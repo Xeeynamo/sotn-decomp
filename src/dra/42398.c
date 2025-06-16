@@ -289,7 +289,7 @@ void func_800E2B00(void) {
     AddPrim(&g_CurrentOT[0x1FE], drMode++);
 
     i = 0;
-    palette = g_Clut + g_DebugCurPal * 16;
+    palette = &g_Clut[0][g_DebugCurPal * 16];
     curTile = tile;
     g_GpuUsage.drawModes++;
     while (i < 0x10) {
@@ -342,7 +342,7 @@ void DebugEditColorChannel(s32 colorAdd) {
     u16 originalColor;
     u16* palette;
 
-    palette = g_Clut + g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx;
+    palette = &g_Clut[0][0] + g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx;
     originalColor = palette[0];
     switch (g_DebugColorChannel) {
     case DEBUG_COLOR_CHANNEL_RED:
@@ -450,7 +450,7 @@ s32 DebugUpdate(void) {
                 }
                 if (g_pads[1].pressed & PAD_R2 &&
                     g_pads[1].tapped & PAD_SQUARE) {
-                    g_Clut[g_DebugCurPal * 0x10 + g_DebugPalIdx] ^= 0x8000;
+                    g_Clut[0][g_DebugCurPal * 0x10 + g_DebugPalIdx] ^= 0x8000;
                 }
             } else {
                 // tileset viewer debug cont
@@ -587,15 +587,15 @@ void PrintGpuInfo(void) {
             break;
         }
 
-        if (g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x8000) {
+        if (g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x8000) {
             FntPrint("  half on\n");
         } else {
             FntPrint("  half off\n");
         };
 
-        r = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x1F;
-        g = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 5 & 0x1F;
-        b = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 10 & 0x1F;
+        r = g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x1F;
+        g = g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 5 & 0x1F;
+        b = g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 10 & 0x1F;
         FntPrint("rgb:%02X,%02X,%02X\n", r, g, b);
     } else {
         FntPrint("01:%04x,%04x\n", D_8006C384.x, D_8006C384.y);

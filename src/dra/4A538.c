@@ -179,7 +179,7 @@ void func_800EA7CC(void) {
         new_var = temp_s0[1];
         count = temp_s0[2];
 
-        clut = g_Clut;
+        clut = g_Clut[0];
         clut += new_var;
 
         switch (ptr->unk8 & 0xFF) {
@@ -253,7 +253,7 @@ void func_800EA7CC(void) {
             break;
         case 5: // some kind of bulk palette copy?
             while (true) {
-                clut = g_Clut;
+                clut = g_Clut[0];
                 temp_v0_5 = ptr->data;
                 temp_s0 = temp_v0_5 - 2;
                 data = temp_v0_5[0];
@@ -286,7 +286,7 @@ void func_800EA7CC(void) {
 
     // re-upload updated stage tileset palette
     offset = 0;
-    temp_s0 = g_Clut;
+    temp_s0 = g_Clut[0];
     clutX = 0x200;
     for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
         if (palettes[offset] != 0) {

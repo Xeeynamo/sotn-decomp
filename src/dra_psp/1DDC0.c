@@ -485,16 +485,16 @@ s32 LoadFileSimToMem(SimKind kind) {
         LoadImage(&g_Vram.D_800ACD98, (u_long*)D_800A04CC);
         D_psp_091CE378 = &D_8D6DC40;
         LoadImage(&g_Vram.D_800ACDA8, D_psp_091CE378);
-        clutAddr = (u_long*)&g_Clut[0x1000];
+        clutAddr = (u_long*)g_Clut[1];
         StoreImage(&g_Vram.D_800ACDA8, clutAddr);
         break;
     case SIM_STAGE_CHR:
     case SIM_11:
         LoadStageTileset(SIM_CHR0, 0);
-        clutAddr = (u_long*)&g_Clut[0];
+        clutAddr = (u_long*)g_Clut[0];
         StoreImage(&g_Vram.D_800ACDB8, clutAddr);
         if (kind == SIM_11) {
-            clutAddr = (u_long*)&g_Clut[0x2000];
+            clutAddr = (u_long*)g_Clut[2];
             StoreImage(&g_Vram.D_800ACDB8, clutAddr);
             LoadImage(&g_Vram.D_800ACDB0, clutAddr);
         }
@@ -520,12 +520,12 @@ s32 LoadFileSimToMem(SimKind kind) {
         break;
     case SIM_16:
         LoadImage(&g_Vram.D_800ACDB8, (u_long*)SIM_PTR);
-        clutAddr = (u_long*)&g_Clut[0x2000];
+        clutAddr = (u_long*)g_Clut[2];
         StoreImage(&g_Vram.D_800ACDB8, clutAddr);
         break;
     case SIM_17:
         LoadImage(&g_Vram.D_800ACDA8, (u_long*)SIM_PTR);
-        clutAddr = (u_long*)&g_Clut[0];
+        clutAddr = (u_long*)g_Clut[0];
         StoreImage(&g_Vram.D_800ACDA8, clutAddr);
         break;
     }

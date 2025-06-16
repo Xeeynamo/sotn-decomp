@@ -533,7 +533,7 @@ extern u16 D_91F8618[];
 extern u16 D_psp_092F1138[];
 #endif
 
-#define CLUT_INDEX_SERVANT_2 0x1410
+#define CLUT_INDEX_SERVANT_2 0x410
 extern u16 g_ServantClut[16];
 extern u16 g_SwordClut[32];
 extern VECTOR g_TransferVector;
@@ -564,7 +564,7 @@ void ServantInit(InitializeMode mode) {
 
     self = &g_Entities[UNK_ENTITY_4];
 
-    dst = &g_Clut[CLUT_INDEX_SERVANT];
+    dst = &g_Clut[1][CLUT_INDEX_SERVANT];
     src = g_ServantClut;
 
 #ifdef VERSION_PSP
@@ -577,7 +577,7 @@ void ServantInit(InitializeMode mode) {
         *dst++ = *src++;
     }
 
-    dst = &g_Clut[CLUT_INDEX_SERVANT_2];
+    dst = &g_Clut[1][CLUT_INDEX_SERVANT_2];
     src = g_SwordClut;
 
     for (i = 0; i < LEN(g_SwordClut); i++) {
@@ -589,7 +589,7 @@ void ServantInit(InitializeMode mode) {
     rect.w = 0x30;
     rect.h = 1;
 
-    dst = &g_Clut[CLUT_INDEX_SERVANT];
+    dst = &g_Clut[1][CLUT_INDEX_SERVANT];
     LoadImage(&rect, (u_long*)dst);
     DestroyEntity(self);
 

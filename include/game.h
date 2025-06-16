@@ -1967,9 +1967,9 @@ extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3C4 D_8006C3C4[32];
 extern s32 g_Servant; // Currently selected familiar in the menu
 
-#define CLUT_INDEX_SERVANT 0x1400
-#define CLUT_INDEX_SERVANT_OVERWRITE 0x1430
-extern u16 g_Clut[0x3000];
+#define CLUT_INDEX_SERVANT 0x400
+#define CLUT_INDEX_SERVANT_OVERWRITE 0x430
+extern u16 g_Clut[3][0x1000];
 
 extern PlayerState g_Player;
 
