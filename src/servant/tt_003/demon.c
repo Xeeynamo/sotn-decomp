@@ -715,13 +715,13 @@ void ServantInit(InitializeMode mode) {
         }
     }
 
-    dst = &g_Clut[CLUT_INDEX_SERVANT];
+    dst = &g_Clut[1][CLUT_INDEX_SERVANT];
     src = g_ServantClut;
     for (i = 0; i < lenServant; i++) {
         *dst++ = *src++;
     }
 
-    dst = &g_Clut[CLUT_INDEX_SERVANT_OVERWRITE];
+    dst = &g_Clut[1][CLUT_INDEX_SERVANT_OVERWRITE];
     src = g_DemonClut;
 
     for (i = 0; i < lenDemon; i++) {
@@ -733,7 +733,7 @@ void ServantInit(InitializeMode mode) {
     rect.h = 1;
     rect.y = 0xF4;
 
-    dst = &g_Clut[CLUT_INDEX_SERVANT];
+    dst = &g_Clut[1][CLUT_INDEX_SERVANT];
     LoadImage(&rect, (u_long*)dst);
 
     spriteBanks = g_api.o.spriteBanks;

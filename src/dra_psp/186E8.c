@@ -342,7 +342,7 @@ void func_800E2B00(void) {
     AddPrim(&g_CurrentOT[0x1FE], drMode++);
 
     i = 0;
-    palette = g_Clut + g_DebugCurPal * 16;
+    palette = &g_Clut[0][g_DebugCurPal * COLORS_PER_PAL];
     curTile = tile;
     g_GpuUsage.drawModes++;
     while (i < 0x10) {
@@ -395,22 +395,22 @@ void DebugEditColorChannel(s32 colorAdd) {
     u16 originalColor;
     u16* palette;
 
-    palette = g_Clut + g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx;
+    palette = &g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx];
     originalColor = palette[0];
     switch (g_DebugColorChannel) {
     case DEBUG_COLOR_CHANNEL_RED:
-        color = originalColor & 0xFFE0;
-        color |= (originalColor + colorAdd) & 0x1F;
+        color = originalColor & UNRED_MASK;
+        color |= (originalColor + colorAdd) & RED_MASK;
         *palette = color;
         break;
     case DEBUG_COLOR_CHANNEL_GREEN:
-        color = originalColor & 0xFC1F;
-        color |= (originalColor + (colorAdd << 5)) & 0x3E0;
+        color = originalColor & UNGREEN_MASK;
+        color |= (originalColor + (colorAdd << 5)) & GREEN_MASK;
         *palette = color;
         break;
     case DEBUG_COLOR_CHANNEL_BLUE:
-        color = originalColor & 0x83FF;
-        color |= (originalColor + (colorAdd << 10)) & 0x7C00;
+        color = originalColor & UNBLUE_MASK;
+        color |= (originalColor + (colorAdd << 10)) & BLUE_MASK;
         *palette = color;
         break;
     }
