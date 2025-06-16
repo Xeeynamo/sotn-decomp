@@ -38,9 +38,9 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, 2C048]
-      #- [0x3A8, .data, 2C048]
-      #- [0x454, .data, 2C048]
-      #- [0x46C, .data, 2C048]
+      - [0x3A8, .data, 2C048]
+      - [0x454, .data, 2C048]
+      - [0x46C, .data, 2C048]
       - [0x4D0, .data, 3410C]
       - [0x4E0, .data, banks]
       - [0x728, data]
