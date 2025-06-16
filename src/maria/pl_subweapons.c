@@ -1461,7 +1461,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 4; i++) {
                 color = -0x80;
-                prim->clut = 0x11A;
+                prim->clut = PAL_WPN_CARDINAL & 0x3FF;
                 prim->priority = self->zPriority;
                 prim->drawMode = DRAW_DEFAULT;
                 switch (i) {
