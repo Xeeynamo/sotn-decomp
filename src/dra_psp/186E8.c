@@ -399,18 +399,18 @@ void DebugEditColorChannel(s32 colorAdd) {
     originalColor = palette[0];
     switch (g_DebugColorChannel) {
     case DEBUG_COLOR_CHANNEL_RED:
-        color = originalColor & 0xFFE0;
-        color |= (originalColor + colorAdd) & 0x1F;
+        color = originalColor & UNRED_MASK;
+        color |= (originalColor + colorAdd) & RED_MASK;
         *palette = color;
         break;
     case DEBUG_COLOR_CHANNEL_GREEN:
-        color = originalColor & 0xFC1F;
-        color |= (originalColor + (colorAdd << 5)) & 0x3E0;
+        color = originalColor & UNGREEN_MASK;
+        color |= (originalColor + (colorAdd << 5)) & GREEN_MASK;
         *palette = color;
         break;
     case DEBUG_COLOR_CHANNEL_BLUE:
-        color = originalColor & 0x83FF;
-        color |= (originalColor + (colorAdd << 10)) & 0x7C00;
+        color = originalColor & UNBLUE_MASK;
+        color |= (originalColor + (colorAdd << 10)) & BLUE_MASK;
         *palette = color;
         break;
     }
