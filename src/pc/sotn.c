@@ -14,7 +14,7 @@
 
 u16 g_RawVram[VRAM_W * VRAM_H];
 GameApi g_ApiInit = {0};
-extern u8* g_DemoPtr;
+u8* g_DemoPtr;
 u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern bool g_IsQuitRequested;
 
