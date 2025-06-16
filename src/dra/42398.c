@@ -336,15 +336,15 @@ void func_800E2B00(void) {
     g_GpuUsage.drawModes++;
 }
 
-void DebugEditColorChannel(s32 colorAdd) {
-    #define RED_MASK 0x1F
-    #define GREEN_MASK 0x3E0
-    #define BLUE_MASK 0x7C00
-    #define ALPHA_MASK 0x8000
-    #define UNRED_MASK (BLUE_MASK | GREEN_MASK | ALPHA_MASK)
-    #define UNGREEN_MASK (BLUE_MASK | RED_MASK | ALPHA_MASK)
-    #define UNBLUE_MASK (GREEN_MASK | RED_MASK | ALPHA_MASK)
+#define RED_MASK 0x1F
+#define GREEN_MASK 0x3E0
+#define BLUE_MASK 0x7C00
+#define ALPHA_MASK 0x8000
+#define UNRED_MASK (BLUE_MASK | GREEN_MASK | ALPHA_MASK)
+#define UNGREEN_MASK (BLUE_MASK | RED_MASK | ALPHA_MASK)
+#define UNBLUE_MASK (GREEN_MASK | RED_MASK | ALPHA_MASK)
 
+void DebugEditColorChannel(s32 colorAdd) {
     s32 newColorChannel;
     s32 color;
     u16 originalColor;
@@ -459,7 +459,7 @@ s32 DebugUpdate(void) {
                 if (g_pads[1].pressed & PAD_R2 &&
                     g_pads[1].tapped & PAD_SQUARE) {
                     g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] ^=
-                        0x8000;
+                        ALPHA_MASK;
                 }
             } else {
                 // tileset viewer debug cont
@@ -597,7 +597,7 @@ void PrintGpuInfo(void) {
         }
 
         if (g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] &
-            0x8000) {
+            ALPHA_MASK) {
             FntPrint("  half on\n");
         } else {
             FntPrint("  half off\n");
