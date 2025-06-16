@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern u16 g_SplashSfx;
-extern u16 g_SurfacingSfx;
+extern u16 g_WaterSounds[];
 extern s16 g_WaterXTbl[];
 
 #ifdef VERSION_PSP
@@ -497,7 +496,7 @@ void EntitySplashWater(Entity* self) {
             aspect = 8;
         }
 
-        g_api.PlaySfxVolPan(g_SplashSfx, 0x7F, aspect);
+        g_api.PlaySfxVolPan(g_WaterSounds[0], 0x7F, aspect);
 
         self->velocityY = g_SplashYMovement[params * 2];
         self->ext.waterEffects.accelY = g_SplashYMovement[params * 2 + 1];
@@ -581,7 +580,7 @@ void EntitySurfacingWater(Entity* self) {
         }
         params = self->params;
         if (!(params & 0x8000)) {
-            g_api.PlaySfxVolPan(g_SurfacingSfx, 0x7F, temp_s3);
+            g_api.PlaySfxVolPan(g_WaterSounds[1], 0x7F, temp_s3);
         }
 #ifdef VERSION_PSP
         params = (params >> 5) & 0x7;
@@ -722,7 +721,7 @@ void EntitySideWaterSplash(Entity* self) {
         }
         params = self->params;
         if (!(params & 0xF)) {
-            g_api.PlaySfx(g_SplashSfx);
+            g_api.PlaySfx(g_WaterSounds[0]);
         }
         angle = g_SideWaterAngles[(params >> 4) & 0xF];
         // Two speeds. Get the pointer for the first one.

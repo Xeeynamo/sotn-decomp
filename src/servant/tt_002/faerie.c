@@ -478,7 +478,7 @@ void ServantInit(InitializeMode mode) {
         }
     }
 
-    dst = &g_Clut[CLUT_INDEX_SERVANT];
+    dst = &g_Clut[1][CLUT_INDEX_SERVANT];
     src = g_FaerieClut;
     for (i = 0; i < len; i++) {
         *dst++ = *src++;
@@ -489,7 +489,7 @@ void ServantInit(InitializeMode mode) {
     rect.h = 1;
     rect.y = 0xF4;
 
-    dst = &g_Clut[CLUT_INDEX_SERVANT];
+    dst = &g_Clut[1][CLUT_INDEX_SERVANT];
     LoadImage(&rect, (u_long*)dst);
 
     spriteBanks = g_api.o.spriteBanks;

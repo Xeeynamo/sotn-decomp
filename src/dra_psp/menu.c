@@ -917,7 +917,7 @@ void MenuDrawAlucardPortrait(MenuContext* ctx) {
 // Examples: 31->23, 15->11
 static s32 DarkenCloakColor(s32 color) { return color * 3 / 4; }
 
-// Creates light and dark versions of cloak colors in BGR555 format
+// Creates light and dark versions of cloak colors in RGB5551 format
 void ApplyJosephsCloakPalette(void) {
     const int LiningDark = 0;
     const int LiningLight = 1;
@@ -925,19 +925,19 @@ void ApplyJosephsCloakPalette(void) {
     const int ExteriorLight = 3;
 
     g_JosephsCloakColors[LiningDark] =
-        0x8000 + DarkenCloakColor(g_Settings.cloakColors[3]) +
+        ALPHA_MASK + DarkenCloakColor(g_Settings.cloakColors[3]) +
         (DarkenCloakColor(g_Settings.cloakColors[4]) << 5) +
         (DarkenCloakColor(g_Settings.cloakColors[5]) << 10);
     g_JosephsCloakColors[LiningLight] =
-        0x8000 + g_Settings.cloakColors[3] + (g_Settings.cloakColors[4] << 5) +
-        (g_Settings.cloakColors[5] << 10);
+        ALPHA_MASK + g_Settings.cloakColors[3] +
+        (g_Settings.cloakColors[4] << 5) + (g_Settings.cloakColors[5] << 10);
     g_JosephsCloakColors[ExteriorDark] =
-        0x8000 + DarkenCloakColor(g_Settings.cloakColors[0]) +
+        ALPHA_MASK + DarkenCloakColor(g_Settings.cloakColors[0]) +
         (DarkenCloakColor(g_Settings.cloakColors[1]) << 5) +
         (DarkenCloakColor(g_Settings.cloakColors[2]) << 10);
     g_JosephsCloakColors[ExteriorLight] =
-        0x8000 + g_Settings.cloakColors[0] + (g_Settings.cloakColors[1] << 5) +
-        (g_Settings.cloakColors[2] << 10);
+        ALPHA_MASK + g_Settings.cloakColors[0] +
+        (g_Settings.cloakColors[1] << 5) + (g_Settings.cloakColors[2] << 10);
 }
 
 void MenuDrawAlucardCloakPreview(MenuContext* ctx) {

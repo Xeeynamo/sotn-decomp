@@ -1,5 +1,4 @@
-g_SplashSfx = 0x8018122C;
-g_SurfacingSfx = 0x8018122E;
+g_WaterSounds = 0x8018122C;
 g_WaterXTbl = 0x80181230;
 D_80180FE0 = 0x8018129C;
 NP3_PrizeDrops = 0x80181618;
