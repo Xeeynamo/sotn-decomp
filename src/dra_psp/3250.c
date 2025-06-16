@@ -113,16 +113,16 @@ s32 func_800EA5E4(u32 arg0) {
 #define RED_MASK 0x1F
 #define GREEN_MASK 0x3E0
 #define BLUE_MASK 0x7C00
-// These could be ~RED_MASK, but that doesn't match.
-#define UNRED_MASK 0xFFFF - RED_MASK
-#define UNGREEN_MASK 0xFFFF - GREEN_MASK
-#define UNBLUE_MASK 0xFFFF - BLUE_MASK
+#define ALPHA_MASK 0x8000
+#define UNRED_MASK (BLUE_MASK | GREEN_MASK | ALPHA_MASK)
+#define UNGREEN_MASK (BLUE_MASK | RED_MASK | ALPHA_MASK)
+#define UNBLUE_MASK (GREEN_MASK | RED_MASK | ALPHA_MASK)
 
 #define GET_RED(x) ((x) & RED_MASK)
 #define GET_GREEN(x) ((x) & GREEN_MASK)
 #define GET_BLUE(x) ((x) & BLUE_MASK)
 
-// Takes a color "col" in RGB555 and increments/decrements each component
+// Takes a color "col" in RGB5551 and increments/decrements each component
 // to bring it closer to the target by 1.
 u16 func_800EA720(u16 target, u16 col) {
     if (GET_RED(target) > GET_RED(col)) {

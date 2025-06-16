@@ -337,27 +337,35 @@ void func_800E2B00(void) {
 }
 
 void DebugEditColorChannel(s32 colorAdd) {
+    #define RED_MASK 0x1F
+    #define GREEN_MASK 0x3E0
+    #define BLUE_MASK 0x7C00
+    #define ALPHA_MASK 0x8000
+    #define UNRED_MASK (BLUE_MASK | GREEN_MASK | ALPHA_MASK)
+    #define UNGREEN_MASK (BLUE_MASK | RED_MASK | ALPHA_MASK)
+    #define UNBLUE_MASK (GREEN_MASK | RED_MASK | ALPHA_MASK)
+
     s32 newColorChannel;
     s32 color;
     u16 originalColor;
     u16* palette;
 
-    palette = &g_Clut[0][0] + g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx;
-    originalColor = palette[0];
+    palette = g_Clut[0] + g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx;
+    originalColor = *palette;
     switch (g_DebugColorChannel) {
     case DEBUG_COLOR_CHANNEL_RED:
-        color = originalColor & 0xFFE0;
-        color |= (originalColor + colorAdd) & 0x1F;
+        color = originalColor & UNRED_MASK;
+        color |= (originalColor + colorAdd) & RED_MASK;
         *palette = color;
         break;
     case DEBUG_COLOR_CHANNEL_GREEN:
-        color = originalColor & 0xFC1F;
-        color |= (originalColor + (colorAdd << 5)) & 0x3E0;
+        color = originalColor & UNGREEN_MASK;
+        color |= (originalColor + (colorAdd << 5)) & GREEN_MASK;
         *palette = color;
         break;
     case DEBUG_COLOR_CHANNEL_BLUE:
-        color = originalColor & 0x83FF;
-        color |= (originalColor + (colorAdd << 10)) & 0x7C00;
+        color = originalColor & UNBLUE_MASK;
+        color |= (originalColor + (colorAdd << 10)) & BLUE_MASK;
         *palette = color;
         break;
     }
