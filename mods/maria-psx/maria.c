@@ -80,6 +80,7 @@ void func_91040A0(u_long** _gfxBank) {
         }
         gfxLoad++;
     }
+    return -1;
 }
 
 void func_892667C(s32 paletteID, u16* paletteData) {
