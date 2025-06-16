@@ -57,10 +57,12 @@ void func_90E4C18() {}
 void func_90E4C68() {}
 void func_9101FC8() {}
 
-s32 LoadGfxBankAsync(GfxBank* gfxBank) {
+void func_91040A0(u_long** _gfxBank) {
+    GfxBank* gfxBank;
     GfxLoad* gfxLoad;
     s32 i;
 
+    gfxBank = (GfxBank*)_gfxBank; // avoid problems with the game.h signature
     if (gfxBank->kind == GFX_BANK_NONE) {
         return -1;
     }
@@ -78,7 +80,6 @@ s32 LoadGfxBankAsync(GfxBank* gfxBank) {
         }
         gfxLoad++;
     }
-    return -1;
 }
 
 void func_892667C(s32 paletteID, u16* paletteData) {
