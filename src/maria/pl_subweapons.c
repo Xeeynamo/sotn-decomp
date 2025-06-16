@@ -893,7 +893,7 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
 #ifdef VERSION_PSP
             prim->tpage = 5;
 #else
-            prim->tpage = 0x13;
+            prim->tpage = 0x19;
 #endif
             prim->clut = self->palette & 0x3FF;
             prim->priority = self->zPriority;
@@ -925,6 +925,12 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
                         NormalizeAngle(ratan2(spD0 - var_s5, spD4 - var_s6));
                     func_89285A0(angle, &m);
                     SetGeomOffset(var_s6, var_s5);
+#ifndef VERSION_PSP
+                    // I do not know why this works. The stack might be messed
+                    // up and function just so happen to match PSP decomp.
+                    spA0.vx = var_s6;
+                    spA0.vy = var_s5;
+#endif
                     TransMatrix(&m, &spA0);
                     SetRotMatrix(&m);
                     SetTransMatrix(&m);
@@ -987,6 +993,10 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
                     u = 0x80;
                     v = 0;
                 }
+#ifndef VERSION_PSP
+                // Dragon GFXs are re-located in the VRAM on other platforms
+                u -= 0x80;
+#endif
                 prim->u1 = u;
                 prim->v1 = v + 0x1F;
                 prim->u0 = u + 0x1F;
