@@ -12,14 +12,14 @@ extern GfxBank* D_psp_0918BC30[];
 extern u16 D_psp_091654C0[];
 
 // BSS
-u16 D_80137478[ICON_SLOT_NUM];
-u16 D_801374B8[ICON_SLOT_NUM];
-u16 D_801374F8[ICON_SLOT_NUM];
-u16 D_80137538[ICON_SLOT_NUM];
-u8* g_DecSrcPtr;
-u8* g_DecDstPtr;
-bool g_DecReadNibbleFlag;
-bool g_DecWriteNibbleFlag;
+static u16 D_80137478[ICON_SLOT_NUM];
+static u16 D_801374B8[ICON_SLOT_NUM];
+static u16 D_801374F8[ICON_SLOT_NUM];
+static u16 D_80137538[ICON_SLOT_NUM];
+static u8* g_DecSrcPtr;
+static u8* g_DecDstPtr;
+static bool g_DecReadNibbleFlag;
+static bool g_DecWriteNibbleFlag;
 STATIC_PAD_BSS(8);
 
 #include "../get_lang.h"

@@ -152,7 +152,7 @@ segments:
       - {start: 0xEED80, type: bss, vram: 0x091CB700, name: bss1}
       - {start: 0xEED80, type: .bss, vram: 0x091CDC58, name: dra/4DA70}
       - {start: 0xEED80, type: bss, vram: 0x091CDC60, name: bss2}
-      - {start: 0xEED80, type: .bss, vram: 0x091CDCF8, name: dra/5087C}
+      - {start: 0xEED80, type: .bss, vram: 0x091CDCE8, name: dra/5087C}
       - {start: 0xEED80, type: .bss, vram: 0x091CDD40, name: dra_psp/menu}
       - {start: 0xEED80, type: bss, vram: 0x091CE1E8, name: bss3}
       - {start: 0xEED80, type: .bss, vram: 0x091CE268, name: dra_psp/186E8}
