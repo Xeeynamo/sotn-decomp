@@ -3184,10 +3184,9 @@ typedef struct {
     u8 unk85;
     u8 unk86;
     struct Entity* unkEntity;
-    s16 unk6;
-    u16 unk26;
-    s8 unk28;
-    s32 unk2A;
+    u8 : 8;
+    s32 : 32;
+    s32 : 32;
     s32 : 32;
     s32 : 32;
     s32 : 32;
@@ -3195,7 +3194,7 @@ typedef struct {
     s32 : 32;
     s32 : 32;
     f32 unkB0;
-} ET_801D2444;
+} ET_BonePillar;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3470,7 +3469,7 @@ typedef union { // offset=0x7C
     ET_801C801C et_801C801C;
     ET_WaterAlcove et_waterAlcove;
     ET_801C12B0 et_801C12B0;
-    ET_801D2444 et_801D2444;
+    ET_BonePillar et_bonePillar;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

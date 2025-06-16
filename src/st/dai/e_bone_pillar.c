@@ -1,63 +1,78 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-extern u16 D_us_801809FE;
-extern s32 D_us_80181C54;
-extern s32 D_us_80181C84;
-extern s16 D_us_80181C8C;
-extern s16 D_us_80181C9C[];
-extern s16 D_us_80181CA4;
-extern s32 D_us_80181CAC;
-extern s32 D_us_80181CE4;
-extern s32 D_us_80181D18;
-extern s16 D_us_80181D30[];
+#ifdef VERSION_PSP
+s32 D_us_80181C54[] = {0x00200000, 0x00040000, 0xFFFC0004, 0x0000FFF8};
+#else
+s32 D_us_80181C54[] = {
+    0x00200000, 0x00040000, 0xFFFC0004, 0x0000FFF8, 0x00080000, 0x00040000,
+    0xFFFC0002, 0x0000FFFC, 0x00240000, 0x00040000, 0xFFFC0002, 0x0000FFFC};
+#endif
+s32 D_us_80181C84[] = {0x000E0000, 0x00000000};
+s16 D_us_80181C8C[] = {
+    0x0002, 0xFFF1, 0x0002, 0xFFEF, 0xFFFC, 0x000A, 0xFFFC, 0x0009};
+s16 D_us_80181C9C[] = {0x0026, 0x0026, 0x000E, 0x000A};
+s16 D_us_80181CA4[] = {0x02C0, 0x0540, 0x0AC0, 0x0D40};
+s32 D_us_80181CAC[] = {
+    0x02020130, 0x02020102, 0x02020102, 0x02020102, 0x02020102,
+    0x04020302, 0x04050502, 0x04020602, 0x07020602, 0x07020602,
+    0x07020802, 0x07020802, 0x04110602, 0x000000FF};
+s32 D_us_80181CE4[] = {
+    0x0A020930, 0x0A020902, 0x0A020902, 0x0A020902, 0x0A020902,
+    0x0C020B02, 0x0E020D02, 0x0F020D05, 0x0F021002, 0x11021002,
+    0x11021002, 0x0F021002, 0x00FF0D11};
+s32 D_us_80181D18[] = {
+    0x02030103, 0x04030303, 0x06030503, 0x08030703, 0x0A030903, 0x00FF0B03};
+s16 D_us_80181D30[] = {
+    0x0010, 0x0020, 0x0030, 0x0040, 0x0050, 0x0040, 0x0030, 0x0020};
+
 extern s16* D_us_801BC7B0[];
 
-void func_us_801D1D00(Entity* self) {
+void EntityBonePillarHead(Entity* self) {
     Collider collider;
-    Entity* newEntity;
-    s16 temp_v1;
-    s16* ptr;
-    s32 posX, posY;
+    Entity* entity;
+    s32 offsetX, offsetY;
     s32 i;
-    s32 var_s6;
+    s32 unkVar;
+    s16 angle;
+    s16* ptr;
 
-    if ((self->flags & 0x100) && (self->step < 8)) {
+    if ((self->flags & FLAG_DEAD) && (self->step < 8)) {
         SetStep(8);
     }
-    if (self->ext.et_801D2444.unk85) {
-        self->ext.et_801D2444.unk85 = 0;
+    if (self->ext.et_bonePillar.unk85) {
+        self->ext.et_bonePillar.unk85 = 0;
         SetStep(0xA);
     }
-    switch (self->step) { // irregular
+    switch (self->step) {
     case 0x0:
-        InitializeEntity(&D_us_801809F8);
-        self->palette = D_us_801809FE + 1;
+        InitializeEntity(g_EInitBonePillarHead);
+        self->palette = g_EInitBonePillarHead[3] + 1;
         self->animCurFrame = 1;
-        self->flags |= 0x20000000;
+        self->flags |= FLAG_UNK_20000000;
         if (self->params & 0xFF) {
             self->hitboxOffX = -1;
-            self->hitboxOffY = -0xE;
+            self->hitboxOffY = -14;
             self->animCurFrame = 9;
             SetStep(2);
             break;
         }
         self->hitboxOffX = -3;
-        self->hitboxOffY = 0xD;
+        self->hitboxOffY = 13;
     case 0x1:
         if (UnkCollisionFunc3(&D_us_80181C54) & 1) {
             if (self->params & 0x100) {
-                newEntity = self + 1;
-                CreateEntityFromCurrentEntity(0x2C, newEntity);
-                newEntity->posX.i.hi = self->posX.i.hi + 8;
-                newEntity->posY.i.hi = self->posY.i.hi - 8;
+                entity = self + 1;
+                CreateEntityFromCurrentEntity(E_BONE_PILLAR_SPIKE_BALL, entity);
+                entity->posX.i.hi = self->posX.i.hi + 8;
+                entity->posY.i.hi = self->posY.i.hi - 8;
                 self->params = 0;
             } else {
-                newEntity = self + 1;
-                CreateEntityFromCurrentEntity(0x29, newEntity);
-                newEntity->params = 1;
-                newEntity->posX.i.hi = self->posX.i.hi;
-                newEntity->posY.i.hi = self->posY.i.hi;
+                entity = self + 1;
+                CreateEntityFromCurrentEntity(E_BONE_PILLAR_HEAD, entity);
+                entity->params = 1;
+                entity->posX.i.hi = self->posX.i.hi;
+                entity->posY.i.hi = self->posY.i.hi;
             }
             SetStep(2);
         }
@@ -69,10 +84,10 @@ void func_us_801D1D00(Entity* self) {
         break;
     case 0x3:
         if (!self->step_s) {
-            self->ext.et_801D2444.unk80 =
-                D_us_80181D30[self->ext.et_801D2444.unk84];
-            self->ext.et_801D2444.unk84++;
-            self->ext.et_801D2444.unk84 &= 7;
+            self->ext.et_bonePillar.unk80 =
+                D_us_80181D30[self->ext.et_bonePillar.unk84];
+            self->ext.et_bonePillar.unk84++;
+            self->ext.et_bonePillar.unk84 &= 7;
             self->step_s++;
         }
         if (self->params) {
@@ -81,7 +96,7 @@ void func_us_801D1D00(Entity* self) {
             self->animCurFrame = 1;
         }
         if (self->params == ((GetSideToPlayer() & 1) ^ 1)) {
-            if (!--self->ext.et_801D2444.unk80) {
+            if (!--self->ext.et_bonePillar.unk80) {
                 SetStep(4);
             }
         }
@@ -91,97 +106,96 @@ void func_us_801D1D00(Entity* self) {
         break;
     case 0x4:
         if (g_Timer & 2) {
-            self->palette = D_us_801809FE;
+            self->palette = g_EInitBonePillarHead[3];
         } else {
-            self->palette = D_us_801809FE + 1;
+            self->palette = g_EInitBonePillarHead[3] + 1;
         }
         if (self->params) {
-            var_s6 = AnimateEntity(&D_us_80181CE4, self);
+            unkVar = AnimateEntity(&D_us_80181CE4, self);
         } else {
-            var_s6 = AnimateEntity(&D_us_80181CAC, self);
+            unkVar = AnimateEntity(&D_us_80181CAC, self);
         }
-        if (!var_s6) {
-            self->palette = D_us_801809FE + 1;
+        if (!unkVar) {
+            self->palette = g_EInitBonePillarHead[3] + 1;
             SetStep(3);
         }
-        if ((self->pose == 0x11) && (var_s6 & 0x80)) {
-            newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (newEntity != NULL) {
-                CreateEntityFromEntity(0x2A, self, newEntity);
-                newEntity->facingLeft = self->params;
+        if ((self->pose == 0x11) && (unkVar & 0x80)) {
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_BONE_PILLAR_FIRE, self, entity);
+                entity->facingLeft = self->params;
                 if (self->params) {
-                    newEntity->posY.i.hi -= 0xE;
+                    entity->posY.i.hi -= 0xE;
                     break;
                 }
-                newEntity->posY.i.hi += 8;
+                entity->posY.i.hi += 8;
             }
         }
         break;
     case 0x8:
-        ptr = &D_us_80181C8C;
-        var_s6 = 0;
+        ptr = D_us_80181C8C;
+        unkVar = 0;
         if (!self->params) {
             ptr += 4;
-            var_s6 = 2;
+            unkVar = 2;
         }
         for (i = 0; i < 2; i++) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != NULL) {
-                CreateEntityFromEntity(0x2B, self, newEntity);
-                newEntity->params = i + var_s6;
-                newEntity->posX.i.hi += *ptr++;
-                newEntity->posY.i.hi += *ptr++;
+            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_BONE_PILLAR_PIECES, self, entity);
+                entity->params = i + unkVar;
+                entity->posX.i.hi += *ptr++;
+                entity->posY.i.hi += *ptr++;
             }
         }
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (newEntity != NULL) {
-            CreateEntityFromEntity(2, self, newEntity);
-            newEntity->params = 2;
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            entity->params = 2;
         }
         if ((!self->params) &&
-            ((newEntity = self + 1, (newEntity->entityId) == 0x29) ||
-             ((newEntity->entityId) == 0x2C))) {
-            newEntity->ext.et_801D2444.unk85 = 1;
+            ((entity = self + 1, (entity->entityId) == E_BONE_PILLAR_HEAD) ||
+             ((entity->entityId) == E_BONE_PILLAR_SPIKE_BALL))) {
+            entity->ext.et_bonePillar.unk85 = 1;
         }
-        PlaySfxPositional(0x683);
+        PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
         DestroyEntity(self);
         break;
     case 0xA:
-        switch (self->step_s) { // switch 1; irregular
+        switch (self->step_s) {
         case 0:
             self->animCurFrame = 0x18;
             self->hitboxOffX = 0;
             self->hitboxOffY = 0;
-            self->drawFlags |= 4;
-            self->velocityX = -0xC000;
-            self->velocityY = -0x10000;
-            self->flags &= 0xDFFFFFFF;
-            self->flags |= 0x02000000;
+            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->velocityX = FIX(-0.75);
+            self->velocityY = FIX(-1.0);
+            self->flags &= ~FLAG_UNK_20000000;
+            self->flags |= FLAG_UNK_02000000;
             self->step_s++;
-            // fallthrough
         case 1:
             self->rotate -= 0x20;
             MoveEntity();
-            self->velocityY += 0x3000;
-            for (ptr = &D_us_80181CA4, i = 0; i < 4; i++, ptr++) {
-                posX = self->posX.i.hi;
-                posY = self->posY.i.hi;
-                temp_v1 = self->rotate + *ptr;
-                posX += ((rcos(temp_v1) * 0xE) >> 0xC);
-                posY += ((rsin(temp_v1) * 0xE) >> 0xC);
-                g_api.CheckCollision(posX, posY, &collider, 0);
-                if (collider.effects & 1) {
-                    PlaySfxPositional(0x6A6);
+            self->velocityY += FIX(0.1875);
+            for (ptr = D_us_80181CA4, i = 0; i < 4; i++, ptr++) {
+                offsetX = self->posX.i.hi;
+                offsetY = self->posY.i.hi;
+                angle = self->rotate + *ptr;
+                offsetX += ((rcos(angle) * 0xE) >> 0xC);
+                offsetY += ((rsin(angle) * 0xE) >> 0xC);
+                g_api.CheckCollision(offsetX, offsetY, &collider, 0);
+                if (collider.effects & EFFECT_SOLID) {
+                    PlaySfxPositional(SFX_SKULL_KNOCK_B);
                     self->posY.i.hi += collider.unk18;
                     self->velocityY = -self->velocityY;
                     self->velocityY -= self->velocityY / 2;
                     break;
                 }
             }
-            if (self->flags & 0x100) {
-                PlaySfxPositional(0x683);
+            if (self->flags & FLAG_DEAD) {
+                PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
                 self->hitboxState = 0;
-                self->drawFlags = 0;
+                self->drawFlags = FLAG_DRAW_DEFAULT;
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
                 self->params = 1;
@@ -189,59 +203,40 @@ void func_us_801D1D00(Entity* self) {
         }
         break;
     case 0xFF:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (!self->step_s) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
 }
 
-void func_us_801D2444(Entity* self) {
+void EntityBonePillarSpikeBall(Entity* self) {
     Collider collider;
-    Entity* newEntity;
+    Entity* entity;
     Primitive* prim;
     s32 primIndex;
-    s32 posX;
-    s32 posY;
+    s32 posX, posY;
 
-    if (self->flags & 0x100) {
-        PlaySfxPositional(0x683);
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (newEntity != NULL) {
-            CreateEntityFromEntity(2, self, newEntity);
-            newEntity->params = 3;
+    if (self->flags & FLAG_DEAD) {
+        PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
+            entity->params = 3;
         }
         DestroyEntity(self);
         return;
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A1C);
+        InitializeEntity(g_EInitBonePillarSpikeBall);
         self->animCurFrame = 0x16;
         self->hitboxWidth = 0xD;
         self->hitboxHeight = 0xD;
-        self->flags |= 0x02000000;
+        self->flags |= FLAG_UNK_02000000;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         prim->tpage = self->unk5A / 4;
@@ -255,62 +250,63 @@ void func_us_801D2444(Entity* self) {
         } else {
             posY = 0;
         }
-        prim->clut = D_us_80180A1C[3] + 2;
+        prim->clut = g_EInitBonePillarSpikeBall[3] + 2;
         prim->u0 = prim->u2 = posX + 0x50;
         prim->u1 = prim->u3 = posX + 0x70;
         prim->v0 = prim->v1 = posY + 0x30;
         prim->v2 = prim->v3 = posY + 0x50;
         prim->priority = self->zPriority - 1;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
     case 1:
-        if (self->ext.et_801D2444.unk85) {
-            self->drawFlags = 4;
+        if (self->ext.et_bonePillar.unk85) {
+            self->drawFlags = FLAG_DRAW_ROTATE;
             self->hitPoints = 0x7FFF;
             self->hitboxState = 1;
-            self->velocityX = -0xC000;
-            self->velocityY = -0x10000;
+            self->velocityX = FIX(-0.75);
+            self->velocityY = FIX(-1.0);
             self->step++;
-            newEntity = AllocEntity(&g_Entities[32], &g_Entities[47]);
-            if (newEntity != NULL) {
-                DestroyEntity(newEntity);
-                newEntity->entityId = 0x43;
-                newEntity->pfnUpdate = func_us_801D2444;
-                newEntity->attack = self->attack;
-                newEntity->hitboxWidth = self->hitboxWidth;
-                newEntity->hitboxHeight = self->hitboxHeight;
-                newEntity->hitboxState = 2;
-                newEntity->attackElement = 0x8000;
-                newEntity->nFramesInvincibility = 0x10;
-                newEntity->stunFrames = 4;
-                newEntity->hitEffect = 1;
-                newEntity->ext.et_801D2444.unkB0.i.hi = 0;
-                newEntity->flags = 0x0C000000;
-                g_api.func_80118894(newEntity);
-                newEntity->step = 4;
-                newEntity->ext.et_801D2444.unkEntity = self;
-                self->ext.et_801D2444.unkEntity = newEntity;
+            entity = AllocEntity(&g_Entities[32], &g_Entities[47]);
+            if (entity != NULL) {
+                DestroyEntity(entity);
+                entity->entityId = E_SEALED_DOOR;
+                entity->pfnUpdate = EntityBonePillarSpikeBall;
+                entity->attack = self->attack;
+                entity->hitboxWidth = self->hitboxWidth;
+                entity->hitboxHeight = self->hitboxHeight;
+                entity->hitboxState = 2;
+                entity->attackElement = 0x8000;
+                entity->nFramesInvincibility = 0x10;
+                entity->stunFrames = 4;
+                entity->hitEffect = 1;
+                entity->ext.et_bonePillar.unkB0.i.hi = 0;
+                entity->flags =
+                    FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
+                g_api.func_80118894(entity);
+                entity->step = 4;
+                entity->ext.et_bonePillar.unkEntity = self;
+                self->ext.et_bonePillar.unkEntity = entity;
             }
         }
         break;
     case 2:
         MoveEntity();
         self->rotate -= 0x40;
-        self->velocityY += 0x4000;
+        self->velocityY += FIX(0.25);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + 8;
         g_api.CheckCollision(posX, posY, &collider, 0);
-        if (collider.effects & 1) {
-            if (!self->ext.et_801D2444.unk86) {
-                self->ext.et_801D2444.unk86 = 1;
-                PlaySfxPositional(0x761);
+        if (collider.effects & EFFECT_SOLID) {
+            if (!self->ext.et_bonePillar.unk86) {
+                self->ext.et_bonePillar.unk86 = 1;
+                PlaySfxPositional(SFX_UNK_761);
             } else {
-                PlaySfxPositional(0x60E);
+                PlaySfxPositional(SFX_METAL_CLANG_B);
             }
             self->posY.i.hi += collider.unk18;
             self->velocityY = -self->velocityY;
             self->velocityY -= self->velocityY / 2;
 
-            if (abs(self->velocityY) < 0x8000) {
+            if (abs(self->velocityY) < FIX(0.5)) {
                 self->step++;
             }
         }
@@ -318,13 +314,13 @@ void func_us_801D2444(Entity* self) {
     case 3:
         UnkCollisionFunc2(&D_us_80181C84);
         self->rotate -= 0x80;
-        self->velocityX = -0x1C000;
+        self->velocityX = FIX(-1.75);
         break;
     case 4:
-        newEntity = self->ext.et_801D2444.unkEntity;
-        self->posX.i.hi = newEntity->posX.i.hi;
-        self->posY.i.hi = newEntity->posY.i.hi;
-        if (newEntity->entityId != 0x2C) {
+        entity = self->ext.et_bonePillar.unkEntity;
+        self->posX.i.hi = entity->posX.i.hi;
+        self->posY.i.hi = entity->posY.i.hi;
+        if (entity->entityId != E_BONE_PILLAR_SPIKE_BALL) {
             DestroyEntity(self);
         }
         return;
@@ -334,13 +330,13 @@ void func_us_801D2444(Entity* self) {
     prim->y0 = prim->y1 = self->posY.i.hi - 0x10;
     prim->x1 = prim->x3 = prim->x0 + 0x20;
     prim->y2 = prim->y3 = prim->y0 + 0x20;
-    if (self->ext.et_801D2444.unk85) {
+    if (self->ext.et_bonePillar.unk85) {
         if (g_Timer & 2) {
-            self->palette = D_us_80180A1C[3];
-            prim->clut = D_us_80180A1C[3] + 2;
+            self->palette = g_EInitBonePillarSpikeBall[3];
+            prim->clut = g_EInitBonePillarSpikeBall[3] + 2;
         } else {
-            self->palette = D_us_80180A1C[3] + 1;
-            prim->clut = D_us_80180A1C[3] + 3;
+            self->palette = g_EInitBonePillarSpikeBall[3] + 1;
+            prim->clut = g_EInitBonePillarSpikeBall[3] + 3;
         }
     }
 }
@@ -353,21 +349,21 @@ void EntityBonePillarFireBreath(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180A10);
+        InitializeEntity(g_EInitBonePillarFireBreath);
         self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
         if (primIndex == -1) {
             DestroyEntity(self);
-            break;
+            return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.et_801D2444.prim = prim;
+        self->ext.et_bonePillar.prim = prim;
         prim->tpage = 0x13;
         prim->clut = 0x221;
         prim->priority = self->zPriority;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
         self->hitboxWidth = 0x15;
@@ -395,25 +391,25 @@ void EntityBonePillarFireBreath(Entity* self) {
             self->hitboxOffX = -0x20;
             self->hitboxOffY = 0x1E;
         }
-        PlaySfxPositional(0x660);
+        PlaySfxPositional(SFX_FIREBALL_SHOT_A);
     case 1:
         if (!AnimateEntity(&D_us_80181D18, self)) {
             self->hitboxState = 0;
             self->step += 1;
-            break;
+            return;
         }
-        prim = self->ext.et_801D2444.prim;
+        prim = self->ext.et_bonePillar.prim;
         ptr = D_us_801BC7B0[self->animCurFrame];
-        ptr += 0x8;
+        ptr += 8;
         prim->u0 = prim->u2 = *ptr++;
         prim->v0 = prim->v1 = *ptr++;
         prim->u1 = prim->u3 = *ptr++;
         prim->v2 = prim->v3 = *ptr++;
         break;
     case 2:
-        for (prim = self->ext.et_801D2444.prim; prim != NULL;
+        for (prim = self->ext.et_bonePillar.prim; prim != NULL;
              prim = prim->next) {
-            prim->type = 1;
+            prim->type = PRIM_TILE;
             if (self->facingLeft) {
                 posX = (Random() & 0x1F) + 0x10;
             } else {
@@ -429,13 +425,13 @@ void EntityBonePillarFireBreath(Entity* self) {
             prim->g0 = 0xA0;
             prim->p2 = (Random() & 7) + 1;
             prim->priority = self->zPriority + 1;
-            prim->drawMode = 0x33;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         }
-        self->ext.et_801D2444.unk80 = 0x30;
+        self->ext.et_bonePillar.unk80 = 0x30;
         self->step++;
-        // fallthrough
     case 3:
-        for (prim = self->ext.et_801D2444.prim; prim != NULL;
+        for (prim = self->ext.et_bonePillar.prim; prim != NULL;
              prim = prim->next) {
             if (!(g_Timer % prim->p2)) {
                 prim->y0--;
@@ -444,47 +440,47 @@ void EntityBonePillarFireBreath(Entity* self) {
             prim->g0 -= 2;
             prim->b0 -= 2;
         }
-        if (!--self->ext.et_801D2444.unk80) {
+        if (!--self->ext.et_bonePillar.unk80) {
             DestroyEntity(self);
         }
     }
 }
 
-void func_us_801D2CFC(Entity* self) {
+void EntityBonePillarDeathParts(Entity* self) {
     Collider collider;
     s32 posX, posY;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180A04);
+        InitializeEntity(g_EInitBonePillarPieces);
         self->hitboxState = 0;
         self->animCurFrame = (self->params & 0xF) + 0x12;
         self->zPriority += self->params & 0xF;
         if (self->params & 1) {
-            self->ext.et_801D2444.unk80 = 0x18;
+            self->ext.et_bonePillar.unk80 = 0x18;
             break;
         }
-        self->ext.et_801D2444.unk80 = 0xC;
+        self->ext.et_bonePillar.unk80 = 0xC;
         break;
     case 1:
-        if (!--self->ext.et_801D2444.unk80) {
+        if (!--self->ext.et_bonePillar.unk80) {
             self->step++;
         }
         break;
     case 2:
         MoveEntity();
-        self->velocityY += 0x2800;
+        self->velocityY += FIX(0.15625);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + D_us_80181C9C[self->params];
         g_api.CheckCollision(posX, posY, &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
-            self->ext.et_801D2444.unk80 = 0xE;
+            self->ext.et_bonePillar.unk80 = 0xE;
             self->step++;
         }
         break;
     case 3:
-        if (!--self->ext.et_801D2444.unk80) {
+        if (!--self->ext.et_bonePillar.unk80) {
             self->step = 0;
             self->pfnUpdate = EntityExplosion;
             self->params = 0;

@@ -131,7 +131,6 @@ EntitySoulStealOrb = 0x801D03B0;
 EntityEnemyBlood = 0x801D0744;
 EntityRoomForeground = 0x801D0BF4;
 BottomCornerText = 0x801D0CE0;
-EntityBonePillarFireBreath = 0x801D2908;
 EntitySkeletonPieces = 0x801D35F4;
 EntityBat = 0x801D3D8C;
 EntitySkelerang = 0x801D468C;

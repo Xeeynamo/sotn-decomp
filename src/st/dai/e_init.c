@@ -41,10 +41,10 @@ void func_us_801C2FF0(Entity* self);
 void func_us_801C1E18(Entity* self);
 void func_us_801D1204(Entity* self);
 void func_us_801D1C24(Entity* self);
-void func_us_801D1D00(Entity* self);
+void EntityBonePillarHead(Entity* self);
 void EntityBonePillarFireBreath(Entity* self);
-void func_us_801D2CFC(Entity* self);
-void func_us_801D2444(Entity* self);
+void EntityBonePillarDeathParts(Entity* self);
+void EntityBonePillarSpikeBall(Entity* self);
 void func_us_801C3644(Entity* self);
 void func_us_801C3D44(Entity* self);
 void func_us_801C3850(Entity* self);
@@ -115,10 +115,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C1E18,
     func_us_801D1204,
     func_us_801D1C24,
-    func_us_801D1D00,
+    EntityBonePillarHead,
     EntityBonePillarFireBreath,
-    func_us_801D2CFC,
-    func_us_801D2444,
+    EntityBonePillarDeathParts,
+    EntityBonePillarSpikeBall,
     func_us_801C3644,
     func_us_801C3D44,
     func_us_801C3850,
@@ -162,10 +162,10 @@ EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_DRA(202), 5};
 EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_DRA(201), 101};
 EInit D_us_801809E0 = {ANIMSET_OVL(4), 0, 72, PAL_DRA(533), 180};
 EInit D_us_801809EC = {ANIMSET_OVL(0), 0, 0, PAL_DRA(0), 181};
-EInit D_us_801809F8 = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 183};
-EInit D_us_80180A04 = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 2};
-EInit D_us_80180A10 = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 184};
-EInit D_us_80180A1C = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 185};
+EInit g_EInitBonePillarHead = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 183};
+EInit g_EInitBonePillarPieces = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 2};
+EInit g_EInitBonePillarFireBreath = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 184};
+EInit g_EInitBonePillarSpikeBall = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 185};
 EInit D_us_80180A28 = {ANIMSET_OVL(7), 1, 72, PAL_DRA(554), 118};
 EInit D_us_80180A34 = {ANIMSET_OVL(0), 0, 0, PAL_DRA(0), 119};
 EInit D_us_80180A40 = {ANIMSET_OVL(8), 0, 75, PAL_DRA(555), 128};
