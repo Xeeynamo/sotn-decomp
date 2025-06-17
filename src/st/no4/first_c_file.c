@@ -2332,7 +2332,7 @@ void func_us_801C8248(Entity* self) {
     s32 posX;
     s32 posY;
 
-    if (g_api_TimeAttackController(
+    if (g_api.TimeAttackController(
             TIMEATTACK_EVENT_SUCCUBUS_DEFEAT, TIMEATTACK_GET_RECORD)) {
         posX = self->posX.val;
         posY = self->posY.val;
