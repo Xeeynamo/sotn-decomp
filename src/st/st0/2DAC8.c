@@ -161,7 +161,7 @@ void func_801ADB10(u16* arg0, u16 arg1, u16 arg2, s32 steps, u8* arg4) {
     arg4[0] >>= 3;
     arg4[1] >>= 3;
     arg4[2] >>= 3;
-    palA = g_Clut + arg1 * COLORS_PER_PAL;
+    palA = &g_Clut[0][arg1 * COLORS_PER_PAL];
 
     for (i = 0; i < steps; arg2++, i++) {
         factor = i * 4096 / steps;
@@ -169,18 +169,18 @@ void func_801ADB10(u16* arg0, u16 arg1, u16 arg2, s32 steps, u8* arg4) {
             if (j == 0) {
                 buf[0] = *palA;
             } else {
-                t = palA[j] & 0x8000;
-                tempR = (palA[j] & 0x1F);
+                t = palA[j] & ALPHA_MASK;
+                tempR = GET_RED(palA[j]);
                 r = (tempR * (4096 - factor)) + (arg4[0] * factor);
-                tempG = (palA[j] >> 5) & 0x1F;
+                tempG = GET_GREEN(palA[j]);
                 tempR = r >> 12;
                 g = (tempG * (4096 - factor)) + (arg4[1] * factor);
-                tempB = (palA[j] >> 10) & 0x1F;
+                tempB = GET_BLUE(palA[j]);
                 tempG = g >> 12;
                 b = (tempB * (4096 - factor)) + (arg4[2] * factor);
                 tempB = b >> 12;
                 buf[j] = ((t | (tempR)) | (tempG << 5)) | (tempB << 10);
-                (g_Clut + (arg2 * COLORS_PER_PAL))[j] = buf[j];
+                (&g_Clut[0][arg2 * COLORS_PER_PAL])[j] = buf[j];
             }
         }
         temp_a2 = arg2 - 0x200;

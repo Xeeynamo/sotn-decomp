@@ -100,6 +100,19 @@ typedef enum {
 #define E_ID(name) E_##name
 #endif
 
+// These are used for RGB5551
+#define RED_MASK 0x1F
+#define GREEN_MASK 0x3E0
+#define BLUE_MASK 0x7C00
+#define ALPHA_MASK 0x8000
+#define UNRED_MASK (BLUE_MASK | GREEN_MASK | ALPHA_MASK)
+#define UNGREEN_MASK (BLUE_MASK | RED_MASK | ALPHA_MASK)
+#define UNBLUE_MASK (GREEN_MASK | RED_MASK | ALPHA_MASK)
+
+#define GET_RED(x) (((x) >> 0) & 0x1F)
+#define GET_GREEN(x) (((x) >> 5) & 0x1F)
+#define GET_BLUE(x) (((x) >> 10) & 0x1F)
+
 #define COLORS_PER_PAL (16)
 #define COLOR_BPP (16)
 #define COLOR_LEN ((COLOR_BPP) / 8)
@@ -1297,6 +1310,26 @@ typedef struct {
     /* 8003C79C */ void (*UpdateStageEntities)(void);
 } AbbreviatedOverlay;
 
+/*
+ * A second type of abbreviated overlay which allows
+ * two spritebanks and provides no cutscene handler.
+ */
+typedef struct {
+    /* 8003C774 */ void (*Update)(void);
+    /* 8003C778 */ void (*HitDetection)(void);
+    /* 8003C77C */ void (*UpdateRoomPosition)(void);
+    /* 8003C780 */ void (*InitRoomEntities)(s32 layoutId);
+    /* 8003C784 */ RoomHeader* rooms;
+    /* 8003C788 */ SpriteParts** spriteBanks;
+    /* 8003C78C */ u_long** cluts;
+    /* 8003C790 */ void* objLayoutHorizontal;
+    /* 8003C794 */ RoomDef* tileLayers;
+    /* 8003C798 */ GfxBank** gfxBanks;
+    /* 8003C79C */ void (*UpdateStageEntities)(void);
+    /* 8003C7A0 */ u8** unk2C; // sprite bank 1
+    /* 8003C7A4 */ u8** unk30; // sprite bank 2
+} AbbreviatedOverlay2;
+
 typedef enum {
     EFFECT_NONE = 0,
     EFFECT_SOLID = 1 << 0,
@@ -1962,9 +1995,9 @@ extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3C4 D_8006C3C4[32];
 extern s32 g_Servant; // Currently selected familiar in the menu
 
-#define CLUT_INDEX_SERVANT 0x1400
-#define CLUT_INDEX_SERVANT_OVERWRITE 0x1430
-extern u16 g_Clut[0x3000];
+#define CLUT_INDEX_SERVANT 0x400
+#define CLUT_INDEX_SERVANT_OVERWRITE 0x430
+extern u16 g_Clut[3][0x1000];
 
 extern PlayerState g_Player;
 

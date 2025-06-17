@@ -246,13 +246,13 @@ s32 LoadFileSimToMem(SimKind kind) {
         LoadImage(&g_Vram.D_800ACDA8, 0x801C0000);
         while (DrawSync(1)) {
         }
-        StoreImage(&g_Vram.D_800ACDA8, g_Clut + 0x1000);
+        StoreImage(&g_Vram.D_800ACDA8, g_Clut[1]);
         break;
     case SIM_STAGE_CHR:
     case SIM_11:
         LoadStageTileset(SIM_CHR0, 0, 0);
         DrawSync(0);
-        clutAddr = g_Clut;
+        clutAddr = g_Clut[0];
         StoreImage(&g_Vram.D_800ACDB8, clutAddr);
         if (kind == 11) {
             clutAddr += 0x2000;
@@ -307,11 +307,11 @@ s32 LoadFileSimToMem(SimKind kind) {
         break;
     case SIM_16:
         LoadImage(&g_Vram.D_800ACDB8, SIM_PTR);
-        StoreImage(&g_Vram.D_800ACDB8, g_Clut + 0x2000);
+        StoreImage(&g_Vram.D_800ACDB8, g_Clut[2]);
         break;
     case SIM_17:
         LoadImage(&g_Vram.D_800ACDA8, SIM_PTR);
-        StoreImage(&g_Vram.D_800ACDA8, g_Clut);
+        StoreImage(&g_Vram.D_800ACDA8, g_Clut[0]);
         break;
     }
     return 0;
@@ -325,11 +325,11 @@ bool LoadFilePc(const struct FileUseContent* file) {
         LoadStageTileset(sim->addr, file->length, 0x100);
         LoadImage(&g_Vram.D_800ACD98, D_800A04CC);
         LoadImage(&g_Vram.D_800ACDA8, (u8*)sim->addr + 0x40000);
-        StoreImage(&g_Vram.D_800ACDA8, g_Clut + 0x1000);
+        StoreImage(&g_Vram.D_800ACDA8, g_Clut[1]);
         break;
     case SIM_STAGE_CHR:
         LoadStageTileset(sim->addr, file->length, 0);
-        StoreImage(&g_Vram.D_800ACDB8, g_Clut);
+        StoreImage(&g_Vram.D_800ACDB8, g_Clut[0]);
         break;
     case SIM_12:
         LoadStageTileset(sim->addr, file->length, 0x100);

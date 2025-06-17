@@ -325,7 +325,7 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
 
     if (D_80137538[index] != palette) {
         for (i = 0; i < 16; i++) {
-            g_Clut[index * 0x10 + i + 0x1D00] =
+            g_Clut[1][index * COLORS_PER_PAL + i + 0xD00] =
                 g_PalEquipIcon[palette * 0x10 + i];
         }
 #ifdef VERSION_PSP
@@ -338,8 +338,8 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
         }
         func_891CCBC(ptr, x * 0x10, y + 0xFD);
 #else
-        LoadClut(&g_Clut[0x1D00], 0, 0xFD);
-        LoadClut(&g_Clut[0x1E00], 0, 0xFE);
+        LoadClut(&g_Clut[1][0xD00], 0, 0xFD);
+        LoadClut(&g_Clut[1][0xE00], 0, 0xFE);
 #endif
     }
     if (D_800973EC == 0) {
