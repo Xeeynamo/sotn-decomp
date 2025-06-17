@@ -13,24 +13,24 @@
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 
 // BSS
-s32 g_DebugFreeze;
-s32 g_DebugHitboxViewMode;
-u32 D_801362B4;
-s32 D_801362B8;
-s32 D_801362BC;
-s32 g_DebugPalIdx;
-DebugColorChannel g_DebugColorChannel;
-u32 D_801362C8;
-OT_TYPE* g_CurrentOT;
-s32 D_801362D0;
-s32 D_801362D4;
-s32 g_DebugIsRecordingVideo;
-GpuUsage g_GpuMaxUsage;
-s32 g_DebugWaitInfoTimer;
-s32 g_DebugRecordVideoFid;
-s16 D_80136308[128];
+static s32 g_DebugFreeze;
+static s32 g_DebugHitboxViewMode;
+static u32 D_801362B4;
+static s32 D_801362B8;
+static s32 D_801362BC;
+static s32 g_DebugPalIdx;
+static DebugColorChannel g_DebugColorChannel;
+static u32 D_801362C8;
+static OT_TYPE* g_CurrentOT;
+static s32 D_801362D0;
+static s32 D_801362D4;
+static s32 g_DebugIsRecordingVideo;
+static GpuUsage g_GpuMaxUsage;
+static s32 g_DebugWaitInfoTimer;
+static s32 g_DebugRecordVideoFid;
+static s16 D_80136308[128];
 #if defined(VERSION_US)
-s32 g_softResetTimer;
+static s32 g_softResetTimer;
 #endif
 
 void VSyncHandler(void);
