@@ -2099,8 +2099,8 @@ void func_us_801C5628(Entity* self) {
           (g_Player.vram_flag & 0x1)) &&
          (g_pads->pressed & PAD_LEFT)) &&
         (PLAYER.step == 1)) {
-        if (self->ext.timer.t != 0) { // ext.xxx.unk7C
-            self->ext.timer.t--;
+        if (self->ext.et_801C4520.unk7C != 0) { // ext.xxx.unk7C
+            self->ext.et_801C4520.unk7C--;
         } else {
             if (self->posX.i.hi >= 45) {
                 self->posX.i.hi--;
@@ -2111,7 +2111,7 @@ void func_us_801C5628(Entity* self) {
                     self->step++;
                 }
             }
-            self->ext.timer.t = 2;
+            self->ext.et_801C4520.unk7C = 2;
         }
     }
 
