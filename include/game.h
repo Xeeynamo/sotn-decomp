@@ -763,11 +763,6 @@ typedef struct {
     /* 0x3 */ u8 objLayoutId;
 } RoomLoadDef; // size = 0x4
 
-// fake struct for D_801375BC
-typedef struct {
-    RoomLoadDef* def;
-} RoomLoadDefHolder;
-
 typedef struct {
     /* 0x0 */ u8 left;
     /* 0x1 */ u8 top;
