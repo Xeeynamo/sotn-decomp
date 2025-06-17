@@ -2129,9 +2129,24 @@ void func_us_801C5628(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C582C);
+void func_us_801C582C(Entity* self) {
+    if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] != 0) {
+        self->entityId = E_SKELETON_APE;
+        self->pfnUpdate = EntitySkeletonApe;
+        EntitySkeletonApe(self);
+    }
+}
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5868);
+void func_us_801C5868(void) {
+    u16* tile;
+    s16 i;
+
+    tile = &g_Tilemap.fg[163];
+
+    for (i = 0; i < 10; i++, tile++) {
+        *tile = 0;
+    }
+}
 
 void func_us_801C58A0(Entity* self) {
     Entity* newEnt;
