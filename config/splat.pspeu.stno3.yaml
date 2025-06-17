@@ -141,7 +141,7 @@ segments:
       - [0x618A8, .rodata, no3/popup]
       - [0x61900, .bss, no3/gen/sprites] # sprites_no3_7_51 is zero, bss on psp
       - [0x61908, .bss, no3/layers] # layer_empty
-      - [0x61918, bss, 61918]
+      - [0x61918, .bss, no3_psp/st_init_no3]
       - [0x61BB0, .bss, no3/e_background_bushes_trees]
       - [0x61BC0, .bss, no3/e_trapdoor]
       - [0x61BC8, .bss, no3/e_shutting_window]
