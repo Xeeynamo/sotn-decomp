@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
 extern u8 D_us_80181804[];
