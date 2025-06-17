@@ -146,5 +146,4 @@ extern u16 g_EInitZombie[];
 
 extern s16 g_WaterXTbl[];
 
-
 extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
