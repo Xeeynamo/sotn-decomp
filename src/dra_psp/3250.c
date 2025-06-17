@@ -62,12 +62,11 @@ void func_800EA5AC(u16 a, u8 r, u8 g, u8 b) {
 
 s32 func_800EA5E4(u32 arg0) {
     u16 temp_v0;
-    s32 i;
-    s32 j;
+    s32 i, j;
     u32 start;
     u32 count;
     u_long* clut;
-    Unkstruct_8006C3C4* clutAnim;
+    Unkstruct_8006C3C4* ptr;
 
     temp_v0 = arg0 & ~0xFF; // & 0xFF00 would be more descriptive.
     arg0 = arg0 & 0xFF;
@@ -85,35 +84,33 @@ s32 func_800EA5E4(u32 arg0) {
         return 1;
     }
 
-    for (j = 0, clutAnim = &D_8006C3C4[0]; j < LEN(D_8006C3C4); j++,
-        clutAnim++) {
-        if (clutAnim->unk8 != 0) {
-            continue;
-        }
-        clutAnim->desc = clut;
-        clutAnim->data = clut + 3;
-        clutAnim->unk8 = (GET_PAL_OP_KIND(clut[0]) | temp_v0);
-        clutAnim->index = 0;
-        clutAnim->unkC = 0;
+    for (i = 0, ptr = D_8006C3C4; i < LEN(D_8006C3C4); i++, ptr++) {
+        if (!ptr->unk8) {
+            ptr->desc = clut;
+            ptr->data = clut + 3;
+            ptr->unk8 = GET_PAL_OP_KIND(clut[0]) | temp_v0;
+            ptr->index = 0;
+            ptr->unkC = 0;
 
-        // Set unkStruct's array to all zeros, except within this range
-        start = clut[1];
-        count = clut[2] + start - 1;
-        start >>= 8;
-        count >>= 8;
-        for (i = 0; i < LEN(clutAnim->unkArray); i++) {
-            clutAnim->unkArray[i] = 0;
-        }
-        for (i = start; count >= i; i++) {
-            clutAnim->unkArray[i] = 1;
-        }
+            // Set unkStruct's array to all zeros, except within this range
+            start = clut[1];
+            count = clut[2] + start - 1;
+            start >>= 8;
+            count >>= 8;
+            for (j = 0; j < LEN(ptr->unkArray); j++) {
+                ptr->unkArray[j] = 0;
+            }
+            for (j = start; j <= count; j++) {
+                ptr->unkArray[j] = 1;
+            }
 
-        switch ((u8)clutAnim->unk8) {
-        case 2:
-        case 16:
-            clutAnim->unkE = 0x1F;
+            switch (ptr->unk8 & 0xFF) {
+            case PAL_UNK_OP2:
+            case 16:
+                ptr->unkE = 0x1F;
+            }
+            return 0;
         }
-        return 0;
     }
     return -1;
 }
