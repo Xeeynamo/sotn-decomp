@@ -3,8 +3,8 @@
 
 extern u8 D_us_80181804[];
 extern Point16 D_us_80181814[];
-extern u8 D_us_8018185C;
-extern u8 D_us_8018186C;
+extern u8 D_us_8018185C[];
+extern u8 D_us_8018186C[];
 
 void func_us_801C82B8(Entity* self) {
     Entity* newEnt;
@@ -12,13 +12,13 @@ void func_us_801C82B8(Entity* self) {
     u8 i;
 
     newEnt = self + 1;
-    if (self->step && self->ext.spearGuard.unk90 == 0) {
+    if (self->step && !self->ext.spearGuard.unk90) {
         newEnt->attack = self->attack;
         newEnt->attackElement = self->attackElement;
     }
 
     if (self->step && self->step < 5 &&
-        ((self->flags & FLAG_DEAD) || g_CastleFlags[NO4_WATER_BLOCKED] > 2)) {
+        (self->flags & FLAG_DEAD || g_CastleFlags[NO4_WATER_BLOCKED] > 2)) {
         DestroyEntity(newEnt);
         SetStep(5);
         self->ext.spearGuard.unk7C = 64;
@@ -69,7 +69,7 @@ void func_us_801C82B8(Entity* self) {
         break;
 
     case 3:
-        animStatus = AnimateEntity(&D_us_8018186C, self);
+        animStatus = AnimateEntity(D_us_8018186C, self);
         newEnt->attack = g_api.enemyDefs[94].attack;
         newEnt->attackElement = g_api.enemyDefs[94].attackElement;
         if (!animStatus) {
@@ -77,7 +77,7 @@ void func_us_801C82B8(Entity* self) {
             self->ext.spearGuard.unk7C = 1;
             break;
         }
-        if ((animStatus & 128) && (self->animCurFrame == 45)) {
+        if (animStatus & 128 && self->animCurFrame == 45) {
             PlaySfxPositional(SFX_WEAPON_SWISH_B);
             break;
         }
@@ -93,7 +93,7 @@ void func_us_801C82B8(Entity* self) {
         break;
 
     case 5:
-        AnimateEntity(&D_us_8018185C, self);
+        AnimateEntity(D_us_8018185C, self);
         if (self->opacity) {
             self->opacity--;
         }
