@@ -39,8 +39,8 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0x30, .data, sprite_banks]
-      - [0x90, .data, header2] # layers
-      - [0x1C4, .data, header2] # layers
+      - [0x90, .data, palette_def]
+      - [0x1C4, .data, layers]
       - [0x5A4, .data, graphics_banks] # GfxBanks
       - [0x77C, .data, gen/e_laydef] # layout entries header
       - [0x924, .data, e_init]

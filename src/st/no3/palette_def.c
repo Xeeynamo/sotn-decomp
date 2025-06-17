@@ -2,4 +2,3 @@
 #include "no3.h"
 
 #include "gen/palette_def.h"
-#include "gen/layers.h"
