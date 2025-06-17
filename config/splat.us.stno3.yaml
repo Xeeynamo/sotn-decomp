@@ -82,6 +82,7 @@ segments:
       - [0x4CE0, .data, cutscene_data]
       - [0x4E60, data]
       - [0x4E74, .data, stage_data]
+      - [0x18838, .data, tilemaps]
       - [0x2EA68, .data, gen/sprites]
       - [0x373E0, .rodata, e_castle_door]
       - [0x37400, .rodata, e_stairway]
