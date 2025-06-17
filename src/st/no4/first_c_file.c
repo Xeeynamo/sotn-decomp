@@ -1977,7 +1977,32 @@ void func_us_801C4BD8(Entity* self) {
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4D2C);
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5020);
+void func_us_801C5020(Entity* self) {
+    if (self->step == 0) {
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 12;
+        self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
+        self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
+        self->opacity = 128;
+        self->rotate = 0;
+        self->zPriority = 159;
+        PlaySfxPositional(SFX_UNK_7BE);
+    }
+
+    if (self->params != 0) {
+        self->rotate += 32;
+    } else {
+        self->rotate -= 32;
+    }
+
+    self->opacity += 252;
+    self->posY.val += FIX(0.5);
+
+    if (self->opacity < 8) {
+        DestroyEntity(self);
+    }
+}
 
 void func_us_801C50FC(void) {
     u16* tile;
