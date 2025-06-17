@@ -1,29 +1,33 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-#ifdef VERSION_PSP
-s32 D_us_80181C54[] = {0x00200000, 0x00040000, 0xFFFC0004, 0x0000FFF8};
-#else
-s32 D_us_80181C54[] = {
-    0x00200000, 0x00040000, 0xFFFC0004, 0x0000FFF8, 0x00080000, 0x00040000,
-    0xFFFC0002, 0x0000FFFC, 0x00240000, 0x00040000, 0xFFFC0002, 0x0000FFFC};
-#endif
-s32 D_us_80181C84[] = {0x000E0000, 0x00000000};
-s16 D_us_80181C8C[] = {
+static s16 sensors_unk1[] = {
+    0x0000, 0x0020, 0x0000, 0x0004, 0x0004, 0xFFFC, 0xFFF8, 0x0000};
+// This appears to be unused and deadstripped on PSP
+static s16 unused[] = {
+    0x0000, 0x0008, 0x0000, 0x0004, 0x0002, 0xFFFC, 0xFFFC, 0x0000,
+    0x0000, 0x0024, 0x0000, 0x0004, 0x0002, 0xFFFC, 0xFFFC, 0x0000};
+static s16 sensors_unk2[] = {0x0000, 0x000E, 0x0000, 0x0000};
+static s16 D_us_80181C8C[] = {
     0x0002, 0xFFF1, 0x0002, 0xFFEF, 0xFFFC, 0x000A, 0xFFFC, 0x0009};
-s16 D_us_80181C9C[] = {0x0026, 0x0026, 0x000E, 0x000A};
-s16 D_us_80181CA4[] = {0x02C0, 0x0540, 0x0AC0, 0x0D40};
-s32 D_us_80181CAC[] = {
-    0x02020130, 0x02020102, 0x02020102, 0x02020102, 0x02020102,
-    0x04020302, 0x04050502, 0x04020602, 0x07020602, 0x07020602,
-    0x07020802, 0x07020802, 0x04110602, 0x000000FF};
-s32 D_us_80181CE4[] = {
-    0x0A020930, 0x0A020902, 0x0A020902, 0x0A020902, 0x0A020902,
-    0x0C020B02, 0x0E020D02, 0x0F020D05, 0x0F021002, 0x11021002,
-    0x11021002, 0x0F021002, 0x00FF0D11};
-s32 D_us_80181D18[] = {
-    0x02030103, 0x04030303, 0x06030503, 0x08030703, 0x0A030903, 0x00FF0B03};
-s16 D_us_80181D30[] = {
+static s16 D_us_80181C9C[] = {0x0026, 0x0026, 0x000E, 0x000A};
+static s16 D_us_80181CA4[] = {0x02C0, 0x0540, 0x0AC0, 0x0D40};
+static u8 anim_unk1[] = {
+    0x30, 0x01, 0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x01, 0x02, 0x02,
+    0x02, 0x01, 0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04,
+    0x02, 0x05, 0x05, 0x04, 0x02, 0x06, 0x02, 0x04, 0x02, 0x06, 0x02, 0x07,
+    0x02, 0x06, 0x02, 0x07, 0x02, 0x08, 0x02, 0x07, 0x02, 0x08, 0x02, 0x07,
+    0x02, 0x06, 0x11, 0x04, 0xFF, 0x00, 0x00, 0x00};
+static u8 anim_unk2[] = {
+    0x30, 0x09, 0x02, 0x0A, 0x02, 0x09, 0x02, 0x0A, 0x02, 0x09, 0x02,
+    0x0A, 0x02, 0x09, 0x02, 0x0A, 0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B,
+    0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0x05, 0x0D, 0x02, 0x0F, 0x02,
+    0x10, 0x02, 0x0F, 0x02, 0x10, 0x02, 0x11, 0x02, 0x10, 0x02, 0x11,
+    0x02, 0x10, 0x02, 0x0F, 0x11, 0x0D, 0xFF, 0x00};
+static u8 anim_unk3[] = {
+    0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05, 0x03, 0x06,
+    0x03, 0x07, 0x03, 0x08, 0x03, 0x09, 0x03, 0x0A, 0x03, 0x0B, 0xFF, 0x00};
+static s16 D_us_80181D30[] = {
     0x0010, 0x0020, 0x0030, 0x0040, 0x0050, 0x0040, 0x0030, 0x0020};
 
 extern s16* D_us_801BC7B0[];
@@ -60,7 +64,7 @@ void EntityBonePillarHead(Entity* self) {
         self->hitboxOffX = -3;
         self->hitboxOffY = 13;
     case 0x1:
-        if (UnkCollisionFunc3(&D_us_80181C54) & 1) {
+        if (UnkCollisionFunc3(sensors_unk1) & 1) {
             if (self->params & 0x100) {
                 entity = self + 1;
                 CreateEntityFromCurrentEntity(E_BONE_PILLAR_SPIKE_BALL, entity);
@@ -111,9 +115,9 @@ void EntityBonePillarHead(Entity* self) {
             self->palette = g_EInitBonePillarHead[3] + 1;
         }
         if (self->params) {
-            unkVar = AnimateEntity(&D_us_80181CE4, self);
+            unkVar = AnimateEntity(anim_unk2, self);
         } else {
-            unkVar = AnimateEntity(&D_us_80181CAC, self);
+            unkVar = AnimateEntity(anim_unk1, self);
         }
         if (!unkVar) {
             self->palette = g_EInitBonePillarHead[3] + 1;
@@ -126,9 +130,9 @@ void EntityBonePillarHead(Entity* self) {
                 entity->facingLeft = self->params;
                 if (self->params) {
                     entity->posY.i.hi -= 0xE;
-                    break;
+                } else {
+                    entity->posY.i.hi += 8;
                 }
-                entity->posY.i.hi += 8;
             }
         }
         break;
@@ -153,10 +157,12 @@ void EntityBonePillarHead(Entity* self) {
             CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 2;
         }
-        if ((!self->params) &&
-            ((entity = self + 1, (entity->entityId) == E_BONE_PILLAR_HEAD) ||
-             ((entity->entityId) == E_BONE_PILLAR_SPIKE_BALL))) {
-            entity->ext.et_bonePillar.unk85 = 1;
+        if (!self->params) {
+            entity = self + 1;
+            if (entity->entityId == E_BONE_PILLAR_HEAD ||
+                entity->entityId == E_BONE_PILLAR_SPIKE_BALL) {
+                entity->ext.et_bonePillar.unk85 = 1;
+            }
         }
         PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
         DestroyEntity(self);
@@ -274,7 +280,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
                 entity->hitboxWidth = self->hitboxWidth;
                 entity->hitboxHeight = self->hitboxHeight;
                 entity->hitboxState = 2;
-                entity->attackElement = 0x8000;
+                entity->attackElement = ELEMENT_FIRE;
                 entity->nFramesInvincibility = 0x10;
                 entity->stunFrames = 4;
                 entity->hitEffect = 1;
@@ -312,7 +318,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
         }
         break;
     case 3:
-        UnkCollisionFunc2(&D_us_80181C84);
+        UnkCollisionFunc2(sensors_unk2);
         self->rotate -= 0x80;
         self->velocityX = FIX(-1.75);
         break;
@@ -393,7 +399,7 @@ void EntityBonePillarFireBreath(Entity* self) {
         }
         PlaySfxPositional(SFX_FIREBALL_SHOT_A);
     case 1:
-        if (!AnimateEntity(&D_us_80181D18, self)) {
+        if (!AnimateEntity(anim_unk3, self)) {
             self->hitboxState = 0;
             self->step += 1;
             return;
@@ -458,9 +464,9 @@ void EntityBonePillarDeathParts(Entity* self) {
         self->zPriority += self->params & 0xF;
         if (self->params & 1) {
             self->ext.et_bonePillar.unk80 = 0x18;
-            break;
+        } else {
+            self->ext.et_bonePillar.unk80 = 0xC;
         }
-        self->ext.et_bonePillar.unk80 = 0xC;
         break;
     case 1:
         if (!--self->ext.et_bonePillar.unk80) {
