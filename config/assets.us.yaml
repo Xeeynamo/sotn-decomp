@@ -607,6 +607,22 @@ files:
           - [0x394, skip]
           - [0x126C, rooms, rooms]
           - [0x1288, skip]
+  - target: disks/us/BOSS/RBO5/RBO5.BIN
+    asset_path: assets/boss/rbo5
+    src_path: src/boss/rbo5
+    splat_config_path: config/splat.us.borbo5.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          #- [0x34, sprite_banks, sprite_banks]
+          #- [0x94, paldef, palette_def]
+          - [0xF0, layers, layers]
+          - [0x128, gfx_banks, graphics_banks]
+          - [0x198, layout, entity_layouts]
+          - [0x340, skip]
+          - [0x1258, rooms, rooms]
+          - [0x1274, skip]
   - target: disks/us/BIN/WEAPON0.BIN
     asset_path: assets/weapon
     src_path: src/weapon
