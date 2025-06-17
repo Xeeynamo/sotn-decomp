@@ -377,8 +377,9 @@ segments:
       - [0x82040, animset, w_018_1]
       - [0x82488, animset, w_018_2]
       - [0x82488, data, w_018]
+      - [0x8273C, .rodata, w_018]
       - [0x82740, c, w_018]
-      - [0x831B4, sbss, w_018]
+      - [0x831B4, .bss, w_018]
   - name: f_019
     type: grey4
     start: 0x85000
@@ -820,8 +821,9 @@ segments:
       - [0x12A040, animset, w_042_1]
       - [0x12A3E4, animset, w_042_2]
       - [0x12A3E4, data, w_042]
-      - [0x12A764, c, w_042]
-      - [0x12B5EC, sbss, w_042]
+      - [0x12A760, .rodata, w_042]
+      - [0x12AB04, c, w_042]
+      - [0x12B5EC, .bss, w_042]
   - name: f_043
     type: grey4
     start: 0x12D000

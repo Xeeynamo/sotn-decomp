@@ -1492,7 +1492,7 @@ void EntityMariaTurtleAttack(Entity* self) {
         self->hitboxOffX = 0;
         self->hitboxOffY = 0;
         self->attack = 255;
-        self->attackElement = 0;
+        self->attackElement = ELEMENT_NONE;
         self->hitboxState = 4;
         self->nFramesInvincibility = 6;
         self->stunFrames = 0;

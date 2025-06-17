@@ -283,7 +283,7 @@ static void func_ptr_80170004(Entity* self) {
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
             self->hitboxWidth = self->hitboxHeight = 9;
             self->attack = 1;
-            self->attackElement = 0;
+            self->attackElement = ELEMENT_NONE;
             self->hitboxState = 4;
             self->nFramesInvincibility = 4;
             self->stunFrames = 4;
