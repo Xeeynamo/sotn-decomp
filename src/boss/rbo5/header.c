@@ -24,8 +24,13 @@ AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
+<<<<<<< HEAD
     .unk2C = g_SpriteSheet,
     .unk30 = g_PlOvlDopBatSpritesheet,
+=======
+    .unk2C = D_us_80184434,
+    .unk30 = D_us_801AAE4C,
+>>>>>>> 37783e7f1 (Partial configuration for RBO5 assets (#2672))
 };
 
 extern s16* D_us_801B0B50[];
