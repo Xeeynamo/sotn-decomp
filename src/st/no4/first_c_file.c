@@ -1808,7 +1808,55 @@ void func_us_801C4228(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4520);
+// Function that checks when alucard pushes the box in underground caverns
+// to block the water hole
+void func_us_801C4520(Entity* self) {
+    Entity* fakePlayer;
+
+    if (self->step == 0) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 6;
+        if (g_CastleFlags[NO4_WATER_BLOCKED] != 0) {
+            self->posX.i.hi = 1824 - g_Tilemap.scrollX.i.hi;
+        } else {
+            self->posX.i.hi = 1888 - g_Tilemap.scrollX.i.hi;
+        }
+    }
+
+    // yikes
+    fakePlayer = &g_Entities[0];
+
+    if ((GetPlayerCollisionWith(self, 16, 17, 5) & 0x1) &&
+        (g_Player.vram_flag & 0x1)) {
+        if (fakePlayer->posX.i.hi < self->posX.i.hi) {
+            if ((g_pads->pressed & PAD_RIGHT) && (fakePlayer->step == 1)) {
+                if (self->ext.et_801C4520.unk7C != 0) {
+                    self->ext.et_801C4520.unk7C--;
+                } else if ((self->posX.i.hi + g_Tilemap.scrollX.i.hi) < 1952) {
+                    self->posX.i.hi++;
+                    fakePlayer->posX.i.hi++;
+                    self->ext.et_801C4520.unk7C = 3;
+                } else {
+                    self->ext.et_801C4520.unk7C = 3;
+                }
+            }
+        } else if ((g_pads->pressed & PAD_LEFT) && (fakePlayer->step == 1)) {
+            if (self->ext.et_801C4520.unk7C != 0) {
+                self->ext.et_801C4520.unk7C--;
+            } else {
+                if ((self->posX.i.hi + g_Tilemap.scrollX.i.hi) >= 1825) {
+                    self->posX.i.hi--;
+                    fakePlayer->posX.i.hi--;
+                    if ((self->posX.i.hi + g_Tilemap.scrollX.i.hi) == 1824) {
+                        g_CastleFlags[NO4_WATER_BLOCKED] = 1;
+                    }
+                }
+                self->ext.et_801C4520.unk7C = 3;
+            }
+        }
+    }
+}
 
 extern s16 D_us_801811D6;  // water surface sprite height
 extern s16 D_us_801812B8;  // water background sprite height
