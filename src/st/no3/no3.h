@@ -128,25 +128,23 @@ extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
 extern u16 g_EInitObtainable[];
 extern u16 g_EInitParticle[];
-extern s16 D_80182F9C[];
-extern s16 D_80182FA8[];
-extern s16 D_80182FC8[];
-extern s16 D_80182FE8[];
 extern u16 g_EInitSpawner[];
 extern u16 g_EInitInteractable[];
 extern u16 g_EInitLockCamera[];
 extern u16 g_EInitCommon[];
 extern u16 g_EInitStInteractable[];
-extern u16 g_EInitMerman[];
-extern s16 g_WaterXTbl[];
-extern u16 D_80180B24[];
-extern u16 D_80180B30[];
-extern u16 D_80180B3C[];
+extern u16 g_EInitFireWarg1[];
+extern u16 g_EInitFireWarg2[];
+extern u16 g_EInitFireWarg3[];
 extern u16 g_EInitWaterObject[];
 extern u16 g_EInitWaterSplash[];
+extern u16 g_EInitMerman[];
 extern u16 g_EInitMermanFireball[];
 extern u16 g_EInitBat[];
+extern u16 g_EInitWarg[];
 extern u16 g_EInitZombie[];
-extern u16 D_80180B9C[];
+
+extern s16 g_WaterXTbl[];
+
 
 extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
