@@ -3,30 +3,25 @@
 #include "dra_bss.h"
 
 void func_800EA538(s32 arg0) {
-    Unkstruct_8006C3C4* var_v0;
-    s32 temp;
-    s32 v1;
     s32 i;
+    Unkstruct_8006C3C4* ptr;
 
-    // !FAKE: 0x8000 inside a temp is weird
-    temp = 0x8000;
-    v1 = (temp >> (arg0 - 1));
+    u16 mask = 0x8000;
+    mask = mask >> (arg0 - 1);
 
-    if (arg0 != 0) {
-        for (i = 0; i < LEN(D_8006C3C4); i++) {
-            if (v1 & D_8006C3C4[i].unk8) {
-                D_8006C3C4[i].unk8 = 0;
+    if (arg0) {
+        for (i = 0, ptr = D_8006C3C4; i < LEN(D_8006C3C4); i++) {
+            if (ptr->unk8 & mask) {
+                ptr->unk8 = 0;
             }
+            ptr++;
         }
-        return;
-    }
-
-    D_8003C0EC[3] = 0;
-    var_v0 = &D_8006C3C4;
-
-    for (i = 0; i < LEN(D_8006C3C4); i++) {
-        var_v0->unk8 = 0;
-        var_v0++;
+    } else {
+        D_8003C0EC[3] = 0;
+        for (i = 0, ptr = D_8006C3C4; i < LEN(D_8006C3C4); i++) {
+            ptr->unk8 = 0;
+            ptr++;
+        }
     }
 }
 
@@ -97,7 +92,7 @@ s32 func_800EA5E4(u32 arg0) {
 
 // Takes a color "col" in RGB5551 and increments/decrements each component
 // to bring it closer to the target by 1.
-u16 func_800EA720(u16 target, u16 col) {
+static u16 func_800EA720(u16 target, u16 col) {
     if ((target & RED_MASK) > (col & RED_MASK)) {
         col = (col & UNRED_MASK) | ((col & RED_MASK) + 1);
     }
@@ -126,24 +121,18 @@ void func_800EA7CC(void) {
     // stores which palettes have been invalidated and need to be re-uploaded
     // to the VRAM
     u8 palettes[0x30];
-    Unkstruct_8006C3C4* ptr;
-    u_long* temp_s0;
-    u_long* temp_v0_5;
-    u_long* temp_s0_4;
-    s32 count;
-    s32 var_a3;
-    s32 isAnimNotDone;
-    s32 i;
-    s32 j;
-    s32 offset;
-    u16 temp_a0_2;
-    u16 temp_s0_2;
-    u16 temp_v0_3;
-    u16 var_v0_2;
-    u16* clut;
+    u_long* desc;
     u16* data;
+    u16* clut;
+    s32 i, j;
+    s32 clutOffset;
+    s32 count;
+    s32 offset;
+    u16 prevClut;
+    u16 newClut;
     u32 clutX;
-    s32 new_var;
+    bool isAnimNotDone;
+    Unkstruct_8006C3C4* ptr;
 
     if (g_DebugEnabled && g_DebugMode == 10) {
         return;
@@ -154,21 +143,20 @@ void func_800EA7CC(void) {
     }
 
     // cycles through a list of palette operations stored in D_8006C3C4
-    for (i = 0, ptr = D_8006C3C4, var_a3 = 0xFFFF; i < 0x20; i++, ptr++) {
-        if (ptr->unk8 == 0) {
+    for (i = 0, ptr = D_8006C3C4; i < 0x20; i++, ptr++) {
+        if (!ptr->unk8) {
             continue;
         }
-        if (ptr->index != 0) {
-            ptr->index = ptr->index + var_a3;
+        if (ptr->index) {
+            ptr->index--;
             continue;
         }
-        temp_s0 = ptr->desc;
-        data = *ptr->data;
-        new_var = temp_s0[1];
-        count = temp_s0[2];
-
+        desc = ptr->desc;
+        data = (u16*)*ptr->data;
+        count = desc[2];
+        clutOffset = desc[1];
         clut = g_Clut[0];
-        clut += new_var;
+        clut += clutOffset;
 
         switch (ptr->unk8 & 0xFF) {
         case 1: // simple palette copy
@@ -187,83 +175,75 @@ void func_800EA7CC(void) {
             for (j = 0; j < LEN(palettes); j++) {
                 palettes[j] |= ptr->unkArray[j];
             }
-
-            ptr->index = HIH(temp_s0[0]) + var_a3;
+            ptr->index = (desc[0] >> 0x10) - 1;
             ptr->data++;
-
             if (*ptr->data == -1) {
-                ptr->data = temp_s0 + 3;
+                ptr->data = desc + 3;
             }
+            break;
+        case 16:
             break;
         case 2: // blend to destination color?
             for (j = 0; j < count; j++) {
-                *clut = func_800EA720(*data++, *clut);
-                clut++;
+                *clut++ = func_800EA720(*data++, *clut);
             }
             for (j = 0; j < LEN(palettes); j++) {
                 palettes[j] |= ptr->unkArray[j];
             }
-
             if (ptr->unkE != 0) {
-                ptr->unkE += var_a3;
-                temp_s0 = ptr->desc;
-                ptr->index = HIH(temp_s0[0]) + var_a3;
+                ptr->unkE--;
+                desc = ptr->desc;
+                ptr->index = (desc[0] >> 0x10) - 1;
             } else {
                 ptr->unkE = 0x1F;
-                if (*++ptr->data == -1) {
+                ptr->data++;
+                if (*ptr->data == -1) {
                     ptr->unk8 = 0;
                 }
             }
             break;
         case 4: // blend to destination, causes item to glow
-            isAnimNotDone = 0;
+            isAnimNotDone = false;
             for (j = 0; j < count; j++) {
-                temp_a0_2 = *data++;
-                temp_s0_2 = *clut;
-                temp_v0_3 = func_800EA720(temp_a0_2, temp_s0_2);
-                if (temp_s0_2 != temp_v0_3) {
-                    isAnimNotDone = 1;
+                prevClut = *clut;
+                newClut = func_800EA720(*data++, prevClut);
+                if (prevClut != newClut) {
+                    isAnimNotDone = true;
                 }
-                *clut++ = temp_v0_3;
+                *clut++ = newClut;
             }
             for (j = 0; j < LEN(palettes); j++) {
                 palettes[j] |= ptr->unkArray[j];
             }
-
-            temp_s0 = ptr->desc;
-            ptr->index = HIH(temp_s0[0]) + var_a3;
-            if (isAnimNotDone == 0) {
+            desc = ptr->desc;
+            ptr->index = (desc[0] >> 0x10) - 1;
+            if (!isAnimNotDone) {
                 ptr->data++;
                 if (*ptr->data == -1) {
-                    ptr->data = temp_s0 + 3;
+                    ptr->data = desc + 3;
                 }
             }
             break;
         case 5: // some kind of bulk palette copy?
             while (true) {
+                desc = (u_long*)(ptr->data - 2);
+                data = (u16*)*ptr->data;
                 clut = g_Clut[0];
-                temp_v0_5 = ptr->data;
-                temp_s0 = temp_v0_5 - 2;
-                data = temp_v0_5[0];
-                new_var = temp_v0_5[-2];
-                clut += new_var;
-                count = temp_v0_5[-1];
+                clutOffset = desc[0];
+                count = desc[1];
+                clut += clutOffset;
                 for (j = 0; j < count; j++) {
                     *clut++ = clutX = *data++;
                 }
-
-                if (temp_s0[3] != -1) {
-                    ptr->data += 3;
-                } else {
+                if (desc[3] == -1) {
                     break;
                 }
+                ptr->data += 3;
             }
             for (j = 0; j < LEN(palettes); j++) {
                 palettes[j] = 1;
             }
             ptr->unk8 = 0;
-            break;
-        case 16:
             break;
         }
     }
@@ -274,27 +254,27 @@ void func_800EA7CC(void) {
 
     // re-upload updated stage tileset palette
     offset = 0;
-    temp_s0 = g_Clut[0];
+    desc = g_Clut[0];
     clutX = 0x200;
-    for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
-        if (palettes[offset] != 0) {
-            LoadClut(temp_s0, clutX, i);
+    for (i = 0xF0; i < 0x100; i++, desc = (s16*)desc + 0x100, offset++) {
+        if (palettes[offset]) {
+            LoadClut(desc, clutX, i);
         }
     }
 
     // re-upload updated shared entity palette
     clutX = 0;
-    for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
-        if (palettes[offset] != 0) {
-            LoadClut(temp_s0, clutX, i);
+    for (i = 0xF0; i < 0x100; i++, desc = (s16*)desc + 0x100, offset++) {
+        if (palettes[offset]) {
+            LoadClut(desc, clutX, i);
         }
     }
 
     // re-upload updated stage-specific entities palette
     clutX = 0x100;
-    for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
+    for (i = 0xF0; i < 0x100; i++, desc = (s16*)desc + 0x100, offset++) {
         if (palettes[offset]) {
-            LoadClut(temp_s0, clutX, i);
+            LoadClut(desc, clutX, i);
         }
     }
 }
