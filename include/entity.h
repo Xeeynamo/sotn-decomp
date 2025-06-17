@@ -3176,6 +3176,15 @@ typedef struct {
     /* 0x84 */ s32 clut;
 } ET_801C12B0;
 
+typedef struct {
+    /* 0x7C */ u8 pad7C[12];
+    /* 0x88 */ u16 unk88;
+} ET_801C59E0;
+
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+} ET_801C4520;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3449,6 +3458,8 @@ typedef union { // offset=0x7C
     ET_801C801C et_801C801C;
     ET_WaterAlcove et_waterAlcove;
     ET_801C12B0 et_801C12B0;
+    ET_801C59E0 et_801C59E0;
+    ET_801C4520 et_801C4520;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
