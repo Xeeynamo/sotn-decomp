@@ -48,6 +48,8 @@ segments:
       - [0xB8C, data]
       - [0x145C, .data, e_red_door]
       - [0x1474, data]
+      - [0x1F20, .data, e_bat]
+      - [0x1F58, data]
       - [0x3FE3C, .rodata, e_breakable]
       - [0x3FE5C, .rodata, unk_408AC]
       #- [0x3FEA8, .rodata, unk_408AC] # Splat suggested

@@ -79,3 +79,4 @@ enum DaiEntities {
     E_MIST_DOOR,           // EntityMistDoor,
     NUM_ENTITIES,
 };
+extern EInit g_EInitBat;
