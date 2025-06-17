@@ -1921,7 +1921,7 @@
 | chi    | EntityBreakableWall                      |      607 |         46 | Yes    | https://decomp.me/scratch/pQIB9 | 0.998 |
 | dra    | func_80104790                            |      609 |         40 |        | https://decomp.me/scratch/nTzWB | 0.997 |
 | ric    | RicEntitySubwpnHolyWaterFlame            |      609 |         45 |        | https://decomp.me/scratch/7wrXp | 0.999 |
-| dra    | func_800EA7CC                            |      609 |         53 |        | https://decomp.me/scratch/crX9v | 0.958 |
+| dra    | func_800EA7CC                            |      609 |         53 |        | https://decomp.me/scratch/0A1Uy | 0.958 |
 | dra    | func_8011B5A4                            |      609 |         64 |        | https://decomp.me/scratch/00qXt | 0.996 |
 | dra    | CheckFloor                               |      611 |         62 |        |                                 |       |
 | st0    | EntityEquipItemDrop                      |      612 |         62 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
