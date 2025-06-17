@@ -14,7 +14,6 @@
 
 u16 g_RawVram[VRAM_W * VRAM_H];
 GameApi g_ApiInit = {0};
-u8* g_DemoPtr;
 u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern bool g_IsQuitRequested;
 
@@ -219,8 +218,6 @@ bool InitGame(struct InitGameParams* params) {
     memcpy(&g_ApiInit, &api, sizeof(g_ApiInit));
 
     InitStrings();
-
-    g_DemoPtr = g_DemoRecordingBuffer;
 
     // forcing g_Vram values while waiting to import the data
     g_Vram.D_800ACD98.x = 0x0380;
