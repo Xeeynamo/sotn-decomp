@@ -183,7 +183,7 @@ void func_800EA7CC(void) {
         clut += clutOffset;
 
         switch (ptr->unk8 & 0xFF) {
-        case 1: // simple palette copy
+        case PAL_COPY: // simple palette copy
             for (j = 0; j < count; j++) {
                 *clut++ = *data++;
             }
@@ -192,7 +192,7 @@ void func_800EA7CC(void) {
             }
             ptr->unk8 = 0;
             break;
-        case 3: // palette rotation
+        case PAL_UNK_OP3: // palette rotation
             for (j = 0; j < count; j++) {
                 *clut++ = *data++;
             }
@@ -207,7 +207,7 @@ void func_800EA7CC(void) {
             break;
         case 16:
             break;
-        case 2: // blend to destination color?
+        case PAL_UNK_OP2: // blend to destination color?
             for (j = 0; j < count; j++) {
                 *clut++ = func_800EA720(*data++, *clut);
             }
@@ -226,7 +226,7 @@ void func_800EA7CC(void) {
                 }
             }
             break;
-        case 4: // blend to destination, causes item to glow
+        case PAL_GLOW_ANIM: // blend to destination, causes item to glow
             isAnimNotDone = false;
             for (j = 0; j < count; j++) {
                 prevClut = *clut;
@@ -248,7 +248,7 @@ void func_800EA7CC(void) {
                 }
             }
             break;
-        case 5: // some kind of bulk palette copy?
+        case PAL_BULK_COPY: // some kind of bulk palette copy?
             while (true) {
                 desc = (u_long*)(ptr->data - 2);
                 data = (u16*)*ptr->data;
