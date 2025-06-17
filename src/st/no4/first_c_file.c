@@ -2326,6 +2326,17 @@ void func_us_801C801C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C8248);
+void func_us_801C8248(Entity* self) {
+    s32 posX;
+    s32 posY;
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C82B8);
+    if (g_api_TimeAttackController(
+            TIMEATTACK_EVENT_SUCCUBUS_DEFEAT, TIMEATTACK_GET_RECORD) != 0) {
+        posX = self->posX.val;
+        posY = self->posY.val;
+        CreateEntityFromCurrentEntity(E_HEART_DROP, self);
+        self->params = 10;
+        self->posX.val = posX;
+        self->posY.val = posY;
+    }
+}
