@@ -80,7 +80,6 @@ segments:
       - [0x3CC4, .data, gen/rooms]
       - [0x3DC8, .data, gen/e_layout] # layout entries data
       - [0x4CE0, .data, cutscene_data]
-      - [0x4E60, data]
       - [0x4E74, .data, stage_data]
       - [0x18838, .data, tilemaps]
       - [0x2EA68, .data, gen/sprites]
