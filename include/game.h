@@ -100,6 +100,19 @@ typedef enum {
 #define E_ID(name) E_##name
 #endif
 
+// These are used for RGB5551
+#define RED_MASK 0x1F
+#define GREEN_MASK 0x3E0
+#define BLUE_MASK 0x7C00
+#define ALPHA_MASK 0x8000
+#define UNRED_MASK (BLUE_MASK | GREEN_MASK | ALPHA_MASK)
+#define UNGREEN_MASK (BLUE_MASK | RED_MASK | ALPHA_MASK)
+#define UNBLUE_MASK (GREEN_MASK | RED_MASK | ALPHA_MASK)
+
+#define GET_RED(x) (((x) >> 0) & 0x1F)
+#define GET_GREEN(x) (((x) >> 5) & 0x1F)
+#define GET_BLUE(x) (((x) >> 10) & 0x1F)
+
 #define COLORS_PER_PAL (16)
 #define COLOR_BPP (16)
 #define COLOR_LEN ((COLOR_BPP) / 8)
@@ -749,11 +762,6 @@ typedef struct {
     /* 0x2 */ u8 objGfxId;
     /* 0x3 */ u8 objLayoutId;
 } RoomLoadDef; // size = 0x4
-
-// fake struct for D_801375BC
-typedef struct {
-    RoomLoadDef* def;
-} RoomLoadDefHolder;
 
 typedef struct {
     /* 0x0 */ u8 left;
@@ -1987,9 +1995,9 @@ extern Entity* g_CurrentEntity;
 extern Unkstruct_8006C3C4 D_8006C3C4[32];
 extern s32 g_Servant; // Currently selected familiar in the menu
 
-#define CLUT_INDEX_SERVANT 0x1400
-#define CLUT_INDEX_SERVANT_OVERWRITE 0x1430
-extern u16 g_Clut[0x3000];
+#define CLUT_INDEX_SERVANT 0x400
+#define CLUT_INDEX_SERVANT_OVERWRITE 0x430
+extern u16 g_Clut[3][0x1000];
 
 extern PlayerState g_Player;
 

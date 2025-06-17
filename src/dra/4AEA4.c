@@ -12,14 +12,14 @@ extern GfxBank* D_psp_0918BC30[];
 extern u16 D_psp_091654C0[];
 
 // BSS
-u16 D_80137478[ICON_SLOT_NUM];
-u16 D_801374B8[ICON_SLOT_NUM];
-u16 D_801374F8[ICON_SLOT_NUM];
-u16 D_80137538[ICON_SLOT_NUM];
-u8* g_DecSrcPtr;
-u8* g_DecDstPtr;
-bool g_DecReadNibbleFlag;
-bool g_DecWriteNibbleFlag;
+static u16 D_80137478[ICON_SLOT_NUM];
+static u16 D_801374B8[ICON_SLOT_NUM];
+static u16 D_801374F8[ICON_SLOT_NUM];
+static u16 D_80137538[ICON_SLOT_NUM];
+static u8* g_DecSrcPtr;
+static u8* g_DecDstPtr;
+static bool g_DecReadNibbleFlag;
+static bool g_DecWriteNibbleFlag;
 STATIC_PAD_BSS(8);
 
 #include "../get_lang.h"
@@ -325,7 +325,7 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
 
     if (D_80137538[index] != palette) {
         for (i = 0; i < 16; i++) {
-            g_Clut[index * 0x10 + i + 0x1D00] =
+            g_Clut[1][index * COLORS_PER_PAL + i + 0xD00] =
                 g_PalEquipIcon[palette * 0x10 + i];
         }
 #ifdef VERSION_PSP
@@ -338,8 +338,8 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
         }
         func_891CCBC(ptr, x * 0x10, y + 0xFD);
 #else
-        LoadClut(&g_Clut[0x1D00], 0, 0xFD);
-        LoadClut(&g_Clut[0x1E00], 0, 0xFE);
+        LoadClut(&g_Clut[1][0xD00], 0, 0xFD);
+        LoadClut(&g_Clut[1][0xE00], 0, 0xFE);
 #endif
     }
     if (D_800973EC == 0) {

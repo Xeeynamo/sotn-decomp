@@ -13,24 +13,24 @@
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 
 // BSS
-s32 g_DebugFreeze;
-s32 g_DebugHitboxViewMode;
-u32 D_801362B4;
-s32 D_801362B8;
-s32 D_801362BC;
-s32 g_DebugPalIdx;
-DebugColorChannel g_DebugColorChannel;
-u32 D_801362C8;
-OT_TYPE* g_CurrentOT;
-s32 D_801362D0;
-s32 D_801362D4;
-s32 g_DebugIsRecordingVideo;
-GpuUsage g_GpuMaxUsage;
-s32 g_DebugWaitInfoTimer;
-s32 g_DebugRecordVideoFid;
-s16 D_80136308[128];
+static s32 g_DebugFreeze;
+static s32 g_DebugHitboxViewMode;
+static u32 D_801362B4;
+static s32 D_801362B8;
+static s32 D_801362BC;
+static s32 g_DebugPalIdx;
+static DebugColorChannel g_DebugColorChannel;
+static u32 D_801362C8;
+static OT_TYPE* g_CurrentOT;
+static s32 D_801362D0;
+static s32 D_801362D4;
+static s32 g_DebugIsRecordingVideo;
+static GpuUsage g_GpuMaxUsage;
+static s32 g_DebugWaitInfoTimer;
+static s32 g_DebugRecordVideoFid;
+static s16 D_80136308[128];
 #if defined(VERSION_US)
-s32 g_softResetTimer;
+static s32 g_softResetTimer;
 #endif
 
 void VSyncHandler(void);
@@ -289,7 +289,7 @@ void func_800E2B00(void) {
     AddPrim(&g_CurrentOT[0x1FE], drMode++);
 
     i = 0;
-    palette = g_Clut + g_DebugCurPal * 16;
+    palette = &g_Clut[0][g_DebugCurPal * COLORS_PER_PAL];
     curTile = tile;
     g_GpuUsage.drawModes++;
     while (i < 0x10) {
@@ -342,22 +342,22 @@ void DebugEditColorChannel(s32 colorAdd) {
     u16 originalColor;
     u16* palette;
 
-    palette = g_Clut + g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx;
-    originalColor = palette[0];
+    palette = g_Clut[0] + g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx;
+    originalColor = *palette;
     switch (g_DebugColorChannel) {
     case DEBUG_COLOR_CHANNEL_RED:
-        color = originalColor & 0xFFE0;
-        color |= (originalColor + colorAdd) & 0x1F;
+        color = originalColor & UNRED_MASK;
+        color |= (originalColor + colorAdd) & RED_MASK;
         *palette = color;
         break;
     case DEBUG_COLOR_CHANNEL_GREEN:
-        color = originalColor & 0xFC1F;
-        color |= (originalColor + (colorAdd << 5)) & 0x3E0;
+        color = originalColor & UNGREEN_MASK;
+        color |= (originalColor + (colorAdd << 5)) & GREEN_MASK;
         *palette = color;
         break;
     case DEBUG_COLOR_CHANNEL_BLUE:
-        color = originalColor & 0x83FF;
-        color |= (originalColor + (colorAdd << 10)) & 0x7C00;
+        color = originalColor & UNBLUE_MASK;
+        color |= (originalColor + (colorAdd << 10)) & BLUE_MASK;
         *palette = color;
         break;
     }
@@ -450,7 +450,8 @@ s32 DebugUpdate(void) {
                 }
                 if (g_pads[1].pressed & PAD_R2 &&
                     g_pads[1].tapped & PAD_SQUARE) {
-                    g_Clut[g_DebugCurPal * 0x10 + g_DebugPalIdx] ^= 0x8000;
+                    g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] ^=
+                        ALPHA_MASK;
                 }
             } else {
                 // tileset viewer debug cont
@@ -587,15 +588,17 @@ void PrintGpuInfo(void) {
             break;
         }
 
-        if (g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x8000) {
+        if (g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] &
+            ALPHA_MASK) {
             FntPrint("  half on\n");
         } else {
             FntPrint("  half off\n");
         };
 
-        r = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] & 0x1F;
-        g = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 5 & 0x1F;
-        b = g_Clut[g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx] >> 10 & 0x1F;
+        r = GET_RED(g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx]);
+        g = GET_GREEN(
+            g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx]);
+        b = GET_BLUE(g_Clut[0][g_DebugCurPal * COLORS_PER_PAL + g_DebugPalIdx]);
         FntPrint("rgb:%02X,%02X,%02X\n", r, g, b);
     } else {
         FntPrint("01:%04x,%04x\n", D_8006C384.x, D_8006C384.y);

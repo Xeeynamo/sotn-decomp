@@ -14,7 +14,6 @@
 
 u16 g_RawVram[VRAM_W * VRAM_H];
 GameApi g_ApiInit = {0};
-extern u8* g_DemoPtr;
 u8 g_DemoRecordingBuffer[DEMO_MAX_LEN];
 extern bool g_IsQuitRequested;
 
@@ -67,7 +66,7 @@ s32 func_800EA5E4(u32);
 void LoadGfxAsync(s32 gfxId);
 void PlaySfx(s16 sfxId);
 void func_800EA538(s32 arg0);
-void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
+void func_800EA5AC(u16 a, u8 r, u8 g, u8 b);
 void func_801027C4(u32 arg0);
 void func_800EB758(s16 px, s16 py, Entity* e, u8 flags, POLY_GT4* p, u8 flipX);
 bool func_80131F68(void);
@@ -219,8 +218,6 @@ bool InitGame(struct InitGameParams* params) {
     memcpy(&g_ApiInit, &api, sizeof(g_ApiInit));
 
     InitStrings();
-
-    g_DemoPtr = g_DemoRecordingBuffer;
 
     // forcing g_Vram values while waiting to import the data
     g_Vram.D_800ACD98.x = 0x0380;

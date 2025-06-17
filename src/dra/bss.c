@@ -7,8 +7,6 @@
 #define padding static
 
 // 5087C.c
-RoomLoadDefHolder D_801375BC; // fake struct?
-Point32 D_801375C0;
 s32 D_801375C8;
 
 // menu.c

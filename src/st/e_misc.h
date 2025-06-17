@@ -962,8 +962,8 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     bufRect.w = COLORS_PER_PAL;
     bufRect.h = 1;
 
-    palA = g_Clut + palIdxA * COLORS_PER_PAL;
-    palB = g_Clut + palIdxB * COLORS_PER_PAL;
+    palA = &g_Clut[0][palIdxA * COLORS_PER_PAL];
+    palB = &g_Clut[0][palIdxB * COLORS_PER_PAL];
 
     for (i = 0; i < steps; i++) {
         factor = i * 4096 / steps;

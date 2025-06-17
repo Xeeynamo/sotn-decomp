@@ -4,9 +4,9 @@
 #include "servant.h"
 
 // BSS
-s32 D_8013640C;
-s32 D_80136410;
-NowLoadingModel g_NowLoadingModel;
+static s32 D_8013640C;
+static s32 D_80136410;
+static NowLoadingModel g_NowLoadingModel;
 
 #include "../get_lang.h"
 
@@ -902,9 +902,9 @@ void HandleGameOver(void) {
             LoadImage(&g_Vram.D_800ACDD0, (u_long*)STAGE_PRG_PTR);
             LoadImage(&g_Vram.D_800ACDD8, (u_long*)STAGE_PRG_PTR + 0x2000);
             LoadImage(&g_Vram.D_800ACDB8, (u_long*)STAGE_PRG_PTR + 0x6000);
-            StoreImage(&g_Vram.D_800ACDB8, (u_long*)&g_Clut[0x2000]);
+            StoreImage(&g_Vram.D_800ACDB8, (u_long*)g_Clut[2]);
             LoadImage(&g_Vram.D_800ACDA8, (u_long*)STAGE_PRG_PTR + 0x6800);
-            StoreImage(&g_Vram.D_800ACDA8, (u_long*)g_Clut);
+            StoreImage(&g_Vram.D_800ACDA8, (u_long*)g_Clut[0]);
         } else {
             if (LoadFileSim(8, SimFileType_System) < 0) {
                 break;
@@ -2114,9 +2114,9 @@ void HandleEnding(void) {
             LoadImage(&g_Vram.D_800ACDE0, (u_long*)STAGE_PRG_PTR);
             LoadImage(&g_Vram.D_800ACDD8, (u_long*)STAGE_PRG_PTR + 0x800);
             LoadImage(&g_Vram.D_800ACDB8, (u_long*)STAGE_PRG_PTR + 0x4800);
-            StoreImage(&g_Vram.D_800ACDB8, (u_long*)&g_Clut[0x2000]);
+            StoreImage(&g_Vram.D_800ACDB8, (u_long*)g_Clut[2]);
             LoadImage(&g_Vram.D_800ACDA8, (u_long*)STAGE_PRG_PTR + 0x5000);
-            StoreImage(&g_Vram.D_800ACDA8, (u_long*)g_Clut);
+            StoreImage(&g_Vram.D_800ACDA8, (u_long*)g_Clut[0]);
         } else {
             if (LoadFileSim(14, SimFileType_System) < 0) {
                 break;
@@ -2134,7 +2134,7 @@ void HandleEnding(void) {
                 break;
             }
         }
-        LoadClut((u_long*)g_Clut, 0x200, 0xF0);
+        LoadClut((u_long*)g_Clut[0], 0x200, 0xF0);
         g_GameStep++;
         break;
     case 2:
