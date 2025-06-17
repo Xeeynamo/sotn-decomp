@@ -80,7 +80,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		case GfxBank16bpp:
 			sb.WriteString("    GFX_BANK_16BPP,\n")
 		case GfxBankCompressed:
-			sb.WriteString("    GFX_BANK_COMPRESSED,\n")
+			sb.WriteString("    (u_long*)GFX_BANK_COMPRESSED,\n")
 		case GfxBankTerminate:
 			break
 		default:
@@ -94,7 +94,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		sb.WriteString("    GFX_TERMINATE(),\n")
 		sb.WriteString("};\n")
 	}
-	sb.WriteString("u_long* OVL_EXPORT(gfxBanks)[] = {\n")
+	sb.WriteString("u_long** OVL_EXPORT(gfxBanks)[] = {\n")
 	for _, i := range gfxBanks.Indices {
 		if i == -1 { // exception for ST0
 			sb.WriteString("    NULL,\n")

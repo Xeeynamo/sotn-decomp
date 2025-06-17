@@ -157,11 +157,11 @@ extern u8* OVL_EXPORT(cutscene_data);
 
 extern s32 E_ID(BG_LIGHTNING);
 
-extern u_long D_pspeu_09278B98;
+extern u_long cutscene_alucard;
 extern u_long D_893DD0C;
 extern u_long D_893EA8C;
 extern u_long D_893F80C;
-extern u_long D_pspeu_09279918;
+extern u_long cutscene_death;
 extern u_long D_894130C;
 extern u_long D_894208C;
 extern u_long D_8942E0C;
@@ -461,7 +461,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                         ptr |= (u_long)*g_Dialogue.scriptCur++;
                         switch (ptr) {
                         case 0:
-                            ptr = (u_long)&D_pspeu_09278B98;
+                            ptr = (u_long)&cutscene_alucard;
                             break;
                         case 1:
                             ptr = (u_long)&D_893DD0C;
@@ -473,7 +473,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                             ptr = (u_long)&D_893F80C;
                             break;
                         case 4:
-                            ptr = (u_long)&D_pspeu_09279918;
+                            ptr = (u_long)&cutscene_death;
                             break;
                         case 5:
                             ptr = (u_long)&D_894130C;

@@ -73,9 +73,6 @@ u16 e_skyswirl_p[] = {
 u16 e_merman_p[] = {
 #include "gen/e_merman_p.h"
 };
-u16 D_801978F8[] = {
-#include "gen/D_801978F8.h"
-};
 u16 D_80197918[] = {
 #include "gen/D_80197918.h"
 };
@@ -136,21 +133,12 @@ u16 e_zombie_p[] = {
 u16 D_80198118[] = {
 #include "gen/D_80198118.h"
 };
-u16 D_80198218[] = {
-#include "gen/D_80198218.h"
-};
 u16 D_80198318[] = {
 #include "gen/D_80198318.h"
-};
-u16 D_80198418[] = {
-#include "gen/D_80198418.h"
 };
 u16 e_death_p[] = {
 #include "gen/e_death_p.h"
 };
 u16 e_explosion_p[] = {
 #include "gen/e_explosion_p.h"
-};
-u16 D_80198778[] = {
-#include "gen/D_80198778.h"
 };

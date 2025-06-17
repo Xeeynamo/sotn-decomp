@@ -6,7 +6,7 @@ extern s16** OVL_EXPORT(spriteBanks)[];
 extern u_long* OVL_EXPORT(cluts)[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
 extern RoomDef OVL_EXPORT(rooms_layers)[];
-extern u_long* OVL_EXPORT(gfxBanks)[];
+extern u_long** OVL_EXPORT(gfxBanks)[];
 void OVL_EXPORT(HitDetection)();
 void UpdateStageEntities();
 void PrologueScroll();
