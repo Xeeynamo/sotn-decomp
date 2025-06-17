@@ -891,9 +891,9 @@ void UpdateCd(void) {
             } while (i < (s32)(sizeof(Overlay) / sizeof(void*)));
             break;
         case CdCallback_6:
-            clutAddr = g_Clut;
+            clutAddr = g_Clut[0];
             StoreImage(&g_Vram.D_800ACDB8, clutAddr);
-            clutAddr = g_Clut + 0x2000;
+            clutAddr = g_Clut[2];
             StoreImage(&g_Vram.D_800ACDB8, clutAddr);
             DrawSync(0);
             LoadImage(&g_Vram.D_800ACDB0, clutAddr);
@@ -902,10 +902,10 @@ void UpdateCd(void) {
             LoadImage(&g_Vram.D_800ACD98, &D_800A04CC);
             break;
         case CdCallback_1:
-            StoreImage(&g_Vram.D_800ACDA8, &g_Clut[0x1000]);
+            StoreImage(&g_Vram.D_800ACDA8, g_Clut[1]);
             break;
         case CdCallback_StageChr:
-            StoreImage(&g_Vram.D_800ACDB8, g_Clut);
+            StoreImage(&g_Vram.D_800ACDB8, g_Clut[0]);
             break;
         case CdCallback_16:
             D_80137FB0 = (short)SsVabOpenHeadSticky(

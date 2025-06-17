@@ -38,8 +38,9 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x1C4, .data, header] # layers
-      - [0x5A4, .data, header] # GfxBanks
+      - [0x30, .data, header2]
+      - [0x1C4, .data, header2] # layers
+      - [0x5A4, .data, header2] # GfxBanks
       - [0x77C, .data, gen/e_laydef] # layout entries header
       - [0x924, .data, e_init]
       - [0xBB4, .data, background_block_init]
@@ -53,7 +54,7 @@ segments:
       - [0x124C, .data, e_jewel_sword_puzzle]
       - [0x1358, .data, e_death_sky_swirl]
       - [0x1390, .data, e_sky_entities]
-      - [0x13A8, data]
+      - [0x13A8, .data, d_water_data]
       - [0x13DC, .data, e_outdoor_ents]
       - [0x1A28, .data, cutscene]
       - [0x1AD4, .data, e_death]

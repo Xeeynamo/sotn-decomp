@@ -292,27 +292,27 @@ u_long* D_800A3AE8[] = {
 
 u_long* D_800A3B00[] = {
     PAL_COPY_INFO(),
-    PAL_COPY_DATA_(0x10F0, &g_Clut[0x10A0], 16),
+    PAL_COPY_DATA_(0x10F0, &g_Clut[1][0xA0], 16),
 };
 
 u_long* D_800A3B10[] = {
     MAKE_PAL_OP(PAL_UNK_OP2, 2),
     PAL_UNK_OP2_INFO(0x10F0, 16),
-    PAL_UNK_OP2_DATA(&g_Clut[0x10C0]),
+    PAL_UNK_OP2_DATA(&g_Clut[1][0xC0]),
     PAL_TERMINATE(),
 };
 
 u_long* D_800A3B24[] = {
     MAKE_PAL_OP(PAL_UNK_OP2, 2),
     PAL_UNK_OP2_INFO(0x10F0, 16),
-    PAL_UNK_OP2_DATA(&g_Clut[0x1000]),
+    PAL_UNK_OP2_DATA(&g_Clut[1][0]),
     PAL_TERMINATE(),
 };
 
 u_long* D_800A3B38[] = {
     MAKE_PAL_OP(PAL_UNK_OP2, 2),
     PAL_UNK_OP2_INFO(0x10F0, 16),
-    PAL_UNK_OP2_DATA(&g_Clut[0x10B0]),
+    PAL_UNK_OP2_DATA(&g_Clut[1][0xB0]),
     PAL_TERMINATE(),
 };
 

@@ -253,8 +253,8 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 		sb.WriteString(fmt.Sprintf("extern TileDefinition %s[];\n", symbol))
 	}
 
+	sb.WriteString("static LayerDef layer_empty = { NULL, NULL, 0, 0, 0 };\n")
 	sb.WriteString("static LayerDef layers[] = {\n")
-	sb.WriteString("    { NULL, NULL, 0, 0, 0 },\n")
 	for _, l := range layers[1:] {
 		sb.WriteString(fmt.Sprintf("    { %s, %s, {%d, %d, %d, %d, 0x%02X}, 0x%02X, 0x%04X},\n",
 			makeSymbolFromFileName(l["data"].(string)),
@@ -273,14 +273,14 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 	sb.WriteString("RoomDef OVL_EXPORT(rooms_layers)[] = {\n")
 	for _, rl := range roomsLayers {
 		if l, found := rl["fg"]; found {
-			sb.WriteString(fmt.Sprintf("    { &layers[%d], ", pool[getHash(*l)]))
+			sb.WriteString(fmt.Sprintf("    { &layers[%d], ", pool[getHash(*l)]-1))
 		} else {
-			sb.WriteString(fmt.Sprintf("    { &layers[0], "))
+			sb.WriteString(fmt.Sprintf("    { &layer_empty, "))
 		}
 		if l, found := rl["bg"]; found {
-			sb.WriteString(fmt.Sprintf("&layers[%d] },\n", pool[getHash(*l)]))
+			sb.WriteString(fmt.Sprintf("&layers[%d] },\n", pool[getHash(*l)]-1))
 		} else {
-			sb.WriteString(fmt.Sprintf("&layers[0] },\n"))
+			sb.WriteString(fmt.Sprintf("&layer_empty },\n"))
 		}
 	}
 	sb.WriteString("};\n")

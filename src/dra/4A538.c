@@ -95,40 +95,28 @@ s32 func_800EA5E4(u32 arg0) {
     return -1;
 }
 
-#define RED_MASK 0x1F
-#define GREEN_MASK 0x3E0
-#define BLUE_MASK 0x7C00
-// These could be ~RED_MASK, but that doesn't match.
-#define UNRED_MASK 0xFFFF - RED_MASK
-#define UNGREEN_MASK 0xFFFF - GREEN_MASK
-#define UNBLUE_MASK 0xFFFF - BLUE_MASK
-
-#define GET_RED(x) ((x) & RED_MASK)
-#define GET_GREEN(x) ((x) & GREEN_MASK)
-#define GET_BLUE(x) ((x) & BLUE_MASK)
-
-// Takes a color "col" in RGB555 and increments/decrements each component
+// Takes a color "col" in RGB5551 and increments/decrements each component
 // to bring it closer to the target by 1.
 u16 func_800EA720(u16 target, u16 col) {
-    if (GET_RED(target) > GET_RED(col)) {
-        col = (col & UNRED_MASK) | (GET_RED(col) + 1);
+    if ((target & RED_MASK) > (col & RED_MASK)) {
+        col = (col & UNRED_MASK) | ((col & RED_MASK) + 1);
     }
-    if (GET_RED(target) < GET_RED(col)) {
-        col = (col & UNRED_MASK) | (GET_RED(col) - 1);
-    }
-
-    if (GET_GREEN(target) > GET_GREEN(col)) {
-        col = (col & UNGREEN_MASK) | (GET_GREEN(col) + (1 << 5));
-    }
-    if (GET_GREEN(target) < GET_GREEN(col)) {
-        col = (col & UNGREEN_MASK) | (GET_GREEN(col) - (1 << 5));
+    if ((target & RED_MASK) < (col & RED_MASK)) {
+        col = (col & UNRED_MASK) | ((col & RED_MASK) - 1);
     }
 
-    if (GET_BLUE(target) > GET_BLUE(col)) {
-        col = (col & UNBLUE_MASK) | (GET_BLUE(col) + (1 << 10));
+    if ((target & GREEN_MASK) > (col & GREEN_MASK)) {
+        col = (col & UNGREEN_MASK) | ((col & GREEN_MASK) + (1 << 5));
     }
-    if (GET_BLUE(target) < GET_BLUE(col)) {
-        col = (col & UNBLUE_MASK) | (GET_BLUE(col) - (1 << 10));
+    if ((target & GREEN_MASK) < (col & GREEN_MASK)) {
+        col = (col & UNGREEN_MASK) | ((col & GREEN_MASK) - (1 << 5));
+    }
+
+    if ((target & BLUE_MASK) > (col & BLUE_MASK)) {
+        col = (col & UNBLUE_MASK) | ((col & BLUE_MASK) + (1 << 10));
+    }
+    if ((target & BLUE_MASK) < (col & BLUE_MASK)) {
+        col = (col & UNBLUE_MASK) | ((col & BLUE_MASK) - (1 << 10));
     }
 
     return col;
@@ -179,7 +167,7 @@ void func_800EA7CC(void) {
         new_var = temp_s0[1];
         count = temp_s0[2];
 
-        clut = g_Clut;
+        clut = g_Clut[0];
         clut += new_var;
 
         switch (ptr->unk8 & 0xFF) {
@@ -253,7 +241,7 @@ void func_800EA7CC(void) {
             break;
         case 5: // some kind of bulk palette copy?
             while (true) {
-                clut = g_Clut;
+                clut = g_Clut[0];
                 temp_v0_5 = ptr->data;
                 temp_s0 = temp_v0_5 - 2;
                 data = temp_v0_5[0];
@@ -286,7 +274,7 @@ void func_800EA7CC(void) {
 
     // re-upload updated stage tileset palette
     offset = 0;
-    temp_s0 = g_Clut;
+    temp_s0 = g_Clut[0];
     clutX = 0x200;
     for (i = 0xF0; i < 0x100; i++, temp_s0 = (s16*)temp_s0 + 0x100, offset++) {
         if (palettes[offset] != 0) {
