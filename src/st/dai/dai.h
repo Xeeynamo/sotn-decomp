@@ -80,3 +80,5 @@ enum DaiEntities {
     NUM_ENTITIES,
 };
 extern EInit g_EInitBat;
+extern EInit g_EInitSkelerang;
+extern EInit g_EInitSkelerangBoomerang;

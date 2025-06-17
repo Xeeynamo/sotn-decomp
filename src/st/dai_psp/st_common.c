@@ -30,9 +30,9 @@ INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/st_common", SetEntityVelocityFromAn
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/st_common", Ratan2Shifted);
 // clang-format off
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/st_common", GetAngleBetweenEntitiesShifted);
-// clang-format on
-INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/st_common", func_pspeu_0924DD10);
 
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/st_common", AdjustValueWithinThreshold);
+// clang-format on
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/st_common", UnkEntityFunc0);
 // clang-format off
 INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/st_common", GetAngleBetweenEntities);

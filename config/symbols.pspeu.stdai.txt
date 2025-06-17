@@ -93,6 +93,7 @@ GetSineScaled = 0x0924DB78;
 SetEntityVelocityFromAngle = 0x0924DBC8;
 Ratan2Shifted = 0x0924DC30;
 GetAngleBetweenEntitiesShifted = 0x0924DC88;
+AdjustValueWithinThreshold = 0x0924DD10;
 UnkEntityFunc0 = 0x0924DDF8;
 GetAngleBetweenEntities = 0x0924DEA0;
 GetNormalizedAngle = 0x0924DF20;
