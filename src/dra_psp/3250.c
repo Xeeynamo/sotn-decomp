@@ -2,29 +2,29 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-extern SaveData D_psp_091CB700;
-extern u8 D_psp_091CD6FE;
-extern u8 D_psp_091CD6FF;
 extern s32 D_8B42044;
 extern u32 g_DebugCurPal;
 extern s32 g_DebugEnabled2;
 
+// BSS
+u8 D_psp_091CB700[0x2000];
+
 void func_psp_090DFBD0(void) {
-    if (*(g_SaveAreaNames[g_StageId]) != 0) {
-        StoreSaveData(&D_psp_091CB700, 0, rand() & 0xF);
+    if (g_SaveAreaNames[g_StageId][0] != 0) {
+        StoreSaveData((SaveData*)D_psp_091CB700, 0, rand() & 0xF);
         if (D_8B42044 != 0) {
             D_8B42044 = 0;
-            D_psp_091CD6FF = 0;
+            D_psp_091CB700[0x1FFF] = 0;
         } else {
-            D_psp_091CD6FF = 0xFF;
+            D_psp_091CB700[0x1FFF] = 0xFF;
         }
-        D_psp_091CD6FE = D_8006C374;
+        D_psp_091CB700[0x1FFE] = D_8006C374;
     }
 }
 
-void func_psp_090DFC68() { memcpy(&D_psp_091CB700, &g_Pix, 0x2000); }
+void func_psp_090DFC68() { memcpy(D_psp_091CB700, &g_Pix, sizeof(D_psp_091CB700)); }
 
-void func_psp_090DFC80() { func_89195C0(&D_psp_091CB700, 0x2000, D_8006C378); }
+void func_psp_090DFC80() { func_89195C0(D_psp_091CB700, sizeof(D_psp_091CB700), D_8006C378); }
 
 void func_800EA538(s32 arg0) {
     s32 i;
