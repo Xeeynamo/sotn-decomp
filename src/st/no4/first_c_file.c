@@ -2182,7 +2182,34 @@ void func_us_801C58A0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C59E0);
+extern u16 D_us_80180F1A[];
+
+void func_us_801C59E0(Entity* self, s16 arg1) {
+    Entity* newEntity;
+
+    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+    if (newEntity != NULL) {
+        CreateEntityFromCurrentEntity(E_SURFACING_WATER, newEntity);
+
+        if (self->ext.swordFamiliar.posX & 2) {
+            newEntity->posY.i.hi = 288 - g_Tilemap.scrollY.i.hi;
+        } else {
+            newEntity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
+        }
+
+        if (self->facingLeft != 0) {
+            newEntity->posX.i.hi += arg1;
+        } else {
+            newEntity->posX.i.hi -= arg1;
+        }
+
+        newEntity->params = 0x8000;
+        newEntity->params = *D_us_80180F1A << 8 | 0x8000;
+        newEntity->ext.equipItemDrop.gravity = 0x17;
+        newEntity->zPriority = 0x9B;
+        self->ext.swordFamiliar.unk8c = 8;
+    }
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5AD4);
 
