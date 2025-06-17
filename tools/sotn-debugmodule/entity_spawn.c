@@ -5,10 +5,8 @@ typedef struct {
     void** values;
 } EntityDef;
 
-#define ENTITY_DEF(first, last)                                                \
-    { ((last) - (first)) / 4 + 1, first }
-#define ENTITY_NONE                                                            \
-    { 0, NULL }
+#define ENTITY_DEF(first, last) {((last) - (first)) / 4 + 1, first}
+#define ENTITY_NONE {0, NULL}
 
 EntityDef g_DraEntities[] = {
     ENTITY_DEF(0x800AD0C4, 0x800AD1D0),
@@ -17,20 +15,20 @@ EntityDef g_RicEntities[] = {
     ENTITY_DEF(0x8015495C, 0x80154A68),
 };
 EntityDef g_StageEntities[] = {
-    ENTITY_NONE,                        // STAGE_NO0
-    ENTITY_NONE,                        // STAGE_NO1
-    ENTITY_NONE,                        // STAGE_LIB
-    ENTITY_NONE,                        // STAGE_CAT
-    ENTITY_NONE,                        // STAGE_NO2
-    ENTITY_NONE,                        // STAGE_CHI
-    ENTITY_NONE,                        // STAGE_DAI
+    ENTITY_DEF(0x80180920, 0x80180A1C), // STAGE_NO0
+    ENTITY_DEF(0x801807C0, 0x80180934), // STAGE_NO1
+    ENTITY_DEF(0x801806C8, 0x801807A4), // STAGE_LIB
+    ENTITY_DEF(0x80180FCC, 0x80181118), // STAGE_CAT
+    ENTITY_DEF(0x8018071C, 0x8018081C), // STAGE_NO2
+    ENTITY_DEF(0x8018055C, 0x8018060C), // STAGE_CHI
+    ENTITY_DEF(0x80180818, 0x80180934), // STAGE_DAI
     ENTITY_DEF(0x801808D0, 0x80180A38), // STAGE_NP3
     ENTITY_DEF(0x80180394, 0x80180400), // STAGE_CEN
-    ENTITY_NONE,                        // STAGE_NO4
-    ENTITY_NONE,                        // STAGE_ARE
-    ENTITY_NONE,                        // STAGE_TOP
+    ENTITY_DEF(0x80180A0C, 0x80180B88), // STAGE_NO4
+    ENTITY_DEF(0x80180958, 0x80180A88), // STAGE_ARE
+    ENTITY_DEF(0x801808E8, 0x80180990), // STAGE_TOP
     ENTITY_DEF(0x80180A94, 0x80180BC4), // STAGE_NZ0
-    ENTITY_NONE,                        // STAGE_NZ1
+    ENTITY_DEF(0x801809C8, 0x80180B24), // STAGE_NZ1
     ENTITY_DEF(0x801803E4, 0x80180440), // STAGE_WRP
     ENTITY_NONE,                        // STAGE_NO1_ALT
     ENTITY_NONE,                        // STAGE_NO0_ALT
@@ -39,31 +37,31 @@ EntityDef g_StageEntities[] = {
     ENTITY_DEF(0x80180A94, 0x80180BC4), // STAGE_UNK_13
     ENTITY_NONE,                        // STAGE_UNK_14
     ENTITY_NONE,                        // STAGE_UNK_15
-    ENTITY_NONE,                        // STAGE_BO7
-    ENTITY_NONE,                        // STAGE_MAR
-    ENTITY_NONE,                        // STAGE_BO6
-    ENTITY_NONE,                        // STAGE_BO5
-    ENTITY_NONE,                        // STAGE_BO4
-    ENTITY_NONE,                        // STAGE_BO3
-    ENTITY_NONE,                        // STAGE_BO2
-    ENTITY_NONE,                        // STAGE_BO1
-    ENTITY_NONE,                        // STAGE_BO0
+    ENTITY_DEF(0x80180364, 0x801803E4), // STAGE_BO7
+    ENTITY_DEF(0x80180310, 0x8018038C), // STAGE_MAR
+    ENTITY_DEF(0x80180328, 0x80180390), // STAGE_BO6
+    ENTITY_DEF(0x8018039C, 0x80180450), // STAGE_BO5
+    ENTITY_DEF(0x80180330, 0x801803A0), // STAGE_BO4
+    ENTITY_DEF(0x80180428, 0x80180530), // STAGE_BO3
+    ENTITY_DEF(0x80180414, 0x801804B4), // STAGE_BO2
+    ENTITY_DEF(0x801809F8, 0x80180A88), // STAGE_BO1
+    ENTITY_DEF(0x801804C8, 0x801805F0), // STAGE_BO0
     ENTITY_DEF(0x801804C0, 0x80180570), // STAGE_ST0
-    ENTITY_NONE,                        // STAGE_RNO0
-    ENTITY_NONE,                        // STAGE_RNO1
-    ENTITY_NONE,                        // STAGE_RLIB
-    ENTITY_NONE,                        // STAGE_RCAT
-    ENTITY_NONE,                        // STAGE_RNO2
-    ENTITY_NONE,                        // STAGE_RCHI
-    ENTITY_NONE,                        // STAGE_RDAI
-    ENTITY_NONE,                        // STAGE_RNO3
-    ENTITY_NONE,                        // STAGE_RCEN
-    ENTITY_NONE,                        // STAGE_RNO4
-    ENTITY_NONE,                        // STAGE_RARE
-    ENTITY_NONE,                        // STAGE_RTOP
-    ENTITY_NONE,                        // STAGE_RNZ0
-    ENTITY_NONE,                        // STAGE_RNZ1
-    ENTITY_NONE,                        // STAGE_RWRP
+    ENTITY_DEF(0x801808FC, 0x80180A34), // STAGE_RNO0
+    ENTITY_DEF(0x801805A8, 0x80180660), // STAGE_RNO1
+    ENTITY_DEF(0x80180530, 0x801805D0), // STAGE_RLIB
+    ENTITY_DEF(0x80180ED4, 0x80180FA8), // STAGE_RCAT
+    ENTITY_DEF(0x80180754, 0x8018084C), // STAGE_RNO2
+    ENTITY_DEF(0x801804F4, 0x80180584), // STAGE_RCHI
+    ENTITY_DEF(0x80180718, 0x801807E4), // STAGE_RDAI
+    ENTITY_DEF(0x80180794, 0x801808C8), // STAGE_RNO3
+    ENTITY_DEF(0x80180458, 0x801804F4), // STAGE_RCEN
+    ENTITY_DEF(0x80180960, 0x80180AD8), // STAGE_RNO4
+    ENTITY_DEF(0x80180664, 0x80180708), // STAGE_RARE
+    ENTITY_DEF(0x801804A4, 0x80180544), // STAGE_RTOP
+    ENTITY_DEF(0x80180898, 0x80180980), // STAGE_RNZ0
+    ENTITY_DEF(0x801809E4, 0x80180B0C), // STAGE_RNZ1
+    ENTITY_DEF(0x801803E4, 0x8018043C), // STAGE_RWRP
     ENTITY_NONE,                        // STAGE_NO1
     ENTITY_NONE,                        // STAGE_NO1
     ENTITY_NONE,                        // STAGE_NO1
@@ -71,15 +69,15 @@ EntityDef g_StageEntities[] = {
     ENTITY_NONE,                        // STAGE_NO1
     ENTITY_NONE,                        // STAGE_NO1
     ENTITY_NONE,                        // STAGE_RNZ1
-    ENTITY_NONE,                        // STAGE_RBO8
-    ENTITY_NONE,                        // STAGE_RBO7
-    ENTITY_NONE,                        // STAGE_RBO6
-    ENTITY_NONE,                        // STAGE_RBO5
-    ENTITY_NONE,                        // STAGE_RBO4
-    ENTITY_NONE,                        // STAGE_RBO3
-    ENTITY_NONE,                        // STAGE_RBO2
-    ENTITY_NONE,                        // STAGE_RBO1
-    ENTITY_NONE,                        // STAGE_RBO0
+    ENTITY_DEF(0x80180970, 0x801809F8), // STAGE_RBO8
+    ENTITY_DEF(0x8018033C, 0x801803B0), // STAGE_RBO7
+    ENTITY_DEF(0x80180400, 0x801804C4), // STAGE_RBO6
+    ENTITY_DEF(0x80180340, 0x801803B4), // STAGE_RBO5
+    ENTITY_DEF(0x801803F0, 0x8018045C), // STAGE_RBO4
+    ENTITY_DEF(0x80180394, 0x80180410), // STAGE_RBO3
+    ENTITY_DEF(0x80180398, 0x80180424), // STAGE_RBO2
+    ENTITY_DEF(0x801803A8, 0x80180424), // STAGE_RBO1
+    ENTITY_DEF(0x80180378, 0x80180424), // STAGE_RBO0
     ENTITY_NONE,                        // STAGE_NO1
     ENTITY_DEF(0x8018049C, 0x801804EC), // STAGE_MAD
     ENTITY_DEF(0x80180924, 0x80180AA8), // STAGE_NO3
