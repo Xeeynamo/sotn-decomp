@@ -68,7 +68,7 @@ segments:
       - [0xE178, c, no3/e_lock_camera]
       - [0xE3D8, c, no3/create_entity]
       - [0xF380, c, no3/e_bat]
-      - [0xF6B8, c, no3_psp/e_stage_name]
+      - [0xF6B8, c, no3/e_stage_name]
       - [0x10538, c, no3/e_red_door]
       - [0x11840, c, no3/st_update]
       - [0x11D78, c, no3/e_fire_warg]
