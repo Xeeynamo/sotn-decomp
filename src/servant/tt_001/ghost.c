@@ -298,7 +298,7 @@ void ServantInit(InitializeMode mode) {
 #endif
 
     if (mode != MENU_SAME_SERVANT) {
-        dst = &g_Clut[CLUT_INDEX_SERVANT];
+        dst = &g_Clut[1][CLUT_INDEX_SERVANT];
         src = g_ServantClut;
 
         for (i = 0; i < lenServantClut; i++) {
@@ -311,7 +311,7 @@ void ServantInit(InitializeMode mode) {
         }
 
         // overwrite part of the clut for this servant
-        dst = &g_Clut[CLUT_INDEX_SERVANT_OVERWRITE];
+        dst = &g_Clut[1][CLUT_INDEX_SERVANT_OVERWRITE];
         src = g_GhostClut;
 
         for (i = 0; i < leng_GhostClut; i++) {
@@ -323,7 +323,7 @@ void ServantInit(InitializeMode mode) {
         rect.h = 1;
         rect.y = 0xF4;
 
-        dst = &g_Clut[CLUT_INDEX_SERVANT];
+        dst = &g_Clut[1][CLUT_INDEX_SERVANT];
         LoadImage(&rect, dst);
 
         spriteBanks = g_api.o.spriteBanks;

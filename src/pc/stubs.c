@@ -60,7 +60,7 @@ s32 D_80097928;
 s32 D_8006C3AC;
 s32 D_800978C4;
 u32 D_80097C98;
-u16 g_Clut[0x3000];
+u16 g_Clut[3][0x1000];
 Point32 D_8006C384;
 MenuNavigation g_MenuNavigation;
 GameSettings g_Settings;

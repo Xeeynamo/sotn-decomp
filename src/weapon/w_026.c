@@ -183,16 +183,16 @@ void func_BA000_8017B37C(void) {
         }
     }
 
-    temp = g_Clut[0x112D + g_HandId * 0x180];
+    temp = g_Clut[1][0x12D + g_HandId * 0x180];
     temp &= 0xFC1F;
     temp += D_BA000_8017AA98 << 5;
-    g_Clut[0x112D + g_HandId * 0x180] = temp;
+    g_Clut[1][0x12D + g_HandId * 0x180] = temp;
 
     rect.x = 0;
     rect.y = 0xF1;
     rect.w = 0x100;
     rect.h = 3;
-    LoadImage(&rect, &g_Clut[0x1100]);
+    LoadImage(&rect, &g_Clut[1][0x100]);
 }
 
 static void EntityWeaponShieldSpell(Entity* self) {
