@@ -641,6 +641,7 @@ enum Sfx {
     SFX_BLOODY_ZOMBIE_DEATH,
     SFX_BLOODY_ZOMBIE_HIT,
     SFX_BLOODY_ZOMBIE_SPLATTER,
+    SFX_SPEAR_GUARD_DEATH = 0x771,
     SFX_WARG_DEATH_HOWL = 0x780, // also used for Scylla Worm (phase 2)
     SFX_WARG_PAIN,
     SFX_WARG_ATTACK,
@@ -651,6 +652,7 @@ enum Sfx {
     SFX_CLOCK_BELL = 1958,
     SFX_CLOCK_ROOM_TICK = 1961,
     SFX_UNK_7AF = 0x7Af,
+    SFX_UNK_7BE = 0x7BE,
     SFX_UNK_761 = 0x761,
 
 #if defined(VERSION_PSP) || defined(VERSION_PC)
