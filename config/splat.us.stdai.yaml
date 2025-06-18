@@ -66,7 +66,7 @@ segments:
       - [0x3FFC0, .rodata, unk_458C4]
       - [0x3FFE0, .rodata, e_red_door]
       - [0x3FFF8, .rodata, e_collect]
-      - [0x400EC, .rodata, e_stage_name]
+      - [0x400CC, .rodata, e_stage_name]
       - [0x40100, .rodata, unk_51010]
       #- [0x4014C, .rodata, unk_51010] # Splat suggested
       #- [0x40160, .rodata, unk_51010] # Splat suggested
