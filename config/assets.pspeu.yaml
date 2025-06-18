@@ -233,6 +233,11 @@ files:
         vram: 0x09237700
         assets:
           - [0x80, skip]
+          - [0x33300, sprite_banks, sprite_banks]
+          - [0x33360, layers, layers]
+          - [0x33730, paldef, palette_def]
+          - [0x33870, gfx_banks, graphics_banks]
+          - [0x33A58, skip]
           - [0x33FB0, cutscene, cutscene_data_it]
           - [0x34150, cutscene, cutscene_data_sp]
           - [0x342D0, cutscene, cutscene_data_fr]
