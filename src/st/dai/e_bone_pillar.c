@@ -284,7 +284,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
                 entity->nFramesInvincibility = 0x10;
                 entity->stunFrames = 4;
                 entity->hitEffect = 1;
-                entity->ext.et_bonePillar.unkB0.i.hi = 0;
+                entity->ext.et_bonePillar.unkB2 = 0;
                 entity->flags =
                     FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
                 g_api.func_80118894(entity);
