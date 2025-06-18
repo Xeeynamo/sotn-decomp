@@ -20,6 +20,7 @@ UNK_Invincibility0 = 0x80181070;
 g_eRedDoorUV = 0x8018145C;
 g_SineTable = 0x80181474;
 g_goldCollectTexts = 0x801817E8;
+g_bigRedFireballAnim = 0x801818CC;
 DAI_rooms = 0x80182358;
 DAI_EntityBackgroundBlock = 0x801C02F0;
 DAI_EntityLockCamera = 0x801C03B8;
