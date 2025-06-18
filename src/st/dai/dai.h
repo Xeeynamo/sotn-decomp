@@ -1,7 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#ifndef DAI_H
+#define DAI_H
+
 #include "stage.h"
 
+#define STAGE_IS_DAI
+
 #define OVL_EXPORT(x) DAI_##x
+
+#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 enum DaiEntities {
     E_NONE,
@@ -82,3 +89,4 @@ enum DaiEntities {
 extern EInit g_EInitBat;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
+#endif
