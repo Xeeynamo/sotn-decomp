@@ -148,6 +148,8 @@
 | maria  | func_pspeu_092C0248                      |       19 |          3 |        |                                 |       |
 | dra    | func_8010427C                            |       19 |          4 |        |                                 |       |
 | ric    | pl_setstep.rodata                        |       20 |          0 | Yes    |                                 |       |
+| dai    | unk_12F98.rodata                         |       20 |          0 | Yes    |                                 |       |
+| dai    | unk_FB68.rodata                          |       20 |          0 | Yes    |                                 |       |
 | lib    | e_dhuron.rodata                          |       20 |          0 | Yes    |                                 |       |
 | lib    | e_flying_zombie.rodata                   |       20 |          0 | Yes    |                                 |       |
 | dra    | DestroyPrimitive                         |       20 |          2 |        |                                 |       |
@@ -393,7 +395,6 @@
 | dra    | PerformSoulSteal                         |       33 |          6 |        |                                 |       |
 | dra    | func_psp_090F21F8                        |       33 |          6 |        |                                 |       |
 | dra    | func_800EAD0C                            |       33 |          8 |        |                                 |       |
-| dai    | unk_FB68.rodata                          |       34 |          0 | Yes    |                                 |       |
 | lib    | unk_3B200.rodata                         |       34 |          0 | Yes    |                                 |       |
 | no3    | e_fire_warg.rodata                       |       34 |          0 | Yes    |                                 |       |
 | no3    | e_merman2.rodata                         |       34 |          0 | Yes    |                                 |       |
@@ -1394,7 +1395,7 @@
 | maria  | func_pspeu_092AAA38                      |      155 |         10 |        | https://decomp.me/scratch/hnxZ5 | 0.996 |
 | dra    | func_80123F78                            |      155 |         14 |        | https://decomp.me/scratch/rLwSV | 0.967 |
 | no3    | EntityDistantTreeMaker                   |      155 |         16 |        |                                 |       |
-| dai    | func_us_801D2CFC                         |      155 |         17 |        |                                 |       |
+| dai    | func_pspeu_0924A3D8                      |      155 |         17 |        | https://decomp.me/scratch/nBGrs | 0.998 |
 | dra    | func_8012ED30                            |      156 |         26 |        |                                 |       |
 | dra    | EntityHellfireNormalFireball             |      157 |         18 |        | https://decomp.me/scratch/Rzlhs | 0.996 |
 | dai    | func_us_801C23A4                         |      157 |         20 |        |                                 |       |
@@ -1735,7 +1736,7 @@
 | maria  | MarEntityApplyMariaPowerAnim             |      346 |         27 |        |                                 |       |
 | ric    | RicEntityApplyMariaPowerAnim             |      346 |         27 |        | https://decomp.me/scratch/YzZxq | 0.999 |
 | ric    | RicEntityCrashHydroStorm                 |      346 |         37 |        | https://decomp.me/scratch/EpsEj | 0.972 |
-| dai    | EntityFishheadFireBreath                 |      348 |         32 |        |                                 |       |
+| dai    | func_pspeu_09249EC0                      |      348 |         32 |        | https://decomp.me/scratch/jvQxB | 0.999 |
 | lib    | func_us_801CCF6C                         |      348 |         34 |        | https://decomp.me/scratch/gNABK | 0.999 |
 | ric    | RicEntityCrashVibhuti                    |      349 |         43 |        |                                 |       |
 | no3    | EntityDeathCutsceneManager               |      350 |         35 | Yes    |                                 |       |
@@ -1838,7 +1839,7 @@
 | ric    | RicEntitySubwpnHolyWaterBreakGlass       |      461 |         29 |        |                                 |       |
 | dra    | func_801309B4                            |      464 |         52 | Yes    | https://decomp.me/scratch/wiEm0 | 0.995 |
 | dra    | ControlMistForm                          |      466 |         93 |        |                                 |       |
-| dai    | func_us_801D2444                         |      467 |         49 |        |                                 |       |
+| dai    | func_pspeu_092497D8                      |      467 |         49 |        | https://decomp.me/scratch/8a5E9 | 0.997 |
 | ric    | RicStepJump                              |      469 |         84 |        |                                 |       |
 | dra    | func_800F0CD8                            |      473 |         40 |        | https://decomp.me/scratch/5y14u | 0.954 |
 | lib    | LIB_EntityLockCamera                     |      473 |         53 |        |                                 |       |
@@ -1959,7 +1960,7 @@
 | st0    | EntityDamageDisplay                      |      682 |         51 |        |                                 |       |
 | wrp    | EntityDamageDisplay                      |      682 |         51 |        |                                 |       |
 | ric    | RicCheckInput                            |      687 |        124 |        |                                 |       |
-| dai    | func_us_801D1D00                         |      688 |         96 |        |                                 |       |
+| dai    | func_pspeu_09248DD0                      |      688 |         96 |        | https://decomp.me/scratch/v9dIV | 0.997 |
 | dra    | EntitySubwpnThrownAxe                    |      691 |         58 |        | https://decomp.me/scratch/VcikX | 0.991 |
 | lib    | func_us_801CD318                         |      691 |         73 |        |                                 |       |
 | st0    | EntityClouds                             |      692 |         55 |        | https://decomp.me/scratch/40hTC | 0.997 |
