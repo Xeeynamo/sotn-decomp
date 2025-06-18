@@ -164,7 +164,8 @@ EInit D_us_801809E0 = {ANIMSET_OVL(4), 0, 72, PAL_DRA(0x215), 180};
 EInit D_us_801809EC = {ANIMSET_OVL(0), 0, 0, PAL_DRA(0), 181};
 EInit g_EInitBonePillarHead = {ANIMSET_OVL(5), 0, 73, PAL_DRA(0x216), 183};
 EInit g_EInitBonePillarPieces = {ANIMSET_OVL(5), 0, 73, PAL_DRA(0x216), 2};
-EInit g_EInitBonePillarFireBreath = {ANIMSET_OVL(5), 0, 73, PAL_DRA(0x216), 184};
+EInit g_EInitBonePillarFireBreath = {
+    ANIMSET_OVL(5), 0, 73, PAL_DRA(0x216), 184};
 EInit g_EInitBonePillarSpikeBall = {ANIMSET_OVL(5), 0, 73, PAL_DRA(0x216), 185};
 EInit D_us_80180A28 = {ANIMSET_OVL(7), 1, 72, PAL_DRA(0x22A), 118};
 EInit D_us_80180A34 = {ANIMSET_OVL(0), 0, 0, PAL_DRA(0), 119};
