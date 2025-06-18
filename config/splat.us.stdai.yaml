@@ -51,7 +51,7 @@ segments:
       - [0x1050, .data, st_update]
       - [0x109C, data]
       - [0x145C, .data, e_red_door]
-      - [0x1474, data]
+      - [0x1474, .data, st_common]
       - [0x1674, .data, e_collect]
       - [0x19C8, .data, e_misc]
       - [0x1A80, data]

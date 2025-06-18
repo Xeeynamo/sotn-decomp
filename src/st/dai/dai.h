@@ -14,7 +14,7 @@ enum DaiEntities {
     E_NONE,
     E_BREAKABLE,           // EntityUnkBreakable,
     E_EXPLOSION,           // EntityExplosion,
-    E_PRIZE_DROP3,         // EntityPrizeDrop,
+    E_PRIZE_DROP,             // EntityPrizeDrop,
     E_DAMAGE_DISPLAY,      // EntityDamageDisplay,
     E_RED_DOOR,            // DAI_EntityRedDoor,
     E_INTENSE_EXPLOSION,   // EntityIntenseExplosion,
