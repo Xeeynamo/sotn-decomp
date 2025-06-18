@@ -135,8 +135,8 @@ u16* func_801B11E8(u8 dialogue) {
     sp1C[1] = 0;
     sp1C[2] = 0;
 
-    ret = g_api.func_ptr_91CF870(sp1C, &sp1F);
-    return g_api.func_ptr_91CF86C(ret, 0);
+    ret = g_api.func_psp_0913F960(sp1C, &sp1F);
+    return g_api.func_psp_0913FA28(ret, 0);
 }
 
 static s32 func_pspeu_09242F68(u8* text) {

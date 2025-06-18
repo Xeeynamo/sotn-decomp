@@ -327,7 +327,7 @@ void MarUpdatePlayerEntities(void) {
     if (D_80174FAC) {
         D_80174FAC--;
         if (D_80174FAC & 1) {
-            g_api.g_pfn_800EA5AC(1, D_80174FB0, D_80174FB4, D_80174FB8);
+            g_api.func_800EA5AC(1, D_80174FB0, D_80174FB4, D_80174FB8);
         }
     }
     D_80174F80[1] = D_80174F80[2] = 0;

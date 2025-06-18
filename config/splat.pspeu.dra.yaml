@@ -92,7 +92,7 @@ segments:
       #- [0x6A8F8, .data, dra/5F60C]
       - [0x6AB40, .data, dra/5087C]
       - [0x6B420, .data, dra_psp/menu]
-      - [0x6DCA8, data]
+      - [0x6DCA8, .data, dra/dra_header]
       - [0x6DDE8, .data, dra_psp/186E8]
       - [0x6F948, .data, dra/game_handlers]
       - [0x832A8, .data, dra_psp/1DDC0]
