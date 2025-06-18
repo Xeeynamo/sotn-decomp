@@ -75,7 +75,7 @@ segments:
       - [0x401D0, .rodata, e_skelerang]
       - [0x4023C, .rodata, unk_550E4]
       - [0x402D0, .rodata, e_sealed_door]
-      - [0x402E8, .rodata, unk_59168]
+      - [0x402E8, .rodata, prim_helpers]
       - [0x402F0, c, e_room_bg]
       - [0x403B8, c, e_lock_camera]
       - [0x40574, c, e_breakable]
