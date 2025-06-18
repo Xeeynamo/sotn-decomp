@@ -113,12 +113,10 @@ segments:
       - [0xA6920, .data, dra/6BF64]
       - [0xA69C8, .data, dra/84B88]
       - [0xA6C38, .data, dra/7879C]
-      - [0xA6FD8, data] # blueprints
       - [0xA72E4, .data, dra/7E4BC]
       - [0xA79D0, .data, dra/d_DBD4]
       - [0xA8120, .data, dra/8D3E8]
-      - [0xA8888, data]
-      - [0xA88C8, .data, dra_psp/cd]
+      - [0xA8888, .data, dra_psp/cd]
       - [0xA88D8, .data, dra/d_CD80]
       - [0xA8948, .data, dra_psp/memcard]
       - [0xAA578, .data, dra/66590]
