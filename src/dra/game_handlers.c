@@ -4,9 +4,9 @@
 #include "servant.h"
 
 // BSS
-s32 D_8013640C;
-s32 D_80136410;
-NowLoadingModel g_NowLoadingModel;
+static s32 D_8013640C;
+static s32 D_80136410;
+static NowLoadingModel g_NowLoadingModel;
 
 #include "../get_lang.h"
 

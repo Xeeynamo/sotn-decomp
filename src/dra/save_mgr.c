@@ -2,7 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-s32 g_MemcardRetryCount;
-s32 g_MemcardFd;
+static s32 g_MemcardRetryCount;
+static s32 g_MemcardFd;
 
 #include "../save_mgr.h"

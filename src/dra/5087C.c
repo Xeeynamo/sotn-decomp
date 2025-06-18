@@ -4,8 +4,12 @@
 #include "menu.h"
 #include "servant.h" // for InitializeMode enum
 
-extern RoomLoadDefHolder D_801375BC;
-extern Point32 D_801375C0;
+// fake struct for D_801375BC
+typedef struct {
+    RoomLoadDef* def;
+    Point32 pos;
+} RoomLoadDefHolder;
+
 extern s32 D_801375C8;
 extern bool D_8C630C8;
 extern s32 D_psp_091CE578;
@@ -22,15 +26,16 @@ extern s32* D_8D97C40;
 #endif
 
 // BSS
-bool D_80137598;
-s32 D_8013759C;
-s32 D_801375A0;
-s32 D_801375A4;
-s32 D_801375A8;
-s32 D_801375AC;
-s32 D_801375B0;
-s32 D_801375B4;
-s32 D_801375B8;
+static bool D_80137598;
+static s32 D_8013759C;
+static s32 D_801375A0;
+static s32 D_801375A4;
+static s32 D_801375A8;
+static s32 D_801375AC;
+static s32 D_801375B0;
+static s32 D_801375B4;
+static s32 D_801375B8;
+static RoomLoadDefHolder D_801375BC;
 
 RoomTeleport D_800A245C[] = {
     {496, 392, 0x00A0, STAGE_NO0, STAGE_NZ0},
@@ -339,8 +344,8 @@ s32 func_800F0CD8(s32 arg0) {
         if (D_80097C98 == 2) {
             ret = SetNextRoomToLoad(g_Tilemap.left + (PLAYER.posX.i.hi >> 8),
                                     g_Tilemap.top + (PLAYER.posY.i.hi >> 8));
-            D_801375C0.x = PLAYER.posX.i.hi & 0xFF;
-            D_801375C0.y = PLAYER.posY.i.hi & 0xFF;
+            D_801375BC.pos.x = PLAYER.posX.i.hi & 0xFF;
+            D_801375BC.pos.y = PLAYER.posY.i.hi & 0xFF;
             return ret;
         }
         if (arg0) {
@@ -354,8 +359,8 @@ s32 func_800F0CD8(s32 arg0) {
                         PLAYER.posX.i.lo = 0;
                     }
 #endif
-                    D_801375C0.x = PLAYER.posX.i.hi + 256;
-                    D_801375C0.y = PLAYER.posY.i.hi;
+                    D_801375BC.pos.x = PLAYER.posX.i.hi + 256;
+                    D_801375BC.pos.y = PLAYER.posY.i.hi;
                     g_Player.unk78 = 1;
                     return ret;
                 } else {
@@ -373,8 +378,8 @@ s32 func_800F0CD8(s32 arg0) {
                         PLAYER.posX.i.lo = 0;
                     }
 #endif
-                    D_801375C0.x = PLAYER.posX.i.hi - 256;
-                    D_801375C0.y = PLAYER.posY.i.hi;
+                    D_801375BC.pos.x = PLAYER.posX.i.hi - 256;
+                    D_801375BC.pos.y = PLAYER.posY.i.hi;
                     g_Player.unk78 = 1;
                     return ret;
                 } else {
@@ -391,8 +396,8 @@ s32 func_800F0CD8(s32 arg0) {
             ret = SetNextRoomToLoad(
                 g_Tilemap.left + (g_PlayerX >> 8), g_Tilemap.top - 1);
             if (ret) {
-                D_801375C0.x = PLAYER.posX.i.hi;
-                D_801375C0.y = PLAYER.posY.i.hi + 208;
+                D_801375BC.pos.x = PLAYER.posX.i.hi;
+                D_801375BC.pos.y = PLAYER.posY.i.hi + 208;
                 g_PlayerY -= 128;
                 g_Player.unk78 = 2;
                 return ret;
@@ -411,8 +416,8 @@ s32 func_800F0CD8(s32 arg0) {
             ret = SetNextRoomToLoad(
                 g_Tilemap.left + (g_PlayerX >> 8), g_Tilemap.bottom + 1);
             if (ret) {
-                D_801375C0.x = PLAYER.posX.i.hi;
-                D_801375C0.y = PLAYER.posY.i.hi - (256 - var_s0);
+                D_801375BC.pos.x = PLAYER.posX.i.hi;
+                D_801375BC.pos.y = PLAYER.posY.i.hi - (256 - var_s0);
                 g_PlayerY += 0x80;
                 g_Player.unk78 = 2;
                 return ret;
@@ -811,21 +816,21 @@ void DrawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
 
 // clang-format off
 u8 D_800A2BC0[] = {
-    12, 34, WALL_LEFT, NZ0_SECRET_WALL_OPEN, RNZ0_SECRET_WALL_OPEN, //
-    12, 34, WALL_BOTTOM, NZ0_SECRET_FLOOR_OPEN, RNZ0_SECRET_CEILING_OPEN, //
-    32, 40, WALL_RIGHT, CHI_DEMON_SWITCH, RCHI_DEMON_SWITCH, //
-    37, 41, WALL_LEFT, CHI_SECRET_WALL_OPEN, RCHI_SECRET_WALL_OPEN, //
-    43, 11, WALL_LEFT, NZ1_LOWER_WALL_OPEN, RNZ1_UPPER_WALL_OPEN, //
-    50, 11, WALL_RIGHT, NZ1_UPPER_WALL_OPEN, RNZ1_LOWER_WALL_OPEN, //
-    11, 41, WALL_LEFT, JEWEL_SWORD_ROOM_OPEN, JEWEL_ROOM_OPEN, //
-    21, 22, WALL_BOTTOM, ARE_ELEVATOR_ACTIVATED, RARE_ELEVATOR_ACTIVATED, //
-    20, 21, WALL_TOP, ARE_SECRET_CEILING_OPEN, RARE_SECRET_FLOOR_OPEN, //
-    29, 22, WALL_RIGHT, NO2_SECRET_WALL_OPEN, RNO2_SECRET_WALL_OPEN, //
-    19, 19, WALL_TOP, NO2_SECRET_CEILING_OPEN, RNO2_SECRET_FLOOR_OPEN, //
-    35, 8, WALL_TOP, TOP_SECRET_STAIRS, RTOP_SECRET_STAIRS, //
-    39, 39, WALL_BOTTOM, NO4_SECRET_FLOOR_OPEN, RNO4_SECRET_CEILING_OPEN, //
-    36, 27, WALL_LEFT, NO4_SECRET_WALL_OPEN, RNO4_SECRET_WALL_OPEN, //
-    32, 26, WALL_BOTTOM, CEN_OPEN, RCEN_OPEN, //
+    12, 34, WALL_LEFT,   NZ0_SECRET_WALL_OPEN,    RNZ0_SECRET_WALL_OPEN,
+    12, 34, WALL_BOTTOM, NZ0_SECRET_FLOOR_OPEN,   RNZ0_SECRET_CEILING_OPEN,
+    32, 40, WALL_RIGHT,  CHI_DEMON_SWITCH,        RCHI_DEMON_SWITCH,
+    37, 41, WALL_LEFT,   CHI_SECRET_WALL_OPEN,    RCHI_SECRET_WALL_OPEN,
+    43, 11, WALL_LEFT,   NZ1_LOWER_WALL_OPEN,     RNZ1_UPPER_WALL_OPEN,
+    50, 11, WALL_RIGHT,  NZ1_UPPER_WALL_OPEN,     RNZ1_LOWER_WALL_OPEN,
+    11, 41, WALL_LEFT,   JEWEL_SWORD_ROOM_OPEN,   JEWEL_ROOM_OPEN,
+    21, 22, WALL_BOTTOM, ARE_ELEVATOR_ACTIVATED,  RARE_ELEVATOR_ACTIVATED,
+    20, 21, WALL_TOP,    ARE_SECRET_CEILING_OPEN, RARE_SECRET_FLOOR_OPEN,
+    29, 22, WALL_RIGHT,  NO2_SECRET_WALL_OPEN,    RNO2_SECRET_WALL_OPEN,
+    19, 19, WALL_TOP,    NO2_SECRET_CEILING_OPEN, RNO2_SECRET_FLOOR_OPEN,
+    35, 8,  WALL_TOP,    TOP_SECRET_STAIRS,       RTOP_SECRET_STAIRS,
+    39, 39, WALL_BOTTOM, NO4_SECRET_FLOOR_OPEN,   RNO4_SECRET_CEILING_OPEN,
+    36, 27, WALL_LEFT,   NO4_SECRET_WALL_OPEN,    RNO4_SECRET_WALL_OPEN,
+    32, 26, WALL_BOTTOM, CEN_OPEN,                RCEN_OPEN,
     0x00, // terminator
 };
 // clang-format on
@@ -1746,8 +1751,8 @@ void RunMainEngine(void) {
             }
             D_8013759C = PLAYER.posX.val;
             D_801375A0 = PLAYER.posY.val;
-            PLAYER.posX.i.hi = D_801375C0.x + g_Tilemap.scrollX.i.hi;
-            PLAYER.posY.i.hi = D_801375C0.y + g_Tilemap.scrollY.i.hi;
+            PLAYER.posX.i.hi = D_801375BC.pos.x + g_Tilemap.scrollX.i.hi;
+            PLAYER.posY.i.hi = D_801375BC.pos.y + g_Tilemap.scrollY.i.hi;
             if (D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) {
                 LoadGfxAsync(ANIMSET_DRA(1));
             }
