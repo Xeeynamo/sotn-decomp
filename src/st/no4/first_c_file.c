@@ -1808,19 +1808,68 @@ void func_us_801C4228(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4520);
+// Function that checks when alucard pushes the box in underground caverns
+// to block the water hole
+void func_us_801C4520(Entity* self) {
+    Entity* player;
+    u16 collision;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 6;
+        if (g_CastleFlags[NO4_WATER_BLOCKED]) {
+            self->posX.i.hi = 1824 - g_Tilemap.scrollX.i.hi;
+        } else {
+            self->posX.i.hi = 1888 - g_Tilemap.scrollX.i.hi;
+        }
+    }
+
+    player = &PLAYER;
+    collision = GetPlayerCollisionWith(self, 16, 17, 5);
+
+    if (collision & 1 && g_Player.vram_flag & 1) {
+        if (player->posX.i.hi < self->posX.i.hi) {
+            if (g_pads[0].pressed & PAD_RIGHT && player->step == 1) {
+                if (self->ext.timer.t) {
+                    self->ext.timer.t--;
+                    return;
+                } else if (self->posX.i.hi + g_Tilemap.scrollX.i.hi < 1952) {
+                    self->posX.i.hi++;
+                    player->posX.i.hi++;
+                }
+                self->ext.timer.t = 3;
+            }
+        } else if (g_pads[0].pressed & PAD_LEFT && player->step == 1) {
+            if (self->ext.timer.t) {
+                self->ext.timer.t--;
+            } else {
+                if (self->posX.i.hi + g_Tilemap.scrollX.i.hi > 1824) {
+                    self->posX.i.hi--;
+                    player->posX.i.hi--;
+                    if (self->posX.i.hi + g_Tilemap.scrollX.i.hi == 1824) {
+                        g_CastleFlags[NO4_WATER_BLOCKED] = 1;
+                    }
+                }
+                self->ext.timer.t = 3;
+            }
+        }
+    }
+}
 
 extern s16 D_us_801811D6;  // water surface sprite height
 extern s16 D_us_801812B8;  // water background sprite height
 extern u8 D_us_80181588[]; // Water flow animation that needs to be blocked by
                            // the crate
 
-// Does something with the water level that kills the 4 spear guards in the
-// alcove
+/**
+ * Does something with the water level that kills the 4 spear guards in the
+ * alcove
+ */
 void func_us_801C4738(Entity* self) {
     Entity* newEnt;
 
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->palette = 68;
@@ -1851,8 +1900,8 @@ void func_us_801C4738(Entity* self) {
 
     if (g_CastleFlags[NO4_WATER_BLOCKED] != 0) {
         if (self->ext.et_waterAlcove.waterHeight < 64) {
-            if (!(self->ext.et_waterAlcove.unk90 & 0x7)) {
-                if (self->ext.et_waterAlcove.waterHeight == 0) {
+            if (!(self->ext.et_waterAlcove.unk8E & 0x7)) {
+                if (!self->ext.et_waterAlcove.waterHeight) {
                     g_api_PlaySfx(SFX_WATER_BUBBLE);
                 }
                 self->ext.et_waterAlcove.waterHeight++;
@@ -1863,15 +1912,15 @@ void func_us_801C4738(Entity* self) {
                     g_CastleFlags[NO4_WATER_BLOCKED]++;
                 }
             }
-            self->ext.et_waterAlcove.unk90++;
+            self->ext.et_waterAlcove.unk8E++;
         }
 
-        if (self->ext.et_waterAlcove.entity7E != 0) {
+        if (self->ext.et_waterAlcove.entity7E) {
             DestroyEntity(self->ext.et_waterAlcove.entity7E);
             self->ext.et_waterAlcove.entity7E = NULL;
         }
 
-        if (self->ext.et_waterAlcove.entity82 != 0) {
+        if (self->ext.et_waterAlcove.entity82) {
             DestroyEntity(self->ext.et_waterAlcove.entity82);
             self->ext.et_waterAlcove.entity82 = NULL;
         }
@@ -1893,7 +1942,7 @@ void func_us_801C4BD8(Entity* self) {
     s16* dataPtr;
     s32 volume;
 
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
     }
@@ -1911,7 +1960,7 @@ void func_us_801C4BD8(Entity* self) {
         volume = 127;
     }
 
-    if (volume == 0) {
+    if (!volume) {
         if (D_us_80181108 != 0) {
             D_us_80181108 = 0;
             g_api.PlaySfx(SET_UNK_A6);
@@ -1929,7 +1978,32 @@ void func_us_801C4BD8(Entity* self) {
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4D2C);
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5020);
+void func_us_801C5020(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 12;
+        self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
+        self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
+        self->opacity = 128;
+        self->rotate = 0;
+        self->zPriority = 159;
+        PlaySfxPositional(SFX_UNK_7BE);
+    }
+
+    if (self->params != 0) {
+        self->rotate += 32;
+    } else {
+        self->rotate -= 32;
+    }
+
+    self->opacity += 252;
+    self->posY.val += FIX(0.5);
+
+    if (self->opacity < 8) {
+        DestroyEntity(self);
+    }
+}
 
 void func_us_801C50FC(void) {
     u16* tile;
@@ -1953,7 +2027,7 @@ extern s32 D_us_8018160C[]; // velocityY
 
 void func_us_801C542C(Entity* self) {
     u16 params = self->params;
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = D_us_801815DC[params];
@@ -1976,7 +2050,7 @@ void func_us_801C5518(Entity* self) {
     u16 diff;
     s16* dataPtr;
 
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = 0;
     }
@@ -2000,19 +2074,20 @@ void func_us_801C5518(Entity* self) {
 
 extern Primitive D_us_80181644;
 
-// Function that runs when the player is in the switch room to activate the
-// skeleton ape that can destroy the bridge in underground caverns.
-// Location (X: 21, Y: 33)
-// https://guides.gamercorner.net/sotn/areas/underground-caverns
-
+/**
+ * Function that runs when the player is in the switch room to activate the
+ * skeleton ape that can destroy the bridge in underground caverns.
+ * Location (X: 21, Y: 33)
+ * https://guides.gamercorner.net/sotn/areas/underground-caverns
+ */
 void func_us_801C5628(Entity* self) {
-    Entity* newEnt;
+    Entity* player;
 
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 40;
-        if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] == 0) {
+        if (!g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE]) {
             self->posX.i.hi = 52;
         } else {
             self->posX.i.hi = 44;
@@ -2020,16 +2095,16 @@ void func_us_801C5628(Entity* self) {
     }
 
     // Idk why it wants to store the entity before but it works so ¯\_(ツ)_/¯
-    newEnt = g_Entities;
+    player = &PLAYER;
 
-    if ((((GetPlayerCollisionWith(self, 0x8, 16, 5) & 0x1) &&
-          (g_Player.vram_flag & 0x1)) &&
-         (g_pads->pressed & PAD_LEFT)) &&
+    if ((((GetPlayerCollisionWith(self, 0x8, 16, 5) & 1) &&
+          (g_Player.vram_flag & 1)) &&
+         (g_pads[0].pressed & PAD_LEFT)) &&
         (PLAYER.step == 1)) {
-        if (self->ext.timer.t != 0) { // ext.xxx.unk7C
-            self->ext.timer.t--;
+        if (self->ext.et_801C4520.unk7C != 0) {
+            self->ext.et_801C4520.unk7C--;
         } else {
-            if (self->posX.i.hi >= 45) {
+            if (self->posX.i.hi > 44) {
                 self->posX.i.hi--;
                 PLAYER.posX.i.hi--;
                 if (self->posX.i.hi == 44) {
@@ -2038,27 +2113,42 @@ void func_us_801C5628(Entity* self) {
                     self->step++;
                 }
             }
-            self->ext.timer.t = 2;
+            self->ext.et_801C4520.unk7C = 2;
         }
     }
 
-    if ((self->step == 2) && (newEnt->posX.i.hi >= 129)) {
+    if ((self->step == 2) && (player->posX.i.hi > 128)) {
         g_api.PlaySfxVolPan(SFX_WALL_DEBRIS_A, 127, 8);
-        newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (newEnt != NULL) {
-            CreateEntityFromCurrentEntity(E_MESSAGE_BOX, newEnt);
-            newEnt->posX.i.hi = 128;
-            newEnt->posY.i.hi = 176;
-            newEnt->ext.prim = &D_us_80181644;
-            newEnt->params = 0x100;
+        player = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (player != NULL) {
+            CreateEntityFromCurrentEntity(E_MESSAGE_BOX, player);
+            player->posX.i.hi = 128;
+            player->posY.i.hi = 176;
+            player->ext.prim = &D_us_80181644;
+            player->params = 0x100;
         }
         self->step++;
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C582C);
+void func_us_801C582C(Entity* self) {
+    if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] != 0) {
+        self->entityId = E_SKELETON_APE;
+        self->pfnUpdate = EntitySkeletonApe;
+        EntitySkeletonApe(self);
+    }
+}
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5868);
+void func_us_801C5868(void) {
+    u16* tile;
+    s16 i;
+
+    tile = &g_Tilemap.fg[163];
+
+    for (i = 0; i < 10; i++, tile++) {
+        *tile = 0;
+    }
+}
 
 void func_us_801C58A0(Entity* self) {
     Entity* newEnt;
@@ -2066,13 +2156,13 @@ void func_us_801C58A0(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
-        if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] != 0) {
+        if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE]) {
             func_us_801C5868();
             DestroyEntity(self);
         }
         break;
     case 1:
-        if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] != 0) {
+        if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE]) {
             newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEnt != NULL) {
                 CreateEntityFromCurrentEntity(E_SKELETON_APE, newEnt);
@@ -2094,7 +2184,34 @@ void func_us_801C58A0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C59E0);
+extern u16 D_us_80180F1A[];
+
+void func_us_801C59E0(Entity* self, s16 arg1) {
+    Entity* newEntity;
+
+    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+    if (newEntity != NULL) {
+        CreateEntityFromCurrentEntity(E_SURFACING_WATER, newEntity);
+
+        if (self->ext.et_surfacingWater.unk90 & 2) {
+            newEntity->posY.i.hi = 288 - g_Tilemap.scrollY.i.hi;
+        } else {
+            newEntity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
+        }
+
+        if (self->facingLeft != 0) {
+            newEntity->posX.i.hi += arg1;
+        } else {
+            newEntity->posX.i.hi -= arg1;
+        }
+
+        newEntity->params = 0x8000;
+        newEntity->params = *D_us_80180F1A << 8 | 0x8000;
+        newEntity->ext.et_surfacingWater.unk88 = 0x17;
+        newEntity->zPriority = 0x9B;
+        self->ext.et_surfacingWater.unk8C = 8;
+    }
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5AD4);
 
@@ -2104,7 +2221,7 @@ void func_us_801C6CEC(Entity* self) {
 
     Entity* prev = self - 1;
 
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x1C;
@@ -2156,7 +2273,7 @@ void func_us_801C801C(Entity* self) {
     case 0:
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
-        if (g_CastleFlags[BOATMAN_GATE_OPEN] != 0) {
+        if (g_CastleFlags[BOATMAN_GATE_OPEN]) {
             func_us_801C7FAC();
             DestroyEntity(self);
             return;
@@ -2164,16 +2281,16 @@ void func_us_801C801C(Entity* self) {
         self->animCurFrame = 24;
         return;
     case 1:
-        if (g_CastleFlags[BOATMAN_GATE_OPEN] != 0) {
+        if (g_CastleFlags[BOATMAN_GATE_OPEN]) {
             GetPlayerCollisionWith(self, 16, 56, 3);
             func_us_801C7FAC();
-            self->ext.et_801C801C.unk80 = 0;
+            self->ext.et_surfacingWater.unk80 = 0;
             self->step++;
             return;
         }
         break;
     case 2:
-        if (!(self->ext.et_801C801C.unk80++ & 0xF)) {
+        if (!(self->ext.et_surfacingWater.unk80++ & 15)) {
             PlaySfxPositional(SFX_STONE_MOVE_C);
         }
 
@@ -2181,25 +2298,25 @@ void func_us_801C801C(Entity* self) {
         offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 
         if (offsetY >= 125) {
-            if (self->ext.et_801C801C.unk7C != 0) {
-                self->ext.et_801C801C.unk7C--;
+            if (self->ext.et_surfacingWater.unk7C) {
+                self->ext.et_surfacingWater.unk7C--;
             } else {
                 newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEnt != NULL) {
                     CreateEntityFromCurrentEntity(E_SURFACING_WATER, newEnt);
                     newEnt->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
                     newEnt->posX.i.hi = (s16)(newEnt->posX.i.hi - 16) +
-                                        (self->ext.et_801C801C.unk7E * 8);
+                                        (self->ext.et_surfacingWater.unk7E * 8);
                     newEnt->params = 0x8000;
-                    newEnt->ext.et_801C801C.unk88 = 23;
+                    newEnt->ext.et_surfacingWater.unk88 = 23;
                     newEnt->zPriority = 155;
                 }
 
-                self->ext.et_801C801C.unk7E++;
-                if (self->ext.et_801C801C.unk7E >= 5) {
-                    self->ext.et_801C801C.unk7E = 0;
+                self->ext.et_surfacingWater.unk7E++;
+                if (self->ext.et_surfacingWater.unk7E >= 5) {
+                    self->ext.et_surfacingWater.unk7E = 0;
                 }
-                self->ext.et_801C801C.unk7C = 1;
+                self->ext.et_surfacingWater.unk7C = 1;
             }
         }
 
@@ -2211,6 +2328,17 @@ void func_us_801C801C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C8248);
+void func_us_801C8248(Entity* self) {
+    s32 posX;
+    s32 posY;
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C82B8);
+    if (g_api.TimeAttackController(
+            TIMEATTACK_EVENT_SUCCUBUS_DEFEAT, TIMEATTACK_GET_RECORD)) {
+        posX = self->posX.val;
+        posY = self->posY.val;
+        CreateEntityFromCurrentEntity(E_HEART_DROP, self);
+        self->params = 10;
+        self->posX.val = posX;
+        self->posY.val = posY;
+    }
+}

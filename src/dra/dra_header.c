@@ -22,7 +22,7 @@ void LoadGfxAsync(s32 gfxId);
 void PlaySfx(s16 sfxId);
 s32 func_800EDB58(u8 primType, s32 count);
 void func_800EA538(s32 arg0);
-void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
+void func_800EA5AC(u16 a, u8 r, u8 g, u8 b);
 void func_801027C4(u32 arg0);
 void func_800EB758(
     s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, s8 flipX);
