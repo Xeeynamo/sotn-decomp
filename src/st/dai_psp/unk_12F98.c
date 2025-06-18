@@ -1,0 +1,10 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "../dai/dai.h"
+
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_12F98", func_pspeu_0924A618);
+
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_12F98", func_pspeu_0924A6E8);
+
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_12F98", func_us_801D1204);
+
+INCLUDE_ASM("st/dai_psp/nonmatchings/dai_psp/unk_12F98", func_us_801D1C24);

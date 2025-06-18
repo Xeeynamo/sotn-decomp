@@ -653,6 +653,7 @@ enum Sfx {
     SFX_CLOCK_ROOM_TICK = 1961,
     SFX_UNK_7AF = 0x7Af,
     SFX_UNK_7BE = 0x7BE,
+    SFX_UNK_761 = 0x761,
 
 #if defined(VERSION_PSP) || defined(VERSION_PC)
     /* 0x8E6 */ SFX_VO_MAR_8E6 = 0x8E6,
