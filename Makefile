@@ -209,7 +209,7 @@ format-src: bin/clang-format format-sotn-lint
 	@#    -print0                                             : print only the matching entries, delimit by NULL to
 	@#                                                          ensure files with characters xargs uses as delimiters are
 	@#                                                          properly handled
-	find $(SRC_DIR) $(INCLUDE_DIR) \
+	find $(SRC_DIR) $(INCLUDE_DIR) mods \
         -type d \( -name 3rd -o -name CMakeFiles -o -name gen \) -prune \
         -o \( -type f \( -name '*.c' -o -name '*.h' \) \) \
         -print0 \
@@ -242,7 +242,7 @@ format-symbols-pspeu: format-symbols-pspeu-sort
 format-symbols: format-symbols-us format-symbols-hd format-symbols-pspeu
 
 format-license:
-	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
+	find src/ mods/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/game.h AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/items.h AGPL-3.0-or-later

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <maria.h>
 
 // copied from src/dra/5F60C.c
