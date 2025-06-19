@@ -10,7 +10,7 @@
 # 3. generate disks/sotn_mariapsp.us.bin
 # docker run --rm -v ./disks:/disks sotn-maria:latest
 
-FROM sotn-build:latest
+FROM xeeynamo/sotn-build:latest
 
 USER ubuntu
 WORKDIR /disks
