@@ -1976,7 +1976,7 @@
 | dra    | HandleGameOver                           |      723 |        139 |        | https://decomp.me/scratch/ULCNQ | 1.0   |
 | dra    | EntitySubwpnReboundStone                 |      728 |        126 |        | https://decomp.me/scratch/aYC1O | 0.999 |
 | dra    | EntityGiantSpinningCross                 |      729 |         63 |        | https://decomp.me/scratch/SwVao | 0.999 |
-| tt_000 | UpdateBatAttackMode                      |      730 |         65 |        |                                 |       |
+| tt_000 | UpdateBatAttackMode                      |      730 |         65 |        | https://decomp.me/scratch/xmphp | 0.993 |
 | ric    | RicEntityCrashAxe                        |      733 |         50 |        | https://decomp.me/scratch/Vn4Gj | 0.999 |
 | lib    | EntityLibrarianChair                     |      733 |        124 |        |                                 |       |
 | lib    | func_us_801B56E4                         |      739 |         81 | Yes    |                                 |       |
@@ -2122,7 +2122,7 @@
 | dra    | EntityMist                               |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
 | st0    | ST0_EntityCutscene                       |     2187 |        194 | Yes    | https://decomp.me/scratch/bgWcS | 0.92  |
 | no3    | NO3_EntityCutscene                       |     2232 |        204 | Yes    | https://decomp.me/scratch/j05ot | 0.999 |
-| dai    | DAI_EntityCutscene                       |     2235 |        203 | Yes    |                                 |       |
+| dai    | DAI_EntityCutscene                       |     2235 |        203 | Yes    | https://decomp.me/scratch/myZc1 | 0.885 |
 | no4    | func_pspeu_09256330                      |     2580 |        253 | Yes    | https://decomp.me/scratch/JQPXI | 0.997 |
 | dra    | EntityAlucard                            |     2716 |        467 | Yes    | https://decomp.me/scratch/2yDg8 | 0.994 |
 | dra    | EntityPlayerBlinkWhite                   |     2950 |        257 | Yes    | https://decomp.me/scratch/GoMQZ | 0.996 |
