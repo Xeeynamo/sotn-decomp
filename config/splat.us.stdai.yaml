@@ -64,6 +64,8 @@ segments:
       - [0x2030, .data, e_skelerang]
       - [0x2318, .data, e_mist_door]
       - [0x2358, data] # DAI_rooms
+      - [0x242C, .data, e_clouds]
+      - [0x2564, data] # unk_59168
       - [0x3FE3C, .rodata, e_breakable]
       - [0x3FE5C, .rodata, unk_408AC]
       #- [0x3FEA8, .rodata, unk_408AC] # Splat suggested
