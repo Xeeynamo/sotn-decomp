@@ -62,7 +62,7 @@ segments:
       - [0xFB68, c, dai_psp/unk_FB68]
       - [0x11750, c, dai/e_bone_pillar]
       - [0x12F98, c, dai_psp/unk_12F98]
-      - [0x142D8, c, dai_psp/e_room_fg]
+      - [0x142D8, c, dai/e_room_fg]
       - [0x143F0, c, dai_psp/unk_143F0]
       - [0x15A88, c, dai/st_common]
       - [0x174B8, c, dai_psp/prim_helpers]
@@ -87,7 +87,9 @@ segments:
       - [0x24C90, .data, dai/st_collision]
       - [0x25140, .data, dai/e_mist_door]
       - [0x25440, .data, dai/e_bone_pillar]
-      - [0x25520, data]
+      - [0x25520, data] # unk_12F98
+      - [0x255F8, .data, dai/e_room_fg]
+      - [0x25698, data] # unk_143F0
       - [0x256C0, .data, dai/st_common]
       - [0x258C0, data]
       - [0x2B8E0, .data, dai/e_red_door_tiles]
