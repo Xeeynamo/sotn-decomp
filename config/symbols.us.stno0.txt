@@ -1,3 +1,7 @@
+NO0_spriteBanks = 0x8018002C;
+NO0_cluts = 0x8018014C;
+NO0_rooms_layers = 0x801804B0;
+NO0_gfxBanks = 0x8018074C;
 NO0_pStObjLayoutHorizontal = 0x80180778;
 NO0_pStObjLayoutVertical = 0x8018084C;
 D_80180FE0 = 0x801810D0;
@@ -15,7 +19,7 @@ anim_bird_cage = 0x80181C5C;
 anim_gear_1 = 0x80181C78;
 anim_gear_2 = 0x80181C84;
 g_StoneDoorTiles = 0x80181C90;
-sprites_nz0_3 = 0x801BEBB0;
+NO0_rooms = 0x801827E0;
 ctulhu_shockwave_uvs = 0x801C11B0;
 Random = 0x801C3788;
 Update = 0x801C37B8;
