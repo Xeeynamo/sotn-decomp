@@ -197,7 +197,7 @@ format: format-src format-tools format-symbols format-license
 .PHONY: lint format-sotn-lint
 lint: format-sotn-lint
 format-sotn-lint:
-	$(SOTNLINT) || echo lint failed 1>&2
+	$(SOTNLINT) || ( echo lint failed 1>&2 && exit 1 )
 
 .PHONY: format-src
 format-src: bin/clang-format format-sotn-lint

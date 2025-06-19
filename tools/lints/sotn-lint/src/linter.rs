@@ -29,7 +29,7 @@ impl CLang for String {
 /// using the appropriate `Entity` field.
 pub struct EntityRangeLinter;
 
-static SYMBOL_PATTERN: Lazy<Regex> = Lazy::new(|| Regex::new(r"D_(?:[a-zA-F0-9]*_)?([A-F0-9]{8})").unwrap());
+static SYMBOL_PATTERN: Lazy<Regex> = Lazy::new(|| Regex::new(r"(D_(?:[a-zA-F0-9]*_)?([A-F0-9]{8}))").unwrap());
 
 impl Linter for EntityRangeLinter {
     fn check_line(&self, line: &str) -> Result<(), String> {
@@ -39,12 +39,13 @@ impl Linter for EntityRangeLinter {
             return Ok(());
         };
 
-        let addr_str = captures.get(1).map(|m| m.as_str().to_string());
+        let addr_str = captures.get(2).map(|m| m.as_str().to_string());
         let addr = u32::from_str_radix(&addr_str.clone().unwrap(), 16).unwrap();
 
         if (addr >= 0x800733D8 && addr < 0x8007EF1C) ||
             (addr >= 0x091e1680 && addr < 0x91ED1C4) {
-            return Err("global should be entity".to_string())
+            let var = captures.get(1).map(|m| m.as_str().to_string()).expect("entity global");
+            return Err(format!("`{}' should index into g_Entities", var));
         }
 
         Ok(())
