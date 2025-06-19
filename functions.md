@@ -1612,7 +1612,7 @@
 | ric    | RicStepSlide                             |      256 |         45 |        |                                 |       |
 | ric    | RicEntityHitByHoly                       |      257 |         29 |        |                                 |       |
 |        | FindValidTarget                          |      257 |         36 |        | https://decomp.me/scratch/Klemw | 1.0   |
-| no4    | func_pspeu_09241E38                      |      258 |         19 |        |                                 |       |
+| no4    | func_pspeu_09241E38                      |      258 |         19 |        | https://decomp.me/scratch/xIWVO | 0.854 |
 | no4    | func_pspeu_09238E18                      |      258 |         30 |        | https://decomp.me/scratch/ab0nd | 0.997 |
 | dra    | func_800E414C                            |      258 |         36 |        | https://decomp.me/scratch/yLuWA | 0.994 |
 | dai    | func_us_801C3164                         |      260 |         36 |        |                                 |       |
@@ -2089,7 +2089,7 @@
 | lib    | EntityCorpseweed                         |     1267 |        134 | Yes    | https://decomp.me/scratch/ZHUBn | 0.999 |
 | st0    | ST0_HitDetection                         |     1332 |        147 |        |                                 |       |
 | dra    | AlucardHandleDamage                      |     1338 |        206 | Yes    |                                 |       |
-| dai    | EntitySealedDoor                         |     1360 |        119 | Yes    |                                 |       |
+| dai    | EntitySealedDoor                         |     1360 |        119 | Yes    | https://decomp.me/scratch/opYtH | 0.988 |
 | no3    | EntityWarg                               |     1392 |        193 | Yes    | https://decomp.me/scratch/IxuOy | 0.999 |
 | st0    | EntityDracula                            |     1396 |        179 | Yes    | https://decomp.me/scratch/sc9l4 | 0.999 |
 | dra    | func_8010EDB8                            |     1516 |        244 |        | https://decomp.me/scratch/i5zeD | 0.994 |
