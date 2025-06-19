@@ -6,6 +6,7 @@
 enum DaiPalette {
     PAL_NONE = 0,
     PAL_UNKC9 = 0xC9,
+    PAL_UNKCA = 0xCA,
     PAL_UNK200 = 0x200,
     PAL_UNK215 = 0x215,
     PAL_BONE_PILLAR = 0x216,
