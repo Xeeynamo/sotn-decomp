@@ -2122,7 +2122,7 @@
 | dra    | EntityMist                               |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
 | st0    | ST0_EntityCutscene                       |     2187 |        194 | Yes    | https://decomp.me/scratch/bgWcS | 0.92  |
 | no3    | NO3_EntityCutscene                       |     2232 |        204 | Yes    | https://decomp.me/scratch/j05ot | 0.999 |
-| dai    | DAI_EntityCutscene                       |     2235 |        203 | Yes    | https://decomp.me/scratch/myZc1 | 0.885 |
+| dai    | DAI_EntityCutscene                       |     2235 |        203 | Yes    | https://decomp.me/scratch/myZc1 | 0.893 |
 | no4    | func_pspeu_09256330                      |     2580 |        253 | Yes    | https://decomp.me/scratch/JQPXI | 0.997 |
 | dra    | EntityAlucard                            |     2716 |        467 | Yes    | https://decomp.me/scratch/2yDg8 | 0.994 |
 | dra    | EntityPlayerBlinkWhite                   |     2950 |        257 | Yes    | https://decomp.me/scratch/GoMQZ | 0.996 |
