@@ -4757,7 +4757,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
         while (*str >= 8) {
             s_8 = 0;
 #ifdef VERSION_PSP
-            ch = g_api.func_ptr_91CF870((char*)str, &sp3f);
+            ch = g_api.func_psp_0913F960((char*)str, &sp3f);
 #else
             ch = *str;
 #endif
@@ -4778,7 +4778,7 @@ void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
                     str += sp3f - 1;
                 }
             }
-            chPix = (u8*)g_api.func_ptr_91CF86C(ch, 1);
+            chPix = (u8*)g_api.func_psp_0913FA28(ch, 1);
 #else
                 ch = *str++ | (ch << 8);
                 if (ch == DOUBLE_SPACE) {

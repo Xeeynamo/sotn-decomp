@@ -75,7 +75,7 @@ u16* func_80106A28(u32 arg0, u16 kind);
 void func_80118894(Entity* self);
 Entity* func_80118970(void);
 s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft);
-u32 UpdateUnarmedAnim(s8* frameProps, u16** frames);
+s32 UpdateUnarmedAnim(s8* frameProps, u16** frames);
 void PlayAnimation(s8* frameProps, AnimationFrame** frames);
 void func_80118C28(s32 arg0);
 void func_8010E168(s32 arg0, s16 arg1);
@@ -162,7 +162,7 @@ bool InitGame(struct InitGameParams* params) {
     api.PlaySfx = PlaySfx;
     api.func_800EDB58 = func_800EDB58;
     api.func_800EA538 = func_800EA538;
-    api.g_pfn_800EA5AC = func_800EA5AC;
+    api.func_800EA5AC = func_800EA5AC;
     api.func_801027C4 = func_801027C4;
     api.func_800EB758 = func_800EB758;
     api.CreateEntFactoryFromEntity = CreateEntFactoryFromEntity;
@@ -211,8 +211,8 @@ bool InitGame(struct InitGameParams* params) {
     api.DebugInputWait = DebugInputWait;
     api.CalcDealDamageMaria = func_800FD664;
     api.CalcPlayerDamageMaria = CalcPlayerDamage;
-    api.func_ptr_91CF86C = NULL;
-    api.func_ptr_91CF870 = NULL;
+    api.func_psp_0913FA28 = NULL;
+    api.func_psp_0913F960 = NULL;
     api.unused13C = NULL;
     memset(&g_ApiInit.o, 0, sizeof(Overlay));
     memcpy(&g_ApiInit, &api, sizeof(g_ApiInit));
