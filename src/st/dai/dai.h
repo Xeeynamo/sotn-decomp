@@ -5,10 +5,10 @@
 #include "stage.h"
 
 #define STAGE_IS_DAI
-
 #define OVL_EXPORT(x) DAI_##x
 
 #define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
+#define SEALED_DOOR_PALETTE 0x245
 
 enum DaiEntities {
     E_NONE,
