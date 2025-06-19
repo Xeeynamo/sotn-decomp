@@ -39,6 +39,8 @@ files:
           - [0x25234, headergfx, D_800C5190]
           - [0x252B8, headergfx, D_800C5214]
           - [0x2539C, skip]
+          - [0x253C8, rawgfx, g_GfxEquipIcon, 16, 5120, 4]
+          - [0x2F3C8, skip]
           - [0x36978, palette, D_800D68D4, 16]
           - [0x36998, palette, D_800D68F4, 16]
           - [0x369B8, palette, D_800D6914, 16]
