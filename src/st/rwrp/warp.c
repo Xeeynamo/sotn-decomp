@@ -266,7 +266,7 @@ void EntityRWarpRoom(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
-        g_api.g_pfn_800EA5AC(0, 0, 0, 0);
+        g_api.func_800EA5AC(0, 0, 0, 0);
         self->step++;
         // fallthrough
     case 7:

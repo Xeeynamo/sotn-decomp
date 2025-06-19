@@ -1079,8 +1079,7 @@ void func_us_801CA014(void) {
     if (D_us_801D3D4C) {
         D_us_801D3D4C--;
         if (D_us_801D3D4C & 1) {
-            g_api.g_pfn_800EA5AC(
-                1, D_us_801D3D50, D_us_801D3D54, D_us_801D3D58);
+            g_api.func_800EA5AC(1, D_us_801D3D50, D_us_801D3D54, D_us_801D3D58);
         }
     }
 

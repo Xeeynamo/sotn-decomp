@@ -3557,7 +3557,8 @@ block_4:
         D_80137608 = 0;
         if (g_Status.relics[id] & RELIC_FLAG_FOUND) {
             D_80137608 = 1;
-            LoadEquipIcon(g_RelicDefs[id].unk08, g_RelicDefs[id].unk0A, 0x1F);
+            LoadEquipIcon(
+                g_RelicDefs[id].icon, g_RelicDefs[id].iconPalette, 0x1F);
         }
         if (g_pads[0].tapped & PAD_MENU_BACK) {
             MenuShow(MENU_DG_MAIN);

@@ -1078,8 +1078,7 @@ void func_us_801C9624(void) {
     if (D_us_801D3324) {
         D_us_801D3324--;
         if (D_us_801D3324 & 1) {
-            g_api.g_pfn_800EA5AC(
-                1, D_us_801D3328, D_us_801D332C, D_us_801D3330);
+            g_api.func_800EA5AC(1, D_us_801D3328, D_us_801D332C, D_us_801D3330);
         }
     }
 
