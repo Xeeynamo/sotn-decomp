@@ -607,7 +607,7 @@ typedef union {
 } unionD_800ACFB4;
 extern unionD_800ACFB4 D_800ACFB4[];
 extern s16* D_800CF324[];
-extern s16* D_800CFE48[18];
+extern s16* D_800CFE48[];
 extern PfnEntityUpdate D_800AD0C4[];
 extern s16 D_800AD54C[6];
 extern s32 D_800AD558[6];

@@ -1,13 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
-typedef struct {
-    u16 frame;
-    s16 pivotX;
-    s16 pivotY;
-    u16 clut;
-} AluFrame;
-
 static AluFrame D_800CF748;
 static AluFrame D_800CF750;
 static AluFrame D_800CF758;

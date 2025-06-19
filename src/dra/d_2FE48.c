@@ -1,45 +1,46 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
-static s16 D_800CFE90[4];
-static s16 D_800CFE98[4];
-static s16 D_800CFEA0[4];
-static s16 D_800CFEA8[4];
-static s16 D_800CFEB0[4];
-static s16 D_800CFEB8[4];
-static s16 D_800CFEC0[4];
-static s16 D_800CFEC8[4];
-static s16 D_800CFED0[4];
-static s16 D_800CFED8[4];
-static s16 D_800CFEE0[4];
-static s16 D_800CFEE8[4];
-static s16 D_800CFEF0[4];
-static s16 D_800CFEF8[4];
-static s16 D_800CFF00[4];
-static s16 D_800CFF08[4];
+static AluFrame D_800CFE90;
+static AluFrame D_800CFE98;
+static AluFrame D_800CFEA0;
+static AluFrame D_800CFEA8;
+static AluFrame D_800CFEB0;
+static AluFrame D_800CFEB8;
+static AluFrame D_800CFEC0;
+static AluFrame D_800CFEC8;
+static AluFrame D_800CFED0;
+static AluFrame D_800CFED8;
+static AluFrame D_800CFEE0;
+static AluFrame D_800CFEE8;
+static AluFrame D_800CFEF0;
+static AluFrame D_800CFEF8;
+static AluFrame D_800CFF00;
+static AluFrame D_800CFF08;
 
-s16* D_800CFE48[] = {
-    NULL,       D_800CFE90, D_800CFE98, D_800CFEA0, D_800CFEA8, D_800CFEB0,
-    D_800CFEB8, D_800CFEC0, D_800CFEC8, D_800CFED0, D_800CFED8, D_800CFEE0,
-    D_800CFEE8, D_800CFEF0, D_800CFEF8, D_800CFF00, D_800CFF08, NULL,
+AluFrame* D_800CFE48[] = {
+    NULL,        &D_800CFE90, &D_800CFE98, &D_800CFEA0, &D_800CFEA8,
+    &D_800CFEB0, &D_800CFEB8, &D_800CFEC0, &D_800CFEC8, &D_800CFED0,
+    &D_800CFED8, &D_800CFEE0, &D_800CFEE8, &D_800CFEF0, &D_800CFEF8,
+    &D_800CFF00, &D_800CFF08, NULL,
 };
 
-static s16 D_800CFE90[] = {0x8000, -22, -48, 0};
-static s16 D_800CFE98[] = {0x8001, -22, -47, 0};
-static s16 D_800CFEA0[] = {0x8002, -22, -40, 0};
-static s16 D_800CFEA8[] = {0x8003, -22, -41, 0};
-static s16 D_800CFEB0[] = {0x8004, -22, -30, 0};
-static s16 D_800CFEB8[] = {0x8004, -22, -31, 0};
-static s16 D_800CFEC0[] = {0x8005, -22, -30, 0};
-static s16 D_800CFEC8[] = {0x8003, -22, -41, 0};
-static s16 D_800CFED0[] = {0x8002, -22, -41, 0};
-static s16 D_800CFED8[] = {0x8001, -22, -49, 0};
-static s16 D_800CFEE0[] = {0x8000, -22, -51, 0};
-static s16 D_800CFEE8[] = {0x8001, -22, -51, 0};
-static s16 D_800CFEF0[] = {0x8002, -22, -42, 0};
-static s16 D_800CFEF8[] = {0x8003, -22, -41, 0};
-static s16 D_800CFF00[] = {0x8004, -22, -29, 0};
-static s16 D_800CFF08[] = {0x8005, -22, -29, 0};
+static AluFrame D_800CFE90 = {0x8000, -22, -48, 0};
+static AluFrame D_800CFE98 = {0x8001, -22, -47, 0};
+static AluFrame D_800CFEA0 = {0x8002, -22, -40, 0};
+static AluFrame D_800CFEA8 = {0x8003, -22, -41, 0};
+static AluFrame D_800CFEB0 = {0x8004, -22, -30, 0};
+static AluFrame D_800CFEB8 = {0x8004, -22, -31, 0};
+static AluFrame D_800CFEC0 = {0x8005, -22, -30, 0};
+static AluFrame D_800CFEC8 = {0x8003, -22, -41, 0};
+static AluFrame D_800CFED0 = {0x8002, -22, -41, 0};
+static AluFrame D_800CFED8 = {0x8001, -22, -49, 0};
+static AluFrame D_800CFEE0 = {0x8000, -22, -51, 0};
+static AluFrame D_800CFEE8 = {0x8001, -22, -51, 0};
+static AluFrame D_800CFEF0 = {0x8002, -22, -42, 0};
+static AluFrame D_800CFEF8 = {0x8003, -22, -41, 0};
+static AluFrame D_800CFF00 = {0x8004, -22, -29, 0};
+static AluFrame D_800CFF08 = {0x8005, -22, -29, 0};
 
 #include "gen/D_800CFF10.h"
 

@@ -340,21 +340,22 @@ GfxBank** g_GfxSharedBank[] = {
 };
 #endif
 
-extern s16* D_800CF324[];
-extern s16* D_800CFF10[];
-extern s16* D_800D0F68[];
-extern s16* D_800D2BF4[];
-extern s16* D_800D2CF8[];
-extern s16* D_800D2FFC[];
-extern s16* D_800D3428[];
-extern s16* D_800D34B8[];
-extern s16* D_800D372C[];
-extern s16* D_800D3B88[];
-extern s16* D_800D5628[];
-extern s16* D_800D327C[];
-extern s16* D_800D56AC[];
-extern s16* D_800D5868[];
-extern s16* D_800D684C[];
+extern s16* D_800CF324[]; // AluFrame
+extern s16* D_800CFF10[]; // SpritePart
+extern s16* D_800D0F68[]; // SpritePart
+extern s16* D_800D2BF4[]; // SpritePart
+extern s16* D_800D2CF8[]; // SpritePart
+extern s16* D_800D2FFC[]; // SpritePart
+extern s16* D_800D3428[]; // SpritePart
+extern s16* D_800D34B8[]; // SpritePart
+extern s16* D_800D372C[]; // SpritePart
+extern s16* D_800D3B88[]; // SpritePart
+extern s16* D_800D5628[]; // SpritePart
+extern s16* D_800D327C[]; // SpritePart
+extern s16* D_800CFE48[]; // AluFrame
+extern s16* D_800D56AC[]; // SpritePart
+extern s16* D_800D5868[]; // SpritePart
+extern s16* D_800D684C[]; // SpritePart
 
 s16** D_800A3B70[] = {
     NULL,       D_800CF324, D_800CFF10, D_800D0F68, D_800D2BF4, D_800D2CF8,
