@@ -44,3 +44,8 @@ $(OVERLAY): $(TARGET)
 
 clean:
 	rm $(OVERLAY) $(MAP) $(BUILD_DIR)/symbols.txt $(ASSETS) $(TARGET) $(OBJS)
+
+disk: build
+	cd $(ROOT_DIR) && make extract_disk
+	cp $(ROOT_DIR)/disks/sotn.$(VERSION).bin $(ROOT_DIR)/disks/sotn_mariapsp.$(VERSION).bin
+	sotn-disk inject $(ROOT_DIR)/disks/sotn_mariapsp.$(VERSION).bin BIN/RIC.BIN $(OVERLAY)
