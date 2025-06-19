@@ -367,7 +367,7 @@ void EntityBonePillarFireBreath(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         self->ext.et_bonePillar.prim = prim;
         prim->tpage = 0x13;
-        prim->clut = 0x221;
+        prim->clut = PAL_BONE_PILLAR_FIRE;
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_UNK02;
         posX = self->posX.i.hi;
