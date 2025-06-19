@@ -3,6 +3,23 @@
 
 #define OVL_EXPORT(x) DAI_##x
 
+enum DaiPalette {
+    PAL_NONE = 0,
+    PAL_UNKC9 = 0xC9,
+    PAL_UNKCA = 0xCA,
+    PAL_UNK200 = 0x200,
+    PAL_UNK215 = 0x215,
+    PAL_BONE_PILLAR = 0x216,
+    PAL_BONE_PILLAR_FIRE = 0x221,
+    PAL_UNK22A = 0x22A,
+    PAL_UNK22B = 0x22B,
+    PAL_BAT = 0x22C,
+    PAL_UNK22F = 0x22F,
+    PAL_UNK232 = 0x232,
+    PAL_UNK234 = 0x234,
+    PAL_UNK235 = 0x235,
+};
+
 enum DaiEntities {
     E_NONE,
     E_BREAKABLE,              // EntityUnkBreakable,
