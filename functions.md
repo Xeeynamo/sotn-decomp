@@ -848,7 +848,7 @@
 | dra    | MenuWindowColorsDraw                     |       66 |          6 |        | https://decomp.me/scratch/LCKtX | 0.992 |
 | chi    | EntityIsNearPlayer                       |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
 | dai    | EntityIsNearPlayer                       |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
-| dai    | SealedDoorIsNearPlayer                   |       66 |          7 |        | https://decomp.me/scratch/fBs1i | 0.986 |
+| dai    | SealedDoorIsNearPlayer                   |       66 |          7 |        | https://decomp.me/scratch/fBs1i | 0.997 |
 | lib    | func_psp_0923E498                        |       66 |          7 |        |                                 |       |
 | no3    | func_pspeu_09247BB8                      |       66 |          7 |        |                                 |       |
 | no4    | EntityIsNearPlayer                       |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
