@@ -86,8 +86,7 @@ MWCCGAP_APP     := $(TOOLS_DIR)/mwccgap/mwccgap.py
 DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
 SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
-SOTNDISK_DIR	:= $(TOOLS_DIR)/sotn-disk/
-SOTNDISK        := $(GOPATH)/bin/sotn-disk
+SOTNDISK        := bin/sotn-disk
 SOTNASSETS      := bin/sotn-assets
 
 # Directories
@@ -459,7 +458,7 @@ $(GO):
 	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz
 	rm go1.22.4.linux-amd64.tar.gz
 $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
-	cd tools/sotn-disk; $(GO) install
+	$(GO) build -C tools/sotn-disk -o ../../$@ .
 $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
 	$(GO) build -C tools/sotn-assets -o ../../$@ .
 
