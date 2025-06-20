@@ -9,8 +9,8 @@ extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern u_long* OVL_EXPORT(gfxBanks)[];
 void UpdateStageEntities();
 
-extern u8* D_us_80184434[0x34C];
-extern u8* D_us_801AAE4C[6];
+extern u8* g_SpriteSheet[0x34C];
+extern u8* g_PlOvlDopBatSpritesheet[6];
 
 AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .Update = Update,
@@ -24,8 +24,8 @@ AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
-    .unk2C = D_us_80184434,
-    .unk30 = D_us_801AAE4C,
+    .unk2C = g_SpriteSheet,
+    .unk30 = g_PlOvlDopBatSpritesheet,
 };
 
 extern s16* D_us_801B0B50[];

@@ -95,6 +95,7 @@ void func_us_801B3690(Entity* self) {
 
     case 4:
         if (D_us_801805B8 & 2) {
+            // BUG! Sets Doppleganger 10 defeat flag instead of Doppleganger 40
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, TIMEATTACK_SET_RECORD);
             self->step++;
@@ -395,8 +396,214 @@ void func_us_801B40A8(Entity* self) {
     }
 }
 
-// light effects
-INCLUDE_ASM("boss/rbo5/nonmatchings/doors", func_us_801B4210);
+extern s32 D_us_80180604[]; // Playstation Format (20.12) Fixed
+extern s32 D_us_801D26D4;
+extern s32 D_us_801D26D8;
+extern s32 D_us_801D26DC;
+
+void func_us_801B4210(Entity* self) {
+    Primitive* prim;
+    Primitive* lastPrim;
+    s32 primIndex;
+    s32 i;
+    s32 angle;
+    s32 moveX;
+    s32 moveY;
+
+    s16 xOffset;
+    s16 posX;
+    s16 posY;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitInteractable);
+        break;
+
+    case 1:
+        if (self->ext.et_801BE2C8.unk84) {
+            self->step++;
+            self->ext.et_801BE2C8.unk84 = 0;
+        }
+        break;
+
+    case 2:
+        primIndex = g_api.func_800EDB58(0x11, 0x30);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.prim = prim;
+            while (prim != NULL) {
+                prim->r0 = prim->g0 = prim->b0 = 8;
+                prim->priority = 0xD0;
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+                lastPrim = prim;
+                prim = prim->next;
+            }
+            self->ext.et_801BE2C8.unk80 = lastPrim;
+        } else {
+            DestroyEntity(self);
+            return;
+        }
+        self->step++;
+        break;
+
+    case 3:
+
+        xOffset = (self - 1)->ext.et_801BDA0C.unk80 / FIX(1.0);
+        if (xOffset < 0) {
+            xOffset = -xOffset;
+        }
+
+        posX = self->posX.i.hi;
+        posY = self->posY.i.hi - 0x28;
+        prim = self->ext.prim;
+        for (i = 0; i < 32; i++) {
+            prim->x0 = posX - xOffset - 0x20 + i;
+            prim->y0 = posY - 0x20 + i;
+            prim->u0 = xOffset * 2 + 0x40 - i * 2;
+            prim->v0 = 0x94 - i * 2;
+            prim = prim->next;
+        }
+
+        while (prim != NULL) {
+            prim->x0 = posX - xOffset;
+            prim->y0 = posY;
+            prim->u0 = xOffset * 2;
+            prim->v0 = 0x54;
+            prim = prim->next;
+        }
+
+        lastPrim = self->ext.et_801BE2C8.unk80;
+        if (self->ext.et_801BE2C8.unk84) {
+            lastPrim->x0 = 0;
+            lastPrim->y0 = 0;
+            lastPrim->u0 = 0xFF;
+            lastPrim->v0 = 0xFF;
+            if (lastPrim->r0 < 248) {
+                lastPrim->r0 += 8;
+                lastPrim->g0 = lastPrim->b0 = lastPrim->r0;
+            } else {
+                (self + 1)->ext.et_801BE2C8.unk84 = 1;
+                self->step++;
+            }
+        }
+        break;
+
+    case 4:
+        prim = self->ext.prim;
+        prim->type = PRIM_TILE;
+        prim->r0 = prim->b0 = prim->g0 = 0xFF;
+        prim->priority = 0x40;
+        prim = prim->next;
+
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
+            prim = prim->next;
+        }
+
+        prim = self->ext.et_801BE2C8.unk80;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+        CreateEntityFromEntity(E_ID_16, self, &DOPPLEGANGER);
+        // BUG! Sets Doppleganger 10 defeat flag instead of Doppleganger 40
+        g_api.TimeAttackController(
+            TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, TIMEATTACK_SET_VISITED);
+        (self + 1)->ext.et_801BE2C8.unk84 = 1;
+        self->step++;
+        break;
+
+    case 5:
+        lastPrim = self->ext.et_801BE2C8.unk80;
+
+        if (lastPrim->r0 > 8) {
+            lastPrim->r0 -= 8;
+            lastPrim->g0 = lastPrim->b0 = lastPrim->r0;
+            break;
+        }
+        g_api.FreePrimitives(self->primIndex);
+        primIndex = g_api.func_800EDB58(4, 0x10);
+        if (primIndex == -1) {
+            return;
+        }
+
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+        moveY = self->posY.i.hi;
+        moveX = self->posX.i.hi;
+
+        for (i = 0; i < 16; i++) {
+            angle = i << 8;
+            prim->x0 = moveX + (((rcos(angle) >> 4) * 64) >> 8);
+            prim->y0 = moveY - (((rsin(angle) >> 4) * 64) >> 8);
+            prim->u0 = 32 + (((rcos(angle) >> 4) * 0x1E) >> 8);
+            prim->v0 = 0xE0 - (((rsin(angle) >> 4) * 0x1E) >> 8);
+
+            angle = (i + 1) << 8;
+            prim->x1 = moveX + (((rcos(angle) >> 4) * 64) >> 8);
+            prim->y1 = moveY - (((rsin(angle) >> 4) * 64) >> 8);
+            prim->u1 = 32 + (((rcos(angle) >> 4) * 0x1E) >> 8);
+            prim->v1 = 0xE0 - (((rsin(angle) >> 4) * 0x1E) >> 8);
+
+            prim->y2 = prim->y3 = moveY;
+            prim->x2 = prim->x3 = moveX;
+            prim->u2 = prim->u3 = 0x20;
+            prim->v2 = prim->v3 = 0xE0;
+
+            prim->tpage = 0x1A;
+            prim->clut = 0x15F;
+            prim->priority = 0x40;
+            prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_UNK02;
+            prim = prim->next;
+        }
+        D_us_801D26D4 = 0x100;
+        self->step++;
+    case 6:
+        // same as the warp room background
+        D_us_801D26D8 += 16;
+        D_us_801D26DC = (rsin(D_us_801D26D8) >> 8) + 0xD0;
+        if (D_us_801D26DC < 0) {
+            D_us_801D26DC = 0;
+        }
+        if (D_us_801D26DC > 0xFF) {
+            D_us_801D26DC = 0xFF;
+        }
+
+        D_us_801D26D4 = (rcos(D_us_801D26D8) >> 8) + 0xD0;
+
+        prim = self->ext.prim;
+
+        for (i = 0; i < 16; i++) {
+            angle = D_us_80180604[(i + 0) % 16];
+            prim->r0 =
+                ((rsin(angle) + FIX(1.0 / 16)) >> 6) * D_us_801D26D4 / 256;
+            angle = D_us_80180604[(i + 5) % 16];
+            prim->g0 =
+                ((rsin(angle) + FIX(1.0 / 16)) >> 6) * D_us_801D26D4 / 256;
+            angle = D_us_80180604[(i + 10) % 16];
+            prim->b0 =
+                ((rsin(angle) + FIX(1.0 / 16)) >> 6) * D_us_801D26D4 / 256;
+            angle = D_us_80180604[(i + 1) % 16];
+            prim->r1 =
+                ((rsin(angle) + FIX(1.0 / 16)) >> 6) * D_us_801D26D4 / 256;
+            angle = D_us_80180604[(i + 6) % 16];
+            prim->g1 =
+                ((rsin(angle) + FIX(1.0 / 16)) >> 6) * D_us_801D26D4 / 256;
+            angle = D_us_80180604[(i + 11) % 16];
+            prim->b1 =
+                ((rsin(angle) + FIX(1.0 / 16)) >> 6) * D_us_801D26D4 / 256;
+
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
+                D_us_801D26DC;
+
+            D_us_80180604[i] += 32;
+            prim = prim->next;
+        }
+        break;
+    }
+}
 
 extern s16 D_us_80180644[];
 extern s16 D_us_8018066C[];
@@ -686,6 +893,8 @@ void func_us_801B5070(Entity* self) {
             if (self->params != 1) {
                 self->step++;
             } else {
+                // BUG! Sets Doppleganger 10 defeat flag instead of Doppleganger
+                // 40
                 g_api.TimeAttackController(
                     TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT,
                     TIMEATTACK_SET_RECORD);

@@ -193,9 +193,14 @@ help: ##@ Print listing of key targets with their descriptions
 format: ##@ Format source code, clean symbols, other linting
 format: format-src format-tools format-symbols format-license
 
+
+.PHONY: lint format-sotn-lint
+lint: format-sotn-lint
+format-sotn-lint:
+	$(SOTNLINT) || ( echo lint failed 1>&2 && exit 1 )
+
 .PHONY: format-src
-format-src: bin/clang-format
-	cargo run --release --manifest-path ./tools/lints/sotn-lint/Cargo.toml ./src
+format-src: bin/clang-format format-sotn-lint
 	@# find explainer:
 	@#    find $(SRC_DIR) $(INCLUDE_DIR)                      : look in src and include
 	@#    -type d \( -name 3rd -o -name CMakeFiles \) -prune  : if an entry is both a directory and 3rd or CMakeFiles

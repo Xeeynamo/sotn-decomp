@@ -9,8 +9,8 @@ s32 func_801B3164(void) {
     s32 port;
     u32 block;
 
-    FntPrint(D_801A7AF8, g_MemCardRStep, g_MemCardRStepSub);
-    FntPrint(D_801A7B08, g_MemCardRetryCount);
+    FntPrint(D_801A7AF8, g_MemCardRStep, g_MemCardRStepSub); // sotn-lint-ignore
+    FntPrint(D_801A7B08, g_MemCardRetryCount);               // sotn-lint-ignore
 
     port = g_MemCardRStepSub / 15;
     block = g_MemCardRStepSub % 15;
@@ -152,8 +152,8 @@ s32 TryLoadSaveData(void) {
     s32 temp_v0;
     s32 blockId;
 
-    FntPrint(D_801A7AF8, g_MemCardRStep, g_MemCardRStepSub);
-    FntPrint(D_801A7B08, g_MemCardRetryCount);
+    FntPrint(D_801A7AF8, g_MemCardRStep, g_MemCardRStepSub); // sotn-lint-ignore
+    FntPrint(D_801A7B08, g_MemCardRetryCount);               // sotn-lint-ignore
 
     nPort = g_MemCardRStepSub / 15;
     nSlot = g_MemCardRStepSub % 15;
@@ -255,7 +255,7 @@ s32 func_801B3A94(s32 arg0) {
 
     FntPrint("\nrstep:%d,%d,%d\n", g_MemCardRStep,
              (D_801BAFFC * 15) + D_801BB000, (D_801BB004 * 15) + D_801BB008);
-    FntPrint(D_801A7B08, g_MemCardRetryCount);
+    FntPrint(D_801A7B08, g_MemCardRetryCount); // sotn-lint-ignore
     switch (g_MemCardRStep) {
     case 0:
         MemcardInit();

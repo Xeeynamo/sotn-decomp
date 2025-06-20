@@ -11,14 +11,13 @@ extern s32 g_HandId;
 #define g_Animset2 w_018_2
 #include "sfx.h"
 
-extern const char D_82000_8017A73C[]; // "\no\n"
-extern s32 D_82000_8017B1B4;          // g_DebugWaitInfoTimer
+static s32 g_DebugWaitInfoTimer;
 
 static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
-    if (D_82000_8017B1B4++ & 4) {
-        FntPrint(D_82000_8017A73C); // TODO: inline
+    if (g_DebugWaitInfoTimer++ & 4) {
+        FntPrint("\no\n");
     }
     DrawSync(0);
     VSync(0);

@@ -101,7 +101,6 @@ fn transform_line_fixed(line: &str) -> String {
                 if let Some(conv) = hex_string_to_float(hex_str.into()) {
                     if count_digits_after_decimal(conv) > 5 || count_digits_before_decimal(conv) > 3
                     {
-                        println!("skipping");
                         return line.to_string();
                     } else {
                         if let Some(group_str) = thing.get(1) {

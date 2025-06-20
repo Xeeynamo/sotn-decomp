@@ -280,6 +280,7 @@ extern u8 D_8D95C40[];
 
 // used with various equipment, enemy resistances, etc
 typedef enum Elements {
+    ELEMENT_NONE = 0,
     ELEMENT_HIT = 0x20,
     ELEMENT_CUT = 0x40,
     ELEMENT_POISON = 0x80,

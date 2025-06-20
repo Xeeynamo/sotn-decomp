@@ -41,7 +41,7 @@ func performCueAction(cuePath string, action imageAction) error {
 	baseDir, _ := path.Split(cuePath)
 	binPath := path.Join(baseDir, mainTrack.file)
 
-	f, err := os.Open(binPath)
+	f, err := os.OpenFile(binPath, os.O_RDWR, 0)
 	if err != nil {
 		return err
 	}
@@ -113,12 +113,12 @@ func parseTracks(cuePath string) ([]cueTrack, error) {
 
 func tokenizeCueLine(line string) []string {
 	tokens := []string{}
-	str := ""
+	sb := strings.Builder{}
 	quotes := false
 	for _, ch := range strings.TrimSpace(line) {
 		if !quotes && unicode.IsSpace(ch) {
-			tokens = append(tokens, str)
-			str = ""
+			tokens = append(tokens, sb.String())
+			sb.Reset()
 		} else if ch == '"' {
 			if quotes {
 				quotes = false
@@ -126,12 +126,12 @@ func tokenizeCueLine(line string) []string {
 				quotes = true
 			}
 		} else {
-			str += string(ch)
+			sb.WriteRune(ch)
 		}
 	}
 
-	if len(str) > 0 {
-		tokens = append(tokens, str)
+	if sb.Len() > 0 {
+		tokens = append(tokens, sb.String())
 	}
 
 	return tokens
