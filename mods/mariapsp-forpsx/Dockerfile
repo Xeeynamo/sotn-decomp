@@ -1,14 +1,14 @@
 # Minimal image to create a PSX disk image with Maria replacing Richter.
 #
 # 1. build image
-# docker build --tag sotn-maria:latest .
+# docker build --tag sotn-mariapsp-forpsx:latest .
 #
 # 2. create the directory disks/ and place the following two files:
 #   disks/sotn.us.bin
 #   disks/sotn.pspeu.iso
 #
 # 3. generate disks/sotn_mariapsp.us.bin
-# docker run --rm -v ./disks:/disks sotn-maria:latest
+# docker run --rm -v ./disks:/disks sotn-mariapsp-forpsx:latest
 
 FROM xeeynamo/sotn-build:latest
 
@@ -19,4 +19,4 @@ RUN git clone https://github.com/xeeynamo/sotn-decomp.git --branch master --dept
     rm -rf /sotn/sotn-decomp/disks && \
     ln -s /disks /sotn/sotn-decomp/
 WORKDIR /sotn/sotn-decomp/mods/mariapsp-forpsx
-ENTRYPOINT ["make" "disk"]
+ENTRYPOINT ["make", "disk"]
