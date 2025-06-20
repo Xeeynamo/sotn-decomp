@@ -501,7 +501,7 @@ static void func_ptr_80170008(Entity* self) {
         break;
     }
     self->posX.val += self->velocityX;
-    DecelerateX(0x2800);
+    DecelerateX(FIX(0.15625));
     if (temp_s6 == 0) {
         u32 tmp = (g_HandId + 1) << 0xC;
         flags = FACTORY(0x3E, self->ext.weapon.unk7E + 1);

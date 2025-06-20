@@ -171,7 +171,7 @@ void func_8012D3E8(void) {
             break;
         }
         if (abs(PLAYER.velocityX) > FIX(1)) {
-            DecelerateX(0x2000);
+            DecelerateX(FIX(0.125));
         }
         if ((PLAYER.facingLeft && (directionsPressed & PAD_RIGHT)) ||
             (!PLAYER.facingLeft && (directionsPressed & PAD_LEFT))) {

@@ -256,12 +256,12 @@ void PlayerStepStand(void) {
         if (func_8010FDF8(0x43018) != 0) {
             return;
         }
-        DecelerateX(0x1000);
+        DecelerateX(FIX(0.0625));
     } else {
         if (func_8010FDF8(0x4301C) != 0) {
             return;
         }
-        DecelerateX(0x2000);
+        DecelerateX(FIX(0.125));
     }
 
     if ((PLAYER.step < 0x40) && (!g_Player.unk48)) {
@@ -2761,7 +2761,7 @@ void ControlBatForm(void) {
                 func_8011690C(0x180);
             }
             if (!(directionsPressed & (PAD_DOWN | PAD_UP))) {
-                DecelerateY(0x2000);
+                DecelerateY(FIX(0.125));
             }
             if (g_Player.vram_flag & 0x800) {
                 if (PLAYER.facingLeft && (g_Player.vram_flag & 0x400) ||
@@ -2851,11 +2851,11 @@ void PlayerStepUnmorphBat(void) {
     s32 else_cycles;
 
     PLAYER.drawFlags = FLAG_DRAW_ROTATE;
-    DecelerateX(0x2000);
+    DecelerateX(FIX(0.125));
     if (g_Player.vram_flag & 3) {
         PLAYER.velocityY = 0;
     }
-    DecelerateY(0x2000);
+    DecelerateY(FIX(0.125));
     func_8011690C(0);
     else_cycles = 0;
     switch (PLAYER.step_s) {
