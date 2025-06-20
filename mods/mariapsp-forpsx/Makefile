@@ -9,7 +9,7 @@ OVERLAY = $(BUILD_DIR)/MARIA.BIN
 CC = mipsel-linux-gnu-gcc
 CFLAGS = -mno-abicalls -G0 -fno-pic -g -O2 -I$(ROOT_DIR)/include -I$(ROOT_DIR)/src/maria -msoft-float -march=3000
 CFLAGS += -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -fno-stack-protector
-LDFLAGS = -nostdlib -Wl,-Map=$(MAP) -T symexport.txt -T $(ROOT_DIR)/player.ld -T $(ROOT_DIR)/config/undefined_syms.$(VERSION).txt -T $(BUILD_DIR)/symbols.txt
+LDFLAGS = -nostdlib -Wl,-Map=$(MAP) -Wl,--build-id=none -T symexport.txt -T $(ROOT_DIR)/player.ld -T $(ROOT_DIR)/config/undefined_syms.$(VERSION).txt -T $(BUILD_DIR)/symbols.txt
 
 HEADER_SRC = maria.c
 SRCS = $(wildcard $(SRC_DIR)/*.c)
