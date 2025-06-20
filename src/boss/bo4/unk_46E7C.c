@@ -453,7 +453,7 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
     }
 }
 
-extern s16 D_us_80183B0E[];
+extern AnimationFrame D_us_80183B0C[];
 
 s32 BatFormFinished(void) {
     if ((DOPPLEGANGER.step_s == 0) || !(g_Dop.padTapped & 8)) {
@@ -462,7 +462,7 @@ s32 BatFormFinished(void) {
 
     SetDopplegangerStep(10);
     SetDopplegangerAnim(202);
-    D_us_80183B0E[0] = 6;
+    D_us_80183B0C[0].pose = 6;
     DOPPLEGANGER.palette = PAL_OVL(0x20D);
     g_Dop.unk66 = 0;
     g_Dop.unk68 = 0;
@@ -486,21 +486,329 @@ void func_8011690C(s16 arg0) {
     }
 }
 
-static s32 func_us_801C820C(void) {
+static s32 CheckWingSmashInput(void) {
     // n.b.! Dop40 checks for padPressed
     if (g_Dop.padTapped & PAD_SQUARE) {
-        return 1;
+        return true;
     }
-    return 0;
+    return false;
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", ControlBatForm);
+extern s32 g_WingSmashTimer;
+extern s32 D_us_801D4A1C;
+
+void ControlBatForm(void) {
+    Entity* newEntity;
+    s32 pressingCross;
+    s16 x_offset;
+    u32 directionsPressed;
+
+    if (BatFormFinished()) {
+        return;
+    }
+
+    directionsPressed =
+        g_Dop.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
+    pressingCross = g_Dop.padPressed & PAD_CROSS;
+    DOPPLEGANGER.drawFlags = FLAG_DRAW_ROTATE;
+    DOPPLEGANGER.rotPivotY = 0;
+
+    if (CheckWingSmashInput() && (DOPPLEGANGER.step_s)) {
+        SetDopplegangerAnim(0xC6);
+        SetSpeedX(FIX(6));
+        DOPPLEGANGER.step_s = 3;
+        CreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x5c), 0);
+        CreateEntFactoryFromEntity(g_CurrentEntity, BP_67, 0);
+        g_WingSmashTimer = 0x40;
+    }
+
+    switch (DOPPLEGANGER.step_s) {
+    case 0:
+        DOPPLEGANGER.rotate = 0;
+        g_Dop.unk44 = g_Dop.unk46 = g_Dop.unk48 = 0;
+        if (g_Entities[STAGE_ENTITY_START + 16].entityId == 0x22) {
+            if (g_Entities[STAGE_ENTITY_START + 16].step != 5) {
+                if (g_Entities[STAGE_ENTITY_START + 16].step < 3) {
+                    g_Dop.unk46 = 0;
+                    g_Entities[STAGE_ENTITY_START + 16].step = 3;
+                }
+                return;
+            } else {
+                DestroyEntity(&g_Entities[STAGE_ENTITY_START + 16]);
+                SetDopplegangerAnim(0xC3);
+            }
+        } else {
+            if (g_Dop.unk66 == 0) {
+                newEntity = CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x20), 0);
+
+                func_8010FAF4();
+                g_Dop.unk66++;
+            }
+            DecelerateX(FIX(9.0 / 512.0));
+            DecelerateY(FIX(9.0 / 512.0));
+            if (abs(DOPPLEGANGER.velocityY) > FIX(1.25)) {
+                if (DOPPLEGANGER.velocityY > 0) {
+                    DOPPLEGANGER.velocityY = FIX(1.25);
+                } else {
+                    DOPPLEGANGER.velocityY = FIX(-1.25);
+                }
+            }
+            SetDopplegangerAnim(0xCA);
+            D_us_80183B0C[0].pose = DOPPLEGANGER.animCurFrame;
+            DOPPLEGANGER.palette = PAL_OVL(0x20D);
+            if (g_Dop.unk66 == 1) {
+                return;
+            }
+            if (g_Dop.unk66 == 2) {
+                DOPPLEGANGER.animSet = ANIMSET_OVL(2);
+                D_us_80183B0C[0].pose = 6;
+                return;
+            }
+        }
+        SetDopplegangerAnim(0xC3);
+        DOPPLEGANGER.poseTimer = 1;
+        DOPPLEGANGER.pose = 2;
+        DOPPLEGANGER.palette = PAL_OVL(0x200);
+        CheckMoveDirection();
+        DOPPLEGANGER.step_s++;
+        break;
+    case 1:
+        if (directionsPressed && !pressingCross) {
+            if (DOPPLEGANGER.ext.player.anim == 0xC3) {
+                DOPPLEGANGER.pose /= 3;
+            }
+            DOPPLEGANGER.step_s++;
+        } else {
+            func_8011690C(0);
+            DecelerateX(FIX(9.0 / 128.0));
+            DecelerateY(FIX(9.0 / 128.0));
+            break;
+        }
+    case 2:
+        // If you're pressing cross, you can't move and inputs are ignored.
+        if (pressingCross) {
+            directionsPressed = 0;
+        }
+        switch (directionsPressed) {
+        case 0:
+        default:
+            SetDopplegangerAnim(0xC3);
+            DOPPLEGANGER.step_s = 1;
+            break;
+        case PAD_UP:
+            DOPPLEGANGER.ext.player.anim = 0xC2;
+            if (DOPPLEGANGER.velocityY < FIX(-1.25)) {
+                DecelerateY(FIX(9.0 / 128.0));
+            } else {
+                DOPPLEGANGER.velocityY = FIX(-1.25);
+            }
+            func_8011690C(-0x80);
+            DecelerateX(FIX(9.0 / 128.0));
+            break;
+        case PAD_DOWN:
+            if (g_Dop.vram_flag & 1) {
+                DOPPLEGANGER.ext.player.anim = 0xC4;
+            } else {
+                DOPPLEGANGER.ext.player.anim = 0xC5;
+            }
+            if (DOPPLEGANGER.velocityY > FIX(1.25)) {
+                DecelerateY(FIX(9.0 / 128.0));
+            } else {
+                DOPPLEGANGER.velocityY = FIX(1.25);
+            }
+            func_8011690C(0);
+            DecelerateX(FIX(9.0 / 128.0));
+            break;
+        case PAD_RIGHT:
+            DOPPLEGANGER.ext.player.anim = 0xC2;
+            DOPPLEGANGER.facingLeft = 0;
+            func_8011690C(0x180);
+            if (DOPPLEGANGER.velocityX > FIX(1.25)) {
+                DecelerateX(FIX(9.0 / 128.0));
+            } else {
+                DOPPLEGANGER.velocityX = FIX(1.25);
+            }
+            DecelerateY(FIX(9.0 / 128.0));
+            break;
+        case PAD_LEFT:
+            DOPPLEGANGER.ext.player.anim = 0xC2;
+            DOPPLEGANGER.facingLeft = 1;
+            func_8011690C(0x180);
+            if (DOPPLEGANGER.velocityX < FIX(-1.25)) {
+                DecelerateX(FIX(9.0 / 128.0));
+            } else {
+                DOPPLEGANGER.velocityX = FIX(-1.25);
+            }
+            DecelerateY(FIX(9.0 / 128.0));
+
+            break;
+        case PAD_RIGHT | PAD_UP:
+            DOPPLEGANGER.ext.player.anim = 0xC2;
+            DOPPLEGANGER.facingLeft = 0;
+            func_8011690C(0x80);
+            if (DOPPLEGANGER.velocityX > FIX(0.875)) {
+                DecelerateX(FIX(3.0 / 64.0));
+            } else {
+                DOPPLEGANGER.velocityX = FIX(0.875);
+            }
+            if (DOPPLEGANGER.velocityY < FIX(-0.875)) {
+                DecelerateY(FIX(3.0 / 64.0));
+            } else {
+                DOPPLEGANGER.velocityY = FIX(-0.875);
+            }
+            break;
+        case PAD_LEFT | PAD_UP:
+            DOPPLEGANGER.ext.player.anim = 0xC2;
+            DOPPLEGANGER.facingLeft = 1;
+            func_8011690C(0x80);
+            if (DOPPLEGANGER.velocityX < FIX(-0.875)) {
+                DecelerateX(FIX(3.0 / 64.0));
+            } else {
+                DOPPLEGANGER.velocityX = FIX(-0.875);
+            }
+            if (DOPPLEGANGER.velocityY < FIX(-0.875)) {
+                DecelerateY(FIX(3.0 / 64.0));
+            } else {
+                DOPPLEGANGER.velocityY = FIX(-0.875);
+            }
+            break;
+        case PAD_RIGHT | PAD_DOWN:
+            if (g_Dop.vram_flag & 1) {
+                DOPPLEGANGER.ext.player.anim = 0xC4;
+            } else {
+                DOPPLEGANGER.ext.player.anim = 0xC5;
+            }
+            DOPPLEGANGER.facingLeft = 0;
+            func_8011690C(0);
+            if (DOPPLEGANGER.velocityX > FIX(0.875)) {
+                DecelerateX(FIX(3.0 / 64.0));
+            } else {
+                DOPPLEGANGER.velocityX = FIX(0.875);
+            }
+            if (DOPPLEGANGER.velocityY > FIX(1.75)) {
+                DecelerateY(FIX(3.0 / 64.0));
+            } else {
+                DOPPLEGANGER.velocityY = FIX(1.75);
+            }
+            break;
+        case PAD_LEFT | PAD_DOWN:
+            if (g_Dop.vram_flag & 1) {
+                DOPPLEGANGER.ext.player.anim = 0xC4;
+            } else {
+                DOPPLEGANGER.ext.player.anim = 0xC5;
+            }
+            DOPPLEGANGER.facingLeft = 1;
+            func_8011690C(0);
+            if (DOPPLEGANGER.velocityX < FIX(-0.875)) {
+                DecelerateX(FIX(3.0 / 64.0));
+            } else {
+                DOPPLEGANGER.velocityX = FIX(-0.875);
+            }
+            if (DOPPLEGANGER.velocityY > FIX(1.75)) {
+                DecelerateY(FIX(3.0 / 64.0));
+            } else {
+                DOPPLEGANGER.velocityY = FIX(1.75);
+            }
+            break;
+        }
+        break;
+    case 3:
+        if (!DOPPLEGANGER.facingLeft && (g_Dop.vram_flag & 4) ||
+            DOPPLEGANGER.facingLeft && (g_Dop.vram_flag & 8)) {
+            g_Dop.padTapped = PAD_R1;
+            BatFormFinished();
+            g_api.func_80102CD8(2);
+            g_api.PlaySfx(SFX_WALL_DEBRIS_B);
+            DOPPLEGANGER.velocityX = 0;
+            g_Dop.demo_timer = 32;
+            g_Dop.padSim = 0;
+            break;
+        }
+        // When wing smash ends, force an un-transform
+        if (--g_WingSmashTimer == 0) {
+            g_Dop.padTapped = PAD_R1;
+            BatFormFinished();
+            g_Dop.demo_timer = 32;
+            g_Dop.padSim = 0;
+        } else {
+            if (directionsPressed & PAD_UP) {
+                DOPPLEGANGER.velocityY -= FIX(0.125);
+                func_8011690C(0x80);
+            }
+            if (directionsPressed & PAD_DOWN) {
+                DOPPLEGANGER.velocityY += FIX(0.125);
+            }
+            if (!(directionsPressed & PAD_UP)) {
+                func_8011690C(0x180);
+            }
+            if (!(directionsPressed & (PAD_DOWN | PAD_UP))) {
+                DecelerateY(FIX(1.0 / 8.0));
+            }
+            if (g_Dop.vram_flag & 0x800) {
+                if (DOPPLEGANGER.facingLeft && (g_Dop.vram_flag & 0x400) ||
+                    !DOPPLEGANGER.facingLeft && !(g_Dop.vram_flag & 0x400)) {
+                    DOPPLEGANGER.velocityY = FIX(6);
+                }
+            }
+            if (g_Dop.vram_flag & 0x8000) {
+                if (DOPPLEGANGER.facingLeft && (g_Dop.vram_flag & 0x4000) ||
+                    !DOPPLEGANGER.facingLeft && !(g_Dop.vram_flag & 0x4000)) {
+                    DOPPLEGANGER.velocityY = FIX(-6);
+                }
+            }
+            if (DOPPLEGANGER.velocityY < FIX(-6)) {
+                DOPPLEGANGER.velocityY = FIX(-6);
+            }
+            if (DOPPLEGANGER.velocityY > FIX(6)) {
+                DOPPLEGANGER.velocityY = FIX(6);
+            }
+            if (g_GameTimer % 3 == 0) {
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, BP_WING_SMASH_TRAIL, 0);
+                if (g_Dop.vram_flag & 1) {
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(BP_69, 9), 0);
+                }
+                if (g_Dop.vram_flag & 2) {
+                    x_offset = 3;
+                    if (DOPPLEGANGER.facingLeft) {
+                        x_offset = -x_offset;
+                    }
+                    DOPPLEGANGER.posY.i.hi -= 8;
+                    DOPPLEGANGER.posX.i.hi += x_offset;
+                    CreateEntFactoryFromEntity(
+                        g_CurrentEntity, FACTORY(BP_4, 1), 0);
+                    DOPPLEGANGER.posY.i.hi += 8;
+                    DOPPLEGANGER.posX.i.hi -= x_offset;
+                }
+            }
+        }
+        break;
+    }
+
+    if (D_us_801D4A1C != 0) {
+        if (DOPPLEGANGER.velocityX > 0) {
+            DOPPLEGANGER.velocityX = 0;
+        }
+    }
+    if (D_us_801D4A1C != 0) {
+        if (D_us_801D4A1C > 0) {
+            D_us_801D4A1C--;
+            g_CurrentEntity->posY.i.hi++;
+        } else {
+            D_us_801D4A1C++;
+            g_CurrentEntity->posY.i.hi--;
+        }
+    }
+}
 
 extern s16 g_DopSensorsCeilingDefault[];
 extern s16 g_DopSensorsFloorDefault[];
 extern Point16 g_DopSensorsCeiling[];
 extern Point16 g_DopSensorsFloor[];
-extern s16 D_us_80183B0C[][2];
+extern AnimationFrame D_us_80183B0C[];
 
 void DopplegangerStepUnmorphBat(void) {
     s32 i;
@@ -542,7 +850,7 @@ void DopplegangerStepUnmorphBat(void) {
             DOPPLEGANGER.rotate = 0;
             g_Dop.unk66 = 1;
             DOPPLEGANGER.step_s = 1;
-            D_us_80183B0C[0][1] = 0x5F;
+            D_us_80183B0C[0].pose = 0x5F;
         }
         break;
 
@@ -595,7 +903,7 @@ void ControlMistForm(void) {
                 DOPPLEGANGER.velocityY = FIX(-1);
             }
             SetDopplegangerAnim(0xCA);
-            D_us_80183B0E[0] = DOPPLEGANGER.animCurFrame;
+            D_us_80183B0C[0].pose = DOPPLEGANGER.animCurFrame;
             g_api.func_800EA538(5);
             g_api.func_800EA5E4(0x8801U);
             DOPPLEGANGER.step_s++;
@@ -1079,8 +1387,7 @@ void func_us_801CA014(void) {
     if (D_us_801D3D4C) {
         D_us_801D3D4C--;
         if (D_us_801D3D4C & 1) {
-            g_api.g_pfn_800EA5AC(
-                1, D_us_801D3D50, D_us_801D3D54, D_us_801D3D58);
+            g_api.func_800EA5AC(1, D_us_801D3D50, D_us_801D3D54, D_us_801D3D58);
         }
     }
 
@@ -1488,7 +1795,458 @@ static bool func_8011BD48(Entity* entity) {
     return false;
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", EntityDopplegangerBlinkWhite);
+extern s16* D_us_801B0A78[];
+extern s16* D_us_801B159C[];
+extern s16 D_us_801818A0[42][10];
+extern s32 D_us_80181860[];
+extern u8* g_SpriteSheet[];
+extern s32 D_us_80181B70;
+extern u8** g_PlOvlDopBatSpritesheet[];
+
+// player turns white for some sort of status effect
+void EntityDopplegangerBlinkWhite(Entity* self) {
+    Primitive* prim;
+    u8 var_s7;
+    u8 var_s6;
+    u8 sp7f;
+    u8 sp7e;
+    s16 sp7c;
+    s16 sp7a;
+    s16 xOffset;
+    s16 yOffset;
+    s16 sp78;
+    s16 sp76;
+    s16 sp74;
+    s16 sp72;
+    s16 posX;
+    s16 posY;
+    s16* sp5c;
+    u8* sp58;
+    s32 i;
+    s32 sp54;
+    s32 sp50;
+
+    s16 maskedParams;
+    s16 angle;
+    s16 sp6e;
+    s16* sp4c;
+    s16 sp6c;
+    s16 sp6a;
+    s16 sp68;
+    s16 sp66;
+    s16 sp64;
+    s16 sp62;
+    s16 sp60;
+
+    s32 sp40;
+    Entity* sp3C;
+    s32 sp38;
+
+    maskedParams = (self->params & 0x7F00) >> 8;
+
+    if (((maskedParams & 0x3F) != 0x1D) &&
+        (g_Dop.status & PLAYER_STATUS_MIST_FORM)) {
+        D_us_80181B70 = 0;
+        DestroyEntity(self);
+        return;
+    }
+
+    if ((D_us_80181B70) && maskedParams != 0x20 && maskedParams != 0x21 &&
+        ((maskedParams & 0x3F) != 0x1D)) {
+        DestroyEntity(self);
+        return;
+    }
+
+    self->posY.i.hi = DOPPLEGANGER.posY.i.hi;
+    self->posX.i.hi = DOPPLEGANGER.posX.i.hi;
+    self->facingLeft = DOPPLEGANGER.facingLeft;
+    if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(1)) {
+        sp5c = D_us_801B0A78[DOPPLEGANGER.animCurFrame & 0x7FFF];
+    }
+    if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(2)) {
+        sp5c = D_us_801B159C[DOPPLEGANGER.animCurFrame & 0x7FFF];
+    }
+    if (!DOPPLEGANGER.animSet || (DOPPLEGANGER.animCurFrame & 0x7FFF) == 0) {
+        DestroyEntity(self);
+        return;
+    }
+
+    sp72 = *sp5c++;
+    sp72 &= 0x7FFF;
+
+    posX = self->posX.i.hi;
+    posY = self->posY.i.hi;
+
+    if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(1)) {
+        sp58 = g_SpriteSheet[sp72];
+    }
+    if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(2)) {
+        sp58 = g_PlOvlDopBatSpritesheet[sp72];
+    }
+
+    var_s7 = 4;
+    var_s6 = 1;
+    sp7f = var_s7 + sp58[0];
+    sp7e = var_s6 + sp58[1];
+    xOffset = sp7f - var_s7;
+    yOffset = sp7e - var_s6;
+    sp7c = sp5c[0] + sp58[2];
+    sp7a = sp5c[1] + sp58[3];
+
+    self->rotate = DOPPLEGANGER.rotate;
+    self->drawFlags = DOPPLEGANGER.drawFlags;
+    self->scaleX = DOPPLEGANGER.scaleX;
+    self->scaleY = DOPPLEGANGER.scaleY;
+    self->rotPivotY = DOPPLEGANGER.rotPivotY;
+    self->rotPivotX = DOPPLEGANGER.rotPivotX;
+
+    sp4c = D_us_801818A0[maskedParams & 0x3F];
+    switch (self->step) {
+    case 0:
+        if (func_8011BD48(self)) {
+            DestroyEntity(self);
+            return;
+        }
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = FLAG_UNK_10000000 | FLAG_HAS_PRIMS;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 8; i++) {
+            D_us_80181860[i] = i << 9;
+            prim->tpage = 0x10;
+            prim->clut = sp4c[3];
+            prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
+                prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 =
+                    prim->g3 = 0x80;
+            prim->priority = DOPPLEGANGER.zPriority + 2;
+
+            prim->drawMode = sp4c[8] + DRAW_COLORS + DRAW_UNK02;
+            prim = prim->next;
+        }
+        self->ext.playerBlink.unk8A = sp4c[9];
+        self->ext.playerBlink.unk90 = 0;
+        self->ext.playerBlink.unk98 = 0;
+        self->ext.playerBlink.unk9A = 0x100;
+        self->step++;
+        if (maskedParams == 0x20) {
+            self->step = 8;
+        }
+        if (maskedParams == 0x21) {
+            self->step = 0xA;
+        }
+        break;
+    case 1:
+        if (sp4c[7] == 0x7008) {
+            self->ext.playerBlink.unk90 += 0x50;
+        } else {
+            self->ext.playerBlink.unk90 += 0xA;
+        }
+        if (self->ext.playerBlink.unk90 > 0x100) {
+            self->ext.playerBlink.unk90 = 0x100;
+            self->ext.playerBlink.unk80 = sp4c[7];
+            self->step++;
+        }
+        break;
+    case 2:
+        if (sp4c[7] >= 0x7000) {
+            self->ext.playerBlink.unk80 = 8;
+            switch ((u32)sp4c[7]) {
+            case 0x7000:
+                if (g_Dop.timers[1] == 0) {
+                    self->step++;
+                }
+                break;
+            case 0x7001:
+            case 0x7007:
+                if (DOPPLEGANGER.step != Dop_Hit) {
+                    self->step++;
+                }
+                break;
+            case 0x7005:
+            case 0x7006:
+                if (DOPPLEGANGER.ext.player.anim != 0xC0) {
+                    self->step++;
+                }
+                break;
+            case 0x7008:
+                if ((g_Dop.status & PLAYER_STATUS_UNK400000) == 0) {
+                    self->step++;
+                }
+                break;
+            case 0x7009: // Hold this step until player is out of state (5,3)
+                // This state corresponds to wing smashing.
+                if (DOPPLEGANGER.step_s != 3 ||
+                    DOPPLEGANGER.step != Dop_MorphBat) {
+                    self->step++;
+                }
+            }
+        }
+        if (--self->ext.playerBlink.unk80 == 0) {
+            self->step++;
+        }
+        break;
+    case 3:
+        self->ext.playerBlink.unk90 -= 10;
+        if (self->ext.playerBlink.unk90 < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 8:
+        D_us_80181B70 = 1;
+        self->ext.playerBlink.unk98 += 8;
+        self->ext.playerBlink.unk9C += 256;
+        if (self->ext.playerBlink.unk98 > 128) {
+            self->ext.playerBlink.unk98 = 128;
+            g_Dop.unk66 = 2;
+            self->step++;
+        }
+        break;
+    case 9:
+    case 11:
+        self->ext.playerBlink.unk98 -= 8;
+        self->ext.playerBlink.unk9C += 0x100;
+        if (self->ext.playerBlink.unk98 < 0) {
+            g_Dop.unk66 = 3;
+            self->params = 0x1B00;
+            self->step = 1;
+            prim = &g_PrimBuf[self->primIndex];
+            for (i = 0; i < 8; i++) {
+                prim->clut = 0x15F;
+                prim = prim->next;
+            }
+            D_us_80181B70 = 0;
+            return;
+        }
+        break;
+    case 10:
+        D_us_80181B70 = 1;
+        self->ext.playerBlink.unk98 += 8;
+        self->ext.playerBlink.unk9C += 0x100;
+        if (self->ext.playerBlink.unk98 > 0x80) {
+            self->ext.playerBlink.unk98 = 0x80;
+        }
+        if (g_Dop.unk66 == 1) {
+            self->step++;
+        }
+        break;
+    }
+
+    sp78 = self->ext.playerBlink.unk9C;
+    sp76 = self->ext.playerBlink.unk98;
+    sp54 = 3;
+    sp50 = 6;
+    if (sp4c[7] == 0x700A) {
+        sp50 = 0;
+        sp54 = 0;
+    }
+    self->ext.playerBlink.unk82 += self->ext.playerBlink.unk8A;
+    if (self->facingLeft) {
+        posX = posX - sp7c;
+    } else {
+        posX = posX + sp7c;
+    }
+    posY = posY + sp7a;
+    prim = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 8; i++) {
+        if (maskedParams & 0x40) {
+            switch (i) {
+            case 0:
+                if (self->facingLeft) {
+                    prim->x1 = posX - xOffset / 2;
+                } else {
+                    prim->x1 = posX + xOffset / 2;
+                }
+                prim->x0 = posX;
+                prim->u0 = var_s7;
+                prim->u1 = var_s7 + xOffset / 2;
+                prim->y1 = posY;
+                prim->y0 = posY;
+                prim->v1 = var_s6;
+                prim->v0 = var_s6;
+                break;
+            case 1:
+                if (self->facingLeft) {
+                    prim->x0 = posX - xOffset / 2;
+                    prim->x1 = posX - xOffset;
+                } else {
+                    prim->x0 = posX + xOffset / 2;
+                    prim->x1 = posX + xOffset;
+                }
+                prim->u0 = var_s7 + xOffset / 2;
+                prim->u1 = var_s7 + xOffset;
+                prim->y0 = prim->y1 = posY;
+                prim->v0 = prim->v1 = var_s6;
+                break;
+            case 2:
+                if (self->facingLeft) {
+                    prim->x0 = prim->x1 = posX - xOffset;
+                } else {
+                    prim->x0 = prim->x1 = posX + xOffset;
+                }
+                prim->u0 = prim->u1 = var_s7 + xOffset;
+                prim->y0 = posY;
+                prim->y1 = posY + yOffset / 2;
+                prim->v0 = var_s6;
+                prim->v1 = var_s6 + yOffset / 2;
+                break;
+            case 3:
+                if (self->facingLeft) {
+                    prim->x0 = prim->x1 = posX - xOffset;
+                } else {
+                    prim->x0 = prim->x1 = posX + xOffset;
+                }
+
+                prim->u0 = prim->u1 = var_s7 + xOffset;
+                prim->y0 = posY + yOffset / 2;
+                prim->y1 = posY + yOffset;
+                prim->v0 = var_s6 + yOffset / 2;
+                prim->v1 = var_s6 + yOffset;
+                break;
+            case 4:
+                if (self->facingLeft) {
+                    prim->x0 = posX - xOffset;
+                    prim->x1 = posX - xOffset / 2;
+                } else {
+                    prim->x0 = posX + xOffset;
+                    prim->x1 = posX + xOffset / 2;
+                }
+                prim->u0 = var_s7 + xOffset;
+                prim->u1 = var_s7 + xOffset / 2;
+                prim->y0 = prim->y1 = posY + yOffset;
+                prim->v0 = prim->v1 = var_s6 + yOffset;
+                break;
+            case 5:
+                if (self->facingLeft) {
+                    prim->x0 = posX - xOffset / 2;
+                } else {
+                    prim->x0 = posX + xOffset / 2;
+                }
+                prim->x1 = posX;
+                prim->u0 = var_s7 + xOffset / 2;
+                prim->u1 = var_s7;
+                prim->y0 = prim->y1 = posY + yOffset;
+                prim->v0 = prim->v1 = var_s6 + yOffset;
+
+                break;
+            case 6:
+                prim->x1 = posX;
+                prim->x0 = posX;
+                prim->u1 = var_s7;
+                prim->u0 = var_s7;
+                prim->y0 = posY + yOffset;
+                prim->y1 = posY + yOffset / 2;
+                prim->v0 = var_s6 + yOffset;
+                prim->v1 = var_s6 + yOffset / 2;
+                break;
+            case 7:
+                prim->x1 = posX;
+                prim->x0 = posX;
+                prim->u1 = var_s7;
+                prim->u0 = var_s7;
+                prim->y0 = posY + yOffset / 2;
+                prim->y1 = posY;
+                prim->v0 = var_s6 + yOffset / 2;
+                prim->v1 = var_s6;
+                break;
+            }
+            if (self->facingLeft) {
+                prim->x2 = prim->x3 =
+                    posX - xOffset / 2 +
+                    ((rcos(self->ext.playerBlink.unk82) >> 4) * sp54 >> 0xC);
+            } else {
+                prim->x2 = prim->x3 =
+                    posX + xOffset / 2 +
+                    ((rcos(self->ext.playerBlink.unk82) >> 4) * sp54 >> 0xC);
+            }
+            prim->y2 = prim->y3 =
+                (posY + yOffset / 2) -
+                ((rsin(self->ext.playerBlink.unk82) >> 4) * sp50 >> 8);
+            prim->u2 = prim->u3 = var_s7 + xOffset / 2;
+            prim->v2 = prim->v3 = var_s6 + yOffset / 2;
+        } else {
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = (posX - xOffset) + 1;
+                prim->x1 = prim->x3 = posX + 1;
+            } else {
+                prim->x0 = prim->x2 = posX;
+                prim->x1 = prim->x3 = posX + xOffset;
+            }
+            if (maskedParams == 0x20 || maskedParams == 0x21) {
+                sp74 = (rsin(sp78) >> 7) * sp76 / 256;
+                prim->x0 += sp74;
+                prim->x1 += sp74;
+                sp78 += 0x600;
+                sp74 = (rsin(sp78) >> 7) * sp76 / 256;
+                prim->x2 += sp74;
+                prim->x3 += sp74;
+            }
+            prim->y0 = prim->y1 = posY + yOffset * i / 8;
+            prim->y2 = prim->y3 = posY + yOffset * (i + 1) / 8;
+            if (self->facingLeft) {
+                prim->u0 = prim->u2 = sp7f - 1;
+                prim->u1 = prim->u3 = var_s7 - 1;
+            } else {
+                prim->u0 = prim->u2 = var_s7;
+                prim->u1 = prim->u3 = sp7f;
+            }
+            prim->v0 = prim->v1 = var_s6 + yOffset * i / 8;
+            prim->v2 = prim->v3 = var_s6 + yOffset * (i + 1) / 8;
+        }
+
+        g_api.func_800EB758(self->posX.i.hi, self->posY.i.hi, self,
+                            self->drawFlags, (POLY_GT4*)prim, self->facingLeft);
+
+        if (maskedParams != 0x20 && maskedParams != 0x21) {
+            sp6e = sp4c[0];
+            sp6c = sp4c[2];
+            sp6a = sp4c[1];
+            sp68 = sp4c[4];
+            sp64 = sp4c[6];
+            sp66 = sp4c[5];
+            // clang-format off
+            if (maskedParams & 0x40) {
+                angle = D_us_80181860[(i + sp6e) % 8];
+                prim->r0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
+                angle = D_us_80181860[(i + sp6c) % 8];
+                prim->g0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
+                angle = D_us_80181860[(i + sp6a) % 8];
+                prim->b0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                angle = D_us_80181860[(i + sp6e + 1) % 8];
+                prim->r1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
+                angle = D_us_80181860[(i + sp6c + 1) % 8];
+                prim->g1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
+                angle = D_us_80181860[(i + sp6a + 1) % 8];
+                prim->b1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0;
+                D_us_80181860[i] += self->ext.playerBlink.unk8A;
+            } else {
+                angle = D_us_80181860[(i + sp6e) % 8];
+                prim->r0 = prim->r1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
+                angle = D_us_80181860[(i + sp6c) % 8];
+                prim->g0 = prim->g1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
+                angle = D_us_80181860[(i + sp6a) % 8];
+                prim->b0 = prim->b1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                angle = D_us_80181860[(i + sp6e + 1) % 8];
+                prim->r2 = prim->r3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
+                angle = D_us_80181860[(i + sp6c + 1) % 8];
+                prim->g2 = prim->g3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
+                angle = D_us_80181860[(i + sp6a + 1) % 8];
+                prim->b2 = prim->b3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                D_us_80181860[i] += self->ext.playerBlink.unk8A;
+            }
+        }
+        // clang-format on
+        prim = prim->next;
+    }
+    func_us_801C5354(1, 1);
+    if (((maskedParams & 0x3F) == 0) || ((maskedParams & 0x3F) == 7)) {
+        func_us_801C5430(1, 0xA);
+    }
+}
 
 extern s16* D_us_801B0A78[];
 extern s16 D_us_80181B74[24][5];

@@ -64,7 +64,7 @@ char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
     for (; *str;) {
         sp38 = 0;
 
-        ch16 = g_api.func_ptr_91CF870(str, &sp3f);
+        ch16 = g_api.func_psp_0913F960(str, &sp3f);
         ch = *str++;
         if (ch != 1) {
             if (ch >= 'a' && ch <= 'z') {
@@ -85,7 +85,7 @@ char* BlitChar(char* str, s32 xOffset, s32 posX, s32 posY) {
                 }
             }
 
-            chPix = (u8*)g_api.func_ptr_91CF86C(ch16, 0);
+            chPix = (u8*)g_api.func_psp_0913FA28(ch16, 0);
 
             while (true) {
                 if (ch == ' ') {

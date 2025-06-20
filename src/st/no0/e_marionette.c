@@ -36,7 +36,7 @@ static u8 D_us_8018214C[] = {8, 23, 6, 22, 6, 24, 6, 21, 6, 20, 6, 23, 4,  19,
 static u8* D_us_80182178[] = {D_us_801820FC, D_us_80182124, D_us_8018214C};
 static u8 D_us_80182184[] = {6, 1, 4, 1, 4, 2, 6, 3, 5, 4, 5, 5, 0, 0};
 
-extern s16* D_us_801BA12C[];
+extern s16* sprites_no0_8[];
 
 u8 func_us_801D6254(s16 arg0[]) {
     Collider collider;
@@ -491,7 +491,7 @@ void EntityMarionette(Entity* self) {
         case 0:
             dataPtr = (s16*)g_EInitMarionette;
             clut = *(dataPtr + 11);
-            dataPtr = D_us_801BA12C[self->animCurFrame];
+            dataPtr = sprites_no0_8[self->animCurFrame];
             primIndex = g_api.AllocPrimitives(PRIM_GT4, *dataPtr * 2);
             if (primIndex != -1) {
                 self->flags |= FLAG_HAS_PRIMS;

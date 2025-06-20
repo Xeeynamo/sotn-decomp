@@ -6,12 +6,13 @@ extern u8 D_800AC914[10][30];
 extern u16 D_800AC934[];
 
 static char D_psp_09187068[] =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstu"
-    "vwxyz0123456789\" .+-=_'?/![]\":;,()";
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    "abcdefghijklmnopqrstuvwxyz"
+    "0123456789\" .+-=_'?/![]\":;,()";
 static char D_psp_091870C0[] =
-    "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋ"
-    "ｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ０１２３４５６７８９”　．＋−＝＿’？／！［］”"
-    "：；，（）";
+    "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ"
+    "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ"
+    "０１２３４５６７８９”　．＋−＝＿’？／！［］”：；，（）";
 static char* D_psp_09187168[] = {D_psp_091870C0};
 static char* D_psp_09187170[] = {D_psp_09187068};
 static char D_psp_09187178[] =

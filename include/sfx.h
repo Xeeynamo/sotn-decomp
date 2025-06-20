@@ -305,6 +305,7 @@ enum {
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
 #define SFX_RBO5_UNK_7AE 0x7AE
 #define SFX_BO4_UNK_7CB 0x7CB
+#define SFX_BO4_UNK_7CC 0x7CC
 #define SFX_BO4_UNK_7D7 0x7D7
 #define SFX_BO4_UNK_7DC 0x7DC
 #define SFX_BO4_UNK_7DD 0x7DD
@@ -641,6 +642,7 @@ enum Sfx {
     SFX_BLOODY_ZOMBIE_DEATH,
     SFX_BLOODY_ZOMBIE_HIT,
     SFX_BLOODY_ZOMBIE_SPLATTER,
+    SFX_SPEAR_GUARD_DEATH = 0x771,
     SFX_WARG_DEATH_HOWL = 0x780, // also used for Scylla Worm (phase 2)
     SFX_WARG_PAIN,
     SFX_WARG_ATTACK,
@@ -651,6 +653,8 @@ enum Sfx {
     SFX_CLOCK_BELL = 1958,
     SFX_CLOCK_ROOM_TICK = 1961,
     SFX_UNK_7AF = 0x7Af,
+    SFX_UNK_7BE = 0x7BE,
+    SFX_UNK_761 = 0x761,
 
 #if defined(VERSION_PSP) || defined(VERSION_PC)
     /* 0x8E6 */ SFX_VO_MAR_8E6 = 0x8E6,

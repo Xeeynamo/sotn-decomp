@@ -101,6 +101,7 @@ typedef enum EntityIDs {
 
 extern void EntityExplosionVariants(Entity* entity);
 extern void EntityGreyPuff(Entity* entity);
+extern void EntitySkeletonApe(Entity* entity);
 
 extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;

@@ -52,7 +52,6 @@ extern u_long* D_800A3BB8[];
 FactoryBlueprint g_FactoryBlueprints[0xC0] = {0};
 u8 g_BmpCastleMap[0x20000];
 
-extern u8 g_GfxEquipIcon[320][16 * 16 / 2];
 extern u16 g_PalEquipIcon[320 * 16];
 
 // list of exposed API
@@ -66,7 +65,7 @@ s32 func_800EA5E4(u32);
 void LoadGfxAsync(s32 gfxId);
 void PlaySfx(s16 sfxId);
 void func_800EA538(s32 arg0);
-void func_800EA5AC(u16 arg0, u8 arg1, u8 arg2, u8 arg3);
+void func_800EA5AC(u16 a, u8 r, u8 g, u8 b);
 void func_801027C4(u32 arg0);
 void func_800EB758(s16 px, s16 py, Entity* e, u8 flags, POLY_GT4* p, u8 flipX);
 bool func_80131F68(void);
@@ -75,7 +74,7 @@ u16* func_80106A28(u32 arg0, u16 kind);
 void func_80118894(Entity* self);
 Entity* func_80118970(void);
 s16 func_80118B18(Entity* ent1, Entity* ent2, s16 facingLeft);
-u32 UpdateUnarmedAnim(s8* frameProps, u16** frames);
+s32 UpdateUnarmedAnim(s8* frameProps, u16** frames);
 void PlayAnimation(s8* frameProps, AnimationFrame** frames);
 void func_80118C28(s32 arg0);
 void func_8010E168(s32 arg0, s16 arg1);
@@ -124,7 +123,6 @@ bool InitAccessoryDefs(const char* jsonContent);
 void InitRelicDefs(void);
 void InitEnemyDefs(void);
 void InitSubwpnDefs(void);
-bool InitGfxEquipIcons(const struct FileOpenRead* r);
 bool InitPalEquipIcons(const struct FileOpenRead* r);
 void InitVbVh(void);
 static bool InitSfxData(struct FileAsString* file);
@@ -162,7 +160,7 @@ bool InitGame(struct InitGameParams* params) {
     api.PlaySfx = PlaySfx;
     api.func_800EDB58 = func_800EDB58;
     api.func_800EA538 = func_800EA538;
-    api.g_pfn_800EA5AC = func_800EA5AC;
+    api.func_800EA5AC = func_800EA5AC;
     api.func_801027C4 = func_801027C4;
     api.func_800EB758 = func_800EB758;
     api.CreateEntFactoryFromEntity = CreateEntFactoryFromEntity;
@@ -211,8 +209,8 @@ bool InitGame(struct InitGameParams* params) {
     api.DebugInputWait = DebugInputWait;
     api.CalcDealDamageMaria = func_800FD664;
     api.CalcPlayerDamageMaria = CalcPlayerDamage;
-    api.func_ptr_91CF86C = NULL;
-    api.func_ptr_91CF870 = NULL;
+    api.func_psp_0913FA28 = NULL;
+    api.func_psp_0913F960 = NULL;
     api.unused13C = NULL;
     memset(&g_ApiInit.o, 0, sizeof(Overlay));
     memcpy(&g_ApiInit, &api, sizeof(g_ApiInit));
@@ -233,7 +231,6 @@ bool InitGame(struct InitGameParams* params) {
     g_Vram.D_800ACDA8.w = 0x0100;
     g_Vram.D_800ACDA8.h = 0x0010;
 
-    FileOpenRead(InitGfxEquipIcons, "assets/dra/g_GfxEquipIcon.bin", NULL);
     FileOpenRead(InitPalEquipIcons, "assets/dra/g_PalEquipIcon.bin", NULL);
     InitVbVh();
 
@@ -307,14 +304,6 @@ void ReadToArray(const char* filename, char* content, size_t targetlen) {
         ERRORF(
             "file read for '%s' failed (%d/%d)", filename, readlen, targetlen);
     }
-}
-
-bool InitGfxEquipIcons(const struct FileOpenRead* r) {
-    size_t n = fread(g_GfxEquipIcon, 1, sizeof(g_GfxEquipIcon), r->file);
-    if (n != sizeof(g_GfxEquipIcon)) {
-        WARNF("unable to read all bytes: %d/%d", n, sizeof(g_GfxEquipIcon));
-    }
-    return true;
 }
 
 bool InitPalEquipIcons(const struct FileOpenRead* r) {

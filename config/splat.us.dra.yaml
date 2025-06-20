@@ -78,27 +78,27 @@ segments:
       - [0x2438, .data, 4DA70] # D_800A2438
       - [0x243C, .data, demo] # D_800A243C
       - [0x245C, .data, 5087C] # D_800A245C
-      - [0x297C, .data, 5087C] # D_800A297C
-      - [0x2BC0, .data, 5087C] # D_800A2BC0
-      - [0x2C0C, .data, 5087C] # D_800A2C0C, D_800A2D44
+      # - [0x297C, .data, 5087C] # D_800A297C
+      # - [0x2BC0, .data, 5087C] # D_800A2BC0
+      # - [0x2C0C, .data, 5087C] # D_800A2C0C, D_800A2D44
       - [0x2D48, .data, menu]
       - [0x2EC0, .data, 5D5BC] # g_LevelHPIncrease
       - [0x2EE8, .data, 5F60C] # hud sprites def
-      - [0x2FBC, .data, 5F60C] # g_CapePaletteDefs
-      - [0x300C, .data, 5F60C] # g_CheatCodes
-      - [0x3014, .data, 5F60C] # D_800A3014
+      # - [0x2FBC, .data, 5F60C] # g_CapePaletteDefs
+      # - [0x300C, .data, 5F60C] # g_CheatCodes
+      # - [0x3014, .data, 5F60C] # D_800A3014
       - [0x3134, .data, 628AC] # D_800A3194
       - [0x31B0, .data, 62EB8] # D_800A3210
-      - [0x3330, .data, 62EB8] # D_800A33A0-D_800A35D0
+      # - [0x3330, .data, 62EB8] # D_800A33A0-D_800A35D0
       - [0x37D8, .data, d_37d8] # Palette, GFX desc until D_800A3BB8
       - [0x3C40, .data, lba_stage]
       - [0x4A00, .data, config_us] # subweapons
-      - [0x4B04, .data, config_us] # equipments
-      - [0x7718, .data, config_us] # accessories
-      - [0x8258, .data, config_us] # menu
-      - [0x8410, .data, config_us] # spells
-      - [0x8720, .data, config_us] # relics
-      - [0x8900, .data, config_us] # enemies
+      # - [0x4B04, .data, config_us] # equipments
+      # - [0x7718, .data, config_us] # accessories
+      # - [0x8258, .data, config_us] # menu
+      # - [0x8410, .data, config_us] # spells
+      # - [0x8720, .data, config_us] # relics
+      # - [0x8900, .data, config_us] # enemies
       - [0xC910, .data, 66590]
       - [0xC958, .data, cd]
       - [0xCD80, .data, d_CD80]
@@ -109,7 +109,7 @@ segments:
       - [0xCF6C, .data, 70394]
       - [0xCF74, .data, 71830]
       - [0xCFB4, .data, 7879C]
-      - [0xD1D4, .data, 7879C] # blueprints
+      # - [0xD1D4, .data, 7879C] # blueprints
       - [0xD4CC, .data, 7E4BC]
       - [0xDBD4, .data, d_DBD4]
       - [0xE2A8, .data, d_E294]
@@ -117,8 +117,8 @@ segments:
       - [0x10884, .data, 8BEF8]
       - [0x108CC, .data, d_10798]
       - [0x10924, .data, 8D3E8] # D_800B0924 to D_800B09F8
-      - [0x10A3C, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
-      - [0x10B34, .data, 8D3E8] # D_800B0CB4 and D_800B0F94
+      # - [0x10A3C, .data, 8D3E8] # D_800B0A3C to D_800B0AEC
+      # - [0x10B34, .data, 8D3E8] # D_800B0CB4 and D_800B0F94
       - [0x1107C, .data, sound] # aPbav
       # - [0x1407C, .data, sound] # aPbav_0
       # - [0x1607C, .data, sound] # aPbav_2
@@ -133,14 +133,15 @@ segments:
       # - [0x1D224, .data, sound_data] # g_XaMusicConfigs
       # - [0x1F554, .data, sound_data] # g_SfxData
       # - [0x2097C, .data, sound_data] # g_SfxScripts
-      - [0x2217C, .data, d_24CEC] # text_item_up
-      - [0x227B0, .data, d_24CEC] # load_room_obj
-      - [0x23560, .data, d_24CEC] # save_room_obj
-      - [0x24864, .data, d_24CEC] # load_room_tile
-      - [0x24A90, .data, d_24CEC] # save_room_tile
+      - [0x2217C, .data, d_2217C] # text_item_up
+      # - [0x227B0, .data, d_2217C] # load_room_obj
+      # - [0x23560, .data, d_2217C] # save_room_obj
+      # - [0x24864, .data, d_2217C] # load_room_tile
+      # - [0x24A90, .data, d_2217C] # save_room_tile
       - [0x24CEC, .data, d_24CEC]
-      - [0x25324, raw, g_GfxEquipIcon]
+      # - [0x25324, .data, d_24CEC] # g_GfxEquipIcon
       - [0x2F324, .data, d_2F324]
+      - [0x2FE48, .data, d_2FE48]
       - [0x388D4, raw, g_PalEquipIcon]
       - [0x3B0D4, .data, d_3B0D4]
       - [0x3B3B4, .rodata, 42398] # func_800E2398
@@ -187,7 +188,7 @@ segments:
       - [0x3CC2C, .rodata, 628AC] # func_801028AC
       # - [0x3CC54, .rodata, 628AC] # func_80102D70
       - [0x3CC70, .rodata, 62EB8] # HandleSaveMenu
-      - [0x3CDC0, .rodata, 62EB8] # func_80103ED4
+      # - [0x3CDC0, .rodata, 62EB8] # func_80103ED4
       - [0x3CDDC, .rodata, lba_stage]
       - [0x3D188, .rodata, config_us]
       - [0x40D38, .rodata, cd] # func_801080DC
@@ -202,7 +203,7 @@ segments:
       # - [0x413A0, .rodata, 704D0] # func_8011151C
       - [0x413C0, .rodata, 71830] # func_80111830
       # - [0x41400, .rodata, 71830] # func_801119C4
-      - [0x41410, .rodata, 71830] # PlayerStepStand
+      # - [0x41410, .rodata, 71830] # PlayerStepStand
       # - [0x41588, .rodata, 71830] # PlayerStepJump
       # - [0x41750, .rodata, 71830] # PlayerStepCrouch
       # - [0x418E0, .rodata, 71830] # PlayerStepHighJump

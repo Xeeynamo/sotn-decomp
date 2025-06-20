@@ -4,10 +4,16 @@ package iso9660
 
 import (
 	"errors"
+	"fmt"
 	"io"
 )
 
 type TrackMode int
+
+type ReaderWriterAt interface {
+	io.ReaderAt
+	io.WriterAt
+}
 
 const (
 	TrackMode1_2048 = TrackMode(0x800)
@@ -19,25 +25,25 @@ var (
 )
 
 type Image struct {
-	reader io.ReaderAt
+	reader ReaderWriterAt
 	mode   TrackMode
 	Pvd    PrimaryVolumeDescriptor
 }
 
 type File struct {
 	DirectoryEntry
-	reader io.ReaderAt
-	mode   TrackMode
+	handler ReaderWriterAt
+	mode    TrackMode
 }
 
-func OpenImage(r io.ReaderAt, mode TrackMode) (*Image, error) {
-	pvdSec, err := readSector(r, 16, mode, false)
+func OpenImage(rw ReaderWriterAt, mode TrackMode) (*Image, error) {
+	pvdSec, err := readSector(rw, 16, mode, false)
 	if err != nil {
 		return nil, err
 	}
 
 	return &Image{
-		reader: r,
+		reader: rw,
 		mode:   mode,
 		Pvd:    parsePVD(pvdSec), // TODO assume first volume is always primary
 	}, nil
@@ -46,7 +52,7 @@ func OpenImage(r io.ReaderAt, mode TrackMode) (*Image, error) {
 func (img *Image) RootDir() File {
 	return File{
 		DirectoryEntry: img.Pvd.DirectoryRecord,
-		reader:         img.reader,
+		handler:        img.reader,
 		mode:           img.mode,
 	}
 }
@@ -63,7 +69,7 @@ func (file File) GetChildren() ([]File, error) {
 	for {
 		// horrible hack as it can read unnecessary bytes, but it works
 		if offset+bufSafe > secSize {
-			sec, err := readSector(file.reader, location(chloc), file.mode, false)
+			sec, err := readSector(file.handler, location(chloc), file.mode, false)
 			if err != nil {
 				return nil, err
 			}
@@ -74,7 +80,7 @@ func (file File) GetChildren() ([]File, error) {
 
 		f := File{
 			DirectoryEntry: parseDirectoryEntry(data[offset:]),
-			reader:         file.reader,
+			handler:        file.handler,
 			mode:           file.mode,
 		}
 		if f.DirectoryRecordLength == 0 {
@@ -86,7 +92,7 @@ func (file File) GetChildren() ([]File, error) {
 	}
 }
 
-func (file File) WriteFile(w io.Writer) error {
+func (file File) ReadToFile(w io.Writer) error {
 	size := file.DataLength.LSB
 	sector := location(file.ExtentLocation.LSB)
 
@@ -97,7 +103,7 @@ func (file File) WriteFile(w io.Writer) error {
 	}
 
 	for size > 0 {
-		sec, err := readSector(file.reader, sector, file.mode, useMode2)
+		sec, err := readSector(file.handler, sector, file.mode, useMode2)
 		if err != nil {
 			if err == io.EOF {
 				return nil
@@ -115,5 +121,24 @@ func (file File) WriteFile(w io.Writer) error {
 		sector++
 	}
 
+	return nil
+}
+
+func (file File) WriteFromData(b []byte) error {
+	if uint32(len(b)) > file.DataLength.LSB {
+		return fmt.Errorf("data too long (%d > %d)", len(b), file.DataLength.LSB)
+	}
+	for loc := location(file.ExtentLocation.LSB); len(b) > 0; loc++ {
+		chunk := b
+		if len(b) > sectorSize {
+			chunk = b[:sectorSize]
+			b = b[sectorSize:]
+		} else {
+			b = []byte{}
+		}
+		if err := writeSector(file.handler, loc, file.mode, chunk); err != nil {
+			return err
+		}
+	}
 	return nil
 }

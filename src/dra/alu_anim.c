@@ -178,7 +178,7 @@ AnimationFrame* func_8010DA70(AnimationFrame** frames) {
     }
 }
 
-u32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
+s32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
     u16* frameIndex;
 
     frameIndex = frames[g_CurrentEntity->ext.player.anim] + PLAYER.pose;

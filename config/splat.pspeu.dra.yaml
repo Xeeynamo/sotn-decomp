@@ -92,7 +92,7 @@ segments:
       #- [0x6A8F8, .data, dra/5F60C]
       - [0x6AB40, .data, dra/5087C]
       - [0x6B420, .data, dra_psp/menu]
-      - [0x6DCA8, data]
+      - [0x6DCA8, .data, dra/dra_header]
       - [0x6DDE8, .data, dra_psp/186E8]
       - [0x6F948, .data, dra/game_handlers]
       - [0x832A8, .data, dra_psp/1DDC0]
@@ -102,7 +102,9 @@ segments:
       - [0x84210, .data, dra/5D5BC]
       - [0x84238, .data, dra/4AEA4]
       - [0x84248, .data, dra_psp/d_84248]
-      - [0x92E80, .data, dra_psp/d_92E80]
+      - [0x92E80, .data, dra/d_2F324]
+      - [0x939A8, .data, dra/d_24CEC]
+      # - [0x94010, .data, dra/d_24CEC] # g_GfxEquipIcon
       - [0x9E010, .data, dra/d_E294]
       - [0xA0578, .data, dra/692E8]
       - [0xA6820, .data, dra/71830]
@@ -113,12 +115,10 @@ segments:
       - [0xA6920, .data, dra/6BF64]
       - [0xA69C8, .data, dra/84B88]
       - [0xA6C38, .data, dra/7879C]
-      - [0xA6FD8, data] # blueprints
       - [0xA72E4, .data, dra/7E4BC]
       - [0xA79D0, .data, dra/d_DBD4]
       - [0xA8120, .data, dra/8D3E8]
-      - [0xA8888, data]
-      - [0xA88C8, .data, dra_psp/cd]
+      - [0xA8888, .data, dra_psp/cd]
       - [0xA88D8, .data, dra/d_CD80]
       - [0xA8948, .data, dra_psp/memcard]
       - [0xAA578, .data, dra/66590]
@@ -149,7 +149,8 @@ segments:
       - [0xEEB28, .rodata, dra/7E4BC]
       - [0xEEC30, .rodata, dra/8D3E8]
       - [0xEED48, .rodata, dra_psp/63C08]
-      - {start: 0xEED80, type: bss, vram: 0x091CB700, name: bss1}
+      - {start: 0xEED80, type: .bss, vram: 0x091CB700, name: dra_psp/3250}
+      - {start: 0xEED80, type: bss, vram: 0x091CD700, name: bss1}
       - {start: 0xEED80, type: .bss, vram: 0x091CDC58, name: dra/4DA70}
       - {start: 0xEED80, type: bss, vram: 0x091CDC60, name: bss2}
       - {start: 0xEED80, type: .bss, vram: 0x091CDCE8, name: dra/5087C}
@@ -164,6 +165,7 @@ segments:
       - {start: 0xEED80, type: bss, vram: 0x091CE3D0, name: bss6}
       - {start: 0xEED80, type: .bss, vram: 0x091CE428, name: dra/4AEA4}
       - {start: 0xEED80, type: bss, vram: 0x091CE548, name: bss7}
+      - {start: 0xEED80, type: .bss, vram: 0x09234A30, name: dra/d_2F324}
       - {start: 0xEED80, type: .bss, vram: 0x09234B68, name: dra/692E8}
       - {start: 0xEED80, type: bss, vram: 0x09234B98, name: bss8}
       - {start: 0xEED80, type: .bss, vram: 0x09234CB0, name: dra/71830}

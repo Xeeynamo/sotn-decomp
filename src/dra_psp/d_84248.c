@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../dra/dra.h"
+#include <game.h>
 
 u16 D_800DB1F4[] = {
 #include "../dra/gen/D_800DB1F4.h"
@@ -141,44 +141,43 @@ u8 save_room_obj[] = {
 
 #include "../dra/gen/D_800D3428.h"
 
-extern s16 D_psp_0916F780[];
-extern s16 D_psp_0916F788[];
-extern s16 D_psp_0916F790[];
-extern s16 D_psp_0916F798[];
-extern s16 D_psp_0916F7A0[];
-extern s16 D_psp_0916F7A8[];
-extern s16 D_psp_0916F7B0[];
-extern s16 D_psp_0916F7B8[];
-extern s16 D_psp_0916F7C0[];
-extern s16 D_psp_0916F7C8[];
-extern s16 D_psp_0916F7D0[];
-extern s16 D_psp_0916F7D8[];
-extern s16 D_psp_0916F7E0[];
-extern s16 D_psp_0916F7E8[];
-extern s16 D_psp_0916F7F0[];
-extern s16 D_psp_0916F7F8[];
+static AluFrame D_800CFE90;
+static AluFrame D_800CFE98;
+static AluFrame D_800CFEA0;
+static AluFrame D_800CFEA8;
+static AluFrame D_800CFEB0;
+static AluFrame D_800CFEB8;
+static AluFrame D_800CFEC0;
+static AluFrame D_800CFEC8;
+static AluFrame D_800CFED0;
+static AluFrame D_800CFED8;
+static AluFrame D_800CFEE0;
+static AluFrame D_800CFEE8;
+static AluFrame D_800CFEF0;
+static AluFrame D_800CFEF8;
+static AluFrame D_800CFF00;
+static AluFrame D_800CFF08;
 
-s16* D_800CFE48[] = {
-    NULL,           D_psp_0916F780, D_psp_0916F788, D_psp_0916F790,
-    D_psp_0916F798, D_psp_0916F7A0, D_psp_0916F7A8, D_psp_0916F7B0,
-    D_psp_0916F7B8, D_psp_0916F7C0, D_psp_0916F7C8, D_psp_0916F7D0,
-    D_psp_0916F7D8, D_psp_0916F7E0, D_psp_0916F7E8, D_psp_0916F7F0,
-    D_psp_0916F7F8,
+AluFrame* D_800CFE48[] = {
+    NULL,        &D_800CFE90, &D_800CFE98, &D_800CFEA0, &D_800CFEA8,
+    &D_800CFEB0, &D_800CFEB8, &D_800CFEC0, &D_800CFEC8, &D_800CFED0,
+    &D_800CFED8, &D_800CFEE0, &D_800CFEE8, &D_800CFEF0, &D_800CFEF8,
+    &D_800CFF00, &D_800CFF08, NULL,
 };
 
-static s16 D_psp_0916F780[] = {0x8000, -22, -48, 0};
-static s16 D_psp_0916F788[] = {0x8001, -22, -47, 0};
-static s16 D_psp_0916F790[] = {0x8002, -22, -40, 0};
-static s16 D_psp_0916F798[] = {0x8003, -22, -41, 0};
-static s16 D_psp_0916F7A0[] = {0x8004, -22, -30, 0};
-static s16 D_psp_0916F7A8[] = {0x8004, -22, -31, 0};
-static s16 D_psp_0916F7B0[] = {0x8005, -22, -30, 0};
-static s16 D_psp_0916F7B8[] = {0x8003, -22, -41, 0};
-static s16 D_psp_0916F7C0[] = {0x8002, -22, -41, 0};
-static s16 D_psp_0916F7C8[] = {0x8001, -22, -49, 0};
-static s16 D_psp_0916F7D0[] = {0x8000, -22, -51, 0};
-static s16 D_psp_0916F7D8[] = {0x8001, -22, -51, 0};
-static s16 D_psp_0916F7E0[] = {0x8002, -22, -42, 0};
-static s16 D_psp_0916F7E8[] = {0x8003, -22, -41, 0};
-static s16 D_psp_0916F7F0[] = {0x8004, -22, -29, 0};
-static s16 D_psp_0916F7F8[] = {0x8005, -22, -29, 0};
+static AluFrame D_800CFE90 = {0x8000, -22, -48, 0};
+static AluFrame D_800CFE98 = {0x8001, -22, -47, 0};
+static AluFrame D_800CFEA0 = {0x8002, -22, -40, 0};
+static AluFrame D_800CFEA8 = {0x8003, -22, -41, 0};
+static AluFrame D_800CFEB0 = {0x8004, -22, -30, 0};
+static AluFrame D_800CFEB8 = {0x8004, -22, -31, 0};
+static AluFrame D_800CFEC0 = {0x8005, -22, -30, 0};
+static AluFrame D_800CFEC8 = {0x8003, -22, -41, 0};
+static AluFrame D_800CFED0 = {0x8002, -22, -41, 0};
+static AluFrame D_800CFED8 = {0x8001, -22, -49, 0};
+static AluFrame D_800CFEE0 = {0x8000, -22, -51, 0};
+static AluFrame D_800CFEE8 = {0x8001, -22, -51, 0};
+static AluFrame D_800CFEF0 = {0x8002, -22, -42, 0};
+static AluFrame D_800CFEF8 = {0x8003, -22, -41, 0};
+static AluFrame D_800CFF00 = {0x8004, -22, -29, 0};
+static AluFrame D_800CFF08 = {0x8005, -22, -29, 0};

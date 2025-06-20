@@ -1248,23 +1248,30 @@ typedef struct {
 } Sprite; /* size=0x14 */
 
 typedef struct {
-    /* 00 */ s16 flags;
-    /* 02 */ s16 offsetx;
-    /* 04 */ s16 offsety;
-    /* 06 */ s16 width;
-    /* 08 */ s16 height;
-    /* 0A */ s16 clut;
-    /* 0C */ s16 tileset;
-    /* 0E */ s16 left;
-    /* 10 */ s16 top;
-    /* 12 */ s16 right;
-    /* 14 */ s16 bottom;
+    /* 0x00 */ s16 flags;
+    /* 0x02 */ s16 offsetx;
+    /* 0x04 */ s16 offsety;
+    /* 0x06 */ s16 width;
+    /* 0x08 */ s16 height;
+    /* 0x0A */ s16 clut;
+    /* 0x0C */ s16 tileset;
+    /* 0x0E */ s16 left;
+    /* 0x10 */ s16 top;
+    /* 0x12 */ s16 right;
+    /* 0x14 */ s16 bottom;
 } SpritePart; /* size=0x16 */
 
 typedef struct {
-    /* 00 */ u16 count;
-    /* 02 */ SpritePart parts[0];
+    /* 0x00 */ u16 count;
+    /* 0x02 */ SpritePart parts[0];
 } SpriteParts; // size = 4 + count*sizeof(SpritePart)
+
+typedef struct {
+    /* 0x00 */ u16 frame;
+    /* 0x02 */ s16 pivotX;
+    /* 0x04 */ s16 pivotY;
+    /* 0x06 */ u16 clut;
+} AluFrame; /* size=0x8 */
 
 /*
  * In the PSX version of the game, stage objects begin with this
@@ -1499,21 +1506,12 @@ typedef struct {
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ char* desc;
-    /* 0x08 */ u16 unk08;
-    /* 0x0A */ u16 unk0A;
-    /* 0x0C */ s32 unk0C;
-} RelicDesc; /* size=0x10 */
-
-typedef struct {
-    /* 0x00 */ const char* name;
-    /* 0x04 */ const char* desc;
     /* 0x08 */ u16 icon;
     /* 0x0A */ u16 iconPalette;
 #ifndef VERSION_BETA
-    /* 0x0C */ u16 unk0C;
-    /* 0x0E */ u16 unk0E;
+    /* 0x0C */ s32 unk0C;
 #endif
-} RelicOrb; /* size=0x10 */
+} RelicDesc; /* size=0x10 */
 
 typedef struct {
     /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character
@@ -1576,7 +1574,7 @@ typedef struct {
     /* 8003C7B8 */ s16 (*AllocPrimitives)(PrimitiveType type, s32 count);
     /* 8003C7BC */ void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
     /* 8003C7C0 */ void (*func_80102CD8)(s32 arg0);
-    /* 8003C7C4 */ void (*UpdateAnim)(
+    /* 8003C7C4 */ u32 (*UpdateAnim)(
         FrameProperty* frameProps, AnimationFrame** anims);
     /* 8003C7C8 */ void (*SetSpeedX)(s32 value);
     /* 8003C7CC */ Entity* (*GetFreeEntity)(s16 start, s16 end);
@@ -1585,12 +1583,9 @@ typedef struct {
     /* 8003C7D4 */ s32 (*func_800EA5E4)(u32);
     /* 8003C7D8 */ void (*LoadGfxAsync)(s32 gfxId);
     /* 8003C7DC */ void (*PlaySfx)(s32 sfxId);
-    /* 8003C7E0 */ s16 (*func_800EDB58)(s32, s32);
+    /* 8003C7E0 */ s16 (*func_800EDB58)(u8, s32);
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
-    // Everywhere g_pfn_800EA5AC is called it can use a default signature
-    // and in `bo4` and `rbo5` a generic signature is required.
-    /* 8003C7E8 */ void (*g_pfn_800EA5AC)(
-        s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+    /* 8003C7E8 */ void (*func_800EA5AC)(u32 a, u32 r, u32 g, u32 b);
     /* 8003C7EC */ void (*func_801027C4)(u32 arg0);
     // this signature differs from `func_800EB758`. the last
     // argument is 16-bits instead of 8.
@@ -1622,10 +1617,10 @@ typedef struct {
     /* 8003C83C */ bool (*LoadMonsterLibrarianPreview)(s32 monsterId);
     /* 8003C840 */ s32 (*TimeAttackController)(
         TimeAttackEvents eventId, TimeAttackActions action);
-    /* 8003C844 */ void* (*func_8010E0A8)(void);
-    /* 8003C848 */ void (*func_800FE044)(s32, s32);
+    /* 8003C844 */ void (*func_8010E0A8)(void);
+    /* 8003C848 */ s32 (*func_800FE044)(s32, s32);
     /* 8003C84C */ void (*AddToInventory)(u32 id, EquipKind kind);
-    /* 8003C850 */ RelicOrb* relicDefs;
+    /* 8003C850 */ RelicDesc* relicDefs;
     /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
     /* 8003C858 */ s32 (*PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
     /* 8003C85C */ s32 (*SetVolumeCommand22_23)(s32 vol, s32 distance);
@@ -1643,15 +1638,15 @@ typedef struct {
     /* 8003C888 */ bool (*func_800F27F4)(s32 arg0);
     /* 8003C88C */ s32 (*GetStatBuffTimer)(s32 arg0);
     /* 8003C890 */ s32 (*func_800FD664)(s32 arg0);
-    /* 8003C894 */ s32 (*CalcPlayerDamage)(DamageParam* damageParam);
+    /* 8003C894 */ bool (*CalcPlayerDamage)(DamageParam* damageParam);
     /* 8003C898 */ void (*LearnSpell)(s32 spellId);
     /* 8003C89C */ void (*DebugInputWait)(const char* str);
 
     // exclusive to PSP
     /* 8003C8A0 */ int (*CalcDealDamageMaria)(s32 baseAttack);
-    /* 8003C8A4 */ s32 (*CalcPlayerDamageMaria)(DamageParam* damageParam);
-    /* 8003C8A8 */ u16* (*func_ptr_91CF86C)(u32 arg0, u16 kind);
-    /* 8003C8AC */ u16 (*func_ptr_91CF870)(char*, u8* ch);
+    /* 8003C8A4 */ bool (*CalcPlayerDamageMaria)(DamageParam* damageParam);
+    /* 8003C8A8 */ u16* (*func_psp_0913FA28)(u32 ch, u16 kind);
+    /* 8003C8AC */ u16 (*func_psp_0913F960)(char*, u8* ch);
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
@@ -1685,7 +1680,7 @@ extern void (*g_api_LoadGfxAsync)(s32 gfxId);
 extern void (*g_api_PlaySfx)(s32 sfxId);
 extern s16 (*g_api_func_800EDB58)(s32, s32);
 extern void (*g_api_func_800EA538)(s32 arg0);
-extern void (*g_api_g_pfn_800EA5AC)(s32 arg0, s32 arg1, s32 arg2, s32 arg3);
+extern void (*g_api_func_800EA5AC)(u32 a, u32 r, u32 g, u32 b);
 extern Entity* (*g_api_CreateEntFactoryFromEntity)(
     Entity* self, u32 flags, s32 arg2);
 extern bool (*g_api_func_80131F68)(void);
@@ -1704,10 +1699,10 @@ extern Accessory* g_api_accessoryDefs;
 extern void (*g_api_AddHearts)(s32 value);
 extern s32 (*g_api_TimeAttackController)(
     TimeAttackEvents eventId, TimeAttackActions action);
-extern void* (*g_api_func_8010E0A8)(void);
-extern void (*g_api_func_800FE044)(s32, s32);
+extern void (*g_api_func_8010E0A8)(void);
+extern s32 (*g_api_func_800FE044)(s32, s32);
 extern void (*g_api_AddToInventory)(u32 id, EquipKind kind);
-extern RelicOrb* g_api_relicDefs;
+extern RelicDesc* g_api_relicDefs;
 extern s32 (*g_api_PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
 extern s32 (*g_api_SetVolumeCommand22_23)(s32 vol, s32 distance);
 extern void (*g_api_func_800F53A4)(void);
@@ -1724,7 +1719,7 @@ extern bool (*g_api_func_80133950)(void);
 extern bool (*g_api_func_800F27F4)(s32 arg0);
 extern s32 (*g_api_GetStatBuffTimer)(s32 arg0);
 extern s32 (*g_api_func_800FD664)(s32 arg0);
-extern s32 (*g_api_CalcPlayerDamage)(DamageParam* damageParam);
+extern bool (*g_api_CalcPlayerDamage)(DamageParam* damageParam);
 extern void (*g_api_LearnSpell)(s32 spellId);
 extern void (*g_api_DebugInputWait)(const char* str);
 /***************************/

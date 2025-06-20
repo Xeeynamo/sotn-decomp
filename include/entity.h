@@ -3159,14 +3159,19 @@ typedef struct {
     /* 0x84 */ s16 : 16;
     /* 0x86 */ s16 : 16;
     /* 0x88 */ s16 unk88;
-} ET_801C801C;
+    /* 0x8A */ s16 : 16;
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s32 unk90;
+} ET_SurfacingWater;
 
 typedef struct {
     /* 0x7C */ u16 waterHeight;
     /* 0x7E */ struct Entity* entity7E;
     /* 0x82 */ struct Entity* entity82;
-    /* 0x86 */ u8 pad86[8];
-    /* 0x90 */ u16 unk90;
+    /* 0x86 */ s32 : 32;
+    /* 0x8A */ s32 : 32;
+    /* 0x8E */ u16 unk8E;
 } ET_WaterAlcove;
 
 typedef struct {
@@ -3175,6 +3180,31 @@ typedef struct {
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s32 clut;
 } ET_801C12B0;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ u8 unk86;
+    /* 0x88 */ struct Entity* unkEntity;
+    /* 0x89 */ u8 : 8;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s32 : 32;
+    /* 0xA0 */ s32 : 32;
+    /* 0xA4 */ s32 : 32;
+    /* 0xA8 */ s32 : 32;
+    /* 0xAC */ s32 : 32;
+    /* 0xB0 */ s16 : 16;
+    /* 0xB2 */ s16 unkB2;
+} ET_BonePillar;
+
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+} ET_801C4520;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3446,9 +3476,11 @@ typedef union { // offset=0x7C
     ET_FrogToad frogToad;
     ET_Fishhead fishhead;
     ET_KillerFish killerFish;
-    ET_801C801C et_801C801C;
+    ET_SurfacingWater et_surfacingWater;
     ET_WaterAlcove et_waterAlcove;
     ET_801C12B0 et_801C12B0;
+    ET_BonePillar et_bonePillar;
+    ET_801C4520 et_801C4520;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

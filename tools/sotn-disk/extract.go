@@ -36,7 +36,7 @@ func extract(f iso9660.File, basePath string) error {
 			}
 			defer f.Close()
 
-			if err := child.WriteFile(f); err != nil {
+			if err := child.ReadToFile(f); err != nil {
 				return err
 			}
 		}
