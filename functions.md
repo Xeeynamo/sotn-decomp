@@ -1648,7 +1648,7 @@
 | dra    | MenuHandleCursorInput                    |      275 |         39 | Yes    |                                 |       |
 | dra    | func_801042C4                            |      277 |         20 |        | https://decomp.me/scratch/cAFJW | 0.998 |
 | no4    | func_pspeu_0923FF60                      |      277 |         31 |        | https://decomp.me/scratch/fFj3M | 0.999 |
-| no4    | func_pspeu_092423C8                      |      277 |         33 |        | https://decomp.me/scratch/NuZXm | 0.856 |
+| no4    | func_pspeu_092423C8                      |      277 |         33 |        | https://decomp.me/scratch/NuZXm | 0.952 |
 | dra    | func_80124164                            |      279 |         17 |        |                                 |       |
 | maria  | func_80165DD8                            |      279 |         17 |        |                                 |       |
 | ric    | func_80165DD8                            |      279 |         17 |        |                                 |       |
