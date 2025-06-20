@@ -73,6 +73,9 @@ files:
           - [0x370D4, palette, D_800D70D4, 16]
           - [0x372D4, palette, D_800D72D4, 16]
           - [0x388D4, skip]
+          - [0x3B0D4, palette, D_800DB0D4, 16]
+          - [0x3B0F4, palette, D_800DB0F4, 16]
+          - [0x3B114, palette, D_800DB114, 16]
           - [0x3B1F4, palette, D_800DB1F4, 16]
           - [0x3B3B4, skip]
   - target: disks/us/BIN/RIC.BIN

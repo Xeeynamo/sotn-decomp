@@ -73,6 +73,9 @@ files:
           - [0x37178, palette, D_800D70D4, 16]
           - [0x37378, palette, D_800D72D4, 16]
           - [0x38978, skip]
+          - [0x3B178, palette, D_800DB0D4, 16]
+          - [0x3B198, palette, D_800DB0F4, 16]
+          - [0x3B1B8, palette, D_800DB114, 16]
           - [0x3B298, palette, D_800DB1F4, 16]
           - [0x3B458, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/ric.bin

@@ -133,11 +133,6 @@ typedef struct {
 } FactoryBlueprint;
 
 typedef struct {
-    s32 unk0;
-    s16 unk4;
-} unkstr_800cfe48; // for EntityAlucard
-
-typedef struct {
     s16 flipX;
     s16 flipY;
     s16 clut;

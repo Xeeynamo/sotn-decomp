@@ -629,7 +629,7 @@ void EntityAlucard() {
     s32 posY;
     DamageParam damage;
     s32 sp40 = 0;
-    unkstr_800cfe48* sp3c;
+    AluFrame* sp3c;
     s32 sp38;
     void (*weapon_func)();
     PlayerDraw* draw;
@@ -1507,8 +1507,8 @@ block_160:
         g_CurrentEntity->nFramesInvincibility = 0;
         func_8010D800();
         if (PLAYER.animSet == 0xD) {
-            sp3c = (unkstr_800cfe48*)D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
-            sp3c->unk4 = D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
+            sp3c = (AluFrame*)D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
+            sp3c->pivotY = D_8013AECC + D_800ACE20[PLAYER.animCurFrame];
         }
 #ifdef VERSION_US
         FntPrint("step:%04x\n", PLAYER.step);
