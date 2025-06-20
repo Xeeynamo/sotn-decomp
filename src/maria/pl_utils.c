@@ -36,9 +36,6 @@ void func_maria_8015C4AC(void) {
         g_Entities[1].pose--;
         return;
     }
-#if !defined(VERSION_PSP)
-    prim = &g_PrimBuf[g_Entities[1].primIndex];
-#endif
     for (prim = &g_PrimBuf[g_Entities[1].primIndex], i = 0; prim != NULL; i++,
         prim = prim->next) {
         if (i == g_Entities[1].entityId) {

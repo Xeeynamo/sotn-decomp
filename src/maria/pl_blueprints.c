@@ -44,11 +44,6 @@ static Entity* MarGetFreeEntityReverse(s16 start, s16 end) {
     }
     return NULL;
 }
-#if defined(VERSION_PSP)
-extern s32 D_80174F80[11];
-#else
-static s32 D_80174F80[11];
-#endif
 void func_maria_8015F9F0(Entity* entity) {
     s32 i;
     s32 enemyId;
@@ -69,21 +64,6 @@ void func_maria_8015F9F0(Entity* entity) {
     }
 }
 
-#if defined(VERSION_PSP)
-extern u8 D_80174FAC;
-extern u8 D_80174FB0;
-extern u8 D_80174FB4;
-extern u8 D_80174FB8;
-#else
-static u8 D_80174FAC;
-STATIC_PAD_BSS(3);
-static u8 D_80174FB0;
-STATIC_PAD_BSS(3);
-static u8 D_80174FB4;
-STATIC_PAD_BSS(3);
-static u8 D_80174FB8;
-STATIC_PAD_BSS(3);
-#endif
 void func_maria_8015FA5C(s32 arg0) {
     D_80174FAC = D_80154674[arg0][0];
     D_80174FB0 = D_80154674[arg0][1];
@@ -184,8 +164,7 @@ static s32 func_8015FDB0(Primitive* prim, s16 posX, s16 posY) {
     return ret;
 }
 
-void MarEntityDummy(Entity*) {}
-
+void MarEntityDummy(Entity* self) {}
 void MarEntityFactory(Entity* self);
 void MarEntitySmokePuff(Entity* self);
 void EntityMariaDragonAttack(Entity* self);
@@ -1328,7 +1307,11 @@ void EntityMariaOwl(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
+#ifdef VERSION_PSP
         self->unk5A = 0x18;
+#else
+        self->unk5A = 0x66;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_OWL;
         self->animSet = ANIMSET_WPN_OWL;
@@ -1391,7 +1374,7 @@ void EntityMariaOwl(Entity* self) {
         VECTOR sp5C = {0, 0, 0};
         VECTOR sp4C;
         SVECTOR sp44;
-        s32 sp40;
+        long sp40;
         s32 x;
         s32 y;
         s32 var_s0;
@@ -1431,7 +1414,7 @@ void EntityMariaOwl(Entity* self) {
         sp44.vx = self->ext.mariaOwl.velocityX;
         sp44.vy = 0;
         sp44.vz = 0;
-        func_892796C(&sp44, &sp4C, &sp40);
+        RotTrans(&sp44, &sp4C, &sp40);
         self->velocityX = sp4C.vx << 8;
         self->velocityY = sp4C.vy << 8;
         self->posX.val += self->velocityX;
@@ -1467,11 +1450,6 @@ bool func_maria_80162E9C(Entity* entity) {
 
 // EntityPlayerBlinkWhite (Richter's version).
 // Same general logic flow as in DRA but lots of missing cases.
-#if defined(VERSION_PSP)
-extern s32 D_80154F7C[];
-#else
-static s32 D_80154F7C[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-#endif
 static s16 D_80154FBC[][10] = {
     {0, 0, 0, 0x15F, 0x0100, 0x0100, 0x0100, 0x0060, 0x31, 0x200},
     {0, 2, 6, 0x15F, 0x0100, 0x0100, 0x0100, 0x0040, 0x31, 0x200},
@@ -2449,11 +2427,6 @@ static void func_80166044() {
 // Entity ID 66. Made by blueprint 77 (the very last one).
 // Created in 3 spots in 2 functions (total of 6 calls).
 // DRA version is very similar.
-#if defined(VERSION_PSP)
-extern Point16 D_80175000[32];
-#else
-static Point16 D_80175000[32];
-#endif
 void MarEntityTeleport(Entity* self) {
     Primitive* prim;
     s32 w;
@@ -2999,7 +2972,12 @@ void EntityMariaCrashSummon(Entity* self) {
             return;
         }
         self->flags = FLAG_HAS_PRIMS | FLAG_KEEP_ALIVE_OFFCAMERA;
+#ifdef VERSION_PSP
         self->unk5A = 0x1C;
+#else
+        self->unk5A = 0x70;
+#endif
+
         self->zPriority = 0x1C0;
         LoadCrashSummonResouces(self->ext.mariaCrashSummon.crashId);
         MarSetInvincibilityFrames(0, 999);
@@ -3010,7 +2988,11 @@ void EntityMariaCrashSummon(Entity* self) {
         self->ext.mariaCrashSummon.timer -= 0x10;
         if (self->ext.mariaCrashSummon.timer > 0) {
             prim = &g_PrimBuf[self->primIndex];
+#ifdef VERSION_PSP
             prim->tpage = 7;
+#else
+            prim->tpage = 0x1C;
+#endif
             prim->clut = 0x11E;
             prim->priority = 0x1C0;
             x = (self->ext.mariaCrashSummon.timer * 128) / 256;

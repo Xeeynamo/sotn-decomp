@@ -3,7 +3,6 @@ package main
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
 	"strings"
@@ -18,13 +17,13 @@ type cueTrack struct {
 	mode string
 }
 
-func performCueAction(cuePath string, action imageAction) error {
+func openImageFromCueFile(cuePath string) (*iso9660.Image, error) {
 	tracks, err := parseTracks(cuePath)
 	if err != nil {
-		return err
+		return nil, err
 	}
 	if len(tracks) == 0 {
-		return errors.New("CUE do not provide any track")
+		return nil, errors.New("CUE do not provide any track")
 	}
 
 	mainTrack := getFirstTrack(tracks)
@@ -35,7 +34,7 @@ func performCueAction(cuePath string, action imageAction) error {
 	case "MODE2/2352":
 		mode = iso9660.TrackMode2_2352
 	default:
-		return fmt.Errorf("unrecognized TRACK mode '%s'", mainTrack.mode)
+		return nil, fmt.Errorf("unrecognized TRACK mode '%s'", mainTrack.mode)
 	}
 
 	baseDir, _ := path.Split(cuePath)
@@ -43,15 +42,36 @@ func performCueAction(cuePath string, action imageAction) error {
 
 	f, err := os.OpenFile(binPath, os.O_RDWR, 0)
 	if err != nil {
-		return err
+		return nil, err
 	}
-	defer f.Close()
+	return iso9660.OpenImage(f, mode)
+}
 
-	image, err := iso9660.OpenImage(f, mode)
+func performCueAction(path string, action imageAction) error {
+	stat, err := os.Stat(path)
 	if err != nil {
 		return err
 	}
-
+	var image *iso9660.Image
+	if stat.Size() < 65536 {
+		img, err := openImageFromCueFile(path)
+		if err != nil {
+			return err
+		}
+		image = img
+	} else {
+		// most likely a bin file
+		f, err := os.OpenFile(path, os.O_RDWR, 0)
+		if err != nil {
+			return err
+		}
+		img, err := iso9660.OpenImage(f, iso9660.TrackMode2_2352)
+		if err != nil {
+			return err
+		}
+		image = img
+	}
+	defer image.Close()
 	return action(image.RootDir())
 }
 
@@ -68,7 +88,7 @@ func getFirstTrack(tracks []cueTrack) cueTrack {
 }
 
 func parseTracks(cuePath string) ([]cueTrack, error) {
-	content, err := ioutil.ReadFile(cuePath)
+	content, err := os.ReadFile(cuePath)
 	if err != nil {
 		return nil, err
 	}
