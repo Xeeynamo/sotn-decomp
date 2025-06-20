@@ -128,6 +128,9 @@ func (file File) WriteFromData(b []byte) error {
 	if uint32(len(b)) > file.DataLength.LSB {
 		return fmt.Errorf("data too long (%d > %d)", len(b), file.DataLength.LSB)
 	}
+	newB := make([]byte, file.DataLength.LSB)
+	copy(newB, b)
+	b = newB
 	for loc := location(file.ExtentLocation.LSB); len(b) > 0; loc++ {
 		chunk := b
 		if len(b) > sectorSize {
