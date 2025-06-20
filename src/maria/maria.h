@@ -24,14 +24,7 @@ enum MarInputChecks {
 };
 
 enum MarPalette {
-#ifdef VERSION_PSP
     /* 0x8114 */ PAL_MARIA = 0x8114,
-#else
-    // location is different to not collide with NO1 palette manipulation,
-    // which would otherwise result on a black-looking Maria and wrong
-    // colors for subweapons.
-    PAL_MARIA = 0x8120,
-#endif
     /* 0x8115 */ PAL_WPN_OWL,
     /* 0x8116 */ PAL_WPN_TURTLE,
     /* 0x8117 */ PAL_WPN_TURTLE_CRASH,

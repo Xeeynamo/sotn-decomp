@@ -151,6 +151,9 @@ void func_892667C(s32 paletteID, u16* paletteData) {
     int x = (paletteID & 15) * 16;
     int y = (paletteID >> 4) & 15;
     RECT rect = {x, 240 + y, 16, 1};
+    memcpy(
+        &g_Clut[(paletteID & 0x300) >> 8][(paletteID & 0xFF) * COLORS_PER_PAL],
+        paletteData, PALETTE_LEN);
     LoadImage(&rect, (u_long*)paletteData);
 }
 
