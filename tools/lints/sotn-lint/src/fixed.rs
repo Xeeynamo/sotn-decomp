@@ -38,6 +38,7 @@ fn gen_patterns(patterns: &mut Vec<Pattern>) {
         (r"(OBJECT->NAME\s*>=\s*)(-?0x[0-9a-fA-F]+)\)", false), // >=
         (r"(OBJECT->NAME\s*<\s*)(-?0x[0-9a-fA-F]+)\)", false), // <
         (r"(OBJECT->NAME\s*<=\s*)(-?0x[0-9a-fA-F]+)\)", false), // <=
+        (r"(Decelerate[XY]\()(-?0x[0-9a-fA-F]+)\)", false), // DecelerateX/DecelerateY
     ];
 
     let objs = ["entity", "g_CurrentEntity", "self"];
