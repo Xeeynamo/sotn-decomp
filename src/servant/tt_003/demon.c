@@ -1306,7 +1306,7 @@ void UpdateSubentitySwitch(Entity* self) {
             self->hitboxOffY = 4;
             self->hitboxWidth = 2;
             self->hitboxHeight = 2;
-            self->attackElement = 0x20;
+            self->attackElement = ELEMENT_HIT;
             self->hitboxState = 2;
             self->attack = 0;
             self->nFramesInvincibility = 0;
