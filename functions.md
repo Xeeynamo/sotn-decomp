@@ -1235,7 +1235,7 @@
 | lib    | func_psp_0923D8A0                        |      109 |          9 |        | https://decomp.me/scratch/BKgXI | 0.996 |
 | dra    | func_800F24F4                            |      109 |         19 |        |                                 |       |
 | no3    | func_801CC5A4                            |      110 |          5 |        |                                 |       |
-| no4    | func_pspeu_09242940                      |      111 |         14 |        |                                 |       |
+| no4    | func_pspeu_09242940                      |      111 |         14 |        | https://decomp.me/scratch/DKoLf | 1.0   |
 | no3    | func_pspeu_09252CD8                      |      111 |         19 |        | https://decomp.me/scratch/j3OH6 | 0.999 |
 | chi    | InitializeEntity                         |      112 |          2 |        |                                 |       |
 | dai    | InitializeEntity                         |      112 |          2 |        |                                 |       |
@@ -1612,7 +1612,7 @@
 | ric    | RicStepSlide                             |      256 |         45 |        |                                 |       |
 | ric    | RicEntityHitByHoly                       |      257 |         29 |        |                                 |       |
 |        | FindValidTarget                          |      257 |         36 |        | https://decomp.me/scratch/Klemw | 1.0   |
-| no4    | func_pspeu_09241E38                      |      258 |         19 |        | https://decomp.me/scratch/xIWVO | 0.854 |
+| no4    | func_pspeu_09241E38                      |      258 |         19 |        | https://decomp.me/scratch/xIWVO | 0.607 |
 | no4    | func_pspeu_09238E18                      |      258 |         30 |        | https://decomp.me/scratch/ab0nd | 0.997 |
 | dra    | func_800E414C                            |      258 |         36 |        | https://decomp.me/scratch/yLuWA | 0.994 |
 | dai    | func_us_801C3164                         |      260 |         36 |        |                                 |       |
@@ -1648,7 +1648,7 @@
 | dra    | MenuHandleCursorInput                    |      275 |         39 | Yes    |                                 |       |
 | dra    | func_801042C4                            |      277 |         20 |        | https://decomp.me/scratch/cAFJW | 0.998 |
 | no4    | func_pspeu_0923FF60                      |      277 |         31 |        | https://decomp.me/scratch/fFj3M | 0.999 |
-| no4    | func_pspeu_092423C8                      |      277 |         33 |        | https://decomp.me/scratch/Absyx | 0.418 |
+| no4    | func_pspeu_092423C8                      |      277 |         33 |        | https://decomp.me/scratch/NuZXm | 0.856 |
 | dra    | func_80124164                            |      279 |         17 |        |                                 |       |
 | maria  | func_80165DD8                            |      279 |         17 |        |                                 |       |
 | ric    | func_80165DD8                            |      279 |         17 |        |                                 |       |
@@ -2122,7 +2122,7 @@
 | dra    | EntityMist                               |     2183 |        161 | Yes    | https://decomp.me/scratch/RdP5H | 0.995 |
 | st0    | ST0_EntityCutscene                       |     2187 |        194 | Yes    | https://decomp.me/scratch/bgWcS | 0.92  |
 | no3    | NO3_EntityCutscene                       |     2232 |        204 | Yes    | https://decomp.me/scratch/j05ot | 0.999 |
-| dai    | DAI_EntityCutscene                       |     2235 |        203 | Yes    | https://decomp.me/scratch/myZc1 | 0.893 |
+| dai    | DAI_EntityCutscene                       |     2235 |        203 | Yes    | https://decomp.me/scratch/myZc1 | 0.993 |
 | no4    | func_pspeu_09256330                      |     2580 |        253 | Yes    | https://decomp.me/scratch/JQPXI | 0.997 |
 | dra    | EntityAlucard                            |     2716 |        467 | Yes    | https://decomp.me/scratch/2yDg8 | 0.994 |
 | dra    | EntityPlayerBlinkWhite                   |     2950 |        257 | Yes    | https://decomp.me/scratch/GoMQZ | 0.996 |
