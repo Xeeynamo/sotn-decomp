@@ -2914,6 +2914,9 @@
 | 1.00 | true     | func_us_801B4BF0                    | asm/us/boss/bo4/matchings/doors/func_us_801B4BF0.s 
 | 0.93 | true     | func_us_801B3690                    | asm/us/boss/rbo5/matchings/doors/func_us_801B3690.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801B5774                    | asm/us/boss/bo4/matchings/doors/func_us_801B5774.s 
+| 0.97 | true     | func_us_801B4210                    | asm/us/boss/rbo5/matchings/doors/func_us_801B4210.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | BO4_CheckCeiling                    | asm/us/boss/bo4/matchings/doppleganger/BO4_CheckCeiling.s 
 | 1.00 | true     | RBO5_CheckCeiling                   | asm/us/boss/rbo5/matchings/doppleganger/RBO5_CheckCeiling.s 
 -------------------------------------------------------------------------------
@@ -2980,6 +2983,12 @@
 | 1.00 | true     | BatFormFinished                     | asm/us/boss/bo4/matchings/unk_46E7C/BatFormFinished.s 
 | 1.00 | true     | BatFormFinished                     | asm/us/boss/rbo5/matchings/unk_4648C/BatFormFinished.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | CheckWingSmashInput                 | asm/us/boss/bo4/matchings/unk_46E7C/CheckWingSmashInput.s 
+| 1.00 | true     | CheckWingSmashInput                 | asm/us/boss/rbo5/matchings/unk_4648C/CheckWingSmashInput.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | ControlBatForm                      | asm/us/boss/bo4/matchings/unk_46E7C/ControlBatForm.s 
+| 1.00 | true     | ControlBatForm                      | asm/us/boss/rbo5/matchings/unk_4648C/ControlBatForm.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | CreateEntFactoryFromEntity          | asm/us/boss/bo4/matchings/unk_46E7C/CreateEntFactoryFromEntity.s 
 | 1.00 | true     | CreateEntFactoryFromEntity          | asm/us/boss/rbo5/matchings/unk_4648C/CreateEntFactoryFromEntity.s 
 -------------------------------------------------------------------------------
@@ -2989,14 +2998,14 @@
 | 1.00 | true     | DopplegangerStepKill                | asm/us/boss/bo4/matchings/unk_46E7C/DopplegangerStepKill.s 
 | 1.00 | true     | DopplegangerStepKill                | asm/us/boss/rbo5/matchings/unk_4648C/DopplegangerStepKill.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | EntityDopplegangerBlinkWhite        | asm/us/boss/bo4/matchings/unk_46E7C/EntityDopplegangerBlinkWhite.s 
+| 1.00 | true     | EntityDopplegangerBlinkWhite        | asm/us/boss/rbo5/matchings/unk_4648C/EntityDopplegangerBlinkWhite.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C72BC                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801C72BC.s 
 | 1.00 | true     | func_us_801C68CC                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C68CC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C7340                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801C7340.s 
 | 1.00 | true     | func_us_801C6950                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C6950.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801C820C                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801C820C.s 
-| 1.00 | true     | func_us_801C781C                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C781C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C8CE0                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801C8CE0.s 
 | 1.00 | true     | func_us_801C82F0                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C82F0.s 
@@ -3024,15 +3033,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801D162C                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801D162C.s 
 | 1.00 | true     | func_us_801D0BD8                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801D0BD8.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801B5774                    | asm/us/boss/bo4/nonmatchings/doors/func_us_801B5774.s 
-| 0.97 | false    | func_us_801B4210                    | asm/us/boss/rbo5/nonmatchings/doors/func_us_801B4210.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | ControlBatForm                      | asm/us/boss/bo4/nonmatchings/unk_46E7C/ControlBatForm.s 
-| 1.00 | false    | ControlBatForm                      | asm/us/boss/rbo5/nonmatchings/unk_4648C/ControlBatForm.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | EntityDopplegangerBlinkWhite        | asm/us/boss/bo4/nonmatchings/unk_46E7C/EntityDopplegangerBlinkWhite.s 
-| 1.00 | false    | EntityDopplegangerBlinkWhite        | asm/us/boss/rbo5/nonmatchings/unk_4648C/EntityDopplegangerBlinkWhite.s 
 -------------------------------------------------------------------------------
 | 1.00 | false    | func_us_801CD178                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801CD178.s 
 | 1.00 | false    | func_us_801CC788                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801CC788.s 
