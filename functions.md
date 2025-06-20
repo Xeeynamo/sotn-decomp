@@ -1612,7 +1612,7 @@
 | ric    | RicStepSlide                             |      256 |         45 |        |                                 |       |
 | ric    | RicEntityHitByHoly                       |      257 |         29 |        |                                 |       |
 |        | FindValidTarget                          |      257 |         36 |        | https://decomp.me/scratch/Klemw | 1.0   |
-| no4    | func_pspeu_09241E38                      |      258 |         19 |        | https://decomp.me/scratch/9g4ZO | 0.741 |
+| no4    | func_pspeu_09241E38                      |      258 |         19 |        | https://decomp.me/scratch/9g4ZO | 0.911 |
 | no4    | func_pspeu_09238E18                      |      258 |         30 |        | https://decomp.me/scratch/ab0nd | 0.997 |
 | dra    | func_800E414C                            |      258 |         36 |        | https://decomp.me/scratch/yLuWA | 0.994 |
 | dai    | func_us_801C3164                         |      260 |         36 |        |                                 |       |
