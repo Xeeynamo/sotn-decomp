@@ -21,7 +21,8 @@ typedef enum {
 
     /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
     /* 0x15 */ E_GREY_PUFF,
-    /* 0x17 */ E_ID_17 = 0x17,
+    /* 0x16 */ E_ID_16 = 0x16,
+    /* 0x17 */ E_ID_17,
     /* 0x19 */ E_ID_19 = 0x19,
     /* 0x1A */ E_ID_1A,
     /* 0x1B */ E_ID_1B,

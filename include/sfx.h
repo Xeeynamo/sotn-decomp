@@ -305,6 +305,7 @@ enum {
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
 #define SFX_RBO5_UNK_7AE 0x7AE
 #define SFX_BO4_UNK_7CB 0x7CB
+#define SFX_BO4_UNK_7CC 0x7CC
 #define SFX_BO4_UNK_7D7 0x7D7
 #define SFX_BO4_UNK_7DC 0x7DC
 #define SFX_BO4_UNK_7DD 0x7DD
