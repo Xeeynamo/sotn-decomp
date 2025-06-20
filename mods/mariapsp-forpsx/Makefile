@@ -17,7 +17,7 @@ OBJS = $(BUILD_DIR)/maria.o $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS)
 ASSETS = $(BUILD_DIR)/.assets_done
 
 
-.PHONY: all build clean disk
+.PHONY: all build clean release disk
 
 all: build
 
@@ -45,8 +45,24 @@ $(OVERLAY): $(TARGET)
 clean:
 	rm $(OVERLAY) $(MAP) $(BUILD_DIR)/symbols.txt $(ASSETS) $(TARGET) $(OBJS)
 
-disk: build
+# prepare release by complying with the AGPL-3.0-or-later license
+RELEASE_DIR = release
+release:
 	cd $(ROOT_DIR) && VERSION=pspeu make extract_disk
-	cp $(ROOT_DIR)/disks/sotn.$(VERSION).bin $(ROOT_DIR)/disks/sotn_mariapsp.$(VERSION).bin
+	make $(OVERLAY)
+	mkdir -p $(RELEASE_DIR)/src
+	cp $(OVERLAY) $(RELEASE_DIR)/
+	cp $(MAP) $(RELEASE_DIR)/
+	cp $(ROOT_DIR)/LICENSE $(RELEASE_DIR)/
+	cp $$(find . -maxdepth 1 -type f) release/src/
+	cp $$(find $(ROOT_DIR)/src/maria -maxdepth 1 -type f) release/src/
+	cp $$(find $(ROOT_DIR)/include -maxdepth 1 -type f) release/src/
+	cd release && sha256sum MARIA.BIN > MARIA.BIN.sha256
+
+DISK_DIR = $(ROOT_DIR)/disks/mariapsp-forpsx
+disk: release
+	rm -rf $(DISK_DIR) || true
+	cp -r $(RELEASE_DIR) $(DISK_DIR)
+	cp $(ROOT_DIR)/disks/sotn.$(VERSION).bin $(DISK_DIR)/sotn-patched.$(VERSION).bin
 	cd $(ROOT_DIR) && make bin/sotn-disk
-	$(ROOT_DIR)/bin/sotn-disk inject $(ROOT_DIR)/disks/sotn_mariapsp.$(VERSION).bin BIN/RIC.BIN $(OVERLAY)
+	$(ROOT_DIR)/bin/sotn-disk inject $(DISK_DIR)/sotn-patched.$(VERSION).bin BIN/RIC.BIN $(OVERLAY)
