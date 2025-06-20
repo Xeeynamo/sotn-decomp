@@ -1612,7 +1612,7 @@
 | ric    | RicStepSlide                             |      256 |         45 |        |                                 |       |
 | ric    | RicEntityHitByHoly                       |      257 |         29 |        |                                 |       |
 |        | FindValidTarget                          |      257 |         36 |        | https://decomp.me/scratch/Klemw | 1.0   |
-| no4    | func_pspeu_09241E38                      |      258 |         19 |        | https://decomp.me/scratch/xIWVO | 0.607 |
+| no4    | func_pspeu_09241E38                      |      258 |         19 |        | https://decomp.me/scratch/9g4ZO | 0.741 |
 | no4    | func_pspeu_09238E18                      |      258 |         30 |        | https://decomp.me/scratch/ab0nd | 0.997 |
 | dra    | func_800E414C                            |      258 |         36 |        | https://decomp.me/scratch/yLuWA | 0.994 |
 | dai    | func_us_801C3164                         |      260 |         36 |        |                                 |       |
@@ -1648,7 +1648,7 @@
 | dra    | MenuHandleCursorInput                    |      275 |         39 | Yes    |                                 |       |
 | dra    | func_801042C4                            |      277 |         20 |        | https://decomp.me/scratch/cAFJW | 0.998 |
 | no4    | func_pspeu_0923FF60                      |      277 |         31 |        | https://decomp.me/scratch/fFj3M | 0.999 |
-| no4    | func_pspeu_092423C8                      |      277 |         33 |        | https://decomp.me/scratch/NuZXm | 0.952 |
+| no4    | func_pspeu_092423C8                      |      277 |         33 |        | https://decomp.me/scratch/NuZXm | 1.0   |
 | dra    | func_80124164                            |      279 |         17 |        |                                 |       |
 | maria  | func_80165DD8                            |      279 |         17 |        |                                 |       |
 | ric    | func_80165DD8                            |      279 |         17 |        |                                 |       |
