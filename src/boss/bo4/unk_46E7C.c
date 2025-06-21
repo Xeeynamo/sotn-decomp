@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo4.h"
+#include "../../dra/mist.h"
 
 // n.b.! this is the same as rbo5/unk_4648C.c
 
@@ -1048,12 +1049,12 @@ void DopplegangerStepUnmorphMist(void) {
         if (g_DopSensorsFloor[i].y < g_DopSensorsFloorDefault[i]) {
             g_DopSensorsFloor[i].y++;
         } else {
-            count += 1;
+            count++;
         }
         if (g_DopSensorsCeiling[i].y > g_DopSensorsCeilingDefault[i]) {
             g_DopSensorsCeiling[i].y--;
         } else {
-            count += 1;
+            count++;
         }
         if (i == 0 && (g_Dop.vram_flag & 0x8000)) {
             DOPPLEGANGER.posY.i.hi--;
@@ -3010,8 +3011,6 @@ void EntityHitByIce(Entity* self) {
     }
 }
 
-#include "../../dra/mist.h"
-
 extern mistStruct D_us_801D3DA0[16];
 
 void func_80121F14(s32 velocityX, s32 velocityY) {
@@ -3029,8 +3028,7 @@ extern u32 D_us_80181F98[8];
 extern u32 D_us_80181FB8[8];
 extern mistStruct D_us_801D3DA0[16];
 
-Primitive* func_us_801CEA30(
-    bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
+Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     s32 primU0;
     s32 tempU;
     s32 tempV;
@@ -3130,7 +3128,450 @@ Primitive* func_us_801CEA30(
     return arg2;
 }
 
-INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", EntityMist);
+extern s16 D_us_801D3EF0;
+extern s16 D_us_801D3EE0;
+extern s16 D_us_801D3EF4;
+extern s16 D_us_801D3EE4;
+extern s16 D_us_801D3EF8;
+extern s16 D_us_801D3EE8;
+extern s16 D_us_801D3EFC;
+extern s16 D_us_801D3EEC;
+extern Primitive D_us_801D3F00[8];
+extern mistStruct D_us_801D3DA0[16];
+extern u32 D_us_80181F98[8];
+extern u32 D_us_80181FB8[8];
+extern s32 D_us_801D40A0;
+extern s16 D_us_80181F18[];
+extern s16 D_us_80181F58[];
+extern s32 D_us_801D40A4;
+extern s32 D_us_801D40A8;
+extern s32 D_us_801D40AC;
+
+// spawns mist (player transform)
+void EntityMist(Entity* self) {
+    Primitive* prim;
+    Primitive* mistPrim;
+    mistStruct* mistStruct;
+    s16 xVar;
+    s16 yVar;
+    s16 angle;
+    s16 magnitude;
+    s16 angle2;
+    s16 angle3;
+    s16 xSize;
+    s16 ySize;
+    s16 baseSize;
+    s16 index;
+    s16 xVar2;
+    s16 yVar2;
+    s16 xVar3;
+    s16 yVar3;
+    s32 primColor1;
+    s32 primColor2;
+    s32 primColor3;
+    s32 primColor4;
+    s16 xVar4;
+    s16 yVar4;
+    s32 velX;
+    s32 velY;
+    s32 cosine;
+    s32 sine;
+    s32 i;
+    s32 j;
+    s16 xVar5;
+    s16 yVar5;
+
+    velX = DOPPLEGANGER.velocityX >> 1;
+    velY = DOPPLEGANGER.velocityY >> 1;
+    primColor1 = D_us_801D3EF0 + (rsin(D_us_801D3EE0) >> 8);
+    primColor2 = D_us_801D3EF4 + (rsin(D_us_801D3EE4) >> 8);
+    primColor3 = D_us_801D3EF8 + (rsin(D_us_801D3EE8) >> 8);
+    primColor4 = D_us_801D3EFC + (rsin(D_us_801D3EEC) >> 8);
+    D_us_801D3EE0 += 0x20;
+    D_us_801D3EE4 -= 0x20;
+    D_us_801D3EE8 += 0x20;
+    D_us_801D3EEC -= 0x20;
+    self->ext.mist.timer++;
+
+    self->facingLeft = DOPPLEGANGER.facingLeft;
+    if (DOPPLEGANGER.animSet == 0xF) {
+        self->facingLeft = 0;
+    }
+
+    if (self->step != 0) {
+        mistStruct = D_us_801D3DA0;
+        velX = self->posX.i.hi - D_us_801D40AC;
+        for (i = 0; i < 16; i++) {
+            mistStruct->posX.i.hi += velX;
+            mistStruct++;
+        }
+    }
+
+    switch (self->step) {
+    case 0:
+        // Weird that we set FLAG_DEAD here.
+        self->params = FLAG_UNK_4000 | FLAG_UNK_1000 | FLAG_UNK_800 |
+                       FLAG_UNK_400 | FLAG_DEAD;
+        EntityDopplegangerBlinkWhite(self);
+        if (self->primIndex == -1) {
+            goto block_147;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        mistPrim = D_us_801D3F00;
+        for (i = 0; i < LEN(D_us_801D3F00); i++, mistPrim++) {
+            *mistPrim = *prim;
+            prim = prim->next;
+        }
+        g_api.FreePrimitives(self->primIndex);
+        self->step = 0;
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 80);
+        if (self->primIndex == -1) {
+            goto block_147;
+        }
+
+        D_us_801D3EE0 = rand() & PSP_RANDMASK;
+        D_us_801D3EE4 = rand() & PSP_RANDMASK;
+        D_us_801D3EE8 = rand() & PSP_RANDMASK;
+        D_us_801D3EEC = rand() & PSP_RANDMASK;
+
+        D_us_801D3EF0 = 0xEF;
+        D_us_801D3EF4 = 0xEF;
+        D_us_801D3EF8 = 0xEF;
+        D_us_801D3EFC = 0xEF;
+        mistStruct = &D_us_801D3DA0[0];
+        for (i = 0; i < LEN(D_us_801D3DA0); i++, mistStruct++) {
+            if (self->facingLeft) {
+                mistPrim = &D_us_801D3F00[D_us_80181F98[i >> 1]];
+                xVar = mistPrim->x0;
+                yVar = mistPrim->y0;
+            } else {
+                mistPrim = &D_us_801D3F00[D_us_80181FB8[i >> 1]];
+                xVar = mistPrim->x1;
+                yVar = mistPrim->y1;
+            }
+            xVar5 = (mistPrim->x0 + mistPrim->x1) / 2;
+            yVar5 = (mistPrim->y0 + mistPrim->y1) / 2;
+            if (!(i & 1)) {
+                mistStruct->posX.i.hi = xVar;
+                mistStruct->posY.i.hi = yVar;
+            } else {
+                mistStruct->posX.i.hi = xVar5;
+                mistStruct->posY.i.hi = yVar5;
+            }
+            xVar2 = mistPrim->x2;
+            yVar2 = mistPrim->y2;
+            angle = mistStruct->angle1 = (i * 4096) / 16;
+            mistStruct->angle2 = i << 9;
+            xVar3 = mistStruct->posX.i.hi - xVar2;
+            yVar3 = mistStruct->posY.i.hi - yVar2;
+            mistStruct->size =
+                (SquareRoot12(((xVar3 * xVar3) + (yVar3 * yVar3)) << 0xC) >>
+                 0xC);
+        }
+        xVar4 = xVar2;
+        yVar4 = yVar2;
+        self->ext.mist.xCurrent = xVar2 - DOPPLEGANGER.posX.i.hi;
+        self->ext.mist.yCurrent = yVar2 - DOPPLEGANGER.posY.i.hi;
+        self->posX.i.hi = xVar4;
+        self->posY.i.hi = yVar4;
+        prim = &g_PrimBuf[self->primIndex];
+        for (j = 0; j < 16; j++) {
+            prim = func_80121F58(0, j, prim, self->facingLeft);
+        }
+        for (j = 0; j < 16; j++) {
+            prim = func_80121F58(1, j, prim, self->facingLeft);
+        }
+        self->flags =
+            FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        self->step++;
+        self->ext.mist.timer = 0;
+        D_us_801D40A0 = 0;
+        break;
+    case 1:
+        D_us_801D3EF0 -= 1;
+        D_us_801D3EF4 -= 2;
+        D_us_801D3EF8 -= 3;
+        D_us_801D3EFC -= 4;
+        if (D_us_801D3EF0 < 0xD0) {
+            D_us_801D3EF0 = 0xD0;
+        }
+        if (D_us_801D3EF4 < 0xA0) {
+            D_us_801D3EF4 = 0xA0;
+        }
+        if (D_us_801D3EF8 < 0x70) {
+            D_us_801D3EF8 = 0x70;
+        }
+        if (D_us_801D3EFC < 0x30) {
+            D_us_801D3EFC = 0x30;
+        }
+        if (self->ext.mist.timer == 0x4F) {
+            self->step++;
+            g_api.func_800EA538(5);
+        }
+        // Fallthrough!
+    case 2:
+        j = 0;
+        if (self->ext.mist.timer < 16) {
+            j = 1;
+        }
+        xVar4 = DOPPLEGANGER.posX.i.hi + self->ext.mist.xCurrent;
+        yVar4 = DOPPLEGANGER.posY.i.hi + self->ext.mist.yCurrent;
+        xVar = xVar4 - self->posX.i.hi;
+        yVar = yVar4 - self->posY.i.hi;
+        angle = ratan2(-yVar, xVar);
+        magnitude = SquareRoot12(((xVar * xVar) + (yVar * yVar)) << 0xC) >> 0xC;
+        if (magnitude > 10) {
+            cosine = rcos(angle) * 8;
+            sine = -rsin(angle) * 8;
+            if (magnitude > 35) {
+                cosine *= 2;
+                sine *= 2;
+            }
+            if (magnitude > 60) {
+                cosine *= 2;
+                sine *= 2;
+            }
+            self->posX.val += (s32)cosine;
+            self->posY.val += (s32)sine;
+        }
+        angle3 = angle;
+        xVar3 = (self->posX.i.hi + xVar4) / 2;
+        yVar3 = (self->posY.i.hi + yVar4) / 2;
+        xVar2 = abs(xVar) / 2;
+        yVar2 = abs(yVar) / 2;
+        mistStruct = D_us_801D3DA0;
+        for (i = 0; i < LEN(D_us_801D3DA0); i++, mistStruct++) {
+            if ((mistStruct->size < 0x28) && (g_GameTimer & 1)) {
+                mistStruct->size++;
+            }
+            angle2 = mistStruct->angle1;
+            index = ((angle3 - angle2) & 0xFFF);
+            index = (index >> 7) & 0x1F;
+            baseSize = D_us_80181F18[index];
+            xSize = ((mistStruct->size + xVar2) * baseSize) / 80;
+            ySize = ((mistStruct->size + yVar2) * baseSize) / 80;
+            xVar = xVar3 + (((rcos(angle2) >> 4) * xSize) >> 8);
+            yVar = yVar3 - (((rsin(angle2) >> 4) * ySize) >> 8);
+            mistStruct->angle2 += 8;
+            angle = mistStruct->angle2;
+            if (j) {
+                xVar += (rcos(angle) >> 4) * 2 >> 8;
+                yVar -= (rsin(angle) >> 4) * 2 >> 8;
+            } else {
+                xVar += (((rcos(angle) >> 4) * 6) >> 8);
+                yVar -= (((rsin(angle) >> 4) * 6) >> 8);
+            }
+            xVar5 = xVar - mistStruct->posX.i.hi;
+            yVar5 = yVar - mistStruct->posY.i.hi;
+            angle = ratan2(-yVar5, xVar5) & 0xFFF;
+            mistStruct->posX.val += rcos(angle) << 5;
+            mistStruct->posY.val += -rsin(angle) << 5;
+            if (D_us_80181F58[index] == -1) {
+                mistStruct->posX.val += (s32)velX;
+                mistStruct->posY.val += (s32)velY;
+            }
+        }
+        D_us_801D40A0 += 8;
+        if (D_us_801D40A0 >= 0xFF) {
+            D_us_801D40A0 = 0xFF;
+        }
+        break;
+    case 3:
+        g_api.FreePrimitives(self->primIndex);
+        self->step = 0;
+        xVar = self->ext.mist.xCurrent;
+        yVar = self->ext.mist.yCurrent;
+        self->params = FLAG_UNK_4000 | FLAG_UNK_1000 | FLAG_UNK_800 |
+                       FLAG_UNK_400 | FLAG_DEAD;
+        EntityDopplegangerBlinkWhite(self);
+        if (self->primIndex == -1) {
+            self->flags = 0;
+            DestroyEntity(self);
+            goto block_147;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        mistPrim = D_us_801D3F00;
+        for (i = 0; i < 8; i++, mistPrim++) {
+            *mistPrim = *prim;
+            prim = prim->next;
+        }
+        g_api.FreePrimitives(self->primIndex);
+        self->ext.mist.xCurrent = xVar;
+        self->ext.mist.yCurrent = yVar;
+        self->ext.mist.timer = 0;
+        self->step = 4;
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 80);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+        } else {
+            mistStruct = D_us_801D3DA0;
+            for (i = 0; i < LEN(D_us_801D3DA0); i++, mistStruct++) {
+                if (self->facingLeft) {
+                    mistPrim = &D_us_801D3F00[D_us_80181F98[i >> 1]];
+                    xVar = mistPrim->x0;
+                    yVar = mistPrim->y0;
+                } else {
+                    mistPrim = &D_us_801D3F00[D_us_80181FB8[i >> 1]];
+                    xVar = mistPrim->x1;
+                    yVar = mistPrim->y1;
+                }
+                xVar5 = (mistPrim->x0 + mistPrim->x1) / 2;
+                yVar5 = (mistPrim->y0 + mistPrim->y1) / 2;
+                if (!(i & 1)) {
+                    mistStruct->xOffset = xVar;
+                    mistStruct->yOffset = yVar;
+                } else {
+                    mistStruct->xOffset = xVar5;
+                    mistStruct->yOffset = yVar5;
+                }
+                mistStruct->xOffset -= DOPPLEGANGER.posX.i.hi;
+                mistStruct->yOffset -= DOPPLEGANGER.posY.i.hi;
+                xVar2 = mistPrim->x2;
+                yVar2 = mistPrim->y2;
+            }
+            self->ext.mist.xTarget = xVar2 - DOPPLEGANGER.posX.i.hi;
+            self->ext.mist.yTarget = yVar2 - DOPPLEGANGER.posY.i.hi;
+            prim = &g_PrimBuf[self->primIndex];
+            for (j = 0; j < 16; j++) {
+                prim = func_80121F58(0, j, prim, self->facingLeft);
+            }
+            for (j = 0; j < 16; j++) {
+                prim = func_80121F58(1, j, prim, self->facingLeft);
+            }
+            self->flags =
+                FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+            xVar4 = DOPPLEGANGER.posX.i.hi + self->ext.mist.xCurrent;
+            yVar4 = DOPPLEGANGER.posY.i.hi + self->ext.mist.yCurrent;
+            self->posX.i.hi = DOPPLEGANGER.posX.i.hi;
+            self->posY.i.hi = DOPPLEGANGER.posY.i.hi;
+            D_us_801D40A0 = 0xFF;
+            break;
+        }
+        goto block_147;
+    case 4:
+        if (self->ext.mist.timer == 0xC) {
+            g_api.func_800EA538(5);
+            g_api.func_800EA5E4(0x8802);
+        }
+        j = 0;
+        // These if-statements seem to allow for the mist to stretch and move
+        // The mist's current location moves toward the target in X and Y.
+        if (self->ext.mist.xCurrent > self->ext.mist.xTarget) {
+            self->ext.mist.xCurrent--;
+        }
+        if (self->ext.mist.xCurrent < self->ext.mist.xTarget) {
+            self->ext.mist.xCurrent++;
+        }
+        if (self->ext.mist.yCurrent > self->ext.mist.yTarget) {
+            self->ext.mist.yCurrent--;
+        }
+        if (self->ext.mist.yCurrent < self->ext.mist.yTarget) {
+            self->ext.mist.yCurrent++;
+        }
+        xVar4 = DOPPLEGANGER.posX.i.hi + self->ext.mist.xCurrent;
+        yVar4 = DOPPLEGANGER.posY.i.hi + self->ext.mist.yCurrent;
+
+        xVar = xVar4 - self->posX.i.hi;
+        yVar = yVar4 - self->posY.i.hi;
+
+        mistStruct = D_us_801D3DA0;
+
+        for (i = 0; i < LEN(D_us_801D3DA0); i++, mistStruct++) {
+            xVar = (mistStruct->xOffset + DOPPLEGANGER.posX.i.hi) -
+                   mistStruct->posX.i.hi;
+            yVar = (mistStruct->yOffset + DOPPLEGANGER.posY.i.hi) -
+                   mistStruct->posY.i.hi;
+            if (xVar | yVar) {
+                angle = ratan2(-yVar, xVar);
+                mistStruct->posX.val += rcos(angle) << 5;
+                mistStruct->posY.val += -rsin(angle) << 5;
+            }
+            mistStruct->posX.val += DOPPLEGANGER.velocityX;
+            mistStruct->posY.val += DOPPLEGANGER.velocityY;
+        }
+        if (self->ext.mist.timer > 0x18) {
+            self->step++;
+            self->ext.mist.timer = 0x10;
+        }
+        D_us_801D40A0 -= 0x10;
+        if (D_us_801D40A0 <= 0) {
+            D_us_801D40A0 = 0;
+        }
+        break;
+    case 5:
+        if (self->ext.mist.timer <= 0) {
+            DestroyEntity(self);
+        }
+        return;
+    }
+    D_us_801D40A4 = 0xFF - D_us_801D40A0;
+
+    prim = &g_PrimBuf[self->primIndex];
+    for (j = 0; j < LEN(D_us_801D3DA0); j++) {
+        xVar5 = D_us_801D3DA0[j].posX.i.hi;
+        yVar5 = D_us_801D3DA0[j].posY.i.hi;
+        xVar2 = D_us_801D3DA0[(j + 1) % 16].posX.i.hi;
+        yVar2 = D_us_801D3DA0[(j + 1) % 16].posY.i.hi;
+        prim->x0 = xVar5;
+        prim->y0 = yVar5;
+        prim->x1 = xVar2;
+        prim->y1 = yVar2;
+        prim->x2 = xVar4;
+        prim->x3 = xVar4;
+        prim->y2 = yVar4;
+        prim->y3 = yVar4;
+        PGREY(prim, 0) = PGREY(prim, 1) = 0;
+        PGREY(prim, 2) = PGREY(prim, 3) = D_us_801D40A4;
+
+        prim = prim->next;
+    }
+    for (j = 0; j < LEN(D_us_801D3DA0); j++) {
+        xVar5 = D_us_801D3DA0[j].posX.i.hi;
+        yVar5 = D_us_801D3DA0[j].posY.i.hi;
+        xVar2 = D_us_801D3DA0[(j + 1) % 16].posX.i.hi;
+        yVar2 = D_us_801D3DA0[(j + 1) % 16].posY.i.hi;
+        for (i = 0; i < 4; prim = prim->next, i++) {
+            prim->x0 = xVar4 + (i + 1) * (xVar5 - xVar4) / 4;
+            prim->y0 = yVar4 + (i + 1) * (yVar5 - yVar4) / 4;
+            prim->x1 = xVar4 + (i + 1) * (xVar2 - xVar4) / 4;
+            prim->y1 = yVar4 + (i + 1) * (yVar2 - yVar4) / 4;
+            prim->x2 = xVar4 + i * (xVar5 - xVar4) / 4;
+            prim->y2 = yVar4 + i * (yVar5 - yVar4) / 4;
+            prim->x3 = xVar4 + i * (xVar2 - xVar4) / 4;
+            prim->y3 = yVar4 + i * (yVar2 - yVar4) / 4;
+            switch (i) {
+            case 0:
+                PGREY(prim, 0) = PGREY(prim, 1) =
+                    (D_us_801D40A0 * primColor2 / 256) & 0xFF;
+                PGREY(prim, 2) = PGREY(prim, 3) =
+                    (D_us_801D40A0 * primColor1 / 256) & 0xFF;
+                break;
+            case 1:
+                PGREY(prim, 0) = PGREY(prim, 1) =
+                    (D_us_801D40A0 * primColor3 / 256) & 0xFF;
+                PGREY(prim, 2) = PGREY(prim, 3) =
+                    (D_us_801D40A0 * primColor2 / 256) & 0xFF;
+                break;
+            case 2:
+                PGREY(prim, 0) = PGREY(prim, 1) =
+                    (D_us_801D40A0 * primColor4 / 256) & 0xFF;
+                PGREY(prim, 2) = PGREY(prim, 3) =
+                    (D_us_801D40A0 * primColor3 / 256) & 0xFF;
+                break;
+            case 3:
+                PGREY(prim, 0) = PGREY(prim, 1) = 0;
+                PGREY(prim, 2) = PGREY(prim, 3) =
+                    (D_us_801D40A0 * primColor4 / 256) & 0xFF;
+                break;
+            }
+        }
+    }
+
+block_147:
+    self->facingLeft = DOPPLEGANGER.facingLeft;
+    D_us_801D40A8 = self->posX.val;
+    D_us_801D40AC = self->posX.i.hi;
+}
 
 INCLUDE_ASM("boss/bo4/nonmatchings/unk_46E7C", func_us_801D0318);
 
