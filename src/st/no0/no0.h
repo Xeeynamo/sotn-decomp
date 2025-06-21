@@ -47,7 +47,7 @@ typedef enum EntityIDs {
     /* 0x27 */ E_OLROX_DROOL,
     /* 0x2E */ E_SKELERANG = 0x2E,
     /* 0x2F */ E_SKELERANG_BOOMERANG,
-    /* 0x30 */ E_SKELERANG_UNK,
+    /* 0x30 */ E_SKELERANG_UNKNOWN,
     /* 0x31 */ E_PLATE_LORD,
     /* 0x32 */ E_ID_32,
     /* 0x33 */ E_ID_33,

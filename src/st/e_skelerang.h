@@ -75,7 +75,7 @@ void EntitySkelerang(Entity* self) {
     switch (self->step) {
     case SKELERANG_INIT:
         InitializeEntity(g_EInitSkelerang);
-        CreateEntityFromEntity(E_SKELERANG_UNK, self, self + 1);
+        CreateEntityFromEntity(E_SKELERANG_UNKNOWN, self, self + 1);
 
         entity = self + 2;
         CreateEntityFromEntity(E_SKELERANG_BOOMERANG, self, entity);
