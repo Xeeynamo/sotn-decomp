@@ -65,7 +65,7 @@ segments:
       - [0x142D8, c, dai/e_room_fg]
       - [0x143F0, c, dai_psp/unk_143F0]
       - [0x15A88, c, dai/st_common]
-      - [0x174B8, c, dai_psp/prim_helpers]
+      - [0x174B8, c, dai/prim_helpers]
       - [0x17C50, c, dai_psp/unk_17C50]
       - [0x19A40, c, dai_psp/st_init]
       - [0x19EA0, c, dai_psp/e_breakable]
@@ -107,7 +107,7 @@ segments:
       - [0x2C880, data]
       - [0x36BF0, data] # e_cutscene
       - [0x386F0, data]
-      - [0x5ED00, .data, dai_psp/header]
+      - [0x5ED00, .data, dai/header]
       - [0x5ED30, data] # unk_1A390
       - [0x5ED40, .data, dai/d_prize_drops]
       - [0x5ED60, data] # unk_1A390

@@ -2,12 +2,16 @@
 #include "dai.h"
 
 extern RoomHeader OVL_EXPORT(rooms)[];
-extern s16** OVL_EXPORT(spriteBanks)[];
+extern SpriteParts* OVL_EXPORT(spriteBanks)[];
 extern u_long* OVL_EXPORT(cluts)[];
+#ifdef VERSION_PSP
+extern LayoutEntity* g_pStObjLayoutHorizontal[];
+#else
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
+#endif
 extern RoomDef OVL_EXPORT(rooms_layers)[];
-extern u_long* OVL_EXPORT(gfxBanks)[];
-void UpdateStageEntities();
+extern GfxBank* OVL_EXPORT(gfxBanks)[];
+void UpdateStageEntities(void);
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .Update = Update,
@@ -17,7 +21,11 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .rooms = OVL_EXPORT(rooms),
     .spriteBanks = OVL_EXPORT(spriteBanks),
     .cluts = OVL_EXPORT(cluts),
+#ifdef VERSION_PSP
+    .objLayoutHorizontal = g_pStObjLayoutHorizontal,
+#else
     .objLayoutHorizontal = OVL_EXPORT(pStObjLayoutHorizontal),
+#endif
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
