@@ -249,7 +249,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         self->step++;
         break;
     case 1:
-        DecelerateX(0x1000);
+        DecelerateX(FIX(0.0625));
         self->velocityY -= FIX(0.15625);
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;

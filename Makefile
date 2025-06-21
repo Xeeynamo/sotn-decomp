@@ -86,8 +86,7 @@ MWCCGAP_APP     := $(TOOLS_DIR)/mwccgap/mwccgap.py
 DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
 SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
-SOTNDISK_DIR	:= $(TOOLS_DIR)/sotn-disk/
-SOTNDISK        := $(GOPATH)/bin/sotn-disk
+SOTNDISK        := bin/sotn-disk
 SOTNASSETS      := bin/sotn-assets
 
 # Directories
@@ -193,9 +192,14 @@ help: ##@ Print listing of key targets with their descriptions
 format: ##@ Format source code, clean symbols, other linting
 format: format-src format-tools format-symbols format-license
 
+
+.PHONY: lint format-sotn-lint
+lint: format-sotn-lint
+format-sotn-lint:
+	$(SOTNLINT) || ( echo lint failed 1>&2 && exit 1 )
+
 .PHONY: format-src
-format-src: bin/clang-format
-	cargo run --release --manifest-path ./tools/lints/sotn-lint/Cargo.toml ./src
+format-src: bin/clang-format format-sotn-lint
 	@# find explainer:
 	@#    find $(SRC_DIR) $(INCLUDE_DIR)                      : look in src and include
 	@#    -type d \( -name 3rd -o -name CMakeFiles \) -prune  : if an entry is both a directory and 3rd or CMakeFiles
@@ -204,7 +208,7 @@ format-src: bin/clang-format
 	@#    -print0                                             : print only the matching entries, delimit by NULL to
 	@#                                                          ensure files with characters xargs uses as delimiters are
 	@#                                                          properly handled
-	find $(SRC_DIR) $(INCLUDE_DIR) \
+	find $(SRC_DIR) $(INCLUDE_DIR) mods \
         -type d \( -name 3rd -o -name CMakeFiles -o -name gen \) -prune \
         -o \( -type f \( -name '*.c' -o -name '*.h' \) \) \
         -print0 \
@@ -237,7 +241,7 @@ format-symbols-pspeu: format-symbols-pspeu-sort
 format-symbols: format-symbols-us format-symbols-hd format-symbols-pspeu
 
 format-license:
-	find src/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
+	find src/ mods/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/game.h AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/items.h AGPL-3.0-or-later
@@ -454,7 +458,7 @@ $(GO):
 	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz
 	rm go1.22.4.linux-amd64.tar.gz
 $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
-	cd tools/sotn-disk; $(GO) install
+	$(GO) build -C tools/sotn-disk -o ../../$@ .
 $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
 	$(GO) build -C tools/sotn-assets -o ../../$@ .
 

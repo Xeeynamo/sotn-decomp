@@ -102,7 +102,9 @@ segments:
       - [0x84210, .data, dra/5D5BC]
       - [0x84238, .data, dra/4AEA4]
       - [0x84248, .data, dra_psp/d_84248]
-      - [0x92E80, .data, dra_psp/d_92E80]
+      - [0x92E80, .data, dra/d_2F324]
+      - [0x939A8, .data, dra/d_24CEC]
+      # - [0x94010, .data, dra/d_24CEC] # g_GfxEquipIcon
       - [0x9E010, .data, dra/d_E294]
       - [0xA0578, .data, dra/692E8]
       - [0xA6820, .data, dra/71830]
@@ -163,6 +165,7 @@ segments:
       - {start: 0xEED80, type: bss, vram: 0x091CE3D0, name: bss6}
       - {start: 0xEED80, type: .bss, vram: 0x091CE428, name: dra/4AEA4}
       - {start: 0xEED80, type: bss, vram: 0x091CE548, name: bss7}
+      - {start: 0xEED80, type: .bss, vram: 0x09234A30, name: dra/d_2F324}
       - {start: 0xEED80, type: .bss, vram: 0x09234B68, name: dra/692E8}
       - {start: 0xEED80, type: bss, vram: 0x09234B98, name: bss8}
       - {start: 0xEED80, type: .bss, vram: 0x09234CB0, name: dra/71830}

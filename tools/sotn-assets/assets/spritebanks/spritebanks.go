@@ -96,8 +96,8 @@ func buildSprites(fileName string, outputDir string) error {
 	if err := json.Unmarshal(data, &spritesBanks); err != nil {
 		return err
 	}
-	if len(spritesBanks.Indices) != banksCount {
-		return fmt.Errorf("the number of banks must be exactly %d, got %d", banksCount, len(spritesBanks.Banks))
+	if len(spritesBanks.Indices) != banksCount && len(spritesBanks.Indices) != banksCount + 1 {
+		return fmt.Errorf("the number of banks must be exactly %d, got %d", banksCount, len(spritesBanks.Indices))
 	}
 
 	sbHeader := strings.Builder{}

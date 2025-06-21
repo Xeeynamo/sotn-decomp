@@ -142,7 +142,6 @@ u8 aPqes[] = {0};            // SEQ file
 u8 aPqes_0[] = {0};          // SEQ file
 u8 aPqes_1[] = {0};          // SEQ file
 s32 D_800987B4;
-u8 g_GfxEquipIcon[320][16 * 16 / 2];
 u16 g_PalEquipIcon[320 * 16];
 u16 D_8006ED0C[0x10] = {0};
 u16 D_8006ED2C[0x10] = {0};

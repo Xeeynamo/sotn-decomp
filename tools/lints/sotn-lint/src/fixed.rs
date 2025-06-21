@@ -38,6 +38,7 @@ fn gen_patterns(patterns: &mut Vec<Pattern>) {
         (r"(OBJECT->NAME\s*>=\s*)(-?0x[0-9a-fA-F]+)\)", false), // >=
         (r"(OBJECT->NAME\s*<\s*)(-?0x[0-9a-fA-F]+)\)", false), // <
         (r"(OBJECT->NAME\s*<=\s*)(-?0x[0-9a-fA-F]+)\)", false), // <=
+        (r"(Decelerate[XY]\()(-?0x[0-9a-fA-F]+)\)", false), // DecelerateX/DecelerateY
     ];
 
     let objs = ["entity", "g_CurrentEntity", "self"];
@@ -100,7 +101,6 @@ fn transform_line_fixed(line: &str) -> String {
                 if let Some(conv) = hex_string_to_float(hex_str.into()) {
                     if count_digits_after_decimal(conv) > 5 || count_digits_before_decimal(conv) > 3
                     {
-                        println!("skipping");
                         return line.to_string();
                     } else {
                         if let Some(group_str) = thing.get(1) {

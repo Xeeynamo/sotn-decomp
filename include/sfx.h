@@ -305,6 +305,7 @@ enum {
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
 #define SFX_RBO5_UNK_7AE 0x7AE
 #define SFX_BO4_UNK_7CB 0x7CB
+#define SFX_BO4_UNK_7CC 0x7CC
 #define SFX_BO4_UNK_7D7 0x7D7
 #define SFX_BO4_UNK_7DC 0x7DC
 #define SFX_BO4_UNK_7DD 0x7DD
@@ -655,7 +656,7 @@ enum Sfx {
     SFX_UNK_7BE = 0x7BE,
     SFX_UNK_761 = 0x761,
 
-#if defined(VERSION_PSP) || defined(VERSION_PC)
+    // Exclusive to Maria PSP
     /* 0x8E6 */ SFX_VO_MAR_8E6 = 0x8E6,
     /* 0x8E7 */ SFX_VO_MAR_ATTACK_C,
     /* 0x8E8 */ SFX_VO_MAR_8E8,
@@ -672,7 +673,6 @@ enum Sfx {
     /* 0x8F3 */ SFX_VO_MAR_PAIN_C,
     /* 0x8F4 */ SFX_VO_MAR_PAIN_D,
     /* 0x8F5 */ SFX_VO_MAR_DEATH,
-#endif
 };
 
 #endif

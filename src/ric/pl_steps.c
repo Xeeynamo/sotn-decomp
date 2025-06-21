@@ -48,7 +48,7 @@ void RicStepStand(void) {
 
     if (!RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
                        CHECK_ATTACK | CHECK_CROUCH | CHECK_SLIDE)) {
-        RicDecelerateX(0x2000);
+        RicDecelerateX(FIX(0.125));
         switch (PLAYER.step_s) {
         case 0:
             if (RicCheckFacing()) {
@@ -141,7 +141,7 @@ void RicStepRun(void) {
     g_Player.timers[PL_T_CURSE] = 8;
     if (!RicCheckInput(CHECK_FALL | CHECK_FACING | CHECK_JUMP | CHECK_CRASH |
                        CHECK_ATTACK | CHECK_CROUCH)) {
-        RicDecelerateX(0x2000);
+        RicDecelerateX(FIX(0.125));
         if (RicCheckFacing() == 0) {
             RicSetStand(0);
             if (g_Player.timers[PL_T_RUN] == 0) {
@@ -181,7 +181,7 @@ void RicStepJump(void) {
     }
     switch (PLAYER.step_s) {
     case 0:
-        RicDecelerateX(0x1000);
+        RicDecelerateX(FIX(0.0625));
         facing = RicCheckFacing();
         if (facing) {
             if (g_Player.unk44 & 0x10) {
@@ -337,7 +337,7 @@ void RicStepCrouch(void) {
                (g_Player.padTapped & PAD_TRIANGLE) && RicDoCrash()) {
         return;
     }
-    RicDecelerateX(0x2000);
+    RicDecelerateX(FIX(0.125));
     switch (PLAYER.step_s) {
     case 0x0:
         if (D_8015459C != 0) {
@@ -764,7 +764,7 @@ void RicStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
         }
         break;
     case 5:
-        RicDecelerateX(0x2000);
+        RicDecelerateX(FIX(0.125));
         if (ric_hit_stun_timer) {
             if ((g_Player.vram_flag & 2) && !(g_GameTimer & 3)) {
                 func_80158B04(0);
@@ -787,7 +787,7 @@ void RicStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
         PLAYER.poseTimer = PLAYER.pose = 0;
         break;
     case 6:
-        RicDecelerateX(0x2000);
+        RicDecelerateX(FIX(0.125));
         if (!(g_Player.vram_flag & 1)) {
             RicSetFall();
         }
@@ -804,7 +804,7 @@ void RicStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
         }
         break;
     case 7:
-        RicDecelerateX(0x2000);
+        RicDecelerateX(FIX(0.125));
         if (!(g_Player.vram_flag & 1)) {
             RicSetFall();
         }
@@ -1159,7 +1159,7 @@ void RicStepDeadPrologue(void) {
     case 0:
         g_CurrentEntity->flags |= FLAG_UNK_10000;
         g_unkGraphicsStruct.unk20 = 4;
-        RicDecelerateX(0x2000);
+        RicDecelerateX(FIX(0.125));
         if (PLAYER.velocityX == 0) {
             RicSetAnimation(D_80155748);
             g_Player.timers[PL_T_INVINCIBLE_SCENE] = 4;
@@ -1321,7 +1321,7 @@ void RicStepSlide(void) {
         return;
     }
 
-    RicDecelerateX(0x2000);
+    RicDecelerateX(FIX(0.125));
 #if defined(VERSION_PSP)
     FntPrint("pl_pose = %d\n", PLAYER.pose);
     FntPrint("pl_ptimer = %d\n", PLAYER.poseTimer);
@@ -1454,7 +1454,7 @@ void RicStepSlideKick(void) {
         PLAYER.step_s = 2;
         return;
     }
-    RicDecelerateX(0x1000);
+    RicDecelerateX(FIX(0.0625));
     PLAYER.velocityY += 0x1000;
 
     if (g_Player.vram_flag & 1) {
@@ -1471,7 +1471,7 @@ void RicStepSlideKick(void) {
     }
     if (PLAYER.velocityX < 0) {
         if (g_Player.padPressed & PAD_RIGHT) {
-            RicDecelerateX(0x2000);
+            RicDecelerateX(FIX(0.125));
         }
         if (PLAYER.velocityX > FIX(-3) || (g_Player.vram_flag & 8)) {
             PLAYER.facingLeft++;
@@ -1485,7 +1485,7 @@ void RicStepSlideKick(void) {
     }
     if (PLAYER.velocityX > 0) {
         if (g_Player.padPressed & PAD_LEFT) {
-            RicDecelerateX(0x2000);
+            RicDecelerateX(FIX(0.125));
         }
         if (PLAYER.velocityX < FIX(3) || (g_Player.vram_flag & 4)) {
             PLAYER.facingLeft++;
@@ -1537,15 +1537,15 @@ void RicStepHighJump(void) {
         if (g_Player.padPressed & (PAD_LEFT | PAD_RIGHT)) {
             if (PLAYER.facingLeft) {
                 if (!(g_Player.padPressed & PAD_LEFT)) {
-                    RicDecelerateX(0x1000);
+                    RicDecelerateX(FIX(0.0625));
                 }
             } else {
                 if (!(g_Player.padPressed & PAD_RIGHT)) {
-                    RicDecelerateX(0x1000);
+                    RicDecelerateX(FIX(0.0625));
                 }
             }
         } else {
-            RicDecelerateX(0x1000);
+            RicDecelerateX(FIX(0.0625));
         }
 
         if (g_Player.vram_flag & 2) {

@@ -23,17 +23,16 @@ extern s32 D_12A000_8017A6F4[];
 extern AnimationFrame D_12A000_8017A704[];
 extern s32 D_12A000_8017A740[];
 extern s32 D_12A000_8017A74C[];
-extern s32 D_12A000_8017B5F0;
 
-// rodata
-extern const char D_12A000_8017A760[]; // "\no\n"
-extern s32 D_12A000_8017B5EC;          // g_DebugWaitInfoTimer
+// bss
+static s32 g_DebugWaitInfoTimer;
+static s32 D_12A000_8017B5F0;
 
 static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
-    if (D_12A000_8017B5EC++ & 4) {
-        FntPrint(D_12A000_8017A760); // TODO: inline
+    if (g_DebugWaitInfoTimer++ & 4) {
+        FntPrint("\no\n");
     }
     DrawSync(0);
     VSync(0);

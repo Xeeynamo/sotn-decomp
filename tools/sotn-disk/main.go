@@ -16,8 +16,10 @@ func printHelp() {
 	fmt.Printf("    dump list of files and directories ordered by how they are stored on disc.\n")
 	fmt.Printf("  extract <sotn.cue> <output path>\n")
 	fmt.Printf("    extract all the files into the specified path\n")
-	//fmt.Printf("  make <sotn.cue> <input path> <file list>\n")
-	//fmt.Printf("    creates a PlayStation 1 image given an input path where the game files are located and their order")
+	fmt.Printf("  inject <sotn.cue> <destination> <input file>\n")
+	fmt.Printf("    inject a file to the specified destination inside the image\n")
+	fmt.Printf("  make <sotn.cue> <input path> <file list>\n")
+	fmt.Printf("    creates a PlayStation 1 image given an input path where the game files are located and their order")
 }
 
 func main() {
@@ -34,6 +36,7 @@ func main() {
 		err = performCueAction(cuePath, list)
 	case "extract":
 		if len(os.Args) < 4 {
+			fmt.Printf("wrong number of arguments\n\n")
 			printHelp()
 			return
 		}
@@ -41,8 +44,18 @@ func main() {
 		err = performCueAction(cuePath, func(f iso9660.File) error {
 			return extract(f, outPath)
 		})
+	case "inject":
+		if len(os.Args) < 4 {
+			fmt.Printf("wrong number of arguments\n\n")
+			printHelp()
+			return
+		}
+		destination := os.Args[3]
+		inputPath := os.Args[4]
+		err = inject(cuePath, destination, inputPath)
 	case "make":
 		if len(os.Args) < 5 {
+			fmt.Printf("wrong number of arguments\n\n")
 			printHelp()
 			return
 		}

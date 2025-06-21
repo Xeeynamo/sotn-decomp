@@ -1,0 +1,6 @@
+Dockerfile
+__pycache__/
+.venv/
+.idea/
+.vscode/
+build/

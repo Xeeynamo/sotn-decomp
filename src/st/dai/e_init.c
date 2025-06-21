@@ -149,33 +149,35 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMistDoor,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, PAL_DRA(0), 0};
+EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 0};
 
 #include "../e_init_common.h"
 
 // Unused, not in psp
-EInit g_EInit_801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_DRA(512), 3};
-EInit D_us_801809B0 = {ANIMSET_OVL(1), 0, 0, PAL_DRA(0), 5};
-EInit D_us_801809BC = {ANIMSET_OVL(2), 0, 72, PAL_DRA(201), 5};
+EInit g_EInit_801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_UNK200, 3};
+EInit D_us_801809B0 = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
+EInit D_us_801809BC = {ANIMSET_OVL(2), 0, 72, PAL_UNKC9, 5};
 // Unused, not in psp
-EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_DRA(202), 5};
-EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_DRA(201), 101};
-EInit D_us_801809E0 = {ANIMSET_OVL(4), 0, 72, PAL_DRA(533), 180};
-EInit D_us_801809EC = {ANIMSET_OVL(0), 0, 0, PAL_DRA(0), 181};
-EInit g_EInitBonePillarHead = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 183};
-EInit g_EInitBonePillarPieces = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 2};
-EInit g_EInitBonePillarFireBreath = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 184};
-EInit g_EInitBonePillarSpikeBall = {ANIMSET_OVL(5), 0, 73, PAL_DRA(534), 185};
-EInit D_us_80180A28 = {ANIMSET_OVL(7), 1, 72, PAL_DRA(554), 118};
-EInit D_us_80180A34 = {ANIMSET_OVL(0), 0, 0, PAL_DRA(0), 119};
-EInit D_us_80180A40 = {ANIMSET_OVL(8), 0, 75, PAL_DRA(555), 128};
-EInit D_us_80180A4C = {ANIMSET_OVL(8), 0, 75, PAL_DRA(555), 3};
-EInit g_EInitBat = {ANIMSET_OVL(9), 0, 74, PAL_DRA(556), 64};
-EInit D_us_80180A64 = {ANIMSET_OVL(10), 0, 79, PAL_DRA(559), 114};
-EInit D_us_80180A70 = {ANIMSET_OVL(10), 0, 79, PAL_DRA(559), 115};
-EInit g_EInitSkelerang = {ANIMSET_OVL(11), 1, 72, PAL_DRA(512), 11};
-EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(11), 43, 72, PAL_DRA(512), 12};
-EInit D_us_80180A94 = {ANIMSET_OVL(12), 0, 84, PAL_DRA(562), 227};
-EInit D_us_80180AA0 = {ANIMSET_OVL(13), 0, 81, PAL_DRA(564), 136};
-EInit D_us_80180AAC = {ANIMSET_OVL(13), 0, 81, PAL_DRA(564), 2};
-EInit D_us_80180AB8 = {ANIMSET_OVL(13), 0, 81, PAL_DRA(565), 137};
+EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_UNKCA, 5};
+EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_UNKC9, 101};
+EInit D_us_801809E0 = {ANIMSET_OVL(4), 0, 72, PAL_UNK215, 180};
+EInit D_us_801809EC = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 181};
+EInit g_EInitBonePillarHead = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 183};
+EInit g_EInitBonePillarPieces = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 2};
+EInit g_EInitBonePillarFireBreath = {
+    ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 184};
+EInit g_EInitBonePillarSpikeBall = {
+    ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 185};
+EInit D_us_80180A28 = {ANIMSET_OVL(7), 1, 72, PAL_UNK22A, 118};
+EInit D_us_80180A34 = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
+EInit D_us_80180A40 = {ANIMSET_OVL(8), 0, 75, PAL_UNK22B, 128};
+EInit D_us_80180A4C = {ANIMSET_OVL(8), 0, 75, PAL_UNK22B, 3};
+EInit g_EInitBat = {ANIMSET_OVL(9), 0, 74, PAL_BAT, 64};
+EInit D_us_80180A64 = {ANIMSET_OVL(10), 0, 79, PAL_UNK22F, 114};
+EInit D_us_80180A70 = {ANIMSET_OVL(10), 0, 79, PAL_UNK22F, 115};
+EInit g_EInitSkelerang = {ANIMSET_OVL(11), 1, 72, PAL_UNK200, 11};
+EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(11), 43, 72, PAL_UNK200, 12};
+EInit D_us_80180A94 = {ANIMSET_OVL(12), 0, 84, PAL_UNK232, 227};
+EInit D_us_80180AA0 = {ANIMSET_OVL(13), 0, 81, PAL_UNK234, 136};
+EInit D_us_80180AAC = {ANIMSET_OVL(13), 0, 81, PAL_UNK234, 2};
+EInit D_us_80180AB8 = {ANIMSET_OVL(13), 0, 81, PAL_UNK235, 137};

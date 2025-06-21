@@ -208,7 +208,7 @@ static void func_ptr_80170008(Entity* self) {
         SetSpeedX(-FIX(2.5));
         self->anim = D_11C000_8017A7B8;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
-        self->attackElement |= 0x8000;
+        self->attackElement |= ELEMENT_FIRE;
         SetWeaponProperties(self, 0);
         self->step++;
     } else {

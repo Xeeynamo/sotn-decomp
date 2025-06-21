@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "maria.h"
 
+// ** How to calculate self->unk5A
+// GFX_ENTRY(Y, X, ...
+// where Y and X are variables for the python script below
+// def calc_tpage(y, x):
+//     return (y // 0x100) * 0x40 + ((y & 0x80) // 0x40) + \
+//            ((x & 0x20) // 0x20) + ((x // 0x20) * 2)
+
 static s32 D_pspeu_092E5F18;
 static s32 D_pspeu_092E5D18[0x80];
 static Point16 D_pspeu_092E5B18[0x80];
@@ -20,7 +27,11 @@ void EntityMariaDollAttack(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x19;
+#else
+        self->unk5A = 0x67;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_DOLL;
         self->animSet = ANIMSET_WPN_DOLL;
@@ -110,7 +121,11 @@ void EntityMariaDollActivate(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x19;
+#else
+        self->unk5A = 0x67;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_DOLL;
         self->animSet = ANIMSET_WPN_DOLL;
@@ -263,7 +278,11 @@ void EntityMariaCatAttack(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x14;
+#else
+        self->unk5A = 0x6E;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_CAT;
         self->animSet = ANIMSET_WPN_CAT;
@@ -396,7 +415,11 @@ void EntityMariaCatCrash(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x14;
+#else
+        self->unk5A = 0x6E;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_CAT_CRASH;
         self->animSet = ANIMSET_WPN_CAT;
@@ -475,7 +498,11 @@ void EntityMariaCatCrashAttack(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
+#ifdef VERSION_PSP
         self->unk5A = 0x14;
+#else
+        self->unk5A = 0x6E;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_CAT;
         self->animSet = ANIMSET_WPN_CAT;
@@ -518,7 +545,11 @@ void EntityMariaDragonAttack(Entity* self) {
     switch (self->step) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA;
+#ifdef VERSION_PSP
         self->unk5A = 0x15;
+#else
+        self->unk5A = 0x64;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_DRAGON;
         self->animSet = ANIMSET_WPN_DRAGON;
@@ -672,7 +703,11 @@ void EntityMariaDragonCrash(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x15;
+#else
+        self->unk5A = 0x64;
+#endif
         self->zPriority = 0x1C0;
         self->palette = PAL_WPN_DRAGON_CRASH;
         self->animSet = ANIMSET_WPN_DRAGON;
@@ -718,7 +753,7 @@ void EntityMariaDragonCrash(Entity* self) {
             VECTOR vTranslate = {0, 0, 0};
             VECTOR vVelocity;
             SVECTOR svVelocity;
-            s32 out;
+            long out;
             if (!IsTargetValid(self->ext.mariaDragon.target)) {
                 self->ext.mariaDragon.target = FindTarget(self);
             }
@@ -751,7 +786,7 @@ void EntityMariaDragonCrash(Entity* self) {
             svVelocity.vx = self->ext.mariaDragon.velocity;
             svVelocity.vy = 0;
             svVelocity.vz = 0;
-            func_892796C(&svVelocity, &vVelocity, &out);
+            RotTrans(&svVelocity, &vVelocity, &out);
             self->velocityX = vVelocity.vx << 8;
             self->velocityY = vVelocity.vy << 8;
             FntPrint("%08x : %08x\n", self->velocityX, self->velocityY);
@@ -822,7 +857,11 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
             return;
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
+#ifdef VERSION_PSP
         self->unk5A = 0x15;
+#else
+        self->unk5A = 0x64;
+#endif
         self->zPriority = 0x1C0;
         self->palette = PAL_WPN_DRAGON_CRASH;
         self->animSet = ANIMSET_WPN_DRAGON;
@@ -851,7 +890,11 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         var_s2 = D_pspeu_092E5900 - 1;
         for (i = 0; i < LEN(D_pspeu_092E5B08); i++) {
+#ifdef VERSION_PSP
             prim->tpage = 5;
+#else
+            prim->tpage = 0x19;
+#endif
             prim->clut = self->palette & 0x3FF;
             prim->priority = self->zPriority;
             if (var_s2 >= 7) {
@@ -876,12 +919,18 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
                     SVECTOR sp50;
                     SVECTOR svPosStart;
                     SVECTOR sp40;
-                    s32 out;
+                    long out;
                     s32 angle;
                     angle =
                         NormalizeAngle(ratan2(spD0 - var_s5, spD4 - var_s6));
                     func_89285A0(angle, &m);
                     SetGeomOffset(var_s6, var_s5);
+#ifndef VERSION_PSP
+                    // I do not know why this works. The stack might be messed
+                    // up and function just so happen to match PSP decomp.
+                    spA0.vx = var_s6;
+                    spA0.vy = var_s5;
+#endif
                     TransMatrix(&m, &spA0);
                     SetRotMatrix(&m);
                     SetTransMatrix(&m);
@@ -898,10 +947,10 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
                         svPosEnd.vx = 16;
                         svPosEnd.vy = 16;
                         svPosEnd.vz = 0;
-                        func_892796C(&sp40, &sp60, &out);
-                        func_892796C(&svPosStart, &vPosStart, &out);
-                        func_892796C(&sp50, &sp80, &out);
-                        func_892796C(&svPosEnd, &vPosEnd, &out);
+                        RotTrans(&sp40, &sp60, &out);
+                        RotTrans(&svPosStart, &vPosStart, &out);
+                        RotTrans(&sp50, &sp80, &out);
+                        RotTrans(&svPosEnd, &vPosEnd, &out);
                         prim->x0 = sp60.vx;
                         prim->y0 = sp60.vy;
                         prim->x1 = vPosStart.vx;
@@ -917,8 +966,8 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
                         svPosEnd.vx = 16;
                         svPosEnd.vy = 16;
                         svPosEnd.vz = 0;
-                        func_892796C(&svPosStart, &vPosStart, &out);
-                        func_892796C(&svPosEnd, &vPosEnd, &out);
+                        RotTrans(&svPosStart, &vPosStart, &out);
+                        RotTrans(&svPosEnd, &vPosEnd, &out);
                         prim->x0 = xStart;
                         prim->y0 = yStart;
                         prim->x1 = vPosStart.vx;
@@ -944,6 +993,10 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
                     u = 0x80;
                     v = 0;
                 }
+#ifndef VERSION_PSP
+                // Dragon GFXs are re-located in the VRAM on other platforms
+                u -= 0x80;
+#endif
                 prim->u1 = u;
                 prim->v1 = v + 0x1F;
                 prim->u0 = u + 0x1F;
@@ -997,7 +1050,11 @@ void EntityMariaCardinalAttack(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
+#ifdef VERSION_PSP
         self->unk5A = 0x11;
+#else
+        self->unk5A = 0x65;
+#endif
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_CARDINAL;
@@ -1062,7 +1119,11 @@ void EntityMariaCardinalCrash(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x11;
+#else
+        self->unk5A = 0x65;
+#endif
         self->zPriority = 0x1C0;
         self->palette = PAL_WPN_CARDINAL;
         self->animSet = ANIMSET_WPN_CARDINAL;
@@ -1292,7 +1353,11 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
         }
         self->flags =
             FLAG_HAS_PRIMS | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+#ifdef VERSION_PSP
         self->unk5A = 0x11;
+#else
+        self->unk5A = 0x65;
+#endif
         self->zPriority = 0x1C0;
         self->palette = PAL_WPN_CARDINAL;
         self->animSet = ANIMSET_WPN_CARDINAL;
@@ -1334,7 +1399,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
             VECTOR vTransform = {0, 0, 0};
             VECTOR vVelocity;
             SVECTOR svVelocity;
-            s32 sp48;
+            long sp48;
             if (self->ext.mariaCardinalCrash.timer < 35) {
                 if (IsTargetValid2(self->ext.mariaCardinalCrash.target) == 0) {
                     self->ext.mariaCardinalCrash.target = FindTarget2(self);
@@ -1382,7 +1447,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
             svVelocity.vx = self->ext.mariaCardinalCrash.velocityX;
             svVelocity.vy = 0;
             svVelocity.vz = 0;
-            func_892796C(&svVelocity, &vVelocity, &sp48);
+            RotTrans(&svVelocity, &vVelocity, &sp48);
             self->velocityX = vVelocity.vx << 8;
             self->velocityY = vVelocity.vy << 8;
             self->posX.val += self->velocityX;
@@ -1396,7 +1461,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 4; i++) {
                 color = -0x80;
-                prim->clut = 0x11A;
+                prim->clut = PAL_WPN_CARDINAL & 0x3FF;
                 prim->priority = self->zPriority;
                 prim->drawMode = DRAW_DEFAULT;
                 switch (i) {
@@ -1434,7 +1499,11 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
                     prim->v2 = 0x7F;
                     prim->u3 = 0xCF;
                     prim->v3 = 0x7F;
-                    prim->tpage = 4;
+#ifdef VERSION_PSP
+                    prim->tpage = 0x4;
+#else
+                    prim->tpage = 0x19;
+#endif
                 } else {
                     prim->u0 = 0x98;
                     prim->v0 = 0x38;
@@ -1444,7 +1513,11 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
                     prim->v2 = 0x47;
                     prim->u3 = 0xA7;
                     prim->v3 = 0x47;
+#ifdef VERSION_PSP
                     prim->tpage = 0x24;
+#else
+                    prim->tpage = 0x39;
+#endif
                     prim->drawMode |= FLAG_DRAW_SCALEX | FLAG_DRAW_ROTATE;
                     if (i == 1) {
                         color = -0x80;
@@ -1477,7 +1550,11 @@ void EntityMariaTurtleAttack(Entity* self) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_UNK_100000;
+#ifdef VERSION_PSP
         self->unk5A = 0x10;
+#else
+        self->unk5A = 0x6D;
+#endif
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_TURTLE;
         self->animSet = ANIMSET_WPN_TURTLE;
@@ -1492,7 +1569,7 @@ void EntityMariaTurtleAttack(Entity* self) {
         self->hitboxOffX = 0;
         self->hitboxOffY = 0;
         self->attack = 255;
-        self->attackElement = 0;
+        self->attackElement = ELEMENT_NONE;
         self->hitboxState = 4;
         self->nFramesInvincibility = 6;
         self->stunFrames = 0;
@@ -1529,7 +1606,11 @@ void EntityMariaTurtleCrash(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
+#ifdef VERSION_PSP
         self->unk5A = 0x10;
+#else
+        self->unk5A = 0x6D;
+#endif
         self->zPriority = PLAYER.zPriority - 6;
         self->palette = PAL_WPN_TURTLE;
         self->animSet = ANIMSET_WPN_TURTLE;
@@ -1654,7 +1735,11 @@ void EntityMariaTurtleCrashVortex(Entity* self) {
     case 0:
         self->flags = FLAG_UNK_100000 | FLAG_KEEP_ALIVE_OFFCAMERA |
                       FLAG_POS_CAMERA_LOCKED;
+#ifdef VERSION_PSP
         self->unk5A = 0x10;
+#else
+        self->unk5A = 0x6D;
+#endif
         self->zPriority = PLAYER.zPriority - 7;
         self->palette = PAL_WPN_TURTLE;
         self->animSet = ANIMSET_WPN_TURTLE;
