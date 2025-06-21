@@ -562,12 +562,9 @@ void ServantInit(InitializeMode mode) {
     s_IsServantDestroyed = 0;
 }
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/bat", UpdateServantDefault);
-#else
 void UpdateServantDefault(Entity* self) {
     g_api.GetServantStats(self, 0, 0, &s_BatStats);
-    if (s_IsServantDestroyed != 0) {
+    if (s_IsServantDestroyed) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     if (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) {
@@ -740,10 +737,10 @@ void UpdateServantDefault(Entity* self) {
         self->velocityX = rcos(s_AllowedAngle) << 2 << 4;
         self->velocityY = -(rsin(s_AllowedAngle) << 2 << 4);
         if (self->velocityX > 0) {
-            self->facingLeft = 1;
+            self->facingLeft = true;
         }
         if (self->velocityX < 0) {
-            self->facingLeft = 0;
+            self->facingLeft = false;
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
@@ -796,11 +793,7 @@ void UpdateServantDefault(Entity* self) {
     unused_1560(self);
     g_api.UpdateAnim(NULL, g_BatAnimationFrames);
 }
-#endif
 
-#ifdef VERSION_PSP
-INCLUDE_ASM("servant/tt_000/nonmatchings/bat", UpdateBatAttackMode);
-#else
 void UpdateBatAttackMode(Entity* self) {
     if (self->step == 1 && self->flags & FLAG_UNK_00200000) {
         s_PointAdjustX = (self->ext.bat.cameraX - g_Tilemap.scrollX.i.hi) +
@@ -857,17 +850,15 @@ void UpdateBatAttackMode(Entity* self) {
             self->ext.bat.doUpdateCloseAnimation = true;
         }
         self->facingLeft = PLAYER.facingLeft ? false : true;
-        if (!self->ext.bat.hasShotFireball) {
-            if (g_Player.status & PLAYER_STATUS_UNK800) {
-                // This causes the bat familiar to shoot a fireball when the
-                // player does so in bat form.
-                g_api.CreateEntFactoryFromEntity(self, FACTORY(81, 1), 0);
-                self->ext.bat.hasShotFireball = true;
-            }
-        } else if (self->ext.bat.hasShotFireball) {
-            if (!(g_Player.status & PLAYER_STATUS_UNK800)) {
-                self->ext.bat.hasShotFireball = false;
-            }
+        if (!self->ext.bat.hasShotFireball &&
+            (g_Player.status & PLAYER_STATUS_UNK800)) {
+            // This causes the bat familiar to shoot a fireball when the
+            // player does so in bat form.
+            g_api.CreateEntFactoryFromEntity(self, FACTORY(81, 1), 0);
+            self->ext.bat.hasShotFireball = true;
+        } else if (self->ext.bat.hasShotFireball &&
+                   !(g_Player.status & PLAYER_STATUS_UNK800)) {
+            self->ext.bat.hasShotFireball = false;
         }
 
         // It looks like the use of the variables was largely arbitrary
@@ -925,7 +916,7 @@ void UpdateBatAttackMode(Entity* self) {
         self->velocityY = (s_MoveToPositionY - self->posY.i.hi) << 0xA;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        if (self->posX.i.hi < -0x20 || 0x120 < self->posX.i.hi) {
+        if (self->posX.i.hi < -0x20 || self->posX.i.hi > 0x120) {
             DestroyEntity(self);
             return;
         }
@@ -935,7 +926,6 @@ void UpdateBatAttackMode(Entity* self) {
     unused_1560(self);
     g_api.UpdateAnim(NULL, g_BatAnimationFrames);
 }
-#endif
 
 void unused_339C(void) {}
 
