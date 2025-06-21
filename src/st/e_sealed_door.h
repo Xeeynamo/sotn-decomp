@@ -14,39 +14,55 @@ static u8 g_eBlueDoorUV[][8] = {
     {0x13, 0x3D, 0x13, 0x3D, 0x03, 0x03, 0x45, 0x45},
     {0x3D, 0x13, 0x3D, 0x13, 0x03, 0x03, 0x45, 0x45}};
 
-static u16 g_eBlueDoorTiles[][8] = {
+static s16 g_eBlueDoorTiles[][8] = {
     {0x597, 0x597, 0x597, 0x597, 0x000, 0x000, 0x000, 0x000},
     {0x130, 0x138, 0x1C0, 0x1C5, 0x130, 0x138, 0x1C0, 0x1C5},
     {0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000},
     {0x597, 0x597, 0x597, 0x597, 0x000, 0x000, 0x000, 0x000}};
 
-static char D_80182710[] = "\x7C\x0EMagically sealed．";
+#ifdef VERSION_PSP
+static char sealed_door_ENG[] = "\x98\x10Magically sealed\x81\x44";
+static char sealed_door_ES[] = "\x98\x10Sellado m\xCCgicamente.";
+static char sealed_door_IT[] = "\xA8\x10Sigillato magicamente.";
+static char sealed_door_FR[] =
+    "\x98\x10"
+    "Ferm\xD1 par la magie";
+static char sealed_door_DE[] = "\x98\x10Magisch versiegelt.";
+
+static char* sealed_door_label;
+
+#include "../get_lang.h"
+#else
+static char sealed_door_label[] = "\x7C\x0EMagically sealed．";
 // NZ0 has an extra .word in data vs NO0
 #if defined(STAGE_IS_NZ0)
 STATIC_PAD_DATA(4);
 #endif
+#endif
 
-static s32 SealedDoorIsNearPlayer(Entity* e) {
-    s16 diff = PLAYER.posX.i.hi - e->posX.i.hi;
+static bool SealedDoorIsNearPlayer(Entity* self) {
+    s16 distanceX;
+    s16 diffX;
+    s16 distanceY;
+    s16 diffY;
 
-    diff = abs(diff);
-
-    if (diff >= 25) {
-        return 0;
-    } else {
-        diff = PLAYER.posY.i.hi - e->posY.i.hi;
-        diff = abs(diff);
-        if (diff < 33) {
-            return 1;
-        } else {
-            return 0;
-        }
+    diffX = PLAYER.posX.i.hi - self->posX.i.hi;
+    distanceX = abs(diffX);
+    if (distanceX > 24) {
+        return false;
     }
-    return diff;
+
+    diffY = PLAYER.posY.i.hi - self->posY.i.hi;
+    distanceY = abs(diffY);
+    if (distanceY > 32) {
+        return false;
+    }
+
+    return true;
 }
 
-// sealed door that displays "Magically Sealed" prompt
 void EntitySealedDoor(Entity* self) {
+    s32 palette;
     Entity* messageBox;
     Primitive* prim;
     s32 i;
@@ -54,7 +70,7 @@ void EntitySealedDoor(Entity* self) {
     u8* uv;
     s16 x;
     s16 y;
-    u8 sp3F;
+    u8 params;
     s16 endX;
     s16 scrollX;
     s16 scrollY;
@@ -82,11 +98,10 @@ void EntitySealedDoor(Entity* self) {
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
-        uv = g_eBlueDoorUV;
+        uv = (u8*)g_eBlueDoorUV;
         prim = &g_PrimBuf[self->primIndex];
-        y = self->posY.i.hi - 0x1F;
-        for (prim = &g_PrimBuf[self->primIndex], i = 0; prim->next != NULL; i++,
-            prim = prim->next, uv += 8) {
+        for (i = 0, y = self->posY.i.hi - 0x1F; prim->next != NULL; i++,
+            uv += 8, prim = prim->next) {
             prim->u0 = uv[0];
             prim->u1 = uv[1];
             prim->u2 = uv[2];
@@ -100,7 +115,7 @@ void EntitySealedDoor(Entity* self) {
             prim->priority = PLAYER.zPriority - 0x20;
             prim->y0 = prim->y1 = y;
             prim->y2 = prim->y3 = y + 62;
-            if (i == 0) {
+            if (!i) {
                 prim->y0 = prim->y1 = y;
                 prim->y2 = prim->y3 = y + 62;
             }
@@ -135,9 +150,9 @@ void EntitySealedDoor(Entity* self) {
             if (self->params & 0x100) {
                 self->ext.sealedDoor.angle = 0x800;
             }
-            g_Player.demo_timer = 24;
             PLAYER.velocityY = 0;
             g_Player.padSim = 0;
+            g_Player.demo_timer = 24;
             self->animCurFrame = 0;
             self->step = 4;
             break;
@@ -147,7 +162,7 @@ void EntitySealedDoor(Entity* self) {
         self->ext.sealedDoor.angle = 0xC00;
         for (prim = &g_PrimBuf[self->primIndex], i = 0; prim->next != NULL; i++,
             prim = prim->next) {
-            if (i != 0) {
+            if (i) {
                 prim->drawMode |= DRAW_HIDE;
             } else {
                 prim->drawMode = DRAW_COLORS | DRAW_UNK02;
@@ -168,11 +183,18 @@ void EntitySealedDoor(Entity* self) {
                 if (messageBox == NULL) {
                     break;
                 }
+
+#ifdef VERSION_PSP
+                sealed_door_label =
+                    GetLang(sealed_door_ENG, sealed_door_FR, sealed_door_ES,
+                            sealed_door_DE, sealed_door_IT);
+#endif
+
                 self->ext.sealedDoor.showedMessage = 1;
                 CreateEntityFromCurrentEntity(E_MESSAGE_BOX, messageBox);
                 messageBox->posX.i.hi = 0x80;
                 messageBox->posY.i.hi = 0xB0;
-                messageBox->ext.messageBox.label = D_80182710;
+                messageBox->ext.messageBox.label = sealed_door_label;
                 break;
             }
 
@@ -184,7 +206,7 @@ void EntitySealedDoor(Entity* self) {
                 if (i == 2 && (self->params & 0x100)) {
                     prim->drawMode &= ~DRAW_HIDE;
                 }
-                if (i == 0) {
+                if (!i) {
                     prim->drawMode &= ~DRAW_HIDE;
                 }
             }
@@ -221,7 +243,7 @@ void EntitySealedDoor(Entity* self) {
         if (g_Player.demo_timer >= 4) {
             return;
         }
-        if (self->ext.sealedDoor.sideToPlayer != 0) {
+        if (self->ext.sealedDoor.sideToPlayer) {
             g_Player.padSim = PAD_LEFT;
         } else {
             g_Player.padSim = PAD_RIGHT;
@@ -230,13 +252,13 @@ void EntitySealedDoor(Entity* self) {
         self->step++;
         break;
     case 4:
-        if (self->ext.sealedDoor.sideToPlayer == 0) {
-            g_Player.padSim = PAD_RIGHT;
-        } else {
+        if (self->ext.sealedDoor.sideToPlayer) {
             g_Player.padSim = PAD_LEFT;
+        } else {
+            g_Player.padSim = PAD_RIGHT;
         }
         g_Player.demo_timer = 4;
-        if (SealedDoorIsNearPlayer(self) == 0) {
+        if (!SealedDoorIsNearPlayer(self)) {
             g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
             g_Player.demo_timer = 0;
@@ -247,7 +269,7 @@ void EntitySealedDoor(Entity* self) {
         g_Player.demo_timer = 4;
         if (!(self->params & 0x100)) {
             self->ext.sealedDoor.angle -= 0x20;
-            if (self->ext.sealedDoor.angle < 0xC01) {
+            if (self->ext.sealedDoor.angle <= 0xC00) {
                 self->ext.sealedDoor.angle = 0xC00;
             }
         } else {
@@ -257,9 +279,9 @@ void EntitySealedDoor(Entity* self) {
             }
         }
         if (self->ext.sealedDoor.angle == 0xC00) {
-            prim = &g_PrimBuf[self->primIndex];
-            for (i = 0; prim != NULL; i++, prim = prim->next) {
-                if (!(self->params & 0x1000) || (i != 0)) {
+            for (prim = &g_PrimBuf[self->primIndex], i = 0; prim != NULL; i++,
+                prim = prim->next) {
+                if (!(self->params & 0x1000) || i) {
                     prim->drawMode |= DRAW_HIDE;
                 }
             }
@@ -281,12 +303,13 @@ void EntitySealedDoor(Entity* self) {
         x++;
     }
 
+    i = 0;
     angle = self->ext.sealedDoor.angle;
-    prim = &g_PrimBuf[self->primIndex];
-    for (i = 0; prim->next != NULL; i++, prim = prim->next) {
+    for (prim = &g_PrimBuf[self->primIndex]; prim->next != NULL; i++,
+        prim = prim->next) {
         if (!(prim->drawMode & DRAW_HIDE)) {
             if (!(self->params & 0x100)) {
-                if (i == 0) {
+                if (!i) {
                     endX = prim->x0 = prim->x2 =
                         x + ((rcos(angle) >> 8) * 32 >> 4);
                     prim->x1 = prim->x3 =
@@ -323,7 +346,7 @@ void EntitySealedDoor(Entity* self) {
                     }
                 }
             } else {
-                if (i == 0) {
+                if (!i) {
                     endX = prim->x1 = prim->x3 =
                         x + ((rcos(angle) >> 8) * 32 >> 4);
                     prim->x0 = prim->x2 =
@@ -365,21 +388,21 @@ void EntitySealedDoor(Entity* self) {
         }
     }
 
-    if (self->animCurFrame == 0) {
-        prim->drawMode = DRAW_HIDE | DRAW_UNK02;
-    } else {
+    if (self->animCurFrame) {
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+    } else {
+        prim->drawMode = DRAW_HIDE | DRAW_UNK02;
     }
     prim->clut = self->palette;
     self->ext.sealedDoor.unk82 += 0x20;
-    if (self->ext.sealedDoor.unk82 >= 0x381) {
+    if (self->ext.sealedDoor.unk82 > 0x380) {
         self->ext.sealedDoor.unk82 = -self->ext.sealedDoor.unk82;
     }
 
-    self->palette =
-        (abs(self->ext.sealedDoor.unk82) >> 8) + SEALED_DOOR_PALETTE;
+    palette = (abs(self->ext.sealedDoor.unk82) >> 8);
+    self->palette = palette + SEALED_DOOR_PALETTE;
 
-    sp3F = self->params & 0xFF;
+    params = self->params & 0xFF;
     if (self->animCurFrame) {
         for (i = 0; i < 4; i++) {
             x = self->posX.i.hi;
@@ -387,7 +410,7 @@ void EntitySealedDoor(Entity* self) {
             scrollX = x + g_Tilemap.scrollX.i.hi;
             scrollY = y + g_Tilemap.scrollY.i.hi;
             tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 0x10;
-            g_Tilemap.fg[tileIdx] = g_eBlueDoorTiles[sp3F][i];
+            g_Tilemap.fg[tileIdx] = g_eBlueDoorTiles[params][i];
         }
     } else {
         for (i = 0; i < 4; i++) {
@@ -396,7 +419,7 @@ void EntitySealedDoor(Entity* self) {
             scrollX = x + g_Tilemap.scrollX.i.hi;
             scrollY = y + g_Tilemap.scrollY.i.hi;
             tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 0x10;
-            g_Tilemap.fg[tileIdx] = g_eBlueDoorTiles[sp3F][i + 4];
+            g_Tilemap.fg[tileIdx] = g_eBlueDoorTiles[params][i + 4];
         }
     }
 }

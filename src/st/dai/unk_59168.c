@@ -9,5 +9,3 @@ INCLUDE_ASM("st/dai/nonmatchings/unk_59168", func_us_801D9394);
 INCLUDE_ASM("st/dai/nonmatchings/unk_59168", func_us_801D97D0);
 
 INCLUDE_ASM("st/dai/nonmatchings/unk_59168", func_us_801D9F5C);
-
-INCLUDE_RODATA("st/dai/nonmatchings/unk_59168", D_us_801C02E8);

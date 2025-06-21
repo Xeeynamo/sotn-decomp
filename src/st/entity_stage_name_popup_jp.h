@@ -23,7 +23,7 @@ void EntityStageNamePopup(Entity* self) {
     s16 var_s3;
     s16 var_s2;
 
-#ifdef STAGE_IS_LIB
+#if defined(STAGE_IS_LIB) || defined(STAGE_IS_DAI)
     if (D_91CE570) {
         func_psp_0923C0C0();
     }
@@ -35,7 +35,7 @@ void EntityStageNamePopup(Entity* self) {
             DestroyEntity(self);
             return;
         }
-#ifdef STAGE_IS_LIB
+#if defined(STAGE_IS_LIB) || defined(STAGE_IS_DAI)
         func_psp_0923C0C0();
 #endif
         InitializeEntity(g_EInitInteractable);
