@@ -41,6 +41,10 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0x2C, data] # DAI_spriteBanks
+      #- [0x8C, data] # palette_def
+      #- [0x178, data] # layers
+      #  [0x468, data] # graphics banks
+      #- [0x670, data, gen/laydef]
       - [0x818, .data, e_init]
       - [0xAC4, .data, background_block_init]
       - [0xADC, .data, e_red_door_tiles]
@@ -49,7 +53,8 @@ segments:
       - [0xBF0, data] # e_breakable
       - [0xC18, data] # unk_408AC
       - [0xEC0, .data, d_prize_drops]
-      - [0xEE0, data] # e_cutscene
+      - [0xEE0, data, e_cutscene]
+      - [0xF94, data]
       - [0x1024, data] # unk_458C4
       - [0x1050, .data, st_update]
       - [0x109C, .data, st_collision]
@@ -68,10 +73,12 @@ segments:
       - [0x211C, data] # unk_550E4
       - [0x22A8, .data, e_sealed_door]
       - [0x2318, .data, e_mist_door]
-      - [0x2358, data] # DAI_rooms
+      - [0x2358, data] #, gen/rooms]
       - [0x242C, .data, e_clouds]
       - [0x2564, data] # unk_59168
       - [0x277C, data]
+      - [0x3A94, data, e_cutscene_script]
+      - [0x3F20, data]
       - [0x3FE3C, .rodata, e_breakable]
       - [0x3FE5C, .rodata, unk_408AC]
       #- [0x3FEA8, .rodata, unk_408AC] # Splat suggested

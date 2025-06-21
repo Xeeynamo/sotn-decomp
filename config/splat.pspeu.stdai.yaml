@@ -67,7 +67,7 @@ segments:
       - [0x15A88, c, dai/st_common]
       - [0x174B8, c, dai/prim_helpers]
       - [0x17C50, c, dai_psp/unk_17C50]
-      - [0x19A40, c, dai_psp/st_init]
+      - [0x19A40, c, dai/st_init_psp]
       - [0x19EA0, c, dai_psp/e_breakable]
       - [0x1A390, c, dai_psp/unk_1A390]
       - [0x1C3F0, c, dai_psp/e_cutscene]
@@ -102,16 +102,16 @@ segments:
       - [0x2B8E0, .data, dai/e_red_door_tiles]
       - [0x2B910, .data, dai/e_init]
       - [0x2BC20, data] # DAI_rooms
-      - [0x2BCF8, data] # st_init
+      - [0x2BCF8, data, dai/e_cutscene_script]
       - [0x2C4B8, data] # e_breakable
       - [0x2C880, data]
-      - [0x36BF0, data] # e_cutscene
+      - [0x36BF0, data, dai/e_cutscene_data]
       - [0x386F0, data]
       - [0x5ED00, .data, dai/header]
       - [0x5ED30, data] # unk_1A390
       - [0x5ED40, .data, dai/d_prize_drops]
       - [0x5ED60, data] # unk_1A390
-      - [0x5ED90, data] # e_cutscene
+      - [0x5ED90, data, dai_psp/e_cutscene]
       - [0x5F158, .data, dai/background_block_init]
       - [0x5F178, .data, dai/e_lock_camera]
       - [0x5F1F0, data]
@@ -133,6 +133,8 @@ segments:
       - [0x5FA00, bss, 5FA00]
       - [0x5FA08, .bss, dai/e_mist_door]
       - [0x5FA20, bss, 5FA20]
+      - [0x5FA38, .bss, dai/st_init_psp]
+      - [0x5FA48, bss, 5FA48]
       - [0x60210, .bss, dai/e_lock_camera]
       - [0x60218, bss, 60218]
       - [0x60230, .bss, dai/e_clouds]
