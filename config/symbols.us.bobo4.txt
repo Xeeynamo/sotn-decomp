@@ -206,6 +206,7 @@ EntityGravityBootBeam = 0x801CCD90;
 EntityWingSmashTrail = 0x801CD048;
 DopEntityHitByLightning = 0x801CDB68;
 EntityHitByIce = 0x801CE280;
+func_80121F58 = 0x801CEA30;
 EntityMist = 0x801CEDF4;
 ReboundStoneBounce1 = 0x801D0D4C;
 ReboundStoneBounce2 = 0x801D0D90;
