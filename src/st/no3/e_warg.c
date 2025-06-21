@@ -225,7 +225,7 @@ void EntityWarg(Entity* self) {
         self->unk60 = otherEnt;
         CreateEntityFromCurrentEntity(E_ID_4B, otherEnt);
         otherEnt->unk5C = self;
-        InitializeEntity(D_80180B9C);
+        InitializeEntity(g_EInitWarg);
         otherEnt->unk60 = self;
         self->facingLeft = (GetSideToPlayer() ^ 1) & 1;
         if (self->facingLeft) {
@@ -610,7 +610,7 @@ void EntityUnkId4B(Entity* self) {
     previous = self - 1;
 
     if (!self->step) {
-        InitializeEntity(D_80180B9C);
+        InitializeEntity(g_EInitWarg);
         self->animCurFrame = 0;
         self->hitPoints = 0x7FFF;
     }

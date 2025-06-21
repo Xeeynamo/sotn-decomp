@@ -73,9 +73,6 @@ u16 e_skyswirl_p[] = {
 u16 e_merman_p[] = {
 #include "gen/e_merman_p.h"
 };
-u16 D_801978F8[] = {
-#include "gen/D_801978F8.h"
-};
 u16 D_80197918[] = {
 #include "gen/D_80197918.h"
 };
@@ -136,14 +133,8 @@ u16 e_zombie_p[] = {
 u16 D_80198118[] = {
 #include "gen/D_80198118.h"
 };
-u16 D_80198218[] = {
-#include "gen/D_80198218.h"
-};
 u16 D_80198318[] = {
 #include "gen/D_80198318.h"
-};
-u16 D_80198418[] = {
-#include "gen/D_80198418.h"
 };
 u16 e_death_p[] = {
 #include "gen/e_death_p.h"
@@ -151,53 +142,3 @@ u16 e_death_p[] = {
 u16 e_explosion_p[] = {
 #include "gen/e_explosion_p.h"
 };
-u16 D_80198778[] = {
-#include "gen/D_80198778.h"
-};
-
-#include "gen/tilemap_18838.h"
-#include "gen/tilemap_19438.h"
-#include "gen/tilemap_19638.h"
-#include "gen/tilemap_19A38.h"
-#include "gen/tilemap_19E38.h"
-#include "gen/tilemap_1AC38.h"
-#include "gen/tilemap_1AE38.h"
-#include "gen/tilemap_1B038.h"
-#include "gen/tilemap_1B238.h"
-#include "gen/tilemap_1B638.h"
-#include "gen/tilemap_1BA38.h"
-#include "gen/tilemap_1C238.h"
-#include "gen/tilemap_1CA38.h"
-#include "gen/tilemap_1CC38.h"
-#include "gen/tilemap_1CE38.h"
-#include "gen/tilemap_1DA38.h"
-#include "gen/tilemap_1E638.h"
-#include "gen/tilemap_1E838.h"
-#include "gen/tilemap_1EA38.h"
-#include "gen/tilemap_1F638.h"
-#include "gen/tilemap_1F838.h"
-#include "gen/tilemap_1FA38.h"
-#include "gen/tilemap_1FC38.h"
-#include "gen/tilemap_20038.h"
-#include "gen/tilemap_20238.h"
-#include "gen/tilemap_20838.h"
-#include "gen/tilemap_20E38.h"
-#include "gen/tilemap_21038.h"
-#include "gen/tilemap_21238.h"
-#include "gen/tilemap_21438.h"
-#include "gen/tilemap_21638.h"
-#include "gen/tilemap_22238.h"
-#include "gen/tilemap_22E38.h"
-#include "gen/tilemap_23038.h"
-#include "gen/tilemap_23238.h"
-#include "gen/tilemap_23438.h"
-#include "gen/tilemap_23638.h"
-#include "gen/tilemap_25A38.h"
-#include "gen/tilemap_25C38.h"
-#include "gen/tilemap_25E38.h"
-#include "gen/tilemap_26038.h"
-#include "gen/tilemap_26238.h"
-#include "gen/tilemap_26438.h"
-#include "gen/tiledef_26A38.h"
-#include "gen/tiledef_2AA48.h"
-#include "gen/tiledef_2EA58.h"
