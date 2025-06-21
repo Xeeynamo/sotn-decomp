@@ -13,6 +13,7 @@ type TrackMode int
 type ReaderWriterAt interface {
 	io.ReaderAt
 	io.WriterAt
+	io.Closer
 }
 
 const (
@@ -25,9 +26,9 @@ var (
 )
 
 type Image struct {
-	reader ReaderWriterAt
-	mode   TrackMode
-	Pvd    PrimaryVolumeDescriptor
+	file ReaderWriterAt
+	mode TrackMode
+	Pvd  PrimaryVolumeDescriptor
 }
 
 type File struct {
@@ -36,23 +37,27 @@ type File struct {
 	mode    TrackMode
 }
 
-func OpenImage(rw ReaderWriterAt, mode TrackMode) (*Image, error) {
-	pvdSec, err := readSector(rw, 16, mode, false)
+func OpenImage(file ReaderWriterAt, mode TrackMode) (*Image, error) {
+	pvdSec, err := readSector(file, 16, mode, false)
 	if err != nil {
 		return nil, err
 	}
 
 	return &Image{
-		reader: rw,
-		mode:   mode,
-		Pvd:    parsePVD(pvdSec), // TODO assume first volume is always primary
+		file: file,
+		mode: mode,
+		Pvd:  parsePVD(pvdSec), // TODO assume first volume is always primary
 	}, nil
+}
+
+func (img *Image) Close() error {
+	return img.file.Close()
 }
 
 func (img *Image) RootDir() File {
 	return File{
 		DirectoryEntry: img.Pvd.DirectoryRecord,
-		handler:        img.reader,
+		handler:        img.file,
 		mode:           img.mode,
 	}
 }
@@ -128,6 +133,9 @@ func (file File) WriteFromData(b []byte) error {
 	if uint32(len(b)) > file.DataLength.LSB {
 		return fmt.Errorf("data too long (%d > %d)", len(b), file.DataLength.LSB)
 	}
+	newB := make([]byte, file.DataLength.LSB)
+	copy(newB, b)
+	b = newB
 	for loc := location(file.ExtentLocation.LSB); len(b) > 0; loc++ {
 		chunk := b
 		if len(b) > sectorSize {

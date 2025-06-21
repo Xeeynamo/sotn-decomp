@@ -4,10 +4,10 @@
 
 // To use Maria as a playable character, add -DUSE_PLAYER_MARIA=1 in cmake
 
-void MAR_Load();
+void MARIA_Load();
 void InitPlayerMaria(void) {
     g_CurrentEntity = &PLAYER;
-    MAR_Load();
+    MARIA_Load();
 }
 
 int func_8919BA8() { return 0; }
@@ -58,13 +58,6 @@ void func_89285A0(s32 angle, MATRIX* out) {
     out->t[2] = 0;
     out->t[1] = 0;
     out->t[0] = 0;
-}
-
-void func_892796C(SVECTOR* in, VECTOR* out, s32* unk) {
-    out->vx = in->vx;
-    out->vy = in->vy;
-    out->vz = in->vz;
-    *unk = 0;
 }
 
 s16 func_90E0E30(PrimitiveType kind, s32 count) {

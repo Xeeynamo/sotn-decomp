@@ -656,7 +656,7 @@ enum Sfx {
     SFX_UNK_7BE = 0x7BE,
     SFX_UNK_761 = 0x761,
 
-#if defined(VERSION_PSP) || defined(VERSION_PC)
+    // Exclusive to Maria PSP
     /* 0x8E6 */ SFX_VO_MAR_8E6 = 0x8E6,
     /* 0x8E7 */ SFX_VO_MAR_ATTACK_C,
     /* 0x8E8 */ SFX_VO_MAR_8E8,
@@ -673,7 +673,6 @@ enum Sfx {
     /* 0x8F3 */ SFX_VO_MAR_PAIN_C,
     /* 0x8F4 */ SFX_VO_MAR_PAIN_D,
     /* 0x8F5 */ SFX_VO_MAR_DEATH,
-#endif
 };
 
 #endif
