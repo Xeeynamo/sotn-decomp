@@ -95,6 +95,7 @@
 | dai   | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
 | dai   | e_sealed_door.rodata                     |       16 |          0 | Yes    |                                 |       |
 | dai   | unk_143F0.rodata                         |       16 |          0 | Yes    |                                 |       |
+| dai   | unk_2280.rodata                          |       16 |          0 | Yes    |                                 |       |
 | lib   | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
 | no3   | e_castle_door.rodata                     |       16 |          0 | Yes    |                                 |       |
 | no3   | e_outdoor_ents.rodata                    |       16 |          0 | Yes    |                                 |       |
@@ -306,6 +307,7 @@
 | st0   | func_pspeu_09246B88                      |       27 |          5 |        | https://decomp.me/scratch/b8HGJ | 1.0   |
 | dra   | SoundWait                                |       27 |          6 |        |                                 |       |
 | maria | pl_steps.rodata                          |       28 |          0 | Yes    |                                 |       |
+| dai   | e_skelerang.rodata                       |       28 |          0 | Yes    |                                 |       |
 | lib   | e_lesser_demon.rodata                    |       28 |          0 | Yes    |                                 |       |
 | lib   | e_mudman.rodata                          |       28 |          0 | Yes    |                                 |       |
 | no3   | jtbl_pspeu_09298F28                      |       28 |          0 | Yes    |                                 |       |
@@ -469,7 +471,6 @@
 | no4   | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | st0   | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | wrp   | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
-| dai   | unk_1360.rodata                          |       38 |          0 | Yes    |                                 |       |
 | dai   | unk_1A390.rodata                         |       38 |          0 | Yes    |                                 |       |
 | no4   | unk_2108.rodata                          |       38 |          0 | Yes    |                                 |       |
 | dra   | DestroyEntity                            |       38 |          3 |        |                                 |       |
@@ -695,9 +696,9 @@
 | dra   | func_psp_090EAF08                        |       51 |         10 |        | https://decomp.me/scratch/dmTOh | 0.218 |
 | maria | GetLang                                  |       51 |         10 |        |                                 |       |
 | ric   | GetLang                                  |       51 |         10 |        |                                 |       |
-| dai   | GetLang_09253A70                         |       51 |         10 |        |                                 |       |
 | dai   | GetLang_09246968                         |       51 |         10 |        |                                 |       |
 | dai   | GetLang_09245408                         |       51 |         10 |        |                                 |       |
+| dai   | GetLang_09253A70                         |       51 |         10 |        |                                 |       |
 | lib   | func_psp_0924B2E0                        |       51 |         10 |        | https://decomp.me/scratch/5eIud | 0.218 |
 | lib   | GetLang                                  |       51 |         10 |        |                                 |       |
 | lib   | func_psp_0925D430                        |       51 |         10 |        | https://decomp.me/scratch/aysnE | 1.0   |
@@ -798,8 +799,8 @@
 | dra   | 71830.rodata                             |       62 |          0 | Yes    |                                 |       |
 | dra   | GetPlayerSensor                          |       62 |          5 |        |                                 |       |
 | chi   | PrizeDropFall                            |       62 |          5 |        |                                 |       |
-| dai   | DAI_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
 | dai   | PrizeDropFall                            |       62 |          5 |        |                                 |       |
+| dai   | DAI_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
 | lib   | PrizeDropFall                            |       62 |          5 |        |                                 |       |
 | lib   | LIB_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
 | lib   | func_us_801B7C94                         |       62 |          5 |        |                                 |       |
@@ -883,7 +884,7 @@
 | lib   | func_psp_0923A448                        |       68 |         11 |        |                                 |       |
 | dra   | func_psp_090EDA78                        |       69 |          6 |        |                                 |       |
 |       | CreateEventEntity                        |       69 |          6 |        |                                 |       |
-| dai   | func_pspeu_0924DD10                      |       69 |          7 |        |                                 |       |
+| dai   | AdjustValueWithinThreshold               |       69 |          7 |        |                                 |       |
 | dra   | ReadPads                                 |       69 |          9 |        |                                 |       |
 | dai   | func_us_801C1E18                         |       70 |          6 |        |                                 |       |
 | dra   | PlayerStepUnk48                          |       70 |         11 |        |                                 |       |
@@ -1863,7 +1864,6 @@
 | maria | func_pspeu_092A6E50                      |      501 |         49 | Yes    | https://decomp.me/scratch/SzuXR | 0.999 |
 | no3   | EntityDeathStolenItem                    |      502 |         28 | Yes    | https://decomp.me/scratch/EJUYk | 0.997 |
 | ric   | RicEntityFactory                         |      504 |         41 | Yes    | https://decomp.me/scratch/aAOUj | 0.997 |
-| dai   | EntityClouds                             |      506 |         49 |        | https://decomp.me/scratch/40hTC | 0.997 |
 | no4   | EntitySkeletonApe                        |      507 |         90 | Yes    | https://decomp.me/scratch/jTy3E | 0.992 |
 | maria | MarStepDead                              |      508 |         59 |        |                                 |       |
 | ric   | RicStepDead                              |      508 |         59 |        |                                 |       |
@@ -1885,6 +1885,7 @@
 | no3   | func_pspeu_0923C528                      |      531 |         20 |        | https://decomp.me/scratch/BVXN7 | 0.998 |
 | lib   | func_psp_0923DCC8                        |      532 |         57 |        | https://decomp.me/scratch/NXku6 | 0.999 |
 | lib   | func_us_801AFE0C                         |      534 |         67 | Yes    |                                 |       |
+| dai   | EntityClouds                             |      538 |         49 |        | https://decomp.me/scratch/40hTC | 0.997 |
 | dra   | MainGame                                 |      539 |         84 |        | https://decomp.me/scratch/xoBh0 | 0.985 |
 |       | SwitchModeInitialize                     |      542 |         56 |        |                                 |       |
 | maria | func_pspeu_092A82E0                      |      543 |         60 |        | https://decomp.me/scratch/4Ptya | 0.973 |
