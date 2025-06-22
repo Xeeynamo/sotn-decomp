@@ -3157,11 +3157,14 @@ typedef struct {
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 : 16;
     /* 0x86 */ s16 : 16;
-    /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 : 16;
-    /* 0x8C */ s16 unk8C;
+    /* 0x88 */ s16 origPosX;
+    /* 0x8A */ s16 origPosY;
+    /* 0x8C */ u16 unk8C;
     /* 0x8E */ s16 : 16;
     /* 0x90 */ s32 unk90;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s16 newPosX;
+    /* 0x9A */ s16 newPosY;
 } ET_SurfacingWater;
 
 typedef struct {

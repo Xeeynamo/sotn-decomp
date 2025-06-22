@@ -3,7 +3,7 @@
 
 extern u16 D_us_80180F1A[];
 
-void func_us_801C59E0(Entity* self, s16 arg1) {
+void func_us_801C59E0(Entity* self, s16 xOffset) {
     Entity* newEntity;
 
     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -16,21 +16,67 @@ void func_us_801C59E0(Entity* self, s16 arg1) {
             newEntity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
         }
 
-        if (self->facingLeft != 0) {
-            newEntity->posX.i.hi += arg1;
+        if (self->facingLeft) {
+            newEntity->posX.i.hi += xOffset;
         } else {
-            newEntity->posX.i.hi -= arg1;
+            newEntity->posX.i.hi -= xOffset;
         }
 
         newEntity->params = 0x8000;
-        newEntity->params = *D_us_80180F1A << 8 | 0x8000;
-        newEntity->ext.et_surfacingWater.unk88 = 0x17;
+        newEntity->params |= D_us_80180F1A[0] << 8;
+        newEntity->ext.et_surfacingWater.origPosX = 0x17;
         newEntity->zPriority = 0x9B;
         self->ext.et_surfacingWater.unk8C = 8;
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/e_ferryman", func_us_801C5AD4);
+void func_us_801C5AD4(u16 collision, Entity* entity) {
+    Entity* tempEntity;
+    s16 posX;
+    s16 posY;
+
+    entity->ext.et_surfacingWater.origPosX = entity->posX.i.hi;
+    entity->ext.et_surfacingWater.origPosY = entity->posY.i.hi;
+
+    if (!entity->ext.et_surfacingWater.unk94) {
+        MoveEntity();
+    } else {
+        entity->posX.i.hi = entity->ext.et_surfacingWater.newPosX;
+        entity->posY.i.hi = entity->ext.et_surfacingWater.newPosY;
+        entity->posX.i.lo = entity->posY.i.lo = 0;
+    }
+    posX = entity->posX.i.hi - entity->ext.et_surfacingWater.origPosX;
+    posY = entity->posY.i.hi - entity->ext.et_surfacingWater.origPosY;
+    if (posX && !entity->ext.et_surfacingWater.unk94) {
+        if (!entity->ext.et_surfacingWater.unk8C) {
+            if (!(entity->ext.et_surfacingWater.unk90 & 1)) {
+                func_us_801C59E0(entity, 40);
+                tempEntity = entity + 1;
+                if (tempEntity->animCurFrame == 0x1E ||
+                    tempEntity->animCurFrame == 0x1F) {
+                    func_us_801C59E0(entity, -56);
+                }
+            }
+        } else {
+            entity->ext.et_surfacingWater.unk8C--;
+        }
+    }
+
+    tempEntity = &PLAYER;
+    if (collision) {
+        if (posX > 0) {
+            if (!(g_Player.vram_flag & 4)) {
+                tempEntity->posX.i.hi += posX;
+                D_80097488.x.i.hi += posX;
+            }
+        } else if (!(g_Player.vram_flag & 8)) {
+            tempEntity->posX.i.hi += posX;
+            D_80097488.x.i.hi += posX;
+        }
+        tempEntity->posY.i.hi += posY;
+        D_80097488.y.i.hi += posY;
+    }
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/e_ferryman", func_us_801C5C7C);
 
@@ -125,7 +171,7 @@ void func_us_801C801C(Entity* self) {
                     newEnt->posX.i.hi = (s16)(newEnt->posX.i.hi - 16) +
                                         (self->ext.et_surfacingWater.unk7E * 8);
                     newEnt->params = 0x8000;
-                    newEnt->ext.et_surfacingWater.unk88 = 23;
+                    newEnt->ext.et_surfacingWater.origPosX = 23;
                     newEnt->zPriority = 155;
                 }
 
