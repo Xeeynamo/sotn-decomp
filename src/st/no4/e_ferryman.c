@@ -709,7 +709,18 @@ void func_us_801C6DA8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/e_ferryman", func_us_801C7204);
+void func_us_801C7204(Entity* entity, s32 arg1) {
+    s32 var_a1;
+
+    if (entity->ext.ferrymanUnk.unk7E) {
+        return;
+    }
+
+    PlaySfxPositional(SFX_LEVER_METAL_BANG);
+    entity->ext.ferrymanUnk.unk88 = arg1;
+    entity->ext.ferrymanUnk.unk8C = -(entity->ext.ferrymanUnk.unk88 / 16);
+    entity->ext.ferrymanUnk.unk7E = 1;
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/e_ferryman", func_us_801C726C);
 

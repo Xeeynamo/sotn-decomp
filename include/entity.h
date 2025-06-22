@@ -3179,6 +3179,15 @@ typedef struct {
 } ET_FerrymanBoat;
 
 typedef struct {
+    /* 0x7C */ s16 : 16;
+    /* 0x7E */ u16 unk7E;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s32 unk8C;
+} ET_FerrymanUnk;
+
+typedef struct {
     /* 0x7C */ u16 waterHeight;
     /* 0x7E */ struct Entity* entity7E;
     /* 0x82 */ struct Entity* entity82;
@@ -3501,8 +3510,9 @@ typedef union { // offset=0x7C
     ET_801C12B0 et_801C12B0;
     ET_BonePillar et_bonePillar;
     ET_801C4520 et_801C4520;
-    ET_Crow et_crow;
-	ET_FerrymanBoat ferrymanBoat;
+	ET_Crow et_crow;
+    ET_FerrymanBoat ferrymanBoat;
+    ET_FerrymanUnk ferrymanUnk;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
