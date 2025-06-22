@@ -24,11 +24,11 @@ func ReadSpritesBanks(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteBanks, da
 	if err := addr.MoveFile(r, baseAddr); err != nil {
 		return SpriteBanks{}, datarange.DataRange{}, err
 	}
-
+	boundaries := baseAddr.Boundaries()
 	offBanks := make([]psx.Addr, 0, banksCount)
 	for {
 		addr := psx.ReadAddr(r)
-		if addr != psx.RamNull && !addr.InRange(baseAddr, psx.RamGameEnd) {
+		if addr != psx.RamNull && !addr.InRange(baseAddr, boundaries.GameEnd) {
 			break
 		}
 		offBanks = append(offBanks, addr)

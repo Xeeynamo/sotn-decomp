@@ -102,8 +102,8 @@ func hydrateYOrderFields(x layouts, y layouts) error {
 	return nil
 }
 
-func readEntityLayout(r io.ReadSeeker, ovlName string, off psx.Addr, count int, isX bool) (layouts, []datarange.DataRange, error) {
-	if err := off.MoveFile(r, psx.RamStageBegin); err != nil {
+func readEntityLayout(r io.ReadSeeker, ovlName string, off, baseAddr psx.Addr, count int, isX bool) (layouts, []datarange.DataRange, error) {
+	if err := off.MoveFile(r, baseAddr); err != nil {
 		return layouts{}, nil, err
 	}
 
@@ -119,7 +119,7 @@ func readEntityLayout(r io.ReadSeeker, ovlName string, off psx.Addr, count int, 
 	var blocks [][]layoutEntry
 	var xRanges []datarange.DataRange
 	for _, blockOffset := range util.SortUniqueOffsets(blockOffsets) {
-		if err := blockOffset.MoveFile(r, psx.RamStageBegin); err != nil {
+		if err := blockOffset.MoveFile(r, baseAddr); err != nil {
 			return layouts{}, nil, err
 		}
 		var entries []layoutEntry
@@ -155,7 +155,7 @@ func readEntityLayout(r io.ReadSeeker, ovlName string, off psx.Addr, count int, 
 
 	endOfArray := off.Sum(count * 4)
 	if isX { // we want to do the same thing with the vertically aligned layout
-		yLayouts, yRanges, err := readEntityLayout(r, ovlName, endOfArray, count, false)
+		yLayouts, yRanges, err := readEntityLayout(r, ovlName, endOfArray, baseAddr, count, false)
 		if err != nil {
 			return layouts{}, nil, fmt.Errorf("readEntityLayout failed on Y: %w", err)
 		}

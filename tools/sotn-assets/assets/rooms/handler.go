@@ -35,7 +35,7 @@ func (h *handler) Name() string { return "rooms" }
 
 func (h *handler) Extract(e assets.ExtractArgs) error {
 	r := bytes.NewReader(e.Data)
-	rooms, _, err := readRooms(r, e.RamBase.Sum(e.Start))
+	rooms, _, err := readRooms(r, e.RamBase.Sum(e.Start), e.RamBase)
 	if err != nil {
 		return fmt.Errorf("failed to read rooms: %w", err)
 	}
@@ -75,7 +75,7 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	if err != nil {
 		return assets.InfoResult{}, err
 	}
-	_, dataRange, err := readRooms(r, header.Rooms)
+	_, dataRange, err := readRooms(r, header.Rooms, header.Rooms.Boundaries().StageBegin)
 	if err != nil {
 		return assets.InfoResult{}, err
 	}
@@ -108,11 +108,11 @@ func (r Room) isTerminator() bool {
 	return r.Left == 0x40
 }
 
-func readRooms(r io.ReadSeeker, off psx.Addr) ([]Room, datarange.DataRange, error) {
+func readRooms(r io.ReadSeeker, off psx.Addr, baseAddr psx.Addr) ([]Room, datarange.DataRange, error) {
 	if off == 0 {
 		return nil, datarange.DataRange{}, nil
 	}
-	if err := off.MoveFile(r, psx.RamStageBegin); err != nil {
+	if err := off.MoveFile(r, baseAddr); err != nil {
 		return nil, datarange.DataRange{}, err
 	}
 

@@ -598,7 +598,7 @@ with open("build.ninja", "w") as f:
         "splat",
         # 'touch' circumnavigates a bug where splat would not update the
         # mtime of the linker script if it is already up-to-date.
-        command=".venv/bin/splat split $in 2> /dev/null && touch $out",
+        command=".venv/bin/splat split $in > /dev/null && touch $out",
         description="splat $in",
     )
     nw.rule(

@@ -23,11 +23,11 @@ func (h *handler) Name() string { return "layout" }
 func (h *handler) Extract(e assets.ExtractArgs) error {
 	ovlName := filepath.Base(e.AssetDir)
 	r := bytes.NewReader(e.Data)
-	layoutOff, err := layoutOffset(r)
+	layoutOff, err := layoutOffset(r, e.RamBase)
 	if err != nil {
 		return err
 	}
-	layouts, _, err := readEntityLayout(r, ovlName, layoutOff, entryCount, true)
+	layouts, _, err := readEntityLayout(r, ovlName, layoutOff, e.RamBase, entryCount, true)
 	return util.WriteJsonFile(assetPath(e.AssetDir, e.Name), layouts)
 }
 
@@ -41,12 +41,13 @@ func assetPath(dir, name string) string {
 
 func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	r := bytes.NewReader(a.StageData)
-	layoutOff, err := layoutOffset(r)
+	boundaries := psx.Addr(0x80000000).Boundaries()
+	layoutOff, err := layoutOffset(r, boundaries.StageBegin)
 	if err != nil {
 		return assets.InfoResult{}, err
 	}
 	nLayouts := 53 // it seems there are always 53 elements?!
-	_, layoutsRange, err := readEntityLayout(r, "dummy", layoutOff, nLayouts, true)
+	_, layoutsRange, err := readEntityLayout(r, "dummy", layoutOff, boundaries.StageBegin, nLayouts, true)
 	if err != nil {
 		return assets.InfoResult{}, fmt.Errorf("unable to gather all entity layouts: %w", err)
 	}
@@ -73,7 +74,7 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	}, nil
 }
 
-func layoutOffset(r io.ReadSeeker) (psx.Addr, error) {
+func layoutOffset(r io.ReadSeeker, baseAddr psx.Addr) (psx.Addr, error) {
 	header, err := sotn.ReadStageHeader(r)
 	if err != nil {
 		return psx.RamNull, err
@@ -85,7 +86,7 @@ func layoutOffset(r io.ReadSeeker) (psx.Addr, error) {
 	// ⚠️ assumption
 	// some overlays have this field nulled, we have to find the offset ourselves
 	// it should be usually be right after header.Graphics
-	_, graphicsRange, err := gfxbanks.ReadGraphics(r, psx.RamStageBegin, header.Graphics, func(addr psx.Addr) string {
+	_, graphicsRange, err := gfxbanks.ReadGraphics(r, baseAddr, header.Graphics, func(addr psx.Addr) string {
 		return ""
 	})
 	if err != nil {

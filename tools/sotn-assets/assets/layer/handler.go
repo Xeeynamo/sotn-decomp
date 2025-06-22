@@ -23,15 +23,15 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err != nil {
 		return err
 	}
-	l, _, err := readLayers(r, header.Layers)
+	l, _, err := readLayers(r, header.Layers, e.RamBase)
 	if err != nil {
 		return fmt.Errorf("unable to read layers: %w", err)
 	}
-	tileMaps, tileMapsRange, err := readAllTileMaps(r, l)
+	tileMaps, tileMapsRange, err := readAllTileMaps(r, e.RamBase, l)
 	if err != nil {
 		return fmt.Errorf("unable to gather all the tile maps: %w", err)
 	}
-	tileDefs, tileDefsRange, err := readAllTiledefs(r, l)
+	tileDefs, tileDefsRange, err := readAllTiledefs(r, e.RamBase, l)
 	if err != nil {
 		return fmt.Errorf("unable to gather all the tile defs: %w", err)
 	}
@@ -39,7 +39,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	// check for unused tile defs (CEN has one)
 	for tileMapsRange.End() < tileDefsRange.Begin() {
 		offset := tileDefsRange.Begin().Sum(-0x10)
-		unusedTileDef, unusedTileDefRange, err := readTiledef(r, offset)
+		unusedTileDef, unusedTileDefRange, err := readTiledef(r, offset, e.RamBase)
 		if err != nil {
 			return fmt.Errorf("there is a gap between tileMaps and tileDefs: %w", err)
 		}
@@ -47,23 +47,34 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		tileDefsRange = datarange.MergeDataRanges([]datarange.DataRange{tileDefsRange, unusedTileDefRange})
 	}
 
+	for _, layerData := range l { // cheap solution to "adjust" the addresses
+		if layerData.fg != nil {
+			layerData.fg.Data = psx.Addr(layerData.fg.Data.Real(e.RamBase))
+			layerData.fg.Tiledef = psx.Addr(layerData.fg.Tiledef.Real(e.RamBase))
+		}
+		if layerData.bg != nil {
+			layerData.bg.Data = psx.Addr(layerData.bg.Data.Real(e.RamBase))
+			layerData.bg.Tiledef = psx.Addr(layerData.bg.Tiledef.Real(e.RamBase))
+		}
+	}
 	if err := util.WriteJsonFile(filepath.Join(e.AssetDir, "layers.json"), l); err != nil {
 		return fmt.Errorf("unable to create layers file: %w", err)
 	}
 
 	for offset, data := range tileMaps {
-		fileName := filepath.Join(e.AssetDir, tilemapFileName(offset))
+		fileName := filepath.Join(e.AssetDir, tilemapFileName(offset.Real(e.RamBase)))
 		if err := util.WriteFile(fileName, data); err != nil {
 			return fmt.Errorf("unable to create %q: %w", fileName, err)
 		}
 	}
 
 	for offset, tileDefsData := range tileDefs {
+		real := offset.Real(e.RamBase)
 		defs := tileDefPaths{
-			Tiles:      tiledefIndicesFileName(offset),
-			Pages:      tiledefPagesFileName(offset),
-			Cluts:      tiledefClutsFileName(offset),
-			Collisions: tiledefCollisionsFileName(offset),
+			Tiles:      tiledefIndicesFileName(real),
+			Pages:      tiledefPagesFileName(real),
+			Cluts:      tiledefClutsFileName(real),
+			Collisions: tiledefCollisionsFileName(real),
 		}
 		if err := util.WriteFile(filepath.Join(e.AssetDir, defs.Tiles), tileDefsData.Tiles); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Tiles, err)
@@ -77,7 +88,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		if err := util.WriteFile(filepath.Join(e.AssetDir, defs.Collisions), tileDefsData.Cols); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Collisions, err)
 		}
-		if err := util.WriteJsonFile(filepath.Join(e.AssetDir, tiledefFileName(offset)), defs); err != nil {
+		if err := util.WriteJsonFile(filepath.Join(e.AssetDir, tiledefFileName(real)), defs); err != nil {
 			return fmt.Errorf("unable to create layers file: %w", err)
 		}
 	}
@@ -94,15 +105,16 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	if err != nil {
 		return assets.InfoResult{}, err
 	}
-	l, layersRange, err := readLayers(r, header.Layers)
+	boundaries := header.Layers.Boundaries()
+	l, layersRange, err := readLayers(r, header.Layers, boundaries.StageBegin)
 	if err != nil {
 		return assets.InfoResult{}, fmt.Errorf("unable to read layers: %w", err)
 	}
-	_, tileMapsRange, err := readAllTileMaps(r, l)
+	_, tileMapsRange, err := readAllTileMaps(r, boundaries.StageBegin, l)
 	if err != nil {
 		return assets.InfoResult{}, fmt.Errorf("unable to gather all the tile maps: %w", err)
 	}
-	tileDefs, tileDefsRange, err := readAllTiledefs(r, l)
+	tileDefs, tileDefsRange, err := readAllTiledefs(r, boundaries.StageBegin, l)
 	if err != nil {
 		return assets.InfoResult{}, fmt.Errorf("unable to gather all the tile defs: %w", err)
 	}
@@ -110,7 +122,7 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	// check for unused tile defs (CEN has one)
 	for tileMapsRange.End() < tileDefsRange.Begin() {
 		offset := tileDefsRange.Begin().Sum(-0x10)
-		unusedTileDef, unusedTileDefRange, err := readTiledef(r, offset)
+		unusedTileDef, unusedTileDefRange, err := readTiledef(r, offset, boundaries.StageBegin)
 		if err != nil {
 			return assets.InfoResult{}, fmt.Errorf("there is a gap between tileMaps and tileDefs: %w", err)
 		}
@@ -146,26 +158,26 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	}, nil
 }
 
-func tilemapFileName(off psx.Addr) string {
-	return fmt.Sprintf("tilemap_%05X.bin", off.Real(psx.RamStageBegin))
+func tilemapFileName(off int) string {
+	return fmt.Sprintf("tilemap_%05X.bin", uint32(off&0x7FFFFFFF))
 }
 
-func tiledefFileName(off psx.Addr) string {
-	return fmt.Sprintf("tiledef_%05X.json", off.Real(psx.RamStageBegin))
+func tiledefFileName(off int) string {
+	return fmt.Sprintf("tiledef_%05X.json", uint32(off&0x7FFFFFFF))
 }
 
-func tiledefIndicesFileName(off psx.Addr) string {
-	return fmt.Sprintf("tiledef_%05X_tiles.bin", off.Real(psx.RamStageBegin))
+func tiledefIndicesFileName(off int) string {
+	return fmt.Sprintf("tiledef_%05X_tiles.bin", uint32(off&0x7FFFFFFF))
 }
 
-func tiledefPagesFileName(off psx.Addr) string {
-	return fmt.Sprintf("tiledef_%05X_pages.bin", off.Real(psx.RamStageBegin))
+func tiledefPagesFileName(off int) string {
+	return fmt.Sprintf("tiledef_%05X_pages.bin", uint32(off&0x7FFFFFFF))
 }
 
-func tiledefClutsFileName(off psx.Addr) string {
-	return fmt.Sprintf("tiledef_%05X_cluts.bin", off.Real(psx.RamStageBegin))
+func tiledefClutsFileName(off int) string {
+	return fmt.Sprintf("tiledef_%05X_cluts.bin", uint32(off&0x7FFFFFFF))
 }
 
-func tiledefCollisionsFileName(off psx.Addr) string {
-	return fmt.Sprintf("tiledef_%05X_cols.bin", off.Real(psx.RamStageBegin))
+func tiledefCollisionsFileName(off int) string {
+	return fmt.Sprintf("tiledef_%05X_cols.bin", uint32(off&0x7FFFFFFF))
 }

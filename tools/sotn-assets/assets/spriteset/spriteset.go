@@ -17,11 +17,12 @@ func ReadSpriteSet(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteSet, dataran
 	}
 
 	// the end of the Sprite array is the beginning of the earliest Sprite offset
-	earliestSpriteOff := psx.RamStageEnd
+	boundaries := baseAddr.Boundaries()
+	earliestSpriteOff := boundaries.GameEnd
 	currentOff := addr
 	var spriteOffsets []psx.Addr
 	for {
-		if currentOff == earliestSpriteOff {
+		if currentOff >= earliestSpriteOff {
 			break
 		}
 		currentOff += 4
@@ -32,7 +33,7 @@ func ReadSpriteSet(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteSet, dataran
 		}
 		spriteOffsets = append(spriteOffsets, spriteOffset)
 		if spriteOffset != psx.RamNull {
-			if !spriteOffset.InRange(baseAddr, psx.RamGameEnd) {
+			if !spriteOffset.InRange(baseAddr, boundaries.GameEnd) {
 				err := fmt.Errorf("sprite offset %s is not valid", spriteOffset)
 				return nil, datarange.DataRange{}, err
 			}

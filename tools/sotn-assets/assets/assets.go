@@ -16,6 +16,7 @@ type ExtractArgs struct {
 	Args        []string
 	SplatConfig *splat.Config
 	RamBase     psx.Addr
+	Boundaries  psx.Offsets
 	Symbol      func(addr psx.Addr) string
 }
 type Extractor interface {
@@ -35,6 +36,7 @@ type Builder interface {
 type InfoArgs struct {
 	StageFilePath string
 	StageData     []byte
+	Boundaries    psx.Offsets
 }
 type InfoAssetEntry struct {
 	DataRange datarange.DataRange
