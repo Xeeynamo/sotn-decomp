@@ -71,11 +71,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	}
 	content.WriteString("    PAL_TERMINATE(),\n")
 	content.WriteString("};\n")
-<<<<<<< HEAD
 	content.WriteString("u_long* OVL_EXPORT(cluts)[] = {(u_long*)&pal_def};\n")
-=======
-	content.WriteString("u_long** OVL_EXPORT(cluts)[] = {pal_def};\n")
->>>>>>> 5d04b212e (Whole bunch of graphics pulled in)
 	return util.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(content.String()))
 }
 
