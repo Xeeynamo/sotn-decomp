@@ -1,13 +1,22 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#ifndef DAI_H
+#define DAI_H
+
 #include "stage.h"
 
+#define STAGE_IS_DAI
 #define OVL_EXPORT(x) DAI_##x
 
+#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
+#define SEALED_DOOR_PALETTE 0x245
+
+// Used for cluts, palettes, and in g_EInits
 enum DaiPalette {
     PAL_NONE = 0,
+    PAL_CLOUDS = 0xC0,
     PAL_UNKC9 = 0xC9,
     PAL_UNKCA = 0xCA,
-    PAL_UNK200 = 0x200,
+    PAL_SKELERANG = 0x200,
     PAL_UNK215 = 0x215,
     PAL_BONE_PILLAR = 0x216,
     PAL_BONE_PILLAR_FIRE = 0x221,
@@ -24,7 +33,7 @@ enum DaiEntities {
     E_NONE,
     E_BREAKABLE,              // EntityUnkBreakable,
     E_EXPLOSION,              // EntityExplosion,
-    E_PRIZE_DROP3,            // EntityPrizeDrop,
+    E_PRIZE_DROP,             // EntityPrizeDrop,
     E_DAMAGE_DISPLAY,         // EntityDamageDisplay,
     E_RED_DOOR,               // DAI_EntityRedDoor,
     E_INTENSE_EXPLOSION,      // EntityIntenseExplosion,
@@ -121,12 +130,14 @@ extern EInit D_us_80180A28;
 extern EInit D_us_80180A34;
 extern EInit D_us_80180A40;
 extern EInit D_us_80180A4C;
-extern EInit D_us_80180A58;
+extern EInit g_EInitBat;
 extern EInit D_us_80180A64;
 extern EInit D_us_80180A70;
-extern EInit D_us_80180A7C;
-extern EInit D_us_80180A88;
+extern EInit g_EInitSkelerang;
+extern EInit g_EInitSkelerangBoomerang;
 extern EInit D_us_80180A94;
 extern EInit D_us_80180AA0;
 extern EInit D_us_80180AAC;
 extern EInit D_us_80180AB8;
+
+#endif

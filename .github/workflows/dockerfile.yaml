@@ -12,6 +12,7 @@ on:
 
 jobs:
   push-docker-image:
+    if: github.repository == 'Xeeynamo/sotn-decomp'
     runs-on: ubuntu-latest
     steps:
       - name: Clone main repository
