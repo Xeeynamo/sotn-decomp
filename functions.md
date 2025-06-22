@@ -505,7 +505,7 @@
 | lib   | CutsceneUnk3                             |       39 |          3 |        |                                 |       |
 | no3   | func_pspeu_09242FB8                      |       39 |          3 |        | https://decomp.me/scratch/Gjhce | 0.809 |
 | no4   | func_pspeu_0925A0F0                      |       39 |          3 |        |                                 |       |
-| no4   | func_pspeu_0923BAB0                      |       39 |          4 |        |                                 |       |
+| no4   | func_pspeu_0923BAB0                      |       39 |          4 |        | https://decomp.me/scratch/OPjGe | 1.0   |
 | dra   | LoadMonsterLibrarianPreview              |       39 |          5 |        |                                 |       |
 | ric   | func_pspeu_092B5F48                      |       39 |          5 |        |                                 |       |
 | maria | MarSetWalk                               |       39 |          7 |        |                                 |       |
@@ -1355,7 +1355,7 @@
 | dra   | func_psp_090F1418                        |      142 |         13 |        |                                 |       |
 | ric   | GetAguneaLightningAngle                  |      142 |         19 |        | https://decomp.me/scratch/ZAu5o | 1.0   |
 | no3   | EntityJewelSwordDoor                     |      143 |         21 |        |                                 |       |
-| maria | func_pspeu_092A6740                      |      144 |         13 |        | https://decomp.me/scratch/k8Oux | 0.999 |
+| maria | func_pspeu_092A6740                      |      144 |         13 |        | https://decomp.me/scratch/iUiEL | 1.0   |
 | dra   | AddToInventory                           |      144 |         15 |        | https://decomp.me/scratch/NBaeA | 0.999 |
 | maria | CheckHighJumpInput                       |      144 |         24 |        |                                 |       |
 | dra   | GetStatusAilmentTimer                    |      145 |         15 | Yes    |                                 |       |
@@ -1562,7 +1562,7 @@
 | maria | MarCheckWallLeft                         |      228 |         29 |        |                                 |       |
 | ric   | RicCheckWallLeft                         |      228 |         29 |        |                                 |       |
 | no3   | EntityPathBlockSmallWeight               |      229 |         25 |        | https://decomp.me/scratch/mQ0R4 | 0.955 |
-| dai   | func_us_801C5920                         |      229 |         33 |        |                                 |       |
+| dai   | func_us_801C5920                         |      229 |         33 |        | https://decomp.me/scratch/V8YGS | 0.998 |
 | lib   | func_us_801B12D0                         |      231 |         11 |        |                                 |       |
 | no3   | EntityPathBlockTallWeight                |      232 |         23 |        | https://decomp.me/scratch/qXk9X | 0.967 |
 | dra   | PlayerStepHighJump                       |      232 |         32 |        |                                 |       |
@@ -1729,7 +1729,7 @@
 | no4   | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
 | st0   | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
 | wrp   | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
-| dai   | EntityUnkBreakable                       |      340 |         49 |        |                                 |       |
+| dai   | EntityUnkBreakable                       |      340 |         49 |        | https://decomp.me/scratch/OkZQf | 0.628 |
 | dra   | func_80123B40                            |      342 |         25 |        |                                 |       |
 | maria | func_pspeu_092AB1C0                      |      344 |         32 |        | https://decomp.me/scratch/zL9P3 | 0.999 |
 | dra   | func_800FE044                            |      345 |         35 |        | https://decomp.me/scratch/ld2iy | 0.99  |
@@ -1928,7 +1928,7 @@
 | st0   | EntityEquipItemDrop                      |      612 |         62 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | dra   | EntityBatEcho                            |      618 |         43 |        | https://decomp.me/scratch/90rWo | 0.998 |
 | dra   | func_800EB758                            |      619 |         30 |        | https://decomp.me/scratch/i7kpN | 1.0   |
-| no4   | func_pspeu_0923BB30                      |      621 |         50 |        |                                 |       |
+| no4   | func_pspeu_0923BB30                      |      621 |         50 |        | https://decomp.me/scratch/MtIyy | 0.643 |
 | ric   | RicEntityAguneaLightning                 |      624 |         46 | Yes    | https://decomp.me/scratch/dgUhj | 1.0   |
 | lib   | func_psp_0923CFC0                        |      630 |        109 | Yes    | https://decomp.me/scratch/QqPkx | 0.997 |
 | st0   | func_801BD8F0                            |      634 |         59 | Yes    | https://decomp.me/scratch/oOt9S | 0.997 |
