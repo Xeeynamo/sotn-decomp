@@ -159,7 +159,7 @@ clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
 	git clean -fdx asm/$(VERSION)/
 	git clean -fdx build/$(VERSION)/
-	git clean -fdx src/**/gen
+	git clean -fdx src/**/gen/
 	git clean -fdx config/*$(VERSION)*
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
