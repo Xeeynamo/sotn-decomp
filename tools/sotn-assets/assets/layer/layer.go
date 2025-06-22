@@ -57,8 +57,8 @@ func (l *layerDef) tilemapFileSize() int {
 
 func (l *layerDef) unpack() layerUnpacked {
 	return layerUnpacked{
-		Data:          tilemapFileName(l.Data),
-		Tiledef:       tiledefFileName(l.Tiledef),
+		Data:          tilemapFileName(int(l.Data)),
+		Tiledef:       tiledefFileName(int(l.Tiledef)),
 		Left:          int((l.PackedInfo >> 0) & 0x3F),
 		Top:           int((l.PackedInfo >> 6) & 0x3F),
 		Right:         int((l.PackedInfo >> 12) & 0x3F),
@@ -84,11 +84,11 @@ func (r roomLayers) MarshalJSON() ([]byte, error) {
 	return json.Marshal(m)
 }
 
-func readLayers(r io.ReadSeeker, off psx.Addr) ([]roomLayers, datarange.DataRange, error) {
+func readLayers(r io.ReadSeeker, off, baseAddr psx.Addr) ([]roomLayers, datarange.DataRange, error) {
 	if off == 0 {
 		return nil, datarange.DataRange{}, nil
 	}
-	if err := off.MoveFile(r, psx.RamStageBegin); err != nil {
+	if err := off.MoveFile(r, baseAddr); err != nil {
 		return nil, datarange.DataRange{}, err
 	}
 
@@ -99,8 +99,8 @@ func readLayers(r io.ReadSeeker, off psx.Addr) ([]roomLayers, datarange.DataRang
 		if err := binary.Read(r, binary.LittleEndian, layersOff); err != nil {
 			return nil, datarange.DataRange{}, err
 		}
-		if layersOff[0] <= psx.RamStageBegin || layersOff[0] >= off ||
-			layersOff[1] <= psx.RamStageBegin || layersOff[1] >= off {
+		if layersOff[0] <= baseAddr || layersOff[0] >= off ||
+			layersOff[1] <= baseAddr || layersOff[1] >= off {
 			break
 		}
 		layerOffsets = append(layerOffsets, layersOff...)
@@ -114,7 +114,7 @@ func readLayers(r io.ReadSeeker, off psx.Addr) ([]roomLayers, datarange.DataRang
 			continue
 		}
 
-		if err := layerOffset.MoveFile(r, psx.RamStageBegin); err != nil {
+		if err := layerOffset.MoveFile(r, baseAddr); err != nil {
 			return nil, datarange.DataRange{}, err
 		}
 		var l layerDef

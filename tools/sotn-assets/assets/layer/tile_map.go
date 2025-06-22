@@ -7,8 +7,8 @@ import (
 	"io"
 )
 
-func readTilemap(r io.ReadSeeker, layer *layerDef) ([]byte, datarange.DataRange, error) {
-	if err := layer.Data.MoveFile(r, psx.RamStageBegin); err != nil {
+func readTilemap(r io.ReadSeeker, baseAddr psx.Addr, layer *layerDef) ([]byte, datarange.DataRange, error) {
+	if err := layer.Data.MoveFile(r, baseAddr); err != nil {
 		return nil, datarange.DataRange{}, err
 	}
 	data := make([]byte, layer.tilemapFileSize())
@@ -18,13 +18,13 @@ func readTilemap(r io.ReadSeeker, layer *layerDef) ([]byte, datarange.DataRange,
 	return data, datarange.FromAddr(layer.Data, len(data)), nil
 }
 
-func readAllTileMaps(r io.ReadSeeker, roomLayers []roomLayers) (map[psx.Addr][]byte, datarange.DataRange, error) {
+func readAllTileMaps(r io.ReadSeeker, baseAddr psx.Addr, roomLayers []roomLayers) (map[psx.Addr][]byte, datarange.DataRange, error) {
 	var ranges []datarange.DataRange
 	processed := map[psx.Addr][]byte{}
 	for _, rl := range roomLayers {
 		if rl.fg != nil {
 			if _, found := processed[rl.fg.Data]; !found {
-				td, r, err := readTilemap(r, rl.fg)
+				td, r, err := readTilemap(r, baseAddr, rl.fg)
 				if err != nil {
 					return nil, datarange.DataRange{}, fmt.Errorf("unable to read fg tilemap: %w", err)
 				}
@@ -34,7 +34,7 @@ func readAllTileMaps(r io.ReadSeeker, roomLayers []roomLayers) (map[psx.Addr][]b
 		}
 		if rl.bg != nil {
 			if _, found := processed[rl.bg.Data]; !found {
-				td, r, err := readTilemap(r, rl.bg)
+				td, r, err := readTilemap(r, baseAddr, rl.bg)
 				if err != nil {
 					return nil, datarange.DataRange{}, fmt.Errorf("unable to read fg tilemap: %w", err)
 				}

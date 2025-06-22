@@ -37,7 +37,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err := binary.Read(r, binary.LittleEndian, &palDefAddr); err != nil {
 		return fmt.Errorf("error reading exported clut first entry: %w", err)
 	}
-	if palDefAddr.Real(psx.RamStageBegin) != e.Start {
+	if palDefAddr.Real(e.RamBase) != e.Start {
 		return fmt.Errorf("invalid palette entry offset, got %s but expected %s", palDefAddr, e.RamBase.Sum(e.Start))
 	}
 	entries, err := readPaletteEntries(r, e.RamBase, palDefAddr, e.Symbol)
@@ -81,17 +81,18 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	if err != nil {
 		return assets.InfoResult{}, err
 	}
-	if err := header.Cluts.MoveFile(r, psx.RamStageBegin); err != nil {
+	boundaries := header.Cluts.Boundaries()
+	if err := header.Cluts.MoveFile(r, boundaries.StageBegin); err != nil {
 		return assets.InfoResult{}, fmt.Errorf("invalid offset: %w", err)
 	}
 	var palDefAddr psx.Addr
 	if err := binary.Read(r, binary.LittleEndian, &palDefAddr); err != nil {
 		return assets.InfoResult{}, fmt.Errorf("error reading exported clut first entry: %w", err)
 	}
-	if !palDefAddr.InRange(psx.RamStageBegin, psx.RamStageEnd) {
+	if !palDefAddr.InRange(boundaries.StageBegin, boundaries.StageEnd) {
 		return assets.InfoResult{}, fmt.Errorf("invalid palette entry at %s, address out of the stage range: got %s", header.Cluts, palDefAddr)
 	}
-	entries, err := readPaletteEntries(r, psx.RamStageBegin, palDefAddr, func(addr psx.Addr) string {
+	entries, err := readPaletteEntries(r, boundaries.StageBegin, palDefAddr, func(addr psx.Addr) string {
 		return ""
 	})
 	if err != nil {
@@ -151,6 +152,7 @@ func readPaletteEntries(r io.ReadSeeker, baseAddr, addr psx.Addr, symbol func(ad
 	if paletteOp != palBulkCopy {
 		return nil, fmt.Errorf("invalid palette op, expected %08X but got %08X", palBulkCopy, paletteOp)
 	}
+	boundaries := baseAddr.Boundaries()
 	for i := 0; ; i++ {
 		var dst uint32
 		var length uint32
@@ -167,7 +169,7 @@ func readPaletteEntries(r io.ReadSeeker, baseAddr, addr psx.Addr, symbol func(ad
 		if length > 0x1000 {
 			return nil, fmt.Errorf("invalid palette entry at %s, length out of range: got 0x%08X, expected less than 0x1000", baseAddr.Sum(i*4*3+4), length)
 		}
-		if !addr.InRange(psx.RamStageBegin, psx.RamStageEnd) {
+		if !addr.InRange(baseAddr, boundaries.GameEnd) {
 			return nil, fmt.Errorf("invalid palette entry at %s, address out of the stage range: got %s", baseAddr.Sum(i*4*3+4), addr)
 		}
 		name := symbol(addr)

@@ -1,5 +1,7 @@
 package psx
 
+// this package is effectively no longer 'psx' exclusive, as it now also covers psp
+
 import (
 	"encoding/binary"
 	"fmt"
@@ -8,13 +10,36 @@ import (
 
 type Addr uint32
 
-const (
-	RamNull       = Addr(0)
-	RamGameBegin  = Addr(0x800A0000)
-	RamStageBegin = Addr(0x80180000)
-	RamStageEnd   = Addr(0x801E0000)
-	RamGameEnd    = Addr(0x801F8000)
+type Offsets struct {
+	GameBegin  Addr
+	StageBegin Addr
+	StageEnd   Addr
+	GameEnd    Addr
+}
+
+const RamNull = Addr(0)
+
+var (
+	ramPSX = Offsets{
+		GameBegin:  Addr(0x800A0000),
+		StageBegin: Addr(0x80180000),
+		StageEnd:   Addr(0x801E0000),
+		GameEnd:    Addr(0x801F8000),
+	}
+	ramPSP = Offsets{
+		GameBegin:  Addr(0x090DCA00),
+		StageBegin: Addr(0x09237700),
+		StageEnd:   Addr(0x092A5500),
+		GameEnd:    Addr(0x09800000),
+	}
 )
+
+func (off Addr) Boundaries() Offsets {
+	if off >= Addr(0x80000000) {
+		return ramPSX
+	}
+	return ramPSP
+}
 
 func (off Addr) Format(f fmt.State, c rune) {
 	f.Write([]byte(fmt.Sprintf("0x%08X", uint32(off))))
@@ -51,7 +76,7 @@ func (off Addr) InRange(begin Addr, end Addr) bool {
 }
 
 func (off Addr) MoveFile(r io.ReadSeeker, begin Addr) error {
-	end := RamGameEnd
+	end := off.Boundaries().GameEnd
 	if !off.InRange(begin, end) {
 		err := fmt.Errorf("offset %s is outside the boundaries [%s, %s]", off, begin, end)
 		panic(err)

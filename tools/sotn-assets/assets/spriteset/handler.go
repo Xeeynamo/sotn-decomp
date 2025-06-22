@@ -18,6 +18,9 @@ var Handler = &handler{}
 func (h *handler) Name() string { return "spriteset" }
 
 func (h *handler) Extract(e assets.ExtractArgs) error {
+	if e.AssetDir == "assets/maria" {
+		e.AssetDir = e.AssetDir
+	}
 	var sprites []*spriteParts
 	var err error
 	if e.Start != e.End {

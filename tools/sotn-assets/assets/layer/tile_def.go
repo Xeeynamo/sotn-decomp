@@ -22,8 +22,8 @@ type tileDefPaths struct {
 	Collisions string `json:"collisions"`
 }
 
-func readTiledef(r io.ReadSeeker, off psx.Addr) (tileDef, datarange.DataRange, error) {
-	if err := off.MoveFile(r, psx.RamStageBegin); err != nil {
+func readTiledef(r io.ReadSeeker, off, baseAddr psx.Addr) (tileDef, datarange.DataRange, error) {
+	if err := off.MoveFile(r, baseAddr); err != nil {
 		return tileDef{}, datarange.DataRange{}, err
 	}
 
@@ -39,28 +39,28 @@ func readTiledef(r io.ReadSeeker, off psx.Addr) (tileDef, datarange.DataRange, e
 		Cols:  make([]byte, off-offsets[3]),
 	}
 
-	if err := offsets[0].MoveFile(r, psx.RamStageBegin); err != nil {
+	if err := offsets[0].MoveFile(r, baseAddr); err != nil {
 		return tileDef{}, datarange.DataRange{}, err
 	}
 	if _, err := r.Read(td.Tiles); err != nil {
 		return tileDef{}, datarange.DataRange{}, err
 	}
 
-	if err := offsets[1].MoveFile(r, psx.RamStageBegin); err != nil {
+	if err := offsets[1].MoveFile(r, baseAddr); err != nil {
 		return tileDef{}, datarange.DataRange{}, err
 	}
 	if _, err := r.Read(td.Pages); err != nil {
 		return tileDef{}, datarange.DataRange{}, err
 	}
 
-	if err := offsets[2].MoveFile(r, psx.RamStageBegin); err != nil {
+	if err := offsets[2].MoveFile(r, baseAddr); err != nil {
 		return tileDef{}, datarange.DataRange{}, err
 	}
 	if _, err := r.Read(td.Cluts); err != nil {
 		return tileDef{}, datarange.DataRange{}, err
 	}
 
-	if err := offsets[3].MoveFile(r, psx.RamStageBegin); err != nil {
+	if err := offsets[3].MoveFile(r, baseAddr); err != nil {
 		return tileDef{}, datarange.DataRange{}, err
 	}
 	if _, err := r.Read(td.Cols); err != nil {
@@ -70,13 +70,13 @@ func readTiledef(r io.ReadSeeker, off psx.Addr) (tileDef, datarange.DataRange, e
 	return td, datarange.New(offsets[0], off.Sum(0x10)), nil
 }
 
-func readAllTiledefs(r io.ReadSeeker, roomLayers []roomLayers) (map[psx.Addr]tileDef, datarange.DataRange, error) {
+func readAllTiledefs(r io.ReadSeeker, baseAddr psx.Addr, roomLayers []roomLayers) (map[psx.Addr]tileDef, datarange.DataRange, error) {
 	var ranges []datarange.DataRange
 	processed := map[psx.Addr]tileDef{}
 	for _, rl := range roomLayers {
 		if rl.fg != nil {
 			if _, found := processed[rl.fg.Tiledef]; !found {
-				td, r, err := readTiledef(r, rl.fg.Tiledef)
+				td, r, err := readTiledef(r, rl.fg.Tiledef, baseAddr)
 				if err != nil {
 					return nil, datarange.DataRange{}, fmt.Errorf("unable to read fg tiledef: %w", err)
 				}
@@ -86,7 +86,7 @@ func readAllTiledefs(r io.ReadSeeker, roomLayers []roomLayers) (map[psx.Addr]til
 		}
 		if rl.bg != nil {
 			if _, found := processed[rl.bg.Tiledef]; !found {
-				td, r, err := readTiledef(r, rl.bg.Tiledef)
+				td, r, err := readTiledef(r, rl.bg.Tiledef, baseAddr)
 				if err != nil {
 					return nil, datarange.DataRange{}, fmt.Errorf("unable to read fg tiledef: %w", err)
 				}

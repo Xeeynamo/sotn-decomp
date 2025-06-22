@@ -1,6 +1,7 @@
 package sotn
 
 import (
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"os"
 	"strings"
 )
@@ -32,4 +33,15 @@ func GetPlatform() Platform {
 		return PlatformPSP
 	}
 	return PlatformPSX
+}
+
+func (p Platform) GetBoundaries() psx.Offsets {
+	switch p {
+	case PlatformPSX:
+		return psx.Addr(0x80000000).Boundaries()
+	case PlatformPSP:
+		return psx.Addr(0x08000000).Boundaries()
+	default:
+		panic("unsupported platform " + string(p))
+	}
 }
