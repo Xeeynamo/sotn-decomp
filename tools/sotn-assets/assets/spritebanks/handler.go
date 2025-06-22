@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"path/filepath"
@@ -41,7 +40,8 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	if err != nil {
 		return assets.InfoResult{}, err
 	}
-	_, dataRange, err := ReadSpritesBanks(r, psx.RamStageBegin, header.Sprites)
+	boundaries := header.Sprites.Boundaries()
+	_, dataRange, err := ReadSpritesBanks(r, boundaries.StageBegin, header.Sprites)
 	if err != nil {
 		return assets.InfoResult{}, err
 	}

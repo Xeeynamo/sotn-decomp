@@ -135,6 +135,7 @@ func enqueueExtractAssetEntry(
 			AssetDir:    assetDir,
 			SrcDir:      srcDir,
 			RamBase:     ramBase,
+			Boundaries:  ramBase.Boundaries(),
 			Name:        name,
 			Args:        args,
 			SplatConfig: splatConfig,

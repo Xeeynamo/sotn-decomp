@@ -115,7 +115,8 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	if err != nil {
 		return assets.InfoResult{}, err
 	}
-	gfx, headerDataRange, err := ReadGraphics(r, psx.RamStageBegin, header.Graphics, func(addr psx.Addr) string {
+	boundaries := header.Graphics.Boundaries()
+	gfx, headerDataRange, err := ReadGraphics(r, boundaries.StageBegin, header.Graphics, func(addr psx.Addr) string {
 		return ""
 	})
 	if err != nil {
