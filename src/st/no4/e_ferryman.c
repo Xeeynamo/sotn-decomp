@@ -581,7 +581,133 @@ void func_us_801C6CEC(Entity* self) {
     self->posY.i.hi = prev->posY.i.hi;
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/e_ferryman", func_us_801C6DA8);
+extern u16 D_us_801816B4[];
+extern u8 D_us_801816D4[];
+extern s16 D_us_801816DC[];
+extern s16 D_us_801816F4[];
+
+void func_us_801C6DA8(Entity* self) {
+    u32 scrollX; // sp38
+
+    Primitive* prim; // s0
+    u32 primIndex;   // s1
+    s16 var_s1;      // s1
+    s16 var_s2;      // s2
+    s16 sin;         // s3
+    s16* ptrTwo;     // s4
+    s32 i;           // s5
+    u8* ptr;         // s6
+    s16 cos;         // s7
+    u32 scrollY;     // s8
+
+    scrollX = g_Tilemap.scrollX.i.hi;
+    scrollY = g_Tilemap.scrollY.i.hi;
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 13);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+
+            i = 0;
+            while (prim != NULL) {
+                prim->tpage = 0xF;
+                prim->clut = 0x5F;
+                ptr = D_us_801816D4;
+                ptr += D_us_801816B4[i] * 4;
+                prim->u0 = prim->u2 = *ptr++;
+                prim->u1 = prim->u3 = *ptr++;
+                prim->v0 = prim->v1 = *ptr++;
+                prim->v2 = prim->v3 = *ptr;
+                prim->priority = 0x80;
+                prim->drawMode = DRAW_HIDE;
+                prim = prim->next;
+                i++;
+            }
+            self->rotate = 0x200U;
+        } else {
+            self->step = 0;
+            return;
+        }
+    }
+
+    if (self->ext.et_surfacingWater.unk7C) {
+        if (self->ext.et_surfacingWater.unk7C < 0) {
+            self->ext.et_surfacingWater.unk7E++;
+            self->rotate += 0x10;
+        } else {
+            self->ext.et_surfacingWater.unk7E--;
+            self->rotate -= 0x10;
+        }
+    }
+    self->ext.et_surfacingWater.unk7E &= 0xF;
+    prim = &g_PrimBuf[self->primIndex];
+    i = 0;
+    while (prim != NULL) {
+        if (i < 3) {
+            ptrTwo = &D_us_801816DC[(self->params * 6) + (i * 2)];
+            var_s2 = *ptrTwo++ - scrollX;
+            var_s1 = *ptrTwo - scrollY;
+            if (self->params) {
+                sin = (rsin(-self->rotate) * 0x1A) >> 0xC;
+                cos = (rcos(-self->rotate) * 0x1A) >> 0xC;
+            } else {
+                sin = (rsin(self->rotate) * 0x1A) >> 0xC;
+                cos = (rcos(self->rotate) * 0x1A) >> 0xC;
+            }
+
+            prim->x0 = var_s2 - cos;
+            prim->x1 = var_s2 + sin;
+            prim->x2 = var_s2 - sin;
+            prim->x3 = var_s2 + cos;
+            prim->y0 = var_s1 - sin;
+            prim->y1 = var_s1 - cos;
+            prim->y2 = var_s1 + cos;
+            prim->y3 = var_s1 + sin;
+            prim->drawMode = DRAW_UNK02;
+            prim = prim->next;
+        } else {
+            ptrTwo = &D_us_801816F4[(self->params * 0x1E) + ((i - 3) * 3)];
+            sin = *ptrTwo++;
+            var_s2 = *ptrTwo++ - scrollX;
+            var_s1 = *ptrTwo - scrollY;
+            switch (sin) {
+            case 0:
+                prim->x0 = prim->x2 = var_s2 - 4;
+                prim->x1 = prim->x3 = var_s2 + 4;
+                var_s1 += self->ext.et_surfacingWater.unk7E;
+                prim->y0 = prim->y1 = var_s1;
+                prim->y2 = prim->y3 = var_s1 + 0x60;
+                break;
+            case 1:
+                prim->x0 = prim->x2 = var_s2 - 4;
+                prim->x1 = prim->x3 = var_s2 + 4;
+                var_s1 -= self->ext.et_surfacingWater.unk7E;
+                prim->y0 = prim->y1 = var_s1;
+                prim->y2 = prim->y3 = var_s1 + 0x60;
+                break;
+            case 2:
+                var_s2 -= self->ext.et_surfacingWater.unk7E;
+                prim->x0 = prim->x1 = var_s2;
+                prim->x2 = prim->x3 = var_s2 + 0x60;
+                prim->y1 = prim->y3 = var_s1 - 4;
+                prim->y0 = prim->y2 = var_s1 + 4;
+                break;
+            case 3:
+                var_s2 += self->ext.et_surfacingWater.unk7E;
+                prim->x0 = prim->x1 = var_s2;
+                prim->x2 = prim->x3 = var_s2 + 0x60;
+                prim->y1 = prim->y3 = var_s1 - 4;
+                prim->y0 = prim->y2 = var_s1 + 4;
+                break;
+            }
+            prim->drawMode = DRAW_UNK02;
+            prim = prim->next;
+        }
+        i += 1;
+    }
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/e_ferryman", func_us_801C7204);
 
