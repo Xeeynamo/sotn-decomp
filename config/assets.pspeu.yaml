@@ -279,3 +279,14 @@ files:
           - [0x1BFB0, cutscene, cutscene_data_ge]
           - [0x1C298, cutscene, cutscene_data_en]
           - [0x1C500, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/wrp.bin
+    asset_path: assets/st/wrp
+    src_path: src/st/wrp_psp
+    splat_config_path: config/splat.pspeu.stwrp.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0xF5F8, layers, layers]
+          - [0xF6E8, skip]

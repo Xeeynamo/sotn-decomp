@@ -31,7 +31,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err != nil {
 		return fmt.Errorf("unable to gather all the tile maps: %w", err)
 	}
-	tileDefs, _, err := readAllTiledefs(r, e.RamBase, l)
+	tileDefs, err := readAllTiledefs(r, e.RamBase, l)
 	if err != nil {
 		return fmt.Errorf("unable to gather all the tile defs: %w", err)
 	}
