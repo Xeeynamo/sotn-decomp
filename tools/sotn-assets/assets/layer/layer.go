@@ -89,8 +89,9 @@ func readLayers(r io.ReadSeeker, off, baseAddr psx.Addr) ([]roomLayers, datarang
 		if err := binary.Read(r, binary.LittleEndian, layersOff); err != nil {
 			return nil, datarange.DataRange{}, err
 		}
+		// we do not check for `layersOff[1] >= off`, as on PSP this falls to BSS
 		if layersOff[0] <= baseAddr || layersOff[0] >= off ||
-			layersOff[1] <= baseAddr || layersOff[1] >= off {
+			layersOff[1] <= baseAddr {
 			break
 		}
 		layerOffsets = append(layerOffsets, layersOff...)
@@ -104,6 +105,11 @@ func readLayers(r io.ReadSeeker, off, baseAddr psx.Addr) ([]roomLayers, datarang
 			continue
 		}
 
+		if layerOffset >= off {
+			// assumes this is a layer_empty falling to BSS
+			pool[layerOffset] = nil
+			continue
+		}
 		if err := layerOffset.MoveFile(r, baseAddr); err != nil {
 			return nil, datarange.DataRange{}, err
 		}
