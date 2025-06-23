@@ -21,18 +21,17 @@ var Handler = &handler{}
 func (h *handler) Name() string { return "layout" }
 
 func (h *handler) Extract(e assets.ExtractArgs) error {
-	ovlName := filepath.Base(e.AssetDir)
 	r := bytes.NewReader(e.Data)
 	layoutOff, err := layoutOffset(r, e.RamBase)
 	if err != nil {
 		return err
 	}
-	layouts, _, err := readEntityLayout(r, ovlName, layoutOff, e.RamBase, entryCount, true)
+	layouts, _, err := readEntityLayout(r, e.OvlName, layoutOff, e.RamBase, entryCount, true)
 	return util.WriteJsonFile(assetPath(e.AssetDir, e.Name), layouts)
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
-	return buildEntityLayouts(assetPath(e.AssetDir, e.Name), e.SrcDir)
+	return buildEntityLayouts(assetPath(e.AssetDir, e.Name), e.SrcDir, e.OvlName)
 }
 
 func assetPath(dir, name string) string {

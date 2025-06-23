@@ -48,7 +48,6 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
-	ovlName := filepath.Base(e.SrcDir)
 	data, err := os.ReadFile(assetPath(e.AssetDir, e.Name))
 	if err != nil {
 		return err
@@ -62,7 +61,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	sb := strings.Builder{}
 	sb.WriteString("// clang-format off\n")
 	for i, bank := range gfxBanks.Banks {
-		bankSymbolNames[i] = fmt.Sprintf("%s_gfxbank_%d", ovlName, i)
+		bankSymbolNames[i] = fmt.Sprintf("%s_gfxbank_%d", e.OvlName, i)
 		for _, e := range bank.Entries {
 			if e.isEmpty() {
 				continue

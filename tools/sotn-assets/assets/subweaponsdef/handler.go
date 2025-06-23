@@ -76,12 +76,11 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err != nil || len(elementFields) == 0 {
 		return fmt.Errorf("fetch enum %s: %w", "Elements", err)
 	}
-	ovlName := filepath.Base(e.AssetDir)
-	weaponFields, err := fetchEnum(e.SrcDir, ovlName, e.Args[0])
+	weaponFields, err := fetchEnum(e.SrcDir, e.OvlName, e.Args[0])
 	if err != nil || len(weaponFields) == 0 {
 		return fmt.Errorf("fetch enum %s: %w", e.Args[0], err)
 	}
-	blueprintFields, err := fetchEnum(e.SrcDir, ovlName, e.Args[1])
+	blueprintFields, err := fetchEnum(e.SrcDir, e.OvlName, e.Args[1])
 	if err != nil || len(blueprintFields) == 0 {
 		return fmt.Errorf("fetch enum %s: %w", e.Args[1], err)
 	}

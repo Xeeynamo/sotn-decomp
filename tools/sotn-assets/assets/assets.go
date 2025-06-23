@@ -14,6 +14,7 @@ type ExtractArgs struct {
 	SrcDir      string
 	Name        string
 	Args        []string
+	OvlName     string
 	SplatConfig *splat.Config
 	RamBase     psx.Addr
 	Boundaries  psx.Offsets
@@ -28,6 +29,7 @@ type BuildArgs struct {
 	SrcDir   string
 	Name     string
 	Args     []string
+	OvlName  string
 }
 type Builder interface {
 	Build(a BuildArgs) error
