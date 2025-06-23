@@ -7,7 +7,6 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/tiledef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"path/filepath"
 	"strconv"
@@ -20,12 +19,12 @@ var Handler = &handler{}
 func (h *handler) Name() string { return "layers" }
 
 func (h *handler) Extract(e assets.ExtractArgs) error {
-	r := bytes.NewReader(e.Data)
-	header, err := sotn.ReadStageHeader(r)
+	roomLayersOffset, err := findRoomsLayerArray(e)
 	if err != nil {
-		return err
+		return fmt.Errorf("unable to find the start of OVL_EXPORT(rooms_layers): %w", err)
 	}
-	l, _, err := readLayers(r, header.Layers, e.RamBase)
+	r := bytes.NewReader(e.Data)
+	l, _, err := readLayers(r, roomLayersOffset, e.RamBase)
 	if err != nil {
 		return fmt.Errorf("unable to read layers: %w", err)
 	}
@@ -97,62 +96,33 @@ func (h *handler) Build(e assets.BuildArgs) error {
 }
 
 func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
-	r := bytes.NewReader(a.StageData)
-	header, err := sotn.ReadStageHeader(r)
-	if err != nil {
-		return assets.InfoResult{}, err
-	}
-	boundaries := header.Layers.Boundaries()
-	l, layersRange, err := readLayers(r, header.Layers, boundaries.StageBegin)
-	if err != nil {
-		return assets.InfoResult{}, fmt.Errorf("unable to read layers: %w", err)
-	}
-	_, tileMapsRange, err := readAllTileMaps(r, boundaries.StageBegin, l)
-	if err != nil {
-		return assets.InfoResult{}, fmt.Errorf("unable to gather all the tile maps: %w", err)
-	}
-	tileDefs, tileDefsRange, err := readAllTiledefs(r, boundaries.StageBegin, l)
-	if err != nil {
-		return assets.InfoResult{}, fmt.Errorf("unable to gather all the tile defs: %w", err)
-	}
+	// this will not work anymore. Ignore.
+	return assets.InfoResult{}, nil
+}
 
-	// check for unused tile defs (CEN has one)
-	for tileMapsRange.End() < tileDefsRange.Begin() {
-		offset := tileDefsRange.Begin().Sum(-0x10)
-		unusedTileDef, unusedTileDefRange, err := tiledef.Read(r, offset, boundaries.StageBegin)
-		if err != nil {
-			return assets.InfoResult{}, fmt.Errorf("there is a gap between tileMaps and tileDefs: %w", err)
+func findRoomsLayerArray(e assets.ExtractArgs) (psx.Addr, error) {
+	// format is:
+	//   LayerDef layer_empty = {a bunch of nulls}
+	//   LayerDef layers[???] = {...}
+	//   RoomDef OVL_EXPORT(rooms_layers)[???] = {...}
+	// we need to find 'rooms_layers' first. This is done by assuming each entry
+	// is a 0x10 long 'LayerDef'. We need to save the offset of each entry.
+	// As soon as we read an entry where the address points to one of the LayerDef,
+	// we can assume that is the 'rooms_layers' we've been looking for.
+	//
+	r := bytes.NewReader(e.Data)
+	layersAddr := map[psx.Addr]struct{}{}
+	for cur := e.Start; cur < e.End; cur += 4 {
+		offset := e.RamBase.Sum(cur)
+		if err := offset.MoveFile(r, e.RamBase); err != nil {
+			return 0, err
 		}
-		tileDefs[offset] = unusedTileDef
-		tileDefsRange = datarange.MergeDataRanges([]datarange.DataRange{tileDefsRange, unusedTileDefRange})
+		if _, isLayerAddr := layersAddr[psx.ReadAddr(r)]; isLayerAddr == true {
+			return offset, nil
+		}
+		layersAddr[offset] = struct{}{}
 	}
-
-	return assets.InfoResult{
-		AssetEntries: []assets.InfoAssetEntry{
-			{
-				DataRange: layersRange,
-				Kind:      "layers",
-				Name:      "layers",
-			},
-		},
-		SplatEntries: []assets.InfoSplatEntry{
-			{
-				DataRange: layersRange,
-				Name:      "header",
-				Comment:   "layers",
-			},
-			{
-				DataRange: tileMapsRange,
-				Name:      "tile_data",
-				Comment:   "tile data",
-			},
-			{
-				DataRange: tileDefsRange,
-				Name:      "tile_data",
-				Comment:   "tile definitions",
-			},
-		},
-	}, nil
+	return 0, fmt.Errorf("EOF")
 }
 
 func tilemapFileName(ovl string, n int) string {
