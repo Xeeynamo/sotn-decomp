@@ -1,3 +1,3 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../wrp/wrp.h"
-#include "gen/layers.h"
+#include "../wrp/gen/layers.h"

@@ -281,7 +281,7 @@ files:
           - [0x1C500, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/wrp.bin
     asset_path: assets/st/wrp
-    src_path: src/st/wrp_psp
+    src_path: src/st/wrp
     splat_config_path: config/splat.pspeu.stwrp.yaml
     segments:
       - start: 0x80
