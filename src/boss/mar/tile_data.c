@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-#include "gen/tilemap_05300.h"
-#include "gen/tilemap_05500.h"
-#include "gen/tiledef_09700.h"
+#include "gen/mar_tilemap_0.h"
+#include "gen/mar_tilemap_1.h"
+#include "gen/mar_tiledef_0.h"

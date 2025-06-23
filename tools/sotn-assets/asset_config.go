@@ -2,6 +2,10 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+	"strconv"
+
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/binary"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/blueprintsdef"
@@ -21,13 +25,12 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritesheet"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/subweaponsdef"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/tiledef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/xamusicconfig"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"golang.org/x/sync/errgroup"
 	"gopkg.in/yaml.v2"
-	"os"
-	"strconv"
 )
 
 type assetSegmentEntry struct {
@@ -69,6 +72,7 @@ var handlers = func() map[string]assets.Handler {
 		spritebanks.Handler,
 		spriteset.Handler,
 		spritesheet.Handler,
+		tiledef.Handler,
 		subweaponsdef.Handler,
 		xamusicconfig.Handler,
 	} {
@@ -138,6 +142,7 @@ func enqueueExtractAssetEntry(
 			Boundaries:  ramBase.Boundaries(),
 			Name:        name,
 			Args:        args,
+			OvlName:     filepath.Base(assetDir),
 			SplatConfig: splatConfig,
 			Symbol:      symbol,
 		}); err != nil {
@@ -218,6 +223,7 @@ func enqueueBuildAssetEntry(
 			SrcDir:   sourceDir,
 			Name:     name,
 			Args:     args,
+			OvlName:  filepath.Base(assetDir),
 		})
 		if err != nil {
 			return fmt.Errorf("unable to build asset %q at %q: %v", name, assetDir, err)
