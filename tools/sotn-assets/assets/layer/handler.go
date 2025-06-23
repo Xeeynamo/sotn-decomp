@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/tiledef"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"path/filepath"
@@ -28,24 +27,13 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err != nil {
 		return fmt.Errorf("unable to read layers: %w", err)
 	}
-	tileMaps, tileMapsRange, err := readAllTileMaps(r, e.RamBase, l)
+	tileMaps, _, err := readAllTileMaps(r, e.RamBase, l)
 	if err != nil {
 		return fmt.Errorf("unable to gather all the tile maps: %w", err)
 	}
-	tileDefs, tileDefsRange, err := readAllTiledefs(r, e.RamBase, l)
+	tileDefs, _, err := readAllTiledefs(r, e.RamBase, l)
 	if err != nil {
 		return fmt.Errorf("unable to gather all the tile defs: %w", err)
-	}
-
-	// check for unused tile defs (CEN has one)
-	for tileMapsRange.End() < tileDefsRange.Begin() {
-		offset := tileDefsRange.Begin().Sum(-0x10)
-		unusedTileDef, unusedTileDefRange, err := tiledef.Read(r, offset, e.RamBase)
-		if err != nil {
-			return fmt.Errorf("there is a gap between tileMaps and tileDefs: %w", err)
-		}
-		tileDefs[offset] = unusedTileDef
-		tileDefsRange = datarange.MergeDataRanges([]datarange.DataRange{tileDefsRange, unusedTileDefRange})
 	}
 
 	tilemapAddrs := map[psx.Addr]struct{}{}

@@ -124,7 +124,8 @@ files:
           - [0x698C, palette, e_maria_cen_p, 16]
           - [0x69AC, palette, e_elevator_cen_p, 16]
           - [0x69EC, skip] # tile data
-          - [0x81EC, skip] # tile definitions
+          - [0x81EC, tiledef, unused]
+          - [0x85FC, skip] # the other used tile definition
           - [0xC60C, skip] # sprites
   - target: disks/us/ST/CHI/CHI.BIN
     asset_path: assets/st/chi
@@ -205,7 +206,8 @@ files:
           - [0xB348, palette, D_8018B348, 16]
           - [0xB448, palette, D_8018B448, 16] # unused
           - [0xB548, skip] # tile data
-          - [0xBD48, skip] # tile definitions
+          - [0xBD48, tiledef, unused]
+          - [0xC158, skip] # the other used tile definition
           - [0x10168, skip] # sprites
   - target: disks/us/ST/LIB/LIB.BIN
     asset_path: assets/st/lib

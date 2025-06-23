@@ -122,6 +122,8 @@ files:
           - [0x69AC, palette, e_maria_cen_p, 16]
           - [0x69CC, palette, e_elevator_cen_p, 16]
           - [0x6A0C, skip] # tile data
+          - [0x820C, tiledef, unused]
+          - [0x861C, skip] # the other used tile definition
           - [0xC62C, skip] # sprites
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/wrp.bin
     asset_path: assets/st/wrp

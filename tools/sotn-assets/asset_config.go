@@ -25,6 +25,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spriteset"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/spritesheet"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/subweaponsdef"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/tiledef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/xamusicconfig"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
@@ -71,6 +72,7 @@ var handlers = func() map[string]assets.Handler {
 		spritebanks.Handler,
 		spriteset.Handler,
 		spritesheet.Handler,
+		tiledef.Handler,
 		subweaponsdef.Handler,
 		xamusicconfig.Handler,
 	} {

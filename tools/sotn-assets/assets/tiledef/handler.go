@@ -36,7 +36,7 @@ var Handler = &handler{}
 func (h *handler) Name() string { return "tiledef" }
 
 func (h *handler) Extract(e assets.ExtractArgs) error {
-	r := bytes.NewReader(e.Data[e.Start:e.End])
+	r := bytes.NewReader(e.Data)
 	td, _, err := Read(r, e.RamBase.Sum(e.End-0x10), e.RamBase)
 	if err != nil {
 		return err

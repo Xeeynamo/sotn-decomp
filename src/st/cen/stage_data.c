@@ -56,5 +56,5 @@ u16 e_elevator_cen_p[] = {
 #include "gen/cen_tilemap_0.h"
 #include "gen/cen_tilemap_1.h"
 #include "gen/cen_tilemap_2.h"
+#include "gen/cen_tiledef_unused.h"
 #include "gen/cen_tiledef_0.h"
-#include "gen/cen_tiledef_1.h"

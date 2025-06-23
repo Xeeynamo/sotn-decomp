@@ -177,17 +177,6 @@ func buildLayers(inputDir, fileName, outputDir, ovlName string) error {
 		}
 	}
 
-	// use unused tiledefs
-	files, err := os.ReadDir(inputDir)
-	if err != nil {
-		return err
-	}
-	for _, file := range files {
-		if !file.IsDir() && strings.HasPrefix(file.Name(), ovlName+"_tiledef_") && strings.HasSuffix(file.Name(), ".json") {
-			tiledefs[file.Name()] = struct{}{}
-		}
-	}
-
 	eg := errgroup.Group{}
 	for name := range tilemaps {
 		fullPath := filepath.Join(filepath.Dir(fileName), name)

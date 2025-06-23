@@ -73,5 +73,5 @@ u16 D_8018B448[] = {
 
 #include "gen/dre_tilemap_0.h"
 #include "gen/dre_tilemap_1.h"
+#include "gen/dre_tiledef_unused.h"
 #include "gen/dre_tiledef_0.h"
-#include "gen/dre_tiledef_1.h"
