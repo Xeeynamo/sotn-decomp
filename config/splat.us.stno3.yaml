@@ -38,9 +38,10 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x30, .data, header2]
-      - [0x1C4, .data, header2] # layers
-      - [0x5A4, .data, header2] # GfxBanks
+      - [0x30, .data, sprite_banks]
+      - [0x90, .data, palette_def]
+      - [0x1C4, .data, layers]
+      - [0x5A4, .data, graphics_banks] # GfxBanks
       - [0x77C, .data, gen/e_laydef] # layout entries header
       - [0x924, .data, e_init]
       - [0xBB4, .data, background_block_init]
@@ -79,8 +80,8 @@ segments:
       - [0x3CC4, .data, gen/rooms]
       - [0x3DC8, .data, gen/e_layout] # layout entries data
       - [0x4CE0, .data, cutscene_data]
-      - [0x4E60, data]
       - [0x4E74, .data, stage_data]
+      - [0x18838, .data, tilemaps]
       - [0x2EA68, .data, gen/sprites]
       - [0x373E0, .rodata, e_castle_door]
       - [0x37400, .rodata, e_stairway]

@@ -283,7 +283,7 @@ void EntityFireWarg(Entity* self) {
         CreateEntityFromCurrentEntity(E_ID_30, ent_s0);
         ent_s0->unk5C = self;
         if (self->params) {
-            InitializeEntity(D_80180B30);
+            InitializeEntity(g_EInitFireWarg2);
             self->animCurFrame = 0x32;
             // The self + 2 entity is an E_ID_31, or EntityUnkId31
             ent_s4 = self + 2;
@@ -294,7 +294,7 @@ void EntityFireWarg(Entity* self) {
             ent_s0->unk5C = self;
             ent_s0->unk60 = self;
         } else {
-            InitializeEntity(D_80180B24);
+            InitializeEntity(g_EInitFireWarg1);
         }
         ent_s0->unk60 = self;
         self->facingLeft = (GetSideToPlayer() ^ 1) & 1;
@@ -838,13 +838,13 @@ void EntityUnkId30(Entity* self) {
     entity = self - 1;
     if (!self->step) {
         if (self->params) {
-            InitializeEntity(D_80180B30);
+            InitializeEntity(g_EInitFireWarg2);
             self->hitboxState = 0;
         } else {
             if (entity->params) {
-                InitializeEntity(D_80180B30);
+                InitializeEntity(g_EInitFireWarg2);
             } else {
-                InitializeEntity(D_80180B24);
+                InitializeEntity(g_EInitFireWarg1);
             }
         }
         self->animCurFrame = 0;
@@ -906,7 +906,7 @@ void EntityUnkId31(Entity* self) {
     s16 i;
 
     if (!self->step) {
-        InitializeEntity(D_80180B24);
+        InitializeEntity(g_EInitFireWarg1);
         self->zPriority++;
         otherEnt = self + 1;
         CreateEntityFromCurrentEntity(E_ID_30, otherEnt);
@@ -1047,7 +1047,7 @@ void EntityExplosion3(Entity* entity) {
     if (!entity->step) {
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
-            InitializeEntity(D_80180B3C);
+            InitializeEntity(g_EInitFireWarg3);
             entity->flags |= FLAG_UNK_2000;
             entity->hitboxState = 0;
             prim = &g_PrimBuf[primIndex];
@@ -1209,7 +1209,7 @@ void EntityFireWargWaveAttack(Entity* self) {
         PlaySfxPositional(SFX_FIREBALL_SHOT_A);
         CreateEntityFromCurrentEntity(E_ID_2F, newEntity);
         newEntity->facingLeft = self->facingLeft;
-        InitializeEntity(D_80180B3C);
+        InitializeEntity(g_EInitFireWarg3);
 
         self->ext.timer.t = 8;
         self->hitboxWidth = 8;
@@ -1344,7 +1344,7 @@ void EntityUnkId2F(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_80180B3C);
+        InitializeEntity(g_EInitFireWarg3);
         self->attack /= 2;
         self->ext.timer.t = 8;
         self->hitboxWidth = 4;
