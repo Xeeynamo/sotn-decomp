@@ -233,12 +233,7 @@ func writeStaticU8(w io.Writer, fileName string, symbol string) error {
 	var sb strings.Builder
 	sb.WriteString("// clang-format off\n")
 	sb.WriteString(fmt.Sprintf("static unsigned char %s[] = {\n", symbol))
-	for i := 0; i < len(data); i++ {
-		sb.WriteString(fmt.Sprintf("0x%02X,", data[i]))
-		if (i & 15) == 15 {
-			sb.WriteString("\n")
-		}
-	}
+	util.WriteBytesAsHex(&sb, data)
 	sb.WriteString("};\n")
 
 	_, err = w.Write([]byte(sb.String()))

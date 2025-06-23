@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"slices"
 	"strings"
+	"unsafe"
 
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
@@ -317,12 +318,8 @@ func buildGenericU16(fileName string, symbol string, outputDir string) error {
 	var sb strings.Builder
 	sb.WriteString("// clang-format off\n")
 	sb.WriteString(fmt.Sprintf("u16 %s[] = {\n", symbol))
-	for i := 0; i < len(data); i += 2 {
-		sb.WriteString(fmt.Sprintf("0x%02X%02X,", data[i+1], data[i]))
-		if (i & 31) == 30 {
-			sb.WriteString("\n")
-		}
-	}
+	u16Data := (*[1 << 30]uint16)(unsafe.Pointer(&data[0]))[:len(data)/2]
+	util.WriteWordsAsHex(&sb, u16Data)
 	sb.WriteString("};\n")
 
 	return util.WriteFile(filepath.Join(outputDir, fmt.Sprintf("gen/%s.h", symbol)), []byte(sb.String()))
