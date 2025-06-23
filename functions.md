@@ -1388,7 +1388,7 @@
 | dra   | CheckGravityBootsInput                   |      152 |         28 |        |                                 |       |
 | no3   | EntityDistantBackgroundTrees             |      153 |         14 |        | https://decomp.me/scratch/ZWE1R | 0.999 |
 | maria | func_pspeu_092A7950                      |      153 |         16 |        | https://decomp.me/scratch/Me93h | 0.997 |
-| no4   | func_pspeu_09242AD0                      |      153 |         23 |        | https://decomp.me/scratch/CdEjV | 0.999 |
+| no4   | func_pspeu_09242AD0                      |      153 |         23 |        | https://decomp.me/scratch/8FlJD | 1.0   |
 | dra   | func_80118970                            |      153 |         25 |        | https://decomp.me/scratch/npQE7 | 0.998 |
 | dra   | UnknownEntId49                           |      154 |         11 |        |                                 |       |
 | ric   | RicEntityArmBrandishWhip                 |      154 |         15 |        |                                 |       |
@@ -1613,7 +1613,7 @@
 | ric   | RicStepSlide                             |      256 |         45 |        |                                 |       |
 | ric   | RicEntityHitByHoly                       |      257 |         29 |        |                                 |       |
 |       | FindValidTarget                          |      257 |         36 |        | https://decomp.me/scratch/Klemw | 1.0   |
-| no4   | func_pspeu_09241E38                      |      258 |         19 |        | https://decomp.me/scratch/9g4ZO | 0.986 |
+| no4   | func_pspeu_09241E38                      |      258 |         19 |        | https://decomp.me/scratch/Vhq1P | 1.0   |
 | no4   | func_pspeu_09238E18                      |      258 |         30 |        | https://decomp.me/scratch/ab0nd | 0.997 |
 | dra   | func_800E414C                            |      258 |         36 |        | https://decomp.me/scratch/yLuWA | 0.994 |
 | dai   | func_us_801C3164                         |      260 |         36 |        |                                 |       |
@@ -1730,7 +1730,7 @@
 | no4   | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
 | st0   | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
 | wrp   | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
-| dai   | EntityUnkBreakable                       |      340 |         49 |        | https://decomp.me/scratch/OkZQf | 0.628 |
+| dai   | EntityUnkBreakable                       |      340 |         49 |        | https://decomp.me/scratch/OkZQf | 0.993 |
 | dra   | func_80123B40                            |      342 |         25 |        |                                 |       |
 | maria | func_pspeu_092AB1C0                      |      344 |         32 |        | https://decomp.me/scratch/zL9P3 | 0.999 |
 | dra   | func_800FE044                            |      345 |         35 |        | https://decomp.me/scratch/ld2iy | 0.99  |
