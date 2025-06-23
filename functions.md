@@ -1929,7 +1929,7 @@
 | st0   | EntityEquipItemDrop                      |      612 |         62 | Yes    | https://decomp.me/scratch/h5Klh | 0.997 |
 | dra   | EntityBatEcho                            |      618 |         43 |        | https://decomp.me/scratch/90rWo | 0.998 |
 | dra   | func_800EB758                            |      619 |         30 |        | https://decomp.me/scratch/i7kpN | 1.0   |
-| no4   | func_pspeu_0923BB30                      |      621 |         50 |        | https://decomp.me/scratch/MtIyy | 0.688 |
+| no4   | func_pspeu_0923BB30                      |      621 |         50 |        | https://decomp.me/scratch/MtIyy | 0.696 |
 | ric   | RicEntityAguneaLightning                 |      624 |         46 | Yes    | https://decomp.me/scratch/dgUhj | 1.0   |
 | lib   | func_psp_0923CFC0                        |      630 |        109 | Yes    | https://decomp.me/scratch/QqPkx | 0.997 |
 | st0   | func_801BD8F0                            |      634 |         59 | Yes    | https://decomp.me/scratch/oOt9S | 0.997 |
