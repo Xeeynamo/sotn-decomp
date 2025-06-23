@@ -47,22 +47,35 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		tileDefsRange = datarange.MergeDataRanges([]datarange.DataRange{tileDefsRange, unusedTileDefRange})
 	}
 
-	for _, layerData := range l { // cheap solution to "adjust" the addresses
+	tilemapAddrs := map[psx.Addr]struct{}{}
+	tiledefAddrs := map[psx.Addr]struct{}{}
+	for _, layerData := range l {
 		if layerData.fg != nil {
-			layerData.fg.Data = psx.Addr(layerData.fg.Data.Real(e.RamBase))
-			layerData.fg.Tiledef = psx.Addr(layerData.fg.Tiledef.Real(e.RamBase))
+			tilemapAddrs[layerData.fg.Data] = struct{}{}
+			tiledefAddrs[layerData.fg.Tiledef] = struct{}{}
 		}
 		if layerData.bg != nil {
-			layerData.bg.Data = psx.Addr(layerData.bg.Data.Real(e.RamBase))
-			layerData.bg.Tiledef = psx.Addr(layerData.bg.Tiledef.Real(e.RamBase))
+			tilemapAddrs[layerData.bg.Data] = struct{}{}
+			tiledefAddrs[layerData.bg.Tiledef] = struct{}{}
 		}
 	}
-	if err := util.WriteJsonFile(filepath.Join(e.AssetDir, "layers.json"), l); err != nil {
+	addrPool := util.MergeMaps(util.SortedIndexMap(tileMaps), util.SortedIndexMap(tileDefs))
+	roomLayers := make([]map[string]layerUnpacked, len(l))
+	for i, layerData := range l {
+		roomLayers[i] = make(map[string]layerUnpacked)
+		if layerData.fg != nil {
+			roomLayers[i]["fg"] = layerData.fg.unpack(e.OvlName, addrPool)
+		}
+		if layerData.bg != nil {
+			roomLayers[i]["bg"] = layerData.bg.unpack(e.OvlName, addrPool)
+		}
+	}
+	if err := util.WriteJsonFile(filepath.Join(e.AssetDir, "layers.json"), roomLayers); err != nil {
 		return fmt.Errorf("unable to create layers file: %w", err)
 	}
 
 	for offset, data := range tileMaps {
-		fileName := filepath.Join(e.AssetDir, tilemapFileName(offset.Real(e.RamBase)))
+		fileName := filepath.Join(e.AssetDir, tilemapFileName(e.OvlName, addrPool[offset]))
 		if err := util.WriteFile(fileName, data); err != nil {
 			return fmt.Errorf("unable to create %q: %w", fileName, err)
 		}
@@ -88,7 +101,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		if err := util.WriteFile(filepath.Join(e.AssetDir, defs.Collisions), tileDefsData.Cols); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Collisions, err)
 		}
-		if err := util.WriteJsonFile(filepath.Join(e.AssetDir, tiledefFileName(real)), defs); err != nil {
+		if err := util.WriteJsonFile(filepath.Join(e.AssetDir, tiledefFileName(e.OvlName, addrPool[offset])), defs); err != nil {
 			return fmt.Errorf("unable to create layers file: %w", err)
 		}
 	}
@@ -96,7 +109,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
-	return buildLayers(e.AssetDir, filepath.Join(e.AssetDir, "layers.json"), e.SrcDir)
+	return buildLayers(e.AssetDir, filepath.Join(e.AssetDir, "layers.json"), e.SrcDir, e.OvlName)
 }
 
 func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
@@ -158,26 +171,26 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	}, nil
 }
 
-func tilemapFileName(off int) string {
-	return fmt.Sprintf("tilemap_%05X.bin", uint32(off&0x7FFFFFFF))
+func tilemapFileName(ovl string, n int) string {
+	return fmt.Sprintf("%s_tilemap_%d.bin", ovl, n)
 }
 
-func tiledefFileName(off int) string {
-	return fmt.Sprintf("tiledef_%05X.json", uint32(off&0x7FFFFFFF))
+func tiledefFileName(ovl string, n int) string {
+	return fmt.Sprintf("%s_tiledef_%d.json", ovl, n)
 }
 
-func tiledefIndicesFileName(off int) string {
-	return fmt.Sprintf("tiledef_%05X_tiles.bin", uint32(off&0x7FFFFFFF))
+func tiledefIndicesFileName(n int) string {
+	return fmt.Sprintf("tiledef_%05X_tiles.bin", n)
 }
 
-func tiledefPagesFileName(off int) string {
-	return fmt.Sprintf("tiledef_%05X_pages.bin", uint32(off&0x7FFFFFFF))
+func tiledefPagesFileName(n int) string {
+	return fmt.Sprintf("tiledef_%05X_pages.bin", n)
 }
 
-func tiledefClutsFileName(off int) string {
-	return fmt.Sprintf("tiledef_%05X_cluts.bin", uint32(off&0x7FFFFFFF))
+func tiledefClutsFileName(n int) string {
+	return fmt.Sprintf("tiledef_%05X_cluts.bin", n)
 }
 
-func tiledefCollisionsFileName(off int) string {
-	return fmt.Sprintf("tiledef_%05X_cols.bin", uint32(off&0x7FFFFFFF))
+func tiledefCollisionsFileName(n int) string {
+	return fmt.Sprintf("tiledef_%05X_cols.bin", n)
 }

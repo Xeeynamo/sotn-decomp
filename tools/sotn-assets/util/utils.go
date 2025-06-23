@@ -4,10 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"golang.org/x/exp/constraints"
 	"image/color"
 	"os"
 	"path/filepath"
 	"slices"
+	"sort"
 	"strconv"
 	"strings"
 )
@@ -26,6 +28,32 @@ func ReverseMap[K comparable, V comparable](m map[K]V) map[V]K {
 		reversed[v] = k
 	}
 	return reversed
+}
+
+func MergeMaps[K comparable, V any](map1, map2 map[K]V) map[K]V {
+	merged := make(map[K]V, len(map1)+len(map2))
+	for k, v := range map1 {
+		merged[k] = v
+	}
+	for k, v := range map2 {
+		merged[k] = v
+	}
+	return merged
+}
+
+func SortedIndexMap[K constraints.Ordered, V any](set map[K]V) map[K]int {
+	keys := make([]K, 0, len(set))
+	for k := range set {
+		keys = append(keys, k)
+	}
+	sort.Slice(keys, func(i, j int) bool {
+		return keys[i] < keys[j]
+	})
+	indexMap := make(map[K]int, len(keys))
+	for i, k := range keys {
+		indexMap[k] = i
+	}
+	return indexMap
 }
 
 func MinBy[T any](slice []T, getter func(T) int) (max int) {

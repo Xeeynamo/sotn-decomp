@@ -55,10 +55,10 @@ func (l *layerDef) tilemapFileSize() int {
 	return w * h * 512
 }
 
-func (l *layerDef) unpack() layerUnpacked {
+func (l *layerDef) unpack(ovl string, addrPool map[psx.Addr]int) layerUnpacked {
 	return layerUnpacked{
-		Data:          tilemapFileName(int(l.Data)),
-		Tiledef:       tiledefFileName(int(l.Tiledef)),
+		Data:          tilemapFileName(ovl, addrPool[l.Data]),
+		Tiledef:       tiledefFileName(ovl, addrPool[l.Tiledef]),
 		Left:          int((l.PackedInfo >> 0) & 0x3F),
 		Top:           int((l.PackedInfo >> 6) & 0x3F),
 		Right:         int((l.PackedInfo >> 12) & 0x3F),
@@ -71,17 +71,6 @@ func (l *layerDef) unpack() layerUnpacked {
 		ZPriority:     int(l.ZPriority),
 		Flags:         int(l.Flags),
 	}
-}
-
-func (r roomLayers) MarshalJSON() ([]byte, error) {
-	m := map[string]interface{}{}
-	if r.fg != nil {
-		m["fg"] = r.fg.unpack()
-	}
-	if r.bg != nil {
-		m["bg"] = r.bg.unpack()
-	}
-	return json.Marshal(m)
 }
 
 func readLayers(r io.ReadSeeker, off, baseAddr psx.Addr) ([]roomLayers, datarange.DataRange, error) {
@@ -138,7 +127,7 @@ func readLayers(r io.ReadSeeker, off, baseAddr psx.Addr) ([]roomLayers, datarang
 	return roomsLayers, datarange.New(slices.Min(layerOffsets), off.Sum(count*8)), nil
 }
 
-func buildLayers(inputDir string, fileName string, outputDir string) error {
+func buildLayers(inputDir, fileName, outputDir, ovlName string) error {
 	getHash := func(l layerUnpacked) string {
 		return fmt.Sprintf("%s-%s-%d-%d-%d-%d", l.Data, l.Tiledef, l.Left, l.Top, l.Right, l.Bottom)
 	}
@@ -186,7 +175,7 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 		return err
 	}
 	for _, file := range files {
-		if !file.IsDir() && strings.HasPrefix(file.Name(), "tiledef_") && strings.HasSuffix(file.Name(), ".json") {
+		if !file.IsDir() && strings.HasPrefix(file.Name(), ovlName+"_tiledef_") && strings.HasSuffix(file.Name(), ".json") {
 			tiledefs[file.Name()] = struct{}{}
 		}
 	}
