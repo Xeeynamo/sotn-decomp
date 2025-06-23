@@ -4,11 +4,13 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/tiledef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"path/filepath"
+	"strconv"
 )
 
 type handler struct{}
@@ -39,7 +41,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	// check for unused tile defs (CEN has one)
 	for tileMapsRange.End() < tileDefsRange.Begin() {
 		offset := tileDefsRange.Begin().Sum(-0x10)
-		unusedTileDef, unusedTileDefRange, err := readTiledef(r, offset, e.RamBase)
+		unusedTileDef, unusedTileDefRange, err := tiledef.Read(r, offset, e.RamBase)
 		if err != nil {
 			return fmt.Errorf("there is a gap between tileMaps and tileDefs: %w", err)
 		}
@@ -81,28 +83,10 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		}
 	}
 
-	for offset, tileDefsData := range tileDefs {
+	for offset, td := range tileDefs {
 		i := addrPool[offset]
-		defs := tileDefPaths{
-			Tiles:      tiledefIndicesFileName(e.OvlName, i),
-			Pages:      tiledefPagesFileName(e.OvlName, i),
-			Cluts:      tiledefClutsFileName(e.OvlName, i),
-			Collisions: tiledefCollisionsFileName(e.OvlName, i),
-		}
-		if err := util.WriteFile(filepath.Join(e.AssetDir, defs.Tiles), tileDefsData.Tiles); err != nil {
-			return fmt.Errorf("unable to create %q: %w", defs.Tiles, err)
-		}
-		if err := util.WriteFile(filepath.Join(e.AssetDir, defs.Pages), tileDefsData.Pages); err != nil {
-			return fmt.Errorf("unable to create %q: %w", defs.Pages, err)
-		}
-		if err := util.WriteFile(filepath.Join(e.AssetDir, defs.Cluts), tileDefsData.Cluts); err != nil {
-			return fmt.Errorf("unable to create %q: %w", defs.Cluts, err)
-		}
-		if err := util.WriteFile(filepath.Join(e.AssetDir, defs.Collisions), tileDefsData.Cols); err != nil {
-			return fmt.Errorf("unable to create %q: %w", defs.Collisions, err)
-		}
-		if err := util.WriteJsonFile(filepath.Join(e.AssetDir, tiledefFileName(e.OvlName, i)), defs); err != nil {
-			return fmt.Errorf("unable to create layers file: %w", err)
+		if err := tiledef.Write(td, e.AssetDir, e.OvlName, strconv.Itoa(i)); err != nil {
+			return err
 		}
 	}
 	return nil
@@ -135,7 +119,7 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 	// check for unused tile defs (CEN has one)
 	for tileMapsRange.End() < tileDefsRange.Begin() {
 		offset := tileDefsRange.Begin().Sum(-0x10)
-		unusedTileDef, unusedTileDefRange, err := readTiledef(r, offset, boundaries.StageBegin)
+		unusedTileDef, unusedTileDefRange, err := tiledef.Read(r, offset, boundaries.StageBegin)
 		if err != nil {
 			return assets.InfoResult{}, fmt.Errorf("there is a gap between tileMaps and tileDefs: %w", err)
 		}

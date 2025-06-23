@@ -4,6 +4,7 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/tiledef"
 	"io"
 	"os"
 	"path/filepath"
@@ -192,7 +193,7 @@ func buildLayers(inputDir, fileName, outputDir, ovlName string) error {
 		fullPath := filepath.Join(filepath.Dir(fileName), name)
 		symbol := makeSymbolFromFileName(name)
 		eg.Go(func() error {
-			return buildTiledefs(fullPath, symbol, outputDir)
+			return tiledef.Build(fullPath, symbol, outputDir)
 		})
 	}
 	if err := eg.Wait(); err != nil {
@@ -319,60 +320,4 @@ func buildGenericU16(fileName string, symbol string, outputDir string) error {
 	sb.WriteString("};\n")
 
 	return util.WriteFile(filepath.Join(outputDir, fmt.Sprintf("gen/%s.h", symbol)), []byte(sb.String()))
-}
-
-func buildTiledefs(inFileName string, symbol string, outputDir string) error {
-	data, err := os.ReadFile(inFileName)
-	if err != nil {
-		return err
-	}
-
-	var tiledef tileDefPaths
-	if err := json.Unmarshal(data, &tiledef); err != nil {
-		return err
-	}
-
-	outFileName := filepath.Join(outputDir, fmt.Sprintf("gen/%s.h", symbol))
-	if err := os.MkdirAll(filepath.Dir(outFileName), 0755); err != nil {
-		return err
-	}
-	f, err := os.Create(outFileName)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	tilesSymbol := makeSymbolFromFileName(tiledef.Tiles)
-	tilesFileName := filepath.Join(filepath.Dir(inFileName), tiledef.Tiles)
-	if err := writeStaticU8(f, tilesFileName, tilesSymbol); err != nil {
-		return err
-	}
-
-	pagesSymbol := makeSymbolFromFileName(tiledef.Pages)
-	pagesFileName := filepath.Join(filepath.Dir(inFileName), tiledef.Pages)
-	if err := writeStaticU8(f, pagesFileName, pagesSymbol); err != nil {
-		return err
-	}
-
-	clutsSymbol := makeSymbolFromFileName(tiledef.Cluts)
-	clutsFileName := filepath.Join(filepath.Dir(inFileName), tiledef.Cluts)
-	if err := writeStaticU8(f, clutsFileName, clutsSymbol); err != nil {
-		return err
-	}
-
-	colsSymbol := makeSymbolFromFileName(tiledef.Collisions)
-	colsFileName := filepath.Join(filepath.Dir(inFileName), tiledef.Collisions)
-	if err := writeStaticU8(f, colsFileName, colsSymbol); err != nil {
-		return err
-	}
-
-	_, _ = f.WriteString("// clang-format off\n")
-	_, _ = f.WriteString(fmt.Sprintf("TileDefinition %s[] = {\n", symbol))
-	_, _ = f.WriteString(fmt.Sprintf("    %s,\n", tilesSymbol))
-	_, _ = f.WriteString(fmt.Sprintf("    %s,\n", pagesSymbol))
-	_, _ = f.WriteString(fmt.Sprintf("    %s,\n", clutsSymbol))
-	_, _ = f.WriteString(fmt.Sprintf("    %s,\n", colsSymbol))
-	_, _ = f.WriteString("};\n")
-
-	return nil
 }
