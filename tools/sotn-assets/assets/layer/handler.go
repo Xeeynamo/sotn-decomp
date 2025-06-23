@@ -82,12 +82,12 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	}
 
 	for offset, tileDefsData := range tileDefs {
-		real := offset.Real(e.RamBase)
+		i := addrPool[offset]
 		defs := tileDefPaths{
-			Tiles:      tiledefIndicesFileName(real),
-			Pages:      tiledefPagesFileName(real),
-			Cluts:      tiledefClutsFileName(real),
-			Collisions: tiledefCollisionsFileName(real),
+			Tiles:      tiledefIndicesFileName(e.OvlName, i),
+			Pages:      tiledefPagesFileName(e.OvlName, i),
+			Cluts:      tiledefClutsFileName(e.OvlName, i),
+			Collisions: tiledefCollisionsFileName(e.OvlName, i),
 		}
 		if err := util.WriteFile(filepath.Join(e.AssetDir, defs.Tiles), tileDefsData.Tiles); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Tiles, err)
@@ -101,7 +101,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		if err := util.WriteFile(filepath.Join(e.AssetDir, defs.Collisions), tileDefsData.Cols); err != nil {
 			return fmt.Errorf("unable to create %q: %w", defs.Collisions, err)
 		}
-		if err := util.WriteJsonFile(filepath.Join(e.AssetDir, tiledefFileName(e.OvlName, addrPool[offset])), defs); err != nil {
+		if err := util.WriteJsonFile(filepath.Join(e.AssetDir, tiledefFileName(e.OvlName, i)), defs); err != nil {
 			return fmt.Errorf("unable to create layers file: %w", err)
 		}
 	}
@@ -179,18 +179,18 @@ func tiledefFileName(ovl string, n int) string {
 	return fmt.Sprintf("%s_tiledef_%d.json", ovl, n)
 }
 
-func tiledefIndicesFileName(n int) string {
-	return fmt.Sprintf("tiledef_%05X_tiles.bin", n)
+func tiledefIndicesFileName(ovl string, n int) string {
+	return fmt.Sprintf("%s_tiledef_%d_tiles.bin", ovl, n)
 }
 
-func tiledefPagesFileName(n int) string {
-	return fmt.Sprintf("tiledef_%05X_pages.bin", n)
+func tiledefPagesFileName(ovl string, n int) string {
+	return fmt.Sprintf("%s_tiledef_%d_pages.bin", ovl, n)
 }
 
-func tiledefClutsFileName(n int) string {
-	return fmt.Sprintf("tiledef_%05X_cluts.bin", n)
+func tiledefClutsFileName(ovl string, n int) string {
+	return fmt.Sprintf("%s_tiledef_%d_cluts.bin", ovl, n)
 }
 
-func tiledefCollisionsFileName(n int) string {
-	return fmt.Sprintf("tiledef_%05X_cols.bin", n)
+func tiledefCollisionsFileName(ovl string, n int) string {
+	return fmt.Sprintf("%s_tiledef_%d_cols.bin", ovl, n)
 }
