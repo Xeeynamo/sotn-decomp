@@ -125,9 +125,9 @@ u16 D_8019B210[] = {
 #include "gen/D_8019B210.h"
 };
 
-#include "gen/tilemap_1B2D0.h"
-#include "gen/tilemap_1C6D0.h"
-#include "gen/tilemap_1DAD0.h"
-#include "gen/tilemap_1E0D0.h"
-#include "gen/tilemap_1E2D0.h"
-#include "gen/tiledef_226D0.h"
+#include "gen/st0_tilemap_0.h"
+#include "gen/st0_tilemap_1.h"
+#include "gen/st0_tilemap_2.h"
+#include "gen/st0_tilemap_3.h"
+#include "gen/st0_tilemap_4.h"
+#include "gen/st0_tiledef_0.h"

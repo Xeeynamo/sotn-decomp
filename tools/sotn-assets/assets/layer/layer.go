@@ -4,11 +4,13 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/tiledef"
 	"io"
 	"os"
 	"path/filepath"
 	"slices"
 	"strings"
+	"unsafe"
 
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
@@ -55,10 +57,10 @@ func (l *layerDef) tilemapFileSize() int {
 	return w * h * 512
 }
 
-func (l *layerDef) unpack() layerUnpacked {
+func (l *layerDef) unpack(ovl string, addrPool map[psx.Addr]int) layerUnpacked {
 	return layerUnpacked{
-		Data:          tilemapFileName(int(l.Data)),
-		Tiledef:       tiledefFileName(int(l.Tiledef)),
+		Data:          tilemapFileName(ovl, addrPool[l.Data]),
+		Tiledef:       tiledefFileName(ovl, addrPool[l.Tiledef]),
 		Left:          int((l.PackedInfo >> 0) & 0x3F),
 		Top:           int((l.PackedInfo >> 6) & 0x3F),
 		Right:         int((l.PackedInfo >> 12) & 0x3F),
@@ -71,17 +73,6 @@ func (l *layerDef) unpack() layerUnpacked {
 		ZPriority:     int(l.ZPriority),
 		Flags:         int(l.Flags),
 	}
-}
-
-func (r roomLayers) MarshalJSON() ([]byte, error) {
-	m := map[string]interface{}{}
-	if r.fg != nil {
-		m["fg"] = r.fg.unpack()
-	}
-	if r.bg != nil {
-		m["bg"] = r.bg.unpack()
-	}
-	return json.Marshal(m)
 }
 
 func readLayers(r io.ReadSeeker, off, baseAddr psx.Addr) ([]roomLayers, datarange.DataRange, error) {
@@ -99,8 +90,9 @@ func readLayers(r io.ReadSeeker, off, baseAddr psx.Addr) ([]roomLayers, datarang
 		if err := binary.Read(r, binary.LittleEndian, layersOff); err != nil {
 			return nil, datarange.DataRange{}, err
 		}
+		// we do not check for `layersOff[1] >= off`, as on PSP this falls to BSS
 		if layersOff[0] <= baseAddr || layersOff[0] >= off ||
-			layersOff[1] <= baseAddr || layersOff[1] >= off {
+			layersOff[1] <= baseAddr {
 			break
 		}
 		layerOffsets = append(layerOffsets, layersOff...)
@@ -114,6 +106,11 @@ func readLayers(r io.ReadSeeker, off, baseAddr psx.Addr) ([]roomLayers, datarang
 			continue
 		}
 
+		if layerOffset >= off {
+			// assumes this is a layer_empty falling to BSS
+			pool[layerOffset] = nil
+			continue
+		}
 		if err := layerOffset.MoveFile(r, baseAddr); err != nil {
 			return nil, datarange.DataRange{}, err
 		}
@@ -138,7 +135,7 @@ func readLayers(r io.ReadSeeker, off, baseAddr psx.Addr) ([]roomLayers, datarang
 	return roomsLayers, datarange.New(slices.Min(layerOffsets), off.Sum(count*8)), nil
 }
 
-func buildLayers(inputDir string, fileName string, outputDir string) error {
+func buildLayers(inputDir, fileName, outputDir, ovlName string) error {
 	getHash := func(l layerUnpacked) string {
 		return fmt.Sprintf("%s-%s-%d-%d-%d-%d", l.Data, l.Tiledef, l.Left, l.Top, l.Right, l.Bottom)
 	}
@@ -180,17 +177,6 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 		}
 	}
 
-	// use unused tiledefs
-	files, err := os.ReadDir(inputDir)
-	if err != nil {
-		return err
-	}
-	for _, file := range files {
-		if !file.IsDir() && strings.HasPrefix(file.Name(), "tiledef_") && strings.HasSuffix(file.Name(), ".json") {
-			tiledefs[file.Name()] = struct{}{}
-		}
-	}
-
 	eg := errgroup.Group{}
 	for name := range tilemaps {
 		fullPath := filepath.Join(filepath.Dir(fileName), name)
@@ -203,7 +189,7 @@ func buildLayers(inputDir string, fileName string, outputDir string) error {
 		fullPath := filepath.Join(filepath.Dir(fileName), name)
 		symbol := makeSymbolFromFileName(name)
 		eg.Go(func() error {
-			return buildTiledefs(fullPath, symbol, outputDir)
+			return tiledef.Build(fullPath, symbol, outputDir)
 		})
 	}
 	if err := eg.Wait(); err != nil {
@@ -321,69 +307,9 @@ func buildGenericU16(fileName string, symbol string, outputDir string) error {
 	var sb strings.Builder
 	sb.WriteString("// clang-format off\n")
 	sb.WriteString(fmt.Sprintf("u16 %s[] = {\n", symbol))
-	for i := 0; i < len(data); i += 2 {
-		sb.WriteString(fmt.Sprintf("0x%02X%02X,", data[i+1], data[i]))
-		if (i & 31) == 30 {
-			sb.WriteString("\n")
-		}
-	}
+	u16Data := (*[1 << 30]uint16)(unsafe.Pointer(&data[0]))[:len(data)/2]
+	util.WriteWordsAsHex(&sb, u16Data)
 	sb.WriteString("};\n")
 
 	return util.WriteFile(filepath.Join(outputDir, fmt.Sprintf("gen/%s.h", symbol)), []byte(sb.String()))
-}
-
-func buildTiledefs(inFileName string, symbol string, outputDir string) error {
-	data, err := os.ReadFile(inFileName)
-	if err != nil {
-		return err
-	}
-
-	var tiledef tileDefPaths
-	if err := json.Unmarshal(data, &tiledef); err != nil {
-		return err
-	}
-
-	outFileName := filepath.Join(outputDir, fmt.Sprintf("gen/%s.h", symbol))
-	if err := os.MkdirAll(filepath.Dir(outFileName), 0755); err != nil {
-		return err
-	}
-	f, err := os.Create(outFileName)
-	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	tilesSymbol := makeSymbolFromFileName(tiledef.Tiles)
-	tilesFileName := filepath.Join(filepath.Dir(inFileName), tiledef.Tiles)
-	if err := writeStaticU8(f, tilesFileName, tilesSymbol); err != nil {
-		return err
-	}
-
-	pagesSymbol := makeSymbolFromFileName(tiledef.Pages)
-	pagesFileName := filepath.Join(filepath.Dir(inFileName), tiledef.Pages)
-	if err := writeStaticU8(f, pagesFileName, pagesSymbol); err != nil {
-		return err
-	}
-
-	clutsSymbol := makeSymbolFromFileName(tiledef.Cluts)
-	clutsFileName := filepath.Join(filepath.Dir(inFileName), tiledef.Cluts)
-	if err := writeStaticU8(f, clutsFileName, clutsSymbol); err != nil {
-		return err
-	}
-
-	colsSymbol := makeSymbolFromFileName(tiledef.Collisions)
-	colsFileName := filepath.Join(filepath.Dir(inFileName), tiledef.Collisions)
-	if err := writeStaticU8(f, colsFileName, colsSymbol); err != nil {
-		return err
-	}
-
-	_, _ = f.WriteString("// clang-format off\n")
-	_, _ = f.WriteString(fmt.Sprintf("TileDefinition %s[] = {\n", symbol))
-	_, _ = f.WriteString(fmt.Sprintf("    %s,\n", tilesSymbol))
-	_, _ = f.WriteString(fmt.Sprintf("    %s,\n", pagesSymbol))
-	_, _ = f.WriteString(fmt.Sprintf("    %s,\n", clutsSymbol))
-	_, _ = f.WriteString(fmt.Sprintf("    %s,\n", colsSymbol))
-	_, _ = f.WriteString("};\n")
-
-	return nil
 }

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+#ifndef VERSION_PSP // data not yet imported!
 u8 stage_title_wrp_jp[] = {
 #include "gen/stage_title_wrp_jp.h"
 };
@@ -13,25 +14,13 @@ u16 D_80181D08[] = {
 u16 D_80181D28[] = {
 #include "gen/D_80181D28.h"
 };
-
-#if defined(VERSION_US)
-#include "gen/tilemap_01D68.h"
-#include "gen/tilemap_01F68.h"
-#include "gen/tilemap_02168.h"
-#include "gen/tilemap_02368.h"
-#include "gen/tilemap_02568.h"
-#include "gen/tilemap_02768.h"
-#include "gen/tiledef_02D68.h"
-#include "gen/tiledef_06D78.h"
-
-#elif defined(VERSION_HD)
-#include "gen/tilemap_01D6C.h"
-#include "gen/tilemap_01F6C.h"
-#include "gen/tilemap_0216C.h"
-#include "gen/tilemap_0236C.h"
-#include "gen/tilemap_0256C.h"
-#include "gen/tilemap_0276C.h"
-#include "gen/tiledef_02D6C.h"
-#include "gen/tiledef_06D7C.h"
-
 #endif
+
+#include "gen/wrp_tilemap_0.h"
+#include "gen/wrp_tilemap_1.h"
+#include "gen/wrp_tilemap_2.h"
+#include "gen/wrp_tilemap_3.h"
+#include "gen/wrp_tilemap_4.h"
+#include "gen/wrp_tilemap_5.h"
+#include "gen/wrp_tiledef_0.h"
+#include "gen/wrp_tiledef_1.h"

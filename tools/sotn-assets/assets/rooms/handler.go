@@ -45,7 +45,6 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 func (h *handler) Build(e assets.BuildArgs) error {
 	inPath := assetPath(e.AssetDir, e.Name)
 	outPath := sourcePath(e.SrcDir, e.Name)
-	ovlName := filepath.Base(filepath.Dir(inPath))
 	data, err := os.ReadFile(inPath)
 	if err != nil {
 		return err
@@ -58,7 +57,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 
 	content := strings.Builder{}
 	content.WriteString("// clang-format off\n")
-	content.WriteString(fmt.Sprintf("unsigned char %s_rooms[] = {\n", strings.ToUpper(ovlName)))
+	content.WriteString(fmt.Sprintf("unsigned char %s_rooms[] = {\n", strings.ToUpper(e.OvlName)))
 	for _, room := range rooms {
 		s := fmt.Sprintf("    %d, %d, %d, %d, %d, %d, %d, %d,\n",
 			room.Left, room.Top, room.Right, room.Bottom,

@@ -47,29 +47,28 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if len(e.Args) < 2 {
 		return fmt.Errorf("require blueprint enum name as second argument")
 	}
-	ovlName := filepath.Base(e.AssetDir)
-	bpKindFields, err := fetchEnum(e.SrcDir, ovlName, "BlueprintKind")
+	bpKindFields, err := fetchEnum(e.SrcDir, e.OvlName, "BlueprintKind")
 	if err != nil || len(bpKindFields) == 0 {
 		if err == nil {
 			err = fmt.Errorf("not found")
 		}
 		return fmt.Errorf("fetch enum %s: %w", "BlueprintKind", err)
 	}
-	bpOriginFields, err := fetchEnum(e.SrcDir, ovlName, "BlueprintOrigin")
+	bpOriginFields, err := fetchEnum(e.SrcDir, e.OvlName, "BlueprintOrigin")
 	if err != nil || len(bpOriginFields) == 0 {
 		if err == nil {
 			err = fmt.Errorf("not found")
 		}
 		return fmt.Errorf("fetch enum %s: %w", "BlueprintOrigin", err)
 	}
-	blueprintFields, err := fetchEnum(e.SrcDir, ovlName, e.Args[0])
+	blueprintFields, err := fetchEnum(e.SrcDir, e.OvlName, e.Args[0])
 	if err != nil || len(blueprintFields) == 0 {
 		if err == nil {
 			err = fmt.Errorf("not found")
 		}
 		return fmt.Errorf("fetch enum %s: %w", e.Args[0], err)
 	}
-	entityFields, err := fetchEnum(e.SrcDir, ovlName, e.Args[1])
+	entityFields, err := fetchEnum(e.SrcDir, e.OvlName, e.Args[1])
 	if err != nil || len(entityFields) == 0 {
 		if err == nil {
 			err = fmt.Errorf("not found")
@@ -77,7 +76,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		return fmt.Errorf("fetch enum %s: %w", e.Args[1], err)
 	}
 
-	entries, err := parse(e.Data[e.Start:e.End], ovlName == "dra", entityFields, bpKindFields, bpOriginFields)
+	entries, err := parse(e.Data[e.Start:e.End], e.OvlName == "dra", entityFields, bpKindFields, bpOriginFields)
 	if err != nil {
 		return fmt.Errorf("parse error: %w", err)
 	}
@@ -106,8 +105,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		return fmt.Errorf("failed to read file: %w", err)
 	}
 	enumName := e.Args[0]
-	ovlName := filepath.Base(e.AssetDir)
-	fields, err := fetchEnum(e.SrcDir, ovlName, enumName)
+	fields, err := fetchEnum(e.SrcDir, e.OvlName, enumName)
 	if err != nil {
 		return fmt.Errorf("fetch enum %s: %w", enumName, err)
 	}
