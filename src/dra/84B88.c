@@ -1,13 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
-
-typedef enum {
-    DAGGER_INIT,
-    DAGGER_FLYING,
-    DAGGER_BOUNCE,
-    DAGGER_HIT_ENEMY
-} DaggerSteps;
+#include "subwpn_dagger.h"
 
 // dagger thrown when using subweapon
 void EntitySubwpnKnife(Entity* self) {
