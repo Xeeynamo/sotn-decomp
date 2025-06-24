@@ -166,7 +166,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     continue;
                 }
                 return;
-            case CSOP_SCRIPT_UNKNOWN_4:
+            case CSOP_HIDE_DIALOG:
                 if (g_SkipCutscene) {
                     continue;
                 }
