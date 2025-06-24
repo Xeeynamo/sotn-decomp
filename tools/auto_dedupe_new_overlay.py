@@ -43,15 +43,6 @@ def get_symbols_yaml_filename(version_name, overlay_name):
     splatname = get_splat_yaml_filename(version_name, overlay_name)
     return splatname.replace("splat", "symbols").replace(".yaml", ".txt")
 
-
-def get_nonmatchings_path(version_name, ovl_name):
-    if version_name == "pspeu":
-        nonmatchings_path = f"psp/{ovl_name}"
-    else:
-        nonmatchings_path = "nonmatchings"
-    return nonmatchings_path
-
-
 def get_file_splits(version_name, overlay_name):
     with open(f"src/st/{overlay_name}/{version_name}.c") as f:
         clines = f.readlines()
@@ -129,7 +120,6 @@ def split_c_files(version_name, overlay_name, new_segments):
     output_buffer = []
     overlay_dir = f"src/st/{overlay_name}/"
     output_filename = "first_c_file"
-    nonmatchings_path = get_nonmatchings_path(version_name, overlay_name)
     for line in c_file_lines:
         match = re.search(r'INCLUDE_ASM\("[^"]+",\s*(\w+)\);', line)
         if match:
@@ -145,8 +135,8 @@ def split_c_files(version_name, overlay_name, new_segments):
                 output_filename = dest_file
         output_buffer.append(
             line.replace(
-                f"{nonmatchings_path}/{version_name}",
-                f"{nonmatchings_path}/{output_filename}",
+                f"nonmatchings/{version_name}",
+                f"nonmatchings/{output_filename}",
             )
         )
     # Flush the last one
@@ -183,7 +173,6 @@ def split_rodata(version_name, overlay_name, new_segments):
     # Get the rodata and create splat segments
     # Do this by searching for INCLUDE_RODATA in the c files, and make the rodata parse to that file
     overlay_dir = f"src/st/{overlay_name}/"
-    nonmatchings_path = get_nonmatchings_path(version_name, overlay_name)
     yaml_rodata_lines = []
     for seg in new_segments:
         c_file = overlay_dir + seg[1] + ".c"
@@ -204,7 +193,7 @@ def split_rodata(version_name, overlay_name, new_segments):
             if match:
                 funcname = match.group(1)
                 with open(
-                    f"asm/{version_name}/st/{overlay_name}/{nonmatchings_path}/{version_name}/{funcname}.s"
+                    f"asm/{version_name}/st/{overlay_name}/nonmatchings/{version_name}/{funcname}.s"
                 ) as asmfile:
                     asmlines = asmfile.read().splitlines()
                     for i, line in enumerate(asmlines):
