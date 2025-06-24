@@ -1,5 +1,7 @@
 #include "common.h"
 
+// clang-format off
+
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/first_c_file", func_pspeu_09237700);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/first_c_file", InitEntityIds);
@@ -83,3 +85,5 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/first_c_file", func_pspeu_092404E0)
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/first_c_file", func_pspeu_092405B8);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/first_c_file", func_pspeu_092406B8);
+
+// clang-format on

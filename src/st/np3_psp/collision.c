@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
+// clang-format off
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/collision", HitDetection);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/collision", EntityDamageDisplay);
@@ -24,3 +25,6 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/collision", EntitySideWaterSplash);
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/collision", EntitySmallWaterDrop);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/collision", EntityWaterDrop);
+
+// clang-format on
+
