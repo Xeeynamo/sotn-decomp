@@ -471,7 +471,7 @@
 | no4   | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | st0   | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | wrp   | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
-| dai   | unk_1A390.rodata                         |       38 |          0 | Yes    |                                 |       |
+| dai   | unk_1A770.rodata                         |       38 |          0 | Yes    |                                 |       |
 | no4   | unk_2108.rodata                          |       38 |          0 | Yes    |                                 |       |
 | dra   | DestroyEntity                            |       38 |          3 |        |                                 |       |
 | dra   | func_800EDB08                            |       38 |          4 |        | https://decomp.me/scratch/dXwiB | 0.995 |
@@ -1762,7 +1762,7 @@
 | st0   | EntitySoulStealOrb                       |      364 |         33 |        | https://decomp.me/scratch/zmw3E | 0.997 |
 | wrp   | EntitySoulStealOrb                       |      364 |         33 |        | https://decomp.me/scratch/zmw3E | 0.997 |
 | lib   | EntityFleaMan                            |      364 |         72 |        | https://decomp.me/scratch/igamJ | 0.998 |
-| dai   | func_us_801D3FD8                         |      365 |         61 |        |                                 |       |
+| dai   | func_us_801D3FD8                         |      365 |         61 |        | https://decomp.me/scratch/6M0vG | 0.824 |
 | lib   | func_us_801AFA80                         |      367 |         31 |        |                                 |       |
 | dra   | func_psp_090EB8B8                        |      368 |         17 |        |                                 |       |
 | dai   | func_pspeu_09258EC0                      |      369 |         21 |        |                                 |       |
@@ -2014,7 +2014,7 @@
 | lib   | EntityLifeUpSpawn                        |      858 |         61 | Yes    | https://decomp.me/scratch/evuI8 | 0.999 |
 | st0   | func_801BC5C0                            |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.998 |
 | st0   | func_801AF774                            |      868 |         52 | Yes    | https://decomp.me/scratch/jQNRR | 0.999 |
-| no4   | func_pspeu_0923C460                      |      870 |        106 | Yes    |                                 |       |
+| no4   | func_pspeu_0923C460                      |      870 |        106 | Yes    | https://decomp.me/scratch/ZDaM8 | 0.601 |
 | lib   | func_us_801AE8E8                         |      883 |         80 |        |                                 |       |
 | lib   | func_us_801B420C                         |      884 |         74 | Yes    |                                 |       |
 | st0   | EntityBackgroundVortex                   |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
