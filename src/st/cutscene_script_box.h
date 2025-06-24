@@ -7,7 +7,7 @@
 #define CUTSCENE_UNK4_TPAGE 0x10
 #endif
 
-void CutsceneUnk3(s16 nextCharY) {
+static void CutsceneUnk3(s16 nextCharY) {
     RECT rect;
     rect.x = CUTSCENE_UNK3_RECT_X;
     rect.y = (nextCharY * 12) + 384;
@@ -19,7 +19,7 @@ void CutsceneUnk3(s16 nextCharY) {
 #endif
 }
 
-void CutsceneUnk4(void) {
+static void CutsceneUnk4(void) {
     Primitive* prim;
 
     CutsceneUnk3(g_Dialogue.nextCharY);
@@ -29,9 +29,9 @@ void CutsceneUnk4(void) {
     prim->y0 = g_Dialogue.nextLineY;
     prim->u0 = 0;
     prim->x0 = g_Dialogue.startX + 4;
-    prim->v0 = g_Dialogue.nextCharY * 0xC + 0x80;
-    prim->u1 = 0xC0;
-    prim->v1 = 0xC;
+    prim->v0 = g_Dialogue.nextCharY * 12 + 128;
+    prim->u1 = 192;
+    prim->v1 = 12;
     prim->priority = 0x1FF;
     prim->drawMode = DRAW_DEFAULT;
 }

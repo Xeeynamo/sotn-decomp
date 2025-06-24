@@ -139,9 +139,9 @@ void func_us_801C5B88(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
-        self->animSet = -0x7FF1;
-        self->animCurFrame = 0xA;
-        self->unk5A = 0x48;
+        self->animSet = ANIMSET_OVL(15);
+        self->animCurFrame = 10;
+        self->unk5A = 72;
         self->palette = PAL_UNK251;
         break;
     case 1:
@@ -150,13 +150,13 @@ void func_us_801C5B88(Entity* self) {
         }
         break;
     case 2:
-        if (!AnimateEntity(&D_us_80181024, self)) {
+        if (!AnimateEntity(D_us_80181024, self)) {
             SetStep(3);
             self->velocityX = FIX(1.5);
         }
         break;
     case 3:
-        pan = AnimateEntity(&D_us_80181030, self);
+        pan = AnimateEntity(D_us_80181030, self);
         if (pan & 0x80 && (self->pose == 3 || self->pose == 7)) {
             pan = (self->posX.i.hi - 120) / 16;
             if (pan < -8) {
@@ -165,26 +165,26 @@ void func_us_801C5B88(Entity* self) {
             if (pan > 8) {
                 pan = 8;
             }
-            g_api.PlaySfxVolPan(0x64C, 0x50, pan);
+            g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 80, pan);
         }
         MoveEntity();
-        if (posScrollX > 0x170) {
+        if (posScrollX > 368) {
             SetStep(4);
             self->velocityY = FIX(-4);
         }
         break;
     case 4:
-        AnimateEntity(&D_us_80181044, self);
+        AnimateEntity(D_us_80181044, self);
         self->velocityY += FIX(0.1875);
         MoveEntity();
-        if (self->velocityY > 0 && posScrollY > 0x97) {
-            self->posY.i.hi = 0x97 - gTilemap->scrollY.i.hi;
+        if (self->velocityY > 0 && posScrollY > 151) {
+            self->posY.i.hi = 151 - gTilemap->scrollY.i.hi;
             self->velocityY = FIX(0);
             SetStep(5);
         }
         break;
     case 5:
-        pan = AnimateEntity(&D_us_80181030, self);
+        pan = AnimateEntity(D_us_80181030, self);
         if (pan & 0x80 && (self->pose == 3 || self->pose == 7)) {
             pan = (self->posX.i.hi - 120) / 16;
             if (pan < -8) {
@@ -193,27 +193,27 @@ void func_us_801C5B88(Entity* self) {
             if (pan > 8) {
                 pan = 8;
             }
-            g_api.PlaySfxVolPan(0x64C, 0x50, pan);
+            g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 80, pan);
         }
         MoveEntity();
-        if (posScrollX > 0x1C0) {
+        if (posScrollX > 448) {
             SetStep(6);
             self->velocityY = FIX(-4);
             g_CutsceneFlags |= 8;
         }
         break;
     case 6:
-        AnimateEntity(&D_us_80181044, self);
+        AnimateEntity(D_us_80181044, self);
         self->velocityY += FIX(0.1875);
         MoveEntity();
-        if (self->velocityY > 0 && posScrollY > 0x87) {
+        if (self->velocityY > 0 && posScrollY > 135) {
             self->posY.i.hi = 0x87 - gTilemap->scrollY.i.hi;
             self->velocityY = FIX(0);
             SetStep(7);
         }
         break;
     case 7:
-        pan = AnimateEntity(&D_us_80181030, self);
+        pan = AnimateEntity(D_us_80181030, self);
         if (pan & 0x80 && (self->pose == 3 || self->pose == 7)) {
             pan = (self->posX.i.hi - 120) / 16;
             if (pan < -8) {
@@ -222,10 +222,10 @@ void func_us_801C5B88(Entity* self) {
             if (pan > 8) {
                 pan = 8;
             }
-            g_api.PlaySfxVolPan(0x64C, 0x50, pan);
+            g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 0x50, pan);
         }
         MoveEntity();
-        if (posScrollX > 0x220) {
+        if (posScrollX > 544) {
             DestroyEntity(self);
         }
         break;
