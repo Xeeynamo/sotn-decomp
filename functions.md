@@ -1656,7 +1656,7 @@
 | dra   | CheckDarkMetamorphosisInput              |      279 |         37 | Yes    |                                 |       |
 | dra   | CheckWingSmashInput                      |      279 |         38 | Yes    | https://decomp.me/scratch/ygTgB | 0.828 |
 | dra   | EntityExpandingCircle                    |      280 |         15 |        | https://decomp.me/scratch/45Hgg | 0.998 |
-| dai   | func_us_801D43BC                         |      282 |         43 | Yes    |                                 |       |
+| dai   | func_us_801D43BC                         |      282 |         43 | Yes    | https://decomp.me/scratch/QZT1W | 0.999 |
 | dra   | EntityPlayerPinkEffect                   |      283 |         37 | Yes    | https://decomp.me/scratch/G9UM4 | 0.994 |
 | dra   | HandleVideoPlayback                      |      285 |         37 | Yes    | https://decomp.me/scratch/kc55L | 1.0   |
 | no4   | func_pspeu_09237700                      |      285 |         47 |        | https://decomp.me/scratch/pG66O | 0.997 |
@@ -1762,7 +1762,7 @@
 | st0   | EntitySoulStealOrb                       |      364 |         33 |        | https://decomp.me/scratch/zmw3E | 0.997 |
 | wrp   | EntitySoulStealOrb                       |      364 |         33 |        | https://decomp.me/scratch/zmw3E | 0.997 |
 | lib   | EntityFleaMan                            |      364 |         72 |        | https://decomp.me/scratch/igamJ | 0.998 |
-| dai   | func_us_801D3FD8                         |      365 |         61 |        | https://decomp.me/scratch/6M0vG | 0.824 |
+| dai   | func_us_801D3FD8                         |      365 |         61 |        | https://decomp.me/scratch/6M0vG | 0.999 |
 | lib   | func_us_801AFA80                         |      367 |         31 |        |                                 |       |
 | dra   | func_psp_090EB8B8                        |      368 |         17 |        |                                 |       |
 | dai   | func_pspeu_09258EC0                      |      369 |         21 |        |                                 |       |
@@ -2014,7 +2014,7 @@
 | lib   | EntityLifeUpSpawn                        |      858 |         61 | Yes    | https://decomp.me/scratch/evuI8 | 0.999 |
 | st0   | func_801BC5C0                            |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.998 |
 | st0   | func_801AF774                            |      868 |         52 | Yes    | https://decomp.me/scratch/jQNRR | 0.999 |
-| no4   | func_pspeu_0923C460                      |      870 |        106 | Yes    | https://decomp.me/scratch/ZDaM8 | 0.601 |
+| no4   | func_pspeu_0923C460                      |      870 |        106 | Yes    | https://decomp.me/scratch/ZDaM8 | 0.605 |
 | lib   | func_us_801AE8E8                         |      883 |         80 |        |                                 |       |
 | lib   | func_us_801B420C                         |      884 |         74 | Yes    |                                 |       |
 | st0   | EntityBackgroundVortex                   |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
