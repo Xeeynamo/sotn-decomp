@@ -27,4 +27,3 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/collision", EntitySmallWaterDrop);
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/collision", EntityWaterDrop);
 
 // clang-format on
-
