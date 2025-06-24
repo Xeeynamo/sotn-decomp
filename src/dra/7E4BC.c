@@ -327,10 +327,11 @@ void func_8011E4BC(Entity* self) {
                 tilePrim->posX.i.hi = selfXPos;
                 tilePrim->posY.i.hi = selfYPos;
                 if (i < 10) {
-                    tilePrim->velocityY.val = -((i * i * 0x1800) + 0x2000);
+                    tilePrim->velocityY.val =
+                        -((i * i * 0x1800) + FIX(1.0 / 8));
                 } else {
                     tilePrim->velocityY.val =
-                        ((i - 10) * (i - 10) * 0x1800) + 0x2000;
+                        ((i - 10) * (i - 10) * 0x1800) + FIX(1.0 / 8);
                 }
                 tilePrim->delay = 0x3F;
                 break;
@@ -414,7 +415,7 @@ void func_8011E4BC(Entity* self) {
             case 9:
                 tilePrim->posY.val += tilePrim->velocityY.val;
                 tilePrim->posX.val += tilePrim->velocityX.val;
-                tilePrim->velocityY.val = (tilePrim->velocityY.val + 0x2800);
+                tilePrim->velocityY.val += FIX(5.0 / 32.0);
                 tilePrim->r0 -= 3;
                 tilePrim->g0 -= 3;
                 tilePrim->b0 -= 3;
@@ -430,7 +431,7 @@ void func_8011E4BC(Entity* self) {
                 }
                 tilePrim->posX.val += tilePrim->velocityX.val;
                 tilePrim->posY.val += tilePrim->velocityY.val;
-                tilePrim->velocityY.val = (tilePrim->velocityY.val + 0x1400);
+                tilePrim->velocityY.val += FIX(5.0 / 64.0);
                 break;
             case 3:
             case 10:
