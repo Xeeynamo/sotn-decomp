@@ -1,0 +1,49 @@
+options:
+  platform: psp
+  basename: stnp3
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/np3.bin
+  asm_path: asm/pspeu/st/np3_psp
+  asset_path: assets/st/np3
+  src_path: src/st
+  ld_script_path: build/pspeu/stnp3.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.stnp3.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.stnp3.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.stnp3.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x8000000
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 78660301541f3b90d2b6d39d9b7dde4343481b65
+segments:
+  - [0x0, bin, mwo_header]
+  - name: stnp3
+    type: code
+    start: 0x80
+    vram:  0x09237700
+    bss_size: 0x380
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, np3_psp/pspeu]
+      - [0x2B080, data]
+      - [0x5A380, .rodata, np3_psp/pspeu]
+      - [0x5A580, bss]
+  - [0x5A580]
