@@ -1528,9 +1528,12 @@ void EntitySubwpnReboundStone(Entity* self) {
                      EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
                      EFFECT_SOLID);
                 if (colliderFlags & EFFECT_SOLID) {
-                    colliderFlags &= 0xFF00;
+                    colliderFlags &=
+                        EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                        EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0400 |
+                        EFFECT_UNK_0200 | EFFECT_UNK_0100;
                     if (deltaY > 0) {
-                        if ((colliderFlags == 0) ||
+                        if ((colliderFlags == EFFECT_NONE) ||
                             (colliderFlags & EFFECT_UNK_0800)) {
                             ReboundStoneBounce1(0x800);
                         }
@@ -1559,7 +1562,7 @@ void EntitySubwpnReboundStone(Entity* self) {
                         }
                     }
                     if (deltaY < 0) {
-                        if ((colliderFlags == 0) ||
+                        if ((colliderFlags == EFFECT_NONE) ||
                             (colliderFlags & EFFECT_UNK_8000)) {
                             ReboundStoneBounce1(0x800);
                         }
@@ -1597,12 +1600,17 @@ void EntitySubwpnReboundStone(Entity* self) {
                      EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0002 |
                      EFFECT_SOLID);
                 if (colliderFlags & EFFECT_SOLID) {
-                    colliderFlags &= 0xFF00;
+                    colliderFlags &=
+                        EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                        EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0400 |
+                        EFFECT_UNK_0200 | EFFECT_UNK_0100;
                     // Cases when traveling right
                     if (deltaX > 0) {
-                        if ((colliderFlags == 0) ||
-                            TEST_BITS(colliderFlags, 0x4800) ||
-                            TEST_BITS(colliderFlags, 0xC000)) {
+                        if (colliderFlags == EFFECT_NONE ||
+                            TEST_BITS(colliderFlags,
+                                      EFFECT_UNK_4000 | EFFECT_UNK_0800) ||
+                            TEST_BITS(colliderFlags,
+                                      EFFECT_UNK_8000 | EFFECT_UNK_4000)) {
                             ReboundStoneBounce1(0x400);
                         }
                         if (colliderFlags == EFFECT_UNK_0800) {
@@ -1630,9 +1638,13 @@ void EntitySubwpnReboundStone(Entity* self) {
                     }
                     // Cases when traveling left
                     if (deltaX < 0) {
-                        if ((colliderFlags == 0) ||
-                            ((colliderFlags & 0x4800) == 0x800) ||
-                            ((colliderFlags & 0xC000) == 0x8000)) {
+                        if ((colliderFlags == EFFECT_NONE) ||
+                            ((colliderFlags &
+                              (EFFECT_UNK_4000 | EFFECT_UNK_0800)) ==
+                             EFFECT_UNK_0800) ||
+                            ((colliderFlags &
+                              (EFFECT_UNK_8000 | EFFECT_UNK_4000)) ==
+                             EFFECT_UNK_8000)) {
                             ReboundStoneBounce1(0x400);
                         }
                         if (colliderFlags ==

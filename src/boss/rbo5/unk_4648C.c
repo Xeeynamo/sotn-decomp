@@ -2801,7 +2801,8 @@ void func_us_801CC788(Entity* self) {
             case 9:
                 tilePrim->posY.val += tilePrim->velocityY.val;
                 tilePrim->posX.val += tilePrim->velocityX.val;
-                tilePrim->velocityY.val = (tilePrim->velocityY.val + 0x2800);
+                tilePrim->velocityY.val =
+                    (tilePrim->velocityY.val + FIX(5.0 / 32.0));
                 tilePrim->r0 -= 3;
                 tilePrim->g0 -= 3;
                 tilePrim->b0 -= 3;
@@ -2817,7 +2818,8 @@ void func_us_801CC788(Entity* self) {
                 }
                 tilePrim->posX.val += tilePrim->velocityX.val;
                 tilePrim->posY.val += tilePrim->velocityY.val;
-                tilePrim->velocityY.val = (tilePrim->velocityY.val + 0x1400);
+                tilePrim->velocityY.val =
+                    (tilePrim->velocityY.val + FIX(5.0 / 64.0));
                 break;
             case 3:
                 tilePrim->posY.val += tilePrim->velocityY.val;
@@ -3874,9 +3876,12 @@ void EntitySubwpnReboundStone(Entity* self) {
                              EFFECT_UNK_2000 | EFFECT_UNK_1000 |
                              EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
             if (colliderFlags & EFFECT_SOLID) {
-                colliderFlags &= 0xFF00;
+                colliderFlags &=
+                    EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                    EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0400 |
+                    EFFECT_UNK_0200 | EFFECT_UNK_0100;
                 if (deltaY > 0) {
-                    if ((colliderFlags == 0) ||
+                    if ((colliderFlags == EFFECT_NONE) ||
                         (colliderFlags & EFFECT_UNK_0800)) {
                         ReboundStoneBounce1(0x800);
                     }
@@ -3902,7 +3907,7 @@ void EntitySubwpnReboundStone(Entity* self) {
                     }
                 }
                 if (deltaY < 0) {
-                    if ((colliderFlags == 0) ||
+                    if ((colliderFlags == EFFECT_NONE) ||
                         (colliderFlags & EFFECT_UNK_8000)) {
                         ReboundStoneBounce1(0x800);
                     }
@@ -3936,12 +3941,17 @@ void EntitySubwpnReboundStone(Entity* self) {
                              EFFECT_UNK_2000 | EFFECT_UNK_1000 |
                              EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
             if (colliderFlags & EFFECT_SOLID) {
-                colliderFlags &= 0xFF00;
+                colliderFlags &=
+                    EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                    EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0400 |
+                    EFFECT_UNK_0200 | EFFECT_UNK_0100;
                 // Cases when traveling right
                 if (deltaX > 0) {
-                    if ((colliderFlags == 0) ||
-                        TEST_BITS(colliderFlags, 0x4800) ||
-                        TEST_BITS(colliderFlags, 0xC000)) {
+                    if (colliderFlags == EFFECT_NONE ||
+                        TEST_BITS(
+                            colliderFlags, EFFECT_UNK_4000 | EFFECT_UNK_0800) ||
+                        TEST_BITS(
+                            colliderFlags, EFFECT_UNK_8000 | EFFECT_UNK_4000)) {
                         ReboundStoneBounce1(0x400);
                     }
                     if (colliderFlags == EFFECT_UNK_0800) {
@@ -3965,9 +3975,13 @@ void EntitySubwpnReboundStone(Entity* self) {
                 }
                 // Cases when traveling left
                 if (deltaX < 0) {
-                    if ((colliderFlags == 0) ||
-                        ((colliderFlags & 0x4800) == 0x800) ||
-                        ((colliderFlags & 0xC000) == 0x8000)) {
+                    if ((colliderFlags == EFFECT_NONE) ||
+                        ((colliderFlags &
+                          (EFFECT_UNK_4000 | EFFECT_UNK_0800)) ==
+                         EFFECT_UNK_0800) ||
+                        ((colliderFlags &
+                          (EFFECT_UNK_8000 | EFFECT_UNK_4000)) ==
+                         EFFECT_UNK_8000)) {
                         ReboundStoneBounce1(0x400);
                     }
                     if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_4000) {
