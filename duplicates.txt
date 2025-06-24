@@ -2999,6 +2999,12 @@
 | 1.00 | true     | EntityDopplegangerBlinkWhite        | asm/us/boss/bo4/matchings/unk_46E7C/EntityDopplegangerBlinkWhite.s 
 | 1.00 | true     | EntityDopplegangerBlinkWhite        | asm/us/boss/rbo5/matchings/unk_4648C/EntityDopplegangerBlinkWhite.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | EntitySubwpnKnife                   | asm/us/boss/bo4/matchings/unk_46E7C/EntitySubwpnKnife.s 
+| 0.98 | true     | EntitySubwpnKnife                   | asm/us/boss/rbo5/matchings/unk_4648C/EntitySubwpnKnife.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntitySubwpnReboundStone            | asm/us/boss/bo4/matchings/unk_46E7C/EntitySubwpnReboundStone.s 
+| 1.00 | true     | EntitySubwpnReboundStone            | asm/us/boss/rbo5/matchings/unk_4648C/EntitySubwpnReboundStone.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C72BC                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801C72BC.s 
 | 1.00 | true     | func_us_801C68CC                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C68CC.s 
 -------------------------------------------------------------------------------
@@ -3029,20 +3035,14 @@
 | 1.00 | true     | func_us_801CA748                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801CA748.s 
 | 1.00 | true     | func_us_801C9D58                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801C9D58.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801CD178                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801CD178.s 
+| 1.00 | true     | func_us_801CC788                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801CC788.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801D162C                    | asm/us/boss/bo4/matchings/unk_46E7C/func_us_801D162C.s 
 | 1.00 | true     | func_us_801D0BD8                    | asm/us/boss/rbo5/matchings/unk_4648C/func_us_801D0BD8.s 
 -------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801CD178                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801CD178.s 
-| 1.00 | false    | func_us_801CC788                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801CC788.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801D0318                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801D0318.s 
-| 1.00 | false    | func_us_801CF8C4                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801CF8C4.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801D0DE0                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801D0DE0.s 
-| 1.00 | false    | func_us_801D038C                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801D038C.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801D17EC                    | asm/us/boss/bo4/nonmatchings/unk_46E7C/func_us_801D17EC.s 
-| 0.98 | false    | func_us_801D0D98                    | asm/us/boss/rbo5/nonmatchings/unk_4648C/func_us_801D0D98.s 
+| 1.00 | false    | EntityDopplegangerDissolves         | asm/us/boss/bo4/nonmatchings/unk_46E7C/EntityDopplegangerDissolves.s 
+| 1.00 | false    | EntityDopplegangerDissolves         | asm/us/boss/rbo5/nonmatchings/unk_4648C/EntityDopplegangerDissolves.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_80198574                    | asm/us/boss/mar/matchings/clock_room/func_us_80198574.s 
 | 1.00 | true     | func_us_801CD750                    | asm/us/st/no0/matchings/clock_room/func_us_801CD750.s 
