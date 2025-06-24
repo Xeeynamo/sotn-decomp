@@ -67,7 +67,7 @@ segments:
       - [0x1C54, .data, e_bone_pillar]
       - [0x1D40, data] # unk_52EA4
       - [0x1F20, .data, e_bat]
-      - [0x1F58, data] # unk_53FD8
+      - [0x1F58, .data, e_crow]
       - [0x2030, .data, e_skelerang]
       - [0x211C, data] # unk_550E4
       - [0x22A8, .data, e_sealed_door]
@@ -90,7 +90,7 @@ segments:
       - [0x4013C, .rodata, e_bone_pillar]
       - [0x40160, .rodata, unk_52EA4]
       - [0x4018C, .rodata, e_bat]
-      - [0x401A0, .rodata, unk_53FD8]
+      - [0x401A0, .rodata, e_crow]
       - [0x401D0, .rodata, e_skelerang]
       - [0x4023C, .rodata, unk_550E4]
       - [0x402D0, .rodata, e_sealed_door]
@@ -116,7 +116,7 @@ segments:
       - [0x51D00, c, e_bone_pillar]
       - [0x52EA4, c, unk_52EA4]
       - [0x53D8C, c, e_bat]
-      - [0x53FD8, c, unk_53FD8]
+      - [0x53FD8, c, e_crow]
       - [0x5468C, c, e_skelerang]
       - [0x550E4, c, unk_550E4]
       - [0x573E4, c, e_sealed_door]
