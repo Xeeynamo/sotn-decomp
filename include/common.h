@@ -117,7 +117,7 @@
 #define FACTORY(id, param) ((id) + (param << 16))
 
 // Tests multiple bits of x being set, based on the bitmask defined in y.
-#define TEST_BITS(x, y) ((x & y) == y)
+#define TEST_BITS(x, y) (((x) & (y)) == (y))
 
 // PSX SDK libraries do not use float. Instead they use a fix-point number
 // where 4096 is equal to 1.0.
