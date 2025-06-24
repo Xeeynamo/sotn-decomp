@@ -253,9 +253,7 @@ void DemoSaveFile(void) {
 
 void DemoInit(s32 arg0) {
     s32* temp;
-#if !defined(VERSION_PC)
     g_DemoPtr = DEMO_KEY_PTR;
-#endif
     temp = (s32*)g_DemoPtr;
     *temp = 0;
 
@@ -358,6 +356,9 @@ void DemoUpdate(void) {
     u8 frameCount;
     s32 demoOffset;
 
+#ifdef VERSION_PC
+    g_DemoPtr = DEMO_KEY_PTR;
+#endif
     btnLo = g_DemoPtr[0];
     btnHi = g_DemoPtr[1];
     frameCount = g_DemoPtr[2];
