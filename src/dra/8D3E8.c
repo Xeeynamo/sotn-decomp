@@ -613,8 +613,7 @@ void PlayerStepUnmorphWolf(void) {
         }
         if ((g_Player.vram_flag & 3) == 3) {
             g_Player.unk68 = 1;
-            PLAYER.velocityY = 0;
-            PLAYER.velocityX = 0;
+            PLAYER.velocityX = PLAYER.velocityY = 0;
         }
         if (else_cycles == 4) {
             PLAYER.animSet = 1;

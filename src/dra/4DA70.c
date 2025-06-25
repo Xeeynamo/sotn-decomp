@@ -89,7 +89,7 @@ s32 func_800EDB58(u8 primType, s32 count) {
     return (s16)primStartIdx;
 }
 
-s32 AllocPrimitives(u8 primType, s32 count) {
+s16 AllocPrimitives(u8 primType, s32 count) {
     s32 i;
     Primitive* prim;
     s16 index;
@@ -112,16 +112,16 @@ s32 AllocPrimitives(u8 primType, s32 count) {
                 }
                 prim->next = &g_PrimBuf[index];
             }
-            return (s16)i;
+            return i;
         }
     }
     return -1;
 }
 
-s32 func_800EDD9C(u8 type, s32 count) {
+s16 AllocPrimitivesReverse(u8 type, s32 count) {
     s32 i;
     Primitive* prim;
-    s16 foundPolyIndex;
+    s16 index;
 
     for (prim = &g_PrimBuf[LEN(g_PrimBuf) - 1], i = LEN(g_PrimBuf) - 1; i >= 0;
          i--, prim--) {
@@ -132,11 +132,10 @@ s32 func_800EDD9C(u8 type, s32 count) {
                 prim->next = NULL;
             } else {
                 prim->type = type;
-                foundPolyIndex = func_800EDD9C(type, count - 1);
-                prim->next = &g_PrimBuf[foundPolyIndex];
+                index = AllocPrimitivesReverse(type, count - 1);
+                prim->next = &g_PrimBuf[index];
             }
-            foundPolyIndex = i;
-            return foundPolyIndex;
+            return i;
         }
     }
 #if defined(VERSION_PSP)

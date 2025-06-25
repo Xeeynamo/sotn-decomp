@@ -24,7 +24,6 @@ func_800EDAE4 = 0x090E0CA8;
 func_800EDB08 = 0x090E0CF0;
 func_800EDB58 = 0x090E0D68;
 AllocPrimitives = 0x090E0E30;
-func_800EDD9C = 0x090E0F00;
 FreePrimitives = 0x090E0FA8;
 RenderPrimitives = 0x090E0FF8;
 func_801024DC = 0x090E2720;
