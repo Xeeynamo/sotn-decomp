@@ -8,7 +8,7 @@ typedef enum {
     CSOP_LINE_BREAK,
     CSOP_SET_SPEED,
     CSOP_SET_WAIT,
-    CSOP_SCRIPT_UNKNOWN_4,
+    CSOP_HIDE_DIALOG,
     CSOP_SET_PORTRAIT,
     CSOP_NEXT_DIALOG,
     CSOP_SET_POS,
@@ -38,6 +38,7 @@ typedef enum {
 #define LINE_BREAK() CSOP_LINE_BREAK
 #define SET_SPEED(x) CSOP_SET_SPEED, x
 #define SET_WAIT(x) CSOP_SET_WAIT, x
+#define HIDE_DIALOG() CSOP_HIDE_DIALOG
 #define SET_PORTRAIT(clut, side) CSOP_SET_PORTRAIT, clut, side
 #define NEXT_DIALOG() CSOP_NEXT_DIALOG
 #define SET_POS(x, y) CSOP_SET_POS, x, y
@@ -51,6 +52,7 @@ typedef enum {
 #define SCRIPT_UNKNOWN_15(x) CSOP_SCRIPT_UNKNOWN_15, script_word(x)
 #define WAIT_FOR_FLAG(x) CSOP_WAIT_FOR_FLAG, x
 #define SET_FLAG(x) CSOP_SET_FLAG, x
+#define SCRIPT_UNKNOWN_18() CSOP_SCRIPT_UNKNOWN_18
 #define LOAD_PORTRAIT(addr, id) CSOP_LOAD_PORTRAIT, script_word(addr), id
 #define SCRIPT_UNKNOWN_20(x) CSOP_SCRIPT_UNKNOWN_20, script_half(x)
 #define SCRIPT_UNKNOWN_21() CSOP_SCRIPT_UNKNOWN_21
