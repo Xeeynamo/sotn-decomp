@@ -2,10 +2,6 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-#if defined(VERSION_PSP)
-#include "../dra_psp/dra_psp.h"
-#endif
-
 #define HUD_NUM_SPRITES 14
 u8 g_HudSpriteX[HUD_NUM_SPRITES] = {
     90, 90, 90, 34, 2, 31, 3, 9, 15, 21, 59, 63, 67, 71,
@@ -32,8 +28,9 @@ u16 g_HudSpriteClut[HUD_NUM_SPRITES] = {
     0x0171, 0x0171, 0x0171, 0x0196, 0x0196, 0x0196, 0x0196,
 };
 u16 g_HudSpriteBlend[HUD_NUM_SPRITES] = {
-    DRAW_HIDE, DRAW_HIDE, DRAW_HIDE, 0x2000, 0x2000, 0x2000, 0x2000,
-    0x2000,    0x2000,    0x2000,    0x2000, 0x2000, 0x2000, 0x2000,
+    DRAW_HIDE,   DRAW_HIDE,   DRAW_HIDE,   DRAW_ABSPOS, DRAW_ABSPOS,
+    DRAW_ABSPOS, DRAW_ABSPOS, DRAW_ABSPOS, DRAW_ABSPOS, DRAW_ABSPOS,
+    DRAW_ABSPOS, DRAW_ABSPOS, DRAW_ABSPOS, DRAW_ABSPOS,
 };
 u16 g_HudSubwpnSpriteClut[HUD_NUM_SPRITES] = {
     0x0175, 0x0176, 0x0175, 0x0176, 0x0175, 0x0176, 0x0175,
@@ -108,6 +105,8 @@ char* g_LuckCode = "x-x!v''q";
 char* g_AxeArmorCode = "axearmor";
 
 #if defined(VERSION_PSP)
+extern s32 D_psp_091CDC80;
+extern s32 D_psp_091CDC88;
 extern s32 D_psp_091FC3F8;
 extern s32 D_psp_091FC400;
 extern s32 D_psp_091FC408;
