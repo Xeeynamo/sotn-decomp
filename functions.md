@@ -122,6 +122,7 @@
 | dra   | 62EB8.rodata                             |       18 |          0 | Yes    |                                 |       |
 | dra   | 84B88.rodata                             |       18 |          0 | Yes    |                                 |       |
 | dra   | 8A0A4.rodata                             |       18 |          0 | Yes    |                                 |       |
+| dai   | cutscene_init.rodata                     |       18 |          0 | Yes    |                                 |       |
 | dai   | unk_17C50.rodata                         |       18 |          0 | Yes    |                                 |       |
 | lib   | e_life_up.rodata                         |       18 |          0 | Yes    |                                 |       |
 | lib   | unk_3B53C.rodata                         |       18 |          0 | Yes    |                                 |       |
@@ -273,6 +274,7 @@
 | dra   | PerformHellfire                          |       25 |          4 |        |                                 |       |
 | dra   | MuteSound                                |       25 |          6 |        |                                 |       |
 | dra   | 4AEA4.rodata                             |       26 |          0 | Yes    |                                 |       |
+| dai   | unk_1A770.rodata                         |       26 |          0 | Yes    |                                 |       |
 | st0   | 2A218.rodata                             |       26 |          0 | Yes    |                                 |       |
 | dra   | HideAllBackgroundLayers                  |       26 |          2 |        |                                 |       |
 | dra   | SetSpeedX                                |       26 |          2 |        | https://decomp.me/scratch/XhVNS | 0.559 |
@@ -471,7 +473,6 @@
 | no4   | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | st0   | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
 | wrp   | AllocEntity                              |       37 |          6 |        | https://decomp.me/scratch/ITQAn | 1.0   |
-| dai   | unk_1A770.rodata                         |       38 |          0 | Yes    |                                 |       |
 | no4   | unk_2108.rodata                          |       38 |          0 | Yes    |                                 |       |
 | dra   | DestroyEntity                            |       38 |          3 |        |                                 |       |
 | dra   | func_800EDB08                            |       38 |          4 |        | https://decomp.me/scratch/dXwiB | 0.995 |
@@ -696,9 +697,9 @@
 | dra   | func_psp_090EAF08                        |       51 |         10 |        | https://decomp.me/scratch/dmTOh | 0.218 |
 | maria | GetLang                                  |       51 |         10 |        |                                 |       |
 | ric   | GetLang                                  |       51 |         10 |        |                                 |       |
+| dai   | GetLang_09253A70                         |       51 |         10 |        |                                 |       |
 | dai   | GetLang_09246968                         |       51 |         10 |        |                                 |       |
 | dai   | GetLang_09245408                         |       51 |         10 |        |                                 |       |
-| dai   | GetLang_09253A70                         |       51 |         10 |        |                                 |       |
 | lib   | func_psp_0924B2E0                        |       51 |         10 |        | https://decomp.me/scratch/5eIud | 0.218 |
 | lib   | GetLang                                  |       51 |         10 |        |                                 |       |
 | lib   | func_psp_0925D430                        |       51 |         10 |        | https://decomp.me/scratch/aysnE | 1.0   |
@@ -830,7 +831,7 @@
 | no4   | EntityFishheadFireball                   |       63 |         10 |        |                                 |       |
 |       | ServantUnk0                              |       63 |         12 |        |                                 |       |
 | dra   | menu.rodata                              |       64 |          0 | Yes    |                                 |       |
-| dai   | e_cutscene.rodata                        |       64 |          0 | Yes    |                                 |       |
+| dai   | e_cutscene_psp.rodata                    |       64 |          0 | Yes    |                                 |       |
 | lib   | cutscene.rodata                          |       64 |          0 | Yes    |                                 |       |
 | no3   | cutscene.rodata                          |       64 |          0 | Yes    |                                 |       |
 | dra   | CheckWeaponCombo                         |       64 |          5 |        | https://decomp.me/scratch/w25wF | 1.0   |
