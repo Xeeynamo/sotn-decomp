@@ -5,7 +5,7 @@ extern s32 D_us_801D4118[];
 extern s32 D_us_801D4198[];
 extern s32 D_us_801D4D74;
 
-void func_us_801C1A38(void) {
+static void func_us_801C1A38(void) {
     Entity* entity;
     Primitive* prim;
     s16 primIndex;
@@ -71,11 +71,23 @@ void func_us_801C1A38(void) {
     }
 }
 
+static s16 D_us_801811E8[] = {
+    -0x30, -0x30, -0x2F, -0x28, -0x29, -0x1E, -0x1F, -0x1E, -0x29,
+    -0x29, -0x31, -0x33, -0x33, -0x2A, -0x29, -0x1D, -0x1D, 0,
+};
+static s32 D_us_8018120C[] = {
+    FIX(1.0 / 2048.0), FIX(1.0 / 1024.0), FIX(1.0 / 2.0),    FIX(1.0 / 8.0),
+    FIX(1.0 / 4.0),    FIX(1.0 / 16.0),   FIX(1.0 / 32.0),   FIX(1.0 / 128.0),
+    FIX(1.0 / 256.0),  FIX(1.0 / 2048.0),
+    FIX(1.0 / 2048.0), // different from rbo5
+    FIX(1.0 / 2048.0), FIX(1.0 / 2048.0), FIX(1.0 / 2048.0), FIX(1.0 / 2048.0),
+    FIX(1.0 / 2048.0),
+};
+
 #include "../dop_check_st_collision.h"
 
 extern s32 D_us_801805A0;
-extern s16 D_us_801811E8[];
-extern s32 D_us_8018120C[];
+
 extern u8 D_us_80183C70[][4];
 extern AnimationFrame* D_us_80183CB4[];
 extern SpriteParts* D_us_801B159C[];
@@ -503,9 +515,9 @@ typedef enum {
     THINK_STEP_WAIT,
 } ThinkStep;
 
-extern s32 D_us_801D3D24; // think_step
-extern s32 D_us_801D3D28; // timer
-extern s32 D_us_801D3D2C; // timer
+static s32 D_us_801D3D24; // think_step
+static s32 D_us_801D3D28; // timer
+static s32 D_us_801D3D2C; // timer
 
 static void DopplegangerThinking(void) {
     s32 posX;
@@ -813,7 +825,7 @@ static void DopplegangerThinking(void) {
     }
 }
 
-extern EInit D_us_80180410;
+extern EInit EInitUnk16;
 
 typedef struct {
     u16 unk0;
@@ -824,14 +836,14 @@ typedef struct {
 
 extern Unk_Dop D_us_801D4DDA;
 
-void func_us_801C37B4(Entity* self) {
+void EntityUnkId16(Entity* self) {
     s32 i;
     Entity* entity;
     s16 hitPoints;
 
     D_us_801D4DDA.unk0 = DOPPLEGANGER.hitPoints;
     if (self->step == 0) {
-        InitializeEntity(D_us_80180410);
+        InitializeEntity(EInitUnk16);
         func_us_801C1A38();
 
         entity = &g_Entities[STAGE_ENTITY_START + 4];

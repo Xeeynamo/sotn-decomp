@@ -145,7 +145,10 @@ static func_us_801C7340(void) {
     }
 }
 
-extern s16 D_us_8018133C[];
+static s16 D_us_8018133C[] = {
+    SFX_BO4_UNK_7DD, SFX_BO4_UNK_7DC, SFX_BO4_UNK_7DB, SFX_BO4_UNK_7DA,
+    SFX_BO4_UNK_7D9, SFX_BO4_UNK_7D8, SFX_BO4_UNK_7D7,
+};
 
 void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
     s32 sfxIndex;
@@ -278,10 +281,10 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
 }
 
 extern s32 D_us_801805A0;
-extern s32 D_us_801D3D30;
-extern s32 D_us_801D3D34;
-extern s32 D_us_801D3D38;
-extern s32 D_us_801D3D3C;
+static s32 D_us_801D3D30;
+static s32 D_us_801D3D34;
+static s32 D_us_801D3D38;
+static s32 D_us_801D3D3C;
 extern u_long D_us_801D421C[];
 extern RECT D_us_80181FD8;
 
@@ -496,7 +499,7 @@ static s32 CheckWingSmashInput(void) {
     return false;
 }
 
-extern s32 g_WingSmashTimer;
+static s32 g_WingSmashTimer;
 extern s32 D_us_801D4A1C;
 
 void ControlBatForm(void) {
@@ -810,7 +813,6 @@ extern s16 g_DopSensorsCeilingDefault[];
 extern s16 g_DopSensorsFloorDefault[];
 extern Point16 g_DopSensorsCeiling[];
 extern Point16 g_DopSensorsFloor[];
-extern AnimationFrame D_us_80183B0C[];
 
 void DopplegangerStepUnmorphBat(void) {
     s32 i;
@@ -877,8 +879,6 @@ s32 func_us_801C8EE4(void) {
     SetDopplegangerStep(15);
     return true;
 }
-
-extern s32 D_us_801D4A1C;
 
 void ControlMistForm(void) {
     u32 padDirection;
@@ -1086,7 +1086,7 @@ void DopplegangerStepUnmorphMist(void) {
     }
 }
 
-extern s32 D_us_801D3D44;
+static s32 D_us_801D3D44;
 
 void DopplegangerStepSwordWarp(void) {
     if (DOPPLEGANGER.step_s == 0) {
@@ -1101,8 +1101,12 @@ void DopplegangerStepSwordWarp(void) {
     }
 }
 
-extern s16 D_us_8018134C[]; // rotation angles
-extern s32 D_us_801D3D48;
+// rotation angles
+static s16 D_us_8018134C[] = {
+    0x0000, 0x0000, 0x0100, 0x0000, 0xFF00, 0x0000, 0x0100, 0x0000,
+    0xFF00, 0xFE00, 0xFF00, 0x0000, 0x0100, 0x0200, 0x0100, 0x0000,
+};
+static s32 D_us_801D3D48;
 
 void DopplegangerStepStone(s32 arg0) {
     switch (DOPPLEGANGER.step_s) {
@@ -1205,12 +1209,109 @@ typedef union {
     u8 rawBytes[4];
     AnimationFrame af;
 } unionD_us_8018136C;
-extern unionD_us_8018136C D_us_8018136C[];
+static unionD_us_8018136C D_us_8018136C[] = {
+    {.rawBytes =
+         {
+             0x10,
+             0x7F,
+             0x3F,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0x7F,
+             0x00,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0x3F,
+             0x3F,
+             0x3F,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0x5F,
+             0x2F,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x0C,
+             0x7F,
+             0x3F,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x0C,
+             0x7F,
+             0x3F,
+             0x7F,
+         }},
+    {.rawBytes =
+         {
+             0x02,
+             0x7F,
+             0x3F,
+             0x7F,
+         }},
+    {.rawBytes =
+         {
+             0x06,
+             0x00,
+             0x3F,
+             0x7F,
+         }},
+    {.rawBytes =
+         {
+             0x06,
+             0x3F,
+             0x3F,
+             0x3F,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0x3F,
+             0x3F,
+             0x7F,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0xFF,
+             0xFF,
+             0xFF,
+         }},
+    {.rawBytes =
+         {
+             0x12,
+             0x7F,
+             0x00,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x12,
+             0x7F,
+             0x7F,
+             0x7F,
+         }},
+};
 
-extern u8 D_us_801D3D4C;
-extern u8 D_us_801D3D50;
-extern u8 D_us_801D3D54;
-extern u8 D_us_801D3D58;
+// some kind of timer
+static u8 D_us_801D3D4C;
+STATIC_PAD_BSS(3);
+static u8 D_us_801D3D50;
+STATIC_PAD_BSS(3);
+static u8 D_us_801D3D54;
+STATIC_PAD_BSS(3);
+static u8 D_us_801D3D58;
+STATIC_PAD_BSS(3);
 
 void func_80118C28(s32 arg0) {
     // Break up the 4-byte struct D_us_8018136C[arg0] into individual bytes.
@@ -1220,7 +1321,12 @@ void func_80118C28(s32 arg0) {
     D_us_801D3D58 = D_us_8018136C[arg0].rawBytes[3];
 }
 
-extern u8 D_us_801813A0[];
+static u8 D_us_801813A0[] = {
+    0x00, 0x50, 0x10, 0x50, 0x00, 0x60, 0x10, 0x60, 0x10, 0x50, 0x20, 0x50,
+    0x10, 0x60, 0x20, 0x60, 0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50,
+    0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38, 0x78, 0x30, 0x80, 0x30,
+    0x78, 0x38, 0x80, 0x38, 0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40,
+};
 
 static s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
     s16 right;
@@ -1264,7 +1370,7 @@ static s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
     return 0;
 }
 
-extern Point16 D_us_801D3D5C[16];
+static Point16 D_us_801D3D5C[16];
 
 void DopEntityHitByHoly(Entity* self) {
     s32 shouldHide;
@@ -1345,12 +1451,83 @@ void DopEntityHitByHoly(Entity* self) {
 
 void PrintDummySet(void) { FntPrint("dummy set\n"); }
 
-extern PfnEntityUpdate D_us_801813D0[];
-// some kind of timer
-extern u8 D_us_801D3D4C;
-extern u8 D_us_801D3D50;
-extern u8 D_us_801D3D54;
-extern u8 D_us_801D3D58;
+void func_us_801CA2AC(Entity*);
+void EntitySmokePuff(Entity*);
+void EntityGravityBootBeam(Entity*);
+void EntitySubwpnKnife(Entity*);
+void func_us_801CD178(Entity*);
+void EntityDopplegangerBlinkWhite(Entity*);
+void func_us_801CD89C(Entity*);
+void EntitySubwpnReboundStone(Entity*);
+void DopEntityHitByLightning(Entity*);
+void EntityDopplegangerOutline(Entity*);
+void EntityDopplegangerDissolves(Entity*);
+void EntityHitByIce(Entity*);
+void EntityMist(Entity*);
+void EntityWingSmashTrail(Entity*);
+void func_us_801CA748(Entity*);
+void DopEntityHitByHoly(Entity*);
+void DopEntityHitByDark(Entity*);
+void DopplegangerUnarmedAttack(Entity*);
+
+static PfnEntityUpdate D_us_801813D0[] = {
+    PrintDummySet,
+    func_us_801CA2AC,
+    EntitySmokePuff,
+    EntityGravityBootBeam,
+    EntitySubwpnKnife,
+    func_us_801CD178,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    EntityDopplegangerBlinkWhite,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    func_us_801CD89C,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    EntitySubwpnReboundStone,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    DopEntityHitByLightning,
+    EntityDopplegangerOutline,
+    EntityDopplegangerDissolves,
+    EntityHitByIce,
+    EntityMist,
+    EntityWingSmashTrail,
+    func_us_801CA748,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    DopEntityHitByHoly,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    DopEntityHitByDark,
+    DopplegangerUnarmedAttack,
+};
 
 void func_us_801CA014(void) {
     Entity* entity;
@@ -1737,7 +1914,7 @@ void EntitySmokePuff(Entity* self) {
     }
 }
 
-extern s32 D_us_801D3D9C;
+static s32 D_us_801D3D9C;
 extern AnimationFrame D_us_80181828[];
 
 void DopEntityHitByDark(Entity* self) {
@@ -2250,9 +2427,7 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
     }
 }
 
-extern s16* D_us_801B0A78[];
 extern s16 D_us_80181B74[24][5];
-extern u8* g_SpriteSheet[];
 
 void EntityDopplegangerOutline(Entity* self) {
     s16* animFramePtr;
@@ -2847,7 +3022,6 @@ void func_us_801CD178(Entity* self) {
     }
 }
 
-extern AnimationFrame D_us_801817A8[];
 extern AnimationFrame D_us_80181D3C[];
 extern AnimationFrame D_us_80181D78[];
 
@@ -3232,7 +3406,7 @@ void EntityHitByIce(Entity* self) {
     }
 }
 
-extern mistStruct D_us_801D3DA0[16];
+static mistStruct D_us_801D3DA0[16];
 
 void func_80121F14(s32 velocityX, s32 velocityY) {
     mistStruct* ptr = D_us_801D3DA0;
@@ -3247,7 +3421,6 @@ void func_80121F14(s32 velocityX, s32 velocityY) {
 extern Primitive D_us_801D3F00[8];
 extern u32 D_us_80181F98[8];
 extern u32 D_us_80181FB8[8];
-extern mistStruct D_us_801D3DA0[16];
 
 Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     s32 primU0;
@@ -3349,18 +3522,22 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     return arg2;
 }
 
-extern s16 D_us_801D3EF0;
-extern s16 D_us_801D3EE0;
-extern s16 D_us_801D3EF4;
-extern s16 D_us_801D3EE4;
-extern s16 D_us_801D3EF8;
-extern s16 D_us_801D3EE8;
-extern s16 D_us_801D3EFC;
-extern s16 D_us_801D3EEC;
-extern Primitive D_us_801D3F00[8];
-extern mistStruct D_us_801D3DA0[16];
-extern u32 D_us_80181F98[8];
-extern u32 D_us_80181FB8[8];
+static s16 D_us_801D3EE0;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D3EE4;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D3EE8;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D3EEC;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D3EF0;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D3EF4;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D3EF8;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D3EFC;
+STATIC_PAD_BSS(2);
 extern s32 D_us_801D40A0;
 extern s16 D_us_80181F18[];
 extern s16 D_us_80181F58[];
@@ -3799,7 +3976,6 @@ extern u16 D_us_801D4DDA;
 extern s32 D_us_801D4DF0;
 extern s32 D_us_801D4DF4;
 extern u8 D_us_80181FE8[][8];
-extern RECT D_us_80181FD8;
 extern s32 g_stone_flag;
 
 // player dissolves into pixels
@@ -4052,7 +4228,7 @@ void EntityDopplegangerDissolves(Entity* self) {
 
 #include "../../rebound_stone.h"
 
-extern EInit D_us_8018041C;
+extern EInit EInitReboundStone;
 void EntitySubwpnReboundStone(Entity* self) {
     s16 playerX;
     s16 playerY;
@@ -4073,7 +4249,7 @@ void EntitySubwpnReboundStone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_8018041C);
+        InitializeEntity(EInitReboundStone);
         if (g_Dop.status & PLAYER_STATUS_POISON) {
             self->attack = self->attack / 2;
         }
@@ -4359,7 +4535,7 @@ extern EInit D_us_8018044C;
 extern DopWeaponAnimation D_us_80184278[];
 
 // Similar to DRA's EntityUnarmedAttack
-void func_us_801D162C(Entity* self) {
+void DopplegangerUnarmedAttack(Entity* self) {
     EInit* var_a0;
     s16 animIndex;
     DopWeaponAnimation* anim;
@@ -4400,7 +4576,7 @@ void func_us_801D162C(Entity* self) {
     }
 }
 
-extern EInit D_us_80180428;
+extern EInit EInitSubwpnKnife;
 
 void EntitySubwpnKnife(Entity* self) {
     Collider collider;
@@ -4420,7 +4596,7 @@ void EntitySubwpnKnife(Entity* self) {
 
     switch (self->step) {
     case DAGGER_INIT:
-        InitializeEntity(D_us_80180428);
+        InitializeEntity(EInitSubwpnKnife);
         if (g_Dop.status & PLAYER_STATUS_POISON) {
             self->attack = self->attack / 2;
         }
