@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../np3/np3.h"
 
+#include "../pfn_entity_update.h"
+
+extern LayoutEntity* D_8D2E368;
+extern LayoutEntity* D_8D2E43C;
+
+extern Overlay OVL_EXPORT(Overlay);
+
 extern s32 E_ID(ID_11);
 extern s32 E_ID(ID_12);
 extern s32 E_ID(ID_13);
@@ -155,4 +162,11 @@ void InitEntityIds(void) {
     E_ID(BLADE_SWORD) = 0x5B;
 }
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/st_init_np3", NP3_Load);
+void OVL_EXPORT(Load)(void) {
+    InitEntityIds();
+    PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
+    g_pStObjLayoutHorizontal = &D_8D2E368;
+    g_pStObjLayoutVertical = &D_8D2E43C;
+    func_892A018();
+    memcpy((u8*)&g_api, (u8*)&OVL_EXPORT(Overlay), sizeof(Overlay));
+}

@@ -56,6 +56,8 @@ EntitySmallWaterDrop = 0x092550D0; // source=match
 EntityWaterDrop = 0x09255400; // source=match
 BottomCornerText = 0x09255760; // source=match
 EntityRoomForeground = 0x09255D58; // source=match
+NP3_EntityUpdates = 0x0926B088;
+NP3_Overlay = 0x0928E820;
 D_psp_E_BLADE_SWORD = 0x09291C18;
 D_psp_E_BLADE = 0x09291C20;
 D_psp_E_GURKHA_SWORD = 0x09291C28;
