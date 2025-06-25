@@ -2890,7 +2890,7 @@ void func_800FB0FC(void) {
     func_800FB004();
 }
 
-void func_800FB160(s32 arg0, s32 arg1, EquipKind equipType) {
+void func_800FB160(s32 arg0, s32 arg1, s32 equipType) {
     u8 swap;
     u8* equipOrder;
 
@@ -2900,7 +2900,7 @@ void func_800FB160(s32 arg0, s32 arg1, EquipKind equipType) {
     equipOrder[D_801375D8[arg1]] = swap;
 }
 
-bool func_800FB1EC(s32 arg0) {
+static bool func_800FB1EC(s32 arg0) {
     if (D_801375CC == EQUIP_HAND) {
         if (arg0 == 0) {
             return true;
@@ -2966,22 +2966,22 @@ MenuContextInit g_MenuInit[NUM_MENU] = {
 #endif
 #define PAD_MENU_BACK_ALT (PAD_MENU_SELECT | PAD_MENU_BACK)
 
-s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
+s32 func_800FB23C(s32* nav, u8* order, u8* count, u32* selected) {
     s32 prevCursor;
     s32 nItems;
     s32 ret;
-    u16 itemId;
     s32 var_s4;
     s32 var_s6;
-    u16 otherItemId;
+    u16 prevItemId;
     u16 yetAnotherId;
+    u16 itemId;
 
-    nItems = func_800FD6C4(D_801375CC);
-    prevCursor = nav->cursorMain;
-    MenuHandleCursorInput(nav, nItems, 2);
-    itemId = order[D_801375D8[nav->cursorMain]];
-    otherItemId = *selected;
     ret = 0;
+    nItems = func_800FD6C4(D_801375CC);
+    prevCursor = *nav;
+    MenuHandleCursorInput(nav, nItems, 2);
+    itemId = order[D_801375D8[*nav]];
+    prevItemId = *selected;
     if (count[itemId] != 0) {
         *selected = itemId;
     } else {
@@ -2990,14 +2990,14 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
 
     if (D_801375CC == EQUIP_HAND) {
         yetAnotherId = g_Status.equipment[1 - D_801375D0];
-        if (count[itemId] > 0) {
-            if (g_EquipDefs[otherItemId].itemCategory == ITEM_TWOHAND) {
+        if (count[itemId] != 0) {
+            if (g_EquipDefs[prevItemId].itemCategory == ITEM_TWOHAND) {
                 g_Status.equipment[1 - D_801375D0] = 0;
             }
             if (g_EquipDefs[itemId].itemCategory == ITEM_TWOHAND) {
-                g_Status.equipment[1 - D_801375D0] = itemId;
+                g_Status.equipment[1 - D_801375D0] = itemId & 0xFFFF;
             }
-        } else if (g_EquipDefs[otherItemId].itemCategory == ITEM_TWOHAND) {
+        } else if (g_EquipDefs[prevItemId].itemCategory == ITEM_TWOHAND) {
             g_Status.equipment[1 - D_801375D0] = 0;
         }
     }
@@ -3008,14 +3008,14 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
          g_Player.unk60) &&
         itemId == ITEM_AXE_LORD_ARMOR && D_801375CC == EQUIP_ARMOR &&
         count[itemId] != 0;
-    var_s6 |= D_801375CC == EQUIP_HAND && count[itemId] > 0 &&
+    var_s6 |= D_801375CC == EQUIP_HAND && count[itemId] != 0 &&
               (itemId == ITEM_LIFE_APPLE || itemId == ITEM_HAMMER);
     D_80137948 = 0;
     if (!var_s6) {
         D_80137948 = 1;
         func_800F7244();
     }
-    *selected = otherItemId;
+    *selected = prevItemId;
     if (D_801375CC == EQUIP_HAND) {
         g_Status.equipment[1 - D_801375D0] = yetAnotherId;
     }
@@ -3023,7 +3023,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     if (g_pads[0].tapped & PAD_MENU_SORT) {
         if (!g_IsSelectingEquipment) {
             if (!func_800FB1EC(itemId)) {
-                g_EquipmentCursor = nav->cursorMain;
+                g_EquipmentCursor = *nav;
                 g_IsSelectingEquipment++;
                 PlaySfx(SFX_UI_CONFIRM);
             } else {
@@ -3031,9 +3031,9 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
             }
         } else {
             if (!func_800FB1EC(itemId)) {
-                func_800FB160(g_EquipmentCursor, nav->cursorMain, D_801375CC);
-                ret = 2;
+                func_800FB160(g_EquipmentCursor, *nav, D_801375CC);
                 g_IsSelectingEquipment = 0;
+                ret = 2;
                 PlaySfx(SFX_UI_CONFIRM);
             } else {
                 PlaySfx(SFX_UI_ERROR);
@@ -3042,9 +3042,9 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
         if (g_IsSelectingEquipment) {
             if (!func_800FB1EC(itemId)) {
-                func_800FB160(g_EquipmentCursor, nav->cursorMain, D_801375CC);
-                ret = 2;
+                func_800FB160(g_EquipmentCursor, *nav, D_801375CC);
                 g_IsSelectingEquipment = 0;
+                ret = 2;
                 PlaySfx(SFX_UI_CONFIRM);
             } else {
                 PlaySfx(SFX_UI_ERROR);
@@ -3053,7 +3053,7 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
             PlaySfx(SFX_UI_ERROR);
         } else {
             PlaySfx(SFX_UI_CONFIRM);
-            if (count[itemId] > 0) {
+            if (count[itemId] != 0) {
                 var_s4 = 1;
                 *selected = itemId;
                 if (!func_800FB1EC(itemId)) {
@@ -3078,9 +3078,9 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
                     *selected = D_800A2DEC[D_801375D4];
                 }
             }
-            AddToInventory(otherItemId, D_801375CC);
+            AddToInventory(prevItemId, D_801375CC);
             if (D_801375CC == EQUIP_HAND) {
-                if (g_EquipDefs[otherItemId].itemCategory == ITEM_TWOHAND) {
+                if (g_EquipDefs[prevItemId].itemCategory == ITEM_TWOHAND) {
                     g_Status.equipment[1 - D_801375D0] = 0;
                 }
                 if (g_EquipDefs[itemId].itemCategory == ITEM_TWOHAND &&
@@ -3089,14 +3089,14 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
                         ITEM_TWOHAND) {
                         AddToInventory(yetAnotherId, D_801375CC);
                     }
-                    g_Status.equipment[1 - D_801375D0] = itemId;
+                    g_Status.equipment[1 - D_801375D0] = itemId & 0xFFFF;
                 }
             }
         block_5b0:
             ret = 2;
         }
     }
-    func_800FA3C4(nav->cursorMain, var_s6, 1);
+    func_800FA3C4(*nav, var_s6, 1);
     if (-g_Menus[MENU_DG_EQUIP_SELECTOR].h / 12) {
         if (g_pads[0].repeat & PAD_L1) {
             D_80137844[0] = 5;
@@ -3124,17 +3124,16 @@ s32 func_800FB23C(MenuNavigation* nav, u8* order, u8* count, u32* selected) {
     }
 
     if (g_pads[0].tapped & PAD_MENU_BACK) {
-        if (!g_IsSelectingEquipment) {
+        if (g_IsSelectingEquipment) {
+            g_IsSelectingEquipment = 0;
+        } else {
             func_800FAE98();
             return 0;
-        } else {
-            g_IsSelectingEquipment = 0;
         }
     }
-    if (prevCursor != nav->cursorMain) {
+    if (prevCursor != *nav) {
         return 2;
     }
-
     return ret;
 }
 
