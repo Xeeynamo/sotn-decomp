@@ -46,7 +46,7 @@ def get_symbols_yaml_filename(version_name, overlay_name):
 
 def get_nonmatchings_path(version_name, ovl_name):
     if version_name == "pspeu":
-        nonmatchings_path = f"psp/{ovl_name}"
+        nonmatchings_path = f"nonmatchings/{ovl_name}"
     else:
         nonmatchings_path = "nonmatchings"
     return nonmatchings_path
