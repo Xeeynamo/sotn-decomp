@@ -1,4 +1,5 @@
-InitEntityIds = 0x09237928; // source=match
+InitEntityIds1 = 0x09237700; // source=match
+InitEntityIds2 = 0x09237928; // source=match
 NP3_Load = 0x09237A90; // source=match
 EntityBreakable = 0x0923ADC8; // source=match
 NP3_EntityLockCamera = 0x0923E2E8; // source=match

@@ -3,9 +3,9 @@
 
 // clang-format off
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/first_c_file", func_pspeu_09237700);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/first_c_file", InitEntityIds1);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/first_c_file", InitEntityIds);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/first_c_file", InitEntityIds2);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/first_c_file", NP3_Load);
 
