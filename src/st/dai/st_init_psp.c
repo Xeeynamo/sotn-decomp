@@ -70,6 +70,7 @@ s32 E_ID(CUTSCENE);
 s32 E_ID(UNK_46);
 s32 E_ID(UNK_47);
 s32 E_ID(MIST_DOOR);
+
 u8* OVL_EXPORT(cutscene_script); // bss
 u8* D_pspeu_092970B8;            // bss
 

@@ -171,6 +171,9 @@ typedef enum {
     PAD_RIGHT = 0x0020,
     PAD_DOWN = 0x0040,
     PAD_LEFT = 0x0080,
+    PAD_BAT = PAD_R1,
+    PAD_MIST = PAD_L1 | PAD_R1,
+    PAD_WOLF = PAD_L1,
 #else
     BUTTON_COUNT = 8,
     PAD_L2 = 0x0001,
@@ -189,6 +192,9 @@ typedef enum {
     PAD_RIGHT = 0x2000,
     PAD_DOWN = 0x4000,
     PAD_LEFT = 0x8000,
+    PAD_BAT = PAD_R1,
+    PAD_MIST = PAD_L1,
+    PAD_WOLF = PAD_R2,
 #endif
     PAD_SIM_UNK10000 = 0x10000,
     PAD_SIM_UNK20000 = 0x20000,

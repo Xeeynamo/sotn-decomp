@@ -209,6 +209,26 @@ files:
           - [0x3ED78, palette, crash_dragon_pal, 16]
           - [0x3ED98, palette, crash_cardinal_pal, 16]
           - [0x3F338, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dai.bin
+    asset_path: assets/st/dai
+    src_path: src/st/dai
+    splat_config_path: config/splat.pspeu.stdai.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x2BCF8, cutscene, cutscene_script_it]
+          - [0x2BE5C, skip] # trailing script data
+          - [0x2BE70, cutscene, cutscene_script_sp]
+          - [0x2BFBC, skip] # trailing script data
+          - [0x2BFC8, cutscene, cutscene_script_fr]
+          - [0x2C134, skip] # trailing script data
+          - [0x2C138, cutscene, cutscene_script_ge]
+          - [0x2C2C4, skip] # trailing script data
+          - [0x2C2C8, cutscene, cutscene_script_en]
+          - [0x2C428, skip] # trailing script data
+          - [0x2C4B8, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
     asset_path: assets/st/lib
     src_path: src/st/lib_psp

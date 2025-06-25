@@ -29,6 +29,7 @@ enum DaiPalette {
     PAL_UNK235 = 0x235,
     PAL_BREAKABLE = 0x249,
     PAL_BREAKABLE_DEBRIS = 0x24D,
+    PAL_UNK251 = 0x251,
 };
 
 enum DaiEntities {

@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#ifdef VERSION_PSP
+#include "cutscene_actor_name_psp.h"
+#else
 extern const char* actor_names[];
 
 // Creates primitives for the actor name at the head of the dialogue
@@ -59,3 +62,4 @@ static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
         }
     }
 }
+#endif
