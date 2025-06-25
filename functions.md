@@ -94,10 +94,10 @@
 | chi   | en_debug_cerberus_gate.rodata            |       16 |          0 | Yes    |                                 |       |
 | chi   | en_red_door.rodata                       |       16 |          0 | Yes    |                                 |       |
 | chi   | en_stage_name.rodata                     |       16 |          0 | Yes    |                                 |       |
+| dai   | e_crow.rodata                            |       16 |          0 | Yes    |                                 |       |
 | dai   | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
 | dai   | e_sealed_door.rodata                     |       16 |          0 | Yes    |                                 |       |
 | dai   | unk_143F0.rodata                         |       16 |          0 | Yes    |                                 |       |
-| dai   | unk_2280.rodata                          |       16 |          0 | Yes    |                                 |       |
 | lib   | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
 | no3   | e_castle_door.rodata                     |       16 |          0 | Yes    |                                 |       |
 | no3   | e_outdoor_ents.rodata                    |       16 |          0 | Yes    |                                 |       |
