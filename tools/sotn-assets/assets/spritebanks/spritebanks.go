@@ -85,8 +85,7 @@ func ReadSpritesBanks(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteBanks, da
 	}, datarange.MergeDataRanges(spriteRanges), nil
 }
 
-func buildSprites(fileName string, outputDir string) error {
-	ovlName := filepath.Base(outputDir)
+func buildSprites(fileName, outputDir, ovlName string) error {
 	data, err := os.ReadFile(fileName)
 	if err != nil {
 		return err
@@ -96,7 +95,7 @@ func buildSprites(fileName string, outputDir string) error {
 	if err := json.Unmarshal(data, &spritesBanks); err != nil {
 		return err
 	}
-	if len(spritesBanks.Indices) != banksCount && len(spritesBanks.Indices) != banksCount + 1 {
+	if len(spritesBanks.Indices) != banksCount && len(spritesBanks.Indices) != banksCount+1 {
 		return fmt.Errorf("the number of banks must be exactly %d, got %d", banksCount, len(spritesBanks.Indices))
 	}
 

@@ -33,6 +33,10 @@ void CutsceneRun(void) {
             entity->posX.i.hi |= *g_Dialogue.scriptEnd++;
             entity->posY.i.hi = *g_Dialogue.scriptEnd++ * 0x10;
             entity->posY.i.hi |= *g_Dialogue.scriptEnd++;
+#ifdef STAGE_IS_DAI
+            entity->posX.i.hi -= g_Tilemap.scrollX.i.hi;
+            entity->posY.i.hi -= g_Tilemap.scrollY.i.hi;
+#endif
             break;
         case 1:
             entity = &g_Entities[*g_Dialogue.scriptEnd++ & 0xFF] +

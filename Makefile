@@ -159,7 +159,7 @@ clean: ##@ clean extracted files, assets, and build artifacts
 	git clean -fdx assets/
 	git clean -fdx asm/$(VERSION)/
 	git clean -fdx build/$(VERSION)/
-	git clean -fdx $(SRC_DIR)/weapon
+	git clean -fdx src/**/gen
 	git clean -fdx config/*$(VERSION)*
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
@@ -454,7 +454,7 @@ $(MIPSMATCH_DIR)/target/release/mipsmatch: $(MIPSMATCH_DIR) $(shell find $(MIPSM
 $(MIPSMATCH_APP): $(MIPSMATCH_DIR)/target/release/mipsmatch
 	cp $< $@
 $(GO):
-	curl -L -o go1.22.4.linux-amd64.tar.gz https://go.dev/dl/go1.22.4.linux-amd64.tar.gz
+	curl -L -o go1.22.4.linux-amd64.tar.gz https://go.dev/dl/go1.24.4.linux-amd64.tar.gz
 	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz
 	rm go1.22.4.linux-amd64.tar.gz
 $(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)

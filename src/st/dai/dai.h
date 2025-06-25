@@ -27,11 +27,14 @@ enum DaiPalette {
     PAL_UNK232 = 0x232,
     PAL_UNK234 = 0x234,
     PAL_UNK235 = 0x235,
+    PAL_BREAKABLE = 0x249,
+    PAL_BREAKABLE_DEBRIS = 0x24D,
+    PAL_UNK251 = 0x251,
 };
 
 enum DaiEntities {
     E_NONE,
-    E_BREAKABLE,              // EntityUnkBreakable,
+    E_BREAKABLE,              // DAI_EntityBreakable,
     E_EXPLOSION,              // EntityExplosion,
     E_PRIZE_DROP,             // EntityPrizeDrop,
     E_DAMAGE_DISPLAY,         // EntityDamageDisplay,
@@ -98,7 +101,7 @@ enum DaiEntities {
     E_UNK_41,                 // func_us_801D70A0,
     E_UNK_42,                 // func_us_801D3BD4,
     E_SEALED_DOOR,            // EntitySealedDoor,
-    E_UNK_44,                 // func_801A8328,
+    E_BREAKABLE_DEBRIS,       // EntityBreakableDebris,
     E_CUTSCENE,               // DAI_EntityCutscene,
     E_UNK_46,                 // func_us_801C5920,
     E_UNK_47,                 // func_us_801C5B88,
@@ -106,7 +109,7 @@ enum DaiEntities {
     NUM_ENTITIES,
 };
 
-extern EInit g_EInitBreakable;
+extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit g_EInitSpawner;

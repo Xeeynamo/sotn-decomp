@@ -173,9 +173,7 @@ func readEntityLayout(r io.ReadSeeker, ovlName string, off, baseAddr psx.Addr, c
 	}
 }
 
-func buildEntityLayouts(fileName string, outputDir string) error {
-	ovlName := filepath.Base(outputDir)
-
+func buildEntityLayouts(fileName, outputDir, ovlName string) error {
 	writeLayoutEntries := func(sb *strings.Builder, banks [][]layoutEntry, align4 bool) error {
 		nWritten := 0
 		for i, entries := range banks {

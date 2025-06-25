@@ -65,11 +65,12 @@ s32 E_ID(UNK_40);
 s32 E_ID(UNK_41);
 s32 E_ID(UNK_42);
 s32 E_ID(SEALED_DOOR);
-s32 E_ID(UNK_44);
+s32 E_ID(BREAKABLE_DEBRIS);
 s32 E_ID(CUTSCENE);
 s32 E_ID(UNK_46);
 s32 E_ID(UNK_47);
 s32 E_ID(MIST_DOOR);
+
 u8* OVL_EXPORT(cutscene_script); // bss
 u8* D_pspeu_092970B8;            // bss
 
@@ -127,7 +128,7 @@ void InitEntityIds(void) {
     E_ID(UNK_41) = 0x41;
     E_ID(UNK_42) = 0x42;
     E_ID(SEALED_DOOR) = 0x43;
-    E_ID(UNK_44) = 0x44;
+    E_ID(BREAKABLE_DEBRIS) = 0x44;
     E_ID(CUTSCENE) = 0x45;
     E_ID(UNK_46) = 0x46;
     E_ID(UNK_47) = 0x47;

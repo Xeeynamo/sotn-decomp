@@ -53,16 +53,8 @@ u16 e_elevator_cen_p[] = {
 #include "gen/e_elevator_cen_p.h"
 };
 
-#ifdef VERSION_HD
-#include "gen/tilemap_06A0C.h"
-#include "gen/tilemap_06E0C.h"
-#include "gen/tilemap_0800C.h"
-#include "gen/tiledef_0860C.h"
-#include "gen/tiledef_0C61C.h"
-#else
-#include "gen/tilemap_069EC.h"
-#include "gen/tilemap_06DEC.h"
-#include "gen/tilemap_07FEC.h"
-#include "gen/tiledef_085EC.h"
-#include "gen/tiledef_0C5FC.h"
-#endif
+#include "gen/cen_tilemap_0.h"
+#include "gen/cen_tilemap_1.h"
+#include "gen/cen_tilemap_2.h"
+#include "gen/cen_tiledef_unused.h"
+#include "gen/cen_tiledef_0.h"
