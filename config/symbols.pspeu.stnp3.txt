@@ -1,5 +1,3 @@
-InitEntityIds = 0x09237700; // source=match
-NP3_Load = 0x09237A90; // source=match
 EntityMermanRockLeftSide = 0x09237B08;
 EntityMermanRockRightSide = 0x09237F70;
 EntityJewelSwordDoor = 0x092383A0;
