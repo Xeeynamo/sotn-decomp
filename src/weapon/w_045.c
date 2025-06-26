@@ -232,8 +232,7 @@ static s32 func_ptr_8017000C(Entity* self) {
     if (g_Player.vram_flag & 1) {
         if (PLAYER.step_s != 0) {
             PLAYER.step = 0x28;
-            PLAYER.velocityY = 0;
-            PLAYER.velocityX = 0;
+            PLAYER.velocityX = PLAYER.velocityY = 0;
             g_api.PlaySfx(SFX_STOMP_SOFT_A);
             return;
         }

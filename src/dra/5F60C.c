@@ -2,10 +2,6 @@
 #include "dra.h"
 #include "dra_bss.h"
 
-#if defined(VERSION_PSP)
-#include "../dra_psp/dra_psp.h"
-#endif
-
 #define HUD_NUM_SPRITES 14
 u8 g_HudSpriteX[HUD_NUM_SPRITES] = {
     90, 90, 90, 34, 2, 31, 3, 9, 15, 21, 59, 63, 67, 71,
@@ -32,8 +28,9 @@ u16 g_HudSpriteClut[HUD_NUM_SPRITES] = {
     0x0171, 0x0171, 0x0171, 0x0196, 0x0196, 0x0196, 0x0196,
 };
 u16 g_HudSpriteBlend[HUD_NUM_SPRITES] = {
-    DRAW_HIDE, DRAW_HIDE, DRAW_HIDE, 0x2000, 0x2000, 0x2000, 0x2000,
-    0x2000,    0x2000,    0x2000,    0x2000, 0x2000, 0x2000, 0x2000,
+    DRAW_HIDE,   DRAW_HIDE,   DRAW_HIDE,   DRAW_ABSPOS, DRAW_ABSPOS,
+    DRAW_ABSPOS, DRAW_ABSPOS, DRAW_ABSPOS, DRAW_ABSPOS, DRAW_ABSPOS,
+    DRAW_ABSPOS, DRAW_ABSPOS, DRAW_ABSPOS, DRAW_ABSPOS,
 };
 u16 g_HudSubwpnSpriteClut[HUD_NUM_SPRITES] = {
     0x0175, 0x0176, 0x0175, 0x0176, 0x0175, 0x0176, 0x0175,
@@ -108,6 +105,8 @@ char* g_LuckCode = "x-x!v''q";
 char* g_AxeArmorCode = "axearmor";
 
 #if defined(VERSION_PSP)
+extern s32 D_psp_091CDC80;
+extern s32 D_psp_091CDC88;
 extern s32 D_psp_091FC3F8;
 extern s32 D_psp_091FC400;
 extern s32 D_psp_091FC408;
@@ -631,7 +630,8 @@ void DrawRichterHud(void) {
     g_PlayerHud.unk1C = g_PlayerHud.unk20 =
         g_PlayerHud.unk0C * 100 / g_PlayerHud.unk10;
     g_PlayerHud.unk24 = 0;
-    g_PlayerHud.primIndex1 = func_800EDD9C(PRIM_GT4, RIC_HUD_NUM_SPRITES);
+    g_PlayerHud.primIndex1 =
+        AllocPrimitivesReverse(PRIM_GT4, RIC_HUD_NUM_SPRITES);
     prim = &g_PrimBuf[g_PlayerHud.primIndex1];
 
     SetTexturedPrimRect(prim, 2, 22, 32, 96, 0, 0);
@@ -708,7 +708,7 @@ void DrawRichterHud(void) {
     prim->priority = 0x1EF;
     prim->drawMode = DRAW_ABSPOS;
 
-    g_PlayerHud.primIndex2 = func_800EDD9C(4, 16);
+    g_PlayerHud.primIndex2 = AllocPrimitivesReverse(PRIM_GT4, 16);
     for (prim = &g_PrimBuf[g_PlayerHud.primIndex2], i = 0; prim != 0; i++,
         prim = prim->next) {
         SetTexturedPrimRect(prim, 216 + i * 2, 22, 2, 96, 32 + i * 2, 0);
@@ -1208,7 +1208,7 @@ void DrawHud(void) {
         return;
     }
 
-    g_PlayerHud.primIndex1 = func_800EDD9C(PRIM_GT4, HUD_NUM_SPRITES);
+    g_PlayerHud.primIndex1 = AllocPrimitivesReverse(PRIM_GT4, HUD_NUM_SPRITES);
     prim = &g_PrimBuf[g_PlayerHud.primIndex1];
 
     for (i = 0; prim != NULL; i++, prim = prim->next) {

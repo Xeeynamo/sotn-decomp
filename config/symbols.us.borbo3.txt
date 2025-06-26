@@ -13,5 +13,3 @@ EntityDamageDisplay = 0x801946E4;
 InitRoomEntities = 0x801955E4;
 UpdateRoomPosition = 0x8019575C;
 RBO3_EntityRedDoor = 0x80195978;
-DestroyEntity = 0x801965B0;
-InitializeEntity = 0x801972C0;

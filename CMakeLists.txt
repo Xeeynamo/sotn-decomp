@@ -530,7 +530,6 @@ target_compile_definitions(core PUBLIC
     PERMUTER
     NON_MATCHING
     HARD_LINK
-    DEMO_KEY_PTR=0
     _internal_version_us
 )
 
