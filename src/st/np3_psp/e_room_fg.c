@@ -13,7 +13,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_092598E0);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259A18);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259A58);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", DestroyEntity);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259AF0);
 
@@ -25,7 +25,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259D58);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259DB0);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259E38);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", MoveEntity);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259E88);
 
@@ -33,7 +33,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259EC0);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A178);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A458);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", AllocEntity);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A4C8);
 
@@ -55,7 +55,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A968);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A9B8);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A9F8);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", InitializeEntity);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925ABA0);
 
