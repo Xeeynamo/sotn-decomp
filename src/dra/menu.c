@@ -1571,12 +1571,12 @@ void func_800F84CC(void) {
     s32 primIndex;
 
     for (i = 0; i < NUM_MENU; i++) {
-        D_801377FC[i] = func_800EDD9C(PRIM_G4, 1);
+        D_801377FC[i] = AllocPrimitivesReverse(PRIM_G4, 1);
         prim = &g_PrimBuf[D_801377FC[i]];
         prim->drawMode = DRAW_HIDE;
     }
 
-    D_801377FC[NUM_MENU + 0] = func_800EDD9C(PRIM_GT4, 1);
+    D_801377FC[NUM_MENU + 0] = AllocPrimitivesReverse(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801377FC[NUM_MENU + 0]];
     SetPrimRect(prim, 20, 195, 42, 28);
     prim->u0 = 113;
@@ -1592,7 +1592,7 @@ void func_800F84CC(void) {
     prim->priority = 0x40;
     prim->drawMode = DRAW_MENU | DRAW_HIDE;
 
-    D_801377FC[NUM_MENU + 1] = func_800EDD9C(PRIM_GT4, 2);
+    D_801377FC[NUM_MENU + 1] = AllocPrimitivesReverse(PRIM_GT4, 2);
     prim = &g_PrimBuf[D_801377FC[NUM_MENU + 1]];
     for (i = 0; prim; i++) {
         prim->x0 = prim->x2 = 7;

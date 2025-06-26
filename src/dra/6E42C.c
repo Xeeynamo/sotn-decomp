@@ -32,8 +32,7 @@ void func_8010E4D0(void) {
 
     if (g_Player.unk72 == 1 || g_Player.unk72 == 2) {
         SetPlayerAnim(0xC7);
-        PLAYER.velocityY = 0;
-        PLAYER.velocityX = 0;
+        PLAYER.velocityX = PLAYER.velocityY = 0;
         SetPlayerStep(Player_AlucardStuck);
         func_80111CC0();
         PlaySfx(SFX_VO_ALU_WHAT);
@@ -151,7 +150,8 @@ void func_8010E83C(bool clearUnk44bit) {
     if (g_Player.unk72) {
         func_8010E7AC();
         return;
-    } else if (CheckMoveDirection()) {
+    }
+    if (CheckMoveDirection()) {
         SetPlayerAnim(26);
         SetSpeedX(FIX(1.5));
         g_Player.unk44 = 0;
@@ -359,8 +359,7 @@ s32 CheckChainLimit(s32 itemId, s32 handId) {
 }
 
 void func_8010ED54(u8 anim) {
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     SetPlayerStep(Player_SwordWarp);
     SetPlayerAnim(anim);
     // Factory 61 has child 31, EntityPlayerOutline
@@ -844,16 +843,14 @@ void func_8010FAF4(void) {
 }
 
 void PerformHellfire(void) {
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     SetPlayerStep(Player_SpellHellfire);
     func_8010E168(1, 0x10);
     func_8010E3E0();
 }
 
 void PerformDarkMetamorphosis(void) {
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     SetPlayerStep(Player_SpellDarkMetamorphosis);
     func_8010E3E0();
     SetPlayerAnim(0xBA);
@@ -868,8 +865,7 @@ void PerformDarkMetamorphosis(void) {
 }
 
 void PerformSoulSteal(void) {
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     SetPlayerStep(Player_SpellSoulSteal);
     func_8010E3E0();
     SetPlayerAnim(0xDA);
@@ -879,8 +875,7 @@ void PerformSoulSteal(void) {
 }
 
 void PerformSummonSpirit(void) {
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     SetPlayerStep(Player_SpellSummonSpirit);
     func_8010E3E0();
     CreateEntFactoryFromEntity(
@@ -891,8 +886,7 @@ void PerformSummonSpirit(void) {
 }
 
 void PerformTetraSpirit(void) {
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     SetPlayerStep(Player_SpellTetraSpirit);
     func_8010E3E0();
     CreateEntFactoryFromEntity(
@@ -903,8 +897,7 @@ void PerformTetraSpirit(void) {
 }
 
 void PerformSwordBrothers(void) {
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     SetPlayerStep(Player_SpellSwordBrothers);
     func_8010E3E0();
     SetPlayerAnim(0xF1);

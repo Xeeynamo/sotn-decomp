@@ -89,8 +89,8 @@ enum DaiEntities {
     E_UNK_35,                 // func_us_801D37C4,
     E_UNK_36,                 // func_us_801D3A40,
     E_BAT,                    // EntityBat,
-    E_UNK_38,                 // func_us_801D3FD8,
-    E_UNK_39,                 // func_us_801D43BC,
+    E_BLACK_CROW,             // EntityBlackCrow,
+    E_BLUE_CROW,              // EntityBlueRaven,
     E_SKELERANG,              // EntitySkelerang,
     E_SKELERANG_BOOMERANG,    // EntitySkelerangBoomerang,
     E_SKELERANG_UNKNOWN,      // EntitySkelerangUnknown,
@@ -134,8 +134,8 @@ extern EInit D_us_80180A34;
 extern EInit D_us_80180A40;
 extern EInit D_us_80180A4C;
 extern EInit g_EInitBat;
-extern EInit D_us_80180A64;
-extern EInit D_us_80180A70;
+extern EInit g_EInitBlueRaven;
+extern EInit g_EInitBlackCrow;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
 extern EInit D_us_80180A94;
