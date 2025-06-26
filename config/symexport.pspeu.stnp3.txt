@@ -1,4 +1,3 @@
 EXTERN(_binary_assets_st_np3_mwo_header_bin_start);
-EXTERN(InitEntityIds);
 EXTERN(NP3_Load);
 
