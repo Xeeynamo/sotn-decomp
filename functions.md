@@ -759,7 +759,7 @@
 | st0   | GetLang                                  |       51 |         10 |        |                                 |       |
 | no3   | e_death.rodata                           |       52 |          0 | Yes    |                                 |       |
 | chi   | SalemWitchTrySpawnShadow                 |       52 |          5 |        |                                 |       |
-| dra   | func_800EDD9C                            |       52 |          6 |        | https://decomp.me/scratch/qAogY | 0.659 |
+| dra   | func_psp_090E0F00                        |       52 |          6 |        | https://decomp.me/scratch/xYX6N | 0.769 |
 | st0   | func_801AD838                            |       52 |         10 |        | https://decomp.me/scratch/2pNca | 0.995 |
 | maria | MarStepWalk                              |       52 |         13 |        |                                 |       |
 | dra   | func_psp_090F18B0                        |       53 |          3 |        |                                 |       |
@@ -1134,7 +1134,7 @@
 | np3   | func_pspeu_09261108                      |       87 |         10 |        |                                 |       |
 | st0   | EntityCutscenePhotographFire             |       87 |         10 |        |                                 |       |
 | dra   | func_8010E6AC                            |       87 |         14 |        |                                 |       |
-| dai   | func_pspeu_0924F2D0                      |       87 |         18 |        | https://decomp.me/scratch/2SUwM | 0.997 |
+| dai   | func_pspeu_0924F2D0                      |       87 |         18 |        | https://decomp.me/scratch/2SUwM | 1.0   |
 | dra   | func_psp_090EC248                        |       88 |          3 |        |                                 |       |
 | st0   | EntityDraculaBody                        |       88 |         10 |        | https://decomp.me/scratch/sc9l4 | 0.999 |
 | st0   | EntitySecretStairsCeiling                |       88 |         14 |        | https://decomp.me/scratch/tPIfj | 0.999 |
