@@ -108,7 +108,7 @@ extern u8 D_801390A0;
 extern u16 g_CurSfxVol20_21;
 extern u8 D_801390A8;
 extern u16 g_SfxScriptVolumeCopy[];
-extern s8* D_801390B4[];
+extern s8* g_CurrentSfxScriptCopy[];
 extern u8 g_SeqIsPlaying;
 extern GpuBuffer* g_BackBuffer;
 extern u8 D_801390D8;

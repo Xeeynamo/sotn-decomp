@@ -354,8 +354,7 @@ bool RicDoCrash(void) {
     subWpnID = RicCheckSubweapon(&subWpn, true, true);
     g_Player.unk46 = 4;
     g_Player.unk4E = 0;
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     switch (subWpnID) {
     case SUBWPN_NONE:
         RicSetStep(PL_S_FLAME_WHIP);

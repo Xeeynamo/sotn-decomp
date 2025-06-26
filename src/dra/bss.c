@@ -269,7 +269,7 @@ padding u16 D_801390A4_;
 u8 D_801390A8;
 padding u8 D_801390A9[3];
 u16 g_SfxScriptVolumeCopy[NUM_CH];
-s8* D_801390B4[NUM_CH];
+s8* g_CurrentSfxScriptCopy[NUM_CH];
 u8 g_SeqIsPlaying;
 padding u8 D_801390C5[3];
 SpuVoiceAttr* D_801390C8;
