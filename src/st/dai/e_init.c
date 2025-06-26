@@ -56,8 +56,8 @@ void EntitySkeletonPieces(Entity* self);
 void func_us_801D37C4(Entity* self);
 void func_us_801D3A40(Entity* self);
 void EntityBat(Entity* self);
-void func_us_801D3FD8(Entity* self);
-void func_us_801D43BC(Entity* self);
+void EntityBlackCrow(Entity* self);
+void EntityBlueRaven(Entity* self);
 void EntitySkelerang(Entity* self);
 void EntitySkelerangBoomerang(Entity* self);
 void EntitySkelerangUnknown(Entity* self);
@@ -130,8 +130,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D37C4,
     func_us_801D3A40,
     EntityBat,
-    func_us_801D3FD8,
-    func_us_801D43BC,
+    EntityBlackCrow,
+    EntityBlueRaven,
     EntitySkelerang,
     EntitySkelerangBoomerang,
     EntitySkelerangUnknown,
@@ -173,8 +173,8 @@ EInit D_us_80180A34 = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
 EInit D_us_80180A40 = {ANIMSET_OVL(8), 0, 75, PAL_UNK22B, 128};
 EInit D_us_80180A4C = {ANIMSET_OVL(8), 0, 75, PAL_UNK22B, 3};
 EInit g_EInitBat = {ANIMSET_OVL(9), 0, 74, PAL_BAT, 64};
-EInit D_us_80180A64 = {ANIMSET_OVL(10), 0, 79, PAL_UNK22F, 114};
-EInit D_us_80180A70 = {ANIMSET_OVL(10), 0, 79, PAL_UNK22F, 115};
+EInit g_EInitBlueRaven = {ANIMSET_OVL(10), 0, 79, PAL_UNK22F, 114};
+EInit g_EInitBlackCrow = {ANIMSET_OVL(10), 0, 79, PAL_UNK22F, 115};
 EInit g_EInitSkelerang = {ANIMSET_OVL(11), 1, 72, PAL_SKELERANG, 11};
 EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(11), 43, 72, PAL_SKELERANG, 12};
 EInit D_us_80180A94 = {ANIMSET_OVL(12), 0, 84, PAL_UNK232, 227};

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo5.h"
 #include "../../dra/mist.h"
+#include "../../dra/subwpn_dagger.h"
 
 // n.b.! this is the same as bo4/unk_46E7C.c
 
@@ -2624,7 +2625,229 @@ void EntityWingSmashTrail(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801CC788);
+extern unkStr_8011E4BC* D_us_80181D98[];
+extern s32 D_us_801D36E8[32];
+extern s32 D_us_801D3768[32];
+
+void func_us_801CC788(Entity* self) {
+    byte stackpad[0x28];
+    FakePrim* tilePrim;
+    u8 thickness;
+    s16 upperParams;
+    s16 randAngleShift;
+    s32 var_a2;
+    s16 randVar2;
+    s16 twelveShift;
+    s16 randVar;
+    s16 selfXPos;
+    s16 selfYPos;
+    unkStr_8011E4BC* temp_s5;
+    s32 i;
+
+    upperParams = self->params >> 8;
+    temp_s5 = D_us_80181D98[upperParams];
+    selfXPos = self->posX.i.hi;
+    selfYPos = self->posY.i.hi;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex =
+            g_api.func_800EDB58(PRIM_TILE_ALT, temp_s5->count + 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = temp_s5->flags;
+        switch (upperParams) {
+        case 8:
+            self->ext.et_8011E4BC.unk7C = 0x3F;
+            break;
+        case 3:
+        case 5:
+            self->ext.et_8011E4BC.unk7C = 0x2F;
+            break;
+        case 4:
+        case 7:
+        case 11:
+            self->ext.et_8011E4BC.unk7C = 0x1F;
+            break;
+        }
+        for (tilePrim = (FakePrim*)&g_PrimBuf[self->primIndex], i = 0; true;
+             i++, tilePrim = tilePrim->next) {
+            tilePrim->drawMode = temp_s5->drawMode;
+            tilePrim->priority = DOPPLEGANGER.zPriority + temp_s5->priority;
+            if (tilePrim->next == NULL) {
+                tilePrim->drawMode &= ~DRAW_HIDE;
+                tilePrim->y0 = tilePrim->x0 = tilePrim->w = 0;
+                break;
+            }
+            tilePrim->posX.i.hi = selfXPos;
+            tilePrim->posY.i.hi = selfYPos;
+            tilePrim->posX.i.lo = tilePrim->posY.i.lo = 0;
+            switch (temp_s5->unkA) {
+            case 0:
+                randVar2 = rand() & PSP_RANDMASK;
+                randAngleShift = (randVar2 & 1) + 2;
+                tilePrim->velocityX.val = (rcos(randVar2) << randAngleShift);
+                tilePrim->velocityY.val = -(rsin(randVar2) << randAngleShift);
+                break;
+            case 1:
+            case 9:
+                tilePrim->velocityX.val = (((rand() & 0x1FF) - 0x100) << 8);
+                tilePrim->velocityY.val = (((rand() & 0x1FF) - 0x100) << 8);
+                break;
+            case 2:
+                tilePrim->velocityX.val =
+                    ((s32)(((rand() & PSP_RANDMASK) * 2) - 0x8000)) >> 1;
+                tilePrim->velocityY.val = -(rand() & 0x3FFF);
+                tilePrim->posX.val += (tilePrim->velocityX.val * 19);
+                tilePrim->posY.i.hi = (selfYPos + (rand() & 7)) - 3;
+                tilePrim->delay = (rand() & 0xF) + 0x10;
+                break;
+            case 8:
+                twelveShift = -12;
+                if (DOPPLEGANGER.facingLeft) {
+                    twelveShift = -twelveShift;
+                }
+                tilePrim->velocityX.val =
+                    (((rand() & PSP_RANDMASK) * 4) + FIX(-1));
+                tilePrim->velocityY.val = -(rand() & 0x3FFF);
+                tilePrim->posX.val +=
+                    ((tilePrim->velocityX.val * 35) + (twelveShift << 16));
+                tilePrim->velocityX.val >>= 2;
+                tilePrim->posY.i.hi = selfYPos - (rand() & 0x1F);
+                tilePrim->delay = (rand() & 0x1F) + 0x10;
+                break;
+            case 3:
+                tilePrim->posX.i.hi = (selfXPos + (rand() & 0xF)) - 7;
+                tilePrim->posY.i.hi = selfYPos - (rand() & 0x1F);
+                tilePrim->velocityY.val = FIX(-0.75) - (rand() & 0x7FFF);
+                tilePrim->velocityX.val =
+                    self->ext.et_8011E4BC.parent->velocityX;
+                tilePrim->delay = ((i * 2) + 0xF);
+                break;
+            case 4:
+                randVar = (rand() & 0x1F);
+                tilePrim->posX.i.hi = (selfXPos + randVar) - 0x10;
+                randVar = (rand() & 0x1F);
+                tilePrim->posY.i.hi = (selfYPos + randVar) - 0x14;
+                randVar = rand() & 0x1F;
+                tilePrim->velocityX.val = D_us_801D36E8[randVar];
+                tilePrim->velocityY.val = D_us_801D3768[randVar];
+                break;
+            case 10:
+            case 11:
+            case 12:
+            case 13:
+                break;
+            }
+            tilePrim->x0 = tilePrim->posX.i.hi;
+            tilePrim->y0 = tilePrim->posY.i.hi;
+            tilePrim->r0 = temp_s5->r;
+            tilePrim->g0 = temp_s5->g;
+            tilePrim->b0 = temp_s5->b;
+            tilePrim->w = temp_s5->w;
+            tilePrim->h = temp_s5->h;
+        }
+        self->step++;
+        break;
+    case 1:
+        switch (upperParams) {
+        case 3:
+        case 4:
+        case 7:
+        case 8:
+        case 11:
+            if (--self->ext.et_8011E4BC.unk7C == 0) {
+                DestroyEntity(self);
+                return;
+            }
+            // fallthrough
+        case 5:
+            if (--self->ext.et_8011E4BC.unk7C == 0) {
+                DestroyEntity(self);
+                return;
+            }
+            thickness = 2;
+            var_a2 = self->ext.et_8011E4BC.unk7C;
+            if (var_a2 < 9) {
+                thickness--;
+            }
+            break;
+        }
+        for (tilePrim = (FakePrim*)&g_PrimBuf[self->primIndex], i = 0; true;
+             i++, tilePrim = tilePrim->next) {
+            if (tilePrim->next == NULL) {
+                tilePrim->drawMode &= ~DRAW_HIDE;
+                tilePrim->y0 = tilePrim->x0 = tilePrim->w = 0;
+                return;
+            }
+
+            tilePrim->posX.i.hi = tilePrim->x0;
+            tilePrim->posY.i.hi = tilePrim->y0;
+            switch (temp_s5->unkA) {
+            case 0:
+                tilePrim->posY.val += tilePrim->velocityY.val;
+                tilePrim->posX.val += tilePrim->velocityX.val;
+                tilePrim->r0 -= 6;
+                tilePrim->g0 -= 6;
+                tilePrim->b0 -= 6;
+                if (tilePrim->r0 < 8) {
+                    DestroyEntity(self);
+                    return;
+                }
+                break;
+            case 1:
+            case 9:
+                tilePrim->posY.val += tilePrim->velocityY.val;
+                tilePrim->posX.val += tilePrim->velocityX.val;
+                tilePrim->velocityY.val =
+                    (tilePrim->velocityY.val + FIX(5.0 / 32.0));
+                tilePrim->r0 -= 3;
+                tilePrim->g0 -= 3;
+                tilePrim->b0 -= 3;
+                if (tilePrim->r0 < 8) {
+                    DestroyEntity(self);
+                    return;
+                }
+                break;
+            case 2:
+            case 8:
+                if (--tilePrim->delay == 0) {
+                    tilePrim->drawMode |= DRAW_HIDE;
+                }
+                tilePrim->posX.val += tilePrim->velocityX.val;
+                tilePrim->posY.val += tilePrim->velocityY.val;
+                tilePrim->velocityY.val =
+                    (tilePrim->velocityY.val + FIX(5.0 / 64.0));
+                break;
+            case 3:
+                tilePrim->posY.val += tilePrim->velocityY.val;
+                if (--tilePrim->delay < 0) {
+                    tilePrim->drawMode |= DRAW_HIDE;
+                }
+                break;
+            case 4:
+                tilePrim->posX.val += tilePrim->velocityX.val;
+                tilePrim->posY.val += tilePrim->velocityY.val;
+                tilePrim->velocityY.val -= (tilePrim->velocityY.val >> 5);
+                if (!(var_a2 & 7)) {
+                    tilePrim->velocityX.val >>= 1;
+                    tilePrim->velocityY.val >>= 1;
+                    if (var_a2 & 0x20) {
+                        tilePrim->velocityY.val >>= 1;
+                    }
+                }
+
+                tilePrim->w = tilePrim->h = thickness;
+                break;
+            }
+            tilePrim->x0 = tilePrim->posX.i.hi;
+            tilePrim->y0 = tilePrim->posY.i.hi;
+        }
+        break;
+    }
+}
 
 extern AnimationFrame D_800AD57C[];
 extern AnimationFrame D_us_80181DC8[];
@@ -3010,8 +3233,6 @@ void EntityHitByIce(Entity* self) {
         }
     }
 }
-
-#include "../../dra/mist.h"
 
 extern mistStruct D_us_801D3378[16];
 
@@ -3562,11 +3783,310 @@ block_147:
     self->facingLeft = DOPPLEGANGER.facingLeft;
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801CF8C4);
+INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", EntityDopplegangerDissolves);
 
 #include "../../rebound_stone.h"
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801D038C);
+extern EInit D_us_80180430;
+void EntitySubwpnReboundStone(Entity* self) {
+    s16 playerX;
+    s16 playerY;
+    Collider collider;
+    s32 speed;
+    s32 currX;
+    s32 currY;
+    s32 collX;
+    s32 collY;
+    s32 deltaX;
+    s32 deltaY;
+    s32 i;
+    s32 colliderFlags;
+    PrimLineG2* prim;
+
+    speed = 0x400;
+    self->ext.reboundStone.unk82 = 0;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180430);
+        if (g_Dop.status & PLAYER_STATUS_POISON) {
+            self->attack = self->attack / 2;
+        }
+        self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 8);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->posY.i.hi -= 12;
+        playerX = self->posX.i.hi;
+        playerY = self->posY.i.hi;
+
+        for (prim = (PrimLineG2*)&g_PrimBuf[self->primIndex], i = 0;
+             prim != NULL; i++, prim = prim->next) {
+            prim->r0 = prim->r1 = 0xFF;
+            prim->g0 = prim->g1 = 0x7F;
+            prim->priority = DOPPLEGANGER.zPriority + 2;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            if (i != 0) {
+                prim->drawMode |= DRAW_HIDE;
+            }
+            prim->x0 = prim->x1 = playerX;
+            prim->y0 = prim->y1 = playerY;
+            prim->timer = 20;
+        }
+        self->flags |=
+            FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        self->zPriority = DOPPLEGANGER.zPriority + 2;
+
+        if (DOPPLEGANGER.facingLeft) {
+            self->ext.reboundStone.stoneAngle = 0x980;
+        } else {
+            self->ext.reboundStone.stoneAngle = 0xE80;
+        }
+        self->ext.reboundStone.stoneAngle += (rand() & 0x7F) - 0x40;
+
+        self->ext.reboundStone.lifeTimer = 0x40;
+        self->step = 1;
+        g_api.PlaySfx(SFX_WEAPON_SWISH_C);
+
+        break;
+    case 1:
+        if (self->flags & FLAG_DEAD) {
+            CreateEntFactoryFromEntity(self, BP_10, 0);
+            g_api.PlaySfx(SFX_UI_TINK);
+            self->step = 2;
+            break;
+        }
+
+        playerX = self->posX.i.hi;
+        playerY = self->posY.i.hi;
+        deltaX = rcos(self->ext.reboundStone.stoneAngle) * 0x10;
+        deltaY = -rsin(self->ext.reboundStone.stoneAngle) * 0x10;
+        currX = self->posX.val;
+        currY = self->posY.val;
+
+        for (i = 0; i < 6; i++) {
+            collX = FIX_TO_I(currX);
+            collY = FIX_TO_I(currY + deltaY);
+            g_api.CheckCollision(collX, collY, &collider, 0);
+            colliderFlags = collider.effects &
+                            (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                             EFFECT_UNK_2000 | EFFECT_UNK_1000 |
+                             EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
+            if (colliderFlags & EFFECT_SOLID) {
+                colliderFlags &=
+                    EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                    EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0400 |
+                    EFFECT_UNK_0200 | EFFECT_UNK_0100;
+                if (deltaY > 0) {
+                    if ((colliderFlags == EFFECT_NONE) ||
+                        (colliderFlags & EFFECT_UNK_0800)) {
+                        ReboundStoneBounce1(0x800);
+                    }
+                    if (colliderFlags == EFFECT_UNK_8000) {
+                        ReboundStoneBounce2(0x200);
+                    }
+                    if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_1000) {
+                        ReboundStoneBounce2(0x12E);
+                    }
+                    if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_2000) {
+                        ReboundStoneBounce2(0xA0);
+                    }
+                    if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_4000) {
+                        ReboundStoneBounce2(0x600);
+                    }
+                    if (colliderFlags ==
+                        EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_UNK_1000) {
+                        ReboundStoneBounce2(0x6D2);
+                    }
+                    if (colliderFlags ==
+                        EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_UNK_2000) {
+                        ReboundStoneBounce2(0x760);
+                    }
+                }
+                if (deltaY < 0) {
+                    if ((colliderFlags == EFFECT_NONE) ||
+                        (colliderFlags & EFFECT_UNK_8000)) {
+                        ReboundStoneBounce1(0x800);
+                    }
+                    if (colliderFlags == EFFECT_UNK_0800) {
+                        ReboundStoneBounce2(0xE00);
+                    }
+                    if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_1000) {
+                        ReboundStoneBounce2(0xED2);
+                    }
+                    if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_2000) {
+                        ReboundStoneBounce2(0xF60);
+                    }
+                    if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_4000) {
+                        ReboundStoneBounce2(0xA00);
+                    }
+                    if (colliderFlags ==
+                        EFFECT_UNK_0800 + EFFECT_UNK_4000 + EFFECT_UNK_1000) {
+                        ReboundStoneBounce2(0x92E);
+                    }
+                    if (colliderFlags ==
+                        EFFECT_UNK_0800 + EFFECT_UNK_4000 + EFFECT_UNK_2000) {
+                        ReboundStoneBounce2(0x8A0);
+                    }
+                }
+            }
+            collY = FIX_TO_I(currY);
+            collX = FIX_TO_I(currX + deltaX);
+            g_api.CheckCollision(collX, collY, &collider, 0);
+            colliderFlags = collider.effects &
+                            (EFFECT_UNK_8000 | EFFECT_UNK_4000 |
+                             EFFECT_UNK_2000 | EFFECT_UNK_1000 |
+                             EFFECT_UNK_0800 | EFFECT_UNK_0002 | EFFECT_SOLID);
+            if (colliderFlags & EFFECT_SOLID) {
+                colliderFlags &=
+                    EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+                    EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0400 |
+                    EFFECT_UNK_0200 | EFFECT_UNK_0100;
+                // Cases when traveling right
+                if (deltaX > 0) {
+                    if (colliderFlags == EFFECT_NONE ||
+                        TEST_BITS(
+                            colliderFlags, EFFECT_UNK_4000 | EFFECT_UNK_0800) ||
+                        TEST_BITS(
+                            colliderFlags, EFFECT_UNK_8000 | EFFECT_UNK_4000)) {
+                        ReboundStoneBounce1(0x400);
+                    }
+                    if (colliderFlags == EFFECT_UNK_0800) {
+                        ReboundStoneBounce2(0xE00);
+                    }
+                    if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_1000) {
+                        ReboundStoneBounce2(0xED2);
+                    }
+                    if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_2000) {
+                        ReboundStoneBounce2(0xF60);
+                    }
+                    if (colliderFlags == EFFECT_UNK_8000) {
+                        ReboundStoneBounce2(0x200);
+                    }
+                    if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_1000) {
+                        ReboundStoneBounce2(0x12E);
+                    }
+                    if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_2000) {
+                        ReboundStoneBounce2(0xA0);
+                    }
+                }
+                // Cases when traveling left
+                if (deltaX < 0) {
+                    if ((colliderFlags == EFFECT_NONE) ||
+                        ((colliderFlags &
+                          (EFFECT_UNK_4000 | EFFECT_UNK_0800)) ==
+                         EFFECT_UNK_0800) ||
+                        ((colliderFlags &
+                          (EFFECT_UNK_8000 | EFFECT_UNK_4000)) ==
+                         EFFECT_UNK_8000)) {
+                        ReboundStoneBounce1(0x400);
+                    }
+                    if (colliderFlags == EFFECT_UNK_0800 + EFFECT_UNK_4000) {
+                        ReboundStoneBounce2(0xA00);
+                    }
+                    if (colliderFlags ==
+                        EFFECT_UNK_0800 + EFFECT_UNK_4000 + EFFECT_UNK_1000) {
+                        ReboundStoneBounce2(0x92E);
+                    }
+                    if (colliderFlags ==
+                        EFFECT_UNK_0800 + EFFECT_UNK_4000 + EFFECT_UNK_2000) {
+                        ReboundStoneBounce2(0x8A0);
+                    }
+                    if (colliderFlags == EFFECT_UNK_8000 + EFFECT_UNK_4000) {
+                        ReboundStoneBounce2(0x600);
+                    }
+                    if (colliderFlags ==
+                        EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_UNK_1000) {
+                        ReboundStoneBounce2(0x6D2);
+                    }
+                    if (colliderFlags ==
+                        EFFECT_UNK_8000 + EFFECT_UNK_4000 + EFFECT_UNK_2000) {
+                        ReboundStoneBounce2(0x760);
+                    }
+                }
+            }
+
+            if (self->ext.reboundStone.unk82) {
+                goto block_93;
+            }
+            currX += deltaX;
+            currY += deltaY;
+        }
+
+    block_93:
+        if (self->ext.reboundStone.unk82) {
+            CreateEntFactoryFromEntity(self, 10, 0);
+            g_api.PlaySfx(SFX_UI_TINK);
+        }
+        if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
+            self->posY.i.hi < -0x40 || self->posY.i.hi > 0x140 ||
+            self->ext.reboundStone.unk80 == 5) {
+            self->step = 2;
+        } else {
+            deltaX =
+                ((rcos(self->ext.reboundStone.stoneAngle) << 4) * speed) >> 8;
+            self->posX.val += deltaX;
+            deltaY =
+                -((rsin(self->ext.reboundStone.stoneAngle) << 4) * speed) >> 8;
+            self->posY.val += deltaY;
+        }
+        break;
+    case 2:
+        playerX = self->posX.i.hi;
+        playerY = self->posY.i.hi;
+        if (--self->ext.reboundStone.lifeTimer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        if (self->ext.reboundStone.lifeTimer == 0x20) {
+            self->hitboxState = 0;
+        }
+        prim = (PrimLineG2*)&g_PrimBuf[self->primIndex];
+        while (prim != NULL) {
+            prim->timer = 0;
+            prim = prim->next;
+        }
+        break;
+    }
+
+    prim = (PrimLineG2*)&g_PrimBuf[self->primIndex];
+    i = 0;
+    if (self->step == 2) {
+        colliderFlags = 4;
+    } else {
+        colliderFlags = 2;
+    }
+    // cleaner to use previous 3 lines than to put them in the for's initializer
+    for (; prim != NULL; i++, prim = prim->next) {
+        if (self->ext.reboundStone.unk82 && i == self->ext.reboundStone.unk80) {
+            prim->x0 = playerX;
+            prim->y0 = playerY;
+            prim->drawMode &= ~DRAW_HIDE;
+        }
+        if (i == self->ext.reboundStone.unk80) {
+            prim->x1 = self->posX.i.hi;
+            prim->y1 = self->posY.i.hi;
+        }
+        if (!(prim->drawMode & DRAW_HIDE)) {
+            if (prim->timer) {
+                prim->timer--;
+            } else {
+                // again not colliderFlags, seems to control stone fading
+                if (colliderFlags < prim->r1) {
+                    prim->r1 -= colliderFlags;
+                }
+                prim->r0 = prim->r1;
+                if (prim->g1 > (colliderFlags / 2)) {
+                    prim->g1 -= colliderFlags / 2;
+                }
+                prim->g0 = prim->g1;
+            }
+        }
+    }
+}
 
 s32 UpdateUnarmedAnim(s8*, AnimationFrame*);
 extern EInit D_us_80180454;
@@ -3615,4 +4135,211 @@ void func_us_801D0BD8(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", func_us_801D0D98);
+extern EInit D_us_8018043C;
+
+void EntitySubwpnKnife(Entity* self) {
+    Collider collider;
+    Primitive* prim;
+    s32 i;
+    s16 offsetX;
+    s16 offsetY;
+    s16 angle1;
+    s16 angle2;
+    s16 angle3;
+    s16 angle4;
+    s16 x;
+    s16 y;
+    s16 xCol;
+    s32 modX;
+    s32 modY;
+
+    switch (self->step) {
+    case DAGGER_INIT:
+        InitializeEntity(D_us_8018043C);
+        if (g_Dop.status & PLAYER_STATUS_POISON) {
+            self->attack = self->attack / 2;
+        }
+
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->facingLeft = DOPPLEGANGER.facingLeft;
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 2;
+        self->hitboxOffX = 4;
+        self->hitboxOffY = 0;
+        if (!(g_Dop.status & PLAYER_STATUS_CROUCH)) {
+            self->posY.i.hi -= 9;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        prim->tpage = 0x1C;
+        prim->clut = 0x1AB;
+        prim->u0 = prim->u1 = 0x18;
+        prim->v0 = prim->v2 = 0x18;
+        prim->u2 = prim->u3 = 0x20;
+        prim->v1 = prim->v3 = 0;
+        prim->priority = DOPPLEGANGER.zPriority + 2;
+        prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+
+        prim = prim->next;
+        prim->type = PRIM_LINE_G2;
+        prim->priority = DOPPLEGANGER.zPriority + 2;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_UNK02 | DRAW_TRANSP;
+        prim->r0 = 0x7F;
+        prim->g0 = 0x3F;
+        prim->b0 = 0;
+        SetSpeedX(FIX(8));
+        g_api.PlaySfx(SFX_WEAPON_SWISH_C);
+        g_Dop.timers[ALU_T_10] = 4;
+        break;
+    case DAGGER_FLYING:
+        self->ext.timer.t++;
+        if (self->velocityX > 0) {
+            xCol = 8;
+        }
+        if (self->velocityX < 0) {
+            xCol = -8;
+        }
+
+        for (i = 0; i < 8; i++) {
+            if (self->velocityX > 0) {
+                self->posX.i.hi++;
+            }
+            if (self->velocityX < 0) {
+                self->posX.i.hi--;
+            }
+            g_api.CheckCollision(
+                self->posX.i.hi + xCol, self->posY.i.hi, &collider, 0);
+            if (collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002) ||
+                (self->flags & FLAG_DEAD)) {
+                self->ext.timer.t = 64;
+                self->velocityX = -(self->velocityX >> 3);
+                self->velocityY = FIX(-2.5);
+                self->hitboxState = 0;
+                self->posX.i.hi += xCol;
+                CreateEntFactoryFromEntity(self, FACTORY(BP_10, 0), 0);
+                self->posX.i.hi -= xCol;
+                if (collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
+                    g_api.PlaySfx(SFX_UI_TINK);
+                } else {
+                    g_api.PlaySfx(SFX_BO4_UNK_7E8);
+                }
+                self->step++;
+                return;
+            }
+        }
+        if (self->hitFlags & 0x80) {
+            self->ext.timer.t = 4;
+            self->step = DAGGER_HIT_ENEMY;
+            self->hitboxState = 0;
+            return;
+        }
+        x = self->posX.i.hi;
+        y = self->posY.i.hi;
+        offsetX = 12;
+        offsetY = 8;
+        if (self->facingLeft) {
+            offsetX = -offsetX;
+            offsetY = -offsetY;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        prim->x0 = x - offsetX;
+        prim->y0 = y - 4;
+        prim->x1 = x + offsetX;
+        prim->y1 = y - 4;
+        prim->x2 = x - offsetX;
+        prim->y2 = y + 4;
+        prim->x3 = x + offsetX;
+        prim->y3 = y + 4;
+        prim->clut = 0x1AB;
+        (g_GameTimer >> 1) & 1; // no-op
+        prim->drawMode &= ~DRAW_HIDE;
+        prim = prim->next;
+        prim->x0 = x - offsetY;
+        prim->y0 = y - 1;
+        prim->x1 = x - (offsetX * (self->ext.timer.t / 2));
+        prim->y1 = y - 1;
+        prim->drawMode &= ~DRAW_HIDE;
+        if (self->step != DAGGER_FLYING) {
+            prim->drawMode |= DRAW_HIDE;
+            return;
+        }
+        break;
+    case DAGGER_BOUNCE:
+        prim = &g_PrimBuf[self->primIndex];
+        if (--self->ext.timer.t == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        if (self->ext.timer.t == 0x20) {
+            prim->drawMode |=
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
+            PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = PGREY(prim, 3) =
+                0x60;
+        }
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->velocityY += FIX(0.125);
+        x = self->posX.i.hi;
+        y = self->posY.i.hi;
+        offsetX = 12;
+        if (self->facingLeft == 0) {
+            angle1 = 0x800 - 0xD2;
+            angle2 = 0xD2;
+            angle3 = 0x800 + 0xD2;
+            angle4 = -0xD2;
+            self->rotate -= 0x80;
+        } else {
+            angle2 = 0x800 - 0xD2;
+            angle1 = 0xD2;
+            angle4 = 0x800 + 0xD2;
+            angle3 = -0xD2;
+            self->rotate += 0x80;
+        }
+        angle1 += self->rotate;
+        angle2 += self->rotate;
+        angle3 += self->rotate;
+        angle4 += self->rotate;
+        if (self->facingLeft) {
+            offsetX = -offsetX;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        modX = (rcos(angle1) * 0xCA0) >> 0x14;
+        modY = -(rsin(angle1) * 0xCA0) >> 0x14;
+        prim->x0 = x + (s16)modX;
+        prim->y0 = y - (s16)modY;
+        modX = (rcos(angle2) * 0xCA0) >> 0x14;
+        modY = -(rsin(angle2) * 0xCA0) >> 0x14;
+        prim->x1 = x + (s16)modX;
+        prim->y1 = y - (s16)modY;
+        modX = (rcos(angle3) * 0xCA0) >> 0x14;
+        modY = -(rsin(angle3) * 0xCA0) >> 0x14;
+        prim->x2 = x + (s16)modX;
+        prim->y2 = y - (s16)modY;
+        modX = (rcos(angle4) * 0xCA0) >> 0x14;
+        modY = -(rsin(angle4) * 0xCA0) >> 0x14;
+        prim->x3 = x + (s16)modX;
+        prim->y3 = y - (s16)modY;
+        prim->clut = 0x1AB;
+
+        (g_GameTimer >> 1) & 1; // no-op
+        if (self->ext.timer.t < 0x21) {
+            prim->r0 -= 2;
+            prim->g0 = prim->b0 = PGREY(prim, 1) = PGREY(prim, 2) =
+                PGREY(prim, 3) = prim->r0;
+        }
+        prim->drawMode &= ~DRAW_HIDE;
+        prim = prim->next;
+        prim->drawMode |= DRAW_HIDE;
+        break;
+    case DAGGER_HIT_ENEMY:
+        if (--self->ext.timer.t == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
