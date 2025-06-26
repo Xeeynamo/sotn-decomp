@@ -11,6 +11,7 @@ g_unkGraphicsStruct = 0x800973F8;
 g_pads              = 0x80097490;
 g_Status            = 0x80097964;
 g_PlayerDraw        = 0x80097D1C;
+g_MainGame          = 0x800A0000;
 g_SfxScripts        = 0x800C1ECC;
 g_ServantDesc       = 0x80170000;
 D_8017D000          = 0x8017D000;

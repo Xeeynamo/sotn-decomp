@@ -339,6 +339,7 @@ def remove_orphans(symbol_file_name, symbols_set):
             len(sym_def) > 4
             and sym_def.find("ignore:true") == -1
             and sym_def.lower().find("allow_duplicated:true") == -1
+            and sym_def.find("used:true") == -1
         ):
             sym_tokenized = sym_def.split("=")
             if len(sym_tokenized) >= 2:
@@ -368,7 +369,9 @@ def remove_orphans_from_config(config_yaml):
     asm_path = config["options"]["asm_path"]
 
     file_list = get_all_file_paths_recursively(asm_path)
-    asm_file_list = [file for file in file_list if file.endswith(".s")]
+    asm_file_list = [
+        file for file in file_list if file.endswith(".s") and "/matchings/" not in file
+    ]
 
     if len(file_list) == 0:
         print(
