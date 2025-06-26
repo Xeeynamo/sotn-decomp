@@ -1138,8 +1138,7 @@ static int func_8015BB80(void) {
 void MarStepTeleport(void) {
     Entity* e;
 
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     g_Player.padSim = 0;
     g_Player.demo_timer = 4;
     switch (PLAYER.step_s) {
