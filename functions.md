@@ -1498,8 +1498,8 @@
 | np3   | func_pspeu_0923E548                      |      147 |         13 |        |                                 |       |
 | no3   | EntityFallingRock2                       |      147 |         17 |        |                                 |       |
 | np3   | func_pspeu_09238598                      |      147 |         17 |        |                                 |       |
-| dai   | func_us_801D3A40                         |      147 |         18 |        | https://decomp.me/scratch/8242X | 0.805 |
-| dai   | func_us_801D3BD4                         |      147 |         18 |        | https://decomp.me/scratch/PuJx0 | 0.924 |
+| dai   | func_us_801D3A40                         |      147 |         18 |        | https://decomp.me/scratch/8242X | 0.997 |
+| dai   | func_us_801D3BD4                         |      147 |         18 |        | https://decomp.me/scratch/PuJx0 | 0.998 |
 | no3   | EntityFallingRock                        |      147 |         19 |        | https://decomp.me/scratch/qC6Ep | 0.994 |
 | np3   | func_pspeu_09238E30                      |      147 |         19 |        |                                 |       |
 | ric   | CheckHighJumpInput                       |      148 |         25 |        |                                 |       |
@@ -1688,7 +1688,7 @@
 | no3   | EntityZombie                             |      218 |         39 |        |                                 |       |
 | np3   | func_pspeu_09261738                      |      218 |         39 |        |                                 |       |
 | dra   | DecompressData                           |      218 |         47 | Yes    | https://decomp.me/scratch/ylDoN | 0.826 |
-| dai   | func_us_801D37C4                         |      219 |         35 |        | https://decomp.me/scratch/5EnJK | 0.666 |
+| dai   | func_us_801D37C4                         |      219 |         35 |        | https://decomp.me/scratch/5EnJK | 0.998 |
 | maria | MarDoSubweapon                           |      219 |         40 |        |                                 |       |
 | dra   | PlayerStepHellfire                       |      219 |         43 |        |                                 |       |
 | no3   | EntitySmallWaterDrop                     |      220 |         22 |        |                                 |       |
@@ -2125,7 +2125,7 @@
 | dra   | HandleSaveMenu                           |      639 |        101 |        | https://decomp.me/scratch/rPayV | 0.924 |
 | lib   | func_us_801B4830                         |      642 |         61 | Yes    |                                 |       |
 | no4   | func_pspeu_092483A0                      |      644 |         88 | Yes    | https://decomp.me/scratch/I0gCE | 0.998 |
-| dai   | func_us_801D2FA4                         |      644 |        102 | Yes    | https://decomp.me/scratch/mRJHX | 0.554 |
+| dai   | func_us_801D2FA4                         |      644 |        102 | Yes    | https://decomp.me/scratch/mRJHX | 0.86  |
 | dra   | func_8012D3E8                            |      646 |        129 |        | https://decomp.me/scratch/EUC5f | 0.991 |
 | maria | MarCheckInput                            |      648 |        123 |        | https://decomp.me/scratch/mNR5x | 0.992 |
 | lib   | func_psp_09258100                        |      650 |         63 | Yes    | https://decomp.me/scratch/5WF0f | 0.992 |
