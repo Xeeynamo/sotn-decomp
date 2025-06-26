@@ -8,19 +8,19 @@ extern u32 D_91CE570;
 
 // data
 static u8 stage_name_en[] = {
-#include "stage_name_en.h"
+#include "gen/stage_name_en.h"
 };
 static u8 stage_name_it[] = {
-#include "stage_name_it.h"
+#include "gen/stage_name_it.h"
 };
 static u8 stage_name_sp[] = {
-#include "stage_name_sp.h"
+#include "gen/stage_name_sp.h"
 };
 static u8 stage_name_ge[] = {
-#include "stage_name_ge.h"
+#include "gen/stage_name_ge.h"
 };
 static u8 stage_name_fr[] = {
-#include "stage_name_fr.h"
+#include "gen/stage_name_fr.h"
 };
 
 static u_long* stage_name[] = {
