@@ -1257,7 +1257,7 @@ char StatChangeArrow(u16 arg0, u16 arg1) {
     }
 }
 
-void func_psp_090EDBA0(void) {
+void func_800F7244(void) {
     s32 i;
 
     g_NewAttackRightHand = g_Status.attackHands[0];
@@ -1628,12 +1628,12 @@ void func_800F84CC(void) {
     s32 primIndex;
 
     for (i = 0; i < NUM_MENU; i++) {
-        D_801377FC[i] = func_800EDD9C(PRIM_G4, 1);
+        D_801377FC[i] = AllocPrimitivesReverse(PRIM_G4, 1);
         prim = &g_PrimBuf[D_801377FC[i]];
         prim->drawMode = DRAW_HIDE;
     }
 
-    D_801377FC[NUM_MENU + 0] = func_800EDD9C(PRIM_GT4, 1);
+    D_801377FC[NUM_MENU + 0] = AllocPrimitivesReverse(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801377FC[NUM_MENU + 0]];
     SetPrimRect(prim, 20, 195, 42, 28);
     prim->u0 = 113;
@@ -1649,7 +1649,7 @@ void func_800F84CC(void) {
     prim->priority = 0x40;
     prim->drawMode = DRAW_MENU | DRAW_HIDE;
 
-    D_801377FC[NUM_MENU + 1] = func_800EDD9C(PRIM_GT4, 2);
+    D_801377FC[NUM_MENU + 1] = AllocPrimitivesReverse(PRIM_GT4, 2);
     prim = &g_PrimBuf[D_801377FC[NUM_MENU + 1]];
     for (i = 0; prim; i++) {
         prim->x0 = prim->x2 = 7;
@@ -2496,7 +2496,7 @@ void MenuHandleCursorInput(s32* nav, u8 nOptions, u32 arg2) {
     }
 }
 
-void func_psp_090F1418(s32 cursorIndex, s32 arg1, s32 arg2) {
+void func_800FA3C4(s32 cursorIndex, s32 arg1, s32 arg2) {
     s32 limit;
     s32 x0, y0;
     s32 a, b; // quotient and remainder of cursorIndex / 2
@@ -2591,7 +2591,7 @@ void MenuEquipHandlePageScroll(s32 arg0) {
             }
         }
     }
-    func_psp_090F1418(*cursorIndex, 0, 0);
+    func_800FA3C4(*cursorIndex, 0, 0);
 }
 
 // If you use both attack buttons at once, see if something special
@@ -2747,7 +2747,7 @@ void func_800FAC48(void) {
 
 void func_800FAC98(void) { func_800F9808(2); }
 
-bool func_psp_090F1CE8(void) {
+bool func_800FACB8(void) {
     if (g_pads[0].tapped & PAD_R2) {
         g_MenuNavigation.cursorEquip++;
         if (g_MenuNavigation.cursorEquip == 7) {
@@ -2793,7 +2793,7 @@ void func_800FADC0(void) {
     }
 }
 
-void func_psp_090F1EA0(void) {
+void func_800FAE98(void) {
     func_800FADC0();
     g_MenuStep = MENU_STEP_EQUIP;
 }
@@ -2873,7 +2873,7 @@ void func_800FB0FC(void) {
     func_800FB004();
 }
 
-void func_psp_090F2178(s32 arg0, s32 arg1, EquipKind equipType) {
+void func_800FB160(s32 arg0, s32 arg1, s32 equipType) {
     u8 swap;
     u8* equipOrder;
 
@@ -2883,7 +2883,7 @@ void func_psp_090F2178(s32 arg0, s32 arg1, EquipKind equipType) {
     equipOrder[D_801375D8[arg1]] = swap;
 }
 
-bool func_psp_090F21F8(s32 arg0) {
+static bool func_800FB1EC(s32 arg0) {
     if (D_801375CC == EQUIP_HAND) {
         if (arg0 == 0) {
             return true;
@@ -2926,7 +2926,180 @@ MenuContextInit g_MenuInit[NUM_MENU] = {
 #define PAD_MENU_SORT (PAD_TRIANGLE)
 #define PAD_MENU_BACK_ALT (PAD_MENU_BACK | PAD_MENU_SELECT)
 
-INCLUDE_ASM("dra_psp/nonmatchings/dra_psp/menu", func_800FB23C);
+s32 func_800FB23C(s32* nav, u8* order, u8* count, u32* selected) {
+    s32 prevCursor;
+    s32 nItems;
+    s32 ret;
+    s32 var_s4;
+    s32 var_s6;
+    u16 prevItemId;
+    u16 yetAnotherId;
+    u16 itemId;
+
+    ret = 0;
+    nItems = func_800FD6C4(D_801375CC);
+    prevCursor = *nav;
+    MenuHandleCursorInput(nav, nItems, 2);
+    itemId = order[D_801375D8[*nav]];
+    prevItemId = *selected;
+    if (count[itemId] != 0) {
+        *selected = itemId;
+    } else {
+        *selected = 0;
+    }
+
+    if (D_801375CC == EQUIP_HAND) {
+        yetAnotherId = g_Status.equipment[1 - D_801375D0];
+        if (count[itemId] != 0) {
+            if (g_EquipDefs[prevItemId].itemCategory == ITEM_TWOHAND) {
+                g_Status.equipment[1 - D_801375D0] = 0;
+            }
+            if (g_EquipDefs[itemId].itemCategory == ITEM_TWOHAND) {
+                g_Status.equipment[1 - D_801375D0] = itemId & 0xFFFF;
+            }
+        } else if (g_EquipDefs[prevItemId].itemCategory == ITEM_TWOHAND) {
+            g_Status.equipment[1 - D_801375D0] = 0;
+        }
+    }
+    func_800F53A4();
+    var_s6 =
+        (g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10) |
+         PLAYER.step == Player_UnmorphWolf | PLAYER.step == Player_BossGrab |
+         g_Player.unk60) &&
+        itemId == ITEM_AXE_LORD_ARMOR && D_801375CC == EQUIP_ARMOR &&
+        count[itemId] != 0;
+    var_s6 |= D_801375CC == EQUIP_HAND && count[itemId] != 0 &&
+              (itemId == ITEM_LIFE_APPLE || itemId == ITEM_HAMMER);
+    D_80137948 = 0;
+    if (!var_s6) {
+        D_80137948 = 1;
+        func_800F7244();
+    }
+    *selected = prevItemId;
+    if (D_801375CC == EQUIP_HAND) {
+        g_Status.equipment[1 - D_801375D0] = yetAnotherId;
+    }
+    func_800F53A4();
+    if (g_pads[0].tapped & PAD_MENU_SORT) {
+        if (!g_IsSelectingEquipment) {
+            if (!func_800FB1EC(itemId)) {
+                g_EquipmentCursor = *nav;
+                g_IsSelectingEquipment++;
+                PlaySfx(SFX_UI_CONFIRM);
+            } else {
+                PlaySfx(SFX_UI_ERROR);
+            }
+        } else {
+            if (!func_800FB1EC(itemId)) {
+                func_800FB160(g_EquipmentCursor, *nav, D_801375CC);
+                g_IsSelectingEquipment = 0;
+                ret = 2;
+                PlaySfx(SFX_UI_CONFIRM);
+            } else {
+                PlaySfx(SFX_UI_ERROR);
+            }
+        }
+    } else if (g_pads[0].tapped & PAD_MENU_SELECT) {
+        if (g_IsSelectingEquipment) {
+            if (!func_800FB1EC(itemId)) {
+                func_800FB160(g_EquipmentCursor, *nav, D_801375CC);
+                g_IsSelectingEquipment = 0;
+                ret = 2;
+                PlaySfx(SFX_UI_CONFIRM);
+            } else {
+                PlaySfx(SFX_UI_ERROR);
+            }
+        } else if (var_s6) {
+            PlaySfx(SFX_UI_ERROR);
+        } else {
+            PlaySfx(SFX_UI_CONFIRM);
+            if (count[itemId] != 0) {
+                var_s4 = 1;
+                *selected = itemId;
+                if (!func_800FB1EC(itemId)) {
+                    count[itemId]--;
+                }
+                if (D_801375CC == EQUIP_HAND && itemId == ITEM_SWORD_FAMILIAR) {
+                    if (g_Status.relics[RELIC_SWORD_CARD] & RELIC_FLAG_FOUND &&
+                        g_Status.relics[RELIC_SWORD_CARD] & RELIC_FLAG_ACTIVE) {
+                        g_Status.relics[RELIC_SWORD_CARD] = RELIC_FLAG_FOUND;
+                        g_Servant = 0;
+                    }
+                }
+            } else {
+                var_s4 = 0;
+                if (D_801375CC == EQUIP_HAND) {
+                    if (*selected == 0) {
+                        goto block_5b0;
+                    } else {
+                        *selected = 0;
+                    }
+                } else {
+                    *selected = D_800A2DEC[D_801375D4];
+                }
+            }
+            AddToInventory(prevItemId, D_801375CC);
+            if (D_801375CC == EQUIP_HAND) {
+                if (g_EquipDefs[prevItemId].itemCategory == ITEM_TWOHAND) {
+                    g_Status.equipment[1 - D_801375D0] = 0;
+                }
+                if (g_EquipDefs[itemId].itemCategory == ITEM_TWOHAND &&
+                    var_s4) {
+                    if (g_EquipDefs[yetAnotherId].itemCategory !=
+                        ITEM_TWOHAND) {
+                        AddToInventory(yetAnotherId, D_801375CC);
+                    }
+                    g_Status.equipment[1 - D_801375D0] = itemId & 0xFFFF;
+                }
+            }
+            if (D_801375D0 < 2) {
+                func_psp_090F18B0(0);
+                func_psp_090F18B0(1);
+            }
+        block_5b0:
+            ret = 2;
+        }
+    }
+    func_800FA3C4(*nav, var_s6, 1);
+    if (-g_Menus[MENU_DG_EQUIP_SELECTOR].h / 12) {
+        if (g_pads[0].repeat & PAD_L1) {
+            D_80137844[0] = 5;
+        } else if (D_80137844[0] == 0) {
+            D_80137844[0] = 1;
+        }
+    } else {
+        D_80137844[0] = 0;
+    }
+    if ((-g_Menus[MENU_DG_EQUIP_SELECTOR].h +
+         g_Menus[MENU_DG_EQUIP_SELECTOR].cursorH) /
+            12 <
+        (nItems + 1) / 2) {
+        if (g_pads[0].repeat & PAD_R1) {
+            D_80137844[1] = 5;
+        } else if (D_80137844[1] == 0) {
+            D_80137844[1] = 1;
+        }
+    } else {
+        D_80137844[1] = 0;
+    }
+
+    if (func_800FACB8()) {
+        return 1;
+    }
+
+    if (g_pads[0].tapped & PAD_MENU_BACK) {
+        if (g_IsSelectingEquipment) {
+            g_IsSelectingEquipment = 0;
+        } else {
+            func_800FAE98();
+            return 0;
+        }
+    }
+    if (prevCursor != *nav) {
+        return 2;
+    }
+    return ret;
+}
 
 void func_800FB9BC(void) {
     const int ItemsPerRow = 2;

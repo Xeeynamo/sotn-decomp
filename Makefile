@@ -237,7 +237,9 @@ format-symbols-hd-%: format-symbols-hd-sort
 format-symbols-hd: $(patsubst config/splat.hd.%.yaml,format-symbols-hd-%,$(wildcard config/splat.hd.*.yaml))
 format-symbols-pspeu-sort:
 	VERSION=pspeu $(PYTHON) ./tools/symbols.py sort
-format-symbols-pspeu: format-symbols-pspeu-sort
+format-symbols-pspeu-%: format-symbols-pspeu-sort
+	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.pspeu.$*.yaml
+format-symbols-pspeu: $(patsubst config/splat.pspeu.%.yaml,format-symbols-pspeu-%,$(wildcard config/splat.pspeu.*.yaml))
 format-symbols: format-symbols-us format-symbols-hd format-symbols-pspeu
 
 format-license:

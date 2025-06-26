@@ -337,8 +337,7 @@ bool MarDoCrash(void) {
     g_Player.unk4A = subWpnID;
     g_Player.unk46 = 4;
     g_Player.unk4E = 0;
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     switch (subWpnID) {
     case PL_W_NONE:
         if (PLAYER.step == PL_S_FALL || PLAYER.step == PL_S_JUMP) {

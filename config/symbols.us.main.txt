@@ -6,4 +6,3 @@ libcd_CDRegister3 = 0x80032E74;
 main_fd = 0x800339F8;
 main_cdlFile = 0x800339FC;
 main_cdlMode = 0x80033A14;
-g_MainGame = 0x800A0000;

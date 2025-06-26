@@ -73,7 +73,7 @@ u8 g_SfxScriptModeCopy[NUM_CH];
 s16 g_SfxScriptTimer[NUM_CH];
 s16 g_SfxScriptTimerCopy[NUM_CH];
 s8* g_CurrentSfxScript[NUM_CH];
-s8* D_801390B4[NUM_CH];
+s8* g_CurrentSfxScriptCopy[NUM_CH];
 s16 g_CurrentSfxScriptSfxId2[NUM_CH];
 s16 g_SfxScriptUnk6[NUM_CH];
 s16 g_CurrentSfxId12_19[NUM_CH];
@@ -1038,7 +1038,7 @@ static void AddCdSoundCommand(s16 arg0) {
 void func_psp_09141440(s32 arg0) {
     if ((func_892A7E0(arg0) & 0x80) == 0) {
         func_892A97C(arg0, 0x80);
-        AddCdSoundCommand(2);
+        AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
     }
 }
 
@@ -1427,7 +1427,7 @@ void CdSoundCommand12(void) {
         D_8013B5F4[g_CdSoundCommand16].unk8 = var_t0;
         D_8013B5F4[g_CdSoundCommand16].unkc = D_psp_092374B0;
         D_8013B5F4[g_CdSoundCommand16].unke = D_80139014;
-        SsSetSerialAttr(0, 0, 0);
+        SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SOFF);
         if (DoCdCommand(CdlPause, NULL, NULL) == 0) {
             g_CdSoundCommandStep++;
         }
@@ -1518,7 +1518,7 @@ void CdSoundCommand14(void) {
 
     case 6:
         D_8013AEF4 = VSync(-1);
-        SsSetSerialAttr(0, 0, 1);
+        SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SON);
         D_8013AE90 = D_8013B5F4[g_CdSoundCommand16 - 1].unk8;
         D_80139014 = D_8013B5F4[g_CdSoundCommand16 - 1].unke;
         g_CdSoundCommandStep++;
@@ -1559,6 +1559,7 @@ void func_80133FCC(void) {
     if (D_psp_092374B8 == 0) {
         return;
     }
+
     if (D_801390A0 != 0) {
         return;
     }
@@ -1568,7 +1569,7 @@ void func_80133FCC(void) {
             func_psp_09141440(i);
             if ((temp_v0 & 0x80) == 0) {
                 func_892A97C(i, 0x80);
-                AddCdSoundCommand(2);
+                AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
             }
         }
     }
@@ -1621,7 +1622,7 @@ void CdSoundCommand10(void) {
     case 2:
         SetReverbDepth(0);
         StopSeq();
-        AddCdSoundCommand(3);
+        AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_1);
         D_800BD1C4 = 3;
         g_CdSoundCommandStep++;
         break;
@@ -1672,7 +1673,7 @@ void CdSoundCommand8(void) {
         break;
 
     case 2:
-        AddCdSoundCommand(2);
+        AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
         D_8013B61C = 0;
         D_801390A0 = g_CdSoundCommandStep = 0;
         AdvanceCdSoundCommandQueue();
@@ -1814,7 +1815,7 @@ void RestoreSfxScriptData(s16 arg0, s16 arg1) {
     g_SfxScriptDistance[arg1] = g_SfxScriptDistanceCopy[arg0];
     g_SfxScriptTimer[arg1] = g_SfxScriptTimerCopy[arg0];
     g_SfxScriptMode[arg1] = g_SfxScriptModeCopy[arg0];
-    g_CurrentSfxScript[arg1] = D_801390B4[arg0];
+    g_CurrentSfxScript[arg1] = g_CurrentSfxScriptCopy[arg0];
 }
 
 void PauseSfxScripts(void) {
@@ -1832,7 +1833,7 @@ void PauseSfxScripts(void) {
         g_SfxScriptDistanceCopy[i] = g_SfxScriptDistance[i];
         g_SfxScriptTimerCopy[i] = g_SfxScriptTimer[i];
         g_SfxScriptModeCopy[i] = g_SfxScriptMode[i];
-        D_801390B4[i] = g_CurrentSfxScript[i];
+        g_CurrentSfxScriptCopy[i] = g_CurrentSfxScript[i];
         g_CurrentSfxScriptSfxId[i] = 0;
         g_SfxScriptVolume[i] = 0;
         g_SfxScriptDistance[i] = 0;

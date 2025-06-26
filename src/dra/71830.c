@@ -1652,8 +1652,7 @@ void PlayerStepStoned(s32 arg0) {
         PLAYER.palette = 0x8161;
         if (func_8010FDF8(0x20280) != 0) {
             PLAYER.step = Player_StatusStone;
-            PLAYER.velocityY = 0;
-            PLAYER.velocityX = 0;
+            PLAYER.velocityX = PLAYER.velocityY = 0;
             func_80102CD8(1);
             PlaySfx(SFX_WALL_DEBRIS_B);
             CreateEntFactoryFromEntity(g_CurrentEntity, BP_39, 0);
@@ -1790,15 +1789,13 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
     plDraw = &g_PlayerDraw[0];
     if ((g_unkGraphicsStruct.unk20 == 0xFFF) && (PLAYER.step_s)) {
         SetPlayerStep(Player_Unk17);
-        PLAYER.velocityY = 0;
-        PLAYER.velocityX = 0;
+        PLAYER.velocityX = PLAYER.velocityY = 0;
         return;
     }
     switch (PLAYER.step_s) {
     case 0:
         nullifyVelY = true;
-        PLAYER.velocityY = 0;
-        PLAYER.velocityX = 0;
+        PLAYER.velocityX = PLAYER.velocityY = 0;
         if (arg_PlayerStep == Player_StatusStone) {
             ent = &g_Entities[16];
             for (j = 16; j < 64; j++, ent++) {
@@ -1969,8 +1966,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
 
 void PlayerStepUnk17(void) {
     PLAYER.drawFlags = FLAG_DRAW_ROTATE;
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     PLAYER.poseTimer = 4;
 
     if (g_unkGraphicsStruct.unk20 == 0) {
@@ -2099,16 +2095,14 @@ void PlayerStepKillWater(void) {
     plDraw = g_PlayerDraw;
     if (g_unkGraphicsStruct.unk20 == 0xFFF && PLAYER.step_s) {
         SetPlayerStep(Player_Unk17);
-        PLAYER.velocityY = 0;
-        PLAYER.velocityX = 0;
+        PLAYER.velocityX = PLAYER.velocityY = 0;
         return;
     }
 
     switch (PLAYER.step_s) {
     case 0:
         var_s2 = true;
-        PLAYER.velocityY = 0;
-        PLAYER.velocityX = 0;
+        PLAYER.velocityX = PLAYER.velocityY = 0;
         PlaySfx(SFX_VO_ALU_DEATH);
         func_80113EE0();
         PLAYER.velocityY = FIX(-1.625);
@@ -2170,8 +2164,7 @@ void PlayerStepBossGrab(void) {
             g_Player.unk40 = 0x8166;
             PlaySfx(SFX_VO_ALU_PAIN_E);
         }
-        PLAYER.velocityY = 0;
-        PLAYER.velocityX = 0;
+        PLAYER.velocityX = PLAYER.velocityY = 0;
         PLAYER.step_s = 1;
         g_Player.unk60 = 2;
         return;
@@ -2308,8 +2301,7 @@ void PlayerStepUnk48(void) {
 }
 
 void PlayerStepUnk49(void) {
-    PLAYER.velocityY = 0;
-    PLAYER.velocityX = 0;
+    PLAYER.velocityX = PLAYER.velocityY = 0;
     if ((g_Player.padSim >> 16) != 2) {
         func_8010E570(0);
     }
@@ -2889,8 +2881,7 @@ void PlayerStepUnmorphBat(void) {
 
         if ((g_Player.vram_flag & 3) == 3) {
             g_Player.unk68 = 1;
-            PLAYER.velocityY = 0;
-            PLAYER.velocityX = 0;
+            PLAYER.velocityX = PLAYER.velocityY = 0;
         }
         if (else_cycles == 8) {
             PLAYER.animSet = 1;
@@ -3249,8 +3240,7 @@ void PlayerStepUnmorphMist(void) {
     }
     if ((g_Player.vram_flag & 3) == 3) {
         PLAYER.step_s = 1;
-        PLAYER.velocityY = 0;
-        PLAYER.velocityX = 0;
+        PLAYER.velocityX = PLAYER.velocityY = 0;
     }
     if (else_cycles == 8) {
         if (func_80111D24()) {
