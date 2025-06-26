@@ -1,7 +1,6 @@
 | Ovl   | Function                                 |   Length |   Branches | Jtbl   | WIP                             | %     |
 |-------|------------------------------------------|----------|------------|--------|---------------------------------|-------|
 | lib   | e_mist_door.rodata                       |        7 |          0 |        |                                 |       |
-| np3   | first_c_file.rodata                      |        7 |          0 |        |                                 |       |
 | dra   | func_psp_090E29A8                        |        7 |          1 |        |                                 |       |
 | dra   | func_psp_0913F8C8                        |        7 |          1 |        |                                 |       |
 | dra   | func_psp_0913F8D0                        |        7 |          1 |        |                                 |       |
@@ -1013,8 +1012,8 @@
 | no3   | func_pspeu_09260470                      |       73 |          7 |        |                                 |       |
 | no4   | func_pspeu_0925B5B8                      |       73 |          7 |        |                                 |       |
 | np3   | func_pspeu_0925A870                      |       73 |          7 |        |                                 |       |
-| np3   | func_pspeu_0923EF28                      |       73 |          7 |        |                                 |       |
 | np3   | func_pspeu_09247DF0                      |       73 |          7 |        |                                 |       |
+| np3   | func_pspeu_0923EF28                      |       73 |          7 |        |                                 |       |
 | wrp   | func_psp_09243A70                        |       73 |          7 |        |                                 |       |
 | lib   | func_psp_0926ADD8                        |       73 |          8 |        | https://decomp.me/scratch/sz59k | 1.0   |
 | dra   | func_psp_09117998                        |       73 |         12 |        | https://decomp.me/scratch/MkcQs | 0.966 |
@@ -1191,7 +1190,6 @@
 | no3   | func_pspeu_09249738                      |       93 |         19 |        |                                 |       |
 | lib   | func_psp_0924C6C0                        |       94 |          8 |        |                                 |       |
 | chi   | func_psp_0924BB40                        |       95 |          1 |        |                                 |       |
-| np3   | InitEntityIds                            |       95 |          1 |        |                                 |       |
 | np3   | func_pspeu_0923E948                      |       95 |          7 |        |                                 |       |
 | lib   | func_psp_09254120                        |       95 |          8 |        | https://decomp.me/scratch/DkpLG | 0.997 |
 | no4   | func_pspeu_09237FB0                      |       95 |          8 |        |                                 |       |
@@ -1485,7 +1483,6 @@
 | dra   | func_80118B18                            |      141 |         14 |        |                                 |       |
 | dra   | func_psp_090F1418                        |      142 |         13 |        |                                 |       |
 | ric   | func_pspeu_092BA338                      |      142 |         19 |        |                                 |       |
-| np3   | func_pspeu_09237700                      |      143 |          0 |        | https://decomp.me/scratch/pG66O | 0.997 |
 | no3   | EntityJewelSwordDoor                     |      143 |         21 |        |                                 |       |
 | np3   | func_pspeu_092383A0                      |      143 |         21 |        |                                 |       |
 | maria | func_pspeu_092A6740                      |      144 |         13 |        | https://decomp.me/scratch/iUiEL | 1.0   |
@@ -1722,6 +1719,7 @@
 | no3   | EntityPathBlockTallWeight                |      232 |         23 |        | https://decomp.me/scratch/qXk9X | 0.967 |
 | np3   | func_pspeu_0923F538                      |      232 |         23 |        |                                 |       |
 | dra   | func_psp_0910B768                        |      232 |         32 |        | https://decomp.me/scratch/NbHyy | 0.983 |
+| np3   | InitEntityIds                            |      233 |          1 |        |                                 |       |
 | dra   | func_psp_090EB298                        |      233 |         18 |        |                                 |       |
 | no3   | EntityBackgroundTrees                    |      233 |         25 |        |                                 |       |
 | no3   | EntityWaterDrop                          |      233 |         25 |        |                                 |       |
