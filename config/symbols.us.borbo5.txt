@@ -44,7 +44,6 @@ EntityDamageDisplay = 0x801B6E3C;
 InitRoomEntities = 0x801B7D3C;
 UpdateRoomPosition = 0x801B7EB4;
 RBO5_EntityRedDoor = 0x801B80D0;
-DestroyEntity = 0x801B8D08;
 EntityDummy = 0x801B9B14;
 EntityPrizeDrop = 0x801BA728;
 EntityExplosion = 0x801BAF9C;
