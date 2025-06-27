@@ -2,7 +2,7 @@
 #include "bo4.h"
 
 s32 D_us_801805A0 = 0;
-s32 D_us_801805A4 = 0;
+s32 g_stone_flag = 0;
 
 extern s32 D_us_801D4DF0;
 extern s32 D_us_801D4DF4;
@@ -90,7 +90,7 @@ void func_us_801B4BF0(Entity* self) {
         break;
 
     case 5:
-        if (D_us_801805A4 == 0) {
+        if (g_stone_flag == 0) {
             dop = &DOPPLEGANGER;
             offsetX = self->posX.i.hi - dop->posX.i.hi;
             offsetY = self->posY.i.hi - dop->posY.i.hi;
@@ -103,7 +103,7 @@ void func_us_801B4BF0(Entity* self) {
             if (tangent < 8) {
                 self->step++;
             }
-        } else if (D_us_801805A4 == 2) {
+        } else if (g_stone_flag == 2) {
             self->step++;
         }
         break;
@@ -158,7 +158,7 @@ void func_us_801B4BF0(Entity* self) {
         break;
     }
 
-    D_us_801805A4 = 0;
+    g_stone_flag = 0;
     D_us_801D4DF0 = self->posX.i.hi;
     D_us_801D4DF4 = self->posY.i.hi;
 }

@@ -1315,7 +1315,7 @@ void EntityPlayerDissolves(Entity* self) {
         self->step += 1;
         /* fallthrough */
     case 2:
-        PLAYER.animCurFrame |= ~0x7FFF;
+        PLAYER.animCurFrame |= 0x8000;
         if (g_Player.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
             self->step += 1;
         }
@@ -1334,7 +1334,7 @@ void EntityPlayerDissolves(Entity* self) {
         }
         break;
     case 3:
-        PLAYER.animCurFrame |= ~0x7FFF;
+        PLAYER.animCurFrame |= 0x8000;
         self->ext.dissolve.unk7E =
             D_800AE140[self->ext.dissolve.unk80][self->ext.dissolve.unk7C];
         data = (u_long*)D_80139A7C;

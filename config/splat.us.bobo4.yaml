@@ -66,10 +66,11 @@ segments:
       - [0x11CC, .data, gen/rooms]
       - [0x11E8, data, doppleganger]
       - [0x12E4, .data, dop_anim]
-      - [0x1318, data]
+      - [0x1318, data, unk_45354]
+      - [0x1334, data, unk_46E7C]
       - [0x4290, .data, e_life_up]
       - [0x42E4, .data, gen/e_layout]
-      - [0x435C, data]
+      - [0x435C, data] # g_SpriteSheet
       - [0x2BEA0, cmp, D_801ABEA0]
       - [0x2C180, cmp, D_801AC180]
       - [0x2C288, pal, D_us_801AC288]
