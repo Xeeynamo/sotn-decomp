@@ -1138,7 +1138,7 @@
 | st0   | EntityDraculaBody                        |       88 |         10 |        | https://decomp.me/scratch/sc9l4 | 0.999 |
 | st0   | EntitySecretStairsCeiling                |       88 |         14 |        | https://decomp.me/scratch/tPIfj | 0.999 |
 | dra   | func_psp_090E4828                        |       89 |          7 |        | https://decomp.me/scratch/hSVjW | 1.0   |
-| dai   | func_us_801D36EC                         |       89 |          7 |        | https://decomp.me/scratch/enNNe | 0.926 |
+| dai   | func_us_801D36EC                         |       89 |          7 |        | https://decomp.me/scratch/0i4Ky | 1.0   |
 | dra   | TimeAttackController                     |       89 |          8 |        |                                 |       |
 | dra   | func_psp_090FF608                        |       89 |         10 |        |                                 |       |
 | dra   | func_psp_0910E378                        |       89 |         11 |        | https://decomp.me/scratch/iwB9u | 1.0   |
@@ -2123,7 +2123,7 @@
 | dra   | func_psp_090DCD28                        |      639 |        101 |        |                                 |       |
 | lib   | func_us_801B4830                         |      642 |         61 | Yes    |                                 |       |
 | no4   | func_pspeu_092483A0                      |      644 |         88 | Yes    | https://decomp.me/scratch/I0gCE | 0.998 |
-| dai   | func_us_801D2FA4                         |      644 |        102 | Yes    | https://decomp.me/scratch/mRJHX | 0.896 |
+| dai   | func_us_801D2FA4                         |      644 |        102 | Yes    | https://decomp.me/scratch/OGF82 | 0.999 |
 | dra   | func_psp_09137900                        |      646 |        129 |        | https://decomp.me/scratch/UgjUb | 0.97  |
 | maria | func_pspeu_092B3848                      |      648 |        123 |        |                                 |       |
 | lib   | func_psp_09258100                        |      650 |         63 | Yes    | https://decomp.me/scratch/5WF0f | 0.992 |
