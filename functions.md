@@ -1101,7 +1101,7 @@
 | no3   | EntityWargExplosionPuffTransparent       |       82 |          8 |        | https://decomp.me/scratch/IxuOy | 0.999 |
 | no4   | func_pspeu_09238CF0                      |       82 |          8 |        | https://decomp.me/scratch/qonr5 | 1.0   |
 | dra   | func_psp_090F76D0                        |       82 |          9 |        |                                 |       |
-| lib   | EntitySkeletonPieces                     |       82 |          9 |        | https://decomp.me/scratch/JvA5Y | 0.999 |
+| lib   | EntitySkeletonPieces                     |       82 |          9 |        | https://decomp.me/scratch/JvA5Y | 1.0   |
 | dra   | func_psp_090FF298                        |       82 |         11 |        |                                 |       |
 | dra   | func_psp_09141C10                        |       82 |         15 |        |                                 |       |
 | dra   | func_psp_09143548                        |       83 |          4 |        |                                 |       |
@@ -1151,7 +1151,7 @@
 | np3   | CreateEntitiesToTheRight                 |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
 | st0   | func_pspeu_092485C8                      |       89 |         11 |        |                                 |       |
 | wrp   | func_psp_09237C48                        |       89 |         11 |        |                                 |       |
-| dai   | EntitySkeletonPieces                     |       90 |          9 |        | https://decomp.me/scratch/JvA5Y | 0.999 |
+| dai   | EntitySkeletonPieces                     |       90 |          9 |        | https://decomp.me/scratch/JvA5Y | 1.0   |
 | dai   | func_us_801C1184                         |       90 |         10 |        |                                 |       |
 | ric   | func_pspeu_092AF898                      |       90 |         17 |        |                                 |       |
 | chi   | func_psp_0924D7F8                        |       91 |          4 |        | https://decomp.me/scratch/vOZf2 | 0.975 |
@@ -1495,8 +1495,8 @@
 | np3   | func_pspeu_0923E548                      |      147 |         13 |        |                                 |       |
 | no3   | EntityFallingRock2                       |      147 |         17 |        |                                 |       |
 | np3   | func_pspeu_09238598                      |      147 |         17 |        |                                 |       |
-| dai   | func_us_801D3A40                         |      147 |         18 |        | https://decomp.me/scratch/8242X | 0.997 |
-| dai   | func_us_801D3BD4                         |      147 |         18 |        | https://decomp.me/scratch/PuJx0 | 0.998 |
+| dai   | func_us_801D3A40                         |      147 |         18 |        | https://decomp.me/scratch/8242X | 0.998 |
+| dai   | func_us_801D3BD4                         |      147 |         18 |        | https://decomp.me/scratch/PuJx0 | 0.999 |
 | no3   | EntityFallingRock                        |      147 |         19 |        | https://decomp.me/scratch/qC6Ep | 0.994 |
 | np3   | func_pspeu_09238E30                      |      147 |         19 |        |                                 |       |
 | ric   | func_pspeu_092AE150                      |      148 |         25 |        |                                 |       |
@@ -2064,7 +2064,7 @@
 | dra   | func_psp_090EDE28                        |      517 |         73 |        |                                 |       |
 | dra   | func_psp_091020A0                        |      517 |         74 |        | https://decomp.me/scratch/t87MI | 0.984 |
 | dra   | EntitySubwpnHolyWaterFlame               |      519 |         37 |        |                                 |       |
-| lib   | EntitySkeleton                           |      519 |         82 |        | https://decomp.me/scratch/JvA5Y | 0.999 |
+| lib   | EntitySkeleton                           |      519 |         82 |        | https://decomp.me/scratch/JvA5Y | 1.0   |
 | chi   | EntityGremlin                            |      521 |         71 |        |                                 |       |
 | no3   | EntityBackgroundLightning                |      527 |         63 |        | https://decomp.me/scratch/MsNjR | 0.995 |
 | no3   | func_pspeu_0923C528                      |      531 |         20 |        | https://decomp.me/scratch/BVXN7 | 0.998 |
