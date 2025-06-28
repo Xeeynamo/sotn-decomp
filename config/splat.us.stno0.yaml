@@ -40,8 +40,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x90, data]
-      - [0x778, data, e_laydef]
+      - [0x778, data] # e_laydef
       - [0x920, .data, e_init]
       - [0xC5C, .data, e_red_door_tiles]
       - [0xC8C, .data, background_block_init]
@@ -77,7 +76,9 @@ segments:
       - [0x2618, .data, e_flea_man]
       - [0x2670, .data, e_skeleton]
       - [0x2770, .data, e_sealed_door]
-      - [0x27E0, data]
+      - [0x27E0, .data, gen/rooms]
+      - [0x291C, data]
+      - [0x48A0, .data, stage_data]
       - [0x3654C, .data, gen/sprites]
       - [0x411B0, data]
       - [0x41368, .rodata, e_explosion_puff_opaque]
