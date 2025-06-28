@@ -1,5 +1,7 @@
-InitEntityIds = 0x09237700; // source=match
-NP3_Load = 0x09237A90; // source=match
+EntityMermanRockLeftSide = 0x09237B08;
+EntityMermanRockRightSide = 0x09237F70;
+EntityJewelSwordDoor = 0x092383A0;
+EntityFallingRock2 = 0x09238598;
 EntityBreakable = 0x0923ADC8; // source=match
 NP3_EntityLockCamera = 0x0923E2E8; // source=match
 CreateEntityFromLayout = 0x09240AA8; // source=match
@@ -45,6 +47,7 @@ EntityEquipItemDrop = 0x0924CAF8; // source=match
 EntityRelicOrb = 0x0924D350; // source=match
 EntityHeartDrop = 0x0924E488; // source=match
 EntityMessageBox = 0x0924E658; // source=match
+PlaySfxPositional = 0x0924F788;
 HitDetection = 0x0924F8E0; // source=match
 EntityDamageDisplay = 0x092510B0; // source=match
 func_801C4144 = 0x092526F0; // source=match
@@ -56,7 +59,13 @@ EntitySmallWaterDrop = 0x092550D0; // source=match
 EntityWaterDrop = 0x09255400; // source=match
 BottomCornerText = 0x09255760; // source=match
 EntityRoomForeground = 0x09255D58; // source=match
+DestroyEntity = 0x09259A58;
+MoveEntity = 0x09259E38;
+AllocEntity = 0x0925A458;
+InitializeEntity = 0x0925A9F8;
 NP3_EntityUpdates = 0x0926B088;
+g_EInitInteractable = 0x0926B238;
+g_EInitStInteractable = 0x0926B288;
 NP3_Overlay = 0x0928E820;
 D_psp_E_BLADE_SWORD = 0x09291C18;
 D_psp_E_BLADE = 0x09291C20;
