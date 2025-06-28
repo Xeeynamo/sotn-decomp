@@ -4,23 +4,30 @@
 extern s32 E_ID(FALLING_ROCK_2);
 #endif
 
+// why devs why
+#ifdef STAGE_IS_NO3
+#define TILE_PTR_TYPE u16
+#else
+#define TILE_PTR_TYPE s16
+#endif
+
 // Tiles come in sets of 6. Keep them aligned as such.
 // clang-format off
-static u16 leftRockTiles[] = {
+static TILE_PTR_TYPE leftRockTiles[] = {
     0x026C, 0x0273, 0x027A, 0x026D, 0x0274, 0x027B,
     0x06B2, 0x0000, 0x06C5, 0x06B3, 0x06D9, 0x06DA,
     0x06B2, 0x0000, 0x06C5, 0x06B3, 0x06B4, 0x06B5};
 // PSP zero-padding between these suggests a split in arrays
-static u16 leftRockInitTiles[] = {
+static TILE_PTR_TYPE leftRockInitTiles[] = {
     0x0332, 0x033A, 0x0351, 0x0000, 0x0000, 0x0000,
     0x0332, 0x033A, 0x0351, 0x0350, 0x032F, 0x034E,
 };
 
-static u16 rightRockTiles[] = {
+static TILE_PTR_TYPE rightRockTiles[] = {
     0x02A7, 0x0287, 0x02B4, 0x02A8, 0x02AE, 0x02B5,
     0x06DB, 0x06DC, 0x06DD, 0x06B7, 0x0000, 0x06C6,
     0x06B6, 0x06B8, 0x06B9, 0x06B7, 0x0000, 0x06C6};
-static u16 rockTiles3[] = {
+static TILE_PTR_TYPE rockTiles3[] = {
     0x0000, 0x0000, 0x0000, 0x0350, 0x032F, 0x034E,
     0x0332, 0x033A, 0x0351, 0x0350, 0x032F, 0x034E,
     0x02D2, 0x02D2, 0x02D2, 0x02D2, 0x02D2, 0x02D2,
@@ -30,7 +37,7 @@ static u16 rockTiles3[] = {
     0x06BA, 0x0000, 0x0000, 0x06BD, 0x06BF, 0x06BB,
     0x0000, 0x0000, 0x06BE, 0x06C0, 0x06BC, 0x0000,
     0x0000, 0x06BD, 0x06C1, 0x0000, 0x0000, 0x0000};
-static u16 rockTiles4[] = {
+static TILE_PTR_TYPE rockTiles4[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 
     0x0350, 0x0000, 0x034E, 0x0339, 0x0000, 
     0x034E, 0x0339, 0x0350, 0x032F, 0x0000, 0x034F, 
@@ -47,7 +54,7 @@ static u8 newRockParams[] = {1, 2, 1, 2, 1};
 void EntityMermanRockLeftSide(Entity* self) {
     const int rockBroken = (1 << 0);
     const int wolfFlag = (1 << 2);
-    u16* tileLayoutPtr;
+    TILE_PTR_TYPE* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
     u8* params;
@@ -144,7 +151,7 @@ void EntityMermanRockLeftSide(Entity* self) {
 void EntityMermanRockRightSide(Entity* self) {
     const int rockBroken = (1 << 1);
     const int batFlag = (1 << 3);
-    u16* tileLayoutPtr;
+    TILE_PTR_TYPE* tileLayoutPtr;
     Entity* newEntity;
     s32 tilePos;
     u8* params;
@@ -232,7 +239,7 @@ void EntityMermanRockRightSide(Entity* self) {
 }
 
 void EntityJewelSwordDoor(Entity* self) {
-    u16* tileLayoutPtr;
+    TILE_PTR_TYPE* tileLayoutPtr;
     s32 i;
     s32 j;
     s32 tileLayoutPos;
