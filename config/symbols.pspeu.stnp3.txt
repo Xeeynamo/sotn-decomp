@@ -6,6 +6,9 @@ EntityStairwayPiece = 0x092387B8;
 EntityFallingRock = 0x09238E30;
 EntityBackgroundBushes = 0x09239058;
 EntityBackgroundTrees = 0x09239600;
+EntitySlogra = 0x09239960;
+EntitySlograSpear = 0x0923AA30;
+EntitySlograSpearProjectile = 0x0923AC78;
 EntityBreakable = 0x0923ADC8; // source=match
 NP3_EntityLockCamera = 0x0923E2E8; // source=match
 CreateEntityFromLayout = 0x09240AA8; // source=match
