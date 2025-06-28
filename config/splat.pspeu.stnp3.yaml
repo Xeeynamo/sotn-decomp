@@ -44,7 +44,8 @@ segments:
     subsegments:
       - [0x80, c, np3_psp/st_init_np3]
       - [0x488, c, np3/e_jewel_sword_puzzle]
-      - [0x1138, c, np3_psp/working_on]
+      - [0x1138, c, np3/e_stairway]
+      - [0x19D8, c, np3_psp/working_on]
       - [0x9428, c, np3_psp/create_entity]
       - [0xCA08, c, np3_psp/e_red_door]
       - [0xDD10, c, np3_psp/st_update]
