@@ -88,8 +88,7 @@ segments:
       - [0x23800, .data, dai/e_bat]
       - [0x23840, .data, dai/e_skelerang]
       - [0x23930, .data, dai/e_crow]
-      - [0x23A18, data]
-      - [0x24580, data, dai/e_stage_name]
+      - [0x23A18, .data, dai/e_stage_name]
       - [0x245B0, .data, dai/e_red_door]
       - [0x245C8, .data, dai/st_update]
       - [0x245F8, data] # unk_52E8
