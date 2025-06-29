@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
+// clang-format off
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", EntityRoomForeground);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09255E70);
@@ -65,8 +66,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925AD28);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925AEB8);
 
-INCLUDE_ASM(
-    "st/np3_psp/nonmatchings/np3_psp/e_room_fg", ReplaceBreakableWithItemDrop);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", ReplaceBreakableWithItemDrop);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925B488);
 
@@ -149,3 +149,5 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", UnkPolyFunc2);
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09262600);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09262658);
+
+// clang-format on
