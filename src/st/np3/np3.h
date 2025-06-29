@@ -156,7 +156,6 @@ extern u16 D_801811E6[];
 
 extern s16 g_WaterXTbl[]; // pos TBL
 
-
 extern s16 D_80181A50[];
 extern u16 D_80181D80[];
 extern u16 D_80181DB0[];

@@ -65,7 +65,8 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925AD28);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925AEB8);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", ReplaceBreakableWithItemDrop);
+INCLUDE_ASM(
+    "st/np3_psp/nonmatchings/np3_psp/e_room_fg", ReplaceBreakableWithItemDrop);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925B488);
 
