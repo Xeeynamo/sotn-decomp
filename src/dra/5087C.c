@@ -616,7 +616,7 @@ s32 func_800F16D0(void) {
     }
 }
 
-static void paintColorOntoBuffer(u8* buffer, s32 offsetX, s32 offsetY, s32 colorIndex) {
+static void writeColorToBuffer(u8* buffer, s32 offsetX, s32 offsetY, s32 colorIndex) {
     // Pixels are stored 2 per byte
     s32 bufferIndex = (offsetX / 2) + (offsetY * 4);
 
@@ -627,23 +627,23 @@ static void paintColorOntoBuffer(u8* buffer, s32 offsetX, s32 offsetY, s32 color
     }
 }
 
-static s32 func_800F17C8(u8 bitmap[], s32 x, s32 y) {
-    s32 temp_v0 = (x / 2) + (y * 4);
+static s32 readColorFromBuffer(u8* buffer, s32 offsetX, s32 offsetY) {
+    s32 bufferIndex = (offsetX / 2) + (offsetY * 4);
 
-    if (!(x & 1)) {
-        return bitmap[temp_v0] & 0xF;
+    if (!(offsetX & 1)) {
+        return buffer[bufferIndex] & 0xF;
     } else {
-        return (bitmap[temp_v0] & 0xF0) >> 4;
+        return (buffer[bufferIndex] & 0xF0) >> 4;
     }
 }
 
-static void copyMapTileToBuffer(s32 tileX, s32 tileY, u8* buffer) {
+static void copyMapTileColorsToBuffer(s32 tileX, s32 tileY, u8* buffer) {
     s32 offsetX, offsetY;
     u8* start;
 
     start = CASTLE_MAP_PTR;
-    start += tileX * 2;
-    start += tileY * 4 * 128;
+    start += tileX * (4 / 2);
+    start += tileY * (4 / 2) * 256;
     for (offsetY = 0; offsetY < 5; offsetY++) {
         for (offsetX = 0; offsetX < 4; offsetX++) {
             buffer[4 * offsetY + offsetX] = (start + offsetY * 128)[offsetX];
@@ -665,40 +665,39 @@ static void copyBufferToMapTile(s32 tileX, s32 tileY, u8* buffer) {
     }
 }
 
-void func_800F18C4(s32 tileX, s32 tileY) {
+void resetMapTileOnCastleBlueprint(s32 tileX, s32 tileY) {
     u8 buffer[4 * 5];
     s32 offsetX, offsetY;
 
-    copyMapTileToBuffer(tileX, tileY, buffer);
-
+    copyMapTileColorsToBuffer(tileX, tileY, buffer);
     for (offsetY = 0; offsetY < 4; offsetY++) {
         for (offsetX = 0; offsetX < 5; offsetX++) {
-            paintColorOntoBuffer(buffer, offsetX, offsetY, 0);
+            writeColorToBuffer(buffer, offsetX, offsetY, 0);
         }
     }
     copyBufferToMapTile(tileX, tileY, buffer);
 }
 
-void func_800F1954(s32 tileX, s32 tileY, s32 arg2) {
+void paintMapTileOnCastleBlueprint(s32 tileX, s32 tileY, s32 colorIndex) {
     u8 buffer[4 * 5];
     s32 offsetX, offsetY;
 
-    copyMapTileToBuffer(tileX, tileY, buffer);
+    copyMapTileColorsToBuffer(tileX, tileY, buffer);
     for (offsetY = 0; offsetY < 4; offsetY++) {
         for (offsetX = 0; offsetX < 5; offsetX++) {
-            if (arg2 == 1 && offsetX == 0) {
-                paintColorOntoBuffer(buffer, offsetX, offsetY, 0);
-            } else if (arg2 != 2 && offsetX == 4) {
-                paintColorOntoBuffer(buffer, offsetX, offsetY, 0);
+            if (colorIndex == 1 && offsetX == 0) {
+                writeColorToBuffer(buffer, offsetX, offsetY, 0);
+            } else if (colorIndex != 2 && offsetX == 4) {
+                writeColorToBuffer(buffer, offsetX, offsetY, 0);
             } else {
-                paintColorOntoBuffer(buffer, offsetX, offsetY, 1);
+                writeColorToBuffer(buffer, offsetX, offsetY, 1);
             }
         }
     }
     copyBufferToMapTile(tileX, tileY, buffer);
 }
 
-void repaintTilesOnCastleBlueprint(s32 invertedCastleIndicator) {
+void repaintMapTilesOnCastleBlueprint(s32 invertedCastleIndicator) {
     // In the Underground Caverns, there is a vertical asymmetry in what tiles
     // are expected to be revealed by normal player movement in certain rooms.
     // Because of this asymmetry, the contours of the revealed map won't exactly
@@ -711,21 +710,21 @@ void repaintTilesOnCastleBlueprint(s32 invertedCastleIndicator) {
     // player changes castles.
     if (invertedCastleIndicator == 0) {
         // Underground Caverns, Left Ferryman Route
-        func_800F18C4(14, 43);
-        func_800F18C4(16, 43);
+        resetMapTileOnCastleBlueprint(14, 43);
+        resetMapTileOnCastleBlueprint(16, 43);
         // Underground Caverns, Right Ferryman Route
-        func_800F18C4(43, 42);
-        func_800F18C4(44, 42);
-        func_800F18C4(45, 42);
-        func_800F18C4(48, 42);
+        resetMapTileOnCastleBlueprint(43, 42);
+        resetMapTileOnCastleBlueprint(44, 42);
+        resetMapTileOnCastleBlueprint(45, 42);
+        resetMapTileOnCastleBlueprint(48, 42);
     } else {
         // Reverse Caverns
-        func_800F1954(14, 43, 0);
-        func_800F1954(16, 43, 1);
-        func_800F1954(43, 42, 2);
-        func_800F1954(44, 42, 2);
-        func_800F1954(45, 42, 2);
-        func_800F1954(48, 42, 2);
+        paintMapTileOnCastleBlueprint(14, 43, 0);
+        paintMapTileOnCastleBlueprint(16, 43, 1);
+        paintMapTileOnCastleBlueprint(43, 42, 2);
+        paintMapTileOnCastleBlueprint(44, 42, 2);
+        paintMapTileOnCastleBlueprint(45, 42, 2);
+        paintMapTileOnCastleBlueprint(48, 42, 2);
     }
 }
 
@@ -766,16 +765,16 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
     if (arg2 == 0) {
         for (i = 0; i < 5; i++) {
             for (j = 0; j < 5; j++) {
-                temp_v0 = func_800F17C8(bitmap, j, i);
+                temp_v0 = readColorFromBuffer(bitmap, j, i);
                 if (temp_v0 == 0 || temp_v0 == 3 || temp_v0 == 13) {
-                    temp_v0 = func_800F17C8(img1, j, i);
+                    temp_v0 = readColorFromBuffer(img1, j, i);
                     if (temp_v0 == 2) {
                         temp_v0 = 1;
                     }
                     if (temp_v0 == 0) {
-                        paintColorOntoBuffer(bitmap, j, i, 14);
+                        writeColorToBuffer(bitmap, j, i, 14);
                     } else {
-                        paintColorOntoBuffer(bitmap, j, i, temp_v0);
+                        writeColorToBuffer(bitmap, j, i, temp_v0);
                     }
                 }
             }
@@ -783,11 +782,11 @@ void func_800F1B08(s32 x, s32 y, s32 arg2) {
     } else {
         for (i = 0; i < 5; i++) {
             for (j = 0; j < 5; j++) {
-                if (func_800F17C8(bitmap, j, i) == 0) {
-                    if (func_800F17C8(img1, j, i) == 0) {
-                        paintColorOntoBuffer(bitmap, j, i, 13);
+                if (readColorFromBuffer(bitmap, j, i) == 0) {
+                    if (readColorFromBuffer(img1, j, i) == 0) {
+                        writeColorToBuffer(bitmap, j, i, 13);
                     } else {
-                        paintColorOntoBuffer(bitmap, j, i, 3);
+                        writeColorToBuffer(bitmap, j, i, 3);
                     }
                 }
             }
@@ -810,16 +809,16 @@ void DrawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
     StoreImage(&rect, (u_long*)bitmap);
     DrawSync(0);
     if (direction == WALL_TOP) {
-        paintColorOntoBuffer(bitmap, 2, 0, func_800F17C8(bitmap, 2, 1));
+        writeColorToBuffer(bitmap, 2, 0, readColorFromBuffer(bitmap, 2, 1));
     }
     if (direction == WALL_LEFT) {
-        paintColorOntoBuffer(bitmap, 0, 2, func_800F17C8(bitmap, 1, 2));
+        writeColorToBuffer(bitmap, 0, 2, readColorFromBuffer(bitmap, 1, 2));
     }
     if (direction == WALL_BOTTOM) {
-        paintColorOntoBuffer(bitmap, 2, 4, func_800F17C8(bitmap, 2, 3));
+        writeColorToBuffer(bitmap, 2, 4, readColorFromBuffer(bitmap, 2, 3));
     }
     if (direction == WALL_RIGHT) {
-        paintColorOntoBuffer(bitmap, 4, 2, func_800F17C8(bitmap, 3, 2));
+        writeColorToBuffer(bitmap, 4, 2, readColorFromBuffer(bitmap, 3, 2));
     }
     LoadTPage((u_long*)bitmap, 0, 0, x + VramPosX, y * 4 + VramPosY, 8, 5);
 }
@@ -920,7 +919,7 @@ void func_800F2120(void) {
     s32 subMap;
     s32 idx;
 
-    repaintTilesOnCastleBlueprint(g_StageId & STAGE_INVERTEDCASTLE_FLAG);
+    repaintMapTilesOnCastleBlueprint(g_StageId & STAGE_INVERTEDCASTLE_FLAG);
     ClearImage(&g_Vram.D_800ACDE8, 0, 0, 0);
     DrawSync(0);
 
