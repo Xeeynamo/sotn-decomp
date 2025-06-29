@@ -637,7 +637,7 @@ static s32 func_800F17C8(u8 bitmap[], s32 x, s32 y) {
     }
 }
 
-static void func_800F180C(s32 tileX, s32 tileY, u8* buffer) {
+static void copyMapTileToBuffer(s32 tileX, s32 tileY, u8* buffer) {
     s32 offsetX, offsetY;
     u8* start;
 
@@ -651,17 +651,16 @@ static void func_800F180C(s32 tileX, s32 tileY, u8* buffer) {
     }
 }
 
-static void func_800F1868(s32 x, s32 y, u8* buffer) {
-    s32 i;
-    s32 j;
+static void copyBufferToMapTile(s32 tileX, s32 tileY, u8* buffer) {
+    s32 offsetX, offsetY;
     u8* start;
 
     start = CASTLE_MAP_PTR;
-    start += x * 2;
-    start += y * 4 * 128;
-    for (i = 0; i < 5; i++) {
-        for (j = 0; j < 4; j++) {
-            (start + i * 0x80)[j] = buffer[(4 * i) + j];
+    start += tileX * 2;
+    start += tileY * 4 * 128;
+    for (offsetY = 0; offsetY < 5; offsetY++) {
+        for (offsetX = 0; offsetX < 4; offsetX++) {
+            (start + offsetY * 0x80)[offsetX] = buffer[(4 * offsetY) + offsetX];
         }
     }
 }
@@ -670,21 +669,21 @@ void func_800F18C4(s32 tileX, s32 tileY) {
     u8 buffer[4 * 5];
     s32 offsetX, offsetY;
 
-    func_800F180C(tileX, tileY, buffer);
+    copyMapTileToBuffer(tileX, tileY, buffer);
 
     for (offsetY = 0; offsetY < 4; offsetY++) {
         for (offsetX = 0; offsetX < 5; offsetX++) {
             paintColorOntoBuffer(buffer, offsetX, offsetY, 0);
         }
     }
-    func_800F1868(tileX, tileY, buffer);
+    copyBufferToMapTile(tileX, tileY, buffer);
 }
 
 void func_800F1954(s32 tileX, s32 tileY, s32 arg2) {
     u8 buffer[4 * 5];
     s32 offsetX, offsetY;
 
-    func_800F180C(tileX, tileY, buffer);
+    copyMapTileToBuffer(tileX, tileY, buffer);
     for (offsetY = 0; offsetY < 4; offsetY++) {
         for (offsetX = 0; offsetX < 5; offsetX++) {
             if (arg2 == 1 && offsetX == 0) {
@@ -696,7 +695,7 @@ void func_800F1954(s32 tileX, s32 tileY, s32 arg2) {
             }
         }
     }
-    func_800F1868(tileX, tileY, buffer);
+    copyBufferToMapTile(tileX, tileY, buffer);
 }
 
 void repaintTilesOnCastleBlueprint(s32 invertedCastleIndicator) {
