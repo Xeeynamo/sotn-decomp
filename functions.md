@@ -96,7 +96,7 @@
 | dai   | e_crow.rodata                            |       16 |          0 | Yes    |                                 |       |
 | dai   | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
 | dai   | e_sealed_door.rodata                     |       16 |          0 | Yes    |                                 |       |
-| dai   | unk_143F0.rodata                         |       16 |          0 | Yes    |                                 |       |
+| dai   | e_spectral_sword.rodata                  |       16 |          0 | Yes    |                                 |       |
 | lib   | e_red_door.rodata                        |       16 |          0 | Yes    |                                 |       |
 | no3   | e_castle_door.rodata                     |       16 |          0 | Yes    |                                 |       |
 | no3   | e_outdoor_ents.rodata                    |       16 |          0 | Yes    |                                 |       |
@@ -125,7 +125,7 @@
 | dra   | 84B88.rodata                             |       18 |          0 | Yes    |                                 |       |
 | dra   | 8A0A4.rodata                             |       18 |          0 | Yes    |                                 |       |
 | dai   | cutscene_init.rodata                     |       18 |          0 | Yes    |                                 |       |
-| dai   | unk_17C50.rodata                         |       18 |          0 | Yes    |                                 |       |
+| dai   | e_bone_halberd.rodata                    |       18 |          0 | Yes    |                                 |       |
 | lib   | e_life_up.rodata                         |       18 |          0 | Yes    |                                 |       |
 | lib   | unk_3B53C.rodata                         |       18 |          0 | Yes    |                                 |       |
 | no4   | e_skeleton_ape.rodata                    |       18 |          0 | Yes    |                                 |       |
@@ -153,8 +153,8 @@
 | maria | func_pspeu_092C0248                      |       19 |          3 |        |                                 |       |
 | dra   | func_psp_090DDAA8                        |       19 |          4 |        |                                 |       |
 | ric   | pl_setstep.rodata                        |       20 |          0 | Yes    |                                 |       |
-| dai   | unk_12F98.rodata                         |       20 |          0 | Yes    |                                 |       |
-| dai   | unk_FB68.rodata                          |       20 |          0 | Yes    |                                 |       |
+| dai   | e_corner_guard.rodata                    |       20 |          0 | Yes    |                                 |       |
+| dai   | e_hunting_girl.rodata                    |       20 |          0 | Yes    |                                 |       |
 | lib   | e_dhuron.rodata                          |       20 |          0 | Yes    |                                 |       |
 | lib   | e_flying_zombie.rodata                   |       20 |          0 | Yes    |                                 |       |
 | np3   | create_entity.rodata                     |       20 |          0 | Yes    |                                 |       |
@@ -289,7 +289,7 @@
 | dra   | func_psp_091160D0                        |       25 |          4 |        |                                 |       |
 | dra   | func_psp_09140E00                        |       25 |          6 |        |                                 |       |
 | dra   | 4AEA4.rodata                             |       26 |          0 | Yes    |                                 |       |
-| dai   | unk_1A770.rodata                         |       26 |          0 | Yes    |                                 |       |
+| dai   | unk_40BA4.rodata                         |       26 |          0 | Yes    |                                 |       |
 | st0   | 2A218.rodata                             |       26 |          0 | Yes    |                                 |       |
 | dra   | func_psp_091032C8                        |       26 |          2 |        |                                 |       |
 | dra   | SetSpeedX                                |       26 |          2 |        | https://decomp.me/scratch/XhVNS | 0.559 |
@@ -590,7 +590,7 @@
 |       | bat.rodata                               |       42 |          0 | Yes    |                                 |       |
 | chi   | en_collect.rodata                        |       42 |          0 | Yes    |                                 |       |
 | dai   | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
-| dai   | unk_1F270.rodata                         |       42 |          0 | Yes    |                                 |       |
+| dai   | e_priest.rodata                          |       42 |          0 | Yes    |                                 |       |
 | lib   | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
 | no3   | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
 | no4   | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
@@ -898,7 +898,7 @@
 | no3   | func_pspeu_0923D348                      |       64 |          8 |        | https://decomp.me/scratch/nncWb | 0.996 |
 | np3   | func_pspeu_0923FE90                      |       64 |          8 |        |                                 |       |
 | dai   | func_pspeu_09251430                      |       65 |          6 |        |                                 |       |
-| dai   | func_pspeu_0924BA70                      |       65 |          6 |        |                                 |       |
+| dai   | func_pspeu_0924BA70                      |       65 |          6 |        | https://decomp.me/scratch/6HFZa | 0.958 |
 | np3   | func_pspeu_09261240                      |       65 |          7 |        |                                 |       |
 | dra   | func_psp_09127B50                        |       65 |          8 |        | https://decomp.me/scratch/9ZT5U | 1.0   |
 | chi   | UpdateRoomPosition                       |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
@@ -988,7 +988,7 @@
 | wrp   | func_psp_0923CC80                        |       71 |          7 |        |                                 |       |
 | wrp   | func_psp_09243F28                        |       71 |          7 |        |                                 |       |
 | dra   | func_psp_09101190                        |       71 |          8 |        |                                 |       |
-| dai   | func_us_801BEDD8                         |       71 |          9 |        |                                 |       |
+| dai   | func_us_801C3104                         |       71 |          9 |        | https://decomp.me/scratch/k0Isz | 0.997 |
 | lib   | func_psp_09254CD0                        |       71 |          9 |        |                                 |       |
 | lib   | func_psp_09250DE8                        |       71 |          9 |        |                                 |       |
 | dra   | func_psp_090E3030                        |       71 |         10 |        | https://decomp.me/scratch/ewhRs | 0.989 |
@@ -2009,7 +2009,7 @@
 | ric   | RicEntitySubwpnThrownVibhuti             |      435 |         44 |        |                                 |       |
 | chi   | func_psp_0923A7F0                        |      437 |         25 |        | https://decomp.me/scratch/tPXxN | 1.0   |
 | ric   | RicEntitySubwpnCrashCross                |      438 |         38 |        | https://decomp.me/scratch/K9fsm | 0.999 |
-| no3   | EntityCastleDoor                         |      442 |         47 | Yes    | https://decomp.me/scratch/UeFXe | 0.997 |
+| no3   | EntityCastleDoor                         |      442 |         47 | Yes    | https://decomp.me/scratch/NDri5 | 0.998 |
 | dra   | EntitySummonSpirit                       |      443 |         38 |        | https://decomp.me/scratch/YSrnR | 0.996 |
 | ric   | RicEntitySubwpnAgunea                    |      445 |         51 |        | https://decomp.me/scratch/jiDSG | 0.998 |
 | ric   | func_pspeu_092A9840                      |      445 |         51 | Yes    |                                 |       |
