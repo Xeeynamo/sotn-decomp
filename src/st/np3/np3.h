@@ -157,36 +157,7 @@ extern u16 D_801811E6[];
 
 extern s16 g_WaterXTbl[]; // pos TBL
 
-// *** EntitySlogra properties START ***
 
-extern u16 g_EInitSlograNP3[]; // Init
-extern s32 D_801812CC;         // killed in entrance local flag
-extern s32 D_801812D0;         // some collision data
-extern u16 D_801812E0;         // some collision data
-extern u8 D_801812E8[];        // animation
-extern u8 D_801812F4[];        // animation
-extern u8 D_80181300[];        // animation
-extern u8 D_80181310[];        // animation
-extern u8 D_8018131C[];        // animation
-extern u8 D_80181328[];        // animation
-extern u8 D_80181348[];        // animation
-extern u8 D_8018135C[];        // animation
-extern u8 D_80181370[];        // animation
-extern u8 D_8018137C[];        // animation
-extern u8 D_80181388[];        // animation
-extern u8 D_8018139C[];        // animation
-extern u8 D_801813B4[];        // animation
-extern u8 D_801813C4[];        // animation
-extern u8 D_801813CC[];        // animation
-extern u8 D_801813EC[][4];
-extern u8 D_8018142C[];
-
-// *** EntitySlogra properties END ***
-
-extern u8 D_801813D4[];
-extern u8 D_801813E4[];
-extern s8 D_80181454[];
-extern u8 D_8018148C[];
 extern s16 D_80181A50[];
 extern u16 D_80181D80[];
 extern u16 D_80181DB0[];
