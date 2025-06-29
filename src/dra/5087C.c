@@ -616,7 +616,8 @@ s32 func_800F16D0(void) {
     }
 }
 
-static void writeColorToBuffer(u8* buffer, s32 offsetX, s32 offsetY, s32 colorIndex) {
+static void writeColorToBuffer(
+    u8* buffer, s32 offsetX, s32 offsetY, s32 colorIndex) {
     // Pixels are stored 2 per byte
     s32 bufferIndex = (offsetX / 2) + (offsetY * 4);
 
