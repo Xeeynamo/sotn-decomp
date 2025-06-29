@@ -1540,7 +1540,7 @@
 | np3   | func_pspeu_09241FE0                      |      158 |         12 |        |                                 |       |
 | chi   | EntitySalemWitchTriboltLaunch            |      158 |         24 |        |                                 |       |
 | no3   | EntityFoliageMaker                       |      159 |         16 |        |                                 |       |
-| np3   | EntitySlograSpear                        |      159 |         16 |        |                                 |       |
+| np3   | EntitySlograSpear                        |      159 |         16 |        | https://decomp.me/scratch/hCcGP | 0.991 |
 | no4   | func_pspeu_092398B8                      |      159 |         18 |        | https://decomp.me/scratch/QOqDy | 0.999 |
 | dra   | func_psp_09137110                        |      159 |         21 |        |                                 |       |
 | dra   | func_psp_0913E220                        |      160 |         10 |        |                                 |       |
@@ -2228,7 +2228,7 @@
 | np3   | EntityPrizeDrop                          |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | wrp   | EntityPrizeDrop                          |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | no4   | EntityBoneArcher                         |      979 |        177 |        | https://decomp.me/scratch/s6o5d | 0.997 |
-| dai   | func_us_801C1298                         |      987 |         83 |        |                                 |       |
+| dai   | func_us_801C1298                         |      987 |         83 |        | https://decomp.me/scratch/PAASF | 0.668 |
 | no3   | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | np3   | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | wrp   | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
@@ -2253,7 +2253,7 @@
 | dra   | func_psp_090E5020                        |     1102 |        110 |        |                                 |       |
 | dai   | func_us_801D64A0                         |     1116 |        152 | Yes    |                                 |       |
 | np3   | func_pspeu_0925F9D0                      |     1123 |        182 |        |                                 |       |
-| np3   | EntitySlogra                             |     1154 |        213 |        |                                 |       |
+| np3   | EntitySlogra                             |     1154 |        213 |        | https://decomp.me/scratch/hCcGP | 0.991 |
 | st0   | EntityCutscenePhotograph                 |     1164 |         88 | Yes    | https://decomp.me/scratch/6oVBR | 0.997 |
 | no3   | EntityMerman                             |     1166 |        174 | Yes    | https://decomp.me/scratch/rvDYb | 0.999 |
 | dra   | func_psp_0910F720                        |     1173 |        197 | Yes    | https://decomp.me/scratch/MBJNm | 0.971 |
