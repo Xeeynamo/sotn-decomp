@@ -44,8 +44,8 @@ typedef enum {
     SLOGRA_DYING_END,
 } SlograDyingSubSteps;
 
-// BSS
-static bool D_801812CC;
+// BSS; not static since gaibon also uses it
+bool D_801812CC;
 
 static s16 D_801812D0[] = {0, 32, 0, 4, 16, -4, -32, 0};
 static s16 D_801812E0[] = {0, 32, 16, 0};
@@ -141,7 +141,7 @@ void EntitySlogra(Entity* self) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
         break;
-
+ 
     case SLOGRA_WALKING_WITH_SPEAR:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;

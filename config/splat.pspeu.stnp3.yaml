@@ -74,5 +74,5 @@ segments:
       - [0x5A580, bss, 5A580]
       - [0x5A7F0, .bss, np3/e_background_bushes_trees]
       - [0x5A800, .bss, np3_psp/e_slogra]
-      - [0x5A800, bss, 5A808]
+      - [0x5A808, bss, 5A808]
   - [0x5A900]

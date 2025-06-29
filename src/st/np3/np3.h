@@ -101,7 +101,6 @@ typedef enum EntityIDs {
     /* 0x5B */ E_BLADE_SWORD
 } EntityIDs;
 
-extern void CreateEntityFromCurrentEntity(u16, Entity*);
 extern void ReplaceBreakableWithItemDrop(Entity*);
 extern void func_801BAFA0(s16);
 extern void func_801BB044(s16);
@@ -322,3 +321,5 @@ extern s16 D_80183A4C[];
 // for EntityBackgroundBushes
 
 extern u16 g_EInitStInteractable[];
+
+extern bool D_801812CC;
