@@ -11,6 +11,7 @@ EntitySlograSpear = 0x0923AA30;
 EntitySlograSpearProjectile = 0x0923AC78;
 EntityBreakable = 0x0923ADC8; // source=match
 EntityBackgroundLightning = 0x0923AF48;
+EntityCastleDoor = 0x0923B360;
 NP3_EntityLockCamera = 0x0923E2E8; // source=match
 CreateEntityFromLayout = 0x09240AA8; // source=match
 CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
