@@ -45,47 +45,47 @@ typedef enum {
 } SlograDyingSubSteps;
 
 // not static since gaibon also uses it
-bool D_801812CC = false;
+bool slograGaibonRetreat = false;
 
-static s16 D_801812D0[] = {0, 32, 0, 4, 16, -4, -32, 0};
-static s16 D_801812E0[] = {0, 32, 16, 0};
-static u8 D_801812E8[] = {9, 1, 8, 2, 12, 3, 10, 2, 0};
-static u8 D_801812F4[] = {7, 1, 7, 4, 7, 5, 17, 1, 0};
-static u8 D_80181300[] = {8, 1, 4, 31, 10, 32, 4, 33, 4, 34, 4, 6, 255, 0};
-static u8 D_80181310[] = {4, 6, 3, 7, 2, 9, 4, 8, 32, 6, 255, 0};
-static u8 D_8018131C[] = {1, 6, 6, 32, 6, 31, 53, 1, 255, 0};
-static u8 D_80181328[] = {
-    7, 1, 5, 10, 22, 11, 2, 12, 2, 13, 2, 14, 2, 15, 65, 14, 255, 0};
+static s16 sensors1[] = {0, 32, 0, 4, 16, -4, -32, 0};
+static s16 sensors2[] = {0, 32, 16, 0};
+static u8 anim1[] = {9, 1, 8, 2, 12, 3, 10, 2, 0};
+static u8 anim2[] = {7, 1, 7, 4, 7, 5, 17, 1, 0};
+static u8 anim3[] = {8, 1, 4, 31, 10, 32, 4, 33, 4, 34, 4, 6, 255, 0};
+static u8 anim4[] = {4, 6, 3, 7, 2, 9, 4, 8, 32, 6, 255, 0};
+static u8 anim5[] = {1, 6, 6, 32, 6, 31, 53, 1, 255, 0};
+static u8 anim6[] = {7,  1, 5,  10, 22, 11, 2,  12,  2,
+                     13, 2, 14, 2,  15, 65, 14, 255, 0};
 static u8 unused_anim[] = {24, 14, 6, 13, 5, 31, 34, 1, 255, 0};
-static u8 D_80181348[] = {
-    3, 16, 3, 17, 1, 18, 1, 19, 1, 18, 1, 19, 1, 18, 24, 19, 255, 0};
-static u8 D_8018135C[] = {
-    3, 16, 3, 17, 3, 18, 1, 21, 1, 20, 1, 21, 1, 20, 1, 21, 40, 20, 255, 0};
-static u8 D_80181370[] = {9, 22, 8, 23, 12, 24, 10, 23, 0};
-static u8 D_8018137C[] = {7, 22, 7, 25, 7, 26, 17, 22, 0};
-static u8 D_80181388[] = {
-    3, 27, 3, 28, 1, 21, 1, 20, 1, 21, 1, 20, 1, 21, 24, 20, 255, 0};
-static u8 D_8018139C[] = {5, 25, 5, 26, 5, 27, 5, 28, 7,  20, 14,  21,
-                          5, 27, 2, 30, 1, 29, 1, 30, 50, 29, 255, 0};
-static u8 D_801813B4[] = {2, 21, 2, 27, 2, 30, 1, 29, 1, 30, 2, 29, 255, 0};
-static u8 D_801813C4[] = {2, 21, 3, 20, 0};
-static u8 D_801813CC[] = {3, 36, 2, 37, 255, 0};
-static u8 D_801813D4[] = {2, 38, 2, 39, 2, 40, 2, 41, 2, 42, 2, 43, 255, 0};
-static u8 D_801813E4[] = {1, 38, 1, 39, 0};
-static s8 D_801813EC[] = {
+static u8 anim7[] = {3,  16, 3,  17, 1,  18, 1,  19,  1,
+                     18, 1,  19, 1,  18, 24, 19, 255, 0};
+static u8 anim8[] = {3, 16, 3, 17, 3, 18, 1,  21, 1,   20,
+                     1, 21, 1, 20, 1, 21, 40, 20, 255, 0};
+static u8 anim9[] = {9, 22, 8, 23, 12, 24, 10, 23, 0};
+static u8 anim10[] = {7, 22, 7, 25, 7, 26, 17, 22, 0};
+static u8 anim11[] = {3,  27, 3,  28, 1,  21, 1,  20,  1,
+                      21, 1,  20, 1,  21, 24, 20, 255, 0};
+static u8 anim12[] = {5, 25, 5, 26, 5, 27, 5, 28, 7,  20, 14,  21,
+                      5, 27, 2, 30, 1, 29, 1, 30, 50, 29, 255, 0};
+static u8 anim13[] = {2, 21, 2, 27, 2, 30, 1, 29, 1, 30, 2, 29, 255, 0};
+static u8 anim14[] = {2, 21, 3, 20, 0};
+static u8 anim15[] = {3, 36, 2, 37, 255, 0};
+static u8 anim16[] = {2, 38, 2, 39, 2, 40, 2, 41, 2, 42, 2, 43, 255, 0};
+static u8 anim17[] = {1, 38, 1, 39, 0};
+static s8 slograHitboxes[] = {
     0,  0, 0,  0,  -8,  2,   19, 27, -12, 6,   19, 24, -11, 6,  19, 24,
     -7, 2, 19, 27, 0,   2,   19, 27, -82, -96, 0,  0,  -27, 13, 32, 11,
     -9, 2, 19, 27, -85, -97, 0,  0,  -4,  18,  8,  32, 0,   0,  7,  4,
     1,  1, 4,  11, 2,   1,   7,  7,  2,   1,   9,  4,  3,   1,  7,  5};
-static u8 D_8018142C[] = {
+static u8 slograHitboxIdx[] = {
     0, 1, 1, 1, 1, 1, 2, 3, 2, 2, 4, 5, 1, 1, 2, 2, 5, 5, 5, 5,
     5, 5, 1, 1, 1, 4, 4, 1, 1, 7, 7, 8, 8, 8, 8, 9, 1, 1, 0, 0};
-static s8 D_80181454[] = {
+static s8 spearHitboxes[] = {
     0,   0,  0,   0,  -36, 12, 8,   5,  -36, 11, 8,   5,  -51, -5,
     19,  6,  -49, -5, 19,  6,  -33, 12, 7,   4,  -27, 8,  7,   4,
     -34, 13, 7,   4,  -40, 16, 10,  4,  -52, -5, 19,  6,  -82, -96,
     0,   0,  -36, 14, 7,   4,  -36, 16, 7,   4,  -4,  18, 4,   32};
-static u8 D_8018148C[] = {
+static u8 spearHitboxIdx[] = {
     0,  0,  0,  0,  0,  0,  3,  4,  3,  3,  0,  0, 0, 0, 9, 9, 10, 10, 10, 10,
     10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0, 0, 0, 0, 0, 13, 13, 0,  0};
 
@@ -117,7 +117,7 @@ void EntitySlogra(Entity* self) {
                 SetStep(SLOGRA_GAIBON_COMBO_ATTACK);
             }
         }
-        if (D_801812CC) {
+        if (slograGaibonRetreat) {
             self->hitboxState = 0;
             if (self->step != SLOGRA_GAIBON_RETREAT) {
                 SetStep(SLOGRA_GAIBON_RETREAT);
@@ -141,20 +141,20 @@ void EntitySlogra(Entity* self) {
         CreateEntityFromCurrentEntity(E_ID(SLOGRA_SPEAR), otherEnt);
 
     case SLOGRA_FLOOR_ALIGN:
-        if (UnkCollisionFunc3(&D_801812D0) & 1) {
+        if (UnkCollisionFunc3(&sensors1) & 1) {
             SetStep(SLOGRA_IDLE);
         }
         break;
 
     case SLOGRA_IDLE:
-        AnimateEntity(D_801812F4, self);
+        AnimateEntity(anim2, self);
         if (GetDistanceToPlayerX() < 96) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
         break;
 
     case SLOGRA_TAUNT_WITH_SPEAR:
-        if (AnimateEntity(D_801812F4, self) == 0) {
+        if (AnimateEntity(anim2, self) == 0) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
         break;
@@ -170,14 +170,14 @@ void EntitySlogra(Entity* self) {
             self->ext.GS_Props.timer = 128;
             self->step_s++;
         }
-        AnimateEntity(D_801812E8, self);
+        AnimateEntity(anim1, self);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         if (self->facingLeft ^ self->ext.GS_Props.flag) {
             self->velocityX = FIX(0.75);
         } else {
             self->velocityX = FIX(-0.75);
         }
-        UnkCollisionFunc2(&D_801812E0);
+        UnkCollisionFunc2(&sensors2);
         if (!self->ext.GS_Props.flag) {
             if (GetDistanceToPlayerX() < 72) {
                 if (!self->ext.GS_Props.attackMode) {
@@ -214,7 +214,7 @@ void EntitySlogra(Entity* self) {
             PlaySfxPositional(SFX_SLOGRA_ROAR);
             self->step_s++;
         }
-        if (AnimateEntity(D_80181328, self) == 0) {
+        if (AnimateEntity(anim6, self) == 0) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
         }
         if (!self->poseTimer && self->pose == 4) {
@@ -229,7 +229,7 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
 
         case SLOGRA_FIRE_PROJECTILE:
-            if (AnimateEntity(D_80181300, self) == 0) {
+            if (AnimateEntity(anim3, self) == 0) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
                 otherEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (otherEnt != NULL) {
@@ -249,13 +249,13 @@ void EntitySlogra(Entity* self) {
             break;
 
         case SLOGRA_FIRE_COOLDOWN:
-            if (AnimateEntity(D_80181310, self) == 0) {
+            if (AnimateEntity(anim4, self) == 0) {
                 SetSubStep(SLOGRA_FIRE_END);
             }
             break;
 
         case SLOGRA_FIRE_END:
-            if (AnimateEntity(D_8018131C, self) == 0) {
+            if (AnimateEntity(anim5, self) == 0) {
                 SetStep(SLOGRA_WALKING_WITH_SPEAR);
             }
             break;
@@ -268,9 +268,9 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
         }
         if (self->ext.GS_Props.nearDeath) {
-            animation = D_80181388;
+            animation = anim11;
         } else {
-            animation = D_80181348;
+            animation = anim7;
         }
         if (AnimateEntity(animation, self) == 0) {
             SetStep(SLOGRA_WALKING_WITH_SPEAR);
@@ -281,8 +281,8 @@ void EntitySlogra(Entity* self) {
         break;
 
     case SLOGRA_LOSE_SPEAR:
-        if (AnimateEntity(D_8018135C, self) == 0) {
-            D_801812CC = 1;
+        if (AnimateEntity(anim8, self) == 0) {
+            slograGaibonRetreat = 1;
             SetStep(SLOGRA_GAIBON_RETREAT);
         }
         if (self->pose > 1) {
@@ -291,7 +291,7 @@ void EntitySlogra(Entity* self) {
         break;
 
     case SLOGRA_TAUNT_WITHOUT_SPEAR:
-        if (AnimateEntity(D_8018137C, self) == 0) {
+        if (AnimateEntity(anim10, self) == 0) {
             SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
         }
         break;
@@ -304,7 +304,7 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
         }
 
-        AnimateEntity(D_80181370, self);
+        AnimateEntity(anim9, self);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         if (self->facingLeft ^ self->ext.GS_Props.flag) {
             self->velocityX = FIX(0.75);
@@ -312,7 +312,7 @@ void EntitySlogra(Entity* self) {
             self->velocityX = FIX(-0.75);
         }
 
-        UnkCollisionFunc2(&D_801812E0);
+        UnkCollisionFunc2(&sensors2);
         if (!self->ext.GS_Props.flag && GetDistanceToPlayerX() < 72) {
             self->ext.GS_Props.flag ^= 1;
         }
@@ -330,7 +330,7 @@ void EntitySlogra(Entity* self) {
         break;
 
     case SLOGRA_ATTACK: // Attack without spear
-        if (AnimateEntity(D_8018139C, self) == 0) {
+        if (AnimateEntity(anim12, self) == 0) {
             SetStep(SLOGRA_WALKING_WITHOUT_SPEAR);
         }
         if (!self->poseTimer && self->pose == 7) {
@@ -351,13 +351,13 @@ void EntitySlogra(Entity* self) {
 
         case 1:
             if (self->ext.GS_Props.nearDeath) {
-                animation = D_801813B4;
+                animation = anim13;
             } else {
-                animation = D_801813CC;
+                animation = anim15;
             }
             AnimateEntity(animation, self);
 
-            if (UnkCollisionFunc3(&D_801812D0) & 1) {
+            if (UnkCollisionFunc3(&sensors1) & 1) {
                 g_api.func_80102CD8(1);
                 self->ext.GS_Props.timer = 16;
                 self->step_s++;
@@ -377,9 +377,9 @@ void EntitySlogra(Entity* self) {
 
     case SLOGRA_GAIBON_RETREAT:
         if (self->ext.GS_Props.nearDeath) {
-            animation = D_8018137C;
+            animation = anim10;
         } else {
-            animation = D_801812F4;
+            animation = anim2;
         }
         AnimateEntity(animation, self);
         break;
@@ -397,8 +397,8 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
 
         case SLOGRA_DYING_EXPLODING:
-            unusedCollResult = UnkCollisionFunc3(&D_801812D0);
-            AnimateEntity(D_801813C4, self);
+            unusedCollResult = UnkCollisionFunc3(&sensors1);
+            AnimateEntity(anim14, self);
             if (!(g_Timer & 3)) {
                 otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (otherEnt != NULL) {
@@ -429,8 +429,8 @@ void EntitySlogra(Entity* self) {
     case SLOGRA_DEBUG:
 #include "../pad2_anim_debug.h"
     }
-    hitbox = D_801813EC;
-    hitbox += 4 * D_8018142C[self->animCurFrame];
+    hitbox = slograHitboxes;
+    hitbox += 4 * slograHitboxIdx[self->animCurFrame];
     self->hitboxOffX = *hitbox++;
     self->hitboxOffY = *hitbox++;
     self->hitboxWidth = *hitbox++;
@@ -452,8 +452,8 @@ void EntitySlograSpear(Entity* self) {
         self->posX.i.hi = slogra->posX.i.hi;
         self->posY.i.hi = slogra->posY.i.hi;
         animFrame = slogra->animCurFrame;
-        hitbox = D_80181454;
-        hitbox += 4 * D_8018148C[animFrame];
+        hitbox = spearHitboxes;
+        hitbox += 4 * spearHitboxIdx[animFrame];
         self->hitboxOffX = *hitbox++;
         self->hitboxOffY = *hitbox++;
         self->hitboxWidth = *hitbox++;
@@ -513,14 +513,14 @@ void EntitySlograSpearProjectile(Entity* self) {
         }
 
     case 1:
-        if (AnimateEntity(D_801813D4, self) == 0) {
+        if (AnimateEntity(anim16, self) == 0) {
             SetStep(2);
         }
         break;
 
     case 2:
         MoveEntity();
-        AnimateEntity(D_801813E4, self);
+        AnimateEntity(anim17, self);
         break;
     }
 }

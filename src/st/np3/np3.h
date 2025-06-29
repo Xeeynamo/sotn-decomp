@@ -321,4 +321,4 @@ extern s16 D_80183A4C[];
 
 extern u16 g_EInitStInteractable[];
 
-extern bool D_801812CC;
+extern bool slograGaibonRetreat;
