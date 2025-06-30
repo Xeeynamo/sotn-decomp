@@ -1,6 +1,18 @@
-InitEntityIds = 0x09237700; // source=match
-NP3_Load = 0x09237A90; // source=match
+EntityMermanRockLeftSide = 0x09237B08;
+EntityMermanRockRightSide = 0x09237F70;
+EntityJewelSwordDoor = 0x092383A0;
+EntityFallingRock2 = 0x09238598;
+EntityStairwayPiece = 0x092387B8;
+EntityFallingRock = 0x09238E30;
+EntityBackgroundBushes = 0x09239058;
+EntityBackgroundTrees = 0x09239600;
+EntitySlogra = 0x09239960;
+EntitySlograSpear = 0x0923AA30;
+EntitySlograSpearProjectile = 0x0923AC78;
 EntityBreakable = 0x0923ADC8; // source=match
+EntityBackgroundLightning = 0x0923AF48;
+EntityCastleDoor = 0x0923B360;
+EntityTrapDoor = 0x0923B788;
 NP3_EntityLockCamera = 0x0923E2E8; // source=match
 CreateEntityFromLayout = 0x09240AA8; // source=match
 CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
@@ -45,6 +57,7 @@ EntityEquipItemDrop = 0x0924CAF8; // source=match
 EntityRelicOrb = 0x0924D350; // source=match
 EntityHeartDrop = 0x0924E488; // source=match
 EntityMessageBox = 0x0924E658; // source=match
+PlaySfxPositional = 0x0924F788;
 HitDetection = 0x0924F8E0; // source=match
 EntityDamageDisplay = 0x092510B0; // source=match
 func_801C4144 = 0x092526F0; // source=match
@@ -56,7 +69,27 @@ EntitySmallWaterDrop = 0x092550D0; // source=match
 EntityWaterDrop = 0x09255400; // source=match
 BottomCornerText = 0x09255760; // source=match
 EntityRoomForeground = 0x09255D58; // source=match
+DestroyEntity = 0x09259A58;
+AnimateEntity = 0x09259B78;
+GetDistanceToPlayerX = 0x09259CE8;
+GetSideToPlayer = 0x09259DB0;
+MoveEntity = 0x09259E38;
+UnkCollisionFunc3 = 0x09259EC0;
+UnkCollisionFunc2 = 0x0925A178;
+AllocEntity = 0x0925A458;
+SetStep = 0x0925A968;
+SetSubStep = 0x0925A9B8;
+InitializeEntity = 0x0925A9F8;
+ReplaceBreakableWithItemDrop = 0x0925B390;
+UnkPrimHelper = 0x09261C08;
+UnkPolyFunc2 = 0x09262598;
 NP3_EntityUpdates = 0x0926B088;
+NP3_EInitBreakable = 0x0926B1F8;
+g_EInitInteractable = 0x0926B238;
+g_EInitStInteractable = 0x0926B288;
+g_EInitSlograNP3 = 0x0926B358;
+g_EInitSlograSpearNP3 = 0x0926B368;
+g_EInitSlograProjectileNP3 = 0x0926B378;
 NP3_Overlay = 0x0928E820;
 D_psp_E_BLADE_SWORD = 0x09291C18;
 D_psp_E_BLADE = 0x09291C20;
@@ -133,3 +166,4 @@ D_psp_E_EXPLOSION_VARIANTS = 0x09291E50;
 D_psp_E_ID_13 = 0x09291E58;
 D_psp_E_ID_12 = 0x09291E60;
 D_psp_E_ID_11 = 0x09291E68;
+slograGaibonRetreat = 0x09291E80;

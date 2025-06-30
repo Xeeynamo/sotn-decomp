@@ -157,7 +157,7 @@ void EntityGaibon(Entity* self) {
             (self->step < GAIBON_LANDING_AFTER_SHOOTING)) {
             SetStep(GAIBON_PICKUP_SLOGRA);
         }
-        if (D_801812CC) {
+        if (slograGaibonRetreat) {
             self->hitboxState = 0;
             if (self->step != SLOGRA_GAIBON_RETREAT) {
                 SetStep(SLOGRA_GAIBON_RETREAT);
@@ -574,7 +574,7 @@ void EntityGaibon(Entity* self) {
                 self->ext.GS_Props.flag++;
                 self->palette = g_EInitGaibonNP3[3] + self->ext.GS_Props.flag;
                 if (self->ext.GS_Props.flag == 6) {
-                    D_801812CC = 1;
+                    slograGaibonRetreat = 1;
                     self->flags &= ~0xF;
                     SetStep(SLOGRA_GAIBON_RETREAT);
                 }
