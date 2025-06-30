@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
+// clang-format off
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", EntityRoomForeground);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09255E70);
@@ -17,21 +18,21 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", DestroyEntity);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259AF0);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259B78);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", AnimateEntity);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259CE8);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", GetDistanceToPlayerX);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259D58);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259DB0);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", GetSideToPlayer);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", MoveEntity);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259E88);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259EC0);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", UnkCollisionFunc3);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A178);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", UnkCollisionFunc2);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", AllocEntity);
 
@@ -51,9 +52,9 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A7F0);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A870);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A968);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", SetStep);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A9B8);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", SetSubStep);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", InitializeEntity);
 
@@ -65,7 +66,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925AD28);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925AEB8);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925B390);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", ReplaceBreakableWithItemDrop);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925B488);
 
@@ -148,3 +149,5 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", UnkPolyFunc2);
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09262600);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09262658);
+
+// clang-format on
