@@ -1459,7 +1459,7 @@
 | np3   | func_pspeu_092491E8                      |      133 |         17 |        |                                 |       |
 | st0   | EntityDraculaMegaFireball                |      133 |         18 |        | https://decomp.me/scratch/6Jc0h | 0.998 |
 | no4   | func_pspeu_09256138                      |      134 |          9 |        | https://decomp.me/scratch/SGsZx | 1.0   |
-| dai   | func_us_801C220C                         |      134 |         10 |        |                                 |       |
+| dai   | func_us_801C220C                         |      134 |         10 |        | https://decomp.me/scratch/vW5XR | 0.854 |
 | no3   | EntityCastleDoorTransition               |      134 |         17 |        | https://decomp.me/scratch/rpjFW | 0.984 |
 | dra   | func_psp_0911B630                        |      135 |         12 |        | https://decomp.me/scratch/K9Ujo | 1.0   |
 | dra   | UnknownEntId48                           |      135 |         13 |        | https://decomp.me/scratch/50GZY | 0.996 |
@@ -1599,7 +1599,7 @@
 | lib   | func_psp_0923DA30                        |      178 |         16 |        | https://decomp.me/scratch/lsF0V | 0.996 |
 | st0   | EntityDraculaGlass                       |      179 |         30 |        | https://decomp.me/scratch/2FUOR | 0.998 |
 | lib   | func_psp_09255D78                        |      181 |         19 |        | https://decomp.me/scratch/TWujm | 1.0   |
-| dai   | func_us_801C2068                         |      182 |         14 |        |                                 |       |
+| dai   | func_us_801C2068                         |      182 |         14 |        | https://decomp.me/scratch/RRP9x | 0.987 |
 | no4   | func_pspeu_09242FB8                      |      182 |         22 |        | https://decomp.me/scratch/Gjhce | 0.809 |
 | dra   | PlayAnimation                            |      183 |         17 |        |                                 |       |
 | chi   | EntityVenusWeedSpike                     |      183 |         20 |        |                                 |       |
