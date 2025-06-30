@@ -69,4 +69,4 @@ static void MyInitRoomEntities(s32 objLayoutId) {
     PlaySfx(MU_CRYSTAL_TEARDROPS);
 }
 
-static void UpdateStageEntities(void) { NOT_IMPLEMENTED; }
+void UpdateStageEntities(void) { NOT_IMPLEMENTED; }
