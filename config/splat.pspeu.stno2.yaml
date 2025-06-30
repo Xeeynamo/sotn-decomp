@@ -44,8 +44,8 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, no2_psp/first_c_file]
+      - [0x80, c, no2_psp/80]
       - [0x24E00, data]
-      - [0x55C00, .rodata, no2_psp/first_c_file]
+      - [0x55C00, .rodata, no2_psp/80]
       - [0x55E00, bss]
   - [0x56080]
