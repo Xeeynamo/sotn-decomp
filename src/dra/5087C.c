@@ -619,7 +619,7 @@ s32 func_800F16D0(void) {
 static void writeColorToBuffer(
     u8* buffer, s32 offsetX, s32 offsetY, s32 colorIndex) {
     // Pixels are stored 2 per byte
-    s32 bufferIndex = (offsetX / 2) + (offsetY * 4);
+    s32 bufferIndex = (offsetX / PIXELS_PER_BYTE) + (offsetY * 4);
 
     if (!(offsetX & 1)) {
         buffer[bufferIndex] = (buffer[bufferIndex] & 0xF0) + colorIndex;
@@ -629,7 +629,7 @@ static void writeColorToBuffer(
 }
 
 static s32 readColorFromBuffer(u8* buffer, s32 offsetX, s32 offsetY) {
-    s32 bufferIndex = (offsetX / 2) + (offsetY * 4);
+    s32 bufferIndex = (offsetX / PIXELS_PER_BYTE) + (offsetY * 4);
 
     if (!(offsetX & 1)) {
         return buffer[bufferIndex] & 0xF;
@@ -643,8 +643,8 @@ static void copyMapTileColorsToBuffer(s32 tileX, s32 tileY, u8* buffer) {
     u8* start;
 
     start = CASTLE_MAP_PTR;
-    start += tileX * (4 / 2);
-    start += tileY * (4 / 2) * 256;
+    start += tileX * WIDTH_OF_MAP_TILE_IN_BYTES;
+    start += tileY * (HEIGHT_OF_MAP_TILE_IN_PIXELS * WIDTH_OF_MAP_ROW_IN_BYTES);
     for (offsetY = 0; offsetY < 5; offsetY++) {
         for (offsetX = 0; offsetX < 4; offsetX++) {
             buffer[4 * offsetY + offsetX] = (start + offsetY * 128)[offsetX];
@@ -657,8 +657,8 @@ static void copyBufferToMapTile(s32 tileX, s32 tileY, u8* buffer) {
     u8* start;
 
     start = CASTLE_MAP_PTR;
-    start += tileX * 2;
-    start += tileY * 4 * 128;
+    start += tileX * WIDTH_OF_MAP_TILE_IN_BYTES;
+    start += tileY * (HEIGHT_OF_MAP_TILE_IN_PIXELS * WIDTH_OF_MAP_ROW_IN_BYTES);
     for (offsetY = 0; offsetY < 5; offsetY++) {
         for (offsetX = 0; offsetX < 4; offsetX++) {
             (start + offsetY * 0x80)[offsetX] = buffer[(4 * offsetY) + offsetX];
