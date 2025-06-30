@@ -639,7 +639,7 @@ static s32 readColorFromBuffer(u8* buffer, s32 offsetX, s32 offsetY) {
 }
 
 static void copyMapTileColorsToBuffer(s32 tileX, s32 tileY, u8* buffer) {
-    s32 offsetX, offsetY;
+    s32 offsetY, offsetX;
     u8* start;
 
     start = CASTLE_MAP_PTR;
@@ -653,7 +653,7 @@ static void copyMapTileColorsToBuffer(s32 tileX, s32 tileY, u8* buffer) {
 }
 
 static void copyBufferToMapTile(s32 tileX, s32 tileY, u8* buffer) {
-    s32 offsetX, offsetY;
+    s32 offsetY, offsetX;
     u8* start;
 
     start = CASTLE_MAP_PTR;
@@ -668,7 +668,7 @@ static void copyBufferToMapTile(s32 tileX, s32 tileY, u8* buffer) {
 
 void resetMapTileOnCastleBlueprint(s32 tileX, s32 tileY) {
     u8 buffer[4 * 5];
-    s32 offsetX, offsetY;
+    s32 offsetY, offsetX;
 
     copyMapTileColorsToBuffer(tileX, tileY, buffer);
     for (offsetY = 0; offsetY < 4; offsetY++) {
@@ -681,7 +681,7 @@ void resetMapTileOnCastleBlueprint(s32 tileX, s32 tileY) {
 
 void paintMapTileOnCastleBlueprint(s32 tileX, s32 tileY, s32 colorIndex) {
     u8 buffer[4 * 5];
-    s32 offsetX, offsetY;
+    s32 offsetY, offsetX;
 
     copyMapTileColorsToBuffer(tileX, tileY, buffer);
     for (offsetY = 0; offsetY < 4; offsetY++) {
