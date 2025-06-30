@@ -142,7 +142,10 @@ void func_us_801C6950(void) {
     }
 }
 
-extern s16 D_us_801813C8[];
+static s16 D_us_801813C8[] = {
+    SFX_BO4_UNK_7DD, SFX_BO4_UNK_7DC, SFX_BO4_UNK_7DB, SFX_BO4_UNK_7DA,
+    SFX_BO4_UNK_7D9, SFX_BO4_UNK_7D8, SFX_BO4_UNK_7D7,
+};
 
 void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
     s32 sfxIndex;
@@ -275,10 +278,10 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
 }
 
 extern s32 D_us_801805B8;
-extern s32 D_us_801D3308;
-extern s32 D_us_801D330C;
-extern s32 D_us_801D3310;
-extern s32 D_us_801D3314;
+static s32 D_us_801D3308;
+static s32 D_us_801D330C;
+static s32 D_us_801D3310;
+static s32 D_us_801D3314;
 extern u_long D_us_801D37EC[];
 extern RECT D_us_80182064;
 
@@ -345,7 +348,7 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
         }
         plDraw->r0 = plDraw->g0 = plDraw->b0 = plDraw->r1 = plDraw->g1 =
             plDraw->b1 = plDraw->r2 = plDraw->g2 = plDraw->b2 = plDraw->r3 =
-                plDraw->g3 = plDraw->b3 = 0x80;
+                plDraw->g3 = plDraw->b3 = 128;
         plDraw->enableColorBlend = 1;
         DOPPLEGANGER.step_s++;
         break;
@@ -452,7 +455,6 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
     }
 }
 
-extern PlayerState g_Dop;
 extern AnimationFrame D_us_80183B98[];
 
 bool BatFormFinished(void) {
@@ -494,8 +496,7 @@ static s32 CheckWingSmashInput(void) {
     return false;
 }
 
-extern s32 g_WingSmashTimer;
-extern AnimationFrame D_us_80183B98[];
+static s32 g_WingSmashTimer;
 extern s32 D_us_801D3FEC;
 
 void ControlBatForm(void) {
@@ -876,8 +877,6 @@ s32 func_us_801C84F4(void) {
     return true;
 }
 
-extern s32 D_us_801D3FEC;
-
 void ControlMistForm(void) {
     u32 padDirection;
 
@@ -1026,8 +1025,6 @@ void ControlMistForm(void) {
         }
     }
 }
-extern s16 g_DopSensorsCeilingDefault[];
-extern s16 g_DopSensorsFloorDefault[];
 
 void DopplegangerStepUnmorphMist(void) {
     s32 i;
@@ -1050,12 +1047,12 @@ void DopplegangerStepUnmorphMist(void) {
         if (g_DopSensorsFloor[i].y < g_DopSensorsFloorDefault[i]) {
             g_DopSensorsFloor[i].y++;
         } else {
-            count += 1;
+            count++;
         }
         if (g_DopSensorsCeiling[i].y > g_DopSensorsCeilingDefault[i]) {
             g_DopSensorsCeiling[i].y--;
         } else {
-            count += 1;
+            count++;
         }
         if (i == 0 && (g_Dop.vram_flag & 0x8000)) {
             DOPPLEGANGER.posY.i.hi--;
@@ -1086,7 +1083,7 @@ void DopplegangerStepUnmorphMist(void) {
     }
 }
 
-extern s32 D_us_801D331C;
+static s32 D_us_801D331C;
 
 void DopplegangerStepSwordWarp(void) {
     if (DOPPLEGANGER.step_s == 0) {
@@ -1101,8 +1098,12 @@ void DopplegangerStepSwordWarp(void) {
     }
 }
 
-extern s16 D_us_801813D8[]; // rotation angles
-extern s32 D_us_801D3320;
+// rotation angles
+static s16 D_us_801813D8[] = {
+    0x0000, 0x0000, 0x0100, 0x0000, 0xFF00, 0x0000, 0x0100, 0x0000,
+    0xFF00, 0xFE00, 0xFF00, 0x0000, 0x0100, 0x0200, 0x0100, 0x0000,
+};
+static s32 D_us_801D3320;
 
 void DopplegangerStepStone(s32 arg0) {
     switch (DOPPLEGANGER.step_s) {
@@ -1205,12 +1206,109 @@ typedef union {
     u8 rawBytes[4];
     AnimationFrame af;
 } unionD_us_801813F8;
-extern unionD_us_801813F8 D_us_801813F8[];
+static unionD_us_801813F8 D_us_801813F8[] = {
+    {.rawBytes =
+         {
+             0x10,
+             0x7F,
+             0x3F,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0x7F,
+             0x00,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0x3F,
+             0x3F,
+             0x3F,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0x5F,
+             0x2F,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x0C,
+             0x7F,
+             0x3F,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x0C,
+             0x7F,
+             0x3F,
+             0x7F,
+         }},
+    {.rawBytes =
+         {
+             0x02,
+             0x7F,
+             0x3F,
+             0x7F,
+         }},
+    {.rawBytes =
+         {
+             0x06,
+             0x00,
+             0x3F,
+             0x7F,
+         }},
+    {.rawBytes =
+         {
+             0x06,
+             0x3F,
+             0x3F,
+             0x3F,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0x3F,
+             0x3F,
+             0x7F,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0xFF,
+             0xFF,
+             0xFF,
+         }},
+    {.rawBytes =
+         {
+             0x12,
+             0x7F,
+             0x00,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x12,
+             0x7F,
+             0x7F,
+             0x7F,
+         }},
+};
 
-extern u8 D_us_801D3324;
-extern u8 D_us_801D3328;
-extern u8 D_us_801D332C;
-extern u8 D_us_801D3330;
+// some kind of timer
+static u8 D_us_801D3324;
+STATIC_PAD_BSS(3);
+static u8 D_us_801D3328;
+STATIC_PAD_BSS(3);
+static u8 D_us_801D332C;
+STATIC_PAD_BSS(3);
+static u8 D_us_801D3330;
+STATIC_PAD_BSS(3);
 
 void func_80118C28(s32 arg0) {
     // Break up the 4-byte struct D_us_801813F8[arg0] into individual bytes.
@@ -1220,7 +1318,12 @@ void func_80118C28(s32 arg0) {
     D_us_801D3330 = D_us_801813F8[arg0].rawBytes[3];
 }
 
-extern u8 D_us_8018142C[];
+static u8 D_us_8018142C[] = {
+    0x00, 0x50, 0x10, 0x50, 0x00, 0x60, 0x10, 0x60, 0x10, 0x50, 0x20, 0x50,
+    0x10, 0x60, 0x20, 0x60, 0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50,
+    0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38, 0x78, 0x30, 0x80, 0x30,
+    0x78, 0x38, 0x80, 0x38, 0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40,
+};
 
 static s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
     s16 right;
@@ -1263,7 +1366,8 @@ static s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
     }
     return 0;
 }
-extern Point16 D_us_801D3334[16];
+
+static Point16 D_us_801D3334[16];
 
 void DopEntityHitByHoly(Entity* self) {
     s32 shouldHide;
@@ -1344,12 +1448,83 @@ void DopEntityHitByHoly(Entity* self) {
 
 void PrintDummySet(void) { FntPrint("dummy set\n"); }
 
-extern PfnEntityUpdate D_us_8018145C[];
-// some kind of timer
-extern u8 D_us_801D3324;
-extern u8 D_us_801D3328;
-extern u8 D_us_801D332C;
-extern u8 D_us_801D3330;
+void func_us_801C98BC(Entity*);
+void EntitySmokePuff(Entity*);
+void EntityGravityBootBeam(Entity*);
+void EntitySubwpnKnife(Entity*);
+void func_us_801CC788(Entity*);
+void EntityDopplegangerBlinkWhite(Entity*);
+void func_8011EDA8(Entity*);
+void EntitySubwpnReboundStone(Entity*);
+void DopEntityHitByLightning(Entity*);
+void EntityDopplegangerOutline(Entity*);
+void EntityDopplegangerDissolves(Entity*);
+void EntityHitByIce(Entity*);
+void EntityMist(Entity*);
+void EntityWingSmashTrail(Entity*);
+void func_us_801C9D58(Entity*);
+void DopEntityHitByHoly(Entity*);
+void DopEntityHitByDark(Entity*);
+void DopplegangerUnarmedAttack(Entity*);
+
+static PfnEntityUpdate D_us_8018145C[] = {
+    PrintDummySet,
+    func_us_801C98BC,
+    EntitySmokePuff,
+    EntityGravityBootBeam,
+    EntitySubwpnKnife,
+    func_us_801CC788,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    EntityDopplegangerBlinkWhite,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    func_8011EDA8,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    EntitySubwpnReboundStone,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    DopEntityHitByLightning,
+    EntityDopplegangerOutline,
+    EntityDopplegangerDissolves,
+    EntityHitByIce,
+    EntityMist,
+    EntityWingSmashTrail,
+    func_us_801C9D58,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    DopEntityHitByHoly,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    DopEntityHitByDark,
+    DopplegangerUnarmedAttack,
+};
 
 void func_us_801C9624(void) {
     Entity* entity;
@@ -1735,7 +1910,7 @@ void EntitySmokePuff(Entity* self) {
     }
 }
 
-extern s32 D_us_801D3374;
+static s32 D_us_801D3374;
 extern AnimationFrame D_us_801818B4[];
 
 void DopEntityHitByDark(Entity* self) {
@@ -2248,7 +2423,6 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
     }
 }
 
-extern s16* D_us_801B0B50[];
 extern s16 D_us_80181C00[24][5];
 
 void EntityDopplegangerOutline(Entity* self) {
@@ -2849,7 +3023,6 @@ void func_us_801CC788(Entity* self) {
     }
 }
 
-extern AnimationFrame D_800AD57C[];
 extern AnimationFrame D_us_80181DC8[];
 extern AnimationFrame D_us_80181E04[];
 
@@ -3234,7 +3407,7 @@ void EntityHitByIce(Entity* self) {
     }
 }
 
-extern mistStruct D_us_801D3378[16];
+static mistStruct D_us_801D3378[16];
 
 void func_80121F14(s32 velocityX, s32 velocityY) {
     mistStruct* ptr = D_us_801D3378;
@@ -3249,7 +3422,6 @@ void func_80121F14(s32 velocityX, s32 velocityY) {
 extern Primitive D_us_801D34D8[8];
 extern u32 D_us_80182024[8];
 extern u32 D_us_80182044[8];
-extern mistStruct D_us_801D3378[16];
 
 Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     s32 primU0;
@@ -3351,18 +3523,22 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     return arg2;
 }
 
-extern s16 D_us_801D34C8;
-extern s16 D_us_801D34B8;
-extern s16 D_us_801D34CC;
-extern s16 D_us_801D34BC;
-extern s16 D_us_801D34D0;
-extern s16 D_us_801D34C0;
-extern s16 D_us_801D34D4;
-extern s16 D_us_801D34C4;
-extern Primitive D_us_801D34D8[8];
-extern mistStruct D_us_801D3378[16];
-extern u32 D_us_80182024[8];
-extern u32 D_us_80182044[8];
+static s16 D_us_801D34B8;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34BC;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34C0;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34C4;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34C8;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34CC;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34D0;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34D4;
+STATIC_PAD_BSS(2);
 extern s32 D_us_801D3678;
 extern s16 D_us_80181FA4[];
 extern s16 D_us_80181FE4[];
@@ -3788,7 +3964,6 @@ extern u16 D_us_801D43AA;
 extern s32 D_us_801D43C0;
 extern s32 D_us_801D43C4;
 extern u8 D_us_80182074[][8];
-extern RECT D_us_80182064;
 extern s32 g_stone_flag;
 
 // player dissolves into pixels
@@ -4043,7 +4218,7 @@ void EntityDopplegangerDissolves(Entity* self) {
 
 #include "../../rebound_stone.h"
 
-extern EInit D_us_80180430;
+extern EInit EInitReboundStone;
 void EntitySubwpnReboundStone(Entity* self) {
     s16 playerX;
     s16 playerY;
@@ -4064,7 +4239,7 @@ void EntitySubwpnReboundStone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180430);
+        InitializeEntity(EInitReboundStone);
         if (g_Dop.status & PLAYER_STATUS_POISON) {
             self->attack = self->attack / 2;
         }
@@ -4350,7 +4525,7 @@ extern EInit D_us_80180460;
 extern DopWeaponAnimation D_us_80184304[];
 
 // Similar to DRA's EntityUnarmedAttack
-void func_us_801D0BD8(Entity* self) {
+void DopplegangerUnarmedAttack(Entity* self) {
     EInit* var_a0;
     s16 animIndex;
     DopWeaponAnimation* anim;
@@ -4391,7 +4566,7 @@ void func_us_801D0BD8(Entity* self) {
     }
 }
 
-extern EInit D_us_8018043C;
+extern EInit EInitSubwpnKnife;
 
 void EntitySubwpnKnife(Entity* self) {
     Collider collider;
@@ -4411,7 +4586,7 @@ void EntitySubwpnKnife(Entity* self) {
 
     switch (self->step) {
     case DAGGER_INIT:
-        InitializeEntity(D_us_8018043C);
+        InitializeEntity(EInitSubwpnKnife);
         if (g_Dop.status & PLAYER_STATUS_POISON) {
             self->attack = self->attack / 2;
         }

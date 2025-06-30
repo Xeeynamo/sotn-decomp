@@ -5,7 +5,7 @@ extern s32 D_us_801D36E8[];
 extern s32 D_us_801D3768[];
 extern s32 D_us_801D4344;
 
-void func_us_801C096C(void) {
+static void func_us_801C096C(void) {
     Entity* entity;
     Primitive* prim;
     s16 primIndex;
@@ -74,25 +74,36 @@ void func_us_801C096C(void) {
         TIMEATTACK_EVENT_DOPPLEGANGER_40_DEFEAT, TIMEATTACK_SET_VISITED);
 }
 
+static s16 D_us_80181274[] = {
+    -0x30, -0x30, -0x2F, -0x28, -0x29, -0x1E, -0x1F, -0x1E, -0x29,
+    -0x29, -0x31, -0x33, -0x33, -0x2A, -0x29, -0x1D, -0x1D, 0,
+};
+static s32 D_us_80181298[] = {
+    FIX(1.0 / 2048.0), FIX(1.0 / 1024.0), FIX(1.0 / 2.0),    FIX(1.0 / 8.0),
+    FIX(1.0 / 4.0),    FIX(1.0 / 16.0),   FIX(1.0 / 32.0),   FIX(1.0 / 128.0),
+    FIX(1.0 / 256.0),  FIX(1.0 / 2048.0),
+    FIX(1.0 / 512.0), // different from bo4
+    FIX(1.0 / 2048.0), FIX(1.0 / 2048.0), FIX(1.0 / 2048.0), FIX(1.0 / 2048.0),
+    FIX(1.0 / 2048.0),
+};
+
 #include "../dop_check_st_collision.h"
 
 extern s32 D_us_801805B8;
-extern s16 D_us_80181274[];
-extern s32 D_us_80181298[];
 extern u8 D_us_80183CFC[][4];
 extern AnimationFrame* D_us_80183D40[];
 extern SpriteParts* D_us_801B1674[];
 extern s32 D_us_801D3FEC;
 
 void EntityDoppleganger40(void) {
-    s32 i;         // s0
-    s32 status;    // s1
-    s16 step;      // s2
-    s16 step_s;    // s3
-    s32 var_s5;    // s4
-    s32 posY;      // s6
-    s32 posX;      // s7
-    s32 vram_flag; // s8
+    s32 i;
+    s32 status;
+    s16 step;
+    s16 step_s;
+    s32 var_s5;
+    s32 posY;
+    s32 posX;
+    s32 vram_flag;
     Pos pos;
     Pos unused_pos;
     SpriteParts* parts;
@@ -496,8 +507,8 @@ void EntityDoppleganger40(void) {
     FntPrint("noroi:%02x\n", g_Dop.timers[1]);
 }
 
-extern s32 D_us_801D32F4;
-extern s32 D_us_801D32F8;
+static s32 D_us_801D32F4;
+static s32 D_us_801D32F8;
 
 void func_us_801C1DB0(s32 arg0) {
     D_us_801D32F4 = arg0;
@@ -505,9 +516,9 @@ void func_us_801C1DB0(s32 arg0) {
 }
 
 extern s32 D_us_801805B0;
-extern s32 D_us_801D32FC;
-extern s32 D_us_801D3300;
-extern s32 D_us_801D3304;
+static s32 D_us_801D32FC;
+static s32 D_us_801D3300;
+static s32 D_us_801D3304;
 
 void func_us_801C1DC8(void) {
     s32 dopOffsetX;
@@ -983,15 +994,15 @@ void func_us_801C1DC8(void) {
     }
 }
 
-extern EInit D_us_80180424;
+extern EInit EInitUnk16;
 
-void func_us_801C2D90(Entity* self) {
+void EntityUnkId16(Entity* self) {
     Entity* entity;
     s32 i;
 
     g_Dop.unk6A = DOPPLEGANGER.hitPoints;
     if (self->step == 0) {
-        InitializeEntity(D_us_80180424);
+        InitializeEntity(EInitUnk16);
         if (PLAYER.posX.i.hi > 0x80) {
             DOPPLEGANGER.posX.i.hi = 0x10;
         } else {
