@@ -25,7 +25,6 @@ static RoomHeader rooms[] = {
 static u_long* sprite_banks[1] = {NULL};
 static u16* clut_anims[] = {empty_clut_load, NULL};
 static void* entity_gfxs[] = {empty_entity_gfx, NULL};
-static void UpdateStageEntities(void);
 extern s16** WRP_spriteBanks[];
 extern RoomDef WRP_rooms_layers[];
 
