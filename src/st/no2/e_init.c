@@ -44,9 +44,9 @@ void func_us_801C58DC(Entity* self);
 void func_us_801C4614(Entity* self);
 void func_us_801C6B3C(Entity* self);
 void func_us_801C6C1C(Entity* self);
-void func_us_801C3C50(Entity* self);
-void func_us_801C4408(Entity* self);
-void func_us_801C3594(Entity* self);
+void EntityBloodyZombie(Entity* self);
+void EntityBloodDrips(Entity* self);
+void EntityBloodSplatter(Entity* self);
 void func_us_801B72E8(Entity* self);
 void func_us_801B5948(Entity* self);
 void func_us_801B7580(Entity* self);
@@ -111,9 +111,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x29 */ func_us_801C4614,
     /* 0x2A */ func_us_801C6B3C,
     /* 0x2B */ func_us_801C6C1C,
-    /* 0x2C */ func_us_801C3C50,
-    /* 0x2D */ func_us_801C4408,
-    /* 0x2E */ func_us_801C3594,
+    /* 0x2C */ EntityBloodyZombie,
+    /* 0x2D */ EntityBloodDrips,
+    /* 0x2E */ EntityBloodSplatter,
     /* 0x2F */ func_us_801B72E8,
     /* 0x30 */ func_us_801B5948,
     /* 0x31 */ func_us_801B7580,

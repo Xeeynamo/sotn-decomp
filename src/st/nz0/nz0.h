@@ -98,26 +98,28 @@ void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 void func_801C4CC0(void);
 
-extern u16 g_EInitParticle[];
-extern u16 g_EInitInteractable[]; // Init Elevator2
-extern u16 g_EInitCommon[];
-extern u16 g_EInitEnemy3[];
+extern EInit g_EInitBloodyZombie;
+
+extern EInit g_EInitParticle;
+extern EInit g_EInitInteractable; // Init Elevator2
+extern EInit g_EInitCommon;
+extern EInit g_EInitEnemy3;
 
 // *** EntityBloodSkeleton properties START ***
 
-extern u16 g_EInitBloodSkeleton[]; // InitProps
+extern EInit g_EInitBloodSkeleton;
 
 // *** EntityBloodSkeleton properties END ***
 
-extern u16 g_EInitSkeleton[];
-extern u16 g_EInitSpittleBone[];
-extern u16 g_EInitTableWithGlobe[];
-extern u16 g_EInitSubwpnCloche[];
-extern u16 g_EInitBossDoor[];
+extern EInit g_EInitSkeleton;
+extern EInit g_EInitSpittleBone;
+extern EInit g_EInitTableWithGlobe;
+extern EInit g_EInitSubwpnCloche;
+extern EInit g_EInitBossDoor;
 
 // *** EntitySlogra properties START ***
 
-extern u16 g_EInitSlogra[]; // Init
+extern EInit g_EInitSlogra; // Init
 extern s16 D_8018105C[];
 extern s16 D_8018106C[];
 extern u8 D_80181074[]; // Animation
@@ -144,12 +146,12 @@ extern u8 D_80181218[];
 
 // *** EntitySlogra properties END ***
 
-extern u16 g_EInitSlograSpear[];
-extern u16 g_EInitSlograProjectile[];
+extern EInit g_EInitSlograSpear;
+extern EInit g_EInitSlograProjectile;
 
 // *** EntityGaibon properties START ***
 
-extern u16 g_EInitGaibon[];
+extern EInit g_EInitGaibon;
 extern u16 D_80180D36;
 extern u16 D_80181240[];
 extern u8 D_80181250[];
@@ -164,12 +166,11 @@ extern u8 D_801812FC[];
 extern u8 D_80181304[];
 extern s8 D_80181310[];
 extern u8 D_80181340[];
-extern u16 g_EInitGaibon[];
 
 // *** EntityGaibon properties END ***
 
-extern u16 g_EInitGaibonProjectile[];
-extern u16 g_EInitGaibonLargeProjectile[];
+extern EInit g_EInitGaibonProjectile;
+extern EInit g_EInitGaibonLargeProjectile;
 extern s32 D_80180E04[];
 extern u8 D_80180E24[];
 extern u8 D_80180E2C[];
@@ -191,14 +192,14 @@ extern u32 D_80181EEC[];
 extern ObjInit D_80182014[];
 
 extern u8 D_80181F30[];
-extern u16 g_EInitSubwpnClochePieces[];
-extern u16 g_EInitObtainable[];
+extern EInit g_EInitSubwpnClochePieces;
+extern EInit g_EInitObtainable;
 extern u16 D_80180BC8[];
 extern u16 D_80181CA8[];
 extern u16 D_80181CD8[];
 extern u8* g_SubweaponAnimPrizeDrop[];
-extern u16 g_EInitSkeletonPieces[];
-extern u16 g_EInitSkeletonBone[];
+extern EInit g_EInitSkeletonPieces;
+extern EInit g_EInitSkeletonBone;
 
 // *** EntityLeftSecretRoomWall properties START ***
 
@@ -224,14 +225,14 @@ typedef enum {
 
 // *** EntitySpittleBoneSpit properties START ***
 
-extern u16 g_EInitSpittleBoneSpit[]; // Init
+extern EInit g_EInitSpittleBoneSpit;
 
 // *** EntitySpittleBoneSpit properties END ***
 
-extern u16 g_EInitAxeKnight[];
-extern u16 g_EInitAxeKnightAxe[];
-extern u16 g_EInitLifeMaxTank[];
-extern u16 g_EInitPrizeContainer[];
+extern EInit g_EInitAxeKnight;
+extern EInit g_EInitAxeKnightAxe;
+extern EInit g_EInitLifeMaxTank;
+extern EInit g_EInitPrizeContainer;
 extern const char D_801B058C[]; // "charal %x\n"
 extern const char D_801B0598[]; // "charal %x\n"
 extern const char D_801B08C8[]; // "charal %x\n"
@@ -265,4 +266,4 @@ extern s32 g_IsCutsceneDone;
 extern u32 g_CutsceneFlags;
 
 // EntityMaria, mostly animations
-extern u16 g_EInitSpawner[];
+extern EInit g_EInitSpawner;
