@@ -29,9 +29,9 @@ typedef enum EntityIDs {
     /* 0x13 */ // E_ID_13,
     /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
     /* 0x15 */ E_GREY_PUFF,
-    /* 0x16 */ // E_ID_16,
-    /* 0x17 */ // E_ID_17,
-    /* 0x18 */ // E_ID_18,
+    /* 0x16 */ E_SKELERANG,
+    /* 0x17 */ E_SKELERANG_BOOMERANG,
+    /* 0x18 */ E_SKELERANG_UNKNOWN,
     /* 0x19 */ // E_ID_19,
     /* 0x1A */ // E_ID_1A,
     /* 0x1B */ // E_ID_1B,
@@ -49,4 +49,34 @@ typedef enum EntityIDs {
     /* 0x27 */ E_ID_27 = 0x27,
 } EntityIDs;
 
-extern u16 g_EInitParticle[];
+// extern EInit D_us_80180820;
+extern EInit g_EInitObtainable;
+extern EInit g_EInitParticle;
+// extern EInit D_us_80180844;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitUnkId13;
+// extern EInit D_us_80180868;
+// extern EInit D_us_80180874;
+extern EInit g_EInitDamageNum;
+extern EInit g_EInitSkelerang;
+extern EInit g_EInitSkelerangBoomerang;
+// extern EInit D_us_801808A4;
+// extern EInit D_us_801808B0;
+// extern EInit D_us_801808BC;
+// extern EInit D_us_801808C8;
+// extern EInit D_us_801808D4;
+extern EInit g_EInitBloodyZombie;
+// extern EInit D_us_801808EC;
+// extern EInit D_us_801808F8;
+// extern EInit D_us_80180904;
+// extern EInit D_us_80180910;
+// extern EInit D_us_8018091C;
+// extern EInit D_us_80180928;
+// extern EInit D_us_80180934;
+// extern EInit D_us_80180940;
+// extern EInit D_us_8018094C;
+// extern EInit D_us_80180958;
+// extern EInit D_us_80180964;
+// extern EInit D_us_80180970;
+// extern EInit D_us_8018097C;
+// extern EInit D_us_80180988;

@@ -21,9 +21,9 @@ void func_us_801B3598(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801C2B3C(Entity* self);
-void func_us_801C32C4(Entity* self);
-void func_us_801C3538(Entity* self);
+void EntitySkelerang(Entity* self);
+void EntitySkelerangBoomerang(Entity* self);
+void EntitySkelerangUnknown(Entity* self);
 void func_us_801B3D8C(Entity* self);
 void func_us_801B3F30(Entity* self);
 void func_us_801B4148(Entity* self);
@@ -88,9 +88,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x12 */ EntityUnkId13,
     /* 0x13 */ EntityExplosionVariants,
     /* 0x14 */ EntityGreyPuff,
-    /* 0x15 */ func_us_801C2B3C,
-    /* 0x16 */ func_us_801C32C4,
-    /* 0x17 */ func_us_801C3538,
+    /* 0x15 */ EntitySkelerang,
+    /* 0x16 */ EntitySkelerangBoomerang,
+    /* 0x17 */ EntitySkelerangUnknown,
     /* 0x18 */ func_us_801B3D8C,
     /* 0x19 */ func_us_801B3F30,
     /* 0x1A */ func_us_801B4148,
@@ -138,19 +138,19 @@ EInit D_us_80180820 = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x002};
 EInit D_us_80180844 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x004};
-EInit D_us_80180850 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x005};
+EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x005};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x002};
 EInit D_us_80180868 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x001};
 EInit D_us_80180874 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
-EInit D_us_8018088C = {ANIMSET_OVL(0x01), 0x01, 0x48, 0x200, 0x00B};
-EInit D_us_80180898 = {ANIMSET_OVL(0x01), 0x2B, 0x48, 0x200, 0x00C};
+EInit g_EInitSkelerang = {ANIMSET_OVL(0x01), 0x01, 0x48, 0x200, 0x00B};
+EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(0x01), 0x2B, 0x48, 0x200, 0x00C};
 EInit D_us_801808A4 = {ANIMSET_OVL(0x02), 0x0B, 0x00, 0x000, 0x003};
 EInit D_us_801808B0 = {ANIMSET_OVL(0x03), 0x01, 0x49, 0x203, 0x003};
 EInit D_us_801808BC = {ANIMSET_OVL(0x08), 0x10, 0x49, 0x21C, 0x014};
 EInit D_us_801808C8 = {ANIMSET_OVL(0x08), 0x00, 0x49, 0x2CB, 0x015};
 EInit D_us_801808D4 = {ANIMSET_OVL(0x08), 0x01, 0x49, 0x21C, 0x016};
-EInit D_us_801808E0 = {ANIMSET_OVL(0x09), 0x01, 0x4A, 0x223, 0x00D};
+EInit g_EInitBloodyZombie = {ANIMSET_OVL(0x09), 0x01, 0x4A, 0x223, 0x00D};
 EInit D_us_801808EC = {ANIMSET_OVL(0x02), 0x0E, 0x00, 0x000, 0x005};
 EInit D_us_801808F8 = {ANIMSET_OVL(0x05), 0x01, 0x4C, 0x207, 0x085};
 EInit D_us_80180904 = {ANIMSET_OVL(0x05), 0x01, 0x4C, 0x207, 0x003};
