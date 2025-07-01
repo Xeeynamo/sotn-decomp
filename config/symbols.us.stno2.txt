@@ -65,6 +65,7 @@ EntityGreyPuff = 0x801BFE54;
 EntityIntenseExplosion = 0x801C07F4;
 EntityBigRedFireball = 0x801C0B40;
 PlaySfxPositional = 0x801C1BF0;
+EntityStageNamePopup = 0x801C1EB8;
 EntitySkelerang = 0x801C2B3C;
 EntitySkelerangBoomerang = 0x801C32C4;
 EntitySkelerangUnknown = 0x801C3538;

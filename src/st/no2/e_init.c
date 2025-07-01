@@ -9,7 +9,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void func_us_801C7508(Entity* self);
 void func_us_801C7D4C(Entity* self);
-void func_us_801C1EB8(Entity* self);
+void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOr(Entity* self);
 void EntityHeartDrop(Entity* self);
@@ -75,7 +75,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x05 */ EntityIntenseExplosion,
     /* 0x06 */ func_us_801C7508,
     /* 0x07 */ func_us_801C7D4C,
-    /* 0x08 */ func_us_801C1EB8,
+    /* 0x08 */ EntityStageNamePopup,
     /* 0x09 */ EntityEquipItemDrop,
     /* 0x0A */ EntityRelicOrb,
     /* 0x0B */ EntityHeartDrop,
