@@ -6,7 +6,6 @@ extern s16** OVL_EXPORT(spriteBanks)[];
 extern u_long* OVL_EXPORT(cluts)[];
 extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern u_long** OVL_EXPORT(gfxBanks)[];
-void UpdateStageEntities();
 
 Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,

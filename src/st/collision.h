@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
-#include "sfx.h"
 
 #if defined(VERSION_US)
 static u16 g_testCollEnemyLookup[] = {
