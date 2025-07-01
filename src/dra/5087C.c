@@ -647,7 +647,8 @@ static void copyMapTileColorsToBuffer(s32 tileX, s32 tileY, u8* buffer) {
     start += tileY * (HEIGHT_OF_MAP_TILE_IN_PIXELS * WIDTH_OF_MAP_ROW_IN_BYTES);
     for (offsetY = 0; offsetY < 5; offsetY++) {
         for (offsetX = 0; offsetX < 4; offsetX++) {
-            buffer[4 * offsetY + offsetX] = (start + offsetY * WIDTH_OF_MAP_ROW_IN_BYTES)[offsetX];
+            buffer[4 * offsetY + offsetX] =
+                (start + offsetY * WIDTH_OF_MAP_ROW_IN_BYTES)[offsetX];
         }
     }
 }
@@ -661,7 +662,8 @@ static void copyBufferToMapTile(s32 tileX, s32 tileY, u8* buffer) {
     start += tileY * (HEIGHT_OF_MAP_TILE_IN_PIXELS * WIDTH_OF_MAP_ROW_IN_BYTES);
     for (offsetY = 0; offsetY < 5; offsetY++) {
         for (offsetX = 0; offsetX < 4; offsetX++) {
-            (start + offsetY * WIDTH_OF_MAP_ROW_IN_BYTES)[offsetX] = buffer[(4 * offsetY) + offsetX];
+            (start + offsetY * WIDTH_OF_MAP_ROW_IN_BYTES)[offsetX] =
+                buffer[(4 * offsetY) + offsetX];
         }
     }
 }
@@ -793,7 +795,8 @@ void func_800F1B08(s32 tileX, s32 tileY, s32 arg2) {
             }
         }
     }
-    LoadTPage((u_long*)buffer, 0, 0, VramPosX + tileX, VramPosY + tileY * 4, 8, 5);
+    LoadTPage(
+        (u_long*)buffer, 0, 0, VramPosX + tileX, VramPosY + tileY * 4, 8, 5);
 }
 
 void DrawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
