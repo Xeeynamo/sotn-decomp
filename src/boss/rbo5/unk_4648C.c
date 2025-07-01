@@ -137,12 +137,15 @@ void func_us_801C68CC(void) {
 void func_us_801C6950(void) {
     if (DOPPLEGANGER.posX.i.hi <= PLAYER.posX.i.hi) {
         DOPPLEGANGER.entityRoomIndex = 0;
-        return;
+    } else {
+        DOPPLEGANGER.entityRoomIndex = 1;
     }
-    DOPPLEGANGER.entityRoomIndex = 1;
 }
 
-extern s16 D_us_801813C8[];
+static s16 D_us_801813C8[] = {
+    SFX_BO4_UNK_7DD, SFX_BO4_UNK_7DC, SFX_BO4_UNK_7DB, SFX_BO4_UNK_7DA,
+    SFX_BO4_UNK_7D9, SFX_BO4_UNK_7D8, SFX_BO4_UNK_7D7,
+};
 
 void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
     s32 sfxIndex;
@@ -275,10 +278,10 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
 }
 
 extern s32 D_us_801805B8;
-extern s32 D_us_801D3308;
-extern s32 D_us_801D330C;
-extern s32 D_us_801D3310;
-extern s32 D_us_801D3314;
+static s32 D_us_801D3308;
+static s32 D_us_801D330C;
+static s32 D_us_801D3310;
+static s32 D_us_801D3314;
 extern u_long D_us_801D37EC[];
 extern RECT D_us_80182064;
 
@@ -345,7 +348,7 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
         }
         plDraw->r0 = plDraw->g0 = plDraw->b0 = plDraw->r1 = plDraw->g1 =
             plDraw->b1 = plDraw->r2 = plDraw->g2 = plDraw->b2 = plDraw->r3 =
-                plDraw->g3 = plDraw->b3 = 0x80;
+                plDraw->g3 = plDraw->b3 = 128;
         plDraw->enableColorBlend = 1;
         DOPPLEGANGER.step_s++;
         break;
@@ -452,7 +455,6 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
     }
 }
 
-extern PlayerState g_Dop;
 extern AnimationFrame D_us_80183B98[];
 
 bool BatFormFinished(void) {
@@ -494,8 +496,7 @@ static s32 CheckWingSmashInput(void) {
     return false;
 }
 
-extern s32 g_WingSmashTimer;
-extern AnimationFrame D_us_80183B98[];
+static s32 g_WingSmashTimer;
 extern s32 D_us_801D3FEC;
 
 void ControlBatForm(void) {
@@ -858,7 +859,7 @@ void DopplegangerStepUnmorphBat(void) {
         if (g_Dop.unk66 == 3) {
             func_us_801C4EE4();
             if (!(g_Dop.vram_flag & 0x8000)) {
-                DOPPLEGANGER.velocityY = 0xFFFF0000;
+                DOPPLEGANGER.velocityY = FIX(-1);
             }
             DOPPLEGANGER.palette = PAL_OVL(0x200);
             func_80111CC0();
@@ -875,8 +876,6 @@ s32 func_us_801C84F4(void) {
     SetDopplegangerStep(15);
     return true;
 }
-
-extern s32 D_us_801D3FEC;
 
 void ControlMistForm(void) {
     u32 padDirection;
@@ -1026,8 +1025,6 @@ void ControlMistForm(void) {
         }
     }
 }
-extern s16 g_DopSensorsCeilingDefault[];
-extern s16 g_DopSensorsFloorDefault[];
 
 void DopplegangerStepUnmorphMist(void) {
     s32 i;
@@ -1050,12 +1047,12 @@ void DopplegangerStepUnmorphMist(void) {
         if (g_DopSensorsFloor[i].y < g_DopSensorsFloorDefault[i]) {
             g_DopSensorsFloor[i].y++;
         } else {
-            count += 1;
+            count++;
         }
         if (g_DopSensorsCeiling[i].y > g_DopSensorsCeilingDefault[i]) {
             g_DopSensorsCeiling[i].y--;
         } else {
-            count += 1;
+            count++;
         }
         if (i == 0 && (g_Dop.vram_flag & 0x8000)) {
             DOPPLEGANGER.posY.i.hi--;
@@ -1086,7 +1083,7 @@ void DopplegangerStepUnmorphMist(void) {
     }
 }
 
-extern s32 D_us_801D331C;
+static s32 D_us_801D331C;
 
 void DopplegangerStepSwordWarp(void) {
     if (DOPPLEGANGER.step_s == 0) {
@@ -1101,8 +1098,12 @@ void DopplegangerStepSwordWarp(void) {
     }
 }
 
-extern s16 D_us_801813D8[]; // rotation angles
-extern s32 D_us_801D3320;
+// rotation angles
+static s16 D_us_801813D8[] = {
+    0x0000, 0x0000, 0x0100, 0x0000, 0xFF00, 0x0000, 0x0100, 0x0000,
+    0xFF00, 0xFE00, 0xFF00, 0x0000, 0x0100, 0x0200, 0x0100, 0x0000,
+};
+static s32 D_us_801D3320;
 
 void DopplegangerStepStone(s32 arg0) {
     switch (DOPPLEGANGER.step_s) {
@@ -1205,12 +1206,109 @@ typedef union {
     u8 rawBytes[4];
     AnimationFrame af;
 } unionD_us_801813F8;
-extern unionD_us_801813F8 D_us_801813F8[];
+static unionD_us_801813F8 D_us_801813F8[] = {
+    {.rawBytes =
+         {
+             0x10,
+             0x7F,
+             0x3F,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0x7F,
+             0x00,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0x3F,
+             0x3F,
+             0x3F,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0x5F,
+             0x2F,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x0C,
+             0x7F,
+             0x3F,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x0C,
+             0x7F,
+             0x3F,
+             0x7F,
+         }},
+    {.rawBytes =
+         {
+             0x02,
+             0x7F,
+             0x3F,
+             0x7F,
+         }},
+    {.rawBytes =
+         {
+             0x06,
+             0x00,
+             0x3F,
+             0x7F,
+         }},
+    {.rawBytes =
+         {
+             0x06,
+             0x3F,
+             0x3F,
+             0x3F,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0x3F,
+             0x3F,
+             0x7F,
+         }},
+    {.rawBytes =
+         {
+             0x10,
+             0xFF,
+             0xFF,
+             0xFF,
+         }},
+    {.rawBytes =
+         {
+             0x12,
+             0x7F,
+             0x00,
+             0x00,
+         }},
+    {.rawBytes =
+         {
+             0x12,
+             0x7F,
+             0x7F,
+             0x7F,
+         }},
+};
 
-extern u8 D_us_801D3324;
-extern u8 D_us_801D3328;
-extern u8 D_us_801D332C;
-extern u8 D_us_801D3330;
+// some kind of timer
+static u8 D_us_801D3324;
+STATIC_PAD_BSS(3);
+static u8 D_us_801D3328;
+STATIC_PAD_BSS(3);
+static u8 D_us_801D332C;
+STATIC_PAD_BSS(3);
+static u8 D_us_801D3330;
+STATIC_PAD_BSS(3);
 
 void func_80118C28(s32 arg0) {
     // Break up the 4-byte struct D_us_801813F8[arg0] into individual bytes.
@@ -1220,7 +1318,12 @@ void func_80118C28(s32 arg0) {
     D_us_801D3330 = D_us_801813F8[arg0].rawBytes[3];
 }
 
-extern u8 D_us_8018142C[];
+static u8 D_us_8018142C[] = {
+    0x00, 0x50, 0x10, 0x50, 0x00, 0x60, 0x10, 0x60, 0x10, 0x50, 0x20, 0x50,
+    0x10, 0x60, 0x20, 0x60, 0x70, 0x40, 0x80, 0x40, 0x70, 0x50, 0x80, 0x50,
+    0x70, 0x30, 0x78, 0x30, 0x70, 0x38, 0x78, 0x38, 0x78, 0x30, 0x80, 0x30,
+    0x78, 0x38, 0x80, 0x38, 0x70, 0x38, 0x78, 0x38, 0x77, 0x40, 0x78, 0x40,
+};
 
 static s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
     s16 right;
@@ -1263,7 +1366,8 @@ static s32 func_80119E78(Primitive* prim, s16 xCenter, s16 yCenter) {
     }
     return 0;
 }
-extern Point16 D_us_801D3334[16];
+
+static Point16 D_us_801D3334[16];
 
 void DopEntityHitByHoly(Entity* self) {
     s32 shouldHide;
@@ -1344,12 +1448,83 @@ void DopEntityHitByHoly(Entity* self) {
 
 void PrintDummySet(void) { FntPrint("dummy set\n"); }
 
-extern PfnEntityUpdate D_us_8018145C[];
-// some kind of timer
-extern u8 D_us_801D3324;
-extern u8 D_us_801D3328;
-extern u8 D_us_801D332C;
-extern u8 D_us_801D3330;
+void func_us_801C98BC(Entity*);
+void EntitySmokePuff(Entity*);
+void EntityGravityBootBeam(Entity*);
+void EntitySubwpnKnife(Entity*);
+void func_us_801CC788(Entity*);
+void EntityDopplegangerBlinkWhite(Entity*);
+void func_8011EDA8(Entity*);
+void EntitySubwpnReboundStone(Entity*);
+void DopEntityHitByLightning(Entity*);
+void EntityDopplegangerOutline(Entity*);
+void EntityDopplegangerDissolves(Entity*);
+void EntityHitByIce(Entity*);
+void EntityMist(Entity*);
+void EntityWingSmashTrail(Entity*);
+void func_us_801C9D58(Entity*);
+void DopEntityHitByHoly(Entity*);
+void DopEntityHitByDark(Entity*);
+void DopplegangerUnarmedAttack(Entity*);
+
+static PfnEntityUpdate D_us_8018145C[] = {
+    PrintDummySet,
+    func_us_801C98BC,
+    EntitySmokePuff,
+    EntityGravityBootBeam,
+    EntitySubwpnKnife,
+    func_us_801CC788,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    EntityDopplegangerBlinkWhite,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    func_8011EDA8,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    EntitySubwpnReboundStone,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    DopEntityHitByLightning,
+    EntityDopplegangerOutline,
+    EntityDopplegangerDissolves,
+    EntityHitByIce,
+    EntityMist,
+    EntityWingSmashTrail,
+    func_us_801C9D58,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    DopEntityHitByHoly,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    PrintDummySet,
+    DopEntityHitByDark,
+    DopplegangerUnarmedAttack,
+};
 
 void func_us_801C9624(void) {
     Entity* entity;
@@ -1477,7 +1652,7 @@ void func_us_801C98BC(Entity* self) {
         case B_ORIGIN_4:
             self->posX.val = DOPPLEGANGER.posX.val;
             self->posY.val = DOPPLEGANGER.posY.val;
-            if (DOPPLEGANGER.step != 2) {
+            if (DOPPLEGANGER.step != Dop_Walk) {
                 self->entityId = 0;
                 return;
             }
@@ -1485,7 +1660,7 @@ void func_us_801C98BC(Entity* self) {
         case B_ORIGIN_7:
             self->posX.val = DOPPLEGANGER.posX.val;
             self->posY.val = DOPPLEGANGER.posY.val;
-            if (DOPPLEGANGER.step != 11) {
+            if (DOPPLEGANGER.step != Dop_Hit) {
                 self->entityId = 0;
                 return;
             }
@@ -1735,7 +1910,7 @@ void EntitySmokePuff(Entity* self) {
     }
 }
 
-extern s32 D_us_801D3374;
+static s32 D_us_801D3374;
 extern AnimationFrame D_us_801818B4[];
 
 void DopEntityHitByDark(Entity* self) {
@@ -1795,7 +1970,7 @@ static bool func_8011BD48(Entity* entity) {
     return false;
 }
 
-extern s16* D_us_801B0B50[];
+extern AluFrame* D_us_801B0B50[];
 extern s16* D_us_801B1674[];
 extern s16 D_us_8018192C[42][10];
 extern s32 D_us_801818EC[];
@@ -2248,7 +2423,6 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
     }
 }
 
-extern s16* D_us_801B0B50[];
 extern s16 D_us_80181C00[24][5];
 
 void EntityDopplegangerOutline(Entity* self) {
@@ -2849,7 +3023,6 @@ void func_us_801CC788(Entity* self) {
     }
 }
 
-extern AnimationFrame D_800AD57C[];
 extern AnimationFrame D_us_80181DC8[];
 extern AnimationFrame D_us_80181E04[];
 
@@ -3234,7 +3407,7 @@ void EntityHitByIce(Entity* self) {
     }
 }
 
-extern mistStruct D_us_801D3378[16];
+static mistStruct D_us_801D3378[16];
 
 void func_80121F14(s32 velocityX, s32 velocityY) {
     mistStruct* ptr = D_us_801D3378;
@@ -3249,7 +3422,6 @@ void func_80121F14(s32 velocityX, s32 velocityY) {
 extern Primitive D_us_801D34D8[8];
 extern u32 D_us_80182024[8];
 extern u32 D_us_80182044[8];
-extern mistStruct D_us_801D3378[16];
 
 Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     s32 primU0;
@@ -3351,18 +3523,22 @@ Primitive* func_80121F58(bool arg0, s32 arg1, Primitive* arg2, s16 facingLeft) {
     return arg2;
 }
 
-extern s16 D_us_801D34C8;
-extern s16 D_us_801D34B8;
-extern s16 D_us_801D34CC;
-extern s16 D_us_801D34BC;
-extern s16 D_us_801D34D0;
-extern s16 D_us_801D34C0;
-extern s16 D_us_801D34D4;
-extern s16 D_us_801D34C4;
-extern Primitive D_us_801D34D8[8];
-extern mistStruct D_us_801D3378[16];
-extern u32 D_us_80182024[8];
-extern u32 D_us_80182044[8];
+static s16 D_us_801D34B8;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34BC;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34C0;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34C4;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34C8;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34CC;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34D0;
+STATIC_PAD_BSS(2);
+static s16 D_us_801D34D4;
+STATIC_PAD_BSS(2);
 extern s32 D_us_801D3678;
 extern s16 D_us_80181FA4[];
 extern s16 D_us_80181FE4[];
@@ -3783,11 +3959,266 @@ block_147:
     self->facingLeft = DOPPLEGANGER.facingLeft;
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/unk_4648C", EntityDopplegangerDissolves);
+extern RECT D_us_8018206C;
+extern u16 D_us_801D43AA;
+extern s32 D_us_801D43C0;
+extern s32 D_us_801D43C4;
+extern u8 D_us_80182074[][8];
+extern s32 g_stone_flag;
+
+// player dissolves into pixels
+void EntityDopplegangerDissolves(Entity* self) {
+    const int PrimCount = 36;
+    const int Iterations = 16;
+
+    u8 xMargin;
+    u8 yMargin;
+    u8 wSprite;
+    u8 hSprite;
+    s16 blueOffset;
+    s16 xPivot;
+    s16 yPivot;
+    s16 width;
+    s16 height;
+    s16 sp42;
+    s32 sp3C;
+    s16* sp38;
+    Primitive* prim;
+    s32 i;
+    u8* s2;
+    s16 s3;
+    s16 s4;
+    s16 s5;
+    s32 s6;
+    s16 s7;
+    u_long* data;
+    u8* plSprite;
+
+    s32 xBase, yBase, angle, tangent;
+
+    if (DOPPLEGANGER.ext.player.anim != 0x38 &&
+        (self->step == 2 || self->step == 3)) {
+        self->step = 4;
+        LoadImage(&D_us_8018206C, (u_long*)D_us_801D37EC);
+        self->ext.dissolve.unk7E = rand() & 0xFF;
+        self->ext.dissolve.unk7C = 0x30;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            prim->drawMode &= ~DRAW_HIDE;
+            prim = prim->next;
+        }
+    }
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, PrimCount);
+        if (self->primIndex == -1) {
+            return;
+        }
+        self->flags = FLAG_HAS_PRIMS | FLAG_POS_CAMERA_LOCKED;
+        self->ext.dissolve.unk7C = 0;
+        self->ext.dissolve.unk80 = rand() & 7;
+        self->ext.dissolve.unk7E =
+            D_us_80182074[self->ext.dissolve.unk80][self->ext.dissolve.unk7C];
+
+        s5 = self->posX.i.hi = DOPPLEGANGER.posX.i.hi;
+        s7 = self->posY.i.hi = DOPPLEGANGER.posY.i.hi;
+        self->facingLeft = DOPPLEGANGER.facingLeft;
+
+        sp38 = (s16*)D_us_801B0B50[DOPPLEGANGER.animCurFrame & 0x7FFF];
+        sp42 = *sp38++;
+        sp42 &= 0x7FFF;
+        plSprite = g_SpriteSheet[sp42];
+        xMargin = 4;
+        yMargin = 1;
+        wSprite = xMargin + plSprite[0];
+        hSprite = yMargin + plSprite[1];
+        width = wSprite - xMargin;
+        height = hSprite - yMargin;
+        s3 = width / 6;
+        s4 = height / 6;
+        xPivot = sp38[0] + plSprite[2];
+        yPivot = sp38[1] + plSprite[3];
+        if (self->facingLeft) {
+            s5 = s5 - xPivot;
+        } else {
+            s5 = s5 + xPivot;
+        }
+        s7 = s7 + yPivot;
+
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = (s5 - (s3 * (i % 6))) + 1;
+                prim->x1 = prim->x3 = prim->x0 - s3;
+            } else {
+                prim->x0 = prim->x2 = s5 + (s3 * (i % 6));
+                prim->x1 = prim->x3 = prim->x0 + s3;
+            }
+            prim->y0 = prim->y1 = s7 + (s4 * (i / 6));
+            prim->y2 = prim->y3 = prim->y0 + s4;
+            prim->u0 = prim->u2 = (xMargin) + (s3 * (i % 6)) + 0x80;
+            prim->u1 = prim->u3 = prim->u0 + s3;
+            prim->v0 = prim->v1 = (yMargin + (s4 * (i / 6)));
+            prim->v2 = prim->v3 = prim->v0 + s4;
+            prim->g0 = (((i / 6) * 2) + (rand() & 3));
+            prim->tpage = 0x10;
+            prim->clut = DOPPLEGANGER.palette & 0x7FFF;
+            prim->priority = DOPPLEGANGER.zPriority + 2;
+            prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+            prim->r3 = i * 7;
+            prim = prim->next;
+        }
+        self->step++;
+        break;
+    case 1:
+        StoreImage(&D_us_80182064, (u_long*)D_us_801D37EC);
+
+        self->step++;
+        // fallthrough
+    case 2:
+        DOPPLEGANGER.animCurFrame |= 0x8000;
+        if (g_Dop.padTapped & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT)) {
+            self->step++;
+        }
+        break;
+    case 3:
+        DOPPLEGANGER.animCurFrame |= 0x8000;
+        self->ext.dissolve.unk7E =
+            D_us_80182074[self->ext.dissolve.unk80][self->ext.dissolve.unk7C];
+        data = (u_long*)D_us_801D37EC;
+        s2 = (u8*)data;
+        s2 = s2 + ((self->ext.dissolve.unk7E >> 1) & 7);
+        s2 = s2 + (((self->ext.dissolve.unk7E & 0xFF) >> 4) << 5);
+        for (i = 0; i < Iterations; i++) {
+            if (rand() & 3) {
+                if (self->ext.dissolve.unk7E & 1) {
+                    if (*(s2 + (i & 3) * 8 + (i >> 2) * 0x200)) {
+                        *(s2 + (i & 3) * 8 + (i >> 2) * 0x200) &= 0xF0;
+                        *(s2 + (i & 3) * 8 + (i >> 2) * 0x200) |= 1;
+                    }
+                } else if (*(s2 + (i & 3) * 8 + (i >> 2) * 0x200)) {
+                    *(s2 + (i & 3) * 8 + (i >> 2) * 0x200) &= 0x0F;
+                    *(s2 + (i & 3) * 8 + (i >> 2) * 0x200) |= 0x10;
+                }
+            }
+        }
+        LoadImage(&D_us_80182064, data);
+        if (++self->ext.dissolve.unk7C == 8) {
+            self->ext.dissolve.unk7C = 0;
+            self->ext.dissolve.unk80 += 1;
+            self->ext.dissolve.unk80 &= 7;
+            self->step = 2;
+        }
+        break;
+    case 4:
+        if (DOPPLEGANGER.step == Dop_Kill || D_us_801D43AA <= 0) {
+            g_stone_flag = 1;
+            if (g_Timer % 2 == 0) {
+                goto after_loop;
+            }
+        } else if (g_Timer % 3 == 0) {
+            break;
+        }
+
+        for (sp3C = 0; sp3C < 6; sp3C++) {
+            data = (u_long*)D_us_801D37EC;
+            s2 = (u8*)data;
+            s2 = s2 + ((self->ext.dissolve.unk7E >> 1) & 7);
+            s2 = s2 + (((self->ext.dissolve.unk7E & 0xFF) >> 4) << 5);
+            for (i = 0; i < Iterations; i++) {
+                if (self->ext.dissolve.unk7E & 1) {
+                    *(s2 + (i & 3) * 8 + (i >> 2) * 0x200) &= 0xF0;
+                } else {
+                    *(s2 + (i & 3) * 8 + (i >> 2) * 0x200) &= 0x0F;
+                }
+            }
+            // some sort of prng state
+            self->ext.dissolve.unk7E += 0x23;
+            self->ext.dissolve.unk7E &= 0xFF;
+        }
+
+        LoadImage(&D_us_8018206C, data);
+        if (--self->ext.dissolve.unk7C <= 0) {
+            if ((DOPPLEGANGER.step == Dop_Kill) || D_us_801D43AA == 0) {
+                if (self->ext.dissolve.unk7C < -0x1F) {
+                    g_stone_flag = 2;
+                    DestroyEntity(self);
+                    return;
+                }
+            } else {
+                DestroyEntity(self);
+                return;
+            }
+        }
+
+    after_loop:
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < PrimCount; i++) {
+            // prim->drawMode &= DRAW_UNK_200;
+            // prim->drawMode |= DRAW_UNK02;
+            if (prim->r0 == 0) {
+                if (--prim->g0 == 0) {
+                    prim->r0++;
+                    prim->b0 = ((rand() & 3) + 0xF8);
+                    prim->r1 = 0x20 - ((i / 6) * 2);
+                }
+            } else if (DOPPLEGANGER.step == Dop_Kill || D_us_801D43AA <= 0) {
+                xBase = D_us_801D43C0 - (prim->x0 + prim->x1) / 2;
+                yBase = D_us_801D43C4 - ((prim->y0 + prim->y2) / 2);
+                tangent = ratan2(-yBase, xBase);
+                angle = prim->r3;
+                angle *= 0x10;
+                if ((angle - tangent) < 0) {
+                    angle += 0x80;
+                }
+
+                if ((angle - tangent) > 0) {
+                    angle -= 0x80;
+                }
+                angle &= 0xFFF;
+                xBase = rcos(angle) >> 0xB;
+                yBase = rsin(angle) >> 0xB;
+                angle >>= 4;
+                prim->r3 = angle;
+                prim->x0 += xBase;
+                prim->x1 += xBase;
+                prim->x2 += xBase;
+                prim->x3 += xBase;
+                prim->y0 -= yBase;
+                prim->y1 -= yBase;
+                prim->y2 -= yBase;
+                prim->y3 -= yBase;
+            } else {
+                if (prim->r1) {
+                    prim->r1--;
+                } else {
+                    prim->drawMode = DRAW_HIDE;
+                }
+                if (prim->b0 < 0x30 || prim->b0 > 0xD0) {
+                    prim->b0 += 2;
+                }
+                blueOffset = (s16)((s8)prim->b0 >> 4);
+                prim->y0 += blueOffset;
+                prim->y1 += blueOffset;
+                prim->y2 += blueOffset;
+                prim->y3 += blueOffset;
+            }
+            prim = prim->next;
+        }
+        break;
+    }
+
+    if (DOPPLEGANGER.step == Dop_Kill || D_us_801D43AA <= 0) {
+        g_stone_flag = 1;
+    }
+    func_us_801C4954(1, 1);
+}
 
 #include "../../rebound_stone.h"
 
-extern EInit D_us_80180430;
+extern EInit EInitReboundStone;
 void EntitySubwpnReboundStone(Entity* self) {
     s16 playerX;
     s16 playerY;
@@ -3808,7 +4239,7 @@ void EntitySubwpnReboundStone(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180430);
+        InitializeEntity(EInitReboundStone);
         if (g_Dop.status & PLAYER_STATUS_POISON) {
             self->attack = self->attack / 2;
         }
@@ -4094,7 +4525,7 @@ extern EInit D_us_80180460;
 extern DopWeaponAnimation D_us_80184304[];
 
 // Similar to DRA's EntityUnarmedAttack
-void func_us_801D0BD8(Entity* self) {
+void DopplegangerUnarmedAttack(Entity* self) {
     EInit* var_a0;
     s16 animIndex;
     DopWeaponAnimation* anim;
@@ -4135,7 +4566,7 @@ void func_us_801D0BD8(Entity* self) {
     }
 }
 
-extern EInit D_us_8018043C;
+extern EInit EInitSubwpnKnife;
 
 void EntitySubwpnKnife(Entity* self) {
     Collider collider;
@@ -4155,7 +4586,7 @@ void EntitySubwpnKnife(Entity* self) {
 
     switch (self->step) {
     case DAGGER_INIT:
-        InitializeEntity(D_us_8018043C);
+        InitializeEntity(EInitSubwpnKnife);
         if (g_Dop.status & PLAYER_STATUS_POISON) {
             self->attack = self->attack / 2;
         }

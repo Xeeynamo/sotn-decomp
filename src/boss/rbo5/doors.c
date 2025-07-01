@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo5.h"
 
-// hit during enter sequence
-extern s32 D_us_801805B8;
-extern s32 g_stone_flag;
+u16 D_us_801805B0 = 0;
+STATIC_PAD_DATA(4);
+s32 D_us_801805B8 = 0;
+s32 g_stone_flag = 0;
+
 extern s32 D_us_801D43C0;
 extern s32 D_us_801D43C4;
 extern EInit g_EInitInteractable;
@@ -21,7 +23,8 @@ extern s32 D_pspeu_0926BC98;
 #define E_ID(ID_1D) D_pspeu_0926BC98
 #endif
 
-void func_us_801B3690(Entity* self) {
+// hit during enter sequence
+void EntityUnkId18(Entity* self) {
     s32 i;
     Entity* dop;
     Entity* entity;
@@ -184,16 +187,22 @@ void func_us_801B3690(Entity* self) {
     D_us_801D43C4 = self->posY.i.hi;
 }
 
-extern EInit D_us_8018046C;
-extern s16 D_us_801805C0[];
-extern s16 D_us_801805CC[];
-extern s16 D_us_801805D8[];
-extern u8 D_us_801805E4[];
-extern u8 D_us_801805EC[];
-extern u8 D_us_801805F4[];
-extern u8 D_us_801805FC[];
+extern EInit EInitUnk17;
+static s16 D_us_801805C0[] = {
+    0x80, 0x80, 0x100, 0x300, 0x500, 0x700,
+};
+static s16 D_us_801805CC[] = {
+    0xC, 0xC, 0x12, 0x16, 0x20, 0x26,
+};
+static s16 D_us_801805D8[] = {
+    0x100, 0x100, 0xF8, 0xF2, 0xEE, 0xEC,
+};
+static u8 D_us_801805E4[] = {1, 0x62, 0x1, 0x63, 0};
+static u8 D_us_801805EC[] = {1, 0x64, 0x1, 0x65, 0};
+static u8 D_us_801805F4[] = {2, 0x62, 0x2, 0x63, 0};
+static u8 D_us_801805FC[] = {2, 0x64, 0x2, 0x65, 0};
 
-void func_us_801B3B0C(Entity* self) {
+void EntityUnkId17(Entity* self) {
     s32 flag;
     s32 primIndex;
     s16 xOffset, yOffset;
@@ -203,7 +212,7 @@ void func_us_801B3B0C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_8018046C);
+        InitializeEntity(EInitUnk17);
         self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE |
                            FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
         if ((self->params & 0xF) > 1) {
@@ -271,7 +280,7 @@ void func_us_801B3B0C(Entity* self) {
     case 3:
         if (g_Timer % 2 == 0) {
             self->palette++;
-            if (self->palette > 0x8058) {
+            if (self->palette > PAL_OVL(0x58)) {
                 g_api.PlaySfx(SFX_ELECTRICITY);
                 self->palette = PAL_OVL(0x4F);
                 self->step++;
@@ -283,7 +292,7 @@ void func_us_801B3B0C(Entity* self) {
         break;
 
     case 4:
-        magnitude = self->ext.et_801BDA0C.unk80 / 0x10000;
+        magnitude = self->ext.et_801BDA0C.unk80 / FIX(1);
         xOffset = (rcos(self->rotate - 0x400) * magnitude) >> 0xC;
         yOffset = (rsin(self->rotate - 0x400) * magnitude) >> 0xC;
         prim = self->ext.et_801BDA0C.unk7C;
@@ -346,16 +355,12 @@ void func_us_801B3B0C(Entity* self) {
     }
 }
 
-extern EInit D_us_8018046C;
-extern u8 D_us_801805E4[];
-extern u8 D_us_801805EC[];
-
-void func_us_801B40A8(Entity* self) {
+void EntityUnkId1C(Entity* self) {
     s32 offsetX;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_8018046C);
+        InitializeEntity(EInitUnk17);
         self->rotate = -0x400;
         self->drawFlags |= FLAG_DRAW_ROTATE;
         if (self->params & 1) {
@@ -396,12 +401,16 @@ void func_us_801B40A8(Entity* self) {
     }
 }
 
-extern s32 D_us_80180604[]; // Playstation Format (20.12) Fixed
-extern s32 D_us_801D26D4;
-extern s32 D_us_801D26D8;
-extern s32 D_us_801D26DC;
+static s32 D_us_80180604[] = {
+    FLT(0),    FLT(0.125), FLT(0.25), FLT(0.375), FLT(0.5),  FLT(0.625),
+    FLT(0.75), FLT(0.875), FLT(1),    FLT(1.125), FLT(1.25), FLT(1.375),
+    FLT(1.5),  FLT(1.625), FLT(1.75), FLT(1.875),
+};
+static s32 D_us_801D26D4;
+static s32 D_us_801D26D8;
+static s32 D_us_801D26DC;
 
-void func_us_801B4210(Entity* self) {
+void EntityUnkId19(Entity* self) {
     Primitive* prim;
     Primitive* lastPrim;
     s32 primIndex;
@@ -605,11 +614,17 @@ void func_us_801B4210(Entity* self) {
     }
 }
 
-extern s16 D_us_80180644[];
-extern s16 D_us_8018066C[];
-extern s16 D_us_80180658[];
+static s16 D_us_80180644[] = {
+    0x0000, 0x0600, 0x0E00, 0x0100, 0x0800, 0x0A00, 0x0200, 0x0400, 0x0C00, 0,
+};
+static s16 D_us_80180658[] = {
+    4, 8, 13, -0x18, -0x14, -12, 21, -12, 2, 0,
+};
+static s16 D_us_8018066C[] = {
+    20, 8, 12, 13, 16, 6, 12, 16, 8, 4,
+};
 
-void func_us_801B4A30(Entity* self) {
+void EntityUnkId1A(Entity* self) {
     s32 primIndex;
     s16 rotate;
     s16 scaleY;
@@ -654,7 +669,7 @@ void func_us_801B4A30(Entity* self) {
                 prim->u1 = prim->u3 = 0x28;
                 prim->v0 = prim->v1 = 0xA0;
                 prim->v2 = prim->v3 = 0xA8;
-                prim->r0 = prim->g0 = prim->b0 = 0x10;
+                prim->r0 = prim->g0 = prim->b0 = 16;
                 LOW(prim->r1) = LOW(prim->r0);
                 LOW(prim->r2) = LOW(prim->r0);
                 LOW(prim->r3) = LOW(prim->r0);
@@ -669,7 +684,7 @@ void func_us_801B4A30(Entity* self) {
             lastPrim->x1 = lastPrim->x3 = 0;
             lastPrim->y0 = lastPrim->y1 = 0;
             lastPrim->y2 = lastPrim->y3 = 0;
-            PGREY(lastPrim, 0) = 0xFF;
+            PGREY(lastPrim, 0) = 255;
             LOW(lastPrim->r1) = LOW(lastPrim->r0);
             LOW(lastPrim->r2) = LOW(lastPrim->r0);
             LOW(lastPrim->r3) = LOW(lastPrim->r0);
@@ -693,7 +708,7 @@ void func_us_801B4A30(Entity* self) {
         iter = 0;
         zPointer = self->ext.et_801BE2C8.unk88;
         prim = self->ext.et_801BE2C8.unk7C;
-        SetGeomScreen(0x100);
+        SetGeomScreen(DISP_STAGE_W);
         SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
         for (i = 0; i < 8; i++) {
             scaleY = 0x280;
@@ -731,8 +746,8 @@ void func_us_801B4A30(Entity* self) {
                     break;
                 }
                 RotAverage4(
-                    &p0, &p1, &p2, &p3, (long*)(&prim->x0), (long*)(&prim->x1),
-                    (long*)(&prim->x2), (long*)(&prim->x3), &p, &flag);
+                    &p0, &p1, &p2, &p3, (long*)&prim->x0, (long*)&prim->x1,
+                    (long*)&prim->x2, (long*)&prim->x3, &p, &flag);
                 prim->r0 = 0x20 - (i % 3) * 8 - j / 4;
                 if (prim->r0 > 0x80) {
                     prim->r0 = 0;
@@ -780,8 +795,23 @@ void func_us_801B4A30(Entity* self) {
     }
 }
 
-extern s16 D_us_80180680[];
-extern s16 D_us_80180694[];
+static s16 D_us_80180680[] = {
+    0x01E0, 0x0061, 0x006E, 0x006F, 0x01FF, 0x01E0,
+};
+
+static u8 D_us_8018068C[8] = {
+    false, false, true, true, true, false, false, false,
+};
+
+static s16 D_us_80180694[] = {
+    0x0373, 0x0000, 0x0000, 0x0000, 0x075E, 0x0001, 0x0001, 0x0001,
+    0x0000, 0x0000, 0x0000, 0x072D, 0x0001, 0x0001, 0x0001, 0x075D,
+    0x0000, 0x0000, 0x0000, 0x03F2, 0x0001, 0x0001, 0x0001, 0x075C,
+    0x0000, 0x0000, 0x0000, 0x0375, 0x0001, 0x0001, 0x0001, 0x0765,
+    0x0375, 0x0000, 0x0000, 0x0969, 0x0762, 0x0001, 0x0001, 0x0764,
+    0x0933, 0x0000, 0x0000, 0x0951, 0x0761, 0x0001, 0x0001, 0x0763,
+};
+
 void func_us_801B5004(Tilemap* map, s32 arg1) {
     Tilemap* tmap;
     s16 tilePos;
@@ -801,13 +831,11 @@ void func_us_801B5004(Tilemap* map, s32 arg1) {
 
 #ifdef VERSION_PSP
 extern s32 D_us_801805B0;
-#else
-extern u16 D_us_801805B0;
 #endif
-extern u8 D_us_8018068C[8];
+
 extern EInit g_EInitCommon;
 
-void func_us_801B5070(Entity* self) {
+void EntityUnkId1E(Entity* self) {
     Entity* entity;
     u16 params;
     u16 temp_s1;

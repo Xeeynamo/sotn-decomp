@@ -5,7 +5,7 @@ extern s32 D_us_801D36E8[];
 extern s32 D_us_801D3768[];
 extern s32 D_us_801D4344;
 
-void func_us_801C096C(void) {
+static void func_us_801C096C(void) {
     Entity* entity;
     Primitive* prim;
     s16 primIndex;
@@ -74,25 +74,36 @@ void func_us_801C096C(void) {
         TIMEATTACK_EVENT_DOPPLEGANGER_40_DEFEAT, TIMEATTACK_SET_VISITED);
 }
 
+static s16 D_us_80181274[] = {
+    -0x30, -0x30, -0x2F, -0x28, -0x29, -0x1E, -0x1F, -0x1E, -0x29,
+    -0x29, -0x31, -0x33, -0x33, -0x2A, -0x29, -0x1D, -0x1D, 0,
+};
+static s32 D_us_80181298[] = {
+    FIX(1.0 / 2048.0), FIX(1.0 / 1024.0), FIX(1.0 / 2.0),    FIX(1.0 / 8.0),
+    FIX(1.0 / 4.0),    FIX(1.0 / 16.0),   FIX(1.0 / 32.0),   FIX(1.0 / 128.0),
+    FIX(1.0 / 256.0),  FIX(1.0 / 2048.0),
+    FIX(1.0 / 512.0), // different from bo4
+    FIX(1.0 / 2048.0), FIX(1.0 / 2048.0), FIX(1.0 / 2048.0), FIX(1.0 / 2048.0),
+    FIX(1.0 / 2048.0),
+};
+
 #include "../dop_check_st_collision.h"
 
 extern s32 D_us_801805B8;
-extern s16 D_us_80181274[];
-extern s32 D_us_80181298[];
 extern u8 D_us_80183CFC[][4];
 extern AnimationFrame* D_us_80183D40[];
 extern SpriteParts* D_us_801B1674[];
 extern s32 D_us_801D3FEC;
 
 void EntityDoppleganger40(void) {
-    s32 i;         // s0
-    s32 status;    // s1
-    s16 step;      // s2
-    s16 step_s;    // s3
-    s32 var_s5;    // s4
-    s32 posY;      // s6
-    s32 posX;      // s7
-    s32 vram_flag; // s8
+    s32 i;
+    s32 status;
+    s16 step;
+    s16 step_s;
+    s32 var_s5;
+    s32 posY;
+    s32 posX;
+    s32 vram_flag;
     Pos pos;
     Pos unused_pos;
     SpriteParts* parts;
@@ -496,25 +507,502 @@ void EntityDoppleganger40(void) {
     FntPrint("noroi:%02x\n", g_Dop.timers[1]);
 }
 
-extern s32 D_us_801D32F4;
-extern s32 D_us_801D32F8;
+static s32 D_us_801D32F4;
+static s32 D_us_801D32F8;
 
 void func_us_801C1DB0(s32 arg0) {
     D_us_801D32F4 = arg0;
     D_us_801D32F8 = 0;
 }
 
-INCLUDE_ASM("boss/rbo5/nonmatchings/doppleganger", func_us_801C1DC8);
+extern s32 D_us_801805B0;
+static s32 D_us_801D32FC;
+static s32 D_us_801D3300;
+static s32 D_us_801D3304;
 
-extern EInit D_us_80180424;
+void func_us_801C1DC8(void) {
+    s32 dopOffsetX;
+    s32 flags;
+    s32 playerDistance;
+    u32 playerLeft;
 
-void func_us_801C2D90(Entity* self) {
+    flags = 0;
+    dopOffsetX = g_Tilemap.scrollX.i.hi + DOPPLEGANGER.posX.i.hi;
+    g_Dop.demo_timer = 2;
+    g_Dop.padSim = PAD_NONE;
+    playerLeft = false;
+    if ((DOPPLEGANGER.posX.i.hi - PLAYER.posX.i.hi) >= 0) {
+        playerLeft = true;
+    }
+    playerDistance = abs(DOPPLEGANGER.posX.i.hi - PLAYER.posX.i.hi);
+
+    if (g_Player.status & PLAYER_STATUS_DEAD) {
+        func_us_801C1DB0(0x10);
+    } else if (g_Dop.status & PLAYER_STATUS_STONE) {
+        func_us_801C1DB0(0xF);
+    } else if (g_Dop.status & PLAYER_STATUS_UNK10000) {
+        func_us_801C1DB0(0);
+    } else if (g_Player.timers[12] && D_us_801D32F4 != 0xE) {
+        func_us_801C1DB0(0xE);
+    }
+
+    switch (D_us_801D32F4) {
+    case 0:
+        if (!(g_Dop.status & PLAYER_STATUS_UNK10000)) {
+            if (DOPPLEGANGER.facingLeft != playerLeft) {
+                if (playerLeft) {
+                    g_Dop.padSim = PAD_LEFT;
+                } else {
+                    g_Dop.padSim = PAD_RIGHT;
+                }
+            }
+            if (g_Player.timers[10]) {
+                if (rand() & 1) {
+                    func_us_801C1DB0(7);
+                } else {
+                    func_us_801C1DB0(5);
+                }
+                break;
+            }
+
+            if (abs(DOPPLEGANGER.posY.i.hi - PLAYER.posY.i.hi) >= 0x21) {
+                func_us_801C1DB0(7);
+                break;
+            }
+
+            if (playerDistance >= 0x51) {
+                if (playerLeft) {
+                    g_Dop.padSim = PAD_LEFT;
+                } else {
+                    g_Dop.padSim = PAD_RIGHT;
+                }
+            } else {
+                func_us_801C1DB0(1);
+            }
+        }
+        break;
+    case 1:
+        if (D_us_801D32F8 == 0) {
+            D_us_801D32FC = 0x20;
+            D_us_801D3300 = 8;
+            D_us_801D32F8++;
+        }
+        if (DOPPLEGANGER.facingLeft != playerLeft) {
+            if (playerLeft) {
+                g_Dop.padSim = PAD_LEFT;
+            } else {
+                g_Dop.padSim = PAD_RIGHT;
+            }
+        }
+        if (playerDistance > 0x50) {
+            func_us_801C1DB0(0);
+            break;
+        }
+
+        if (dopOffsetX < 0x30) {
+            if (!DOPPLEGANGER.facingLeft) {
+                g_Dop.padSim = PAD_RIGHT;
+                func_us_801C1DB0(3);
+                break;
+            }
+        }
+        if (dopOffsetX > 0xD0 && (DOPPLEGANGER.facingLeft)) {
+            g_Dop.padSim = PAD_LEFT;
+            func_us_801C1DB0(3);
+            break;
+        }
+        if (g_Player.timers[9]) {
+            switch (rand() & 7) {
+            case 0:
+            case 6:
+            case 7:
+                func_us_801C1DB0(6);
+                break;
+            case 1:
+            case 2:
+                func_us_801C1DB0(5);
+                break;
+            case 3:
+            case 4:
+            case 5:
+                func_us_801C1DB0(2);
+                break;
+            }
+        } else {
+            if (g_Player.timers[10]) {
+                if (rand() & 1) {
+                    func_us_801C1DB0(7);
+                } else {
+                    func_us_801C1DB0(5);
+                }
+                break;
+            }
+            if (g_Player.status & PLAYER_STATUS_CROUCH) {
+                func_us_801C1DB0(7);
+                break;
+            } else {
+                if (playerDistance < 0x10) {
+                    if (DOPPLEGANGER.posX.i.hi >= 0x80) {
+                        g_Dop.padSim = PAD_LEFT;
+                        func_us_801C1DB0(2);
+                    } else {
+                        g_Dop.padSim = PAD_RIGHT;
+                        func_us_801C1DB0(2);
+                    }
+                }
+                if (playerDistance < 0x40) {
+                    if (D_us_801D3300 != 0) {
+                        D_us_801D3300--;
+                        return;
+                    }
+                    func_us_801C1DB0(8);
+                    break;
+                }
+                if (D_us_801D32FC != 0) {
+                    D_us_801D32FC--;
+                    break;
+                }
+                func_us_801C1DB0(9);
+            }
+        }
+        break;
+    case 2:
+        if (D_us_801D32F8 == 0) {
+            if (DOPPLEGANGER.step == 1 && DOPPLEGANGER.step_s == 3) {
+                D_us_801D32F8++;
+            } else if (g_Timer & 1) {
+                g_Dop.padSim = PAD_TRIANGLE;
+            }
+
+        } else if (DOPPLEGANGER.step != 1 || DOPPLEGANGER.step_s != 3) {
+            func_us_801C1DB0(9);
+        }
+        break;
+    case 3:
+        switch (D_us_801D32F8) {
+        case 0:
+            if (g_Dop.status & PLAYER_STATUS_BAT_FORM) {
+                D_us_801D32F8++;
+            } else if (g_Timer & 1) {
+                g_Dop.padSim = PAD_R1;
+            }
+            DOPPLEGANGER.velocityX = 0;
+            break;
+        case 1:
+            if (DOPPLEGANGER.step == 6 && DOPPLEGANGER.step_s == 3) {
+                D_us_801D32FC = 0xA;
+                D_us_801D32F8++;
+            } else {
+                g_Dop.padSim = PAD_SQUARE;
+            }
+
+            if (DOPPLEGANGER.step != 6) {
+                func_us_801C1DB0(0);
+            }
+            break;
+        case 2:
+            if (!(g_GameTimer & 1)) {
+                g_Dop.padSim = PAD_UP;
+            }
+            if (D_us_801D32FC != 0) {
+                D_us_801D32FC--;
+            } else if (g_Timer & 1) {
+                g_Dop.padSim |= PAD_R1;
+            }
+
+            if (DOPPLEGANGER.step != 6) {
+                func_us_801C1DB0(0);
+            }
+            break;
+        }
+        break;
+    case 4:
+        g_Dop.padSim = PAD_DOWN;
+        if (D_us_801D32F8 == 0) {
+            if (g_Dop.unk46) {
+                D_us_801D32F8++;
+            } else if (g_Timer & 1) {
+                g_Dop.padSim |= PAD_DOWN | PAD_SQUARE;
+            }
+        } else if (!g_Dop.unk46) {
+            func_us_801C1DB0(0);
+        }
+        break;
+    case 5:
+        if (DOPPLEGANGER.facingLeft != playerLeft) {
+            if (playerLeft) {
+                g_Dop.padSim = PAD_LEFT;
+            } else {
+                g_Dop.padSim = PAD_RIGHT;
+            }
+        }
+        g_Dop.padSim |= PAD_DOWN;
+        if (D_us_801D32F8 == 0) {
+            if (DOPPLEGANGER.step == 3) {
+                D_us_801D32F8++;
+                D_us_801D32FC = 6;
+            }
+        } else {
+            if (--D_us_801D32FC == 0) {
+                func_us_801C1DB0(10);
+            } else if (playerDistance < 0x40) {
+                func_us_801C1DB0(4);
+            }
+        }
+        break;
+    case 6:
+        if (D_us_801D32F8 == 0) {
+            if ((u16)DOPPLEGANGER.step == 5) {
+                D_us_801D32FC = 0;
+                D_us_801D32F8++;
+            } else {
+                if (g_Timer & 1) {
+                    g_Dop.padSim = PAD_CROSS;
+                }
+            }
+        } else {
+            if (g_Dop.vram_flag & 1) {
+                func_us_801C1DB0(0);
+            } else {
+                g_Dop.padSim = PAD_CROSS;
+                D_us_801D32FC++;
+                if (!(D_us_801D32FC % 16)) {
+                    g_Dop.padSim |= PAD_UP | PAD_SQUARE | PAD_CROSS;
+                }
+            }
+        }
+        break;
+    case 7:
+        if (D_us_801D32F8 == 0) {
+            if ((u16)DOPPLEGANGER.step == 5) {
+                D_us_801D32FC = 0;
+                D_us_801D32F8++;
+                return;
+            }
+
+            if (playerLeft) {
+                g_Dop.padSim = PAD_LEFT;
+            } else {
+                g_Dop.padSim = PAD_RIGHT;
+            }
+            if (g_Timer & 1) {
+                g_Dop.padSim |= PAD_CROSS;
+            }
+            D_us_801D3304 = g_Dop.padSim & (PAD_LEFT | PAD_RIGHT);
+        } else if (g_Dop.vram_flag & 1) {
+            func_us_801C1DB0(0);
+        } else {
+            g_Dop.padSim = D_us_801D3304 + PAD_CROSS;
+            if (DOPPLEGANGER.velocityY > 0) {
+                if (DOPPLEGANGER.velocityY > FIX(2)) {
+                    g_Dop.padSim |= PAD_DOWN | PAD_SQUARE;
+                }
+
+                if (abs(DOPPLEGANGER.posY.i.hi - PLAYER.posY.i.hi) < 0x10) {
+                    g_Dop.padSim |= PAD_DOWN | PAD_SQUARE;
+                }
+            }
+        }
+        break;
+    case 8:
+        if (D_us_801D32F8 == 0) {
+            if (g_Dop.unk46) {
+                D_us_801D32F8++;
+            } else {
+                if (g_Timer & 1) {
+                    g_Dop.padSim |= PAD_SQUARE;
+                }
+            }
+        } else if (!g_Dop.unk46) {
+            if (playerLeft) {
+                g_Dop.padSim |= PAD_LEFT;
+            } else {
+                g_Dop.padSim |= PAD_RIGHT;
+            }
+            func_us_801C1DB0(0);
+            if (DOPPLEGANGER.facingLeft) {
+                if (DOPPLEGANGER.posX.i.hi < 0xA0) {
+                    func_us_801C1DB0(2);
+                }
+                if (DOPPLEGANGER.facingLeft) {
+                    break;
+                }
+            }
+            if (DOPPLEGANGER.posX.i.hi > 0x60) {
+                func_us_801C1DB0(2);
+            }
+        }
+        break;
+    case 9:
+        switch (D_us_801D32F8) {
+        case 0:
+            D_us_801D32F8++;
+            D_us_801D32FC = 0x18;
+            g_Dop.padSim = PAD_UP | PAD_SQUARE;
+            break;
+        case 1:
+            if (--D_us_801D32FC == 0) {
+                D_us_801D32F8++;
+                g_Dop.padSim = PAD_UP | PAD_SQUARE;
+                D_us_801D32FC = 0x10;
+                if (playerLeft) {
+                    g_Dop.padSim |= PAD_LEFT;
+                } else {
+                    g_Dop.padSim |= PAD_RIGHT;
+                }
+            }
+            break;
+        case 2:
+            if (--D_us_801D32FC == 0) {
+                if (playerLeft) {
+                    g_Dop.padSim |= PAD_LEFT;
+                } else {
+                    g_Dop.padSim |= PAD_RIGHT;
+                }
+                D_us_801D32F8++;
+            }
+            // fallthrough
+        case 4:
+        default:
+            if (DOPPLEGANGER.facingLeft && DOPPLEGANGER.posX.i.hi < 0xA0) {
+                func_us_801C1DB0(2);
+            } else if (
+                !DOPPLEGANGER.facingLeft && DOPPLEGANGER.posX.i.hi > 0x60) {
+                func_us_801C1DB0(2);
+            } else {
+                func_us_801C1DB0(0);
+            }
+            break;
+        }
+        break;
+    case 10:
+        if (D_us_801D32F8 == 0) {
+            g_Dop.padSim = PAD_DOWN;
+            if (DOPPLEGANGER.step == 9) {
+                D_us_801D32F8++;
+            }
+            if (g_Timer & 1) {
+                g_Dop.padSim |= PAD_DOWN | PAD_TRIANGLE;
+            }
+        } else if (DOPPLEGANGER.step != 9) {
+            D_us_801D32F4 = 6;
+            D_us_801D32F8 = 1; // PLAYER_STATUS_BAT_FORM?
+        }
+        break;
+    case 14:
+        if (D_us_801D32F8 == 0) {
+            if (g_Timer & 1) {
+                g_Dop.padSim = PAD_R2;
+            }
+            if (g_Dop.status & PLAYER_STATUS_MIST_FORM) {
+                g_Dop.padSim = PAD_NONE;
+                D_us_801D32F8++;
+                D_us_801D32FC = 0xA0;
+            }
+        } else if (D_us_801D32FC != 0) {
+            D_us_801D32FC--;
+            if (!(g_GameTimer & 0x1F)) {
+                g_Dop.padSim = PAD_UP;
+            }
+        } else {
+            if (g_Timer & 1) {
+                g_Dop.padSim = PAD_R2;
+            }
+            if (!(g_Dop.status & PLAYER_STATUS_MIST_FORM)) {
+                g_Dop.padSim = PAD_NONE;
+                func_us_801C1DB0(0);
+            }
+        }
+        break;
+    case 15:
+        if (!(g_Dop.status & PLAYER_STATUS_STONE)) {
+            func_us_801C1DB0(0);
+        }
+        if (!(g_GameTimer & 0x3F)) {
+            g_Dop.padSim = PAD_UP;
+        }
+        break;
+    case 16:
+        if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
+            func_us_801C1DB0(0);
+        }
+        g_Dop.padSim = PAD_UP;
+        if ((g_Dop.status & PLAYER_STATUS_BAT_FORM) && (g_Timer & 1)) {
+            g_Dop.padSim = PAD_R1;
+        }
+        if ((g_Dop.status & PLAYER_STATUS_MIST_FORM) && (g_Timer & 1)) {
+            g_Dop.padSim = PAD_R1;
+        }
+        break;
+    case 17:
+        if (abs(DOPPLEGANGER.posY.i.hi - PLAYER.posY.i.hi) < 8) {
+            D_us_801D32F4 = 0;
+            return;
+        }
+        break;
+    case 18:
+        func_us_801C4A30(1, 4);
+        g_Player.padSim = PAD_LEFT;
+        g_Player.demo_timer = 4;
+        g_Dop.padSim = PAD_RIGHT;
+        g_Dop.demo_timer = 4;
+        if (PLAYER.posX.i.hi < 0xB8) {
+            g_Player.padSim = PAD_NONE;
+            flags |= 1;
+        }
+        if (DOPPLEGANGER.posX.i.hi >= 0x49) {
+            g_Dop.padSim = PAD_NONE;
+            flags |= 2;
+        }
+        if (flags == 3) {
+            D_us_801805B0 = 0xE;
+            func_us_801C1DB0(0x13);
+            break;
+        }
+        break;
+    case 19:
+    case 21:
+        func_us_801C4A30(1, 4);
+        if (D_us_801D32F8 == 0) {
+            D_us_801D32FC = 0x40;
+            D_us_801D32F8++;
+        } else {
+            if (--D_us_801D32FC == 0) {
+                func_us_801C1DB0(0);
+            }
+        }
+        break;
+    case 20:
+        func_us_801C4A30(1, 4);
+        g_Player.padSim = PAD_RIGHT;
+        g_Player.demo_timer = 4;
+        g_Dop.padSim = PAD_LEFT;
+        g_Dop.demo_timer = 4;
+        if (PLAYER.posX.i.hi >= 0x49) {
+            g_Player.padSim = PAD_NONE;
+            flags |= 1;
+        }
+        if (DOPPLEGANGER.posX.i.hi < 0xB8) {
+            g_Dop.padSim = PAD_NONE;
+            flags |= 2;
+        }
+        if (flags == 3) {
+            D_us_801805B0 = 7;
+            func_us_801C1DB0(0x15);
+        }
+        break;
+    }
+}
+
+extern EInit EInitUnk16;
+
+void EntityUnkId16(Entity* self) {
     Entity* entity;
     s32 i;
 
     g_Dop.unk6A = DOPPLEGANGER.hitPoints;
     if (self->step == 0) {
-        InitializeEntity(D_us_80180424);
+        InitializeEntity(EInitUnk16);
         if (PLAYER.posX.i.hi > 0x80) {
             DOPPLEGANGER.posX.i.hi = 0x10;
         } else {

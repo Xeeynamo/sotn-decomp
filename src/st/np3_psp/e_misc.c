@@ -21,4 +21,4 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", func_pspeu_0924F488);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", func_pspeu_0924F618);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", func_pspeu_0924F788);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", PlaySfxPositional);
