@@ -1,12 +1,24 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo5.h"
 
-extern AnimationFrame D_us_801806F4[];
-extern EInit D_us_8018046C;
+static AnimationFrame D_us_801806F4[] = {
+    {
+        0x7201,
+        0x7301,
+    },
+    {
+        0x7401,
+        0xFF,
+    },
+};
+extern EInit EInitUnk17;
 extern s32 D_us_801805B8;
-extern u16 D_us_801806FC[][2];
+static u16 D_us_801806FC[][2] = {
+    {0x03A1, 0x03A2}, {0x03CA, 0x03BC}, {0x040E, 0x03FC}, {0x0438, 0x0410},
+    {0x05AE, 0x05AF}, {0x05B0, 0x05B1}, {0x05B2, 0x05B3}, {0x05B4, 0x05B5},
+};
 
-void func_us_801B54F0(Entity* self) {
+void EntityUnkId1B(Entity* self) {
     Entity* next;
     s32 i;
     s32 tilemapIndex;
@@ -31,7 +43,7 @@ void func_us_801B54F0(Entity* self) {
         }
 
         g_Player.demo_timer = 0x18;
-        InitializeEntity(D_us_8018046C);
+        InitializeEntity(EInitUnk17);
         self->animCurFrame = 0;
         self->ext.dopBGLight.unk84 = 0;
 

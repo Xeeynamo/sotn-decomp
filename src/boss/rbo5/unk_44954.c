@@ -95,7 +95,13 @@ void func_8010E3B8(s32 velocityX) {
     DOPPLEGANGER.velocityX = velocityX;
 }
 
-extern u8 D_us_801813A4[][2];
+static u8 D_us_801813A4[][2] = {
+    {0, 17},
+    {4, 21},
+    {1, 16},
+    {3, 35},
+};
+
 void func_8010E470(s32 arg0, s32 velocityX) {
     s32 unused_stack[2];
 
@@ -106,7 +112,9 @@ void func_8010E470(s32 arg0, s32 velocityX) {
     SetDopplegangerAnim(D_us_801813A4[arg0][1]);
 }
 
-extern u8 D_us_801813AC[];
+static u8 D_us_801813AC[] = {
+    0x04, 0x05, 0x0A, 0x0B, 0x0E, 0x0F, 0x1D, 0x1E, 0x04, 0x03, 0x00, 0x00,
+};
 
 void func_8010E570(s32 arg0) {
     s32 anim = 0;
@@ -238,7 +246,12 @@ void func_us_801C504C(void) {
     CreateEntFactoryFromEntity(g_CurrentEntity, 2, 0);
 }
 
-extern s16 D_us_801813B8[];
+static s16 D_us_801813B8[] = {
+    SFX_BO4_UNK_7DE,
+    SFX_BO4_UNK_7DF,
+    SFX_BO4_UNK_7E0,
+    SFX_BO4_UNK_7E1,
+};
 
 void func_8010EA54(s32 arg0) {
     s16 temp_hi;
@@ -663,7 +676,12 @@ void DopplegangerStepWalk(void) {
     }
 }
 
-extern s16 D_us_801813C0[];
+static s16 D_us_801813C0[] = {
+    1,
+    0x1f,
+    0,
+    27,
+};
 
 void DopplegangerStepJump(void) {
     s32 moveDirection;

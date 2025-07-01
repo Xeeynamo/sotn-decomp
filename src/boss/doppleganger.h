@@ -5,7 +5,7 @@
 typedef enum {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_FACTORY,
-    /* 0x02 */ E_EXPLOSION = 2,
+    /* 0x02 */ E_EXPLOSION,
     /* 0x03 */ E_PRIZE_DROP,
     /* 0x04 */ E_NUMERIC_DAMAGE,
     /* 0x05 */ E_RED_DOOR,
@@ -18,11 +18,13 @@ typedef enum {
     /* 0x0C */ E_HEART_DROP,
     /* 0x0D */ E_ENEMY_BLOOD,
     /* 0x0E */ E_MESSAGE_BOX,
+    /* 0x13 */ E_ID_13,
 
     /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
     /* 0x15 */ E_GREY_PUFF,
     /* 0x16 */ E_ID_16 = 0x16,
     /* 0x17 */ E_ID_17,
+    /* 0x18 */ E_ID_18,
     /* 0x19 */ E_ID_19 = 0x19,
     /* 0x1A */ E_ID_1A,
     /* 0x1B */ E_ID_1B,

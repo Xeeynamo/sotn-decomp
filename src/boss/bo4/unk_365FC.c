@@ -1,20 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo4.h"
 
-extern EInit D_us_80180458;
+extern EInit EInitUnk17;
 extern s32 D_us_801805A0;
-extern u8 D_us_80180668[];
-extern u16 D_us_80180670[][2];
+static u8 D_us_80180668[] = {
+    0x01, 0x72, 0x01, 0x73, 0x01, 0x74, 0xFF, 0x00,
+};
+static u16 D_us_80180670[][2] = {
+    {0x03A1, 0x03A2}, {0x03CA, 0x03BC}, {0x040E, 0x03FC}, {0x0438, 0x0410},
+    {0x05AE, 0x05AF}, {0x05B0, 0x05B1}, {0x05B2, 0x05B3}, {0x05B4, 0x05B5},
+};
 
 #ifdef VERSION_PSP
 extern s32 D_pspeu_0926BCA8;
 #endif
 
 // 4-segment block doors
-// n.b.! the equivalent RBO5 function, `func_us_801B54F0`
+// n.b.! the equivalent RBO5 function, `EntityUnkId1B`
 //       appears the same as the PSP version of this BO4
 //       version.
-void func_us_801B65FC(Entity* self) {
+void EntityUnkId1B(Entity* self) {
     Entity* next;
     s32 i;
     s32 tilemapIndex;
@@ -43,7 +48,7 @@ void func_us_801B65FC(Entity* self) {
         }
 
         g_Player.demo_timer = 0x18;
-        InitializeEntity(D_us_80180458);
+        InitializeEntity(EInitUnk17);
         self->animCurFrame = 0;
         self->ext.dopBGLight.unk84 = 0;
 

@@ -9,7 +9,7 @@ extern s32 D_us_801D4DF4;
 extern EInit g_EInitInteractable;
 
 // hit during enter sequence
-void func_us_801B4BF0(Entity* self) {
+void EntityUnkId18(Entity* self) {
     s32 i;
     Entity* dop;
     Entity* entity;
@@ -164,8 +164,7 @@ void func_us_801B4BF0(Entity* self) {
 }
 
 // hit during enter sequence
-extern EInit D_us_80180458;
-extern s32 D_us_80181570;
+extern EInit EInitUnk17;
 static s16 D_us_801805A8[] = {
     0x80, 0x80, 0x100, 0x300, 0x500, 0x700,
 };
@@ -176,11 +175,11 @@ static s16 D_us_801805C0[] = {
     0x100, 0x100, 0xF8, 0xF2, 0xEE, 0xEC,
 };
 static u8 D_us_801805CC[] = {1, 0x62, 0x1, 0x63, 0};
-extern u8 D_us_801805D4[] = {1, 0x64, 0x1, 0x65, 0};
-extern u8 D_us_801805DC[] = {2, 0x62, 0x2, 0x63, 0};
-extern u8 D_us_801805E4[] = {2, 0x64, 0x2, 0x65, 0};
+static u8 D_us_801805D4[] = {1, 0x64, 0x1, 0x65, 0};
+static u8 D_us_801805DC[] = {2, 0x62, 0x2, 0x63, 0};
+static u8 D_us_801805E4[] = {2, 0x64, 0x2, 0x65, 0};
 
-void func_us_801B5040(Entity* self) {
+void EntityUnkId17(Entity* self) {
     s32 flag;
     s32 primIndex;
     s16 xOffset, yOffset;
@@ -190,7 +189,7 @@ void func_us_801B5040(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180458);
+        InitializeEntity(EInitUnk17);
         self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE |
                            FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
         if ((self->params & 0xF) > 1) {
@@ -333,12 +332,12 @@ void func_us_801B5040(Entity* self) {
     }
 }
 
-void func_us_801B55DC(Entity* self) {
+void EntityUnkId1C(Entity* self) {
     s32 offsetX;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180458);
+        InitializeEntity(EInitUnk17);
         self->drawFlags |= FLAG_DRAW_ROTATE;
         self->rotate = -0x400;
         if (self->params & 1) {
@@ -361,10 +360,10 @@ void func_us_801B55DC(Entity* self) {
 
         offsetX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (self->velocityX > 0) {
-            if (offsetX > 0x100) {
+            if (offsetX > DISP_STAGE_W) {
                 self->step++;
             }
-        } else if (offsetX < 0x100) {
+        } else if (offsetX < DISP_STAGE_W) {
             self->step++;
         }
 
@@ -375,7 +374,7 @@ void func_us_801B55DC(Entity* self) {
         break;
 
     case 2:
-        self->posX.i.hi = 0x100 - g_Tilemap.scrollX.i.hi;
+        self->posX.i.hi = DISP_STAGE_W - g_Tilemap.scrollX.i.hi;
         if (self->params & 1) {
             self->animCurFrame = 0x64;
         } else {
@@ -386,12 +385,16 @@ void func_us_801B55DC(Entity* self) {
 }
 
 // light effects
-extern s32 D_us_801805EC[]; // Playstation Format (20.12) Fixed
-extern s32 D_us_801D3104;   // WarpBackgroundAmplitiude
-extern s32 D_us_801D3108;   // same as WarpBackgroundPhase
-extern s32 D_us_801D310C;   // same as WarpBackgroundBrightness
+static s32 D_us_801805EC[] = {
+    FLT(0),    FLT(0.125), FLT(0.25), FLT(0.375), FLT(0.5),  FLT(0.625),
+    FLT(0.75), FLT(0.875), FLT(1),    FLT(1.125), FLT(1.25), FLT(1.375),
+    FLT(1.5),  FLT(1.625), FLT(1.75), FLT(1.875),
+};
+static s32 D_us_801D3104; // WarpBackgroundAmplitiude
+static s32 D_us_801D3108; // same as WarpBackgroundPhase
+static s32 D_us_801D310C; // same as WarpBackgroundBrightness
 
-void func_us_801B5774(Entity* self) {
+void EntityUnkId19(Entity* self) {
     Primitive* prim;
     Primitive* lastPrim;
     s32 primIndex;
@@ -595,13 +598,19 @@ void func_us_801B5774(Entity* self) {
     }
 }
 
-extern s16 D_us_80180640[];
-extern s16 D_us_80180654[];
-extern u16 D_us_8018062C[];
+static u16 D_us_8018062C[] = {
+    0x0000, 0x0600, 0x0E00, 0x0100, 0x0800, 0x0A00, 0x0200, 0x0400, 0x0C00, 0,
+};
+static s16 D_us_80180640[] = {
+    4, 8, 13, -0x18, -0x14, -12, 21, -12, 2, 0,
+};
+static s16 D_us_80180654[] = {
+    20, 8, 12, 13, 16, 6, 12, 16, 8, 4,
+};
 
 // hit during enter sequence
 // similar to `NO1`'s `func_us_801BE2C8`.
-void func_us_801B5FB0(Entity* self) {
+void EntityUnkId1A(Entity* self) {
     s32 primIndex;
     s16 rotate;
     s16 scaleY;
@@ -661,7 +670,7 @@ void func_us_801B5FB0(Entity* self) {
             lastPrim->x1 = lastPrim->x3 = 0;
             lastPrim->y0 = lastPrim->y1 = 0;
             lastPrim->y2 = lastPrim->y3 = 0;
-            lastPrim->r0 = lastPrim->g0 = lastPrim->b0 = 0xFF;
+            PGREY(lastPrim, 0) = 255;
             LOW(lastPrim->r1) = LOW(lastPrim->r0);
             LOW(lastPrim->r2) = LOW(lastPrim->r0);
             LOW(lastPrim->r3) = LOW(lastPrim->r0);
@@ -686,7 +695,7 @@ void func_us_801B5FB0(Entity* self) {
         iter = 0;
         zPointer = self->ext.et_801BE2C8.unk88;
         prim = self->ext.et_801BE2C8.unk7C;
-        SetGeomScreen(256);
+        SetGeomScreen(DISP_STAGE_W);
         SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
         for (i = 0; i < 8; i++) {
             scaleY = 0x280;
