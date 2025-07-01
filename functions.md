@@ -2410,7 +2410,7 @@
 | ric   | func_pspeu_092A7B98                      |     1050 |        167 | Yes    |                                 |       |
 | st0   | PrologueScroll                           |     1058 |        112 | Yes    | https://decomp.me/scratch/JGHAO | 0.996 |
 | lib   | func_us_801B6324                         |     1060 |        102 | Yes    |                                 |       |
-| dai   | func_us_801D1204                         |     1077 |        150 | Yes    | https://decomp.me/scratch/48TQE | 0.722 |
+| dai   | func_us_801D1204                         |     1077 |        150 | Yes    | https://decomp.me/scratch/48TQE | 0.735 |
 | lib   | func_us_801B8A00                         |     1080 |        118 | Yes    |                                 |       |
 | no3   | EntityAlucardWaterEffect                 |     1095 |        132 |        |                                 |       |
 | no4   | EntityAlucardWaterEffect                 |     1095 |        132 |        |                                 |       |
