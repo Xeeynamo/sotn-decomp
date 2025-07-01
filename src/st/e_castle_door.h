@@ -71,9 +71,12 @@ void EntityCastleDoor(Entity* self) {
     s32 i;
 
     SVECTOR sVec2 = {0};
-
+#if defined(STAGE_IS_NO3)
     switch (self->step) {
     case 0:
+#else
+    if (!self->step) {
+#endif
         InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex == -1) {
@@ -96,21 +99,20 @@ void EntityCastleDoor(Entity* self) {
             prim->v2 = prim->v3 = 0x81;
             prim = prim->next;
         }
-#if defined(STAGE_IS_NO3)
-        if (g_CastleFlags[PROLOGUE_COMPLETE]) {
-            self->ext.castleDoor.rotate = 0;
-            self->step = 5;
-        }
-#else
+#if !defined(STAGE_IS_NO3)
         self->ext.castleDoor.rotate = 0;
         tilePos = 0x445;
         for (i = 0; i < 8; i++) {
             g_Tilemap.fg[tilePos] = castleDoorTilesShut[i];
             tilePos += 0x20;
         }
-#endif
+#else
+
+        if (g_CastleFlags[PROLOGUE_COMPLETE]) {
+            self->ext.castleDoor.rotate = 0;
+            self->step = 5;
+        }
         break;
-#if defined(STAGE_IS_NO3)
     case 1:
         tilePos = 0x445;
         for (i = 0; i < 8; tilePos += 0x20, i++) {

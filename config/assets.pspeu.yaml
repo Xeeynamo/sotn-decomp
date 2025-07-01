@@ -218,6 +218,12 @@ files:
         vram: 0x09237700
         assets:
           - [0x80, skip]
+          - [0x23A18, cmpgfx, stage_name_en, 128, 64, 4]
+          - [0x23C38, cmpgfx, stage_name_it, 128, 64, 4]
+          - [0x23E88, cmpgfx, stage_name_sp, 128, 64, 4]
+          - [0x24090, cmpgfx, stage_name_ge, 128, 64, 4]
+          - [0x24360, cmpgfx, stage_name_fr, 128, 64, 4]
+          - [0x2457C, skip]
           - [0x2BCF8, cutscene, cutscene_script_it]
           - [0x2BE5C, skip] # trailing script data
           - [0x2BE70, cutscene, cutscene_script_sp]
