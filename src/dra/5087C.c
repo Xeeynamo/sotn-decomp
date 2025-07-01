@@ -647,7 +647,7 @@ static void copyMapTileColorsToBuffer(s32 tileX, s32 tileY, u8* buffer) {
     start += tileY * (HEIGHT_OF_MAP_TILE_IN_PIXELS * WIDTH_OF_MAP_ROW_IN_BYTES);
     for (offsetY = 0; offsetY < 5; offsetY++) {
         for (offsetX = 0; offsetX < 4; offsetX++) {
-            buffer[4 * offsetY + offsetX] = (start + offsetY * 128)[offsetX];
+            buffer[4 * offsetY + offsetX] = (start + offsetY * WIDTH_OF_MAP_ROW_IN_BYTES)[offsetX];
         }
     }
 }
@@ -661,7 +661,7 @@ static void copyBufferToMapTile(s32 tileX, s32 tileY, u8* buffer) {
     start += tileY * (HEIGHT_OF_MAP_TILE_IN_PIXELS * WIDTH_OF_MAP_ROW_IN_BYTES);
     for (offsetY = 0; offsetY < 5; offsetY++) {
         for (offsetX = 0; offsetX < 4; offsetX++) {
-            (start + offsetY * 0x80)[offsetX] = buffer[(4 * offsetY) + offsetX];
+            (start + offsetY * WIDTH_OF_MAP_ROW_IN_BYTES)[offsetX] = buffer[(4 * offsetY) + offsetX];
         }
     }
 }
@@ -729,71 +729,71 @@ void repaintMapTilesOnCastleBlueprint(s32 invertedCastleIndicator) {
     }
 }
 
-void func_800F1B08(s32 x, s32 y, s32 arg2) {
+void func_800F1B08(s32 tileX, s32 tileY, s32 arg2) {
 #define VramPosX 0x340
 #define VramPosY 0x100
     RECT rect;
-    u8 img2[20];
-    u8 img1[20];
-    s32 j;
-    s32 i;
-    s32 temp_v0;
+    u8 buffer1[20];
+    u8 buffer2[20];
+    s32 x;
+    s32 y;
+    s32 colorIndex;
     u8* src;
     u8* dst;
-    u8* bitmap;
+    u8* buffer;
 
     if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
-        x = 0x3F - x;
-        y = 0x3F - y;
+        tileX = 0x3F - tileX;
+        tileY = 0x3F - tileY;
     }
-    bitmap = img2;
-    rect.x = VramPosX + x;
-    rect.y = VramPosY + y * 4;
+    buffer = buffer1;
+    rect.x = VramPosX + tileX;
+    rect.y = VramPosY + tileY * 4;
     rect.w = 2;
     rect.h = 5;
-    StoreImage(&rect, (u_long*)bitmap);
+    StoreImage(&rect, (u_long*)buffer);
     DrawSync(0);
     src = CASTLE_MAP_PTR;
-    src += x * 2;
-    src += y * 4 * 0x80;
+    src += tileX * WIDTH_OF_MAP_TILE_IN_BYTES;
+    src += tileY * HEIGHT_OF_MAP_TILE_IN_PIXELS * WIDTH_OF_MAP_ROW_IN_BYTES;
 
-    for (i = 0; i < 5; i++) {
-        for (j = 0; j < 4; j++) {
-            img1[4 * i + j] = (src + i * 0x80)[j];
+    for (y = 0; y < 5; y++) {
+        for (x = 0; x < 4; x++) {
+            buffer2[4 * y + x] = (src + y * WIDTH_OF_MAP_ROW_IN_BYTES)[x];
         }
     }
 
     if (arg2 == 0) {
-        for (i = 0; i < 5; i++) {
-            for (j = 0; j < 5; j++) {
-                temp_v0 = readColorFromBuffer(bitmap, j, i);
-                if (temp_v0 == 0 || temp_v0 == 3 || temp_v0 == 13) {
-                    temp_v0 = readColorFromBuffer(img1, j, i);
-                    if (temp_v0 == 2) {
-                        temp_v0 = 1;
+        for (y = 0; y < 5; y++) {
+            for (x = 0; x < 5; x++) {
+                colorIndex = readColorFromBuffer(buffer, x, y);
+                if (colorIndex == 0 || colorIndex == 3 || colorIndex == 13) {
+                    colorIndex = readColorFromBuffer(buffer2, x, y);
+                    if (colorIndex == 2) {
+                        colorIndex = 1;
                     }
-                    if (temp_v0 == 0) {
-                        writeColorToBuffer(bitmap, j, i, 14);
+                    if (colorIndex == 0) {
+                        writeColorToBuffer(buffer, x, y, 14);
                     } else {
-                        writeColorToBuffer(bitmap, j, i, temp_v0);
+                        writeColorToBuffer(buffer, x, y, colorIndex);
                     }
                 }
             }
         }
     } else {
-        for (i = 0; i < 5; i++) {
-            for (j = 0; j < 5; j++) {
-                if (readColorFromBuffer(bitmap, j, i) == 0) {
-                    if (readColorFromBuffer(img1, j, i) == 0) {
-                        writeColorToBuffer(bitmap, j, i, 13);
+        for (y = 0; y < 5; y++) {
+            for (x = 0; x < 5; x++) {
+                if (readColorFromBuffer(buffer, x, y) == 0) {
+                    if (readColorFromBuffer(buffer2, x, y) == 0) {
+                        writeColorToBuffer(buffer, x, y, 13);
                     } else {
-                        writeColorToBuffer(bitmap, j, i, 3);
+                        writeColorToBuffer(buffer, x, y, 3);
                     }
                 }
             }
         }
     }
-    LoadTPage((u_long*)bitmap, 0, 0, VramPosX + x, VramPosY + y * 4, 8, 5);
+    LoadTPage((u_long*)buffer, 0, 0, VramPosX + tileX, VramPosY + tileY * 4, 8, 5);
 }
 
 void DrawSecretPassageOnMap(s32 x, s32 y, s32 direction) {
@@ -892,31 +892,31 @@ void RevealSecretPassageAtPlayerPositionOnMap(s32 castleFlagId) {
 }
 
 void func_800F2014(void) {
-    s32 x;
-    s32 y;
+    s32 tileX;
+    s32 tileY;
     s32 subMap;
     s32 idx;
 
     if (g_canRevealMap && (g_StageId != STAGE_ST0)) {
-        x = g_Tilemap.left + (g_PlayerX >> 8);
-        y = g_Tilemap.top + (g_PlayerY >> 8);
-        subMap = 1 << ((3 - (x & 3)) * 2);
-        idx = (x >> 2) + (y * 16);
+        tileX = g_Tilemap.left + (g_PlayerX >> 8);
+        tileY = g_Tilemap.top + (g_PlayerY >> 8);
+        subMap = 1 << ((3 - (tileX & 3)) * 2);
+        idx = (tileX >> 2) + (tileY * 16);
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
-            idx += 2 * 4 * 0x80;
+            idx += 2 * 4 * WIDTH_OF_MAP_ROW_IN_BYTES;
         }
         if (!(g_CastleMap[idx] & subMap)) {
             g_CastleMap[idx] |= subMap;
             g_RoomCount++;
-            func_800F1B08(x, y, 0);
-            RevealSecretPassageOnMap(x, y, 0xFFFF);
+            func_800F1B08(tileX, tileY, 0);
+            RevealSecretPassageOnMap(tileX, tileY, 0xFFFF);
         }
     }
 }
 
 void func_800F2120(void) {
-    s32 x;
-    s32 y;
+    s32 tileX;
+    s32 tileY;
     s32 subMap;
     s32 idx;
 
@@ -924,12 +924,12 @@ void func_800F2120(void) {
     ClearImage(&g_Vram.D_800ACDE8, 0, 0, 0);
     DrawSync(0);
 
-    for (y = 0; y < 64; y++) {
-        for (x = 0; x < 64; x++) {
+    for (tileY = 0; tileY < 64; tileY++) {
+        for (tileX = 0; tileX < 64; tileX++) {
             // sequence of 2 bit masks: 0xC0, 0x30, 0x0C, 0x03
             // 0b11000000, 0b110000, 0b1100, 0b11
-            subMap = 3 << ((3 - (x & 3)) * 2);
-            idx = (x >> 2) + (y * 16);
+            subMap = 3 << ((3 - (tileX & 3)) * 2);
+            idx = (tileX >> 2) + (tileY * 16);
 
             if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
                 idx += 0x400;
@@ -937,11 +937,11 @@ void func_800F2120(void) {
             // 0x55 and 0xAA are masks for even and odd bits.
             // 0x55 is 0b1010101
             if (g_CastleMap[idx] & (subMap & 0x55)) {
-                func_800F1B08(x, y, 0);
-                RevealSecretPassageOnMap(x, y, 0xFFFF);
+                func_800F1B08(tileX, tileY, 0);
+                RevealSecretPassageOnMap(tileX, tileY, 0xFFFF);
                 // 0xAA is 0b10101010
             } else if (g_CastleMap[idx] & (subMap & 0xAA)) {
-                func_800F1B08(x, y, 1);
+                func_800F1B08(tileX, tileY, 1);
             }
         }
     }
