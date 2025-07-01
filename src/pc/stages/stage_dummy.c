@@ -68,5 +68,3 @@ static void MyInitRoomEntities(s32 objLayoutId) {
     INFOF("Stage ID: %02X", g_StageId);
     PlaySfx(MU_CRYSTAL_TEARDROPS);
 }
-
-void UpdateStageEntities(void) { NOT_IMPLEMENTED; }
