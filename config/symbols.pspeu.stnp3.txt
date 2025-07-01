@@ -13,6 +13,7 @@ EntityBreakable = 0x0923ADC8; // source=match
 EntityBackgroundLightning = 0x0923AF48;
 EntityCastleDoor = 0x0923B360;
 EntityTrapDoor = 0x0923B788;
+EntityGaibon = 0x0923B938;
 NP3_EntityLockCamera = 0x0923E2E8; // source=match
 CreateEntityFromLayout = 0x09240AA8; // source=match
 CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
@@ -72,6 +73,7 @@ EntityRoomForeground = 0x09255D58; // source=match
 DestroyEntity = 0x09259A58;
 AnimateEntity = 0x09259B78;
 GetDistanceToPlayerX = 0x09259CE8;
+GetDistanceToPlayerY = 0x09259D58;
 GetSideToPlayer = 0x09259DB0;
 MoveEntity = 0x09259E38;
 UnkCollisionFunc3 = 0x09259EC0;
@@ -90,6 +92,7 @@ g_EInitStInteractable = 0x0926B288;
 g_EInitSlograNP3 = 0x0926B358;
 g_EInitSlograSpearNP3 = 0x0926B368;
 g_EInitSlograProjectileNP3 = 0x0926B378;
+g_EInitGaibonNP3 = 0x0926B388;
 NP3_Overlay = 0x0928E820;
 D_psp_E_BLADE_SWORD = 0x09291C18;
 D_psp_E_BLADE = 0x09291C20;

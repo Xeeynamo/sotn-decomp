@@ -22,7 +22,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", AnimateEntity);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", GetDistanceToPlayerX);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259D58);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", GetDistanceToPlayerY);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", GetSideToPlayer);
 
