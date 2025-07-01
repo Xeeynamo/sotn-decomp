@@ -733,8 +733,8 @@ void EntitySmallGaibonProjectile(Entity* self) {
         self->animCurFrame = 1;
         self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_ROTATE;
         self->scaleX = 0xC0;
-        self->velocityX = (rcos(self->rotate) * 0x28000) >> 0xC;
-        self->velocityY = (rsin(self->rotate) * 0x28000) >> 0xC;
+        self->velocityX = (rcos(self->rotate) * FIX(2.5)) >> 0xC;
+        self->velocityY = (rsin(self->rotate) * FIX(2.5)) >> 0xC;
         self->rotate -= 0x400;
         self->palette = PAL_OVL(0x1B6);
 
@@ -763,8 +763,8 @@ void EntityLargeGaibonProjectile(Entity* self) {
         if (!self->params) {
             self->animSet = ANIMSET_DRA(2);
             self->drawFlags = FLAG_DRAW_ROTATE;
-            self->velocityX = (rcos(self->rotate) * 0x38000) >> 0xC;
-            self->velocityY = (rsin(self->rotate) * 0x38000) >> 0xC;
+            self->velocityX = (rcos(self->rotate) * FIX(3.5)) >> 0xC;
+            self->velocityY = (rsin(self->rotate) * FIX(3.5)) >> 0xC;
             self->rotate -= 0x400;
             self->palette = PAL_OVL(0x1B6);
         } else {
