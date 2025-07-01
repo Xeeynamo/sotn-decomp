@@ -254,7 +254,7 @@ static char* D_psp_09299A18[] = {
     "Dracula’s close friend．",
     "Dark Priest of Dracula．",
     "Lord of Wallachia．"};
-extern char* D_psp_0929A320[] = {
+static char* D_psp_0929A320[] = {
     "in １７９２．（５ years ago）",
     "bones．",
     "",
@@ -1621,7 +1621,7 @@ static char* D_psp_092A1A88[] = {
     _S("HOL"), _S("DRK"), _S("FIR"), _S("THU"), _S("ICE"), _S("H2O"),
     _S("STN"), _S("PSN"), _S("CUR"), _S("CUT"), _S("HIT")};
 static char D_psp_092A1AB8[] = _S("None");
-extern char* D_psp_092A1B00[] = {
+static char* D_psp_092A1B00[] = {
     _S("LV"),         _S("HP"),  _S("Def"), _S("Exp"),
     _S("Drop Items"), _S("No."), _S("??")};
 static char D_psp_092A1B20[] = {

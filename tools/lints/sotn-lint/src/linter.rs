@@ -78,3 +78,20 @@ impl Linter for RegexLinter {
         }
     }
 }
+
+/// `LocalExternLinter` looks for global variables that are declared `extern`.
+/// The `extern` declaration means the variable is defined elsewhere, so
+/// local globals with definitions should not be permitted.
+pub struct LocalExternLinter;
+
+static LOCAL_EXTERN_PATTERN: Lazy<Regex> = Lazy::new(|| Regex::new(r"^extern [^ ]+ ([a-zA-Z0-9$_]+)[^ ]* = ").unwrap());
+
+impl Linter for LocalExternLinter {
+    fn check_line(&self, line: &str) -> Result<(), String> {
+        let Some(captures) = LOCAL_EXTERN_PATTERN.captures(line) else {
+            return Ok(());
+        };
+        let symbol = captures.get(1).map(|m| m.as_str().to_string()).expect("symbol");
+        Err(format!("`{}' definition should not be `extern`", symbol))
+    }
+}
