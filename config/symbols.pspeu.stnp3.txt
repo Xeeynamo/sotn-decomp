@@ -15,6 +15,8 @@ EntityCastleDoor = 0x0923B360;
 EntityTrapDoor = 0x0923B788;
 EntityGaibon = 0x0923B938;
 func_801B8CC0 = 0x0923D6E0;
+EntitySmallGaibonProjectile = 0x0923D810;
+EntityLargeGaibonProjectile = 0x0923D978;
 NP3_EntityLockCamera = 0x0923E2E8; // source=match
 CreateEntityFromLayout = 0x09240AA8; // source=match
 CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
@@ -94,6 +96,8 @@ g_EInitSlograNP3 = 0x0926B358;
 g_EInitSlograSpearNP3 = 0x0926B368;
 g_EInitSlograProjectileNP3 = 0x0926B378;
 g_EInitGaibonNP3 = 0x0926B388;
+g_EInitGaibonProjectileNP3 = 0x0926B398;
+g_EInitGaibonLargeProjectileNP3 = 0x0926B3A8;
 NP3_Overlay = 0x0928E820;
 D_psp_E_BLADE_SWORD = 0x09291C18;
 D_psp_E_BLADE = 0x09291C20;

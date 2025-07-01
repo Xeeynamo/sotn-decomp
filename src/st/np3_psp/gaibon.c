@@ -127,13 +127,6 @@ static u8 D_801815B4[] = {
     0x0A, 0x0A, 0x0A, 0x0B,0x0B, 0x0B, 0x0A, 0x0B,
     0x0B, 0x00, 0x00, 0x00
 };
-static u8 D_801815E0[] = {0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x04, 0x00};
-static u8 D_801815EC[] = {0x02, 0x0D, 0x02, 0x0E, 0x02, 0x0F, 0x02,
-                          0x10, 0x02, 0x0F, 0x02, 0x0E, 0x00};
-static u8 D_801815FC[] = {
-    0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x01, 0x04, 0x01, 0x05,
-    0x01, 0x06, 0x01, 0x07, 0x01, 0x08, 0x01, 0x09, 0x01, 0x0A,
-    0x01, 0x0B, 0x01, 0x0C, 0x01, 0x0D, 0xFF, 0x00};
 
 void EntityGaibon(Entity* self) {
     Collider collider;
@@ -714,6 +707,101 @@ void func_801B8CC0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/gaibon", func_pspeu_0923D810);
+static u8 D_801815E0[] = {0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x04, 0x00};
+static u8 D_801815EC[] = {0x02, 0x0D, 0x02, 0x0E, 0x02, 0x0F, 0x02,
+                          0x10, 0x02, 0x0F, 0x02, 0x0E, 0x00};
+static u8 D_801815FC[] = {
+    0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x01, 0x04, 0x01, 0x05,
+    0x01, 0x06, 0x01, 0x07, 0x01, 0x08, 0x01, 0x09, 0x01, 0x0A,
+    0x01, 0x0B, 0x01, 0x0C, 0x01, 0x0D, 0xFF, 0x00};
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/gaibon", func_pspeu_0923D978);
+// small red projectile from gaibon
+void EntitySmallGaibonProjectile(Entity* self) {
+    if (self->flags & FLAG_DEAD) {
+        self->drawFlags = FLAG_DRAW_DEFAULT;
+        self->step = 0;
+        self->pfnUpdate = EntityExplosion;
+        self->entityId = 2;
+        self->params = 0;
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitGaibonProjectileNP3);
+        self->animSet = ANIMSET_DRA(2);
+        self->animCurFrame = 1;
+        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_ROTATE;
+        self->scaleX = 0xC0;
+        self->velocityX = (rcos(self->rotate) * 0x28000) >> 0xC;
+        self->velocityY = (rsin(self->rotate) * 0x28000) >> 0xC;
+        self->rotate -= 0x400;
+        self->palette = PAL_OVL(0x1B6);
+
+    case 1:
+        MoveEntity();
+        AnimateEntity(D_801815E0, self);
+        break;
+    }
+}
+
+void EntityLargeGaibonProjectile(Entity* self) {
+    Entity* newEntity;
+
+    if (self->flags & FLAG_DEAD) {
+        self->drawFlags = FLAG_DRAW_DEFAULT;
+        self->step = 0;
+        self->pfnUpdate = EntityExplosion;
+        self->entityId = 2;
+        self->params = 1;
+        return;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitGaibonLargeProjectileNP3);
+        if (!self->params) {
+            self->animSet = ANIMSET_DRA(2);
+            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->velocityX = (rcos(self->rotate) * 0x38000) >> 0xC;
+            self->velocityY = (rsin(self->rotate) * 0x38000) >> 0xC;
+            self->rotate -= 0x400;
+            self->palette = PAL_OVL(0x1B6);
+        } else {
+            self->animSet = ANIMSET_DRA(14);
+            self->unk5A = 0x79;
+            self->drawFlags =
+                FLAG_DRAW_SCALEX | FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
+            self->scaleX = 0x100;
+            self->opacity = 0x80;
+            self->palette = PAL_OVL(0x1F3);
+            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->step = 2;
+            self->hitboxState = 0;
+            self->flags |= FLAG_UNK_2000;
+        }
+        break;
+
+    case 1:
+        MoveEntity();
+        AnimateEntity(D_801815EC, self);
+        if (!(g_Timer & 3)) {
+            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (newEntity != NULL) {
+                CreateEntityFromEntity(E_ID(GAIBON_BIG_FIREBALL), self, newEntity);
+                newEntity->params = 1;
+                newEntity->rotate = self->rotate;
+                newEntity->zPriority = self->zPriority + 1;
+            }
+        }
+        break;
+
+    case 2:
+        self->opacity -= 2;
+        self->scaleX -= 4;
+        if (AnimateEntity(D_801815FC, self) == 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
