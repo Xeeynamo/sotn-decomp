@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../np3/np3.h"
 
+#ifdef VERSION_PSP
 extern s32 E_ID(GAIBON);
 extern s32 E_ID(GAIBON_IDLE);
 extern s32 E_ID(GAIBON_SMALL_FIREBALL);
 extern s32 E_ID(GAIBON_BIG_FIREBALL);
+#endif
 
 #define SLOGRA self[-8]
 
