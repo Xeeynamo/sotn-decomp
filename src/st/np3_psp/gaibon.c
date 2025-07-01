@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../np3/np3.h"
 
+extern s32 E_ID(GAIBON);
 extern s32 E_ID(GAIBON_IDLE);
 extern s32 E_ID(GAIBON_SMALL_FIREBALL);
 extern s32 E_ID(GAIBON_BIG_FIREBALL);
@@ -683,7 +684,35 @@ void EntityGaibon(Entity* self) {
     self->hitboxHeight = *hitboxPtr++;
 }
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/gaibon", func_pspeu_0923D6E0);
+void func_801B8CC0(Entity* self) {
+    Entity* gaibon;
+    s32 gaibonFrame;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitGaibonNP3);
+        self->hitboxState = 0;
+    }
+
+    gaibon = self - 1;
+    self->facingLeft = gaibon->facingLeft;
+    self->palette = gaibon->palette;
+    self->posX.i.hi = gaibon->posX.i.hi;
+    self->posY.i.hi = gaibon->posY.i.hi;
+    self->animCurFrame = 0;
+
+    gaibonFrame = gaibon->animCurFrame;
+    if (0x1F < gaibonFrame && gaibonFrame < 0x23) {
+        self->animCurFrame = 0x26;
+    } else if (gaibonFrame == 0x23) {
+        self->animCurFrame = 0x27;
+    } else if (0x23 < gaibonFrame && gaibonFrame < 0x26) {
+        self->animCurFrame = 0x28;
+    }
+
+    if (gaibon->entityId != E_ID(GAIBON)) {
+        DestroyEntity(self);
+    }
+}
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/gaibon", func_pspeu_0923D810);
 

@@ -14,6 +14,7 @@ EntityBackgroundLightning = 0x0923AF48;
 EntityCastleDoor = 0x0923B360;
 EntityTrapDoor = 0x0923B788;
 EntityGaibon = 0x0923B938;
+func_801B8CC0 = 0x0923D6E0;
 NP3_EntityLockCamera = 0x0923E2E8; // source=match
 CreateEntityFromLayout = 0x09240AA8; // source=match
 CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
