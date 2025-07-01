@@ -5,7 +5,7 @@ void func_us_801B3754(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void func_us_801BAEF4(Entity* self);
+void OVL_EXPORT(EntityRedDoor)(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void func_us_801C7508(Entity* self);
 void func_us_801C7D4C(Entity* self);
@@ -71,7 +71,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x01 */ EntityExplosion,
     /* 0x02 */ EntityPrizeDrop,
     /* 0x03 */ EntityDamageDisplay,
-    /* 0x04 */ func_us_801BAEF4,
+    /* 0x04 */ OVL_EXPORT(EntityRedDoor),
     /* 0x05 */ EntityIntenseExplosion,
     /* 0x06 */ func_us_801C7508,
     /* 0x07 */ func_us_801C7D4C,
@@ -141,7 +141,7 @@ EInit D_us_80180844 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x005};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x002};
 EInit D_us_80180868 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x001};
-EInit D_us_80180874 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
+EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit g_EInitSkelerang = {ANIMSET_OVL(0x01), 0x01, 0x48, 0x200, 0x00B};
 EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(0x01), 0x2B, 0x48, 0x200, 0x00C};

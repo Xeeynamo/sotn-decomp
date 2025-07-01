@@ -64,7 +64,7 @@ extern EInit g_EInitParticle;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitUnkId13;
 // extern EInit D_us_80180868;
-// extern EInit D_us_80180874;
+extern EInit g_EInitCommon;
 extern EInit g_EInitDamageNum;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
