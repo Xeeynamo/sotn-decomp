@@ -48,4 +48,5 @@ segments:
       - [0x2420, c, sword]
       - [0x763C, c, servant_common]
       - [0x82B0, .bss, sword]
+      - [0x8670, bss, sword_bss]
   - [0xA000]

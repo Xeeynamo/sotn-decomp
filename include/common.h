@@ -124,6 +124,7 @@
 #define FLT(x) ((s32)((x) * 4096.0))
 #define I_TO_FLT(x) ((s32)(x) << 12)
 #define FLT_TO_I(x) ((s32)(x) >> 12)
+#define FLT_TO_FIX(x) ((s32)(x) << 5)
 
 // Access to the Scratchpad memory. Different on different systems.
 #if defined(VERSION_PC)
