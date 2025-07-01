@@ -92,51 +92,51 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self) {
             tilemap->width = self->ext.lockCamera.unk84;
             tilemap->height = self->ext.lockCamera.unk86;
             self->ext.lockCamera.unk7E = 0;
-            return;
-        }
-        var_s4 = (self->ext.lockCamera.unk80 - tilemap->x) / 2;
-        if (var_s4) {
-            if (var_s4 > 0) {
-                tilemap->x += 2;
-            } else {
-                tilemap->x -= 2;
-            }
         } else {
-            tilemap->x = self->ext.lockCamera.unk80;
-            self->ext.lockCamera.unk7E &= ~1;
-        }
-        var_s4 = (self->ext.lockCamera.unk82 - tilemap->y) / 2;
-        if (var_s4) {
-            if (var_s4 > 0) {
-                tilemap->y += 2;
+            var_s4 = (self->ext.lockCamera.unk80 - tilemap->x) / 2;
+            if (var_s4) {
+                if (var_s4 > 0) {
+                    tilemap->x += 2;
+                } else {
+                    tilemap->x -= 2;
+                }
             } else {
-                tilemap->y -= 2;
+                tilemap->x = self->ext.lockCamera.unk80;
+                self->ext.lockCamera.unk7E &= ~1;
             }
-        } else {
-            tilemap->y = self->ext.lockCamera.unk82;
-            self->ext.lockCamera.unk7E &= ~2;
-        }
-        var_s4 = (self->ext.lockCamera.unk84 - tilemap->width) / 2;
-        if (var_s4) {
-            if (var_s4 > 0) {
-                tilemap->width += 2;
+            var_s4 = (self->ext.lockCamera.unk82 - tilemap->y) / 2;
+            if (var_s4) {
+                if (var_s4 > 0) {
+                    tilemap->y += 2;
+                } else {
+                    tilemap->y -= 2;
+                }
             } else {
-                tilemap->width -= 2;
+                tilemap->y = self->ext.lockCamera.unk82;
+                self->ext.lockCamera.unk7E &= ~2;
             }
-        } else {
-            tilemap->width = self->ext.lockCamera.unk84;
-            self->ext.lockCamera.unk7E &= ~4;
-        }
-        var_s4 = (self->ext.lockCamera.unk86 - tilemap->height) / 2;
-        if (var_s4) {
-            if (var_s4 > 0) {
-                tilemap->height += 2;
+            var_s4 = (self->ext.lockCamera.unk84 - tilemap->width) / 2;
+            if (var_s4) {
+                if (var_s4 > 0) {
+                    tilemap->width += 2;
+                } else {
+                    tilemap->width -= 2;
+                }
             } else {
-                tilemap->height -= 2;
+                tilemap->width = self->ext.lockCamera.unk84;
+                self->ext.lockCamera.unk7E &= ~4;
             }
-        } else {
-            tilemap->height = self->ext.lockCamera.unk86;
-            self->ext.lockCamera.unk7E &= ~8;
+            var_s4 = (self->ext.lockCamera.unk86 - tilemap->height) / 2;
+            if (var_s4) {
+                if (var_s4 > 0) {
+                    tilemap->height += 2;
+                } else {
+                    tilemap->height -= 2;
+                }
+            } else {
+                tilemap->height = self->ext.lockCamera.unk86;
+                self->ext.lockCamera.unk7E &= ~8;
+            }
         }
     }
 }

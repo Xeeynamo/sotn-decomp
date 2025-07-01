@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
 #include "../../../include/cloud_struct.h"
+#include "../clock_tower.h"
 
 static s16 D_80182084[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181,
@@ -255,20 +256,12 @@ void EntityClouds(Entity* self) {
     }
 }
 
-typedef struct {
-    u8 u0, v0, u1, v1, u2, v2;
-    u16 clut;
-} ClockTowerData;
 static ClockTowerData s_RoofTextureData[] = {
     {0x10, 0x29, 0x02, 0x44, 0x1E, 0x44, 0x40},
     {0x30, 0x29, 0x22, 0x44, 0x3E, 0x44, 0x40},
     {0x15, 0x49, 0x02, 0x6F, 0x26, 0x6F, 0x3E},
 };
 
-typedef struct {
-    u8 u, v, w, h;
-    u16 clut;
-} ClockTowerData2;
 static ClockTowerData2 s_TowerTextureData[] = {
     {0x01, 0x01, 0x3D, 0x25, 0x3E}, {0x41, 0x01, 0x3D, 0x75, 0x44},
     {0x81, 0x01, 0x3D, 0x75, 0x44}, {0x01, 0x71, 0x3D, 0x0D, 0x44},
@@ -316,37 +309,6 @@ static SVECTOR D_80182358[] = {
     {65, 283, -65}, {65, 450, -65}, {65, 283, 65},   {65, 450, 65},
 };
 
-// The clocktower defines two types of drawing "scripts" - the first for
-// the pyramid roof sections and the second for quad clock faces and
-// tower. These have slightly different structure, but work the same
-// way. An `SVECTOR` array is chosen from an array of pointers
-// (`s_ClockVertexSets`) using the special value `0x80`. The next value
-// will be used to choose the vector array that subsequent vertexes will
-// be chosen from. After the vertex array selection, one or more polygon
-// definitions follows. These polygons are always of the same type
-// and have the same size.
-//
-// Each entry consits of a `textureIndex`, followed by the vertexes
-// necessary to build the polygon. After the vertexes comes a priority
-// which is added to a constant value.
-//
-// A value of 0xFF is used to denote the end of the script.
-
-// declares which vertex array will be used for subsequent polygons
-#define VINDEX_MARKER 0x80
-#define VINDEX(i) VINDEX_MARKER, (i)
-
-// indicates the end of the drawing script
-#define OBJ_END 0xFF
-
-// Sets up a triangle for drawing. `textureIndex` is
-// an index into a texture lookup table. Each vertex is an
-// index into the table defined by the previous `VINDEX`
-// declaration. `priority` is the `Primitive` priority
-// plus a constant defined by the consumer.
-#define DRAW_TRIANGLE(textureIndex, v1, v2, v3, priority)                      \
-    (textureIndex), (v1), (v2), (v3), (priority)
-
 // clocktower roof
 static u8 s_ClockRoofScript[] = {
     // clang-format off
@@ -367,14 +329,6 @@ static u8 s_ClockRoofScript[] = {
     OBJ_END,
     // clang-format on
 };
-
-// Quads are defined by declaring vertexes in the
-// order top-left, top-right, bottom-left, bottom-right.
-// Often the sets list the quads in clockwise order, so
-// the `QUAD` macro reflects the difference in expected
-// order.
-#define DRAW_QUAD(textureIndex, v1, v2, v4, v3, priority)                      \
-    (textureIndex), (v1), (v2), (v4), (v3), (priority)
 
 // clocktower clock and base
 static u8 s_ClockTowerScript[] = {

@@ -653,6 +653,7 @@ enum Sfx {
     SFX_CTULHU_ROAR,
     SFX_UNK_761 = 0x761,
     SFX_SPEAR_GUARD_DEATH = 0x771,
+    SFX_UNK_77C = 0x77C,
     SFX_WARG_DEATH_HOWL = 0x780, // also used for Scylla Worm (phase 2)
     SFX_WARG_PAIN,
     SFX_WARG_ATTACK,

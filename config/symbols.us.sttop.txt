@@ -15,6 +15,7 @@ g_EInitUnkId13 = 0x801809D0;
 g_EInitLockCamera = 0x801809DC;
 g_EInitCommon = 0x801809E8;
 g_EInitDamageNum = 0x801809F4;
+g_EInitTOPCommon = 0x80180A00;
 g_EInitFleaRider = 0x80180A0C;
 g_EInitAxeKnight = 0x80180A18;
 g_EInitAxeKnightAxe = 0x80180A24;
@@ -26,8 +27,12 @@ entityLockCameraTilemapProps = 0x80180AA8;
 g_eBreakableAnimations = 0x80180B54;
 g_eBreakableHitboxes = 0x80180B7C;
 g_eBreakableExplosionTypes = 0x80180B88;
+g_eBreakablePalettes = 0x80180B94;
 g_eBreakableanimSets = 0x80180BA8;
+g_eBreakableUnk5A = 0x80180BBC;
 g_eBreakableDrawModes = 0x80180BD0;
+g_eBreakableHitboxOffsets = 0x80180BDC;
+D_us_80180CC8 = 0x80180CC8;
 TOP_PrizeDrops = 0x80180D10;
 actor_names = 0x80180DE4;
 g_eRedDoorUV = 0x80181234;
@@ -54,12 +59,20 @@ hitbox_2_lookup = 0x80181B28;
 init_velocity_x = 0x80181B60;
 init_velocity_y = 0x80181B6C;
 TOP_rooms = 0x80181B78;
+cloudVectorOne = 0x80181C44;
+cloudVectorTwo =  0x80181C4C;
+cloudVectorThree = 0x80181C54;
+cloudVectorFour = 0x80181C5C;
+s_RoofTextureData = 0x80181CFC;
+s_TowerTextureData = 0x80181D14;
+s_ClockRoofScript = 0x80181FD0;
+s_ClockTowerScript = 0x80182008;
+s_ClockVertexSets = 0x8018207C;
 sprites_3 = 0x801A6490;
 TOP_EntityBackgroundBlock = 0x801A8C38; // source=match
-PlayerIsWithinHitbox = 0x801A8D00; // source=duplicate
 TOP_EntityLockCamera = 0x801A8D84;
 EntityBreakable = 0x801A9390;
-func_801A8328 = 0x801A96F4; // source=duplicate
+TOP_EntityBreakableDebris = 0x801A96F4; // source=duplicate
 CutsceneUnk1 = 0x801AB768; // source=duplicate
 SetCutsceneScript = 0x801AB7BC; // source=duplicate
 CutsceneUnk4 = 0x801AB9DC; // source=duplicate
@@ -69,31 +82,19 @@ CutsceneRun = 0x801ABC44; // source=duplicate
 CutsceneSkip = 0x801ABF20; // source=duplicate
 ScaleCutsceneAvatar = 0x801AC000; // source=duplicate
 TOP_EntityCutscene = 0x801AC104; // source=duplicate
-Random = 0x801AD630; // source=match
 Update = 0x801AD660; // source=match
 UpdateStageEntities = 0x801AD95C; // source=match
 HitDetection = 0x801ADA64; // source=match
 EntityDamageDisplay = 0x801AEB7C; // source=match
 InitRoomEntities = 0x801AFA7C; // source=match
 UpdateRoomPosition = 0x801AFBF4; // source=match
-CreateEntityFromCurrentEntity = 0x801AFCA8; // source=match
-CreateEntityFromEntity = 0x801AFD1C; // source=match
 TOP_EntityRedDoor = 0x801AFE10; // source=match
 DestroyEntity = 0x801B0A48; // source=match
-PreventEntityFromRespawning = 0x801B0B30; // source=match
-AnimateEntity = 0x801B0B78; // source=match
-GetSideToPlayer = 0x801B0DB8; // source=match
 MoveEntity = 0x801B0DFC; // source=match
-UnkCollisionFunc3 = 0x801B0E58; // source=match
-AllocEntity = 0x801B12B8; // source=match
-SetEntityVelocityFromAngle = 0x801B1360;
-GetAngleBetweenEntitiesShifted = 0x801B1404;
-AdjustValueWithinThreshold = 0x801B1494;
 SetStep = 0x801B1688; // source=match
 InitializeEntity = 0x801B1758; // source=match
 EntityDummy = 0x801B1854; // source=match
 GetPlayerCollisionWith = 0x801B1AFC; // source=match
-ReplaceBreakableWithItemDrop = 0x801B1E40; // source=match
 EntityPrizeDrop = 0x801B2468; // source=match
 EntityExplosion = 0x801B2CDC; // source=match
 EntityEquipItemDrop = 0x801B2E7C; // source=match
@@ -105,7 +106,6 @@ EntityExplosionVariants = 0x801B4C80; // source=match
 EntityGreyPuff = 0x801B4D70; // source=match
 EntityIntenseExplosion = 0x801B5710; // source=match
 InitializeUnkEntity = 0x801B5810; // source=match
-PlaySfxPositional = 0x801B6B0C;
 EntityStageNamePopup = 0x801B6DD4; // source=match
 EntitySoulStealOrb = 0x801B7A58; // source=match
 EntityEnemyBlood = 0x801B7DEC; // source=match
@@ -114,8 +114,6 @@ EntityFleaRider = 0x801B86B8;
 EntityAxeKnightBlue = 0x801B96A8; // source=match
 EntityAxeKnightThrowingAxe = 0x801BA144; // source=match
 func_us_801CBA30 = 0x801BA2D4; // source=match
-UnkPrimHelper = 0x801BA3C8; // source=match
-UnkPolyFunc2 = 0x801BAB14; // source=match
 EntityClouds = 0x801BABF8;
 EntityClockTower3D = 0x801BB354; // source=duplicate
 g_SkipCutscene = 0x801BC460;
