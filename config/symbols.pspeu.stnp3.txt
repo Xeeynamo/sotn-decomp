@@ -18,6 +18,7 @@ EntityGaibonLeg = 0x0923D6E0;
 EntitySmallGaibonProjectile = 0x0923D810;
 EntityLargeGaibonProjectile = 0x0923D978;
 EntityTilemapShufflerUnused = 0x0923DC40;
+EntityShuttingWindow = 0x0923DD78;
 NP3_EntityLockCamera = 0x0923E2E8; // source=match
 CreateEntityFromLayout = 0x09240AA8; // source=match
 CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
@@ -91,6 +92,7 @@ UnkPrimHelper = 0x09261C08;
 UnkPolyFunc2 = 0x09262598;
 NP3_EntityUpdates = 0x0926B088;
 NP3_EInitBreakable = 0x0926B1F8;
+g_EInitParticle = 0x0926B218;
 g_EInitInteractable = 0x0926B238;
 g_EInitStInteractable = 0x0926B288;
 g_EInitSlograNP3 = 0x0926B358;

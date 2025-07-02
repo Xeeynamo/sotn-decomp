@@ -3,8 +3,6 @@
 
 // clang-format off
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0923DD78);
-
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0923E118);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0923E1F0);
