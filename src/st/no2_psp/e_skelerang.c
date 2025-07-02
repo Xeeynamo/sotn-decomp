@@ -2,7 +2,7 @@
 #include "../no2/no2.h"
 
 INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/e_skelerang", EntitySkelerang);
-
+// clang-format off
 INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/e_skelerang", EntitySkelerangBoomerang);
 
 INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/e_skelerang", EntitySkelerangUnknown);

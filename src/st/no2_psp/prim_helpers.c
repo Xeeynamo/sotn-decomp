@@ -14,5 +14,5 @@ INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/prim_helpers", PrimResetNext);
 INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/prim_helpers", UnkPolyFunc2);
 
 INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/prim_helpers", UnkPolyFunc0);
-
+// clang-format off
 INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/prim_helpers", PrimDecreaseBrightness);
