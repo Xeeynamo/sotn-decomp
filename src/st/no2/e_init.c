@@ -42,8 +42,8 @@ void EntityBigRedFireball(Entity* self);
 void func_us_801B6E34(Entity* self);
 void EntityOwlKnight(Entity* self);
 void EntityOwl(Entity* self);
-void func_us_801C6B3C(Entity* self);
-void func_us_801C6C1C(Entity* self);
+void EntityOwlKnightSword(Entity* self);
+void EntityOwlTarget(Entity* self);
 void EntityBloodyZombie(Entity* self);
 void EntityBloodDrips(Entity* self);
 void EntityBloodSplatter(Entity* self);
@@ -109,8 +109,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x27 */ func_us_801B6E34,
     /* 0x28 */ EntityOwlKnight,
     /* 0x29 */ EntityOwl,
-    /* 0x2A */ func_us_801C6B3C,
-    /* 0x2B */ func_us_801C6C1C,
+    /* 0x2A */ EntityOwlKnightSword,
+    /* 0x2B */ EntityOwlTarget,
     /* 0x2C */ EntityBloodyZombie,
     /* 0x2D */ EntityBloodDrips,
     /* 0x2E */ EntityBloodSplatter,
