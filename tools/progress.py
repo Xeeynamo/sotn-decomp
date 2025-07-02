@@ -423,6 +423,7 @@ if __name__ == "__main__":
     progress["stmad"] = DecompProgressStats("stmad", "st/mad")
     progress["stno0"] = DecompProgressStats("stno0", "st/no0")
     progress["stno1"] = DecompProgressStats("stno1", "st/no1")
+    progress["stno2"] = DecompProgressStats("stno2", "st/no2")
     progress["stno3"] = DecompProgressStats("stno3", "st/no3")
     progress["stno4"] = DecompProgressStats("stno4", "st/no4")
     progress["stnp3"] = DecompProgressStats("stnp3", "st/np3")

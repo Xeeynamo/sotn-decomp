@@ -25,10 +25,8 @@ typedef enum {
 } SkelerangBoomerangSteps;
 
 static s16 sensors_ground[][2] = {{0, 24}, {0, 4}, {8, -4}, {-16, 0}};
-static Point16 positions[] = {
-    {.x = 8, .y = -10}, {.x = -4, .y = -10}, {.x = 0, .y = -30},
-    {.x = 0, .y = -30}, {.x = 3, .y = -8},   {.x = 4, .y = 6},
-    {.x = -2, .y = 6},  {.x = 12, .y = 16},  {.x = -8, .y = 16}};
+static Point16 positions[] = {{8, -10}, {-4, -10}, {0, -30}, {0, -30}, {3, -8},
+                              {4, 6},   {-2, 6},   {12, 16}, {-8, 16}};
 static u8 anim_wake[] = {
     32, 1, 49, 2, 2, 3, 3, 4, 3, 5, 1, 6, 1, 7, 1, 8, 33, 9, -1, 0};
 static u8 anim_bounce[] = {
@@ -205,7 +203,7 @@ void EntitySkelerang(Entity* self) {
     case SKELERANG_DEATH_COWER:
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(2, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 2;
             entity->posY.i.hi += 24;
         }
@@ -251,7 +249,7 @@ void EntitySkelerang(Entity* self) {
         if (!--self->ext.skelerang.unk84) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(2, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 index = self->params;
                 if (self->facingLeft) {
                     entity->posX.i.hi -= positions[index].x;
@@ -304,9 +302,9 @@ void EntitySkelerangBoomerang(Entity* self) {
         self->ext.skelerang.unk84 = 48;
         if (self->params) {
             self->ext.skelerang.angle = 0;
-            return;
+        } else {
+            self->ext.skelerang.angle = 128;
         }
-        self->ext.skelerang.angle = 128;
         break;
     case BOOMERANG_FLY:
         self->hitboxState = 1;
@@ -342,7 +340,7 @@ void EntitySkelerangBoomerang(Entity* self) {
     case BOOMERANG_DESTROY:
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(2, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 1;
         }
         DestroyEntity(self);

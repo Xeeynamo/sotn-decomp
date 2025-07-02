@@ -7,7 +7,6 @@ extern u_long* OVL_EXPORT(cluts)[];
 extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
 extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern u_long** OVL_EXPORT(gfxBanks)[];
-void UpdateStageEntities();
 void func_8018E1D4();
 
 static Overlay OVL_EXPORT(Overlay) = {

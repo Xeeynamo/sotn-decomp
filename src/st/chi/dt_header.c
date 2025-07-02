@@ -13,9 +13,6 @@ extern u_long* OVL_EXPORT(cluts)[];
 extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern GfxBank* OVL_EXPORT(gfxBanks)[];
 
-void UpdateStageEntities();
-void HitDetection();
-
 // D_80180000
 Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
