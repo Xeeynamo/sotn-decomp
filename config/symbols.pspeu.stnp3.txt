@@ -17,6 +17,7 @@ EntityGaibon = 0x0923B938;
 EntityGaibonLeg = 0x0923D6E0;
 EntitySmallGaibonProjectile = 0x0923D810;
 EntityLargeGaibonProjectile = 0x0923D978;
+EntityTilemapShufflerUnused = 0x0923DC40;
 NP3_EntityLockCamera = 0x0923E2E8; // source=match
 CreateEntityFromLayout = 0x09240AA8; // source=match
 CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
