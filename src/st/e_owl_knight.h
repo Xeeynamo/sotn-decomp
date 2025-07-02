@@ -419,7 +419,7 @@ u8 OwlKnightDeathAnim(void) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.prim = prim;
+            g_CurrentEntity->ext.owl.unk7C = prim;
             while (prim != NULL) {
                 prim->tpage = 0x12;
                 prim->clut = g_EInitOwlKnight[3] + 1;
@@ -447,7 +447,7 @@ u8 OwlKnightDeathAnim(void) {
                 prim->p2 = 0;
                 prim = prim->next;
             }
-            prim = g_CurrentEntity->ext.prim;
+            prim = g_CurrentEntity->ext.owl.unk7C;
             prim->v0 = 0x80;
             prim->v1 = prim->v0;
             prim->v2 = prim->v0 + 10;
@@ -474,7 +474,7 @@ u8 OwlKnightDeathAnim(void) {
         g_CurrentEntity->step_s++;
         break;
     case 1:
-        prim = g_CurrentEntity->ext.prim;
+        prim = g_CurrentEntity->ext.owl.unk7C;
         PGREY(prim, 0) = 32;
         LOW(prim->r1) = LOW(prim->r0);
         PGREY(prim, 2) = 160;
@@ -482,7 +482,7 @@ u8 OwlKnightDeathAnim(void) {
         g_CurrentEntity->step_s++;
         break;
     case 2:
-        prim = g_CurrentEntity->ext.prim;
+        prim = g_CurrentEntity->ext.owl.unk7C;
         if (g_Timer % 6 == 0) {
             prim->y0++;
             prim->y1 = prim->y0;
@@ -507,7 +507,7 @@ u8 OwlKnightDeathAnim(void) {
         g_CurrentEntity->step_s++;
         break;
     case 3:
-        prim = g_CurrentEntity->ext.prim;
+        prim = g_CurrentEntity->ext.owl.unk7C;
         if (PrimDecreaseBrightness(prim, 6) == 0) {
             return 1;
         }
