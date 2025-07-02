@@ -3,7 +3,7 @@
 
 #ifdef VERSION_PSP
 extern s32 E_ID(GAIBON);
-extern s32 E_ID(GAIBON_IDLE);
+extern s32 E_ID(GAIBON_LEG);
 extern s32 E_ID(GAIBON_SMALL_FIREBALL);
 extern s32 E_ID(GAIBON_BIG_FIREBALL);
 #endif
@@ -153,7 +153,7 @@ void EntityGaibon(Entity* self) {
         InitializeEntity(g_EInitGaibonNP3);
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         other = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(GAIBON_IDLE), other);
+        CreateEntityFromCurrentEntity(E_ID(GAIBON_LEG), other);
         other->zPriority = self->zPriority + 4;
         SetStep(GAIBON_IDLE);
         break;
@@ -655,7 +655,12 @@ void EntityGaibon(Entity* self) {
     self->hitboxHeight = *hitboxPtr++;
 }
 
-void func_801B8CC0(Entity* self) {
+// This is a weird one. Gaibon's far leg is a separate entity.
+// It doesn't do anything special and just follows Gaibon.
+// When it's created by Gaibon, it gets a zPriority which is 4 higher
+// than Gaibon's own Z priority, so maybe something is supposed to go between
+// the two legs?
+void EntityGaibonLeg(Entity* self) {
     Entity* gaibon;
     s32 gaibonFrame;
 
@@ -672,12 +677,12 @@ void func_801B8CC0(Entity* self) {
     self->animCurFrame = 0;
 
     gaibonFrame = gaibon->animCurFrame;
-    if (0x1F < gaibonFrame && gaibonFrame < 0x23) {
-        self->animCurFrame = 0x26;
-    } else if (gaibonFrame == 0x23) {
-        self->animCurFrame = 0x27;
-    } else if (0x23 < gaibonFrame && gaibonFrame < 0x26) {
-        self->animCurFrame = 0x28;
+    if (31 < gaibonFrame && gaibonFrame < 35) {
+        self->animCurFrame = 38;
+    } else if (gaibonFrame == 35) {
+        self->animCurFrame = 39;
+    } else if (35 < gaibonFrame && gaibonFrame < 38) {
+        self->animCurFrame = 40;
     }
 
     if (gaibon->entityId != E_ID(GAIBON)) {

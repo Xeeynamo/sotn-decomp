@@ -89,7 +89,7 @@ typedef enum EntityIDs {
     /* 0x4F */ E_SLOGRA_SPEAR,
     /* 0x50 */ E_SLOGRA_SPEAR_PROJECTILE,
     /* 0x51 */ E_GAIBON,
-    /* 0x52 */ E_GAIBON_IDLE,
+    /* 0x52 */ E_GAIBON_LEG,
     /* 0x53 */ E_GAIBON_SMALL_FIREBALL,
     /* 0x54 */ E_GAIBON_BIG_FIREBALL,
     /* 0x55 */ E_HAMMER, // the enemy named "Hammer", Gurkha's friend

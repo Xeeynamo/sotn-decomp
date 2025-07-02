@@ -14,7 +14,7 @@ EntityBackgroundLightning = 0x0923AF48;
 EntityCastleDoor = 0x0923B360;
 EntityTrapDoor = 0x0923B788;
 EntityGaibon = 0x0923B938;
-func_801B8CC0 = 0x0923D6E0;
+EntityGaibonLeg = 0x0923D6E0;
 EntitySmallGaibonProjectile = 0x0923D810;
 EntityLargeGaibonProjectile = 0x0923D978;
 NP3_EntityLockCamera = 0x0923E2E8; // source=match
@@ -108,7 +108,7 @@ D_psp_E_GURKHA_BODY_PARTS = 0x09291C40;
 D_psp_E_HAMMER = 0x09291C48;
 D_psp_E_GAIBON_BIG_FIREBALL = 0x09291C50;
 D_psp_E_GAIBON_SMALL_FIREBALL = 0x09291C58;
-D_psp_E_GAIBON_IDLE = 0x09291C60;
+D_psp_E_GAIBON_LEG = 0x09291C60;
 D_psp_E_GAIBON = 0x09291C68;
 D_psp_E_SLOGRA_SPEAR_PROJECTILE = 0x09291C70;
 D_psp_E_SLOGRA_SPEAR = 0x09291C78;
