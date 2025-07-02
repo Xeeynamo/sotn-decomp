@@ -72,9 +72,8 @@ segments:
       - [0x2554, .data, e_bat]
       - [0x258C, .data, e_zombie]
       - [0x25D4, .data, e_bloody_zombie]
-      - [0x26CC, data]
-      - [0x2720, data]
-      - [0x2740, data]
+      - [0x26CC, .data, e_owl_knight]
+      - [0x2978, data]
       - [0x2A20, data]
       - [0x2B00, data]
       - [0x3010, data]
@@ -104,10 +103,8 @@ segments:
       - [0x3208C, .rodata, e_bat] # EntityBat
       - [0x320A0, .rodata, e_zombie] # EntityZombie
       - [0x320B4, .rodata, e_bloody_zombie] # EntityBloodyZombie data
-      - [0x320DC, .rodata, 4B018] # Shared charal string for owl and owl knight
-      - [0x320EC, .rodata, 4B018] # EntityOwl
-      - [0x3214C, .rodata, 4B018] # EntityOwlKnight
-      - [0x321EC, .rodata, 4D540] # Strings
+      - [0x320DC, .rodata, e_owl_knight]
+      - [0x321EC, .rodata, 4D658] # Strings
       - [0x3224C, .rodata, 4E69C] # EntityHammer
       - [0x322CC, .rodata, 4E69C] # EntityGurkhaBodyParts
       - [0x322F8, .rodata, 4F5B8] # EntityGurkha
@@ -152,14 +149,14 @@ segments:
       - [0x4997C, c, e_bat]
       - [0x49BC8, c, e_zombie]
       - [0x49F98, c, e_bloody_zombie] # EntityBloodyZombie
-      - [0x4B018, c]
-      - [0x4D540, c]
+      - [0x4B018, c, e_owl_knight]
+      - [0x4D658, c]
       - [0x4E69C, c]
       - [0x4F5B8, c]
       - [0x50A00, c, blade]
       - [0x51F38, c, prim_helpers]
       - [0x52768, .bss, create_entity]
       - [0x5277D, .bss, bss]
-      - [0x53378, .bss, 4D540]
+      - [0x53378, .bss, 4D658]
       - [0x533F4, .bss, e_collect]
   - [0x53434]

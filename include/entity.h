@@ -1565,14 +1565,13 @@ typedef struct {
 } ET_LifeUpSpawn;
 
 typedef struct {
-    byte pad[4];
-    // Needs further study; there is a use of LOW(unk80).
+    struct Primitive* unk7C;
     u16 unk80;
     u16 unk82;
     s16 unk84;
-    s16 unk86;
+    s16 : 16;
     s16 unk88;
-    s16 unk8A;
+    s16 : 16;
     u8 unk8C;
 } ET_Owl;
 
