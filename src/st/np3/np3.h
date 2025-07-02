@@ -120,7 +120,7 @@ extern EInit g_EInitScimitarParts;
 extern EInit g_EInitBat;
 extern EInit g_EInitZombie;
 extern EInit g_EInitOwlKnight;
-extern EInit D_us_801808C8;
+extern EInit g_EInitOwlKnightSword;
 extern EInit g_EInitOwl;
 extern EInit g_EInitBloodyZombie;
 extern EInit g_EInitSlograNP3;

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 static u16 D_us_80181C1C[] = {
     0, 8, 0, 6, 8, -6, -16, 0, 0, 31, 8, 0, 0, 16, 255, 0,
 };
@@ -1075,7 +1076,7 @@ void EntityOwlKnightSword(Entity* self) {
     s8* hitboxPtr;
 
     if (!self->step) {
-        InitializeEntity(D_us_801808C8);
+        InitializeEntity(g_EInitOwlKnightSword);
     }
     self->facingLeft = KNIGHT->facingLeft;
     self->posX.i.hi = KNIGHT->posX.i.hi;
