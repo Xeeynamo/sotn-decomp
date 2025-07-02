@@ -13,7 +13,7 @@ typedef enum EntityIDs {
     /* 0x03 */ E_PRIZE_DROP,
     /* 0x04 */ // E_NUMERIC_DAMAGE,
     /* 0x05 */ // E_RED_DOOR,
-    /* 0x06 */ // E_INTENSE_EXPLOSION,
+    /* 0x06 */ E_INTENSE_EXPLOSION = 0x06,
     /* 0x07 */ // E_SOUL_STEAL_ORB,
     /* 0x08 */ // E_ROOM_FOREGROUND,
     /* 0x09 */ // E_STAGE_NAME_POPUP,
@@ -48,10 +48,10 @@ typedef enum EntityIDs {
     /* 0x26 */ // E_ID_26,
     /* 0x27 */ E_ID_27 = 0x27,
     /* 0x28 */ // E_ID_28,
-    /* 0x29 */ // E_ID_29,
+    /* 0x29 */ E_OWL_KNIGHT = 0x29,
     /* 0x2A */ // E_ID_2A,
-    /* 0x2B */ // E_ID_2B,
-    /* 0x2C */ // E_ID_2C,
+    /* 0x2B */ E_ID_2B = 0x2B,
+    /* 0x2C */ E_ID_2C,
     /* 0x2D */ // E_ID_2D,
     /* 0x2E */ E_BLOOD_DRIPS = 0x2E,
     /* 0x2F */ E_BLOOD_SPLATTER,
@@ -70,9 +70,9 @@ extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
 // extern EInit D_us_801808A4;
 // extern EInit D_us_801808B0;
-// extern EInit D_us_801808BC;
-// extern EInit D_us_801808C8;
-// extern EInit D_us_801808D4;
+extern EInit g_EInitOwlKnight;
+extern EInit D_us_801808C8;
+extern EInit g_EInitOwl;
 extern EInit g_EInitBloodyZombie;
 // extern EInit D_us_801808EC;
 // extern EInit D_us_801808F8;
