@@ -149,6 +149,12 @@ def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A):
                 v_0 = frame_params[8]
                 u_1 = frame_params[9]
                 v_1 = frame_params[10]
+                if runk0 & 1:
+                    u_0 += 0x80
+                    u_1 += 0x80
+                if runk0 & 2:
+                    v_0 += 0x80
+                    v_1 += 0x80
                 assert u_1 - u_0 == width
                 assert v_1 - v_0 == height
                 print(

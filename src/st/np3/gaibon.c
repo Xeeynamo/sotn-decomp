@@ -97,18 +97,13 @@ static u8 anim8[] = {5, 13, 5, 18, 5, 25, 4, 26, 41, 25, 255, 0};
 static u8 anim9[] = {2, 25, 2, 27, 0, 0, 0, 0};
 static u8 anim10[] = {16, 25, 5, 28, 6, 29, 32, 30, 255, 0};
 static s8 gaibonHitboxes[][4] = {
-    {0x00, 0x00, 0x00, 0x00}, {0xFD, 0xFC, 0x0F, 0x1B},
-    {0xFD, 0xFD, 0x0F, 0x19}, {0xFD, 0xFF, 0x0F, 0x18},
-    {0xFD, 0xFF, 0x0F, 0x17}, {0xFC, 0x04, 0x0F, 0x17},
-    {0xFD, 0xFD, 0x10, 0x15}, {0xFD, 0xFD, 0x10, 0x14},
-    {0xFB, 0x04, 0x11, 0x17}, {0xC5, 0xB6, 0x00, 0x00},
-    {0xFB, 0xF9, 0x0F, 0x14}, {0xFB, 0xFB, 0x0F, 0x12},
+    {0, 0, 0, 0},     {-3, -4, 15, 27}, {-3, -3, 15, 25}, {-3, -1, 15, 24},
+    {-3, -1, 15, 23}, {-4, 4, 15, 23},  {-3, -3, 16, 21}, {-3, -3, 16, 20},
+    {-5, 4, 17, 23},  {-59, -74, 0, 0}, {-5, -7, 15, 20}, {-5, -5, 15, 18},
 };
 static u8 gaibonHitboxIdx[] = {
-    0x00, 0x01, 0x02, 0x03, 0x04, 0x01, 0x02, 0x03, 0x04, 0x01, 0x04,
-    0x01, 0x04, 0x04, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x06,
-    0x06, 0x07, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08, 0x09, 0x09, 0x0A,
-    0x0A, 0x0A, 0x0B, 0x0B, 0x0B, 0x0A, 0x0B, 0x0B, 0x00, 0x00, 0x00};
+    0, 1, 2, 3, 4, 1, 2, 3, 4, 1, 4,  1,  4,  4,  5,  5,  5,  5,  5,  5, 5, 6,
+    6, 7, 8, 8, 8, 8, 8, 8, 9, 9, 10, 10, 10, 11, 11, 11, 10, 11, 11, 0, 0, 0};
 
 void EntityGaibon(Entity* self) {
     Collider collider;
@@ -132,7 +127,7 @@ void EntityGaibon(Entity* self) {
             }
         }
         if (!(self->flags & FLAG_DEAD) || (self->step >= GAIBON_NEAR_DEATH)) {
-            other = self - 8;
+            other = &SLOGRA;
             if ((other->ext.GS_Props.pickupFlag) &&
                 (self->step < GAIBON_LANDING_AFTER_SHOOTING)) {
                 SetStep(GAIBON_PICKUP_SLOGRA);
@@ -572,7 +567,7 @@ void EntityGaibon(Entity* self) {
     case SLOGRA_GAIBON_RETREAT:
         switch (self->step_s) {
         case 0:
-            other = self - 8;
+            other = &SLOGRA;
             xVar = other->posX.i.hi - self->posX.i.hi;
             if (xVar > 0) {
                 self->facingLeft = 1;
@@ -609,7 +604,7 @@ void EntityGaibon(Entity* self) {
             if (self->velocityY < FIX(-2)) {
                 self->velocityY = FIX(-2);
             }
-            other = self - 8;
+            other = &SLOGRA;
             other->posX.i.hi = self->posX.i.hi;
             other->posY.i.hi = self->posY.i.hi + 28;
             break;
