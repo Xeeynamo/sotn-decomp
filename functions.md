@@ -1147,7 +1147,7 @@
 | dra   | func_psp_09141E30                        |       78 |         13 |        |                                 |       |
 | maria | func_pspeu_092C0138                      |       78 |         14 |        |                                 |       |
 | dra   | func_psp_09100D70                        |       79 |          5 |        |                                 |       |
-| dai   | func_us_801D6FC8                         |       79 |          5 |        |                                 |       |
+| dai   | func_us_801D6FC8                         |       79 |          5 |        | https://decomp.me/scratch/gEp9B | 1.0   |
 | no2   | func_pspeu_0924ECC0                      |       79 |          6 |        |                                 |       |
 | np3   | func_pspeu_0925B680                      |       79 |          6 |        |                                 |       |
 | lib   | func_psp_09258A38                        |       79 |          7 |        | https://decomp.me/scratch/YDvBh | 1.0   |
@@ -1564,7 +1564,7 @@
 | np3   | func_pspeu_092491E8                      |      133 |         17 |        |                                 |       |
 | st0   | EntityDraculaMegaFireball                |      133 |         18 |        | https://decomp.me/scratch/6Jc0h | 0.998 |
 | no4   | func_pspeu_09256138                      |      134 |          9 |        | https://decomp.me/scratch/SGsZx | 1.0   |
-| dai   | func_us_801C220C                         |      134 |         10 |        | https://decomp.me/scratch/vW5XR | 0.976 |
+| dai   | func_us_801C220C                         |      134 |         10 |        | https://decomp.me/scratch/vW5XR | 0.999 |
 | no3   | EntityCastleDoorTransition               |      134 |         17 |        | https://decomp.me/scratch/rpjFW | 0.984 |
 | no2   | func_pspeu_09256148                      |      135 |          5 |        |                                 |       |
 | dra   | func_psp_0911B630                        |      135 |         12 |        | https://decomp.me/scratch/K9Ujo | 1.0   |
@@ -1827,7 +1827,7 @@
 | chi   | EntitySalemWitchTriboltProjectile        |      222 |         24 |        |                                 |       |
 | no4   | func_pspeu_0923F860                      |      222 |         24 |        | https://decomp.me/scratch/VXxBR | 1.0   |
 | no4   | func_pspeu_092409A8                      |      222 |         25 |        | https://decomp.me/scratch/dcikq | 1.0   |
-| dai   | func_pspeu_09247708                      |      223 |         15 |        |                                 |       |
+| dai   | func_pspeu_09247708                      |      223 |         15 |        | https://decomp.me/scratch/FGwwm | 0.604 |
 | no4   | func_pspeu_09240350                      |      223 |         22 |        | https://decomp.me/scratch/kdSl6 | 1.0   |
 | dra   | func_psp_090E4CD0                        |      224 |         10 |        | https://decomp.me/scratch/eGtmM | 1.0   |
 | dai   | func_pspeu_09258B78                      |      224 |         12 |        |                                 |       |
@@ -2012,7 +2012,7 @@
 | np3   | func_pspeu_0923EAA0                      |      318 |         40 |        |                                 |       |
 | no2   | func_pspeu_09250ED0                      |      319 |         32 |        |                                 |       |
 | np3   | func_pspeu_0925D890                      |      319 |         32 |        |                                 |       |
-| dai   | func_us_801D70A0                         |      319 |         42 |        |                                 |       |
+| dai   | func_us_801D70A0                         |      319 |         42 |        | https://decomp.me/scratch/tSHto | 0.927 |
 | np3   | func_pspeu_0923FA08                      |      319 |         43 |        |                                 |       |
 | no4   | func_pspeu_09238860                      |      320 |         54 |        | https://decomp.me/scratch/aJLfo | 0.999 |
 | dra   | func_psp_090EE5D0                        |      323 |         37 |        |                                 |       |
@@ -2064,7 +2064,7 @@
 | no4   | EntitySideWaterSplash                    |      352 |         30 |        |                                 |       |
 | np3   | EntitySideWaterSplash                    |      352 |         30 |        |                                 |       |
 | dra   | func_80130264                            |      352 |         34 | Yes    |                                 |       |
-| dai   | func_pspeu_092471E8                      |      354 |         31 |        |                                 |       |
+| dai   | func_pspeu_092471E8                      |      354 |         31 |        | https://decomp.me/scratch/RBwPR | 0.565 |
 | no4   | func_pspeu_09249030                      |      356 |         34 |        | https://decomp.me/scratch/VAgqW | 1.0   |
 | chi   | EntityVenusWeedDart                      |      356 |         37 |        |                                 |       |
 | dra   | func_psp_09127490                        |      356 |         51 |        | https://decomp.me/scratch/UbCHl | 0.989 |
@@ -2410,7 +2410,7 @@
 | ric   | func_pspeu_092A7B98                      |     1050 |        167 | Yes    |                                 |       |
 | st0   | PrologueScroll                           |     1058 |        112 | Yes    | https://decomp.me/scratch/JGHAO | 0.996 |
 | lib   | func_us_801B6324                         |     1060 |        102 | Yes    |                                 |       |
-| dai   | func_us_801D1204                         |     1077 |        150 | Yes    | https://decomp.me/scratch/48TQE | 0.735 |
+| dai   | func_us_801D1204                         |     1077 |        150 | Yes    | https://decomp.me/scratch/48TQE | 1.0   |
 | lib   | func_us_801B8A00                         |     1080 |        118 | Yes    |                                 |       |
 | no3   | EntityAlucardWaterEffect                 |     1095 |        132 |        |                                 |       |
 | no4   | EntityAlucardWaterEffect                 |     1095 |        132 |        |                                 |       |
