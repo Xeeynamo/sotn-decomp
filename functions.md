@@ -1339,7 +1339,7 @@
 | wrp   | EntityExplosion                          |       99 |          9 |        | https://decomp.me/scratch/CfU6H | 1.0   |
 | no3   | EntityBoneScimitarParts                  |       99 |         10 |        |                                 |       |
 | np3   | func_pspeu_09252588                      |       99 |         10 |        |                                 |       |
-| np3   | func_pspeu_0923D810                      |       99 |         11 |        | https://decomp.me/scratch/PbZu2 | 1.0   |
+| np3   | func_pspeu_0923D810                      |       99 |         11 |        | https://decomp.me/scratch/K2ZvK | 1.0   |
 | dra   | func_psp_090ED310                        |       99 |         12 |        |                                 |       |
 | st0   | func_pspeu_09241BF0                      |      101 |          5 |        |                                 |       |
 | chi   | func_psp_092473D8                        |      101 |          7 |        |                                 |       |
@@ -1752,7 +1752,7 @@
 | no4   | func_pspeu_09241870                      |      187 |         21 |        | https://decomp.me/scratch/kQlY0 | 0.999 |
 | dra   | func_psp_090F9FE0                        |      187 |         28 | Yes    |                                 |       |
 | ric   | RicEntitySubwpnBibleTrail                |      188 |         14 |        |                                 |       |
-| np3   | func_pspeu_0923D978                      |      189 |         23 |        |                                 |       |
+| np3   | func_pspeu_0923D978                      |      189 |         23 |        | https://decomp.me/scratch/4bN8f | 1.0   |
 | maria | func_pspeu_092AC7C8                      |      189 |         29 |        |                                 |       |
 | ric   | func_pspeu_092ADEA0                      |      189 |         29 |        |                                 |       |
 | maria | func_pspeu_092A9978                      |      191 |         30 |        | https://decomp.me/scratch/Gn1Se | 0.999 |
@@ -2367,7 +2367,7 @@
 | lib   | EntityLifeUpSpawn                        |      858 |         61 | Yes    | https://decomp.me/scratch/evuI8 | 0.999 |
 | st0   | func_801BC5C0                            |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.998 |
 | st0   | func_801AF774                            |      868 |         52 | Yes    | https://decomp.me/scratch/jQNRR | 0.999 |
-| no4   | func_pspeu_0923C460                      |      870 |        106 | Yes    | https://decomp.me/scratch/ZDaM8 | 0.605 |
+| no4   | func_pspeu_0923C460                      |      870 |        106 | Yes    | https://decomp.me/scratch/axDU4 | 0.605 |
 | lib   | func_us_801AE8E8                         |      883 |         80 |        |                                 |       |
 | lib   | func_psp_09263810                        |      884 |         74 | Yes    | https://decomp.me/scratch/e81JN | 0.995 |
 | st0   | EntityBackgroundVortex                   |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
@@ -2416,7 +2416,7 @@
 | no4   | EntityAlucardWaterEffect                 |     1095 |        132 |        |                                 |       |
 | np3   | EntityAlucardWaterEffect                 |     1095 |        132 |        |                                 |       |
 | dra   | func_psp_090E5020                        |     1102 |        110 |        |                                 |       |
-| dai   | func_us_801D64A0                         |     1116 |        152 | Yes    | https://decomp.me/scratch/UrWPj | 0.829 |
+| dai   | func_us_801D64A0                         |     1116 |        152 | Yes    | https://decomp.me/scratch/UrWPj | 0.837 |
 | no2   | func_pspeu_09253010                      |     1123 |        182 |        |                                 |       |
 | np3   | func_pspeu_0925F9D0                      |     1123 |        182 |        |                                 |       |
 | np3   | EntitySlogra                             |     1154 |        213 |        | https://decomp.me/scratch/hCcGP | 0.991 |
