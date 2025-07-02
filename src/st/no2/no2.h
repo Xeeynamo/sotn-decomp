@@ -47,6 +47,14 @@ typedef enum EntityIDs {
     /* 0x25 */ // E_ID_25,
     /* 0x26 */ // E_ID_26,
     /* 0x27 */ E_ID_27 = 0x27,
+    /* 0x28 */ // E_ID_28,
+    /* 0x29 */ // E_ID_29,
+    /* 0x2A */ // E_ID_2A,
+    /* 0x2B */ // E_ID_2B,
+    /* 0x2C */ // E_ID_2C,
+    /* 0x2D */ // E_ID_2D,
+    /* 0x2E */ E_BLOOD_DRIPS = 0x2E,
+    /* 0x2F */ E_BLOOD_SPLATTER,
 } EntityIDs;
 
 // extern EInit D_us_80180820;
@@ -56,7 +64,7 @@ extern EInit g_EInitParticle;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitUnkId13;
 // extern EInit D_us_80180868;
-// extern EInit D_us_80180874;
+extern EInit g_EInitCommon;
 extern EInit g_EInitDamageNum;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;

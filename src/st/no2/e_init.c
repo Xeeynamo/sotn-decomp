@@ -5,11 +5,11 @@ void func_us_801B3754(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
-void func_us_801BAEF4(Entity* self);
+void OVL_EXPORT(EntityRedDoor)(Entity* self);
 void EntityIntenseExplosion(Entity* self);
 void func_us_801C7508(Entity* self);
 void func_us_801C7D4C(Entity* self);
-void func_us_801C1EB8(Entity* self);
+void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOr(Entity* self);
 void EntityHeartDrop(Entity* self);
@@ -44,9 +44,9 @@ void func_us_801C58DC(Entity* self);
 void func_us_801C4614(Entity* self);
 void func_us_801C6B3C(Entity* self);
 void func_us_801C6C1C(Entity* self);
-void func_us_801C3C50(Entity* self);
-void func_us_801C4408(Entity* self);
-void func_us_801C3594(Entity* self);
+void EntityBloodyZombie(Entity* self);
+void EntityBloodDrips(Entity* self);
+void EntityBloodSplatter(Entity* self);
 void func_us_801B72E8(Entity* self);
 void func_us_801B5948(Entity* self);
 void func_us_801B7580(Entity* self);
@@ -71,11 +71,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x01 */ EntityExplosion,
     /* 0x02 */ EntityPrizeDrop,
     /* 0x03 */ EntityDamageDisplay,
-    /* 0x04 */ func_us_801BAEF4,
+    /* 0x04 */ OVL_EXPORT(EntityRedDoor),
     /* 0x05 */ EntityIntenseExplosion,
     /* 0x06 */ func_us_801C7508,
     /* 0x07 */ func_us_801C7D4C,
-    /* 0x08 */ func_us_801C1EB8,
+    /* 0x08 */ EntityStageNamePopup,
     /* 0x09 */ EntityEquipItemDrop,
     /* 0x0A */ EntityRelicOrb,
     /* 0x0B */ EntityHeartDrop,
@@ -111,9 +111,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x29 */ func_us_801C4614,
     /* 0x2A */ func_us_801C6B3C,
     /* 0x2B */ func_us_801C6C1C,
-    /* 0x2C */ func_us_801C3C50,
-    /* 0x2D */ func_us_801C4408,
-    /* 0x2E */ func_us_801C3594,
+    /* 0x2C */ EntityBloodyZombie,
+    /* 0x2D */ EntityBloodDrips,
+    /* 0x2E */ EntityBloodSplatter,
     /* 0x2F */ func_us_801B72E8,
     /* 0x30 */ func_us_801B5948,
     /* 0x31 */ func_us_801B7580,
@@ -141,7 +141,7 @@ EInit D_us_80180844 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x005};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x002};
 EInit D_us_80180868 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x001};
-EInit D_us_80180874 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
+EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit g_EInitSkelerang = {ANIMSET_OVL(0x01), 0x01, 0x48, 0x200, 0x00B};
 EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(0x01), 0x2B, 0x48, 0x200, 0x00C};

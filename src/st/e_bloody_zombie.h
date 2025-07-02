@@ -11,7 +11,6 @@ typedef enum {
     BLOODY_ZOMBIE_DESTROY
 } EntityBloodyZombieSteps;
 
-extern u16 g_EInitBloodyZombie[];
 static s16 sensors_ground[4][2] = {{0, 28}, {0, 4}, {8, -4}, {-16, 0}};
 static u16 sensors_move[][2] = {{0, 28}, {8, 0}};
 static u8 anim_walk[] = {0x04, 0x02, 0x0D, 0x03, 0x0A, 0x02, 0x0A, 0x01,
@@ -106,10 +105,10 @@ void EntityBloodSplatter(Entity* self) {
 
             if (self->facingLeft) {
                 LOW(prim->next->u0) = 0xA000;
-                prim->next->tpage = 0x200;
+                LOH(prim->next->tpage) = 0x200;
                 prim->next->x1 += 4;
             } else {
-                LOW(prim->next->u0) = 0xFFFF6000;
+                LOW(prim->next->u0) = -0xA000;
                 LOH(prim->next->tpage) = -0x200;
                 prim->next->x1 -= 4;
             }
@@ -143,7 +142,7 @@ void EntityBloodSplatter(Entity* self) {
                 LOW(prim->next->u0) = 0xC000;
                 LOH(prim->next->tpage) = 0x200;
             } else {
-                LOW(prim->next->u0) = 0xFFFF4000;
+                LOW(prim->next->u0) = -0xC000;
                 LOH(prim->next->tpage) = -0x200;
             }
             prim->priority = self->zPriority + 2;
@@ -173,7 +172,7 @@ void EntityBloodSplatter(Entity* self) {
         }
 
         prim->next->b3 -= 2;
-        if (UpdateAnimation(small_blood_anim, prim) == 0) {
+        if (!UpdateAnimation(small_blood_anim, prim)) {
             UnkPolyFunc0(prim);
         }
 
@@ -190,7 +189,7 @@ void EntityBloodSplatter(Entity* self) {
             prim->next->b3 = 0;
         }
 
-        if (UpdateAnimation(big_blood_anim, prim) == 0) {
+        if (!UpdateAnimation(big_blood_anim, prim)) {
             UnkPolyFunc0(prim);
         }
 
@@ -214,22 +213,22 @@ static void func_801C53AC(Primitive* prim) {
         prim->v2 = 255;
         prim->u2 = prim->u0;
         prim->u3 = prim->u1;
-        *(s16*)&prim->next->r2 = 16;
-        *(s16*)&prim->next->b2 = 16;
+        LOH(prim->next->r2) = 16;
+        LOH(prim->next->b2) = 16;
         prim->next->x1 = g_CurrentEntity->posX.i.hi;
         prim->next->y0 = g_CurrentEntity->posY.i.hi;
 
-        if (g_CurrentEntity->facingLeft != 0) {
+        if (g_CurrentEntity->facingLeft) {
             prim->next->x1 -= 8;
         } else {
             prim->next->x1 += 8;
         }
         if (prim->next->r3 == 0) {
-            *(s32*)&prim->next->u0 = -0x4000;
+            LOW(prim->next->u0) = -0x4000;
         } else {
-            *(s32*)&prim->next->u0 = 0x4000;
+            LOW(prim->next->u0) = 0x4000;
         }
-        *(s32*)&prim->next->r1 = -0x20000;
+        LOW(prim->next->r1) = -0x20000;
         prim->next->b3 = 0x80;
         prim->priority = g_CurrentEntity->zPriority + 1;
         prim->drawMode = DRAW_UNK02;
@@ -238,8 +237,8 @@ static void func_801C53AC(Primitive* prim) {
 
     case 1:
         UnkPrimHelper(prim);
-        *(s32*)&prim->next->r1 += 0x2000;
-        if (*(s32*)&prim->next->r1 > 0x20000) {
+        LOW(prim->next->r1) += 0x2000;
+        if (LOW(prim->next->r1) > 0x20000) {
             UnkPolyFunc0(prim);
         }
         break;
@@ -289,7 +288,7 @@ void EntityBloodyZombie(Entity* self) {
         AnimateEntity(anim_walk, self);
         UnkCollisionFunc2(sensors_move);
 
-        if (self->facingLeft == 0) {
+        if (!self->facingLeft) {
             self->velocityX = FIX(-0.375);
         } else {
             self->velocityX = FIX(0.375);
@@ -300,11 +299,11 @@ void EntityBloodyZombie(Entity* self) {
             self->facingLeft ^= 1;
         }
 
-        if (!(Random() % 64)) { // Drop BloodDrips from the enemy knife
+        if ((Random() % 64) == 0) { // Drop BloodDrips from the enemy knife
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_BLOOD_DRIPS, self, newEntity);
-                if (self->facingLeft != 0) {
+                if (self->facingLeft) {
                     newEntity->posX.i.hi += 16;
                 } else {
                     newEntity->posX.i.hi -= 16;
@@ -320,22 +319,22 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case BLOODY_ZOMBIE_CHASE:
-        if (AnimateEntity(anim_chase, self) == 0) {
+        if (!AnimateEntity(anim_chase, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         UnkCollisionFunc2(sensors_move);
 
-        if (self->facingLeft != 0) {
+        if (self->facingLeft) {
             self->velocityX = FIX(0.75);
         } else {
             self->velocityX = FIX(-0.75);
         }
 
-        if (!(Random() % 64)) { // Drop BloodDrips from the enemy knife
+        if ((Random() % 64) == 0) { // Drop BloodDrips from the enemy knife
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_BLOOD_DRIPS, self, newEntity);
-                if (self->facingLeft != 0) {
+                if (self->facingLeft) {
                     newEntity->posX.i.hi += 18;
                 } else {
                     newEntity->posX.i.hi -= 18;
@@ -370,7 +369,7 @@ void EntityBloodyZombie(Entity* self) {
             self->step_s++;
         }
 
-        if (AnimateEntity(anim_hit, self) == 0) {
+        if (!AnimateEntity(anim_hit, self)) {
             SetStep(BLOODY_ZOMBIE_WALK);
             self->step_s++;
         }
@@ -391,13 +390,13 @@ void EntityBloodyZombie(Entity* self) {
         }
 
         if (self->pose < 13) {
-            if (!(g_Timer % 8)) {
+            if ((g_Timer % 8) == 0) {
                 PlaySfxPositional(SFX_BLOODY_ZOMBIE_SPLATTER);
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_BLOOD_SPLATTER, self, newEntity);
                     newEntity->facingLeft = self->ext.bloodyZombie.unk84;
-                    if (self->facingLeft != 0) {
+                    if (self->facingLeft) {
                         newEntity->posX.i.hi -= 4;
                     } else {
                         newEntity->posX.i.hi += 4;
@@ -413,7 +412,7 @@ void EntityBloodyZombie(Entity* self) {
             }
 
             self->ext.bloodyZombie.unk80++;
-            if (!(g_Timer & 3)) {
+            if ((g_Timer & 3) == 0) {
                 prim = FindFirstUnkPrim2(self->ext.bloodyZombie.prim, 2);
                 if (prim != NULL) {
                     UnkPolyFunc2(prim);
@@ -433,13 +432,13 @@ void EntityBloodyZombie(Entity* self) {
             }
         }
 
-        if (AnimateEntity(anim_die, self) == 0) {
+        if (!AnimateEntity(anim_die, self)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = 2;
                 newEntity->posY.i.hi += 16;
-                if (self->facingLeft != 0) {
+                if (self->facingLeft) {
                     newEntity->posX.i.hi -= 8;
                 } else {
                     newEntity->posX.i.hi += 8;
