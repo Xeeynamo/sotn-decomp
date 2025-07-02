@@ -2012,7 +2012,7 @@
 | np3   | func_pspeu_0923EAA0                      |      318 |         40 |        |                                 |       |
 | no2   | func_pspeu_09250ED0                      |      319 |         32 |        |                                 |       |
 | np3   | func_pspeu_0925D890                      |      319 |         32 |        |                                 |       |
-| dai   | func_us_801D70A0                         |      319 |         42 |        | https://decomp.me/scratch/tSHto | 0.927 |
+| dai   | func_us_801D70A0                         |      319 |         42 |        | https://decomp.me/scratch/tSHto | 0.999 |
 | np3   | func_pspeu_0923FA08                      |      319 |         43 |        |                                 |       |
 | no4   | func_pspeu_09238860                      |      320 |         54 |        | https://decomp.me/scratch/aJLfo | 0.999 |
 | dra   | func_psp_090EE5D0                        |      323 |         37 |        |                                 |       |
@@ -2416,7 +2416,7 @@
 | no4   | EntityAlucardWaterEffect                 |     1095 |        132 |        |                                 |       |
 | np3   | EntityAlucardWaterEffect                 |     1095 |        132 |        |                                 |       |
 | dra   | func_psp_090E5020                        |     1102 |        110 |        |                                 |       |
-| dai   | func_us_801D64A0                         |     1116 |        152 | Yes    |                                 |       |
+| dai   | func_us_801D64A0                         |     1116 |        152 | Yes    | https://decomp.me/scratch/UrWPj | 0.435 |
 | no2   | func_pspeu_09253010                      |     1123 |        182 |        |                                 |       |
 | np3   | func_pspeu_0925F9D0                      |     1123 |        182 |        |                                 |       |
 | np3   | EntitySlogra                             |     1154 |        213 |        | https://decomp.me/scratch/hCcGP | 0.991 |
