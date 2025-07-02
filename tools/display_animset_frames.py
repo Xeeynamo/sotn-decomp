@@ -177,7 +177,7 @@ def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A):
                 )
                 frame_params = frame_params[11:]
             ax.set_title(
-                f'Frame #{self.anim_index} of {len(self.framearray)}; "{frame_name}"'
+                f'Frame #{self.anim_index} of {len(self.framearray) - 1}; "{frame_name}"'
             )
             ax.imshow(overall_image)
             plt.draw()
