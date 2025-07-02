@@ -628,7 +628,7 @@ void MakeExplosions(void) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
 #if defined(STAGE_IS_NO2)
-            CreateEntityFromEntity(E_ID_27, g_CurrentEntity, entity);
+            CreateEntityFromEntity(E_BIG_RED_FIREBALL, g_CurrentEntity, entity);
 #else
             CreateEntityFromEntity(E_EXPLOSION, g_CurrentEntity, entity);
 #endif

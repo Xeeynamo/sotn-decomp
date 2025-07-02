@@ -52,7 +52,7 @@ void EntityOwl(Entity* self) {
         InitializeEntity(g_EInitOwl);
         // Turns out the knight is spawned from the owl. Neat!
         CreateEntityFromEntity(E_OWL_KNIGHT, self, KNIGHT);
-        CreateEntityFromEntity(E_ID_2C, self, HELPER);
+        CreateEntityFromEntity(E_UNK_2C, self, HELPER);
         break;
     case 1:
         AnimateEntity(anim_owl_1, self);
@@ -604,7 +604,7 @@ void EntityOwlKnight(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitOwlKnight);
-        CreateEntityFromEntity(E_ID_2B, self, HELPER);
+        CreateEntityFromEntity(E_UNK_2B, self, HELPER);
         self->hitboxOffX = -1;
         self->zPriority -= 2;
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
