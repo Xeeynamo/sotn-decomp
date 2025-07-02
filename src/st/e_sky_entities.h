@@ -18,7 +18,7 @@ void EntityLightningThunder(Entity* self) {
     }
 }
 
-extern s16 cloudPos[][2] = {{0x88, 0x6C}, {0xC8, 0x30}, {0x30, 0x44}};
+static s16 cloudPos[][2] = {{0x88, 0x6C}, {0xC8, 0x30}, {0x30, 0x44}};
 
 // When lightning strikes, we get a bright bolt, but it is against a cloud
 // as a background. It's subtle and hard to see, but it's there.

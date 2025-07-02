@@ -26,6 +26,7 @@ use flags::FlagsTransformer;
 use line_transformer::LineTransformer;
 use linter::Linter;
 use linter::EntityRangeLinter;
+use linter::LocalExternLinter;
 use linter::RegexLinter;
 use player_status::PlayerStatusTransformer;
 use primitive_type::PrimitiveTypeTransformer;
@@ -71,7 +72,7 @@ fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>,
         for (i, line) in lines.iter().enumerate() {
             if lines[i] != original_lines[i] {
                 alterations += 1;
-                println!("{}: {} -> {}", i, original_lines[i], lines[i]);
+                println!("{}:{} {} -> {}", file_path, i, original_lines[i], lines[i]);
             }
             writeln!(file, "{}", line).expect("Unable to write line to file");
         }
@@ -104,6 +105,7 @@ fn process_directory(dir_path: &str) -> bool {
 
     let linters: Vec<Box<dyn Linter>> = vec![
         Box::new(EntityRangeLinter),
+        Box::new(LocalExternLinter),
         Box::new(RegexLinter::new("Static String Reference", r"FntPrint\(D_")),
     ];
 
