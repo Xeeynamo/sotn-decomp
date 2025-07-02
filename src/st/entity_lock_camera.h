@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 static u8 entityLockCameraHitbox[] = {
-    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x20};
+    0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x20,
+};
 
 static u8 entityLockCameraData[8] = {0};
 
@@ -19,7 +20,6 @@ static u16 entityLockCameraTilemapProps[] = {
     0x00F0, 0x01FC, 0x0310, 0x02FC, 0x00F0, 0x01FC, 0x0310, 0x02FC,
 };
 
-extern u16 g_EInitLockCamera[];
 // params: Which camera lock config to use
 void OVL_EXPORT(EntityLockCamera)(Entity* self) {
     u16 var_s0;

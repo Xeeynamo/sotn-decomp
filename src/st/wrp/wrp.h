@@ -34,11 +34,12 @@ typedef struct {
     s16 x, y;
 } WarpCoord;
 
-extern u16 g_EInitObtainable[];
-extern u16 g_EInitParticle[];
-extern u16 g_EInitInteractable[];
-extern u16 g_EInitCommon[];
-extern u16 g_EInitSmallRocks[];
+extern EInit g_EInitLockCamera;
+extern EInit g_EInitObtainable;
+extern EInit g_EInitParticle;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitCommon;
+extern EInit g_EInitSmallRocks;
 
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);

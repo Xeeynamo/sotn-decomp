@@ -27,5 +27,6 @@ extern s32 D_pspeu_0926BCD0;
 #endif
 
 extern EInit g_EInitParticle;
+extern EInit g_EInitLockCamera;
 
 #endif // BO4_H

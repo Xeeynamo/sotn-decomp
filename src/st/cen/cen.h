@@ -47,12 +47,13 @@ void EntityGreyPuff(Entity* entity);
 
 /*** Initializers ***/
 extern EInit OVL_EXPORT(EInitBreakable);
-extern u16 g_EInitObtainable[];
-extern u16 g_EInitSpawner[];
-extern u16 g_EInitInteractable[];
-extern u16 g_EInitCommon[];
-extern u16 g_EInitParticle[];
-extern u16 g_EInitElevator[]; // EntityElevator
+extern EInit g_EInitObtainable;
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitCommon;
+extern EInit g_EInitParticle;
+extern EInit g_EInitElevator;
+extern EInit g_EInitLockCamera;
 
 extern u16* D_80180574[];
 extern u8 D_80180594[];
