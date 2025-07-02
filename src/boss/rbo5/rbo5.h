@@ -10,5 +10,6 @@
 #include "../doppleganger.h"
 
 extern EInit g_EInitParticle;
+extern EInit g_EInitLockCamera;
 
 #endif // RBO5_H

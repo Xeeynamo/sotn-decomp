@@ -56,8 +56,9 @@ void EntityGreyPuff(Entity* entity);
 extern s32 D_80096ED0_mad;
 
 // ST/MAD
-extern u16 g_EInitObtainable[];
-extern u16 g_EInitCommon[];
+extern EInit g_EInitLockCamera;
+extern EInit g_EInitObtainable;
+extern EInit g_EInitCommon;
 extern u16 D_80180538[];
 extern ObjInit D_8018056C[];
 extern u8 D_801805B4[];
@@ -71,7 +72,7 @@ extern s32 D_80180EC4[];
 extern u16 D_80180FBC[];
 extern s32 D_80180FCC[];
 extern ObjInit D_801810F4[];
-extern u16 g_EInitParticle[];
+extern EInit g_EInitParticle;
 extern u8 g_UnkEntityAnimData[];
 // extern u16 g_testCollEnemyLookup[];
 // extern u8 g_testCollLuckCutoff[];

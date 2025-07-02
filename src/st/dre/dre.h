@@ -54,9 +54,10 @@ void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 /* *** Initializers *** */
-extern u16 g_EInitObtainable[];
+extern EInit g_EInitLockCamera;
+extern EInit g_EInitObtainable;
 extern u16 D_8018047C[];
-extern u16 g_EInitInteractable[];
+extern EInit g_EInitInteractable;
 extern u16 D_801804D0[]; // EntitySuccubus
 extern u16 D_801804DC[];
 extern u16 D_80180500[];
@@ -96,8 +97,8 @@ extern u8 D_80180780[]; // Animation
 extern const u8 D_80180794[];
 extern u8 D_801807F8[][4];
 extern u8 D_80180830[];
-extern u16 g_EInitParticle[];
-extern u16 g_EInitCommon[];
+extern EInit g_EInitParticle;
+extern EInit g_EInitCommon;
 extern u16 D_801804F4[];
 extern s8 c_HeartPrizes[];
 extern u16 D_801804E8[];
@@ -127,12 +128,10 @@ extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 
-extern s32 g_SkipCutscene;
 extern Primitive* D_801A3EF0[];
 extern s32 D_801A3F08;
 extern s32 D_801A3F0C;
 extern s32 D_801A3F10[];
-extern u32 g_CutsceneFlags;
 
 // For succubus cutscene
 extern u8 D_8018088C[];

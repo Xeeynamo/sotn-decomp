@@ -42,9 +42,11 @@ typedef enum Statues {
     /* 1 */ LEFT_STATUE,
 } Statues;
 
-extern u16 g_EInitCommon[];
 extern u16 g_Statues[];
-extern u16 g_EInitSpawner[];
+
+extern EInit g_EInitCommon;
+extern EInit g_EInitSpawner;
 extern EInit g_EInitParticle;
+extern EInit g_EInitLockCamera;
 
 #endif
