@@ -974,14 +974,16 @@ typedef enum EquipKind {
     NUM_EQUIP_KINDS,
 } EquipKind;
 
+// Note that these item IDs are not the same as the item IDs in the BodyItems
+// enum
 typedef enum {
-    DROPPED_ITEM_ZIRCON = 360,
-    DROPPED_ITEM_AQUAMARINE = 361,
-    DROPPED_ITEM_TURQUOISE = 362,
-    DROPPED_ITEM_ONYX = 363,
-    DROPPED_ITEM_GARNET = 364,
-    DROPPED_ITEM_OPAL = 365,
-    DROPPED_ITEM_DIAMOND = 366,
+    DROPPED_ITEM_ZIRCON = 360,     // 0x0168
+    DROPPED_ITEM_AQUAMARINE = 361, // 0x0169
+    DROPPED_ITEM_TURQUOISE = 362,  // 0x016A
+    DROPPED_ITEM_ONYX = 363,       // 0x016B
+    DROPPED_ITEM_GARNET = 364,     // 0x016C
+    DROPPED_ITEM_OPAL = 365,       // 0x016D
+    DROPPED_ITEM_DIAMOND = 366,    // 0x016E
 } DroppedItem;
 
 typedef enum {

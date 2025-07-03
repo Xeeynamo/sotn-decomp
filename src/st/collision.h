@@ -178,8 +178,12 @@ static u16 g_testCollPrizeTable[] = {
     0x0000, 0x0000, 0x0001, 0x0001, 0x0002, 0x0006, 0x0007, 0x00C6,
 };
 
-// clang-format off
+// The Jewel Sword drop table below consists of pairs of numbers
+// The first value of each pair is the threshold (out of 0x0FFF)
+// The second value of each pair is the dropped item ID
+
 static u16 g_jewelSwordDropTable[] = {
+    // clang-format off
     0x0C00, DROPPED_ITEM_ZIRCON,
     0x0F00, DROPPED_ITEM_AQUAMARINE,
     0x0FD0, DROPPED_ITEM_TURQUOISE,
@@ -187,8 +191,28 @@ static u16 g_jewelSwordDropTable[] = {
     0x0FF8, DROPPED_ITEM_GARNET,
     0x0FFD, DROPPED_ITEM_OPAL,
     0x0FFF, DROPPED_ITEM_DIAMOND,
+    // clang-format on
 };
-// clang-format on
+
+// To determine the ratio for a given drop, you subtract the threshold that came
+// before it in the list (0 for the first entry) from its threshold.
+
+// For example, Turquoise has a threshold of 0x0FD0 (4048 in decimal), and
+// Aquamarine (the entry before it) has a threshold of 0x0F00 (3840 in decimal).
+// Therefore, Turquoise has a drop ratio of 208 (4048 - 3840 = 208). That means
+// that out of 4096 drops from a Jewel Sword, 208 Turquoises are expected, on
+// average.
+
+// The table above equates to the following drop ratios for all gems
+// Item       | Ratio
+// -----------+------
+// Zircon     |  3073
+// Aquamarine |   768
+// Turquoise  |   208
+// Onyx       |    32
+// Garnet     |     8
+// Opal       |     5
+// Diamond    |     2
 
 static u16 g_eDamageDisplayClut[] = {
     PAL_DRA(0x1B2), PAL_DRA(0x1B3), PAL_DRA(0x1B6), PAL_DRA(0x1B7),
@@ -592,10 +616,14 @@ void HitDetection(void) {
                             AllocEntity(&g_Entities[160], &g_Entities[192]);
                         miscVar1 = 0;
                         if (otherEntity != NULL) {
+                            // A random number is generated and then compared to
+                            // the thresholds in the drop table in order until
+                            // the threshold is greater to determine which
+                            // random jewel to drop from Jewel Sword.
                             if (hitboxCheck2 == 5) {
                                 dropThresholdAndItem = g_jewelSwordDropTable;
                                 miscVar3 = rand() & 0xFFF;
-                                while (1) {
+                                while (true) {
                                     if (*dropThresholdAndItem++ >= miscVar3) {
                                         miscVar3 = *dropThresholdAndItem;
                                         break;
