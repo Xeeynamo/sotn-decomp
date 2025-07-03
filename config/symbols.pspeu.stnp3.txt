@@ -30,6 +30,8 @@ EntityPathBlockSmallWeight = 0x0923F1A0;
 EntityPathBlockTallWeight = 0x0923F538;
 EntityHeartRoomSwitch = 0x0923F890;
 EntityHeartRoomGoldDoor = 0x0923FA08;
+CreateExplosionPuff = 0x0923FE90;
+EntityExplosionPuffOpaque = 0x0923FF70;
 CreateEntityFromLayout = 0x09240AA8; // source=match
 CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
 CreateEntityWhenInHorizontalRange = 0x09240D60; // source=match
