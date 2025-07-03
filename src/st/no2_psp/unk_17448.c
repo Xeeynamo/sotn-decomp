@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "../no2/no2.h"
 
 INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/unk_17448", func_pspeu_0924EAC8);
 
@@ -9,7 +9,7 @@ INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/unk_17448", func_pspeu_0924ECC0);
 
 INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/unk_17448", func_pspeu_0924EDE0);
 
-INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/unk_17448", func_pspeu_0924EFD0);
+INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/unk_17448", func_801CDC80);
 
 INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/unk_17448", func_pspeu_0924F0B8);
 

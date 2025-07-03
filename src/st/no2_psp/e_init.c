@@ -29,9 +29,9 @@ void func_pspeu_09257C00(Entity* self);
 void func_pspeu_09259E40(Entity* self);
 void func_pspeu_09259D40(Entity* self);
 void func_pspeu_0925A248(Entity* self);
-void func_pspeu_0925C0F8(Entity* self);
+void func_us_801C3D44(Entity* self);
 void func_pspeu_0925BBA8(Entity* self);
-void func_pspeu_0925BAD0(Entity* self);
+void func_us_801C379C(Entity* self);
 void func_pspeu_092556A0(Entity* self);
 void func_pspeu_09256348(Entity* self);
 void func_pspeu_09255EF0(Entity* self);
@@ -45,7 +45,7 @@ void EntityBloodyZombie(Entity* self);
 void EntityBloodDrips(Entity* self);
 void EntityBloodSplatter(Entity* self);
 void func_pspeu_0925B730(Entity* self);
-void func_pspeu_0925C380(Entity* self);
+void func_us_801C3ED8(Entity* self);
 void func_pspeu_0925B278(Entity* self);
 void func_pspeu_09257ED8(Entity* self);
 void func_pspeu_0923D188(Entity* self);
@@ -96,9 +96,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_pspeu_09259E40,
     func_pspeu_09259D40,
     func_pspeu_0925A248,
-    func_pspeu_0925C0F8,
+    func_us_801C3D44,
     func_pspeu_0925BBA8,
-    func_pspeu_0925BAD0,
+    func_us_801C379C,
     func_pspeu_092556A0,
     func_pspeu_09256348,
     func_pspeu_09255EF0,
@@ -112,7 +112,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBloodDrips,
     EntityBloodSplatter,
     func_pspeu_0925B730,
-    func_pspeu_0925C380,
+    func_us_801C3ED8,
     func_pspeu_0925B278,
     func_pspeu_09257ED8,
     func_pspeu_0923D188,
