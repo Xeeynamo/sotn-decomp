@@ -178,10 +178,17 @@ static u16 g_testCollPrizeTable[] = {
     0x0000, 0x0000, 0x0001, 0x0001, 0x0002, 0x0006, 0x0007, 0x00C6,
 };
 
-static u16 g_testCollRandTable[] = {
-    0x0C00, 0x0168, 0x0F00, 0x0169, 0x0FD0, 0x016A, 0x0FF0,
-    0x016B, 0x0FF8, 0x016C, 0x0FFD, 0x016D, 0x0FFF, 0x016E,
+// clang-format off
+static u16 g_jewelSwordDropTable[] = {
+    0x0C00, DROPPED_ITEM_ZIRCON,
+    0x0F00, DROPPED_ITEM_AQUAMARINE,
+    0x0FD0, DROPPED_ITEM_TURQUOISE,
+    0x0FF0, DROPPED_ITEM_ONYX,
+    0x0FF8, DROPPED_ITEM_GARNET,
+    0x0FFD, DROPPED_ITEM_OPAL,
+    0x0FFF, DROPPED_ITEM_DIAMOND,
 };
+// clang-format on
 
 static u16 g_eDamageDisplayClut[] = {
     PAL_DRA(0x1B2), PAL_DRA(0x1B3), PAL_DRA(0x1B6), PAL_DRA(0x1B7),
@@ -198,7 +205,7 @@ void HitDetection(void) {
     s32* scratchpad_2;
     Entity* iterEnt2;
     s32* scratchpad_1;
-    u16* randCompare;
+    u16* dropThresholdAndItem;
     s16 xCoord;
     s16 yCoord2;
     u16 miscVar1;
@@ -586,17 +593,14 @@ void HitDetection(void) {
                         miscVar1 = 0;
                         if (otherEntity != NULL) {
                             if (hitboxCheck2 == 5) {
-                                // This little block is weird, especially since
-                                // the g_testCollRandTable is not any obvious
-                                // number pattern.
-                                randCompare = g_testCollRandTable;
+                                dropThresholdAndItem = g_jewelSwordDropTable;
                                 miscVar3 = rand() & 0xFFF;
                                 while (1) {
-                                    if (*randCompare++ >= miscVar3) {
-                                        miscVar3 = *randCompare;
+                                    if (*dropThresholdAndItem++ >= miscVar3) {
+                                        miscVar3 = *dropThresholdAndItem;
                                         break;
                                     }
-                                    randCompare++;
+                                    dropThresholdAndItem++;
                                 }
 
                             } else {

@@ -131,8 +131,6 @@ void OVL_EXPORT(HitDetection)(void) {
     Entity* otherEntity;
     Entity* entFrom5C;
     Primitive* prim;
-    EnemyDef* sp3C;
-    u16* randCompare;
     s32 hitboxWidth;
     s32 yCoord1;
     u32 hitboxCheck1;

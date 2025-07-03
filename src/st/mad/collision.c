@@ -70,7 +70,7 @@ static u16 g_testCollPrizeTable[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0001, 0x0001, 0x0001,
 };
 
-static u16 g_testCollRandTable[] = {
+static u16 g_jewelSwordDropTable[] = {
     0x0C00, 0x016C, 0x0F00, 0x016D, 0x0FD0, 0x016E, 0x0FF0,
     0x016F, 0x0FF8, 0x0170, 0x0FFD, 0x0171, 0x0FFF, 0x0172,
 };
@@ -92,7 +92,7 @@ void HitDetection(void) {
     u16 miscVar3;
     u16 i;
     s32* scratchpad_1;
-    u16* randCompare;
+    u16* dropThresholdAndItem;
     u32 hitboxCheck1;
     EnemyDef* sp3C;
     s16 xCoord;
@@ -471,17 +471,14 @@ void HitDetection(void) {
                             AllocEntity(&g_Entities[160], &g_Entities[192]);
                         if (otherEntity != NULL) {
                             if (hitboxCheck2 == 5) {
-                                // This little block is weird, especially since
-                                // the g_testCollRandTable is not any obvious
-                                // number pattern.
-                                randCompare = g_testCollRandTable;
+                                dropThresholdAndItem = g_jewelSwordDropTable;
                                 miscVar3 = rand() & 0xFFF;
                                 while (1) {
-                                    if (*randCompare++ >= miscVar3) {
-                                        miscVar3 = *randCompare;
+                                    if (*dropThresholdAndItem++ >= miscVar3) {
+                                        miscVar3 = *dropThresholdAndItem;
                                         break;
                                     }
-                                    randCompare++;
+                                    dropThresholdAndItem++;
                                 }
 
                             } else {

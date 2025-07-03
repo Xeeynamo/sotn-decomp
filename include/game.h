@@ -975,6 +975,16 @@ typedef enum EquipKind {
 } EquipKind;
 
 typedef enum {
+    DROPPED_ITEM_ZIRCON = 360,
+    DROPPED_ITEM_AQUAMARINE = 361,
+    DROPPED_ITEM_TURQUOISE = 362,
+    DROPPED_ITEM_ONYX = 363,
+    DROPPED_ITEM_GARNET = 364,
+    DROPPED_ITEM_OPAL = 365,
+    DROPPED_ITEM_DIAMOND = 366,
+} DroppedItem;
+
+typedef enum {
     ITEM_S_SWORD,
     ITEM_SWORD,
     ITEM_THROW_1,
