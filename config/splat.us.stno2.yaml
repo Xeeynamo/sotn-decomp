@@ -84,7 +84,6 @@ segments:
       - [0x42B3C, c, e_skelerang]
       - [0x43594, c, e_bloody_zombie]
       - [0x44614, c, e_owl_knight]
-      - [0x46C1C, c, unk_46C1C]
       - [0x46C54, c, e_life_up]
       - [0x47508, c, e_particles]
       - [0x47D4C, c, e_room_fg]

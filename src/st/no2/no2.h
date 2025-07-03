@@ -18,7 +18,7 @@ enum OVL_EXPORT(Palette) {
     PAL_UNK_23B = 0x23B,
     PAL_UNK_23E = 0x23E,
     PAL_UNK_241 = 0x241,
-    PAL_UNK_2CB = 0x2CB,
+    PAL_OWL_KNIGHT_SWORD = 0x2CB,
 };
 
 enum OVL_EXPORT(Entities) {
@@ -65,8 +65,8 @@ enum OVL_EXPORT(Entities) {
     E_UNK_28,               // func_us_801B6E34
     E_OWL_KNIGHT,           // EntityOwlKnight
     E_OWL,                  // EntityOwl
-    E_UNK_2B,               // func_801CD540
-    E_UNK_2C,               // func_801CD620
+    E_OWL_KNIGHT_SWORD,     // EntityOwlKnightSword
+    E_OWL_TARGET,           // EntityOwlTarget
     E_BLOODY_ZOMBIE,        // EntityBloodyZombie
     E_BLOOD_DRIPS,          // EntityBloodDrips
     E_BLOOD_SPLATTER,       // EntityBloodSplatter
@@ -105,7 +105,7 @@ extern EInit g_EInitSkelerangBoomerang;
 // extern EInit D_us_801808A4;
 // extern EInit D_us_801808B0;
 extern EInit g_EInitOwlKnight;
-extern EInit D_us_801808C8;
+extern EInit g_EInitOwlKnightSword;
 extern EInit g_EInitOwl;
 extern EInit g_EInitBloodyZombie;
 // extern EInit D_us_801808EC;
