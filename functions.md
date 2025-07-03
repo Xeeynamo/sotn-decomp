@@ -2295,7 +2295,7 @@
 | lib   | func_psp_09258100                        |      650 |         63 | Yes    | https://decomp.me/scratch/5WF0f | 0.992 |
 | ric   | RicEntityAguneaCircle                    |      655 |         49 | Yes    | https://decomp.me/scratch/hxWhp | 0.999 |
 | lib   | EntityFleaArmor                          |      655 |         98 |        |                                 |       |
-| dai   | func_us_801D9F5C                         |      656 |         41 |        |                                 |       |
+| dai   | func_us_801D9F5C                         |      656 |         41 |        | https://decomp.me/scratch/VoM7L | 0.201 |
 | dra   | EntityHitByLightning                     |      657 |         61 |        | https://decomp.me/scratch/Edjbi | 0.998 |
 | dra   | EntityAguneaHitEnemy                     |      661 |         70 |        | https://decomp.me/scratch/nYgFo | 0.999 |
 | lib   | UnkRecursivePrimFunc2                    |      663 |         11 |        |                                 |       |
@@ -2399,7 +2399,7 @@
 | np3   | EntityPrizeDrop                          |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | wrp   | EntityPrizeDrop                          |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | no4   | EntityBoneArcher                         |      979 |        177 |        | https://decomp.me/scratch/s6o5d | 0.997 |
-| dai   | func_us_801C1298                         |      987 |         83 |        | https://decomp.me/scratch/PAASF | 0.668 |
+| dai   | func_us_801C1298                         |      987 |         83 |        | https://decomp.me/scratch/PAASF | 0.73  |
 | no3   | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | np3   | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | wrp   | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
