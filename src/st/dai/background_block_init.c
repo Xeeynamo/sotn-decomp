@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-static u8 g_eBackgroundBlockInitAnimFrames[] = {0x40, 0x01, 0xFF, 0x00};
+static u8 g_eBackgroundBlockInitAnimFrames[] = {64, 1, -1, 0};
 
 ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {{
     .animSet = ANIMSET_DRA(6),
