@@ -26,6 +26,9 @@ DoorCascadePhysics = 0x0923E548;
 EntityCavernDoorLever = 0x0923E768;
 EntityCavernDoorPlatform = 0x0923E948;
 EntityCavernDoor = 0x0923EAA0;
+EntityWeightsSwitch = 0x0923F020;
+EntityPathBlockSmallWeight = 0x0923F1A0;
+EntityPathBlockTallWeight = 0x0923F538;
 CreateEntityFromLayout = 0x09240AA8; // source=match
 CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
 CreateEntityWhenInHorizontalRange = 0x09240D60; // source=match
