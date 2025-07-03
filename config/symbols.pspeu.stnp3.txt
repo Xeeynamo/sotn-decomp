@@ -22,6 +22,10 @@ EntityShuttingWindow = 0x0923DD78;
 EntityUnkId16 = 0x0923E118;
 NP3_EntityBackgroundBlock = 0x0923E1F0;
 NP3_EntityLockCamera = 0x0923E2E8; // source=match
+DoorCascadePhysics = 0x0923E548;
+EntityCavernDoorLever = 0x0923E768;
+EntityCavernDoorPlatform = 0x0923E948;
+EntityCavernDoor = 0x0923EAA0;
 CreateEntityFromLayout = 0x09240AA8; // source=match
 CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
 CreateEntityWhenInHorizontalRange = 0x09240D60; // source=match
@@ -90,7 +94,9 @@ SetStep = 0x0925A968;
 SetSubStep = 0x0925A9B8;
 InitializeEntity = 0x0925A9F8;
 ReplaceBreakableWithItemDrop = 0x0925B390;
+GetPlayerCollisionWith = 0x0925AEB8;
 UnkPrimHelper = 0x09261C08;
+FindFirstUnkPrim = 0x09262388;
 UnkPolyFunc2 = 0x09262598;
 NP3_EntityUpdates = 0x0926B088;
 NP3_EInitBreakable = 0x0926B1F8;

@@ -64,7 +64,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925ABD8);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925AD28);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925AEB8);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", GetPlayerCollisionWith);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", ReplaceBreakableWithItemDrop);
 
@@ -138,7 +138,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", UnkPrimHelper);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09262108);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09262388);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", FindFirstUnkPrim);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_092623D8);
 

@@ -3,14 +3,6 @@
 
 // clang-format off
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0923E548);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0923E768);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0923E948);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0923EAA0);
-
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0923EF28);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0923F020);

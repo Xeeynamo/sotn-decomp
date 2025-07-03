@@ -102,6 +102,8 @@ typedef enum EntityIDs {
 } EntityIDs;
 
 extern void ReplaceBreakableWithItemDrop(Entity*);
+extern Primitive* FindFirstUnkPrim(Primitive* poly);
+
 extern void func_801BAFA0(s16);
 extern void func_801BB044(s16);
 extern void func_801BB140(s16);
