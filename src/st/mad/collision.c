@@ -480,10 +480,8 @@ void HitDetection(void) {
                         otherEntity =
                             AllocEntity(&g_Entities[160], &g_Entities[192]);
                         if (otherEntity != NULL) {
-                            // A random number is generated and then compared to
-                            // the thresholds in the drop table in order until
-                            // the threshold is greater to determine which
-                            // random jewel to drop from Jewel Sword.
+                            // Determine which jewel to randomly drop from the
+                            // Jewel Sword
                             if (hitboxCheck2 == 5) {
                                 dropThresholdAndItem = g_jewelSwordDropTable;
                                 miscVar3 = rand() & 0xFFF;

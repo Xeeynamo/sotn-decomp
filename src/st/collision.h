@@ -206,7 +206,7 @@ static u16 g_jewelSwordDropTable[] = {
 // The table above equates to the following drop ratios for all gems
 // Item       | Ratio
 // -----------+------
-// Zircon     |  3073
+// Zircon     |  3073 (This number is 1 larger than expected due to >=)
 // Aquamarine |   768
 // Turquoise  |   208
 // Onyx       |    32
@@ -616,10 +616,8 @@ void HitDetection(void) {
                             AllocEntity(&g_Entities[160], &g_Entities[192]);
                         miscVar1 = 0;
                         if (otherEntity != NULL) {
-                            // A random number is generated and then compared to
-                            // the thresholds in the drop table in order until
-                            // the threshold is greater to determine which
-                            // random jewel to drop from Jewel Sword.
+                            // Determine which jewel to randomly drop from the
+                            // Jewel Sword
                             if (hitboxCheck2 == 5) {
                                 dropThresholdAndItem = g_jewelSwordDropTable;
                                 miscVar3 = rand() & 0xFFF;
