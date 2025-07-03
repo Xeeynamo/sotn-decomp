@@ -34,7 +34,7 @@ void InitRoomEntities(s32 objLayoutId);
 void UpdateRoomPosition();
 
 void Update(void);
-
+void UpdateStageEntities();
 void HitDetection(void);
 
 s32 Random();

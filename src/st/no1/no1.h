@@ -89,7 +89,7 @@ extern EInit g_EInitInteractable;
 // extern EInit D_us_80180980;
 // extern EInit D_us_8018098C;
 // extern EInit g_EInitUnkId13;
-// extern EInit g_EInitLockCamera;
+extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
 extern EInit D_us_801809C8;

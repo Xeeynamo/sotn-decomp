@@ -1,0 +1,97 @@
+options:
+  platform: psx
+  basename: stno2
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/NO2/NO2.BIN
+  asm_path: asm/us/st/no2
+  asset_path: assets/st/no2
+  src_path: src/st/no2
+  ld_script_path: build/us/stno2.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.stno2.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stno2.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.stno2.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: b048fd4c7825130724c524c0d3e7304044502db4
+segments:
+  - name: stno2
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x2C, data]
+      - [0x71C, .data, e_init]
+      - [0x994, data]
+      - [0x9EC, .data, e_lock_camera]
+      - [0xA6C, data]
+      - [0x1008, .data, st_update]
+      - [0x1054, .data, collision]
+      - [0x1414, .data, e_red_door]
+      - [0x142C, .data, st_common]
+      - [0x162C, .data, e_collect]
+      - [0x1980, .data, e_misc]
+      - [0x1A38, .data, e_skelerang]
+      - [0x1B24, .data, e_bloody_zombie]
+      - [0x1C1C, .data, e_owl_knight]
+      - [0x1EC8, data]
+      - [0x32E00, .rodata, e_breakable]
+      - [0x32E20, .rodata, unk_33A94]
+      - [0x32EC4, .rodata, e_sealed_door]
+      - [0x32EDC, .rodata, e_red_door]
+      - [0x32EF4, .rodata, e_collect]
+      - [0x32FC8, .rodata, e_stage_name]
+      - [0x32FFC, .rodata, e_skelerang]
+      - [0x33068, .rodata, e_bloody_zombie]
+      - [0x33090, .rodata, e_owl_knight]
+      - [0x331A0, .rodata, e_life_up]
+      - [0x331BC, .rodata, unk_48168]
+      - [0x3345C, .rodata, prim_helpers]
+      - [0x33464, rodata]
+      - [0x334D0, c, e_room_bg]
+      - [0x33598, c, e_lock_camera]
+      - [0x33754, c, e_breakable]
+      - [0x33A94, c, unk_33A94]
+      - [0x37908, c, e_sealed_door]
+      - [0x38714, c, st_update]
+      - [0x38B48, c, collision]
+      - [0x3A304, c, create_entity]
+      - [0x3AE7C, c, e_red_door]
+      - [0x3BB2C, c, st_common]
+      - [0x3CFDC, c, e_collect]
+      - [0x3F94C, c, e_misc]
+      - [0x41CE8, c, e_stage_name]
+      - [0x42B3C, c, e_skelerang]
+      - [0x43594, c, e_bloody_zombie]
+      - [0x44614, c, e_owl_knight]
+      - [0x46C54, c, e_life_up]
+      - [0x47508, c, e_particles]
+      - [0x47D4C, c, e_room_fg]
+      - [0x47E38, c, popup]
+      - [0x48168, c, unk_48168]
+      - [0x4D558, c, prim_helpers]
+      - [0x4DD88, c, unk_4DD88]
+      - [0x4F0F0, .bss, create_entity]
+      - [0x4F100, bss]
+      - [0x4FD7C, .bss, e_collect]
+  - [0x4FDBC]

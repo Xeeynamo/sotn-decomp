@@ -40,7 +40,7 @@ static u8 anim_fireball[] = {2, 38, 2, 39, 2, 40, 2, 41, 2, 42, 0, 0};
 static u8 anim_land[] = {
     1, 1, 1, 2, 1, 3, 1, 4, 1, 30, 1, 31, 5, 30, 4, 4, 3, 3, 2, 2, 2, 1, 0, 0};
 static s16 triple_fireball_rot_z[] = {384, 0, -384};
-extern u8 anim_death[] = {3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,  7,
+static u8 anim_death[] = {3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,  7,
                           3, 8, 3, 9, 3, 10, 3, 11, 3, 12, 3, 13, -1, 0};
 extern s16* ctulhu_shockwave_uvs[]; // uvs for shockwave
 

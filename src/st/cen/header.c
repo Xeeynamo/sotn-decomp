@@ -5,7 +5,6 @@ void Update(void);
 void HitDetection(void);
 void UpdateRoomPosition(void);
 void InitRoomEntities(s32 objLayoutId);
-void UpdateStageEntities(void);
 
 extern RoomHeader OVL_EXPORT(rooms)[];
 extern s16** OVL_EXPORT(spriteBanks)[];

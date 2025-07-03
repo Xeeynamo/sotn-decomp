@@ -8,7 +8,6 @@
 //  PSX HD | 0x200 | 0x88    | 0x1570 | 0x40 |
 //
 #include <stage.h>
-#include "sfx.h"
 
 #if defined(VERSION_PSP)
 #include "blit_char_psp.h"
@@ -956,7 +955,6 @@ s16 g_RelicOrbSparkleX[] = {-8, 4, -2, 8, 0, 4, -4, 2};
 s16 g_RelicOrbSparkleY[] = {-2, 2, 4, -3, 0, 2, -4, 3};
 #endif
 
-extern u16 g_EInitObtainable[];
 extern u16 msgBoxTpage[0x600];
 
 void BlinkItem(Entity* entity, u16 blinkFlag);
@@ -1509,7 +1507,6 @@ void EntityHeartDrop(Entity* self) {
 #if !defined(VERSION_BETA)
 // params: message box duration, in frames
 // ext.messageBox.label: box size and text to render
-extern u16 g_EInitObtainable[];
 void EntityMessageBox(Entity* self) {
     const u16 VramX = 0;
     const u16 VramY = 0x180;

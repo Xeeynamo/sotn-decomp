@@ -77,8 +77,8 @@ typedef enum EntityIDs {
     /* 0x43 */ E_ZOMBIE_SPAWNER,
     /* 0x44 */ E_OWL_KNIGHT,
     /* 0x45 */ E_OWL,
-    /* 0x46 */ E_801CD540,
-    /* 0x47 */ E_801CD620,
+    /* 0x46 */ E_OWL_KNIGHT_SWORD,
+    /* 0x47 */ E_OWL_TARGET,
     /* 0x48 */ E_BLOODY_ZOMBIE,
     /* 0x49 */ E_BLOOD_DRIPS,
     /* 0x4A */ E_BLOOD_SPLATTER,
@@ -101,6 +101,41 @@ typedef enum EntityIDs {
     /* 0x5B */ E_BLADE_SWORD
 } EntityIDs;
 
+extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitObtainable;
+extern EInit g_EInitParticle;
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitUnkId13;
+extern EInit g_EInitLockCamera;
+extern EInit g_EInitCommon;
+extern EInit g_EInitDamageNum;
+extern EInit g_EInitStInteractable;
+extern EInit g_EInitWaterObject;
+extern EInit g_EInitWaterSplash;
+extern EInit g_EInitMerman;
+extern EInit g_EInitMermanFireball;
+extern EInit g_EInitBoneScimitar;
+extern EInit g_EInitScimitarParts;
+extern EInit g_EInitBat;
+extern EInit g_EInitZombie;
+extern EInit g_EInitOwlKnight;
+extern EInit g_EInitOwlKnightSword;
+extern EInit g_EInitOwl;
+extern EInit g_EInitBloodyZombie;
+extern EInit g_EInitSlograNP3;
+extern EInit g_EInitSlograSpearNP3;
+extern EInit g_EInitSlograProjectileNP3;
+extern EInit g_EInitGaibonNP3;
+extern EInit g_EInitGaibonProjectileNP3;
+extern EInit g_EInitGaibonLargeProjectileNP3;
+extern EInit g_EInitGurkhaType0;
+extern EInit g_EInitGurkhaHammer;
+extern EInit g_EInitGurkhaType1;
+extern EInit g_EInitGurkhaSword;
+extern EInit g_EInitGurkhaType2;
+extern EInit g_EInitGurkhaBlade;
+
 extern void ReplaceBreakableWithItemDrop(Entity*);
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
@@ -120,34 +155,12 @@ extern void EntityPrizeDrop(Entity* entity);
 extern void EntityEquipItemDrop(Entity* entity);
 extern Primitive* func_801D2470(Primitive* poly);
 void EntityGreyPuff(Entity* entity);
-extern EInit OVL_EXPORT(EInitBreakable);
 extern u8* g_eBreakableAnimations[8];
 extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
 extern u8 g_eBreakableDrawModes[];
-extern u16 g_EInitObtainable[];
-extern u16 g_EInitParticle[];
-extern u16 g_EInitSpawner[];
-extern u16 g_EInitInteractable[];
-extern u16 g_EInitLockCamera[];
-extern u16 g_EInitCommon[];
-extern u16 g_EInitWaterObject[];
-extern u16 g_EInitWaterSplash[];
-extern u16 g_EInitMerman[];
-extern u16 g_EInitMermanFireball[];
 extern u16 D_80180AF0[];
-extern u16 g_EInitBat[];
-extern u16 g_EInitZombie[];
-extern u16 D_80180B20[];
-extern u16 g_EInitSlograSpearNP3[];
-extern u16 g_EInitSlograProjectileNP3[];
-extern u16 g_EInitGaibonNP3[];
-extern u16 g_EInitGaibonProjectileNP3[];
-extern u16 g_EInitGaibonLargeProjectileNP3[];
-extern u16 g_EInitGurkhaHammer[];
-extern u16 g_EInitGurkhaSword[];
-extern u16 g_EInitGurkhaBlade[];
 extern u16 D_8018112C[];
 extern u16 D_80181144[];
 extern u16 D_8018115C[]; // this could be a struct
@@ -179,7 +192,6 @@ extern u16 D_801825CC;
 
 // *** EntityBloodyZombie properties START ***
 
-extern u16 g_EInitBloodyZombie[]; // InitProps
 extern s32 D_801825D4;
 extern u16 D_801825E4[];
 extern u8 D_801825EC[]; // Animation: Walking
@@ -195,8 +207,6 @@ extern u8 D_8018267C[]; // Animation: Walking faster
 extern s32 D_8018268C;
 extern s32 D_801826A4;
 extern s32 D_801826C4;
-extern u8 D_80182914[];
-extern u8 D_80182935[];
 
 // *** EntitySoulStealOrb properties START ***
 
@@ -209,7 +219,6 @@ extern u8 g_ESoulStealOrbAnim[];
 extern SVECTOR g_CastleDoorVector;
 
 // For EntityHammer
-extern u16 g_EInitGurkhaType0[];
 extern u16 D_80182978[];
 extern s16 D_80182988[];
 extern s16 D_80182A20;
@@ -229,11 +238,7 @@ extern s16 D_80182E38[];
 extern s16 D_80182E48[];
 extern s16 D_80182EDC[];
 
-// For EntityGurkhaBodyParts
-extern u16 g_EInitGurkhaType2[];
-
 // For EntityGurkha
-extern u16 g_EInitGurkhaType1[];
 extern u16 D_80182EF4[];
 extern s16 D_80182F04[];
 extern s16 D_80182F9C;
@@ -254,42 +259,6 @@ extern s16 D_80183360[];
 extern s16 D_80183378[];
 extern s16 D_801833A0[];
 extern s16 D_801833CC[];
-
-// For EntityOwl
-extern u16 g_EInitOwl[];
-extern u16 D_801826CC[];
-extern u8 D_801826EC[];
-extern u8 D_801826F8[];
-extern u8 D_80182710[];
-extern u8 D_80182720[];
-extern u8 D_80182734[];
-extern u8 D_80182740[];
-extern u8 D_8018274C[];
-
-// For EntityOwlKnight
-extern u16 D_80180B14[];
-extern u16 D_80182758[];
-extern s16 D_80182768[];
-extern u8 D_80182770[];
-extern u8 D_80182778[];
-extern u8 D_80182788[];
-extern u8 D_80182794[];
-extern u8 D_801827A8[];
-extern u8 D_801827BC[];
-extern u8 D_801827C8[];
-extern u8 D_801827D8[];
-extern u8 D_801827EC[];
-extern u8 D_80182800[];
-extern u8 D_80182820[];
-extern u8 D_80182834[];
-extern u8 D_8018284C[];
-extern u8 D_80182860[];
-extern u8 D_80182888[];
-extern u8 D_801828A0[];
-extern u8 D_801828AC[];
-extern s8 D_801828B8[];
-extern u8 D_801828C8[];
-extern s16 D_8018290C[];
 
 // For EntityBlade
 
@@ -318,9 +287,5 @@ extern s16 D_80183934[];
 extern s16 D_80183990[];
 extern s16 D_80183A24[];
 extern s16 D_80183A4C[];
-
-// for EntityBackgroundBushes
-
-extern u16 g_EInitStInteractable[];
 
 extern bool slograGaibonRetreat;

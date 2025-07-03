@@ -491,8 +491,6 @@ u8 UnkCollisionFunc4(s32 arg0) {
 
 #endif
 
-extern u16 g_EInitParticle[];
-
 // params: (& 0xF0) Use an alternate set of hardcoded palette and drawMode
 //         (& 0xFF00) if non-zero, uses ((& 0xFF00) >> 8) as the zPriority
 void EntityIntenseExplosion(Entity* self) {
@@ -629,7 +627,11 @@ void MakeExplosions(void) {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
+#if defined(STAGE_IS_NO2)
+            CreateEntityFromEntity(E_BIG_RED_FIREBALL, g_CurrentEntity, entity);
+#else
             CreateEntityFromEntity(E_EXPLOSION, g_CurrentEntity, entity);
+#endif
             // EntityExplosion does not seem to use these values.
             entity->ext.destructAnim.unk85 = 6 - i;
             entity->ext.destructAnim.unk80 = temp_s3;

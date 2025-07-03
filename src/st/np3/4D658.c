@@ -1,41 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
 
-void func_801CD540(Entity* self) {
-    s8* hitbox;
-    s32 diff;
-
-    if (self->step == 0) {
-        InitializeEntity(D_80180B20);
-    }
-
-    self->facingLeft = self[-1].facingLeft;
-    self->posX.i.hi = self[-1].posX.i.hi;
-    self->posY.i.hi = self[-1].posY.i.hi;
-    hitbox = D_80182914;
-    diff = D_80182935[self[-1].animCurFrame];
-
-    diff -= 4;
-    if (diff < 0) {
-        diff = 0;
-    }
-
-    hitbox += diff * 4;
-    self->hitboxOffX = *hitbox++;
-    self->hitboxOffY = *hitbox++;
-    self->hitboxWidth = hitbox[0];
-    self->hitboxHeight = hitbox[1];
-    if (self[-1].entityId != 0x44) {
-        DestroyEntity(self);
-    }
-}
-
-void func_801CD620(Entity* self) {
-    if (self->step == 0) {
-        InitializeEntity(g_EInitInteractable);
-    }
-}
-
 static s32 D_801D3378;
 static s32 D_801D337C;
 static s32 D_801D3380;
