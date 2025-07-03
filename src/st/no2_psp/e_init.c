@@ -1,21 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../no2/no2.h"
 
-void func_pspeu_09256D08(Entity* self);
+void EntityUnkBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
 void OVL_EXPORT(EntityRedDoor)(Entity* self);
 void EntityIntenseExplosion(Entity* self);
-void func_pspeu_0923EB00(Entity* self);
-void func_pspeu_09246DB8(Entity* self);
+void EntitySoulStealOrb(Entity* self);
+void EntityRoomForeground(Entity* self);
 void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOrb(Entity* self);
 void EntityHeartDrop(Entity* self);
-void func_pspeu_0923F060(Entity* self);
-void EntityMessageBox(Entity* self);
-void EntityDummy(Entity* self);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
 void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
@@ -64,22 +61,22 @@ void func_pspeu_09250ED0(Entity* self);
 void func_pspeu_0924AB98(Entity* self);
 void func_pspeu_0924BE50(Entity* self);
 void func_pspeu_0924BF68(Entity* self);
-void func_pspeu_092571F8(Entity* self);
+void func_801A8328(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    /* 0x00 */ func_pspeu_09256D08,
+    /* 0x00 */ EntityUnkBreakable,
     /* 0x01 */ EntityExplosion,
     /* 0x02 */ EntityPrizeDrop,
     /* 0x03 */ EntityDamageDisplay,
     /* 0x04 */ OVL_EXPORT(EntityRedDoor),
     /* 0x05 */ EntityIntenseExplosion,
-    /* 0x06 */ func_pspeu_0923EB00,
-    /* 0x07 */ func_pspeu_09246DB8,
+    /* 0x06 */ EntitySoulStealOrb,
+    /* 0x07 */ EntityRoomForeground,
     /* 0x08 */ EntityStageNamePopup,
     /* 0x09 */ EntityEquipItemDrop,
     /* 0x0A */ EntityRelicOrb,
     /* 0x0B */ EntityHeartDrop,
-    /* 0x0C */ func_pspeu_0923F060,
+    /* 0x0C */ EntityEnemyBlood,
     /* 0x0D */ EntityMessageBox,
     /* 0x0E */ EntityDummy,
     /* 0x0F */ EntityDummy,
@@ -131,7 +128,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x3D */ func_pspeu_0924AB98,
     /* 0x3E */ func_pspeu_0924BE50,
     /* 0x3F */ func_pspeu_0924BF68,
-    /* 0x40 */ func_pspeu_092571F8,
+    /* 0x40 */ func_801A8328,
 };
 
 EInit D_pspeu_09266618 = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x000};

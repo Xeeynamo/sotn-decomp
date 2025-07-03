@@ -1,6 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
-#include "sfx.h"
+
+#ifdef VERSION_PSP
+extern s32 E_ID(GAIBON);
+extern s32 E_ID(GAIBON_LEG);
+extern s32 E_ID(GAIBON_SMALL_FIREBALL);
+extern s32 E_ID(GAIBON_BIG_FIREBALL);
+#endif
 
 #define SLOGRA self[-8]
 
@@ -76,60 +82,28 @@ typedef enum {
     GAIBON_DYING_TURN_INTO_BONES,
 } GaibonDyingSubSteps;
 
-extern u16 g_EInitGaibonNP3[];
-
-static s32 D_801814B4[] = {
-    0x001C0000,
-    0x00040000,
-    0xFFFC0004,
-    0x0000FFF8,
+static s16 sensors[] = {0, 28, 0, 4, 4, -4, -8, 0};
+static u8 anim1[] = {6, 1, 3, 9, 2, 2, 2, 3, 3, 4, 4, 10, 5, 3, 5, 2, 0};
+static u8 anim2[] = {2, 1, 1, 9, 1, 2, 1, 3, 1, 4,  1,  10, 2, 3, 2, 2, 4,
+                     1, 2, 9, 1, 2, 1, 3, 2, 4, 2,  10, 3,  3, 3, 2, 5, 1,
+                     2, 9, 2, 2, 2, 3, 2, 4, 3, 10, 4,  3,  4, 2, 0};
+static u8 anim3[] = {6, 5, 3, 11, 2, 6, 2, 7, 3, 8, 4, 12, 5, 7, 5, 6, 0};
+static u8 anim4[] = {6, 32, 3, 33, 2, 34, 2, 35, 3, 36, 4, 37, 5, 35, 5, 34, 0};
+static u8 anim5[] = {5, 13, 5, 14, 4, 15, 8, 14, 255, 0};
+static u8 anim6[] = {3, 14, 3, 16, 3, 17, 4, 18, 4, 19, 34, 18, 255, 0};
+static u8 anim7[] = {4,  3, 1,  22, 1,  21, 1,  22,  4,
+                     21, 4, 23, 4,  20, 1,  24, 255, 0};
+static u8 anim8[] = {5, 13, 5, 18, 5, 25, 4, 26, 41, 25, 255, 0};
+static u8 anim9[] = {2, 25, 2, 27, 0, 0, 0, 0};
+static u8 anim10[] = {16, 25, 5, 28, 6, 29, 32, 30, 255, 0};
+static s8 gaibonHitboxes[][4] = {
+    {0, 0, 0, 0},     {-3, -4, 15, 27}, {-3, -3, 15, 25}, {-3, -1, 15, 24},
+    {-3, -1, 15, 23}, {-4, 4, 15, 23},  {-3, -3, 16, 21}, {-3, -3, 16, 20},
+    {-5, 4, 17, 23},  {-59, -74, 0, 0}, {-5, -7, 15, 20}, {-5, -5, 15, 18},
 };
-static u8 D_801814C4[] = {0x06, 0x01, 0x03, 0x09, 0x02, 0x02, 0x02, 0x03, 0x03,
-                          0x04, 0x04, 0x0A, 0x05, 0x03, 0x05, 0x02, 0x00};
-static u8 D_801814D8[] = {
-    0x02, 0x01, 0x01, 0x09, 0x01, 0x02, 0x01, 0x03, 0x01, 0x04,
-    0x01, 0x0A, 0x02, 0x03, 0x02, 0x02, 0x04, 0x01, 0x02, 0x09,
-    0x01, 0x02, 0x01, 0x03, 0x02, 0x04, 0x02, 0x0A, 0x03, 0x03,
-    0x03, 0x02, 0x05, 0x01, 0x02, 0x09, 0x02, 0x02, 0x02, 0x03,
-    0x02, 0x04, 0x03, 0x0A, 0x04, 0x03, 0x04, 0x02, 0x00};
-static u8 D_8018150C[] = {0x06, 0x05, 0x03, 0x0B, 0x02, 0x06, 0x02, 0x07, 0x03,
-                          0x08, 0x04, 0x0C, 0x05, 0x07, 0x05, 0x06, 0x00};
-static u8 D_80181520[] = {0x06, 0x20, 0x03, 0x21, 0x02, 0x22, 0x02, 0x23, 0x03,
-                          0x24, 0x04, 0x25, 0x05, 0x23, 0x05, 0x22, 0x00};
-static u8 D_80181534[] = {
-    0x05, 0x0D, 0x05, 0x0E, 0x04, 0x0F, 0x08, 0x0E, 0xFF, 0x00};
-static u8 D_80181540[] = {0x03, 0x0E, 0x03, 0x10, 0x03, 0x11, 0x04,
-                          0x12, 0x04, 0x13, 0x22, 0x12, 0xFF, 0x00};
-static u8 D_80181550[] = {0x04, 0x03, 0x01, 0x16, 0x01, 0x15, 0x01, 0x16, 0x04,
-                          0x15, 0x04, 0x17, 0x04, 0x14, 0x01, 0x18, 0xFF, 0x00};
-static u8 D_80181564[] = {
-    0x05, 0x0D, 0x05, 0x12, 0x05, 0x19, 0x04, 0x1A, 0x29, 0x19, 0xFF, 0x00};
-static u8 D_80181570[] = {0x02, 0x19, 0x02, 0x1B, 0x00, 0x00, 0x00, 0x00};
-static u8 D_80181578[] = {
-    0x10, 0x19, 0x05, 0x1C, 0x06, 0x1D, 0x20, 0x1E, 0xFF, 0x00};
-static u8 D_80181584[][4] = {
-    {0x00, 0x00, 0x00, 0x00}, {0xFD, 0xFC, 0x0F, 0x1B},
-    {0xFD, 0xFD, 0x0F, 0x19}, {0xFD, 0xFF, 0x0F, 0x18},
-    {0xFD, 0xFF, 0x0F, 0x17}, {0xFC, 0x04, 0x0F, 0x17},
-    {0xFD, 0xFD, 0x10, 0x15}, {0xFD, 0xFD, 0x10, 0x14},
-    {0xFB, 0x04, 0x11, 0x17}, {0xC5, 0xB6, 0x00, 0x00},
-    {0xFB, 0xF9, 0x0F, 0x14}, {0xFB, 0xFB, 0x0F, 0x12},
-};
-static u8 D_801815B4[][4] = {
-    {0x00, 0x01, 0x02, 0x03}, {0x04, 0x01, 0x02, 0x03},
-    {0x04, 0x01, 0x04, 0x01}, {0x04, 0x04, 0x05, 0x05},
-    {0x05, 0x05, 0x05, 0x05}, {0x05, 0x06, 0x06, 0x07},
-    {0x08, 0x08, 0x08, 0x08}, {0x08, 0x08, 0x09, 0x09},
-    {0x0A, 0x0A, 0x0A, 0x0B}, {0x0B, 0x0B, 0x0A, 0x0B},
-    {0x0B, 0x00, 0x00, 0x00},
-};
-static u8 D_801815E0[] = {0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x04, 0x00};
-static u8 D_801815EC[] = {0x02, 0x0D, 0x02, 0x0E, 0x02, 0x0F, 0x02,
-                          0x10, 0x02, 0x0F, 0x02, 0x0E, 0x00};
-static u8 D_801815FC[] = {
-    0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x01, 0x04, 0x01, 0x05,
-    0x01, 0x06, 0x01, 0x07, 0x01, 0x08, 0x01, 0x09, 0x01, 0x0A,
-    0x01, 0x0B, 0x01, 0x0C, 0x01, 0x0D, 0xFF, 0x00};
+static u8 gaibonHitboxIdx[] = {
+    0, 1, 2, 3, 4, 1, 2, 3, 4, 1, 4,  1,  4,  4,  5,  5,  5,  5,  5,  5, 5, 6,
+    6, 7, 8, 8, 8, 8, 8, 8, 9, 9, 10, 10, 10, 11, 11, 11, 10, 11, 11, 0, 0, 0};
 
 void EntityGaibon(Entity* self) {
     Collider collider;
@@ -138,11 +112,11 @@ void EntityGaibon(Entity* self) {
     s8* hitboxPtr;
     s32 xVar;
     s32 yVar;
-    s32 speedLimit;
     s32 speed;
+    s32 speedLimit;
 
-    if (self->step != 0) {
-        if (self->ext.GS_Props.nearDeath == 0) {
+    if (self->step) {
+        if (!self->ext.GS_Props.nearDeath) {
             if (self->hitPoints < g_api.enemyDefs[0xFE].hitPoints / 2) {
                 self->ext.GS_Props.nearDeath = 1;
                 xVar = self->posX.i.hi - 0x80;
@@ -152,10 +126,12 @@ void EntityGaibon(Entity* self) {
                 }
             }
         }
-        if ((!(self->flags & FLAG_DEAD) || (self->step >= GAIBON_NEAR_DEATH)) &&
-            (SLOGRA.ext.GS_Props.pickupFlag) &&
-            (self->step < GAIBON_LANDING_AFTER_SHOOTING)) {
-            SetStep(GAIBON_PICKUP_SLOGRA);
+        if (!(self->flags & FLAG_DEAD) || (self->step >= GAIBON_NEAR_DEATH)) {
+            other = &SLOGRA;
+            if ((other->ext.GS_Props.pickupFlag) &&
+                (self->step < GAIBON_LANDING_AFTER_SHOOTING)) {
+                SetStep(GAIBON_PICKUP_SLOGRA);
+            }
         }
         if (slograGaibonRetreat) {
             self->hitboxState = 0;
@@ -166,20 +142,25 @@ void EntityGaibon(Entity* self) {
     }
     switch (self->step) {
     case 0x0:
-        if ((g_CastleFlags[SLO_GAI_DEFEATED] == 0) &&
-            (g_CastleFlags[SLO_GAI_RETREATED] == 0)) {
-            InitializeEntity(g_EInitGaibonNP3);
-            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            CreateEntityFromCurrentEntity(E_GAIBON_IDLE, self + 1);
-            (self + 1)->zPriority = self->zPriority + 4;
-            SetStep(GAIBON_IDLE);
-            break;
+        if (g_CastleFlags[SLO_GAI_DEFEATED]) {
+            DestroyEntity(self);
+            return;
         }
-        DestroyEntity(self);
-        return;
+        if (g_CastleFlags[SLO_GAI_RETREATED]) {
+            DestroyEntity(self);
+            return;
+        }
+        InitializeEntity(g_EInitGaibonNP3);
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        other = self + 1;
+        CreateEntityFromCurrentEntity(E_ID(GAIBON_LEG), other);
+        other->zPriority = self->zPriority + 4;
+        SetStep(GAIBON_IDLE);
+        break;
+
     case GAIBON_IDLE:
-        AnimateEntity(D_801814C4, self);
-        if (self->poseTimer == 0 && self->pose == 1) {
+        AnimateEntity(anim1, self);
+        if (!self->poseTimer && self->pose == 1) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
         if ((GetDistanceToPlayerX() < 0x60) &&
@@ -218,7 +199,7 @@ void EntityGaibon(Entity* self) {
             self->velocityX = (speed * rcos(self->ext.GS_Props.angle)) >> 0xC;
             self->velocityY = (speed * rsin(self->ext.GS_Props.angle)) >> 0xC;
             MoveEntity();
-            AnimateEntity(D_801814C4, self);
+            AnimateEntity(anim1, self);
             if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
@@ -231,7 +212,7 @@ void EntityGaibon(Entity* self) {
             MoveEntity();
             self->velocityX -= self->velocityX / 32;
             self->velocityY -= self->velocityY / 32;
-            if (!AnimateEntity(D_801814D8, self)) {
+            if (!AnimateEntity(anim2, self)) {
                 SetStep(GAIBON_FLY_SHOOT_FIREBALLS);
             }
             if (!self->poseTimer && self->pose == 1) {
@@ -275,7 +256,7 @@ void EntityGaibon(Entity* self) {
             self->velocityX = (speed * rcos(self->ext.GS_Props.angle)) >> 0xC;
             self->velocityY = (speed * rsin(self->ext.GS_Props.angle)) >> 0xC;
             MoveEntity();
-            AnimateEntity(D_8018150C, self);
+            AnimateEntity(anim3, self);
             if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
@@ -288,7 +269,7 @@ void EntityGaibon(Entity* self) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     CreateEntityFromEntity(
-                        E_GAIBON_SMALL_FIREBALL, self, other);
+                        E_ID(GAIBON_SMALL_FIREBALL), self, other);
                     PlaySfxPositional(SFX_EXPLODE_FAST_A);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
@@ -309,7 +290,7 @@ void EntityGaibon(Entity* self) {
             MoveEntity();
             self->velocityX -= self->velocityX / 32;
             self->velocityY -= self->velocityY / 32;
-            if (AnimateEntity(D_801814D8, self) == 0) {
+            if (AnimateEntity(anim2, self) == 0) {
                 xVar = self->posX.i.hi - 0x80;
                 if (abs(xVar) < 0x60) {
                     SetStep(5);
@@ -359,7 +340,7 @@ void EntityGaibon(Entity* self) {
             }
             break;
         case GAIBON_FALLING_ON_GROUND:
-            if (AnimateEntity(D_80181534, self) == 0) {
+            if (AnimateEntity(anim5, self) == 0) {
                 SetStep(GAIBON_SHOOT_FROM_GROUND);
             }
             break;
@@ -372,7 +353,7 @@ void EntityGaibon(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case GAIBON_SHOOT_FROM_GROUND_FACE_SETUP:
-            if (AnimateEntity(D_80181540, self) == 0) {
+            if (AnimateEntity(anim6, self) == 0) {
                 self->ext.GS_Props.timer = 64;
                 if (self->ext.GS_Props.nearDeath) {
                     self->ext.GS_Props.timer *= 2;
@@ -386,11 +367,11 @@ void EntityGaibon(Entity* self) {
                 if (other != NULL) {
                     if (!self->ext.GS_Props.nearDeath) {
                         CreateEntityFromEntity(
-                            E_GAIBON_SMALL_FIREBALL, self, other);
+                            E_ID(GAIBON_SMALL_FIREBALL), self, other);
                         PlaySfxPositional(SFX_EXPLODE_FAST_A);
                     } else {
                         CreateEntityFromEntity(
-                            E_GAIBON_BIG_FIREBALL, self, other);
+                            E_ID(GAIBON_BIG_FIREBALL), self, other);
                         PlaySfxPositional(SFX_EXPLODE_B);
                     }
                     other->posY.i.hi -= 6;
@@ -413,7 +394,7 @@ void EntityGaibon(Entity* self) {
     case GAIBON_FLY_SHOOT_BIG_FIREBALL:
         switch (self->step_s) {
         case GAIBON_FLY_SHOOT_BIG_FIREBALL_SETUP:
-            if (AnimateEntity(D_80181550, self) == 0) {
+            if (AnimateEntity(anim7, self) == 0) {
                 self->step_s++;
             }
             break;
@@ -423,7 +404,8 @@ void EntityGaibon(Entity* self) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
                     PlaySfxPositional(SFX_EXPLODE_B);
-                    CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, other);
+                    CreateEntityFromEntity(
+                        E_ID(GAIBON_BIG_FIREBALL), self, other);
                     other->posY.i.hi -= 2;
                     if (self->facingLeft) {
                         other->posX.i.hi += 12;
@@ -498,7 +480,7 @@ void EntityGaibon(Entity* self) {
             }
             break;
         case GAIBON_PICKUP_SLOGRA_ASCENDING:
-            AnimateEntity(D_80181520, self);
+            AnimateEntity(anim4, self);
             if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
@@ -519,7 +501,7 @@ void EntityGaibon(Entity* self) {
             }
             break;
         case GAIBON_PICKUP_SLOGRA_AIMING:
-            AnimateEntity(D_80181520, self);
+            AnimateEntity(anim4, self);
             if (!self->poseTimer && self->pose == 1) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
@@ -559,23 +541,23 @@ void EntityGaibon(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case GAIBON_NEAR_DEATH_FLOOR_HIT_WAIT:
-            if (UnkCollisionFunc3(D_801814B4) & 1) {
+            if (UnkCollisionFunc3(sensors) & 1) {
                 SetSubStep(GAIBON_NEAR_DEATH_FLOOR_LANDING);
             }
             break;
         case GAIBON_NEAR_DEATH_FLOOR_LANDING:
-            if (AnimateEntity(D_80181564, self) == 0) {
+            if (AnimateEntity(anim8, self) == 0) {
                 self->ext.GS_Props.flag = 0;
                 SetSubStep(GAIBON_NEAR_DEATH_TRANSFORM);
             }
             break;
         case GAIBON_NEAR_DEATH_TRANSFORM:
-            if (AnimateEntity(D_80181570, self) == 0) {
+            if (AnimateEntity(anim9, self) == 0) {
                 self->ext.GS_Props.flag++;
                 self->palette = g_EInitGaibonNP3[3] + self->ext.GS_Props.flag;
                 if (self->ext.GS_Props.flag == 6) {
-                    slograGaibonRetreat = 1;
                     self->flags &= ~0xF;
+                    slograGaibonRetreat = 1;
                     SetStep(SLOGRA_GAIBON_RETREAT);
                 }
             }
@@ -585,7 +567,8 @@ void EntityGaibon(Entity* self) {
     case SLOGRA_GAIBON_RETREAT:
         switch (self->step_s) {
         case 0:
-            xVar = SLOGRA.posX.i.hi - self->posX.i.hi;
+            other = &SLOGRA;
+            xVar = other->posX.i.hi - self->posX.i.hi;
             if (xVar > 0) {
                 self->facingLeft = 1;
             } else {
@@ -615,14 +598,15 @@ void EntityGaibon(Entity* self) {
             }
             break;
         case 2:
-            AnimateEntity(D_80181520, self);
+            AnimateEntity(anim4, self);
             MoveEntity();
             self->velocityY -= FIX(5.0 / 128);
             if (self->velocityY < FIX(-2)) {
                 self->velocityY = FIX(-2);
             }
-            SLOGRA.posX.i.hi = self->posX.i.hi;
-            SLOGRA.posY.i.hi = self->posY.i.hi + 28;
+            other = &SLOGRA;
+            other->posX.i.hi = self->posX.i.hi;
+            other->posY.i.hi = self->posY.i.hi + 28;
             break;
         }
         break;
@@ -633,7 +617,7 @@ void EntityGaibon(Entity* self) {
     case GAIBON_DYING:
         switch (self->step_s) {
         case GAIBON_DYING_REACT:
-            if (AnimateEntity(D_80181578, self) == 0) {
+            if (AnimateEntity(anim10, self) == 0) {
                 self->ext.GS_Props.timer = 96;
                 self->animCurFrame = 0x1F;
                 self->flags &= ~0xF;
@@ -663,50 +647,64 @@ void EntityGaibon(Entity* self) {
     case 0xFF:
 #include "../pad2_anim_debug.h"
     }
-    hitboxPtr = &D_80181584[0];
-    hitboxPtr += D_801815B4[0][self->animCurFrame] * 4;
+    hitboxPtr = &gaibonHitboxes[0][0];
+    hitboxPtr += gaibonHitboxIdx[self->animCurFrame] * 4;
     self->hitboxOffX = *hitboxPtr++;
     self->hitboxOffY = *hitboxPtr++;
     self->hitboxWidth = *hitboxPtr++;
     self->hitboxHeight = *hitboxPtr++;
-    return;
 }
 
-void func_801B8CC0(Entity* self) {
-    Entity* prevEntity;
-    s16 animCurFrame;
+// This is a weird one. Gaibon's far leg is a separate entity.
+// It doesn't do anything special and just follows Gaibon.
+// When it's created by Gaibon, it gets a zPriority which is 4 higher
+// than Gaibon's own Z priority, so maybe something is supposed to go between
+// the two legs?
+void EntityGaibonLeg(Entity* self) {
+    Entity* gaibon;
+    s32 gaibonFrame;
 
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitGaibonNP3);
         self->hitboxState = 0;
     }
 
-    prevEntity = &self[-1];
-    self->facingLeft = prevEntity->facingLeft;
-    self->palette = prevEntity->palette;
-    self->posX.i.hi = prevEntity->posX.i.hi;
-    self->posY.i.hi = prevEntity->posY.i.hi;
+    gaibon = self - 1;
+    self->facingLeft = gaibon->facingLeft;
+    self->palette = gaibon->palette;
+    self->posX.i.hi = gaibon->posX.i.hi;
+    self->posY.i.hi = gaibon->posY.i.hi;
     self->animCurFrame = 0;
 
-    if ((prevEntity->animCurFrame - 32) < 3U) {
-        self->animCurFrame = 0x26;
-    } else if (prevEntity->animCurFrame == 35) {
-        self->animCurFrame = 0x27;
-    } else if ((prevEntity->animCurFrame - 36) < 2U) {
-        self->animCurFrame = 0x28;
+    gaibonFrame = gaibon->animCurFrame;
+    if (31 < gaibonFrame && gaibonFrame < 35) {
+        self->animCurFrame = 38;
+    } else if (gaibonFrame == 35) {
+        self->animCurFrame = 39;
+    } else if (35 < gaibonFrame && gaibonFrame < 38) {
+        self->animCurFrame = 40;
     }
 
-    if (prevEntity->entityId != E_GAIBON) {
+    if (gaibon->entityId != E_ID(GAIBON)) {
         DestroyEntity(self);
     }
 }
 
+static u8 anim_small_fireball[] = {
+    0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x04, 0x00};
+static u8 anim_large_fireball1[] = {0x02, 0x0D, 0x02, 0x0E, 0x02, 0x0F, 0x02,
+                                    0x10, 0x02, 0x0F, 0x02, 0x0E, 0x00};
+static u8 anim_large_fireball2[] = {
+    0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x01, 0x04, 0x01, 0x05,
+    0x01, 0x06, 0x01, 0x07, 0x01, 0x08, 0x01, 0x09, 0x01, 0x0A,
+    0x01, 0x0B, 0x01, 0x0C, 0x01, 0x0D, 0xFF, 0x00};
+
 // small red projectile from gaibon
 void EntitySmallGaibonProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
-        self->pfnUpdate = EntityExplosion;
         self->drawFlags = FLAG_DRAW_DEFAULT;
         self->step = 0;
+        self->pfnUpdate = EntityExplosion;
         self->entityId = 2;
         self->params = 0;
         return;
@@ -719,14 +717,14 @@ void EntitySmallGaibonProjectile(Entity* self) {
         self->animCurFrame = 1;
         self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_ROTATE;
         self->scaleX = 0xC0;
-        self->velocityX = (rcos(self->rotate) * 0x28000) >> 0xC;
-        self->velocityY = (rsin(self->rotate) * 0x28000) >> 0xC;
-        self->palette = PAL_OVL(0x1B6);
+        self->velocityX = (rcos(self->rotate) * FIX(2.5)) >> 0xC;
+        self->velocityY = (rsin(self->rotate) * FIX(2.5)) >> 0xC;
         self->rotate -= 0x400;
+        self->palette = PAL_OVL(0x1B6);
 
     case 1:
         MoveEntity();
-        AnimateEntity(D_801815E0, self);
+        AnimateEntity(anim_small_fireball, self);
         break;
     }
 }
@@ -735,10 +733,10 @@ void EntityLargeGaibonProjectile(Entity* self) {
     Entity* newEntity;
 
     if (self->flags & FLAG_DEAD) {
-        self->pfnUpdate = EntityExplosion;
-        self->entityId = 2;
         self->drawFlags = FLAG_DRAW_DEFAULT;
         self->step = 0;
+        self->pfnUpdate = EntityExplosion;
+        self->entityId = 2;
         self->params = 1;
         return;
     }
@@ -746,13 +744,13 @@ void EntityLargeGaibonProjectile(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitGaibonLargeProjectileNP3);
-        if (self->params == 0) {
+        if (!self->params) {
             self->animSet = ANIMSET_DRA(2);
             self->drawFlags = FLAG_DRAW_ROTATE;
-            self->velocityX = (rcos(self->rotate) * 0x38000) >> 0xC;
-            self->velocityY = (rsin(self->rotate) * 0x38000) >> 0xC;
-            self->palette = PAL_OVL(0x1B6);
+            self->velocityX = (rcos(self->rotate) * FIX(3.5)) >> 0xC;
+            self->velocityY = (rsin(self->rotate) * FIX(3.5)) >> 0xC;
             self->rotate -= 0x400;
+            self->palette = PAL_OVL(0x1B6);
         } else {
             self->animSet = ANIMSET_DRA(14);
             self->unk5A = 0x79;
@@ -770,11 +768,12 @@ void EntityLargeGaibonProjectile(Entity* self) {
 
     case 1:
         MoveEntity();
-        AnimateEntity(D_801815EC, self);
+        AnimateEntity(anim_large_fireball1, self);
         if (!(g_Timer & 3)) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_GAIBON_BIG_FIREBALL, self, newEntity);
+                CreateEntityFromEntity(
+                    E_ID(GAIBON_BIG_FIREBALL), self, newEntity);
                 newEntity->params = 1;
                 newEntity->rotate = self->rotate;
                 newEntity->zPriority = self->zPriority + 1;
@@ -783,9 +782,9 @@ void EntityLargeGaibonProjectile(Entity* self) {
         break;
 
     case 2:
-        self->opacity += 0xFE;
+        self->opacity -= 2;
         self->scaleX -= 4;
-        if (AnimateEntity(D_801815FC, self) == 0) {
+        if (AnimateEntity(anim_large_fireball2, self) == 0) {
             DestroyEntity(self);
         }
         break;
