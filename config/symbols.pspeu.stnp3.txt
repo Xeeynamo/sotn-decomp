@@ -13,18 +13,28 @@ EntityBreakable = 0x0923ADC8; // source=match
 EntityBackgroundLightning = 0x0923AF48;
 EntityCastleDoor = 0x0923B360;
 EntityTrapDoor = 0x0923B788;
+EntityGaibon = 0x0923B938;
+EntityGaibonLeg = 0x0923D6E0;
+EntitySmallGaibonProjectile = 0x0923D810;
+EntityLargeGaibonProjectile = 0x0923D978;
+EntityTilemapShufflerUnused = 0x0923DC40;
+EntityShuttingWindow = 0x0923DD78;
+EntityUnkId16 = 0x0923E118;
+NP3_EntityBackgroundBlock = 0x0923E1F0;
 NP3_EntityLockCamera = 0x0923E2E8; // source=match
-CreateEntityFromLayout = 0x09240AA8; // source=match
-CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
-CreateEntityWhenInHorizontalRange = 0x09240D60; // source=match
-FindFirstEntityToTheRight = 0x09240EF8; // source=match
-FindFirstEntityToTheLeft = 0x09240F68; // source=match
-CreateEntitiesToTheRight = 0x09240FF0; // source=match
-CreateEntitiesToTheLeft = 0x09241130; // source=match
-FindFirstEntityAbove = 0x09241288; // source=match
-FindFirstEntityBelow = 0x09241300; // source=match
-CreateEntitiesAbove = 0x09241388; // source=match
-CreateEntitiesBelow = 0x092414D0; // source=match
+EntityCavernDoorLever = 0x0923E768;
+EntityCavernDoorPlatform = 0x0923E948;
+EntityCavernDoor = 0x0923EAA0;
+EntityWeightsSwitch = 0x0923F020;
+EntityPathBlockSmallWeight = 0x0923F1A0;
+EntityPathBlockTallWeight = 0x0923F538;
+EntityHeartRoomSwitch = 0x0923F890;
+EntityHeartRoomGoldDoor = 0x0923FA08;
+CreateExplosionPuff = 0x0923FE90;
+EntityExplosionPuffOpaque = 0x0923FF70;
+EntityLightningThunder = 0x092404E0;
+EntityLightningCloud = 0x092405B8;
+EntityTransparentWater = 0x092406B8;
 InitRoomEntities = 0x09241630; // source=match
 UpdateRoomPosition = 0x09241860; // source=match
 CreateEntityFromCurrentEntity = 0x09241940; // source=match
@@ -72,6 +82,7 @@ EntityRoomForeground = 0x09255D58; // source=match
 DestroyEntity = 0x09259A58;
 AnimateEntity = 0x09259B78;
 GetDistanceToPlayerX = 0x09259CE8;
+GetDistanceToPlayerY = 0x09259D58;
 GetSideToPlayer = 0x09259DB0;
 MoveEntity = 0x09259E38;
 UnkCollisionFunc3 = 0x09259EC0;
@@ -80,17 +91,27 @@ AllocEntity = 0x0925A458;
 SetStep = 0x0925A968;
 SetSubStep = 0x0925A9B8;
 InitializeEntity = 0x0925A9F8;
+GetPlayerCollisionWith = 0x0925AEB8;
 ReplaceBreakableWithItemDrop = 0x0925B390;
 UnkPrimHelper = 0x09261C08;
+FindFirstUnkPrim = 0x09262388;
 UnkPolyFunc2 = 0x09262598;
 NP3_EntityUpdates = 0x0926B088;
 NP3_EInitBreakable = 0x0926B1F8;
+g_EInitParticle = 0x0926B218;
+g_EInitSpawner = 0x0926B228;
 g_EInitInteractable = 0x0926B238;
+g_EInitLockCamera = 0x0926B258;
+g_EInitCommon = 0x0926B268;
 g_EInitStInteractable = 0x0926B288;
 g_EInitSlograNP3 = 0x0926B358;
 g_EInitSlograSpearNP3 = 0x0926B368;
 g_EInitSlograProjectileNP3 = 0x0926B378;
+g_EInitGaibonNP3 = 0x0926B388;
+g_EInitGaibonProjectileNP3 = 0x0926B398;
+g_EInitGaibonLargeProjectileNP3 = 0x0926B3A8;
 NP3_Overlay = 0x0928E820;
+NP3_BackgroundBlockInit = 0x0928F058;
 D_psp_E_BLADE_SWORD = 0x09291C18;
 D_psp_E_BLADE = 0x09291C20;
 D_psp_E_GURKHA_SWORD = 0x09291C28;
@@ -100,7 +121,7 @@ D_psp_E_GURKHA_BODY_PARTS = 0x09291C40;
 D_psp_E_HAMMER = 0x09291C48;
 D_psp_E_GAIBON_BIG_FIREBALL = 0x09291C50;
 D_psp_E_GAIBON_SMALL_FIREBALL = 0x09291C58;
-D_psp_E_GAIBON_IDLE = 0x09291C60;
+D_psp_E_GAIBON_LEG = 0x09291C60;
 D_psp_E_GAIBON = 0x09291C68;
 D_psp_E_SLOGRA_SPEAR_PROJECTILE = 0x09291C70;
 D_psp_E_SLOGRA_SPEAR = 0x09291C78;
