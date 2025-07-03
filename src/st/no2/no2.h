@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
 #include "stage.h"
 
 #define STAGE_IS_NO2
@@ -6,56 +7,89 @@
 #define OVL_EXPORT(x) NO2_##x
 #define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
-typedef enum EntityIDs {
-    /* 0x00 */ // E_NONE,
-    /* 0x01 */ // E_BREAKABLE,
-    /* 0x02 */ E_EXPLOSION = 0x02,
-    /* 0x03 */ E_PRIZE_DROP,
-    /* 0x04 */ // E_NUMERIC_DAMAGE,
-    /* 0x05 */ // E_RED_DOOR,
-    /* 0x06 */ E_INTENSE_EXPLOSION = 0x06,
-    /* 0x07 */ // E_SOUL_STEAL_ORB,
-    /* 0x08 */ // E_ROOM_FOREGROUND,
-    /* 0x09 */ // E_STAGE_NAME_POPUP,
-    /* 0x0A */ E_EQUIP_ITEM_DROP = 0x0A,
-    /* 0x0B */ // E_RELIC_ORB,
-    /* 0x0C */ // E_HEART_DROP,
-    /* 0x0D */ // E_ENEMY_BLOOD,
-    /* 0x0E */ // E_MESSAGE_BOX,
-    /* 0x0F */ // E_DUMMY_0F,
-    /* 0x10 */ // E_DUMMY_10,
-    /* 0x11 */ // E_BACKGROUND_BLOCK,
-    /* 0x12 */ // E_LOCK_CAMERA,
-    /* 0x13 */ // E_ID_13,
-    /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
-    /* 0x15 */ E_GREY_PUFF,
-    /* 0x16 */ E_SKELERANG,
-    /* 0x17 */ E_SKELERANG_BOOMERANG,
-    /* 0x18 */ E_SKELERANG_UNKNOWN,
-    /* 0x19 */ // E_ID_19,
-    /* 0x1A */ // E_ID_1A,
-    /* 0x1B */ // E_ID_1B,
-    /* 0x1C */ // E_ID_1C,
-    /* 0x1D */ // E_ID_1D,
-    /* 0x1E */ // E_ID_1E,
-    /* 0x1F */ // E_ID_1F,
-    /* 0x20 */ // E_ID_20,
-    /* 0x21 */ // E_ID_21,
-    /* 0x22 */ // E_ID_22,
-    /* 0x23 */ // E_ID_23,
-    /* 0x24 */ // E_ID_24,
-    /* 0x25 */ // E_ID_25,
-    /* 0x26 */ // E_ID_26,
-    /* 0x27 */ E_ID_27 = 0x27,
-    /* 0x28 */ // E_ID_28,
-    /* 0x29 */ E_OWL_KNIGHT = 0x29,
-    /* 0x2A */ E_OWL,
-    /* 0x2B */ E_OWL_KNIGHT_SWORD,
-    /* 0x2C */ E_OWL_TARGET,
-    /* 0x2D */ // E_ID_2D,
-    /* 0x2E */ E_BLOOD_DRIPS = 0x2E,
-    /* 0x2F */ E_BLOOD_SPLATTER,
-} EntityIDs;
+enum OVL_EXPORT(Palette) {
+    PAL_NONE = 0,
+    PAL_SKELERANG = 0x200,
+    PAL_UNK_203 = 0x203,
+    PAL_UNK_207 = 0x207,
+    PAL_OWL_KNIGHT = 0x21C,
+    PAL_BLOODY_ZOMBIE = 0x223,
+    PAL_UNK_238 = 0x238,
+    PAL_UNK_23B = 0x23B,
+    PAL_UNK_23E = 0x23E,
+    PAL_UNK_241 = 0x241,
+    PAL_OWL_KNIGHT_SWORD = 0x2CB,
+};
+
+enum OVL_EXPORT(Entities) {
+    E_NONE,
+    E_UNK_BREAKABLE,        // EntityUnkBreakable
+    E_EXPLOSION,            // EntityExplosion
+    E_PRIZE_DROP,           // EntityPrizeDrop
+    E_DAMAGE_DISPLAY,       // EntityDamageDisplay
+    E_RED_DOOR,             // OVL_EXPORT(EntityRedDoor)
+    E_INTENSE_EXPLOSION,    // EntityIntenseExplosion
+    E_SOUL_STEAL_ORB,       // EntitySoulStealOrb
+    E_ROOM_FOREGROUND,      // EntityRoomForeground
+    E_STAGE_NAME_POPUP,     // EntityStageNamePopup
+    E_EQUIP_ITEM_DROP,      // EntityEquipItemDrop
+    E_RELIC_ORB,            // EntityRelicOrb
+    E_HEART_DROP,           // EntityHeartDrop
+    E_ENEMY_BLOOD,          // EntityEnemyBlood
+    E_MESSAGE_BOX,          // EntityMessageBox
+    E_DUMMY_F,              // EntityDummy
+    E_DUMMY_10,             // EntityDummy
+    E_BACKGROUND_BLOCK,     // OVL_EXPORT(EntityBackgroundBlock)
+    E_LOCK_CAMERA,          // OVL_EXPORT(EntityLockCamera)
+    E_UNK_ID13,             // EntityUnkId13
+    E_EXPLOSION_VARIANTS,   // EntityExplosionVariants
+    E_GREY_PUFF,            // EntityGreyPuff
+    E_SKELERANG,            // EntitySkelerang
+    E_SKELERANG_BOOMERANG,  // EntitySkelerangBoomerang
+    E_SKELERANG_UNKNOWN,    // EntitySkelerangUnknown
+    E_UNK_19,               // func_us_801B3D8C
+    E_UNK_1A,               // func_us_801B3F30
+    E_FROZEN_SHADE_CRYSTAL, // EntityFrozenShadeCrystal
+    E_UNK_1C,               // func_us_801B41A4
+    E_UNK_1D,               // func_us_801B4210
+    E3D_BACKGROUND_HOUSE,   // Entity3DBackgroundHouse
+    E3D_HOUSE_SPAWNER,      // Entity3DHouseSpawner
+    E_UNK_20,               // func_us_801B4DA4
+    E_UNK_21,               // func_us_801B5750
+    E_UNK_22,               // func_us_801B5368
+    E_UNK_23,               // func_us_801B52B4
+    E_UNK_24,               // func_us_801B5FB8
+    E_UNK_25,               // func_us_801B68EC
+    E_UNK_26,               // func_us_801B65A4
+    E_BIG_RED_FIREBALL,     // EntityBigRedFireball
+    E_UNK_28,               // func_us_801B6E34
+    E_OWL_KNIGHT,           // EntityOwlKnight
+    E_OWL,                  // EntityOwl
+    E_OWL_KNIGHT_SWORD,     // EntityOwlKnightSword
+    E_OWL_TARGET,           // EntityOwlTarget
+    E_BLOODY_ZOMBIE,        // EntityBloodyZombie
+    E_BLOOD_DRIPS,          // EntityBloodDrips
+    E_BLOOD_SPLATTER,       // EntityBloodSplatter
+    E_UNK_30,               // func_us_801B72E8
+    E_UNK_31,               // func_us_801B5948
+    E_UNK_32,               // func_us_801B7580
+    E_UNK_33,               // func_us_801B7980
+    E_UNK_34,               // func_us_801C8168
+    E_UNK_35,               // func_us_801C8954
+    E_UNK_36,               // func_us_801C8AAC
+    E_HAMMER,               // EntityHammer
+    E_GURKHA_BODY_PARTS,    // EntityGurkhaBodyParts
+    E_HAMMER_WEAPON,        // EntityHammerWeapon
+    E_GURKHA,               // EntityGurkha
+    E_GURKHA_SWORD,         // EntityGurkhaSword
+    E_BLADE,                // EntityBlade
+    E_BLADE_SWORD,          // EntityBladeSword
+    E_UNK_3E,               // func_us_801CDDF4
+    E_UNK_3F,               // func_us_801CEB08
+    E_UNK_40,               // func_us_801CEBDC
+    E_UNK_41,               // func_801A8328
+    NUM_ENTITIES,
+};
 
 // extern EInit D_us_80180820;
 extern EInit g_EInitObtainable;
