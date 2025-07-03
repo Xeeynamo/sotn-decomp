@@ -35,17 +35,6 @@ EntityExplosionPuffOpaque = 0x0923FF70;
 EntityLightningThunder = 0x092404E0;
 EntityLightningCloud = 0x092405B8;
 EntityTransparentWater = 0x092406B8;
-CreateEntityFromLayout = 0x09240AA8; // source=match
-CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
-CreateEntityWhenInHorizontalRange = 0x09240D60; // source=match
-FindFirstEntityToTheRight = 0x09240EF8; // source=match
-FindFirstEntityToTheLeft = 0x09240F68; // source=match
-CreateEntitiesToTheRight = 0x09240FF0; // source=match
-CreateEntitiesToTheLeft = 0x09241130; // source=match
-FindFirstEntityAbove = 0x09241288; // source=match
-FindFirstEntityBelow = 0x09241300; // source=match
-CreateEntitiesAbove = 0x09241388; // source=match
-CreateEntitiesBelow = 0x092414D0; // source=match
 InitRoomEntities = 0x09241630; // source=match
 UpdateRoomPosition = 0x09241860; // source=match
 CreateEntityFromCurrentEntity = 0x09241940; // source=match
