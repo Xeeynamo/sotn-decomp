@@ -2,29 +2,28 @@
 #include "../no2/no2.h"
 
 void func_pspeu_09256D08(Entity* self);
-void func_pspeu_092412F0(Entity* self);
-void func_pspeu_092404D8(Entity* self);
-void func_pspeu_09245DB8(Entity* self);
-void func_pspeu_0923BA30(Entity* self);
-void func_pspeu_09243F80(Entity* self);
+void EntityExplosion(Entity* self);
+void EntityPrizeDrop(Entity* self);
+void EntityDamageDisplay(Entity* self);
+void OVL_EXPORT(EntityRedDoor)(Entity* self);
+void EntityIntenseExplosion(Entity* self);
 void func_pspeu_0923EB00(Entity* self);
 void func_pspeu_09246DB8(Entity* self);
-void func_pspeu_0923AA98(Entity* self);
-void func_pspeu_092415F0(Entity* self);
-void func_pspeu_09241E48(Entity* self);
-void func_pspeu_09242F80(Entity* self);
+void EntityStageNamePopup(Entity* self);
+void EntityEquipItemDrop(Entity* self);
+void EntityRelicOrb(Entity* self);
+void EntityHeartDrop(Entity* self);
 void func_pspeu_0923F060(Entity* self);
-void func_pspeu_09243150(Entity* self);
-void func_pspeu_0924D810(Entity* self);
-void func_pspeu_0924D810(Entity* self);
-void func_pspeu_0925A8A8(Entity* self);
-void func_pspeu_0925B018(Entity* self);
-void func_pspeu_09243A10(Entity* self);
-void func_pspeu_09243C88(Entity* self);
-void func_pspeu_09243E00(Entity* self);
-void func_pspeu_09239B28(Entity* self);
-void func_pspeu_0923A620(Entity* self);
-void func_pspeu_0923A9D8(Entity* self);
+void EntityMessageBox(Entity* self);
+void EntityDummy(Entity* self);
+void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
+void OVL_EXPORT(EntityLockCamera)(Entity* self);
+void EntityUnkId13(Entity* self);
+void EntityExplosionVariants(Entity* self);
+void EntityGreyPuff(Entity* self);
+void EntitySkelerang(Entity* self);
+void EntitySkelerangBoomerang(Entity* self);
+void EntitySkelerangUnknown(Entity* self);
 void func_pspeu_092575D8(Entity* self);
 void func_pspeu_09257810(Entity* self);
 void func_pspeu_09257B10(Entity* self);
@@ -39,15 +38,15 @@ void func_pspeu_0925BAD0(Entity* self);
 void func_pspeu_092556A0(Entity* self);
 void func_pspeu_09256348(Entity* self);
 void func_pspeu_09255EF0(Entity* self);
-void func_pspeu_092441F8(Entity* self);
+void EntityBigRedFireball(Entity* self);
 void func_pspeu_0925A988(Entity* self);
-void func_pspeu_09248B38(Entity* self);
-void func_pspeu_09246ED0(Entity* self);
-void func_pspeu_0924A940(Entity* self);
-void func_pspeu_0924AA78(Entity* self);
-void func_pspeu_09238E80(Entity* self);
-void func_pspeu_09239898(Entity* self);
-void func_pspeu_092386A8(Entity* self);
+void EntityOwlKnight(Entity* self);
+void EntityOwl(Entity* self);
+void EntityOwlKnightSword(Entity* self);
+void EntityOwlTarget(Entity* self);
+void EntityBloodyZombie(Entity* self);
+void EntityBloodDrips(Entity* self);
+void EntityBloodSplatter(Entity* self);
 void func_pspeu_0925B730(Entity* self);
 void func_pspeu_0925C380(Entity* self);
 void func_pspeu_0925B278(Entity* self);
@@ -69,29 +68,29 @@ void func_pspeu_092571F8(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x00 */ func_pspeu_09256D08,
-    /* 0x01 */ func_pspeu_092412F0,
-    /* 0x02 */ func_pspeu_092404D8,
-    /* 0x03 */ func_pspeu_09245DB8,
-    /* 0x04 */ func_pspeu_0923BA30,
-    /* 0x05 */ func_pspeu_09243F80,
+    /* 0x01 */ EntityExplosion,
+    /* 0x02 */ EntityPrizeDrop,
+    /* 0x03 */ EntityDamageDisplay,
+    /* 0x04 */ OVL_EXPORT(EntityRedDoor),
+    /* 0x05 */ EntityIntenseExplosion,
     /* 0x06 */ func_pspeu_0923EB00,
     /* 0x07 */ func_pspeu_09246DB8,
-    /* 0x08 */ func_pspeu_0923AA98,
-    /* 0x09 */ func_pspeu_092415F0,
-    /* 0x0A */ func_pspeu_09241E48,
-    /* 0x0B */ func_pspeu_09242F80,
+    /* 0x08 */ EntityStageNamePopup,
+    /* 0x09 */ EntityEquipItemDrop,
+    /* 0x0A */ EntityRelicOrb,
+    /* 0x0B */ EntityHeartDrop,
     /* 0x0C */ func_pspeu_0923F060,
-    /* 0x0D */ func_pspeu_09243150,
-    /* 0x0E */ func_pspeu_0924D810,
-    /* 0x0F */ func_pspeu_0924D810,
-    /* 0x10 */ func_pspeu_0925A8A8,
-    /* 0x11 */ func_pspeu_0925B018,
-    /* 0x12 */ func_pspeu_09243A10,
-    /* 0x13 */ func_pspeu_09243C88,
-    /* 0x14 */ func_pspeu_09243E00,
-    /* 0x15 */ func_pspeu_09239B28,
-    /* 0x16 */ func_pspeu_0923A620,
-    /* 0x17 */ func_pspeu_0923A9D8,
+    /* 0x0D */ EntityMessageBox,
+    /* 0x0E */ EntityDummy,
+    /* 0x0F */ EntityDummy,
+    /* 0x10 */ OVL_EXPORT(EntityBackgroundBlock),
+    /* 0x11 */ OVL_EXPORT(EntityLockCamera),
+    /* 0x12 */ EntityUnkId13,
+    /* 0x13 */ EntityExplosionVariants,
+    /* 0x14 */ EntityGreyPuff,
+    /* 0x15 */ EntitySkelerang,
+    /* 0x16 */ EntitySkelerangBoomerang,
+    /* 0x17 */ EntitySkelerangUnknown,
     /* 0x18 */ func_pspeu_092575D8,
     /* 0x19 */ func_pspeu_09257810,
     /* 0x1A */ func_pspeu_09257B10,
@@ -106,15 +105,15 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x23 */ func_pspeu_092556A0,
     /* 0x24 */ func_pspeu_09256348,
     /* 0x25 */ func_pspeu_09255EF0,
-    /* 0x26 */ func_pspeu_092441F8,
+    /* 0x26 */ EntityBigRedFireball,
     /* 0x27 */ func_pspeu_0925A988,
-    /* 0x28 */ func_pspeu_09248B38,
-    /* 0x29 */ func_pspeu_09246ED0,
-    /* 0x2A */ func_pspeu_0924A940,
-    /* 0x2B */ func_pspeu_0924AA78,
-    /* 0x2C */ func_pspeu_09238E80,
-    /* 0x2D */ func_pspeu_09239898,
-    /* 0x2E */ func_pspeu_092386A8,
+    /* 0x28 */ EntityOwlKnight,
+    /* 0x29 */ EntityOwl,
+    /* 0x2A */ EntityOwlKnightSword,
+    /* 0x2B */ EntityOwlTarget,
+    /* 0x2C */ EntityBloodyZombie,
+    /* 0x2D */ EntityBloodDrips,
+    /* 0x2E */ EntityBloodSplatter,
     /* 0x2F */ func_pspeu_0925B730,
     /* 0x30 */ func_pspeu_0925C380,
     /* 0x31 */ func_pspeu_0925B278,
