@@ -3,8 +3,6 @@
 
 // clang-format off
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0923E1F0);
-
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", NP3_EntityLockCamera);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0923E548);

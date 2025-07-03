@@ -20,6 +20,7 @@ EntityLargeGaibonProjectile = 0x0923D978;
 EntityTilemapShufflerUnused = 0x0923DC40;
 EntityShuttingWindow = 0x0923DD78;
 EntityUnkId16 = 0x0923E118;
+NP3_EntityBackgroundBlock = 0x0923E1F0;
 NP3_EntityLockCamera = 0x0923E2E8; // source=match
 CreateEntityFromLayout = 0x09240AA8; // source=match
 CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
@@ -96,6 +97,7 @@ NP3_EInitBreakable = 0x0926B1F8;
 g_EInitParticle = 0x0926B218;
 g_EInitSpawner = 0x0926B228;
 g_EInitInteractable = 0x0926B238;
+g_EInitCommon = 0x0926B268;
 g_EInitStInteractable = 0x0926B288;
 g_EInitSlograNP3 = 0x0926B358;
 g_EInitSlograSpearNP3 = 0x0926B368;
@@ -104,6 +106,7 @@ g_EInitGaibonNP3 = 0x0926B388;
 g_EInitGaibonProjectileNP3 = 0x0926B398;
 g_EInitGaibonLargeProjectileNP3 = 0x0926B3A8;
 NP3_Overlay = 0x0928E820;
+NP3_BackgroundBlockInit = 0x0928F058;
 D_psp_E_BLADE_SWORD = 0x09291C18;
 D_psp_E_BLADE = 0x09291C20;
 D_psp_E_GURKHA_SWORD = 0x09291C28;
