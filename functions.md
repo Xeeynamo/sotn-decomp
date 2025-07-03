@@ -161,8 +161,8 @@
 | lib   | e_dhuron.rodata                          |       20 |          0 | Yes    |                                 |       |
 | lib   | e_flying_zombie.rodata                   |       20 |          0 | Yes    |                                 |       |
 | no2   | unk_1028.rodata                          |       20 |          0 | Yes    |                                 |       |
-| np3   | create_entity.rodata                     |       20 |          0 | Yes    |                                 |       |
 | np3   | e_misc.rodata                            |       20 |          0 | Yes    |                                 |       |
+| np3   | working_on.rodata                        |       20 |          0 | Yes    |                                 |       |
 | dra   | func_psp_090E0C30                        |       20 |          2 |        | https://decomp.me/scratch/UpVrZ | 1.0   |
 | dra   | func_800FD664                            |       20 |          2 |        | https://decomp.me/scratch/5bOa5 | 0.601 |
 | dra   | func_psp_091007E0                        |       20 |          2 |        |                                 |       |
@@ -362,7 +362,7 @@
 | no2   | GetDistanceToPlayerY                     |       28 |          2 |        |                                 |       |
 | no3   | func_pspeu_0925FBD8                      |       28 |          2 |        |                                 |       |
 | no4   | func_pspeu_0925AD20                      |       28 |          2 |        |                                 |       |
-| np3   | func_pspeu_09259D58                      |       28 |          2 |        |                                 |       |
+| np3   | GetDistanceToPlayerY                     |       28 |          2 |        |                                 |       |
 | dra   | func_psp_09141F50                        |       28 |          4 |        |                                 |       |
 | dai   | func_pspeu_09253F78                      |       29 |          1 |        |                                 |       |
 | lib   | CutsceneUnk1                             |       29 |          1 |        |                                 |       |
@@ -383,7 +383,7 @@
 | lib   | func_psp_09250CE0                        |       29 |          5 |        |                                 |       |
 | no2   | FindFirstUnkPrim                         |       29 |          5 |        | https://decomp.me/scratch/eONLp | 1.0   |
 | no3   | func_pspeu_09261588                      |       29 |          5 |        |                                 |       |
-| np3   | func_pspeu_09262388                      |       29 |          5 |        |                                 |       |
+| np3   | FindFirstUnkPrim                         |       29 |          5 |        | https://decomp.me/scratch/eONLp | 1.0   |
 | chi   | en_thornweed_corpseweed.rodata           |       30 |          0 | Yes    |                                 |       |
 | lib   | en_thornweed_corpseweed.rodata           |       30 |          0 | Yes    |                                 |       |
 | st0   | prologue_scroll.rodata                   |       30 |          0 | Yes    |                                 |       |
@@ -497,7 +497,7 @@
 | no2   | FindFirstEntityToTheRight                |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
 | no3   | func_pspeu_09245EA8                      |       36 |          4 |        | https://decomp.me/scratch/HzPAR | 0.23  |
 | no4   | func_pspeu_09243E58                      |       36 |          4 |        |                                 |       |
-| np3   | FindFirstEntityToTheRight                |       36 |          4 |        | https://decomp.me/scratch/bk3Io | 1.0   |
+| np3   | func_pspeu_09240EF8                      |       36 |          4 |        |                                 |       |
 | st0   | func_pspeu_092484D0                      |       36 |          4 |        |                                 |       |
 | wrp   | func_psp_09237B50                        |       36 |          4 |        |                                 |       |
 | dra   | func_psp_091040A0                        |       36 |          5 |        | https://decomp.me/scratch/WO6Th | 1.0   |
@@ -549,7 +549,7 @@
 | no2   | FindFirstEntityAbove                     |       38 |          4 |        | https://decomp.me/scratch/2Cdlo | 1.0   |
 | no3   | func_pspeu_09246238                      |       38 |          4 |        |                                 |       |
 | no4   | func_pspeu_092441E8                      |       38 |          4 |        |                                 |       |
-| np3   | FindFirstEntityAbove                     |       38 |          4 |        | https://decomp.me/scratch/2Cdlo | 1.0   |
+| np3   | func_pspeu_09241288                      |       38 |          4 |        |                                 |       |
 | st0   | func_pspeu_09248860                      |       38 |          4 |        |                                 |       |
 | wrp   | func_psp_09237EE0                        |       38 |          4 |        |                                 |       |
 | lib   | func_us_801B60C8                         |       38 |          7 |        |                                 |       |
@@ -657,8 +657,8 @@
 | no3   | func_pspeu_092462B0                      |       42 |          5 |        |                                 |       |
 | no4   | func_pspeu_09243EC8                      |       42 |          5 |        |                                 |       |
 | no4   | func_pspeu_09244260                      |       42 |          5 |        |                                 |       |
-| np3   | FindFirstEntityBelow                     |       42 |          5 |        |                                 |       |
-| np3   | FindFirstEntityToTheLeft                 |       42 |          5 |        |                                 |       |
+| np3   | func_pspeu_09240F68                      |       42 |          5 |        |                                 |       |
+| np3   | func_pspeu_09241300                      |       42 |          5 |        |                                 |       |
 | st0   | func_pspeu_09248540                      |       42 |          5 |        |                                 |       |
 | st0   | func_pspeu_092488D8                      |       42 |          5 |        |                                 |       |
 | wrp   | func_psp_09237BC0                        |       42 |          5 |        |                                 |       |
@@ -904,7 +904,7 @@
 | maria | func_pspeu_092B5B30                      |       61 |          8 |        |                                 |       |
 | ric   | func_pspeu_092BE628                      |       61 |          8 |        |                                 |       |
 | no3   | EntityLightningThunder                   |       61 |          8 |        | https://decomp.me/scratch/p80dP | 0.996 |
-| np3   | func_pspeu_092404E0                      |       61 |          8 |        |                                 |       |
+| np3   | EntityLightningThunder                   |       61 |          8 |        | https://decomp.me/scratch/p80dP | 0.996 |
 | dra   | func_psp_09106008                        |       61 |          9 |        |                                 |       |
 | dai   | func_pspeu_092510C0                      |       61 |         10 |        |                                 |       |
 | dai   | func_us_801C379C                         |       61 |         10 |        | https://decomp.me/scratch/EkELI | 0.998 |
@@ -930,8 +930,8 @@
 | no3   | EntityUnkId16                            |       62 |          5 |        |                                 |       |
 | no4   | func_pspeu_0924C490                      |       62 |          5 |        |                                 |       |
 | no4   | NO4_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
+| np3   | EntityUnkId16                            |       62 |          5 |        |                                 |       |
 | np3   | PrizeDropFall                            |       62 |          5 |        |                                 |       |
-| np3   | func_pspeu_0923E118                      |       62 |          5 |        |                                 |       |
 | st0   | func_pspeu_0924B7E0                      |       62 |          5 |        |                                 |       |
 | st0   | ST0_EntityBackgroundBlock                |       62 |          5 |        | https://decomp.me/scratch/WQI2Y | 0.998 |
 | wrp   | func_psp_0923C988                        |       62 |          5 |        |                                 |       |
@@ -961,7 +961,7 @@
 | dra   | func_psp_090F17D8                        |       64 |          5 |        |                                 |       |
 | dra   | func_psp_090E28D0                        |       64 |          7 |        |                                 |       |
 | no3   | func_pspeu_0923D348                      |       64 |          8 |        | https://decomp.me/scratch/nncWb | 0.996 |
-| np3   | func_pspeu_0923FE90                      |       64 |          8 |        |                                 |       |
+| np3   | CreateExplosionPuff                      |       64 |          8 |        |                                 |       |
 | dai   | func_pspeu_09251430                      |       65 |          6 |        |                                 |       |
 | dai   | func_pspeu_0924BA70                      |       65 |          6 |        | https://decomp.me/scratch/6HFZa | 1.0   |
 | no2   | func_pspeu_0924AAB8                      |       65 |          6 |        |                                 |       |
@@ -1011,7 +1011,7 @@
 | dra   | func_psp_090ED570                        |       68 |          5 |        |                                 |       |
 | no3   | NO3_EntityBackgroundBlock                |       68 |          5 |        |                                 |       |
 | no4   | func_pspeu_0923B288                      |       68 |          5 |        | https://decomp.me/scratch/zkHDD | 1.0   |
-| np3   | func_pspeu_0923E1F0                      |       68 |          5 |        |                                 |       |
+| np3   | NP3_EntityBackgroundBlock                |       68 |          5 |        |                                 |       |
 | dra   | func_psp_09102800                        |       68 |          6 | Yes    |                                 |       |
 | maria | func_pspeu_092B6528                      |       68 |          6 |        |                                 |       |
 | ric   | func_pspeu_092BF628                      |       68 |          6 |        |                                 |       |
@@ -1041,7 +1041,7 @@
 | dra   | func_psp_090E2720                        |       71 |          5 |        | https://decomp.me/scratch/e3xop | 0.912 |
 | ric   | func_pspeu_092BE788                      |       71 |          5 |        |                                 |       |
 | no3   | EntityLightningCloud                     |       71 |          5 |        | https://decomp.me/scratch/PoKUO | 0.981 |
-| np3   | func_pspeu_092405B8                      |       71 |          5 |        |                                 |       |
+| np3   | EntityLightningCloud                     |       71 |          5 |        | https://decomp.me/scratch/PoKUO | 0.981 |
 | dra   | PlaySfxVolPan                            |       71 |          7 |        |                                 |       |
 | dra   | func_psp_090F0220                        |       71 |          7 |        |                                 |       |
 | chi   | func_psp_09240A00                        |       71 |          7 |        |                                 |       |
@@ -1089,9 +1089,9 @@
 | no3   | func_pspeu_09239020                      |       73 |          7 |        | https://decomp.me/scratch/MS6uL | 1.0   |
 | no3   | func_pspeu_09260470                      |       73 |          7 |        |                                 |       |
 | no4   | func_pspeu_0925B5B8                      |       73 |          7 |        |                                 |       |
+| np3   | func_pspeu_0923EF28                      |       73 |          7 |        |                                 |       |
 | np3   | func_pspeu_0925A870                      |       73 |          7 |        |                                 |       |
 | np3   | func_pspeu_09247DF0                      |       73 |          7 |        |                                 |       |
-| np3   | func_pspeu_0923EF28                      |       73 |          7 |        |                                 |       |
 | wrp   | func_psp_09243A70                        |       73 |          7 |        |                                 |       |
 | lib   | func_psp_0926ADD8                        |       73 |          8 |        | https://decomp.me/scratch/sz59k | 1.0   |
 | dra   | func_psp_09117998                        |       73 |         12 |        | https://decomp.me/scratch/MkcQs | 0.966 |
@@ -1125,7 +1125,7 @@
 | no2   | CreateEntityFromLayout                   |       77 |          2 |        |                                 |       |
 | no3   | func_pspeu_09245A58                      |       77 |          2 |        |                                 |       |
 | no4   | func_pspeu_09243A08                      |       77 |          2 |        |                                 |       |
-| np3   | CreateEntityFromLayout                   |       77 |          2 |        |                                 |       |
+| np3   | func_pspeu_09240AA8                      |       77 |          2 |        |                                 |       |
 | st0   | func_pspeu_09248080                      |       77 |          2 |        |                                 |       |
 | wrp   | func_psp_09237700                        |       77 |          2 |        |                                 |       |
 | dra   | DrawConsumableCount                      |       77 |          4 |        | https://decomp.me/scratch/PRpzZ | 0.959 |
@@ -1207,13 +1207,13 @@
 | ric   | pl_blueprints.rodata                     |       86 |          0 | Yes    |                                 |       |
 | no2   | func_pspeu_0924A940                      |       86 |          6 |        |                                 |       |
 | no3   | EntityTilemapShufflerUnused              |       86 |          6 |        |                                 |       |
+| np3   | EntityTilemapShufflerUnused              |       86 |          6 |        |                                 |       |
 | np3   | func_pspeu_092598E0                      |       86 |          6 |        |                                 |       |
-| np3   | func_pspeu_0923DC40                      |       86 |          6 |        |                                 |       |
 | no4   | func_pspeu_09239788                      |       86 |          8 |        | https://decomp.me/scratch/tyxF7 | 0.995 |
 | dra   | func_psp_09141FA8                        |       86 |          9 |        |                                 |       |
 | dra   | func_psp_0910BAC8                        |       86 |         11 |        | https://decomp.me/scratch/YLJuY | 0.996 |
 | dra   | func_psp_09140698                        |       86 |         12 |        |                                 |       |
-| np3   | func_pspeu_0923D6E0                      |       86 |         12 |        | https://decomp.me/scratch/Y74Xl | 0.997 |
+| np3   | EntityGaibonLeg                          |       86 |         12 |        |                                 |       |
 | maria | func_pspeu_092A81C0                      |       86 |         17 |        |                                 |       |
 | maria | func_pspeu_092A9C28                      |       86 |         17 |        |                                 |       |
 | dra   | func_psp_090ED818                        |       87 |          7 |        |                                 |       |
@@ -1238,7 +1238,7 @@
 | no2   | CreateEntitiesToTheRight                 |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
 | no3   | func_pspeu_09245FA0                      |       89 |         11 |        |                                 |       |
 | no4   | func_pspeu_09243F50                      |       89 |         11 |        |                                 |       |
-| np3   | CreateEntitiesToTheRight                 |       89 |         11 |        | https://decomp.me/scratch/Q7Lis | 0.993 |
+| np3   | func_pspeu_09240FF0                      |       89 |         11 |        |                                 |       |
 | st0   | func_pspeu_092485C8                      |       89 |         11 |        |                                 |       |
 | wrp   | func_psp_09237C48                        |       89 |         11 |        |                                 |       |
 | dai   | EntitySkeletonPieces                     |       90 |          9 |        | https://decomp.me/scratch/JvA5Y | 1.0   |
@@ -1256,7 +1256,7 @@
 | no2   | CreateEntitiesAbove                      |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
 | no3   | func_pspeu_09246338                      |       91 |         11 |        |                                 |       |
 | no4   | func_pspeu_092442E8                      |       91 |         11 |        |                                 |       |
-| np3   | CreateEntitiesAbove                      |       91 |         11 |        | https://decomp.me/scratch/ezNeo | 0.99  |
+| np3   | func_pspeu_09241388                      |       91 |         11 |        |                                 |       |
 | st0   | func_pspeu_09248960                      |       91 |         11 |        |                                 |       |
 | wrp   | func_psp_09237FE0                        |       91 |         11 |        |                                 |       |
 | dra   | func_psp_09110E90                        |       91 |         19 |        | https://decomp.me/scratch/EKNij | 0.988 |
@@ -1283,7 +1283,7 @@
 | no3   | func_pspeu_09249738                      |       93 |         19 |        |                                 |       |
 | lib   | func_psp_0924C6C0                        |       94 |          8 |        |                                 |       |
 | chi   | func_psp_0924BB40                        |       95 |          1 |        |                                 |       |
-| np3   | func_pspeu_0923E948                      |       95 |          7 |        |                                 |       |
+| np3   | EntityCavernDoorPlatform                 |       95 |          7 |        |                                 |       |
 | lib   | func_psp_09254120                        |       95 |          8 |        | https://decomp.me/scratch/DkpLG | 0.997 |
 | no4   | func_pspeu_09237FB0                      |       95 |          8 |        |                                 |       |
 | maria | MarEntitySlideKick                       |       95 |          9 |        |                                 |       |
@@ -1305,7 +1305,7 @@
 | no2   | CreateEntitiesToTheLeft                  |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
 | no3   | func_pspeu_092460E0                      |       96 |         12 |        |                                 |       |
 | no4   | func_pspeu_09244090                      |       96 |         12 |        |                                 |       |
-| np3   | CreateEntitiesToTheLeft                  |       96 |         12 |        | https://decomp.me/scratch/xflP0 | 0.673 |
+| np3   | func_pspeu_09241130                      |       96 |         12 |        |                                 |       |
 | st0   | func_pspeu_09248708                      |       96 |         12 |        |                                 |       |
 | wrp   | func_psp_09237D88                        |       96 |         12 |        |                                 |       |
 | dra   | func_psp_091060E0                        |       96 |         16 |        |                                 |       |
@@ -1332,7 +1332,7 @@
 | no2   | CreateEntitiesBelow                      |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
 | no3   | func_pspeu_09246480                      |       98 |         12 |        |                                 |       |
 | no4   | func_pspeu_09244430                      |       98 |         12 |        |                                 |       |
-| np3   | CreateEntitiesBelow                      |       98 |         12 |        | https://decomp.me/scratch/yxzDb | 0.993 |
+| np3   | func_pspeu_092414D0                      |       98 |         12 |        |                                 |       |
 | st0   | func_pspeu_09248AA8                      |       98 |         12 |        |                                 |       |
 | wrp   | func_psp_09238128                        |       98 |         12 |        |                                 |       |
 | dai   | func_us_801C3644                         |       98 |         18 |        | https://decomp.me/scratch/rQpVp | 0.994 |
@@ -1347,7 +1347,7 @@
 | wrp   | EntityExplosion                          |       99 |          9 |        | https://decomp.me/scratch/CfU6H | 1.0   |
 | no3   | EntityBoneScimitarParts                  |       99 |         10 |        |                                 |       |
 | np3   | func_pspeu_09252588                      |       99 |         10 |        |                                 |       |
-| np3   | func_pspeu_0923D810                      |       99 |         11 |        | https://decomp.me/scratch/K2ZvK | 1.0   |
+| np3   | EntitySmallGaibonProjectile              |       99 |         11 |        |                                 |       |
 | dra   | func_psp_090ED310                        |       99 |         12 |        |                                 |       |
 | st0   | func_pspeu_09241BF0                      |      101 |          5 |        |                                 |       |
 | chi   | func_psp_092473D8                        |      101 |          7 |        |                                 |       |
@@ -1369,7 +1369,7 @@
 | dra   | func_psp_090EC7E8                        |      102 |          6 |        |                                 |       |
 | dra   | func_psp_090EF780                        |      102 |          8 |        |                                 |       |
 | no3   | EntityHeartRoomSwitch                    |      102 |         11 |        | https://decomp.me/scratch/iwM1G | 0.92  |
-| np3   | func_pspeu_0923F890                      |      102 |         11 |        |                                 |       |
+| np3   | EntityHeartRoomSwitch                    |      102 |         11 |        | https://decomp.me/scratch/iwM1G | 0.92  |
 | dra   | func_psp_090F1A08                        |      102 |         12 |        |                                 |       |
 | no3   | EntityDeathScytheShadow                  |      102 |         13 |        | https://decomp.me/scratch/WWVqj | 0.957 |
 | dra   | func_psp_09144038                        |      103 |          2 |        |                                 |       |
@@ -1404,7 +1404,7 @@
 | no3   | EntityBreakable                          |      104 |         11 |        | https://decomp.me/scratch/SjwKz | 0.998 |
 | no3   | EntityWeightsSwitch                      |      104 |         11 |        |                                 |       |
 | np3   | EntityBreakable                          |      104 |         11 |        | https://decomp.me/scratch/SjwKz | 0.998 |
-| np3   | func_pspeu_0923F020                      |      104 |         11 |        |                                 |       |
+| np3   | EntityWeightsSwitch                      |      104 |         11 |        |                                 |       |
 | wrp   | EntityBreakable                          |      104 |         11 |        | https://decomp.me/scratch/SjwKz | 0.998 |
 | maria | func_pspeu_092C0280                      |      104 |         12 |        |                                 |       |
 | dra   | func_psp_09142B40                        |      104 |         14 |        |                                 |       |
@@ -1494,8 +1494,8 @@
 | no4   | func_pspeu_09243B28                      |      113 |         13 |        |                                 |       |
 | no4   | func_pspeu_09243CC0                      |      113 |         13 |        |                                 |       |
 | no4   | func_pspeu_0925BB40                      |      113 |         13 |        |                                 |       |
-| np3   | CreateEntityWhenInHorizontalRange        |      113 |         13 |        |                                 |       |
-| np3   | CreateEntityWhenInVerticalRange          |      113 |         13 |        |                                 |       |
+| np3   | func_pspeu_09240BC8                      |      113 |         13 |        |                                 |       |
+| np3   | func_pspeu_09240D60                      |      113 |         13 |        |                                 |       |
 | np3   | func_pspeu_0925AD28                      |      113 |         13 |        |                                 |       |
 | st0   | func_pspeu_092481A0                      |      113 |         13 |        |                                 |       |
 | st0   | func_pspeu_09248338                      |      113 |         13 |        |                                 |       |
@@ -1561,7 +1561,7 @@
 | no4   | func_pspeu_09252930                      |      129 |         12 |        |                                 |       |
 | np3   | func_801C4144                            |      129 |         12 |        |                                 |       |
 | no3   | EntityCavernDoorLever                    |      130 |         16 |        |                                 |       |
-| np3   | func_pspeu_0923E768                      |      130 |         16 |        |                                 |       |
+| np3   | EntityCavernDoorLever                    |      130 |         16 |        |                                 |       |
 | dai   | EntityMistDoor                           |      132 |         14 |        | https://decomp.me/scratch/RdP5H | 0.995 |
 | lib   | EntityMistDoor                           |      132 |         14 |        | https://decomp.me/scratch/RdP5H | 0.995 |
 | dra   | func_psp_09104AA0                        |      132 |         15 |        |                                 |       |
@@ -1759,7 +1759,7 @@
 | no4   | func_pspeu_09241870                      |      187 |         21 |        | https://decomp.me/scratch/kQlY0 | 0.999 |
 | dra   | func_psp_090F9FE0                        |      187 |         28 | Yes    |                                 |       |
 | ric   | RicEntitySubwpnBibleTrail                |      188 |         14 |        |                                 |       |
-| np3   | func_pspeu_0923D978                      |      189 |         23 |        | https://decomp.me/scratch/4bN8f | 1.0   |
+| np3   | EntityLargeGaibonProjectile              |      189 |         23 |        |                                 |       |
 | maria | func_pspeu_092AC7C8                      |      189 |         29 |        |                                 |       |
 | ric   | func_pspeu_092ADEA0                      |      189 |         29 |        |                                 |       |
 | maria | func_pspeu_092A9978                      |      191 |         30 |        | https://decomp.me/scratch/Gn1Se | 0.999 |
@@ -1853,7 +1853,7 @@
 | dai   | func_us_801C5920                         |      229 |         33 |        | https://decomp.me/scratch/V8YGS | 0.998 |
 | lib   | func_psp_0925ED00                        |      231 |         11 |        | https://decomp.me/scratch/KmkFV | 1.0   |
 | no3   | EntityPathBlockTallWeight                |      232 |         23 |        | https://decomp.me/scratch/qXk9X | 0.967 |
-| np3   | func_pspeu_0923F538                      |      232 |         23 |        |                                 |       |
+| np3   | EntityPathBlockTallWeight                |      232 |         23 |        | https://decomp.me/scratch/qXk9X | 0.967 |
 | dra   | func_psp_0910B768                        |      232 |         32 |        | https://decomp.me/scratch/NbHyy | 0.983 |
 | np3   | func_pspeu_09237700                      |      233 |          1 |        | https://decomp.me/scratch/pG66O | 0.997 |
 | dra   | func_psp_090EB298                        |      233 |         18 |        |                                 |       |
@@ -1883,7 +1883,7 @@
 | dra   | func_psp_090FA828                        |      245 |         39 | Yes    |                                 |       |
 | dra   | func_psp_09112AC8                        |      246 |         41 |        | https://decomp.me/scratch/84U6L | 0.983 |
 | no4   | func_pspeu_09237BE8                      |      247 |          1 |        | https://decomp.me/scratch/Nzq8O | 1.0   |
-| np3   | func_pspeu_0923F1A0                      |      247 |         26 |        |                                 |       |
+| np3   | EntityPathBlockSmallWeight               |      247 |         26 |        | https://decomp.me/scratch/mQ0R4 | 0.955 |
 | dra   | func_psp_090FCEE0                        |      247 |         31 |        | https://decomp.me/scratch/fwp99 | 1.0   |
 | no4   | func_pspeu_092391D8                      |      248 |         34 |        | https://decomp.me/scratch/zAICA | 0.996 |
 | lib   | EntityCandleTable                        |      249 |         35 |        |                                 |       |
@@ -1892,7 +1892,7 @@
 | no2   | func_pspeu_092592A0                      |      251 |          6 |        |                                 |       |
 | maria | func_pspeu_092A7B80                      |      251 |         26 |        | https://decomp.me/scratch/vLB2f | 0.998 |
 | no3   | EntityShuttingWindow                     |      252 |         32 |        | https://decomp.me/scratch/Mhry9 | 0.999 |
-| np3   | func_pspeu_0923DD78                      |      252 |         32 |        |                                 |       |
+| np3   | EntityShuttingWindow                     |      252 |         32 |        | https://decomp.me/scratch/Mhry9 | 0.999 |
 | dra   | func_psp_09111648                        |      252 |         38 |        |                                 |       |
 | no3   | func_pspeu_09237F80                      |      253 |          1 |        | https://decomp.me/scratch/kNK0Y | 1.0   |
 | dai   | func_pspeu_09254220                      |      253 |         18 |        |                                 |       |
@@ -1943,7 +1943,7 @@
 | no4   | func_pspeu_0923E690                      |      272 |         23 |        | https://decomp.me/scratch/2teRw | 1.0   |
 | ric   | RicEntityRevivalColumn                   |      273 |         26 |        | https://decomp.me/scratch/9WUIk | 0.999 |
 | no3   | EntityTransparentWater                   |      274 |         26 |        |                                 |       |
-| np3   | func_pspeu_092406B8                      |      274 |         26 |        |                                 |       |
+| np3   | EntityTransparentWater                   |      274 |         26 |        |                                 |       |
 | lib   | func_psp_09261338                        |      274 |         43 |        | https://decomp.me/scratch/JwqB9 | 0.985 |
 | st0   | func_pspeu_09242A98                      |      275 |         24 |        |                                 |       |
 | no2   | func_pspeu_092529B0                      |      275 |         37 |        |                                 |       |
@@ -2016,11 +2016,11 @@
 | no4   | func_pspeu_09258960                      |      317 |         18 |        | https://decomp.me/scratch/6JUYI | 1.0   |
 | maria | MarInit                                  |      317 |         34 |        |                                 |       |
 | wrp   | EntityWarpSmallRocks                     |      318 |         33 | Yes    | https://decomp.me/scratch/EbwDy | 0.948 |
-| np3   | func_pspeu_0923EAA0                      |      318 |         40 |        |                                 |       |
+| np3   | EntityCavernDoor                         |      318 |         40 |        |                                 |       |
 | no2   | func_pspeu_09250ED0                      |      319 |         32 |        |                                 |       |
 | np3   | func_pspeu_0925D890                      |      319 |         32 |        |                                 |       |
 | dai   | func_us_801D70A0                         |      319 |         42 |        | https://decomp.me/scratch/tSHto | 0.999 |
-| np3   | func_pspeu_0923FA08                      |      319 |         43 |        |                                 |       |
+| np3   | EntityHeartRoomGoldDoor                  |      319 |         43 |        |                                 |       |
 | no4   | func_pspeu_09238860                      |      320 |         54 |        | https://decomp.me/scratch/aJLfo | 0.999 |
 | dra   | func_psp_090EE5D0                        |      323 |         37 |        |                                 |       |
 | no4   | func_pspeu_0923F390                      |      324 |         16 |        | https://decomp.me/scratch/ejkfg | 1.0   |
@@ -2037,7 +2037,7 @@
 | no2   | GetPlayerCollisionWith                   |      332 |         41 |        | https://decomp.me/scratch/xNJDs | 0.994 |
 | no3   | func_pspeu_09260AB8                      |      332 |         41 |        |                                 |       |
 | no4   | GetPlayerCollisionWith                   |      332 |         41 |        | https://decomp.me/scratch/xNJDs | 0.994 |
-| np3   | func_pspeu_0925AEB8                      |      332 |         41 |        |                                 |       |
+| np3   | GetPlayerCollisionWith                   |      332 |         41 |        | https://decomp.me/scratch/xNJDs | 0.994 |
 | dai   | func_us_801C2CD4                         |      333 |         35 | Yes    | https://decomp.me/scratch/5hPEW | 0.998 |
 | ric   | func_pspeu_092B00F0                      |      333 |         60 | Yes    |                                 |       |
 | lib   | func_psp_09257BF8                        |      334 |         15 |        | https://decomp.me/scratch/EXmKW | 1.0   |
@@ -2096,7 +2096,7 @@
 | dai   | func_pspeu_09258EC0                      |      369 |         21 |        |                                 |       |
 | dra   | func_80130618                            |      369 |         35 | Yes    | https://decomp.me/scratch/OYrXh | 0.994 |
 | no3   | EntityExplosionPuffOpaque                |      372 |         50 |        | https://decomp.me/scratch/b9WAS | 0.836 |
-| np3   | func_pspeu_0923FF70                      |      372 |         50 |        |                                 |       |
+| np3   | EntityExplosionPuffOpaque                |      372 |         50 |        | https://decomp.me/scratch/b9WAS | 0.836 |
 | dra   | func_psp_090F8348                        |      373 |         35 |        | https://decomp.me/scratch/y1YvJ | 1.0   |
 | dra   | func_psp_090F5560                        |      374 |         13 |        | https://decomp.me/scratch/32CTa | 1.0   |
 | chi   | func_psp_0923EAE8                        |      374 |         35 |        |                                 |       |
@@ -2499,7 +2499,7 @@
 | lib   | EntityLesserDemon                        |     1920 |        313 |        |                                 |       |
 | maria | MarEntityPlayerBlinkWhite                |     1981 |        164 | Yes    |                                 |       |
 | ric   | RicEntityPlayerBlinkWhite                |     1985 |        164 | Yes    | https://decomp.me/scratch/e3Wuj | 0.96  |
-| np3   | func_pspeu_0923B938                      |     2010 |        291 |        |                                 |       |
+| np3   | EntityGaibon                             |     2010 |        291 |        | https://decomp.me/scratch/2IARs | 0.002 |
 | ric   | RicEntitySubwpnStopwatch                 |     2016 |        158 | Yes    | https://decomp.me/scratch/kbgQU | 1.0   |
 | no2   | func_pspeu_09248B38                      |     2055 |        322 | Yes    |                                 |       |
 | np3   | func_pspeu_09257AD8                      |     2055 |        322 | Yes    |                                 |       |
