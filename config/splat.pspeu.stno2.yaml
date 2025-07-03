@@ -45,7 +45,12 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, no2_psp/80]
+      - [0x1F3B8, c, no2_psp/st_init_no2]
+      - [0x1F688, c, no2_psp/1F688]
       - [0x24E00, data]
       - [0x55C00, .rodata, no2_psp/80]
-      - [0x55E00, bss]
+      - [0x55DB8, .rodata, no2_psp/1F688]
+      - {start: 0x55E00, type: bss, vram: 0x0928D480, name: bss1}
+      - {start: 0x55E00, type: .bss, vram: 0x0928D518, name: no2_psp/st_init_no2}
+      - {start: 0x55E00, type: bss, vram: 0x0928D6A0, name: bss2}
   - [0x56080]
