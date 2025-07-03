@@ -184,13 +184,13 @@ static u16 g_testCollPrizeTable[] = {
 
 static u16 g_jewelSwordDropTable[] = {
     // clang-format off
-    0x0C00, DROPPED_ITEM_ZIRCON,
-    0x0F00, DROPPED_ITEM_AQUAMARINE,
-    0x0FD0, DROPPED_ITEM_TURQUOISE,
-    0x0FF0, DROPPED_ITEM_ONYX,
-    0x0FF8, DROPPED_ITEM_GARNET,
-    0x0FFD, DROPPED_ITEM_OPAL,
-    0x0FFF, DROPPED_ITEM_DIAMOND,
+    0x0C00, DROP_ZIRCON,
+    0x0F00, DROP_AQUAMARINE,
+    0x0FD0, DROP_TURQUOISE,
+    0x0FF0, DROP_ONYX,
+    0x0FF8, DROP_GARNET,
+    0x0FFD, DROP_OPAL,
+    0x0FFF, DROP_DIAMOND,
     // clang-format on
 };
 
@@ -229,7 +229,7 @@ void HitDetection(void) {
     s32* scratchpad_2;
     Entity* iterEnt2;
     s32* scratchpad_1;
-    u16* dropThresholdAndItem;
+    u16* dropTable;
     s16 xCoord;
     s16 yCoord2;
     u16 miscVar1;
@@ -619,14 +619,14 @@ void HitDetection(void) {
                             // Determine which jewel to randomly drop from the
                             // Jewel Sword
                             if (hitboxCheck2 == 5) {
-                                dropThresholdAndItem = g_jewelSwordDropTable;
+                                dropTable = g_jewelSwordDropTable;
                                 miscVar3 = rand() & 0xFFF;
                                 while (true) {
-                                    if (*dropThresholdAndItem++ >= miscVar3) {
-                                        miscVar3 = *dropThresholdAndItem;
+                                    if (*dropTable++ >= miscVar3) {
+                                        miscVar3 = *dropTable;
                                         break;
                                     }
-                                    dropThresholdAndItem++;
+                                    dropTable++;
                                 }
 
                             } else {
