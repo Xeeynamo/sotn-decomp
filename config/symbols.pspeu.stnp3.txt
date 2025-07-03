@@ -34,6 +34,7 @@ CreateExplosionPuff = 0x0923FE90;
 EntityExplosionPuffOpaque = 0x0923FF70;
 EntityLightningThunder = 0x092404E0;
 EntityLightningCloud = 0x092405B8;
+EntityTransparentWater = 0x092406B8;
 CreateEntityFromLayout = 0x09240AA8; // source=match
 CreateEntityWhenInVerticalRange = 0x09240BC8; // source=match
 CreateEntityWhenInHorizontalRange = 0x09240D60; // source=match
