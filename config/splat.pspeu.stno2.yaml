@@ -52,8 +52,7 @@ segments:
       - [0x55D0, c, no2/st_update]
       - [0x5B08, c, no2_psp/unk_5B08]
       - [0x6A68, c, no2_psp/e_particles]
-      - [0x7FF8, c, no2_psp/unk_7FF8]
-      - [0x80D0, c, no2_psp/e_collect]
+      - [0x7FF8, c, no2/e_collect]
       - [0xC248, c, no2_psp/e_misc]
       - [0xCF68, c, no2_psp/collision]
       - [0xF140, c, no2_psp/popup]
@@ -77,6 +76,8 @@ segments:
       - [0x25B98, .data, no2/e_red_door]
       - [0x25BB0, .data, no2/st_update]
       - [0x25BE0, data]
+      - [0x25DF8, .data, no2/e_collect]
+      - [0x26340, data]
       - [0x26808, .data, no2/e_owl_knight]
       - [0x26AF8, data]
       - [0x26B90, .data, no2/st_common]
@@ -91,12 +92,13 @@ segments:
       - [0x55C28, .rodata, no2/e_skelerang]
       - [0x55C70, .rodata, no2/e_red_door]
       - [0x55C88, .rodata, no2_psp/unk_5B08]
-      - [0x55CA0, .rodata, no2_psp/e_collect]
+      - [0x55CA0, .rodata, no2/e_collect]
       - [0x55D00, .rodata, no2/e_owl_knight]
       - [0x55D60, .rodata, no2_psp/unk_17448]
       - [0x55DB8, .rodata, no2_psp/e_sealed_door]
       - {start: 0x55E00, type: .bss, vram: 0x0928D480, name: no2/create_entity}
-      - {start: 0x55E00, type: bss, vram: 0x0928D4A0, name: bss1}
+      - {start: 0x55E00, type: .bss, vram: 0x0928D4A0, name: no2/e_collect}
+      - {start: 0x55E00, type: bss, vram: 0x0928D500, name: bss1}
       - {start: 0x55E00, type: .bss, vram: 0x0928D518, name: no2_psp/st_init_no2}
       - {start: 0x55E00, type: .bss, vram: 0x0928D6A0, name: no2/e_lock_camera}
       - {start: 0x55E00, type: bss, vram: 0x0928D6A8, name: bss2}
