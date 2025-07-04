@@ -96,7 +96,7 @@ void EntityLifeUpSpawn(Entity* self) {
                 }
             }
         }
-        g_api.PlaySfx(SE_BOSS_DEFEATED);
+        g_api.PlaySfx(SFX_BOSS_DEFEATED);
         break;
     case 1:
         if (!self->ext.lifeUpSpawn.unk86) {
