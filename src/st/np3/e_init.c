@@ -82,7 +82,7 @@ void EntitySlogra(Entity* self);
 void EntitySlograSpear(Entity* self);
 void EntitySlograSpearProjectile(Entity* self);
 void EntityGaibon(Entity* self);
-void func_801B8CC0(Entity* self);
+void EntityGaibonLeg(Entity* self);
 void EntitySmallGaibonProjectile(Entity* self);
 void EntityLargeGaibonProjectile(Entity* self);
 void EntityHammer(Entity* self);
@@ -175,7 +175,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySlograSpear,
     EntitySlograSpearProjectile, // 0x50
     EntityGaibon,
-    func_801B8CC0,
+    EntityGaibonLeg,
     EntitySmallGaibonProjectile,
     EntityLargeGaibonProjectile,
     EntityHammer,

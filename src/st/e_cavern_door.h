@@ -94,8 +94,8 @@ void EntityCavernDoorLever(Entity* self) {
 // platform attached to lever at cavern door
 void EntityCavernDoorPlatform(Entity* self) {
     Entity* player;
-    s32 xDiff;
     s32 collision;
+    s32 xDiff;
 
     switch (self->step) {
     case 0:
