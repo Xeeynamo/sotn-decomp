@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
+#include "sfx.h"
 
 extern s32 D_us_80181ACC;
 
@@ -1310,7 +1311,7 @@ void EntityLesserDemon(Entity* self) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             AnimateEntity(D_us_80181B84, self);
             if (self->pose == 2) {
-                PlaySfxPositional(0x70E);
+                PlaySfxPositional(SFX_LESSER_DEMON_POISON);
                 self->ext.lesserDemon.unk84 = 0;
                 self->step_s++;
                 self->ext.lesserDemon.unk80 = 0;
