@@ -1139,7 +1139,7 @@
 | np3   | EntityRoomForeground                     |       77 |          6 |        |                                 |       |
 | st0   | EntityRoomForeground                     |       77 |          6 |        |                                 |       |
 | wrp   | EntityRoomForeground                     |       77 |          6 |        |                                 |       |
-| dai   | func_us_801D636C                         |       77 |          7 |        |                                 |       |
+| dai   | func_us_801D636C                         |       77 |          7 |        | https://decomp.me/scratch/Ddj3H | 1.0   |
 | dra   | CalcPlayerDamage                         |       77 |          9 |        |                                 |       |
 | dra   | CalcPlayerDamageMaria                    |       77 |          9 |        |                                 |       |
 | dra   | MenuDrawStr                              |       77 |          9 |        |                                 |       |
@@ -1891,8 +1891,8 @@
 | dra   | func_psp_091107E8                        |      250 |         34 |        |                                 |       |
 | no2   | func_pspeu_092592A0                      |      251 |          6 |        |                                 |       |
 | maria | func_pspeu_092A7B80                      |      251 |         26 |        | https://decomp.me/scratch/vLB2f | 0.998 |
-| no3   | EntityShuttingWindow                     |      252 |         32 |        | https://decomp.me/scratch/Mhry9 | 0.999 |
-| np3   | EntityShuttingWindow                     |      252 |         32 |        | https://decomp.me/scratch/Mhry9 | 0.999 |
+| no3   | EntityShuttingWindow                     |      252 |         32 |        | https://decomp.me/scratch/xDhah | 1.0   |
+| np3   | EntityShuttingWindow                     |      252 |         32 |        | https://decomp.me/scratch/xDhah | 1.0   |
 | dra   | func_psp_09111648                        |      252 |         38 |        |                                 |       |
 | no3   | func_pspeu_09237F80                      |      253 |          1 |        | https://decomp.me/scratch/kNK0Y | 1.0   |
 | dai   | func_pspeu_09254220                      |      253 |         18 |        |                                 |       |
@@ -2399,7 +2399,7 @@
 | np3   | EntityPrizeDrop                          |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | wrp   | EntityPrizeDrop                          |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | no4   | EntityBoneArcher                         |      979 |        177 |        | https://decomp.me/scratch/s6o5d | 0.997 |
-| dai   | func_us_801C1298                         |      987 |         83 |        | https://decomp.me/scratch/PAASF | 0.73  |
+| dai   | func_us_801C1298                         |      987 |         83 |        | https://decomp.me/scratch/PVv1f | 0.953 |
 | no3   | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | np3   | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
 | wrp   | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/DqmOT | 1.0   |
@@ -2423,7 +2423,7 @@
 | no4   | EntityAlucardWaterEffect                 |     1095 |        132 |        |                                 |       |
 | np3   | EntityAlucardWaterEffect                 |     1095 |        132 |        |                                 |       |
 | dra   | func_psp_090E5020                        |     1102 |        110 |        |                                 |       |
-| dai   | func_us_801D64A0                         |     1116 |        152 | Yes    | https://decomp.me/scratch/UrWPj | 0.937 |
+| dai   | func_us_801D64A0                         |     1116 |        152 | Yes    | https://decomp.me/scratch/6Bq6p | 0.944 |
 | no2   | func_pspeu_09253010                      |     1123 |        182 |        |                                 |       |
 | np3   | func_pspeu_0925F9D0                      |     1123 |        182 |        |                                 |       |
 | np3   | EntitySlogra                             |     1154 |        213 |        | https://decomp.me/scratch/hCcGP | 0.991 |
