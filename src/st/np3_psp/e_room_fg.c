@@ -148,6 +148,6 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", UnkPolyFunc2);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", UnkPolyFunc0);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09262658);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", PrimDecreaseBrightness);
 
 // clang-format on

@@ -102,6 +102,7 @@ ReplaceBreakableWithItemDrop = 0x0925B390;
 UnkPrimHelper = 0x09261C08;
 UpdateAnimation = 0x09262108;
 UnkPolyFunc0 = 0x09262600;
+PrimDecreaseBrightness = 0x09262658;
 FindFirstUnkPrim = 0x09262388;
 FindFirstUnkPrim2 = 0x092623D8;
 UnkPolyFunc2 = 0x09262598;
