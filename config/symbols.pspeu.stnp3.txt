@@ -50,6 +50,15 @@ NP3_EntityRedDoor = 0x09244170; // source=match
 Random = 0x09245390; // source=match
 Update = 0x092453D0; // source=match
 UpdateStageEntities = 0x092457B0; // source=match
+CheckMermanEnteringWater = 0x092458C8;
+EntityMerman2 = 0x09245A18;
+EntityMermanFireSpit = 0x09247270;
+EntityMediumWaterSplash = 0x09247508;
+EntityMermanWaterSplash = 0x09247608;
+EntityMerman2JumpAir = 0x09247AB8;
+EntityHighWaterSplash = 0x09247B68;
+EntityDeadMerman = 0x09247DF0;
+EntityMermanSpawner = 0x09247EF8;
 func_psp_0923AD68 = 0x092495F0; // source=match
 func_psp_0923B2F0 = 0x09249B78; // source=match
 EntitySoulStealOrb = 0x0924A008; // source=match
@@ -114,6 +123,8 @@ g_EInitInteractable = 0x0926B238;
 g_EInitLockCamera = 0x0926B258;
 g_EInitCommon = 0x0926B268;
 g_EInitStInteractable = 0x0926B288;
+g_EInitWaterObject = 0x0926B298;
+g_EInitWaterSplash = 0x0926B2A8;
 g_EInitBat = 0x0926B2F8;
 g_EInitBloodyZombie = 0x0926B348;
 g_EInitSlograNP3 = 0x0926B358;
@@ -124,6 +135,7 @@ g_EInitGaibonProjectileNP3 = 0x0926B398;
 g_EInitGaibonLargeProjectileNP3 = 0x0926B3A8;
 NP3_RedDoorTiles = 0x0926B418;
 NP3_Overlay = 0x0928E820;
+g_WaterXTbl = 0x0928EFB8;
 NP3_BackgroundBlockInit = 0x0928F058;
 D_psp_E_BLADE_SWORD = 0x09291C18;
 D_psp_E_BLADE = 0x09291C20;
