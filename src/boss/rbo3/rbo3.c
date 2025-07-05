@@ -284,7 +284,7 @@ void EntityMedusa(Entity* self) {
             SetStep(3);
         }
         if (self->pose == 3 && self->poseTimer == 0) {
-            PlaySfxPositional(SFX_RBO3_UNK_7D1);
+            PlaySfxPositional(SFX_SCIFI_BLAST);
             for (i = 0; i < 2; i++) {
                 entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
                 if (entity != NULL) {

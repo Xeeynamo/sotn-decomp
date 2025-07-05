@@ -1356,7 +1356,7 @@ void EntityLesserDemon(Entity* self) {
             break;
         }
         if (self->pose == 3 && self->poseTimer == 0) {
-            PlaySfxPositional(0x7D1);
+            PlaySfxPositional(SFX_SCIFI_BLAST);
             self->ext.lesserDemon.unk84 = 2;
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
+#include "sfx.h"
 
 // Likely copied out of DRA. This code
 // appears to go unused.
@@ -1312,7 +1313,7 @@ void func_us_801BA290(Entity* self) {
                 LOW(prim->r2) = LOW(prim->r0);
                 LOW(prim->r3) = LOW(prim->r0);
                 if (prim->r0 == 0x30) {
-                    g_api.PlaySfx(0x7AC);
+                    g_api.PlaySfx(SFX_TELESCOPE_SHUTTER_CLICK);
                     self->step_s = 2;
                 }
                 prim = prim->next;
@@ -1365,7 +1366,7 @@ void func_us_801BA290(Entity* self) {
 
         case 4:
             if (!--self->ext.et_801BA290.unk82) {
-                g_api.PlaySfx(0x7AC);
+                g_api.PlaySfx(SFX_TELESCOPE_SHUTTER_CLICK);
                 self->step_s = 0;
                 self->step++;
             }

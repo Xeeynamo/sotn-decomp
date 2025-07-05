@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
+#include "sfx.h"
 
 // Forward declaration. EntityAlucard needs to not know these args are s16.
 // But 80113D7C (in this file, but before PlayerStepKill) needs to know
@@ -339,7 +340,7 @@ void PlayerStepStand(void) {
     case Player_Stand_ChairSit:
         if (PLAYER.ext.player.anim == 0xF2 && --g_AlucardChairSleepTimer == 0) {
             if (g_StageId == STAGE_NO1) {
-                PlaySfx(0x7AD);
+                PlaySfx(SFX_ALU_ZZZ_SNORE);
             }
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_SLEEP_ZZZ, 0), 0);
