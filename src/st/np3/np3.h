@@ -101,6 +101,8 @@ typedef enum EntityIDs {
     /* 0x5B */ E_BLADE_SWORD
 } EntityIDs;
 
+extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
+
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;

@@ -39,6 +39,10 @@ InitRoomEntities = 0x09241630; // source=match
 UpdateRoomPosition = 0x09241860; // source=match
 CreateEntityFromCurrentEntity = 0x09241940; // source=match
 CreateEntityFromEntity = 0x092419C8; // source=match
+EntityBloodSplatter = 0x09241A50;
+func_801C53AC = 0x09241FE0;
+EntityBloodyZombie = 0x09242228;
+EntityBloodDrips = 0x09242C40;
 EntityStageNamePopup = 0x09243208; // source=match
 EntityIsNearPlayer = 0x09244088; // source=match
 NP3_EntityRedDoor = 0x09244170; // source=match
@@ -67,6 +71,7 @@ EntityEquipItemDrop = 0x0924CAF8; // source=match
 EntityRelicOrb = 0x0924D350; // source=match
 EntityHeartDrop = 0x0924E488; // source=match
 EntityMessageBox = 0x0924E658; // source=match
+CheckColliderOffsets = 0x0924EDD0;
 PlaySfxPositional = 0x0924F788;
 HitDetection = 0x0924F8E0; // source=match
 EntityDamageDisplay = 0x092510B0; // source=match
@@ -94,7 +99,10 @@ InitializeEntity = 0x0925A9F8;
 GetPlayerCollisionWith = 0x0925AEB8;
 ReplaceBreakableWithItemDrop = 0x0925B390;
 UnkPrimHelper = 0x09261C08;
+UpdateAnimation = 0x09262108;
+UnkPolyFunc0 = 0x09262600;
 FindFirstUnkPrim = 0x09262388;
+FindFirstUnkPrim2 = 0x092623D8;
 UnkPolyFunc2 = 0x09262598;
 NP3_EntityUpdates = 0x0926B088;
 NP3_EInitBreakable = 0x0926B1F8;
@@ -104,6 +112,7 @@ g_EInitInteractable = 0x0926B238;
 g_EInitLockCamera = 0x0926B258;
 g_EInitCommon = 0x0926B268;
 g_EInitStInteractable = 0x0926B288;
+g_EInitBloodyZombie = 0x0926B348;
 g_EInitSlograNP3 = 0x0926B358;
 g_EInitSlograSpearNP3 = 0x0926B368;
 g_EInitSlograProjectileNP3 = 0x0926B378;
