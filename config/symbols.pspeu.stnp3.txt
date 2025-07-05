@@ -122,6 +122,7 @@ g_EInitSlograProjectileNP3 = 0x0926B378;
 g_EInitGaibonNP3 = 0x0926B388;
 g_EInitGaibonProjectileNP3 = 0x0926B398;
 g_EInitGaibonLargeProjectileNP3 = 0x0926B3A8;
+NP3_RedDoorTiles = 0x0926B418;
 NP3_Overlay = 0x0928E820;
 NP3_BackgroundBlockInit = 0x0928F058;
 D_psp_E_BLADE_SWORD = 0x09291C18;
