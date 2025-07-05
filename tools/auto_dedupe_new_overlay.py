@@ -17,7 +17,7 @@ import os
 # Maybe the dictionary should be changed so the file name is the key, but eh.
 file_start_funcs = {
     "EntityIsNearPlayer": ["e_red_door"],
-    "Random": ["st_update"],
+    "Random": ["st_update", "UpdateStageEntities"],
     "HitDetection": ["collision"],
     "CreateEntityFromLayout": ["create_entity"],
     "DestroyEntity": ["st_common"],
