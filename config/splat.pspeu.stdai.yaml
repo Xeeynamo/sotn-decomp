@@ -107,8 +107,8 @@ segments:
       - [0x258C0, data] # unk_17C50
       - [0x26BD0, data] # unk_12F98
       - [0x26C40, data]
-      - [0x27988, data] # e_bone_pillar
-      - [0x279C0, data]
+      - [0x27988, data] # EntityBonePillarFireBreathUV
+      - [0x27B70, data]
       - [0x2B8E0, .data, dai/e_red_door_tiles]
       - [0x2B910, .data, dai/e_init]
       - [0x2BC20, data] # DAI_rooms

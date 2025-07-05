@@ -4,39 +4,75 @@
 
 #include "stage.h"
 
-#define STAGE_IS_DAI
 #define OVL_EXPORT(x) DAI_##x
+#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG) // psx e_stage_name
 
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
-#define SEALED_DOOR_PALETTE 0x245
+#include "../pfn_entity_update.h"
+
+#define SEALED_DOOR_PALETTE 0x245 // e_sealed_door
+
+// e_collect
+#define HEART_DROP_CASTLE_FLAG 0x98
+// commented here because sotn_str doesn't do .h files
+/*
+#ifdef VERSION_PSP
+#define GOLD_COLLECT_TEXT                                                      \
+    _S("$1"), _S("$25"), _S("$50"), _S("$100"), _S("$250"), _S("$400"),        \
+        _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
+#endif
+*/
+
+// e_cutscene/cutscene_script_box
+#define CUTSCENE_UNK3_RECT_X 0
+#define CUTSCENE_UNK4_TPAGE 16
+
+// e_cutscene/cutscene_script_text
+#ifdef VERSION_PSP
+#define CUTSCENE_UNK1_NEXT_X 0
+#define CUTSCENE_UNK1_UNK17 2
+#else
+#define CUTSCENE_UNK1_NEXT_X 2
+#define CUTSCENE_UNK1_UNK17 8
+#endif
+
+// e_cutscene/set_cutscene_script
+#ifdef VERSION_PC
+#define NUM_CUTSCENE_PRIM 8
+#else
+#define NUM_CUTSCENE_PRIM 7
+#endif
 
 // Used for cluts, palettes, and in g_EInits
-enum DaiPalette {
+enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
     PAL_CLOUDS = 0xC0,
-    PAL_UNKC9 = 0xC9,
-    PAL_UNKCA = 0xCA,
+    PAL_UNK_C9 = 0xC9,
+    PAL_UNK_CA = 0xCA,
     PAL_STAGE_NAME_15F = 0x15F,
     PAL_STAGE_NAME_19D = 0x19D,
     PAL_STAGE_NAME_19E = 0x19E,
     PAL_STAGE_NAME_19F = 0x19F,
     PAL_SKELERANG = 0x200,
-    PAL_UNK215 = 0x215,
+    PAL_UNK_215 = 0x215,
     PAL_BONE_PILLAR = 0x216,
     PAL_BONE_PILLAR_FIRE = 0x221,
-    PAL_UNK22A = 0x22A,
-    PAL_UNK22B = 0x22B,
+    PAL_UNK_22A = 0x22A,
+    PAL_UNK_22B = 0x22B,
     PAL_BAT = 0x22C,
-    PAL_UNK22F = 0x22F,
-    PAL_UNK232 = 0x232,
-    PAL_UNK234 = 0x234,
-    PAL_UNK235 = 0x235,
+    PAL_CROW = 0x22F,
+    PAL_UNK_232 = 0x232,
+    PAL_UNK_234 = 0x234,
+    PAL_UNK_235 = 0x235,
+    PAL_SEALED_DOOR = 0x245,
     PAL_BREAKABLE = 0x249,
     PAL_BREAKABLE_DEBRIS = 0x24D,
-    PAL_UNK251 = 0x251,
+    PAL_CUTSCENE = 0x251,
 };
 
-enum DaiEntities {
+// Used when a constant value E_ID is used for both psx and pspeu
+// The E_ID() macro should be used when psx uses a constant value, but pspeu
+// uses a bss reference
+enum OVL_EXPORT(Entities) {
     E_NONE,
     E_BREAKABLE,              // DAI_EntityBreakable,
     E_EXPLOSION,              // EntityExplosion,
@@ -113,6 +149,7 @@ enum DaiEntities {
     NUM_ENTITIES,
 };
 
+extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[]; // e_room_bg
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
@@ -122,10 +159,10 @@ extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
-// extern EInit g_EInit_801809A4;
+// extern EInit g_EInit_801809A4; // Unused
 extern EInit D_us_801809B0;
 extern EInit D_us_801809BC;
-// extern EInit g_EInit_801809C8;
+// extern EInit g_EInit_801809C8; // Unused
 extern EInit D_us_801809D4;
 extern EInit D_us_801809E0;
 extern EInit D_us_801809EC;

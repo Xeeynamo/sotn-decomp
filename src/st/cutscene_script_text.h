@@ -1,17 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#ifndef CUTSCENE_UNK1_NEXT_X
-#define CUTSCENE_UNK1_NEXT_X 2
-#endif
-
-#ifndef CUTSCENE_UNK1_UNK17
-#define CUTSCENE_UNK1_UNK17 8
-#endif
-
-#if defined(VERSION_PC)
-#define NUM_CUTSCENE_PRIM 8
-#else
-#define NUM_CUTSCENE_PRIM 7
-#endif
+// The CUTSCENE_UNK1_NEXT_X, CUTSCENE_UNK1_UNK17, and NUM_CUTSCENE_PRIM macros
+// must be set in ovl.h
 
 // pspeu needs this to not be static
 void CutsceneUnk1(void) {

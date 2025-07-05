@@ -30,10 +30,10 @@ void EntityBlackCrow(Entity* self) {
         InitializeEntity(g_EInitBlackCrow);
         self->animCurFrame = 1;
         self->ext.et_crow.unk84 = g_Tilemap.scrollY.val + self->posY.val;
-        self->zPriority = 0xB0;
+        self->zPriority = 176;
         break;
     case 1:
-        if (!AnimateEntity(&anim_1, self)) {
+        if (!AnimateEntity(anim_1, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         if (GetDistanceToPlayerX() < 80 && GetDistanceToPlayerY() < 64) {
@@ -41,7 +41,7 @@ void EntityBlackCrow(Entity* self) {
         }
         break;
     case 2:
-        if (!AnimateEntity(&anim_2, self)) {
+        if (!AnimateEntity(anim_2, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         if (self->ext.et_crow.unk80) {
@@ -66,9 +66,9 @@ void EntityBlackCrow(Entity* self) {
         case 1:
             MoveEntity();
             if (self->velocityY < FIX(-2)) {
-                AnimateEntity(&anim_3, self);
+                AnimateEntity(anim_3, self);
             } else {
-                AnimateEntity(&anim_2, self);
+                AnimateEntity(anim_2, self);
                 self->velocityY -= FIX(0.125);
             }
             if (self->velocityY < 0) {
@@ -81,7 +81,7 @@ void EntityBlackCrow(Entity* self) {
             }
             break;
         case 2:
-            AnimateEntity(&anim_3, self);
+            AnimateEntity(anim_3, self);
             MoveEntity();
             self->velocityY += FIX(0.25);
             if (self->velocityY > FIX(0.5)) {
@@ -102,10 +102,10 @@ void EntityBlackCrow(Entity* self) {
         MoveEntity();
         self->rotate += 64;
         self->velocityY += FIX(0.09375);
-        if (!AnimateEntity(&anim_4, self)) {
+        if (!AnimateEntity(anim_4, self)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(2, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 0;
             }
             DestroyEntity(self);
@@ -127,7 +127,7 @@ void EntityBlueRaven(Entity* self) {
         PlaySfxPositional(SFX_CROW_CAW_PAIN);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(2, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 0;
         }
         DestroyEntity(self);
@@ -141,7 +141,7 @@ void EntityBlueRaven(Entity* self) {
         self->zPriority = 0xB0;
         break;
     case 1:
-        if (!AnimateEntity(&anim_5, self)) {
+        if (!AnimateEntity(anim_5, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         if (GetDistanceToPlayerX() < 96 && GetDistanceToPlayerY() < 48) {
@@ -160,7 +160,7 @@ void EntityBlueRaven(Entity* self) {
         SetStep(3);
         break;
     case 3:
-        AnimateEntity(&anim_6, self);
+        AnimateEntity(anim_6, self);
         MoveEntity();
         if (GetDistanceToPlayerY() < 8) {
             self->ext.et_crow.unk80 = 32;
@@ -168,7 +168,7 @@ void EntityBlueRaven(Entity* self) {
         }
         break;
     case 4:
-        AnimateEntity(&anim_7, self);
+        AnimateEntity(anim_7, self);
         if (!--self->ext.et_crow.unk80) {
             if (self->facingLeft) {
                 self->velocityX = FIX(2.0);
@@ -180,7 +180,7 @@ void EntityBlueRaven(Entity* self) {
         }
         break;
     case 5:
-        AnimateEntity(&anim_7, self);
+        AnimateEntity(anim_7, self);
         MoveEntity();
         self->velocityY -= FIX(0.03125);
         if (self->facingLeft) {

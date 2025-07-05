@@ -1,35 +1,26 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-static s16 sensors_bone_pillar[] = {
-    0x0000, 0x0020, 0x0000, 0x0004, 0x0004, 0xFFFC, 0xFFF8, 0x0000};
+static s16 sensors_bone_pillar[] = {0, 32, 0, 4, 4, -4, -8, 0};
 // This appears to be unused and deadstripped on PSP
-static s16 unused[] = {
-    0x0000, 0x0008, 0x0000, 0x0004, 0x0002, 0xFFFC, 0xFFFC, 0x0000,
-    0x0000, 0x0024, 0x0000, 0x0004, 0x0002, 0xFFFC, 0xFFFC, 0x0000};
-static s16 sensors_spike_ball[] = {0x0000, 0x000E, 0x0000, 0x0000};
-static s16 D_us_80181C8C[] = {
-    0x0002, 0xFFF1, 0x0002, 0xFFEF, 0xFFFC, 0x000A, 0xFFFC, 0x0009};
-static s16 D_us_80181C9C[] = {0x0026, 0x0026, 0x000E, 0x000A};
-static s16 D_us_80181CA4[] = {0x02C0, 0x0540, 0x0AC0, 0x0D40};
+static s16 unused[] = {0, 8, 0, 4, 2, -4, -4, 0, 0, 36, 0, 4, 2, -4, -4, 0};
+static s16 sensors_spike_ball[] = {0, 14, 0, 0};
+static s16 g_eBonePillarHitbox[] = {2, -15, 2, -17, -4, 10, -4, 9};
+static s16 g_eBonePillarPosYOffset[] = {38, 38, 14, 10};
+static s16 g_eBonePillarAngle[] = {704, 1344, 2752, 3392};
 static u8 anim_bone_pillar_1[] = {
-    0x30, 0x01, 0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x01, 0x02, 0x02,
-    0x02, 0x01, 0x02, 0x02, 0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04,
-    0x02, 0x05, 0x05, 0x04, 0x02, 0x06, 0x02, 0x04, 0x02, 0x06, 0x02, 0x07,
-    0x02, 0x06, 0x02, 0x07, 0x02, 0x08, 0x02, 0x07, 0x02, 0x08, 0x02, 0x07,
-    0x02, 0x06, 0x11, 0x04, 0xFF, 0x00, 0x00, 0x00};
+    48, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2,  1, 2,   2, 2, 1, 2,
+    2,  2, 3, 2, 4, 2, 5, 5, 4, 2, 6, 2, 4,  2, 6,   2, 7, 2, 6,
+    2,  7, 2, 8, 2, 7, 2, 8, 2, 7, 2, 6, 17, 4, 255, 0, 0, 0};
 static u8 anim_bone_pillar_2[] = {
-    0x30, 0x09, 0x02, 0x0A, 0x02, 0x09, 0x02, 0x0A, 0x02, 0x09, 0x02,
-    0x0A, 0x02, 0x09, 0x02, 0x0A, 0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B,
-    0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0x05, 0x0D, 0x02, 0x0F, 0x02,
-    0x10, 0x02, 0x0F, 0x02, 0x10, 0x02, 0x11, 0x02, 0x10, 0x02, 0x11,
-    0x02, 0x10, 0x02, 0x0F, 0x11, 0x0D, 0xFF, 0x00};
+    48, 9,  2, 10, 2, 9,  2, 10, 2, 9,  2, 10, 2,  9,  2,   10, 2, 9,
+    2,  10, 2, 11, 2, 12, 2, 13, 2, 14, 5, 13, 2,  15, 2,   16, 2, 15,
+    2,  16, 2, 17, 2, 16, 2, 17, 2, 16, 2, 15, 17, 13, 255, 0};
 static u8 anim_fire_breath[] = {
-    0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05, 0x03, 0x06,
-    0x03, 0x07, 0x03, 0x08, 0x03, 0x09, 0x03, 0x0A, 0x03, 0x0B, 0xFF, 0x00};
-static s16 D_us_80181D30[] = {
-    0x0010, 0x0020, 0x0030, 0x0040, 0x0050, 0x0040, 0x0030, 0x0020};
+    3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 7, 3, 8, 3, 9, 3, 10, 3, 11, 255, 0};
+static s16 D_us_80181D30[] = {16, 32, 48, 64, 80, 64, 48, 32};
 
+// g_eBonePillarFireBreathUV
 extern s16* D_us_801BC7B0[];
 
 void EntityBonePillarHead(Entity* self) {
@@ -46,10 +37,10 @@ void EntityBonePillarHead(Entity* self) {
     }
     if (self->ext.et_bonePillar.unk85) {
         self->ext.et_bonePillar.unk85 = 0;
-        SetStep(0xA);
+        SetStep(10);
     }
     switch (self->step) {
-    case 0x0:
+    case 0:
         InitializeEntity(g_EInitBonePillarHead);
         self->palette = g_EInitBonePillarHead[3] + 1;
         self->animCurFrame = 1;
@@ -63,7 +54,7 @@ void EntityBonePillarHead(Entity* self) {
         }
         self->hitboxOffX = -3;
         self->hitboxOffY = 13;
-    case 0x1:
+    case 1:
         if (UnkCollisionFunc3(sensors_bone_pillar) & 1) {
             if (self->params & 0x100) {
                 entity = self + 1;
@@ -81,12 +72,12 @@ void EntityBonePillarHead(Entity* self) {
             SetStep(2);
         }
         break;
-    case 0x2:
-        if (GetDistanceToPlayerX() < 0x70) {
+    case 2:
+        if (GetDistanceToPlayerX() < 112) {
             SetStep(3);
         }
         break;
-    case 0x3:
+    case 3:
         if (!self->step_s) {
             self->ext.et_bonePillar.unk80 =
                 D_us_80181D30[self->ext.et_bonePillar.unk84];
@@ -104,11 +95,11 @@ void EntityBonePillarHead(Entity* self) {
                 SetStep(4);
             }
         }
-        if (GetDistanceToPlayerX() > 0x80) {
+        if (GetDistanceToPlayerX() > 128) {
             SetStep(3);
         }
         break;
-    case 0x4:
+    case 4:
         if (g_Timer & 2) {
             self->palette = g_EInitBonePillarHead[3];
         } else {
@@ -123,21 +114,21 @@ void EntityBonePillarHead(Entity* self) {
             self->palette = g_EInitBonePillarHead[3] + 1;
             SetStep(3);
         }
-        if ((self->pose == 0x11) && (unkVar & 0x80)) {
+        if ((self->pose == 17) && (unkVar & 0x80)) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_BONE_PILLAR_FIRE, self, entity);
                 entity->facingLeft = self->params;
                 if (self->params) {
-                    entity->posY.i.hi -= 0xE;
+                    entity->posY.i.hi -= 14;
                 } else {
                     entity->posY.i.hi += 8;
                 }
             }
         }
         break;
-    case 0x8:
-        ptr = D_us_80181C8C;
+    case 8:
+        ptr = g_eBonePillarHitbox;
         unkVar = 0;
         if (!self->params) {
             ptr += 4;
@@ -167,10 +158,10 @@ void EntityBonePillarHead(Entity* self) {
         PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
         DestroyEntity(self);
         break;
-    case 0xA:
+    case 10:
         switch (self->step_s) {
         case 0:
-            self->animCurFrame = 0x18;
+            self->animCurFrame = 24;
             self->hitboxOffX = 0;
             self->hitboxOffY = 0;
             self->drawFlags |= FLAG_DRAW_ROTATE;
@@ -180,15 +171,15 @@ void EntityBonePillarHead(Entity* self) {
             self->flags |= FLAG_UNK_02000000;
             self->step_s++;
         case 1:
-            self->rotate -= 0x20;
+            self->rotate -= 32;
             MoveEntity();
             self->velocityY += FIX(0.1875);
-            for (ptr = D_us_80181CA4, i = 0; i < 4; i++, ptr++) {
+            for (ptr = g_eBonePillarAngle, i = 0; i < 4; i++, ptr++) {
                 offsetX = self->posX.i.hi;
                 offsetY = self->posY.i.hi;
                 angle = self->rotate + *ptr;
-                offsetX += ((rcos(angle) * 0xE) >> 0xC);
-                offsetY += ((rsin(angle) * 0xE) >> 0xC);
+                offsetX += ((rcos(angle) * 14) >> 12);
+                offsetY += ((rsin(angle) * 14) >> 12);
                 g_api.CheckCollision(offsetX, offsetY, &collider, 0);
                 if (collider.effects & EFFECT_SOLID) {
                     PlaySfxPositional(SFX_SKULL_KNOCK_B);
@@ -208,7 +199,7 @@ void EntityBonePillarHead(Entity* self) {
             }
         }
         break;
-    case 0xFF:
+    case 255:
 #include "../pad2_anim_debug.h"
     }
 }
@@ -233,9 +224,9 @@ void EntityBonePillarSpikeBall(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitBonePillarSpikeBall);
-        self->animCurFrame = 0x16;
-        self->hitboxWidth = 0xD;
-        self->hitboxHeight = 0xD;
+        self->animCurFrame = 22;
+        self->hitboxWidth = 13;
+        self->hitboxHeight = 13;
         self->flags |= FLAG_UNK_02000000;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
@@ -247,26 +238,26 @@ void EntityBonePillarSpikeBall(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         prim->tpage = self->unk5A / 4;
         if (self->unk5A & 1) {
-            posX = 0x80;
+            posX = 128;
         } else {
             posX = 0;
         }
         if (self->unk5A & 2) {
-            posY = 0x80;
+            posY = 128;
         } else {
             posY = 0;
         }
         prim->clut = g_EInitBonePillarSpikeBall[3] + 2;
-        prim->u0 = prim->u2 = posX + 0x50;
-        prim->u1 = prim->u3 = posX + 0x70;
-        prim->v0 = prim->v1 = posY + 0x30;
-        prim->v2 = prim->v3 = posY + 0x50;
+        prim->u0 = prim->u2 = posX + 80;
+        prim->u1 = prim->u3 = posX + 112;
+        prim->v0 = prim->v1 = posY + 48;
+        prim->v2 = prim->v3 = posY + 80;
         prim->priority = self->zPriority - 1;
         prim->drawMode = DRAW_UNK02;
     case 1:
         if (self->ext.et_bonePillar.unk85) {
             self->drawFlags = FLAG_DRAW_ROTATE;
-            self->hitPoints = 0x7FFF;
+            self->hitPoints = 32767;
             self->hitboxState = 1;
             self->velocityX = FIX(-0.75);
             self->velocityY = FIX(-1.0);
@@ -281,7 +272,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
                 entity->hitboxHeight = self->hitboxHeight;
                 entity->hitboxState = 2;
                 entity->attackElement = ELEMENT_FIRE;
-                entity->nFramesInvincibility = 0x10;
+                entity->nFramesInvincibility = 16;
                 entity->stunFrames = 4;
                 entity->hitEffect = 1;
                 entity->ext.et_bonePillar.unkB2 = 0;
@@ -296,7 +287,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
         break;
     case 2:
         MoveEntity();
-        self->rotate -= 0x40;
+        self->rotate -= 64;
         self->velocityY += FIX(0.25);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi + 8;
@@ -319,7 +310,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
         break;
     case 3:
         UnkCollisionFunc2(sensors_spike_ball);
-        self->rotate -= 0x80;
+        self->rotate -= 128;
         self->velocityX = FIX(-1.75);
         break;
     case 4:
@@ -332,10 +323,10 @@ void EntityBonePillarSpikeBall(Entity* self) {
         return;
     }
     prim = &g_PrimBuf[self->primIndex];
-    prim->x0 = prim->x2 = self->posX.i.hi - 0xF;
-    prim->y0 = prim->y1 = self->posY.i.hi - 0x10;
-    prim->x1 = prim->x3 = prim->x0 + 0x20;
-    prim->y2 = prim->y3 = prim->y0 + 0x20;
+    prim->x0 = prim->x2 = self->posX.i.hi - 15;
+    prim->y0 = prim->y1 = self->posY.i.hi - 16;
+    prim->x1 = prim->x3 = prim->x0 + 32;
+    prim->y2 = prim->y3 = prim->y0 + 32;
     if (self->ext.et_bonePillar.unk85) {
         if (g_Timer & 2) {
             self->palette = g_EInitBonePillarSpikeBall[3];
@@ -357,7 +348,7 @@ void EntityBonePillarFireBreath(Entity* self) {
     case 0:
         InitializeEntity(g_EInitBonePillarFireBreath);
         self->animSet = 0;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -366,36 +357,36 @@ void EntityBonePillarFireBreath(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.et_bonePillar.prim = prim;
-        prim->tpage = 0x13;
+        prim->tpage = 19;
         prim->clut = PAL_BONE_PILLAR_FIRE;
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_UNK02;
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
-        self->hitboxWidth = 0x15;
-        self->hitboxHeight = 0x18;
+        self->hitboxWidth = 21;
+        self->hitboxHeight = 24;
         if (self->facingLeft) {
-            prim->x0 = posX + 0x30;
+            prim->x0 = posX + 48;
             prim->x1 = posX - 4;
-            prim->x2 = posX + 0x40;
+            prim->x2 = posX + 64;
             prim->x3 = posX + 4;
-            prim->y0 = posY - 0x60;
+            prim->y0 = posY - 96;
             prim->y1 = posY - 8;
-            prim->y2 = posY - 0x20;
+            prim->y2 = posY - 32;
             prim->y3 = posY + 8;
-            self->hitboxOffX = -0x20;
-            self->hitboxOffY = -0x18;
+            self->hitboxOffX = -32;
+            self->hitboxOffY = -24;
         } else {
-            prim->x0 = posX - 0x40;
+            prim->x0 = posX - 64;
             prim->x1 = posX - 4;
-            prim->x2 = posX - 0x30;
+            prim->x2 = posX - 48;
             prim->x3 = posX + 4;
             prim->y0 = posY;
             prim->y1 = posY - 8;
-            prim->y2 = posY + 0x40;
+            prim->y2 = posY + 64;
             prim->y3 = posY + 8;
-            self->hitboxOffX = -0x20;
-            self->hitboxOffY = 0x1E;
+            self->hitboxOffX = -32;
+            self->hitboxOffY = 30;
         }
         PlaySfxPositional(SFX_FIREBALL_SHOT_A);
     case 1:
@@ -417,24 +408,24 @@ void EntityBonePillarFireBreath(Entity* self) {
              prim = prim->next) {
             prim->type = PRIM_TILE;
             if (self->facingLeft) {
-                posX = (Random() & 0x1F) + 0x10;
+                posX = (Random() & 0x1F) + 16;
             } else {
-                posX = -(Random() & 0x1F) - 0x10;
+                posX = -(Random() & 0x1F) - 16;
             }
             prim->x0 = self->posX.i.hi + posX;
             posY = self->posY.i.hi - posX;
             prim->y0 = posY - (Random() & 0x1F) + 8;
             prim->u0 = 1;
             prim->v0 = 1;
-            prim->r0 = 0xE0;
-            prim->b0 = 0x88;
-            prim->g0 = 0xA0;
+            prim->r0 = 224;
+            prim->b0 = 136;
+            prim->g0 = 160;
             prim->p2 = (Random() & 7) + 1;
             prim->priority = self->zPriority + 1;
             prim->drawMode =
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         }
-        self->ext.et_bonePillar.unk80 = 0x30;
+        self->ext.et_bonePillar.unk80 = 48;
         self->step++;
     case 3:
         for (prim = self->ext.et_bonePillar.prim; prim != NULL;
@@ -460,12 +451,12 @@ void EntityBonePillarDeathParts(Entity* self) {
     case 0:
         InitializeEntity(g_EInitBonePillarPieces);
         self->hitboxState = 0;
-        self->animCurFrame = (self->params & 0xF) + 0x12;
+        self->animCurFrame = (self->params & 0xF) + 18;
         self->zPriority += self->params & 0xF;
         if (self->params & 1) {
-            self->ext.et_bonePillar.unk80 = 0x18;
+            self->ext.et_bonePillar.unk80 = 24;
         } else {
-            self->ext.et_bonePillar.unk80 = 0xC;
+            self->ext.et_bonePillar.unk80 = 12;
         }
         break;
     case 1:
@@ -477,11 +468,11 @@ void EntityBonePillarDeathParts(Entity* self) {
         MoveEntity();
         self->velocityY += FIX(0.15625);
         posX = self->posX.i.hi;
-        posY = self->posY.i.hi + D_us_80181C9C[self->params];
+        posY = self->posY.i.hi + g_eBonePillarPosYOffset[self->params];
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;
-            self->ext.et_bonePillar.unk80 = 0xE;
+            self->ext.et_bonePillar.unk80 = 14;
             self->step++;
         }
         break;

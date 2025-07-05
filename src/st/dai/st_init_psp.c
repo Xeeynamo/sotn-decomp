@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dai/dai.h"
 
-#include "../pfn_entity_update.h"
-
 extern LayoutEntity* D_8D2E2B0;
 extern LayoutEntity* D_8D2E384;
 
@@ -53,8 +51,8 @@ s32 E_ID(SKELETON_PIECES);
 s32 E_ID(UNK_35);
 s32 E_ID(UNK_36);
 s32 E_ID(BAT);
-s32 E_ID(UNK_38);
-s32 E_ID(UNK_39);
+s32 E_ID(BLACK_CROW);
+s32 E_ID(BLUE_CROW);
 s32 E_ID(SKELERANG);
 s32 E_ID(SKELERANG_BOOMERANG);
 s32 E_ID(SKELERANG_UNKNOWN);
@@ -116,8 +114,8 @@ void InitEntityIds(void) {
     E_ID(UNK_35) = 0x35;
     E_ID(UNK_36) = 0x36;
     E_ID(BAT) = 0x37;
-    E_ID(UNK_38) = 0x38;
-    E_ID(UNK_39) = 0x39;
+    E_ID(BLACK_CROW) = 0x38;
+    E_ID(BLUE_CROW) = 0x39;
     E_ID(SKELERANG) = 0x3A;
     E_ID(SKELERANG_BOOMERANG) = 0x3B;
     E_ID(SKELERANG_UNKNOWN) = 0x3C;

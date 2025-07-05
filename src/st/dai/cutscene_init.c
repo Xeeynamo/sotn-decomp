@@ -12,27 +12,22 @@ extern u32 g_CutsceneFlags;
 
 // This appears to be unused and deadstripped on PSP
 static u8 unused[] = {
-    0x01, 0x01, 0xFF, 0x00, 0x01, 0x02, 0xFF, 0x00, 0x01, 0x02, 0x07, 0x03,
-    0x07, 0x04, 0x07, 0x05, 0x07, 0x06, 0x07, 0x07, 0x07, 0x08, 0x07, 0x09,
-    0x10, 0x0A, 0xFF, 0x00, 0x01, 0x0A, 0x06, 0x0B, 0x06, 0x0C, 0x06, 0x0D,
-    0x10, 0x0E, 0x0A, 0x0F, 0x0A, 0x0E, 0x0A, 0x0F, 0x20, 0x0E, 0xFF, 0x00,
-    0x01, 0x0E, 0x04, 0x10, 0x04, 0x11, 0x0B, 0x12, 0xFF, 0x00, 0x00, 0x00,
-    0x01, 0x13, 0xFF, 0x00, 0x01, 0x12, 0xFF, 0x00, 0x20, 0x12, 0x03, 0x11,
-    0x03, 0x10, 0x03, 0x14, 0x03, 0x15, 0x40, 0x16, 0x06, 0x15, 0x05, 0x0D,
-    0x05, 0x0C, 0x05, 0x0B, 0x20, 0x0A, 0xFF, 0x00, 0x10, 0x0A, 0x10, 0x17,
-    0x08, 0x0A, 0xFF, 0x00, 0x01, 0x0A, 0x02, 0x0B, 0x02, 0x0C, 0x06, 0x18,
-    0x06, 0x19, 0x50, 0x18, 0x03, 0x0C, 0x03, 0x0B, 0x08, 0x0A, 0xFF, 0x00,
-    0x01, 0x0A, 0x03, 0x0B, 0x03, 0x0C, 0x03, 0x0D, 0x03, 0x0E, 0x06, 0x1B,
-    0x10, 0x1A, 0x20, 0x1B, 0x03, 0x0E, 0x03, 0x0D, 0x03, 0x0C, 0xFF, 0x00};
+    1, 1,  255, 0,  1,  2,  255, 0,  1,   2,  7,   3,  7,  4,  7,   5,
+    7, 6,  7,   7,  7,  8,  7,   9,  16,  10, 255, 0,  1,  10, 6,   11,
+    6, 12, 6,   13, 16, 14, 10,  15, 10,  14, 10,  15, 32, 14, 255, 0,
+    1, 14, 4,   16, 4,  17, 11,  18, 255, 0,  0,   0,  1,  19, 255, 0,
+    1, 18, 255, 0,  32, 18, 3,   17, 3,   16, 3,   20, 3,  21, 64,  22,
+    6, 21, 5,   13, 5,  12, 5,   11, 32,  10, 255, 0,  16, 10, 16,  23,
+    8, 10, 255, 0,  1,  10, 2,   11, 2,   12, 6,   24, 6,  25, 80,  24,
+    3, 12, 3,   11, 8,  10, 255, 0,  1,   10, 3,   11, 3,  12, 3,   13,
+    3, 14, 6,   27, 16, 26, 32,  27, 3,   14, 3,   13, 3,  12, 255, 0};
 
-static u8 D_us_80181024[] = {
-    0x04, 0x1C, 0x04, 0x1D, 0x04, 0x1E, 0x04, 0x1F, 0xFF, 0x00};
+static u8 D_us_80181024[] = {4, 28, 4, 29, 4, 30, 4, 31, 255, 0};
 static u8 D_us_80181030[] = {
-    0x02, 0x20, 0x04, 0x21, 0x04, 0x22, 0x04, 0x23, 0x04,
-    0x24, 0x04, 0x25, 0x04, 0x26, 0x04, 0x27, 0x02, 0x20};
-static u8 D_us_80181044[] = {0x08, 0x28, 0x08, 0x29, 0x60, 0x2A, 0xFF, 0x00};
+    2, 32, 4, 33, 4, 34, 4, 35, 4, 36, 4, 37, 4, 38, 4, 39, 2, 32};
+static u8 D_us_80181044[] = {8, 40, 8, 41, 96, 42, 255, 0};
 // This appears to be unused and deadstripped on PSP
-static u8 unused_too[] = {0x01, 0x0C, 0xFF, 0x00};
+static u8 unused_too[] = {1, 12, 255, 0};
 
 void func_801961DC(s16 arg0) {
     s16 temp_v0 = arg0 - g_unkGraphicsStruct.unkC;
@@ -47,11 +42,11 @@ void func_801961DC(s16 arg0) {
 }
 
 void func_us_801C5920(Entity* self) {
-    Tilemap* gTilemap;
+    Tilemap* gTilemapPtr;
     Entity* gEntities;
     s16 posScrollX;
 
-    gTilemap = &g_Tilemap;
+    gTilemapPtr = &g_Tilemap;
     gEntities = g_Entities;
 
     posScrollX = gEntities->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -77,7 +72,7 @@ void func_us_801C5920(Entity* self) {
         g_Player.demo_timer = 1;
         break;
     case 1:
-        if (posScrollX > 0x170) {
+        if (posScrollX > 368) {
             if (g_Player.status &
                 (PLAYER_STATUS_WOLF_FORM | PLAYER_STATUS_MIST_FORM |
                  PLAYER_STATUS_BAT_FORM)) {
@@ -95,7 +90,7 @@ void func_us_801C5920(Entity* self) {
                 g_Player.padSim = PAD_LEFT;
             }
         } else {
-            gEntities->posX.i.hi = 0x170 - g_Tilemap.scrollX.i.hi;
+            gEntities->posX.i.hi = 368 - g_Tilemap.scrollX.i.hi;
             g_Player.padSim = 0;
             g_CutsceneFlags |= 1;
             self->step++;
@@ -103,7 +98,7 @@ void func_us_801C5920(Entity* self) {
         g_Player.demo_timer = 1;
         break;
     case 2:
-        func_801961DC(0xB0);
+        func_801961DC(176);
         g_Player.demo_timer = 1;
         if (g_CutsceneFlags & 2) {
             self->step++;
@@ -111,8 +106,8 @@ void func_us_801C5920(Entity* self) {
         }
         break;
     case 3:
-        func_801961DC(0x80);
-        if ((g_unkGraphicsStruct.unkC == 0x80) && (g_CutsceneFlags & 8)) {
+        func_801961DC(128);
+        if ((g_unkGraphicsStruct.unkC == 128) && (g_CutsceneFlags & 8)) {
             g_PauseAllowed = true;
             if (g_unkGraphicsStruct.pauseEnemies) {
                 g_unkGraphicsStruct.pauseEnemies = false;
@@ -125,16 +120,16 @@ void func_us_801C5920(Entity* self) {
 }
 
 void func_us_801C5B88(Entity* self) {
-    Tilemap* gTilemap;
+    Tilemap* gTilemapPtr;
     Entity* gEntities;
     s16 posScrollX, posScrollY;
     s32 pan;
 
-    gTilemap = &g_Tilemap;
+    gTilemapPtr = &g_Tilemap;
     gEntities = g_Entities;
 
-    posScrollX = self->posX.i.hi + gTilemap->scrollX.i.hi;
-    posScrollY = self->posY.i.hi + gTilemap->scrollY.i.hi;
+    posScrollX = self->posX.i.hi + gTilemapPtr->scrollX.i.hi;
+    posScrollY = self->posY.i.hi + gTilemapPtr->scrollY.i.hi;
 
     switch (self->step) {
     case 0:
@@ -142,7 +137,7 @@ void func_us_801C5B88(Entity* self) {
         self->animSet = ANIMSET_OVL(15);
         self->animCurFrame = 10;
         self->unk5A = 72;
-        self->palette = PAL_UNK251;
+        self->palette = PAL_CUTSCENE;
         break;
     case 1:
         if (g_CutsceneFlags & 4) {
@@ -178,7 +173,7 @@ void func_us_801C5B88(Entity* self) {
         self->velocityY += FIX(0.1875);
         MoveEntity();
         if (self->velocityY > 0 && posScrollY > 151) {
-            self->posY.i.hi = 151 - gTilemap->scrollY.i.hi;
+            self->posY.i.hi = 151 - gTilemapPtr->scrollY.i.hi;
             self->velocityY = FIX(0);
             SetStep(5);
         }
@@ -207,7 +202,7 @@ void func_us_801C5B88(Entity* self) {
         self->velocityY += FIX(0.1875);
         MoveEntity();
         if (self->velocityY > 0 && posScrollY > 135) {
-            self->posY.i.hi = 0x87 - gTilemap->scrollY.i.hi;
+            self->posY.i.hi = 135 - gTilemapPtr->scrollY.i.hi;
             self->velocityY = FIX(0);
             SetStep(7);
         }
@@ -222,7 +217,7 @@ void func_us_801C5B88(Entity* self) {
             if (pan > 8) {
                 pan = 8;
             }
-            g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 0x50, pan);
+            g_api.PlaySfxVolPan(SFX_STOMP_SOFT_B, 80, pan);
         }
         MoveEntity();
         if (posScrollX > 544) {
