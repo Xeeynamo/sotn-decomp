@@ -178,10 +178,41 @@ static u16 g_testCollPrizeTable[] = {
     0x0000, 0x0000, 0x0001, 0x0001, 0x0002, 0x0006, 0x0007, 0x00C6,
 };
 
-static u16 g_testCollRandTable[] = {
-    0x0C00, 0x0168, 0x0F00, 0x0169, 0x0FD0, 0x016A, 0x0FF0,
-    0x016B, 0x0FF8, 0x016C, 0x0FFD, 0x016D, 0x0FFF, 0x016E,
+// The Jewel Sword drop table below consists of pairs of numbers
+// The first value of each pair is the threshold (out of 0x0FFF)
+// The second value of each pair is the dropped item ID
+
+static u16 g_jewelSwordDropTable[] = {
+    // clang-format off
+    0x0C00, DROP_ZIRCON,
+    0x0F00, DROP_AQUAMARINE,
+    0x0FD0, DROP_TURQUOISE,
+    0x0FF0, DROP_ONYX,
+    0x0FF8, DROP_GARNET,
+    0x0FFD, DROP_OPAL,
+    0x0FFF, DROP_DIAMOND,
+    // clang-format on
 };
+
+// To determine the ratio for a given drop, you subtract the threshold that came
+// before it in the list (0 for the first entry) from its threshold.
+
+// For example, Turquoise has a threshold of 0x0FD0 (4048 in decimal), and
+// Aquamarine (the entry before it) has a threshold of 0x0F00 (3840 in decimal).
+// Therefore, Turquoise has a drop ratio of 208 (4048 - 3840 = 208). That means
+// that out of 4096 drops from a Jewel Sword, 208 Turquoises are expected, on
+// average.
+
+// The table above equates to the following drop ratios for all gems
+// Item       | Ratio
+// -----------+------
+// Zircon     |  3073 (This number is 1 larger than expected due to >=)
+// Aquamarine |   768
+// Turquoise  |   208
+// Onyx       |    32
+// Garnet     |     8
+// Opal       |     5
+// Diamond    |     2
 
 static u16 g_eDamageDisplayClut[] = {
     PAL_DRA(0x1B2), PAL_DRA(0x1B3), PAL_DRA(0x1B6), PAL_DRA(0x1B7),
@@ -198,7 +229,7 @@ void HitDetection(void) {
     s32* scratchpad_2;
     Entity* iterEnt2;
     s32* scratchpad_1;
-    u16* randCompare;
+    u16* dropTable;
     s16 xCoord;
     s16 yCoord2;
     u16 miscVar1;
@@ -585,18 +616,17 @@ void HitDetection(void) {
                             AllocEntity(&g_Entities[160], &g_Entities[192]);
                         miscVar1 = 0;
                         if (otherEntity != NULL) {
+                            // Determine which jewel to randomly drop from the
+                            // Jewel Sword
                             if (hitboxCheck2 == 5) {
-                                // This little block is weird, especially since
-                                // the g_testCollRandTable is not any obvious
-                                // number pattern.
-                                randCompare = g_testCollRandTable;
+                                dropTable = g_jewelSwordDropTable;
                                 miscVar3 = rand() & 0xFFF;
-                                while (1) {
-                                    if (*randCompare++ >= miscVar3) {
-                                        miscVar3 = *randCompare;
+                                while (true) {
+                                    if (*dropTable++ >= miscVar3) {
+                                        miscVar3 = *dropTable;
                                         break;
                                     }
-                                    randCompare++;
+                                    dropTable++;
                                 }
 
                             } else {

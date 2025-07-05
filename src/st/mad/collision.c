@@ -70,9 +70,19 @@ static u16 g_testCollPrizeTable[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0001, 0x0001, 0x0001,
 };
 
-static u16 g_testCollRandTable[] = {
-    0x0C00, 0x016C, 0x0F00, 0x016D, 0x0FD0, 0x016E, 0x0FF0,
-    0x016F, 0x0FF8, 0x0170, 0x0FFD, 0x0171, 0x0FFF, 0x0172,
+// See the notes about g_jewelSwordDropTable in src/st/collision.h
+// Note that while the thresholds are the same, the item IDs are not
+
+static u16 g_jewelSwordDropTable[] = {
+    // clang-format off
+    0x0C00, 0x016C, // Garnet?
+    0x0F00, 0x016D, // Opal?
+    0x0FD0, 0x016E, // Diamond?
+    0x0FF0, 0x016F, // Lapis Lazuli?
+    0x0FF8, 0x0170, // Ring of Ares?
+    0x0FFD, 0x0171, // Gold Ring?
+    0x0FFF, 0x0172, // Silver Ring?
+    // clang-format on
 };
 
 static u16 g_eDamageDisplayClut[] = {
@@ -92,7 +102,7 @@ void HitDetection(void) {
     u16 miscVar3;
     u16 i;
     s32* scratchpad_1;
-    u16* randCompare;
+    u16* dropTable;
     u32 hitboxCheck1;
     EnemyDef* sp3C;
     s16 xCoord;
@@ -470,18 +480,17 @@ void HitDetection(void) {
                         otherEntity =
                             AllocEntity(&g_Entities[160], &g_Entities[192]);
                         if (otherEntity != NULL) {
+                            // Determine which jewel to randomly drop from the
+                            // Jewel Sword
                             if (hitboxCheck2 == 5) {
-                                // This little block is weird, especially since
-                                // the g_testCollRandTable is not any obvious
-                                // number pattern.
-                                randCompare = g_testCollRandTable;
+                                dropTable = g_jewelSwordDropTable;
                                 miscVar3 = rand() & 0xFFF;
                                 while (1) {
-                                    if (*randCompare++ >= miscVar3) {
-                                        miscVar3 = *randCompare;
+                                    if (*dropTable++ >= miscVar3) {
+                                        miscVar3 = *dropTable;
                                         break;
                                     }
-                                    randCompare++;
+                                    dropTable++;
                                 }
 
                             } else {

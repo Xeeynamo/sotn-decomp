@@ -81,7 +81,7 @@ extern u8 g_UnkEntityAnimData[];
 // extern u16 g_testCollElementLookup[10];
 // extern u8 g_testColliFrames[10];
 // extern u16 g_testCollPrizeTable[];
-// extern u16 g_testCollRandTable;
+// extern u16 g_jewelSwordDropTable;
 extern RoomHeader g_rooms[];
 
 extern EInit OVL_EXPORT(EInitBreakable);
