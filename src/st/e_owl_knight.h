@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-static u16 D_us_80181C1C[] = {
-    0, 8, 0, 6, 8, -6, -16, 0, 0, 31, 8, 0, 0, 16, 255, 0,
-};
+static u16 D_us_80181C1C[] = {0, 8, 0, 6, 8, -6, -16, 0};
+static u16 D_us_80181C2C[] = {0, 31, 8, 0, 0, 16, 255, 0}; // unused
 static u8 anim_owl_1[] = {64, 1, 12, 2, 12, 3, 12, 2, 0, 0};
 static u8 anim_owl_2[] = {
     4, 1, 4, 2, 4, 3, 8, 7, 8, 4, 8, 5, 8, 6, 8, 7, 8, 3, 8, 2, 4, 1, -1, 0,
@@ -1071,18 +1070,19 @@ static u8 D_us_80181E94[] = {
 
 // The sword sprite is part of the owl knight, this handles the sword hitbox
 void EntityOwlKnightSword(Entity* self) {
-#define KNIGHT (self - 1)
     s32 index;
     s8* hitboxPtr;
+    Entity* parent;
 
     if (!self->step) {
         InitializeEntity(g_EInitOwlKnightSword);
     }
-    self->facingLeft = KNIGHT->facingLeft;
-    self->posX.i.hi = KNIGHT->posX.i.hi;
-    self->posY.i.hi = KNIGHT->posY.i.hi;
+    parent = self - 1;
+    self->facingLeft = parent->facingLeft;
+    self->posX.i.hi = parent->posX.i.hi;
+    self->posY.i.hi = parent->posY.i.hi;
     hitboxPtr = D_us_80181E64;
-    index = KNIGHT->animCurFrame - 0xF;
+    index = parent->animCurFrame - 0xF;
     index = D_us_80181E94[index] - 4;
     if (index < 0) {
         index = 0;
@@ -1092,7 +1092,7 @@ void EntityOwlKnightSword(Entity* self) {
     self->hitboxOffY = *hitboxPtr++;
     self->hitboxWidth = *hitboxPtr++;
     self->hitboxHeight = *hitboxPtr++;
-    if (KNIGHT->entityId != E_OWL_KNIGHT) {
+    if (parent->entityId != E_OWL_KNIGHT) {
         DestroyEntity(self);
     }
 }

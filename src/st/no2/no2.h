@@ -91,6 +91,8 @@ enum OVL_EXPORT(Entities) {
     NUM_ENTITIES,
 };
 
+extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
+
 // extern EInit D_us_80180820;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
