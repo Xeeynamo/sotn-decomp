@@ -90,8 +90,8 @@ enum DaiEntities {
     E_UNK_32,                 // func_us_801D2FA4,
     E_UNK_33,                 // func_us_801D36EC,
     E_SKELETON_PIECES,        // EntitySkeletonPieces,
-    E_UNK_35,                 // func_us_801D37C4,
-    E_UNK_36,                 // func_us_801D3A40,
+    E_WINGED_GUARD,           // EntityWingedGuard,
+    E_WINGED_GUARD_PARTS,     // EntityWingedGuardParts,
     E_BAT,                    // EntityBat,
     E_BLACK_CROW,             // EntityBlackCrow,
     E_BLUE_CROW,              // EntityBlueRaven,
@@ -135,7 +135,7 @@ extern EInit g_EInitBonePillarFireBreath;
 extern EInit g_EInitBonePillarSpikeBall;
 extern EInit D_us_80180A28;
 extern EInit D_us_80180A34;
-extern EInit D_us_80180A40;
+extern EInit g_EInitWingedGuard;
 extern EInit D_us_80180A4C;
 extern EInit g_EInitBat;
 extern EInit g_EInitBlueRaven;

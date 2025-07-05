@@ -23,23 +23,23 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void func_us_801C0BA4(Entity* self);
-void func_us_801D97D0(Entity* self);
+void func_us_801D97D0(Entity* self); // stained glass parallax background
 void func_us_801D9F5C(Entity* self);
-void func_us_801C0F8C(Entity* self);
-void func_us_801C1184(Entity* self);
-void func_us_801C1298(Entity* self);
-void func_us_801C1EE4(Entity* self);
+void func_us_801C0F8C(Entity* self); // Big statue block
+void func_us_801C1184(Entity* self); // Little statue block
+void func_us_801C1298(Entity* self); // Bell
+void func_us_801C1EE4(Entity* self); // Tower wall foreground
 void func_us_801C2068(Entity* self);
-void func_us_801C220C(Entity* self);
+void func_us_801C220C(Entity* self); // Tower sky?
 void EntityClouds(Entity* self);
-void func_us_801C34FC(Entity* self);
+void func_us_801C34FC(Entity* self); // Tower sky?
 void func_us_801C23A4(Entity* self);
-void func_us_801C3164(Entity* self);
+void func_us_801C3164(Entity* self); // priest room
 void func_us_801C2534(Entity* self);
-void func_us_801C2CD4(Entity* self);
-void func_us_801C2FF0(Entity* self);
+void func_us_801C2CD4(Entity* self); // priest blades
+void func_us_801C2FF0(Entity* self); // priest blade debris
 void func_us_801C1E18(Entity* self);
-void func_us_801D1204(Entity* self);
+void func_us_801D1204(Entity* self); // corner guard
 void func_us_801D1C24(Entity* self);
 void EntityBonePillarHead(Entity* self);
 void EntityBonePillarFireBreath(Entity* self);
@@ -53,20 +53,20 @@ void func_us_801C3ED8(Entity* self);
 void func_us_801D2FA4(Entity* self);
 void func_us_801D36EC(Entity* self);
 void EntitySkeletonPieces(Entity* self);
-void func_us_801D37C4(Entity* self);
-void func_us_801D3A40(Entity* self);
+void EntityWingedGuard(Entity* self);
+void EntityWingedGuardParts(Entity* self);
 void EntityBat(Entity* self);
 void EntityBlackCrow(Entity* self);
 void EntityBlueRaven(Entity* self);
 void EntitySkelerang(Entity* self);
 void EntitySkelerangBoomerang(Entity* self);
 void EntitySkelerangUnknown(Entity* self);
-void func_us_801D56F4(Entity* self);
+void func_us_801D56F4(Entity* self); // hunting girl
 void func_us_801D636C(Entity* self);
-void func_us_801D64A0(Entity* self);
+void func_us_801D64A0(Entity* self); // spectral sword
 void func_us_801D6FC8(Entity* self);
 void func_us_801D70A0(Entity* self);
-void func_us_801D3BD4(Entity* self);
+void EntityWingedGuardSpawner(Entity* self);
 void EntitySealedDoor(Entity* self);
 void EntityBreakableDebris(Entity* self);
 void OVL_EXPORT(EntityCutscene)(Entity* self);
@@ -127,8 +127,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D2FA4,
     func_us_801D36EC,
     EntitySkeletonPieces,
-    func_us_801D37C4,
-    func_us_801D3A40,
+    EntityWingedGuard,
+    EntityWingedGuardParts,
     EntityBat,
     EntityBlackCrow,
     EntityBlueRaven,
@@ -140,7 +140,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D64A0,
     func_us_801D6FC8,
     func_us_801D70A0,
-    func_us_801D3BD4,
+    EntityWingedGuardSpawner,
     EntitySealedDoor,
     EntityBreakableDebris,
     OVL_EXPORT(EntityCutscene),
@@ -170,7 +170,7 @@ EInit g_EInitBonePillarSpikeBall = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 185};
 EInit D_us_80180A28 = {ANIMSET_OVL(7), 1, 72, PAL_UNK22A, 118};
 EInit D_us_80180A34 = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
-EInit D_us_80180A40 = {ANIMSET_OVL(8), 0, 75, PAL_UNK22B, 128};
+EInit g_EInitWingedGuard = {ANIMSET_OVL(8), 0, 75, PAL_UNK22B, 128};
 EInit D_us_80180A4C = {ANIMSET_OVL(8), 0, 75, PAL_UNK22B, 3};
 EInit g_EInitBat = {ANIMSET_OVL(9), 0, 74, PAL_BAT, 64};
 EInit g_EInitBlueRaven = {ANIMSET_OVL(10), 0, 79, PAL_UNK22F, 114};
