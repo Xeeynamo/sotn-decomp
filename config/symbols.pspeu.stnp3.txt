@@ -43,6 +43,7 @@ EntityBloodSplatter = 0x09241A50;
 func_801C53AC = 0x09241FE0;
 EntityBloodyZombie = 0x09242228;
 EntityBloodDrips = 0x09242C40;
+EntityBat = 0x09242ED0;
 EntityStageNamePopup = 0x09243208; // source=match
 EntityIsNearPlayer = 0x09244088; // source=match
 NP3_EntityRedDoor = 0x09244170; // source=match
@@ -112,6 +113,7 @@ g_EInitInteractable = 0x0926B238;
 g_EInitLockCamera = 0x0926B258;
 g_EInitCommon = 0x0926B268;
 g_EInitStInteractable = 0x0926B288;
+g_EInitBat = 0x0926B2F8;
 g_EInitBloodyZombie = 0x0926B348;
 g_EInitSlograNP3 = 0x0926B358;
 g_EInitSlograSpearNP3 = 0x0926B368;
