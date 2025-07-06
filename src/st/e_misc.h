@@ -649,20 +649,21 @@ extern u8 g_bigRedFireballAnim[];
 void EntityBigRedFireball(Entity* self) {
     s32 speedTemp;
 
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitParticle);
         self->animSet = ANIMSET_DRA(2);
         self->palette = PAL_OVL(0x1B6);
-        self->opacity = 0x70;
-        self->zPriority = 192;
         self->drawFlags |= (FLAG_DRAW_ROTATE + FLAG_DRAW_OPACITY);
         self->drawMode |= (DRAW_TPAGE + DRAW_TPAGE2);
+        self->opacity = 0x70;
+        self->zPriority = 192;
 
         switch (self->ext.bigredfireball.switch_control) {
         case 1:
             if (self->ext.bigredfireball.speed > 3) {
                 self->ext.bigredfireball.speed -= 3;
-                self->ext.bigredfireball.angle -= 0x800;
+                self->ext.bigredfireball.angle =
+                    self->ext.bigredfireball.angle - 0x800;
             }
             break;
 
@@ -672,20 +673,23 @@ void EntityBigRedFireball(Entity* self) {
             break;
         }
 
-        self->rotate = self->ext.bigredfireball.angle &= 0xFFF;
+        self->ext.bigredfireball.angle &= 0xFFF;
+        self->rotate = self->ext.bigredfireball.angle;
         speedTemp = self->ext.bigredfireball.speed * 320 / 24; // = 13.333
         self->velocityX = speedTemp * rsin(self->ext.bigredfireball.angle);
         self->velocityY = -(speedTemp * rcos(self->ext.bigredfireball.angle));
     }
 
-    if (self->pose >= 13) {
-        self->velocityX = self->velocityX / 4 * 3;
-        self->velocityY = self->velocityY / 4 * 3;
+    if (self->pose > 12) {
+        self->velocityX /= 4;
+        self->velocityX *= 3;
+        self->velocityY /= 4;
+        self->velocityY *= 3;
     }
 
     MoveEntity();
 
-    if (AnimateEntity(g_bigRedFireballAnim, self) == 0) {
+    if (!AnimateEntity(g_bigRedFireballAnim, self)) {
         DestroyEntity(self);
     }
 }
