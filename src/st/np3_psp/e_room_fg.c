@@ -46,11 +46,11 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A5D8);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A660);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A748);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", UnkEntityFunc0);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A7F0);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", GetAngleBetweenEntities);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925A870);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", GetNormalizedAngle);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", SetStep);
 
