@@ -125,6 +125,7 @@ GetNormalizedAngle = 0x0925A870;
 SetStep = 0x0925A968;
 SetSubStep = 0x0925A9B8;
 InitializeEntity = 0x0925A9F8;
+EntityDummy = 0x0925ABA0;
 UnkCollisionFunc = 0x0925ABD8;
 CheckFieldCollision = 0x0925AD28;
 GetPlayerCollisionWith = 0x0925AEB8;

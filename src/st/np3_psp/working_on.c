@@ -3,60 +3,6 @@
 
 // clang-format off
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", DestroyEntity);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", PreventEntityFromRespawning);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", AnimateEntity);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", GetDistanceToPlayerX);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", GetDistanceToPlayerY);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", GetSideToPlayer);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", MoveEntity);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", FallEntity);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", UnkCollisionFunc3);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", UnkCollisionFunc2);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", AllocEntity);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0925A4C8);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", SetEntityVelocityFromAngle);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", Ratan2Shifted);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", GetAngleBetweenEntitiesShifted);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", AdjustValueWithinThreshold);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", UnkEntityFunc0);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", GetAngleBetweenEntities);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", GetNormalizedAngle);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", SetStep);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", SetSubStep);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", InitializeEntity);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0925ABA0);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", UnkCollisionFunc);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", CheckFieldCollision);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", GetPlayerCollisionWith);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", ReplaceBreakableWithItemDrop);
-
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0925B488);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0925B558);
