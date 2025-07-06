@@ -26,7 +26,7 @@ file_start_funcs = {
     "StageNamePopupHelper": ["e_stage_name", "EntityStageNamePopup"],
     "EntitySoulStealOrb": ["e_particles", "EntityEnemyBlood"],
     "PrizeDropFall": ["e_collect"],
-    "EntityRoomForeground": ["e_room_fg"],
+    "EntityRoomForeground": ["e_room_fg", "EntityRoomForeground"],
     "BottomCornerText": ["popup", "BottomCornerText"],
     "UnkPrimHelper": ["prim_helpers"],
     "AxeKnightUnkFunc1": ["e_axe_knight", "EntityAxeKnightThrowingAxe"],
