@@ -59,6 +59,10 @@ EntityMerman2JumpAir = 0x09247AB8;
 EntityHighWaterSplash = 0x09247B68;
 EntityDeadMerman = 0x09247DF0;
 EntityMermanSpawner = 0x09247EF8;
+EntityMerman = 0x092480C8;
+EntityMermanFireball = 0x092491E8;
+EntityMermanJumpAir = 0x092493D0;
+EntityMermanExplosion = 0x09249480;
 func_psp_0923AD68 = 0x092495F0; // source=match
 func_psp_0923B2F0 = 0x09249B78; // source=match
 EntitySoulStealOrb = 0x0924A008; // source=match
@@ -82,6 +86,7 @@ EntityRelicOrb = 0x0924D350; // source=match
 EntityHeartDrop = 0x0924E488; // source=match
 EntityMessageBox = 0x0924E658; // source=match
 CheckColliderOffsets = 0x0924EDD0;
+UnkCollisionFunc5 = 0x0924F488;
 PlaySfxPositional = 0x0924F788;
 HitDetection = 0x0924F8E0; // source=match
 EntityDamageDisplay = 0x092510B0; // source=match
@@ -125,6 +130,8 @@ g_EInitCommon = 0x0926B268;
 g_EInitStInteractable = 0x0926B288;
 g_EInitWaterObject = 0x0926B298;
 g_EInitWaterSplash = 0x0926B2A8;
+g_EInitMerman = 0x0926B2B8;
+g_EInitMermanFireball = 0x0926B2C8;
 g_EInitBat = 0x0926B2F8;
 g_EInitBloodyZombie = 0x0926B348;
 g_EInitSlograNP3 = 0x0926B358;

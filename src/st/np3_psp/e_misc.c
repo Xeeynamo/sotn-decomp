@@ -17,7 +17,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", func_pspeu_0924F190);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", func_pspeu_0924F308);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", func_pspeu_0924F488);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", UnkCollisionFunc5);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", func_pspeu_0924F618);
 
