@@ -68,7 +68,7 @@ void func_us_801D6FC8(Entity* self);
 void func_us_801D70A0(Entity* self);
 void func_us_801D3BD4(Entity* self);
 void EntitySealedDoor(Entity* self);
-void EntityBreakableDebris(Entity* self);
+void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
 void OVL_EXPORT(EntityCutscene)(Entity* self);
 void func_us_801C5920(Entity* self);
 void func_us_801C5B88(Entity* self);
@@ -142,7 +142,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D70A0,
     func_us_801D3BD4,
     EntitySealedDoor,
-    EntityBreakableDebris,
+    OVL_EXPORT(EntityBreakableDebris),
     OVL_EXPORT(EntityCutscene),
     func_us_801C5920,
     func_us_801C5B88,
@@ -150,17 +150,20 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 };
 
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 0};
-
-#include "../e_init_common.h"
-
-// Unused, not in psp
-EInit g_EInit_801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 1};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 2};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 4};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 5};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 2};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 1};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
+EInit g_EInit_801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3}; // Unused
 EInit D_us_801809B0 = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
-EInit D_us_801809BC = {ANIMSET_OVL(2), 0, 72, PAL_UNKC9, 5};
-// Unused, not in psp
-EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_UNKCA, 5};
-EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_UNKC9, 101};
-EInit D_us_801809E0 = {ANIMSET_OVL(4), 0, 72, PAL_UNK215, 180};
+EInit D_us_801809BC = {ANIMSET_OVL(2), 0, 72, PAL_UNK_C9, 5};
+EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_UNK_CA, 5}; // Unused
+EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_UNK_C9, 101};
+EInit D_us_801809E0 = {ANIMSET_OVL(4), 0, 72, PAL_UNK_215, 180};
 EInit D_us_801809EC = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 181};
 EInit g_EInitBonePillarHead = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 183};
 EInit g_EInitBonePillarPieces = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 2};
@@ -168,16 +171,16 @@ EInit g_EInitBonePillarFireBreath = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 184};
 EInit g_EInitBonePillarSpikeBall = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 185};
-EInit D_us_80180A28 = {ANIMSET_OVL(7), 1, 72, PAL_UNK22A, 118};
+EInit D_us_80180A28 = {ANIMSET_OVL(7), 1, 72, PAL_UNK_22A, 118};
 EInit D_us_80180A34 = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
-EInit D_us_80180A40 = {ANIMSET_OVL(8), 0, 75, PAL_UNK22B, 128};
-EInit D_us_80180A4C = {ANIMSET_OVL(8), 0, 75, PAL_UNK22B, 3};
+EInit D_us_80180A40 = {ANIMSET_OVL(8), 0, 75, PAL_UNK_22B, 128};
+EInit D_us_80180A4C = {ANIMSET_OVL(8), 0, 75, PAL_UNK_22B, 3};
 EInit g_EInitBat = {ANIMSET_OVL(9), 0, 74, PAL_BAT, 64};
-EInit g_EInitBlueRaven = {ANIMSET_OVL(10), 0, 79, PAL_UNK22F, 114};
-EInit g_EInitBlackCrow = {ANIMSET_OVL(10), 0, 79, PAL_UNK22F, 115};
+EInit g_EInitBlueRaven = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 114};
+EInit g_EInitBlackCrow = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 115};
 EInit g_EInitSkelerang = {ANIMSET_OVL(11), 1, 72, PAL_SKELERANG, 11};
 EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(11), 43, 72, PAL_SKELERANG, 12};
-EInit D_us_80180A94 = {ANIMSET_OVL(12), 0, 84, PAL_UNK232, 227};
-EInit D_us_80180AA0 = {ANIMSET_OVL(13), 0, 81, PAL_UNK234, 136};
-EInit D_us_80180AAC = {ANIMSET_OVL(13), 0, 81, PAL_UNK234, 2};
-EInit D_us_80180AB8 = {ANIMSET_OVL(13), 0, 81, PAL_UNK235, 137};
+EInit D_us_80180A94 = {ANIMSET_OVL(12), 0, 84, PAL_UNK_232, 227};
+EInit D_us_80180AA0 = {ANIMSET_OVL(13), 0, 81, PAL_UNK_234, 136};
+EInit D_us_80180AAC = {ANIMSET_OVL(13), 0, 81, PAL_UNK_234, 2};
+EInit D_us_80180AB8 = {ANIMSET_OVL(13), 0, 81, PAL_UNK_235, 137};

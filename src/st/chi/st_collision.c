@@ -12,7 +12,7 @@
 // D_80180D80: g_testCollElementLookup
 // D_80180D94: g_testColliFrames
 // D_80180DA0: g_testCollPrizeTable
-// D_80180DE0: g_testCollRandTable
+// D_80180DE0: g_jewelSwordDropTable
 // D_80180DFC: g_eDamageDisplayClut
 // func_8019E2A8: HitDetection
 // func_8019F3C0: [E_NUMERIC_DAMAGE] EntityDamageDisplay

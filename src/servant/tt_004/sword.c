@@ -122,33 +122,19 @@ static s32 s_SwordCurrentLevel;
 static s32 D_us_8017865C[1];
 static s32 D_us_80178660[3]; // should be part of the preceeding array
 static u32 D_us_8017866C;
-// looks like a struct like:
-//  {
-//    Point16 coord0, coord1, coord2, coord3;
-//    s16 priority;
-//    s16 drawMode;
-//  }
-// but the addressing is funny
-static s32 D_us_80178670; // 0
-static s32 D_us_80178674; // 1
-static s32 D_us_80178678; // 2
-static s32 D_us_8017867C; // 3
-static s16 D_us_80178680; // priority
-static s16 D_us_80178682; // drawMode
-static s32 D_us_80178684[5][3];
-
-static Point16 D_us_801786C0[1];
-static Point16 D_us_801786C4[4]; // should be part of the preceding array
-static s32 D_us_801786D4[96];
-static s32 D_us_80178854[96];
-static s32 D_us_801789D4[96];
-static MATRIX D_us_80178B54;
-static s32 D_us_80178B74;
-static s32 D_us_80178B78;
-static s32 D_us_80178B7C;
-static s32 D_us_80178B80;
-static s32 D_us_80178B84;
-static s32 D_us_80178B88;
+extern s32 D_us_80178670[4][5];
+extern Point16 D_us_801786C0[1];
+extern Point16 D_us_801786C4[4]; // should be part of the preceding array
+extern s32 D_us_801786D4[96];
+extern s32 D_us_80178854[96];
+extern s32 D_us_801789D4[96];
+extern MATRIX D_us_80178B54;
+extern s32 D_us_80178B74;
+extern s32 D_us_80178B78;
+extern s32 D_us_80178B7C;
+extern s32 D_us_80178B80;
+extern s32 D_us_80178B84;
+extern s32 D_us_80178B88;
 
 // sets up familiar entity id "state" during initialization
 // and level change
@@ -1259,7 +1245,112 @@ void func_us_80176BF8(Entity* self) {
     D_us_80178B78 = 0;
 }
 
-INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_80176F28);
+void func_us_80176F28(Entity* self) {
+    s32 i;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags =
+            FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_UNK_20000;
+        D_us_8017863C = &g_PrimBuf[self->primIndex];
+        for (i = 0; i < 4; i++) {
+            D_us_8017863C->tpage = 0x1B;
+            D_us_8017863C->clut = 0x141;
+            D_us_8017863C->u0 = D_us_8017863C->u2 = 0;
+            D_us_8017863C->v0 = D_us_8017863C->v1 = 0;
+            D_us_8017863C->u1 = D_us_8017863C->u3 = 16;
+            D_us_8017863C->v2 = D_us_8017863C->v3 = 16;
+            D_us_8017863C->drawMode =
+                DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE |
+                DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+
+            D_us_8017863C = D_us_8017863C->next;
+        }
+        self->step++;
+        break;
+
+    case 1:
+        D_us_8017863C = &g_PrimBuf[self->primIndex];
+        if (D_us_80178B7C != 0) {
+            for (i = 0; i < 4; i++) {
+                D_us_8017863C->priority = D_us_80178670[i][4];
+                D_us_8017863C->drawMode &= ~DRAW_HIDE;
+                LOW(D_us_8017863C->x0) = D_us_80178670[i][0];
+                LOW(D_us_8017863C->x1) = D_us_80178670[i][1];
+                LOW(D_us_8017863C->x2) = D_us_80178670[i][2];
+                LOW(D_us_8017863C->x3) = D_us_80178670[i][3];
+
+                if (i < 2) {
+                    D_us_8017863C->r0 = D_us_8017863C->g0 =
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178644))) + 32;
+                    D_us_8017863C->b0 =
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178648))) + 64;
+
+                    D_us_8017863C->r1 = D_us_8017863C->g1 =
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178644))) + 96;
+                    D_us_8017863C->b1 =
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178648))) + 192;
+
+                    D_us_8017863C->r2 = D_us_8017863C->g2 =
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178644))) + 32;
+                    D_us_8017863C->b2 =
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178648))) + 64;
+
+                    D_us_8017863C->r3 = D_us_8017863C->g3 =
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178644))) + 32;
+                    D_us_8017863C->b3 =
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178648))) + 64;
+                } else {
+                    D_us_8017863C->r0 = D_us_8017863C->g0 =
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178644))) + 96;
+                    D_us_8017863C->b0 =
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178648))) + 0xc0;
+
+                    D_us_8017863C->r1 = D_us_8017863C->g1 =
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178644))) + 96;
+                    D_us_8017863C->b1 =
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178648))) + 192;
+
+                    D_us_8017863C->r2 = D_us_8017863C->g2 =
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178644))) + 32;
+                    D_us_8017863C->b2 =
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178648))) + 64;
+
+                    D_us_8017863C->r3 = D_us_8017863C->g3 =
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178644))) + 32;
+                    D_us_8017863C->b3 =
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178648))) + 64;
+                }
+
+                D_us_8017863C = D_us_8017863C->next;
+            }
+        } else {
+            for (i = 0; i < 4; i++) {
+                D_us_8017863C->drawMode |= DRAW_HIDE;
+
+                LOW(D_us_8017863C->x0) = D_us_80178670[i][0];
+                LOW(D_us_8017863C->x1) = D_us_80178670[i][1];
+                LOW(D_us_8017863C->x2) = D_us_80178670[i][2];
+                LOW(D_us_8017863C->x3) = D_us_80178670[i][3];
+
+                D_us_8017863C = D_us_8017863C->next;
+            }
+        }
+        D_us_80178644 += 0x20;
+        D_us_80178644 &= 0xFFF;
+        D_us_80178644 += 0x40;
+        D_us_80178644 &= 0xFFF;
+        break;
+    }
+
+    D_us_80178B7C = 0;
+}
 
 void func_us_801773CC(Entity* self) {
     Entity* entity;
