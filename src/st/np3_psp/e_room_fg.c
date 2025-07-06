@@ -28,7 +28,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", GetSideToPlayer);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", MoveEntity);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259E88);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", FallEntity);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", UnkCollisionFunc3);
 
@@ -62,7 +62,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925ABA0);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925ABD8);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925AD28);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", CheckFieldCollision);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", GetPlayerCollisionWith);
 

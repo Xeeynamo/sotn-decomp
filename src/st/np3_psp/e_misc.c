@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", EntityRelicOrb);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", EntityHeartDrop);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", EntityMessageBox);
-
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", CheckColliderOffsets);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_misc", func_pspeu_0924EF18);
