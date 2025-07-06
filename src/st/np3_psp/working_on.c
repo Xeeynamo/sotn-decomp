@@ -3,12 +3,6 @@
 
 // clang-format off
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09251AB8);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09251BB8);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09252588);
-
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_801C4144);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", EntityAlucardWaterEffect);

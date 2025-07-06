@@ -53,9 +53,10 @@ static u8 attack_timer_cycles[2][4] = {
     {0x80, 0x08, 0x08, 0x40}, // skeleton type 0, attacks in quick succession
     {0xF0, 0xC0, 0xA0, 0x80}, // type 1, attacks slowly
 };
-static u16 sensors_ground[][2] = {{0, 20}, {0, 4}, {8, -4}, {-16, 0}};
+#define XY(x, y) x, y
+static u16 sensors_ground[] = {XY(0, 20), XY(0, 4), XY(8, -4), XY(-16, 0)};
 static s16 sensors_special[] = {0, 20, 12, 0};
-static u16 sensor_move[][2] = {{-12, 16}, {0, -16}, {0, -16}};
+static s16 sensor_move[] = {XY(-12, 16), XY(0, -16), XY(0, -16)};
 
 static void BoneScimitarAttackCheck(void) {
     s32 temp = UnkCollisionFunc2(sensors_special);

@@ -60,7 +60,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", InitializeEntity);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925ABA0);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_0925ABD8);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", UnkCollisionFunc);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", CheckFieldCollision);
 

@@ -89,6 +89,8 @@ EntityIntenseExplosion = 0x0924F618;
 PlaySfxPositional = 0x0924F788;
 HitDetection = 0x0924F8E0; // source=match
 EntityDamageDisplay = 0x092510B0; // source=match
+EntityBoneScimitar = 0x09251BB8;
+EntityBoneScimitarParts = 0x09252588;
 func_801C4144 = 0x092526F0; // source=match
 EntityAlucardWaterEffect = 0x092528C0; // source=match
 EntitySplashWater = 0x092538C0; // source=match
@@ -115,6 +117,7 @@ GetNormalizedAngle = 0x0925A870;
 SetStep = 0x0925A968;
 SetSubStep = 0x0925A9B8;
 InitializeEntity = 0x0925A9F8;
+UnkCollisionFunc = 0x0925ABD8;
 CheckFieldCollision = 0x0925AD28;
 GetPlayerCollisionWith = 0x0925AEB8;
 ReplaceBreakableWithItemDrop = 0x0925B390;
@@ -140,6 +143,8 @@ g_EInitWaterObject = 0x0926B298;
 g_EInitWaterSplash = 0x0926B2A8;
 g_EInitMerman = 0x0926B2B8;
 g_EInitMermanFireball = 0x0926B2C8;
+g_EInitBoneScimitar = 0x0926B2D8;
+g_EInitScimitarParts = 0x0926B2E8;
 g_EInitBat = 0x0926B2F8;
 g_EInitBloodyZombie = 0x0926B348;
 g_EInitSlograNP3 = 0x0926B358;
