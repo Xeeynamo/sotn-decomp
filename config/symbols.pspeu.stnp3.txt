@@ -30,7 +30,6 @@ EntityPathBlockSmallWeight = 0x0923F1A0;
 EntityPathBlockTallWeight = 0x0923F538;
 EntityHeartRoomSwitch = 0x0923F890;
 EntityHeartRoomGoldDoor = 0x0923FA08;
-CreateExplosionPuff = 0x0923FE90;
 EntityExplosionPuffOpaque = 0x0923FF70;
 EntityLightningThunder = 0x092404E0;
 EntityLightningCloud = 0x092405B8;
@@ -40,17 +39,14 @@ UpdateRoomPosition = 0x09241860; // source=match
 CreateEntityFromCurrentEntity = 0x09241940; // source=match
 CreateEntityFromEntity = 0x092419C8; // source=match
 EntityBloodSplatter = 0x09241A50;
-func_801C53AC = 0x09241FE0;
 EntityBloodyZombie = 0x09242228;
 EntityBloodDrips = 0x09242C40;
 EntityBat = 0x09242ED0;
 EntityStageNamePopup = 0x09243208; // source=match
-EntityIsNearPlayer = 0x09244088; // source=match
 NP3_EntityRedDoor = 0x09244170; // source=match
 Random = 0x09245390; // source=match
 Update = 0x092453D0; // source=match
 UpdateStageEntities = 0x092457B0; // source=match
-CheckMermanEnteringWater = 0x092458C8;
 EntityMerman2 = 0x09245A18;
 EntityMermanFireSpit = 0x09247270;
 EntityMediumWaterSplash = 0x09247508;
@@ -63,8 +59,6 @@ EntityMerman = 0x092480C8;
 EntityMermanFireball = 0x092491E8;
 EntityMermanJumpAir = 0x092493D0;
 EntityMermanExplosion = 0x09249480;
-func_psp_0923AD68 = 0x092495F0; // source=match
-func_psp_0923B2F0 = 0x09249B78; // source=match
 EntitySoulStealOrb = 0x0924A008; // source=match
 EntityEnemyBlood = 0x0924A568; // source=match
 func_psp_0923C2F8 = 0x0924AB80; // source=match
@@ -118,11 +112,11 @@ GetPlayerCollisionWith = 0x0925AEB8;
 ReplaceBreakableWithItemDrop = 0x0925B390;
 UnkPrimHelper = 0x09261C08;
 UpdateAnimation = 0x09262108;
-UnkPolyFunc0 = 0x09262600;
-PrimDecreaseBrightness = 0x09262658;
 FindFirstUnkPrim = 0x09262388;
 FindFirstUnkPrim2 = 0x092623D8;
 UnkPolyFunc2 = 0x09262598;
+UnkPolyFunc0 = 0x09262600;
+PrimDecreaseBrightness = 0x09262658;
 NP3_EntityUpdates = 0x0926B088;
 NP3_EInitBreakable = 0x0926B1F8;
 g_EInitObtainable = 0x0926B208;

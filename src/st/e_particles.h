@@ -275,4 +275,3 @@ void EntityEnemyBlood(Entity* self) {
         }
     }
 }
-
