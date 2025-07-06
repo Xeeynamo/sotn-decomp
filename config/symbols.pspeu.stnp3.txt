@@ -100,6 +100,10 @@ EntitySmallWaterDrop = 0x092550D0; // source=match
 EntityWaterDrop = 0x09255400; // source=match
 BottomCornerText = 0x09255760; // source=match
 EntityRoomForeground = 0x09255D58; // source=match
+EntityOwl = 0x09255E70;
+EntityOwlKnight = 0x09257AD8;
+EntityOwlKnightSword = 0x092598E0;
+EntityOwlTarget = 0x09259A18;
 DestroyEntity = 0x09259A58;
 PreventEntityFromRespawning = 0x09259AF0;
 AnimateEntity = 0x09259B78;
@@ -111,6 +115,10 @@ FallEntity = 0x09259E88;
 UnkCollisionFunc3 = 0x09259EC0;
 UnkCollisionFunc2 = 0x0925A178;
 AllocEntity = 0x0925A458;
+SetEntityVelocityFromAngle = 0x0925A518;
+Ratan2Shifted = 0x0925A580;
+GetAngleBetweenEntitiesShifted = 0x0925A5D8;
+AdjustValueWithinThreshold = 0x0925A660;
 UnkEntityFunc0 = 0x0925A748;
 GetAngleBetweenEntities = 0x0925A7F0;
 GetNormalizedAngle = 0x0925A870;
@@ -146,6 +154,9 @@ g_EInitMermanFireball = 0x0926B2C8;
 g_EInitBoneScimitar = 0x0926B2D8;
 g_EInitScimitarParts = 0x0926B2E8;
 g_EInitBat = 0x0926B2F8;
+g_EInitOwlKnight = 0x0926B318;
+g_EInitOwlKnightSword = 0x0926B328;
+g_EInitOwl = 0x0926B338;
 g_EInitBloodyZombie = 0x0926B348;
 g_EInitSlograNP3 = 0x0926B358;
 g_EInitSlograSpearNP3 = 0x0926B368;

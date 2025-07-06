@@ -3,16 +3,6 @@
 
 // clang-format off
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09255E70);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_092575D0);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09257AD8);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_092598E0);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09259A18);
-
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", DestroyEntity);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", PreventEntityFromRespawning);
@@ -37,13 +27,13 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", AllocEntity);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0925A4C8);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0925A518);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", SetEntityVelocityFromAngle);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0925A580);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", Ratan2Shifted);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0925A5D8);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", GetAngleBetweenEntitiesShifted);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0925A660);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", AdjustValueWithinThreshold);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", UnkEntityFunc0);
 
