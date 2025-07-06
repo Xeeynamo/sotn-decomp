@@ -816,7 +816,7 @@
 | st0   | func_801AD838                            |       52 |         10 |        | https://decomp.me/scratch/2pNca | 0.995 |
 | maria | func_pspeu_092AE4A8                      |       52 |         13 |        |                                 |       |
 | dra   | func_psp_090F18B0                        |       53 |          3 |        |                                 |       |
-| no4   | func_pspeu_0923D0C8                      |       53 |          3 |        |                                 |       |
+| no4   | func_pspeu_0923D0C8                      |       53 |          3 |        | https://decomp.me/scratch/Cm89N | 1.0   |
 | dra   | func_psp_091049E8                        |       53 |          5 |        |                                 |       |
 | dra   | func_psp_090FF3C0                        |       53 |          5 |        |                                 |       |
 | np3   | func_pspeu_09262658                      |       53 |          6 |        |                                 |       |
@@ -2281,7 +2281,7 @@
 | no2   | func_pspeu_09254D78                      |      616 |         52 |        |                                 |       |
 | dra   | EntityBatEcho                            |      618 |         43 |        | https://decomp.me/scratch/90rWo | 0.998 |
 | dra   | func_800EB758                            |      619 |         30 |        | https://decomp.me/scratch/i7kpN | 1.0   |
-| no4   | func_pspeu_0923BB30                      |      621 |         50 |        | https://decomp.me/scratch/MtIyy | 0.696 |
+| no4   | func_pspeu_0923BB30                      |      621 |         50 |        | https://decomp.me/scratch/pkcRw | 1.0   |
 | ric   | RicEntityAguneaLightning                 |      624 |         46 | Yes    | https://decomp.me/scratch/dgUhj | 1.0   |
 | lib   | func_psp_0923CFC0                        |      630 |        109 | Yes    | https://decomp.me/scratch/QqPkx | 0.997 |
 | st0   | func_801BD8F0                            |      634 |         59 | Yes    | https://decomp.me/scratch/oOt9S | 0.997 |
@@ -2374,7 +2374,7 @@
 | lib   | EntityLifeUpSpawn                        |      858 |         61 | Yes    | https://decomp.me/scratch/evuI8 | 0.999 |
 | st0   | func_801BC5C0                            |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.998 |
 | st0   | func_801AF774                            |      868 |         52 | Yes    | https://decomp.me/scratch/jQNRR | 0.999 |
-| no4   | func_pspeu_0923C460                      |      870 |        106 | Yes    | https://decomp.me/scratch/axDU4 | 0.674 |
+| no4   | func_pspeu_0923C460                      |      870 |        106 | Yes    | https://decomp.me/scratch/Fijsk | 0.99  |
 | lib   | func_us_801AE8E8                         |      883 |         80 |        |                                 |       |
 | lib   | func_psp_09263810                        |      884 |         74 | Yes    | https://decomp.me/scratch/e81JN | 0.995 |
 | st0   | EntityBackgroundVortex                   |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
