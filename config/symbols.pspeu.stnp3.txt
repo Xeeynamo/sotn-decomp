@@ -80,7 +80,12 @@ EntityRelicOrb = 0x0924D350; // source=match
 EntityHeartDrop = 0x0924E488; // source=match
 EntityMessageBox = 0x0924E658; // source=match
 CheckColliderOffsets = 0x0924EDD0;
+EntityUnkId13 = 0x0924EF18;
+EntityGreyPuffSpawner = 0x0924F060;
+EntityExplosionVariants = 0x0924F190;
+EntityGreyPuff = 0x0924F308;
 UnkCollisionFunc5 = 0x0924F488;
+EntityIntenseExplosion = 0x0924F618;
 PlaySfxPositional = 0x0924F788;
 HitDetection = 0x0924F8E0; // source=match
 EntityDamageDisplay = 0x092510B0; // source=match
@@ -125,6 +130,7 @@ g_EInitObtainable = 0x0926B208;
 g_EInitParticle = 0x0926B218;
 g_EInitSpawner = 0x0926B228;
 g_EInitInteractable = 0x0926B238;
+g_EInitUnkId13 = 0x0926B248;
 g_EInitLockCamera = 0x0926B258;
 g_EInitCommon = 0x0926B268;
 g_EInitStInteractable = 0x0926B288;
