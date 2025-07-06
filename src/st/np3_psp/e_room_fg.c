@@ -16,7 +16,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259A18);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", DestroyEntity);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", func_pspeu_09259AF0);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", PreventEntityFromRespawning);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_room_fg", AnimateEntity);
 

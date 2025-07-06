@@ -99,6 +99,7 @@ EntityWaterDrop = 0x09255400; // source=match
 BottomCornerText = 0x09255760; // source=match
 EntityRoomForeground = 0x09255D58; // source=match
 DestroyEntity = 0x09259A58;
+PreventEntityFromRespawning = 0x09259AF0;
 AnimateEntity = 0x09259B78;
 GetDistanceToPlayerX = 0x09259CE8;
 GetDistanceToPlayerY = 0x09259D58;
@@ -133,6 +134,7 @@ g_EInitInteractable = 0x0926B238;
 g_EInitUnkId13 = 0x0926B248;
 g_EInitLockCamera = 0x0926B258;
 g_EInitCommon = 0x0926B268;
+g_EInitDamageNum = 0x0926B278;
 g_EInitStInteractable = 0x0926B288;
 g_EInitWaterObject = 0x0926B298;
 g_EInitWaterSplash = 0x0926B2A8;
