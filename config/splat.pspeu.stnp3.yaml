@@ -77,7 +77,7 @@ segments:
       - [0x18260, c, np3/collision]
       - [0x1A438, c, np3/e_bone_scimitar]
       - [0x1B070, c, np3/water_effects]
-      - [0x1E0E0, c, np3_psp/popup]
+      - [0x1E0E0, c, np3/popup]
       - [0x1E6D8, c, np3_psp/e_room_fg]
       - [0x2B080, data]
       - [0x571D0, .data, np3/e_jewel_sword_puzzle]
