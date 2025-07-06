@@ -61,75 +61,43 @@ EntityMermanJumpAir = 0x092493D0;
 EntityMermanExplosion = 0x09249480;
 EntitySoulStealOrb = 0x0924A008; // source=match
 EntityEnemyBlood = 0x0924A568; // source=match
-func_psp_0923C2F8 = 0x0924AB80; // source=match
-func_psp_0923C390 = 0x0924AC18; // source=match
-BlitChar = 0x0924AC58; // source=match
-PrizeDropFall = 0x0924B210; // source=match
-PrizeDropFall2 = 0x0924B2E8; // source=match
-CollectHeart = 0x0924B468; // source=match
-CollectGold = 0x0924B508; // source=match
-CollectSubweapon = 0x0924B608; // source=match
-CollectHeartVessel = 0x0924B8A0; // source=match
-CollectLifeVessel = 0x0924B960; // source=match
-CollectDummy = 0x0924B9B8; // source=match
 EntityPrizeDrop = 0x0924B9E0; // source=match
 EntityExplosion = 0x0924C7F8; // source=match
-BlinkItem = 0x0924C960; // source=match
 EntityEquipItemDrop = 0x0924CAF8; // source=match
 EntityRelicOrb = 0x0924D350; // source=match
 EntityHeartDrop = 0x0924E488; // source=match
 EntityMessageBox = 0x0924E658; // source=match
-CheckColliderOffsets = 0x0924EDD0;
 EntityUnkId13 = 0x0924EF18;
-EntityGreyPuffSpawner = 0x0924F060;
 EntityExplosionVariants = 0x0924F190;
 EntityGreyPuff = 0x0924F308;
-UnkCollisionFunc5 = 0x0924F488;
 EntityIntenseExplosion = 0x0924F618;
 PlaySfxPositional = 0x0924F788;
 HitDetection = 0x0924F8E0; // source=match
 EntityDamageDisplay = 0x092510B0; // source=match
 EntityBoneScimitar = 0x09251BB8;
 EntityBoneScimitarParts = 0x09252588;
-func_801C4144 = 0x092526F0; // source=match
 EntityAlucardWaterEffect = 0x092528C0; // source=match
 EntitySplashWater = 0x092538C0; // source=match
 EntitySurfacingWater = 0x09254450; // source=match
 EntitySideWaterSplash = 0x09254BA8; // source=match
 EntitySmallWaterDrop = 0x092550D0; // source=match
 EntityWaterDrop = 0x09255400; // source=match
-BottomCornerText = 0x09255760; // source=match
 EntityRoomForeground = 0x09255D58; // source=match
 EntityOwl = 0x09255E70;
 EntityOwlKnight = 0x09257AD8;
 EntityOwlKnightSword = 0x092598E0;
 EntityOwlTarget = 0x09259A18;
 DestroyEntity = 0x09259A58;
-PreventEntityFromRespawning = 0x09259AF0;
 AnimateEntity = 0x09259B78;
 GetDistanceToPlayerX = 0x09259CE8;
-GetDistanceToPlayerY = 0x09259D58;
 GetSideToPlayer = 0x09259DB0;
 MoveEntity = 0x09259E38;
-FallEntity = 0x09259E88;
 UnkCollisionFunc3 = 0x09259EC0;
 UnkCollisionFunc2 = 0x0925A178;
 AllocEntity = 0x0925A458;
-SetEntityVelocityFromAngle = 0x0925A518;
-Ratan2Shifted = 0x0925A580;
-GetAngleBetweenEntitiesShifted = 0x0925A5D8;
-AdjustValueWithinThreshold = 0x0925A660;
-UnkEntityFunc0 = 0x0925A748;
-GetAngleBetweenEntities = 0x0925A7F0;
-GetNormalizedAngle = 0x0925A870;
 SetStep = 0x0925A968;
-SetSubStep = 0x0925A9B8;
 InitializeEntity = 0x0925A9F8;
 EntityDummy = 0x0925ABA0;
-UnkCollisionFunc = 0x0925ABD8;
-CheckFieldCollision = 0x0925AD28;
-GetPlayerCollisionWith = 0x0925AEB8;
-ReplaceBreakableWithItemDrop = 0x0925B390;
 UnkPrimHelper = 0x09261C08;
 UpdateAnimation = 0x09262108;
 FindFirstUnkPrim = 0x09262388;
