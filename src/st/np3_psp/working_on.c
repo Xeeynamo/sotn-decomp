@@ -3,11 +3,6 @@
 
 // clang-format off
 
-// EntityZombie
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09261738);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09261A58);
-
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", UnkPrimHelper);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", UpdateAnimation);
