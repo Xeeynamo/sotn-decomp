@@ -3212,6 +3212,17 @@ typedef struct {
     s32 unk84;
 } ET_Crow;
 
+typedef struct {
+    u16 timer;
+    u16 posY;
+    u16 prevTimer;
+} ET_801C4980;
+
+typedef struct {
+    struct Entity* unk7C;
+    struct Primitive* unk80;
+} ET_801C5268;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3487,6 +3498,8 @@ typedef union { // offset=0x7C
     ET_801C12B0 et_801C12B0;
     ET_BonePillar et_bonePillar;
     ET_801C4520 et_801C4520;
+    ET_801C4980 et_801C4980;
+    ET_801C5268 et_801C5268;
     ET_Crow et_crow;
 } Ext;
 
