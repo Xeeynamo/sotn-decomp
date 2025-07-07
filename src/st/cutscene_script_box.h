@@ -1,11 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#ifndef CUTSCENE_UNK3_RECT_X
-#define CUTSCENE_UNK3_RECT_X 0
-#endif
-
-#ifndef CUTSCENE_UNK4_TPAGE
-#define CUTSCENE_UNK4_TPAGE 0x10
-#endif
+// The CUTSCENE_UNK3_RECT_X and CUTSCENE_UNK4_TPAGE macros must be set in ovl.h
 
 static void CutsceneUnk3(s16 nextCharY) {
     RECT rect;
