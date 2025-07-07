@@ -1902,7 +1902,7 @@ void func_us_801C4738(Entity* self) {
         if (self->ext.et_waterAlcove.waterHeight < 64) {
             if (!(self->ext.et_waterAlcove.unk8E & 0x7)) {
                 if (!self->ext.et_waterAlcove.waterHeight) {
-                    g_api_PlaySfx(SFX_WATER_BUBBLE);
+                    g_api.PlaySfx(SFX_WATER_BUBBLE);
                 }
                 self->ext.et_waterAlcove.waterHeight++;
                 if (self->ext.et_waterAlcove.waterHeight == 20) {
