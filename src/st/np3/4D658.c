@@ -29,7 +29,7 @@ void func_801CD734() {
         func_801CD658();
 }
 
-void func_801CD78C(Point32* src, s32 speed, s16 angle, Point32* dst) {
+static void func_801CD78C(Point32* src, s32 speed, s16 angle, Point32* dst) {
     if (g_CurrentEntity->facingLeft) {
         angle = -angle;
     }

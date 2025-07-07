@@ -98,6 +98,7 @@ AllocEntity = 0x0925A458;
 SetStep = 0x0925A968;
 InitializeEntity = 0x0925A9F8;
 EntityDummy = 0x0925ABA0;
+func_801CD78C = 0x0925B488;
 EntityZombie = 0x09261738;
 EntityZombieSpawner = 0x09261A58;
 UnkPrimHelper = 0x09261C08;
