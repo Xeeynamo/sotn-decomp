@@ -1976,7 +1976,86 @@ void func_us_801C4BD8(Entity* self) {
     D_us_80181108 = 1;
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4D2C);
+void func_us_801C4D2C(Entity* self) {
+    s16 leftBoundX, rightBoundX, currentX, playerScreenY;
+    u16 playerInRange;
+
+    u16* tilePtr;
+    Entity* newEntity;
+    Tilemap* tilemap;
+    Entity* player;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+    }
+
+    player = &g_Entities[0];
+    tilemap = &g_Tilemap;
+
+    // Another P2 controller triangle secret ?
+    if (g_pads[1].tapped & PAD_TRIANGLE) {
+        g_api.PlaySfx(SFX_UNK_7BD);
+    }
+
+    playerInRange = 0;
+    if (!(g_Player.status &
+          (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM))) {
+        playerScreenY = player->posY.i.hi + tilemap->scrollY.i.hi;
+        if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+            if (playerScreenY > 151 && playerScreenY < 171) {
+                playerInRange = 1;
+                leftBoundX = player->posX.i.hi + tilemap->scrollX.i.hi - 12;
+                rightBoundX = leftBoundX + 24;
+            }
+        } else if (playerScreenY > 151 && playerScreenY < 199) {
+            playerInRange = 1;
+            leftBoundX = player->posX.i.hi + tilemap->scrollX.i.hi - 8;
+            rightBoundX = leftBoundX + 16;
+        }
+    }
+
+    if (playerInRange) {
+        for (currentX = leftBoundX; currentX <= rightBoundX; currentX += 8) {
+            playerInRange = 0;
+
+            if ((currentX >= 2624 && currentX < 2784) ||
+                (currentX >= 2944 && currentX < 3040)) {
+                playerInRange = 1;
+            }
+
+            if (playerInRange) {
+                tilePtr = &tilemap->fg[currentX / 16] + 2288;
+
+                if (*tilePtr == 1793 || *tilePtr == 1797) {
+                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (newEntity) {
+                        CreateEntityFromCurrentEntity(E_ID_54, newEntity);
+                        newEntity->posX.i.hi =
+                            ((currentX & 0xFFF0) + 8) - tilemap->scrollX.i.hi;
+                        newEntity->posY.i.hi = 178 - tilemap->scrollY.i.hi;
+                        if (player->posX.i.hi > newEntity->posX.i.hi) {
+                            newEntity->params = 1;
+                        }
+                    }
+                    *tilePtr = 2759;
+                } else if (*tilePtr == 1804) {
+                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (newEntity) {
+                        CreateEntityFromCurrentEntity(E_ID_54, newEntity);
+                        newEntity->posX.i.hi =
+                            ((currentX & 0xFFF0) + 8) - tilemap->scrollX.i.hi;
+                        newEntity->posY.i.hi = 178 - tilemap->scrollY.i.hi;
+                        if (player->posX.i.hi > newEntity->posX.i.hi) {
+                            newEntity->params = 1;
+                        }
+                    }
+                    *tilePtr = 1437;
+                }
+            }
+        }
+    }
+}
 
 void func_us_801C5020(Entity* self) {
     if (!self->step) {
