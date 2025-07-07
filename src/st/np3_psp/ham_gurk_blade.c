@@ -40,11 +40,45 @@ static void func_801CD78C(Point32* src, s32 speed, s16 angle, Point32* dst) {
     dst->y += speed * rcos(angle) * 16;
 }
 
+void func_801CD83C(Entity* self) {
+    s16 angle = self->ext.GH_Props.rotate;
+    Entity* src;
+
+    if (g_CurrentEntity->facingLeft) {
+        angle = -angle;
+    }
+
+    src = self->ext.GH_Props.parent;
+    self->posX.val = src->posX.val;
+    self->posY.val = src->posY.val;
+    self->posX.val -= self->ext.GH_Props.unk9E * rsin(angle) * 16;
+    self->posY.val += self->ext.GH_Props.unk9E * rcos(angle) * 16;
+    if (self->ext.GH_Props.unkA8) {
+        FntPrint("CAUTION!! WARNING_A AT %x\n", self->animCurFrame);
+    }
+    self->ext.GH_Props.unkA8 |= 1;
+}
+
+void func_801CD91C(Entity* self) {
+    s16 angle = self->ext.GH_Props.rotate;
+    Entity* src;
+
+    if (g_CurrentEntity->facingLeft) {
+        angle = -angle;
+    }
+    src = self->ext.GH_Props.parent;
+    src->posX.val = self->posX.val;
+    src->posY.val = self->posY.val;
+    src->posX.val -= -self->ext.GH_Props.unk9E * rsin(angle) * 16;
+    src->posY.val =
+        -self->ext.GH_Props.unk9E * rcos(angle) * 16 + src->posY.val;
+    if (self->ext.GH_Props.unkA8) {
+        FntPrint("CAUTION!! WARNING_B AT %x\n", self->animCurFrame);
+    }
+    self->ext.GH_Props.unkA8 |= 1;
+}
+
 // clang-format off
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925B558);
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925B680);
 
 // func_801CDAC8
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925B7A0);
