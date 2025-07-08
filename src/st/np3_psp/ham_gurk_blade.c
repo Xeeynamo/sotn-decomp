@@ -192,9 +192,19 @@ void func_801CDD80(s16* arg0, unkStr_801CDD80* arg1) {
     }
 }
 
-// clang-format off
+void func_801CDE10(s16* arg0) {
+    Entity* ent;
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925BBF8);
+    while (*arg0) {
+        if (*arg0 != 0xFF) {
+            ent = &g_CurrentEntity[*arg0];
+            ent->ext.GH_Props.rotate += ent->ext.GH_Props.unkA6;
+        }
+        arg0++;
+    }
+}
+
+// clang-format off
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925BC90);
 
