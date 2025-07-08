@@ -171,12 +171,28 @@ void func_801CDD00(Entity* entity, s16 arg1, s16 arg2) {
     temp_t0 = temp_t0 / arg2;
     entity->ext.GH_Props.unkA6 = temp_t0;
     entity->ext.GH_Props.unkA4 = arg1;
+}
 
+typedef struct{
+    s16 unk0;
+    s16* unk4;
+} unkStr_801CDD80;
+
+void func_801CDD80(s16* arg0, unkStr_801CDD80* arg1) {
+    Entity* var_s1;
+    s16* ptr = arg1->unk4;
+
+    while (*arg0) {
+        if (*arg0 != 0xFF) {
+            var_s1 = &g_CurrentEntity[*arg0];
+            func_801CDD00(var_s1, *ptr, arg1->unk0);
+        }
+        ptr++;
+        arg0++;
+    }
 }
 
 // clang-format off
-
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925BB38);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925BBF8);
 
