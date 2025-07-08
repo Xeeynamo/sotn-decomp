@@ -105,7 +105,7 @@ segments:
       - [0x320A0, .rodata, e_zombie] # EntityZombie
       - [0x320B4, .rodata, e_bloody_zombie] # EntityBloodyZombie data
       - [0x320DC, .rodata, e_owl_knight]
-      - [0x321EC, .rodata, 4D658] # Strings
+      - [0x321EC, .rodata, giantbro_helpers] # Strings
       - [0x3224C, .rodata, 4E69C] # EntityHammer
       - [0x322CC, .rodata, 4E69C] # EntityGurkhaBodyParts
       - [0x322F8, .rodata, 4F5B8] # EntityGurkha
@@ -151,13 +151,14 @@ segments:
       - [0x49BC8, c, e_zombie]
       - [0x49F98, c, e_bloody_zombie] # EntityBloodyZombie
       - [0x4B018, c, e_owl_knight]
-      - [0x4D658, c]
+      - [0x4D658, c, giantbro_helpers]
+      - [0x4E04C, c]
       - [0x4E69C, c]
       - [0x4F5B8, c]
       - [0x50A00, c, blade]
       - [0x51F38, c, prim_helpers]
       - [0x52768, .bss, create_entity]
       - [0x5277D, .bss, bss]
-      - [0x53378, .bss, 4D658]
+      - [0x53378, .bss, giantbro_helpers]
       - [0x533F4, .bss, e_collect]
   - [0x53434]
