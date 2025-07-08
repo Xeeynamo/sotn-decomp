@@ -235,9 +235,19 @@ void func_801CDF1C(s16 entIndices[], unkStr_801CDD80* arg1, s32 arg2) {
     }
 }
 
-// clang-format off
+void func_801CDFD8(Entity* self, s32 arg1) {
+    if (!self->ext.GH_Props.unkB4[0]) {
+        func_801CDD00(self, self->ext.GH_Props.unkA4, arg1);
+        self->ext.GH_Props.unkB4[0] = arg1;
+    }
+    self->ext.GH_Props.unkB4[0]--;
+    self->ext.GH_Props.rotate += self->ext.GH_Props.unkA6;
+    func_801CD83C(self);
+}
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925BE60);
+// Shared helper functions end here. Then the Blade file begins.
+
+// clang-format off
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925BEF0);
 
