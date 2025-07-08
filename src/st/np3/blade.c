@@ -1,29 +1,41 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
-#include "sfx.h"
 
 // The enemy called "Blade", his helper functions, and his swords
 
 static void func_801D0A00(s16* arg0) {
-    func_801CD91C(&g_CurrentEntity[arg0[1]]);
-    func_801CD91C(&g_CurrentEntity[arg0[0]]);
-    func_801CD91C(&g_CurrentEntity[18]);
-    func_801CD83C(&g_CurrentEntity[arg0[2]]);
-    func_801CD83C(&g_CurrentEntity[arg0[3]]);
+    Entity* ent;
 
-    for (arg0 += 4; *arg0 != 0; arg0++) {
+    ent = &g_CurrentEntity[arg0[1]];
+    func_801CD91C(ent);
+    ent = &g_CurrentEntity[arg0[0]];
+    func_801CD91C(ent);
+    ent = &g_CurrentEntity[18];
+    func_801CD91C(ent);
+    ent = &g_CurrentEntity[arg0[2]];
+    func_801CD83C(ent);
+    ent = &g_CurrentEntity[arg0[3]];
+    func_801CD83C(ent);
+
+    for (arg0 += 4; *arg0; arg0++) {
         if (*arg0 != 0xFF) {
-            func_801CD83C(&g_CurrentEntity[*arg0]);
+            ent = &g_CurrentEntity[*arg0];
+            func_801CD83C(ent);
         }
     }
 }
 
 static void func_801D0B40(void) {
-    s16* unk88 = g_CurrentEntity[15].ext.et_801D0B40.unk88;
-    g_CurrentEntity[15].ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
+    Entity* ent;
+    s16* unk88;
 
-    unk88 = g_CurrentEntity[16].ext.et_801D0B40.unk88;
-    g_CurrentEntity[16].ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
+    ent = &g_CurrentEntity[15];
+    unk88 = ent->ext.et_801D0B40.unk88;
+    ent->ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
+    
+    ent = &g_CurrentEntity[16];
+    unk88 = ent->ext.et_801D0B40.unk88;
+    ent->ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
 }
 
 // Function does not use the argument, but all calls in EntityBlade
