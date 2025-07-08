@@ -120,8 +120,8 @@ void func_801CDAC8(Entity* ent1, Entity* ent2) {
     temp_s6 = ratan2(-ratanX, ratanY);
     temp_s4 = ent1->ext.GH_Props.unk9E << 8;
     temp_s3 = ent2->ext.GH_Props.unk9E << 8;
-    ratanX >>= 8;
-    ratanY >>= 8;
+    ratanX = ratanX >> 8;
+    ratanY = ratanY >> 8;
     temp_s2 = SquareRoot0((ratanX * ratanX) + (ratanY * ratanY));
     if (((temp_s4 + temp_s3) << 8) < temp_s2) {
         temp_s2 = ((temp_s4 + temp_s3) << 8);
