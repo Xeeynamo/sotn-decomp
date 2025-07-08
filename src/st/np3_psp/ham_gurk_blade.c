@@ -157,9 +157,24 @@ bool func_801CDC80(s16* arg0, s16 arg1, s16 arg2) {
     return false;
 }
 
-// clang-format off
+void func_801CDD00(Entity* entity, s16 arg1, s16 arg2) {
+    s16 temp_t0 = arg1 - entity->ext.GH_Props.rotate;
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925BA78);
+    if (temp_t0 > 0x800) {
+        temp_t0 = temp_t0 - 0x1000;
+    }
+
+    if (temp_t0 < -0x800) {
+        temp_t0 = temp_t0 + 0x1000;
+    }
+
+    temp_t0 = temp_t0 / arg2;
+    entity->ext.GH_Props.unkA6 = temp_t0;
+    entity->ext.GH_Props.unkA4 = arg1;
+
+}
+
+// clang-format off
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925BB38);
 
