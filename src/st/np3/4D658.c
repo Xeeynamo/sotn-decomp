@@ -77,6 +77,7 @@ void func_801CD91C(Entity* self) {
     self->ext.GH_Props.unkA8 |= 1;
 }
 
+// unused
 void func_801CDA14(Entity* ent1, Entity* ent2) {
     Entity* temp_a0;
 
@@ -86,7 +87,7 @@ void func_801CDA14(Entity* ent1, Entity* ent2) {
     func_801CD78C(
         ent1, ent2->ext.GH_Props.unk9E, ent2->ext.GH_Props.rotate, ent2);
 }
-
+// unused
 void func_801CDA6C(Entity* self, s32 arg1) {
     Entity* temp_s0;
 

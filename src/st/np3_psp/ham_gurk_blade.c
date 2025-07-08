@@ -78,10 +78,69 @@ void func_801CD91C(Entity* self) {
     self->ext.GH_Props.unkA8 |= 1;
 }
 
-// clang-format off
+// unused
+void func_801CDA14(Entity* ent1, Entity* ent2) {
+    Entity* temp_a0;
 
-// func_801CDAC8
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925B7A0);
+    temp_a0 = ent1->ext.GH_Props.parent;
+    // Need to cast the entities to Point32 to account for PosX/PosY actually
+    // being a Point of two F32 values.
+    func_801CD78C((Point32*)temp_a0, temp_a0->ext.GH_Props.unk9E,
+                  temp_a0->ext.GH_Props.rotate, (Point32*)ent1);
+    func_801CD78C(
+        (Point32*)ent1, ent2->ext.GH_Props.unk9E, ent2->ext.GH_Props.rotate, (Point32*)ent2);
+}
+// unused
+void func_801CDA6C(Entity* self, s32 arg1) {
+    Entity* temp_s0;
+
+    temp_s0 = self->ext.GH_Props.parent;
+    func_801CD78C(
+        (Point32*)self, -self->ext.GH_Props.unk9E, self->ext.GH_Props.rotate, (Point32*)temp_s0);
+    func_801CD78C((Point32*)temp_s0, -temp_s0->ext.GH_Props.unk9E,
+                  temp_s0->ext.GH_Props.rotate, (Point32*)arg1);
+}
+
+void func_801CDAC8(Entity* ent1, Entity* ent2) {
+    Point32 sp10;
+    s16 temp_s6;
+    Point32* parentPos;
+    s32 temp_s4;
+    s32 temp_s3;
+    s32 temp_s2;
+    s32 ratanX;
+    s32 ratanY;
+
+    parentPos = (Point32*)ent1->ext.GH_Props.parent;
+    ratanX = ent2->posX.val - parentPos->x;
+    if (g_CurrentEntity->facingLeft) {
+        ratanX = -ratanX;
+    }
+    ratanY = ent2->posY.val - parentPos->y;
+    temp_s6 = ratan2(-ratanX, ratanY);
+    temp_s4 = ent1->ext.GH_Props.unk9E << 8;
+    temp_s3 = ent2->ext.GH_Props.unk9E << 8;
+    ratanX >>= 8;
+    ratanY >>= 8;
+    temp_s2 = SquareRoot0((ratanX * ratanX) + (ratanY * ratanY));
+    if (((temp_s4 + temp_s3) << 8) < temp_s2) {
+        temp_s2 = ((temp_s4 + temp_s3) << 8);
+    }
+    temp_s2 = (temp_s2 * temp_s4) / (temp_s4 + temp_s3);
+    temp_s3 = (temp_s4 * temp_s4) - (temp_s2 * temp_s2);
+    temp_s3 = SquareRoot0(temp_s3);
+    temp_s6 += ratan2(temp_s3, temp_s2);
+    ent1->ext.GH_Props.unkA4 = temp_s6;
+    func_801CD78C(parentPos, ent1->ext.GH_Props.unk9E, temp_s6, &sp10);
+    ratanX = ent2->posX.val - sp10.x;
+    if (g_CurrentEntity->facingLeft) {
+        ratanX = -ratanX;
+    }
+    ratanY = ent2->posY.val - sp10.y;
+    ent2->ext.GH_Props.unkA4 = ratan2(-ratanX, ratanY);
+}
+
+// clang-format off
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925B990);
 
