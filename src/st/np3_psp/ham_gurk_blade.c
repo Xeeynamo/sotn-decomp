@@ -217,9 +217,25 @@ void func_801CDE88(s16* arg0) {
     }
 }
 
-// clang-format off
+void func_801CDF1C(s16 entIndices[], unkStr_801CDD80* arg1, s32 arg2) {
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925BD38);
+    arg1 += (u16)g_CurrentEntity->ext.GH_Props.unkB0[arg2];
+
+    if (!g_CurrentEntity->ext.GH_Props.unkB4[arg2]) {
+        func_801CDD80(entIndices, arg1);
+        g_CurrentEntity->ext.GH_Props.unkB4[arg2] = arg1->unk0;
+    }
+    if (!(--g_CurrentEntity->ext.GH_Props.unkB4[arg2])) {
+        arg1++;
+        if (!arg1->unk0) {
+            g_CurrentEntity->ext.GH_Props.unkB0[arg2] = 0;
+        } else {
+            ++g_CurrentEntity->ext.GH_Props.unkB0[arg2];
+        }
+    }
+}
+
+// clang-format off
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925BE60);
 
