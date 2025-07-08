@@ -37,7 +37,6 @@ EntityTransparentWater = 0x092406B8;
 InitRoomEntities = 0x09241630; // source=match
 UpdateRoomPosition = 0x09241860; // source=match
 CreateEntityFromCurrentEntity = 0x09241940; // source=match
-CreateEntityFromEntity = 0x092419C8; // source=match
 EntityBloodSplatter = 0x09241A50;
 EntityBloodyZombie = 0x09242228;
 EntityBloodDrips = 0x09242C40;
@@ -88,36 +87,23 @@ EntityOwlKnight = 0x09257AD8;
 EntityOwlKnightSword = 0x092598E0;
 EntityOwlTarget = 0x09259A18;
 DestroyEntity = 0x09259A58;
-AnimateEntity = 0x09259B78;
 GetDistanceToPlayerX = 0x09259CE8;
 GetSideToPlayer = 0x09259DB0;
 MoveEntity = 0x09259E38;
 UnkCollisionFunc3 = 0x09259EC0;
-UnkCollisionFunc2 = 0x0925A178;
-AllocEntity = 0x0925A458;
 SetStep = 0x0925A968;
 InitializeEntity = 0x0925A9F8;
 EntityDummy = 0x0925ABA0;
-func_801CD78C = 0x0925B488;
 func_801CD83C = 0x0925B558;
 func_801CD91C = 0x0925B680;
 func_801CDAC8 = 0x0925B7A0;
 func_801CDC80 = 0x0925B990;
-func_801CDD00 = 0x0925BA78;
-func_801CDD80 = 0x0925BB38;
 func_801CDE10 = 0x0925BBF8;
 func_801CDE88 = 0x0925BC90;
 func_801CDF1C = 0x0925BD38;
 func_801CDFD8 = 0x0925BE60;
 EntityZombie = 0x09261738;
 EntityZombieSpawner = 0x09261A58;
-UnkPrimHelper = 0x09261C08;
-UpdateAnimation = 0x09262108;
-FindFirstUnkPrim = 0x09262388;
-FindFirstUnkPrim2 = 0x092623D8;
-UnkPolyFunc2 = 0x09262598;
-UnkPolyFunc0 = 0x09262600;
-PrimDecreaseBrightness = 0x09262658;
 NP3_EntityUpdates = 0x0926B088;
 NP3_EInitBreakable = 0x0926B1F8;
 g_EInitObtainable = 0x0926B208;
