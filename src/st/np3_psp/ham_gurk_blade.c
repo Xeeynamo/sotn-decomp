@@ -140,9 +140,24 @@ void func_801CDAC8(Entity* ent1, Entity* ent2) {
     ent2->ext.GH_Props.unkA4 = ratan2(-ratanX, ratanY);
 }
 
-// clang-format off
+bool func_801CDC80(s16* arg0, s16 arg1, s16 arg2) {
+    if (abs(*arg0 - arg1) < arg2) {
+        *arg0 = arg1;
+        return true;
+    }
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925B990);
+    if (*arg0 > arg1) {
+        *arg0 -= arg2;
+    }
+
+    if (*arg0 < arg1) {
+        *arg0 += arg2;
+    }
+
+    return false;
+}
+
+// clang-format off
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/ham_gurk_blade", func_pspeu_0925BA78);
 
