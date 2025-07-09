@@ -722,7 +722,145 @@ void func_us_801C7204(Entity* entity, s32 arg1) {
     entity->ext.ferrymanUnk.unk7E = 1;
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/e_ferryman", func_us_801C726C);
+extern s16 D_us_80181788[];
+
+void func_us_801C726C(Entity* entity, s32 arg1, s16 posX, s16 posY, u16 arg4) {
+    u32 i;              // sp3C
+    s16* sp38;          // sp38
+    Entity* player;     // sp34
+    Entity* tempEntity; // s8
+    s16 var_s7;         // s7
+    s16 var_s6;         // s6
+    s16 var_s5;         // s5
+    s16 var_s4;         // s4
+    Primitive* prim;    // s3
+    u16 var_s2;         // s2
+    long var_s1;        // s1
+    long var_s0;        // s0
+
+    player = &PLAYER;
+    if (!entity->ext.et_801C726C.unk7C) {
+        arg1 = 0;
+    }
+
+    if (entity->ext.et_801C726C.unk7E) {
+        entity->ext.et_801C726C.unk88 += entity->ext.et_801C726C.unk8C;
+        var_s0 = entity->ext.et_801C726C.unk84;
+        entity->ext.et_801C726C.unk84 += entity->ext.et_801C726C.unk88;
+
+        if ((var_s0 < 0 && entity->ext.et_801C726C.unk84 >= 0) ||
+            (var_s0 > 0 && entity->ext.et_801C726C.unk84 <= 0)) {
+            entity->ext.et_801C726C.unk88 /= 2;
+            if (entity->ext.et_801C726C.unk88 < 0x20000 &&
+                entity->ext.et_801C726C.unk88 > -0x20000) {
+                entity->ext.et_801C726C.unk84 = 0;
+                entity->ext.et_801C726C.unk7E = 0;
+            } else {
+                entity->ext.et_801C726C.unk8C =
+                    -entity->ext.et_801C726C.unk8C / 2; // TODO: negative
+            }
+        }
+    }
+    var_s2 = entity->ext.et_801C726C_child.unk86;
+    sp38 = D_us_80181788;
+    var_s6 = posX;
+    var_s7 = posY;
+
+    for (i = 0, prim = &g_PrimBuf[entity->primIndex]; prim != NULL; i++) {
+        switch (i) {
+        case 0:
+            var_s0 = 0;
+            var_s1 = 0x1000;
+            break;
+        case 1:
+            var_s0 = rsin(var_s2 / 2);
+            var_s1 = rcos(var_s2 / 2);
+            break;
+        case 2:
+            var_s0 = rsin(var_s2 / 2);
+            var_s1 = rcos(var_s2 / 2);
+            var_s6 -= (var_s0 * 0x16) >> 0xC;
+            var_s7 += (var_s1 * 0x16) >> 0xC;
+            break;
+        case 3:
+            var_s0 = rsin(var_s2);
+            var_s1 = rcos(var_s2);
+            var_s6 -= (rsin(var_s2 / 2) * 8) >> 0xC;
+            var_s7 += (rcos(var_s2 / 2) * 8) >> 0xC;
+            break;
+        case 4:
+            var_s0 = rsin(var_s2);
+            var_s1 = rcos(var_s2);
+            posX = var_s6 - ((var_s0 * 4) >> 0xC);
+            posY = var_s7 + ((var_s1 * 4) >> 0xC);
+            if (entity->params) {
+                tempEntity = entity + 3;
+            } else {
+                tempEntity = entity + 4;
+            }
+            tempEntity->ext.et_801C726C_child.unk94 |= arg1;
+            if (arg1) {
+                if (tempEntity->facingLeft) {
+                    tempEntity->rotate = -var_s2 & 0xFFF;
+                    tempEntity->ext.et_801C726C_child.unk98 =
+                        var_s6 + (((var_s1 * 2) - (var_s0 * 0x22)) >> 0xC);
+                    tempEntity->ext.et_801C726C_child.unk9A =
+                        var_s7 + (((var_s0 * 2) + (var_s1 * 0x22)) >> 0xC);
+                } else {
+                    tempEntity->rotate = var_s2;
+                    tempEntity->ext.et_801C726C_child.unk98 =
+                        var_s6 + (((var_s1 * -3) - (var_s0 * 0x22)) >> 0xC);
+                    tempEntity->ext.et_801C726C_child.unk9A =
+                        var_s7 + (((var_s0 * -3) + (var_s1 * 0x22)) >> 0xC);
+                }
+            }
+            var_s6 -= (var_s0 * 0x16) >> 0xC;
+            var_s7 += (var_s1 * 0x16) >> 0xC;
+            break;
+        }
+
+        var_s5 = *sp38++;
+        var_s4 = *sp38++;
+        prim->x0 = var_s6 + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
+        prim->y0 = var_s7 + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
+
+        var_s5 = *sp38++;
+        var_s4 = *sp38++;
+        prim->x1 = var_s6 + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
+        prim->y1 = var_s7 + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
+
+        var_s5 = *sp38++;
+        var_s4 = *sp38++;
+        prim->x2 = var_s6 + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
+        prim->y2 = var_s7 + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
+
+        var_s5 = *sp38++;
+        var_s4 = *sp38++;
+        prim->x3 = var_s6 + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
+        prim->y3 = var_s7 + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
+
+        prim = prim->next;
+    }
+
+    if (arg4) {
+        var_s6 = posX - entity->posX.i.hi;
+        var_s7 = posY - entity->posY.i.hi;
+        if (var_s6 > 0) {
+            if (!(g_Player.vram_flag & 4)) {
+                player->posX.i.hi += var_s6;
+                D_80097488.x.i.hi += var_s6;
+            }
+        } else if (!(g_Player.vram_flag & 8)) {
+            player->posX.i.hi += var_s6;
+            D_80097488.x.i.hi += var_s6;
+        }
+        player->posY.i.hi += var_s7;
+        D_80097488.y.i.hi += var_s7;
+    }
+    entity->posX.i.hi = posX;
+    entity->posY.i.hi = posY;
+    entity->rotate = var_s2;
+}
 
 INCLUDE_ASM("st/no4/nonmatchings/e_ferryman", func_us_801C789C);
 

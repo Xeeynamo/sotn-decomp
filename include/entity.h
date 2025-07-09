@@ -3188,6 +3188,28 @@ typedef struct {
 } ET_FerrymanUnk;
 
 typedef struct {
+    /* 0x7C */ u16 unk7C;
+    /* 0x7E */ u16 unk7E;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ s32 unk84;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s32 unk8C;
+} ET_801C726C;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 : 16;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 unk9A;
+} ET_801C726C_Child;
+
+typedef struct {
     /* 0x7C */ u16 waterHeight;
     /* 0x7E */ struct Entity* entity7E;
     /* 0x82 */ struct Entity* entity82;
@@ -3510,9 +3532,11 @@ typedef union { // offset=0x7C
     ET_801C12B0 et_801C12B0;
     ET_BonePillar et_bonePillar;
     ET_801C4520 et_801C4520;
-	ET_Crow et_crow;
+    ET_Crow et_crow;
     ET_FerrymanBoat ferrymanBoat;
     ET_FerrymanUnk ferrymanUnk;
+    ET_801C726C et_801C726C;
+    ET_801C726C_Child et_801C726C_child;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
