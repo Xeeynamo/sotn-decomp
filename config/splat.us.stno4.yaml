@@ -46,7 +46,9 @@ segments:
       - [0xD5C, .data, e_lock_camera]
       - [0xDDC, .data, e_breakable]
       - [0xECC, data] # additional water_effects data
-      - [0xF18, data]
+      - [0x1108, data]
+      - [0x1678, data, e_ferryman]
+      - [0x1804, data]
       - [0x1880, .data, e_secrets]
       - [0x18F0, .data, e_bat]
       - [0x1928, data] # NO4_PrizeDrops
