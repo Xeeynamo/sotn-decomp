@@ -862,7 +862,280 @@ void func_us_801C726C(Entity* entity, s32 arg1, s16 posX, s16 posY, u16 arg4) {
     entity->rotate = var_s2;
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/e_ferryman", func_us_801C789C);
+extern u8 D_us_8018176C[];
+extern u8 D_us_801817D8[];
+extern u8 D_us_801817E0[];
+
+#ifdef VERSION_PSP
+#define COLLISION_WIDTH 0x24
+#else
+#define COLLISION_WIDTH 0x20
+#endif
+
+void func_us_801C789C(Entity* self) {
+    s32 primIndex; // sp3C
+    s32 sp38;      // sp38
+    s32 sp34;      // sp34
+
+    u16 var_s8;      // s8
+    u32 scrollY;     // s7
+    u16 var_s6;      // s6
+    Entity* entity;  // s5
+    u32 scrollX;     // s4
+    s16 var_s3;      // s3
+    s16 var_s2;      // s2
+    u8* var_s1;      // s1
+    Primitive* prim; // s0
+
+    scrollX = g_Tilemap.scrollX.i.hi;
+    scrollY = g_Tilemap.scrollY.i.hi;
+    if (self->step && self->ext.et_801C726C.unk90 == 0) {
+        self->posY.i.hi += 0x2C;
+        if (self->ext.et_801C726C.unk9A) {
+            self->ext.et_801C726C.unk9A -= 1;
+            var_s6 = 0;
+        } else {
+            var_s6 = GetPlayerCollisionWith(self, COLLISION_WIDTH, 5, 4);
+            // Possible !BUG: duplicate && condition here
+            if (!var_s6 && self->ext.et_801C726C.unk98 &&
+                self->ext.et_801C726C.unk98) {
+                self->ext.et_801C726C.unk9A = 4;
+            }
+        }
+        self->ext.et_801C726C.unk98 = var_s6;
+        self->posY.i.hi -= 0x2C;
+    }
+
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
+        if (primIndex != -1) {
+            InitializeEntity(&g_EInitInteractable);
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            self->drawFlags = FLAG_DRAW_ROTATE;
+            prim = &g_PrimBuf[primIndex];
+            sp38 = 0;
+            var_s1 = D_us_8018176C;
+
+            while (prim != NULL) {
+                prim->clut = 0x5F;
+                prim->tpage = 0xF;
+                prim->u0 = prim->u2 = *var_s1++;
+                prim->u1 = prim->u3 = *var_s1++;
+                prim->v0 = prim->v1 = *var_s1++;
+                prim->v2 = prim->v3 = *var_s1++;
+                prim->priority = *var_s1++;
+                prim->drawMode = DRAW_UNK02;
+                prim = prim->next;
+            }
+            self->animSet = -0x7FFF;
+            self->animCurFrame = 5;
+            self->zPriority = 0x9C;
+            self->ext.et_801C726C.unk80 = 0;
+            self->ext.et_801C726C.unk84 = 0x8000;
+            return;
+        }
+        break;
+    case 1:
+        entity = self + 2;
+        entity->ext.et_801C726C_child.unk7C = 0;
+        var_s8 = true;
+        if (self->params) {
+            entity = self + 3;
+            if (!entity->facingLeft) {
+                var_s8 = false;
+            }
+        } else {
+            entity = self + 4;
+            if (entity->facingLeft) {
+                var_s8 = false;
+            }
+        }
+        if (!var_s8 && (entity->step < 4 || entity->step > 12)) {
+            var_s8 = true;
+        }
+        if ((var_s8 && var_s6) || self->ext.et_801C726C.unk7C) {
+            self->step++;
+            func_us_801C7204(self, 0xFFFC0000);
+        }
+
+        var_s3 = 0xF0 - scrollY;
+        if (self->params) {
+            var_s2 = 0x2CE - scrollX;
+        } else {
+            var_s2 = 0x422 - scrollX;
+        }
+        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+        return;
+    case 2:
+        entity = self + 2;
+        entity->ext.et_801C726C_child.unk7C = 1;
+        self->ext.et_801C726C.unk80++;
+        if (self->ext.et_801C726C.unk80 > 0xA2) {
+            var_s3 = 0x4E;
+            if (self->params) {
+                var_s2 = (0x2CE - scrollX) - self->ext.et_801C726C.unk80 + 0xA2;
+            } else {
+                var_s2 = (0x2CE - scrollX) + self->ext.et_801C726C.unk80 + 0xB2;
+            }
+            if (self->ext.et_801C726C.unk80 == 0x188) {
+                if (self->params) {
+                    func_us_801C7204(self, 0x80000);
+                } else {
+                    func_us_801C7204(self, -0x80000);
+                }
+                self->step++;
+                self->ext.et_801C726C.unk82 = 0x80;
+            }
+        } else {
+            var_s3 = 0xF0 - (self->ext.et_801C726C.unk80);
+            if (self->params) {
+                var_s2 = 0x2CE - scrollX;
+                if (self->ext.et_801C726C.unk80 == 0xA2) {
+                    func_us_801C7204(self, -0x80000);
+                }
+            } else {
+                var_s2 = 0x422 - scrollX;
+                if (self->ext.et_801C726C.unk80 == 0xA2) {
+                    func_us_801C7204(self, 0x80000);
+                }
+            }
+        }
+        if (var_s3 < 0xDF && self->ext.et_801C726C.unk7C) {
+            if (var_s3 == 0xDE) {
+                if (self->params) {
+                    func_us_801C7204(self, 0x50000);
+                } else {
+                    func_us_801C7204(self, -0x50000);
+                }
+            }
+            sp34 = true;
+        } else {
+            sp34 = false;
+        }
+        var_s3 -= scrollY;
+        func_us_801C726C(self, sp34, var_s2, var_s3, var_s6);
+        if (!(self->ext.et_801C726C.unk94 % 10)) {
+            self->ext.et_801C726C.unk94 = 0;
+            PlaySfxPositional(0x6DA);
+        }
+        self->ext.et_801C726C.unk94++;
+        break;
+    case 3:
+        entity = self + 2;
+        entity->ext.et_801C726C_child.unk7C = 0;
+        if (!--self->ext.et_801C726C.unk82) {
+            self->step++;
+            PlaySfxPositional(0x675);
+        }
+
+        var_s3 = 0x4E - scrollY;
+        if (self->params) {
+            var_s2 = 0x1E8 - scrollX;
+        } else {
+            var_s2 = 0x508 - scrollX;
+        }
+        func_us_801C726C(self, 1, var_s2, var_s3, var_s6);
+        break;
+    case 4:
+        self->zPriority = 0x82;
+        self->ext.et_801C726C.unk90 = 1;
+        self->ext.et_801C726C.unk7C = 0;
+        if (!AnimateEntity(D_us_801817D8, self)) {
+            self->pose = 0;
+            self->poseTimer = 0;
+            self->step++;
+        }
+
+        var_s3 = 0x4E - scrollY;
+        if (self->params) {
+            var_s2 = 0x1E8 - scrollX;
+        } else {
+            var_s2 = 0x508 - scrollX;
+        }
+        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+        break;
+    case 5:
+        if (!AnimateEntity(D_us_801817E0, self)) {
+            if (self->params) {
+                func_us_801C7204(self, -0x50000);
+            } else {
+                func_us_801C7204(self, 0x50000);
+            }
+            self->step++;
+            self->ext.et_801C726C.unk82 = 0x40;
+        }
+        if (self->pose == 2) {
+            self->ext.et_801C726C.unk90 = 0;
+            self->zPriority = 0x9C;
+        }
+
+        var_s3 = 0x4E - scrollY;
+        if (self->params) {
+            var_s2 = 0x1E8 - scrollX;
+        } else {
+            var_s2 = 0x508 - scrollX;
+        }
+        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+        break;
+    case 6:
+        if (!--self->ext.et_801C726C.unk82) {
+            if (self->params) {
+                func_us_801C7204(self, 0x80000);
+            } else {
+                func_us_801C7204(self, -0x80000);
+            }
+            self->step++;
+        }
+
+        var_s3 = 0x4E - scrollY;
+        if (self->params) {
+            var_s2 = 0x1E8 - scrollX;
+        } else {
+            var_s2 = 0x508 - scrollX;
+        }
+        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+        break;
+    case 7:
+        entity = self + 2;
+        entity->ext.et_801C726C_child.unk7C = -1;
+        if (!--self->ext.et_801C726C.unk80) {
+            SetStep(1);
+        }
+
+        if (self->ext.et_801C726C.unk80 > 0xA2) {
+            var_s3 = 0x4E;
+            if (self->params) {
+                var_s2 = (0x2CE - scrollX) - self->ext.et_801C726C.unk80 + 0xA2;
+                if (self->ext.et_801C726C.unk80 == 0xA3) {
+                    func_us_801C7204(self, -0x80000);
+                }
+            } else {
+                var_s2 = (0x2CE - scrollX) + self->ext.et_801C726C.unk80 + 0xB2;
+                if (self->ext.et_801C726C.unk80 == 0xA3) {
+                    func_us_801C7204(self, 0x80000);
+                }
+            }
+        } else {
+            var_s3 = 0xF0 - (self->ext.et_801C726C.unk80);
+            if (self->params) {
+                var_s2 = 0x2CE - scrollX;
+            } else {
+                var_s2 = 0x422 - scrollX;
+            }
+        }
+        var_s3 -= scrollY;
+        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+
+        if (!(self->ext.et_801C726C.unk94 % 10)) {
+            self->ext.et_801C726C.unk94 = 0;
+            PlaySfxPositional(0x6DA);
+        }
+        self->ext.et_801C726C.unk94++;
+        break;
+    }
+}
 
 void func_us_801C7FA4(void) {}
 

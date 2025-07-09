@@ -3190,14 +3190,20 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u16 unk7C;
     /* 0x7E */ u16 unk7E;
-    /* 0x80 */ u32 : 32;
+    /* 0x80 */ u16 unk80;
+    /* 0x82 */ s16 unk82;
     /* 0x84 */ s32 unk84;
     /* 0x88 */ s32 unk88;
     /* 0x8C */ s32 unk8C;
+    /* 0x90 */ s32 unk90;
+    /* 0x94 */ u16 unk94;
+    /* 0x96 */ u16 : 16;
+    /* 0x98 */ u16 unk98;
+    /* 0x9A */ u16 unk9A;
 } ET_801C726C;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ s16 unk7C;
     /* 0x80 */ s32 : 32;
     /* 0x84 */ s16 : 16;
     /* 0x86 */ s16 unk86;
