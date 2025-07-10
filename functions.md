@@ -1717,7 +1717,7 @@
 | np3   | func_pspeu_0925F770                      |      171 |         28 |        |                                 |       |
 | dra   | func_psp_09111F58                        |      172 |         25 |        | https://decomp.me/scratch/3KWJI | 0.978 |
 | no2   | func_pspeu_0924F738                      |      172 |         37 |        |                                 |       |
-| np3   | func_pspeu_0925C0F8                      |      172 |         37 |        |                                 |       |
+| np3   | func_pspeu_0925C0F8                      |      172 |         37 |        | https://decomp.me/scratch/Qe9zq | 1.0   |
 | st0   | ST0_EntityLockCamera                     |      173 |         13 |        |                                 |       |
 | no3   | EntityHighWaterSplash                    |      174 |         21 |        |                                 |       |
 | np3   | EntityHighWaterSplash                    |      174 |         21 |        |                                 |       |
@@ -2382,7 +2382,7 @@
 | lib   | EntityLifeUpSpawn                        |      858 |         61 | Yes    | https://decomp.me/scratch/evuI8 | 0.999 |
 | st0   | func_801BC5C0                            |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.998 |
 | st0   | func_801AF774                            |      868 |         52 | Yes    | https://decomp.me/scratch/jQNRR | 0.999 |
-| no4   | func_pspeu_0923C460                      |      870 |        106 | Yes    | https://decomp.me/scratch/Fijsk | 0.99  |
+| no4   | func_pspeu_0923C460                      |      870 |        106 | Yes    | https://decomp.me/scratch/Fijsk | 1.0   |
 | lib   | func_us_801AE8E8                         |      883 |         80 |        |                                 |       |
 | lib   | func_psp_09263810                        |      884 |         74 | Yes    | https://decomp.me/scratch/e81JN | 0.995 |
 | st0   | EntityBackgroundVortex                   |      890 |        109 |        | https://decomp.me/scratch/v0YBV | 0.998 |
@@ -2479,7 +2479,7 @@
 | no3   | EntityWarg                               |     1392 |        193 | Yes    | https://decomp.me/scratch/IxuOy | 0.999 |
 | st0   | EntityDracula                            |     1396 |        179 | Yes    | https://decomp.me/scratch/sc9l4 | 0.999 |
 | no2   | func_pspeu_0924F990                      |     1457 |        237 | Yes    |                                 |       |
-| np3   | func_pspeu_0925C350                      |     1457 |        237 | Yes    |                                 |       |
+| np3   | func_pspeu_0925C350                      |     1457 |        237 | Yes    | https://decomp.me/scratch/cX9hQ | 0.995 |
 | dra   | func_psp_09114A38                        |     1516 |        244 |        | https://decomp.me/scratch/1vIIq | 0.946 |
 | dra   | func_psp_090FD268                        |     1538 |        105 |        |                                 |       |
 | dra   | func_psp_090E0FF8                        |     1552 |         69 |        | https://decomp.me/scratch/OvTcA | 0.299 |
