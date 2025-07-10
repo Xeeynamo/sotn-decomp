@@ -121,7 +121,7 @@ static s32 func_801D0B78(Entity* ent) {
 // clang-format off
 
 // EntityBlade
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_blade", func_pspeu_0925C350);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_blade", EntityBlade);
 
 // EntityBladeSword
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_blade", func_pspeu_0925D890);
