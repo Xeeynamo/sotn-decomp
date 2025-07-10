@@ -9,7 +9,6 @@ INCLUDE_ASM("st/no2/nonmatchings/unk_33A94", func_us_801B3F30);
 
 INCLUDE_ASM("st/no2/nonmatchings/unk_33A94", EntityFrozenShadeCrystal);
 
-//INCLUDE_ASM("st/no2/nonmatchings/unk_33A94", func_us_801B41A4);
 extern s8 g_GpuBuffers_0_draw_b0;
 extern s8 g_GpuBuffers_0_draw_g0;
 extern s8 g_GpuBuffers_0_draw_r0;
