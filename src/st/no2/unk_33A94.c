@@ -9,7 +9,17 @@ INCLUDE_ASM("st/no2/nonmatchings/unk_33A94", func_us_801B3F30);
 
 INCLUDE_ASM("st/no2/nonmatchings/unk_33A94", EntityFrozenShadeCrystal);
 
-INCLUDE_ASM("st/no2/nonmatchings/unk_33A94", func_us_801B41A4);
+void func_us_801B41A4(void) {
+    if (g_CurrentEntity->step == 0) {
+        g_CurrentEntity->step += 1;
+    }
+    g_GpuBuffers[0].draw.r0 = 0x20;
+    g_GpuBuffers[0].draw.g0 = 0x18;
+    g_GpuBuffers[0].draw.b0 = 0x28;
+    g_GpuBuffers[1].draw.r0 = 0x20;
+    g_GpuBuffers[1].draw.g0 = 0x18;
+    g_GpuBuffers[1].draw.b0 = 0x28;
+}
 
 INCLUDE_ASM("st/no2/nonmatchings/unk_33A94", func_us_801B4210);
 
