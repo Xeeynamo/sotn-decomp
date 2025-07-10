@@ -262,32 +262,4 @@ extern s16 D_80183378[];
 extern s16 D_801833A0[];
 extern s16 D_801833CC[];
 
-// For EntityBlade
-
-extern u16 D_801833E4[];
-extern s16 D_801833F4;
-extern s16 D_80183494;
-extern s16 D_801834B8[];
-extern s16 D_801834D8[];
-extern s16 D_801834F8[];
-extern s16 D_80183514[];
-extern s16 D_80183530[];
-extern s16 D_80183548[];
-extern s16 D_80183560[];
-extern s16 D_80183570[];
-extern s16 D_80183580[];
-extern s16 D_801835A8[];
-extern s16 D_80183600[];
-extern s16 D_80183638[];
-extern s16 D_80183700[];
-extern s16 D_80183720[];
-extern s16 D_80183760[];
-extern s16 D_8018386C[];
-extern s16 D_8018389C[];
-extern s16 D_801838C4[];
-extern s16 D_80183934[];
-extern s16 D_80183990[];
-extern s16 D_80183A24[];
-extern s16 D_80183A4C[];
-
 extern bool slograGaibonRetreat;
