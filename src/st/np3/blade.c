@@ -115,11 +115,11 @@ static s32 func_801D0B78(Entity* unused) {
 }
 
 typedef struct{
-    s16 unk0;
-    s16 unk2;
-    s16 unk4;
-    u16 unk6;
-    s16 unk8;
+    s16 eArrayOffset;
+    s16 eArrayParentOffset;
+    s16 unk9E;
+    u16 params;
+    s16 zOffset;
 } bladeBodyPartsInit;
 
 // For EntityBlade
@@ -188,13 +188,13 @@ void EntityBlade(Entity* self) {
         }
         break;
     case 2:
-        for (parts = &D_801833F4, ent_s4 = self; parts->unk0; parts ++) {
-            ent_s0 = self + parts->unk0;
+        for (parts = &D_801833F4, ent_s4 = self; parts->eArrayOffset; parts ++) {
+            ent_s0 = self + parts->eArrayOffset;
             CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, ent_s0);
-            ent_s0->ext.GH_Props.unk9E = parts->unk4;
-            ent_s0->ext.GH_Props.parent = self + parts->unk2;
-            ent_s0->params = parts->unk6 + 0x200;
-            ent_s0->zPriority = self->zPriority + parts->unk8;
+            ent_s0->ext.GH_Props.unk9E = parts->unk9E;
+            ent_s0->ext.GH_Props.parent = self + parts->eArrayParentOffset;
+            ent_s0->params = parts->params + 0x200;
+            ent_s0->zPriority = self->zPriority + parts->zOffset;
             ent_s0->unk5C = self;
             ent_s0->unk60 = ent_s4;
             ent_s4 = ent_s0;
