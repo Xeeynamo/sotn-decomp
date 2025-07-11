@@ -80,7 +80,7 @@ segments:
       - [0x3010, data]
       - [0x33A0, data]
       - [0x33E4, .data, blade]
-      - [0x33F4, data, blade]
+      - [0x3494, data, blade]
       - [0x3530, data]
       - [0x3570, data]
       - [0x3580, data]

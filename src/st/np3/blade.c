@@ -117,15 +117,15 @@ static s32 func_801D0B78(Entity* unused) {
 typedef struct{
     s16 unk0;
     s16 unk2;
-    u16 unk4;
+    s16 unk4;
     u16 unk6;
-    u16 unk8;
+    s16 unk8;
 } bladeBodyPartsInit;
 
 // For EntityBlade
 
 static s16 D_801833E4[] = {0, 9, 0, 4, 4, -4, -8, 0};
-extern bladeBodyPartsInit D_801833F4[];
+static bladeBodyPartsInit D_801833F4[] = {{9, 18, 16, 7, 1}, {10, 9, 14, 8, 2}, {11, 10, 0, 9, 3}, {12, 18, 16, 13, -1}, {13, 12, 14, 14, -2}, {14, 13, 0, 15, -3}, {18, 0, 8, 3, 0}, {2, 0, -12, 2, 1}, {1, 2, -4, 1, 0}, {3, 2, 0, 4, 2}, {4, 3, 10, 5, 5}, {5, 4, 13, 6, 4}, {6, 2, 0, 10, -2}, {7, 6, 10, 11, -6}, {8, 7, 13, 12, -5}, {0,0,0,0,0}};
 extern s16 D_80183494[];
 extern s16 D_801834B8[];
 extern s16 D_801834D8[];
