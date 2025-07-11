@@ -46,7 +46,9 @@ segments:
       - [0xD5C, .data, e_lock_camera]
       - [0xDDC, .data, e_breakable]
       - [0xECC, data] # additional water_effects data
-      - [0xF18, data]
+      - [0x1108, data]
+      - [0x1678, .data, e_ferryman]
+      - [0x1804, data]
       - [0x1880, .data, e_secrets]
       - [0x18F0, .data, e_bat]
       - [0x1928, data] # NO4_PrizeDrops
@@ -71,6 +73,7 @@ segments:
       - [0x30F0, data]
       - [0x40980, .rodata, e_breakable]
       - [0x409A0, .rodata, first_c_file]
+      - [0x409B8, .rodata, e_ferryman]
       - [0x40A30, .rodata, C82B8]
       - [0x40A48, .rodata, e_bat]
       - [0x40A5C, .rodata, e_killer_fish]
@@ -90,7 +93,8 @@ segments:
       - [0x40E0C, c, e_lock_camera]
       - [0x40FC8, c, e_breakable]
       - [0x412B0, c, first_c_file]
-      - [0x482B8, c, C82B8]
+      - [0x459E0, c, e_ferryman]
+      - [0x48248, c, C82B8]
       - [0x486F4, c, e_secrets]
       - [0x48E4C, c, e_bat]
       - [0x49130, c, e_killer_fish]
