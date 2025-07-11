@@ -741,7 +741,16 @@ void func_us_801C7204(Entity* entity, s32 arg1) {
     entity->ext.ferrymanUnk.unk7E = 1;
 }
 
-extern s16 D_us_80181788[];
+static u8 D_us_8018176C[] = {
+    0xE4, 0xEC, 0xC4, 0xD6, 0x85, 0xE2, 0xEE, 0xE1, 0xFF, 0x84,
+    0xE4, 0xEC, 0xC4, 0xD6, 0x83, 0xE2, 0xEE, 0xE1, 0xFF, 0x82,
+    0x80, 0xC0, 0xE1, 0xFF, 0x81, 0x00, 0x00, 0x00};
+static s16 D_us_80181788[] = {
+    0xFFFC, 0xFFF4, 0x0004, 0xFFF4, 0xFFFC, 0x0006, 0x0004, 0x0006,
+    0xFFFA, 0xFFFE, 0x0006, 0xFFFE, 0xFFFA, 0x001C, 0x0006, 0x001C,
+    0xFFFC, 0xFFFC, 0x0004, 0xFFFC, 0xFFFC, 0x000E, 0x0004, 0x000E,
+    0xFFFA, 0xFFFE, 0x0006, 0xFFFE, 0xFFFA, 0x001C, 0x0006, 0x001C,
+    0xFFE0, 0xFFFD, 0x0020, 0xFFFD, 0xFFE0, 0x001B, 0x0020, 0x001B};
 
 void func_us_801C726C(Entity* entity, s32 arg1, s16 posX, s16 posY, u16 arg4) {
     u32 i;              // sp3C
@@ -881,9 +890,8 @@ void func_us_801C726C(Entity* entity, s32 arg1, s16 posX, s16 posY, u16 arg4) {
     entity->rotate = var_s2;
 }
 
-extern u8 D_us_8018176C[];
-extern u8 D_us_801817D8[];
-extern u8 D_us_801817E0[];
+static u8 D_us_801817D8[] = {0x04, 0x23, 0x84, 0x24, 0xFF, 0x00, 0x00, 0x00};
+static u8 D_us_801817E0[] = {0x04, 0x23, 0x04, 0x05, 0xFF, 0x00, 0x00, 0x00};
 
 #ifdef VERSION_PSP
 #define COLLISION_WIDTH 0x24
@@ -929,7 +937,7 @@ void func_us_801C789C(Entity* self) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
         if (primIndex != -1) {
-            InitializeEntity(&g_EInitInteractable);
+            InitializeEntity(g_EInitInteractable);
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             self->drawFlags = FLAG_DRAW_ROTATE;
@@ -1156,7 +1164,7 @@ void func_us_801C789C(Entity* self) {
     }
 }
 
-void func_us_801C7FA4(void) {}
+void func_us_801C7FA4(Entity* self) {}
 
 extern u16 D_us_801817E8;
 

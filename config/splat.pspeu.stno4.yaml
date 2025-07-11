@@ -86,7 +86,7 @@ segments:
       - [0x659C8, .data, no4/e_killer_fish]
       - [0x65A38, .data, no4/e_secrets]
       - [0x65AA8, .data, no4_psp/e_ferryman]
-      - [0x65BA0, data, e_ferryman_u]
+      - [0x65C20, data, e_ferryman_u]
       - [0x65C40, data]
       - [0x662C8, .data, no4/e_bone_archer]
       - [0x66460, data]

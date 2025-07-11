@@ -606,7 +606,7 @@ static s16 D_us_801816F4[] = {
     0x0001, 0x02F2, 0x0060, 0x0001, 0x02F2, 0x00C0, 0x0001, 0x02F2, 0x0120,
     0x0003, 0x0200, 0x0040, 0x0003, 0x0260, 0x0040};
 
-void func_pspeu_0923B378(Entity* self) {
+void func_us_801C6DA8(Entity* self) {
     u32 primIndex; // sp3C
     u32 scrollX;   // sp38
 
@@ -729,13 +729,443 @@ void func_pspeu_0923B378(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no4_psp/nonmatchings/no4_psp/e_ferryman", func_pspeu_0923BAB0);
+void func_us_801C7204(Entity* entity, s32 arg1) {
+    s32 var_a1;
 
-INCLUDE_ASM("st/no4_psp/nonmatchings/no4_psp/e_ferryman", func_pspeu_0923BB30);
+    if (entity->ext.ferrymanUnk.unk7E) {
+        return;
+    }
 
-INCLUDE_ASM("st/no4_psp/nonmatchings/no4_psp/e_ferryman", func_pspeu_0923C460);
+    PlaySfxPositional(SFX_LEVER_METAL_BANG);
+    entity->ext.ferrymanUnk.unk88 = arg1;
+    entity->ext.ferrymanUnk.unk8C = -(entity->ext.ferrymanUnk.unk88 / 16);
+    entity->ext.ferrymanUnk.unk7E = 1;
+}
 
-INCLUDE_ASM("st/no4_psp/nonmatchings/no4_psp/e_ferryman", func_pspeu_0923D0B8);
+static u8 D_us_8018176C[] = {
+    0xE4, 0xEC, 0xC4, 0xD6, 0x85, 0xE2, 0xEE, 0xE1, 0xFF, 0x84,
+    0xE4, 0xEC, 0xC4, 0xD6, 0x83, 0xE2, 0xEE, 0xE1, 0xFF, 0x82,
+    0x80, 0xC0, 0xE1, 0xFF, 0x81, 0x00, 0x00, 0x00};
+static s16 D_us_80181788[] = {
+    0xFFFC, 0xFFF4, 0x0004, 0xFFF4, 0xFFFC, 0x0006, 0x0004, 0x0006,
+    0xFFFA, 0xFFFE, 0x0006, 0xFFFE, 0xFFFA, 0x001C, 0x0006, 0x001C,
+    0xFFFC, 0xFFFC, 0x0004, 0xFFFC, 0xFFFC, 0x000E, 0x0004, 0x000E,
+    0xFFFA, 0xFFFE, 0x0006, 0xFFFE, 0xFFFA, 0x001C, 0x0006, 0x001C,
+    0xFFE0, 0xFFFD, 0x0020, 0xFFFD, 0xFFE0, 0x001B, 0x0020, 0x001B};
+
+void func_us_801C726C(Entity* entity, s32 arg1, s16 posX, s16 posY, u16 arg4) {
+    u32 i;              // sp3C
+    s16* sp38;          // sp38
+    Entity* player;     // sp34
+    Entity* tempEntity; // s8
+    s16 var_s7;         // s7
+    s16 var_s6;         // s6
+    s16 var_s5;         // s5
+    s16 var_s4;         // s4
+    Primitive* prim;    // s3
+    u16 var_s2;         // s2
+    long var_s1;        // s1
+    long var_s0;        // s0
+
+    player = &PLAYER;
+    if (!entity->ext.et_801C726C.unk7C) {
+        arg1 = 0;
+    }
+
+    if (entity->ext.et_801C726C.unk7E) {
+        entity->ext.et_801C726C.unk88 += entity->ext.et_801C726C.unk8C;
+        var_s0 = entity->ext.et_801C726C.unk84;
+        entity->ext.et_801C726C.unk84 += entity->ext.et_801C726C.unk88;
+
+        if ((var_s0 < 0 && entity->ext.et_801C726C.unk84 >= 0) ||
+            (var_s0 > 0 && entity->ext.et_801C726C.unk84 <= 0)) {
+            entity->ext.et_801C726C.unk88 /= 2;
+            if (entity->ext.et_801C726C.unk88 < 0x20000 &&
+                entity->ext.et_801C726C.unk88 > -0x20000) {
+                entity->ext.et_801C726C.unk84 = 0;
+                entity->ext.et_801C726C.unk7E = 0;
+            } else {
+                entity->ext.et_801C726C.unk8C =
+                    -entity->ext.et_801C726C.unk8C / 2; // TODO: negative
+            }
+        }
+    }
+    var_s2 = entity->ext.et_801C726C_child.unk86;
+    sp38 = D_us_80181788;
+    var_s6 = posX;
+    var_s7 = posY;
+
+    for (i = 0, prim = &g_PrimBuf[entity->primIndex]; prim != NULL; i++) {
+        switch (i) {
+        case 0:
+            var_s0 = 0;
+            var_s1 = 0x1000;
+            break;
+        case 1:
+            var_s0 = rsin(var_s2 / 2);
+            var_s1 = rcos(var_s2 / 2);
+            break;
+        case 2:
+            var_s0 = rsin(var_s2 / 2);
+            var_s1 = rcos(var_s2 / 2);
+            var_s6 -= (var_s0 * 0x16) >> 0xC;
+            var_s7 += (var_s1 * 0x16) >> 0xC;
+            break;
+        case 3:
+            var_s0 = rsin(var_s2);
+            var_s1 = rcos(var_s2);
+            var_s6 -= (rsin(var_s2 / 2) * 8) >> 0xC;
+            var_s7 += (rcos(var_s2 / 2) * 8) >> 0xC;
+            break;
+        case 4:
+            var_s0 = rsin(var_s2);
+            var_s1 = rcos(var_s2);
+            posX = var_s6 - ((var_s0 * 4) >> 0xC);
+            posY = var_s7 + ((var_s1 * 4) >> 0xC);
+            if (entity->params) {
+                tempEntity = entity + 3;
+            } else {
+                tempEntity = entity + 4;
+            }
+            tempEntity->ext.et_801C726C_child.unk94 |= arg1;
+            if (arg1) {
+                if (tempEntity->facingLeft) {
+                    tempEntity->rotate = -var_s2 & 0xFFF;
+                    tempEntity->ext.et_801C726C_child.unk98 =
+                        var_s6 + (((var_s1 * 2) - (var_s0 * 0x22)) >> 0xC);
+                    tempEntity->ext.et_801C726C_child.unk9A =
+                        var_s7 + (((var_s0 * 2) + (var_s1 * 0x22)) >> 0xC);
+                } else {
+                    tempEntity->rotate = var_s2;
+                    tempEntity->ext.et_801C726C_child.unk98 =
+                        var_s6 + (((var_s1 * -3) - (var_s0 * 0x22)) >> 0xC);
+                    tempEntity->ext.et_801C726C_child.unk9A =
+                        var_s7 + (((var_s0 * -3) + (var_s1 * 0x22)) >> 0xC);
+                }
+            }
+            var_s6 -= (var_s0 * 0x16) >> 0xC;
+            var_s7 += (var_s1 * 0x16) >> 0xC;
+            break;
+        }
+
+        var_s5 = *sp38++;
+        var_s4 = *sp38++;
+        prim->x0 = var_s6 + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
+        prim->y0 = var_s7 + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
+
+        var_s5 = *sp38++;
+        var_s4 = *sp38++;
+        prim->x1 = var_s6 + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
+        prim->y1 = var_s7 + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
+
+        var_s5 = *sp38++;
+        var_s4 = *sp38++;
+        prim->x2 = var_s6 + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
+        prim->y2 = var_s7 + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
+
+        var_s5 = *sp38++;
+        var_s4 = *sp38++;
+        prim->x3 = var_s6 + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
+        prim->y3 = var_s7 + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
+
+        prim = prim->next;
+    }
+
+    if (arg4) {
+        var_s6 = posX - entity->posX.i.hi;
+        var_s7 = posY - entity->posY.i.hi;
+        if (var_s6 > 0) {
+            if (!(g_Player.vram_flag & 4)) {
+                player->posX.i.hi += var_s6;
+                D_80097488.x.i.hi += var_s6;
+            }
+        } else if (!(g_Player.vram_flag & 8)) {
+            player->posX.i.hi += var_s6;
+            D_80097488.x.i.hi += var_s6;
+        }
+        player->posY.i.hi += var_s7;
+        D_80097488.y.i.hi += var_s7;
+    }
+    entity->posX.i.hi = posX;
+    entity->posY.i.hi = posY;
+    entity->rotate = var_s2;
+}
+
+static u8 D_us_801817D8[] = {0x04, 0x23, 0x84, 0x24, 0xFF, 0x00, 0x00, 0x00};
+static u8 D_us_801817E0[] = {0x04, 0x23, 0x04, 0x05, 0xFF, 0x00, 0x00, 0x00};
+
+#ifdef VERSION_PSP
+#define COLLISION_WIDTH 0x24
+#else
+#define COLLISION_WIDTH 0x20
+#endif
+
+void func_us_801C789C(Entity* self) {
+    s32 primIndex; // sp3C
+    s32 sp38;      // sp38
+    s32 sp34;      // sp34
+
+    u16 var_s8;      // s8
+    u32 scrollY;     // s7
+    u16 var_s6;      // s6
+    Entity* entity;  // s5
+    u32 scrollX;     // s4
+    s16 var_s3;      // s3
+    s16 var_s2;      // s2
+    u8* var_s1;      // s1
+    Primitive* prim; // s0
+
+    scrollX = g_Tilemap.scrollX.i.hi;
+    scrollY = g_Tilemap.scrollY.i.hi;
+    if (self->step && self->ext.et_801C726C.unk90 == 0) {
+        self->posY.i.hi += 0x2C;
+        if (self->ext.et_801C726C.unk9A) {
+            self->ext.et_801C726C.unk9A -= 1;
+            var_s6 = 0;
+        } else {
+            var_s6 = GetPlayerCollisionWith(self, COLLISION_WIDTH, 5, 4);
+            // Possible !BUG: duplicate && condition here
+            if (!var_s6 && self->ext.et_801C726C.unk98 &&
+                self->ext.et_801C726C.unk98) {
+                self->ext.et_801C726C.unk9A = 4;
+            }
+        }
+        self->ext.et_801C726C.unk98 = var_s6;
+        self->posY.i.hi -= 0x2C;
+    }
+
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
+        if (primIndex != -1) {
+            InitializeEntity(g_EInitInteractable);
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            self->drawFlags = FLAG_DRAW_ROTATE;
+            prim = &g_PrimBuf[primIndex];
+            sp38 = 0;
+            var_s1 = D_us_8018176C;
+
+            while (prim != NULL) {
+                prim->clut = 0x5F;
+                prim->tpage = 0xF;
+                prim->u0 = prim->u2 = *var_s1++;
+                prim->u1 = prim->u3 = *var_s1++;
+                prim->v0 = prim->v1 = *var_s1++;
+                prim->v2 = prim->v3 = *var_s1++;
+                prim->priority = *var_s1++;
+                prim->drawMode = DRAW_UNK02;
+                prim = prim->next;
+            }
+            self->animSet = -0x7FFF;
+            self->animCurFrame = 5;
+            self->zPriority = 0x9C;
+            self->ext.et_801C726C.unk80 = 0;
+            self->ext.et_801C726C.unk84 = 0x8000;
+            return;
+        }
+        break;
+    case 1:
+        entity = self + 2;
+        entity->ext.et_801C726C_child.unk7C = 0;
+        var_s8 = true;
+        if (self->params) {
+            entity = self + 3;
+            if (!entity->facingLeft) {
+                var_s8 = false;
+            }
+        } else {
+            entity = self + 4;
+            if (entity->facingLeft) {
+                var_s8 = false;
+            }
+        }
+        if (!var_s8 && (entity->step < 4 || entity->step > 12)) {
+            var_s8 = true;
+        }
+        if ((var_s8 && var_s6) || self->ext.et_801C726C.unk7C) {
+            self->step++;
+            func_us_801C7204(self, 0xFFFC0000);
+        }
+
+        var_s3 = 0xF0 - scrollY;
+        if (self->params) {
+            var_s2 = 0x2CE - scrollX;
+        } else {
+            var_s2 = 0x422 - scrollX;
+        }
+        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+        return;
+    case 2:
+        entity = self + 2;
+        entity->ext.et_801C726C_child.unk7C = 1;
+        self->ext.et_801C726C.unk80++;
+        if (self->ext.et_801C726C.unk80 > 0xA2) {
+            var_s3 = 0x4E;
+            if (self->params) {
+                var_s2 = (0x2CE - scrollX) - self->ext.et_801C726C.unk80 + 0xA2;
+            } else {
+                var_s2 = (0x2CE - scrollX) + self->ext.et_801C726C.unk80 + 0xB2;
+            }
+            if (self->ext.et_801C726C.unk80 == 0x188) {
+                if (self->params) {
+                    func_us_801C7204(self, 0x80000);
+                } else {
+                    func_us_801C7204(self, -0x80000);
+                }
+                self->step++;
+                self->ext.et_801C726C.unk82 = 0x80;
+            }
+        } else {
+            var_s3 = 0xF0 - (self->ext.et_801C726C.unk80);
+            if (self->params) {
+                var_s2 = 0x2CE - scrollX;
+                if (self->ext.et_801C726C.unk80 == 0xA2) {
+                    func_us_801C7204(self, -0x80000);
+                }
+            } else {
+                var_s2 = 0x422 - scrollX;
+                if (self->ext.et_801C726C.unk80 == 0xA2) {
+                    func_us_801C7204(self, 0x80000);
+                }
+            }
+        }
+        if (var_s3 < 0xDF && self->ext.et_801C726C.unk7C) {
+            if (var_s3 == 0xDE) {
+                if (self->params) {
+                    func_us_801C7204(self, 0x50000);
+                } else {
+                    func_us_801C7204(self, -0x50000);
+                }
+            }
+            sp34 = true;
+        } else {
+            sp34 = false;
+        }
+        var_s3 -= scrollY;
+        func_us_801C726C(self, sp34, var_s2, var_s3, var_s6);
+        if (!(self->ext.et_801C726C.unk94 % 10)) {
+            self->ext.et_801C726C.unk94 = 0;
+            PlaySfxPositional(0x6DA);
+        }
+        self->ext.et_801C726C.unk94++;
+        break;
+    case 3:
+        entity = self + 2;
+        entity->ext.et_801C726C_child.unk7C = 0;
+        if (!--self->ext.et_801C726C.unk82) {
+            self->step++;
+            PlaySfxPositional(0x675);
+        }
+
+        var_s3 = 0x4E - scrollY;
+        if (self->params) {
+            var_s2 = 0x1E8 - scrollX;
+        } else {
+            var_s2 = 0x508 - scrollX;
+        }
+        func_us_801C726C(self, 1, var_s2, var_s3, var_s6);
+        break;
+    case 4:
+        self->zPriority = 0x82;
+        self->ext.et_801C726C.unk90 = 1;
+        self->ext.et_801C726C.unk7C = 0;
+        if (!AnimateEntity(D_us_801817D8, self)) {
+            self->pose = 0;
+            self->poseTimer = 0;
+            self->step++;
+        }
+
+        var_s3 = 0x4E - scrollY;
+        if (self->params) {
+            var_s2 = 0x1E8 - scrollX;
+        } else {
+            var_s2 = 0x508 - scrollX;
+        }
+        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+        break;
+    case 5:
+        if (!AnimateEntity(D_us_801817E0, self)) {
+            if (self->params) {
+                func_us_801C7204(self, -0x50000);
+            } else {
+                func_us_801C7204(self, 0x50000);
+            }
+            self->step++;
+            self->ext.et_801C726C.unk82 = 0x40;
+        }
+        if (self->pose == 2) {
+            self->ext.et_801C726C.unk90 = 0;
+            self->zPriority = 0x9C;
+        }
+
+        var_s3 = 0x4E - scrollY;
+        if (self->params) {
+            var_s2 = 0x1E8 - scrollX;
+        } else {
+            var_s2 = 0x508 - scrollX;
+        }
+        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+        break;
+    case 6:
+        if (!--self->ext.et_801C726C.unk82) {
+            if (self->params) {
+                func_us_801C7204(self, 0x80000);
+            } else {
+                func_us_801C7204(self, -0x80000);
+            }
+            self->step++;
+        }
+
+        var_s3 = 0x4E - scrollY;
+        if (self->params) {
+            var_s2 = 0x1E8 - scrollX;
+        } else {
+            var_s2 = 0x508 - scrollX;
+        }
+        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+        break;
+    case 7:
+        entity = self + 2;
+        entity->ext.et_801C726C_child.unk7C = -1;
+        if (!--self->ext.et_801C726C.unk80) {
+            SetStep(1);
+        }
+
+        if (self->ext.et_801C726C.unk80 > 0xA2) {
+            var_s3 = 0x4E;
+            if (self->params) {
+                var_s2 = (0x2CE - scrollX) - self->ext.et_801C726C.unk80 + 0xA2;
+                if (self->ext.et_801C726C.unk80 == 0xA3) {
+                    func_us_801C7204(self, -0x80000);
+                }
+            } else {
+                var_s2 = (0x2CE - scrollX) + self->ext.et_801C726C.unk80 + 0xB2;
+                if (self->ext.et_801C726C.unk80 == 0xA3) {
+                    func_us_801C7204(self, 0x80000);
+                }
+            }
+        } else {
+            var_s3 = 0xF0 - (self->ext.et_801C726C.unk80);
+            if (self->params) {
+                var_s2 = 0x2CE - scrollX;
+            } else {
+                var_s2 = 0x422 - scrollX;
+            }
+        }
+        var_s3 -= scrollY;
+        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+
+        if (!(self->ext.et_801C726C.unk94 % 10)) {
+            self->ext.et_801C726C.unk94 = 0;
+            PlaySfxPositional(0x6DA);
+        }
+        self->ext.et_801C726C.unk94++;
+        break;
+    }
+}
+
+void func_us_801C7FA4(Entity* self) {}
 
 INCLUDE_ASM("st/no4_psp/nonmatchings/no4_psp/e_ferryman", func_pspeu_0923D0C8);
 
