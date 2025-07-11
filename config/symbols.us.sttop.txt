@@ -164,3 +164,4 @@ anim_walk = 0x80181A4C;
 anim_throw_duck = 0x80181A5C;
 anim_charge_final_slice = 0x80181A70;
 anim_throw_stand = 0x80181A80;
+g_EInitInteractable = 0x801809C4;
