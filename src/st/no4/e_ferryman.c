@@ -85,10 +85,8 @@ void MoveBoat(u16 playerInBoat, Entity* entity) {
 }
 
 extern u32 g_CutsceneFlags;
-// anim
 static u8 anim_row[] = {
     0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F, 0x10, 0x20, 0x00, 0x00};
-// anim
 static u8 anim_stationary[] = {0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F,
                                0x10, 0x20, 0x10, 0x1C, 0xFF, 0x00, 0x00, 0x00};
 static s32 y_offsets[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
@@ -206,11 +204,11 @@ void EntityFerrymanController(Entity* self) {
         }
         if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
-                self->ext.ferrymanBoat.accelerationX -= 0x1800;
+                self->ext.ferrymanBoat.accelerationX -= FIX(0.09375);
             }
         } else {
             if (self->ext.ferrymanBoat.accelerationX != 0) {
-                self->ext.ferrymanBoat.accelerationX += 0x600;
+                self->ext.ferrymanBoat.accelerationX += FIX(0.0234375);
             }
             if (!self->params) {
                 if (ferrymanEntity->pose == 5) {
@@ -253,10 +251,10 @@ void EntityFerrymanController(Entity* self) {
 
         if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
-                self->ext.ferrymanBoat.accelerationX -= 0x1800;
+                self->ext.ferrymanBoat.accelerationX -= FIX(0.09375);
             }
         } else if (self->ext.ferrymanBoat.accelerationX != 0) {
-            self->ext.ferrymanBoat.accelerationX += 0x300;
+            self->ext.ferrymanBoat.accelerationX += FIX(0.01171875);
         }
 
         if (self->facingLeft) {
@@ -271,10 +269,10 @@ void EntityFerrymanController(Entity* self) {
         AnimateEntity(anim_stationary, ferrymanEntity);
         if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
-                self->ext.ferrymanBoat.accelerationX -= 0x1800;
+                self->ext.ferrymanBoat.accelerationX -= FIX(0.09375);
             }
         } else if (self->ext.ferrymanBoat.accelerationX < FIX(-1)) {
-            self->ext.ferrymanBoat.accelerationX += 0x300;
+            self->ext.ferrymanBoat.accelerationX += FIX(0.01171875);
         }
         offset = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (self->facingLeft) {
@@ -386,11 +384,11 @@ void EntityFerrymanController(Entity* self) {
         }
         if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
-                self->ext.ferrymanBoat.accelerationX -= 0x1800; // FIX(0.09375)
+                self->ext.ferrymanBoat.accelerationX -= FIX(0.09375);
             }
         } else {
             if (self->ext.ferrymanBoat.accelerationX != 0) {
-                self->ext.ferrymanBoat.accelerationX += 0x600; // FIX(0.02345)
+                self->ext.ferrymanBoat.accelerationX += FIX(0.02345);
             }
             if (ferrymanEntity->pose == 5) {
                 offset = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -417,10 +415,10 @@ void EntityFerrymanController(Entity* self) {
         }
         if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
-                self->ext.ferrymanBoat.accelerationX -= 0x1800; // FIX(0.09375)
+                self->ext.ferrymanBoat.accelerationX -= FIX(0.09375);
             }
         } else {
-            self->ext.ferrymanBoat.accelerationX += 0x340; // FIX(0.0127)
+            self->ext.ferrymanBoat.accelerationX += FIX(0.0127);
             if (self->ext.ferrymanBoat.accelerationX > 0) {
                 self->ext.ferrymanBoat.accelerationX = 0;
                 self->step++;
@@ -530,11 +528,11 @@ void EntityFerrymanController(Entity* self) {
         }
         if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
-                self->ext.ferrymanBoat.accelerationX -= 0x1800; // FIX(0.09375)
+                self->ext.ferrymanBoat.accelerationX -= FIX(0.09375);
             }
         } else {
             if (self->ext.ferrymanBoat.accelerationX != 0) {
-                self->ext.ferrymanBoat.accelerationX += 0x600; // FIX(0.02345)
+                self->ext.ferrymanBoat.accelerationX += FIX(0.02345);
             }
             if (ferrymanEntity->pose == 5) {
                 offset = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
@@ -562,13 +560,13 @@ void EntityFerrymanController(Entity* self) {
         }
         if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
-                self->ext.ferrymanBoat.accelerationX -= 0x1800;
+                self->ext.ferrymanBoat.accelerationX -= FIX(0.09375);
             }
         } else {
             if (self->facingLeft) {
-                self->ext.ferrymanBoat.accelerationX += 0x1C0;
+                self->ext.ferrymanBoat.accelerationX += FIX(0.0068359375);
             } else {
-                self->ext.ferrymanBoat.accelerationX += 0x340;
+                self->ext.ferrymanBoat.accelerationX += FIX(0.0126953125);
             }
             if (self->ext.ferrymanBoat.accelerationX > 0) {
                 self->ext.ferrymanBoat.accelerationX = 0;
@@ -610,7 +608,7 @@ void EntityFerryman(Entity* self) {
 }
 
 static u16 arr_indexes[] = {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
-// { u0/2, u1/3, v0/1, v2/3 }
+// 2 elements of prim values { u0/2, u1/3, v0/1, v2/3 }
 static u8 D_us_801816D4[2][4] = {
     {0xC1, 0xDF, 0xE1, 0xFF}, {0xF4, 0xFC, 0x9C, 0xFC}};
 
@@ -786,14 +784,14 @@ void func_us_801C7204(Entity* entity, s32 arg1) {
     entity->ext.boatElevator.unk7E = 1;
 }
 
-// { u0/2, u1/3, v0/1, v2/3, priority }
-static u8 D_us_8018176C[][5] = {
+// 5 elements of prim values { u0/2, u1/3, v0/1, v2/3, priority }
+static u8 D_us_8018176C[5][5] = {
     {0xE4, 0xEC, 0xC4, 0xD6, 0x85},
     {0xE2, 0xEE, 0xE1, 0xFF, 0x84},
     {0xE4, 0xEC, 0xC4, 0xD6, 0x83},
     {0xE2, 0xEE, 0xE1, 0xFF, 0x82},
     {0x80, 0xC0, 0xE1, 0xFF, 0x81}};
-static s16 D_us_80181788[][8] = {
+static s16 D_us_80181788[5][8] = {
     {-4, -12, 4, -12, -4, 6, 4, 6},
     {-6, -2, 6, -2, -6, 28, 6, 28},
     {-4, -4, 4, -4, -4, 14, 4, 14},
@@ -939,9 +937,7 @@ void MoveBoatElevator(
     entity->rotate = angle;
 }
 
-// anim
 static u8 anim_floor_open[] = {0x04, 0x23, 0x84, 0x24, 0xFF, 0x00, 0x00, 0x00};
-// anim
 static u8 anim_floor_close[] = {0x04, 0x23, 0x04, 0x05, 0xFF, 0x00, 0x00, 0x00};
 
 #ifdef VERSION_PSP
