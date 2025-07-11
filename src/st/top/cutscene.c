@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
 // cutscene
@@ -35,4 +36,3 @@ INCLUDE_ASM("st/top/nonmatchings/cutscene", func_us_801AD11C);
 INCLUDE_ASM("st/top/nonmatchings/cutscene", func_us_801AD320);
 
 INCLUDE_ASM("st/top/nonmatchings/cutscene", func_us_801AD400);
-

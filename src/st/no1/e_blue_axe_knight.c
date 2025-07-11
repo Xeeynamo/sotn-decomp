@@ -4,4 +4,3 @@
 #include "../e_blue_axe_knight.h"
 
 STATIC_PAD_DATA(4);
-

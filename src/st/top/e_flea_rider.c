@@ -1,6 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
-// flea rider?
-
-INCLUDE_ASM("st/top/nonmatchings/e_flea_rider", func_us_801B86B8);
-
+INCLUDE_ASM("st/top/nonmatchings/e_flea_rider", EntityFleaRider);

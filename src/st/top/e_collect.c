@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
 INCLUDE_RODATA("st/top/nonmatchings/e_collect", D_us_801A8A7C);
@@ -52,5 +53,3 @@ INCLUDE_ASM("st/top/nonmatchings/e_collect", EntityRelicOrb);
 INCLUDE_ASM("st/top/nonmatchings/e_collect", EntityHeartDrop);
 
 INCLUDE_ASM("st/top/nonmatchings/e_collect", EntityMessageBox);
-
-

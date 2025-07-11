@@ -1,5 +1,44 @@
+TOP_pStObjLayoutHorizontal = 0x80180740;
+TOP_pStObjLayoutVertical = 0x80180814;
+TOP_EntityUpdates = 0x801808E8;
+TOP_EInitBreakable = 0x80180994;
+g_EInitObtainable = 0x801809A0;
+g_EInitParticle = 0x801809AC;
+g_EInitInteractable = 0x801809C4;
+g_EInitUnkId13 = 0x801809D0;
+g_EInitCommon = 0x801809E8;
+g_EInitDamageNum = 0x801809F4;
+g_EInitAxeKnight = 0x80180A18;
+g_EInitAxeKnightAxe = 0x80180A24;
+TOP_RedDoorTiles = 0x80180A68;
+TOP_PrizeDrops = 0x80180D10;
+g_eRedDoorUV = 0x80181234;
+g_bigRedFireballAnim = 0x801816A4;
+sensors_move = 0x801819BC;
+sensors_ground = 0x801819C4;
+dead_particle_pos = 0x801819D4;
+anim_walk_alt = 0x801819F4;
+anim_throw_stand_alt = 0x80181A04;
+anim_throw_duck_alt = 0x80181A1C;
+anim_charge_swing_alt = 0x80181A30;
+anim_charge_final_slice_alt = 0x80181A3C;
+anim_walk = 0x80181A4C;
+anim_throw_duck = 0x80181A5C;
+anim_charge_final_slice = 0x80181A70;
+anim_throw_stand = 0x80181A80;
+anim_charge_swing = 0x80181A98;
+anim_die = 0x80181AA4;
+hitboxes = 0x80181AB0;
+hitbox_lookup = 0x80181AC0;
+hitboxes_2 = 0x80181AF0;
+hitbox_2_lookup = 0x80181B28;
+init_velocity_x = 0x80181B60;
+init_velocity_y = 0x80181B6C;
+sprites_3 = 0x801A6490;
 TOP_EntityBackgroundBlock = 0x801A8C38; // source=match
 PlayerIsWithinHitbox = 0x801A8D00; // source=duplicate
+EntityLockCamera = 0x801A8D84;
+EntityBreakable = 0x801A9390;
 func_801A8328 = 0x801A96F4; // source=duplicate
 CutsceneUnk1 = 0x801AB768; // source=duplicate
 SetCutsceneScript = 0x801AB7BC; // source=duplicate
@@ -107,6 +146,7 @@ EntitySoulStealOrb = 0x801B7A58; // source=match
 EntityEnemyBlood = 0x801B7DEC; // source=match
 EntityRoomForeground = 0x801B829C; // source=match
 BottomCornerText = 0x801B8388; // source=match
+EntityFleaRider = 0x801B86B8;
 AxeKnightUnkFunc1 = 0x801B8BB8; // source=match
 func_us_801CA51C = 0x801B8DC0; // source=match
 func_us_801CAD20 = 0x801B95C4; // source=match
@@ -125,43 +165,3 @@ UnkPolyFunc0 = 0x801BAB68; // source=match
 PrimDecreaseBrightness = 0x801BAB94; // source=match
 EntityClockTower3D = 0x801BB354; // source=duplicate
 g_ItemIconSlots = 0x801BC51C;
-g_EInitDamageNum = 0x801809F4;
-g_EInitCommon = 0x801809E8;
-TOP_RedDoorTiles = 0x80180A68;
-g_eRedDoorUV = 0x80181234;
-g_EInitObtainable = 0x801809A0;
-TOP_EntityUpdates = 0x801808E8;
-TOP_EInitBreakable = 0x80180994;
-g_EInitParticle = 0x801809AC;
-EntityBreakable = 0x801A9390;
-EntityLockCamera = 0x801A8D84;
-TOP_pStObjLayoutHorizontal = 0x80180740;
-TOP_pStObjLayoutVertical = 0x80180814;
-g_EInitUnkId13 = 0x801809D0;
-g_bigRedFireballAnim = 0x801816A4;
-TOP_PrizeDrops = 0x80180D10;
-g_EInitAxeKnightAxe = 0x80180A24;
-g_EInitAxeKnight = 0x80180A18;
-sprites_3 = 0x801A6490;
-sensors_move = 0x801819BC;
-sensors_ground = 0x801819C4;
-dead_particle_pos = 0x801819D4;
-
-anim_charge_swing = 0x80181A98;
-anim_die = 0x80181AA4;
-hitboxes = 0x80181AB0;
-hitbox_lookup = 0x80181AC0;
-hitboxes_2 = 0x80181AF0;
-hitbox_2_lookup = 0x80181B28;
-init_velocity_x = 0x80181B60;
-init_velocity_y = 0x80181B6C;
-anim_walk_alt = 0x801819F4;
-anim_throw_stand_alt = 0x80181A04;
-anim_throw_duck_alt = 0x80181A1C;
-anim_charge_swing_alt = 0x80181A30;
-anim_charge_final_slice_alt = 0x80181A3C;
-anim_walk = 0x80181A4C;
-anim_throw_duck = 0x80181A5C;
-anim_charge_final_slice = 0x80181A70;
-anim_throw_stand = 0x80181A80;
-g_EInitInteractable = 0x801809C4;
