@@ -642,6 +642,8 @@ void EntityPrizeDrop(Entity* self) {
     }
 }
 
+extern EInit g_EInitParticle;
+
 // params: (& 0xFF) The explosion type
 //         (& 0xF0) These explosion types use a different (hardcoded) palette
 //                  and drawMode

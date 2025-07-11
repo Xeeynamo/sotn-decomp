@@ -1,9 +1,5 @@
-#include "common.h"
+#include "top.h"
 
-// e_lock_camera
+#include "../player_is_within_hitbox.h"
 
-INCLUDE_ASM("st/top/nonmatchings/e_lock_camera", PlayerIsWithinHitbox);
-
-INCLUDE_ASM("st/top/nonmatchings/e_lock_camera", func_us_801A8D84);
-
-
+INCLUDE_ASM("st/top/nonmatchings/e_lock_camera", EntityLockCamera);
