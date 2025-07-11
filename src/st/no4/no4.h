@@ -96,7 +96,9 @@ typedef enum EntityIDs {
     /* 0x57 */ E_SKELETON_APE_PUNCH,
     /* 0x58 */ E_SKELETON_APE_BARREL,
     /* 0x59 */ E_THROWN_BARREL,
-    /* 0x5A */ E_KILLER_FISH_DEATH_PUFF = 0x5A
+    /* 0x5A */ E_KILLER_FISH_DEATH_PUFF = 0x5A,
+    // /* 0x5B */ E_ID_5B,
+    /* 0x5C */ E_ID_5C = 0x5C,
 } EntityIDs;
 
 extern void EntityExplosionVariants(Entity* entity);

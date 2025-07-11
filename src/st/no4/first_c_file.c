@@ -2175,7 +2175,7 @@ void func_us_801C5134(void) {
     for (i = 1; i < 4; i++) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity) {
-            CreateEntityFromCurrentEntity(0x5C, newEntity);
+            CreateEntityFromCurrentEntity(E_ID_5C, newEntity);
             newEntity->posX.i.hi += D_us_801815BE[i - 1];
             newEntity->posY.i.hi += D_us_801815CC[i];
             newEntity->params = i;
