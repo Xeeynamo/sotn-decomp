@@ -1166,21 +1166,31 @@ void func_us_801C789C(Entity* self) {
 
 void func_us_801C7FA4(Entity* self) {}
 
-extern u16 D_us_801817E8;
+static u16 D_us_801817E8[] = {
+    0x0374, 0x0374, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
+    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
 
 void func_us_801C7FAC(void) {
+    u16* tilePtr;
+    Tilemap* tileMap;
     s32 i;
-    Tilemap* tileMap = &g_Tilemap;
-    s16 offset = 0x595;
-    u16* var_a2 = &D_us_801817E8;
+    s16 offset;
+
+    tileMap = &g_Tilemap;
+    offset = 0x595;
+    tilePtr = D_us_801817E8;
 
     for (i = 0; i < 7; i++) {
-        *(tileMap->fg + offset) = *var_a2++;
+        tileMap->fg[offset] = *tilePtr++;
         offset++;
-        *(tileMap->fg + offset) = *var_a2++;
-        offset = offset + 0xCF;
+        tileMap->fg[offset] = *tilePtr++;
+        offset += 0xCF;
     }
 }
+
+#ifdef VERSION_PSP
+extern s32 E_ID(SURFACING_WATER);
+#endif
 
 void func_us_801C801C(Entity* self) {
     Entity* newEnt;
@@ -1201,8 +1211,8 @@ void func_us_801C801C(Entity* self) {
         if (g_CastleFlags[BOATMAN_GATE_OPEN]) {
             GetPlayerCollisionWith(self, 16, 56, 3);
             func_us_801C7FAC();
-            self->ext.et_surfacingWater.unk80 = 0;
             self->step++;
+            self->ext.et_surfacingWater.unk80 = 0;
             return;
         }
         break;
@@ -1214,23 +1224,24 @@ void func_us_801C801C(Entity* self) {
         self->posY.i.hi--;
         offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 
-        if (offsetY >= 125) {
+        if (offsetY > 124) {
             if (self->ext.et_surfacingWater.unk7C) {
                 self->ext.et_surfacingWater.unk7C--;
             } else {
                 newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEnt != NULL) {
-                    CreateEntityFromCurrentEntity(E_SURFACING_WATER, newEnt);
+                    CreateEntityFromCurrentEntity(
+                        E_ID(SURFACING_WATER), newEnt);
                     newEnt->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
-                    newEnt->posX.i.hi = (s16)(newEnt->posX.i.hi - 16) +
-                                        (self->ext.et_surfacingWater.unk7E * 8);
+                    newEnt->posX.i.hi +=
+                        (self->ext.et_surfacingWater.unk7E * 8) - 16;
                     newEnt->params = 0x8000;
                     newEnt->ext.et_surfacingWater.origPosX = 23;
                     newEnt->zPriority = 155;
                 }
 
                 self->ext.et_surfacingWater.unk7E++;
-                if (self->ext.et_surfacingWater.unk7E >= 5) {
+                if (self->ext.et_surfacingWater.unk7E > 4) {
                     self->ext.et_surfacingWater.unk7E = 0;
                 }
                 self->ext.et_surfacingWater.unk7C = 1;
@@ -1242,20 +1253,5 @@ void func_us_801C801C(Entity* self) {
         if (offsetY < 36) {
             DestroyEntity(self);
         }
-    }
-}
-
-void func_us_801C8248(Entity* self) {
-    s32 posX;
-    s32 posY;
-
-    if (g_api.TimeAttackController(
-            TIMEATTACK_EVENT_SUCCUBUS_DEFEAT, TIMEATTACK_GET_RECORD)) {
-        posX = self->posX.val;
-        posY = self->posY.val;
-        CreateEntityFromCurrentEntity(E_HEART_DROP, self);
-        self->params = 10;
-        self->posX.val = posX;
-        self->posY.val = posY;
     }
 }

@@ -1,6 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
+void func_us_801C8248(Entity* self) {
+    s32 posX;
+    s32 posY;
+
+    if (g_api.TimeAttackController(
+            TIMEATTACK_EVENT_SUCCUBUS_DEFEAT, TIMEATTACK_GET_RECORD)) {
+        posX = self->posX.val;
+        posY = self->posY.val;
+        CreateEntityFromCurrentEntity(E_HEART_DROP, self);
+        self->params = 10;
+        self->posX.val = posX;
+        self->posY.val = posY;
+    }
+}
+
 extern u8 D_us_80181804[];
 extern Point16 D_us_80181814[];
 extern u8 D_us_8018185C[];

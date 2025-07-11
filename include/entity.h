@@ -3153,7 +3153,7 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 unk7C;
     /* 0x7E */ s16 unk7E;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ u16 unk80;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 : 16;
     /* 0x86 */ s16 : 16;
