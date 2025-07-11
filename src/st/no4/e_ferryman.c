@@ -1,14 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
-extern u16 D_us_80180F1A[];
+extern s16 D_us_80180F1A[];
+#ifdef VERSION_PSP
+extern s32 E_ID(SURFACING_WATER);
+#endif
 
 void func_us_801C59E0(Entity* self, s16 xOffset) {
     Entity* newEntity;
 
     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (newEntity != NULL) {
-        CreateEntityFromCurrentEntity(E_SURFACING_WATER, newEntity);
+        CreateEntityFromCurrentEntity(E_ID(SURFACING_WATER), newEntity);
 
         if (self->ext.et_surfacingWater.unk90 & 2) {
             newEntity->posY.i.hi = 288 - g_Tilemap.scrollY.i.hi;
@@ -79,13 +82,18 @@ void func_us_801C5AD4(u16 collision, Entity* entity) {
 }
 
 extern u32 g_CutsceneFlags;
-extern u8 D_us_80181678[]; // anim
-extern u8 D_us_80181684[]; // anim
-extern s32 D_us_80181694[8];
+static u8 D_us_80181678[] = {0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E,
+                             0x10, 0x1F, 0x10, 0x20, 0x00, 0x00}; // anim
+static u8 D_us_80181684[] = {
+    0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F,
+    0x10, 0x20, 0x10, 0x1C, 0xFF, 0x00, 0x00, 0x00}; // anim
+static s32 D_us_80181694[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
 
-extern s32 D_psp_E_SPLASH_WATER;
-extern s32 D_psp_E_ID_2E;
-extern s32 D_psp_E_ID_4F;
+#ifdef VERSION_PSP
+extern s32 E_ID(SPLASH_WATER);
+extern s32 E_ID(ID_2E);
+extern s32 E_ID(ID_4F);
+#endif
 
 // Ferryman boat travel logic
 void func_us_801C5C7C(Entity* self) {
@@ -560,24 +568,26 @@ void func_us_801C5C7C(Entity* self) {
 }
 
 void func_us_801C6CEC(Entity* self) {
-
     Entity* prev = self - 1;
 
     if (!self->step) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x1C;
+        self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->drawFlags = FLAG_DRAW_ROTATE;
         self->zPriority = 0x9A;
-        self->flags |= FLAG_POS_CAMERA_LOCKED;
     }
+
     self->posX.i.hi = prev->posX.i.hi;
     self->rotate = prev->rotate;
-    if (self->facingLeft != 0) {
+
+    if (self->facingLeft) {
         self->posX.i.hi += 4;
     } else {
         self->posX.i.hi -= 4;
     }
+
     self->posY.i.hi = prev->posY.i.hi;
 }
 
