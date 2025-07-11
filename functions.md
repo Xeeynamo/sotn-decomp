@@ -44,7 +44,7 @@
 | ric   | RicEntityNotImplemented2                 |        9 |          1 |        |                                 |       |
 | ric   | RicEntityNotImplemented3                 |        9 |          1 |        |                                 |       |
 |       | func_092E7B80                            |        9 |          1 |        |                                 |       |
-| no4   | func_pspeu_0923D0B8                      |        9 |          1 |        |                                 |       |
+| no4   | func_pspeu_0923D0B8                      |        9 |          1 |        | https://decomp.me/scratch/Plt7n | 0.5   |
 | dra   | func_psp_091176D8                        |       11 |          1 |        | https://decomp.me/scratch/d12qm | 1.0   |
 | dra   | func_psp_090F67E8                        |       11 |          1 |        |                                 |       |
 | dra   | func_psp_090DFC68                        |       11 |          1 |        |                                 |       |
@@ -545,7 +545,7 @@
 | st0   | func_pspeu_092503E8                      |       37 |          6 |        |                                 |       |
 | wrp   | func_psp_092438D8                        |       37 |          6 |        |                                 |       |
 | no2   | e_owl_knight.rodata                      |       38 |          0 | Yes    |                                 |       |
-| no4   | unk_2108.rodata                          |       38 |          0 | Yes    |                                 |       |
+| no4   | e_ferryman.rodata                        |       38 |          0 | Yes    |                                 |       |
 | np3   | giantbro_helpers.rodata                  |       38 |          0 | Yes    |                                 |       |
 | dra   | func_psp_0913E7B8                        |       38 |          3 |        |                                 |       |
 | dra   | func_800EDB08                            |       38 |          4 |        | https://decomp.me/scratch/dXwiB | 0.995 |
@@ -1751,8 +1751,8 @@
 | np3   | func_pspeu_0924B608                      |      184 |         20 |        |                                 |       |
 | wrp   | func_psp_0923CD80                        |      184 |         20 |        |                                 |       |
 | dra   | func_psp_09139428                        |      185 |         25 |        |                                 |       |
+| no4   | func_pspeu_0923D180                      |      185 |         27 |        | https://decomp.me/scratch/qkYZs | 0.998 |
 | no4   | func_pspeu_09248D90                      |      185 |         27 |        | https://decomp.me/scratch/wRJ5x | 0.999 |
-| no4   | func_pspeu_0923D180                      |      185 |         27 |        |                                 |       |
 | dra   | EntitySubwpnBibleTrail                   |      186 |         14 |        |                                 |       |
 | chi   | func_psp_09247720                        |      186 |         20 |        |                                 |       |
 | dai   | UnkCollisionFunc3                        |      186 |         20 |        |                                 |       |
@@ -2199,7 +2199,7 @@
 | dra   | func_psp_0913DB20                        |      481 |         49 |        |                                 |       |
 | dra   | EntitySubwpnBible                        |      482 |         41 |        | https://decomp.me/scratch/gR8gd | 0.999 |
 | dra   | func_psp_0910D1F0                        |      482 |         75 |        | https://decomp.me/scratch/YkKqZ | 0.99  |
-| no4   | func_pspeu_0923B378                      |      485 |         30 |        | https://decomp.me/scratch/xBGnL | 0.998 |
+| no4   | func_pspeu_0923B378                      |      485 |         30 |        | https://decomp.me/scratch/xBGnL | 0.999 |
 | no2   | func_pspeu_09256348                      |      486 |         67 |        |                                 |       |
 | maria | MarEntitySmokePuff                       |      487 |         42 |        |                                 |       |
 | ric   | RicEntitySmokePuff                       |      487 |         42 |        | https://decomp.me/scratch/zTa6L | 0.995 |
