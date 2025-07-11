@@ -124,7 +124,7 @@ typedef struct{
 
 // For EntityBlade
 
-extern s16 D_801833E4[];
+static s16 D_801833E4[] = {0, 9, 0, 4, 4, -4, -8, 0};
 extern bladeBodyPartsInit D_801833F4[];
 extern s16 D_80183494[];
 extern s16 D_801834B8[];
