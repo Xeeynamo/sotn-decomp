@@ -8,7 +8,8 @@ extern s16 D_us_80180F1A[];
 extern s32 E_ID(SURFACING_WATER);
 #endif
 
-void func_us_801C59E0(Entity* self, s16 xOffset) {
+// Generates water effect in front of the boat as it travels forward
+void GenerateBowWave(Entity* self, s16 xOffset) {
     Entity* newEntity;
 
     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -35,7 +36,7 @@ void func_us_801C59E0(Entity* self, s16 xOffset) {
     }
 }
 
-void func_us_801C5AD4(u16 collision, Entity* entity) {
+void MoveBoat(u16 playerInBoat, Entity* entity) {
     Entity* tempEntity;
     s16 posX;
     s16 posY;
@@ -55,11 +56,11 @@ void func_us_801C5AD4(u16 collision, Entity* entity) {
     if (posX && !entity->ext.et_surfacingWater.unk94) {
         if (!entity->ext.et_surfacingWater.unk8C) {
             if (!(entity->ext.et_surfacingWater.unk90 & 1)) {
-                func_us_801C59E0(entity, 40);
+                GenerateBowWave(entity, 40);
                 tempEntity = entity + 1;
                 if (tempEntity->animCurFrame == 0x1E ||
                     tempEntity->animCurFrame == 0x1F) {
-                    func_us_801C59E0(entity, -56);
+                    GenerateBowWave(entity, -56);
                 }
             }
         } else {
@@ -68,7 +69,7 @@ void func_us_801C5AD4(u16 collision, Entity* entity) {
     }
 
     tempEntity = &PLAYER;
-    if (collision) {
+    if (playerInBoat) {
         if (posX > 0) {
             if (!(g_Player.vram_flag & 4)) {
                 tempEntity->posX.i.hi += posX;
@@ -85,30 +86,30 @@ void func_us_801C5AD4(u16 collision, Entity* entity) {
 
 extern u32 g_CutsceneFlags;
 // anim
-static u8 D_us_80181678[] = {
+static u8 anim_row[] = {
     0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F, 0x10, 0x20, 0x00, 0x00};
 // anim
-static u8 D_us_80181684[] = {0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F,
-                             0x10, 0x20, 0x10, 0x1C, 0xFF, 0x00, 0x00, 0x00};
+static u8 anim_stationary[] = {0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F,
+                               0x10, 0x20, 0x10, 0x1C, 0xFF, 0x00, 0x00, 0x00};
 static s32 y_offsets[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
 
 #ifdef VERSION_PSP
 extern s32 E_ID(SPLASH_WATER);
-extern s32 E_ID(ID_2E);
+extern s32 E_ID(FERRYMAN);
 extern s32 E_ID(ID_4F);
 #endif
 
 // Ferryman boat travel logic
-void func_us_801C5C7C(Entity* self) {
-    Entity* childEntity;
+void EntityFerrymanController(Entity* self) {
+    Entity* ferrymanEntity;
     Entity* tempEntity;
     s16 offset;
-    u16 collision;
+    u16 playerInBoat;
 
     /* Check that the player is on the boat */
     tempEntity = &PLAYER;
-    collision = GetPlayerCollisionWith(self, 0x24, 5, 4);
-    if (collision) {
+    playerInBoat = GetPlayerCollisionWith(self, 0x24, 5, 4);
+    if (playerInBoat) {
         self->posX.i.hi += 0x28;
         GetPlayerCollisionWith(self, 4, 9, 9);
         self->posX.i.hi -= 0x50;
@@ -120,25 +121,27 @@ void func_us_801C5C7C(Entity* self) {
     }
 
     if (self->step && !self->ext.ferrymanBoat.unk94) {
-        if (collision && !self->ext.ferrymanBoat.unk80 &&
-            !self->ext.ferrymanBoat.collision) {
+        if (playerInBoat && !self->ext.ferrymanBoat.unk80 &&
+            !self->ext.ferrymanBoat.playerInBoat) {
             self->ext.ferrymanBoat.unk80 = 8;
         }
         if (self->ext.ferrymanBoat.unk80 != 0) {
             self->ext.ferrymanBoat.unk80--;
             offset = y_offsets[self->ext.ferrymanBoat.unk80];
             self->posY.i.hi += offset;
-            if (collision) {
+            if (playerInBoat) {
                 tempEntity->posY.i.hi += offset;
                 D_80097488.y.i.hi += offset;
             }
         }
     }
 
-    self->ext.ferrymanBoat.collision = collision;
-    childEntity = self + 1;
+    self->ext.ferrymanBoat.playerInBoat = playerInBoat;
+    ferrymanEntity = self + 1;
     switch (self->step) {
     case 0:
+        // If we don't have the Merman statue yet, ferryman only appears in one
+        // location, delete the other instance.
         if (!self->params && !(g_Status.relics[RELIC_MERMAN_STATUE] & 2)) {
             DestroyEntity(self);
             return;
@@ -156,11 +159,11 @@ void func_us_801C5C7C(Entity* self) {
         self->zPriority = 0x9A;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
         self->drawFlags = FLAG_DRAW_ROTATE;
-        CreateEntityFromCurrentEntity(E_ID(ID_2E), childEntity);
-        childEntity->facingLeft = self->facingLeft;
+        CreateEntityFromCurrentEntity(E_ID(FERRYMAN), ferrymanEntity);
+        ferrymanEntity->facingLeft = self->facingLeft;
         break;
     case 1:
-        if (collision) {
+        if (playerInBoat) {
             self->step++;
             tempEntity = &g_Entities[172];
             CreateEntityFromCurrentEntity(E_ID(ID_4F), tempEntity);
@@ -168,10 +171,12 @@ void func_us_801C5C7C(Entity* self) {
         }
         break;
     case 2:
+        // If we already met the ferryman we can skip straight to rowing
         if (g_CutsceneFlags & 0x80) {
             self->step += 2;
         } else {
-            g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = 1;
+            // Otherwise pause world state and put Alucard into human form
+            g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
             g_PauseAllowed = false;
             g_unkGraphicsStruct.pauseEnemies = true;
             g_Player.demo_timer = 1;
@@ -187,17 +192,19 @@ void func_us_801C5C7C(Entity* self) {
         g_Player.demo_timer = 1;
         g_Player.padSim = PAD_NONE;
         if (g_CutsceneFlags & 0x80) {
+            // Unpause world state once meeting ferryman cutscene is over
             g_PauseAllowed = true;
             g_unkGraphicsStruct.pauseEnemies = false;
             self->step++;
         }
         break;
     case 4:
-        if ((AnimateEntity(D_us_80181678, childEntity) & 0x80) &&
-            (childEntity->pose == 2)) {
+        // Begin rowing
+        if ((AnimateEntity(anim_row, ferrymanEntity) & 0x80) &&
+            (ferrymanEntity->pose == 2)) {
             PlaySfxPositional(SFX_OAR_ROW);
         }
-        if (childEntity->pose > 1 && childEntity->pose < 5) {
+        if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
                 self->ext.ferrymanBoat.accelerationX -= 0x1800;
             }
@@ -206,12 +213,12 @@ void func_us_801C5C7C(Entity* self) {
                 self->ext.ferrymanBoat.accelerationX += 0x600;
             }
             if (!self->params) {
-                if (childEntity->pose == 5) {
+                if (ferrymanEntity->pose == 5) {
                     offset = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
                     if (self->facingLeft) {
                         if (offset > 0xAA0 &&
-                            !g_CastleFlags[BOATMAN_GATE_OPEN]) {
-                            g_CastleFlags[BOATMAN_GATE_OPEN] = true;
+                            !g_CastleFlags[FERRYMAN_GATE_OPEN]) {
+                            g_CastleFlags[FERRYMAN_GATE_OPEN] = true;
                         }
                         if (offset > 0xBE0) {
                             self->step++;
@@ -220,7 +227,7 @@ void func_us_801C5C7C(Entity* self) {
                         self->step++;
                     }
                 }
-            } else if (childEntity->pose == 5) {
+            } else if (ferrymanEntity->pose == 5) {
                 offset = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
                 if (self->facingLeft) {
                     if (offset > 480) {
@@ -236,15 +243,15 @@ void func_us_801C5C7C(Entity* self) {
         } else {
             self->velocityX = self->ext.ferrymanBoat.accelerationX;
         }
-        func_us_801C5AD4(collision, self);
+        MoveBoat(playerInBoat, self);
         break;
     case 5:
-        if ((AnimateEntity(D_us_80181684, childEntity) & 0x80) &&
-            childEntity->pose == 2) {
+        if ((AnimateEntity(anim_stationary, ferrymanEntity) & 0x80) &&
+            ferrymanEntity->pose == 2) {
             g_api.PlaySfx(SFX_OAR_ROW);
         }
 
-        if (childEntity->pose > 1 && childEntity->pose < 5) {
+        if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
                 self->ext.ferrymanBoat.accelerationX -= 0x1800;
             }
@@ -258,11 +265,11 @@ void func_us_801C5C7C(Entity* self) {
             self->velocityX = self->ext.ferrymanBoat.accelerationX;
         }
 
-        func_us_801C5AD4(collision, self);
+        MoveBoat(playerInBoat, self);
         break;
     case 6:
-        AnimateEntity(D_us_80181684, childEntity);
-        if (childEntity->pose > 1 && childEntity->pose < 5) {
+        AnimateEntity(anim_stationary, ferrymanEntity);
+        if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
                 self->ext.ferrymanBoat.accelerationX -= 0x1800;
             }
@@ -287,9 +294,10 @@ void func_us_801C5C7C(Entity* self) {
                 self->step++;
             }
         }
-        func_us_801C5AD4(collision, self);
+        MoveBoat(playerInBoat, self);
         break;
     case 7:
+        // Heading off the edge of a waterfall
         offset = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         switch (self->step_s) {
         case 0:
@@ -359,8 +367,8 @@ void func_us_801C5C7C(Entity* self) {
                 self->ext.ferrymanBoat.flags = 2;
                 self->step++;
                 self->step_s = 0;
-                childEntity->pose = 0;
-                childEntity->poseTimer = 0;
+                ferrymanEntity->pose = 0;
+                ferrymanEntity->poseTimer = 0;
             }
             self->rotate -= 8;
             if (self->rotate < 0) {
@@ -368,14 +376,15 @@ void func_us_801C5C7C(Entity* self) {
             }
             break;
         }
-        func_us_801C5AD4(collision, self);
+        MoveBoat(playerInBoat, self);
         break;
     case 8:
-        if ((AnimateEntity(D_us_80181678, childEntity) & 0x80) &&
-            (childEntity->pose == 2)) {
+        // Begin rowing again after falling off waterfall
+        if ((AnimateEntity(anim_row, ferrymanEntity) & 0x80) &&
+            (ferrymanEntity->pose == 2)) {
             g_api.PlaySfx(SFX_OAR_ROW);
         }
-        if (childEntity->pose > 1 && childEntity->pose < 5) {
+        if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
                 self->ext.ferrymanBoat.accelerationX -= 0x1800; // FIX(0.09375)
             }
@@ -383,7 +392,7 @@ void func_us_801C5C7C(Entity* self) {
             if (self->ext.ferrymanBoat.accelerationX != 0) {
                 self->ext.ferrymanBoat.accelerationX += 0x600; // FIX(0.02345)
             }
-            if (childEntity->pose == 5) {
+            if (ferrymanEntity->pose == 5) {
                 offset = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
                 if (self->facingLeft) {
                     if (offset > 928) {
@@ -399,14 +408,14 @@ void func_us_801C5C7C(Entity* self) {
         } else {
             self->velocityX = self->ext.ferrymanBoat.accelerationX;
         }
-        func_us_801C5AD4(collision, self);
+        MoveBoat(playerInBoat, self);
         break;
     case 9:
-        if ((AnimateEntity(D_us_80181684, childEntity) & 0x80) &&
-            (childEntity->pose == 2)) {
+        if ((AnimateEntity(anim_stationary, ferrymanEntity) & 0x80) &&
+            (ferrymanEntity->pose == 2)) {
             g_api.PlaySfx(SFX_OAR_ROW);
         }
-        if (childEntity->pose > 1 && childEntity->pose < 5) {
+        if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
                 self->ext.ferrymanBoat.accelerationX -= 0x1800; // FIX(0.09375)
             }
@@ -415,12 +424,14 @@ void func_us_801C5C7C(Entity* self) {
             if (self->ext.ferrymanBoat.accelerationX > 0) {
                 self->ext.ferrymanBoat.accelerationX = 0;
                 self->step++;
+
                 if (self->facingLeft) {
-                    childEntity = self - 4;
+                    ferrymanEntity = self - 4;
                 } else {
-                    childEntity = self - 3;
+                    ferrymanEntity = self - 3;
                 }
-                childEntity->ext.ferrymanUnk.unk7C = 1;
+                // take note! this is no longer referencing the ferryman
+                ferrymanEntity->ext.boatElevator.unk7C = 1;
             }
         }
         if (self->facingLeft) {
@@ -428,21 +439,22 @@ void func_us_801C5C7C(Entity* self) {
         } else {
             self->velocityX = self->ext.ferrymanBoat.accelerationX;
         }
-        func_us_801C5AD4(collision, self);
+        MoveBoat(playerInBoat, self);
         break;
     case 10:
-        func_us_801C5AD4(collision, self);
+        MoveBoat(playerInBoat, self);
         if (self->ext.ferrymanBoat.unk94) {
             self->step++;
         }
         break;
     case 11:
-        func_us_801C5AD4(collision, self);
+        MoveBoat(playerInBoat, self);
         if (!self->ext.ferrymanBoat.unk94) {
             self->step++;
         }
         break;
     case 12:
+        // Getting moved by boat elevator
         offset = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         switch (self->step_s) {
         case 0:
@@ -503,19 +515,20 @@ void func_us_801C5C7C(Entity* self) {
                 self->ext.ferrymanBoat.flags = 0;
                 self->step++;
                 self->step_s = 0;
-                childEntity->pose = 0;
-                childEntity->poseTimer = 0;
+                ferrymanEntity->pose = 0;
+                ferrymanEntity->poseTimer = 0;
             }
             break;
         }
-        func_us_801C5AD4(collision, self);
+        MoveBoat(playerInBoat, self);
         break;
     case 13:
-        if ((AnimateEntity(D_us_80181678, childEntity) & 0x80) &&
-            (childEntity->pose == 2)) {
+        // Begin rowing animation after being lifted by elevator
+        if ((AnimateEntity(anim_row, ferrymanEntity) & 0x80) &&
+            (ferrymanEntity->pose == 2)) {
             g_api.PlaySfx(SFX_OAR_ROW);
         }
-        if (childEntity->pose > 1 && childEntity->pose < 5) {
+        if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
                 self->ext.ferrymanBoat.accelerationX -= 0x1800; // FIX(0.09375)
             }
@@ -523,7 +536,7 @@ void func_us_801C5C7C(Entity* self) {
             if (self->ext.ferrymanBoat.accelerationX != 0) {
                 self->ext.ferrymanBoat.accelerationX += 0x600; // FIX(0.02345)
             }
-            if (childEntity->pose == 5) {
+            if (ferrymanEntity->pose == 5) {
                 offset = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
                 if (self->facingLeft) {
                     if (offset > 1792) {
@@ -539,14 +552,15 @@ void func_us_801C5C7C(Entity* self) {
         } else {
             self->velocityX = self->ext.ferrymanBoat.accelerationX;
         }
-        func_us_801C5AD4(collision, self);
+        MoveBoat(playerInBoat, self);
         break;
     case 14:
-        if ((AnimateEntity(D_us_80181684, childEntity) & 0x80) &&
-            (childEntity->pose == 2)) {
+        // Finshed our journey
+        if ((AnimateEntity(anim_stationary, ferrymanEntity) & 0x80) &&
+            (ferrymanEntity->pose == 2)) {
             g_api.PlaySfx(SFX_OAR_ROW);
         }
-        if (childEntity->pose > 1 && childEntity->pose < 5) {
+        if (ferrymanEntity->pose > 1 && ferrymanEntity->pose < 5) {
             if (self->ext.ferrymanBoat.accelerationX > FIX(-1.5)) {
                 self->ext.ferrymanBoat.accelerationX -= 0x1800;
             }
@@ -565,14 +579,14 @@ void func_us_801C5C7C(Entity* self) {
         } else {
             self->velocityX = self->ext.ferrymanBoat.accelerationX;
         }
-        func_us_801C5AD4(collision, self);
+        MoveBoat(playerInBoat, self);
         break;
     }
     self->ext.ferrymanBoat.unk94 = false;
 }
 
-void func_us_801C6CEC(Entity* self) {
-    Entity* prev = self - 1;
+void EntityFerryman(Entity* self) {
+    Entity* boatEntity = self - 1;
 
     if (!self->step) {
         InitializeEntity(g_EInitInteractable);
@@ -583,8 +597,8 @@ void func_us_801C6CEC(Entity* self) {
         self->zPriority = 0x9A;
     }
 
-    self->posX.i.hi = prev->posX.i.hi;
-    self->rotate = prev->rotate;
+    self->posX.i.hi = boatEntity->posX.i.hi;
+    self->rotate = boatEntity->rotate;
 
     if (self->facingLeft) {
         self->posX.i.hi += 4;
@@ -592,7 +606,7 @@ void func_us_801C6CEC(Entity* self) {
         self->posX.i.hi -= 4;
     }
 
-    self->posY.i.hi = prev->posY.i.hi;
+    self->posY.i.hi = boatEntity->posY.i.hi;
 }
 
 static u16 arr_indexes[] = {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
@@ -637,7 +651,8 @@ static s16 D_us_801816F4[] = {
 };
 // clang-format on
 
-void func_us_801C6DA8(Entity* self) {
+// Controls drawing of the boat elevator chains and rotating gear mechanism
+void EntityBoatElevatorChains(Entity* self) {
     u32 primIndex;
     u32 scrollX;
 
@@ -676,23 +691,23 @@ void func_us_801C6DA8(Entity* self) {
                 prim = prim->next;
                 i++;
             }
-            self->rotate = 0x200U;
+            self->rotate = 0x200;
         } else {
             self->step = 0;
             return;
         }
     }
 
-    if (self->ext.ferrymanUnk.unk7C) {
-        if (self->ext.ferrymanUnk.unk7C < 0) {
-            self->ext.ferrymanUnk.unk7E++;
+    if (self->ext.boatElevator_child.unk7C) {
+        if (self->ext.boatElevator_child.unk7C < 0) {
+            self->ext.boatElevator_child.unk7E++;
             self->rotate += 0x10;
         } else {
-            self->ext.ferrymanUnk.unk7E--;
+            self->ext.boatElevator_child.unk7E--;
             self->rotate -= 0x10;
         }
     }
-    self->ext.ferrymanUnk.unk7E &= 0xF;
+    self->ext.boatElevator_child.unk7E &= 0xF;
     prim = &g_PrimBuf[self->primIndex];
     i = 0;
     while (prim != NULL) {
@@ -727,26 +742,26 @@ void func_us_801C6DA8(Entity* self) {
             case 0:
                 prim->x0 = prim->x2 = xOffset - 4;
                 prim->x1 = prim->x3 = xOffset + 4;
-                yOffset += self->ext.ferrymanUnk.unk7E;
+                yOffset += self->ext.boatElevator_child.unk7E;
                 prim->y0 = prim->y1 = yOffset;
                 prim->y2 = prim->y3 = yOffset + 0x60;
                 break;
             case 1:
                 prim->x0 = prim->x2 = xOffset - 4;
                 prim->x1 = prim->x3 = xOffset + 4;
-                yOffset -= self->ext.ferrymanUnk.unk7E;
+                yOffset -= self->ext.boatElevator_child.unk7E;
                 prim->y0 = prim->y1 = yOffset;
                 prim->y2 = prim->y3 = yOffset + 0x60;
                 break;
             case 2:
-                xOffset -= self->ext.ferrymanUnk.unk7E;
+                xOffset -= self->ext.boatElevator_child.unk7E;
                 prim->x0 = prim->x1 = xOffset;
                 prim->x2 = prim->x3 = xOffset + 0x60;
                 prim->y1 = prim->y3 = yOffset - 4;
                 prim->y0 = prim->y2 = yOffset + 4;
                 break;
             case 3:
-                xOffset += self->ext.ferrymanUnk.unk7E;
+                xOffset += self->ext.boatElevator_child.unk7E;
                 prim->x0 = prim->x1 = xOffset;
                 prim->x2 = prim->x3 = xOffset + 0x60;
                 prim->y1 = prim->y3 = yOffset - 4;
@@ -761,14 +776,14 @@ void func_us_801C6DA8(Entity* self) {
 }
 
 void func_us_801C7204(Entity* entity, s32 arg1) {
-    if (entity->ext.ferrymanUnk.unk7E) {
+    if (entity->ext.boatElevator.unk7E) {
         return;
     }
 
     PlaySfxPositional(SFX_LEVER_METAL_BANG);
-    entity->ext.ferrymanUnk.unk88 = arg1;
-    entity->ext.ferrymanUnk.unk8C = -(entity->ext.ferrymanUnk.unk88 / 16);
-    entity->ext.ferrymanUnk.unk7E = 1;
+    entity->ext.boatElevator.unk88 = arg1;
+    entity->ext.boatElevator.unk8C = -(entity->ext.boatElevator.unk88 / 16);
+    entity->ext.boatElevator.unk7E = 1;
 }
 
 // { u0/2, u1/3, v0/1, v2/3, priority }
@@ -785,7 +800,7 @@ static s16 D_us_80181788[][8] = {
     {-6, -2, 6, -2, -6, 28, 6, 28},
     {-32, -3, 32, -3, -32, 27, 32, 27}};
 
-void func_us_801C726C(
+void MoveBoatElevator(
     Entity* entity, s32 arg1, s16 posX, s16 posY, u16 collisionDetected) {
     u32 i;
     s16* ptr;
@@ -801,29 +816,29 @@ void func_us_801C726C(
     long var_s0;
 
     player = &PLAYER;
-    if (!entity->ext.et_801C726C.unk7C) {
+    if (!entity->ext.boatElevator.unk7C) {
         arg1 = false;
     }
 
-    if (entity->ext.et_801C726C.unk7E) {
-        entity->ext.et_801C726C.unk88 += entity->ext.et_801C726C.unk8C;
-        var_s0 = entity->ext.et_801C726C.unk84;
-        entity->ext.et_801C726C.unk84 += entity->ext.et_801C726C.unk88;
+    if (entity->ext.boatElevator.unk7E) {
+        entity->ext.boatElevator.unk88 += entity->ext.boatElevator.unk8C;
+        var_s0 = entity->ext.boatElevator.unk84;
+        entity->ext.boatElevator.unk84 += entity->ext.boatElevator.unk88;
 
-        if ((var_s0 < 0 && entity->ext.et_801C726C.unk84 >= 0) ||
-            (var_s0 > 0 && entity->ext.et_801C726C.unk84 <= 0)) {
-            entity->ext.et_801C726C.unk88 /= 2;
-            if (entity->ext.et_801C726C.unk88 < 0x20000 &&
-                entity->ext.et_801C726C.unk88 > -0x20000) {
-                entity->ext.et_801C726C.unk84 = 0;
-                entity->ext.et_801C726C.unk7E = 0;
+        if ((var_s0 < 0 && entity->ext.boatElevator.unk84 >= 0) ||
+            (var_s0 > 0 && entity->ext.boatElevator.unk84 <= 0)) {
+            entity->ext.boatElevator.unk88 /= 2;
+            if (entity->ext.boatElevator.unk88 < 0x20000 &&
+                entity->ext.boatElevator.unk88 > -0x20000) {
+                entity->ext.boatElevator.unk84 = 0;
+                entity->ext.boatElevator.unk7E = 0;
             } else {
-                entity->ext.et_801C726C.unk8C =
-                    -entity->ext.et_801C726C.unk8C / 2;
+                entity->ext.boatElevator.unk8C =
+                    -entity->ext.boatElevator.unk8C / 2;
             }
         }
     }
-    angle = entity->ext.et_801C726C_child.unk86;
+    angle = entity->ext.boatElevator_child.unk86;
     ptr = *D_us_80181788;
     posXTemp = posX;
     posYTemp = posY;
@@ -860,19 +875,19 @@ void func_us_801C726C(
             } else {
                 tempEntity = entity + 4;
             }
-            tempEntity->ext.et_801C726C_child.unk94 |= arg1;
+            tempEntity->ext.boatElevator_child.unk94 |= arg1;
             if (arg1) {
                 if (tempEntity->facingLeft) {
                     tempEntity->rotate = -angle & 0xFFF;
-                    tempEntity->ext.et_801C726C_child.unk98 =
+                    tempEntity->ext.boatElevator_child.unk98 =
                         posXTemp + (((var_s1 * 2) - (var_s0 * 0x22)) >> 0xC);
-                    tempEntity->ext.et_801C726C_child.unk9A =
+                    tempEntity->ext.boatElevator_child.unk9A =
                         posYTemp + (((var_s0 * 2) + (var_s1 * 0x22)) >> 0xC);
                 } else {
                     tempEntity->rotate = angle;
-                    tempEntity->ext.et_801C726C_child.unk98 =
+                    tempEntity->ext.boatElevator_child.unk98 =
                         posXTemp + (((var_s1 * -3) - (var_s0 * 0x22)) >> 0xC);
-                    tempEntity->ext.et_801C726C_child.unk9A =
+                    tempEntity->ext.boatElevator_child.unk9A =
                         posYTemp + (((var_s0 * -3) + (var_s1 * 0x22)) >> 0xC);
                 }
             }
@@ -925,9 +940,9 @@ void func_us_801C726C(
 }
 
 // anim
-static u8 D_us_801817D8[] = {0x04, 0x23, 0x84, 0x24, 0xFF, 0x00, 0x00, 0x00};
+static u8 anim_floor_open[] = {0x04, 0x23, 0x84, 0x24, 0xFF, 0x00, 0x00, 0x00};
 // anim
-static u8 D_us_801817E0[] = {0x04, 0x23, 0x04, 0x05, 0xFF, 0x00, 0x00, 0x00};
+static u8 anim_floor_close[] = {0x04, 0x23, 0x04, 0x05, 0xFF, 0x00, 0x00, 0x00};
 
 #ifdef VERSION_PSP
 #define COLLISION_WIDTH 0x24
@@ -935,7 +950,7 @@ static u8 D_us_801817E0[] = {0x04, 0x23, 0x04, 0x05, 0xFF, 0x00, 0x00, 0x00};
 #define COLLISION_WIDTH 0x20
 #endif
 
-void func_us_801C789C(Entity* self) {
+void EntityBoatElevatorController(Entity* self) {
     s32 primIndex;
     s32 sp38;
     s32 sp34;
@@ -952,20 +967,20 @@ void func_us_801C789C(Entity* self) {
 
     scrollX = g_Tilemap.scrollX.i.hi;
     scrollY = g_Tilemap.scrollY.i.hi;
-    if (self->step && self->ext.et_801C726C.unk90 == 0) {
+    if (self->step && self->ext.boatElevator.unk90 == 0) {
         self->posY.i.hi += 0x2C;
-        if (self->ext.et_801C726C.unk9A) {
-            self->ext.et_801C726C.unk9A -= 1;
+        if (self->ext.boatElevator.unk9A) {
+            self->ext.boatElevator.unk9A -= 1;
             collision = false;
         } else {
             collision = GetPlayerCollisionWith(self, COLLISION_WIDTH, 5, 4);
             // Possible !BUG: duplicate && condition here
-            if (!collision && self->ext.et_801C726C.collisionDetected &&
-                self->ext.et_801C726C.collisionDetected) {
-                self->ext.et_801C726C.unk9A = 4;
+            if (!collision && self->ext.boatElevator.collisionDetected &&
+                self->ext.boatElevator.collisionDetected) {
+                self->ext.boatElevator.unk9A = 4;
             }
         }
-        self->ext.et_801C726C.collisionDetected = collision;
+        self->ext.boatElevator.collisionDetected = collision;
         self->posY.i.hi -= 0x2C;
     }
 
@@ -995,14 +1010,14 @@ void func_us_801C789C(Entity* self) {
             self->animSet = ANIMSET_OVL(1);
             self->animCurFrame = 5;
             self->zPriority = 0x9C;
-            self->ext.et_801C726C.unk80 = 0;
-            self->ext.et_801C726C.unk84 = 0x8000;
+            self->ext.boatElevator.unk80 = 0;
+            self->ext.boatElevator.unk84 = 0x8000;
             return;
         }
         break;
     case 1:
         entity = self + 2;
-        entity->ext.et_801C726C_child.unk7C = 0;
+        entity->ext.boatElevator_child.unk7C = 0;
         var_s8 = true;
         if (self->params) {
             entity = self + 3;
@@ -1018,7 +1033,7 @@ void func_us_801C789C(Entity* self) {
         if (!var_s8 && (entity->step < 4 || entity->step > 12)) {
             var_s8 = true;
         }
-        if ((var_s8 && collision) || self->ext.et_801C726C.unk7C) {
+        if ((var_s8 && collision) || self->ext.boatElevator.unk7C) {
             self->step++;
             func_us_801C7204(self, 0xFFFC0000);
         }
@@ -1029,43 +1044,43 @@ void func_us_801C789C(Entity* self) {
         } else {
             posX = 0x422 - scrollX;
         }
-        func_us_801C726C(self, false, posX, posY, collision);
+        MoveBoatElevator(self, false, posX, posY, collision);
         return;
     case 2:
         entity = self + 2;
-        entity->ext.et_801C726C_child.unk7C = 1;
-        self->ext.et_801C726C.unk80++;
-        if (self->ext.et_801C726C.unk80 > 0xA2) {
+        entity->ext.boatElevator_child.unk7C = 1;
+        self->ext.boatElevator.unk80++;
+        if (self->ext.boatElevator.unk80 > 0xA2) {
             posY = 0x4E;
             if (self->params) {
-                posX = (0x2CE - scrollX) - self->ext.et_801C726C.unk80 + 0xA2;
+                posX = (0x2CE - scrollX) - self->ext.boatElevator.unk80 + 0xA2;
             } else {
-                posX = (0x2CE - scrollX) + self->ext.et_801C726C.unk80 + 0xB2;
+                posX = (0x2CE - scrollX) + self->ext.boatElevator.unk80 + 0xB2;
             }
-            if (self->ext.et_801C726C.unk80 == 0x188) {
+            if (self->ext.boatElevator.unk80 == 0x188) {
                 if (self->params) {
                     func_us_801C7204(self, 0x80000);
                 } else {
                     func_us_801C7204(self, -0x80000);
                 }
                 self->step++;
-                self->ext.et_801C726C.unk82 = 0x80;
+                self->ext.boatElevator.unk82 = 0x80;
             }
         } else {
-            posY = 0xF0 - (self->ext.et_801C726C.unk80);
+            posY = 0xF0 - (self->ext.boatElevator.unk80);
             if (self->params) {
                 posX = 0x2CE - scrollX;
-                if (self->ext.et_801C726C.unk80 == 0xA2) {
+                if (self->ext.boatElevator.unk80 == 0xA2) {
                     func_us_801C7204(self, -0x80000);
                 }
             } else {
                 posX = 0x422 - scrollX;
-                if (self->ext.et_801C726C.unk80 == 0xA2) {
+                if (self->ext.boatElevator.unk80 == 0xA2) {
                     func_us_801C7204(self, 0x80000);
                 }
             }
         }
-        if (posY < 0xDF && self->ext.et_801C726C.unk7C) {
+        if (posY < 0xDF && self->ext.boatElevator.unk7C) {
             if (posY == 0xDE) {
                 if (self->params) {
                     func_us_801C7204(self, 0x50000);
@@ -1078,17 +1093,17 @@ void func_us_801C789C(Entity* self) {
             sp34 = false;
         }
         posY -= scrollY;
-        func_us_801C726C(self, sp34, posX, posY, collision);
-        if (!(self->ext.et_801C726C.unk94 % 10)) {
-            self->ext.et_801C726C.unk94 = 0;
+        MoveBoatElevator(self, sp34, posX, posY, collision);
+        if (!(self->ext.boatElevator.unk94 % 10)) {
+            self->ext.boatElevator.unk94 = 0;
             PlaySfxPositional(SFX_METAL_RATTLE_A);
         }
-        self->ext.et_801C726C.unk94++;
+        self->ext.boatElevator.unk94++;
         break;
     case 3:
         entity = self + 2;
-        entity->ext.et_801C726C_child.unk7C = 0;
-        if (!--self->ext.et_801C726C.unk82) {
+        entity->ext.boatElevator_child.unk7C = 0;
+        if (!--self->ext.boatElevator.unk82) {
             self->step++;
             PlaySfxPositional(SFX_LEVER_METAL_BANG);
         }
@@ -1099,13 +1114,14 @@ void func_us_801C789C(Entity* self) {
         } else {
             posX = 0x508 - scrollX;
         }
-        func_us_801C726C(self, true, posX, posY, collision);
+        MoveBoatElevator(self, true, posX, posY, collision);
         break;
     case 4:
+        // End of the line, drop the boat
         self->zPriority = 0x82;
-        self->ext.et_801C726C.unk90 = 1;
-        self->ext.et_801C726C.unk7C = 0;
-        if (!AnimateEntity(D_us_801817D8, self)) {
+        self->ext.boatElevator.unk90 = 1;
+        self->ext.boatElevator.unk7C = 0;
+        if (!AnimateEntity(anim_floor_open, self)) {
             self->pose = 0;
             self->poseTimer = 0;
             self->step++;
@@ -1117,20 +1133,21 @@ void func_us_801C789C(Entity* self) {
         } else {
             posX = 0x508 - scrollX;
         }
-        func_us_801C726C(self, false, posX, posY, collision);
+        MoveBoatElevator(self, false, posX, posY, collision);
         break;
     case 5:
-        if (!AnimateEntity(D_us_801817E0, self)) {
+        // Dropped the boat, now close the floor back up
+        if (!AnimateEntity(anim_floor_close, self)) {
             if (self->params) {
                 func_us_801C7204(self, -0x50000);
             } else {
                 func_us_801C7204(self, 0x50000);
             }
             self->step++;
-            self->ext.et_801C726C.unk82 = 0x40;
+            self->ext.boatElevator.unk82 = 0x40;
         }
         if (self->pose == 2) {
-            self->ext.et_801C726C.unk90 = 0;
+            self->ext.boatElevator.unk90 = 0;
             self->zPriority = 0x9C;
         }
 
@@ -1140,10 +1157,10 @@ void func_us_801C789C(Entity* self) {
         } else {
             posX = 0x508 - scrollX;
         }
-        func_us_801C726C(self, false, posX, posY, collision);
+        MoveBoatElevator(self, false, posX, posY, collision);
         break;
     case 6:
-        if (!--self->ext.et_801C726C.unk82) {
+        if (!--self->ext.boatElevator.unk82) {
             if (self->params) {
                 func_us_801C7204(self, 0x80000);
             } else {
@@ -1158,30 +1175,30 @@ void func_us_801C789C(Entity* self) {
         } else {
             posX = 0x508 - scrollX;
         }
-        func_us_801C726C(self, false, posX, posY, collision);
+        MoveBoatElevator(self, false, posX, posY, collision);
         break;
     case 7:
         entity = self + 2;
-        entity->ext.et_801C726C_child.unk7C = -1;
-        if (!--self->ext.et_801C726C.unk80) {
+        entity->ext.boatElevator_child.unk7C = -1;
+        if (!--self->ext.boatElevator.unk80) {
             SetStep(1);
         }
 
-        if (self->ext.et_801C726C.unk80 > 0xA2) {
+        if (self->ext.boatElevator.unk80 > 0xA2) {
             posY = 0x4E;
             if (self->params) {
-                posX = (0x2CE - scrollX) - self->ext.et_801C726C.unk80 + 0xA2;
-                if (self->ext.et_801C726C.unk80 == 0xA3) {
+                posX = (0x2CE - scrollX) - self->ext.boatElevator.unk80 + 0xA2;
+                if (self->ext.boatElevator.unk80 == 0xA3) {
                     func_us_801C7204(self, -0x80000);
                 }
             } else {
-                posX = (0x2CE - scrollX) + self->ext.et_801C726C.unk80 + 0xB2;
-                if (self->ext.et_801C726C.unk80 == 0xA3) {
+                posX = (0x2CE - scrollX) + self->ext.boatElevator.unk80 + 0xB2;
+                if (self->ext.boatElevator.unk80 == 0xA3) {
                     func_us_801C7204(self, 0x80000);
                 }
             }
         } else {
-            posY = 0xF0 - (self->ext.et_801C726C.unk80);
+            posY = 0xF0 - (self->ext.boatElevator.unk80);
             if (self->params) {
                 posX = 0x2CE - scrollX;
             } else {
@@ -1189,13 +1206,13 @@ void func_us_801C789C(Entity* self) {
             }
         }
         posY -= scrollY;
-        func_us_801C726C(self, false, posX, posY, collision);
+        MoveBoatElevator(self, false, posX, posY, collision);
 
-        if (!(self->ext.et_801C726C.unk94 % 10)) {
-            self->ext.et_801C726C.unk94 = 0;
+        if (!(self->ext.boatElevator.unk94 % 10)) {
+            self->ext.boatElevator.unk94 = 0;
             PlaySfxPositional(SFX_METAL_RATTLE_A);
         }
-        self->ext.et_801C726C.unk94++;
+        self->ext.boatElevator.unk94++;
         break;
     }
 }
@@ -1205,7 +1222,7 @@ void EntityFerrymanUnused(Entity* self) {}
 static u16 tiles[7][2] = {
     {884, 884}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
 
-void func_us_801C7FAC(void) {
+void LoadFerrymanGateTiles(void) {
     u16* tileLayoutPtr;
     Tilemap* tileMap;
     s32 i;
@@ -1227,7 +1244,7 @@ void func_us_801C7FAC(void) {
 extern s32 E_ID(SURFACING_WATER);
 #endif
 
-void func_us_801C801C(Entity* self) {
+void EntityFerrymanGateController(Entity* self) {
     Entity* newEntity;
     s16 offsetY;
 
@@ -1235,17 +1252,17 @@ void func_us_801C801C(Entity* self) {
     case 0:
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
-        if (g_CastleFlags[BOATMAN_GATE_OPEN]) {
-            func_us_801C7FAC();
+        if (g_CastleFlags[FERRYMAN_GATE_OPEN]) {
+            LoadFerrymanGateTiles();
             DestroyEntity(self);
             break;
         }
         self->animCurFrame = 24;
         break;
     case 1:
-        if (g_CastleFlags[BOATMAN_GATE_OPEN]) {
+        if (g_CastleFlags[FERRYMAN_GATE_OPEN]) {
             GetPlayerCollisionWith(self, 16, 56, 3);
-            func_us_801C7FAC();
+            LoadFerrymanGateTiles();
             self->step++;
             self->ext.et_surfacingWater.unk80 = 0;
             break;

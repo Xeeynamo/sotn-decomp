@@ -44,10 +44,10 @@ void func_us_801C3A04(Entity* self);
 void func_us_801C3CC4(Entity* self);
 void func_us_801C3FB0(Entity* self);
 void func_us_801C4228(Entity* self);
-void func_us_801C5C7C(Entity* self);
-void func_us_801C6CEC(Entity* self);
-void func_us_801C6DA8(Entity* self);
-void func_us_801C789C(Entity* self);
+void EntityFerrymanController(Entity* self);
+void EntityFerryman(Entity* self);
+void EntityBoatElevatorChains(Entity* self);
+void EntityBoatElevatorController(Entity* self);
 void EntityFerrymanUnused(Entity* self);
 void func_us_801C123C(Entity* self);
 void func_us_801C4520(Entity* self);
@@ -74,7 +74,7 @@ void EntitySpearGuard(Entity* self);
 void EntityThrownSpear(Entity* self);
 void EntityBoneArcher(Entity* self);
 void EntityBoneArcherArrow(Entity* self);
-void func_us_801C801C(Entity* self);
+void EntityFerrymanGateController(Entity* self);
 void OVL_EXPORT(EntityCutscene)(Entity* self);
 void func_us_801C4BD8(Entity* self);
 void EntityBreakableWall(Entity* self);
@@ -139,10 +139,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x29 */ func_us_801C3CC4,
     /* 0x2A */ func_us_801C3FB0,
     /* 0x2B */ func_us_801C4228,
-    /* 0x2C */ func_us_801C5C7C,
-    /* 0x2D */ func_us_801C6CEC,
-    /* 0x2E */ func_us_801C6DA8,
-    /* 0x2F */ func_us_801C789C,
+    /* 0x2C */ EntityFerrymanController,
+    /* 0x2D */ EntityFerryman,
+    /* 0x2E */ EntityBoatElevatorChains,
+    /* 0x2F */ EntityBoatElevatorController,
     /* 0x30 */ EntityFerrymanUnused,
     /* 0x31 */ EntityDummy,
     /* 0x32 */ EntityDummy,
@@ -172,7 +172,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x4A */ EntityThrownSpear,
     /* 0x4B */ EntityBoneArcher,
     /* 0x4C */ EntityBoneArcherArrow,
-    /* 0x4D */ func_us_801C801C,
+    /* 0x4D */ EntityFerrymanGateController,
     /* 0x4E */ OVL_EXPORT(EntityCutscene),
     /* 0x4F */ func_us_801C4BD8,
     /* 0x50 */ EntityBreakableWall,

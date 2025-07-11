@@ -52,7 +52,7 @@ typedef enum EntityIDs {
     // /* 0x2B */ E_ID_2B,
     // /* 0x2C */ E_ID_2C,
     // /* 0x2D */ E_ID_2D,
-    /* 0x2E */ E_ID_2E = 0x2E,
+    /* 0x2E */ E_FERRYMAN = 0x2E,
     // /* 0x2F */ E_ID_2F,
     // /* 0x30 */ E_ID_30,
     // /* 0x31 */ E_ID_31,

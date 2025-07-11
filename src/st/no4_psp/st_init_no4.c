@@ -50,7 +50,7 @@ static s32 E_ID(ID_2A);
 static s32 E_ID(ID_2B);
 static s32 E_ID(ID_2C);
 static s32 E_ID(ID_2D);
-s32 E_ID(ID_2E);
+s32 E_ID(FERRYMAN);
 static s32 E_ID(ID_2F);
 static s32 E_ID(ID_30);
 static s32 E_ID(ID_31);
@@ -139,7 +139,7 @@ void InitEntityIds(void) {
     E_ID(ID_2B) = 0x2B;
     E_ID(ID_2C) = 0x2C;
     E_ID(ID_2D) = 0x2D;
-    E_ID(ID_2E) = 0x2E;
+    E_ID(FERRYMAN) = 0x2E;
     E_ID(ID_2F) = 0x2F;
     E_ID(ID_30) = 0x30;
     E_ID(ID_31) = 0x31;
