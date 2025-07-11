@@ -3198,7 +3198,7 @@ typedef struct {
     /* 0x90 */ s32 unk90;
     /* 0x94 */ u16 unk94;
     /* 0x96 */ u16 : 16;
-    /* 0x98 */ u16 unk98;
+    /* 0x98 */ u16 collisionDetected;
     /* 0x9A */ u16 unk9A;
 } ET_801C726C;
 

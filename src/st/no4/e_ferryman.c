@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no4.h"
 
+// This is part of a different water effects data segment
 extern s16 D_us_80180F1A[];
+
 #ifdef VERSION_PSP
 extern s32 E_ID(SURFACING_WATER);
 #endif
@@ -82,12 +84,13 @@ void func_us_801C5AD4(u16 collision, Entity* entity) {
 }
 
 extern u32 g_CutsceneFlags;
-static u8 D_us_80181678[] = {0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E,
-                             0x10, 0x1F, 0x10, 0x20, 0x00, 0x00}; // anim
-static u8 D_us_80181684[] = {
-    0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F,
-    0x10, 0x20, 0x10, 0x1C, 0xFF, 0x00, 0x00, 0x00}; // anim
-static s32 D_us_80181694[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
+// anim
+static u8 D_us_80181678[] = {
+    0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F, 0x10, 0x20, 0x00, 0x00};
+// anim
+static u8 D_us_80181684[] = {0x18, 0x1C, 0x10, 0x1D, 0x10, 0x1E, 0x10, 0x1F,
+                             0x10, 0x20, 0x10, 0x1C, 0xFF, 0x00, 0x00, 0x00};
+static s32 y_offsets[8] = {-1, -1, -1, 0, 0, 1, 1, 1};
 
 #ifdef VERSION_PSP
 extern s32 E_ID(SPLASH_WATER);
@@ -123,7 +126,7 @@ void func_us_801C5C7C(Entity* self) {
         }
         if (self->ext.ferrymanBoat.unk80 != 0) {
             self->ext.ferrymanBoat.unk80--;
-            offset = D_us_80181694[self->ext.ferrymanBoat.unk80];
+            offset = y_offsets[self->ext.ferrymanBoat.unk80];
             self->posY.i.hi += offset;
             if (collision) {
                 tempEntity->posY.i.hi += offset;
@@ -206,8 +209,9 @@ void func_us_801C5C7C(Entity* self) {
                 if (childEntity->pose == 5) {
                     offset = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
                     if (self->facingLeft) {
-                        if (offset > 0xAA0 && !g_CastleFlags[0xC2]) {
-                            g_CastleFlags[0xC2] = true;
+                        if (offset > 0xAA0 &&
+                            !g_CastleFlags[BOATMAN_GATE_OPEN]) {
+                            g_CastleFlags[BOATMAN_GATE_OPEN] = true;
                         }
                         if (offset > 0xBE0) {
                             self->step++;
@@ -416,7 +420,7 @@ void func_us_801C5C7C(Entity* self) {
                 } else {
                     childEntity = self - 3;
                 }
-                childEntity->ext.ILLEGAL.s16[0] = 1; // TODO
+                childEntity->ext.ferrymanUnk.unk7C = 1;
             }
         }
         if (self->facingLeft) {
@@ -591,33 +595,61 @@ void func_us_801C6CEC(Entity* self) {
     self->posY.i.hi = prev->posY.i.hi;
 }
 
-static u16 D_us_801816B4[] = {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+static u16 arr_indexes[] = {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+// { u0/2, u1/3, v0/1, v2/3 }
 static u8 D_us_801816D4[2][4] = {
     {0xC1, 0xDF, 0xE1, 0xFF}, {0xF4, 0xFC, 0x9C, 0xFC}};
-static s16 D_us_801816DC[] = {0x0410, 0x0030, 0x0410, 0x01A0, 0x0500, 0x0030,
-                              0x02E0, 0x0030, 0x02E0, 0x01A0, 0x01F0, 0x0030};
+
+// clang-format off
+// 6 elements of { xOffset, yOffset }
+static s16 D_us_801816DC[] = {
+    1040, 48,
+    1040, 416,
+    1280, 48,
+    736, 48,
+    736, 416,
+    496, 48
+};
+
+
+// 30 elements of { case, xOffset, yOffset }
 static s16 D_us_801816F4[] = {
-    0x0000, 0x0422, 0xFFF0, 0x0000, 0x0422, 0x0050, 0x0000, 0x0422, 0x00B0,
-    0x0000, 0x0422, 0x0110, 0x0001, 0x03FE, 0x0000, 0x0001, 0x03FE, 0x0060,
-    0x0001, 0x03FE, 0x00C0, 0x0001, 0x03FE, 0x0120, 0x0002, 0x0438, 0x0042,
-    0x0002, 0x0498, 0x0042, 0x0000, 0x02CE, 0xFFF0, 0x0000, 0x02CE, 0x0050,
-    0x0000, 0x02CE, 0x00B0, 0x0000, 0x02CE, 0x0110, 0x0001, 0x02F2, 0x0000,
-    0x0001, 0x02F2, 0x0060, 0x0001, 0x02F2, 0x00C0, 0x0001, 0x02F2, 0x0120,
-    0x0003, 0x0200, 0x0040, 0x0003, 0x0260, 0x0040};
+    0, 1058, -16,
+    0, 1058, 80,
+    0, 1058, 176,
+    0, 1058, 272,
+    1, 1022, 0,
+    1, 1022, 96,
+    1, 1022, 192,
+    1, 1022, 288,
+    2, 1080, 66,
+    2, 1176, 66,
+    0, 718, -16,
+    0, 718, 80,
+    0, 718, 176,
+    0, 718, 272,
+    1, 754, 0,
+    1, 754, 96,
+    1, 754, 192,
+    1, 754, 288,
+    3, 512, 64,
+    3, 608, 64
+};
+// clang-format on
 
 void func_us_801C6DA8(Entity* self) {
-    u32 primIndex; // sp3C
-    u32 scrollX;   // sp38
+    u32 primIndex;
+    u32 scrollX;
 
-    u32 scrollY;     // s8
-    s16 cos;         // s7
-    u8* ptr;         // s6
-    s32 i;           // s5
-    s16* ptrTwo;     // s4
-    s16 sin;         // s3
-    s16 var_s2;      // s2
-    s16 var_s1;      // s1
-    Primitive* prim; // s0
+    u32 scrollY;
+    s16 cos;
+    u8* ptr;
+    s32 i;
+    s16* ptrTwo;
+    s16 sin;
+    s16 xOffset;
+    s16 yOffset;
+    Primitive* prim;
 
     scrollX = g_Tilemap.scrollX.i.hi;
     scrollY = g_Tilemap.scrollY.i.hi;
@@ -633,8 +665,8 @@ void func_us_801C6DA8(Entity* self) {
             while (prim != NULL) {
                 prim->tpage = 0xF;
                 prim->clut = 0x5F;
-                ptr = D_us_801816D4[0];
-                ptr += D_us_801816B4[i] * 4;
+                ptr = *D_us_801816D4;
+                ptr += arr_indexes[i] * 4;
                 prim->u0 = prim->u2 = *ptr++;
                 prim->u1 = prim->u3 = *ptr++;
                 prim->v0 = prim->v1 = *ptr++;
@@ -666,8 +698,8 @@ void func_us_801C6DA8(Entity* self) {
     while (prim != NULL) {
         if (i < 3) {
             ptrTwo = &D_us_801816DC[(self->params * 6) + (i * 2)];
-            var_s2 = *ptrTwo++ - scrollX;
-            var_s1 = *ptrTwo - scrollY;
+            xOffset = *ptrTwo++ - scrollX;
+            yOffset = *ptrTwo - scrollY;
             if (self->params) {
                 sin = (rsin(-self->rotate) * 0x1A) >> 0xC;
                 cos = (rcos(-self->rotate) * 0x1A) >> 0xC;
@@ -676,61 +708,59 @@ void func_us_801C6DA8(Entity* self) {
                 cos = (rcos(self->rotate) * 0x1A) >> 0xC;
             }
 
-            prim->x0 = var_s2 - cos;
-            prim->x1 = var_s2 + sin;
-            prim->x2 = var_s2 - sin;
-            prim->x3 = var_s2 + cos;
-            prim->y0 = var_s1 - sin;
-            prim->y1 = var_s1 - cos;
-            prim->y2 = var_s1 + cos;
-            prim->y3 = var_s1 + sin;
+            prim->x0 = xOffset - cos;
+            prim->x1 = xOffset + sin;
+            prim->x2 = xOffset - sin;
+            prim->x3 = xOffset + cos;
+            prim->y0 = yOffset - sin;
+            prim->y1 = yOffset - cos;
+            prim->y2 = yOffset + cos;
+            prim->y3 = yOffset + sin;
             prim->drawMode = DRAW_UNK02;
             prim = prim->next;
         } else {
             ptrTwo = &D_us_801816F4[(self->params * 3) * 10 + ((i - 3) * 3)];
             sin = *ptrTwo++;
-            var_s2 = *ptrTwo++ - scrollX;
-            var_s1 = *ptrTwo - scrollY;
+            xOffset = *ptrTwo++ - scrollX;
+            yOffset = *ptrTwo - scrollY;
             switch (sin) {
             case 0:
-                prim->x0 = prim->x2 = var_s2 - 4;
-                prim->x1 = prim->x3 = var_s2 + 4;
-                var_s1 += self->ext.ferrymanUnk.unk7E;
-                prim->y0 = prim->y1 = var_s1;
-                prim->y2 = prim->y3 = var_s1 + 0x60;
+                prim->x0 = prim->x2 = xOffset - 4;
+                prim->x1 = prim->x3 = xOffset + 4;
+                yOffset += self->ext.ferrymanUnk.unk7E;
+                prim->y0 = prim->y1 = yOffset;
+                prim->y2 = prim->y3 = yOffset + 0x60;
                 break;
             case 1:
-                prim->x0 = prim->x2 = var_s2 - 4;
-                prim->x1 = prim->x3 = var_s2 + 4;
-                var_s1 -= self->ext.ferrymanUnk.unk7E;
-                prim->y0 = prim->y1 = var_s1;
-                prim->y2 = prim->y3 = var_s1 + 0x60;
+                prim->x0 = prim->x2 = xOffset - 4;
+                prim->x1 = prim->x3 = xOffset + 4;
+                yOffset -= self->ext.ferrymanUnk.unk7E;
+                prim->y0 = prim->y1 = yOffset;
+                prim->y2 = prim->y3 = yOffset + 0x60;
                 break;
             case 2:
-                var_s2 -= self->ext.ferrymanUnk.unk7E;
-                prim->x0 = prim->x1 = var_s2;
-                prim->x2 = prim->x3 = var_s2 + 0x60;
-                prim->y1 = prim->y3 = var_s1 - 4;
-                prim->y0 = prim->y2 = var_s1 + 4;
+                xOffset -= self->ext.ferrymanUnk.unk7E;
+                prim->x0 = prim->x1 = xOffset;
+                prim->x2 = prim->x3 = xOffset + 0x60;
+                prim->y1 = prim->y3 = yOffset - 4;
+                prim->y0 = prim->y2 = yOffset + 4;
                 break;
             case 3:
-                var_s2 += self->ext.ferrymanUnk.unk7E;
-                prim->x0 = prim->x1 = var_s2;
-                prim->x2 = prim->x3 = var_s2 + 0x60;
-                prim->y1 = prim->y3 = var_s1 - 4;
-                prim->y0 = prim->y2 = var_s1 + 4;
+                xOffset += self->ext.ferrymanUnk.unk7E;
+                prim->x0 = prim->x1 = xOffset;
+                prim->x2 = prim->x3 = xOffset + 0x60;
+                prim->y1 = prim->y3 = yOffset - 4;
+                prim->y0 = prim->y2 = yOffset + 4;
                 break;
             }
             prim->drawMode = DRAW_UNK02;
             prim = prim->next;
         }
-        i += 1;
+        i++;
     }
 }
 
 void func_us_801C7204(Entity* entity, s32 arg1) {
-    s32 var_a1;
-
     if (entity->ext.ferrymanUnk.unk7E) {
         return;
     }
@@ -741,34 +771,38 @@ void func_us_801C7204(Entity* entity, s32 arg1) {
     entity->ext.ferrymanUnk.unk7E = 1;
 }
 
-static u8 D_us_8018176C[] = {
-    0xE4, 0xEC, 0xC4, 0xD6, 0x85, 0xE2, 0xEE, 0xE1, 0xFF, 0x84,
-    0xE4, 0xEC, 0xC4, 0xD6, 0x83, 0xE2, 0xEE, 0xE1, 0xFF, 0x82,
-    0x80, 0xC0, 0xE1, 0xFF, 0x81, 0x00, 0x00, 0x00};
-static s16 D_us_80181788[] = {
-    0xFFFC, 0xFFF4, 0x0004, 0xFFF4, 0xFFFC, 0x0006, 0x0004, 0x0006,
-    0xFFFA, 0xFFFE, 0x0006, 0xFFFE, 0xFFFA, 0x001C, 0x0006, 0x001C,
-    0xFFFC, 0xFFFC, 0x0004, 0xFFFC, 0xFFFC, 0x000E, 0x0004, 0x000E,
-    0xFFFA, 0xFFFE, 0x0006, 0xFFFE, 0xFFFA, 0x001C, 0x0006, 0x001C,
-    0xFFE0, 0xFFFD, 0x0020, 0xFFFD, 0xFFE0, 0x001B, 0x0020, 0x001B};
+// { u0/2, u1/3, v0/1, v2/3, priority }
+static u8 D_us_8018176C[][5] = {
+    {0xE4, 0xEC, 0xC4, 0xD6, 0x85},
+    {0xE2, 0xEE, 0xE1, 0xFF, 0x84},
+    {0xE4, 0xEC, 0xC4, 0xD6, 0x83},
+    {0xE2, 0xEE, 0xE1, 0xFF, 0x82},
+    {0x80, 0xC0, 0xE1, 0xFF, 0x81}};
+static s16 D_us_80181788[][8] = {
+    {-4, -12, 4, -12, -4, 6, 4, 6},
+    {-6, -2, 6, -2, -6, 28, 6, 28},
+    {-4, -4, 4, -4, -4, 14, 4, 14},
+    {-6, -2, 6, -2, -6, 28, 6, 28},
+    {-32, -3, 32, -3, -32, 27, 32, 27}};
 
-void func_us_801C726C(Entity* entity, s32 arg1, s16 posX, s16 posY, u16 arg4) {
-    u32 i;              // sp3C
-    s16* sp38;          // sp38
-    Entity* player;     // sp34
-    Entity* tempEntity; // s8
-    s16 var_s7;         // s7
-    s16 var_s6;         // s6
-    s16 var_s5;         // s5
-    s16 var_s4;         // s4
-    Primitive* prim;    // s3
-    u16 var_s2;         // s2
-    long var_s1;        // s1
-    long var_s0;        // s0
+void func_us_801C726C(
+    Entity* entity, s32 arg1, s16 posX, s16 posY, u16 collisionDetected) {
+    u32 i;
+    s16* ptr;
+    Entity* player;
+    Entity* tempEntity;
+    s16 posYTemp;
+    s16 posXTemp;
+    s16 var_s5;
+    s16 var_s4;
+    Primitive* prim;
+    u16 angle;
+    long var_s1;
+    long var_s0;
 
     player = &PLAYER;
     if (!entity->ext.et_801C726C.unk7C) {
-        arg1 = 0;
+        arg1 = false;
     }
 
     if (entity->ext.et_801C726C.unk7E) {
@@ -785,14 +819,14 @@ void func_us_801C726C(Entity* entity, s32 arg1, s16 posX, s16 posY, u16 arg4) {
                 entity->ext.et_801C726C.unk7E = 0;
             } else {
                 entity->ext.et_801C726C.unk8C =
-                    -entity->ext.et_801C726C.unk8C / 2; // TODO: negative
+                    -entity->ext.et_801C726C.unk8C / 2;
             }
         }
     }
-    var_s2 = entity->ext.et_801C726C_child.unk86;
-    sp38 = D_us_80181788;
-    var_s6 = posX;
-    var_s7 = posY;
+    angle = entity->ext.et_801C726C_child.unk86;
+    ptr = *D_us_80181788;
+    posXTemp = posX;
+    posYTemp = posY;
 
     for (i = 0, prim = &g_PrimBuf[entity->primIndex]; prim != NULL; i++) {
         switch (i) {
@@ -801,26 +835,26 @@ void func_us_801C726C(Entity* entity, s32 arg1, s16 posX, s16 posY, u16 arg4) {
             var_s1 = 0x1000;
             break;
         case 1:
-            var_s0 = rsin(var_s2 / 2);
-            var_s1 = rcos(var_s2 / 2);
+            var_s0 = rsin(angle / 2);
+            var_s1 = rcos(angle / 2);
             break;
         case 2:
-            var_s0 = rsin(var_s2 / 2);
-            var_s1 = rcos(var_s2 / 2);
-            var_s6 -= (var_s0 * 0x16) >> 0xC;
-            var_s7 += (var_s1 * 0x16) >> 0xC;
+            var_s0 = rsin(angle / 2);
+            var_s1 = rcos(angle / 2);
+            posXTemp -= (var_s0 * 0x16) >> 0xC;
+            posYTemp += (var_s1 * 0x16) >> 0xC;
             break;
         case 3:
-            var_s0 = rsin(var_s2);
-            var_s1 = rcos(var_s2);
-            var_s6 -= (rsin(var_s2 / 2) * 8) >> 0xC;
-            var_s7 += (rcos(var_s2 / 2) * 8) >> 0xC;
+            var_s0 = rsin(angle);
+            var_s1 = rcos(angle);
+            posXTemp -= (rsin(angle / 2) * 8) >> 0xC;
+            posYTemp += (rcos(angle / 2) * 8) >> 0xC;
             break;
         case 4:
-            var_s0 = rsin(var_s2);
-            var_s1 = rcos(var_s2);
-            posX = var_s6 - ((var_s0 * 4) >> 0xC);
-            posY = var_s7 + ((var_s1 * 4) >> 0xC);
+            var_s0 = rsin(angle);
+            var_s1 = rcos(angle);
+            posX = posXTemp - ((var_s0 * 4) >> 0xC);
+            posY = posYTemp + ((var_s1 * 4) >> 0xC);
             if (entity->params) {
                 tempEntity = entity + 3;
             } else {
@@ -829,68 +863,70 @@ void func_us_801C726C(Entity* entity, s32 arg1, s16 posX, s16 posY, u16 arg4) {
             tempEntity->ext.et_801C726C_child.unk94 |= arg1;
             if (arg1) {
                 if (tempEntity->facingLeft) {
-                    tempEntity->rotate = -var_s2 & 0xFFF;
+                    tempEntity->rotate = -angle & 0xFFF;
                     tempEntity->ext.et_801C726C_child.unk98 =
-                        var_s6 + (((var_s1 * 2) - (var_s0 * 0x22)) >> 0xC);
+                        posXTemp + (((var_s1 * 2) - (var_s0 * 0x22)) >> 0xC);
                     tempEntity->ext.et_801C726C_child.unk9A =
-                        var_s7 + (((var_s0 * 2) + (var_s1 * 0x22)) >> 0xC);
+                        posYTemp + (((var_s0 * 2) + (var_s1 * 0x22)) >> 0xC);
                 } else {
-                    tempEntity->rotate = var_s2;
+                    tempEntity->rotate = angle;
                     tempEntity->ext.et_801C726C_child.unk98 =
-                        var_s6 + (((var_s1 * -3) - (var_s0 * 0x22)) >> 0xC);
+                        posXTemp + (((var_s1 * -3) - (var_s0 * 0x22)) >> 0xC);
                     tempEntity->ext.et_801C726C_child.unk9A =
-                        var_s7 + (((var_s0 * -3) + (var_s1 * 0x22)) >> 0xC);
+                        posYTemp + (((var_s0 * -3) + (var_s1 * 0x22)) >> 0xC);
                 }
             }
-            var_s6 -= (var_s0 * 0x16) >> 0xC;
-            var_s7 += (var_s1 * 0x16) >> 0xC;
+            posXTemp -= (var_s0 * 0x16) >> 0xC;
+            posYTemp += (var_s1 * 0x16) >> 0xC;
             break;
         }
 
-        var_s5 = *sp38++;
-        var_s4 = *sp38++;
-        prim->x0 = var_s6 + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
-        prim->y0 = var_s7 + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
+        var_s5 = *ptr++;
+        var_s4 = *ptr++;
+        prim->x0 = posXTemp + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
+        prim->y0 = posYTemp + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
 
-        var_s5 = *sp38++;
-        var_s4 = *sp38++;
-        prim->x1 = var_s6 + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
-        prim->y1 = var_s7 + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
+        var_s5 = *ptr++;
+        var_s4 = *ptr++;
+        prim->x1 = posXTemp + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
+        prim->y1 = posYTemp + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
 
-        var_s5 = *sp38++;
-        var_s4 = *sp38++;
-        prim->x2 = var_s6 + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
-        prim->y2 = var_s7 + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
+        var_s5 = *ptr++;
+        var_s4 = *ptr++;
+        prim->x2 = posXTemp + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
+        prim->y2 = posYTemp + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
 
-        var_s5 = *sp38++;
-        var_s4 = *sp38++;
-        prim->x3 = var_s6 + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
-        prim->y3 = var_s7 + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
+        var_s5 = *ptr++;
+        var_s4 = *ptr++;
+        prim->x3 = posXTemp + (((var_s5 * var_s1) - (var_s4 * var_s0)) >> 0xC);
+        prim->y3 = posYTemp + (((var_s5 * var_s0) + (var_s4 * var_s1)) >> 0xC);
 
         prim = prim->next;
     }
 
-    if (arg4) {
-        var_s6 = posX - entity->posX.i.hi;
-        var_s7 = posY - entity->posY.i.hi;
-        if (var_s6 > 0) {
+    if (collisionDetected) {
+        posXTemp = posX - entity->posX.i.hi;
+        posYTemp = posY - entity->posY.i.hi;
+        if (posXTemp > 0) {
             if (!(g_Player.vram_flag & 4)) {
-                player->posX.i.hi += var_s6;
-                D_80097488.x.i.hi += var_s6;
+                player->posX.i.hi += posXTemp;
+                D_80097488.x.i.hi += posXTemp;
             }
         } else if (!(g_Player.vram_flag & 8)) {
-            player->posX.i.hi += var_s6;
-            D_80097488.x.i.hi += var_s6;
+            player->posX.i.hi += posXTemp;
+            D_80097488.x.i.hi += posXTemp;
         }
-        player->posY.i.hi += var_s7;
-        D_80097488.y.i.hi += var_s7;
+        player->posY.i.hi += posYTemp;
+        D_80097488.y.i.hi += posYTemp;
     }
     entity->posX.i.hi = posX;
     entity->posY.i.hi = posY;
-    entity->rotate = var_s2;
+    entity->rotate = angle;
 }
 
+// anim
 static u8 D_us_801817D8[] = {0x04, 0x23, 0x84, 0x24, 0xFF, 0x00, 0x00, 0x00};
+// anim
 static u8 D_us_801817E0[] = {0x04, 0x23, 0x04, 0x05, 0xFF, 0x00, 0x00, 0x00};
 
 #ifdef VERSION_PSP
@@ -900,19 +936,19 @@ static u8 D_us_801817E0[] = {0x04, 0x23, 0x04, 0x05, 0xFF, 0x00, 0x00, 0x00};
 #endif
 
 void func_us_801C789C(Entity* self) {
-    s32 primIndex; // sp3C
-    s32 sp38;      // sp38
-    s32 sp34;      // sp34
+    s32 primIndex;
+    s32 sp38;
+    s32 sp34;
 
-    u16 var_s8;      // s8
-    u32 scrollY;     // s7
-    u16 var_s6;      // s6
-    Entity* entity;  // s5
-    u32 scrollX;     // s4
-    s16 var_s3;      // s3
-    s16 var_s2;      // s2
-    u8* var_s1;      // s1
-    Primitive* prim; // s0
+    u16 var_s8;
+    u32 scrollY;
+    u16 collision;
+    Entity* entity;
+    u32 scrollX;
+    s16 posY;
+    s16 posX;
+    u8* ptr;
+    Primitive* prim;
 
     scrollX = g_Tilemap.scrollX.i.hi;
     scrollY = g_Tilemap.scrollY.i.hi;
@@ -920,16 +956,16 @@ void func_us_801C789C(Entity* self) {
         self->posY.i.hi += 0x2C;
         if (self->ext.et_801C726C.unk9A) {
             self->ext.et_801C726C.unk9A -= 1;
-            var_s6 = 0;
+            collision = false;
         } else {
-            var_s6 = GetPlayerCollisionWith(self, COLLISION_WIDTH, 5, 4);
+            collision = GetPlayerCollisionWith(self, COLLISION_WIDTH, 5, 4);
             // Possible !BUG: duplicate && condition here
-            if (!var_s6 && self->ext.et_801C726C.unk98 &&
-                self->ext.et_801C726C.unk98) {
+            if (!collision && self->ext.et_801C726C.collisionDetected &&
+                self->ext.et_801C726C.collisionDetected) {
                 self->ext.et_801C726C.unk9A = 4;
             }
         }
-        self->ext.et_801C726C.unk98 = var_s6;
+        self->ext.et_801C726C.collisionDetected = collision;
         self->posY.i.hi -= 0x2C;
     }
 
@@ -943,20 +979,20 @@ void func_us_801C789C(Entity* self) {
             self->drawFlags = FLAG_DRAW_ROTATE;
             prim = &g_PrimBuf[primIndex];
             sp38 = 0;
-            var_s1 = D_us_8018176C;
+            ptr = *D_us_8018176C;
 
             while (prim != NULL) {
                 prim->clut = 0x5F;
                 prim->tpage = 0xF;
-                prim->u0 = prim->u2 = *var_s1++;
-                prim->u1 = prim->u3 = *var_s1++;
-                prim->v0 = prim->v1 = *var_s1++;
-                prim->v2 = prim->v3 = *var_s1++;
-                prim->priority = *var_s1++;
+                prim->u0 = prim->u2 = *ptr++;
+                prim->u1 = prim->u3 = *ptr++;
+                prim->v0 = prim->v1 = *ptr++;
+                prim->v2 = prim->v3 = *ptr++;
+                prim->priority = *ptr++;
                 prim->drawMode = DRAW_UNK02;
                 prim = prim->next;
             }
-            self->animSet = -0x7FFF;
+            self->animSet = ANIMSET_OVL(1);
             self->animCurFrame = 5;
             self->zPriority = 0x9C;
             self->ext.et_801C726C.unk80 = 0;
@@ -982,29 +1018,29 @@ void func_us_801C789C(Entity* self) {
         if (!var_s8 && (entity->step < 4 || entity->step > 12)) {
             var_s8 = true;
         }
-        if ((var_s8 && var_s6) || self->ext.et_801C726C.unk7C) {
+        if ((var_s8 && collision) || self->ext.et_801C726C.unk7C) {
             self->step++;
             func_us_801C7204(self, 0xFFFC0000);
         }
 
-        var_s3 = 0xF0 - scrollY;
+        posY = 0xF0 - scrollY;
         if (self->params) {
-            var_s2 = 0x2CE - scrollX;
+            posX = 0x2CE - scrollX;
         } else {
-            var_s2 = 0x422 - scrollX;
+            posX = 0x422 - scrollX;
         }
-        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+        func_us_801C726C(self, false, posX, posY, collision);
         return;
     case 2:
         entity = self + 2;
         entity->ext.et_801C726C_child.unk7C = 1;
         self->ext.et_801C726C.unk80++;
         if (self->ext.et_801C726C.unk80 > 0xA2) {
-            var_s3 = 0x4E;
+            posY = 0x4E;
             if (self->params) {
-                var_s2 = (0x2CE - scrollX) - self->ext.et_801C726C.unk80 + 0xA2;
+                posX = (0x2CE - scrollX) - self->ext.et_801C726C.unk80 + 0xA2;
             } else {
-                var_s2 = (0x2CE - scrollX) + self->ext.et_801C726C.unk80 + 0xB2;
+                posX = (0x2CE - scrollX) + self->ext.et_801C726C.unk80 + 0xB2;
             }
             if (self->ext.et_801C726C.unk80 == 0x188) {
                 if (self->params) {
@@ -1016,21 +1052,21 @@ void func_us_801C789C(Entity* self) {
                 self->ext.et_801C726C.unk82 = 0x80;
             }
         } else {
-            var_s3 = 0xF0 - (self->ext.et_801C726C.unk80);
+            posY = 0xF0 - (self->ext.et_801C726C.unk80);
             if (self->params) {
-                var_s2 = 0x2CE - scrollX;
+                posX = 0x2CE - scrollX;
                 if (self->ext.et_801C726C.unk80 == 0xA2) {
                     func_us_801C7204(self, -0x80000);
                 }
             } else {
-                var_s2 = 0x422 - scrollX;
+                posX = 0x422 - scrollX;
                 if (self->ext.et_801C726C.unk80 == 0xA2) {
                     func_us_801C7204(self, 0x80000);
                 }
             }
         }
-        if (var_s3 < 0xDF && self->ext.et_801C726C.unk7C) {
-            if (var_s3 == 0xDE) {
+        if (posY < 0xDF && self->ext.et_801C726C.unk7C) {
+            if (posY == 0xDE) {
                 if (self->params) {
                     func_us_801C7204(self, 0x50000);
                 } else {
@@ -1041,11 +1077,11 @@ void func_us_801C789C(Entity* self) {
         } else {
             sp34 = false;
         }
-        var_s3 -= scrollY;
-        func_us_801C726C(self, sp34, var_s2, var_s3, var_s6);
+        posY -= scrollY;
+        func_us_801C726C(self, sp34, posX, posY, collision);
         if (!(self->ext.et_801C726C.unk94 % 10)) {
             self->ext.et_801C726C.unk94 = 0;
-            PlaySfxPositional(0x6DA);
+            PlaySfxPositional(SFX_METAL_RATTLE_A);
         }
         self->ext.et_801C726C.unk94++;
         break;
@@ -1054,16 +1090,16 @@ void func_us_801C789C(Entity* self) {
         entity->ext.et_801C726C_child.unk7C = 0;
         if (!--self->ext.et_801C726C.unk82) {
             self->step++;
-            PlaySfxPositional(0x675);
+            PlaySfxPositional(SFX_LEVER_METAL_BANG);
         }
 
-        var_s3 = 0x4E - scrollY;
+        posY = 0x4E - scrollY;
         if (self->params) {
-            var_s2 = 0x1E8 - scrollX;
+            posX = 0x1E8 - scrollX;
         } else {
-            var_s2 = 0x508 - scrollX;
+            posX = 0x508 - scrollX;
         }
-        func_us_801C726C(self, 1, var_s2, var_s3, var_s6);
+        func_us_801C726C(self, true, posX, posY, collision);
         break;
     case 4:
         self->zPriority = 0x82;
@@ -1075,13 +1111,13 @@ void func_us_801C789C(Entity* self) {
             self->step++;
         }
 
-        var_s3 = 0x4E - scrollY;
+        posY = 0x4E - scrollY;
         if (self->params) {
-            var_s2 = 0x1E8 - scrollX;
+            posX = 0x1E8 - scrollX;
         } else {
-            var_s2 = 0x508 - scrollX;
+            posX = 0x508 - scrollX;
         }
-        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+        func_us_801C726C(self, false, posX, posY, collision);
         break;
     case 5:
         if (!AnimateEntity(D_us_801817E0, self)) {
@@ -1098,13 +1134,13 @@ void func_us_801C789C(Entity* self) {
             self->zPriority = 0x9C;
         }
 
-        var_s3 = 0x4E - scrollY;
+        posY = 0x4E - scrollY;
         if (self->params) {
-            var_s2 = 0x1E8 - scrollX;
+            posX = 0x1E8 - scrollX;
         } else {
-            var_s2 = 0x508 - scrollX;
+            posX = 0x508 - scrollX;
         }
-        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+        func_us_801C726C(self, false, posX, posY, collision);
         break;
     case 6:
         if (!--self->ext.et_801C726C.unk82) {
@@ -1116,13 +1152,13 @@ void func_us_801C789C(Entity* self) {
             self->step++;
         }
 
-        var_s3 = 0x4E - scrollY;
+        posY = 0x4E - scrollY;
         if (self->params) {
-            var_s2 = 0x1E8 - scrollX;
+            posX = 0x1E8 - scrollX;
         } else {
-            var_s2 = 0x508 - scrollX;
+            posX = 0x508 - scrollX;
         }
-        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+        func_us_801C726C(self, false, posX, posY, collision);
         break;
     case 7:
         entity = self + 2;
@@ -1132,58 +1168,57 @@ void func_us_801C789C(Entity* self) {
         }
 
         if (self->ext.et_801C726C.unk80 > 0xA2) {
-            var_s3 = 0x4E;
+            posY = 0x4E;
             if (self->params) {
-                var_s2 = (0x2CE - scrollX) - self->ext.et_801C726C.unk80 + 0xA2;
+                posX = (0x2CE - scrollX) - self->ext.et_801C726C.unk80 + 0xA2;
                 if (self->ext.et_801C726C.unk80 == 0xA3) {
                     func_us_801C7204(self, -0x80000);
                 }
             } else {
-                var_s2 = (0x2CE - scrollX) + self->ext.et_801C726C.unk80 + 0xB2;
+                posX = (0x2CE - scrollX) + self->ext.et_801C726C.unk80 + 0xB2;
                 if (self->ext.et_801C726C.unk80 == 0xA3) {
                     func_us_801C7204(self, 0x80000);
                 }
             }
         } else {
-            var_s3 = 0xF0 - (self->ext.et_801C726C.unk80);
+            posY = 0xF0 - (self->ext.et_801C726C.unk80);
             if (self->params) {
-                var_s2 = 0x2CE - scrollX;
+                posX = 0x2CE - scrollX;
             } else {
-                var_s2 = 0x422 - scrollX;
+                posX = 0x422 - scrollX;
             }
         }
-        var_s3 -= scrollY;
-        func_us_801C726C(self, 0, var_s2, var_s3, var_s6);
+        posY -= scrollY;
+        func_us_801C726C(self, false, posX, posY, collision);
 
         if (!(self->ext.et_801C726C.unk94 % 10)) {
             self->ext.et_801C726C.unk94 = 0;
-            PlaySfxPositional(0x6DA);
+            PlaySfxPositional(SFX_METAL_RATTLE_A);
         }
         self->ext.et_801C726C.unk94++;
         break;
     }
 }
 
-void func_us_801C7FA4(Entity* self) {}
+void EntityFerrymanUnused(Entity* self) {}
 
-static u16 D_us_801817E8[] = {
-    0x0374, 0x0374, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000};
+static u16 tiles[7][2] = {
+    {884, 884}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
 
 void func_us_801C7FAC(void) {
-    u16* tilePtr;
+    u16* tileLayoutPtr;
     Tilemap* tileMap;
     s32 i;
     s16 offset;
 
     tileMap = &g_Tilemap;
     offset = 0x595;
-    tilePtr = D_us_801817E8;
+    tileLayoutPtr = *tiles;
 
-    for (i = 0; i < 7; i++) {
-        tileMap->fg[offset] = *tilePtr++;
+    for (i = 0; i < LEN(tiles); i++) {
+        tileMap->fg[offset] = *tileLayoutPtr++;
         offset++;
-        tileMap->fg[offset] = *tilePtr++;
+        tileMap->fg[offset] = *tileLayoutPtr++;
         offset += 0xCF;
     }
 }
@@ -1193,7 +1228,7 @@ extern s32 E_ID(SURFACING_WATER);
 #endif
 
 void func_us_801C801C(Entity* self) {
-    Entity* newEnt;
+    Entity* newEntity;
     s16 offsetY;
 
     switch (self->step) {
@@ -1203,17 +1238,17 @@ void func_us_801C801C(Entity* self) {
         if (g_CastleFlags[BOATMAN_GATE_OPEN]) {
             func_us_801C7FAC();
             DestroyEntity(self);
-            return;
+            break;
         }
         self->animCurFrame = 24;
-        return;
+        break;
     case 1:
         if (g_CastleFlags[BOATMAN_GATE_OPEN]) {
             GetPlayerCollisionWith(self, 16, 56, 3);
             func_us_801C7FAC();
             self->step++;
             self->ext.et_surfacingWater.unk80 = 0;
-            return;
+            break;
         }
         break;
     case 2:
@@ -1228,16 +1263,16 @@ void func_us_801C801C(Entity* self) {
             if (self->ext.et_surfacingWater.unk7C) {
                 self->ext.et_surfacingWater.unk7C--;
             } else {
-                newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (newEnt != NULL) {
+                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(
-                        E_ID(SURFACING_WATER), newEnt);
-                    newEnt->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
-                    newEnt->posX.i.hi +=
+                        E_ID(SURFACING_WATER), newEntity);
+                    newEntity->posY.i.hi = 176 - g_Tilemap.scrollY.i.hi;
+                    newEntity->posX.i.hi +=
                         (self->ext.et_surfacingWater.unk7E * 8) - 16;
-                    newEnt->params = 0x8000;
-                    newEnt->ext.et_surfacingWater.origPosX = 23;
-                    newEnt->zPriority = 155;
+                    newEntity->params = 0x8000;
+                    newEntity->ext.et_surfacingWater.origPosX = 23;
+                    newEntity->zPriority = 155;
                 }
 
                 self->ext.et_surfacingWater.unk7E++;
@@ -1253,5 +1288,6 @@ void func_us_801C801C(Entity* self) {
         if (offsetY < 36) {
             DestroyEntity(self);
         }
+        break;
     }
 }

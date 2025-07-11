@@ -48,7 +48,7 @@ void func_us_801C5C7C(Entity* self);
 void func_us_801C6CEC(Entity* self);
 void func_us_801C6DA8(Entity* self);
 void func_us_801C789C(Entity* self);
-void func_us_801C7FA4(Entity* self);
+void EntityFerrymanUnused(Entity* self);
 void func_us_801C123C(Entity* self);
 void func_us_801C4520(Entity* self);
 void func_us_801C4738(Entity* self);
@@ -143,7 +143,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x2D */ func_us_801C6CEC,
     /* 0x2E */ func_us_801C6DA8,
     /* 0x2F */ func_us_801C789C,
-    /* 0x30 */ func_us_801C7FA4,
+    /* 0x30 */ EntityFerrymanUnused,
     /* 0x31 */ EntityDummy,
     /* 0x32 */ EntityDummy,
     /* 0x33 */ EntityDummy,
