@@ -39,36 +39,47 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
-      #- [0x, .data, e_init]
-      #- [0x, .data, ...]
-      #- [0x, .data, e_misc]
-      #- [0x, .data, e_collect]
-      #- [0x, .data, e_particles]
-      #- [0x, .data, e_blue_axe_knight]
-      - [0x2891C, .rodata, us]
-      # - [0x, .rodata, cutscene]
-      # - [0x, .rodata, e_red_door]
-      # - [0x, .rodata, e_collect]
-      # - [0x, .rodata, e_stage_name]
-      # - [0x, .rodata, possibly other stage data]
-      # - [0x, .rodata, e_blue_axe_knight]
+      - [0x8E4, data, e_init]
+      - [0xA30, data]
+      - [0xE28, .data, st_update]
+      - [0xE74, .data, collision]
+      - [0x1234, .data, e_red_door]
+      - [0x124C, data, st_common]
+      - [0x144C, data, e_collect]
+      - [0x17A0, data, e_misc]
+      - [0x1858, .data, e_particles]
+      - [0x18D8, data, e_room_fg]
+      - [0x1970, data]
+      - [0x19BC, data, e_blue_axe_knight]
+      - [0x1B78, data]
+      - [0x288E8, .rodata, e_lock_camera]
+      - [0x28904, .rodata, us]
+      - [0x2898C, .rodata, cutscene]
+      - [0x28A64, .rodata, e_red_door]
+      - [0x28A7C, .rodata, e_collect]
+      - [0x28B50, .rodata, e_stage_name]
+      - [0x28B84, .rodata, e_flea_rider]
+      - [0x28BAC, .rodata, e_blue_axe_knight]
       - [0x28C30, .rodata, prim_helpers]
-      - [0x28C38, c, us] # e_room_bg
-      # - [0x28D00, c, us]
-      # - [0x2D630, c, us] # st_update
-      # - [0x2DA64, c, us] # collision
-      # - [0x2F220, c, us] # create_entity
-      # - [0x2FD98, c, us] # e_red_door
-      # - [0x30A48, c, us] # st_common
-      # - [0x31EF8, c, us] # e_collect
-      # - [0x34868, c, us] # e_misc
-      # - [0x36C04, c, us] # e_stage_name
-      # - [0x37A58, c, us] # e_particles
-      # - [0x3829C, c, us] # e_room_fg
-      # - [0x38388, c, us] # popup
-      # - [0x386B8, c, us]
-      # - [0x38BB8, c, us] # e_blue_axe_knight
+      - [0x28C38, c, e_room_bg]
+      - [0x28D00, c, e_lock_camera]
+      - [0x29250, c, us]
+      - [0x2B768, c, cutscene]
+      - [0x2D630, c, st_update]
+      - [0x2DA64, c, collision]
+      - [0x2F220, c, create_entity]
+      - [0x2FD98, c, e_red_door]
+      - [0x30A48, c, st_common]
+      - [0x31EF8, c, e_collect]
+      - [0x34868, c, e_misc]
+      - [0x36C04, c, e_stage_name]
+      - [0x37A58, c, e_particles]
+      - [0x3829C, c, e_room_fg]
+      - [0x38388, c, popup]
+      - [0x386B8, c, e_flea_rider]
+      - [0x38BB8, c, e_blue_axe_knight]
       - [0x3A3C8, c, prim_helpers]
       - [0x3ABF8, c, e_clock_tower]
       - [0x3B7F0, sbss]
+      # - [0x, sbss, cutscene]
   - [0x3C55C]

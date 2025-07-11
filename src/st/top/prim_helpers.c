@@ -17,3 +17,5 @@ INCLUDE_ASM("st/top/nonmatchings/prim_helpers", UnkPolyFunc2);
 INCLUDE_ASM("st/top/nonmatchings/prim_helpers", UnkPolyFunc0);
 
 INCLUDE_ASM("st/top/nonmatchings/prim_helpers", PrimDecreaseBrightness);
+
+INCLUDE_RODATA("st/top/nonmatchings/prim_helpers", D_us_801A8C30);

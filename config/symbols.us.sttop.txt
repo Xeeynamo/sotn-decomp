@@ -10,7 +10,7 @@ SetCutsceneEnd = 0x801ABC18; // source=duplicate
 CutsceneRun = 0x801ABC44; // source=duplicate
 CutsceneSkip = 0x801ABF20; // source=duplicate
 ScaleCutsceneAvatar = 0x801AC000; // source=duplicate
-NZ0_EntityCutscene = 0x801AC104; // source=duplicate
+TOP_EntityCutscene = 0x801AC104; // source=duplicate
 Random = 0x801AD630; // source=match
 Update = 0x801AD660; // source=match
 UpdateStageEntities = 0x801AD95C; // source=match
@@ -124,3 +124,9 @@ UnkPolyFunc2 = 0x801BAB14; // source=match
 UnkPolyFunc0 = 0x801BAB68; // source=match
 PrimDecreaseBrightness = 0x801BAB94; // source=match
 EntityClockTower3D = 0x801BB354; // source=duplicate
+g_ItemIconSlots = 0x801BC51C;
+g_EInitDamageNum = 0x801809F4;
+g_EInitCommon = 0x801809E8;
+TOP_RedDoorTiles = 0x80180A68;
+g_eRedDoorUV = 0x80181234;
+g_EInitObtainable = 0x801809A0;
