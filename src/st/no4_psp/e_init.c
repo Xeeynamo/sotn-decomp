@@ -45,7 +45,7 @@ void func_pspeu_09240CD0(Entity* self);
 void func_pspeu_09241098(Entity* self);
 void func_pspeu_09241410(Entity* self);
 void func_us_801C5C7C(Entity* self);
-void func_pspeu_0923B288(Entity* self);
+void func_us_801C6CEC(Entity* self);
 void func_pspeu_0923B378(Entity* self);
 void func_pspeu_0923C460(Entity* self);
 void func_pspeu_0923D0B8(Entity* self);
@@ -140,7 +140,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x2A */ func_pspeu_09241098,
     /* 0x2B */ func_pspeu_09241410,
     /* 0x2C */ func_us_801C5C7C,
-    /* 0x2D */ func_pspeu_0923B288,
+    /* 0x2D */ func_us_801C6CEC,
     /* 0x2E */ func_pspeu_0923B378,
     /* 0x2F */ func_pspeu_0923C460,
     /* 0x30 */ func_pspeu_0923D0B8,

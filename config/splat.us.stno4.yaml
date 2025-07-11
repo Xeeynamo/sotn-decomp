@@ -48,7 +48,7 @@ segments:
       - [0xECC, data] # additional water_effects data
       - [0x1108, data]
       - [0x1678, .data, e_ferryman]
-      - [0x16B4, data, e_ferryman_u]
+      - [0x176C, data, e_ferryman_u]
       - [0x1804, data]
       - [0x1880, .data, e_secrets]
       - [0x18F0, .data, e_bat]

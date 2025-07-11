@@ -591,24 +591,33 @@ void func_us_801C6CEC(Entity* self) {
     self->posY.i.hi = prev->posY.i.hi;
 }
 
-extern u16 D_us_801816B4[];
-extern u8 D_us_801816D4[];
-extern s16 D_us_801816DC[];
-extern s16 D_us_801816F4[];
+static u16 D_us_801816B4[] = {0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1};
+static u8 D_us_801816D4[2][4] = {
+    {0xC1, 0xDF, 0xE1, 0xFF}, {0xF4, 0xFC, 0x9C, 0xFC}};
+static s16 D_us_801816DC[] = {0x0410, 0x0030, 0x0410, 0x01A0, 0x0500, 0x0030,
+                              0x02E0, 0x0030, 0x02E0, 0x01A0, 0x01F0, 0x0030};
+static s16 D_us_801816F4[] = {
+    0x0000, 0x0422, 0xFFF0, 0x0000, 0x0422, 0x0050, 0x0000, 0x0422, 0x00B0,
+    0x0000, 0x0422, 0x0110, 0x0001, 0x03FE, 0x0000, 0x0001, 0x03FE, 0x0060,
+    0x0001, 0x03FE, 0x00C0, 0x0001, 0x03FE, 0x0120, 0x0002, 0x0438, 0x0042,
+    0x0002, 0x0498, 0x0042, 0x0000, 0x02CE, 0xFFF0, 0x0000, 0x02CE, 0x0050,
+    0x0000, 0x02CE, 0x00B0, 0x0000, 0x02CE, 0x0110, 0x0001, 0x02F2, 0x0000,
+    0x0001, 0x02F2, 0x0060, 0x0001, 0x02F2, 0x00C0, 0x0001, 0x02F2, 0x0120,
+    0x0003, 0x0200, 0x0040, 0x0003, 0x0260, 0x0040};
 
 void func_us_801C6DA8(Entity* self) {
-    u32 scrollX; // sp38
+    u32 primIndex; // sp3C
+    u32 scrollX;   // sp38
 
-    Primitive* prim; // s0
-    u32 primIndex;   // s1
-    s16 var_s1;      // s1
-    s16 var_s2;      // s2
-    s16 sin;         // s3
-    s16* ptrTwo;     // s4
-    s32 i;           // s5
-    u8* ptr;         // s6
-    s16 cos;         // s7
     u32 scrollY;     // s8
+    s16 cos;         // s7
+    u8* ptr;         // s6
+    s32 i;           // s5
+    s16* ptrTwo;     // s4
+    s16 sin;         // s3
+    s16 var_s2;      // s2
+    s16 var_s1;      // s1
+    Primitive* prim; // s0
 
     scrollX = g_Tilemap.scrollX.i.hi;
     scrollY = g_Tilemap.scrollY.i.hi;
@@ -624,7 +633,7 @@ void func_us_801C6DA8(Entity* self) {
             while (prim != NULL) {
                 prim->tpage = 0xF;
                 prim->clut = 0x5F;
-                ptr = D_us_801816D4;
+                ptr = D_us_801816D4[0];
                 ptr += D_us_801816B4[i] * 4;
                 prim->u0 = prim->u2 = *ptr++;
                 prim->u1 = prim->u3 = *ptr++;
@@ -642,16 +651,16 @@ void func_us_801C6DA8(Entity* self) {
         }
     }
 
-    if (self->ext.et_surfacingWater.unk7C) {
-        if (self->ext.et_surfacingWater.unk7C < 0) {
-            self->ext.et_surfacingWater.unk7E++;
+    if (self->ext.ferrymanUnk.unk7C) {
+        if (self->ext.ferrymanUnk.unk7C < 0) {
+            self->ext.ferrymanUnk.unk7E++;
             self->rotate += 0x10;
         } else {
-            self->ext.et_surfacingWater.unk7E--;
+            self->ext.ferrymanUnk.unk7E--;
             self->rotate -= 0x10;
         }
     }
-    self->ext.et_surfacingWater.unk7E &= 0xF;
+    self->ext.ferrymanUnk.unk7E &= 0xF;
     prim = &g_PrimBuf[self->primIndex];
     i = 0;
     while (prim != NULL) {
@@ -678,7 +687,7 @@ void func_us_801C6DA8(Entity* self) {
             prim->drawMode = DRAW_UNK02;
             prim = prim->next;
         } else {
-            ptrTwo = &D_us_801816F4[(self->params * 0x1E) + ((i - 3) * 3)];
+            ptrTwo = &D_us_801816F4[(self->params * 3) * 10 + ((i - 3) * 3)];
             sin = *ptrTwo++;
             var_s2 = *ptrTwo++ - scrollX;
             var_s1 = *ptrTwo - scrollY;
@@ -686,26 +695,26 @@ void func_us_801C6DA8(Entity* self) {
             case 0:
                 prim->x0 = prim->x2 = var_s2 - 4;
                 prim->x1 = prim->x3 = var_s2 + 4;
-                var_s1 += self->ext.et_surfacingWater.unk7E;
+                var_s1 += self->ext.ferrymanUnk.unk7E;
                 prim->y0 = prim->y1 = var_s1;
                 prim->y2 = prim->y3 = var_s1 + 0x60;
                 break;
             case 1:
                 prim->x0 = prim->x2 = var_s2 - 4;
                 prim->x1 = prim->x3 = var_s2 + 4;
-                var_s1 -= self->ext.et_surfacingWater.unk7E;
+                var_s1 -= self->ext.ferrymanUnk.unk7E;
                 prim->y0 = prim->y1 = var_s1;
                 prim->y2 = prim->y3 = var_s1 + 0x60;
                 break;
             case 2:
-                var_s2 -= self->ext.et_surfacingWater.unk7E;
+                var_s2 -= self->ext.ferrymanUnk.unk7E;
                 prim->x0 = prim->x1 = var_s2;
                 prim->x2 = prim->x3 = var_s2 + 0x60;
                 prim->y1 = prim->y3 = var_s1 - 4;
                 prim->y0 = prim->y2 = var_s1 + 4;
                 break;
             case 3:
-                var_s2 += self->ext.et_surfacingWater.unk7E;
+                var_s2 += self->ext.ferrymanUnk.unk7E;
                 prim->x0 = prim->x1 = var_s2;
                 prim->x2 = prim->x3 = var_s2 + 0x60;
                 prim->y1 = prim->y3 = var_s1 - 4;
