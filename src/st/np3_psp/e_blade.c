@@ -14,14 +14,14 @@ static void func_801D0A00(s16* arg0) {
     ent = &g_CurrentEntity[18];
     func_801CD91C(ent);
     ent = &g_CurrentEntity[arg0[2]];
-    func_801CD83C(ent);
+    polarPlacePart(ent);
     ent = &g_CurrentEntity[arg0[3]];
-    func_801CD83C(ent);
+    polarPlacePart(ent);
 
     for (arg0 += 4; *arg0; arg0++) {
         if (*arg0 != 0xFF) {
             ent = &g_CurrentEntity[*arg0];
-            func_801CD83C(ent);
+            polarPlacePart(ent);
         }
     }
 }

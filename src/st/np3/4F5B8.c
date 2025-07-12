@@ -154,7 +154,7 @@ void EntityGurkha(Entity* self) {
         for (var_s4 = &D_80182F04; *var_s4 != 0; var_s4 += 5) {
             otherEnt = self + var_s4[0];
             CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, otherEnt);
-            otherEnt->ext.GH_Props.unk9E = var_s4[2];
+            otherEnt->ext.GH_Props.length = var_s4[2];
             otherEnt->ext.GH_Props.parent = self + var_s4[1];
             otherEnt->params = var_s4[3] + 0x100;
             zPriority = self->zPriority + var_s4[4];
@@ -168,7 +168,7 @@ void EntityGurkha(Entity* self) {
         CreateEntityFromCurrentEntity(E_GURKHA_SWORD, self + 15);
         (self + 15)->ext.GH_Props.parent = self + 5;
         (self + 15)->params = 0x14;
-        (self + 15)->ext.GH_Props.unk9E = 0;
+        (self + 15)->ext.GH_Props.length = 0;
         (self + 15)->zPriority = self->zPriority + 3;
         self->step++;
         /* fallthrough */
@@ -187,7 +187,7 @@ void EntityGurkha(Entity* self) {
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
         func_801CF778();
-        func_801CE258(&D_80182F9C);
+        polarPlacePartsList(&D_80182F9C);
         if (self->ext.GH_Props.unkB0[0] > 1) {
             collider.unk18 = 9;
             otherEnt = &self[var_s2[3]];
@@ -213,7 +213,7 @@ void EntityGurkha(Entity* self) {
         func_801CDF1C(var_s2, &D_80183130, 0);
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
-        func_801CE258(&D_80182F9C);
+        polarPlacePartsList(&D_80182F9C);
         func_801CF778();
         if (self->ext.GH_Props.unkB0[0] > 1) {
             collider.unk18 = 9;
@@ -292,7 +292,7 @@ void EntityGurkha(Entity* self) {
             }
             break;
         }
-        func_801CE258(&D_80182F9C);
+        polarPlacePartsList(&D_80182F9C);
         break;
     case 11:
         if (self->ext.GH_Props.unk84 == 1) {
@@ -305,7 +305,7 @@ void EntityGurkha(Entity* self) {
             func_801CDF1C(var_s2, &D_80183284, 0);
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
-            func_801CE258(&D_80182F9C);
+            polarPlacePartsList(&D_80182F9C);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
                 (self->ext.GH_Props.unkB4[0] == 0)) {
                 self->ext.GH_Props.unk80 = 0;
@@ -323,7 +323,7 @@ void EntityGurkha(Entity* self) {
             (self + 13)->ext.GH_Props.unkA8 = 1;
             (self + 12)->ext.GH_Props.rotate = (self + 12)->ext.GH_Props.unkA4;
             (self + 13)->ext.GH_Props.rotate = (self + 13)->ext.GH_Props.unkA4;
-            func_801CE258(&D_80182F9C);
+            polarPlacePartsList(&D_80182F9C);
             if ((self->ext.GH_Props.unk80 & 0x7FF) == 0) {
                 func_801CF7A0(self);
             }
@@ -341,7 +341,7 @@ void EntityGurkha(Entity* self) {
             func_801CDF1C(var_s2, &D_80183360, 0);
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
-            func_801CE258(&D_80182F9C);
+            polarPlacePartsList(&D_80182F9C);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
                 (self->ext.GH_Props.unkB4[0] == 0)) {
                 PlaySfxPositional(0x740);
@@ -367,7 +367,7 @@ void EntityGurkha(Entity* self) {
                 otherEnt->ext.GH_Props.unkA6 = -0x20;
             }
             otherEnt->ext.GH_Props.rotate += otherEnt->ext.GH_Props.unkA6;
-            func_801CE258(&D_80182F9C);
+            polarPlacePartsList(&D_80182F9C);
             if (otherEnt->ext.GH_Props.rotate < -0x1100) {
                 otherEnt->ext.GH_Props.rotate = -0x100;
                 self->step_s++;
@@ -382,7 +382,7 @@ void EntityGurkha(Entity* self) {
             func_801CDF1C(var_s2, &D_80183378, 0);
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
-            func_801CE258(&D_80182F9C);
+            polarPlacePartsList(&D_80182F9C);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
                 (self->ext.GH_Props.unkB4[0] == 0)) {
                 if (self->facingLeft == 0) {
@@ -412,7 +412,7 @@ void EntityGurkha(Entity* self) {
             func_801CDF1C(var_s2, &D_801833A0, 0);
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
-            func_801CE258(&D_80182F9C);
+            polarPlacePartsList(&D_80182F9C);
             if (self->ext.GH_Props.unkB0[0] == 0 &&
                 self->ext.GH_Props.unkB4[0] == 0) {
                 self->step_s++;
@@ -437,7 +437,7 @@ void EntityGurkha(Entity* self) {
             (self + 15)->ext.GH_Props.rotate += (self + 15)->ext.GH_Props.unkA6;
             (self + 15)->ext.GH_Props.unkA6 -=
                 (self + 15)->ext.GH_Props.unkA6 / 16;
-            func_801CE258(&D_80182F9C);
+            polarPlacePartsList(&D_80182F9C);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
                 (self->ext.GH_Props.unkB4[0] == 0)) {
                 SetStep(5);
@@ -454,7 +454,7 @@ void EntityGurkha(Entity* self) {
         func_801CDF1C(var_s2, &D_80183258, 0);
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
-        func_801CE258(&D_80182F9C);
+        polarPlacePartsList(&D_80182F9C);
         if (self->ext.GH_Props.unkB4[0] == 0) {
             self->facingLeft ^= 1;
             func_801CF7A0(self);
@@ -473,7 +473,7 @@ void EntityGurkha(Entity* self) {
         func_801CDF1C(var_s2, &D_801833CC, 0);
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
-        func_801CE258(&D_80182F9C);
+        polarPlacePartsList(&D_80182F9C);
         if (self->ext.GH_Props.unkB0[0] == 0 &&
             self->ext.GH_Props.unkB4[0] == 0) {
             func_801CF7A0(self);

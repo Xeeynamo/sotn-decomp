@@ -43,7 +43,9 @@ static void func_801CD78C(Point32* src, s32 speed, s16 angle, Point32* dst) {
     dst->y += speed * rcos(angle) * 16;
 }
 
-void func_801CD83C(Entity* self) {
+// Based on the body part's angle and length, update its X and Y positions
+// using the parent's position with a polar coordinate offset.
+void polarPlacePart(Entity* self) {
     s16 angle = self->ext.GH_Props.rotate;
     Entity* src;
 
@@ -54,8 +56,8 @@ void func_801CD83C(Entity* self) {
     src = self->ext.GH_Props.parent;
     self->posX.val = src->posX.val;
     self->posY.val = src->posY.val;
-    self->posX.val -= self->ext.GH_Props.unk9E * rsin(angle) * 16;
-    self->posY.val += self->ext.GH_Props.unk9E * rcos(angle) * 16;
+    self->posX.val -= self->ext.GH_Props.length * rsin(angle) * 16;
+    self->posY.val += self->ext.GH_Props.length * rcos(angle) * 16;
     if (self->ext.GH_Props.unkA8) {
         FntPrint("CAUTION!! WARNING_A AT %x\n", self->animCurFrame);
     }
@@ -72,9 +74,9 @@ void func_801CD91C(Entity* self) {
     src = self->ext.GH_Props.parent;
     src->posX.val = self->posX.val;
     src->posY.val = self->posY.val;
-    src->posX.val -= -self->ext.GH_Props.unk9E * rsin(angle) * 16;
+    src->posX.val -= -self->ext.GH_Props.length * rsin(angle) * 16;
     src->posY.val =
-        -self->ext.GH_Props.unk9E * rcos(angle) * 16 + src->posY.val;
+        -self->ext.GH_Props.length * rcos(angle) * 16 + src->posY.val;
     if (self->ext.GH_Props.unkA8) {
         FntPrint("CAUTION!! WARNING_B AT %x\n", self->animCurFrame);
     }
@@ -88,9 +90,9 @@ void func_801CDA14(Entity* ent1, Entity* ent2) {
     temp_a0 = ent1->ext.GH_Props.parent;
     // Need to cast the entities to Point32 to account for PosX/PosY actually
     // being a Point of two F32 values.
-    func_801CD78C((Point32*)temp_a0, temp_a0->ext.GH_Props.unk9E,
+    func_801CD78C((Point32*)temp_a0, temp_a0->ext.GH_Props.length,
                   temp_a0->ext.GH_Props.rotate, (Point32*)ent1);
-    func_801CD78C((Point32*)ent1, ent2->ext.GH_Props.unk9E,
+    func_801CD78C((Point32*)ent1, ent2->ext.GH_Props.length,
                   ent2->ext.GH_Props.rotate, (Point32*)ent2);
 }
 // unused
@@ -98,9 +100,9 @@ void func_801CDA6C(Entity* self, s32 arg1) {
     Entity* temp_s0;
 
     temp_s0 = self->ext.GH_Props.parent;
-    func_801CD78C((Point32*)self, -self->ext.GH_Props.unk9E,
+    func_801CD78C((Point32*)self, -self->ext.GH_Props.length,
                   self->ext.GH_Props.rotate, (Point32*)temp_s0);
-    func_801CD78C((Point32*)temp_s0, -temp_s0->ext.GH_Props.unk9E,
+    func_801CD78C((Point32*)temp_s0, -temp_s0->ext.GH_Props.length,
                   temp_s0->ext.GH_Props.rotate, (Point32*)arg1);
 }
 
@@ -121,8 +123,8 @@ void func_801CDAC8(Entity* ent1, Entity* ent2) {
     }
     ratanY = ent2->posY.val - parentPos->y;
     temp_s6 = ratan2(-ratanX, ratanY);
-    temp_s4 = ent1->ext.GH_Props.unk9E << 8;
-    temp_s3 = ent2->ext.GH_Props.unk9E << 8;
+    temp_s4 = ent1->ext.GH_Props.length << 8;
+    temp_s3 = ent2->ext.GH_Props.length << 8;
     ratanX = ratanX >> 8;
     ratanY = ratanY >> 8;
     temp_s2 = SquareRoot0((ratanX * ratanX) + (ratanY * ratanY));
@@ -134,7 +136,7 @@ void func_801CDAC8(Entity* ent1, Entity* ent2) {
     temp_s3 = SquareRoot0(temp_s3);
     temp_s6 += ratan2(temp_s3, temp_s2);
     ent1->ext.GH_Props.unkA4 = temp_s6;
-    func_801CD78C(parentPos, ent1->ext.GH_Props.unk9E, temp_s6, &sp10);
+    func_801CD78C(parentPos, ent1->ext.GH_Props.length, temp_s6, &sp10);
     ratanX = ent2->posX.val - sp10.x;
     if (g_CurrentEntity->facingLeft) {
         ratanX = -ratanX;
@@ -207,16 +209,16 @@ void func_801CDE10(s16* arg0) {
     }
 }
 
-void func_801CDE88(s16* arg0) {
+void polarPlacePartsWithAngvel(s16* entOffsets) {
     Entity* ent;
 
-    while (*arg0) {
-        if (*arg0 != 0xFF) {
-            ent = &g_CurrentEntity[*arg0];
+    while (*entOffsets) {
+        if (*entOffsets != 0xFF) {
+            ent = &g_CurrentEntity[*entOffsets];
             ent->ext.GH_Props.rotate += ent->ext.GH_Props.unkA6;
-            func_801CD83C(ent);
+            polarPlacePart(ent);
         }
-        arg0++;
+        entOffsets++;
     }
 }
 
@@ -245,5 +247,5 @@ void func_801CDFD8(Entity* self, s32 arg1) {
     }
     self->ext.GH_Props.unkB4[0]--;
     self->ext.GH_Props.rotate += self->ext.GH_Props.unkA6;
-    func_801CD83C(self);
+    polarPlacePart(self);
 }

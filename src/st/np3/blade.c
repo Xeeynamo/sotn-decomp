@@ -13,14 +13,14 @@ static void func_801D0A00(s16* arg0) {
     ent = &g_CurrentEntity[18];
     func_801CD91C(ent);
     ent = &g_CurrentEntity[arg0[2]];
-    func_801CD83C(ent);
+    polarPlacePart(ent);
     ent = &g_CurrentEntity[arg0[3]];
-    func_801CD83C(ent);
+    polarPlacePart(ent);
 
     for (arg0 += 4; *arg0; arg0++) {
         if (*arg0 != 0xFF) {
             ent = &g_CurrentEntity[*arg0];
-            func_801CD83C(ent);
+            polarPlacePart(ent);
         }
     }
 }
@@ -117,7 +117,7 @@ static s32 func_801D0B78(Entity* unused) {
 typedef struct{
     s16 eArrayOffset;
     s16 eArrayParentOffset;
-    s16 unk9E;
+    s16 length;
     u16 params;
     s16 zOffset;
 } bladeBodyPartsInit;
@@ -126,7 +126,7 @@ typedef struct{
 
 static s16 D_801833E4[] = {0, 9, 0, 4, 4, -4, -8, 0};
 static bladeBodyPartsInit D_801833F4[] = {{9, 18, 16, 7, 1}, {10, 9, 14, 8, 2}, {11, 10, 0, 9, 3}, {12, 18, 16, 13, -1}, {13, 12, 14, 14, -2}, {14, 13, 0, 15, -3}, {18, 0, 8, 3, 0}, {2, 0, -12, 2, 1}, {1, 2, -4, 1, 0}, {3, 2, 0, 4, 2}, {4, 3, 10, 5, 5}, {5, 4, 13, 6, 4}, {6, 2, 0, 10, -2}, {7, 6, 10, 11, -6}, {8, 7, 13, 12, -5}, {0,0,0,0,0}};
-extern s16 D_80183494[];
+static s16 D_80183494[] = {18, 2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 0};
 extern s16 D_801834B8[];
 extern s16 D_801834D8[];
 extern s16 D_801834F8[];
@@ -191,7 +191,7 @@ void EntityBlade(Entity* self) {
         for (parts = &D_801833F4, ent_s4 = self; parts->eArrayOffset; parts ++) {
             ent_s0 = self + parts->eArrayOffset;
             CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, ent_s0);
-            ent_s0->ext.GH_Props.unk9E = parts->unk9E;
+            ent_s0->ext.GH_Props.length = parts->length;
             ent_s0->ext.GH_Props.parent = self + parts->eArrayParentOffset;
             ent_s0->params = parts->params + 0x200;
             ent_s0->zPriority = self->zPriority + parts->zOffset;
@@ -204,14 +204,14 @@ void EntityBlade(Entity* self) {
 
         ent_s0 = self + 15;
         CreateEntityFromCurrentEntity(E_BLADE_SWORD, ent_s0);
-        ent_s0->ext.GH_Props.unk9E = 12;
+        ent_s0->ext.GH_Props.length = 12;
         ent_s0->ext.GH_Props.parent = self + 5;
         ent_s0->zPriority = self->zPriority + 3;
         ent_s0->params = 19;
 
         ent_s0 = self + 16;
         CreateEntityFromCurrentEntity(E_BLADE_SWORD, ent_s0);
-        ent_s0->ext.GH_Props.unk9E = 12;
+        ent_s0->ext.GH_Props.length = 12;
         ent_s0->ext.GH_Props.parent = self + 8;
         ent_s0->zPriority = self->zPriority - 4;
         ent_s0->params = 19;
@@ -231,7 +231,7 @@ void EntityBlade(Entity* self) {
         func_801CDE10(var_s1);
         func_801D0A00(var_s1);
         func_801D0B40();
-        func_801CE258(&D_80183494);
+        polarPlacePartsList(&D_80183494);
         if (self->ext.GH_Props.unkB0[0] > 1) {
             collider.unk18 = 9;
             ent_s0 = &self[var_s1[3]];
@@ -264,7 +264,7 @@ void EntityBlade(Entity* self) {
         func_801CDE10(var_s1);
         func_801D0A00(var_s1);
         func_801D0B40();
-        func_801CE258(&D_80183494);
+        polarPlacePartsList(&D_80183494);
         if (self->ext.GH_Props.unkB0[0] > 1) {
             collider.unk18 = 9;
             ent_s0 = &self[var_s1[3]];
@@ -358,7 +358,7 @@ void EntityBlade(Entity* self) {
             }
             break;
         }
-        func_801CE258(&D_80183494);
+        polarPlacePartsList(&D_80183494);
         break;
     case 8:
         if (self->ext.GH_Props.unk84 == 1) {
@@ -379,7 +379,7 @@ void EntityBlade(Entity* self) {
             func_801CDF1C(var_s1, &D_8018386C, 0);
             func_801CDE10(var_s1);
             func_801D0A00(var_s1);
-            func_801CE258(&D_80183494);
+            polarPlacePartsList(&D_80183494);
             ent_s0 = self + 16;
             if (ent_s0->hitFlags) {
                 self->ext.GH_Props.unk8D = 1;
@@ -401,7 +401,7 @@ void EntityBlade(Entity* self) {
                 (!self->ext.GH_Props.unkB4[0])) {
                 PlaySfxPositional(SFX_BONE_SWORD_SWISH_C);
             }
-            func_801CE258(&D_80183494);
+            polarPlacePartsList(&D_80183494);
             if ((!self->ext.GH_Props.unkB0[0]) &&
                 (!self->ext.GH_Props.unkB4[0])) {
                 ent_s0 = self + 15;
@@ -415,7 +415,7 @@ void EntityBlade(Entity* self) {
             func_801CDF1C(var_s1, &D_801835A8, 0);
             func_801CDE10(var_s1);
             func_801D0A00(var_s1);
-            func_801CE258(&D_80183494);
+            polarPlacePartsList(&D_80183494);
             if ((!self->ext.GH_Props.unkB0[0]) &&
                 (!self->ext.GH_Props.unkB4[0])) {
                 var_s3 = func_801D0B78(self);
@@ -442,7 +442,7 @@ void EntityBlade(Entity* self) {
         func_801CDE10(var_s1);
         func_801D0A00(var_s1);
         func_801D0B40();
-        func_801CE258(&D_80183494);
+        polarPlacePartsList(&D_80183494);
         ent_s0 = self + var_s1[5];
         ent_s0->ext.GH_Props.unk8D = 1;
         if ((!self->ext.GH_Props.unkB0[0]) &&
@@ -468,7 +468,7 @@ void EntityBlade(Entity* self) {
         func_801CDE10(var_s1);
         func_801D0A00(var_s1);
         func_801D0B40();
-        func_801CE258(&D_80183494);
+        polarPlacePartsList(&D_80183494);
         if (!self->ext.GH_Props.unkB4[0]) {
             self->facingLeft ^= 1;
             self->ext.GH_Props.unk88 = 0;
@@ -493,7 +493,7 @@ void EntityBlade(Entity* self) {
         func_801CDF1C(var_s1, &D_80183990, 0);
         func_801CDE10(var_s1);
         func_801D0A00(var_s1);
-        func_801CE258(&D_80183494);
+        polarPlacePartsList(&D_80183494);
         if ((!self->ext.GH_Props.unkB0[0]) &&
             (!self->ext.GH_Props.unkB4[0])) {
             var_s3 = func_801D0B78(self);
@@ -523,7 +523,7 @@ void EntityBlade(Entity* self) {
             func_801CDF1C(var_s1, &D_80183A24, 0);
             func_801CDE10(var_s1);
             func_801D0A00(var_s1);
-            func_801CE258(&D_80183494);
+            polarPlacePartsList(&D_80183494);
             if ((self->ext.GH_Props.unkB0[0] == 3) &&
                 (!self->ext.GH_Props.unkB4[0])) {
                 PlaySfxPositional(SFX_STOMP_HARD_A);
@@ -536,8 +536,8 @@ void EntityBlade(Entity* self) {
         case 2:
             var_s1 = D_80183580;
             func_801CDF1C(var_s1, &D_80183A4C, 0);
-            func_801CDE88(var_s1);
-            func_801CE258(&D_80183494);
+            polarPlacePartsWithAngvel(var_s1);
+            polarPlacePartsList(&D_80183494);
             if ((!self->ext.GH_Props.unkB0[0]) &&
                 (!self->ext.GH_Props.unkB4[0])) {
                 PlaySfxPositional(SFX_ARROW_SHOT_A);
