@@ -820,7 +820,7 @@ typedef struct {
     /* 0x8C */ u8 unk8C;
     /* 0x8D */ u8 unk8D;
     /* 0x8E */ char pad_8E[0xE];
-    /* 0x9C */ u16 unk9C;
+    /* 0x9C */ s16 unk9C;
 } ET_801D1BB8;
 
 typedef struct {

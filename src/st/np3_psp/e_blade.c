@@ -694,10 +694,129 @@ void EntityBlade(Entity* self) {
     D_8006C38C.y = self->ext.GH_Props.unkB4[0];
 }
 
-// clang-format off
+void EntityBladeSword(Entity* self) {
+    Primitive *prim, *prim2;
+    s32 x0, y0, x1, y1;
+    s32 primIndex;
+    s16 angle;
+    s32 i;
 
-// EntityBladeSword
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_blade", func_pspeu_0925D890);
+    if (self->ext.et_801D1BB8.unk8C) {
+        self->step = 8;
+    }
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitGurkhaBlade);
+        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->hitboxWidth = 6;
+        self->hitboxHeight = 6;
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 6);
+        if (primIndex == -1) {
+#ifdef VERSION_PSP
+            DestroyEntity(self);
+#else
+            self->ext.et_801D1BB8.prim = NULL;
+#endif
+            break;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.et_801D1BB8.prim = prim;
+
+        for (i = 0; prim != NULL; prim = prim->next) {
+            prim->r0 = i;
+            prim->g0 = i;
+            prim->b0 = i;
+            LOW(prim->r1) = LOW(prim->r0);
+            i += 10;
+            prim->r2 = i;
+            prim->g2 = i;
+            prim->b2 = i;
+            LOW(prim->r3) = LOW(prim->r2);
+            prim->x0 = self->posX.i.hi;
+            prim->y0 = self->posY.i.hi;
+            LOW(prim->x1) = LOW(prim->x0);
+            LOW(prim->x2) = LOW(prim->x0);
+            LOW(prim->x3) = LOW(prim->x0);
+            prim->priority = self->zPriority;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+        }
+
+    case 1:
+        self->rotate = self->ext.et_801D1BB8.unk9C;
+        break;
+
+    case 24:
+        self->flags |= FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
+        self->hitboxState = 0;
+        break;
+
+    case 8:
+        if (self->facingLeft) {
+            self->velocityX = FIX(8.0);
+        } else {
+            self->velocityX = FIX(-8.0);
+        }
+        MoveEntity();
+        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+    }
+
+    angle = self->rotate;
+    self->hitboxOffX = (rsin(angle) * -13) >> 12;
+    self->hitboxOffY = (rcos(angle) * 13) >> 12;
+
+    prim = self->ext.et_801D1BB8.prim;
+    #if !defined(VERSION_PSP)
+    if(prim != NULL){
+    #else
+    if(1){
+    #endif
+        for (i = 0; i < 5; i++) {
+            prim2 = prim->next;
+            LOW(prim->x0) = LOW(prim2->x0);
+            LOW(prim->x1) = LOW(prim2->x1);
+            LOW(prim->x2) = LOW(prim2->x2);
+            LOW(prim->x3) = LOW(prim2->x3);
+            if (self->ext.et_801D1BB8.unk8D) {
+                prim->drawMode =
+                    DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            } else {
+                prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+            }
+            prim = prim2;
+        }
+    }
+    
+
+    angle = self->rotate;
+    if (self->facingLeft) {
+        angle = -angle;
+    }
+
+    x0 = ((rsin(angle) * -20) >> 12) + self->posX.i.hi;
+    y0 = ((rcos(angle) * 20) >> 12) + self->posY.i.hi;
+    x1 = ((rsin(angle) * 4) >> 12) + self->posX.i.hi;
+    y1 = ((rcos(angle) * -4) >> 12) + self->posY.i.hi;
+
+    LOW(prim->x2) = LOW(prim->x0);
+    LOW(prim->x3) = LOW(prim->x1);
+
+    prim->x0 = x0;
+    prim->y0 = y0;
+    prim->x1 = x1;
+    prim->y1 = y1;
+
+    if (self->ext.et_801D1BB8.unk8D) {
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+    } else {
+        prim->drawMode = DRAW_HIDE | DRAW_UNK02;
+    }
+}
+
+// clang-format off
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/e_blade", func_pspeu_0925DD30);
 
