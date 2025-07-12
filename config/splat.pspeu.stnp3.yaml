@@ -131,7 +131,7 @@ segments:
       - [0x5A470, .rodata, np3/water_effects]
       - [0x5A490, .rodata, np3/giantbro_helpers]
       - [0x5A4F0, .rodata, np3/blade]
-      - [0x5A508, .rodata, np3_psp/working_on]
+      - [0x5A508, .rodata, np3_psp/gurkha]
       - [0x5A580, bss, 5A580]
       - [0x5A7F0, .bss, np3/e_background_bushes_trees]
       - [0x5A800, .bss, np3/slogra]
