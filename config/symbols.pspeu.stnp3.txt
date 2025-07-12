@@ -86,7 +86,6 @@ EntityOwl = 0x09255E70;
 EntityOwlKnight = 0x09257AD8;
 EntityOwlKnightSword = 0x092598E0;
 EntityOwlTarget = 0x09259A18;
-DestroyEntity = 0x09259A58;
 GetSideToPlayer = 0x09259DB0;
 MoveEntity = 0x09259E38;
 UnkCollisionFunc3 = 0x09259EC0;

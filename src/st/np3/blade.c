@@ -769,11 +769,11 @@ void EntityBladeSword(Entity* self) {
     self->hitboxOffY = (rcos(angle) * 13) >> 12;
 
     prim = self->ext.GH_Props.prim;
-    #if !defined(VERSION_PSP)
-    if(prim != NULL){
-    #else
-    if(1){
-    #endif
+#if !defined(VERSION_PSP)
+    if (prim != NULL) {
+#else
+    if (1) {
+#endif
         for (i = 0; i < 5; i++) {
             prim2 = prim->next;
             LOW(prim->x0) = LOW(prim2->x0);
@@ -789,7 +789,6 @@ void EntityBladeSword(Entity* self) {
             prim = prim2;
         }
     }
-    
 
     angle = self->rotate;
     if (self->facingLeft) {
