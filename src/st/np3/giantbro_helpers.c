@@ -178,11 +178,6 @@ void func_801CDD00(Entity* entity, s16 arg1, s16 arg2) {
     entity->ext.GH_Props.unkA4 = arg1;
 }
 
-typedef struct {
-    s16 unk0;
-    s16* unk4;
-} unkStr_801CDD80;
-
 void func_801CDD80(s16* arg0, unkStr_801CDD80* arg1) {
     Entity* var_s1;
     s16* ptr = arg1->unk4;

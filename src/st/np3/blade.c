@@ -32,7 +32,7 @@ static void func_801D0B40(void) {
     ent = &g_CurrentEntity[15];
     unk88 = ent->ext.et_801D0B40.unk88;
     ent->ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
-    
+
     ent = &g_CurrentEntity[16];
     unk88 = ent->ext.et_801D0B40.unk88;
     ent->ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
@@ -114,7 +114,7 @@ static s32 func_801D0B78(Entity* unused) {
     return ret;
 }
 
-typedef struct{
+typedef struct {
     s16 eArrayOffset;
     s16 eArrayParentOffset;
     s16 length;
@@ -125,8 +125,15 @@ typedef struct{
 // For EntityBlade
 
 static s16 D_801833E4[] = {0, 9, 0, 4, 4, -4, -8, 0};
-static bladeBodyPartsInit D_801833F4[] = {{9, 18, 16, 7, 1}, {10, 9, 14, 8, 2}, {11, 10, 0, 9, 3}, {12, 18, 16, 13, -1}, {13, 12, 14, 14, -2}, {14, 13, 0, 15, -3}, {18, 0, 8, 3, 0}, {2, 0, -12, 2, 1}, {1, 2, -4, 1, 0}, {3, 2, 0, 4, 2}, {4, 3, 10, 5, 5}, {5, 4, 13, 6, 4}, {6, 2, 0, 10, -2}, {7, 6, 10, 11, -6}, {8, 7, 13, 12, -5}, {0,0,0,0,0}};
-static s16 D_80183494[] = {18, 2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 0};
+static bladeBodyPartsInit D_801833F4[] = {
+    {9, 18, 16, 7, 1},    {10, 9, 14, 8, 2},    {11, 10, 0, 9, 3},
+    {12, 18, 16, 13, -1}, {13, 12, 14, 14, -2}, {14, 13, 0, 15, -3},
+    {18, 0, 8, 3, 0},     {2, 0, -12, 2, 1},    {1, 2, -4, 1, 0},
+    {3, 2, 0, 4, 2},      {4, 3, 10, 5, 5},     {5, 4, 13, 6, 4},
+    {6, 2, 0, 10, -2},    {7, 6, 10, 11, -6},   {8, 7, 13, 12, -5},
+    {0, 0, 0, 0, 0}};
+static s16 D_80183494[] = {
+    18, 2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 0};
 static s16 D_801834B8[] = {9, 10, 12, 13, 11, 14, 2, 1, 4, 5, 7, 8, 15, 16, 0};
 static s16 D_801834D8[] = {12, 13, 9, 10, 14, 11, 2, 1, 4, 5, 7, 8, 15, 16, 0};
 static s16 D_801834F8[] = {9, 10, 12, 13, 11, 14, 2, 1, 4, 5, 7, 8, 0};
@@ -134,21 +141,115 @@ static s16 D_80183514[] = {12, 13, 9, 10, 14, 11, 2, 1, 4, 5, 7, 8, 0};
 static s16 D_80183530[] = {9, 10, 12, 13, 11, 14, 2, 4, 5, 7, 8, 0};
 static s16 D_80183548[] = {12, 13, 9, 10, 14, 11, 2, 7, 8, 4, 5, 0};
 static s16 D_80183560[] = {9, 10, 12, 13, 11, 14, 0};
-extern s16 D_80183570[] = {12, 13, 9, 10, 14, 11, 0};
-extern s16 D_80183580[] = {2, 4, 5, 15, 0};
-extern s16 D_801835A8[];
-extern s16 D_80183600[];
-extern s16 D_80183638[];
-extern s16 D_80183700[];
-extern s16 D_80183720[];
-extern s16 D_80183760[];
-extern s16 D_8018386C[];
-extern s16 D_8018389C[];
-extern s16 D_801838C4[];
-extern s16 D_80183934[];
-extern s16 D_80183990[];
-extern s16 D_80183A24[];
-extern s16 D_80183A4C[];
+static s16 D_80183570[] = {12, 13, 9, 10, 14, 11, 0};
+static s16 D_80183580[] = {2, 4, 5, 15, 0};
+static s16 D_8018358C[] = {0,      0,     0x80,  -0x100, 0,     0,      0,
+                           -0x100, -0x40, 0x100, 0,      0x200, -0x500, -0x400};
+static unkStr_801CDD80 D_801835A8[] = {{16, &D_8018358C}, {0, 0}};
+static s16 D_801835B8[] = {
+    0x40, -0x20, 0x20, -0x220, 0, -0x100, 0, -0xc0, -0xc0, 0x20, 0x100, 0};
+static s16 D_801835D0[] = {
+    -0x90, -0x90, 0x158, 0, 0, -0x20, 0, 0x80, 0x100, -0xc0, -0xc0, 0};
+static s16 D_801835E8[] = {
+    -0x100, -0x180, 0x100, 0xc0, 0, 0x40, 0, 0x100, 0x280, -0x140, -0x140, 0};
+static unkStr_801CDD80 D_80183600[] = {
+    {14, &D_801835B8}, {14, &D_801835D0}, {14, &D_801835E8}, {0, 0}};
+static s16 D_80183620[] = {
+    0x200, 0xc0, -0x100, -0x180, 0, -0x40, 0, -0x140, -0x140, 0x100, 0x280, 0};
+static unkStr_801CDD80 D_80183638[] = {
+    {14, &D_801835D0}, {14, &D_801835B8}, {14, &D_80183620}, {0, 0}};
+static s16 D_80183658[] = {
+    0x100, 0x40, 0x80, -0x400, 0, -0x380, -0xc0, -0xc0, 0x80, 0, 0x300, 0};
+static s16 D_80183670[] = {0xc0,  -0x100, 0x100, -0x480, 0,     -0x400,
+                           -0xe0, -0x40,  0x100, -0x80,  0x240, 0};
+static s16 D_80183688[] = {-0x140, -0x180, 0x240, -0x400, 0,    -0x400,
+                           -0x100, -0x100, 0x2c0, -0x100, 0x40, 0};
+static s16 D_801836A0[] = {
+    -0x1c0, -0x200, 0x2c0, -0x200, 0, -0x200, -0xe0, 0, 0x440, -0x140, 0};
+static s16 D_801836B8[] = {
+    -0xc0, -0x300, 0x240, -0x100, -0x180, 0, -0xc0, 0, 0x440, -0x180, -0x40, 0};
+static s16 D_801836D0[] = {
+    0x20, -0x380, 0x1c0, 0, -0x240, 0x100, -0xc0, 0, 0x400, -0x140, 0};
+static s16 D_801836E8[] = {
+    0x80, -0x400, 0x100, 0x40, -0x380, 0x100, -0xc0, 0, 0x300, -0xc0, 0x80, 0};
+static unkStr_801CDD80 D_80183700[] = {
+    {5, &D_80183670}, {5, &D_80183688}, {4, &D_801836A0}, {0, 0}};
+static unkStr_801CDD80 D_80183720[] = {
+    {4, &D_801836B8},
+    {4, &D_801836D0},
+    {4, &D_801836E8},
+    {0x60, &D_801836E8},
+    {0, 0}};
+static s16 D_80183748[] = {0, 0, 0x80, -0x80, 0, 0, 0, 0, 0, 0, 0, 0};
+static unkStr_801CDD80 D_80183760[] = {{32, &D_80183748}, {0, 0}};
+static s16 D_80183770[] = {
+    0x100,  -0x240, 0x200, -0x100, 0,     0,      -0x1c0,
+    -0x100, -0x300, 0x100, 0,      0x180, -0x500, -0x480};
+static s16 D_8018378C[] = {
+    0x180,  -0x240, 0x280, -0x100, 0,     0,      -0x1c0,
+    -0x100, -0x300, 0x100, 0,      0x180, -0x500, -0x480};
+static s16 D_801837A8[] = {0x40,  -0x180, 0x1c0, -0x180, 0,     0,      -0x20,
+                           -0x40, -0x300, 0x100, 0x300,  0x500, -0x500, 0};
+static s16 D_801837C4[] = {0, -0x100, 0x100, -0x100, 0,     0,      0x80,
+                           0, -0x300, 0x100, 0x700,  0xa00, -0x300, 0x500};
+static s16 D_801837E0[] = {
+    0, -0x140, 0x100, -0xc0, 0, 0, 0, 0, -0x300, 0x100, 0x740, 0xa80, 0, 0x600};
+static s16 D_801837FC[] = {0x40, -0x1c0, 0x1c0, 0,     0,     0,     0,
+                           0,    -0x300, 0x100, 0x400, 0x900, 0x380, 0x300};
+static s16 D_80183818[] = {-0x100, -0x240, 0x200, 0, 0,     0,     -0x80,
+                           -0x40,  0x200,  0x300, 0, 0x300, 0x300, -0x300};
+static s16 D_80183834[] = {-0x240, -0x240, 0x300, -0x100, 0, 0,     -0x200,
+                           -0x100, 0x400,  0x400, -0x200, 0, 0x400, -0x600};
+static s16 D_80183850[] = {-0x280, -0x280, 0x380, -0x140, 0,     0,     -0x180,
+                           -0x80,  0x340,  0x4c0, -0x200, 0x200, 0x500, -0x300};
+static unkStr_801CDD80 D_8018386C[] = {
+    {16, &D_80183770}, {24, &D_8018378C}, {4, &D_801837A8},
+    {8, &D_801837C4},  {18, &D_801837E0}, {0, 0}};
+static unkStr_801CDD80 D_8018389C[] = {
+    {4, &D_801837FC},
+    {6, &D_80183818},
+    {4, &D_80183834},
+    {32, &D_80183850},
+    {0, 0}};
+static unkStr_801CDD80 D_801838C4[] = {{16, D_80183770}, {0, 0}};
+static s16 D_801838D4[] = {0x80,  -0x40, 0x300,  -0x200, 0,     -0x200,
+                           0x100, -0x80, -0x100, 0x300,  0x100, 0x180};
+static s16 D_801838EC[] = {
+    0xa0, -0x40, 0x400, 0x300, 0, 0x300, 0x180, -0x80, 0, 0x400, -0x1c0, 0};
+static s16 D_80183904[] = {
+    0x80, -0x40, 0x500, 0x380, 0, 0x400, 0x180, -0x80, 0x100, 0x500, -0x200, 0};
+static s16 D_8018391C[] = {0x80,  -0x40, 0x480, 0x300, 0,      0x300,
+                           0x180, -0x80, 0x80,  0x300, -0x100, 0x80};
+static unkStr_801CDD80 D_80183934[] = {
+    {12, &D_8018358C}, {12, &D_80183770}, {4, &D_801838D4},  {4, &D_801838EC},
+    {6, &D_80183904},  {24, &D_8018391C}, {16, &D_80183770}, {0, 0}};
+static s16 D_80183974[] = {0xc0,  -0x80, 0x180, -0x200, 0,     -0x200, 0x100,
+                           0x180, 0x400, 0x600, 0x300,  0x500, 0,      -0x100};
+static unkStr_801CDD80 D_80183990[] = {
+    {16, &D_80183974}, {32, &D_8018358C}, {0, 0}};
+static s16 D_801839A8[] = {
+    0,      -0x200, 0x80,  -0x200, -0x200, -0x200, 0,
+    -0x100, -0x40,  0x100, 0,      0x200,  -0x500, -0x400};
+static s16 D_801839C4[] = {
+    -0x100, -0x400, -0x140, -0x400, -0x400, -0x400, -0x200,
+    -0x100, -0x100, 0x200,  0x200,  0x300,  -0x300, -0x100};
+static s16 D_801839E0[] = {
+    0,      -0x400, 0x80,  -0x400, -0x400, -0x400, -0x100,
+    -0x100, 0x200,  0x400, 0x200,  0x280,  -0x300, -0x100};
+static s16 D_801839FC[] = {0, 0x400, 0x600, 0x300};
+static s16 D_80183A04[] = {0x40, 0x700, 0xb00, 0x800};
+static s16 D_80183A0C[] = {0x0, 0x780, 0xb80, 0xc00};
+static s16 D_80183A14[] = {-0x180, 0x600, 0x600, 0xa00};
+static s16 D_80183A1C[] = {-0x340, 0x400, 0x4c0, 0x400};
+static unkStr_801CDD80 D_80183A24[] = {
+    {16, &D_8018358C},
+    {16, &D_801839A8},
+    {6, &D_801839C4},
+    {56, &D_801839E0},
+    {0, 0}};
+static unkStr_801CDD80 D_80183A4C[] = {
+    {6, &D_801839FC}, {8, &D_80183A04}, {32, &D_80183A0C},
+    {4, &D_80183A14}, {3, &D_80183A1C}, {0, 0}};
 
 void EntityBlade(Entity* self) {
     Collider collider;
@@ -161,11 +262,11 @@ void EntityBlade(Entity* self) {
     if ((self->step & 1) && (self->hitFlags & 3)) {
         func_801CE1E8(0xE);
     }
-    if ((self->flags & FLAG_DEAD) && (self->step < 0x18)){
+    if ((self->flags & FLAG_DEAD) && (self->step < 0x18)) {
         ent_s0 = self + 13;
         ent_s4 = self + 10;
-        
-        if(ent_s0->ext.GH_Props.unk88 || ent_s4->ext.GH_Props.unk88) {
+
+        if (ent_s0->ext.GH_Props.unk88 || ent_s4->ext.GH_Props.unk88) {
             PlaySfxPositional(0x750);
             func_801CE1E8(0x18);
         }
@@ -188,7 +289,7 @@ void EntityBlade(Entity* self) {
         }
         break;
     case 2:
-        for (parts = &D_801833F4, ent_s4 = self; parts->eArrayOffset; parts ++) {
+        for (parts = &D_801833F4, ent_s4 = self; parts->eArrayOffset; parts++) {
             ent_s0 = self + parts->eArrayOffset;
             CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, ent_s0);
             ent_s0->ext.GH_Props.length = parts->length;
@@ -242,7 +343,7 @@ void EntityBlade(Entity* self) {
                 func_801CE228();
                 var_s3 = func_801CE120(ent_s0, self->facingLeft);
                 self->ext.GH_Props.unk88 = var_s3;
-                    
+
                 var_s3 = func_801D0B78(ent_s0);
                 if (var_s3) {
                     func_801CE1E8(var_s3);
@@ -277,10 +378,10 @@ void EntityBlade(Entity* self) {
                 if (var_s3) {
                     func_801CE1E8(6);
                 }
-                
+
                 var_s3 = func_801CE120(ent_s0, self->facingLeft);
                 self->ext.GH_Props.unk88 = var_s3;
-                    
+
                 var_s3 = func_801D0B78(self);
                 if (var_s3) {
                     func_801CE1E8(var_s3);
@@ -348,7 +449,7 @@ void EntityBlade(Entity* self) {
                 func_801CE228();
                 var_s3 = func_801CE120(ent_s0, self->facingLeft);
                 self->ext.GH_Props.unk88 = var_s3;
-                    
+
                 var_s3 = func_801D0B78(ent_s0);
                 if (var_s3) {
                     func_801CE1E8(var_s3);
@@ -445,10 +546,9 @@ void EntityBlade(Entity* self) {
         polarPlacePartsList(&D_80183494);
         ent_s0 = self + var_s1[5];
         ent_s0->ext.GH_Props.unk8D = 1;
-        if ((!self->ext.GH_Props.unkB0[0]) &&
-            (!self->ext.GH_Props.unkB4[0])) {
+        if ((!self->ext.GH_Props.unkB0[0]) && (!self->ext.GH_Props.unkB4[0])) {
             // repeated line, surprised it gets compiled
-            ent_s0 = self + var_s1[5]; 
+            ent_s0 = self + var_s1[5];
             ent_s0->ext.GH_Props.unk8D = 0;
             var_s3 = func_801D0B78(self);
             if (var_s3) {
@@ -494,8 +594,7 @@ void EntityBlade(Entity* self) {
         func_801CDE10(var_s1);
         func_801D0A00(var_s1);
         polarPlacePartsList(&D_80183494);
-        if ((!self->ext.GH_Props.unkB0[0]) &&
-            (!self->ext.GH_Props.unkB4[0])) {
+        if ((!self->ext.GH_Props.unkB0[0]) && (!self->ext.GH_Props.unkB4[0])) {
             var_s3 = func_801D0B78(self);
             if (var_s3) {
                 func_801CE1E8(var_s3);
@@ -528,8 +627,7 @@ void EntityBlade(Entity* self) {
                 (!self->ext.GH_Props.unkB4[0])) {
                 PlaySfxPositional(SFX_STOMP_HARD_A);
             }
-            if (!self->ext.GH_Props.unkB0[0] &&
-                !self->ext.GH_Props.unkB4[0]) {
+            if (!self->ext.GH_Props.unkB0[0] && !self->ext.GH_Props.unkB4[0]) {
                 self->step_s++;
             }
             break;

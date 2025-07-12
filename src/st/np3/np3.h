@@ -263,3 +263,8 @@ extern s16 D_801833A0[];
 extern s16 D_801833CC[];
 
 extern bool slograGaibonRetreat;
+
+typedef struct {
+    s16 unk0;
+    s16* unk4;
+} unkStr_801CDD80;

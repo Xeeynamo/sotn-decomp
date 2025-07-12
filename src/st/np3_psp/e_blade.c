@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../np3/np3.h"
 
-
 // The enemy called "Blade", his helper functions, and his swords
 
 static void func_801D0A00(s16* arg0) {
@@ -33,7 +32,7 @@ static void func_801D0B40(void) {
     ent = &g_CurrentEntity[15];
     unk88 = ent->ext.et_801D0B40.unk88;
     ent->ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
-    
+
     ent = &g_CurrentEntity[16];
     unk88 = ent->ext.et_801D0B40.unk88;
     ent->ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
@@ -47,7 +46,7 @@ static s32 func_801D0B78(Entity* ent) {
     // This is the logic of GetDistanceToPlayerX.
     // We just call the function over and over instead.
     xDist_unused = player->posX.i.hi - ent->posX.i.hi;
-    if (xDist_unused < 0){
+    if (xDist_unused < 0) {
         xDist_unused = -xDist_unused;
     }
 
