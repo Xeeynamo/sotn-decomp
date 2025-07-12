@@ -815,15 +815,6 @@ typedef struct {
 } ET_801D0B40;
 
 typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ char pad_80[0xC];
-    /* 0x8C */ u8 unk8C;
-    /* 0x8D */ u8 unk8D;
-    /* 0x8E */ char pad_8E[0xE];
-    /* 0x9C */ s16 unk9C;
-} ET_801D1BB8;
-
-typedef struct {
     /* 0x7C */ char pad_0[0xC];
     /* 0x88 */ u16 unk88;
 } ET_801D0B78;
@@ -838,7 +829,7 @@ typedef struct {
 } ET_WaterEffects;
 
 typedef struct {
-    /* 0x7C */ char pad_0[4];
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ char pad_82[2];
     /* 0x84 */ u8 unk84;
@@ -3317,7 +3308,6 @@ typedef union { // offset=0x7C
     ET_DeathSkySwirl deathSkySwirl;
     ET_Elevator elevator;
     ET_801D0B40 et_801D0B40;
-    ET_801D1BB8 et_801D1BB8;
     ET_801D0B78 et_801D0B78;
     ET_WaterEffects waterEffects;
     ET_GurkhaHammer GH_Props;

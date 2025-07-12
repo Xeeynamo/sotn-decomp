@@ -701,7 +701,7 @@ void EntityBladeSword(Entity* self) {
     s16 angle;
     s32 i;
 
-    if (self->ext.et_801D1BB8.unk8C) {
+    if (self->ext.GH_Props.unk8C) {
         self->step = 8;
     }
 
@@ -716,14 +716,14 @@ void EntityBladeSword(Entity* self) {
 #ifdef VERSION_PSP
             DestroyEntity(self);
 #else
-            self->ext.et_801D1BB8.prim = NULL;
+            self->ext.GH_Props.prim = NULL;
 #endif
             break;
         }
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.et_801D1BB8.prim = prim;
+        self->ext.GH_Props.prim = prim;
 
         for (i = 0; prim != NULL; prim = prim->next) {
             prim->r0 = i;
@@ -746,7 +746,7 @@ void EntityBladeSword(Entity* self) {
         }
 
     case 1:
-        self->rotate = self->ext.et_801D1BB8.unk9C;
+        self->rotate = self->ext.GH_Props.rotate;
         break;
 
     case 24:
@@ -768,7 +768,7 @@ void EntityBladeSword(Entity* self) {
     self->hitboxOffX = (rsin(angle) * -13) >> 12;
     self->hitboxOffY = (rcos(angle) * 13) >> 12;
 
-    prim = self->ext.et_801D1BB8.prim;
+    prim = self->ext.GH_Props.prim;
     #if !defined(VERSION_PSP)
     if(prim != NULL){
     #else
@@ -780,7 +780,7 @@ void EntityBladeSword(Entity* self) {
             LOW(prim->x1) = LOW(prim2->x1);
             LOW(prim->x2) = LOW(prim2->x2);
             LOW(prim->x3) = LOW(prim2->x3);
-            if (self->ext.et_801D1BB8.unk8D) {
+            if (self->ext.GH_Props.unk8D) {
                 prim->drawMode =
                     DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             } else {
@@ -809,7 +809,7 @@ void EntityBladeSword(Entity* self) {
     prim->x1 = x1;
     prim->y1 = y1;
 
-    if (self->ext.et_801D1BB8.unk8D) {
+    if (self->ext.GH_Props.unk8D) {
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
     } else {
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
