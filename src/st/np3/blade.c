@@ -38,14 +38,17 @@ static void func_801D0B40(void) {
     ent->ext.et_801D0B40.unk84 = unk88[0x4E] - 0x600;
 }
 
-// Function does not use the argument, but all calls in EntityBlade
-// give one, so we include it here.
-static s32 func_801D0B78(Entity* unused) {
+static s32 func_801D0B78(Entity* ent) {
+    Entity* player = &PLAYER;
+    s32 xDist_unused;
     s32 ret;
 
-    //! FAKE:
-    do {
-    } while (0);
+    // This is the logic of GetDistanceToPlayerX.
+    // We just call the function over and over instead.
+    xDist_unused = player->posX.i.hi - ent->posX.i.hi;
+    if (xDist_unused < 0) {
+        xDist_unused = -xDist_unused;
+    }
 
     ret = 0;
 
@@ -57,7 +60,7 @@ static s32 func_801D0B78(Entity* unused) {
         if (GetDistanceToPlayerX() > 80) {
             ret = 6;
         }
-        if (g_CurrentEntity->ext.et_801D0B78.unk88 != 0) {
+        if (g_CurrentEntity->ext.et_801D0B78.unk88) {
             ret = 7;
         }
         break;
@@ -72,7 +75,7 @@ static s32 func_801D0B78(Entity* unused) {
         if (GetDistanceToPlayerX() > 80) {
             ret = 6;
         }
-        if (g_CurrentEntity->ext.et_801D0B78.unk88 != 0) {
+        if (g_CurrentEntity->ext.et_801D0B78.unk88) {
             ret = 7;
         }
         break;
@@ -84,7 +87,7 @@ static s32 func_801D0B78(Entity* unused) {
         break;
 
     case 6:
-        if (g_CurrentEntity->ext.et_801D0B78.unk88 != 0) {
+        if (g_CurrentEntity->ext.et_801D0B78.unk88) {
             ret = 7;
         }
         if (GetDistanceToPlayerX() < 48) {
@@ -102,7 +105,7 @@ static s32 func_801D0B78(Entity* unused) {
         if (GetDistanceToPlayerX() < 64) {
             ret = 10;
         }
-        if (g_CurrentEntity->ext.et_801D0B78.unk88 != 0) {
+        if (g_CurrentEntity->ext.et_801D0B78.unk88) {
             ret = 7;
         }
         break;
@@ -114,15 +117,21 @@ static s32 func_801D0B78(Entity* unused) {
     return ret;
 }
 
+// note on member types: length and zOffset definitely look signed
+// in the data, but psp uses lhu instead of lh.
 typedef struct {
     s16 eArrayOffset;
     s16 eArrayParentOffset;
-    s16 length;
+    u16 length;
     u16 params;
-    s16 zOffset;
+    u16 zOffset;
 } bladeBodyPartsInit;
 
 // For EntityBlade
+
+// TODO: Lots of these are referencing the body parts numerically.
+// We should make enums for each of them (12 might be BLADE_LEFT_THIGH)
+// to make these giant data sets more meaningful.
 
 static s16 D_801833E4[] = {0, 9, 0, 4, 4, -4, -8, 0};
 static bladeBodyPartsInit D_801833F4[] = {
