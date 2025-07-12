@@ -1,48 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
-#include "sfx.h"
-
-void EntityHammerWeapon(Entity* self) {
-    s16 temp_s0;
-    s32 velY;
-    s32 temp_s1;
-    s16 angle;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitGurkhaHammer);
-        self->hitboxWidth = 10;
-        self->hitboxHeight = 10;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
-
-    case 1:
-        angle = self->ext.GH_Props.rotate;
-        self->rotate = angle;
-        self->hitboxOffX = ((u32)(rsin(angle) * 0xD) >> 0xA);
-        self->hitboxOffY = (-(rcos(angle) * 0x34) >> 0xC);
-        break;
-
-    case 24:
-        switch (self->step_s) {
-        case 0:
-            temp_s1 = (Random() & 0x1F) + 0x10;
-            temp_s0 = (Random() * 6) + 0x900;
-            self->velocityX = (temp_s1 * rcos(temp_s0)) / 2;
-            velY = temp_s1 * rsin(temp_s0);
-            self->hitboxState = 0;
-            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-            self->step_s++;
-            self->velocityY = velY;
-            break;
-
-        case 1:
-            MoveEntity();
-            self->velocityY += FIX(0.125);
-            func_801CDC80(&self->rotate, 0x800, 0x20);
-            break;
-        }
-    }
-}
 
 void func_801CF778(void) {
     Entity* currEnt15;
