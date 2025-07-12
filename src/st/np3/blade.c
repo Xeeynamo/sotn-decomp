@@ -687,40 +687,44 @@ void EntityBlade(Entity* self) {
 
 void EntityBladeSword(Entity* self) {
     Primitive *prim, *prim2;
-    s32 x0, x1, y0, y1;
-    s16 primIndex;
+    s32 x0, y0, x1, y1;
+    s32 primIndex;
     s16 angle;
     s32 i;
 
-    if (self->ext.et_801D1BB8.unk8C != 0) {
+    if (self->ext.et_801D1BB8.unk8C) {
         self->step = 8;
     }
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitGurkhaBlade);
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
         primIndex = g_api.AllocPrimitives(PRIM_G4, 6);
         if (primIndex == -1) {
+#ifdef VERSION_PSP
+            DestroyEntity(self);
+#else
             self->ext.et_801D1BB8.prim = NULL;
+#endif
             break;
         }
-        prim = &g_PrimBuf[primIndex];
-        self->primIndex = primIndex;
-        self->ext.et_801D1BB8.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.et_801D1BB8.prim = prim;
 
         for (i = 0; prim != NULL; prim = prim->next) {
             prim->r0 = i;
             prim->g0 = i;
             prim->b0 = i;
+            LOW(prim->r1) = LOW(prim->r0);
             i += 10;
             prim->r2 = i;
             prim->g2 = i;
             prim->b2 = i;
-            LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r2);
             prim->x0 = self->posX.i.hi;
             prim->y0 = self->posY.i.hi;
@@ -737,26 +741,30 @@ void EntityBladeSword(Entity* self) {
         break;
 
     case 24:
-        self->hitboxState = 0;
         self->flags |= FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
+        self->hitboxState = 0;
         break;
 
     case 8:
-        if (self->facingLeft == 0) {
-            self->velocityX = FIX(-8.0);
-        } else {
+        if (self->facingLeft) {
             self->velocityX = FIX(8.0);
+        } else {
+            self->velocityX = FIX(-8.0);
         }
         MoveEntity();
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
     }
 
     angle = self->rotate;
-    self->hitboxOffX = -1 * (rsin(angle) * 13) >> 12;
-    self->hitboxOffY = +1 * (rcos(angle) * 13) >> 12;
+    self->hitboxOffX = (rsin(angle) * -13) >> 12;
+    self->hitboxOffY = (rcos(angle) * 13) >> 12;
 
     prim = self->ext.et_801D1BB8.prim;
-    if (prim != NULL) {
+    #if !defined(VERSION_PSP)
+    if(prim != NULL){
+    #else
+    if(1){
+    #endif
         for (i = 0; i < 5; i++) {
             prim2 = prim->next;
             LOW(prim->x0) = LOW(prim2->x0);
@@ -772,24 +780,25 @@ void EntityBladeSword(Entity* self) {
             prim = prim2;
         }
     }
+    
 
     angle = self->rotate;
-    if (self->facingLeft != 0) {
+    if (self->facingLeft) {
         angle = -angle;
     }
 
-    x0 = (-1 * (rsin(angle) * 20) >> 12) + self->posX.i.hi;
-    y0 = (+1 * (rcos(angle) * 20) >> 12) + self->posY.i.hi;
-    x1 = (+1 * (rsin(angle) * 4) >> 12) + self->posX.i.hi;
-    y1 = (-1 * (rcos(angle) * 4) >> 12) + self->posY.i.hi;
+    x0 = ((rsin(angle) * -20) >> 12) + self->posX.i.hi;
+    y0 = ((rcos(angle) * 20) >> 12) + self->posY.i.hi;
+    x1 = ((rsin(angle) * 4) >> 12) + self->posX.i.hi;
+    y1 = ((rcos(angle) * -4) >> 12) + self->posY.i.hi;
 
     LOW(prim->x2) = LOW(prim->x0);
     LOW(prim->x3) = LOW(prim->x1);
 
     prim->x0 = x0;
     prim->y0 = y0;
-    prim->y1 = y1;
     prim->x1 = x1;
+    prim->y1 = y1;
 
     if (self->ext.et_801D1BB8.unk8D) {
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
