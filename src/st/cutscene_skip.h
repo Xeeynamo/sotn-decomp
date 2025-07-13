@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 extern Dialogue g_Dialogue;
+extern bool g_SkipCutscene;
 
 void CutsceneSkip(Entity* self) {
     if (g_pads[0].tapped == PAD_START) {

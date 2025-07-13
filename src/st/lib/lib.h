@@ -137,7 +137,6 @@ extern EInit g_EInitFleaMan;
 extern EInit g_EInitMudman;
 extern EInit D_us_801809EC;
 
-extern s32 g_SkipCutscene;
 extern s32 g_IsCutsceneDone;
 extern u32 g_CutsceneFlags;
 extern Dialogue g_Dialogue;

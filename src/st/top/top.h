@@ -1,4 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#ifndef TOP_H
+#define TOP_H
+
+#define STAGE_IS_TOP
+
 #include "stage.h"
 
 #define OVL_EXPORT(x) TOP_##x
@@ -33,3 +38,5 @@ typedef enum EntityIDs {
     /* 0x2A */ E_AXE_KNIGHT_AXE_2 = 0x2A,
     /* 0x2B */ E_UNK_ENTITY = 0x2B,
 };
+
+#endif // TOP_H
