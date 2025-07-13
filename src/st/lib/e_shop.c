@@ -524,6 +524,8 @@ void func_us_801AFE0C(Entity* self) {
     }
 }
 
+extern bool g_SkipCutscene;
+
 void EntityLibrarianChair(Entity* self) {
     Entity* newEnt;
     Entity* player = &PLAYER;

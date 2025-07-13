@@ -18,8 +18,6 @@ INCLUDE_ASM("st/top/nonmatchings/296F4", func_us_801AA624);
 
 INCLUDE_ASM("st/top/nonmatchings/296F4", func_us_801AABA4);
 
-// charal
-
 // lion head lamp?
 INCLUDE_ASM("st/top/nonmatchings/296F4", func_us_801AB308);
 
@@ -27,5 +25,4 @@ INCLUDE_ASM("st/top/nonmatchings/296F4", func_us_801AB308);
 INCLUDE_ASM("st/top/nonmatchings/296F4", func_us_801AB45C);
 
 // warp pad?
-
 INCLUDE_ASM("st/top/nonmatchings/296F4", func_us_801AB67C);

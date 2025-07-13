@@ -4,6 +4,7 @@
 extern EInit g_EInitInteractable;
 extern u32 g_CutsceneFlags;
 
+// Alucard walks to the Warp platform
 void func_us_801AD11C(Entity* self) {
     Tilemap* tilemap;
     Entity* player;
@@ -26,14 +27,14 @@ void func_us_801AD11C(Entity* self) {
 
     case 1:
         if (g_CutsceneFlags & 0x40) {
-            g_Player.padSim = 0x2000;
+            g_Player.padSim = PAD_RIGHT;
             self->step++;
         }
         g_Player.demo_timer = 1;
         break;
 
     case 2:
-        g_Player.padSim = 0;
+        g_Player.padSim = PAD_NONE;
         g_Player.demo_timer = 1;
         player->posX.i.hi = 0x380 - tilemap->scrollX.i.hi;
         if (g_CutsceneFlags & 0x20) {
@@ -42,10 +43,10 @@ void func_us_801AD11C(Entity* self) {
         break;
 
     case 3:
-        g_Player.padSim = 0x8000;
+        g_Player.padSim = PAD_LEFT;
         g_Player.demo_timer = 1;
         if (offsetX < 0x270) {
-            g_Player.padSim |= 0x40;
+            g_Player.padSim |= PAD_CROSS;
             if (offsetX < 0x141) {
                 g_Player.padSim = PAD_NONE;
                 self->step++;
@@ -58,13 +59,13 @@ void func_us_801AD11C(Entity* self) {
         break;
 
     case 4:
-        g_Player.padSim = 0x1000;
+        g_Player.padSim = PAD_UP;
         g_Player.demo_timer = 1;
         break;
 
     case 5:
         g_PauseAllowed = true;
-        if (g_unkGraphicsStruct.pauseEnemies != false) {
+        if (g_unkGraphicsStruct.pauseEnemies) {
             g_unkGraphicsStruct.pauseEnemies = false;
         }
         DestroyEntity(self);

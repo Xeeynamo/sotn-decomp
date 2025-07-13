@@ -437,7 +437,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
         SrcAsmPair {
             asm_dir: String::from("../../asm/us/st/top/matchings/"),
             src_dir: String::from("../../src/st/top/"),
-            overlay_name: String::from("ST0"),
+            overlay_name: String::from("TOP"),
             include_asm: get_all_include_asm("../../src/st/top/"),
             path_matcher: "st/top".to_string(),
         },

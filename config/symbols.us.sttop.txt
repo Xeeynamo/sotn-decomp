@@ -10,6 +10,7 @@ g_EInitUnkId13 = 0x801809D0;
 g_EInitLockCamera = 0x801809DC;
 g_EInitCommon = 0x801809E8;
 g_EInitDamageNum = 0x801809F4;
+g_EInitFleaRider = 0x80180A0C;
 g_EInitAxeKnight = 0x80180A18;
 g_EInitAxeKnightAxe = 0x80180A24;
 TOP_BackgroundBlockInit = 0x80180A40;

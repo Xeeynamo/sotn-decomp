@@ -72,6 +72,7 @@ typedef enum {
 
 // Original name: multiple_count
 extern s32 g_MultipleCount; // clones counter
+extern bool g_SkipCutscene;
 
 void EntitySuccubus(Entity* self) {
     u8* clonesShootOrder;

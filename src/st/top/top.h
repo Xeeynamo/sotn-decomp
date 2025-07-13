@@ -34,9 +34,9 @@ typedef enum EntityIDs {
     /* 0x21 */ E_FLEA_RIDER = 0x21,
     /* 0x23 */ E_CUTSCENE = 0x23,
     /* 0x28 */ E_AXE_KNIGHT_BLUE = 0x28,
-    /* 0x28 */ E_AXE_KNIGHT_AXE = 0x29,
-    /* 0x2A */ E_AXE_KNIGHT_AXE_2 = 0x2A,
-    /* 0x2B */ E_UNK_ENTITY = 0x2B,
+    /* 0x28 */ E_AXE_KNIGHT_AXE,
+    /* 0x2A */ E_AXE_KNIGHT_AXE_2,
+    /* 0x2B */ E_UNK_ENTITY,
 };
 
 #endif // TOP_H
