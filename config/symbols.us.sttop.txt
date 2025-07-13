@@ -56,7 +56,6 @@ EntityBreakable = 0x801A9390;
 func_801A8328 = 0x801A96F4; // source=duplicate
 CutsceneUnk1 = 0x801AB768; // source=duplicate
 SetCutsceneScript = 0x801AB7BC; // source=duplicate
-CutsceneUnk3 = 0x801AB980; // source=duplicate
 CutsceneUnk4 = 0x801AB9DC; // source=duplicate
 DrawCutsceneActorName = 0x801ABA94; // source=duplicate
 SetCutsceneEnd = 0x801ABC18; // source=duplicate
@@ -79,31 +78,16 @@ PreventEntityFromRespawning = 0x801B0B30; // source=match
 AnimateEntity = 0x801B0B78; // source=match
 GetSideToPlayer = 0x801B0DB8; // source=match
 MoveEntity = 0x801B0DFC; // source=match
-FallEntity = 0x801B0E2C; // source=match
 UnkCollisionFunc3 = 0x801B0E58; // source=match
 AllocEntity = 0x801B12B8; // source=match
-SetEntityVelocityFromAngle = 0x801B1360; // source=match
-GetAngleBetweenEntitiesShifted = 0x801B1404; // source=match
-AdjustValueWithinThreshold = 0x801B1494; // source=match
 SetStep = 0x801B1688; // source=match
 InitializeEntity = 0x801B1758; // source=match
 EntityDummy = 0x801B1854; // source=match
-CheckFieldCollision = 0x801B19A4; // source=match
 GetPlayerCollisionWith = 0x801B1AFC; // source=match
 ReplaceBreakableWithItemDrop = 0x801B1E40; // source=match
-PrizeDropFall = 0x801B1EF8; // source=match
-PrizeDropFall2 = 0x801B1F7C; // source=match
-CollectHeart = 0x801B20D8; // source=match
-CollectGold = 0x801B2158; // source=match
-CollectSubweapon = 0x801B2234; // source=match
-CollectHeartVessel = 0x801B234C; // source=match
-CollectLifeVessel = 0x801B23F0; // source=match
-CollectDummy = 0x801B2440; // source=match
 EntityPrizeDrop = 0x801B2468; // source=match
 EntityExplosion = 0x801B2CDC; // source=match
-BlinkItem = 0x801B2DD8; // source=match
 EntityEquipItemDrop = 0x801B2E7C; // source=match
-BlitChar = 0x801B3464; // source=match
 EntityRelicOrb = 0x801B3714; // source=match
 EntityHeartDrop = 0x801B41E4; // source=match
 EntityMessageBox = 0x801B430C; // source=match
@@ -112,18 +96,17 @@ EntityExplosionVariants = 0x801B4C80; // source=match
 EntityGreyPuff = 0x801B4D70; // source=match
 EntityIntenseExplosion = 0x801B5710; // source=match
 InitializeUnkEntity = 0x801B5810; // source=match
-PlaySfxPositional = 0x801B6B0C; // source=match
 EntityStageNamePopup = 0x801B6DD4; // source=match
 EntitySoulStealOrb = 0x801B7A58; // source=match
 EntityEnemyBlood = 0x801B7DEC; // source=match
 EntityRoomForeground = 0x801B829C; // source=match
-BottomCornerText = 0x801B8388; // source=match
 EntityFleaRider = 0x801B86B8;
 EntityAxeKnightBlue = 0x801B96A8; // source=match
 EntityAxeKnightThrowingAxe = 0x801BA144; // source=match
 func_us_801CBA30 = 0x801BA2D4; // source=match
 UnkPrimHelper = 0x801BA3C8; // source=match
 UnkPolyFunc2 = 0x801BAB14; // source=match
+EntityClouds = 0x801BABF8;
 EntityClockTower3D = 0x801BB354; // source=duplicate
 g_SkipCutscene = 0x801BC460;
 g_Dialogue = 0x801BC464; // size=0x44

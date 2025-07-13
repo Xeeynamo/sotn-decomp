@@ -3,7 +3,7 @@ extern Dialogue g_Dialogue;
 extern u32 g_CutsceneFlags;
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
 
-void CutsceneRun(void) {
+static void CutsceneRun(void) {
     Entity* entity;
     u16 startTimer;
 

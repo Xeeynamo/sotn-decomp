@@ -26,7 +26,7 @@ void func_us_801A9CB8(Entity*);
 void func_us_801A99EC(Entity*);
 void func_us_801A9F0C(Entity*);
 void EntityClockTower3D(Entity*);
-void func_us_801BABF8(Entity*);
+void EntityClouds(Entity*);
 void func_us_801AA354(Entity*);
 void func_us_801AA624(Entity*);
 void func_us_801AB308(Entity*);
@@ -71,7 +71,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801A99EC,
     func_us_801A9F0C,
     EntityClockTower3D,
-    func_us_801BABF8,
+    EntityClouds,
     func_us_801AA354,
     func_us_801AA624,
     func_us_801AB308,
