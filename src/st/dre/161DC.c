@@ -13,8 +13,6 @@ void func_801961DC(s16 arg0) {
     }
 }
 
-extern bool g_SkipCutscene;
-
 void EntityCSMoveAlucard(Entity* self) {
     Tilemap* currentRoomTileLayout = &g_Tilemap;
     Entity* player = &PLAYER;

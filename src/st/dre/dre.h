@@ -140,6 +140,7 @@ extern u16 D_80180894[];
 extern u16 D_8018089C[];
 extern u16 D_801808A0[];
 extern s16 D_801808A8[];
+extern s32 g_SkipCutscene;
 extern u32 g_CutsceneFlags;
 extern s32 g_IsCutsceneDone;
 
