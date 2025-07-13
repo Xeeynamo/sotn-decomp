@@ -84,15 +84,15 @@ void func_801CE228() {
     }
 }
 
-void func_801CE258(s16* arg0) {
+void polarPlacePartsList(s16* entOffsets) {
     Entity* entity;
 
-    while (*arg0 != 0) {
-        entity = &g_CurrentEntity[*arg0];
+    while (*entOffsets) {
+        entity = &g_CurrentEntity[*entOffsets];
         if (entity->ext.GH_Props.unkA8 == 0) {
-            func_801CD83C(entity);
+            polarPlacePart(entity);
         }
-        arg0++;
+        entOffsets++;
     }
 }
 
@@ -101,12 +101,12 @@ void func_801CE2CC(s16* arg0) {
 
     func_801CD91C(&g_CurrentEntity[arg0[1]]);
     func_801CD91C(&g_CurrentEntity[arg0[0]]);
-    func_801CD83C(&g_CurrentEntity[arg0[2]]);
-    func_801CD83C(&g_CurrentEntity[arg0[3]]);
+    polarPlacePart(&g_CurrentEntity[arg0[2]]);
+    polarPlacePart(&g_CurrentEntity[arg0[3]]);
 
     for (arg0 += 4; *arg0 != 0; arg0++) {
         if (*arg0 != 0xFF) {
-            func_801CD83C(&g_CurrentEntity[*arg0]);
+            polarPlacePart(&g_CurrentEntity[*arg0]);
         }
     }
 }
@@ -117,13 +117,13 @@ void func_801CE3FC(s16* arg0) {
     s32 i;
 
     for (i = 0, var_s0 = arg0; i < 4; i++) {
-        func_801CD83C(&g_CurrentEntity[*var_s0]);
+        polarPlacePart(&g_CurrentEntity[*var_s0]);
         var_s0++;
     }
 
     for (arg0 += 4; *arg0 != 0; arg0++) {
         if (*arg0 != 0xFF) {
-            func_801CD83C(&g_CurrentEntity[*arg0]);
+            polarPlacePart(&g_CurrentEntity[*arg0]);
         }
     }
 }
