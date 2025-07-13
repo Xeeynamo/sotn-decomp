@@ -38,7 +38,8 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, header]
+      - [0x34, data]
       - [0x8E8, .data, e_init]
       - [0xA30, .data, e_room_bg]
       - [0xA68, .data, e_red_door_tiles]

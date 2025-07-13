@@ -1,3 +1,8 @@
+TOP_Overlay = 0x80180000;
+TOP_spriteBanks = 0x80180034;
+TOP_cluts = 0x801804C0;
+TOP_rooms_layers = 0x801805C8;
+TOP_gfxBanks = 0x801806F0;
 TOP_pStObjLayoutHorizontal = 0x80180740;
 TOP_pStObjLayoutVertical = 0x80180814;
 TOP_EntityUpdates = 0x801808E8;
@@ -48,6 +53,7 @@ hitboxes_2 = 0x80181AF0;
 hitbox_2_lookup = 0x80181B28;
 init_velocity_x = 0x80181B60;
 init_velocity_y = 0x80181B6C;
+TOP_rooms = 0x80181B78;
 sprites_3 = 0x801A6490;
 TOP_EntityBackgroundBlock = 0x801A8C38; // source=match
 PlayerIsWithinHitbox = 0x801A8D00; // source=duplicate
@@ -80,6 +86,9 @@ GetSideToPlayer = 0x801B0DB8; // source=match
 MoveEntity = 0x801B0DFC; // source=match
 UnkCollisionFunc3 = 0x801B0E58; // source=match
 AllocEntity = 0x801B12B8; // source=match
+SetEntityVelocityFromAngle = 0x801B1360;
+GetAngleBetweenEntitiesShifted = 0x801B1404;
+AdjustValueWithinThreshold = 0x801B1494;
 SetStep = 0x801B1688; // source=match
 InitializeEntity = 0x801B1758; // source=match
 EntityDummy = 0x801B1854; // source=match
@@ -96,6 +105,7 @@ EntityExplosionVariants = 0x801B4C80; // source=match
 EntityGreyPuff = 0x801B4D70; // source=match
 EntityIntenseExplosion = 0x801B5710; // source=match
 InitializeUnkEntity = 0x801B5810; // source=match
+PlaySfxPositional = 0x801B6B0C;
 EntityStageNamePopup = 0x801B6DD4; // source=match
 EntitySoulStealOrb = 0x801B7A58; // source=match
 EntityEnemyBlood = 0x801B7DEC; // source=match
