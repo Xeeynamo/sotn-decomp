@@ -240,28 +240,6 @@ extern s16 D_80182E38[];
 extern s16 D_80182E48[];
 extern s16 D_80182EDC[];
 
-// For EntityGurkha
-extern u16 D_80182EF4[];
-extern s16 D_80182F04[];
-extern s16 D_80182F9C;
-extern s16 D_80182FBC[];
-extern s16 D_80182FD8[];
-extern s16 D_80182FF4[];
-extern s16 D_80183010[];
-extern s16 D_8018302C[];
-extern s16 D_80183044[];
-extern s16 D_80183098[];
-extern s16 D_801830F8[];
-extern s16 D_80183130[];
-extern s16 D_801831F8[];
-extern s16 D_80183218[];
-extern s16 D_80183258[];
-extern s16 D_80183284[];
-extern s16 D_80183360[];
-extern s16 D_80183378[];
-extern s16 D_801833A0[];
-extern s16 D_801833CC[];
-
 extern bool slograGaibonRetreat;
 
 typedef struct {
