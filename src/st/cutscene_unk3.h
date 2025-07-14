@@ -4,7 +4,7 @@
 #endif
 
 #if defined(VERSION_PSP)
-extern s32 cutsceneUnk3Unknown[0x380]; // bss
+extern u8 cutsceneUnk3Unknown[0x380]; // bss
 #endif
 
 static void CutsceneUnk3(s16 nextCharY) {
