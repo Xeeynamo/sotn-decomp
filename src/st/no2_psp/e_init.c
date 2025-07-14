@@ -48,9 +48,9 @@ void func_pspeu_0925B730(Entity* self);
 void func_us_801C3ED8(Entity* self);
 void func_pspeu_0925B278(Entity* self);
 void func_pspeu_09257ED8(Entity* self);
-void func_pspeu_0923D188(Entity* self);
-void func_pspeu_0923DCC0(Entity* self);
-void func_pspeu_0923DE98(Entity* self);
+void EntityValhallaKnight(Entity* self);
+void func_us_801C8954(Entity* self);
+void func_us_801C8AAC(Entity* self);
 void func_pspeu_09253010(Entity* self);
 void func_pspeu_09254098(Entity* self);
 void func_pspeu_09254520(Entity* self);
@@ -115,9 +115,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C3ED8,
     func_pspeu_0925B278,
     func_pspeu_09257ED8,
-    func_pspeu_0923D188,
-    func_pspeu_0923DCC0,
-    func_pspeu_0923DE98,
+    EntityValhallaKnight,
+    func_us_801C8954,
+    func_us_801C8AAC,
     func_pspeu_09253010,
     func_pspeu_09254098,
     func_pspeu_09254520,
@@ -152,10 +152,12 @@ EInit g_EInitOwl = {ANIMSET_OVL(0x08), 0x01, 0x49, PAL_OWL_KNIGHT, 0x016};
 EInit g_EInitBloodyZombie = {
     ANIMSET_OVL(0x09), 0x01, 0x4A, PAL_BLOODY_ZOMBIE, 0x00D};
 EInit D_pspeu_09266728 = {ANIMSET_OVL(0x02), 0x0E, 0x00, PAL_NONE, 0x005};
-EInit D_pspeu_09266738 = {ANIMSET_OVL(0x05), 0x01, 0x4C, PAL_UNK_207, 0x085};
-EInit D_pspeu_09266748 = {ANIMSET_OVL(0x05), 0x01, 0x4C, PAL_UNK_207, 0x003};
-EInit D_pspeu_09266758 = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NONE, 0x086};
-EInit D_pspeu_09266768 = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NONE, 0x087};
+EInit g_EInitValhallaKnight = {
+    ANIMSET_OVL(0x05), 0x01, 0x4C, PAL_VALHALLA_KNIGHT, 0x085};
+EInit D_us_80180904 = {
+    ANIMSET_OVL(0x05), 0x01, 0x4C, PAL_VALHALLA_KNIGHT, 0x003};
+EInit D_us_80180910 = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NONE, 0x086};
+EInit D_us_8018091C = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NONE, 0x087};
 EInit D_pspeu_09266778 = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_UNK_23E, 0x0BA};
 EInit D_pspeu_09266788 = {ANIMSET_OVL(0x06), 0x12, 0x4C, PAL_UNK_23E, 0x0BB};
 EInit D_pspeu_09266798 = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_UNK_23B, 0x0BC};

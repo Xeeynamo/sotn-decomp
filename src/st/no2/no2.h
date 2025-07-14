@@ -11,7 +11,7 @@ enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
     PAL_SKELERANG = 0x200,
     PAL_UNK_203 = 0x203,
-    PAL_UNK_207 = 0x207,
+    PAL_VALHALLA_KNIGHT = 0x207,
     PAL_OWL_KNIGHT = 0x21C,
     PAL_BLOODY_ZOMBIE = 0x223,
     PAL_UNK_238 = 0x238,
@@ -76,7 +76,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_31,               // func_us_801B5948
     E_UNK_32,               // func_us_801B7580
     E_UNK_33,               // func_us_801B7980
-    E_UNK_34,               // EntityValhallaKnight
+    E_VALHALLA_KNIGHT,      // EntityValhallaKnight
     E_UNK_35,               // func_us_801C8954
     E_UNK_36,               // func_us_801C8AAC
     E_HAMMER,               // EntityHammer
@@ -114,9 +114,9 @@ extern EInit g_EInitOwl;
 extern EInit g_EInitBloodyZombie;
 // extern EInit D_us_801808EC;
 extern EInit g_EInitValhallaKnight;
-// extern EInit D_us_80180904;
-// extern EInit D_us_80180910;
-// extern EInit D_us_8018091C;
+extern EInit D_us_80180904;
+extern EInit D_us_80180910;
+extern EInit D_us_8018091C;
 // extern EInit D_us_80180928;
 // extern EInit D_us_80180934;
 // extern EInit D_us_80180940;
