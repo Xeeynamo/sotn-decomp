@@ -10,7 +10,7 @@ INCLUDE_ASM("st/no2/nonmatchings/unk_33A94", func_us_801B3F30);
 void EntityFrozenShadeCrystal(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitCommon);
-        self->animSet = -0x7FFE;
+        self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 1;
         self->zPriority = 0xA0;
     }
