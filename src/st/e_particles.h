@@ -16,12 +16,14 @@ u16 g_ESoulStealOrbAngles[] = {
 };
 
 s16 g_ESoulStealOrbSprt[] = {
-    0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00D0, 0x0068, 0x00D8, 0x0070,
-    0xFFFD, 0xFFFD, 0x0008, 0x0008, 0x00C8, 0x0068, 0x00D0, 0x0070,
-    0xFFF9, 0xFFF9, 0x0010, 0x000F, 0x00C8, 0x0070, 0x00D8, 0x007F,
-    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x0080, 0x0068, 0x0098, 0x007F,
-    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x0098, 0x0068, 0x00B0, 0x007F,
-    0xFFF5, 0xFFF5, 0x0018, 0x0017, 0x00B0, 0x0068, 0x00C8, 0x007F,
+    // clang-format off
+    -3,  -3,  8,  8,  208, 104, 216, 112,
+    -3,  -3,  8,  8,  200, 104, 208, 112,
+    -7,  -7,  16, 15, 200, 112, 216, 127,
+    -11, -11, 24, 23, 128, 104, 152, 127,
+    -11, -11, 24, 23, 152, 104, 176, 127,
+    -11, -11, 24, 23, 176, 104, 200, 127,
+    // clang-format on
 };
 
 u8 g_ESoulStealOrbAnim[] = {4, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 3, 0, 0};
@@ -206,7 +208,7 @@ void EntityEnemyBlood(Entity* self) {
         break;
 
     case 1:
-        if (!(--self->ext.bloodDroplets.timer)) {
+        if (!--self->ext.bloodDroplets.timer) {
             DestroyEntity(self);
             break;
         }

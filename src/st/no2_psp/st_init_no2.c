@@ -56,7 +56,7 @@ s32 E_ID(ID_3D);
 s32 E_ID(ID_3E);
 s32 E_ID(ID_3F);
 s32 E_ID(ID_40);
-s32 E_ID(ID_41);
+s32 E_ID(BREAKABLE_DEBRIS);
 
 void InitEntityIds(void) {
     E_ID(ID_11) = 0x11;
@@ -107,7 +107,7 @@ void InitEntityIds(void) {
     E_ID(ID_3E) = 0x3E;
     E_ID(ID_3F) = 0x3F;
     E_ID(ID_40) = 0x40;
-    E_ID(ID_41) = 0x41;
+    E_ID(BREAKABLE_DEBRIS) = 0x41;
 }
 
 void OVL_EXPORT(Load)(void) {
