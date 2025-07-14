@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
-static u8 foregroundAnim1[] = {0x40, 0x01, 0xFF, 0x00};
-static u8 foregroundAnim2[] = {0x40, 0x02, 0xFF, 0x00};
-static u8 foregroundAnim3[] = {0x40, 0x02, 0xFF, 0x00};
-static u8 foregroundAnim4[] = {0x40, 0x01, 0xFF, 0x00};
-static u8 foregroundAnim5[] = {0x40, 0x03, 0xFF, 0x00};
+static u8 foregroundAnim1[] = {64, 1, -1, 0};
+static u8 foregroundAnim2[] = {64, 2, -1, 0};
+static u8 foregroundAnim3[] = {64, 2, -1, 0};
+static u8 foregroundAnim4[] = {64, 1, -1, 0};
+static u8 foregroundAnim5[] = {64, 3, -1, 0};
 static ObjInit eRoomForegroundInit[] = {
-    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, foregroundAnim1},
-    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, foregroundAnim3},
-    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x10, 0, foregroundAnim4},
-    {0x0006, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, foregroundAnim2},
-    {0x000C, 0x01EC, 0x0000, 0x0000, 0x00, 0x10, 0, foregroundAnim5},
-    {0x000C, 0x0080, 0x0000, 0x0000, 0x00, 0x10, 0, foregroundAnim4},
+    {0x0006, 0x1EC, 0, 0, 0, DRAW_TPAGE, 0, foregroundAnim1},
+    {0x000C, 0x1EC, 0, 0, 0, DRAW_TPAGE, 0, foregroundAnim3},
+    {0x000C, 0x080, 0, 0, 0, DRAW_TPAGE, 0, foregroundAnim4},
+    {0x0006, 0x1EC, 0, 0, 0, DRAW_TPAGE, 0, foregroundAnim2},
+    {0x000C, 0x1EC, 0, 0, 0, DRAW_TPAGE, 0, foregroundAnim5},
+    {0x000C, 0x080, 0, 0, 0, DRAW_TPAGE, 0, foregroundAnim4},
 };
 
 extern u16 g_EInitCommon[];

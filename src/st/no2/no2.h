@@ -18,12 +18,14 @@ enum OVL_EXPORT(Palette) {
     PAL_UNK_23B = 0x23B,
     PAL_UNK_23E = 0x23E,
     PAL_UNK_241 = 0x241,
+    PAL_BREAKABLE = 0x251,
+    PAL_BREAKABLE_DEBRIS = 0x255,
     PAL_OWL_KNIGHT_SWORD = 0x2CB,
 };
 
 enum OVL_EXPORT(Entities) {
     E_NONE,
-    E_UNK_BREAKABLE,        // EntityUnkBreakable
+    E_BREAKABLE,            // EntityBreakable
     E_EXPLOSION,            // EntityExplosion
     E_PRIZE_DROP,           // EntityPrizeDrop
     E_DAMAGE_DISPLAY,       // EntityDamageDisplay
@@ -87,13 +89,13 @@ enum OVL_EXPORT(Entities) {
     E_UNK_3E,               // func_us_801CDDF4
     E_UNK_3F,               // func_us_801CEB08
     E_UNK_40,               // func_us_801CEBDC
-    E_UNK_41,               // func_801A8328
+    E_BREAKABLE_DEBRIS,     // EntityBreakableDebris
     NUM_ENTITIES,
 };
 
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
-// extern EInit D_us_80180820;
+extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 // extern EInit D_us_80180844;
