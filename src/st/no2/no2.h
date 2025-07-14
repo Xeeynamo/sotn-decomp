@@ -76,7 +76,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_31,               // func_us_801B5948
     E_UNK_32,               // func_us_801B7580
     E_UNK_33,               // func_us_801B7980
-    E_UNK_34,               // func_us_801C8168
+    E_UNK_34,               // EntityValhallaKnight
     E_UNK_35,               // func_us_801C8954
     E_UNK_36,               // func_us_801C8AAC
     E_HAMMER,               // EntityHammer
@@ -113,7 +113,7 @@ extern EInit g_EInitOwlKnightSword;
 extern EInit g_EInitOwl;
 extern EInit g_EInitBloodyZombie;
 // extern EInit D_us_801808EC;
-// extern EInit D_us_801808F8;
+extern EInit g_EInitValhallaKnight;
 // extern EInit D_us_80180904;
 // extern EInit D_us_80180910;
 // extern EInit D_us_8018091C;
