@@ -16,8 +16,8 @@ extern char cutscene_data_en[];
 
 extern u8* D_psp_092A54E0;            // bss
 extern u8* D_psp_092A54E8;            // bss
-extern u8* D_psp_092A54F0;            // bss
 extern u8* OVL_EXPORT(cutscene_data); // bss
+extern u8* D_psp_092A54F8;            // bss
 
 #include "../get_lang_at.h"
 
@@ -152,11 +152,11 @@ void InitEntityIds(void) {
 }
 
 void OVL_EXPORT(Load)(void) {
-    OVL_EXPORT(cutscene_data) = GetLangAt(
+    D_psp_092A54F8 = GetLangAt(
         8, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
-    D_psp_092A54F0 = GetLangAt(
+    OVL_EXPORT(cutscene_data) = GetLangAt(
         0, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
