@@ -5,7 +5,14 @@ INCLUDE_ASM("st/no2/nonmatchings/33D8C", func_us_801B3D8C);
 
 INCLUDE_ASM("st/no2/nonmatchings/33D8C", func_us_801B3F30);
 
-INCLUDE_ASM("st/no2/nonmatchings/33D8C", EntityFrozenShadeCrystal);
+void EntityFrozenShadeCrystal(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(2);
+        self->animCurFrame = 1;
+        self->zPriority = 0xA0;
+    }
+}
 
 void func_us_801B41A4(void) {
     if (g_CurrentEntity->step == 0) {
