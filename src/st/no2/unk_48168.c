@@ -13,7 +13,7 @@ INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801CD734);
 
 INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801CD78C);
 
-INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801CD83C);
+INCLUDE_ASM("st/no2/nonmatchings/unk_48168", polarPlacePart);
 
 INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801CD91C);
 
@@ -31,7 +31,7 @@ INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801CDD80);
 
 INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801CDE10);
 
-INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801CDE88);
+INCLUDE_ASM("st/no2/nonmatchings/unk_48168", polarPlacePartsWithAngvel);
 
 INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801CDF1C);
 
@@ -45,7 +45,7 @@ INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801CE1E8);
 
 INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801CE228);
 
-INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801CE258);
+INCLUDE_ASM("st/no2/nonmatchings/unk_48168", polarPlacePartsList);
 
 INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801CE2CC);
 
@@ -66,13 +66,3 @@ INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801CF7A0);
 INCLUDE_ASM("st/no2/nonmatchings/unk_48168", EntityGurkha);
 
 INCLUDE_ASM("st/no2/nonmatchings/unk_48168", EntityGurkhaSword);
-
-INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801D0A00);
-
-INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801D0B40);
-
-INCLUDE_ASM("st/no2/nonmatchings/unk_48168", func_801D0B78);
-
-INCLUDE_ASM("st/no2/nonmatchings/unk_48168", EntityBlade);
-
-INCLUDE_ASM("st/no2/nonmatchings/unk_48168", EntityBladeSword);

@@ -56,8 +56,8 @@ void func_pspeu_09254098(Entity* self);
 void func_pspeu_09254520(Entity* self);
 void func_pspeu_092515D0(Entity* self);
 void func_pspeu_092529B0(Entity* self);
-void func_pspeu_0924F990(Entity* self);
-void func_pspeu_09250ED0(Entity* self);
+void EntityBlade(Entity* self);
+void EntityBladeSword(Entity* self);
 void func_pspeu_0924AB98(Entity* self);
 void func_pspeu_0924BE50(Entity* self);
 void func_pspeu_0924BF68(Entity* self);
@@ -123,8 +123,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_pspeu_09254520,
     func_pspeu_092515D0,
     func_pspeu_092529B0,
-    func_pspeu_0924F990,
-    func_pspeu_09250ED0,
+    EntityBlade,
+    EntityBladeSword,
     func_pspeu_0924AB98,
     func_pspeu_0924BE50,
     func_pspeu_0924BF68,
@@ -160,8 +160,8 @@ EInit D_pspeu_09266778 = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_UNK_23E, 0x0BA};
 EInit D_pspeu_09266788 = {ANIMSET_OVL(0x06), 0x12, 0x4C, PAL_UNK_23E, 0x0BB};
 EInit D_pspeu_09266798 = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_UNK_23B, 0x0BC};
 EInit D_pspeu_092667A8 = {ANIMSET_OVL(0x06), 0x14, 0x4C, PAL_UNK_23B, 0x0BD};
-EInit D_pspeu_092667B8 = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_UNK_238, 0x0BE};
-EInit D_pspeu_092667C8 = {ANIMSET_OVL(0x06), 0x13, 0x4C, PAL_UNK_238, 0x0BF};
+EInit g_EInitBlade = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_UNK_238, 0x0BE};
+EInit g_EInitBladeSword = {ANIMSET_OVL(0x06), 0x13, 0x4C, PAL_UNK_238, 0x0BF};
 EInit D_pspeu_092667D8 = {ANIMSET_OVL(0x04), 0x00, 0x50, PAL_UNK_241, 0x081};
 EInit D_pspeu_092667E8 = {ANIMSET_OVL(0x04), 0x00, 0x50, PAL_UNK_241, 0x002};
 EInit D_pspeu_092667F8 = {ANIMSET_OVL(0x04), 0x00, 0x50, PAL_UNK_241, 0x082};

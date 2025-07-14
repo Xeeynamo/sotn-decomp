@@ -62,6 +62,8 @@ segments:
       - [0x15048, c, no2/st_common]
       - [0x16928, c, no2/prim_helpers]
       - [0x17448, c, no2_psp/unk_17448]
+      - [0x17EB0, c, no2/blade]
+      - [0x19CF0, c, no2_psp/19CF0]
       - [0x1F3B8, c, no2_psp/st_init_no2]
       - [0x1F688, c, no2/e_breakable]
       - [0x1FF58, c, no2_psp/1FF58]
@@ -85,6 +87,8 @@ segments:
       - [0x26AF8, data]
       - [0x26B90, .data, no2/st_common]
       - [0x26D90, data]
+      - [0x26DD0, .data, no2/blade]
+      - [0x27498, data]
       - [0x2EE90, .data, no2_psp/e_init]
       - [0x2F188, data]
       - [0x2F298, .data, no2/e_breakable]
@@ -99,7 +103,8 @@ segments:
       - [0x55C88, .rodata, no2_psp/unk_5B08]
       - [0x55CA0, .rodata, no2/e_collect]
       - [0x55D00, .rodata, no2/e_owl_knight]
-      - [0x55D60, .rodata, no2_psp/unk_17448]
+      - [0x55D60, .rodata, no2/blade]
+      - [0x55D78, .rodata, no2_psp/19CF0]
       - [0x55DB8, .rodata, no2_psp/e_sealed_door]
       - {start: 0x55E00, type: .bss, vram: 0x0928D480, name: no2/create_entity}
       - {start: 0x55E00, type: .bss, vram: 0x0928D4A0, name: no2/e_collect}

@@ -121,8 +121,13 @@ extern EInit g_EInitBloodyZombie;
 // extern EInit D_us_80180934;
 // extern EInit D_us_80180940;
 // extern EInit D_us_8018094C;
-// extern EInit D_us_80180958;
-// extern EInit D_us_80180964;
+extern EInit g_EInitBlade;
+extern EInit g_EInitBladeSword;
 // extern EInit D_us_80180970;
 // extern EInit D_us_8018097C;
 // extern EInit D_us_80180988;
+
+typedef struct {
+    s16 unk0;
+    s16* unk4;
+} unkStr_801CDD80;
