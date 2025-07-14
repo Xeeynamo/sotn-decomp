@@ -1,0 +1,98 @@
+options:
+  platform: psx
+  basename: sttop
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/TOP/TOP.BIN
+  asm_path: asm/us/st/top
+  asset_path: assets/st/top
+  src_path: src/st/top
+  ld_script_path: build/us/sttop.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.sttop.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.sttop.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.sttop.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x80010000
+sha1: 47bb15117558c88f516cf4fc72fb8c91445d135e
+segments:
+  - name: sttop
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x34, data]
+      - [0x8E8, .data, e_init]
+      - [0xA30, .data, e_room_bg]
+      - [0xA68, .data, e_red_door_tiles]
+      - [0xA98, .data, e_lock_camera]
+      - [0xAF8, data, e_breakable]
+      - [0xBDC, data, 296F4]
+      - [0xE28, .data, st_update]
+      - [0xE74, .data, collision]
+      - [0x1234, .data, e_red_door]
+      - [0x124C, .data, st_common]
+      - [0x144C, .data, e_collect]
+      - [0x17A0, .data, e_misc]
+      - [0x1858, .data, e_particles]
+      - [0x18D8, .data, e_room_fg]
+      - [0x1964, data]
+      - [0x19BC, .data, e_blue_axe_knight]
+      - [0x1B78, data]
+      - [0x288E8, .rodata, e_lock_camera]
+      - [0x28904, .rodata, us]
+      - [0x2891C, .rodata, e_breakable]
+      - [0x2893C, .rodata, 296F4]
+      - [0x2898C, .rodata, cutscene]
+      - [0x28A30, .rodata, post_richter_cutscene]
+      - [0x28A64, .rodata, e_red_door]
+      - [0x28A7C, .rodata, e_collect]
+      - [0x28B50, .rodata, e_stage_name]
+      - [0x28B84, .rodata, e_flea_rider]
+      - [0x28BAC, .rodata, e_blue_axe_knight]
+      - [0x28C30, .rodata, prim_helpers]
+      - [0x28C38, c, e_room_bg]
+      - [0x28D00, c, e_lock_camera]
+      - [0x29250, c, us]
+      - [0x29390, c, e_breakable]
+      - [0x296F4, c, 296F4]
+      - [0x2B768, c, cutscene]
+      - [0x2D11C, c, post_richter_cutscene]
+      - [0x2D630, c, st_update]
+      - [0x2DA64, c, collision]
+      - [0x2F220, c, create_entity]
+      - [0x2FD98, c, e_red_door]
+      - [0x30A48, c, st_common]
+      - [0x31EF8, c, e_collect]
+      - [0x34868, c, e_misc]
+      - [0x36C04, c, e_stage_name]
+      - [0x37A58, c, e_particles]
+      - [0x3829C, c, e_room_fg]
+      - [0x38388, c, popup]
+      - [0x386B8, c, e_flea_rider]
+      - [0x38BB8, c, e_blue_axe_knight]
+      - [0x3A3C8, c, prim_helpers]
+      - [0x3ABF8, c, e_clock_tower]
+      - [0x3B7F0, bss]
+      - [0x3B850, .bss, create_entity]
+      - [0x3B860, bss]
+      - [0x3C51C, .bss, e_collect]
+  - [0x3C55C]

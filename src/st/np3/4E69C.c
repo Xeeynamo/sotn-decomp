@@ -37,7 +37,7 @@ void EntityHammer(Entity* self) {
         for (var_s4 = &D_80182988; *var_s4 != 0; var_s4 += 5) {
             otherEnt = self + var_s4[0];
             CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, otherEnt);
-            otherEnt->ext.GH_Props.unk9E = var_s4[2];
+            otherEnt->ext.GH_Props.length = var_s4[2];
             otherEnt->ext.GH_Props.parent = self + var_s4[1];
             otherEnt->params = var_s4[3];
             zPriority = self->zPriority + var_s4[4];
@@ -49,7 +49,7 @@ void EntityHammer(Entity* self) {
         self->unk60 = var_s3_1;
         self->unk5C = NULL;
         CreateEntityFromCurrentEntity(E_HAMMER_WEAPON, self + 15);
-        (self + 15)->ext.GH_Props.unk9E = 12;
+        (self + 15)->ext.GH_Props.length = 12;
         (self + 15)->ext.GH_Props.parent = self + 5;
         (self + 15)->params = 0x12;
         (self + 15)->zPriority = self->zPriority + 3;
@@ -70,7 +70,7 @@ void EntityHammer(Entity* self) {
         func_801CDF1C(var_s2, &D_80182BB4, 0);
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
-        func_801CE258(&D_80182A20);
+        polarPlacePartsList(&D_80182A20);
         if (self->ext.GH_Props.unkB0[0] > 1) {
             collider.unk18 = 9;
             otherEnt = &self[var_s2[3]];
@@ -95,7 +95,7 @@ void EntityHammer(Entity* self) {
         func_801CDF1C(var_s2, &D_80182BEC, 0);
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
-        func_801CE258(&D_80182A20);
+        polarPlacePartsList(&D_80182A20);
         if (self->ext.GH_Props.unkB0[0] > 1) {
             collider.unk18 = 9;
             otherEnt = &self[var_s2[3]];
@@ -171,7 +171,7 @@ void EntityHammer(Entity* self) {
             }
             break;
         }
-        func_801CE258(&D_80182A20);
+        polarPlacePartsList(&D_80182A20);
         break;
     case 6:
         switch (self->step_s) {
@@ -193,7 +193,7 @@ void EntityHammer(Entity* self) {
             func_801CDAC8(otherEnt, var_s3_2);
             func_801CDFD8(otherEnt, 0x10);
             func_801CDFD8(var_s3_2, 0x10);
-            func_801CE258(&D_80182A20);
+            polarPlacePartsList(&D_80182A20);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
                 (self->ext.GH_Props.unkB4[0] == 0)) {
                 PlaySfxPositional(0x743);
@@ -216,7 +216,7 @@ void EntityHammer(Entity* self) {
             func_801CDAC8(otherEnt, var_s3_2);
             func_801CDFD8(otherEnt, 2);
             func_801CDFD8(var_s3_2, 2);
-            func_801CE258(&D_80182A20);
+            polarPlacePartsList(&D_80182A20);
             if ((self->ext.GH_Props.unkB0[0] == 4) &&
                 (self->ext.GH_Props.unkB4[0] == 0)) {
                 self->ext.GH_Props.unk84 ^= 1;
@@ -241,7 +241,7 @@ void EntityHammer(Entity* self) {
             func_801CDF1C(var_s2, &D_80182E38, 0);
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
-            func_801CE258(&D_80182A20);
+            polarPlacePartsList(&D_80182A20);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
                 (self->ext.GH_Props.unkB4[0] == 0)) {
                 self->step_s++;
@@ -261,7 +261,7 @@ void EntityHammer(Entity* self) {
         func_801CDF1C(var_s2, &D_80182CFC, 0);
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
-        func_801CE258(&D_80182A20);
+        polarPlacePartsList(&D_80182A20);
         if (self->ext.GH_Props.unkB4[0] == 0) {
             self->facingLeft ^= 1;
             func_801CE4CC(self);
@@ -280,7 +280,7 @@ void EntityHammer(Entity* self) {
         func_801CDF1C(var_s2, &D_80182EDC, 0);
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
-        func_801CE258(&D_80182A20);
+        polarPlacePartsList(&D_80182A20);
         if (self->ext.GH_Props.unkB0[0] == 0 &&
             self->ext.GH_Props.unkB4[0] == 0) {
             func_801CE4CC(self);
@@ -416,5 +416,47 @@ void EntityGurkhaBodyParts(Entity* self) {
         parent = self->ext.GH_Props.parent;
         parent->ext.GH_Props.rotate = self->ext.GH_Props.rotate;
         break;
+    }
+}
+
+void EntityHammerWeapon(Entity* self) {
+    s16 temp_s0;
+    s32 velY;
+    s32 temp_s1;
+    s16 angle;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitGurkhaHammer);
+        self->hitboxWidth = 10;
+        self->hitboxHeight = 10;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
+
+    case 1:
+        angle = self->ext.GH_Props.rotate;
+        self->rotate = angle;
+        self->hitboxOffX = ((u32)(rsin(angle) * 0xD) >> 0xA);
+        self->hitboxOffY = (-(rcos(angle) * 0x34) >> 0xC);
+        break;
+
+    case 24:
+        switch (self->step_s) {
+        case 0:
+            temp_s1 = (Random() & 0x1F) + 0x10;
+            temp_s0 = (Random() * 6) + 0x900;
+            self->velocityX = (temp_s1 * rcos(temp_s0)) / 2;
+            velY = temp_s1 * rsin(temp_s0);
+            self->hitboxState = 0;
+            self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
+            self->step_s++;
+            self->velocityY = velY;
+            break;
+
+        case 1:
+            MoveEntity();
+            self->velocityY += FIX(0.125);
+            func_801CDC80(&self->rotate, 0x800, 0x20);
+            break;
+        }
     }
 }

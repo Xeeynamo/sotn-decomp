@@ -93,8 +93,10 @@ typedef enum {
     /* 0x88 */ RNZ0_SECRET_WALL_OPEN = 136,
     /* 0x89 */ RNZ0_SECRET_CEILING_OPEN = 137,
     /* 0x90 */ TOP_STAGE_FLAG = 144,
-    /* 0x91 */ TOP_SECRET_WALL_1_BROKEN = 145, // Upper left of large room
-    /* 0x92 */ TOP_SECRET_WALL_2_BROKEN = 146, // Lower left of large room
+    /* 0x91 */ TOP_SECRET_WALL_1_BROKEN =
+        145, // Upper left of large room - behind power of mist
+    /* 0x92 */ TOP_SECRET_WALL_2_BROKEN =
+        146, // Lower left of large room - behind leap stone
     /* 0x93 */ TOP_LION_LIGHTS = 147,    // Different bits for each lion pair
     /* 0x94 */ TOP_SECRET_STAIRS = 148,  // The drop down stairs before Richter
     /* 0x95 */ SHAFT_ORB_DEFEATED = 149, // Set by defeating Shaft's orb
