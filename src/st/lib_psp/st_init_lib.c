@@ -14,76 +14,76 @@ extern char cutscene_data_fr[];
 extern char cutscene_data_ge[];
 extern char cutscene_data_en[];
 
-extern u8* D_psp_092A54E0;            // bss
-extern u8* D_psp_092A54E8;            // bss
-extern u8* OVL_EXPORT(cutscene_data); // bss
-extern u8* D_psp_092A54F8;            // bss
-
 #include "../get_lang_at.h"
 
-extern s32 E_ID(ID_11);
-extern s32 E_ID(ID_12);
-extern s32 E_ID(ID_13);
-extern s32 E_ID(EXPLOSION_VARIANTS);
-extern s32 E_ID(GREY_PUFF);
-extern s32 E_ID(ID_16);
-extern s32 E_ID(ID_17);
-extern s32 E_ID(ID_18);
-extern s32 E_ID(ID_19);
-extern s32 E_ID(ID_1A);
-extern s32 E_ID(ID_1B);
-extern s32 E_ID(ID_1C);
-extern s32 E_ID(BLOOD_DRIPS);
-extern s32 E_ID(BLOOD_SPLATTER);
-extern s32 E_ID(ID_1F);
-extern s32 E_ID(ID_20);
-extern s32 E_ID(ID_21);
-extern s32 E_ID(ID_22);
-extern s32 E_ID(ID_23);
-extern s32 E_ID(ID_24);
-extern s32 E_ID(ID_25);
-extern s32 E_ID(ID_26);
-extern s32 E_ID(ID_27);
-extern s32 E_ID(ID_28);
-extern s32 E_ID(ID_29);
-extern s32 E_ID(ID_2A);
-extern s32 E_ID(ID_2B);
-extern s32 E_ID(ID_2C);
-extern s32 E_ID(ID_2D);
-extern s32 E_ID(ID_2E);
-extern s32 E_ID(ID_2F);
-extern s32 E_ID(ID_30);
-extern s32 E_ID(ID_31);
-extern s32 E_ID(ID_32);
-extern s32 E_ID(ID_33);
-extern s32 E_ID(ID_34);
-extern s32 E_ID(ID_35);
-extern s32 E_ID(ID_36);
-extern s32 E_ID(ID_37);
-extern s32 E_ID(ID_38);
-extern s32 E_ID(ID_39);
-extern s32 E_ID(THORNWEED);
-extern s32 E_ID(CORPSEWEED);
-extern s32 E_ID(CORPSEWEED_PROJECTILE);
-extern s32 E_ID(CANDLE_TABLE);
-extern s32 E_ID(ID_3E);
-extern s32 E_ID(ID_3F);
-extern s32 E_ID(ID_40);
-extern s32 E_ID(ID_41);
-extern s32 E_ID(ID_42);
-extern s32 E_ID(SKELETON);
-extern s32 E_ID(SKELETON_THROWN_BONE);
-extern s32 E_ID(SKELETON_PIECES);
-extern s32 E_ID(ID_46);
-extern s32 E_ID(ID_47);
-extern s32 E_ID(ID_48);
-extern s32 E_ID(ID_49);
-extern s32 E_ID(ID_4A);
-extern s32 E_ID(ID_4B);
-extern s32 E_ID(ID_4C);
-extern s32 E_ID(MUDMAN);
-extern s32 E_ID(ID_4E);
-extern s32 E_ID(ID_4F);
+static s32 E_ID(ID_11);
+s32 E_ID(ID_12);
+static s32 E_ID(ID_13);
+static s32 E_ID(EXPLOSION_VARIANTS);
+static s32 E_ID(GREY_PUFF);
+static s32 E_ID(ID_16);
+static s32 E_ID(ID_17);
+static s32 E_ID(ID_18);
+static s32 E_ID(ID_19);
+static s32 E_ID(ID_1A);
+static s32 E_ID(ID_1B);
+static s32 E_ID(ID_1C);
+static s32 E_ID(BLOOD_DRIPS);
+static s32 E_ID(BLOOD_SPLATTER);
+s32 E_ID(ID_1F);
+s32 E_ID(ID_20);
+s32 E_ID(ID_21);
+s32 E_ID(ID_22);
+static s32 E_ID(ID_23);
+static s32 E_ID(ID_24);
+s32 E_ID(ID_25);
+static s32 E_ID(ID_26);
+s32 E_ID(ID_27);
+s32 E_ID(ID_28);
+s32 E_ID(ID_29);
+s32 E_ID(ID_2A);
+static s32 E_ID(ID_2B);
+static s32 E_ID(ID_2C);
+s32 E_ID(ID_2D);
+s32 E_ID(ID_2E);
+s32 E_ID(ID_2F);
+static s32 E_ID(ID_30);
+static s32 E_ID(ID_31);
+static s32 E_ID(ID_32);
+static s32 E_ID(ID_33);
+static s32 E_ID(ID_34);
+static s32 E_ID(ID_35);
+static s32 E_ID(ID_36);
+s32 E_ID(ID_37);
+static s32 E_ID(ID_38);
+static s32 E_ID(ID_39);
+static s32 E_ID(THORNWEED);
+static s32 E_ID(CORPSEWEED);
+static s32 E_ID(CORPSEWEED_PROJECTILE);
+s32 E_ID(CANDLE_TABLE);
+static s32 E_ID(ID_3E);
+static s32 E_ID(ID_3F);
+s32 E_ID(ID_40);
+static s32 E_ID(ID_41);
+s32 E_ID(ID_42);
+s32 E_ID(SKELETON);
+static s32 E_ID(SKELETON_THROWN_BONE);
+static s32 E_ID(SKELETON_PIECES);
+static s32 E_ID(ID_46);
+static s32 E_ID(ID_47);
+s32 E_ID(ID_48);
+static s32 E_ID(ID_49);
+static s32 E_ID(ID_4A);
+static s32 E_ID(ID_4B);
+static s32 E_ID(ID_4C);
+s32 E_ID(MUDMAN);
+static s32 E_ID(ID_4E);
+s32 E_ID(ID_4F);
+
+u8* OVL_EXPORT(cutscene_data_offset_eight);
+u8* OVL_EXPORT(cutscene_data);
+u8* OVL_EXPORT(cutscene_data_offset_zero);
+u8* OVL_EXPORT(cutscene_data_offset_four);
 
 void InitEntityIds(void) {
     E_ID(ID_11) = 0x11;
@@ -152,7 +152,7 @@ void InitEntityIds(void) {
 }
 
 void OVL_EXPORT(Load)(void) {
-    D_psp_092A54F8 = GetLangAt(
+    OVL_EXPORT(cutscene_data_offset_eight) = GetLangAt(
         8, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
@@ -160,11 +160,11 @@ void OVL_EXPORT(Load)(void) {
         0, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
-    D_psp_092A54E8 = GetLangAt(
+    OVL_EXPORT(cutscene_data_offset_zero) = GetLangAt(
         0, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 
-    D_psp_092A54E0 = GetLangAt(
+    OVL_EXPORT(cutscene_data_offset_four) = GetLangAt(
         4, (u8*)cutscene_data_en, (u8*)cutscene_data_fr, (u8*)cutscene_data_sp,
         (u8*)cutscene_data_ge, (u8*)cutscene_data_it);
 

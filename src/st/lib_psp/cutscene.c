@@ -71,6 +71,17 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 
 #include "../../get_lang.h"
 
+// BSS
+u32 g_CutsceneFlags; // used in e_shop.c
+s32 g_SkipCutscene;  // used in e_shop.c
+static Dialogue g_Dialogue;
+static u8 D_psp_092A5CD8;
+static s32 D_psp_092A5CB8[8];
+static u8 cutsceneUnk3Unknown[0x380];
+static u16 actor_names[0x100];
+static u8 D_psp_092A5730[2]; // Can't get this one to go where it should
+s32 g_IsCutsceneDone;        // used in e_shop.c
+
 #include "../cutscene_actor_name_psp.h"
 
 #define CUTSCENE_UNK3_RECT_X 64
@@ -91,23 +102,22 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 
 #include "../cutscene_skip.h"
 
-extern s32 D_psp_092A5CB8[4]; // bss
-extern s8* D_psp_092A54E8[];  // bss
+static u8 D_psp_092987D8[] = {0, 64};
+static u16 D_psp_092987E0[] = {0x0220, 0x0228};
+static u16 D_psp_092987E8[] = {0x0040, 0x0060};
+static u16 D_psp_092987F0[] = {0x01A1, 0x01A1};
+static s16 D_psp_092987F8[] = {
+    0x0008, 0x0013, 0x0011, 0x0031, 0x004F, 0x0026, 0x0036, 0x001D, 0x001B,
+    0x0033, 0x002C, 0x0021, 0x0019, 0x000A, 0x0033, 0x001F, 0x0048, 0x002F,
+    0x0013, 0x0019, 0x004D, 0x004B, 0x0017, 0x001D, 0x0012, 0x0002, 0x001B,
+    0x002A, 0x0050, 0x0045, 0x0032, 0x000D, 0x002A, 0x004D, 0x0006, 0x0027,
+    0x0007, 0x0048, 0x002F, 0x001B, 0x0036, 0x0022, 0x0039, 0x0014, 0x0039,
+    0x001D, 0x000A, 0x0035, 0x0010, 0x001B, 0x003D, 0x0017, 0x002E, 0x000B,
+    0x0049, 0x0042, 0x003D, 0x002A, 0x0001, 0x000C, 0x001B, 0x0034, 0x0041,
+    0x0035, 0x0008, 0x000E, 0x004D, 0x0011, 0x0034, 0x0041, 0x0029, 0x0048};
 
-extern u8 D_psp_092987D8[];
-extern u8 D_psp_092A5730[];
-
-extern u16 D_psp_092987E0[];
-extern u16 D_psp_092987E8[];
-extern u16 D_psp_092987F0[];
-extern s16 D_psp_092987F8[];
-
-extern u16 D_psp_092A5738[]; // actor names
-extern u8 D_psp_09298888[];
-extern u8 D_psp_09298890[];
-
-extern u8 cutsceneUnk3Unknown[0x380];
-extern u8 D_psp_092A5CD8;
+static u8 D_psp_09298888[] = {3, 5};
+static u8 D_psp_09298890[] = {3, 5};
 
 extern u_long D_psp_0927D778;
 extern u_long D_893DD0C;
@@ -121,7 +131,9 @@ extern u_long D_8943B8C;
 extern u_long D_894490C;
 extern u_long D_894568C;
 
-extern u8* D_psp_092A54F8;
+// This is BSS from st_init_lib.c
+extern u8* OVL_EXPORT(cutscene_data_offset_eight);
+extern u8* OVL_EXPORT(cutscene_data_offset_zero);
 extern u8* OVL_EXPORT(cutscene_data);
 
 void OVL_EXPORT(EntityCutscene)(Entity* self) {
@@ -156,11 +168,13 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     switch (self->step) {
     case 0:
         if (g_CastleFlags[MET_LIBRARIAN]) {
-            *D_psp_092A54E8[0] = 1;
+            *OVL_EXPORT(cutscene_data_offset_zero) = 1;
         } else {
-            *D_psp_092A54E8[0] = 0;
+            *OVL_EXPORT(cutscene_data_offset_zero) = 0;
         }
-        if (SetCutsceneScript(D_psp_092A54F8)) {
+
+        // Interestingly this cutscene is initially loaded at offset +8
+        if (SetCutsceneScript(OVL_EXPORT(cutscene_data_offset_eight))) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             self->primIndex = g_Dialogue.primIndex[2];
             g_CutsceneFlags = 0;
@@ -260,8 +274,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     CutsceneUnk4();
                     prim->priority = 0x1FE;
                     prim->drawMode = DRAW_DEFAULT;
-                    DrawCutsceneActorName(i, self, D_psp_092A5738,
-                                          D_psp_09298888, D_psp_09298890, 2);
+                    DrawCutsceneActorName(i, self, actor_names, D_psp_09298888,
+                                          D_psp_09298890, 2);
                     g_Dialogue.portraitAnimTimer = 6;
                     self->step = 3;
                     return;
