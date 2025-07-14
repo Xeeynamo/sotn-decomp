@@ -78,7 +78,6 @@ segments:
       - [0x2A20, data]
       - [0x2B00, data]
       - [0x2EF4, .data, gurkha]
-      - [0x2F04, data, gurkha]
       - [0x3010, data]
       - [0x33A0, data]
       - [0x33E4, .data, blade]
