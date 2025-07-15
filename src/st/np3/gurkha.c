@@ -581,8 +581,8 @@ void EntityGurkhaSword(Entity* self) {
     case 1:
         self->rotate = self->ext.GH_Props.rotate;
         angle = self->rotate;
-        self->hitboxOffX = (rsin(angle) << 4) >> 12;
-        self->hitboxOffY = (-rcos(angle) << 4) >> 0xC;
+        self->hitboxOffX = (rsin(angle) * 16) >> 12;
+        self->hitboxOffY = (rcos(angle) * -16) >> 12;
         if (self->ext.GH_Props.unk8C) {
             self->step++;
         }
@@ -602,8 +602,8 @@ void EntityGurkhaSword(Entity* self) {
         self->ext.GH_Props.rotate = self->rotate;
         self->ext.GH_Props.unkA6 = -0xC0;
         angle = self->rotate;
-        self->hitboxOffX = (rsin(angle) << 4) >> 12;
-        self->hitboxOffY = (-rcos(angle) * 16) >> 0xC;
+        self->hitboxOffX = (rsin(angle) * 16) >> 12;
+        self->hitboxOffY = (rcos(angle) * -16) >> 12;
 
         if (self->facingLeft) {
             self->velocityX -= FIX(0.25);
@@ -615,7 +615,7 @@ void EntityGurkhaSword(Entity* self) {
             PlaySfxPositional(SFX_ARROW_SHOT_A);
         }
 
-        if (abs(self->velocityX) == 0x80000) {
+        if (abs(self->velocityX) == FIX(8)) {
             self->ext.GH_Props.unk8C = 0;
             self->step = 1;
         }
