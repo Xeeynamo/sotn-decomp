@@ -255,4 +255,4 @@ typedef struct {
     u16 length;
     u16 params;
     u16 zOffset;
-} bladeBodyPartsInit;
+} giantBroBodyPartsInit;

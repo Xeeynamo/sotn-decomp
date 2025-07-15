@@ -5,7 +5,7 @@
 static u16 D_80182EF4[] = {
     0x0, 0x9, 0x0, 0x4, 0x4, -0x4, -0x8, 0x0,
 };
-static bladeBodyPartsInit D_80182F04[] = {
+static giantBroBodyPartsInit D_80182F04[] = {
     {9, 0, 16, 7, 1},    {10, 9, 14, 8, 2},    {11, 10, 0, 9, 3},
     {12, 0, 16, 13, -1}, {13, 12, 14, 14, -2}, {14, 13, 0, 15, -3},
     {2, 0, -18, 2, 1},   {1, 2, -4, 17, 0},    {3, 2, 0, 4, 2},
@@ -175,7 +175,7 @@ void EntityGurkha(Entity* self) {
     Entity* ent_s0;
     Entity* ent_s3;
     s16* var_s1;
-    bladeBodyPartsInit* parts;
+    giantBroBodyPartsInit* parts;
     s32 res;
 
     if ((self->step & 1) && (self->hitFlags & 3)) {

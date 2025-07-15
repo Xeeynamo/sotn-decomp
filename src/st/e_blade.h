@@ -123,7 +123,7 @@ static s32 func_801D0B78(Entity* ent) {
 // to make these giant data sets more meaningful.
 
 static s16 D_801833E4[] = {0, 9, 0, 4, 4, -4, -8, 0};
-static bladeBodyPartsInit D_801833F4[] = {
+static giantBroBodyPartsInit D_801833F4[] = {
     {9, 18, 16, 7, 1},    {10, 9, 14, 8, 2},    {11, 10, 0, 9, 3},
     {12, 18, 16, 13, -1}, {13, 12, 14, 14, -2}, {14, 13, 0, 15, -3},
     {18, 0, 8, 3, 0},     {2, 0, -12, 2, 1},    {1, 2, -4, 1, 0},
@@ -254,7 +254,7 @@ void EntityBlade(Entity* self) {
     Collider collider;
     Entity* ent_s4;
     s32 var_s3;
-    bladeBodyPartsInit* parts;
+    giantBroBodyPartsInit* parts;
     s16* ptr;
     Entity* ent_s0;
 
