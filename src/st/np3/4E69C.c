@@ -341,7 +341,7 @@ void EntityGurkhaBodyParts(Entity* self) {
             InitializeEntity(g_EInitGurkhaType1);
             break;
         case 2:
-            InitializeEntity(g_EInitGurkhaType2);
+            InitializeEntity(g_EInitBlade);
             break;
         }
         self->hitboxWidth = 6;

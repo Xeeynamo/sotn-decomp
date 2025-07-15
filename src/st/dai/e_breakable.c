@@ -5,16 +5,16 @@
 extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif
 
-static u8 anim_1[] = {3, 3, 3, 4, 3, 5, 3, 6, 0, 0, 0, 0};
+static u8 anim_1[] = {3, 3, 3, 4, 3, 5, 3, 6, 0, 0};
 static u8 anim_2[] = {3, 7, 3, 8, 3, 9, 3, 10, 3, 11, 0, 0};
-static u8 anim_3[] = {5, 1, 5, 2, 5, 3, 5, 4, 0, 0, 0, 0};
-static u8 anim_4[] = {5, 5, 5, 6, 5, 7, 5, 8, 0, 0, 0, 0};
-static u8 anim_5[] = {5, 9, 5, 10, 5, 11, 5, 12, 0, 0, 0, 0};
-static u8 anim_6[] = {5, 13, 5, 14, 5, 15, 5, 16, 0, 0, 0, 0};
+static u8 anim_3[] = {5, 1, 5, 2, 5, 3, 5, 4, 0, 0};
+static u8 anim_4[] = {5, 5, 5, 6, 5, 7, 5, 8, 0, 0};
+static u8 anim_5[] = {5, 9, 5, 10, 5, 11, 5, 12, 0, 0};
+static u8 anim_6[] = {5, 13, 5, 14, 5, 15, 5, 16, 0, 0};
 static u8 anim_7[] = {5, 17, 5, 18, 5, 19, 0, 0};
 static u8 anim_8[] = {5, 23, 0, 0};
 static u8 anim_9[] = {5, 22, 0, 0};
-static u8 anim_10[] = {5, 20, 255, 255, 5, 21, 5, 21, 255, 0, 0, 0};
+static u8 anim_10[] = {5, 20, -1, -1, 5, 21, 5, 21, -1, 0};
 static u8* g_eBreakableAnimations[] = {anim_1, anim_2, anim_3, anim_4, anim_5,
                                        anim_6, anim_7, anim_8, anim_9, anim_10};
 static u8 g_eBreakableHitboxes[] = {8, 8, 40, 24, 16, 16, 8, 8, 8, 8, 8, 0};
@@ -48,7 +48,8 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
     s16* ptr;
     Entity* entity;
     u16 breakableType;
-    s32 debrisIndex, debrisMax;
+    s32 i;
+    s32 debrisCount;
     s16 posY;
 
     breakableType = self->params >> 12;
@@ -75,22 +76,21 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             self->facingLeft = GetSideToPlayer() & 1;
             posY = self->posY.i.hi - 40;
             if (breakableType == 2) {
-                debrisMax = 4;
+                debrisCount = 4;
             } else {
-                debrisMax = 3;
+                debrisCount = 3;
             }
             ptr = g_eBreakableDebrisOffsets;
             if (breakableType == 3) {
                 ptr += 5;
             }
-            for (debrisIndex = 0; debrisIndex < debrisMax; posY += 16,
-                debrisIndex++) {
+            for (i = 0; i < debrisCount; i++) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(
                         E_ID(BREAKABLE_DEBRIS), self, entity);
                     entity->posY.i.hi = posY;
-                    entity->params = ptr[debrisIndex];
+                    entity->params = ptr[i];
                     entity->facingLeft = self->facingLeft;
                 }
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -99,6 +99,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
                     entity->posY.i.hi = posY;
                     entity->params = 0;
                 }
+                posY += 16;
             }
             g_api.PlaySfx(SFX_CANDLE_HIT);
             break;

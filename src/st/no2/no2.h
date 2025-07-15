@@ -11,19 +11,21 @@ enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
     PAL_SKELERANG = 0x200,
     PAL_UNK_203 = 0x203,
-    PAL_UNK_207 = 0x207,
+    PAL_VALHALLA_KNIGHT = 0x207,
     PAL_OWL_KNIGHT = 0x21C,
     PAL_BLOODY_ZOMBIE = 0x223,
     PAL_UNK_238 = 0x238,
     PAL_UNK_23B = 0x23B,
     PAL_UNK_23E = 0x23E,
     PAL_UNK_241 = 0x241,
+    PAL_BREAKABLE = 0x251,
+    PAL_BREAKABLE_DEBRIS = 0x255,
     PAL_OWL_KNIGHT_SWORD = 0x2CB,
 };
 
 enum OVL_EXPORT(Entities) {
     E_NONE,
-    E_UNK_BREAKABLE,        // EntityUnkBreakable
+    E_BREAKABLE,            // EntityBreakable
     E_EXPLOSION,            // EntityExplosion
     E_PRIZE_DROP,           // EntityPrizeDrop
     E_DAMAGE_DISPLAY,       // EntityDamageDisplay
@@ -74,7 +76,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_31,               // func_us_801B5948
     E_UNK_32,               // func_us_801B7580
     E_UNK_33,               // func_us_801B7980
-    E_UNK_34,               // func_us_801C8168
+    E_VALHALLA_KNIGHT,      // EntityValhallaKnight
     E_UNK_35,               // func_us_801C8954
     E_UNK_36,               // func_us_801C8AAC
     E_HAMMER,               // EntityHammer
@@ -87,13 +89,13 @@ enum OVL_EXPORT(Entities) {
     E_UNK_3E,               // func_us_801CDDF4
     E_UNK_3F,               // func_us_801CEB08
     E_UNK_40,               // func_us_801CEBDC
-    E_UNK_41,               // func_801A8328
+    E_BREAKABLE_DEBRIS,     // EntityBreakableDebris
     NUM_ENTITIES,
 };
 
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
-// extern EInit D_us_80180820;
+extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 // extern EInit D_us_80180844;
@@ -111,16 +113,21 @@ extern EInit g_EInitOwlKnightSword;
 extern EInit g_EInitOwl;
 extern EInit g_EInitBloodyZombie;
 // extern EInit D_us_801808EC;
-// extern EInit D_us_801808F8;
-// extern EInit D_us_80180904;
-// extern EInit D_us_80180910;
-// extern EInit D_us_8018091C;
+extern EInit g_EInitValhallaKnight;
+extern EInit D_us_80180904;
+extern EInit D_us_80180910;
+extern EInit D_us_8018091C;
 // extern EInit D_us_80180928;
 // extern EInit D_us_80180934;
 // extern EInit D_us_80180940;
 // extern EInit D_us_8018094C;
-// extern EInit D_us_80180958;
-// extern EInit D_us_80180964;
+extern EInit g_EInitBlade;
+extern EInit g_EInitBladeSword;
 // extern EInit D_us_80180970;
 // extern EInit D_us_8018097C;
 // extern EInit D_us_80180988;
+
+typedef struct {
+    s16 unk0;
+    s16* unk4;
+} unkStr_801CDD80;

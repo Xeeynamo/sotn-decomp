@@ -68,12 +68,10 @@ void EntitySealedDoor(Entity* self) {
     s32 i;
     s16 angle;
     u8* uv;
-    s16 x;
-    s16 y;
+    s16 x, y;
     u8 params;
     s16 endX;
-    s16 scrollX;
-    s16 scrollY;
+    s16 scrollX, scrollY;
     s32 tileIdx;
 
     switch (self->step) {
@@ -115,7 +113,7 @@ void EntitySealedDoor(Entity* self) {
             prim->priority = PLAYER.zPriority - 0x20;
             prim->y0 = prim->y1 = y;
             prim->y2 = prim->y3 = y + 62;
-            if (!i) {
+            if (i == 0) {
                 prim->y0 = prim->y1 = y;
                 prim->y2 = prim->y3 = y + 62;
             }
@@ -206,7 +204,7 @@ void EntitySealedDoor(Entity* self) {
                 if (i == 2 && (self->params & 0x100)) {
                     prim->drawMode &= ~DRAW_HIDE;
                 }
-                if (!i) {
+                if (i == 0) {
                     prim->drawMode &= ~DRAW_HIDE;
                 }
             }
@@ -309,7 +307,7 @@ void EntitySealedDoor(Entity* self) {
         prim = prim->next) {
         if (!(prim->drawMode & DRAW_HIDE)) {
             if (!(self->params & 0x100)) {
-                if (!i) {
+                if (i == 0) {
                     endX = prim->x0 = prim->x2 =
                         x + ((rcos(angle) >> 8) * 32 >> 4);
                     prim->x1 = prim->x3 =
@@ -346,7 +344,7 @@ void EntitySealedDoor(Entity* self) {
                     }
                 }
             } else {
-                if (!i) {
+                if (i == 0) {
                     endX = prim->x1 = prim->x3 =
                         x + ((rcos(angle) >> 8) * 32 >> 4);
                     prim->x0 = prim->x2 =
@@ -399,7 +397,7 @@ void EntitySealedDoor(Entity* self) {
         self->ext.sealedDoor.unk82 = -self->ext.sealedDoor.unk82;
     }
 
-    palette = (abs(self->ext.sealedDoor.unk82) >> 8);
+    palette = abs(self->ext.sealedDoor.unk82) >> 8;
     self->palette = palette + SEALED_DOOR_PALETTE;
 
     params = self->params & 0xFF;

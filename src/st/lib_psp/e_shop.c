@@ -13,7 +13,7 @@ extern s32 E_ID(ID_2E);
 extern s32 E_ID(ID_2F);
 extern s32 E_ID(ID_48);
 extern s32 E_ID(ID_4F);
-extern u8* D_psp_092A54E0;
+extern u8* OVL_EXPORT(cutscene_data_offset_four);
 
 /// An inventory item consists of a category, which affects
 /// how the other fields are interpretted, an "unlock level",
@@ -3160,7 +3160,7 @@ void func_us_801B15C0(Entity* self) {
         switch (self->step_s) {
         case 0:
 #ifdef VERSION_PSP
-            *D_psp_092A54E0 = 0;
+            *OVL_EXPORT(cutscene_data_offset_four) = 0;
 #else
             D_us_80183F64 = 0;
 #endif
@@ -5525,14 +5525,14 @@ void func_us_801B5F18(Entity* self) {
     CreateEntityFromCurrentEntity(E_ID(ID_25), tempEntity);
     self->step++;
 #ifdef VERSION_PSP
-    *D_psp_092A54E0 = 0;
+    *OVL_EXPORT(cutscene_data_offset_four) = 0;
 #else
     D_us_80183F64 = 0;
 #endif
     if (D_8003C730 == 2) {
         D_8003C730 = 0;
 #ifdef VERSION_PSP
-        *D_psp_092A54E0 = 1;
+        *OVL_EXPORT(cutscene_data_offset_four) = 1;
 #else
         D_us_80183F64 = 1;
 #endif
