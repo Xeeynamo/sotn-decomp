@@ -54,8 +54,8 @@ enum OVL_EXPORT(Entities) {
     E_FROZEN_SHADE_CRYSTAL, // EntityFrozenShadeCrystal
     E_UNK_1C,               // func_us_801B41A4
     E_UNK_1D,               // func_us_801B4210
-    E3D_BACKGROUND_HOUSE,   // Entity3DBackgroundHouse
-    E3D_HOUSE_SPAWNER,      // Entity3DHouseSpawner
+    E_3D_BACKGROUND_HOUSE,  // Entity3DBackgroundHouse
+    E_3D_HOUSE_SPAWNER,     // Entity3DHouseSpawner
     E_UNK_20,               // func_us_801B4DA4
     E_UNK_21,               // func_us_801B5750
     E_UNK_22,               // func_us_801B5368
