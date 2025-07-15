@@ -1,7 +1,70 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
 
-INCLUDE_ASM("st/no2/nonmatchings/33D8C", func_us_801B3D8C);
+void func_us_801B3D8C(Entity* self)
+{
+    Entity* tempEntity;
+    Primitive* tempPrim;
+    s16 primY23;
+    s16 primX02;
+    s16 primX13;
+    s16 primY01;
+    s16 offsetX;
+    s16 offsetY;
+    s32 step;
+
+    tempEntity = self;
+    if (tempEntity->params != 0) {
+        offsetX = 0x0;
+        offsetY = -0x40;
+    } else {
+        offsetY = 0x58;
+    }
+    if (tempEntity->step == 0) {
+        tempEntity->step += 1;
+        if (tempEntity->params != 0) {
+            tempEntity->primIndex = (s32) g_api_AllocPrimitives(PRIM_GT4, 0x20);
+        } else {
+            tempEntity->primIndex = (s32) g_api_AllocPrimitives(PRIM_GT4, 8);
+        }
+        if (tempEntity->primIndex == -1) {
+            DestroyEntity(tempEntity);
+            return;
+        }
+        tempEntity->flags = 0x04800000;
+        tempPrim = &g_PrimBuf[tempEntity->primIndex];
+        step = 0;
+
+        while (tempPrim != NULL) {
+            primX02 = ((step & 7) << 6) + offsetX;
+            tempPrim->x2 = primX02;
+            tempPrim->x0 = primX02;
+            primX13 = (s16) tempPrim->x0 + 0x48;
+            tempPrim->x3 = primX13;
+            tempPrim->x1 = primX13;
+            primY01 = offsetY + ((step >> 3) * 0x64);
+            tempPrim->y0 = primY01;
+            tempPrim->y1 = primY01; 
+            primY23 = (u16) tempPrim->y0 + 0x6C;
+            tempPrim->y2 = primY23;
+            tempPrim->y3 = primY23;
+            tempPrim->u0 = 0x80;
+            tempPrim->v0 = 0;
+            tempPrim->u1 = 0xC8;
+            tempPrim->v1 = 0;
+            tempPrim->u2 = 0x80;
+            tempPrim->v2 = 0x68;
+            tempPrim->u3 = 0xC8;
+            tempPrim->v3 = 0x68;
+            tempPrim->tpage = 0xF;
+            tempPrim->clut = 0x36;
+            tempPrim->priority = 0x10;
+            tempPrim->drawMode = 0;
+            step += 1;
+            tempPrim = tempPrim->next;
+        }
+    }
+}
 
 INCLUDE_ASM("st/no2/nonmatchings/33D8C", func_us_801B3F30);
 
