@@ -63,7 +63,7 @@ void EntityBlade(Entity* self);
 void EntityBladeSword(Entity* self);
 void EntitySpectralSword(Entity* self);
 void func_us_801CEB08(Entity* self);
-void func_us_801CEBDC(Entity* self);
+void EntityPoltergeist(Entity* self);
 void EntityBreakableDebris(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
@@ -130,7 +130,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBladeSword,
     EntitySpectralSword,
     func_us_801CEB08,
-    func_us_801CEBDC,
+    EntityPoltergeist,
     EntityBreakableDebris,
 };
 
@@ -171,5 +171,5 @@ EInit g_EInitSpectralSword = {
     ANIMSET_OVL(0x04), 0x00, 0x50, PAL_SPECTRAL_SWORD, 0x081};
 EInit D_us_8018097C = {
     ANIMSET_OVL(0x04), 0x00, 0x50, PAL_SPECTRAL_SWORD, 0x002};
-EInit D_us_80180988 = {
+EInit g_EInitPoltergeist = {
     ANIMSET_OVL(0x04), 0x00, 0x50, PAL_SPECTRAL_SWORD, 0x082};

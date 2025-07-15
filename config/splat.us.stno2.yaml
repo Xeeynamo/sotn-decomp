@@ -62,6 +62,8 @@ segments:
       - [0x219C, data]
       - [0x2C08, .data, blade]
       - [0x32A0, data]
+      - [0x336C, .data, e_spectral_sword]
+      - [0x33F8, data]
       - [0x32E00, .rodata, e_breakable]
       - [0x32E20, .rodata, 33D8C]
       - [0x32EC4, .rodata, e_sealed_door]

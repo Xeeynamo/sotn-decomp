@@ -1,17 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
 
-extern s8 D_us_8018336C[];
-extern s16 D_us_801833D0[];
-extern s8 D_us_801833B0[][2];
+static s8 D_us_8018336C[] = {
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x04, 0x01, 0x1D, 0x01, 0x00, 0x0D, 0x05,
+    0xFB, 0x00, 0x06, 0x05, 0xFF, 0x02, 0x0C, 0x06, 0x06, 0x07, 0x0C, 0x0C,
+    0xFF, 0x01, 0x0B, 0x04, 0x01, 0x09, 0x09, 0x0C, 0xFF, 0x01, 0x0C, 0x04,
+    0x00, 0x00, 0x0C, 0x0C, 0xFD, 0x08, 0x04, 0x0F, 0xFA, 0x07, 0x0A, 0x09,
+    0x01, 0x00, 0x0A, 0x0A, 0x00, 0x02, 0x01, 0x0F, 0x00, 0x02, 0x03, 0x15,
+    0xFE, 0xFB, 0x0A, 0x06, 0x00, 0x01, 0x06, 0x03};
+static s8 D_us_801833B0[][2] = {
+    {0, 0}, {8, 4},  {8, 6},  {12, 6}, {0, 8}, {8, 3},  {16, 4}, {8, 4},
+    {0, 8}, {16, 4}, {12, 6}, {8, 4},  {8, 4}, {12, 6}, {8, 4},  {4, 2}};
+static s16 D_us_801833D0[] = {
+    0x800, 0x700, 0x740, 0x780, 0x4C0, 0x800,  0x540,  0x700,
+    0x200, 0x500, 0x700, 0x640, 0x400, -0x400, -0x7C0, 0x800};
+STATIC_PAD_DATA(8);
 
-bool StepTowards(s16* val, s32 target, s32 step) {
+static bool StepTowards(s16* val, s32 target, s32 step) {
     if (abs(*val - target) < step) {
         *val = target;
         return true;
     }
 
-    if (target < *val) {
+    if (*val > target) {
         *val -= step;
     }
 
@@ -73,7 +84,7 @@ void EntitySpectralSword(Entity* self) {
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
         ent = self + 1;
         for (i = 1; i < 16; i++, ent++) {
-            CreateEntityFromEntity(E_UNK_40, self, ent);
+            CreateEntityFromEntity(E_POLTERGEIST, self, ent);
             ent->posY.i.hi = 0x120;
             ent->posY.i.hi = 0x580;
             ent->params = i;
@@ -334,8 +345,8 @@ void EntitySpectralSword(Entity* self) {
                 RotMatrix(rot, m);
                 gte_SetRotMatrix(m);
                 gte_rtps();
-                gte_stsxy(var_fp);
-                gte_stszotz(var_s7);
+                gte_stsxy((long*)var_fp);
+                gte_stszotz((long*)var_s7);
                 *var_s7 -= 0x100;
                 i++;
                 var_fp++;
@@ -420,7 +431,7 @@ void func_us_801CEB08(Entity* self) {
     }
 }
 
-void func_us_801CEBDC(Entity* self) {
+void EntityPoltergeist(Entity* self) {
     Entity* tempEntity;
     s16 angle;
     s32 dx, dy;
@@ -433,7 +444,7 @@ void func_us_801CEBDC(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180988);
+        InitializeEntity(g_EInitPoltergeist);
         self->animCurFrame = self->params + 1;
         self->drawFlags |= FLAG_DRAW_ROTATE;
         hitboxPtr = D_us_8018336C;

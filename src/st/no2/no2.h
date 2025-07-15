@@ -89,7 +89,7 @@ enum OVL_EXPORT(Entities) {
     E_BLADE_SWORD,          // EntityBladeSword
     E_SPECTRAL_SWORD,       // EntitySpectralSword
     E_UNK_3F,               // func_us_801CEB08
-    E_UNK_40,               // func_us_801CEBDC
+    E_POLTERGEIST,          // EntityPoltergeist
     E_BREAKABLE_DEBRIS,     // EntityBreakableDebris
     NUM_ENTITIES,
 };
@@ -126,7 +126,7 @@ extern EInit g_EInitBlade;
 extern EInit g_EInitBladeSword;
 extern EInit g_EInitSpectralSword;
 extern EInit D_us_8018097C;
-extern EInit D_us_80180988;
+extern EInit g_EInitPoltergeist;
 
 typedef struct {
     s16 unk0;
