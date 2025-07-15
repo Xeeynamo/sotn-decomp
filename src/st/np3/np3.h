@@ -135,8 +135,8 @@ extern EInit g_EInitGurkhaType0;
 extern EInit g_EInitGurkhaHammer;
 extern EInit g_EInitGurkhaType1;
 extern EInit g_EInitGurkhaSword;
-extern EInit g_EInitGurkhaType2;
-extern EInit g_EInitGurkhaBlade;
+extern EInit g_EInitBlade;
+extern EInit g_EInitBladeSword;
 
 extern void ReplaceBreakableWithItemDrop(Entity*);
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
