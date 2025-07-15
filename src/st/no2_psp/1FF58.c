@@ -2,10 +2,10 @@
 #include "../no2/no2.h"
 
 void func_pspeu_092575D8(Entity* self) {
-    Primitive* tempPrim;
+    Primitive* prim;
     s16 offsetX;
     s16 offsetY;
-    s32 primIter;
+    s32 i;
 
     if (self->params) {
         offsetX = 0x0;
@@ -17,36 +17,33 @@ void func_pspeu_092575D8(Entity* self) {
     if (!self->step) {
         self->step += 1;
         if (self->params) {
-            self->primIndex = (s32)g_api_AllocPrimitives(PRIM_GT4, 0x20);
+            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
         } else {
-            self->primIndex = (s32)g_api_AllocPrimitives(PRIM_GT4, 8);
+            self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         }
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-        tempPrim = &g_PrimBuf[self->primIndex];
-        primIter = 0;
-        while (tempPrim != NULL) {
-            tempPrim->x0 = tempPrim->x2 = (primIter & 7) * 0x40 + offsetX;
-            tempPrim->x1 = tempPrim->x3 = (s16)tempPrim->x0 + 0x48;
-            tempPrim->y1 = tempPrim->y0 = ((primIter >> 3) * 0x64) + offsetY;
-            tempPrim->y3 = tempPrim->y2 = (s16)tempPrim->y0 + 0x6C;
-            tempPrim->u0 = 0x80;
-            tempPrim->v0 = 0;
-            tempPrim->u1 = 0xC8;
-            tempPrim->v1 = 0;
-            tempPrim->u2 = 0x80;
-            tempPrim->v2 = 0x68;
-            tempPrim->u3 = 0xC8;
-            tempPrim->v3 = 0x68;
-            tempPrim->tpage = 0xF;
-            tempPrim->clut = 0x36;
-            tempPrim->priority = 0x10;
-            tempPrim->drawMode = DRAW_DEFAULT;
-            primIter += 1;
-            tempPrim = tempPrim->next;
+        prim = &g_PrimBuf[self->primIndex];
+        for (i = 0; prim != NULL; i++, prim = prim->next) {
+            prim->x0 = prim->x2 = (i & 7) * 0x40 + offsetX;
+            prim->x1 = prim->x3 = prim->x0 + 0x48;
+            prim->y1 = prim->y0 = ((i >> 3) * 0x64) + offsetY;
+            prim->y3 = prim->y2 = prim->y0 + 0x6C;
+            prim->u0 = 0x80;
+            prim->v0 = 0;
+            prim->u1 = 0xC8;
+            prim->v1 = 0;
+            prim->u2 = 0x80;
+            prim->v2 = 0x68;
+            prim->u3 = 0xC8;
+            prim->v3 = 0x68;
+            prim->tpage = 0xF;
+            prim->clut = 0x36;
+            prim->priority = 0x10;
+            prim->drawMode = DRAW_DEFAULT;
         }
     }
 }
