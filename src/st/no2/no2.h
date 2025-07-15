@@ -17,7 +17,8 @@ enum OVL_EXPORT(Palette) {
     PAL_UNK_238 = 0x238,
     PAL_UNK_23B = 0x23B,
     PAL_UNK_23E = 0x23E,
-    PAL_UNK_241 = 0x241,
+    PAL_SPECTRAL_SWORD = 0x241,
+    PAL_UNK_242 = 0x242,
     PAL_BREAKABLE = 0x251,
     PAL_BREAKABLE_DEBRIS = 0x255,
     PAL_OWL_KNIGHT_SWORD = 0x2CB,
@@ -86,7 +87,7 @@ enum OVL_EXPORT(Entities) {
     E_GURKHA_SWORD,         // EntityGurkhaSword
     E_BLADE,                // EntityBlade
     E_BLADE_SWORD,          // EntityBladeSword
-    E_UNK_3E,               // func_us_801CDDF4
+    E_SPECTRAL_SWORD,       // EntitySpectralSword
     E_UNK_3F,               // func_us_801CEB08
     E_UNK_40,               // func_us_801CEBDC
     E_BREAKABLE_DEBRIS,     // EntityBreakableDebris
@@ -123,9 +124,9 @@ extern EInit D_us_8018091C;
 // extern EInit D_us_8018094C;
 extern EInit g_EInitBlade;
 extern EInit g_EInitBladeSword;
-// extern EInit D_us_80180970;
-// extern EInit D_us_8018097C;
-// extern EInit D_us_80180988;
+extern EInit g_EInitSpectralSword;
+extern EInit D_us_8018097C;
+extern EInit D_us_80180988;
 
 typedef struct {
     s16 unk0;
