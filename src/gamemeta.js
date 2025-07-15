@@ -31,7 +31,8 @@ const gameMetadata = {
             "name": "PlayStation 1 US",
             "overlays": [
                 "dra", "ric", "weapon",
-                "stcen", "stchi", "stdre", "stlib", "stmad", "stno0", "stno1", "stno3", "stnp3", "stnz0", "stsel", "stst0", "stwrp", "strwrp",
+                "stcen", "stchi", "stdai", "stdre", "stlib", "stmad", "stno0", "stno1", "stno2", "stno3", "stno4", "stnp3", "stnz0", "stsel", "stst0", "sttop", "stwrp",
+                "strwrp",
                 "bomar", "bobo4", "borbo3", "borbo5",
                 "tt_000", "tt_001", "tt_002","tt_003", "tt_004"
             ]
@@ -40,14 +41,18 @@ const gameMetadata = {
             "id": "pspeu",
             "name": "PSP EU",
             "overlays": [
-                "dra", "stlib", "stst0", "stwrp", "tt_000"
+                "dra", "maria", "ric",
+                "stchi", "stdai", "stlib", "stno2", "stno3", "stno4", "stnp3", "stst0", "stwrp",
+                "tt_000"
             ]
         },
         {
             "id": "hd",
             "name": "Debug JP build (from PSP hdbin)",
             "overlays": [
-                "dra", "ric", "tt_000"
+                "dra", "ric",
+                "stcen", "stwrp",
+                "tt_000"
             ]
         },
     ],
@@ -60,6 +65,10 @@ const gameMetadata = {
             "name": "BIN/WEAPON0.BIN",
             "desc": "Weapons, shield and consumable programs"
         },
+        "maria": {
+            "name": "PSPBIN/MARIA.BIN",
+            "desc": "Maria program",
+        },
         "ric": {
             "name": "BIN/RIC.BIN",
             "desc": "Richter program"
@@ -71,6 +80,10 @@ const gameMetadata = {
         "stchi": {
             "name": "ST/CHI/CHI.BIN",
             "desc": "Abandoned Mine"
+        },
+        "stdai": {
+            "name": "ST/DAI/DAI.BIN",
+            "desc": "Royal Chapel"
         },
         "stdre": {
             "name": "ST/DRE/DRE.BIN",
@@ -89,12 +102,20 @@ const gameMetadata = {
             "desc": "Marble Gallery"
         },
         "stno1": {
-            "name": "ST/NO0/NO1.BIN",
+            "name": "ST/NO1/NO1.BIN",
             "desc": "Outer Wall"
+        },
+        "stno2": {
+            "name": "ST/NO2/NO2.BIN",
+            "desc": "Olrox's Quarters"
         },
         "stno3": {
             "name": "ST/NO3/NO3.BIN",
             "desc": "Entrance (first visit)"
+        },
+        "stno4": {
+            "name": "ST/NO4/NO4.BIN",
+            "desc": "Caverns"
         },
         "stnp3": {
             "name": "ST/NP3/NP3.BIN",
@@ -104,6 +125,10 @@ const gameMetadata = {
             "name": "ST/NZ0/NZ0.BIN",
             "desc": "Alchemy Lab"
         },
+        "stnz1": {
+            "name": "ST/NZ1/NZ1.BIN",
+            "desc": "Clock Tower"
+        },
         "stsel": {
             "name": "ST/SEL/SEL.BIN",
             "desc": "Title screen"
@@ -111,6 +136,10 @@ const gameMetadata = {
         "stst0": {
             "name": "ST/ST0/ST0.BIN",
             "desc": "Prologue"
+        },
+        "sttop": {
+            "name": "ST/TOP/TOP.BIN",
+            "desc": "Castle Keep",
         },
         "stwrp": {
             "name": "ST/WRP/WRP.BIN",
