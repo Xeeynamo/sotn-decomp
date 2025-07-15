@@ -3240,11 +3240,18 @@ typedef struct {
 } ET_801C4520;
 
 typedef struct {
-    struct Primitive* prim;
-    s16 unk80;
-    s16 : 16;
-    s32 unk84;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 unk84;
 } ET_Crow;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 unk84;
+} ET_ValhallaKnight;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3524,6 +3531,7 @@ typedef union { // offset=0x7C
     ET_FerrymanBoat ferrymanBoat;
     ET_BoatElevator boatElevator;
     ET_BoatElevator_Child boatElevator_child;
+    ET_ValhallaKnight valhallaKnight;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
