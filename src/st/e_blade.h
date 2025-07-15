@@ -116,16 +116,6 @@ static s32 func_801D0B78(Entity* ent) {
     return ret;
 }
 
-// note on member types: length and zOffset definitely look signed
-// in the data, but psp uses lhu instead of lh.
-typedef struct {
-    s16 eArrayOffset;
-    s16 eArrayParentOffset;
-    u16 length;
-    u16 params;
-    u16 zOffset;
-} bladeBodyPartsInit;
-
 // For EntityBlade
 
 // TODO: Lots of these are referencing the body parts numerically.
