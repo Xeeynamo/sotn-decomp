@@ -77,7 +77,7 @@ segments:
       - [0x33244, .rodata, 4966C]
       - [0x333DC, .rodata, blade]
       - [0x3345C, .rodata, prim_helpers]
-      - [0x33464, rodata]
+      - [0x33464, .rodata, unk_4DD88]
       - [0x334D0, c, e_room_bg]
       - [0x33598, c, e_lock_camera]
       - [0x33754, c, e_breakable]
