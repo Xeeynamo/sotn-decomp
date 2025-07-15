@@ -17,22 +17,22 @@ void func_us_801B3D8C(Entity* self) {
     if (!self->step) {
         self->step += 1;
         if (self->params) {
-            self->primIndex = (s32) g_api_AllocPrimitives(PRIM_GT4, 0x20);
+            self->primIndex = (s32)g_api_AllocPrimitives(PRIM_GT4, 0x20);
         } else {
-            self->primIndex = (s32) g_api_AllocPrimitives(PRIM_GT4, 8);
+            self->primIndex = (s32)g_api_AllocPrimitives(PRIM_GT4, 8);
         }
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;
         }
-        self->flags = 0x04800000;
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         tempPrim = &g_PrimBuf[self->primIndex];
         primIter = 0;
         while (tempPrim != NULL) {
             tempPrim->x0 = tempPrim->x2 = (primIter & 7) * 0x40 + offsetX;
-            tempPrim->x1 = tempPrim->x3 = (s16) tempPrim->x0 + 0x48;
+            tempPrim->x1 = tempPrim->x3 = (s16)tempPrim->x0 + 0x48;
             tempPrim->y1 = tempPrim->y0 = ((primIter >> 3) * 0x64) + offsetY;
-            tempPrim->y3 = tempPrim->y2 = (s16) tempPrim->y0 + 0x6C;
+            tempPrim->y3 = tempPrim->y2 = (s16)tempPrim->y0 + 0x6C;
             tempPrim->u0 = 0x80;
             tempPrim->v0 = 0;
             tempPrim->u1 = 0xC8;
@@ -44,7 +44,7 @@ void func_us_801B3D8C(Entity* self) {
             tempPrim->tpage = 0xF;
             tempPrim->clut = 0x36;
             tempPrim->priority = 0x10;
-            tempPrim->drawMode = 0;
+            tempPrim->drawMode = DRAW_DEFAULT;
             primIter += 1;
             tempPrim = tempPrim->next;
         }
