@@ -1,53 +1,38 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
 
-void func_us_801B3D8C(Entity* self)
-{
-    Entity* tempEntity;
+void func_us_801B3D8C(Entity* self) {
     Primitive* tempPrim;
-    s16 primY23;
-    s16 primX02;
-    s16 primX13;
-    s16 primY01;
     s16 offsetX;
     s16 offsetY;
-    s32 step;
+    s32 primIter;
 
-    tempEntity = self;
-    if (tempEntity->params != 0) {
+    if (self->params) {
         offsetX = 0x0;
         offsetY = -0x40;
     } else {
+        offsetX = 0x0;
         offsetY = 0x58;
     }
-    if (tempEntity->step == 0) {
-        tempEntity->step += 1;
-        if (tempEntity->params != 0) {
-            tempEntity->primIndex = (s32) g_api_AllocPrimitives(PRIM_GT4, 0x20);
+    if (!self->step) {
+        self->step += 1;
+        if (self->params) {
+            self->primIndex = (s32) g_api_AllocPrimitives(PRIM_GT4, 0x20);
         } else {
-            tempEntity->primIndex = (s32) g_api_AllocPrimitives(PRIM_GT4, 8);
+            self->primIndex = (s32) g_api_AllocPrimitives(PRIM_GT4, 8);
         }
-        if (tempEntity->primIndex == -1) {
-            DestroyEntity(tempEntity);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
             return;
         }
-        tempEntity->flags = 0x04800000;
-        tempPrim = &g_PrimBuf[tempEntity->primIndex];
-        step = 0;
-
+        self->flags = 0x04800000;
+        tempPrim = &g_PrimBuf[self->primIndex];
+        primIter = 0;
         while (tempPrim != NULL) {
-            primX02 = ((step & 7) << 6) + offsetX;
-            tempPrim->x2 = primX02;
-            tempPrim->x0 = primX02;
-            primX13 = (s16) tempPrim->x0 + 0x48;
-            tempPrim->x3 = primX13;
-            tempPrim->x1 = primX13;
-            primY01 = offsetY + ((step >> 3) * 0x64);
-            tempPrim->y0 = primY01;
-            tempPrim->y1 = primY01; 
-            primY23 = (u16) tempPrim->y0 + 0x6C;
-            tempPrim->y2 = primY23;
-            tempPrim->y3 = primY23;
+            tempPrim->x0 = tempPrim->x2 = (primIter & 7) * 0x40 + offsetX;
+            tempPrim->x1 = tempPrim->x3 = (s16) tempPrim->x0 + 0x48;
+            tempPrim->y1 = tempPrim->y0 = ((primIter >> 3) * 0x64) + offsetY;
+            tempPrim->y3 = tempPrim->y2 = (s16) tempPrim->y0 + 0x6C;
             tempPrim->u0 = 0x80;
             tempPrim->v0 = 0;
             tempPrim->u1 = 0xC8;
@@ -60,7 +45,7 @@ void func_us_801B3D8C(Entity* self)
             tempPrim->clut = 0x36;
             tempPrim->priority = 0x10;
             tempPrim->drawMode = 0;
-            step += 1;
+            primIter += 1;
             tempPrim = tempPrim->next;
         }
     }
