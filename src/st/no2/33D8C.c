@@ -49,8 +49,8 @@ void func_us_801B3D8C(Entity* self) {
 }
 
 /* st/no2/data/B7C.data.s */
-u16 D_us_80180B7C[] = {0x8044, 0x8048, 0x8049, 0x804A, 0x804B, 0x804C, 0x804D, 0x0000};
-u32 D_us_80180B8C[] = {0x4, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD};
+extern u16 D_us_80180B7C[];
+extern u32 D_us_80180B8C[];
 
 extern s16 PLAYER_posX_i_hi;
 
