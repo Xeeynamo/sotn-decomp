@@ -75,6 +75,7 @@ NormalColorDpq = 0x089278B0;
 NormalClip = 0x089278D4;
 RotTrans = 0x892796C;
 RotTransPers = 0x89279C4;
+RotTransPers3 = 0x8927A30;
 RotTransPers4 = 0x8927AF8;
 RotAverage3 = 0x8927B88;
 RotAverage4 = 0x08927B90;

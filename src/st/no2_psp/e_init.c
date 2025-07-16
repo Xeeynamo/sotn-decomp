@@ -26,8 +26,8 @@ void func_pspeu_09257810(Entity* self);
 void func_pspeu_09257B10(Entity* self);
 void func_pspeu_09257B78(Entity* self);
 void func_pspeu_09257C00(Entity* self);
-void func_pspeu_09259E40(Entity* self);
-void func_pspeu_09259D40(Entity* self);
+void Entity3DBackgroundHouse(Entity* self);
+void Entity3DHouseSpawner(Entity* self);
 void func_pspeu_0925A248(Entity* self);
 void func_us_801C3D44(Entity* self);
 void func_pspeu_0925BBA8(Entity* self);
@@ -93,8 +93,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_pspeu_09257B10,
     func_pspeu_09257B78,
     func_pspeu_09257C00,
-    func_pspeu_09259E40,
-    func_pspeu_09259D40,
+    Entity3DBackgroundHouse,
+    Entity3DHouseSpawner,
     func_pspeu_0925A248,
     func_us_801C3D44,
     func_pspeu_0925BBA8,

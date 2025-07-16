@@ -21,7 +21,7 @@ s32 E_ID(ID_1A);
 s32 E_ID(ID_1B);
 s32 E_ID(ID_1C);
 s32 E_ID(ID_1D);
-s32 E_ID(ID_1E);
+s32 E_ID(3D_BACKGROUND_HOUSE);
 s32 E_ID(ID_1F);
 s32 E_ID(ID_20);
 s32 E_ID(ID_21);
@@ -72,7 +72,7 @@ void InitEntityIds(void) {
     E_ID(ID_1B) = 0x1B;
     E_ID(ID_1C) = 0x1C;
     E_ID(ID_1D) = 0x1D;
-    E_ID(ID_1E) = 0x1E;
+    E_ID(3D_BACKGROUND_HOUSE) = 0x1E;
     E_ID(ID_1F) = 0x1F;
     E_ID(ID_20) = 0x20;
     E_ID(ID_21) = 0x21;
