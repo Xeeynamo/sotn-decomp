@@ -26,7 +26,7 @@ void EntitySkelerangBoomerang(Entity* self);
 void EntitySkelerangUnknown(Entity* self);
 void func_us_801B3D8C(Entity* self);
 void func_us_801B3F30(Entity* self);
-void EntityFrozenShadeCrystal(Entity* self);
+void func_us_801B4148(Entity* self);
 void func_us_801B41A4(Entity* self);
 void func_us_801B4210(Entity* self);
 void Entity3DBackgroundHouse(Entity* self);
@@ -93,7 +93,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkelerangUnknown,
     func_us_801B3D8C,
     func_us_801B3F30,
-    EntityFrozenShadeCrystal,
+    func_us_801B4148,
     func_us_801B41A4,
     func_us_801B4210,
     Entity3DBackgroundHouse,

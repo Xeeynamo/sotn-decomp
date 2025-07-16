@@ -55,7 +55,7 @@ segments:
       - [0x7FF8, c, no2/e_collect]
       - [0xC248, c, no2/e_misc]
       - [0xCF68, c, no2/collision]
-      - [0xF140, c, no2_psp/popup]
+      - [0xF140, c, no2/popup]
       - [0xF738, c, no2/e_room_fg]
       - [0xF850, c, no2/e_owl_knight]
       - [0x13438, c, no2/e_spectral_sword]
@@ -67,7 +67,7 @@ segments:
       - [0x1F3B8, c, no2_psp/st_init_no2]
       - [0x1F688, c, no2/e_breakable]
       - [0x1FF58, c, no2_psp/1FF58]
-      - [0x20770, c, no2_psp/e_sealed_door]
+      - [0x20770, c, no2/e_sealed_door]
       - [0x21C20, c, no2/e_background_house]
       - [0x22BC8, c, no2_psp/22BC8]
       - [0x23228, c, no2/e_room_bg]
@@ -97,6 +97,7 @@ segments:
       - [0x2F3E0, data]
       - [0x55718, .data, no2/header]
       - [0x55748, data]
+      - [0x55790, .data, no2/e_sealed_door]
       - [0x55800, .data, no2/e_background_house]
       - [0x55990, data]
       - [0x55A48, .data, no2/e_lock_camera]
@@ -109,7 +110,7 @@ segments:
       - [0x55D00, .rodata, no2/e_owl_knight]
       - [0x55D60, .rodata, no2/blade]
       - [0x55D78, .rodata, no2_psp/19CF0]
-      - [0x55DB8, .rodata, no2_psp/e_sealed_door]
+      - [0x55DB8, .rodata, no2/e_sealed_door]
       - {start: 0x55E00, type: .bss, vram: 0x0928D480, name: no2/create_entity}
       - {start: 0x55E00, type: .bss, vram: 0x0928D4A0, name: no2/e_collect}
       - {start: 0x55E00, type: bss, vram: 0x0928D500, name: bss1}
