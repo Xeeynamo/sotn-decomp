@@ -81,7 +81,6 @@ func_801CD620 = 0x801C6C1C;
 EntitySoulStealOrb = 0x801C7508;
 EntityEnemyBlood = 0x801C789C;
 EntityRoomForeground = 0x801C7D4C;
-BottomCornerText = 0x801C7E38;
 EntityValhallaKnight = 0x801C8168;
 polarPlacePart = 0x801C8E5C;
 func_801CD91C = 0x801C8F3C;

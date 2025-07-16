@@ -55,7 +55,7 @@ segments:
       - [0x7FF8, c, no2/e_collect]
       - [0xC248, c, no2/e_misc]
       - [0xCF68, c, no2/collision]
-      - [0xF140, c, no2_psp/popup]
+      - [0xF140, c, no2/popup]
       - [0xF738, c, no2/e_room_fg]
       - [0xF850, c, no2/e_owl_knight]
       - [0x13438, c, no2/e_spectral_sword]

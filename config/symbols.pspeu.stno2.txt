@@ -31,7 +31,6 @@ EntityBigRedFireball = 0x092441F8;
 PlaySfxPositional = 0x09244490;
 HitDetection = 0x092445E8;
 EntityDamageDisplay = 0x09245DB8;
-BottomCornerText = 0x092467C0;
 EntityRoomForeground = 0x09246DB8;
 EntityOwl = 0x09246ED0;
 EntityOwlKnight = 0x09248B38;
