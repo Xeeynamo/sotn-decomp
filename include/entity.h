@@ -3253,6 +3253,28 @@ typedef struct {
     /* 0x84 */ s16 unk84;
 } ET_ValhallaKnight;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u16 unk84;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ Pos unk88;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 : 16;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ u8 unk96;
+    /* 0x97 */ s8 : 8;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 unk9A;
+    /* 0x9C */ s16 unk9C;
+} ET_SpectralSword;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ struct Entity* unk80;
+} ET_801CEB08;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3532,6 +3554,8 @@ typedef union { // offset=0x7C
     ET_BoatElevator boatElevator;
     ET_BoatElevator_Child boatElevator_child;
     ET_ValhallaKnight valhallaKnight;
+    ET_SpectralSword spectralSword;
+    ET_801CEB08 et_801CEB08;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
