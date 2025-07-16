@@ -48,6 +48,8 @@ segments:
       - [0xB7C, data]
       - [0xBB8, .data, e_background_house]
       - [0xD38, data]
+      - [0xF7C, .data, e_sealed_door]
+      - [0xFEC, data]
       - [0x1008, .data, st_update]
       - [0x1054, .data, collision]
       - [0x1414, .data, e_red_door]

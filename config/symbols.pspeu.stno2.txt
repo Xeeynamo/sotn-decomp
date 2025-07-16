@@ -74,7 +74,6 @@ polarPlacePartsList = 0x09254A58;
 func_801CE3FC = 0x09254C70;
 EntityBreakable = 0x09256D08;
 EntityBreakableDebris = 0x092571F8;
-SealedDoorIsNearPlayer = 0x09257DF0;
 Entity3DHouseSpawner = 0x09259D40;
 Entity3DBackgroundHouse = 0x09259E40;
 NO2_EntityBackgroundBlock = 0x0925A8A8;

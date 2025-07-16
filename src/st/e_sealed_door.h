@@ -12,13 +12,15 @@
 static u8 g_eBlueDoorUV[][8] = {
     {0x03, 0x0D, 0x03, 0x0D, 0x03, 0x03, 0x45, 0x45},
     {0x13, 0x3D, 0x13, 0x3D, 0x03, 0x03, 0x45, 0x45},
-    {0x3D, 0x13, 0x3D, 0x13, 0x03, 0x03, 0x45, 0x45}};
+    {0x3D, 0x13, 0x3D, 0x13, 0x03, 0x03, 0x45, 0x45},
+};
 
 static s16 g_eBlueDoorTiles[][8] = {
     {0x597, 0x597, 0x597, 0x597, 0x000, 0x000, 0x000, 0x000},
     {0x130, 0x138, 0x1C0, 0x1C5, 0x130, 0x138, 0x1C0, 0x1C5},
     {0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000},
-    {0x597, 0x597, 0x597, 0x597, 0x000, 0x000, 0x000, 0x000}};
+    {0x597, 0x597, 0x597, 0x597, 0x000, 0x000, 0x000, 0x000},
+};
 
 #ifdef VERSION_PSP
 static char sealed_door_ENG[] = "\x98\x10Magically sealed\x81\x44";
@@ -96,7 +98,7 @@ void EntitySealedDoor(Entity* self) {
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
-        uv = (u8*)g_eBlueDoorUV;
+        uv = g_eBlueDoorUV[0];
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0, y = self->posY.i.hi - 0x1F; prim->next != NULL; i++,
             uv += 8, prim = prim->next) {
@@ -112,17 +114,17 @@ void EntitySealedDoor(Entity* self) {
             prim->clut = SEALED_DOOR_CLUT;
             prim->priority = PLAYER.zPriority - 0x20;
             prim->y0 = prim->y1 = y;
-            prim->y2 = prim->y3 = y + 62;
+            prim->y2 = prim->y3 = y + 0x3E;
             if (i == 0) {
                 prim->y0 = prim->y1 = y;
-                prim->y2 = prim->y3 = y + 62;
+                prim->y2 = prim->y3 = y + 0x3E;
             }
             prim->drawMode = DRAW_COLORS | DRAW_UNK02;
             prim->r0 = prim->b0 = prim->g0 = 0x7F;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
-            if (i == 2 && !(self->params & 0x100)) {
+            if (i == 2 && (self->params & 0x100) == 0) {
                 prim->drawMode |= DRAW_HIDE;
             }
             if (i == 1 && (self->params & 0x100)) {
@@ -142,10 +144,10 @@ void EntitySealedDoor(Entity* self) {
         prim->priority = 0xAA;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         if (SealedDoorIsNearPlayer(self)) {
-            if (!(self->params & 0x100)) {
+            if ((self->params & 0x100) == 0) {
                 self->ext.sealedDoor.angle = 0x1000;
             }
-            if (self->params & 0x100) {
+            if ((self->params & 0x100) != 0) {
                 self->ext.sealedDoor.angle = 0x800;
             }
             PLAYER.velocityY = 0;
@@ -160,7 +162,7 @@ void EntitySealedDoor(Entity* self) {
         self->ext.sealedDoor.angle = 0xC00;
         for (prim = &g_PrimBuf[self->primIndex], i = 0; prim->next != NULL; i++,
             prim = prim->next) {
-            if (i) {
+            if (i != 0) {
                 prim->drawMode |= DRAW_HIDE;
             } else {
                 prim->drawMode = DRAW_COLORS | DRAW_UNK02;
@@ -169,7 +171,7 @@ void EntitySealedDoor(Entity* self) {
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
 
         if (!(((PLAYER.facingLeft != GetSideToPlayer()) & 1) ^ 1) &&
-            ((PLAYER.step == 0x19 && g_PlayableCharacter) ||
+            ((PLAYER.step == 25 && g_PlayableCharacter != PLAYER_ALUCARD) ||
              PLAYER.step == 1) &&
             SealedDoorIsNearPlayer(self)) {
             // If player does not have the jewel, show the box.
@@ -195,13 +197,12 @@ void EntitySealedDoor(Entity* self) {
                 messageBox->ext.messageBox.label = sealed_door_label;
                 break;
             }
-
-            for (prim = &g_PrimBuf[self->primIndex], i = 0; prim != NULL; i++,
-                prim = prim->next) {
-                if (i == 1 && !(self->params & 0x100)) {
+            prim = &g_PrimBuf[self->primIndex];
+            for (i = 0; prim != NULL; i++, prim = prim->next) {
+                if (i == 1 && (self->params & 0x100) == 0) {
                     prim->drawMode &= ~DRAW_HIDE;
                 }
-                if (i == 2 && (self->params & 0x100)) {
+                if (i == 2 && (self->params & 0x100) != 0) {
                     prim->drawMode &= ~DRAW_HIDE;
                 }
                 if (i == 0) {
@@ -216,10 +217,11 @@ void EntitySealedDoor(Entity* self) {
             self->step++;
         }
         break;
+
     case 2:
         g_Player.padSim = 0;
         g_Player.demo_timer = 24;
-        if (!(self->params & 0x100)) {
+        if ((self->params & 0x100) == 0) {
             self->ext.sealedDoor.angle += 0x20;
             if (self->ext.sealedDoor.angle >= 0x1000) {
                 self->ext.sealedDoor.angle = 0x1000;
@@ -237,6 +239,7 @@ void EntitySealedDoor(Entity* self) {
             }
         }
         break;
+
     case 3:
         if (g_Player.demo_timer >= 4) {
             return;
@@ -249,6 +252,7 @@ void EntitySealedDoor(Entity* self) {
         g_Player.demo_timer = 3;
         self->step++;
         break;
+
     case 4:
         if (self->ext.sealedDoor.sideToPlayer) {
             g_Player.padSim = PAD_LEFT;
@@ -262,10 +266,11 @@ void EntitySealedDoor(Entity* self) {
             g_Player.demo_timer = 0;
         }
         break;
+
     case 5:
         g_Player.padSim = 0;
         g_Player.demo_timer = 4;
-        if (!(self->params & 0x100)) {
+        if ((self->params & 0x100) == 0) {
             self->ext.sealedDoor.angle -= 0x20;
             if (self->ext.sealedDoor.angle <= 0xC00) {
                 self->ext.sealedDoor.angle = 0xC00;
@@ -277,9 +282,9 @@ void EntitySealedDoor(Entity* self) {
             }
         }
         if (self->ext.sealedDoor.angle == 0xC00) {
-            for (prim = &g_PrimBuf[self->primIndex], i = 0; prim != NULL; i++,
-                prim = prim->next) {
-                if (!(self->params & 0x1000) || i) {
+            prim = &g_PrimBuf[self->primIndex];
+            for (i = 0; prim != NULL; i++, prim = prim->next) {
+                if ((self->params & 0x1000) == 0 || i != 0) {
                     prim->drawMode |= DRAW_HIDE;
                 }
             }
@@ -303,84 +308,82 @@ void EntitySealedDoor(Entity* self) {
 
     i = 0;
     angle = self->ext.sealedDoor.angle;
-    for (prim = &g_PrimBuf[self->primIndex]; prim->next != NULL; i++,
-        prim = prim->next) {
-        if (!(prim->drawMode & DRAW_HIDE)) {
-            if (!(self->params & 0x100)) {
-                if (i == 0) {
-                    endX = prim->x0 = prim->x2 =
-                        x + ((rcos(angle) >> 8) * 32 >> 4);
-                    prim->x1 = prim->x3 =
-                        prim->x0 - ((rsin(angle) >> 4) * 6 >> 8);
-                    if (angle > 0xF80) {
-                        prim->x1 = prim->x3 = prim->x0 + 1;
-                    }
-                    if (angle > 0xE00) {
-                        prim->u0 = prim->u2 = 4;
-                        prim->u1 = prim->u3 = 12;
-                    }
-                    if (angle <= 0xE00) {
-                        prim->u0 = prim->u2 = 3;
-                        prim->u1 = prim->u3 = 13;
-                    }
-                    if (angle == 0x1000) {
-                        prim->r1 = prim->b1 = prim->g1 = 63;
-                        prim->r3 = prim->b3 = prim->g3 = 63;
-                    } else {
-                        prim->r1 = prim->b1 = prim->g1 =
-                            0x7F - ((angle & 0x3FF) >> 4);
-                        prim->r3 = prim->b3 = prim->g3 =
-                            0x7F - ((angle & 0x3FF) >> 4);
-                    }
+    prim = &g_PrimBuf[self->primIndex];
+    for (; prim->next != NULL; i++, prim = prim->next) {
+        if (prim->drawMode & DRAW_HIDE) {
+            continue;
+        }
+        if ((self->params & 0x100) == 0) {
+            if (i == 0) {
+                endX = prim->x0 = prim->x2 = x + ((rcos(angle) >> 8) * 32 >> 4);
+                prim->x1 = prim->x3 = prim->x0 - ((rsin(angle) >> 4) * 6 >> 8);
+                if (angle > 0xF80) {
+                    prim->x1 = prim->x3 = prim->x0 + 1;
+                }
+                if (angle > 0xE00) {
+                    prim->u0 = prim->u2 = 4;
+                    prim->u1 = prim->u3 = 12;
+                }
+                if (angle <= 0xE00) {
+                    prim->u0 = prim->u2 = 3;
+                    prim->u1 = prim->u3 = 13;
+                }
+                if (angle == 0x1000) {
+                    prim->r1 = prim->b1 = prim->g1 = 0x3F;
+                    prim->r3 = prim->b3 = prim->g3 = 0x3F;
                 } else {
-                    prim->x0 = prim->x2 = x;
-                    prim->x1 = prim->x3 = endX;
-                    if (angle == 0x1000) {
-                        prim->r0 = prim->b0 = prim->g0 = 63;
-                        prim->r2 = prim->b2 = prim->g2 = 63;
-                    } else {
-                        prim->r0 = prim->b0 = prim->g0 = (angle & 0x3FF) >> 4;
-                        prim->r2 = prim->b2 = prim->g2 = (angle & 0x3FF) >> 4;
-                    }
+                    prim->r1 = prim->b1 = prim->g1 =
+                        0x7F - ((angle & 0x3FF) >> 4);
+                    prim->r3 = prim->b3 = prim->g3 =
+                        0x7F - ((angle & 0x3FF) >> 4);
                 }
             } else {
-                if (i == 0) {
-                    endX = prim->x1 = prim->x3 =
-                        x + ((rcos(angle) >> 8) * 32 >> 4);
-                    prim->x0 = prim->x2 =
-                        prim->x1 + (((rsin(angle) >> 4) * 6) >> 8);
-                    if (angle < 0x880) {
-                        prim->x0 = prim->x2 = prim->x1 - 1;
-                    }
-                    if (angle < 0xA00) {
-                        prim->u0 = prim->u2 = 4;
-                        prim->u1 = prim->u3 = 12;
-                    }
-                    if (angle > 0xA00) {
-                        prim->u0 = prim->u2 = 3;
-                        prim->u1 = prim->u3 = 13;
-                    }
-                    if (angle == 0x800) {
-                        prim->r0 = prim->b0 = prim->g0 = 127;
-                        prim->r2 = prim->b2 = prim->g2 = 127;
-                    } else {
-                        prim->r0 = prim->b0 = prim->g0 =
-                            63 + ((angle & 0x3FF) >> 4);
-                        prim->r2 = prim->b2 = prim->g2 =
-                            63 + ((angle & 0x3FF) >> 4);
-                    }
+                prim->x0 = prim->x2 = x;
+                prim->x1 = prim->x3 = endX;
+                if (angle == 0x1000) {
+                    prim->r0 = prim->b0 = prim->g0 = 0x3F;
+                    prim->r2 = prim->b2 = prim->g2 = 0x3F;
                 } else {
-                    prim->x0 = prim->x2 = endX - 1;
-                    prim->x1 = prim->x3 = x;
-                    if (angle == 0x800) {
-                        prim->r1 = prim->b1 = prim->g1 = 63;
-                        prim->r3 = prim->b3 = prim->g3 = 63;
-                    } else {
-                        prim->r1 = prim->b1 = prim->g1 =
-                            63 - ((angle & 0x3FF) >> 4);
-                        prim->r3 = prim->b3 = prim->g3 =
-                            63 - ((angle & 0x3FF) >> 4);
-                    }
+                    prim->r0 = prim->b0 = prim->g0 = (angle & 0x3FF) >> 4;
+                    prim->r2 = prim->b2 = prim->g2 = (angle & 0x3FF) >> 4;
+                }
+            }
+        } else {
+            if (i == 0) {
+                endX = prim->x1 = prim->x3 = x + ((rcos(angle) >> 8) * 32 >> 4);
+                prim->x0 = prim->x2 =
+                    prim->x1 + (((rsin(angle) >> 4) * 6) >> 8);
+                if (angle < 0x880) {
+                    prim->x0 = prim->x2 = prim->x1 - 1;
+                }
+                if (angle < 0xA00) {
+                    prim->u0 = prim->u2 = 4;
+                    prim->u1 = prim->u3 = 12;
+                }
+                if (angle > 0xA00) {
+                    prim->u0 = prim->u2 = 3;
+                    prim->u1 = prim->u3 = 13;
+                }
+                if (angle == 0x800) {
+                    prim->r0 = prim->b0 = prim->g0 = 0x7F;
+                    prim->r2 = prim->b2 = prim->g2 = 0x7F;
+                } else {
+                    prim->r0 = prim->b0 = prim->g0 =
+                        0x3F + ((angle & 0x3FF) >> 4);
+                    prim->r2 = prim->b2 = prim->g2 =
+                        0x3F + ((angle & 0x3FF) >> 4);
+                }
+            } else {
+                prim->x0 = prim->x2 = endX - 1;
+                prim->x1 = prim->x3 = x;
+                if (angle == 0x800) {
+                    prim->r1 = prim->b1 = prim->g1 = 0x3F;
+                    prim->r3 = prim->b3 = prim->g3 = 0x3F;
+                } else {
+                    prim->r1 = prim->b1 = prim->g1 =
+                        0x3F - ((angle & 0x3FF) >> 4);
+                    prim->r3 = prim->b3 = prim->g3 =
+                        0x3F - ((angle & 0x3FF) >> 4);
                 }
             }
         }

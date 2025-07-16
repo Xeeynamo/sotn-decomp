@@ -47,7 +47,7 @@ void EntityBloodSplatter(Entity* self);
 void func_pspeu_0925B730(Entity* self);
 void func_us_801C3ED8(Entity* self);
 void func_pspeu_0925B278(Entity* self);
-void func_pspeu_09257ED8(Entity* self);
+void EntitySealedDoor(Entity* self);
 void EntityValhallaKnight(Entity* self);
 void func_us_801C8954(Entity* self);
 void func_us_801C8AAC(Entity* self);
@@ -114,7 +114,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_pspeu_0925B730,
     func_us_801C3ED8,
     func_pspeu_0925B278,
-    func_pspeu_09257ED8,
+    EntitySealedDoor,
     EntityValhallaKnight,
     func_us_801C8954,
     func_us_801C8AAC,
