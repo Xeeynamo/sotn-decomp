@@ -24,7 +24,7 @@ INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_801CE228);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", polarPlacePartsList);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_092614A8);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_801CE2CC);
 
 INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_801CE3FC);
 

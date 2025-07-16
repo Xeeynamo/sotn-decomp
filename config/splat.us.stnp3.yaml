@@ -77,8 +77,7 @@ segments:
       - [0x2978, data]
       - [0x2A20, data]
       - [0x2B00, data]
-      - [0x3010, data]
-      - [0x33A0, data]
+      - [0x2EF4, .data, gurkha]
       - [0x33E4, .data, blade]
       - [0x3A7C, .data, gen/rooms]
       - [0x3B68, .data, gen/e_layout] # layout entries data
