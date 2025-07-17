@@ -347,6 +347,8 @@ files:
           - [0x3E8, gfx_banks, graphics_banks]
           - [0x574, layout, entity_layouts]
           - [0x71C, skip]
+          - [0x32A0, rooms, rooms]
+          - [0x336C, skip]
           - [0x4248, cmpgfx, D_80184248, 128, 128, 4]
           - [0x4618, cmpgfx, D_80184618, 128, 128, 4]
           - [0x4C84, cmpgfx, e_skelerang_1, 128, 128, 4, 0x144E8]
