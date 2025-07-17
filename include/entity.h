@@ -3276,9 +3276,9 @@ typedef struct {
 } ET_801CEB08;
 
 typedef struct {
-    /* 0x7C */ u16 unk7C;
-    /* 0x7E */ u16 unk7E;
-    /* 0x80 */ u16 unk80;
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
 } ET_801B3F30;
 
 typedef union { // offset=0x7C

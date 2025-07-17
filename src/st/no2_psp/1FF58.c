@@ -49,10 +49,9 @@ void func_us_801B3D8C(Entity* self) {
 }
 
 /* st/no2_psp/data/55748.data.s */
-extern u16 D_pspeu_0928CDC8[];
-extern u32 D_pspeu_0928CDD8[];
-
-extern s16 PLAYER_posX_i_hi;
+u16 D_pspeu_0928CDC8[] = {
+    0x8044, 0x8048, 0x8049, 0x804A, 0x804B, 0x804C, 0x804D, 0x0000};
+u32 D_pspeu_0928CDD8[] = {0x4, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD};
 
 // Looks like some kind of animation handling routine?
 // 0928CDD8 is the palette ID, C8 is the palette data.
@@ -73,11 +72,11 @@ void func_pspeu_09257810(Entity* self) {
         self->ext.et_801B3F30.unk7C = 2;
         self->ext.et_801B3F30.unk80 = 0x10;
         self->zPriority = 0x80;
-        self->drawMode = 0x70;
+        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         break;
     case 1:
         if (g_Tilemap.scrollY.i.hi >= 0x304) {
-            deltaPosXHi = self->posX.i.hi - PLAYER_posX_i_hi;
+            deltaPosXHi = self->posX.i.hi - PLAYER.posX.i.hi;
             absDeltaPosXHi = abs(deltaPosXHi);
             if (absDeltaPosXHi < 0x80)
                 self->step++;
@@ -94,10 +93,11 @@ void func_pspeu_09257810(Entity* self) {
                     if (colorLo > 0x1F) {
                         colorLo = 0x1F;
                     }
-                    g_Clut[0][0x400 + curPal * 16 + j] = (color & ~0x1F) + colorLo;
+                    g_Clut[0][0x400 + curPal * 16 + j] = 
+                        (color & ~0x1F) + colorLo;
                 }
             }
-            LoadClut((void *) &(g_Clut[0][0x400]), 0x200, 0xF4);
+            LoadClut((void*)&(g_Clut[0][0x400]), 0x200, 0xF4);
             self->ext.et_801B3F30.unk80 = 0x10;
         }
         break;
