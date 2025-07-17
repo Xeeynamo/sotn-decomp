@@ -93,7 +93,7 @@ void func_pspeu_09257810(Entity* self) {
                     if (colorLo > 0x1F) {
                         colorLo = 0x1F;
                     }
-                    g_Clut[0][0x400 + curPal * 16 + j] = 
+                    g_Clut[0][0x400 + curPal * 16 + j] =
                         (color & ~0x1F) + colorLo;
                 }
             }
