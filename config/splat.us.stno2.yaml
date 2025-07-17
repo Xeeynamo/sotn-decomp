@@ -40,7 +40,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x2C, data]
+      - [0x574, .data, gen/e_laydef]
       - [0x71C, .data, e_init]
       - [0x994, data]
       - [0x9EC, .data, e_lock_camera]
@@ -67,7 +67,10 @@ segments:
       - [0x2C08, .data, blade]
       - [0x32A0, data]
       - [0x336C, .data, e_spectral_sword]
-      - [0x33F8, data]
+      - [0x33F8, .data, gen/e_layout]
+      - [0x4248, .data, stage_data]
+      - [0x14E28, .data, tilemaps]
+      - [0x2C858, .data, gen/sprites]
       - [0x32E00, .rodata, e_breakable]
       - [0x32E20, .rodata, 34DA4]
       - [0x32EC4, .rodata, e_sealed_door]

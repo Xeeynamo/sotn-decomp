@@ -333,6 +333,51 @@ files:
           - [0x3544, skip]
           #- [0x4CE0, cutscene, cutscene_data]
           #- [0x4E60, skip]
+  - target: disks/us/ST/NO2/NO2.BIN
+    asset_path: assets/st/no2
+    src_path: src/st/no2
+    splat_config_path: config/splat.us.stno2.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, paldef, palette_def]
+          - [0x110, layers, layers]
+          - [0x3E8, gfx_banks, graphics_banks]
+          - [0x574, layout, entity_layouts]
+          - [0x71C, skip]
+          - [0x4248, cmpgfx, D_80184248, 128, 128, 4]
+          - [0x4618, cmpgfx, D_80184618, 128, 128, 4]
+          - [0x4C84, cmpgfx, e_skelerang_1, 128, 128, 4, 0x144E8]
+          - [0x58DC, cmpgfx, e_skelerang_2, 128, 128, 4, 0x144E8]
+          - [0x65D4, cmpgfx, D_801865D4, 128, 128, 4]
+          - [0x7254, cmpgfx, D_80187254, 128, 128, 4]
+          - [0x815C, cmpgfx, e_bloody_zombie, 128, 128, 4, 0x145A8]
+          - [0x8E14, cmpgfx, e_owl_knight_1, 128, 128, 4, 0x14608]
+          - [0x9E98, cmpgfx, e_owl_knight_2, 128, 128, 4, 0x14628]
+          - [0xAD10, cmpgfx, e_owl_knight_3, 128, 128, 4, 0x14628]
+          - [0xBA28, cmpgfx, D_8018BA28, 128, 128, 4]
+          - [0xC3D4, cmpgfx, D_8018C3D4, 128, 128, 4]
+          - [0xD2CC, cmpgfx, D_8018D2CC, 128, 128, 4]
+          - [0xF7DC, cmpgfx, e_valhalla_knight_1, 128, 128, 4, 0x149A8]
+          - [0x1062C, cmpgfx, e_valhalla_knight_2, 128, 128, 4, 0x149A8]
+          - [0x11810, cmpgfx, e_valhalla_knight_3, 128, 128, 4, 0x149A8]
+          - [0x1260C, cmpgfx, D_8019260C, 128, 128, 4]
+          - [0x12D6C, cmpgfx, e_spectral_sword, 128, 128, 4, 0x14B28]
+          - [0x13660, cmpgfx, e_breakable, 128, 128, 4, 0x14D28]
+          - [0x14014, cmpgfx, stage_title_no2, 128, 128, 4]
+          - [0x144E8, palette, e_skelerang_pal, 16]
+          - [0x14548, palette, D_80194548, 16]
+          - [0x14588, palette, D_80194588, 16]
+          - [0x145A8, palette, e_bloody_zombie_pal, 16]
+          - [0x14608, palette, e_owl_knight_pal, 16]
+          - [0x146E8, palette, D_801946E8, 16]
+          - [0x149A8, palette, e_valhalla_knight_pal, 16]
+          - [0x14A08, palette, D_80194A08, 16]
+          - [0x14B28, palette, e_spectral_sword_pal, 16]
+          - [0x14D28, palette, e_breakable_pal, 16]
+          - [0x14E28, skip]
   - target: disks/us/ST/NO3/NO3.BIN
     asset_path: assets/st/no3
     src_path: src/st/no3
