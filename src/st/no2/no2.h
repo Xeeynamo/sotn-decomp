@@ -94,6 +94,7 @@ enum OVL_EXPORT(Entities) {
     NUM_ENTITIES,
 };
 
+extern Primitive* FindFirstUnkPrim(Primitive* prim);
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
 extern EInit g_EInitBreakable;
@@ -107,7 +108,7 @@ extern EInit g_EInitCommon;
 extern EInit g_EInitDamageNum;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
-// extern EInit D_us_801808A4;
+extern EInit D_us_801808A4;
 // extern EInit D_us_801808B0;
 extern EInit g_EInitOwlKnight;
 extern EInit g_EInitOwlKnightSword;
