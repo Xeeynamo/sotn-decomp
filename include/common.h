@@ -91,6 +91,7 @@
 #define LOH(x) (*(s16*)&(x))
 #define HIH(x) (((s16*)&(x))[1])
 #define LOHU(x) (*(u16*)&(x))
+#define HIHU(x) (((u16*)&(x))[1])
 #define LOW(x) (*(s32*)&(x))
 #define LOWU(x) (*(u32*)&(x))
 #define F(x) (*(f32*)&(x))

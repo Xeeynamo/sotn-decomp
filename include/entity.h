@@ -1822,11 +1822,23 @@ typedef struct {
 
 // CHI Room5, Bottom, Breakable Wall
 typedef struct {
-    /* 0x7C */ char pad_7C[0x8];
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 : 32;
     /* 0x84 */ s16 breakCount;
-    /* 0x86 */ char pad_86[0xE];
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
     /* 0x94 */ s16 resetTimer;
 } ET_BreakableWall;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ struct Primitive* unk84;
+    /* 0x88 */ u8 unk88;
+} ET_BreakableNO2;
 
 typedef struct {
     /* 0x7C */ char pad_7C[0x20];
@@ -3568,6 +3580,7 @@ typedef union { // offset=0x7C
     ET_801CEB08 et_801CEB08;
     ET_801B3F30 et_801B3F30;
     ET_801B4210 et_801B4210;
+    ET_BreakableNO2 breakableNo2;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

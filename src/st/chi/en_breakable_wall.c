@@ -204,7 +204,7 @@ void EntityBreakableWall(Entity* self) {
         self->primIndex = newPrimIdx;
         prim = &g_PrimBuf[newPrimIdx];
 
-        self->ext.prim = prim;
+        self->ext.breakableWall.prim = prim;
 
         // Calculate values for left prim
         xPos = self->posX.i.hi - 23;
@@ -308,7 +308,7 @@ void EntityBreakableWall(Entity* self) {
         return;
 
     case BREAK_1: // Dynamically calculated, never set directly
-        prim = self->ext.prim;
+        prim = self->ext.breakableWall.prim;
         prim = prim->next;
         prim->drawMode = DRAW_HIDE;
         self->ext.breakableWall.resetTimer = ResetTime;
@@ -316,7 +316,7 @@ void EntityBreakableWall(Entity* self) {
         return;
 
     case BREAK_2: // Dynamically calculated, never set directly
-        prim = self->ext.prim;
+        prim = self->ext.breakableWall.prim;
         prim->u1 = prim->u3 -= 0x10;
         prim->x1 = prim->x3 -= 0x10;
         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -331,7 +331,7 @@ void EntityBreakableWall(Entity* self) {
         return;
 
     case BREAK_3: // Dynamically calculated, never set directly
-        prim = self->ext.prim;
+        prim = self->ext.breakableWall.prim;
         prim->drawMode = DRAW_HIDE;
         self->hitboxState = 0;
         g_CastleFlags[CHI_SECRET_WALL_OPEN] = 1;

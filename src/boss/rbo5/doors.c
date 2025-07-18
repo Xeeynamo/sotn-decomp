@@ -436,7 +436,7 @@ void EntityUnkId19(Entity* self) {
         break;
 
     case 2:
-        primIndex = g_api.func_800EDB58(0x11, 0x30);
+        primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x30);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -531,7 +531,7 @@ void EntityUnkId19(Entity* self) {
             break;
         }
         g_api.FreePrimitives(self->primIndex);
-        primIndex = g_api.func_800EDB58(4, 0x10);
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x10);
         if (primIndex == -1) {
             return;
         }
