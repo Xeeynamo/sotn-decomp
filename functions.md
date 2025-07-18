@@ -2171,7 +2171,7 @@
 | no4   | func_pspeu_0924A260                      |      420 |         78 |        | https://decomp.me/scratch/7WKgl | 0.999 |
 | st0   | EntitySecretStairs                       |      422 |         46 |        | https://decomp.me/scratch/tPIfj | 0.999 |
 | lib   | EntityLesserDemonSpit                    |      425 |         35 | Yes    |                                 |       |
-| no2   | func_pspeu_0925A248                      |      427 |         27 |        |                                 |       |
+| no2   | func_pspeu_0925A248                      |      427 |         27 |        | https://decomp.me/scratch/VSCcm | 0.412 |
 | no4   | func_pspeu_0923DD38                      |      428 |         36 |        | https://decomp.me/scratch/jpibD | 1.0   |
 | no3   | EntityStairwayPiece                      |      434 |         43 |        | https://decomp.me/scratch/EJfLO | 0.992 |
 | np3   | EntityStairwayPiece                      |      434 |         43 |        | https://decomp.me/scratch/EJfLO | 0.992 |
