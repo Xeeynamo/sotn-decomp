@@ -1123,7 +1123,7 @@
 | 1.00 | true     | UnkPrimHelper                       | asm/us/st/mad/matchings/prim_helpers/UnkPrimHelper.s 
 | 1.00 | true     | func_us_801DE09C                    | asm/us/st/no0/matchings/prim_helpers/func_us_801DE09C.s 
 | 1.00 | true     | func_us_801D5AF8                    | asm/us/st/no1/matchings/prim_helpers/func_us_801D5AF8.s 
-| 1.00 | true     | UnkPrimHelper                       | asm/us/st/no2/matchings/prim_helpers/UnkPrimHelper.s 
+| 1.00 | true     | func_us_801CD558                    | asm/us/st/no2/matchings/prim_helpers/func_us_801CD558.s 
 | 1.00 | true     | func_801D6880                       | asm/us/st/no3/matchings/prim_helpers/func_801D6880.s 
 | 1.00 | true     | func_us_801DE2E0                    | asm/us/st/no4/matchings/prim_helpers/func_us_801DE2E0.s 
 | 1.00 | true     | func_801D1F38                       | asm/us/st/np3/matchings/prim_helpers/func_801D1F38.s 
@@ -1167,7 +1167,7 @@
 | 1.00 | true     | func_801994D8                       | asm/us/st/mad/matchings/prim_helpers/func_801994D8.s 
 | 1.00 | true     | func_us_801DE5D4                    | asm/us/st/no0/matchings/prim_helpers/func_us_801DE5D4.s 
 | 1.00 | true     | func_us_801D6030                    | asm/us/st/no1/matchings/prim_helpers/func_us_801D6030.s 
-| 1.00 | true     | FindFirstUnkPrim                    | asm/us/st/no2/matchings/prim_helpers/FindFirstUnkPrim.s 
+| 1.00 | true     | func_us_801CDA90                    | asm/us/st/no2/matchings/prim_helpers/func_us_801CDA90.s 
 | 1.00 | true     | func_801D6DB8                       | asm/us/st/no3/matchings/prim_helpers/func_801D6DB8.s 
 | 1.00 | true     | func_us_801DE818                    | asm/us/st/no4/matchings/prim_helpers/func_us_801DE818.s 
 | 1.00 | true     | func_801D2470                       | asm/us/st/np3/matchings/prim_helpers/func_801D2470.s 
@@ -1189,7 +1189,7 @@
 | 1.00 | true     | func_80199508                       | asm/us/st/mad/matchings/prim_helpers/func_80199508.s 
 | 1.00 | true     | func_us_801DE604                    | asm/us/st/no0/matchings/prim_helpers/func_us_801DE604.s 
 | 1.00 | true     | func_us_801D6060                    | asm/us/st/no1/matchings/prim_helpers/func_us_801D6060.s 
-| 1.00 | true     | FindFirstUnkPrim2                   | asm/us/st/no2/matchings/prim_helpers/FindFirstUnkPrim2.s 
+| 1.00 | true     | func_us_801CDAC0                    | asm/us/st/no2/matchings/prim_helpers/func_us_801CDAC0.s 
 | 1.00 | true     | func_801D6DE8                       | asm/us/st/no3/matchings/prim_helpers/func_801D6DE8.s 
 | 1.00 | true     | func_us_801DE848                    | asm/us/st/no4/matchings/prim_helpers/func_us_801DE848.s 
 | 1.00 | true     | func_801D24A0                       | asm/us/st/np3/matchings/prim_helpers/func_801D24A0.s 
@@ -1255,7 +1255,7 @@
 | 1.00 | true     | UnkPolyFunc2                        | asm/us/st/mad/matchings/prim_helpers/UnkPolyFunc2.s 
 | 1.00 | true     | func_us_801DE7E8                    | asm/us/st/no0/matchings/prim_helpers/func_us_801DE7E8.s 
 | 1.00 | true     | func_us_801D6244                    | asm/us/st/no1/matchings/prim_helpers/func_us_801D6244.s 
-| 1.00 | true     | UnkPolyFunc2                        | asm/us/st/no2/matchings/prim_helpers/UnkPolyFunc2.s 
+| 1.00 | true     | func_us_801CDCA4                    | asm/us/st/no2/matchings/prim_helpers/func_us_801CDCA4.s 
 | 1.00 | true     | func_801D6FCC                       | asm/us/st/no3/matchings/prim_helpers/func_801D6FCC.s 
 | 1.00 | true     | func_us_801DEA2C                    | asm/us/st/no4/matchings/prim_helpers/func_us_801DEA2C.s 
 | 1.00 | true     | func_801D2684                       | asm/us/st/np3/matchings/prim_helpers/func_801D2684.s 
@@ -1277,7 +1277,7 @@
 | 1.00 | true     | func_80199740                       | asm/us/st/mad/matchings/prim_helpers/func_80199740.s 
 | 1.00 | true     | func_us_801DE83C                    | asm/us/st/no0/matchings/prim_helpers/func_us_801DE83C.s 
 | 1.00 | true     | func_us_801D6298                    | asm/us/st/no1/matchings/prim_helpers/func_us_801D6298.s 
-| 1.00 | true     | UnkPolyFunc0                        | asm/us/st/no2/matchings/prim_helpers/UnkPolyFunc0.s 
+| 1.00 | true     | func_us_801CDCF8                    | asm/us/st/no2/matchings/prim_helpers/func_us_801CDCF8.s 
 | 1.00 | true     | func_801D7020                       | asm/us/st/no3/matchings/prim_helpers/func_801D7020.s 
 | 1.00 | true     | func_us_801DEA80                    | asm/us/st/no4/matchings/prim_helpers/func_us_801DEA80.s 
 | 1.00 | true     | func_801D26D8                       | asm/us/st/np3/matchings/prim_helpers/func_801D26D8.s 
