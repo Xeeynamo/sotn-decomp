@@ -19,7 +19,7 @@ def get_asm(slug):
     if slug in zip_cache:
         return zip_cache[slug]
     url = f"https://decomp.me/api/scratch/{slug}/export?target_only=1"
-    response = requests.get(url)
+    response = requests.get(headers={"User-Agent": "function-finder"}, url=url)
     if response.status_code == 200:
         with zipfile.ZipFile(BytesIO(response.content)) as the_zip:
             zip_contents = the_zip.namelist()
@@ -45,7 +45,7 @@ def fetch_all_results(url):
     results = []
 
     while url:
-        response = requests.get(url)
+        response = requests.get(headers={"User-Agent": "function-finder"}, url=url)
         data = response.json()
 
         results.extend(data.get("results", []))
