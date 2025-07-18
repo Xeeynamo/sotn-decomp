@@ -144,7 +144,7 @@ void func_us_801B4210(Entity* self) {
     s32 i;
 
     flag = false;
-    if ((g_Entities[(self->params) + 0x40].entityId) != 1) {
+    if ((g_Entities[self->params + 0x40].entityId) != 1) {
         flag = true;
     }
     switch (self->step) {
@@ -160,7 +160,7 @@ void func_us_801B4210(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(6, self, entity);
+                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
                     entity->posX.i.hi += ((rand() & 0xF) - 8);
                     entity->posY.i.hi += ((rand() & 0xF) - 8);
                     entity->params = 0x10;
