@@ -133,4 +133,46 @@ void func_us_801B41A4(Entity* self) {
     g_GpuBuffers[1].draw.b0 = 0x28;
 }
 
-INCLUDE_ASM("st/no2_psp/nonmatchings/no2_psp/1FF58", func_pspeu_09257C00);
+/* st/no2_psp/data/55748.data.s */
+u8 D_pspeu_0928CDF8[] = {
+    0xA, 0x4, 0xA, 0x5, 0xA, 0x6, 0xA, 0x7, 0xA, 0x8, 0x0, 0x0};
+u8 D_pspeu_0928CE08[] = {0xA, 0xA};
+
+void func_pspeu_09257C00(Entity* self) {
+    Entity* entity;
+    bool flag;
+    s32 i;
+
+    flag = false;
+    if ((g_Entities[(self->params) + 0x40].entityId) != 1) {
+        flag = true;
+    }
+    switch (self->step) { /* irregular */
+    case 0:
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(2);
+        self->zPriority = 0x80;
+        break;
+    case 1:
+        if ((self->ext.et_801B4210.unk7C == 0) && flag) {
+            self->pose = self->poseTimer = 0;
+            for (i = 0; i < 5; i++) {
+                entity = AllocEntity(
+                    &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+                if (entity != NULL) {
+                    CreateEntityFromEntity(6, self, entity);
+                    entity->posX.i.hi += ((rand() & 0xF) - 8);
+                    entity->posY.i.hi += ((rand() & 0xF) - 8);
+                    entity->params = 0x10;
+                }
+            }
+        }
+        break;
+    }
+    if (!flag) {
+        AnimateEntity(D_pspeu_0928CDF8, self);
+    } else {
+        AnimateEntity(D_pspeu_0928CE08, self);
+    }
+    self->ext.et_801B4210.unk7C = flag;
+}
