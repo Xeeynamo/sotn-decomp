@@ -2199,9 +2199,6 @@ void func_us_801C5134(void) {
     }
 }
 
-extern u16 D_8007749E;
-extern Entity* D_800774F8;
-
 // Function that updates the bridge state in underground caverns
 void func_us_801C5268(Entity* self) {
     Entity* entity;
@@ -2219,10 +2216,11 @@ void func_us_801C5268(Entity* self) {
     }
     if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] == 1) {
         if (!self->step_s) {
-            if (D_8007749E == E_SKELETON_APE) {
-                entity = D_800774F8;
-                if (D_800774F8) {
-                    self->ext.et_801C5268.unk7C = D_800774F8;
+            entity = &g_Entities[88];
+            if (entity->entityId == E_SKELETON_APE) {
+                entity = entity->ext.et_801C5268.unk80;
+                if (entity) {
+                    self->ext.et_801C5268.unk7C = entity;
                     self->step_s++;
                 }
             }
