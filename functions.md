@@ -307,7 +307,7 @@
 | chi   | func_psp_0923C0C0                        |       25 |          2 |        | https://decomp.me/scratch/UeWVd | 1.0   |
 | dai   | func_pspeu_0923A228                      |       25 |          2 |        |                                 |       |
 | lib   | func_psp_0923C0C0                        |       25 |          2 |        | https://decomp.me/scratch/UeWVd | 1.0   |
-| no2   | func_psp_0923C0C0                        |       25 |          2 |        | https://decomp.me/scratch/UeWVd | 1.0   |
+| no2   | func_pspeu_0923AA48                      |       25 |          2 |        |                                 |       |
 | no4   | func_psp_0923C0C0                        |       25 |          2 |        | https://decomp.me/scratch/UeWVd | 1.0   |
 | dra   | func_psp_09101AA8                        |       25 |          3 |        | https://decomp.me/scratch/CaBA3 | 1.0   |
 | dra   | func_psp_09102B78                        |       25 |          4 |        |                                 |       |
@@ -418,7 +418,7 @@
 | chi   | func_psp_09248A98                        |       31 |          2 |        |                                 |       |
 | dai   | UnkPolyFunc2                             |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | lib   | func_psp_09250FD8                        |       31 |          2 |        |                                 |       |
-| no2   | UnkPolyFunc2                             |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
+| no2   | func_pspeu_0924E938                      |       31 |          2 |        |                                 |       |
 | no3   | func_pspeu_092616E0                      |       31 |          2 |        |                                 |       |
 | no4   | UnkPolyFunc2                             |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
 | np3   | func_pspeu_09262598                      |       31 |          2 |        |                                 |       |
@@ -955,7 +955,7 @@
 | chi   | func_psp_09248B00                        |       63 |          7 |        |                                 |       |
 | dai   | PrimDecreaseBrightness                   |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
 | lib   | func_psp_09251098                        |       63 |          7 |        |                                 |       |
-| no2   | PrimDecreaseBrightness                   |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
+| no2   | func_pspeu_0924E9F8                      |       63 |          7 |        |                                 |       |
 | no3   | func_pspeu_09261748                      |       63 |          7 |        |                                 |       |
 | no4   | PrimDecreaseBrightness                   |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
 | st0   | func_pspeu_09251A80                      |       63 |          7 |        |                                 |       |
@@ -2057,7 +2057,7 @@
 | chi   | func_psp_09248440                        |      338 |         36 |        |                                 |       |
 | dai   | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
 | lib   | func_psp_09250560                        |      338 |         36 |        |                                 |       |
-| no2   | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
+| no2   | func_pspeu_0924DFA8                      |      338 |         36 |        |                                 |       |
 | no3   | func_pspeu_09261088                      |      338 |         36 |        |                                 |       |
 | no4   | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
 | np3   | func_pspeu_09261C08                      |      338 |         36 |        |                                 |       |
