@@ -23,7 +23,7 @@ void EntityStageNamePopup(Entity* self) {
     s16 var_s3;
     s16 var_s2;
 
-#if defined(STAGE_IS_LIB)
+#if defined(STAGE_IS_LIB) || defined(STAGE_IS_NO2)
     if (D_91CE570) {
         func_psp_0923C0C0();
     }
@@ -35,7 +35,7 @@ void EntityStageNamePopup(Entity* self) {
             DestroyEntity(self);
             return;
         }
-#if defined(STAGE_IS_LIB)
+#if defined(STAGE_IS_LIB) || defined(STAGE_IS_NO2)
         func_psp_0923C0C0();
 #endif
         InitializeEntity(g_EInitInteractable);
@@ -381,51 +381,18 @@ void EntityStageNamePopup(Entity* self) {
         }
         break;
     case 18:
-        if (self->step_s != 0) {
-            (void)1;
-            return;
-        }
-
-        prim = self->ext.stpopupj.unk84;
-        prim->x1 -= 4;
-        var_s2 = prim->x3 = prim->x1;
-        prim = self->ext.stpopupj.prim;
+        switch (self->step_s) {
+        case 0:
+            prim = self->ext.stpopupj.unk84;
+            prim->x1 -= 4;
+            var_s2 = prim->x3 = prim->x1;
+            prim = self->ext.stpopupj.prim;
 #ifdef VERSION_PSP
-        self->ext.stpopupj.unk80 += 4;
+            self->ext.stpopupj.unk80 += 4;
 #endif
-        for (i = 0; i < 2; i++) {
+            for (i = 0; i < 2; i++) {
 #ifdef VERSION_PSP
-            if (self->ext.stpopupj.unk80 > 0x80 && prim->x1 > var_s2) {
-                prim->x1 -= 8;
-                prim->x3 = prim->x1;
-                if (prim->x1 < prim->x0) {
-                    prim->drawMode = DRAW_HIDE;
-                }
-                prim->u1 -= 8;
-                prim->u3 = prim->u1;
-
-                if (!prim->u1) {
-                    prim->drawMode = DRAW_HIDE;
-                }
-            }
-#else
-            if (prim->x1 > var_s2) {
-                prim->x1 -= 4;
-                prim->x3 = prim->x1;
-                if (prim->x1 < prim->x0) {
-                    prim->drawMode = DRAW_HIDE;
-                }
-                prim->u1 -= 4;
-                prim->u3 = prim->u1;
-            }
-#endif
-            prim = prim->next;
-        }
-
-#ifdef VERSION_PSP
-        for (i = 0; i < 2; i++) {
-            if (self->ext.stpopupj.unk80 < 0x81) {
-                if (prim->x1 > var_s2) {
+                if (self->ext.stpopupj.unk80 > 0x80 && prim->x1 > var_s2) {
                     prim->x1 -= 8;
                     prim->x3 = prim->x1;
                     if (prim->x1 < prim->x0) {
@@ -438,19 +405,52 @@ void EntityStageNamePopup(Entity* self) {
                         prim->drawMode = DRAW_HIDE;
                     }
                 }
-            } else {
-                prim->drawMode = DRAW_HIDE;
+#else
+                if (prim->x1 > var_s2) {
+                    prim->x1 -= 4;
+                    prim->x3 = prim->x1;
+                    if (prim->x1 < prim->x0) {
+                        prim->drawMode = DRAW_HIDE;
+                    }
+                    prim->u1 -= 4;
+                    prim->u3 = prim->u1;
+                }
+#endif
+                prim = prim->next;
             }
-            prim = prim->next;
-        }
+
+#ifdef VERSION_PSP
+            for (i = 0; i < 2; i++) {
+                if (self->ext.stpopupj.unk80 < 0x81) {
+                    if (prim->x1 > var_s2) {
+                        prim->x1 -= 8;
+                        prim->x3 = prim->x1;
+                        if (prim->x1 < prim->x0) {
+                            prim->drawMode = DRAW_HIDE;
+                        }
+                        prim->u1 -= 8;
+                        prim->u3 = prim->u1;
+
+                        if (!prim->u1) {
+                            prim->drawMode = DRAW_HIDE;
+                        }
+                    }
+                } else {
+                    prim->drawMode = DRAW_HIDE;
+                }
+                prim = prim->next;
+            }
 #endif
 
-        prim = self->ext.stpopupj.unk84;
-        if (prim->x0 > prim->x1) {
-            DestroyEntity(self);
-            return;
+            prim = self->ext.stpopupj.unk84;
+            if (prim->x0 > prim->x1) {
+                DestroyEntity(self);
+                return;
+            }
+            break;
         }
         break;
+
     case 32:
         if (!--self->ext.stpopupj.unk80) {
             g_CastleFlags[STAGE_FLAG] = 1;
