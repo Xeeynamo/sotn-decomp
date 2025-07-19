@@ -1902,7 +1902,7 @@ void func_us_801C4738(Entity* self) {
         if (self->ext.et_waterAlcove.waterHeight < 64) {
             if (!(self->ext.et_waterAlcove.unk8E & 0x7)) {
                 if (!self->ext.et_waterAlcove.waterHeight) {
-                    g_api_PlaySfx(SFX_WATER_BUBBLE);
+                    g_api.PlaySfx(SFX_WATER_BUBBLE);
                 }
                 self->ext.et_waterAlcove.waterHeight++;
                 if (self->ext.et_waterAlcove.waterHeight == 20) {
@@ -1935,7 +1935,74 @@ void func_us_801C4738(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4980);
+s32 GetPlayerCollisionWith(void*, u16, u16, u16);
+extern u16 D_us_80181590[6];
+
+void func_us_801C4980(Entity* self) {
+    Entity* player;
+    u16* hitboxPtr;
+    s16 prevPosY, deltaX, deltaY, angle;
+    u16 collision, hitboxIndex;
+
+    player = &PLAYER;
+    hitboxIndex = self->params;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitCommon);
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = hitboxIndex + 25;
+        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->ext.et_801C4980.posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+    }
+
+    hitboxPtr = &D_us_80181590[hitboxIndex << 1];
+
+    prevPosY = self->posY.i.hi;
+    self->posY.i.hi = self->ext.et_801C4980.posY - g_Tilemap.scrollY.i.hi +
+                      self->ext.et_801C4980.timer;
+    collision = GetPlayerCollisionWith(self, *hitboxPtr++, *hitboxPtr, 4);
+    self->posY.i.hi = prevPosY;
+    self->ext.et_801C4980.prevTimer = self->ext.et_801C4980.timer;
+
+    deltaX = self->posX.i.hi - player->posX.i.hi;
+
+    if (collision) {
+        if (self->ext.et_801C4980.timer < 4) {
+            self->ext.et_801C4980.timer++;
+        }
+    } else if (self->ext.et_801C4980.timer) {
+        self->ext.et_801C4980.timer--;
+    }
+
+    deltaY = self->ext.et_801C4980.timer;
+    if (deltaX < 0) {
+        prevPosY = (deltaX * deltaY * -0x100) / 56;
+    } else {
+        prevPosY = (deltaX * deltaY << 8) / 56;
+    }
+
+    self->posY.i.hi = (self->ext.et_801C4980.posY - g_Tilemap.scrollY.i.hi) +
+                      (deltaY - prevPosY / 256);
+
+    if (collision) {
+        deltaY -= self->ext.et_801C4980.prevTimer;
+        player->posY.i.hi += deltaY;
+        D_80097488.x.i.hi += deltaY;
+    }
+
+    angle = -prevPosY;
+    if (collision || deltaY) {
+        if (deltaX < 0) {
+            self->rotate = ratan2(angle, -0x3800);
+            self->rotate = (self->rotate - 0x800) & 0xFFF;
+            return;
+        }
+        self->rotate = ratan2(angle, 0x3800);
+        return;
+    }
+
+    self->rotate = 0;
+}
 
 void func_us_801C4BD8(Entity* self) {
     Tilemap* tmap;
@@ -1976,7 +2043,86 @@ void func_us_801C4BD8(Entity* self) {
     D_us_80181108 = 1;
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C4D2C);
+void func_us_801C4D2C(Entity* self) {
+    s16 leftBoundX, rightBoundX, currentX, playerScreenY;
+    u16 playerInRange;
+
+    u16* tilePtr;
+    Entity* newEntity;
+    Tilemap* tilemap;
+    Entity* player;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = 0;
+    }
+
+    player = &g_Entities[0];
+    tilemap = &g_Tilemap;
+
+    // Another P2 controller triangle secret ?
+    if (g_pads[1].tapped & PAD_TRIANGLE) {
+        g_api.PlaySfx(SFX_UNK_7BD);
+    }
+
+    playerInRange = 0;
+    if (!(g_Player.status &
+          (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM))) {
+        playerScreenY = player->posY.i.hi + tilemap->scrollY.i.hi;
+        if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
+            if (playerScreenY > 151 && playerScreenY < 171) {
+                playerInRange = 1;
+                leftBoundX = player->posX.i.hi + tilemap->scrollX.i.hi - 12;
+                rightBoundX = leftBoundX + 24;
+            }
+        } else if (playerScreenY > 151 && playerScreenY < 199) {
+            playerInRange = 1;
+            leftBoundX = player->posX.i.hi + tilemap->scrollX.i.hi - 8;
+            rightBoundX = leftBoundX + 16;
+        }
+    }
+
+    if (playerInRange) {
+        for (currentX = leftBoundX; currentX <= rightBoundX; currentX += 8) {
+            playerInRange = 0;
+
+            if ((currentX >= 2624 && currentX < 2784) ||
+                (currentX >= 2944 && currentX < 3040)) {
+                playerInRange = 1;
+            }
+
+            if (playerInRange) {
+                tilePtr = &tilemap->fg[currentX / 16] + 2288;
+
+                if (*tilePtr == 1793 || *tilePtr == 1797) {
+                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (newEntity) {
+                        CreateEntityFromCurrentEntity(E_ID_54, newEntity);
+                        newEntity->posX.i.hi =
+                            ((currentX & 0xFFF0) + 8) - tilemap->scrollX.i.hi;
+                        newEntity->posY.i.hi = 178 - tilemap->scrollY.i.hi;
+                        if (player->posX.i.hi > newEntity->posX.i.hi) {
+                            newEntity->params = 1;
+                        }
+                    }
+                    *tilePtr = 2759;
+                } else if (*tilePtr == 1804) {
+                    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (newEntity) {
+                        CreateEntityFromCurrentEntity(E_ID_54, newEntity);
+                        newEntity->posX.i.hi =
+                            ((currentX & 0xFFF0) + 8) - tilemap->scrollX.i.hi;
+                        newEntity->posY.i.hi = 178 - tilemap->scrollY.i.hi;
+                        if (player->posX.i.hi > newEntity->posX.i.hi) {
+                            newEntity->params = 1;
+                        }
+                    }
+                    *tilePtr = 1437;
+                }
+            }
+        }
+    }
+}
 
 void func_us_801C5020(Entity* self) {
     if (!self->step) {
@@ -2016,9 +2162,89 @@ void func_us_801C50FC(void) {
     }
 }
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5134);
+extern u16 D_us_801815BE[];
+extern u16 D_us_801815CC[];
 
-INCLUDE_ASM("st/no4/nonmatchings/first_c_file", func_us_801C5268);
+void func_us_801C5134(void) {
+    Entity* newEntity;
+    s16 offsetX;
+    s32 i;
+
+    PlaySfxPositional(SFX_UNK_7BD);
+
+    for (i = 1; i < 4; i++) {
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (newEntity) {
+            CreateEntityFromCurrentEntity(E_ID_5C, newEntity);
+            newEntity->posX.i.hi += D_us_801815BE[i - 1];
+            newEntity->posY.i.hi += D_us_801815CC[i];
+            newEntity->params = i;
+        } else {
+            break;
+        }
+    }
+
+    offsetX = -72;
+    for (i = 0; i < 10; i++) {
+        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (newEntity) {
+            CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
+            newEntity->params = 17;
+            newEntity->posX.i.hi += ((offsetX + ((rand() & 7) * 2)) - 7);
+            newEntity->posY.i.hi += (((rand() & 7) * 4) - 7);
+            offsetX += 16;
+        } else {
+            break;
+        }
+    }
+}
+
+// Function that updates the bridge state in underground caverns
+void func_us_801C5268(Entity* self) {
+    Entity* entity;
+    u16 offsetX;
+
+    if (!self->step) {
+        InitializeEntity(g_EInitInteractable);
+        self->animSet = ANIMSET_OVL(0);
+        self->posX.i.hi = 896 - g_Tilemap.scrollX.i.hi;
+        if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] > 1) {
+            func_us_801C50FC();
+            DestroyEntity(self);
+            return;
+        }
+    }
+    if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] == 1) {
+        if (!self->step_s) {
+            entity = &g_Entities[88];
+            if (entity->entityId == E_SKELETON_APE) {
+                entity = entity->ext.et_801C5268.unk80;
+                if (entity) {
+                    self->ext.et_801C5268.unk7C = entity;
+                    self->step_s++;
+                }
+            }
+        } else {
+            entity = self->ext.et_801C5268.unk7C;
+            if (entity->entityId != E_SKELETON_APE_BARREL) {
+                self->step_s = 0;
+            } else if (entity->step == 4 &&
+                       entity->posY.i.hi + g_Tilemap.scrollY.i.hi > 128) {
+                offsetX = entity->posX.i.hi + g_Tilemap.scrollX.i.hi;
+                if (offsetX > 808 && offsetX < 984) {
+                    g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] = 2;
+                }
+            }
+        }
+    }
+    if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] == 2 ||
+        g_pads[1].tapped & PAD_TRIANGLE) {
+        PlaySfxPositional(SFX_UNK_7BD);
+        g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE]++;
+        func_us_801C50FC();
+        func_us_801C5134();
+    }
+}
 
 extern s16 D_us_801815DC[]; // animCurFrame
 extern u16 D_us_801815EC[]; // facingLeft

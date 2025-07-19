@@ -3259,6 +3259,17 @@ typedef struct {
 } ET_Crow;
 
 typedef struct {
+    /* 0x7C */ u16 timer;
+    /* 0x7E */ u16 posY;
+    /* 0x80 */ u16 prevTimer;
+} ET_801C4980;
+
+typedef struct {
+    /* 0x7C */ struct Entity* unk7C;
+    /* 0x80 */ struct Entity* unk80;
+} ET_801C5268;
+
+typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 : 16;
@@ -3571,6 +3582,8 @@ typedef union { // offset=0x7C
     ET_801C12B0 et_801C12B0;
     ET_BonePillar et_bonePillar;
     ET_801C4520 et_801C4520;
+    ET_801C4980 et_801C4980;
+    ET_801C5268 et_801C5268;
     ET_Crow et_crow;
     ET_FerrymanBoat ferrymanBoat;
     ET_BoatElevator boatElevator;
