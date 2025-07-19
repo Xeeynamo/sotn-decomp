@@ -3293,6 +3293,10 @@ typedef struct {
     /* 0x80 */ s16 unk80;
 } ET_801B3F30;
 
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+} ET_801B4210;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3575,6 +3579,7 @@ typedef union { // offset=0x7C
     ET_SpectralSword spectralSword;
     ET_801CEB08 et_801CEB08;
     ET_801B3F30 et_801B3F30;
+    ET_801B4210 et_801B4210;
     ET_BreakableNO2 breakableNo2;
 } Ext;
 
