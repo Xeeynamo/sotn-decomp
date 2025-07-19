@@ -1951,7 +1951,7 @@ void func_us_801C4980(Entity* self) {
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = hitboxIndex + 25;
-        self->drawFlags = 4;
+        self->drawFlags = FLAG_DRAW_ROTATE;
         self->ext.et_801C4980.posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     }
 
