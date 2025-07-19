@@ -6,11 +6,7 @@ SVECTOR D_80182848 = {8, 8, 0};
 u16 D_80182850[] = {0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,
                     0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,
                     0x17, 0x19, 0x1A, 0x1B, 0x1C, 0x1D};
-#ifdef VERSION_PSP
-SVECTOR D_8018287C; // bss
-#else
-SVECTOR D_8018287C = {0, 0, 0};
-#endif
+SVECTOR D_8018287C = {0};
 
 extern u16 g_EInitInteractable[];
 void EntityLifeUpSpawn(Entity* self) {
@@ -28,11 +24,8 @@ void EntityLifeUpSpawn(Entity* self) {
     s32 XY_var;
     u32 primIndex;
     s16 zCoord;
-    s32 i;
-    s32 j;
-    s32 k;
-    s16 xVar;
-    s16 yVar;
+    s32 i, j, k;
+    s16 xVar, yVar;
 
     switch (self->step) {
     case 0:
@@ -83,7 +76,7 @@ void EntityLifeUpSpawn(Entity* self) {
                     // Not clear what this prim is using u0 and r1 for.
                     // Note that every-other prim has this. prim is a normal
                     // primitive, while prim->next is being funny.
-                    LOW(prim->next->u0) = 0xFFFB0000;
+                    LOW(prim->next->u0) = -0x50000;
                     LOW(prim->next->r1) = 0;
                     prim->next->x1 = 0x80;
                     prim->next->y0 = 0;
@@ -196,7 +189,7 @@ void EntityLifeUpSpawn(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             self->velocityY = 0;
             self->posY.i.hi += collider.unk18;
-            if (!(--self->ext.lifeUpSpawn.unk84)) {
+            if (!--self->ext.lifeUpSpawn.unk84) {
                 self->step = 5;
                 break;
             }

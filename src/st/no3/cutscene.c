@@ -19,7 +19,7 @@ static const char* actor_names[] = {_S("Alucard"), _S("Death")};
 
 // BSS
 STATIC_PAD_BSS(0xC00);
-u32 g_SkipCutscene;
+s32 g_SkipCutscene;
 Dialogue g_Dialogue;
 u32 D_801D7D68[26];
 u32 g_CutsceneFlags;

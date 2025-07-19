@@ -64,7 +64,8 @@ segments:
       - [0x1A50, .data, st_common]
       - [0x1C50, .data, e_collect]
       - [0x1F40, .data, e_misc] # EntityRelicOrb
-      - [0x205C, data]
+      - [0x205C, .data, e_particles]
+      - [0x20DC, .data, e_room_fg]
       - [0x2168, .data, water_effects]
       - [0x2224, .data, e_merman2]
       - [0x2338, .data, e_merman]
@@ -76,13 +77,8 @@ segments:
       - [0x2978, data]
       - [0x2A20, data]
       - [0x2B00, data]
-      - [0x3010, data]
-      - [0x33A0, data]
-      - [0x3530, data]
-      - [0x3570, data]
-      - [0x3580, data]
-      - [0x3720, data]
-      - [0x3760, data]
+      - [0x2EF4, .data, gurkha]
+      - [0x33E4, .data, blade]
       - [0x3A7C, .data, gen/rooms]
       - [0x3B68, .data, gen/e_layout] # layout entries data
       - [0x49E0, .data, stage_data]
@@ -104,11 +100,11 @@ segments:
       - [0x320A0, .rodata, e_zombie] # EntityZombie
       - [0x320B4, .rodata, e_bloody_zombie] # EntityBloodyZombie data
       - [0x320DC, .rodata, e_owl_knight]
-      - [0x321EC, .rodata, 4D658] # Strings
+      - [0x321EC, .rodata, giantbro_helpers] # Strings
       - [0x3224C, .rodata, 4E69C] # EntityHammer
       - [0x322CC, .rodata, 4E69C] # EntityGurkhaBodyParts
-      - [0x322F8, .rodata, 4F5B8] # EntityGurkha
-      - [0x32380, .rodata, 4F5B8] # EntityGurkhaSword
+      - [0x322F8, .rodata, gurkha] # EntityGurkha
+      - [0x32380, .rodata, gurkha] # EntityGurkhaSword
       - [0x323E4, .rodata, blade] # EntityBlade
       - [0x32464, .rodata, prim_helpers]
       - [0x3246C, c, e_room_bg]
@@ -150,13 +146,14 @@ segments:
       - [0x49BC8, c, e_zombie]
       - [0x49F98, c, e_bloody_zombie] # EntityBloodyZombie
       - [0x4B018, c, e_owl_knight]
-      - [0x4D658, c]
+      - [0x4D658, c, giantbro_helpers]
+      - [0x4E04C, c]
       - [0x4E69C, c]
-      - [0x4F5B8, c]
+      - [0x4F778, c, gurkha]
       - [0x50A00, c, blade]
       - [0x51F38, c, prim_helpers]
       - [0x52768, .bss, create_entity]
       - [0x5277D, .bss, bss]
-      - [0x53378, .bss, 4D658]
+      - [0x53378, .bss, giantbro_helpers]
       - [0x533F4, .bss, e_collect]
   - [0x53434]

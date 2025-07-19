@@ -66,7 +66,7 @@ segments:
       - [0x138C, .data, e_particles]
       - [0x140C, .data, e_room_fg]
       - [0x1498, .data, gen/rooms]
-      - [0x14AC, data]
+      - [0x14AC, .data, e_background_house]
       - [0x1608, .data, gen/e_layout] # layout entries data
       - [0x16C0, data]
       - [0x16C8, .data, cutscene_data]
@@ -107,7 +107,7 @@ segments:
       - [0x21BFC, c, e_room_fg]
       - [0x21CE8, c, popup]
       - [0x22018, c, prim_helpers]
-      - [0x22848, c]
+      - [0x22848, c, e_background_house]
       - [0x23264, .bss, create_entity]
       - [0x232CA, .bss, bss]
       - [0x23FB6, .bss, e_collect]

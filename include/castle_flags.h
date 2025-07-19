@@ -93,8 +93,10 @@ typedef enum {
     /* 0x88 */ RNZ0_SECRET_WALL_OPEN = 136,
     /* 0x89 */ RNZ0_SECRET_CEILING_OPEN = 137,
     /* 0x90 */ TOP_STAGE_FLAG = 144,
-    /* 0x91 */ TOP_SECRET_WALL_1_BROKEN = 145, // Upper left of large room
-    /* 0x92 */ TOP_SECRET_WALL_2_BROKEN = 146, // Lower left of large room
+    /* 0x91 */ TOP_SECRET_WALL_1_BROKEN =
+        145, // Upper left of large room - behind power of mist
+    /* 0x92 */ TOP_SECRET_WALL_2_BROKEN =
+        146, // Lower left of large room - behind leap stone
     /* 0x93 */ TOP_LION_LIGHTS = 147,    // Different bits for each lion pair
     /* 0x94 */ TOP_SECRET_STAIRS = 148,  // The drop down stairs before Richter
     /* 0x95 */ SHAFT_ORB_DEFEATED = 149, // Set by defeating Shaft's orb
@@ -134,8 +136,8 @@ typedef enum {
     // Offset 0xC1 is set by blocking the water with the crate in NO4
     // Ends at value of 3, incrementing by 1 as the water fills
     /* 0xC1 */ NO4_WATER_BLOCKED = 193,
-    /* 0xC2 */ BOATMAN_GATE_OPEN = 194, // At the end of the second boat trip
-    /* 0xC3 */ SCYLLA_DEFEATED = 195,   // Controls the water before Scylla
+    /* 0xC2 */ FERRYMAN_GATE_OPEN = 194, // At the end of the second boat trip
+    /* 0xC3 */ SCYLLA_DEFEATED = 195,    // Controls the water before Scylla
     /* 0xC4 */ NO4_SECRET_FLOOR_OPEN = 196,
     /* 0xC5 */ SCYLLA_WYRM_DEFEATED = 197, // Miniboss before Scylla
     /* 0xC6 */ NO4_SECRET_WALL_OPEN = 198,
@@ -253,7 +255,7 @@ typedef enum {
     /* 00000001 */ // NO4_KNUCKLE_DUSTER
 
     /* 0x10B */ CASTLE_COLLECTIBLES_10B = 267,
-    /* 10000000 */ // NO4_BOATMAN_LIFE_VESSEL // Second boatman area
+    /* 10000000 */ // NO4_FERRYMAN_LIFE_VESSEL // Second ferryman area
     /* 01000000 */ // NO4_ELIXIR
     /* 00100000 */ // NO4_SHIITAKE_2
     /* 00010000 */ // NO4_TOADSTOOL

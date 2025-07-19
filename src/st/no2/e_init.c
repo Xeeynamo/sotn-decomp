@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
 
-void EntityUnkBreakable(Entity* self);
+void EntityBreakable(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
@@ -26,7 +26,7 @@ void EntitySkelerangBoomerang(Entity* self);
 void EntitySkelerangUnknown(Entity* self);
 void func_us_801B3D8C(Entity* self);
 void func_us_801B3F30(Entity* self);
-void EntityFrozenShadeCrystal(Entity* self);
+void func_us_801B4148(Entity* self);
 void func_us_801B41A4(Entity* self);
 void func_us_801B4210(Entity* self);
 void Entity3DBackgroundHouse(Entity* self);
@@ -51,7 +51,7 @@ void func_us_801B72E8(Entity* self);
 void func_us_801B5948(Entity* self);
 void func_us_801B7580(Entity* self);
 void EntitySealedDoor(Entity* self);
-void func_us_801C8168(Entity* self);
+void EntityValhallaKnight(Entity* self);
 void func_us_801C8954(Entity* self);
 void func_us_801C8AAC(Entity* self);
 void EntityHammer(Entity* self);
@@ -61,13 +61,13 @@ void EntityGurkha(Entity* self);
 void EntityGurkhaSword(Entity* self);
 void EntityBlade(Entity* self);
 void EntityBladeSword(Entity* self);
-void func_us_801CDDF4(Entity* self);
+void EntitySpectralSword(Entity* self);
 void func_us_801CEB08(Entity* self);
-void func_us_801CEBDC(Entity* self);
-void func_801A8328(Entity* self);
+void EntityPoltergeist(Entity* self);
+void EntityBreakableDebris(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    EntityUnkBreakable,
+    EntityBreakable,
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
@@ -93,7 +93,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkelerangUnknown,
     func_us_801B3D8C,
     func_us_801B3F30,
-    EntityFrozenShadeCrystal,
+    func_us_801B4148,
     func_us_801B41A4,
     func_us_801B4210,
     Entity3DBackgroundHouse,
@@ -118,7 +118,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B5948,
     func_us_801B7580,
     EntitySealedDoor,
-    func_us_801C8168,
+    EntityValhallaKnight,
     func_us_801C8954,
     func_us_801C8AAC,
     EntityHammer,
@@ -128,13 +128,13 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityGurkhaSword,
     EntityBlade,
     EntityBladeSword,
-    func_us_801CDDF4,
+    EntitySpectralSword,
     func_us_801CEB08,
-    func_us_801CEBDC,
-    func_801A8328,
+    EntityPoltergeist,
+    EntityBreakableDebris,
 };
 
-EInit D_us_80180820 = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x000};
+EInit g_EInitBreakable = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x002};
 EInit D_us_80180844 = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x004};
@@ -155,16 +155,21 @@ EInit g_EInitOwl = {ANIMSET_OVL(0x08), 0x01, 0x49, PAL_OWL_KNIGHT, 0x016};
 EInit g_EInitBloodyZombie = {
     ANIMSET_OVL(0x09), 0x01, 0x4A, PAL_BLOODY_ZOMBIE, 0x00D};
 EInit D_us_801808EC = {ANIMSET_OVL(0x02), 0x0E, 0x00, PAL_NONE, 0x005};
-EInit D_us_801808F8 = {ANIMSET_OVL(0x05), 0x01, 0x4C, PAL_UNK_207, 0x085};
-EInit D_us_80180904 = {ANIMSET_OVL(0x05), 0x01, 0x4C, PAL_UNK_207, 0x003};
+EInit g_EInitValhallaKnight = {
+    ANIMSET_OVL(0x05), 0x01, 0x4C, PAL_VALHALLA_KNIGHT, 0x085};
+EInit D_us_80180904 = {
+    ANIMSET_OVL(0x05), 0x01, 0x4C, PAL_VALHALLA_KNIGHT, 0x003};
 EInit D_us_80180910 = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NONE, 0x086};
 EInit D_us_8018091C = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NONE, 0x087};
 EInit D_us_80180928 = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_UNK_23E, 0x0BA};
 EInit D_us_80180934 = {ANIMSET_OVL(0x06), 0x12, 0x4C, PAL_UNK_23E, 0x0BB};
 EInit D_us_80180940 = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_UNK_23B, 0x0BC};
 EInit D_us_8018094C = {ANIMSET_OVL(0x06), 0x14, 0x4C, PAL_UNK_23B, 0x0BD};
-EInit D_us_80180958 = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_UNK_238, 0x0BE};
-EInit D_us_80180964 = {ANIMSET_OVL(0x06), 0x13, 0x4C, PAL_UNK_238, 0x0BF};
-EInit D_us_80180970 = {ANIMSET_OVL(0x04), 0x00, 0x50, PAL_UNK_241, 0x081};
-EInit D_us_8018097C = {ANIMSET_OVL(0x04), 0x00, 0x50, PAL_UNK_241, 0x002};
-EInit D_us_80180988 = {ANIMSET_OVL(0x04), 0x00, 0x50, PAL_UNK_241, 0x082};
+EInit g_EInitBlade = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_BLADE, 0x0BE};
+EInit g_EInitBladeSword = {ANIMSET_OVL(0x06), 0x13, 0x4C, PAL_BLADE, 0x0BF};
+EInit g_EInitSpectralSword = {
+    ANIMSET_OVL(0x04), 0x00, 0x50, PAL_SPECTRAL_SWORD, 0x081};
+EInit D_us_8018097C = {
+    ANIMSET_OVL(0x04), 0x00, 0x50, PAL_SPECTRAL_SWORD, 0x002};
+EInit g_EInitPoltergeist = {
+    ANIMSET_OVL(0x04), 0x00, 0x50, PAL_SPECTRAL_SWORD, 0x082};

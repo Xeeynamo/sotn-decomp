@@ -72,7 +72,7 @@ void EntityClouds(Entity* self) {
 
     if (!self->step) {
         InitializeEntity(g_EInitInteractable);
-        primIndex = g_api.func_800EDB58(4, 0x60);
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x60);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;

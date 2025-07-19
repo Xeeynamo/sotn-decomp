@@ -720,11 +720,6 @@ struct Entity;
 #include "unkstruct.h"
 
 typedef struct {
-    f32 x;
-    f32 y;
-} Pos;
-
-typedef struct {
     f32 posX;
     f32 posY;
 } Camera;

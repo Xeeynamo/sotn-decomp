@@ -44,11 +44,11 @@ void func_pspeu_092409A8(Entity* self);
 void func_pspeu_09240CD0(Entity* self);
 void func_pspeu_09241098(Entity* self);
 void func_pspeu_09241410(Entity* self);
-void func_pspeu_09239B00(Entity* self);
-void func_pspeu_0923B288(Entity* self);
-void func_pspeu_0923B378(Entity* self);
-void func_pspeu_0923C460(Entity* self);
-void func_pspeu_0923D0B8(Entity* self);
+void EntityFerrymanController(Entity* self);
+void EntityFerryman(Entity* self);
+void EntityBoatElevatorChains(Entity* self);
+void EntityBoatElevatorController(Entity* self);
+void EntityFerrymanUnused(Entity* self);
 void func_us_801C123C(Entity* self);
 void func_pspeu_09241870(Entity* self);
 void func_pspeu_09241B28(Entity* self);
@@ -74,7 +74,7 @@ void EntitySpearGuard(Entity* self);
 void EntityThrownSpear(Entity* self);
 void EntityBoneArcher(Entity* self);
 void EntityBoneArcherArrow(Entity* self);
-void func_pspeu_0923D180(Entity* self);
+void EntityFerrymanGateController(Entity* self);
 void OVL_EXPORT(EntityCutscene)(Entity* self);
 void func_pspeu_09242200(Entity* self);
 void EntityBreakableWall(Entity* self);
@@ -139,11 +139,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x29 */ func_pspeu_09240CD0,
     /* 0x2A */ func_pspeu_09241098,
     /* 0x2B */ func_pspeu_09241410,
-    /* 0x2C */ func_pspeu_09239B00,
-    /* 0x2D */ func_pspeu_0923B288,
-    /* 0x2E */ func_pspeu_0923B378,
-    /* 0x2F */ func_pspeu_0923C460,
-    /* 0x30 */ func_pspeu_0923D0B8,
+    /* 0x2C */ EntityFerrymanController,
+    /* 0x2D */ EntityFerryman,
+    /* 0x2E */ EntityBoatElevatorChains,
+    /* 0x2F */ EntityBoatElevatorController,
+    /* 0x30 */ EntityFerrymanUnused,
     /* 0x31 */ EntityDummy,
     /* 0x32 */ EntityDummy,
     /* 0x33 */ EntityDummy,
@@ -172,7 +172,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x4A */ EntityThrownSpear,
     /* 0x4B */ EntityBoneArcher,
     /* 0x4C */ EntityBoneArcherArrow,
-    /* 0x4D */ func_pspeu_0923D180,
+    /* 0x4D */ EntityFerrymanGateController,
     /* 0x4E */ OVL_EXPORT(EntityCutscene),
     /* 0x4F */ func_pspeu_09242200,
     /* 0x50 */ EntityBreakableWall,

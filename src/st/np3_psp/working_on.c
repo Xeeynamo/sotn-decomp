@@ -3,16 +3,29 @@
 
 // clang-format off
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09241A50);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0925F770);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09241FE0);
+// Hammer
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_0925F9D0);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09242228);
+// EntityGurkhaBodyParts
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09260A58);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09242C40);
+// EntityHammerWeapon
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09260EE0);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_pspeu_09242ED0);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_801CE04C);
 
-INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", EntityStageNamePopup);
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_801CE120);
+
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_801CE1E8);
+
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_801CE228);
+
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", polarPlacePartsList);
+
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_801CE2CC);
+
+INCLUDE_ASM("st/np3_psp/nonmatchings/np3_psp/working_on", func_801CE3FC);
 
 // clang-format on
