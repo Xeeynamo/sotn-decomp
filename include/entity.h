@@ -3220,7 +3220,7 @@ typedef struct {
 
 typedef struct {
     struct Entity* unk7C;
-    struct Primitive* unk80;
+    struct Entity* unk80;
 } ET_801C5268;
 
 typedef union { // offset=0x7C
