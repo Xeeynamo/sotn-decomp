@@ -244,3 +244,66 @@ typedef struct FrozenShadePrim {
     /* 0x31 */ u8 v3; // TODO not verified
     /* 0x32 */ u16 drawMode;
 } FrozenShadePrim; /* size=0x34 */
+
+typedef struct Prim_801B4DA4 {
+    /* 0x00 */ struct Prim_801B4DA4* next;
+#if defined(VERSION_PSP)
+    u_long dummy;
+#endif
+    union {
+        struct {
+            /* 0x04 */ u8 r0;
+            /* 0x05 */ u8 g0;
+            /* 0x06 */ u8 b0;
+            /* 0x07 */ u8 type;
+        } rgb;
+        DR_ENV* drenv0;
+    } union0;
+    /* 0x08 */ s16 x0;
+    /* 0x0A */ s16 y0;
+    /* 0x0C */ u8 u0;    // w for PrimitiveType::TILE
+    /* 0x0D */ u8 v0;    // h for PrimitiveType::TILE
+    /* 0x0E */ u16 clut; // TODO not verified
+    union {
+        struct {
+            /* 0x10 */ u8 r1;
+            /* 0x11 */ u8 g1;
+            /* 0x12 */ u8 b1;
+            /* 0x13 */ u8 p1;
+        } rgb;
+        DR_ENV* drenv1;
+    } union1;
+    /* 0x14 */ s16 x1;
+    /* 0x16 */ s16 y1;
+    /* 0x18 */ u8 u1;     // TODO not verified
+    /* 0x19 */ u8 v1;     // TODO not verified
+    /* 0x1A */ u16 tpage; // TODO not verified
+    union {
+        struct {
+            /* 0x1C */ u8 r2;
+            /* 0x1D */ u8 g2;
+            /* 0x1E */ u8 b2;
+            /* 0x1F */ u8 p2;
+        } rgb;
+        DR_ENV* drenv2;
+    } union2;
+    /* 0x20 */ s16 x2;
+    /* 0x22 */ s16 y2;
+    /* 0x24 */ u8 u2; // TODO not verified
+    /* 0x25 */ u8 v2; // TODO not verified
+    /* 0x26 */ u16 priority;
+    union {
+        struct {
+            /* 0x28 */ u8 r3;
+            /* 0x29 */ u8 g3;
+            /* 0x2A */ u8 b3;
+            /* 0x2B */ u8 p3;
+        } rgb;
+        DR_ENV* drenv3;
+    } union3;
+    /* 0x2C */ s16 x3;
+    /* 0x2E */ s16 y3;
+    /* 0x30 */ u8 u3; // TODO not verified
+    /* 0x31 */ u8 v3; // TODO not verified
+    /* 0x32 */ u16 drawMode;
+} Prim_801B4DA4; /* size=0x34 */
