@@ -40,6 +40,10 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
+      - [0x2C, .data, sprite_banks]
+      - [0x8C, .data, palette_def]
+      - [0x110, .data, layers]
+      - [0x3E8, .data, graphics_banks]
       - [0x574, .data, gen/e_laydef]
       - [0x71C, .data, e_init]
       - [0x994, .data, background_block_init]
@@ -47,8 +51,6 @@ segments:
       - [0x9EC, .data, e_lock_camera]
       - [0xA6C, .data, e_breakable]
       - [0xB7C, .data, 33D8C]
-      - [0xBA8, .data, 33D8C]
-      - [0xBB4, .data, 33D8C]
       - [0xBB8, .data, e_background_house]
       - [0xD38, data]
       - [0xD48, .data, e_secrets]

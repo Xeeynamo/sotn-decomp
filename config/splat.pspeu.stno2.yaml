@@ -67,7 +67,7 @@ segments:
       - [0x1D6F8, c, no2/e_secrets]
       - [0x1F3B8, c, no2_psp/st_init_no2]
       - [0x1F688, c, no2/e_breakable]
-      - [0x1FF58, c, no2_psp/1FF58]
+      - [0x1FF58, c, no2/33D8C]
       - [0x20770, c, no2/e_sealed_door]
       - [0x21C20, c, no2/e_background_house]
       - [0x22BC8, c, no2_psp/22BC8]
@@ -94,18 +94,22 @@ segments:
       - [0x27498, data]
       - [0x27EC0, .data, no2/e_secrets]
       - [0x27FD8, data]
+      - [0x2E9A0, .data, no2/layers]
+      - [0x2EC68, data]
       - [0x2EE90, .data, no2_psp/e_init]
-      - [0x2F188, data]
+      - [0x2F188, .data, no2/e_red_door_tiles]
+      - [0x2F1C8, .data, no2/gen/rooms]
       - [0x2F298, .data, no2/e_breakable]
       - [0x2F3E0, data]
+      - [0x3DCE8, .data, no2/tilemaps]
       - [0x55718, .data, no2/header]
-      - [0x55748, .data, no2_psp/1FF58]
-      - [0x55778, .data, no2_psp/1FF58]
-      - [0x55788, .data, no2_psp/1FF58]
-      - [0x5578C, data]
+      - [0x55748, .data, no2/33D8C]
       - [0x55790, .data, no2/e_sealed_door]
       - [0x55800, .data, no2/e_background_house]
-      - [0x55990, data]
+      - [0x55990, .data, no2/d_prize_drops]
+      - [0x559A8, data]
+      - [0x559B0, .data, no2/background_block_init]
+      - [0x559D0, data]
       - [0x55A48, .data, no2/e_lock_camera]
       - [0x55AC0, data]
       - [0x55C00, .rodata, no2/e_bloody_zombie]
@@ -120,6 +124,7 @@ segments:
       - {start: 0x55E00, type: .bss, vram: 0x0928D480, name: no2/create_entity}
       - {start: 0x55E00, type: .bss, vram: 0x0928D4A0, name: no2/e_collect}
       - {start: 0x55E00, type: bss, vram: 0x0928D500, name: bss1}
+      - {start: 0x55E00, type: .bss, vram: 0x0928D508, name: no2/layers}
       - {start: 0x55E00, type: .bss, vram: 0x0928D518, name: no2_psp/st_init_no2}
       - {start: 0x55E00, type: .bss, vram: 0x0928D6A0, name: no2/e_lock_camera}
       - {start: 0x55E00, type: bss, vram: 0x0928D6A8, name: bss2}
