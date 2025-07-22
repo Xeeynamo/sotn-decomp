@@ -39,7 +39,7 @@ void func_us_801B5FB8(Entity* self);
 void func_us_801B68EC(Entity* self);
 void func_us_801B65A4(Entity* self);
 void EntityBigRedFireball(Entity* self);
-void func_pspeu_0925A988(Entity* self);
+void func_us_801B6E34(Entity* self);
 void EntityOwlKnight(Entity* self);
 void EntityOwl(Entity* self);
 void EntityOwlKnightSword(Entity* self);
@@ -106,7 +106,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B68EC,
     func_us_801B65A4,
     EntityBigRedFireball,
-    func_pspeu_0925A988,
+    func_us_801B6E34,
     EntityOwlKnight,
     EntityOwl,
     EntityOwlKnightSword,
@@ -147,7 +147,7 @@ EInit g_EInitSkelerang = {ANIMSET_OVL(0x01), 0x01, 0x48, PAL_SKELERANG, 0x00B};
 EInit g_EInitSkelerangBoomerang = {
     ANIMSET_OVL(0x01), 0x2B, 0x48, PAL_SKELERANG, 0x00C};
 EInit D_us_801808A4 = {ANIMSET_OVL(0x02), 0x0B, 0x00, PAL_NONE, 0x003};
-EInit D_pspeu_092666D8 = {ANIMSET_OVL(0x03), 0x01, 0x49, PAL_UNK_203, 0x003};
+EInit D_us_801808B0 = {ANIMSET_OVL(0x03), 0x01, 0x49, PAL_UNK_203, 0x003};
 EInit g_EInitOwlKnight = {ANIMSET_OVL(0x08), 0x10, 0x49, PAL_OWL_KNIGHT, 0x014};
 EInit g_EInitOwlKnightSword = {
     ANIMSET_OVL(0x08), 0x00, 0x49, PAL_OWL_KNIGHT_SWORD, 0x015};
