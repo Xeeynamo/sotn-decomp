@@ -4,23 +4,23 @@
 extern s32 g_UserLanguage;
 
 static u8 D_pspeu_0925C670[] = {
-#include "gen/D_pspeu_0925C670.h"
+#include "../no2/gen/D_pspeu_0925C670.h"
 };
 
 static u8 D_pspeu_0925C8A0[] = {
-#include "gen/D_pspeu_0925C8A0.h"
+#include "../no2/gen/D_pspeu_0925C8A0.h"
 };
 
 static u8 D_pspeu_0925CAF8[] = {
-#include "gen/D_pspeu_0925CAF8.h"
+#include "../no2/gen/D_pspeu_0925CAF8.h"
 };
 
 static u8 D_pspeu_0925CD88[] = {
-#include "gen/D_pspeu_0925CD88.h"
+#include "../no2/gen/D_pspeu_0925CD88.h"
 };
 
 static u8 D_pspeu_0925CF98[] = {
-#include "gen/D_pspeu_0925CF98.h"
+#include "../no2/gen/D_pspeu_0925CF98.h"
 };
 
 static u_long* D_pspeu_0925D1E8[] = {

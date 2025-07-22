@@ -252,7 +252,7 @@ files:
           - [0x3F608, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no2.bin
     asset_path: assets/st/no2
-    src_path: src/st/no2_psp
+    src_path: src/st/no2
     splat_config_path: config/splat.pspeu.stno2.yaml
     segments:
       - start: 0x80
@@ -265,6 +265,10 @@ files:
           - [0x25708, cmpgfx, D_pspeu_0925CD88, 128, 32, 4]
           - [0x25918, cmpgfx, D_pspeu_0925CF98, 128, 32, 4]
           - [0x25B68, skip]
+          - [0x2E9A0, layers, layers]
+          - [0x2EC68, skip]
+          - [0x2F1C8, rooms, rooms]
+          - [0x2F298, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no3.bin
     asset_path: assets/st/no3
     src_path: src/st/no3_psp
