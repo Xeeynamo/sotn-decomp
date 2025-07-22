@@ -109,7 +109,7 @@ extern EInit g_EInitDamageNum;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
 extern EInit D_us_801808A4;
-// extern EInit D_us_801808B0;
+extern EInit D_us_801808B0;
 extern EInit g_EInitOwlKnight;
 extern EInit g_EInitOwlKnightSword;
 extern EInit g_EInitOwl;
