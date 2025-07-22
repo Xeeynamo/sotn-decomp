@@ -211,7 +211,7 @@
 | lib   | func_psp_0924F9C0                        |       21 |          1 |        |                                 |       |
 | lib   | func_psp_0923F7A0                        |       21 |          1 |        |                                 |       |
 | no2   | func_pspeu_0923F710                      |       21 |          1 |        |                                 |       |
-| no2   | SetSubStep                               |       21 |          1 |        |                                 |       |
+| no2   | func_pspeu_0924D628                      |       21 |          1 |        |                                 |       |
 | no2   | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | no3   | func_pspeu_09254778                      |       21 |          1 |        |                                 |       |
 | no3   | func_pspeu_092605B8                      |       21 |          1 |        |                                 |       |
@@ -471,7 +471,7 @@
 | chi   | func_psp_09247548                        |       34 |          2 |        |                                 |       |
 | dai   | GetDistanceToPlayerX                     |       34 |          2 |        | https://decomp.me/scratch/92Xme | 1.0   |
 | lib   | func_psp_0924EDD8                        |       34 |          2 |        |                                 |       |
-| no2   | GetDistanceToPlayerX                     |       34 |          2 |        | https://decomp.me/scratch/92Xme | 1.0   |
+| no2   | func_pspeu_0924C958                      |       34 |          2 |        |                                 |       |
 | no3   | func_pspeu_0925FB68                      |       34 |          2 |        |                                 |       |
 | no4   | func_pspeu_0925ACB0                      |       34 |          2 |        |                                 |       |
 | np3   | func_pspeu_09259CE8                      |       34 |          2 |        |                                 |       |
@@ -2038,7 +2038,7 @@
 | no3   | EntityMermanWaterSplash                  |      324 |         34 |        | https://decomp.me/scratch/bBJhZ | 0.997 |
 | np3   | EntityMermanWaterSplash                  |      324 |         34 |        | https://decomp.me/scratch/bBJhZ | 0.997 |
 | st0   | func_pspeu_09241708                      |      325 |          7 |        |                                 |       |
-| no2   | func_pspeu_0925B278                      |      330 |         40 |        |                                 |       |
+| no2   | func_pspeu_0925B278                      |      330 |         40 |        | https://decomp.me/scratch/TynoM | 1.0   |
 | chi   | EntityThornweed                          |      330 |         47 | Yes    |                                 |       |
 | lib   | EntityThornweed                          |      330 |         47 | Yes    |                                 |       |
 | dra   | DealDamage                               |      331 |         39 |        | https://decomp.me/scratch/rZ44e | 0.999 |
