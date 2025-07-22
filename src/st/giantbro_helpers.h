@@ -224,7 +224,7 @@ void func_801CDF1C(s16 entIndices[], unkStr_801CDD80* arg1, s32 arg2) {
         func_801CDD80(entIndices, arg1);
         g_CurrentEntity->ext.GH_Props.unkB4[arg2] = arg1->unk0;
     }
-    if (!(--g_CurrentEntity->ext.GH_Props.unkB4[arg2])) {
+    if (!--g_CurrentEntity->ext.GH_Props.unkB4[arg2]) {
         arg1++;
         if (!arg1->unk0) {
             g_CurrentEntity->ext.GH_Props.unkB0[arg2] = 0;

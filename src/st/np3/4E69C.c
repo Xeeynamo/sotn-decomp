@@ -13,11 +13,11 @@ void EntityHammer(Entity* self) {
     u16 zPriority;
 
     if ((self->step & 1) && (self->hitFlags & 3)) {
-        func_801CE1E8(0xC);
+        func_801CE1E8(12);
     }
     if ((self->flags & FLAG_DEAD) && (self->step < 24)) {
         PlaySfxPositional(0x745);
-        func_801CE1E8(0x18);
+        func_801CE1E8(24);
     }
     switch (self->step) {
     case 0:
@@ -67,13 +67,13 @@ void EntityHammer(Entity* self) {
         } else {
             var_s2 = D_80182AD0;
         }
-        func_801CDF1C(var_s2, &D_80182BB4, 0);
+        func_801CDF1C(var_s2, D_80182BB4, 0);
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
-        polarPlacePartsList(&D_80182A20);
+        polarPlacePartsList(D_80182A20);
         if (self->ext.GH_Props.unkB0[0] > 1) {
             collider.unk18 = 9;
-            otherEnt = &self[var_s2[3]];
+            otherEnt = self + var_s2[3];
             func_801CE04C(otherEnt, &collider);
             if (otherEnt->ext.GH_Props.unk88 != 0) {
                 otherEnt->posY.i.hi += collider.unk18;
@@ -92,13 +92,13 @@ void EntityHammer(Entity* self) {
         } else {
             var_s2 = D_80182AD0;
         }
-        func_801CDF1C(var_s2, &D_80182BEC, 0);
+        func_801CDF1C(var_s2, D_80182BEC, 0);
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
-        polarPlacePartsList(&D_80182A20);
+        polarPlacePartsList(D_80182A20);
         if (self->ext.GH_Props.unkB0[0] > 1) {
             collider.unk18 = 9;
-            otherEnt = &self[var_s2[3]];
+            otherEnt = self + var_s2[3];
             func_801CE04C(otherEnt, &collider);
             if (otherEnt->ext.GH_Props.unk88 != 0) {
                 otherEnt->posY.i.hi += collider.unk18;
@@ -125,7 +125,7 @@ void EntityHammer(Entity* self) {
             } else {
                 var_s2 = D_80182A5C;
             }
-            func_801CDF1C(var_s2, &D_80182B54, 0);
+            func_801CDF1C(var_s2, D_80182B54, 0);
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
             if (self->ext.GH_Props.unkB0[0] == 0 &&
@@ -134,7 +134,7 @@ void EntityHammer(Entity* self) {
             }
             break;
         case 1:
-            func_801CDF1C(var_s2, &D_80182C9C, 0);
+            func_801CDF1C(var_s2, D_80182C9C, 0);
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
             if (self->ext.GH_Props.unkB4[0] == 0 &&
@@ -155,10 +155,10 @@ void EntityHammer(Entity* self) {
         case 3:
             MoveEntity();
             self->velocityY += FIX(48.0 / 128);
-            func_801CDF1C(var_s2, &D_80182CC4, 0);
+            func_801CDF1C(var_s2, D_80182CC4, 0);
             func_801CDE10(var_s2);
             func_801CE3FC(var_s2);
-            otherEnt = &self[var_s2[3]];
+            otherEnt = self + var_s2[3];
             collider.unk18 = 10;
             func_801CE04C(otherEnt, &collider);
             if (otherEnt->ext.GH_Props.unk88 != 0) {
@@ -171,7 +171,7 @@ void EntityHammer(Entity* self) {
             }
             break;
         }
-        polarPlacePartsList(&D_80182A20);
+        polarPlacePartsList(D_80182A20);
         break;
     case 6:
         switch (self->step_s) {
@@ -184,7 +184,7 @@ void EntityHammer(Entity* self) {
             } else {
                 var_s2 = D_80182B00;
             }
-            func_801CDF1C(var_s2, &D_80182E38, 0);
+            func_801CDF1C(var_s2, D_80182E38, 0);
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
             otherEnt = self + 7;
@@ -193,7 +193,7 @@ void EntityHammer(Entity* self) {
             func_801CDAC8(otherEnt, var_s3_2);
             func_801CDFD8(otherEnt, 0x10);
             func_801CDFD8(var_s3_2, 0x10);
-            polarPlacePartsList(&D_80182A20);
+            polarPlacePartsList(D_80182A20);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
                 (self->ext.GH_Props.unkB4[0] == 0)) {
                 PlaySfxPositional(0x743);
@@ -207,7 +207,7 @@ void EntityHammer(Entity* self) {
             } else {
                 var_s2 = D_80182B00;
             }
-            func_801CDF1C(var_s2, &D_80182E48, 0);
+            func_801CDF1C(var_s2, D_80182E48, 0);
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
             otherEnt = self + 7;
@@ -216,7 +216,7 @@ void EntityHammer(Entity* self) {
             func_801CDAC8(otherEnt, var_s3_2);
             func_801CDFD8(otherEnt, 2);
             func_801CDFD8(var_s3_2, 2);
-            polarPlacePartsList(&D_80182A20);
+            polarPlacePartsList(D_80182A20);
             if ((self->ext.GH_Props.unkB0[0] == 4) &&
                 (self->ext.GH_Props.unkB4[0] == 0)) {
                 self->ext.GH_Props.unk84 ^= 1;
@@ -238,10 +238,10 @@ void EntityHammer(Entity* self) {
             } else {
                 var_s2 = D_80182B00;
             }
-            func_801CDF1C(var_s2, &D_80182E38, 0);
+            func_801CDF1C(var_s2, D_80182E38, 0);
             func_801CDE10(var_s2);
             func_801CE2CC(var_s2);
-            polarPlacePartsList(&D_80182A20);
+            polarPlacePartsList(D_80182A20);
             if ((self->ext.GH_Props.unkB0[0] == 0) &&
                 (self->ext.GH_Props.unkB4[0] == 0)) {
                 self->step_s++;
@@ -258,10 +258,10 @@ void EntityHammer(Entity* self) {
         } else {
             var_s2 = D_80182AD0;
         }
-        func_801CDF1C(var_s2, &D_80182CFC, 0);
+        func_801CDF1C(var_s2, D_80182CFC, 0);
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
-        polarPlacePartsList(&D_80182A20);
+        polarPlacePartsList(D_80182A20);
         if (self->ext.GH_Props.unkB4[0] == 0) {
             self->facingLeft ^= 1;
             func_801CE4CC(self);
@@ -277,10 +277,10 @@ void EntityHammer(Entity* self) {
         } else {
             var_s2 = D_80182A5C;
         }
-        func_801CDF1C(var_s2, &D_80182EDC, 0);
+        func_801CDF1C(var_s2, D_80182EDC, 0);
         func_801CDE10(var_s2);
         func_801CE2CC(var_s2);
-        polarPlacePartsList(&D_80182A20);
+        polarPlacePartsList(D_80182A20);
         if (self->ext.GH_Props.unkB0[0] == 0 &&
             self->ext.GH_Props.unkB4[0] == 0) {
             func_801CE4CC(self);
@@ -338,7 +338,7 @@ void EntityGurkhaBodyParts(Entity* self) {
             InitializeEntity(g_EInitGurkhaType0);
             break;
         case 1:
-            InitializeEntity(g_EInitGurkhaType1);
+            InitializeEntity(g_EInitGurkha);
             break;
         case 2:
             InitializeEntity(g_EInitBlade);

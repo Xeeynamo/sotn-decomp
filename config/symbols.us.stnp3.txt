@@ -47,5 +47,5 @@ EntityOwlKnight = 0x801CC2E0;
 EntityHammer = 0x801CE69C;
 EntityGurkhaBodyParts = 0x801CF254;
 EntityGurkha = 0x801CF94C;
-EntityGurkhaSword = 0x801D0730;
+EntityGurkhaWeapon = 0x801D0730;
 EntityBlade = 0x801D0D40;
