@@ -608,8 +608,8 @@
 | chi   | func_psp_09247350                        |       40 |          2 |        |                                 |       |
 | dai   | func_pspeu_0924D1A0                      |       40 |          2 |        |                                 |       |
 | lib   | func_psp_0924EBE0                        |       40 |          2 |        |                                 |       |
-| no2   | func_pspeu_0924C760                      |       40 |          2 |        |                                 |       |
 | no2   | func_pspeu_09257B78                      |       40 |          2 |        |                                 |       |
+| no2   | func_pspeu_0924C760                      |       40 |          2 |        |                                 |       |
 | no3   | func_pspeu_0925F970                      |       40 |          2 |        |                                 |       |
 | no4   | func_pspeu_0925AAB8                      |       40 |          2 |        |                                 |       |
 | np3   | func_pspeu_09259AF0                      |       40 |          2 |        |                                 |       |
@@ -919,7 +919,7 @@
 | dai   | func_pspeu_092510C0                      |       61 |         10 |        |                                 |       |
 | dai   | func_us_801C379C                         |       61 |         10 |        | https://decomp.me/scratch/EkELI | 0.998 |
 | lib   | func_psp_09253D58                        |       61 |         10 |        | https://decomp.me/scratch/nlfs5 | 1.0   |
-| no2   | func_us_801C379C                         |       61 |         10 |        | https://decomp.me/scratch/EkELI | 0.998 |
+| no2   | func_pspeu_0925BAD0                      |       61 |         10 |        |                                 |       |
 | no3   | func_pspeu_09237700                      |       61 |         10 |        | https://decomp.me/scratch/pG66O | 0.997 |
 | no4   | func_pspeu_09237B20                      |       61 |         10 |        |                                 |       |
 | no4   | func_pspeu_0923D4A0                      |       61 |         10 |        |                                 |       |
@@ -1050,7 +1050,7 @@
 | dra   | func_psp_090E8A30                        |       71 |          5 |        |                                 |       |
 | dra   | func_psp_090E2720                        |       71 |          5 |        | https://decomp.me/scratch/e3xop | 0.912 |
 | ric   | func_pspeu_092BE788                      |       71 |          5 |        |                                 |       |
-| no2   | func_us_801C3ED8                         |       71 |          5 |        | https://decomp.me/scratch/u8p22 | 1.0   |
+| no2   | func_pspeu_0925C380                      |       71 |          5 |        |                                 |       |
 | no3   | EntityLightningCloud                     |       71 |          5 |        | https://decomp.me/scratch/PoKUO | 0.981 |
 | np3   | EntityLightningCloud                     |       71 |          5 |        | https://decomp.me/scratch/PoKUO | 0.981 |
 | dra   | PlaySfxVolPan                            |       71 |          7 |        |                                 |       |
@@ -1737,7 +1737,7 @@
 | np3   | EntityBloodDrips                         |      177 |         20 |        | https://decomp.me/scratch/9WRgM | 0.998 |
 | dra   | func_psp_090E4968                        |      178 |          3 |        | https://decomp.me/scratch/YpuSi | 1.0   |
 | lib   | func_psp_0923DA30                        |      178 |         16 |        | https://decomp.me/scratch/lsF0V | 0.996 |
-| no2   | func_us_801C3D44                         |      178 |         21 |        | https://decomp.me/scratch/dQ5T7 | 0.999 |
+| no2   | func_pspeu_0925C0F8                      |      178 |         21 |        | https://decomp.me/scratch/Qe9zq | 1.0   |
 | no2   | EntityBigRedFireball                     |      179 |         17 |        |                                 |       |
 | st0   | EntityDraculaGlass                       |      179 |         30 |        | https://decomp.me/scratch/2FUOR | 0.998 |
 | lib   | func_psp_09255D78                        |      181 |         19 |        | https://decomp.me/scratch/TWujm | 1.0   |
@@ -2186,7 +2186,7 @@
 | no3   | EntityFireWargDeathBeams                 |      448 |         35 |        | https://decomp.me/scratch/SrqzA | 0.999 |
 | dra   | func_80130E94                            |      450 |         49 | Yes    | https://decomp.me/scratch/TEA4v | 0.992 |
 | maria | func_pspeu_092AE558                      |      451 |         78 |        |                                 |       |
-| no2   | func_pspeu_0925A988                      |      453 |         84 |        |                                 |       |
+| no2   | func_pspeu_0925A988                      |      453 |         84 |        | https://decomp.me/scratch/nH9fd | 1.0   |
 | dai   | func_us_801C0BA4                         |      454 |         57 | Yes    | https://decomp.me/scratch/ysFYh | 1.0   |
 | st0   | EntityStageTitleFadeout                  |      456 |         31 | Yes    |                                 |       |
 | dra   | EntitySubwpnHolyWaterBreakGlass          |      457 |         29 |        |                                 |       |
