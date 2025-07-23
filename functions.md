@@ -1784,7 +1784,7 @@
 | dra   | func_psp_09116450                        |      196 |         22 |        | https://decomp.me/scratch/lVQqi | 0.974 |
 | dra   | func_psp_091398F0                        |      196 |         35 | Yes    | https://decomp.me/scratch/dKVhj | 0.994 |
 | lib   | func_psp_09253E20                        |      197 |          1 |        | https://decomp.me/scratch/ykdyz | 1.0   |
-| no2   | func_pspeu_0925BBA8                      |      197 |         20 |        |                                 |       |
+| no2   | func_pspeu_0925BBA8                      |      197 |         20 |        | https://decomp.me/scratch/9Lpph | 0.602 |
 | dra   | func_psp_09138DA0                        |      197 |         41 |        |                                 |       |
 | dra   | func_psp_0910E4B8                        |      198 |         34 | Yes    | https://decomp.me/scratch/OQ6N2 | 0.989 |
 |       | ServantInit                              |      199 |         20 |        |                                 |       |
@@ -1898,7 +1898,7 @@
 | dra   | func_psp_090FCEE0                        |      247 |         31 |        | https://decomp.me/scratch/fwp99 | 1.0   |
 | no4   | func_pspeu_092391D8                      |      248 |         34 |        | https://decomp.me/scratch/zAICA | 0.996 |
 | lib   | EntityCandleTable                        |      249 |         35 |        |                                 |       |
-| no2   | func_pspeu_0925B730                      |      249 |         37 |        |                                 |       |
+| no2   | func_pspeu_0925B730                      |      249 |         37 |        | https://decomp.me/scratch/WtmMA | 1.0   |
 | dra   | func_psp_091107E8                        |      250 |         34 |        |                                 |       |
 | no2   | func_pspeu_092592A0                      |      251 |          6 |        |                                 |       |
 | maria | func_pspeu_092A7B80                      |      251 |         26 |        | https://decomp.me/scratch/vLB2f | 0.998 |
