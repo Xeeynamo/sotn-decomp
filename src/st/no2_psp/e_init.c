@@ -13,6 +13,9 @@ void EntityStageNamePopup(Entity* self);
 void EntityEquipItemDrop(Entity* self);
 void EntityRelicOrb(Entity* self);
 void EntityHeartDrop(Entity* self);
+void EntityEnemyBlood(Entity* self);
+void EntityMessageBox(Entity* self);
+void EntityDummy(Entity* self);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self);
 void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
@@ -22,21 +25,21 @@ void EntitySkelerang(Entity* self);
 void EntitySkelerangBoomerang(Entity* self);
 void EntitySkelerangUnknown(Entity* self);
 void func_us_801B3D8C(Entity* self);
-void func_pspeu_09257810(Entity* self);
+void func_us_801B3F30(Entity* self);
 void func_us_801B4148(Entity* self);
 void func_us_801B41A4(Entity* self);
-void func_pspeu_09257C00(Entity* self);
+void func_us_801B4210(Entity* self);
 void Entity3DBackgroundHouse(Entity* self);
 void Entity3DHouseSpawner(Entity* self);
 void func_pspeu_0925A248(Entity* self);
-void func_us_801C3D44(Entity* self);
+void func_pspeu_0925C0F8(Entity* self);
 void func_pspeu_0925BBA8(Entity* self);
-void func_us_801C379C(Entity* self);
+void func_pspeu_0925BAD0(Entity* self);
 void func_us_801B5FB8(Entity* self);
 void func_us_801B68EC(Entity* self);
 void func_us_801B65A4(Entity* self);
 void EntityBigRedFireball(Entity* self);
-void func_pspeu_0925A988(Entity* self);
+void func_us_801B6E34(Entity* self);
 void EntityOwlKnight(Entity* self);
 void EntityOwl(Entity* self);
 void EntityOwlKnightSword(Entity* self);
@@ -45,7 +48,7 @@ void EntityBloodyZombie(Entity* self);
 void EntityBloodDrips(Entity* self);
 void EntityBloodSplatter(Entity* self);
 void func_pspeu_0925B730(Entity* self);
-void func_us_801C3ED8(Entity* self);
+void func_pspeu_0925C380(Entity* self);
 void func_pspeu_0925B278(Entity* self);
 void EntitySealedDoor(Entity* self);
 void EntityValhallaKnight(Entity* self);
@@ -89,21 +92,21 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkelerangBoomerang,
     EntitySkelerangUnknown,
     func_us_801B3D8C,
-    func_pspeu_09257810,
+    func_us_801B3F30,
     func_us_801B4148,
     func_us_801B41A4,
-    func_pspeu_09257C00,
+    func_us_801B4210,
     Entity3DBackgroundHouse,
     Entity3DHouseSpawner,
     func_pspeu_0925A248,
-    func_us_801C3D44,
+    func_pspeu_0925C0F8,
     func_pspeu_0925BBA8,
-    func_us_801C379C,
+    func_pspeu_0925BAD0,
     func_us_801B5FB8,
     func_us_801B68EC,
     func_us_801B65A4,
     EntityBigRedFireball,
-    func_pspeu_0925A988,
+    func_us_801B6E34,
     EntityOwlKnight,
     EntityOwl,
     EntityOwlKnightSword,
@@ -112,7 +115,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBloodDrips,
     EntityBloodSplatter,
     func_pspeu_0925B730,
-    func_us_801C3ED8,
+    func_pspeu_0925C380,
     func_pspeu_0925B278,
     EntitySealedDoor,
     EntityValhallaKnight,
@@ -144,7 +147,7 @@ EInit g_EInitSkelerang = {ANIMSET_OVL(0x01), 0x01, 0x48, PAL_SKELERANG, 0x00B};
 EInit g_EInitSkelerangBoomerang = {
     ANIMSET_OVL(0x01), 0x2B, 0x48, PAL_SKELERANG, 0x00C};
 EInit D_us_801808A4 = {ANIMSET_OVL(0x02), 0x0B, 0x00, PAL_NONE, 0x003};
-EInit D_pspeu_092666D8 = {ANIMSET_OVL(0x03), 0x01, 0x49, PAL_UNK_203, 0x003};
+EInit D_us_801808B0 = {ANIMSET_OVL(0x03), 0x01, 0x49, PAL_UNK_203, 0x003};
 EInit g_EInitOwlKnight = {ANIMSET_OVL(0x08), 0x10, 0x49, PAL_OWL_KNIGHT, 0x014};
 EInit g_EInitOwlKnightSword = {
     ANIMSET_OVL(0x08), 0x00, 0x49, PAL_OWL_KNIGHT_SWORD, 0x015};

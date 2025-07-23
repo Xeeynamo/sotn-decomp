@@ -65,7 +65,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_25,              // func_us_801B68EC
     E_UNK_26,              // func_us_801B65A4
     E_BIG_RED_FIREBALL,    // EntityBigRedFireball
-    E_UNK_28,              // func_us_801B6E34
+    E_ID_28,               // func_us_801B6E34
     E_OWL_KNIGHT,          // EntityOwlKnight
     E_OWL,                 // EntityOwl
     E_OWL_KNIGHT_SWORD,    // EntityOwlKnightSword
@@ -109,7 +109,7 @@ extern EInit g_EInitDamageNum;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
 extern EInit D_us_801808A4;
-// extern EInit D_us_801808B0;
+extern EInit D_us_801808B0;
 extern EInit g_EInitOwlKnight;
 extern EInit g_EInitOwlKnightSword;
 extern EInit g_EInitOwl;

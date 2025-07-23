@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
 
+u16 D_us_80180B7C[] = {
+    PAL_OVL(0x44), PAL_OVL(0x48), PAL_OVL(0x49), PAL_OVL(0x4A),
+    PAL_OVL(0x4B), PAL_OVL(0x4C), PAL_OVL(0x4D)};
+u32 D_us_80180B8C[] = {4, 8, 9, 10, 11, 12, 13};
+u8 D_us_80180BA8[] = {10, 4, 10, 5, 10, 6, 10, 7, 10, 8, 0, 0};
+u8 D_us_80180BB4[] = {10, 10, 0, 0};
+
 void func_us_801B3D8C(Entity* self) {
     Primitive* prim;
     s16 offsetX;
@@ -48,13 +55,6 @@ void func_us_801B3D8C(Entity* self) {
     }
 }
 
-/* st/no2/data/B7C.data.s */
-u16 D_us_80180B7C[] = {
-    0x8044, 0x8048, 0x8049, 0x804A, 0x804B, 0x804C, 0x804D, 0x0000};
-u32 D_us_80180B8C[] = {0x4, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD};
-
-// Looks like some kind of animation handling routine?
-// 80180B8C is the palette ID, 7C is the palette data.
 void func_us_801B3F30(Entity* self) {
     u8 colorLo;
     u16 color;
@@ -93,7 +93,7 @@ void func_us_801B3F30(Entity* self) {
                     if (colorLo > 0x1F) {
                         colorLo = 0x1F;
                     }
-                    g_Clut[0][0x400 + curPal * 16 + j] =
+                    g_Clut[0][0x400 + curPal * COLORS_PER_PAL + j] =
                         (color & ~0x1F) + colorLo;
                 }
             }
@@ -133,11 +133,6 @@ void func_us_801B41A4(Entity* self) {
     g_GpuBuffers[1].draw.b0 = 0x28;
 }
 
-/* st/no2/data/B7C.data.s */
-u8 D_us_80180BA8[] = {0xA, 0x4, 0xA, 0x5, 0xA, 0x6,
-                      0xA, 0x7, 0xA, 0x8, 0x0, 0x0};
-u8 D_us_80180BB4[] = {0xA, 0xA};
-
 void func_us_801B4210(Entity* self) {
     Entity* entity;
     bool flag;
@@ -154,15 +149,15 @@ void func_us_801B4210(Entity* self) {
         self->zPriority = 0x80;
         break;
     case 1:
-        if ((self->ext.et_801B4210.unk7C == 0) && flag) {
+        if (self->ext.et_801B4210.unk7C == 0 && flag) {
             self->pose = self->poseTimer = 0;
             for (i = 0; i < 5; i++) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
-                    entity->posX.i.hi += ((rand() & 0xF) - 8);
-                    entity->posY.i.hi += ((rand() & 0xF) - 8);
+                    entity->posX.i.hi += (rand() & 0xF) - 8;
+                    entity->posY.i.hi += (rand() & 0xF) - 8;
                     entity->params = 0x10;
                 }
             }
