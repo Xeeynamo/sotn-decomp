@@ -100,7 +100,7 @@ extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
-// extern EInit D_us_80180844;
+extern EInit D_us_80180844;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;

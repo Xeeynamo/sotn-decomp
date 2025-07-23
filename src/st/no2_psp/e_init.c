@@ -31,7 +31,7 @@ void func_us_801B41A4(Entity* self);
 void func_us_801B4210(Entity* self);
 void Entity3DBackgroundHouse(Entity* self);
 void Entity3DHouseSpawner(Entity* self);
-void func_pspeu_0925A248(Entity* self);
+void func_us_801B4DA4(Entity* self);
 void func_pspeu_0925C0F8(Entity* self);
 void func_pspeu_0925BBA8(Entity* self);
 void func_pspeu_0925BAD0(Entity* self);
@@ -98,7 +98,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B4210,
     Entity3DBackgroundHouse,
     Entity3DHouseSpawner,
-    func_pspeu_0925A248,
+    func_us_801B4DA4,
     func_pspeu_0925C0F8,
     func_pspeu_0925BBA8,
     func_pspeu_0925BAD0,
@@ -137,7 +137,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 EInit g_EInitBreakable = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x002};
-EInit D_pspeu_09266648 = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x004};
+EInit D_us_80180844 = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x005};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x001};
