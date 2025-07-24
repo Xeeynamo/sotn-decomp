@@ -96,9 +96,9 @@ typedef enum EntityIDs {
     /* 0x56 */ E_GURKHA_BODY_PARTS,
     /* 0x57 */ E_HAMMER_WEAPON,
     /* 0x58 */ E_GURKHA,
-    /* 0x59 */ E_GURKHA_SWORD,
+    /* 0x59 */ E_GURKHA_WEAPON,
     /* 0x5A */ E_BLADE,
-    /* 0x5B */ E_BLADE_SWORD
+    /* 0x5B */ E_BLADE_WEAPON
 } EntityIDs;
 
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
@@ -133,10 +133,10 @@ extern EInit g_EInitGaibonProjectileNP3;
 extern EInit g_EInitGaibonLargeProjectileNP3;
 extern EInit g_EInitGurkhaType0;
 extern EInit g_EInitGurkhaHammer;
-extern EInit g_EInitGurkhaType1;
-extern EInit g_EInitGurkhaSword;
+extern EInit g_EInitGurkha;
+extern EInit g_EInitGurkhaWeapon;
 extern EInit g_EInitBlade;
-extern EInit g_EInitBladeSword;
+extern EInit g_EInitBladeWeapon;
 
 extern void ReplaceBreakableWithItemDrop(Entity*);
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
@@ -223,7 +223,7 @@ extern SVECTOR g_CastleDoorVector;
 // For EntityHammer
 extern u16 D_80182978[];
 extern s16 D_80182988[];
-extern s16 D_80182A20;
+extern s16 D_80182A20[];
 extern s16 D_80182A40[];
 extern s16 D_80182A5C[];
 extern s16 D_80182AB8[];
