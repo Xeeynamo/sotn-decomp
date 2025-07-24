@@ -14,21 +14,21 @@ u8 D_pspeu_0928D230[] = {
     0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0, 0x0,
 };
 
-void func_pspeu_0925BAD0(Entity* sp10) {
+void func_pspeu_0925BAD0(Entity* self) {
     s16 angle;
-    if (!sp10->step) {
+    if (!self->step) {
         InitializeEntity(g_EInitParticle);
-        sp10->zPriority = 0xA0;
-        sp10->animSet = 8;
-        sp10->animCurFrame = 1;
-        sp10->palette = 0x8161;
-        angle = GetAngleBetweenEntitiesShifted(sp10, g_Entities); // & 0xFF;
+        self->zPriority = 0xA0;
+        self->animSet = 8;
+        self->animCurFrame = 1;
+        self->palette = 0x8161;
+        angle = GetAngleBetweenEntitiesShifted(self, g_Entities); // & 0xFF;
         SetEntityVelocityFromAngle(angle, 0x28);
         return;
     }
     MoveEntity();
-    if (!AnimateEntity(D_pspeu_0928D230, sp10)) {
-        DestroyEntity(sp10);
+    if (!AnimateEntity(D_pspeu_0928D230, self)) {
+        DestroyEntity(self);
     }
 }
 
