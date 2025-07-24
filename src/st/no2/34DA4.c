@@ -1,21 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
 
-// already in e_init.c
-extern EInit D_us_80180844[];
-// st/no2/data/34DA4.rodata.s
-extern RECT D_us_801B2E20;
-
 void func_us_801B4DA4(Entity* self) {
     DRAWENV draw;
-    RECT rect;
     DR_ENV* dr_env;
     Primitive* prim;
     s32 i;
     s32 primIndex;
     u8 flag;
 
-    rect = D_us_801B2E20;
+    RECT rect = {.x = 0, .y = 256, .w = 80, .h = 192};
+
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180844);
@@ -74,7 +69,11 @@ void func_us_801B4DA4(Entity* self) {
         prim = self->ext.prim;
         for (i = 2; i >= 0; i--) {
             prim->type = PRIM_GT4;
+#ifdef VERSION_PSP
+            prim->tpage = 0x1110;
+#else
             prim->tpage = 0x110;
+#endif
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = prim->u0 + 0x28;
             prim->v0 = prim->v1 = 0;
@@ -96,7 +95,11 @@ void func_us_801B4DA4(Entity* self) {
             prim = prim->next;
         }
         prim->type = PRIM_GT4;
+#ifdef VERSION_PSP
+        prim->tpage = 0x101A;
+#else
         prim->tpage = 0x1A;
+#endif
         prim->clut = 0x15F;
         prim->u0 = prim->u2 = 0x10;
         prim->u1 = prim->u3 = 0x20;
@@ -116,7 +119,11 @@ void func_us_801B4DA4(Entity* self) {
         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         prim = prim->next;
         prim->type = PRIM_GT4;
-        prim->tpage = (flag) ? 0x104 : 0x100;
+#ifdef VERSION_PSP
+        prim->tpage = 0x104;
+#else
+        prim->tpage = flag ? 0x104 : 0x100;
+#endif
         prim->u0 = prim->u2 = 0x8B;
         prim->u1 = prim->u3 = 0xB3;
         prim->v0 = prim->v1 = 0x37;
@@ -129,7 +136,11 @@ void func_us_801B4DA4(Entity* self) {
         prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         prim->type = PRIM_GT4;
+#ifdef VERSION_PSP
+        prim->tpage = 0x1110;
+#else
         prim->tpage = 0x110;
+#endif
         prim->u0 = prim->u2 = 4;
         prim->u1 = prim->u3 = 0x4C;
         prim->v0 = prim->v1 = 0x44;
@@ -138,9 +149,15 @@ void func_us_801B4DA4(Entity* self) {
         prim->x1 = prim->x3 = 0xC3;
         prim->y0 = prim->y1 = 0x27;
         prim->y2 = prim->y3 = 0x6F;
+#ifdef VERSION_PSP
+        prim->r0 = 0x20;
+        prim->g0 = 0x10;
+        prim->b0 = 0x20;
+#else
         prim->r0 = 0x10;
         prim->g0 = 0x8;
         prim->b0 = 0x10;
+#endif
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
@@ -150,17 +167,3 @@ void func_us_801B4DA4(Entity* self) {
         return;
     }
 }
-
-INCLUDE_ASM("st/no2/nonmatchings/34DA4", func_us_801B52B4);
-
-INCLUDE_ASM("st/no2/nonmatchings/34DA4", func_us_801B5368);
-
-INCLUDE_ASM("st/no2/nonmatchings/34DA4", func_us_801B5578);
-
-INCLUDE_ASM("st/no2/nonmatchings/34DA4", func_us_801B56A4);
-
-INCLUDE_ASM("st/no2/nonmatchings/34DA4", func_us_801B5750);
-
-INCLUDE_ASM("st/no2/nonmatchings/34DA4", func_us_801B5948);
-
-INCLUDE_RODATA("st/no2/nonmatchings/34DA4", D_us_801B2E20);

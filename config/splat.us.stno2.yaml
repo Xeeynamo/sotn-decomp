@@ -106,6 +106,7 @@ segments:
       - [0x33D8C, c, 33D8C]
       - [0x34388, c, e_background_house]
       - [0x34DA4, c, 34DA4]
+      - [0x352B4, c, 352B4]
       - [0x359C4, c, e_secrets]
       - [0x36E34, c, 36E34]
       - [0x372E8, c, 372E8]
