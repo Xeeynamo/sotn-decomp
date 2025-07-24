@@ -52,7 +52,7 @@ segments:
       - [0xA6C, .data, e_breakable]
       - [0xB7C, .data, 33D8C]
       - [0xBB8, .data, e_background_house]
-      - [0xD38, data]
+      - [0xD38, .data, 352B4]
       - [0xD48, .data, e_secrets]
       - [0xE44, .data, 36E34]
       - [0xEA8, data]
