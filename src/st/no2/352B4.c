@@ -10,7 +10,7 @@ void func_us_801B5368(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_801808A4);
+        InitializeEntity(D_us_801808A4);
         self->drawFlags |= FLAG_DRAW_ROTATE;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
@@ -80,7 +80,7 @@ void func_us_801B5578(u32 tileIdx) {
 
     for (entityIdx = 0; entityIdx < 3; entityIdx++) {
         newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (newEnt) {
+        if (newEnt != NULL) {
             CreateEntityFromCurrentEntity(E_UNK_22, newEnt);
             newEnt->posX.i.hi = screenX;
             newEnt->posY.i.hi = screenY;
@@ -89,7 +89,7 @@ void func_us_801B5578(u32 tileIdx) {
     }
 
     newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
-    if (newEnt) {
+    if (newEnt != NULL) {
         CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, newEnt);
         newEnt->posX.i.hi = screenX;
         newEnt->posY.i.hi = screenY;
@@ -97,7 +97,7 @@ void func_us_801B5578(u32 tileIdx) {
     }
 
     newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
-    if (newEnt) {
+    if (newEnt != NULL) {
         CreateEntityFromCurrentEntity(E_UNK_23, newEnt);
         newEnt->posX.i.hi = screenX;
         newEnt->posY.i.hi = screenY;
@@ -135,7 +135,7 @@ void func_us_801B5750(Entity* self) {
     player = &PLAYER;
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_us_80180844);
+        InitializeEntity(D_us_80180844);
         g_GpuBuffers[0].draw.r0 = 0x10;
         g_GpuBuffers[0].draw.g0 = 0x10;
         g_GpuBuffers[0].draw.b0 = 0x10;

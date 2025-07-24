@@ -9,7 +9,7 @@ typedef struct {
     u8* animData;
 } EntityConfig;
 
-extern EntityConfig D_us_80180EF8;
+extern EntityConfig D_us_80180EF8[];
 
 void func_us_801B72E8(Entity* self) {
     s32 entityOffset;
@@ -19,7 +19,7 @@ void func_us_801B72E8(Entity* self) {
     case 0:
         InitializeEntity(g_EInitParticle);
         entityOffset = self->params & 0xF;
-        entityConfig = &D_us_80180EF8 + entityOffset;
+        entityConfig = &D_us_80180EF8[entityOffset];
         self->palette = entityConfig->palette + 0x226;
         self->drawMode = entityConfig->drawMode;
         self->animSet = entityConfig->animSet;
@@ -41,7 +41,6 @@ void func_us_801B72E8(Entity* self) {
         self->velocityY = FIX(-1.0);
         if (!AnimateEntity(self->ext.et_801B72E8.animData, self)) {
             DestroyEntity(self);
-            return;
         }
         break;
 
@@ -56,7 +55,6 @@ void func_us_801B72E8(Entity* self) {
                 self->scaleX = self->scaleY = 256;
                 self->opacity = 128;
                 self->step_s++;
-                return;
             }
             break;
         case 1:
@@ -64,9 +62,7 @@ void func_us_801B72E8(Entity* self) {
             self->opacity -= 16;
             if (!self->opacity) {
                 DestroyEntity(self);
-                return;
             }
-            break;
         }
         break;
 
@@ -81,11 +77,10 @@ void func_us_801B72E8(Entity* self) {
             self->drawFlags = FLAG_DRAW_OPACITY;
             self->opacity = 128;
             self->step_s++;
-            return;
+            break;
         case 1:
             if (self->pose == 5) {
                 self->step_s++;
-                return;
             }
             break;
         case 2:
@@ -163,12 +158,10 @@ void func_us_801B7580(Entity* self) {
             if (posX < 488) {
                 self->posX.i.hi = 488 - g_Tilemap.scrollX.i.hi;
                 self->step++;
-                return;
             }
         } else if (posX > 24) {
             self->posX.i.hi = 24 - g_Tilemap.scrollX.i.hi;
             self->step++;
-            return;
         }
         break;
 
@@ -182,9 +175,9 @@ void func_us_801B7580(Entity* self) {
         }
         tileRowCounter = 0;
         while (tileRowCounter < 4) {
-            (&g_Tilemap.fg[tilemapIndex])[0] = tileDataPtr[0];
-            (&g_Tilemap.fg[tilemapIndex])[1] = tileDataPtr[1];
-            (&g_Tilemap.fg[tilemapIndex])[2] = tileDataPtr[2];
+            g_Tilemap.fg[tilemapIndex] = tileDataPtr[0];
+            g_Tilemap.fg[tilemapIndex + 1] = tileDataPtr[1];
+            g_Tilemap.fg[tilemapIndex + 2] = tileDataPtr[2];
             tilemapIndex += 32;
             tileRowCounter++;
             tileDataPtr += 3;
@@ -193,26 +186,6 @@ void func_us_801B7580(Entity* self) {
         return;
 
     case 255:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (!self->params) {
-                self->animCurFrame++;
-                self->params |= 1;
-            } else {
-                break;
-            }
-        } else {
-            self->params = 0;
-        }
-
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (!self->step_s) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
+#include "../pad2_anim_debug.h"
     }
 }
