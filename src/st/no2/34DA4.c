@@ -1,21 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
 
-// already in e_init.c
-extern EInit D_us_80180844[];
-// st/no2/data/34DA4.rodata.s
-extern RECT D_us_801B2E20;
-
 void func_us_801B4DA4(Entity* self) {
     DRAWENV draw;
-    RECT rect;
     DR_ENV* dr_env;
     Primitive* prim;
     s32 i;
     s32 primIndex;
     u8 flag;
 
-    rect = D_us_801B2E20;
+    RECT rect = {.x = 0, .y = 256, .w = 80, .h = 192};
+
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180844);
@@ -74,7 +69,11 @@ void func_us_801B4DA4(Entity* self) {
         prim = self->ext.prim;
         for (i = 2; i >= 0; i--) {
             prim->type = PRIM_GT4;
+#ifdef VERSION_PSP
+            prim->tpage = 0x1110;
+#else
             prim->tpage = 0x110;
+#endif
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = prim->u0 + 0x28;
             prim->v0 = prim->v1 = 0;
@@ -96,7 +95,11 @@ void func_us_801B4DA4(Entity* self) {
             prim = prim->next;
         }
         prim->type = PRIM_GT4;
+#ifdef VERSION_PSP
+        prim->tpage = 0x101A;
+#else
         prim->tpage = 0x1A;
+#endif
         prim->clut = 0x15F;
         prim->u0 = prim->u2 = 0x10;
         prim->u1 = prim->u3 = 0x20;
@@ -116,7 +119,11 @@ void func_us_801B4DA4(Entity* self) {
         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         prim = prim->next;
         prim->type = PRIM_GT4;
-        prim->tpage = (flag) ? 0x104 : 0x100;
+#ifdef VERSION_PSP
+        prim->tpage = 0x104;
+#else
+        prim->tpage = flag ? 0x104 : 0x100;
+#endif
         prim->u0 = prim->u2 = 0x8B;
         prim->u1 = prim->u3 = 0xB3;
         prim->v0 = prim->v1 = 0x37;
@@ -129,7 +136,11 @@ void func_us_801B4DA4(Entity* self) {
         prim->drawMode = DRAW_DEFAULT;
         prim = prim->next;
         prim->type = PRIM_GT4;
+#ifdef VERSION_PSP
+        prim->tpage = 0x1110;
+#else
         prim->tpage = 0x110;
+#endif
         prim->u0 = prim->u2 = 4;
         prim->u1 = prim->u3 = 0x4C;
         prim->v0 = prim->v1 = 0x44;
@@ -138,9 +149,15 @@ void func_us_801B4DA4(Entity* self) {
         prim->x1 = prim->x3 = 0xC3;
         prim->y0 = prim->y1 = 0x27;
         prim->y2 = prim->y3 = 0x6F;
+#ifdef VERSION_PSP
+        prim->r0 = 0x20;
+        prim->g0 = 0x10;
+        prim->b0 = 0x20;
+#else
         prim->r0 = 0x10;
         prim->g0 = 0x8;
         prim->b0 = 0x10;
+#endif
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
@@ -150,196 +167,3 @@ void func_us_801B4DA4(Entity* self) {
         return;
     }
 }
-
-INCLUDE_ASM("st/no2/nonmatchings/34DA4", func_us_801B52B4);
-
-void func_us_801B5368(Entity* self) {
-    Collider collider;
-    s16 posX, posY;
-    u8 params;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(&D_us_801808A4);
-        self->drawFlags |= FLAG_DRAW_ROTATE;
-        self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
-                       FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-        self->zPriority = 160;
-        self->velocityX = 0;
-        self->velocityY = 0;
-        self->rotate = 0;
-        self->ext.et_801B5368.unk80 = 0;
-        params = self->params;
-
-        if (params & 1) {
-            self->velocityX = FIX(0.5);
-            self->rotate += 0x10;
-            self->ext.et_801B5368.unk80 += 8;
-        }
-
-        if (params & 2) {
-            self->velocityX = FIX(-0.5);
-            self->rotate -= 0x10;
-            self->ext.et_801B5368.unk80 -= 8;
-        }
-
-        self->velocityY += FIX(0.75);
-        self->velocityX += ((Random() & 3) << 0xD) - FIX(0.1875);
-        self->velocityY += ((Random() & 3) << 0xD) - FIX(0.1875);
-        self->ext.et_801B5368.unk80 += (((Random() & 3) * 0x10) - 0x18);
-        break;
-
-    case 1:
-        MoveEntity();
-        self->velocityY += FIX(0.15625);
-        self->rotate += self->ext.et_801B5368.unk80;
-        posX = self->posX.i.hi;
-        posY = self->posY.i.hi;
-        g_api.CheckCollision(posX, posY, &collider, 0);
-
-        if (collider.effects) {
-            if (collider.effects & EFFECT_SOLID) {
-                self->velocityY = -self->velocityY / 2;
-                self->ext.et_801B5368.unk80 *= 4;
-            }
-            if (collider.effects & EFFECT_UNK_0002) {
-                self->velocityX = -self->velocityX;
-            }
-            if (abs(self->velocityY) < FIX(0.1875)) {
-                DestroyEntity(self);
-            }
-        }
-        return;
-    }
-}
-
-/*
-    Function that generates 3 spike chunks that fall when a spike tile is
-   destroyed
-*/
-void func_us_801B5578(u32 tileIdx) {
-    s16 screenX, screenY;
-    s32 entityIdx;
-    Entity* newEnt;
-
-    screenX = tileIdx % 96 * 16 + 8;
-    screenY = tileIdx / 96 * 16 + 8;
-
-    screenX -= g_Tilemap.scrollX.i.hi;
-    screenY -= g_Tilemap.scrollY.i.hi;
-
-    for (entityIdx = 0; entityIdx < 3; entityIdx++) {
-        newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (newEnt) {
-            CreateEntityFromCurrentEntity(E_UNK_22, newEnt);
-            newEnt->posX.i.hi = screenX;
-            newEnt->posY.i.hi = screenY;
-            newEnt->params = entityIdx;
-        }
-    }
-
-    newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
-    if (newEnt) {
-        CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, newEnt);
-        newEnt->posX.i.hi = screenX;
-        newEnt->posY.i.hi = screenY;
-        newEnt->params = 16;
-    }
-
-    newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
-    if (newEnt) {
-        CreateEntityFromCurrentEntity(E_UNK_23, newEnt);
-        newEnt->posX.i.hi = screenX;
-        newEnt->posY.i.hi = screenY;
-    }
-}
-
-void func_us_801B56A4(u32 tileIndex) {
-    s16 screenX, screenY;
-    Entity* newEnt;
-
-    screenX = tileIndex % 96 * 16 + 8;
-    screenY = tileIndex / 96 * 16 + 8;
-
-    screenX -= g_Tilemap.scrollX.i.hi;
-    screenY -= g_Tilemap.scrollY.i.hi;
-
-    newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
-    if (newEnt != NULL) {
-        CreateEntityFromCurrentEntity(E_UNK_31, newEnt);
-        newEnt->posX.i.hi = screenX;
-        newEnt->posY.i.hi = screenY;
-    }
-}
-
-/*
-    Function that checks if the player can destroy the spikes in Olrox's
-    quarters
-*/
-void func_us_801B5750(Entity* self) {
-    Entity* player;
-    s16 scrollX, scrollY;
-    u32 tileType, newTileType, colType, tileIdx;
-    s32 i;
-
-    player = &PLAYER;
-    switch (self->step) {
-    case 0:
-        InitializeEntity(&D_us_80180844);
-        g_GpuBuffers[0].draw.r0 = 0x10;
-        g_GpuBuffers[0].draw.g0 = 0x10;
-        g_GpuBuffers[0].draw.b0 = 0x10;
-        g_GpuBuffers[1].draw.r0 = 0x10;
-        g_GpuBuffers[1].draw.g0 = 0x10;
-        g_GpuBuffers[1].draw.b0 = 0x10;
-    case 1:
-        scrollX = player->posX.i.hi + g_Tilemap.scrollX.i.hi;
-        scrollY = player->posY.i.hi + g_Tilemap.scrollY.i.hi;
-        tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 16;
-        tileIdx -= 0x60;
-
-        for (i = 0; i < 3; i++) {
-            tileType = g_Tilemap.fg[tileIdx];
-            colType = g_Tilemap.tileDef->collision[tileType];
-            if (((colType + 12) & 0xFF) < 4) {
-                if (g_api.CheckEquipmentItemCount(
-                        ITEM_SPIKE_BREAKER, EQUIP_ARMOR)) {
-                    switch (tileType) {
-                    case 0x6AE:
-                        newTileType = 0x6B1;
-                        break;
-                    case 0x6AF:
-                        newTileType = 0x6B2;
-                        break;
-                    case 0x6B0:
-                        newTileType = 0x6B3;
-                        break;
-                    }
-                    g_Tilemap.fg[tileIdx] = newTileType;
-                    func_us_801B5578(tileIdx);
-                    g_api.PlaySfx(SFX_EXPLODE_FAST_A);
-                } else {
-                    func_us_801B56A4(tileIdx);
-                }
-            }
-            tileIdx += 0x60;
-        }
-        return;
-    }
-}
-
-void func_us_801B5948(Entity* self) {
-    if (self->step == 0) {
-        InitializeEntity(g_EInitInteractable);
-        self->attackElement = 0x50;
-        self->attack = 15;
-        self->hitboxState = 1;
-        self->hitboxWidth = 4;
-        self->hitboxHeight = 4;
-        self->poseTimer = 4;
-        return;
-    }
-    DestroyEntity(self);
-}
-
-INCLUDE_RODATA("st/no2/nonmatchings/34DA4", D_us_801B2E20);

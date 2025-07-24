@@ -22,11 +22,3 @@ INCLUDE_ASM("st/no2/nonmatchings/4966C", EntityHammer);
 INCLUDE_ASM("st/no2/nonmatchings/4966C", EntityGurkhaBodyParts);
 
 INCLUDE_ASM("st/no2/nonmatchings/4966C", EntityHammerWeapon);
-
-INCLUDE_ASM("st/no2/nonmatchings/4966C", func_801CF778);
-
-INCLUDE_ASM("st/no2/nonmatchings/4966C", func_801CF7A0);
-
-INCLUDE_ASM("st/no2/nonmatchings/4966C", EntityGurkha);
-
-INCLUDE_ASM("st/no2/nonmatchings/4966C", EntityGurkhaSword);

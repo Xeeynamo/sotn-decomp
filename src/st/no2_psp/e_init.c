@@ -31,7 +31,7 @@ void func_us_801B41A4(Entity* self);
 void func_us_801B4210(Entity* self);
 void Entity3DBackgroundHouse(Entity* self);
 void Entity3DHouseSpawner(Entity* self);
-void func_pspeu_0925A248(Entity* self);
+void func_us_801B4DA4(Entity* self);
 void func_pspeu_0925C0F8(Entity* self);
 void func_pspeu_0925BBA8(Entity* self);
 void func_pspeu_0925BAD0(Entity* self);
@@ -57,10 +57,10 @@ void func_us_801C8AAC(Entity* self);
 void func_pspeu_09253010(Entity* self);
 void func_pspeu_09254098(Entity* self);
 void func_pspeu_09254520(Entity* self);
-void func_pspeu_092515D0(Entity* self);
-void func_pspeu_092529B0(Entity* self);
+void EntityGurkha(Entity* self);
+void EntityGurkhaWeapon(Entity* self);
 void EntityBlade(Entity* self);
-void EntityBladeSword(Entity* self);
+void EntityBladeWeapon(Entity* self);
 void EntitySpectralSword(Entity* self);
 void func_us_801CEB08(Entity* self);
 void EntityPoltergeist(Entity* self);
@@ -98,7 +98,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B4210,
     Entity3DBackgroundHouse,
     Entity3DHouseSpawner,
-    func_pspeu_0925A248,
+    func_us_801B4DA4,
     func_pspeu_0925C0F8,
     func_pspeu_0925BBA8,
     func_pspeu_0925BAD0,
@@ -124,10 +124,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_pspeu_09253010,
     func_pspeu_09254098,
     func_pspeu_09254520,
-    func_pspeu_092515D0,
-    func_pspeu_092529B0,
+    EntityGurkha,
+    EntityGurkhaWeapon,
     EntityBlade,
-    EntityBladeSword,
+    EntityBladeWeapon,
     EntitySpectralSword,
     func_us_801CEB08,
     EntityPoltergeist,
@@ -137,7 +137,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 EInit g_EInitBreakable = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x002};
-EInit D_pspeu_09266648 = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x004};
+EInit D_us_80180844 = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x005};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x001};
@@ -163,10 +163,10 @@ EInit D_us_80180910 = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NONE, 0x086};
 EInit D_us_8018091C = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NONE, 0x087};
 EInit D_pspeu_09266778 = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_UNK_23E, 0x0BA};
 EInit D_pspeu_09266788 = {ANIMSET_OVL(0x06), 0x12, 0x4C, PAL_UNK_23E, 0x0BB};
-EInit D_pspeu_09266798 = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_UNK_23B, 0x0BC};
-EInit D_pspeu_092667A8 = {ANIMSET_OVL(0x06), 0x14, 0x4C, PAL_UNK_23B, 0x0BD};
+EInit g_EInitGurkha = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_GURKHA, 0x0BC};
+EInit g_EInitGurkhaWeapon = {ANIMSET_OVL(0x06), 0x14, 0x4C, PAL_GURKHA, 0x0BD};
 EInit g_EInitBlade = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_BLADE, 0x0BE};
-EInit g_EInitBladeSword = {ANIMSET_OVL(0x06), 0x13, 0x4C, PAL_BLADE, 0x0BF};
+EInit g_EInitBladeWeapon = {ANIMSET_OVL(0x06), 0x13, 0x4C, PAL_BLADE, 0x0BF};
 EInit g_EInitSpectralSword = {
     ANIMSET_OVL(0x04), 0x00, 0x50, PAL_SPECTRAL_SWORD, 0x081};
 EInit D_us_8018097C = {

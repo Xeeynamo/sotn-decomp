@@ -15,7 +15,7 @@ enum OVL_EXPORT(Palette) {
     PAL_OWL_KNIGHT = 0x21C,
     PAL_BLOODY_ZOMBIE = 0x223,
     PAL_BLADE = 0x238,
-    PAL_UNK_23B = 0x23B,
+    PAL_GURKHA = 0x23B,
     PAL_UNK_23E = 0x23E,
     PAL_SPECTRAL_SWORD = 0x241,
     PAL_UNK_242 = 0x242,
@@ -84,9 +84,9 @@ enum OVL_EXPORT(Entities) {
     E_GURKHA_BODY_PARTS,   // EntityGurkhaBodyParts
     E_HAMMER_WEAPON,       // EntityHammerWeapon
     E_GURKHA,              // EntityGurkha
-    E_GURKHA_SWORD,        // EntityGurkhaSword
+    E_GURKHA_WEAPON,       // EntityGurkhaWeapon
     E_BLADE,               // EntityBlade
-    E_BLADE_SWORD,         // EntityBladeSword
+    E_BLADE_WEAPON,        // EntityBladeWeapon
     E_SPECTRAL_SWORD,      // EntitySpectralSword
     E_UNK_3F,              // func_us_801CEB08
     E_POLTERGEIST,         // EntityPoltergeist
@@ -100,7 +100,7 @@ extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
-// extern EInit D_us_80180844;
+extern EInit D_us_80180844;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
@@ -121,10 +121,10 @@ extern EInit D_us_80180910;
 extern EInit D_us_8018091C;
 // extern EInit D_us_80180928;
 // extern EInit D_us_80180934;
-// extern EInit D_us_80180940;
-// extern EInit D_us_8018094C;
+extern EInit g_EInitGurkha;
+extern EInit g_EInitGurkhaWeapon;
 extern EInit g_EInitBlade;
-extern EInit g_EInitBladeSword;
+extern EInit g_EInitBladeWeapon;
 extern EInit g_EInitSpectralSword;
 extern EInit D_us_8018097C;
 extern EInit g_EInitPoltergeist;
