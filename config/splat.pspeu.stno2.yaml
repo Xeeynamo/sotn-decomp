@@ -114,6 +114,7 @@ segments:
       - [0x559D0, .data, no2/36E34]
       - [0x55A48, .data, no2/e_lock_camera]
       - [0x55AC0, data]
+      - [0x55BB0, .data, no2_psp/unk_23BF8]
       - [0x55C00, .rodata, no2/e_bloody_zombie]
       - [0x55C28, .rodata, no2/e_skelerang]
       - [0x55C70, .rodata, no2/e_red_door]
