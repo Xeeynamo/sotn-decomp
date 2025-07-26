@@ -33,7 +33,7 @@ static u8* stage_name_gfx[] = {
     stage_name_en, stage_name_fr, stage_name_sp, stage_name_ge, stage_name_it,
 };
 
-void func_psp_0923C0C0(void) {
+void LoadStageNameGraphics(void) {
     gfxBank[3] = (u_long*)stage_name_gfx[g_UserLanguage - 1];
     func_91040A0(gfxBank);
 }

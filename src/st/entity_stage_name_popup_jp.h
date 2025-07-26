@@ -30,7 +30,7 @@ void EntityStageNamePopup(Entity* self) {
 
 #if defined(STAGE_IS_LIB) || defined(STAGE_IS_NO2) || defined(STAGE_IS_NO4)
     if (D_91CE570) {
-        func_psp_0923C0C0();
+        LoadStageNameGraphics();
     }
 #endif
 
@@ -41,7 +41,7 @@ void EntityStageNamePopup(Entity* self) {
             return;
         }
 #if defined(STAGE_IS_LIB) || defined(STAGE_IS_NO2) || defined(STAGE_IS_NO4)
-        func_psp_0923C0C0();
+        LoadStageNameGraphics();
 #endif
         InitializeEntity(g_EInitInteractable);
         self->ext.stpopupj.unk8C = 0;

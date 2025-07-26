@@ -33,7 +33,7 @@ static u_long* stage_name[] = {
 // GetLang
 static u8* get_lang[] = {
     stage_name_en, stage_name_fr, stage_name_sp, stage_name_ge, stage_name_it};
-static void func_psp_0923C0C0(void) {
+static void LoadStageNameGraphics(void) {
     stage_name[3] = (u_long*)get_lang[g_UserLanguage - 1];
     func_91040A0(stage_name);
 }
@@ -48,7 +48,7 @@ void EntityStageNamePopup(Entity* self) {
     s16 xStartVal;
 
     if (D_91CE570) {
-        func_psp_0923C0C0();
+        LoadStageNameGraphics();
     }
 
     switch (self->step) {
@@ -57,7 +57,7 @@ void EntityStageNamePopup(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        func_psp_0923C0C0();
+        LoadStageNameGraphics();
         InitializeEntity(g_EInitInteractable);
         self->ext.stpopupj.unk8C = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 183);
