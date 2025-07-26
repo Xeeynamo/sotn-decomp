@@ -65,7 +65,7 @@ segments:
       - [0x189D0, c, no4/e_misc]
       - [0x190D8, c, no4/collision]
       - [0x1B2B0, c, no4/water_effects]
-      - [0x1E320, c, no4_psp/popup]
+      - [0x1E320, c, no4/popup]
       - [0x1E918, c, no4/e_frozen_shade]
       - [0x220E0, c, no4/e_room_fg]
       - [0x221F8, c, no4/e_skeleton_ape]
