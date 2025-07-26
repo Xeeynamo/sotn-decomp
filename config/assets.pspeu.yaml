@@ -178,12 +178,12 @@ files:
           - [0x20250, palette, maria_pal, 16]
           - [0x20850, spriteset, wpn_owl_spr]
           - [0x20B28, palette, wpn_owl_pal, 16]
-          - [0x21128, cmpgfx, wpn_owl_gfx, 128, 128, 4, 0x20B28] 
+          - [0x21128, cmpgfx, wpn_owl_gfx, 128, 128, 4, 0x20B28]
           - [0x218A0, spriteset, wpn_doll_spr]
           - [0x21A98, palette, wpn_doll_pal, 16]
           - [0x22098, cmpgfx, wpn_doll_gfx, 128, 128, 4, 0x21A98]
           - [0x22AE0, spriteset, wpn_turtle_spr]
-          - [0x22BD0, palette, wpn_turtle_pal, 16] 
+          - [0x22BD0, palette, wpn_turtle_pal, 16]
           - [0x22BF0, palette, wpn_turtle2_pal, 16]
           - [0x231D0, cmpgfx, wpn_turtle_gfx, 128, 128, 4, 0x22BD0]
           - [0x24390, spriteset, wpn_cardinal_spr]
@@ -309,6 +309,12 @@ files:
           - [0x309A0, cutscene, cutscene_data_ferryman_left_ge]
           - [0x30A08, cutscene, cutscene_data_ferryman_left_en]
           - [0x30A68, skip]
+          - [0x66460, cmpgfx, stage_name_en, 128, 64, 4]
+          - [0x66748, cmpgfx, stage_name_it, 128, 64, 4]
+          - [0x669E0, cmpgfx, stage_name_sp, 128, 64, 4]
+          - [0x66CB0, cmpgfx, stage_name_ge, 128, 64, 4]
+          - [0x66F38, cmpgfx, stage_name_fr, 128, 64, 4]
+          - [0x671D0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/st0.bin
     asset_path: assets/st/st0
     src_path: src/st/st0_psp

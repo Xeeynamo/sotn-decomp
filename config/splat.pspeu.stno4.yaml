@@ -88,7 +88,7 @@ segments:
       - [0x65AA8, .data, no4/e_ferryman]
       - [0x65C40, data]
       - [0x662C8, .data, no4/e_bone_archer]
-      - [0x66460, data]
+      - [0x66460, .data, no4_psp/e_stage_name]
       - [0x67200, .data, no4/e_red_door]
       - [0x67218, .data, no4/st_update]
       - [0x67248, .data, no4/e_fishhead]

@@ -5,6 +5,11 @@ extern u32 D_91CE570;
 #define STAGE_FLAG NULL_STAGE_FLAG
 #endif
 
+#ifndef PRIM_X0_VAL
+#define PRIM_X0_VAL 8
+#define PRIM_X1_VAL 0xF8
+#endif
+
 #ifdef VERSION_PSP
 #define NUM_PRIMS 183
 #else
@@ -23,7 +28,7 @@ void EntityStageNamePopup(Entity* self) {
     s16 var_s3;
     s16 var_s2;
 
-#if defined(STAGE_IS_LIB) || defined(STAGE_IS_NO2)
+#if defined(STAGE_IS_LIB) || defined(STAGE_IS_NO2) || defined(STAGE_IS_NO4)
     if (D_91CE570) {
         func_psp_0923C0C0();
     }
@@ -35,7 +40,7 @@ void EntityStageNamePopup(Entity* self) {
             DestroyEntity(self);
             return;
         }
-#if defined(STAGE_IS_LIB) || defined(STAGE_IS_NO2)
+#if defined(STAGE_IS_LIB) || defined(STAGE_IS_NO2) || defined(STAGE_IS_NO4)
         func_psp_0923C0C0();
 #endif
         InitializeEntity(g_EInitInteractable);
@@ -167,9 +172,9 @@ void EntityStageNamePopup(Entity* self) {
         prim->v1 = prim->v0;
         prim->v2 = 0xFF;
         prim->v3 = prim->v2;
-        prim->x2 = prim->x0 = 8;
+        prim->x2 = prim->x0 = PRIM_X0_VAL;
 #ifdef VERSION_PSP
-        prim->x3 = prim->x1 = 0xF8;
+        prim->x3 = prim->x1 = PRIM_X1_VAL;
         prim->y1 = prim->y0 = 0x9B;
         prim->y3 = prim->y2 = 0xBF;
 #else
@@ -247,7 +252,7 @@ void EntityStageNamePopup(Entity* self) {
                 var_s6 |= 1;
             }
 
-            if (prim->x0 > 0x10) {
+            if (prim->x0 > PRIM_X0_VAL * 2) {
                 prim->x0 -= 8;
                 prim->x2 = prim->x0;
                 prim->x1 += 8;
@@ -326,7 +331,8 @@ void EntityStageNamePopup(Entity* self) {
             }
             break;
         case 3:
-            PrimDecreaseBrightness(self->ext.stpopupj.unk88, 4);
+            prim = self->ext.stpopupj.unk88;
+            PrimDecreaseBrightness(prim, 4);
             if (!(g_Timer % 2)) {
                 prim = self->ext.stpopupj.prim;
                 for (i = 0; i < 2; i++) {
