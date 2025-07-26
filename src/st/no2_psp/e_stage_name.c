@@ -3,40 +3,39 @@
 
 extern s32 g_UserLanguage;
 
-static u8 D_pspeu_0925C670[] = {
-#include "../no2/gen/D_pspeu_0925C670.h"
+static u8 stage_name_en[] = {
+#include "../no2/gen/stage_name_en.h"
 };
 
-static u8 D_pspeu_0925C8A0[] = {
-#include "../no2/gen/D_pspeu_0925C8A0.h"
+static u8 stage_name_it[] = {
+#include "../no2/gen/stage_name_it.h"
 };
 
-static u8 D_pspeu_0925CAF8[] = {
-#include "../no2/gen/D_pspeu_0925CAF8.h"
+static u8 stage_name_sp[] = {
+#include "../no2/gen/stage_name_sp.h"
 };
 
-static u8 D_pspeu_0925CD88[] = {
-#include "../no2/gen/D_pspeu_0925CD88.h"
+static u8 stage_name_ge[] = {
+#include "../no2/gen/stage_name_ge.h"
 };
 
-static u8 D_pspeu_0925CF98[] = {
-#include "../no2/gen/D_pspeu_0925CF98.h"
+static u8 stage_name_fr[] = {
+#include "../no2/gen/stage_name_fr.h"
 };
 
-static u_long* D_pspeu_0925D1E8[] = {
+static u_long* gfxBank[] = {
     (u_long*)GFX_BANK_COMPRESSED,
-    GFX_ENTRY(0x100, 0x40, 128, 128, D_pspeu_0925C670),
+    GFX_ENTRY(0x100, 0x40, 128, 128, stage_name_en),
     GFX_TERMINATE(),
 };
 
-static u8* D_pspeu_0925D200[] = {
-    D_pspeu_0925C670, D_pspeu_0925CF98, D_pspeu_0925CAF8,
-    D_pspeu_0925CD88, D_pspeu_0925C8A0,
+static u8* stage_name_gfx[] = {
+    stage_name_en, stage_name_fr, stage_name_sp, stage_name_ge, stage_name_it,
 };
 
 void func_psp_0923C0C0(void) {
-    D_pspeu_0925D1E8[3] = (u_long*)D_pspeu_0925D200[g_UserLanguage - 1];
-    func_91040A0(D_pspeu_0925D1E8);
+    gfxBank[3] = (u_long*)stage_name_gfx[g_UserLanguage - 1];
+    func_91040A0(gfxBank);
 }
 
 #include "../entity_stage_name_popup_jp.h"
