@@ -84,6 +84,8 @@ segments:
       - [0x1D630, data]
       - [0x1D6D0, .data, chi/en_breakable]
       - [0x1D758, data]
+      - [0x1D790, .data, chi_psp/en_stage_name]
+      - [0x1EA58, data]
       - [0x34080, .data, chi/background_block_init]
       - [0x340C0, .data, chi/e_lock_camera]
       - [0x34138, .data, chi/en_falling_stairs]
