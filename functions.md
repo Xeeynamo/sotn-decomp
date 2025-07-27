@@ -287,8 +287,8 @@
 | lib   | func_psp_0924F5B8                        |       25 |          1 |        |                                 |       |
 | lib   | func_psp_0924F970                        |       25 |          1 |        | https://decomp.me/scratch/P1Emw | 0.712 |
 | no2   | MoveEntity                               |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
-| no2   | SetStep                                  |       25 |          1 |        | https://decomp.me/scratch/X4nwe | 0.979 |
 | no2   | func_pspeu_0924D138                      |       25 |          1 |        |                                 |       |
+| no2   | func_pspeu_0924D5D8                      |       25 |          1 |        |                                 |       |
 | no3   | func_pspeu_0925FCB8                      |       25 |          1 |        |                                 |       |
 | no3   | func_pspeu_09260568                      |       25 |          1 |        |                                 |       |
 | no4   | MoveEntity                               |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
@@ -304,11 +304,11 @@
 | dra   | func_psp_090EC518                        |       25 |          2 |        |                                 |       |
 | dra   | func_psp_090ED060                        |       25 |          2 |        |                                 |       |
 | dra   | func_psp_090EF440                        |       25 |          2 |        |                                 |       |
-| chi   | func_psp_0923C0C0                        |       25 |          2 |        | https://decomp.me/scratch/UeWVd | 1.0   |
+| chi   | LoadStageNameGraphics                    |       25 |          2 |        |                                 |       |
 | dai   | func_pspeu_0923A228                      |       25 |          2 |        |                                 |       |
 | lib   | func_psp_0923C0C0                        |       25 |          2 |        | https://decomp.me/scratch/UeWVd | 1.0   |
 | no2   | func_pspeu_0923AA48                      |       25 |          2 |        |                                 |       |
-| no4   | func_psp_0923C0C0                        |       25 |          2 |        | https://decomp.me/scratch/UeWVd | 1.0   |
+| no4   | func_pspeu_09245B68                      |       25 |          2 |        |                                 |       |
 | dra   | func_psp_09101AA8                        |       25 |          3 |        | https://decomp.me/scratch/CaBA3 | 1.0   |
 | dra   | func_psp_09102B78                        |       25 |          4 |        |                                 |       |
 | dra   | func_psp_091160D0                        |       25 |          4 |        |                                 |       |
@@ -420,7 +420,7 @@
 | lib   | func_psp_09250FD8                        |       31 |          2 |        |                                 |       |
 | no2   | func_pspeu_0924E938                      |       31 |          2 |        |                                 |       |
 | no3   | func_pspeu_092616E0                      |       31 |          2 |        |                                 |       |
-| no4   | UnkPolyFunc2                             |       31 |          2 |        | https://decomp.me/scratch/dSvnu | 1.0   |
+| no4   | func_pspeu_0925C8A8                      |       31 |          2 |        |                                 |       |
 | np3   | func_pspeu_09262598                      |       31 |          2 |        |                                 |       |
 | st0   | func_pspeu_09251A18                      |       31 |          2 |        |                                 |       |
 | wrp   | func_psp_09244628                        |       31 |          2 |        |                                 |       |
@@ -957,7 +957,7 @@
 | lib   | func_psp_09251098                        |       63 |          7 |        |                                 |       |
 | no2   | func_pspeu_0924E9F8                      |       63 |          7 |        |                                 |       |
 | no3   | func_pspeu_09261748                      |       63 |          7 |        |                                 |       |
-| no4   | PrimDecreaseBrightness                   |       63 |          7 |        | https://decomp.me/scratch/FHvQS | 1.0   |
+| no4   | func_pspeu_0925C910                      |       63 |          7 |        |                                 |       |
 | st0   | func_pspeu_09251A80                      |       63 |          7 |        |                                 |       |
 | wrp   | func_psp_09244690                        |       63 |          7 |        |                                 |       |
 | dra   | AllocPrimitives                          |       63 |          8 |        | https://decomp.me/scratch/h0S5o | 0.727 |
@@ -2059,7 +2059,7 @@
 | lib   | func_psp_09250560                        |      338 |         36 |        |                                 |       |
 | no2   | func_pspeu_0924DFA8                      |      338 |         36 |        |                                 |       |
 | no3   | func_pspeu_09261088                      |      338 |         36 |        |                                 |       |
-| no4   | UnkPrimHelper                            |      338 |         36 |        |                                 |       |
+| no4   | func_pspeu_0925C2A0                      |      338 |         36 |        |                                 |       |
 | np3   | func_pspeu_09261C08                      |      338 |         36 |        |                                 |       |
 | st0   | func_pspeu_09251410                      |      338 |         36 |        | https://decomp.me/scratch/uCQhx | 0.999 |
 | wrp   | func_psp_09244020                        |      338 |         36 |        | https://decomp.me/scratch/LSXAc | 1.0   |
@@ -2141,7 +2141,7 @@
 | lib   | func_psp_0924C810                        |      406 |         25 |        |                                 |       |
 | no2   | func_pspeu_092467C0                      |      406 |         25 |        |                                 |       |
 | no3   | func_pspeu_0925F1C8                      |      406 |         25 |        |                                 |       |
-| no4   | BottomCornerText                         |      406 |         25 |        | https://decomp.me/scratch/OZfBf | 0.999 |
+| no4   | func_pspeu_092559A0                      |      406 |         25 |        |                                 |       |
 | np3   | func_pspeu_09255760                      |      406 |         25 |        |                                 |       |
 | st0   | func_pspeu_0924F680                      |      406 |         25 |        |                                 |       |
 | wrp   | func_psp_09242E28                        |      406 |         25 |        |                                 |       |
