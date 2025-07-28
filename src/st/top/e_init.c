@@ -28,7 +28,7 @@ void EntitySecretStairs(Entity*);
 void EntityClockTower3D(Entity*);
 void EntityClouds(Entity*);
 void EntityBreakableWall(Entity*);
-void func_us_801AA624(Entity*);
+void EntityTriangleElevator(Entity*);
 void EntityLionLamp(Entity*);
 void func_us_801AB45C(Entity*);
 void func_us_801AB67C(Entity*);
@@ -73,7 +73,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityClockTower3D,
     EntityClouds,
     EntityBreakableWall,
-    func_us_801AA624,
+    EntityTriangleElevator,
     EntityLionLamp,
     func_us_801AB45C,
     func_us_801AB67C,

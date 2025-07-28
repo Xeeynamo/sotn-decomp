@@ -63,24 +63,19 @@ cloudVectorOne = 0x80181C44;
 cloudVectorTwo =  0x80181C4C;
 cloudVectorThree = 0x80181C54;
 cloudVectorFour = 0x80181C5C;
+data = 0x80181CE4;
+empty = 0x80181CF4;
 s_RoofTextureData = 0x80181CFC;
 s_TowerTextureData = 0x80181D14;
 s_ClockRoofScript = 0x80181FD0;
 s_ClockTowerScript = 0x80182008;
 s_ClockVertexSets = 0x8018207C;
+TOP_cutscene_data = 0x80182C08;
 sprites_3 = 0x801A6490;
 TOP_EntityBackgroundBlock = 0x801A8C38; // source=match
 TOP_EntityLockCamera = 0x801A8D84;
 EntityBreakable = 0x801A9390;
 TOP_EntityBreakableDebris = 0x801A96F4; // source=duplicate
-CutsceneUnk1 = 0x801AB768; // source=duplicate
-SetCutsceneScript = 0x801AB7BC; // source=duplicate
-CutsceneUnk4 = 0x801AB9DC; // source=duplicate
-DrawCutsceneActorName = 0x801ABA94; // source=duplicate
-SetCutsceneEnd = 0x801ABC18; // source=duplicate
-CutsceneRun = 0x801ABC44; // source=duplicate
-CutsceneSkip = 0x801ABF20; // source=duplicate
-ScaleCutsceneAvatar = 0x801AC000; // source=duplicate
 TOP_EntityCutscene = 0x801AC104; // source=duplicate
 Update = 0x801AD660; // source=match
 UpdateStageEntities = 0x801AD95C; // source=match
@@ -89,12 +84,7 @@ EntityDamageDisplay = 0x801AEB7C; // source=match
 InitRoomEntities = 0x801AFA7C; // source=match
 UpdateRoomPosition = 0x801AFBF4; // source=match
 TOP_EntityRedDoor = 0x801AFE10; // source=match
-DestroyEntity = 0x801B0A48; // source=match
-MoveEntity = 0x801B0DFC; // source=match
-SetStep = 0x801B1688; // source=match
-InitializeEntity = 0x801B1758; // source=match
 EntityDummy = 0x801B1854; // source=match
-GetPlayerCollisionWith = 0x801B1AFC; // source=match
 EntityPrizeDrop = 0x801B2468; // source=match
 EntityExplosion = 0x801B2CDC; // source=match
 EntityEquipItemDrop = 0x801B2E7C; // source=match
@@ -119,4 +109,5 @@ EntityClockTower3D = 0x801BB354; // source=duplicate
 g_SkipCutscene = 0x801BC460;
 g_Dialogue = 0x801BC464; // size=0x44
 g_CutsceneFlags = 0x801BC510;
+g_IsCutsceneDone = 0x801BC518;
 g_ItemIconSlots = 0x801BC51C;
