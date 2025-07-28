@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
 
-u8 D_us_80180D38[] = {
-    0x2, 0x1, 0x2, 0x2, 0x2,  0x3, 0x2, 0x4,
-    0x2, 0x5, 0x4, 0x6, 0xFF, 0x0, 0x0, 0x0,
-};
+#ifdef VERSION_PSP
+extern s32 E_ID(ID_22);
+extern s32 E_ID(ID_23);
+extern s32 E_ID(ID_31);
+#endif
+
+static u8 D_us_80180D38[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1, 0};
 
 void func_us_801B52B4(Entity* self) {
     s16 angle;
@@ -13,8 +16,8 @@ void func_us_801B52B4(Entity* self) {
         self->zPriority = 0xA0;
         self->animSet = 8;
         self->animCurFrame = 1;
-        self->palette = 0x8161;
-        angle = GetAngleBetweenEntitiesShifted(self, g_Entities); // & 0xFF;
+        self->palette = PAL_OVL(0x161);
+        angle = GetAngleBetweenEntitiesShifted(self, &PLAYER);
         SetEntityVelocityFromAngle(angle, 0x28);
         return;
     }
@@ -35,7 +38,7 @@ void func_us_801B5368(Entity* self) {
         self->drawFlags |= FLAG_DRAW_ROTATE;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-        self->zPriority = 160;
+        self->zPriority = 0xA0;
         self->velocityX = 0;
         self->velocityY = 0;
         self->rotate = 0;
@@ -57,7 +60,7 @@ void func_us_801B5368(Entity* self) {
         self->velocityY += FIX(0.75);
         self->velocityX += ((Random() & 3) << 0xD) - FIX(0.1875);
         self->velocityY += ((Random() & 3) << 0xD) - FIX(0.1875);
-        self->ext.et_801B5368.unk80 += (((Random() & 3) * 0x10) - 0x18);
+        self->ext.et_801B5368.unk80 += ((Random() & 3) * 0x10) - 0x18;
         break;
 
     case 1:
@@ -80,7 +83,7 @@ void func_us_801B5368(Entity* self) {
                 DestroyEntity(self);
             }
         }
-        return;
+        break;
     }
 }
 
@@ -89,57 +92,57 @@ void func_us_801B5368(Entity* self) {
    destroyed
 */
 void func_us_801B5578(u32 tileIdx) {
-    s16 screenX, screenY;
-    s32 entityIdx;
+    s16 posX, posY;
+    s32 i;
     Entity* newEnt;
 
-    screenX = tileIdx % 96 * 16 + 8;
-    screenY = tileIdx / 96 * 16 + 8;
+    posX = tileIdx % 0x60 * 16 + 8;
+    posY = tileIdx / 0x60 * 16 + 8;
 
-    screenX -= g_Tilemap.scrollX.i.hi;
-    screenY -= g_Tilemap.scrollY.i.hi;
+    posX -= g_Tilemap.scrollX.i.hi;
+    posY -= g_Tilemap.scrollY.i.hi;
 
-    for (entityIdx = 0; entityIdx < 3; entityIdx++) {
+    for (i = 0; i < 3; i++) {
         newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEnt != NULL) {
-            CreateEntityFromCurrentEntity(E_UNK_22, newEnt);
-            newEnt->posX.i.hi = screenX;
-            newEnt->posY.i.hi = screenY;
-            newEnt->params = entityIdx;
+            CreateEntityFromCurrentEntity(E_ID(ID_22), newEnt);
+            newEnt->posX.i.hi = posX;
+            newEnt->posY.i.hi = posY;
+            newEnt->params = i;
         }
     }
 
     newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (newEnt != NULL) {
         CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, newEnt);
-        newEnt->posX.i.hi = screenX;
-        newEnt->posY.i.hi = screenY;
+        newEnt->posX.i.hi = posX;
+        newEnt->posY.i.hi = posY;
         newEnt->params = 16;
     }
 
     newEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (newEnt != NULL) {
-        CreateEntityFromCurrentEntity(E_UNK_23, newEnt);
-        newEnt->posX.i.hi = screenX;
-        newEnt->posY.i.hi = screenY;
+        CreateEntityFromCurrentEntity(E_ID(ID_23), newEnt);
+        newEnt->posX.i.hi = posX;
+        newEnt->posY.i.hi = posY;
     }
 }
 
-void func_us_801B56A4(u32 tileIndex) {
-    s16 screenX, screenY;
+void func_us_801B56A4(u32 tileIdx) {
+    s16 posX, posY;
     Entity* newEnt;
 
-    screenX = tileIndex % 96 * 16 + 8;
-    screenY = tileIndex / 96 * 16 + 8;
+    posX = tileIdx % 0x60 * 16 + 8;
+    posY = tileIdx / 0x60 * 16 + 8;
 
-    screenX -= g_Tilemap.scrollX.i.hi;
-    screenY -= g_Tilemap.scrollY.i.hi;
+    posX -= g_Tilemap.scrollX.i.hi;
+    posY -= g_Tilemap.scrollY.i.hi;
 
     newEnt = AllocEntity(&g_Entities[160], &g_Entities[192]);
     if (newEnt != NULL) {
-        CreateEntityFromCurrentEntity(E_UNK_31, newEnt);
-        newEnt->posX.i.hi = screenX;
-        newEnt->posY.i.hi = screenY;
+        CreateEntityFromCurrentEntity(E_ID(ID_31), newEnt);
+        newEnt->posX.i.hi = posX;
+        newEnt->posY.i.hi = posY;
     }
 }
 
@@ -149,9 +152,13 @@ void func_us_801B56A4(u32 tileIndex) {
 */
 void func_us_801B5750(Entity* self) {
     Entity* player;
-    s16 scrollX, scrollY;
-    u32 tileType, newTileType, colType, tileIdx;
+    u32 tileIdx;
+    u32 newTileType;
+    u32 tileType;
+    u8 colType;
     s32 i;
+    s16 x, y;
+    s16 scrollX, scrollY;
 
     player = &PLAYER;
     switch (self->step) {
@@ -163,25 +170,30 @@ void func_us_801B5750(Entity* self) {
         g_GpuBuffers[1].draw.r0 = 0x10;
         g_GpuBuffers[1].draw.g0 = 0x10;
         g_GpuBuffers[1].draw.b0 = 0x10;
+        /* fallthrough */
     case 1:
-        scrollX = player->posX.i.hi + g_Tilemap.scrollX.i.hi;
-        scrollY = player->posY.i.hi + g_Tilemap.scrollY.i.hi;
-        tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 16;
+        x = player->posX.i.hi;
+        y = player->posY.i.hi;
+        scrollX = x + g_Tilemap.scrollX.i.hi;
+        scrollY = y + g_Tilemap.scrollY.i.hi;
+        tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 0x10;
         tileIdx -= 0x60;
 
         for (i = 0; i < 3; i++) {
             tileType = g_Tilemap.fg[tileIdx];
             colType = g_Tilemap.tileDef->collision[tileType];
-            if (((colType + 12) & 0xFF) < 4) {
+            if (colType > 0xF3 && colType < 0xF8) {
                 if (g_api.CheckEquipmentItemCount(
                         ITEM_SPIKE_BREAKER, EQUIP_ARMOR)) {
                     switch (tileType) {
                     case 0x6AE:
                         newTileType = 0x6B1;
                         break;
+
                     case 0x6AF:
                         newTileType = 0x6B2;
                         break;
+
                     case 0x6B0:
                         newTileType = 0x6B3;
                         break;
@@ -195,12 +207,12 @@ void func_us_801B5750(Entity* self) {
             }
             tileIdx += 0x60;
         }
-        return;
+        break;
     }
 }
 
 void func_us_801B5948(Entity* self) {
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitInteractable);
         self->attackElement = 0x50;
         self->attack = 15;
@@ -208,7 +220,7 @@ void func_us_801B5948(Entity* self) {
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
         self->poseTimer = 4;
-        return;
+    } else {
+        DestroyEntity(self);
     }
-    DestroyEntity(self);
 }

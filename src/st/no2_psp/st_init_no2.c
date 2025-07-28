@@ -76,8 +76,8 @@ void InitEntityIds(void) {
     E_ID(3D_HOUSE_SPAWNER) = E_3D_HOUSE_SPAWNER;
     E_ID(ID_20) = E_UNK_20;
     E_ID(ID_21) = E_UNK_21;
-    E_ID(ID_22) = E_UNK_22;
-    E_ID(ID_23) = E_UNK_23;
+    E_ID(ID_22) = E_ID_22;
+    E_ID(ID_23) = E_ID_23;
     E_ID(ID_24) = E_UNK_24;
     E_ID(ID_25) = E_UNK_25;
     E_ID(ID_26) = E_UNK_26;
@@ -91,8 +91,8 @@ void InitEntityIds(void) {
     E_ID(BLOOD_DRIPS) = E_BLOOD_DRIPS;
     E_ID(BLOOD_SPLATTER) = E_BLOOD_SPLATTER;
     E_ID(ID_30) = E_UNK_30;
-    E_ID(ID_31) = E_UNK_31;
-    E_ID(ID_32) = E_UNK_32;
+    E_ID(ID_31) = E_ID_31;
+    E_ID(ID_32) = E_ID_32;
     E_ID(ID_33) = E_UNK_33;
     E_ID(VALHALLA_KNIGHT) = E_VALHALLA_KNIGHT;
     E_ID(ID_35) = E_UNK_35;

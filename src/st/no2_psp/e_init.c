@@ -32,9 +32,9 @@ void func_us_801B4210(Entity* self);
 void Entity3DBackgroundHouse(Entity* self);
 void Entity3DHouseSpawner(Entity* self);
 void func_us_801B4DA4(Entity* self);
-void func_pspeu_0925C0F8(Entity* self);
-void func_pspeu_0925BBA8(Entity* self);
-void func_pspeu_0925BAD0(Entity* self);
+void func_us_801B5750(Entity* self);
+void func_us_801B5368(Entity* self);
+void func_us_801B52B4(Entity* self);
 void func_us_801B5FB8(Entity* self);
 void func_us_801B68EC(Entity* self);
 void func_us_801B65A4(Entity* self);
@@ -47,9 +47,9 @@ void EntityOwlTarget(Entity* self);
 void EntityBloodyZombie(Entity* self);
 void EntityBloodDrips(Entity* self);
 void EntityBloodSplatter(Entity* self);
-void func_pspeu_0925B730(Entity* self);
-void func_pspeu_0925C380(Entity* self);
-void func_pspeu_0925B278(Entity* self);
+void func_us_801B72E8(Entity* self);
+void func_us_801B5948(Entity* self);
+void func_us_801B7580(Entity* self);
 void EntitySealedDoor(Entity* self);
 void EntityValhallaKnight(Entity* self);
 void func_us_801C8954(Entity* self);
@@ -99,9 +99,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     Entity3DBackgroundHouse,
     Entity3DHouseSpawner,
     func_us_801B4DA4,
-    func_pspeu_0925C0F8,
-    func_pspeu_0925BBA8,
-    func_pspeu_0925BAD0,
+    func_us_801B5750,
+    func_us_801B5368,
+    func_us_801B52B4,
     func_us_801B5FB8,
     func_us_801B68EC,
     func_us_801B65A4,
@@ -114,9 +114,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBloodyZombie,
     EntityBloodDrips,
     EntityBloodSplatter,
-    func_pspeu_0925B730,
-    func_pspeu_0925C380,
-    func_pspeu_0925B278,
+    func_us_801B72E8,
+    func_us_801B5948,
+    func_us_801B7580,
     EntitySealedDoor,
     EntityValhallaKnight,
     func_us_801C8954,
@@ -154,7 +154,7 @@ EInit g_EInitOwlKnightSword = {
 EInit g_EInitOwl = {ANIMSET_OVL(0x08), 0x01, 0x49, PAL_OWL_KNIGHT, 0x016};
 EInit g_EInitBloodyZombie = {
     ANIMSET_OVL(0x09), 0x01, 0x4A, PAL_BLOODY_ZOMBIE, 0x00D};
-EInit D_pspeu_09266728 = {ANIMSET_OVL(0x02), 0x0E, 0x00, PAL_NONE, 0x005};
+EInit D_us_801808EC = {ANIMSET_OVL(0x02), 0x0E, 0x00, PAL_NONE, 0x005};
 EInit g_EInitValhallaKnight = {
     ANIMSET_OVL(0x05), 0x01, 0x4C, PAL_VALHALLA_KNIGHT, 0x085};
 EInit D_us_80180904 = {
