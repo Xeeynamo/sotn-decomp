@@ -1845,6 +1845,12 @@ typedef struct {
     /* 0x9C */ s16 rotSpeed;
 } ET_BreakableWallDebris;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 unk80;
+    /* 0x84 */ s32 unk84;
+} ET_BreakableWall2;
+
 // NO4 Room 1, Bottom, Breakable Crystal Floor
 typedef struct {
     /* 0x7C */ s32 : 32;
@@ -2066,6 +2072,23 @@ typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ u8 unk80;
 } ET_CEN_Elevator;
+
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 : 8;
+    /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 unk7F;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ Point16 mapPos;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ s32 unk8C;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ struct Primitive* prim;
+} ET_TOP_Elevator;
 
 typedef struct {
     /* 0x7C */ s32 : 32;
@@ -3327,6 +3350,22 @@ typedef struct {
     /* 0x80 */ s16 unk80;
 } ET_801B5368;
 
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ struct Entity* entity;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ u16 : 16;
+    /* 0x88 */ s16 unk88;
+} ET_FleaRider;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u8 unk84;
+} ET_HiddenStairs;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3484,6 +3523,7 @@ typedef union { // offset=0x7C
     ET_DeathScythe deathScythe;
     ET_Unused_MAD_ST0 unusedMadST0;
     ET_CEN_Elevator cenElevator;
+    ET_TOP_Elevator topElevator;
     ET_BloodSkeleton bloodSkeleton;
     ET_UnusedCENEnt unusedCENEnt;
     ET_SmallRisingHeart smallRisingHeart;
@@ -3492,6 +3532,7 @@ typedef union { // offset=0x7C
     ET_DemonSwitchWall demonSwitchWall;
     ET_BreakableWall breakableWall;
     ET_BreakableWallDebris breakableWallDebris;
+    ET_BreakableWall2 breakableWall2;
     ET_BreakableTerrain breakableTerrain;
     ET_DebugCerberusGate debugCerberusGate;
     ET_FallingStairs fallingStairs;
@@ -3616,6 +3657,8 @@ typedef union { // offset=0x7C
     ET_801B6E34 et_801B6E34;
     ET_801B72E8 et_801B72E8;
     ET_801B5368 et_801B5368;
+    ET_FleaRider fleaRider;
+    ET_HiddenStairs hiddenStairs;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

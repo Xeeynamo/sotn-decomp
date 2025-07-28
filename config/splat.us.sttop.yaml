@@ -73,7 +73,7 @@ segments:
       - [0x28D00, c, e_lock_camera]
       - [0x29250, c, us]
       - [0x29390, c, e_breakable]
-      - [0x296F4, c, 296F4]
+      - [0x299EC, c, 296F4]
       - [0x2B768, c, cutscene]
       - [0x2D11C, c, post_richter_cutscene]
       - [0x2D630, c, st_update]
