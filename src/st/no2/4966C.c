@@ -14,11 +14,3 @@ INCLUDE_ASM("st/no2/nonmatchings/4966C", polarPlacePartsList);
 INCLUDE_ASM("st/no2/nonmatchings/4966C", func_801CE2CC);
 
 INCLUDE_ASM("st/no2/nonmatchings/4966C", func_801CE3FC);
-
-INCLUDE_ASM("st/no2/nonmatchings/4966C", func_801CE4CC);
-
-INCLUDE_ASM("st/no2/nonmatchings/4966C", EntityHammer);
-
-INCLUDE_ASM("st/no2/nonmatchings/4966C", EntityGurkhaBodyParts);
-
-INCLUDE_ASM("st/no2/nonmatchings/4966C", EntityHammerWeapon);
