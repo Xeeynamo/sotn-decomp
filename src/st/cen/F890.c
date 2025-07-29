@@ -341,14 +341,15 @@ void EntityRoomDarkness(Entity* self) {
     }
 }
 
-#if !defined(VERSION_HD)
 void EntityMaria(Entity* self) {
     if (self->step == 0) {
+#if !defined(VERSION_HD)
         /* Has player seen Maria Holy Glasses Cutscene? */
         if (g_CastleFlags[MET_MARIA_IN_CEN] != 0) {
             DestroyEntity(self);
             return;
         }
+#endif
         InitializeEntity(g_EInitSpawner);
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->animSet = ANIMSET_OVL(1);
@@ -358,9 +359,6 @@ void EntityMaria(Entity* self) {
         self->zPriority = 0x80;
     }
 }
-#else
-INCLUDE_ASM("st/cen/nonmatchings/F890", EntityMaria);
-#endif
 
 s16 func_8019040C(Primitive* prim, s16 arg1) {
     s16 ret = arg1;
@@ -402,7 +400,6 @@ s16 func_801904B8(Primitive* prim, s16 arg1) {
     return arg1;
 }
 
-#if !defined(VERSION_HD)
 // Elevator when not moving (ID 1A)
 void EntityElevatorStationary(Entity* self) {
     Entity* player = &PLAYER;
@@ -463,8 +460,10 @@ void EntityElevatorStationary(Entity* self) {
                     g_Entities[1].ext.entSlot1.unk0 = 1;
                     g_Player.demo_timer = 2;
                     g_Player.padSim = 0;
+#if !defined(VERSION_HD)
                     PLAYER.velocityX = 0;
                     PLAYER.velocityY = 0;
+#endif
                     self->step = 2;
                 }
             }
@@ -562,9 +561,6 @@ void EntityElevatorStationary(Entity* self) {
         DestroyEntity(self);
     }
 }
-#else
-INCLUDE_ASM("st/cen/nonmatchings/F890", EntityElevatorStationary);
-#endif
 
 void EntityUnkId1B(Entity* self) {
     Entity* entity = &self[self->params];
