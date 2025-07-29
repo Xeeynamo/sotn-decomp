@@ -59,8 +59,8 @@ enum OVL_EXPORT(Entities) {
     E_3D_HOUSE_SPAWNER,    // Entity3DHouseSpawner
     E_UNK_20,              // func_us_801B4DA4
     E_UNK_21,              // func_us_801B5750
-    E_UNK_22,              // func_us_801B5368
-    E_UNK_23,              // func_us_801B52B4
+    E_ID_22,               // func_us_801B5368
+    E_ID_23,               // func_us_801B52B4
     E_UNK_24,              // func_us_801B5FB8
     E_UNK_25,              // func_us_801B68EC
     E_UNK_26,              // func_us_801B65A4
@@ -74,8 +74,8 @@ enum OVL_EXPORT(Entities) {
     E_BLOOD_DRIPS,         // EntityBloodDrips
     E_BLOOD_SPLATTER,      // EntityBloodSplatter
     E_UNK_30,              // func_us_801B72E8
-    E_UNK_31,              // func_us_801B5948
-    E_UNK_32,              // func_us_801B7580
+    E_ID_31,               // func_us_801B5948
+    E_ID_32,               // func_us_801B7580
     E_UNK_33,              // func_us_801B7980
     E_VALHALLA_KNIGHT,     // EntityValhallaKnight
     E_UNK_35,              // func_us_801C8954
@@ -114,7 +114,7 @@ extern EInit g_EInitOwlKnight;
 extern EInit g_EInitOwlKnightSword;
 extern EInit g_EInitOwl;
 extern EInit g_EInitBloodyZombie;
-// extern EInit D_us_801808EC;
+extern EInit D_us_801808EC;
 extern EInit g_EInitValhallaKnight;
 extern EInit D_us_80180904;
 extern EInit D_us_80180910;
