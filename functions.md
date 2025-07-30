@@ -212,7 +212,7 @@
 | lib   | func_psp_0923F7A0                        |       21 |          1 |        |                                 |       |
 | no2   | func_pspeu_0923F710                      |       21 |          1 |        |                                 |       |
 | no2   | func_pspeu_0924D628                      |       21 |          1 |        |                                 |       |
-| no2   | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
+| no2   | func_pspeu_0923CC50                      |       21 |          1 |        |                                 |       |
 | no3   | func_pspeu_09254778                      |       21 |          1 |        |                                 |       |
 | no3   | func_pspeu_092605B8                      |       21 |          1 |        |                                 |       |
 | no3   | func_pspeu_09248EC0                      |       21 |          1 |        |                                 |       |
@@ -286,7 +286,7 @@
 | lib   | func_psp_0924EF28                        |       25 |          1 |        |                                 |       |
 | lib   | func_psp_0924F5B8                        |       25 |          1 |        |                                 |       |
 | lib   | func_psp_0924F970                        |       25 |          1 |        | https://decomp.me/scratch/P1Emw | 0.712 |
-| no2   | MoveEntity                               |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
+| no2   | func_pspeu_0924CAA8                      |       25 |          1 |        |                                 |       |
 | no2   | func_pspeu_0924D138                      |       25 |          1 |        |                                 |       |
 | no2   | func_pspeu_0924D5D8                      |       25 |          1 |        |                                 |       |
 | no3   | func_pspeu_0925FCB8                      |       25 |          1 |        |                                 |       |
@@ -428,7 +428,7 @@
 | dra   | func_psp_0913E4F8                        |       31 |          3 |        | https://decomp.me/scratch/LLSQQ | 0.505 |
 | dai   | SetEntityVelocityFromAngle               |       31 |          3 |        | https://decomp.me/scratch/IrMtS | 1.0   |
 | lib   | func_psp_0924F608                        |       31 |          3 |        |                                 |       |
-| no2   | func_801CE228                            |       31 |          3 |        |                                 |       |
+| no2   | func_pspeu_092549F8                      |       31 |          3 |        |                                 |       |
 | no2   | func_pspeu_0924D188                      |       31 |          3 |        |                                 |       |
 | no4   | func_pspeu_092428E0                      |       31 |          3 |        |                                 |       |
 | no4   | func_pspeu_092432C0                      |       31 |          3 |        |                                 |       |
@@ -572,7 +572,7 @@
 | lib   | func_psp_09238598                        |       39 |          2 |        | https://decomp.me/scratch/gVbRE | 0.994 |
 | lib   | func_psp_09238620                        |       39 |          2 |        |                                 |       |
 | lib   | func_psp_0924F6C8                        |       39 |          2 |        |                                 |       |
-| no2   | CreateEntityFromCurrentEntity            |       39 |          2 |        | https://decomp.me/scratch/FD6dM | 0.991 |
+| no2   | func_pspeu_09238598                      |       39 |          2 |        |                                 |       |
 | no2   | func_pspeu_09238620                      |       39 |          2 |        |                                 |       |
 | no2   | func_pspeu_0924D248                      |       39 |          2 |        |                                 |       |
 | no3   | func_pspeu_092468F0                      |       39 |          2 |        |                                 |       |
@@ -629,7 +629,7 @@
 | chi   | func_psp_09247610                        |       41 |          3 |        |                                 |       |
 | dai   | GetSideToPlayer                          |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | lib   | func_psp_0924EEA0                        |       41 |          3 |        |                                 |       |
-| no2   | GetSideToPlayer                          |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
+| no2   | func_pspeu_0924CA20                      |       41 |          3 |        |                                 |       |
 | no3   | func_pspeu_0925FC30                      |       41 |          3 |        |                                 |       |
 | no4   | GetSideToPlayer                          |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
 | np3   | GetSideToPlayer                          |       41 |          3 |        | https://decomp.me/scratch/ap3Mz | 0.994 |
@@ -653,7 +653,7 @@
 | dra   | func_psp_0913D640                        |       42 |          3 |        |                                 |       |
 | dra   | func_psp_090ED1B8                        |       42 |          3 |        |                                 |       |
 | dra   | func_psp_090E2848                        |       42 |          4 |        |                                 |       |
-| no2   | func_801CDFD8                            |       42 |          4 |        |                                 |       |
+| no2   | func_pspeu_0924F4A0                      |       42 |          4 |        |                                 |       |
 | np3   | func_801CDFD8                            |       42 |          4 |        |                                 |       |
 | maria | func_pspeu_092BFFB8                      |       42 |          5 |        |                                 |       |
 | chi   | func_psp_09237BC0                        |       42 |          5 |        |                                 |       |
@@ -697,13 +697,13 @@
 | chi   | en_venus_weed.rodata                     |       44 |          0 | Yes    |                                 |       |
 | dra   | SetVolumeCommand22_23                    |       44 |          3 |        |                                 |       |
 | st0   | func_pspeu_0924BB08                      |       44 |          3 |        |                                 |       |
-| no2   | polarPlacePartsList                      |       44 |          5 |        |                                 |       |
+| no2   | func_pspeu_09254A58                      |       44 |          5 |        |                                 |       |
 | np3   | polarPlacePartsList                      |       44 |          5 |        |                                 |       |
 | dra   | func_psp_091434A8                        |       45 |          1 |        |                                 |       |
 | maria | func_pspeu_092A9D48                      |       45 |          1 |        |                                 |       |
 | maria | func_pspeu_092A9DE8                      |       45 |          1 |        |                                 |       |
 |       | func_092EB8E8                            |       45 |          2 |        |                                 |       |
-| no2   | func_801CE1E8                            |       45 |          3 |        |                                 |       |
+| no2   | func_pspeu_09254960                      |       45 |          3 |        |                                 |       |
 | np3   | func_801CE1E8                            |       45 |          3 |        |                                 |       |
 | maria | func_pspeu_092BF8B8                      |       45 |          5 |        |                                 |       |
 | dra   | func_psp_09117A90                        |       45 |          6 |        | https://decomp.me/scratch/gUEVC | 0.713 |
@@ -721,7 +721,7 @@
 | dai   | func_pspeu_0923EF38                      |       46 |          4 |        |                                 |       |
 | lib   | func_psp_09244170                        |       46 |          4 |        |                                 |       |
 | no2   | func_pspeu_0923FF60                      |       46 |          4 |        | https://decomp.me/scratch/fFj3M | 0.999 |
-| no2   | func_801CDE10                            |       46 |          4 |        |                                 |       |
+| no2   | func_pspeu_0924F238                      |       46 |          4 |        |                                 |       |
 | no3   | func_pspeu_09254FC8                      |       46 |          4 |        |                                 |       |
 | no4   | func_pspeu_0924C6E8                      |       46 |          4 |        |                                 |       |
 | np3   | func_pspeu_0924B468                      |       46 |          4 |        |                                 |       |
@@ -975,7 +975,7 @@
 | dai   | func_pspeu_09251430                      |       65 |          6 |        |                                 |       |
 | dai   | func_pspeu_0924BA70                      |       65 |          6 |        | https://decomp.me/scratch/6HFZa | 1.0   |
 | no2   | func_pspeu_0924AAB8                      |       65 |          6 |        |                                 |       |
-| no2   | func_801CE120                            |       65 |          7 |        |                                 |       |
+| no2   | func_pspeu_09254880                      |       65 |          7 |        |                                 |       |
 | np3   | func_801CE120                            |       65 |          7 |        |                                 |       |
 | dra   | func_psp_09127B50                        |       65 |          8 |        | https://decomp.me/scratch/9ZT5U | 1.0   |
 | chi   | UpdateRoomPosition                       |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
@@ -1007,7 +1007,7 @@
 | maria | func_80160F0C                            |       67 |          6 |        |                                 |       |
 | ric   | func_80160F0C                            |       67 |          6 |        |                                 |       |
 | lib   | func_psp_09239568                        |       67 |          6 |        | https://decomp.me/scratch/vnLIX | 1.0   |
-| no2   | func_801CDC80                            |       67 |          6 |        |                                 |       |
+| no2   | func_pspeu_0924EFD0                      |       67 |          6 |        |                                 |       |
 | no4   | func_pspeu_092482B0                      |       67 |          6 |        | https://decomp.me/scratch/LJBKp | 0.998 |
 | np3   | func_801CDC80                            |       67 |          6 |        |                                 |       |
 | st0   | func_pspeu_09237BC0                      |       67 |          6 |        |                                 |       |
@@ -1126,7 +1126,7 @@
 | dra   | func_psp_0911B820                        |       76 |          8 |        |                                 |       |
 | maria | MarEntityBladeDash                       |       76 |          8 |        |                                 |       |
 | ric   | RicEntityBladeDash                       |       76 |          8 |        |                                 |       |
-| no2   | func_801CE3FC                            |       76 |          8 |        |                                 |       |
+| no2   | func_pspeu_09254C70                      |       76 |          8 |        |                                 |       |
 | np3   | func_801CE3FC                            |       76 |          8 |        |                                 |       |
 | ric   | func_pspeu_092A9560                      |       76 |         11 |        |                                 |       |
 | dra   | func_psp_09136F30                        |       76 |         13 |        | https://decomp.me/scratch/Nwupw | 0.989 |
@@ -1192,7 +1192,7 @@
 | np3   | polarPlacePart                           |       81 |          6 |        |                                 |       |
 | dra   | func_psp_090E2F60                        |       81 |         11 | Yes    | https://decomp.me/scratch/n90nV | 0.976 |
 | ric   | 319C4.rodata                             |       82 |          0 | Yes    |                                 |       |
-| no2   | func_801CDF1C                            |       82 |          6 |        |                                 |       |
+| no2   | func_pspeu_0924F378                      |       82 |          6 |        |                                 |       |
 | np3   | func_801CDF1C                            |       82 |          6 |        |                                 |       |
 | no3   | EntityWargExplosionPuffTransparent       |       82 |          8 |        | https://decomp.me/scratch/IxuOy | 0.999 |
 | no4   | func_pspeu_09238CF0                      |       82 |          8 |        | https://decomp.me/scratch/qonr5 | 1.0   |
@@ -1229,7 +1229,7 @@
 | maria | func_pspeu_092A9C28                      |       86 |         17 |        |                                 |       |
 | dra   | func_psp_090ED818                        |       87 |          7 |        |                                 |       |
 | lib   | func_psp_09269FF0                        |       87 |          8 |        | https://decomp.me/scratch/ERUMB | 0.999 |
-| no2   | func_801CE04C                            |       87 |         10 |        |                                 |       |
+| no2   | func_pspeu_09254748                      |       87 |         10 |        |                                 |       |
 | np3   | func_801CE04C                            |       87 |         10 |        |                                 |       |
 | st0   | EntityCutscenePhotographFire             |       87 |         10 |        |                                 |       |
 | dra   | func_psp_091140D8                        |       87 |         14 |        | https://decomp.me/scratch/B78tT | 0.988 |
@@ -1330,7 +1330,7 @@
 | chi   | func_psp_09244878                        |       97 |         12 |        |                                 |       |
 | dai   | PlaySfxPositional                        |       97 |         12 |        |                                 |       |
 | lib   | PlaySfxPositional                        |       97 |         12 |        |                                 |       |
-| no2   | PlaySfxPositional                        |       97 |         12 |        |                                 |       |
+| no2   | func_pspeu_09244490                      |       97 |         12 |        |                                 |       |
 | no3   | func_pspeu_092591F0                      |       97 |         12 |        |                                 |       |
 | no4   | PlaySfxPositional                        |       97 |         12 |        |                                 |       |
 | np3   | PlaySfxPositional                        |       97 |         12 |        |                                 |       |
@@ -1432,7 +1432,7 @@
 | dai   | func_us_801C34FC                         |      105 |          9 |        | https://decomp.me/scratch/kLQp6 | 0.999 |
 | no3   | EntityFallingLeaf                        |      105 |         10 |        | https://decomp.me/scratch/tLGbd | 0.998 |
 | dra   | func_psp_09141AA0                        |      105 |         15 |        |                                 |       |
-| no2   | func_801CE2CC                            |      106 |          9 |        |                                 |       |
+| no2   | func_pspeu_09254AE8                      |      106 |          9 |        |                                 |       |
 | np3   | func_801CE2CC                            |      106 |          9 |        |                                 |       |
 | dra   | func_psp_09111BB8                        |      106 |         11 |        |                                 |       |
 | dra   | EntityPlayerSleepZ                       |      106 |         12 |        |                                 |       |
@@ -1472,7 +1472,7 @@
 | chi   | InitializeEntity                         |      112 |          2 |        |                                 |       |
 | dai   | InitializeEntity                         |      112 |          2 |        |                                 |       |
 | lib   | InitializeEntity                         |      112 |          2 |        |                                 |       |
-| no2   | InitializeEntity                         |      112 |          2 |        |                                 |       |
+| no2   | func_pspeu_0924D668                      |      112 |          2 |        |                                 |       |
 | no3   | func_pspeu_092605F8                      |      112 |          2 |        |                                 |       |
 | no4   | InitializeEntity                         |      112 |          2 |        |                                 |       |
 | np3   | InitializeEntity                         |      112 |          2 |        |                                 |       |
@@ -1577,7 +1577,7 @@
 | lib   | EntityMistDoor                           |      132 |         14 |        | https://decomp.me/scratch/RdP5H | 0.995 |
 | dra   | func_psp_09104AA0                        |      132 |         15 |        |                                 |       |
 | dra   | func_psp_091418D0                        |      132 |         16 |        |                                 |       |
-| no2   | func_801CDAC8                            |      133 |         11 |        | https://decomp.me/scratch/INxeE | 1.0   |
+| no2   | func_pspeu_0924EDE0                      |      133 |         11 |        |                                 |       |
 | np3   | func_801CDAC8                            |      133 |         11 |        | https://decomp.me/scratch/INxeE | 1.0   |
 | no3   | EntityMermanFireball                     |      133 |         17 |        |                                 |       |
 | np3   | EntityMermanFireball                     |      133 |         17 |        |                                 |       |
@@ -1760,7 +1760,7 @@
 | chi   | func_psp_09247720                        |      186 |         20 |        |                                 |       |
 | dai   | UnkCollisionFunc3                        |      186 |         20 |        |                                 |       |
 | lib   | func_psp_0924EFB0                        |      186 |         20 |        |                                 |       |
-| no2   | UnkCollisionFunc3                        |      186 |         20 |        |                                 |       |
+| no2   | func_pspeu_0924CB30                      |      186 |         20 |        |                                 |       |
 | no3   | func_pspeu_0925FD40                      |      186 |         20 |        |                                 |       |
 | no4   | func_pspeu_0925AE88                      |      186 |         20 |        |                                 |       |
 | np3   | UnkCollisionFunc3                        |      186 |         20 |        |                                 |       |
