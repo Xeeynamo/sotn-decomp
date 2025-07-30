@@ -32,7 +32,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->step = 3;
     }
     if (self->step != 4) {
-        self->posX.val = g_Entities->posX.val;
+        self->posX.val = PLAYER.posX.val;
         self->posY.val = PLAYER.posY.val;
         self->facingLeft = PLAYER.facingLeft;
     }

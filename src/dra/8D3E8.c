@@ -1313,7 +1313,7 @@ void func_80130264(Entity* self) {
     self->zPriority = PLAYER.zPriority;
 #endif
     self->facingLeft = PLAYER.facingLeft;
-    self->posX.val = g_Entities->posX.val;
+    self->posX.val = PLAYER.posX.val;
     self->posY.val = PLAYER.posY.val;
     self->rotate = 0x800 - D_80138430;
 

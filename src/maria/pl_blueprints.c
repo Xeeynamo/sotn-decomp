@@ -1166,7 +1166,7 @@ void MarEntityApplyMariaPowerAnim(Entity* self) {
 void func_maria_801623E0(Entity* self) {
     Primitive* prim;
 
-    self->posX.val = g_Entities->posX.val;
+    self->posX.val = PLAYER.posX.val;
     self->posY.val = PLAYER.posY.val;
     switch (self->step) {
     case 0:
@@ -2681,8 +2681,8 @@ s32 func_pspeu_092BEAB0(s16 setUnk80) {
     }
     DestroyEntity(entity);
     entity->entityId = E_UNK_16;
-    entity->posX.val = g_Entities->posX.val;
-    entity->posY.val = g_Entities->posY.val;
+    entity->posX.val = PLAYER.posX.val;
+    entity->posY.val = PLAYER.posY.val;
     entity->ext.maria092BEAB0.unk80 = setUnk80;
     entity->ext.maria092BEAB0.unk82 = 1;
     return 0;

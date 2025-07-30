@@ -607,7 +607,7 @@ void func_us_801C0B9C(Entity* self) {
         }
         break;
     case 4:
-        if (g_pads->pressed & PAD_UP) {
+        if (g_pads[0].pressed & PAD_UP) {
             self->step++;
         }
         break;

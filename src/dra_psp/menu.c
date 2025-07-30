@@ -2712,7 +2712,7 @@ void func_800FAB1C(void) {
     s32 i;
     Entity* entity;
 
-    entity = g_Entities + START;
+    entity = &g_Entities[START];
     for (i = START; i < 64; i++) {
         if (entity->entityId >= 0xD0 && entity->entityId < 0xE0) {
             DestroyEntity(entity);

@@ -1535,7 +1535,7 @@ void RunMainEngine(void) {
         D_801375A8 -= D_80097488.y.val;
         func_800F0940();
 
-        for (i = 0, ent = &g_Entities[0]; i < LEN(g_Entities); i++, ent++) {
+        for (i = 0, ent = g_Entities; i < TOTAL_ENTITY_COUNT; i++, ent++) {
             ent_unk68 = ent->unk68;
             if (ent_unk68) {
                 ent->posX.val += D_801375B4 * ent_unk68 * 0x100;
@@ -1830,7 +1830,7 @@ void RunMainEngine(void) {
             }
             D_801375A4 = D_8013759C - PLAYER.posX.val;
             D_801375A8 = D_801375A0 - PLAYER.posY.val;
-            for (i = 0, ent = &g_Entities[0]; i < LEN(g_Entities); i++, ent++) {
+            for (i = 0, ent = g_Entities; i < TOTAL_ENTITY_COUNT; i++, ent++) {
                 if (ent->flags & FLAG_UNK_20000) {
                     ent->posX.val -= D_801375A4;
                     ent->posY.val -= D_801375A8;

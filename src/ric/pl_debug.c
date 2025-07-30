@@ -38,10 +38,10 @@ bool RicDebug(void) {
     }
     if (g_Player.padPressed & PAD_CROSS) {
         if (g_Player.padPressed & PAD_RIGHT) {
-            g_Entities->posX.val += FIX(16.0);
+            PLAYER.posX.val += FIX(16.0);
         }
         if (g_Player.padPressed & PAD_LEFT) {
-            g_Entities->posX.val -= FIX(16.0);
+            PLAYER.posX.val -= FIX(16.0);
         }
         if (g_Player.padPressed & PAD_UP) {
             PLAYER.posY.val -= FIX(16.0);
@@ -52,10 +52,10 @@ bool RicDebug(void) {
 
     } else {
         if (g_Player.padTapped & PAD_RIGHT) {
-            g_Entities->posX.val += FIX(16.0);
+            PLAYER.posX.val += FIX(16.0);
         }
         if (g_Player.padTapped & PAD_LEFT) {
-            g_Entities->posX.val -= FIX(16.0);
+            PLAYER.posX.val -= FIX(16.0);
         }
         if (g_Player.padTapped & PAD_UP) {
             PLAYER.posY.val -= FIX(16.0);

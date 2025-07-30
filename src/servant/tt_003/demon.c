@@ -814,7 +814,7 @@ void UpdateServantDefault(Entity* self) {
         if (PLAYER.facingLeft) {
             s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
         }
-        s_TargetLocationX_calc = g_Entities->posX.i.hi + s_TargetLocOffset_calc;
+        s_TargetLocationX_calc = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
         s_TargetLocationY_calc = PLAYER.posY.i.hi - 0x20;
 
         s_AngleToTarget = self->ext.demon.randomMovementAngle;

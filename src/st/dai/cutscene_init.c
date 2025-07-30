@@ -43,13 +43,13 @@ void func_801961DC(s16 arg0) {
 
 void func_us_801C5920(Entity* self) {
     Tilemap* gTilemapPtr;
-    Entity* gEntities;
+    Entity* player;
     s16 posScrollX;
 
     gTilemapPtr = &g_Tilemap;
-    gEntities = g_Entities;
+    player = &PLAYER;
 
-    posScrollX = gEntities->posX.i.hi + g_Tilemap.scrollX.i.hi;
+    posScrollX = player->posX.i.hi + g_Tilemap.scrollX.i.hi;
 
     switch (self->step) {
     case 0:
@@ -90,7 +90,7 @@ void func_us_801C5920(Entity* self) {
                 g_Player.padSim = PAD_LEFT;
             }
         } else {
-            gEntities->posX.i.hi = 368 - g_Tilemap.scrollX.i.hi;
+            player->posX.i.hi = 368 - g_Tilemap.scrollX.i.hi;
             g_Player.padSim = 0;
             g_CutsceneFlags |= 1;
             self->step++;
@@ -121,12 +121,12 @@ void func_us_801C5920(Entity* self) {
 
 void func_us_801C5B88(Entity* self) {
     Tilemap* gTilemapPtr;
-    Entity* gEntities;
+    Entity* player;
     s16 posScrollX, posScrollY;
     s32 pan;
 
     gTilemapPtr = &g_Tilemap;
-    gEntities = g_Entities;
+    player = &PLAYER;
 
     posScrollX = self->posX.i.hi + gTilemapPtr->scrollX.i.hi;
     posScrollY = self->posY.i.hi + gTilemapPtr->scrollY.i.hi;
