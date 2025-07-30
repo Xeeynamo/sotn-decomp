@@ -72,7 +72,7 @@ segments:
       - [0x1F1C, .data, e_particles]
       - [0x1F9C, .data, e_room_fg]
       - [0x2028, .data, e_valhalla_knight]
-      - [0x219C, data]
+      - [0x219C, .data, hammer]
       - [0x2718, .data, gurkha]
       - [0x2C08, .data, blade]
       - [0x32A0, .data, gen/rooms]
