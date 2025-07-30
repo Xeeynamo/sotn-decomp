@@ -24,6 +24,7 @@ static unkStr_801CDD80 D_80183098[] = {
     {16, D_8018307C},
     {0, 0}
 };
+
 static s16 D_801830A8[] = {0x100, 0x0C0, -0x100, -0x180}; // unused
 static s16 D_801830B0[] = {0x040, -0x020, 0x040,  -0x220, 0x000, -0x100,
                            0x000, -0x0C0, -0x0C0, 0x020,  0x100, 0x000};
@@ -138,22 +139,21 @@ static void func_801CF778(void) {
     currEnt15->ext.GH_Props.rotate = ent15Parent->ext.GH_Props.rotate + 0x300;
 }
 
-static s32 func_801CF7A0(Entity* ent) {
+static s32 func_801CF7A0(Entity* self) {
     Entity* otherEnt;
-    s32 xDistance;
     s32 step;
+    s32 dx;
 
     if (g_CurrentEntity->ext.GH_Props.unk8E) {
-        --g_CurrentEntity->ext.GH_Props.unk8E;
+        g_CurrentEntity->ext.GH_Props.unk8E--;
     }
     otherEnt = &PLAYER;
-    xDistance = ent->posX.i.hi - otherEnt->posX.i.hi;
-
+    dx = self->posX.i.hi - otherEnt->posX.i.hi;
     if (g_CurrentEntity->facingLeft) {
-        xDistance = -xDistance;
+        dx = -dx;
     }
 
-    if (xDistance < -16) {
+    if (dx < -16) {
         func_801CE1E8(10);
         return;
     }
@@ -165,43 +165,41 @@ static s32 func_801CF7A0(Entity* ent) {
     }
 
     step = func_801CE120(otherEnt, g_CurrentEntity->facingLeft);
-    if (step) {
+    if (step != 0) {
         func_801CE1E8(7);
         return;
     }
 
     step = 5;
 
-    if (xDistance < 48) {
+    if (dx < 48) {
         step = 7;
     }
 
-    if (xDistance < 80) {
+    if (dx < 80) {
         step = 5;
     }
 
-    if (xDistance > 128) {
+    if (dx > 128) {
         step = 8;
     }
 
     if (!g_CurrentEntity->ext.GH_Props.unk8E) {
-        if (xDistance < 160) {
+        if (dx < 160) {
             g_CurrentEntity->ext.GH_Props.unk8E = 3;
             step = 6;
             g_CurrentEntity->ext.GH_Props.unk8C = 1;
         }
-        if (xDistance < 64) {
+        if (dx < 64) {
             g_CurrentEntity->ext.GH_Props.unk8C = 0;
         }
     }
 
     if (step != g_CurrentEntity->step) {
-        do {
-            func_801CE1E8(step);
-        } while (0); // no idea why, found by permuter
+        func_801CE1E8(step);
     }
 
-    if ((g_CurrentEntity->step == 7) && (step == 5)) {
+    if (g_CurrentEntity->step == 7 && step == 5) {
         g_CurrentEntity->ext.GH_Props.unkB0[0] = 1;
     }
 }
