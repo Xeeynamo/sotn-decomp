@@ -225,7 +225,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     if (self->step) {
         if (g_IsCutsceneDone && !g_SkipCutscene &&
             ((g_Settings.D_8003CB04 & 0x400) || g_IsTimeAttackUnlocked)) {
-            if (g_pads->tapped & PAD_START) {
+            if (g_pads[0].tapped & PAD_START) {
                 g_SkipCutscene = 1;
                 g_api.FreePrimitives(self->primIndex);
                 self->flags ^= FLAG_HAS_PRIMS;

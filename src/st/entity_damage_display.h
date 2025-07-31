@@ -55,7 +55,7 @@ void EntityDamageDisplay(Entity* self) {
     s16 xOffset;
 
     if (self->ext.ndmg.unk88) {
-        self->posX.val = g_Entities->posX.val;
+        self->posX.val = PLAYER.posX.val;
         self->posY.val = PLAYER.posY.val + -FIX(16.0);
     }
 

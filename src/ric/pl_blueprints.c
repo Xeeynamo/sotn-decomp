@@ -1432,7 +1432,7 @@ void RicEntityApplyMariaPowerAnim(Entity* self) {
 void func_801623E0(Entity* self) {
     Primitive* prim;
 
-    self->posX.val = g_Entities->posX.val;
+    self->posX.val = PLAYER.posX.val;
     self->posY.val = PLAYER.posY.val;
     switch (self->step) {
     case 0:

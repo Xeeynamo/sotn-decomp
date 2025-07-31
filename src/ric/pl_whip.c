@@ -523,7 +523,7 @@ void RicEntityArmBrandishWhip(Entity* entity) {
     } else {
         entity->animCurFrame = D_80155D08[D_80175080];
     }
-    entity->posX.val = g_Entities->posX.val;
+    entity->posX.val = PLAYER.posX.val;
     entity->posY.val = PLAYER.posY.val;
 }
 

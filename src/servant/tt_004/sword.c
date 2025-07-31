@@ -692,7 +692,7 @@ void UpdateServantDefault(Entity* self) {
     } else {
         D_us_80178550 = PLAYER.facingLeft ? FIX(0x1C) : -FIX(0x1C);
         D_us_80178554 = FIX(0x1C);
-        D_us_80178548 = g_Entities->posX.val + D_us_80178550;
+        D_us_80178548 = PLAYER.posX.val + D_us_80178550;
         D_us_8017854C = PLAYER.posY.val -
                         (((rcos(D_us_80178564) << 4) << 4) + D_us_80178554);
     }

@@ -97,7 +97,7 @@ void EntityCerberusGateDebug(Entity* self) {
         return;
 
     case WAIT_FOR_INPUT:
-        if (!(g_pads->pressed & PAD_UP)) {
+        if (!(g_pads[0].pressed & PAD_UP)) {
             return;
         }
         self->step++;
