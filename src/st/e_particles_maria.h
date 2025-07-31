@@ -101,7 +101,7 @@ void func_psp_0923B2F0(Entity* self) {
     u16 direction;
     Entity* pl;
 
-    pl = g_Entities;
+    pl = &PLAYER;
     switch (self->step) {
     default:
         return;

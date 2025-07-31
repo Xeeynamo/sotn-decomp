@@ -417,14 +417,14 @@ void func_800FE8F0(void) {
 
 // SAT: func_0606FFE4
 void AddHearts(s32 value) {
-    Entity* temp;
+    Entity* player;
     if (g_Status.hearts < g_Status.heartsMax) {
         g_Status.hearts += value;
         if (g_Status.hearts > g_Status.heartsMax) { // swapped
             g_Status.hearts = g_Status.heartsMax;
         }
-        temp = g_Entities;
-        g_api.CreateEntFactoryFromEntity(temp, 99, 0); // g_api is new
+        player = &PLAYER;
+        g_api.CreateEntFactoryFromEntity(player, 99, 0); // g_api is new
 
         PlaySfx(SFX_HEART_PICKUP);
     }

@@ -108,7 +108,7 @@ void ResetEntityArray(void) {
     Entity* entity;
     u8* ch;
 
-    for (i = 0, entity = g_Entities; i < LEN(g_Entities); i++, entity++) {
+    for (i = 0, entity = g_Entities; i < TOTAL_ENTITY_COUNT; i++, entity++) {
         ch = (u8*)entity;
         for (j = 0; j < sizeof(Entity); j++) {
             *ch++ = 0;
@@ -168,7 +168,7 @@ void RenderEntities(void) {
 
     r->poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     r->ot = g_CurrentBuffer->ot;
-    for (r->index = 0, entity = g_Entities; r->index < LEN(g_Entities);
+    for (r->index = 0, entity = g_Entities; r->index < TOTAL_ENTITY_COUNT;
          r->index++, entity++) {
         if ((r->animSet = entity->animSet) == 0 |
             (r->animCurFrame = entity->animCurFrame) == 0) {
@@ -665,7 +665,7 @@ void RenderEntitiesPSP(void) {
 
     r->poly = &g_CurrentBuffer->polyGT4[g_GpuUsage.gt4];
     r->ot = g_CurrentBuffer->ot;
-    for (r->index = 0, entity = g_Entities; r->index < LEN(g_Entities);
+    for (r->index = 0, entity = g_Entities; r->index < TOTAL_ENTITY_COUNT;
          r->index++, entity++) {
         if ((entity->animSet == 0) || (entity->animCurFrame == 0)) {
             continue;

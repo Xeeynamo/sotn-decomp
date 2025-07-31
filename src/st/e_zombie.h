@@ -102,7 +102,7 @@ void EntityZombieSpawner(Entity* self) {
     if (g_CastleFlags[CASTLE_TURNED_ON]) {
         self->posX.i.hi = 128;
         if (!--self->ext.zombieSpawner.spawnDelay) {
-            newEntity = AllocEntity(g_Entities + 160, g_Entities + 168);
+            newEntity = AllocEntity(&g_Entities[160], &g_Entities[168]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_ZOMBIE, self, newEntity);
                 temp = (Random() & 0x3F) + 96;

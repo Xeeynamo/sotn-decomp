@@ -152,8 +152,7 @@ void func_us_801B4210(Entity* self) {
         if (self->ext.et_801B4210.unk7C == 0 && flag) {
             self->pose = self->poseTimer = 0;
             for (i = 0; i < 5; i++) {
-                entity = AllocEntity(
-                    &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
+                entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
                     entity->posX.i.hi += (rand() & 0xF) - 8;
