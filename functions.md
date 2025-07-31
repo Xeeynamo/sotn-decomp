@@ -870,8 +870,8 @@
 | lib   | func_psp_09263628                        |       57 |          1 |        | https://decomp.me/scratch/JNqKh | 0.987 |
 | dai   | func_pspeu_09253EA8                      |       57 |          2 |        |                                 |       |
 | lib   | func_psp_0925AC70                        |       57 |          2 |        |                                 |       |
-| no4   | CutsceneUnk4                             |       57 |          2 |        | https://decomp.me/scratch/ZPQ9p | 0.624 |
-| st0   | CutsceneUnk4                             |       57 |          2 |        | https://decomp.me/scratch/ZPQ9p | 0.624 |
+| no4   | CutsceneUnk4                             |       57 |          2 |        | https://decomp.me/scratch/fEv6U | 1.0   |
+| st0   | CutsceneUnk4                             |       57 |          2 |        | https://decomp.me/scratch/fEv6U | 1.0   |
 | maria | func_pspeu_092B3750                      |       57 |          5 |        |                                 |       |
 | ric   | func_pspeu_092B1178                      |       57 |          5 |        |                                 |       |
 | dra   | func_psp_09109140                        |       57 |          9 |        |                                 |       |
@@ -905,7 +905,7 @@
 | lib   | func_us_801AE84C                         |       60 |          8 |        |                                 |       |
 | dra   | func_psp_09113E70                        |       60 |         11 |        | https://decomp.me/scratch/JloZJ | 0.983 |
 | dra   | func_psp_09143168                        |       61 |          1 |        |                                 |       |
-| maria | func_pspeu_092B91B8                      |       61 |          3 |        |                                 |       |
+| maria | func_pspeu_092B91B8                      |       61 |          3 |        | https://decomp.me/scratch/4qYZi | 1.0   |
 | dra   | func_psp_0910F298                        |       61 |          5 |        |                                 |       |
 | lib   | func_psp_092410A8                        |       61 |          5 |        |                                 |       |
 | dra   | func_psp_090F77E8                        |       61 |          6 |        |                                 |       |
@@ -1139,7 +1139,7 @@
 | np3   | func_pspeu_09240AA8                      |       77 |          2 |        |                                 |       |
 | st0   | func_pspeu_09248080                      |       77 |          2 |        |                                 |       |
 | wrp   | func_psp_09237700                        |       77 |          2 |        |                                 |       |
-| dra   | DrawConsumableCount                      |       77 |          4 |        | https://decomp.me/scratch/PRpzZ | 0.959 |
+| dra   | DrawConsumableCount                      |       77 |          4 |        | https://decomp.me/scratch/dHNOD | 1.0   |
 | no2   | func_pspeu_0924BE50                      |       77 |          5 |        |                                 |       |
 | chi   | EntityRoomForeground                     |       77 |          6 |        |                                 |       |
 | dai   | EntityRoomForeground                     |       77 |          6 |        |                                 |       |
@@ -1231,7 +1231,7 @@
 | lib   | func_psp_09269FF0                        |       87 |          8 |        | https://decomp.me/scratch/ERUMB | 0.999 |
 | no2   | func_pspeu_09254748                      |       87 |         10 |        |                                 |       |
 | np3   | func_801CE04C                            |       87 |         10 |        |                                 |       |
-| st0   | EntityCutscenePhotographFire             |       87 |         10 |        |                                 |       |
+| st0   | EntityCutscenePhotographFire             |       87 |         10 |        | https://decomp.me/scratch/TIsgi | 1.0   |
 | dra   | func_psp_091140D8                        |       87 |         14 |        | https://decomp.me/scratch/B78tT | 0.988 |
 | dai   | func_pspeu_0924F2D0                      |       87 |         18 |        | https://decomp.me/scratch/2SUwM | 1.0   |
 | dra   | func_psp_090EC248                        |       88 |          3 |        |                                 |       |
@@ -1409,7 +1409,7 @@
 | dai   | EntityExplosionVariantsSpawner           |      104 |          5 |        |                                 |       |
 | lib   | func_psp_09247D68                        |      104 |          5 |        | https://decomp.me/scratch/A9uqm | 0.996 |
 | no3   | func_pspeu_09258A78                      |      104 |          5 |        |                                 |       |
-| maria | func_pspeu_092BFD30                      |      104 |          8 |        | https://decomp.me/scratch/ayE51 | 1.0   |
+| maria | func_pspeu_092BFD30                      |      104 |          8 |        | https://decomp.me/scratch/CnPWP | 1.0   |
 | dra   | func_psp_090EF200                        |      104 |         10 |        |                                 |       |
 | ric   | func_80160D2C                            |      104 |         10 |        |                                 |       |
 | no3   | EntityBreakable                          |      104 |         11 |        | https://decomp.me/scratch/SjwKz | 0.998 |
@@ -1592,7 +1592,7 @@
 | no4   | EntityThrownSpear                        |      136 |         17 |        |                                 |       |
 | chi   | EntityGremlinEffect                      |      136 |         18 |        |                                 |       |
 | dra   | func_psp_09141668                        |      136 |         21 |        |                                 |       |
-| chi   | EntityGremlinFire                        |      136 |         21 |        |                                 |       |
+| chi   | EntityGremlinFire                        |      136 |         21 |        | https://decomp.me/scratch/z4w6b | 1.0   |
 | no4   | func_pspeu_09249560                      |      138 |         15 |        | https://decomp.me/scratch/KO4LD | 0.999 |
 | no2   | func_pspeu_09257C00                      |      138 |         20 |        | https://decomp.me/scratch/BTgEC | 0.998 |
 | dra   | func_psp_090EB028                        |      139 |          2 |        | https://decomp.me/scratch/qYY9V | 0.989 |
@@ -2082,7 +2082,7 @@
 | no4   | EntitySideWaterSplash                    |      352 |         30 |        |                                 |       |
 | np3   | EntitySideWaterSplash                    |      352 |         30 |        |                                 |       |
 | dra   | func_80130264                            |      352 |         34 | Yes    |                                 |       |
-| dai   | func_pspeu_092471E8                      |      354 |         31 |        | https://decomp.me/scratch/GcJAI | 0.91  |
+| dai   | func_pspeu_092471E8                      |      354 |         31 |        | https://decomp.me/scratch/CGpFv | 0.956 |
 | no4   | func_pspeu_09249030                      |      356 |         34 |        | https://decomp.me/scratch/VAgqW | 1.0   |
 | chi   | EntityVenusWeedDart                      |      356 |         37 |        |                                 |       |
 | dra   | func_psp_09127490                        |      356 |         51 |        | https://decomp.me/scratch/UbCHl | 0.989 |
@@ -2239,7 +2239,7 @@
 | dra   | func_psp_091020A0                        |      517 |         74 |        | https://decomp.me/scratch/t87MI | 0.984 |
 | dra   | EntitySubwpnHolyWaterFlame               |      519 |         37 |        |                                 |       |
 | lib   | EntitySkeleton                           |      519 |         82 |        | https://decomp.me/scratch/JvA5Y | 1.0   |
-| chi   | EntityGremlin                            |      521 |         71 |        |                                 |       |
+| chi   | EntityGremlin                            |      521 |         71 |        | https://decomp.me/scratch/z4w6b | 1.0   |
 | no3   | EntityBackgroundLightning                |      527 |         63 |        | https://decomp.me/scratch/MsNjR | 0.995 |
 | no3   | func_pspeu_0923C528                      |      531 |         20 |        | https://decomp.me/scratch/BVXN7 | 0.998 |
 | lib   | func_psp_0923DCC8                        |      532 |         57 |        | https://decomp.me/scratch/NXku6 | 0.999 |
@@ -2255,7 +2255,7 @@
 | dra   | EntityLevelUpAnimation                   |      555 |         41 |        | https://decomp.me/scratch/03x76 | 0.998 |
 | lib   | func_psp_092697D0                        |      556 |         54 |        | https://decomp.me/scratch/F9CJ5 | 0.996 |
 | dra   | EntityFactory                            |      557 |         48 | Yes    |                                 |       |
-| st0   | EntityCutscene                           |      557 |         84 | Yes    | https://decomp.me/scratch/6oVBR | 0.997 |
+| st0   | EntityCutscene                           |      557 |         84 | Yes    | https://decomp.me/scratch/TIsgi | 1.0   |
 | st0   | EntityStageTitleCard                     |      559 |         43 | Yes    |                                 |       |
 | dai   | func_us_801D97D0                         |      559 |         55 |        |                                 |       |
 | ric   | RicEntitySubwpnCross                     |      560 |         53 | Yes    | https://decomp.me/scratch/98zwV | 0.998 |
@@ -2438,7 +2438,7 @@
 | no2   | EntityHammer                             |     1123 |        182 |        |                                 |       |
 | np3   | func_pspeu_0925F9D0                      |     1123 |        182 |        | https://decomp.me/scratch/oBPut | 0.995 |
 | np3   | EntitySlogra                             |     1154 |        213 |        | https://decomp.me/scratch/hCcGP | 0.991 |
-| st0   | EntityCutscenePhotograph                 |     1164 |         88 | Yes    | https://decomp.me/scratch/6oVBR | 0.997 |
+| st0   | EntityCutscenePhotograph                 |     1164 |         88 | Yes    | https://decomp.me/scratch/TIsgi | 1.0   |
 | np3   | EntityRelicOrb                           |     1166 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | no3   | EntityMerman                             |     1166 |        174 | Yes    | https://decomp.me/scratch/rvDYb | 0.999 |
 | np3   | EntityMerman                             |     1166 |        174 | Yes    | https://decomp.me/scratch/rvDYb | 0.999 |
