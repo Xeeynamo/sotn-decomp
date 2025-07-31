@@ -73,5 +73,3 @@ void main(void) {
     }
     g_MainGame();
 }
-
-const char a0123456789abcd[] = "0123456789ABCDEF\0\0\0\0";
