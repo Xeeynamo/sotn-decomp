@@ -1,8 +1,6 @@
 #include "common.h"
 #include <libgpu.h>
 
-const char a0123456789abcd[] = "0123456789ABCDEF";
-
 typedef struct {
     /* 0x00 */ TILE tile;
     /* 0x10 */ DR_MODE draw_mode;
@@ -12,9 +10,19 @@ typedef struct {
     /* 0x28 */ s32 written;
 } FntStream;
 
+const char a0123456789abcd[] = "0123456789ABCDEF";
+
+extern FntStream Font[4];
 extern s32 D_8002B810;
 extern s32 D_8002B814;
+extern u_long D_8002B818[];
+extern s32 D_8002C218;
 extern int (*GPU_printf)(const char*, ...);
+
+extern u16 clut;
+extern u16 tpage;
+extern char D_80033A18[];
+extern SPRT_8 D_80033E18[];
 
 void SetDumpFnt(int id) {
     if (id >= 0 && D_8002B810 >= id) {
@@ -23,11 +31,6 @@ void SetDumpFnt(int id) {
     }
 }
 
-extern u_long D_8002B818[];
-extern FntStream Font[4];
-extern u16 clut;
-extern u16 tpage;
-
 void FntLoad(s32 tx, s32 ty) {
     clut = LoadClut(D_8002B818, tx, ty + 0x80);
     tpage = LoadTPage(D_8002B818 + 0x80, 0, 0, tx, ty, 0x80, 0x20);
@@ -35,7 +38,45 @@ void FntLoad(s32 tx, s32 ty) {
     memset(Font, 0, sizeof(Font));
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/font", FntOpen);
+s32 FntOpen(s32 x, s32 y, s32 w, s32 h, s32 isbg, s32 n) {
+    s32 i;
+    SPRT_8* sprites;
+
+    if (D_8002B810 >= 4) {
+        return -1;
+    }
+    if (D_8002B810 == 0) {
+        D_8002C218 = 0;
+    }
+    if ((n + D_8002C218) > 0x400) {
+        n = 0x400 - D_8002C218;
+    }
+    SetDrawMode(&Font[D_8002B810].draw_mode, 0, 0, tpage, NULL);
+    if (isbg) {
+        SetTile(&Font[D_8002B810].tile);
+        (*&Font[D_8002B810].tile).r0 = 0;
+        (*&Font[D_8002B810].tile).g0 = 0;
+        (*&Font[D_8002B810].tile).b0 = 0;
+    }
+    (*&Font[D_8002B810].tile).x0 = x;
+    (*&Font[D_8002B810].tile).y0 = y;
+    (*&Font[D_8002B810].tile).w = w;
+    (*&Font[D_8002B810].tile).h = h;
+    Font[D_8002B810].capacity = n;
+    Font[D_8002B810].written = 0;
+    Font[D_8002B810].buffer = &D_80033A18[D_8002C218];
+    Font[D_8002B810].sprites = &D_80033E18[D_8002C218];
+    *Font[D_8002B810].buffer = 0;
+    sprites = Font[D_8002B810].sprites;
+    for (i = 0; i < n; i++) {
+        SetSprt8(sprites);
+        SetShadeTex(sprites, true);
+        sprites->clut = clut;
+        sprites++;
+    }
+    D_8002C218 += n;
+    return D_8002B810++;
+}
 
 u_long* FntFlush(s32 id) {
     DR_MODE* dr;
