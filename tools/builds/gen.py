@@ -87,7 +87,7 @@ def add_c_psx(
         return
     entries[output] = {}
     rule = "psx-cc"
-    if file_name == "src/main/psxsdk/libgpu/sys.c":
+    if file_name == "src/main/psxsdk/libgpu/sys.c" or file_name == "src/main/psxsdk/libgpu/font.c":
         rule = "psx-cc-2_21"
     nw.build(
         rule=rule,
