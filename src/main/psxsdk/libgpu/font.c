@@ -4,12 +4,12 @@
 const char a0123456789abcd[] = "0123456789ABCDEF";
 
 typedef struct {
-  /* 0x00 */ TILE tile;
-  /* 0x10 */ DR_MODE draw_mode;
-  /* 0x1C */ u32 capacity;
-  /* 0x20 */ SPRT_8* sprites;
-  /* 0x24 */ char* buffer;
-  /* 0x28 */ s32 written;
+    /* 0x00 */ TILE tile;
+    /* 0x10 */ DR_MODE draw_mode;
+    /* 0x1C */ u32 capacity;
+    /* 0x20 */ SPRT_8* sprites;
+    /* 0x24 */ char* buffer;
+    /* 0x28 */ s32 written;
 } FntStream;
 
 extern s32 D_8002B810;
