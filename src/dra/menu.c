@@ -1792,39 +1792,39 @@ void MenuDrawLine(s32 x0, s32 y0, s32 x1, s32 y1, s32 isColorStatic) {
 }
 
 void DrawConsumableCount(s32 itemId, s32 hand, MenuContext* ctx) {
-    u8 outstring[16];
-    u8* str_idx;
+    char buf[16];
+    char* ptr;
     s32 displayCount;
-    u8 equipCount;
 
-    if (g_EquipDefs[itemId].isConsumable != 0) {
-        // This holds one less than how many you have.
-        equipCount = g_Status.equipHandCount[itemId];
-        str_idx = &outstring;
-        // First character in the string is the (
-        *str_idx++ = CH('(');
-        // This is now how many you have.
-        displayCount = equipCount + 1;
-        if (displayCount < 10) {
-            // Get the character code for the count.
-            *str_idx++ = equipCount + 1 + CH('0');
-        } else {
-            if (displayCount == 100) {
-                *str_idx++ = CH('1');
-                // Neat trick, set this to 0 so following two steps draw
-                // 00
-                displayCount = 0;
-            }
-            *str_idx++ = (displayCount / 10) + CH('0');
-            *str_idx++ = (displayCount % 10) + CH('0');
-        }
-        // Finish off with a ) and string terminator
-        *str_idx++ = CH(')');
-        *str_idx++ = 0xFF;
-        *str_idx++ = 0;
-        // Draw it after the item name. X=224, Y = 30 + 13*hand
-        MenuDrawStr(&outstring, 224, (hand * 13) + 30, ctx);
+    if (!g_EquipDefs[itemId].isConsumable) {
+        return;
     }
+    ptr = &buf;
+    displayCount = g_Status.equipHandCount[itemId] + 1;
+    // First character in the string is the (
+    *ptr++ = CH('(');
+    if (displayCount < 10) {
+        // Get the character code for the count.
+        *ptr++ = displayCount + CH('0');
+    } else {
+        if (displayCount == 100) {
+            *ptr++ = CH('1');
+            // Neat trick, set this to 0 so following two steps draw 00
+            displayCount = 0;
+        }
+        *ptr++ = (displayCount / 10) + CH('0');
+        *ptr++ = (displayCount % 10) + CH('0');
+    }
+    // Finish off with a ) and string terminator
+    *ptr++ = CH(')');
+#ifdef VERSION_PSP
+    *((s8*)&(*ptr++)) = 0xFF;
+#else
+    *ptr++ = 0xFF;
+#endif
+    *ptr++ = '\0';
+    // Draw it after the item name. X=224, Y = 30 + 13*hand
+    MenuDrawStr(buf, 224, 30 + (hand * 13), ctx);
 }
 
 u8 D_800A2D80[] = {0x00, 0x20, 0x30, 0x40, 0x50, 0x60, 0x69, 0x70,
