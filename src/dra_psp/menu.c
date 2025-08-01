@@ -1834,7 +1834,41 @@ void MenuDrawLine(s32 x0, s32 y0, s32 x1, s32 y1, s32 isColorStatic) {
     g_GpuUsage.line++;
 }
 
-INCLUDE_ASM("dra_psp/nonmatchings/dra_psp/menu", DrawConsumableCount);
+void DrawConsumableCount(s32 itemId, s32 hand, MenuContext* ctx) {
+    char buf[16];
+    char* ptr;
+    s32 displayCount;
+
+    if (!g_EquipDefs[itemId].isConsumable) {
+        return;
+    }
+    ptr = buf;
+    displayCount = g_Status.equipHandCount[itemId] + 1;
+    // First character in the string is the (
+    *ptr++ = CH('(');
+    if (displayCount < 10) {
+        // Get the character code for the count.
+        *ptr++ = displayCount + CH('0');
+    } else {
+        if (displayCount == 100) {
+            *ptr++ = CH('1');
+            // Neat trick, set this to 0 so following two steps draw 00
+            displayCount = 0;
+        }
+        *ptr++ = (displayCount / 10) + CH('0');
+        *ptr++ = (displayCount % 10) + CH('0');
+    }
+    // Finish off with a ) and string terminator
+    *ptr++ = CH(')');
+#ifdef VERSION_PSP
+    *((s8*)&(*ptr++)) = 0xFF;
+#else
+    *ptr++ = 0xFF;
+#endif
+    *ptr++ = '\0';
+    // Draw it after the item name. X=224, Y = 30 + 13*hand
+    MenuDrawStr(buf, 224, 30 + (hand * 13), ctx);
+}
 
 u8 D_800A2D80[] = {0x00, 0x20, 0x30, 0x40, 0x50, 0x60, 0x69, 0x70,
                    0x75, 0x78, 0x7A, 0x7C, 0x7D, 0x7E, 0x7F, 0x80};
