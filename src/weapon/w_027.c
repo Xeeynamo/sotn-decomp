@@ -22,7 +22,7 @@ static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
     if (D_C1000_8017C6EC++ & 4) {
-        FntPrint("\no\n\0"); // TODO: remove extra NUL byte padding
+        FntPrint("\no\n");
     }
     DrawSync(0);
     VSync(0);

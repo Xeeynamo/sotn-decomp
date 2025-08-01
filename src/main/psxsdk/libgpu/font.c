@@ -4,7 +4,7 @@
 typedef struct {
     /* 0x00 */ TILE tile;
     /* 0x10 */ DR_MODE draw_mode;
-    /* 0x1C */ u32 capacity;
+    /* 0x1C */ s32 capacity;
     /* 0x20 */ SPRT_8* sprites;
     /* 0x24 */ char* buffer;
     /* 0x28 */ s32 written;
@@ -17,6 +17,7 @@ extern s32 D_8002B810;
 extern s32 D_8002B814;
 extern u_long D_8002B818[];
 extern s32 D_8002C218;
+extern char* D_8002C21C[];
 extern int (*GPU_printf)(const char*, ...);
 
 extern u16 clut;
@@ -169,4 +170,128 @@ u_long* FntFlush(s32 id) {
     return (u_long*)dr;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/font", FntPrint);
+#define WriteChar(c)                                                           \
+    font->buffer[font->written++] = (c);                                       \
+    if (font->written > font->capacity) {                                      \
+        return -1;                                                             \
+    }
+
+s32 FntPrint(s32 id, ...) {
+    char buf[0x200];
+    s32* args;
+    FntStream* font;
+    u8 padZeros;
+    u32 num;
+    s32 len;
+    s32 width;
+    char* f;
+    char* bufPtr;
+    char sign;
+    u32 ch;
+    s16 percent;
+
+    args = &id + 1;
+    if (id < 0 || id >= D_8002B810) {
+        f = (char*)id;
+        id = D_8002B814;
+        if (Font[id].buffer == NULL) {
+            return -1;
+        }
+    } else {
+        args = &id + 2;
+        f = (char*)*(&id + 1);
+    }
+
+    font = &Font[id];
+    if (font->written > font->capacity) {
+        return -1;
+    }
+    percent = '%';
+    for (; ch = *f, ch; f++) {
+        if (ch == percent) {
+            ch = *++f;
+            if (ch == percent) {
+                WriteChar(ch);
+                continue;
+            }
+        } else {
+            WriteChar(ch);
+            continue;
+        }
+
+        width = 0;
+        padZeros = ch == '0';
+        while (ch >= '0' && ch <= '9') {
+            width = (width * 10) + (ch - '0');
+            ch = *++f;
+        }
+        bufPtr = &args;
+        if (width <= 0) {
+            width = 1;
+        }
+
+        switch (ch) {
+        case 'd':
+            num = *args++;
+            sign = 0;
+            if (num & 0x80000000) {
+                num = -num;
+                sign = '-';
+            }
+            len = 0;
+            do {
+                do {
+                    *--bufPtr = (num % 10) + '0';
+                    num /= 10;
+                    len++;
+                } while (len == 0);
+            } while (num != 0);
+            if (sign != 0) {
+                *--bufPtr = sign;
+                len++;
+            }
+            break;
+
+        case 'X':
+        case 'x':
+            len = 0;
+            num = *args++;
+            do {
+                do {
+                    *--bufPtr = D_8002C21C[0][num & 0xF];
+                    num >>= 4;
+                    len++;
+                } while (len == 0);
+            } while (num != 0);
+            if (padZeros) {
+                while (len < width) {
+                    *--bufPtr = '0';
+                    len++;
+                }
+            }
+            break;
+
+        case 'c':
+            *--bufPtr = *args++;
+            len = 1;
+            break;
+
+        case 's':
+            bufPtr = (char*)*args++;
+            len = strlen(bufPtr);
+            break;
+        }
+
+        while (len < width) {
+            WriteChar(' ');
+            width--;
+        }
+        len--;
+        while (len != -1) {
+            WriteChar(*bufPtr++);
+            len--;
+        }
+    }
+    font->buffer[font->written] = 0;
+    return font->written;
+}
