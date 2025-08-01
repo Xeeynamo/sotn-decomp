@@ -870,8 +870,8 @@
 | lib   | func_psp_09263628                        |       57 |          1 |        | https://decomp.me/scratch/JNqKh | 0.987 |
 | dai   | func_pspeu_09253EA8                      |       57 |          2 |        |                                 |       |
 | lib   | func_psp_0925AC70                        |       57 |          2 |        |                                 |       |
-| no4   | CutsceneUnk4                             |       57 |          2 |        | https://decomp.me/scratch/fEv6U | 1.0   |
-| st0   | CutsceneUnk4                             |       57 |          2 |        | https://decomp.me/scratch/fEv6U | 1.0   |
+| no4   | CutsceneUnk4                             |       57 |          2 |        | https://decomp.me/scratch/4XnFH | 1.0   |
+| st0   | CutsceneUnk4                             |       57 |          2 |        | https://decomp.me/scratch/4XnFH | 1.0   |
 | maria | func_pspeu_092B3750                      |       57 |          5 |        |                                 |       |
 | ric   | func_pspeu_092B1178                      |       57 |          5 |        |                                 |       |
 | dra   | func_psp_09109140                        |       57 |          9 |        |                                 |       |
@@ -1139,7 +1139,7 @@
 | np3   | func_pspeu_09240AA8                      |       77 |          2 |        |                                 |       |
 | st0   | func_pspeu_09248080                      |       77 |          2 |        |                                 |       |
 | wrp   | func_psp_09237700                        |       77 |          2 |        |                                 |       |
-| dra   | DrawConsumableCount                      |       77 |          4 |        | https://decomp.me/scratch/dHNOD | 1.0   |
+| dra   | func_psp_090EF8F0                        |       77 |          4 |        |                                 |       |
 | no2   | func_pspeu_0924BE50                      |       77 |          5 |        |                                 |       |
 | chi   | EntityRoomForeground                     |       77 |          6 |        |                                 |       |
 | dai   | EntityRoomForeground                     |       77 |          6 |        |                                 |       |
@@ -1153,7 +1153,7 @@
 | dai   | func_us_801D636C                         |       77 |          7 |        | https://decomp.me/scratch/Ddj3H | 1.0   |
 | dra   | CalcPlayerDamage                         |       77 |          9 |        |                                 |       |
 | dra   | CalcPlayerDamageMaria                    |       77 |          9 |        |                                 |       |
-| dra   | MenuDrawStr                              |       77 |          9 |        |                                 |       |
+| dra   | func_psp_090ED0B0                        |       77 |          9 |        |                                 |       |
 | dra   | 5087C.rodata                             |       78 |          0 | Yes    |                                 |       |
 | maria | func_pspeu_092AE0A8                      |       78 |          7 |        |                                 |       |
 | ric   | func_pspeu_092A6610                      |       78 |          7 |        |                                 |       |
