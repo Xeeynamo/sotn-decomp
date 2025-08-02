@@ -1,0 +1,65 @@
+options:
+  platform: psx
+  basename: strtop
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/RTOP/RTOP.BIN
+  asm_path: asm/us/st/rtop
+  asset_path: assets/st/rtop
+  src_path: src/st/rtop
+  ld_script_path: build/us/strtop.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.strtop.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.strtop.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.strtop.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x80010000
+sha1: 8796aac904d02e06219fc1949b52b8ddfa5d522b
+segments:
+  - name: strtop
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x1FC2C, .rodata, 204E8]
+      - [0x1FC8C, .rodata, e_red_door]
+      - [0x1FDAC, .rodata, 2D57C]
+      - [0x1FDF4, .rodata, prim_helpers]
+      - [0x1FDFC, c, e_room_bg]
+      # - [0x1FEDC, c, us] # e_lock_camera
+      - [0x203A8, c, us] # us
+      - [0x204E8, c]
+      - [0x224F4, c, st_update]
+      # - [0x22928, c, us] # collision
+      # - [0x240E4, c, us] # create_entity
+      - [0x24C5C, c, e_red_door]
+      # - [0x2590C, c, us] # st_common
+      # - [0x26DBC, c, us] # e_collect
+      # - [0x2972C, c, us] # e_misc
+      # - [0x2BAC8, c, us] # e_stage_name
+      # - [0x2C91C, c, us] # e_particles
+      # - [0x2D160, c, us] # e_room_fg
+      # - [0x2D24C, c, us] # popup
+      - [0x2D57C, c]
+      - [0x2F028, c, prim_helpers]
+      - [0x2F858, c]
+      - [0x30460, sbss]
+  - [0x3111C]
