@@ -2082,7 +2082,7 @@
 | no4   | EntitySideWaterSplash                    |      352 |         30 |        |                                 |       |
 | np3   | EntitySideWaterSplash                    |      352 |         30 |        |                                 |       |
 | dra   | func_80130264                            |      352 |         34 | Yes    |                                 |       |
-| dai   | func_pspeu_092471E8                      |      354 |         31 |        | https://decomp.me/scratch/CGpFv | 0.956 |
+| dai   | func_pspeu_092471E8                      |      354 |         31 |        | https://decomp.me/scratch/CGpFv | 0.959 |
 | no4   | func_pspeu_09249030                      |      356 |         34 |        | https://decomp.me/scratch/VAgqW | 1.0   |
 | chi   | EntityVenusWeedDart                      |      356 |         37 |        |                                 |       |
 | dra   | func_psp_09127490                        |      356 |         51 |        | https://decomp.me/scratch/UbCHl | 0.989 |
