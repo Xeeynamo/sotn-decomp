@@ -404,8 +404,181 @@ void EntityBreakableWall(Entity* self) {
 }
 
 // triangle elevators
+extern s32 D_80072F20;
+// odd +1 reference to D_us_80180CC6
+extern s16 D_us_80180CC8[];
 
-INCLUDE_ASM("st/top/nonmatchings/296F4", func_us_801AA624);
+void EntityTriangleElevator(Entity* self) {
+    Primitive* prim;
+    s16 offsetY;
+    s32 offsetX;
+    s32 scrollY;
+    s32 primIndex;
+    s32 collision;
+    u16 flags;
+    Entity* player;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(g_EInitTOPCommon);
+        self->animCurFrame = 0xD;
+        self->hitboxState = 1;
+        self->ext.topElevator.unk88 = 0;
+        self->ext.topElevator.unk7E = self->params & 1;
+        self->ext.topElevator.unk7C = 0;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
+        if (primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+
+        prim = &g_PrimBuf[primIndex];
+        offsetX = self->posX.i.hi;
+        scrollY = 0xC7 - g_Tilemap.scrollY.i.hi;
+
+        prim->tpage = 0xE;
+        prim->clut = 0xD1;
+        prim->u0 = prim->u2 = 0x38;
+        prim->u1 = prim->u3 = 0x3F;
+        prim->v0 = prim->v1 = 0x30;
+        prim->v2 = prim->v3 = 0x36;
+        prim->x0 = prim->x2 = offsetX - 4;
+        prim->x1 = prim->x3 = offsetX + 4;
+        prim->y0 = prim->y1 = scrollY - 4;
+        prim->y2 = prim->y3 = scrollY + 4;
+        prim->priority = 0x6C;
+        prim->drawMode = DRAW_UNK02;
+
+        prim = prim->next;
+        prim->tpage = 0xE;
+        prim->clut = 0xD1;
+        prim->u0 = prim->u2 = 0x40;
+        prim->u1 = prim->u3 = 0x47;
+        prim->v0 = prim->v1 = 0x31;
+        prim->v2 = prim->v3 = 0x36;
+        prim->x0 = prim->x2 = offsetX - 4;
+        prim->x1 = prim->x3 = offsetX + 4;
+        prim->y0 = prim->y1 = scrollY + 4;
+        scrollY = 0x197 - g_Tilemap.scrollY.i.hi;
+        prim->y2 = prim->y3 = scrollY - 4;
+        prim->priority = 0x6C;
+        prim->drawMode = DRAW_UNK02;
+
+        prim = prim->next;
+        prim->tpage = 0xE;
+        prim->clut = 0xD1;
+        prim->u0 = prim->u2 = 0x38;
+        prim->u1 = prim->u3 = 0x3F;
+        prim->v0 = prim->v1 = 0x30;
+        prim->v2 = prim->v3 = 0x36;
+        prim->x0 = prim->x2 = offsetX - 4;
+        prim->x1 = prim->x3 = offsetX + 4;
+        prim->y0 = prim->y1 = scrollY + 4;
+        prim->y2 = prim->y3 = scrollY - 4;
+        prim->priority = 0x6C;
+        prim->drawMode = DRAW_UNK02;
+
+        prim = prim->next;
+        self->ext.topElevator.prim = prim;
+        prim->tpage = 0xE;
+        prim->clut = 0xD2;
+        prim->u0 = prim->u2 = 0x40;
+        prim->u1 = prim->u3 = 0x5F;
+        prim->v0 = prim->v1 = 0x70;
+        prim->v2 = prim->v3 = 0x7F;
+        prim->priority = 0x6D;
+        prim->drawMode = DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+
+        prim = prim->next;
+        break;
+
+    case 1:
+        player = &PLAYER;
+
+        if (self->ext.topElevator.mapPos.y > 0x197) {
+            self->ext.topElevator.unk7E = 1;
+        }
+        if (self->ext.topElevator.mapPos.y < 0xC7) {
+            self->ext.topElevator.unk7E = 0;
+        }
+        if (self->ext.topElevator.unk7E) {
+            self->velocityY = -FIX(0.5);
+        } else {
+            self->velocityY = FIX(0.5);
+        }
+        self->velocityX = 0;
+        MoveEntity();
+        self->ext.topElevator.unk88++;
+
+        if (self->ext.topElevator.unk7C & 4) {
+            offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi -
+                      self->ext.topElevator.mapPos.y;
+            if ((offsetY > 0) ||
+                ((offsetY < 0) && ((g_Player.vram_flag ^ 2) & 2))) {
+                player->posY.i.hi += offsetY;
+                D_80097488.y.i.hi += offsetY;
+            }
+        }
+
+        flags = 4;
+        if (self->ext.topElevator.unk8A) {
+            self->ext.topElevator.unk8A--;
+            flags ^= 4;
+        }
+
+        if (self->ext.topElevator.unk80 & 0xF &&
+            self->ext.topElevator.unk80 & 0xF0) {
+            flags |= 0x10;
+        }
+        collision = GetPlayerCollisionWith(self, 0x10, 7, flags);
+
+        if (self->ext.topElevator.unk80 & 0xF) {
+            if (self->ext.topElevator.unk80 & 0xF0) {
+                offsetY =
+                    -D_us_80180CC8[(self->ext.topElevator.unk80 & 0xF) - 1];
+            } else {
+                offsetY = D_us_80180CC8[self->ext.topElevator.unk80 - 1];
+            }
+            self->posY.i.hi += offsetY;
+            if (collision & 4) {
+                player->posY.i.hi += offsetY;
+                D_80097488.y.i.hi += offsetY;
+            }
+            self->ext.topElevator.unk80--;
+        }
+
+        if (collision & 4) {
+            g_api.func_8010DFF0(0, 1);
+            if (self->ext.topElevator.unk7C ^ 4) {
+                if (!(self->ext.topElevator.unk80 & 0xF)) {
+                    if (HIH(player->velocityY) > 0) {
+                        self->ext.topElevator.unk80 = 8;
+                    }
+                }
+            }
+        } else {
+            if (self->ext.topElevator.unk7C & 4) {
+                self->ext.topElevator.unk8A = 8;
+            }
+        }
+        if ((collision & 2) && !(self->ext.topElevator.unk80 & 0xF)) {
+            self->ext.topElevator.unk80 = 0x18;
+        }
+        self->ext.topElevator.unk7C = collision;
+        break;
+    }
+
+    prim = self->ext.topElevator.prim;
+    prim->x0 = prim->x2 = self->posX.i.hi - 0x10;
+    prim->x1 = prim->x3 = self->posX.i.hi + 0x10;
+    prim->y0 = prim->y1 = self->posY.i.hi - 4;
+    prim->y2 = prim->y3 = self->posY.i.hi + 0x1C;
+    self->ext.topElevator.mapPos.x = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+    self->ext.topElevator.mapPos.y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+}
 
 extern s16 D_us_80180CC8[];
 extern u8 D_us_80180CD8[][3];

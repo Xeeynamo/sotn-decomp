@@ -485,6 +485,7 @@ def reference_overlays(version: str) -> list[str]:
             "stno4",
             "stnp3",
             "stnz0",
+            "sttop",
             "strwrp",
             "stst0",
             "stwrp",
