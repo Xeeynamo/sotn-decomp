@@ -25,7 +25,9 @@ INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_1CD50", EntityThornweed);
 
 INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_1CD50", EntityCorpseweed);
 
+// clang-format off
 INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_1CD50", EntityCorpseweedProjectile);
+// clang-format on
 
 INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_1CD50", func_pspeu_09259DC0);
 

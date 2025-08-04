@@ -3,4 +3,6 @@
 
 INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/st_collision", HitDetection);
 
+// clang-format off
 INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/st_collision", EntityDamageDisplay);
+// clang-format on

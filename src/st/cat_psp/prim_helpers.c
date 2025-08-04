@@ -13,4 +13,6 @@ INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/prim_helpers", UnkPolyFunc2);
 
 INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/prim_helpers", UnkPolyFunc0);
 
+// clang-format off
 INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/prim_helpers", PrimDecreaseBrightness);
+// clang-format on
