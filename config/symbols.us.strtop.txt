@@ -111,3 +111,10 @@ func_801A8328 = 0x801A0850; // source=dups
 EntitySkeletonPieces = 0x801AE0A8; // source=dups
 EntityClockTower3D = 0x801AFFBC; // source=dups
 g_EInitCommon = 0x8018059C;
+g_EInitInteractable = 0x80180578;
+s_ClockRoofScript = 0x80181988;
+s_ClockVertexSets = 0x80181A34;
+s_RoofTextureData = 0x801816B4;
+s_ClockTowerScript = 0x801819C0;
+s_TowerTextureData = 0x801816CC;
+EntityTombstone = 0x801AD57C;
