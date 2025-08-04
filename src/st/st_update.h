@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
+#ifndef STAGE_IS_CAT
 static u16 unused[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0001, 0x0000,
     0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0101};
+#endif
 
 // palette
 u16 UNK_Invincibility0[] = {

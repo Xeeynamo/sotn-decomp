@@ -28,3 +28,5 @@ INCLUDE_ASM("st/cat/nonmatchings/unk_4A13C", func_us_801CD728);
 INCLUDE_ASM("st/cat/nonmatchings/unk_4A13C", func_us_801CDB50);
 
 INCLUDE_ASM("st/cat/nonmatchings/unk_4A13C", func_us_801CE170);
+
+INCLUDE_RODATA("st/cat/nonmatchings/unk_4A13C", D_us_801B6BB0);
