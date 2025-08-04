@@ -41,6 +41,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
+      - [0x1B84, .data, e_red_door]
+      - [0x1B9C, data]
       - [0x24C8, .data, e_particles]
       - [0x2548, data]
       - [0x366D8, .rodata, unk_3732C]
