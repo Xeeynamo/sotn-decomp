@@ -44,3 +44,5 @@ INCLUDE_ASM("st/cat/nonmatchings/e_collect", EntityExplosion);
 INCLUDE_ASM("st/cat/nonmatchings/e_collect", BlinkItem);
 
 INCLUDE_ASM("st/cat/nonmatchings/e_collect", EntityEquipItemDrop);
+
+INCLUDE_RODATA("st/cat/nonmatchings/e_collect", D_us_801B6908);

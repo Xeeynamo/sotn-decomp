@@ -44,7 +44,6 @@ segments:
       - [0x366D8, .rodata, unk_3732C]
       - [0x36868, .rodata, e_red_door]
       - [0x36880, .rodata, e_collect]
-      - [0x36908, .rodata, blit_char]
       - [0x36918, .rodata, e_relic_orb]
       - [0x36940, .rodata, e_misc_2]
       - [0x36954, .rodata, unk_44C7C]
