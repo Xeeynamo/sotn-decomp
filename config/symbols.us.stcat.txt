@@ -6,6 +6,7 @@ CAT_gfxBanks = 0x80180DDC;
 CAT_pStObjLayoutHorizontal = 0x80180E24;
 CAT_pStObjLayoutVertical = 0x80180EF8;
 CAT_EntityUpdates = 0x80180FCC;
+g_EInitObtainable = 0x80181128;
 g_EInitInteractable = 0x8018114C;
 g_EInitCommon = 0x80181170;
 UNK_Invincibility0 = 0x80181798;

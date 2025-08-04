@@ -100,6 +100,7 @@ CAT_rooms_layers = 0x09269040;
 CAT_cluts = 0x092697F8;
 CAT_gfxBanks = 0x09269A50;
 CAT_EntityUpdates = 0x09269AB8;
+g_EInitObtainable = 0x09269C18;
 g_EInitCommon = 0x09269C78;
 CAT_rooms = 0x0926D890;
 CAT_Overlay = 0x09296B30;
