@@ -61,7 +61,7 @@ segments:
       - [0x153B0, c, cat_psp/unk_153B0]
       - [0x1A9C0, c, cat_psp/st_common]
       - [0x1C308, c, cat_psp/func_pspeu_09253988]
-      - [0x1C4B0, c, cat_psp/prim_helpers]
+      - [0x1C4B0, c, cat/prim_helpers]
       - [0x1CD50, c, cat_psp/unk_1CD50]
       - [0x26C48, c, cat_psp/st_init]
       - [0x26FF8, c, cat_psp/e_breakable]
