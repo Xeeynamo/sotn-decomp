@@ -146,3 +146,4 @@ g_LayoutObjHorizontal = 0x801D7884;
 g_LayoutObjVertical = 0x801D7888;
 g_LayoutObjPosHorizontal = 0x801D788C;
 g_LayoutObjPosVertical = 0x801D7890;
+g_EInitInteractable = 0x8018114C;

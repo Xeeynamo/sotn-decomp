@@ -1,8 +1,14 @@
 
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#ifndef CAT_H
+#define CAT_H
+
+#define STAGE_IS_CAT
+
 #include "stage.h"
 
 #define OVL_EXPORT(x) CAT_##x
+#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 enum OVL_EXPORT(Entities) {
     E_NONE,
@@ -92,3 +98,7 @@ enum OVL_EXPORT(Entities) {
     E_BLOOD_SKELETON,        // EntityBloodSkeleton
     NUM_ENTITIES,
 };
+
+extern EInit g_EInitInteractable;
+
+#endif
