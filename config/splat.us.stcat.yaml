@@ -1,0 +1,78 @@
+options:
+  platform: psx
+  basename: stcat
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/CAT/CAT.BIN
+  asm_path: asm/us/st/cat
+  asset_path: assets/st/cat
+  src_path: src/st/cat
+  ld_script_path: build/us/stcat.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.stcat.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stcat.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.stcat.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  nonmatchings_path: nonmatchings
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: 02ac6d5a2cd2db5a402aa9ceaab98574539c095d
+segments:
+  - name: stcat
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x366D8, .rodata, unk_3732C]
+      - [0x36868, .rodata, e_red_door]
+      - [0x36880, .rodata, e_collect]
+      - [0x36908, .rodata, blit_char]
+      - [0x36918, .rodata, e_relic_orb]
+      - [0x36940, .rodata, e_misc_2]
+      - [0x36954, .rodata, unk_44C7C]
+      - [0x36A5C, .rodata, e_stage_name]
+      - [0x36A90, .rodata, unk_4A13C]
+      - [0x36BB0, .rodata, popup]
+      - [0x36BB8, .rodata, unk_4EE88]
+      - [0x36DF4, .rodata, prim_helpers]
+      - [0x36DFC, c, st_debug]
+      - [0x37080, c, e_breakable]
+      - [0x3732C, c, unk_3732C]
+      - [0x3B6A4, c, st_update]
+      - [0x3BAD8, c, st_collision]
+      - [0x3D294, c, create_entity]
+      - [0x3DE0C, c, e_red_door]
+      - [0x3EABC, c, st_common]
+      - [0x3FF6C, c, e_misc]
+      - [0x42308, c, e_collect]
+      - [0x43874, c, blit_char]
+      - [0x43B24, c, e_relic_orb]
+      - [0x445F4, c, e_misc_2]
+      - [0x44C7C, c, unk_44C7C]
+      - [0x492E8, c, e_stage_name]
+      - [0x4A13C, c, unk_4A13C]
+      - [0x4E228, c, e_particles]
+      - [0x4EA6C, c, e_room_fg]
+      - [0x4EB58, c, popup]
+      - [0x4EE88, c, unk_4EE88]
+      - [0x57054, c, prim_helpers]
+      - [0x57884, sbss]
+  - [0x585C0]

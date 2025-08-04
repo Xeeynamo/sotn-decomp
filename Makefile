@@ -273,6 +273,7 @@ force_extract:
 force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/dra.elf > config/symbols.us.dra.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/ric.elf > config/symbols.us.ric.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stcat.elf > config/symbols.us.stcat.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stcen.elf > config/symbols.us.stcen.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stchi.elf > config/symbols.us.stchi.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stdai.elf > config/symbols.us.stdai.txt
