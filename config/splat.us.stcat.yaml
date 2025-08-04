@@ -43,6 +43,7 @@ segments:
       - [0x0, data]
       - [0x1358, .data, e_lock_camera]
       - [0x13D8, data]
+      - [0x1798, .data, st_update]
       - [0x17C4, .data, st_collision]
       - [0x1B84, .data, e_red_door]
       - [0x1B9C, .data, st_common]
