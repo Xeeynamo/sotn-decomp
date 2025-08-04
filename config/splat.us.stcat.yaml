@@ -41,6 +41,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
+      - [0x1358, .data, e_lock_camera]
+      - [0x13D8, data]
       - [0x17C4, .data, st_collision]
       - [0x1B84, .data, e_red_door]
       - [0x1B9C, .data, st_common]
@@ -58,7 +60,8 @@ segments:
       - [0x36A90, .rodata, unk_4A13C]
       - [0x36BB8, .rodata, unk_4EE88]
       - [0x36DF4, .rodata, prim_helpers]
-      - [0x36DFC, c, st_debug]
+      - [0x36DFC, c, e_room_bg]
+      - [0x36EC4, c, e_lock_camera]
       - [0x37080, c, e_breakable]
       - [0x3732C, c, unk_3732C]
       - [0x3B6A4, c, st_update]
