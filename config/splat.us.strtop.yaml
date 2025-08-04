@@ -39,6 +39,9 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
+      - [0x4A0, data, e_init]
+      - [0x608, data]
+      - [0x1FC14, rodata]
       - [0x1FC2C, .rodata, 204E8]
       - [0x1FC8C, .rodata, e_red_door]
       - [0x1FDAC, .rodata, 2D57C]

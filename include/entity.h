@@ -3366,6 +3366,11 @@ typedef struct {
     /* 0x84 */ u8 unk84;
 } ET_HiddenStairs;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 timer;
+} ET_Tombstone;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3659,6 +3664,7 @@ typedef union { // offset=0x7C
     ET_801B5368 et_801B5368;
     ET_FleaRider fleaRider;
     ET_HiddenStairs hiddenStairs;
+    ET_Tombstone tombstone;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
