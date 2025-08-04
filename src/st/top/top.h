@@ -4,7 +4,7 @@
 
 #define STAGE_IS_TOP
 
-#include "stage.h"
+#include <stage.h>
 
 #define OVL_EXPORT(x) TOP_##x
 #define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
