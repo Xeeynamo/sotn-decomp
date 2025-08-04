@@ -56,7 +56,7 @@ segments:
       - [0x109D8, c, cat_psp/e_misc_2]
       - [0x11320, c, cat_psp/e_misc]
       - [0x12AC8, c, cat_psp/st_collision]
-      - [0x14CA0, c, cat_psp/popup]
+      - [0x14CA0, c, cat/popup]
       - [0x15298, c, cat/e_room_fg]
       - [0x153B0, c, cat_psp/unk_153B0]
       - [0x1A9C0, c, cat_psp/st_common]

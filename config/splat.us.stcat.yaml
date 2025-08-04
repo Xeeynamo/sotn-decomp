@@ -54,7 +54,6 @@ segments:
       - [0x36954, .rodata, unk_44C7C]
       - [0x36A5C, .rodata, e_stage_name]
       - [0x36A90, .rodata, unk_4A13C]
-      - [0x36BB0, .rodata, popup]
       - [0x36BB8, .rodata, unk_4EE88]
       - [0x36DF4, .rodata, prim_helpers]
       - [0x36DFC, c, st_debug]
