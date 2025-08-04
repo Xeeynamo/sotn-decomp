@@ -205,9 +205,9 @@
 | dra   | func_psp_0913D798                        |       21 |          1 |        |                                 |       |
 | maria | func_pspeu_092B3458                      |       21 |          1 |        |                                 |       |
 | ric   | func_pspeu_092B0E60                      |       21 |          1 |        |                                 |       |
-| cat   | func_psp_0923C390                        |       21 |          1 |        |                                 |       |
 | cat   | SetSubStep                               |       21 |          1 |        |                                 |       |
 | cat   | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
+| cat   | func_psp_0923C390                        |       21 |          1 |        |                                 |       |
 | chi   | func_psp_09240110                        |       21 |          1 |        |                                 |       |
 | chi   | Random                                   |       21 |          1 |        | https://decomp.me/scratch/rhbo1 | 0.98  |
 | chi   | func_psp_09247F98                        |       21 |          1 |        |                                 |       |
@@ -286,9 +286,9 @@
 | dra   | func_psp_09136EE0                        |       25 |          1 |        | https://decomp.me/scratch/SecRk | 0.624 |
 | maria | func_pspeu_092ADD70                      |       25 |          1 |        |                                 |       |
 | ric   | func_pspeu_092A62D8                      |       25 |          1 |        |                                 |       |
-| cat   | GetSineScaled                            |       25 |          1 |        | https://decomp.me/scratch/pKD67 | 0.995 |
 | cat   | MoveEntity                               |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
 | cat   | SetStep                                  |       25 |          1 |        | https://decomp.me/scratch/X4nwe | 0.979 |
+| cat   | func_pspeu_09252AB0                      |       25 |          1 |        |                                 |       |
 | chi   | MoveEntity                               |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
 | chi   | func_psp_09247F48                        |       25 |          1 |        |                                 |       |
 | dai   | MoveEntity                               |       25 |          1 |        | https://decomp.me/scratch/u4rz3 | 0.975 |
@@ -349,7 +349,7 @@
 | lib   | func_psp_09251040                        |       27 |          1 |        |                                 |       |
 | no2   | func_pspeu_0924E9A0                      |       27 |          1 |        |                                 |       |
 | np3   | func_pspeu_09262600                      |       27 |          1 |        |                                 |       |
-| cat   | Ratan2Shifted                            |       27 |          2 |        | https://decomp.me/scratch/zOAvE | 1.0   |
+| cat   | func_pspeu_09252B68                      |       27 |          2 |        |                                 |       |
 | dai   | func_pspeu_0924DC30                      |       27 |          2 |        |                                 |       |
 | dai   | func_pspeu_09247A50                      |       27 |          2 |        | https://decomp.me/scratch/YoeQq | 1.0   |
 | lib   | func_psp_0924F670                        |       27 |          2 |        |                                 |       |
@@ -540,7 +540,7 @@
 | dra   | func_psp_091040A0                        |       36 |          5 |        | https://decomp.me/scratch/WO6Th | 1.0   |
 | dra   | func_psp_0913F7F8                        |       36 |          5 |        |                                 |       |
 | dra   | func_psp_090F2178                        |       37 |          2 |        |                                 |       |
-| cat   | GetAngleBetweenEntities                  |       37 |          2 |        | https://decomp.me/scratch/X5ggf | 1.0   |
+| cat   | func_pspeu_09252CF0                      |       37 |          2 |        |                                 |       |
 | chi   | func_psp_09247DD0                        |       37 |          2 |        |                                 |       |
 | dai   | func_pspeu_0924DEA0                      |       37 |          2 |        |                                 |       |
 | lib   | func_psp_0924F7F8                        |       37 |          2 |        |                                 |       |
@@ -809,7 +809,7 @@
 | dai   | func_pspeu_09258810                      |       49 |          1 |        | https://decomp.me/scratch/d5Qff | 1.0   |
 | dra   | func_psp_0913A3A0                        |       49 |          4 |        | https://decomp.me/scratch/xz567 | 0.506 |
 | dra   | func_psp_090F0FD0                        |       49 |          5 |        |                                 |       |
-| cat   | UnkEntityFunc0                           |       49 |          5 |        |                                 |       |
+| cat   | func_pspeu_09252C48                      |       49 |          5 |        |                                 |       |
 | chi   | func_psp_09247D28                        |       49 |          5 |        |                                 |       |
 | dai   | func_pspeu_0924DDF8                      |       49 |          5 |        |                                 |       |
 | lib   | func_psp_0924F750                        |       49 |          5 |        |                                 |       |
@@ -974,8 +974,8 @@
 | dra   | 71830.rodata                             |       62 |          0 | Yes    |                                 |       |
 | no2   | func_pspeu_0925C018                      |       62 |          4 |        | https://decomp.me/scratch/mCB2Q | 0.996 |
 | dra   | GetPlayerSensor                          |       62 |          5 |        |                                 |       |
-| cat   | PrizeDropFall                            |       62 |          5 |        |                                 |       |
 | cat   | CAT_EntityBackgroundBlock                |       62 |          5 |        |                                 |       |
+| cat   | PrizeDropFall                            |       62 |          5 |        |                                 |       |
 | cat   | func_pspeu_0925C960                      |       62 |          5 |        |                                 |       |
 | chi   | func_psp_09240708                        |       62 |          5 |        |                                 |       |
 | dai   | func_pspeu_0923ECE0                      |       62 |          5 |        |                                 |       |
@@ -1043,7 +1043,7 @@
 | st0   | UpdateRoomPosition                       |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | wrp   | UpdateRoomPosition                       |       65 |         11 |        | https://decomp.me/scratch/S8isD | 0.993 |
 | dra   | func_psp_090ED480                        |       66 |          6 |        |                                 |       |
-| cat   | EntityIsNearPlayer                       |       66 |          7 |        | https://decomp.me/scratch/pg8P6 | 0.997 |
+| cat   | func_pspeu_0923BEA0                      |       66 |          7 |        |                                 |       |
 | chi   | func_psp_0923D2A8                        |       66 |          7 |        |                                 |       |
 | dai   | func_pspeu_0923B128                      |       66 |          7 |        |                                 |       |
 | dai   | func_pspeu_092454A8                      |       66 |          7 |        |                                 |       |
@@ -1097,7 +1097,7 @@
 | dai   | func_us_801C1E18                         |       70 |          6 |        | https://decomp.me/scratch/DrwIe | 1.0   |
 | dra   | func_psp_0910EFE0                        |       70 |         11 |        |                                 |       |
 | dra   | func_psp_091407E0                        |       71 |          1 |        |                                 |       |
-| cat   | PrimResetNext                            |       71 |          1 |        | https://decomp.me/scratch/QLgf6 | 1.0   |
+| cat   | func_pspeu_09254138                      |       71 |          1 |        |                                 |       |
 | chi   | func_psp_09248990                        |       71 |          1 |        |                                 |       |
 | dai   | func_pspeu_0924F038                      |       71 |          1 |        |                                 |       |
 | lib   | func_psp_09250ED0                        |       71 |          1 |        |                                 |       |
@@ -1115,8 +1115,8 @@
 | np3   | EntityLightningCloud                     |       71 |          5 |        | https://decomp.me/scratch/PoKUO | 0.981 |
 | dra   | PlaySfxVolPan                            |       71 |          7 |        |                                 |       |
 | dra   | func_psp_090F0220                        |       71 |          7 |        |                                 |       |
-| cat   | CollectGold                              |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | cat   | ReplaceBreakableWithItemDrop             |       71 |          7 |        | https://decomp.me/scratch/qZwvm | 0.998 |
+| cat   | CollectGold                              |       71 |          7 |        | https://decomp.me/scratch/0ERH9 | 0.981 |
 | chi   | func_psp_09240A00                        |       71 |          7 |        |                                 |       |
 | chi   | func_psp_09248348                        |       71 |          7 |        |                                 |       |
 | dai   | func_pspeu_0923EFD8                      |       71 |          7 |        |                                 |       |
@@ -1154,7 +1154,7 @@
 | no2   | func_pspeu_092440F0                      |       73 |          4 |        |                                 |       |
 | dra   | func_psp_0913E558                        |       73 |          7 |        | https://decomp.me/scratch/UBHSj | 0.479 |
 | dra   | func_psp_090ECD78                        |       73 |          7 |        |                                 |       |
-| cat   | GetNormalizedAngle                       |       73 |          7 |        |                                 |       |
+| cat   | func_pspeu_09252D70                      |       73 |          7 |        |                                 |       |
 | chi   | func_psp_09247E50                        |       73 |          7 |        |                                 |       |
 | dai   | func_pspeu_0924DF20                      |       73 |          7 |        |                                 |       |
 | lib   | func_psp_0924F878                        |       73 |          7 |        |                                 |       |
@@ -2126,7 +2126,7 @@
 | dra   | func_psp_09144280                        |      303 |         47 |        |                                 |       |
 | dra   | func_psp_091367A0                        |      305 |         25 |        | https://decomp.me/scratch/ons5L | 1.0   |
 | maria | func_pspeu_092A6A08                      |      306 |         41 |        | https://decomp.me/scratch/fWk1M | 0.999 |
-| cat   | func_psp_0923B2F0                        |      307 |         26 |        |                                 |       |
+| cat   | func_pspeu_0923F478                      |      307 |         26 |        |                                 |       |
 | chi   | func_psp_0923F070                        |      307 |         26 |        |                                 |       |
 | dai   | func_pspeu_0923D648                      |      307 |         26 |        |                                 |       |
 | lib   | func_psp_09242880                        |      307 |         26 |        |                                 |       |
@@ -2251,7 +2251,7 @@
 | np3   | EntityExplosionPuffOpaque                |      372 |         50 |        | https://decomp.me/scratch/b9WAS | 0.836 |
 | dra   | func_psp_090F8348                        |      373 |         35 |        | https://decomp.me/scratch/y1YvJ | 1.0   |
 | dra   | func_psp_090F5560                        |      374 |         13 |        | https://decomp.me/scratch/32CTa | 1.0   |
-| cat   | func_psp_0923AD68                        |      374 |         35 |        | https://decomp.me/scratch/4ZqS7 | 1.0   |
+| cat   | func_pspeu_0923EEF0                      |      374 |         35 |        |                                 |       |
 | chi   | func_psp_0923EAE8                        |      374 |         35 |        |                                 |       |
 | dai   | func_pspeu_0923D0C0                      |      374 |         35 |        |                                 |       |
 | lib   | func_psp_092422F8                        |      374 |         35 |        |                                 |       |
