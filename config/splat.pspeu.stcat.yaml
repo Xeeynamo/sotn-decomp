@@ -45,7 +45,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, cat_psp/create_entity]
+      - [0x80, c, cat/create_entity]
       - [0x1028, c, cat_psp/unk_1028]
       - [0x4820, c, cat_psp/e_red_door]
       - [0x5B28, c, cat_psp/st_update]
@@ -76,5 +76,6 @@ segments:
       - [0x5F870, .rodata, cat_psp/unk_153B0]
       - [0x5F8F0, .rodata, cat_psp/unk_1CD50]
       - [0x5F930, .rodata, cat_psp/unk_28C10]
-      - [0x5F980, bss]
+      - [0x5F980, .bss, cat/create_entity]
+      - [0x5F9A0, bss, 5F9A0]
   - [0x60980]
