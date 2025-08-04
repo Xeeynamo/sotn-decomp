@@ -1,0 +1,94 @@
+
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "stage.h"
+
+#define OVL_EXPORT(x) CAT_##x
+
+enum OVL_EXPORT(Entities) {
+    E_NONE,
+    E_UNK_BREAKABLE,         // EntityUnkBreakable
+    E_EXPLOSION,             // EntityExplosion
+    E_PRIZE_DROP,            // EntityPrizeDrop
+    E_DAMAGE_DISPLAY,        // EntityDamageDisplay
+    E_RED_DOOR,              // OVL_EXPORT(EntityRedDoor)
+    E_INTENSE_EXPLOSION,     // EntityIntenseExplosion
+    E_SOUL_STEAL_ORB,        // EntitySoulStealOrb
+    E_ROOM_FOREGROUND,       // EntityRoomForeground
+    E_STAGE_NAME_POPUP,      // EntityStageNamePopup
+    E_EQUIP_ITEM_DROP,       // EntityEquipItemDrop
+    E_RELIC_ORB,             // EntityRelicOrb
+    E_HEART_DROP,            // EntityHeartDrop
+    E_ENEMY_BLOOD,           // EntityEnemyBlood
+    E_MESSAGE_BOX,           // EntityMessageBox
+    E_DUMMY_F,               // EntityDummy
+    E_DUMMY_10,              // EntityDummy
+    E_BACKGROUND_BLOCK,      // OVL_EXPORT(EntityBackgroundBlock)
+    E_LOCK_CAMERA,           // OVL_EXPORT(EntityLockCamera)
+    E_UNK_ID13,              // EntityUnkId13
+    E_EXPLOSION_VARIANTS,    // EntityExplosionVariants
+    E_GREY_PUFF,             // EntityGreyPuff
+    E_UNK_16,                // func_pspeu_0925BE88
+    E_UNK_17,                // func_pspeu_0925B118
+    E_UNK_18,                // func_pspeu_0925B7B8
+    E_UNK_19,                // func_pspeu_0925CA38
+    E_UNK_1A,                // func_pspeu_09253988
+    E_UNK_1B,                // func_pspeu_09260D58
+    E_UNK_1C,                // func_us_801C3D44
+    E_UNK_1D,                // func_us_801C3850
+    E_UNK_1E,                // func_us_801C379C
+    E_UNK_1F,                // func_pspeu_09261BB8
+    E_UNK_20,                // func_us_801C3ED8
+    E_UNK_21,                // func_pspeu_09261748
+    E_UNK_22,                // func_pspeu_0925F410
+    E_UNK_23,                // func_pspeu_0925EA40
+    E_UNK_24,                // func_pspeu_0925D418
+    E_UNK_25,                // func_pspeu_0925DC38
+    E_UNK_26,                // func_pspeu_0925D8C8
+    E_UNK_27,                // func_pspeu_0925D168
+    E_UNK_28,                // func_pspeu_0925CC60
+    E_UNK_29,                // func_pspeu_09260768
+    E_UNK_2A,                // func_pspeu_092604A0
+    E_UNK_2B,                // func_pspeu_09262B58
+    E_UNK_2C,                // func_pspeu_0925F7B0
+    E_BIG_RED_FIREBALL,      // EntityBigRedFireball
+    E_UNK_2E,                // func_pspeu_092395A8
+    E_UNK_2F,                // func_pspeu_0923A8B8
+    E_UNK_30,                // func_pspeu_0923BA88
+    E_UNK_31,                // func_pspeu_0923BBC8
+    E_UNK_32,                // func_pspeu_09255558
+    E_UNK_33,                // func_pspeu_092566B8
+    E_UNK_34,                // func_pspeu_09257850
+    E_UNK_35,                // func_pspeu_09257148
+    E_UNK_36,                // func_pspeu_09257FD0
+    E_UNK_37,                // func_pspeu_09243078
+    E_UNK_38,                // func_pspeu_09243F28
+    E_UNK_39,                // func_pspeu_09242AC8
+    E_UNK_3A,                // func_pspeu_092427C8
+    E_UNK_3B,                // func_pspeu_09241E58
+    E_UNK_3C,                // func_pspeu_09240480
+    E_UNK_3D,                // func_pspeu_09241A88
+    E_UNK_3E,                // func_pspeu_09250068
+    E_UNK_3F,                // func_pspeu_09250C88
+    E_UNK_40,                // func_pspeu_092513C8
+    E_UNK_41,                // func_pspeu_09251718
+    E_UNK_42,                // func_pspeu_09251C28
+    E_UNK_43,                // func_pspeu_09260290
+    E_UNK_44,                // func_pspeu_0923DA30
+    E_UNK_45,                // func_pspeu_0923EA58
+    E_UNK_46,                // func_pspeu_0923EBC0
+    E_GREMLIN,               // EntityGremlin
+    E_GREMLIN_EFFECT,        // EntityGremlinEffect
+    E_GREMLIN_FIRE,          // EntityGremlinFire
+    E_UNK_4A,                // func_pspeu_0924CF78
+    E_UNK_4B,                // func_pspeu_0924E938
+    E_UNK_4C,                // func_pspeu_0924EE40
+    E_UNK_4D,                // func_pspeu_0924F8C8
+    E_UNK_4E,                // func_pspeu_09259E28
+    E_UNK_4F,                // func_pspeu_0925AFA0
+    E_UNK_50,                // func_pspeu_0925AEB8
+    E_THORNWEED,             // EntityThornweed
+    E_CORPSEWEED,            // EntityCorpseweed
+    E_CORPSEWEED_PROJECTILE, // EntityCorpseweedProjectile
+    E_UNK_54,                // func_pspeu_0924CA30
+    NUM_ENTITIES,
+};

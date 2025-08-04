@@ -1,0 +1,2 @@
+EXTERN(_binary_assets_st_cat_mwo_header_bin_start);
+EXTERN(CAT_Load);
