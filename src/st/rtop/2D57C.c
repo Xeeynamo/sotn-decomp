@@ -2,7 +2,6 @@
 #include "rtop.h"
 #include <sfx.h>
 
-
 // new
 
 // tombstone
@@ -12,7 +11,7 @@ extern s16 D_us_8018144C[];
 void EntityTombstone(Entity* self) {
     Entity* entity;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(2, self, entity);
@@ -26,7 +25,7 @@ void EntityTombstone(Entity* self) {
     case 0:
         InitializeEntity(D_us_801805CC);
         self->hitboxOffY = -6;
-        self->drawFlags |= 4;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
         self->animCurFrame = 0x15;
         break;
 
@@ -54,7 +53,7 @@ void EntityTombstone(Entity* self) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(2);
                 } else {
-                    self->velocityX  = -FIX(2);
+                    self->velocityX = -FIX(2);
                 }
                 self->velocityY = -FIX(4);
                 self->step_s++;
@@ -98,5 +97,3 @@ INCLUDE_ASM("st/rtop/nonmatchings/2D57C", func_us_801AE94C);
 INCLUDE_ASM("st/rtop/nonmatchings/2D57C", func_us_801AEC28);
 
 INCLUDE_ASM("st/rtop/nonmatchings/2D57C", func_us_801AEEF4);
-
-

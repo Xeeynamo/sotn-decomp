@@ -5,4 +5,3 @@
 
 // block to determine richter fight
 INCLUDE_ASM("st/rtop/nonmatchings/us", func_us_801A9250);
-

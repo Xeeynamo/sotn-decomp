@@ -40,30 +40,46 @@ segments:
     subsegments:
       - [0x0, .data, header]
       - [0x40, data, header]
-      - [0x4A0, data, e_init]
-      - [0x608, data]
+      - [0x4A4, data, e_init]
+      - [0x608, .data, e_room_bg]
+      - [0x640, .data, e_red_door_tiles]
+      - [0x670, .data, e_lock_camera]
+      - [0x6B8, data]
+      - [0x910, .data, st_update]
+      - [0x95C, .data, collision]
+      - [0xD1C, .data, e_red_door]
+      - [0xD34, .data, st_common]
+      - [0xF34, .data, e_collect]
+      - [0x1288, .data, e_misc]
+      - [0x1340, .data, e_particles]
+      - [0x13C0, .data, e_room_fg]
+      - [0x144C, data]
       - [0x1FC14, rodata]
       - [0x1FC2C, .rodata, 204E8]
       - [0x1FC8C, .rodata, e_red_door]
+      - [0x1FCA4, .rodata, e_collect]
+      - [0x1FD78, .rodata, e_stage_name]
       - [0x1FDAC, .rodata, 2D57C]
       - [0x1FDF4, .rodata, prim_helpers]
       - [0x1FDFC, c, e_room_bg]
-      # - [0x1FEDC, c, us] # e_lock_camera
-      - [0x203A8, c, us] # us
+      - [0x1FEDC, c, e_lock_camera]
+      - [0x203A8, c, us]
       - [0x204E8, c]
       - [0x224F4, c, st_update]
-      # - [0x22928, c, us] # collision
-      # - [0x240E4, c, us] # create_entity
+      - [0x22928, c, collision]
+      - [0x240E4, c, create_entity]
       - [0x24C5C, c, e_red_door]
-      # - [0x2590C, c, us] # st_common
-      # - [0x26DBC, c, us] # e_collect
-      # - [0x2972C, c, us] # e_misc
-      # - [0x2BAC8, c, us] # e_stage_name
-      # - [0x2C91C, c, us] # e_particles
-      # - [0x2D160, c, us] # e_room_fg
-      # - [0x2D24C, c, us] # popup
+      - [0x2590C, c, st_common]
+      - [0x26DBC, c, e_collect]
+      - [0x2972C, c, e_misc]
+      - [0x2BAC8, c, e_stage_name]
+      - [0x2C91C, c, e_particles]
+      - [0x2D160, c, e_room_fg]
+      - [0x2D24C, c, popup]
       - [0x2D57C, c]
       - [0x2F028, c, prim_helpers]
-      - [0x2F858, c]
-      - [0x30460, sbss]
+      - [0x2F858, c, e_clock_tower]
+      - [0x30460, .bss, create_entity]
+      - [0x30470, bss]
+      - [0x310DC, .bss, e_collect]
   - [0x3111C]
