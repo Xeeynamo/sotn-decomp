@@ -24,4 +24,3 @@ INCLUDE_ASM("st/rtop/nonmatchings/204E8", func_us_801A20A4);
 INCLUDE_ASM("st/rtop/nonmatchings/204E8", func_us_801A21F8);
 
 INCLUDE_ASM("st/rtop/nonmatchings/204E8", func_us_801A2408);
-
