@@ -317,31 +317,34 @@ bool UnkCollisionFunc5(s16* pointXY) {
 }
 
 #if !defined(STAGE_IS_NO0)
-u8 UnkCollisionFunc4(s32 arg0) {
+u8 UnkCollisionFunc4(u8 arg0) {
     Collider collider;
-    u32 bits_67;
-    u32 bits_45;
-    u32 bits_23;
-    u8 bits_01;
+    u8 bits_45;
+    u8 bits_23;
+    u8 bits_67;
     u16 collEff;
+    s16 posX;
+    s16 posY;
+    u8 bits_01;
 
     MoveEntity();
     bits_67 = 0;
     bits_23 = 0;
     bits_45 = 0;
-    bits_01 = arg0 & 3;
     collEff = 0;
+    bits_01 = arg0 & 3;
     switch (bits_01) {
     case 0:
         g_CurrentEntity->posY.i.hi += 3;
-        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                             g_CurrentEntity->posY.i.hi, &collider, 0);
+        posX = g_CurrentEntity->posX.i.hi;
+        posY = g_CurrentEntity->posY.i.hi;
+        g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects != EFFECT_NONE) {
             collEff = collider.effects;
             g_CurrentEntity->posY.i.hi += collider.unk18;
-            g_api.CheckCollision(
-                g_CurrentEntity->posX.i.hi,
-                (s16)(g_CurrentEntity->posY.i.hi - 4), &collider, 0);
+            posX = g_CurrentEntity->posX.i.hi;
+            posY = g_CurrentEntity->posY.i.hi - 4;
+            g_api.CheckCollision(posX, posY, &collider, 0);
             if (collider.effects & EFFECT_UNK_0002) {
                 bits_67 = 0x40;
                 if (g_CurrentEntity->velocityX > 0) {
@@ -369,14 +372,15 @@ u8 UnkCollisionFunc4(s32 arg0) {
 
     case 1:
         g_CurrentEntity->posY.i.hi -= 3;
-        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                             g_CurrentEntity->posY.i.hi, &collider, 0);
+        posX = g_CurrentEntity->posX.i.hi;
+        posY = g_CurrentEntity->posY.i.hi;
+        g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects != EFFECT_NONE) {
             collEff = collider.effects;
             g_CurrentEntity->posY.i.hi += collider.unk20;
-            g_api.CheckCollision(
-                g_CurrentEntity->posX.i.hi,
-                (s16)(g_CurrentEntity->posY.i.hi + 4), &collider, 0);
+            posX = g_CurrentEntity->posX.i.hi;
+            posY = g_CurrentEntity->posY.i.hi + 4;
+            g_api.CheckCollision(posX, posY, &collider, 0);
             if (collider.effects & EFFECT_UNK_0002) {
                 bits_67 = 0x40;
                 if (g_CurrentEntity->velocityX > 0) {
@@ -404,13 +408,15 @@ u8 UnkCollisionFunc4(s32 arg0) {
 
     case 2:
         g_CurrentEntity->posX.i.hi += 3;
-        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                             g_CurrentEntity->posY.i.hi, &collider, 0);
+        posX = g_CurrentEntity->posX.i.hi;
+        posY = g_CurrentEntity->posY.i.hi;
+        g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects != EFFECT_NONE) {
             collEff = collider.effects;
             g_CurrentEntity->posX.i.hi += collider.unk14;
-            g_api.CheckCollision((s16)(g_CurrentEntity->posX.i.hi - 4),
-                                 g_CurrentEntity->posY.i.hi, &collider, 0);
+            posX = g_CurrentEntity->posX.i.hi - 4;
+            posY = g_CurrentEntity->posY.i.hi;
+            g_api.CheckCollision(posX, posY, &collider, 0);
             if (collider.effects & EFFECT_SOLID) {
                 bits_67 = 0x40;
                 if (g_CurrentEntity->velocityY > 0) {
@@ -438,13 +444,15 @@ u8 UnkCollisionFunc4(s32 arg0) {
 
     case 3:
         g_CurrentEntity->posX.i.hi -= 3;
-        g_api.CheckCollision(g_CurrentEntity->posX.i.hi,
-                             g_CurrentEntity->posY.i.hi, &collider, 0);
+        posX = g_CurrentEntity->posX.i.hi;
+        posY = g_CurrentEntity->posY.i.hi;
+        g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects != EFFECT_NONE) {
             collEff = collider.effects;
             g_CurrentEntity->posX.i.hi += collider.unk1C;
-            g_api.CheckCollision((s16)(g_CurrentEntity->posX.i.hi + 4),
-                                 g_CurrentEntity->posY.i.hi, &collider, 0);
+            posX = g_CurrentEntity->posX.i.hi + 4;
+            posY = g_CurrentEntity->posY.i.hi;
+            g_api.CheckCollision(posX, posY, &collider, 0);
             if (collider.effects & EFFECT_SOLID) {
                 bits_67 = 0x40;
                 if (g_CurrentEntity->velocityY > 0) {
@@ -485,7 +493,7 @@ u8 UnkCollisionFunc4(s32 arg0) {
     if (collEff & EFFECT_UNK_4000) {
         bits_45 = 0x10;
     }
-    bits_01 = (bits_45 + (bits_23 + (bits_67 + bits_01)));
+    bits_01 = (bits_45 + (bits_23 + (bits_01 + bits_67)));
     return bits_01;
 }
 
@@ -616,8 +624,8 @@ void MakeEntityFromId(u16 entityId, Entity* src, Entity* dst) {
 }
 
 void MakeExplosions(void) {
-    s32 temp_s3;
-    s8 temp_s4;
+    u8 temp_s4;
+    s16 temp_s3;
     Entity* entity;
     s32 i;
 
@@ -627,7 +635,7 @@ void MakeExplosions(void) {
     for (i = 0; i < 6; i++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-#if defined(STAGE_IS_NO2)
+#if defined(STAGE_IS_NO2) || defined(STAGE_IS_CAT)
             CreateEntityFromEntity(E_BIG_RED_FIREBALL, g_CurrentEntity, entity);
 #else
             CreateEntityFromEntity(E_EXPLOSION, g_CurrentEntity, entity);
@@ -827,7 +835,7 @@ static s16 g_QuadIndices2[] = {
     3, 4, 6, 7, //bottom left quad
     4, 5, 7, 8, //bottom right quad
 #if !defined(STAGE_IS_NZ0) && !defined(STAGE_IS_NO1) &&                        \
-    !defined(STAGE_IS_CHI) && STAGE != STAGE_ST0 && !defined(STAGE_IS_LIB)
+    !defined(STAGE_IS_CHI) && STAGE != STAGE_ST0 && !defined(STAGE_IS_LIB) && !defined(STAGE_IS_CAT)
     0, 0,
 #endif
 #if defined(VERSION_BETA)
