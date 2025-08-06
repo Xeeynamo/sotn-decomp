@@ -30,6 +30,8 @@ typedef enum EntityIDs {
     /* 0x13 */ E_UNK_ID_13 = 0x13,
     /* 0x14 */ E_EXPLOSION_VARIANTS,
     /* 0x15 */ E_GREY_PUFF,
+
+    /* 0x22 */ E_YORICK = 0x22,
 } EntityIDs;
 
 #endif // RTOP_H

@@ -3,9 +3,7 @@
 
 static u8 AnimFrames_80180608[] = {0x40, 0x01, 0xFF, 0x00};
 static u8 AnimFrames_8018060C[] = {
-0x02, 0x25, 0x02, 0x26,
-0x02, 0x27, 0x02, 0x26,
-0x00, 0x00,
+    0x02, 0x25, 0x02, 0x26, 0x02, 0x27, 0x02, 0x26, 0x00, 0x00,
 };
 
 ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
@@ -14,14 +12,14 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
      .unk5A = 0,
      .palette = PAL_DRA(0),
      .drawFlags = FLAG_DRAW_DEFAULT,
-     .drawMode = 0x10,
+     .drawMode = DRAW_TPAGE,
      .flags = 0,
      .animFrames = AnimFrames_80180608},
     {.animSet = ANIMSET_OVL(1),
      .zPriority = 0xC0,
      .unk5A = 0x0000,
      .palette = PAL_DRA(0),
-     .drawFlags = 0x3,
+     .drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX,
      .drawMode = DRAW_TPAGE2 | DRAW_TPAGE,
      .flags = 0,
      .animFrames = AnimFrames_8018060C},
