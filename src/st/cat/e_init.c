@@ -79,8 +79,8 @@ void func_us_801D3D08(Entity* self);
 void func_us_801D4088(Entity* self);
 void func_us_801D4744(Entity* self);
 void EntityWereskeleton(Entity* self);
-void func_us_801D564C(Entity* self);
-void func_us_801D5578(Entity* self);
+void func_us_801CE958(Entity* self);
+void func_us_801CEA2C(Entity* self);
 void EntityThornweed(Entity* self);
 void EntityCorpseweed(Entity* self);
 void EntityCorpseweedProjectile(Entity* self);
@@ -165,8 +165,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D4088,
     func_us_801D4744,
     EntityWereskeleton,
-    func_us_801D564C,
-    func_us_801D5578,
+    func_us_801CE958,
+    func_us_801CEA2C,
     EntityThornweed,
     EntityCorpseweed,
     EntityCorpseweedProjectile,

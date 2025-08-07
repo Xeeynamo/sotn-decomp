@@ -52,39 +52,3 @@ INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D1474);
 INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D1F68);
 
 INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D2060);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", EntityGremlin);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", EntityGremlinEffect);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", EntityGremlinFire);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D2B3C);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D3468);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D3A50);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D3C1C);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D3D08);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D4088);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D4744);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D49F8);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", EntityWereskeleton);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D5578);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D564C);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", EntityThornweed);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", EntityCorpseweed);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", EntityCorpseweedProjectile);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", EntityBloodSkeleton);

@@ -78,9 +78,9 @@ void func_pspeu_0924CF78(Entity* self);
 void func_pspeu_0924E938(Entity* self);
 void func_pspeu_0924EE40(Entity* self);
 void func_pspeu_0924F8C8(Entity* self);
-void func_pspeu_09259E28(Entity* self);
-void func_pspeu_0925AFA0(Entity* self);
-void func_pspeu_0925AEB8(Entity* self);
+void EntityWereskeleton(Entity* self);
+void func_us_801CE958(Entity* self);
+void func_us_801CEA2C(Entity* self);
 void EntityThornweed(Entity* self);
 void EntityCorpseweed(Entity* self);
 void EntityCorpseweedProjectile(Entity* self);
@@ -164,9 +164,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_pspeu_0924E938,
     func_pspeu_0924EE40,
     func_pspeu_0924F8C8,
-    func_pspeu_09259E28,
-    func_pspeu_0925AFA0,
-    func_pspeu_0925AEB8,
+    EntityWereskeleton,
+    func_us_801CE958,
+    func_us_801CEA2C,
     EntityThornweed,
     EntityCorpseweed,
     EntityCorpseweedProjectile,
