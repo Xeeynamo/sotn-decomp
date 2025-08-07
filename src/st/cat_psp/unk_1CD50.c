@@ -20,11 +20,3 @@ INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_1CD50", func_pspeu_092572D0);
 INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_1CD50", func_pspeu_09257850);
 
 INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_1CD50", func_pspeu_09257FD0);
-
-INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_1CD50", EntityThornweed);
-
-INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_1CD50", EntityCorpseweed);
-
-// clang-format off
-INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_1CD50", EntityCorpseweedProjectile);
-// clang-format on

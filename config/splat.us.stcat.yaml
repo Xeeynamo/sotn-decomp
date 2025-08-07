@@ -54,7 +54,7 @@ segments:
       - [0x2548, .data, e_room_fg]
       - [0x25D4, data]
       - [0x2814, .data, e_wereskeleton]
-      - [0x2990, data, en_thornweed_corpseweed]
+      - [0x2990, .data, en_thornweed_corpseweed]
       - [0x2A48, data]
       - [0x366D8, .rodata, unk_3732C]
       - [0x36868, .rodata, e_red_door]
