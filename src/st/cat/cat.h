@@ -101,6 +101,8 @@ enum OVL_EXPORT(Entities) {
 
 extern EInit g_EInitDamageNum;
 extern EInit g_EInitInteractable;
+extern EInit g_EInitGremlin;
+extern EInit g_EInitGremlinFire;
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitWereskeleton;

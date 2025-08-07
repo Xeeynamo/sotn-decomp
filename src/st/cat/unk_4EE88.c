@@ -52,23 +52,3 @@ INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D1474);
 INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D1F68);
 
 INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D2060);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", EntityGremlin);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", EntityGremlinEffect);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", EntityGremlinFire);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D2B3C);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D3468);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D3A50);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D3C1C);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D3D08);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D4088);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4EE88", func_us_801D4744);
