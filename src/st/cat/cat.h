@@ -90,8 +90,8 @@ enum OVL_EXPORT(Entities) {
     E_UNK_4C,                // func_us_801D4088
     E_UNK_4D,                // func_us_801D4744
     E_WERESKELETON,          // EntityWereskeleton
-    E_UNK_4F,                // func_us_801D564C
-    E_UNK_50,                // func_us_801D5578
+    E_ID_42,                 // func_us_801CE958
+    E_ID_43,                 // func_us_801CEA2C
     E_THORNWEED,             // EntityThornweed
     E_CORPSEWEED,            // EntityCorpseweed
     E_CORPSEWEED_PROJECTILE, // EntityCorpseweedProjectile
@@ -103,5 +103,7 @@ extern EInit g_EInitDamageNum;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitObtainable;
+extern EInit g_EInitWereskeleton;
+extern EInit D_us_80180A88;
 
 #endif

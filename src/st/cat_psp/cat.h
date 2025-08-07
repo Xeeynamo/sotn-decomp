@@ -83,9 +83,9 @@ enum OVL_EXPORT(Entities) {
     E_UNK_4B,                // func_pspeu_0924E938
     E_UNK_4C,                // func_pspeu_0924EE40
     E_UNK_4D,                // func_pspeu_0924F8C8
-    E_UNK_4E,                // func_pspeu_09259E28
-    E_UNK_4F,                // func_pspeu_0925AFA0
-    E_UNK_50,                // func_pspeu_0925AEB8
+    E_WERESKELETON,          // EntityWereskeleton
+    E_ID_42,                 // func_us_801CE958
+    E_ID_43,                 // func_us_801CEA2C
     E_THORNWEED,             // EntityThornweed
     E_CORPSEWEED,            // EntityCorpseweed
     E_CORPSEWEED_PROJECTILE, // EntityCorpseweedProjectile
