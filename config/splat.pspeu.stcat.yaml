@@ -89,6 +89,8 @@ segments:
       - [0x2D590, .data, cat/en_thornweed_corpseweed]
       - [0x2D660, .data, cat/e_wereskeleton]
       - [0x2D7C0, data]
+      - [0x32438, data, cat_psp/e_init]
+      - [0x32818, data]
       - [0x5F628, .data, cat/e_lock_camera]
       - [0x5F6A0, data]
       - [0x5F780, .rodata, cat/e_red_door]
