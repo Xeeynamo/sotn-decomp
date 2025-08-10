@@ -9,14 +9,14 @@ extern u16 D_us_801805F6;
 
 // TODO: ext is wrong
 void func_us_801AE19C(Entity* self) {
-    Entity* entity; // s0
-    s32 i; // s3
-    s32 offsetY; // s5
+    Entity* entity;   // s0
+    s32 i;            // s3
+    s32 offsetY;      // s5
     s32 sideToPlayer; // s4
-    s32 temp_s1_2; // s2
-    s16 temp_s0; // s1
+    s32 temp_s1_2;    // s2
+    s16 temp_s0;      // s1
 
-    if ((self->flags & 0x100) && self->step != 4) {
+    if ((self->flags & FLAG_DEAD) && self->step != 4) {
         PlaySfxPositional(0x73F);
         SetStep(4);
     }
@@ -65,19 +65,19 @@ void func_us_801AE19C(Entity* self) {
             }
             if (offsetY > 0) {
                 self->velocityY -= 0x400;
-                if (self->velocityY < -0x8000) {
-                    self->velocityY = -0x8000;
+                if (self->velocityY < FIX(-0.5)) {
+                    self->velocityY = FIX(-0.5);
                 }
             } else {
                 self->velocityY += 0x400;
-                if (self->velocityY > 0x8000) {
-                    self->velocityY = 0x8000;
+                if (self->velocityY > FIX(0.5)) {
+                    self->velocityY = FIX(0.5);
                 }
             }
             if (self->facingLeft ^ self->ext.subwpnAxe.unk8C[0]) {
                 self->velocityX += 0xC00;
-                if (self->velocityX >= 0x14000) {
-                    self->velocityX = 0x14000;
+                if (self->velocityX >= FIX(1.25)) {
+                    self->velocityX = FIX(1.25);
                 }
             } else {
                 self->velocityX -= 0xC00;
@@ -98,8 +98,8 @@ void func_us_801AE19C(Entity* self) {
                 self->step_s++;
             }
             break;
-            
-        case 2: 
+
+        case 2:
             MoveEntity();
             self->velocityX -= self->velocityX / 16;
             self->velocityY -= self->velocityY / 16;
@@ -132,13 +132,12 @@ void func_us_801AE19C(Entity* self) {
 
     case 3:
         if (!self->step_s) {
-            if ((GetSideToPlayer() & 1)) {
-                self->velocityX = 0xC000;
+            if (GetSideToPlayer() & 1) {
+                self->velocityX = FIX(0.75);
             } else {
-                self->velocityX = -0xC000;
-                
+                self->velocityX = FIX(-0.75);
             }
-            self->velocityY = -0x20000;
+            self->velocityY = FIX(-2.0);
             self->animCurFrame = 1;
             self->ext.factory.unk80 = 0x60;
             self->step_s += 1;
@@ -184,7 +183,7 @@ void func_us_801AE19C(Entity* self) {
                 }
             }
             PlaySfxPositional(0x62A);
-            self->drawFlags = 8;
+            self->drawFlags = FLAG_DRAW_OPACITY;
             self->opacity = 0xC0;
             self->step_s++;
             break;
@@ -193,7 +192,7 @@ void func_us_801AE19C(Entity* self) {
             self->opacity -= 4;
             if (!self->opacity) {
                 self->animCurFrame = 0;
-                self->drawMode = self->drawFlags = 0;
+                self->drawMode = self->drawFlags = FLAG_DRAW_DEFAULT;
                 self->ext.factory.unk80 = 0x100;
                 PlaySfxPositional(0x672);
                 self->step_s++;
@@ -234,14 +233,14 @@ void func_us_801AE19C(Entity* self) {
 
     if (!(self->palette & 0x8000)) {
         self->palette = D_us_801805F6 + self->ext.ILLEGAL.s16[4];
-        self->drawMode = 0x30;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
     } else {
-        self->drawMode = 0;
+        self->drawMode = DRAW_DEFAULT;
     }
 
     if (!(g_Timer & 3)) {
         self->ext.factory.unk84++;
-        if (self->ext.factory.unk84 > 4 ) {
+        if (self->ext.factory.unk84 > 4) {
             self->ext.factory.unk84 = 0;
         }
     }
@@ -260,11 +259,11 @@ void func_us_801AE94C(Entity* self) {
     case 0:
         InitializeEntity(D_us_801805FC);
         self->hitboxState = 0;
-        self->drawFlags = 3;
-        self->drawMode = 0x70;
+        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         if (self->params) {
-            self->drawFlags |= 8;
-            self->animCurFrame = (s16) self->params;
+            self->drawFlags |= FLAG_DRAW_OPACITY;
+            self->animCurFrame = (s16)self->params;
             self->step = 2;
             return;
         }
@@ -295,7 +294,7 @@ void func_us_801AE94C(Entity* self) {
             scale = (rcos(self->ext.factory.unk80) << 6) >> 0xC;
             self->scaleY = scale + 0x1E0;
             opacity = 0x80;
-            if (entity->flags & 0x100) {
+            if (entity->flags & FLAG_DEAD) {
                 self->scaleX = self->scaleY = 0x1E0;
                 self->opacity = 0x80;
                 self->step_s++;
@@ -337,14 +336,12 @@ void func_us_801AE94C(Entity* self) {
             }
             self->scaleY = scale;
 
-
             if (shouldDestroy) {
                 DestroyEntity(self);
                 return;
             }
             break;
         }
-
 
         if (!(self->ext.factory.unk80 & 0xF)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -373,7 +370,6 @@ void func_us_801AE94C(Entity* self) {
     }
 }
 
-
 extern EInit D_us_801805FC;
 
 void func_us_801AEC28(Entity* self) {
@@ -395,12 +391,12 @@ void func_us_801AEC28(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        
-        self->flags |= 0x800000;
+
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
-        prim->type = 4;
+        prim->type = PRIM_GT4;
         prim->tpage = 0x13;
         prim->clut = 0x220; // n.b.! double assignment
         prim->clut = 0x16D;
@@ -409,11 +405,11 @@ void func_us_801AEC28(Entity* self) {
         prim->v0 = prim->v1 = 0x70;
         prim->v2 = prim->v3 = 0x77;
         prim->priority = self->zPriority + 1;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
         // fallthrough
-    
+
     case 1:
-        
+
         entity = self - 2;
         self->facingLeft = entity->facingLeft;
         offsetX = entity->posX.i.hi;
@@ -441,7 +437,7 @@ void func_us_801AEC28(Entity* self) {
             return;
         }
 
-        if (entity->flags & 0x100) {
+        if (entity->flags & FLAG_DEAD) {
             self->step++;
         }
 
@@ -451,7 +447,6 @@ void func_us_801AEC28(Entity* self) {
         self->posX.i.hi += offsetX / 2;
         offsetX = self->posX.i.hi + offsetX;
         offsetY = self->posY.i.hi + (rsin(angle) >> 0xC);
-        
 
         prim = self->ext.prim;
         prim->x0 = prim->x2 = offsetX - 3;
@@ -459,7 +454,7 @@ void func_us_801AEC28(Entity* self) {
         prim->y0 = prim->y1 = offsetY - 3;
         prim->y2 = prim->y3 = offsetY + 3;
         break;
-    
+
     case 2:
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {

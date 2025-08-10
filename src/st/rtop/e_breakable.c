@@ -1,18 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rtop.h"
 
-extern  u8* g_eBreakableAnimations[];
-extern  u8 g_eBreakableHitboxes[];
+extern u8* g_eBreakableAnimations[];
+extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakablePalettes[];
-extern  u16 g_eBreakableAnimSets[];
-extern  u16 g_eBreakableUnk5A[];
-extern  u8 g_eBreakableDrawModes[];
-extern  u16 g_eBreakableHitboxOffsets[];
-extern  s16 g_eBreakableDebrisOffsets[];
+extern u16 g_eBreakableAnimSets[];
+extern u16 g_eBreakableUnk5A[];
+extern u8 g_eBreakableDrawModes[];
+extern u16 g_eBreakableHitboxOffsets[];
+extern s16 g_eBreakableDebrisOffsets[];
 
 extern EInit OVL_EXPORT(EInitBreakable);
-
 
 void OVL_EXPORT(EntityBreakable)(Entity* self) {
     s16* ptr;
@@ -214,5 +213,3 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
         }
     }
 }
-
-
