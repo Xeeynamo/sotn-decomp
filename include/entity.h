@@ -1737,7 +1737,7 @@ typedef struct {
     /* 0x84 */ u8 attackTimerIndex;
     /* 0x85 */ s32 : 24;
     /* 0x88 */ u8 explosionTimer;
-    /* 0x89 */ u8: 8;
+    /* 0x89 */ u8 : 8;
     /* 0x8A */ u8 explosionTimer2;
     /* 0x8B */ s8 : 8;
     /* 0x8C */ s32 : 32;
@@ -3364,14 +3364,28 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u32 : 32;
-    /* 0x80 */ u32 : 32;
-    /* 0x84 */ u8 unk84;
-} ET_HiddenStairs;
-
-typedef struct {
-    /* 0x7C */ u32 : 32;
     /* 0x80 */ s16 timer;
 } ET_Tombstone;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 unk84;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s16 timer;
+} ET_Yorick;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 unk84;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ u16 : 16;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ u8 unk94;
+} ET_YorickSkull;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3665,8 +3679,9 @@ typedef union { // offset=0x7C
     ET_801B72E8 et_801B72E8;
     ET_801B5368 et_801B5368;
     ET_FleaRider fleaRider;
-    ET_HiddenStairs hiddenStairs;
     ET_Tombstone tombstone;
+    ET_Yorick yorick;
+    ET_YorickSkull yorickSkull;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
