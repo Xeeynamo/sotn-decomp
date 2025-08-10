@@ -68,7 +68,6 @@ extern Point16 D_us_8018080C[];
 extern s32 D_us_8018080E[];
 extern u16 D_us_8018081C[];
 
-
 void EntitySecretStairs(Entity* self) {
     Entity* entity;
     s32 i;
@@ -86,7 +85,7 @@ void EntitySecretStairs(Entity* self) {
         if (self->params == 0) {
             self->ext.et_8011E4BC.pad[6] = 1;
             entity = self + 1;
-            for (i  =0 ;i < 3; i++) {
+            for (i = 0; i < 3; i++) {
                 CreateEntityFromCurrentEntity(0x18, entity);
                 entity->params = i + 1;
                 entity++;
@@ -113,19 +112,19 @@ void EntitySecretStairs(Entity* self) {
     case 2:
         self->rotate += 16;
         if (!self->rotate) {
-            self->drawFlags = 0;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
             self->step++;
         }
         break;
 
     case 3:
-        if ((u8) self->ext.et_8011E4BC.pad[6] == 0) {
+        if ((u8)self->ext.et_8011E4BC.pad[6] == 0) {
             entity = self - 1;
             self->posX.i.hi = entity->posX.i.hi;
             self->posY.i.hi = entity->posY.i.hi;
             if (self->params == 3) {
-                self->posX.i.hi = (u16) self->posX.i.hi + 0x10;
-                self->posY.i.hi = (u16) self->posY.i.hi + 0x10;
+                self->posX.i.hi = (u16)self->posX.i.hi + 0x10;
+                self->posY.i.hi = (u16)self->posY.i.hi + 0x10;
             }
         } else {
             g_api.PlaySfx(0x642);
@@ -177,7 +176,6 @@ void EntitySecretStairs(Entity* self) {
             break;
         }
         break;
-
     }
 }
 
@@ -466,7 +464,6 @@ void EntityTriangleElevator(Entity* self) {
     self->ext.topElevator.mapPos.y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 }
 
-
 extern s16 D_us_801808C8[];
 extern u8 D_us_801808D8[][3];
 // map pos y
@@ -701,7 +698,6 @@ void func_us_801A1940(Entity* self) {
     prim->y0 = prim->y1 = self->posY.i.hi + 8;
     prim->y2 = prim->y3 = self->posY.i.hi + 0x18;
 }
-
 
 extern u8 D_us_801808F0[];
 
