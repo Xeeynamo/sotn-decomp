@@ -1163,7 +1163,8 @@ typedef struct {
     /* 0x00, 8003C9A8 */ s32 cursorMain;
     /* 0x04, 8003C9AC */ s32 cursorRelic;
     /* 0x08, 8003C9B0 */ s32 cursorEquip;
-    /* 0x0C, 8003C9B4 */ s32 cursorEquipType[NUM_EQUIP_KINDS];
+    /* 0x0C, 8003C9B4 */ s32 cursorHandEquipType;
+    /* 0x10, 8003C9B8 */ s32 cursorEquipType[NUM_EQUIP_KINDS - 1];
     /* 0x20, 8003C9C8 */ s32 scrollEquipType[NUM_EQUIP_KINDS];
     /* 0x34, 8003C9DC */ s32 cursorSpells;
     /* 0x38, 8003C9E0 */ s32 cursorSettings;
