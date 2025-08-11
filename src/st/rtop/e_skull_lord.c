@@ -1,35 +1,32 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rtop.h"
 
-extern EInit D_us_801805F0;
-extern u16 D_us_801805F6;
-
-extern EInit D_us_801805F0;
+extern EInit g_EInitSkullLord;
 extern u16 D_us_801805F6;
 
 // TODO: ext is wrong
-void func_us_801AE19C(Entity* self) {
-    Entity* entity;   // s0
-    s32 i;            // s3
-    s32 offsetY;      // s5
-    s32 sideToPlayer; // s4
-    s32 temp_s1_2;    // s2
-    s16 temp_s0;      // s1
+void EntitySkullLord(Entity* self) {
+    Entity* entity;
+    s32 i;
+    s32 offsetY;
+    s32 sideToPlayer;
+    s32 temp_s1_2;
+    s16 temp_s0;
 
     if ((self->flags & FLAG_DEAD) && self->step != 4) {
-        PlaySfxPositional(0x73F);
+        PlaySfxPositional(SFX_UNK_73F);
         SetStep(4);
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801805F0);
+        InitializeEntity(g_EInitSkullLord);
         self->hitboxOffX = 4;
         entity = self + 1;
-        CreateEntityFromEntity(0x27, self, entity);
+        CreateEntityFromEntity(E_SKULL_LORD_OUTLINE, self, entity);
         entity->zPriority = self->zPriority - 4;
         entity = self + 2;
-        CreateEntityFromEntity(0x28, self, entity);
+        CreateEntityFromEntity(E_SKULL_LORD_FLAMES, self, entity);
         entity->zPriority = self->zPriority - 2;
         break;
 
@@ -44,8 +41,8 @@ void func_us_801AE19C(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->velocityY = 0;
-            self->ext.factory.unk80 = ((Random() & 7) * 0x10) + 0x10;
-            self->ext.factory.newEntityId = 0;
+            self->ext.skullLord.timer = ((Random() & 7) * 0x10) + 0x10;
+            self->ext.skullLord.unk90 = 0;
             self->step_s++;
             // fallthrough
 
@@ -56,12 +53,12 @@ void func_us_801AE19C(Entity* self) {
             if (self->hitFlags & 3) {
                 self->velocityX >>= 1;
                 self->velocityY >>= 1;
-                self->ext.factory.newEntityId = 0x40;
+                self->ext.skullLord.unk90 = 0x40;
             }
 
-            if (self->ext.factory.newEntityId) {
-                self->ext.factory.newEntityId--;
-                self->ext.subwpnAxe.unk8C[0] ^= 1;
+            if (self->ext.skullLord.unk90) {
+                self->ext.skullLord.unk90--;
+                self->ext.skullLord.unk8C ^= 1;
             }
             if (offsetY > 0) {
                 self->velocityY -= 0x400;
@@ -74,7 +71,7 @@ void func_us_801AE19C(Entity* self) {
                     self->velocityY = FIX(0.5);
                 }
             }
-            if (self->facingLeft ^ self->ext.subwpnAxe.unk8C[0]) {
+            if (self->facingLeft ^ self->ext.skullLord.unk8C) {
                 self->velocityX += 0xC00;
                 if (self->velocityX >= FIX(1.25)) {
                     self->velocityX = FIX(1.25);
@@ -87,14 +84,14 @@ void func_us_801AE19C(Entity* self) {
             }
             sideToPlayer = (GetSideToPlayer() & 1) ^ 1;
             if (sideToPlayer != self->facingLeft) {
-                self->ext.subwpnAxe.unk8C[0] = 1;
+                self->ext.skullLord.unk8C = 1;
                 if (GetDistanceToPlayerX() > 0x20) {
                     self->facingLeft ^= 1;
                 }
             } else {
-                self->ext.subwpnAxe.unk8C[0] = 0;
+                self->ext.skullLord.unk8C = 0;
             }
-            if (!--self->ext.factory.unk80) {
+            if (!--self->ext.skullLord.timer) {
                 self->step_s++;
             }
             break;
@@ -113,7 +110,7 @@ void func_us_801AE19C(Entity* self) {
 
         if (!self->poseTimer) {
             if (!self->pose) {
-                PlaySfxPositional(0x6A6);
+                PlaySfxPositional(SFX_SKULL_KNOCK_B);
                 self->animCurFrame = 1;
                 self->poseTimer = (Random() & 0x7F) | 7;
                 self->pose = 1;
@@ -139,13 +136,13 @@ void func_us_801AE19C(Entity* self) {
             }
             self->velocityY = FIX(-2.0);
             self->animCurFrame = 1;
-            self->ext.factory.unk80 = 0x60;
+            self->ext.skullLord.timer = 0x60;
             self->step_s += 1;
         }
         MoveEntity();
         self->velocityX -= (self->velocityX >> 5);
         self->velocityY -= (self->velocityY >> 5);
-        if (!--self->ext.factory.unk80) {
+        if (!--self->ext.skullLord.timer) {
             SetStep(2);
         }
         break;
@@ -154,12 +151,12 @@ void func_us_801AE19C(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->hitboxState = 0;
-            self->ext.factory.unk80 = 0x10;
+            self->ext.skullLord.timer = 0x10;
             self->step_s += 1;
             // fallthrough
 
         case 1:
-            if (!--self->ext.factory.unk80) {
+            if (!--self->ext.skullLord.timer) {
                 self->step_s++;
             }
             break;
@@ -169,10 +166,10 @@ void func_us_801AE19C(Entity* self) {
             for (i = 0; i < 24; i++) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(0x29, self, entity);
+                    CreateEntityFromEntity(E_SKULL_LORD_PIECES, self, entity);
                     temp_s0 = (Random() & 0x7F) << 4;
                     temp_s1_2 = (Random() & 0x1F) + 8;
-                    entity->ext.factory.unk82 = temp_s0;
+                    entity->ext.skullLord.unk82 = temp_s0;
                     entity->posX.i.hi += ((temp_s1_2 * rcos(temp_s0)) >> 0xC);
                     entity->posY.i.hi -= ((temp_s1_2 * rsin(temp_s0)) >> 0xC);
                     if (Random() & 1) {
@@ -182,7 +179,7 @@ void func_us_801AE19C(Entity* self) {
                     }
                 }
             }
-            PlaySfxPositional(0x62A);
+            PlaySfxPositional(SFX_SKELETON_DEATH_B);
             self->drawFlags = FLAG_DRAW_OPACITY;
             self->opacity = 0xC0;
             self->step_s++;
@@ -193,14 +190,14 @@ void func_us_801AE19C(Entity* self) {
             if (!self->opacity) {
                 self->animCurFrame = 0;
                 self->drawMode = self->drawFlags = FLAG_DRAW_DEFAULT;
-                self->ext.factory.unk80 = 0x100;
-                PlaySfxPositional(0x672);
+                self->ext.skullLord.timer = 0x100;
+                PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
                 self->step_s++;
             }
             break;
 
         case 4:
-            if (!--self->ext.factory.unk80) {
+            if (!--self->ext.skullLord.timer) {
                 DestroyEntity(self);
                 return;
             }
@@ -232,16 +229,16 @@ void func_us_801AE19C(Entity* self) {
     }
 
     if (!(self->palette & 0x8000)) {
-        self->palette = D_us_801805F6 + self->ext.ILLEGAL.s16[4];
+        self->palette = g_EInitSkullLord[3] + self->ext.skullLord.unk84;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
     } else {
         self->drawMode = DRAW_DEFAULT;
     }
 
     if (!(g_Timer & 3)) {
-        self->ext.factory.unk84++;
-        if (self->ext.factory.unk84 > 4) {
-            self->ext.factory.unk84 = 0;
+        self->ext.skullLord.unk84++;
+        if (self->ext.skullLord.unk84 > 4) {
+            self->ext.skullLord.unk84 = 0;
         }
     }
 }
@@ -249,7 +246,7 @@ void func_us_801AE19C(Entity* self) {
 extern EInit D_us_801805FC;
 extern u8 D_us_8018151C[];
 
-void func_us_801AE94C(Entity* self) {
+void EntitySkullLordOutline(Entity* self) {
     Entity* entity;
     s32 scale;
     s32 opacity;
@@ -282,8 +279,8 @@ void func_us_801AE94C(Entity* self) {
         self->facingLeft = entity->facingLeft;
         self->posX.i.hi = entity->posX.i.hi;
         self->posY.i.hi = entity->posY.i.hi;
-        self->ext.factory.unk80++;
-        if (self->ext.factory.unk80 & 2) {
+        self->ext.skullLord.timer++;
+        if (self->ext.skullLord.timer & 2) {
             self->posX.i.hi += 3;
         } else {
             self->posX.i.hi -= 3;
@@ -291,7 +288,7 @@ void func_us_801AE94C(Entity* self) {
 
         switch (self->step_s) {
         case 0:
-            scale = (rcos(self->ext.factory.unk80) << 6) >> 0xC;
+            scale = (rcos(self->ext.skullLord.timer) << 6) >> 0xC;
             self->scaleY = scale + 0x1E0;
             opacity = 0x80;
             if (entity->flags & FLAG_DEAD) {
@@ -343,10 +340,10 @@ void func_us_801AE94C(Entity* self) {
             break;
         }
 
-        if (!(self->ext.factory.unk80 & 0xF)) {
+        if (!(self->ext.skullLord.timer & 0xF)) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(0x27, self, entity);
+                CreateEntityFromEntity(E_SKULL_LORD_OUTLINE, self, entity);
                 entity->params = self->animCurFrame;
                 entity->facingLeft = self->facingLeft;
                 entity->scaleX = self->scaleX;
@@ -370,9 +367,7 @@ void func_us_801AE94C(Entity* self) {
     }
 }
 
-extern EInit D_us_801805FC;
-
-void func_us_801AEC28(Entity* self) {
+void EntitySkullLordFlames(Entity* self) {
     Entity* entity;
     Primitive* prim;
     s32 offsetX; // s2
@@ -467,7 +462,7 @@ void func_us_801AEC28(Entity* self) {
     }
 }
 
-void func_us_801AEEF4(Entity* self) {
+void EntitySkullLordPieces(Entity* self) {
     s32 rand;
     s16 temp_s0;
 
@@ -480,7 +475,7 @@ void func_us_801AEEF4(Entity* self) {
             rand = 2;
         }
         self->animCurFrame = rand + 9;
-        temp_s0 = self->ext.factory.unk82;
+        temp_s0 = self->ext.skullLord.unk82;
         rand = (Random() & 0xF) + 2;
         self->velocityX = rand * rcos(temp_s0);
         rand = 0x20 - (Random() & 0x1F);

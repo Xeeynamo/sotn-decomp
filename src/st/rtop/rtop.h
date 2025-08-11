@@ -30,12 +30,16 @@ typedef enum EntityIDs {
     /* 0x13 */ E_UNK_ID_13 = 0x13,
     /* 0x14 */ E_EXPLOSION_VARIANTS,
     /* 0x15 */ E_GREY_PUFF,
+    /* 0x18 */ E_STAIR_SEGMENT = 0x18,
     /* 0x1C */ E_BREAKABLE_DEBRIS = 0x1C,
-
     /* 0x22 */ E_YORICK = 0x22,
     /* 0x23 */ E_YORICK_SKULL,
     /* 0x24 */ E_SKELETON_PARTS,
     /* 0x25 */ E_TOMBSTONE,
+    /* 0x26 */ E_SKULL_LORD,
+    /* 0x27 */ E_SKULL_LORD_OUTLINE,
+    /* 0x27 */ E_SKULL_LORD_FLAMES,
+    /* 0x27 */ E_SKULL_LORD_PIECES,
 } EntityIDs;
 
 #endif // RTOP_H

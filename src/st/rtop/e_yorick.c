@@ -121,7 +121,7 @@ void EntityYorick(Entity* self) {
         case 1:
             AnimateEntity(D_us_801814A0, self);
             if (UnkCollisionFunc3(D_us_80181468) & 1) {
-                PlaySfxPositional(0x648);
+                PlaySfxPositional(SFX_STOMP_HARD_C);
                 ++self->ext.yorick.timer;
                 if (self->ext.yorick.timer > 2) {
                     SetStep(5);
@@ -172,7 +172,7 @@ void EntityYorick(Entity* self) {
             entity->velocityX = D_us_801814C4[i];
             entity->velocityY = D_us_801814E0[i];
         }
-        PlaySfxPositional(0x62B);
+        PlaySfxPositional(SFX_SKELETON_DEATH_C);
         DestroyEntity(self);
         break;
     }
@@ -195,7 +195,7 @@ void EntityYorickSkull(Entity* self) {
             CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 0;
         }
-        PlaySfxPositional(0x658);
+        PlaySfxPositional(SFX_EXPLODE_E);
         DestroyEntity(self);
         return;
     }
