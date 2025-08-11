@@ -137,7 +137,7 @@ void EntitySkullLord(Entity* self) {
             self->velocityY = FIX(-2.0);
             self->animCurFrame = 1;
             self->ext.skullLord.timer = 0x60;
-            self->step_s += 1;
+            self->step_s++;
         }
         MoveEntity();
         self->velocityX -= (self->velocityX >> 5);
@@ -152,7 +152,7 @@ void EntitySkullLord(Entity* self) {
         case 0:
             self->hitboxState = 0;
             self->ext.skullLord.timer = 0x10;
-            self->step_s += 1;
+            self->step_s++;
             // fallthrough
 
         case 1:
@@ -207,7 +207,7 @@ void EntitySkullLord(Entity* self) {
 
     case 0xFF:
         FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & 0x80) {
+        if (g_pads[1].pressed & PAD_SQUARE) {
             if (!self->params) {
                 self->animCurFrame++;
                 self->params |= 1;
@@ -217,7 +217,7 @@ void EntitySkullLord(Entity* self) {
         } else {
             self->params = 0;
         }
-        if (g_pads[1].pressed & 0x20) {
+        if (g_pads[1].pressed & PAD_CIRCLE) {
             if (!self->step_s) {
                 self->animCurFrame--;
                 self->step_s |= 1;
@@ -228,7 +228,7 @@ void EntitySkullLord(Entity* self) {
         break;
     }
 
-    if (!(self->palette & 0x8000)) {
+    if (!(self->palette & PAL_OVL_FLAG)) {
         self->palette = g_EInitSkullLord[3] + self->ext.skullLord.unk84;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
     } else {

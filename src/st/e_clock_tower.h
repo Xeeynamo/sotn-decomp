@@ -16,7 +16,7 @@ extern cloudData data[];
 extern SVECTOR empty;
 
 // very simliar to ST0's EntityClouds, however,
-// TOP is much taller so many dimensional constants
+// TOP & RTOP are much taller so many dimensional constants
 // differ.
 void EntityClouds(Entity* self) {
 #ifdef VERSION_PC

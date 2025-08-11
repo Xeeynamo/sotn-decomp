@@ -33,6 +33,7 @@ g_eBreakableUnk5A = 0x80180BBC;
 g_eBreakableDrawModes = 0x80180BD0;
 g_eBreakableHitboxOffsets = 0x80180BDC;
 D_us_80180CC8 = 0x80180CC8;
+LionLampAnim = 0x80180CF0;
 TOP_PrizeDrops = 0x80180D10;
 actor_names = 0x80180DE4;
 g_eRedDoorUV = 0x80181234;

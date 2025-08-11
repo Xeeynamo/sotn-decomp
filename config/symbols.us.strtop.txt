@@ -27,6 +27,7 @@ g_eBreakableHitboxOffsets = 0x8018079C;
 g_eBreakableDebrisOffsets = 0x801807B4;
 RTOP_PrizeDrops = 0x801807C8;
 D_us_801808C8 = 0x801808C8;
+LionLampAnim = 0x801808F0;
 g_bigRedFireballAnim = 0x8018118C;
 anim_bone_rot = 0x801814AC;
 D_us_801814FC = 0x801814FC;

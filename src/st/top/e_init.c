@@ -31,7 +31,7 @@ void EntityBreakableWall(Entity*);
 void EntityTriangleElevator(Entity*);
 void EntityLionLamp(Entity*);
 void func_us_801AB45C(Entity*);
-void func_us_801AB67C(Entity*);
+void EntityTriggerBeforeCastleWarp(Entity*);
 void func_us_801AABA4(Entity*);
 void EntityFleaRider(Entity*);
 void func_us_801A9250(Entity*);
@@ -76,7 +76,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityTriangleElevator,
     EntityLionLamp,
     func_us_801AB45C,
-    func_us_801AB67C,
+    EntityTriggerBeforeCastleWarp,
     func_us_801AABA4,
     EntityFleaRider,
     func_us_801A9250,

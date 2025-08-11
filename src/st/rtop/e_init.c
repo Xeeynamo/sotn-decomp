@@ -29,9 +29,9 @@ void EntityClouds(Entity*);
 void EntityBreakableWall(Entity*);
 void OVL_EXPORT(EntityBreakableDebris)(Entity*);
 void EntityTriangleElevator(Entity*);
-void func_us_801A20A4(Entity*);
+void EntityLionLamp(Entity*);
 void func_us_801A21F8(Entity*);
-void func_us_801A2408(Entity*);
+void EntityTriggerBeforeCastleWarp(Entity*);
 void func_us_801A1940(Entity*);
 void EntityYorick(Entity*);
 void EntityYorickSkull(Entity*);
@@ -72,9 +72,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakableWall,
     OVL_EXPORT(EntityBreakableDebris),
     EntityTriangleElevator,
-    func_us_801A20A4,
+    EntityLionLamp,
     func_us_801A21F8,
-    func_us_801A2408,
+    EntityTriggerBeforeCastleWarp,
     func_us_801A1940,
     EntityYorick,
     EntityYorickSkull,
