@@ -2,11 +2,11 @@
 #include "rtop.h"
 
 // same as TOP
-// TODO: EntityStairSwitch
-extern EInit D_us_801805C0;
-void func_us_801A0B48(Entity* self) {
+extern EInit g_EInitRTOPCommon;
+
+void EntityStairSwitch(Entity* self) {
     if (self->step == 0) {
-        InitializeEntity(D_us_801805C0);
+        InitializeEntity(g_EInitRTOPCommon);
         self->animCurFrame = 5;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
@@ -35,7 +35,7 @@ void func_us_801A0BF4(Entity* self) {
     FntPrint("w_y %x\n", g_PlayerY);
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801805C0);
+        InitializeEntity(g_EInitRTOPCommon);
 
         // cursed!
         *((volatile s16*)&self->animCurFrame) = 3;
@@ -63,7 +63,6 @@ void func_us_801A0BF4(Entity* self) {
     }
 }
 
-extern EInit D_us_801805C0;
 extern Point16 D_us_8018080C[];
 extern s32 D_us_8018080E[];
 extern u16 D_us_8018081C[];
@@ -80,13 +79,13 @@ void EntitySecretStairs(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801805C0);
+        InitializeEntity(g_EInitRTOPCommon);
         self->animCurFrame = 1;
         if (self->params == 0) {
             self->ext.et_8011E4BC.pad[6] = 1;
             entity = self + 1;
             for (i = 0; i < 3; i++) {
-                CreateEntityFromCurrentEntity(0x18, entity);
+                CreateEntityFromCurrentEntity(E_STAIR_SEGMENT, entity);
                 entity->params = i + 1;
                 entity++;
             }
@@ -104,7 +103,7 @@ void EntitySecretStairs(Entity* self) {
         break;
     case 1:
         if (g_CastleFlags[TOP_SECRET_STAIRS] != 0) {
-            g_api.PlaySfx(0x642);
+            g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
         }
         break;
@@ -127,7 +126,7 @@ void EntitySecretStairs(Entity* self) {
                 self->posY.i.hi = (u16)self->posY.i.hi + 0x10;
             }
         } else {
-            g_api.PlaySfx(0x642);
+            g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
         }
         break;
@@ -192,7 +191,7 @@ void EntityBreakableWall(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801805C0);
+        InitializeEntity(g_EInitRTOPCommon);
         self->animCurFrame = 0xF;
         self->hitboxWidth = 8;
         self->hitboxHeight = 0x18;
@@ -288,7 +287,6 @@ void EntityBreakableWall(Entity* self) {
     }
 }
 
-extern EInit D_us_801805C0;
 // odd +1 reference to D_us_80180CC6
 extern s16 D_us_801808C8[];
 
@@ -304,7 +302,7 @@ void EntityTriangleElevator(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801805C0);
+        InitializeEntity(g_EInitRTOPCommon);
         self->animCurFrame = 0xD;
         self->hitboxState = 1;
         self->ext.topElevator.unk88 = 0;
@@ -464,7 +462,6 @@ void EntityTriangleElevator(Entity* self) {
     self->ext.topElevator.mapPos.y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 }
 
-extern s16 D_us_801808C8[];
 extern u8 D_us_801808D8[][3];
 // map pos y
 extern s32 D_us_801B10D8;
@@ -491,7 +488,7 @@ void func_us_801A1940(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801805C0);
+        InitializeEntity(g_EInitRTOPCommon);
         self->animCurFrame = 0xC;
         self->hitboxState = 1;
         self->ext.topElevator.unk88 = 0;
@@ -704,7 +701,7 @@ extern u8 D_us_801808F0[];
 void func_us_801A20A4(Entity* self) {
     switch (self->step) {
     case 0x0:
-        InitializeEntity(D_us_801805C0);
+        InitializeEntity(g_EInitRTOPCommon);
         self->zPriority = 0x58;
         // fallthrough
 
@@ -741,7 +738,6 @@ void func_us_801A20A4(Entity* self) {
 }
 
 extern u8 D_us_801808FC[];
-extern s32 D_us_801B10D8;
 
 void func_us_801A21F8(Entity* self) {
     u8* clutIndexes;
@@ -751,7 +747,7 @@ void func_us_801A21F8(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801805C0);
+        InitializeEntity(g_EInitRTOPCommon);
         self->animSet = 7;
         self->animCurFrame = 3;
         self->zPriority = 0x5C;

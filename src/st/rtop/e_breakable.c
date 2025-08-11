@@ -73,7 +73,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
                 }
                 posY -= 16;
             }
-            g_api.PlaySfx(0x67F);
+            g_api.PlaySfx(SFX_CANDLE_HIT_WHOOSH_B);
             break;
 
         case 9:
