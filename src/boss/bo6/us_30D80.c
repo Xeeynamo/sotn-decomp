@@ -14,6 +14,8 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_30D80", EntityGreyPuff);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_30D80", EntityOlroxDrool);
 
+// e_collect3
+
 INCLUDE_ASM("boss/bo6/nonmatchings/us_30D80", UnkCollisionFunc5);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_30D80", UnkCollisionFunc4);
@@ -33,5 +35,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_30D80", UnkRecursivePrimFunc1);
 INCLUDE_ASM("boss/bo6/nonmatchings/us_30D80", UnkRecursivePrimFunc2);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_30D80", ClutLerp);
+
+// no longer in e_misc
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_30D80", PlaySfxPositional);
