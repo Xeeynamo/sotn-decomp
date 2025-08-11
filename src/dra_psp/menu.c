@@ -1139,8 +1139,8 @@ void MenuJosephsCloakDraw(MenuContext* ctx) {
     }
     for (i = 0; i < 6; i++) {
         s32 y = 40 + (i * 12);
-        MenuDrawInt(g_Settings.cloakColors[i], x_Start + number_spacing + 72,
-                    y, menu);
+        MenuDrawInt(
+            g_Settings.cloakColors[i], x_Start + number_spacing + 72, y, menu);
     }
     func_800F5E68(menu, g_MenuNavigation.cursorCloak, x_Start - 2, 38,
                   number_spacing + 88, 12, 0, 1);
@@ -2543,7 +2543,8 @@ void func_800F99B8(const char* str, u32 y, bool arg2) {
         }
     }
 
-    LoadTPage((u_long*)D_8013794C, 0, 0, D_80137950 + x, D_80137954 + y, var_s4 * 2, 0x10);
+    LoadTPage((u_long*)D_8013794C, 0, 0, D_80137950 + x, D_80137954 + y,
+              var_s4 * 2, 0x10);
     D_8013794C += var_s4 * FontHeight;
 }
 #endif
@@ -2614,9 +2615,11 @@ void func_800F9E18(s32 arg0) {
 
         STRCPY(buffer, g_RelicDefs[i * ItemsPerRow + 1].name);
         if ((nHalfScreenSize & 1) == 0) {
-            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 0x280, true);
+            func_800F99B8(
+                buffer, (nHalfScreenSize / ItemsPerRow) + 0x280, true);
         } else {
-            func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 0x303, true);
+            func_800F99B8(
+                buffer, (nHalfScreenSize / ItemsPerRow) + 0x303, true);
         }
     }
 }
@@ -2831,8 +2834,7 @@ void MenuEquipHandlePageScroll(s32 arg0) {
     if (D_801375CC == EQUIP_HAND) {
         cursorIndex = &g_MenuNavigation.cursorHandEquipType;
     } else {
-        cursorIndex =
-            &g_MenuNavigation.cursorEquipType[D_801375D4];
+        cursorIndex = &g_MenuNavigation.cursorEquipType[D_801375D4];
     }
 
     nItems = func_800FD6C4(D_801375CC);
@@ -4295,14 +4297,16 @@ block_4:
             g_AccessoryDefs[equipId].iconPalette);
         func_800FAF44(true);
     case MENU_STEP_EQUIP_ACC:
-        isSecondAccessory = (g_MenuNavigation.cursorEquip == ACCESSORY_2_SLOT) ? 1 : 0;
+        isSecondAccessory =
+            (g_MenuNavigation.cursorEquip == ACCESSORY_2_SLOT) ? 1 : 0;
         i = func_800FB23C(
             &g_MenuNavigation.cursorEquipType[D_801375D4],
             g_Status.equipBodyOrder, g_Status.equipBodyCount,
             &g_Status.wornEquipment[D_801375D4 + isSecondAccessory]);
         if (i == 2) {
-            equipId = g_Status.equipBodyOrder
-                          [D_801375D8[g_MenuNavigation.cursorEquipType[D_801375D4]]];
+            equipId =
+                g_Status.equipBodyOrder
+                    [D_801375D8[g_MenuNavigation.cursorEquipType[D_801375D4]]];
             func_800FAD34(
                 g_AccessoryDefs[equipId].description,
                 g_Status.equipBodyCount[equipId], g_AccessoryDefs[equipId].icon,
