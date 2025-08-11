@@ -166,10 +166,9 @@ void EntitySecretStairs(Entity* self) {
     s32 posX;
     s32 posY;
     s32 offsetX;
-    s16 angle;
     s32 offsetY;
+    s16 angle;
     u16* var_a1;
-    s16 index;
 
     switch (self->step) {
     case 0:
@@ -315,12 +314,12 @@ void EntityBreakableWall(Entity* self) {
         self->hitboxOffY = 0;
         self->hitboxState = 2;
         if (!self->params) {
-            if (g_CastleFlags[TOP_SECRET_WALL_1_BROKEN]) {
+            if (g_CastleFlags[OVL_EXPORT(SECRET_WALL_1_BROKEN)]) {
                 wallStatus = 3;
             } else {
                 wallStatus = 0;
             }
-        } else if (g_CastleFlags[TOP_SECRET_WALL_2_BROKEN]) {
+        } else if (g_CastleFlags[OVL_EXPORT(SECRET_WALL_2_BROKEN])) {
             wallStatus = 3;
         } else {
             wallStatus = 0;
@@ -362,9 +361,9 @@ void EntityBreakableWall(Entity* self) {
         self->step++;
         if (self->ext.breakableWall2.unk84 == 3) {
             if (!self->params) {
-                g_CastleFlags[TOP_SECRET_WALL_1_BROKEN] = 1;
+                g_CastleFlags[OVL_EXPORT(SECRET_WALL_1_BROKEN)] = 1;
             } else {
-                g_CastleFlags[TOP_SECRET_WALL_2_BROKEN] = 1;
+                g_CastleFlags[OVL_EXPORT(SECRET_WALL_2_BROKEN)] = 1;
             }
             wallTiles = D_us_80180CC2;
             if (!self->params) {
@@ -403,7 +402,6 @@ void EntityBreakableWall(Entity* self) {
     }
 }
 
-// triangle elevators
 // odd +1 reference to D_us_80180CC6
 extern s16 D_us_80180CC8[];
 
@@ -816,54 +814,15 @@ void func_us_801AABA4(Entity* self) {
 
 extern u8 D_us_80180CF0[];
 
-void EntityLionLamp(Entity* self) {
-    switch (self->step) {
-    case 0x0:
-        InitializeEntity(g_EInitTOPCommon);
-        self->zPriority = 0x58;
-        // fallthrough
-
-    case 1:
-        AnimateEntity(D_us_80180CF0, self);
-        if (g_Timer & 1) {
-            self->palette = 0;
-        } else {
-            self->palette = 1;
-        }
-        break;
-
-    case 255:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & 0x80) {
-            if (self->params) {
-                return;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-
-        if (g_pads[1].pressed & 0x20) {
-            if (self->step_s == 0) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
-    }
-}
+#define STAGE_EINIT_COMMON g_EInitTOPCommon
+#include "../e_lion_lamp.h"
 
 extern u8 D_us_80180CFC[];
-extern s32 D_us_801BC514;
 
 void func_us_801AB45C(Entity* self) {
     u8* lookup;
     s32 writeIndex;
     s32 readIndex;
-    u8 clutId;
     s32 offsetY;
 
     switch (self->step) {
@@ -906,8 +865,9 @@ void func_us_801AB45C(Entity* self) {
         if (!self->poseTimer) {
             self->poseTimer = 4;
             lookup = D_us_80180CFC;
-            lookup = &lookup[self->params * 5];
+            lookup += self->params * 5;
             writeIndex = lookup[0];
+            // cursed composition!
             readIndex = self->pose;
             readIndex = lookup[readIndex];
             g_ClutIds[writeIndex] = g_ClutIds[readIndex];
@@ -922,21 +882,4 @@ void func_us_801AB45C(Entity* self) {
     }
 }
 
-// warp pad?
-extern EInit g_EInitInteractable;
-
-void func_us_801AB67C(Entity* self) {
-    FntPrint("alive \n");
-    if (self->step == 0) {
-        InitializeEntity(g_EInitInteractable);
-        g_api.func_800EA5E4(0xC001U);
-        g_api.func_800EA5E4(0xC002U);
-        g_api.func_800EA5E4(0xC003U);
-        g_api.func_800EA5E4(0xC004U);
-        g_api.func_800EA5E4(0xC005U);
-        g_api.func_800EA5E4(0xC006U);
-        g_api.func_800EA5E4(0xC007U);
-        g_api.func_800EA5E4(0xC008U);
-        g_api.func_800EA5E4(0xC009U);
-    }
-}
+#include "../e_trigger_before_castle_warp.h"

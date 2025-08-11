@@ -5,7 +5,8 @@
 extern EInit g_EInitRTOPCommon;
 
 void EntityStairSwitch(Entity* self) {
-    if (self->step == 0) {
+    switch (self->step) {
+    case 0:
         InitializeEntity(g_EInitRTOPCommon);
         self->animCurFrame = 5;
         self->hitboxWidth = 6;
@@ -17,19 +18,19 @@ void EntityStairSwitch(Entity* self) {
         } else {
             self->animCurFrame = 4;
             self->hitboxState = 0;
-            self->palette += 1;
+            self->palette++;
             g_Tilemap.fg[0x251B] = 0x328;
             self->step = 3;
         }
+        break;
     }
 }
 
-// in upper castle, possibly stairs
 void func_us_801A0BF4(Entity* self) {
     s32 i;
     s32 tilemapIndex;
-    s32 posX;
-    s32 posY;
+    s32 offsetX;
+    s32 offsetY;
 
     FntPrint("step %x\n", self->step);
     FntPrint("w_y %x\n", g_PlayerY);
@@ -50,10 +51,10 @@ void func_us_801A0BF4(Entity* self) {
 
     case 3:
         self->animCurFrame = 0;
-        posX = LOH(PLAYER.posX.i.hi) + g_Tilemap.scrollX.i.hi;
-        posY = LOH(PLAYER.posY.i.hi) + g_Tilemap.scrollY.i.hi;
+        offsetX = LOH(PLAYER.posX.i.hi) + g_Tilemap.scrollX.i.hi;
+        offsetY = LOH(PLAYER.posY.i.hi) + g_Tilemap.scrollY.i.hi;
 
-        if (posX > 0x220 && posX < 0x2C0 && posY > 0x460 &&
+        if (offsetX > 0x220 && offsetX < 0x2C0 && offsetY > 0x460 &&
             g_PlayerY >= 0x4DE) {
             g_Tilemap.height = 0x4FB;
             g_Tilemap.bottom = g_Tilemap.bottom - 3;
@@ -81,20 +82,19 @@ void EntitySecretStairs(Entity* self) {
     case 0:
         InitializeEntity(g_EInitRTOPCommon);
         self->animCurFrame = 1;
-        if (self->params == 0) {
-            self->ext.et_8011E4BC.pad[6] = 1;
+        if (!self->params) {
+            self->ext.secretStairs.unk84 = 1;
             entity = self + 1;
-            for (i = 0; i < 3; i++) {
+            for (i = 0; i < 3; i++, entity++) {
                 CreateEntityFromCurrentEntity(E_STAIR_SEGMENT, entity);
                 entity->params = i + 1;
-                entity++;
             }
         }
         if (self->params == 3) {
             self->animCurFrame = 2;
             self->zPriority++;
         }
-        g_api.RevealSecretPassageAtPlayerPositionOnMap(0x9B);
+        g_api.RevealSecretPassageAtPlayerPositionOnMap(RTOP_SECRET_STAIRS);
         posX = D_us_8018080C[self->params].x;
         posY = D_us_8018080C[self->params].y;
         self->posX.i.hi = 0x800 - posX - g_Tilemap.scrollX.i.hi;
@@ -102,7 +102,7 @@ void EntitySecretStairs(Entity* self) {
         self->step = 15;
         break;
     case 1:
-        if (g_CastleFlags[TOP_SECRET_STAIRS] != 0) {
+        if (g_CastleFlags[TOP_SECRET_STAIRS]) {
             g_api.PlaySfx(SFX_DOOR_OPEN);
             self->step++;
         }
@@ -117,13 +117,13 @@ void EntitySecretStairs(Entity* self) {
         break;
 
     case 3:
-        if ((u8)self->ext.et_8011E4BC.pad[6] == 0) {
+        if (self->ext.secretStairs.unk84 == 0) {
             entity = self - 1;
             self->posX.i.hi = entity->posX.i.hi;
             self->posY.i.hi = entity->posY.i.hi;
             if (self->params == 3) {
-                self->posX.i.hi = (u16)self->posX.i.hi + 0x10;
-                self->posY.i.hi = (u16)self->posY.i.hi + 0x10;
+                self->posX.i.hi += 0x10;
+                self->posY.i.hi += 0x10;
             }
         } else {
             g_api.PlaySfx(SFX_DOOR_OPEN);
@@ -178,10 +178,10 @@ void EntitySecretStairs(Entity* self) {
     }
 }
 
+// breakable wall behind leap stone or power of mist
 extern u16 D_us_801808BC[];
 extern u16 D_us_801808C2[];
 
-// secret wall
 void EntityBreakableWall(Entity* self) {
     s32 wallStatus;
     Entity* entity;
@@ -199,12 +199,12 @@ void EntityBreakableWall(Entity* self) {
         self->hitboxOffY = 0;
         self->hitboxState = 2;
         if (!self->params) {
-            if (g_CastleFlags[RTOP_SECRET_WALL_1_BROKEN]) {
+            if (g_CastleFlags[OVL_EXPORT(SECRET_WALL_1_BROKEN)]) {
                 wallStatus = 3;
             } else {
                 wallStatus = 0;
             }
-        } else if (g_CastleFlags[RTOP_SECRET_WALL_2_BROKEN]) {
+        } else if (g_CastleFlags[OVL_EXPORT(SECRET_WALL_2_BROKEN])) {
             wallStatus = 3;
         } else {
             wallStatus = 0;
@@ -246,9 +246,9 @@ void EntityBreakableWall(Entity* self) {
         self->step++;
         if (self->ext.breakableWall2.unk84 == 3) {
             if (!self->params) {
-                g_CastleFlags[RTOP_SECRET_WALL_1_BROKEN] = 1;
+                g_CastleFlags[OVL_EXPORT(SECRET_WALL_1_BROKEN)] = 1;
             } else {
-                g_CastleFlags[RTOP_SECRET_WALL_2_BROKEN] = 1;
+                g_CastleFlags[OVL_EXPORT(SECRET_WALL_2_BROKEN)] = 1;
             }
             wallTiles = D_us_801808C2;
             if (!self->params) {
@@ -698,51 +698,15 @@ void func_us_801A1940(Entity* self) {
 
 extern u8 D_us_801808F0[];
 
-void func_us_801A20A4(Entity* self) {
-    switch (self->step) {
-    case 0x0:
-        InitializeEntity(g_EInitRTOPCommon);
-        self->zPriority = 0x58;
-        // fallthrough
-
-    case 0x1:
-        AnimateEntity(D_us_801808F0, self);
-        if (g_Timer & 1) {
-            self->palette = 0;
-        } else {
-            self->palette = 1;
-        }
-        break;
-
-    case 0xFF:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & 0x80) {
-            if (self->params != 0) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & 0x20) {
-            if (self->step_s == 0) {
-                self->animCurFrame--;
-                self->step_s |= 1;
-            }
-        } else {
-            self->step_s = 0;
-        }
-        break;
-    }
-}
+#define STAGE_EINIT_COMMON g_EInitRTOPCommon
+#include "../e_lion_lamp.h"
 
 extern u8 D_us_801808FC[];
 
 void func_us_801A21F8(Entity* self) {
-    u8* clutIndexes;
-    s32 clutSource;
-    s32 clutTarget;
+    u8* lookup;
+    s32 writeIndex;
+    s32 readIndex;
     s32 offsetY;
 
     switch (self->step) {
@@ -785,39 +749,24 @@ void func_us_801A21F8(Entity* self) {
 
         if (!self->poseTimer) {
             self->poseTimer = 4;
-            clutIndexes = D_us_801808FC;
-            clutIndexes += self->params * 5;
+            lookup = D_us_801808FC;
+            lookup += self->params * 5;
 
-            clutTarget = *clutIndexes;
+            writeIndex = lookup[0];
             // cursed composition!
-            clutSource = self->pose;
-            clutSource = clutIndexes[clutSource];
-            g_ClutIds[clutTarget] = g_ClutIds[clutSource];
+            readIndex = self->pose;
+            readIndex = lookup[readIndex];
+            g_ClutIds[writeIndex] = g_ClutIds[readIndex];
             self->pose++;
             if (self->pose > 3) {
                 self->pose = 0;
             }
         } else {
-            --self->poseTimer;
+            self->poseTimer--;
         }
         break;
     }
 }
 
-extern EInit g_EInitInteractable;
-
-void func_us_801A2408(Entity* self) {
-    FntPrint("alive \n");
-    if (self->step == 0) {
-        InitializeEntity(g_EInitInteractable);
-        g_api.func_800EA5E4(0xC001U);
-        g_api.func_800EA5E4(0xC002U);
-        g_api.func_800EA5E4(0xC003U);
-        g_api.func_800EA5E4(0xC004U);
-        g_api.func_800EA5E4(0xC005U);
-        g_api.func_800EA5E4(0xC006U);
-        g_api.func_800EA5E4(0xC007U);
-        g_api.func_800EA5E4(0xC008U);
-        g_api.func_800EA5E4(0xC009U);
-    }
-}
+// n.b.! unused
+#include "../e_trigger_before_castle_warp.h"
