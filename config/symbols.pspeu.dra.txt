@@ -13,7 +13,6 @@ RevealSecretPassageAtPlayerPositionOnMap = 0x090E8620;
 func_800F2288 = 0x090E88C0;
 func_800F27F4 = 0x090E8E58;
 func_800F53A4 = 0x090EBE20;
-func_800F82F4 = 0x090EEDF8;
 DebugInputWait = 0x090f50f8;
 func_800EB758 = 0x090FC4E0;
 EntityBatEcho = 0x090FFB28;
