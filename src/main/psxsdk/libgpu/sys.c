@@ -21,10 +21,13 @@ typedef struct {
 } gpu;                                          // size = 0x40
 
 struct QueueItem {
-    s32 unk0;
-    s32 unk[0x4A / 4];
+    void (*unk0)(s32*, s32);
+    s32* unk4;
+    s32 unk8;
+    s32 unk[0x10];
 };
 
+s32 _exeque();
 int printf(char*, ...);
 u_long get_ce(short, short);
 u_long get_cs(short, short);
@@ -789,23 +792,135 @@ s32 _param(s32 arg0) {
     return *GPU_DATA & 0xFFFFFF;
 }
 
-void _addque(s32 arg0, s32 arg1, s32 arg2) { _addque2(arg0, arg1, 0, arg2); }
+void _addque(void (*arg0)(s32*, s32), s32* arg1, s32 arg2) {
+    _addque2(arg0, arg1, 0, arg2);
+}
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _addque2);
+s32 _addque2(void (*arg0)(s32*, s32), s32* arg1, s32 arg2, s32 arg3) {
+    s32 temp_s0;
+    s32 intrMask;
+    s32 i;
+    struct QueueItem* queueItem;
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libgpu/sys", _exeque);
+    intrMask = SetIntrMask(0);
+    if (D_8002C274 == 0) {
+        _sync(0);
+        arg0(arg1, arg3);
+        SetIntrMask(intrMask);
+        return 0;
+    }
+    if ((_qin == _qout) && !(*DMA2_CHCR & 0x01000000)) {
+        if (D_8002C278 != NULL) {
+            DMACallback(2, _exeque);
+        }
+        while (!(*GPU_STATUS & 0x10000000)) {
+        }
+        arg0(arg1, arg3);
+        SetIntrMask(intrMask);
+        return 0;
+    }
+    temp_s0 = (_qin + 1) & 0x3F;
+    if (temp_s0 == _qout) {
+        set_alarm();
+        while (temp_s0 == _qout) {
+            if (get_alarm()) {
+                SetIntrMask(intrMask);
+                return -1;
+            }
+            _exeque();
+        }
+    }
+    queueItem = &D_80037F54[_qin];
+    _qin = temp_s0;
+    queueItem->unk0 = NULL;
+    if (arg2 != 0) {
+        for (i = 0; i < (arg2 / 4); i++) {
+            queueItem->unk[i] = arg1[i];
+        }
+        queueItem->unk4 = queueItem->unk;
+    } else {
+        queueItem->unk4 = arg1;
+    }
+    queueItem->unk8 = arg3;
+    queueItem->unk0 = arg0;
+    _exeque();
+    SetIntrMask(intrMask);
+    return (_qin - _qout) & 0x3F;
+}
+
+s32 _exeque(void) {
+    s32 intrMask;
+    s32 ret;
+
+    intrMask = SetIntrMask(0);
+
+loop_1:
+
+    if (_qin == _qout) {
+        if (D_8002C278 == NULL) {
+            DMACallback(2, NULL);
+        }
+        ret = 0;
+        goto temp0;
+    }
+
+    if (*DMA2_CHCR & 0x01000000) {
+        goto temp1;
+    }
+
+    if (D_80037F54[_qout].unk0 != NULL) {
+        while (!(*GPU_STATUS & 0x10000000)) {
+        }
+        D_80037F54[_qout].unk0(D_80037F54[_qout].unk4, D_80037F54[_qout].unk8);
+        D_80037F54[_qout].unk0 = NULL;
+        _qout = (_qout + 1) & 0x3F;
+        goto loop_1;
+    }
+    _reset(1);
+    printf("GPU_exeque: null func.\n");
+    ret = -1;
+    goto temp0;
+
+temp0:
+
+    if ((D_8002C278 != NULL) && CheckCallback() && (ret == 0) &&
+        !(*DMA2_CHCR & 0x01000000)) {
+        set_alarm();
+        while (!(*GPU_STATUS & 0x04000000)) {
+            if (get_alarm()) {
+                break;
+            }
+        }
+        SetIntrMask(intrMask);
+        D_8002C278();
+        return ret;
+    } else {
+        goto temp2;
+    }
+
+temp1:
+
+    DMACallback(2, _exeque);
+    ret = 1;
+    goto temp0;
+
+temp2:
+
+    SetIntrMask(intrMask);
+    return ret;
+}
 
 s32 _reset(s32 arg0) {
-    s32 temp_s1;
-    s32 var_a0;
+    s32 intrMask;
+    s32 i;
 
-    temp_s1 = SetIntrMask(0);
+    intrMask = SetIntrMask(0);
     DMACallback(2, 0);
     _qout = 0;
     _qin = _qout;
 
-    for (var_a0 = 0; var_a0 < 0x40; var_a0++) {
-        D_80037F54[var_a0].unk0 = 0;
+    for (i = 0; i < 64; i++) {
+        D_80037F54[i].unk0 = 0;
     }
 
     switch (arg0) {
@@ -824,7 +939,7 @@ s32 _reset(s32 arg0) {
         break;
     }
     *GPU_DATA = (*GPU_STATUS & 0x3FFF) | 0xE1001000;
-    SetIntrMask(temp_s1);
+    SetIntrMask(intrMask);
     return ((u32)*GPU_STATUS >> 0xC) & 1;
 }
 
@@ -874,25 +989,25 @@ void set_alarm(void) {
 }
 
 s32 get_alarm(void) {
-    s32 temp_s0;
-    s32 var_v1;
+    s32 intrMask;
+    s32 i;
     if ((D_80039254 < VSync(-1)) || D_80039258++ > 0x780000) {
         *GPU_STATUS;
         printf("GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x\n",
                (_qin - _qout) & 0x3F, *GPU_STATUS, *DMA2_CHCR, *DMA2_MADR);
-        temp_s0 = SetIntrMask(0);
+        intrMask = SetIntrMask(0);
         DMACallback(2, 0);
         _qout = 0;
         _qin = _qout;
-        for (var_v1 = 0; var_v1 < 64; var_v1++) {
-            D_80037F54[var_v1].unk0 = 0;
+        for (i = 0; i < 64; i++) {
+            D_80037F54[i].unk0 = 0;
         }
         *DMA2_CHCR = 0x401;
         *DPCR |= 0x800;
         *GPU_STATUS = 0x02000000;
         *GPU_STATUS = 0x01000000;
         *GPU_DATA = (*GPU_STATUS & 0x3FFF) | 0xE1001000;
-        SetIntrMask(temp_s0);
+        SetIntrMask(intrMask);
         *GPU_STATUS;
         return -1;
     }
