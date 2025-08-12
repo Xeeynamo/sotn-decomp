@@ -48,9 +48,9 @@ void EntityYorick(Entity* self) {
             SetStep(3);
         }
         if (offsetX > 0) {
-            self->facingLeft = 0;
+            self->facingLeft = false;
         } else {
-            self->facingLeft = 1;
+            self->facingLeft = true;
         }
 
         if (self->facingLeft) {

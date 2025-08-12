@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rtop.h"
 
-// same as TOP
 extern EInit g_EInitRTOPCommon;
 
+// Simplified version of TOP's. This version doesn't support being manipulated
 void EntityStairSwitch(Entity* self) {
     switch (self->step) {
     case 0:
@@ -690,13 +690,11 @@ void func_us_801A1940(Entity* self) {
     self->ext.topElevator.mapPos.x = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
     self->ext.topElevator.mapPos.y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     prim = self->ext.topElevator.prim;
-    prim->x0 = prim->x2 = self->posX.i.hi - 0x10;
-    prim->x1 = prim->x3 = self->posX.i.hi + 0x10;
+    prim->x0 = prim->x2 = self->posX.i.hi - 16;
+    prim->x1 = prim->x3 = self->posX.i.hi + 16;
     prim->y0 = prim->y1 = self->posY.i.hi + 8;
-    prim->y2 = prim->y3 = self->posY.i.hi + 0x18;
+    prim->y2 = prim->y3 = self->posY.i.hi + 24;
 }
-
-extern u8 D_us_801808F0[];
 
 #define STAGE_EINIT_COMMON g_EInitRTOPCommon
 #include "../e_lion_lamp.h"

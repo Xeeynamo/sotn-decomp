@@ -4,14 +4,13 @@
 extern EInit g_EInitSkullLord;
 extern u16 D_us_801805F6;
 
-// TODO: ext is wrong
 void EntitySkullLord(Entity* self) {
     Entity* entity;
     s32 i;
     s32 offsetY;
     s32 sideToPlayer;
     s32 temp_s1_2;
-    s16 temp_s0;
+    s16 angle;
 
     if ((self->flags & FLAG_DEAD) && self->step != 4) {
         PlaySfxPositional(SFX_UNK_73F);
@@ -72,12 +71,12 @@ void EntitySkullLord(Entity* self) {
                 }
             }
             if (self->facingLeft ^ self->ext.skullLord.unk8C) {
-                self->velocityX += 0xC00;
+                self->velocityX += FIX(3.0 / 64.0);
                 if (self->velocityX >= FIX(1.25)) {
                     self->velocityX = FIX(1.25);
                 }
             } else {
-                self->velocityX -= 0xC00;
+                self->velocityX -= FIX(3.0 / 64.0);
                 if (self->velocityX <= -FIX(1.25)) {
                     self->velocityX = -FIX(1.25);
                 }
@@ -167,11 +166,11 @@ void EntitySkullLord(Entity* self) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_SKULL_LORD_PIECES, self, entity);
-                    temp_s0 = (Random() & 0x7F) << 4;
+                    angle = (Random() & 0x7F) << 4;
                     temp_s1_2 = (Random() & 0x1F) + 8;
-                    entity->ext.skullLord.unk82 = temp_s0;
-                    entity->posX.i.hi += ((temp_s1_2 * rcos(temp_s0)) >> 0xC);
-                    entity->posY.i.hi -= ((temp_s1_2 * rsin(temp_s0)) >> 0xC);
+                    entity->ext.skullLord.unk82 = angle;
+                    entity->posX.i.hi += ((temp_s1_2 * rcos(angle)) >> 0xC);
+                    entity->posY.i.hi -= ((temp_s1_2 * rsin(angle)) >> 0xC);
                     if (Random() & 1) {
                         entity->zPriority = self->zPriority + 1;
                     } else {
@@ -370,7 +369,7 @@ void EntitySkullLordOutline(Entity* self) {
 void EntitySkullLordFlames(Entity* self) {
     Entity* entity;
     Primitive* prim;
-    s32 offsetX; // s2
+    s32 offsetX;
     s32 offsetY;
     s32 distance;
     s32 primIndex;
@@ -464,7 +463,7 @@ void EntitySkullLordFlames(Entity* self) {
 
 void EntitySkullLordPieces(Entity* self) {
     s32 rand;
-    s16 temp_s0;
+    s16 angle;
 
     switch (self->step) {
     case 0:
@@ -475,11 +474,11 @@ void EntitySkullLordPieces(Entity* self) {
             rand = 2;
         }
         self->animCurFrame = rand + 9;
-        temp_s0 = self->ext.skullLord.unk82;
+        angle = self->ext.skullLord.unk82;
         rand = (Random() & 0xF) + 2;
-        self->velocityX = rand * rcos(temp_s0);
+        self->velocityX = rand * rcos(angle);
         rand = 0x20 - (Random() & 0x1F);
-        self->velocityY = -rand * rsin(temp_s0);
+        self->velocityY = -rand * rsin(angle);
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_ROTATE;
         break;
