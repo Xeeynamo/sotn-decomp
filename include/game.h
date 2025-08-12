@@ -1926,7 +1926,7 @@ typedef struct {
     /* 80072BD0 */ Collider colFloor[NUM_HORIZONTAL_SENSORS];
     /* 80072C60 */ Collider colCeiling[NUM_HORIZONTAL_SENSORS];
     /* 80072CF0 */ Collider colWall[NUM_VERTICAL_SENSORS * 2];
-    /* 80072EE8 */ u32 padPressed;
+    /* 0x318 80072EE8 */ u32 padPressed;
     /* 80072EEC */ u32 padTapped;
     /* 80072EF0 */ u32 padHeld;
     /* 80072EF4 */ u32 padSim; // simulate input to force player actions

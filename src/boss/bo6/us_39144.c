@@ -47,9 +47,76 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetFall);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BA050);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicCheckSubwpnChainLimit);
+static s32 OVL_EXPORT(RicCheckSubwpnChainLimit)(s16 subwpnId, s16 limit) {
+    Entity* entity;
+    s32 i;
+    u32 nEmpty;
+    s32 nFound;
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoSubweapon);
+    entity = &g_Entities[0x60];
+    for (i = 0, nFound = 0, nEmpty = 0; i < 32; i++, entity++) {
+        if (!entity->entityId) {
+            nEmpty++;
+        }
+
+        if (entity->ext.subweapon.subweaponId != 0 &&
+            entity->ext.subweapon.subweaponId == subwpnId) {
+            nFound++;
+        }
+
+        if (nFound >= limit) {
+            return -1;
+        }
+    }
+
+    if (nEmpty < 1) {
+        return -1;
+    } else {
+        return 0;
+    }
+}
+
+extern u16 D_us_80182170[][2];
+extern u16 D_us_801821C0[][2];
+
+s32 OVL_EXPORT(RicDoSubweapon)(void) {
+    SubweaponDef sp10;
+
+    if (!(g_Ric.padPressed & PAD_UP)) {
+        return 1;
+    }
+
+    if (OVL_EXPORT(RicCheckSubwpnChainLimit)(func_us_801BB3FC(&sp10, 0, 0),
+                         sp10.chainLimit) < 0) {
+        return 2;
+    }
+
+    func_us_801BBDC0(g_CurrentEntity, sp10.blueprintNum, 0);
+    g_Ric.timers[PL_T_10] = 4;
+    switch (RIC.step) {
+    case PL_S_RUN:
+        RIC.step = PL_S_STAND;
+        func_us_801BBDC0(g_CurrentEntity, 0U, 0);
+        func_us_801B9940(D_us_80182170);
+        break;
+    case PL_S_STAND:
+    case PL_S_WALK:
+    case PL_S_CROUCH:
+        RIC.step = PL_S_STAND;
+        func_us_801B9940(D_us_80182170);
+        break;
+    case PL_S_FALL:
+    case PL_S_JUMP:
+        RIC.step = PL_S_JUMP;
+        func_us_801B9940(D_us_801821C0);
+        break;
+    }
+    g_Ric.unk46 = 3;
+    RIC.step_s = 0x42;
+    // n.b.! this was just set before the switch
+    g_Ric.timers[PL_T_10] = 4;
+    return 0;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoAttack);
 
