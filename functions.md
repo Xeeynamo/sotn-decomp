@@ -2244,7 +2244,7 @@
 | dai   | func_us_801D3FD8                         |      365 |         61 |        | https://decomp.me/scratch/6M0vG | 0.999 |
 | lib   | func_us_801AFA80                         |      367 |         31 |        |                                 |       |
 | dra   | func_psp_090EB8B8                        |      368 |         17 |        |                                 |       |
-| dai   | func_pspeu_09258EC0                      |      369 |         21 |        | https://decomp.me/scratch/8484M | 0.254 |
+| dai   | func_pspeu_09258EC0                      |      369 |         21 |        | https://decomp.me/scratch/8484M | 0.259 |
 | cat   | func_pspeu_092572D0                      |      369 |         26 |        |                                 |       |
 | dra   | func_80130618                            |      369 |         35 | Yes    | https://decomp.me/scratch/OYrXh | 0.994 |
 | no3   | EntityExplosionPuffOpaque                |      372 |         50 |        | https://decomp.me/scratch/b9WAS | 0.836 |
