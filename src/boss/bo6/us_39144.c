@@ -13,7 +13,11 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B96F4);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetStep);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetAnimation);
+void OVL_EXPORT(RicSetAnimation)(AnimationFrame* anim) {
+    g_CurrentEntity->anim = anim;
+    g_CurrentEntity->poseTimer = 0;
+    g_CurrentEntity->pose = 0;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", DecelerateX);
 
@@ -80,35 +84,38 @@ extern u16 D_us_80182170[][2];
 extern u16 D_us_801821C0[][2];
 
 s32 OVL_EXPORT(RicDoSubweapon)(void) {
-    SubweaponDef sp10;
+    SubweaponDef subweapon;
+    s16 subweaponId;
+    s16 chainLimit;
 
     if (!(g_Ric.padPressed & PAD_UP)) {
         return 1;
     }
 
-    if (OVL_EXPORT(RicCheckSubwpnChainLimit)(func_us_801BB3FC(&sp10, 0, 0),
-                         sp10.chainLimit) < 0) {
+    subweaponId = BO6_RicCheckSubweapon(&subweapon, 0, 0);
+    chainLimit = subweapon.chainLimit;
+    if (OVL_EXPORT(RicCheckSubwpnChainLimit)(subweaponId, chainLimit) < 0) {
         return 2;
     }
 
-    func_us_801BBDC0(g_CurrentEntity, sp10.blueprintNum, 0);
+    OVL_EXPORT(RicCreateEntFactoryFromEntity)(g_CurrentEntity, subweapon.blueprintNum, 0);
     g_Ric.timers[PL_T_10] = 4;
     switch (RIC.step) {
     case PL_S_RUN:
         RIC.step = PL_S_STAND;
-        func_us_801BBDC0(g_CurrentEntity, 0U, 0);
-        func_us_801B9940(D_us_80182170);
+        OVL_EXPORT(RicCreateEntFactoryFromEntity)(g_CurrentEntity, 0U, 0);
+        BO6_RicSetAnimation(D_us_80182170);
         break;
     case PL_S_STAND:
     case PL_S_WALK:
     case PL_S_CROUCH:
         RIC.step = PL_S_STAND;
-        func_us_801B9940(D_us_80182170);
+        BO6_RicSetAnimation(D_us_80182170);
         break;
     case PL_S_FALL:
     case PL_S_JUMP:
         RIC.step = PL_S_JUMP;
-        func_us_801B9940(D_us_801821C0);
+        BO6_RicSetAnimation(D_us_801821C0);
         break;
     }
     g_Ric.unk46 = 3;
@@ -132,7 +139,17 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BA9D0);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicCheckInput);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicGetFreeEntity);
+static Entity* OVL_EXPORT(RicGetFreeEntity)(s16 start, s16 end) {
+    Entity* entity = &g_Entities[start];
+    s16 i;
+
+    for (i = start; i < end; i++, entity++) {
+        if (entity->entityId == E_NONE) {
+            return entity;
+        }
+    }
+    return NULL;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicGetFreeEntityReverse);
 
@@ -154,7 +171,23 @@ void func_us_801BBBC8(void) {}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BBBD0);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicCreateEntFactoryFromEntity);
+Entity* OVL_EXPORT(RicCreateEntFactoryFromEntity)(Entity* source, u32 factoryParams, s32 arg2) {
+    Entity* entity = OVL_EXPORT(RicGetFreeEntity)(68, 80);
+    if (!entity) {
+        return NULL;
+    }
+    DestroyEntity(entity);
+    entity->entityId = E_FACTORY;
+    // the parent pointer must align for anything the factory creates
+    entity->ext.factory.parent = source;
+    entity->posX.val = source->posX.val;
+    entity->posY.val = source->posY.val;
+    entity->facingLeft = source->facingLeft;
+    entity->zPriority = source->zPriority;
+    entity->params = factoryParams & 0xFFF;
+    entity->ext.factory.paramsBase = (factoryParams & 0xFF0000) >> 8;
+    return entity;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityFactory);
 

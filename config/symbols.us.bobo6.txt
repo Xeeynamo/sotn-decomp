@@ -267,5 +267,8 @@ UnkPolyFunc0 = 0x801CDE14;
 PrimDecreaseBrightness = 0x801CDE40;
 EntityLifeUpSpawn = 0x801CDEA4;
 g_Ric = 0x801D12C8; // size=0x3D0
-// g_Ric_padPressed = 0x801D15E0;
 BO6_RicDoSubweapon = 0x801BA168;
+BO6_RicCreateEntFactoryFromEntity = 0x801BBDC0;
+BO6_RicSetAnimation = 0x801B9940;
+BO6_RicGetFreeEntity = 0x801BB21C;
+BO6_RicCheckSubweapon = 0x801BB3FC;
