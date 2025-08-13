@@ -177,4 +177,4 @@
 | libcd  | getintr                |      440 |         51 | Yes    |                                                                                                                          | https://decomp.me/scratch/HG2UF | 0.868 |
 | libspu | _SpuSetVoiceAttr       |      516 |         94 | Yes    |                                                                                                                          | https://decomp.me/scratch/bUDmT | 0.818 |
 | libcd  | StCdInterrupt          |      650 |         71 |        |                                                                                                                          |                                 |       |
-| libc   | sprintf                |      661 |         91 | Yes    |                                                                                                                          | https://decomp.me/scratch/jOVKa | 0.827 |
+| libc   | sprintf                |      661 |         91 | Yes    |                                                                                                                          | https://decomp.me/scratch/ML8eW | 0.885 |
