@@ -7,11 +7,19 @@ void func_us_801B9338(void) {}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B9340);
 
+// split pl_utils
+
+// maybe func_8015C4AC
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B94CC);
 
+// maybe func_8015C6D4
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B96F4);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetStep);
+// BO6_RicSetStep
+void OVL_EXPORT(RicSetStep)(s16 step) {
+    RIC.step = step;
+    RIC.step_s = 0;
+}
 
 void OVL_EXPORT(RicSetAnimation)(AnimationFrame* anim) {
     g_CurrentEntity->anim = anim;
