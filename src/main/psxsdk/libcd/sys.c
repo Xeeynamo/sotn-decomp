@@ -84,7 +84,8 @@ static inline func(u8 com, u8* param, u8* result, s32 arg3) {
         if (com != 1 && CD_status & 0x10) {
             CD_cw(1, NULL, NULL, 0);
         }
-        if ((param == NULL) || (D_80032A24[com] == 0) || (CD_cw(2, param, result, 0) == 0)) {
+        if ((param == NULL) || (D_80032A24[com] == 0) ||
+            (CD_cw(2, param, result, 0) == 0)) {
             CD_cbsync = old;
             if (CD_cw(com, param, result, arg3) == 0) {
                 return 0;
@@ -100,9 +101,7 @@ int CdControl(u8 com, u8* param, u8* result) {
     return func(com, param, result, 0) == 0;
 }
 
-int CdControlF(u8 com, u8* param) {
-    return func(com, param, NULL, 1) == 0;
-}
+int CdControlF(u8 com, u8* param) { return func(com, param, NULL, 1) == 0; }
 
 int CdControlB(u8 com, u8* param, u8* result) {
     if (func(com, param, result, 0)) {
@@ -133,11 +132,12 @@ CdlLOC* CdIntToPos(int i, CdlLOC* p) {
 }
 
 int CdPosToInt(CdlLOC* p) {
-    #define DECODE_BCD(x) (((x) >> 4) * 10 + ((x) & 0xF))
+#define DECODE_BCD(x) (((x) >> 4) * 10 + ((x) & 0xF))
 
     u8 sector = p->sector;
     u8 second = p->second;
     u8 minute = p->minute;
 
-    return (DECODE_BCD(minute) * 60 + DECODE_BCD(second)) * 75 + DECODE_BCD(sector) - 150;
+    return (DECODE_BCD(minute) * 60 + DECODE_BCD(second)) * 75 +
+           DECODE_BCD(sector) - 150;
 }
