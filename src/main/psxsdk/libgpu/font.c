@@ -1,5 +1,6 @@
 #include "common.h"
 #include <libgpu.h>
+#include <stdarg.h>
 
 typedef struct {
     /* 0x00 */ TILE tile;
@@ -175,10 +176,6 @@ u_long* FntFlush(s32 id) {
     if (font->written > font->capacity) {                                      \
         return -1;                                                             \
     }
-
-typedef s32* va_list;
-#define va_start(v, l) v = &l + 1
-#define va_arg(v, l) (++v, *(l*)(v - 1))
 
 long FntPrint(long id, ...) {
     char buf[0x200];

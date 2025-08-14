@@ -1,4 +1,5 @@
 #include "common.h"
+#include <stdarg.h>
 
 typedef struct {
     bool leftJustified : 1;
@@ -15,10 +16,6 @@ typedef struct {
 } printf_info;
 
 static printf_info D_8002D3A8 = {0};
-
-typedef s32* va_list;
-#define va_start(v, l) v = &l + 1
-#define va_arg(v, l) (++v, *(l*)(v - 1))
 
 s32 sprintf(char* out, char* f, ...) {
     char buf[0x200];
