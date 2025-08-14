@@ -1,8 +1,5 @@
 #include "common.h"
 
-const char a0123456789abcd_0[] = "0123456789ABCDEF";
-const char a0123456789abcd_1[] = "0123456789abcdef";
-
 typedef struct {
     bool leftJustified : 1;
     bool prependPlus : 1;
@@ -15,9 +12,9 @@ typedef struct {
     char leadingChar;
     s32 padding;
     s32 precision;
-} tempStrct;
+} printf_info;
 
-extern tempStrct D_8002D3A8;
+static printf_info D_8002D3A8 = {0};
 
 typedef s32* va_list;
 #define va_start(v, l) v = &l + 1
@@ -25,7 +22,7 @@ typedef s32* va_list;
 
 s32 sprintf(char* out, char* f, ...) {
     char buf[0x200];
-    tempStrct s;
+    printf_info info;
     va_list args;
     char* hexChars;
     s32 written;
@@ -42,74 +39,74 @@ s32 sprintf(char* out, char* f, ...) {
             out[written++] = ch;
             continue;
         }
-        s = D_8002D3A8;
+        info = D_8002D3A8;
 
         while (true) {
             ch = *++f;
             if (ch == '-') {
-                s.leftJustified = true;
+                info.leftJustified = true;
             } else if (ch == '+') {
-                s.prependPlus = true;
+                info.prependPlus = true;
             } else if (ch == ' ') {
-                s.leadingChar = ' ';
+                info.leadingChar = ' ';
             } else if (ch == '#') {
-                s.alternativeForm = true;
+                info.alternativeForm = true;
             } else if (ch == '0') {
-                s.leadingZeros = true;
+                info.leadingZeros = true;
             } else {
                 break;
             }
         }
 
         if (ch == '*') {
-            s.padding = va_arg(args, s32);
-            if (s.padding < 0) {
-                s.padding = -s.padding;
-                s.leftJustified = true;
+            info.padding = va_arg(args, s32);
+            if (info.padding < 0) {
+                info.padding = -info.padding;
+                info.leftJustified = true;
             }
             ch = *++f;
         } else {
             while (ch >= '0' && ch <= '9') {
-                s.padding = (s.padding * 10) + (ch - '0');
+                info.padding = (info.padding * 10) + (ch - '0');
                 ch = *++f;
             }
         }
         if (ch == '.') {
             ch = *++f;
             if (ch == '*') {
-                s.precision = va_arg(args, s32);
+                info.precision = va_arg(args, s32);
                 ch = *++f;
             } else {
                 while (ch >= '0' && ch <= '9') {
-                    s.precision = (s.precision * 10) + (ch - '0');
+                    info.precision = (info.precision * 10) + (ch - '0');
                     ch = *++f;
                 }
             }
-            if (s.precision >= 0) {
-                s.usePrecision = true;
+            if (info.precision >= 0) {
+                info.usePrecision = true;
             }
         }
 
         bufPtr = &args - 4;
 
-        if (s.leftJustified) {
-            s.leadingZeros = false;
+        if (info.leftJustified) {
+            info.leadingZeros = false;
         }
 
     loop_30:
         switch (ch) {
         case 'h':
-            s.isHalf = true;
+            info.isHalf = true;
             ch = *++f;
             goto loop_30;
 
         case 'l':
-            s.isLong = true;
+            info.isLong = true;
             ch = *++f;
             goto loop_30;
 
         case 'L':
-            s.isLongLong = true;
+            info.isLongLong = true;
             ch = *++f;
             goto loop_30;
 
@@ -117,17 +114,17 @@ s32 sprintf(char* out, char* f, ...) {
         case 'i':
             num = va_arg(args, s32);
             do {
-                if (s.isHalf) {
+                if (info.isHalf) {
                     num = (s16)num;
                 }
             } while (0);
             if (num < 0) {
                 num = -num;
-                s.leadingChar = '-';
+                info.leadingChar = '-';
             } else {
                 do {
-                    if (s.prependPlus) {
-                        s.leadingChar = '+';
+                    if (info.prependPlus) {
+                        info.leadingChar = '+';
                     }
                 } while (0);
             }
@@ -136,21 +133,21 @@ s32 sprintf(char* out, char* f, ...) {
         case 'u':
             num = va_arg(args, u32);
             do {
-                if (s.isHalf) {
+                if (info.isHalf) {
                     num = (u16)num;
                 }
             } while (0);
-            s.leadingChar = '\0';
+            info.leadingChar = '\0';
         block_44:
-            if (!s.usePrecision) {
-                if (s.leadingZeros) {
-                    s.precision = s.padding;
-                    if (s.leadingChar != '\0') {
-                        s.precision = s.padding - 1;
+            if (!info.usePrecision) {
+                if (info.leadingZeros) {
+                    info.precision = info.padding;
+                    if (info.leadingChar != '\0') {
+                        info.precision = info.padding - 1;
                     }
                 }
-                if (s.precision <= 0) {
-                    s.precision = 1;
+                if (info.precision <= 0) {
+                    info.precision = 1;
                 }
             }
             len = 0;
@@ -159,12 +156,12 @@ s32 sprintf(char* out, char* f, ...) {
                 num /= 10U;
                 len++;
             }
-            while (len < s.precision) {
+            while (len < info.precision) {
                 *--bufPtr = '0';
                 len++;
             }
-            if (s.leadingChar != '\0') {
-                *--bufPtr = s.leadingChar;
+            if (info.leadingChar != '\0') {
+                *--bufPtr = info.leadingChar;
                 len++;
             }
             break;
@@ -172,16 +169,16 @@ s32 sprintf(char* out, char* f, ...) {
         case 'o':
             num = va_arg(args, u32);
             do {
-                if (s.isHalf) {
+                if (info.isHalf) {
                     num = (u16)num;
                 }
             } while (0);
-            if (!s.usePrecision) {
-                if (s.leadingZeros) {
-                    s.precision = s.padding;
+            if (!info.usePrecision) {
+                if (info.leadingZeros) {
+                    info.precision = info.padding;
                 }
-                if (s.precision <= 0) {
-                    s.precision = 1;
+                if (info.precision <= 0) {
+                    info.precision = 1;
                 }
             }
             len = 0;
@@ -190,42 +187,42 @@ s32 sprintf(char* out, char* f, ...) {
                 num /= 8U;
                 len++;
             }
-            if (s.alternativeForm && (len != 0) && (*bufPtr != '0')) {
+            if (info.alternativeForm && (len != 0) && (*bufPtr != '0')) {
                 *--bufPtr = '0';
                 len++;
             }
-            while (len < s.precision) {
+            while (len < info.precision) {
                 *--bufPtr = '0';
                 len++;
             }
             break;
 
         case 'p':
-            s.precision = 8;
-            s.usePrecision = true;
-            s.isLong = true;
+            info.precision = 8;
+            info.usePrecision = true;
+            info.isLong = true;
             /* fallthrough */
         case 'X':
-            hexChars = a0123456789abcd_0;
+            hexChars = "0123456789ABCDEF";
             goto block_79;
         case 'x':
-            hexChars = a0123456789abcd_1;
+            hexChars = "0123456789abcdef";
         block_79:
             num = va_arg(args, u32);
             do {
-                if (s.isHalf) {
+                if (info.isHalf) {
                     num = (u16)num;
                 }
             } while (0);
-            if (!s.usePrecision) {
-                if (s.leadingZeros) {
-                    s.precision = s.padding;
-                    if (s.alternativeForm) {
-                        s.precision = s.padding - 2;
+            if (!info.usePrecision) {
+                if (info.leadingZeros) {
+                    info.precision = info.padding;
+                    if (info.alternativeForm) {
+                        info.precision = info.padding - 2;
                     }
                 }
-                if (s.precision <= 0) {
-                    s.precision = 1;
+                if (info.precision <= 0) {
+                    info.precision = 1;
                 }
             }
             len = 0;
@@ -234,11 +231,11 @@ s32 sprintf(char* out, char* f, ...) {
                 num /= 16U;
                 len++;
             }
-            while (len < s.precision) {
+            while (len < info.precision) {
                 *--bufPtr = '0';
                 len++;
             }
-            if (s.alternativeForm) {
+            if (info.alternativeForm) {
                 *--bufPtr = ch;
                 *--bufPtr = '0';
                 len += 2;
@@ -252,31 +249,31 @@ s32 sprintf(char* out, char* f, ...) {
 
         case 's':
             bufPtr = va_arg(args, char*);
-            if (s.alternativeForm) {
+            if (info.alternativeForm) {
                 len = *bufPtr++;
-                if (s.usePrecision) {
-                    if (s.precision < len) {
-                        len = s.precision;
+                if (info.usePrecision) {
+                    if (info.precision < len) {
+                        len = info.precision;
                     }
                 }
-            } else if (!s.usePrecision) {
+            } else if (!info.usePrecision) {
                 len = strlen(bufPtr);
             } else {
-                char* ptr = memchr(bufPtr, 0, s.precision);
+                char* ptr = memchr(bufPtr, 0, info.precision);
                 len = ptr - bufPtr;
                 if (ptr == NULL) {
-                    len = s.precision;
+                    len = info.precision;
                 }
             }
             break;
 
         case 'n':
             bufPtr = va_arg(args, s32*);
-            if (s.isHalf) {
+            if (info.isHalf) {
                 LOH(*bufPtr) = written;
-            } else if (s.isLong) {
+            } else if (info.isLong) {
                 LOW(*bufPtr) = written;
-            } else if (s.isLongLong) {
+            } else if (info.isLongLong) {
                 LOW(*bufPtr) = written;
             } else {
                 LOW(*bufPtr) = written;
@@ -291,15 +288,15 @@ s32 sprintf(char* out, char* f, ...) {
                 goto end;
             }
         }
-        if (len < s.padding && !s.leftJustified) {
-            while (len < s.padding) {
+        if (len < info.padding && !info.leftJustified) {
+            while (len < info.padding) {
                 out[written++] = ' ';
-                s.padding--;
+                info.padding--;
             }
         }
         memmove(&out[written], bufPtr, len);
         written += len;
-        while (len < s.padding) {
+        while (len < info.padding) {
             out[written++] = ' ';
             len++;
         }
