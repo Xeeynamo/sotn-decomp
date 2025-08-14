@@ -176,21 +176,24 @@ u_long* FntFlush(s32 id) {
         return -1;                                                             \
     }
 
-s32 FntPrint(s32 id, ...) {
+typedef s32* va_list;
+#define va_start(v, l) v = &l + 1
+#define va_arg(v, l) (++v, *(l*)(v - 1))
+
+long FntPrint(long id, ...) {
     char buf[0x200];
-    s32* args;
+    va_list args;
     FntStream* font;
     u8 padZeros;
-    u32 num;
+    s32 num;
     s32 len;
     s32 width;
     char* f;
     char* bufPtr;
     char sign;
     u32 ch;
-    s16 percent;
 
-    args = &id + 1;
+    va_start(args, id);
     if (id < 0 || id >= D_8002B810) {
         f = (char*)id;
         id = D_8002B814;
@@ -198,7 +201,7 @@ s32 FntPrint(s32 id, ...) {
             return -1;
         }
     } else {
-        args = &id + 2;
+        va_start(args, id + 1);
         f = (char*)*(&id + 1);
     }
 
@@ -206,16 +209,15 @@ s32 FntPrint(s32 id, ...) {
     if (font->written > font->capacity) {
         return -1;
     }
-    percent = '%';
-    for (; ch = *f, ch; f++) {
-        if (ch == percent) {
-            ch = *++f;
-            if (ch == percent) {
-                WriteChar(ch);
-                continue;
-            }
-        } else {
+    for (; ch = *f, ch; ++f) {
+        if (ch != '%') {
             WriteChar(ch);
+            continue;
+        }
+
+        ch = *++f;
+        if (ch == '%') {
+            WriteChar('%');
             continue;
         }
 
@@ -232,17 +234,17 @@ s32 FntPrint(s32 id, ...) {
 
         switch (ch) {
         case 'd':
-            num = *args++;
+            num = va_arg(args, s32);
             sign = 0;
-            if (num & 0x80000000) {
+            if (num < 0) {
                 num = -num;
                 sign = '-';
             }
             len = 0;
             do {
                 do {
-                    *--bufPtr = (num % 10) + '0';
-                    num /= 10;
+                    *--bufPtr = (num % 10U) + '0';
+                    num /= 10U;
                     len++;
                 } while (len == 0);
             } while (num != 0);
@@ -255,11 +257,11 @@ s32 FntPrint(s32 id, ...) {
         case 'X':
         case 'x':
             len = 0;
-            num = *args++;
+            num = va_arg(args, s32);
             do {
                 do {
-                    *--bufPtr = D_8002C21C[0][num & 0xF];
-                    num >>= 4;
+                    *--bufPtr = D_8002C21C[0][num % 16U];
+                    num /= 16U;
                     len++;
                 } while (len == 0);
             } while (num != 0);
@@ -272,12 +274,12 @@ s32 FntPrint(s32 id, ...) {
             break;
 
         case 'c':
-            *--bufPtr = *args++;
+            *--bufPtr = va_arg(args, char);
             len = 1;
             break;
 
         case 's':
-            bufPtr = (char*)*args++;
+            bufPtr = va_arg(args, char*);
             len = strlen(bufPtr);
             break;
         }
