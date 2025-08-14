@@ -1,15 +1,18 @@
 #include "libcd_internal.h"
 #include <common.h>
 
+extern int CD_pos;
 extern u8 CD_status;
+extern s32 D_80032A24[];
+extern s32 D_80032AB0;
+extern char* D_80032AC8[];
+extern char* D_80032B48[];
 
 int CdStatus(void) { return CD_status; }
 
 int CdMode(void) { return CD_mode; }
 
 int CdLastCom(void) { return CD_com; }
-
-extern int CD_pos;
 
 int* CdLastPos(void) { return &CD_pos; }
 
@@ -32,8 +35,6 @@ int CdReset(int mode) {
 
 void CdFlush(void) { CD_flush(); }
 
-extern s32 D_80032AB0;
-
 s32 CdSetDebug(s32 arg0) {
     s32 temp_v0;
 
@@ -42,8 +43,6 @@ s32 CdSetDebug(s32 arg0) {
     return temp_v0;
 }
 
-extern char* D_80032AC8[];
-
 char* CdComstr(unsigned char com) {
     if (com > 0x1b) {
         return "none";
@@ -51,8 +50,6 @@ char* CdComstr(unsigned char com) {
 
     return D_80032AC8[com];
 }
-
-extern char* D_80032B48[];
 
 char* CdIntstr(u8 intr) {
     if (intr > 6) {
@@ -77,11 +74,42 @@ long CdReadyCallback(void (*func)(void)) {
     return old;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdControl);
+static inline func(u8 com, u8* param, u8* result, s32 arg3) {
+    s32 i;
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdControlF);
+    CdlCB old = CD_cbsync;
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdControlB);
+    for (i = 3; i != -1; i--) {
+        CD_cbsync = NULL;
+        if (com != 1 && CD_status & 0x10) {
+            CD_cw(1, NULL, NULL, 0);
+        }
+        if ((param == NULL) || (D_80032A24[com] == 0) || (CD_cw(2, param, result, 0) == 0)) {
+            CD_cbsync = old;
+            if (CD_cw(com, param, result, arg3) == 0) {
+                return 0;
+            }
+        }
+    }
+
+    CD_cbsync = old;
+    return -1;
+}
+
+int CdControl(u8 com, u8* param, u8* result) {
+    return func(com, param, result, 0) == 0;
+}
+
+int CdControlF(u8 com, u8* param) {
+    return func(com, param, NULL, 1) == 0;
+}
+
+int CdControlB(u8 com, u8* param, u8* result) {
+    if (func(com, param, result, 0)) {
+        return 0;
+    }
+    return CD_sync(0, result) == 2;
+}
 
 int CdMix(CdlATV* vol) {
     CD_vol(vol);
@@ -90,11 +118,7 @@ int CdMix(CdlATV* vol) {
 
 int CdGetSector(void* madr, int size) { return CD_getsector(madr, size) == 0; }
 
-void* DMACallback(int dma, void (*func)());
-
 long CdDataCallback(void (*func)()) { return DMACallback(3, func); }
-
-void CD_datasync(int);
 
 void CdDataSync(int mode) { CD_datasync(mode); }
 
@@ -108,4 +132,12 @@ CdlLOC* CdIntToPos(int i, CdlLOC* p) {
     return p;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/sys", CdPosToInt);
+int CdPosToInt(CdlLOC* p) {
+    #define DECODE_BCD(x) (((x) >> 4) * 10 + ((x) & 0xF))
+
+    u8 sector = p->sector;
+    u8 second = p->second;
+    u8 minute = p->minute;
+
+    return (DECODE_BCD(minute) * 60 + DECODE_BCD(second)) * 75 + DECODE_BCD(sector) - 150;
+}
