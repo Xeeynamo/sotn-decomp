@@ -11,7 +11,7 @@ typedef struct {
     bool isLong : 1;
     bool isLongLong : 1;
     char leadingChar;
-    s32 padding;
+    s32 width;
     s32 precision;
 } printf_info;
 
@@ -56,15 +56,15 @@ s32 sprintf(char* out, char* f, ...) {
         }
 
         if (ch == '*') {
-            info.padding = va_arg(args, s32);
-            if (info.padding < 0) {
-                info.padding = -info.padding;
+            info.width = va_arg(args, s32);
+            if (info.width < 0) {
+                info.width = -info.width;
                 info.leftJustified = true;
             }
             ch = *++f;
         } else {
             while (ch >= '0' && ch <= '9') {
-                info.padding = (info.padding * 10) + (ch - '0');
+                info.width = (info.width * 10) + (ch - '0');
                 ch = *++f;
             }
         }
@@ -84,6 +84,8 @@ s32 sprintf(char* out, char* f, ...) {
             }
         }
 
+        // This points to buf[0x200] (last element of buf + 1). Need to use args
+        // to force args on the stack
         bufPtr = &args - 4;
 
         if (info.leftJustified) {
@@ -123,9 +125,9 @@ s32 sprintf(char* out, char* f, ...) {
                     if (info.prependPlus) {
                         info.leadingChar = '+';
                     }
-                } while (0);
+                } while (0); // FAKE
             }
-            goto block_44;
+            goto printDec;
 
         case 'u':
             num = va_arg(args, u32);
@@ -135,12 +137,12 @@ s32 sprintf(char* out, char* f, ...) {
                 }
             } while (0);
             info.leadingChar = '\0';
-        block_44:
+        printDec:
             if (!info.usePrecision) {
                 if (info.leadingZeros) {
-                    info.precision = info.padding;
+                    info.precision = info.width;
                     if (info.leadingChar != '\0') {
-                        info.precision = info.padding - 1;
+                        info.precision = info.width - 1;
                     }
                 }
                 if (info.precision <= 0) {
@@ -172,7 +174,7 @@ s32 sprintf(char* out, char* f, ...) {
             } while (0);
             if (!info.usePrecision) {
                 if (info.leadingZeros) {
-                    info.precision = info.padding;
+                    info.precision = info.width;
                 }
                 if (info.precision <= 0) {
                     info.precision = 1;
@@ -201,10 +203,10 @@ s32 sprintf(char* out, char* f, ...) {
             /* fallthrough */
         case 'X':
             hexChars = "0123456789ABCDEF";
-            goto block_79;
+            goto printHex;
         case 'x':
             hexChars = "0123456789abcdef";
-        block_79:
+        printHex:
             num = va_arg(args, u32);
             do {
                 if (info.isHalf) {
@@ -213,9 +215,9 @@ s32 sprintf(char* out, char* f, ...) {
             } while (0);
             if (!info.usePrecision) {
                 if (info.leadingZeros) {
-                    info.precision = info.padding;
+                    info.precision = info.width;
                     if (info.alternativeForm) {
-                        info.precision = info.padding - 2;
+                        info.precision = info.width - 2;
                     }
                 }
                 if (info.precision <= 0) {
@@ -285,15 +287,15 @@ s32 sprintf(char* out, char* f, ...) {
                 goto end;
             }
         }
-        if (len < info.padding && !info.leftJustified) {
-            while (len < info.padding) {
+        if (len < info.width && !info.leftJustified) {
+            while (len < info.width) {
                 out[written++] = ' ';
-                info.padding--;
+                info.width--;
             }
         }
         memmove(&out[written], bufPtr, len);
         written += len;
-        while (len < info.padding) {
+        while (len < info.width) {
             out[written++] = ' ';
             len++;
         }
