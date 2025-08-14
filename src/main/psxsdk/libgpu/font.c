@@ -198,8 +198,7 @@ long FntPrint(long id, ...) {
             return -1;
         }
     } else {
-        va_start(args, id + 1);
-        f = (char*)*(&id + 1);
+        f = va_arg(args, char*);
     }
 
     font = &Font[id];
