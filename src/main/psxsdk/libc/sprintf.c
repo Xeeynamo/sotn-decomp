@@ -13,7 +13,7 @@ typedef struct {
     char leadingChar;
     s32 width;
     s32 precision;
-} printf_info;
+} printf_info; /* size = 0xC */
 
 static printf_info D_8002D3A8 = {0};
 
@@ -84,9 +84,9 @@ s32 sprintf(char* out, char* f, ...) {
             }
         }
 
-        // This points to buf[0x200] (last element of buf + 1). Need to use args
+        // This points to &buf[0x200 - 4]. Need to use args
         // to force args on the stack
-        bufPtr = &args - 4;
+        bufPtr = (char*)&args - sizeof(printf_info) - 4;
 
         if (info.leftJustified) {
             info.leadingZeros = false;
