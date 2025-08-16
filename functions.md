@@ -2244,7 +2244,7 @@
 | dai   | func_us_801D3FD8                         |      365 |         61 |        | https://decomp.me/scratch/6M0vG | 0.999 |
 | lib   | func_us_801AFA80                         |      367 |         31 |        |                                 |       |
 | dra   | func_psp_090EB8B8                        |      368 |         17 |        |                                 |       |
-| dai   | func_pspeu_09258EC0                      |      369 |         21 |        | https://decomp.me/scratch/8484M | 0.259 |
+| dai   | func_pspeu_09258EC0                      |      369 |         21 |        | https://decomp.me/scratch/8484M | 0.293 |
 | cat   | func_pspeu_092572D0                      |      369 |         26 |        |                                 |       |
 | dra   | func_80130618                            |      369 |         35 | Yes    | https://decomp.me/scratch/OYrXh | 0.994 |
 | no3   | EntityExplosionPuffOpaque                |      372 |         50 |        | https://decomp.me/scratch/b9WAS | 0.836 |
@@ -2415,7 +2415,7 @@
 | dra   | EntityFactory                            |      557 |         48 | Yes    |                                 |       |
 | st0   | EntityCutscene                           |      557 |         84 | Yes    | https://decomp.me/scratch/TIsgi | 1.0   |
 | st0   | EntityStageTitleCard                     |      559 |         43 | Yes    |                                 |       |
-| dai   | func_us_801D97D0                         |      559 |         55 |        |                                 |       |
+| dai   | func_us_801D97D0                         |      559 |         55 |        | https://decomp.me/scratch/GAVBE | 0.985 |
 | ric   | RicEntitySubwpnCross                     |      560 |         53 | Yes    | https://decomp.me/scratch/98zwV | 0.998 |
 | maria | func_pspeu_092B4AF8                      |      562 |         55 |        |                                 |       |
 | ric   | func_pspeu_092B2590                      |      562 |         55 |        | https://decomp.me/scratch/ltPpf | 0.925 |
