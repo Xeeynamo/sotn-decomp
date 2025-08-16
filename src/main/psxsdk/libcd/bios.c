@@ -87,9 +87,27 @@ static inline void callback(void) {
     *D_80032D68 = temp_s1;
 }
 
+static inline void set_alarm(char* name) {
+    // schedule timeout for 960 vblanks from now
+    ((Alarm_t*)&Alarm)->unk0 = VSync(-1) + 960;
+    ((Alarm_t*)&Alarm)->unk4 = 0;
+    ((Alarm_t*)&Alarm)->unk8 = name;
+}
+
+static inline int get_alarm(void) {
+    if (((Alarm_t*)&Alarm)->unk0 < VSync(-1) ||
+        ((Alarm_t*)&Alarm)->unk4++ > 0x3C0000) {
+        puts(&aCdTimeout);
+        printf(D_800106B4, ((Alarm_t*)&Alarm)->unk8, D_80032AC8[CD_com],
+               D_80032B48[D_80032D80.sync], D_80032B48[D_80032D80.ready]);
+        CD_flush();
+        return -1;
+    }
+    return 0;
+}
+
 s32 CD_cw(u8 com, u8* param, u8* arg2, s32 arg3) {
     s32 i;
-    s32 var_v0_2;
 
     if (D_80032AB0 > 1) {
         printf("%s...\n", D_80032AC8[com]);
@@ -119,21 +137,11 @@ s32 CD_cw(u8 com, u8* param, u8* arg2, s32 arg3) {
     if (arg3 != 0) {
         return 0;
     }
-    ((Alarm_t*)&Alarm)->unk0 = VSync(-1) + 0x3C0;
-    ((Alarm_t*)&Alarm)->unk4 = 0;
-    ((Alarm_t*)&Alarm)->unk8 = "CD_cw";
+
+    set_alarm("CD_cw");
+
     while (D_80032D80.sync == 0) {
-        if (((Alarm_t*)&Alarm)->unk0 < VSync(-1) ||
-            ((Alarm_t*)&Alarm)->unk4++ > 0x3C0000) {
-            puts(&aCdTimeout);
-            printf(D_800106B4, ((Alarm_t*)&Alarm)->unk8, D_80032AC8[CD_com],
-                   D_80032B48[D_80032D80.sync], D_80032B48[D_80032D80.ready]);
-            CD_flush();
-            var_v0_2 = -1;
-        } else {
-            var_v0_2 = 0;
-        }
-        if (var_v0_2 != 0) {
+        if (get_alarm()) {
             return -1;
         }
         if (CheckCallback()) {
