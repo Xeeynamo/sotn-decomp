@@ -81,11 +81,11 @@ static inline cd_cw(u8 com, u8* param, u8* result, s32 arg3) {
 
     for (i = 3; i != -1; i--) {
         CD_cbsync = NULL;
-        if (com != 1 && CD_status & 0x10) {
-            CD_cw(1, NULL, NULL, 0);
+        if (com != CdlNop && (CD_status & 0x10)) {
+            CD_cw(CdlNop, NULL, NULL, 0);
         }
         if ((param == NULL) || (D_80032A24[com] == 0) ||
-            (CD_cw(2, param, result, 0) == 0)) {
+            (CD_cw(CdlSetloc, param, result, 0) == 0)) {
             CD_cbsync = old;
             if (CD_cw(com, param, result, arg3) == 0) {
                 return 0;
