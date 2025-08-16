@@ -74,7 +74,7 @@ long CdReadyCallback(void (*func)(void)) {
     return old;
 }
 
-static inline func(u8 com, u8* param, u8* result, s32 arg3) {
+static inline cd_cw(u8 com, u8* param, u8* result, s32 arg3) {
     s32 i;
 
     CdlCB old = CD_cbsync;
@@ -98,13 +98,13 @@ static inline func(u8 com, u8* param, u8* result, s32 arg3) {
 }
 
 int CdControl(u8 com, u8* param, u8* result) {
-    return func(com, param, result, 0) == 0;
+    return cd_cw(com, param, result, 0) == 0;
 }
 
-int CdControlF(u8 com, u8* param) { return func(com, param, NULL, 1) == 0; }
+int CdControlF(u8 com, u8* param) { return cd_cw(com, param, NULL, 1) == 0; }
 
 int CdControlB(u8 com, u8* param, u8* result) {
-    if (func(com, param, result, 0)) {
+    if (cd_cw(com, param, result, 0)) {
         return 0;
     }
     return CD_sync(0, result) == 2;
