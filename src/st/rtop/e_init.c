@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "top.h"
+#include "rtop.h"
 
 void OVL_EXPORT(EntityBreakable)(Entity*);
 void EntityExplosion(Entity*);
@@ -16,34 +16,31 @@ void EntityHeartDrop(Entity*);
 void EntityEnemyBlood(Entity*);
 void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
-void EntityDummy(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
 void OVL_EXPORT(EntityLockCamera)(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
-void func_us_801A9CB8(Entity*);
+void func_us_801A0BF4(Entity*);
 void EntityStairSwitch(Entity*);
 void EntitySecretStairs(Entity*);
 void EntityClockTower3D(Entity*);
 void EntityClouds(Entity*);
 void EntityBreakableWall(Entity*);
+void OVL_EXPORT(EntityBreakableDebris)(Entity*);
 void EntityTriangleElevator(Entity*);
 void EntityLionLamp(Entity*);
-void func_us_801AB45C(Entity*);
+void func_us_801A21F8(Entity*);
 void EntityTriggerBeforeCastleWarp(Entity*);
-void func_us_801AABA4(Entity*);
-void EntityFleaRider(Entity*);
-void func_us_801A9250(Entity*);
-void OVL_EXPORT(EntityCutscene)(Entity*);
-void func_us_801AD11C(Entity*);
-void func_us_801AD320(Entity*);
-void func_us_801AD400(Entity*);
-void OVL_EXPORT(EntityBreakableDebris)(Entity*);
-void EntityAxeKnightBlue(Entity*);
-void EntityAxeKnightThrowingAxe(Entity*);
-void func_us_801CBA30(Entity*);
-void InitializeUnkEntity(Entity*);
+void func_us_801A1940(Entity*);
+void EntityYorick(Entity*);
+void EntityYorickSkull(Entity*);
+void EntitySkeletonPieces(Entity*);
+void EntityTombstone(Entity*);
+void EntitySkullLord(Entity*);
+void EntitySkullLordOutline(Entity*);
+void EntitySkullLordFlames(Entity*);
+void EntitySkullLordPieces(Entity*);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     OVL_EXPORT(EntityBreakable),
@@ -67,35 +64,37 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801A9CB8,
+    func_us_801A0BF4,
     EntityStairSwitch,
     EntitySecretStairs,
     EntityClockTower3D,
     EntityClouds,
     EntityBreakableWall,
+    OVL_EXPORT(EntityBreakableDebris),
     EntityTriangleElevator,
     EntityLionLamp,
-    func_us_801AB45C,
+    func_us_801A21F8,
     EntityTriggerBeforeCastleWarp,
-    func_us_801AABA4,
-    EntityFleaRider,
-    func_us_801A9250,
-    OVL_EXPORT(EntityCutscene),
-    func_us_801AD11C,
-    func_us_801AD320,
-    func_us_801AD400,
-    OVL_EXPORT(EntityBreakableDebris),
-    EntityAxeKnightBlue,
-    EntityAxeKnightThrowingAxe,
-    func_us_801CBA30,
-    InitializeUnkEntity,
+    func_us_801A1940,
+    EntityYorick,
+    EntityYorickSkull,
+    EntitySkeletonPieces,
+    EntityTombstone,
+    EntitySkullLord,
+    EntitySkullLordOutline,
+    EntitySkullLordFlames,
+    EntitySkullLordPieces,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, 0x0, 0};
+EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0, 0x0, 0};
 
 #include "../e_init_common.h"
 
-EInit g_EInitTOPCommon = {ANIMSET_OVL(1), 0, 0, 0, 5};
-EInit g_EInitFleaRider = {ANIMSET_OVL(3), 0, 0x4B, 0x206, 0x30};
-EInit g_EInitAxeKnight = {ANIMSET_OVL(7), 1, 0x50, 0x0240, 6};
-EInit g_EInitAxeKnightAxe = {ANIMSET_OVL(7), 0x2F, 0x50, 0x240, 7};
+static EInit __unused__ = {ANIMSET_OVL(1), 0, 0, 0x0, 3};
+EInit g_EInitRTOPCommon = {ANIMSET_OVL(2), 0, 0, 0x0, 5};
+EInit D_us_801805CC = {ANIMSET_OVL(5), 21, 0x4D, 0x208, 0x71};
+EInit g_EInitSkeletonPieces = {ANIMSET_OVL(6), 1, 0x56, 0x20A, 0x78};
+EInit D_us_801805E4 = {ANIMSET_OVL(6), 0x1E, 0x56, 0x20A, 0x79};
+EInit g_EInitSkullLord = {ANIMSET_OVL(7), 1, 0x48, 0x20B, 0x105};
+
+EInit D_us_801805FC = {ANIMSET_OVL(7), 1, 0x48, 0x20B, 0x5};

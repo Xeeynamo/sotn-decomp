@@ -1,40 +1,40 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "top.h"
+#include "rtop.h"
+
+extern u8* g_eBreakableAnimations[];
+extern u8 g_eBreakableHitboxes[];
+extern u8 g_eBreakableExplosionTypes[];
+extern u16 g_eBreakablePalettes[];
+extern u16 g_eBreakableAnimSets[];
+extern u16 g_eBreakableUnk5A[];
+extern u8 g_eBreakableDrawModes[];
+extern u16 g_eBreakableHitboxOffsets[];
+extern s16 g_eBreakableDebrisOffsets[];
 
 extern EInit OVL_EXPORT(EInitBreakable);
 
-extern u16 g_eBreakablePalettes[];
-extern u16 g_eBreakableUnk5A[];
-extern u16 g_eBreakableHitboxOffsets[];
-extern u8* g_eBreakableAnimations[];
-extern u8 g_eBreakableExplosionTypes[];
-extern u8 g_eBreakableDrawModes[];
-extern u8 g_eBreakableHitboxes[];
-extern u16 g_eBreakableanimSets[];
-extern s16 D_us_80180BF4[];
-
 void OVL_EXPORT(EntityBreakable)(Entity* self) {
+    s16* ptr;
     Entity* entity;
     s32 i;
+    s32 debrisCount;
     s16 posY;
-    s32 n;
-    s16* ptr;
     u16 breakableType;
 
     breakableType = self->params >> 12;
-
     if (!self->step) {
-        InitializeEntity(TOP_EInitBreakable);
+        InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
         self->drawMode = g_eBreakableDrawModes[breakableType];
         self->hitboxHeight = g_eBreakableHitboxes[breakableType];
-        self->animSet = g_eBreakableanimSets[breakableType];
+        self->animSet = g_eBreakableAnimSets[breakableType];
         self->unk5A = g_eBreakableUnk5A[breakableType];
         self->palette = g_eBreakablePalettes[breakableType];
-        self->hitboxOffY = g_eBreakableHitboxOffsets[breakableType];
+        self->hitboxOffY = -g_eBreakableHitboxOffsets[breakableType];
     }
 
     AnimateEntity(g_eBreakableAnimations[breakableType], self);
+
     if (self->hitParams) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
@@ -47,22 +47,23 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
         case 3:
             self->facingLeft = GetSideToPlayer() & 1;
 
-            posY = self->posY.i.hi - 40;
+            posY = self->posY.i.hi + 40;
             if (breakableType == 2) {
-                n = 4;
+                debrisCount = 4;
             } else {
-                n = 3;
+                debrisCount = 3;
             }
 
-            ptr = D_us_80180BF4;
+            ptr = g_eBreakableDebrisOffsets;
             if (breakableType == 3) {
                 ptr += 5;
             }
 
-            for (i = 0; i < n; i++) {
+            for (i = 0; i < debrisCount; i++) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_BREAKABLE_2, self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(BREAKABLE_DEBRIS), self, entity);
                     entity->posY.i.hi = posY;
                     entity->params = ptr[i];
                     entity->facingLeft = self->facingLeft;
@@ -73,18 +74,16 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
                     entity->posY.i.hi = posY;
                     entity->params = 0;
                 }
-                posY += 16;
+                posY -= 16;
             }
             g_api.PlaySfx(SFX_CANDLE_HIT_WHOOSH_B);
-#ifndef VERSION_PSP
             ReplaceBreakableWithItemDrop(self);
-#endif
             break;
 
         case 9:
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(E_BREAKABLE_2, entity);
+                CreateEntityFromCurrentEntity(E_ID(BREAKABLE_DEBRIS), entity);
                 entity->params = 256;
             }
 
@@ -128,8 +127,8 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
     }
 }
 
-#define PAL_BREAKABLE 0x238
-#define PAL_BREAKABLE_DEBRIS 0x23C
+#define PAL_BREAKABLE PAL_DRA(0x200)
+#define PAL_BREAKABLE_DEBRIS PAL_DRA(0x204)
 
 extern EInit g_EInitInteractable;
 extern EInit g_EInitParticle;
@@ -145,7 +144,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
     case 0:
         if (self->params & 0x100) {
             InitializeEntity(g_EInitInteractable);
-            self->animSet = ANIMSET_OVL(6);
+            self->animSet = ANIMSET_OVL(4);
             self->unk5A = 91;
             self->palette = PAL_BREAKABLE;
             self->animCurFrame = 21;
@@ -173,8 +172,8 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
         prim->u1 = prim->u3 = 167;
         posY = 132;
         posY += self->params * 16;
-        prim->v0 = prim->v1 = posY;
-        prim->v2 = prim->v3 = posY + 15;
+        prim->v0 = prim->v1 = posY + 15;
+        prim->v2 = prim->v3 = posY;
 
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;

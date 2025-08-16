@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#ifndef TOP_H
-#define TOP_H
+#ifndef RTOP_H
+#define RTOP_H
 
-#define STAGE_IS_TOP
+#define STAGE_IS_RTOP
 
 #include <stage.h>
 
-#define OVL_EXPORT(x) TOP_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
+#define OVL_EXPORT(x) RTOP_##x
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
@@ -31,15 +30,16 @@ typedef enum EntityIDs {
     /* 0x13 */ E_UNK_ID_13 = 0x13,
     /* 0x14 */ E_EXPLOSION_VARIANTS,
     /* 0x15 */ E_GREY_PUFF,
-    /* 0x17 */ E_STAIR_SWITCH = 0x17,
-    /* 0x18 */ E_SECRET_STAIRS,
-    /* 0x21 */ E_FLEA_RIDER = 0x21,
-    /* 0x23 */ E_CUTSCENE = 0x23,
-    /* 0x27 */ E_BREAKABLE_2 = 0x27,
-    /* 0x28 */ E_AXE_KNIGHT_BLUE,
-    /* 0x29 */ E_AXE_KNIGHT_AXE,
-    /* 0x2A */ E_AXE_KNIGHT_AXE_2,
-    /* 0x2B */ E_UNK_ENTITY,
-};
+    /* 0x18 */ E_STAIR_SEGMENT = 0x18,
+    /* 0x1C */ E_BREAKABLE_DEBRIS = 0x1C,
+    /* 0x22 */ E_YORICK = 0x22,
+    /* 0x23 */ E_YORICK_SKULL,
+    /* 0x24 */ E_SKELETON_PARTS,
+    /* 0x25 */ E_TOMBSTONE,
+    /* 0x26 */ E_SKULL_LORD,
+    /* 0x27 */ E_SKULL_LORD_OUTLINE,
+    /* 0x27 */ E_SKULL_LORD_FLAMES,
+    /* 0x27 */ E_SKULL_LORD_PIECES,
+} EntityIDs;
 
-#endif // TOP_H
+#endif // RTOP_H
