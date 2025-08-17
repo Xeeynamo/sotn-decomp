@@ -22,6 +22,10 @@ static s16 D_80182694[] = {0x0000, 0x0018, 0x0000, 0x0004, 0x0008, 0xFFFC,
                            0xFFF0, 0x0000, 0x0000, 0x0018, 0x0008, 0x0000};
 static s16 D_801826AC[] = {0x000A, 0x001C, 0x000A, 0x0014, 0x00FF, 0x0000};
 
+#ifdef STAGE_IS_CAT
+extern s16 D_pspeu_09264728[];
+#endif
+
 typedef enum {
     BLOOD_SKELETON_INIT,
     BLOOD_SKELETON_IDLE,
@@ -31,7 +35,8 @@ typedef enum {
 } BLOOD_SKELETON_STEPS;
 
 void EntityBloodSkeleton(Entity* self) {
-    u8* animation;
+    s32 animationResult;
+    u8 collider;
 
     if ((self->flags & FLAG_DEAD) && (self->step < 3)) {
         PlaySfxPositional(SFX_RED_SKEL_COLLAPSE);
@@ -42,11 +47,13 @@ void EntityBloodSkeleton(Entity* self) {
     switch (self->step) {
     case BLOOD_SKELETON_INIT:
         InitializeEntity(g_EInitBloodSkeleton);
-        self->facingLeft = (u32)Random() % 2;
+        self->facingLeft = Random() & 1;
         self->animCurFrame = 1;
+#ifdef STAGE_IS_NZ0
         self->flags &=
             ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
               FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_UNK_20000000);
+#endif
         self->palette += self->params;
         break;
 
@@ -58,29 +65,42 @@ void EntityBloodSkeleton(Entity* self) {
         break;
 
     case BLOOD_SKELETON_WALK:
+#ifdef STAGE_IS_CAT
+        if (!self->step_s) {
+            self->ext.bloodSkeleton.timer = D_pspeu_09264728[Random() & 3];
+            self->step_s++;
+        }
+
+        if (!--self->ext.bloodSkeleton.timer) {
+            self->step_s = 0;
+            self->facingLeft = Random() & 1;
+        }
+#endif
+
         if (self->poseTimer == 0) {
-            if (self->facingLeft != 0) {
+            if (self->facingLeft) {
                 self->posX.i.hi += D_80182624[self->pose];
             } else {
                 self->posX.i.hi -= D_80182624[self->pose];
             }
         }
 
-        if ((AnimateEntity(anim_walk, self) == 0) &&
-            (GetDistanceToPlayerY() < 48) && (Random() % 4) == 0) {
-            self->facingLeft = GetSideToPlayer() % 2 == 0;
+        if (!AnimateEntity(anim_walk, self) && GetDistanceToPlayerY() < 48 &&
+            (Random() & 3) == 0) {
+            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         }
 
-        if ((u8)CheckColliderOffsets(D_801826AC, self->facingLeft) != 2) {
+        collider = CheckColliderOffsets(D_801826AC, self->facingLeft);
+        if (collider ^ 2) {
             self->facingLeft ^= 1;
         }
         break;
 
     case BLOOD_SKELETON_DISASSEMBLE:
         if (AnimateEntity(anim_disassemble, self) == 0) {
-            self->ext.bloodSkeleton.timer = 0xF0;
             self->flags &= ~FLAG_DEAD;
-            if (self->params != 0) {
+            self->ext.bloodSkeleton.timer = 0xF0;
+            if (self->params) {
                 self->ext.bloodSkeleton.timer = 4;
             }
             SetStep(BLOOD_SKELETON_REASSEMBLE);
@@ -90,9 +110,9 @@ void EntityBloodSkeleton(Entity* self) {
     case BLOOD_SKELETON_REASSEMBLE:
         switch (self->step_s) {
         case 0:
-            if (--self->ext.bloodSkeleton.timer == 0) {
-                self->rotate = 0;
+            if (!--self->ext.bloodSkeleton.timer) {
                 self->drawFlags |= FLAG_DRAW_ROTATE;
+                self->rotate = 0;
                 PlaySfxPositional(SFX_RED_SKEL_REBUILD);
                 self->step_s++;
                 return;
@@ -109,7 +129,7 @@ void EntityBloodSkeleton(Entity* self) {
                 }
             }
 
-            if (self->ext.bloodSkeleton.timer >= 9) {
+            if (self->ext.bloodSkeleton.timer > 8) {
                 self->drawFlags = FLAG_DRAW_DEFAULT;
                 self->rotate = 0;
                 self->step_s++;
@@ -117,21 +137,26 @@ void EntityBloodSkeleton(Entity* self) {
             break;
 
         case 2:
-            if (self->params == 0) {
-                animation = &anim_reassemble;
+            if (!self->params) {
+                animationResult = AnimateEntity(anim_reassemble, self);
             } else {
-                animation = &anim_reassemble_alt;
+                animationResult = AnimateEntity(anim_reassemble_alt, self);
             }
 
-            if (AnimateEntity(animation, self) == 0) {
+            if (!animationResult) {
                 self->hitPoints = 0;
                 self->hitboxState = 3;
+#ifdef STAGE_IS_NZ0
                 self->flags =
                     g_api.enemyDefs[70].flags &
                     ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
                       FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA | FLAG_UNK_20000000);
+#else
+                self->flags = g_api.enemyDefs[70].flags;
+#endif
                 SetStep(BLOOD_SKELETON_WALK);
             }
+            break;
         }
         break;
     }
