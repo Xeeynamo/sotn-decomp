@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "libsnd_i.h"
 
 void SsUtSetReverbDepth(s16 ldepth, s16 rdepth) {

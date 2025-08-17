@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "common.h"
 #include "psxsdk/libcd.h"
 #include "registers.h"

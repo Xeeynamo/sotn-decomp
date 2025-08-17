@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "libsnd_i.h"
 
 void SsSetSerialAttr(char arg0, char arg1, char arg2) {
