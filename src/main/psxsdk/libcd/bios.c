@@ -73,10 +73,10 @@ static int D_80032CE8[] = {0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2, 1, 0,
 #include "registers.h"
 
 static volatile int* D_80032D78 = (int*)0x1F801020;
-static union SpuUnion* D_80032D7C = (union SpuUnion*)0x1F801C00;
+static volatile SPU_RXX* D_80032D7C = (SPU_RXX*)0x1F801C00;
 static volatile CD_intr Intr = {0};
 
-static inline void _memcpy(void* _dst, void* _src, u32 _size) {
+static inline void _memcpy(void* _dst, void* _src, size_t _size) {
     char* pDst = (char*)_dst;
     char* pSrc = (char*)_src;
 
@@ -272,16 +272,14 @@ int CD_flush(void) {
 int CD_initvol(void) {
     CdlATV vol;
 
-    if ((unsigned short)D_80032D7C->rxxnv.main_volx.left == 0) {
-        if ((unsigned short)D_80032D7C->rxxnv.main_volx.right == 0) {
-            D_80032D7C->rxxnv.main_vol.left = 0x3FFF;
-            D_80032D7C->rxxnv.main_vol.right = 0x3FFF;
-        }
+    if (D_80032D7C->main_volx.left == 0 && D_80032D7C->main_volx.right == 0) {
+        D_80032D7C->main_vol.left = 0x3FFF;
+        D_80032D7C->main_vol.right = 0x3FFF;
     }
 
-    D_80032D7C->rxxnv.cd_vol.left = 0x3FFF;
-    D_80032D7C->rxxnv.cd_vol.right = 0x3FFF;
-    D_80032D7C->rxxnv.spucnt = 0xC001;
+    D_80032D7C->cd_vol.left = 0x3FFF;
+    D_80032D7C->cd_vol.right = 0x3FFF;
+    D_80032D7C->spucnt = 0xC001;
     vol.val0 = vol.val2 = 0x80;
     vol.val1 = vol.val3 = 0;
     *libcd_CDRegister0 = 2;
