@@ -109,7 +109,100 @@ static inline int get_alarm(void) {
     return 0;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", getintr);
+int getintr(void) {
+    volatile char nReg;
+    volatile Result_t buf;
+    int i, j;
+    int bHasError;
+
+    *libcd_CDRegister0 = 1;
+
+    nReg = *libcd_CDRegister3 & 0x7;
+
+    if (nReg == 0) {
+        return 0;
+    }
+    
+    bHasError = 0;
+
+    while (nReg != (*libcd_CDRegister3 & 7)) {
+        nReg = *libcd_CDRegister3 & 0x7;
+    }
+
+    for (i = 0; i < 8; i++) {
+        if ((*libcd_CDRegister0 & 0x20) == 0) {
+            break;
+        }
+        buf.unk0[i] = *libcd_CDRegister1;
+    }
+    for (j = i; j < 8; j++) {
+        buf.unk0[j] = 0;
+    }
+    
+    *libcd_CDRegister0 = 1;
+    *libcd_CDRegister3 = 7;
+    *libcd_CDRegister2 = 7;
+    if (nReg != 3 || D_80032C68[CD_com]) {
+        if (!(CD_status & CdlStatShellOpen) && (buf.unk0[0] & CdlStatShellOpen)) {
+            CD_nopen++;
+        }
+        CD_status = buf.unk0[0];
+        CD_status1 = buf.unk0[1];
+        bHasError = CD_status;
+        bHasError &= (CdlStatError | CdlStatSeekError | CdlStatIdError | CdlStatShellOpen);
+
+    }
+    if (nReg == 5) {
+        puts("DiskError: ");
+        if (D_80032AB0 > 0) {
+            printf("com=%s,code=(%02x:%02x)\n", D_80032AC8[CD_com], CD_status, CD_status1);
+        }
+    }
+    switch (nReg) {
+    case 3:
+        if (bHasError) {
+            Intr.sync = CdlDiskError;
+            _memcpy(&D_80039260, &buf, sizeof(Result_t));
+            return 2;
+        }
+        if (D_80032B68[CD_com]) {
+            Intr.sync = CdlAcknowledge;
+            _memcpy(&D_80039260, &buf, sizeof(Result_t));
+            return 1;
+        }
+        Intr.sync = CdlComplete;
+        _memcpy(&D_80039260, &buf, sizeof(Result_t));
+        return 2;
+    case 2:
+        Intr.sync = bHasError ? CdlDiskError : CdlComplete;
+        _memcpy(&D_80039260, &buf, sizeof(Result_t));
+        return 2;
+    case 1:
+        if (bHasError && i == 1) {
+            bHasError = 0;
+        }
+        Intr.ready = bHasError ? CdlDiskError : CdlDataReady;
+        _memcpy(&D_80039268, &buf, sizeof(Result_t));
+        *libcd_CDRegister0 = 0;
+        *libcd_CDRegister3 = 0;
+        return 4;
+    case 4:
+        Intr.ready = Intr.c = CdlDataEnd;
+        _memcpy(&D_80039270, &buf, sizeof(Result_t));
+        _memcpy(&D_80039268, &buf, sizeof(Result_t));
+        return 4;
+    case 5:
+        Intr.sync = Intr.ready = CdlDiskError;
+        _memcpy(&D_80039260, &buf, sizeof(Result_t));
+        _memcpy(&D_80039268, &buf, sizeof(Result_t));
+        return 6;
+    default:
+        puts("CDROM: unknown intr");
+        printf("(%d)\n", nReg);
+        return 0;
+    }
+}
+
 
 static inline void callback(void) {
     int interrupt;
@@ -134,8 +227,8 @@ static inline void callback(void) {
 }
 
 int CD_sync(int mode, Result_t* result) {
-    s32 i;
-    s32 sync;
+    int i;
+    int sync;
 
     set_alarm("CD_sync");
 
@@ -149,8 +242,8 @@ int CD_sync(int mode, Result_t* result) {
         }
 
         sync = Intr.sync;
-        if (sync == 2 || sync == 5) {
-            Intr.sync = 2;
+        if (sync == CdlComplete || sync == CdlDiskError) {
+            Intr.sync = CdlComplete;
             _memcpy(result, &D_80039260, sizeof(Result_t));
             return sync;
         }
@@ -162,9 +255,9 @@ int CD_sync(int mode, Result_t* result) {
 }
 
 int CD_ready(int mode, Result_t* result) {
-    s32 i;
-    s32 c;
-    s32 ready;
+    int i;
+    int c;
+    int ready;
 
     set_alarm("CD_ready");
     while (true) {
@@ -193,7 +286,7 @@ int CD_ready(int mode, Result_t* result) {
 }
 
 int CD_cw(u8 com, u8* param, Result_t* result, s32 arg3) {
-    s32 i;
+    int i;
 
     if (D_80032AB0 > 1) {
         printf("%s...\n", D_80032AC8[com]);
@@ -210,9 +303,9 @@ int CD_cw(u8 com, u8* param, Result_t* result, s32 arg3) {
             CD_pos[i] = param[i];
         }
     }
-    Intr.sync = 0;
-    if (D_80032BE8[com] != 0) {
-        Intr.ready = 0;
+    Intr.sync = CdlNoIntr;
+    if (D_80032BE8[com]) {
+        Intr.ready = CdlNoIntr;
     }
     *libcd_CDRegister0 = 0;
     for (i = 0; i < D_80032BE8[com + 0x40]; i++) {
@@ -226,7 +319,7 @@ int CD_cw(u8 com, u8* param, Result_t* result, s32 arg3) {
 
     set_alarm("CD_cw");
 
-    while (Intr.sync == 0) {
+    while (Intr.sync == CdlNoIntr) {
         if (get_alarm()) {
             return -1;
         }
@@ -234,13 +327,13 @@ int CD_cw(u8 com, u8* param, Result_t* result, s32 arg3) {
             callback();
         }
     }
-    if ((Intr.sync == 2) && (com == CdlSetmode)) {
+    if (Intr.sync == CdlComplete && com == CdlSetmode) {
         CD_mode = *param;
     }
 
     _memcpy(result, &D_80039260, sizeof(Result_t));
 
-    return -(Intr.sync == 5);
+    return -(Intr.sync == CdlDiskError);
 }
 
 int CD_vol(CdlATV* vol) {
@@ -262,8 +355,8 @@ int CD_flush(void) {
         *libcd_CDRegister2 = 7;
     }
 
-    Intr.ready = Intr.c = 0;
-    Intr.sync = 2;
+    Intr.ready = Intr.c = CdlNoIntr;
+    Intr.sync = CdlComplete;
     *libcd_CDRegister0 = 0;
     *libcd_CDRegister3 = 0;
     *D_80032D78 = 0x1325;
@@ -334,8 +427,8 @@ int CD_init(void) {
         *libcd_CDRegister2 = 7;
     }
 
-    Intr.ready = Intr.c = 0;
-    Intr.sync = 2;
+    Intr.ready = Intr.c = CdlNoIntr;
+    Intr.sync = CdlComplete;
 
     *libcd_CDRegister0 = 0;
     *libcd_CDRegister3 = 0;

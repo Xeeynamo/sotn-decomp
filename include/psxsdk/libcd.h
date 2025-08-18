@@ -100,6 +100,7 @@ typedef struct {
 #define CdlStatSeek 0x40      /* seeking */
 #define CdlStatRead 0x20      /* reading data sectors */
 #define CdlStatShellOpen 0x10 /* once shell open */
+#define CdlStatIdError 0x08   /* rejected due to being unlicensed */
 #define CdlStatSeekError 0x04 /* seek error detected */
 #define CdlStatStandby 0x02   /* spindle motor rotating */
 #define CdlStatError 0x01     /* command error detected */
@@ -121,8 +122,7 @@ typedef struct {
 } CdlFILE;
 
 typedef struct Result_t {
-    int unk0;
-    int unk4;
+    char unk0[8];
 } Result_t;
 
 typedef void (*CdlCB)(u_char, Result_t*);

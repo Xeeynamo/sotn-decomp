@@ -47,7 +47,7 @@ void main(void) {
 
         g_GameState = (main_cdlFile.size + 0x7ff) >> 0xB;
         CdControl(CdlSetloc, &main_cdlFile, NULL);
-        CdRead(g_GameState, (u32*)DRA_PRG_PTR, 0x80);
+        CdRead(g_GameState, (u32*)DRA_PRG_PTR, CdlModeSpeed | CdlModeSpeedNormal);
         // block until read is complete
         main_fd = CdReadSync(0, NULL);
         if (main_fd < 0) {
@@ -63,7 +63,7 @@ void main(void) {
             g_GameState = (main_cdlFile.size + 0x7ff) >> 0xB;
         }
         CdControl(CdlSetloc, &main_cdlFile, NULL);
-        CdRead(g_GameState, (u32*)CASTLE_MAP_PTR, 0x80);
+        CdRead(g_GameState, (u32*)CASTLE_MAP_PTR, CdlModeSpeed | CdlModeSpeedNormal);
         // block until read is complete
         main_fd = CdReadSync(0, NULL);
 
