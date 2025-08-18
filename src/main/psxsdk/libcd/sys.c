@@ -1,8 +1,13 @@
 #include "libcd_internal.h"
 #include <common.h>
 
-extern int CD_pos;
-extern u8 CD_status;
+extern CdlCB CD_cbready;
+extern CdlCB CD_cbsync;
+extern unsigned char CD_status;
+extern unsigned char CD_mode;
+extern unsigned char CD_com;
+extern unsigned char CD_pos[];
+
 extern s32 D_80032A24[];
 extern s32 D_80032AB0;
 extern char* D_80032AC8[];
@@ -14,7 +19,7 @@ int CdMode(void) { return CD_mode; }
 
 int CdLastCom(void) { return CD_com; }
 
-int* CdLastPos(void) { return &CD_pos; }
+unsigned char* CdLastPos(void) { return CD_pos; }
 
 int CdReset(int mode) {
     if (mode == 2) {

@@ -42,6 +42,7 @@ typedef struct {
 /*
  * CD-ROM Primitive Commands
  */
+#define CdlSync 0x00
 #define CdlNop 0x01
 #define CdlSetloc 0x02
 #define CdlPlay 0x03
@@ -51,7 +52,7 @@ typedef struct {
 #define CdlStandby 0x07
 #define CdlStop 0x08
 #define CdlPause 0x09
-#define CdlInit 0x0A
+#define CdlReset 0x0A
 #define CdlMute 0x0B
 #define CdlDemute 0x0C
 #define CdlSetfilter 0x0D
