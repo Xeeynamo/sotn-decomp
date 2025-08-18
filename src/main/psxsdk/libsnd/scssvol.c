@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "libsnd_i.h"
 
 void SsSetSerialVol(char s_num, short voll, short volr) {

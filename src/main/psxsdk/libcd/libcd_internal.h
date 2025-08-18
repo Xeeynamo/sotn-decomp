@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include <psxsdk/libcd.h>
 
 int CD_sync(int mode, unsigned char* result);

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "common.h"
 
 extern s16 rsin_tbl[];

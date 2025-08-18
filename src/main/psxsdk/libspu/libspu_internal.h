@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #ifndef LIBSPU_INTERNAL_H
 #define LIBSPU_INTERNAL_H
 

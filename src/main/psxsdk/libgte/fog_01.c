@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "common.h"
 
 void SetFogNear(long a, long h) {

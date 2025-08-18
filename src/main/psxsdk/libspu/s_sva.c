@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "common.h"
 #include "psxsdk/libspu.h"
 #include "libspu_internal.h"

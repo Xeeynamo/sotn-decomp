@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "common.h"
 
 extern const s16 g_AtanTable[0x400];

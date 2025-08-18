@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include <common.h>
 #include <include_asm.h>
 #include <psxsdk/libetc.h>
