@@ -14,36 +14,38 @@ typedef struct Alarm_t {
     char* unk8;
 } Alarm_t;
 
+extern char D_80039260[];
+extern char D_80039268[];
+extern char D_80039270[];
+extern volatile Alarm_t Alarm;
+
+extern s32 D_80032AB0;
+// TODO: CD_status is a word here, but a byte in sys.c
+extern int CD_status;
+extern int CD_status1;
 extern s32 CD_nopen;
+extern u8 CD_pos[];
+
+extern char* D_80032AC8[];
+extern char* D_80032B48[];
 extern s32 D_80032B68[];
+extern s32 D_80032BE8[];
 extern s32 D_80032C68[];
+extern s32 D_80032CE8[];
+extern int CD_TestParmNum;
 extern volatile unsigned char* D_80032D68;
 extern volatile unsigned char* D_80032D6C;
 extern volatile unsigned char* D_80032D70;
 extern volatile unsigned char* D_80032D74;
 extern volatile int* D_80032D78;
-extern volatile CD_flush_struct D_80032D80;
 extern union SpuUnion* D_80032D7C;
-// TODO: CD_status is a word here, but a byte in sys.c
-extern int CD_status;
-extern int CD_status1;
+extern volatile CD_flush_struct D_80032D80;
 extern volatile unsigned char D_80032D84;
-extern int* D_80032D9C;
-extern int* D_80032DA0;
-extern int* D_80032DA4;
-extern int* D_80032DA8;
+extern volatile int* D_80032D9C;
+extern volatile int* D_80032DA0;
+extern volatile int* D_80032DA4;
+extern volatile int* D_80032DA8;
 extern volatile int* D_80032DAC;
-extern int CD_TestParmNum;
-extern char D_80039260[];
-extern char D_80039268[];
-extern char D_80039270[];
-extern volatile Alarm_t Alarm;
-extern u8 CD_pos[];
-extern s32 D_80032AB0;
-extern char* D_80032AC8[];
-extern char* D_80032B48[];
-extern s32 D_80032BE8[];
-extern s32 D_80032CE8[];
 
 static inline void _memcpy(void* _dst, void* _src, u32 _size) {
     char* pDst = (char*)_dst;
