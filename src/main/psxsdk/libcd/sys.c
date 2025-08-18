@@ -71,13 +71,13 @@ int CdSync(int mode, Result_t* result) { return CD_sync(mode, result); }
 
 int CdReady(int mode, Result_t* result) { return CD_ready(mode, result); }
 
-long CdSyncCallback(void (*func)(void)) {
+CdlCB CdSyncCallback(CdlCB func) {
     CdlCB old = CD_cbsync;
     CD_cbsync = func;
     return old;
 }
 
-long CdReadyCallback(void (*func)(void)) {
+CdlCB CdReadyCallback(CdlCB func) {
     CdlCB old = CD_cbready;
     CD_cbready = func;
     return old;
