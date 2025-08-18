@@ -143,8 +143,7 @@ int getintr(void) {
     *libcd_CDRegister3 = 7;
     *libcd_CDRegister2 = 7;
     if (nReg != 3 || D_80032C68[CD_com]) {
-        if (!(CD_status & CdlStatShellOpen) &&
-            (buf[0] & CdlStatShellOpen)) {
+        if (!(CD_status & CdlStatShellOpen) && (buf[0] & CdlStatShellOpen)) {
             CD_nopen++;
         }
         CD_status = buf[0];
