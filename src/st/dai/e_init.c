@@ -23,23 +23,23 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void func_us_801C0BA4(Entity* self);
-void func_us_801D97D0(Entity* self); // stained glass parallax background
+void func_us_801D97D0(Entity* self);
 void func_us_801D9F5C(Entity* self);
-void func_us_801C0F8C(Entity* self); // Big statue block
-void func_us_801C1184(Entity* self); // Little statue block
-void func_us_801C1298(Entity* self); // Bell
-void func_us_801C1EE4(Entity* self); // Tower wall foreground
+void func_us_801C0F8C(Entity* self);
+void func_us_801C1184(Entity* self);
+void func_us_801C1298(Entity* self);
+void func_us_801C1EE4(Entity* self);
 void func_us_801C2068(Entity* self);
-void func_us_801C220C(Entity* self); // Tower sky?
+void func_us_801C220C(Entity* self);
 void EntityClouds(Entity* self);
-void func_us_801C34FC(Entity* self); // Tower sky?
+void func_us_801C34FC(Entity* self);
 void func_us_801C23A4(Entity* self);
-void func_us_801C3164(Entity* self); // priest room
+void func_us_801C3164(Entity* self);
 void func_us_801C2534(Entity* self);
-void func_us_801C2CD4(Entity* self); // priest blades
-void func_us_801C2FF0(Entity* self); // priest blade debris
+void func_us_801C2CD4(Entity* self);
+void func_us_801C2FF0(Entity* self);
 void func_us_801C1E18(Entity* self);
-void func_us_801D1204(Entity* self); // corner guard
+void func_us_801D1204(Entity* self);
 void func_us_801D1C24(Entity* self);
 void EntityBonePillarHead(Entity* self);
 void EntityBonePillarFireBreath(Entity* self);
@@ -61,9 +61,9 @@ void EntityBlueRaven(Entity* self);
 void EntitySkelerang(Entity* self);
 void EntitySkelerangBoomerang(Entity* self);
 void EntitySkelerangUnknown(Entity* self);
-void func_us_801D56F4(Entity* self); // hunting girl
+void func_us_801D56F4(Entity* self);
 void func_us_801D636C(Entity* self);
-void func_us_801D64A0(Entity* self); // spectral sword
+void func_us_801D64A0(Entity* self);
 void func_us_801D6FC8(Entity* self);
 void func_us_801D70A0(Entity* self);
 void EntityWingedGuardSpawner(Entity* self);
