@@ -733,20 +733,20 @@ void func_80131FCC(void) {
 }
 
 u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
-    g_CdCommandStatus = CdSync(1, (Result_t*)g_CdCommandResult);
+    g_CdCommandStatus = CdSync(CdlNop, (Result_t*)g_CdCommandResult);
 
     if (com == CdlGetlocL) {
         if (g_CdCommandStatus != CdlComplete) {
-            CdControl(CdlNop, 0, 0);
+            CdControl(CdlNop, NULL, NULL);
             D_8013B680 = 2;
             return D_8013B680;
         }
     } else if (*g_CdCommandResult & CdlStatShellOpen) {
-        CdControl(CdlNop, 0, 0);
+        CdControl(CdlNop, NULL, NULL);
         D_8013B680 = 2;
         return D_8013B680;
     } else if (*g_CdCommandResult & CdlStatSeekError) {
-        CdControl(CdlNop, 0, 0);
+        CdControl(CdlNop, NULL, NULL);
         D_8013B680 = 2;
         return D_8013B680;
     }

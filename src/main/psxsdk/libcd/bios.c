@@ -133,10 +133,10 @@ int getintr(void) {
         if ((*libcd_CDRegister0 & 0x20) == 0) {
             break;
         }
-        buf.unk0[i] = *libcd_CDRegister1;
+        buf[i] = *libcd_CDRegister1;
     }
     for (j = i; j < 8; j++) {
-        buf.unk0[j] = 0;
+        buf[j] = 0;
     }
 
     *libcd_CDRegister0 = 1;
@@ -144,11 +144,11 @@ int getintr(void) {
     *libcd_CDRegister2 = 7;
     if (nReg != 3 || D_80032C68[CD_com]) {
         if (!(CD_status & CdlStatShellOpen) &&
-            (buf.unk0[0] & CdlStatShellOpen)) {
+            (buf[0] & CdlStatShellOpen)) {
             CD_nopen++;
         }
-        CD_status = buf.unk0[0];
-        CD_status1 = buf.unk0[1];
+        CD_status = buf[0];
+        CD_status1 = buf[1];
         bHasError = CD_status;
         bHasError &= (CdlStatError | CdlStatSeekError | CdlStatIdError |
                       CdlStatShellOpen);
@@ -298,7 +298,7 @@ int CD_cw(u8 com, u8* param, Result_t* result, s32 arg3) {
         }
         return -2;
     }
-    CD_sync(0, 0);
+    CD_sync(CdlSync, NULL);
     if (com == CdlSetloc) {
         for (i = 0; i < 4; i++) {
             CD_pos[i] = param[i];
@@ -448,7 +448,7 @@ int CD_init(void) {
         return -1;
     }
 
-    if (CD_sync(0, 0) != CdlComplete) {
+    if (CD_sync(CdlSync, NULL) != CdlComplete) {
         return -1;
     }
     return 0;

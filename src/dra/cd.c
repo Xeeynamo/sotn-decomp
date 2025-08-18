@@ -222,7 +222,7 @@ s32 func_801073E8(void) {
     u8 res;
     s32 ret;
 
-    if (CdSync(1, &res) == CdlNoIntr) {
+    if (CdSync(CdlNop, &res) == CdlNoIntr) {
         return D_80137F9C = 0;
     }
 
@@ -729,20 +729,20 @@ void UpdateCd(void) {
         }
 
         func_801073C0();
-        if (CdSync(1, NULL) == CdlNoIntr) {
+        if (CdSync(CdlNop, NULL) == CdlNoIntr) {
             break;
         }
 
-        CdControl(CdlNop, 0, result);
+        CdControl(CdlNop, NULL, result);
         if (result[0] & CdlModeRT) {
             break;
         }
 
-        if (!CdControl(CdlPause, 0, 0)) {
+        if (!CdControl(CdlPause, NULL, NULL)) {
             break;
         }
 
-        if (CdSync(1, NULL) == CdlDiskError) {
+        if (CdSync(CdlNop, NULL) == CdlDiskError) {
             func_8010838C(CdStep_DiskErr);
             break;
         }
@@ -750,15 +750,15 @@ void UpdateCd(void) {
         break;
 
     case CdStep_SetSpeed:
-        if (CdSync(1, NULL) == CdlNoIntr) {
+        if (CdSync(CdlNop, NULL) == CdlNoIntr) {
             break;
         }
         setModeArg[0] = CdlModeSpeed;
-        if (!CdControl(CdlSetmode, setModeArg, CDL_MODE_SPEED)) {
+        if (!CdControl(CdlSetmode, setModeArg, NULL)) {
             break;
         }
 
-        if (CdSync(1, NULL) == CdlDiskError) {
+        if (CdSync(CdlNop, NULL) == CdlDiskError) {
             func_8010838C(CdStep_DiskErr);
             break;
         }
@@ -766,7 +766,7 @@ void UpdateCd(void) {
         break;
 
     case CdStep_SetPos:
-        if (CdSync(1, NULL) == CdlNoIntr) {
+        if (CdSync(CdlNop, NULL) == CdlNoIntr) {
             break;
         }
         cd = &g_CdCallback;
@@ -799,7 +799,7 @@ void UpdateCd(void) {
         g_Cd.D_80137F78 = 0;
         if (g_LoadFile & 0x8000) {
             CdIntToPos(cdFile->loc, &cd->loc);
-            if (CdControl(CdlSeekL, &cd->loc, 0) != 0) {
+            if (CdControl(CdlSeekL, &cd->loc, NULL)) {
                 g_CdStep = CdStep_Complete;
             }
         } else {
@@ -824,8 +824,8 @@ void UpdateCd(void) {
                 if (g_CdCallback == CdCallback_4) {
                     CdIntToPos(g_LoadOvlIdx * 4 + cdFile->loc, &g_CdLoc);
                 }
-                if (CdControl(CdlSetloc, &g_CdLoc, 0) != 0) {
-                    if (CdSync(1, NULL) != 5) {
+                if (CdControl(CdlSetloc, &g_CdLoc, NULL)) {
+                    if (CdSync(CdlNop, NULL) != CdlDiskError) {
                         g_CdStep++;
                     } else {
                         func_8010838C(CdStep_DiskErr);
@@ -836,14 +836,14 @@ void UpdateCd(void) {
         break;
 
     case CdStep_Seek:
-        if (CdSync(1, NULL) == CdlNoIntr) {
+        if (CdSync(CdlNop, NULL) == CdlNoIntr) {
             break;
         }
         CdReadyCallback(func_80107460);
         CdDataCallback(g_CdCallbacks[g_CdCallback]);
-        if (CdControl(CdlReadN, &g_CdLoc, 0) == 0) {
+        if (CdControl(CdlReadN, &g_CdLoc, NULL) == 0) {
             func_801073C0();
-        } else if (CdSync(1, NULL) == CdlDiskError) {
+        } else if (CdSync(CdlNop, NULL) == CdlDiskError) {
             func_801073C0();
             func_8010838C(CdStep_DiskErr);
         } else {
@@ -852,7 +852,7 @@ void UpdateCd(void) {
         break;
 
     case CdStep_5:
-        if (CdSync(1, NULL) == CdlDiskError) {
+        if (CdSync(CdlNop, NULL) == CdlDiskError) {
             func_8010838C(CdStep_DiskErr);
             break;
         }
@@ -867,14 +867,14 @@ void UpdateCd(void) {
         }
         if (g_Cd.D_80137F78 == 1) {
             func_801073C0();
-            if (CdControl(CdlPause, 0, 0) != 0) {
+            if (CdControl(CdlPause, NULL, NULL)) {
                 g_CdStep++;
             }
         }
         break;
 
     case CdStep_6:
-        if (CdSync(1, NULL) == CdlDiskError) {
+        if (CdSync(CdlNop, NULL) == CdlDiskError) {
             func_8010838C(CdStep_DiskErr);
             break;
         }
@@ -926,7 +926,7 @@ void UpdateCd(void) {
         } else if (cdFile->nextCdFileType != CdFile_NoNext) {
             g_LoadFile = cdFile->nextCdFileType;
             g_CdStep = CdStep_LoadInit;
-        } else if (CdControl(CdlPause, 0, 0) != 0) {
+        } else if (CdControl(CdlPause, NULL, NULL)) {
             g_LoadFile = CdFile_None;
             g_CdStep = CdStep_None;
             D_80137FA0 = 0;
@@ -934,9 +934,9 @@ void UpdateCd(void) {
         break;
 
     case CdStep_Complete:
-        if (CdSync(1, NULL) == CdlDiskError) {
+        if (CdSync(CdlNop, NULL) == CdlDiskError) {
             func_8010838C(CdStep_DiskErr);
-        } else if (CdSync(1, NULL) == CdlComplete) {
+        } else if (CdSync(CdlNop, NULL) == CdlComplete) {
             g_LoadFile = CdFile_None;
             g_CdStep = CdStep_None;
             D_80137FA0 = 0;
@@ -1008,7 +1008,7 @@ void UpdateCd(void) {
         break;
 
     case CdStep_F1:
-        temp_v1_8 = CdSync(1, result) == CdlComplete;
+        temp_v1_8 = CdSync(CdlNop, result) == CdlComplete;
         if (temp_v1_8 != 0) {
             if (!(result[0] & CdlStatShellOpen)) {
                 g_CdStep = CdStep_F2;
@@ -1029,7 +1029,7 @@ void UpdateCd(void) {
         break;
 
     case CdStep_F3:
-        temp_v1_9 = CdSync(1, result) == CdlComplete;
+        temp_v1_9 = CdSync(CdlNop, result) == CdlComplete;
         if (temp_v1_9 != 0) {
             if ((result[0] & (CdlStatShellOpen | CdlStatStandby)) == 2) {
                 g_CdStep = CdStep_Retry;

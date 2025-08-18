@@ -121,9 +121,7 @@ typedef struct {
     char name[16]; /* file name (body) */
 } CdlFILE;
 
-typedef struct Result_t {
-    char unk0[8];
-} Result_t;
+typedef char Result_t[8];
 
 typedef void (*CdlCB)(u_char, Result_t*);
 
