@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "libsnd_i.h"
 
 void SsUtSetReverbDelay(short delay) {

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "libsnd_i.h"
 
 u32 SpuVmVSetUp(s16 arg0, s16 arg1) {

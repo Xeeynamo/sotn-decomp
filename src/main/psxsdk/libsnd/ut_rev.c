@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "libsnd_i.h"
 
 s16 SsUtSetReverbType(s16 arg0) {

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "types.h"
 
 void* memmove(u_char* dest, u_char* src, int count) {

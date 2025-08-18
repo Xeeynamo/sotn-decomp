@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "common.h"
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/cdread2", CdRead2);

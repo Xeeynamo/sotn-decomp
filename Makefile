@@ -244,6 +244,7 @@ format-symbols: format-symbols-us format-symbols-hd format-symbols-pspeu
 
 format-license:
 	find src/ mods/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
+	find src/main/psxsdk | grep -E '\.c$$|\.h$$' | $(PYTHON) ./tools/lint-license.py - MIT
 	$(PYTHON) ./tools/lint-license.py include/game.h AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/items.h AGPL-3.0-or-later

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include <psxsdk/libcd.h>
 
 extern CdlCB CD_cbready;
