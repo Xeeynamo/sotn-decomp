@@ -173,8 +173,8 @@ EInit g_EInitBonePillarSpikeBall = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 185};
 EInit D_us_80180A28 = {ANIMSET_OVL(7), 1, 72, PAL_UNK_22A, 118};
 EInit D_us_80180A34 = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
-EInit D_us_80180A40 = {ANIMSET_OVL(8), 0, 75, PAL_UNK_22B, 128};
-EInit D_us_80180A4C = {ANIMSET_OVL(8), 0, 75, PAL_UNK_22B, 3};
+EInit g_EInitWingedGuard = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 128};
+EInit g_EInitWingedGuardParts = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 3};
 EInit g_EInitBat = {ANIMSET_OVL(9), 0, 74, PAL_BAT, 64};
 EInit g_EInitBlueRaven = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 114};
 EInit g_EInitBlackCrow = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 115};

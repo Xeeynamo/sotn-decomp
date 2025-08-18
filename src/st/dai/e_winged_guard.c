@@ -1,16 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
-// e_winged_guard/func_us_801D37C4
-// PSX: https://decomp.me/scratch/OmxmR
-// PSP: https://decomp.me/scratch/5EnJK
-
-// e_winged_guard/func_us_801D3A40
-// PSX: https://decomp.me/scratch/URIka
-// PSP: https://decomp.me/scratch/8242X
-
-// e_winged_guard/EntityWingedGuardSpawner
-// PSX: https://decomp.me/scratch/MHZqk
-// PSP: https://decomp.me/scratch/PuJx0
 
 static u8 anim_1[] = {
     6, 1, 4, 2, 4, 3, 6, 4, 4, 3, 4, 2, 0, 0, 0, 0,
@@ -21,8 +10,8 @@ static u32 g_eWingedGuardVelocities[][2] = {
     {FIX(0.125), FIX(-1)},  {FIX(0), FIX(0)},
 };
 
-// static s16 D_us_80181F10[] defined before EntityWingedGuardSpawner because of
-// const string in func_us_801D37C4
+// static s16 g_minMaxPositions[] defined before EntityWingedGuardSpawner
+// because of const string in func_us_801D37C4
 
 void EntityWingedGuard(Entity* self) {
     Entity* entity;
@@ -79,7 +68,7 @@ void EntityWingedGuardParts(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A4C);
+        InitializeEntity(g_EInitWingedGuardParts);
         self->flags |= FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         self->animCurFrame = self->params + 5;
         if (!self->params) {
@@ -116,12 +105,12 @@ static s16 g_minMaxPositions[] = {384, 640, 416, 1664, 384, 640, 416, 944};
 
 void EntityWingedGuardSpawner(Entity* self) {
     Entity* entity;
-    s32 posX;
-    s32 posY;
+    s32 posX, posY;
     s16* minMaxPositions;
 
     if (!self->step) {
         InitializeEntity(g_EInitSpawner);
+        // This is not a mistake, Winged Guard and Ghost use the same spawner
         self->ext.ghostEnemySpawner.timer = 1;
     }
     if (!--self->ext.ghostEnemySpawner.timer) {
