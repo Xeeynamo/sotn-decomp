@@ -80,9 +80,9 @@ extern s32 E_ID(HAMMER);
 extern s32 E_ID(GURKHA_BODY_PARTS);
 extern s32 E_ID(HAMMER_WEAPON);
 extern s32 E_ID(GURKHA);
-extern s32 E_ID(GURKHA_SWORD);
+extern s32 E_ID(GURKHA_WEAPON);
 extern s32 E_ID(BLADE);
-extern s32 E_ID(BLADE_SWORD);
+extern s32 E_ID(BLADE_WEAPON);
 
 void InitEntityIds(void) {
     E_ID(ID_11) = E_ID_11;
@@ -157,9 +157,9 @@ void InitEntityIds(void) {
     E_ID(GURKHA_BODY_PARTS) = E_GURKHA_BODY_PARTS;
     E_ID(HAMMER_WEAPON) = E_HAMMER_WEAPON;
     E_ID(GURKHA) = E_GURKHA;
-    E_ID(GURKHA_SWORD) = E_GURKHA_SWORD;
+    E_ID(GURKHA_WEAPON) = E_GURKHA_WEAPON;
     E_ID(BLADE) = E_BLADE;
-    E_ID(BLADE_SWORD) = E_BLADE_SWORD;
+    E_ID(BLADE_WEAPON) = E_BLADE_WEAPON;
 }
 
 void OVL_EXPORT(Load)(void) {

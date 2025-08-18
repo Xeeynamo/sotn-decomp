@@ -300,6 +300,7 @@ enum {
 // STAGE NO4
 #define SFX_TOAD_CROAK 0x71A
 #define SFX_FROG_CROAK 0x71B
+#define SFX_OAR_ROW 0x7BF
 #define SFX_WATER_BUBBLE 0x7C4
 
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
@@ -323,7 +324,6 @@ enum {
 // BOSS RBO3 - Medusa
 #define SFX_RBO3_UNK_7C5 0x7C5
 #define SFX_RBO3_UNK_7C8 0x7C8
-#define SFX_RBO3_UNK_7D1 0x7D1
 #define SFX_RBO3_UNK_7FB 0x7FB
 #define SFX_RBO3_UNK_7FD 0x7FD
 #define SFX_RBO3_UNK_7FE 0x7FE
@@ -331,10 +331,6 @@ enum {
 #define SFX_RBO3_UNK_801 0x801
 #define SFX_RBO3_UNK_802 0x802
 #define SFX_RBO3_UNK_804 0x804
-
-// SHARED SOUNDS
-// These are sounds that are shared across multiple BIN files
-#define SE_BOSS_DEFEATED 0x7D2
 
 // UNUSED SOUNDS
 #define NA_VO_MAR_AIM_HEAD 0x87F
@@ -409,7 +405,7 @@ enum Sfx {
     /* 0x62D */ SFX_WEAPON_STAB_A,
     /* 0x62E */ SFX_WEAPON_STAB_B,  // Common stab sfx
     /* 0x62F */ SFX_WEAPON_APPEAR,  // Item Crash, Neutron Bomb
-    /* 0x630 */ SFX_UNK_BETA_630,   // 0x630 (MAD, TE1, TE2, TE3, TE4, TE5)
+    /* 0x630 */ SFX_UNK_BETA_630,   // (MAD, TE1, TE2, TE3, TE4, TE5)
     /* 0x631 */ SFX_DEATH_AMBIENCE, // BGM ambience during first Death cutscene
     /* 0x632 */ SFX_MAGIC_GLASS_BREAK, // Subweapon Container
     /* 0x633 */ SFX_UI_CONFIRM,
@@ -648,23 +644,30 @@ enum Sfx {
     SFX_SALEM_WITCH_ATTACK = 0x736,
     SFX_SALEM_WITCH_HURT,
     SFX_SALEM_WITCH_DEATH,
+    SFX_GHOST_ENEMY_HOWL = 0x739,
     SFX_BLOODY_ZOMBIE_HIT_GRUNT = 0x746,
     SFX_BLOODY_ZOMBIE_DEATH,
     SFX_BLOODY_ZOMBIE_HIT,
     SFX_BLOODY_ZOMBIE_SPLATTER,
+    SFX_CTULHU_LAUGH = 0x758,
+    SFX_CTULHU_ROAR,
+    SFX_UNK_761 = 0x761,
     SFX_SPEAR_GUARD_DEATH = 0x771,
+    SFX_UNK_77C = 0x77C,
     SFX_WARG_DEATH_HOWL = 0x780, // also used for Scylla Worm (phase 2)
     SFX_WARG_PAIN,
     SFX_WARG_ATTACK,
     SFX_WARG_GROWL,
-    SFX_GHOST_ENEMY_HOWL = 1849,
-    SFX_CTULHU_LAUGH = 1880,
-    SFX_UNK_797 = 1943,
-    SFX_CLOCK_BELL = 1958,
-    SFX_CLOCK_ROOM_TICK = 1961,
+    SFX_UNK_797 = 0x797,
+    SFX_CLOCK_BELL = 0x7A6,
+    SFX_CLOCK_ROOM_TICK = 0x7A9,
+    SFX_TELESCOPE_SHUTTER_CLICK = 0x7AC,
+    SFX_ALU_ZZZ_SNORE,
     SFX_UNK_7AF = 0x7Af,
+    SFX_UNK_7BD = 0x7BD,
     SFX_UNK_7BE = 0x7BE,
-    SFX_UNK_761 = 0x761,
+    SFX_SCIFI_BLAST = 0x7D1,
+    SFX_BOSS_DEFEATED,
 
     // Exclusive to Maria PSP
     /* 0x8E6 */ SFX_VO_MAR_8E6 = 0x8E6,

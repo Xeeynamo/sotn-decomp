@@ -244,6 +244,7 @@ format-symbols: format-symbols-us format-symbols-hd format-symbols-pspeu
 
 format-license:
 	find src/ mods/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
+	find src/main/psxsdk | grep -E '\.c$$|\.h$$' | $(PYTHON) ./tools/lint-license.py - MIT
 	$(PYTHON) ./tools/lint-license.py include/game.h AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/items.h AGPL-3.0-or-later
@@ -273,6 +274,7 @@ force_extract:
 force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/dra.elf > config/symbols.us.dra.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/ric.elf > config/symbols.us.ric.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/stcat.elf > config/symbols.us.stcat.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stcen.elf > config/symbols.us.stcen.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stchi.elf > config/symbols.us.stchi.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stdai.elf > config/symbols.us.stdai.txt
@@ -289,6 +291,7 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/stnz0.elf > config/symbols.us.stnz0.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stsel.elf > config/symbols.us.stsel.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stst0.elf > config/symbols.us.stst0.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/sttop.elf > config/symbols.us.sttop.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stwrp.elf > config/symbols.us.stwrp.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/strwrp.elf > config/symbols.us.strwrp.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/bomar.elf > config/symbols.us.bomar.txt

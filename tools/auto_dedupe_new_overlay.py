@@ -17,7 +17,7 @@ import os
 # Maybe the dictionary should be changed so the file name is the key, but eh.
 file_start_funcs = {
     "EntityIsNearPlayer": ["e_red_door"],
-    "Random": ["st_update"],
+    "Random": ["st_update", "UpdateStageEntities"],
     "HitDetection": ["collision"],
     "CreateEntityFromLayout": ["create_entity"],
     "DestroyEntity": ["st_common"],
@@ -26,7 +26,7 @@ file_start_funcs = {
     "StageNamePopupHelper": ["e_stage_name", "EntityStageNamePopup"],
     "EntitySoulStealOrb": ["e_particles", "EntityEnemyBlood"],
     "PrizeDropFall": ["e_collect"],
-    "EntityRoomForeground": ["e_room_fg"],
+    "EntityRoomForeground": ["e_room_fg", "EntityRoomForeground"],
     "BottomCornerText": ["popup", "BottomCornerText"],
     "UnkPrimHelper": ["prim_helpers"],
     "AxeKnightUnkFunc1": ["e_axe_knight", "EntityAxeKnightThrowingAxe"],

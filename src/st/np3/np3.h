@@ -96,10 +96,12 @@ typedef enum EntityIDs {
     /* 0x56 */ E_GURKHA_BODY_PARTS,
     /* 0x57 */ E_HAMMER_WEAPON,
     /* 0x58 */ E_GURKHA,
-    /* 0x59 */ E_GURKHA_SWORD,
+    /* 0x59 */ E_GURKHA_WEAPON,
     /* 0x5A */ E_BLADE,
-    /* 0x5B */ E_BLADE_SWORD
+    /* 0x5B */ E_BLADE_WEAPON
 } EntityIDs;
+
+extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit g_EInitObtainable;
@@ -131,10 +133,10 @@ extern EInit g_EInitGaibonProjectileNP3;
 extern EInit g_EInitGaibonLargeProjectileNP3;
 extern EInit g_EInitGurkhaType0;
 extern EInit g_EInitGurkhaHammer;
-extern EInit g_EInitGurkhaType1;
-extern EInit g_EInitGurkhaSword;
-extern EInit g_EInitGurkhaType2;
-extern EInit g_EInitGurkhaBlade;
+extern EInit g_EInitGurkha;
+extern EInit g_EInitGurkhaWeapon;
+extern EInit g_EInitBlade;
+extern EInit g_EInitBladeWeapon;
 
 extern void ReplaceBreakableWithItemDrop(Entity*);
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
@@ -221,7 +223,7 @@ extern SVECTOR g_CastleDoorVector;
 // For EntityHammer
 extern u16 D_80182978[];
 extern s16 D_80182988[];
-extern s16 D_80182A20;
+extern s16 D_80182A20[];
 extern s16 D_80182A40[];
 extern s16 D_80182A5C[];
 extern s16 D_80182AB8[];
@@ -238,54 +240,19 @@ extern s16 D_80182E38[];
 extern s16 D_80182E48[];
 extern s16 D_80182EDC[];
 
-// For EntityGurkha
-extern u16 D_80182EF4[];
-extern s16 D_80182F04[];
-extern s16 D_80182F9C;
-extern s16 D_80182FBC[];
-extern s16 D_80182FD8[];
-extern s16 D_80182FF4[];
-extern s16 D_80183010[];
-extern s16 D_8018302C[];
-extern s16 D_80183044[];
-extern s16 D_80183098[];
-extern s16 D_801830F8[];
-extern s16 D_80183130[];
-extern s16 D_801831F8[];
-extern s16 D_80183218[];
-extern s16 D_80183258[];
-extern s16 D_80183284[];
-extern s16 D_80183360[];
-extern s16 D_80183378[];
-extern s16 D_801833A0[];
-extern s16 D_801833CC[];
-
-// For EntityBlade
-
-extern u16 D_801833E4[];
-extern s16 D_801833F4;
-extern s16 D_80183494;
-extern s16 D_801834B8[];
-extern s16 D_801834D8[];
-extern s16 D_801834F8[];
-extern s16 D_80183514[];
-extern s16 D_80183530[];
-extern s16 D_80183548[];
-extern s16 D_80183560[];
-extern s16 D_80183570[];
-extern s16 D_80183580[];
-extern s16 D_801835A8[];
-extern s16 D_80183600[];
-extern s16 D_80183638[];
-extern s16 D_80183700[];
-extern s16 D_80183720[];
-extern s16 D_80183760[];
-extern s16 D_8018386C[];
-extern s16 D_8018389C[];
-extern s16 D_801838C4[];
-extern s16 D_80183934[];
-extern s16 D_80183990[];
-extern s16 D_80183A24[];
-extern s16 D_80183A4C[];
-
 extern bool slograGaibonRetreat;
+
+typedef struct {
+    s16 unk0;
+    s16* unk4;
+} unkStr_801CDD80;
+
+// note on member types: length and zOffset definitely look signed
+// in the data, but psp uses lhu instead of lh.
+typedef struct {
+    s16 eArrayOffset;
+    s16 eArrayParentOffset;
+    u16 length;
+    u16 params;
+    u16 zOffset;
+} giantBroBodyPartsInit;

@@ -17,7 +17,7 @@ static void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;
     s16 subType;
 
-    self->posX.val = g_Entities->posX.val;
+    self->posX.val = PLAYER.posX.val;
     self->posY.val = PLAYER.posY.val;
     self->facingLeft = PLAYER.facingLeft;
     subType = self->params & 0x7FFF;

@@ -57,7 +57,7 @@ static void StageNamePopupHelper(Primitive* prim) {
     }
 }
 
-extern u16 g_EInitInteractable[];
+extern EInit g_EInitInteractable;
 void EntityStageNamePopup(Entity* self) {
     u8 pad[100];
     Primitive* prim;

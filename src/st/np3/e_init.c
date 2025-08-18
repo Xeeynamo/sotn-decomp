@@ -89,9 +89,9 @@ void EntityHammer(Entity* self);
 void EntityGurkhaBodyParts(Entity* self);
 void EntityHammerWeapon(Entity* self);
 void EntityGurkha(Entity* self);
-void EntityGurkhaSword(Entity* self);
+void EntityGurkhaWeapon(Entity* self);
 void EntityBlade(Entity* self);
-void EntityBladeSword(Entity* self);
+void EntityBladeWeapon(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBreakable,
@@ -182,9 +182,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityGurkhaBodyParts,
     EntityHammerWeapon,
     EntityGurkha,
-    EntityGurkhaSword,
+    EntityGurkhaWeapon,
     EntityBlade,
-    EntityBladeSword,
+    EntityBladeWeapon,
 };
 
 EInit OVL_EXPORT(
@@ -221,7 +221,7 @@ EInit g_EInitGaibonLargeProjectileNP3 = {
     ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x100};
 EInit g_EInitGurkhaType0 = {ANIMSET_OVL(0x0C), 0x02, 0x4C, 0x2F0, 0x0BA};
 EInit g_EInitGurkhaHammer = {ANIMSET_OVL(0x0C), 0x12, 0x4C, 0x2F0, 0x0BB};
-EInit g_EInitGurkhaType1 = {ANIMSET_OVL(0x0C), 0x02, 0x4C, 0x2ED, 0x0BC};
-EInit g_EInitGurkhaSword = {ANIMSET_OVL(0x0C), 0x14, 0x4C, 0x2ED, 0x0BD};
-EInit g_EInitGurkhaType2 = {ANIMSET_OVL(0x0C), 0x02, 0x4C, 0x2EA, 0x0BE};
-EInit g_EInitGurkhaBlade = {ANIMSET_OVL(0x0C), 0x13, 0x4C, 0x2EA, 0x0BF};
+EInit g_EInitGurkha = {ANIMSET_OVL(0x0C), 0x02, 0x4C, 0x2ED, 0x0BC};
+EInit g_EInitGurkhaWeapon = {ANIMSET_OVL(0x0C), 0x14, 0x4C, 0x2ED, 0x0BD};
+EInit g_EInitBlade = {ANIMSET_OVL(0x0C), 0x02, 0x4C, 0x2EA, 0x0BE};
+EInit g_EInitBladeWeapon = {ANIMSET_OVL(0x0C), 0x13, 0x4C, 0x2EA, 0x0BF};

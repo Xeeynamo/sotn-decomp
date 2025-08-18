@@ -87,7 +87,10 @@ def add_c_psx(
         return
     entries[output] = {}
     rule = "psx-cc"
-    if file_name == "src/main/psxsdk/libgpu/sys.c":
+    if (
+        file_name == "src/main/psxsdk/libgpu/sys.c"
+        or file_name == "src/main/psxsdk/libgpu/font.c"
+    ):
         rule = "psx-cc-2_21"
     nw.build(
         rule=rule,
@@ -96,11 +99,6 @@ def add_c_psx(
         implicit=[
             f"src/.assets_build_done_{ver}",
             ld_path,
-            "include/types.h",
-            "include/common.h",
-            "include/game.h",
-            "include/entity.h",
-            "include/sfx.h",
         ],
         variables={
             "version": version,
@@ -221,6 +219,7 @@ def add_c_psp(
             "include/common.h",
             "include/game.h",
             "include/entity.h",
+            "include/sfx.h",
         ],
         variables={
             "version": version,
@@ -609,7 +608,7 @@ with open("build.ninja", "w") as f:
     cpp_defs = "-Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM -D_internal_version_$version -DSOTN_STR"
     cc_command = (
         "VERSION=$version"
-        f" mipsel-linux-gnu-cpp $cpp_flags -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin {cpp_defs} $in"
+        f" mipsel-linux-gnu-cpp $cpp_flags -MMD -MF $out.d -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin {cpp_defs} $in"
         " | tools/sotn_str/target/release/sotn_str process"
         " | iconv --from-code=UTF-8 --to-code=Shift-JIS"
         " | bin/cc1-psx-26 -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags"
@@ -618,11 +617,15 @@ with open("build.ninja", "w") as f:
     )
     nw.rule(
         "psx-cc",
+        depfile="$out.d",
+        deps="gcc",
         command=cc_command,
         description="psx cc $in",
     )
     nw.rule(
         "psx-cc-2_21",
+        depfile="$out.d",
+        deps="gcc",
         command=cc_command.replace("--aspsx-version=2.34", "--aspsx-version=2.21"),
         description="psx cc $in",
     )

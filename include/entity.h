@@ -815,15 +815,6 @@ typedef struct {
 } ET_801D0B40;
 
 typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ char pad_80[0xC];
-    /* 0x8C */ u8 unk8C;
-    /* 0x8D */ u8 unk8D;
-    /* 0x8E */ char pad_8E[0xE];
-    /* 0x9C */ u16 unk9C;
-} ET_801D1BB8;
-
-typedef struct {
     /* 0x7C */ char pad_0[0xC];
     /* 0x88 */ u16 unk88;
 } ET_801D0B78;
@@ -838,7 +829,7 @@ typedef struct {
 } ET_WaterEffects;
 
 typedef struct {
-    /* 0x7C */ char pad_0[4];
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ char pad_82[2];
     /* 0x84 */ u8 unk84;
@@ -850,7 +841,7 @@ typedef struct {
     /* 0x8E */ u8 unk8E;
     /* 0x8E */ char pad_8E[13];
     /* 0x9C */ s16 rotate;
-    /* 0x9E */ s16 unk9E;
+    /* 0x9E */ s16 length;
     /* 0xA0 */ struct Entity* parent;
     /* 0xA4 */ s16 unkA4;
     /* 0xA6 */ s16 unkA6;
@@ -1831,16 +1822,34 @@ typedef struct {
 
 // CHI Room5, Bottom, Breakable Wall
 typedef struct {
-    /* 0x7C */ char pad_7C[0x8];
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s32 : 32;
     /* 0x84 */ s16 breakCount;
-    /* 0x86 */ char pad_86[0xE];
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
     /* 0x94 */ s16 resetTimer;
 } ET_BreakableWall;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ struct Primitive* unk84;
+    /* 0x88 */ u8 unk88;
+} ET_BreakableNO2;
 
 typedef struct {
     /* 0x7C */ char pad_7C[0x20];
     /* 0x9C */ s16 rotSpeed;
 } ET_BreakableWallDebris;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 unk80;
+    /* 0x84 */ s32 unk84;
+} ET_BreakableWall2;
 
 // NO4 Room 1, Bottom, Breakable Crystal Floor
 typedef struct {
@@ -2063,6 +2072,23 @@ typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ u8 unk80;
 } ET_CEN_Elevator;
+
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 : 8;
+    /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 unk7F;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ Point16 mapPos;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ s32 unk8C;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ struct Primitive* prim;
+} ET_TOP_Elevator;
 
 typedef struct {
     /* 0x7C */ s32 : 32;
@@ -3153,16 +3179,59 @@ typedef struct {
 typedef struct {
     /* 0x7C */ s16 unk7C;
     /* 0x7E */ s16 unk7E;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ u16 unk80;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 : 16;
     /* 0x86 */ s16 : 16;
-    /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 : 16;
-    /* 0x8C */ s16 unk8C;
+    /* 0x88 */ s16 origPosX;
+    /* 0x8A */ s16 origPosY;
+    /* 0x8C */ u16 unk8C;
     /* 0x8E */ s16 : 16;
     /* 0x90 */ s32 unk90;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s16 newPosX;
+    /* 0x9A */ s16 newPosY;
 } ET_SurfacingWater;
+
+typedef struct {
+    /* 0x7C */ s32 playerInBoat;
+    /* 0x80 */ s32 unk80;
+    /* 0x84 */ s32 accelerationX;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s16 : 16;
+    /* 0x8E */ u16 splashTimer;
+    /* 0x90 */ s32 flags;
+    /* 0x94 */ s32 unk94;
+} ET_FerrymanBoat;
+
+typedef struct {
+    /* 0x7C */ u16 unk7C;
+    /* 0x7E */ u16 unk7E;
+    /* 0x80 */ u16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s32 unk84;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ s32 unk8C;
+    /* 0x90 */ s32 unk90;
+    /* 0x94 */ u16 unk94;
+    /* 0x96 */ u16 : 16;
+    /* 0x98 */ u16 collisionDetected;
+    /* 0x9A */ u16 unk9A;
+} ET_BoatElevator;
+
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ u16 unk7E;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 : 16;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 unk9A;
+} ET_BoatElevator_Child;
 
 typedef struct {
     /* 0x7C */ u16 waterHeight;
@@ -3206,11 +3275,96 @@ typedef struct {
 } ET_801C4520;
 
 typedef struct {
-    struct Primitive* prim;
-    s16 unk80;
-    s16 : 16;
-    s32 unk84;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 unk84;
 } ET_Crow;
+
+typedef struct {
+    /* 0x7C */ u16 timer;
+    /* 0x7E */ u16 posY;
+    /* 0x80 */ u16 prevTimer;
+} ET_801C4980;
+
+typedef struct {
+    /* 0x7C */ struct Entity* unk7C;
+    /* 0x80 */ struct Entity* unk80;
+} ET_801C5268;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 unk84;
+} ET_ValhallaKnight;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u16 unk84;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ Pos unk88;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 : 16;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ u8 unk96;
+    /* 0x97 */ s8 : 8;
+    /* 0x98 */ s16 unk98;
+    /* 0x9A */ s16 unk9A;
+    /* 0x9C */ s16 unk9C;
+} ET_SpectralSword;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ struct Entity* unk80;
+} ET_801CEB08;
+
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+} ET_801B3F30;
+
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+} ET_801B4210;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u8 unk80;
+    /* 0x81 */ u8 : 8;
+    /* 0x82 */ u8 : 8;
+    /* 0x83 */ u8 : 8;
+    /* 0x84 */ s16 unk84;
+} ET_801B6E34;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u8* animData;
+} ET_801B72E8;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 unk80;
+} ET_801B5368;
+
+typedef struct {
+    /* 0x7C */ s16 unk7C;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ struct Entity* entity;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
+    /* 0x86 */ u16 : 16;
+    /* 0x88 */ s16 unk88;
+} ET_FleaRider;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u8 unk84;
+} ET_HiddenStairs;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3317,7 +3471,6 @@ typedef union { // offset=0x7C
     ET_DeathSkySwirl deathSkySwirl;
     ET_Elevator elevator;
     ET_801D0B40 et_801D0B40;
-    ET_801D1BB8 et_801D1BB8;
     ET_801D0B78 et_801D0B78;
     ET_WaterEffects waterEffects;
     ET_GurkhaHammer GH_Props;
@@ -3370,6 +3523,7 @@ typedef union { // offset=0x7C
     ET_DeathScythe deathScythe;
     ET_Unused_MAD_ST0 unusedMadST0;
     ET_CEN_Elevator cenElevator;
+    ET_TOP_Elevator topElevator;
     ET_BloodSkeleton bloodSkeleton;
     ET_UnusedCENEnt unusedCENEnt;
     ET_SmallRisingHeart smallRisingHeart;
@@ -3378,6 +3532,7 @@ typedef union { // offset=0x7C
     ET_DemonSwitchWall demonSwitchWall;
     ET_BreakableWall breakableWall;
     ET_BreakableWallDebris breakableWallDebris;
+    ET_BreakableWall2 breakableWall2;
     ET_BreakableTerrain breakableTerrain;
     ET_DebugCerberusGate debugCerberusGate;
     ET_FallingStairs fallingStairs;
@@ -3487,7 +3642,23 @@ typedef union { // offset=0x7C
     ET_801C12B0 et_801C12B0;
     ET_BonePillar et_bonePillar;
     ET_801C4520 et_801C4520;
+    ET_801C4980 et_801C4980;
+    ET_801C5268 et_801C5268;
     ET_Crow et_crow;
+    ET_FerrymanBoat ferrymanBoat;
+    ET_BoatElevator boatElevator;
+    ET_BoatElevator_Child boatElevator_child;
+    ET_ValhallaKnight valhallaKnight;
+    ET_SpectralSword spectralSword;
+    ET_801CEB08 et_801CEB08;
+    ET_801B3F30 et_801B3F30;
+    ET_801B4210 et_801B4210;
+    ET_BreakableNO2 breakableNo2;
+    ET_801B6E34 et_801B6E34;
+    ET_801B72E8 et_801B72E8;
+    ET_801B5368 et_801B5368;
+    ET_FleaRider fleaRider;
+    ET_HiddenStairs hiddenStairs;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

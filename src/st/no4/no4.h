@@ -52,7 +52,7 @@ typedef enum EntityIDs {
     // /* 0x2B */ E_ID_2B,
     // /* 0x2C */ E_ID_2C,
     // /* 0x2D */ E_ID_2D,
-    // /* 0x2E */ E_ID_2E,
+    /* 0x2E */ E_FERRYMAN = 0x2E,
     // /* 0x2F */ E_ID_2F,
     // /* 0x30 */ E_ID_30,
     // /* 0x31 */ E_ID_31,
@@ -85,18 +85,20 @@ typedef enum EntityIDs {
     /* 0x4C */ E_BONE_ARCHER,
     /* 0x4D */ E_BONE_ARCHER_ARROW,
     // /* 0x4E */ E_ID_4E,
-    // /* 0x4F */ E_ID_4F,
+    /* 0x4F */ E_ID_4F = 0x4F,
     // /* 0x50 */ E_ID_50,
     // /* 0x51 */ E_ID_51,
     /* 0x52 */ E_BREAKABLE_WALL_DEBRIS = 0x52,
     // /* 0x53 */ E_ID_53,
-    // /* 0x54 */ E_ID_54,
+    /* 0x54 */ E_ID_54 = 0x54,
     // /* 0x55 */ E_ID_55,
     /* 0x56 */ E_SKELETON_APE = 0x56,
     /* 0x57 */ E_SKELETON_APE_PUNCH,
     /* 0x58 */ E_SKELETON_APE_BARREL,
     /* 0x59 */ E_THROWN_BARREL,
-    /* 0x5A */ E_KILLER_FISH_DEATH_PUFF = 0x5A
+    /* 0x5A */ E_KILLER_FISH_DEATH_PUFF = 0x5A,
+    // /* 0x5B */ E_ID_5B,
+    /* 0x5C */ E_ID_5C = 0x5C,
 } EntityIDs;
 
 extern void EntityExplosionVariants(Entity* entity);

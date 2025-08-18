@@ -1,8 +1,6 @@
 #ifndef CUTSCENE_H
 #define CUTSCENE_H
 
-#include <game.h>
-
 typedef enum {
     CSOP_END_CUTSCENE,
     CSOP_LINE_BREAK,

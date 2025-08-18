@@ -5,6 +5,11 @@ extern u32 D_91CE570;
 #define STAGE_FLAG NULL_STAGE_FLAG
 #endif
 
+#ifndef PRIM_X0_VAL
+#define PRIM_X0_VAL 8
+#define PRIM_X1_VAL 0xF8
+#endif
+
 #ifdef VERSION_PSP
 #define NUM_PRIMS 183
 #else
@@ -23,9 +28,9 @@ void EntityStageNamePopup(Entity* self) {
     s16 var_s3;
     s16 var_s2;
 
-#if defined(STAGE_IS_LIB)
+#if defined(STAGE_IS_LIB) || defined(STAGE_IS_NO2) || defined(STAGE_IS_NO4)
     if (D_91CE570) {
-        func_psp_0923C0C0();
+        LoadStageNameGraphics();
     }
 #endif
 
@@ -35,8 +40,8 @@ void EntityStageNamePopup(Entity* self) {
             DestroyEntity(self);
             return;
         }
-#if defined(STAGE_IS_LIB)
-        func_psp_0923C0C0();
+#if defined(STAGE_IS_LIB) || defined(STAGE_IS_NO2) || defined(STAGE_IS_NO4)
+        LoadStageNameGraphics();
 #endif
         InitializeEntity(g_EInitInteractable);
         self->ext.stpopupj.unk8C = 0;
@@ -167,9 +172,9 @@ void EntityStageNamePopup(Entity* self) {
         prim->v1 = prim->v0;
         prim->v2 = 0xFF;
         prim->v3 = prim->v2;
-        prim->x2 = prim->x0 = 8;
+        prim->x2 = prim->x0 = PRIM_X0_VAL;
 #ifdef VERSION_PSP
-        prim->x3 = prim->x1 = 0xF8;
+        prim->x3 = prim->x1 = PRIM_X1_VAL;
         prim->y1 = prim->y0 = 0x9B;
         prim->y3 = prim->y2 = 0xBF;
 #else
@@ -247,7 +252,7 @@ void EntityStageNamePopup(Entity* self) {
                 var_s6 |= 1;
             }
 
-            if (prim->x0 > 0x10) {
+            if (prim->x0 > PRIM_X0_VAL * 2) {
                 prim->x0 -= 8;
                 prim->x2 = prim->x0;
                 prim->x1 += 8;
@@ -326,7 +331,8 @@ void EntityStageNamePopup(Entity* self) {
             }
             break;
         case 3:
-            PrimDecreaseBrightness(self->ext.stpopupj.unk88, 4);
+            prim = self->ext.stpopupj.unk88;
+            PrimDecreaseBrightness(prim, 4);
             if (!(g_Timer % 2)) {
                 prim = self->ext.stpopupj.prim;
                 for (i = 0; i < 2; i++) {
@@ -381,51 +387,18 @@ void EntityStageNamePopup(Entity* self) {
         }
         break;
     case 18:
-        if (self->step_s != 0) {
-            (void)1;
-            return;
-        }
-
-        prim = self->ext.stpopupj.unk84;
-        prim->x1 -= 4;
-        var_s2 = prim->x3 = prim->x1;
-        prim = self->ext.stpopupj.prim;
+        switch (self->step_s) {
+        case 0:
+            prim = self->ext.stpopupj.unk84;
+            prim->x1 -= 4;
+            var_s2 = prim->x3 = prim->x1;
+            prim = self->ext.stpopupj.prim;
 #ifdef VERSION_PSP
-        self->ext.stpopupj.unk80 += 4;
+            self->ext.stpopupj.unk80 += 4;
 #endif
-        for (i = 0; i < 2; i++) {
+            for (i = 0; i < 2; i++) {
 #ifdef VERSION_PSP
-            if (self->ext.stpopupj.unk80 > 0x80 && prim->x1 > var_s2) {
-                prim->x1 -= 8;
-                prim->x3 = prim->x1;
-                if (prim->x1 < prim->x0) {
-                    prim->drawMode = DRAW_HIDE;
-                }
-                prim->u1 -= 8;
-                prim->u3 = prim->u1;
-
-                if (!prim->u1) {
-                    prim->drawMode = DRAW_HIDE;
-                }
-            }
-#else
-            if (prim->x1 > var_s2) {
-                prim->x1 -= 4;
-                prim->x3 = prim->x1;
-                if (prim->x1 < prim->x0) {
-                    prim->drawMode = DRAW_HIDE;
-                }
-                prim->u1 -= 4;
-                prim->u3 = prim->u1;
-            }
-#endif
-            prim = prim->next;
-        }
-
-#ifdef VERSION_PSP
-        for (i = 0; i < 2; i++) {
-            if (self->ext.stpopupj.unk80 < 0x81) {
-                if (prim->x1 > var_s2) {
+                if (self->ext.stpopupj.unk80 > 0x80 && prim->x1 > var_s2) {
                     prim->x1 -= 8;
                     prim->x3 = prim->x1;
                     if (prim->x1 < prim->x0) {
@@ -438,19 +411,52 @@ void EntityStageNamePopup(Entity* self) {
                         prim->drawMode = DRAW_HIDE;
                     }
                 }
-            } else {
-                prim->drawMode = DRAW_HIDE;
+#else
+                if (prim->x1 > var_s2) {
+                    prim->x1 -= 4;
+                    prim->x3 = prim->x1;
+                    if (prim->x1 < prim->x0) {
+                        prim->drawMode = DRAW_HIDE;
+                    }
+                    prim->u1 -= 4;
+                    prim->u3 = prim->u1;
+                }
+#endif
+                prim = prim->next;
             }
-            prim = prim->next;
-        }
+
+#ifdef VERSION_PSP
+            for (i = 0; i < 2; i++) {
+                if (self->ext.stpopupj.unk80 < 0x81) {
+                    if (prim->x1 > var_s2) {
+                        prim->x1 -= 8;
+                        prim->x3 = prim->x1;
+                        if (prim->x1 < prim->x0) {
+                            prim->drawMode = DRAW_HIDE;
+                        }
+                        prim->u1 -= 8;
+                        prim->u3 = prim->u1;
+
+                        if (!prim->u1) {
+                            prim->drawMode = DRAW_HIDE;
+                        }
+                    }
+                } else {
+                    prim->drawMode = DRAW_HIDE;
+                }
+                prim = prim->next;
+            }
 #endif
 
-        prim = self->ext.stpopupj.unk84;
-        if (prim->x0 > prim->x1) {
-            DestroyEntity(self);
-            return;
+            prim = self->ext.stpopupj.unk84;
+            if (prim->x0 > prim->x1) {
+                DestroyEntity(self);
+                return;
+            }
+            break;
         }
         break;
+
     case 32:
         if (!--self->ext.stpopupj.unk80) {
             g_CastleFlags[STAGE_FLAG] = 1;

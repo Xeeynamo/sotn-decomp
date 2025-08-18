@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "types.h"
 
 static volatile u8* libcd_CDRegister0 = (u8*)0x1F801800;

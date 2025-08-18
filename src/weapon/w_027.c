@@ -22,7 +22,7 @@ static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
     if (D_C1000_8017C6EC++ & 4) {
-        FntPrint("\no\n\0"); // TODO: remove extra NUL byte padding
+        FntPrint("\no\n");
     }
     DrawSync(0);
     VSync(0);
@@ -55,7 +55,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->step = 3;
     }
     if (self->step != 4) {
-        self->posX.val = g_Entities->posX.val;
+        self->posX.val = PLAYER.posX.val;
         self->posY.val = PLAYER.posY.val;
         self->facingLeft = PLAYER.facingLeft;
     }

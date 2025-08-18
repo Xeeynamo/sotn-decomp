@@ -3,7 +3,7 @@ extern Dialogue g_Dialogue;
 extern u32 g_CutsceneFlags;
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
 
-void CutsceneRun(void) {
+static void CutsceneRun(void) {
     Entity* entity;
     u16 startTimer;
 
@@ -33,7 +33,7 @@ void CutsceneRun(void) {
             entity->posX.i.hi |= *g_Dialogue.scriptEnd++;
             entity->posY.i.hi = *g_Dialogue.scriptEnd++ * 0x10;
             entity->posY.i.hi |= *g_Dialogue.scriptEnd++;
-#ifdef STAGE_IS_DAI
+#if defined(STAGE_IS_CEN) || defined(STAGE_IS_TOP)
             entity->posX.i.hi -= g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi -= g_Tilemap.scrollY.i.hi;
 #endif

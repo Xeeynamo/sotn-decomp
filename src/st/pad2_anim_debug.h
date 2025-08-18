@@ -25,10 +25,11 @@ if (g_pads[1].pressed & BUTTON_SYMBOL) {
 #else
 if (g_pads[1].pressed & PAD_CIRCLE) {
 #endif
-    if (!self->step_s) {
-        self->animCurFrame--;
-        self->step_s |= 1;
+    if (self->step_s) {
+        break;
     }
+    self->animCurFrame--;
+    self->step_s |= 1;
 } else {
     self->step_s = 0;
 }

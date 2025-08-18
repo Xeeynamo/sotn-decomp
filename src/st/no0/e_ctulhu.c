@@ -356,7 +356,7 @@ void EntityCtulhu(Entity* self) {
             break;
         case 2:
             if (!(g_Timer & 0xF)) {
-                PlaySfxPositional(0x759);
+                PlaySfxPositional(SFX_CTULHU_ROAR);
             }
             AnimateEntity(anim_laugh_static, self);
             // If player is revived, return back to standard action

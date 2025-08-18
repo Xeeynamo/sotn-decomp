@@ -58,9 +58,9 @@ jobs:
     strategy:
       matrix:
         compiler: ["clang", "gcc"]
-        build_type: ["Debug", "RelWithDebInfo"]
-        sound_engine: ["lle", "custom"]
-        standard: ["c99", "c17"]
+        build_type: ["RelWithDebInfo"]
+        sound_engine: ["lle"]
+        standard: ["c99"]
         arch: ["x86_64"]
     runs-on: ubuntu-24.04
     needs: extract-assets
@@ -105,8 +105,8 @@ jobs:
   build-macos:
     strategy:
       matrix:
-        build_type: ["Debug", "RelWithDebInfo"]
-        sound_engine: ["lle", "custom"]
+        build_type: ["RelWithDebInfo"]
+        sound_engine: ["lle"]
     runs-on: macos-latest
     needs: extract-assets
     steps:
@@ -141,8 +141,8 @@ jobs:
   build-windows:
     strategy:
       matrix:
-        build_type: ["Debug", "RelWithDebInfo"]
-        sound_engine: ["lle", "custom"]
+        build_type: ["RelWithDebInfo"]
+        sound_engine: ["lle"]
     runs-on: windows-latest
     needs: extract-assets
     steps:

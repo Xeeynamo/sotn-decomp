@@ -4,12 +4,7 @@
 
 extern u8* OVL_EXPORT(cutscene_script);             // Defined by st_init
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[]; // Defined by e_init
-
-#define CUTSCENE_UNK1_NEXT_X 0
-#define CUTSCENE_UNK1_UNK17 2
-
-extern u_long D_pspeu_092970B8; // Defined by st_init
-
+extern u_long D_pspeu_092970B8;                     // Defined by st_init
 extern u_long D_pspeu_0926E270;
 extern u_long D_pspeu_0926EFF0;
 extern u_long D_893EA8C;
@@ -90,32 +85,28 @@ static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 // clang-format on
 
 // data
-static u8 D_pspeu_09296718[] = {0x00, 0x40, 0x00, 0x00};
-static u8 D_pspeu_0929671C[] = {0x00, 0x00, 0x00, 0x00};
-static u16 D_pspeu_09296720[] = {0x0258, 0x0260, 0x0210, 0x0218};
-static u16 D_pspeu_09296728[] = {0x0000, 0x0020};
-static u16 D_pspeu_09296730[] = {0x01A1, 0x01A1, 0x01A1, 0x01A1};
+static u8 D_pspeu_09296718[] = {0, 64, 0, 0};
+static u8 D_pspeu_0929671C[] = {0, 0, 0, 0};
+static u16 D_pspeu_09296720[] = {600, 608, 528, 536};
+static u16 D_pspeu_09296728[] = {0, 32};
+static u16 D_pspeu_09296730[] = {417, 417, 417, 417};
 static s16 D_pspeu_09296738[] = {
-    0x0008, 0x0013, 0x0011, 0x0031, 0x004F, 0x0026, 0x0036, 0x001D, 0x001B,
-    0x0033, 0x002C, 0x0021, 0x0019, 0x000A, 0x0033, 0x001F, 0x0048, 0x002F,
-    0x0013, 0x0019, 0x004D, 0x004B, 0x0017, 0x001D, 0x0012, 0x0002, 0x001B,
-    0x002A, 0x0050, 0x0045, 0x0032, 0x000D, 0x002A, 0x004D, 0x0006, 0x0027,
-    0x0007, 0x0048, 0x002F, 0x001B, 0x0036, 0x0022, 0x0039, 0x0014, 0x0039,
-    0x001D, 0x000A, 0x0035, 0x0010, 0x001B, 0x003D, 0x0017, 0x002E, 0x000B,
-    0x0049, 0x0042, 0x003D, 0x002A, 0x0001, 0x000C, 0x001B, 0x0034, 0x0041,
-    0x0035, 0x0008, 0x000E, 0x004D, 0x0011, 0x0034, 0x0041, 0x0029, 0x0048};
+    8,  19, 17, 49, 79, 38, 54, 29, 27, 51, 44, 33, 25, 10, 51, 31, 72, 47,
+    19, 25, 77, 75, 23, 29, 18, 2,  27, 42, 80, 69, 50, 13, 42, 77, 6,  39,
+    7,  72, 47, 27, 54, 34, 57, 20, 57, 29, 10, 53, 16, 27, 61, 23, 46, 11,
+    73, 66, 61, 42, 1,  12, 27, 52, 65, 53, 8,  14, 77, 17, 52, 65, 41, 72};
 
-static u8 D_pspeu_092967C8[] = {0x03, 0x04, 0x09, 0x07, 0x00, 0x00, 0x00, 0x00};
-static u8 D_pspeu_092967D0[] = {0x03, 0x04, 0x09, 0x07, 0x00, 0x00, 0x00, 0x00};
+static u8 D_pspeu_092967C8[] = {3, 4, 9, 7, 0, 0, 0, 0};
+static u8 D_pspeu_092967D0[] = {3, 4, 9, 7, 0, 0, 0, 0};
 
 // bss
 u32 g_CutsceneFlags; // Used by cutscene_init
 static s32 g_SkipCutscene;
 Dialogue g_Dialogue; // Used by cutscene_init
 static u8 D_pspeu_09297838;
-static u8 D_pspeu_09297818[0x20];
-static u8 cutsceneUnk3Unknown[0x380];
-static u16 D_pspeu_09297298[0x100];
+static u8 D_pspeu_09297818[32];
+static u8 cutsceneUnk3Unknown[896];
+static u16 D_pspeu_09297298[256];
 static u8 D_pspeu_09297290[8];
 static s32 g_IsCutsceneDone;
 
@@ -234,7 +225,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     if (self->step) {
         if (g_IsCutsceneDone && !g_SkipCutscene &&
             ((g_Settings.D_8003CB04 & 0x400) || g_IsTimeAttackUnlocked)) {
-            if (g_pads->tapped & PAD_START) {
+            if (g_pads[0].tapped & PAD_START) {
                 g_SkipCutscene = 1;
                 g_api.FreePrimitives(self->primIndex);
                 self->flags ^= FLAG_HAS_PRIMS;
@@ -347,7 +338,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     uCoord = D_pspeu_09296718[nextChar2];
                     vCoord = D_pspeu_09297290[nextChar2];
                     prim->clut = D_pspeu_09296720[i];
-                    prim->tpage = 0x90;
+                    prim->tpage = 144;
                     prim->u0 = prim->u2 = uCoord;
                     prim->u1 = prim->u3 = uCoord + 47;
                     prim->v0 = prim->v1 = vCoord;
@@ -359,7 +350,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     g_Dialogue.clutIndex = D_pspeu_09296730[i];
                     CutsceneUnk1();
                     CutsceneUnk4();
-                    prim->priority = 0x1FE;
+                    prim->priority = 510;
                     prim->drawMode = DRAW_DEFAULT;
                     DrawCutsceneActorName(
                         i, self, D_pspeu_09297298, D_pspeu_092967C8,
@@ -539,8 +530,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                             break;
                         }
                         j = g_Dialogue.scriptCur++[0];
-                        LoadTPage((u_long*)ptr, 1, 0, D_pspeu_09296728[j],
-                                  0x100, 0x30, 0x48);
+                        LoadTPage((u_long*)ptr, 1, 0, D_pspeu_09296728[j], 256,
+                                  48, 72);
                     }
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_20:
@@ -612,7 +603,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 break;
             }
             for (i = 0; i < 8; i++) {
-                if (var_s6[(i << 3) / 2] & 240) {
+                if (var_s6[(i << 3) / 2] & 0xF0) {
                     break;
                 }
             }
@@ -673,7 +664,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             }
         }
         LoadTPage((u_long*)cutsceneUnk3Unknown, 0, 0, g_Dialogue.nextLineX,
-                  vCoord, 0xE0, 8);
+                  vCoord, 224, 8);
         if (nextChar != 32) {
             g_Dialogue.nextCharX += rect.w;
         } else {
@@ -743,7 +734,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         switch (self->step_s) {
         case 0:
             g_IsCutsceneDone = 1;
-            primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 0x48);
+            primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 72);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 break;
@@ -755,10 +746,10 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 prim->b0 = prim->b1 = prim->g0 = prim->g1 = 0;
                 prim->x0 = prim->x1 = 247;
                 prim->y0 = prim->y1 = g_Dialogue.startY + uCoord;
-                prim->priority = 0x1FE;
+                prim->priority = 510;
                 prim->drawMode = DRAW_DEFAULT;
                 prim->x2 = D_pspeu_09296738[uCoord];
-                prim->x3 = 0xF70;
+                prim->x3 = 3952;
                 uCoord++;
             }
             self->step_s++;
@@ -804,7 +795,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             }
 
             prim = prim->next;
-            if (prim->r0 < 0x10) {
+            if (prim->r0 < 16) {
                 prim->r0 = prim->g0 = prim->b0 = 16;
             } else {
                 prim->r0 = prim->g0 = prim->b0 -= 15;

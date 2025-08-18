@@ -6,27 +6,23 @@ extern u8 OVL_EXPORT(cutscene_script)[];
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[]; // Defined by e_init
 
 // data
-static u8 D_us_80180EE0[] = {0x00, 0x40, 0x00, 0x00};
-static u8 D_us_80180EE4[] = {0x00, 0x00, 0x00, 0x00};
-static u16 D_us_80180EE8[] = {0x0258, 0x0260, 0x0210, 0x0218};
-static u16 D_us_80180EF0[] = {0x0000, 0x0020};
-static u16 D_us_80180EF4[] = {0x01A1, 0x01A1, 0x01A1, 0x01A1};
-static u16 D_us_80180EFC[] = {
-    0x0008, 0x0013, 0x0011, 0x0031, 0x004F, 0x0026, 0x0036, 0x001D, 0x001B,
-    0x0033, 0x002C, 0x0021, 0x0019, 0x000A, 0x0033, 0x001F, 0x0048, 0x002F,
-    0x0013, 0x0019, 0x004D, 0x004B, 0x0017, 0x001D, 0x0012, 0x0002, 0x001B,
-    0x002A, 0x0050, 0x0045, 0x0032, 0x000D, 0x002A, 0x004D, 0x0006, 0x0027,
-    0x0007, 0x0048, 0x002F, 0x001B, 0x0036, 0x0022, 0x0039, 0x0014, 0x0039,
-    0x001D, 0x000A, 0x0035, 0x0010, 0x001B, 0x003D, 0x0017, 0x002E, 0x000B,
-    0x0049, 0x0042, 0x003D, 0x002A, 0x0001, 0x000C, 0x001B, 0x0034, 0x0041,
-    0x0035, 0x0008, 0x000E, 0x004D, 0x0011, 0x0034, 0x0041, 0x0029, 0x0048};
+static u8 D_us_80180EE0[] = {0, 64, 0, 0};
+static u8 D_us_80180EE4[] = {0, 0, 0, 0};
+static u16 D_us_80180EE8[] = {600, 608, 528, 536};
+static u16 D_us_80180EF0[] = {0, 32};
+static u16 D_us_80180EF4[] = {417, 417, 417, 417};
+static s16 D_us_80180EFC[] = {
+    8,  19, 17, 49, 79, 38, 54, 29, 27, 51, 44, 33, 25, 10, 51, 31, 72, 47,
+    19, 25, 77, 75, 23, 29, 18, 2,  27, 42, 80, 69, 50, 13, 42, 77, 6,  39,
+    7,  72, 47, 27, 54, 34, 57, 20, 57, 29, 10, 53, 16, 27, 61, 23, 46, 11,
+    73, 66, 61, 42, 1,  12, 27, 52, 65, 53, 8,  14, 77, 17, 52, 65, 41, 72};
 
 static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
 
 // bss
 s32 g_SkipCutscene;
 Dialogue g_Dialogue; // Used by cutscene_init
-STATIC_PAD_BSS(0x68);
+STATIC_PAD_BSS(104);
 u32 g_CutsceneFlags; // Used by cutscene_init
 s32 g_IsCutsceneDone;
 
@@ -136,7 +132,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     if (self->step) {
         if (g_IsCutsceneDone && !g_SkipCutscene &&
             ((g_Settings.D_8003CB04 & 0x400) || g_IsTimeAttackUnlocked)) {
-            if (g_pads->tapped & PAD_START) {
+            if (g_pads[0].tapped & PAD_START) {
                 g_SkipCutscene = 1;
                 g_api.FreePrimitives(self->primIndex);
                 self->flags ^= FLAG_HAS_PRIMS;
@@ -244,24 +240,24 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 uCoord = D_us_80180EE0[nextChar2 & 1];
                 vCoord = D_us_80180EE4[nextChar2 & 1];
                 prim->clut = D_us_80180EE8[i];
-                prim->tpage = 0x90;
+                prim->tpage = 144;
                 if (nextChar2 & 0x80) {
-                    prim->u0 = prim->u2 = uCoord + 0x2F;
+                    prim->u0 = prim->u2 = uCoord + 47;
                     prim->u1 = prim->u3 = uCoord;
                 } else {
                     prim->u0 = prim->u2 = uCoord;
-                    prim->u1 = prim->u3 = uCoord + 0x2F;
+                    prim->u1 = prim->u3 = uCoord + 47;
                 }
                 prim->v0 = prim->v1 = vCoord;
-                prim->v2 = prim->v3 = vCoord + 0x48;
+                prim->v2 = prim->v3 = vCoord + 72;
                 prim->x0 = prim->x1 = prim->x2 = prim->x3 =
-                    g_Dialogue.startX - 0x1E;
+                    g_Dialogue.startX - 30;
                 prim->y0 = prim->y1 = prim->y2 = prim->y3 =
-                    g_Dialogue.startY + 0x24;
+                    g_Dialogue.startY + 36;
                 g_Dialogue.clutIndex = D_us_80180EF4[i];
                 CutsceneUnk1();
                 CutsceneUnk4();
-                prim->priority = 0x1FE;
+                prim->priority = 510;
                 prim->drawMode = DRAW_DEFAULT;
                 DrawCutsceneActorName(i, self);
                 g_Dialogue.portraitAnimTimer = 6;
@@ -290,11 +286,11 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 prim = g_Dialogue.prim[5];
                 prim = prim->next;
                 prim->y0 = prim->y1 = g_Dialogue.startY;
-                prim->y2 = prim->y3 = g_Dialogue.startY + 0x48;
+                prim->y2 = prim->y3 = g_Dialogue.startY + 72;
                 prim = prim->next;
                 prim->y0 = g_Dialogue.startY - 1;
-                prim->u0 = 0xF6;
-                g_Dialogue.portraitAnimTimer = 0x18;
+                prim->u0 = 246;
+                g_Dialogue.portraitAnimTimer = 24;
                 self->step = 5;
                 self->step_s = 0;
                 return;
@@ -302,7 +298,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 if (g_SkipCutscene) {
                     continue;
                 }
-                g_Dialogue.portraitAnimTimer = 0x18;
+                g_Dialogue.portraitAnimTimer = 24;
                 self->step = 6;
                 return;
             case CSOP_PLAY_SOUND:
@@ -403,8 +399,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     ptr |= (u_long)*g_Dialogue.scriptCur++;
                     ptr += 0x100000;
                     nextChar2 = g_Dialogue.scriptCur++[0];
-                    LoadTPage((u_long*)ptr, 1, 0, D_us_80180EF0[nextChar2],
-                              0x100, 0x30, 0x48);
+                    LoadTPage((u_long*)ptr, 1, 0, D_us_80180EF0[nextChar2], 256,
+                              48, 72);
                 }
                 continue;
             case CSOP_SCRIPT_UNKNOWN_20:
@@ -438,15 +434,15 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             }
             break; // This breaks the big while-loop!
         }
-        if (nextChar == 0x20) {
+        if (nextChar == 32) {
             g_Dialogue.nextCharX += 2;
             return;
         }
-        rect.x = ((nextChar & 0xF) * 2) + 0x380;
-        rect.y = ((nextChar & 0xF0) >> 1) + 0xF0;
+        rect.x = ((nextChar & 0xF) * 2) + 896;
+        rect.y = ((nextChar & 0xF0) >> 1) + 240;
         rect.w = 2;
         rect.h = 8;
-        vCoord = (g_Dialogue.nextCharY * 0xC) + 0x180;
+        vCoord = (g_Dialogue.nextCharY * 12) + 384;
         MoveImage(&rect, g_Dialogue.nextCharX, vCoord);
         g_Dialogue.nextCharX += 2;
         break;
@@ -489,7 +485,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         switch (self->step_s) {
         case 0:
             g_IsCutsceneDone = 1;
-            primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 0x48);
+            primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 72);
             if (primIndex == -1) {
                 DestroyEntity(self);
                 break;
@@ -497,14 +493,14 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             g_Dialogue.primIndex[0] = primIndex;
             for (prim = &g_PrimBuf[primIndex], uCoord = 0; prim != NULL;
                  prim = prim->next, uCoord++) {
-                prim->r0 = prim->r1 = 0x7F;
+                prim->r0 = prim->r1 = 127;
                 prim->b0 = prim->b1 = prim->g0 = prim->g1 = 0;
-                prim->x0 = prim->x1 = 0xF7;
+                prim->x0 = prim->x1 = 247;
                 prim->y0 = prim->y1 = g_Dialogue.startY + uCoord;
-                prim->priority = 0x1FE;
+                prim->priority = 510;
                 prim->drawMode = DRAW_DEFAULT;
                 prim->x2 = D_us_80180EFC[uCoord];
-                prim->x3 = 0xF70;
+                prim->x3 = 3952;
             }
             self->step_s++;
             break;
@@ -535,24 +531,24 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             uCoord = 0;
             prim = g_Dialogue.prim[5];
             prim = prim->next;
-            if (prim->r0 < 0x10) {
+            if (prim->r0 < 16) {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
             } else {
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 -= 0x10;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 -= 16;
                 uCoord = 1;
             }
-            if (prim->b0 >= 0x7F) {
-                prim->b0 = prim->b1 = 0x7F;
+            if (prim->b0 >= 127) {
+                prim->b0 = prim->b1 = 127;
             } else {
                 prim->b0 = prim->b1 += 8;
                 uCoord = 1;
             }
 
             prim = prim->next;
-            if (prim->r0 < 0x10) {
-                prim->r0 = prim->g0 = prim->b0 = 0x10;
+            if (prim->r0 < 16) {
+                prim->r0 = prim->g0 = prim->b0 = 16;
             } else {
-                prim->r0 = prim->g0 = prim->b0 -= 0xF;
+                prim->r0 = prim->g0 = prim->b0 -= 15;
                 uCoord = 1;
             }
             if (!uCoord) {
@@ -564,7 +560,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         prim = g_Dialogue.prim[5];
         prim = prim->next;
         g_Dialogue.portraitAnimTimer--;
-        if (g_Dialogue.portraitAnimTimer >= 0xC) {
+        if (g_Dialogue.portraitAnimTimer >= 12) {
             prim = prim->next;
             prim->u0 -= 20;
             if (g_Dialogue.portraitAnimTimer & 1) {

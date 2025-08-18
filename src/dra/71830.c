@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
+#include "sfx.h"
 
 // Forward declaration. EntityAlucard needs to not know these args are s16.
 // But 80113D7C (in this file, but before PlayerStepKill) needs to know
@@ -51,10 +52,10 @@ bool func_801119C4(void) {
 
     if (g_Player.padPressed & PAD_CROSS) {
         if (g_Player.padPressed & PAD_RIGHT) {
-            g_Entities->posX.val += FIX(16.0f);
+            PLAYER.posX.val += FIX(16.0f);
         }
         if (g_Player.padPressed & PAD_LEFT) {
-            g_Entities->posX.val -= FIX(16.0f);
+            PLAYER.posX.val -= FIX(16.0f);
         }
         if (g_Player.padPressed & PAD_UP) {
             PLAYER.posY.val -= FIX(16.0f);
@@ -65,10 +66,10 @@ bool func_801119C4(void) {
 
     } else {
         if (g_Player.padTapped & PAD_RIGHT) {
-            g_Entities->posX.val += FIX(16.0f);
+            PLAYER.posX.val += FIX(16.0f);
         }
         if (g_Player.padTapped & PAD_LEFT) {
-            g_Entities->posX.val -= FIX(16.0f);
+            PLAYER.posX.val -= FIX(16.0f);
         }
         if (g_Player.padTapped & PAD_UP) {
             PLAYER.posY.val -= FIX(16.0f);
@@ -339,7 +340,7 @@ void PlayerStepStand(void) {
     case Player_Stand_ChairSit:
         if (PLAYER.ext.player.anim == 0xF2 && --g_AlucardChairSleepTimer == 0) {
             if (g_StageId == STAGE_NO1) {
-                PlaySfx(0x7AD);
+                PlaySfx(SFX_ALU_ZZZ_SNORE);
             }
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_SLEEP_ZZZ, 0), 0);
@@ -2010,7 +2011,7 @@ void PlayerStepTeleport(void) {
     PLAYER.velocityX = PLAYER.velocityY = 0;
     g_Player.padSim = 0;
 #if defined(VERSION_PSP)
-    g_pads->pressed = g_pads->tapped = 0;
+    g_pads[0].pressed = g_pads[0].tapped = 0;
 #endif
     g_Player.demo_timer = 4;
 
@@ -2327,7 +2328,7 @@ bool BatFormFinished(void) {
         SetPlayerStep(Player_UnmorphBat);
         SetPlayerAnim(0xCA);
         D_800AFDA4[0].pose = 6;
-        g_Entities->palette = PAL_OVL(0x10D);
+        PLAYER.palette = PAL_OVL(0x10D);
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
         CreateEntFactoryFromEntity(

@@ -178,12 +178,12 @@ files:
           - [0x20250, palette, maria_pal, 16]
           - [0x20850, spriteset, wpn_owl_spr]
           - [0x20B28, palette, wpn_owl_pal, 16]
-          - [0x21128, cmpgfx, wpn_owl_gfx, 128, 128, 4, 0x20B28] 
+          - [0x21128, cmpgfx, wpn_owl_gfx, 128, 128, 4, 0x20B28]
           - [0x218A0, spriteset, wpn_doll_spr]
           - [0x21A98, palette, wpn_doll_pal, 16]
           - [0x22098, cmpgfx, wpn_doll_gfx, 128, 128, 4, 0x21A98]
           - [0x22AE0, spriteset, wpn_turtle_spr]
-          - [0x22BD0, palette, wpn_turtle_pal, 16] 
+          - [0x22BD0, palette, wpn_turtle_pal, 16]
           - [0x22BF0, palette, wpn_turtle2_pal, 16]
           - [0x231D0, cmpgfx, wpn_turtle_gfx, 128, 128, 4, 0x22BD0]
           - [0x24390, spriteset, wpn_cardinal_spr]
@@ -209,6 +209,21 @@ files:
           - [0x3ED78, palette, crash_dragon_pal, 16]
           - [0x3ED98, palette, crash_cardinal_pal, 16]
           - [0x3F338, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/chi.bin
+    asset_path: assets/st/chi
+    src_path: src/st/chi_psp
+    splat_config_path: config/splat.pspeu.stchi.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x1D790, cmpgfx, stage_name_en, 128, 64, 4]
+          - [0x1DC28, cmpgfx, stage_name_it, 128, 64, 4]
+          - [0x1DF88, cmpgfx, stage_name_sp, 128, 64, 4]
+          - [0x1E2C8, cmpgfx, stage_name_ge, 128, 64, 4]
+          - [0x1E6C8, cmpgfx, stage_name_fr, 128, 64, 4]
+          - [0x1EA28, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dai.bin
     asset_path: assets/st/dai
     src_path: src/st/dai
@@ -244,12 +259,37 @@ files:
         vram: 0x09237700
         assets:
           - [0x80, skip]
+          - [0x36AF0, cmpgfx, stage_name_en, 128, 64, 4]
+          - [0x36CE8, cmpgfx, stage_name_it, 128, 64, 4]
+          - [0x36F70, cmpgfx, stage_name_sp, 128, 64, 4]
+          - [0x371F0, cmpgfx, stage_name_ge, 128, 64, 4]
+          - [0x37480, cmpgfx, stage_name_fr, 128, 64, 4]
+          - [0x37758, skip]
           - [0x3ECB0, cutscene, cutscene_data_it]
           - [0x3EEA0, cutscene, cutscene_data_sp]
           - [0x3F068, cutscene, cutscene_data_fr]
           - [0x3F260, cutscene, cutscene_data_ge]
           - [0x3F448, cutscene, cutscene_data_en]
           - [0x3F608, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no2.bin
+    asset_path: assets/st/no2
+    src_path: src/st/no2
+    splat_config_path: config/splat.pspeu.stno2.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x24FF0, cmpgfx, stage_name_en, 128, 64, 4]
+          - [0x25220, cmpgfx, stage_name_it, 128, 64, 4]
+          - [0x25478, cmpgfx, stage_name_sp, 128, 64, 4]
+          - [0x25708, cmpgfx, stage_name_ge, 128, 64, 4]
+          - [0x25918, cmpgfx, stage_name_fr, 128, 64, 4]
+          - [0x25B68, skip]
+          - [0x2E9A0, layers, layers]
+          - [0x2EC68, skip]
+          - [0x2F1C8, rooms, rooms]
+          - [0x2F298, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no3.bin
     asset_path: assets/st/no3
     src_path: src/st/no3_psp
@@ -290,6 +330,12 @@ files:
           - [0x309A0, cutscene, cutscene_data_ferryman_left_ge]
           - [0x30A08, cutscene, cutscene_data_ferryman_left_en]
           - [0x30A68, skip]
+          - [0x66460, cmpgfx, stage_name_en, 128, 64, 4]
+          - [0x66748, cmpgfx, stage_name_it, 128, 64, 4]
+          - [0x669E0, cmpgfx, stage_name_sp, 128, 64, 4]
+          - [0x66CB0, cmpgfx, stage_name_ge, 128, 64, 4]
+          - [0x66F38, cmpgfx, stage_name_fr, 128, 64, 4]
+          - [0x671D0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/st0.bin
     asset_path: assets/st/st0
     src_path: src/st/st0_psp

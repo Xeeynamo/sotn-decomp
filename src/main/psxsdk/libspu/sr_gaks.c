@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "common.h"
 #include "libspu_internal.h"
 
@@ -34,10 +35,12 @@ s32 SpuRGetAllKeysStatus(s32 min, s32 max, s8* status) {
             } else {
                 status[voice] = 3;
             }
-        } else if (volume != 0) {
-            status[voice] = 2;
         } else {
-            status[voice] = 0;
+            if (volume != 0) {
+                status[voice] = 2;
+            } else {
+                status[voice] = 0;
+            }
         }
     }
 
@@ -59,10 +62,12 @@ void SpuGetAllKeysStatus(s8* status) {
             } else {
                 status[voice] = 3;
             }
-        } else if (volumex != 0) {
-            status[voice] = 2;
         } else {
-            status[voice] = 0;
+            if (volumex != 0) {
+                status[voice] = 2;
+            } else {
+                status[voice] = 0;
+            }
         }
     }
 }

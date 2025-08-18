@@ -38,7 +38,7 @@ segments:
     subalign: 4
     subsegments:
       - [0x800, .rodata, main]
-      - [0x874, .rodata, psxsdk/libgpu/font]
+      - [0x85C, .rodata, psxsdk/libgpu/font]
       - [0x8F8, .rodata, psxsdk/libgpu/prim]
       - [0x9C8, .rodata, psxsdk/libgpu/sys]
       - [0xBC4, .rodata, psxsdk/libetc/vsync] # aVsyncTimeout
@@ -268,12 +268,14 @@ segments:
       - [0x1B93C, c, psxsdk/libspu/s_n2p]
       - [0x1BB88, c, psxsdk/libspu/sr_gaks]
       - [0x1BCE0, data]
+      - [0x1CA64, .data, psxsdk/libgpu/sys]
       - [0x1CAA8, .data, psxsdk/libetc/vsync]
       - [0x1CAB8, .data, psxsdk/libetc/intr]
       - [0x1DB54, .data, psxsdk/libetc/intr_vb]
       - [0x1DB7C, .data, psxsdk/libetc/intr_dma]
       - [0x1DBA4, .data, psxsdk/libetc/vmode]
-      - [0x1DBA8, data]
+      - [0x1DBA8, .data, psxsdk/libc/sprintf]
+      - [0x1DBB4, data]
       - [0x235E8, .data, psxsdk/libcd/c_002]
       - [0x235F8, .data, psxsdk/libcd/c_003]
       - [0x23608, .data, psxsdk/libcd/c_004]

@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #include "libsnd_i.h"
 
 void SsSetTickMode(long tick_mode) {

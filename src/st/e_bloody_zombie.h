@@ -207,12 +207,10 @@ static void func_801C53AC(Primitive* prim) {
         prim->clut = 0x16D;
         prim->u0 = 80;
         prim->u1 = 96;
-        prim->v1 = 239;
-        prim->v0 = 239;
-        prim->v3 = 255;
-        prim->v2 = 255;
         prim->u2 = prim->u0;
         prim->u3 = prim->u1;
+        prim->v0 = prim->v1 = 239;
+        prim->v2 = prim->v3 = 255;
         LOH(prim->next->r2) = 16;
         LOH(prim->next->b2) = 16;
         prim->next->x1 = g_CurrentEntity->posX.i.hi;
@@ -223,10 +221,10 @@ static void func_801C53AC(Primitive* prim) {
         } else {
             prim->next->x1 += 8;
         }
-        if (prim->next->r3 == 0) {
-            LOW(prim->next->u0) = -0x4000;
-        } else {
+        if (prim->next->r3) {
             LOW(prim->next->u0) = 0x4000;
+        } else {
+            LOW(prim->next->u0) = -0x4000;
         }
         LOW(prim->next->r1) = -0x20000;
         prim->next->b3 = 0x80;
@@ -247,12 +245,12 @@ static void func_801C53AC(Primitive* prim) {
 
 void EntityBloodyZombie(Entity* self) {
     Primitive* prim;
-    Entity* newEntity;
-    s16 primIndex;
-    s16 facing;
+    Entity* tempEntity;
+    s32 primIndex;
+    u8 facing;
     s32 animStatus;
 
-    if (self->hitParams && self->step & 1) {
+    if (self->hitParams && self->step % 2) {
         PlaySfxPositional(SFX_BLOODY_ZOMBIE_HIT_GRUNT);
         PlaySfxPositional(SFX_BLOODY_ZOMBIE_HIT);
         SetStep(BLOODY_ZOMBIE_TAKE_HIT);
@@ -280,7 +278,7 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case BLOODY_ZOMBIE_WALK:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             self->ext.bloodyZombie.unk80 = 128;
             self->step_s++;
         }
@@ -288,31 +286,32 @@ void EntityBloodyZombie(Entity* self) {
         AnimateEntity(anim_walk, self);
         UnkCollisionFunc2(sensors_move);
 
-        if (!self->facingLeft) {
-            self->velocityX = FIX(-0.375);
-        } else {
+        if (self->facingLeft) {
             self->velocityX = FIX(0.375);
+        } else {
+            self->velocityX = FIX(-0.375);
         }
 
-        if (--self->ext.bloodyZombie.unk80 == 0) {
+        if (!--self->ext.bloodyZombie.unk80) {
             self->ext.bloodyZombie.unk80 = 128;
             self->facingLeft ^= 1;
         }
 
-        if ((Random() % 64) == 0) { // Drop BloodDrips from the enemy knife
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != NULL) {
-                CreateEntityFromEntity(E_BLOOD_DRIPS, self, newEntity);
+        if ((Random() & 0x3F) == 0) { // Drop BloodDrips from the enemy knife
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (tempEntity != NULL) {
+                CreateEntityFromEntity(E_BLOOD_DRIPS, self, tempEntity);
                 if (self->facingLeft) {
-                    newEntity->posX.i.hi += 16;
+                    tempEntity->posX.i.hi += 16;
                 } else {
-                    newEntity->posX.i.hi -= 16;
+                    tempEntity->posX.i.hi -= 16;
                 }
-                newEntity->posY.i.hi += 12;
+                tempEntity->posY.i.hi += 12;
             }
         }
+        tempEntity = &PLAYER;
         facing = GetSideToPlayer() & 1;
-        if (PLAYER.facingLeft == facing && GetDistanceToPlayerX() < 128) {
+        if (tempEntity->facingLeft == facing && GetDistanceToPlayerX() < 128) {
             self->facingLeft = facing ^ 1;
             SetStep(BLOODY_ZOMBIE_CHASE);
         }
@@ -330,16 +329,16 @@ void EntityBloodyZombie(Entity* self) {
             self->velocityX = FIX(-0.75);
         }
 
-        if ((Random() % 64) == 0) { // Drop BloodDrips from the enemy knife
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != NULL) {
-                CreateEntityFromEntity(E_BLOOD_DRIPS, self, newEntity);
+        if ((Random() & 0x3F) == 0) { // Drop BloodDrips from the enemy knife
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (tempEntity != NULL) {
+                CreateEntityFromEntity(E_BLOOD_DRIPS, self, tempEntity);
                 if (self->facingLeft) {
-                    newEntity->posX.i.hi += 18;
+                    tempEntity->posX.i.hi += 18;
                 } else {
-                    newEntity->posX.i.hi -= 18;
+                    tempEntity->posX.i.hi -= 18;
                 }
-                newEntity->posY.i.hi += 12;
+                tempEntity->posY.i.hi += 12;
             }
         }
 
@@ -359,12 +358,12 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case BLOODY_ZOMBIE_TAKE_HIT:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             // Splat blood
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != NULL) {
-                CreateEntityFromEntity(E_BLOOD_SPLATTER, self, newEntity);
-                newEntity->facingLeft = GetSideToPlayer() & 1;
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (tempEntity != NULL) {
+                CreateEntityFromEntity(E_BLOOD_SPLATTER, self, tempEntity);
+                tempEntity->facingLeft = GetSideToPlayer() & 1;
             }
             self->step_s++;
         }
@@ -376,44 +375,46 @@ void EntityBloodyZombie(Entity* self) {
         break;
 
     case BLOODY_ZOMBIE_DYING:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x14);
-            if (primIndex == -1) {
+            if (primIndex != -1) {
+                self->flags |= FLAG_HAS_PRIMS;
+                self->primIndex = primIndex;
+                prim = &g_PrimBuf[primIndex];
+                self->ext.bloodyZombie.prim = prim;
+            } else {
                 DestroyEntity(self);
                 return;
             }
-            self->primIndex = primIndex;
-            prim = &g_PrimBuf[primIndex];
-            self->ext.bloodyZombie.prim = prim;
-            self->flags |= FLAG_HAS_PRIMS;
             self->step_s++;
         }
 
         if (self->pose < 13) {
             if ((g_Timer % 8) == 0) {
                 PlaySfxPositional(SFX_BLOODY_ZOMBIE_SPLATTER);
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_BLOOD_SPLATTER, self, newEntity);
-                    newEntity->facingLeft = self->ext.bloodyZombie.unk84;
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (tempEntity != NULL) {
+                    CreateEntityFromEntity(E_BLOOD_SPLATTER, self, tempEntity);
+                    tempEntity->facingLeft = self->ext.bloodyZombie.unk84;
                     if (self->facingLeft) {
-                        newEntity->posX.i.hi -= 4;
+                        tempEntity->posX.i.hi -= 4;
                     } else {
-                        newEntity->posX.i.hi += 4;
+                        tempEntity->posX.i.hi += 4;
                     }
-                    newEntity->posY.i.hi += 4;
+                    tempEntity->posY.i.hi += 4;
                 }
                 self->ext.bloodyZombie.unk84 ^= 1;
             }
             self->ext.bloodyZombie.unk80 = 0;
         } else {
-            if (self->ext.bloodyZombie.unk80 == 0) {
+            if (!self->ext.bloodyZombie.unk80) {
                 PlaySfxPositional(SFX_BLOODY_ZOMBIE_SPLATTER);
             }
 
             self->ext.bloodyZombie.unk80++;
-            if ((g_Timer & 3) == 0) {
-                prim = FindFirstUnkPrim2(self->ext.bloodyZombie.prim, 2);
+            if ((g_Timer % 4) == 0) {
+                prim = self->ext.bloodyZombie.prim;
+                prim = FindFirstUnkPrim2(prim, 2);
                 if (prim != NULL) {
                     UnkPolyFunc2(prim);
                     prim->next->r3 = self->ext.bloodyZombie.unk84;
@@ -433,15 +434,15 @@ void EntityBloodyZombie(Entity* self) {
         }
 
         if (!AnimateEntity(anim_die, self)) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (newEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->params = 2;
-                newEntity->posY.i.hi += 16;
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (tempEntity != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                tempEntity->params = 2;
+                tempEntity->posY.i.hi += 16;
                 if (self->facingLeft) {
-                    newEntity->posX.i.hi -= 8;
+                    tempEntity->posX.i.hi -= 8;
                 } else {
-                    newEntity->posX.i.hi += 8;
+                    tempEntity->posX.i.hi += 8;
                 }
             }
             self->ext.bloodyZombie.unk80 = 64;
@@ -462,16 +463,16 @@ void EntityBloodyZombie(Entity* self) {
             }
         }
 
-        if (--self->ext.bloodyZombie.unk80 == 0) {
+        if (!--self->ext.bloodyZombie.unk80) {
             DestroyEntity(self);
         }
         break;
     }
 
-    if (self->animCurFrame > 10 && self->animCurFrame < 13) {
+    if (self->animCurFrame == 11 || self->animCurFrame == 12) {
         self->hitboxWidth = 18;
         self->hitboxHeight = 12;
-        *(s16*)&self->hitboxOffX = -12;
+        self->hitboxOffX = -12;
         self->hitboxOffY = -12;
     } else {
         self->hitboxWidth = 4;

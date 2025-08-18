@@ -157,7 +157,7 @@ void check_macro(int scanCode, enum Spells which, const u8* keyb) {
 void handle_macros(const u8* keyb, u_long* pressed) {
     // put a candle with a subweapon drop in the room
     if (keyb[SDL_SCANCODE_1] && !previousKeyStates[SDL_SCANCODE_1]) {
-        Entity* temp = g_Entities + STAGE_ENTITY_START + 10;
+        Entity* temp = &g_Entities[STAGE_ENTITY_START + 10];
         LayoutEntity l;
         l.posX = 128;
         l.posY = 128;
@@ -170,7 +170,7 @@ void handle_macros(const u8* keyb, u_long* pressed) {
     // simulate hit with zero damage
     // change PLAYER.hitParams to simulate different kind of hits
     if (keyb[SDL_SCANCODE_2] && !previousKeyStates[SDL_SCANCODE_2]) {
-        Entity* temp = g_Entities + STAGE_ENTITY_START + 11;
+        Entity* temp = &g_Entities[STAGE_ENTITY_START + 11];
         temp->posX.i.hi = 128;
         temp->posY.i.hi = 128;
         PLAYER.unkB8 = temp;
@@ -179,7 +179,7 @@ void handle_macros(const u8* keyb, u_long* pressed) {
 
     // simulate instant kill
     if (keyb[SDL_SCANCODE_3] && !previousKeyStates[SDL_SCANCODE_2]) {
-        Entity* temp = g_Entities + STAGE_ENTITY_START + 11;
+        Entity* temp = &g_Entities[STAGE_ENTITY_START + 11];
         temp->posX.i.hi = 128;
         temp->posY.i.hi = 128;
         PLAYER.unkB8 = temp;
@@ -189,7 +189,7 @@ void handle_macros(const u8* keyb, u_long* pressed) {
 
     // simulate prologue kill
     if (keyb[SDL_SCANCODE_4] && !previousKeyStates[SDL_SCANCODE_2]) {
-        Entity* temp = g_Entities + STAGE_ENTITY_START + 11;
+        Entity* temp = &g_Entities[STAGE_ENTITY_START + 11];
         temp->posX.i.hi = 128;
         temp->posY.i.hi = 128;
         PLAYER.unkB8 = temp;

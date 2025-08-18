@@ -1,25 +1,39 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
 
-extern ObjInit D_801820F0[];
-void EntityRoomForeground(Entity* entity) {
-    ObjInit* objInit = &D_801820F0[entity->params];
+static u8 anim1[] = {64, 1, 255, 0};
+static u8 anim2[] = {64, 2, 255, 0};
+static u8 anim3[] = {64, 2, 255, 0};
+static u8 anim4[] = {64, 1, 255, 0};
+static u8 anim5[] = {64, 3, 255, 0};
 
-    if (entity->step == 0) {
+static ObjInit objData[] = {
+    {0x6, 492, 0, 0x0, 0x0, 16, 0, anim1},
+    {0xc, 492, 0, 0x0, 0x0, 16, 0, anim3},
+    {0xc, 128, 0, 0x0, 0x0, 16, 0, anim4},
+    {0x6, 492, 0, 0x0, 0x0, 16, 0, anim2},
+    {0xc, 492, 0, 0x0, 0x0, 16, 0, anim5},
+    {0xc, 128, 0, 0x0, 0x0, 16, 0, anim4},
+};
+
+void EntityRoomForeground(Entity* self) {
+    ObjInit* objInit = &objData[self->params];
+
+    if (!self->step) {
         InitializeEntity(g_EInitCommon);
-        entity->animSet = objInit->animSet;
-        entity->zPriority = objInit->zPriority;
-        entity->unk5A = objInit->unk5A;
-        entity->palette = objInit->palette;
-        entity->drawFlags = objInit->drawFlags;
-        entity->drawMode = objInit->drawMode;
+        self->animSet = objInit->animSet;
+        self->zPriority = objInit->zPriority;
+        self->unk5A = objInit->unk5A;
+        self->palette = objInit->palette;
+        self->drawFlags = objInit->drawFlags;
+        self->drawMode = objInit->drawMode;
         if (objInit->flags != 0) {
-            entity->flags = objInit->flags;
+            self->flags = objInit->flags;
         }
-        if (entity->params >= 5) {
-            entity->rotate = 0x800;
-            entity->drawFlags |= FLAG_DRAW_ROTATE;
+        if (self->params > 4) {
+            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->rotate = 0x800;
         }
     }
-    AnimateEntity(objInit->animFrames, entity);
+    AnimateEntity(objInit->animFrames, self);
 }

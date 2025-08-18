@@ -104,4 +104,9 @@ typedef struct {
     u8 v;
 } uvPair;
 
+typedef struct {
+    f32 x;
+    f32 y;
+} Pos;
+
 #endif

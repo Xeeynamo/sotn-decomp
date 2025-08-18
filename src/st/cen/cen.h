@@ -2,6 +2,8 @@
 #ifndef CEN_H
 #define CEN_H
 
+#define STAGE_IS_CEN
+
 #include "common.h"
 #include "stage.h"
 

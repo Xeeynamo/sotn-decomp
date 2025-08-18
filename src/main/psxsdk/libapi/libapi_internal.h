@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 #ifndef LIBAPI_INTERNAL_H
 #define LIBAPI_INTERNAL_H
 
