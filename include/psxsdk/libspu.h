@@ -36,8 +36,8 @@ typedef void (*SpuIRQCallbackProc)(void);
 #endif
 
 typedef struct {
-    short left;  // left channel
-    short right; // right channel
+    unsigned short left;  // left channel
+    unsigned short right; // right channel
 } SpuVolume;
 
 typedef struct {
