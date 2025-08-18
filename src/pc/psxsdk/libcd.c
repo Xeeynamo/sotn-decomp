@@ -14,7 +14,7 @@ int current_channel = 0;
 
 int CdReading() { return reading; }
 
-long CdReadyCallback(void (*func)(void)) {
+CdlCB CdReadyCallback(CdlCB func) {
     NOT_IMPLEMENTED;
     return func;
 }
@@ -53,7 +53,7 @@ int CdPosToInt(CdlLOC* p) {
            DECODE_BCD(p->sector) - 150;
 }
 
-int CdControl(u_char com, u_char* param, u_char* result) {
+int CdControl(u_char com, u_char* param, Result_t* result) {
     DEBUGF("com %d %s", com, CdSyncModeToStr(com));
     CdlLOC* pos;
 
@@ -78,7 +78,7 @@ int CdControl(u_char com, u_char* param, u_char* result) {
     return 1;
 }
 
-int CdSync(int mode, u_char* result) {
+int CdSync(int mode, Result_t* result) {
     DEBUGF("mode %0d %s", mode, CdSyncModeToStr(mode));
     return CdlComplete;
 }
