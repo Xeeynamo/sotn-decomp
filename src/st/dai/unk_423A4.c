@@ -49,7 +49,7 @@ void func_us_801C23A4(Entity* self) {
         }
         break;
     case 3:
-        self->posY.val -= 0x12000;
+        self->posY.val -= FIX(1.125);
         if (self->posY.val < FIX(129.0)) {
             self->posY.val = FIX(129.0);
             self->step = 16;
