@@ -14,7 +14,7 @@ int current_channel = 0;
 
 int CdReading() { return reading; }
 
-long CdReadyCallback(void (*func)(void)) {
+CdlCB CdReadyCallback(CdlCB func) {
     NOT_IMPLEMENTED;
     return func;
 }
