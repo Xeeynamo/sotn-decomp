@@ -122,7 +122,7 @@ int getintr(void) {
     if (nReg == 0) {
         return 0;
     }
-    
+
     bHasError = 0;
 
     while (nReg != (*libcd_CDRegister3 & 7)) {
@@ -138,24 +138,26 @@ int getintr(void) {
     for (j = i; j < 8; j++) {
         buf.unk0[j] = 0;
     }
-    
+
     *libcd_CDRegister0 = 1;
     *libcd_CDRegister3 = 7;
     *libcd_CDRegister2 = 7;
     if (nReg != 3 || D_80032C68[CD_com]) {
-        if (!(CD_status & CdlStatShellOpen) && (buf.unk0[0] & CdlStatShellOpen)) {
+        if (!(CD_status & CdlStatShellOpen) &&
+            (buf.unk0[0] & CdlStatShellOpen)) {
             CD_nopen++;
         }
         CD_status = buf.unk0[0];
         CD_status1 = buf.unk0[1];
         bHasError = CD_status;
-        bHasError &= (CdlStatError | CdlStatSeekError | CdlStatIdError | CdlStatShellOpen);
-
+        bHasError &= (CdlStatError | CdlStatSeekError | CdlStatIdError |
+                      CdlStatShellOpen);
     }
     if (nReg == 5) {
         puts("DiskError: ");
         if (D_80032AB0 > 0) {
-            printf("com=%s,code=(%02x:%02x)\n", D_80032AC8[CD_com], CD_status, CD_status1);
+            printf("com=%s,code=(%02x:%02x)\n", D_80032AC8[CD_com], CD_status,
+                   CD_status1);
         }
     }
     switch (nReg) {
@@ -202,7 +204,6 @@ int getintr(void) {
         return 0;
     }
 }
-
 
 static inline void callback(void) {
     int interrupt;
