@@ -48,7 +48,7 @@ segments:
       - [0xD48, .rodata, psxsdk/libcd/event]
       - [0xD60, .rodata, psxsdk/libcd/sys]
       - [0xD68, rodata] # referenced indirectly by libcd functions (see 1BCE0.data.s)
-      - [0xEB4, .rodata, psxsdk/libcd/bios]
+      - [0xEA4, .rodata, psxsdk/libcd/bios]
       - [0xFB8, .rodata, psxsdk/libcd/iso9660]
       - [0x11A4, .rodata, psxsdk/libcd/cdread]
       - [0x11E8, .rodata, psxsdk/libcd/c_011]

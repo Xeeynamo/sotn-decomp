@@ -14,6 +14,9 @@ typedef struct Alarm_t {
     char* unk8;
 } Alarm_t;
 
+extern s32 CD_nopen;
+extern s32 D_80032B68[];
+extern s32 D_80032C68[];
 extern volatile unsigned char* D_80032D68;
 extern volatile unsigned char* D_80032D6C;
 extern volatile unsigned char* D_80032D70;
@@ -33,6 +36,7 @@ extern volatile int* D_80032DAC;
 extern int CD_TestParmNum;
 extern char D_80039260[];
 extern char D_80039268[];
+extern char D_80039270[];
 extern volatile Alarm_t Alarm;
 extern u8 CD_pos[];
 extern s32 D_80032AB0;
@@ -40,17 +44,6 @@ extern char* D_80032AC8[];
 extern char* D_80032B48[];
 extern s32 D_80032BE8[];
 extern s32 D_80032CE8[];
-extern s8 aCdTimeout;
-
-// this is a string constant in several of the
-// uncompiled functions below
-const char D_800106B4[] = "%s:(%s) Sync=%s, Ready=%s\n";
-
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", getintr);
-
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_sync);
-
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_ready);
 
 static inline void _memcpy(void* _dst, void* _src, u32 _size) {
     char* pDst = (char*)_dst;
@@ -65,6 +58,28 @@ static inline void _memcpy(void* _dst, void* _src, u32 _size) {
     }
 }
 
+static inline void set_alarm(char* name) {
+    // schedule timeout for 960 vblanks from now
+    ((Alarm_t*)&Alarm)->unk0 = VSync(-1) + 960;
+    ((Alarm_t*)&Alarm)->unk4 = 0;
+    ((Alarm_t*)&Alarm)->unk8 = name;
+}
+
+static inline int get_alarm(void) {
+    if (((Alarm_t*)&Alarm)->unk0 < VSync(-1) ||
+        ((Alarm_t*)&Alarm)->unk4++ > 0x3C0000) {
+        puts("CD timeout: ");
+        printf("%s:(%s) Sync=%s, Ready=%s\n", ((Alarm_t*)&Alarm)->unk8,
+               D_80032AC8[CD_com], D_80032B48[D_80032D80.sync],
+               D_80032B48[D_80032D80.ready]);
+        CD_flush();
+        return -1;
+    }
+    return 0;
+}
+
+INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", getintr);
+
 static inline void callback(void) {
     int interrupt;
     unsigned char temp_s1;
@@ -77,36 +92,76 @@ static inline void callback(void) {
             break;
         }
 
-        if (interrupt & 4 && CD_cbready != NULL) {
+        if ((interrupt & 4) && CD_cbready != NULL) {
             CD_cbready(D_80032D80.ready, &D_80039268);
         }
-        if (interrupt & 2 && (CD_cbsync != NULL)) {
+        if ((interrupt & 2) && CD_cbsync != NULL) {
             CD_cbsync(D_80032D80.sync, &D_80039260);
         }
     }
     *D_80032D68 = temp_s1;
 }
 
-static inline void set_alarm(char* name) {
-    // schedule timeout for 960 vblanks from now
-    ((Alarm_t*)&Alarm)->unk0 = VSync(-1) + 960;
-    ((Alarm_t*)&Alarm)->unk4 = 0;
-    ((Alarm_t*)&Alarm)->unk8 = name;
-}
+int CD_sync(int mode, unsigned char* result) {
+    s32 i;
+    s32 sync;
 
-static inline int get_alarm(void) {
-    if (((Alarm_t*)&Alarm)->unk0 < VSync(-1) ||
-        ((Alarm_t*)&Alarm)->unk4++ > 0x3C0000) {
-        puts(&aCdTimeout);
-        printf(D_800106B4, ((Alarm_t*)&Alarm)->unk8, D_80032AC8[CD_com],
-               D_80032B48[D_80032D80.sync], D_80032B48[D_80032D80.ready]);
-        CD_flush();
-        return -1;
+    set_alarm("CD_sync");
+
+    while (true) {
+        if (get_alarm()) {
+            return -1;
+        }
+
+        if (CheckCallback()) {
+            callback();
+        }
+
+        sync = D_80032D80.sync;
+        if (sync == 2 || sync == 5) {
+            D_80032D80.sync = 2;
+            _memcpy(result, D_80039260, 8);
+            return sync;
+        }
+
+        if (mode != 0) {
+            return 0;
+        }
     }
-    return 0;
 }
 
-s32 CD_cw(u8 com, u8* param, u8* arg2, s32 arg3) {
+s32 CD_ready(s32 arg0, u8* arg1) {
+    s32 i;
+    s32 c;
+    s32 ready;
+
+    set_alarm("CD_ready");
+    while (true) {
+        if (get_alarm()) {
+            return -1;
+        }
+        if (CheckCallback()) {
+            callback();
+        }
+        c = D_80032D80.c;
+        if (c != 0) {
+            D_80032D80.c = 0;
+            _memcpy(arg1, D_80039270, 8);
+            return c;
+        }
+        ready = D_80032D80.ready;
+        if (ready != 0) {
+            D_80032D80.ready = 0;
+            _memcpy(arg1, D_80039268, 8);
+            return ready;
+        }
+        if (arg0 != 0) {
+            return 0;
+        }
+    }
+}
+
+int CD_cw(u8 com, u8* param, u8* arg2, s32 arg3) {
     s32 i;
 
     if (D_80032AB0 > 1) {
@@ -247,26 +302,45 @@ int CD_init(void) {
     *D_80032D74 = 0;
     *D_80032D78 = 0x1325;
 
-    CD_cw(1U, NULL, NULL, 0);
+    CD_cw(CdlNop, NULL, NULL, 0);
     if (CD_status & 0x10) {
-        CD_cw(1U, NULL, NULL, 0);
+        CD_cw(CdlNop, NULL, NULL, 0);
     }
 
-    if (CD_cw(0xAU, NULL, NULL, 0) != 0) {
+    if (CD_cw(CdlInit, NULL, NULL, 0)) {
         return -1;
     }
 
-    if (CD_cw(0xCU, NULL, NULL, 0) != 0) {
+    if (CD_cw(CdlDemute, NULL, NULL, 0)) {
         return -1;
     }
 
-    if (CD_sync(0, 0) != 2) {
+    if (CD_sync(0, 0) != CdlComplete) {
         return -1;
     }
     return 0;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/bios", CD_datasync);
+int CD_datasync(int mode) {
+    int ret;
+
+    set_alarm("CD_datasync");
+    while (true) {
+        if (get_alarm()) {
+            ret = -1;
+            break;
+        }
+        if (!(*D_80032DAC & 0x01000000)) {
+            ret = 0;
+            break;
+        }
+        if (mode != 0) {
+            ret = 1;
+            break;
+        }
+    }
+    return ret;
+}
 
 int CD_getsector(void* buffer, size_t size) {
     *D_80032D68 = 0;

@@ -51,11 +51,12 @@ typedef struct {
 #define CdlStandby 0x07
 #define CdlStop 0x08
 #define CdlPause 0x09
-#define CdlMute 0x0b
-#define CdlDemute 0x0c
-#define CdlSetfilter 0x0d
-#define CdlSetmode 0x0e
-#define CdlGetparam 0x0f
+#define CdlInit 0x0A
+#define CdlMute 0x0B
+#define CdlDemute 0x0C
+#define CdlSetfilter 0x0D
+#define CdlSetmode 0x0E
+#define CdlGetparam 0x0F
 #define CdlGetlocL 0x10
 #define CdlGetlocP 0x11
 #define CdlGetTN 0x13
