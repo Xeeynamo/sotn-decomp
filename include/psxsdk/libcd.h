@@ -120,14 +120,19 @@ typedef struct {
     char name[16]; /* file name (body) */
 } CdlFILE;
 
-typedef void (*CdlCB)(u_char, u_char*);
+typedef struct Result_t {
+    int unk0;
+    int unk4;
+} Result_t;
 
-void def_cbsync(u_char intr, u_char* result);
-void def_cbready(u_char intr, u_char* result);
-void def_cbread(u_char intr, u_char* result);
+typedef void (*CdlCB)(u_char, Result_t*);
+
+void def_cbsync(u_char intr, Result_t* result);
+void def_cbready(u_char intr, Result_t* result);
+void def_cbread(u_char intr, Result_t* result);
 
 int CdInit(void);
-int CdStatus(void);
+char CdStatus(void);
 int CdMode(void);
 int CdLastCom(void);
 int CdReset(int mode);
@@ -135,14 +140,14 @@ void CdFlush(void);
 int CdSetDebug(int level);
 char* CdComstr(u_char com);
 char* CdIntstr(u_char intr);
-int CdSync(int mode, u_char* result);
-int CdReady(int mode, u_char* result);
+int CdSync(int mode, Result_t* result);
+int CdReady(int mode, Result_t* result);
 long CdSyncCallback(void (*func)(void));
 long CdReadyCallback(void (*func)(void));
 
 // Issues direct primitive commands to the CD-ROM subsystem
-int CdControl(u_char com, u_char* param, u_char* result);
-int CdControlB(u_char com, u_char* param, u_char* result);
+int CdControl(u_char com, u_char* param, Result_t* result);
+int CdControlB(u_char com, u_char* param, Result_t* result);
 int CdControlF(u_char com, u_char* param);
 
 /*

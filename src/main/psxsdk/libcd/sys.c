@@ -2,19 +2,22 @@
 #include "libcd_internal.h"
 #include <common.h>
 
+#include "registers.h"
+
 extern CdlCB CD_cbready;
 extern CdlCB CD_cbsync;
-extern unsigned char CD_status;
+extern int CD_status;
 extern unsigned char CD_mode;
 extern unsigned char CD_com;
 extern unsigned char CD_pos[];
-
-extern s32 D_80032A24[];
-extern s32 D_80032AB0;
+extern int D_80032AB0;
 extern char* D_80032AC8[];
 extern char* D_80032B48[];
 
-int CdStatus(void) { return CD_status; }
+static int D_80032A24[] = {0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+                           0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0};
+
+inline char CdStatus(void) { return CD_status; }
 
 int CdMode(void) { return CD_mode; }
 
@@ -32,7 +35,7 @@ int CdReset(int mode) {
         return 0;
     }
 
-    if (mode == 1 && CD_initvol() != 0) {
+    if (mode == 1 && CD_initvol()) {
         return 0;
     }
 
@@ -64,9 +67,9 @@ char* CdIntstr(u8 intr) {
     return D_80032B48[intr];
 }
 
-int CdSync(int mode, u_char* result) { return CD_sync(mode, result); }
+int CdSync(int mode, Result_t* result) { return CD_sync(mode, result); }
 
-int CdReady(int mode, u_char* result) { return CD_ready(mode, result); }
+int CdReady(int mode, Result_t* result) { return CD_ready(mode, result); }
 
 long CdSyncCallback(void (*func)(void)) {
     CdlCB old = CD_cbsync;
@@ -80,20 +83,20 @@ long CdReadyCallback(void (*func)(void)) {
     return old;
 }
 
-static inline cd_cw(u8 com, u8* param, u8* result, s32 arg3) {
+static inline cd_cw(u8 com, u8* param, Result_t* result, s32 arg3) {
     s32 i;
 
     CdlCB old = CD_cbsync;
 
     for (i = 3; i != -1; i--) {
         CD_cbsync = NULL;
-        if (com != CdlNop && (CD_status & 0x10)) {
+        if (com != CdlNop && (CdStatus() & 0x10)) {
             CD_cw(CdlNop, NULL, NULL, 0);
         }
-        if ((param == NULL) || (D_80032A24[com] == 0) ||
-            (CD_cw(CdlSetloc, param, result, 0) == 0)) {
+        if (param == NULL || D_80032A24[com] == 0 ||
+            !CD_cw(CdlSetloc, param, result, 0)) {
             CD_cbsync = old;
-            if (CD_cw(com, param, result, arg3) == 0) {
+            if (!CD_cw(com, param, result, arg3)) {
                 return 0;
             }
         }
@@ -103,13 +106,13 @@ static inline cd_cw(u8 com, u8* param, u8* result, s32 arg3) {
     return -1;
 }
 
-int CdControl(u8 com, u8* param, u8* result) {
+int CdControl(u8 com, u8* param, Result_t* result) {
     return cd_cw(com, param, result, 0) == 0;
 }
 
 int CdControlF(u8 com, u8* param) { return cd_cw(com, param, NULL, 1) == 0; }
 
-int CdControlB(u8 com, u8* param, u8* result) {
+int CdControlB(u8 com, u8* param, Result_t* result) {
     if (cd_cw(com, param, result, 0)) {
         return 0;
     }

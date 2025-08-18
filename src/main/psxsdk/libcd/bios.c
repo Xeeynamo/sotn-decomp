@@ -11,7 +11,7 @@ typedef struct {
 
 typedef struct {
     CD_intr* intr;
-    unsigned char** unk4;
+    Result_t* result;
     unsigned char* cd_com;
     int* cd_status;
     unsigned char** cd_pos;
@@ -24,19 +24,18 @@ typedef struct Alarm_t {
     char* unk8;
 } Alarm_t;
 
-extern char D_80039260[];
-extern char D_80039268[];
-extern char D_80039270[];
-extern volatile Alarm_t Alarm;
+Result_t D_80039260;
+Result_t D_80039268;
+Result_t D_80039270;
+volatile Alarm_t Alarm;
 
-extern CdlCB CD_cbsync;
-extern CdlCB CD_cbready;
-extern int D_80032AB0;
-// TODO: CD_status is a word here, but a byte in sys.c
-extern int CD_status;
-extern int CD_status1;
-extern int CD_nopen;
-
+CdlCB CD_cbsync = NULL;
+CdlCB CD_cbready = NULL;
+STATIC_PAD_DATA(4);
+int D_80032AB0 = 0;
+int CD_status = 0;
+int CD_status1 = 0;
+int CD_nopen = 0;
 unsigned char CD_pos[] = {2, 0, 0, 0};
 unsigned char CD_mode = 0;
 unsigned char CD_com = 0;
@@ -134,7 +133,7 @@ static inline void callback(void) {
     *libcd_CDRegister0 = temp_s1;
 }
 
-int CD_sync(int mode, unsigned char* result) {
+int CD_sync(int mode, Result_t* result) {
     s32 i;
     s32 sync;
 
@@ -152,7 +151,7 @@ int CD_sync(int mode, unsigned char* result) {
         sync = Intr.sync;
         if (sync == 2 || sync == 5) {
             Intr.sync = 2;
-            _memcpy(result, D_80039260, 8);
+            _memcpy(result, &D_80039260, sizeof(Result_t));
             return sync;
         }
 
@@ -162,7 +161,7 @@ int CD_sync(int mode, unsigned char* result) {
     }
 }
 
-s32 CD_ready(s32 arg0, u8* arg1) {
+int CD_ready(int mode, Result_t* result) {
     s32 i;
     s32 c;
     s32 ready;
@@ -178,22 +177,22 @@ s32 CD_ready(s32 arg0, u8* arg1) {
         c = Intr.c;
         if (c != 0) {
             Intr.c = 0;
-            _memcpy(arg1, D_80039270, 8);
+            _memcpy(result, &D_80039270, sizeof(Result_t));
             return c;
         }
         ready = Intr.ready;
         if (ready != 0) {
             Intr.ready = 0;
-            _memcpy(arg1, D_80039268, 8);
+            _memcpy(result, &D_80039268, sizeof(Result_t));
             return ready;
         }
-        if (arg0 != 0) {
+        if (mode != 0) {
             return 0;
         }
     }
 }
 
-int CD_cw(u8 com, u8* param, u8* arg2, s32 arg3) {
+int CD_cw(u8 com, u8* param, Result_t* result, s32 arg3) {
     s32 i;
 
     if (D_80032AB0 > 1) {
@@ -239,7 +238,7 @@ int CD_cw(u8 com, u8* param, u8* arg2, s32 arg3) {
         CD_mode = *param;
     }
 
-    _memcpy(arg2, D_80039260, 8);
+    _memcpy(result, &D_80039260, sizeof(Result_t));
 
     return -(Intr.sync == 5);
 }
@@ -307,7 +306,7 @@ void CD_initintr(void) {
 
 static CD_init_struct D_80032D84 = {
     .intr = &Intr,
-    .unk4 = &D_80039260,
+    .result = &D_80039260,
     .cd_com = &CD_com,
     .cd_status = &CD_status,
     .cd_pos = &CD_pos,
