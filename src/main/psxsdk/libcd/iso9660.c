@@ -45,7 +45,7 @@ CdlFILE* CdSearchFile(CdlFILE* fp, char* name) {
             break;
         }
     }
-    out:
+out:
     if (i >= 8) {
         if (D_80032AB0 > 0) {
             printf("%s: path level (%d) error\n", name, i);
