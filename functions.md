@@ -1424,7 +1424,7 @@
 | np3   | func_pspeu_092414D0                      |       98 |         12 |        |                                 |       |
 | st0   | func_pspeu_09248AA8                      |       98 |         12 |        |                                 |       |
 | wrp   | func_psp_09238128                        |       98 |         12 |        |                                 |       |
-| dai   | func_us_801C3644                         |       98 |         18 |        | https://decomp.me/scratch/rQpVp | 0.994 |
+| dai   | func_us_801C3644                         |       98 |         18 |        | https://decomp.me/scratch/rQpVp | 0.992 |
 | cat   | EntityExplosion                          |       99 |          9 |        | https://decomp.me/scratch/CfU6H | 1.0   |
 | chi   | EntityExplosion                          |       99 |          9 |        | https://decomp.me/scratch/CfU6H | 1.0   |
 | dai   | EntityExplosion                          |       99 |          9 |        | https://decomp.me/scratch/CfU6H | 1.0   |
