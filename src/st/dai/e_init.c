@@ -53,8 +53,8 @@ void func_us_801C3ED8(Entity* self);
 void func_us_801D2FA4(Entity* self);
 void func_us_801D36EC(Entity* self);
 void EntitySkeletonPieces(Entity* self);
-void func_us_801D37C4(Entity* self);
-void func_us_801D3A40(Entity* self);
+void EntityWingedGuard(Entity* self);
+void EntityWingedGuardParts(Entity* self);
 void EntityBat(Entity* self);
 void EntityBlackCrow(Entity* self);
 void EntityBlueRaven(Entity* self);
@@ -66,7 +66,7 @@ void func_us_801D636C(Entity* self);
 void func_us_801D64A0(Entity* self);
 void func_us_801D6FC8(Entity* self);
 void func_us_801D70A0(Entity* self);
-void func_us_801D3BD4(Entity* self);
+void EntityWingedGuardSpawner(Entity* self);
 void EntitySealedDoor(Entity* self);
 void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
 void OVL_EXPORT(EntityCutscene)(Entity* self);
@@ -127,8 +127,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D2FA4,
     func_us_801D36EC,
     EntitySkeletonPieces,
-    func_us_801D37C4,
-    func_us_801D3A40,
+    EntityWingedGuard,
+    EntityWingedGuardParts,
     EntityBat,
     EntityBlackCrow,
     EntityBlueRaven,
@@ -140,7 +140,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D64A0,
     func_us_801D6FC8,
     func_us_801D70A0,
-    func_us_801D3BD4,
+    EntityWingedGuardSpawner,
     EntitySealedDoor,
     OVL_EXPORT(EntityBreakableDebris),
     OVL_EXPORT(EntityCutscene),
@@ -173,8 +173,8 @@ EInit g_EInitBonePillarSpikeBall = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 185};
 EInit D_us_80180A28 = {ANIMSET_OVL(7), 1, 72, PAL_UNK_22A, 118};
 EInit D_us_80180A34 = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
-EInit D_us_80180A40 = {ANIMSET_OVL(8), 0, 75, PAL_UNK_22B, 128};
-EInit D_us_80180A4C = {ANIMSET_OVL(8), 0, 75, PAL_UNK_22B, 3};
+EInit g_EInitWingedGuard = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 128};
+EInit g_EInitWingedGuardParts = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 3};
 EInit g_EInitBat = {ANIMSET_OVL(9), 0, 74, PAL_BAT, 64};
 EInit g_EInitBlueRaven = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 114};
 EInit g_EInitBlackCrow = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 115};
