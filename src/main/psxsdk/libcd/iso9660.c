@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
+#include "libcd_internal.h"
 #include "common.h"
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/iso9660", CdSearchFile);
 
-s32 strncmp(const char* str1, const char* str2, size_t num);
-
-s32 _cmp(const char* str1, const char* str2) {
+int _cmp(const char* str1, const char* str2) {
     return strncmp(str1, str2, 0xC) == 0;
 }
 
@@ -15,12 +14,17 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/iso9660", CD_searchdir);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/iso9660", CD_cachefile);
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/iso9660", cd_read);
+int cd_read(int sectors, int arg1, u_long* buf) {
+    CdlLOC p;
 
-void cd_memcpy(unsigned char* dst, unsigned char* src, int size) {
-    int i;
+    CdIntToPos(arg1, &p);
+    CdControl(CdlSetloc, &p.minute, NULL);
+    CdRead(sectors, buf, CdlModeSpeed | CdlModeSpeedNormal);
+    return CdReadSync(0, NULL) == 0;
+}
 
-    for (i = size - 1; i != -1; i--) {
+void cd_memcpy(char* dst, char* src, size_t size) {
+    while (size--) {
         *dst++ = *src++;
     }
 }

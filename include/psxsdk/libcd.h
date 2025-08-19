@@ -42,6 +42,7 @@ typedef struct {
 /*
  * CD-ROM Primitive Commands
  */
+#define CdlSync 0x00
 #define CdlNop 0x01
 #define CdlSetloc 0x02
 #define CdlPlay 0x03
@@ -51,11 +52,12 @@ typedef struct {
 #define CdlStandby 0x07
 #define CdlStop 0x08
 #define CdlPause 0x09
-#define CdlMute 0x0b
-#define CdlDemute 0x0c
-#define CdlSetfilter 0x0d
-#define CdlSetmode 0x0e
-#define CdlGetparam 0x0f
+#define CdlReset 0x0A
+#define CdlMute 0x0B
+#define CdlDemute 0x0C
+#define CdlSetfilter 0x0D
+#define CdlSetmode 0x0E
+#define CdlGetparam 0x0F
 #define CdlGetlocL 0x10
 #define CdlGetlocP 0x11
 #define CdlGetTN 0x13
@@ -98,6 +100,7 @@ typedef struct {
 #define CdlStatSeek 0x40      /* seeking */
 #define CdlStatRead 0x20      /* reading data sectors */
 #define CdlStatShellOpen 0x10 /* once shell open */
+#define CdlStatIdError 0x08   /* rejected due to being unlicensed */
 #define CdlStatSeekError 0x04 /* seek error detected */
 #define CdlStatStandby 0x02   /* spindle motor rotating */
 #define CdlStatError 0x01     /* command error detected */
@@ -118,14 +121,18 @@ typedef struct {
     char name[16]; /* file name (body) */
 } CdlFILE;
 
-typedef void (*CdlCB)(u_char, u_char*);
+typedef struct Result_t {
+    char unk0[8];
+} Result_t;
 
-void def_cbsync(u_char intr, u_char* result);
-void def_cbready(u_char intr, u_char* result);
-void def_cbread(u_char intr, u_char* result);
+typedef void (*CdlCB)(u_char, Result_t*);
+
+void def_cbsync(u_char intr, Result_t* result);
+void def_cbready(u_char intr, Result_t* result);
+void def_cbread(u_char intr, Result_t* result);
 
 int CdInit(void);
-int CdStatus(void);
+char CdStatus(void);
 int CdMode(void);
 int CdLastCom(void);
 int CdReset(int mode);
@@ -133,14 +140,14 @@ void CdFlush(void);
 int CdSetDebug(int level);
 char* CdComstr(u_char com);
 char* CdIntstr(u_char intr);
-int CdSync(int mode, u_char* result);
-int CdReady(int mode, u_char* result);
-long CdSyncCallback(void (*func)(void));
-long CdReadyCallback(void (*func)(void));
+int CdSync(int mode, Result_t* result);
+int CdReady(int mode, Result_t* result);
+CdlCB CdSyncCallback(CdlCB func);
+CdlCB CdReadyCallback(CdlCB func);
 
 // Issues direct primitive commands to the CD-ROM subsystem
-int CdControl(u_char com, u_char* param, u_char* result);
-int CdControlB(u_char com, u_char* param, u_char* result);
+int CdControl(u_char com, u_char* param, Result_t* result);
+int CdControlB(u_char com, u_char* param, Result_t* result);
 int CdControlF(u_char com, u_char* param);
 
 /*
