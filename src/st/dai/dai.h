@@ -58,7 +58,7 @@ enum OVL_EXPORT(Palette) {
     PAL_BONE_PILLAR = 0x216,
     PAL_BONE_PILLAR_FIRE = 0x221,
     PAL_UNK_22A = 0x22A,
-    PAL_UNK_22B = 0x22B,
+    PAL_WINGED_GUARD = 0x22B,
     PAL_BAT = 0x22C,
     PAL_CROW = 0x22F,
     PAL_UNK_232 = 0x232,
@@ -127,8 +127,8 @@ enum OVL_EXPORT(Entities) {
     E_UNK_32,                 // func_us_801D2FA4,
     E_UNK_33,                 // func_us_801D36EC,
     E_SKELETON_PIECES,        // EntitySkeletonPieces,
-    E_UNK_35,                 // func_us_801D37C4,
-    E_UNK_36,                 // func_us_801D3A40,
+    E_WINGED_GUARD,           // EntityWingedGuard,
+    E_WINGED_GUARD_PARTS,     // EntityWingedGuardParts,
     E_BAT,                    // EntityBat,
     E_BLACK_CROW,             // EntityBlackCrow,
     E_BLUE_CROW,              // EntityBlueRaven,
@@ -140,7 +140,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_3F,                 // func_us_801D64A0,
     E_UNK_40,                 // func_us_801D6FC8,
     E_UNK_41,                 // func_us_801D70A0,
-    E_UNK_42,                 // func_us_801D3BD4,
+    E_UNK_42,                 // EntityWingedGuardSpawner,
     E_SEALED_DOOR,            // EntitySealedDoor,
     E_BREAKABLE_DEBRIS,       // EntityBreakableDebris,
     E_CUTSCENE,               // DAI_EntityCutscene,
@@ -173,8 +173,8 @@ extern EInit g_EInitBonePillarFireBreath;
 extern EInit g_EInitBonePillarSpikeBall;
 extern EInit D_us_80180A28;
 extern EInit D_us_80180A34;
-extern EInit D_us_80180A40;
-extern EInit D_us_80180A4C;
+extern EInit g_EInitWingedGuard;
+extern EInit g_EInitWingedGuardParts;
 extern EInit g_EInitBat;
 extern EInit g_EInitBlueRaven;
 extern EInit g_EInitBlackCrow;
