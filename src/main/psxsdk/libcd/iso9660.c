@@ -18,9 +18,9 @@ int cd_read(int sectors, int arg1, u_long* buf) {
     CdlLOC p;
 
     CdIntToPos(arg1, &p);
-    CdControl(CdlSetloc, &p.minute, NULL);
+    CdControl(CdlSetloc, &p, NULL);
     CdRead(sectors, buf, CdlModeSpeed | CdlModeSpeedNormal);
-    return CdReadSync(0, NULL) == 0;
+    return CdReadSync(CdlSync, NULL) == 0;
 }
 
 void cd_memcpy(char* dst, char* src, size_t size) {
