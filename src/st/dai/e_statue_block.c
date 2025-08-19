@@ -2,11 +2,11 @@
 #include "dai.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(STATUE_BLOCK);
+extern s32 E_ID(STATUE);
 #endif
 static s16 g_sensors[] = {0, -15, 0, 0};
 
-void func_us_801C0F8C(Entity* self) {
+void EntityBlock(Entity* self) {
     u32 collision;
     Entity* entity;
     Entity* playerPtr;
@@ -21,7 +21,7 @@ void func_us_801C0F8C(Entity* self) {
             self->step = 16;
         } else {
             entity = self + 1;
-            CreateEntityFromEntity(E_ID(STATUE_BLOCK), self, entity);
+            CreateEntityFromEntity(E_ID(STATUE), self, entity);
             entity->posX.i.hi += 16;
             entity->posY.i.hi += 16;
         case 1:
@@ -61,7 +61,7 @@ void func_us_801C0F8C(Entity* self) {
     collision = GetPlayerCollisionWith(self, 16, 48, 7);
 }
 
-void func_us_801C1184(Entity* self) {
+void EntityStatue(Entity* self) {
     Entity* entity;
 
     if (!self->step) {
@@ -81,7 +81,7 @@ void func_us_801C1184(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(2, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->posX.i.hi -= 8;
             entity->posY.i.hi -= 8;
             entity->params = 1;

@@ -25,8 +25,8 @@ void EntityGreyPuff(Entity* self);
 void func_us_801C0BA4(Entity* self);
 void func_us_801D97D0(Entity* self);
 void func_us_801D9F5C(Entity* self);
-void func_us_801C0F8C(Entity* self);
-void func_us_801C1184(Entity* self);
+void EntityBlock(Entity* self);
+void EntityStatue(Entity* self);
 void func_us_801C1298(Entity* self);
 void func_us_801C1EE4(Entity* self);
 void func_us_801C2068(Entity* self);
@@ -99,8 +99,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C0BA4,
     func_us_801D97D0,
     func_us_801D9F5C,
-    func_us_801C0F8C,
-    func_us_801C1184,
+    EntityBlock,
+    EntityStatue,
     func_us_801C1298,
     func_us_801C1EE4,
     func_us_801C2068,
