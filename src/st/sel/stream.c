@@ -12,7 +12,7 @@ s32 StreamDiskIsReady() {
     int ret;
 
     // if CD data isn't ready
-    if (CdSync(1, &res) == CdlNoIntr) {
+    if (CdSync(CdlNop, &res) == CdlNoIntr) {
         return g_StreamDiskIsReady = 0;
     }
 

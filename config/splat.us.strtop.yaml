@@ -1,0 +1,91 @@
+options:
+  platform: psx
+  basename: strtop
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/RTOP/RTOP.BIN
+  asm_path: asm/us/st/rtop
+  asset_path: assets/st/rtop
+  src_path: src/st/rtop
+  ld_script_path: build/us/strtop.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.strtop.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.strtop.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.strtop.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x80010000
+sha1: 8796aac904d02e06219fc1949b52b8ddfa5d522b
+segments:
+  - name: strtop
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x40, data, header]
+      - [0x4A4, .data, e_init]
+      - [0x608, .data, e_room_bg]
+      - [0x640, .data, e_red_door_tiles]
+      - [0x670, .data, e_lock_camera]
+      - [0x6B8, data, e_breakable]
+      - [0x790, data]
+      - [0x910, .data, st_update]
+      - [0x95C, .data, collision]
+      - [0xD1C, .data, e_red_door]
+      - [0xD34, .data, st_common]
+      - [0xF34, .data, e_collect]
+      - [0x1288, .data, e_misc]
+      - [0x1340, .data, e_particles]
+      - [0x13C0, .data, e_room_fg]
+      - [0x144C, data]
+      - [0x1FC14, .rodata, e_richter_fight_trigger]
+      - [0x1FC2C, .rodata, e_breakable]
+      - [0x1FC4C, .rodata, 20B48]
+      - [0x1FC8C, .rodata, e_red_door]
+      - [0x1FCA4, .rodata, e_collect]
+      - [0x1FD78, .rodata, e_stage_name]
+      - [0x1FDAC, .rodata, e_yorick]
+      - [0x1FDD0, .rodata, e_skull_lord]
+      - [0x1FDF4, .rodata, prim_helpers]
+      - [0x1FDFC, c, e_room_bg]
+      - [0x1FEDC, c, e_lock_camera]
+      - [0x203A8, c, e_richter_fight_trigger]
+      - [0x204E8, c, e_breakable]
+      - [0x20B48, c]
+      - [0x224F4, c, st_update]
+      - [0x22928, c, collision]
+      - [0x240E4, c, create_entity]
+      - [0x24C5C, c, e_red_door]
+      - [0x2590C, c, st_common]
+      - [0x26DBC, c, e_collect]
+      - [0x2972C, c, e_misc]
+      - [0x2BAC8, c, e_stage_name]
+      - [0x2C91C, c, e_particles]
+      - [0x2D160, c, e_room_fg]
+      - [0x2D24C, c, popup]
+      - [0x2D57C, c, e_tombstone]
+      - [0x2D800, c, e_yorick]
+      - [0x2E19C, c, e_skull_lord]
+      - [0x2F028, c, prim_helpers]
+      - [0x2F858, c, e_clock_tower]
+      - [0x30460, .bss, create_entity]
+      - [0x30470, bss]
+      - [0x310DC, .bss, e_collect]
+  - [0x3111C]

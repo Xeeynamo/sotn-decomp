@@ -293,6 +293,7 @@ force_symbols: ##@ Extract a full list of symbols from a successful build
 	$(PYTHON) ./tools/symbols.py elf build/us/stst0.elf > config/symbols.us.stst0.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/sttop.elf > config/symbols.us.sttop.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/stwrp.elf > config/symbols.us.stwrp.txt
+	$(PYTHON) ./tools/symbols.py elf build/us/strtop.elf > config/symbols.us.strtop.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/strwrp.elf > config/symbols.us.strwrp.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/bomar.elf > config/symbols.us.bomar.txt
 	$(PYTHON) ./tools/symbols.py elf build/us/bobo4.elf > config/symbols.us.bobo4.txt
@@ -352,19 +353,25 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/F_NP3.BIN $(DISK_DIR)/ST/NP3/F_NP3.BIN
 	cp $(BUILD_DIR)/NZ0.BIN $(DISK_DIR)/ST/NZ0/NZ0.BIN
 	cp $(BUILD_DIR)/F_NZ0.BIN $(DISK_DIR)/ST/NZ0/F_NZ0.BIN
-	cp $(BUILD_DIR)/RWRP.BIN $(DISK_DIR)/ST/RWRP/RWRP.BIN
-	cp $(BUILD_DIR)/F_RWRP.BIN $(DISK_DIR)/ST/RWRP/F_RWRP.BIN
 	cp $(BUILD_DIR)/SEL.BIN $(DISK_DIR)/ST/SEL/SEL.BIN
 	cp $(BUILD_DIR)/ST0.BIN $(DISK_DIR)/ST/ST0/ST0.BIN
 	cp $(BUILD_DIR)/F_ST0.BIN $(DISK_DIR)/ST/ST0/F_ST0.BIN
+	cp $(BUILD_DIR)/TOP.BIN $(DISK_DIR)/ST/TOP/TOP.BIN
+	cp $(BUILD_DIR)/F_TOP.BIN $(DISK_DIR)/ST/TOP/F_TOP.BIN
 	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
 	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
+	cp $(BUILD_DIR)/RTOP.BIN $(DISK_DIR)/ST/RTOP/RTOP.BIN
+	cp $(BUILD_DIR)/F_RTOP.BIN $(DISK_DIR)/ST/RTOP/F_RTOP.BIN
+	cp $(BUILD_DIR)/RWRP.BIN $(DISK_DIR)/ST/RWRP/RWRP.BIN
+	cp $(BUILD_DIR)/F_RWRP.BIN $(DISK_DIR)/ST/RWRP/F_RWRP.BIN
 	cp $(BUILD_DIR)/MAR.BIN $(DISK_DIR)/BOSS/MAR/MAR.BIN
 	cp $(BUILD_DIR)/F_MAR.BIN $(DISK_DIR)/BOSS/MAR/F_MAR.BIN
 	cp $(BUILD_DIR)/BO4.BIN $(DISK_DIR)/BOSS/BO4/BO4.BIN
 	cp $(BUILD_DIR)/F_BO4.BIN $(DISK_DIR)/BOSS/BO4/F_BO4.BIN
 	cp $(BUILD_DIR)/RBO3.BIN $(DISK_DIR)/BOSS/RBO3/RBO3.BIN
 	cp $(BUILD_DIR)/F_RBO3.BIN $(DISK_DIR)/BOSS/RBO3/F_RBO3.BIN
+	cp $(BUILD_DIR)/RBO5.BIN $(DISK_DIR)/BOSS/RBO5/RBO5.BIN
+	cp $(BUILD_DIR)/F_RBO5.BIN $(DISK_DIR)/BOSS/RBO5/F_RBO5.BIN
 	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
 	cp $(BUILD_DIR)/TT_001.BIN $(DISK_DIR)/SERVANT/TT_001.BIN
 	cp $(BUILD_DIR)/TT_002.BIN $(DISK_DIR)/SERVANT/TT_002.BIN
