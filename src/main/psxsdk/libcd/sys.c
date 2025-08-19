@@ -116,7 +116,7 @@ int CdControlB(u8 com, u8* param, Result_t* result) {
     if (cd_cw(com, param, result, 0)) {
         return 0;
     }
-    return CD_sync(0, result) == 2;
+    return CD_sync(CdlSync, result) == CdlComplete;
 }
 
 int CdMix(CdlATV* vol) {
