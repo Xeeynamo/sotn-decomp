@@ -73,7 +73,7 @@ segments:
       - [0x19EA0, c, dai/e_breakable]
       - [0x1A770, c, dai/unk_40BA4]
       - [0x1ADC8, c, dai/unk_434FC]
-      - [0x1AF48, c, dai_psp/e_chair]
+      - [0x1AF48, c, dai/e_chair]
       - [0x1B400, c, dai_psp/unk_41EE4]
       - [0x1BAB8, c, dai/cutscene_init]
       - [0x1C3F0, c, dai/e_cutscene_psp]
@@ -118,7 +118,7 @@ segments:
       - [0x36BF0, data, dai/e_cutscene_data]
       - [0x386F0, data]
       - [0x5ED00, .data, dai/header]
-      - [0x5ED30, data] # unk_1A770
+      - [0x5ED30, .data, dai/e_chair]
       - [0x5ED40, .data, dai/d_prize_drops]
       - [0x5ED60, .data, dai/cutscene_init]
       - [0x5ED90, .data, dai/e_cutscene_psp]
