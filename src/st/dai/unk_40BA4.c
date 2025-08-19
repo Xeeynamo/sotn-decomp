@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-#ifndef VERSION_PSP
-extern s32 D_80072F2C;
-#endif
-
 void func_us_801C0BA4(Entity* self) {
     s32 unkX;
     s16 params = self->params;
@@ -28,7 +24,7 @@ void func_us_801C0BA4(Entity* self) {
         if (deltaY < 32) {
 #else
         if (deltaY < 48) {
-            if (D_80072F2C & 0x40000) {
+            if (g_Player.status & PLAYER_STATUS_DEAD) {
                 PLAYER.velocityX = 0;
                 return;
             }
