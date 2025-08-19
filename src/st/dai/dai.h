@@ -45,6 +45,8 @@
 // Used for cluts, palettes, and in g_EInits
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
+    PAL_BELL_1 = 0x75,
+    PAL_BELL_2 = 0x76,
     PAL_CLOUDS = 0xC0,
     PAL_434FC = 0xC5,
     PAL_UNK_C9 = 0xC9,
@@ -101,7 +103,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_18,                 // func_us_801D9F5C,
     E_UNK_19,                 // func_us_801C0F8C,
     E_UNK_1A,                 // func_us_801C1184,
-    E_UNK_1B,                 // func_us_801C1298,
+    E_BELL,                   // EntityBell,
     E_UNK_1C,                 // func_us_801C1EE4,
     E_UNK_1D,                 // func_us_801C2068,
     E_UNK_1E,                 // func_us_801C220C,
@@ -112,7 +114,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_23,                 // func_us_801C2534,
     E_UNK_24,                 // func_us_801C2CD4,
     E_UNK_25,                 // func_us_801C2FF0,
-    E_UNK_26,                 // func_us_801C1E18,
+    E_UNK_26,                 // EntityBellHelper,
     E_UNK_27,                 // func_us_801D1204,
     E_UNK_28,                 // func_us_801D1C24,
     E_BONE_PILLAR_HEAD,       // EntityBonePillarHead,
