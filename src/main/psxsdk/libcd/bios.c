@@ -80,7 +80,7 @@ static inline void _memcpy(void* _dst, void* _src, size_t _size) {
     char* pDst = (char*)_dst;
     char* pSrc = (char*)_src;
 
-    if (pDst == 0) {
+    if (pDst == NULL) {
         return;
     }
 
@@ -435,7 +435,7 @@ int CD_init(void) {
     *D_80032D78 = 0x1325;
 
     CD_cw(CdlNop, NULL, NULL, 0);
-    if (CD_status & 0x10) {
+    if (CD_status & CdlStatShellOpen) {
         CD_cw(CdlNop, NULL, NULL, 0);
     }
 
