@@ -12,7 +12,7 @@ void func_us_801C23A4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801809B0);
+        InitializeEntity(g_EInitStatueBlock);
         self->zPriority = 92;
         self->animCurFrame = 12;
         if (self->params & 1) {

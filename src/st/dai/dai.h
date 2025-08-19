@@ -100,7 +100,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_17,                 // func_us_801D97D0,
     E_UNK_18,                 // func_us_801D9F5C,
     E_UNK_19,                 // func_us_801C0F8C,
-    E_UNK_1A,                 // func_us_801C1184,
+    E_STATUE_BLOCK,           // func_us_801C1184,
     E_UNK_1B,                 // func_us_801C1298,
     E_UNK_1C,                 // func_us_801C1EE4,
     E_UNK_1D,                 // func_us_801C2068,
@@ -161,7 +161,7 @@ extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
 // extern EInit g_EInit_801809A4; // Unused
-extern EInit D_us_801809B0;
+extern EInit g_EInitStatueBlock;
 extern EInit D_us_801809BC;
 // extern EInit g_EInit_801809C8; // Unused
 extern EInit D_us_801809D4;

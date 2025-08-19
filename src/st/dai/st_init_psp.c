@@ -21,7 +21,7 @@ s32 E_ID(UNK_16);
 s32 E_ID(UNK_17);
 s32 E_ID(UNK_18);
 s32 E_ID(UNK_19);
-s32 E_ID(UNK_1A);
+s32 E_ID(STATUE_BLOCK);
 s32 E_ID(UNK_1B);
 s32 E_ID(UNK_1C);
 s32 E_ID(UNK_1D);
@@ -84,7 +84,7 @@ void InitEntityIds(void) {
     E_ID(UNK_17) = 0x17;
     E_ID(UNK_18) = 0x18;
     E_ID(UNK_19) = 0x19;
-    E_ID(UNK_1A) = 0x1A;
+    E_ID(STATUE_BLOCK) = 0x1A;
     E_ID(UNK_1B) = 0x1B;
     E_ID(UNK_1C) = 0x1C;
     E_ID(UNK_1D) = 0x1D;

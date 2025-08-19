@@ -80,7 +80,7 @@ segments:
       - [0x1EF30, c, dai/e_room_bg]
       - [0x1F010, c, dai/e_lock_camera]
       - [0x1F270, c, dai/unk_423A4]
-      - [0x1F4A8, c, dai_psp/e_statue_block]
+      - [0x1F4A8, c, dai/e_statue_block]
       - [0x1F868, c, dai_psp/e_priest]
       - [0x20A58, c, dai_psp/unk_4379C]
       - [0x214F8, c, dai_psp/e_stained_glass]
@@ -105,6 +105,7 @@ segments:
       - [0x25698, data] # unk_143F0
       - [0x256C0, .data, dai/st_common]
       - [0x258C0, data] # unk_17C50
+      - [0x25A68, data]
       - [0x26BD0, data] # unk_12F98
       - [0x26C40, data]
       - [0x27988, data] # EntityBonePillarFireBreathUV
@@ -124,7 +125,8 @@ segments:
       - [0x5ED90, .data, dai/e_cutscene_psp]
       - [0x5F158, .data, dai/background_block_init]
       - [0x5F178, .data, dai/e_lock_camera]
-      - [0x5F1F0, data]
+      - [0x5F1F0, .data, dai/e_statue_block]
+      - [0x5F1F8, data]
       - [0x5F550, .data, dai/e_clouds]
       - [0x5F680, .rodata, dai/e_skelerang]
       - [0x5F6C8, .rodata, dai/e_crow]
