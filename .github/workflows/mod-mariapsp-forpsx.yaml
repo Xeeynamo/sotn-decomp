@@ -52,7 +52,7 @@ jobs:
         working-directory: mods/mariapsp-forpsx
         run: VERSION=${{ matrix.version }} make
   push-docker-image:
-    if: github.repository == 'Xeeynamo/sotn-decomp'
+    if: github.repository == 'Xeeynamo/sotn-decomp' && github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - name: Clone main repository

@@ -101,8 +101,8 @@ enum OVL_EXPORT(Entities) {
     E_UNK_16,                 // func_us_801C0BA4,
     E_UNK_17,                 // func_us_801D97D0,
     E_UNK_18,                 // func_us_801D9F5C,
-    E_UNK_19,                 // func_us_801C0F8C,
-    E_UNK_1A,                 // func_us_801C1184,
+    E_UNK_19,                 // EntityBlock,
+    E_STATUE,                 // EntityStatue,
     E_BELL,                   // EntityBell,
     E_UNK_1C,                 // func_us_801C1EE4,
     E_UNK_1D,                 // func_us_801C2068,
@@ -110,7 +110,7 @@ enum OVL_EXPORT(Entities) {
     E_CLOUDS,                 // EntityClouds,
     E_UNK_20,                 // func_us_801C34FC,
     E_UNK_21,                 // func_us_801C23A4,
-    E_UNK_22,                 // func_us_801C3164,
+    E_UNK_22,                 // EntityChair,
     E_UNK_23,                 // func_us_801C2534,
     E_UNK_24,                 // func_us_801C2CD4,
     E_UNK_25,                 // func_us_801C2FF0,
@@ -163,7 +163,7 @@ extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
 // extern EInit g_EInit_801809A4; // Unused
-extern EInit D_us_801809B0;
+extern EInit g_EInitStatueBlock;
 extern EInit D_us_801809BC;
 // extern EInit g_EInit_801809C8; // Unused
 extern EInit D_us_801809D4;
