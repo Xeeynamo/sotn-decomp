@@ -2550,7 +2550,7 @@
 | lib   | func_psp_09260748                        |      820 |         58 |        | https://decomp.me/scratch/XjkPy | 1.0   |
 | dra   | EntityPlayerOutline                      |      826 |         55 | Yes    | https://decomp.me/scratch/Z7J5l | 0.996 |
 | cat   | func_pspeu_09250068                      |      834 |        140 |        |                                 |       |
-| dai   | func_us_801C2534                         |      841 |        120 | Yes    | https://decomp.me/scratch/W2iyf | 0.997 |
+| dai   | func_us_801C2534                         |      841 |        120 | Yes    | https://decomp.me/scratch/W2iyf | 0.996 |
 | lib   | EntityLifeUpSpawn                        |      858 |         61 | Yes    | https://decomp.me/scratch/evuI8 | 0.999 |
 | st0   | func_801BC5C0                            |      862 |         92 |        | https://decomp.me/scratch/zJz4c | 0.998 |
 | st0   | func_801AF774                            |      868 |         52 | Yes    | https://decomp.me/scratch/jQNRR | 0.999 |
