@@ -1094,7 +1094,7 @@
 | np3   | func_pspeu_0925A660                      |       69 |          7 |        |                                 |       |
 | dra   | func_psp_0913E6D0                        |       69 |          9 |        | https://decomp.me/scratch/7Xoqu | 0.97  |
 | cat   | func_pspeu_092627A8                      |       70 |          4 |        |                                 |       |
-| dai   | func_us_801C1E18                         |       70 |          6 |        | https://decomp.me/scratch/DrwIe | 1.0   |
+| dai   | func_pspeu_09250E68                      |       70 |          6 |        |                                 |       |
 | dra   | func_psp_0910EFE0                        |       70 |         11 |        |                                 |       |
 | dra   | func_psp_091407E0                        |       71 |          1 |        |                                 |       |
 | cat   | func_pspeu_09254138                      |       71 |          1 |        |                                 |       |
@@ -2580,7 +2580,7 @@
 | np3   | EntityPrizeDrop                          |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | wrp   | EntityPrizeDrop                          |      972 |        120 | Yes    | https://decomp.me/scratch/xtj0K | 0.998 |
 | no4   | EntityBoneArcher                         |      979 |        177 |        | https://decomp.me/scratch/s6o5d | 0.997 |
-| dai   | func_us_801C1298                         |      987 |         83 |        | https://decomp.me/scratch/Fxc5b | 0.999 |
+| dai   | func_pspeu_0924FFA0                      |      987 |         83 |        |                                 |       |
 | no3   | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/X2j8p | 1.0   |
 | np3   | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/X2j8p | 1.0   |
 | wrp   | EntityStageNamePopup                     |      989 |         83 |        | https://decomp.me/scratch/X2j8p | 1.0   |
