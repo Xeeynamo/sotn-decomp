@@ -25,8 +25,8 @@ void EntityGreyPuff(Entity* self);
 void func_us_801C0BA4(Entity* self);
 void func_us_801D97D0(Entity* self);
 void func_us_801D9F5C(Entity* self);
-void func_us_801C0F8C(Entity* self);
-void func_us_801C1184(Entity* self);
+void EntityBlock(Entity* self);
+void EntityStatue(Entity* self);
 void EntityBell(Entity* self);
 void func_us_801C1EE4(Entity* self);
 void func_us_801C2068(Entity* self);
@@ -99,8 +99,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C0BA4,
     func_us_801D97D0,
     func_us_801D9F5C,
-    func_us_801C0F8C,
-    func_us_801C1184,
+    EntityBlock,
+    EntityStatue,
     EntityBell,
     func_us_801C1EE4,
     func_us_801C2068,
@@ -159,7 +159,7 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 1};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInit_801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3}; // Unused
-EInit D_us_801809B0 = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
+EInit g_EInitStatueBlock = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
 EInit D_us_801809BC = {ANIMSET_OVL(2), 0, 72, PAL_UNK_C9, 5};
 EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_UNK_CA, 5}; // Unused
 EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_UNK_C9, 101};

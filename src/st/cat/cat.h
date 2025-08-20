@@ -81,7 +81,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_43,                // func_us_801BB4CC
     E_UNK_44,                // func_us_801D1474
     E_UNK_45,                // func_us_801D1F68
-    E_UNK_46,                // func_us_801D2060
+    E_TOMBSTONE,             // EntityTombstone
     E_GREMLIN,               // EntityGremlin
     E_GREMLIN_EFFECT,        // EntityGremlinEffect
     E_GREMLIN_FIRE,          // EntityGremlinFire

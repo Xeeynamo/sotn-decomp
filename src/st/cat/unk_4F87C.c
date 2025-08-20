@@ -20,5 +20,3 @@ INCLUDE_ASM("st/cat/nonmatchings/unk_4F87C", func_us_801D12E0);
 INCLUDE_ASM("st/cat/nonmatchings/unk_4F87C", func_us_801D1474);
 
 INCLUDE_ASM("st/cat/nonmatchings/unk_4F87C", func_us_801D1F68);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_4F87C", func_us_801D2060);
