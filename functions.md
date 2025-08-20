@@ -1324,7 +1324,7 @@
 | st0   | func_pspeu_092485C8                      |       89 |         11 |        |                                 |       |
 | wrp   | func_psp_09237C48                        |       89 |         11 |        |                                 |       |
 | dai   | EntitySkeletonPieces                     |       90 |          9 |        | https://decomp.me/scratch/JvA5Y | 1.0   |
-| dai   | func_us_801C1184                         |       90 |         10 |        | https://decomp.me/scratch/wMIJA | 0.996 |
+| dai   | func_pspeu_09256DA0                      |       90 |         10 |        |                                 |       |
 | ric   | func_pspeu_092AF898                      |       90 |         17 |        |                                 |       |
 | chi   | func_psp_0924D7F8                        |       91 |          4 |        | https://decomp.me/scratch/vOZf2 | 0.975 |
 | cat   | func_pspeu_092489A0                      |       91 |          7 |        |                                 |       |
@@ -1816,7 +1816,7 @@
 | dra   | func_psp_090F2B20                        |      169 |         15 |        |                                 |       |
 | maria | func_pspeu_092B1930                      |      169 |         26 |        |                                 |       |
 | dra   | func_80127CC8                            |      170 |         17 |        | https://decomp.me/scratch/TFP3q | 0.992 |
-| dai   | func_us_801C0F8C                         |      170 |         18 |        | https://decomp.me/scratch/NuH8a | 0.999 |
+| dai   | func_pspeu_09256B28                      |      170 |         18 |        |                                 |       |
 | no2   | func_pspeu_09255EF0                      |      170 |         28 |        | https://decomp.me/scratch/U0jQk | 0.999 |
 | dra   | func_psp_09102898                        |      170 |         34 |        | https://decomp.me/scratch/LTNbq | 0.992 |
 | no3   | EntityDeathSkySwirl                      |      171 |         21 |        |                                 |       |
