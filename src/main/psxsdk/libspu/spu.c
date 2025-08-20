@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 #include "common.h"
 #include "libspu_internal.h"
-#include <kernel.h>
+#include <psxsdk/kernel.h>
 
 #define WASTE_TIME()                                                           \
     sp4 = 0xD;                                                                 \

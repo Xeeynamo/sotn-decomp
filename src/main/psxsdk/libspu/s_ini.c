@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 #include "common.h"
 #include "libspu_internal.h"
-#include <kernel.h>
+#include <psxsdk/kernel.h>
 
 struct SpuRevAttr {
     s32 unk0;
