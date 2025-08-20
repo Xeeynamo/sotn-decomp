@@ -15,7 +15,7 @@ typedef struct {
     unsigned char* cd_com;
     int* cd_status;
     unsigned char** cd_pos;
-    char** aIdBiosCV177199;
+    const char* rcsid;
 } CD_init_struct;
 
 typedef struct Alarm_t {
@@ -401,7 +401,7 @@ static CD_init_struct D_80032D84 = {
     .cd_com = &CD_com,
     .cd_status = &CD_status,
     .cd_pos = &CD_pos,
-    .aIdBiosCV177199 = "$Id: bios.c,v 1.77 1996/05/13 06:58:16 suzu Exp $"};
+    .rcsid = "$Id: bios.c,v 1.77 1996/05/13 06:58:16 suzu Exp $"};
 static volatile int* D_80032D9C = (int*)0x1F801018;
 static volatile int* D_80032DA0 = (int*)0x1F8010F0;
 static volatile int* D_80032DA4 = (int*)0x1F8010B0;

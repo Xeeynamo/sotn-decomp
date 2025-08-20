@@ -5,7 +5,7 @@
 
 void StUnSetRing() {
     EnterCriticalSection();
-    CdDataCallback(0);
+    CdDataCallback(NULL);
     CdReadyCallback(NULL);
     *libcd_CDRegister0 = 0;
     *libcd_CDRegister3 = 0;

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 #include "common.h"
 #include "libspu_internal.h"
+#include <kernel.h>
 
 #define WASTE_TIME()                                                           \
     sp4 = 0xD;                                                                 \
@@ -317,7 +318,7 @@ void _spu_FiDMA(void) {
         _spu_transferCallback();
         return;
     }
-    DeliverEvent(0xF0000009U, 0x20U);
+    DeliverEvent(HwSPU, EvSpCOMP);
 }
 
 extern s32* D_80033508;

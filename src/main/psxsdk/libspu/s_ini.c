@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 #include "common.h"
 #include "libspu_internal.h"
+#include <kernel.h>
 
 struct SpuRevAttr {
     s32 unk0;
@@ -49,16 +50,16 @@ void _SpuInit(s32 arg0) {
 }
 
 void SpuStart(void) {
-    s32 temp_v0;
+    int event;
 
     if (_spu_isCalled == 0) {
         _spu_isCalled = 1;
         EnterCriticalSection();
         D_80033098 = 0;
         _SpuDataCallback(_spu_FiDMA);
-        temp_v0 = OpenEvent(0xF0000009U, 0x20, 0x2000, NULL);
-        _spu_EVdma = temp_v0;
-        EnableEvent(temp_v0);
+        event = OpenEvent(HwSPU, EvSpCOMP, EvMdNOINTR, NULL);
+        _spu_EVdma = event;
+        EnableEvent(event);
         ExitCriticalSection();
     }
 }
