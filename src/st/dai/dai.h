@@ -112,7 +112,7 @@ enum OVL_EXPORT(Entities) {
     E_CLOUDS,                 // EntityClouds,
     E_UNK_20,                 // func_us_801C34FC,
     E_UNK_21,                 // func_us_801C23A4,
-    E_UNK_22,                 // func_us_801C3164,
+    E_UNK_22,                 // EntityChair,
     E_PRIEST,                 // EntityPriest,
     E_PRIEST_BLADES,          // EntityPriestBlades,
     E_PRIEST_BLADE_DEBRIS,    // EntityPriestBladeDebris,

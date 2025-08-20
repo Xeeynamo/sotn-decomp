@@ -2834,6 +2834,8 @@ typedef struct {
 typedef struct {
     // may be a timer, perhaps related to falling asleep
     s16 unk0;
+    s16 pad[7];
+    struct Entity* unkEntity;
 } ET_Chair;
 
 typedef struct {
@@ -2894,11 +2896,6 @@ typedef struct {
     /* 0x7C */ s16 timer;
     /* 0x7E */ s16 unk7E;
 } ET_801B7D34;
-
-typedef struct {
-    /* 0x7C */ s32 pad[4];
-    /* 0x8C */ struct Entity* unkEntity;
-} ET_801B81E8;
 
 typedef struct {
     /* 0x7C */ s16 pad[3];
@@ -3662,7 +3659,6 @@ typedef union { // offset=0x7C
     ET_801D4558 et_801D4558;
     ET_801BE880 et_801BE880;
     ET_801B7D34 et_801B7D34;
-    ET_801B81E8 et_801B81E8;
     ET_Fish fish;
     ET_Bird bird;
     ET_Marionette marionette;

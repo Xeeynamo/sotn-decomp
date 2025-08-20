@@ -54,6 +54,7 @@ segments:
       - [0xCAC, .data, e_bell]
       - [0xD54, .data, e_priest]
       - [0xE60, data]
+      - [0xE8C, .data, e_chair]
       - [0xEA0, .data, unk_43644]
       - [0xEA4, data]
       - [0xEC0, .data, d_prize_drops]

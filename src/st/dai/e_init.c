@@ -34,7 +34,7 @@ void func_us_801C220C(Entity* self);
 void EntityClouds(Entity* self);
 void func_us_801C34FC(Entity* self);
 void func_us_801C23A4(Entity* self);
-void func_us_801C3164(Entity* self);
+void EntityChair(Entity* self);
 void EntityPriest(Entity* self);
 void EntityPriestBlades(Entity* self);
 void EntityPriestBladeDebris(Entity* self);
@@ -108,7 +108,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityClouds,
     func_us_801C34FC,
     func_us_801C23A4,
-    func_us_801C3164,
+    EntityChair,
     EntityPriest,
     EntityPriestBlades,
     EntityPriestBladeDebris,
