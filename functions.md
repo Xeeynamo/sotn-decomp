@@ -1967,7 +1967,7 @@
 | dai   | func_pspeu_09258B78                      |      224 |         12 |        | https://decomp.me/scratch/BX3YF | 1.0   |
 | maria | func_pspeu_092B5340                      |      224 |         28 |        |                                 |       |
 | ric   | func_pspeu_092B2DD8                      |      224 |         28 |        |                                 |       |
-| cat   | func_pspeu_0923EBC0                      |      224 |         39 |        |                                 |       |
+| cat   | EntityTombstone                          |      224 |         39 |        |                                 |       |
 | dra   | func_psp_090E08D8                        |      225 |          7 |        |                                 |       |
 | lib   | func_psp_09256AC0                        |      225 |         18 |        | https://decomp.me/scratch/TXHRR | 0.999 |
 | dai   | EntityBat                                |      225 |         41 |        | https://decomp.me/scratch/90rWo | 0.998 |
