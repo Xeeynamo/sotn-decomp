@@ -50,7 +50,7 @@ segments:
       - [0xADC, .data, e_red_door_tiles]
       - [0xB0C, .data, e_lock_camera]
       - [0xB8C, .data, e_breakable]
-      - [0xCA4, data, e_statue_block]
+      - [0xCA4, .data, e_statue_block]
       - [0xCAC, .data, e_bell]
       - [0xD54, .data, e_priest]
       - [0xE60, data]
