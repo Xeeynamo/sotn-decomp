@@ -86,7 +86,7 @@ static AnimationFrame D_us_80180F8C[] = {
     {8, 8}, {8, 9}, {8, 10}, {8, 11}, {-1, 0}};
 
 void func_us_801B81E8(Entity* self) {
-    if (self->ext.et_801B81E8.unkEntity->step != 4) {
+    if (self->ext.chair.unkEntity->step != 4) {
         DestroyEntity(self);
         return;
     }
