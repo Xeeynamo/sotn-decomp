@@ -8,5 +8,3 @@ INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_6060", func_pspeu_0923D7C0);
 INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_6060", func_pspeu_0923DA30);
 
 INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_6060", func_pspeu_0923EA58);
-
-INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_6060", func_pspeu_0923EBC0);

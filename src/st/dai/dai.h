@@ -110,7 +110,7 @@ enum OVL_EXPORT(Entities) {
     E_CLOUDS,                 // EntityClouds,
     E_UNK_20,                 // func_us_801C34FC,
     E_UNK_21,                 // func_us_801C23A4,
-    E_UNK_22,                 // func_us_801C3164,
+    E_UNK_22,                 // EntityChair,
     E_UNK_23,                 // func_us_801C2534,
     E_UNK_24,                 // func_us_801C2CD4,
     E_UNK_25,                 // func_us_801C2FF0,
