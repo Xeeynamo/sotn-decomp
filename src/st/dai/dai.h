@@ -45,10 +45,12 @@
 // Used for cluts, palettes, and in g_EInits
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
+    PAL_41EE4_74 = 0x74,
     PAL_BELL_1 = 0x75,
     PAL_BELL_2 = 0x76,
     PAL_CLOUDS = 0xC0,
     PAL_434FC = 0xC5,
+    PAL_41EE4_C8 = 0xC8,
     PAL_UNK_C9 = 0xC9,
     PAL_UNK_CA = 0xCA,
     PAL_STAGE_NAME_15F = 0x15F,
