@@ -70,7 +70,7 @@ void func_us_801D0F10(Entity* self);
 void func_us_801BB4CC(Entity* self);
 void func_us_801D1474(Entity* self);
 void func_us_801D1F68(Entity* self);
-void func_us_801D2060(Entity* self);
+void EntityTombstone(Entity* self);
 void EntityGremlin(Entity* self);
 void EntityGremlinEffect(Entity* self);
 void EntityGremlinFire(Entity* self);
@@ -156,7 +156,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801BB4CC,
     func_us_801D1474,
     func_us_801D1F68,
-    func_us_801D2060,
+    EntityTombstone,
     EntityGremlin,
     EntityGremlinEffect,
     EntityGremlinFire,
@@ -217,7 +217,7 @@ EInit D_us_8018126C = {ANIMSET_OVL(0x09), 0x01, 0x4D, 0x0236, 0x06F};
 EInit D_us_80181278 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x070};
 
 // Tombstone
-EInit D_us_80181284 = {ANIMSET_OVL(0x09), 0x15, 0x4D, 0x0236, 0x071};
+EInit g_EInitTombstone = {ANIMSET_OVL(0x09), 0x15, 0x4D, 0x0236, 0x071};
 
 // Gremlin
 EInit g_EInitGremlin = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x0E1};
