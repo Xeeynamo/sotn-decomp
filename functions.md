@@ -1136,7 +1136,7 @@
 | wrp   | func_psp_0923CC80                        |       71 |          7 |        |                                 |       |
 | wrp   | func_psp_09243F28                        |       71 |          7 |        |                                 |       |
 | dra   | func_psp_09101190                        |       71 |          8 |        |                                 |       |
-| dai   | func_us_801C3104                         |       71 |          9 |        | https://decomp.me/scratch/k0Isz | 0.997 |
+| dai   | func_pspeu_092525C8                      |       71 |          9 |        |                                 |       |
 | lib   | func_psp_09254CD0                        |       71 |          9 |        |                                 |       |
 | lib   | func_psp_09250DE8                        |       71 |          9 |        |                                 |       |
 | dra   | func_psp_090E3030                        |       71 |         10 |        | https://decomp.me/scratch/ewhRs | 0.989 |
@@ -2044,7 +2044,7 @@
 | no4   | func_pspeu_09238E18                      |      258 |         30 |        | https://decomp.me/scratch/ab0nd | 0.997 |
 | dra   | func_psp_090F6430                        |      258 |         36 |        |                                 |       |
 | cat   | EntityUnkBreakable                       |      258 |         36 |        | https://decomp.me/scratch/OkZQf | 0.993 |
-| dai   | func_us_801C3164                         |      260 |         36 |        | https://decomp.me/scratch/Mr5pJ | 0.995 |
+| dai   | func_pspeu_092526B8                      |      260 |         36 |        |                                 |       |
 | no4   | func_pspeu_09240CD0                      |      261 |         21 |        | https://decomp.me/scratch/kWwKu | 1.0   |
 | maria | func_pspeu_092B28B0                      |      261 |         51 |        | https://decomp.me/scratch/feauq | 0.99  |
 | cat   | func_pspeu_0924FC98                      |      262 |         20 |        |                                 |       |
