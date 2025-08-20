@@ -2183,7 +2183,7 @@
 | no3   | func_pspeu_09260AB8                      |      332 |         41 |        |                                 |       |
 | no4   | GetPlayerCollisionWith                   |      332 |         41 |        | https://decomp.me/scratch/xNJDs | 0.994 |
 | np3   | func_pspeu_0925AEB8                      |      332 |         41 |        |                                 |       |
-| dai   | func_us_801C2CD4                         |      333 |         35 | Yes    | https://decomp.me/scratch/5hPEW | 0.998 |
+| dai   | func_us_801C2CD4                         |      333 |         35 | Yes    | https://decomp.me/scratch/5hPEW | 0.996 |
 | ric   | func_pspeu_092B00F0                      |      333 |         60 | Yes    |                                 |       |
 | lib   | func_psp_09257BF8                        |      334 |         15 |        | https://decomp.me/scratch/EXmKW | 1.0   |
 | no4   | func_pspeu_0923EED0                      |      334 |         32 |        | https://decomp.me/scratch/RxBsy | 0.999 |
