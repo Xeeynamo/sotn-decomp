@@ -3396,6 +3396,16 @@ typedef struct {
     /* 0x90 */ s16 unk90;
 } ET_SkullLord;
 
+typedef struct {
+    s32 pada;
+    u32 swingStep;
+    s32 unk84;
+    s32 unk88;
+    s32 unk8C;
+    s32 padb[3];
+    u32 unk9C;
+} ET_Bell;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3691,6 +3701,7 @@ typedef union { // offset=0x7C
     ET_Yorick yorick;
     ET_YorickSkull yorickSkull;
     ET_SkullLord skullLord;
+    ET_Bell et_bell;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
