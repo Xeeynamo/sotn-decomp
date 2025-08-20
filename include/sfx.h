@@ -276,6 +276,12 @@ enum {
 // plays every 10 frames while using bible subweapon
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
+// STAGE DAI
+// Unknown SFX related to the priest
+#define SFX_UNK_204 0x204
+#define SFX_UNK_4E5 0x4E5
+#define SFX_UNK_7BB 0x7BB
+
 // STAGE DRE
 #define NA_VO_SU_LAUGH 0x86E
 // Blank, may be a leftover from the Jap version.
