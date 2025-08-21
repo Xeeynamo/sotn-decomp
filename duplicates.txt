@@ -3419,7 +3419,7 @@
 | 1.00 | true     | func_us_801D2318                    | asm/us/st/no0/matchings/e_skelerang/func_us_801D2318.s 
 | 1.00 | true     | EntitySkelerangUnknown              | asm/us/st/no2/matchings/e_skelerang/EntitySkelerangUnknown.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | StepTowards                         | asm/us/st/dai/matchings/e_spectral_sword/StepTowards.s 
+| 1.00 | true     | func_us_801D6434                    | asm/us/st/dai/matchings/e_spectral_sword/func_us_801D6434.s 
 | 1.00 | true     | func_us_801D29F8                    | asm/us/st/no0/matchings/e_plate_lord/func_us_801D29F8.s 
 | 1.00 | true     | func_us_801CDD88                    | asm/us/st/no2/matchings/e_spectral_sword/func_us_801CDD88.s 
 -------------------------------------------------------------------------------
@@ -3979,6 +3979,9 @@
 | 1.00 | true     | func_8018D89C                       | asm/us/st/cen/matchings/e_breakable/func_8018D89C.s 
 | 0.99 | true     | func_8019B698                       | asm/us/st/chi/matchings/en_breakable/func_8019B698.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801D6FC8                    | asm/us/st/dai/matchings/e_spectral_sword/func_us_801D6FC8.s 
+| 0.98 | true     | func_us_801CEB08                    | asm/us/st/no2/matchings/e_spectral_sword/func_us_801CEB08.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | Entity3DBackgroundHouse             | asm/us/st/dre/matchings/e_background_house/Entity3DBackgroundHouse.s 
 | 1.00 | true     | Entity3DBackgroundHouse             | asm/us/st/no2/matchings/e_background_house/Entity3DBackgroundHouse.s 
 -------------------------------------------------------------------------------
@@ -4140,9 +4143,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C6B3C                    | asm/us/st/no2/matchings/e_owl_knight/func_us_801C6B3C.s 
 | 1.00 | true     | func_801CD540                       | asm/us/st/np3/matchings/e_owl_knight/func_801CD540.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801CEB08                    | asm/us/st/no2/matchings/e_spectral_sword/func_us_801CEB08.s 
-| 0.98 | false    | func_us_801D6FC8                    | asm/us/st/dai/nonmatchings/e_spectral_sword/func_us_801D6FC8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityGurkha                        | asm/us/st/no2/matchings/gurkha/EntityGurkha.s 
 | 1.00 | true     | EntityGurkha                        | asm/us/st/np3/matchings/gurkha/EntityGurkha.s 
