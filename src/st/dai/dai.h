@@ -56,6 +56,7 @@ enum OVL_EXPORT(Palette) {
     PAL_UNK_CC = 0xCC,
     PAL_UNK_CE = 0xCE,
     PAL_STAGE_NAME_15F = 0x15F,
+    PAL_SPECTRAL_SWORD_WEAPON_3 = 0x16B,
     PAL_STAGE_NAME_19D = 0x19D,
     PAL_STAGE_NAME_19E = 0x19E,
     PAL_STAGE_NAME_19F = 0x19F,
@@ -68,8 +69,9 @@ enum OVL_EXPORT(Palette) {
     PAL_BAT = 0x22C,
     PAL_CROW = 0x22F,
     PAL_UNK_232 = 0x232,
-    PAL_UNK_234 = 0x234,
-    PAL_UNK_235 = 0x235,
+    PAL_SPECTRAL_SWORD = 0x234,
+    PAL_SPECTRAL_SWORD_WEAPON_1 = 0x235,
+    PAL_SPECTRAL_SWORD_WEAPON_2 = 0x236,
     PAL_SEALED_DOOR = 0x245,
     PAL_BREAKABLE = 0x249,
     PAL_BREAKABLE_DEBRIS = 0x24D,
@@ -143,9 +145,9 @@ enum OVL_EXPORT(Entities) {
     E_SKELERANG_UNKNOWN,      // EntitySkelerangUnknown,
     E_UNK_3D,                 // func_us_801D56F4,
     E_UNK_3E,                 // func_us_801D636C,
-    E_UNK_3F,                 // func_us_801D64A0,
-    E_UNK_40,                 // func_us_801D6FC8,
-    E_UNK_41,                 // func_us_801D70A0,
+    E_SPECTRAL_SWORD,         // EntitySpectralSword,
+    E_SPECTRAL_SWORD_AURA,    // EntitySpectralSwordAura,
+    E_SPECTRAL_SWORD_WEAPON,  // EntitySpectralSwordWeapon,
     E_UNK_42,                 // EntityWingedGuardSpawner,
     E_SEALED_DOOR,            // EntitySealedDoor,
     E_BREAKABLE_DEBRIS,       // EntityBreakableDebris,
@@ -187,8 +189,8 @@ extern EInit g_EInitBlackCrow;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
 extern EInit D_us_80180A94;
-extern EInit D_us_80180AA0;
-extern EInit D_us_80180AAC;
-extern EInit D_us_80180AB8;
+extern EInit g_EInitSpectralSword;
+extern EInit g_EInitSpectralSwordAura;
+extern EInit g_EInitSpectralSwordWeapon;
 
 #endif

@@ -63,9 +63,9 @@ void EntitySkelerangBoomerang(Entity* self);
 void EntitySkelerangUnknown(Entity* self);
 void func_us_801D56F4(Entity* self);
 void func_us_801D636C(Entity* self);
-void func_us_801D64A0(Entity* self);
-void func_us_801D6FC8(Entity* self);
-void func_us_801D70A0(Entity* self);
+void EntitySpectralSword(Entity* self);
+void EntitySpectralSwordAura(Entity* self);
+void EntitySpectralSwordWeapon(Entity* self);
 void EntityWingedGuardSpawner(Entity* self);
 void EntitySealedDoor(Entity* self);
 void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
@@ -137,9 +137,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkelerangUnknown,
     func_us_801D56F4,
     func_us_801D636C,
-    func_us_801D64A0,
-    func_us_801D6FC8,
-    func_us_801D70A0,
+    EntitySpectralSword,
+    EntitySpectralSwordAura,
+    EntitySpectralSwordWeapon,
     EntityWingedGuardSpawner,
     EntitySealedDoor,
     OVL_EXPORT(EntityBreakableDebris),
@@ -181,6 +181,8 @@ EInit g_EInitBlackCrow = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 115};
 EInit g_EInitSkelerang = {ANIMSET_OVL(11), 1, 72, PAL_SKELERANG, 11};
 EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(11), 43, 72, PAL_SKELERANG, 12};
 EInit D_us_80180A94 = {ANIMSET_OVL(12), 0, 84, PAL_UNK_232, 227};
-EInit D_us_80180AA0 = {ANIMSET_OVL(13), 0, 81, PAL_UNK_234, 136};
-EInit D_us_80180AAC = {ANIMSET_OVL(13), 0, 81, PAL_UNK_234, 2};
-EInit D_us_80180AB8 = {ANIMSET_OVL(13), 0, 81, PAL_UNK_235, 137};
+EInit g_EInitSpectralSword = {ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 136};
+EInit g_EInitSpectralSwordAura = {
+    ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 2};
+EInit g_EInitSpectralSwordWeapon = {
+    ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD_WEAPON_1, 137};

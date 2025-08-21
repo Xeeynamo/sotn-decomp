@@ -79,7 +79,6 @@ EntityBat = 0x801D3D8C;
 EntitySkelerang = 0x801D468C;
 EntitySkelerangBoomerang = 0x801D4E14;
 EntitySkelerangUnknown = 0x801D5088;
-StepTowards = 0x801D6434;
 EntitySealedDoor = 0x801D745C;
 EntityMistDoor = 0x801D81D0;
 UnkPrimHelper = 0x801D82B8;

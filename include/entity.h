@@ -3313,6 +3313,12 @@ typedef struct {
     /* 0x98 */ s16 unk98;
     /* 0x9A */ s16 unk9A;
     /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ s16 : 16;
+    /* 0xA2 */ s16 unkA2;
+    /* 0xA4 */ s32 pad[2];
+    /* 0xAC */ struct Entity* unkAC;
+    /* 0xB0 */ u8 unkB0;
 } ET_SpectralSword;
 
 typedef struct {
