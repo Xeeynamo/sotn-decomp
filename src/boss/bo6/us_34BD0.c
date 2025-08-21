@@ -1,4 +1,5 @@
-#include "common.h"
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "bo6.h"
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_34BD0", func_us_801B4BD0);
 
@@ -12,11 +13,40 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_34BD0", func_us_801B50BC);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_34BD0", func_us_801B5A14);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_34BD0", func_us_801B5A2C);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_34BD0", RichterThinking);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_34BD0", func_us_801B6998);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_34BD0", func_us_801B6AC4);
+extern EInit D_us_80180400; //
+extern s32 D_us_801CF3E0;
+extern u32 D_us_801CF3E4;
+
+void func_us_801B6AC4(Entity* self) {
+    Entity* entity;
+    s32 i;
+
+    g_Ric.unk6A = RIC.hitPoints;
+    if (self->step == 0) {
+        InitializeEntity(D_us_80180400);
+        func_us_801B4BD0();
+        entity = &g_Entities[STAGE_ENTITY_START + 4];
+        for (i = STAGE_ENTITY_START + 4; i < 144; i++, entity++) {
+            DestroyEntity(entity);
+        }
+        g_Ric.unk6E = g_Ric.unk6A = g_Ric.unk6C = RIC.hitPoints;
+        D_us_801CF3E4 = g_Ric.unk6E / 2;
+        D_us_801CF3E0 = 0;
+        g_Ric.unk70 = RIC.hitboxState;
+        func_us_801B5A14(18);
+        func_us_801B9B78(1, 48);
+    } else {
+        RichterThinking();
+        func_us_801B50BC();
+        func_us_801BBBD0();
+        func_us_801B6998();
+    }
+    g_Ric.unk6C = g_Ric.unk6A;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_34BD0", func_us_801B6BD8);
 

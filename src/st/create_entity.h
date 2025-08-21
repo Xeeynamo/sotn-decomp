@@ -17,8 +17,6 @@ STATIC_PAD_BSS(3);
 static u8 g_LayoutObjPosVertical;
 STATIC_PAD_BSS(3);
 
-#include <stage.h>
-
 #define LAYOUT_OBJ_START 0xfffe
 #define LAYOUT_OBJ_END 0xffff
 

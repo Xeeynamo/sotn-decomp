@@ -39,7 +39,26 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B9ACC);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetInvincibilityFrames);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_DisableAfterImage);
+// similar to func_8010DFF0 in DRA or func_us_801C5354 in BO4
+void OVL_EXPORT(DisableAfterImage)(s32 resetAnims, s32 time) {
+    Primitive* prim;
+
+    if (resetAnims) {
+        g_Entities[E_ID_41].ext.disableAfterImage.unk7D = 1;
+        g_Entities[E_ID_41].animCurFrame = g_Entities[E_ID_42].animCurFrame =
+            g_Entities[E_ID_43].animCurFrame = 0;
+        prim = &g_PrimBuf[g_Entities[E_ID_41].primIndex];
+        while (prim != NULL) {
+            prim->x1 = 0;
+            prim = prim->next;
+        }
+    }
+    g_Entities[E_ID_41].ext.disableAfterImage.unk7C = 1;
+    g_Entities[E_ID_41].ext.disableAfterImage.unk7E = 0xA;
+    if (time) {
+        g_Ric.timers[ALU_T_15] = 4;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B9C14);
 
@@ -106,7 +125,8 @@ s32 OVL_EXPORT(RicDoSubweapon)(void) {
         return 2;
     }
 
-    OVL_EXPORT(RicCreateEntFactoryFromEntity)(g_CurrentEntity, subweapon.blueprintNum, 0);
+    OVL_EXPORT(RicCreateEntFactoryFromEntity)
+    (g_CurrentEntity, subweapon.blueprintNum, 0);
     g_Ric.timers[PL_T_10] = 4;
     switch (RIC.step) {
     case PL_S_RUN:
@@ -165,7 +185,56 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BB314);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BB370);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicCheckSubweapon);
+extern SubweaponDef subweapons_def[];
+
+s32 BO6_RicCheckSubweapon(
+    SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
+    SubweaponDef* subwpn;
+    SubweaponDef* wpn;
+    s32 i;
+    s32 subweaponId;
+    s32 distanceX;
+
+    distanceX = abs(RIC.posX.i.hi - PLAYER.posX.i.hi);
+
+    if (isItemCrash == 0) {
+        if (distanceX < 0x50) {
+            subweaponId = 3;
+        } else {
+            subweaponId = 4;
+        }
+        if ((RIC.posY.i.hi - PLAYER.posY.i.hi) > 0x18) {
+            subweaponId = 2;
+        }
+        if ((RIC.posY.i.hi - PLAYER.posY.i.hi) < -0x18) {
+            subweaponId = 3;
+        }
+        if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+            subweaponId = 2;
+        }
+
+        *actualSubwpn = subweapons_def[subweaponId];
+    } else {
+        subweaponId = 4;
+        if (g_Ric.padPressed & 4) {
+            subweaponId = 2;
+        } else {
+            if (g_Ric.padPressed & 1) {
+                subweaponId = 3;
+            }
+            if (g_Ric.padPressed & 0x800) {
+                subweaponId = 9;
+            }
+            if (g_Ric.padPressed & 0x100) {
+                subweaponId = 5;
+            }
+        }
+
+        subwpn = &subweapons_def[subweaponId];
+        *actualSubwpn = subweapons_def[subwpn->crashId];
+    }
+    return subweaponId;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BB5BC);
 
@@ -179,7 +248,8 @@ void func_us_801BBBC8(void) {}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BBBD0);
 
-Entity* OVL_EXPORT(RicCreateEntFactoryFromEntity)(Entity* source, u32 factoryParams, s32 arg2) {
+Entity* OVL_EXPORT(RicCreateEntFactoryFromEntity)(
+    Entity* source, u32 factoryParams, s32 arg2) {
     Entity* entity = OVL_EXPORT(RicGetFreeEntity)(68, 80);
     if (!entity) {
         return NULL;

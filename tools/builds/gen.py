@@ -733,12 +733,15 @@ with open(build_ninja, "w") as f:
         command=(
             "VERSION=$version"
             " tools/sotn_str/target/release/sotn_str process -p -f $in"
-            " | .venv/bin/python3 tools/mwccgap/mwccgap.py $out --src-dir $src_dir"
+            " | .venv/bin/python3 ../mwccgap/mwccgap.py $out --src-dir $src_dir"
             " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path bin/allegrex-as"
             " --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc"
             " -gccinc -Iinclude -D_internal_version_$version -DSOTN_STR -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
+            " -gccdep -MD"
             " $opt_level -opt nointrinsics"
         ),
+        depfile="$out.d",
+        deps="gcc",
         description="psp cc $in",
     )
     nw.rule(
