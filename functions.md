@@ -828,7 +828,7 @@
 | dra   | func_psp_09116120                        |       49 |         10 |        |                                 |       |
 | dra   | func_psp_0910BC78                        |       50 |          3 |        |                                 |       |
 | dra   | func_800EA538                            |       50 |          5 |        | https://decomp.me/scratch/BfS3i | 0.997 |
-| no2   | func_pspeu_0924F2D0                      |       50 |          5 |        | https://decomp.me/scratch/2SUwM | 1.0   |
+| no2   | func_pspeu_0924F2D0                      |       50 |          5 |        | https://decomp.me/scratch/2SUwM | 0.997 |
 | np3   | func_pspeu_0925BC90                      |       50 |          5 |        |                                 |       |
 | dra   | func_psp_09114208                        |       50 |          6 |        | https://decomp.me/scratch/Oy6SM | 0.98  |
 | dra   | func_psp_0910E2D0                        |       50 |          7 |        |                                 |       |
@@ -1264,7 +1264,7 @@
 | no3   | EntityWargExplosionPuffTransparent       |       82 |          8 |        | https://decomp.me/scratch/IxuOy | 0.999 |
 | no4   | func_pspeu_09238CF0                      |       82 |          8 |        | https://decomp.me/scratch/qonr5 | 1.0   |
 | dra   | func_psp_090F76D0                        |       82 |          9 |        |                                 |       |
-| lib   | EntitySkeletonPieces                     |       82 |          9 |        | https://decomp.me/scratch/JvA5Y | 1.0   |
+| lib   | EntitySkeletonPieces                     |       82 |          9 |        | https://decomp.me/scratch/JvA5Y | 0.999 |
 | dra   | func_psp_090FF298                        |       82 |         11 |        |                                 |       |
 | dra   | func_psp_09141C10                        |       82 |         15 |        |                                 |       |
 | dra   | func_psp_09143548                        |       83 |          4 |        |                                 |       |
@@ -1301,7 +1301,7 @@
 | np3   | func_801CE04C                            |       87 |         10 |        |                                 |       |
 | st0   | EntityCutscenePhotographFire             |       87 |         10 |        | https://decomp.me/scratch/TIsgi | 1.0   |
 | dra   | func_psp_091140D8                        |       87 |         14 |        | https://decomp.me/scratch/B78tT | 0.988 |
-| dai   | func_pspeu_0924F2D0                      |       87 |         18 |        | https://decomp.me/scratch/2SUwM | 1.0   |
+| dai   | func_pspeu_0924F2D0                      |       87 |         18 |        | https://decomp.me/scratch/2SUwM | 0.997 |
 | dra   | func_psp_090EC248                        |       88 |          3 |        |                                 |       |
 | st0   | EntityDraculaBody                        |       88 |         10 |        | https://decomp.me/scratch/sc9l4 | 0.999 |
 | cat   | func_pspeu_0924E800                      |       88 |         11 |        |                                 |       |
@@ -1323,7 +1323,7 @@
 | np3   | func_pspeu_09240FF0                      |       89 |         11 |        |                                 |       |
 | st0   | func_pspeu_092485C8                      |       89 |         11 |        |                                 |       |
 | wrp   | func_psp_09237C48                        |       89 |         11 |        |                                 |       |
-| dai   | EntitySkeletonPieces                     |       90 |          9 |        | https://decomp.me/scratch/JvA5Y | 1.0   |
+| dai   | EntitySkeletonPieces                     |       90 |          9 |        | https://decomp.me/scratch/JvA5Y | 0.999 |
 | dai   | func_pspeu_09256DA0                      |       90 |         10 |        |                                 |       |
 | ric   | func_pspeu_092AF898                      |       90 |         17 |        |                                 |       |
 | chi   | func_psp_0924D7F8                        |       91 |          4 |        | https://decomp.me/scratch/vOZf2 | 0.975 |
@@ -2394,7 +2394,7 @@
 | dra   | func_psp_090EDE28                        |      517 |         73 |        |                                 |       |
 | dra   | func_psp_091020A0                        |      517 |         74 |        | https://decomp.me/scratch/t87MI | 0.984 |
 | dra   | EntitySubwpnHolyWaterFlame               |      519 |         37 |        |                                 |       |
-| lib   | EntitySkeleton                           |      519 |         82 |        | https://decomp.me/scratch/JvA5Y | 1.0   |
+| lib   | EntitySkeleton                           |      519 |         82 |        | https://decomp.me/scratch/JvA5Y | 0.999 |
 | cat   | EntityGremlin                            |      521 |         71 |        | https://decomp.me/scratch/Cyn7w | 1.0   |
 | chi   | EntityGremlin                            |      521 |         71 |        | https://decomp.me/scratch/Cyn7w | 1.0   |
 | cat   | func_pspeu_09250C88                      |      523 |         54 | Yes    |                                 |       |
