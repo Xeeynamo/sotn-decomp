@@ -3313,6 +3313,12 @@ typedef struct {
     /* 0x98 */ s16 unk98;
     /* 0x9A */ s16 unk9A;
     /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ s16 : 16;
+    /* 0xA2 */ s16 unkA2;
+    /* 0xA4 */ s32 pad[2];
+    /* 0xAC */ struct Entity* unkAC;
+    /* 0xB0 */ u8 unkB0;
 } ET_SpectralSword;
 
 typedef struct {
@@ -3405,6 +3411,19 @@ typedef struct {
     s32 padb[3];
     u32 unk9C;
 } ET_Bell;
+
+typedef struct {
+    struct Primitive* prim;
+    s16 unk80;
+    s16 : 16;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+} ET_Priest;
+
+typedef struct {
+    struct Primitive* prim;
+} ET_Unk41EE4;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3702,6 +3721,8 @@ typedef union { // offset=0x7C
     ET_YorickSkull yorickSkull;
     ET_SkullLord skullLord;
     ET_Bell et_bell;
+    ET_Unk41EE4 unk41EE4;
+    ET_Priest priest;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

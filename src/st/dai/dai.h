@@ -45,13 +45,18 @@
 // Used for cluts, palettes, and in g_EInits
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
+    PAL_41EE4_74 = 0x74,
     PAL_BELL_1 = 0x75,
     PAL_BELL_2 = 0x76,
     PAL_CLOUDS = 0xC0,
     PAL_434FC = 0xC5,
+    PAL_41EE4_C8 = 0xC8,
     PAL_UNK_C9 = 0xC9,
     PAL_UNK_CA = 0xCA,
+    PAL_UNK_CC = 0xCC,
+    PAL_UNK_CE = 0xCE,
     PAL_STAGE_NAME_15F = 0x15F,
+    PAL_SPECTRAL_SWORD_WEAPON_3 = 0x16B,
     PAL_STAGE_NAME_19D = 0x19D,
     PAL_STAGE_NAME_19E = 0x19E,
     PAL_STAGE_NAME_19F = 0x19F,
@@ -64,8 +69,9 @@ enum OVL_EXPORT(Palette) {
     PAL_BAT = 0x22C,
     PAL_CROW = 0x22F,
     PAL_UNK_232 = 0x232,
-    PAL_UNK_234 = 0x234,
-    PAL_UNK_235 = 0x235,
+    PAL_SPECTRAL_SWORD = 0x234,
+    PAL_SPECTRAL_SWORD_WEAPON_1 = 0x235,
+    PAL_SPECTRAL_SWORD_WEAPON_2 = 0x236,
     PAL_SEALED_DOOR = 0x245,
     PAL_BREAKABLE = 0x249,
     PAL_BREAKABLE_DEBRIS = 0x24D,
@@ -111,9 +117,9 @@ enum OVL_EXPORT(Entities) {
     E_UNK_20,                 // func_us_801C34FC,
     E_UNK_21,                 // func_us_801C23A4,
     E_UNK_22,                 // EntityChair,
-    E_UNK_23,                 // func_us_801C2534,
-    E_UNK_24,                 // func_us_801C2CD4,
-    E_UNK_25,                 // func_us_801C2FF0,
+    E_PRIEST,                 // EntityPriest,
+    E_PRIEST_BLADES,          // EntityPriestBlades,
+    E_PRIEST_BLADE_DEBRIS,    // EntityPriestBladeDebris,
     E_UNK_26,                 // EntityBellHelper,
     E_UNK_27,                 // func_us_801D1204,
     E_UNK_28,                 // func_us_801D1C24,
@@ -139,9 +145,9 @@ enum OVL_EXPORT(Entities) {
     E_SKELERANG_UNKNOWN,      // EntitySkelerangUnknown,
     E_UNK_3D,                 // func_us_801D56F4,
     E_UNK_3E,                 // func_us_801D636C,
-    E_UNK_3F,                 // func_us_801D64A0,
-    E_UNK_40,                 // func_us_801D6FC8,
-    E_UNK_41,                 // func_us_801D70A0,
+    E_SPECTRAL_SWORD,         // EntitySpectralSword,
+    E_SPECTRAL_SWORD_AURA,    // EntitySpectralSwordAura,
+    E_SPECTRAL_SWORD_WEAPON,  // EntitySpectralSwordWeapon,
     E_UNK_42,                 // EntityWingedGuardSpawner,
     E_SEALED_DOOR,            // EntitySealedDoor,
     E_BREAKABLE_DEBRIS,       // EntityBreakableDebris,
@@ -164,7 +170,7 @@ extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
 // extern EInit g_EInit_801809A4; // Unused
 extern EInit g_EInitStatueBlock;
-extern EInit D_us_801809BC;
+extern EInit g_EInitPriest;
 // extern EInit g_EInit_801809C8; // Unused
 extern EInit D_us_801809D4;
 extern EInit D_us_801809E0;
@@ -183,8 +189,8 @@ extern EInit g_EInitBlackCrow;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
 extern EInit D_us_80180A94;
-extern EInit D_us_80180AA0;
-extern EInit D_us_80180AAC;
-extern EInit D_us_80180AB8;
+extern EInit g_EInitSpectralSword;
+extern EInit g_EInitSpectralSwordAura;
+extern EInit g_EInitSpectralSwordWeapon;
 
 #endif
