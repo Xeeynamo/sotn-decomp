@@ -26,7 +26,7 @@ int CdLastCom(void) { return CD_com; }
 unsigned char* CdLastPos(void) { return CD_pos; }
 
 int CdReset(int mode) {
-    if (mode == 2) {
+    if (mode == CdlModeAP) {
         CD_initintr();
         return 1;
     }
@@ -35,7 +35,7 @@ int CdReset(int mode) {
         return 0;
     }
 
-    if (mode == 1 && CD_initvol()) {
+    if (mode == CdlModeDA && CD_initvol()) {
         return 0;
     }
 

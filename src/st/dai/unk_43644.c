@@ -2,9 +2,9 @@
 #include "dai.h"
 
 // bss on pspeu
-// currently used by e_priest/func_us_801C2534
+// Used by e_priest/func_us_801C2534
 #ifdef VERSION_PSP
-s32 D_us_80180EA0; // D_pspeu_092970A0
+s32 D_us_80180EA0;
 #else
 s32 D_us_80180EA0 = {0};
 #endif
