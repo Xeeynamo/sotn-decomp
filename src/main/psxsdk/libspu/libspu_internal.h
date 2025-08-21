@@ -168,6 +168,6 @@ extern s32 _spu_transMode;
 #define SPU_TRANSFER_BY_DMA 0
 #define SPU_TRANSFER_BY_IO 1
 
-extern u8* _spu_memList;
+extern SPU_MALLOC* _spu_memList;
 
 #endif
