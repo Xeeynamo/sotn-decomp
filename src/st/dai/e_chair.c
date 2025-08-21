@@ -2,7 +2,7 @@
 #include "dai.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_23);
+extern s32 E_ID(PRIEST);
 #endif
 
 static AnimationFrame anim_1[] = {{8, 8}, {8, 9}, {8, 10}, {8, 11}, {-1, 0}};
@@ -42,7 +42,7 @@ void EntityChair(Entity* self) {
         if (self->params & 0xFF00) {
             entity = self + 1;
             if (self->params & 0x100) {
-                CreateEntityFromCurrentEntity(E_ID(UNK_23), entity);
+                CreateEntityFromCurrentEntity(E_ID(PRIEST), entity);
                 entity->posX.i.hi = 176;
                 entity->posY.i.hi = 128;
                 entity->params = 0;
@@ -52,7 +52,7 @@ void EntityChair(Entity* self) {
                 break;
             }
             if (self->params & 0x200) {
-                CreateEntityFromCurrentEntity(E_ID(UNK_23), entity);
+                CreateEntityFromCurrentEntity(E_ID(PRIEST), entity);
                 entity->posX.i.hi = 64;
                 entity->posY.i.hi = 128;
                 entity->params = 1;

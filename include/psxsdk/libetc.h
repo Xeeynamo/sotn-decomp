@@ -11,7 +11,7 @@ struct Callbacks {
     void* (*StopCallback)(void);
     Callback (*VSyncCallbacks)(int ch, Callback f);
     void* (*RestartCallback)(void);
-    void* D_8002C2B8;
+    void* intrEnv;
 };
 
 extern struct Callbacks* D_8002D340;
@@ -24,9 +24,7 @@ void* ResetCallback(void);
 void StopCallback(void);
 long RestartCallback(void);
 int CheckCallback(void);
-
 long SetVideoMode(long mode);
-
 void PadInit(int mode);
 u_long PadRead(int id);
 void PadStop(void);

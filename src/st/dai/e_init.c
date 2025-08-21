@@ -35,9 +35,9 @@ void EntityClouds(Entity* self);
 void func_us_801C34FC(Entity* self);
 void func_us_801C23A4(Entity* self);
 void EntityChair(Entity* self);
-void func_us_801C2534(Entity* self);
-void func_us_801C2CD4(Entity* self);
-void func_us_801C2FF0(Entity* self);
+void EntityPriest(Entity* self);
+void EntityPriestBlades(Entity* self);
+void EntityPriestBladeDebris(Entity* self);
 void EntityBellHelper(Entity* self);
 void func_us_801D1204(Entity* self);
 void func_us_801D1C24(Entity* self);
@@ -109,9 +109,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C34FC,
     func_us_801C23A4,
     EntityChair,
-    func_us_801C2534,
-    func_us_801C2CD4,
-    func_us_801C2FF0,
+    EntityPriest,
+    EntityPriestBlades,
+    EntityPriestBladeDebris,
     EntityBellHelper,
     func_us_801D1204,
     func_us_801D1C24,
@@ -160,7 +160,7 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInit_801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3}; // Unused
 EInit g_EInitStatueBlock = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
-EInit D_us_801809BC = {ANIMSET_OVL(2), 0, 72, PAL_UNK_C9, 5};
+EInit g_EInitPriest = {ANIMSET_OVL(2), 0, 72, PAL_UNK_C9, 5};
 EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_UNK_CA, 5}; // Unused
 EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_UNK_C9, 101};
 EInit D_us_801809E0 = {ANIMSET_OVL(4), 0, 72, PAL_UNK_215, 180};
