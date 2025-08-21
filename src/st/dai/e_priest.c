@@ -102,7 +102,7 @@ void EntityPriest(Entity* self) {
     case 1:
         self->ext.priest.unk88++;
         if ((self->ext.priest.unk88 == 1) && (self->params & 1)) {
-            g_api.PlaySfx(SFX_UNK_304);
+            g_api.PlaySfx(SFX_UNK_PSP_304);
             D_us_80180EA0 = 1;
             D_80097928 = 0;
         }
