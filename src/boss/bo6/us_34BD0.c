@@ -11,7 +11,12 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_34BD0", func_us_801B502C);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_34BD0", func_us_801B50BC);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_34BD0", func_us_801B5A14);
+extern s32 D_us_801CF3C8; // Richter Think Step
+extern s32 D_us_801CF3CC; // Richter Think Step_s
+void func_us_801B5A14(s32 step) {
+    D_us_801CF3C8 = step;
+    D_us_801CF3CC = 0;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_34BD0", RichterThinking);
 
