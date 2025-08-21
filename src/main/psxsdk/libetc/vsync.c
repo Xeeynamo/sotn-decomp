@@ -39,10 +39,9 @@ s32 VSync(s32 mode) {
     v_wait(waitCount, max);
     temp_s0 = *D_8002C2A8;
     v_wait(Vcount + 1, 1);
-    if ((temp_s0 & 0x80000) && ((temp_s0 ^ *D_8002C2A8) >= 0)) {
-        do {
-
-        } while (!((temp_s0 ^ *D_8002C2A8) & 0x80000000));
+    if (temp_s0 & 0x80000) {
+        while (!((temp_s0 ^ *D_8002C2A8) & 0x80000000)) {
+        }
     }
     prevVcount = Vcount;
     Hcount = *D_8002C2AC;

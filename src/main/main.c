@@ -12,11 +12,12 @@ void main(void) {
     InitHeap((void*)0x801F0000, 0x7800);
     CdInit();
 
-    g_GameState = Game_Boot;
-
-    do {
+    for (g_GameState = Game_Boot; g_GameState != Game_Init; g_GameState--) {
         main_fd = open("sim:c:\\bin\\dra.bin", 1);
-    } while (main_fd == -1 && --g_GameState != Game_Init);
+        if (main_fd != -1) {
+            break;
+        }
+    }
 
     if (g_GameState != Game_Init) {
         read(main_fd, (void*)DRA_PRG_PTR, 0x130000);

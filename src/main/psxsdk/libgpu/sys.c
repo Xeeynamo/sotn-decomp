@@ -3,7 +3,7 @@
 #include <psxsdk/libgpu.h>
 
 typedef struct {
-    /* 0x00 */ u32 unk00;                       // aIdSysCV1831995
+    /* 0x00 */ const char* rcsid;               // aIdSysCV1831995
     /* 0x04 */ void (*addque)();                // _addque
     /* 0x08 */ int (*addque2)();                // _addque2
     /* 0x0C */ u32 clr;                         // _clr
