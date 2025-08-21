@@ -88,7 +88,7 @@ enum {
     /* us:0x303, jp:0x303 */ MU_CURSE_ZONE,
 #if defined(VERSION_US)
     /* us:0x304           */ MU_CURSE_ZONE_LOOP_POINT,
-#elif defined(VERSION_PSP)
+#else
     /*           jp:0x304 */ SFX_UNK_304, // SFX related to DAI priest
 #endif
     /* us:0x305, jp:0x305 */ MU_REQUIEM_FOR_THE_GODS,
