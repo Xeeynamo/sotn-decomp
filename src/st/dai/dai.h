@@ -51,6 +51,8 @@ enum OVL_EXPORT(Palette) {
     PAL_434FC = 0xC5,
     PAL_UNK_C9 = 0xC9,
     PAL_UNK_CA = 0xCA,
+    PAL_UNK_CC = 0xCC,
+    PAL_UNK_CE = 0xCE,
     PAL_STAGE_NAME_15F = 0x15F,
     PAL_STAGE_NAME_19D = 0x19D,
     PAL_STAGE_NAME_19E = 0x19E,
@@ -111,9 +113,9 @@ enum OVL_EXPORT(Entities) {
     E_UNK_20,                 // func_us_801C34FC,
     E_UNK_21,                 // func_us_801C23A4,
     E_UNK_22,                 // EntityChair,
-    E_UNK_23,                 // func_us_801C2534,
-    E_UNK_24,                 // func_us_801C2CD4,
-    E_UNK_25,                 // func_us_801C2FF0,
+    E_PRIEST,                 // EntityPriest,
+    E_PRIEST_BLADES,          // EntityPriestBlades,
+    E_PRIEST_BLADE_DEBRIS,    // EntityPriestBladeDebris,
     E_UNK_26,                 // EntityBellHelper,
     E_UNK_27,                 // func_us_801D1204,
     E_UNK_28,                 // func_us_801D1C24,
@@ -164,7 +166,7 @@ extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
 // extern EInit g_EInit_801809A4; // Unused
 extern EInit g_EInitStatueBlock;
-extern EInit D_us_801809BC;
+extern EInit g_EInitPriest;
 // extern EInit g_EInit_801809C8; // Unused
 extern EInit D_us_801809D4;
 extern EInit D_us_801809E0;

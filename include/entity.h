@@ -3406,6 +3406,15 @@ typedef struct {
     u32 unk9C;
 } ET_Bell;
 
+typedef struct {
+    struct Primitive* prim;
+    s16 unk80;
+    s16 : 16;
+    s16 unk84;
+    s16 unk86;
+    s16 unk88;
+} ET_Priest;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3702,6 +3711,7 @@ typedef union { // offset=0x7C
     ET_YorickSkull yorickSkull;
     ET_SkullLord skullLord;
     ET_Bell et_bell;
+    ET_Priest priest;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
