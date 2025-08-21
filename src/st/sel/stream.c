@@ -19,7 +19,7 @@ s32 StreamDiskIsReady() {
     ret = CdLastCom();
     if (ret >= CdlGetlocL && ret <= CdlGetlocP || !(res & CdlStatShellOpen)) {
         // clear the command
-        CdControlF(1, NULL);
+        CdControlF(CdlNop, NULL);
         return g_StreamDiskIsReady = 0;
     }
 
@@ -171,7 +171,7 @@ void func_801B9C18(s32 unused, void (*callback)()) {
     DecDCTReset(0);
     *s0 = 0;
     DecDCToutCallback(callback);
-    StSetRing((s32)(s0 + 2), 0x28);
+    StSetRing((u_long*)(s0 + 2), 40);
     StSetStream(*g_StreamIsRGB24, START_FRAME, -1, NULL, NULL);
 }
 

@@ -90,7 +90,7 @@ static inline cd_cw(u8 com, u8* param, Result_t* result, s32 arg3) {
 
     for (i = 3; i != -1; i--) {
         CD_cbsync = NULL;
-        if (com != CdlNop && (CdStatus() & 0x10)) {
+        if (com != CdlNop && (CdStatus() & CdlStatShellOpen)) {
             CD_cw(CdlNop, NULL, NULL, 0);
         }
         if (param == NULL || D_80032A24[com] == 0 ||

@@ -3,6 +3,18 @@
 #include <kernel.h>
 #include "libcd_internal.h"
 
+static inline void def_cbsync(u_char intr, Result_t* result) {
+    DeliverEvent(HwCdRom, EvSpCOMP);
+}
+
+static inline void def_cbready(u_char intr, Result_t* result) {
+    DeliverEvent(HwCdRom, EvSpDR);
+}
+
+static inline void def_cbread(u_char intr, Result_t* result) {
+    DeliverEvent(HwCdRom, EvSpDR);
+}
+
 int CdInit(void) {
     unsigned int i;
 
@@ -18,16 +30,4 @@ int CdInit(void) {
 
     printf("CdInit: Init failed\n");
     return 0;
-}
-
-void def_cbsync(u_char intr, Result_t* result) {
-    DeliverEvent(HwCdRom, EvSpCOMP);
-}
-
-void def_cbready(u_char intr, Result_t* result) {
-    DeliverEvent(HwCdRom, EvSpDR);
-}
-
-void def_cbread(u_char intr, Result_t* result) {
-    DeliverEvent(HwCdRom, EvSpDR);
 }

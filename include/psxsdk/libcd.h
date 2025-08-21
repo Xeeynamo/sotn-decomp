@@ -125,10 +125,6 @@ typedef char Result_t[8];
 
 typedef void (*CdlCB)(u_char, Result_t*);
 
-void def_cbsync(u_char intr, Result_t* result);
-void def_cbready(u_char intr, Result_t* result);
-void def_cbread(u_char intr, Result_t* result);
-
 int CdInit(void);
 char CdStatus(void);
 int CdMode(void);
@@ -161,7 +157,7 @@ CdlLOC* CdIntToPos(int i, CdlLOC* p);
 int CdPosToInt(CdlLOC* p);
 CdlFILE* CdSearchFile(CdlFILE* fp, char* name);
 int CdRead(int sectors, u_long* buf, int mode);
-int CdReadSync(int mode, u_char* result);
+int CdReadSync(int mode, Result_t* result);
 CdlCB CdReadCallback(CdlCB func);
 int CdRead2(long mode);
 

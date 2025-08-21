@@ -11,15 +11,14 @@ void _SsSeqPlay(s16 arg0, s16 arg1) {
     s32 temp;
 
     temp_s1 = &_ss_score[arg0][arg1];
-    temp = temp_s1->delta_value - temp_s1->unk70;
-    if (temp > 0) {
+    if (temp_s1->delta_value - temp_s1->unk70 > 0) {
         if (temp_s1->unk6E > 0) {
             temp_s1->unk6E--;
         } else if (temp_s1->unk6E == 0) {
             temp_s1->unk6E = temp_s1->unk70;
             temp_s1->delta_value--;
         } else {
-            temp_s1->delta_value = temp;
+            temp_s1->delta_value -= temp_s1->unk70;
         }
     } else if (temp_s1->delta_value <= temp_s1->unk70) {
         var_s0 = temp_s1->delta_value;
@@ -41,67 +40,46 @@ void _SsSetPitchBend(s16, s16);
 void _SsSetProgramChange(s16 arg0, s16 arg1, u8 arg2);
 
 void _SsGetSeqData(s16 arg0, s16 arg1) {
-    s32 temp_a2;
     struct SeqStruct* score;
-    u8 channel;
     u8 temp_s0;
     u8 temp_s0_2;
     u8 var_s3;
-    u8* read_ptr;
-    u8* temp_v0;
-    u8* temp_v0_2;
-    u8* temp_v0_3;
-    u8* temp_v1;
 
     score = &_ss_score[arg0][arg1];
-    read_ptr = score->read_pos;
-    score->read_pos++;
-    temp_s0 = read_ptr[0];
-    channel = read_ptr[0] & 0xF;
-    if (read_ptr[0] & 0x80) {
-        temp_a2 = read_ptr[0] & 0xF0;
-        score->channel = channel;
-        switch (temp_a2) {
+    temp_s0 = *score->read_pos++;
+    if (temp_s0 & 0x80) {
+        score->channel = temp_s0 & 0xF;
+        switch (temp_s0 & 0xF0) {
         case 0x90:
-            temp_v1 = score->read_pos;
             score->unk11 = 0x90;
-            score->read_pos = temp_v1 + 1;
-            temp_s0_2 = temp_v1[0];
-            score->read_pos++;
-            var_s3 = temp_v1[1];
+            temp_s0_2 = *score->read_pos++;
+            var_s3 = *score->read_pos++;
             score->delta_value = _SsReadDeltaValue(arg0, arg1);
             _SsNoteOn(arg0, arg1, temp_s0_2, var_s3);
             return;
         case 0xB0:
-            temp_v0 = score->read_pos;
             score->unk11 = 0xB0;
-            score->read_pos = temp_v0 + 1;
-            _SsSetControlChange(arg0, arg1, temp_v0[0]);
+            _SsSetControlChange(arg0, arg1, *score->read_pos++);
             return;
         case 0xC0:
-            temp_v0_2 = score->read_pos;
             score->unk11 = 0xC0;
-            score->read_pos = temp_v0_2 + 1;
-            _SsSetProgramChange(arg0, arg1, temp_v0_2[0]);
+            _SsSetProgramChange(arg0, arg1, *score->read_pos++);
             return;
         case 0xE0:
             score->unk11 = 0xE0;
-            score->read_pos += 1;
+            score->read_pos++;
             _SsSetPitchBend(arg0, arg1);
             return;
         case 0xF0:
-            temp_v0_3 = score->read_pos;
             score->unk11 = 0xFF;
-            score->channel = channel;
-            score->read_pos = temp_v0_3 + 1;
-            _SsGetMetaEvent(arg0, arg1, temp_v0_3[0]);
+            score->channel = temp_s0 & 0xF;
+            _SsGetMetaEvent(arg0, arg1, *score->read_pos++);
             return;
         }
     } else {
         switch (score->unk11) {
         case 0x90:
-            score->read_pos = read_ptr + 2;
-            var_s3 = read_ptr[1];
+            var_s3 = *score->read_pos++;
             score->delta_value = _SsReadDeltaValue(arg0, arg1);
             _SsNoteOn(arg0, arg1, temp_s0, var_s3);
             return;
@@ -297,8 +275,6 @@ void _SsContPortamento(s16 arg0, s16 arg1, s32 arg2) {
         SsUtGetVagAtr(
             temp_s2->unk4c, temp_s2->programs[new_var], var_s0, &sp20);
         if ((arg2 & 0xFF) < 0x40U) {
-            do {
-            } while (0);
             sp20.mode = 2;
         } else if (((arg2 + 0xC0) & 0xFF) < 0x40U) {
             sp20.mode = 0;

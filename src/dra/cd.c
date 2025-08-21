@@ -228,7 +228,7 @@ s32 func_801073E8(void) {
 
     ret = CdLastCom();
     if (ret >= CdlGetlocL && ret <= CdlGetlocP || !(res & CdlStatShellOpen)) {
-        CdControlF(1, 0);
+        CdControlF(CdlNop, NULL);
         return D_80137F9C = 0;
     }
     return D_80137F9C = 1;
@@ -305,11 +305,8 @@ void CopyRicOvlCallback(void) {
 }
 
 void CopySupportOvlCallback(void) {
-    s32 temp_v1;
     s32 i;
     s32 len;
-    u8* var_v0;
-    u8** temp_a0;
 
     if (g_Cd.overlayBlockCount != 0) {
         len = CD_BLOCK_LEN;
@@ -349,9 +346,6 @@ void func_801078C4(void) {
     s32 i;
     s32 len;
     s32 var_a3;
-    s32 var_v0;
-    s32** var_a0;
-    u8** temp_a0;
 
     if (g_Cd.overlayBlockCount != 0) {
         len = CD_BLOCK_LEN;
@@ -487,13 +481,6 @@ void func_80107DB4(void) {
 }
 
 void func_80107EF0(void) {
-    s32 temp_v1;
-    s32 temp_v1_3;
-    s32 var_a1;
-    s32 var_v0;
-    s32 var_v0_2;
-    u8** temp_a0;
-    void (*var_a0)();
     s32 i;
     s32 len;
     short res;
@@ -647,21 +634,14 @@ void UpdateCd(void) {
 
     unsigned char result[8];
     unsigned char setModeArg[24];
-    u32* pDst;
     CdFile* cdFile;
-    s32 temp_v1_2;
     s32 temp_v1_8;
     s32 temp_v1_9;
     s32 i;
-    s32 cdFileSize;
-    s32 var_v0_3;
-    s32 var_v0_4;
     s8 seqIdx;
-    u32 temp_v1_3;
-    u32 temp_v1_4;
     u32* pSrc;
+    u32* pDst;
     u16* clutAddr;
-
     s32* pLoadFile;
     CdMgr* cd;
 
@@ -772,25 +752,12 @@ void UpdateCd(void) {
         cd = &g_CdCallback;
         cd->cb = cdFile->cb;
         pLoadFile = &cdFile->size;
-        cdFileSize = *pLoadFile;
-        if (cdFileSize < 0) {
-            cdFileSize += 0x1FFF;
-        }
-        g_Cd.D_80137F68 = cdFileSize >> 13;
+        g_Cd.D_80137F68 = *pLoadFile / 0x2000;
         g_VabId = cdFile->vabId;
-        var_v0_3 = *pLoadFile;
-        if (var_v0_3 < 0) {
-            var_v0_3 += 0x7FF;
-        }
-        g_Cd.overlayBlockCount = var_v0_3 >> 11;
-        temp_v1_2 = (var_v0_4 = *pLoadFile);
-        if (temp_v1_2 < 0) {
-            var_v0_4 += 0x7FF;
-        }
-
+        g_Cd.overlayBlockCount = *pLoadFile / 0x800;
         // how many bytes long will be the last block to read?
         // eg. if the file is 0x820 long, then the value will be 0x20
-        g_Cd.overlayLastBlockSize = temp_v1_2 - (var_v0_4 >> 11 << 11);
+        g_Cd.overlayLastBlockSize = *pLoadFile % 0x800;
         D_80137F96 = cdFile->unkF;
         g_Cd.addr = D_800ACD10[cdFile->unkD];
         g_Cd.D_80137F6C = 0;
@@ -1000,7 +967,7 @@ void UpdateCd(void) {
 
     case CdStep_CdShellOpenErr:
         // The CdlStatShellOpen flag is cleared only when CdlNOP is issued
-        CdControlF(CdlNop, 0);
+        CdControlF(CdlNop, NULL);
         g_CdStep = CdStep_F1;
         if (g_Timer & 4) {
             FntPrint("cd shell open error\n");
@@ -1024,7 +991,7 @@ void UpdateCd(void) {
         break;
 
     case CdStep_F2:
-        CdControlF(CdlGetTN, 0);
+        CdControlF(CdlGetTN, NULL);
         g_CdStep = CdStep_F3;
         break;
 

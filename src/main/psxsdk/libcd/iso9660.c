@@ -5,7 +5,7 @@
 extern int CD_nopen;
 extern int D_80032AB0;
 extern int D_80032DB4;
-extern CdlFILE file[0x40];
+extern CdlFILE file[CdlMAXFILE];
 
 CdlFILE* CdSearchFile(CdlFILE* fp, char* name) {
     char buf[32];
@@ -26,7 +26,7 @@ CdlFILE* CdSearchFile(CdlFILE* fp, char* name) {
     }
     buf[0] = 0;
     namePtr = name;
-    for (i = 0; i < 8; i++) {
+    for (i = 0; i < CdlMAXLEVEL; i++) {
         bufPtr = &buf;
         while (*namePtr != '\\') {
             if (*namePtr == 0) {
@@ -46,7 +46,7 @@ CdlFILE* CdSearchFile(CdlFILE* fp, char* name) {
         }
     }
 out:
-    if (i >= 8) {
+    if (i >= CdlMAXLEVEL) {
         if (D_80032AB0 > 0) {
             printf("%s: path level (%d) error\n", name, i);
         }
@@ -68,8 +68,8 @@ out:
     if (D_80032AB0 > 1) {
         printf("CdSearchFile: searching %s...\n", buf);
     }
-    for (i = 0; i < 0x40; i++) {
-        if (file[i].name[0] == NULL) {
+    for (i = 0; i < CdlMAXFILE; i++) {
+        if (file[i].name[0] == 0) {
             break;
         }
         if (_cmp(file[i].name, buf)) {
