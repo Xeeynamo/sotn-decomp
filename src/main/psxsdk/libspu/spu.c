@@ -181,17 +181,13 @@ s32 _spu_init(s32 arg0) {
 s32 _spu_writeByIO(u8* addr, s32 size) {
     volatile s32 sp0;
     volatile s32 sp4;
-    s32 spustat_prev;
-    s32 spustat;
-    s32 wait_count;
+    u16 spustat;
     s32 num_to_trans;
     u32 total_size;
     u16* cur_pos;
     s32 spustat_cur;
-    s32 less_than_64;
     s32 num_trans;
     u16 data;
-    u8 pad[8];
     u16 spucnt;
 
     total_size = size;
@@ -204,23 +200,20 @@ s32 _spu_writeByIO(u8* addr, s32 size) {
     _spu_RXX->rxx.trans_addr = _spu_tsa;
 #endif
     WASTE_TIME();
-    less_than_64 = total_size < 0x41;
     while (total_size != 0) {
         num_to_trans = total_size;
-        if (less_than_64 == 0) {
+        if (total_size > 0x40) {
             num_to_trans = 0x40;
         }
         num_trans = 0;
-        if (num_to_trans > 0) {
-            do {
-                data = *cur_pos++;
-                num_trans += 2;
+        while (num_trans < num_to_trans) {
+            data = *cur_pos++;
+            num_trans += 2;
 #ifndef VERSION_PC
-                _spu_RXX->rxx.trans_fifo = data;
+            _spu_RXX->rxx.trans_fifo = data;
 #else
-                write_16(0x1F801DA8, data, __FILE__, __LINE__);
+            write_16(0x1F801DA8, data, __FILE__, __LINE__);
 #endif
-            } while (num_trans < num_to_trans);
         }
 #ifndef VERSION_PC
         spucnt = _spu_RXX->rxx.spucnt;
@@ -236,58 +229,42 @@ s32 _spu_writeByIO(u8* addr, s32 size) {
         WASTE_TIME();
         D_800334FC = 0;
 #ifndef VERSION_PC
-        if (_spu_RXX->rxx.spustat & 0x400) {
+        while (_spu_RXX->rxx.spustat & 0x400) {
 #else
-        if (read_16(0x1ae, __FILE__, __LINE__) & 0x400) {
+        while (read_16(0x1ae, __FILE__, __LINE__) & 0x400) {
 #endif
-            do {
-                wait_count = D_800334FC + 1;
-                D_800334FC = wait_count;
-                if (wait_count > 5000) {
-                    printf("SPU:T/O [%s]\n", "wait (wrdy H -> L)");
-                    break;
-                }
-#ifndef VERSION_PC
-            } while (_spu_RXX->rxx.spustat & 0x400);
-#else
-            } while (read_16(0x1ae, __FILE__, __LINE__) & 0x400);
-#endif
+            D_800334FC++;
+            if (D_800334FC > 5000) {
+                printf("SPU:T/O [%s]\n", "wait (wrdy H -> L)");
+                break;
+            }
         }
         WASTE_TIME();
         WASTE_TIME();
         total_size -= num_to_trans;
-        less_than_64 = total_size < 0x41;
     }
 #ifndef VERSION_PC
     spucnt = _spu_RXX->rxx.spucnt;
     spucnt &= 0xffcf;
     _spu_RXX->rxx.spucnt = spucnt;
-    spustat_prev = spustat & 0xFFFF;
     D_800334FC = 0;
     spustat_cur = _spu_RXX->rxx.spustat & 0x7FF;
 #else
     spucnt = read_16(0x1F801DAA, __FILE__, __LINE__);
     spucnt &= 0xffcf;
     write_16(0x1F801DAA, spucnt, __FILE__, __LINE__);
-    spustat_prev = spustat & 0xFFFF;
     D_800334FC = 0;
     spustat_cur = read_16(0x1ae, __FILE__, __LINE__) & 0x7FF;
 #endif
-    if (spustat_cur != spustat_prev) {
-        // ignore this busy loop for now
-#ifndef VERSOIN_PC
-        while (true) {
-            wait_count = D_800334FC + 1;
-            D_800334FC = wait_count;
-            if (wait_count > 5000) {
-                printf("SPU:T/O [%s]\n", "wait (dmaf clear/W)");
-                return;
-            }
-            spustat_cur = _spu_RXX->rxx.spustat & 0x7FF;
-            if (spustat_cur == spustat_prev) {
-                break;
-            }
+// ignore this busy loop for now
+#ifndef VERSION_PC
+    while (spustat_cur != spustat) {
+        D_800334FC++;
+        if (D_800334FC > 5000) {
+            printf("SPU:T/O [%s]\n", "wait (dmaf clear/W)");
+            return;
         }
+        spustat_cur = _spu_RXX->rxx.spustat & 0x7FF;
     }
 #endif
     return spustat_cur;
@@ -374,7 +351,7 @@ void _spu_FsetRXX(s32 arg0, u32 arg1, s32 arg2) {
 #ifdef VERSION_PC
         write_16(0x1F801C00 + arg0 * 2, arg1, __FILE__, __LINE__);
 #else
-            _spu_RXX->raw[arg0] = arg1;
+        _spu_RXX->raw[arg0] = arg1;
 #endif
         return;
     }
