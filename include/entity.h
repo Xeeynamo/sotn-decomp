@@ -3415,6 +3415,10 @@ typedef struct {
     s16 unk88;
 } ET_Priest;
 
+typedef struct {
+    struct Primitive* prim;
+} ET_Unk41EE4;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3711,6 +3715,7 @@ typedef union { // offset=0x7C
     ET_YorickSkull yorickSkull;
     ET_SkullLord skullLord;
     ET_Bell et_bell;
+    ET_Unk41EE4 unk41EE4;
     ET_Priest priest;
 } Ext;
 
