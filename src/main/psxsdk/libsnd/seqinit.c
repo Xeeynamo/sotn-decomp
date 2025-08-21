@@ -103,24 +103,23 @@ s16 _SsInitSoundSeq(s16 arg0, s16 vab_id, u8* addr) {
 }
 
 s16 SsSeqOpen(u32 addr, s16 vab_id) {
-    s32 open_bits;
     s16 seq_sep_no;
     u32 bit_pos;
     u8 found;
-    open_bits = _snd_openflag;
-    if (open_bits == 0xFFFFFFFF) {
+
+    if (_snd_openflag == 0xFFFFFFFF) {
         printf("Can't Open Sequence data any more\n\n");
         return -1;
     }
     bit_pos = 0;
     found = 0;
-    do {
-        if (!((1 << bit_pos) & open_bits)) {
+    while (!found) {
+        if (!((1 << bit_pos) & _snd_openflag)) {
             seq_sep_no = bit_pos;
             found = 1;
         }
-        bit_pos += 1;
-    } while (found == 0);
+        bit_pos++;
+    }
     _snd_openflag |= 1 << seq_sep_no;
     if (_SsInitSoundSeq(seq_sep_no, vab_id, addr) == -1) {
         return -1;
