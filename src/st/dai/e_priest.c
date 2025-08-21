@@ -102,7 +102,7 @@ void EntityPriest(Entity* self) {
     case 1:
         self->ext.priest.unk88++;
         if ((self->ext.priest.unk88 == 1) && (self->params & 1)) {
-            g_api.PlaySfx(MU_CURSE_ZONE_LOOP_POINT);
+            g_api.PlaySfx(SFX_UNK_304);
             D_us_80180EA0 = 1;
             D_80097928 = 0;
         }
@@ -364,7 +364,7 @@ void EntityPriestBlades(Entity* self) {
         break;
     case 1:
         params = self->params;
-        self->posX.val += 0xFFFD8000;
+        self->posX.val += FIX(-2.5);
         if (self->posX.i.hi < g_xYxVals[params][2]) {
             self->posX.i.hi = g_xYxVals[params][2];
             self->ext.priest.unk80 = 96;
@@ -397,7 +397,7 @@ void EntityPriestBlades(Entity* self) {
             return;
         }
         params = self->params;
-        self->posX.val += 0xFFFC8000;
+        self->posX.val += FIX(-3.5);
         if (self->posX.i.hi < g_xYxVals[params][0]) {
             DestroyEntity(self);
         }

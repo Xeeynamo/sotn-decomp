@@ -86,7 +86,11 @@ enum {
     /* us:0x301, jp:0x301 */ MU_LOST_PAINTING = 0x301,
     /* us:0x302, jp:0x302 */ MU_LOST_PAINTING_LOOP_POINT,
     /* us:0x303, jp:0x303 */ MU_CURSE_ZONE,
-    /* us:0x304, jp:0x304 */ MU_CURSE_ZONE_LOOP_POINT,
+#if defined(VERSION_US)
+    /* us:0x304           */ MU_CURSE_ZONE_LOOP_POINT,
+#elif defined(VERSION_PSP)
+    /*           jp:0x304 */ SFX_UNK_304, // SFX related to DAI priest
+#endif
     /* us:0x305, jp:0x305 */ MU_REQUIEM_FOR_THE_GODS,
     /* us:0x306, jp:0x306 */ MU_REQUIEM_FOR_THE_GODS_LOOP_POINT,
     /* us:0x307, jp:0x307 */ MU_RAINBOW_CEMETERY,
