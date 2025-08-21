@@ -279,6 +279,7 @@ segments:
       - [0x23214, .data, psxsdk/libcd/sys]
       - [0x232A4, .data, psxsdk/libcd/bios]
       - [0x235B0, data]
+      - [0x235B8, .data, psxsdk/libcd/cdread]
       - [0x235E8, .data, psxsdk/libcd/c_002]
       - [0x235F8, .data, psxsdk/libcd/c_003]
       - [0x23608, .data, psxsdk/libcd/c_004]
