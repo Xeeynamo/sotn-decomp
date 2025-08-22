@@ -61,7 +61,7 @@ enum OVL_EXPORT(Palette) {
     PAL_STAGE_NAME_19E = 0x19E,
     PAL_STAGE_NAME_19F = 0x19F,
     PAL_SKELERANG = 0x200,
-    PAL_UNK_215 = 0x215,
+    PAL_CORNER_GUARD = 0x215,
     PAL_BONE_PILLAR = 0x216,
     PAL_BONE_PILLAR_FIRE = 0x221,
     PAL_UNK_22A = 0x22A,
@@ -121,7 +121,7 @@ enum OVL_EXPORT(Entities) {
     E_PRIEST_BLADES,          // EntityPriestBlades,
     E_PRIEST_BLADE_DEBRIS,    // EntityPriestBladeDebris,
     E_UNK_26,                 // EntityBellHelper,
-    E_UNK_27,                 // func_us_801D1204,
+    E_CORNER_GUARD,           // EntityCornerGuard,
     E_UNK_28,                 // func_us_801D1C24,
     E_BONE_PILLAR_HEAD,       // EntityBonePillarHead,
     E_BONE_PILLAR_FIRE,       // EntityBonePillarFireBreath,
@@ -173,7 +173,7 @@ extern EInit g_EInitStatueBlock;
 extern EInit g_EInitPriest;
 // extern EInit g_EInit_801809C8; // Unused
 extern EInit D_us_801809D4;
-extern EInit D_us_801809E0;
+extern EInit g_EInitCornerGuard;
 extern EInit D_us_801809EC;
 extern EInit g_EInitBonePillarHead;
 extern EInit g_EInitBonePillarPieces;

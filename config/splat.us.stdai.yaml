@@ -67,7 +67,7 @@ segments:
       - [0x19C8, .data, e_misc]
       - [0x1A80, .data, e_particles]
       - [0x1B00, .data, e_room_fg]
-      - [0x1B8C, data] # e_corner_guard
+      - [0x1B8C, .data, e_corner_guard]
       - [0x1C54, .data, e_bone_pillar]
       - [0x1D40, data] # e_bone_halberd
       - [0x1EC0, .data, e_winged_guard]
@@ -85,6 +85,8 @@ segments:
       - [0x3A94, .data, cutscene_script]
       - [0x3C18, data, cutscene_data]
       - [0x3F20, data]
+      - [0x3BA44, data] # e_corner_guard sprite banks?
+      - [0x3C1B4, data]
       - [0x3FE3C, .rodata, e_breakable]
       - [0x3FE5C, .rodata, unk_40BA4]
       - [0x3FE98, .rodata, e_priest]
