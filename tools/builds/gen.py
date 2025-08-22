@@ -331,6 +331,9 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
         outputs=[ld_path],
         inputs=[entry.path],
         implicit=symbol_paths,
+        variables={
+            "version": ver,
+        },
     )
     if platform == "psx":
         add_c = add_c_psx
@@ -434,6 +437,9 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
         outputs=[ld_path],
         inputs=[entry.path],
         implicit=symbol_paths,
+        variables={
+            "version": version,
+        },
     )
     if platform == "psx":
         add_c = add_c_psx
@@ -593,11 +599,17 @@ def add_checksum(nw: ninja_syntax.Writer, version: str, file_name: str):
 
 with open("build.ninja", "w") as f:
     nw = ninja_syntax.Writer(f)
+
+    forced_symbol_config = ""
+    if "FORCE_SYMBOLS" in os.environ:
+        print("forcing symbols")
+        forced_symbol_config = "build/$version/$in"
+
     nw.rule(
         "splat",
         # 'touch' circumnavigates a bug where splat would not update the
         # mtime of the linker script if it is already up-to-date.
-        command=".venv/bin/splat split $in > /dev/null && touch $out",
+        command=f".venv/bin/splat split $in {forced_symbol_config} > /dev/null && touch $out",
         description="splat $in",
     )
     nw.rule(

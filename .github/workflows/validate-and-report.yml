@@ -150,16 +150,18 @@ jobs:
       - name: Clean ld files
         run: |
             find ./build -type f -name "*.ld" -delete
+      - name: Create reports directory
+        run: |
+          mkdir -p gh-duplicates
       - name: Generate duplicates report
         run: |
           make build || true
-          make force_symbols
-          .venv/bin/python3 tools/function_finder/fix_matchings.py
-          cd tools/dups
-          cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
+          make duplicates-report
+          cp build/us/reports/duplicates.txt gh-duplicates/
       - name: Generate function report
         run: |
-            .venv/bin/python3 tools/function_finder/function_finder_psx.py > gh-duplicates/functions.md
+          make function-finder
+          cp build/us/reports/{functions.md,function_calls,function_graphs.md} gh-duplicates/
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action'

@@ -34,9 +34,11 @@ ASSETS_DIR      := assets
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 BUILD_DIR       := build/$(VERSION)
+REPORTS_DIR     := $(BUILD_DIR)/reports
 PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_permuter/permuter_loader)
 RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
+BUILD_CONFIG_DIR := $(BUILD_DIR)/config
 BUILD_DISK_DIR  := $(BUILD_DIR)/disk
 
 # Files
@@ -154,10 +156,12 @@ build_pspeu: $(SOTNSTR_APP) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) 
 	VERSION=pspeu .venv/bin/python3 tools/builds/gen.py
 	ninja
 
-.PHONY: clean
+.PHONY: clean clean_asm
+clean_asm:
+	git clean -fdx $(ASM_DIR)
 clean: ##@ clean extracted files, assets, and build artifacts
+clean: clean_asm
 	git clean -fdx assets/
-	git clean -fdx asm/$(VERSION)/
 	git clean -fdx build/$(VERSION)/
 	git clean -fdx src/**/gen/
 	git clean -fdx config/*$(VERSION)*
@@ -265,45 +269,68 @@ expected: build
 
 # Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
-	mv src src_tmp
 	find $(BUILD_DIR) -type f -name "*.ld" -delete
-	make extract -j
-	rm -rf src/
-	mv src_tmp src
+	$(MAKE) extract -j
+	$(MAKE) -j
 
+.PHONY: gen_force_symbols
+gen_force_symbols:
+	VERSION=us FORCE_SYMBOLS= $(PYTHON) tools/builds/gen.py
+
+
+$(BUILD_CONFIG_DIR):
+	mkdir -p $(BUILD_CONFIG_DIR)
+force_symbols_%: $(BUILD_DIR)/%.elf $(BUILD_CONFIG_DIR) gen_force_symbols
+	$(PYTHON) ./tools/symbols.py dynamic config/splat.$(VERSION).$*.yaml > $(BUILD_CONFIG_DIR)/symbols.$(VERSION).$*.txt
+	echo '{options: { symbol_addrs_path: [ "$(BUILD_CONFIG_DIR)/symbols.$(VERSION).$*.txt"]}}' > $(BUILD_CONFIG_DIR)/splat.$(VERSION).$*.yaml
+	rm -f $(BUILD_DIR)/$*.ld
+	ninja $(BUILD_DIR)/$*.ld
+
+force_symbols_weapon: $(BUILD_CONFIG_DIR) gen_force_symbols
+	# TODO: symbol extract is not currently working for weapon
+	# place a dummy file instead
+	touch $(BUILD_CONFIG_DIR)/symbols.$(VERSION).weapon.txt
+	echo '{options: { symbol_addrs_path: [ "$(BUILD_CONFIG_DIR)/symbols.$(VERSION).weapon.txt"]}}' > build/us/config/splat.us.weapon.yaml
+	rm -f $(BUILD_DIR)/weapon.ld
+	ninja $(BUILD_DIR)/weapon.ld
+
+
+.PHONY: force_symbols
 force_symbols: ##@ Extract a full list of symbols from a successful build
-	$(PYTHON) ./tools/symbols.py elf build/us/dra.elf > config/symbols.us.dra.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/ric.elf > config/symbols.us.ric.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stcat.elf > config/symbols.us.stcat.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stcen.elf > config/symbols.us.stcen.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stchi.elf > config/symbols.us.stchi.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stdai.elf > config/symbols.us.stdai.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stdre.elf > config/symbols.us.stdre.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stlib.elf > config/symbols.us.stlib.txt
-	# note the lack of `version` for mad
-	$(PYTHON) ./tools/symbols.py elf build/us/stmad.elf > config/symbols.stmad.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno0.elf > config/symbols.us.stno0.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno1.elf > config/symbols.us.stno1.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno2.elf > config/symbols.us.stno2.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno3.elf > config/symbols.us.stno3.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno4.elf > config/symbols.us.stno4.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stnp3.elf > config/symbols.us.stnp3.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stnz0.elf > config/symbols.us.stnz0.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stsel.elf > config/symbols.us.stsel.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stst0.elf > config/symbols.us.stst0.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/sttop.elf > config/symbols.us.sttop.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stwrp.elf > config/symbols.us.stwrp.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/strtop.elf > config/symbols.us.strtop.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/strwrp.elf > config/symbols.us.strwrp.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/bomar.elf > config/symbols.us.bomar.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/bobo4.elf > config/symbols.us.bobo4.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/borbo3.elf > config/symbols.us.borbo3.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/borbo5.elf > config/symbols.us.borbo5.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_000.elf > config/symbols.us.tt_000.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_001.elf > config/symbols.us.tt_001.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_002.elf > config/symbols.us.tt_002.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_003.elf > config/symbols.us.tt_003.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_004.elf > config/symbols.us.tt_004.txt
+force_symbols: \
+	force_symbols_main \
+	force_symbols_dra \
+	force_symbols_ric \
+	force_symbols_stcat \
+	force_symbols_stcen \
+	force_symbols_stchi \
+	force_symbols_stdai \
+	force_symbols_stdre \
+	force_symbols_stlib \
+	force_symbols_stmad \
+	force_symbols_stno0 \
+	force_symbols_stno1 \
+	force_symbols_stno2 \
+	force_symbols_stno3 \
+	force_symbols_stno4 \
+	force_symbols_stnp3 \
+	force_symbols_stnz0 \
+	force_symbols_stsel \
+	force_symbols_stst0 \
+	force_symbols_sttop \
+	force_symbols_stwrp \
+	force_symbols_strtop \
+	force_symbols_strwrp \
+	force_symbols_bomar \
+	force_symbols_bobo4 \
+	force_symbols_borbo3 \
+	force_symbols_borbo5 \
+	force_symbols_tt_000 \
+	force_symbols_tt_001 \
+	force_symbols_tt_002 \
+	force_symbols_tt_003 \
+	force_symbols_tt_004 \
+	force_symbols_weapon
 
 context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
@@ -395,29 +422,6 @@ extract_disk_psp%:
 test:
 	$(PYTHON) tools/symbols_test.py
 
-function-finder:
-	# TODO: make sure graphviz is installed
-	$(MAKE) force_symbols
-	$(MAKE) force_extract
-	$(PYTHON) tools/analyze_calls.py
-	git clean -fdx asm/
-	git checkout config/
-	rm -f build/us/main.ld
-	rm -rf build/us/weapon.ld
-	$(MAKE) -j extract
-	$(PYTHON) tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
-	rm -rf gh-duplicates/function_calls || true
-	mv function_calls gh-duplicates/
-	mv function_graphs.md gh-duplicates/
-
-duplicates-report:
-	$(MAKE) force_symbols
-	$(MAKE) force_extract
-	cd tools/dups; \
-	    cargo run --release -- \
-            --threshold .90 \
-            --output-file ../../gh-duplicates/duplicates.txt
-
 .PHONY: python-dependencies
 python-dependencies: $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
@@ -479,6 +483,38 @@ $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
 
 build/$(VERSION)/src/%.o: src/%
 	ninja $@
+
+
+##@
+##@ Reporting Targets
+##@
+
+function-finder: ##@ generates lists of files, their decomp status, and call graphs
+function-finder: clean_asm $(REPORTS_DIR)
+	# TODO: make sure graphviz is installed
+	$(MAKE)
+	$(MAKE) force_symbols -j
+	$(PYTHON) tools/analyze_calls.py
+	$(PYTHON) tools/function_finder/function_finder_psx.py --use-call-trees > $(REPORTS_DIR)/functions.md
+	$(MAKE) clean_asm
+
+$(REPORTS_DIR):
+	mkdir -p $(REPORTS_DIR)
+
+.PHONY: duplicates-report
+duplicates-report: ##@ generate a report of duplicate functions
+duplicates-report: $(REPORTS_DIR)/duplicates.txt
+$(REPORTS_DIR)/duplicates.txt: $(REPORTS_DIR)
+	$(MAKE)
+	$(MAKE) clean_asm
+	$(MAKE) force_symbols -j
+	cd tools/dups ; \
+		cargo run --release -- \
+			--threshold .90 \
+			--output-file ../../$(REPORTS_DIR)/duplicates.txt
+	$(MAKE) clean_asm
+
+
 
 ##@
 ##@ Disc Dumping Targets
