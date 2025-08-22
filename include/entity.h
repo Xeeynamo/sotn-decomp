@@ -3433,6 +3433,18 @@ typedef struct {
     u8 unk85;
 } ET_CornerGuard;
 
+typedef struct {
+    u8 unk7C;
+    u8 pad0[3];
+    u8 facingLeft;
+    u8 pad1[3];
+    u8 unk84;
+    u8 pad2[3];
+    u8 unk88;
+    u8 pad3[3];
+    s16 unk8C;
+} ET_BoneHalberd;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3732,6 +3744,7 @@ typedef union { // offset=0x7C
     ET_Unk41EE4 unk41EE4;
     ET_Priest priest;
     ET_CornerGuard cornerGuard;
+    ET_BoneHalberd boneHalberd;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
