@@ -50,9 +50,9 @@ void func_us_801C3D44(Entity* self);
 void func_us_801C3850(Entity* self);
 void func_us_801C379C(Entity* self);
 void func_us_801C3ED8(Entity* self);
-void func_us_801D2FA4(Entity* self);
-void func_us_801D36EC(Entity* self);
-void EntitySkeletonPieces(Entity* self);
+void EntityBoneHalberd(Entity* self);
+void EntityBoneHalberdNaginata(Entity* self);
+void EntityBoneHalberdParts(Entity* self);
 void EntityWingedGuard(Entity* self);
 void EntityWingedGuardParts(Entity* self);
 void EntityBat(Entity* self);
@@ -124,9 +124,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C3850,
     func_us_801C379C,
     func_us_801C3ED8,
-    func_us_801D2FA4,
-    func_us_801D36EC,
-    EntitySkeletonPieces,
+    EntityBoneHalberd,
+    EntityBoneHalberdNaginata,
+    EntityBoneHalberdParts,
     EntityWingedGuard,
     EntityWingedGuardParts,
     EntityBat,
@@ -171,8 +171,8 @@ EInit g_EInitBonePillarFireBreath = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 184};
 EInit g_EInitBonePillarSpikeBall = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 185};
-EInit D_us_80180A28 = {ANIMSET_OVL(7), 1, 72, PAL_UNK_22A, 118};
-EInit D_us_80180A34 = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
+EInit g_EInitBoneHalberd = {ANIMSET_OVL(7), 1, 72, PAL_UNK_22A, 118};
+EInit g_EInitBoneHalberdNaginata = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
 EInit g_EInitWingedGuard = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 128};
 EInit g_EInitWingedGuardParts = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 3};
 EInit g_EInitBat = {ANIMSET_OVL(9), 0, 74, PAL_BAT, 64};
