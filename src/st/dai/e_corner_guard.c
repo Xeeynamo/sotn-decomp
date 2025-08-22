@@ -5,7 +5,7 @@ static s16 g_sensors[] = {0, 20, 0, 4, 4, -4, -8, 0};
 static s16 g_sensors2[] = {0, 20, 4, 0};
 // Possibly movement distance
 static s16 D_us_80181BA4[] = {-16, 38, 16, 6};
-// Possibly attack distance?
+// Possibly attack distance
 static s16 D_us_80181BAC[] = {32, 48, 64, 16};
 static u8 g_anim1[] = {5, 1, 5, 2, 5, 3, 5, 2, 0, 0, 0, 0};
 static u8 g_anim2[] = {
