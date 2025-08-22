@@ -103,7 +103,7 @@ void _spu_setReverbAttr(struct rev_param_entry* arg0) {
     if ((temp_a2 != 0) || (temp_a1 & 0x40000000)) {
         _spu_RXX->rxx.vLIN = arg0->vLIN;
     }
-    if ((temp_a2 != 0) || ((s32)temp_a1 < 0)) {
+    if ((temp_a2 != 0) || (temp_a1 & 0x80000000)) {
         _spu_RXX->rxx.vRIN = arg0->vRIN;
     }
 }
