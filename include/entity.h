@@ -3426,6 +3426,14 @@ typedef struct {
 } ET_Unk41EE4;
 
 typedef struct {
+    struct Primitive* prim;
+    s16 unk80;
+    s16 : 16;
+    u8 unk84;
+    u8 unk85;
+} ET_CornerGuard;
+
+typedef struct {
     u8 unk7C;
     u8 pad0[3];
     u8 facingLeft;
@@ -3441,6 +3449,29 @@ typedef struct {
     s32 : 32;
     s16 rotate;
 } ET_Unk4379C;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ struct Primitive* unk80;
+    /* 0x84 */ struct Primitive* unk84;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ u8 unk8A;
+    /* 0x8B */ u8 unk8B;
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+    /* 0x94 */ s16 deathTimer;
+    /* 0x96 */ s16 palette;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ u8 unk9C;
+    /* 0x9D */ u8 largeSlimePaletteCycle;
+    /* 0x9E */ u8 facingLeft;
+    /* 0x9F */ u8 dying;
+    /* 0xA0 */ u8 deathColorCycle;
+    /* 0xA1 */ u8 largeSlimeDying;
+} ET_Slime;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3740,8 +3771,10 @@ typedef union { // offset=0x7C
     ET_Bell et_bell;
     ET_Unk41EE4 unk41EE4;
     ET_Priest priest;
+    ET_CornerGuard cornerGuard;
     ET_BoneHalberd boneHalberd;
     ET_Unk4379C unk4379C;
+    ET_Slime slime;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

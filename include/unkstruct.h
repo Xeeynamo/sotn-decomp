@@ -144,4 +144,12 @@ typedef struct {
     u8 unused;
 } Unkstruct_8017AAD8; // for w_046
 
+// currently used in e_slime
+typedef struct {
+    s16 top;
+    s16 bottom;
+    s16 left;
+    s16 right;
+} TileCollision;
+
 #endif // UNKSTRUCT_H
