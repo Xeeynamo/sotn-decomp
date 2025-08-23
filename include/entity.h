@@ -3427,6 +3427,26 @@ typedef struct {
 
 typedef struct {
     struct Primitive* prim;
+    s16 attackTimer;
+    s16 sinePhase;
+    u8 brightness;
+    u8 attackPatternIdx;
+    u8 attacking;
+    u8 random;
+    s32 : 32;
+    s16 nextStep;
+    s16 cycleTimer;
+    s16 scrollY;
+    struct Primitive* spiritPrim;
+    struct Primitive* attackPrim;
+    u16 attackStep;
+    u16 frames;
+    s16 rotate;
+    s32 attack;
+} ET_HuntingGirl;
+
+typedef struct {
+    struct Primitive* prim;
     s16 unk80;
     s16 : 16;
     u8 unk84;
@@ -3768,6 +3788,7 @@ typedef union { // offset=0x7C
     ET_Priest priest;
     ET_CornerGuard cornerGuard;
     ET_BoneHalberd boneHalberd;
+    ET_HuntingGirl huntingGirl;
     ET_Slime slime;
 } Ext;
 

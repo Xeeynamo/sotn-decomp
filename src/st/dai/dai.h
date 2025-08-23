@@ -68,6 +68,7 @@ enum OVL_EXPORT(Palette) {
     PAL_WINGED_GUARD = 0x22B,
     PAL_BAT = 0x22C,
     PAL_CROW = 0x22F,
+    PAL_HUNTING_GIRL = 0x231,
     PAL_UNK_232 = 0x232,
     PAL_SPECTRAL_SWORD = 0x234,
     PAL_SPECTRAL_SWORD_WEAPON_1 = 0x235,
@@ -143,8 +144,8 @@ enum OVL_EXPORT(Entities) {
     E_SKELERANG,              // EntitySkelerang,
     E_SKELERANG_BOOMERANG,    // EntitySkelerangBoomerang,
     E_SKELERANG_UNKNOWN,      // EntitySkelerangUnknown,
-    E_UNK_3D,                 // func_us_801D56F4,
-    E_UNK_3E,                 // func_us_801D636C,
+    E_HUNTING_GIRL,           // EntityHuntingGirl,
+    E_HUNTING_GIRL_SPIRIT,    // EntityHuntingGirlSpirit,
     E_SPECTRAL_SWORD,         // EntitySpectralSword,
     E_SPECTRAL_SWORD_AURA,    // EntitySpectralSwordAura,
     E_SPECTRAL_SWORD_WEAPON,  // EntitySpectralSwordWeapon,
@@ -188,7 +189,7 @@ extern EInit g_EInitBlueRaven;
 extern EInit g_EInitBlackCrow;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
-extern EInit D_us_80180A94;
+extern EInit g_EInitHuntingGirl;
 extern EInit g_EInitSpectralSword;
 extern EInit g_EInitSpectralSwordAura;
 extern EInit g_EInitSpectralSwordWeapon;
