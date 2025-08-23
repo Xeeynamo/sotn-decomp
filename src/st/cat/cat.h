@@ -85,9 +85,9 @@ enum OVL_EXPORT(Entities) {
     E_GREMLIN,               // EntityGremlin
     E_GREMLIN_EFFECT,        // EntityGremlinEffect
     E_GREMLIN_FIRE,          // EntityGremlinFire
-    E_UNK_4A,                // func_us_801D2B3C
+    E_UNK_4A,                // EntityLargeSlime
     E_UNK_4B,                // func_us_801D3D08
-    E_UNK_4C,                // func_us_801D4088
+    E_UNK_4C,                // EntitySlime
     E_UNK_4D,                // func_us_801D4744
     E_WERESKELETON,          // EntityWereskeleton
     E_ID_42,                 // func_us_801CE958

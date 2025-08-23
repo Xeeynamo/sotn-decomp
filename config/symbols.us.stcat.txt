@@ -63,7 +63,6 @@ EntityUnkId13 = 0x801C005C;
 EntityGreyPuffSpawner = 0x801C029C;
 EntityExplosionVariants = 0x801C0384;
 EntityGreyPuff = 0x801C0474;
-UnkCollisionFunc4 = 0x801C0894;
 EntityIntenseExplosion = 0x801C0E14;
 MakeExplosions = 0x801C10A8;
 EntityBigRedFireball = 0x801C1160;
