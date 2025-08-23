@@ -3466,6 +3466,11 @@ typedef struct {
 } ET_BoneHalberd;
 
 typedef struct {
+    s32 : 32;
+    s16 rotate;
+} ET_Unk4379C;
+
+typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ struct Primitive* unk80;
     /* 0x84 */ struct Primitive* unk84;
@@ -3788,6 +3793,7 @@ typedef union { // offset=0x7C
     ET_Priest priest;
     ET_CornerGuard cornerGuard;
     ET_BoneHalberd boneHalberd;
+    ET_Unk4379C unk4379C;
     ET_HuntingGirl huntingGirl;
     ET_Slime slime;
 } Ext;
