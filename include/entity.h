@@ -3445,6 +3445,29 @@ typedef struct {
     s16 unk8C;
 } ET_BoneHalberd;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ struct Primitive* unk80;
+    /* 0x84 */ struct Primitive* unk84;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ u8 unk8A;
+    /* 0x8B */ u8 unk8B;
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+    /* 0x94 */ s16 deathTimer;
+    /* 0x96 */ s16 palette;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ u8 unk9C;
+    /* 0x9D */ u8 largeSlimePaletteCycle;
+    /* 0x9E */ u8 facingLeft;
+    /* 0x9F */ u8 dying;
+    /* 0xA0 */ u8 deathColorCycle;
+    /* 0xA1 */ u8 largeSlimeDying;
+} ET_Slime;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3745,6 +3768,7 @@ typedef union { // offset=0x7C
     ET_Priest priest;
     ET_CornerGuard cornerGuard;
     ET_BoneHalberd boneHalberd;
+    ET_Slime slime;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
