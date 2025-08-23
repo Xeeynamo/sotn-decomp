@@ -95,6 +95,7 @@
 #define LOW(x) (*(s32*)&(x))
 #define LOWU(x) (*(u32*)&(x))
 #define F(x) (*(f32*)&(x))
+#define POS(x) (*(Pos*)&(x))
 
 #if defined(HACKS) && !defined(PERMUTER)
 #define ALIGNED4 __attribute__((aligned(4)))
