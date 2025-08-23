@@ -39,7 +39,7 @@ void EntityPriest(Entity* self);
 void EntityPriestBlades(Entity* self);
 void EntityPriestBladeDebris(Entity* self);
 void EntityBellHelper(Entity* self);
-void func_us_801D1204(Entity* self);
+void EntityCornerGuard(Entity* self);
 void func_us_801D1C24(Entity* self);
 void EntityBonePillarHead(Entity* self);
 void EntityBonePillarFireBreath(Entity* self);
@@ -113,7 +113,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityPriestBlades,
     EntityPriestBladeDebris,
     EntityBellHelper,
-    func_us_801D1204,
+    EntityCornerGuard,
     func_us_801D1C24,
     EntityBonePillarHead,
     EntityBonePillarFireBreath,
@@ -163,7 +163,7 @@ EInit g_EInitStatueBlock = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
 EInit g_EInitPriest = {ANIMSET_OVL(2), 0, 72, PAL_UNK_C9, 5};
 EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_UNK_CA, 5}; // Unused
 EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_UNK_C9, 101};
-EInit D_us_801809E0 = {ANIMSET_OVL(4), 0, 72, PAL_UNK_215, 180};
+EInit g_EInitCornerGuard = {ANIMSET_OVL(4), 0, 72, PAL_CORNER_GUARD, 180};
 EInit D_us_801809EC = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 181};
 EInit g_EInitBonePillarHead = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 183};
 EInit g_EInitBonePillarPieces = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 2};
