@@ -1714,7 +1714,7 @@
 | maria | func_pspeu_092ACA78                      |      144 |         24 |        |                                 |       |
 | dra   | func_psp_09100E90                        |      145 |         15 | Yes    | https://decomp.me/scratch/9Ejz3 | 0.997 |
 | dra   | func_psp_09140FF0                        |      145 |         15 |        |                                 |       |
-| cat   | func_us_801C3D44                         |      146 |         16 |        | https://decomp.me/scratch/dQ5T7 | 0.999 |
+| cat   | func_us_801C3D44                         |      146 |         16 |        | https://decomp.me/scratch/dQ5T7 | 0.998 |
 | lib   | func_us_801CD9EC                         |      146 |         18 |        |                                 |       |
 | no3   | func_pspeu_09239940                      |      147 |         13 |        |                                 |       |
 | np3   | func_pspeu_0923E548                      |      147 |         13 |        |                                 |       |
@@ -1745,7 +1745,7 @@
 | no2   | EntityHammerWeapon                       |      150 |         20 |        |                                 |       |
 | np3   | func_pspeu_09260EE0                      |      150 |         20 |        |                                 |       |
 | dra   | func_psp_090F0330                        |      151 |         12 |        |                                 |       |
-| dai   | func_us_801C3D44                         |      152 |         17 |        | https://decomp.me/scratch/dQ5T7 | 0.999 |
+| dai   | func_us_801C3D44                         |      152 |         17 |        | https://decomp.me/scratch/dQ5T7 | 0.998 |
 | no2   | func_pspeu_092513B8                      |      152 |         22 |        |                                 |       |
 | np3   | func_pspeu_0925DD78                      |      152 |         22 |        | https://decomp.me/scratch/3BgLY | 1.0   |
 | dra   | func_psp_091121C0                        |      152 |         23 |        | https://decomp.me/scratch/zdVQr | 0.918 |
@@ -2061,7 +2061,7 @@
 | cat   | func_us_801C3850                         |      265 |         24 |        | https://decomp.me/scratch/oSlP5 | 1.0   |
 | dai   | func_us_801C3850                         |      265 |         24 |        | https://decomp.me/scratch/oSlP5 | 1.0   |
 | st0   | func_801A805C                            |      266 |         33 |        | https://decomp.me/scratch/2jlww | 0.991 |
-| cat   | func_pspeu_0924F8C8                      |      266 |         36 |        |                                 |       |
+| cat   | func_pspeu_0924F8C8                      |      266 |         36 |        | https://decomp.me/scratch/IfFYL | 0.999 |
 | cat   | func_pspeu_09242C88                      |      268 |         27 |        |                                 |       |
 | maria | func_pspeu_092BF950                      |      269 |         26 |        | https://decomp.me/scratch/uJ00p | 1.0   |
 | cat   | Update                                   |      269 |         44 |        | https://decomp.me/scratch/OEQHX | 1.0   |
@@ -2467,7 +2467,7 @@
 | ric   | RicEntityAguneaCircle                    |      655 |         49 | Yes    | https://decomp.me/scratch/hxWhp | 0.999 |
 | cat   | UnkCollisionFunc4                        |      655 |         51 |        |                                 |       |
 | lib   | EntityFleaArmor                          |      655 |         98 |        |                                 |       |
-| dai   | func_us_801D9F5C                         |      656 |         41 |        | https://decomp.me/scratch/VoM7L | 1.0   |
+| dai   | func_us_801D9F5C                         |      656 |         41 |        | https://decomp.me/scratch/VoM7L | 0.999 |
 | dra   | EntityHitByLightning                     |      657 |         61 |        | https://decomp.me/scratch/Edjbi | 0.998 |
 | cat   | func_pspeu_09241E58                      |      657 |         69 | Yes    |                                 |       |
 | cat   | func_pspeu_0925EA40                      |      658 |         41 |        |                                 |       |
@@ -2513,7 +2513,7 @@
 | dra   | EntityGiantSpinningCross                 |      729 |         63 |        | https://decomp.me/scratch/SwVao | 0.999 |
 |       | UpdateBatAttackMode                      |      730 |         65 |        | https://decomp.me/scratch/xmphp | 0.993 |
 | ric   | RicEntityCrashAxe                        |      733 |         50 |        | https://decomp.me/scratch/Vn4Gj | 0.999 |
-| cat   | func_pspeu_0924EE40                      |      733 |         69 | Yes    | https://decomp.me/scratch/HqxY9 | 0.366 |
+| cat   | func_pspeu_0924EE40                      |      733 |         69 | Yes    | https://decomp.me/scratch/HqxY9 | 0.999 |
 | lib   | EntityLibrarianChair                     |      733 |        124 |        |                                 |       |
 | lib   | func_us_801B56E4                         |      739 |         81 | Yes    |                                 |       |
 | cat   | func_pspeu_0925BE88                      |      741 |         71 |        | https://decomp.me/scratch/48kzQ | 0.994 |
