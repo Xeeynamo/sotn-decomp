@@ -182,6 +182,8 @@ typedef struct AxePrim {
 } AxePrim;
 
 // If we find more uses, can get a better name.
+// Currently includes no3/e_cavern_door, np3/e_cavern_door, and
+// dai/e_corner_guard
 typedef struct EntranceCascadePrim {
     /* 0x00 */ struct EntranceCascadePrim* next;
 #if defined(VERSION_PC) || defined(VERSION_PSP)
@@ -190,14 +192,18 @@ typedef struct EntranceCascadePrim {
     /* 0x04 */ s32 : 32;
     /* 0x08 */ s16 x0;
     /* 0x0A */ s16 y0;
-    /* 0x0C */ s32 : 32;
-    /* 0x10 */ s32 : 32;
+    /* 0x0C */ s32 unk10;
+    /* 0x10 */ s32 unk14;
     /* 0x14 */ s16 x1;
     /* 0x16 */ s16 y1;
-    /* 0x18 */ s32 : 32;
-    /* 0x1C */ s32 : 32;
+    /* 0x18 */ s16 : 16;
+    /* 0x1A */ s16 unk1E;
+    /* 0x1C */ s16 x2;
+    /* 0x1E */ s16 y2;
     /* 0x20 */ f32 velocityY;
-    /* 0x24 */ s32 : 32;
+    /* 0x24 */ u8 step;
+    /* 0x25 */ u8 : 8;
+    /* 0x26 */ s16 : 16;
     /* 0x28 */ s32 : 24;
     /* 0x2B */ u8 p3; // TODO not verified
     /* 0x2C */ f32 velocityX;
