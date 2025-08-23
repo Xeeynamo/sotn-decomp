@@ -3426,6 +3426,26 @@ typedef struct {
 } ET_Unk41EE4;
 
 typedef struct {
+    struct Primitive* prim;
+    s16 attackTimer;
+    s16 sinePhase;
+    u8 brightness;
+    u8 attackPatternIdx;
+    u8 attacking;
+    u8 random;
+    s32 : 32;
+    s16 nextStep;
+    s16 cycleTimer;
+    s16 scrollY;
+    struct Primitive* spiritPrim;
+    struct Primitive* attackPrim;
+    u16 attackStep;
+    u16 frames;
+    s16 rotate;
+    s32 attack;
+} ET_HuntingGirl;
+
+typedef struct {
     u8 unk7C;
     u8 pad0[3];
     u8 facingLeft;
@@ -3736,6 +3756,7 @@ typedef union { // offset=0x7C
     ET_Unk41EE4 unk41EE4;
     ET_Priest priest;
     ET_BoneHalberd boneHalberd;
+    ET_HuntingGirl huntingGirl;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

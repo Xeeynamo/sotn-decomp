@@ -124,6 +124,9 @@
 // PSX SDK libraries do not use float. Instead they use a fix-point number
 // where 4096 is equal to 1.0.
 #define FLT(x) ((s32)((x) * 4096.0))
+// Converts an amount of rotation in degrees to a fixed-point value
+// fixed-point / 4096 * 360 = degrees
+#define ROT(x) ((s32)((x) * 4096.0 / 360))
 #define I_TO_FLT(x) ((s32)(x) << 12)
 #define FLT_TO_I(x) ((s32)(x) >> 12)
 #define FLT_TO_FIX(x) ((s32)(x) << 5)

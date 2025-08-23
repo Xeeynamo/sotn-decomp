@@ -59,7 +59,7 @@ segments:
       - [0xDD88, c, dai/e_sealed_door]
       - [0xF2E8, c, dai/e_mist_door]
       - [0xF570, c, dai/popup]
-      - [0xFB68, c, dai_psp/e_hunting_girl]
+      - [0xFB68, c, dai/e_hunting_girl]
       - [0x11750, c, dai/e_bone_pillar]
       - [0x12F98, c, dai_psp/e_corner_guard]
       - [0x142D8, c, dai/e_room_fg]
@@ -98,7 +98,7 @@ segments:
       - [0x24C90, .data, dai/st_collision]
       - [0x25068, .data, dai/e_sealed_door]
       - [0x25140, .data, dai/e_mist_door]
-      - [0x252C8, data] # unk_FB68
+      - [0x252C8, .data, dai/e_hunting_girl]
       - [0x25440, .data, dai/e_bone_pillar]
       - [0x25520, data] # unk_12F98
       - [0x255F8, .data, dai/e_room_fg]
@@ -136,7 +136,7 @@ segments:
       - [0x5F6E0, .rodata, dai/e_red_door]
       - [0x5F6F8, .rodata, dai/e_collect]
       - [0x5F758, .rodata, dai/e_sealed_door]
-      - [0x5F770, .rodata, dai_psp/e_hunting_girl]
+      - [0x5F770, .rodata, dai/e_hunting_girl]
       - [0x5F798, .rodata, dai_psp/e_corner_guard]
       - [0x5F7C0, .rodata, dai/e_spectral_sword]
       - [0x5F7D8, .rodata, dai/e_bone_halberd]
