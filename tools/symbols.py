@@ -445,7 +445,7 @@ def print_map_symbols(map_file_name, no_default):
 
 def get_elf_symbols(elf_file_name) -> dict[int, str]:
     with subprocess.Popen(
-        args=["nm", elf_file_name],
+        args=["nm", "-U", elf_file_name],
         stdout=subprocess.PIPE,
         stdin=subprocess.PIPE,
         stderr=subprocess.PIPE,
