@@ -38,7 +38,6 @@ REPORTS_DIR     := $(BUILD_DIR)/reports
 PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_permuter/permuter_loader)
 RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
-BUILD_CONFIG_DIR := $(BUILD_DIR)/config
 BUILD_DISK_DIR  := $(BUILD_DIR)/disk
 
 # Files
@@ -273,64 +272,14 @@ force_extract:
 	$(MAKE) extract -j
 	$(MAKE) -j
 
-.PHONY: gen_force_symbols
-gen_force_symbols:
-	VERSION=us FORCE_SYMBOLS= $(PYTHON) tools/builds/gen.py
-
-
-$(BUILD_CONFIG_DIR):
-	mkdir -p $(BUILD_CONFIG_DIR)
-force_symbols_%: $(BUILD_DIR)/%.elf $(BUILD_CONFIG_DIR) gen_force_symbols
-	$(PYTHON) ./tools/symbols.py dynamic config/splat.$(VERSION).$*.yaml > $(BUILD_CONFIG_DIR)/symbols.$(VERSION).$*.txt
-	echo '{options: { symbol_addrs_path: [ "$(BUILD_CONFIG_DIR)/symbols.$(VERSION).$*.txt"]}}' > $(BUILD_CONFIG_DIR)/splat.$(VERSION).$*.yaml
-	rm -f $(BUILD_DIR)/$*.ld
-	ninja $(BUILD_DIR)/$*.ld
-
-force_symbols_weapon: $(BUILD_CONFIG_DIR) gen_force_symbols
-	# TODO: symbol extract is not currently working for weapon
-	# place a dummy file instead
-	touch $(BUILD_CONFIG_DIR)/symbols.$(VERSION).weapon.txt
-	echo '{options: { symbol_addrs_path: [ "$(BUILD_CONFIG_DIR)/symbols.$(VERSION).weapon.txt"]}}' > build/us/config/splat.us.weapon.yaml
-	rm -f $(BUILD_DIR)/weapon.ld
-	ninja $(BUILD_DIR)/weapon.ld
-
-
 .PHONY: force_symbols
 force_symbols: ##@ Extract a full list of symbols from a successful build
-force_symbols: \
-	force_symbols_main \
-	force_symbols_dra \
-	force_symbols_ric \
-	force_symbols_stcat \
-	force_symbols_stcen \
-	force_symbols_stchi \
-	force_symbols_stdai \
-	force_symbols_stdre \
-	force_symbols_stlib \
-	force_symbols_stmad \
-	force_symbols_stno0 \
-	force_symbols_stno1 \
-	force_symbols_stno2 \
-	force_symbols_stno3 \
-	force_symbols_stno4 \
-	force_symbols_stnp3 \
-	force_symbols_stnz0 \
-	force_symbols_stsel \
-	force_symbols_stst0 \
-	force_symbols_sttop \
-	force_symbols_stwrp \
-	force_symbols_strtop \
-	force_symbols_strwrp \
-	force_symbols_bomar \
-	force_symbols_bobo4 \
-	force_symbols_borbo3 \
-	force_symbols_borbo5 \
-	force_symbols_tt_000 \
-	force_symbols_tt_001 \
-	force_symbols_tt_002 \
-	force_symbols_tt_003 \
-	force_symbols_tt_004 \
-	force_symbols_weapon
+force_symbols: clean_asm
+	FORCE_SYMBOLS= $(PYTHON) tools/builds/gen.py $(BUILD_DIR)/dynsyms.ninja
+	linker_scripts="$$(find $(BUILD_DIR) -type f -name '*.ld')" && \
+		xargs -n1 echo <<< "$$linker_scripts" && \
+		xargs rm <<< "$$linker_scripts" && \
+		xargs ninja -j0 -f $(BUILD_DIR)/dynsyms.ninja <<< "$$linker_scripts"
 
 context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
@@ -489,14 +438,16 @@ build/$(VERSION)/src/%.o: src/%
 ##@ Reporting Targets
 ##@
 
-function-finder: ##@ generates lists of files, their decomp status, and call graphs
-function-finder: clean_asm $(REPORTS_DIR)
-	# TODO: make sure graphviz is installed
-	$(MAKE)
+.PHONY: reports prepare-reports
+reports: duplicates-report function-finder
+prepare-reports: build $(REPORTS_DIR)
 	$(MAKE) force_symbols -j
+
+function-finder: ##@ generates lists of files, their decomp status, and call graphs
+function-finder: prepare-reports
+	# TODO: make sure graphviz is installed
 	$(PYTHON) tools/analyze_calls.py
 	$(PYTHON) tools/function_finder/function_finder_psx.py --use-call-trees > $(REPORTS_DIR)/functions.md
-	$(MAKE) clean_asm
 
 $(REPORTS_DIR):
 	mkdir -p $(REPORTS_DIR)
@@ -504,16 +455,11 @@ $(REPORTS_DIR):
 .PHONY: duplicates-report
 duplicates-report: ##@ generate a report of duplicate functions
 duplicates-report: $(REPORTS_DIR)/duplicates.txt
-$(REPORTS_DIR)/duplicates.txt: $(REPORTS_DIR)
-	$(MAKE)
-	$(MAKE) clean_asm
-	$(MAKE) force_symbols -j
+$(REPORTS_DIR)/duplicates.txt: prepare-reports
 	cd tools/dups ; \
 		cargo run --release -- \
 			--threshold .90 \
 			--output-file ../../$(REPORTS_DIR)/duplicates.txt
-	$(MAKE) clean_asm
-
 
 
 ##@

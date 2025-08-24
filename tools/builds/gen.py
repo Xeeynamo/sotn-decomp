@@ -3,6 +3,7 @@
 
 import ninja_syntax
 import os
+import sys
 import yaml
 
 # global dictionary that collects all source entries
@@ -325,6 +326,8 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
     undefined_syms_auto_path = str(splat_config["options"]["undefined_syms_auto_path"])
     asm_path = str(splat_config["options"]["asm_path"])
     src_path = str(splat_config["options"]["src_path"])
+    ovl_name = str(splat_config["options"]["basename"])
+    build_path = str(splat_config["options"]["build_path"])
 
     nw.build(
         rule="splat",
@@ -413,13 +416,29 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
         inputs=weapons,
     )
 
+    dyn_symbols_file = f"{build_path}/config/dyn_syms.{ovl_name}.txt"
+    nw.build(
+        rule="export-dynamic-symbols-dummy",
+        outputs=[dyn_symbols_file],
+        inputs=[f"config/splat.{ver}.weapon.yaml"],
+    )
+
 
 def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     with open(file_name) as f:
         splat_config = yaml.load(f, Loader=yaml.SafeLoader)
     platform = str(splat_config["options"]["platform"])
     ovl_name = str(splat_config["options"]["basename"])
-    if ovl_name == "weapon":
+    build_path = str(splat_config["options"]["build_path"])
+
+    dyn_symbols_file = f"{build_path}/config/dyn_syms.{ovl_name}.txt"
+    nw.build(
+        rule="dynamic-splat-config",
+        inputs=[dyn_symbols_file],
+        outputs=[f"{build_path}/config/splat.{version}.{ovl_name}.yaml.dyn_syms"],
+    )
+
+    if is_weapon(ovl_name):
         add_weapon_splat_config(nw, version, splat_config)
         return
     target_path = str(splat_config["options"]["target_path"])
@@ -573,6 +592,14 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
             stage_gfx_path = f"build/{version}/{gfx_name}"
             target_f_path = os.path.join(os.path.dirname(target_path), gfx_name)
             add_gfx_stage(nw, target_f_path, asset_path, stage_gfx_path)
+
+    nw.build(
+        rule="export-dynamic-symbols",
+        outputs=[dyn_symbols_file],
+        inputs=[file_name],
+        implicit=[output_elf],
+    )
+
     return
 
 
@@ -597,13 +624,17 @@ def add_checksum(nw: ninja_syntax.Writer, version: str, file_name: str):
     )
 
 
-with open("build.ninja", "w") as f:
+build_ninja = "build.ninja"
+if len(sys.argv) > 1:
+    build_ninja = str(sys.argv[1])
+
+with open(build_ninja, "w") as f:
     nw = ninja_syntax.Writer(f)
 
     forced_symbol_config = ""
     if "FORCE_SYMBOLS" in os.environ:
         print("forcing symbols")
-        forced_symbol_config = "build/$version/$in"
+        forced_symbol_config = "build/$version/$in.dyn_syms"
 
     nw.rule(
         "splat",
@@ -723,6 +754,21 @@ with open("build.ninja", "w") as f:
         "memcard-encode",
         command=".venv/bin/python3 tools/png2s.py encode $in $out_gfx $sym_gfx $out_pal $sym_pal",
         description="memcard icon encode $in",
+    )
+    nw.rule(
+        "export-dynamic-symbols",
+        command=".venv/bin/python3 tools/symbols.py dynamic $in > $out",
+        description="export dynamic symbols $in",
+    )
+    nw.rule(
+        "export-dynamic-symbols-dummy",
+        command="touch $out",
+        description="export fake dynamic symbols $in",
+    )
+    nw.rule(
+        "dynamic-splat-config",
+        command="echo '{options: { symbol_addrs_path: [ '$in']}}' > $out",
+        description="create dynamic splat $out",
     )
     nw.rule(
         "check",
