@@ -85,16 +85,6 @@ extern long ratan2(long y, long x);
                      :                                                         \
                      : "r"(r0))
 
-// When explicitly specifying the registers is needed for matching with gte_ldv0
-#define gte_ldv0i(i0, r0)                                                      \
-    __asm__ volatile(                                                          \
-        "lui    " #i0 ", %%hi( %0 );"                                          \
-        "addiu  " #i0 ", " #i0 ", %%lo( %0 );"                                 \
-        "lwc2	$0, 0( " #i0 " );"                                             \
-        "lwc2	$1, 4( " #i0 " )"                                              \
-        :                                                                      \
-        : "i"(r0))
-
 #define gte_ldv1(r0)                                                           \
     __asm__ volatile("lwc2	$2, 0( %0 );"                                       \
                      "lwc2	$3, 4( %0 )"                                        \
@@ -118,23 +108,6 @@ extern long ratan2(long y, long x);
         :                                                                      \
         : "r"(r0), "r"(r1), "r"(r2))
 
-// When explicitly specifying the registers is needed for matching with gte_ldv3
-#define gte_ldv3i(i0, r0, i1, r1, i2, r2)                                      \
-    __asm__ volatile(                                                          \
-        "lui    " #i0 ", %%hi( %0 );"                                          \
-        "addiu  " #i0 ", " #i0 ", %%lo( %0 );"                                 \
-        "lui    " #i1 ", %%hi( %1 );"                                          \
-        "addiu  " #i1 ", " #i1 ", %%lo( %1 );"                                 \
-        "lui    " #i2 ", %%hi( %2 );"                                          \
-        "addiu  " #i2 ", " #i2 ", %%lo( %2 );"                                 \
-        "lwc2	$0, 0( " #i0 " );"                                             \
-        "lwc2	$1, 4( " #i0 " );"                                             \
-        "lwc2	$2, 0( " #i1 " );"                                             \
-        "lwc2	$3, 4( " #i1 " );"                                             \
-        "lwc2	$4, 0( " #i2 " );"                                             \
-        "lwc2	$5, 4( " #i2 " )"                                              \
-        :                                                                      \
-        : "i"(r0), "i"(r1), "i"(r2))
 #define gte_ldv3c(r0)                                                          \
     __asm__ volatile(                                                          \
         "lwc2	$0, 0( %0 );"                                                    \

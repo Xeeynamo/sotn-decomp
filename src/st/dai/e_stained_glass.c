@@ -536,16 +536,13 @@ void func_us_801D9F5C(Entity* self) {
             SETROTMATRIX(&mtx);
             gte_SetTransVector(&transVector);
             if (!count) {
-#ifdef VERSION_PSP
                 gte_ldv0(&D_us_801826E4);
                 gte_rtps();
+#ifdef VERSION_PSP
                 gte_stsxy((long*)&rect2.w);
                 tempX = (u16)LOW(rect2.w);
                 tempY = LOW(rect2.w) >> 16;
 #else
-                // Use the t9 register to load &D_us_801826E4
-                gte_ldv0i($t9, &D_us_801826E4);
-                gte_rtps();
                 gte_stsxy((long*)&rect1.x);
                 prim->drawMode = DRAW_COLORS;
                 tempX = rect1.x;
@@ -594,27 +591,19 @@ void func_us_801D9F5C(Entity* self) {
                 gte_rtpt();
                 gte_stsxy3(&rect2.w, &rect2.x, &rect1.w);
                 if (rect1.h >= 0) {
-                    gte_ldv0(&D_us_801826DC);
-                    gte_rtps();
-                    gte_stsxy((long*)&rect1.x);
 #else
-                // Use the t7, t8, and t9 registers to load &D_us_801826C4,
-                // &D_us_801826CC, and &D_us_801826D4 respectively
-                gte_ldv3i($t7, &D_us_801826C4, $t8, &D_us_801826CC, $t9,
-                          &D_us_801826D4);
+                gte_ldv3(&D_us_801826C4, &D_us_801826CC, &D_us_801826D4);
                 gte_rtpt();
                 gte_stsxy3(&rect1.x, &rect1.w, &rect2.x);
                 if (rect2.y >= 0) {
-                    // Use the t7 register to load &D_us_801826DC
-                    gte_ldv0i($t7, &D_us_801826DC);
-                    gte_rtps();
-                    gte_stsxy((long*)&rect2.w);
 #endif
-// This could be combined with the previous ifdef, but separating them helps
-// with readability
+                    gte_ldv0(&D_us_801826DC);
+                    gte_rtps();
+
 // psx uses temp variables here where psp does not and the ordering is a bit
 // different between the two
 #ifdef VERSION_PSP
+                    gte_stsxy((long*)&rect1.x);
                     midpoint1 =
                         ((LOW(rect2.w) + LOW(rect2.x)) / 2) & 0xFFFF0000;
                     midpoint1 |= (rect2.w + rect2.x) >> 1;
@@ -636,6 +625,7 @@ void func_us_801D9F5C(Entity* self) {
                     prim->drawMode = DRAW_DEFAULT;
                     prim = prim->next;
 #else
+                    gte_stsxy((long*)&rect2.w);
                     tempRect1x = LOW(rect1.x);
                     tempRect1w = LOW(rect1.w);
                     prim->clut = ((count * 2) + PAL_STAINED_GLASS_205);
