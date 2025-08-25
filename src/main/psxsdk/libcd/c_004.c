@@ -5,6 +5,7 @@
 
 extern StHEADER* D_800987C8;
 extern s32 D_8003B688;
+extern s32 D_8003C768;
 extern void (*D_8003C8BC)(void);
 extern s32 D_800730D4;
 extern s32 D_80097954;
@@ -26,4 +27,10 @@ void data_ready_callback(void) {
     D_800730D4 = 0;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/c_004", StGetBackloc);
+s32 StGetBackloc(CdlLOC* loc) {
+    if (D_8003C768) {
+        return -1;
+    }
+    CdIntToPos(CdPosToInt(&fp_2) + 1, loc);
+    return D_8003B688;
+}

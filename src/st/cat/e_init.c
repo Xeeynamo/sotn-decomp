@@ -74,9 +74,9 @@ void EntityTombstone(Entity* self);
 void EntityGremlin(Entity* self);
 void EntityGremlinEffect(Entity* self);
 void EntityGremlinFire(Entity* self);
-void func_us_801D2B3C(Entity* self);
+void EntityLargeSlime(Entity* self);
 void func_us_801D3D08(Entity* self);
-void func_us_801D4088(Entity* self);
+void EntitySlime(Entity* self);
 void func_us_801D4744(Entity* self);
 void EntityWereskeleton(Entity* self);
 void func_us_801CEA2C(Entity* self);
@@ -160,9 +160,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityGremlin,
     EntityGremlinEffect,
     EntityGremlinFire,
-    func_us_801D2B3C,
+    EntityLargeSlime,
     func_us_801D3D08,
-    func_us_801D4088,
+    EntitySlime,
     func_us_801D4744,
     EntityWereskeleton,
     func_us_801CEA2C,
@@ -225,10 +225,10 @@ EInit D_us_801812F0 = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x005};
 EInit g_EInitGremlinFire = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x0E2};
 
 // Large Slime
-EInit D_us_801812B4 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x041};
+EInit g_EInitLargeSlime = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x041};
 
 // Slime
-EInit D_us_801812C0 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x042};
+EInit g_EInitSlime = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x042};
 
 // Wereskeleton
 EInit g_EInitWereskeleton = {ANIMSET_OVL(0x06), 0x01, 0x49, 0x0250, 0x03D};
