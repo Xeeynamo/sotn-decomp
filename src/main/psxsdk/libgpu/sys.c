@@ -379,12 +379,8 @@ void SetDrawOffset(DR_OFFSET* p, u_short* ofs) {
 void SetPriority(DR_PRIO* p, s32 pbc, s32 pbw) {
     s32 var_v1;
 
-    *(((u8*)&p->tag) + 3) = 2;
-    var_v1 = 0xE6000000;
-    if (pbc != 0) {
-        var_v1 = 0xE6000002;
-    }
-    p->code[0] = var_v1 | (pbw != 0);
+    setlen(p, 2);
+    p->code[0] = (pbc ? 0xE6000002 : 0xE6000000) | (pbw != 0);
     p->code[1] = 0;
 }
 
