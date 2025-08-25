@@ -193,11 +193,6 @@ Primitive* func_us_801D9394(
     return dstPrim;
 }
 
-#ifdef VERSION_PSP
-#define DATAPTR (u8*)(1 << 16)
-#else
-#define DATAPTR (u8*)(0x1F80 << 16)
-#endif
 void func_us_801D97D0(Entity* self) {
     s16 midpointX, midpointY;
     s32 primIndex;
@@ -286,7 +281,7 @@ void func_us_801D97D0(Entity* self) {
             if (iterations) {
                 prim2 = func_us_801D9394(
                     &D_us_80182574, &D_us_8018257C, &D_us_80182584,
-                    &D_us_8018258C, prim1, iterations, prim2, DATAPTR);
+                    &D_us_8018258C, prim1, iterations, prim2, (u8*)SP(0));
                 prim1->drawMode = DRAW_HIDE;
             }
 #ifdef VERSION_PSP
