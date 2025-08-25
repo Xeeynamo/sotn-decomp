@@ -10,8 +10,8 @@ requests
 graphviz
 splat64==0.34.1
 crunch64
-spimdisasm>=1.35.0
-rabbitizer>=1.13.0
+spimdisasm==1.35.0
+rabbitizer==1.13.0
 n64img==0.3.3
 pygfxd
 pillow
