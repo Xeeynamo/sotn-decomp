@@ -1783,7 +1783,7 @@
 | ric   | func_pspeu_092AFB68                      |      160 |         30 |        |                                 |       |
 | maria | func_pspeu_092B5F18                      |      161 |          5 |        |                                 |       |
 | ric   | func_pspeu_092BEA38                      |      161 |          5 |        |                                 |       |
-| cat   | func_pspeu_0923A658                      |      161 |          9 |        |                                 |       |
+| cat   | func_pspeu_0923A658                      |      161 |          9 |        | https://decomp.me/scratch/SaIIe | 1.0   |
 | dra   | EntityBatFireball                        |      161 |         14 |        | https://decomp.me/scratch/u4uRW | 0.997 |
 | dra   | EntityHellfireBigFireball                |      161 |         19 |        | https://decomp.me/scratch/WSXa9 | 0.998 |
 | maria | func_pspeu_092B02A8                      |      161 |         21 |        |                                 |       |
@@ -2612,7 +2612,7 @@
 | dai   | func_pspeu_0924BB50                      |     1116 |        152 | Yes    |                                 |       |
 | no2   | EntityHammer                             |     1123 |        182 |        |                                 |       |
 | np3   | func_pspeu_0925F9D0                      |     1123 |        182 |        | https://decomp.me/scratch/oBPut | 0.995 |
-| cat   | func_pspeu_092395A8                      |     1126 |        161 |        |                                 |       |
+| cat   | func_pspeu_092395A8                      |     1126 |        161 |        | https://decomp.me/scratch/gUctX | 0.998 |
 | cat   | EntityWereskeleton                       |     1129 |        174 |        |                                 |       |
 | cat   | func_pspeu_0923DA30                      |     1139 |        210 | Yes    |                                 |       |
 | np3   | EntitySlogra                             |     1154 |        213 |        | https://decomp.me/scratch/hCcGP | 0.991 |
@@ -2637,7 +2637,7 @@
 | lib   | func_psp_0924B568                        |     1202 |        112 | Yes    | https://decomp.me/scratch/pxRRV | 0.997 |
 | dra   | InitStatsAndGear                         |     1203 |        134 |        |                                 |       |
 | dra   | func_psp_090F8A08                        |     1203 |        196 |        |                                 |       |
-| cat   | func_pspeu_0923A8B8                      |     1207 |        109 |        |                                 |       |
+| cat   | func_pspeu_0923A8B8                      |     1207 |        109 |        | https://decomp.me/scratch/k6qsF | 0.932 |
 | ric   | RicMain                                  |     1221 |        208 | Yes    | https://decomp.me/scratch/k8pHC | 0.993 |
 | lib   | func_us_801B6F30                         |     1229 |        132 | Yes    |                                 |       |
 | no3   | NO3_EntityRedDoor                        |     1232 |        112 | Yes    | https://decomp.me/scratch/UqXDf | 0.002 |
