@@ -3,12 +3,14 @@
 
 import ninja_syntax
 import os
+from pathlib import Path
 import sys
 import yaml
 
 # global dictionary that collects all source entries
 # useful to avoid adding multiple rules for the same output file
 entries = dict()
+linker_scripts = set()
 
 psp_o4_files = [
     "3250.c",
@@ -336,6 +338,7 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
         implicit=symbol_paths,
         variables={
             "version": ver,
+            "dynamic_symbols": "",
         },
     )
     if platform == "psx":
@@ -430,12 +433,17 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     platform = str(splat_config["options"]["platform"])
     ovl_name = str(splat_config["options"]["basename"])
     build_path = str(splat_config["options"]["build_path"])
+    ld_path = str(splat_config["options"]["ld_script_path"])
 
     dyn_symbols_file = f"{build_path}/config/dyn_syms.{ovl_name}.txt"
+    dyn_syms_splat_config = (
+        f"{build_path}/config/splat.{version}.{ovl_name}.yaml.dyn_syms"
+    )
+    linker_scripts.add(ld_path)
     nw.build(
         rule="dynamic-splat-config",
-        inputs=[dyn_symbols_file],
-        outputs=[f"{build_path}/config/splat.{version}.{ovl_name}.yaml.dyn_syms"],
+        inputs=dyn_symbols_file,
+        outputs=dyn_syms_splat_config,
     )
 
     if is_weapon(ovl_name):
@@ -443,7 +451,6 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
         return
     target_path = str(splat_config["options"]["target_path"])
     asset_path = str(splat_config["options"]["asset_path"])
-    ld_path = str(splat_config["options"]["ld_script_path"])
     symbol_paths = list[str](splat_config["options"]["symbol_addrs_path"])
     undefined_funcs_auto_path = str(
         splat_config["options"]["undefined_funcs_auto_path"]
@@ -451,14 +458,17 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     undefined_syms_auto_path = str(splat_config["options"]["undefined_syms_auto_path"])
     asm_path = str(splat_config["options"]["asm_path"])
     src_path = str(splat_config["options"]["src_path"])
+
+    dynamic_symbols = ""
+    if "FORCE_SYMBOLS" in os.environ and Path(dyn_symbols_file).exists():
+        dynamic_symbols = dyn_syms_splat_config
+
     nw.build(
         rule="splat",
         outputs=[ld_path],
         inputs=[entry.path],
         implicit=symbol_paths,
-        variables={
-            "version": version,
-        },
+        variables={"version": version, "dynamic_symbols": dynamic_symbols},
     )
     if platform == "psx":
         add_c = add_c_psx
@@ -627,20 +637,16 @@ def add_checksum(nw: ninja_syntax.Writer, version: str, file_name: str):
 build_ninja = "build.ninja"
 if len(sys.argv) > 1:
     build_ninja = str(sys.argv[1])
+    os.makedirs(os.path.dirname(build_ninja), exist_ok=True)
 
 with open(build_ninja, "w") as f:
     nw = ninja_syntax.Writer(f)
-
-    forced_symbol_config = ""
-    if "FORCE_SYMBOLS" in os.environ:
-        print("forcing symbols")
-        forced_symbol_config = "build/$version/$in.dyn_syms"
 
     nw.rule(
         "splat",
         # 'touch' circumnavigates a bug where splat would not update the
         # mtime of the linker script if it is already up-to-date.
-        command=f".venv/bin/splat split $in {forced_symbol_config} > /dev/null && touch $out",
+        command=f".venv/bin/splat split $in $dynamic_symbols > /dev/null && touch $out",
         description="splat $in",
     )
     nw.rule(
@@ -792,4 +798,11 @@ with open(build_ninja, "w") as f:
         )
         add_assets_config(nw, version)
         add_checksum(nw, version, f"config/check.{version}.sha")
+
+    nw.build(
+        rule="phony",
+        outputs="split",
+        implicit=list(linker_scripts),
+    )
+
     nw.close()

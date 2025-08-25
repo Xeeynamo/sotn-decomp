@@ -152,8 +152,7 @@ jobs:
           make reports
       - name: Publish reports
           mkdir -p gh-duplicates
-          cp build/us/reports/duplicates.txt gh-duplicates/
-          cp build/us/reports/{functions.md,function_calls,function_graphs.md} gh-duplicates/
+          cp -r build/us/reports/* gh-duplicates/
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action'

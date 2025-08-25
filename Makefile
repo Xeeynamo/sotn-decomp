@@ -276,10 +276,12 @@ force_extract:
 force_symbols: ##@ Extract a full list of symbols from a successful build
 force_symbols: clean_asm
 	FORCE_SYMBOLS= $(PYTHON) tools/builds/gen.py $(BUILD_DIR)/dynsyms.ninja
-	linker_scripts="$$(find $(BUILD_DIR) -type f -name '*.ld')" && \
-		xargs -n1 echo <<< "$$linker_scripts" && \
-		xargs rm <<< "$$linker_scripts" && \
-		xargs ninja -j0 -f $(BUILD_DIR)/dynsyms.ninja <<< "$$linker_scripts"
+	# only force symbols for overlays that are built. weapons are excluded with `-maxdepth 1`
+	linker_scripts="$$(find $(BUILD_DIR) -maxdepth 1 -type f -name '*.elf' | sed 's/\.elf/\.ld/')" && \
+	   if [[ -n $$linker_scripts ]]; then \
+		   xargs rm -f <<< "$$linker_scripts" && \
+		   xargs ninja -j0 -f $(BUILD_DIR)/dynsyms.ninja <<< "$$linker_scripts" ; \
+	   fi
 
 context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)

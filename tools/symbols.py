@@ -519,7 +519,7 @@ def print_dynamic_symbols(file, config_yaml):
 
     sorted_symbols = sorted(elf_symbols_by_vram.items(), key=lambda item: item[0])
     for offset, name in sorted_symbols:
-        if name in elf_symbols_by_name:
+        if name in elf_symbols_by_name and not name.endswith(".NON_MATCHING"):
             print(f"{name} = 0x{offset:08X}; // allow_duplicated:True", file=file)
 
 
