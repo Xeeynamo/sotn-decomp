@@ -231,11 +231,9 @@ OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
         GPU_printf("ClearOTag(%08x,%d)...\n", ot, n);
     }
 
-    n--;
-    while (n) {
+    while (--n) {
         setlen(ot, 0);
         setaddr(ot, ot + 1);
-        n--;
         ot++;
     }
 
@@ -391,7 +389,6 @@ void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
 void SetDrawEnv(DR_ENV* dr_env_in, DRAWENV* env) {
     RECT clip_rect;
     s32 offset;
-    u16 calc_clip_height;
     DR_ENV* dr_env;
 
     dr_env = dr_env_in;
@@ -411,23 +408,8 @@ void SetDrawEnv(DR_ENV* dr_env_in, DRAWENV* env) {
         clip_rect.w = env->clip.w;
         clip_rect.h = env->clip.h;
         clip_rect.w = CLAMP(clip_rect.w, 0, 1023);
+        clip_rect.h = CLAMP(clip_rect.h, 0, (D_8002C26C ? 1024 : 512) - 1);
 
-        if (clip_rect.h >= 0) {
-            if ((D_8002C26C != 0 && clip_rect.h >= 1024) ||
-                (D_8002C26C == 0 && clip_rect.h >= 512)) {
-                if (D_8002C26C != 0) {
-                    calc_clip_height = 1023;
-                } else {
-                    calc_clip_height = 511;
-                }
-            } else {
-                calc_clip_height = clip_rect.h;
-            }
-        } else {
-            calc_clip_height = 0;
-        }
-
-        clip_rect.h = calc_clip_height;
         if ((clip_rect.x & 0x3F) || (clip_rect.w & 0x3F)) {
             clip_rect.x -= env->ofs[0];
             clip_rect.y -= env->ofs[1];
@@ -539,7 +521,6 @@ s32 _clr(RECT* arg0, s32 color) {
     u16 temp_v0;
     u16 var_v1;
     RECT temp;
-    u16 temp_h;
     s32* ptr;
 
     temp.x = arg0->x;
@@ -548,23 +529,8 @@ s32 _clr(RECT* arg0, s32 color) {
     temp.h = arg0->h;
 
     temp.w = CLAMP(temp.w, 0, 1023);
+    temp.h = CLAMP(temp.h, 0, (D_8002C26C ? 1024 : 512) - 1);
 
-    if (temp.h >= 0) {
-        if ((D_8002C26C != 0 && temp.h >= 1024) ||
-            (D_8002C26C == 0 && temp.h >= 512)) {
-            if (D_8002C26C != 0) {
-                temp_h = 1023;
-            } else {
-                temp_h = 511;
-            }
-        } else {
-            temp_h = temp.h;
-        }
-    } else {
-        temp_h = 0;
-    }
-
-    temp.h = temp_h;
     if ((temp.x & 0x3F) || (temp.w & 0x3F)) {
         ptr = &D_80037E20[8];
         D_80037E20[0] = ((s32)ptr & 0xFFFFFF) | 0x07000000; // set up otag
@@ -610,22 +576,8 @@ s32 _dws(RECT* arg0, s32* arg1) {
     var_s4 = 0;
 
     temp.w = CLAMP(temp.w, 0, 1023);
+    temp.h = CLAMP(temp.h, 0, (D_8002C26C ? 1024 : 512) - 1);
 
-    if (temp.h >= 0) {
-        if ((D_8002C26C != 0 && temp.h >= 1024) ||
-            (D_8002C26C == 0 && temp.h >= 512)) {
-            if (D_8002C26C != 0) {
-                temp_h = 1023;
-            } else {
-                temp_h = 511;
-            }
-        } else {
-            temp_h = temp.h;
-        }
-    } else {
-        temp_h = 0;
-    }
-    temp.h = temp_h;
     temp_a0 = ((temp.w * temp.h) + 1) / 2;
     if (temp_a0 <= 0) {
         return -1;
@@ -667,7 +619,6 @@ s32 _drs(RECT* arg0, s32* arg1) {
     s32 temp_a0;
     s32 size;
     s32 var_s0;
-    s16 var_a0;
 
     set_alarm();
     temp.x = arg0->x;
@@ -676,22 +627,8 @@ s32 _drs(RECT* arg0, s32* arg1) {
     temp.h = arg0->h;
 
     temp.w = CLAMP(temp.w, 0, 1023);
+    temp.h = CLAMP(temp.h, 0, (D_8002C26C ? 1024 : 512) - 1);
 
-    if (temp.h >= 0) {
-        if ((D_8002C26C != 0 && temp.h >= 1024) ||
-            (D_8002C26C == 0 && temp.h >= 512)) {
-            if (D_8002C26C != 0) {
-                var_a0 = 1023;
-            } else {
-                var_a0 = 511;
-            }
-        } else {
-            var_a0 = temp.h;
-        }
-    } else {
-        var_a0 = 0;
-    }
-    temp.h = var_a0;
     temp_a0 = ((temp.w * temp.h) + 1) / 2;
     if (temp_a0 <= 0) {
         return -1;
@@ -740,13 +677,11 @@ void _ctl(u32 arg0) {
 s32 _getctl(s32 arg0) { return (arg0 << 0x18) | ctlbuf[arg0]; }
 
 s32 _cwb(s32* arg0, s32 arg1) {
-    s32* var_a0;
     s32 i;
 
     *GPU_STATUS = 0x04000000;
-    var_a0 = arg0;
     for (i = arg1 - 1; i != -1; i--) {
-        *GPU_DATA = *var_a0++;
+        *GPU_DATA = *arg0++;
     }
     return 0;
 }
