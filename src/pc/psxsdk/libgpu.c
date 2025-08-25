@@ -11,7 +11,7 @@ int FntOpen(int x, int y, int w, int h, int isbg, int n) { NOT_IMPLEMENTED; }
 void FntLoad(int tx, int ty) { NOT_IMPLEMENTED; }
 
 int MyFntPrint(const char* fmt, va_list arg);
-int FntPrint(const char* fmt, ...) {
+int FntPrint(char* fmt, ...) {
     int n;
     va_list args;
     va_start(args, fmt);

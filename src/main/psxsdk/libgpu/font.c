@@ -178,7 +178,7 @@ u_long* FntFlush(s32 id) {
         return -1;                                                             \
     }
 
-long FntPrint(long id, ...) {
+int FntPrint(char* id, ...) {
     char buf[0x200];
     va_list args;
     FntStream* font;
@@ -192,17 +192,17 @@ long FntPrint(long id, ...) {
     u32 ch;
 
     va_start(args, id);
-    if (id < 0 || id >= D_8002B810) {
+    if (LOW(id) < 0 || LOW(id) >= D_8002B810) {
         f = (char*)id;
         id = D_8002B814;
-        if (Font[id].buffer == NULL) {
+        if (Font[LOW(id)].buffer == NULL) {
             return -1;
         }
     } else {
         f = va_arg(args, char*);
     }
 
-    font = &Font[id];
+    font = &Font[LOW(id)];
     if (font->written > font->capacity) {
         return -1;
     }

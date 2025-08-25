@@ -65,8 +65,10 @@ static volatile s32* DPCR = (s32*)0x1F8010F0;
 static volatile s32 _qin = 0;
 static volatile s32 _qout = 0;
 
+#ifndef CLAMP
 #define CLAMP(value, low, high)                                                \
     value < low ? low : (value > high ? high : value)
+#endif
 
 // gpu commands
 #define CMD_CLEAR_CACHE 0x01000000
