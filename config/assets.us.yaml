@@ -727,6 +727,12 @@ files:
           - [0x330, skip]
           - [0x11CC, rooms, rooms]
           - [0x11E8, skip]
+          - [0x14B0, blueprintsdef, blueprints, DopBlueprints, EntityIDs]
+          - [0x1764, skip]
+          - [0x4290, skip]
+          - [0x435C, spritesheet, doppleganger]
+          - [0x2AD74, spritesheet, bat_form]
+          - [0x2BEA0, skip]
   - target: disks/us/BOSS/RBO3/RBO3.BIN
     asset_path: assets/boss/rbo3
     src_path: src/boss/rbo3
