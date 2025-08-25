@@ -3,23 +3,13 @@
 #include "libsnd_i.h"
 
 s16 _SsInitSoundSeq(s16 arg0, s16 vab_id, u8* addr) {
-    s32 temp_lo;
-    s32 tempo;
-    s32 delta_value;
     s32 channel;
     u32 temp_a1_2;
     u32 temp_lo_2;
-    u32 temp_lo_3;
-    u32 temp_lo_4;
     struct SeqStruct* score;
-    int new_var;
+    u32 new_var;
     u32 new_var2;
-    u8 a;
-    u8 b;
-    u8 c;
-    u8 t;
-    u8 q;
-    channel = 0;
+
     score = &_ss_score[arg0][0];
     score->unk4c = vab_id;
     score->unk4a = 0;
@@ -50,7 +40,7 @@ s16 _SsInitSoundSeq(s16 arg0, s16 vab_id, u8* addr) {
     }
     score->unk6E = 1;
     score->read_pos = addr;
-    if ((score->read_pos[0] == 'S') || (score->read_pos[0] == 'p')) {
+    if ((*score->read_pos == 'S') || (*score->read_pos == 'p')) {
         score->read_pos += 8;
         if (addr[7] != 1) {
             printf("This is not SEQ Data.\n");
@@ -60,42 +50,31 @@ s16 _SsInitSoundSeq(s16 arg0, s16 vab_id, u8* addr) {
         printf("This is an old SEQ Data Format.\n");
         return 0;
     }
-    t = *(score->read_pos++);
-    q = *(score->read_pos++);
-    score->unk4a = (s16)(q | (t << 8));
-    a = *(score->read_pos++);
-    b = *(score->read_pos++);
-    c = *(score->read_pos++);
-    tempo = ((a << 0x10) | (b << 8)) | c;
-    temp_lo = 60000000 / tempo;
-    score->unk84 = tempo;
-    if (((s32)(((u32)tempo) >> 1)) < (60000000 % tempo)) {
-        score->unk84 = (s32)(temp_lo + 1);
+    score->unk4a = (*score->read_pos++) << 8 | *score->read_pos++;
+    score->unk84 = (*score->read_pos++) << 0x10 | (*score->read_pos++) << 8 | *score->read_pos++;
+    if ((score->unk84 / 2) < (60000000 % score->unk84)) {
+        score->unk84 = (60000000 / score->unk84) + 1;
     } else {
-        score->unk84 = temp_lo;
+        score->unk84 = 60000000 / score->unk84;
     }
     score->unk8c = score->unk84;
     score->read_pos += 2;
-    delta_value = _SsReadDeltaValue(arg0, 0);
-    temp_lo_2 = score->unk4a * score->unk84;
-    new_var = temp_lo_2 * 10;
+    score->delta_value = score->unk7c = _SsReadDeltaValue(arg0, 0);
     score->next_sep_pos = score->read_pos;
-    score->unk7c = delta_value;
-    score->delta_value = delta_value;
     score->loop_pos = score->read_pos;
+
+    temp_lo_2 = (score->unk4a * score->unk84);
+    new_var = score->unk4a * score->unk84 * 10;
     temp_a1_2 = VBLANK_MINUS * 60;
     new_var2 = temp_a1_2;
-    if (new_var < new_var2) {
-        temp_lo_3 = (VBLANK_MINUS * 600) / temp_lo_2;
-        score->unk6E = temp_lo_3;
-        score->unk70 = temp_lo_3;
+
+    if (new_var < temp_a1_2) {
+        score->unk70 = score->unk6E = ((VBLANK_MINUS * 60) * 10) / temp_lo_2;
     } else {
-        temp_lo_4 = ((score->unk4a * score->unk84) * 10) / new_var2;
         score->unk6E = -1;
-        score->unk70 = temp_lo_4;
-        if ((VBLANK_MINUS * 30) <
-            (((score->unk4a * score->unk84) * 10) % new_var2)) {
-            score->unk70 = (u16)(temp_lo_4 + 1);
+        score->unk70 = (score->unk4a * score->unk84 * 10) / new_var2;
+        if ((VBLANK_MINUS * 60) / 2 < (score->unk4a * score->unk84 * 10) % new_var2) {
+            score->unk70++;
         }
     }
     score->unk72 = score->unk70;
