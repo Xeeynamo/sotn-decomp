@@ -40,7 +40,7 @@ void _SsInit(void) {
         }
     }
 
-    VBLANK_MINUS = 0x3C;
+    VBLANK_MINUS = 60;
     _snd_openflag = 0;
     _snd_ev_flag = 0;
 }

@@ -460,52 +460,47 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmFlush);
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmKeyOn);
 
-s32 SpuVmKeyOff(s16 arg0, s16 vabId, s16 prog, s32 note) {
+s32 SpuVmKeyOff(s16 arg0, s16 vabId, s16 prog, u16 note) {
     s32 bitsUpper;
     s32 bitsLower;
-    u8 var_t0;
+    u8 voice;
     s32 var_t1;
     u16 temp_v1;
-    u8 pad[2];
 
-    var_t0 = 0;
     var_t1 = 0;
-    if (spuVmMaxVoice != 0) {
-        do {
-            if ((_svm_voice[var_t0].note == (note & 0xFFFF)) &&
-                (_svm_voice[var_t0].prog == prog) &&
-                (_svm_voice[var_t0].unke == arg0) &&
-                (_svm_voice[var_t0].vabId == vabId)) {
-                if (_svm_voice[var_t0].unk0 == 0xFF) {
-                    _svm_voice[var_t0].unk1b = 0;
-                    _svm_voice[var_t0].unk04 = 0;
-                    D_80032F10[202] = 0;
-                    D_80032F10[203] = 0;
+    for (voice = 0; voice < spuVmMaxVoice; voice++) {
+        if ((_svm_voice[voice].note == note) &&
+            (_svm_voice[voice].prog == prog) &&
+            (_svm_voice[voice].unke == arg0) &&
+            (_svm_voice[voice].vabId == vabId)) {
+            if (_svm_voice[voice].unk0 == 0xFF) {
+                _svm_voice[voice].unk1b = 0;
+                _svm_voice[voice].unk04 = 0;
+                D_80032F10[202] = 0;
+                D_80032F10[203] = 0;
+            } else {
+                _svm_cur.field_0x1a = voice;
+                temp_v1 = get_field_0x1a();
+                if (temp_v1 < 0x10) {
+                    bitsLower = 1 << temp_v1;
+                    bitsUpper = 0;
                 } else {
-                    _svm_cur.field_0x1a = var_t0;
-                    temp_v1 = get_field_0x1a();
-                    if (temp_v1 < 0x10) {
-                        bitsLower = 1 << temp_v1;
-                        bitsUpper = 0;
-                    } else {
-                        bitsLower = 0;
-                        bitsUpper = 1 << (temp_v1 - 0x10);
-                    }
-
-                    _svm_voice[temp_v1].unk1b = 0;
-                    _svm_voice[temp_v1].unk04 = 0;
-                    _svm_voice[temp_v1].unk0 = 0;
-
-                    _svm_okof1 = bitsLower | _svm_okof1;
-                    _svm_okof2 = bitsUpper | _svm_okof2;
-
-                    _svm_okon1 = _svm_okon1 & ~_svm_okof1;
-                    _svm_okon2 = _svm_okon2 & ~_svm_okof2;
+                    bitsLower = 0;
+                    bitsUpper = 1 << (temp_v1 - 0x10);
                 }
-                var_t1 += 1;
+
+                _svm_voice[temp_v1].unk1b = 0;
+                _svm_voice[temp_v1].unk04 = 0;
+                _svm_voice[temp_v1].unk0 = 0;
+
+                _svm_okof1 = bitsLower | _svm_okof1;
+                _svm_okof2 = bitsUpper | _svm_okof2;
+
+                _svm_okon1 = _svm_okon1 & ~_svm_okof1;
+                _svm_okon2 = _svm_okon2 & ~_svm_okof2;
             }
-            var_t0 += 1;
-        } while (var_t0 < spuVmMaxVoice);
+            var_t1 += 1;
+        }
     }
     return var_t1;
 }
@@ -527,8 +522,8 @@ void SpuVmSeKeyOn(s16 arg0, s16 arg1, u16 arg2, s32 arg3, u16 arg4, u16 arg5) {
     SpuVmKeyOn(0x21, arg0, arg1, arg2, var_a1, var_v1);
 }
 
-void SpuVmSeKeyOff(s16 arg0, s16 arg1, u16 arg2) {
-    SpuVmKeyOff(0x21, arg0, arg1, arg2);
+void SpuVmSeKeyOff(s16 vabId, s16 prog, u16 note) {
+    SpuVmKeyOff(0x21, vabId, prog, note);
 }
 
 void KeyOnCheck(void) {}
