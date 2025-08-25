@@ -70,6 +70,15 @@ elf_parser.add_argument(
     help="Do not include Splat default symbols that starts with D_ or func_",
 )
 
+dynamic_parser = subparsers.add_parser(
+    "dynamic",
+    description="Print the list of dynamic symbols from an elf file that are not included in static symbol tables.",
+)
+dynamic_parser.add_argument(
+    "config_yaml",
+    help="The Splat YAML config of the overlay to generate the dynamic symbol list from",
+)
+
 
 def is_splat_symbol_name(name):
     return (
@@ -325,6 +334,30 @@ def tokenize_symbols(file_path):
     return re.findall(r"\b[a-zA-Z_]\w*\b", content_without_strings)
 
 
+def get_txt_symbols(symbol_file_name) -> dict[int, str]:
+    with open(symbol_file_name, "r") as symbol_file_ref:
+        symbols_defined = symbol_file_ref.readlines()
+
+    symbols = dict()
+    for sym_def in symbols_defined:
+        if sym_def.startswith("//"):
+            # ignore comments
+            continue
+
+        if (
+            len(sym_def) > 4
+            and sym_def.find("ignore:true") == -1
+            and sym_def.lower().find("allow_duplicated:true") == -1
+            and sym_def.find("used:true") == -1
+        ):
+            sym_tokenized = sym_def.split("=")
+            if len(sym_tokenized) >= 2:
+                sym = sym_tokenized[0].strip()
+                addr = int(sym_tokenized[1].split(";")[0].strip(), 16)
+                symbols[addr] = sym
+    return symbols
+
+
 def remove_orphans(symbol_file_name, symbols_set):
     with open(symbol_file_name, "r") as symbol_file_ref:
         symbols_defined = symbol_file_ref.readlines()
@@ -410,9 +443,9 @@ def print_map_symbols(map_file_name, no_default):
         print(f"{syms[vram]} = 0x{vram:08X}; // allow_duplicated:True")
 
 
-def get_elf_symbols(elf_file_name) -> dict:
+def get_elf_symbols(elf_file_name) -> dict[int, str]:
     with subprocess.Popen(
-        args=["nm", elf_file_name],
+        args=["nm", "-U", elf_file_name],
         stdout=subprocess.PIPE,
         stdin=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -449,21 +482,45 @@ def get_elf_symbols(elf_file_name) -> dict:
 
 
 def print_elf_symbols(file, elf_file_name, no_default):
-    with subprocess.Popen(
-        args=["nm", elf_file_name],
-        stdout=subprocess.PIPE,
-        stdin=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        env=dict(os.environ),
-    ) as p:
-        stdout_raw, stderr_raw = p.communicate()
-        output = stdout_raw.decode("utf-8").splitlines()
     symbols = get_elf_symbols(elf_file_name)
     sorted_symbols = sorted(symbols.items(), key=lambda item: item[0])
     for offset, name in sorted_symbols:
         if no_default and (name.startswith("func_") or name.startswith("D_")):
             continue
         print(f"{name} = 0x{offset:08X}; // allow_duplicated:True", file=file)
+
+
+def print_dynamic_symbols(file, config_yaml):
+    with open(config_yaml, "r") as config_yaml_ref:
+        config = yaml.safe_load(config_yaml_ref)
+    options = config["options"]
+    symbol_addrs_path = options["symbol_addrs_path"]
+    if isinstance(symbol_addrs_path, str):
+        symbol_file_names = [symbol_addrs_path]
+    else:
+        symbol_file_names = symbol_addrs_path
+
+    symbols = dict()
+    for symbol_file in symbol_file_names:
+        symbols |= get_txt_symbols(symbol_file)
+
+    elf_path = options.get("elf_path")
+    if elf_path is None:
+        build_path = options["build_path"]
+        basename = options["basename"]
+        elf_path = f"{build_path}/{basename}.elf"
+
+    elf_symbols_by_vram = get_elf_symbols(elf_path)
+    elf_symbols_by_name = {v: k for k, v in elf_symbols_by_vram.items()}
+
+    for offset, name in symbols.items():
+        elf_symbols_by_vram.pop(offset, None)
+        elf_symbols_by_name.pop(name, None)
+
+    sorted_symbols = sorted(elf_symbols_by_vram.items(), key=lambda item: item[0])
+    for offset, name in sorted_symbols:
+        if name in elf_symbols_by_name and not name.endswith(".NON_MATCHING"):
+            print(f"{name} = 0x{offset:08X}; // allow_duplicated:True", file=file)
 
 
 if __name__ == "__main__":
@@ -482,3 +539,5 @@ if __name__ == "__main__":
         print_map_symbols(args.map_file_name, args.no_default)
     elif args.command == "elf":
         print_elf_symbols(sys.stdout, args.elf_file_name, args.no_default)
+    elif args.command == "dynamic":
+        print_dynamic_symbols(sys.stdout, args.config_yaml)
