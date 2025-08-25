@@ -20,11 +20,10 @@ void _SsSndTempo(s16 arg0, s16 arg1) {
             if (pSeq->unk70 <= 0) {
                 pSeq->unk70 = 1;
             }
-        }
-
-        if ((pSeq->unkA0 == 0) || (pSeq->unk8c == pSeq->unkA4)) {
-            _ss_score[arg0][arg1].unk90 &= ~0x40;
-            _ss_score[arg0][arg1].unk90 &= ~0x80;
+            if ((pSeq->unkA0 == 0) || (pSeq->unk8c == pSeq->unkA4)) {
+                _ss_score[arg0][arg1].unk90 &= ~0x40;
+                _ss_score[arg0][arg1].unk90 &= ~0x80;
+            }
         }
     } else {
         if (pSeq->unk8c > pSeq->unkA4) {
@@ -34,7 +33,7 @@ void _SsSndTempo(s16 arg0, s16 arg1) {
             }
         } else if (pSeq->unk8c < pSeq->unkA4) {
             pSeq->unk8c -= pSeq->unk44;
-            if (pSeq->unkA4 < pSeq->unk8c) {
+            if (pSeq->unk8c > pSeq->unkA4) {
                 pSeq->unk8c = pSeq->unkA4;
             }
         }
