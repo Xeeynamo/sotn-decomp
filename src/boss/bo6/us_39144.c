@@ -246,7 +246,55 @@ void func_us_801BBBC0(void) {}
 
 void func_us_801BBBC8(void) {}
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BBBD0);
+extern AnimationFrame* D_us_801812B8[];
+extern PfnEntityUpdate D_us_8018158C[];
+extern u8 D_us_801D0800;
+extern u8 D_us_801D0804;
+extern u8 D_us_801D0808;
+extern u8 D_us_801D07FC;
+
+void func_us_801BBBD0(void) {
+    Entity* entity;
+    PfnEntityUpdate entityUpdate;
+    s32 i;
+
+    entity = g_CurrentEntity = &g_Entities[E_ID_44];
+
+    for (i = E_ID_44; i < E_ID_90; i++, g_CurrentEntity++, entity++) {
+        if (entity->entityId) {
+            entityUpdate = D_us_8018158C[entity->entityId];
+            entityUpdate(entity);
+            entity = g_CurrentEntity;
+
+            if (entity->entityId) {
+                if (!(entity->flags & FLAG_UNK_10000000) &&
+                    (entity->posX.i.hi > 288 || entity->posX.i.hi < -32 ||
+                     entity->posY.i.hi > 256 || entity->posY.i.hi < -16)) {
+                    DestroyEntity(entity);
+                } else {
+                    if (entity->flags & FLAG_UNK_20000000) {
+                        g_api.UpdateAnim(NULL, D_us_801812B8);
+                    }
+                    entity->flags |= FLAG_NOT_AN_ENEMY;
+                }
+            }
+        }
+    }
+
+    if (D_us_801D07FC) {
+        D_us_801D07FC--;
+        if (D_us_801D07FC & 1) {
+            g_api.func_800EA5AC(1, D_us_801D0800, D_us_801D0804, D_us_801D0808);
+        }
+    }
+    if ((RIC.step == 0x11) || (RIC.step == 0x60) || (RIC.step == 0x70)) {
+        FntPrint("dead boss\n");
+        entity = &g_Entities[E_ID_44];
+        for (i = E_ID_44; i < E_ID_90; i++, entity++) {
+            entity->hitboxState = 0;
+        };
+    }
+}
 
 Entity* OVL_EXPORT(RicCreateEntFactoryFromEntity)(
     Entity* source, u32 factoryParams, s32 arg2) {
