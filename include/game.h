@@ -811,7 +811,6 @@ typedef struct {
 #define POSE_LOOP(index) {0, index} // loop at pose index
 #define POSE_END {-1, 0}            // stop at last frame
 #define POSE_JUMP(anim) {-2, anim}  // set new animation
-#define POSE_UNKNOWN(anim) {-3, anim}
 typedef struct {
     u16 duration;
     u16 pose; // contains both frameNo and hitboxNo

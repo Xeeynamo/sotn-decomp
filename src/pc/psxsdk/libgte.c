@@ -20,9 +20,3 @@ long RotAverage3(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, long* sxy0, long* sxy1,
     assert(false);
     return 0;
 }
-
-long RotAverage4(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, SVECTOR* v3, long* sxy0,
-                 long* sxy1, long* sxy2, long* sxy3, long* p, long* flag) {
-    assert(false);
-    return 0;
-}

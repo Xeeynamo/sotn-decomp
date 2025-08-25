@@ -67,17 +67,15 @@ segments:
       - [0x12E4, .data, dop_anim]
       - [0x1318, .data, unk_45354]
       - [0x133C, .data, unk_46E7C]
-      - [0x14B0, .data, unk_46E7C] # factory blueprint
-      - [0x2028, .data, doppleganger_anim] # animation
-      - [0x4098, data, doppleganger_anim]
+      - [0x14B0, data, unk_46E7C] # factory blueprint
       - [0x4290, .data, e_life_up]
       - [0x42E4, .data, gen/e_layout]
-      - [0x435C, .data, spritesheets] # doppleganger_sprites, bat_form_sprites
+      - [0x435C, data] # g_SpriteSheet
       - [0x2BEA0, cmp, D_801ABEA0]
       - [0x2C180, cmp, D_801AC180]
       - [0x2C288, pal, D_us_801AC288]
       - [0x2C668, .data, tile_data]
-      - [0x30A78, data] # small animationframe sets, unimportable
+      - [0x30A78, data]
       - [0x340E4, .rodata, doors]
       - [0x34188, .rodata, unk_365FC]
       - [0x341A8, .rodata, e_red_door]
@@ -116,6 +114,6 @@ segments:
       - [0x53120, bss] # unused
       - [0x53D24, .bss, doppleganger]
       - [0x53D30, .bss, unk_46E7C]
-      - [0x54118, .bss, bss]
+      - [0x53F00, bss, unk_46E7C]
       - [0x54DF8, .bss, e_collect]
   - [0x54E38]

@@ -5,6 +5,8 @@ extern PlayerState g_Dop;
 
 // n.b.! this file is the same as rbo5/unk_44954.c
 
+extern s16 D_us_801D4D6E;
+
 // may be equivalent func_8010DFF0 in DRA
 void func_us_801C5354(s32 resetAnims, s32 arg1) {
     Primitive* prim;
@@ -23,9 +25,9 @@ void func_us_801C5354(s32 resetAnims, s32 arg1) {
     g_Entities[E_ID_41].ext.disableAfterImage.unk7E = 0xA;
     if (arg1 != 0) {
         if (arg1 < 4) {
-            g_Dop.timers[ALU_T_15] = 4;
+            D_us_801D4D6E = 4;
         } else {
-            g_Dop.timers[ALU_T_15] = arg1;
+            D_us_801D4D6E = arg1;
         }
     }
 }
@@ -296,7 +298,7 @@ s32 func_us_801C5B68(void) {
 
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(3, 0), 0);
 
-    g_Dop.timers[ALU_T_10] = 4;
+    g_Dop.timers[10] = 4;
     if (DOPPLEGANGER.step_s >= 0x40) {
         return 0;
     }
@@ -353,7 +355,7 @@ s32 func_us_801C5CF8(void) {
         return 0;
     }
 
-    if (g_Dop.timers[ALU_T_CURSE]) {
+    if (g_Dop.timers[1]) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x39, 1), 0);
 
         switch (DOPPLEGANGER.step) {
@@ -423,7 +425,7 @@ s32 func_us_801C5CF8(void) {
     }
 
     SetDopplegangerAnim(animBase + animOffset);
-    g_Dop.timers[ALU_T_9] = 4;
+    g_Dop.timers[9] = 4;
 
     return 1;
 }
@@ -584,10 +586,10 @@ bool func_us_801C6040(s32 arg0) {
 }
 
 void func_80111CC0(void) {
-    if (g_Dop.timers[ALU_T_CURSE] != 0) {
+    if (g_Dop.timers[1] != 0) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x17), 0);
     }
-    if (g_Dop.timers[ALU_T_POISON] != 0) {
+    if (g_Dop.timers[0] != 0) {
         CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x16), 0);
     }
 }

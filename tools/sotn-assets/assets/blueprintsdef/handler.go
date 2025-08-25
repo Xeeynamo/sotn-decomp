@@ -3,7 +3,6 @@ package blueprintsdef
 import (
 	"bytes"
 	"encoding/binary"
-	"os/exec"
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
@@ -163,23 +162,12 @@ func sourcePath(dir, name string) string {
 }
 
 func fetchEnum(srcDir, ovlName, enumName string) (map[int]string, error) {
-    cpp, err := exec.LookPath("cpp")
-    cmd := exec.Command(cpp,
-                        fmt.Sprintf("-DVERSION=%s"),
-                        "-lang-c",
-                        "-Iinclude",
-                        "-Iinclude/psxsdk",
-                        "-fno-builtin",
-                        "-undef",
-                        "-P",
-                        fmt.Sprintf("%s/%s.h", srcDir, ovlName))
-    o, err := cmd.Output()
-
+	f, err := os.Open(fmt.Sprintf("%s/%s.h", srcDir, ovlName))
 	if err != nil {
-		return nil, fmt.Errorf("failed preprocess header: %s %s: %w", cmd.Path, cmd.Args, err)
+		return nil, err
 	}
-    r := strings.NewReader(string(o))
-	return sotn.ParseCEnum(r, enumName, 0)
+	defer f.Close()
+	return sotn.ParseCEnum(f, enumName, 0)
 }
 
 func parse(

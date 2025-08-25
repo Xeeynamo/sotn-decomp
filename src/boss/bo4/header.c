@@ -8,8 +8,8 @@ extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
 extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern u_long** OVL_EXPORT(gfxBanks)[];
 
-extern u8* doppleganger_sprites[0x34C];
-extern u8* bat_form_sprites[6];
+extern u8* g_SpriteSheet[0x34C];
+extern u8* g_PlOvlDopBatSpritesheet[6];
 
 AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .Update = Update,
@@ -23,8 +23,8 @@ AbbreviatedOverlay2 OVL_EXPORT(Overlay) = {
     .tileLayers = OVL_EXPORT(rooms_layers),
     .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
-    .unk2C = doppleganger_sprites,
-    .unk30 = bat_form_sprites,
+    .unk2C = g_SpriteSheet,
+    .unk30 = g_PlOvlDopBatSpritesheet,
 };
 
 extern s16* D_us_801B0A78[];
