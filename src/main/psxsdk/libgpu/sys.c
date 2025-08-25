@@ -530,13 +530,9 @@ s32 _otc(s32 arg0, s32 arg1) {
     *DMA6_BCR = arg1;
     *DMA6_CHCR = 0x11000002;
     set_alarm();
-    if (*DMA6_CHCR & 0x01000000) {
-        while (1) {
-            if (get_alarm()) {
-                return -1;
-            } else if (!(*DMA6_CHCR & (1 << 24))) {
-                break;
-            }
+    while (*DMA6_CHCR & 0x01000000) {
+        if (get_alarm()) {
+            return -1;
         }
     }
     return arg1;
@@ -609,11 +605,9 @@ s32 _dws(RECT* arg0, s32* arg1) {
     s32 temp_a0;
     s32 size;
     s32 var_s0;
-    s32* img_ptr;
     s16 temp_h;
     s32 var_s4;
 
-    img_ptr = arg1;
     set_alarm();
     temp.x = arg0->x;
     temp.y = arg0->y;
@@ -644,13 +638,9 @@ s32 _dws(RECT* arg0, s32* arg1) {
     }
     var_s0 = temp_a0 % 16;
     size = temp_a0 / 16;
-    if (!(*GPU_STATUS & STATUS_READY_TO_RECEIVE_CMD)) {
-        while (1) {
-            if (get_alarm()) {
-                return -1;
-            } else if (*GPU_STATUS & STATUS_READY_TO_RECEIVE_CMD) {
-                break;
-            }
+    while (!(*GPU_STATUS & STATUS_READY_TO_RECEIVE_CMD)) {
+        if (get_alarm()) {
+            return -1;
         }
     }
 
@@ -663,12 +653,12 @@ s32 _dws(RECT* arg0, s32* arg1) {
     *GPU_DATA = *(s32*)&temp.w;
 
     for (var_s0 = var_s0 - 1; var_s0 != -1; var_s0--) {
-        *GPU_DATA = *img_ptr++;
+        *GPU_DATA = *arg1++;
     }
 
     if (size != 0) {
         *GPU_STATUS = 0x04000002;
-        *DMA2_MADR = img_ptr;
+        *DMA2_MADR = arg1;
         *DMA2_BCR = (size << 0x10) | 0x10;
         *DMA2_CHCR = 0x01000201;
     }
@@ -683,17 +673,13 @@ s32 _drs(RECT* arg0, s32* arg1) {
     s32 temp_a0;
     s32 size;
     s32 var_s0;
-    s32* img_ptr;
     s16 var_a0;
-    s32 var_s4;
 
-    img_ptr = arg1;
     set_alarm();
     temp.x = arg0->x;
     temp.y = arg0->y;
     temp.w = arg0->w;
     temp.h = arg0->h;
-    var_s4 = 0;
 
     temp.w = CLAMP(temp.w, 0, 1023);
 
@@ -718,15 +704,9 @@ s32 _drs(RECT* arg0, s32* arg1) {
     }
     var_s0 = temp_a0 % 16;
     size = temp_a0 / 16;
-    if (!(*GPU_STATUS & STATUS_READY_TO_RECEIVE_CMD)) {
-        while (1) {
-            if (get_alarm()) {
-                return -1;
-            } else {
-                if (*GPU_STATUS & STATUS_READY_TO_RECEIVE_CMD) {
-                    break;
-                }
-            }
+    while (!(*GPU_STATUS & STATUS_READY_TO_RECEIVE_CMD)) {
+        if (get_alarm()) {
+            return -1;
         }
     }
 
@@ -738,23 +718,19 @@ s32 _drs(RECT* arg0, s32* arg1) {
     *GPU_DATA = *(s32*)&temp.x;
     *GPU_DATA = *(s32*)&temp.w;
 
-    if (!(*GPU_STATUS & STATUS_READY_TO_SEND_VRAM_TO_CPU)) {
-        while (1) {
-            if (get_alarm()) {
-                return -1;
-            } else if (*GPU_STATUS & STATUS_READY_TO_SEND_VRAM_TO_CPU) {
-                break;
-            }
+    while (!(*GPU_STATUS & STATUS_READY_TO_SEND_VRAM_TO_CPU)) {
+        if (get_alarm()) {
+            return -1;
         }
     }
 
     for (var_s0 = var_s0 - 1; var_s0 != -1; var_s0--) {
-        *img_ptr++ = *GPU_DATA;
+        *arg1++ = *GPU_DATA;
     }
 
     if (size != 0) {
         *GPU_STATUS = 0x04000003;
-        *DMA2_MADR = img_ptr;
+        *DMA2_MADR = arg1;
         *DMA2_BCR = (size << 0x10) | 0x10;
         *DMA2_CHCR = 0x01000200;
     }
