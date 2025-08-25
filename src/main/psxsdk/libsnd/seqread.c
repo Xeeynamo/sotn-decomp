@@ -539,8 +539,8 @@ void _SsSetPitchBend(s16 arg0, s16 arg1) {
     temp_s0 = &_ss_score[arg0][arg1];
     channel = temp_s0->channel;
     temp_v1 = temp_s0->read_pos++;
-    SpuVmPitchBend(
-        (arg1 << 8) | arg0, temp_s0->unk4c, temp_s0->programs[channel], *temp_v1);
+    SpuVmPitchBend((arg1 << 8) | arg0, temp_s0->unk4c,
+                   temp_s0->programs[channel], *temp_v1);
     temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 

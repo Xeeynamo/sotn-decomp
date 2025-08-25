@@ -51,7 +51,8 @@ s16 _SsInitSoundSeq(s16 arg0, s16 vab_id, u8* addr) {
         return 0;
     }
     score->unk4a = (*score->read_pos++) << 8 | *score->read_pos++;
-    score->unk84 = (*score->read_pos++) << 0x10 | (*score->read_pos++) << 8 | *score->read_pos++;
+    score->unk84 = (*score->read_pos++) << 0x10 | (*score->read_pos++) << 8 |
+                   *score->read_pos++;
     if ((score->unk84 / 2) < (60000000 % score->unk84)) {
         score->unk84 = (60000000 / score->unk84) + 1;
     } else {
@@ -73,7 +74,8 @@ s16 _SsInitSoundSeq(s16 arg0, s16 vab_id, u8* addr) {
     } else {
         score->unk6E = -1;
         score->unk70 = (score->unk4a * score->unk84 * 10) / new_var2;
-        if ((VBLANK_MINUS * 60) / 2 < (score->unk4a * score->unk84 * 10) % new_var2) {
+        if ((VBLANK_MINUS * 60) / 2 <
+            (score->unk4a * score->unk84 * 10) % new_var2) {
             score->unk70++;
         }
     }
