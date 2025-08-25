@@ -3466,6 +3466,11 @@ typedef struct {
 } ET_BoneHalberd;
 
 typedef struct {
+    struct Primitive* prim1;
+    struct Primitive* prim2;
+} ET_StainedGlass;
+
+typedef struct {
     s32 : 32;
     s16 rotate;
 } ET_Unk4379C;
@@ -3796,6 +3801,7 @@ typedef union { // offset=0x7C
     ET_Unk4379C unk4379C;
     ET_HuntingGirl huntingGirl;
     ET_Slime slime;
+    ET_StainedGlass stainedGlass;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

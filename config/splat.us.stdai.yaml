@@ -80,8 +80,8 @@ segments:
       - [0x2318, .data, e_mist_door]
       - [0x2358, data] #, gen/rooms]
       - [0x242C, .data, e_clouds]
-      - [0x2564, data] # e_stained_glass
-      - [0x277C, data]
+      - [0x2564, .data, e_stained_glass]
+      - [0x2784, data]
       - [0x3A94, .data, cutscene_script]
       - [0x3C18, data, cutscene_data]
       - [0x3F20, data]
