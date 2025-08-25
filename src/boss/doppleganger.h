@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+#ifndef DOPPLEGANGER_H
+#define DOPPLEGANGER_H
+
 #define DOPPLEGANGER g_Entities[STAGE_ENTITY_START]
 
-typedef enum {
+typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_FACTORY,
     /* 0x02 */ E_EXPLOSION,
@@ -18,20 +21,32 @@ typedef enum {
     /* 0x0C */ E_HEART_DROP,
     /* 0x0D */ E_ENEMY_BLOOD,
     /* 0x0E */ E_MESSAGE_BOX,
-    /* 0x13 */ E_ID_13,
+    /* 0x0F */ E_ID_13,
+    /* 0x10 */ E_ID_10,
 
     /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
     /* 0x15 */ E_GREY_PUFF,
-    /* 0x16 */ E_ID_16 = 0x16,
+    /* 0x16 */ E_ID_16,
     /* 0x17 */ E_ID_17,
     /* 0x18 */ E_ID_18,
-    /* 0x19 */ E_ID_19 = 0x19,
+    /* 0x19 */ E_ID_19,
     /* 0x1A */ E_ID_1A,
     /* 0x1B */ E_ID_1B,
     /* 0x1C */ E_ID_1C,
     /* 0x1D */ E_ID_1D,
+    /* 0x1E */ E_ID_1E,
+    /* 0x1F */ E_ID_1F,
 
+    /* 0x20 */ E_ID_20 = 0x20,
+    /* 0x21 */ E_ID_21,
     /* 0x22 */ E_MIST = 0x22,
+    /* 0x23 */ E_ID_23,
+    /* 0x24 */ E_ID_24,
+    /* 0x2F */ E_ID_2F = 0x2F,
+
+    /* 0x36 */ E_ID_36 = 0x36,
+    /* 0x37 */ E_ID_37 = 0x37,
+    /* 0x38 */ E_ID_38,
 
     /* 0x41 */ E_ID_41 = 0x41,
     /* 0x42 */ E_ID_42 = 0x42,
@@ -40,6 +55,8 @@ typedef enum {
     /* 0x50 */ E_ID_50 = 0x50, // may be E_WEAPON
 
     /* 0x60 */ E_ID_60 = 0x60,
+    /* 0xB8 */ E_ID_B8 = 0xB8,
+    /* 0xEC */ E_ID_EC = 0xEC,
     /* 0x90 */ E_ID_90 = 0x90,
 } EntityIDs;
 
@@ -224,13 +241,7 @@ enum DopBlueprints {
     BP_112,
     BP_113,
     BP_114,
-    BP_115,
-    BP_116,
-    BP_SUMMON_SPIRIT,
-    BP_118,
-    BP_119,
-    BP_120,
-    BP_TELEPORT,
-    BP_SLEEP_ZZZ,
     NUM_BLUEPRINTS,
 };
+
+#endif // DOPPLEGANGER_H
