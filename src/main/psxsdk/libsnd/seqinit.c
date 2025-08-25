@@ -3,12 +3,8 @@
 #include "libsnd_i.h"
 
 s16 _SsInitSoundSeq(s16 arg0, s16 vab_id, u8* addr) {
-    s32 channel;
-    u32 temp_a1_2;
-    u32 temp_lo_2;
     struct SeqStruct* score;
-    u32 new_var;
-    u32 new_var2;
+    s32 channel;
 
     score = &_ss_score[arg0][0];
     score->unk4c = vab_id;
@@ -64,18 +60,14 @@ s16 _SsInitSoundSeq(s16 arg0, s16 vab_id, u8* addr) {
     score->next_sep_pos = score->read_pos;
     score->loop_pos = score->read_pos;
 
-    temp_lo_2 = (score->unk4a * score->unk84);
-    new_var = score->unk4a * score->unk84 * 10;
-    temp_a1_2 = VBLANK_MINUS * 60;
-    new_var2 = temp_a1_2;
-
-    if (new_var < temp_a1_2) {
-        score->unk70 = score->unk6E = ((VBLANK_MINUS * 60) * 10) / temp_lo_2;
+    if ((score->unk4a * score->unk84 * 10) < (VBLANK_MINUS * 60)) {
+        score->unk70 = score->unk6E =
+            (VBLANK_MINUS * 600) / (score->unk4a * score->unk84);
     } else {
         score->unk6E = -1;
-        score->unk70 = (score->unk4a * score->unk84 * 10) / new_var2;
-        if ((VBLANK_MINUS * 60) / 2 <
-            (score->unk4a * score->unk84 * 10) % new_var2) {
+        score->unk70 = (score->unk4a * score->unk84 * 10) / (VBLANK_MINUS * 60);
+        if ((VBLANK_MINUS * 30) <
+            (score->unk4a * score->unk84 * 10) % (VBLANK_MINUS * 60)) {
             score->unk70++;
         }
     }

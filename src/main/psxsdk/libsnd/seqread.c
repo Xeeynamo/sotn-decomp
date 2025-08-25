@@ -545,35 +545,23 @@ void _SsSetPitchBend(s16 arg0, s16 arg1) {
 }
 
 void _SsGetMetaEvent(s16 arg0, s16 arg1, u8 arg2) {
-    s32 tempo;
     struct SeqStruct* score;
-    u32 temp_a1_2;
-    u32 temp_lo_2;
-    u32 temp_lo_3;
-    u32 temp_lo_4;
-    u8* temp_a1;
-    s32 a, b, c;
 
     score = &_ss_score[arg0][arg1];
     switch (arg2) {
     case 0x51:
-        temp_a1 = score->read_pos;
-        a = *score->read_pos++;
-        b = *score->read_pos++;
-        c = *score->read_pos++;
-        tempo = 60000000 / ((a << 0x10) | (b << 8) | c);
-        temp_lo_2 = score->unk4a * tempo;
-        score->unk8c = tempo;
-        if ((temp_lo_2 * 10) < VBLANK_MINUS * 60) {
-            temp_lo_3 = (VBLANK_MINUS * 600) / temp_lo_2;
-            score->unk6E = temp_lo_3;
-            score->unk70 = temp_lo_3;
+        score->unk8c = (*score->read_pos++) << 0x10 |
+                       (*score->read_pos++) << 8 | *score->read_pos++;
+        score->unk8c = 60000000 / score->unk8c;
+        if ((score->unk4a * score->unk8c * 10) < VBLANK_MINUS * 60) {
+            score->unk70 = score->unk6E =
+                (VBLANK_MINUS * 600) / (score->unk4a * score->unk8c);
         } else {
             score->unk6E = -1;
             score->unk70 =
-                (u32)(score->unk4a * score->unk8c * 10) / (VBLANK_MINUS * 60);
-            if ((VBLANK_MINUS * 30) < ((u32)(score->unk4a * score->unk8c * 10) %
-                                       (VBLANK_MINUS * 60))) {
+                (score->unk4a * score->unk8c * 10) / (VBLANK_MINUS * 60);
+            if ((VBLANK_MINUS * 30) <
+                (score->unk4a * score->unk8c * 10) % (VBLANK_MINUS * 60)) {
                 score->unk70++;
             }
         }
