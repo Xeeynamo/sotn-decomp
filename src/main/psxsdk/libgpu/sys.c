@@ -516,10 +516,6 @@ s32 _otc(s32 arg0, s32 arg1) {
 
 // Clears Frame Buffer
 s32 _clr(RECT* arg0, s32 color) {
-    s16 var_v0;
-    s32 temp_a1;
-    u16 temp_v0;
-    u16 var_v1;
     RECT temp;
     s32* ptr;
 
@@ -565,7 +561,6 @@ s32 _dws(RECT* arg0, s32* arg1) {
     s32 temp_a0;
     s32 size;
     s32 var_s0;
-    s16 temp_h;
     s32 var_s4;
 
     set_alarm();
@@ -816,12 +811,12 @@ temp2:
     return ret;
 }
 
-s32 _reset(s32 arg0) {
+inline s32 _reset(s32 arg0) {
     s32 intrMask;
     s32 i;
 
     intrMask = SetIntrMask(0);
-    DMACallback(2, 0);
+    DMACallback(2, NULL);
     _qout = 0;
     _qin = _qout;
 
@@ -852,7 +847,7 @@ s32 _reset(s32 arg0) {
 s32 _sync(s32 arg0) {
     if (arg0 == 0) {
         if (D_8002C278 == NULL) {
-            DMACallback(2, 0);
+            DMACallback(2, NULL);
         }
         set_alarm();
         while (_qin != _qout) {
@@ -895,26 +890,11 @@ void set_alarm(void) {
 }
 
 s32 get_alarm(void) {
-    s32 intrMask;
-    s32 i;
-    if ((D_80039254 < VSync(-1)) || D_80039258++ > 0x780000) {
+    if (D_80039254 < VSync(-1) || D_80039258++ > 0x780000) {
         *GPU_STATUS;
         printf("GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x\n",
                (_qin - _qout) & 0x3F, *GPU_STATUS, *DMA2_CHCR, *DMA2_MADR);
-        intrMask = SetIntrMask(0);
-        DMACallback(2, 0);
-        _qout = 0;
-        _qin = _qout;
-        for (i = 0; i < 64; i++) {
-            D_80037F54[i].unk0 = 0;
-        }
-        *DMA2_CHCR = 0x401;
-        *DPCR |= 0x800;
-        *GPU_STATUS = 0x02000000;
-        *GPU_STATUS = 0x01000000;
-        *GPU_DATA = (*GPU_STATUS & 0x3FFF) | 0xE1001000;
-        SetIntrMask(intrMask);
-        *GPU_STATUS;
+        _reset(1);
         return -1;
     }
     return 0;
