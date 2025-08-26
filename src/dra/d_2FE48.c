@@ -42,33 +42,33 @@ static AluFrame D_800CFEF8 = {0x8003, -22, -41, 0};
 static AluFrame D_800CFF00 = {0x8004, -22, -29, 0};
 static AluFrame D_800CFF08 = {0x8005, -22, -29, 0};
 
-#include "gen/D_800CFF10.h"
+#include GEN_VERSION(D_800CFF10.h)
 
-#include "gen/D_800D0F68.h"
+#include GEN_VERSION(D_800D0F68.h)
 
-#include "gen/D_800D2BF4.h"
+#include GEN_VERSION(D_800D2BF4.h)
 
-#include "gen/D_800D2CF8.h"
+#include GEN_VERSION(D_800D2CF8.h)
 
-#include "gen/D_800D2FFC.h"
+#include GEN_VERSION(D_800D2FFC.h)
 
-#include "gen/D_800D327C.h"
+#include GEN_VERSION(D_800D327C.h)
 
-#include "gen/D_800D3428.h"
+#include GEN_VERSION(D_800D3428.h)
 
-#include "gen/D_800D34B8.h"
+#include GEN_VERSION(D_800D34B8.h)
 
-#include "gen/D_800D372C.h"
+#include GEN_VERSION(D_800D372C.h)
 
-#include "gen/D_800D3B88.h"
+#include GEN_VERSION(D_800D3B88.h)
 
-#include "gen/D_800D5628.h"
+#include GEN_VERSION(D_800D5628.h)
 
-#include "gen/D_800D56AC.h"
+#include GEN_VERSION(D_800D56AC.h)
 
-#include "gen/D_800D5868.h"
+#include GEN_VERSION(D_800D5868.h)
 
-#include "gen/D_800D684C.h"
+#include GEN_VERSION(D_800D684C.h)
 
 u16 D_800D68D4[] = {
 #include "gen/D_800D68D4.h"

@@ -58,7 +58,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err != nil {
 		return fmt.Errorf("error generating image: %v", err)
 	}
-	if err := os.MkdirAll(e.AssetDir, 0755); err != nil {
+	if err := os.MkdirAll(filepath.Dir(assetPath(e.AssetDir, e.Name)), 0755); err != nil {
 		return fmt.Errorf("error creating directory: %v", err)
 	}
 	fout, err := os.Create(assetPath(e.AssetDir, e.Name))
