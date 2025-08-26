@@ -74,7 +74,7 @@ u16 D_800D72D4[] = {
 };
 
 u8 text_item_up[] = {
-#include "../dra/gen/text_item_up.h"
+#include "../dra/gen/psp/text_item_up.h"
 };
 
 u16 D_800DB0D4[] = {
@@ -94,7 +94,7 @@ u16 D_psp_091654C0[] = {
 };
 
 u8 load_room_obj[] = {
-#include "../dra/gen/load_room_obj.h"
+#include "../dra/gen/psp/load_room_obj.h"
 };
 
 u16 D_800DB0F4[] = {
@@ -102,15 +102,15 @@ u16 D_800DB0F4[] = {
 };
 
 u8 save_room_tile[] = {
-#include "../dra/gen/save_room_tile.h"
+#include "../dra/gen/psp/save_room_tile.h"
 };
 
 u8 load_room_tile[] = {
-#include "../dra/gen/load_room_tile.h"
+#include "../dra/gen/psp/load_room_tile.h"
 };
 
 u8 save_room_obj[] = {
-#include "../dra/gen/save_room_obj.h"
+#include "../dra/gen/psp/save_room_obj.h"
 };
 
 #include "../dra/gen/D_800D34B8.h"

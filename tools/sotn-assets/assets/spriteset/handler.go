@@ -50,7 +50,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	sb := strings.Builder{}
 	sb.WriteString("// clang-format off\n")
 	if len(ss) > 0 {
-		BuildSpriteSet(&sb, ss, e.Name)
+		BuildSpriteSet(&sb, ss, filepath.Base(e.Name))
 	}
 	return util.WriteFile(out, []byte(sb.String()))
 }

@@ -153,6 +153,14 @@ build_hd: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
 build_pspeu: $(SOTNSTR_APP) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
 	VERSION=pspeu .venv/bin/python3 tools/builds/gen.py
 	ninja
+build_picci:
+	cmake -B src/pc
+	cmake --build src/pc
+build_all:
+	$(MAKE)
+	$(MAKE) VERSION=pspeu
+	$(MAKE) VERSION=hd
+	$(MAKE) build_picci
 
 .PHONY: clean
 clean: ##@ clean extracted files, assets, and build artifacts
