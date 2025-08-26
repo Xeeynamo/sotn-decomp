@@ -8,6 +8,9 @@
 #define VERSION_PC
 #endif
 #define VERSION_US
+#ifdef VERSION
+#undef VERSION
+#endif
 #define VERSION "us"
 
 #include <stdio.h>
