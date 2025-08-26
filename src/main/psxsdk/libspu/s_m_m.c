@@ -4,7 +4,7 @@
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libspu/s_m_m", SpuMalloc);
 
-void func_800286E0(void) {
+void _spu_gcSPU(void) {
     s32 i, j;
 
     for (i = 0; i <= D_80033560;) {
@@ -20,11 +20,10 @@ void func_800286E0(void) {
                   _spu_memList[i].size))) {
                 _spu_memList[j].addr = 0x2FFFFFFF;
                 _spu_memList[i].size += _spu_memList[j].size;
-                goto skip;
+                continue;
             }
         }
         i++;
-    skip:
     }
     for (i = 0; i <= D_80033560; i++) {
         if (_spu_memList[i].size == 0) {

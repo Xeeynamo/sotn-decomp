@@ -757,7 +757,7 @@ short SsUtKeyOff(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note) {
 
     if (_snd_ev_flag != 1) {
         _snd_ev_flag = 1;
-        if (voice >= 0 && voice < 24) {
+        if (voice >= 0 && voice < NUM_SPU_CHANNELS) {
             if ((_svm_voice[voice].vabId == vabId) &&
                 (_svm_voice[voice].prog == prog) &&
                 (_svm_voice[voice].tone == tone) &&
@@ -869,15 +869,15 @@ s16 SsUtKeyOnV(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 fine,
     return voice;
 }
 
-s32 SsUtKeyOffV(u16 arg0) {
+s32 SsUtKeyOffV(s16 voice) {
     u16 bitsUpper;
     u16 bitsLower;
     u16 temp2;
 
     if (_snd_ev_flag != 1) {
         _snd_ev_flag = 1;
-        if (arg0 < 24) {
-            _svm_cur.field_0x1a = arg0;
+        if (voice >= 0 && voice < NUM_SPU_CHANNELS) {
+            _svm_cur.field_0x1a = voice;
             temp2 = get_field_0x1a();
             if (temp2 < 0x10) {
                 bitsLower = 1 << temp2;
@@ -913,7 +913,7 @@ s16 SsUtPitchBend(s16 voice, s16 vabId, s16 prog, s16 note, s16 pbend) {
 
 short SsUtChangePitch(short voice, short vabId, short prog, short old_note,
                       short old_fine, short new_note, short new_fine) {
-    if (voice >= 0 && voice < 24) {
+    if (voice >= 0 && voice < NUM_SPU_CHANNELS) {
         if (_svm_voice[voice].vabId == vabId) {
             if (_svm_voice[voice].prog == prog) {
                 if (_svm_voice[voice].note == old_note) {
@@ -971,15 +971,9 @@ s32 SsUtSetDetVVol(s16 arg0, s16 arg1, s16 arg2) {
 }
 
 s16 SsUtGetVVol(s16 vc, s16* voll, s16* volr) {
-    struct Unk* temp_v1;
-    s16 temp1;
-    s16 temp2;
-    s16* temp;
-
     if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
-        temp = &D_80032F10[vc * 8];
-        temp1 = temp[0];
-        temp2 = temp[1];
+        s16 temp1 = D_80032F10[vc * 8 + 0];
+        s16 temp2 = D_80032F10[vc * 8 + 1];
         *voll = temp1 / 129;
         *volr = temp2 / 129;
         return 0;

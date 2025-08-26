@@ -16,5 +16,5 @@ void SpuFree(unsigned long arg0) {
             break;
         }
     }
-    func_800286E0();
+    _spu_gcSPU();
 }
