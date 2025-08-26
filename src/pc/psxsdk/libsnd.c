@@ -135,7 +135,7 @@ struct SeqStruct* _ss_score[34];
 #else
 struct SeqStruct* _ss_score[32]; /* #12 */
 #endif
-s32 VBLANK_MINUS;   /* #13 */
+u32 VBLANK_MINUS;   /* #13 */
 s32 _snd_openflag;  /* #14 */
 s16 _snd_seq_s_max; /* #15 */
 s16 _snd_seq_t_max; /* #16 */
