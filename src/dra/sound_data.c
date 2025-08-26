@@ -13,11 +13,11 @@ SeqData g_SeqInfo[] = {
 };
 
 XaMusicConfig g_XaMusicConfigs[] = {
-#include "gen/xa_music_config.h"
+#include GEN_VERSION(xa_music_config.h)
 };
 
 Unkstruct_800BF554 g_SfxData[] = {
-#include "gen/sfx_config.h"
+#include GEN_VERSION(sfx_config.h)
 };
 
 s8 D_800C097C[] = {0x00, 0x00, 0x3C, 0x00, 0x3C, 0x01, 0x00, 0x00, 0x38, 0x00,
