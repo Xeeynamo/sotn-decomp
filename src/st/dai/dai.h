@@ -43,8 +43,11 @@
 #endif
 
 // Used for cluts, palettes, and in g_EInits
+// Some of the PAL_STAGE_NAME items seem to be used as general palettes
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
+    PAL_STAINED_GLASS_E = 0xE,
+    PAL_STAINED_GLASS_F = 0xF,
     PAL_41EE4_74 = 0x74,
     PAL_BELL_1 = 0x75,
     PAL_BELL_2 = 0x76,
@@ -62,6 +65,8 @@ enum OVL_EXPORT(Palette) {
     PAL_STAGE_NAME_19E = 0x19E,
     PAL_STAGE_NAME_19F = 0x19F,
     PAL_SKELERANG = 0x200,
+    PAL_STAINED_GLASS_204 = 0x204,
+    PAL_STAINED_GLASS_205 = 0x205,
     PAL_CORNER_GUARD = 0x215,
     PAL_BONE_PILLAR = 0x216,
     PAL_BONE_PILLAR_FIRE = 0x221,

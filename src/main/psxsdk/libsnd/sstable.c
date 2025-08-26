@@ -2,8 +2,7 @@
 #include "libsnd_i.h"
 
 void SsSetTableSize(char* table, short s_max, short t_max) {
-    s32 i;
-    s32 j;
+    s32 i, j;
     struct SeqStruct* pTypedTable;
 
     _snd_seq_s_max = s_max;
@@ -14,7 +13,7 @@ void SsSetTableSize(char* table, short s_max, short t_max) {
     }
 
     for (i = 0; i < _snd_seq_s_max; i++) {
-        for (j = 0; _snd_seq_t_max > j; j++) {
+        for (j = 0; j < _snd_seq_t_max; j++) {
             _ss_score[i][j].unk90 = 0;
             _ss_score[i][j].unk3C = 0xFF;
             _ss_score[i][j].unk0 = 0;

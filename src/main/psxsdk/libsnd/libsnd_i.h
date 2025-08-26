@@ -202,7 +202,7 @@ struct SeqStruct {
     u32 unk94;
     u32 unk98;
     s32 unk9C;
-    s32 unkA0;
+    u32 unkA0;
     u32 unkA4;
     s16 padA6;
     s16 padaa;
@@ -375,7 +375,7 @@ struct SndSeqTickEnv {
 
 extern struct SndSeqTickEnv _snd_seq_tick_env;
 
-extern s32 VBLANK_MINUS;
+extern u32 VBLANK_MINUS;
 
 extern s16 _svm_damper;
 
