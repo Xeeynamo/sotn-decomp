@@ -46,10 +46,10 @@ void EntityBonePillarFireBreath(Entity* self);
 void EntityBonePillarDeathParts(Entity* self);
 void EntityBonePillarSpikeBall(Entity* self);
 void func_us_801C3644(Entity* self);
-void func_us_801C3D44(Entity* self);
-void func_us_801C3850(Entity* self);
-void func_us_801C379C(Entity* self);
-void func_us_801C3ED8(Entity* self);
+void EntitySpikes(Entity* self);
+void EntitySpikesParts(Entity* self);
+void EntitySpikesDust(Entity* self);
+void EntitySpikesDamage(Entity* self);
 void EntityBoneHalberd(Entity* self);
 void EntityBoneHalberdNaginata(Entity* self);
 void EntityBoneHalberdParts(Entity* self);
@@ -120,10 +120,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBonePillarDeathParts,
     EntityBonePillarSpikeBall,
     func_us_801C3644,
-    func_us_801C3D44,
-    func_us_801C3850,
-    func_us_801C379C,
-    func_us_801C3ED8,
+    EntitySpikes,
+    EntitySpikesParts,
+    EntitySpikesDust,
+    EntitySpikesDamage,
     EntityBoneHalberd,
     EntityBoneHalberdNaginata,
     EntityBoneHalberdParts,
@@ -159,6 +159,7 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 1};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInit_801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3}; // Unused
+// This seems to be used as a common init and should probably be renamed
 EInit g_EInitStatueBlock = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
 EInit g_EInitPriest = {ANIMSET_OVL(2), 0, 72, PAL_UNK_C9, 5};
 EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_UNK_CA, 5}; // Unused

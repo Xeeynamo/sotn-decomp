@@ -2,15 +2,16 @@
 #include "dai.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_2F);
-extern s32 E_ID(UNK_30);
-extern s32 E_ID(UNK_31);
+extern s32 E_ID(SPIKES_PARTS);
+extern s32 E_ID(SPIKES_DUST);
+extern s32 E_ID(SPIKES_DAMAGE);
 #endif
 
-static u8 anim[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1, 0, 0, 0};
-static u8 D_us_80180EB4[][3] = {{5, 4, 6}, {1, 0, 2}, {9, 8, 10}, {0, 0, 0}};
+static u8 g_animSpikesDust[] = {
+    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1, 0, 0, 0};
+static u8 g_params[][3] = {{5, 4, 6}, {1, 0, 2}, {9, 8, 10}, {0, 0, 0}};
 
-void func_us_801C379C(Entity* self) {
+void EntitySpikesDust(Entity* self) {
     s16 angle;
 
     if (!self->step) {
@@ -18,18 +19,18 @@ void func_us_801C379C(Entity* self) {
         self->zPriority = 160;
         self->animSet = 8;
         self->animCurFrame = 1;
-        self->palette = PAL_OVL(PAL_UNK_161);
-        angle = GetAngleBetweenEntitiesShifted(self, g_Entities);
+        self->palette = PAL_OVL(PAL_SPIKES_DUST);
+        angle = GetAngleBetweenEntitiesShifted(self, &PLAYER);
         SetEntityVelocityFromAngle(angle, 40);
         return;
     }
     MoveEntity();
-    if (!AnimateEntity(anim, self)) {
+    if (!AnimateEntity(g_animSpikesDust, self)) {
         DestroyEntity(self);
     }
 }
 
-void func_us_801C3850(Entity* self) {
+void EntitySpikesParts(Entity* self) {
     Collider collider;
     s16 posX, posY;
     u8 params;
@@ -45,28 +46,28 @@ void func_us_801C3850(Entity* self) {
         self->velocityX = 0;
         self->velocityY = 0;
         self->rotate = 0;
-        self->ext.unk4379C.rotate = 0;
+        self->ext.spikes.rotate = 0;
         params = (self->params & 0xFF00) >> 8;
         if ((params) & 1) {
             self->velocityX = FIX(0.5);
             self->rotate += ROT(1.40625);
-            self->ext.unk4379C.rotate += 8;
+            self->ext.spikes.rotate += 8;
         }
         if ((params) & 2) {
             self->velocityX = FIX(-0.5);
             self->rotate -= ROT(1.40625);
-            self->ext.unk4379C.rotate -= 8;
+            self->ext.spikes.rotate -= 8;
         }
         params = self->params & 0xFF;
         if (params & 2) {
             self->velocityX += FIX(-0.75);
             self->rotate -= ROT(90);
-            self->ext.unk4379C.rotate += 64;
+            self->ext.spikes.rotate += 64;
         }
         if (params & 1) {
             self->velocityX += FIX(0.75);
             self->rotate += ROT(90);
-            self->ext.unk4379C.rotate -= 64;
+            self->ext.spikes.rotate -= 64;
         }
         if (params & 4) {
             self->velocityY += FIX(0.75);
@@ -75,21 +76,21 @@ void func_us_801C3850(Entity* self) {
         if (params & 8) {
             self->velocityY += FIX(-2.5);
         }
-        self->velocityX += FIX(-0.1875) + ((Random() & 3) << 13);
-        self->velocityY += FIX(-0.1875) + ((Random() & 3) << 13);
-        self->ext.unk4379C.rotate += (-24 + (Random() & 3) * 16);
+        self->velocityX += ((Random() & 3) << 13) - FIX(0.1875);
+        self->velocityY += ((Random() & 3) << 13) - FIX(0.1875);
+        self->ext.spikes.rotate += ((Random() & 3) * 16) - 24;
         break;
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.15625);
-        self->rotate += self->ext.unk4379C.rotate;
+        self->rotate += self->ext.spikes.rotate;
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects) {
             if (collider.effects & EFFECT_SOLID) {
                 self->velocityY = -self->velocityY / 2;
-                self->ext.unk4379C.rotate *= 4;
+                self->ext.spikes.rotate *= 4;
             }
             if (collider.effects & EFFECT_UNK_0002) {
                 self->velocityX = -self->velocityX;
@@ -102,112 +103,105 @@ void func_us_801C3850(Entity* self) {
     }
 }
 
-void func_us_801C3B10(u32 tileIdx) {
-    u8 accumulator;
+void SpikesBreak(u32 tileIdx) {
     Entity* entity;
-    s16 posX, posY;
-    s32 count;
-    s32 i, j;
-    u8 collision;
-    u32 collisionIdx;
+    s16 tilePosX, tilePosY;
+    s32 count, tileIdxOffset;
+    u32 tileType;
+    u8 collisionType;
+    u8 params;
 
-    posX = ((tileIdx % 80) * 16) + 8;
-    posY = ((tileIdx / 80) * 16) + 8;
-    accumulator = 0;
+    tilePosX = ((tileIdx % 80) * 16) + 8;
+    tilePosY = ((tileIdx / 80) * 16) + 8;
+    params = 0;
     tileIdx -= 81;
-    for (i = 0; i < 3; tileIdx += 80, i++) {
-        for (j = 0; j < 3; j++) {
-            collisionIdx = (&g_Tilemap.fg[tileIdx])[j];
-            collision = g_Tilemap.tileDef->collision[collisionIdx];
-            if (collision == 3) {
-                accumulator |= D_us_80180EB4[i][j];
+    for (count = 0; count < 3; tileIdx += 80, count++) {
+        for (tileIdxOffset = 0; tileIdxOffset < 3; tileIdxOffset++) {
+            tileType = (&g_Tilemap.fg[tileIdx])[tileIdxOffset];
+            collisionType = g_Tilemap.tileDef->collision[tileType];
+            if (collisionType == 3) {
+                params |= g_params[count][tileIdxOffset];
             }
         }
     }
-    posX -= g_Tilemap.scrollX.i.hi;
-    posY -= g_Tilemap.scrollY.i.hi;
-    for (i = 0; i < 3; i++) {
+    tilePosX -= g_Tilemap.scrollX.i.hi;
+    tilePosY -= g_Tilemap.scrollY.i.hi;
+    for (count = 0; count < 3; count++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromCurrentEntity(E_ID(UNK_2F), entity);
-            entity->posX.i.hi = posX;
-            entity->posY.i.hi = posY;
-            entity->params = accumulator + (i << 8);
+            CreateEntityFromCurrentEntity(E_ID(SPIKES_PARTS), entity);
+            entity->posX.i.hi = tilePosX;
+            entity->posY.i.hi = tilePosY;
+            entity->params = params + (count << 8);
         }
     }
     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (entity != NULL) {
         CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, entity);
-        entity->posX.i.hi = posX;
-        entity->posY.i.hi = posY;
+        entity->posX.i.hi = tilePosX;
+        entity->posY.i.hi = tilePosY;
         entity->params = 16;
     }
     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (entity != NULL) {
-        CreateEntityFromCurrentEntity(E_ID(UNK_30), entity);
-        entity->posX.i.hi = posX;
-        entity->posY.i.hi = posY;
+        CreateEntityFromCurrentEntity(E_ID(SPIKES_DUST), entity);
+        entity->posX.i.hi = tilePosX;
+        entity->posY.i.hi = tilePosY;
     }
 }
 
-void func_us_801C3CE4(u32 arg0) {
-    Tilemap* gTilemap;
-    Entity* gCurrentEntity;
-    s16 scrollX, scrollY;
+void SpikesApplyDamage(u32 tileIdx) {
+    Entity* spikesDamage;
+    s16 tilePosX, tilePosY;
 
-    scrollX = arg0 % 80 * 16 + 8;
-    scrollY = arg0 / 80 * 16 + 8;
-    scrollX -= g_Tilemap.scrollX.i.hi;
-    scrollY -= g_Tilemap.scrollY.i.hi;
+    tilePosX = ((tileIdx % 80) * 16) + 8;
+    tilePosY = ((tileIdx / 80) * 16) + 8;
+    tilePosX -= g_Tilemap.scrollX.i.hi;
+    tilePosY -= g_Tilemap.scrollY.i.hi;
 
-    gCurrentEntity = g_CurrentEntity + 1;
-    gCurrentEntity->posX.i.hi = scrollX;
-    gCurrentEntity->posY.i.hi = scrollY;
+    spikesDamage = g_CurrentEntity + 1;
+    spikesDamage->posX.i.hi = tilePosX;
+    spikesDamage->posY.i.hi = tilePosY;
 }
 
-void func_us_801C3D44(Entity* self) {
-    u8 colType;
-    u32 tileIdx;
-    s32 count;
+void EntitySpikes(Entity* self) {
+    Entity* playerPtr;
     Entity* entity;
-    u32 colTile;
-    Entity* playerPtr = &PLAYER;
-    s16 posY;
+    u32 tileIdx;
+    u32 tileType;
+    u8 collisionType;
+    s32 count;
+    s16 posX, posY;
     s16 scrollX, scrollY;
-    u16 posX;
 
+    playerPtr = &PLAYER;
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_ID(UNK_31), entity);
+        CreateEntityFromCurrentEntity(E_ID(SPIKES_DAMAGE), entity);
         break;
     case 1:
         entity = self + 1;
         entity->posX.i.hi = -16;
         entity->posY.i.hi = -16;
-#ifdef VERSION_PSP
         posX = playerPtr->posX.i.hi;
         posY = playerPtr->posY.i.hi;
-        scrollX = LOH(posX) + g_Tilemap.scrollX.i.hi;
-#else
-        posY = playerPtr->posY.i.hi;
-        scrollX = LOH(playerPtr->posX.i.hi) + g_Tilemap.scrollX.i.hi;
-#endif
+        scrollX = posX + g_Tilemap.scrollX.i.hi;
         scrollY = posY + g_Tilemap.scrollY.i.hi;
         tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 16;
         tileIdx -= 80;
         for (count = 0; count < 3; tileIdx += 80, count++) {
-            colTile = g_Tilemap.fg[tileIdx];
-            colType = g_Tilemap.tileDef->collision[colTile];
-            if (colType > 243 && colType < 248) {
-                // Is there an enum for this?
-                if (g_api.CheckEquipmentItemCount(0xE, 2)) {
-                    g_Tilemap.fg[tileIdx] = 0;
-                    func_us_801C3B10(tileIdx);
+            tileType = g_Tilemap.fg[tileIdx];
+            collisionType = g_Tilemap.tileDef->collision[tileType];
+            if (collisionType > 243 && collisionType < 248) {
+                if (g_api.CheckEquipmentItemCount(
+                        ITEM_SPIKE_BREAKER, EQUIP_ARMOR)) {
+                    g_Tilemap.fg[tileIdx] = NULL;
+                    SpikesBreak(tileIdx);
                     g_api.PlaySfx(SFX_EXPLODE_FAST_A);
                 } else {
-                    func_us_801C3CE4(tileIdx);
+                    SpikesApplyDamage(tileIdx);
                 }
             }
         }
@@ -215,11 +209,10 @@ void func_us_801C3D44(Entity* self) {
     }
 }
 
-void func_us_801C3ED8(Entity* self) {
+void EntitySpikesDamage(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitInteractable);
-        // The elements needed have not yet been defined in the enum
-        self->attackElement = 0x51;
+        self->attackElement = ELEMENT_CUT | ELEMENT_UNK_10 | ELEMENT_UNK_1;
         self->attack = 15;
         self->hitboxState = 1;
         self->hitboxWidth = 4;
