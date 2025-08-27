@@ -3500,14 +3500,14 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ u8 unk80;
+    /* 0x80 */ u8 thrownDisc;
     /* 0x81 */ u8 angle;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ u32 unk84;
     /* 0x88 */ u32 unk88;
     /* 0x8C */ s16 unk8C;
     /* 0x8E */ s16 unk8E;
-    /* 0x90 */ struct Primitive* unk90;
+    /* 0x90 */ struct Primitive* lastPrim;
     /* 0x94 */ s16 unk94;
     /* 0x96 */ s16 unk96;
     /* 0x98 */ u32 unk98;

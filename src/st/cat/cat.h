@@ -57,10 +57,10 @@ enum OVL_EXPORT(Entities) {
     E_UNK_2B,                // func_us_801B8D2C
     E_UNK_2C,                // func_us_801BA7FC
     E_BIG_RED_FIREBALL,      // EntityBigRedFireball
-    E_UNK_2E,                // func_us_801CA2A4
-    E_UNK_2F,                // func_us_801CAF68
-    E_UNK_30,                // func_us_801CBB24
-    E_UNK_31,                // func_us_801CBC10
+    E_DISCUS_LORD,           // EntityDiscusLord
+    E_DISCUS,                // EntityDiscus
+    E_DISCUS_TRAIL,          // EntityDiscusTrail
+    E_DISCUS_CHAIN,          // EntityDiscusChain
     E_UNK_32,                // func_us_801CC2E4
     E_UNK_33,                // func_us_801CCEF0
     E_UNK_34,                // func_us_801CDB50

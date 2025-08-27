@@ -276,6 +276,11 @@ enum {
 // plays every 10 frames while using bible subweapon
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
+// STAGE CAT
+#define SFX_DISCUS_LORD_HEY 0x763
+#define SFX_DISCUS_LORD_DEATH_VORTEX 0x764
+#define SFX_DISCUS_BUZZ 0x765
+
 // STAGE DAI
 // Unknown SFX related to the priest
 #define SFX_UNK_204 0x204
