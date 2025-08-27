@@ -963,8 +963,8 @@
 | np3   | EntityLightningThunder                   |       61 |          8 |        | https://decomp.me/scratch/p80dP | 0.996 |
 | dra   | func_psp_09106008                        |       61 |          9 |        |                                 |       |
 | cat   | func_us_801C379C                         |       61 |         10 |        | https://decomp.me/scratch/EkELI | 0.998 |
-| dai   | func_pspeu_092510C0                      |       61 |         10 |        |                                 |       |
 | dai   | func_us_801C379C                         |       61 |         10 |        | https://decomp.me/scratch/EkELI | 0.998 |
+| dai   | func_pspeu_092510C0                      |       61 |         10 |        |                                 |       |
 | lib   | func_psp_09253D58                        |       61 |         10 |        | https://decomp.me/scratch/nlfs5 | 1.0   |
 | no2   | func_pspeu_0925BAD0                      |       61 |         10 |        | https://decomp.me/scratch/AERwH | 0.979 |
 | no3   | func_pspeu_09237700                      |       61 |         10 |        | https://decomp.me/scratch/pG66O | 0.997 |
