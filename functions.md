@@ -906,7 +906,7 @@
 | maria | func_pspeu_092B20B8                      |       55 |         10 |        |                                 |       |
 | dra   | func_psp_09141488                        |       56 |          2 |        |                                 |       |
 | no2   | func_pspeu_0924F0B8                      |       56 |          4 |        |                                 |       |
-| np3   | func_pspeu_0925BA78                      |       56 |          4 |        | https://decomp.me/scratch/UylKz | 0.977 |
+| np3   | func_pspeu_0925BA78                      |       56 |          4 |        | https://decomp.me/scratch/zy9D1 | 1.0   |
 | no2   | func_pspeu_0924F178                      |       56 |          5 |        |                                 |       |
 | np3   | func_pspeu_0925BB38                      |       56 |          5 |        | https://decomp.me/scratch/YssLz | 0.957 |
 | ric   | func_pspeu_092A94A0                      |       56 |          8 |        |                                 |       |
@@ -1186,7 +1186,7 @@
 | wrp   | WRP_EntityBackgroundBlock                |       75 |          6 |        |                                 |       |
 | dra   | func_psp_09108D40                        |       75 |         10 |        | https://decomp.me/scratch/Po3Mr | 0.93  |
 | ric   | func_pspeu_092A9738                      |       75 |         10 |        |                                 |       |
-| dra   | func_psp_09100870                        |       75 |         14 |        |                                 |       |
+| dra   | func_psp_09100870                        |       75 |         14 |        | https://decomp.me/scratch/UnLM1 | 0.998 |
 | dra   | func_801027C4                            |       76 |          5 | Yes    | https://decomp.me/scratch/e61f5 | 0.94  |
 | dra   | func_psp_0911B820                        |       76 |          8 |        |                                 |       |
 | maria | MarEntityBladeDash                       |       76 |          8 |        |                                 |       |
@@ -1310,7 +1310,7 @@
 | dra   | func_psp_090E4828                        |       89 |          7 |        | https://decomp.me/scratch/hSVjW | 1.0   |
 | dai   | func_pspeu_0924FE60                      |       89 |          7 |        |                                 |       |
 | dra   | TimeAttackController                     |       89 |          8 |        |                                 |       |
-| cat   | func_pspeu_0923BA88                      |       89 |          8 |        |                                 |       |
+| cat   | func_pspeu_0923BA88                      |       89 |          8 |        | https://decomp.me/scratch/fQ9SG | 0.998 |
 | dra   | func_psp_090FF608                        |       89 |         10 |        |                                 |       |
 | dra   | func_psp_0910E378                        |       89 |         11 |        | https://decomp.me/scratch/iwB9u | 1.0   |
 | ric   | func_pspeu_092AA248                      |       89 |         11 |        |                                 |       |
@@ -1571,7 +1571,7 @@
 | dra   | EntityDiveKickAttack                     |      112 |          9 |        |                                 |       |
 | dra   | func_psp_090EC380                        |      112 |          9 |        |                                 |       |
 | no2   | func_pspeu_0924F530                      |      112 |         10 |        |                                 |       |
-| np3   | func_pspeu_0925BEF0                      |      112 |         10 |        |                                 |       |
+| np3   | func_pspeu_0925BEF0                      |      112 |         10 |        | https://decomp.me/scratch/CtPl1 | 1.0   |
 | maria | func_pspeu_092AB940                      |      112 |         11 |        |                                 |       |
 | ric   | func_pspeu_092AD108                      |      112 |         11 |        |                                 |       |
 | lib   | func_us_801B5F84                         |      112 |         18 |        |                                 |       |
@@ -1891,7 +1891,7 @@
 | no4   | func_pspeu_09249FA0                      |      193 |         24 |        | https://decomp.me/scratch/cLBEx | 0.999 |
 | cat   | func_pspeu_09261748                      |      193 |         34 |        |                                 |       |
 | dra   | 7879C.rodata                             |      194 |          0 | Yes    |                                 |       |
-| cat   | func_pspeu_0923BBC8                      |      194 |         14 |        |                                 |       |
+| cat   | func_pspeu_0923BBC8                      |      194 |         14 |        | https://decomp.me/scratch/62K1j | 0.997 |
 | no3   | func_pspeu_0924C7A8                      |      194 |         19 |        | https://decomp.me/scratch/6UFDb | 1.0   |
 | dra   | func_psp_09101AF0                        |      194 |         20 |        | https://decomp.me/scratch/mZPXF | 0.995 |
 | maria | func_pspeu_092B0E50                      |      195 |         32 |        |                                 |       |
@@ -2637,7 +2637,7 @@
 | lib   | func_psp_0924B568                        |     1202 |        112 | Yes    | https://decomp.me/scratch/pxRRV | 0.997 |
 | dra   | InitStatsAndGear                         |     1203 |        134 |        |                                 |       |
 | dra   | func_psp_090F8A08                        |     1203 |        196 |        |                                 |       |
-| cat   | func_pspeu_0923A8B8                      |     1207 |        109 |        | https://decomp.me/scratch/k6qsF | 0.932 |
+| cat   | func_pspeu_0923A8B8                      |     1207 |        109 |        | https://decomp.me/scratch/k6qsF | 0.999 |
 | ric   | RicMain                                  |     1221 |        208 | Yes    | https://decomp.me/scratch/k8pHC | 0.993 |
 | lib   | func_us_801B6F30                         |     1229 |        132 | Yes    |                                 |       |
 | no3   | NO3_EntityRedDoor                        |     1232 |        112 | Yes    | https://decomp.me/scratch/UqXDf | 0.002 |
