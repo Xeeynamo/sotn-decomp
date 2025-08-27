@@ -331,38 +331,65 @@ s32 _spu_t(s32 arg0, ...) {
     switch (arg0) {
     case 2:
         count = va_arg(args, u32);
-        _spu_RXX->rxx.trans_addr = _spu_tsa = count >> _spu_mem_mode_plus;
+        _spu_tsa = count >> _spu_mem_mode_plus;
+#ifdef VERSION_PC
+        write_16(0x1F801DA6, _spu_tsa, __FILE__, __LINE__);
+#else
+        _spu_RXX->rxx.trans_addr = _spu_tsa;
+#endif
         break;
 
     case 1:
         D_80033550 = 0;
         i = 0;
+#ifdef VERSION_PC
+        while (read_16(0x1F801DA6, __FILE__, __LINE__) != _spu_tsa) {
+#else
         while (_spu_RXX->rxx.trans_addr != _spu_tsa) {
+#endif
             if (++i > 0xF00) {
                 return -2;
             }
         }
 
+#ifdef VERSION_PC
+        cnt = read_16(0x1F801DAA, __FILE__, __LINE__);
+        cnt &= ~0x30;
+        cnt |= 0x20;
+        write_16(0x1F801DAA, cnt, __FILE__, __LINE__);
+#else
         cnt = _spu_RXX->rxx.spucnt;
         cnt &= ~0x30;
         cnt |= 0x20;
         _spu_RXX->rxx.spucnt = cnt;
+#endif
         break;
 
     case 0:
         D_80033550 = 1;
 
         i = 0;
+#ifdef VERSION_PC
+        while (read_16(0x1F801DA6, __FILE__, __LINE__) != _spu_tsa) {
+#else
         while (_spu_RXX->rxx.trans_addr != _spu_tsa) {
+#endif
             if (++i > 0xF00) {
                 return -2;
             }
         }
 
+#ifdef VERSION_PC
+        cnt = read_16(0x1F801DAA, __FILE__, __LINE__);
+        cnt &= ~0x30;
+        cnt |= 0x30;
+        write_16(0x1F801DAA, cnt, __FILE__, __LINE__);
+#else
         cnt = _spu_RXX->rxx.spucnt;
         cnt &= ~0x30;
         cnt |= 0x30;
         _spu_RXX->rxx.spucnt = cnt;
+#endif
         break;
 
     case 3:
@@ -373,11 +400,25 @@ s32 _spu_t(s32 arg0, ...) {
         }
 
         i = 0;
+#ifdef VERSION_PC
+        while ((read_16(0x1F801DAA, __FILE__, __LINE__) & 0x30) != ck2) {
+#else
         while ((_spu_RXX->rxx.spucnt & 0x30) != ck2) {
+#endif
             if (++i > 0xF00) {
                 return -2;
             }
         }
+
+#ifdef VERSION_PC
+        // transfer
+        u32* source_address = (u32*)va_arg(args, u32*);
+        count = (s32)va_arg(args, s32);
+        for (i = 0; i < count / 4; i++) {
+            write_dma(source_address[i], __FILE__, __LINE__);
+        }
+        return 0;
+#endif
 
         if (D_80033550 == 1) {
             _spu_FsetDelayR();
