@@ -37,24 +37,22 @@ void SsSetTickMode(long tick_mode) {
             VBLANK_MINUS = 240;
             return;
         case 5:
-            switch (videoMode) {
-            case 1:
-                VBLANK_MINUS = 50;
-                return;
-            default:
-            case 0:
+            if (videoMode == 0) {
                 VBLANK_MINUS = 60;
-                return;
+            } else if (videoMode == 1) {
+                VBLANK_MINUS = 50;
+            } else {
+                VBLANK_MINUS = 60;
             }
             break;
         case 0:
-            if (videoMode != 0) {
-                if (videoMode == 1) {
-                    VBLANK_MINUS = 50;
-                    return;
-                }
+            if (videoMode == 0) {
+                VBLANK_MINUS = 60;
+            } else if (videoMode == 1) {
+                VBLANK_MINUS = 50;
+            } else {
+                VBLANK_MINUS = 60;
             }
-            VBLANK_MINUS = 60;
             return;
         default:
             VBLANK_MINUS = 60;

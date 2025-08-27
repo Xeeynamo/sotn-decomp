@@ -592,8 +592,6 @@ void* InterruptCallback(u8 arg0, void (*arg1)()) { return 0; }
 
 long GetVideoMode(void) { return 0; }
 
-struct SndSeqTickEnv _snd_seq_tick_env;
-
 s32 D_8003355C;
 
 typedef union {
@@ -846,12 +844,10 @@ s32 _spu_mem_mode_unitM;
 s32 _spu_rev_offsetaddr;
 s32 _spu_rev_reserve_wa;
 
-void func_800286E0(void);
+void _spu_gcSPU(void);
 
 #define _spu_AllocBlockNum D_8003355C
 #define _spu_AllocLastNum D_80033560
-
-void _spu_gcSPU() { func_800286E0(); }
 
 long SpuMalloc(long size) {
     long pAllocated;
@@ -982,7 +978,7 @@ out_of_blocks:
     return pAllocated;
 }
 
-void func_800286E0(void) {
+void _spu_gcSPU(void) {
     int last_alloc_idx;        // $v0
     int counter;               // $t1
     SPU_MALLOC* pMemList;      // $t0
