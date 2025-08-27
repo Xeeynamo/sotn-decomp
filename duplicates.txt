@@ -3423,11 +3423,11 @@
 | 1.00 | true     | func_us_801D29F8                    | asm/us/st/no0/matchings/e_plate_lord/func_us_801D29F8.s 
 | 1.00 | true     | func_us_801CDD88                    | asm/us/st/no2/matchings/e_spectral_sword/func_us_801CDD88.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801C379C                    | asm/us/st/dai/matchings/unk_4379C/func_us_801C379C.s 
+| 1.00 | true     | func_us_801C379C                    | asm/us/st/dai/matchings/e_spikes/func_us_801C379C.s 
 | 1.00 | true     | func_us_801B52B4                    | asm/us/st/no2/matchings/352B4/func_us_801B52B4.s 
 | 1.00 | false    | func_us_801B7F2C                    | asm/us/st/cat/nonmatchings/unk_3732C/func_us_801B7F2C.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801C3ED8                    | asm/us/st/dai/matchings/unk_4379C/func_us_801C3ED8.s 
+| 1.00 | true     | func_us_801C3ED8                    | asm/us/st/dai/matchings/e_spikes/func_us_801C3ED8.s 
 | 0.90 | true     | func_us_801B5948                    | asm/us/st/no2/matchings/352B4/func_us_801B5948.s 
 | 0.90 | false    | func_us_801B86B0                    | asm/us/st/cat/nonmatchings/unk_3732C/func_us_801B86B0.s 
 -------------------------------------------------------------------------------
@@ -3973,13 +3973,13 @@
 | 1.00 | true     | func_us_801D6FC8                    | asm/us/st/dai/matchings/e_spectral_sword/func_us_801D6FC8.s 
 | 0.98 | true     | func_us_801CEB08                    | asm/us/st/no2/matchings/e_spectral_sword/func_us_801CEB08.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801C3850                    | asm/us/st/dai/matchings/unk_4379C/func_us_801C3850.s 
+| 1.00 | true     | func_us_801C3850                    | asm/us/st/dai/matchings/e_spikes/func_us_801C3850.s 
 | 1.00 | false    | func_us_801B7FE0                    | asm/us/st/cat/nonmatchings/unk_3732C/func_us_801B7FE0.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801C3B10                    | asm/us/st/dai/matchings/unk_4379C/func_us_801C3B10.s 
+| 1.00 | true     | func_us_801C3B10                    | asm/us/st/dai/matchings/e_spikes/func_us_801C3B10.s 
 | 1.00 | false    | func_us_801B82A0                    | asm/us/st/cat/nonmatchings/unk_3732C/func_us_801B82A0.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801C3D44                    | asm/us/st/dai/matchings/unk_4379C/func_us_801C3D44.s 
+| 1.00 | true     | func_us_801C3D44                    | asm/us/st/dai/matchings/e_spikes/func_us_801C3D44.s 
 | 0.96 | false    | func_us_801B852C                    | asm/us/st/cat/nonmatchings/unk_3732C/func_us_801B852C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | Entity3DBackgroundHouse             | asm/us/st/dre/matchings/e_background_house/Entity3DBackgroundHouse.s 
