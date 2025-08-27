@@ -2,7 +2,9 @@
 #include "common.h"
 #include "libspu_internal.h"
 #include <psxsdk/kernel.h>
+#ifndef VERSION_PC
 #include <psxsdk/stdarg.h>
+#endif
 
 #define WASTE_TIME()                                                           \
     sp4 = 0xD;                                                                 \
