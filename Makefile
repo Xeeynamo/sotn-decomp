@@ -155,8 +155,8 @@ build_pspeu: $(SOTNSTR_APP) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) 
 	ninja
 .PHONY: build_picci
 build_picci:
-	cmake -B src/pc
-	cmake --build src/pc
+	cmake -B build/pc -G Ninja
+	cmake --build build/pc
 .PHONY: build_all
 build_all:
 	$(MAKE)
