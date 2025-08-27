@@ -589,14 +589,14 @@ void EntityDiscus(Entity* self) {
                 LOW(self->ext.discusLord.entity) =
                     -LOW(self->ext.discusLord.entity);
             }
-            if (LOW(self->ext.discusLord.entity) < 0x200000) {
-                LOW(self->ext.discusLord.entity) = 0x200000;
+            if (LOW(self->ext.discusLord.entity) < FIX(32.0)) {
+                LOW(self->ext.discusLord.entity) = FIX(32.0);
             }
-            if (self->ext.discusLord.unkA8 < 0x200000) {
-                self->ext.discusLord.unkA8 = 0x200000;
+            if (self->ext.discusLord.unkA8 < FIX(32.0)) {
+                self->ext.discusLord.unkA8 = FIX(32.0);
             }
-            if (self->ext.discusLord.unkA8 > 0x600000) {
-                self->ext.discusLord.unkA8 = 0x600000;
+            if (self->ext.discusLord.unkA8 > FIX(96.0)) {
+                self->ext.discusLord.unkA8 = FIX(96.0);
             }
 
             LOH(self->ext.discusLord.unkAC) =
@@ -606,7 +606,7 @@ void EntityDiscus(Entity* self) {
             self->velocityY = 0;
             self->ext.discusLord.unk84 =
                 -((LOW(self->ext.discusLord.entity) -
-                   (LOH(self->ext.discusLord.unkAC) * 0x60000)) *
+                   (LOH(self->ext.discusLord.unkAC) * FIX(6.0))) *
                   2 /
                   (LOH(self->ext.discusLord.unkAC) *
                    LOH(self->ext.discusLord.unkAC)));
@@ -637,7 +637,7 @@ void EntityDiscus(Entity* self) {
                 self->velocityX = 0;
                 self->velocityY = 0;
                 self->ext.discusLord.unk84 = 0;
-                self->ext.discusLord.unk88 = 0x4000;
+                self->ext.discusLord.unk88 = FIX(0.25);
                 if (self->facingLeft) {
                     self->ext.discusLord.unk84 = -self->ext.discusLord.unk84;
                 }
@@ -676,7 +676,7 @@ void EntityDiscus(Entity* self) {
                         prim->y2 += collider.unk18;
                     }
                     if (self->velocityY > FIX(-0.5)) {
-                        self->ext.discusLord.unk84 = 0x2000;
+                        self->ext.discusLord.unk84 = FIX(0.125);
                         self->ext.discusLord.unk88 = 0;
                         if (self->facingLeft) {
                             self->ext.discusLord.unk84 =
