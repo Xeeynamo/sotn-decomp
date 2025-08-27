@@ -210,20 +210,18 @@ static int MDEC_out_sync(void) {
 }
 
 int timeout(const char* funcName) {
-    const char* errDma = "\t DMA=(%d,%d), ADDR=(0x%08x->0x%08x)\n";
-    const char* errFifo =
-        "\t FIFO=(%d,%d),BUSY=%d,DREQ=(%d,%d),RGB24=%d,STP=%d\n";
     u32 temp_s0;
 
     printf("%s timeout:\n", funcName);
     temp_s0 = *mdec1;
 
-    printf(errDma, (*d0_chcr >> 0x18) & 1, (*d1_chcr >> 0x18) & 1, *d0_madr,
-           *d1_madr);
+    printf("\t DMA=(%d,%d), ADDR=(0x%08x->0x%08x)\n", (*d0_chcr >> 0x18) & 1,
+           (*d1_chcr >> 0x18) & 1, *d0_madr, *d1_madr);
 
-    printf(errFifo, ~temp_s0 >> 0x1F, (temp_s0 >> 0x1E) & 1,
-           (temp_s0 >> 0x1D) & 1, (temp_s0 >> 0x1C) & 1, (temp_s0 >> 0x1B) & 1,
-           (temp_s0 >> 0x19) & 1, (temp_s0 >> 0x17) & 1);
+    printf("\t FIFO=(%d,%d),BUSY=%d,DREQ=(%d,%d),RGB24=%d,STP=%d\n",
+           ~temp_s0 >> 0x1F, (temp_s0 >> 0x1E) & 1, (temp_s0 >> 0x1D) & 1,
+           (temp_s0 >> 0x1C) & 1, (temp_s0 >> 0x1B) & 1, (temp_s0 >> 0x19) & 1,
+           (temp_s0 >> 0x17) & 1);
 
     *mdec1 = 0x80000000;
     *d0_chcr = 0;
