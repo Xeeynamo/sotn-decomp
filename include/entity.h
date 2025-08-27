@@ -3498,6 +3498,27 @@ typedef struct {
     /* 0xA1 */ u8 largeSlimeDying;
 } ET_Slime;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ u8 unk80;
+    /* 0x81 */ u8 angle;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u32 unk84;
+    /* 0x88 */ u32 unk88;
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 unk8E;
+    /* 0x90 */ struct Primitive* unk90;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
+    /* 0x98 */ u32 unk98;
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ struct Primitive* unkA0;
+    /* 0xA4 */ struct Entity* entity;
+    /* 0xA8 */ s32 unkA8;
+    /* 0xAC */ s32 unkAC;
+} ET_DiscusLord;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3802,6 +3823,7 @@ typedef union { // offset=0x7C
     ET_HuntingGirl huntingGirl;
     ET_Slime slime;
     ET_StainedGlass stainedGlass;
+    ET_DiscusLord discusLord;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
