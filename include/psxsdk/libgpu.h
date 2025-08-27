@@ -606,7 +606,7 @@ extern void FntLoad(int tx, int ty);
 // come across so far use a char*. modern compilers
 // are strict about this type of thing, so this
 // doesn't match the docs.
-int FntPrint(char* id, ...);
+int FntPrint(const char* fmt, ...);
 extern void SetDispMask(int mask);
 extern void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw);
 extern void SetDumpFnt(int id);

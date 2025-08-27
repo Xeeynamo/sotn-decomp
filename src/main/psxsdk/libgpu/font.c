@@ -178,7 +178,7 @@ u_long* FntFlush(s32 id) {
         return -1;                                                             \
     }
 
-int FntPrint(char* id, ...) {
+int FntPrint(const char* id, ...) {
     char buf[0x200];
     va_list args;
     FntStream* font;
