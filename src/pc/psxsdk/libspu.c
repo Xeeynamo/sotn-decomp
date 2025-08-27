@@ -176,7 +176,7 @@ u32 _SpuMallocSeparateTo3(s32 arg0, SPU_MALLOC* arg1, s32 arg2) {
         } else {
             return -1;
         }
-        func_800286E0();
+        _spu_gcSPU();
         var_v0 = temp_addr;
     } else {
         return -1;
@@ -252,7 +252,7 @@ long SpuMallocWithStartAddr(unsigned long addr, long size) {
                 }
                 return var_v0;
             }
-            func_800286E0();
+            _spu_gcSPU();
             list_pos = 0;
         loop_18:
             fmask = 0x0FFFFFFF;
@@ -288,7 +288,7 @@ long SpuMallocWithStartAddr(unsigned long addr, long size) {
             block_29:
                 addr_temp = _SpuMallocSeparateTo3(list_pos, sep_addr, sep_size);
             block_30:
-                func_800286E0();
+                _spu_gcSPU();
                 var_v0 = addr_temp;
                 return var_v0;
             }

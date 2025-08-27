@@ -24,22 +24,16 @@ void _SsUtResolveADSR(u16 arg0, u16 arg1, struct Unk* arg2);
 void _SsSeqPlay(s16, s16);
 void _SsClose(s16);
 
-extern s32 D_80032EF4;
-extern u8 D_80032F01;
-extern u8 D_80032F02;
 void EnterCriticalSection(void);
 void VSyncCallback(void (*func)());
 void ExitCriticalSection(void);
 void* InterruptCallback(u8, void (*)());
-void ResetCallback();
-void SpuInit();
-void _SsInit();
+void ResetCallback(void);
+void SpuInit(void);
+void _SsInit(void);
+void SsSeqCalledTbyT(void);
 void Snd_SetPlayMode(s16, s16, u8, s16);
-void SpuQuit();
-static void _SsStart(s32);
-extern void (*D_80032EF8)();
-extern void (*D_80032EFC)();
-extern s32 D_80032F04;
+void SpuQuit(void);
 
 extern s32 D_8003C74C;
 extern SpuReverbAttr _svm_rattr;
@@ -275,7 +269,6 @@ extern union RegBuf _svm_sreg_buf;
 
 extern unsigned char _svm_sreg_dirty[NUM_SPU_CHANNELS];
 
-extern u16* D_80032F10;
 extern u8 spuVmMaxVoice;
 
 struct SpuVoice {
