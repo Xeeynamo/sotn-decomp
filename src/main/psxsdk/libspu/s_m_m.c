@@ -2,6 +2,7 @@
 #include "common.h"
 #include "libspu_internal.h"
 
+#ifndef VERSION_PC
 long SpuMalloc(long size) {
     s32 var_a0;
     s32 var_s2;
@@ -88,6 +89,7 @@ long SpuMalloc(long size) {
     }
     return -1;
 }
+#endif
 
 void _spu_gcSPU(void) {
     s32 i, j;
