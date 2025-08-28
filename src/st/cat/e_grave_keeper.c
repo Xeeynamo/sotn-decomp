@@ -1,33 +1,33 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cat.h"
 
-extern EInit D_us_8018126C;
-static s16 D_us_801826BC[] = {0, 23, 0, 4, 8, -4, -16, 0};
+extern EInit g_EInitGraveKeeper;
+static s16 sensors_ground[] = {0, 23, 0, 4, 8, -4, -16, 0};
 static s16 D_us_801826CC[] = {0, 23, 8, 0};
 static s16 D_us_801826D4[] = {-12, 16, 0, -16};
-static u8 D_us_801826DC[] = {
+static u8 anim_walk[] = {
     0x0C, 0x01, 0x06, 0x02, 0x0C, 0x03, 0x06, 0x02, 0x00, 0x00, 0x00, 0x00};
-static u8 D_us_801826E8[] = {
+static u8 anim_jump[] = {
     0x01, 0x01, 0x02, 0x06, 0x03, 0x07, 0x01, 0x08, 0xFF, 0x00, 0x00, 0x00};
-static u8 D_us_801826F4[] = {
+static u8 anim_punch[] = {
     0x04, 0x01, 0x04, 0x04, 0x16, 0x05, 0x08, 0x04, 0xFF, 0x00, 0x00, 0x00};
-static u8 D_us_80182700[] = {
+static u8 anim_dash[] = {
     0x08, 0x01, 0x02, 0x02, 0x03, 0x03, 0x02, 0x01, 0x02, 0x08, 0xFF, 0x00};
-static u8 D_us_8018270C[] = {
+static u8 anim_stand[] = {
     0x08, 0x0B, 0x08, 0x0C, 0x08, 0x0D, 0x08, 0x01, 0xFF, 0x00, 0x00, 0x00};
-static u8 D_us_80182718[] = {
+static u8 anim_duck[] = {
     0x01, 0x01, 0x04, 0x0D, 0x04, 0x0C, 0x04, 0x0B, 0xFF, 0x00, 0x00, 0x00};
-static u8 D_us_80182724[] = {
+static u8 anim_kick_land[] = {
     0x03, 0x06, 0x03, 0x07, 0x03, 0x06, 0x04, 0x01, 0xFF, 0x00, 0x00, 0x00};
-static u8 D_us_80182730[] = {0x02, 0x01, 0x02, 0x02, 0x03, 0x03, 0x02, 0x02,
-                             0x08, 0x08, 0x18, 0x09, 0xFF, 0x00, 0x00, 0x00};
-static u8 D_us_80182740[] = {0x06, 0x01, 0x08, 0x0E, 0x06, 0x0F, 0x06, 0x10,
-                             0x06, 0x11, 0x06, 0x12, 0x16, 0x13, 0xFF, 0x00};
+static u8 anim_kick[] = {0x02, 0x01, 0x02, 0x02, 0x03, 0x03, 0x02, 0x02,
+                         0x08, 0x08, 0x18, 0x09, 0xFF, 0x00, 0x00, 0x00};
+static u8 anim_death[] = {0x06, 0x01, 0x08, 0x0E, 0x06, 0x0F, 0x06, 0x10,
+                          0x06, 0x11, 0x06, 0x12, 0x16, 0x13, 0xFF, 0x00};
 
-extern EInit D_us_80181278;
+extern EInit g_EInitGraveKeeperHitbox;
 
 // { hitboxOffX, hitboxOffY, hitboxWidth, hitboxHeight}
-static s16 D_us_80182750[][4] = {
+static s16 hitbox_data[][4] = {
     // all other anim frames
     {0, 0, 0, 0},
     // anim frame 5
@@ -37,23 +37,43 @@ static s16 D_us_80182750[][4] = {
     // anim frame 10
     {-18, 16, 8, 4}};
 
-void func_us_801D121C(void) {
-    Entity* newEntity;
+typedef enum GraveKeeperStep {
+    GRAVE_KEEPER_INIT = 0,
+    GRAVE_KEEPER_CHECK_SENSORS = 1,
+    GRAVE_KEEPER_WAIT_FOR_AGGRO = 2,
+    GRAVE_KEEPER_STAND = 3,
+    GRAVE_KEEPER_WALK_TOWARD = 4,
+    GRAVE_KEEPER_WALK_AWAY = 5,
+    GRAVE_KEEPER_JUMP_LANDED = 6,
+    GRAVE_KEEPER_WALL_JUMP = 7,
+    GRAVE_KEEPER_PUNCH_CLOSE = 8,
+    GRAVE_KEEPER_PUNCH_DASH = 9,
+    GRAVE_KEEPER_JUMP_KICK = 10,
+    GRAVE_KEEPER_GROUND_KICK = 11,
+    GRAVE_KEEPER_DEATH = 12,
+    GRAVE_KEEPER_DUCK = 13
+};
 
-    newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-    if (newEntity != NULL) {
-        CreateEntityFromEntity(E_INTENSE_EXPLOSION, g_CurrentEntity, newEntity);
-        newEntity->posY.i.hi += 0x18;
+// Spawns dust at the Grave Keeper's feet in various scenarios
+// such as standing up from idle, dashing, and landing after jumping
+static void SpawnDustParticles(void) {
+    Entity* dustEntity;
+
+    dustEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+    if (dustEntity != NULL) {
+        CreateEntityFromEntity(
+            E_INTENSE_EXPLOSION, g_CurrentEntity, dustEntity);
+        dustEntity->posY.i.hi += 0x18;
         if (g_CurrentEntity->facingLeft) {
-            newEntity->posX.i.hi -= 8;
+            dustEntity->posX.i.hi -= 8;
         } else {
-            newEntity->posX.i.hi += 8;
+            dustEntity->posX.i.hi += 8;
         }
 
-        newEntity->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
-        newEntity->scaleX = newEntity->scaleY = 0xA0;
-        newEntity->zPriority = g_CurrentEntity->zPriority + 2;
-        newEntity->params = 0x10;
+        dustEntity->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        dustEntity->scaleX = dustEntity->scaleY = 0xA0;
+        dustEntity->zPriority = g_CurrentEntity->zPriority + 2;
+        dustEntity->params = 0x10;
     }
 }
 
@@ -74,8 +94,8 @@ void func_us_801D12E0(u32 resetColliderEffects) {
             g_CurrentEntity->posX.i.hi += collider.unk14;
             g_CurrentEntity->facingLeft ^= 1;
             g_CurrentEntity->ext.graveKeeper.unk82 = 0;
-            g_CurrentEntity->ext.graveKeeper.unk85 = 1;
-            SetStep(10);
+            g_CurrentEntity->ext.graveKeeper.resetColliderEffects = 1;
+            SetStep(GRAVE_KEEPER_JUMP_KICK);
             return;
         }
 
@@ -83,8 +103,8 @@ void func_us_801D12E0(u32 resetColliderEffects) {
         if (g_Tilemap.width < posX) {
             g_CurrentEntity->facingLeft ^= 1;
             g_CurrentEntity->ext.graveKeeper.unk82 = 0;
-            g_CurrentEntity->ext.graveKeeper.unk85 = 1;
-            SetStep(10);
+            g_CurrentEntity->ext.graveKeeper.resetColliderEffects = 1;
+            SetStep(GRAVE_KEEPER_JUMP_KICK);
         }
     } else {
         posX -= 0x10;
@@ -96,8 +116,8 @@ void func_us_801D12E0(u32 resetColliderEffects) {
             g_CurrentEntity->posX.i.hi += collider.unk1C;
             g_CurrentEntity->facingLeft ^= 1;
             g_CurrentEntity->ext.graveKeeper.unk82 = 0;
-            g_CurrentEntity->ext.graveKeeper.unk85 = 1;
-            SetStep(10);
+            g_CurrentEntity->ext.graveKeeper.resetColliderEffects = 1;
+            SetStep(GRAVE_KEEPER_JUMP_KICK);
             return;
         }
 
@@ -105,18 +125,18 @@ void func_us_801D12E0(u32 resetColliderEffects) {
         if (posX < g_Tilemap.x) {
             g_CurrentEntity->facingLeft ^= 1;
             g_CurrentEntity->ext.graveKeeper.unk82 = 0;
-            g_CurrentEntity->ext.graveKeeper.unk85 = 1;
-            SetStep(10);
+            g_CurrentEntity->ext.graveKeeper.resetColliderEffects = 1;
+            SetStep(GRAVE_KEEPER_JUMP_KICK);
         }
     }
 }
 
-void func_us_801D1474(Entity* self) {
+void EntityGraveKeeper(Entity* self) {
     Entity* entity;
     Entity* player;
-    s32 var_s2;
-    s32 var_s1;
-    s32 var_s3;
+    s32 collisionDetected;
+    s32 playerMovingSameDirection;
+    s32 distanceToPlayer;
     s32 var_s5;
     s32 pad[9];
 
@@ -124,52 +144,51 @@ void func_us_801D1474(Entity* self) {
         entity = self + 1;
         DestroyEntity(entity);
         self->hitboxState = 0;
-        SetStep(0xC);
+        SetStep(GRAVE_KEEPER_DEATH);
     }
 
     switch (self->step) {
-    case 0:
-        InitializeEntity(D_us_8018126C);
+    case GRAVE_KEEPER_INIT:
+        InitializeEntity(g_EInitGraveKeeper);
         self->animCurFrame = 0xB;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_UNK_45, entity);
+        CreateEntityFromCurrentEntity(E_GRAVE_KEEPER_HITBOX, entity);
         // fallthrough
-    case 1:
-        if (UnkCollisionFunc3(D_us_801826BC) & 1) {
-            SetStep(2);
-            return;
+    case GRAVE_KEEPER_CHECK_SENSORS:
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
+            SetStep(GRAVE_KEEPER_WAIT_FOR_AGGRO);
         }
         break;
-    case 2:
+    case GRAVE_KEEPER_WAIT_FOR_AGGRO:
         self->animCurFrame = 0xB;
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         self->hitboxHeight = 8;
         self->hitboxOffY = 8;
+        // Sit and wait for player to aggro
         if (GetDistanceToPlayerX() < 0x60) {
-            SetStep(3);
-            return;
+            SetStep(GRAVE_KEEPER_STAND);
         }
         break;
-    case 3:
+    case GRAVE_KEEPER_STAND:
+        // Player has aggro'd, stand and prepare to fight
         if (!self->step_s) {
-            func_us_801D121C();
+            SpawnDustParticles();
             self->step_s++;
         }
-        if (!AnimateEntity(&D_us_8018270C, self)) {
+        if (!AnimateEntity(anim_stand, self)) {
             self->hitboxHeight = 0x14;
             self->hitboxOffY = 0;
-            SetStep(4);
-            return;
+            SetStep(GRAVE_KEEPER_WALK_TOWARD);
         }
         break;
-    case 4:
-    case 5:
+    case GRAVE_KEEPER_WALK_TOWARD:
+    case GRAVE_KEEPER_WALK_AWAY:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
         }
         UnkCollisionFunc2(D_us_801826CC);
-        if (!AnimateEntity(D_us_801826DC, self)) {
+        if (!AnimateEntity(anim_walk, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.graveKeeper.unk82 = 1;
         }
@@ -181,101 +200,96 @@ void func_us_801D1474(Entity* self) {
         }
 
         if (self->step == 5) {
+            // walk backwards away from player
             self->velocityX = -self->velocityX;
         }
 
         switch (self->step) {
-        case 4:
+        case GRAVE_KEEPER_WALK_TOWARD:
+            // If we're too close, walk backwards away from player
             if (GetDistanceToPlayerX() < 0x40) {
-                SetStep(5);
+                SetStep(GRAVE_KEEPER_WALK_AWAY);
             }
 
             // BUG: This may be uninitialised!
-            if (var_s2 & 0x80) {
-                var_s2 = UnkCollisionFunc(D_us_801826D4, 2);
-                if (var_s2 & 2) {
-                    SetStep(7);
+            if (collisionDetected & 0x80) {
+                collisionDetected = UnkCollisionFunc(D_us_801826D4, 2);
+                if (collisionDetected & 2) {
+                    SetStep(GRAVE_KEEPER_WALL_JUMP);
                 }
             }
             break;
-        case 5:
+        case GRAVE_KEEPER_WALK_AWAY:
+            // If we're too far away, walk towards player
             if (GetDistanceToPlayerX() > 0x80) {
-                SetStep(4);
+                SetStep(GRAVE_KEEPER_WALK_TOWARD);
             }
             break;
         }
 
         if (self->facingLeft != (GetSideToPlayer() & 1)) {
             player = &PLAYER;
-            var_s3 = GetDistanceToPlayerX();
+            distanceToPlayer = GetDistanceToPlayerX();
             // BUG: this goes unused
             var_s5 = PLAYER.posY.i.hi - self->posY.i.hi;
-            if ((PLAYER.step_s & 0x40) && var_s3 < 0x30) {
-                if (PLAYER.step == 2) {
+            if ((PLAYER.step_s & 0x40) && distanceToPlayer < 0x30) {
+                if (PLAYER.step == Player_Crouch) {
                     self->ext.graveKeeper.unk82 = 2;
-                    SetStep(7);
-                    return;
+                    SetStep(GRAVE_KEEPER_WALL_JUMP);
+                } else {
+                    // If we're walking away and the player attempts to attack
+                    // close while standing, we can duck the attack
+                    SetStep(GRAVE_KEEPER_DUCK);
                 }
-                SetStep(0xD);
-                return;
-            }
-            if (self->ext.graveKeeper.unk82) {
-                var_s1 = 0;
+            } else if (self->ext.graveKeeper.unk82) {
+                playerMovingSameDirection = 0;
                 self->ext.graveKeeper.unk82 = 0;
                 if (self->facingLeft) {
                     if (player->velocityX <= 0) {
-                        var_s1 |= 1;
+                        playerMovingSameDirection |= 1;
                     }
                 } else if (player->velocityX >= 0) {
-                    var_s1 |= 1;
+                    playerMovingSameDirection |= 1;
                 }
 
-                if (PLAYER.step == 4 && var_s3 > 0x40) {
-                    if (var_s1 & 1) {
+                if (PLAYER.step == Player_Jump && distanceToPlayer > 0x40) {
+                    if (playerMovingSameDirection & 1) {
                         self->ext.graveKeeper.unk82 = 0;
                     } else {
                         self->ext.graveKeeper.unk82 = 1;
                     }
-                    SetStep(10);
-                    return;
-                }
-
-                if (var_s3 < 0x40) {
-                    if (((var_s1 != 0) ^ 1) & 1) {
-                        SetStep(0xB);
-                        return;
+                    SetStep(GRAVE_KEEPER_JUMP_KICK);
+                } else if (distanceToPlayer < 0x40) {
+                    if (!playerMovingSameDirection & 1) {
+                        SetStep(GRAVE_KEEPER_GROUND_KICK);
+                    } else {
+                        SetStep(GRAVE_KEEPER_PUNCH_CLOSE);
                     }
-                    SetStep(8);
-                    return;
-                }
-
-                if (var_s3 < 0x100) {
-                    if (((var_s1 != 0) ^ 1) & 1) {
-                        SetStep(10);
-                        return;
+                } else if (distanceToPlayer < 0x100) {
+                    if (!playerMovingSameDirection & 1) {
+                        SetStep(GRAVE_KEEPER_JUMP_KICK);
+                    } else {
+                        SetStep(GRAVE_KEEPER_PUNCH_DASH);
                     }
-                    SetStep(9);
-                    return;
                 }
             }
         }
         break;
-    case 13:
+    case GRAVE_KEEPER_DUCK:
         if (!self->step_s) {
-            func_us_801D121C();
+            SpawnDustParticles();
             self->step_s++;
         }
         self->hitboxHeight = 8;
         self->hitboxOffY = 8;
-        if (!AnimateEntity(&D_us_80182718, self) && !(PLAYER.step_s & 0x40)) {
-            SetStep(3);
-            return;
+        if (!AnimateEntity(anim_duck, self) && !(PLAYER.step_s & 0x40)) {
+            SetStep(GRAVE_KEEPER_STAND);
         }
         break;
-    case 7:
+    case GRAVE_KEEPER_WALL_JUMP:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(&D_us_801826E8, self)) {
+            if (!AnimateEntity(anim_jump, self)) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(2.0);
                 } else {
@@ -286,55 +300,54 @@ void func_us_801D1474(Entity* self) {
                     self->velocityX = -self->velocityX;
                 }
                 SetSubStep(1);
-                return;
             }
             break;
         case 1:
-            if (UnkCollisionFunc3(D_us_801826BC) & 1) {
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
+                // We've hit the ground so return back to walk phase
                 PlaySfxPositional(SFX_STOMP_HARD_B);
-                SetStep(4);
-                return;
+                SetStep(GRAVE_KEEPER_WALK_TOWARD);
+            } else {
+                func_us_801D12E0(self->ext.graveKeeper.resetColliderEffects);
             }
-            func_us_801D12E0(self->ext.graveKeeper.unk85);
-            return;
         }
         break;
-    case 8:
-        if (!AnimateEntity(D_us_801826F4, self)) {
+    case GRAVE_KEEPER_PUNCH_CLOSE:
+        // Player is close enough to punch from stationary
+        if (!AnimateEntity(anim_punch, self)) {
             if (Random() & 1) {
-                SetStep(4);
+                SetStep(GRAVE_KEEPER_WALK_TOWARD);
             } else {
-                SetStep(0xB);
+                SetStep(GRAVE_KEEPER_GROUND_KICK);
             }
         }
 
         if (self->pose == 2 && !self->poseTimer) {
-            PlaySfxPositional(0x755);
-            return;
+            PlaySfxPositional(SFX_GRAVE_KEEPER_HIYAH);
         }
         break;
-    case 9:
+    case GRAVE_KEEPER_PUNCH_DASH:
+        // Player is farther away, we need to dash punch
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_us_80182700, self)) {
-                PlaySfxPositional(0x755);
+            if (!AnimateEntity(anim_dash, self)) {
+                PlaySfxPositional(SFX_GRAVE_KEEPER_HIYAH);
                 if (self->facingLeft) {
                     self->velocityX = FIX(2.0);
                 } else {
                     self->velocityX = FIX(-2.0);
                 }
-                self->ext.graveKeeper.unk80 = 0x40;
+                self->ext.graveKeeper.walkTimer = 0x40;
                 self->poseTimer = 0;
                 self->pose = 0;
                 self->step_s++;
-                return;
             }
             break;
         case 2:
             self->velocityX -= self->velocityX / 0x20;
-            if (!AnimateEntity(&D_us_801826F4, self)) {
-                SetStep(4);
-                return;
+            if (!AnimateEntity(anim_punch, self)) {
+                SetStep(GRAVE_KEEPER_WALK_TOWARD);
+                break;
             }
             if (self->pose == 2 && !self->poseTimer) {
                 PlaySfxPositional(SFX_WEAPON_SWISH_C);
@@ -344,15 +357,15 @@ void func_us_801D1474(Entity* self) {
             }
             // fallthrough
         case 1:
-            var_s2 = UnkCollisionFunc2(D_us_801826CC);
-            if (var_s2 & 0x80) {
+            collisionDetected = UnkCollisionFunc2(D_us_801826CC);
+            if (collisionDetected & 0x80) {
                 self->ext.graveKeeper.unk82 = 0;
-                SetStep(10);
+                SetStep(GRAVE_KEEPER_JUMP_KICK);
             }
 
-            if (!--self->ext.graveKeeper.unk80) {
-                SetStep(4);
-                return;
+            if (!--self->ext.graveKeeper.walkTimer) {
+                SetStep(GRAVE_KEEPER_WALK_TOWARD);
+                break;
             }
 
             if (GetDistanceToPlayerX() < 0x30) {
@@ -360,17 +373,17 @@ void func_us_801D1474(Entity* self) {
             }
 
             if (self->step_s == 1 && !(g_Timer & 7)) {
-                func_us_801D121C();
-                return;
+                SpawnDustParticles();
             }
         }
         break;
-    case 10:
+    case GRAVE_KEEPER_JUMP_KICK:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_us_801826E8, self)) {
-                PlaySfxPositional(0x754);
+            if (!AnimateEntity(anim_jump, self)) {
+                PlaySfxPositional(SFX_GRAVE_KEEPER_GRAAH);
                 if (self->ext.graveKeeper.unk82 & 1) {
+                    // Player is jumping away, do a bigger jump
                     self->velocityX = FIX(3.0);
                     self->velocityY = FIX(-6.0);
                 } else {
@@ -381,18 +394,18 @@ void func_us_801D1474(Entity* self) {
                 if (!self->facingLeft) {
                     self->velocityX = -self->velocityX;
                 }
-                self->ext.graveKeeper.unk84 = 0;
+                self->ext.graveKeeper.kickHitPlayer = 0;
                 self->step_s++;
-                return;
             }
             break;
         case 1:
             entity = self + 1;
             if (entity->hitFlags & 0x80) {
+                // We hit the player, bounce back slightly and land
                 PlaySfxPositional(SFX_WEAPON_HIT_A);
                 self->velocityX = -self->velocityX / 2;
                 self->velocityY = FIX(-3.0);
-                self->ext.graveKeeper.unk84 = 1;
+                self->ext.graveKeeper.kickHitPlayer = 1;
                 self->step_s++;
             }
             // fallthrough
@@ -403,43 +416,42 @@ void func_us_801D1474(Entity* self) {
             }
 
             if (self->velocityY > FIX(1.0)) {
-                var_s2 = UnkCollisionFunc3(D_us_801826BC);
-                if (var_s2 & 1) {
-                    self->ext.graveKeeper.unk85 = 0;
+                collisionDetected = UnkCollisionFunc3(sensors_ground);
+                if (collisionDetected & 1) {
+                    self->ext.graveKeeper.resetColliderEffects = 0;
                     PlaySfxPositional(SFX_STOMP_HARD_B);
-                    SetStep(6);
-                    return;
+                    SetStep(GRAVE_KEEPER_JUMP_LANDED);
+                    break;
                 }
             } else {
                 MoveEntity();
                 self->velocityY += FIX(0.25);
             }
 
-            if (!self->ext.graveKeeper.unk84) {
-                func_us_801D12E0(self->ext.graveKeeper.unk85);
-                return;
+            if (!self->ext.graveKeeper.kickHitPlayer) {
+                func_us_801D12E0(self->ext.graveKeeper.resetColliderEffects);
             }
             break;
         }
         break;
-    case 6:
+    case GRAVE_KEEPER_JUMP_LANDED:
+        // We've landed back on the ground, return to walk phase
         if (!self->step_s) {
-            func_us_801D121C();
+            SpawnDustParticles();
             self->step_s++;
         }
-        if (!AnimateEntity(D_us_80182724, self)) {
-            SetStep(4);
-            return;
+        if (!AnimateEntity(anim_kick_land, self)) {
+            SetStep(GRAVE_KEEPER_WALK_TOWARD);
         }
         break;
-    case 11:
+    case GRAVE_KEEPER_GROUND_KICK:
         if (!self->step_s) {
             self->velocityX = 0;
             self->velocityY = 0;
             self->step_s++;
         }
         if (self->pose == 4 && !self->poseTimer) {
-            PlaySfxPositional(0x755);
+            PlaySfxPositional(SFX_GRAVE_KEEPER_HIYAH);
             if (self->facingLeft) {
                 self->velocityX = FIX(2.0);
             } else {
@@ -450,28 +462,28 @@ void func_us_801D1474(Entity* self) {
         UnkCollisionFunc2(D_us_801826CC);
         self->velocityX -= self->velocityX / 0x20;
         if (self->velocityX != 0 && !(g_Timer & 7)) {
-            func_us_801D121C();
+            SpawnDustParticles();
         }
 
-        if (!AnimateEntity(D_us_80182730, self)) {
-            SetStep(4);
-            return;
+        if (!AnimateEntity(anim_kick, self)) {
+            SetStep(GRAVE_KEEPER_WALK_TOWARD);
         }
         break;
-    case 12:
+    case GRAVE_KEEPER_DEATH:
+        // Death becomes us
         switch (self->step_s) {
         case 0:
             self->velocityX = FIX(2.0);
             if ((GetSideToPlayer() & 1) ^ 1) {
                 self->velocityX = -self->velocityX;
             }
-            PlaySfxPositional(0x756);
+            PlaySfxPositional(SFX_GRAVE_KEEPER_DEATH);
             self->step_s++;
             break;
         case 1:
             UnkCollisionFunc2(D_us_801826CC);
             self->velocityX -= self->velocityX / 0x20;
-            if (!AnimateEntity(&D_us_80182740, self)) {
+            if (!AnimateEntity(anim_death, self)) {
                 self->step_s++;
             }
             break;
@@ -489,13 +501,13 @@ void func_us_801D1474(Entity* self) {
     }
 }
 
-void func_us_801D1F68(Entity* self) {
+void EntityGraveKeeperHitbox(Entity* self) {
     Entity* parent;
     s32 idx;
     s16* ptr;
 
     if (!self->step_s) {
-        InitializeEntity(D_us_80181278);
+        InitializeEntity(g_EInitGraveKeeperHitbox);
     }
 
     parent = self - 1;
@@ -505,25 +517,25 @@ void func_us_801D1F68(Entity* self) {
 
     switch (parent->animCurFrame) {
     case 5:
-        idx = 1 * LEN(D_us_80182750);
+        idx = 1 * LEN(hitbox_data);
         break;
     case 9:
-        idx = 2 * LEN(D_us_80182750);
+        idx = 2 * LEN(hitbox_data);
         break;
     case 10:
-        idx = 3 * LEN(D_us_80182750);
+        idx = 3 * LEN(hitbox_data);
         break;
     default:
-        idx = 0 * LEN(D_us_80182750);
+        idx = 0 * LEN(hitbox_data);
         break;
     }
 
-    ptr = D_us_80182750[0] + idx;
+    ptr = hitbox_data[0] + idx;
     self->hitboxOffX = *ptr++;
     self->hitboxOffY = *ptr++;
     self->hitboxWidth = *ptr++;
     self->hitboxHeight = *ptr++;
-    if (parent->entityId != 0x44) {
+    if (parent->entityId != E_GRAVE_KEEPER) {
         DestroyEntity(self);
     }
 }
