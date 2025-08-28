@@ -29,7 +29,6 @@ extern u16 D_80033540[];
 extern s32 _spu_addrMode;
 extern s32 _spu_mem_mode;
 extern s32 _spu_mem_mode_unit;
-extern s32 _spu_mem_mode_unitM;
 
 s32 _spu_init(s32 arg0) {
     volatile s32 sp0;
