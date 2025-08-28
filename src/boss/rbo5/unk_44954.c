@@ -5,8 +5,6 @@ extern PlayerState g_Dop;
 
 // n.b.! this file is the same as bo4/unk_45354.c
 
-extern s16 D_us_801D433E;
-
 // may be equivalent func_8010DFF0 in DRA
 void func_us_801C4954(s32 resetAnims, s32 arg1) {
     Primitive* prim;
@@ -25,9 +23,9 @@ void func_us_801C4954(s32 resetAnims, s32 arg1) {
     g_Entities[E_ID_41].ext.disableAfterImage.unk7E = 0xA;
     if (arg1 != 0) {
         if (arg1 < 4) {
-            D_us_801D433E = 4;
+            g_Dop.timers[15] = 4;
         } else {
-            D_us_801D433E = arg1;
+            g_Dop.timers[15] = arg1;
         }
     }
 }

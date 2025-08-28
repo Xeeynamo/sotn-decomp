@@ -1199,7 +1199,9 @@ void DopplegangerStepStone(s32 arg0) {
     }
 }
 
+#ifndef VERSION_PC
 #include "../../get_free_entity.h"
+#endif
 
 // this is the same as unionD_800ACFB4 in DRA
 typedef union {
@@ -1553,7 +1555,7 @@ void func_us_801C9624(void) {
                 DestroyEntity(g_CurrentEntity);
             } else {
                 if (entity->flags & FLAG_UNK_20000000) {
-                    UpdateAnim(0, &D_us_801813F8[0].af);
+                    OVL_EXPORT(UpdateAnim)(0, &D_us_801813F8[0].af);
                 }
                 entity->flags |= FLAG_NOT_AN_ENEMY;
             }
@@ -4519,7 +4521,7 @@ void EntitySubwpnReboundStone(Entity* self) {
     }
 }
 
-s32 UpdateUnarmedAnim(s8*, AnimationFrame*);
+s32 OVL_EXPORT(UpdateUnarmedAnim)(s8*, AnimationFrame*);
 extern EInit D_us_80180454;
 extern EInit D_us_80180460;
 extern DopWeaponAnimation D_us_80184304[];
@@ -4561,7 +4563,7 @@ void DopplegangerUnarmedAttack(Entity* self) {
     if (DOPPLEGANGER.poseTimer == 1 && DOPPLEGANGER.pose == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
     }
-    if (UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
+    if (OVL_EXPORT(UpdateUnarmedAnim)(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
     }
 }
