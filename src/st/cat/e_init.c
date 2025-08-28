@@ -46,10 +46,10 @@ void func_us_801BA164(Entity* self);
 void func_us_801B8D2C(Entity* self);
 void func_us_801BA7FC(Entity* self);
 void EntityBigRedFireball(Entity* self);
-void func_us_801CA2A4(Entity* self);
-void func_us_801CAF68(Entity* self);
-void func_us_801CBB24(Entity* self);
-void func_us_801CBC10(Entity* self);
+void EntityDiscusLord(Entity* self);
+void EntityDiscus(Entity* self);
+void EntityDiscusTrail(Entity* self);
+void EntityDiscusChain(Entity* self);
 void func_us_801CC2E4(Entity* self);
 void func_us_801CCEF0(Entity* self);
 void func_us_801CDB50(Entity* self);
@@ -132,10 +132,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B8D2C,
     func_us_801BA7FC,
     EntityBigRedFireball,
-    func_us_801CA2A4,
-    func_us_801CAF68,
-    func_us_801CBB24,
-    func_us_801CBC10,
+    EntityDiscusLord,
+    EntityDiscus,
+    EntityDiscusTrail,
+    EntityDiscusChain,
     func_us_801CC2E4,
     func_us_801CCEF0,
     func_us_801CDB50,
@@ -198,8 +198,8 @@ EInit D_us_801811E8 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x005};
 EInit D_us_801811F4 = {ANIMSET_OVL(0x01), 0x13, 0x00, 0x0000, 0x000};
 
 // Discus Lord
-EInit D_us_80181200 = {ANIMSET_OVL(0x04), 0x01, 0x49, 0x0224, 0x04D};
-EInit D_us_8018120C = {ANIMSET_OVL(0x04), 0x10, 0x49, 0x0224, 0x04E};
+EInit g_EInitDiscusLord = {ANIMSET_OVL(0x04), 0x01, 0x49, 0x0224, 0x04D};
+EInit g_EInitDiscus = {ANIMSET_OVL(0x04), 0x10, 0x49, 0x0224, 0x04E};
 
 // Hellfire Beast
 EInit D_us_80181218 = {ANIMSET_OVL(0x04), 0x19, 0x49, 0x0224, 0x047};
