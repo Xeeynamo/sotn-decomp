@@ -42,31 +42,31 @@ void func_us_801B5368(Entity* self) {
         self->velocityX = 0;
         self->velocityY = 0;
         self->rotate = 0;
-        self->ext.et_801B5368.unk80 = 0;
+        self->ext.spikes.rotate = 0;
         params = self->params;
 
         if (params & 1) {
             self->velocityX = FIX(0.5);
             self->rotate += 0x10;
-            self->ext.et_801B5368.unk80 += 8;
+            self->ext.spikes.rotate += 8;
         }
 
         if (params & 2) {
             self->velocityX = FIX(-0.5);
             self->rotate -= 0x10;
-            self->ext.et_801B5368.unk80 -= 8;
+            self->ext.spikes.rotate -= 8;
         }
 
         self->velocityY += FIX(0.75);
         self->velocityX += ((Random() & 3) << 0xD) - FIX(0.1875);
         self->velocityY += ((Random() & 3) << 0xD) - FIX(0.1875);
-        self->ext.et_801B5368.unk80 += ((Random() & 3) * 0x10) - 0x18;
+        self->ext.spikes.rotate += ((Random() & 3) * 0x10) - 0x18;
         break;
 
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.15625);
-        self->rotate += self->ext.et_801B5368.unk80;
+        self->rotate += self->ext.spikes.rotate;
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
         g_api.CheckCollision(posX, posY, &collider, 0);
@@ -74,7 +74,7 @@ void func_us_801B5368(Entity* self) {
         if (collider.effects) {
             if (collider.effects & EFFECT_SOLID) {
                 self->velocityY = -self->velocityY / 2;
-                self->ext.et_801B5368.unk80 *= 4;
+                self->ext.spikes.rotate *= 4;
             }
             if (collider.effects & EFFECT_UNK_0002) {
                 self->velocityX = -self->velocityX;
