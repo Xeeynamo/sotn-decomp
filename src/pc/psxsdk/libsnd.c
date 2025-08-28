@@ -1155,6 +1155,49 @@ s32 D_800330F8[256] = {0};
 s32 D_80033558;
 volatile u32* D_80033554;
 
+void write_dma(u32 data, char* file, int line);
+
+// dma function, reimplement to avoid pulling in dma controller
+int _spu_t(int mode, ...) {
+    va_list args;
+    va_start(args, mode);
+    s32 spu_ram_dest_addr;
+    u32* source_address;
+    s32 count;
+    s32 i;
+
+    switch (mode) {
+    case 0:
+    case 1:
+        write_16(0x1F801DAA, (read_16(0x1F801DAA) & ~0x30) | 0x20, __FILE__,
+                 __LINE__);
+        return 0;
+
+    case 2:
+        // set destination address
+        spu_ram_dest_addr = va_arg(args, u32) >> _spu_mem_mode_plus;
+        _spu_tsa = spu_ram_dest_addr;
+
+        // dma destination address in spu ram
+        write_16(0x1f801da6, spu_ram_dest_addr, __FILE__, __LINE__);
+        return 0;
+
+    case 3:
+        // transfer
+        source_address = (u32*)va_arg(args, u32*);
+        count = (s32)va_arg(args, s32);
+        for (i = 0; i < count / 4; i++) {
+            write_dma(source_address[i], __FILE__, __LINE__);
+        }
+
+        return 0;
+        break;
+    }
+
+    assert(false);
+    return 0;
+}
+
 void _SsSndCrescendo(s16 arg0, s16 arg1) { assert(false); }
 void _SsSndDecrescendo(s16 arg0, s16 arg1) { assert(false); }
 
