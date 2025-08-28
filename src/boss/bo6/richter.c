@@ -543,15 +543,17 @@ void func_us_801B6998(void) {
     case 0:
         break;
     case 10:
-        if ((g_CastleFlags[SHAFT_ORB_DEFEATED] == 0) && (g_DemoMode == Demo_None)) {
+        if ((g_CastleFlags[SHAFT_ORB_DEFEATED] == 0) &&
+            (g_DemoMode == Demo_None)) {
             g_unkGraphicsStruct.pauseEnemies = true;
             D_us_801D11C0 = 0;
         }
         D_us_80181278++;
         break;
     case 11:
-        if (++D_us_801D11C0 >1) {
-            if ((g_CastleFlags[SHAFT_ORB_DEFEATED] == 0) && (g_DemoMode == Demo_None)) {
+        if (++D_us_801D11C0 > 1) {
+            if ((g_CastleFlags[SHAFT_ORB_DEFEATED] == 0) &&
+                (g_DemoMode == Demo_None)) {
                 g_unkGraphicsStruct.unk20 = 0xFF;
             }
             D_us_80181278++;
@@ -570,7 +572,6 @@ void func_us_801B6998(void) {
         break;
     }
 }
-
 
 extern EInit D_us_80180400; //
 extern s32 D_us_801CF3E0;
