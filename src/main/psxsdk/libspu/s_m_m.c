@@ -33,7 +33,8 @@ long SpuMalloc(long size) {
 
         for (; i < D_8003355C; i++) {
             if (_spu_memList[i].addr & 0x40000000 ||
-                (_spu_memList[i].addr & 0x80000000 && _spu_memList[i].size >= size)) {
+                (_spu_memList[i].addr & 0x80000000 &&
+                 _spu_memList[i].size >= size)) {
                 var_s2 = i;
                 break;
             }
@@ -49,7 +50,9 @@ long SpuMalloc(long size) {
 
             // Why the volatile?
             _spu_memList[next].addr =
-                (*(volatile int*)&_spu_memList[var_s2].addr & 0x0FFFFFFF) + size | 0x40000000;
+                (*(volatile int*)&_spu_memList[var_s2].addr & 0x0FFFFFFF) +
+                    size |
+                0x40000000;
             _spu_memList[next].size = _spu_memList[var_s2].size - size;
 
             _spu_memList[var_s2].addr &= 0x0FFFFFFF;
