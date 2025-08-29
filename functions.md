@@ -267,7 +267,7 @@
 | dra   | func_psp_090F6A50                        |       23 |          4 |        |                                 |       |
 | dra   | 63C08.rodata                             |       24 |          0 | Yes    |                                 |       |
 | ric   | pl_subweapon_cross.rodata                |       24 |          0 | Yes    |                                 |       |
-| cat   | unk_6060.rodata                          |       24 |          0 | Yes    |                                 |       |
+| cat   | e_grave_keeper.rodata                    |       24 |          0 | Yes    |                                 |       |
 | no3   | e_warg.rodata                            |       24 |          0 | Yes    |                                 |       |
 | no4   | e_spear_guard.rodata                     |       24 |          0 | Yes    |                                 |       |
 | np3   | jtbl_pspeu_09291B10                      |       24 |          0 | Yes    |                                 |       |
@@ -1380,7 +1380,7 @@
 | dra   | 7E4BC.rodata                             |       96 |          0 | Yes    |                                 |       |
 | no4   | EntitySkeletonApePunch                   |       96 |          6 |        |                                 |       |
 | dra   | func_80123A60                            |       96 |         11 |        | https://decomp.me/scratch/Lfdzl | 0.994 |
-| cat   | UnkCollisionFunc                         |       96 |         11 |        | https://decomp.me/scratch/g7u6C | 0.999 |
+| cat   | func_pspeu_092530D8                      |       96 |         11 |        |                                 |       |
 | dai   | func_pspeu_0924E288                      |       96 |         11 |        |                                 |       |
 | lib   | func_psp_0924FCB0                        |       96 |         11 |        |                                 |       |
 | no3   | func_pspeu_092607D8                      |       96 |         11 |        |                                 |       |
@@ -1463,7 +1463,7 @@
 | no3   | EntityHeartRoomSwitch                    |      102 |         11 |        | https://decomp.me/scratch/iwM1G | 0.92  |
 | np3   | EntityHeartRoomSwitch                    |      102 |         11 |        | https://decomp.me/scratch/iwM1G | 0.92  |
 | dra   | func_psp_090F1A08                        |      102 |         12 |        |                                 |       |
-| cat   | func_pspeu_0923EA58                      |      102 |         12 |        |                                 |       |
+| cat   | EntityGraveKeeperHitbox                  |      102 |         12 |        |                                 |       |
 | no3   | EntityDeathScytheShadow                  |      102 |         13 |        | https://decomp.me/scratch/WWVqj | 0.957 |
 | dra   | func_psp_09144038                        |      103 |          2 |        |                                 |       |
 | dra   | func_psp_09125DB8                        |      103 |          4 |        | https://decomp.me/scratch/ezh6e | 0.944 |
@@ -1807,7 +1807,7 @@
 | dra   | func_psp_09139068                        |      166 |         16 |        |                                 |       |
 | dra   | func_psp_090E81A8                        |      166 |         19 |        | https://decomp.me/scratch/51Yrl | 0.722 |
 | st0   | EntityDraculaMeteorball                  |      166 |         24 |        | https://decomp.me/scratch/w4afZ | 0.995 |
-| cat   | func_pspeu_0923D7C0                      |      167 |         17 |        |                                 |       |
+| cat   | func_pspeu_0923D7C0                      |      167 |         17 |        | https://decomp.me/scratch/ZwcxR | 0.999 |
 | dra   | func_psp_09105DA0                        |      167 |         27 |        |                                 |       |
 | maria | func_pspeu_092B2DA0                      |      168 |         15 |        |                                 |       |
 | ric   | func_pspeu_092B07A8                      |      168 |         15 |        |                                 |       |
@@ -2614,7 +2614,7 @@
 | np3   | func_pspeu_0925F9D0                      |     1123 |        182 |        | https://decomp.me/scratch/oBPut | 0.995 |
 | cat   | EntityDiscusLord                         |     1126 |        161 |        |                                 |       |
 | cat   | EntityWereskeleton                       |     1129 |        174 |        |                                 |       |
-| cat   | func_pspeu_0923DA30                      |     1139 |        210 | Yes    |                                 |       |
+| cat   | EntityGraveKeeper                        |     1139 |        210 | Yes    |                                 |       |
 | np3   | EntitySlogra                             |     1154 |        213 |        | https://decomp.me/scratch/hCcGP | 0.991 |
 | st0   | EntityCutscenePhotograph                 |     1164 |         88 | Yes    | https://decomp.me/scratch/TIsgi | 1.0   |
 | np3   | EntityRelicOrb                           |     1166 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
