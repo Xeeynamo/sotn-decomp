@@ -130,67 +130,67 @@ void GetSavePalette(u8* dst, s32 palIdx) {
 }
 
 u8 memcard_0[] = {
-#include "../dra/gen/memcard_0.h"
+#include "../dra/gen/psp/memcard_0.h"
 };
 
 u8 memcard_1[] = {
-#include "../dra/gen/memcard_1.h"
+#include "../dra/gen/psp/memcard_1.h"
 };
 
 u8 memcard_2[] = {
-#include "../dra/gen/memcard_2.h"
+#include "../dra/gen/psp/memcard_2.h"
 };
 
 u8 memcard_3[] = {
-#include "../dra/gen/memcard_3.h"
+#include "../dra/gen/psp/memcard_3.h"
 };
 
 u8 memcard_4[] = {
-#include "../dra/gen/memcard_4.h"
+#include "../dra/gen/psp/memcard_4.h"
 };
 
 u8 memcard_5[] = {
-#include "../dra/gen/memcard_5.h"
+#include "../dra/gen/psp/memcard_5.h"
 };
 
 u8 memcard_6[] = {
-#include "../dra/gen/memcard_6.h"
+#include "../dra/gen/psp/memcard_6.h"
 };
 
 u8 memcard_7[] = {
-#include "../dra/gen/memcard_7.h"
+#include "../dra/gen/psp/memcard_7.h"
 };
 
 u8 memcard_8[] = {
-#include "../dra/gen/memcard_8.h"
+#include "../dra/gen/psp/memcard_8.h"
 };
 
 u8 memcard_9[] = {
-#include "../dra/gen/memcard_9.h"
+#include "../dra/gen/psp/memcard_9.h"
 };
 
 u8 memcard_10[] = {
-#include "../dra/gen/memcard_10.h"
+#include "../dra/gen/psp/memcard_10.h"
 };
 
 u8 memcard_11[] = {
-#include "../dra/gen/memcard_11.h"
+#include "../dra/gen/psp/memcard_11.h"
 };
 
 u8 memcard_12[] = {
-#include "../dra/gen/memcard_12.h"
+#include "../dra/gen/psp/memcard_12.h"
 };
 
 u8 memcard_13[] = {
-#include "../dra/gen/memcard_13.h"
+#include "../dra/gen/psp/memcard_13.h"
 };
 
 u8 memcard_14[] = {
-#include "../dra/gen/memcard_14.h"
+#include "../dra/gen/psp/memcard_14.h"
 };
 
 u8 memcard_15[] = {
-#include "../dra/gen/memcard_15.h"
+#include "../dra/gen/psp/memcard_15.h"
 };
 
 u8* g_saveIconTexture[] = {
