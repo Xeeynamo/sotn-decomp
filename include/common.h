@@ -70,9 +70,11 @@
 #ifndef _MSC_VER
 #define STATIC_ASSERT _Static_assert
 #define PACKED __attribute__((packed))
+#define UNUSED __attribute__((unused))
 #else
 #define STATIC_ASSERT(x, ...)
 #define PACKED
+#define UNUSED
 #endif
 #define ASSERT(x) assert(x)
 
@@ -80,12 +82,12 @@
 #define ASSERT(x)
 #define STATIC_ASSERT(x, y)
 #define PACKED
-
+#define UNUSED
 #else
 #define ASSERT(x)
 #define STATIC_ASSERT(x, ...)
 #define PACKED
-
+#define UNUSED
 #endif
 
 #define LOH(x) (*(s16*)&(x))

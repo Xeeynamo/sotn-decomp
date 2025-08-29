@@ -440,7 +440,7 @@ void EntityDoppleganger40(void) {
         g_Dop.timers[15] = 4;
         DOPPLEGANGER.palette = PAL_OVL(0x200);
     }
-    PlayAnimation(D_us_80183CFC, D_us_80183D40);
+    OVL_EXPORT(PlayAnimation)(D_us_80183CFC, D_us_80183D40);
     if (g_Dop.status & PLAYER_STATUS_DEAD) {
         if (DOPPLEGANGER.poseTimer < 0) {
             DOPPLEGANGER.animCurFrame |= 0x8000;
@@ -455,7 +455,7 @@ void EntityDoppleganger40(void) {
             DOPPLEGANGER.hitboxState = 0;
         }
     }
-    func_8010D59C();
+    OVL_EXPORT(func_8010D59C)();
     vram_flag = g_Dop.vram_flag;
     posX = DOPPLEGANGER.posX.val;
     posY = DOPPLEGANGER.posY.val;
@@ -495,7 +495,7 @@ void EntityDoppleganger40(void) {
     }
 
     g_Dop.unk04 = vram_flag;
-    func_8010D800();
+    OVL_EXPORT(func_8010D800)();
 
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(2)) {
         parts = D_us_801B1674[DOPPLEGANGER.animCurFrame & 0x7FFF];
