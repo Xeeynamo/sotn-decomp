@@ -68,8 +68,8 @@ void func_us_801D08A8(Entity* self);
 void func_us_801D0B38(Entity* self);
 void func_us_801D0F10(Entity* self);
 void func_us_801BB4CC(Entity* self);
-void func_us_801D1474(Entity* self);
-void func_us_801D1F68(Entity* self);
+void EntityGraveKeeper(Entity* self);
+void EntityGraveKeeperHitbox(Entity* self);
 void EntityTombstone(Entity* self);
 void EntityGremlin(Entity* self);
 void EntityGremlinEffect(Entity* self);
@@ -154,8 +154,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D0B38,
     func_us_801D0F10,
     func_us_801BB4CC,
-    func_us_801D1474,
-    func_us_801D1F68,
+    EntityGraveKeeper,
+    EntityGraveKeeperHitbox,
     EntityTombstone,
     EntityGremlin,
     EntityGremlinEffect,
@@ -213,8 +213,8 @@ EInit D_us_80181254 = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x005};
 EInit D_us_80181260 = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x084};
 
 // Grave Keeper
-EInit D_us_8018126C = {ANIMSET_OVL(0x09), 0x01, 0x4D, 0x0236, 0x06F};
-EInit D_us_80181278 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x070};
+EInit g_EInitGraveKeeper = {ANIMSET_OVL(0x09), 0x01, 0x4D, 0x0236, 0x06F};
+EInit g_EInitGraveKeeperHitbox = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x070};
 
 // Tombstone
 EInit g_EInitTombstone = {ANIMSET_OVL(0x09), 0x15, 0x4D, 0x0236, 0x071};

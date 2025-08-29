@@ -3514,6 +3514,14 @@ typedef struct {
     /* 0xAC */ s32 unkAC;
 } ET_DiscusLord;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 walkTimer;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u8 kickHitPlayer;
+    /* 0x85 */ u8 resetColliderEffects;
+} ET_GraveKeeper;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3818,6 +3826,7 @@ typedef union { // offset=0x7C
     ET_Slime slime;
     ET_StainedGlass stainedGlass;
     ET_DiscusLord discusLord;
+    ET_GraveKeeper graveKeeper;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
