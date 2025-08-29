@@ -7,7 +7,6 @@ s32 _SpuIsInAllocateArea_(u32);
 extern s32 D_800330F8[];
 extern s32 _spu_rev_startaddr[];
 extern s32 _spu_EVdma;
-extern s32 _spu_mem_mode_plus;
 extern s32 _spu_transMode;
 
 s32 SpuClearReverbWorkArea(s32 rev_mode) {
