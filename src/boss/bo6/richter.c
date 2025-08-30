@@ -28,7 +28,7 @@ extern s32 D_us_801CF3D0;
 extern s32 D_us_801CF3D8;
 extern s32 D_us_801CF3E0;
 extern s32 D_us_801CF3E4;
-extern s32 D_us_801D11C4;
+extern s32 g_CutsceneFlags;
 
 extern s32 D_us_801D169C; // padSim + 0xB0
 static void func_us_801B5A14(s32 step);
@@ -475,7 +475,7 @@ void RichterThinking(void) {
             D_us_801CF3D0 = 0x40;
             D_us_801CF3CC = 1;
         } else {
-            if ((D_us_801D11C4 & 2) || (g_CastleFlags[SHAFT_ORB_DEFEATED]) ||
+            if ((g_CutsceneFlags & 2) || (g_CastleFlags[SHAFT_ORB_DEFEATED]) ||
                 (g_DemoMode != Demo_None)) {
                 if (!--D_us_801CF3D0) {
                     OVL_EXPORT(RicCreateEntFactoryFromEntity)
@@ -560,12 +560,12 @@ void func_us_801B6998(void) {
         }
         break;
     case 20:
-        if (D_us_801D11C4 & 4) {
+        if (g_CutsceneFlags & 4) {
             D_us_80181278 = 0x1E;
         }
         break;
     case 40:
-        D_us_801D11C4 |= 8;
+        g_CutsceneFlags |= 8;
         break;
     case 50:
     default:
