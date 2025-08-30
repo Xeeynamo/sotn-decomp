@@ -41,7 +41,6 @@ extern s8 _svm_auto_kof_mode;
 static inline u16 get_field_0x1a() { return _svm_cur.field_0x1a; }
 
 u8 SpuVmAlloc(s32 arg0) {
-    s16 temp_a2;
     u8 var_t2;
     u16 var_t0;
     u16 var_t3;
@@ -49,48 +48,44 @@ u8 SpuVmAlloc(s32 arg0) {
     u8 channel;
     u8 var_t1;
     u16 prior;
-    char temp;
 
-    channel = 0x63;
-    var_t3 = 0xFFFF;
+    channel = 99;
+    var_t3 = -1;
     var_t2 = 0;
     var_t0 = 0;
     prior = _svm_cur.field_F_prior;
-    var_t1 = 0x63;
+    var_t1 = 99;
     for (cur_voice = 0; cur_voice < spuVmMaxVoice; cur_voice++) {
         if (_svm_voice[cur_voice].unk1b == 0 &&
             _svm_voice[cur_voice].unk6 == 0) {
             channel = cur_voice;
             break;
-        } else {
-            temp_a2 = _svm_voice[cur_voice].unk18;
-            if (temp_a2 < prior) {
-                prior = temp_a2;
-                var_t1 = cur_voice;
-                var_t3 = _svm_voice[cur_voice].unk6;
+        }
+        if (_svm_voice[cur_voice].unk18 < prior) {
+            prior = _svm_voice[cur_voice].unk18;
+            var_t1 = cur_voice;
+            var_t3 = _svm_voice[cur_voice].unk6;
+            var_t0 = _svm_voice[cur_voice].unk2;
+            var_t2 = 1;
+        } else if (_svm_voice[cur_voice].unk18 == prior) {
+            var_t2 += 1;
+            if (_svm_voice[cur_voice].unk6 < var_t3) {
                 var_t0 = _svm_voice[cur_voice].unk2;
-                var_t2 = 1;
-            } else {
-                if (temp_a2 == prior) {
-                    var_t2 += 1;
-                    if (_svm_voice[cur_voice].unk6 < var_t3) {
-                        var_t0 = _svm_voice[cur_voice].unk2;
-                        var_t3 = _svm_voice[cur_voice].unk6;
-                        var_t1 = cur_voice;
-                    } else if (_svm_voice[cur_voice].unk6 == var_t3) {
-                        if (var_t0 < _svm_voice[cur_voice].unk2) {
-                            var_t0 = _svm_voice[cur_voice].unk2;
-                            var_t1 = cur_voice;
-                        }
-                    }
+                var_t3 = _svm_voice[cur_voice].unk6;
+                var_t1 = cur_voice;
+            } else if (_svm_voice[cur_voice].unk6 == var_t3) {
+                if (var_t0 < _svm_voice[cur_voice].unk2) {
+                    var_t0 = _svm_voice[cur_voice].unk2;
+                    var_t1 = cur_voice;
                 }
             }
         }
     }
-    if (channel == 0x63) {
-        channel = var_t1;
-        if (!var_t2) {
+    if (channel == 99) {
+        if (var_t2 == 0) {
             channel = spuVmMaxVoice;
+        } else {
+            channel = var_t1;
         }
     }
     if (channel < spuVmMaxVoice) {

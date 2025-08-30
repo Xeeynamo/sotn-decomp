@@ -19,6 +19,7 @@ extern s32 D_8003355C;
 extern s32 D_80033560;
 extern s8* D_80033564;
 extern s32 _spu_mem_mode_plus;
+extern s32 _spu_mem_mode_unitM;
 
 typedef struct tagSpuMalloc {
     u32 addr;
