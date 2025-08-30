@@ -99,6 +99,7 @@ EntityStageNamePopup = 0x801B32EC;
 EntitySoulStealOrb = 0x801B3F70;
 EntityEnemyBlood = 0x801B4304;
 EntityRoomForeground = 0x801B47B4;
+BottomCornerText = 0x801B48A0;
 BO6_CheckBladeDashInput = 0x801B4FA4;
 BO6_CheckHighJumpInput = 0x801B502C;
 BO6_RicMain = 0x801B50BC;
