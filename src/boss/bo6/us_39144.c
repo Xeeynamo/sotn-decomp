@@ -144,7 +144,6 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashHydroStorm);
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_DebugShowWaitInfo);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_DebugInputWait);
-
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C310C);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", WarpBackgroundBrightness);

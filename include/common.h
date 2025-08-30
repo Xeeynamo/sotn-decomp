@@ -52,7 +52,6 @@
 #define UNUSED
 #endif
 #define ASSERT(x) assert(x)
-
 #elif defined(VERSION_PSP)
 #define ASSERT(x)
 #define STATIC_ASSERT(x, y)

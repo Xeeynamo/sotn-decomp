@@ -6,9 +6,9 @@ static u8 entityLockCameraHitbox[] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x20,
 };
 
-static u8 entityLockCameraData[8] = {0};
+u8 entityLockCameraData[8] = {0};
 
-static u16 entityLockCameraTilemapProps[] = {
+u16 entityLockCameraTilemapProps[] = {
 #if defined(STAGE_IS_NO1)
     0x01A0, 0x0000, 0x02A0, 0x0200, 0x01A0, 0x0000, 0x02A0, 0x0200,
 #else
