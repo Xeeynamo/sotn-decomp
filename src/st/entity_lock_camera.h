@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+extern EInit g_EInitLockCamera;
+
 static u8 entityLockCameraHitbox[] = {
     0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x50, 0x20,
 };
