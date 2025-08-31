@@ -1,7 +1,3 @@
 # Matches in config or any subdirectory
 !.gitignore
-*.ld
 *auto.*.txt
-*_syms.txt
-!zero.ld
-!*_user_syms.txt
