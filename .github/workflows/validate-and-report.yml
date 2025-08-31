@@ -151,6 +151,7 @@ jobs:
         run: |
           make reports
       - name: Publish reports
+        run: |
           mkdir -p gh-duplicates
           cp -r build/us/reports/* gh-duplicates/
       - name: Commit all reports
