@@ -2048,7 +2048,7 @@
 | dai   | func_pspeu_092526B8                      |      260 |         36 |        |                                 |       |
 | no4   | func_pspeu_09240CD0                      |      261 |         21 |        | https://decomp.me/scratch/kWwKu | 1.0   |
 | maria | func_pspeu_092B28B0                      |      261 |         51 |        | https://decomp.me/scratch/feauq | 0.99  |
-| cat   | func_pspeu_0924FC98                      |      262 |         20 |        |                                 |       |
+| cat   | func_pspeu_0924FC98                      |      262 |         20 |        | https://decomp.me/scratch/XwKnm | 1.0   |
 | dai   | func_801A8328                            |      262 |         27 |        | https://decomp.me/scratch/cxlD0 | 0.998 |
 | no2   | EntityBreakableDebris                    |      262 |         27 |        | https://decomp.me/scratch/SjwKz | 0.998 |
 | st0   | func_801A8328                            |      262 |         27 |        | https://decomp.me/scratch/cxlD0 | 0.998 |
