@@ -12,14 +12,14 @@
 <!-- rbo3.EntityGreyPuffSpawner -->
 <g id="node1" class="node">
 <title>rbo3.EntityGreyPuffSpawner</title>
-<ellipse fill="red" stroke="black" cx="145.59" cy="-198" rx="145.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="145.59" cy="-198" rx="145.67" ry="18"/>
 <text text-anchor="middle" x="145.59" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntityGreyPuffSpawner</text>
 </g>
 <!-- rbo3.AllocEntity -->
 <g id="node2" class="node">
 <title>rbo3.AllocEntity</title>
 <g id="a_node2"><a xlink:href="rbo3.AllocEntity.svg" xlink:title="rbo3.AllocEntity">
-<ellipse fill="red" stroke="black" cx="145.59" cy="-18" rx="86.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="145.59" cy="-18" rx="86.38" ry="18"/>
 <text text-anchor="middle" x="145.59" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.AllocEntity</text>
 </a>
 </g>

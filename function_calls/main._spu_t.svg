@@ -12,7 +12,7 @@
 <!-- main._spu_t -->
 <g id="node1" class="node">
 <title>main._spu_t</title>
-<ellipse fill="red" stroke="black" cx="65.64" cy="-18" rx="65.79" ry="18"/>
+<ellipse fill="green" stroke="black" cx="65.64" cy="-18" rx="65.79" ry="18"/>
 <text text-anchor="middle" x="65.64" y="-14.3" font-family="Times,serif" font-size="14.00">main._spu_t</text>
 </g>
 </g>

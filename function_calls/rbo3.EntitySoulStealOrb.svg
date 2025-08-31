@@ -12,7 +12,7 @@
 <!-- rbo3.EntitySoulStealOrb -->
 <g id="node1" class="node">
 <title>rbo3.EntitySoulStealOrb</title>
-<ellipse fill="red" stroke="black" cx="1119.44" cy="-198" rx="126.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1119.44" cy="-198" rx="126.18" ry="18"/>
 <text text-anchor="middle" x="1119.44" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntitySoulStealOrb</text>
 </g>
 <!-- dra.AllocPrimitives -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.AnimateEntity</title>
 <g id="a_node3"><a xlink:href="rbo3.AnimateEntity.svg" xlink:title="rbo3.AnimateEntity">
-<ellipse fill="red" stroke="black" cx="319.44" cy="-18" rx="102.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="319.44" cy="-18" rx="102.88" ry="18"/>
 <text text-anchor="middle" x="319.44" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.AnimateEntity</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>rbo3.DestroyEntity</title>
 <g id="a_node4"><a xlink:href="rbo3.DestroyEntity.svg" xlink:title="rbo3.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="540.44" cy="-18" rx="100.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="540.44" cy="-18" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="540.44" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.DestroyEntity</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>rbo3.GetAngleBetweenEntities</title>
 <g id="a_node5"><a xlink:href="rbo3.GetAngleBetweenEntities.svg" xlink:title="rbo3.GetAngleBetweenEntities">
-<ellipse fill="red" stroke="black" cx="814.44" cy="-18" rx="155.17" ry="18"/>
+<ellipse fill="green" stroke="black" cx="814.44" cy="-18" rx="155.17" ry="18"/>
 <text text-anchor="middle" x="814.44" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.GetAngleBetweenEntities</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>rbo3.GetNormalizedAngle</title>
 <g id="a_node6"><a xlink:href="rbo3.GetNormalizedAngle.svg" xlink:title="rbo3.GetNormalizedAngle">
-<ellipse fill="red" stroke="black" cx="1119.44" cy="-18" rx="131.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1119.44" cy="-18" rx="131.88" ry="18"/>
 <text text-anchor="middle" x="1119.44" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.GetNormalizedAngle</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>rbo3.InitializeEntity</title>
 <g id="a_node7"><a xlink:href="rbo3.InitializeEntity.svg" xlink:title="rbo3.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="1374.44" cy="-18" rx="104.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1374.44" cy="-18" rx="104.78" ry="18"/>
 <text text-anchor="middle" x="1374.44" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.InitializeEntity</text>
 </a>
 </g>
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>rbo3.MoveEntity</title>
 <g id="a_node8"><a xlink:href="rbo3.MoveEntity.svg" xlink:title="rbo3.MoveEntity">
-<ellipse fill="red" stroke="black" cx="1586.44" cy="-18" rx="89.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1586.44" cy="-18" rx="89.08" ry="18"/>
 <text text-anchor="middle" x="1586.44" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.MoveEntity</text>
 </a>
 </g>
@@ -131,7 +131,7 @@
 <g id="node9" class="node">
 <title>rbo3.Random</title>
 <g id="a_node9"><a xlink:href="rbo3.Random.svg" xlink:title="rbo3.Random">
-<ellipse fill="red" stroke="black" cx="1766.44" cy="-18" rx="73.39" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1766.44" cy="-18" rx="73.39" ry="18"/>
 <text text-anchor="middle" x="1766.44" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.Random</text>
 </a>
 </g>
@@ -147,7 +147,7 @@
 <g id="node10" class="node">
 <title>rbo3.UnkEntityFunc0</title>
 <g id="a_node10"><a xlink:href="rbo3.UnkEntityFunc0.svg" xlink:title="rbo3.UnkEntityFunc0">
-<ellipse fill="red" stroke="black" cx="1969.44" cy="-18" rx="111.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1969.44" cy="-18" rx="111.58" ry="18"/>
 <text text-anchor="middle" x="1969.44" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.UnkEntityFunc0</text>
 </a>
 </g>

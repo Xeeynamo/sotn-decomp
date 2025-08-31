@@ -12,7 +12,7 @@
 <!-- main.CD_ready -->
 <g id="node1" class="node">
 <title>main.CD_ready</title>
-<ellipse fill="red" stroke="black" cx="81.24" cy="-18" rx="81.49" ry="18"/>
+<ellipse fill="green" stroke="black" cx="81.24" cy="-18" rx="81.49" ry="18"/>
 <text text-anchor="middle" x="81.24" y="-14.3" font-family="Times,serif" font-size="14.00">main.CD_ready</text>
 </g>
 </g>

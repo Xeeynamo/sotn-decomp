@@ -12,14 +12,14 @@
 <!-- rbo3.func_us_80192D64 -->
 <g id="node1" class="node">
 <title>rbo3.func_us_80192D64</title>
-<ellipse fill="red" stroke="black" cx="283.84" cy="-198" rx="122.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="283.84" cy="-198" rx="122.68" ry="18"/>
 <text text-anchor="middle" x="283.84" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.func_us_80192D64</text>
 </g>
 <!-- rbo3.CreateEntityFromEntity -->
 <g id="node2" class="node">
 <title>rbo3.CreateEntityFromEntity</title>
 <g id="a_node2"><a xlink:href="rbo3.CreateEntityFromEntity.svg" xlink:title="rbo3.CreateEntityFromEntity">
-<ellipse fill="red" stroke="black" cx="148.84" cy="-18" rx="148.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="148.84" cy="-18" rx="148.67" ry="18"/>
 <text text-anchor="middle" x="148.84" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.CreateEntityFromEntity</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.InitializeEntity</title>
 <g id="a_node3"><a xlink:href="rbo3.InitializeEntity.svg" xlink:title="rbo3.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="419.84" cy="-18" rx="104.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="419.84" cy="-18" rx="104.78" ry="18"/>
 <text text-anchor="middle" x="419.84" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.InitializeEntity</text>
 </a>
 </g>

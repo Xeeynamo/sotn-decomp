@@ -12,7 +12,7 @@
 <!-- no0.func_us_801D4AA4 -->
 <g id="node1" class="node">
 <title>no0.func_us_801D4AA4</title>
-<ellipse fill="red" stroke="black" cx="211.09" cy="-198" rx="119.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="211.09" cy="-198" rx="119.68" ry="18"/>
 <text text-anchor="middle" x="211.09" y="-194.3" font-family="Times,serif" font-size="14.00">no0.func_us_801D4AA4</text>
 </g>
 <!-- no0.InitializeEntity -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>no0.func_801CD78C</title>
 <g id="a_node3"><a xlink:href="no0.func_801CD78C.svg" xlink:title="no0.func_801CD78C">
-<ellipse fill="red" stroke="black" cx="323.09" cy="-18" rx="105.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="323.09" cy="-18" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="323.09" y="-14.3" font-family="Times,serif" font-size="14.00">no0.func_801CD78C</text>
 </a>
 </g>

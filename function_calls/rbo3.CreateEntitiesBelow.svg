@@ -12,7 +12,7 @@
 <!-- rbo3.CreateEntitiesBelow -->
 <g id="node1" class="node">
 <title>rbo3.CreateEntitiesBelow</title>
-<ellipse fill="red" stroke="black" cx="389.63" cy="-198" rx="131.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="389.63" cy="-198" rx="131.08" ry="18"/>
 <text text-anchor="middle" x="389.63" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.CreateEntitiesBelow</text>
 </g>
 <!-- rbo3.CreateEntityWhenInHorizontalRange -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.FindFirstEntityBelow</title>
 <g id="a_node3"><a xlink:href="rbo3.FindFirstEntityBelow.svg" xlink:title="rbo3.FindFirstEntityBelow">
-<ellipse fill="red" stroke="black" cx="570.63" cy="-18" rx="135.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="570.63" cy="-18" rx="135.68" ry="18"/>
 <text text-anchor="middle" x="570.63" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.FindFirstEntityBelow</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>rbo3.UpdateRoomPosition</title>
 <g id="a_node4"><a xlink:href="rbo3.UpdateRoomPosition.svg" xlink:title="rbo3.UpdateRoomPosition">
-<ellipse fill="red" stroke="black" cx="389.63" cy="-378" rx="132.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="389.63" cy="-378" rx="132.68" ry="18"/>
 <text text-anchor="middle" x="389.63" y="-374.3" font-family="Times,serif" font-size="14.00">rbo3.UpdateRoomPosition</text>
 </a>
 </g>

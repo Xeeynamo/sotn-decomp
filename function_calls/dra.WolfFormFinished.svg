@@ -95,37 +95,37 @@
 <polygon fill="black" stroke="black" points="1129.96,-41.82 1137.8,-34.69 1127.23,-35.38 1129.96,-41.82"/>
 <text text-anchor="middle" x="1132.8" y="-38.49" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- dra.func_8012D28C -->
+<!-- dra.PlayerStepMorphWolf -->
 <g id="node7" class="node">
+<title>dra.PlayerStepMorphWolf</title>
+<g id="a_node7"><a xlink:href="dra.PlayerStepMorphWolf.svg" xlink:title="dra.PlayerStepMorphWolf">
+<ellipse fill="green" stroke="black" cx="629.74" cy="-378" rx="131.88" ry="18"/>
+<text text-anchor="middle" x="629.74" y="-374.3" font-family="Times,serif" font-size="14.00">dra.PlayerStepMorphWolf</text>
+</a>
+</g>
+</g>
+<!-- dra.PlayerStepMorphWolf&#45;&gt;dra.WolfFormFinished -->
+<g id="edge6" class="edge">
+<title>dra.PlayerStepMorphWolf&#45;&gt;dra.WolfFormFinished</title>
+<path fill="none" stroke="black" d="M641.82,-359.93C664.11,-328.43 711.82,-261.03 737.87,-224.24"/>
+<polygon fill="black" stroke="black" points="740.77,-226.2 743.69,-216.02 735.06,-222.16 740.77,-226.2"/>
+<text text-anchor="middle" x="636.82" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
+</g>
+<!-- dra.func_8012D28C -->
+<g id="node8" class="node">
 <title>dra.func_8012D28C</title>
-<g id="a_node7"><a xlink:href="dra.func_8012D28C.svg" xlink:title="dra.func_8012D28C">
-<ellipse fill="green" stroke="black" cx="644.74" cy="-378" rx="102.88" ry="18"/>
-<text text-anchor="middle" x="644.74" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_8012D28C</text>
+<g id="a_node8"><a xlink:href="dra.func_8012D28C.svg" xlink:title="dra.func_8012D28C">
+<ellipse fill="green" stroke="black" cx="882.74" cy="-378" rx="102.88" ry="18"/>
+<text text-anchor="middle" x="882.74" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_8012D28C</text>
 </a>
 </g>
 </g>
 <!-- dra.func_8012D28C&#45;&gt;dra.WolfFormFinished -->
-<g id="edge6" class="edge">
-<title>dra.func_8012D28C&#45;&gt;dra.WolfFormFinished</title>
-<path fill="none" stroke="black" d="M655.38,-359.93C674.94,-328.57 716.7,-261.6 739.7,-224.71"/>
-<polygon fill="black" stroke="black" points="742.8,-226.35 745.12,-216.02 736.86,-222.65 742.8,-226.35"/>
-<text text-anchor="middle" x="650.38" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
-</g>
-<!-- dra.func_8012EF2C -->
-<g id="node8" class="node">
-<title>dra.func_8012EF2C</title>
-<g id="a_node8"><a xlink:href="dra.func_8012EF2C.svg" xlink:title="dra.func_8012EF2C">
-<ellipse fill="green" stroke="black" cx="867.74" cy="-378" rx="102.88" ry="18"/>
-<text text-anchor="middle" x="867.74" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_8012EF2C</text>
-</a>
-</g>
-</g>
-<!-- dra.func_8012EF2C&#45;&gt;dra.WolfFormFinished -->
 <g id="edge7" class="edge">
-<title>dra.func_8012EF2C&#45;&gt;dra.WolfFormFinished</title>
-<path fill="none" stroke="black" d="M857,-359.93C837.26,-328.57 795.13,-261.6 771.91,-224.71"/>
-<polygon fill="black" stroke="black" points="774.73,-222.62 766.44,-216.02 768.81,-226.34 774.73,-222.62"/>
-<text text-anchor="middle" x="852" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
+<title>dra.func_8012D28C&#45;&gt;dra.WolfFormFinished</title>
+<path fill="none" stroke="black" d="M870.56,-359.93C848.08,-328.43 800,-261.03 773.74,-224.24"/>
+<polygon fill="black" stroke="black" points="776.53,-222.12 767.88,-216.02 770.83,-226.19 776.53,-222.12"/>
+<text text-anchor="middle" x="865.56" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 </g>
 </svg>

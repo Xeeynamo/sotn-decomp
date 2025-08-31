@@ -12,7 +12,7 @@
 <!-- rbo3.SetSubStep -->
 <g id="node1" class="node">
 <title>rbo3.SetSubStep</title>
-<ellipse fill="red" stroke="black" cx="90.34" cy="-18" rx="90.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="90.34" cy="-18" rx="90.18" ry="18"/>
 <text text-anchor="middle" x="90.34" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.SetSubStep</text>
 </g>
 </g>

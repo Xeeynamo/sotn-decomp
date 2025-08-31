@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="137.79" cy="-198" rx="137.58" ry="18"/>
 <text text-anchor="middle" x="137.79" y="-194.3" font-family="Times,serif" font-size="14.00">dre.GetPlayerCollisionWith</text>
 </g>
-<!-- dra.func_8010BF64 -->
+<!-- dra.GetPlayerSensor -->
 <g id="node2" class="node">
-<title>dra.func_8010BF64</title>
-<g id="a_node2"><a xlink:href="dra.func_8010BF64.svg" xlink:title="dra.func_8010BF64">
-<ellipse fill="green" stroke="black" cx="137.79" cy="-18" rx="102.08" ry="18"/>
-<text text-anchor="middle" x="137.79" y="-14.3" font-family="Times,serif" font-size="14.00">dra.func_8010BF64</text>
+<title>dra.GetPlayerSensor</title>
+<g id="a_node2"><a xlink:href="dra.GetPlayerSensor.svg" xlink:title="dra.GetPlayerSensor">
+<ellipse fill="green" stroke="black" cx="137.79" cy="-18" rx="107.78" ry="18"/>
+<text text-anchor="middle" x="137.79" y="-14.3" font-family="Times,serif" font-size="14.00">dra.GetPlayerSensor</text>
 </a>
 </g>
 </g>
-<!-- dre.GetPlayerCollisionWith&#45;&gt;dra.func_8010BF64 -->
+<!-- dre.GetPlayerCollisionWith&#45;&gt;dra.GetPlayerSensor -->
 <g id="edge1" class="edge">
-<title>dre.GetPlayerCollisionWith&#45;&gt;dra.func_8010BF64</title>
+<title>dre.GetPlayerCollisionWith&#45;&gt;dra.GetPlayerSensor</title>
 <path fill="none" stroke="black" d="M137.79,-179.93C137.79,-148.97 137.79,-83.3 137.79,-46.13"/>
 <polygon fill="black" stroke="black" points="141.29,-46.02 137.79,-36.02 134.29,-46.02 141.29,-46.02"/>
 <text text-anchor="middle" x="132.79" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>

@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="157.29" cy="-18" rx="157.07" ry="18"/>
 <text text-anchor="middle" x="157.29" y="-14.3" font-family="Times,serif" font-size="14.00">ric.RicCheckSubwpnChainLimit</text>
 </g>
-<!-- ric.func_8015D250 -->
+<!-- ric.RicDoSubweapon -->
 <g id="node2" class="node">
-<title>ric.func_8015D250</title>
-<g id="a_node2"><a xlink:href="ric.func_8015D250.svg" xlink:title="ric.func_8015D250">
-<ellipse fill="green" stroke="black" cx="157.29" cy="-198" rx="98.58" ry="18"/>
-<text text-anchor="middle" x="157.29" y="-194.3" font-family="Times,serif" font-size="14.00">ric.func_8015D250</text>
+<title>ric.RicDoSubweapon</title>
+<g id="a_node2"><a xlink:href="ric.RicDoSubweapon.svg" xlink:title="ric.RicDoSubweapon">
+<ellipse fill="green" stroke="black" cx="157.29" cy="-198" rx="106.68" ry="18"/>
+<text text-anchor="middle" x="157.29" y="-194.3" font-family="Times,serif" font-size="14.00">ric.RicDoSubweapon</text>
 </a>
 </g>
 </g>
-<!-- ric.func_8015D250&#45;&gt;ric.RicCheckSubwpnChainLimit -->
+<!-- ric.RicDoSubweapon&#45;&gt;ric.RicCheckSubwpnChainLimit -->
 <g id="edge1" class="edge">
-<title>ric.func_8015D250&#45;&gt;ric.RicCheckSubwpnChainLimit</title>
+<title>ric.RicDoSubweapon&#45;&gt;ric.RicCheckSubwpnChainLimit</title>
 <path fill="none" stroke="black" d="M157.29,-179.93C157.29,-148.97 157.29,-83.3 157.29,-46.13"/>
 <polygon fill="black" stroke="black" points="160.79,-46.02 157.29,-36.02 153.79,-46.02 160.79,-46.02"/>
 <text text-anchor="middle" x="152.29" y="-168.73" font-family="Times,serif" font-size="14.00">1</text>

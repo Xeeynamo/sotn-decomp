@@ -12,7 +12,7 @@
 <!-- no3.EntityFireWarg -->
 <g id="node1" class="node">
 <title>no3.EntityFireWarg</title>
-<ellipse fill="red" stroke="black" cx="2437.49" cy="-198" rx="102.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2437.49" cy="-198" rx="102.88" ry="18"/>
 <text text-anchor="middle" x="2437.49" y="-194.3" font-family="Times,serif" font-size="14.00">no3.EntityFireWarg</text>
 </g>
 <!-- dra.CheckCollision -->

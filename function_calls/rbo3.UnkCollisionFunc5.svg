@@ -12,7 +12,7 @@
 <!-- rbo3.UnkCollisionFunc5 -->
 <g id="node1" class="node">
 <title>rbo3.UnkCollisionFunc5</title>
-<ellipse fill="red" stroke="black" cx="195.49" cy="-198" rx="122.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="195.49" cy="-198" rx="122.68" ry="18"/>
 <text text-anchor="middle" x="195.49" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.UnkCollisionFunc5</text>
 </g>
 <!-- dra.CheckCollision -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.FallEntity</title>
 <g id="a_node3"><a xlink:href="rbo3.FallEntity.svg" xlink:title="rbo3.FallEntity">
-<ellipse fill="red" stroke="black" cx="294.49" cy="-18" rx="81.49" ry="18"/>
+<ellipse fill="green" stroke="black" cx="294.49" cy="-18" rx="81.49" ry="18"/>
 <text text-anchor="middle" x="294.49" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.FallEntity</text>
 </a>
 </g>

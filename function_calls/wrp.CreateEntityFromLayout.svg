@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="413.38" cy="-198" rx="148.37" ry="18"/>
 <text text-anchor="middle" x="413.38" y="-194.3" font-family="Times,serif" font-size="14.00">wrp.CreateEntityFromLayout</text>
 </g>
-<!-- wrp.DestroyEntity -->
+<!-- dra.DestroyEntity -->
 <g id="node2" class="node">
-<title>wrp.DestroyEntity</title>
-<g id="a_node2"><a xlink:href="wrp.DestroyEntity.svg" xlink:title="wrp.DestroyEntity">
-<ellipse fill="green" stroke="black" cx="413.38" cy="-18" rx="96.68" ry="18"/>
-<text text-anchor="middle" x="413.38" y="-14.3" font-family="Times,serif" font-size="14.00">wrp.DestroyEntity</text>
+<title>dra.DestroyEntity</title>
+<g id="a_node2"><a xlink:href="dra.DestroyEntity.svg" xlink:title="dra.DestroyEntity">
+<ellipse fill="green" stroke="black" cx="413.38" cy="-18" rx="94.78" ry="18"/>
+<text text-anchor="middle" x="413.38" y="-14.3" font-family="Times,serif" font-size="14.00">dra.DestroyEntity</text>
 </a>
 </g>
 </g>
-<!-- wrp.CreateEntityFromLayout&#45;&gt;wrp.DestroyEntity -->
+<!-- wrp.CreateEntityFromLayout&#45;&gt;dra.DestroyEntity -->
 <g id="edge1" class="edge">
-<title>wrp.CreateEntityFromLayout&#45;&gt;wrp.DestroyEntity</title>
+<title>wrp.CreateEntityFromLayout&#45;&gt;dra.DestroyEntity</title>
 <path fill="none" stroke="black" d="M413.38,-179.93C413.38,-148.97 413.38,-83.3 413.38,-46.13"/>
 <polygon fill="black" stroke="black" points="416.88,-46.02 413.38,-36.02 409.88,-46.02 416.88,-46.02"/>
 <text text-anchor="middle" x="408.38" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>

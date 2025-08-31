@@ -12,7 +12,7 @@
 <!-- main.get_ofs -->
 <g id="node1" class="node">
 <title>main.get_ofs</title>
-<ellipse fill="red" stroke="black" cx="69.54" cy="-18" rx="69.59" ry="18"/>
+<ellipse fill="green" stroke="black" cx="69.54" cy="-18" rx="69.59" ry="18"/>
 <text text-anchor="middle" x="69.54" y="-14.3" font-family="Times,serif" font-size="14.00">main.get_ofs</text>
 </g>
 </g>

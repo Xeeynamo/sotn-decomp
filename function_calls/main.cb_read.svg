@@ -12,7 +12,7 @@
 <!-- main.cb_read -->
 <g id="node1" class="node">
 <title>main.cb_read</title>
-<ellipse fill="red" stroke="black" cx="72.79" cy="-18" rx="72.59" ry="18"/>
+<ellipse fill="green" stroke="black" cx="72.79" cy="-18" rx="72.59" ry="18"/>
 <text text-anchor="middle" x="72.79" y="-14.3" font-family="Times,serif" font-size="14.00">main.cb_read</text>
 </g>
 </g>

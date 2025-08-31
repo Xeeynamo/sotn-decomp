@@ -12,7 +12,7 @@
 <!-- main.cd_read_retry -->
 <g id="node1" class="node">
 <title>main.cd_read_retry</title>
-<ellipse fill="red" stroke="black" cx="100.74" cy="-18" rx="100.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="100.74" cy="-18" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="100.74" y="-14.3" font-family="Times,serif" font-size="14.00">main.cd_read_retry</text>
 </g>
 </g>

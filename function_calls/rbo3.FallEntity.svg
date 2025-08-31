@@ -12,14 +12,14 @@
 <!-- rbo3.FallEntity -->
 <g id="node1" class="node">
 <title>rbo3.FallEntity</title>
-<ellipse fill="red" stroke="black" cx="632.84" cy="-18" rx="81.49" ry="18"/>
+<ellipse fill="green" stroke="black" cx="632.84" cy="-18" rx="81.49" ry="18"/>
 <text text-anchor="middle" x="632.84" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.FallEntity</text>
 </g>
 <!-- rbo3.EntityEquipItemDrop -->
 <g id="node2" class="node">
 <title>rbo3.EntityEquipItemDrop</title>
 <g id="a_node2"><a xlink:href="rbo3.EntityEquipItemDrop.svg" xlink:title="rbo3.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="135.84" cy="-198" rx="135.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="135.84" cy="-198" rx="135.68" ry="18"/>
 <text text-anchor="middle" x="135.84" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.EntityPrizeDrop</title>
 <g id="a_node3"><a xlink:href="rbo3.EntityPrizeDrop.svg" xlink:title="rbo3.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="399.84" cy="-198" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="399.84" cy="-198" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="399.84" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntityPrizeDrop</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>rbo3.UnkCollisionFunc3</title>
 <g id="a_node5"><a xlink:href="rbo3.UnkCollisionFunc3.svg" xlink:title="rbo3.UnkCollisionFunc3">
-<ellipse fill="red" stroke="black" cx="877.84" cy="-198" rx="122.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="877.84" cy="-198" rx="122.68" ry="18"/>
 <text text-anchor="middle" x="877.84" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.UnkCollisionFunc3</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>rbo3.UnkCollisionFunc5</title>
 <g id="a_node6"><a xlink:href="rbo3.UnkCollisionFunc5.svg" xlink:title="rbo3.UnkCollisionFunc5">
-<ellipse fill="red" stroke="black" cx="1141.84" cy="-198" rx="122.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1141.84" cy="-198" rx="122.68" ry="18"/>
 <text text-anchor="middle" x="1141.84" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.UnkCollisionFunc5</text>
 </a>
 </g>

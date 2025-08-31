@@ -12,14 +12,14 @@
 <!-- rbo3.GetAngleBetweenEntitiesShifted -->
 <g id="node1" class="node">
 <title>rbo3.GetAngleBetweenEntitiesShifted</title>
-<ellipse fill="red" stroke="black" cx="188.48" cy="-198" rx="188.47" ry="18"/>
+<ellipse fill="green" stroke="black" cx="188.48" cy="-198" rx="188.47" ry="18"/>
 <text text-anchor="middle" x="188.48" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.GetAngleBetweenEntitiesShifted</text>
 </g>
 <!-- rbo3.Ratan2Shifted -->
 <g id="node2" class="node">
 <title>rbo3.Ratan2Shifted</title>
 <g id="a_node2"><a xlink:href="rbo3.Ratan2Shifted.svg" xlink:title="rbo3.Ratan2Shifted">
-<ellipse fill="red" stroke="black" cx="188.48" cy="-18" rx="102.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="188.48" cy="-18" rx="102.08" ry="18"/>
 <text text-anchor="middle" x="188.48" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.Ratan2Shifted</text>
 </a>
 </g>

@@ -12,7 +12,7 @@
 <!-- main.init_ring_status -->
 <g id="node1" class="node">
 <title>main.init_ring_status</title>
-<ellipse fill="red" stroke="black" cx="108.54" cy="-18" rx="108.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="108.54" cy="-18" rx="108.58" ry="18"/>
 <text text-anchor="middle" x="108.54" y="-14.3" font-family="Times,serif" font-size="14.00">main.init_ring_status</text>
 </g>
 </g>

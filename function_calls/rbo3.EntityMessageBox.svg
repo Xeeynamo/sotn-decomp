@@ -12,7 +12,7 @@
 <!-- rbo3.EntityMessageBox -->
 <g id="node1" class="node">
 <title>rbo3.EntityMessageBox</title>
-<ellipse fill="red" stroke="black" cx="483.34" cy="-198" rx="122.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="483.34" cy="-198" rx="122.38" ry="18"/>
 <text text-anchor="middle" x="483.34" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntityMessageBox</text>
 </g>
 <!-- ClearImage -->
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>rbo3.BlitChar</title>
 <g id="a_node5"><a xlink:href="rbo3.BlitChar.svg" xlink:title="rbo3.BlitChar">
-<ellipse fill="red" stroke="black" cx="579.34" cy="-18" rx="74.19" ry="18"/>
+<ellipse fill="green" stroke="black" cx="579.34" cy="-18" rx="74.19" ry="18"/>
 <text text-anchor="middle" x="579.34" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.BlitChar</text>
 </a>
 </g>
@@ -83,7 +83,7 @@
 <g id="node6" class="node">
 <title>rbo3.DestroyEntity</title>
 <g id="a_node6"><a xlink:href="rbo3.DestroyEntity.svg" xlink:title="rbo3.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="772.34" cy="-18" rx="100.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="772.34" cy="-18" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="772.34" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.DestroyEntity</text>
 </a>
 </g>
@@ -99,7 +99,7 @@
 <g id="node7" class="node">
 <title>rbo3.InitializeEntity</title>
 <g id="a_node7"><a xlink:href="rbo3.InitializeEntity.svg" xlink:title="rbo3.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="995.34" cy="-18" rx="104.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="995.34" cy="-18" rx="104.78" ry="18"/>
 <text text-anchor="middle" x="995.34" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.InitializeEntity</text>
 </a>
 </g>

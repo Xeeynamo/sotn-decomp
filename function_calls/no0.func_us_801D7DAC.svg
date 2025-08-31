@@ -12,7 +12,7 @@
 <!-- no0.func_us_801D7DAC -->
 <g id="node1" class="node">
 <title>no0.func_us_801D7DAC</title>
-<ellipse fill="red" stroke="black" cx="201.19" cy="-198" rx="121.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="201.19" cy="-198" rx="121.58" ry="18"/>
 <text text-anchor="middle" x="201.19" y="-194.3" font-family="Times,serif" font-size="14.00">no0.func_us_801D7DAC</text>
 </g>
 <!-- dra.GetFreeEntity -->

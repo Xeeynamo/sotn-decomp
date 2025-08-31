@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.EntityElevatorStationary</title>
 <g id="a_node3"><a xlink:href="cen.EntityElevatorStationary.svg" xlink:title="cen.EntityElevatorStationary">
-<ellipse fill="red" stroke="black" cx="396.69" cy="-198" rx="146.77" ry="18"/>
+<ellipse fill="green" stroke="black" cx="396.69" cy="-198" rx="146.77" ry="18"/>
 <text text-anchor="middle" x="396.69" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityElevatorStationary</text>
 </a>
 </g>

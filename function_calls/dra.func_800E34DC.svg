@@ -15,18 +15,18 @@
 <ellipse fill="green" stroke="black" cx="401.14" cy="-198" rx="103.98" ry="18"/>
 <text text-anchor="middle" x="401.14" y="-194.3" font-family="Times,serif" font-size="14.00">dra.func_800E34DC</text>
 </g>
-<!-- dra.func_800E346C -->
+<!-- dra.SetGPUBuffRGBZero -->
 <g id="node2" class="node">
-<title>dra.func_800E346C</title>
-<g id="a_node2"><a xlink:href="dra.func_800E346C.svg" xlink:title="dra.func_800E346C">
-<ellipse fill="green" stroke="black" cx="401.14" cy="-18" rx="102.88" ry="18"/>
-<text text-anchor="middle" x="401.14" y="-14.3" font-family="Times,serif" font-size="14.00">dra.func_800E346C</text>
+<title>dra.SetGPUBuffRGBZero</title>
+<g id="a_node2"><a xlink:href="dra.SetGPUBuffRGBZero.svg" xlink:title="dra.SetGPUBuffRGBZero">
+<ellipse fill="green" stroke="black" cx="401.14" cy="-18" rx="127.28" ry="18"/>
+<text text-anchor="middle" x="401.14" y="-14.3" font-family="Times,serif" font-size="14.00">dra.SetGPUBuffRGBZero</text>
 </a>
 </g>
 </g>
-<!-- dra.func_800E34DC&#45;&gt;dra.func_800E346C -->
+<!-- dra.func_800E34DC&#45;&gt;dra.SetGPUBuffRGBZero -->
 <g id="edge1" class="edge">
-<title>dra.func_800E34DC&#45;&gt;dra.func_800E346C</title>
+<title>dra.func_800E34DC&#45;&gt;dra.SetGPUBuffRGBZero</title>
 <path fill="none" stroke="black" d="M401.14,-179.93C401.14,-148.97 401.14,-83.3 401.14,-46.13"/>
 <polygon fill="black" stroke="black" points="404.64,-46.02 401.14,-36.02 397.64,-46.02 404.64,-46.02"/>
 <text text-anchor="middle" x="396.14" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>

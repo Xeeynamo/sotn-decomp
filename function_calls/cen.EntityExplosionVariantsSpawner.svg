@@ -12,7 +12,7 @@
 <!-- cen.EntityExplosionVariantsSpawner -->
 <g id="node1" class="node">
 <title>cen.EntityExplosionVariantsSpawner</title>
-<ellipse fill="red" stroke="black" cx="183.28" cy="-198" rx="183.07" ry="18"/>
+<ellipse fill="green" stroke="black" cx="183.28" cy="-198" rx="183.07" ry="18"/>
 <text text-anchor="middle" x="183.28" y="-194.3" font-family="Times,serif" font-size="14.00">cen.EntityExplosionVariantsSpawner</text>
 </g>
 <!-- cen.AllocEntity -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>cen.EntityOlroxDrool</title>
 <g id="a_node3"><a xlink:href="cen.EntityOlroxDrool.svg" xlink:title="cen.EntityOlroxDrool">
-<ellipse fill="red" stroke="black" cx="183.28" cy="-378" rx="109.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="183.28" cy="-378" rx="109.38" ry="18"/>
 <text text-anchor="middle" x="183.28" y="-374.3" font-family="Times,serif" font-size="14.00">cen.EntityOlroxDrool</text>
 </a>
 </g>

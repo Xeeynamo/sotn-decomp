@@ -12,14 +12,14 @@
 <!-- rbo3.GetSineScaled -->
 <g id="node1" class="node">
 <title>rbo3.GetSineScaled</title>
-<ellipse fill="red" stroke="black" cx="167.04" cy="-18" rx="102.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="167.04" cy="-18" rx="102.88" ry="18"/>
 <text text-anchor="middle" x="167.04" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.GetSineScaled</text>
 </g>
 <!-- rbo3.SetEntityVelocityFromAngle -->
 <g id="node2" class="node">
 <title>rbo3.SetEntityVelocityFromAngle</title>
 <g id="a_node2"><a xlink:href="rbo3.SetEntityVelocityFromAngle.svg" xlink:title="rbo3.SetEntityVelocityFromAngle">
-<ellipse fill="red" stroke="black" cx="167.04" cy="-198" rx="167.07" ry="18"/>
+<ellipse fill="green" stroke="black" cx="167.04" cy="-198" rx="167.07" ry="18"/>
 <text text-anchor="middle" x="167.04" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.SetEntityVelocityFromAngle</text>
 </a>
 </g>

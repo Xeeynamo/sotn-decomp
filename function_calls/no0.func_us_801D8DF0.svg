@@ -12,7 +12,7 @@
 <!-- no0.func_us_801D8DF0 -->
 <g id="node1" class="node">
 <title>no0.func_us_801D8DF0</title>
-<ellipse fill="red" stroke="black" cx="602.49" cy="-198" rx="120.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="602.49" cy="-198" rx="120.48" ry="18"/>
 <text text-anchor="middle" x="602.49" y="-194.3" font-family="Times,serif" font-size="14.00">no0.func_us_801D8DF0</text>
 </g>
 <!-- dra.CheckCollision -->

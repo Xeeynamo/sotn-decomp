@@ -12,14 +12,14 @@
 <!-- rbo3.PrimDecreaseBrightness -->
 <g id="node1" class="node">
 <title>rbo3.PrimDecreaseBrightness</title>
-<ellipse fill="red" stroke="black" cx="293.49" cy="-18" rx="151.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="293.49" cy="-18" rx="151.37" ry="18"/>
 <text text-anchor="middle" x="293.49" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.PrimDecreaseBrightness</text>
 </g>
 <!-- rbo3.StageNamePopupHelper -->
 <g id="node2" class="node">
 <title>rbo3.StageNamePopupHelper</title>
 <g id="a_node2"><a xlink:href="rbo3.StageNamePopupHelper.svg" xlink:title="rbo3.StageNamePopupHelper">
-<ellipse fill="red" stroke="black" cx="149.49" cy="-198" rx="149.47" ry="18"/>
+<ellipse fill="green" stroke="black" cx="149.49" cy="-198" rx="149.47" ry="18"/>
 <text text-anchor="middle" x="149.49" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.StageNamePopupHelper</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.func_us_80192020</title>
 <g id="a_node3"><a xlink:href="rbo3.func_us_80192020.svg" xlink:title="rbo3.func_us_80192020">
-<ellipse fill="red" stroke="black" cx="438.49" cy="-198" rx="121.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="438.49" cy="-198" rx="121.58" ry="18"/>
 <text text-anchor="middle" x="438.49" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.func_us_80192020</text>
 </a>
 </g>

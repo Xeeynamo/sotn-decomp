@@ -12,14 +12,14 @@
 <!-- no0.func_us_801D26CC -->
 <g id="node1" class="node">
 <title>no0.func_us_801D26CC</title>
-<ellipse fill="red" stroke="black" cx="120.24" cy="-198" rx="120.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="120.24" cy="-198" rx="120.48" ry="18"/>
 <text text-anchor="middle" x="120.24" y="-194.3" font-family="Times,serif" font-size="14.00">no0.func_us_801D26CC</text>
 </g>
 <!-- no0.func_801CD78C -->
 <g id="node2" class="node">
 <title>no0.func_801CD78C</title>
 <g id="a_node2"><a xlink:href="no0.func_801CD78C.svg" xlink:title="no0.func_801CD78C">
-<ellipse fill="red" stroke="black" cx="120.24" cy="-18" rx="105.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="120.24" cy="-18" rx="105.08" ry="18"/>
 <text text-anchor="middle" x="120.24" y="-14.3" font-family="Times,serif" font-size="14.00">no0.func_801CD78C</text>
 </a>
 </g>
@@ -31,18 +31,18 @@
 <polygon fill="black" stroke="black" points="123.74,-46.02 120.24,-36.02 116.74,-46.02 123.74,-46.02"/>
 <text text-anchor="middle" x="115.24" y="-39.82" font-family="Times,serif" font-size="14.00">2</text>
 </g>
-<!-- no0.func_us_801D2A64 -->
+<!-- no0.EntityPlateLord -->
 <g id="node3" class="node">
-<title>no0.func_us_801D2A64</title>
-<g id="a_node3"><a xlink:href="no0.func_us_801D2A64.svg" xlink:title="no0.func_us_801D2A64">
-<ellipse fill="red" stroke="black" cx="120.24" cy="-378" rx="118.88" ry="18"/>
-<text text-anchor="middle" x="120.24" y="-374.3" font-family="Times,serif" font-size="14.00">no0.func_us_801D2A64</text>
+<title>no0.EntityPlateLord</title>
+<g id="a_node3"><a xlink:href="no0.EntityPlateLord.svg" xlink:title="no0.EntityPlateLord">
+<ellipse fill="green" stroke="black" cx="120.24" cy="-378" rx="104.78" ry="18"/>
+<text text-anchor="middle" x="120.24" y="-374.3" font-family="Times,serif" font-size="14.00">no0.EntityPlateLord</text>
 </a>
 </g>
 </g>
-<!-- no0.func_us_801D2A64&#45;&gt;no0.func_us_801D26CC -->
+<!-- no0.EntityPlateLord&#45;&gt;no0.func_us_801D26CC -->
 <g id="edge2" class="edge">
-<title>no0.func_us_801D2A64&#45;&gt;no0.func_us_801D26CC</title>
+<title>no0.EntityPlateLord&#45;&gt;no0.func_us_801D26CC</title>
 <path fill="none" stroke="black" d="M120.24,-359.93C120.24,-328.97 120.24,-263.3 120.24,-226.13"/>
 <polygon fill="black" stroke="black" points="123.74,-226.02 120.24,-216.02 116.74,-226.02 123.74,-226.02"/>
 <text text-anchor="middle" x="110.74" y="-348.73" font-family="Times,serif" font-size="14.00">12</text>

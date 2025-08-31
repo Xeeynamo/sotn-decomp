@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>tt_000.UpdateBatAttackMode</title>
 <g id="a_node3"><a xlink:href="tt_000.UpdateBatAttackMode.svg" xlink:title="tt_000.UpdateBatAttackMode">
-<ellipse fill="red" stroke="black" cx="450.69" cy="-198" rx="149.47" ry="18"/>
+<ellipse fill="green" stroke="black" cx="450.69" cy="-198" rx="149.47" ry="18"/>
 <text text-anchor="middle" x="450.69" y="-194.3" font-family="Times,serif" font-size="14.00">tt_000.UpdateBatAttackMode</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>tt_000.UpdateServantDefault</title>
 <g id="a_node4"><a xlink:href="tt_000.UpdateServantDefault.svg" xlink:title="tt_000.UpdateServantDefault">
-<ellipse fill="red" stroke="black" cx="766.69" cy="-198" rx="148.37" ry="18"/>
+<ellipse fill="green" stroke="black" cx="766.69" cy="-198" rx="148.37" ry="18"/>
 <text text-anchor="middle" x="766.69" y="-194.3" font-family="Times,serif" font-size="14.00">tt_000.UpdateServantDefault</text>
 </a>
 </g>

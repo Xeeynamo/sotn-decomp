@@ -12,14 +12,14 @@
 <!-- rbo3.BlinkItem -->
 <g id="node1" class="node">
 <title>rbo3.BlinkItem</title>
-<ellipse fill="red" stroke="black" cx="264.84" cy="-18" rx="80.69" ry="18"/>
+<ellipse fill="green" stroke="black" cx="264.84" cy="-18" rx="80.69" ry="18"/>
 <text text-anchor="middle" x="264.84" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.BlinkItem</text>
 </g>
 <!-- rbo3.EntityEquipItemDrop -->
 <g id="node2" class="node">
 <title>rbo3.EntityEquipItemDrop</title>
 <g id="a_node2"><a xlink:href="rbo3.EntityEquipItemDrop.svg" xlink:title="rbo3.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="135.84" cy="-198" rx="135.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="135.84" cy="-198" rx="135.68" ry="18"/>
 <text text-anchor="middle" x="135.84" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.EntityRelicOrb</title>
 <g id="a_node3"><a xlink:href="rbo3.EntityRelicOrb.svg" xlink:title="rbo3.EntityRelicOrb">
-<ellipse fill="red" stroke="black" cx="393.84" cy="-198" rx="104.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="393.84" cy="-198" rx="104.78" ry="18"/>
 <text text-anchor="middle" x="393.84" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntityRelicOrb</text>
 </a>
 </g>

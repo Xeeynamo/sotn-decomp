@@ -12,7 +12,7 @@
 <!-- no0.func_us_801D4FCC -->
 <g id="node1" class="node">
 <title>no0.func_us_801D4FCC</title>
-<ellipse fill="red" stroke="black" cx="120.89" cy="-198" rx="120.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="120.89" cy="-198" rx="120.78" ry="18"/>
 <text text-anchor="middle" x="120.89" y="-194.3" font-family="Times,serif" font-size="14.00">no0.func_us_801D4FCC</text>
 </g>
 <!-- rcos -->
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>no0.func_us_801D542C</title>
 <g id="a_node4"><a xlink:href="no0.func_us_801D542C.svg" xlink:title="no0.func_us_801D542C">
-<ellipse fill="red" stroke="black" cx="120.89" cy="-378" rx="119.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="120.89" cy="-378" rx="119.68" ry="18"/>
 <text text-anchor="middle" x="120.89" y="-374.3" font-family="Times,serif" font-size="14.00">no0.func_us_801D542C</text>
 </a>
 </g>

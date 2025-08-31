@@ -12,7 +12,7 @@
 <!-- rbo3.BottomCornerText -->
 <g id="node1" class="node">
 <title>rbo3.BottomCornerText</title>
-<ellipse fill="red" stroke="black" cx="332.04" cy="-198" rx="121.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="332.04" cy="-198" rx="121.58" ry="18"/>
 <text text-anchor="middle" x="332.04" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.BottomCornerText</text>
 </g>
 <!-- dra.AllocPrimitives -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.CollectGold</title>
 <g id="a_node3"><a xlink:href="rbo3.CollectGold.svg" xlink:title="rbo3.CollectGold">
-<ellipse fill="red" stroke="black" cx="89.04" cy="-378" rx="89.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="89.04" cy="-378" rx="89.08" ry="18"/>
 <text text-anchor="middle" x="89.04" y="-374.3" font-family="Times,serif" font-size="14.00">rbo3.CollectGold</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>rbo3.EntityEquipItemDrop</title>
 <g id="a_node4"><a xlink:href="rbo3.EntityEquipItemDrop.svg" xlink:title="rbo3.EntityEquipItemDrop">
-<ellipse fill="red" stroke="black" cx="332.04" cy="-378" rx="135.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="332.04" cy="-378" rx="135.68" ry="18"/>
 <text text-anchor="middle" x="332.04" y="-374.3" font-family="Times,serif" font-size="14.00">rbo3.EntityEquipItemDrop</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>rbo3.HitDetection</title>
 <g id="a_node5"><a xlink:href="rbo3.HitDetection.svg" xlink:title="rbo3.HitDetection">
-<ellipse fill="red" stroke="black" cx="581.04" cy="-378" rx="94.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="581.04" cy="-378" rx="94.78" ry="18"/>
 <text text-anchor="middle" x="581.04" y="-374.3" font-family="Times,serif" font-size="14.00">rbo3.HitDetection</text>
 </a>
 </g>

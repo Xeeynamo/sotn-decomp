@@ -12,7 +12,7 @@
 <!-- rbo3.UnkEntityFunc0 -->
 <g id="node1" class="node">
 <title>rbo3.UnkEntityFunc0</title>
-<ellipse fill="red" stroke="black" cx="255.19" cy="-198" rx="111.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="255.19" cy="-198" rx="111.58" ry="18"/>
 <text text-anchor="middle" x="255.19" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.UnkEntityFunc0</text>
 </g>
 <!-- rcos -->
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>rbo3.EntityEnemyBlood</title>
 <g id="a_node4"><a xlink:href="rbo3.EntityEnemyBlood.svg" xlink:title="rbo3.EntityEnemyBlood">
-<ellipse fill="red" stroke="black" cx="122.19" cy="-378" rx="122.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="122.19" cy="-378" rx="122.38" ry="18"/>
 <text text-anchor="middle" x="122.19" y="-374.3" font-family="Times,serif" font-size="14.00">rbo3.EntityEnemyBlood</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>rbo3.EntitySoulStealOrb</title>
 <g id="a_node5"><a xlink:href="rbo3.EntitySoulStealOrb.svg" xlink:title="rbo3.EntitySoulStealOrb">
-<ellipse fill="red" stroke="black" cx="388.19" cy="-378" rx="126.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="388.19" cy="-378" rx="126.18" ry="18"/>
 <text text-anchor="middle" x="388.19" y="-374.3" font-family="Times,serif" font-size="14.00">rbo3.EntitySoulStealOrb</text>
 </a>
 </g>

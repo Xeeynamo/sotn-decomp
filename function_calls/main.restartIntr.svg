@@ -12,7 +12,7 @@
 <!-- main.restartIntr -->
 <g id="node1" class="node">
 <title>main.restartIntr</title>
-<ellipse fill="red" stroke="black" cx="86.44" cy="-18" rx="86.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="86.44" cy="-18" rx="86.38" ry="18"/>
 <text text-anchor="middle" x="86.44" y="-14.3" font-family="Times,serif" font-size="14.00">main.restartIntr</text>
 </g>
 </g>

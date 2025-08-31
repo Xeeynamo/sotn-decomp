@@ -12,7 +12,7 @@
 <!-- main.CD_datasync -->
 <g id="node1" class="node">
 <title>main.CD_datasync</title>
-<ellipse fill="red" stroke="black" cx="96.84" cy="-18" rx="96.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="96.84" cy="-18" rx="96.68" ry="18"/>
 <text text-anchor="middle" x="96.84" y="-14.3" font-family="Times,serif" font-size="14.00">main.CD_datasync</text>
 </g>
 </g>

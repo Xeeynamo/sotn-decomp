@@ -19,7 +19,7 @@
 <g id="node2" class="node">
 <title>rbo3.EntityPrizeDrop</title>
 <g id="a_node2"><a xlink:href="rbo3.EntityPrizeDrop.svg" xlink:title="rbo3.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="110.49" cy="-198" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="110.49" cy="-198" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="110.49" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntityPrizeDrop</text>
 </a>
 </g>

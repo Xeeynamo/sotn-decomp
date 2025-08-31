@@ -12,14 +12,14 @@
 <!-- rbo3.GetNormalizedAngle -->
 <g id="node1" class="node">
 <title>rbo3.GetNormalizedAngle</title>
-<ellipse fill="red" stroke="black" cx="260.09" cy="-18" rx="131.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="260.09" cy="-18" rx="131.88" ry="18"/>
 <text text-anchor="middle" x="260.09" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.GetNormalizedAngle</text>
 </g>
 <!-- rbo3.EntitySoulStealOrb -->
 <g id="node2" class="node">
 <title>rbo3.EntitySoulStealOrb</title>
 <g id="a_node2"><a xlink:href="rbo3.EntitySoulStealOrb.svg" xlink:title="rbo3.EntitySoulStealOrb">
-<ellipse fill="red" stroke="black" cx="126.09" cy="-198" rx="126.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="126.09" cy="-198" rx="126.18" ry="18"/>
 <text text-anchor="middle" x="126.09" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntitySoulStealOrb</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.func_us_801923DC</title>
 <g id="a_node3"><a xlink:href="rbo3.func_us_801923DC.svg" xlink:title="rbo3.func_us_801923DC">
-<ellipse fill="red" stroke="black" cx="394.09" cy="-198" rx="124.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="394.09" cy="-198" rx="124.28" ry="18"/>
 <text text-anchor="middle" x="394.09" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.func_us_801923DC</text>
 </a>
 </g>

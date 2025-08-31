@@ -12,14 +12,14 @@
 <!-- rbo3.EntityExplosionVariantsSpawner -->
 <g id="node1" class="node">
 <title>rbo3.EntityExplosionVariantsSpawner</title>
-<ellipse fill="red" stroke="black" cx="188.48" cy="-198" rx="188.47" ry="18"/>
+<ellipse fill="green" stroke="black" cx="188.48" cy="-198" rx="188.47" ry="18"/>
 <text text-anchor="middle" x="188.48" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntityExplosionVariantsSpawner</text>
 </g>
 <!-- rbo3.AllocEntity -->
 <g id="node2" class="node">
 <title>rbo3.AllocEntity</title>
 <g id="a_node2"><a xlink:href="rbo3.AllocEntity.svg" xlink:title="rbo3.AllocEntity">
-<ellipse fill="red" stroke="black" cx="188.48" cy="-18" rx="86.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="188.48" cy="-18" rx="86.38" ry="18"/>
 <text text-anchor="middle" x="188.48" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.AllocEntity</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.EntityOlroxDrool</title>
 <g id="a_node3"><a xlink:href="rbo3.EntityOlroxDrool.svg" xlink:title="rbo3.EntityOlroxDrool">
-<ellipse fill="red" stroke="black" cx="188.48" cy="-378" rx="114.28" ry="18"/>
+<ellipse fill="green" stroke="black" cx="188.48" cy="-378" rx="114.28" ry="18"/>
 <text text-anchor="middle" x="188.48" y="-374.3" font-family="Times,serif" font-size="14.00">rbo3.EntityOlroxDrool</text>
 </a>
 </g>

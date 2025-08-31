@@ -99,49 +99,49 @@
 <g id="node7" class="node">
 <title>dra.EntityAlucard</title>
 <g id="a_node7"><a xlink:href="dra.EntityAlucard.svg" xlink:title="dra.EntityAlucard">
-<ellipse fill="green" stroke="black" cx="397.29" cy="-378" rx="93.68" ry="18"/>
-<text text-anchor="middle" x="397.29" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntityAlucard</text>
+<ellipse fill="green" stroke="black" cx="374.29" cy="-378" rx="93.68" ry="18"/>
+<text text-anchor="middle" x="374.29" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntityAlucard</text>
 </a>
 </g>
 </g>
 <!-- dra.EntityAlucard&#45;&gt;dra.HandleDamage -->
 <g id="edge6" class="edge">
 <title>dra.EntityAlucard&#45;&gt;dra.HandleDamage</title>
-<path fill="none" stroke="black" d="M417.43,-360.25C455.82,-328.32 539.58,-258.65 583.37,-222.23"/>
-<polygon fill="black" stroke="black" points="585.61,-224.92 591.06,-215.83 581.13,-219.53 585.61,-224.92"/>
-<text text-anchor="middle" x="412.43" y="-349.05" font-family="Times,serif" font-size="14.00">1</text>
+<path fill="none" stroke="black" d="M396.59,-360.25C439.31,-328.17 532.74,-258 581.04,-221.72"/>
+<polygon fill="black" stroke="black" points="583.33,-224.38 589.23,-215.57 579.13,-218.78 583.33,-224.38"/>
+<text text-anchor="middle" x="391.59" y="-349.05" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- dra.func_80113D7C -->
+<!-- dra.PlayerStepBossGrab -->
 <g id="node8" class="node">
-<title>dra.func_80113D7C</title>
-<g id="a_node8"><a xlink:href="dra.func_80113D7C.svg" xlink:title="dra.func_80113D7C">
-<ellipse fill="green" stroke="black" cx="611.29" cy="-378" rx="102.88" ry="18"/>
-<text text-anchor="middle" x="611.29" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_80113D7C</text>
+<title>dra.PlayerStepBossGrab</title>
+<g id="a_node8"><a xlink:href="dra.PlayerStepBossGrab.svg" xlink:title="dra.PlayerStepBossGrab">
+<ellipse fill="green" stroke="black" cx="611.29" cy="-378" rx="125.38" ry="18"/>
+<text text-anchor="middle" x="611.29" y="-374.3" font-family="Times,serif" font-size="14.00">dra.PlayerStepBossGrab</text>
 </a>
 </g>
 </g>
-<!-- dra.func_80113D7C&#45;&gt;dra.HandleDamage -->
+<!-- dra.PlayerStepBossGrab&#45;&gt;dra.HandleDamage -->
 <g id="edge7" class="edge">
-<title>dra.func_80113D7C&#45;&gt;dra.HandleDamage</title>
+<title>dra.PlayerStepBossGrab&#45;&gt;dra.HandleDamage</title>
 <path fill="none" stroke="black" d="M611.29,-359.93C611.29,-328.97 611.29,-263.3 611.29,-226.13"/>
 <polygon fill="black" stroke="black" points="614.79,-226.02 611.29,-216.02 607.79,-226.02 614.79,-226.02"/>
 <text text-anchor="middle" x="606.29" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- dra.func_80116208 -->
+<!-- dra.func_80113D7C -->
 <g id="node9" class="node">
-<title>dra.func_80116208</title>
-<g id="a_node9"><a xlink:href="dra.func_80116208.svg" xlink:title="dra.func_80116208">
-<ellipse fill="green" stroke="black" cx="832.29" cy="-378" rx="100.98" ry="18"/>
-<text text-anchor="middle" x="832.29" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_80116208</text>
+<title>dra.func_80113D7C</title>
+<g id="a_node9"><a xlink:href="dra.func_80113D7C.svg" xlink:title="dra.func_80113D7C">
+<ellipse fill="green" stroke="black" cx="857.29" cy="-378" rx="102.88" ry="18"/>
+<text text-anchor="middle" x="857.29" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_80113D7C</text>
 </a>
 </g>
 </g>
-<!-- dra.func_80116208&#45;&gt;dra.HandleDamage -->
+<!-- dra.func_80113D7C&#45;&gt;dra.HandleDamage -->
 <g id="edge8" class="edge">
-<title>dra.func_80116208&#45;&gt;dra.HandleDamage</title>
-<path fill="none" stroke="black" d="M811.5,-360.25C771.85,-328.32 685.35,-258.65 640.13,-222.23"/>
-<polygon fill="black" stroke="black" points="642.17,-219.38 632.19,-215.83 637.78,-224.83 642.17,-219.38"/>
-<text text-anchor="middle" x="806.5" y="-349.05" font-family="Times,serif" font-size="14.00">1</text>
+<title>dra.func_80113D7C&#45;&gt;dra.HandleDamage</title>
+<path fill="none" stroke="black" d="M834.15,-360.25C789.72,-328.1 692.43,-257.71 642.39,-221.5"/>
+<polygon fill="black" stroke="black" points="644.35,-218.6 634.2,-215.57 640.25,-224.27 644.35,-218.6"/>
+<text text-anchor="middle" x="829.15" y="-349.05" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 </g>
 </svg>

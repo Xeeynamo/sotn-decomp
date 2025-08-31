@@ -12,14 +12,14 @@
 <!-- rbo3.EntityBigRedFireball -->
 <g id="node1" class="node">
 <title>rbo3.EntityBigRedFireball</title>
-<ellipse fill="red" stroke="black" cx="652.69" cy="-198" rx="133.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="652.69" cy="-198" rx="133.78" ry="18"/>
 <text text-anchor="middle" x="652.69" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntityBigRedFireball</text>
 </g>
 <!-- rbo3.AnimateEntity -->
 <g id="node2" class="node">
 <title>rbo3.AnimateEntity</title>
 <g id="a_node2"><a xlink:href="rbo3.AnimateEntity.svg" xlink:title="rbo3.AnimateEntity">
-<ellipse fill="red" stroke="black" cx="102.69" cy="-18" rx="102.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="102.69" cy="-18" rx="102.88" ry="18"/>
 <text text-anchor="middle" x="102.69" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.AnimateEntity</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.DestroyEntity</title>
 <g id="a_node3"><a xlink:href="rbo3.DestroyEntity.svg" xlink:title="rbo3.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="323.69" cy="-18" rx="100.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="323.69" cy="-18" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="323.69" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.DestroyEntity</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>rbo3.InitializeEntity</title>
 <g id="a_node4"><a xlink:href="rbo3.InitializeEntity.svg" xlink:title="rbo3.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="546.69" cy="-18" rx="104.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="546.69" cy="-18" rx="104.78" ry="18"/>
 <text text-anchor="middle" x="546.69" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.InitializeEntity</text>
 </a>
 </g>
@@ -67,7 +67,7 @@
 <g id="node5" class="node">
 <title>rbo3.MoveEntity</title>
 <g id="a_node5"><a xlink:href="rbo3.MoveEntity.svg" xlink:title="rbo3.MoveEntity">
-<ellipse fill="red" stroke="black" cx="758.69" cy="-18" rx="89.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="758.69" cy="-18" rx="89.08" ry="18"/>
 <text text-anchor="middle" x="758.69" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.MoveEntity</text>
 </a>
 </g>

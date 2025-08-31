@@ -243,129 +243,129 @@
 <g id="node16" class="node">
 <title>dra.AlucardHandleDamage</title>
 <g id="a_node16"><a xlink:href="dra.AlucardHandleDamage.svg" xlink:title="dra.AlucardHandleDamage">
-<ellipse fill="green" stroke="black" cx="792.09" cy="-378" rx="135.68" ry="18"/>
-<text text-anchor="middle" x="792.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.AlucardHandleDamage</text>
+<ellipse fill="green" stroke="black" cx="742.09" cy="-378" rx="135.68" ry="18"/>
+<text text-anchor="middle" x="742.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.AlucardHandleDamage</text>
 </a>
 </g>
 </g>
 <!-- dra.AlucardHandleDamage&#45;&gt;dra.func_8010FDF8 -->
 <g id="edge15" class="edge">
 <title>dra.AlucardHandleDamage&#45;&gt;dra.func_8010FDF8</title>
-<path fill="none" stroke="black" d="M859.31,-362.28C1010.92,-329.09 1378.31,-248.65 1533.74,-214.62"/>
-<polygon fill="black" stroke="black" points="1534.65,-218.01 1543.67,-212.45 1533.15,-211.17 1534.65,-218.01"/>
-<text text-anchor="middle" x="854.31" y="-351.08" font-family="Times,serif" font-size="14.00">2</text>
+<path fill="none" stroke="black" d="M812.35,-362.51C973.26,-329.32 1367.26,-248.05 1531.41,-214.2"/>
+<polygon fill="black" stroke="black" points="1532.33,-217.58 1541.42,-212.13 1530.92,-210.72 1532.33,-217.58"/>
+<text text-anchor="middle" x="807.35" y="-351.31" font-family="Times,serif" font-size="14.00">2</text>
+</g>
+<!-- dra.PlayerStepCrouch -->
+<g id="node17" class="node">
+<title>dra.PlayerStepCrouch</title>
+<g id="a_node17"><a xlink:href="dra.PlayerStepCrouch.svg" xlink:title="dra.PlayerStepCrouch">
+<ellipse fill="green" stroke="black" cx="1010.09" cy="-378" rx="113.98" ry="18"/>
+<text text-anchor="middle" x="1010.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.PlayerStepCrouch</text>
+</a>
+</g>
+</g>
+<!-- dra.PlayerStepCrouch&#45;&gt;dra.func_8010FDF8 -->
+<g id="edge16" class="edge">
+<title>dra.PlayerStepCrouch&#45;&gt;dra.func_8010FDF8</title>
+<path fill="none" stroke="black" d="M1060.82,-361.82C1170.32,-329.07 1428.37,-251.87 1545.46,-216.84"/>
+<polygon fill="black" stroke="black" points="1546.75,-220.11 1555.33,-213.89 1544.74,-213.4 1546.75,-220.11"/>
+<text text-anchor="middle" x="1055.82" y="-350.62" font-family="Times,serif" font-size="14.00">1</text>
+</g>
+<!-- dra.PlayerStepFall -->
+<g id="node18" class="node">
+<title>dra.PlayerStepFall</title>
+<g id="a_node18"><a xlink:href="dra.PlayerStepFall.svg" xlink:title="dra.PlayerStepFall">
+<ellipse fill="green" stroke="black" cx="1239.09" cy="-378" rx="97.48" ry="18"/>
+<text text-anchor="middle" x="1239.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.PlayerStepFall</text>
+</a>
+</g>
+</g>
+<!-- dra.PlayerStepFall&#45;&gt;dra.func_8010FDF8 -->
+<g id="edge17" class="edge">
+<title>dra.PlayerStepFall&#45;&gt;dra.func_8010FDF8</title>
+<path fill="none" stroke="black" d="M1271.89,-361.05C1338.44,-328.68 1489.24,-255.34 1562.94,-219.5"/>
+<polygon fill="black" stroke="black" points="1564.5,-222.63 1571.96,-215.11 1561.44,-216.34 1564.5,-222.63"/>
+<text text-anchor="middle" x="1266.89" y="-349.85" font-family="Times,serif" font-size="14.00">1</text>
+</g>
+<!-- dra.PlayerStepHighJump -->
+<g id="node19" class="node">
+<title>dra.PlayerStepHighJump</title>
+<g id="a_node19"><a xlink:href="dra.PlayerStepHighJump.svg" xlink:title="dra.PlayerStepHighJump">
+<ellipse fill="green" stroke="black" cx="1481.09" cy="-378" rx="126.98" ry="18"/>
+<text text-anchor="middle" x="1481.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.PlayerStepHighJump</text>
+</a>
+</g>
+</g>
+<!-- dra.PlayerStepHighJump&#45;&gt;dra.func_8010FDF8 -->
+<g id="edge18" class="edge">
+<title>dra.PlayerStepHighJump&#45;&gt;dra.func_8010FDF8</title>
+<path fill="none" stroke="black" d="M1492.98,-359.93C1514.92,-328.43 1561.87,-261.03 1587.51,-224.24"/>
+<polygon fill="black" stroke="black" points="1590.39,-226.22 1593.24,-216.02 1584.65,-222.22 1590.39,-226.22"/>
+<text text-anchor="middle" x="1487.98" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 <!-- dra.PlayerStepJump -->
-<g id="node17" class="node">
+<g id="node20" class="node">
 <title>dra.PlayerStepJump</title>
-<g id="a_node17"><a xlink:href="dra.PlayerStepJump.svg" xlink:title="dra.PlayerStepJump">
-<ellipse fill="green" stroke="black" cx="1050.09" cy="-378" rx="104.78" ry="18"/>
-<text text-anchor="middle" x="1050.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.PlayerStepJump</text>
+<g id="a_node20"><a xlink:href="dra.PlayerStepJump.svg" xlink:title="dra.PlayerStepJump">
+<ellipse fill="green" stroke="black" cx="1730.09" cy="-378" rx="104.78" ry="18"/>
+<text text-anchor="middle" x="1730.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.PlayerStepJump</text>
 </a>
 </g>
 </g>
 <!-- dra.PlayerStepJump&#45;&gt;dra.func_8010FDF8 -->
-<g id="edge16" class="edge">
-<title>dra.PlayerStepJump&#45;&gt;dra.func_8010FDF8</title>
-<path fill="none" stroke="black" d="M1097.41,-361.82C1199.19,-329.18 1438.57,-252.41 1548.31,-217.21"/>
-<polygon fill="black" stroke="black" points="1549.44,-220.52 1557.89,-214.14 1547.3,-213.86 1549.44,-220.52"/>
-<text text-anchor="middle" x="1092.41" y="-350.62" font-family="Times,serif" font-size="14.00">1</text>
-</g>
-<!-- dra.func_801120B4 -->
-<g id="node18" class="node">
-<title>dra.func_801120B4</title>
-<g id="a_node18"><a xlink:href="dra.func_801120B4.svg" xlink:title="dra.func_801120B4">
-<ellipse fill="green" stroke="black" cx="1274.09" cy="-378" rx="101.28" ry="18"/>
-<text text-anchor="middle" x="1274.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_801120B4</text>
-</a>
-</g>
-</g>
-<!-- dra.func_801120B4&#45;&gt;dra.func_8010FDF8 -->
-<g id="edge17" class="edge">
-<title>dra.func_801120B4&#45;&gt;dra.func_8010FDF8</title>
-<path fill="none" stroke="black" d="M1304.34,-360.73C1364.39,-328.44 1498.63,-256.25 1565.56,-220.25"/>
-<polygon fill="black" stroke="black" points="1567.4,-223.24 1574.55,-215.42 1564.08,-217.08 1567.4,-223.24"/>
-<text text-anchor="middle" x="1299.34" y="-349.53" font-family="Times,serif" font-size="14.00">2</text>
-</g>
-<!-- dra.func_80112B64 -->
-<g id="node19" class="node">
-<title>dra.func_80112B64</title>
-<g id="a_node19"><a xlink:href="dra.func_80112B64.svg" xlink:title="dra.func_80112B64">
-<ellipse fill="green" stroke="black" cx="1495.09" cy="-378" rx="101.28" ry="18"/>
-<text text-anchor="middle" x="1495.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_80112B64</text>
-</a>
-</g>
-</g>
-<!-- dra.func_80112B64&#45;&gt;dra.func_8010FDF8 -->
-<g id="edge18" class="edge">
-<title>dra.func_80112B64&#45;&gt;dra.func_8010FDF8</title>
-<path fill="none" stroke="black" d="M1505.64,-359.93C1525.02,-328.57 1566.4,-261.6 1589.2,-224.71"/>
-<polygon fill="black" stroke="black" points="1592.29,-226.36 1594.57,-216.02 1586.34,-222.68 1592.29,-226.36"/>
-<text text-anchor="middle" x="1500.64" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
-</g>
-<!-- dra.func_80113148 -->
-<g id="node20" class="node">
-<title>dra.func_80113148</title>
-<g id="a_node20"><a xlink:href="dra.func_80113148.svg" xlink:title="dra.func_80113148">
-<ellipse fill="green" stroke="black" cx="1715.09" cy="-378" rx="100.98" ry="18"/>
-<text text-anchor="middle" x="1715.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_80113148</text>
-</a>
-</g>
-</g>
-<!-- dra.func_80113148&#45;&gt;dra.func_8010FDF8 -->
 <g id="edge19" class="edge">
-<title>dra.func_80113148&#45;&gt;dra.func_8010FDF8</title>
-<path fill="none" stroke="black" d="M1704.54,-359.93C1685.16,-328.57 1643.78,-261.6 1620.98,-224.71"/>
-<polygon fill="black" stroke="black" points="1623.84,-222.68 1615.6,-216.02 1617.88,-226.36 1623.84,-222.68"/>
-<text text-anchor="middle" x="1699.54" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
+<title>dra.PlayerStepJump&#45;&gt;dra.func_8010FDF8</title>
+<path fill="none" stroke="black" d="M1718.1,-359.93C1695.98,-328.43 1648.65,-261.03 1622.81,-224.24"/>
+<polygon fill="black" stroke="black" points="1625.65,-222.19 1617.04,-216.02 1619.92,-226.21 1625.65,-222.19"/>
+<text text-anchor="middle" x="1713.1" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- dra.func_801131C4 -->
+<!-- dra.PlayerStepStand -->
 <g id="node21" class="node">
-<title>dra.func_801131C4</title>
-<g id="a_node21"><a xlink:href="dra.func_801131C4.svg" xlink:title="dra.func_801131C4">
-<ellipse fill="green" stroke="black" cx="1935.09" cy="-378" rx="101.28" ry="18"/>
-<text text-anchor="middle" x="1935.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_801131C4</text>
+<title>dra.PlayerStepStand</title>
+<g id="a_node21"><a xlink:href="dra.PlayerStepStand.svg" xlink:title="dra.PlayerStepStand">
+<ellipse fill="green" stroke="black" cx="1961.09" cy="-378" rx="107.78" ry="18"/>
+<text text-anchor="middle" x="1961.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.PlayerStepStand</text>
 </a>
 </g>
 </g>
-<!-- dra.func_801131C4&#45;&gt;dra.func_8010FDF8 -->
+<!-- dra.PlayerStepStand&#45;&gt;dra.func_8010FDF8 -->
 <g id="edge20" class="edge">
-<title>dra.func_801131C4&#45;&gt;dra.func_8010FDF8</title>
-<path fill="none" stroke="black" d="M1904.93,-360.73C1845.06,-328.44 1711.23,-256.25 1644.49,-220.25"/>
-<polygon fill="black" stroke="black" points="1646,-217.09 1635.54,-215.42 1642.68,-223.25 1646,-217.09"/>
-<text text-anchor="middle" x="1899.93" y="-349.53" font-family="Times,serif" font-size="14.00">1</text>
+<title>dra.PlayerStepStand&#45;&gt;dra.func_8010FDF8</title>
+<path fill="none" stroke="black" d="M1928.55,-360.73C1863.67,-328.29 1718.26,-255.59 1646.61,-219.76"/>
+<polygon fill="black" stroke="black" points="1647.93,-216.51 1637.42,-215.17 1644.8,-222.77 1647.93,-216.51"/>
+<text text-anchor="middle" x="1923.55" y="-349.53" font-family="Times,serif" font-size="14.00">2</text>
 </g>
-<!-- dra.func_80113AAC -->
+<!-- dra.PlayerStepStoned -->
 <g id="node22" class="node">
-<title>dra.func_80113AAC</title>
-<g id="a_node22"><a xlink:href="dra.func_80113AAC.svg" xlink:title="dra.func_80113AAC">
-<ellipse fill="green" stroke="black" cx="2157.09" cy="-378" rx="102.88" ry="18"/>
-<text text-anchor="middle" x="2157.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_80113AAC</text>
+<title>dra.PlayerStepStoned</title>
+<g id="a_node22"><a xlink:href="dra.PlayerStepStoned.svg" xlink:title="dra.PlayerStepStoned">
+<ellipse fill="green" stroke="black" cx="2200.09" cy="-378" rx="113.18" ry="18"/>
+<text text-anchor="middle" x="2200.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.PlayerStepStoned</text>
 </a>
 </g>
 </g>
-<!-- dra.func_80113AAC&#45;&gt;dra.func_8010FDF8 -->
+<!-- dra.PlayerStepStoned&#45;&gt;dra.func_8010FDF8 -->
 <g id="edge21" class="edge">
-<title>dra.func_80113AAC&#45;&gt;dra.func_8010FDF8</title>
-<path fill="none" stroke="black" d="M2110.03,-361.82C2008.79,-329.18 1770.71,-252.41 1661.56,-217.21"/>
-<polygon fill="black" stroke="black" points="1662.62,-213.88 1652.03,-214.14 1660.48,-220.54 1662.62,-213.88"/>
-<text text-anchor="middle" x="2105.03" y="-350.62" font-family="Times,serif" font-size="14.00">1</text>
+<title>dra.PlayerStepStoned&#45;&gt;dra.func_8010FDF8</title>
+<path fill="none" stroke="black" d="M2149.36,-361.82C2039.86,-329.07 1781.81,-251.87 1664.72,-216.84"/>
+<polygon fill="black" stroke="black" points="1665.43,-213.4 1654.85,-213.89 1663.43,-220.11 1665.43,-213.4"/>
+<text text-anchor="middle" x="2144.36" y="-350.62" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- dra.func_80114DF4 -->
+<!-- dra.PlayerStepWalk -->
 <g id="node23" class="node">
-<title>dra.func_80114DF4</title>
-<g id="a_node23"><a xlink:href="dra.func_80114DF4.svg" xlink:title="dra.func_80114DF4">
-<ellipse fill="green" stroke="black" cx="2380.09" cy="-378" rx="102.88" ry="18"/>
-<text text-anchor="middle" x="2380.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_80114DF4</text>
+<title>dra.PlayerStepWalk</title>
+<g id="a_node23"><a xlink:href="dra.PlayerStepWalk.svg" xlink:title="dra.PlayerStepWalk">
+<ellipse fill="green" stroke="black" cx="2434.09" cy="-378" rx="102.88" ry="18"/>
+<text text-anchor="middle" x="2434.09" y="-374.3" font-family="Times,serif" font-size="14.00">dra.PlayerStepWalk</text>
 </a>
 </g>
 </g>
-<!-- dra.func_80114DF4&#45;&gt;dra.func_8010FDF8 -->
+<!-- dra.PlayerStepWalk&#45;&gt;dra.func_8010FDF8 -->
 <g id="edge22" class="edge">
-<title>dra.func_80114DF4&#45;&gt;dra.func_8010FDF8</title>
-<path fill="none" stroke="black" d="M2320.56,-363.33C2179.54,-330.94 1825.66,-249.66 1674.88,-215.03"/>
-<polygon fill="black" stroke="black" points="1675.35,-211.55 1664.82,-212.72 1673.78,-218.37 1675.35,-211.55"/>
-<text text-anchor="middle" x="2315.56" y="-352.13" font-family="Times,serif" font-size="14.00">1</text>
+<title>dra.PlayerStepWalk&#45;&gt;dra.func_8010FDF8</title>
+<path fill="none" stroke="black" d="M2371.78,-363.62C2221.17,-331.28 1837.99,-249.01 1677.52,-214.55"/>
+<polygon fill="black" stroke="black" points="1677.78,-211.03 1667.27,-212.35 1676.32,-217.87 1677.78,-211.03"/>
+<text text-anchor="middle" x="2366.78" y="-352.42" font-family="Times,serif" font-size="14.00">1</text>
 </g>
 </g>
 </svg>

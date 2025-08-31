@@ -67,33 +67,33 @@
 <g id="node5" class="node">
 <title>dra.AlucardHandleDamage</title>
 <g id="a_node5"><a xlink:href="dra.AlucardHandleDamage.svg" xlink:title="dra.AlucardHandleDamage">
-<ellipse fill="green" stroke="black" cx="285.74" cy="-378" rx="135.68" ry="18"/>
-<text text-anchor="middle" x="285.74" y="-374.3" font-family="Times,serif" font-size="14.00">dra.AlucardHandleDamage</text>
+<ellipse fill="green" stroke="black" cx="273.74" cy="-378" rx="135.68" ry="18"/>
+<text text-anchor="middle" x="273.74" y="-374.3" font-family="Times,serif" font-size="14.00">dra.AlucardHandleDamage</text>
 </a>
 </g>
 </g>
 <!-- dra.AlucardHandleDamage&#45;&gt;dra.func_801139CC -->
 <g id="edge4" class="edge">
 <title>dra.AlucardHandleDamage&#45;&gt;dra.func_801139CC</title>
-<path fill="none" stroke="black" d="M298.01,-359.93C320.66,-328.43 369.13,-261.03 395.58,-224.24"/>
-<polygon fill="black" stroke="black" points="398.5,-226.18 401.5,-216.02 392.82,-222.09 398.5,-226.18"/>
-<text text-anchor="middle" x="293.01" y="-348.73" font-family="Times,serif" font-size="14.00">2</text>
+<path fill="none" stroke="black" d="M287.16,-359.93C311.93,-328.43 364.94,-261.03 393.88,-224.24"/>
+<polygon fill="black" stroke="black" points="396.92,-226.04 400.35,-216.02 391.42,-221.71 396.92,-226.04"/>
+<text text-anchor="middle" x="282.16" y="-348.73" font-family="Times,serif" font-size="14.00">2</text>
 </g>
-<!-- dra.func_80113AAC -->
+<!-- dra.PlayerStepHighJump -->
 <g id="node6" class="node">
-<title>dra.func_80113AAC</title>
-<g id="a_node6"><a xlink:href="dra.func_80113AAC.svg" xlink:title="dra.func_80113AAC">
-<ellipse fill="green" stroke="black" cx="542.74" cy="-378" rx="102.88" ry="18"/>
-<text text-anchor="middle" x="542.74" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_80113AAC</text>
+<title>dra.PlayerStepHighJump</title>
+<g id="a_node6"><a xlink:href="dra.PlayerStepHighJump.svg" xlink:title="dra.PlayerStepHighJump">
+<ellipse fill="green" stroke="black" cx="554.74" cy="-378" rx="126.98" ry="18"/>
+<text text-anchor="middle" x="554.74" y="-374.3" font-family="Times,serif" font-size="14.00">dra.PlayerStepHighJump</text>
 </a>
 </g>
 </g>
-<!-- dra.func_80113AAC&#45;&gt;dra.func_801139CC -->
+<!-- dra.PlayerStepHighJump&#45;&gt;dra.func_801139CC -->
 <g id="edge5" class="edge">
-<title>dra.func_80113AAC&#45;&gt;dra.func_801139CC</title>
-<path fill="none" stroke="black" d="M530.37,-359.93C507.54,-328.43 458.69,-261.03 432.03,-224.24"/>
-<polygon fill="black" stroke="black" points="434.77,-222.06 426.07,-216.02 429.1,-226.17 434.77,-222.06"/>
-<text text-anchor="middle" x="525.37" y="-348.73" font-family="Times,serif" font-size="14.00">2</text>
+<title>dra.PlayerStepHighJump&#45;&gt;dra.func_801139CC</title>
+<path fill="none" stroke="black" d="M541.22,-359.93C516.27,-328.43 462.87,-261.03 433.73,-224.24"/>
+<polygon fill="black" stroke="black" points="436.17,-221.68 427.21,-216.02 430.68,-226.03 436.17,-221.68"/>
+<text text-anchor="middle" x="536.22" y="-348.73" font-family="Times,serif" font-size="14.00">2</text>
 </g>
 </g>
 </svg>

@@ -12,7 +12,7 @@
 <!-- rbo3.ClutLerp -->
 <g id="node1" class="node">
 <title>rbo3.ClutLerp</title>
-<ellipse fill="red" stroke="black" cx="109.8" cy="-198" rx="76.09" ry="18"/>
+<ellipse fill="green" stroke="black" cx="109.8" cy="-198" rx="76.09" ry="18"/>
 <text text-anchor="middle" x="109.8" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.ClutLerp</text>
 </g>
 <!-- GetClut -->

@@ -12,7 +12,7 @@
 <!-- main.CD_getsector -->
 <g id="node1" class="node">
 <title>main.CD_getsector</title>
-<ellipse fill="red" stroke="black" cx="98.79" cy="-18" rx="98.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="98.79" cy="-18" rx="98.58" ry="18"/>
 <text text-anchor="middle" x="98.79" y="-14.3" font-family="Times,serif" font-size="14.00">main.CD_getsector</text>
 </g>
 </g>

@@ -12,14 +12,14 @@
 <!-- rbo3.ReplaceBreakableWithItemDrop -->
 <g id="node1" class="node">
 <title>rbo3.ReplaceBreakableWithItemDrop</title>
-<ellipse fill="red" stroke="black" cx="250.74" cy="-198" rx="184.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="250.74" cy="-198" rx="184.67" ry="18"/>
 <text text-anchor="middle" x="250.74" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.ReplaceBreakableWithItemDrop</text>
 </g>
 <!-- rbo3.DestroyEntity -->
 <g id="node2" class="node">
 <title>rbo3.DestroyEntity</title>
 <g id="a_node2"><a xlink:href="rbo3.DestroyEntity.svg" xlink:title="rbo3.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="100.74" cy="-18" rx="100.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="100.74" cy="-18" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="100.74" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.DestroyEntity</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.PreventEntityFromRespawning</title>
 <g id="a_node3"><a xlink:href="rbo3.PreventEntityFromRespawning.svg" xlink:title="rbo3.PreventEntityFromRespawning">
-<ellipse fill="red" stroke="black" cx="401.74" cy="-18" rx="181.97" ry="18"/>
+<ellipse fill="green" stroke="black" cx="401.74" cy="-18" rx="181.97" ry="18"/>
 <text text-anchor="middle" x="401.74" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.PreventEntityFromRespawning</text>
 </a>
 </g>

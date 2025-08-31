@@ -12,7 +12,7 @@
 <!-- rbo3.Ratan2 -->
 <g id="node1" class="node">
 <title>rbo3.Ratan2</title>
-<ellipse fill="red" stroke="black" cx="68.24" cy="-198" rx="68.49" ry="18"/>
+<ellipse fill="green" stroke="black" cx="68.24" cy="-198" rx="68.49" ry="18"/>
 <text text-anchor="middle" x="68.24" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.Ratan2</text>
 </g>
 <!-- ratan2 -->

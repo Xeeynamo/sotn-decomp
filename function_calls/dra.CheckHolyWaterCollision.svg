@@ -31,18 +31,18 @@
 <polygon fill="black" stroke="black" points="150.39,-46.02 146.89,-36.02 143.39,-46.02 150.39,-46.02"/>
 <text text-anchor="middle" x="141.89" y="-39.82" font-family="Times,serif" font-size="14.00">2</text>
 </g>
-<!-- dra.EntityHolyWater -->
+<!-- dra.EntitySubwpnHolyWater -->
 <g id="node3" class="node">
-<title>dra.EntityHolyWater</title>
-<g id="a_node3"><a xlink:href="dra.EntityHolyWater.svg" xlink:title="dra.EntityHolyWater">
-<ellipse fill="green" stroke="black" cx="146.89" cy="-378" rx="107.48" ry="18"/>
-<text text-anchor="middle" x="146.89" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntityHolyWater</text>
+<title>dra.EntitySubwpnHolyWater</title>
+<g id="a_node3"><a xlink:href="dra.EntitySubwpnHolyWater.svg" xlink:title="dra.EntitySubwpnHolyWater">
+<ellipse fill="green" stroke="black" cx="146.89" cy="-378" rx="144.87" ry="18"/>
+<text text-anchor="middle" x="146.89" y="-374.3" font-family="Times,serif" font-size="14.00">dra.EntitySubwpnHolyWater</text>
 </a>
 </g>
 </g>
-<!-- dra.EntityHolyWater&#45;&gt;dra.CheckHolyWaterCollision -->
+<!-- dra.EntitySubwpnHolyWater&#45;&gt;dra.CheckHolyWaterCollision -->
 <g id="edge2" class="edge">
-<title>dra.EntityHolyWater&#45;&gt;dra.CheckHolyWaterCollision</title>
+<title>dra.EntitySubwpnHolyWater&#45;&gt;dra.CheckHolyWaterCollision</title>
 <path fill="none" stroke="black" d="M146.89,-359.93C146.89,-328.97 146.89,-263.3 146.89,-226.13"/>
 <polygon fill="black" stroke="black" points="150.39,-226.02 146.89,-216.02 143.39,-226.02 150.39,-226.02"/>
 <text text-anchor="middle" x="141.89" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>

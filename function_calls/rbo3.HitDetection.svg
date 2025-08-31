@@ -12,7 +12,7 @@
 <!-- rbo3.HitDetection -->
 <g id="node1" class="node">
 <title>rbo3.HitDetection</title>
-<ellipse fill="red" stroke="black" cx="1252.39" cy="-198" rx="94.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1252.39" cy="-198" rx="94.78" ry="18"/>
 <text text-anchor="middle" x="1252.39" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.HitDetection</text>
 </g>
 <!-- dra.DealDamage -->
@@ -131,7 +131,7 @@
 <g id="node9" class="node">
 <title>rbo3.AllocEntity</title>
 <g id="a_node9"><a xlink:href="rbo3.AllocEntity.svg" xlink:title="rbo3.AllocEntity">
-<ellipse fill="red" stroke="black" cx="1389.39" cy="-18" rx="86.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1389.39" cy="-18" rx="86.38" ry="18"/>
 <text text-anchor="middle" x="1389.39" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.AllocEntity</text>
 </a>
 </g>
@@ -147,7 +147,7 @@
 <g id="node10" class="node">
 <title>rbo3.BottomCornerText</title>
 <g id="a_node10"><a xlink:href="rbo3.BottomCornerText.svg" xlink:title="rbo3.BottomCornerText">
-<ellipse fill="red" stroke="black" cx="1615.39" cy="-18" rx="121.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1615.39" cy="-18" rx="121.58" ry="18"/>
 <text text-anchor="middle" x="1615.39" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.BottomCornerText</text>
 </a>
 </g>
@@ -163,7 +163,7 @@
 <g id="node11" class="node">
 <title>rbo3.CreateEntityFromEntity</title>
 <g id="a_node11"><a xlink:href="rbo3.CreateEntityFromEntity.svg" xlink:title="rbo3.CreateEntityFromEntity">
-<ellipse fill="red" stroke="black" cx="1903.39" cy="-18" rx="148.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1903.39" cy="-18" rx="148.67" ry="18"/>
 <text text-anchor="middle" x="1903.39" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.CreateEntityFromEntity</text>
 </a>
 </g>
@@ -179,7 +179,7 @@
 <g id="node12" class="node">
 <title>rbo3.DestroyEntity</title>
 <g id="a_node12"><a xlink:href="rbo3.DestroyEntity.svg" xlink:title="rbo3.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="2171.39" cy="-18" rx="100.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2171.39" cy="-18" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="2171.39" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.DestroyEntity</text>
 </a>
 </g>
@@ -195,7 +195,7 @@
 <g id="node13" class="node">
 <title>rbo3.PreventEntityFromRespawning</title>
 <g id="a_node13"><a xlink:href="rbo3.PreventEntityFromRespawning.svg" xlink:title="rbo3.PreventEntityFromRespawning">
-<ellipse fill="red" stroke="black" cx="2472.39" cy="-18" rx="181.97" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2472.39" cy="-18" rx="181.97" ry="18"/>
 <text text-anchor="middle" x="2472.39" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.PreventEntityFromRespawning</text>
 </a>
 </g>
@@ -211,7 +211,7 @@
 <g id="node14" class="node">
 <title>rbo3.Random</title>
 <g id="a_node14"><a xlink:href="rbo3.Random.svg" xlink:title="rbo3.Random">
-<ellipse fill="red" stroke="black" cx="2745.39" cy="-18" rx="73.39" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2745.39" cy="-18" rx="73.39" ry="18"/>
 <text text-anchor="middle" x="2745.39" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.Random</text>
 </a>
 </g>

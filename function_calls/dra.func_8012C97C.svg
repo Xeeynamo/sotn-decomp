@@ -47,18 +47,18 @@
 <polygon fill="black" stroke="black" points="283.22,-46.42 285.2,-36.02 277.16,-42.92 283.22,-46.42"/>
 <text text-anchor="middle" x="280.2" y="-39.82" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- dra.func_8012EF2C -->
+<!-- dra.PlayerStepMorphWolf -->
 <g id="node4" class="node">
-<title>dra.func_8012EF2C</title>
-<g id="a_node4"><a xlink:href="dra.func_8012EF2C.svg" xlink:title="dra.func_8012EF2C">
-<ellipse fill="green" stroke="black" cx="192.04" cy="-378" rx="102.88" ry="18"/>
-<text text-anchor="middle" x="192.04" y="-374.3" font-family="Times,serif" font-size="14.00">dra.func_8012EF2C</text>
+<title>dra.PlayerStepMorphWolf</title>
+<g id="a_node4"><a xlink:href="dra.PlayerStepMorphWolf.svg" xlink:title="dra.PlayerStepMorphWolf">
+<ellipse fill="green" stroke="black" cx="192.04" cy="-378" rx="131.88" ry="18"/>
+<text text-anchor="middle" x="192.04" y="-374.3" font-family="Times,serif" font-size="14.00">dra.PlayerStepMorphWolf</text>
 </a>
 </g>
 </g>
-<!-- dra.func_8012EF2C&#45;&gt;dra.func_8012C97C -->
+<!-- dra.PlayerStepMorphWolf&#45;&gt;dra.func_8012C97C -->
 <g id="edge3" class="edge">
-<title>dra.func_8012EF2C&#45;&gt;dra.func_8012C97C</title>
+<title>dra.PlayerStepMorphWolf&#45;&gt;dra.func_8012C97C</title>
 <path fill="none" stroke="black" d="M192.04,-359.93C192.04,-328.97 192.04,-263.3 192.04,-226.13"/>
 <polygon fill="black" stroke="black" points="195.54,-226.02 192.04,-216.02 188.54,-226.02 195.54,-226.02"/>
 <text text-anchor="middle" x="187.04" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>

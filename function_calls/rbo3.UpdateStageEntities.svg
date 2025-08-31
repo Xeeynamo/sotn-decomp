@@ -12,7 +12,7 @@
 <!-- rbo3.UpdateStageEntities -->
 <g id="node1" class="node">
 <title>rbo3.UpdateStageEntities</title>
-<ellipse fill="red" stroke="black" cx="132.59" cy="-198" rx="132.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="132.59" cy="-198" rx="132.68" ry="18"/>
 <text text-anchor="middle" x="132.59" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.UpdateStageEntities</text>
 </g>
 <!-- UnknownEntityFunction -->

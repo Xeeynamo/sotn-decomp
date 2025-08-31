@@ -12,7 +12,7 @@
 <!-- rbo3.EntityEquipItemDrop -->
 <g id="node1" class="node">
 <title>rbo3.EntityEquipItemDrop</title>
-<ellipse fill="red" stroke="black" cx="1664.69" cy="-198" rx="135.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1664.69" cy="-198" rx="135.68" ry="18"/>
 <text text-anchor="middle" x="1664.69" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntityEquipItemDrop</text>
 </g>
 <!-- dra.AddToInventory -->
@@ -115,7 +115,7 @@
 <g id="node8" class="node">
 <title>rbo3.BlinkItem</title>
 <g id="a_node8"><a xlink:href="rbo3.BlinkItem.svg" xlink:title="rbo3.BlinkItem">
-<ellipse fill="red" stroke="black" cx="1311.69" cy="-18" rx="80.69" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1311.69" cy="-18" rx="80.69" ry="18"/>
 <text text-anchor="middle" x="1311.69" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.BlinkItem</text>
 </a>
 </g>
@@ -131,7 +131,7 @@
 <g id="node9" class="node">
 <title>rbo3.BottomCornerText</title>
 <g id="a_node9"><a xlink:href="rbo3.BottomCornerText.svg" xlink:title="rbo3.BottomCornerText">
-<ellipse fill="red" stroke="black" cx="1531.69" cy="-18" rx="121.58" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1531.69" cy="-18" rx="121.58" ry="18"/>
 <text text-anchor="middle" x="1531.69" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.BottomCornerText</text>
 </a>
 </g>
@@ -147,7 +147,7 @@
 <g id="node10" class="node">
 <title>rbo3.CheckFieldCollision</title>
 <g id="a_node10"><a xlink:href="rbo3.CheckFieldCollision.svg" xlink:title="rbo3.CheckFieldCollision">
-<ellipse fill="red" stroke="black" cx="1797.69" cy="-18" rx="126.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="1797.69" cy="-18" rx="126.98" ry="18"/>
 <text text-anchor="middle" x="1797.69" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.CheckFieldCollision</text>
 </a>
 </g>
@@ -163,7 +163,7 @@
 <g id="node11" class="node">
 <title>rbo3.DestroyEntity</title>
 <g id="a_node11"><a xlink:href="rbo3.DestroyEntity.svg" xlink:title="rbo3.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="2042.69" cy="-18" rx="100.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2042.69" cy="-18" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="2042.69" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.DestroyEntity</text>
 </a>
 </g>
@@ -179,7 +179,7 @@
 <g id="node12" class="node">
 <title>rbo3.EntityPrizeDrop</title>
 <g id="a_node12"><a xlink:href="rbo3.EntityPrizeDrop.svg" xlink:title="rbo3.EntityPrizeDrop">
-<ellipse fill="red" stroke="black" cx="2271.69" cy="-18" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2271.69" cy="-18" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="2271.69" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.EntityPrizeDrop</text>
 </a>
 </g>
@@ -195,7 +195,7 @@
 <g id="node13" class="node">
 <title>rbo3.FallEntity</title>
 <g id="a_node13"><a xlink:href="rbo3.FallEntity.svg" xlink:title="rbo3.FallEntity">
-<ellipse fill="red" stroke="black" cx="2481.69" cy="-18" rx="81.49" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2481.69" cy="-18" rx="81.49" ry="18"/>
 <text text-anchor="middle" x="2481.69" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.FallEntity</text>
 </a>
 </g>
@@ -211,7 +211,7 @@
 <g id="node14" class="node">
 <title>rbo3.InitializeEntity</title>
 <g id="a_node14"><a xlink:href="rbo3.InitializeEntity.svg" xlink:title="rbo3.InitializeEntity">
-<ellipse fill="red" stroke="black" cx="2685.69" cy="-18" rx="104.78" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2685.69" cy="-18" rx="104.78" ry="18"/>
 <text text-anchor="middle" x="2685.69" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.InitializeEntity</text>
 </a>
 </g>
@@ -227,7 +227,7 @@
 <g id="node15" class="node">
 <title>rbo3.MoveEntity</title>
 <g id="a_node15"><a xlink:href="rbo3.MoveEntity.svg" xlink:title="rbo3.MoveEntity">
-<ellipse fill="red" stroke="black" cx="2897.69" cy="-18" rx="89.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="2897.69" cy="-18" rx="89.08" ry="18"/>
 <text text-anchor="middle" x="2897.69" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.MoveEntity</text>
 </a>
 </g>
@@ -259,7 +259,7 @@
 <g id="node17" class="node">
 <title>rbo3.SetStep</title>
 <g id="a_node17"><a xlink:href="rbo3.SetStep.svg" xlink:title="rbo3.SetStep">
-<ellipse fill="red" stroke="black" cx="3304.69" cy="-18" rx="72.29" ry="18"/>
+<ellipse fill="green" stroke="black" cx="3304.69" cy="-18" rx="72.29" ry="18"/>
 <text text-anchor="middle" x="3304.69" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.SetStep</text>
 </a>
 </g>

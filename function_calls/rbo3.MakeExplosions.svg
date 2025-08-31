@@ -12,14 +12,14 @@
 <!-- rbo3.MakeExplosions -->
 <g id="node1" class="node">
 <title>rbo3.MakeExplosions</title>
-<ellipse fill="red" stroke="black" cx="339.44" cy="-198" rx="110.48" ry="18"/>
+<ellipse fill="green" stroke="black" cx="339.44" cy="-198" rx="110.48" ry="18"/>
 <text text-anchor="middle" x="339.44" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.MakeExplosions</text>
 </g>
 <!-- rbo3.AllocEntity -->
 <g id="node2" class="node">
 <title>rbo3.AllocEntity</title>
 <g id="a_node2"><a xlink:href="rbo3.AllocEntity.svg" xlink:title="rbo3.AllocEntity">
-<ellipse fill="red" stroke="black" cx="86.44" cy="-18" rx="86.38" ry="18"/>
+<ellipse fill="green" stroke="black" cx="86.44" cy="-18" rx="86.38" ry="18"/>
 <text text-anchor="middle" x="86.44" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.AllocEntity</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.CreateEntityFromEntity</title>
 <g id="a_node3"><a xlink:href="rbo3.CreateEntityFromEntity.svg" xlink:title="rbo3.CreateEntityFromEntity">
-<ellipse fill="red" stroke="black" cx="339.44" cy="-18" rx="148.67" ry="18"/>
+<ellipse fill="green" stroke="black" cx="339.44" cy="-18" rx="148.67" ry="18"/>
 <text text-anchor="middle" x="339.44" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.CreateEntityFromEntity</text>
 </a>
 </g>
@@ -51,7 +51,7 @@
 <g id="node4" class="node">
 <title>rbo3.Random</title>
 <g id="a_node4"><a xlink:href="rbo3.Random.svg" xlink:title="rbo3.Random">
-<ellipse fill="red" stroke="black" cx="579.44" cy="-18" rx="73.39" ry="18"/>
+<ellipse fill="green" stroke="black" cx="579.44" cy="-18" rx="73.39" ry="18"/>
 <text text-anchor="middle" x="579.44" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.Random</text>
 </a>
 </g>

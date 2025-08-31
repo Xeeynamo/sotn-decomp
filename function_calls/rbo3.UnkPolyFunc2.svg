@@ -12,14 +12,14 @@
 <!-- rbo3.UnkPolyFunc2 -->
 <g id="node1" class="node">
 <title>rbo3.UnkPolyFunc2</title>
-<ellipse fill="red" stroke="black" cx="126.09" cy="-198" rx="102.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="126.09" cy="-198" rx="102.88" ry="18"/>
 <text text-anchor="middle" x="126.09" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.UnkPolyFunc2</text>
 </g>
 <!-- rbo3.PrimResetNext -->
 <g id="node2" class="node">
 <title>rbo3.PrimResetNext</title>
 <g id="a_node2"><a xlink:href="rbo3.PrimResetNext.svg" xlink:title="rbo3.PrimResetNext">
-<ellipse fill="red" stroke="black" cx="126.09" cy="-18" rx="106.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="126.09" cy="-18" rx="106.68" ry="18"/>
 <text text-anchor="middle" x="126.09" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.PrimResetNext</text>
 </a>
 </g>
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.EntityLifeUpSpawn</title>
 <g id="a_node3"><a xlink:href="rbo3.EntityLifeUpSpawn.svg" xlink:title="rbo3.EntityLifeUpSpawn">
-<ellipse fill="red" stroke="black" cx="126.09" cy="-378" rx="126.18" ry="18"/>
+<ellipse fill="green" stroke="black" cx="126.09" cy="-378" rx="126.18" ry="18"/>
 <text text-anchor="middle" x="126.09" y="-374.3" font-family="Times,serif" font-size="14.00">rbo3.EntityLifeUpSpawn</text>
 </a>
 </g>

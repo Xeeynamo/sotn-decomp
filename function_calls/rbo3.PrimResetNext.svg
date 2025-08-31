@@ -12,14 +12,14 @@
 <!-- rbo3.PrimResetNext -->
 <g id="node1" class="node">
 <title>rbo3.PrimResetNext</title>
-<ellipse fill="red" stroke="black" cx="106.59" cy="-18" rx="106.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="106.59" cy="-18" rx="106.68" ry="18"/>
 <text text-anchor="middle" x="106.59" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.PrimResetNext</text>
 </g>
 <!-- rbo3.UnkPolyFunc2 -->
 <g id="node2" class="node">
 <title>rbo3.UnkPolyFunc2</title>
 <g id="a_node2"><a xlink:href="rbo3.UnkPolyFunc2.svg" xlink:title="rbo3.UnkPolyFunc2">
-<ellipse fill="red" stroke="black" cx="106.59" cy="-198" rx="102.88" ry="18"/>
+<ellipse fill="green" stroke="black" cx="106.59" cy="-198" rx="102.88" ry="18"/>
 <text text-anchor="middle" x="106.59" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.UnkPolyFunc2</text>
 </a>
 </g>

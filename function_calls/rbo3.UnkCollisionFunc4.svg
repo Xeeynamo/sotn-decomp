@@ -12,7 +12,7 @@
 <!-- rbo3.UnkCollisionFunc4 -->
 <g id="node1" class="node">
 <title>rbo3.UnkCollisionFunc4</title>
-<ellipse fill="red" stroke="black" cx="214.89" cy="-198" rx="122.68" ry="18"/>
+<ellipse fill="green" stroke="black" cx="214.89" cy="-198" rx="122.68" ry="18"/>
 <text text-anchor="middle" x="214.89" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.UnkCollisionFunc4</text>
 </g>
 <!-- g_api_CheckCollision -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.MoveEntity</title>
 <g id="a_node3"><a xlink:href="rbo3.MoveEntity.svg" xlink:title="rbo3.MoveEntity">
-<ellipse fill="red" stroke="black" cx="322.89" cy="-18" rx="89.08" ry="18"/>
+<ellipse fill="green" stroke="black" cx="322.89" cy="-18" rx="89.08" ry="18"/>
 <text text-anchor="middle" x="322.89" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.MoveEntity</text>
 </a>
 </g>

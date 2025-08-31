@@ -111,18 +111,18 @@
 <polygon fill="black" stroke="black" points="1163.23,-41.08 1171.42,-34.36 1160.82,-34.51 1163.23,-41.08"/>
 <text text-anchor="middle" x="1166.42" y="-38.16" font-family="Times,serif" font-size="14.00">1</text>
 </g>
-<!-- ric.RicHandleSlide -->
+<!-- ric.RicStepSlide -->
 <g id="node8" class="node">
-<title>ric.RicHandleSlide</title>
-<g id="a_node8"><a xlink:href="ric.RicHandleSlide.svg" xlink:title="ric.RicHandleSlide">
-<ellipse fill="green" stroke="black" cx="727.34" cy="-378" rx="96.68" ry="18"/>
-<text text-anchor="middle" x="727.34" y="-374.3" font-family="Times,serif" font-size="14.00">ric.RicHandleSlide</text>
+<title>ric.RicStepSlide</title>
+<g id="a_node8"><a xlink:href="ric.RicStepSlide.svg" xlink:title="ric.RicStepSlide">
+<ellipse fill="green" stroke="black" cx="727.34" cy="-378" rx="85.29" ry="18"/>
+<text text-anchor="middle" x="727.34" y="-374.3" font-family="Times,serif" font-size="14.00">ric.RicStepSlide</text>
 </a>
 </g>
 </g>
-<!-- ric.RicHandleSlide&#45;&gt;ric.RicSetSlideKick -->
+<!-- ric.RicStepSlide&#45;&gt;ric.RicSetSlideKick -->
 <g id="edge7" class="edge">
-<title>ric.RicHandleSlide&#45;&gt;ric.RicSetSlideKick</title>
+<title>ric.RicStepSlide&#45;&gt;ric.RicSetSlideKick</title>
 <path fill="none" stroke="black" d="M727.34,-359.93C727.34,-328.97 727.34,-263.3 727.34,-226.13"/>
 <polygon fill="black" stroke="black" points="730.84,-226.02 727.34,-216.02 723.84,-226.02 730.84,-226.02"/>
 <text text-anchor="middle" x="722.34" y="-348.73" font-family="Times,serif" font-size="14.00">1</text>

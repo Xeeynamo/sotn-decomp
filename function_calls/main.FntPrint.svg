@@ -12,7 +12,7 @@
 <!-- main.FntPrint -->
 <g id="node1" class="node">
 <title>main.FntPrint</title>
-<ellipse fill="red" stroke="black" cx="76.04" cy="-18" rx="76.09" ry="18"/>
+<ellipse fill="green" stroke="black" cx="76.04" cy="-18" rx="76.09" ry="18"/>
 <text text-anchor="middle" x="76.04" y="-14.3" font-family="Times,serif" font-size="14.00">main.FntPrint</text>
 </g>
 </g>

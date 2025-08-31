@@ -12,7 +12,7 @@
 <!-- rbo3.EntityHeartDrop -->
 <g id="node1" class="node">
 <title>rbo3.EntityHeartDrop</title>
-<ellipse fill="red" stroke="black" cx="245.14" cy="-198" rx="113.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="245.14" cy="-198" rx="113.98" ry="18"/>
 <text text-anchor="middle" x="245.14" y="-194.3" font-family="Times,serif" font-size="14.00">rbo3.EntityHeartDrop</text>
 </g>
 <!-- UnknownEntityFunction -->
@@ -35,7 +35,7 @@
 <g id="node3" class="node">
 <title>rbo3.DestroyEntity</title>
 <g id="a_node3"><a xlink:href="rbo3.DestroyEntity.svg" xlink:title="rbo3.DestroyEntity">
-<ellipse fill="red" stroke="black" cx="367.14" cy="-18" rx="100.98" ry="18"/>
+<ellipse fill="green" stroke="black" cx="367.14" cy="-18" rx="100.98" ry="18"/>
 <text text-anchor="middle" x="367.14" y="-14.3" font-family="Times,serif" font-size="14.00">rbo3.DestroyEntity</text>
 </a>
 </g>
