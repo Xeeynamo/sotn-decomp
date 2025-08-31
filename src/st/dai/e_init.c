@@ -39,20 +39,20 @@ void EntityPriest(Entity* self);
 void EntityPriestBlades(Entity* self);
 void EntityPriestBladeDebris(Entity* self);
 void EntityBellHelper(Entity* self);
-void func_us_801D1204(Entity* self);
+void EntityCornerGuard(Entity* self);
 void func_us_801D1C24(Entity* self);
 void EntityBonePillarHead(Entity* self);
 void EntityBonePillarFireBreath(Entity* self);
 void EntityBonePillarDeathParts(Entity* self);
 void EntityBonePillarSpikeBall(Entity* self);
 void func_us_801C3644(Entity* self);
-void func_us_801C3D44(Entity* self);
-void func_us_801C3850(Entity* self);
-void func_us_801C379C(Entity* self);
-void func_us_801C3ED8(Entity* self);
-void func_us_801D2FA4(Entity* self);
-void func_us_801D36EC(Entity* self);
-void EntitySkeletonPieces(Entity* self);
+void EntitySpikes(Entity* self);
+void EntitySpikesParts(Entity* self);
+void EntitySpikesDust(Entity* self);
+void EntitySpikesDamage(Entity* self);
+void EntityBoneHalberd(Entity* self);
+void EntityBoneHalberdNaginata(Entity* self);
+void EntityBoneHalberdParts(Entity* self);
 void EntityWingedGuard(Entity* self);
 void EntityWingedGuardParts(Entity* self);
 void EntityBat(Entity* self);
@@ -61,8 +61,8 @@ void EntityBlueRaven(Entity* self);
 void EntitySkelerang(Entity* self);
 void EntitySkelerangBoomerang(Entity* self);
 void EntitySkelerangUnknown(Entity* self);
-void func_us_801D56F4(Entity* self);
-void func_us_801D636C(Entity* self);
+void EntityHuntingGirl(Entity* self);
+void EntityHuntingGirlSpirit(Entity* self);
 void EntitySpectralSword(Entity* self);
 void EntitySpectralSwordAura(Entity* self);
 void EntitySpectralSwordWeapon(Entity* self);
@@ -113,20 +113,20 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityPriestBlades,
     EntityPriestBladeDebris,
     EntityBellHelper,
-    func_us_801D1204,
+    EntityCornerGuard,
     func_us_801D1C24,
     EntityBonePillarHead,
     EntityBonePillarFireBreath,
     EntityBonePillarDeathParts,
     EntityBonePillarSpikeBall,
     func_us_801C3644,
-    func_us_801C3D44,
-    func_us_801C3850,
-    func_us_801C379C,
-    func_us_801C3ED8,
-    func_us_801D2FA4,
-    func_us_801D36EC,
-    EntitySkeletonPieces,
+    EntitySpikes,
+    EntitySpikesParts,
+    EntitySpikesDust,
+    EntitySpikesDamage,
+    EntityBoneHalberd,
+    EntityBoneHalberdNaginata,
+    EntityBoneHalberdParts,
     EntityWingedGuard,
     EntityWingedGuardParts,
     EntityBat,
@@ -135,8 +135,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkelerang,
     EntitySkelerangBoomerang,
     EntitySkelerangUnknown,
-    func_us_801D56F4,
-    func_us_801D636C,
+    EntityHuntingGirl,
+    EntityHuntingGirlSpirit,
     EntitySpectralSword,
     EntitySpectralSwordAura,
     EntitySpectralSwordWeapon,
@@ -159,11 +159,12 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 1};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInit_801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3}; // Unused
+// This seems to be used as a common init and should probably be renamed
 EInit g_EInitStatueBlock = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
 EInit g_EInitPriest = {ANIMSET_OVL(2), 0, 72, PAL_UNK_C9, 5};
 EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_UNK_CA, 5}; // Unused
 EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_UNK_C9, 101};
-EInit D_us_801809E0 = {ANIMSET_OVL(4), 0, 72, PAL_UNK_215, 180};
+EInit g_EInitCornerGuard = {ANIMSET_OVL(4), 0, 72, PAL_CORNER_GUARD, 180};
 EInit D_us_801809EC = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 181};
 EInit g_EInitBonePillarHead = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 183};
 EInit g_EInitBonePillarPieces = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 2};
@@ -171,8 +172,8 @@ EInit g_EInitBonePillarFireBreath = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 184};
 EInit g_EInitBonePillarSpikeBall = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 185};
-EInit D_us_80180A28 = {ANIMSET_OVL(7), 1, 72, PAL_UNK_22A, 118};
-EInit D_us_80180A34 = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
+EInit g_EInitBoneHalberd = {ANIMSET_OVL(7), 1, 72, PAL_UNK_22A, 118};
+EInit g_EInitBoneHalberdNaginata = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
 EInit g_EInitWingedGuard = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 128};
 EInit g_EInitWingedGuardParts = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 3};
 EInit g_EInitBat = {ANIMSET_OVL(9), 0, 74, PAL_BAT, 64};
@@ -180,7 +181,7 @@ EInit g_EInitBlueRaven = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 114};
 EInit g_EInitBlackCrow = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 115};
 EInit g_EInitSkelerang = {ANIMSET_OVL(11), 1, 72, PAL_SKELERANG, 11};
 EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(11), 43, 72, PAL_SKELERANG, 12};
-EInit D_us_80180A94 = {ANIMSET_OVL(12), 0, 84, PAL_UNK_232, 227};
+EInit g_EInitHuntingGirl = {ANIMSET_OVL(12), 0, 84, PAL_UNK_232, 227};
 EInit g_EInitSpectralSword = {ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 136};
 EInit g_EInitSpectralSwordAura = {
     ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 2};

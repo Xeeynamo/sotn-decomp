@@ -57,10 +57,10 @@ enum OVL_EXPORT(Entities) {
     E_UNK_2B,                // func_us_801B8D2C
     E_UNK_2C,                // func_us_801BA7FC
     E_BIG_RED_FIREBALL,      // EntityBigRedFireball
-    E_UNK_2E,                // func_us_801CA2A4
-    E_UNK_2F,                // func_us_801CAF68
-    E_UNK_30,                // func_us_801CBB24
-    E_UNK_31,                // func_us_801CBC10
+    E_DISCUS_LORD,           // EntityDiscusLord
+    E_DISCUS,                // EntityDiscus
+    E_DISCUS_TRAIL,          // EntityDiscusTrail
+    E_DISCUS_CHAIN,          // EntityDiscusChain
     E_UNK_32,                // func_us_801CC2E4
     E_UNK_33,                // func_us_801CCEF0
     E_UNK_34,                // func_us_801CDB50
@@ -79,15 +79,15 @@ enum OVL_EXPORT(Entities) {
     E_UNK_41,                // func_us_801D0B38
     E_UNK_42,                // func_us_801D0F10
     E_UNK_43,                // func_us_801BB4CC
-    E_UNK_44,                // func_us_801D1474
-    E_UNK_45,                // func_us_801D1F68
+    E_GRAVE_KEEPER,          // EntityGraveKeeper
+    E_GRAVE_KEEPER_HITBOX,   // EntityGraveKeeperHitbox
     E_TOMBSTONE,             // EntityTombstone
     E_GREMLIN,               // EntityGremlin
     E_GREMLIN_EFFECT,        // EntityGremlinEffect
     E_GREMLIN_FIRE,          // EntityGremlinFire
-    E_UNK_4A,                // func_us_801D2B3C
+    E_UNK_4A,                // EntityLargeSlime
     E_UNK_4B,                // func_us_801D3D08
-    E_UNK_4C,                // func_us_801D4088
+    E_UNK_4C,                // EntitySlime
     E_UNK_4D,                // func_us_801D4744
     E_WERESKELETON,          // EntityWereskeleton
     E_ID_42,                 // func_us_801CE958

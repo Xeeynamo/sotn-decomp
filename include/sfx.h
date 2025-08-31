@@ -276,6 +276,14 @@ enum {
 // plays every 10 frames while using bible subweapon
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
+// STAGE CAT
+#define SFX_GRAVE_KEEPER_GRAAH 0x754
+#define SFX_GRAVE_KEEPER_HIYAH 0x755
+#define SFX_GRAVE_KEEPER_DEATH 0x756
+#define SFX_DISCUS_LORD_HEY 0x763
+#define SFX_DISCUS_LORD_DEATH_VORTEX 0x764
+#define SFX_DISCUS_BUZZ 0x765
+
 // STAGE DAI
 // Unknown SFX related to the priest
 #define SFX_UNK_204 0x204
@@ -648,6 +656,9 @@ enum Sfx {
     SFX_MARIONETTE_YELL,
     SFX_GREMLIN_HURT = 0x728,
     SFX_GREMLIN_DEATH,
+    SFX_UNK_72A = 0x72A,
+    SFX_UNK_72B = 0x72B,
+    SFX_UNK_72C = 0x72C,
     SFX_FROZEN_SHADE_SCREAM = 0x733,
     SFX_SALEM_WITCH_ATTACK = 0x736,
     SFX_SALEM_WITCH_HURT,

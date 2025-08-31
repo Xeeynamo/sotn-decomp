@@ -43,8 +43,11 @@
 #endif
 
 // Used for cluts, palettes, and in g_EInits
+// Some of the PAL_STAGE_NAME items seem to be used as general palettes
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
+    PAL_STAINED_GLASS_E = 0xE,
+    PAL_STAINED_GLASS_F = 0xF,
     PAL_41EE4_74 = 0x74,
     PAL_BELL_1 = 0x75,
     PAL_BELL_2 = 0x76,
@@ -56,18 +59,22 @@ enum OVL_EXPORT(Palette) {
     PAL_UNK_CC = 0xCC,
     PAL_UNK_CE = 0xCE,
     PAL_STAGE_NAME_15F = 0x15F,
+    PAL_SPIKES_DUST = 0x161,
     PAL_SPECTRAL_SWORD_WEAPON_3 = 0x16B,
     PAL_STAGE_NAME_19D = 0x19D,
     PAL_STAGE_NAME_19E = 0x19E,
     PAL_STAGE_NAME_19F = 0x19F,
     PAL_SKELERANG = 0x200,
-    PAL_UNK_215 = 0x215,
+    PAL_STAINED_GLASS_204 = 0x204,
+    PAL_STAINED_GLASS_205 = 0x205,
+    PAL_CORNER_GUARD = 0x215,
     PAL_BONE_PILLAR = 0x216,
     PAL_BONE_PILLAR_FIRE = 0x221,
     PAL_UNK_22A = 0x22A,
     PAL_WINGED_GUARD = 0x22B,
     PAL_BAT = 0x22C,
     PAL_CROW = 0x22F,
+    PAL_HUNTING_GIRL = 0x231,
     PAL_UNK_232 = 0x232,
     PAL_SPECTRAL_SWORD = 0x234,
     PAL_SPECTRAL_SWORD_WEAPON_1 = 0x235,
@@ -121,20 +128,20 @@ enum OVL_EXPORT(Entities) {
     E_PRIEST_BLADES,          // EntityPriestBlades,
     E_PRIEST_BLADE_DEBRIS,    // EntityPriestBladeDebris,
     E_UNK_26,                 // EntityBellHelper,
-    E_UNK_27,                 // func_us_801D1204,
+    E_CORNER_GUARD,           // EntityCornerGuard,
     E_UNK_28,                 // func_us_801D1C24,
     E_BONE_PILLAR_HEAD,       // EntityBonePillarHead,
     E_BONE_PILLAR_FIRE,       // EntityBonePillarFireBreath,
     E_BONE_PILLAR_PIECES,     // EntityBonePillarDeathParts,
     E_BONE_PILLAR_SPIKE_BALL, // EntityBonePillarSpikeBall,
     E_UNK_2D,                 // func_us_801C3644,
-    E_UNK_2E,                 // func_us_801C3D44,
-    E_UNK_2F,                 // func_us_801C3850,
-    E_UNK_30,                 // func_us_801C379C,
-    E_UNK_31,                 // func_us_801C3ED8,
-    E_UNK_32,                 // func_us_801D2FA4,
-    E_UNK_33,                 // func_us_801D36EC,
-    E_SKELETON_PIECES,        // EntitySkeletonPieces,
+    E_SPIKES,                 // EntitySpikes,
+    E_SPIKES_PARTS,           // EntitySpikesParts,
+    E_SPIKES_DUST,            // EntitySpikesDust,
+    E_SPIKES_DAMAGE,          // EntitySpikesDamage,
+    E_BONE_HALBERD,           // EntityBoneHalberd,
+    E_BONE_HALBERD_NAGINATA,  // EntityBoneHalberdNaginata,
+    E_BONE_HALBERD_PARTS,     // EntityBoneHalberdParts,
     E_WINGED_GUARD,           // EntityWingedGuard,
     E_WINGED_GUARD_PARTS,     // EntityWingedGuardParts,
     E_BAT,                    // EntityBat,
@@ -143,8 +150,8 @@ enum OVL_EXPORT(Entities) {
     E_SKELERANG,              // EntitySkelerang,
     E_SKELERANG_BOOMERANG,    // EntitySkelerangBoomerang,
     E_SKELERANG_UNKNOWN,      // EntitySkelerangUnknown,
-    E_UNK_3D,                 // func_us_801D56F4,
-    E_UNK_3E,                 // func_us_801D636C,
+    E_HUNTING_GIRL,           // EntityHuntingGirl,
+    E_HUNTING_GIRL_SPIRIT,    // EntityHuntingGirlSpirit,
     E_SPECTRAL_SWORD,         // EntitySpectralSword,
     E_SPECTRAL_SWORD_AURA,    // EntitySpectralSwordAura,
     E_SPECTRAL_SWORD_WEAPON,  // EntitySpectralSwordWeapon,
@@ -173,14 +180,14 @@ extern EInit g_EInitStatueBlock;
 extern EInit g_EInitPriest;
 // extern EInit g_EInit_801809C8; // Unused
 extern EInit D_us_801809D4;
-extern EInit D_us_801809E0;
+extern EInit g_EInitCornerGuard;
 extern EInit D_us_801809EC;
 extern EInit g_EInitBonePillarHead;
 extern EInit g_EInitBonePillarPieces;
 extern EInit g_EInitBonePillarFireBreath;
 extern EInit g_EInitBonePillarSpikeBall;
-extern EInit D_us_80180A28;
-extern EInit D_us_80180A34;
+extern EInit g_EInitBoneHalberd;
+extern EInit g_EInitBoneHalberdNaginata;
 extern EInit g_EInitWingedGuard;
 extern EInit g_EInitWingedGuardParts;
 extern EInit g_EInitBat;
@@ -188,7 +195,7 @@ extern EInit g_EInitBlueRaven;
 extern EInit g_EInitBlackCrow;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
-extern EInit D_us_80180A94;
+extern EInit g_EInitHuntingGirl;
 extern EInit g_EInitSpectralSword;
 extern EInit g_EInitSpectralSwordAura;
 extern EInit g_EInitSpectralSwordWeapon;

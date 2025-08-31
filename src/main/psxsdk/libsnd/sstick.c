@@ -3,7 +3,6 @@
 
 void SsSetTickMode(long tick_mode) {
     s32 videoMode;
-    s32 var_v0;
 
     videoMode = GetVideoMode();
     if (tick_mode & 0x1000) {
@@ -16,49 +15,47 @@ void SsSetTickMode(long tick_mode) {
     if (_snd_seq_tick_env.unk0 < 6) {
         switch (_snd_seq_tick_env.unk0) {
         case 4:
-            VBLANK_MINUS = 0x32;
+            VBLANK_MINUS = 50;
             if (videoMode != 1) {
-                _snd_seq_tick_env.unk0 = 0x32;
-                return;
+                _snd_seq_tick_env.unk0 = 50;
+            } else {
+                _snd_seq_tick_env.unk0 = 5;
             }
-            _snd_seq_tick_env.unk0 = 5;
             return;
         case 1:
-            var_v0 = 0x3C;
-            VBLANK_MINUS = 0x3C;
+            VBLANK_MINUS = 60;
             if (videoMode == 0) {
-                var_v0 = 5;
+                _snd_seq_tick_env.unk0 = 5;
+            } else {
+                _snd_seq_tick_env.unk0 = 60;
             }
-            _snd_seq_tick_env.unk0 = var_v0;
             return;
         case 3:
-            VBLANK_MINUS = 0x78;
+            VBLANK_MINUS = 120;
             return;
         case 2:
-            VBLANK_MINUS = 0xF0;
+            VBLANK_MINUS = 240;
             return;
         case 5:
-            switch (videoMode) {
-            case 1:
-                VBLANK_MINUS = 0x32;
-                return;
-            default:
-            case 0:
-                VBLANK_MINUS = 0x3C;
-                return;
+            if (videoMode == 0) {
+                VBLANK_MINUS = 60;
+            } else if (videoMode == 1) {
+                VBLANK_MINUS = 50;
+            } else {
+                VBLANK_MINUS = 60;
             }
             break;
         case 0:
-            if (videoMode != 0) {
-                if (videoMode == 1) {
-                    VBLANK_MINUS = 0x32;
-                    return;
-                }
+            if (videoMode == 0) {
+                VBLANK_MINUS = 60;
+            } else if (videoMode == 1) {
+                VBLANK_MINUS = 50;
+            } else {
+                VBLANK_MINUS = 60;
             }
-            VBLANK_MINUS = 0x3C;
             return;
         default:
-            VBLANK_MINUS = 0x3C;
+            VBLANK_MINUS = 60;
             return;
         }
     } else {

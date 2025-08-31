@@ -46,10 +46,10 @@ void func_us_801BA164(Entity* self);
 void func_us_801B8D2C(Entity* self);
 void func_us_801BA7FC(Entity* self);
 void EntityBigRedFireball(Entity* self);
-void func_us_801CA2A4(Entity* self);
-void func_us_801CAF68(Entity* self);
-void func_us_801CBB24(Entity* self);
-void func_us_801CBC10(Entity* self);
+void EntityDiscusLord(Entity* self);
+void EntityDiscus(Entity* self);
+void EntityDiscusTrail(Entity* self);
+void EntityDiscusChain(Entity* self);
 void func_us_801CC2E4(Entity* self);
 void func_us_801CCEF0(Entity* self);
 void func_us_801CDB50(Entity* self);
@@ -68,15 +68,15 @@ void func_us_801D08A8(Entity* self);
 void func_us_801D0B38(Entity* self);
 void func_us_801D0F10(Entity* self);
 void func_us_801BB4CC(Entity* self);
-void func_us_801D1474(Entity* self);
-void func_us_801D1F68(Entity* self);
+void EntityGraveKeeper(Entity* self);
+void EntityGraveKeeperHitbox(Entity* self);
 void EntityTombstone(Entity* self);
 void EntityGremlin(Entity* self);
 void EntityGremlinEffect(Entity* self);
 void EntityGremlinFire(Entity* self);
-void func_us_801D2B3C(Entity* self);
+void EntityLargeSlime(Entity* self);
 void func_us_801D3D08(Entity* self);
-void func_us_801D4088(Entity* self);
+void EntitySlime(Entity* self);
 void func_us_801D4744(Entity* self);
 void EntityWereskeleton(Entity* self);
 void func_us_801CEA2C(Entity* self);
@@ -132,10 +132,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B8D2C,
     func_us_801BA7FC,
     EntityBigRedFireball,
-    func_us_801CA2A4,
-    func_us_801CAF68,
-    func_us_801CBB24,
-    func_us_801CBC10,
+    EntityDiscusLord,
+    EntityDiscus,
+    EntityDiscusTrail,
+    EntityDiscusChain,
     func_us_801CC2E4,
     func_us_801CCEF0,
     func_us_801CDB50,
@@ -154,15 +154,15 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D0B38,
     func_us_801D0F10,
     func_us_801BB4CC,
-    func_us_801D1474,
-    func_us_801D1F68,
+    EntityGraveKeeper,
+    EntityGraveKeeperHitbox,
     EntityTombstone,
     EntityGremlin,
     EntityGremlinEffect,
     EntityGremlinFire,
-    func_us_801D2B3C,
+    EntityLargeSlime,
     func_us_801D3D08,
-    func_us_801D4088,
+    EntitySlime,
     func_us_801D4744,
     EntityWereskeleton,
     func_us_801CEA2C,
@@ -198,8 +198,8 @@ EInit D_us_801811E8 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x005};
 EInit D_us_801811F4 = {ANIMSET_OVL(0x01), 0x13, 0x00, 0x0000, 0x000};
 
 // Discus Lord
-EInit D_us_80181200 = {ANIMSET_OVL(0x04), 0x01, 0x49, 0x0224, 0x04D};
-EInit D_us_8018120C = {ANIMSET_OVL(0x04), 0x10, 0x49, 0x0224, 0x04E};
+EInit g_EInitDiscusLord = {ANIMSET_OVL(0x04), 0x01, 0x49, 0x0224, 0x04D};
+EInit g_EInitDiscus = {ANIMSET_OVL(0x04), 0x10, 0x49, 0x0224, 0x04E};
 
 // Hellfire Beast
 EInit D_us_80181218 = {ANIMSET_OVL(0x04), 0x19, 0x49, 0x0224, 0x047};
@@ -213,8 +213,8 @@ EInit D_us_80181254 = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x005};
 EInit D_us_80181260 = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x084};
 
 // Grave Keeper
-EInit D_us_8018126C = {ANIMSET_OVL(0x09), 0x01, 0x4D, 0x0236, 0x06F};
-EInit D_us_80181278 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x070};
+EInit g_EInitGraveKeeper = {ANIMSET_OVL(0x09), 0x01, 0x4D, 0x0236, 0x06F};
+EInit g_EInitGraveKeeperHitbox = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x070};
 
 // Tombstone
 EInit g_EInitTombstone = {ANIMSET_OVL(0x09), 0x15, 0x4D, 0x0236, 0x071};
@@ -225,10 +225,10 @@ EInit D_us_801812F0 = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x005};
 EInit g_EInitGremlinFire = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x0E2};
 
 // Large Slime
-EInit D_us_801812B4 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x041};
+EInit g_EInitLargeSlime = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x041};
 
 // Slime
-EInit D_us_801812C0 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x042};
+EInit g_EInitSlime = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x042};
 
 // Wereskeleton
 EInit g_EInitWereskeleton = {ANIMSET_OVL(0x06), 0x01, 0x49, 0x0250, 0x03D};

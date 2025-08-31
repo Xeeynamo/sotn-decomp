@@ -296,6 +296,8 @@ extern u8 D_8D95C40[];
 // used with various equipment, enemy resistances, etc
 typedef enum Elements {
     ELEMENT_NONE = 0,
+    ELEMENT_UNK_1 = 0x1,
+    ELEMENT_UNK_10 = 0x10, // Possibly unresistable, used by e_spikes
     ELEMENT_HIT = 0x20,
     ELEMENT_CUT = 0x40,
     ELEMENT_POISON = 0x80,
@@ -811,6 +813,7 @@ typedef struct {
 #define POSE_LOOP(index) {0, index} // loop at pose index
 #define POSE_END {-1, 0}            // stop at last frame
 #define POSE_JUMP(anim) {-2, anim}  // set new animation
+#define POSE_UNKNOWN(anim) {-3, anim}
 typedef struct {
     u16 duration;
     u16 pose; // contains both frameNo and hitboxNo

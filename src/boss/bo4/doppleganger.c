@@ -3,7 +3,6 @@
 
 extern s32 D_us_801D4118[];
 extern s32 D_us_801D4198[];
-extern s32 D_us_801D4D74;
 
 static void func_us_801C1A38(void) {
     Entity* entity;
@@ -41,7 +40,7 @@ static void func_us_801C1A38(void) {
         *colliders = 0;
     }
 
-    D_us_801D4D74 = 0;
+    g_Dop.unk04 = 0;
     g_Dop.vram_flag = 0;
     func_us_801C59DC(0);
     entity = &g_Entities[E_ID_41];
@@ -172,7 +171,7 @@ void EntityDoppleganger10(void) {
                         case 14:
                             break;
                         case 15:
-                            func_8010E0B8();
+                            OVL_EXPORT(func_8010E0B8)();
                             break;
                         }
                     }
@@ -194,7 +193,7 @@ void EntityDoppleganger10(void) {
                 g_Dop.padPressed &= ~(PAD_SQUARE | PAD_CIRCLE);
             }
 
-            if (!g_Dop.timers[14]) {
+            if (!g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
                 if ((g_CurrentEntity->hitFlags > 0) &&
                     (g_CurrentEntity->hitFlags < 4)) {
                     step = DOPPLEGANGER.step;
@@ -301,13 +300,13 @@ void EntityDoppleganger10(void) {
         DopplegangerStepJump();
         break;
     case Dop_MorphBat:
-        ControlBatForm();
+        OVL_EXPORT(ControlBatForm)();
         break;
     case Dop_UnmorphBat:
         DopplegangerStepUnmorphBat();
         break;
     case Dop_MorphMist:
-        ControlMistForm();
+        OVL_EXPORT(ControlMistForm)();
         break;
     case Dop_UnmorphMist:
         DopplegangerStepUnmorphMist();
@@ -353,7 +352,7 @@ void EntityDoppleganger10(void) {
     case Dop_MorphBat:
         func_us_801C5354(1, 1);
         if (DOPPLEGANGER.step_s == 3) {
-            func_us_801C5430(1, 4);
+            OVL_EXPORT(func_us_801C5430)(1, 4);
         }
         status = PLAYER_STATUS_UNK100000 | PLAYER_STATUS_BAT_FORM;
         ;
@@ -363,7 +362,7 @@ void EntityDoppleganger10(void) {
         break;
     case Dop_MorphMist:
         func_us_801C5354(1, 1);
-        func_us_801C5430(1, 4);
+        OVL_EXPORT(func_us_801C5430)(1, 4);
         status = PLAYER_STATUS_UNK100000 | PLAYER_STATUS_MIST_FORM;
         DOPPLEGANGER.palette = PAL_OVL(0x20D);
         break;
@@ -372,7 +371,7 @@ void EntityDoppleganger10(void) {
         status = PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK100000 |
                  PLAYER_STATUS_MIST_FORM;
         DOPPLEGANGER.palette = PAL_OVL(0x20D);
-        func_us_801C5430(1, 4);
+        OVL_EXPORT(func_us_801C5430)(1, 4);
         break;
     case Dop_UnmorphBat:
         func_us_801C5354(1, 1);
@@ -381,17 +380,17 @@ void EntityDoppleganger10(void) {
         if (DOPPLEGANGER.step_s == 0) {
             DOPPLEGANGER.animSet = ANIMSET_OVL(2);
         }
-        func_us_801C5430(1, 4);
+        OVL_EXPORT(func_us_801C5430)(1, 4);
         break;
     case Dop_HighJump:
         func_us_801C5354(1, 1);
-        func_us_801C5430(1, 4);
+        OVL_EXPORT(func_us_801C5430)(1, 4);
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
         break;
     case Dop_Hit:
         status = PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK10000;
         func_us_801C5354(1, 1);
-        func_us_801C5430(1, 4);
+        OVL_EXPORT(func_us_801C5430)(1, 4);
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
         break;
     case Dop_Kill:
@@ -401,13 +400,13 @@ void EntityDoppleganger10(void) {
             status |= PLAYER_STATUS_UNK80000;
         }
         func_us_801C5354(1, 1);
-        func_us_801C5430(1, 4);
+        OVL_EXPORT(func_us_801C5430)(1, 4);
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
         break;
     case Dop_SwordWarp:
         status = PLAYER_STATUS_UNK100000;
         func_us_801C5354(1, 1);
-        func_us_801C5430(4, 0x30);
+        OVL_EXPORT(func_us_801C5430)(4, 0x30);
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
         DOPPLEGANGER.palette = PAL_OVL(0x20D);
         break;
@@ -419,7 +418,7 @@ void EntityDoppleganger10(void) {
         break;
     }
 
-    if (g_Dop.timers[0]) {
+    if (g_Dop.timers[ALU_T_POISON]) {
         status |= PLAYER_STATUS_UNK100000 | PLAYER_STATUS_POISON;
         func_us_801C5354(1, 1);
     }
@@ -428,10 +427,10 @@ void EntityDoppleganger10(void) {
 
     if ((g_Dop.unk08 & PLAYER_STATUS_UNK10000) &&
         !(g_Dop.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK10000))) {
-        g_Dop.timers[15] = 4;
+        g_Dop.timers[ALU_T_15] = 4;
         DOPPLEGANGER.palette = PAL_OVL(0x200);
     }
-    PlayAnimation(D_us_80183C70, D_us_80183CB4);
+    OVL_EXPORT(PlayAnimation)(D_us_80183C70, D_us_80183CB4);
     if (g_Dop.status & PLAYER_STATUS_DEAD) {
         if (DOPPLEGANGER.poseTimer < 0) {
             DOPPLEGANGER.animCurFrame |= 0x8000;
@@ -442,11 +441,12 @@ void EntityDoppleganger10(void) {
         if (g_Dop.status & PLAYER_STATUS_STONE) {
             DOPPLEGANGER.hitboxState &= 0xFFCF;
         }
-        if ((g_Dop.timers[13] | g_Dop.timers[14]) != 0) {
+        if ((g_Dop.timers[ALU_T_INVINCIBLE] |
+             g_Dop.timers[ALU_T_INVINCIBLE_CONSUMABLES]) != 0) {
             DOPPLEGANGER.hitboxState = 0;
         }
     }
-    func_8010D59C();
+    OVL_EXPORT(func_8010D59C)();
     vram_flag = g_Dop.vram_flag;
     posX = DOPPLEGANGER.posX.val;
     posY = DOPPLEGANGER.posY.val;
@@ -486,7 +486,7 @@ void EntityDoppleganger10(void) {
     }
 
     g_Dop.unk04 = vram_flag;
-    func_8010D800();
+    OVL_EXPORT(func_8010D800)();
 
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(2)) {
         parts = D_us_801B159C[DOPPLEGANGER.animCurFrame & 0x7FFF];
@@ -495,7 +495,7 @@ void EntityDoppleganger10(void) {
             D_us_801D4A1C + D_us_801811E8[DOPPLEGANGER.animCurFrame];
     }
 
-    FntPrint("noroi:%02x\n", g_Dop.timers[1]);
+    FntPrint("noroi:%02x\n", g_Dop.timers[ALU_T_CURSE]);
 }
 
 typedef enum {
@@ -827,21 +827,12 @@ static void DopplegangerThinking(void) {
 
 extern EInit EInitUnk16;
 
-typedef struct {
-    u16 unk0;
-    u16 unk2;
-    u16 unk4;
-    u16 unk6;
-} Unk_Dop;
-
-extern Unk_Dop D_us_801D4DDA;
-
 void EntityUnkId16(Entity* self) {
     s32 i;
     Entity* entity;
     s16 hitPoints;
 
-    D_us_801D4DDA.unk0 = DOPPLEGANGER.hitPoints;
+    g_Dop.unk6A = DOPPLEGANGER.hitPoints;
     if (self->step == 0) {
         InitializeEntity(EInitUnk16);
         func_us_801C1A38();
@@ -852,10 +843,9 @@ void EntityUnkId16(Entity* self) {
             DestroyEntity(entity);
         }
 
-        D_us_801D4DDA.unk4 = D_us_801D4DDA.unk0 = D_us_801D4DDA.unk2 =
-            DOPPLEGANGER.hitPoints;
+        g_Dop.unk6E = g_Dop.unk6A = g_Dop.unk6C = DOPPLEGANGER.hitPoints;
 
-        D_us_801D4DDA.unk6 = DOPPLEGANGER.hitboxState;
+        g_Dop.unk70 = DOPPLEGANGER.hitboxState;
         D_us_801D3D24 = THINK_STEP_BACKDASH;
         func_us_801C5354(1, 48);
     } else {
@@ -863,7 +853,7 @@ void EntityUnkId16(Entity* self) {
         EntityDoppleganger10();
         func_us_801CA014();
     }
-    D_us_801D4DDA.unk2 = D_us_801D4DDA.unk0;
+    g_Dop.unk6C = g_Dop.unk6A;
     FntPrint("life:%02x\n", DOPPLEGANGER.hitPoints);
 }
 

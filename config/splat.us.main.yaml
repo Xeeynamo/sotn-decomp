@@ -290,8 +290,11 @@ segments:
       - [0x23658, .data, psxsdk/libcd/c_010]
       - [0x23668, .data, psxsdk/libcd/c_011]
       - [0x23678, data]
+      - [0x236C0, .data, psxsdk/libsnd/ssinit]
+      - [0x236F0, .data, psxsdk/libsnd/ssstart]
       - [0x23708, .data, psxsdk/libsnd/vs_vtbp] # needs to be ram address + 0x800
-      - [0x23710, data]
+      - [0x23710, .data, psxsdk/libsnd/vmanager]
+      - [0x23898, data]
       - [0x29A5C, .data, psxsdk/libetc/pad]
       - [0x29A60, .bss, psxsdk/libcd/bios]
       - [0x29A84, bss]
