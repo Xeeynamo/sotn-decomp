@@ -111,10 +111,9 @@ void vmNoiseOn2(u8 voice, u16 arg1, u16 arg2, u16 arg3, u16 arg4) {
     u16 i;
     u16 bitsUpper;
     u16 bitsLower;
-    u8 pad[2];
 
-    _svm_sreg_buf.buf[voice].field_0_vol_left = arg1;
-    _svm_sreg_buf.buf[voice].field_2_vol_right = arg2;
+    _svm_sreg_buf[voice * 8 + 0] = arg1;
+    _svm_sreg_buf[voice * 8 + 1] = arg2;
     _svm_sreg_dirty[voice] |= 3;
 
     if (voice < 0x10) {
@@ -197,31 +196,32 @@ s32 note2pitch2(u16 arg0, u16 arg1) {
     return var_v1;
 }
 
-void SePitchBend(u8 arg0, s16 arg1) {
+void SePitchBend(u8 vc, s16 arg1) {
     s32 tone;
     s32 temp_v0_2;
     u16 note;
     u16 pbend;
     u8 temp_v0;
     int pos;
-    pos = arg0 * 8;
-    if (arg0 >= 0 && arg0 < NUM_SPU_CHANNELS) {
-        _svm_cur.field_7_fake_program = _svm_voice[arg0].unk10;
-        _svm_cur.field_C_vag_idx = _svm_voice[arg0].tone;
-        _svm_cur.field_0x1a = arg0;
+    pos = vc * 8;
+
+    if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
+        _svm_cur.field_7_fake_program = _svm_voice[vc].unk10;
+        _svm_cur.field_C_vag_idx = _svm_voice[vc].tone;
+        _svm_cur.field_0x1a = vc;
         tone =
             _svm_cur.field_C_vag_idx + (_svm_cur.field_7_fake_program * 0x10);
         if (arg1 >= 0) {
             temp_v0 = _svm_tn[tone].pbmax;
-            note = _svm_voice[arg0].note + ((arg1 * temp_v0) / 127);
+            note = _svm_voice[vc].note + ((arg1 * temp_v0) / 127);
             pbend = (arg1 * temp_v0) % 127;
         } else {
             temp_v0_2 = (arg1 * _svm_tn[tone].pbmin) / 127;
-            note = (_svm_voice[arg0].note + temp_v0_2) - 1;
+            note = (_svm_voice[vc].note + temp_v0_2) - 1;
             pbend = temp_v0_2 + 0x7F;
         }
-        _svm_sreg_buf.raw[pos + 2] = note2pitch2(note, pbend);
-        _svm_sreg_dirty[arg0] |= 4;
+        _svm_sreg_buf[pos + 2] = note2pitch2(note, pbend);
+        _svm_sreg_dirty[vc] |= 4;
     }
 }
 
@@ -312,8 +312,8 @@ void SetAutoVol(s16 voice) {
             volr = voll;
         }
     }
-    _svm_sreg_buf.raw[pos + 0] = voll;
-    _svm_sreg_buf.raw[pos + 1] = volr;
+    _svm_sreg_buf[pos + 0] = voll;
+    _svm_sreg_buf[pos + 1] = volr;
     _svm_sreg_dirty[voice] |= 3;
 }
 
@@ -399,8 +399,8 @@ void SetAutoPan(s16 voice) {
             volr = voll;
         }
     }
-    _svm_sreg_buf.raw[pos + 0] = voll;
-    _svm_sreg_buf.raw[pos + 1] = volr;
+    _svm_sreg_buf[pos + 0] = voll;
+    _svm_sreg_buf[pos + 1] = volr;
     _svm_sreg_dirty[voice] |= 3;
 }
 
@@ -417,7 +417,7 @@ void SpuVmInit(u8 arg0) {
     _svm_damper = 0;
     SpuInitMalloc(0x20, &_ss_spu_vm_rec.D_8003BD50);
     for (var_a1 = 0; var_a1 < 8 * NUM_SPU_CHANNELS; var_a1++) {
-        _svm_sreg_buf.raw[var_a1] = 0;
+        _svm_sreg_buf[var_a1] = 0;
     }
     for (var_a1 = 0; var_a1 < NUM_SPU_CHANNELS; var_a1++) {
         _svm_sreg_dirty[var_a1] = 0;
@@ -551,9 +551,10 @@ s16 SpuVmPBVoice(
     u16 pbend;
     u16 temp_a1;
     u16 note;
+
     temp_t1 = amount - 0x40;
-    if (((_svm_voice[voice].unke == seq_sep_no) &&
-         (_svm_voice[voice].vabId == vabId)) &&
+    if ((_svm_voice[voice].unke == seq_sep_no) &&
+        (_svm_voice[voice].vabId == vabId) &&
         (_svm_voice[voice].prog == program)) {
         temp_a1 = _svm_voice[voice].note;
         temp_v1 =
@@ -577,7 +578,7 @@ s16 SpuVmPBVoice(
         }
         _svm_cur.field_C_vag_idx = _svm_voice[voice].tone;
         _svm_cur.field_0x1a = voice;
-        _svm_sreg_buf.buf[voice].field_4_pitch = note2pitch2(note, pbend);
+        _svm_sreg_buf[voice * 8 + 2] = note2pitch2(note, pbend);
         _svm_sreg_dirty[voice] |= 4;
         return 1;
     } else {
@@ -697,8 +698,8 @@ s32 SpuVmSetSeqVol(s16 seq_sep_no, u16 voll, u16 volr, s16 arg3) {
         for (voice = 0; voice < spuVmMaxVoice; voice++) {
             if ((u16)_svm_voice[voice].unke == (u16)temp) {
                 pos = voice * 8;
-                _svm_sreg_buf.raw[pos + 0] = voll_mul;
-                _svm_sreg_buf.raw[pos + 1] = volr_mul;
+                _svm_sreg_buf[pos + 0] = voll_mul;
+                _svm_sreg_buf[pos + 1] = volr_mul;
                 _svm_sreg_dirty[voice] = _svm_sreg_dirty[voice] | 3;
             }
         }
@@ -876,7 +877,7 @@ s16 SsUtKeyOn(
     return voice;
 }
 
-short SsUtKeyOff(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note) {
+short SsUtKeyOff(s16 vc, s16 vabId, s16 prog, s16 tone, s16 note) {
     unsigned char new_var;
     u16 bitsUpper;
     u16 bitsLower;
@@ -884,19 +885,19 @@ short SsUtKeyOff(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note) {
 
     if (_snd_ev_flag != 1) {
         _snd_ev_flag = 1;
-        if (voice >= 0 && voice < NUM_SPU_CHANNELS) {
-            if ((_svm_voice[voice].vabId == vabId) &&
-                (_svm_voice[voice].prog == prog) &&
-                (_svm_voice[voice].tone == tone) &&
-                (_svm_voice[voice].note == note)) {
-                if (_svm_voice[voice].unk0 == 0xFF) {
-                    new_var = voice;
+        if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
+            if ((_svm_voice[vc].vabId == vabId) &&
+                (_svm_voice[vc].prog == prog) &&
+                (_svm_voice[vc].tone == tone) &&
+                (_svm_voice[vc].note == note)) {
+                if (_svm_voice[vc].unk0 == 0xFF) {
+                    new_var = vc;
                     _svm_voice[new_var].unk1b = 0;
                     _svm_voice[new_var].unk04 = 0;
                     D_80032F10[202] = 0;
                     D_80032F10[203] = 0;
                 } else {
-                    _svm_cur.field_0x1a = voice;
+                    _svm_cur.field_0x1a = vc;
                     temp_v1 = get_field_0x1a();
                     if (temp_v1 < 0x10) {
                         bitsLower = 1 << temp_v1;
@@ -990,15 +991,15 @@ s16 SsUtKeyOnV(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 fine,
     return voice;
 }
 
-s32 SsUtKeyOffV(s16 voice) {
+s32 SsUtKeyOffV(s16 vc) {
     u16 bitsUpper;
     u16 bitsLower;
     u16 temp2;
 
     if (_snd_ev_flag != 1) {
         _snd_ev_flag = 1;
-        if (voice >= 0 && voice < NUM_SPU_CHANNELS) {
-            _svm_cur.field_0x1a = voice;
+        if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
+            _svm_cur.field_0x1a = vc;
             temp2 = get_field_0x1a();
             if (temp2 < 0x10) {
                 bitsLower = 1 << temp2;
@@ -1032,23 +1033,19 @@ s16 SsUtPitchBend(s16 voice, s16 vabId, s16 prog, s16 note, s16 pbend) {
     return -((SpuVmPBVoice(voice, 0x21, vabId, prog, pbend) << 0x10) == 0);
 }
 
-short SsUtChangePitch(short voice, short vabId, short prog, short old_note,
+short SsUtChangePitch(short vc, short vabId, short prog, short old_note,
                       short old_fine, short new_note, short new_fine) {
-    if (voice >= 0 && voice < NUM_SPU_CHANNELS) {
-        if (_svm_voice[voice].vabId == vabId) {
-            if (_svm_voice[voice].prog == prog) {
-                if (_svm_voice[voice].note == old_note) {
-                    SpuVmVSetUp(
-                        _svm_voice[voice].vabId, _svm_voice[voice].prog);
-                    _svm_cur.field_16_vag_idx = 0x21;
-                    _svm_cur.field_0x1a = voice;
-                    _svm_cur.field_C_vag_idx = _svm_voice[voice].tone;
-                    _svm_sreg_buf.buf[voice].field_4_pitch =
-                        note2pitch2((u16)new_note, (u16)new_fine);
-                    _svm_sreg_dirty[voice] = _svm_sreg_dirty[voice] | 4;
-                    return 0;
-                }
-            }
+    if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
+        if ((_svm_voice[vc].vabId == vabId) &&
+            (_svm_voice[vc].prog == prog) &&
+            (_svm_voice[vc].note == old_note)) {
+            SpuVmVSetUp(_svm_voice[vc].vabId, _svm_voice[vc].prog);
+            _svm_cur.field_16_vag_idx = 0x21;
+            _svm_cur.field_0x1a = vc;
+            _svm_cur.field_C_vag_idx = _svm_voice[vc].tone;
+            _svm_sreg_buf[vc * 8 + 2] = note2pitch2(new_note, new_fine);
+            _svm_sreg_dirty[vc] |= 4;
+            return 0;
         }
     }
     return -1;
@@ -1056,15 +1053,13 @@ short SsUtChangePitch(short voice, short vabId, short prog, short old_note,
 
 s16 SsUtChangeADSR(
     s16 vc, s16 vabId, s16 prog, s16 old_note, u16 adsr1, u16 adsr2) {
-    u8 pad[2];
     if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
-        if ((_svm_voice[vc].vabId == vabId) && _svm_voice[vc].prog == prog) {
-            if (_svm_voice[vc].note == old_note) {
-                _svm_sreg_buf.buf[vc].field_8_adsr1 = adsr1;
-                _svm_sreg_buf.buf[vc].field_A_adsr2 = adsr2;
-                _svm_sreg_dirty[vc] = _svm_sreg_dirty[vc] | 0x30;
-                return 0;
-            }
+        if ((_svm_voice[vc].vabId == vabId) && (_svm_voice[vc].prog == prog) &&
+            (_svm_voice[vc].note == old_note)) {
+            _svm_sreg_buf[vc * 8 + 4] = adsr1;
+            _svm_sreg_buf[vc * 8 + 5] = adsr2;
+            _svm_sreg_dirty[vc] |= 0x30;
+            return 0;
         }
     }
     return -1;
@@ -1079,12 +1074,11 @@ s16 SsUtGetDetVVol(s16 vc, s16* voll, s16* volr) {
     return -1;
 }
 
-s32 SsUtSetDetVVol(s16 arg0, s16 arg1, s16 arg2) {
-    s32 temp[2];
-    if (arg0 >= 0 && arg0 < NUM_SPU_CHANNELS) {
-        _svm_sreg_buf.buf[arg0].field_0_vol_left = arg1;
-        _svm_sreg_buf.buf[arg0].field_2_vol_right = arg2;
-        _svm_sreg_dirty[arg0] = _svm_sreg_dirty[arg0] | 3;
+s32 SsUtSetDetVVol(s16 vc, s16 arg1, s16 arg2) {
+    if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
+        _svm_sreg_buf[vc * 8 + 0] = arg1;
+        _svm_sreg_buf[vc * 8 + 1] = arg2;
+        _svm_sreg_dirty[vc] |= 3;
         return 0;
     }
 
@@ -1103,13 +1097,12 @@ s16 SsUtGetVVol(s16 vc, s16* voll, s16* volr) {
 }
 
 s16 SsUtSetVVol(s16 vc, s16 voll, s16 volr) {
-    s32 temp[2];
     if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
         voll *= 129;
         volr *= 129;
-        _svm_sreg_buf.buf[vc].field_2_vol_right = volr;
-        _svm_sreg_buf.buf[vc].field_0_vol_left = voll;
-        _svm_sreg_dirty[vc] = _svm_sreg_dirty[vc] | 3;
+        _svm_sreg_buf[vc * 8 + 1] = volr;
+        _svm_sreg_buf[vc * 8 + 0] = voll;
+        _svm_sreg_dirty[vc] |= 3;
         return 0;
     }
 

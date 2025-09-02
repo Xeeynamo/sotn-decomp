@@ -95,7 +95,7 @@ struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
 
 void WaitEvent(s32 arg0) {}
 
-union RegBuf _svm_sreg_buf;
+s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
 
 unsigned char _svm_sreg_dirty[NUM_SPU_CHANNELS];
 
@@ -346,41 +346,41 @@ void SpuVmFlush(void) {
     do {
         if (*sreg & 1) {
 #ifdef VERSION_PC
-            write_16(0x1F801C00 + i2 * 0x10 + 0, _svm_sreg_buf.raw[i2 * 8 + 0],
+            write_16(0x1F801C00 + i2 * 0x10 + 0, _svm_sreg_buf[i2 * 8 + 0],
                      __FILE__, __LINE__);
-            write_16(0x1F801C00 + i2 * 0x10 + 2, _svm_sreg_buf.raw[i2 * 8 + 1],
+            write_16(0x1F801C00 + i2 * 0x10 + 2, _svm_sreg_buf[i2 * 8 + 1],
                      __FILE__, __LINE__);
 #else
-            D_80032F10[i2 * 8 + 0] = _svm_sreg_buf.raw[i2 * 8 + 0];
-            D_80032F10[i2 * 8 + 1] = _svm_sreg_buf.raw[i2 * 8 + 1];
+            D_80032F10[i2 * 8 + 0] = _svm_sreg_buf[i2 * 8 + 0];
+            D_80032F10[i2 * 8 + 1] = _svm_sreg_buf[i2 * 8 + 1];
 #endif
         }
         if (*sreg & 4) {
 #ifdef VERSION_PC
-            write_16(0x1F801C00 + i2 * 0x10 + 4, _svm_sreg_buf.raw[i2 * 8 + 2],
+            write_16(0x1F801C00 + i2 * 0x10 + 4, _svm_sreg_buf[i2 * 8 + 2],
                      __FILE__, __LINE__);
 #else
-            D_80032F10[i2 * 8 + 2] = _svm_sreg_buf.raw[i2 * 8 + 2];
+            D_80032F10[i2 * 8 + 2] = _svm_sreg_buf[i2 * 8 + 2];
 
 #endif
         }
         if (*sreg & 8) {
 #ifdef VERSION_PC
-            write_16(0x1F801C00 + i2 * 0x10 + 6, _svm_sreg_buf.raw[i2 * 8 + 3],
+            write_16(0x1F801C00 + i2 * 0x10 + 6, _svm_sreg_buf[i2 * 8 + 3],
                      __FILE__, __LINE__);
 #else
-            D_80032F10[i2 * 8 + 3] = _svm_sreg_buf.raw[i2 * 8 + 3];
+            D_80032F10[i2 * 8 + 3] = _svm_sreg_buf[i2 * 8 + 3];
 #endif
         }
         if (*sreg & 0x10) {
 #ifdef VERSION_PC
-            write_16(0x1F801C00 + i2 * 0x10 + 8, _svm_sreg_buf.raw[i2 * 8 + 4],
+            write_16(0x1F801C00 + i2 * 0x10 + 8, _svm_sreg_buf[i2 * 8 + 4],
                      __FILE__, __LINE__);
-            write_16(0x1F801C00 + i2 * 0x10 + 10, _svm_sreg_buf.raw[i2 * 8 + 5],
+            write_16(0x1F801C00 + i2 * 0x10 + 10, _svm_sreg_buf[i2 * 8 + 5],
                      __FILE__, __LINE__);
 #else
-            D_80032F10[i2 * 8 + 4] = _svm_sreg_buf.raw[i2 * 8 + 4];
-            D_80032F10[i2 * 8 + 5] = _svm_sreg_buf.raw[i2 * 8 + 5];
+            D_80032F10[i2 * 8 + 4] = _svm_sreg_buf[i2 * 8 + 4];
+            D_80032F10[i2 * 8 + 5] = _svm_sreg_buf[i2 * 8 + 5];
 #endif
         }
         *sreg = 0;
@@ -471,16 +471,16 @@ void SpuVmKeyOnNow(short vagCount, short pitch) {
         right = (right * right) / 0x3fff;
     }
     pos = a1;
-    _svm_sreg_buf.raw[pos + 2] = new_var;
-    _svm_sreg_buf.raw[pos + 0] = left;
+    _svm_sreg_buf[pos + 2] = new_var;
+    _svm_sreg_buf[pos + 0] = left;
 
 #if 0
   // real version
-  _svm_sreg_buf.raw[pos + 1] = right;
+  _svm_sreg_buf[pos + 1] = right;
 #else
     // wrong but slightly more matching (permuter)
     bitsUpper = right;
-    _svm_sreg_buf.raw[pos + 1] = right;
+    _svm_sreg_buf[pos + 1] = right;
 #endif
     _svm_sreg_dirty[_svm_cur.field_0x1a] |= 7;
     _svm_voice[_svm_cur.field_0x1a].unk04 = new_var;
@@ -522,19 +522,19 @@ void SpuVmDoAllocate(void) {
         _svm_envx_hist[hist_pos] &= ~(1 << _svm_cur.field_0x1a);
     }
     if ((_svm_cur.field_18_voice_idx & 1) > 0) {
-        _svm_sreg_buf.raw[_svm_cur.unk1c.a + 3] =
+        _svm_sreg_buf[_svm_cur.unk1c.a + 3] =
             _svm_pg[(_svm_cur.field_18_voice_idx - 1) / 2].reserved2;
     } else {
-        _svm_sreg_buf.raw[_svm_cur.unk1c.a + 3] =
+        _svm_sreg_buf[_svm_cur.unk1c.a + 3] =
             _svm_pg[(_svm_cur.field_18_voice_idx - 1) / 2].reserved3;
     }
     svm = &_svm_cur.unk1c;
     _svm_sreg_dirty[_svm_cur.field_0x1a] |= 8;
-    _svm_sreg_buf.raw[svm->a + 4] =
+    _svm_sreg_buf[svm->a + 4] =
         _svm_tn[(_svm_cur.field_7_fake_program * 0x10) +
                 _svm_cur.field_C_vag_idx]
             .adsr1;
-    _svm_sreg_buf.raw[svm->a + 5] =
+    _svm_sreg_buf[svm->a + 5] =
         _svm_tn[(_svm_cur.field_7_fake_program * 0x10) +
                 _svm_cur.field_C_vag_idx]
             .adsr2 +
