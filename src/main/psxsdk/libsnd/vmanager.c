@@ -260,7 +260,7 @@ void SetAutoVol(s16 voice) {
     u16 volr;
     s16 pos;
     s32 mvol_scaled;
-    
+
     pos = voice * 8;
     if (_svm_voice[voice].unk20 != 0) {
         if (_svm_voice[voice].unk22-- > 0) {
@@ -290,24 +290,24 @@ void SetAutoVol(s16 voice) {
 
     if (_svm_cur.field_E_pan < 0x40) {
         voll = temp_v1_4;
-        volr = ((temp_v1_4 * _svm_cur.field_E_pan)) / 0x40;
+        volr = (temp_v1_4 * _svm_cur.field_E_pan) / 0x40;
     } else {
         voll = (temp_v1_4 * (0x7F - _svm_cur.field_E_pan)) / 0x40;
         volr = temp_v1_4;
     }
-    
+
     if (_svm_cur.field_B_mpan < 0x40) {
         volr = (volr * _svm_cur.field_B_mpan) / 0x40;
     } else {
         voll = (voll * (0x7F - _svm_cur.field_B_mpan)) / 0x40;
     }
-    
+
     if (_svm_cur.field_0x5 < 0x40) {
         volr = (volr * _svm_cur.field_0x5) / 0x40;
     } else {
         voll = (voll * (0x7F - _svm_cur.field_0x5)) / 0x40;
     }
-    
+
     if (_svm_stereo_mono == 1) {
         if (volr > voll) {
             voll = volr;
