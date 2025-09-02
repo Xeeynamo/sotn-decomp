@@ -6,11 +6,10 @@ s32 SpuSetAnyVoice(s32 on_off, u32 bits, s32 addr1, s32 addr2) {
     s32 var_t0;
     u16* temp_a2;
     u16* temp_a3;
-    u16 temp;
 
     temp_a3 = &_spu_RXX->raw[addr2];
     temp_a2 = &_spu_RXX->raw[addr1];
-    var_t0 = *temp_a2 | ((_spu_RXX->raw[addr2] & 0xff) << 0x10);
+    var_t0 = *temp_a2 | ((_spu_RXX->raw[addr2] & 0xFF) << 0x10);
     if (on_off != 0) {
         if (on_off == 1) {
             var_t0 |= bits & 0xFFFFFF;
