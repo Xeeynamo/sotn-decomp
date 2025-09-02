@@ -205,7 +205,7 @@ void SePitchBend(u8 arg0, s16 arg1) {
     u8 temp_v0;
     int pos;
     pos = arg0 * 8;
-    if (arg0 < 0x18U) {
+    if (arg0 >= 0 && arg0 < NUM_SPU_CHANNELS) {
         _svm_cur.field_7_fake_program = _svm_voice[arg0].unk10;
         _svm_cur.field_C_vag_idx = _svm_voice[arg0].tone;
         _svm_cur.field_0x1a = arg0;
@@ -1117,7 +1117,7 @@ s16 SsUtSetVVol(s16 vc, s16 voll, s16 volr) {
 }
 
 s16 SsUtAutoVol(s16 vc, s16 start_vol, s16 end_vol, s16 delta_time) {
-    if (!(vc >= 0x18U)) {
+    if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
         SeAutoVol(vc, start_vol, end_vol, delta_time);
         return 0;
     }
@@ -1125,7 +1125,7 @@ s16 SsUtAutoVol(s16 vc, s16 start_vol, s16 end_vol, s16 delta_time) {
 }
 
 s16 SsUtAutoPan(s16 vc, s16 start_pan, s16 end_pan, s16 delta_time) {
-    if (!(vc >= 0x18U)) {
+    if (vc >= 0 && vc < NUM_SPU_CHANNELS) {
         SeAutoPan(vc, start_pan, end_pan, delta_time);
         return 0;
     }
