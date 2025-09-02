@@ -112,9 +112,9 @@ void vmNoiseOn2(u8 voice, u16 arg1, u16 arg2, u16 arg3, u16 arg4) {
     u16 bitsUpper;
     u16 bitsLower;
     u8 pad[2];
+
     _svm_sreg_buf.buf[voice].field_0_vol_left = arg1;
     _svm_sreg_buf.buf[voice].field_2_vol_right = arg2;
-    _svm_sreg_dirty[voice] |= 3;
     _svm_sreg_dirty[voice] |= 3;
 
     if (voice < 0x10) {
@@ -168,23 +168,22 @@ u16 note2pitch() {
 }
 
 s32 note2pitch2(u16 arg0, u16 arg1) {
-    VagAtr* temp_v1;
     s16 octave;
     s16 var_a2;
     s16 var_a3;
     short new_var;
     u16 var_v1;
     s32 pos;
+    s32 tone;
 
-    temp_v1 = &_svm_tn[_svm_cur.field_C_vag_idx +
-                       (_svm_cur.field_7_fake_program * 0x10)];
-    var_a3 = (arg1 + temp_v1->shift) / 8;
+    tone = _svm_cur.field_C_vag_idx + (_svm_cur.field_7_fake_program * 0x10);
+    var_a3 = (arg1 + _svm_tn[tone].shift) / 8;
     var_a2 = 0;
     if (var_a3 >= 16) {
         var_a2 = 1;
         var_a3 -= 16;
     }
-    new_var = arg0 + 60 - temp_v1->center + var_a2;
+    new_var = arg0 + 60 - _svm_tn[tone].center + var_a2;
     octave = new_var / 12;
     pos = (new_var % 12) * 16;
     var_v1 = D_80032F14[pos + var_a3];
@@ -548,13 +547,11 @@ void SpuVmNoiseOn(s32 arg0, s32 arg1) {
 s16 SpuVmPBVoice(
     s16 voice, s16 seq_sep_no, s16 vabId, s16 program, u16 amount) {
     s16 temp_t1;
-    s32 temp_lo;
-    s32 temp_v0_2;
     u16 temp_v1;
     u16 pbend;
     u16 temp_a1;
     u16 note;
-    temp_t1 = amount + 0xFFC0U;
+    temp_t1 = amount - 0x40;
     if (((_svm_voice[voice].unke == seq_sep_no) &&
          (_svm_voice[voice].vabId == vabId)) &&
         (_svm_voice[voice].prog == program)) {
@@ -563,17 +560,17 @@ s16 SpuVmPBVoice(
             _svm_voice[voice].tone + (_svm_cur.field_7_fake_program * 0x10);
         if (temp_t1 > 0) {
             do {
-                note = temp_a1 + ((temp_t1 * _svm_tn[temp_v1].pbmax) / 63);
+                note = _svm_voice[voice].note +
+                       ((temp_t1 * _svm_tn[temp_v1].pbmax) / 0x3F);
             } while (0);
-            pbend = ((temp_t1 * _svm_tn[temp_v1].pbmax) % 63) * 2;
+            pbend = ((temp_t1 * _svm_tn[temp_v1].pbmax) % 0x3F) * 2;
         } else {
             note = temp_a1;
             if (temp_t1 < 0) {
-                temp_lo = temp_t1 * _svm_tn[temp_v1].pbmin;
-                temp_v0_2 = temp_lo / 64;
-                note = temp_v0_2;
+                note = ((temp_t1 * _svm_tn[temp_v1].pbmin) / 0x40);
                 note = (temp_a1 + note) - 1;
-                pbend = ((temp_lo - (temp_v0_2 << 6)) * 2) + 0x7F;
+                pbend =
+                    (((temp_t1 * _svm_tn[temp_v1].pbmin) % 0x40) * 2) + 0x7F;
             } else {
                 pbend = 0;
             }
@@ -927,52 +924,48 @@ short SsUtKeyOff(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note) {
 
 s16 SsUtKeyOnV(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 fine,
                s16 voll, s16 volr) {
-    VagAtr* vagAtr;
-    u16 vag;
-    char vag_idx;
-    ProgAtr* progAtr;
-    s32 program;
+    s32 tone2;
+
     if (_snd_ev_flag == 1) {
         return -1;
     }
     _snd_ev_flag = 1;
-    if (((voice >= 0) && (voice <= 23)) && (SpuVmVSetUp(vabId, prog) == 0)) {
-        _svm_cur.field_16_vag_idx = 0x21;
-        _svm_cur.field_2_note = note;
-        _svm_cur.field_0x3 = fine;
-        _svm_cur.field_C_vag_idx = tone;
-        if (voll == volr) {
-            _svm_cur.field_0x5 = 0x40;
-            _svm_cur.field_4_voll = voll;
-        } else if (volr < voll) {
-            _svm_cur.field_4_voll = voll;
-            _svm_cur.field_0x5 = (volr * 64) / voll;
-        } else {
-            _svm_cur.field_4_voll = volr;
-            _svm_cur.field_0x5 = 0x7F - ((voll * 64) / volr);
-        }
-        progAtr = &_svm_pg[prog];
-        _svm_cur.field_A_mvol = progAtr->mvol;
-        _svm_cur.field_B_mpan = progAtr->mpan;
-        _svm_cur.field_0_sep_sep_no_tonecount = progAtr->tones;
-        vagAtr = &_svm_tn[_svm_cur.field_C_vag_idx +
-                          (_svm_cur.field_7_fake_program * 0x10)];
-        _svm_cur.field_F_prior = vagAtr->prior;
-        vag = vagAtr->vag;
-        _svm_cur.field_18_voice_idx = vag;
-        _svm_cur.field_D_vol = vagAtr->vol;
-        _svm_cur.field_E_pan = vagAtr->pan;
-        _svm_cur.field_10_centre = vagAtr->center;
-        _svm_cur.field_11_shift = vagAtr->shift;
-        _svm_cur.field_14_seq_sep_no = vagAtr->mode;
-        _svm_cur.field_12_mode = vagAtr->min;
-        _svm_cur.field_0x13 = vagAtr->max;
-    } else {
+    if (voice < 0 || voice >= NUM_SPU_CHANNELS || SpuVmVSetUp(vabId, prog)) {
         _snd_ev_flag = 0;
         return -1;
     }
+    _svm_cur.field_16_vag_idx = 0x21;
+    _svm_cur.field_2_note = note;
+    _svm_cur.field_0x3 = fine;
+    _svm_cur.field_C_vag_idx = tone;
 
-    if (vag == 0) {
+    if (voll == volr) {
+        _svm_cur.field_0x5 = 0x40;
+        _svm_cur.field_4_voll = voll;
+    } else if (volr < voll) {
+        _svm_cur.field_0x5 = (volr * 0x40) / voll;
+        _svm_cur.field_4_voll = voll;
+    } else {
+        _svm_cur.field_0x5 = 0x7F - ((voll * 0x40) / volr);
+        _svm_cur.field_4_voll = volr;
+    }
+
+    _svm_cur.field_A_mvol = _svm_pg[prog].mvol;
+    _svm_cur.field_B_mpan = _svm_pg[prog].mpan;
+    _svm_cur.field_0_sep_sep_no_tonecount = _svm_pg[prog].tones;
+
+    tone2 = _svm_cur.field_C_vag_idx + (_svm_cur.field_7_fake_program * 0x10);
+    _svm_cur.field_F_prior = _svm_tn[tone2].prior;
+    _svm_cur.field_18_voice_idx = _svm_tn[tone2].vag;
+    _svm_cur.field_D_vol = _svm_tn[tone2].vol;
+    _svm_cur.field_E_pan = _svm_tn[tone2].pan;
+    _svm_cur.field_10_centre = _svm_tn[tone2].center;
+    _svm_cur.field_11_shift = _svm_tn[tone2].shift;
+    _svm_cur.field_14_seq_sep_no = _svm_tn[tone2].mode;
+    _svm_cur.field_12_mode = _svm_tn[tone2].min;
+    _svm_cur.field_0x13 = _svm_tn[tone2].max;
+
+    if (_svm_cur.field_18_voice_idx == 0) {
         _snd_ev_flag = 0;
         return -1;
     }
@@ -980,15 +973,13 @@ s16 SsUtKeyOnV(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 fine,
     _svm_cur.field_0x1a = voice;
     _svm_voice[voice].unke = 0x21;
     _svm_voice[voice].vabId = vabId;
-    program = _svm_cur.field_7_fake_program;
+    _svm_voice[voice].unk10 = _svm_cur.field_7_fake_program;
     _svm_voice[voice].prog = prog;
-    _svm_voice[voice].unk10 = program;
     _svm_voice[voice].unk0 = _svm_cur.field_18_voice_idx;
-    vag_idx = _svm_cur.field_C_vag_idx;
+    _svm_voice[voice].tone = _svm_cur.field_C_vag_idx;
     _svm_voice[voice].note = note;
     _svm_voice[voice].unk1b = 1;
     _svm_voice[voice].unk2 = 0;
-    _svm_voice[voice].tone = vag_idx;
     SpuVmDoAllocate();
     if (_svm_cur.field_18_voice_idx == 0xFF) {
         vmNoiseOn(voice & 0xFF);
