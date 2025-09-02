@@ -249,11 +249,8 @@ void SeAutoVol(s16 vc, s16 start_vol, s16 end_vol, s16 delta_time) {
     }
 }
 
-extern s16 _svm_stereo_mono;
-
 void SetAutoVol(s16 voice) {
     s32 temp_hi;
-    u32 temp_lo;
     s16 temp_v1_3;
     u32 temp_v1_4;
     u16 voll;
@@ -283,9 +280,10 @@ void SetAutoVol(s16 voice) {
     temp_v1_3 = _svm_voice[voice].start_vol;
     _svm_cur.field_4_voll = temp_v1_3;
     mvol_scaled = _svm_vh->mvol * 0x3FFF;
-    temp_hi = (temp_v1_3 * mvol_scaled) / 0x3F01;
-    temp_lo = (temp_hi * _svm_cur.field_A_mvol) * _svm_cur.field_D_vol;
-    temp_hi = temp_lo / 0x3F01;
+    temp_hi = temp_v1_3 * mvol_scaled;
+    temp_hi /= 0x3F01;
+    temp_hi *= _svm_cur.field_A_mvol;
+    temp_hi = (temp_hi * _svm_cur.field_D_vol) / 0x3F01U;
     temp_v1_4 = temp_hi;
 
     if (_svm_cur.field_E_pan < 0x40) {
@@ -337,7 +335,75 @@ void SeAutoPan(s16 vc, s16 start_pan, s16 end_pan, s16 delta_time) {
     }
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SetAutoPan);
+void SetAutoPan(s16 voice) {
+    s32 temp_hi;
+    u32 temp_v1_4;
+    u16 voll;
+    u16 volr;
+    s16 pos;
+    char new_var;
+    u16 new_var2;
+    s32 mvol_scaled;
+
+    pos = voice * 8;
+    if (_svm_voice[voice].unk2c != 0) {
+        if (_svm_voice[voice].unk2e-- > 0) {
+            return;
+        }
+        _svm_voice[voice].unk2e = _svm_voice[voice].unk2c;
+    }
+    _svm_voice[voice].start_pan += _svm_voice[voice].unk2a;
+    if (_svm_voice[voice].unk2a > 0) {
+        if (_svm_voice[voice].start_pan >= _svm_voice[voice].end_pan) {
+            _svm_voice[voice].start_pan = _svm_voice[voice].end_pan;
+            _svm_voice[voice].auto_pan = 0;
+        }
+    } else if (_svm_voice[voice].unk2a < 0) {
+        if (_svm_voice[voice].start_pan <= _svm_voice[voice].end_pan) {
+            _svm_voice[voice].start_pan = _svm_voice[voice].end_pan;
+            _svm_voice[voice].auto_pan = 0;
+        }
+    }
+    new_var = _svm_voice[voice].start_pan;
+    _svm_cur.field_0x5 = new_var;
+    mvol_scaled = _svm_vh->mvol * 0x3FFF;
+    temp_hi = _svm_cur.field_4_voll * mvol_scaled;
+    temp_hi /= 0x3F01;
+    temp_hi *= _svm_cur.field_A_mvol;
+    temp_hi = (temp_hi * _svm_cur.field_D_vol) / 0x3F01U;
+    temp_v1_4 = temp_hi;
+
+    if (_svm_cur.field_E_pan < 0x40) {
+        voll = temp_v1_4;
+        volr = (temp_v1_4 * _svm_cur.field_E_pan) / 0x40;
+    } else {
+        voll = (temp_v1_4 * (0x7F - _svm_cur.field_E_pan)) / 0x40;
+        volr = temp_v1_4;
+    }
+
+    if (_svm_cur.field_B_mpan < 0x40) {
+        volr = (volr * _svm_cur.field_B_mpan) / 0x40;
+    } else {
+        voll = (voll * (0x7F - _svm_cur.field_B_mpan)) / 0x40;
+    }
+    new_var2 = new_var;
+    if (new_var2 < 0x40) {
+        volr = (volr * new_var2) / 0x40;
+    } else {
+        voll = (voll * (0x7F - new_var2)) / 0x40;
+    }
+
+    if (_svm_stereo_mono == 1) {
+        if (volr > voll) {
+            voll = volr;
+        } else {
+            volr = voll;
+        }
+    }
+    _svm_sreg_buf.raw[pos + 0] = voll;
+    _svm_sreg_buf.raw[pos + 1] = volr;
+    _svm_sreg_dirty[voice] |= 3;
+}
 
 void SpuVmInit(u8 arg0) {
     u16 temp_v1;
