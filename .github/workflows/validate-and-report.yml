@@ -147,19 +147,13 @@ jobs:
             make python-dependencies & \
             (sudo apt-get update && sudo apt-get install graphviz) & \
             wait
-      - name: Clean ld files
+      - name: Generate reports
         run: |
-            find ./build -type f -name "*.ld" -delete
-      - name: Generate duplicates report
+          make reports
+      - name: Publish reports
         run: |
-          make build || true
-          make force_symbols
-          .venv/bin/python3 tools/function_finder/fix_matchings.py
-          cd tools/dups
-          cargo run --release -- --threshold .90 --output-file ../../gh-duplicates/duplicates.txt
-      - name: Generate function report
-        run: |
-            .venv/bin/python3 tools/function_finder/function_finder_psx.py > gh-duplicates/functions.md
+          mkdir -p gh-duplicates
+          cp -r build/us/reports/* gh-duplicates/
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action'

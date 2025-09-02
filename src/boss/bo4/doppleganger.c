@@ -171,7 +171,7 @@ void EntityDoppleganger10(void) {
                         case 14:
                             break;
                         case 15:
-                            func_8010E0B8();
+                            OVL_EXPORT(func_8010E0B8)();
                             break;
                         }
                     }
@@ -300,13 +300,13 @@ void EntityDoppleganger10(void) {
         DopplegangerStepJump();
         break;
     case Dop_MorphBat:
-        ControlBatForm();
+        OVL_EXPORT(ControlBatForm)();
         break;
     case Dop_UnmorphBat:
         DopplegangerStepUnmorphBat();
         break;
     case Dop_MorphMist:
-        ControlMistForm();
+        OVL_EXPORT(ControlMistForm)();
         break;
     case Dop_UnmorphMist:
         DopplegangerStepUnmorphMist();
@@ -352,7 +352,7 @@ void EntityDoppleganger10(void) {
     case Dop_MorphBat:
         func_us_801C5354(1, 1);
         if (DOPPLEGANGER.step_s == 3) {
-            func_us_801C5430(1, 4);
+            OVL_EXPORT(func_us_801C5430)(1, 4);
         }
         status = PLAYER_STATUS_UNK100000 | PLAYER_STATUS_BAT_FORM;
         ;
@@ -362,7 +362,7 @@ void EntityDoppleganger10(void) {
         break;
     case Dop_MorphMist:
         func_us_801C5354(1, 1);
-        func_us_801C5430(1, 4);
+        OVL_EXPORT(func_us_801C5430)(1, 4);
         status = PLAYER_STATUS_UNK100000 | PLAYER_STATUS_MIST_FORM;
         DOPPLEGANGER.palette = PAL_OVL(0x20D);
         break;
@@ -371,7 +371,7 @@ void EntityDoppleganger10(void) {
         status = PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK100000 |
                  PLAYER_STATUS_MIST_FORM;
         DOPPLEGANGER.palette = PAL_OVL(0x20D);
-        func_us_801C5430(1, 4);
+        OVL_EXPORT(func_us_801C5430)(1, 4);
         break;
     case Dop_UnmorphBat:
         func_us_801C5354(1, 1);
@@ -380,17 +380,17 @@ void EntityDoppleganger10(void) {
         if (DOPPLEGANGER.step_s == 0) {
             DOPPLEGANGER.animSet = ANIMSET_OVL(2);
         }
-        func_us_801C5430(1, 4);
+        OVL_EXPORT(func_us_801C5430)(1, 4);
         break;
     case Dop_HighJump:
         func_us_801C5354(1, 1);
-        func_us_801C5430(1, 4);
+        OVL_EXPORT(func_us_801C5430)(1, 4);
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
         break;
     case Dop_Hit:
         status = PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK10000;
         func_us_801C5354(1, 1);
-        func_us_801C5430(1, 4);
+        OVL_EXPORT(func_us_801C5430)(1, 4);
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
         break;
     case Dop_Kill:
@@ -400,13 +400,13 @@ void EntityDoppleganger10(void) {
             status |= PLAYER_STATUS_UNK80000;
         }
         func_us_801C5354(1, 1);
-        func_us_801C5430(1, 4);
+        OVL_EXPORT(func_us_801C5430)(1, 4);
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
         break;
     case Dop_SwordWarp:
         status = PLAYER_STATUS_UNK100000;
         func_us_801C5354(1, 1);
-        func_us_801C5430(4, 0x30);
+        OVL_EXPORT(func_us_801C5430)(4, 0x30);
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
         DOPPLEGANGER.palette = PAL_OVL(0x20D);
         break;
@@ -430,7 +430,7 @@ void EntityDoppleganger10(void) {
         g_Dop.timers[ALU_T_15] = 4;
         DOPPLEGANGER.palette = PAL_OVL(0x200);
     }
-    PlayAnimation(D_us_80183C70, D_us_80183CB4);
+    OVL_EXPORT(PlayAnimation)(D_us_80183C70, D_us_80183CB4);
     if (g_Dop.status & PLAYER_STATUS_DEAD) {
         if (DOPPLEGANGER.poseTimer < 0) {
             DOPPLEGANGER.animCurFrame |= 0x8000;
@@ -446,7 +446,7 @@ void EntityDoppleganger10(void) {
             DOPPLEGANGER.hitboxState = 0;
         }
     }
-    func_8010D59C();
+    OVL_EXPORT(func_8010D59C)();
     vram_flag = g_Dop.vram_flag;
     posX = DOPPLEGANGER.posX.val;
     posY = DOPPLEGANGER.posY.val;
@@ -486,7 +486,7 @@ void EntityDoppleganger10(void) {
     }
 
     g_Dop.unk04 = vram_flag;
-    func_8010D800();
+    OVL_EXPORT(func_8010D800)();
 
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(2)) {
         parts = D_us_801B159C[DOPPLEGANGER.animCurFrame & 0x7FFF];

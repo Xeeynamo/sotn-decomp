@@ -19,6 +19,7 @@ typedef unsigned int size_t;
 #define INT16_MAX (0x7FFF)
 #else
 
+#include <stdint.h>
 #include <sys/types.h>
 typedef unsigned char u_char;
 typedef unsigned short u_short;

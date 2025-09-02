@@ -48,6 +48,8 @@ Point16 g_DopSensorsWall[] = {
 
 static void OVL_EXPORT(CheckWallRight)(void);
 static void OVL_EXPORT(CheckWallLeft)(void);
+static void OVL_EXPORT(CheckFloor)(void);
+static void OVL_EXPORT(CheckCeiling)(void);
 
 static void OVL_EXPORT(CheckStageCollision)(bool checkSensors) {
     s16 argX;
