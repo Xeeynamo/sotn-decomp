@@ -69,10 +69,11 @@ typedef enum {
     /* 0x1F */ PL_S_30, // unused
     /* 0x20 */ PL_S_31, // unused
     /* 0x21 */ PL_S_INIT,
-    /* 0x40 */ PL_S_64 = 0x40,
-    /* 0x50 */ PL_S_80 = 0x50,
-    /* 0x60 */ PL_S_96 = 0x60,
-    /* 0x70 */ PL_S_112 = 0x70,
+    // various endings
+    /* 0x40 */ PL_S_ENDING_1 = 0x40,
+    /* 0x50 */ PL_S_ENDING2 = 0x50,
+    /* 0x60 */ PL_S_ENDING_3 = 0x60,
+    /* 0x70 */ PL_S_ENDING_4 = 0x70,
     /* 0xF0 */ PL_S_DEBUG = 0xF0,
 } OVL_EXPORT(RicSteps);
 

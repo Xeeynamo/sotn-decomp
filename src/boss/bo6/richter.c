@@ -1,7 +1,86 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo6.h"
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B4BD0);
+extern s32 D_800763C8;
+extern s32 D_800763F8;
+extern AnimationFrame D_us_80182008[];
+extern s32 D_us_801D11C8[];
+extern s32 D_us_801D1248[];
+extern s32 D_us_801D161C;
+
+void func_us_801B4BD0(void) {
+    s32 i;
+    Entity* var_s1;
+    Entity* e;
+    PlayerState* var_a0;
+    Primitive* prim;
+    s32* memset_ptr;
+    s32 memset_len;
+    s16 temp_v0;
+    s16 primIndex;
+    s32 radius;
+    s32 intensity;
+    s32 temp_v1;
+    s32 var_s2;
+    s32 var_s2_2;
+    s32 var_s2_3;
+    s32* var_s0;
+    s32* var_s3;
+
+    RIC.animSet = ANIMSET_OVL(1);
+    RIC.zPriority = g_unkGraphicsStruct.g_zEntityCenter + 8;
+    RIC.flags = 0x18402000;
+    RIC.facingLeft = 0;
+    RIC.unk5A = 8;
+    RIC.palette = 0x8220;
+    RIC.scaleX = RIC.scaleY = 0x100;
+    RIC.rotPivotY = 0x18;
+    RIC.drawMode = 0;
+
+    g_PlayerDraw[8].r0 = g_PlayerDraw[8].r1 = g_PlayerDraw[8].r2 = g_PlayerDraw[8].r3 =
+        g_PlayerDraw[8].g0 = g_PlayerDraw[8].g1 = g_PlayerDraw[8].g2 = g_PlayerDraw[8].g3 =
+        g_PlayerDraw[8].b0 = g_PlayerDraw[8].b1 = g_PlayerDraw[8].b2 = g_PlayerDraw[8].b3 = 0x80;
+
+    g_PlayerDraw[8].enableColorBlend = 0;
+
+    memset_len = sizeof(PlayerState) / sizeof(s32);
+    memset_ptr = (s32*) &g_Ric;
+    for (i = 0; i < memset_len; i++) {
+        *memset_ptr++ = 0;
+    }
+
+    D_us_801D161C = 1;
+    g_Ric.vram_flag = 1;
+
+    BO6_RicSetStand(0);
+    RIC.anim = D_us_80182008;
+
+    for (i = 0; i < 32; i++) {
+        radius = (rand() & 0x3FF) + FLT(1.0 / 16.0);
+        intensity = (rand() & 0xFF) + FLT(1.0 / 16.0);
+        D_us_801D11C8[i] = ((rcos(radius) << 4) * intensity) >> 8;
+        D_us_801D1248[i] = -(((rsin(radius) << 4) * intensity) >> 7);
+    }
+
+    for (e = &g_Entities[STAGE_ENTITY_START + 1], i = 0; i < 3; i++, e++) {
+        DestroyEntity(e);
+        e->animSet = ANIMSET_OVL(1);
+        e->unk5A = i + 9;
+        e->palette = PAL_OVL(0x220);
+        e->flags = 0x08000000;
+    }
+
+    primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
+    prim = &g_PrimBuf[primIndex];
+    D_800763F8 = primIndex;
+    D_800763C8 |= 0x800000;
+    while (prim != NULL) {
+        prim->drawMode = 0x10A;
+        prim = prim->next;
+    }
+    g_api.TimeAttackController(TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_VISITED);
+}
+
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B4EAC);
 
@@ -9,7 +88,382 @@ INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_CheckBladeDashInput);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_CheckHighJumpInput);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicMain);
+extern s32 D_us_80181210[];
+extern u16 D_us_80181250[];
+extern u16 D_us_80181270[];
+extern AnimationFrame* D_us_80181F14[];
+extern AnimationFrame D_us_801820BC[];
+extern AnimationFrame D_us_801821E0[];
+extern AnimationFrame D_us_8018224C[];
+extern FrameProperty D_us_801824A4[];
+extern s32 D_us_801D169C;
+extern u32 D_us_801D16A4;
+
+void OVL_EXPORT(RicMain)(void) {
+    s16 angle;
+    s32 timer;
+    s32 i;
+    s32 status;
+    s16 step;
+    s16 step_s;
+    PlayerDraw* playerDraw;
+    DamageParam damage;
+    s32 posX, posY;
+
+    // status = saved_reg_s3;
+    // step = saved_reg_s5;
+    // step_s = saved_reg_s6;
+#ifdef VERSION_PSP
+    status = 0;
+#endif
+    g_CurrentEntity = &RIC;
+    playerDraw = &g_PlayerDraw[8];
+    g_Ric.unk4C = 0;
+    for (i = 0; i < LEN(g_Ric.timers); i++) {
+        if (g_Ric.timers[i]) {
+            switch (i) {      /* switch 1 */
+            case PL_T_POISON: /* switch 1 */
+                g_Ric.timers[PL_T_POISON] = 0x800;
+                break;
+            case PL_T_CURSE:
+                break;
+            case PL_T_2: /* switch 1 */
+                RIC.palette = g_Ric.unk40;
+                break;
+            case PL_T_3:
+                break;
+            case PL_T_4: /* switch 1 */
+                angle = (g_GameTimer & 0xF) * 256;
+                playerDraw->r0 = playerDraw->g0 = playerDraw->b0 =
+                    (rsin(angle) + FLT(1)) / 64 + 0x60;
+
+                angle += FLT(1.0 / 8.0);
+                playerDraw->r1 = playerDraw->g1 = playerDraw->b1 =
+                    (rsin(angle) + FLT(1)) / 64 + 0x60;
+
+                angle += FLT(1.0 / 8.0);
+                playerDraw->r3 = playerDraw->g3 = playerDraw->b3 =
+                    (rsin(angle) + FLT(1)) / 64 + 0x60;
+
+                angle += FLT(1.0 / 8.0);
+                playerDraw->r2 = playerDraw->g2 = playerDraw->b2 =
+                    (rsin(angle) + FLT(1)) / 64 + 0x60;
+
+                playerDraw->enableColorBlend = true;
+                break;
+            case PL_T_5:
+            case PL_T_6:
+            case PL_T_7:
+            case PL_T_8:
+            case PL_T_ATTACK:
+            case PL_T_10:
+            case PL_T_RUN:
+            case PL_T_12:
+                break;
+            case PL_T_INVINCIBLE_SCENE: /* switch 1 */
+                g_Ric.timers[PL_T_INVINCIBLE_SCENE] = 4;
+                break;
+            case PL_T_INVINCIBLE:
+                break;
+            case PL_T_AFTERIMAGE_DISABLE: /* switch 1 */
+                OVL_EXPORT(DisableAfterImage)(0, 0);
+                break;
+            }
+
+            if (--g_Ric.timers[i] == 0) {
+                switch (i) { /* switch 2 */
+                case PL_T_POISON:
+                case PL_T_CURSE:
+                    break;
+                case PL_T_2: /* switch 2 */
+                    RIC.palette = PAL_OVL(0x220);
+                    break;
+                case PL_T_3:
+                    break;
+                case PL_T_4: /* switch 2 */
+                    playerDraw->enableColorBlend = false;
+                    break;
+                case PL_T_INVINCIBLE_SCENE: /* switch 2 */
+                    OVL_EXPORT(RicSetInvincibilityFrames)(1, 0x10);
+                    break;
+                case PL_T_6: /* switch 2 */
+                    if ((RIC.step == 4) && (RIC.anim != D_us_801820BC)) {
+                        BO6_RicSetAnimation(D_us_801820BC);
+                        g_Ric.unk44 &= ~0x10;
+                    }
+                    break;
+                case PL_T_INVINCIBLE:
+                    break;
+                case PL_T_AFTERIMAGE_DISABLE: /* switch 2 */
+                    func_us_801B9C14();
+                    break;
+                case PL_T_5:
+                case PL_T_7:
+                case PL_T_8:
+                case PL_T_ATTACK:
+                case PL_T_10:
+                case PL_T_RUN:
+                case PL_T_12:
+                default:
+                    break;
+                }
+            }
+        }
+    }
+
+    g_Ric.padHeld = g_Ric.padPressed;
+    if (g_Ric.demo_timer) {
+        g_Ric.demo_timer--;
+        g_Ric.padPressed = g_Ric.padSim;
+    } else {
+        g_Ric.padPressed = g_pads[1].pressed;
+    }
+    g_Ric.padTapped = (g_Ric.padHeld ^ g_Ric.padPressed) & g_Ric.padPressed;
+
+    if ((RIC.step != PL_S_ENDING_4) && (RIC.step != PL_S_DEAD)) {
+        if (RIC.step != PL_S_DEAD && RIC.flags & FLAG_DEAD) {
+            D_us_801D16A4 |= 2;
+            step = RIC.step;
+            step_s = RIC.step_s;
+            damage.effects =
+                D_us_80181210[g_CurrentEntity->nFramesInvincibility];
+            OVL_EXPORT(RicSetStep)(0x11);
+#ifdef VERSION_PSP
+            g_api.TimeAttackController(
+                TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
+#endif
+        } else if (D_us_801D169C != 0) {
+            OVL_EXPORT(RicSetStep)(0x70);
+        } else {
+            if ((g_Ric.timers[PL_T_INVINCIBLE_SCENE] |
+                 g_Ric.timers[PL_T_INVINCIBLE]) == 0) {
+                if ((g_CurrentEntity->hitFlags > 0) &&
+                    (g_CurrentEntity->hitFlags < 4)) {
+                    step = RIC.step;
+                    step_s = RIC.step_s;
+                    damage.effects =
+                        D_us_80181210[g_CurrentEntity->nFramesInvincibility];
+                    if ((g_Ric.unk6C - g_Ric.unk6A) >= 10) {
+                        damage.damageKind = 3;
+                    } else {
+                        damage.damageKind = 2;
+                    }
+                    OVL_EXPORT(RicSetStep)(0xB);
+                }
+            }
+            goto check_input_combo;
+        }
+    } else {
+    check_input_combo:
+        BO6_CheckBladeDashInput();
+        BO6_CheckHighJumpInput();
+    }
+    g_Ric.prev_step = RIC.step;
+    g_Ric.prev_step_s = RIC.step_s;
+
+    switch (RIC.step) { /* switch 3 */
+    case PL_S_STAND:    /* switch 3 */
+        BO6_RicStepStand();
+        break;
+    case PL_S_WALK: /* switch 3 */
+        BO6_RicStepWalk();
+        break;
+    case PL_S_CROUCH: /* switch 3 */
+        BO6_RicStepCrouch();
+        break;
+    case PL_S_FALL: /* switch 3 */
+        BO6_RicStepFall();
+        break;
+    case PL_S_JUMP: /* switch 3 */
+        BO6_RicStepJump();
+        break;
+    case PL_S_HIGHJUMP: /* switch 3 */
+        BO6_RicStepHighJump();
+        break;
+    case PL_S_HIT: /* switch 3 */
+        BO6_RicStepHit(damage.effects, damage.damageKind, step, step_s);
+        break;
+    case PL_S_DEAD: /* switch 3 */
+        BO6_RicStepDead(damage.effects, damage.damageKind, step, step_s);
+        break;
+    case PL_S_STAND_IN_AIR: /* switch 3 */
+        BO6_RicStepStandInAir();
+        break;
+    case PL_S_FLAME_WHIP: /* switch 3 */
+        BO6_RicStepEnableFlameWhip();
+        break;
+    case PL_S_HYDROSTORM: /* switch 3 */
+        BO6_RicStepHydrostorm();
+        break;
+    case PL_S_THROW_DAGGERS: /* switch 3 */
+        BO6_RicStepThrowDaggers();
+        break;
+    case PL_S_SUBWPN_CRASH: /* switch 3 */
+        BO6_RicStepGenericSubwpnCrash();
+        break;
+    case PL_S_SLIDE: /* switch 3 */
+        BO6_RicStepSlide();
+        break;
+    case PL_S_RUN: /* switch 3 */
+        BO6_RicStepRun();
+        break;
+    case PL_S_SLIDE_KICK: /* switch 3 */
+        BO6_RicStepSlideKick();
+        break;
+    case PL_S_BLADEDASH: /* switch 3 */
+        BO6_RicStepBladeDash();
+        break;
+    case PL_S_ENDING_1: /* switch 3 */
+        func_us_801B913C();
+        break;
+    case PL_S_ENDING2: /* switch 3 */
+        func_us_801B9144();
+        break;
+    case PL_S_ENDING_3: /* switch 3 */
+        func_us_801B9338();
+        break;
+    case PL_S_ENDING_4: /* switch 3 */
+        func_us_801B9340();
+        break;
+    }
+
+    g_Ric.unk08 = g_Ric.status;
+
+    switch (RIC.step) {      /* switch 4 */
+    case PL_S_STAND:         /* switch 4 */
+        status = 0x08000000; /* switch 4 */
+        break;
+    case PL_S_WALK:
+        status = 0x08000000;
+        break;
+    case PL_S_CROUCH: /* switch 4 */
+        status = 0x08000000;
+        if (RIC.step_s != 2) {
+            status = 0x08000020;
+        }
+        break;
+    case PL_S_FALL: /* switch 4 */
+        status = 0x08002000;
+        break;
+    case PL_S_JUMP: /* switch 4 */
+        status = 0x08002000;
+        break;
+    case PL_S_HIGHJUMP: /* switch 4 */
+        BO6_RicSetInvincibilityFrames(1, 4);
+        break;
+    case PL_S_HIT: /* switch 4 */
+        status = 0x08010000;
+        BO6_RicSetInvincibilityFrames(1, 8);
+        break;
+    case PL_S_DEAD: /* switch 4 */
+#ifdef VERSION_PSP
+        g_api.TimeAttackController(
+            TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
+#endif
+        status = 0x08050000;
+        if (RIC.step_s == 0x80) {
+            status |= 0x80000;
+        }
+        BO6_RicSetInvincibilityFrames(1, 8);
+        break;
+
+    case PL_S_FLAME_WHIP:    /* switch 4 */
+    case PL_S_HYDROSTORM:    /* switch 4 */
+    case PL_S_THROW_DAGGERS: /* switch 4 */
+    case PL_S_SUBWPN_CRASH:  /* switch 4 */
+        status = 0x08000000;
+        // fallthrough
+    // possibly PSP specific
+    case PL_S_STAND_IN_AIR:
+        BO6_RicSetInvincibilityFrames(1, 8);
+        break;
+    case PL_S_SLIDE:      /* switch 4 */
+    case PL_S_SLIDE_KICK: /* switch 4 */
+        status = 0x20;
+        break;
+    case PL_S_RUN:
+    case PL_S_BLADEDASH:
+        break;
+    case PL_S_ENDING_1: /* switch 4 */
+    case PL_S_ENDING2:  /* switch 4 */
+        BO6_RicSetInvincibilityFrames(1, 8);
+        status |= 0x08000000;
+        break;
+    case PL_S_ENDING_3: /* switch 4 */
+#ifdef VERSION_PSP
+        g_api.TimeAttackController(
+            TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
+#endif
+        BO6_RicSetInvincibilityFrames(1, 8);
+        status |= 0x08000000;
+        break;
+    case PL_S_ENDING_4: /* switch 4 */
+        g_api.TimeAttackController(
+            TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_RECORD);
+        BO6_RicSetInvincibilityFrames(1, 8);
+        status |= 0x08000000;
+        break;
+    }
+
+    if (g_Ric.timers[PL_T_ATTACK]) {
+        status |= 0x400;
+    }
+    if (g_Ric.timers[PL_T_10]) {
+        status |= 0x800;
+    }
+    if (g_Ric.timers[PL_T_12]) {
+        status |= 0x1000;
+    }
+    status |= 0x10000000;
+    g_Ric.status = status;
+    if (g_Ric.unk08 & 0x10000) {
+        if (!(g_Ric.status & PLAYER_STATUS_UNK10000)) {
+            if (g_Ric.unk5C) {
+                if (g_Status.hp < 2) {
+                    func_us_801BA880();
+                    BO6_RicSetInvincibilityFrames(1, 8);
+                }
+            } else {
+                BO6_RicSetInvincibilityFrames(1, 8);
+                g_Ric.timers[PL_T_4] = 8;
+                RIC.palette = PAL_OVL(0x220);
+            }
+        }
+    }
+    if (status & 0x08000000) {
+        BO6_DisableAfterImage(1, 4);
+    }
+    g_api.UpdateAnim(D_us_801824A4, D_us_80181F14);
+    if (RIC.anim == &D_us_8018224C[0]) {
+        RIC.palette = D_us_80181250[RIC.pose];
+    }
+    if ((RIC.anim == &D_us_801821E0[0]) && (RIC.pose == 4)) {
+        RIC.palette = D_us_80181270[RIC.poseTimer & 3];
+    }
+    if (g_Ric.status & PLAYER_STATUS_DEAD) {
+        if (RIC.poseTimer < 0) {
+            RIC.animCurFrame |= 0x8000;
+        }
+        RIC.hitboxState = 0;
+    } else {
+        RIC.hitboxState = g_Ric.unk70;
+        if ((g_Ric.timers[PL_T_INVINCIBLE_SCENE] |
+             g_Ric.timers[PL_T_INVINCIBLE]) != 0) {
+            RIC.hitboxState = 0;
+        }
+    }
+    func_us_801B94CC();
+    // g_Entities_64 = 0x091E4580;
+    //                 0x091E4584;
+    //                 0x091E4596;
+    posX = RIC.posX.val;
+    posY = RIC.posY.val;
+    func_us_801B4EAC();
+    func_us_801B96F4();
+#ifdef VERSION_PSP
+    FntPrint("pl_color:%04x\n", RIC.palette);
+#endif
+}
 
 extern s32 D_us_801CF3C8; // Richter Think Step
 extern s32 D_us_801CF3CC; // Richter Think Step_s
@@ -584,7 +1038,7 @@ void EntityRichter(Entity* self) {
     g_Ric.unk6A = RIC.hitPoints;
     if (self->step == 0) {
         InitializeEntity(D_us_80180400);
-        func_us_801B4BD0();
+        func_us_801B4BD0(); // 
         entity = &g_Entities[STAGE_ENTITY_START + 4];
         for (i = STAGE_ENTITY_START + 4; i < 144; i++, entity++) {
             DestroyEntity(entity);
@@ -603,6 +1057,8 @@ void EntityRichter(Entity* self) {
     }
     g_Ric.unk6C = g_Ric.unk6A;
 }
+
+// possible file split
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepStand);
 
@@ -628,7 +1084,12 @@ INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepStandInAir);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepEnableFlameWhip);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepHydrostorm);
+void OVL_EXPORT(RicStepHydrostorm)(void) {
+    if (RIC.poseTimer < 0) {
+        OVL_EXPORT(RicSetStand)(0);
+        g_Ric.unk46 = 0;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepGenericSubwpnCrash);
 
