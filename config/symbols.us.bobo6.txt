@@ -297,3 +297,6 @@ e_Ric_unk70 = 0x801D1688;
 =======
 >>>>>>> ae27b63cc (moved import into separate branch)
 g_ItemIconSlots = 0x801D16A8;
+
+
+BO6_RicEntityVibhutiCrashCloud = 0x801C7FEC;

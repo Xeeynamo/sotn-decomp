@@ -410,7 +410,51 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnAgunea);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityAguneaHitEnemy);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityVibhutiCrashCloud);
+extern AnimationFrame D_us_801829D4[];
+
+void BO6_RicEntityVibhutiCrashCloud(Entity* self) {
+    s32 angle;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+
+        self->flags = 0x08800000;
+        self->posX.val = self->ext.vibCrashCloud.parent->ext.vibhutiCrash.x;
+        self->posY.val = self->ext.vibCrashCloud.parent->ext.vibhutiCrash.y;
+        self->facingLeft = self->ext.vibCrashCloud.parent->ext.vibhutiCrash.facing;
+        self->flags |= 0x20000000;
+        self->unk5A = 0x64;
+        self->animSet = 0xE;
+        self->palette = PAL_OVL(0x19E);
+        self->anim = D_us_801829D4;
+        self->drawMode = 0x30;
+        self->drawFlags = 8;
+        self->opacity = 0x60;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 8;
+
+        angle = (rand() % 512) + 0x300;
+        self->velocityX = rcos(angle) << 5;
+        self->velocityY = -(rsin(angle) << 5);
+        self->step++;
+        break;
+
+    case 1:
+        self->ext.vibCrashCloud.unk7C++;
+        if (self->ext.vibCrashCloud.unk7C > 38) {
+            DestroyEntity(self);
+        } else {
+            self->posX.val += self->velocityX;
+            self->posY.val += self->velocityY;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashVibhuti);
 
@@ -442,7 +486,47 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnStopwatchCircle
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_EntityStopWatch);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnBibleTrail);
+void OVL_EXPORT(RicEntitySubwpnBibleTrail)(Entity* entity) {
+    Primitive* prim;
+
+    switch (entity->step) {
+    case 0:
+        entity->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (entity->primIndex == -1) {
+            DestroyEntity(entity);
+            return;
+        }
+        entity->flags = 0x10800000;
+        prim = &g_PrimBuf[entity->primIndex];
+        prim->tpage = 0x1C;
+        prim->clut = 0x19D;
+        prim->u0 = prim->u2 = 0x20;
+        prim->v0 = prim->v1 = 0;
+        prim->u1 = prim->u3 = 0x30;
+        prim->v2 = prim->v3 = 0x10;
+        prim->x0 = prim->x2 = entity->posX.i.hi - 8;
+        prim->x1 = prim->x3 = entity->posX.i.hi + 8;
+        prim->y0 = prim->y1 = entity->posY.i.hi - 8;
+        prim->y2 = prim->y3 = entity->posY.i.hi + 8;
+        prim->priority = entity->zPriority;
+        prim->drawMode = 0x15;
+        entity->ext.et_BibleSubwpn.unk7E = 0x60;
+        entity->step++;
+        break;
+    case 1:
+        entity->ext.et_BibleSubwpn.unk7C++;
+        if (entity->ext.et_BibleSubwpn.unk7C > 5) {
+            entity->step++;
+        }
+        entity->ext.et_BibleSubwpn.unk7E -= 8;
+        break;
+    case 2:
+        DestroyEntity(entity);
+        return;
+    }
+    prim = &g_PrimBuf[entity->primIndex];
+    PCOL(prim) = entity->ext.et_BibleSubwpn.unk7E;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnBible);
 
