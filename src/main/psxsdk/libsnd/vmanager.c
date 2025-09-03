@@ -36,7 +36,9 @@ extern struct _ss_spu_vm_rec_struct _ss_spu_vm_rec;
 extern s16 _svm_vcf;
 extern s16 _svm_orev1;
 extern s16 _svm_orev2;
-extern s8 _svm_auto_kof_mode;
+extern u8 _svm_auto_kof_mode;
+extern s32 _svm_envx_hist[];
+extern s32 D_8003BD08;
 
 static inline u16 get_field_0x1a() { return _svm_cur.field_0x1a; }
 
@@ -600,7 +602,77 @@ s32 SpuVmPitchBend(s16 arg0, s16 arg1, s16 arg2, s16 arg3) {
     return var_s1;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmFlush);
+#ifndef VERSION_PC
+void SpuVmFlush(void) {
+    u32 env_mask;
+    s32 i;
+
+    D_8003BD08 = (D_8003BD08 + 1) & 0xF;
+    _svm_envx_hist[D_8003BD08] = 0;
+
+    for (i = 0; i < spuVmMaxVoice; i++) {
+        _svm_voice[i].unk6 = D_80032F10[i * 8 + 6];
+        if (_svm_voice[i].unk6 == 0) {
+            _svm_envx_hist[D_8003BD08] |= 1 << i;
+        }
+    }
+    if (_svm_auto_kof_mode == 0) {
+        env_mask = 0xFFFFFFFF;
+        for (i = 0; i < 0xF; i++) {
+            env_mask &= _svm_envx_hist[i];
+        }
+
+        for (i = 0; i < spuVmMaxVoice; i++) {
+            if (env_mask & (1 << i)) {
+                if (_svm_voice[i].unk1b == 2) {
+                    SpuSetNoiseVoice(0, 0xFFFFFF);
+                }
+                _svm_voice[i].unk1b = 0;
+            }
+        }
+    }
+
+    _svm_okon1 &= ~_svm_okof1;
+    _svm_okon2 &= ~_svm_okof2;
+    for (i = 0; i < NUM_SPU_CHANNELS; i++) {
+        if (_svm_voice[i].auto_vol != 0) {
+            SetAutoVol(i);
+        }
+        if (_svm_voice[i].auto_pan != 0) {
+            SetAutoPan(i);
+        }
+    }
+
+    for (i = 0; i < NUM_SPU_CHANNELS; i++) {
+        if (_svm_sreg_dirty[i] & 1) {
+            D_80032F10[i * 8 + 0] = _svm_sreg_buf[i * 8 + 0];
+            D_80032F10[i * 8 + 1] = _svm_sreg_buf[i * 8 + 1];
+        }
+        if (_svm_sreg_dirty[i] & 4) {
+            D_80032F10[i * 8 + 2] = _svm_sreg_buf[i * 8 + 2];
+        }
+        if (_svm_sreg_dirty[i] & 8) {
+            D_80032F10[i * 8 + 3] = _svm_sreg_buf[i * 8 + 3];
+        }
+        if (_svm_sreg_dirty[i] & 0x10) {
+            D_80032F10[i * 8 + 4] = _svm_sreg_buf[i * 8 + 4];
+            D_80032F10[i * 8 + 5] = _svm_sreg_buf[i * 8 + 5];
+        }
+        _svm_sreg_dirty[i] = 0;
+    }
+
+    D_80032F10[0x18C / 2] = _svm_okof1;
+    D_80032F10[0x18E / 2] = _svm_okof2;
+    D_80032F10[0x188 / 2] = _svm_okon1;
+    D_80032F10[0x18A / 2] = _svm_okon2;
+    D_80032F10[0x198 / 2] = _svm_orev1;
+    D_80032F10[0x19A / 2] = _svm_orev2;
+    _svm_okof1 = 0;
+    _svm_okof2 = 0;
+    _svm_okon1 = 0;
+    _svm_okon2 = 0;
+}
+#endif
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmKeyOn);
 
@@ -680,7 +752,7 @@ s32 SpuVmSetSeqVol(s16 seq_sep_no, u16 voll, u16 volr, s16 arg3) {
     u8 pad[4];
     int temp;
     s16 pos;
-    temp_v1 = &_ss_score[seq_sep_no & 0xFF][(seq_sep_no >> 8) & 0xff];
+    temp_v1 = &_ss_score[seq_sep_no & 0xFF][(seq_sep_no >> 8) & 0xFF];
     _svm_cur.field_16_vag_idx = seq_sep_no;
     temp_v1->unk74 = voll;
     temp_v1->unk76 = volr;
@@ -700,7 +772,7 @@ s32 SpuVmSetSeqVol(s16 seq_sep_no, u16 voll, u16 volr, s16 arg3) {
                 pos = voice * 8;
                 _svm_sreg_buf[pos + 0] = voll_mul;
                 _svm_sreg_buf[pos + 1] = volr_mul;
-                _svm_sreg_dirty[voice] = _svm_sreg_dirty[voice] | 3;
+                _svm_sreg_dirty[voice] |= 3;
             }
         }
     }
