@@ -444,6 +444,7 @@ build/$(VERSION)/src/%.o: src/%
 reports: duplicates-report function-finder
 prepare-reports: build $(REPORTS_DIR)
 	$(MAKE) force_symbols -j
+	$(PYTHON) tools/function_finder/fix_matchings.py
 
 function-finder: ##@ generates lists of files, their decomp status, and call graphs
 function-finder: prepare-reports
