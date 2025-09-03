@@ -522,7 +522,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 objs += objs_memcard
             else:
                 continue
-    if platform == "psp" and file_name != "PS.ELF":
+    if platform == "psp":
         mwo = os.path.join(asset_path, "mwo_header.bin")
         objs.append(add_copy_psx(nw, version, mwo, mwo, ld_path))
     output_elf = f"build/{version}/{ovl_name}.elf"

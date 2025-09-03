@@ -1,0 +1,48 @@
+options:
+  platform: psp
+  basename: main
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PS.ELF
+  asm_path: asm/pspeu/main_psp
+  asset_path: assets/main_psp
+  src_path: src
+  ld_script_path: build/pspeu/main.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.main.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.main.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.main.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: psp_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .rodata
+    - .data
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+  ld_generate_symbol_per_data_segment: true
+sha1: a3bc73aaa3dc4b873c84a3c0b90e46366f5bbaa9
+segments:
+  - [0x0, bin, mwo_header]
+  - name: main
+    type: code
+    start: 0x16F4
+    vram: 0x08900000
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x16F4, c, main/first_c_file]
+      - [0x3BBA4, rodata]
+      - [0x3C520, data]
+  - [0xB3E1C]
