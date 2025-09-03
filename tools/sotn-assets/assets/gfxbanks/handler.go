@@ -135,9 +135,6 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 		}
 	}
 	gfxOffsets = util.SortUniqueOffsets(gfxOffsets)
-	if gfxOffsets[0] == psx.RamNull {
-		gfxOffsets = gfxOffsets[1:]
-	}
 	for i := 0; i < len(gfxOffsets)-1; i++ {
 		splatEntries = append(splatEntries, assets.InfoSplatEntry{
 			DataRange: datarange.New(gfxOffsets[i], gfxOffsets[i+1]),
