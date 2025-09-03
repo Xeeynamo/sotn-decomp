@@ -448,8 +448,7 @@ prepare-reports: build $(REPORTS_DIR)
 function-finder: ##@ generates lists of files, their decomp status, and call graphs
 function-finder: prepare-reports
 	# TODO: make sure graphviz is installed
-	$(PYTHON) tools/analyze_calls.py
-	$(PYTHON) tools/function_finder/function_finder_psx.py --use-call-trees > $(REPORTS_DIR)/functions.md
+	$(PYTHON) tools/function_finder/function_finder_psx.py > $(REPORTS_DIR)/functions.md
 
 $(REPORTS_DIR):
 	mkdir -p $(REPORTS_DIR)
