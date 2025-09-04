@@ -41,9 +41,9 @@ s32 SpuClearReverbWorkArea(s32 rev_mode) {
         callback = _spu_transferCallback;
         _spu_transferCallback = 0;
     }
-    do {
+    while (var_s3 != 0) {
         var_s0 = var_s1;
-        if (!(var_s1 < 0x401U)) {
+        if (var_s1 > 0x400) {
             var_s0 = 0x400;
         } else {
             var_s3 = 0;
@@ -55,7 +55,7 @@ s32 SpuClearReverbWorkArea(s32 rev_mode) {
         WaitEvent(_spu_EVdma);
         var_s1 -= 0x400;
         var_s2 += 0x400;
-    } while (var_s3 != 0);
+    }
     if (transmodeCleared != 0) {
         _spu_transMode = oldTransmode;
     }

@@ -149,7 +149,6 @@ typedef struct tagSpuControl {
 } SPU_RXX;
 
 union SpuUnion {
-    SPU_RXX rxxnv;
     volatile SPU_RXX rxx;
     volatile u16 raw[0x100];
 };
