@@ -1,14 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
+// This segment shares most code with e_chair.h, but EntityChair has some
+// additional blocks that make it more sensible to keep separate for the time
+// being.
+
 #ifdef VERSION_PSP
-extern s32 E_ID(PRIEST);
+extern s32 E_ID(CONFESSIONAL_GHOST);
 #endif
 
 static AnimationFrame anim_1[] = {{8, 8}, {8, 9}, {8, 10}, {8, 11}, {-1, 0}};
 
-// Matches e_chair/func_us_801BEDD8
-static bool func_us_801C3104(Entity* self) {
+static bool ChairSitCheck(Entity* self) {
     s16 offsetX, offsetY;
 
     if (g_pads[0].pressed != PAD_UP) {
@@ -29,8 +32,6 @@ static bool func_us_801C3104(Entity* self) {
     return true;
 }
 
-// Shares some chunks of code with EntityChair, but appears to have some
-// different sections Is likely the chair in the priest's room
 void EntityChair(Entity* self) {
     s16 offsetX;
     Entity* entity;
@@ -42,7 +43,7 @@ void EntityChair(Entity* self) {
         if (self->params & 0xFF00) {
             entity = self + 1;
             if (self->params & 0x100) {
-                CreateEntityFromCurrentEntity(E_ID(PRIEST), entity);
+                CreateEntityFromCurrentEntity(E_ID(CONFESSIONAL_GHOST), entity);
                 entity->posX.i.hi = 176;
                 entity->posY.i.hi = 128;
                 entity->params = 0;
@@ -52,7 +53,7 @@ void EntityChair(Entity* self) {
                 break;
             }
             if (self->params & 0x200) {
-                CreateEntityFromCurrentEntity(E_ID(PRIEST), entity);
+                CreateEntityFromCurrentEntity(E_ID(CONFESSIONAL_GHOST), entity);
                 entity->posX.i.hi = 64;
                 entity->posY.i.hi = 128;
                 entity->params = 1;
@@ -63,7 +64,7 @@ void EntityChair(Entity* self) {
         }
         break;
     case 1:
-        if (func_us_801C3104(self)) {
+        if (ChairSitCheck(self)) {
             g_Player.demo_timer = 10;
             g_Player.padSim = PAD_UP;
             g_Player.unk14 = self->params & 0xFF;
@@ -108,7 +109,8 @@ void EntityChair(Entity* self) {
     g_api.UpdateAnim(NULL, NULL);
 }
 
-// Matches e_chair/func_us_801B81E8
+// This function exists in dai, lib, and no1
+// It is completely unused within dai
 static void func_us_801B81E8(Entity* self) {
     if (self->ext.chair.unkEntity->step != 4) {
         DestroyEntity(self);
@@ -118,7 +120,7 @@ static void func_us_801B81E8(Entity* self) {
     case 0:
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(3);
-        self->velocityY = FIX(-3.0 / 8.0);
+        self->velocityY = FIX(-0.375);
         self->velocityX = FIX(0.25);
         if (self->facingLeft) {
             self->velocityX = -self->velocityX;

@@ -2,7 +2,7 @@
 #include "dai.h"
 
 // Castle wall foreground
-void func_us_801C1EE4(Entity* self) {
+void EntityCastleWall1(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 posX;
@@ -27,7 +27,7 @@ void func_us_801C1EE4(Entity* self) {
     posX = self->posX.i.hi;
     for (count = 0; count < 2; count++) {
         prim->tpage = 15;
-        prim->clut = PAL_41EE4_74;
+        prim->clut = PAL_CASTLE_WALL_1;
         prim->u0 = prim->u2 = 115 - (count * 16) - self->params;
         prim->u1 = prim->u3 = prim->u0 - (80 - (count * 16));
         prim->v0 = prim->v1 = 67;
@@ -47,7 +47,8 @@ void func_us_801C1EE4(Entity* self) {
     }
 }
 
-void func_us_801C2068(Entity* self) {
+// Foreground stone outside confessional room and other places
+void EntityCastleWall2(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 posX, posY;
@@ -76,7 +77,7 @@ void func_us_801C2068(Entity* self) {
     for (countY = 0; countY < rows; countY++) {
         for (countX = 0; countX < 3; countX++) {
             prim->tpage = 15;
-            prim->clut = PAL_41EE4_C8;
+            prim->clut = PAL_CASTLE_WALL_2;
             prim->u0 = prim->u2 = 193;
             prim->u1 = prim->u3 = 254;
             prim->v0 = prim->v1 = 193;
@@ -97,8 +98,7 @@ void func_us_801C2068(Entity* self) {
     }
 }
 
-// Seems to be something related to the sky
-void func_us_801C220C(Entity* self) {
+void EntityStaircase(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 offsetY;

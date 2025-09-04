@@ -21,6 +21,8 @@ static s8 g_hitbox[][4] = {
     {0, 0, 0, 0}, {-63, -55, 0, 0}, {-33, 30, 8, 8}, {21, -23, 9, 9}};
 static u8 g_hitboxIdx[] = {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,
                            1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 1, 1, 1, 0};
+
+// extern s16* sprites_dai_3[];
 extern s16* D_us_801BBA44[];
 
 // Corner Guard movement?
@@ -81,8 +83,6 @@ void EntityCornerGuard(Entity* self) {
     s32 primIndex;
     s32 uCoord, vCoord;
     s32 distance;
-    // Since Corner Guard is always facing left, this is probably more along the
-    // lines of facing player or player on left
     s32 facingLeft;
     s16* dataPtr;
     s16 palette;
