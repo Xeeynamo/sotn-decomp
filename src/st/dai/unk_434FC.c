@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
+// This function creates a single row of 5 tiles, but I could not pin down
+// precisely what triggers it. I believe it is the trees in the background of
+// some rooms.
 void func_us_801C34FC(Entity* self) {
     Primitive* prim;
     s32 primIndex;
