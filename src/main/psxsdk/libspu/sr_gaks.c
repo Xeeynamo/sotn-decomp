@@ -22,7 +22,7 @@ inline s32 SpuRGetAllKeysStatus(s32 min, s32 max, s8* status) {
     last_voice = max + 1;
 
     for (voice = min; voice < last_voice; voice++) {
-        volumex = _spu_RXX->raw[(8 * voice) + 6];;
+        volumex = _spu_RXX->raw[(8 * voice) + 6];
         if ((1 << voice) & _spu_keystat) {
             if (volumex != 0) {
                 status[voice] = 1;
