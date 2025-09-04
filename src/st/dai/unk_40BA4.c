@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
+// I believe this adjusts player position when entering the tower rooms above
+// ground floor, but I couldn't validate that with enough confidence to properly
+// document the function.
 void func_us_801C0BA4(Entity* self) {
     s32 unkX;
     s16 params = self->params;
