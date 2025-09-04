@@ -43,6 +43,6 @@ segments:
     subalign: 8
     subsegments:
       - [0x16F4, c, main/first_c_file]
-      - [0x3BBA4, rodata]
+      - [0x3B9FC, rodata]
       - [0x3C520, data]
   - [0xB3E1C]
