@@ -2,6 +2,7 @@
 #include "common.h"
 #include "libspu_internal.h"
 
+#ifndef VERSION_PC
 s32 _SpuMallocSeparateTo3(s32 arg0, u32 addr, s32 size) {
     s32 temp_t1;
     s32 temp_t3;
@@ -115,7 +116,9 @@ s32 _SpuMallocSeparateTo3(s32 arg0, u32 addr, s32 size) {
 
     return -1;
 }
+#endif
 
+#ifndef VERSION_PC
 long SpuMallocWithStartAddr(unsigned long _addr, long size) {
     s32 temp_a2;
     s32 addr;
@@ -224,3 +227,4 @@ long SpuMallocWithStartAddr(unsigned long _addr, long size) {
     _spu_gcSPU();
     return addr;
 }
+#endif
