@@ -2,8 +2,6 @@
 #include "common.h"
 #include "libspu_internal.h"
 
-extern s32 _spu_keystat;
-
 void SpuSetKey(long on_off, unsigned long voice_bit) {
     u32 temp_a1;
     unsigned short new_var;
