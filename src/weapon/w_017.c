@@ -8,22 +8,6 @@
 #define g_Animset2 w_017_2
 #include "sfx.h"
 
-typedef struct {
-    /* 0x00 */ s32 x0;
-    /* 0x04 */ s32 y0;
-    /* 0x08 */ s32 x1;
-    /* 0x0C */ s32 y1;
-    /* 0x10 */ s32 x2;
-    /* 0x14 */ s32 y2;
-    /* 0x18 */ s16 u0;
-    /* 0x1A */ s16 v0;
-    /* 0x1C */ s16 u1;
-    /* 0x1E */ s16 v1;
-    /* 0x20 */ s16 u2;
-    /* 0x22 */ s16 v2;
-    /* 0x24 */ u8 pad[8];
-} PrimWeapon017; /* size = 0x2C */
-
 static u16 D_7B000_8017A040[] = {
     COLOR16(0, 0, 0, 0),    COLOR16(27, 10, 0, 0),  COLOR16(27, 12, 2, 0),
     COLOR16(28, 15, 5, 0),  COLOR16(28, 18, 8, 0),  COLOR16(29, 20, 11, 0),

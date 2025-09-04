@@ -2,12 +2,6 @@
 #include "nz0.h"
 #include "sfx.h"
 
-typedef struct SubWpnContDebris {
-    s16 velX;
-    s16 velY;
-    u16 params;
-    u16 facingLeft;
-} SubWpnContDebris;
 static SubWpnContDebris D_80182584[] = {
     {0x0000, 0xFFA9, 0x0003, 0x0000}, {0xFFF6, 0xFFBA, 0x0007, 0x0001},
     {0xFFF5, 0xFFC9, 0x0006, 0x0000}, {0x0007, 0xFFB6, 0x0007, 0x0001},

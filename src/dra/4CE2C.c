@@ -11,28 +11,6 @@ void HideAllBackgroundLayers(void) {
     }
 }
 
-// internal structure that holds all the information to render room layers
-typedef struct {
-    /* 0x00 */ u16 x;
-    /* 0x02 */ u16 y;
-    /* 0x04 */ u16 flags;
-    /* 0x06 */ u16 clutAlt;
-    /* 0x08 */ u16 order;
-    /* 0x0A */ u16 isSemiTrans;
-    /* 0x0C */ u16 tpage;
-    /* 0x0E */ u16 roomTileWidth;
-    /* 0x10 */ u16 roomTileHeight;
-    /* 0x12 */ u16 pad12;
-    /* 0x14 */ u16* tiles;
-    /* 0x18 */ u8* page;
-    /* 0x1C */ u8* gfx;
-    /* 0x20 */ u8* clut;
-    /* 0x24 */ OT_TYPE* ot;
-    /* 0x28 */ SPRT_16* sp16;
-    /* 0x2C */ DR_MODE* dr;
-    /* 0x30 */ RECT rect;
-} TilemapRenderer;
-
 void RenderTilemap(void) {
     s32 i, j;
     s32 l;

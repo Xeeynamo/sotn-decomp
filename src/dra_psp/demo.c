@@ -275,11 +275,6 @@ void DemoInit(s32 arg0) {
     }
 }
 
-typedef struct {
-    u16 psx;
-    u16 psp;
-} ButtonMap;
-
 // mapping between PSX and PSP buttons
 static ButtonMap D_psp_09160AA0[] = {
     {0x1000, PAD_UP},     {0x4000, PAD_DOWN},        {0x8000, PAD_LEFT},

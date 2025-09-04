@@ -79,16 +79,6 @@ typedef enum {
 
 extern PlayerState g_Dop;
 
-// this is similar to `WeaponAnimation` but
-// with fewer fields.
-typedef struct {
-    AnimationFrame* frames;
-    s8* frameProps;
-    u16 soundId;
-    u8 frameStart;
-    u8 soundFrame;
-} DopWeaponAnimation;
-
 // Blueprints are copied from Alucard. Not all are relevant, but the
 // indexes appear to match for now.
 

@@ -6,18 +6,6 @@ s16 D_800B0884[] = {0, 1, 2, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 4, 3, 2, 1};
 s16 D_800B08A8[] = {0x00, 0x20, 0x40, 0x60, 0x80, 0xA0, 0xAA, 0xAA, 0xAA,
                     0xAA, 0xAA, 0xA0, 0x80, 0x60, 0x40, 0x20, 0x00};
 
-typedef struct {
-    s32 : 32;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-    s16 unkC;
-    s32 unk10;
-    s32 unk14;
-    s32 unk18;
-} Unkstruct_8012BEF8; // size = 0x1C
-
 // echo of bat effect
 void EntityBatEcho(Entity* self) {
 #ifdef VERSION_PC

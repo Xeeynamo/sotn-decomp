@@ -122,11 +122,48 @@ typedef enum {
     (WIDTH_OF_MAP_TILE_IN_PIXELS / PIXELS_PER_BYTE)
 #define WIDTH_OF_MAP_ROW_IN_PIXELS (256)
 #define WIDTH_OF_MAP_ROW_IN_BYTES (WIDTH_OF_MAP_ROW_IN_PIXELS / PIXELS_PER_BYTE)
+
+// Color macros
 #define COLORS_PER_PAL (16)
 #define COLOR_BPP (16)
 #define COLOR_LEN ((COLOR_BPP) / 8)
-#define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
 #define COLOR16(r, g, b, a) (r) + ((g) << 5) + ((b) << 10) + ((a) << 15)
+
+// Palette macros
+#define PAL_OVL_FLAG 0x8000
+#define PAL_DRA(x) (x)
+#define PAL_OVL(x) ((x) | PAL_OVL_FLAG)
+
+#define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
+
+#define MAKE_PAL_OP(kind, freq) (u_long*)((kind) | ((freq) << 0x10))
+#define GET_PAL_OP_KIND(x) (LOHU(x))
+#define GET_PAL_OP_FREQ(x) (HIH(x))
+
+#define PAL_COPY 1
+#define PAL_COPY_INFO() MAKE_PAL_OP(PAL_COPY, 0)
+#define PAL_COPY_DATA(dst, data)                                               \
+    (u_long*)(dst), (u_long*)LEN(data), (u_long*)(data)
+#define PAL_COPY_DATA_(dst, data, len)                                         \
+    (u_long*)(dst), (u_long*)(len), (u_long*)(data)
+
+#define PAL_UNK_OP2 2
+#define PAL_UNK_OP2_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
+#define PAL_UNK_OP2_DATA(data) (u_long*)(data)
+
+#define PAL_UNK_OP3 3
+#define PAL_UNK_OP3_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
+#define PAL_UNK_OP3_DATA(data) (u_long*)(data)
+
+#define PAL_GLOW_ANIM 4
+#define PAL_GLOW_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
+#define PAL_GLOW_DATA(data) (u_long*)(data)
+
+#define PAL_BULK_COPY 5
+#define PAL_BULK_COPY_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
+#define PAL_BULK(dst, data) (u_long*)(dst), (u_long*)LEN(data), (u_long*)(data)
+
+#define PAL_TERMINATE() ((u_long*)-1)
 
 #define OTSIZE 0x200
 #define MAX_ENV_COUNT 0x10
@@ -425,10 +462,6 @@ typedef enum {
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
 
-#define PAL_OVL_FLAG 0x8000
-#define PAL_DRA(x) (x)
-#define PAL_OVL(x) ((x) | PAL_OVL_FLAG)
-
 #ifndef SOTN_STR
 // Decorator to re-encode strings with ./tools/sotn_str when building
 // the game. Certain strings in SOTN do not follow the ASCII encoding and each
@@ -719,8 +752,6 @@ typedef enum {
 
 struct Entity;
 
-#include "unkstruct.h"
-
 typedef struct {
     f32 posX;
     f32 posY;
@@ -775,6 +806,12 @@ typedef struct {
     /* 0x2 */ u8 objGfxId;
     /* 0x3 */ u8 objLayoutId;
 } RoomLoadDef; // size = 0x4
+
+// fake struct for D_801375BC
+typedef struct {
+    RoomLoadDef* def;
+    Point32 pos;
+} RoomLoadDefHolder;
 
 typedef struct {
     /* 0x0 */ u8 left;
@@ -882,6 +919,35 @@ typedef struct Entity {
     /* 0x7C */ Ext ext;
     /* 0xB8 */ struct Entity* unkB8;
 } Entity; // size = 0xBC
+
+typedef struct {
+    u16 animSet;
+    u16 unk5A;
+    u16 palette;
+    u16 drawMode;
+    u8* animData;
+} EntityConfig;
+
+// Used in dra/4B758
+typedef struct {
+    s16 unk0;
+    s16 animSet;
+    s16 animCurFrame;
+    u16 w;
+    u16 h;
+    s16 x;
+    s16 y;
+    s16 xPivot;
+    s16 yPivot;
+    u16 unused12;
+    s32 index;
+    s32 index2;
+    u32 spriteSheetIdx;
+    s32 flipX; // set to 2 when facing left, 0 when not
+    s32 eDrawFlags;
+    OT_TYPE* ot;
+    POLY_GT4* poly;
+} EntitiesRenderer;
 
 typedef struct {
     /* 0x00 */ u16 animSet;
@@ -1248,12 +1314,43 @@ typedef struct {
 } LayoutRect; // size = 0x4
 
 typedef struct {
+    /* 0x0 */ u16 posX;
+    /* 0x2 */ u16 posY;
+    /* 0x4 */ u16 entityId;
+    /* 0x6 */ u16 entityRoomIndex;
+    /* 0x8 */ u16 params;
+} LayoutEntity; // size = 0xA
+
+typedef struct {
     /* 0x00 */ u16* layout;
     /* 0x04 */ TileDefinition* tileDef;
     /* 0x08 */ LayoutRect rect;
     /* 0x0C */ u16 zPriority;
     /* 0x0E */ u16 flags;
 } LayerDef; // size = 0x10
+
+// Defined in dra/4CE2C
+// internal structure that holds all the information to render room layers
+typedef struct {
+    /* 0x00 */ u16 x;
+    /* 0x02 */ u16 y;
+    /* 0x04 */ u16 flags;
+    /* 0x06 */ u16 clutAlt;
+    /* 0x08 */ u16 order;
+    /* 0x0A */ u16 isSemiTrans;
+    /* 0x0C */ u16 tpage;
+    /* 0x0E */ u16 roomTileWidth;
+    /* 0x10 */ u16 roomTileHeight;
+    /* 0x12 */ u16 pad12;
+    /* 0x14 */ u16* tiles;
+    /* 0x18 */ u8* page;
+    /* 0x1C */ u8* gfx;
+    /* 0x20 */ u8* clut;
+    /* 0x24 */ OT_TYPE* ot;
+    /* 0x28 */ SPRT_16* sp16;
+    /* 0x2C */ DR_MODE* dr;
+    /* 0x30 */ RECT rect;
+} TilemapRenderer;
 
 typedef struct {
     LayerDef* fg;
@@ -1564,6 +1661,55 @@ typedef struct {
     /* 0x40 */ u8* scriptEnd;    // pointer to the end of the script
 } Dialogue;                      // size = 0x44
 
+// st0_psp/3101C, st0/bss.c, st0/prologue_scroll.c, st0/3101C
+typedef struct {
+    /* 0x00 */ u8* scriptCur;
+    /* 0x04 */ s16 startX;
+    /* 0x06 */ s16 nextLineY;
+    /* 0x08 */ s16 startY;
+    /* 0x0A */ s16 nextCharX;
+    /* 0x0C */ s16 nextLineX;
+    /* 0x0E */ u16 nextCharY;
+    /* 0x10 */ u16 portraitAnimTimer;
+    /* 0x12 */ u8 unk12;
+    /* 0x13 */ u8 clutIndex;
+#ifdef VERSION_PSP
+    /* 0x14 */ u8 nextCharTimer;
+    /* 0x15 */ u8 unk17;
+#endif
+    /* 0x14 */ Primitive* prim;
+    /* 0x18 */ u32 primIndex;
+    /* 0x1C */ u16* unk20;
+    /* 0x20 */ s32 : 32;
+    /* 0x24 */ u16* clutIndexes;
+    /* 0x28 */ s32 : 32;
+    /* 0x2C */ s32 clutArrLength;
+    /* 0x30 */ s32 : 32;
+    /* 0x34 */ u8* script;
+#ifndef VERSION_PSP
+    /* 0x38 */ u16 unk3C; // maybe it is a begin flag?
+    /* 0x3A */ u16 timer;
+#endif
+    /* 0x3C */ u8* scriptEnd;
+} Dialogue2;
+
+// no4/cutscene
+typedef struct {
+    /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character
+    /* 0x04 */ s16 nextCharX;         // starting x coord
+    /* 0x06 */ s16 nextCharY;         // next char y coord
+    /* 0x08 */ s16 portraitAnimTimer; // portrait animation timer
+    /* 0x0A */ u8 nextCharTimer;
+    /* 0x0B */ u8 unkB;
+    // Of course, offsets beyond here won't be right on PSP
+#if defined(VERSION_PSP)
+    /* 0x0C */ Primitive* prim[6]; // for dialogue graphics rendering
+#else
+    /* 0x0C */ Primitive* prim[4]; // for dialogue graphics rendering
+#endif
+    /* 0x1C */ s32 primIndex[3]; // primIndices: unk, actorName, unk
+} Dialogue3;                     // size = 0x28
+
 // Used for the damageKind of DamageParam
 typedef enum {
     DAMAGEKIND_0,
@@ -1677,6 +1823,63 @@ typedef struct {
 } GameApi; /* size=0x140 */
 
 typedef struct {
+    u8 childId;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    u8 unk4;
+    u8 unk5;
+} FactoryBlueprint;
+
+// Used in dra/7E4BC, dra/d_DBD4
+typedef struct {
+    u8 timers[8];
+    u8 blueprints[8];
+    u8 blueprintParams[8];
+    u32 unk18;
+} Unkstruct_800ADEF0; // size:0x1C
+
+// Used in ric/pl_blueprints, maria/pl_blueprints
+typedef struct {
+    s16 xPos;
+    s16 yPos;
+    s32 velocityX;
+    s32 velocityY;
+    s16 timerInit;
+    s16 tpage;
+    u16 clut;
+    u8 uBase;
+    u8 vBase;
+} Props_80161FF0; // size = 0x14
+
+// Used in dra/7E4BC, ric/pl_blueprints, maria/pl_blueprints, rbo5/unk_4648C,
+// bo4/unk_46E7C
+typedef struct {
+    /* 0x00 */ u8 count;
+    /* 0x01 */ u8 r;
+    /* 0x02 */ u8 g;
+    /* 0x03 */ u8 b;
+    /* 0x04 */ u8 w;
+    /* 0x05 */ u8 h;
+    /* 0x06 */ s16 priority;
+    /* 0x08 */ s16 drawMode;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ u32 flags;
+} unkStr_8011E4BC; // size = 0x10
+
+// Used in dra/7E4BC, dra/bss, rbo5/unk_4648C, bo4/unk_46E7C
+typedef struct {
+    f32 posX;
+    f32 posY;
+    s16 angle1;
+    s16 angle2;
+    s16 size;
+    s16 xOffset;
+    s16 yOffset;
+    s16 pad;
+} mistStruct; // size = 0x14
+
+typedef struct {
     void (*D_8013C000)(void);
     void (*D_8013C004)(u16 params);
     void (*D_8013C008)(void);
@@ -1759,6 +1962,17 @@ typedef struct {
     /* 0x0D */ u8 soundFrame;  // when the sound effect is triggered
     /* 0x0E */ s16 unused;     // reserved, always 0
 } WeaponAnimation;             // size = 0x10
+
+// Used in rbo5/unk_4648C, bo4/unk_46E7C
+// this is similar to `WeaponAnimation` but
+// with fewer fields.
+typedef struct {
+    AnimationFrame* frames;
+    s8* frameProps;
+    u16 soundId;
+    u8 frameStart;
+    u8 soundFrame;
+} DopWeaponAnimation;
 
 #define TILE_SIZE 16
 #define TILE_MASK 0x0F
@@ -1964,6 +2178,36 @@ typedef struct {
     u16 palette;
     s16 enabled;
 } DebugInfo;
+
+typedef struct {
+    /* 0x800973F8 */ s32 D_800973F8;
+    /* 0x800973FC */ s32 D_800973FC;
+    /* 0x80097400 */ bool pauseEnemies; // True for Stopwatch and cutscenes
+    /* 0x80097404 */ s32 unk4;
+    /* 0x80097408 */ s32 g_zEntityCenter;
+    /* 0x8009740C */ s32 unkC;
+    /* 0x80097410 */ s32 BottomCornerTextTimer;
+    /* 0x80097414 */ s32 BottomCornerTextPrims;
+    /* 0x80097418 */ s32 unk18;
+    /* 0x8009741C */ s32 unk1C;
+    /* 0x80097420 */ s32 unk20;
+    /* 0x80097424 */ s32 unk24;
+
+    // size must be 8 for the loop in RunMainEngine, while
+    // PreventEntityFromRespawning suggests it has a size of 32
+    /* 0x80097428 */ s32 D_80097428[8];
+} unkGraphicsStruct;
+
+// Used in dra/func_800EA538, dra/func_800EA5E4, dra/func_800EA7CC
+typedef struct {
+    /* 0x00 */ u_long* desc;
+    /* 0x04 */ u_long* data;
+    /* 0x08 */ u16 unk8; // anim mode?
+    /* 0x0A */ u16 index;
+    /* 0x0C */ u16 unkC;
+    /* 0x0E */ u16 unkE;
+    /* 0x10 */ u8 unkArray[0x30]; // color buffer
+} Unkstruct_8006C3C4;             // size = 0x40
 
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;

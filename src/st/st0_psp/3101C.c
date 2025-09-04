@@ -1,11 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../st0/st0.h"
-#include "../st0/dialogue2.h"
-
-typedef struct {
-    Primitive* prim;
-    float y0;
-} UnkPrimStruct;
 
 // This file uses g_Dialogue with a different struct than the usual.
 // It is based on struct Dialogue, which is used in cutscene.c
