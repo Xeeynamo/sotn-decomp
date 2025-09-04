@@ -681,7 +681,7 @@
 | cat   | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
 | chi   | en_collect.rodata                        |       42 |          0 | Yes    |                                 |       |
 | dai   | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
-| dai   | e_priest.rodata                          |       42 |          0 | Yes    |                                 |       |
+| dai   | e_confessional.rodata                    |       42 |          0 | Yes    |                                 |       |
 | lib   | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
 | no2   | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
 | no3   | e_collect.rodata                         |       42 |          0 | Yes    |                                 |       |
