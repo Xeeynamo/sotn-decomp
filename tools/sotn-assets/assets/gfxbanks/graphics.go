@@ -87,10 +87,10 @@ func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, symbol func(addr psx.
 	pool[psx.RamNull] = -1
 	var banks []GfxBank
 	var ranges []datarange.DataRange
-	for _, addrGfxBank := range util.SortUniqueOffsets(addrGfxBanks) {
-		if addrGfxBank == psx.RamNull { // exception for ST0
-			continue
-		}
+	var newRange datarange.DataRange
+	sortedBanks := util.SortUniqueOffsets(addrGfxBanks)
+	lastAddr := sortedBanks[len(sortedBanks)-1]
+	for addrGfxBank := sortedBanks[0]; addrGfxBank <= lastAddr; {
 		if err := addrGfxBank.MoveFile(r, ramBase); err != nil {
 			return GfxBanks{}, datarange.DataRange{}, err
 		}
@@ -99,32 +99,32 @@ func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, symbol func(addr psx.
 			return GfxBanks{}, datarange.DataRange{}, err
 		}
 		if bank.isTerminate() { // ST0 exception where no gfx entries are found
-			pool[addrGfxBank] = len(banks)
-			banks = append(banks, bank)
-			ranges = append(ranges, datarange.FromAddr(addrGfxBank, 4))
-			continue
-		}
-		for {
-			var entry GfxEntry
-			_ = binary.Read(r, binary.LittleEndian, &entry.X)
-			_ = binary.Read(r, binary.LittleEndian, &entry.Y)
-			if entry.isTerminate() {
-				break
-			}
-			_ = binary.Read(r, binary.LittleEndian, &entry.Width)
-			_ = binary.Read(r, binary.LittleEndian, &entry.Height)
-			_ = binary.Read(r, binary.LittleEndian, &entry.addr)
-			if !entry.isEmpty() {
-				entry.Name = symbol(entry.addr)
-				if entry.Name == "" {
-					entry.Name = fmt.Sprintf("D_%08X", uint32(entry.addr))
+			newRange = datarange.FromAddr(addrGfxBank, 4)
+		} else {
+			for {
+				var entry GfxEntry
+				_ = binary.Read(r, binary.LittleEndian, &entry.X)
+				_ = binary.Read(r, binary.LittleEndian, &entry.Y)
+				if entry.isTerminate() {
+					break
 				}
+				_ = binary.Read(r, binary.LittleEndian, &entry.Width)
+				_ = binary.Read(r, binary.LittleEndian, &entry.Height)
+				_ = binary.Read(r, binary.LittleEndian, &entry.addr)
+				if !entry.isEmpty() {
+					entry.Name = symbol(entry.addr)
+					if entry.Name == "" {
+						entry.Name = fmt.Sprintf("D_%08X", uint32(entry.addr))
+					}
+				}
+				bank.Entries = append(bank.Entries, entry)
 			}
-			bank.Entries = append(bank.Entries, entry)
+			newRange = datarange.FromAddr(addrGfxBank, 4+len(bank.Entries)*12+4)
 		}
 		pool[addrGfxBank] = len(banks)
 		banks = append(banks, bank)
-		ranges = append(ranges, datarange.FromAddr(addrGfxBank, 4+len(bank.Entries)*12+4))
+		ranges = append(ranges, newRange)
+		addrGfxBank = newRange.End()
 	}
 
 	var g GfxBanks

@@ -123,6 +123,9 @@ func SortUniqueOffsets(slice []psx.Addr) []psx.Addr {
 		}
 		return 0
 	})
+	if newSlice[0] == psx.RamNull { // ignore null address
+		newSlice = newSlice[1:]
+	}
 	return newSlice
 }
 
