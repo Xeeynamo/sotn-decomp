@@ -11,24 +11,24 @@ typedef struct {
     s16 priority;
 } bellRopeParams;
 
-static SVECTOR g_vectorOne_0 = {-16, 0, 0};
-static SVECTOR g_vectorOne_1 = {16, 0, 0};
-static SVECTOR g_vectorOne_2 = {-16, 26, 0};
-static SVECTOR g_vectorOne_3 = {16, 26, 0};
-static SVECTOR g_vectorTwo_0 = {-50, 26, 0};
-static SVECTOR g_vectorTwo_1 = {0, 26, 0};
-static SVECTOR g_vectorTwo_2 = {-50, 128, 0};
-static SVECTOR g_vectorTwo_3 = {0, 128, 0};
-static SVECTOR g_vectorTwoAlt_0 = {50, 26, 0};
-static SVECTOR g_vectorTwoAlt_2 = {50, 128, 0};
-static SVEC4 g_points[] = {
-    {&g_vectorOne_0, &g_vectorOne_1, &g_vectorOne_2, &g_vectorOne_3},
-    {&g_vectorTwo_0, &g_vectorTwo_1, &g_vectorTwo_2, &g_vectorTwo_3},
-    {&g_vectorTwoAlt_0, &g_vectorTwo_1, &g_vectorTwoAlt_2, &g_vectorTwo_3}};
-static bellRopeParams g_ropeParams[] = {{2, 12, 171}, {4, 29, 169}};
+static SVECTOR vector_one_0 = {-16, 0, 0};
+static SVECTOR vector_one_1 = {16, 0, 0};
+static SVECTOR vector_one_2 = {-16, 26, 0};
+static SVECTOR vector_one_4 = {16, 26, 0};
+static SVECTOR vector_two_0 = {-50, 26, 0};
+static SVECTOR vector_two_1 = {0, 26, 0};
+static SVECTOR vector_two_2 = {-50, 128, 0};
+static SVECTOR vector_two_3 = {0, 128, 0};
+static SVECTOR vector_two_alt_0 = {50, 26, 0};
+static SVECTOR vector_two_alt_2 = {50, 128, 0};
+static SVEC4 points[] = {
+    {&vector_one_0, &vector_one_1, &vector_one_2, &vector_one_4},
+    {&vector_two_0, &vector_two_1, &vector_two_2, &vector_two_3},
+    {&vector_two_alt_0, &vector_two_1, &vector_two_alt_2, &vector_two_3}};
+static bellRopeParams rope_params[] = {{2, 12, 171}, {4, 29, 169}};
 // Two sets of x, y, params
-static s16 g_xyParams[] = {512, 456, 0, 512, 589, 1};
-static VECTOR g_transVector = {0, 0, 1024, 0};
+static s16 xy_params[] = {512, 456, 0, 512, 589, 1};
+static VECTOR trans_vector = {0, 0, 1024, 0};
 
 void EntityBell(Entity* self) {
     s16 angle;
@@ -56,7 +56,7 @@ void EntityBell(Entity* self) {
     SVECTOR rotVector;
     s32 maxRopeSegments;
     s32 posY;
-    SVEC4* points;
+    SVEC4* pointsPtr;
     s32 posX;
     s32 ropeSegment;
     Primitive* prim;
@@ -68,7 +68,7 @@ void EntityBell(Entity* self) {
         InitializeEntity(g_EInitInteractable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter + 8;
         self->ext.et_bell.unk9C = 0;
-        ropeParams = &g_ropeParams[self->params];
+        ropeParams = &rope_params[self->params];
         maxRopeSegments = ropeParams->segments;
         priority = ropeParams->priority;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, maxRopeSegments + 6);
@@ -177,7 +177,7 @@ void EntityBell(Entity* self) {
     if (self->ext.et_bell.unk84 < -FIX(64.0)) {
         self->ext.et_bell.unk84 = -FIX(64.0);
     }
-    ropeParams = &g_ropeParams[self->params];
+    ropeParams = &rope_params[self->params];
     priority = ropeParams->priority;
     if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
         priority = g_unkGraphicsStruct.g_zEntityCenter - 4 + (priority - 169);
@@ -227,15 +227,16 @@ void EntityBell(Entity* self) {
     rotVector.vy = 0;
     rotVector.vz = angle;
     RotMatrix(&rotVector, &mtx);
-    TransMatrix(&mtx, &g_transVector);
+    TransMatrix(&mtx, &trans_vector);
     SetRotMatrix(&mtx);
     SetTransMatrix(&mtx);
-    points = g_points;
+    pointsPtr = points;
     for (ropeSegment = 0; ropeSegment < 3; ropeSegment++) {
-        RotTransPers4(points->v0, points->v1, points->v2, points->v3,
-                      (long*)&prim->x0, (long*)&prim->x1, (long*)&prim->x2,
-                      (long*)&prim->x3, (long*)&gteFlag, (long*)&gteParams);
-        points++;
+        RotTransPers4(
+            pointsPtr->v0, pointsPtr->v1, pointsPtr->v2, pointsPtr->v3,
+            (long*)&prim->x0, (long*)&prim->x1, (long*)&prim->x2,
+            (long*)&prim->x3, (long*)&gteFlag, (long*)&gteParams);
+        pointsPtr++;
         prim->priority = priority;
         prim->drawMode = DRAW_UNK02;
         prim = prim->next;
@@ -348,7 +349,7 @@ void EntityBell(Entity* self) {
 void EntityBellHelper(Entity* self) {
     Entity* entity;
     s32 count;
-    s16* ptr = g_xyParams;
+    s16* ptr = xy_params;
 
     if (!self->step) {
         InitializeEntity(g_EInitInteractable);

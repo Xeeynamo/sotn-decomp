@@ -4,14 +4,14 @@
 static u8 anim_1[] = {
     6, 1, 4, 2, 4, 3, 6, 4, 4, 3, 4, 2, 0, 0, 0, 0,
 };
-static u32 g_eWingedGuardVelocities[][2] = {
+static u32 velocities[][2] = {
     {FIX(0), FIX(-0.5)},    {FIX(0.25), FIX(-1.125)}, {FIX(0.1875), FIX(0)},
     {FIX(-0.1875), FIX(0)}, {FIX(0), FIX(-0.75)},     {FIX(-0.25), FIX(-1.125)},
     {FIX(0.125), FIX(-1)},  {FIX(0), FIX(0)},
 };
 
-// static s16 g_minMaxPositions[] defined before EntityWingedGuardSpawner
-// because of const string in func_us_801D37C4
+// static s16 min_max_positions[] defined before EntityWingedGuardSpawner
+// because of const string in EntityWingedGuard
 
 void EntityWingedGuard(Entity* self) {
     Entity* entity;
@@ -75,16 +75,16 @@ void EntityWingedGuardParts(Entity* self) {
             self->drawFlags |= FLAG_DRAW_ROTATE;
         }
         if (self->facingLeft) {
-            self->velocityX += g_eWingedGuardVelocities[self->params][0];
+            self->velocityX += velocities[self->params][0];
         } else {
-            self->velocityX -= g_eWingedGuardVelocities[self->params][0];
+            self->velocityX -= velocities[self->params][0];
         }
         if (GetSideToPlayer() & 1) {
             self->velocityX += FIX(0.5);
         } else {
             self->velocityX -= FIX(0.5);
         }
-        self->velocityY += g_eWingedGuardVelocities[self->params][1];
+        self->velocityY += velocities[self->params][1];
         return;
     case 1:
         MoveEntity();
@@ -101,7 +101,7 @@ void EntityWingedGuardParts(Entity* self) {
     }
 }
 
-static s16 g_minMaxPositions[] = {384, 640, 416, 1664, 384, 640, 416, 944};
+static s16 min_max_positions[] = {384, 640, 416, 1664, 384, 640, 416, 944};
 
 void EntityWingedGuardSpawner(Entity* self) {
     Entity* entity;
@@ -119,7 +119,7 @@ void EntityWingedGuardSpawner(Entity* self) {
         posX = g_Tilemap.scrollX.i.hi + entity->posX.i.hi;
         posY = g_Tilemap.scrollY.i.hi + entity->posY.i.hi;
         if (self->params) {
-            minMaxPositions = &g_minMaxPositions[(self->params - 1) * 4];
+            minMaxPositions = &min_max_positions[(self->params - 1) * 4];
             if (posX < minMaxPositions[0] || posX > minMaxPositions[1] ||
                 posY < minMaxPositions[2] || posY > minMaxPositions[3]) {
                 return;

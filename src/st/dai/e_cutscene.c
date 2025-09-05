@@ -20,11 +20,11 @@ static s16 D_us_80180EFC[] = {
 static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
 
 // bss
-s32 g_SkipCutscene;
+static s32 skip_cutscene;
 Dialogue g_Dialogue; // Used by cutscene_init
 STATIC_PAD_BSS(104);
 u32 g_CutsceneFlags; // Used by cutscene_init
-s32 g_IsCutsceneDone;
+static s32 is_cutscene_done;
 
 // These three are reversed in order from psp
 #include "../cutscene_script_text.h"
@@ -130,10 +130,10 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     s32 ptr;
 
     if (self->step) {
-        if (g_IsCutsceneDone && !g_SkipCutscene &&
+        if (is_cutscene_done && !skip_cutscene &&
             ((g_Settings.D_8003CB04 & 0x400) || g_IsTimeAttackUnlocked)) {
             if (g_pads[0].tapped & PAD_START) {
-                g_SkipCutscene = 1;
+                skip_cutscene = 1;
                 g_api.FreePrimitives(self->primIndex);
                 self->flags ^= FLAG_HAS_PRIMS;
                 if (g_Dialogue.primIndex[1] != -1) {
@@ -165,15 +165,15 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             self->primIndex = g_Dialogue.primIndex[2];
             g_CutsceneHasControl = 1;
             g_CutsceneFlags = 0;
-            g_IsCutsceneDone = 0;
-            g_SkipCutscene = 0;
+            is_cutscene_done = 0;
+            skip_cutscene = 0;
             self->step++;
         }
         break;
     case 1:
         // this is a huge While-loop! Don't miss it!
         while (1) {
-            if ((g_Dialogue.nextCharTimer != 0) && !g_SkipCutscene) {
+            if ((g_Dialogue.nextCharTimer != 0) && !skip_cutscene) {
                 g_Dialogue.nextCharTimer--;
                 return;
             }
@@ -183,7 +183,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 self->step = 7;
                 return;
             case CSOP_LINE_BREAK:
-                if (g_SkipCutscene) {
+                if (skip_cutscene) {
                     continue;
                 }
                 g_Dialogue.nextCharX = g_Dialogue.nextLineX;
@@ -214,12 +214,12 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 continue;
             case CSOP_SET_WAIT:
                 g_Dialogue.nextCharTimer = *g_Dialogue.scriptCur++;
-                if (g_SkipCutscene) {
+                if (skip_cutscene) {
                     continue;
                 }
                 return;
             case CSOP_HIDE_DIALOG:
-                if (g_SkipCutscene) {
+                if (skip_cutscene) {
                     continue;
                 }
                 prim = g_Dialogue.prim[0];
@@ -229,7 +229,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 }
                 return;
             case CSOP_SET_PORTRAIT:
-                if (g_SkipCutscene) {
+                if (skip_cutscene) {
                     g_Dialogue.scriptCur += 2;
                     continue;
                 }
@@ -264,7 +264,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 self->step = 3;
                 return;
             case CSOP_NEXT_DIALOG:
-                if (g_SkipCutscene) {
+                if (skip_cutscene) {
                     continue;
                 }
                 for (prim = g_Dialogue.prim[0], i = 0; i < 5; i++) {
@@ -277,7 +277,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 self->step = 4;
                 return;
             case CSOP_SET_POS:
-                if (g_SkipCutscene) {
+                if (skip_cutscene) {
                     g_Dialogue.scriptCur += 2;
                     continue;
                 }
@@ -295,14 +295,14 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 self->step_s = 0;
                 return;
             case CSOP_CLOSE_DIALOG:
-                if (g_SkipCutscene) {
+                if (skip_cutscene) {
                     continue;
                 }
                 g_Dialogue.portraitAnimTimer = 24;
                 self->step = 6;
                 return;
             case CSOP_PLAY_SOUND:
-                if (g_SkipCutscene) {
+                if (skip_cutscene) {
                     g_Dialogue.scriptCur++;
                     g_Dialogue.scriptCur++;
                     continue;
@@ -313,7 +313,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 g_api.PlaySfx(nextChar);
                 continue;
             case CSOP_WAIT_FOR_SOUND:
-                if (g_SkipCutscene) {
+                if (skip_cutscene) {
                     continue;
                 }
                 if (g_api.func_80131F68()) {
@@ -322,7 +322,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 *g_Dialogue.scriptCur--;
                 return;
             case CSOP_SCRIPT_UNKNOWN_11:
-                if (g_SkipCutscene) {
+                if (skip_cutscene) {
                     continue;
                 }
                 if (g_api.func_80131F68() != true) {
@@ -387,7 +387,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 g_Dialogue.unk3C = 0;
                 continue;
             case CSOP_LOAD_PORTRAIT:
-                if (g_SkipCutscene) {
+                if (skip_cutscene) {
                     g_Dialogue.scriptCur += 5;
                 } else {
                     ptr = (u_long)*g_Dialogue.scriptCur++;
@@ -411,8 +411,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 continue;
             case CSOP_SCRIPT_UNKNOWN_21:
                 g_CutsceneFlags = 0;
-                g_SkipCutscene = 0;
-                g_IsCutsceneDone = 0;
+                skip_cutscene = 0;
+                is_cutscene_done = 0;
                 continue;
             case CSOP_SCRIPT_UNKNOWN_22:
                 g_CutsceneFlags &= ~(1 << *g_Dialogue.scriptCur++);
@@ -427,7 +427,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 *g_Dialogue.scriptCur++;
                 continue;
             default:
-                if (g_SkipCutscene) {
+                if (skip_cutscene) {
                     continue;
                 }
                 g_Dialogue.nextCharTimer = g_Dialogue.unk17;
@@ -484,7 +484,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     case 5:
         switch (self->step_s) {
         case 0:
-            g_IsCutsceneDone = 1;
+            is_cutscene_done = 1;
             primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 72);
             if (primIndex == -1) {
                 DestroyEntity(self);

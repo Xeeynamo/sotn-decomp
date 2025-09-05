@@ -7,9 +7,8 @@ extern s32 E_ID(SPIKES_DUST);
 extern s32 E_ID(SPIKES_DAMAGE);
 #endif
 
-static u8 g_animSpikesDust[] = {
-    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1, 0, 0, 0};
-static u8 g_params[][3] = {{5, 4, 6}, {1, 0, 2}, {9, 8, 10}, {0, 0, 0}};
+static u8 anim_dust[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1, 0, 0, 0};
+static u8 spikes_params[][3] = {{5, 4, 6}, {1, 0, 2}, {9, 8, 10}, {0, 0, 0}};
 
 void EntitySpikesDust(Entity* self) {
     s16 angle;
@@ -25,7 +24,7 @@ void EntitySpikesDust(Entity* self) {
         return;
     }
     MoveEntity();
-    if (!AnimateEntity(g_animSpikesDust, self)) {
+    if (!AnimateEntity(anim_dust, self)) {
         DestroyEntity(self);
     }
 }
@@ -103,7 +102,7 @@ void EntitySpikesParts(Entity* self) {
     }
 }
 
-void SpikesBreak(u32 tileIdx) {
+static void SpikesBreak(u32 tileIdx) {
     Entity* entity;
     s16 tilePosX, tilePosY;
     s32 count, tileIdxOffset;
@@ -120,7 +119,7 @@ void SpikesBreak(u32 tileIdx) {
             tileType = (&g_Tilemap.fg[tileIdx])[tileIdxOffset];
             collisionType = g_Tilemap.tileDef->collision[tileType];
             if (collisionType == 3) {
-                params |= g_params[count][tileIdxOffset];
+                params |= spikes_params[count][tileIdxOffset];
             }
         }
     }
@@ -150,7 +149,7 @@ void SpikesBreak(u32 tileIdx) {
     }
 }
 
-void SpikesApplyDamage(u32 tileIdx) {
+static void SpikesApplyDamage(u32 tileIdx) {
     Entity* spikesDamage;
     s16 tilePosX, tilePosY;
 

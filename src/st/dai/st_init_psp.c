@@ -70,11 +70,12 @@ s32 E_ID(UNK_47);
 s32 E_ID(MIST_DOOR);
 
 u8* OVL_EXPORT(cutscene_script); // bss
-u8* D_pspeu_092970B8;            // bss
+// Used by dai/e_cutscene_psp/DAI_EntityCutscene
+u8* D_pspeu_092970B8; // bss
 
 #include "../get_lang_at.h"
 
-void InitEntityIds(void) {
+static void InitEntityIds(void) {
     E_ID(BACKGROUND_BLOCK) = 0x11;
     E_ID(LOCK_CAMERA) = 0x12;
     E_ID(UNK_13) = 0x13;

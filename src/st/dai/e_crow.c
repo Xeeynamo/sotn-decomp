@@ -8,7 +8,7 @@ static u8 anim_4[] = {6, 4, 6, 7, 15, 8, 255, 0};
 static u8 anim_5[] = {10, 11, 10, 12, 0, 0, 0, 0};
 static u8 anim_6[] = {6, 13, 6, 14, 6, 15, 6, 16, 0, 0, 0, 0};
 static u8 anim_7[] = {3, 13, 3, 14, 3, 15, 3, 16, 0, 0, 0, 0};
-static s16 g_eCrowHitboxOffsets[] = {
+static s16 hitbox_offsets[] = {
     0, 0, 0, 0,  0,  1,  8, 8,  0, 1,  8, 8,  0, 1, 8, 8, 0, -6, 4, 13, 0, 1, 4,
     8, 0, 5, 4,  12, 0,  4, 4,  7, 0,  0, 0,  0, 0, 0, 0, 0, 0,  0, 0,  0, 0, 2,
     8, 8, 0, -2, 6,  10, 0, -6, 4, 11, 0, -4, 4, 9, 0, 0, 4, 7,  0, -1, 4, 9};
@@ -112,7 +112,7 @@ void EntityBlackCrow(Entity* self) {
             return;
         }
     }
-    ptr = &g_eCrowHitboxOffsets[self->animCurFrame * 4];
+    ptr = &hitbox_offsets[self->animCurFrame * 4];
     self->hitboxOffX = *ptr++;
     self->hitboxOffY = *ptr++;
     self->hitboxWidth = *ptr++;
@@ -190,7 +190,7 @@ void EntityBlueRaven(Entity* self) {
         }
         break;
     }
-    ptr = &g_eCrowHitboxOffsets[self->animCurFrame * 4];
+    ptr = &hitbox_offsets[self->animCurFrame * 4];
     self->hitboxOffX = *ptr++;
     self->hitboxOffY = *ptr++;
     self->hitboxWidth = *ptr++;

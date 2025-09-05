@@ -29,7 +29,7 @@ static u8 D_us_80181044[] = {8, 40, 8, 41, 96, 42, 255, 0};
 // This appears to be unused and deadstripped on PSP
 static u8 unused_too[] = {1, 12, 255, 0};
 
-void func_801961DC(s16 arg0) {
+static void func_801961DC(s16 arg0) {
     s16 temp_v0 = arg0 - g_unkGraphicsStruct.unkC;
 
     if (temp_v0 > 1) {
