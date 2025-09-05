@@ -3,16 +3,16 @@
 #include "dra_bss.h"
 
 u8 aPbav[] = {
-#include "gen/vh_0.h"
+#include GEN_VERSION(vh_0.h)
 };
 u8 aPbav_0[] = {
-#include "gen/vh_1.h"
+#include GEN_VERSION(vh_1.h)
 };
 u8 aPbav_2[] = {
-#include "gen/vh_2.h"
+#include GEN_VERSION(vh_2.h)
 };
 u8 aPbav_1[] = {
-#include "gen/vh_3.h"
+#include GEN_VERSION(vh_3.h)
 };
 
 // files included as headers as data should not be aligned by 4

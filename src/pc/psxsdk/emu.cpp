@@ -424,7 +424,7 @@ void check_ss_vab_open_head_with_mode()
     s8 temp[0x1000] = {0};
     SpuInitMalloc(32, temp);
 
-    ReadToArray("assets/dra/vh_0.bin", (char*)aPbav, LEN(aPbav));
+    ReadToArray("assets/dra/" VERSION "/vh_0.vh", (char*)aPbav, LEN(aPbav));
 
     SsInitHot();
     SpuMallocWithStartAddr(0x1010, 0x10000);
