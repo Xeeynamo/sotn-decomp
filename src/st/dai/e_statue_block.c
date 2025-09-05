@@ -4,7 +4,7 @@
 #ifdef VERSION_PSP
 extern s32 E_ID(STATUE);
 #endif
-static s16 g_sensors[] = {0, -15, 0, 0};
+static s16 sensors[] = {0, -15, 0, 0};
 
 void EntityBlock(Entity* self) {
     u32 collision;
@@ -34,7 +34,7 @@ void EntityBlock(Entity* self) {
         break;
     case 2:
         self->velocityX = FIX(0.25);
-        collision = UnkCollisionFunc2(&g_sensors);
+        collision = UnkCollisionFunc2(&sensors);
         if (!(g_Timer & 7)) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
         }

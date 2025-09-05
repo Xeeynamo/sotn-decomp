@@ -12,7 +12,7 @@ static SVECTOR D_us_801825A4 = {-208, 96, 0};
 static SVECTOR D_us_801825AC = {208, 96, 0};
 // Atypical use of this vector.  It uses the vector values, but also uses pad to
 // store the number of recursions of StainedGlassRecurseDepth
-static VECTOR g_params[] = {
+static VECTOR params[] = {
     {FLT(0.0625), 0, FLT(0.125), 3},   {FLT(0.0625), 0, FLT(0.28125), 2},
     {FLT(0.0625), 0, FLT(0.4375), 2},  {FLT(0.0625), 0, FLT(0.59375), 0},
     {FLT(0.0625), 0, FLT(0.75), 0},    {FLT(0.0625), 0, FLT(0.90625), 0},
@@ -202,7 +202,7 @@ void EntityStainedGlass(Entity* self) {
     u8 transparent; // u8, but used as bool
     s32 iterations;
     s16* yVals;
-    VECTOR* params;
+    VECTOR* paramsPtr;
     CVECTOR* colors;
     s32 count;
     Primitive* prim1;
@@ -246,7 +246,7 @@ void EntityStainedGlass(Entity* self) {
         SetGeomOffset(128, 160);
         prim1 = self->ext.stainedGlass.prim1;
         prim2 = self->ext.stainedGlass.prim2;
-        params = g_params;
+        paramsPtr = params;
         yVals = D_us_80182674;
         colors = D_us_8018268C;
         for (count = 0; count < 12; count++) {
@@ -254,7 +254,7 @@ void EntityStainedGlass(Entity* self) {
             rotVector.vy = *yVals;
             rotVector.vz = 0;
             RotMatrix(&rotVector, &mtx);
-            transVector = *params;
+            transVector = *paramsPtr;
             if (transVector.vx > 0) {
                 transparent = true;
                 prim1->drawMode =
@@ -263,7 +263,7 @@ void EntityStainedGlass(Entity* self) {
                 transparent = false;
                 prim1->drawMode = DRAW_COLORS;
             }
-            iterations = params->pad;
+            iterations = paramsPtr->pad;
             transVector.vx += self->posX.i.hi - 128;
             transVector.vy += self->posY.i.hi - 160;
             transVector.vz += 1024;
@@ -320,7 +320,7 @@ void EntityStainedGlass(Entity* self) {
                 RotMatrix(&D_us_801826BC, &mtx);
                 RotMatrixY(rotVector.vy, &mtx);
                 RotMatrixZ(rotVector.vz, &mtx);
-                transVector = *params;
+                transVector = *paramsPtr;
                 transVector.vx = 96;
                 transVector.vy = 256;
                 transVector.vx += self->posX.i.hi - 128;
@@ -379,7 +379,7 @@ void EntityStainedGlass(Entity* self) {
             }
             colors++;
             yVals++;
-            params++;
+            paramsPtr++;
             prim1 = prim1->next;
         }
         for (count = 0; prim2; prim2 = prim2->next) {
