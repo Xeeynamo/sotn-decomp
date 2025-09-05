@@ -108,9 +108,4 @@ extern EInit g_EInitObtainable;
 extern EInit g_EInitWereskeleton;
 extern EInit D_us_80180A88;
 
-typedef struct {
-    s16 unk0;
-    s16* unk4;
-} unkStr_801CDD80;
-
 #endif

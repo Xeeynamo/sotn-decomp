@@ -464,17 +464,6 @@ typedef struct {
 } NowLoadingModel; // size=0x36
 
 typedef struct {
-    s32 x;
-    s32 y;
-    s32 w;
-    s32 h;
-    s32 u;
-    s32 v;
-    s32 tpage;
-    s32 clut;
-} RicSubwpnIconParams;
-
-typedef struct {
     u32 displayHP;
     s32 primIndex1;
     s32 primIndex2;
@@ -487,8 +476,6 @@ typedef struct {
     u32 unk24;
     s32 unk28;
 } PlayerHud;
-
-#include "mist.h"
 
 // g_ButtonCombo is an array of 16, here is what each index is for
 // Names should be updated as each one is decompiled.
@@ -524,6 +511,88 @@ typedef struct Cmd14 {
     s16 unkc;
     u8 unke;
 } Cmd14;
+
+// Used in dra/7879C
+// "Guard" text displays on screen
+typedef struct {
+    u8 left;
+    u8 top;
+    u8 right;
+    u8 bottom;
+    u16 clut;
+    u16 mode;
+} GuardTextControl;
+
+// Used in dra/5F60C
+typedef struct {
+    s32 x;
+    s32 y;
+    s32 w;
+    s32 h;
+    s32 u;
+    s32 v;
+    s32 tpage;
+    s32 clut;
+} RicSubwpnIconParams;
+
+#ifdef VERSION_PSP
+// Used in dra_psp/demo
+typedef struct {
+    u16 psx;
+    u16 psp;
+} ButtonMap;
+#endif
+
+typedef struct EquipMenuHelper {
+    EquipKind equipTypeFilter;
+    s32 index;
+    s32 isAccessory;
+} EquipMenuHelper;
+
+// Struct for table of values to intitialize MenuContext structs
+typedef struct {
+    /* 0x00 */ s16 cursorX;
+    /* 0x02 */ s16 cursorY;
+    /* 0x04 */ u16 cursorW;
+    /* 0x06 */ u16 cursorH;
+    /* 0x08 */ s32 otIdx;
+} MenuContextInit; // size = 0x0C
+
+// Used in dra/dra, dra/7E4BC, dra/d_DBD4
+typedef struct {
+    u16 palette;
+    u8 unk2;
+} Unkstruct_800AE180;
+
+// Used in dra/bss, dra/dra_bss
+typedef struct {
+    u16 start;
+    s16 current;
+    s16* coords;
+    s16 unk8;
+} Unkstruct_80102CD8;
+
+// Used in dra/8BEF8
+typedef struct {
+    s32 : 32;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s16 unkC;
+    s32 unk10;
+    s32 unk14;
+    s32 unk18;
+} Unkstruct_8012BEF8; // size = 0x1C
+
+// Used in dra/d_10798, dra/8D3E8, dra/dra.h
+// This appears to be a super miniature Entity or something
+// All it has is a state, a timer, and a facing direction.
+typedef struct {
+    s32 state;
+    s32 timer;
+    s32 facingLeft;
+} helper_8012F178;
 
 // Used for the button combos to signal successfully completing the sequence
 #define COMBO_COMPLETE 0xFF
@@ -699,13 +768,6 @@ extern Unkstruct_800BF554 g_SfxData[];
 extern char* aLightTimer02x;
 extern SVECTOR D_800E2024;
 extern SVECTOR D_800E202C;
-// This appears to be a super miniature Entity or something
-// All it has is a state, a timer, and a facing direction.
-typedef struct {
-    s32 state;
-    s32 timer;
-    s32 facingLeft;
-} helper_8012F178;
 extern helper_8012F178 D_800B08CC[6];
 extern s32 D_800B0914;
 extern s32 D_800B0918;

@@ -156,27 +156,6 @@ void FreePrimitives(s32 primitiveIndex) {
     }
 }
 
-typedef union {
-    TILE tile;
-    LINE_G2 g2;
-    POLY_G4 g4;
-    POLY_GT4 gt4;
-    POLY_GT3 gt3;
-    SPRT sprt;
-} PrimBuf;
-
-typedef struct {
-    OT_TYPE* ot;
-    POLY_GT4* gt4;
-    POLY_G4* g4;
-    POLY_GT3* gt3;
-    LINE_G2* g2;
-    TILE* tile;
-    DR_MODE* dr;
-    SPRT* sprt;
-    DR_ENV* env;
-} PrimitivesRenderer;
-
 void RenderPrimitives(void) {
 #ifdef VERSION_PSP
 #define RECT_LOC 0x12C

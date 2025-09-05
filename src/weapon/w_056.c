@@ -7,7 +7,6 @@ extern s32 g_HandId;
 #include "shared.h"
 #include "gen/w_056_1.h"
 #include "gen/w_056_2.h"
-#include "w_053_056.h"
 #define g_Animset w_056_1
 #define g_Animset2 w_056_2
 
@@ -177,11 +176,11 @@ void EntityWeaponAttack(Entity* self) {
 
 extern s16 D_18C000_8017AFA4[];
 extern s16 D_18C000_8017AFB8[];
-extern W053_056Config D_18C000_8017AFCC[];
+extern WeaponParams D_18C000_8017AFCC[];
 
 s32 func_ptr_80170004(Entity* self) {
     Primitive* prim;
-    W053_056Config* config;
+    WeaponParams* config;
     s16 angle;
     s32 shift;
     s16 x, y;

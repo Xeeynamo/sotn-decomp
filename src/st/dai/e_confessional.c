@@ -6,22 +6,6 @@ extern s32 E_ID(CONFESSIONAL_BLADES);
 extern s32 E_ID(CONFESSIONAL_BLADE_DEBRIS);
 #endif
 
-typedef struct {
-    /* 0x00 */ u8* anim1;
-    /* 0x04 */ u8* anim2;
-    /* 0x08 */ u8* anim3;
-    /* 0x0C */ u8* anim4;
-} ConfessionalGhostAnimSet;
-typedef struct {
-    /* 0x00 */ s16 x0;
-    /* 0x02 */ s16 x1;
-    /* 0x04 */ s16 x2;
-    /* 0x06 */ s16 xVal;
-    /* 0x08 */ s16 xHi;
-    /* 0x0A */ s16 x3;
-    /* 0x0C */ ConfessionalGhostAnimSet* animations;
-} ConfessionalGhostParams;
-
 extern bool g_confessionalChimeActive;
 
 u8 g_animA_1[] = {9, 12, 15, 13, 15, 14, 9, 15, 15, 14, 15, 13, 0, 0, 0, 0};

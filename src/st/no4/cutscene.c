@@ -2,9 +2,8 @@
 #include "no4.h"
 #include "../pfn_entity_update.h"
 #include <cutscene.h>
-#include "dialogue.h"
 
-extern OVL_EXPORT(Dialogue) g_Dialogue;
+extern Dialogue3 g_Dialogue;
 
 static void CutsceneUnk1(void) {
     g_Dialogue.nextCharX = 2;

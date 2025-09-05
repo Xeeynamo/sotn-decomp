@@ -23,7 +23,7 @@ static u32 unused[] = {
     0x0000FFF8,
 };
 
-static WarpCoord WarpRoomCoords[] = {
+static Point16 WarpRoomCoords[] = {
     {0x30, 0x19}, {0x1C, 0x13}, {0x04, 0x2E}, {0x17, 0x33}, {0x1A, 0x2A},
 };
 
@@ -76,7 +76,7 @@ void EntityRWarpRoom(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     Entity* entity;
-    WarpCoord* warpCoords;
+    Point16* warpCoords;
     s32 i;
     s32 angle;
     s32 temp;

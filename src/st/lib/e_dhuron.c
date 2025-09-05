@@ -1,13 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-typedef struct {
-    s32 velocityX;
-    s32 velocityY;
-    s16 rotate;
-    s16 unkA;
-} dhuronUnkStruct;
-
 static s16 D_us_80182954[] = {0, 24, 0, 4, 8, -4, -16, 0};
 static s16 D_us_80182964[] = {0, 24, 12, 0};
 static u8 D_us_8018296C[] = {

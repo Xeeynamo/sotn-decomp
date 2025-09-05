@@ -1,12 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-typedef struct {
-    u8* animation;
-    u8 frameA;
-    u8 frameB;
-    s16 xOffset;
-    s16 yOffset;
-    s16 pad;
-} unk_801D0598; /* size=0xC */
 
 static s16 D_us_80182BD8[] = {0, 16, 0, 4, 8, -4, -16, 0};
 static s16 D_us_80182BE8[] = {0, 16, 12, 0};

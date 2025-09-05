@@ -1,10 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo3.h"
-#include "../../../include/cloud_struct.h"
-
-typedef struct {
-    u16 u0, u1, u2, u3;
-} MedusaCloudsUVal;
 
 static MedusaCloudsUVal cloudUVals[] = {
     {0x0000, 0x0000, 0x0000, 0x0000}, {0x8181, 0x81BE, 0x9E81, 0x9EBE},

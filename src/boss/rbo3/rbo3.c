@@ -691,13 +691,13 @@ void func_us_801923DC(Entity* self) {
 }
 
 extern EInit g_EInitParticle;
-extern Unkstruct_80180FE0 D_us_8018071C[];
+extern EntityConfig D_us_8018071C[];
 
 // Entity ID 0x1B
 void func_us_80192998(Entity* self) {
     s32 params;
     u32 priorityParams;
-    Unkstruct_80180FE0* obj;
+    EntityConfig* obj;
 
     switch (self->step) {
     case 0:
@@ -707,8 +707,8 @@ void func_us_80192998(Entity* self) {
         self->palette = obj->palette + 0x2E0;
         self->drawMode = obj->drawMode;
         self->animSet = obj->animSet;
-        self->unk5A = obj->unk2;
-        self->ext.e_80192998.anim = obj->anim;
+        self->unk5A = obj->unk5A;
+        self->ext.e_80192998.anim = obj->animData;
         self->step = params + 1;
         priorityParams = self->params & 0xFF00;
         if (priorityParams) {

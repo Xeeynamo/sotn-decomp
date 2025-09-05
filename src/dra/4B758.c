@@ -116,26 +116,6 @@ void ResetEntityArray(void) {
     }
 }
 
-typedef struct {
-    s16 unk0;
-    s16 animSet;
-    s16 animCurFrame;
-    u16 w;
-    u16 h;
-    s16 x;
-    s16 y;
-    s16 xPivot;
-    s16 yPivot;
-    u16 unused12;
-    s32 index;
-    s32 index2;
-    u32 spriteSheetIdx;
-    s32 flipX; // set to 2 when facing left, 0 when not
-    s32 eDrawFlags;
-    OT_TYPE* ot;
-    POLY_GT4* poly;
-} EntitiesRenderer;
-
 void RenderEntities(void) {
     s16 polyX;
     s16 polyY;

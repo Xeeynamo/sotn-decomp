@@ -77,15 +77,6 @@ static s16 ice_shard_angles[] = {
 static s16 ice_shard_speeds[] = {512, 320, 416, 224, 288, 640, 384, 256};
 
 #define offsetof(st, m) (size_t)((size_t) & (((st*)0)->m)) // __builtin_offsetof
-typedef struct {
-    SVECTOR points[4];
-    Point16 sxy[4];
-    long p;
-    long flag;
-    CVECTOR primaryColor;
-    CVECTOR color;
-    MATRIX mat;
-} NO4_SCRATCHPAD;
 
 static void func_us_801D9560(FrozenShadePrim* prim) {
     s16 dx, dy;

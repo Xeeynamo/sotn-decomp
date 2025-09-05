@@ -472,17 +472,6 @@ void EntityNumberMovesToHpMeter(Entity* self) {
     }
 }
 
-// "Guard" text displays on screen
-
-typedef struct {
-    u8 left;
-    u8 top;
-    u8 right;
-    u8 bottom;
-    u16 clut;
-    u16 mode;
-} GuardTextControl;
-
 #ifdef VERSION_PSP
 extern s32 g_UserLanguage;
 GuardTextControl D_psp_091835F0[] = {

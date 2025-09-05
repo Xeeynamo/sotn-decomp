@@ -24,10 +24,10 @@ void CreateExplosionPuff() {
     }
 }
 
-extern Unkstruct_80180FE0 D_80180FE0[];
+extern EntityConfig D_80180FE0[];
 
 void EntityExplosionPuffOpaque(Entity* self) {
-    Unkstruct_80180FE0* obj;
+    EntityConfig* obj;
     s32 params;
     s32 speed;
 
@@ -39,8 +39,8 @@ void EntityExplosionPuffOpaque(Entity* self) {
         self->palette = obj->palette + E_PUFF_OPAQUE_PALETTE_OFFSET;
         self->drawMode = obj->drawMode;
         self->animSet = obj->animSet;
-        self->unk5A = obj->unk2;
-        self->ext.opaquePuff.anim = obj->anim;
+        self->unk5A = obj->unk5A;
+        self->ext.opaquePuff.anim = obj->animData;
         self->step = params + 1;
 
         if (self->params & 0xFF00) {
