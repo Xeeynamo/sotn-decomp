@@ -18,9 +18,7 @@ extern s32 _spu_rev_flag;
 extern s32 _spu_rev_reserve_wa;
 extern s32 _spu_rev_offsetaddr;
 extern struct SpuRevAttr _spu_rev_attr;
-extern u16 _spu_voice_centerNote[];
 extern s32 _spu_EVdma;
-extern s32 _spu_keystat;
 extern s32 _spu_rev_startaddr[];
 
 void SpuStart(void);

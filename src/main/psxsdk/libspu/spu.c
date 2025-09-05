@@ -123,12 +123,12 @@ s32 _spu_init(s32 arg0) {
             write_16(0x1F801C00 + channel * 16 + 8, 0, __FILE__, __LINE__);
             write_16(0x1F801C00 + channel * 16 + 10, 0, __FILE__, __LINE__);
 #else
-            _spu_RXX->raw[channel * 8 + 0] = 0;      /* left volume */
-            _spu_RXX->raw[channel * 8 + 1] = 0;      /* right volume */
-            _spu_RXX->raw[channel * 8 + 2] = 0x3fff; /* pitch */
-            _spu_RXX->raw[channel * 8 + 3] = 0x200;  /* addr */
-            _spu_RXX->raw[channel * 8 + 4] = 0;      /* adsr1 */
-            _spu_RXX->raw[channel * 8 + 5] = 0;      /* adsr2 */
+            _spu_RXX->rxx.voice[channel].volume.left = 0;
+            _spu_RXX->rxx.voice[channel].volume.right = 0;
+            _spu_RXX->rxx.voice[channel].pitch = 0x3fff;
+            _spu_RXX->rxx.voice[channel].addr = 0x200;
+            _spu_RXX->rxx.voice[channel].adsr[0] = 0;
+            _spu_RXX->rxx.voice[channel].adsr[1] = 0;
 #endif
         }
 #ifdef VERSION_PC
@@ -418,8 +418,7 @@ s32 _spu_write(u8* arg0, u32 size) {
 }
 
 s32 _spu_read(s32 arg0, u32 size) {
-    s32 temp = _spu_tsa << _spu_mem_mode_plus;
-    _spu_t(2, temp);
+    _spu_t(2, _spu_tsa << _spu_mem_mode_plus);
     _spu_t(0);
     _spu_t(3, arg0, size);
     return size;
