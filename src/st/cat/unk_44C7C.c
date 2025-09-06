@@ -10,7 +10,7 @@ void func_us_801C5600(Primitive* prim)
     }
     prim->y0 -= 1;
 
-    if (prim->y0 < prim->u2 + 0x90) {
+    if (prim->y0 < prim->u2 + 144) {
         prim->r0 -= 8;
         prim->g0 -= 4;
         prim->b0 -= 4;
