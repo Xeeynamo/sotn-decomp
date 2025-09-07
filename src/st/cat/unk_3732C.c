@@ -15,7 +15,23 @@ INCLUDE_ASM("st/cat/nonmatchings/unk_3732C", func_us_801B7FE0);
 
 INCLUDE_ASM("st/cat/nonmatchings/unk_3732C", func_us_801B82A0);
 
-INCLUDE_ASM("st/cat/nonmatchings/unk_3732C", func_us_801B8474);
+void func_us_801B8474(u32 arg0) {
+    Entity* temp_v0;
+    s16 temp_s2;
+    s16 temp_s1;
+
+    temp_s2 = (((arg0 % 48) * 16) + 8) - g_Tilemap.scrollX.i.hi;
+    temp_s1 = (((arg0 / 48) * 16) + 8) - g_Tilemap.scrollY.i.hi;
+    (&g_CurrentEntity[1])->posX.i.hi = temp_s2;
+    (&g_CurrentEntity[1])->posY.i.hi = temp_s1;
+
+    temp_v0 = AllocEntity(&g_CurrentEntity[1], &g_CurrentEntity[4]);
+    if (temp_v0 != NULL) {
+        CreateEntityFromCurrentEntity(32, temp_v0);
+        temp_v0->posX.i.hi = temp_s2;
+        temp_v0->posY.i.hi = temp_s1;
+    }
+}
 
 INCLUDE_ASM("st/cat/nonmatchings/unk_3732C", func_us_801B852C);
 
