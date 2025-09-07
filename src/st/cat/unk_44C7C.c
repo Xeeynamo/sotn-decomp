@@ -3,8 +3,7 @@
 
 INCLUDE_ASM("st/cat/nonmatchings/unk_44C7C", func_us_801C4C7C);
 
-void func_us_801C5600(Primitive* prim)
-{
+void func_us_801C5600(Primitive* prim) {
     if ((g_Timer % prim->u3) != 0) {
         return;
     }
@@ -17,9 +16,8 @@ void func_us_801C5600(Primitive* prim)
     }
     if (prim->r0 < 8) {
         prim->p3 = 0;
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
     }
-
 }
 
 INCLUDE_ASM("st/cat/nonmatchings/unk_44C7C", func_us_801C56A0);
