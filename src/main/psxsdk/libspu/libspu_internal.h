@@ -47,8 +47,6 @@ s32 _spu_t(s32, ...);
 u32 _spu_FsetRXXa(s32 arg0, u32 arg1);
 s32 _spu_write(u8*, u32);
 
-void _SpuSetVoiceAttr(SpuVoiceAttr* arg, s32, s32, s32);
-
 struct rev_param_entry {
     u32 flags;
     u16 dAPF1;
