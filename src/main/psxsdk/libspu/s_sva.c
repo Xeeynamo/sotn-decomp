@@ -9,6 +9,7 @@ void SpuSetVoiceAttr(SpuVoiceAttr* arg) {
 
 static inline u16 inline_fn(u16 arg0, u16 arg1) { return arg0 & arg1; }
 
+#ifndef VERSION_PC
 s32 _SpuSetVoiceAttr(SpuVoiceAttr* attr, s32 min, s32 max, s32 arg3) {
     volatile s32 sp10;
     volatile s32 sp14;
@@ -283,3 +284,4 @@ s32 _SpuSetVoiceAttr(SpuVoiceAttr* attr, s32 min, s32 max, s32 arg3) {
     }
     return 0;
 }
+#endif
