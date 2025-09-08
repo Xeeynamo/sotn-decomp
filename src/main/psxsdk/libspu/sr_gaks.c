@@ -3,7 +3,6 @@
 #include "libspu_internal.h"
 
 inline s32 SpuRGetAllKeysStatus(s32 min, s32 max, s8* status) {
-    s32 last_voice;
     s32 voice;
     u16 volumex;
 
@@ -16,12 +15,12 @@ inline s32 SpuRGetAllKeysStatus(s32 min, s32 max, s8* status) {
     if (max >= NUM_SPU_CHANNELS) {
         max = NUM_SPU_CHANNELS - 1;
     }
-    if ((max < 0) || (max < min)) {
+    if (max < 0 || max < min) {
         return -3;
     }
-    last_voice = max + 1;
 
-    for (voice = min; voice < last_voice; voice++) {
+    max++;
+    for (voice = min; voice < max; voice++) {
         volumex = _spu_RXX->raw[(8 * voice) + 6];
         if ((1 << voice) & _spu_keystat) {
             if (volumex != 0) {
