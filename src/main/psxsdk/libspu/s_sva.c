@@ -7,9 +7,7 @@ void SpuSetVoiceAttr(SpuVoiceAttr* arg) {
     _SpuSetVoiceAttr(arg, 0, NUM_SPU_CHANNELS - 1, 0);
 }
 
-static inline u16 inline_fn(u16 arg0, u16 arg1) {
-    return arg0 & arg1;
-}
+static inline u16 inline_fn(u16 arg0, u16 arg1) { return arg0 & arg1; }
 
 s32 _SpuSetVoiceAttr(SpuVoiceAttr* attr, s32 min, s32 max, s32 arg3) {
     volatile s32 sp10;
@@ -63,7 +61,8 @@ s32 _SpuSetVoiceAttr(SpuVoiceAttr* attr, s32 min, s32 max, s32 arg3) {
         if (bSetAll || mask & SPU_VOICE_NOTE) {
             temp_a1 = _spu_voice_centerNote[voice];
             temp_a3 = attr->note;
-            _spu_RXX->raw[pos + 2] = _spu_note2pitch(temp_a1 >> 8, temp_a1 & 0xFF, temp_a3 >> 8, temp_a3 & 0xFF);
+            _spu_RXX->raw[pos + 2] = _spu_note2pitch(
+                temp_a1 >> 8, temp_a1 & 0xFF, temp_a3 >> 8, temp_a3 & 0xFF);
         }
         if (bSetAll || mask & SPU_VOICE_WDSA) {
             var_a1_3 = pos | 3;
@@ -122,10 +121,10 @@ s32 _SpuSetVoiceAttr(SpuVoiceAttr* attr, s32 min, s32 max, s32 arg3) {
                 case 3:
                     var_a1_3 = 0x100;
                     break;
-                case 5: 
+                case 5:
                     var_a1_3 = 0x200;
                     break;
-                case 7: 
+                case 7:
                     var_a1_3 = 0x300;
                     break;
                 default:
@@ -145,7 +144,6 @@ s32 _SpuSetVoiceAttr(SpuVoiceAttr* attr, s32 min, s32 max, s32 arg3) {
             _spu_RXX->raw[pos + 5] = adsr | ((var_a2 | var_a1_3) << 6);
         }
         if (bSetAll || mask & SPU_VOICE_ADSR_RR) {
-            
             if (bSetAll || mask & SPU_VOICE_ADSR_RMODE) {
                 switch (attr->r_mode) {
                 case 3:
@@ -181,33 +179,33 @@ s32 _SpuSetVoiceAttr(SpuVoiceAttr* attr, s32 min, s32 max, s32 arg3) {
         }
         if (bSetAll || mask & SPU_VOICE_VOLL) {
             if (bSetAll || mask & SPU_VOICE_VOLMODEL) {
-                switch ((s16)attr->volmode.left) {        
-                case 1:                     
+                switch ((s16)attr->volmode.left) {
+                case 1:
                     volmode_left = 0x8000;
                     break;
-                case 2:                     
+                case 2:
                     volmode_left = 0x9000;
                     break;
-                case 3:                     
+                case 3:
                     volmode_left = 0xA000;
                     break;
-                case 4:                     
+                case 4:
                     volmode_left = 0xB000;
                     break;
-                case 5:                     
+                case 5:
                     volmode_left = 0xC000;
                     break;
-                case 6:                     
+                case 6:
                     volmode_left = 0xD000;
                     break;
-                case 7:                     
+                case 7:
                     volmode_left = 0xE000;
                     break;
-                case 0:                   
+                case 0:
                     vol_left = attr->volume.left;
                     volmode_left = 0;
                     break;
-                default:                    
+                default:
                     vol_left = attr->volume.left;
                     volmode_left = 0;
                     break;
@@ -273,7 +271,8 @@ s32 _SpuSetVoiceAttr(SpuVoiceAttr* attr, s32 min, s32 max, s32 arg3) {
                     vol_right = attr->volume.right;
                 }
             }
-            _spu_RXX->raw[pos + 1] = inline_fn(vol_right, 0x7FFF) | volmode_right;
+            _spu_RXX->raw[pos + 1] =
+                inline_fn(vol_right, 0x7FFF) | volmode_right;
         }
     }
     if (arg3 == 0) {
