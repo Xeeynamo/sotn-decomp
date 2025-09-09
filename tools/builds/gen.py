@@ -109,11 +109,6 @@ def add_c_psx(
             "cc_flags": get_cc_flags_for_exceptional_files(version, file_name),
         },
     )
-    nw.build(
-        rule="phony",
-        outputs=file_name,
-        implicit=[f"src/.assets_build_done_{ver}"],
-    )
     return output
 
 
@@ -135,6 +130,9 @@ def add_s_psx(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
     return output
 
 
+copied_files = set()
+
+
 def add_copy_psx(
     nw: ninja_syntax.Writer,
     version: str,
@@ -151,6 +149,9 @@ def add_copy_psx(
         outputs=[output],
         inputs=[in_file_name],
     )
+    if in_file_name in copied_files:
+        return output
+    copied_files.add(in_file_name)
     nw.build(
         rule="phony",
         outputs=[in_file_name],
@@ -266,17 +267,22 @@ def add_assets_config(nw: ninja_syntax.Writer, version: str):
     )
 
 
+seen_gfx = set()
+
+
 def add_gfx_stage(
     nw: ninja_syntax.Writer, target_path: str, asset_path: str, output_name: str
 ):
-    nw.build(
-        rule="gfxstage-decode",
-        outputs=f"{asset_path}_0.png",
-        inputs=target_path,
-        variables={
-            "path": asset_path,
-        },
-    )
+    if f"{asset_path}_0.png" not in seen_gfx:
+        seen_gfx.add(f"{asset_path}_0.png")
+        nw.build(
+            rule="gfxstage-decode",
+            outputs=f"{asset_path}_0.png",
+            inputs=target_path,
+            variables={
+                "path": asset_path,
+            },
+        )
     nw.build(
         rule="gfxstage-encode",
         outputs=[output_name],
@@ -628,7 +634,7 @@ def add_checksum(nw: ninja_syntax.Writer, version: str, file_name: str):
         )
     nw.build(
         rule="check",
-        outputs=["🆗"],
+        outputs=[f"{version} 🆗"],
         inputs=file_name,
         implicit=binaries,
     )
@@ -784,8 +790,8 @@ with open(build_ninja, "w") as f:
 
     actual_version = os.getenv("VERSION")
     if not actual_version:
-        actual_version = "us"
-    for version in [actual_version]:
+        actual_version = "us,hd,pspeu"
+    for version in actual_version.split(","):
         for entry in os.scandir("config/"):
             if not entry.name.startswith(f"splat.{version}."):
                 continue
