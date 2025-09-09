@@ -123,7 +123,13 @@ func SortUniqueOffsets(slice []psx.Addr) []psx.Addr {
 		}
 		return 0
 	})
-	if newSlice[0] == psx.RamNull { // ignore null address
+	return newSlice
+}
+
+// Simple wrapper for SortUniqueOffsets to also filter null addresses
+func SortAndFilterOffsets(slice []psx.Addr) []psx.Addr {
+	newSlice := SortUniqueOffsets(slice)
+	if newSlice[0] == psx.RamNull {
 		newSlice = newSlice[1:]
 	}
 	return newSlice

@@ -88,9 +88,9 @@ func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, symbol func(addr psx.
 	var banks []GfxBank
 	var ranges []datarange.DataRange
 	var newRange datarange.DataRange
-	sortedBanks := util.SortUniqueOffsets(addrGfxBanks)
+	sortedBanks := util.SortAndFilterOffsets(addrGfxBanks)
 	lastAddr := sortedBanks[len(sortedBanks)-1]
-	for addrGfxBank := sortedBanks[0]; addrGfxBank <= lastAddr; {
+	for addrGfxBank := sortedBanks[0]; addrGfxBank <= lastAddr; addrGfxBank = newRange.End() {
 		if err := addrGfxBank.MoveFile(r, ramBase); err != nil {
 			return GfxBanks{}, datarange.DataRange{}, err
 		}
@@ -124,7 +124,6 @@ func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, symbol func(addr psx.
 		pool[addrGfxBank] = len(banks)
 		banks = append(banks, bank)
 		ranges = append(ranges, newRange)
-		addrGfxBank = newRange.End()
 	}
 
 	var g GfxBanks
