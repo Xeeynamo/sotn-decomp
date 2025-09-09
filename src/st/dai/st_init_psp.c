@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../dai/dai.h"
+#include "dai.h"
 
 extern LayoutEntity* D_8D2E2B0;
 extern LayoutEntity* D_8D2E384;
@@ -20,20 +20,20 @@ s32 E_ID(GREY_PUFF);
 s32 E_ID(UNK_16);
 s32 E_ID(UNK_17);
 s32 E_ID(UNK_18);
-s32 E_ID(UNK_19);
+s32 E_ID(BLOCK);
 s32 E_ID(STATUE);
 s32 E_ID(BELL);
-s32 E_ID(UNK_1C);
-s32 E_ID(UNK_1D);
-s32 E_ID(UNK_1E);
+s32 E_ID(CASTLE_WALL_1);
+s32 E_ID(CASTLE_WALL_2);
+s32 E_ID(STAIRCASE);
 s32 E_ID(CLOUDS);
-s32 E_ID(UNK_20);
-s32 E_ID(UNK_21);
+s32 E_ID(UNK_801C34FC);
+s32 E_ID(GARGOYLE_STATUE);
 s32 E_ID(UNK_22);
-s32 E_ID(PRIEST);
-s32 E_ID(PRIEST_BLADES);
-s32 E_ID(PRIEST_BLADE_DEBRIS);
-s32 E_ID(UNK_26);
+s32 E_ID(CONFESSIONAL_GHOST);
+s32 E_ID(CONFESSIONAL_BLADES);
+s32 E_ID(CONFESSIONAL_BLADE_DEBRIS);
+s32 E_ID(BELL_HELPER);
 s32 E_ID(UNK_27);
 s32 E_ID(CORNER_GUARD);
 s32 E_ID(BONE_PILLAR_HEAD);
@@ -45,9 +45,9 @@ s32 E_ID(SPIKES);
 s32 E_ID(SPIKES_PARTS);
 s32 E_ID(SPIKES_DUST);
 s32 E_ID(SPIKES_DAMAGE);
-s32 E_ID(E_BONE_HALBERD);
-s32 E_ID(E_BONE_HALBERD_NAGINATA);
-s32 E_ID(E_BONE_HALBERD_PARTS);
+s32 E_ID(BONE_HALBERD);
+s32 E_ID(BONE_HALBERD_NAGINATA);
+s32 E_ID(BONE_HALBERD_PARTS);
 s32 E_ID(UNK_35);
 s32 E_ID(UNK_36);
 s32 E_ID(BAT);
@@ -70,11 +70,12 @@ s32 E_ID(UNK_47);
 s32 E_ID(MIST_DOOR);
 
 u8* OVL_EXPORT(cutscene_script); // bss
-u8* D_pspeu_092970B8;            // bss
+// Used by dai/e_cutscene_psp/DAI_EntityCutscene
+u8* D_pspeu_092970B8; // bss
 
 #include "../get_lang_at.h"
 
-void InitEntityIds(void) {
+static void InitEntityIds(void) {
     E_ID(BACKGROUND_BLOCK) = 0x11;
     E_ID(LOCK_CAMERA) = 0x12;
     E_ID(UNK_13) = 0x13;
@@ -83,20 +84,20 @@ void InitEntityIds(void) {
     E_ID(UNK_16) = 0x16;
     E_ID(UNK_17) = 0x17;
     E_ID(UNK_18) = 0x18;
-    E_ID(UNK_19) = 0x19;
+    E_ID(BLOCK) = 0x19;
     E_ID(STATUE) = 0x1A;
     E_ID(BELL) = 0x1B;
-    E_ID(UNK_1C) = 0x1C;
-    E_ID(UNK_1D) = 0x1D;
-    E_ID(UNK_1E) = 0x1E;
+    E_ID(CASTLE_WALL_1) = 0x1C;
+    E_ID(CASTLE_WALL_2) = 0x1D;
+    E_ID(STAIRCASE) = 0x1E;
     E_ID(CLOUDS) = 0x1F;
-    E_ID(UNK_20) = 0x20;
-    E_ID(UNK_21) = 0x21;
+    E_ID(UNK_801C34FC) = 0x20;
+    E_ID(GARGOYLE_STATUE) = 0x21;
     E_ID(UNK_22) = 0x22;
-    E_ID(PRIEST) = 0x23;
-    E_ID(PRIEST_BLADES) = 0x24;
-    E_ID(PRIEST_BLADE_DEBRIS) = 0x25;
-    E_ID(UNK_26) = 0x26;
+    E_ID(CONFESSIONAL_GHOST) = 0x23;
+    E_ID(CONFESSIONAL_BLADES) = 0x24;
+    E_ID(CONFESSIONAL_BLADE_DEBRIS) = 0x25;
+    E_ID(BELL_HELPER) = 0x26;
     E_ID(UNK_27) = 0x27;
     E_ID(CORNER_GUARD) = 0x28;
     E_ID(BONE_PILLAR_HEAD) = 0x29;
@@ -108,9 +109,9 @@ void InitEntityIds(void) {
     E_ID(SPIKES_PARTS) = 0x2F;
     E_ID(SPIKES_DUST) = 0x30;
     E_ID(SPIKES_DAMAGE) = 0x31;
-    E_ID(E_BONE_HALBERD) = 0x32;
-    E_ID(E_BONE_HALBERD_NAGINATA) = 0x33;
-    E_ID(E_BONE_HALBERD_PARTS) = 0x34;
+    E_ID(BONE_HALBERD) = 0x32;
+    E_ID(BONE_HALBERD_NAGINATA) = 0x33;
+    E_ID(BONE_HALBERD_PARTS) = 0x34;
     E_ID(UNK_35) = 0x35;
     E_ID(UNK_36) = 0x36;
     E_ID(BAT) = 0x37;

@@ -4,7 +4,6 @@
 
 #ifndef VERSION_PC
 long SpuMalloc(long size) {
-    s32 var_a0;
     s32 var_s2;
     s32 var_s3;
     s32 i;
@@ -18,12 +17,7 @@ long SpuMalloc(long size) {
         var_s3 = (0x10000 - _spu_rev_offsetaddr) << _spu_mem_mode_plus;
     }
 
-    var_a0 = size;
-    if (size & ~_spu_mem_mode_unitM) {
-        var_a0 += _spu_mem_mode_unitM;
-    }
-
-    size = var_a0;
+    size += (size & ~_spu_mem_mode_unitM) ? _spu_mem_mode_unitM : 0;
     size >>= _spu_mem_mode_plus;
     size <<= _spu_mem_mode_plus;
 

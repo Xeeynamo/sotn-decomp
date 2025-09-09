@@ -11,8 +11,8 @@ static SVECTOR D_us_8018259C = {208, -96, 0};
 static SVECTOR D_us_801825A4 = {-208, 96, 0};
 static SVECTOR D_us_801825AC = {208, 96, 0};
 // Atypical use of this vector.  It uses the vector values, but also uses pad to
-// store the number of recursions of func_801ADB10
-static VECTOR g_params[] = {
+// store the number of recursions of StainedGlassRecurseDepth
+static VECTOR params[] = {
     {FLT(0.0625), 0, FLT(0.125), 3},   {FLT(0.0625), 0, FLT(0.28125), 2},
     {FLT(0.0625), 0, FLT(0.4375), 2},  {FLT(0.0625), 0, FLT(0.59375), 0},
     {FLT(0.0625), 0, FLT(0.75), 0},    {FLT(0.0625), 0, FLT(0.90625), 0},
@@ -56,7 +56,7 @@ static SVECTOR D_us_801826BC; // bss
 static SVECTOR D_us_8018277C = {0, 0, 0};
 #endif
 
-void func_801ADB10(
+void StainedGlassBlendPalette(
     RECT* arg0, u16 srcPalIdx, u16 destPalIdx, s32 steps, CVECTOR* color) {
     u16 buffer[COLORS_PER_PAL];
     RECT rect;
@@ -99,7 +99,7 @@ void func_801ADB10(
     }
 }
 
-Primitive* func_us_801D9394(
+Primitive* StainedGlassRecurseDepth(
     SVECTOR* p0, SVECTOR* p1, SVECTOR* p2, SVECTOR* p3, Primitive* srcPrim,
     s32 iterations, Primitive* dstPrim, u8* dataPtr) {
     s32 index0;
@@ -183,7 +183,7 @@ Primitive* func_us_801D9394(
                     return NULL;
                 }
             } else {
-                dstPrim = func_us_801D9394(
+                dstPrim = StainedGlassRecurseDepth(
                     &points[index0], &points[index1], &points[index2],
                     &points[index3], tempPrim, iterations - 1, dstPrim,
                     dataPtr);
@@ -193,7 +193,7 @@ Primitive* func_us_801D9394(
     return dstPrim;
 }
 
-void func_us_801D97D0(Entity* self) {
+void EntityStainedGlass(Entity* self) {
     s16 midpointX, midpointY;
     s32 primIndex;
     SVECTOR rotVector;
@@ -202,7 +202,7 @@ void func_us_801D97D0(Entity* self) {
     u8 transparent; // u8, but used as bool
     s32 iterations;
     s16* yVals;
-    VECTOR* params;
+    VECTOR* paramsPtr;
     CVECTOR* colors;
     s32 count;
     Primitive* prim1;
@@ -246,7 +246,7 @@ void func_us_801D97D0(Entity* self) {
         SetGeomOffset(128, 160);
         prim1 = self->ext.stainedGlass.prim1;
         prim2 = self->ext.stainedGlass.prim2;
-        params = g_params;
+        paramsPtr = params;
         yVals = D_us_80182674;
         colors = D_us_8018268C;
         for (count = 0; count < 12; count++) {
@@ -254,7 +254,7 @@ void func_us_801D97D0(Entity* self) {
             rotVector.vy = *yVals;
             rotVector.vz = 0;
             RotMatrix(&rotVector, &mtx);
-            transVector = *params;
+            transVector = *paramsPtr;
             if (transVector.vx > 0) {
                 transparent = true;
                 prim1->drawMode =
@@ -263,7 +263,7 @@ void func_us_801D97D0(Entity* self) {
                 transparent = false;
                 prim1->drawMode = DRAW_COLORS;
             }
-            iterations = params->pad;
+            iterations = paramsPtr->pad;
             transVector.vx += self->posX.i.hi - 128;
             transVector.vy += self->posY.i.hi - 160;
             transVector.vz += 1024;
@@ -279,7 +279,7 @@ void func_us_801D97D0(Entity* self) {
             LOW(prim1->r3) = LOW(prim1->r0);
             prim1->type = 4;
             if (iterations) {
-                prim2 = func_us_801D9394(
+                prim2 = StainedGlassRecurseDepth(
                     &D_us_80182574, &D_us_8018257C, &D_us_80182584,
                     &D_us_8018258C, prim1, iterations, prim2, (u8*)SP(0));
                 prim1->drawMode = DRAW_HIDE;
@@ -320,7 +320,7 @@ void func_us_801D97D0(Entity* self) {
                 RotMatrix(&D_us_801826BC, &mtx);
                 RotMatrixY(rotVector.vy, &mtx);
                 RotMatrixZ(rotVector.vz, &mtx);
-                transVector = *params;
+                transVector = *paramsPtr;
                 transVector.vx = 96;
                 transVector.vy = 256;
                 transVector.vx += self->posX.i.hi - 128;
@@ -379,7 +379,7 @@ void func_us_801D97D0(Entity* self) {
             }
             colors++;
             yVals++;
-            params++;
+            paramsPtr++;
             prim1 = prim1->next;
         }
         for (count = 0; prim2; prim2 = prim2->next) {
@@ -514,8 +514,8 @@ void func_us_801D9F5C(Entity* self) {
         color.r = 24;
         color.g = 24;
         color.b = 24;
-        func_801ADB10(&rect, PAL_STAINED_GLASS_F, PAL_STAINED_GLASS_205,
-                      COLORS_PER_PAL, &color);
+        StainedGlassBlendPalette(&rect, PAL_STAINED_GLASS_F,
+                                 PAL_STAINED_GLASS_205, COLORS_PER_PAL, &color);
         break;
     case 1:
         SetGeomScreen(1024);

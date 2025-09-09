@@ -208,24 +208,6 @@ extern struct SeqStruct* _ss_score[34];
 extern struct SeqStruct* _ss_score[32];
 #endif
 
-typedef struct {
-    SpuVolume volume; /* volume       */
-    long reverb;      /* reverb on/off */
-    long mix;         /* mixing on/off */
-} SpuExtAttr;
-
-typedef struct {
-    unsigned long mask; /* settings mask */
-
-    SpuVolume mvol;     /* master volume */
-    SpuVolume mvolmode; /* master volume mode */
-    SpuVolume mvolx;    /* current master volume */
-    SpuExtAttr cd;      /* CD input attributes */
-    SpuExtAttr ext;     /* external digital input attributes */
-} SpuCommonAttr;
-
-#define SPU_COMMON_MVOLL (0x01 << 0) /* master volume (left) */
-#define SPU_COMMON_MVOLR (0x01 << 1) /* master volume (right) */
 extern void SpuSetCommonAttr(SpuCommonAttr* attr);
 
 extern s16 _snd_seq_s_max;
@@ -247,25 +229,9 @@ typedef struct ProgAtr { /* Program Headdings */
 
 extern ProgAtr* _svm_pg;
 
-struct RegBufStruct {
-    short field_0_vol_left;
-    short field_2_vol_right;
-    short field_4_pitch;
-    unsigned short field_6_vagAddr;
-    unsigned short field_8_adsr1;
-    unsigned short field_A_adsr2;
-    short field_0xc;
-    short field_0xe;
-};
-
 #define NUM_SPU_CHANNELS 24
 
-union RegBuf {
-    struct RegBufStruct buf[NUM_SPU_CHANNELS];
-    s16 raw[192];
-};
-
-extern union RegBuf _svm_sreg_buf;
+extern s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
 
 extern unsigned char _svm_sreg_dirty[NUM_SPU_CHANNELS];
 

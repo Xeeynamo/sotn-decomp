@@ -74,14 +74,14 @@ segments:
       - [0x1A770, c, dai/unk_40BA4]
       - [0x1ADC8, c, dai/unk_434FC]
       - [0x1AF48, c, dai/e_chair]
-      - [0x1B400, c, dai/unk_41EE4]
+      - [0x1B400, c, dai/e_room_fg_2]
       - [0x1BAB8, c, dai/cutscene_init]
       - [0x1C3F0, c, dai/e_cutscene_psp]
       - [0x1EF30, c, dai/e_room_bg]
       - [0x1F010, c, dai/e_lock_camera]
-      - [0x1F270, c, dai/unk_423A4]
+      - [0x1F270, c, dai/e_gargoyle_statue]
       - [0x1F4A8, c, dai/e_statue_block]
-      - [0x1F868, c, dai/e_priest]
+      - [0x1F868, c, dai/e_confessional]
       - [0x20A58, c, dai/e_spikes]
       - [0x214F8, c, dai/e_stained_glass]
       - [0x23008, c, dai/e_clouds]
@@ -107,19 +107,22 @@ segments:
       - [0x258C0, .data, dai/e_bone_halberd]
       - [0x25A68, data, dai_psp/e_statue_block]
       - [0x25A70, .data, dai/e_bell]
-      - [0x25B18, data]
-      - [0x26BD0, data] # e_corner_guard sprite banks?
-      - [0x273C8, data]
-      - [0x27988, data] # EntityBonePillarFireBreathUV
-      - [0x27B70, data]
+      - [0x25B18, data] # gen/sprites
+      - [0x2B2C8, data] # sprite_banks
+      - [0x2B328, data] # layers
+      - [0x2B608, data] # palette_def
+      - [0x2B6F8, data] # graphics_banks
       - [0x2B8E0, .data, dai/e_red_door_tiles]
       - [0x2B910, .data, dai/e_init]
-      - [0x2BC20, data] # DAI_rooms
+      - [0x2BC20, data] # gen/rooms
       - [0x2BCF8, .data, dai/cutscene_script]
       - [0x2C430, .data, dai/e_breakable]
-      - [0x2C588, data]
+      - [0x2C588, data] # e_cutscene_data
+      - [0x2C880, data] # stage_data
       - [0x36BF0, data, dai/e_cutscene_data]
-      - [0x386F0, data]
+      - [0x386F0, data] # stage_data
+      - [0x3ADF0, data] # palettes
+      - [0x3BAD0, data] # tilemaps
       - [0x5ED00, .data, dai/header]
       - [0x5ED30, .data, dai/e_chair]
       - [0x5ED40, .data, dai/d_prize_drops]
@@ -128,7 +131,7 @@ segments:
       - [0x5F158, .data, dai/background_block_init]
       - [0x5F178, .data, dai/e_lock_camera]
       - [0x5F1F0, .data, dai/e_statue_block]
-      - [0x5F1F8, .data, dai/e_priest]
+      - [0x5F1F8, .data, dai/e_confessional]
       - [0x5F328, .data, dai/e_spikes]
       - [0x5F348, .data, dai/e_stained_glass]
       - [0x5F550, .data, dai/e_clouds]
@@ -144,7 +147,7 @@ segments:
       - [0x5F7F8, .rodata, dai/unk_40BA4]
       - [0x5F838, .rodata, dai/cutscene_init]
       - [0x5F858, .rodata, dai/e_cutscene_psp]
-      - [0x5F910, .rodata, dai/e_priest]
+      - [0x5F910, .rodata, dai/e_confessional]
       - [0x5F980, .bss, dai/create_entity]
       - [0x5F9A0, .bss, dai/e_collect]
       - [0x5FA00, bss, 5FA00]
