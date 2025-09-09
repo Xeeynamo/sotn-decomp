@@ -914,15 +914,6 @@ typedef struct Entity {
     /* 0xB8 */ struct Entity* unkB8;
 } Entity; // size = 0xBC
 
-// Used by no2/372E8, rbo3/rbo3, e_explosion_puff_opaque
-typedef struct {
-    u16 animSet;
-    u16 unk5A;
-    u16 palette;
-    u16 drawMode;
-    u8* animData;
-} EntityConfig;
-
 typedef struct {
     /* 0x00 */ u16 animSet;
     /* 0x02 */ u16 zPriority;
@@ -1286,14 +1277,6 @@ typedef struct {
     /* 0x0C */ u32 bottom : 6;
     /* 0x10 */ u8 params : 8;
 } LayoutRect; // size = 0x4
-
-typedef struct {
-    /* 0x0 */ u16 posX;
-    /* 0x2 */ u16 posY;
-    /* 0x4 */ u16 entityId;
-    /* 0x6 */ u16 entityRoomIndex;
-    /* 0x8 */ u16 params;
-} LayoutEntity; // size = 0xA
 
 typedef struct {
     /* 0x00 */ u16* layout;
@@ -1908,17 +1891,6 @@ typedef struct {
     /* 0x0E */ s16 unused;     // reserved, always 0
 } WeaponAnimation;             // size = 0x10
 
-// Used in rbo5/unk_4648C, bo4/unk_46E7C
-// this is similar to `WeaponAnimation` but
-// with fewer fields.
-typedef struct {
-    AnimationFrame* frames;
-    s8* frameProps;
-    u16 soundId;
-    u8 frameStart;
-    u8 soundFrame;
-} DopWeaponAnimation;
-
 #define TILE_SIZE 16
 #define TILE_MASK 0x0F
 #define N_HORIZ_TILES 17
@@ -2124,6 +2096,7 @@ typedef struct {
     s16 enabled;
 } DebugInfo;
 
+// Used in game.h
 typedef struct {
     /* 0x800973F8 */ s32 D_800973F8;
     /* 0x800973FC */ s32 D_800973FC;
@@ -2143,7 +2116,7 @@ typedef struct {
     /* 0x80097428 */ s32 D_80097428[8];
 } unkGraphicsStruct;
 
-// Used in dra/func_800EA538, dra/func_800EA5E4, dra/func_800EA7CC
+// Used in dra/4A538, dra_psp/3250, game.h
 typedef struct {
     /* 0x00 */ u_long* desc;
     /* 0x04 */ u_long* data;

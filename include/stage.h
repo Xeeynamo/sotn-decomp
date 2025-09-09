@@ -13,6 +13,14 @@
 // animSet, animCurFrame, unk5A, palette, enemyID
 typedef u16 EInit[5];
 
+typedef struct {
+    /* 0x0 */ u16 posX;
+    /* 0x2 */ u16 posY;
+    /* 0x4 */ u16 entityId;
+    /* 0x6 */ u16 entityRoomIndex;
+    /* 0x8 */ u16 params;
+} LayoutEntity; // size = 0xA
+
 // Used in e_clock_tower.h, e_clouds.h, st0/3AB08, rbo3/e_clouds
 typedef struct {
     u8* unkPtr;
@@ -71,6 +79,15 @@ typedef struct {
     s16 yOffset;
     s16 pad;
 } unk_801D0598; /* size=0xC */
+
+// Used by no2/372E8, rbo3/rbo3, e_explosion_puff_opaque
+typedef struct {
+    u16 animSet;
+    u16 unk5A;
+    u16 palette;
+    u16 drawMode;
+    u8* animData;
+} EntityConfig;
 
 /*******/
 /* CAT */
