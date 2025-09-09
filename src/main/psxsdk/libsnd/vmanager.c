@@ -103,6 +103,7 @@ u8 SpuVmAlloc(s32 arg0) {
     return channel;
 }
 
+#ifndef VERSION_PC
 void SpuVmKeyOnNow(s16 arg1, u16 arg2) {
     u16 pos;
     u16 bitsUpper;
@@ -182,6 +183,7 @@ void SpuVmKeyOnNow(s16 arg1, u16 arg2) {
     _svm_okof1 &= ~_svm_okon1;
     _svm_okof2 &= ~_svm_okon2;
 }
+#endif
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmDoAllocate);
 
