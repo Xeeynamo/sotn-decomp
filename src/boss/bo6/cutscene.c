@@ -20,7 +20,8 @@ extern const char* actor_names[];
 
 #include "../../st/set_cutscene_end.h"
 
-INCLUDE_ASM("boss/bo6/nonmatchings/cutscene", CutsceneRun);
+#define CUTSCENE_TILEMAP_SCROLL
+#include "../../st/cutscene_run.h"
 
 #include "../../st/cutscene_skip.h"
 
