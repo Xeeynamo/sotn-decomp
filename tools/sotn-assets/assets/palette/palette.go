@@ -81,7 +81,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	for i, paletteFileName := range paletteNames {
 		i, paletteFileName := i, paletteFileName
 		eg.Go(func() error {
-			f, err := os.Create(filepath.Join(e.AssetDir, paletteFileName))
+			f, err := util.CreateAtomicWriter(filepath.Join(e.AssetDir, paletteFileName))
 			if err != nil {
 				return err
 			}
