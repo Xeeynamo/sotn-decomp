@@ -347,11 +347,221 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityHitByLightning);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C03E8);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", EntityShaft);
+#ifdef VERSION_PSP
+extern s32 D_pspeu_0927BAF8;
+#define E_ID_17 D_pspeu_0927BAF8
+#else
+#endif
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C0FE8);
+extern s32 g_CutsceneFlags;
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C13A8);
+// TODO: I AM SHAFT!
+void EntityShaft(Entity* self) {
+    Entity* entity;
+    FntPrint("I AM SHAFT\n");
+    switch (self->step) {
+    case 0:
+#ifdef VERSION_PSP
+        self->flags = 0x10800000;
+#else
+        self->flags = 0x10000000;
+#endif
+        self->animSet = -0x7FFB;
+        self->animCurFrame = 0x8B;
+        self->unk5A = 0x48;
+        self->palette = PAL_OVL(0x250);
+        self->zPriority = RIC.zPriority + 2;
+        self->opacity = 0;
+        self->drawFlags = 8;
+        self->drawMode = 0x30;
+        self->step++;
+        break;
+
+    case 1:
+        self->opacity += 4;
+        if (self->opacity > 48) {
+            self->step++;
+            entity = &g_Entities[0xC8];
+            CreateEntityFromCurrentEntity(E_ID_17, entity);
+            entity->params = 3;
+            self->ext.ILLEGAL.s16[0] = 0x100;
+        }
+        self->posY.val += rsin(self->ext.ILLEGAL.s16[1]) * 4;
+        self->ext.ILLEGAL.s16[1] += 0x20;
+        break;
+
+    case 2:
+        if (!self->ext.ILLEGAL.s16[0]) {
+            if ((g_CutsceneFlags & 0x40) || (g_DemoMode != Demo_None)) {
+                self->drawFlags |= 3;
+                self->scaleX = self->scaleY = 0x100;
+                self->step++;
+            }
+        } else {
+            self->ext.ILLEGAL.s16[0]--;
+        }
+        self->posY.val += rsin(self->ext.ILLEGAL.s16[1]) * 4;
+        self->ext.ILLEGAL.s16[1] += 0x20;
+        break;
+
+    case 3:
+        self->scaleX -= 0x20;
+        if (self->scaleX < 0x10) {
+            self->scaleX = 0x10;
+        }
+
+        self->scaleY += 64;
+        if (self->scaleY > 0x800) {
+            self->scaleY = 0x800;
+        }
+        self->opacity += 6;
+        if ( self->opacity > 0xF0) {
+            self->step++;
+        }
+        break;
+
+    case 4:
+        self->opacity -= 3;
+        if (self->opacity < 4) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
+
+// TODO: rename ShaftOrb
+Entity* BO6_RicGetFreeEntity(s16, s16);
+extern u8 D_us_80181E9C[];
+
+void func_us_801C0FE8(Entity* self) {
+    Entity* entity;
+    Primitive* prim;
+    s32 posX;
+    s32 posY;
+    s32 accelX;
+    s32 accelY;
+    s16 primIndex;
+    s16 params;
+    s32 velocity;
+
+    params = self->params & 0xFF;
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        prim = &g_PrimBuf[self->primIndex];
+        prim->clut = 0x252;
+        prim->tpage = 0x12;
+
+        // temp_a1 = &D_us_80181E9C[temp_a0];
+        prim->u0 = prim->u2 = D_us_80181E9C[params * 2] - 2;
+        prim->u1 = prim->u3 = D_us_80181E9C[params * 2] + 2;
+
+        prim->v0 = prim->v1 = D_us_80181E9C[params * 2 + 1] - 2;
+        prim->v2 = prim->v3 = D_us_80181E9C[params * 2 + 1] + 2;
+
+        prim->priority = RIC.zPriority + 4;
+        prim->drawMode = 2;
+
+        accelX = D_us_80181E9C[params * 2] - 16;
+        accelY = D_us_80181E9C[params * 2 + 1] - 16;
+        self->posX.i.hi += accelX;
+        self->posY.i.hi += accelY;
+
+        velocity = ratan2(-accelY, accelX);
+        velocity += ((rand() & 0x7F) - 0x40);
+        self->ext.shaftOrb.velocityAngle = velocity;
+        self->flags = 0x10800000;
+        self->ext.shaftOrb.timer = 8;
+        self->step++;
+        break;
+
+    case 1:
+        if (--self->ext.shaftOrb.timer == 0) {
+            self->ext.shaftOrb.timer = 16;
+            velocity = self->ext.shaftOrb.velocityAngle;
+            self->velocityX = (rcos(velocity) * 32) + (rand() & 0xF);
+            self->velocityY = -((rsin(velocity) * 32) + (rand() & 0xF));
+            self->step++;
+        }
+        break;
+
+    case 2:
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (--self->ext.shaftOrb.timer == 0) {
+            BO6_RicCreateEntFactoryFromEntity(self, 0x4A, 0);
+            self->velocityY = (rand() & 0x7FFF) + 0xFFFF0000;
+            self->velocityX = self->velocityX >> 2;
+            self->ext.shaftOrb.timer = 1;
+            self->step++;
+        }
+        break;
+    case 3:
+        if ((self->ext.shaftOrb.timer % 4) == 0) {
+            entity = BO6_RicGetFreeEntity(0x50, 0x8F);
+            if (entity != NULL) {
+                DestroyEntity(entity);
+                entity->entityId = 0x43;
+                entity->params = 0x100;
+                // not shaft orb
+                entity->ext.shaftOrb.parent = self->ext.shaftOrb.parent;
+                entity->posX.val = self->posX.val;
+                entity->posY.val = self->posY.val;
+            }
+        }
+        self->ext.shaftOrb.timer += 1;
+        self->velocityY += 0xC00;
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        self->flags &= 0xEFFFFFFF;
+        break;
+    }
+
+    posX = self->posX.i.hi;
+    posY = self->posY.i.hi;
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = prim->x2 = posX - 2;
+    prim->x1 = prim->x3 = posX + 2;
+    prim->y0 = prim->y1 = posY - 2;
+    prim->y2 = prim->y3 = posY + 2;
+}
+
+extern AnimationFrame D_us_80181EDC[];
+
+void func_us_801C13A8(Entity* self) {
+    s16 params = self->params & 0x7F00;
+    switch (self->step) {
+    case 0:
+        self->flags = 0x28000000;
+        self->unk5A = 0x79;
+        self->animSet = 0xE;
+        self->zPriority = RIC.zPriority + 6;
+        self->palette = PAL_OVL(0x25E);
+        self->drawMode = 0x70;
+        self->drawFlags = 3;
+        self->scaleX = self->scaleY = 0xC0;
+        self->anim = D_us_80181EDC;
+        if (params) {
+            self->scaleX = self->scaleY = 0x80;
+            self->anim = D_us_80181EDC;
+        }
+        self->velocityY = -FIX(0.25);
+        self->step++;
+        break;
+
+    case 1:
+        self->posY.val += self->velocityY;
+        if (self->poseTimer < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
+
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityWhip);
 

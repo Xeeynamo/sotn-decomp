@@ -3556,6 +3556,15 @@ typedef struct {
     /* 0x84 */ s16 castTimer;
 } ET_HellfireBeastFlamePillar;
 
+typedef struct {
+    /* 0x7C */ s16 timer;
+    /* 0x7E */ s16 velocityAngle;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ struct Entity* parent;
+} ET_ShaftOrb;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3863,6 +3872,7 @@ typedef union { // offset=0x7C
     ET_HellfireBeast hellfireBeast;
     ET_HellfireBeastThorsHammer hellfireBeastThorsHammer;
     ET_HellfireBeastFlamePillar hellfireBeastFlamePillar;
+    ET_ShaftOrb shaftOrb;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

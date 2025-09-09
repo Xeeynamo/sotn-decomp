@@ -25,6 +25,7 @@ typedef enum EntityIDs {
     /* 0x13 */ E_ID_13,
     /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
     /* 0x15 */ E_GREY_PUFF,
+    /* 0x17 */ E_ID_17 = 0x17,
 
     /* 0x40 */ E_RICHTER = STAGE_ENTITY_START,
     /* 0x41 */ E_ID_41,

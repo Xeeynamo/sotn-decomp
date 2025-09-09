@@ -300,3 +300,8 @@ g_ItemIconSlots = 0x801D16A8;
 
 
 BO6_RicEntityVibhutiCrashCloud = 0x801C7FEC;
+EntityShaft = 0x801C0D90;
+BO6_rooms = 0x80181204;
+BO6_spriteBanks = 0x80180034;
+BO6_cluts = 0x801800D8;
+richter_sprites = 0x8018303C;
