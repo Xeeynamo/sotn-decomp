@@ -5,9 +5,9 @@ static s16 sensors_bone_pillar[] = {0, 32, 0, 4, 4, -4, -8, 0};
 // This appears to be unused and deadstripped on PSP
 static s16 unused[] = {0, 8, 0, 4, 2, -4, -4, 0, 0, 36, 0, 4, 2, -4, -4, 0};
 static s16 sensors_spike_ball[] = {0, 14, 0, 0};
-static s16 g_eBonePillarHitbox[] = {2, -15, 2, -17, -4, 10, -4, 9};
-static s16 g_eBonePillarPosYOffset[] = {38, 38, 14, 10};
-static s16 g_eBonePillarAngle[] = {704, 1344, 2752, 3392};
+static s16 hitbox[] = {2, -15, 2, -17, -4, 10, -4, 9};
+static s16 y_offset[] = {38, 38, 14, 10};
+static s16 angles[] = {704, 1344, 2752, 3392};
 static u8 anim_bone_pillar_1[] = {
     48, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2,  1, 2,   2, 2, 1, 2,
     2,  2, 3, 2, 4, 2, 5, 5, 4, 2, 6, 2, 4,  2, 6,   2, 7, 2, 6,
@@ -128,7 +128,7 @@ void EntityBonePillarHead(Entity* self) {
         }
         break;
     case 8:
-        ptr = g_eBonePillarHitbox;
+        ptr = hitbox;
         unkVar = 0;
         if (!self->params) {
             ptr += 4;
@@ -174,7 +174,7 @@ void EntityBonePillarHead(Entity* self) {
             self->rotate -= 32;
             MoveEntity();
             self->velocityY += FIX(0.1875);
-            for (ptr = g_eBonePillarAngle, i = 0; i < 4; i++, ptr++) {
+            for (ptr = angles, i = 0; i < 4; i++, ptr++) {
                 offsetX = self->posX.i.hi;
                 offsetY = self->posY.i.hi;
                 angle = self->rotate + *ptr;
@@ -468,7 +468,7 @@ void EntityBonePillarDeathParts(Entity* self) {
         MoveEntity();
         self->velocityY += FIX(0.15625);
         posX = self->posX.i.hi;
-        posY = self->posY.i.hi + g_eBonePillarPosYOffset[self->params];
+        posY = self->posY.i.hi + y_offset[self->params];
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
             self->posY.i.hi += collider.unk18;

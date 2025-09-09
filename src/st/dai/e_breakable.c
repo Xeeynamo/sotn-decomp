@@ -15,19 +15,19 @@ static u8 anim_7[] = {5, 17, 5, 18, 5, 19, 0, 0};
 static u8 anim_8[] = {5, 23, 0, 0};
 static u8 anim_9[] = {5, 22, 0, 0};
 static u8 anim_10[] = {5, 20, -1, -1, 5, 21, 5, 21, -1, 0};
-static u8* g_eBreakableAnimations[] = {anim_1, anim_2, anim_3, anim_4, anim_5,
-                                       anim_6, anim_7, anim_8, anim_9, anim_10};
-static u8 g_eBreakableHitboxes[] = {8, 8, 40, 24, 16, 16, 8, 8, 8, 8, 8, 0};
-static u8 g_eBreakableExplosionTypes[] = {0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0};
-static u16 g_eBreakablePalettes[] = {
+static u8* animations[] = {anim_1, anim_2, anim_3, anim_4, anim_5,
+                           anim_6, anim_7, anim_8, anim_9, anim_10};
+static u8 hitboxes[] = {8, 8, 40, 24, 16, 16, 8, 8, 8, 8, 8, 0};
+static u8 explosion_types[] = {0, 0, 2, 2, 2, 2, 2, 2, 2, 2, 0, 0};
+static u16 palettes[] = {
     PAL_NONE,      PAL_NONE,      PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE,
     PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE};
-static u16 g_eBreakableAnimSets[] = {
+static u16 anim_sets[] = {
     ANIMSET_OVL(1),  ANIMSET_OVL(1),  ANIMSET_OVL(14), ANIMSET_OVL(14),
     ANIMSET_OVL(14), ANIMSET_OVL(14), ANIMSET_OVL(14), ANIMSET_OVL(14),
     ANIMSET_OVL(14), ANIMSET_OVL(14)};
-static u16 g_eBreakableUnk5A[] = {0, 0, 91, 91, 91, 91, 91, 91, 91, 91};
-static u8 g_eBreakableDrawModes[] = {
+static u16 unk_5A[] = {0, 0, 91, 91, 91, 91, 91, 91, 91, 91};
+static u8 draw_modes[] = {
     DRAW_TPAGE | DRAW_TPAGE2,
     DRAW_TPAGE | DRAW_TPAGE2,
     DRAW_TPAGE | DRAW_TPAGE2,
@@ -40,9 +40,8 @@ static u8 g_eBreakableDrawModes[] = {
     DRAW_TPAGE | DRAW_TPAGE2,
     DRAW_DEFAULT,
     DRAW_DEFAULT};
-static u16 g_eBreakableHitboxOffsets[] = {
-    0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
-static s16 g_eBreakableDebrisOffsets[] = {0, 1, 2, 2, 3, 0, 1, 2, 3, 0};
+static u16 hitbox_offsets[] = {0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
+static s16 debris_offsets[] = {0, 1, 2, 2, 3, 0, 1, 2, 3, 0};
 
 void OVL_EXPORT(EntityBreakable)(Entity* self) {
     s16* ptr;
@@ -56,19 +55,19 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
     if (!self->step) {
         InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
-        self->drawMode = g_eBreakableDrawModes[breakableType];
-        self->hitboxHeight = g_eBreakableHitboxes[breakableType];
-        self->animSet = g_eBreakableAnimSets[breakableType];
-        self->unk5A = g_eBreakableUnk5A[breakableType];
-        self->palette = g_eBreakablePalettes[breakableType];
-        self->hitboxOffY = g_eBreakableHitboxOffsets[breakableType];
+        self->drawMode = draw_modes[breakableType];
+        self->hitboxHeight = hitboxes[breakableType];
+        self->animSet = anim_sets[breakableType];
+        self->unk5A = unk_5A[breakableType];
+        self->palette = palettes[breakableType];
+        self->hitboxOffY = hitbox_offsets[breakableType];
     }
-    AnimateEntity(g_eBreakableAnimations[breakableType], self);
+    AnimateEntity(animations[breakableType], self);
     if (self->hitParams) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
-            entity->params = g_eBreakableExplosionTypes[breakableType];
+            entity->params = explosion_types[breakableType];
         }
         switch (breakableType) {
         case 2:
@@ -80,7 +79,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             } else {
                 debrisCount = 3;
             }
-            ptr = g_eBreakableDebrisOffsets;
+            ptr = debris_offsets;
             if (breakableType == 3) {
                 ptr += 5;
             }

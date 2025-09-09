@@ -8,34 +8,35 @@ extern s32 E_ID(CONFESSIONAL_BLADE_DEBRIS);
 
 extern bool g_confessionalChimeActive;
 
-u8 g_animA_1[] = {9, 12, 15, 13, 15, 14, 9, 15, 15, 14, 15, 13, 0, 0, 0, 0};
-u8 g_animA_2[] = {64, 1, 22, 2, 0, 0, 0, 0};
-u8 g_animA_3[] = {34, 1, 11, 3, 11, 4, 11, 5,  11, 6,  11, 7,
-                  11, 8, 11, 7, 11, 9, 41, 10, 11, 11, -1, 0};
-u8 g_animA_4[] = {9,  16, 5,  17, 24, 18, 12, 19, 12, 18,
-                  12, 19, 12, 18, 60, 19, -1, 0,  0,  0};
-u8 g_animB_1[] = {12, 29, 15, 30, 12, 31, 15, 30, 0, 0, 0, 0};
-u8 g_animB_2[] = {11, 20, 16, 21, 16, 22, 16, 21, 16, 20, 16, 21, 16, 22,
-                  11, 23, 11, 22, 11, 23, 11, 22, 11, 23, 0,  0,  0,  0};
-u8 g_animB_3[] = {27, 22, 13, 24, 23, 25,  16, 26, 11,
-                  27, 11, 28, 11, 27, 102, 26, -1};
-u8 g_animB_4[] = {60, 29, 12, 32, 12, 33, 9,  34, 9, 35,
-                  9,  34, 9,  35, 9,  34, 25, 35, -1};
-static s16 g_sensors_1[] = {0, 19, 8, 0};
-static s16 g_sensors_2[] = {0, 19, 0, 4, 8, -4, -16, 0};
-static s16 g_xYxVals[][3] = {
+static u8 anim_a_1[] = {
+    9, 12, 15, 13, 15, 14, 9, 15, 15, 14, 15, 13, 0, 0, 0, 0};
+static u8 anim_a_2[] = {64, 1, 22, 2, 0, 0, 0, 0};
+static u8 anim_a_3[] = {34, 1, 11, 3, 11, 4, 11, 5,  11, 6,  11, 7,
+                        11, 8, 11, 7, 11, 9, 41, 10, 11, 11, -1, 0};
+static u8 anim_a_4[] = {
+    9, 16, 5, 17, 24, 18, 12, 19, 12, 18, 12, 19, 12, 18, 60, 19, -1, 0, 0, 0};
+static u8 anim_b_1[] = {12, 29, 15, 30, 12, 31, 15, 30, 0, 0, 0, 0};
+static u8 anim_b_2[] = {11, 20, 16, 21, 16, 22, 16, 21, 16, 20, 16, 21, 16, 22,
+                        11, 23, 11, 22, 11, 23, 11, 22, 11, 23, 0,  0,  0,  0};
+static u8 anim_b_3[] = {
+    27, 22, 13, 24, 23, 25, 16, 26, 11, 27, 11, 28, 11, 27, 102, 26, -1};
+static u8 anim_b_4[] = {
+    60, 29, 12, 32, 12, 33, 9, 34, 9, 35, 9, 34, 9, 35, 9, 34, 25, 35, -1};
+static s16 sensors_1[] = {0, 19, 8, 0};
+static s16 sensors_2[] = {0, 19, 0, 4, 8, -4, -16, 0};
+static s16 xyx_vals[][3] = {
     {120, 140, 104},
     {120, 172, 104},
     {118, 152, 110},
     {118, 180, 110},
     {104, 160, 136}};
-ConfessionalGhostAnimSet g_animsetA = {
-    g_animA_1, g_animA_2, g_animA_3, g_animA_4};
-ConfessionalGhostAnimSet g_animsetB = {
-    g_animB_1, g_animB_2, g_animB_3, g_animB_4};
-static ConfessionalGhostParams g_params[] = {
-    {120, 132, 160, FIX(0.75), 144, 4, &g_animsetA},
-    {119, 108, 64, FIX(0.25), 100, -4, &g_animsetB}};
+static ConfessionalGhostAnimSet animset_a = {
+    anim_a_1, anim_a_2, anim_a_3, anim_a_4};
+static ConfessionalGhostAnimSet animset_b = {
+    anim_b_1, anim_b_2, anim_b_3, anim_b_4};
+static ConfessionalGhostParams params[] = {
+    {120, 132, 160, FIX(0.75), 144, 4, &animset_a},
+    {119, 108, 64, FIX(0.25), 100, -4, &animset_b}};
 static s16 unused[] = {
     8, 1, 8, 2, 16, 3, 8, 4, 23, 5, 4, 6, -1, 0, 8, 1, 8, 2, 4, 7, -1, 0};
 
@@ -43,11 +44,11 @@ void EntityConfessionalGhost(Entity* self) {
     Entity* entity;
     Primitive* prim;
     s32 primIndex;
-    ConfessionalGhostParams* params;
+    ConfessionalGhostParams* paramsPtr;
     u8* animPtr;
 
     g_unkGraphicsStruct.pauseEnemies = true;
-    params = &g_params[self->params & 1];
+    paramsPtr = &params[self->params & 1];
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitConfessionalGhost);
@@ -74,8 +75,8 @@ void EntityConfessionalGhost(Entity* self) {
         prim->u1 = prim->u3 = 39;
         prim->v0 = prim->v1 = 0;
         prim->v2 = prim->v3 = 64;
-        prim->x0 = prim->x2 = params->x0;
-        prim->x1 = prim->x3 = params->x1;
+        prim->x0 = prim->x2 = paramsPtr->x0;
+        prim->x1 = prim->x3 = paramsPtr->x1;
         prim->y0 = prim->y1 = 122;
         prim->y3 = prim->y2 = 186;
         prim->priority = 159;
@@ -106,7 +107,7 @@ void EntityConfessionalGhost(Entity* self) {
         break;
 #endif
     case 2:
-        if (UnkCollisionFunc3(g_sensors_2) & 1) {
+        if (UnkCollisionFunc3(sensors_2) & 1) {
             self->step++;
         }
         break;
@@ -115,12 +116,12 @@ void EntityConfessionalGhost(Entity* self) {
         if (self->opacity > 192) {
             self->opacity = 192;
         }
-        animPtr = params->animations->anim1;
+        animPtr = paramsPtr->animations->anim1;
         AnimateEntity(animPtr, self);
-        UnkCollisionFunc2(g_sensors_1);
-        self->posX.val += params->xVal;
-        if (self->posX.i.hi == params->xHi) {
-            self->posX.i.hi = params->xHi;
+        UnkCollisionFunc2(sensors_1);
+        self->posX.val += paramsPtr->xVal;
+        if (self->posX.i.hi == paramsPtr->xHi) {
+            self->posX.i.hi = paramsPtr->xHi;
             if (self->params & 0x100) {
                 SetStep(6);
             } else {
@@ -137,7 +138,7 @@ void EntityConfessionalGhost(Entity* self) {
         }
         break;
     case 4:
-        animPtr = params->animations->anim2;
+        animPtr = paramsPtr->animations->anim2;
         AnimateEntity(animPtr, self);
         if (!(self->params & 1)) {
             switch (self->step_s) {
@@ -178,7 +179,7 @@ void EntityConfessionalGhost(Entity* self) {
         }
         break;
     case 5:
-        animPtr = params->animations->anim3;
+        animPtr = paramsPtr->animations->anim3;
         AnimateEntity(animPtr, self);
 #ifdef VERSION_PSP
         if ((self->ext.confessionalGhost.unk80) && (g_api.func_80131F68())) {
@@ -198,7 +199,7 @@ void EntityConfessionalGhost(Entity* self) {
         }
         break;
     case 6:
-        animPtr = params->animations->anim4;
+        animPtr = paramsPtr->animations->anim4;
         if (!AnimateEntity(animPtr, self)) {
             // Curtain closing
             g_api.PlaySfx(SFX_UNK_7BB);
@@ -207,9 +208,9 @@ void EntityConfessionalGhost(Entity* self) {
         break;
     case 7:
         prim = self->ext.confessionalGhost.prim;
-        prim->x1 = prim->x3 += params->x3;
-        if (prim->x1 == params->x2) {
-            prim->x1 = prim->x3 = params->x2;
+        prim->x1 = prim->x3 += paramsPtr->x3;
+        if (prim->x1 == paramsPtr->x2) {
+            prim->x1 = prim->x3 = paramsPtr->x2;
             self->ext.confessionalGhost.unk80 = 16;
             self->step++;
         }
@@ -228,8 +229,8 @@ void EntityConfessionalGhost(Entity* self) {
             self->ext.confessionalGhost.unk86 = 1;
         }
         prim = self->ext.confessionalGhost.prim;
-        prim->x2 = params->x0 + self->ext.confessionalGhost.unk86;
-        prim->x3 = params->x2 + self->ext.confessionalGhost.unk86;
+        prim->x2 = paramsPtr->x0 + self->ext.confessionalGhost.unk86;
+        prim->x3 = paramsPtr->x2 + self->ext.confessionalGhost.unk86;
         return;
     case 9:
         switch (self->step_s) {
@@ -292,9 +293,9 @@ void EntityConfessionalGhost(Entity* self) {
             self->animCurFrame = 0;
         }
         prim = self->ext.confessionalGhost.prim;
-        prim->x3 = prim->x1 -= params->x3;
-        if (prim->x1 == params->x1) {
-            prim->x1 = prim->x3 = params->x1;
+        prim->x3 = prim->x1 -= paramsPtr->x3;
+        if (prim->x1 == paramsPtr->x1) {
+            prim->x1 = prim->x3 = paramsPtr->x1;
             SetStep(14);
         }
         break;
@@ -332,8 +333,8 @@ void EntityConfessionalBlades(Entity* self) {
         self->zPriority = 158;
         params = self->params;
         self->animCurFrame += params;
-        self->posX.i.hi = g_xYxVals[params][0];
-        self->posY.i.hi = g_xYxVals[params][1];
+        self->posX.i.hi = xyx_vals[params][0];
+        self->posY.i.hi = xyx_vals[params][1];
         if (params == 4) {
             self->step = 3;
         } else {
@@ -355,8 +356,8 @@ void EntityConfessionalBlades(Entity* self) {
     case 1:
         params = self->params;
         self->posX.val += FIX(-2.5);
-        if (self->posX.i.hi < g_xYxVals[params][2]) {
-            self->posX.i.hi = g_xYxVals[params][2];
+        if (self->posX.i.hi < xyx_vals[params][2]) {
+            self->posX.i.hi = xyx_vals[params][2];
             self->ext.confessionalGhost.unk80 = 96;
             SetStep(2);
         }
@@ -368,15 +369,15 @@ void EntityConfessionalBlades(Entity* self) {
         }
         params = self->params;
         self->posX.val += FIX(2.5);
-        if (self->posX.i.hi > g_xYxVals[params][0]) {
+        if (self->posX.i.hi > xyx_vals[params][0]) {
             DestroyEntity(self);
         }
         break;
     case 3:
         params = self->params;
         self->posX.val += FIX(3.5);
-        if (self->posX.i.hi > g_xYxVals[params][2]) {
-            self->posX.i.hi = g_xYxVals[params][2];
+        if (self->posX.i.hi > xyx_vals[params][2]) {
+            self->posX.i.hi = xyx_vals[params][2];
             self->ext.confessionalGhost.unk80 = 96;
             SetStep(4);
         }
@@ -388,7 +389,7 @@ void EntityConfessionalBlades(Entity* self) {
         }
         params = self->params;
         self->posX.val += FIX(-3.5);
-        if (self->posX.i.hi < g_xYxVals[params][0]) {
+        if (self->posX.i.hi < xyx_vals[params][0]) {
             DestroyEntity(self);
         }
         break;

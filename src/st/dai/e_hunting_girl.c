@@ -1,46 +1,46 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-static u8 g_anim[] = {1, 1, 1, 2};
+static u8 anim[] = {1, 1, 1, 2};
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 46, 0, 4, 0, 0, 0};
-static s16 g_sensors[] = {0, 46, 0, 4, 4, -4, -8, 0};
+static s16 sensors[] = {0, 46, 0, 4, 4, -4, -8, 0};
 #ifdef VERSION_PSP
-static s8 fadeInterval[] = {8, 4, 3, 12, 8, 4, 0, 0};
+static s8 fade_interval[] = {8, 4, 3, 12, 8, 4, 0, 0};
 #else
-static u8 fadeInterval[] = {8, 4, 3, 12, 8, 4, 0, 0};
+static u8 fade_interval[] = {8, 4, 3, 12, 8, 4, 0, 0};
 #endif
 // u, v, width, height, offxetX, offsetY
-static s16 g_params[][6] = {
+static s16 params[][6] = {
     {48, 0, 31, 79, -5, -32},
     {80, 0, 31, 79, -18, -38},
     {0, 0, 47, 55, -32, -16},
     {0, 56, 47, 71, -24, -8},
     {48, 80, 55, 47, -44, -44}};
-static huntingGirlAttackStep g_attackPattern1[] = {
+static huntingGirlAttackStep attack_pattern_1[] = {
     {6, -1, ROT(22.5), 16}, {6, 1, ROT(28.125), 16}, {0xFFF, 0, 0, 0}};
-static huntingGirlAttackStep g_attackPattern2[] = {
+static huntingGirlAttackStep attack_pattern_2[] = {
     {-5, -1, ROT(33.75), 16}, {-5, 1, ROT(39.375), 16}, {0xFFF, 0, 0, 0}};
-static huntingGirlAttackStep g_attackPattern3[] = {
+static huntingGirlAttackStep attack_pattern_3[] = {
     {-16, 8, ROT(90), 8}, {0, 0, ROT(90), 16}, {0x7FFF, 0, 0, 0}};
-static huntingGirlAttackStep g_attackPattern4[] = {
+static huntingGirlAttackStep attack_pattern_4[] = {
     {-10, 5, ROT(33.75), 16}, {0x7FFF, 0, 0, 0}};
-static huntingGirlAttackStep g_attackPattern5[] = {
+static huntingGirlAttackStep attack_pattern_5[] = {
     {-12, 0, ROT(90), 16},       {44, 0, ROT(90), 8},
     {-44, -16, ROT(61.875), 12}, {44, 16, ROT(61.875), 8},
     {-44, 16, ROT(118.125), 12}, {44, -20, ROT(118.125), 8},
     {-44, 0, ROT(78.75), 16},    {0x7FFF, 0, 0, 0}};
-static huntingGirlAttackStep g_attackPattern6[] = {
+static huntingGirlAttackStep attack_pattern_6[] = {
     {-8, 0, ROT(90), 8}, {40, 0, ROT(90), 8},   {-4, -4, ROT(135), 8},
     {0, 8, ROT(45), 8},  {-32, -4, ROT(90), 8}, {64, 0, ROT(90), 8},
     {0x7FFF, 0, 0, 0}};
-static huntingGirlAttackStep g_attackPattern7[] = {
+static huntingGirlAttackStep attack_pattern_7[] = {
     {-8, -8, ROT(135), 8}, {24, 8, ROT(39.375), 8}, {-52, -16, 0x0400, 8},
     {36, 0, ROT(90), 8},   {-16, 20, ROT(45), 8},   {7, -12, ROT(135), 8},
     {0x7FFF, 0, 0, 0}};
-static huntingGirlAttackStep* g_attackPatternPtr[] = {
-    g_attackPattern7, g_attackPattern5, g_attackPattern6};
+static huntingGirlAttackStep* attack_pattern_ptr[] = {
+    attack_pattern_7, attack_pattern_5, attack_pattern_6};
 
-bool HuntingGirlAttack(huntingGirlAttackStep* arg0) {
+static bool HuntingGirlAttack(huntingGirlAttackStep* arg0) {
     Primitive* prim;
     s32 velocityX;
     s32 velocityY;
@@ -172,29 +172,29 @@ bool HuntingGirlAttack(huntingGirlAttackStep* arg0) {
     return false;
 }
 
-bool HuntingGirlPrimHelper(s32 paramIdx, s32 type) {
+static bool HuntingGirlPrimHelper(s32 paramIdx, s32 type) {
     u8 brightness;
-    s16* params;
+    s16* paramsPtr;
     Primitive* prim;
 
     prim = g_CurrentEntity->ext.huntingGirl.prim;
-    params = g_params[paramIdx];
+    paramsPtr = params[paramIdx];
     if (g_CurrentEntity->facingLeft) {
-        prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - params[4];
-        prim->x1 = prim->x3 = prim->x0 - params[2];
+        prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - paramsPtr[4];
+        prim->x1 = prim->x3 = prim->x0 - paramsPtr[2];
     } else {
-        prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi + params[4];
-        prim->x1 = prim->x3 = prim->x0 + params[2];
+        prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi + paramsPtr[4];
+        prim->x1 = prim->x3 = prim->x0 + paramsPtr[2];
     }
-    prim->y0 = prim->y1 = g_CurrentEntity->posY.i.hi + params[5];
-    prim->y2 = prim->y3 = prim->y0 + params[3];
+    prim->y0 = prim->y1 = g_CurrentEntity->posY.i.hi + paramsPtr[5];
+    prim->y2 = prim->y3 = prim->y0 + paramsPtr[3];
     switch (type) {
     case 0:
         prim->clut = PAL_HUNTING_GIRL;
-        prim->u0 = prim->u2 = params[0];
-        prim->u1 = prim->u3 = params[0] + params[2];
-        prim->v0 = prim->v1 = params[1];
-        prim->v2 = prim->v3 = params[1] + params[3];
+        prim->u0 = prim->u2 = paramsPtr[0];
+        prim->u1 = prim->u3 = paramsPtr[0] + paramsPtr[2];
+        prim->v0 = prim->v1 = paramsPtr[1];
+        prim->v2 = prim->v3 = paramsPtr[1] + paramsPtr[3];
         prim->priority = g_CurrentEntity->zPriority + 1;
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
         g_CurrentEntity->ext.huntingGirl.brightness = 0;
@@ -226,7 +226,7 @@ bool HuntingGirlPrimHelper(s32 paramIdx, s32 type) {
     return false;
 }
 
-void HuntingGirlSetNextStep(s32 step) {
+static void HuntingGirlSetNextStep(s32 step) {
     g_CurrentEntity->ext.huntingGirl.attackStep = 0;
     g_CurrentEntity->ext.huntingGirl.frames = 0;
     g_CurrentEntity->ext.huntingGirl.nextStep = step;
@@ -293,7 +293,7 @@ void EntityHuntingGirl(Entity* self) {
         self->ext.huntingGirl.cycleTimer = 512;
         break;
     case 1:
-        if (UnkCollisionFunc3(g_sensors) & 1) {
+        if (UnkCollisionFunc3(sensors) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.huntingGirl.scrollY =
                 self->posY.i.hi + g_Tilemap.scrollY.i.hi;
@@ -327,7 +327,7 @@ void EntityHuntingGirl(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            HuntingGirlAttack(g_attackPattern4);
+            HuntingGirlAttack(attack_pattern_4);
             HuntingGirlPrimHelper(1, 1);
             if (!--self->ext.huntingGirl.attackTimer) {
                 self->step_s++;
@@ -348,7 +348,7 @@ void EntityHuntingGirl(Entity* self) {
             self->ext.huntingGirl.attackTimer = 64;
             self->step_s++;
         }
-        HuntingGirlAttack(g_attackPattern1);
+        HuntingGirlAttack(attack_pattern_1);
         if (GetDistanceToPlayerX() > 80) {
             self->ext.huntingGirl.cycleTimer--;
         }
@@ -375,7 +375,7 @@ void EntityHuntingGirl(Entity* self) {
             self->ext.huntingGirl.attackTimer = 16;
             self->step_s++;
         }
-        HuntingGirlAttack(g_attackPattern2);
+        HuntingGirlAttack(attack_pattern_2);
         if (GetDistanceToPlayerX() > 80) {
             self->ext.huntingGirl.cycleTimer--;
         }
@@ -405,7 +405,7 @@ void EntityHuntingGirl(Entity* self) {
             // fallthrough
         case 1:
             HuntingGirlPrimHelper(2, 1);
-            if (HuntingGirlAttack(g_attackPattern3)) {
+            if (HuntingGirlAttack(attack_pattern_3)) {
                 self->step_s++;
             }
             break;
@@ -421,7 +421,7 @@ void EntityHuntingGirl(Entity* self) {
             }
             break;
         case 3:
-            if (HuntingGirlAttack(g_attackPatternPtr[self->ext.huntingGirl
+            if (HuntingGirlAttack(attack_pattern_ptr[self->ext.huntingGirl
                                                          .attackPatternIdx])) {
                 self->ext.huntingGirl.attacking = false;
                 self->ext.huntingGirl.attackPatternIdx++;
@@ -555,7 +555,7 @@ void EntityHuntingGirl(Entity* self) {
         }
         break;
     }
-    AnimateEntity(g_anim, self);
+    AnimateEntity(anim, self);
     if (!(self->flags & FLAG_DEAD)) {
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
@@ -580,7 +580,7 @@ void EntityHuntingGirl(Entity* self) {
             tempVar = 0;
             for (color = 0; color < 3; color++) {
                 tempColor = colorPtr[color];
-                tempColor -= fadeInterval[color];
+                tempColor -= fade_interval[color];
                 if (tempColor < 0) {
                     tempColor = 0;
                 } else {

@@ -1,6 +1,5 @@
 D_80010960 = 0x80010960; // force_migration:True
 D_80010964 = 0x80010964; // force_migration:True
-_spu_gcSPU = 0x800286E0;
 libcd_CDRegister0 = 0x80032E68;
 libcd_CDRegister2 = 0x80032E70;
 libcd_CDRegister3 = 0x80032E74;

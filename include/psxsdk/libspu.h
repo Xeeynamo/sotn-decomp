@@ -21,6 +21,21 @@
 #define SPU_VOICE_ADSR_ADSR1 (0x01 << 17) // ADSR adsr1 for `VagAtr'
 #define SPU_VOICE_ADSR_ADSR2 (0x01 << 18) // ADSR adsr2 for `VagAtr'
 
+#define SPU_COMMON_MVOLL (0x01 << 0)     // master volume (left)
+#define SPU_COMMON_MVOLR (0x01 << 1)     // master volume (right)
+#define SPU_COMMON_MVOLMODEL (0x01 << 2) // master volume mode (left)
+#define SPU_COMMON_MVOLMODER (0x01 << 3) // master volume mode (right)
+#define SPU_COMMON_RVOLL (0x01 << 4)     // reverb volume (left)
+#define SPU_COMMON_RVOLR (0x01 << 5)     // reverb volume (right)
+#define SPU_COMMON_CDVOLL (0x01 << 6)    // CD input volume (left)
+#define SPU_COMMON_CDVOLR (0x01 << 7)    // CD input volume (right)
+#define SPU_COMMON_CDREV (0x01 << 8)     // CD input reverb on/off
+#define SPU_COMMON_CDMIX (0x01 << 9)     // CD input on/off
+#define SPU_COMMON_EXTVOLL (0x01 << 10)  // external digital input volume (left)
+#define SPU_COMMON_EXTVOLR (0x01 << 11) // external digital input volume (right)
+#define SPU_COMMON_EXTREV (0x01 << 12)  // external digital input reverb on/off
+#define SPU_COMMON_EXTMIX (0x01 << 13)  // external digital input on/off
+
 #define SPU_REV_MODE (0x01 << 0)      // mode setting
 #define SPU_REV_DEPTHL (0x01 << 1)    // reverb depth (left)
 #define SPU_REV_DEPTHR (0x01 << 2)    // reverb depth (right)
@@ -71,6 +86,22 @@ typedef struct {
     long delay;         // Delay Time  (ECHO, DELAY only)
     long feedback;      // Feedback    (ECHO only)
 } SpuReverbAttr;
+
+typedef struct {
+    SpuVolume volume; /* volume       */
+    long reverb;      /* reverb on/off */
+    long mix;         /* mixing on/off */
+} SpuExtAttr;
+
+typedef struct {
+    unsigned long mask; /* settings mask */
+
+    SpuVolume mvol;     /* master volume */
+    SpuVolume mvolmode; /* master volume mode */
+    SpuVolume mvolx;    /* current master volume */
+    SpuExtAttr cd;      /* CD input attributes */
+    SpuExtAttr ext;     /* external digital input attributes */
+} SpuCommonAttr;
 
 extern long SpuSetTransferMode(long mode);
 extern unsigned long SpuWrite(unsigned char* addr, unsigned long size);

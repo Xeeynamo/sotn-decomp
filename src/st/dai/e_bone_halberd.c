@@ -1,39 +1,39 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-static u8 g_anim1[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0, 0, 0, 0};
-static u8 g_anim2[] = {3, 1, 2, 2, 2, 3, 3, 4, 2, 5, 2, 6, 0, 0, 0, 0};
-static u8 g_anim3[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0, 0, 0, 0};
-static u8 g_anim4[] = {
+static u8 anim_1[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0, 0, 0, 0};
+static u8 anim_2[] = {3, 1, 2, 2, 2, 3, 3, 4, 2, 5, 2, 6, 0, 0, 0, 0};
+static u8 anim_3[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0, 0, 0, 0};
+static u8 anim_4[] = {
     5, 1,  5, 2,  5, 7,  6, 8,  2, 9,  2, 10, 2, 11, 2, 12, 2, 13, 2,  10,
     2, 11, 2, 12, 2, 13, 3, 14, 5, 15, 5, 16, 5, 17, 1, 18, 2, 19, 20, 20,
     5, 21, 3, 22, 2, 23, 2, 24, 2, 25, 1, 26, 1, 27, 1, 28, 2, 29, -1, 0};
-static u8 g_anim5[] = {1, 1, 4, 30, 4, 31, 1, 1, -1, 0, 0, 0};
-static u8 g_anim6[] = {1, 1, 4, 30, 6, 31, 4, 30, 1, 1, -1, 0};
-static u16 g_rotInterval[] = {256, 128, 72, 32, 64, 16, 32, -32, 32, 0};
+static u8 anim_5[] = {1, 1, 4, 30, 4, 31, 1, 1, -1, 0, 0, 0};
+static u8 anim_6[] = {1, 1, 4, 30, 6, 31, 4, 30, 1, 1, -1, 0};
+static u16 rotation_interval[] = {256, 128, 72, 32, 64, 16, 32, -32, 32, 0};
 static u8 D_us_80181DD8[] = {
     48, 32, 20, 12, 24, 16, 64, 48, 48, 0, 0, 0,
 };
-static s32 g_velocityX[] = {FIX(0.75), FIX(1.75), FIX(1.5), FIX(1.0), FIX(2.0),
-                            FIX(1.75), FIX(-0.5), FIX(0.0), FIX(0.5)};
-static s32 g_velocityY[] = {
+static s32 velocity_x[] = {FIX(0.75), FIX(1.75), FIX(1.5), FIX(1.0), FIX(2.0),
+                           FIX(1.75), FIX(-0.5), FIX(0.0), FIX(0.5)};
+static s32 velocity_y[] = {
     FIX(-5.0),   FIX(-3.0), FIX(-2.0), FIX(-3.0), FIX(-4.0),
     FIX(-0.875), FIX(-6.0), FIX(-4.5), FIX(-4.5)};
-static s16 g_posIntervalX[] = {
+static s16 interval_x[] = {
     -4, 0, 4, -4, -4, 4, -6, 0, 6, 0,
 };
-static s16 g_posIntervalY[] = {-16, -8, -4, -4, 9, 9, 2, 0, -2, 0};
+static s16 interval_y[] = {-16, -8, -4, -4, 9, 9, 2, 0, -2, 0};
 static u8 D_us_80181E54[][4] = {{96, 8, 8, 32}, {32, 64, 16, 80}};
-static s16 g_sensors[] = {0, 0x14, 0, 4, 8, -4, -16};
-static s16 g_attackSensors2[] = {0, 0x14, 12, 0};
-static s16 g_attackSensors[] = {-12, 16, 0, -16, 0, -16};
-static s16 g_hitbox[] = {
+static s16 sensors[] = {0, 0x14, 0, 4, 8, -4, -16};
+static s16 attack_sensors_2[] = {0, 0x14, 12, 0};
+static s16 attack_sensors[] = {-12, 16, 0, -16, 0, -16};
+static s16 hitbox[] = {
     0,   0,   0,  0, -9,  -22, 6,  6,  -25, -16, 8,  3, -29, -21, 10, 3,
     -39, -26, 10, 3, -54, -16, 15, 11, -64, -5,  11, 3, -64, -5,  11, 3};
 
-void BoneHalberdAttack(void) {
-    s32 collision2 = UnkCollisionFunc2(&g_attackSensors2);
-    u16 collision = UnkCollisionFunc(&g_attackSensors, 3);
+static void BoneHalberdAttack(void) {
+    s32 collision2 = UnkCollisionFunc2(&attack_sensors_2);
+    u16 collision = UnkCollisionFunc(&attack_sensors, 3);
 
     if ((collision2 == 128) || (collision & 2)) {
         SetStep(5);
@@ -72,14 +72,14 @@ void EntityBoneHalberd(Entity* self) {
         CreateEntityFromCurrentEntity(E_BONE_HALBERD_NAGINATA, entity);
         break;
     case 1:
-        if (UnkCollisionFunc3(g_sensors)) {
+        if (UnkCollisionFunc3(sensors)) {
             self->step++;
             return;
         }
     default:
         break;
     case 2:
-        if (!AnimateEntity(g_anim1, self)) {
+        if (!AnimateEntity(anim_1, self)) {
             self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         }
         self->ext.boneHalberd.facingLeft = self->facingLeft;
@@ -94,7 +94,7 @@ void EntityBoneHalberd(Entity* self) {
         BoneHalberdAttack();
         break;
     case 3:
-        if (!AnimateEntity(g_anim3, self)) {
+        if (!AnimateEntity(anim_3, self)) {
             self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         }
         self->ext.boneHalberd.facingLeft = ((self->facingLeft) ^ 1);
@@ -109,7 +109,7 @@ void EntityBoneHalberd(Entity* self) {
         BoneHalberdAttack();
         break;
     case 4:
-        tempVar = AnimateEntity(g_anim4, self);
+        tempVar = AnimateEntity(anim_4, self);
         if (!self->poseTimer && self->pose == 5) {
             PlaySfxPositional(SFX_FAST_SWORD_SWISHES);
         }
@@ -133,8 +133,8 @@ void EntityBoneHalberd(Entity* self) {
             break;
         case 1:
             self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
-            AnimateEntity(g_anim2, self);
-            collision = UnkCollisionFunc2(&g_attackSensors2);
+            AnimateEntity(anim_2, self);
+            collision = UnkCollisionFunc2(&attack_sensors_2);
             if (self->facingLeft) {
                 self->velocityX = FIX(2.0);
             } else {
@@ -158,7 +158,7 @@ void EntityBoneHalberd(Entity* self) {
             if ((!self->poseTimer) && ((self->pose) == 18)) {
                 PlaySfxPositional(SFX_WEAPON_STAB_B);
             }
-            if (!AnimateEntity(g_anim4, self)) {
+            if (!AnimateEntity(anim_4, self)) {
                 self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
                 self->pose = 2;
                 self->poseTimer = 0;
@@ -180,7 +180,7 @@ void EntityBoneHalberd(Entity* self) {
     case 5:
         switch (self->step_s) {
         case 0:
-            if (!(AnimateEntity(g_anim5, self) & 1)) {
+            if (!(AnimateEntity(anim_5, self) & 1)) {
                 tempVar = self->ext.boneHalberd.facingLeft;
                 if (!(Random() & 3)) {
                     tempVar ^= 1;
@@ -198,14 +198,14 @@ void EntityBoneHalberd(Entity* self) {
             }
             break;
         case 1:
-            if (UnkCollisionFunc3(g_sensors)) {
+            if (UnkCollisionFunc3(sensors)) {
                 PlaySfxPositional(SFX_STOMP_HARD_C);
                 self->step_s++;
             }
-            CheckFieldCollision(g_attackSensors, 2);
+            CheckFieldCollision(attack_sensors, 2);
             break;
         case 2:
-            if (!AnimateEntity(g_anim6, self)) {
+            if (!AnimateEntity(anim_6, self)) {
                 SetStep(3);
             }
             break;
@@ -220,13 +220,13 @@ void EntityBoneHalberd(Entity* self) {
                 entity->params = idx;
                 entity->ext.boneHalberd.unk88 = D_us_80181DD8[idx];
                 if (self->facingLeft) {
-                    entity->posX.i.hi -= g_posIntervalX[idx];
+                    entity->posX.i.hi -= interval_x[idx];
                 } else {
-                    entity->posX.i.hi += g_posIntervalX[idx];
+                    entity->posX.i.hi += interval_x[idx];
                 }
-                entity->posY.i.hi += g_posIntervalY[idx];
-                entity->velocityX = g_velocityX[idx];
-                entity->velocityY = g_velocityY[idx];
+                entity->posY.i.hi += interval_y[idx];
+                entity->velocityX = velocity_x[idx];
+                entity->velocityY = velocity_y[idx];
             } else {
                 break;
             }
@@ -242,7 +242,7 @@ void EntityBoneHalberd(Entity* self) {
 void EntityBoneHalberdParts(Entity* self) {
     if (self->step) {
         if (--self->ext.skeleton.explosionTimer) {
-            self->rotate += g_rotInterval[self->params];
+            self->rotate += rotation_interval[self->params];
             FallEntity();
             MoveEntity();
             return;
@@ -286,7 +286,7 @@ void EntityBoneHalberdNaginata(Entity* self) {
     if (animCurFrame > 7) {
         animCurFrame = 0;
     }
-    hitboxPtr = &g_hitbox[animCurFrame * 4];
+    hitboxPtr = &hitbox[animCurFrame * 4];
     self->hitboxOffX = *hitboxPtr++;
     self->hitboxOffY = *hitboxPtr++;
     self->hitboxWidth = *hitboxPtr++;
