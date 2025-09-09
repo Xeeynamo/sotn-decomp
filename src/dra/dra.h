@@ -464,6 +464,17 @@ typedef struct {
 } NowLoadingModel; // size=0x36
 
 typedef struct {
+    s32 x;
+    s32 y;
+    s32 w;
+    s32 h;
+    s32 u;
+    s32 v;
+    s32 tpage;
+    s32 clut;
+} RicSubwpnIconParams;
+
+typedef struct {
     u32 displayHP;
     s32 primIndex1;
     s32 primIndex2;
@@ -512,43 +523,14 @@ typedef struct Cmd14 {
     u8 unke;
 } Cmd14;
 
-// Used in dra/7879C
-// "Guard" text displays on screen
-typedef struct {
-    u8 left;
-    u8 top;
-    u8 right;
-    u8 bottom;
-    u16 clut;
-    u16 mode;
-} GuardTextControl;
-
-// Used in dra/5F60C
-typedef struct {
-    s32 x;
-    s32 y;
-    s32 w;
-    s32 h;
-    s32 u;
-    s32 v;
-    s32 tpage;
-    s32 clut;
-} RicSubwpnIconParams;
-
-#ifdef VERSION_PSP
-// Used in dra_psp/demo
-typedef struct {
-    u16 psx;
-    u16 psp;
-} ButtonMap;
-#endif
-
+// Used in dra/menu, dra_psp/menu
 typedef struct EquipMenuHelper {
     EquipKind equipTypeFilter;
     s32 index;
     s32 isAccessory;
 } EquipMenuHelper;
 
+// Used in dra/menu, dra_psp/menu
 // Struct for table of values to intitialize MenuContext structs
 typedef struct {
     /* 0x00 */ s16 cursorX;
@@ -572,18 +554,13 @@ typedef struct {
     s16 unk8;
 } Unkstruct_80102CD8;
 
-// Used in dra/8BEF8
+// Used in dra/7E4BC, dra/d_DBD4
 typedef struct {
-    s32 : 32;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-    s16 unkC;
-    s32 unk10;
-    s32 unk14;
-    s32 unk18;
-} Unkstruct_8012BEF8; // size = 0x1C
+    u8 timers[8];
+    u8 blueprints[8];
+    u8 blueprintParams[8];
+    u32 unk18;
+} Unkstruct_800ADEF0; // size:0x1C
 
 // Used in dra/d_10798, dra/8D3E8, dra/dra.h
 // This appears to be a super miniature Entity or something

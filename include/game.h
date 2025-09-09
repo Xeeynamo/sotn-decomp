@@ -807,12 +807,6 @@ typedef struct {
     /* 0x3 */ u8 objLayoutId;
 } RoomLoadDef; // size = 0x4
 
-// fake struct for D_801375BC
-typedef struct {
-    RoomLoadDef* def;
-    Point32 pos;
-} RoomLoadDefHolder;
-
 typedef struct {
     /* 0x0 */ u8 left;
     /* 0x1 */ u8 top;
@@ -920,6 +914,7 @@ typedef struct Entity {
     /* 0xB8 */ struct Entity* unkB8;
 } Entity; // size = 0xBC
 
+// Used by no2/372E8, rbo3/rbo3, e_explosion_puff_opaque
 typedef struct {
     u16 animSet;
     u16 unk5A;
@@ -927,27 +922,6 @@ typedef struct {
     u16 drawMode;
     u8* animData;
 } EntityConfig;
-
-// Used in dra/4B758
-typedef struct {
-    s16 unk0;
-    s16 animSet;
-    s16 animCurFrame;
-    u16 w;
-    u16 h;
-    s16 x;
-    s16 y;
-    s16 xPivot;
-    s16 yPivot;
-    u16 unused12;
-    s32 index;
-    s32 index2;
-    u32 spriteSheetIdx;
-    s32 flipX; // set to 2 when facing left, 0 when not
-    s32 eDrawFlags;
-    OT_TYPE* ot;
-    POLY_GT4* poly;
-} EntitiesRenderer;
 
 typedef struct {
     /* 0x00 */ u16 animSet;
@@ -1328,29 +1302,6 @@ typedef struct {
     /* 0x0C */ u16 zPriority;
     /* 0x0E */ u16 flags;
 } LayerDef; // size = 0x10
-
-// Defined in dra/4CE2C
-// internal structure that holds all the information to render room layers
-typedef struct {
-    /* 0x00 */ u16 x;
-    /* 0x02 */ u16 y;
-    /* 0x04 */ u16 flags;
-    /* 0x06 */ u16 clutAlt;
-    /* 0x08 */ u16 order;
-    /* 0x0A */ u16 isSemiTrans;
-    /* 0x0C */ u16 tpage;
-    /* 0x0E */ u16 roomTileWidth;
-    /* 0x10 */ u16 roomTileHeight;
-    /* 0x12 */ u16 pad12;
-    /* 0x14 */ u16* tiles;
-    /* 0x18 */ u8* page;
-    /* 0x1C */ u8* gfx;
-    /* 0x20 */ u8* clut;
-    /* 0x24 */ OT_TYPE* ot;
-    /* 0x28 */ SPRT_16* sp16;
-    /* 0x2C */ DR_MODE* dr;
-    /* 0x30 */ RECT rect;
-} TilemapRenderer;
 
 typedef struct {
     LayerDef* fg;
@@ -1822,23 +1773,6 @@ typedef struct {
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
-typedef struct {
-    u8 childId;
-    u8 unk1;
-    u8 unk2;
-    u8 unk3;
-    u8 unk4;
-    u8 unk5;
-} FactoryBlueprint;
-
-// Used in dra/7E4BC, dra/d_DBD4
-typedef struct {
-    u8 timers[8];
-    u8 blueprints[8];
-    u8 blueprintParams[8];
-    u32 unk18;
-} Unkstruct_800ADEF0; // size:0x1C
-
 // Used in ric/pl_blueprints, maria/pl_blueprints
 typedef struct {
     s16 xPos;
@@ -1851,6 +1785,17 @@ typedef struct {
     u8 uBase;
     u8 vBase;
 } Props_80161FF0; // size = 0x14
+
+// Used in dra/7879C, ric/pl_blueprints, maria/pl_blueprints, rbo5/unk_4648C,
+// bo4/unk_46E7C
+typedef struct {
+    u8 childId;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    u8 unk4;
+    u8 unk5;
+} FactoryBlueprint;
 
 // Used in dra/7E4BC, ric/pl_blueprints, maria/pl_blueprints, rbo5/unk_4648C,
 // bo4/unk_46E7C

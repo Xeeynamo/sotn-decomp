@@ -4,6 +4,12 @@
 #include "menu.h"
 #include "servant.h" // for InitializeMode enum
 
+// fake struct for D_801375BC
+typedef struct {
+    RoomLoadDef* def;
+    Point32 pos;
+} RoomLoadDefHolder;
+
 extern s32 D_801375C8;
 extern bool D_8C630C8;
 extern s32 D_psp_091CE578;
