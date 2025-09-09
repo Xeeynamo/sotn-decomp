@@ -1018,7 +1018,7 @@ s16 SsUtKeyOn(
     if (_svm_cur.field_18_voice_idx == 0xFF) {
         vmNoiseOn(voice & 0xFF);
     } else {
-        SpuVmKeyOnNow(1, note2pitch2(note, fine) & 0xFFFF);
+        SpuVmKeyOnNow(1, note2pitch2(note, fine));
     }
     _snd_ev_flag = 0;
     return voice;
@@ -1134,7 +1134,7 @@ s16 SsUtKeyOnV(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 fine,
     if (_svm_cur.field_18_voice_idx == 0xFF) {
         vmNoiseOn(voice & 0xFF);
     } else {
-        SpuVmKeyOnNow(1, note2pitch2(note, fine) & 0xFFFF);
+        SpuVmKeyOnNow(1, note2pitch2(note, fine));
     }
     _snd_ev_flag = 0;
     return voice;
