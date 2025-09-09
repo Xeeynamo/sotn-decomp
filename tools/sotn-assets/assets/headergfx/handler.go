@@ -49,7 +49,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err := os.MkdirAll(e.AssetDir, 0755); err != nil {
 		return fmt.Errorf("error creating directory: %v", err)
 	}
-	fout, err := os.Create(assetPath(e.AssetDir, e.Name))
+	fout, err := util.CreateAtomicWriter(assetPath(e.AssetDir, e.Name))
 	if err != nil {
 		return fmt.Errorf("error creating file: %v", err)
 	}

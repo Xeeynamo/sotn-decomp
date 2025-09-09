@@ -159,7 +159,7 @@ func Build(inFile, symbol, outDir string) error {
 	if err := os.MkdirAll(filepath.Dir(outFileName), 0755); err != nil {
 		return err
 	}
-	f, err := os.Create(outFileName)
+	f, err := util.CreateAtomicWriter(outFileName)
 	if err != nil {
 		return err
 	}
