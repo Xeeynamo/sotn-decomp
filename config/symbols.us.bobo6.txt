@@ -305,3 +305,5 @@ BO6_rooms = 0x80181204;
 BO6_spriteBanks = 0x80180034;
 BO6_cluts = 0x801800D8;
 richter_sprites = 0x8018303C;
+g_IsCutsceneDone = 0x801D1698;
+cutscene_data = 0x8019A2FB;
