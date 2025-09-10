@@ -497,12 +497,9 @@ u_long get_dx(DISPENV* env) {
 s32 _status(void) { return *GPU_STATUS; }
 
 s32 _otc(s32 arg0, s32 arg1) {
-    s32 temp_a0;
-
     *DPCR |= 0x08000000;
     *DMA6_CHCR = 0;
-    temp_a0 = arg0 - 4 + arg1 * 4;
-    *DMA6_MADR = temp_a0;
+    *DMA6_MADR = arg0 - 4 + arg1 * 4;
     *DMA6_BCR = arg1;
     *DMA6_CHCR = 0x11000002;
     set_alarm();
@@ -536,9 +533,9 @@ s32 _clr(RECT* arg0, s32 color) {
         D_80037E20[4] = 0xE6000000;
 
         D_80037E20[5] = CMD_MONOCHROME_RECTANGLE(color);
-        D_80037E20[6] = (s32) * (u32*)&temp.x;
-        D_80037E20[7] = (s32) * (u32*)&temp.w;
-        *ptr = 0x03FFFFFF;
+        D_80037E20[6] = LOW(temp.x);
+        D_80037E20[7] = LOW(temp.w);
+        D_80037E20[8] = 0x03FFFFFF;
         D_80037E20[9] = _param(3) | 0xE3000000; // set drawing area top left
         D_80037E20[10] =
             _param(4) | 0xE4000000; // set drawing area bottom right
@@ -548,8 +545,8 @@ s32 _clr(RECT* arg0, s32 color) {
         D_80037E20[1] = 0xE6000000; // mask bit setting
 
         D_80037E20[2] = CMD_FILL_RECTANGLE_IN_VRAM(color);
-        D_80037E20[3] = (s32) * (u32*)&temp.x;
-        D_80037E20[4] = (s32) * (u32*)&temp.w;
+        D_80037E20[3] = LOW(temp.x);
+        D_80037E20[4] = LOW(temp.w);
     }
     _cwc(&D_80037E20[0]);
     return 0;
@@ -560,7 +557,7 @@ s32 _dws(RECT* arg0, s32* arg1) {
     RECT temp;
     s32 temp_a0;
     s32 size;
-    s32 var_s0;
+    int var_s0;
     s32 var_s4;
 
     set_alarm();
@@ -588,12 +585,11 @@ s32 _dws(RECT* arg0, s32* arg1) {
     *GPU_STATUS = STATUS_READY_TO_RECEIVE_CMD;
 
     *GPU_DATA = CMD_CLEAR_CACHE;
-
     *GPU_DATA = var_s4 ? 0xB0000000 : CMD_COPY_CPU_TO_VRAM;
     *GPU_DATA = *(s32*)&temp.x;
     *GPU_DATA = *(s32*)&temp.w;
 
-    for (var_s0 = var_s0 - 1; var_s0 != -1; var_s0--) {
+    while (var_s0--) {
         *GPU_DATA = *arg1++;
     }
 
@@ -613,7 +609,7 @@ s32 _drs(RECT* arg0, s32* arg1) {
     RECT temp;
     s32 temp_a0;
     s32 size;
-    s32 var_s0;
+    int var_s0;
 
     set_alarm();
     temp.x = arg0->x;
@@ -639,7 +635,6 @@ s32 _drs(RECT* arg0, s32* arg1) {
     *GPU_STATUS = STATUS_READY_TO_RECEIVE_CMD;
 
     *GPU_DATA = CMD_CLEAR_CACHE;
-
     *GPU_DATA = CMD_COPY_VRAM_TO_CPU;
     *GPU_DATA = *(s32*)&temp.x;
     *GPU_DATA = *(s32*)&temp.w;
@@ -650,7 +645,7 @@ s32 _drs(RECT* arg0, s32* arg1) {
         }
     }
 
-    for (var_s0 = var_s0 - 1; var_s0 != -1; var_s0--) {
+    while (var_s0--) {
         *arg1++ = *GPU_DATA;
     }
 
@@ -671,11 +666,9 @@ void _ctl(u32 arg0) {
 
 s32 _getctl(s32 arg0) { return (arg0 << 0x18) | ctlbuf[arg0]; }
 
-s32 _cwb(s32* arg0, s32 arg1) {
-    s32 i;
-
+s32 _cwb(s32* arg0, int arg1) {
     *GPU_STATUS = 0x04000000;
-    for (i = arg1 - 1; i != -1; i--) {
+    while (arg1--) {
         *GPU_DATA = *arg0++;
     }
     return 0;
@@ -900,10 +893,8 @@ s32 get_alarm(void) {
     return 0;
 }
 
-void GPU_memset(s8* ptr, int value, s32 num) {
-    s32 i;
-
-    for (i = num - 1; i != -1; i--) {
+void GPU_memset(s8* ptr, int value, int num) {
+    while (num--) {
         *ptr++ = value;
     }
 }
