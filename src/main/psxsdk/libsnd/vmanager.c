@@ -945,6 +945,7 @@ s32 SpuVmGetProgPan(s16 arg0, s16 arg1) {
     }
 }
 
+#ifndef VERSION_PC
 s32 SpuVmSetVol(s16 seq_sep_no, s16 vabId, s16 prog, u16 arg3, u16 arg4) {
     s32 var_s2;
     u8 voice;
@@ -1019,6 +1020,7 @@ s32 SpuVmSetVol(s16 seq_sep_no, s16 vabId, s16 prog, u16 arg3, u16 arg4) {
     }
     return var_s2;
 }
+#endif
 
 s16 SsUtKeyOn(
     s16 vabId, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 volr) {
