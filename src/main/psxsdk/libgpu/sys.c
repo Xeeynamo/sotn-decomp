@@ -415,15 +415,15 @@ void SetDrawEnv(DR_ENV* dr_env_in, DRAWENV* env) {
             clip_rect.y -= env->ofs[1];
             *((s32*)dr_env + offset++) =
                 0x60000000 | env->b0 << 0x10 | env->g0 << 8 | env->r0;
-            *((s32*)dr_env + offset++) = *(s32*)&clip_rect.x;
-            *((s32*)dr_env + offset++) = *(s32*)&clip_rect.w;
+            *((s32*)dr_env + offset++) = LOW(clip_rect.x);
+            *((s32*)dr_env + offset++) = LOW(clip_rect.w);
             clip_rect.x += env->ofs[0];
             clip_rect.y += env->ofs[1];
         } else {
             *((s32*)dr_env + offset++) =
                 0x02000000 | env->b0 << 0x10 | env->g0 << 8 | env->r0;
-            *((s32*)dr_env + offset++) = *(s32*)&clip_rect.x;
-            *((s32*)dr_env + offset++) = *(s32*)&clip_rect.w;
+            *((s32*)dr_env + offset++) = LOW(clip_rect.x);
+            *((s32*)dr_env + offset++) = LOW(clip_rect.w);
         }
     }
 
@@ -586,8 +586,8 @@ s32 _dws(RECT* arg0, s32* arg1) {
 
     *GPU_DATA = CMD_CLEAR_CACHE;
     *GPU_DATA = var_s4 ? 0xB0000000 : CMD_COPY_CPU_TO_VRAM;
-    *GPU_DATA = *(s32*)&temp.x;
-    *GPU_DATA = *(s32*)&temp.w;
+    *GPU_DATA = LOW(temp.x);
+    *GPU_DATA = LOW(temp.w);
 
     while (var_s0--) {
         *GPU_DATA = *arg1++;
@@ -636,8 +636,8 @@ s32 _drs(RECT* arg0, s32* arg1) {
 
     *GPU_DATA = CMD_CLEAR_CACHE;
     *GPU_DATA = CMD_COPY_VRAM_TO_CPU;
-    *GPU_DATA = *(s32*)&temp.x;
-    *GPU_DATA = *(s32*)&temp.w;
+    *GPU_DATA = LOW(temp.x);
+    *GPU_DATA = LOW(temp.w);
 
     while (!(*GPU_STATUS & STATUS_READY_TO_SEND_VRAM_TO_CPU)) {
         if (get_alarm()) {
