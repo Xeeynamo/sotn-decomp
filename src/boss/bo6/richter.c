@@ -29,13 +29,13 @@ void func_us_801B4BD0(void) {
 
     RIC.animSet = ANIMSET_OVL(1);
     RIC.zPriority = g_unkGraphicsStruct.g_zEntityCenter + 8;
-    RIC.flags = 0x18402000;
+    RIC.flags = FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_UNK_400000 | FLAG_UNK_2000;
     RIC.facingLeft = 0;
     RIC.unk5A = 8;
     RIC.palette = 0x8220;
     RIC.scaleX = RIC.scaleY = 0x100;
     RIC.rotPivotY = 0x18;
-    RIC.drawMode = 0;
+    RIC.drawMode = DRAW_DEFAULT;
 
     g_PlayerDraw[8].r0 = g_PlayerDraw[8].r1 = g_PlayerDraw[8].r2 = g_PlayerDraw[8].r3 =
         g_PlayerDraw[8].g0 = g_PlayerDraw[8].g1 = g_PlayerDraw[8].g2 = g_PlayerDraw[8].g3 =
@@ -67,7 +67,7 @@ void func_us_801B4BD0(void) {
         e->animSet = ANIMSET_OVL(1);
         e->unk5A = i + 9;
         e->palette = PAL_OVL(0x220);
-        e->flags = 0x08000000;
+        e->flags = FLAG_POS_CAMERA_LOCKED;
     }
 
     primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
@@ -75,7 +75,7 @@ void func_us_801B4BD0(void) {
     D_800763F8 = primIndex;
     D_800763C8 |= 0x800000;
     while (prim != NULL) {
-        prim->drawMode = 0x10A;
+        prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         prim = prim->next;
     }
     g_api.TimeAttackController(TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_VISITED);

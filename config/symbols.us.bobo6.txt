@@ -6,10 +6,7 @@ RIC_hitboxOffX = 0x800762E8;
 RIC_hitboxOffY = 0x800762EA;
 RIC_facingLeft = 0x800762EC;
 RIC_palette = 0x800762EE;
-RIC_drawMode = 0x800762F0;
 RIC_drawFlags = 0x800762F1;
-RIC_scaleX = 0x800762F2;
-RIC_scaleY = 0x800762F4;
 RIC_rotate = 0x800762F6;
 RIC_rotPivotX = 0x800762F8;
 RIC_rotPivotY = 0x800762FA;
@@ -22,8 +19,6 @@ RIC_anim = 0x80076324;
 RIC_pose = 0x80076328;
 RIC_poseTimer = 0x8007632A;
 RIC_animSet = 0x8007632C;
-RIC_animCurFrame = 0x8007632E;
-RIC_unk5A = 0x80076332;
 BO6_pStObjLayoutHorizontal = 0x80180180;
 BO6_pStObjLayoutVertical = 0x80180254;
 BO6_EntityUpdates = 0x80180328;
@@ -254,7 +249,6 @@ g_Ric_unk5C = 0x801D1674;
 g_Ric_unk6A = 0x801D1682;
 g_Ric_unk6C = 0x801D1684;
 g_Ric_unk70 = 0x801D1688;
-<<<<<<< HEAD
 g_IsCutsceneDone = 0x801D1698;
 g_ItemIconSlots = 0x801D16A8;
 NO1Unused_801B7D24 = 0x801B9134;
@@ -293,17 +287,17 @@ g_Ric_prev_step_s = 0x801D166A;
 g_Ric_unk5C = 0x801D1674;
 g_Ric_unk6A = 0x801D1682;
 g_Ric_unk6C = 0x801D1684;
-e_Ric_unk70 = 0x801D1688;
-=======
->>>>>>> ae27b63cc (moved import into separate branch)
+g_Ric_unk70 = 0x801D1688;
 g_ItemIconSlots = 0x801D16A8;
-
-
-BO6_RicEntityVibhutiCrashCloud = 0x801C7FEC;
 EntityShaft = 0x801C0D90;
+BO6_RicEntityVibhutiCrashCloud = 0x801C7FEC;
 BO6_rooms = 0x80181204;
-BO6_spriteBanks = 0x80180034;
-BO6_cluts = 0x801800D8;
-richter_sprites = 0x8018303C;
-g_IsCutsceneDone = 0x801D1698;
-cutscene_data = 0x8019A2FB;
+
+
+RIC_drawMode = 0x800762F0;
+RIC_scaleX = 0x800762F2;
+RIC_scaleY = 0x800762F4;
+RIC_animCurFrame = 0x8007632E;
+RIC_unk5A = 0x80076332;
+g_Ric_unk70 = 0x801D1688;
+

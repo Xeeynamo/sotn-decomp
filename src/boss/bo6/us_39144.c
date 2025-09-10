@@ -362,9 +362,9 @@ void EntityShaft(Entity* self) {
     switch (self->step) {
     case 0:
 #ifdef VERSION_PSP
-        self->flags = 0x10800000;
+        self->flags = FLAG_UNK_10000000 | FLAG_HAS_PRIMS;
 #else
-        self->flags = 0x10000000;
+        self->flags = FLAG_UNK_10000000;
 #endif
         self->animSet = -0x7FFB;
         self->animCurFrame = 0x8B;
@@ -372,8 +372,8 @@ void EntityShaft(Entity* self) {
         self->palette = PAL_OVL(0x250);
         self->zPriority = RIC.zPriority + 2;
         self->opacity = 0;
-        self->drawFlags = 8;
-        self->drawMode = 0x30;
+        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->step++;
         break;
 
@@ -393,7 +393,7 @@ void EntityShaft(Entity* self) {
     case 2:
         if (!self->ext.ILLEGAL.s16[0]) {
             if ((g_CutsceneFlags & 0x40) || (g_DemoMode != Demo_None)) {
-                self->drawFlags |= 3;
+                self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
                 self->scaleX = self->scaleY = 0x100;
                 self->step++;
             }
@@ -464,7 +464,7 @@ void func_us_801C0FE8(Entity* self) {
         prim->v2 = prim->v3 = D_us_80181E9C[params * 2 + 1] + 2;
 
         prim->priority = RIC.zPriority + 4;
-        prim->drawMode = 2;
+        prim->drawMode = DRAW_UNK02;
 
         accelX = D_us_80181E9C[params * 2] - 16;
         accelY = D_us_80181E9C[params * 2 + 1] - 16;
@@ -474,7 +474,7 @@ void func_us_801C0FE8(Entity* self) {
         velocity = ratan2(-accelY, accelX);
         velocity += ((rand() & 0x7F) - 0x40);
         self->ext.shaftOrb.velocityAngle = velocity;
-        self->flags = 0x10800000;
+        self->flags = FLAG_UNK_10000000 | FLAG_HAS_PRIMS;
         self->ext.shaftOrb.timer = 8;
         self->step++;
         break;
@@ -517,7 +517,7 @@ void func_us_801C0FE8(Entity* self) {
         self->velocityY += 0xC00;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
-        self->flags &= 0xEFFFFFFF;
+        self->flags &= ~FLAG_UNK_10000000;
         break;
     }
 
@@ -536,13 +536,13 @@ void func_us_801C13A8(Entity* self) {
     s16 params = self->params & 0x7F00;
     switch (self->step) {
     case 0:
-        self->flags = 0x28000000;
+        self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
         self->unk5A = 0x79;
         self->animSet = 0xE;
         self->zPriority = RIC.zPriority + 6;
         self->palette = PAL_OVL(0x25E);
-        self->drawMode = 0x70;
-        self->drawFlags = 3;
+        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
         self->scaleX = self->scaleY = 0xC0;
         self->anim = D_us_80181EDC;
         if (params) {
@@ -633,17 +633,17 @@ void BO6_RicEntityVibhutiCrashCloud(Entity* self) {
             return;
         }
 
-        self->flags = 0x08800000;
+        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->posX.val = self->ext.vibCrashCloud.parent->ext.vibhutiCrash.x;
         self->posY.val = self->ext.vibCrashCloud.parent->ext.vibhutiCrash.y;
         self->facingLeft = self->ext.vibCrashCloud.parent->ext.vibhutiCrash.facing;
-        self->flags |= 0x20000000;
+        self->flags |= FLAG_UNK_20000000;
         self->unk5A = 0x64;
         self->animSet = 0xE;
         self->palette = PAL_OVL(0x19E);
         self->anim = D_us_801829D4;
-        self->drawMode = 0x30;
-        self->drawFlags = 8;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->drawFlags = FLAG_DRAW_OPACITY;
         self->opacity = 0x60;
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
@@ -706,7 +706,7 @@ void OVL_EXPORT(RicEntitySubwpnBibleTrail)(Entity* entity) {
             DestroyEntity(entity);
             return;
         }
-        entity->flags = 0x10800000;
+        entity->flags = FLAG_UNK_10000000 | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[entity->primIndex];
         prim->tpage = 0x1C;
         prim->clut = 0x19D;
@@ -719,7 +719,7 @@ void OVL_EXPORT(RicEntitySubwpnBibleTrail)(Entity* entity) {
         prim->y0 = prim->y1 = entity->posY.i.hi - 8;
         prim->y2 = prim->y3 = entity->posY.i.hi + 8;
         prim->priority = entity->zPriority;
-        prim->drawMode = 0x15;
+        prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         entity->ext.et_BibleSubwpn.unk7E = 0x60;
         entity->step++;
         break;
