@@ -3,24 +3,24 @@
 #include "libsnd_i.h"
 
 void _SsGetMetaEvent(s16, s16, u8);
-void _SsNoteOn(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
+void _SsNoteOn(s16, s16, s32, s32);
 s32 _SsReadDeltaValue(s16, s16);
 void _SsSetPitchBend(s16, s16);
-void _SsSetProgramChange(s16 arg0, s16 arg1, u8 arg2);
-void _SsGetSeqData(s16 arg0, s16 arg1);
-void _SsContPortamento(s16 arg0, s16 arg1, u8 arg2);
-void _SsSndSetVabAttr(s16 vabId, s16 progNum, s16 toneNum, VagAtr vagAtr,
-                      struct Unk adsrBuffer, short idx, unsigned char attr);
-void SpuVmDamperOff();
-void SpuVmDamperOn();
-void SpuVmSetProgVol(s16, u8, u8);
-void SpuVmSetVol(s32, s16, u8, s16, s32);
+void _SsSetProgramChange(s16, s16, u8);
+void _SsGetSeqData(s16, s16);
+void _SsContPortamento(s16, s16, u8);
+void _SsSndSetVabAttr(s16, s16, s16, VagAtr, struct Unk, short, unsigned char);
+void _SsSetControlChange(s16, s16, u8);
 void _SsContDataEntry(s16, s16, u8);
 void _SsContNrpn2(s16, s16, u8);
 void _SsContRpn1(s16, s16, u8);
 void _SsContRpn2(s16, s16, u8);
-void _SsContResetAll(s16 arg0, s16 arg1);
-void _SsContNrpn1(s16 arg0, s16 arg1, s16 arg2);
+void _SsContResetAll(s16, s16);
+void _SsContNrpn1(s16, s16, s16);
+void SpuVmDamperOff();
+void SpuVmDamperOn();
+void SpuVmSetProgVol(s16, u8, u8);
+void SpuVmSetVol(s32, s16, u8, s16, s32);
 void SpuVmKeyOff(s16, s16, u8, s32);
 void SpuVmKeyOn(s16, s16, u8, s32, s32, s32);
 void SpuVmPitchBend(s32, s16, u8, u8);
