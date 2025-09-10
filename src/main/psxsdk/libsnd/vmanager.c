@@ -964,7 +964,9 @@ s32 SpuVmSetVol(s16 seq_sep_no, s16 vabId, s16 prog, u16 arg3, u16 arg4) {
     _svm_cur.field_16_vag_idx = seq_sep_no;
     for (voice = 0; voice < spuVmMaxVoice; voice++) {
         new_var2 = prog;
-        if ((_svm_voice[voice].unke == seq_sep_no) && (_svm_voice[voice].prog == new_var2) && (_svm_voice[voice].vabId == vabId)) {
+        if ((_svm_voice[voice].unke == seq_sep_no) &&
+            (_svm_voice[voice].prog == new_var2) &&
+            (_svm_voice[voice].vabId == vabId)) {
             if (temp_s1->vol[temp_s1->channel] != arg3) {
                 if (temp_s1->vol[temp_s1->channel] == 0) {
                     temp_s1->vol[temp_s1->channel] = 1;
@@ -973,7 +975,10 @@ s32 SpuVmSetVol(s16 seq_sep_no, s16 vabId, s16 prog, u16 arg3, u16 arg4) {
             new_var = (_svm_voice[voice].unk8 * arg3) / 0x7F;
             mvol_scaled = _svm_vh->mvol * 0x3FFF;
             voll_t = (new_var * mvol_scaled) / 0x3F01;
-            volr_t = voll_t = (voll_t * _svm_pg[new_var2].mvol * _svm_tn[_svm_voice[voice].tone + (new_var2 * 0x10)].vol) / 0x3F01;
+            volr_t = voll_t =
+                (voll_t * _svm_pg[new_var2].mvol *
+                 _svm_tn[_svm_voice[voice].tone + (new_var2 * 0x10)].vol) /
+                0x3F01;
 
             voll_t = (voll_t * temp_s1->unk74) / 0x7F;
             volr_t = (volr_t * temp_s1->unk76) / 0x7F;
@@ -982,13 +987,15 @@ s32 SpuVmSetVol(s16 seq_sep_no, s16 vabId, s16 prog, u16 arg3, u16 arg4) {
                 voll = voll_t;
                 volr = (volr_t * _svm_tn[_svm_voice[voice].tone].pan) / 0x3F;
             } else {
-                voll = (voll_t * (0x7F - _svm_tn[_svm_voice[voice].tone].pan)) / 0x3F;
+                voll = (voll_t * (0x7F - _svm_tn[_svm_voice[voice].tone].pan)) /
+                       0x3F;
                 volr = volr_t;
             }
             if (_svm_pg[_svm_voice[voice].unk10].mpan < 0x40) {
                 volr = (volr * _svm_pg[_svm_voice[voice].unk10].mpan) / 0x3F;
             } else {
-                voll = (voll * (0x7F - _svm_pg[_svm_voice[voice].unk10].mpan)) / 0x3F;
+                voll = (voll * (0x7F - _svm_pg[_svm_voice[voice].unk10].mpan)) /
+                       0x3F;
             }
             if ((pan_arg & 0xFF) < 0x40) {
                 volr = (volr * (pan_arg & 0xFF)) / 0x3F;
@@ -1012,7 +1019,6 @@ s32 SpuVmSetVol(s16 seq_sep_no, s16 vabId, s16 prog, u16 arg3, u16 arg4) {
     }
     return var_s2;
 }
-
 
 s16 SsUtKeyOn(
     s16 vabId, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 volr) {
