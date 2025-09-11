@@ -191,11 +191,11 @@ static void EntityWeaponAttack(Entity* self) {
     s32 mask;
     s16 subType;
 
+    subType = (self->params & 0x7FFF) >> 8;
+
     self->posX.val = PLAYER.posX.val;
     self->posY.val = PLAYER.posY.val;
     self->facingLeft = PLAYER.facingLeft;
-    subType = self->params & 0x7FFF;
-    subType >>= 8;
     anim = &g_SoundEvents[subType];
 
     if (!(PLAYER.ext.weapon.anim >= anim->frameStart &&

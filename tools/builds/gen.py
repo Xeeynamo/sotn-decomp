@@ -41,7 +41,7 @@ def is_hd(version: str) -> bool:
 
 
 def is_weapon(ovl_name: str) -> bool:
-    return ovl_name == "weapon"
+    return ovl_name == "weapon" or ovl_name.startswith("w0_") or ovl_name.startswith("w1_")
 
 
 def is_servant(ovl_name: str) -> bool:
@@ -466,7 +466,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
         outputs=dyn_syms_splat_config,
     )
 
-    if is_weapon(ovl_name):
+    if version != "pspeu" and is_weapon(ovl_name):
         add_weapon_splat_config(nw, version, splat_config)
         return
     target_path = str(splat_config["options"]["target_path"])
