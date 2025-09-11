@@ -16,15 +16,15 @@ static inline void def_cbread(u_char intr, Result_t* result) {
 }
 
 int CdInit(void) {
-    unsigned int i;
+    unsigned int count = 5;
 
-    for (i = 4; i != -1; --i) {
+    while (count--) {
         if (CdReset(1) == 1) {
             CdSyncCallback(def_cbsync);
             CdReadyCallback(def_cbready);
             CdReadCallback(def_cbread);
-            i = 1;
-            return (float)i; // FAKE
+            count = 1;
+            return (float)count; // FAKE
         }
     }
 
