@@ -2836,17 +2836,6 @@
 | 1.00 | false    | func_us_801B995C                    | asm/us/boss/bo6/nonmatchings/us_39144/func_us_801B995C.s 
 | 1.00 | false    | func_us_801B99A4                    | asm/us/boss/bo6/nonmatchings/us_39144/func_us_801B99A4.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | CutsceneRun                         | asm/us/boss/mar/matchings/cutscene/CutsceneRun.s 
-| 0.93 | true     | CutsceneRun                         | asm/us/st/cen/matchings/cutscene/CutsceneRun.s 
-| 0.93 | true     | CutsceneRun                         | asm/us/st/dai/matchings/e_cutscene/CutsceneRun.s 
-| 0.96 | true     | CutsceneRun                         | asm/us/st/dre/matchings/cutscene/CutsceneRun.s 
-| 1.00 | true     | CutsceneRun                         | asm/us/st/lib/matchings/cutscene/CutsceneRun.s 
-| 1.00 | true     | CutsceneRun                         | asm/us/st/no3/matchings/cutscene/CutsceneRun.s 
-| 1.00 | true     | CutsceneRun                         | asm/us/st/nz0/matchings/cutscene/CutsceneRun.s 
-| 1.00 | true     | CutsceneRun                         | asm/us/st/st0/matchings/cutscene/CutsceneRun.s 
-| 0.93 | true     | CutsceneRun                         | asm/us/st/top/matchings/cutscene/CutsceneRun.s 
-| 0.93 | false    | CutsceneRun                         | asm/us/boss/bo6/nonmatchings/cutscene/CutsceneRun.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CutsceneUnk3                        | asm/us/boss/mar/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/dai/matchings/e_cutscene/CutsceneUnk3.s 
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/dre/matchings/cutscene/CutsceneUnk3.s 
@@ -3039,6 +3028,12 @@
 | 1.00 | true     | func_80161C2C                       | asm/us/ric/matchings/pl_blueprints/func_80161C2C.s 
 | 1.00 | false    | func_us_801BD0B8                    | asm/us/boss/bo6/nonmatchings/us_39144/func_us_801BD0B8.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | CutsceneRun                         | asm/us/boss/bo6/matchings/cutscene/CutsceneRun.s 
+| 0.93 | true     | CutsceneRun                         | asm/us/boss/mar/matchings/cutscene/CutsceneRun.s 
+| 1.00 | true     | CutsceneRun                         | asm/us/st/cen/matchings/cutscene/CutsceneRun.s 
+| 1.00 | true     | CutsceneRun                         | asm/us/st/dai/matchings/e_cutscene/CutsceneRun.s 
+| 1.00 | true     | CutsceneRun                         | asm/us/st/top/matchings/cutscene/CutsceneRun.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | CutsceneSkip                        | asm/us/boss/bo6/matchings/cutscene/CutsceneSkip.s 
 | 1.00 | true     | CutsceneSkip                        | asm/us/st/dre/matchings/cutscene/CutsceneSkip.s 
 | 1.00 | true     | CutsceneSkip                        | asm/us/st/lib/matchings/cutscene/CutsceneSkip.s 
@@ -3128,6 +3123,12 @@
 | 0.99 | true     | EntityBreakable                     | asm/us/st/no2/matchings/e_breakable/EntityBreakable.s 
 | 0.92 | true     | RTOP_EntityBreakable                | asm/us/st/rtop/matchings/e_breakable/RTOP_EntityBreakable.s 
 | 0.92 | true     | EntityBreakable                     | asm/us/st/top/matchings/e_breakable/EntityBreakable.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | CutsceneRun                         | asm/us/st/dre/matchings/cutscene/CutsceneRun.s 
+| 0.96 | true     | CutsceneRun                         | asm/us/st/lib/matchings/cutscene/CutsceneRun.s 
+| 0.96 | true     | CutsceneRun                         | asm/us/st/no3/matchings/cutscene/CutsceneRun.s 
+| 0.96 | true     | CutsceneRun                         | asm/us/st/nz0/matchings/cutscene/CutsceneRun.s 
+| 0.96 | true     | CutsceneRun                         | asm/us/st/st0/matchings/cutscene/CutsceneRun.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySkeleton                      | asm/us/st/lib/matchings/e_skeleton/EntitySkeleton.s 
 | 0.90 | true     | EntitySkeleton                      | asm/us/st/no0/matchings/e_skeleton/EntitySkeleton.s 
@@ -3224,6 +3225,11 @@
 | 0.91 | true     | DMA_memclr                          | asm/us/main/matchings/psxsdk/libetc/intr_dma/DMA_memclr.s 
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
@@ -3511,10 +3517,6 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -4031,9 +4033,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
