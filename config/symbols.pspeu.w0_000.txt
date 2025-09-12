@@ -2,5 +2,14 @@ D_pspeu_092F3648 = 0x092F3648;
 D_pspeu_092F3668 = 0x092F3668;
 
 w0_000_Load = 0x092F3498;
-w0_000_Overlay = 0x92F3580;
-EnttiyWeaponAttack = 0x092F3168;
+w0_000_Overlay = 0x092F4708;
+EntityWeaponAttack = 0x092F3168;
+g_SoundEvents = 0x092F46A0;
+DestroyEntity = 0x092F2E80;
+w_000_1 = 0x092F3500;
+SetSpriteBank1 = 0x092F3000;
+g_HandId = 0x092F4780;
+SetWeaponProperties = 0x092F3048;
+GetWeaponId = 0x092F3448;
+LoadWeaponPalette = 0x092F2F18;
+g_WeaponCluts = 0x092F46F0;
