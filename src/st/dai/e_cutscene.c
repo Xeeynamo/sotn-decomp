@@ -2,6 +2,8 @@
 #include "dai.h"
 #include <cutscene.h>
 
+#define CUTSCENE_TILEMAP_SCROLL
+
 #ifdef VERSION_PSP
 extern u8* OVL_EXPORT(cutscene_script); // Defined by st_init
 #else
@@ -107,14 +109,14 @@ static u8 D_pspeu_092967D0[] = {3, 4, 9, 7, 0, 0, 0, 0};
 
 // bss
 u32 g_CutsceneFlags; // Used by cutscene_init
-static s32 skip_cutscene;
+static bool skip_cutscene;
 Dialogue g_Dialogue; // Used by cutscene_init
 static u8 D_pspeu_09297838;
 static u8 D_pspeu_09297818[32];
 static u8 cutsceneUnk3Unknown[896];
 static u16 D_pspeu_09297298[256];
 static u8 D_pspeu_09297290[8];
-static s32 is_cutscene_done;
+static bool is_cutscene_done;
 
 // psp only, can probably be added to cutscene_actor_name.h
 #include "../../get_lang.h"
@@ -127,11 +129,11 @@ static s32 is_cutscene_done;
 static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
 
 // bss
-static s32 skip_cutscene;
+static bool skip_cutscene;
 Dialogue g_Dialogue; // Used by cutscene_init
 STATIC_PAD_BSS(104);
 u32 g_CutsceneFlags; // Used by cutscene_init
-static s32 is_cutscene_done;
+static bool is_cutscene_done;
 
 // These three are reversed in order from psp
 #include "../cutscene_script_text.h"
@@ -185,24 +187,26 @@ static void ScaleCutsceneAvatar(const u8 ySteps) {
 }
 
 void OVL_EXPORT(EntityCutscene)(Entity* self) {
+#ifdef VERSION_PSP
+    const int PRIM = 4;
+#else
+    const int PRIM = 5;
+#endif
     s16 uCoord, vCoord;
     s32 primIndex;
-#ifdef VERSION_PSP
-    s32 sp40;
-#endif
+    bool sp40; // Not used by psx
     RECT rect;
     Primitive* prim;
-    s32 i, j;
     u16 nextChar;
-    s32 nextChar2;
-#ifdef VERSION_PSP
-    u8* var_s6;
-#endif
+    s32 i, j;
     s32 ptr;
-#ifdef VERSION_PSP
+    // Not used by psx
+    s32 nextChar2;
+    u8* var_s6;
     u32 var_s3;
     u8* var_s1;
 
+#ifdef VERSION_PSP
     func_8926498();
 #endif
 
@@ -210,7 +214,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         if (is_cutscene_done && !skip_cutscene &&
             ((g_Settings.D_8003CB04 & 0x400) || g_IsTimeAttackUnlocked)) {
             if (g_pads[0].tapped & PAD_START) {
-                skip_cutscene = 1;
+                skip_cutscene = true;
                 g_api.FreePrimitives(self->primIndex);
                 self->flags ^= FLAG_HAS_PRIMS;
                 if (g_Dialogue.primIndex[1] != -1) {
@@ -240,36 +244,34 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         if (SetCutsceneScript(OVL_EXPORT(cutscene_script))) {
             self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             self->primIndex = g_Dialogue.primIndex[2];
-            g_CutsceneHasControl = 1;
+            g_CutsceneHasControl = true;
             g_CutsceneFlags = 0;
-            is_cutscene_done = 0;
-            skip_cutscene = 0;
+            is_cutscene_done = false;
+            skip_cutscene = false;
             self->step++;
         }
         break;
     case 1:
-#ifdef VERSION_PSP
         nextChar = 0;
-#endif
         // this is a huge While-loop! Don't miss it!
-        while (1) {
+        while (true) {
 #ifdef VERSION_PSP
             nextChar = *g_Dialogue.scriptCur++;
-            sp40 = 0;
+            sp40 = false;
             if (func_8919BA8() & 8) {
                 g_Dialogue.nextCharTimer = 0;
             }
-#endif
             if ((g_Dialogue.nextCharTimer) && !skip_cutscene) {
                 g_Dialogue.nextCharTimer--;
-#ifdef VERSION_PSP
                 g_Dialogue.scriptCur--;
-#endif
                 return;
             }
-#ifdef VERSION_PSP
             if (!(nextChar & 0x80)) {
 #else
+            if ((g_Dialogue.nextCharTimer) && !skip_cutscene) {
+                g_Dialogue.nextCharTimer--;
+                return;
+            }
             nextChar = *g_Dialogue.scriptCur++;
 #endif
                 switch (nextChar) {
@@ -342,11 +344,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                         continue;
                     }
                     prim = g_Dialogue.prim[0];
-#ifdef VERSION_PSP
-                    for (i = 0; i < 4; i++) {
-#else
-                for (i = 0; i < 5; i++) {
-#endif
+                    for (i = 0; i < PRIM; i++) {
                         prim->drawMode = DRAW_HIDE;
                         prim = prim->next;
                     }
@@ -358,30 +356,29 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     }
                     // fake reuse of i?
                     i = *g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
-                    prim = g_Dialogue.prim[4];
+                    prim = g_Dialogue.prim[PRIM];
                     j = *g_Dialogue.scriptCur++;
+#ifdef VERSION_PSP
                     nextChar2 = j & 1;
                     uCoord = D_us_80180EE0[nextChar2];
                     vCoord = D_pspeu_09297290[nextChar2];
 #else
-                nextChar2 = *g_Dialogue.scriptCur++;
-                prim = g_Dialogue.prim[5];
-                uCoord = D_us_80180EE0[nextChar2 & 1];
-                vCoord = D_us_80180EE4[nextChar2 & 1];
+                uCoord = D_us_80180EE0[j & 1];
+                vCoord = D_us_80180EE4[j & 1];
 #endif
                     prim->clut = D_us_80180EE8[i];
                     prim->tpage = 144;
 #ifndef VERSION_PSP
-                    if (nextChar2 & 0x80) {
+                    if (j & 0x80) {
                         prim->u0 = prim->u2 = uCoord + 47;
                         prim->u1 = prim->u3 = uCoord;
                     } else {
-#endif
                         prim->u0 = prim->u2 = uCoord;
                         prim->u1 = prim->u3 = uCoord + 47;
-#ifndef VERSION_PSP
                     }
+#else
+                prim->u0 = prim->u2 = uCoord;
+                prim->u1 = prim->u3 = uCoord + 47;
 #endif
                     prim->v0 = prim->v1 = vCoord;
                     prim->v2 = prim->v3 = vCoord + 72;
@@ -394,13 +391,13 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     CutsceneUnk4();
                     prim->priority = 510;
                     prim->drawMode = DRAW_DEFAULT;
-#ifdef VERSION_PSP
                     DrawCutsceneActorName(
-                        i, self, D_pspeu_09297298, D_pspeu_092967C8,
-                        D_pspeu_092967D0, 4);
-#else
-                DrawCutsceneActorName(i, self);
+                        i, self
+#ifdef VERSION_PSP
+                        ,
+                        D_pspeu_09297298, D_pspeu_092967C8, D_pspeu_092967D0, 4
 #endif
+                    );
                     g_Dialogue.portraitAnimTimer = 6;
                     self->step = 3;
                     return;
@@ -408,11 +405,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     if (skip_cutscene) {
                         continue;
                     }
-#ifdef VERSION_PSP
-                    for (prim = g_Dialogue.prim[0], i = 0; i < 4; i++) {
-#else
-                for (prim = g_Dialogue.prim[0], i = 0; i < 5; i++) {
-#endif
+                    prim = g_Dialogue.prim[0];
+                    for (i = 0; i < PRIM; i++) {
                         prim->drawMode = DRAW_HIDE;
                         prim = prim->next;
                     }
@@ -428,11 +422,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     }
                     g_Dialogue.startX = *g_Dialogue.scriptCur++;
                     g_Dialogue.startY = *g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
-                    prim = g_Dialogue.prim[4];
-#else
-                prim = g_Dialogue.prim[5];
-#endif
+                    prim = g_Dialogue.prim[PRIM];
                     prim = prim->next;
                     prim->y0 = prim->y1 = g_Dialogue.startY;
                     prim->y2 = prim->y3 = g_Dialogue.startY + 72;
@@ -478,7 +468,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     if (skip_cutscene) {
                         continue;
                     }
-                    if (g_api.func_80131F68() != true) {
+                    if (g_api.func_80131F68() != 1) {
                         continue;
                     }
                     *g_Dialogue.scriptCur--;
@@ -603,15 +593,12 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                             ptr = (u_long)&D_894568C;
                             break;
                         }
-                        j = g_Dialogue.scriptCur++[0];
-                        LoadTPage(
-                            (u_long*)ptr, 1, 0, D_us_80180EF0[j], 256, 48, 72);
 #else
                     ptr += 0x100000;
-                    nextChar2 = g_Dialogue.scriptCur++[0];
-                    LoadTPage((u_long*)ptr, 1, 0, D_us_80180EF0[nextChar2], 256,
-                              48, 72);
 #endif
+                        j = *g_Dialogue.scriptCur++;
+                        LoadTPage(
+                            (u_long*)ptr, 1, 0, D_us_80180EF0[j], 256, 48, 72);
                     }
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_20:
@@ -622,8 +609,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_21:
                     g_CutsceneFlags = 0;
-                    skip_cutscene = 0;
-                    is_cutscene_done = 0;
+                    skip_cutscene = false;
+                    is_cutscene_done = false;
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_22:
                     g_CutsceneFlags &= ~(1 << *g_Dialogue.scriptCur++);
@@ -643,7 +630,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     }
                     g_Dialogue.nextCharTimer = g_Dialogue.unk17;
 #ifdef VERSION_PSP
-                    sp40 = 1;
+                    sp40 = true;
                 } // Close the switch
                 if (sp40) {
                     break; // This breaks the big while-loop!
@@ -783,8 +770,6 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
             }
         }
-        // probably 17cc
-        // 1844
         for (i = 0; i < 4; i++) {
             if (i == ptr) {
                 continue;
@@ -798,15 +783,11 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         ScaleCutsceneAvatar(2);
         if (g_Dialogue.portraitAnimTimer >= 6) {
 #endif
-            self->step -= 1;
+            self->step--;
         }
         break;
     case 3:
-#ifdef VERSION_PSP
-        prim = g_Dialogue.prim[4];
-#else
-        prim = g_Dialogue.prim[5];
-#endif
+        prim = g_Dialogue.prim[PRIM];
         prim->x0 = prim->x2 -= 4;
         prim->x1 = prim->x3 += 4;
         prim->y0 = prim->y1 -= 6;
@@ -821,11 +802,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         }
         break;
     case 4:
-#ifdef VERSION_PSP
-        prim = g_Dialogue.prim[4];
-#else
-        prim = g_Dialogue.prim[5];
-#endif
+        prim = g_Dialogue.prim[PRIM];
         prim->x0 = prim->x2 += 4;
         prim->x1 = prim->x3 -= 4;
         prim->y0 = prim->y1 += 6;
@@ -841,7 +818,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     case 5:
         switch (self->step_s) {
         case 0:
-            is_cutscene_done = 1;
+            is_cutscene_done = true;
             primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 72);
             if (primIndex == -1) {
                 DestroyEntity(self);
@@ -863,8 +840,9 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            for (uCoord = 0, prim = &g_PrimBuf[g_Dialogue.primIndex[0]];
-                 prim != NULL; prim = prim->next) {
+            uCoord = 0;
+            for (prim = &g_PrimBuf[g_Dialogue.primIndex[0]]; prim != NULL;
+                 prim = prim->next) {
                 prim->x3 -= prim->x2;
                 prim->x2 += 2;
                 prim->x0 = prim->x3 / 16;
@@ -877,11 +855,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             if (!uCoord) {
                 g_api.FreePrimitives(g_Dialogue.primIndex[0]);
                 g_Dialogue.primIndex[0] = -1;
-#ifdef VERSION_PSP
-                prim = g_Dialogue.prim[4];
-#else
-                prim = g_Dialogue.prim[5];
-#endif
+                prim = g_Dialogue.prim[PRIM];
                 prim = prim->next;
                 prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
                 prim = prim->next;
@@ -891,11 +865,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
             break;
         case 2:
             uCoord = 0;
-#ifdef VERSION_PSP
-            prim = g_Dialogue.prim[4];
-#else
-            prim = g_Dialogue.prim[5];
-#endif
+            prim = g_Dialogue.prim[PRIM];
             prim = prim->next;
             if (prim->r0 < 16) {
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0;
@@ -923,11 +893,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         }
         break;
     case 6:
-#ifdef VERSION_PSP
-        prim = g_Dialogue.prim[4];
-#else
-        prim = g_Dialogue.prim[5];
-#endif
+        prim = g_Dialogue.prim[PRIM];
         prim = prim->next;
         g_Dialogue.portraitAnimTimer--;
         if (g_Dialogue.portraitAnimTimer >= 12) {
@@ -950,9 +916,9 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 
     case 7:
         DestroyEntity(self);
-        g_CastleFlags[MET_MARIA_IN_DAI] = 1;
+        g_CastleFlags[MET_MARIA_IN_DAI] = true;
         g_Settings.D_8003CB04 |= 0x400;
-        g_CutsceneHasControl = 0;
+        g_CutsceneHasControl = false;
         break;
     }
 }
