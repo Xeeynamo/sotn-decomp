@@ -32,49 +32,22 @@ void DecDCTReset(s32 option) {
     MDEC_reset(option);
 }
 
+static inline void _memcpy(long* dst, long* src, size_t size) {
+    while (size--) {
+        *dst++ = *src++;
+    }
+}
+
 s32* DecDCTGetEnv(DECDCTENV* arg0) {
-    s32 i;
-    s32 *src1, *dst1;
-    s32 *src2, *dst2;
-    s32 *src3, *dst3;
-
-    dst1 = &arg0->iq_y;
-    src1 = &mdec_iq[1];
-    for (i = 15; i != -1; i--) {
-        *dst1++ = *src1++;
-    }
-
-    dst2 = &arg0->iq_c;
-    src2 = &mdec_iq[17];
-    for (i = 15; i != -1; i--) {
-        *dst2++ = *src2++;
-    }
-
-    dst3 = &arg0->dct;
-    src3 = &mdec_coef[1];
-    for (i = 31; i != -1; i--) {
-        *dst3++ = *src3++;
-    }
-
+    _memcpy(&arg0->iq_y, &mdec_iq[1], 16);
+    _memcpy(&arg0->iq_c, &mdec_iq[17], 16);
+    _memcpy(&arg0->dct, &mdec_coef[1], 32);
     return arg0;
 }
 
 s32* DecDCTPutEnv(DECDCTENV* arg0) {
-    s32 i;
-    s32 *src1, *dst1;
-    s32 *src2, *dst2;
-
-    dst1 = &mdec_iq[1];
-    src1 = &arg0->iq_y;
-    for (i = 15; i != -1; i--) {
-        *dst1++ = *src1++;
-    }
-
-    dst2 = &mdec_iq[17];
-    src2 = &arg0->iq_c;
-    for (i = 15; i != -1; i--) {
-        *dst2++ = *src2++;
-    }
+    _memcpy(&mdec_iq[1], &arg0->iq_y, 16);
+    _memcpy(&mdec_iq[17], &arg0->iq_c, 16);
 
     MDEC_in(&mdec_iq, 0x20);
     MDEC_in(&mdec_coef, 0x20);
@@ -85,28 +58,18 @@ s32* DecDCTPutEnv(DECDCTENV* arg0) {
 u16 DecDCTBufSize(u16* arg0) { return *arg0; }
 
 void DecDCTin(s32* arg0, s32 arg1) {
-    s32 new_var2;
-    s32 var_v0;
-    s32 var_v0_2;
-
     if (arg1 & 1) {
-        var_v0 = (*arg0) & 0xF7FFFFFF;
+        *arg0 &= ~0x08000000;
     } else {
-        new_var2 = 0x08000000;
-        var_v0 = 0x08000000;
-        var_v0 = (*arg0) | var_v0;
+        *arg0 |= 0x08000000;
     }
 
-    *arg0 = var_v0;
-    var_v0 = 0x02000000;
     if (arg1 & 2) {
-        new_var2 = var_v0;
-        var_v0_2 = (*arg0) | new_var2;
+        *arg0 |= 0x02000000;
     } else {
-        var_v0_2 = (*arg0) & 0xFDFFFFFF;
+        *arg0 &= ~0x02000000;
     }
 
-    *arg0 = var_v0_2;
     MDEC_in(arg0, *(u16*)arg0);
 }
 
@@ -181,15 +144,10 @@ static void MDEC_out(s32 arg0, u32 arg1) {
 static int MDEC_in_sync(void) {
     volatile s32 retries = 0x100000;
 
-    if (*mdec1 & 0x20000000) {
-        while (true) {
-            if (--retries == -1) {
-                timeout("MDEC_in_sync");
-                return -1;
-            }
-            if (!(*mdec1 & 0x20000000)) {
-                break;
-            }
+    while (*mdec1 & 0x20000000) {
+        if (--retries == -1) {
+            timeout("MDEC_in_sync");
+            return -1;
         }
     }
 
