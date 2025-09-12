@@ -1,1 +1,2 @@
-EXTERN(_binary_assets_weapon_mwo_header_bin_size)
+EXTERN(_binary_assets_weapon_mwo_header_bin_start)
+EXTERN(w0_000_Load)

@@ -1,62 +1,56 @@
 #include "common.h"
 
-INCLUDE_ASM("weapon/w0_000_psp/nonmatchings/80", func_pspeu_092F2E00);
+INCLUDE_ASM("weapon/w0_000/nonmatchings/80", func_pspeu_092F2E80);
 
-INCLUDE_ASM("weapon/w0_000_psp/nonmatchings/80", func_pspeu_092F2E80);
+INCLUDE_ASM("weapon/w0_000/nonmatchings/80", func_pspeu_092F2F18);
 
-INCLUDE_ASM("weapon/w0_000_psp/nonmatchings/80", func_pspeu_092F2E98);
+INCLUDE_ASM("weapon/w0_000/nonmatchings/80", func_pspeu_092F3000);
 
-INCLUDE_ASM("weapon/w0_000_psp/nonmatchings/80", func_pspeu_092F2F80);
+INCLUDE_ASM("weapon/w0_000/nonmatchings/80", func_pspeu_092F3048);
 
-INCLUDE_ASM("weapon/w0_000_psp/nonmatchings/80", func_pspeu_092F2FC8);
+INCLUDE_ASM("weapon/w0_000/nonmatchings/80", EnttiyWeaponAttack);
 
-INCLUDE_ASM("weapon/w0_000_psp/nonmatchings/80", func_pspeu_092F3000);
-
-INCLUDE_ASM("weapon/w0_000_psp/nonmatchings/80", func_pspeu_092F3048);
-
-INCLUDE_ASM("weapon/w0_000_psp/nonmatchings/80", func_pspeu_092F30E8);
-
-void func_pspeu_092F33A0(void) {
+void func_pspeu_092F3420(void) {
 }
 
-void func_pspeu_092F33A8(void) {
+void func_pspeu_092F3428(void) {
 }
 
-void func_pspeu_092F33B0(void) {
+void func_pspeu_092F3430(void) {
 }
 
-void func_pspeu_092F33B8(void) {
+void func_pspeu_092F3438(void) {
 }
 
-void func_pspeu_092F33C0(void) {
+void func_pspeu_092F3440(void) {
 }
 
-INCLUDE_ASM("weapon/w0_000_psp/nonmatchings/80", func_pspeu_092F33C8);
+INCLUDE_ASM("weapon/w0_000/nonmatchings/80", func_pspeu_092F3448);
 
-void func_pspeu_092F33D8(void) {
+void func_pspeu_092F3458(void) {
 }
 
-void func_pspeu_092F33E0(void) {
+void func_pspeu_092F3460(void) {
 }
 
-void func_pspeu_092F33E8(void) {
+void func_pspeu_092F3468(void) {
 }
 
-void func_pspeu_092F33F0(void) {
+void func_pspeu_092F3470(void) {
 }
 
-void func_pspeu_092F33F8(void) {
+void func_pspeu_092F3478(void) {
 }
 
-void func_pspeu_092F3400(void) {
+void func_pspeu_092F3480(void) {
 }
 
-void func_pspeu_092F3408(void) {
+void func_pspeu_092F3488(void) {
 }
 
-void func_pspeu_092F3410(void) {
+void func_pspeu_092F3490(void) {
 }
 
-INCLUDE_ASM("weapon/w0_000_psp/nonmatchings/80", func_pspeu_092F3418);
+INCLUDE_ASM("weapon/w0_000/nonmatchings/80", w0_000_Load);
 
-INCLUDE_ASM("weapon/w0_000_psp/nonmatchings/80", func_pspeu_092F3484);
+// INCLUDE_RODATA("weapon/w0_000/nonmatchings/80", D_pspeu_092F4708);

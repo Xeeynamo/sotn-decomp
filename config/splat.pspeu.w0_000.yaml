@@ -4,7 +4,7 @@ options:
   base_path: ..
   build_path: build/pspeu
   target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_000.bin
-  asm_path: asm/pspeu/weapon/w0_000_psp
+  asm_path: asm/pspeu/weapon/w0_000
   asset_path: assets/weapon
   src_path: src/weapon
   ld_script_path: build/pspeu/w0_000.ld
@@ -32,20 +32,19 @@ options:
   asm_inc_header: |
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
-  ld_generate_symbol_per_data_segment: true
 sha1: bc20b2683492352905317f0634b4db6b84f9985d
 segments:
   - [0x0, bin, mwo_header]
   - name: w0_000
     type: code
     start: 0x80
-    vram: 0x92F2E00
-    # bss_start_address: 0x
+    vram:  0x092F2E80
     bss_size: 0x80
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c]
-      - [0x70C, data]
-      - {start: 0x1980, type: bss, vram: 0x92F47C0}
+      - [0x80, c, 80]
+      - [0x700, data]
+      # - [0x1908, rodata, 80_ro]
+      - {type: bss, vram: 0x92F4780}
   - [0x1980]

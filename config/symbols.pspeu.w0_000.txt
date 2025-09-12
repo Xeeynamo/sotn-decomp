@@ -1,2 +1,6 @@
 D_pspeu_092F3648 = 0x092F3648;
 D_pspeu_092F3668 = 0x092F3668;
+
+w0_000_Load = 0x092F3498;
+w0_000_Overlay = 0x92F3580;
+EnttiyWeaponAttack = 0x092F3168;

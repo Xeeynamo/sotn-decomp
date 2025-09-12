@@ -706,6 +706,7 @@ def make_config_psp(ovl_path: str, version: str):
             f"    subsegments:\n",
         ]
         text.extend(text_segments)
+        # TODO: rodata might not exist
         text.extend(
             [
                 f"      - [0x{data_start:X}, data]\n",
