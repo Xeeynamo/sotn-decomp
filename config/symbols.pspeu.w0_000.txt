@@ -9,3 +9,9 @@ SetWeaponProperties = 0x092F3048;
 GetWeaponId = 0x092F3448;
 LoadWeaponPalette = 0x092F2F18;
 g_WeaponCluts = 0x092F46F0;
+
+g_Clut0 = 0x092F4048;
+g_Clut1 = 0x092F4128;
+g_Clut2 = 0x092F4208;
+g_Clut3 = 0x092F42E8;
+g_Clut4 = 0x092F43C8;

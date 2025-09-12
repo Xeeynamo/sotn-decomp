@@ -1247,7 +1247,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             PLAYER.ext.player.anim = 0xD1;
             PlaySfx(SFX_VO_ALU_YELL);
             CreateEntFactoryFromEntity(g_CurrentEntity, BP_85, 0);
-            weapon_func = D_8017A000.func_ptr_80170010;
+            weapon_func = (void (*)()) D_8017A000.func_ptr_80170010;
             weapon_func();
             if (g_Player.unk72) {
                 PLAYER.velocityY = 0;

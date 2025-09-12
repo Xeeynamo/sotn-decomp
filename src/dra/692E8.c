@@ -1201,7 +1201,7 @@ block_160:
         PlayerStepStuck();
         break;
     case Player_AxearmorStand:
-        weapon_func = D_8017A000.func_ptr_80170004;
+        weapon_func = (void (*)()) D_8017A000.func_ptr_80170004;
         weapon_func();
         break;
     case Player_AxearmorWalk:
@@ -1213,7 +1213,7 @@ block_160:
         weapon_func();
         break;
     case Player_AxearmorHit:
-        weapon_func = D_8017A000.func_ptr_80170010;
+        weapon_func = (void (*)()) D_8017A000.func_ptr_80170010;
         weapon_func();
     }
     g_unkGraphicsStruct.unk1C &= ~2;

@@ -69,6 +69,7 @@ typedef struct {
 #define OVL_EXPORT(x) x
 #endif
 
+#ifndef VERSION_PSP
 // exported
 static void EntityWeaponAttack(Entity* self);
 static void LoadWeaponPalette(s32 clutIndex);
@@ -108,11 +109,14 @@ static void SetSpeedX(s32 speed);
 
 Weapon OVL_EXPORT(header) = {
     EntityWeaponAttack, func_ptr_80170004, func_ptr_80170008,
-    func_ptr_8017000C,  func_ptr_80170010, func_ptr_80170014,
+    func_ptr_8017000C,
+    func_ptr_80170010,
+    func_ptr_80170014,
     GetWeaponId,        LoadWeaponPalette, EntityWeaponShieldSpell,
     func_ptr_80170024,  func_ptr_80170028, WeaponUnused2C,
     WeaponUnused30,     WeaponUnused34,    WeaponUnused38,
     WeaponUnused3C,
 };
+#endif
 
 #endif

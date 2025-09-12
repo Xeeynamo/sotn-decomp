@@ -1,21 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "weapon_private.h"
-
 #include "../destroy_entity.h"
 
-static void LoadWeaponPalette(s32 clutIndex) {
+void LoadWeaponPalette(s32 clutIndex) {
     RECT dstRect;
-    u16* src;
     u16* dst;
+    u16* src;
     s32 i;
 
-#if !defined(W_029)
-    dst = src = g_WeaponCluts[clutIndex];
-    dst = D_8006EDCC[g_HandId];
-#else
-    dst = D_8006EDCC[g_HandId];
+    dst = (u16*) &((u16*) g_Clut)[ (((g_HandId * 0x18) + 0x110) * 0x10)];
     src = g_WeaponCluts[clutIndex];
-#endif
+
     if (src == NULL) {
         return;
     }
@@ -24,18 +18,13 @@ static void LoadWeaponPalette(s32 clutIndex) {
         *dst++ = *src++;
     }
 
-#if !defined(W_029)
-    dstRect.w = 0x100;
-    dstRect.h = 3;
-    dstRect.x = 0;
-    dstRect.y = 0xF1;
-#else
     dstRect.x = 0;
     dstRect.w = 0x100;
     dstRect.h = 3;
     dstRect.y = 0xF1;
-#endif
-    LoadImage(&dstRect, &D_8006EDCC);
+
+    dst = (u16*) &((u16*) g_Clut)[0x1100];
+    LoadImage(&dstRect, (u_long*) dst);
 }
 
 static void SetSpriteBank1(SpriteParts* animset) {
@@ -47,44 +36,6 @@ static void SetSpriteBank1(SpriteParts* animset) {
     }
     *spriteBankDst = animset;
 }
-
-static void SetSpriteBank2(SpriteParts* animset) {
-    SpritePart** spriteBankDst = g_api.o.spriteBanks;
-
-    spriteBankDst += 0x11;
-    if (g_HandId != 0) {
-        spriteBankDst += 2;
-    }
-    *spriteBankDst = animset;
-}
-
-#if !defined(W_029) && !defined(W_030) && !defined(W_044) && !defined(W_051)
-static void SetWeaponAnimation(u8 anim) {
-    g_CurrentEntity->ext.weapon.anim = anim;
-    g_CurrentEntity->poseTimer = 0;
-    g_CurrentEntity->pose = 0;
-}
-#endif
-
-#if !defined(W_044)
-
-#include "../decelerate.h"
-
-#include "../set_speed_x.h"
-
-#endif
-
-#if !defined(W_030) && !defined(W_051)
-static void DestroyEntityWeapon(bool arg0) {
-    if (arg0 == false) {
-        DestroyEntity(&g_Entities[E_WEAPON]);
-    }
-    if (arg0 == true && g_Player.unk48 != 0) {
-        DestroyEntity(&g_Entities[E_WEAPON]);
-        g_Player.unk48 = 0;
-    }
-}
-#endif
 
 static void SetWeaponProperties(Entity* self, s32 kind) {
     Equipment equip;
@@ -112,3 +63,4 @@ static void SetWeaponProperties(Entity* self, s32 kind) {
         self->attack = 0xFF;
     }
 }
+

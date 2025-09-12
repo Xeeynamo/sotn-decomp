@@ -43,10 +43,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, 80]
-      - [0x700, data, 80]
-      # - [0x1908, .data, 80]
-      # `make-config.py` needs to support no rodata
-      # - [0x1908, rodata, 80_ro]
+      - [0x80, c, w_000]
+      - [0x700, .data, w_000]
       - {start: 0x1980, type: bss, vram: 0x92F4780}
   - [0x1980]
