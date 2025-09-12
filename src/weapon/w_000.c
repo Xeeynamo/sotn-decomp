@@ -184,11 +184,7 @@ static u16* g_WeaponCluts[] = {
 
 static s32 g_HandId = HAND_ID;
 
-#ifdef VERSION_PSP
-#include "shared_psp.h"
-#else
 #include "shared.h"
-#endif
 
 static void EntityWeaponAttack(Entity* self) {
     WeaponAnimation* anim;

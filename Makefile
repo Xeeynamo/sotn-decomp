@@ -440,6 +440,7 @@ $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
 build/$(VERSION)/src/%.o: src/%
 	ninja $@
 
+
 ##@
 ##@ Reporting Targets
 ##@

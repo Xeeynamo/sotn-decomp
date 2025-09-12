@@ -512,7 +512,7 @@ files:
         vram:  0x092F2E80
         assets:
           - [0x80, skip]
-          - [0x700, spriteset, w_000_1]
-          - [0x1248, spriteset, w_000_2]
+          - [0x700, spriteset, w_000_1] # should be namespaced
+          - [0x1248, spriteset, w_000_2] # should be namespaced
           - [0x1248, skip]
 
