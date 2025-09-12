@@ -298,11 +298,11 @@ void w0_000_Load(void) {
 
 Weapon w0_000_Overlay = {
     EntityWeaponAttack,
-    (int (*)(Entity*)) func_ptr_80170004,
+    (void (*)(Entity*)) func_ptr_80170004,
     (void (*)(Entity*)) func_ptr_80170008,
     (void (*)(Entity*)) func_ptr_8017000C,
-    (int (*)(Entity*)) func_ptr_80170010,
-    (int (*)(Entity*)) func_ptr_80170014,
+    func_ptr_80170010,
+    (void (*)(Entity*)) func_ptr_80170014,
     GetWeaponId,
     LoadWeaponPalette,
     (void (*)(Entity*)) EntityWeaponShieldSpell,
