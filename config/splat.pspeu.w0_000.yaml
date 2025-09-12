@@ -13,8 +13,8 @@ options:
     - config/symbols.pspeu.txt
     - config/symbols.pspeu.weapon.txt
     - config/symbols.pspeu.w0_000.txt
-  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.w0_000.txt
-  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.w0_000.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.w0_000.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.w0_000.txt
   find_file_boundaries: true
   use_legacy_include_asm: false
   migrate_rodata_to_functions: true

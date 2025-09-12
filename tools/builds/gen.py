@@ -584,6 +584,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     sym_version = version
     if ovl_name == "stmad":
         sym_version = "beta"
+    # TODO: get these from splat
     symbols_lists = [
         f"-T config/undefined_syms.{sym_version}.txt",
         f"-T {undefined_syms_auto_path}",

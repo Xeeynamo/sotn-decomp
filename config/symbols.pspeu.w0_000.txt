@@ -1,7 +1,3 @@
-D_pspeu_092F3648 = 0x092F3648;
-D_pspeu_092F3668 = 0x092F3668;
-
-w0_000_Load = 0x092F3498;
 w0_000_Overlay = 0x092F4708;
 EntityWeaponAttack = 0x092F3168;
 g_SoundEvents = 0x092F46A0;

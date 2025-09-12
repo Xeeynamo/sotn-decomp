@@ -95,5 +95,3 @@ void w0_000_Load(void) {
     memcpy(&D_8017A000, &w0_000_Overlay, sizeof(Weapon));
 }
 
-
-// INCLUDE_RODATA("weapon/w0_000/nonmatchings/80", D_pspeu_092F4708);

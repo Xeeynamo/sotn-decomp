@@ -503,3 +503,16 @@ files:
           - [0x80, skip]
           - [0xF5F8, layers, layers]
           - [0xF6E8, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_000.bin
+    asset_path: assets/weapon
+    src_path: src/weapon
+    splat_config_path: config/splat.pspeu.w0_000.yaml
+    segments:
+      - start: 0x80
+        vram:  0x092F2E80
+        assets:
+          - [0x80, skip]
+          - [0x700, spriteset, w_000_1]
+          - [0x1248, spriteset, w_000_2]
+          - [0x1248, skip]
+
