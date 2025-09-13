@@ -1,14 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
 
-typedef struct {
-    u16 animSet;
-    u16 unk5A;
-    u16 palette;
-    u16 drawMode;
-    u8* animData;
-} EntityConfig;
-
 static u8 D_us_80180EA8[] = {3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,  7,
                              3, 8, 3, 9, 3, 10, 3, 11, 3, 12, 3, 13, -1, 0};
 static u8 D_us_80180EC4[] = {

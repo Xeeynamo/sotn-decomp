@@ -1,13 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-typedef struct {
-    s32 animSet;
-    AnimationFrame* anim;
-    s32 count;
-    CVECTOR color;
-} AnimParam;
-
 static u8 D_us_80180D7C[] = {4, 1, 4, 2, 0, 0};
 static u8 D_us_80180D84[] = {4, 0, 4, 0, 0, 0};
 static u8 D_us_80180D8C[] = {5, 1, 5, 2, 5, 3, 5, 4, 0, 0};

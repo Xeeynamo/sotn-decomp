@@ -1,21 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-typedef struct {
-    s16 yMax;
-    s16 yMin;
-    s16 spawnDelay;
-    s16 spawnCount;
-    s16 yellowChance; // chance out of 16 that medusa head will be yellow
-    s16 zPriority;
-} MedusaHeadSpawnerParams;
-
-typedef struct {
-    s32 velocityX;
-    s16 posX;
-    s16 facingLeft;
-} MedusaHeadInitParams;
-
 // clang-format off
 static MedusaHeadSpawnerParams medusaHeadSpawnerParams[] = {
     {.yMax = 0x20, .yMin = 0x200, .spawnDelay = 0xC0, .spawnCount = 0x06, .yellowChance = 0x00, .zPriority = 0x00},

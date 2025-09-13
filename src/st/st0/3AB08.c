@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
-#include "../../../include/cloud_struct.h"
 #include "../clock_tower.h"
 
 static s16 D_80182084[] = {

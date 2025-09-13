@@ -1,13 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-typedef struct {
-    s16 x;
-    s16 y;
-    s16 rotate;
-    s16 frames;
-} huntingGirlAttackStep;
-
 static u8 anim[] = {1, 1, 1, 2};
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 46, 0, 4, 0, 0, 0};
 static s16 sensors[] = {0, 46, 0, 4, 4, -4, -8, 0};

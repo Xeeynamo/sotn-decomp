@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
-#include "dialogue2.h"
 #include "disk.h"
 
 static void SetGameState(GameState gameState) {
@@ -111,16 +110,6 @@ static s32 IsSkipRequested(void) {
     }
     return 0;
 }
-
-typedef struct ProloguePrimitive {
-    u8 u0;
-    u8 v0;
-    u8 u1;
-    u8 v1;
-    s16 x;
-    s16 y;
-    u16 tpage;
-} ProloguePrimitive;
 
 static ProloguePrimitive D_80181568[] = {
     {0x01, 0x80, 0xFF, 0x80, 1, 112, 0x9C},

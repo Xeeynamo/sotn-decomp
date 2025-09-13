@@ -12,7 +12,7 @@ static u32 D_80180648 = 0;
 static u32 D_8018064C[] = {0x00040000, 0x00040000, 0xFFFC0004, 0x0000FFF8};
 #endif
 
-static WarpCoord WarpRoomCoords[] = {
+static Point16 WarpRoomCoords[] = {
     {0x0F, 0x26}, // Entrance
     {0x23, 0x2C}, // Abandoned pit to the Catacomb
     {0x3B, 0x11}, // Outer Wall
@@ -73,7 +73,7 @@ void EntityWarpRoom(Entity* self) {
     s32 move_room;
     s32 moveX;
     s32 moveY;
-    WarpCoord* warpCoords;
+    Point16* warpCoords;
     s32 primIndex;
 
     FntPrint("step %x\n", self->step);

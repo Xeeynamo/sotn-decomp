@@ -239,24 +239,6 @@ void UnkPolyFunc0(Primitive* prim) {
 }
 
 #if !defined(VERSION_BETA)
-struct SubPrim {
-    u8 col[3];
-    u8 type;
-    s16 x0;
-    s16 y0;
-    u8 u0;
-    u8 v0;
-    u16 clut;
-};
-
-typedef struct Primitive2 {
-    struct Primitive2* next;
-#if defined(VERSION_PSP)
-    u32 dummy;
-#endif
-    struct SubPrim prim[4];
-} Primitive2;
-
 s32 PrimDecreaseBrightness(Primitive2* prim, u8 amount) {
     s32 isEnd;
     s32 i;
