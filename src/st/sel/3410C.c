@@ -510,7 +510,8 @@ void func_801B519C(void) {
 }
 
 // Compare to func_801B585C
-// Probably handles Alucard sprite in the ending, did not confirm but uses his palette.
+// Probably handles Alucard sprite in the ending, did not confirm but uses his
+// palette.
 void func_801B5350(void) {
     Entity* self = &g_Entities[UNK_ENTITY_5];
 
@@ -547,7 +548,8 @@ void func_801B5350(void) {
     }
 }
 
-// func_801B54C8 sets up the Richter sprite in the Alucard Mode ending scenes where he was saved.
+// func_801B54C8 sets up the Richter sprite in the Alucard Mode ending scenes
+// where he was saved.
 void func_801B54C8(void) {
     Entity* self = &g_Entities[UNK_ENTITY_7];
 
