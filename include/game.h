@@ -1756,19 +1756,6 @@ typedef struct {
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
 
-// Used in ric/pl_blueprints, maria/pl_blueprints
-typedef struct {
-    s16 xPos;
-    s16 yPos;
-    s32 velocityX;
-    s32 velocityY;
-    s16 timerInit;
-    s16 tpage;
-    u16 clut;
-    u8 uBase;
-    u8 vBase;
-} Props_80161FF0; // size = 0x14
-
 // Used in dra/7879C, ric/pl_blueprints, maria/pl_blueprints, rbo5/unk_4648C,
 // bo4/unk_46E7C
 typedef struct {
@@ -1794,18 +1781,6 @@ typedef struct {
     /* 0x0A */ s16 unkA;
     /* 0x0C */ u32 flags;
 } unkStr_8011E4BC; // size = 0x10
-
-// Used in dra/7E4BC, dra/bss, rbo5/unk_4648C, bo4/unk_46E7C
-typedef struct {
-    f32 posX;
-    f32 posY;
-    s16 angle1;
-    s16 angle2;
-    s16 size;
-    s16 xOffset;
-    s16 yOffset;
-    s16 pad;
-} mistStruct; // size = 0x14
 
 typedef struct {
     void (*D_8013C000)(void);

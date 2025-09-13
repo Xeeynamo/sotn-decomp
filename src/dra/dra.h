@@ -523,6 +523,18 @@ typedef struct Cmd14 {
     u8 unke;
 } Cmd14;
 
+// Used in dra/7E4BC, dra/bss, rbo5/unk_4648C, bo4/unk_46E7C
+typedef struct {
+    f32 posX;
+    f32 posY;
+    s16 angle1;
+    s16 angle2;
+    s16 size;
+    s16 xOffset;
+    s16 yOffset;
+    s16 pad;
+} mistStruct; // size = 0x14
+
 // Used in dra/menu, dra_psp/menu
 typedef struct EquipMenuHelper {
     EquipKind equipTypeFilter;

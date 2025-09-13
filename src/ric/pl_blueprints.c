@@ -1331,6 +1331,17 @@ void func_80161EF8(Entity* self) {
     }
 }
 
+typedef struct {
+    s16 xPos;
+    s16 yPos;
+    s32 velocityX;
+    s32 velocityY;
+    s16 timerInit;
+    s16 tpage;
+    u16 clut;
+    u8 uBase;
+    u8 vBase;
+} Props_80161FF0; // size = 0x14
 static Props_80161FF0 D_80154E5C[] = {
     {-0x40, 0, +FIX(2.5), FIX(0), 0x0060, 0x1B, 0x0118, 128, 0},
     {+0x40, 0, -FIX(2.5), FIX(0), 0x0048, 0x1B, 0x0119, 0, 128},
