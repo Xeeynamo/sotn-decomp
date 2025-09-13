@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
-import hashlib
-import sys
-from pathlib import Path
-
+import hashlib, os, shutil, sys
 
 def sha1sum(filepath):
     h = hashlib.sha1()
@@ -12,32 +9,48 @@ def sha1sum(filepath):
     return h.hexdigest()
 
 
-def check_sha1_file(checkfile):
-    all_ok = True
-    with open(checkfile, "r") as f:
+def read_checksums(filepath):
+    checksums = []
+    with open(filepath, "r") as f:
         for line in f:
             line = line.strip()
             if not line or line.startswith("#"):
                 continue
-            try:
-                expected_hash, filename = line.split(None, 1)
-                filename = filename.strip().lstrip("*")
-                filepath = Path(filename)
-                if not filepath.exists():
-                    print(f"{filename}: FAILED (No such file)")
-                    all_ok = False
-                    continue
+            checksum, name = line.split(None, 1)
+            checksums.append({
+                "name": name,
+                "ovl": os.path.splitext(os.path.basename(name))[0],
+                "checksum": checksum,
+            })
+    return checksums
 
-                actual_hash = sha1sum(filepath)
-                if actual_hash.lower() == expected_hash.lower():
-                    print(f"✅ {filename}")
-                else:
-                    print(f"❌ {filename}")
-                    all_ok = False
-            except ValueError:
-                print(f"Malformed line: {line}")
-                all_ok = False
 
+def check_sha1_file(checkfile):
+    checksums = read_checksums(checkfile)
+    element_width = max([len(check['ovl']) for check in checksums]) + 2
+    window_width = shutil.get_terminal_size((60, 24)).columns
+    n_elements_per_line = window_width // element_width
+
+    column = 0
+    line = ""
+    all_ok = True
+    for check in checksums:
+        if not os.path.exists(check['name']):
+            result = "❓"
+            all_ok = False
+        elif sha1sum(check['name']).lower() != check['checksum'].lower():
+            result = "❌"
+            all_ok = False
+        else:
+            result = "✅"
+        line += f"{result} {check['ovl']:<{element_width}}"
+        column += 1
+        if column % n_elements_per_line == 0:
+            column = 0
+            print(line)
+            line = ""
+    if line != "":
+        print(line)
     return all_ok
 
 
@@ -45,7 +58,4 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: check.py <checkfile.sha>")
         sys.exit(1)
-
-    checkfile = sys.argv[1]
-    ok = check_sha1_file(checkfile)
-    sys.exit(0 if ok else 1)
+    sys.exit(0 if check_sha1_file(sys.argv[1]) else 1)
