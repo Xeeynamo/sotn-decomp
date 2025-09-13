@@ -510,6 +510,7 @@ void func_801B519C(void) {
 }
 
 // Compare to func_801B585C
+// Probably handles Alucard sprite in the ending, did not confirm but uses his palette.
 void func_801B5350(void) {
     Entity* self = &g_Entities[UNK_ENTITY_5];
 
@@ -546,6 +547,7 @@ void func_801B5350(void) {
     }
 }
 
+// func_801B54C8 sets up the Richter sprite in the Alucard Mode ending scenes where he was saved.
 void func_801B54C8(void) {
     Entity* self = &g_Entities[UNK_ENTITY_7];
 
@@ -562,6 +564,7 @@ void func_801B54C8(void) {
     }
 }
 
+// func_801B5548 sets up the Richter sprite in the Richter Mode ending scene.
 void func_801B5548(void) {
     Entity* self = &g_Entities[UNK_ENTITY_7];
 
@@ -578,6 +581,7 @@ void func_801B5548(void) {
     }
 }
 
+// func_801B55C8 handles Maria's sprite in the ending scene.
 void func_801B55C8(void) {
     Entity* self = &g_Entities[6];
 
