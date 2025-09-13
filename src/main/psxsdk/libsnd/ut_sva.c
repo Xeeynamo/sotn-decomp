@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT
 #include "libsnd_i.h"
 
-short SsUtSetVagAtr(
-    short vabId, short progNum, short toneNum, VagAtr* pVagAttr) {
+short SsUtSetVagAtr(short vabId, short prog, short toneNum, VagAtr* pVagAttr) {
     s16 toneIndex;
     if (_svm_vab_used[vabId] == 1) {
-        SpuVmVSetUp(vabId, progNum);
+        SpuVmVSetUp(vabId, prog);
         toneIndex = toneNum + _svm_cur.field_7_fake_program * 0x10;
         _svm_tn[toneIndex].prior = pVagAttr->prior;
         _svm_tn[toneIndex].mode = pVagAttr->mode;
