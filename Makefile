@@ -75,7 +75,8 @@ CLANG			:= $(BIN_DIR)/clang-format
 GOPATH          := $(HOME)/go
 GO              := $(GOPATH)/bin/go
 SOTNLINT		:= cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)/
-DUPS			:= cd $(TOOLS_DIR)/dups; cargo run --release -- --threshold .90 --output-file ../gh-duplicates/duplicates.txt
+DUPS_THRESHOLD  ?= .90
+DUPS			:= cd $(TOOLS_DIR)/dups; cargo run --release -- --threshold $(DUPS_THRESHOLD) --output-file ../../$(REPORTS_DIR)/duplicates.txt
 MIPSMATCH_APP   := $(BIN_DIR)/mipsmatch
 SOTNSTR_APP     := $(TOOLS_DIR)/sotn_str/target/release/sotn_str
 ASMDIFFER_APP	:= $(TOOLS_DIR)/asm-differ/diff.py
@@ -154,6 +155,11 @@ build_hd: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
 build_pspeu: $(SOTNSTR_APP) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
 	VERSION=pspeu .venv/bin/python3 tools/builds/gen.py
 	ninja
+.PHONY: build_all
+build_all:
+	$(MAKE) VERSION=us
+	$(MAKE) VERSION=pspeu
+	$(MAKE) VERSION=hd
 
 .PHONY: clean clean_asm
 clean_asm:
@@ -444,6 +450,7 @@ build/$(VERSION)/src/%.o: src/%
 reports: duplicates-report function-finder
 prepare-reports: build $(REPORTS_DIR)
 	$(MAKE) force_symbols -j
+	$(PYTHON) tools/function_finder/fix_matchings.py
 
 function-finder: ##@ generates lists of files, their decomp status, and call graphs
 function-finder: prepare-reports
@@ -457,10 +464,7 @@ $(REPORTS_DIR):
 duplicates-report: ##@ generate a report of duplicate functions
 duplicates-report: $(REPORTS_DIR)/duplicates.txt
 $(REPORTS_DIR)/duplicates.txt: prepare-reports
-	cd tools/dups ; \
-		cargo run --release -- \
-			--threshold .90 \
-			--output-file ../../$(REPORTS_DIR)/duplicates.txt
+	$(DUPS)
 
 
 ##@
