@@ -104,7 +104,7 @@ u8 SpuVmAlloc(s32 arg0) {
 }
 
 #ifndef VERSION_PC
-void SpuVmKeyOnNow(u8 arg1, u16 arg2) {
+void SpuVmKeyOnNow(u8 vagCount, u16 arg2) {
     u16 pos;
     u16 bitsUpper;
     u16 bitsLower;
