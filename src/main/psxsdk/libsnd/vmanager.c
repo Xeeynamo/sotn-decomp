@@ -772,6 +772,7 @@ void SpuVmFlush(void) {
 }
 #endif
 
+#ifndef VERSION_PC
 s32 SpuVmKeyOn(s16 arg0, s16 vabId, s16 prog, u16 note, u16 voll, u16 volr) {
     struct SeqStruct* score = &_ss_score[arg0 & 0xFF][(arg0 & 0xFF00) >> 8];
     u8 vagIdx[0x80];
@@ -851,6 +852,7 @@ s32 SpuVmKeyOn(s16 arg0, s16 vabId, s16 prog, u16 note, u16 voll, u16 volr) {
     }
     return var_s2;
 }
+#endif
 
 s32 SpuVmKeyOff(s16 arg0, s16 vabId, s16 prog, u16 note) {
     u16 bitsUpper;
