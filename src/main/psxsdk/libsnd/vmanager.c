@@ -820,7 +820,7 @@ s32 SpuVmKeyOn(s16 arg0, s16 vabId, s16 prog, u16 note, u16 voll, u16 volr) {
             _svm_cur.field_14_seq_sep_no = _svm_tn[tone].mode;
             _svm_cur.field_12_mode = _svm_tn[tone].min;
             _svm_cur.field_0x13 = _svm_tn[tone].max;
-            _svm_cur.field_0x1a = SpuVmAlloc(0) & 0xFF;
+            _svm_cur.field_0x1a = SpuVmAlloc(0);
             if (_svm_cur.field_0x1a < spuVmMaxVoice) {
                 _svm_voice[_svm_cur.field_0x1a].unk1b = 1;
                 _svm_voice[_svm_cur.field_0x1a].unk2 = 0;
