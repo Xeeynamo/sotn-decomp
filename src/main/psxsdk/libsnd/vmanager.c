@@ -104,7 +104,7 @@ u8 SpuVmAlloc(s32 arg0) {
 }
 
 #ifndef VERSION_PC
-void SpuVmKeyOnNow(s16 arg1, u16 arg2) {
+void SpuVmKeyOnNow(u8 arg1, u16 arg2) {
     u16 pos;
     u16 bitsUpper;
     u16 bitsLower;
@@ -305,6 +305,24 @@ void SePitchBend(u8 voice, s16 arg1) {
         _svm_sreg_buf[pos + 2] = note2pitch2(note, pbend);
         _svm_sreg_dirty[voice] |= 4;
     }
+}
+
+static inline u8 _SsVmSelectToneAndVag(u8* toneIdx, u8* vagIdx) {
+    u8 i;
+    u8 vagCount;
+    VagAtr* vagAttr;
+
+    vagCount = 0;
+    for (i = 0; i < _svm_cur.field_0_sep_sep_no_tonecount; i++) {
+        vagAttr = &_svm_tn[(_svm_cur.field_7_fake_program * 0x10) + i];
+        if (vagAttr->min > _svm_cur.field_2_note ||
+            _svm_cur.field_2_note > vagAttr->max) {
+            continue;
+        }
+        vagIdx[vagCount] = vagAttr->vag;
+        toneIdx[vagCount++] = i;
+    }
+    return vagCount;
 }
 
 void SsUtVibrateOn(void) {}
@@ -754,7 +772,85 @@ void SpuVmFlush(void) {
 }
 #endif
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmKeyOn);
+s32 SpuVmKeyOn(s16 arg0, s16 vabId, s16 prog, u16 note, u16 voll, u16 volr) {
+    struct SeqStruct* score = &_ss_score[arg0 & 0xFF][(arg0 & 0xFF00) >> 8];
+    u8 vagIdx[0x80];
+    u8 toneIdx[0x80];
+    u8 i;
+    s32 var_s2;
+    s32 tone;
+    u8 vagCount;
+
+    var_s2 = 0;
+    if (SpuVmVSetUp(vabId, prog)) {
+        return -1;
+    }
+    _svm_cur.field_16_vag_idx = arg0;
+    _svm_cur.field_2_note = note;
+    _svm_cur.field_0x3 = 0;
+    if (arg0 == 0x21) {
+        _svm_cur.field_4_voll = voll;
+    } else {
+        _svm_cur.field_4_voll = (voll * score->vol[score->channel]) / 0x7F;
+    }
+
+    _svm_cur.field_0x5 = volr;
+    _svm_cur.field_A_mvol = _svm_pg[prog].mvol;
+    _svm_cur.field_B_mpan = _svm_pg[prog].mpan;
+    _svm_cur.field_0_sep_sep_no_tonecount = _svm_pg[prog].tones;
+    if (_svm_cur.field_7_fake_program >= _svm_vh->ps) {
+        return -1;
+    }
+    if (voll == 0) {
+        var_s2 = SpuVmKeyOff(arg0, vabId, prog, note);
+    } else {
+        vagCount = _SsVmSelectToneAndVag(toneIdx, vagIdx);
+        for (i = 0; i < vagCount; i++) {
+            _svm_cur.field_18_voice_idx = vagIdx[i];
+            _svm_cur.field_C_vag_idx = toneIdx[i];
+
+            tone = _svm_cur.field_C_vag_idx +
+                   (_svm_cur.field_7_fake_program * 0x10);
+            _svm_cur.field_F_prior = _svm_tn[tone].prior;
+            _svm_cur.field_D_vol = _svm_tn[tone].vol;
+            _svm_cur.field_E_pan = _svm_tn[tone].pan;
+            _svm_cur.field_10_centre = _svm_tn[tone].center;
+            _svm_cur.field_11_shift = _svm_tn[tone].shift;
+            _svm_cur.field_14_seq_sep_no = _svm_tn[tone].mode;
+            _svm_cur.field_12_mode = _svm_tn[tone].min;
+            _svm_cur.field_0x13 = _svm_tn[tone].max;
+            _svm_cur.field_0x1a = SpuVmAlloc(0) & 0xFF;
+            if (_svm_cur.field_0x1a < spuVmMaxVoice) {
+                _svm_voice[_svm_cur.field_0x1a].unk1b = 1;
+                _svm_voice[_svm_cur.field_0x1a].unk2 = 0;
+                _svm_voice[_svm_cur.field_0x1a].unke = arg0;
+                _svm_voice[_svm_cur.field_0x1a].vabId = _svm_cur.field_1_vabId;
+                _svm_voice[_svm_cur.field_0x1a].unk10 =
+                    _svm_cur.field_7_fake_program;
+                _svm_voice[_svm_cur.field_0x1a].prog = prog;
+                if (arg0 != 0x21) {
+                    _svm_voice[_svm_cur.field_0x1a].unk8 = voll;
+                }
+                _svm_voice[_svm_cur.field_0x1a].unka = volr;
+                _svm_voice[_svm_cur.field_0x1a].tone = _svm_cur.field_C_vag_idx;
+                _svm_voice[_svm_cur.field_0x1a].note = note;
+                _svm_voice[_svm_cur.field_0x1a].unk18 = _svm_cur.field_F_prior;
+                _svm_voice[_svm_cur.field_0x1a].unk0 =
+                    _svm_cur.field_18_voice_idx;
+                SpuVmDoAllocate();
+                if (_svm_cur.field_18_voice_idx == 0xFF) {
+                    vmNoiseOn(_svm_cur.field_0x1a & 0xFF);
+                } else {
+                    SpuVmKeyOnNow(vagCount, note2pitch() & 0xFFFF);
+                }
+                var_s2 |= 1 << _svm_cur.field_0x1a;
+            } else {
+                var_s2 = -1;
+            }
+        }
+    }
+    return var_s2;
+}
 
 s32 SpuVmKeyOff(s16 arg0, s16 vabId, s16 prog, u16 note) {
     u16 bitsUpper;
@@ -801,7 +897,7 @@ s32 SpuVmKeyOff(s16 arg0, s16 vabId, s16 prog, u16 note) {
     return var_t1;
 }
 
-void SpuVmSeKeyOn(s16 arg0, s16 arg1, u16 arg2, s32 arg3, u16 voll, u16 volr) {
+void SpuVmSeKeyOn(s16 vabId, s16 prog, u16 note, s32 arg3, u16 voll, u16 volr) {
     u16 var_v1;
     u16 var_a1;
 
@@ -815,7 +911,7 @@ void SpuVmSeKeyOn(s16 arg0, s16 arg1, u16 arg2, s32 arg3, u16 voll, u16 volr) {
         var_a1 = volr;
         var_v1 = 0x7F - ((voll * 0x40) / volr);
     }
-    SpuVmKeyOn(0x21, arg0, arg1, arg2, var_a1, var_v1);
+    SpuVmKeyOn(0x21, vabId, prog, note, var_a1, var_v1);
 }
 
 void SpuVmSeKeyOff(s16 vabId, s16 prog, u16 note) {
