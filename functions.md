@@ -1019,7 +1019,7 @@
 | no4   | EntityFishheadFireball                   |       63 |         10 |        |                                 |       |
 |       | func_092EC150                            |       63 |         12 |        |                                 |       |
 | dra   | menu.rodata                              |       64 |          0 | Yes    |                                 |       |
-| dai   | e_cutscene_psp.rodata                    |       64 |          0 | Yes    |                                 |       |
+| dai   | e_cutscene.rodata                        |       64 |          0 | Yes    |                                 |       |
 | lib   | cutscene.rodata                          |       64 |          0 | Yes    |                                 |       |
 | no3   | cutscene.rodata                          |       64 |          0 | Yes    |                                 |       |
 | dra   | func_psp_090F17D8                        |       64 |          5 |        |                                 |       |
