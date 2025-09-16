@@ -515,4 +515,15 @@ files:
           - [0x700, spriteset, w_000_1] # should be namespaced
           - [0x1248, spriteset, w_000_2] # should be namespaced
           - [0x1248, skip]
-
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_000.bin
+    asset_path: assets/weapon
+    src_path: src/weapon
+    splat_config_path: config/splat.pspeu.w1_000.yaml
+    segments:
+      - start: 0x80
+        vram:  0x092F6C80
+        assets:
+          - [0x80, skip]
+          - [0x700, spriteset, w1_000_1] # should be namespaced
+          - [0x1248, spriteset, w1_000_2] # should be namespaced
+          - [0x1248, skip]

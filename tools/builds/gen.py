@@ -530,6 +530,10 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 else:
                     name = str.format("{0:X}", offset)
             if kind == "c" or kind == ".data" or kind == ".rodata" or kind == ".bss":
+                # TODO:
+                #  if this is psp and a weapon
+                #    # rename the input C file to w_XXX.c
+                #    # make it a dependency of wY_XXX.c.o build
                 objs.append(add_c(nw, version, f"{src_path}/{name}.c", ld_path, ""))
             elif kind == "data" or kind == "rodata" or kind == "bss" or kind == "sbss":
                 obj = add_s(nw, version, f"{asm_path}/data/{name}.{kind}.s", ld_path)
@@ -577,8 +581,19 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 objs += objs_memcard
             else:
                 continue
+
+    def find_mwo_header_name(splat_config: dict[str, any]) -> str:
+        for segment in splat_config["segments"]:
+            if isinstance(segment, list) and segment[0] == 0:
+                return f"{segment[2]}.bin"
+            elif isinstance(segemnt, dict) and segment["start"] == 0:
+                if "name" in segment:
+                    return f"{segment["name"]}.bin"
+                return f"{segment["start"]:X}.bin"
+        return "mwo_header.bin"
+
     if platform == "psp" and file_name != "PS.ELF":
-        mwo = os.path.join(asset_path, "mwo_header.bin")
+        mwo = os.path.join(asset_path, find_mwo_header_name(splat_config))
         objs.append(add_copy_psx(nw, version, mwo, mwo, ld_path))
     output_elf = f"build/{version}/{ovl_name}.elf"
     sym_version = version
