@@ -25,10 +25,10 @@ long SpuSetReverbModeParam(SpuReverbAttr* attr) {
     bool bSetAll = attr->mask == 0;
 
     entry.flags = 0;
-    if (bSetAll || mask & 1) {
+    if (bSetAll || mask & SPU_REV_MODE) {
         var_s0 = attr->mode;
-        if (attr->mode & 0x100) {
-            var_s0 &= ~0x100;
+        if (attr->mode & SPU_REV_MODE_CLEAR_WA) {
+            var_s0 &= ~SPU_REV_MODE_CLEAR_WA;
             sp58 = true;
         }
         if (var_s0 >= 0xA ||
@@ -41,11 +41,11 @@ long SpuSetReverbModeParam(SpuReverbAttr* attr) {
         _memcpy(&entry, &D_800335B8[_spu_rev_attr.unk18],
                 sizeof(struct rev_param_entry));
         switch (_spu_rev_attr.unk18) {
-        case 7:
+        case SPU_REV_MODE_ECHO:
             _spu_rev_attr.unk24 = 0x7F;
             _spu_rev_attr.unk20 = 0x7F;
             break;
-        case 8:
+        case SPU_REV_MODE_DELAY:
             _spu_rev_attr.unk24 = 0;
             _spu_rev_attr.unk20 = 0x7F;
             break;
@@ -55,10 +55,10 @@ long SpuSetReverbModeParam(SpuReverbAttr* attr) {
             break;
         }
     }
-    if (bSetAll || mask & 8) {
+    if (bSetAll || mask & SPU_REV_DELAYTIME) {
         switch (_spu_rev_attr.unk18) {
-        case 7:
-        case 8:
+        case SPU_REV_MODE_ECHO:
+        case SPU_REV_MODE_DELAY:
             var_s6 = true;
             if (!var_s4) {
                 _memcpy(&entry, &D_800335B8[_spu_rev_attr.unk18],
@@ -79,10 +79,10 @@ long SpuSetReverbModeParam(SpuReverbAttr* attr) {
             break;
         }
     }
-    if (bSetAll || mask & 0x10) {
+    if (bSetAll || mask & SPU_REV_FEEDBACK) {
         switch (_spu_rev_attr.unk18) {
-        case 7:
-        case 8:
+        case SPU_REV_MODE_ECHO:
+        case SPU_REV_MODE_DELAY:
             var_fp = true;
             if (!var_s4) {
                 if (!var_s6) {
@@ -110,11 +110,11 @@ long SpuSetReverbModeParam(SpuReverbAttr* attr) {
         }
     }
     if (!var_s4) {
-        if (bSetAll || mask & 2) {
+        if (bSetAll || mask & SPU_REV_DEPTHL) {
             _spu_RXX->rxx.rev_vol.left = attr->depth.left;
             _spu_rev_attr.unk1c = attr->depth.left;
         }
-        if (bSetAll || mask & 4) {
+        if (bSetAll || mask & SPU_REV_DEPTHR) {
             _spu_RXX->rxx.rev_vol.right = attr->depth.right;
             _spu_rev_attr.unk1e = attr->depth.right;
         }

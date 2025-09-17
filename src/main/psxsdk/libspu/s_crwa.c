@@ -6,7 +6,7 @@ void WaitEvent(s32);
 s32 _SpuIsInAllocateArea_(u32);
 extern s32 D_800330F8[];
 
-s32 SpuClearReverbWorkArea(s32 rev_mode) {
+s32 SpuClearReverbWorkArea(u32 rev_mode) {
     volatile s32 callback;
     s32 oldTransmode;
     s32 var_s2;
@@ -17,11 +17,11 @@ s32 SpuClearReverbWorkArea(s32 rev_mode) {
 
     callback = 0;
     transmodeCleared = 0;
-    if ((rev_mode >= 0xAU) ||
-        (_SpuIsInAllocateArea_(_spu_rev_startaddr[rev_mode]) != 0)) {
+    if (rev_mode >= SPU_REV_MODE_MAX ||
+        _SpuIsInAllocateArea_(_spu_rev_startaddr[rev_mode])) {
         return -1;
     }
-    if (rev_mode == 0) {
+    if (rev_mode == SPU_REV_MODE_OFF) {
         var_s1 = 0x10 << _spu_mem_mode_plus;
         var_s2 = 0xFFF0 << _spu_mem_mode_plus;
     } else {
