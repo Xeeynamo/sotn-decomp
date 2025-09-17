@@ -4,6 +4,8 @@
 
 extern struct rev_param_entry D_800335B8[];
 
+void _spu_setReverbAttr(struct rev_param_entry* arg0);
+
 static inline void _memcpy(char* dst, char* src, size_t size) {
     while (size--) {
         *dst++ = *src++;
