@@ -42,20 +42,20 @@
 #define SPU_REV_DELAYTIME (0x01 << 3) // Delay Time  (ECHO, DELAY only)
 #define SPU_REV_FEEDBACK (0x01 << 4)  // Feedback    (ECHO only)
 
-#define SPU_REV_MODE_CHECK	(-1)
-#define SPU_REV_MODE_OFF	0
-#define SPU_REV_MODE_ROOM	1
-#define SPU_REV_MODE_STUDIO_A	2
-#define SPU_REV_MODE_STUDIO_B	3
-#define SPU_REV_MODE_STUDIO_C	4
-#define SPU_REV_MODE_HALL	5
-#define SPU_REV_MODE_SPACE	6
-#define SPU_REV_MODE_ECHO	7
-#define SPU_REV_MODE_DELAY	8
-#define SPU_REV_MODE_PIPE	9
-#define SPU_REV_MODE_MAX	10
+#define SPU_REV_MODE_CHECK (-1)
+#define SPU_REV_MODE_OFF 0
+#define SPU_REV_MODE_ROOM 1
+#define SPU_REV_MODE_STUDIO_A 2
+#define SPU_REV_MODE_STUDIO_B 3
+#define SPU_REV_MODE_STUDIO_C 4
+#define SPU_REV_MODE_HALL 5
+#define SPU_REV_MODE_SPACE 6
+#define SPU_REV_MODE_ECHO 7
+#define SPU_REV_MODE_DELAY 8
+#define SPU_REV_MODE_PIPE 9
+#define SPU_REV_MODE_MAX 10
 
-#define SPU_REV_MODE_CLEAR_WA	0x100
+#define SPU_REV_MODE_CLEAR_WA 0x100
 
 #define SPU_OFF 0
 #define SPU_ON 1
