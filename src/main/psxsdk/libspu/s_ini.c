@@ -12,7 +12,7 @@ void _SpuInit(s32 arg0) {
     ResetCallback();
     _spu_init(arg0);
     if (arg0 == 0) {
-        for (i = 0; i < 0x18; i++) {
+        for (i = 0; i < NUM_SPU_CHANNELS; i++) {
             _spu_voice_centerNote[i] = 0xC000;
         }
     }
@@ -32,16 +32,13 @@ void _SpuInit(s32 arg0) {
 }
 
 void SpuStart(void) {
-    int event;
-
     if (_spu_isCalled == 0) {
         _spu_isCalled = 1;
         EnterCriticalSection();
         D_80033098 = 0;
         _SpuDataCallback(_spu_FiDMA);
-        event = OpenEvent(HwSPU, EvSpCOMP, EvMdNOINTR, NULL);
-        _spu_EVdma = event;
-        EnableEvent(event);
+        _spu_EVdma = OpenEvent(HwSPU, EvSpCOMP, EvMdNOINTR, NULL);
+        EnableEvent(_spu_EVdma);
         ExitCriticalSection();
     }
 }
