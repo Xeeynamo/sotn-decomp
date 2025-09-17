@@ -32,8 +32,8 @@ const gameMetadata = {
             "overlays": [
                 "dra", "ric", "weapon",
                 "stcen", "stchi", "stdai", "stdre", "stlib", "stmad", "stno0", "stno1", "stno2", "stno3", "stno4", "stnp3", "stnz0", "stsel", "stst0", "sttop", "stwrp",
-                "strwrp",
-                "bomar", "bobo4", "borbo3", "borbo5",
+                "strtop", "strwrp",
+                "bomar", "bobo4", "bobo6", "borbo3", "borbo5",
                 "tt_000", "tt_001", "tt_002","tt_003", "tt_004"
             ]
         },
@@ -145,6 +145,10 @@ const gameMetadata = {
             "name": "ST/WRP/WRP.BIN",
             "desc": "Warp rooms"
         },
+        "strtop": {
+            "name": "ST/RTOP/RTOP.BIN",
+            "desc": "Reverse Keep"
+        },
         "strwrp": {
             "name": "ST/RWRP/RWRP.BIN",
             "desc": "Warp rooms (reverse)"
@@ -156,6 +160,10 @@ const gameMetadata = {
         "bobo4": {
             "name": "BOSS/BO4/BO4.BIN",
             "desc": "Doppleganger10 boss"
+        },
+        "bobo6": {
+            "name": "BOSS/BO6/BO6.BIN",
+            "desc": "Richter boss"
         },
         "borbo3": {
             "name": "BOSS/RBO3/RBO3.BIN",
