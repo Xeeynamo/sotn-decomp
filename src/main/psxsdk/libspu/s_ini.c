@@ -3,23 +3,7 @@
 #include "libspu_internal.h"
 #include <psxsdk/kernel.h>
 
-struct SpuRevAttr {
-    s32 unk0;
-    s32 unk18;
-    s16 unk1c;
-    s16 unk1e;
-    s32 unk20;
-    s32 unk24;
-};
-
 extern s32 _spu_fd;
-extern s32 _spu_trans_mode;
-extern s32 _spu_rev_flag;
-extern s32 _spu_rev_reserve_wa;
-extern s32 _spu_rev_offsetaddr;
-extern struct SpuRevAttr _spu_rev_attr;
-extern s32 _spu_EVdma;
-extern s32 _spu_rev_startaddr[];
 
 void SpuStart(void);
 

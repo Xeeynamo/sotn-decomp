@@ -20,6 +20,7 @@ extern u16 _spu_tsa;
 extern s32 _spu_rev_flag;
 extern s32 _spu_rev_reserve_wa;
 extern s32 _spu_rev_offsetaddr;
+extern s32 _spu_rev_startaddr[];
 extern s32 _spu_trans_mode;
 
 extern s32 D_80033550;
@@ -82,6 +83,17 @@ struct rev_param_entry {
     u16 vLIN;
     u16 vRIN;
 };
+
+struct SpuRevAttr {
+    s32 unk0;
+    s32 unk18;
+    s16 unk1c;
+    s16 unk1e;
+    s32 unk20;
+    s32 unk24;
+};
+
+extern struct SpuRevAttr _spu_rev_attr;
 
 typedef struct tagSpuVoiceRegister {
     SpuVolume volume; // 0-2

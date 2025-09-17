@@ -105,24 +105,23 @@ u8 SpuVmAlloc(s32 arg0) {
 
 #ifndef VERSION_PC
 void SpuVmKeyOnNow(u8 vagCount, u16 arg2) {
+    struct SeqStruct* score =
+        &_ss_score[_svm_cur.field_16_vag_idx & 0xFF]
+                  [(_svm_cur.field_16_vag_idx & 0xFF00) >> 8];
     u16 pos;
     u16 bitsUpper;
     u16 bitsLower;
-    u32 volr;
-    u32 voll;
-    u32 volr_t;
-    u32 voll_t;
-    struct SeqStruct* score;
+    u32 voll, volr;
+    u32 voll_t, volr_t;
     s32 mvol_scaled;
 
     pos = _svm_cur.field_0x1a * 8;
     mvol_scaled = _svm_vh->mvol * 0x3FFF;
-    voll_t = (_svm_cur.field_4_voll * mvol_scaled) / 0x3F01;
-    voll_t = (voll_t * _svm_cur.field_A_mvol * _svm_cur.field_D_vol) / 0x3F01;
+    voll_t = ((_svm_cur.field_4_voll * mvol_scaled) / 0x7F) / 0x7F;
+    voll_t =
+        ((voll_t * _svm_cur.field_A_mvol * _svm_cur.field_D_vol) / 0x7F) / 0x7F;
     volr_t = voll_t;
 
-    score = &_ss_score[_svm_cur.field_16_vag_idx & 0xFF]
-                      [(_svm_cur.field_16_vag_idx & 0xFF00) >> 8];
     if (_svm_cur.field_16_vag_idx != 0x21) {
         voll_t = (voll_t * score->unk74) / 0x7F;
         volr_t = (volr_t * score->unk76) / 0x7F;
@@ -206,7 +205,7 @@ void vmNoiseOn2(u8 voice, u16 arg1, u16 arg2, u16 arg3, u16 arg4) {
         bitsUpper = 1 << (voice - 0x10);
     }
 
-    _svm_voice[voice].unk04 = 0xa;
+    _svm_voice[voice].unk04 = 0xA;
     for (i = 0; i < spuVmMaxVoice; i++) {
         _svm_voice[i].unk1b &= 1;
     }
@@ -280,10 +279,8 @@ s32 note2pitch2(u16 arg0, u16 arg1) {
 
 void SePitchBend(u8 voice, s16 arg1) {
     s32 tone;
-    s32 temp_v0_2;
     u16 note;
     u16 pbend;
-    u8 temp_v0;
     int pos;
     pos = voice * 8;
 
@@ -294,13 +291,13 @@ void SePitchBend(u8 voice, s16 arg1) {
         tone =
             _svm_cur.field_C_vag_idx + (_svm_cur.field_7_fake_program * 0x10);
         if (arg1 >= 0) {
-            temp_v0 = _svm_tn[tone].pbmax;
-            note = _svm_voice[voice].note + ((arg1 * temp_v0) / 127);
-            pbend = (arg1 * temp_v0) % 127;
+            note = _svm_voice[voice].note + (arg1 * _svm_tn[tone].pbmax) / 0x7F;
+            pbend = (arg1 * _svm_tn[tone].pbmax) % 0x7F;
         } else {
-            temp_v0_2 = (arg1 * _svm_tn[tone].pbmin) / 127;
-            note = (_svm_voice[voice].note + temp_v0_2) - 1;
-            pbend = temp_v0_2 + 0x7F;
+            note =
+                (_svm_voice[voice].note + (arg1 * _svm_tn[tone].pbmin) / 0x7F) -
+                1;
+            pbend = ((arg1 * _svm_tn[tone].pbmin) / 0x7F) + 0x7F;
         }
         _svm_sreg_buf[pos + 2] = note2pitch2(note, pbend);
         _svm_sreg_dirty[voice] |= 4;
@@ -349,11 +346,9 @@ void SeAutoVol(s16 voice, s16 start_vol, s16 end_vol, s16 delta_time) {
 }
 
 void SetAutoVol(s16 voice) {
-    s32 temp_hi;
     s16 temp_v1_3;
-    u32 temp_v1_4;
-    u16 voll;
-    u16 volr;
+    u32 voll_t, volr_t;
+    u16 voll, volr;
     s16 pos;
     s32 mvol_scaled;
 
@@ -379,18 +374,21 @@ void SetAutoVol(s16 voice) {
     temp_v1_3 = _svm_voice[voice].start_vol;
     _svm_cur.field_4_voll = temp_v1_3;
     mvol_scaled = _svm_vh->mvol * 0x3FFF;
-    temp_hi = temp_v1_3 * mvol_scaled;
-    temp_hi /= 0x3F01;
-    temp_hi *= _svm_cur.field_A_mvol;
-    temp_hi = (temp_hi * _svm_cur.field_D_vol) / 0x3F01U;
-    temp_v1_4 = temp_hi;
+
+    voll_t = ((temp_v1_3 * mvol_scaled) / 0x7F) / 0x7F;
+    volr_t = ((temp_v1_3 * mvol_scaled) / 0x7F) / 0x7F;
+
+    voll_t =
+        ((voll_t * _svm_cur.field_A_mvol * _svm_cur.field_D_vol) / 0x7F) / 0x7F;
+    volr_t =
+        ((volr_t * _svm_cur.field_A_mvol * _svm_cur.field_D_vol) / 0x7F) / 0x7F;
 
     if (_svm_cur.field_E_pan < 0x40) {
-        voll = temp_v1_4;
-        volr = (temp_v1_4 * _svm_cur.field_E_pan) / 0x40;
+        voll = voll_t;
+        volr = (volr_t * _svm_cur.field_E_pan) / 0x40;
     } else {
-        voll = (temp_v1_4 * (0x7F - _svm_cur.field_E_pan)) / 0x40;
-        volr = temp_v1_4;
+        voll = (voll_t * (0x7F - _svm_cur.field_E_pan)) / 0x40;
+        volr = volr_t;
     }
 
     if (_svm_cur.field_B_mpan < 0x40) {
@@ -435,10 +433,8 @@ void SeAutoPan(s16 voice, s16 start_pan, s16 end_pan, s16 delta_time) {
 }
 
 void SetAutoPan(s16 voice) {
-    s32 temp_hi;
-    u32 temp_v1_4;
-    u16 voll;
-    u16 volr;
+    u32 voll_t, volr_t;
+    u16 voll, volr;
     s16 pos;
     char new_var;
     u16 new_var2;
@@ -466,18 +462,21 @@ void SetAutoPan(s16 voice) {
     new_var = _svm_voice[voice].start_pan;
     _svm_cur.field_0x5 = new_var;
     mvol_scaled = _svm_vh->mvol * 0x3FFF;
-    temp_hi = _svm_cur.field_4_voll * mvol_scaled;
-    temp_hi /= 0x3F01;
-    temp_hi *= _svm_cur.field_A_mvol;
-    temp_hi = (temp_hi * _svm_cur.field_D_vol) / 0x3F01U;
-    temp_v1_4 = temp_hi;
+
+    voll_t = ((_svm_cur.field_4_voll * mvol_scaled) / 0x7F) / 0x7F;
+    volr_t = ((_svm_cur.field_4_voll * mvol_scaled) / 0x7F) / 0x7F;
+
+    voll_t =
+        ((voll_t * _svm_cur.field_A_mvol * _svm_cur.field_D_vol) / 0x7F) / 0x7F;
+    volr_t =
+        ((volr_t * _svm_cur.field_A_mvol * _svm_cur.field_D_vol) / 0x7F) / 0x7F;
 
     if (_svm_cur.field_E_pan < 0x40) {
-        voll = temp_v1_4;
-        volr = (temp_v1_4 * _svm_cur.field_E_pan) / 0x40;
+        voll = voll_t;
+        volr = (volr_t * _svm_cur.field_E_pan) / 0x40;
     } else {
-        voll = (temp_v1_4 * (0x7F - _svm_cur.field_E_pan)) / 0x40;
-        volr = temp_v1_4;
+        voll = (voll_t * (0x7F - _svm_cur.field_E_pan)) / 0x40;
+        volr = volr_t;
     }
 
     if (_svm_cur.field_B_mpan < 0x40) {
@@ -627,8 +626,8 @@ void SpuVmNoiseOff(void) {
     s16 i;
     for (i = 0; i < spuVmMaxVoice; i++) {
         if (_svm_voice[i].unk1b == 2) {
-            _svm_voice[i & 0xff].unk1b = 0;
-            _svm_voice[i & 0xff].unk04 = 0;
+            _svm_voice[i & 0xFF].unk1b = 0;
+            _svm_voice[i & 0xFF].unk04 = 0;
             // pointer to 0x1F801C00
             D_80032F10[0x194 / 2] = 0;
             D_80032F10[0x196 / 2] = 0;
@@ -1337,8 +1336,8 @@ s16 SsUtGetVVol(s16 voice, s16* voll, s16* volr) {
     if (voice >= 0 && voice < NUM_SPU_CHANNELS) {
         s16 temp1 = D_80032F10[voice * 8 + 0];
         s16 temp2 = D_80032F10[voice * 8 + 1];
-        *voll = temp1 / 129;
-        *volr = temp2 / 129;
+        *voll = temp1 / 0x81;
+        *volr = temp2 / 0x81;
         return 0;
     }
     return -1;
@@ -1346,8 +1345,8 @@ s16 SsUtGetVVol(s16 voice, s16* voll, s16* volr) {
 
 s16 SsUtSetVVol(s16 voice, s16 voll, s16 volr) {
     if (voice >= 0 && voice < NUM_SPU_CHANNELS) {
-        voll *= 129;
-        volr *= 129;
+        voll *= 0x81;
+        volr *= 0x81;
         _svm_sreg_buf[voice * 8 + 1] = volr;
         _svm_sreg_buf[voice * 8 + 0] = voll;
         _svm_sreg_dirty[voice] |= 3;
