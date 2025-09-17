@@ -173,16 +173,57 @@ files:
         vram: 0x80180000
         assets:
           - [0x2C, sprite_banks, sprite_banks]
-          - [0x8C, skip]
-          #- [0x8C, paldef, palette_def]
-          #- [0x178, layers, layers]
-          #- [0x468, gfx_banks, graphics_banks]
-          #- [0x670, layout, entity_layouts]
-          #- [0x818, skip]
-          #- [0x2358, rooms, rooms]
-          #- [0x2F44, skip]
+          - [0x8C, palette, pal_stained_glass, 16] # 0x204
+          - [0xAC, paldef, palette_def]
+          - [0x178, layers, layers]
+          - [0x468, gfx_banks, graphics_banks]
+          - [0x670, layout, entity_layouts]
+          - [0x818, skip]
+          - [0x2358, rooms, rooms]
+          - [0x2F44, skip]
           - [0x3A94, cutscene, cutscene_script_psx]
-          - [0x3C18, skip]
+          - [0x3C18, binary, cutscene_data_psx] # May be gfx data, unsure
+          - [0x3F20, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4]
+          - [0x8498, cmpgfx, gfx_confessional, 128, 128, 4]
+          - [0x96BC, cmpgfx, gfx_chair, 128, 128, 4, 0x1692C]
+          - [0xA298, cmpgfx, gfx_corner_guard, 128, 128, 4, 0x16BAC]
+          - [0xAC40, cmpgfx, gfx_bone_pillar, 128, 128, 4, 0x16BCC]
+          - [0xB9F4, cmpgfx, gfx_bone_pillar_fire, 128, 128, 4, 0x16C4C]
+          - [0xC7D8, cmpgfx, gfx_bone_halberd, 128, 128, 4, 0x16F0C]
+          - [0xD2DC, cmpgfx, gfx_winged_guard, 128, 128, 4, 0x16F2C]
+          - [0xDCA4, cmpgfx, gfx_ghost_bat, 128, 128, 4, 0x16F4C] # ghost palette
+          #- [0xDCA4, cmpgfx, gfx_ghost_bat, 128, 128, 4, 0x16F8C] # bat palette
+          - [0xE768, cmpgfx, gfx_crow, 128, 128, 4, 0x16FAC] # black crow palette
+          #- [0xE768, cmpgfx, gfx_crow, 128, 128, 4, 0x16FCC] # blue raven palette
+          - [0xEDFC, cmpgfx, gfx_skelerang, 128, 128, 4, 0x1692C]
+          - [0xFA54, cmpgfx, gfx_skelerang_spittle_bone, 128, 128, 4, 0x1692C] # skelerang palette
+          #- [0xFA54, cmpgfx, gfx_skelerang_spittle_bone, 128, 128, 4, 0x1694C] # spittle bone palette
+          - [0x1074C, cmpgfx, gfx_hunting_girl, 128, 128, 4, 0x16FEC]
+          - [0x10E84, cmpgfx, gfx_spectral_sword, 128, 128, 4, 0x1704C]
+          - [0x119A0, cmpgfx, gfx_sealed_door, 128, 128, 4, 0x1724C]
+          - [0x122B0, cmpgfx, gfx_breakable, 128, 128, 4, 0x1730C]
+          - [0x12C64, rawgfx, gfx_portrait_alucard, 48, 72, 8, 0x1740C]
+          - [0x139E4, rawgfx, gfx_portrait_maria, 48, 72, 8, 0x1760C]
+          - [0x14764, cmpgfx, gfx_cutscene_1, 128, 128, 4, 0x1780C]
+          - [0x15894, cmpgfx, gfx_cutscene_2, 128, 128, 4, 0x1780C]
+          - [0x16554, cmpgfx, gfx_stage_name_en, 128, 128, 4]
+          - [0x1692C, palette, pal_skelerang_spittle_bone, 16] # 0x200
+          - [0x1698C, palette, pal_unused, 16] # does not exist for pspeu
+          - [0x16BAC, palette, pal_corner_guard, 16] # 0x215
+          - [0x16BCC, palette, pal_bone_pillar, 16] # 0x216
+          - [0x16C4C, palette, pal_bone_pillar_fire, 16] # 0x21A, includes 0x221
+          - [0x16F0C, palette, pal_bone_halberd, 16] # 0x22A
+          - [0x16F2C, palette, pal_winged_guard, 16] # 0x22B
+          - [0x16F4C, palette, pal_ghost_bat, 16] # 0x22C
+          - [0x16FAC, palette, pal_crow, 16] # 0x22F
+          - [0x16FEC, palette, pal_hunting_girl, 16] # 0x231
+          - [0x1704C, palette, pal_spectral_sword, 16] # 0x234
+          - [0x1724C, palette, pal_sealed_door, 16] # 0x244
+          - [0x1730C, palette, pal_breakable, 16] # 0x249
+          - [0x1740C, palette, pal_portrait_alucard, 16] # 0x258
+          - [0x1760C, palette, pal_portrait_maria, 16] # 0x260
+          - [0x1780C, palette, pal_cutscene, 16] # 0x251
+          - [0x1782C, skip]
   - target: disks/us/ST/DRE/DRE.BIN
     asset_path: assets/st/dre
     src_path: src/st/dre
