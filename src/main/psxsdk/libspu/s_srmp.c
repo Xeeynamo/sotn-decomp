@@ -20,7 +20,7 @@ long SpuSetReverbModeParam(SpuReverbAttr* attr) {
     bool var_s6 = false;
     bool sp58 = false;
     bool var_fp = false;
-    
+
     u32 mask = attr->mask;
     bool bSetAll = attr->mask == 0;
 
@@ -31,13 +31,15 @@ long SpuSetReverbModeParam(SpuReverbAttr* attr) {
             var_s0 &= ~0x100;
             sp58 = true;
         }
-        if (var_s0 >= 0xA || _SpuIsInAllocateArea_(_spu_rev_startaddr[var_s0])) {
+        if (var_s0 >= 0xA ||
+            _SpuIsInAllocateArea_(_spu_rev_startaddr[var_s0])) {
             return -1;
         }
         var_s4 = true;
         _spu_rev_attr.unk18 = var_s0;
         _spu_rev_offsetaddr = _spu_rev_startaddr[_spu_rev_attr.unk18];
-        _memcpy(&entry, &D_800335B8[_spu_rev_attr.unk18], sizeof(struct rev_param_entry));
+        _memcpy(&entry, &D_800335B8[_spu_rev_attr.unk18],
+                sizeof(struct rev_param_entry));
         switch (_spu_rev_attr.unk18) {
         case 7:
             _spu_rev_attr.unk24 = 0x7F;
@@ -59,13 +61,15 @@ long SpuSetReverbModeParam(SpuReverbAttr* attr) {
         case 8:
             var_s6 = true;
             if (!var_s4) {
-                _memcpy(&entry, &D_800335B8[_spu_rev_attr.unk18], sizeof(struct rev_param_entry));
+                _memcpy(&entry, &D_800335B8[_spu_rev_attr.unk18],
+                        sizeof(struct rev_param_entry));
                 entry.flags = 0x0C011C00;
             }
             _spu_rev_attr.unk20 = attr->delay;
             entry.mLSAME = ((_spu_rev_attr.unk20 << 0xD) / 0x7F) - entry.dAPF1;
             entry.mRSAME = ((_spu_rev_attr.unk20 << 0xC) / 0x7F) - entry.dAPF2;
-            entry.mLCOMB1 = ((_spu_rev_attr.unk20 << 0xC) / 0x7F) + entry.mRCOMB1;
+            entry.mLCOMB1 =
+                ((_spu_rev_attr.unk20 << 0xC) / 0x7F) + entry.mRCOMB1;
             entry.dLSAME = ((_spu_rev_attr.unk20 << 0xC) / 0x7F) + entry.dRSAME;
             entry.mLAPF1 = ((_spu_rev_attr.unk20 << 0xC) / 0x7F) + entry.mLAPF2;
             entry.mRAPF1 = ((_spu_rev_attr.unk20 << 0xC) / 0x7F) + entry.mRAPF2;
@@ -82,7 +86,8 @@ long SpuSetReverbModeParam(SpuReverbAttr* attr) {
             var_fp = true;
             if (!var_s4) {
                 if (!var_s6) {
-                    _memcpy(&entry, &D_800335B8[_spu_rev_attr.unk18], sizeof(struct rev_param_entry));
+                    _memcpy(&entry, &D_800335B8[_spu_rev_attr.unk18],
+                            sizeof(struct rev_param_entry));
                     entry.flags = 0x80;
                 } else {
                     entry.flags |= 0x80;
