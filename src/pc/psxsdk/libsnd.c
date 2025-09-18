@@ -507,6 +507,38 @@ void SpuVmKeyOnNow(short vagCount, short pitch) {
 
 void vmNoiseOn(s32 arg0) { assert(0); }
 
+void SpuVmDoAllocate(void) {
+    s32 i;
+
+    _svm_cur.field_0x1c = _svm_cur.field_0x1a * 8;
+    _svm_cur.field_0x1e =
+        _svm_cur.field_C_vag_idx + (_svm_cur.field_7_fake_program * 0x10);
+    _svm_voice[_svm_cur.field_0x1a].unk6 = 0x7FFF;
+    for (i = 0; i < 0x10; i++) {
+        _svm_envx_hist[i] &= ~(1 << _svm_cur.field_0x1a);
+    }
+    if ((_svm_cur.field_18_voice_idx & 1) > 0) {
+        _svm_sreg_buf[_svm_cur.field_0x1c + 3] =
+            _svm_pg[(_svm_cur.field_18_voice_idx - 1) / 2].reserved2;
+        _svm_sreg_dirty[_svm_cur.field_0x1a] |= 8;
+    } else {
+        _svm_sreg_buf[_svm_cur.field_0x1c + 3] =
+            _svm_pg[(_svm_cur.field_18_voice_idx - 1) / 2].reserved3;
+        _svm_sreg_dirty[_svm_cur.field_0x1a] |= 8;
+    }
+
+    _svm_sreg_buf[_svm_cur.field_0x1c + 4] =
+        _svm_tn[(_svm_cur.field_7_fake_program * 0x10) +
+                _svm_cur.field_C_vag_idx]
+            .adsr1;
+    _svm_sreg_buf[_svm_cur.field_0x1c + 5] =
+        _svm_tn[(_svm_cur.field_7_fake_program * 0x10) +
+                _svm_cur.field_C_vag_idx]
+            .adsr2 +
+        _svm_damper;
+    _svm_sreg_dirty[_svm_cur.field_0x1a] |= 0x30;
+}
+
 struct rev_param_entry {
     u32 flags;
     u16 dAPF1;
