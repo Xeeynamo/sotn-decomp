@@ -49,8 +49,7 @@ void func_us_801B4BD0(void) {
         *memset_ptr++ = 0;
     }
 
-    D_us_801D161C = 1;
-    g_Ric.vram_flag = 1;
+    g_Ric.vram_flag = g_Ric.unk04 = 1;
 
     BO6_RicSetStand(0);
     RIC.anim = D_us_80182008;
@@ -81,8 +80,29 @@ void func_us_801B4BD0(void) {
     g_api.TimeAttackController(TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_VISITED);
 }
 
+void func_us_801B4EAC(void) {
+    g_Ric.unk04 = g_Ric.vram_flag;
+    g_Ric.vram_flag = 0;
+    RIC.posY.val += RIC.velocityY;
+    RIC.posX.val += RIC.velocityX;
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B4EAC);
+    if (RIC.posY.val >= 0xB30000) {
+        RIC.posY.val = 0xB30000;
+        g_Ric.vram_flag |= 1;
+    }
+    if (RIC.posY.val <= 0x280000) {
+        RIC.posY.val = 0x280000;
+        g_Ric.vram_flag |= 2;
+    }
+    if (RIC.posX.val >= 0xF80000) {
+        RIC.posX.val = 0xF80000;
+        g_Ric.vram_flag |= 4;
+    }
+    if (RIC.posX.val <= 0x80000) {
+        RIC.posX.val = 0x80000;
+        g_Ric.vram_flag |= 8;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_CheckBladeDashInput);
 
@@ -1074,7 +1094,13 @@ INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepCrouch);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicResetPose);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B77D8);
+void func_us_801B77D8(void) {
+    if ((RIC.posX.i.hi - PLAYER.posX.i.hi) <= 0) {
+        RIC.entityRoomIndex = 0;
+    } else {
+        RIC.entityRoomIndex = 1;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepHit);
 

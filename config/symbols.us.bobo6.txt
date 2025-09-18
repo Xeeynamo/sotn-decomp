@@ -281,6 +281,7 @@ g_Ric_timers_12 = 0x801D1610;
 g_Ric_timers_13 = 0x801D1612;
 g_Ric_timers_14 = 0x801D1614;
 g_Ric_vram_flag = 0x801D1618;
+g_Ric_unk04 = 0x801D161C;
 g_Ric_unk08 = 0x801D1620;
 g_Ric_status = 0x801D1624;
 g_Ric_unk40 = 0x801D1658;

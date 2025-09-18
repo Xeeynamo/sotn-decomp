@@ -107,7 +107,8 @@ void RicInit(s16 initParam) {
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
     PLAYER.facingLeft = 0;
     PLAYER.palette = 0x8120;
-    PLAYER.scaleX = PLAYER.scaleY = 0x100;
+    PLAYER.scaleY = 0x100;
+    PLAYER.scaleX = 0x100;
     PLAYER.rotPivotY = 0x18;
     memset_len = sizeof(PlayerState) / sizeof(s32);
     memset_ptr = (s32*)&g_Player;
