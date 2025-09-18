@@ -2,7 +2,7 @@ options:
   platform: psp
   basename: w1_000
   base_path: ..
-  build_path: build/pspeu
+  build_path: build/pspeu/weapon1
   target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_000.bin
   asm_path: asm/pspeu/weapon/w1_000
   asset_path: assets/weapon1
@@ -43,7 +43,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, w1_000]
-      - [0x700, .data, w1_000]
+      - [0x80, c, w_000]
+      - [0x700, .data, w_000]
       - {start: 0x1980, type: bss, vram: 0x92F8580}
   - [0x1980]

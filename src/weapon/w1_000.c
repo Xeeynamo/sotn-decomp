@@ -7,22 +7,17 @@
 #include <sfx.h>
 #include "weapon_private.h"
 
+#ifdef WEAPON1
+// probably a file split
+static s32 g_HandId = HAND_ID;
+#endif
+
 #define inner_path(hand, n) \
     CPP_STR(PATH_JOIN(gen/w##hand, n))
 #define path(hand, n) \
     inner_path(hand, n)
 
-
-static s32 g_HandId = HAND_ID;
-
 #ifdef VERSION_PSP
-#ifdef WEAPON0
-#warning "hand id 0"
-#elif defined(WEAPON1)
-#warning "hand id 1"
-#else
-#warning "no hand"
-#endif
 #include path(HAND_ID, w_000_1.h)
 #include path(HAND_ID, w_000_2.h)
 #else
@@ -201,6 +196,10 @@ static WeaponAnimation g_SoundEvents[] = {
 static u16* g_WeaponCluts[] = {
     (u16*) g_Clut1, (u16*) g_Clut0, (u16*) g_Clut2, (u16*) g_Clut3, (u16*) g_Clut4,
 };
+
+#ifdef WEAPON0
+static s32 g_HandId = HAND_ID;
+#endif
 
 #include "shared.h"
 

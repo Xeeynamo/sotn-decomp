@@ -65,13 +65,9 @@ typedef struct {
 #define WFACTORY2(id, param) FACTORY(((g_HandId + 1) << 12) + (id), (param))
 
 // create function names like w_000_EntityWeaponAttack
-#ifdef VERSION_PC
 #define CONCATENATE_DETAIL(x, y, z) x##y##_##z
 #define CONCATENATE(x, y, z) CONCATENATE_DETAIL(x, y, z)
 #define OVL_EXPORT(x) CONCATENATE(WEAPON, WEAPON_ID, x)
-#else
-#define OVL_EXPORT(x) x
-#endif
 
 #ifndef VERSION_PSP
 // exported

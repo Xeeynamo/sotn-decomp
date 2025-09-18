@@ -80,11 +80,12 @@ def get_cc_flags_for_exceptional_files(version: str, file_name: str):
         return "-O4,p"
     return "-Op"
 
+seen_c_files = set()
 
 def add_c_psx(
-    nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, cpp_flags: str
+    nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, cpp_flags: str, build_path: str,
 ):
-    output = f"build/{ver}/{file_name}.o"
+    output = f"{build_path}/{file_name}.o"
     if output in entries:
         return
     entries[output] = {}
@@ -124,8 +125,8 @@ def add_c_psx(
     return output
 
 
-def add_s_psx(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
-    output = f"build/{ver}/{file_name}.o"
+def add_s_psx(nw: ninja_syntax.Writer, build_path: str, file_name: str, ld_path: str):
+    output = f"{build_path}/{file_name}.o"
     if output in entries:
         return
     entries[output] = {}
@@ -148,8 +149,10 @@ def add_copy_psx(
     in_file_name: str,
     out_file_name: str,
     ld_script_path: str,
+    build_path: str,
 ):
-    output = f"build/{version}/{out_file_name}.o"
+    # TODO: needs to be build_path
+    output = f"{build_path}/{out_file_name}.o"
     if output in entries:
         return
     entries[output] = {}
@@ -215,9 +218,9 @@ def add_memcard_img_psx(
 
 
 def add_c_psp(
-    nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, cpp_flags: str
+    nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, cpp_flags: str, build_path: str,
 ):
-    output = f"build/{ver}/{file_name}.o"
+    output = f"{build_path}/{file_name}.o"
     if output in entries:
         return
     entries[output] = {}
@@ -256,8 +259,8 @@ def add_c_psp(
     return output
 
 
-def add_s_psp(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
-    output = f"build/{ver}/{file_name}.o"
+def add_s_psp(nw: ninja_syntax.Writer, build_path: str, file_name: str, ld_path: str):
+    output = f"{build_path}/{file_name}.o"
     if output in entries:
         return
     entries[output] = {}
@@ -389,13 +392,13 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
         for subsegment in segment["subsegments"]:
             kind = subsegment[1]
             if kind == "data":
-                obj = add_s(nw, ver, f"{asm_path}/data/w_{weapon_id}.data.s", ld_path)
+                obj = add_s(nw, build_path, f"{asm_path}/data/w_{weapon_id}.data.s", ld_path)
                 objs.append(obj)
             elif kind == "sbss":
-                obj = add_s(nw, ver, f"{asm_path}/data/w_{weapon_id}.sbss.s", ld_path)
+                obj = add_s(nw, build_path, f"{asm_path}/data/w_{weapon_id}.sbss.s", ld_path)
                 objs.append(obj)
             elif kind == "c":
-                obj = add_c(nw, ver, f"{src_path}/w_{weapon_id}.c", ld_path, cpp_flags)
+                obj = add_c(nw, ver, f"{src_path}/w_{weapon_id}.c", ld_path, cpp_flags, build_path)
                 objs.insert(0, obj)  # the C file needs to always be linked first
             elif kind == ".data":
                 continue
@@ -508,13 +511,13 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
 
     objs = []
     if ovl_name == "main":
-        objs.append(add_s(nw, version, f"{asm_path}/header.s", ld_path))
+        objs.append(add_s(nw, build_path, f"{asm_path}/header.s", ld_path))
     for segment in splat_config["segments"]:
         if not "type" in segment:
             continue
         if segment["type"] == "data":
             asm_name = f"{asm_path}/data/{segment["name"]}.data.s"
-            objs.append(add_s(nw, version, asm_name, ld_path))
+            objs.append(add_s(nw, build_path, asm_name, ld_path))
             continue
         for subsegment in segment["subsegments"]:
             if isinstance(subsegment, dict):  # handle PSP BSS
@@ -542,12 +545,12 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 #  if this is psp and a weapon
                 #    # rename the input C file to w_XXX.c
                 #    # make it a dependency of wY_XXX.c.o build
-                objs.append(add_c(nw, version, f"{src_path}/{name}.c", ld_path, cpp_flags))
+                objs.append(add_c(nw, version, f"{src_path}/{name}.c", ld_path, cpp_flags, build_path))
             elif kind == "data" or kind == "rodata" or kind == "bss" or kind == "sbss":
-                obj = add_s(nw, version, f"{asm_path}/data/{name}.{kind}.s", ld_path)
+                obj = add_s(nw, build_path, f"{asm_path}/data/{name}.{kind}.s", ld_path)
                 objs.append(obj)
             elif kind == "asm":
-                objs.append(add_s(nw, version, f"{asm_path}/{name}.s", ld_path))
+                objs.append(add_s(nw, build_path, f"{asm_path}/{name}.s", ld_path))
             elif kind == "raw" or kind == "cmp":
                 objs.append(
                     add_copy_psx(
@@ -556,6 +559,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                         f"{asset_path}/{name}.bin",
                         f"{asset_path}/{name}",
                         ld_path,
+                        build_path,
                     )
                 )
             elif kind == "cmpgfx":
@@ -566,6 +570,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                         f"{asset_path}/{name}.gfxbin",
                         f"{asset_path}/{name}",
                         ld_path,
+                        build_path,
                     )
                 )
             elif kind == "pal":
@@ -576,6 +581,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                         f"{asset_path}/{name}.palbin",
                         f"{asset_path}/{name}",
                         ld_path,
+                        build_path,
                     )
                 )
             elif kind == "palette":
@@ -602,8 +608,8 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
 
     if platform == "psp" and file_name != "PS.ELF":
         mwo = os.path.join(asset_path, find_mwo_header_name(splat_config))
-        objs.append(add_copy_psx(nw, version, mwo, mwo, ld_path))
-    output_elf = f"build/{version}/{ovl_name}.elf"
+        objs.append(add_copy_psx(nw, version, mwo, mwo, ld_path, build_path))
+    output_elf = f"{build_path}/{ovl_name}.elf"
     sym_version = version
     if ovl_name == "stmad":
         sym_version = "beta"
@@ -623,7 +629,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
         implicit=[x for x in objs if x],
         variables={
             "ld_flags": "--gc-sections" if platform == "psp" else "",
-            "map_out": f"build/{version}/{ovl_name}.map",
+            "map_out": f"{build_path}/{ovl_name}.map",
             "symbols_arg": str.join(" ", symbols_lists),
         },
     )
@@ -643,7 +649,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
             gfx_name = f"F_{os.path.basename(target_path)}"
             if is_hd(version):
                 gfx_name = f"f_{os.path.basename(target_path)}"
-            stage_gfx_path = f"build/{version}/{gfx_name}"
+            stage_gfx_path = f"{build_path}/{gfx_name}"
             target_f_path = os.path.join(os.path.dirname(target_path), gfx_name)
             add_gfx_stage(nw, target_f_path, asset_path, stage_gfx_path)
 
