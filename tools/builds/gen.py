@@ -498,6 +498,14 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
         add_s = add_s_psp
     else:
         raise Exception(f"platform {platform} not recognized")
+
+    cpp_flags = ""
+    # weapon definitions for psp weapons
+    if ovl_name.startswith("w0_"):
+        cpp_flags = "-DWEAPON0 "
+    elif ovl_name.startswith("w1_"):
+        cpp_flags = "-DWEAPON1 "
+
     objs = []
     if ovl_name == "main":
         objs.append(add_s(nw, version, f"{asm_path}/header.s", ld_path))
@@ -534,7 +542,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 #  if this is psp and a weapon
                 #    # rename the input C file to w_XXX.c
                 #    # make it a dependency of wY_XXX.c.o build
-                objs.append(add_c(nw, version, f"{src_path}/{name}.c", ld_path, ""))
+                objs.append(add_c(nw, version, f"{src_path}/{name}.c", ld_path, cpp_flags))
             elif kind == "data" or kind == "rodata" or kind == "bss" or kind == "sbss":
                 obj = add_s(nw, version, f"{asm_path}/data/{name}.{kind}.s", ld_path)
                 objs.append(obj)
@@ -754,6 +762,7 @@ with open(build_ninja, "w") as f:
             " --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc"
             " -gccinc -Iinclude -D_internal_version_$version -DSOTN_STR -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
             " $opt_level -opt nointrinsics"
+            " $cpp_flags"
         ),
         description="psp cc $in",
     )

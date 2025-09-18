@@ -51,6 +51,10 @@ typedef struct {
 #define HAND_ID 0
 #endif
 
+#if !defined(WEAPON0) && !defined(WEAPON1)
+#define WEAPON0 // forces WEAPON0 for the time being
+#endif
+
 // Weapon Factories all encode `g_HandId` at the top of the params
 #define WFACTORY(id, param) (((g_HandId + 1) << 12) + FACTORY(id, param))
 

@@ -512,8 +512,8 @@ files:
         vram:  0x092F2E80
         assets:
           - [0x80, skip]
-          - [0x700, spriteset, w_000_1] # should be namespaced
-          - [0x1248, spriteset, w_000_2] # should be namespaced
+          - [0x700, spriteset, w0/w_000_1] # should be namespaced
+          - [0x1248, spriteset, w0/w_000_2] # should be namespaced
           - [0x1248, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_000.bin
     asset_path: assets/weapon
@@ -524,6 +524,6 @@ files:
         vram:  0x092F6C80
         assets:
           - [0x80, skip]
-          - [0x700, spriteset, w1_000_1] # should be namespaced
-          - [0x1248, spriteset, w1_000_2] # should be namespaced
-          - [0x1248, skip]
+          - [0x708, spriteset, w1/w_000_1] # should be namespaced
+          - [0x1250, spriteset, w1/w_000_2] # should be namespaced
+          - [0x1250, skip]

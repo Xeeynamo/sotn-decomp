@@ -7,17 +7,22 @@
 #include <sfx.h>
 #include "weapon_private.h"
 
-#ifdef WEAPON1
-static s32 g_HandId = HAND_ID;
-#endif
-
 #define inner_path(hand, n) \
     CPP_STR(PATH_JOIN(gen/w##hand, n))
 #define path(hand, n) \
     inner_path(hand, n)
 
 
+static s32 g_HandId = HAND_ID;
+
 #ifdef VERSION_PSP
+#ifdef WEAPON0
+#warning "hand id 0"
+#elif defined(WEAPON1)
+#warning "hand id 1"
+#else
+#warning "no hand"
+#endif
 #include path(HAND_ID, w_000_1.h)
 #include path(HAND_ID, w_000_2.h)
 #else
@@ -197,10 +202,6 @@ static u16* g_WeaponCluts[] = {
     (u16*) g_Clut1, (u16*) g_Clut0, (u16*) g_Clut2, (u16*) g_Clut3, (u16*) g_Clut4,
 };
 
-#ifdef WEAPON0
-static s32 g_HandId = HAND_ID;
-#endif
-
 #include "shared.h"
 
 static void EntityWeaponAttack(Entity* self) {
@@ -306,11 +307,18 @@ static void WeaponUnused3C(void) {}
 
 #ifdef VERSION_PSP
 // TODO: this should be WEAPON0_PTR
+#ifdef WEAPON0
 extern void D_8017A000[];
+#define WEAPON_PTR D_8017A000
+#else
+extern void D_8017D000[];
+#define WEAPON_PTR D_8017D000
+#endif
 extern Weapon w0_000_Overlay;
 
+// TODO: this should be OVL_EXPORT
 void w0_000_Load(void) {
-    memcpy(&D_8017A000, &w0_000_Overlay, sizeof(Weapon));
+    memcpy(&WEAPON_PTR, &w0_000_Overlay, sizeof(Weapon));
 }
 
 Weapon w0_000_Overlay = {
