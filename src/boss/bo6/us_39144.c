@@ -1,7 +1,56 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo6.h"
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B9144);
+extern s32 D_us_80181278;
+extern AnimationFrame D_us_80181F1C[];
+extern AnimationFrame D_us_801823C8[];
+
+// ending 2 function
+void func_us_801B9144(void) {
+    Entity* entity;
+    switch (RIC.step_s) {
+    case 0:
+        BO6_RicSetAnimation(D_us_80181F1C);
+        g_api.PlaySfx(0x82B);
+        if (RIC.posX.i.hi < 0x80) {
+            RIC.facingLeft = 0;
+        } else {
+            RIC.facingLeft = 1;
+        }
+        RIC.step_s++;
+        // fallthrough
+
+    case 1:
+        D_us_80181278 = 0x14;
+        entity = &g_Entities[200];
+        CreateEntityFromCurrentEntity(0x17, entity);
+        entity->params = 1;
+        RIC.step_s++;
+        // fallthrough
+
+    case 2:
+        if (D_us_80181278 == 0x1E) {
+            BO6_RicSetAnimation(D_us_801823C8);
+            BO6_RicCreateEntFactoryFromEntity(g_CurrentEntity, 0x10024, 0);
+            RIC.step_s++;
+        }
+        break;
+    case 3:
+        if (RIC.animCurFrame == 0xB5) {
+            if (RIC.poseTimer == 1) {
+                BO6_RicCreateEntFactoryFromEntity(g_CurrentEntity, 0x23, 0);
+                g_api.PlaySfx(SFX_WEAPON_APPEAR);
+            }
+        }
+        if (RIC.poseTimer < 0) {
+            D_us_80181278 = 0x28;
+            BO6_RicSetStand(0);
+            BO6_RicCreateEntFactoryFromEntity(g_CurrentEntity, 0x450021, 0);
+            g_Ric.timers[ALU_T_POISON] = 0x800;
+        }
+        break;
+    }
+}
 
 void func_us_801B9338(void) {}
 
