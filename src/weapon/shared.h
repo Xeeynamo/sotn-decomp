@@ -9,7 +9,7 @@ static void LoadWeaponPalette(s32 clutIndex) {
     u16* dst;
     s32 i;
 
-    dst = (u16*) &((u16*) g_Clut)[ (((g_HandId * 0x18) + 0x110) * 0x10)];
+    dst = (u16*)&((u16*)g_Clut)[(((g_HandId * 0x18) + 0x110) * 0x10)];
     src = g_WeaponCluts[clutIndex];
 
     if (src == NULL) {
@@ -25,12 +25,12 @@ static void LoadWeaponPalette(s32 clutIndex) {
     dstRect.h = 3;
     dstRect.y = 0xF1;
 
-    dst = (u16*) &((u16*) g_Clut)[0x1100];
-    LoadImage(&dstRect, (u_long*) dst);
+    dst = (u16*)&((u16*)g_Clut)[0x1100];
+    LoadImage(&dstRect, (u_long*)dst);
 }
 
 static void SetSpriteBank1(SpriteParts* animset) {
-    SpriteParts** spriteBankDst = (SpriteParts**) g_api.o.spriteBanks;
+    SpriteParts** spriteBankDst = (SpriteParts**)g_api.o.spriteBanks;
 
     spriteBankDst += 0x10;
     if (g_HandId != 0) {
@@ -40,7 +40,7 @@ static void SetSpriteBank1(SpriteParts* animset) {
 }
 
 static void SetSpriteBank2(SpriteParts* animset) {
-    SpriteParts** spriteBankDst = (SpriteParts**) g_api.o.spriteBanks;
+    SpriteParts** spriteBankDst = (SpriteParts**)g_api.o.spriteBanks;
 
     spriteBankDst += 0x11;
     if (g_HandId != 0) {

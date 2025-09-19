@@ -41,7 +41,9 @@ def is_hd(version: str) -> bool:
 
 
 def is_weapon(ovl_name: str) -> bool:
-    return ovl_name == "weapon" or ovl_name.startswith("w0_") or ovl_name.startswith("w1_")
+    return (
+        ovl_name == "weapon" or ovl_name.startswith("w0_") or ovl_name.startswith("w1_")
+    )
 
 
 def is_servant(ovl_name: str) -> bool:
@@ -80,10 +82,17 @@ def get_cc_flags_for_exceptional_files(version: str, file_name: str):
         return "-O4,p"
     return "-Op"
 
+
 seen_c_files = set()
 
+
 def add_c_psx(
-    nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, cpp_flags: str, build_path: str,
+    nw: ninja_syntax.Writer,
+    ver: str,
+    file_name: str,
+    ld_path: str,
+    cpp_flags: str,
+    build_path: str,
 ):
     output = f"{build_path}/{file_name}.o"
     if output in entries:
@@ -121,7 +130,6 @@ def add_c_psx(
         outputs=file_name,
         implicit=[f"src/.assets_build_done_{ver}"],
     )
-
     return output
 
 
@@ -218,7 +226,12 @@ def add_memcard_img_psx(
 
 
 def add_c_psp(
-    nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, cpp_flags: str, build_path: str,
+    nw: ninja_syntax.Writer,
+    ver: str,
+    file_name: str,
+    ld_path: str,
+    cpp_flags: str,
+    build_path: str,
 ):
     output = f"{build_path}/{file_name}.o"
     if output in entries:
@@ -392,13 +405,24 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
         for subsegment in segment["subsegments"]:
             kind = subsegment[1]
             if kind == "data":
-                obj = add_s(nw, build_path, f"{asm_path}/data/w_{weapon_id}.data.s", ld_path)
+                obj = add_s(
+                    nw, build_path, f"{asm_path}/data/w_{weapon_id}.data.s", ld_path
+                )
                 objs.append(obj)
             elif kind == "sbss":
-                obj = add_s(nw, build_path, f"{asm_path}/data/w_{weapon_id}.sbss.s", ld_path)
+                obj = add_s(
+                    nw, build_path, f"{asm_path}/data/w_{weapon_id}.sbss.s", ld_path
+                )
                 objs.append(obj)
             elif kind == "c":
-                obj = add_c(nw, ver, f"{src_path}/w_{weapon_id}.c", ld_path, cpp_flags, build_path)
+                obj = add_c(
+                    nw,
+                    ver,
+                    f"{src_path}/w_{weapon_id}.c",
+                    ld_path,
+                    cpp_flags,
+                    build_path,
+                )
                 objs.insert(0, obj)  # the C file needs to always be linked first
             elif kind == ".data":
                 continue
@@ -545,7 +569,16 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 #  if this is psp and a weapon
                 #    # rename the input C file to w_XXX.c
                 #    # make it a dependency of wY_XXX.c.o build
-                objs.append(add_c(nw, version, f"{src_path}/{name}.c", ld_path, cpp_flags, build_path))
+                objs.append(
+                    add_c(
+                        nw,
+                        version,
+                        f"{src_path}/{name}.c",
+                        ld_path,
+                        cpp_flags,
+                        build_path,
+                    )
+                )
             elif kind == "data" or kind == "rodata" or kind == "bss" or kind == "sbss":
                 obj = add_s(nw, build_path, f"{asm_path}/data/{name}.{kind}.s", ld_path)
                 objs.append(obj)

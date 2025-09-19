@@ -186,15 +186,15 @@ static u8* g_Anim1[] = {
 };
 
 static WeaponAnimation g_SoundEvents[] = {
-    {(u16**) g_Anim1, (s8*) g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
-    {(u16**) g_Anim0, (s8*) g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
-    {(u16**) g_Anim0, (s8*) g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
-    {(u16**) g_Anim0, (s8*) g_Hitboxes, 0, SFX_ALUCARD_SWORD_SWISH, 0x41, 4},
-    {(u16**) g_Anim0, (s8*) g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
+    {(u16**)g_Anim1, (s8*)g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
+    {(u16**)g_Anim0, (s8*)g_Hitboxes, 0, SFX_WEAPON_SWISH_B, 0x41, 4},
+    {(u16**)g_Anim0, (s8*)g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
+    {(u16**)g_Anim0, (s8*)g_Hitboxes, 0, SFX_ALUCARD_SWORD_SWISH, 0x41, 4},
+    {(u16**)g_Anim0, (s8*)g_Hitboxes, 0, SFX_WEAPON_SWISH_C, 0x41, 4},
 };
 
 static u16* g_WeaponCluts[] = {
-    (u16*) g_Clut1, (u16*) g_Clut0, (u16*) g_Clut2, (u16*) g_Clut3, (u16*) g_Clut4,
+    (u16*)g_Clut1, (u16*)g_Clut0, (u16*)g_Clut2, (u16*)g_Clut3, (u16*)g_Clut4,
 };
 
 #ifdef WEAPON0
@@ -216,14 +216,13 @@ static void EntityWeaponAttack(Entity* self) {
     anim = &g_SoundEvents[subType];
 
     if (!(PLAYER.ext.weapon.anim >= anim->frameStart &&
-          PLAYER.ext.weapon.anim < anim->frameStart + 7 &&
-          g_Player.unk46)) {
+          PLAYER.ext.weapon.anim < anim->frameStart + 7 && g_Player.unk46)) {
         DestroyEntity(self);
         return;
     }
 
     if (self->step == 0) {
-        SetSpriteBank1((SpriteParts*) g_Animset);
+        SetSpriteBank1((SpriteParts*)g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
         self->palette = 0x110;
         self->unk5A = 0x64;
@@ -303,7 +302,6 @@ static void WeaponUnused38(void) {}
 
 static void WeaponUnused3C(void) {}
 
-
 #ifdef VERSION_PSP
 // TODO: this should be WEAPON0_PTR
 #ifdef WEAPON0
@@ -316,22 +314,20 @@ extern void D_8017D000[];
 extern Weapon w0_000_Overlay;
 
 // TODO: this should be OVL_EXPORT
-void w0_000_Load(void) {
-    memcpy(&WEAPON_PTR, &w0_000_Overlay, sizeof(Weapon));
-}
+void w0_000_Load(void) { memcpy(&WEAPON_PTR, &w0_000_Overlay, sizeof(Weapon)); }
 
 Weapon w0_000_Overlay = {
     EntityWeaponAttack,
-    (void (*)(Entity*)) func_ptr_80170004,
-    (void (*)(Entity*)) func_ptr_80170008,
-    (void (*)(Entity*)) func_ptr_8017000C,
+    (void (*)(Entity*))func_ptr_80170004,
+    (void (*)(Entity*))func_ptr_80170008,
+    (void (*)(Entity*))func_ptr_8017000C,
     func_ptr_80170010,
-    (void (*)(Entity*)) func_ptr_80170014,
+    (void (*)(Entity*))func_ptr_80170014,
     GetWeaponId,
     LoadWeaponPalette,
-    (void (*)(Entity*)) EntityWeaponShieldSpell,
-    (void (*)(Entity*)) func_ptr_80170024,
-    (void (*)(Entity*)) func_ptr_80170028,
+    (void (*)(Entity*))EntityWeaponShieldSpell,
+    (void (*)(Entity*))func_ptr_80170024,
+    (void (*)(Entity*))func_ptr_80170028,
     WeaponUnused2C,
     WeaponUnused30,
     WeaponUnused34,
