@@ -227,8 +227,6 @@ typedef struct ProgAtr { /* Program Headdings */
     unsigned short reserved3; // odd vag spu ptr
 } ProgAtr;                    /* 16 byte */
 
-extern ProgAtr* _svm_pg;
-
 #define NUM_SPU_CHANNELS 24
 
 extern s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];

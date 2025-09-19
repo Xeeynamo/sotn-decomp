@@ -78,6 +78,7 @@ INCLUDE_ASM("st/cen/nonmatchings/cutscene", DrawCutsceneActorName);
 
 #include "../set_cutscene_end.h"
 
+#define CUTSCENE_TILEMAP_SCROLL
 #include "../cutscene_run.h"
 
 #ifndef VERSION_HD

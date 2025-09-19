@@ -11,6 +11,7 @@ extern Dialogue g_Dialogue;
 #include "../cutscene_unk4.h"
 #include "../cutscene_actor_name.h"
 #include "../set_cutscene_end.h"
+#define CUTSCENE_TILEMAP_SCROLL
 #include "../cutscene_run.h"
 #include "../cutscene_skip.h"
 #include "../cutscene_scale_avatar.h"
