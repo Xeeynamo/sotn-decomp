@@ -12,10 +12,10 @@
 static s32 g_HandId = HAND_ID;
 #endif
 
-#define inner_path(hand, n) \
-    CPP_STR(PATH_JOIN(gen/w##hand, n))
-#define path(hand, n) \
-    inner_path(hand, n)
+// clang-format:off
+#define inner_path(hand, n) CPP_STR(PATH_JOIN(gen/w##hand, n))
+// clangformat:on
+#define path(hand, n) inner_path(hand, n)
 
 #ifdef VERSION_PSP
 #include path(HAND_ID, w_000_1.h)

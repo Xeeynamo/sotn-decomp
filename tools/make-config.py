@@ -651,6 +651,18 @@ def make_config_psp(ovl_path: str, version: str):
         str(ovl_header["name"]).split(".")[0],
     )
 
+    # adjust build path for weapons
+    if is_weapon(ovl_name):
+        if ovl_name.startswith("w0_"):
+            build_path = f"build/{version}/weapon0"
+            asset_path = f"assets/weapon"
+        else:
+            build_path = f"build/{version}/weapon1"
+            asset_path = f"assets/weapon1"
+        config["options"]["build_path"] = build_path
+        config["options"]["asset_path"] = asset_path
+        config["options"]["src_path"] = "src/weapon"
+
     # find well-known segment offsets
     matches = find_matches(ovl_name, version)
 
@@ -662,6 +674,10 @@ def make_config_psp(ovl_path: str, version: str):
     vram_c_start = vram + 0x80
     vram_c_end = vram_c_start + text_len
     rodata_start = -1
+    # TODO: this doesn't work if data contains function pointers
+    #
+    # NOTE: weapon is always going to end data with an Overlay struct
+    #       followed by padding to the closest 0x80 alignment
     with open(ovl_path, "rb") as f:
         byte_data = f.read()[data_start:bss_start]
         start = align(data_len // 2, 4)  # very cheap way to skip the entity table
@@ -677,14 +693,20 @@ def make_config_psp(ovl_path: str, version: str):
         rodata_start = data_start + data_len
 
     text_segments = []
-    append_segments(
-        text_segments, 0x80, 8, data_start, f"{ovl_name}_psp/", "80", known_segments
+    if is_weapon(ovl_name):
+        default_segment_name = f"{ovl_name}"
+        append_segments(
+            text_segments, 0x80, 8, data_start, f"", default_segment_name, known_segments
+    )
+    else:
+        default_segment_name = f"80"
+        append_segments(
+            text_segments, 0x80, 8, data_start, f"{ovl_name}_psp/", default_segment_name, known_segments
     )
 
     # set global vram address to allow mapping of global symbols
     config["options"]["global_vram_start"] = HexInt(0x08000000)
 
-    ovl_name = config["options"]["basename"]
     splat_config_path = f"config/splat.{version}.{ovl_name}.yaml"
     with open(splat_config_path, "w") as f:
         f.write(yaml.dump(config, Dumper=IndentDumper, sort_keys=False))
@@ -706,16 +728,23 @@ def make_config_psp(ovl_path: str, version: str):
             f"    subsegments:\n",
         ]
         text.extend(text_segments)
-        # TODO: rodata might not exist
-        text.extend(
-            [
-                f"      - [0x{data_start:X}, data]\n",
-                f"      - [0x{rodata_start:X}, .rodata, 80]\n",
-                f"      - {{type: bss, vram: 0x{bss_start:X}}}\n",
-                f"  - [0x{file_size:X}]\n",
-            ]
-        )
+        text.append(f"      - [0x{data_start:X}, data]\n")
+        print(f"rodata: {rodata_start}")
+        if rodata_start != -1:
+            text.append(f"      - [0x{rodata_start:X}, .rodata, {default_segment_name}]\n")
+        text.append(f"      - {{type: bss, vram: 0x{bss_start:X}}}\n")
+        text.append(f"  - [0x{file_size:X}]\n")
         f.writelines(text)
+
+    if is_weapon(ovl_name):
+        with open("config/symexport.{version}.{ovl_name}.txt", "w"):
+            if ovl_name.startswith("w1"):
+                hand_id = "1"
+            else:
+                hand_id = ""
+            f.write(f"EXTERN(_binary_assets_weapon{hand_id}_mwo_header_bin_start)\n")
+            f.write(f"EXTERN({ovl_name}_Load)")
+
     return splat_config_path
 
 
