@@ -1,12 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
 
-typedef struct {
-    u32 velocityX;
-    u32 velocityY;
-    s16 rotate;
-} unkStr_80182100;
-
 static s16 D_us_80182028[] = {0x00, 0x28, 0x00, 0x04, 0x10, -0x04, -0x20, 0x00};
 static s16 D_us_80182038[] = {0x00, 0x28, 0x08, 0x00};
 static u8 D_us_80182040[] = {6, 1, 6, 2, 6, 3, 6, 4, 6, 5, 0, 0};

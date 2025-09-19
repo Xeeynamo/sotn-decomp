@@ -5,12 +5,6 @@
 extern s32 E_ID(BELL);
 #endif
 
-typedef struct {
-    s16 segments;
-    s16 length;
-    s16 priority;
-} bellRopeParams;
-
 static SVECTOR vector_one_0 = {-16, 0, 0};
 static SVECTOR vector_one_1 = {16, 0, 0};
 static SVECTOR vector_one_2 = {-16, 26, 0};

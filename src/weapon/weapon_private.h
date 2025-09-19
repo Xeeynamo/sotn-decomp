@@ -8,6 +8,40 @@
 #define WEAPON0 // forces WEAPON0 for the time being
 #endif
 
+// Used in weapon/w_046, weapon/w_053, weapon/w_056
+typedef struct {
+    /* 0x0 */ s16 uFlag; // flipX
+    /* 0x2 */ s16 vFlag; // flipY
+    /* 0x4 */ s16 clutFlag;
+    /* 0x6 */ s16 lifetime;
+    /* 0x8 */ s16 rotate;
+    /* 0xA */ u8 r;
+    /* 0xB */ u8 g;
+    /* 0xC */ u8 b;
+    /* 0xD */ u8 unused;
+} WeaponParams;
+
+// Used in weapon/w_051
+typedef struct {
+    s16 isFlipped;
+    s16 timer;
+    s16 rotation;
+} AnimProperties;
+
+// Used in weapon/w_029
+typedef struct {
+    f32 posX;
+    f32 posY;
+    s16 unk8;
+    u16 unkA;
+    s16 unkC;
+    s16 unkE;
+    s16 unk10;
+    s16 spawnDelay;
+    s16 unk14;
+    s16 state;
+} FireShieldDragon;
+
 #if defined(WEAPON0)
 #define HAND_ID 0
 #elif defined(WEAPON1)

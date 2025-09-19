@@ -2,42 +2,6 @@
 extern u16 g_EInitDamageNum[];
 extern u16 g_eDamageDisplayClut[];
 
-typedef struct NumericPrim {
-    /* 0x00 */ struct NumericPrim* next;
-#if defined(VERSION_PC) || defined(VERSION_PSP)
-    u_long dummy;
-#endif
-    /* 0x04 */ u8 r0;
-    /* 0x05 */ u8 g0;
-    /* 0x06 */ u8 b0;
-    /* 0x07 */ u8 type; // PrimitiveType
-    /* 0x08 */ s16 x0;
-    /* 0x0A */ s16 y0;
-    /* 0x0C */ u8 u0;
-    /* 0x0D */ u8 v0;
-    /* 0x0E */ u16 clut;
-    /* 0x10 */ s16 _xOffset;
-    /* 0x12 */ s16 _yOffset;
-    /* 0x14 */ s16 x1;
-    /* 0x16 */ s16 y1;
-    /* 0x18 */ u8 u1;
-    /* 0x19 */ u8 v1;
-    /* 0x1A */ u16 tpage;
-    /* 0x1C */ u16 _width;
-    /* 0x1E */ u16 _height;
-    /* 0x20 */ s16 x2;
-    /* 0x22 */ s16 y2;
-    /* 0x24 */ u8 u2;
-    /* 0x25 */ u8 v2;
-    /* 0x26 */ u16 priority;
-    /* 0x28 */ u32 unused28;
-    /* 0x2C */ s16 x3;
-    /* 0x2E */ s16 y3;
-    /* 0x30 */ u8 u3;
-    /* 0x31 */ u8 v3;
-    /* 0x32 */ u16 drawMode;
-} NumericPrim; /* size=0x34 */
-
 // params: (0xC000) "GUARD" (exclusive)
 //         (0x4000) "CRITICAL!!"
 //         (& 0x3FFF) Numeric value
