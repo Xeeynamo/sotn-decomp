@@ -34,7 +34,7 @@ options:
     .set noreorder /* don't insert nops after branches */
 sha1: bc20b2683492352905317f0634b4db6b84f9985d
 segments:
-  - [0x0, bin, mwo_header]
+  - [0x0, bin, w0_000_mwo_header]
   - name: w0_000
     type: code
     start: 0x80

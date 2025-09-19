@@ -4,8 +4,8 @@
 // Bekatowa, Damascus sword, Hunter sword, Bastard sword, Talwar, Sword of
 // Hador, Luminus, Harper, Gram, Mormegil, Terminus Est, Dark Blade,
 // Mourneblade, Badelaire, Unknown#169
-#include <sfx.h>
 #include "weapon_private.h"
+#include <sfx.h>
 
 #ifdef WEAPON1
 // probably a file split
