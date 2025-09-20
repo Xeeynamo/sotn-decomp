@@ -20,7 +20,7 @@ type SpriteBanks struct {
 	Indices []int                 `json:"indices"`
 }
 
-func ReadSpritesBanks(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteBanks, datarange.DataRange, error) {
+func ReadSpritesBanks(r io.ReadSeeker, baseAddr, addr psx.Addr, numBanks int) (SpriteBanks, datarange.DataRange, error) {
 	if err := addr.MoveFile(r, baseAddr); err != nil {
 		return SpriteBanks{}, datarange.DataRange{}, err
 	}
@@ -28,7 +28,7 @@ func ReadSpritesBanks(r io.ReadSeeker, baseAddr, addr psx.Addr) (SpriteBanks, da
 	offBanks := make([]psx.Addr, 0, banksCount)
 	for {
 		addr := psx.ReadAddr(r)
-		if addr != psx.RamNull && !addr.InRange(baseAddr, boundaries.GameEnd) {
+		if (addr != psx.RamNull && !addr.InRange(baseAddr, boundaries.GameEnd)) || (len(offBanks) == numBanks) {
 			break
 		}
 		offBanks = append(offBanks, addr)

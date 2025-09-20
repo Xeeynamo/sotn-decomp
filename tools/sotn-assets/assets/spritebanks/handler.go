@@ -22,8 +22,9 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if e.Start == e.End {
 		return fmt.Errorf("a group of sprites cannot be 0 bytes long")
 	}
+	numBanks := (e.End - e.Start) / 4
 	r := bytes.NewReader(e.Data)
-	banks, _, err := ReadSpritesBanks(r, e.RamBase, e.RamBase.Sum(e.Start))
+	banks, _, err := ReadSpritesBanks(r, e.RamBase, e.RamBase.Sum(e.Start), numBanks)
 	if err != nil {
 		return fmt.Errorf("failed to read sprites: %w", err)
 	}
@@ -41,7 +42,7 @@ func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {
 		return assets.InfoResult{}, err
 	}
 	boundaries := header.Sprites.Boundaries()
-	_, dataRange, err := ReadSpritesBanks(r, boundaries.StageBegin, header.Sprites)
+	_, dataRange, err := ReadSpritesBanks(r, boundaries.StageBegin, header.Sprites, -1)
 	if err != nil {
 		return assets.InfoResult{}, err
 	}
