@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"path/filepath"
@@ -119,7 +120,11 @@ func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, symbol func(addr psx.
 				}
 				bank.Entries = append(bank.Entries, entry)
 			}
-			newRange = datarange.FromAddr(addrGfxBank, 4+len(bank.Entries)*12+4)
+			alignment := 4
+			if sotn.GetPlatform() == sotn.PlatformPSP {
+				alignment = 8
+			}
+			newRange = datarange.FromAlignedAddr(addrGfxBank, 4+len(bank.Entries)*12+4, alignment)
 		}
 		pool[addrGfxBank] = len(banks)
 		banks = append(banks, bank)
