@@ -299,7 +299,7 @@ func addAssetSymbols(m map[psx.Addr]string, a *assetFileEntry) {
 			if len(args) > 0 {
 				sym = args[0]
 			}
-			m[segment.Vram.Sum(int(offset))] = sym
+			m[segment.Vram.Sum(int(offset) - segment.Start)] = sym
 		}
 	}
 }
