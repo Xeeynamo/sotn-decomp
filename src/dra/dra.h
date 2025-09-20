@@ -488,8 +488,6 @@ typedef struct {
     s32 unk28;
 } PlayerHud;
 
-#include "mist.h"
-
 // g_ButtonCombo is an array of 16, here is what each index is for
 // Names should be updated as each one is decompiled.
 typedef enum {
@@ -524,6 +522,66 @@ typedef struct Cmd14 {
     s16 unkc;
     u8 unke;
 } Cmd14;
+
+// Used in dra/7E4BC, dra/bss, rbo5/unk_4648C, bo4/unk_46E7C
+typedef struct {
+    f32 posX;
+    f32 posY;
+    s16 angle1;
+    s16 angle2;
+    s16 size;
+    s16 xOffset;
+    s16 yOffset;
+    s16 pad;
+} mistStruct; // size = 0x14
+
+// Used in dra/menu, dra_psp/menu
+typedef struct EquipMenuHelper {
+    EquipKind equipTypeFilter;
+    s32 index;
+    s32 isAccessory;
+} EquipMenuHelper;
+
+// Used in dra/menu, dra_psp/menu
+// Struct for table of values to intitialize MenuContext structs
+typedef struct {
+    /* 0x00 */ s16 cursorX;
+    /* 0x02 */ s16 cursorY;
+    /* 0x04 */ u16 cursorW;
+    /* 0x06 */ u16 cursorH;
+    /* 0x08 */ s32 otIdx;
+} MenuContextInit; // size = 0x0C
+
+// Used in dra/dra, dra/7E4BC, dra/d_DBD4
+typedef struct {
+    u16 palette;
+    u8 unk2;
+} Unkstruct_800AE180;
+
+// Used in dra/bss, dra/dra_bss
+typedef struct {
+    u16 start;
+    s16 current;
+    s16* coords;
+    s16 unk8;
+} Unkstruct_80102CD8;
+
+// Used in dra/7E4BC, dra/d_DBD4
+typedef struct {
+    u8 timers[8];
+    u8 blueprints[8];
+    u8 blueprintParams[8];
+    u32 unk18;
+} Unkstruct_800ADEF0; // size:0x1C
+
+// Used in dra/d_10798, dra/8D3E8, dra/dra.h
+// This appears to be a super miniature Entity or something
+// All it has is a state, a timer, and a facing direction.
+typedef struct {
+    s32 state;
+    s32 timer;
+    s32 facingLeft;
+} helper_8012F178;
 
 // Used for the button combos to signal successfully completing the sequence
 #define COMBO_COMPLETE 0xFF
@@ -699,13 +757,6 @@ extern Unkstruct_800BF554 g_SfxData[];
 extern char* aLightTimer02x;
 extern SVECTOR D_800E2024;
 extern SVECTOR D_800E202C;
-// This appears to be a super miniature Entity or something
-// All it has is a state, a timer, and a facing direction.
-typedef struct {
-    s32 state;
-    s32 timer;
-    s32 facingLeft;
-} helper_8012F178;
 extern helper_8012F178 D_800B08CC[6];
 extern s32 D_800B0914;
 extern s32 D_800B0918;

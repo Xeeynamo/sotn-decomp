@@ -250,3 +250,107 @@ typedef struct FrozenShadePrim {
     /* 0x31 */ u8 v3; // TODO not verified
     /* 0x32 */ u16 drawMode;
 } FrozenShadePrim; /* size=0x34 */
+
+typedef struct NumericPrim {
+    /* 0x00 */ struct NumericPrim* next;
+#if defined(VERSION_PC) || defined(VERSION_PSP)
+    u_long dummy;
+#endif
+    /* 0x04 */ u8 r0;
+    /* 0x05 */ u8 g0;
+    /* 0x06 */ u8 b0;
+    /* 0x07 */ u8 type; // PrimitiveType
+    /* 0x08 */ s16 x0;
+    /* 0x0A */ s16 y0;
+    /* 0x0C */ u8 u0;
+    /* 0x0D */ u8 v0;
+    /* 0x0E */ u16 clut;
+    /* 0x10 */ s16 _xOffset;
+    /* 0x12 */ s16 _yOffset;
+    /* 0x14 */ s16 x1;
+    /* 0x16 */ s16 y1;
+    /* 0x18 */ u8 u1;
+    /* 0x19 */ u8 v1;
+    /* 0x1A */ u16 tpage;
+    /* 0x1C */ u16 _width;
+    /* 0x1E */ u16 _height;
+    /* 0x20 */ s16 x2;
+    /* 0x22 */ s16 y2;
+    /* 0x24 */ u8 u2;
+    /* 0x25 */ u8 v2;
+    /* 0x26 */ u16 priority;
+    /* 0x28 */ u32 unused28;
+    /* 0x2C */ s16 x3;
+    /* 0x2E */ s16 y3;
+    /* 0x30 */ u8 u3;
+    /* 0x31 */ u8 v3;
+    /* 0x32 */ u16 drawMode;
+} NumericPrim; /* size=0x34 */
+
+// Used in st0/3101C
+typedef struct {
+    Primitive* prim;
+    float y0;
+} UnkPrimStruct;
+
+struct SubPrim {
+    u8 col[3];
+    u8 type;
+    s16 x0;
+    s16 y0;
+    u8 u0;
+    u8 v0;
+    u16 clut;
+};
+
+typedef struct Primitive2 {
+    struct Primitive2* next;
+#if defined(VERSION_PSP)
+    u32 dummy;
+#endif
+    struct SubPrim prim[4];
+} Primitive2;
+
+// Used in st0/prologue_scroll
+typedef struct ProloguePrimitive {
+    u8 u0;
+    u8 v0;
+    u8 u1;
+    u8 v1;
+    s16 x;
+    s16 y;
+    u16 tpage;
+} ProloguePrimitive;
+
+// Used in tt_002/faerie_ability_data, tt_002/faerie
+typedef struct {
+    /* 0x00 */ s16 count;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ s16 unk6;
+    /* 0x08 */ s16 w;
+    /* 0x0A */ s16 h;
+    /* 0x0C */ s16 r;
+    /* 0x0E */ s16 g;
+    /* 0x10 */ s16 b;
+    /* 0x12 */ u16 priority;
+    /* 0x14 */ s16 drawMode;
+    /* 0x16 */ s16 : 16;
+    /* 0x18 */ u32 flags;
+} ItemPrimitiveParams; // size = 0x1C
+
+typedef struct {
+    /* 0x00 */ s32 x0;
+    /* 0x04 */ s32 y0;
+    /* 0x08 */ s32 x1;
+    /* 0x0C */ s32 y1;
+    /* 0x10 */ s32 x2;
+    /* 0x14 */ s32 y2;
+    /* 0x18 */ s16 u0;
+    /* 0x1A */ s16 v0;
+    /* 0x1C */ s16 u1;
+    /* 0x1E */ s16 v1;
+    /* 0x20 */ s16 u2;
+    /* 0x22 */ s16 v2;
+    /* 0x24 */ u8 pad[8];
+} PrimWeapon017; /* size = 0x2C */

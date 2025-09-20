@@ -30,10 +30,6 @@ typedef enum EntityIDs {
     E_SMALL_ROCKS,
 } EntityIDs;
 
-typedef struct {
-    s16 x, y;
-} WarpCoord;
-
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;

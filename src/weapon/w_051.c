@@ -190,12 +190,6 @@ static s32 color_table[] = {
     /* 7 */ 0, 0, 0, 0, 0,  0,  0,  0,
 };
 
-typedef struct {
-    s16 isFlipped;
-    s16 timer;
-    s16 rotation;
-} AnimProperties;
-
 static AnimProperties D_169000_8017AE74[] = {
     {0, 37, 0x100}, {1, 32, 0xF00}, {0, 48, 0x000}, {1, 24, 0x080},
     {0, 37, 0xF40}, {1, 32, 0x0C0}, {0, 48, 0x000}, {1, 24, 0x140},

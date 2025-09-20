@@ -141,7 +141,7 @@ static u16 D_146000_8017AAC4[] = {
     0x011D, 0x011C, 0x011B, 0x011A, 0x0000,
 };
 
-static Unkstruct_8017AAD8 D_146000_8017AAD8[] = {
+static WeaponParams D_146000_8017AAD8[] = {
     {0x0001, 0x0000, 0x0000, 0x0018, 0x08E0, 0x00, 0xC0, 0x00, 0x01},
     {0x0001, 0x0000, 0x0000, 0x001D, 0x0960, 0x00, 0xC0, 0xC0, 0x00},
     {0x0001, 0x0000, 0x0000, 0x0024, 0x0AE0, 0xC0, 0x00, 0xC0, 0x00},
@@ -190,7 +190,7 @@ static void EntityWeaponAttack(Entity* self) {
     s16 var_s5;
     s16 temp_s5;
     u8 var_s2;
-    Unkstruct_8017AAD8* temp_s3;
+    WeaponParams* temp_s3;
 
     maskedParams = self->params >> 8 & 0x7F;
     if (g_HandId) {
@@ -211,14 +211,14 @@ static void EntityWeaponAttack(Entity* self) {
             return;
         }
         prim = &g_PrimBuf[self->primIndex];
-        if (temp_s3->flipX) {
+        if (temp_s3->uFlag) {
             prim->u0 = prim->u2 = 0x40;
             prim->u1 = prim->u3 = 0;
         } else {
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = 0x40;
         }
-        if (temp_s3->flipY) {
+        if (temp_s3->vFlag) {
             prim->v0 = prim->v1 = var_s2 | 0x40;
             prim->v2 = prim->v3 = var_s2;
         } else {
@@ -258,8 +258,8 @@ static void EntityWeaponAttack(Entity* self) {
         if (!temp) {
             g_api.PlaySfx(SFX_WEAPON_SWISH_A);
         }
-        self->rotate = temp_s3->unk4;
-        self->ext.timer.t = temp_s3->unk3;
+        self->rotate = temp_s3->rotate;
+        self->ext.timer.t = temp_s3->lifetime;
         self->ext.weapon.unk7E = 0;
         g_Player.timers[9] = 4;
         self->step++;
@@ -278,7 +278,7 @@ static void EntityWeaponAttack(Entity* self) {
     }
 
     prim = &g_PrimBuf[self->primIndex];
-    if (temp_s3->clut) {
+    if (temp_s3->clutFlag) {
         prim->clut = var_s5 + D_146000_8017AAC4[self->ext.weapon.unk7E];
     } else {
         prim->clut = var_s5 + D_146000_8017AAB0[self->ext.weapon.unk7E];

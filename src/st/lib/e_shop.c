@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-/// An inventory item consists of a category, which affects
-/// how the other fields are interpretted, an "unlock level",
-/// which is related to the number of things which have been
-/// accomplished in the castle (beating the game unlocks all),
-/// an item ID which corresponds to known item IDs, except for
-/// Jewel of Open, and the final item, which doesn't follow
-/// the pattern and doesn't appear in the shop
+// An inventory item consists of a category, which affects
+// how the other fields are interpretted, an "unlock level",
+// which is related to the number of things which have been
+// accomplished in the castle (beating the game unlocks all),
+// an item ID which corresponds to known item IDs, except for
+// Jewel of Open, and the final item, which doesn't follow
+// the pattern and doesn't appear in the shop
 typedef struct {
     /* 0x0 */ u8 category;
     /* 0x1 */ u8 unlockLevel;

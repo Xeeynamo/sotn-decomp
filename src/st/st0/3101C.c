@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
-#include "dialogue2.h"
 #include "disk.h"
 
 // This file uses g_Dialogue with a different struct than the usual.

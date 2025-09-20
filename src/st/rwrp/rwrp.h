@@ -35,10 +35,6 @@ typedef enum EntityIDs {
     E_SMALL_ROCKS,
 } EntityIDs;
 
-typedef struct {
-    s16 x, y;
-} WarpCoord;
-
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit g_EInitInteractable;
