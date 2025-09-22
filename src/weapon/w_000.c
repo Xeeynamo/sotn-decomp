@@ -7,8 +7,11 @@
 #include "weapon_private.h"
 #include <sfx.h>
 
-#ifdef WEAPON1
-// probably a file split
+#ifdef VERSION_PSP
+// when HAND_ID is zero, MetroWerks puts this in BSS. this may
+// have been in a separate file because it is located at the
+// front of .data (when HAND_ID = 1) on PSP/mwcc, but at the end
+// of .data (regardless of value) on PSX/gcc.
 static s32 g_HandId = HAND_ID;
 #endif
 
@@ -197,7 +200,7 @@ static u16* g_WeaponCluts[] = {
     (u16*)g_Clut1, (u16*)g_Clut0, (u16*)g_Clut2, (u16*)g_Clut3, (u16*)g_Clut4,
 };
 
-#ifdef WEAPON0
+#ifndef VERSION_PSP
 static s32 g_HandId = HAND_ID;
 #endif
 
