@@ -1,12 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo6.h"
 
-extern s32 D_800763C8;
-extern s32 D_800763F8;
 extern AnimationFrame D_us_80182008[];
 extern s32 D_us_801D11C8[];
 extern s32 D_us_801D1248[];
-extern s32 D_us_801D161C;
 
 void func_us_801B4BD0(void) {
     s32 i;
@@ -71,8 +68,8 @@ void func_us_801B4BD0(void) {
 
     primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
     prim = &g_PrimBuf[primIndex];
-    D_800763F8 = primIndex;
-    D_800763C8 |= 0x800000;
+    g_Entities[65].primIndex = primIndex;
+    g_Entities[65].flags |= 0x800000;
     while (prim != NULL) {
         prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         prim = prim->next;
