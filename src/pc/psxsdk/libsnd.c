@@ -505,8 +505,6 @@ void SpuVmKeyOnNow(short vagCount, short pitch) {
     _svm_okof2 = _svm_okof2 & (~_svm_okon2);
 }
 
-void vmNoiseOn(s32 arg0) { assert(0); }
-
 struct rev_param_entry {
     u32 flags;
     u16 dAPF1;

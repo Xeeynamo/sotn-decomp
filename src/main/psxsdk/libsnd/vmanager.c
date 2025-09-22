@@ -217,7 +217,9 @@ void SpuVmDoAllocate(void) {
 }
 
 void vmNoiseOn(u8 arg0) {
-    struct SeqStruct* score = &_ss_score[_svm_cur.field_16_vag_idx & 0xFF][(_svm_cur.field_16_vag_idx & 0xFF00) >> 8];
+    struct SeqStruct* score =
+        &_ss_score[_svm_cur.field_16_vag_idx & 0xFF]
+                  [(_svm_cur.field_16_vag_idx & 0xFF00) >> 8];
     s16 voice;
     u16 bitsUpper;
     u16 bitsLower;
@@ -955,7 +957,7 @@ s32 SpuVmKeyOn(s16 arg0, s16 vabId, s16 prog, u16 note, u16 voll, u16 volr) {
                     _svm_cur.field_18_voice_idx;
                 SpuVmDoAllocate();
                 if (_svm_cur.field_18_voice_idx == 0xFF) {
-                    vmNoiseOn(_svm_cur.field_0x1a & 0xFF);
+                    vmNoiseOn(_svm_cur.field_0x1a);
                 } else {
                     SpuVmKeyOnNow(vagCount, note2pitch() & 0xFFFF);
                 }
@@ -1223,7 +1225,7 @@ s16 SsUtKeyOn(
 
     SpuVmDoAllocate();
     if (_svm_cur.field_18_voice_idx == 0xFF) {
-        vmNoiseOn(voice & 0xFF);
+        vmNoiseOn(voice);
     } else {
         SpuVmKeyOnNow(1, note2pitch2(note, fine));
     }
@@ -1343,7 +1345,7 @@ s16 SsUtKeyOnV(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 fine,
     _svm_voice[voice].unk2 = 0;
     SpuVmDoAllocate();
     if (_svm_cur.field_18_voice_idx == 0xFF) {
-        vmNoiseOn(voice & 0xFF);
+        vmNoiseOn(voice);
     } else {
         SpuVmKeyOnNow(1, note2pitch2(note, fine));
     }
