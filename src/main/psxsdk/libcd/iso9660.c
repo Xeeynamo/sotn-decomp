@@ -24,6 +24,7 @@ extern int D_80032AB0;
 extern int D_80032DB0;
 extern int D_80032DB4;
 extern CdlFILE file[CdlMAXFILE];
+extern CdlDIR D_80039860[];
 extern CdlDIR D_80039884[CdlMAXDIR];
 extern u8 load_buf[0x800];
 
@@ -190,7 +191,67 @@ s32 CD_searchdir(s32 arg0, char* arg1) {
     return -1;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libcd/iso9660", CD_cachefile);
+s32 CD_cachefile(s32 arg0) {
+    LBA sp18;
+    u8* ptr;
+    s32 i;
+    short* namePtr;
+
+    if (arg0 == D_80032DB0) {
+        return 1;
+    }
+
+    if (cd_read(1, D_80039860[arg0].unk0, load_buf) != 1) {
+        if (D_80032AB0 > 0) {
+            printf("CD_cachefile: dir not found\n");
+        }
+        return -1;
+    }
+    if (D_80032AB0 > 1) {
+        printf("CD_cachefile: searching...\n");
+    }
+    i = 0;
+    ptr = load_buf;
+    while (ptr < load_buf + 0x800) {
+        if (ptr[0] == 0) {
+            break;
+        }
+        sp18.i = ((LBA*)&ptr[2])->i;
+        CdIntToPos(sp18.addr, &file[i].pos);
+        ((LBA*)&file[i].size)->i = ((LBA*)&ptr[0xA])->i;
+        switch (i) {
+        case 0:
+            namePtr = file[i].name;
+            strcpy(namePtr, ".");
+            break;
+        case 1:
+            namePtr = file[i].name;
+            strcpy(namePtr, "..");
+            break;
+        default:
+            cd_memcpy(file[i].name, &ptr[0x21], ptr[0x20]);
+            file[i].name[ptr[0x20]] = '\0';
+            break;
+        }
+        if (D_80032AB0 > 1) {
+            printf("\t(%02x:%02x:%02x) %8d %s\n", file[i].pos.minute,
+                   file[i].pos.second, file[i].pos.sector, file[i].size,
+                   file[i].name);
+        }
+        ptr += ptr[0];
+        if (++i >= CdlMAXFILE) {
+            break;
+        }
+    }
+    D_80032DB0 = arg0;
+    if (i < CdlMAXFILE) {
+        file[i].name[0] = '\0';
+    }
+    if (D_80032AB0 > 1) {
+        printf("CD_cachefile: %d files found\n", i);
+    }
+    return 1;
+}
 
 int cd_read(int sectors, int arg1, u_long* buf) {
     CdlLOC p;
