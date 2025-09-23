@@ -1,44 +1,27 @@
 
-use crate::line_transformer::LineTransformer;
-use crate::enum_line_transformer::EnumLineTransformer;
+use crate::define_enum_transformer;
 
-pub struct PrimitiveTypeTransformer {
-    transformer: EnumLineTransformer<u16>,
-}
 
-static TYPES: [(u16, &'static str); 12] = [
-    (0, "PRIM_NONE"),
-    (1, "PRIM_TILE"),
-    (2, "PRIM_LINE_G2"),
-    (3, "PRIM_G4"),
-    (4, "PRIM_GT4"),
-    (5, "PRIM_GT3"),
-    (6, "PRIM_SPRT"),
-    (7, "PRIM_ENV"),
-    (8, "FLAG_DRAW_UNK100"),
-    (0x11, "PRIM_TITLE_ALT"),
-    (0x12, "PRIM_LINE_G2"),
-    (0x13, "PRIM_G4_ALT"),
-];
-
-impl PrimitiveTypeTransformer {
-    pub fn new() -> Self {
-        Self {
-            transformer: EnumLineTransformer::<u16>::new(
-                Some("prim"), "type", &TYPES.iter().collect()),
-        }
-    }
-}
-
-impl LineTransformer for PrimitiveTypeTransformer {
-    fn transform_line(&self, line: &str) -> String {
-        self.transformer.transform_line(line)
-    }
-}
+define_enum_transformer!(PrimitiveTypeTransformer<u16>, prim->type, [
+    PRIM_NONE           = 0,
+    PRIM_TILE           = 1,
+    PRIM_LINE_G2        = 2,
+    PRIM_G4             = 3,
+    PRIM_GT4            = 4,
+    PRIM_GT3            = 5,
+    PRIM_SPRT           = 6,
+    PRIM_ENV            = 7,
+    FLAG_DRAW_UNK100    = 8,
+    PRIM_TITLE_ALT      = 0x11,
+    PRIM_LINE_G2        = 0x12,
+    PRIM_G4_ALT         = 0x13,
+]);
 
 
 #[cfg(test)]
 mod tests {
+    use crate::line_transformer::LineTransformer;
+
     use super::*;
     use once_cell::sync::Lazy;
 

@@ -85,3 +85,30 @@ impl<U: EnumValue> LineTransformer for EnumLineTransformer<U> where <U as FromSt
         self.regex.replace_all(line, |captures: &regex::Captures| self.replace_enum(captures)).to_string()
     }
 }
+
+#[macro_export]
+macro_rules! define_enum_transformer {
+    ($kind: ident<$inner: ty>, $variable: ident->$field: ident, [ $($name: ident = $value: expr,)* ]) => {
+        pub struct $kind {
+            transformer: crate::enum_line_transformer::EnumLineTransformer<$inner>,
+        }
+
+        impl $kind {
+            pub const VALUES: &[($inner, &'static str)] = &[
+                $(($value as $inner, stringify!($name)),)*
+            ];
+            pub fn new() -> Self {
+                Self {
+                    transformer: crate::enum_line_transformer::EnumLineTransformer::<$inner>::new(
+                        Some(stringify!($variable)), stringify!($field), &Self::VALUES.iter().collect()),
+                }
+            }
+        }
+
+        impl crate::line_transformer::LineTransformer for $kind {
+            fn transform_line(&self, line: &str) -> String {
+                self.transformer.transform_line(line)
+            }
+        }
+    };
+}

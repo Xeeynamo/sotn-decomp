@@ -164,3 +164,53 @@ impl<U: EnumValue> LineTransformer for BitFlagLineTransformer<U> where <U as Fro
         self.regex.replace_all(line, |captures: &regex::Captures| self.replace_enum(captures)).to_string()
     }
 }
+
+#[macro_export]
+macro_rules! define_flag_transformer {
+    ($kind: ident<$inner: ty>, $field: ident, [ $default: ident = default, $($name: ident = BIT($bit: expr),)* ]) => {
+        pub struct $kind {
+            transformer: crate::bit_flag_line_transformer::BitFlagLineTransformer<$inner>,
+        }
+
+        impl $kind {
+            pub const VALUES: &[($inner, &'static str)] = &[
+                $(((1 << $bit) as $inner, stringify!($name)),)*
+            ];
+            pub fn new() -> Self {
+                Self {
+                    transformer: crate::bit_flag_line_transformer::BitFlagLineTransformer::<$inner>::new(
+                        stringify!($field), stringify!($default), &Self::VALUES.iter().collect()),
+                }
+            }
+        }
+
+        impl crate::line_transformer::LineTransformer for $kind {
+            fn transform_line(&self, line: &str) -> String {
+                self.transformer.transform_line(line)
+            }
+        }
+    };
+    ($kind: ident<$inner: ty>, $field: ident, [ $default: literal = default, $($name: ident = BIT($bit: expr),)* ]) => {
+        pub struct $kind {
+            transformer: crate::bit_flag_line_transformer::BitFlagLineTransformer<$inner>,
+        }
+
+        impl $kind {
+            const VALUES: &[($inner, &'static str)] = &[
+                $(((1 << $bit) as $inner, stringify!($name)),)*
+            ];
+            pub fn new() -> Self {
+                Self {
+                    transformer: crate::bit_flag_line_transformer::BitFlagLineTransformer::<$inner>::new(
+                        stringify!($field), stringify!($default), &Self::VALUES.iter().collect()),
+                }
+            }
+        }
+
+        impl crate::line_transformer::LineTransformer for $kind {
+            fn transform_line(&self, line: &str) -> String {
+                self.transformer.transform_line(line)
+            }
+        }
+    };
+}

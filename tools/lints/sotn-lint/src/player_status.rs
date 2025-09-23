@@ -1,64 +1,45 @@
-use crate::bit_flag_line_transformer::BitFlagLineTransformer;
-use crate::line_transformer::LineTransformer;
+use crate::define_flag_transformer;
 
-pub struct PlayerStatusTransformer {
-    transformer: BitFlagLineTransformer<u32>,
-}
 
-static PLAYER_STATUSES: [(u32, &'static str); 31] = [
-    (1 << 0, "PLAYER_STATUS_BAT_FORM"),
-    (1 << 1, "PLAYER_STATUS_MIST_FORM"),
-    (1 << 2, "PLAYER_STATUS_WOLF_FORM"),
-    (1 << 3, "PLAYER_STATUS_UNK8"),
-    (1 << 4, "PLAYER_STATUS_UNK10"),
-    (1 << 5, "PLAYER_STATUS_CROUCH"),
-    (1 << 6, "PLAYER_STATUS_UNK40"),
-    (1 << 7, "PLAYER_STATUS_STONE"),
-    (1 << 8, "PLAYER_STATUS_UNK100"),
-    (1 << 9, "PLAYER_STATUS_UNK200"),
-    (1 << 10, "PLAYER_STATUS_UNK400"),
-    (1 << 11, "PLAYER_STATUS_UNK800"),
-    (1 << 12, "PLAYER_STATUS_UNK1000"),
-    (1 << 13, "PLAYER_STATUS_UNK2000"),
-    (1 << 14, "PLAYER_STATUS_POISON"),
-    (1 << 15, "PLAYER_STATUS_CURSE"),
-    (1 << 16, "PLAYER_STATUS_UNK10000"),
-    (1 << 17, "PLAYER_STATUS_UNK20000"),
-    (1 << 18, "PLAYER_STATUS_DEAD"),
-    (1 << 19, "PLAYER_STATUS_UNK80000"),
-    (1 << 20, "PLAYER_STATUS_UNK100000"),
-    (1 << 21, "PLAYER_STATUS_UNK200000"),
-    (1 << 22, "PLAYER_STATUS_UNK400000"),
-    (1 << 23, "PLAYER_STATUS_UNK800000"),
-    (1 << 24, "PLAYER_STATUS_AXEARMOR"),
-    (1 << 25, "PLAYER_STATUS_ABSORB_BLOOD"),
-    (1 << 26, "PLAYER_STATUS_UNK4000000"),
-    (1 << 27, "NO_AFTERIMAGE"),
-    (1 << 28, "PLAYER_STATUS_UNK10000000"),
-    (1 << 29, "PLAYER_STATUS_UNK40000000"),
-    (1 << 30, "PLAYER_STATUS_UNK80000000")
-];
-
-impl PlayerStatusTransformer {
-    pub fn new() -> Self {
-        Self {
-            transformer: BitFlagLineTransformer::<u32>::new(
-                "status",
-                "0",
-                &PLAYER_STATUSES.iter().collect(),
-            ),
-        }
-    }
-}
-
-impl LineTransformer for PlayerStatusTransformer {
-    fn transform_line(&self, line: &str) -> String {
-        self.transformer.transform_line(line)
-    }
-}
+define_flag_transformer!(PlayerStatusTransformer<u32>, status, [
+    0                           = default,
+    PLAYER_STATUS_BAT_FORM      = BIT(0),
+    PLAYER_STATUS_MIST_FORM     = BIT(1),
+    PLAYER_STATUS_WOLF_FORM     = BIT(2),
+    PLAYER_STATUS_UNK8          = BIT(3),
+    PLAYER_STATUS_UNK10         = BIT(4),
+    PLAYER_STATUS_CROUCH        = BIT(5),
+    PLAYER_STATUS_UNK40         = BIT(6),
+    PLAYER_STATUS_STONE         = BIT(7),
+    PLAYER_STATUS_UNK100        = BIT(8),
+    PLAYER_STATUS_UNK200        = BIT(9),
+    PLAYER_STATUS_UNK400        = BIT(10),
+    PLAYER_STATUS_UNK800        = BIT(11),
+    PLAYER_STATUS_UNK1000       = BIT(12),
+    PLAYER_STATUS_UNK2000       = BIT(13),
+    PLAYER_STATUS_POISON        = BIT(14),
+    PLAYER_STATUS_CURSE         = BIT(15),
+    PLAYER_STATUS_UNK10000      = BIT(16),
+    PLAYER_STATUS_UNK20000      = BIT(17),
+    PLAYER_STATUS_DEAD          = BIT(18),
+    PLAYER_STATUS_UNK80000      = BIT(19),
+    PLAYER_STATUS_UNK100000     = BIT(20),
+    PLAYER_STATUS_UNK200000     = BIT(21),
+    PLAYER_STATUS_UNK400000     = BIT(22),
+    PLAYER_STATUS_UNK800000     = BIT(23),
+    PLAYER_STATUS_AXEARMOR      = BIT(24),
+    PLAYER_STATUS_ABSORB_BLOOD  = BIT(25),
+    PLAYER_STATUS_UNK4000000    = BIT(26),
+    NO_AFTERIMAGE               = BIT(27),
+    PLAYER_STATUS_UNK10000000   = BIT(28),
+    PLAYER_STATUS_UNK40000000   = BIT(29),
+    PLAYER_STATUS_UNK8000000    = BIT(30),
+]);
 
 #[cfg(test)]
 mod tests {
+    use crate::line_transformer::LineTransformer;
+
     use super::*;
     use once_cell::sync::Lazy;
 

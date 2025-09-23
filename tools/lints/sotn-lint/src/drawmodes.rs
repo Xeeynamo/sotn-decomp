@@ -1,44 +1,28 @@
-use crate::line_transformer::LineTransformer;
-use crate::bit_flag_line_transformer::BitFlagLineTransformer;
+use crate::define_flag_transformer;
 
-pub struct DrawModeTransformer {
-    transformer: BitFlagLineTransformer<u16>,
-}
+define_flag_transformer!(DrawModeTransformer<u16>, drawMode, [
+    DRAW_DEFAULT    = default,
+    DRAW_TRANSP     = BIT(0),
+    DRAW_UNK02      = BIT(1),
+    DRAW_COLORS     = BIT(2),
+    DRAW_HIDE       = BIT(3),
+    DRAW_TPAGE      = BIT(4),
+    DRAW_TPAGE2     = BIT(5),
+    DRAW_UNK_40     = BIT(6),
+    DRAW_MENU       = BIT(7),
+    DRAW_UNK_100    = BIT(8),
+    DRAW_UNK_200    = BIT(9),
+    DRAW_UNK_400    = BIT(10),
+    DRAW_UNK_800    = BIT(11),
+    DRAW_UNK_1000   = BIT(12),
+    DRAW_ABSPOS     = BIT(13),
+]);
 
-static DRAW_MODES: [(u16, &'static str); 14] = [
-    (1 << 0, "DRAW_TRANSP"),
-    (1 << 1, "DRAW_UNK02"),
-    (1 << 2, "DRAW_COLORS"),
-    (1 << 3, "DRAW_HIDE"),
-    (1 << 4, "DRAW_TPAGE"),
-    (1 << 5, "DRAW_TPAGE2"),
-    (1 << 6, "DRAW_UNK_40"),
-    (1 << 7, "DRAW_MENU"),
-    (1 << 8, "DRAW_UNK_100"),
-    (1 << 9, "DRAW_UNK_200"),
-    (1 << 10, "DRAW_UNK_400"),
-    (1 << 11, "DRAW_UNK_800"),
-    (1 << 12, "DRAW_UNK_1000"),
-    (1 << 13, "DRAW_ABSPOS"),
-];
-
-impl DrawModeTransformer {
-    pub fn new() -> Self {
-        Self {
-            transformer: BitFlagLineTransformer::<u16>::new(
-                "drawMode", "DRAW_DEFAULT", &DRAW_MODES.iter().collect()),
-        }
-    }
-}
-
-impl LineTransformer for DrawModeTransformer {
-    fn transform_line(&self, line: &str) -> String {
-        self.transformer.transform_line(line)
-    }
-}
 
 #[cfg(test)]
 mod tests {
+    use crate::line_transformer::LineTransformer;
+
     use super::*;
     use once_cell::sync::Lazy;
 

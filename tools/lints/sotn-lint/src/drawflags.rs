@@ -1,42 +1,22 @@
-use crate::bit_flag_line_transformer::BitFlagLineTransformer;
-use crate::line_transformer::LineTransformer;
+use crate::define_flag_transformer;
 
-pub struct DrawFlagsTransformer {
-    transformer: BitFlagLineTransformer<u16>,
-}
-
-static DRAW_FLAGS: [(u16, &'static str); 9] = [
-    (1 << 0, "FLAG_DRAW_SCALEX"),
-    (1 << 1, "FLAG_DRAW_SCALEY"),
-    (1 << 2, "FLAG_DRAW_ROTATE"),
-    (1 << 3, "FLAG_DRAW_OPACITY"),
-    (1 << 4, "FLAG_DRAW_UNK10"),
-    (1 << 5, "FLAG_DRAW_UNK20"),
-    (1 << 6, "FLAG_DRAW_UNK40"),
-    (1 << 7, "FLAG_BLINK"),
-    (1 << 8, "FLAG_DRAW_UNK100"),
-];
-
-impl DrawFlagsTransformer {
-    pub fn new() -> Self {
-        Self {
-            transformer: BitFlagLineTransformer::<u16>::new(
-                "drawFlags",
-                "FLAG_DRAW_DEFAULT",
-                &DRAW_FLAGS.iter().collect(),
-            ),
-        }
-    }
-}
-
-impl LineTransformer for DrawFlagsTransformer {
-    fn transform_line(&self, line: &str) -> String {
-        self.transformer.transform_line(line)
-    }
-}
+define_flag_transformer!(DrawFlagsTransformer<u16>, drawFlags, [
+    FLAG_DRAW_DEFAULT   = default,
+    FLAG_DRAW_SCALEX    = BIT(0),
+    FLAG_DRAW_SCALEY    = BIT(1),
+    FLAG_DRAW_ROTATE    = BIT(2),
+    FLAG_DRAW_OPACITY   = BIT(3),
+    FLAG_DRAW_UNK10     = BIT(4),
+    FLAG_DRAW_UNK20     = BIT(5),
+    FLAG_DRAW_UNK40     = BIT(6),
+    FLAG_BLINK          = BIT(7),
+    FLAG_DRAW_UNK100    = BIT(8),
+]);
 
 #[cfg(test)]
 mod tests {
+    use crate::line_transformer::LineTransformer;
+
     use super::*;
     use once_cell::sync::Lazy;
 

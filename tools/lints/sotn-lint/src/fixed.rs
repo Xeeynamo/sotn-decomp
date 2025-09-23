@@ -58,55 +58,44 @@ fn gen_patterns(patterns: &mut Vec<Pattern>) {
 
 fn count_digits_after_decimal(number: f64) -> usize {
     let binding = number.to_string();
-    let decimal_part: Vec<&str> = binding.split('.').collect();
-    if decimal_part.len() > 1 {
-        decimal_part[1].len()
-    } else {
-        0
-    }
+    binding.split('.').skip(1).next().map(|s| s.len()).unwrap_or_default()
 }
 
 fn count_digits_before_decimal(number: f64) -> usize {
     let binding = number.to_string();
     let decimal_part: Vec<&str> = binding.split('.').collect();
-    if decimal_part.len() > 0 {
-        decimal_part[0].len()
-    } else {
-        0
-    }
+
+    decimal_part.first().map(|s| s.len()).unwrap_or_default()
 }
 
 fn hex_string_to_float(hex_str: &str) -> Option<f64> {
     let cleaned_str = hex_str.trim_start_matches("-0x").trim_start_matches("0x");
-    if let Ok(hex_value) = i64::from_str_radix(cleaned_str, 16) {
-        let result = hex_value as f64 / 65536.0;
-        if hex_str.starts_with('-') {
-            Some(-result)
-        } else {
-            Some(result)
-        }
-    } else {
-        None
-    }
+    let Ok(hex_value) = i64::from_str_radix(cleaned_str, 16) else {
+        return None;
+    };
+    let result = hex_value as f64 / 65536.0;
+
+    Some(if hex_str.starts_with('-') { -result } else { result })
 }
 
 fn transform_line_fixed(line: &str) -> String {
     for pattern in PATTERNS.iter() {
-        if let Some(thing) = pattern.regex.captures(line) {
-            if let Some(hex_str) = thing.get(2) {
-                if let Some(conv) = hex_string_to_float(hex_str.into()) {
-                    if count_digits_after_decimal(conv) > 5 || count_digits_before_decimal(conv) > 3
-                    {
-                        return line.to_string();
-                    } else {
-                        if let Some(group_str) = thing.get(1) {
-                            let fixed_value =
-                                fixed(conv, group_str.as_str(), &pattern.should_replace);
-                            return pattern.regex.replace(line, &fixed_value).to_string();
-                        }
-                    }
-                }
-            }
+        let Some(thing) = pattern.regex.captures(line) else {
+            continue;
+        };
+        let Some(hex_str) = thing.get(2) else {
+            continue;
+        };
+        let Some(conv) = hex_string_to_float(hex_str.into()) else {
+            continue;
+        };
+        if count_digits_after_decimal(conv) > 5 || count_digits_before_decimal(conv) > 3 {
+            return line.to_string();
+        } 
+        if let Some(group_str) = thing.get(1) {
+            let fixed_value =
+                fixed(conv, group_str.as_str(), pattern.should_replace);
+            return pattern.regex.replace(line, &fixed_value).to_string();
         }
     }
     line.to_string()
