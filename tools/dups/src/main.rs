@@ -513,6 +513,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
     // Then sort by the length of functions in reverse order
     entries.sort_by_key(|(_, functions)| std::cmp::Reverse(functions.len()));
 
+    // BUG: That if always true
     if let o_file = output_file.unwrap() {
         let mut output_file = File::create(o_file).expect("Unable to create file");
         writeln!(
@@ -556,6 +557,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
                 }
             }
         }
+    // Never executed
     } else {
         for (_, functions) in entries {
             if functions.len() > 1 {
