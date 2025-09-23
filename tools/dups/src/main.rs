@@ -84,7 +84,7 @@ fn process_directory(dir_path: &str, funcs: &mut Vec<Function>) {
                 if let Ok(entry) = entry {
                     let item_path = entry.path();
                     if item_path.is_file() && item_path.to_string_lossy().ends_with(".s") {
-                        println!("checking {:?}", item_path);
+                        println!("checking {item_path:?}");
 
                         let mut file = fs::File::open(item_path.clone()).unwrap();
                         let mut buffer = String::new();
@@ -107,8 +107,8 @@ fn process_directory(dir_path: &str, funcs: &mut Vec<Function>) {
             });
         }
         Err(error) => {
-            eprintln!("Unable to read directory: {}", error);
-            println!("Directory path: {}", dir_path);
+            eprintln!("Unable to read directory: {error}");
+            println!("Directory path: {dir_path}");
         }
     }
 }
@@ -166,7 +166,7 @@ fn process_directory_for_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
         if let Ok(entry) = entry {
             let item_path = entry.path();
             if item_path.is_file() && item_path.to_string_lossy().ends_with(".c") {
-                println!("checking {:?}", item_path);
+                println!("checking {item_path:?}");
 
                 let file = File::open(item_path.clone()).expect("Unable to open file");
                 let mut reader = BufReader::new(file);
@@ -207,10 +207,10 @@ fn process_buffer_for_include_asm(file_content: &str, file_path: &str) -> Vec<In
                 output.push(IncludeAsmEntry {
                     line: buffer.clone(),
                     path: file_path.to_string(),
-                    asm_path: format!("../../asm/us/{}/{}.s", asm_dir, asm_file),
+                    asm_path: format!("../../asm/us/{asm_dir}/{asm_file}.s"),
                 });
             } else {
-                println!("Failed to match regex on line: {}", buffer);
+                println!("Failed to match regex on line: {buffer}");
             }
             buffer.clear();
         }
@@ -607,9 +607,9 @@ fn do_ordered_compare(dirs: Vec<String>, threshold: f64) {
 
     // print out all found duplicates with their similarity values
     let hyphens = "-".repeat(80);
-    println!("{}", hyphens);
+    println!("{hyphens}");
     println!("Duplicates and similarity");
-    println!("{}", hyphens);
+    println!("{hyphens}");
 
     for func_0 in &files[0].funcs {
         for func_1 in &files[1].funcs {
@@ -634,16 +634,16 @@ fn do_ordered_compare(dirs: Vec<String>, threshold: f64) {
     // print out functions as they are seen in order by the first file. Indicate if it's a
     // duplicate if the second function is non-blank
 
-    println!("{}", hyphens);
+    println!("{hyphens}");
     println!("Functions in file order");
-    println!("{}", hyphens);
+    println!("{hyphens}");
     println!(
         "{:<width$} | {:<width$}",
         files[0].name,
         files[1].name,
         width = 40
     );
-    println!("{}", hyphens);
+    println!("{hyphens}");
 
     for func_0 in &files[0].funcs {
         let mut has_dup = false;

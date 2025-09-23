@@ -12,15 +12,15 @@ impl LineTransformer for FixedTransformer {
 }
 
 fn fixed(x: f64, group: &str, has_semicolon: &bool) -> String {
-    let formatted_str = format!("{:.20}", x);
+    let formatted_str = format!("{x:.20}");
     let mut trimmed_str = formatted_str.trim_end_matches('0').to_string();
     if trimmed_str.ends_with('.') {
         trimmed_str.push('0');
     }
     if *has_semicolon {
-        format!("{}FIX({});", group, trimmed_str)
+        format!("{group}FIX({trimmed_str});")
     } else {
-        format!("{}FIX({}))", group, trimmed_str)
+        format!("{group}FIX({trimmed_str}))")
     }
 }
 

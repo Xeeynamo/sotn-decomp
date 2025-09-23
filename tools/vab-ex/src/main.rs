@@ -58,16 +58,16 @@ fn main() {
     // Create the output directory if it doesn't exist
     if !out_dir_path.exists() {
         match fs::create_dir_all(out_dir_path) {
-            Ok(()) => println!("Output directory created: {:?}", out_dir_path),
+            Ok(()) => println!("Output directory created: {out_dir_path:?}"),
             Err(err) => {
-                eprintln!("Error creating output directory: {}", err);
+                eprintln!("Error creating output directory: {err}");
                 return;
             }
         }
     }
 
     if let Err(err) = read_data_from_file(&in_vh, &in_vb, &out_dir) {
-        eprintln!("Error: {}", err);
+        eprintln!("Error: {err}");
     }
 }
 
@@ -140,7 +140,7 @@ fn write_vag(vag_name: String, pcm_name: String, start_pos: u64, data_size: u64)
 
         for i in (0..28).step_by(2) {
             d = read_u8(&mut vag)? as i32;
-            // print!("{} , ", d);
+            // print!("{d} , ");
             s = (d & 0xf) << 12;
             if s & 0x8000 != 0 {
                 s |= 0xffff_0000u32 as i32;
@@ -208,43 +208,43 @@ struct HeaderStruct {
 
 fn read_header(file: &Vec<u8>) -> Result<HeaderStruct> {
     let id = little_endian_ascii_to_str(file, 0, 4)?;
-    println!("ID: {}", id);
+    println!("ID: {id}");
 
     let version = read_u32_at_offset(file, 4)?;
-    println!("Version: {}", version);
+    println!("Version: {version}");
 
     let vab_id = read_u32_at_offset(file, 8)?;
-    println!("VAB ID: {}", vab_id);
+    println!("VAB ID: {vab_id}");
 
     let total_size = read_u32_at_offset(file, 12)?;
-    println!("Total Size: {}", total_size);
+    println!("Total Size: {total_size}");
 
     let reserved_1 = read_u16_at_offset(file, 16)?;
-    println!("Reserved: {}", reserved_1);
+    println!("Reserved: {reserved_1}");
 
     let num_programs = read_u16_at_offset(file, 18)?;
-    println!("Number of Programs: {}", num_programs);
+    println!("Number of Programs: {num_programs}");
 
     let num_tones = read_u16_at_offset(file, 20)?;
-    println!("Number of Tones: {}", num_tones);
+    println!("Number of Tones: {num_tones}");
 
     let num_vags = read_u16_at_offset(file, 22)?;
-    println!("Number of VAGs: {}", num_vags);
+    println!("Number of VAGs: {num_vags}");
 
     let master_volume = read_u8_at_offset(file, 24)?;
-    println!("Master Volume: {}", master_volume);
+    println!("Master Volume: {master_volume}");
 
     let master_pan = read_u8_at_offset(file, 25)?;
-    println!("Master Pan: {}", master_pan);
+    println!("Master Pan: {master_pan}");
 
     let bank_attr_1 = read_u8_at_offset(file, 26)?;
-    println!("Bank Attributes 1: {}", bank_attr_1);
+    println!("Bank Attributes 1: {bank_attr_1}");
 
     let bank_attr_2 = read_u8_at_offset(file, 27)?;
-    println!("Bank Attributes 2: {}", bank_attr_2);
+    println!("Bank Attributes 2: {bank_attr_2}");
 
     let reserved_2 = read_u32_at_offset(file, 28)?;
-    println!("Reserved2: {}", reserved_2);
+    println!("Reserved2: {reserved_2}");
 
     Ok(HeaderStruct {
         id,
@@ -275,7 +275,7 @@ fn read_data_from_file(in_vh: &str, in_vb: &str, out_dir: &str) -> Result<()> {
             let header = read_header(&file_data).unwrap();
 
             let vag_offset_table_start = 0x20 + (32 * 16 * header.num_programs);
-            println!("vag_offset_table_start {}", vag_offset_table_start);
+            println!("vag_offset_table_start {vag_offset_table_start}");
 
             let off_progs = 0 + 0x20;
             let off_tone_attrs = off_progs + (16 * 128);
@@ -286,11 +286,11 @@ fn read_data_from_file(in_vh: &str, in_vb: &str, out_dir: &str) -> Result<()> {
                 let off = off_vag_offsets + vag_num * 2;
                 let vag_size = (read_u16_at_offset(&file_data, off.into())?) as u32 * 8;
 
-                println!("vag offset {} size {}", vag_offset, vag_size);
+                println!("vag offset {vag_offset} size {vag_size}");
 
                 write_vag(
                     in_vb.to_string(),
-                    format!("{}/out{}.wav", out_dir, vag_num),
+                    format!("{out_dir}/out{vag_num}.wav"),
                     vag_offset,
                     vag_size as u64,
                 )
@@ -309,15 +309,15 @@ fn read_data_from_file(in_vh: &str, in_vb: &str, out_dir: &str) -> Result<()> {
         
             let vh_file_json = serde_json::to_string_pretty(&vh_file).unwrap();
 
-            let json_path = format!("{}/vh.json", out_dir);
+            let json_path = format!("{out_dir}/vh.json");
 
             match write_string_to_file(&json_path, &vh_file_json) {
                 Ok(()) => println!("String successfully written to the file."),
-                Err(e) => eprintln!("Error writing to the file: {}", e),
+                Err(e) => eprintln!("Error writing to the file: {e}"),
             }            
         }
         Err(e) => {
-            println!("Error reading the file: {}", e);
+            println!("Error reading the file: {e}");
         }
     }
 
@@ -345,28 +345,28 @@ fn read_programs(file: &Vec<u8>, header: &HeaderStruct) -> Result<Vec<Program>> 
     for program_num in 0..128 {
         let offset = 0x20 + program_num * 16;
 
-        println!("----- Program {} -----", program_num);
+        println!("----- Program {program_num} -----");
 
         let num_tones = read_u8_at_offset(file, (offset + 0).try_into().unwrap())?;
-        println!(" Number of Tones: {}", num_tones);
+        println!(" Number of Tones: {num_tones}");
 
         let volume = read_u8_at_offset(file, (offset + 1).try_into().unwrap())?;
-        println!(" Volume: {}", volume);
+        println!(" Volume: {volume}");
 
         let priority = read_u8_at_offset(file, (offset + 2).try_into().unwrap())?;
-        println!(" Priority: {}", priority);
+        println!(" Priority: {priority}");
 
         let mode = read_u8_at_offset(file, (offset + 3).try_into().unwrap())?;
-        println!(" Mode: {}", mode);
+        println!(" Mode: {mode}");
 
         let pan = read_u8_at_offset(file, (offset + 4).try_into().unwrap())?;
-        println!(" Pan: {}", pan);
+        println!(" Pan: {pan}");
 
         let attr = read_u8_at_offset(file, (offset + 5).try_into().unwrap())?;
-        println!(" Attr: {}", attr);
+        println!(" Attr: {attr}");
 
         let name = little_endian_ascii_to_str(file, (offset + 6).try_into().unwrap(), 10)?;
-        println!(" Name: {:?}", name);
+        println!(" Name: {name:?}");
 
         result.push(Program {
             num_tones,
@@ -431,70 +431,70 @@ fn read_tone_attrs(file: &Vec<u8>, header: &HeaderStruct) -> Result<Vec<Vec<Tone
             );
 
             let prior = read_u8_at_offset(file, (off_current_tone_attr + 0).into())?;
-            println!(" prior: {}", prior);
+            println!(" prior: {prior}");
 
             let mode = read_u8_at_offset(file, (off_current_tone_attr + 1).into())?;
-            println!(" mode: {}", mode);
+            println!(" mode: {mode}");
 
             let volume = read_u8_at_offset(file, (off_current_tone_attr + 2).into())?;
-            println!(" volume: {}", volume);
+            println!(" volume: {volume}");
 
             let pan = read_u8_at_offset(file, (off_current_tone_attr + 3).into())?;
-            println!(" pan: {}", pan);
+            println!(" pan: {pan}");
 
             let center = read_u8_at_offset(file, (off_current_tone_attr + 4).into())?;
-            println!(" center: {}", center);
+            println!(" center: {center}");
 
             let shift = read_u8_at_offset(file, (off_current_tone_attr + 5).into())?;
-            println!(" shift: {}", shift);
+            println!(" shift: {shift}");
 
             let min = read_u8_at_offset(file, (off_current_tone_attr + 6).into())?;
-            println!(" min: {}", min);
+            println!(" min: {min}");
 
             let max = read_u8_at_offset(file, (off_current_tone_attr + 7).into())?;
-            println!(" max: {}", max);
+            println!(" max: {max}");
 
             let vib_w = read_u8_at_offset(file, (off_current_tone_attr + 8).into())?;
-            println!(" vib_w: {}", vib_w);
+            println!(" vib_w: {vib_w}");
 
             let vib_t = read_u8_at_offset(file, (off_current_tone_attr + 9).into())?;
-            println!(" vib_t: {}", vib_t);
+            println!(" vib_t: {vib_t}");
 
             let por_w = read_u8_at_offset(file, (off_current_tone_attr + 10).into())?;
-            println!(" por_w: {}", por_w);
+            println!(" por_w: {por_w}");
 
             let por_t = read_u8_at_offset(file, (off_current_tone_attr + 11).into())?;
-            println!(" por_t: {}", por_t);
+            println!(" por_t: {por_t}");
 
             let pb_min = read_u8_at_offset(file, (off_current_tone_attr + 12).into())?;
-            println!(" pb_min: {}", pb_min);
+            println!(" pb_min: {pb_min}");
 
             let pb_max = read_u8_at_offset(file, (off_current_tone_attr + 13).into())?;
-            println!(" pb_max: {}", pb_max);
+            println!(" pb_max: {pb_max}");
 
             let unk14 = read_u8_at_offset(file, (off_current_tone_attr + 14).into())?;
-            println!(" unk14: {}", unk14);
+            println!(" unk14: {unk14}");
 
             let unk15 = read_u8_at_offset(file, (off_current_tone_attr + 15).into())?;
-            println!(" unk15: {}", unk15);
+            println!(" unk15: {unk15}");
 
             let adsr_1 = read_u16_at_offset(file, (off_current_tone_attr + 16).into())?;
-            println!(" adsr_1: {}", adsr_1);
+            println!(" adsr_1: {adsr_1}");
 
             let adsr_2 = read_u16_at_offset(file, (off_current_tone_attr + 18).into())?;
-            println!(" adsr_2: {}", adsr_2);
+            println!(" adsr_2: {adsr_2}");
 
             // 1-based in editor?
             let prog = read_u8_at_offset(file, (off_current_tone_attr + 20).into())?;
-            println!(" prog: {}", prog);
+            println!(" prog: {prog}");
 
             // 1-based in editor?
             let vag = read_u8_at_offset(file, (off_current_tone_attr + 21).into())?;
-            println!(" vag: {}", vag);
+            println!(" vag: {vag}");
 
             let tone_name =
                 little_endian_ascii_to_str(file, (off_current_tone_attr + 22).into(), 10)?;
-            println!(" Tone Name: {:?}", tone_name);
+            println!(" Tone Name: {tone_name:?}");
 
             result[program_num as usize].push(ToneAttr {
                 prior,
@@ -543,7 +543,7 @@ fn write_tone_attrs(file: & mut Vec<u8>,
 
             let current_tone_attr = &tone_attrs[program_num as usize][tone_attr_num as usize];
 
-            println!("writing program {} tone_attr {} to {}", program_num, tone_attr_num, off_current_tone_attr);
+            println!("writing program {program_num} tone_attr {tone_attr_num} to {off_current_tone_attr}");
 
             write_u8_at_offset(file, (off_current_tone_attr + 0).try_into().unwrap(), &current_tone_attr.prior)?;
             write_u8_at_offset(file, (off_current_tone_attr + 1).try_into().unwrap(), &current_tone_attr.mode)?;
@@ -687,7 +687,7 @@ fn test_header() {
             assert!(header.reserved_2 == 4294967295);
         }
         Err(e) => {
-            println!("Error reading the file: {}", e);
+            println!("Error reading the file: {e}");
         }
     }
 }
@@ -717,7 +717,7 @@ fn test_programs() {
             assert!(programs[1].attr == 255);
         }
         Err(e) => {
-            println!("Error reading the file: {}", e);
+            println!("Error reading the file: {e}");
         }
     }
 }
@@ -740,7 +740,7 @@ fn test_tone_attrs() {
             assert!(tone_attrs[2][0].adsr_2 == 24512);
         }
         Err(e) => {
-            println!("Error reading the file: {}", e);
+            println!("Error reading the file: {e}");
         }
     }
 }
@@ -800,7 +800,7 @@ fn check_serialize_deserialize(file_data: &Vec<u8>)
 
     let vh_file_json = serde_json::to_string_pretty(&vh_file).unwrap();
 
-    println!("{}", vh_file_json);
+    println!("{vh_file_json}");
 
     let deserialized: VhFile = serde_json::from_str(&vh_file_json).unwrap();
 
@@ -822,7 +822,7 @@ fn check_serialize_deserialize(file_data: &Vec<u8>)
     {
         if(test_bytes[i] != file_data[i])
         {
-            println!("mismatch i {} test_bytes[i] {} file_data[i] {}", i, test_bytes[i], file_data[i]);
+            println!("mismatch i {i} test_bytes[i] {} file_data[i] {}", test_bytes[i], file_data[i]);
             assert!(test_bytes[i] == file_data[i]);
         }  
     }
@@ -833,13 +833,13 @@ fn check_serialize_deserialize(file_data: &Vec<u8>)
     let off_progs = 0 + 0x20;
     let off_tone_attrs = off_progs + (16 * 128);
 
-    println!("off_tone_attrs {}", off_tone_attrs);
+    println!("off_tone_attrs {off_tone_attrs}");
 
     for i in off_tone_attrs..test_bytes.len()
     {
         if(test_bytes[i] != file_data[i])
         {
-            println!("mismatch i {} test_bytes[i] {} file_data[i] {}", i, test_bytes[i], file_data[i]);
+            println!("mismatch i {i} test_bytes[i] {} file_data[i] {}", test_bytes[i], file_data[i]);
             assert!(test_bytes[i] == file_data[i]);
         }  
     }
@@ -853,7 +853,7 @@ fn test_serialize() {
             check_serialize_deserialize(&file_data);
         }
         Err(e) => {
-            println!("Error reading the file: {}", e);
+            println!("Error reading the file: {e}");
         }
     }
 }

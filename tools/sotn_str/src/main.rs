@@ -157,7 +157,7 @@ fn convert_j(f: &[u8]) -> String {
 #[allow(dead_code)]
 fn utf8_to_byte_literals_escaped(input: &str) -> String {
     let out = utf8_to_byte_literals(input);
-    let out2 = format!("\"{}\"", out);
+    let out2 = format!("\"{out}\"");
     out2
 }
 
@@ -177,9 +177,9 @@ fn utf8_to_byte_literals(input_str: &str) -> String {
     }
     bytes.push(0xFF);
     let out = bytes.iter()
-        .map(|&val| format!("\\x{:02X}", val))
+        .map(|&val| format!("\\x{val:02X}"))
         .collect::<String>();
-    let out2 = format!("\"{}\"", out);
+    let out2 = format!("\"{out}\"");
     out2
 }
 
@@ -199,9 +199,9 @@ fn utf8_to_byte_literals_psp(input_str: &str) -> String {
     }
     bytes.push(0xFF);
     let out = bytes.iter()
-        .map(|&val| format!("\\x{:02X}", val))
+        .map(|&val| format!("\\x{val:02X}"))
         .collect::<String>();
-    let out2 = format!("\"{}\"", out);
+    let out2 = format!("\"{out}\"");
     out2
 }
 
@@ -274,7 +274,7 @@ fn remove_dakuten_handakuten(utf8_char: &char) -> char {
 //         }
 //     }
 
-//     println!(r#"_S("{}")"#, r);
+//     println!(r#"_S("{r}")"#);
 //     Ok(())
 // }
 
@@ -289,13 +289,13 @@ fn remove_dakuten_handakuten(utf8_char: &char) -> char {
 // fn process_macro_with_transform(line: &str, re: &Regex, transform: impl Fn(&str) -> Vec<u8>) -> String {
 //     re.replace_all(line, |match_: &regex::Captures| {
 //         let s = match_.get(1).map_or("", |m| m.as_str());
-//         // println!("{}", s);
+//         // println!("{s}");
 //         let s = s.replace(r#"\\"#, "\"");
 //         let out = transform(&s);
 //         let escaped = out.iter()
-//             .map(|&c| format!("\\x{:02X}", c))
+//             .map(|&c| format!("\\x{c:02X}"))
 //             .collect::<String>();
-//         format!("\"{}\"", escaped)
+//         format!("\"{escaped}\"")
 //     }).to_string()
 // }
 
@@ -336,7 +336,7 @@ fn process_macro(line: &str, macro_name: &str, transform: impl Fn(&str) -> Strin
 }
 
 fn find_macro_content(line: &str, macro_name: &str, last_end: usize) -> Option<(usize, usize, String)> {
-    let start_pattern = format!("{}(", macro_name);
+    let start_pattern = format!("{macro_name}(");
     if let Some(start) = line[last_end..].find(&start_pattern) {
         let start_idx = start + last_end + start_pattern.len();
         let mut balance = 1;
@@ -407,7 +407,7 @@ fn process(filename: Option<String>, psp: bool) -> io::Result<()> {
         line.clear();
     }
     
-    print!("{}", output);
+    print!("{output}");
 
     Ok(())
 }
@@ -504,9 +504,9 @@ fn alt_utf8_to_byte_literals(input_str: &str) -> String {
     }
     bytes.push(0xFF);
     let output = bytes.iter()
-    .map(|&c| format!("\\x{:02X}", c))
+    .map(|&c| format!("\\x{c:02X}"))
     .collect::<String>();
-    let out2 = format!("\"{}\"", output);
+    let out2 = format!("\"{output}\"");
     out2
 }
 
@@ -520,9 +520,9 @@ fn alt_hd_utf8_to_byte_literals(input_str: &str) -> String {
     
     bytes.push(0xFF);
     let output = bytes.iter()
-    .map(|&c| format!("\\x{:02X}", c))
+    .map(|&c| format!("\\x{c:02X}"))
     .collect::<String>();
-    let out2 = format!("\"{}\"", output);
+    let out2 = format!("\"{output}\"");
     out2
 }
 
@@ -549,13 +549,13 @@ use clap::{Arg};
 //             let filename = &args[2];
 //             let offset = &args[3];
 //             if let Err(e) = parse(filename, offset) {
-//                 eprintln!("Error: {}", e);
+//                 eprintln!("Error: {e}");
 //             }
 //         }
 //         "process" => {
 //             let filename = if args.len() > 2 { Some(args[2].clone()) } else { None };
 //             if let Err(e) = process(filename) {
-//                 eprintln!("Error: {}", e);
+//                 eprintln!("Error: {e}");
 //             }
 //         }
 //         _ => {

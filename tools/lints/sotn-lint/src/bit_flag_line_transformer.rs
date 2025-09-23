@@ -148,10 +148,10 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
                      operator == "<=" || operator == ">=" ||
                      operator == "<" || operator == ">" ||
                      invert == "~" || inverted) {
-                    rvalue = format!("({})", rvalue);
+                    rvalue = format!("({rvalue})");
                 }
             }
-            return format!("{}{}{}{}", prefix.to_string(), invert, rvalue, terminal_string);
+            return format!("{prefix}{invert}{rvalue}{terminal_string}");
         }
         captures
             .get(0)

@@ -45,7 +45,7 @@ impl Linter for EntityRangeLinter {
         if (addr >= 0x800733D8 && addr < 0x8007EF1C) ||
             (addr >= 0x091e1680 && addr < 0x91ED1C4) {
             let var = captures.get(1).map(|m| m.as_str().to_string()).expect("entity global");
-            return Err(format!("`{}' should index into g_Entities", var));
+            return Err(format!("`{var}' should index into g_Entities"));
         }
 
         Ok(())
@@ -92,6 +92,6 @@ impl Linter for LocalExternLinter {
             return Ok(());
         };
         let symbol = captures.get(1).map(|m| m.as_str().to_string()).expect("symbol");
-        Err(format!("`{}' definition should not be `extern`", symbol))
+        Err(format!("`{symbol}' definition should not be `extern`"))
     }
 }

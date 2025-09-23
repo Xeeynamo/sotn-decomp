@@ -57,7 +57,7 @@ fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>,
                 match linter.check_line(&line_str) {
                     Ok(_) => (),
                     Err(msg) => {
-                        println!("{}:{} \x1b[31m{}\x1b[0m -> {}", file_path, i, msg, line_str);
+                        println!("{file_path}:{i} \x1b[31m{msg}\x1b[0m -> {line_str}");
                         lint_passed = false;
                     }
                 }
@@ -72,9 +72,9 @@ fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>,
         for (i, line) in lines.iter().enumerate() {
             if lines[i] != original_lines[i] {
                 alterations += 1;
-                println!("{}:{} {} -> {}", file_path, i, original_lines[i], lines[i]);
+                println!("{file_path}:{i} {} -> {}", original_lines[i], lines[i]);
             }
-            writeln!(file, "{}", line).expect("Unable to write line to file");
+            writeln!(file, "{line}").expect("Unable to write line to file");
         }
     }
 

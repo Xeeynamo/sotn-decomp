@@ -71,7 +71,7 @@ impl<U: EnumValue> EnumLineTransformer<U> where <U as FromStr>::Err: Debug {
                 )
                 .filter(|e| e.is_some())
                 .next() {
-                return format!("{}{}{}", prefix.to_string(), rvalue, terminal_string);
+                return format!("{prefix}{rvalue}{terminal_string}");
             }
         }
         captures
