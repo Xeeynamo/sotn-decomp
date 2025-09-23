@@ -67,7 +67,7 @@ fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>,
         lines.push(line_str);
     }
 
-    if original_lines.iter().zip(lines.iter()).position(|(a, b)| a != b).is_some() {
+    if original_lines.iter().zip(lines.iter()).any(|(a, b)| a != b) {
         let mut file = File::create(file_path).expect("Unable to create file");
         for (i, line) in lines.iter().enumerate() {
             if lines[i] != original_lines[i] {

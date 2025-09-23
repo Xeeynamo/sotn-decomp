@@ -35,7 +35,7 @@ impl Linter for EntityRangeLinter {
     fn check_line(&self, line: &str) -> Result<(), String> {
 
         let stripped = line.to_string().strip_line_comment();
-        let Some(captures) = SYMBOL_PATTERN.captures(&stripped.as_str()) else {
+        let Some(captures) = SYMBOL_PATTERN.captures(stripped.as_str()) else {
             return Ok(());
         };
 
