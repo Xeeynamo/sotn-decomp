@@ -49,7 +49,7 @@ mod tests {
     fn test_player_status_hex() {
         let input_line = "g_Player.status = 0x80;";
         let expected_line = "g_Player.status = PLAYER_STATUS_STONE;";
-        let result = DMT.transform_line(input_line);
+        let result = DMT.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -57,7 +57,7 @@ mod tests {
     fn test_player_status_decimal() {
         let input_line = "g_Player.status = 32;";
         let expected_line = "g_Player.status = PLAYER_STATUS_CROUCH;";
-        let result = DMT.transform_line(input_line);
+        let result = DMT.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -65,7 +65,7 @@ mod tests {
     fn test_player_status_zero() {
         let input_line = "g_Player.status = 0;";
         let expected_line = "g_Player.status = 0;";
-        let result = DMT.transform_line(input_line);
+        let result = DMT.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -73,7 +73,7 @@ mod tests {
     fn test_player_status_zero_hex() {
         let input_line = "g_Player.status = 0x0;";
         let expected_line = "g_Player.status = 0;";
-        let result = DMT.transform_line(input_line);
+        let result = DMT.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -81,7 +81,7 @@ mod tests {
     fn test_player_status_flags() {
         let input_line = "g_Player.status = PLAYER_STATUS_AXEARMOR;";
         let expected_line = "g_Player.status = PLAYER_STATUS_AXEARMOR;";
-        let result = DMT.transform_line(input_line);
+        let result = DMT.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -89,7 +89,7 @@ mod tests {
     fn test_player_status_set() {
         let input_line = "g_Player.status |= 0x2000000;";
         let expected_line = "g_Player.status |= PLAYER_STATUS_ABSORB_BLOOD;";
-        let result = DMT.transform_line(input_line);
+        let result = DMT.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -97,7 +97,7 @@ mod tests {
     fn test_player_status_clear() {
         let input_line = "g_Player.status &= 0xFFFF7FFF;";
         let expected_line = "g_Player.status &= ~PLAYER_STATUS_CURSE;";
-        let result = DMT.transform_line(input_line);
+        let result = DMT.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -105,7 +105,7 @@ mod tests {
     fn test_player_status_clear_many() {
         let input_line = "g_Player.status &= 0xFFFF6FFF;";
         let expected_line = "g_Player.status &= ~(PLAYER_STATUS_CURSE | PLAYER_STATUS_UNK1000);";
-        let result = DMT.transform_line(input_line);
+        let result = DMT.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -113,7 +113,7 @@ mod tests {
     fn test_player_status_inverted_many() {
         let input_line = "g_Player.status &= ~0x300;";
         let expected_line = "g_Player.status &= ~(PLAYER_STATUS_UNK200 | PLAYER_STATUS_UNK100);";
-        let result = DMT.transform_line(input_line);
+        let result = DMT.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -121,7 +121,7 @@ mod tests {
     fn test_equality() {
         let input_line = "if (g_Player.status == 8) {";
         let expected_line = "if (g_Player.status == PLAYER_STATUS_UNK8) {";
-        let result = DMT.transform_line(input_line);
+        let result = DMT.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -129,7 +129,7 @@ mod tests {
     fn test_inequality() {
         let input_line = "if (g_Player.status != 8) {";
         let expected_line = "if (g_Player.status != PLAYER_STATUS_UNK8) {";
-        let result = DMT.transform_line(input_line);
+        let result = DMT.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 

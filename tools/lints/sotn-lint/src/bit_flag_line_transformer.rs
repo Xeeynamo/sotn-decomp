@@ -1,3 +1,4 @@
+use std::borrow::Cow;
 use std::cmp::Eq;
 use std::cmp::Ord;
 use std::fmt::Debug;
@@ -160,8 +161,11 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
 }
 
 impl<U: EnumValue> LineTransformer for BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
-    fn transform_line(&self, line: &str) -> String where {
-        self.regex.replace_all(line, |captures: &regex::Captures| self.replace_enum(captures)).to_string()
+    fn transform_line(&self, line: &str) -> Option<String> where {
+        match self.regex.replace_all(line, |captures: &regex::Captures| self.replace_enum(captures)) {
+            Cow::Borrowed(_) => None,
+            Cow::Owned(s) => Some(s),
+        }
     }
 }
 
@@ -185,7 +189,7 @@ macro_rules! define_flag_transformer {
         }
 
         impl crate::line_transformer::LineTransformer for $kind {
-            fn transform_line(&self, line: &str) -> String {
+            fn transform_line(&self, line: &str) -> Option<String> {
                 self.transformer.transform_line(line)
             }
         }
@@ -208,7 +212,7 @@ macro_rules! define_flag_transformer {
         }
 
         impl crate::line_transformer::LineTransformer for $kind {
-            fn transform_line(&self, line: &str) -> String {
+            fn transform_line(&self, line: &str) -> Option<String> {
                 self.transformer.transform_line(line)
             }
         }

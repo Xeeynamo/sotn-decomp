@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 use lazy_static::lazy_static;
 use regex::Regex;
 
@@ -6,7 +8,7 @@ use crate::line_transformer::LineTransformer;
 pub struct FixedTransformer;
 
 impl LineTransformer for FixedTransformer {
-    fn transform_line(&self, line: &str) -> String {
+    fn transform_line(&self, line: &str) -> Option<String> {
         transform_line_fixed(line)
     }
 }
@@ -78,7 +80,7 @@ fn hex_string_to_float(hex_str: &str) -> Option<f64> {
     Some(if hex_str.starts_with('-') { -result } else { result })
 }
 
-fn transform_line_fixed(line: &str) -> String {
+fn transform_line_fixed(line: &str) -> Option<String> {
     for pattern in PATTERNS.iter() {
         let Some(thing) = pattern.regex.captures(line) else {
             continue;
@@ -90,15 +92,18 @@ fn transform_line_fixed(line: &str) -> String {
             continue;
         };
         if count_digits_after_decimal(conv) > 5 || count_digits_before_decimal(conv) > 3 {
-            return line.to_string();
+            return None;
         } 
         if let Some(group_str) = thing.get(1) {
             let fixed_value =
                 fixed(conv, group_str.as_str(), pattern.should_replace);
-            return pattern.regex.replace(line, &fixed_value).to_string();
+            return match pattern.regex.replace(line, &fixed_value) {
+                Cow::Borrowed(_) => None,
+                Cow::Owned(s) => Some(s),
+            };
         }
     }
-    line.to_string()
+    None
 }
 
 fn get_regexes() -> Vec<Pattern> {
@@ -120,7 +125,7 @@ mod tests {
         let input_line = "entity->velocityY = -0x8000;";
         let expected_line = "entity->velocityY = FIX(-0.5);";
         let result = transform_line_fixed(input_line);
-        assert_eq!(result, expected_line);
+        assert_eq!(result.as_deref(), Some(expected_line));
     }
 
     #[test]
@@ -128,16 +133,16 @@ mod tests {
         let input_line = "entity->velocityY = 0x8000;";
         let expected_line = "entity->velocityY = FIX(0.5);";
         let result = transform_line_fixed(input_line);
-        assert_eq!(result, expected_line);
+        assert_eq!(result.as_deref(), Some(expected_line));
     }
 
     #[test]
     fn test_complex_line() {
         // don't format
         let input_line = "entity->velocityX += 0x8000 - (Random() << 8);";
-        let expected_line = "entity->velocityX += 0x8000 - (Random() << 8);";
+        let _expected_line = "entity->velocityX += 0x8000 - (Random() << 8);";
         let result = transform_line_fixed(input_line);
-        assert_eq!(result, expected_line);
+        assert_eq!(result.as_deref(), None);
     }
 
     #[test]
@@ -145,6 +150,6 @@ mod tests {
         let input_line = "if (self->velocityY < -0x20000) {";
         let expected_line = "if (self->velocityY < FIX(-2.0)) {";
         let result = transform_line_fixed(input_line);
-        assert_eq!(result, expected_line);
+        assert_eq!(result.as_deref(), Some(expected_line));
     }
 }

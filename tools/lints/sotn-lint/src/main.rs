@@ -50,7 +50,10 @@ fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>,
 
         if !line_str.contains("sotn-lint-ignore") {
             for transformer in transformers {
-                line_str = transformer.transform_line(&line_str);
+                line_str = match transformer.transform_line(&line_str) {
+                    Some(s) => s,
+                    None => line_str,
+                };
             }
 
             for linter in linters {
@@ -101,7 +104,7 @@ fn process_directory(dir_path: &str) -> bool {
         Box::new(primitive_type_transformer),
         Box::new(player_status_transformer),
         Box::new(attack_element_transformer),
-        ];
+    ];
 
     let linters: Vec<Box<dyn Linter>> = vec![
         Box::new(EntityRangeLinter),

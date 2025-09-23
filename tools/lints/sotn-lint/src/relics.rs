@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 use regex::Regex;
 
 use lazy_static::lazy_static;
@@ -7,7 +9,7 @@ use crate::line_transformer::LineTransformer;
 pub struct RelicsTransformer;
 
 impl LineTransformer for RelicsTransformer {
-    fn transform_line(&self, line: &str) -> String {
+    fn transform_line(&self, line: &str) -> Option<String> {
         transform_line_relics(line)
     }
 }
@@ -63,22 +65,23 @@ lazy_static! {
     };
 }
 
-fn transform_line_relics(line: &str) -> String {
-    REGEX
-        .replace_all(line, |captures: &regex::Captures| replace_enum(captures))
-        .to_string()
+fn transform_line_relics(line: &str) -> Option<String> {
+    match REGEX.replace_all(line, |captures: &regex::Captures| replace_enum(captures)) {
+        Cow::Borrowed(_) => None,
+        Cow::Owned(s) => Some(s),
+    }
 }
 
 #[test]
 fn test_does_transform() {
     let input = "g_Status.relics[0]";
     let expected_output = "g_Status.relics[RELIC_SOUL_OF_BAT]".to_string();
-    assert_eq!(transform_line_relics(input), expected_output);
+    assert_eq!(transform_line_relics(input), Some(expected_output));
 }
 
 #[test]
 fn test_no_transform() {
     let input = "g_Status.equipment[0]";
-    let expected_output = "g_Status.equipment[0]".to_string();
-    assert_eq!(transform_line_relics(input), expected_output);
+    let _expected_output = "g_Status.equipment[0]".to_string();
+    assert_eq!(transform_line_relics(input).as_deref(), None);
 }

@@ -30,7 +30,7 @@ mod tests {
     fn test_attack_element_hex() {
         let input_line = "self->attackElement = 0x60;";
         let expected_line = "self->attackElement = ELEMENT_CUT | ELEMENT_HIT;";
-        let result = AET.transform_line(input_line);
+        let result = AET.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -38,7 +38,7 @@ mod tests {
     fn test_attack_element_decimal() {
         let input_line = "self->attackElement = 96;";
         let expected_line = "self->attackElement = ELEMENT_CUT | ELEMENT_HIT;";
-        let result = AET.transform_line(input_line);
+        let result = AET.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -46,7 +46,7 @@ mod tests {
     fn test_attack_element_zero() {
         let input_line = "self->attackElement = 0;";
         let expected_line = "self->attackElement = ELEMENT_NONE;";
-        let result = AET.transform_line(input_line);
+        let result = AET.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -54,7 +54,7 @@ mod tests {
     fn test_attack_element_zero_hex() {
         let input_line = "self->attackElement = 0x0;";
         let expected_line = "self->attackElement = ELEMENT_NONE;";
-        let result = AET.transform_line(input_line);
+        let result = AET.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -62,7 +62,7 @@ mod tests {
     fn test_attack_element_flags() {
         let input_line = "self->attackElement = ELEMENT_DARK;";
         let expected_line = "self->attackElement = ELEMENT_DARK;";
-        let result = AET.transform_line(input_line);
+        let result = AET.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -70,7 +70,7 @@ mod tests {
     fn test_attack_element_set() {
         let input_line = "self->attackElement |= 0x80;";
         let expected_line = "self->attackElement |= ELEMENT_POISON;";
-        let result = AET.transform_line(input_line);
+        let result = AET.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -78,7 +78,7 @@ mod tests {
     fn test_attack_element_clear() {
         let input_line = "self->attackElement &= 0xFFFF7FFF;";
         let expected_line = "self->attackElement &= ~ELEMENT_FIRE;";
-        let result = AET.transform_line(input_line);
+        let result = AET.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -86,7 +86,7 @@ mod tests {
     fn test_attack_element_clear_many() {
         let input_line = "self->attackElement &= 0xFFFF7BFF;";
         let expected_line = "self->attackElement &= ~(ELEMENT_FIRE | ELEMENT_WATER);";
-        let result = AET.transform_line(input_line);
+        let result = AET.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -94,7 +94,7 @@ mod tests {
     fn test_attack_element_inverted_many() {
         let input_line = "self->attackElement &= ~0x300;";
         let expected_line = "self->attackElement &= ~(ELEMENT_STONE | ELEMENT_CURSE);";
-        let result = AET.transform_line(input_line);
+        let result = AET.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -102,7 +102,7 @@ mod tests {
     fn test_equality() {
         let input_line = "if (self->attackElement == 256) {";
         let expected_line = "if (self->attackElement == ELEMENT_CURSE) {";
-        let result = AET.transform_line(input_line);
+        let result = AET.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 
@@ -110,7 +110,7 @@ mod tests {
     fn test_inequality() {
         let input_line = "if (self->attackElement != 256) {";
         let expected_line = "if (self->attackElement != ELEMENT_CURSE) {";
-        let result = AET.transform_line(input_line);
+        let result = AET.transform_line_owned(input_line);
         assert_eq!(result, expected_line)
     }
 }
