@@ -1,5 +1,3 @@
-use lazy_static::lazy_static;
-
 use crate::bit_flag_line_transformer::BitFlagLineTransformer;
 use crate::line_transformer::LineTransformer;
 
@@ -7,19 +5,17 @@ pub struct DrawFlagsTransformer {
     transformer: BitFlagLineTransformer<u16>,
 }
 
-lazy_static! {
-    static ref DRAW_FLAGS: [(u16, &'static str); 9] = [
-        (1 << 0, "FLAG_DRAW_SCALEX"),
-        (1 << 1, "FLAG_DRAW_SCALEY"),
-        (1 << 2, "FLAG_DRAW_ROTATE"),
-        (1 << 3, "FLAG_DRAW_OPACITY"),
-        (1 << 4, "FLAG_DRAW_UNK10"),
-        (1 << 5, "FLAG_DRAW_UNK20"),
-        (1 << 6, "FLAG_DRAW_UNK40"),
-        (1 << 7, "FLAG_BLINK"),
-        (1 << 8, "FLAG_DRAW_UNK100"),
-    ];
-}
+static DRAW_FLAGS: [(u16, &'static str); 9] = [
+    (1 << 0, "FLAG_DRAW_SCALEX"),
+    (1 << 1, "FLAG_DRAW_SCALEY"),
+    (1 << 2, "FLAG_DRAW_ROTATE"),
+    (1 << 3, "FLAG_DRAW_OPACITY"),
+    (1 << 4, "FLAG_DRAW_UNK10"),
+    (1 << 5, "FLAG_DRAW_UNK20"),
+    (1 << 6, "FLAG_DRAW_UNK40"),
+    (1 << 7, "FLAG_BLINK"),
+    (1 << 8, "FLAG_DRAW_UNK100"),
+];
 
 impl DrawFlagsTransformer {
     pub fn new() -> Self {

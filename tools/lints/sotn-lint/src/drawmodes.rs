@@ -1,5 +1,3 @@
-use lazy_static::lazy_static;
-
 use crate::line_transformer::LineTransformer;
 use crate::bit_flag_line_transformer::BitFlagLineTransformer;
 
@@ -7,24 +5,22 @@ pub struct DrawModeTransformer {
     transformer: BitFlagLineTransformer<u16>,
 }
 
-lazy_static! {
-    static ref DRAW_MODES: [(u16, &'static str); 14] = [
-        (1 << 0, "DRAW_TRANSP"),
-        (1 << 1, "DRAW_UNK02"),
-        (1 << 2, "DRAW_COLORS"),
-        (1 << 3, "DRAW_HIDE"),
-        (1 << 4, "DRAW_TPAGE"),
-        (1 << 5, "DRAW_TPAGE2"),
-        (1 << 6, "DRAW_UNK_40"),
-        (1 << 7, "DRAW_MENU"),
-        (1 << 8, "DRAW_UNK_100"),
-        (1 << 9, "DRAW_UNK_200"),
-        (1 << 10, "DRAW_UNK_400"),
-        (1 << 11, "DRAW_UNK_800"),
-        (1 << 12, "DRAW_UNK_1000"),
-        (1 << 13, "DRAW_ABSPOS"),
-    ];
-}
+static DRAW_MODES: [(u16, &'static str); 14] = [
+    (1 << 0, "DRAW_TRANSP"),
+    (1 << 1, "DRAW_UNK02"),
+    (1 << 2, "DRAW_COLORS"),
+    (1 << 3, "DRAW_HIDE"),
+    (1 << 4, "DRAW_TPAGE"),
+    (1 << 5, "DRAW_TPAGE2"),
+    (1 << 6, "DRAW_UNK_40"),
+    (1 << 7, "DRAW_MENU"),
+    (1 << 8, "DRAW_UNK_100"),
+    (1 << 9, "DRAW_UNK_200"),
+    (1 << 10, "DRAW_UNK_400"),
+    (1 << 11, "DRAW_UNK_800"),
+    (1 << 12, "DRAW_UNK_1000"),
+    (1 << 13, "DRAW_ABSPOS"),
+];
 
 impl DrawModeTransformer {
     pub fn new() -> Self {

@@ -1,5 +1,3 @@
-use lazy_static::lazy_static;
-
 use crate::line_transformer::LineTransformer;
 use crate::bit_flag_line_transformer::BitFlagLineTransformer;
 
@@ -7,38 +5,36 @@ pub struct FlagsTransformer {
     transformer: BitFlagLineTransformer<u32>,
 }
 
-lazy_static! {
-    static ref FLAGS: [(u32, &'static str); 28] = [
-        (1 << 4, "FLAG_UNK_10"),
-        (1 << 5, "FLAG_UNK_20"),
-        (1 << 6, "FLAG_UNK_40"),
-        (1 << 7, "FLAG_UNK_80"),
-        (1 << 8, "FLAG_DEAD"),
-        (1 << 9, "FLAG_UNK_200"),
-        (1 << 10, "FLAG_UNK_400"),
-        (1 << 11, "FLAG_UNK_800"),
-        (1 << 12, "FLAG_UNK_1000"),
-        (1 << 13, "FLAG_UNK_2000"),
-        (1 << 14, "FLAG_UNK_4000"),
-        (1 << 15, "FLAG_UNK_8000"),
-        (1 << 16, "FLAG_UNK_10000"),
-        (1 << 17, "FLAG_UNK_20000"),
-        (1 << 18, "FLAG_POS_PLAYER_LOCKED"),
-        (1 << 19, "FLAG_UNK_80000"),
-        (1 << 20, "FLAG_UNK_100000"),
-        (1 << 21, "FLAG_UNK_00200000"),
-        (1 << 22, "FLAG_UNK_400000"),
-        (1 << 23, "FLAG_HAS_PRIMS"),
-        (1 << 24, "FLAG_NOT_AN_ENEMY"),
-        (1 << 25, "FLAG_UNK_02000000"),
-        (1 << 26, "FLAG_KEEP_ALIVE_OFFCAMERA"),
-        (1 << 27, "FLAG_POS_CAMERA_LOCKED"),
-        (1 << 28, "FLAG_UNK_10000000"),
-        (1 << 29, "FLAG_UNK_20000000"),
-        (1 << 30, "FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA"),
-        (1 << 31, "FLAG_DESTROY_IF_OUT_OF_CAMERA"),
-    ];
-}
+static FLAGS: [(u32, &'static str); 28] = [
+    (1 << 4, "FLAG_UNK_10"),
+    (1 << 5, "FLAG_UNK_20"),
+    (1 << 6, "FLAG_UNK_40"),
+    (1 << 7, "FLAG_UNK_80"),
+    (1 << 8, "FLAG_DEAD"),
+    (1 << 9, "FLAG_UNK_200"),
+    (1 << 10, "FLAG_UNK_400"),
+    (1 << 11, "FLAG_UNK_800"),
+    (1 << 12, "FLAG_UNK_1000"),
+    (1 << 13, "FLAG_UNK_2000"),
+    (1 << 14, "FLAG_UNK_4000"),
+    (1 << 15, "FLAG_UNK_8000"),
+    (1 << 16, "FLAG_UNK_10000"),
+    (1 << 17, "FLAG_UNK_20000"),
+    (1 << 18, "FLAG_POS_PLAYER_LOCKED"),
+    (1 << 19, "FLAG_UNK_80000"),
+    (1 << 20, "FLAG_UNK_100000"),
+    (1 << 21, "FLAG_UNK_00200000"),
+    (1 << 22, "FLAG_UNK_400000"),
+    (1 << 23, "FLAG_HAS_PRIMS"),
+    (1 << 24, "FLAG_NOT_AN_ENEMY"),
+    (1 << 25, "FLAG_UNK_02000000"),
+    (1 << 26, "FLAG_KEEP_ALIVE_OFFCAMERA"),
+    (1 << 27, "FLAG_POS_CAMERA_LOCKED"),
+    (1 << 28, "FLAG_UNK_10000000"),
+    (1 << 29, "FLAG_UNK_20000000"),
+    (1 << 30, "FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA"),
+    (1 << 31, "FLAG_DESTROY_IF_OUT_OF_CAMERA"),
+];
 
 impl FlagsTransformer {
     pub fn new() -> Self {

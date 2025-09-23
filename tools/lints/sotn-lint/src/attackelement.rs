@@ -1,5 +1,3 @@
-use lazy_static::lazy_static;
-
 use crate::line_transformer::LineTransformer;
 use crate::bit_flag_line_transformer::BitFlagLineTransformer;
 
@@ -7,22 +5,20 @@ pub struct AttackElementTransformer {
     transformer: BitFlagLineTransformer<u32>,
 }
 
-lazy_static! {
-    static ref ATTACK_ELEMENTS: [(u32, &'static str); 12] = [
-        (0x20, "ELEMENT_HIT"),
-        (0x40, "ELEMENT_CUT"),
-        (0x80, "ELEMENT_POISON"),
-        (0x100, "ELEMENT_CURSE"),
-        (0x200, "ELEMENT_STONE"),
-        (0x400, "ELEMENT_WATER"),
-        (0x800, "ELEMENT_DARK"),
-        (0x1000, "ELEMENT_HOLY"),
-        (0x2000, "ELEMENT_ICE"),
-        (0x4000, "ELEMENT_THUNDER"),
-        (0x8000, "ELEMENT_FIRE"),
-        (0x10000, "ELEMENT_UNK_10000"),
-    ];
-}
+static ATTACK_ELEMENTS: [(u32, &'static str); 12] = [
+    (0x20, "ELEMENT_HIT"),
+    (0x40, "ELEMENT_CUT"),
+    (0x80, "ELEMENT_POISON"),
+    (0x100, "ELEMENT_CURSE"),
+    (0x200, "ELEMENT_STONE"),
+    (0x400, "ELEMENT_WATER"),
+    (0x800, "ELEMENT_DARK"),
+    (0x1000, "ELEMENT_HOLY"),
+    (0x2000, "ELEMENT_ICE"),
+    (0x4000, "ELEMENT_THUNDER"),
+    (0x8000, "ELEMENT_FIRE"),
+    (0x10000, "ELEMENT_UNK_10000"),
+];
 
 impl AttackElementTransformer {
     pub fn new() -> Self {

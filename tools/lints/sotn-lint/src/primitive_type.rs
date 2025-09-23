@@ -1,4 +1,3 @@
-use lazy_static::lazy_static;
 
 use crate::line_transformer::LineTransformer;
 use crate::enum_line_transformer::EnumLineTransformer;
@@ -7,22 +6,20 @@ pub struct PrimitiveTypeTransformer {
     transformer: EnumLineTransformer<u16>,
 }
 
-lazy_static! {
-    static ref TYPES: [(u16, &'static str); 12] = [
-        (0, "PRIM_NONE"),
-        (1, "PRIM_TILE"),
-        (2, "PRIM_LINE_G2"),
-        (3, "PRIM_G4"),
-        (4, "PRIM_GT4"),
-        (5, "PRIM_GT3"),
-        (6, "PRIM_SPRT"),
-        (7, "PRIM_ENV"),
-        (8, "FLAG_DRAW_UNK100"),
-        (0x11, "PRIM_TITLE_ALT"),
-        (0x12, "PRIM_LINE_G2"),
-        (0x13, "PRIM_G4_ALT"),
-    ];
-}
+static TYPES: [(u16, &'static str); 12] = [
+    (0, "PRIM_NONE"),
+    (1, "PRIM_TILE"),
+    (2, "PRIM_LINE_G2"),
+    (3, "PRIM_G4"),
+    (4, "PRIM_GT4"),
+    (5, "PRIM_GT3"),
+    (6, "PRIM_SPRT"),
+    (7, "PRIM_ENV"),
+    (8, "FLAG_DRAW_UNK100"),
+    (0x11, "PRIM_TITLE_ALT"),
+    (0x12, "PRIM_LINE_G2"),
+    (0x13, "PRIM_G4_ALT"),
+];
 
 impl PrimitiveTypeTransformer {
     pub fn new() -> Self {
