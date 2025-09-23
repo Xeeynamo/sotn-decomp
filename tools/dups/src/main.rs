@@ -85,7 +85,7 @@ fn process_directory(dir_path: &str, funcs: &mut Vec<Function>) {
                     if item_path.is_file() && item_path.to_string_lossy().ends_with(".s") {
                         println!("checking {item_path:?}");
 
-                        let mut file = fs::File::open(item_path.clone()).unwrap();
+                        let mut file = fs::File::open(&item_path).unwrap();
                         let mut buffer = String::new();
                         file.read_to_string(&mut buffer).unwrap();
 
@@ -97,7 +97,7 @@ fn process_directory(dir_path: &str, funcs: &mut Vec<Function>) {
                             && func.ops[0].op == 0x03E00008
                             && func.ops[1].op == 0x00000000;
                         if !is_null {
-                            funcs.push(func.clone());
+                            funcs.push(func);
                         }
                     } else if item_path.is_dir() {
                         process_directory(&item_path.to_string_lossy(), funcs);
@@ -166,7 +166,7 @@ fn process_directory_for_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
             if item_path.is_file() && item_path.to_string_lossy().ends_with(".c") {
                 println!("checking {item_path:?}");
 
-                let file = File::open(item_path.clone()).expect("Unable to open file");
+                let file = File::open(&item_path).expect("Unable to open file");
                 let mut reader = BufReader::new(file);
                 let mut buffer = String::new();
 
@@ -476,7 +476,7 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
         },
     ];
 
-    for pair in pairs.clone() {
+    for pair in pairs {
         let dir = pair.asm_dir;
         process_asm_directory(&dir, &mut files);
 
@@ -589,7 +589,7 @@ fn do_ordered_compare(dirs: Vec<String>, threshold: f64) {
 
         files.push(DupsFile {
             name: dir.to_string(),
-            funcs: funcs.clone(),
+            funcs,
         });
     }
 
@@ -601,7 +601,7 @@ fn do_ordered_compare(dirs: Vec<String>, threshold: f64) {
     }
 
     // 2 way comparison for determining patterns in overlays
-    let mut pairs: Vec<Vec<Function>> = Vec::new();
+    let mut pairs: Vec<Vec<&Function>> = Vec::new();
 
     // print out all found duplicates with their similarity values
     let hyphens = "-".repeat(80);
@@ -622,8 +622,8 @@ fn do_ordered_compare(dirs: Vec<String>, threshold: f64) {
                     width = 40
                 );
                 let temp = vec![
-                    func_0.clone(),
-                    func_1.clone(),
+                    func_0,
+                    func_1,
                 ];
                 pairs.push(temp);
             }
@@ -645,11 +645,11 @@ fn do_ordered_compare(dirs: Vec<String>, threshold: f64) {
     println!("{hyphens}");
 
     for func_0 in &files[0].funcs {
-        let mut has_dup = false;
+        let mut _has_dup = false;
         let mut dup_name = "";
         for pair in &pairs {
             if func_0.name == pair[0].name {
-                has_dup = true;
+                _has_dup = true;
                 dup_name = &pair[1].name;
             }
         }
@@ -665,7 +665,7 @@ fn main() {
     let dirs = args.dir;
     let output_file = args.output_file;
     let num_dirs = dirs.len();
-    let src_base_dir = args.src_base;
+    let _src_base_dir = args.src_base;
 
     if num_dirs == 2 {
         do_ordered_compare(dirs, threshold);
@@ -715,7 +715,7 @@ fn process_asm_directory(dir: &str, files: &mut Vec<DupsFile>) {
 
     files.push(DupsFile {
         name: dir.to_string(),
-        funcs: funcs.clone(),
+        funcs,
     });
 }
 

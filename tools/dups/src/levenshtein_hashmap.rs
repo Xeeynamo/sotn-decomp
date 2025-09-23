@@ -56,20 +56,19 @@ impl LevenshteinHashMap {
             cache: HashMap::new(),
         }
     }
-    pub fn len(&self) -> usize {
+    pub fn _len(&self) -> usize {
         self.map.len()
     }
-    pub fn iter(&self) -> impl Iterator<Item = (&Vec<u8>, &Vec<Function>)> {
+    pub fn _iter(&self) -> impl Iterator<Item = (&Vec<u8>, &Vec<Function>)> {
         self.map.iter()
     }
 
-    pub fn get(&mut self, key: &[u8]) -> Option<&mut Vec<Function>> {
+    pub fn _get(&mut self, key: &[u8]) -> Option<&mut Vec<Function>> {
         let mut closest_key = None;
         let mut closest_similarity = f64::MIN;
 
-        let map = self.map.clone();
 
-        for (k, _) in map.iter() {
+        for (k, _) in self.map.iter() {
             let size_diff = key.len().min(k.len()) as f64 / key.len().max(k.len()) as f64;
             if size_diff < self.threshold || size_diff <= closest_similarity {
                 continue;
@@ -78,13 +77,13 @@ impl LevenshteinHashMap {
             let similarity = levenshtein_similarity(key, k, &mut self.cache);
 
             if  similarity >= self.threshold && similarity > closest_similarity {
-                closest_key = Some(k);
+                closest_key = Some(k.clone());
                 closest_similarity = similarity;
             }
         }
 
         if let Some(k) = closest_key {
-            self.map.get_mut(k)
+            self.map.get_mut(&k)
         } else {
             None
         }
@@ -151,7 +150,7 @@ mod tests {
         map.insert(func2.key.clone(), func2.clone());
 
         // both functions should be in the same cluster
-        let result1 = map.get(&vec![1, 2, 3]);
+        let result1 = map._get(&vec![1, 2, 3]);
         assert_eq!(result1.expect("has items").len(), 2);
     }
 
@@ -181,10 +180,10 @@ mod tests {
         map.insert(func2.key.clone(), func2.clone());
 
         // functions should be in different clusters
-        let result1 = map.get(&vec![1, 2, 3]);
+        let result1 = map._get(&vec![1, 2, 3]);
         assert_eq!(result1.expect("has items").len(), 1);
 
-        let result2 = map.get(&vec![4, 5, 6]);
+        let result2 = map._get(&vec![4, 5, 6]);
         assert_eq!(result2.expect("has items").len(), 1);
     }
 }
