@@ -76,9 +76,9 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
 
         Self {
             enum_values: _enum_values,
-            regex: regex,
-            default_value: default_value,
-            safe_mask: safe_mask,
+            regex,
+            default_value,
+            safe_mask,
         }
     }
 

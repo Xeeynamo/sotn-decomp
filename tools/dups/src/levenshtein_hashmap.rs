@@ -1,4 +1,4 @@
-use crate::types::{DupsFile, Function, Instruction};
+use crate::types::Function;
 use std::collections::HashMap;
 
 pub struct LevenshteinHashMap {
@@ -65,7 +65,7 @@ impl LevenshteinHashMap {
 
     pub fn get(&mut self, key: &[u8]) -> Option<&mut Vec<Function>> {
         let mut closest_key = None;
-        let mut closest_similarity = std::f64::MIN;
+        let mut closest_similarity = f64::MIN;
 
         let map = self.map.clone();
 
@@ -92,7 +92,7 @@ impl LevenshteinHashMap {
 
     pub fn insert(&mut self, key: Vec<u8>, mut value: Function) {
         let mut closest_key = None;
-        let mut closest_similarity = std::f64::MIN;
+        let mut closest_similarity = f64::MIN;
 
         for k in self.map.keys() {
             let size_diff = key.len().min(k.len()) as f64 / key.len().max(k.len()) as f64;
@@ -109,7 +109,7 @@ impl LevenshteinHashMap {
         }
 
         if let Some(k) = closest_key {
-            let mut val = self.map.get_mut(&k);
+            let val = self.map.get_mut(&k);
             value.similarity = closest_similarity;
             val.unwrap().push(value);
         } else {

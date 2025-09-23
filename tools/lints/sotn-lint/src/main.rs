@@ -67,7 +67,7 @@ fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>,
         lines.push(line_str);
     }
 
-    if let Some(_) = original_lines.iter().zip(lines.iter()).position(|(a, b)| a != b) {
+    if original_lines.iter().zip(lines.iter()).position(|(a, b)| a != b).is_some() {
         let mut file = File::create(file_path).expect("Unable to create file");
         for (i, line) in lines.iter().enumerate() {
             if lines[i] != original_lines[i] {
@@ -120,10 +120,8 @@ fn process_directory(dir_path: &str) -> bool {
                 let (_, passed) = transform_file(&item_path.to_string_lossy(), &transformers, &linters);
 
                 lint_passed &= passed
-            } else if item_path.is_dir() {
-                if item_path.file_name().unwrap() != "mednafen" {
-                    lint_passed &= process_directory(&item_path.to_string_lossy());
-                }
+            } else if item_path.is_dir() && item_path.file_name().unwrap() != "mednafen" {
+                lint_passed &= process_directory(&item_path.to_string_lossy());
             }
         }
         lint_passed

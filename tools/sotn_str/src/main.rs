@@ -169,10 +169,8 @@ fn utf8_to_byte_literals(input_str: &str) -> String {
         } else if char == '月' {
             bytes.push(0xFF);
             bytes.push(0xFF);
-        } else {
-            if let Some(index) = table_index(&char){
-                bytes.push(index as u8);
-            }
+        } else if let Some(index) = table_index(&char){
+            bytes.push(index as u8);
         }
     }
     bytes.push(0xFF);
@@ -191,10 +189,8 @@ fn utf8_to_byte_literals_psp(input_str: &str) -> String {
         } else if char == '月' {
             bytes.push(0xFF);
             bytes.push(0xFF);
-        } else {
-            if let Some(index) = table_psp_index(&char){
-                bytes.push(index as u8);
-            }
+        } else if let Some(index) = table_psp_index(&char){
+            bytes.push(index as u8);
         }
     }
     bytes.push(0xFF);
@@ -214,14 +210,14 @@ fn has_dakuten(utf8_char: &char) -> bool {
         'ダ', 'ヂ', 'ヅ', 'デ', 'ド', 'バ', 'ビ', 'ブ', 'ベ', 'ボ', 
         'ヴ',
     ];
-    dakuten_chars.contains(&utf8_char)
+    dakuten_chars.contains(utf8_char)
 }
 
 fn has_handakuten(utf8_char: &char) -> bool {
     let handakuten_chars = [
         'ぱ', 'ぴ', 'ぷ', 'ぺ', 'ぽ', 'パ', 'ピ', 'プ', 'ペ', 'ポ',
     ];
-    handakuten_chars.contains(&utf8_char)
+    handakuten_chars.contains(utf8_char)
 }
 
 fn dakuten_to_bytes(input_chr: &char) -> Vec<u8> {
@@ -313,7 +309,7 @@ fn remove_dakuten_handakuten(utf8_char: &char) -> char {
 fn process_macro(line: &str, macro_name: &str, transform: impl Fn(&str) -> String) -> String {
     let mut result = String::new();
     let mut last_end = 0;
-    while let Some((start, end, content)) = find_macro_content(&line, macro_name, last_end) {
+    while let Some((start, end, content)) = find_macro_content(line, macro_name, last_end) {
         if start > end {
             panic!("Invalid range: start index {} cannot be greater than end index {}", start, end);
         }
@@ -480,19 +476,19 @@ fn fix_se(chr: char) -> char {
 }
 
 fn table_index(c: &char) -> Option<usize> {
-    return UTF8_TO_INDEX.get(c).copied();
+    UTF8_TO_INDEX.get(c).copied()
 }
 
 fn table_psp_index(c: &char) -> Option<usize> {
-    return UTF8_PSP_TO_INDEX.get(c).copied();
+    UTF8_PSP_TO_INDEX.get(c).copied()
 }
 
 fn alt_hd_utf8_to_index(c: &char) -> Option<usize> {
-    return ALT_HD_UTF8_TO_INDEX.get(c).copied();
+    ALT_HD_UTF8_TO_INDEX.get(c).copied()
 }
 
 fn alt_utf8_to_index(c: &char) -> Option<usize> {
-    return ALT_UTF8_TO_INDEX.get(c).copied();
+    ALT_UTF8_TO_INDEX.get(c).copied()
 }
 
 fn alt_utf8_to_byte_literals(input_str: &str) -> String {

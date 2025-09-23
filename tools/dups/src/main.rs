@@ -4,7 +4,6 @@ use std::fs::File;
 use std::io::BufReader;
 use std::io::Read;
 use std::io::Write;
-use std::process::exit;
 
 mod levenshtein_hashmap;
 mod types;
@@ -69,7 +68,7 @@ fn parse_instructions(input: &str, dir: &str, file: &str) -> Function {
     Function {
         ops: instructions,
         name: func_name.to_string(),
-        key: key,
+        key,
         dir: dir.to_string(),
         file: file.to_string(),
         similarity: 0.0,
@@ -91,7 +90,7 @@ fn process_directory(dir_path: &str, funcs: &mut Vec<Function>) {
                         file.read_to_string(&mut buffer).unwrap();
 
                         let func =
-                            parse_instructions(&buffer, &dir_path, &item_path.to_string_lossy());
+                            parse_instructions(&buffer, dir_path, &item_path.to_string_lossy());
 
                         // jr $ra, nop
                         let is_null = func.ops.len() == 2
@@ -132,7 +131,6 @@ Clustering report for all overlays
 cargo run --release -- --threshold .94 --output-file output.txt
 "
 )]
-
 struct Args {
     /// Levenshtein similarity threshold
     #[arg(short, long)]
@@ -197,13 +195,13 @@ fn process_buffer_for_include_asm(file_content: &str, file_path: &str) -> Vec<In
         if line_str.contains("INCLUDE_ASM") || !buffer.is_empty() {
             buffer.push_str(line_str);
             if !line_str.contains(';') {
-                buffer.push_str(" ");
+                buffer.push(' ');
                 println!("INCLUDE_ASM line did not contain ;, buffering input to subsequent lines");
                 continue;
             }
 
             if let Some(captures) = re.captures(&buffer) {
-                let (full, [asm_dir, asm_file]) = captures.extract();
+                let (_full, [asm_dir, asm_file]) = captures.extract();
                 output.push(IncludeAsmEntry {
                     line: buffer.clone(),
                     path: file_path.to_string(),
@@ -623,10 +621,11 @@ fn do_ordered_compare(dirs: Vec<String>, threshold: f64) {
                     result,
                     width = 40
                 );
-                let mut temp = Vec::new();
-                temp.push(func_0.clone());
-                temp.push(func_1.clone());
-                pairs.push(temp.clone());
+                let temp = vec![
+                    func_0.clone(),
+                    func_1.clone(),
+                ];
+                pairs.push(temp);
             }
         }
     }
@@ -699,13 +698,12 @@ fn levenshtein_similarity(s1: &[u8], s2: &[u8]) -> f64 {
     }
 
     let max_len = len1.max(len2) as f64;
-    let result = (max_len - dp[len1][len2] as f64) / max_len;
-    result
+    (max_len - dp[len1][len2] as f64) / max_len
 }
 
 fn process_asm_directory(dir: &str, files: &mut Vec<DupsFile>) {
     let mut funcs = Vec::new();
-    process_directory(&dir, &mut funcs);
+    process_directory(dir, &mut funcs);
 
     // sort functions by vram address
     funcs.sort_by_key(|function| {

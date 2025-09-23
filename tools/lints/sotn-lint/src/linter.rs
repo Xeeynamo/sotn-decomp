@@ -42,8 +42,8 @@ impl Linter for EntityRangeLinter {
         let addr_str = captures.get(2).map(|m| m.as_str().to_string());
         let addr = u32::from_str_radix(&addr_str.clone().unwrap(), 16).unwrap();
 
-        if (addr >= 0x800733D8 && addr < 0x8007EF1C) ||
-            (addr >= 0x091e1680 && addr < 0x91ED1C4) {
+        if (0x800733D8..0x8007EF1C).contains(&addr) ||
+            (0x091e1680..0x91ED1C4).contains(&addr) {
             let var = captures.get(1).map(|m| m.as_str().to_string()).expect("entity global");
             return Err(format!("`{var}' should index into g_Entities"));
         }

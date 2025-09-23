@@ -45,7 +45,7 @@ impl EnumStatementMatcher {
         Self { regex: Regex::new(&pattern).unwrap() }
     }
 
-    pub fn regex(self: &Self) -> &Regex {
+    pub fn regex(&self) -> &Regex {
         &self.regex
     }
 }

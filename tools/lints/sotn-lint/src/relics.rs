@@ -46,11 +46,9 @@ const RELICS: [&str; 30] = [
 ];
 
 fn replace_enum(captures: &regex::Captures) -> String {
-    if let Some(relic_index) = captures.get(1).map(|m| m.as_str().parse::<usize>()) {
-        if let Ok(relic_index) = relic_index {
-            if let Some(relic_name) = RELICS.get(relic_index) {
-                return format!("g_Status.relics[{relic_name}]");
-            }
+    if let Some(Ok(relic_index)) = captures.get(1).map(|m| m.as_str().parse::<usize>()) {
+        if let Some(relic_name) = RELICS.get(relic_index) {
+            return format!("g_Status.relics[{relic_name}]");
         }
     }
     captures
@@ -61,8 +59,7 @@ fn replace_enum(captures: &regex::Captures) -> String {
 lazy_static! {
     static ref REGEX: Regex = {
         let pattern = r"g_Status\.relics\[(\d+)\]";
-        let re = Regex::new(pattern).unwrap();
-        re
+        Regex::new(pattern).unwrap()
     };
 }
 

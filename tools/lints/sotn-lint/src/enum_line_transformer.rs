@@ -32,7 +32,7 @@ impl<U: EnumValue> EnumLineTransformer<U> where <U as FromStr>::Err: Debug {
 
         Self {
             enum_values: _enum_values,
-            regex: regex,
+            regex,
         }
     }
 
