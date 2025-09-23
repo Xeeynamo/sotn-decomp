@@ -33,6 +33,8 @@ use primitive_type::PrimitiveTypeTransformer;
 use rayon::prelude::*;
 use relics::RelicsTransformer;
 
+use crate::linter::{Gentries, ObjectLinker};
+
 fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>, linters: &Vec<Box<dyn Linter>>) ->
 (usize, bool) {
     let mut alterations = 0;
@@ -107,7 +109,7 @@ fn process_directory(dir_path: &str) -> bool {
     ];
 
     let linters: Vec<Box<dyn Linter>> = vec![
-        Box::new(EntityRangeLinter),
+        Box::new(ObjectLinker::<Gentries>::new()),
         Box::new(LocalExternLinter),
         Box::new(RegexLinter::new("Static String Reference", r"FntPrint\(D_")),
     ];

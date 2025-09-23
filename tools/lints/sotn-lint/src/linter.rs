@@ -1,3 +1,5 @@
+use std::{marker::PhantomData, ops::Range};
+
 use regex::Regex;
 use once_cell::sync::Lazy;
 
@@ -21,36 +23,21 @@ impl CLang for String {
         self.split("//").next().unwrap().to_owned()
     }
 }
+impl<'a> CLang for &'a str {
+    fn strip_line_comment(&self) -> Self {
+        self.split("//").next().unwrap()
+    }
+}
 
 /// `EntityRangeLinter` is a linter which checks automatic
 /// variable names to determine if they are in the range
 /// of the the `g_Entities` table. These references should
 /// be replaced by indexing into the table and, if appropriate,
 /// using the appropriate `Entity` field.
-pub struct EntityRangeLinter;
+pub type EntityRangeLinter = ObjectLinker<Gentries>;
 
 static SYMBOL_PATTERN: Lazy<Regex> = Lazy::new(|| Regex::new(r"(D_(?:[a-zA-F0-9]*_)?([A-F0-9]{8}))").unwrap());
 
-impl Linter for EntityRangeLinter {
-    fn check_line(&self, line: &str) -> Result<(), String> {
-
-        let stripped = line.to_string().strip_line_comment();
-        let Some(captures) = SYMBOL_PATTERN.captures(stripped.as_str()) else {
-            return Ok(());
-        };
-
-        let addr_str = captures.get(2).map(|m| m.as_str().to_string());
-        let addr = u32::from_str_radix(&addr_str.clone().unwrap(), 16).unwrap();
-
-        if (0x800733D8..0x8007EF1C).contains(&addr) ||
-            (0x091e1680..0x91ED1C4).contains(&addr) {
-            let var = captures.get(1).map(|m| m.as_str().to_string()).expect("entity global");
-            return Err(format!("`{var}' should index into g_Entities"));
-        }
-
-        Ok(())
-    }
-}
 
 /// `RegexLinter` takes a line and matches it against a regular expression.
 /// Lines that match are considered failures and will return `Err<String>`.
@@ -70,7 +57,7 @@ impl RegexLinter {
 
 impl Linter for RegexLinter {
     fn check_line(&self, line: &str) -> Result<(), String> {
-        let stripped = line.to_string().strip_line_comment();
+        let stripped = line.strip_line_comment();
         if self.regex.is_match(&stripped) {
             Err(format!("{}: {}", self.name, self.regex))
         } else {
@@ -94,4 +81,50 @@ impl Linter for LocalExternLinter {
         let symbol = captures.get(1).map(|m| m.as_str().to_string()).expect("symbol");
         Err(format!("`{symbol}' definition should not be `extern`"))
     }
+}
+
+
+pub trait Object {
+    const NAME: &'static str;
+    const RANGES: &'static [Range<u32>];
+}
+
+
+pub struct ObjectLinker<O> {
+    _ph: PhantomData<O>,
+}
+
+impl<O: Object + Sync> ObjectLinker<O> {
+    pub fn new() -> Self {
+        Self { _ph: PhantomData }
+    }
+}
+
+impl<O: Object + Sync> Linter for ObjectLinker<O> {
+    fn check_line(&self, line: &str) -> Result<(), String> {
+
+        let stripped = line.strip_line_comment();
+        let Some(captures) = SYMBOL_PATTERN.captures(stripped) else {
+            return Ok(());
+        };
+
+        let addr_str = captures.get(2).map(|m| m.as_str());
+        let addr = u32::from_str_radix(&addr_str.clone().unwrap(), 16).unwrap();
+
+        if O::RANGES.iter().any(|r| r.contains(&addr)) {
+            let var = captures.get(1).map(|m| m.as_str()).expect("entity global");
+            return Err(format!("`{var}' should index into {}", O::NAME));
+        }
+
+        Ok(())
+    }
+}
+
+pub struct Gentries;
+impl Object for Gentries {
+    const NAME: &'static str = "g_Entities";
+    const RANGES: &'static [Range<u32>] = &[
+        0x800733D8..0x8007EF1C,
+        0x091e1680..0x91ED1C4
+    ];
 }
