@@ -36,26 +36,29 @@ fn parse_instructions(input: &str, dir: &str, file: &str) -> Function {
             continue; // Skip lines that don't have enough parts
         }
 
-        if let Ok(file_addr) = u64::from_str_radix(parts[1], 16) {
-            if let Ok(vram_addr) = u64::from_str_radix(parts[2], 16) {
-                if let Ok(op) = u32::from_str_radix(parts[3], 16) {
-                    // splat's output for the instruction is apparently little-endian
-                    let reversed_num = ((op >> 24) & 0xFF)
-                        | (((op >> 16) & 0xFF) << 8)
-                        | (((op >> 8) & 0xFF) << 16)
-                        | ((op & 0xFF) << 24);
+        let Ok(file_addr) = u64::from_str_radix(parts[1], 16) else {
+            continue;
+        };
+        let Ok(vram_addr) = u64::from_str_radix(parts[2], 16) else {
+            continue;
+        };
+        let Ok(op) = u32::from_str_radix(parts[3], 16) else {
+            continue;
+        };
+        // splat's output for the instruction is apparently little-endian
+        let reversed_num = ((op >> 24) & 0xFF)
+            | (((op >> 16) & 0xFF) << 8)
+            | (((op >> 8) & 0xFF) << 16)
+            | ((op & 0xFF) << 24);
 
-                    // if the file address, vram address, and instruction parsed, add it
-                    let instruction = Instruction {
-                        file_addr,
-                        vram_addr,
-                        op: reversed_num,
-                    };
+        // if the file address, vram address, and instruction parsed, add it
+        let instruction = Instruction {
+            file_addr,
+            vram_addr,
+            op: reversed_num,
+        };
 
-                    instructions.push(instruction);
-                }
-            }
-        }
+        instructions.push(instruction);
     }
 
     // use the 'op' part of the instruction to find duplicates
@@ -77,37 +80,40 @@ fn parse_instructions(input: &str, dir: &str, file: &str) -> Function {
 }
 
 fn process_directory(dir_path: &str, funcs: &mut Vec<Function>) {
-    match std::fs::read_dir(dir_path) {
-        Ok(entries) => {
-            entries.for_each(|entry| {
-                if let Ok(entry) = entry {
-                    let item_path = entry.path();
-                    if item_path.is_file() && item_path.to_string_lossy().ends_with(".s") {
-                        println!("checking {item_path:?}");
-
-                        let mut file = fs::File::open(&item_path).unwrap();
-                        let mut buffer = String::new();
-                        file.read_to_string(&mut buffer).unwrap();
-
-                        let func =
-                            parse_instructions(&buffer, dir_path, &item_path.to_string_lossy());
-
-                        // jr $ra, nop
-                        let is_null = func.ops.len() == 2
-                            && func.ops[0].op == 0x03E00008
-                            && func.ops[1].op == 0x00000000;
-                        if !is_null {
-                            funcs.push(func);
-                        }
-                    } else if item_path.is_dir() {
-                        process_directory(&item_path.to_string_lossy(), funcs);
-                    }
-                }
-            });
-        }
+    let entries = match std::fs::read_dir(dir_path) {
+        Ok(e) => e,
         Err(error) => {
             eprintln!("Unable to read directory: {error}");
             println!("Directory path: {dir_path}");
+            return;
+        }
+    };
+
+    for entry in entries.flatten() {
+        let item_path = entry.path();
+
+        if item_path.is_dir() {
+            process_directory(&item_path.to_string_lossy(), funcs);
+            continue;
+        }
+
+        if item_path.is_file() && item_path.to_string_lossy().ends_with(".s") {
+            println!("checking {item_path:?}");
+
+            let mut file = fs::File::open(&item_path).unwrap();
+            let mut buffer = String::new();
+            file.read_to_string(&mut buffer).unwrap();
+
+            let func = parse_instructions(&buffer, dir_path, &item_path.to_string_lossy());
+
+            // jr $ra, nop
+            let is_null = func.ops.len() == 2
+                && func.ops[0].op == 0x03E00008
+                && func.ops[1].op == 0x00000000;
+            if !is_null {
+                funcs.push(func);
+            }
+            continue;
         }
     }
 }
@@ -160,29 +166,31 @@ fn process_directory_for_include_asm(dir: &str) -> Vec<IncludeAsmEntry> {
     let entries = std::fs::read_dir(dir).expect("Unable to read directory");
     let mut output = Vec::new();
 
-    entries.for_each(|entry| {
-        if let Ok(entry) = entry {
-            let item_path = entry.path();
-            if item_path.is_file() && item_path.to_string_lossy().ends_with(".c") {
-                println!("checking {item_path:?}");
+    for entry in entries.flatten() {
+        let item_path = entry.path();
 
-                let file = File::open(&item_path).expect("Unable to open file");
-                let mut reader = BufReader::new(file);
-                let mut buffer = String::new();
-
-                reader
-                    .read_to_string(&mut buffer)
-                    .expect("Unable to read file");
-
-                output.append(&mut process_buffer_for_include_asm(
-                    &buffer,
-                    &item_path.to_string_lossy(),
-                ));
-            } else if item_path.is_dir() {
-                process_directory_for_include_asm(&item_path.to_string_lossy());
-            }
+        if item_path.is_dir() {
+            process_directory_for_include_asm(&item_path.to_string_lossy());
+            continue;
         }
-    });
+        if item_path.is_file() && item_path.to_string_lossy().ends_with(".c") {
+            println!("checking {item_path:?}");
+
+            let file = File::open(&item_path).expect("Unable to open file");
+            let mut reader = BufReader::new(file);
+            let mut buffer = String::new();
+
+            reader
+                .read_to_string(&mut buffer)
+                .expect("Unable to read file");
+
+            output.append(&mut process_buffer_for_include_asm(
+                &buffer,
+                &item_path.to_string_lossy(),
+            ));
+            continue;
+        }
+    }
     output
 }
 
