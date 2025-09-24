@@ -1,5 +1,6 @@
-use std::fs::File;
-use std::io::{BufRead, BufReader, BufWriter, Write};
+use std::fs::{self, File};
+use std::io::{self, BufRead, BufReader, BufWriter, Write};
+use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 
 mod attackelement;
@@ -34,20 +35,17 @@ use relics::RelicsTransformer;
 
 use crate::linter::{Gentries, ObjectRangeLinker};
 
-fn transform_file(file_path: &str, transformers: &[&dyn LineTransformer], linters: &[&dyn Linter]) ->
-(usize, bool) {
+fn transform_file(file_path: &PathBuf, transformers: &[&dyn LineTransformer], linters: &[&dyn Linter]) -> (usize, bool) {
     let mut alterations = 0;
     let mut lines = Vec::new();
     let mut original_lines = Vec::new();
-    let mut i = 0;
     let mut lint_passed = true;
+    let mut file_changed = false;
 
     let file = File::open(file_path).expect("Unable to open file");
     let reader = BufReader::new(file);
-
-    let mut has_changes = false;
-    for line in reader.lines() {
-        i += 1;
+    
+    for (i, line) in reader.lines().into_iter().enumerate() {
         let mut line_str = line.unwrap();
         original_lines.push(line_str.clone());
 
@@ -56,7 +54,7 @@ fn transform_file(file_path: &str, transformers: &[&dyn LineTransformer], linter
                 line_str = match transformer.transform_line(&line_str) {
                     Some(s) => {
                         if line_str != s {
-                            has_changes = true;
+                            file_changed = true;
                         }
 
                         s
@@ -69,7 +67,7 @@ fn transform_file(file_path: &str, transformers: &[&dyn LineTransformer], linter
                 match linter.check_line(&line_str) {
                     Ok(_) => (),
                     Err(msg) => {
-                        println!("{file_path}:{i} \x1b[31m{msg}\x1b[0m -> {line_str}");
+                        println!("{file_path:?}:{i} \x1b[31m{msg}\x1b[0m -> {line_str}");
                         lint_passed = false;
                     }
                 }
@@ -78,14 +76,13 @@ fn transform_file(file_path: &str, transformers: &[&dyn LineTransformer], linter
 
         lines.push(line_str);
     }
-
-    if has_changes {
+    if file_changed {
         let file = File::create(file_path).expect("Unable to create file");
         let mut file = BufWriter::new(file);
         for (i, line) in lines.iter().enumerate() {
             if lines[i] != original_lines[i] {
                 alterations += 1;
-                println!("{file_path}:{i} {} -> {}", original_lines[i], lines[i]);
+                println!("{file_path:?}:{i} {} -> {}", original_lines[i], lines[i]);
             }
             writeln!(file, "{line}").expect("Unable to write line to file");
         }
@@ -94,7 +91,31 @@ fn transform_file(file_path: &str, transformers: &[&dyn LineTransformer], linter
     (alterations, lint_passed)
 }
 
-fn process_directory(dir_path: &str) -> bool {
+
+
+fn collect_files(d: &Path) -> io::Result<Vec<PathBuf>> {
+    let mut v = vec![];
+    for f in fs::read_dir(d)?.flatten() {
+        let t = f.file_type()?;
+        let p = f.path();
+        if t.is_file() {
+            if [Some("c"), Some("h")].contains(&p.extension().and_then(|ext| ext.to_str())) {
+                v.push(p);
+            }
+            continue;
+        }
+        if t.is_dir() {
+            if f.file_name().to_str() != Some("mednafen") {
+                v.extend_from_slice(&collect_files(&f.path())?);
+            }
+            continue;
+        }
+        eprintln!("Unexpected path: {f:?}");
+    }
+    Ok(v)
+}
+fn run(dir: &str) -> bool {
+
     let fixed_transformer = FixedTransformer;
     let relics_transformer = RelicsTransformer;
     let draw_mode_transformer = DrawModeTransformer::default();
@@ -127,31 +148,19 @@ fn process_directory(dir_path: &str) -> bool {
         &regex,
     ];
 
-    let entries = std::fs::read_dir(dir_path).expect("Unable to read directory");
-
-    entries.par_bridge().fold(|| true, |mut lint_passed, entry| {
-        let Ok(entry) = entry else {
-            return lint_passed;
-        };
-        let item_path = entry.path();
-
-        let extension = item_path.extension().and_then(|s| s.to_str());
-        if item_path.is_file() && [Some("c"), Some("h")].contains(&extension) {
-            let (_, passed) = transform_file(&item_path.to_string_lossy(), transformers, linters);
-            return lint_passed & passed;
-        }
-
-        if item_path.is_dir() && item_path.file_name().unwrap() != "mednafen" {
-            lint_passed &= process_directory(&item_path.to_string_lossy());
-            return lint_passed;
-        }
-
-        lint_passed
-    }).reduce(|| true, |a, b| a & b)
+    collect_files(&Path::new(dir))
+        .expect("failed to find files")
+        .par_iter()
+        .map(|file| {
+            let (_, passed) = transform_file(file, transformers, linters);
+            passed
+        })
+        .reduce(|| true, |a, b| a & b)
 }
 
+
 fn main() -> ExitCode {
-    if process_directory(&std::env::args().nth(1).expect("Missing directory path")) {
+    if run(&std::env::args().nth(1).expect("Missing directory path")) {
         ExitCode::SUCCESS
     } else {
         ExitCode::from(1)
