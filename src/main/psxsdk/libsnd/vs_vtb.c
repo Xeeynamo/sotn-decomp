@@ -4,7 +4,7 @@
 s16 SsVabTransBody(u8* addr, s16 vabid) {
     s32 temp_s0;
 
-    if (vabid >= 0 && vabid < 0x11) {
+    if (vabid >= 0 && vabid <= 0x10) {
         if (_svm_vab_used[vabid] == 2) {
             temp_s0 = _svm_vab_start[vabid];
             SpuSetTransferMode(0);
