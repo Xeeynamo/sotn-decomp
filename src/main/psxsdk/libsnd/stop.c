@@ -6,9 +6,9 @@
 void SpuVmSeqKeyOff(s32 arg0);
 
 void _SsSndStop(s16 arg0, s16 arg1) {
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
     int i;
-    struct SeqStruct* score;
-    score = &_ss_score[arg0][arg1];
+
     _ss_score[arg0][arg1].unk90 &= ~1;
     _ss_score[arg0][arg1].unk90 &= ~2;
     _ss_score[arg0][arg1].unk90 &= ~8;

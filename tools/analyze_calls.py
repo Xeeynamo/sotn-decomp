@@ -114,7 +114,12 @@ def handle_jal_call(full_file, call_index):
             "8016B3E4" in callreg_setline
         ):  # weird case in one function with compiler optimizing two calls into one
             return "PlaySfx"
-        if "0xB8($a2)" in callreg_setline or "-0x20($s0)" in callreg_setline:
+        # cases where jalr is using the value set earlier in a register
+        if (
+            "0xB8($a2)" in callreg_setline
+            or "-0x20($s0)" in callreg_setline
+            or "0x0($v0)" in callreg_setline
+        ):
             return "UnknownEntityFunction"
         if "8017B5A8" in callreg_setline:
             return "g_api_CreateEntFactoryFromEntity"

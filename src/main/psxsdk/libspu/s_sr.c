@@ -3,18 +3,18 @@
 #include "libspu_internal.h"
 
 s32 SpuSetReverb(s32 on_off) {
-    u16 var_v1;
+    u16 cnt;
     switch (on_off) {
     case 0:
         _spu_rev_flag = 0;
 #ifdef VERSION_PC
-        var_v1 = read_16(0x1F801DAA, __FILE__, __LINE__); // spucnt
-        var_v1 &= ~0x80;
-        write_16(0x1F801DAA, var_v1, __FILE__, __LINE__); // spucnt
+        cnt = read_16(0x1F801DAA, __FILE__, __LINE__); // spucnt
+        cnt &= ~0x80;
+        write_16(0x1F801DAA, cnt, __FILE__, __LINE__); // spucnt
 #else
-        var_v1 = _spu_RXX->rxx.spucnt;
-        var_v1 &= ~0x80;
-        _spu_RXX->rxx.spucnt = var_v1;
+        cnt = _spu_RXX->rxx.spucnt;
+        cnt &= ~0x80;
+        _spu_RXX->rxx.spucnt = cnt;
 #endif
         break;
 
@@ -23,24 +23,24 @@ s32 SpuSetReverb(s32 on_off) {
             _SpuIsInAllocateArea_(_spu_rev_offsetaddr)) {
             _spu_rev_flag = 0;
 #ifdef VERSION_PC
-            var_v1 = read_16(0x1F801DAA, __FILE__, __LINE__);
-            var_v1 &= ~0x80;
-            write_16(0x1F801DAA, var_v1, __FILE__, __LINE__);
+            cnt = read_16(0x1F801DAA, __FILE__, __LINE__);
+            cnt &= ~0x80;
+            write_16(0x1F801DAA, cnt, __FILE__, __LINE__);
 #else
-            var_v1 = _spu_RXX->rxx.spucnt;
-            var_v1 &= ~0x80;
-            _spu_RXX->rxx.spucnt = var_v1;
+            cnt = _spu_RXX->rxx.spucnt;
+            cnt &= ~0x80;
+            _spu_RXX->rxx.spucnt = cnt;
 #endif
         } else {
             _spu_rev_flag = on_off;
 #ifdef VERSION_PC
-            var_v1 = read_16(0x1F801DAA, __FILE__, __LINE__);
-            var_v1 |= 0x80;
-            write_16(0x1F801DAA, var_v1, __FILE__, __LINE__);
+            cnt = read_16(0x1F801DAA, __FILE__, __LINE__);
+            cnt |= 0x80;
+            write_16(0x1F801DAA, cnt, __FILE__, __LINE__);
 #else
-            var_v1 = _spu_RXX->rxx.spucnt;
-            var_v1 |= 0x80;
-            _spu_RXX->rxx.spucnt = var_v1;
+            cnt = _spu_RXX->rxx.spucnt;
+            cnt |= 0x80;
+            _spu_RXX->rxx.spucnt = cnt;
 #endif
         }
         break;

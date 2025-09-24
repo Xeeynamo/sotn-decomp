@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <psxsdk/libgte.h>
-#include "../../include/cloud_struct.h"
 #include "clock_tower.h"
 
 extern EInit g_EInitSpawner;

@@ -356,8 +356,8 @@ void test_spu_vm_do_allocate()
     can't check most of the func since _svm_voice, _svm_envx_hist, _svm_sreg_buf and _svm_sreg_dirty are hidden
     */
 
-    ASSERT_EQ(_svm_cur.unk1c.a, 16);
-    ASSERT_EQ(_svm_cur.unk1c.b, 1);
+    ASSERT_EQ(_svm_cur.field_0x1c, 16);
+    ASSERT_EQ(_svm_cur.field_0x1e, 1);
 
     /*
         SpuVmKeyOnNow checks
@@ -424,7 +424,7 @@ void check_ss_vab_open_head_with_mode()
     s8 temp[0x1000] = {0};
     SpuInitMalloc(32, temp);
 
-    ReadToArray("assets/dra/vh_0.bin", (char*)aPbav, LEN(aPbav));
+    ReadToArray("assets/dra/" VERSION "/vh_0.vh", (char*)aPbav, LEN(aPbav));
 
     SsInitHot();
     SpuMallocWithStartAddr(0x1010, 0x10000);

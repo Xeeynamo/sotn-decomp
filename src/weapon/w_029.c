@@ -17,21 +17,7 @@ extern s32 D_CF000_8017ACC0;
 extern u16 D_CF000_8017ACF8[];
 extern u16 D_CF000_8017AD04[];
 extern u16 D_CF000_8017AD10[];
-
 extern AnimationFrame D_CF000_8017AD24[];
-
-typedef struct {
-    f32 posX;
-    f32 posY;
-    s16 unk8;
-    u16 unkA;
-    s16 unkC;
-    s16 unkE;
-    s16 unk10;
-    s16 spawnDelay;
-    s16 unk14;
-    s16 state;
-} FireShieldDragon;
 extern FireShieldDragon D_CF000_8017C9A0[][20];
 
 static void EntityWeaponAttack(Entity* self) {

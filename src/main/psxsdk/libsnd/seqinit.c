@@ -3,10 +3,9 @@
 #include "libsnd_i.h"
 
 s16 _SsInitSoundSeq(s16 arg0, s16 vab_id, u8* addr) {
-    struct SeqStruct* score;
+    struct SeqStruct* score = &_ss_score[arg0][0];
     s32 channel;
 
-    score = &_ss_score[arg0][0];
     score->unk4c = vab_id;
     score->unk4a = 0;
     score->unk13 = 0;

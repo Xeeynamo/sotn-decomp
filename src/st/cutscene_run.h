@@ -1,4 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// Options:
+//
+//     #define CUTSCENE_TILEMAP_SCROLL:
+//
+//         adds additional decrements based on `g_Tilemap`'s scroll position
+
 extern Dialogue g_Dialogue;
 extern u32 g_CutsceneFlags;
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
@@ -33,7 +40,7 @@ static void CutsceneRun(void) {
             entity->posX.i.hi |= *g_Dialogue.scriptEnd++;
             entity->posY.i.hi = *g_Dialogue.scriptEnd++ * 0x10;
             entity->posY.i.hi |= *g_Dialogue.scriptEnd++;
-#if defined(STAGE_IS_CEN) || defined(STAGE_IS_TOP)
+#ifdef CUTSCENE_TILEMAP_SCROLL
             entity->posX.i.hi -= g_Tilemap.scrollX.i.hi;
             entity->posY.i.hi -= g_Tilemap.scrollY.i.hi;
 #endif
@@ -45,7 +52,12 @@ static void CutsceneRun(void) {
             break;
         case 2:
             if (!((g_CutsceneFlags >> *g_Dialogue.scriptEnd) & 1)) {
+#ifdef STAGE_IS_DRE
+                g_Dialogue.scriptEnd -= 3;
+                g_Dialogue.timer--;
+#else
                 g_Dialogue.scriptEnd--;
+#endif
                 return;
             }
             g_CutsceneFlags &= ~(1 << *g_Dialogue.scriptEnd++);
