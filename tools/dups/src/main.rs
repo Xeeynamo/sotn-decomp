@@ -603,7 +603,7 @@ fn do_ordered_compare(dirs: Vec<String>, threshold: f64) {
     }
 
     // 2 way comparison for determining patterns in overlays
-    let mut pairs: Vec<Vec<&Function>> = Vec::new();
+    let mut pairs: Vec<(&Function,&Function)> = Vec::new();
 
     // print out all found duplicates with their similarity values
     let hyphens = "-".repeat(80);
@@ -623,11 +623,7 @@ fn do_ordered_compare(dirs: Vec<String>, threshold: f64) {
                     result,
                     width = 40
                 );
-                let temp = vec![
-                    func_0,
-                    func_1,
-                ];
-                pairs.push(temp);
+                pairs.push((func_0, func_1));
             }
         }
     }
@@ -650,9 +646,9 @@ fn do_ordered_compare(dirs: Vec<String>, threshold: f64) {
         let mut _has_dup = false;
         let mut dup_name = "";
         for pair in &pairs {
-            if func_0.name == pair[0].name {
+            if func_0.name == pair.0.name {
                 _has_dup = true;
-                dup_name = &pair[1].name;
+                dup_name = &pair.1.name;
             }
         }
 
