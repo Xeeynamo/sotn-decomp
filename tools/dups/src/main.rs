@@ -679,28 +679,29 @@ fn main() {
 fn levenshtein_similarity(s1: &[u8], s2: &[u8]) -> f64 {
     let len1 = s1.len();
     let len2 = s2.len();
-    let mut dp = vec![vec![0; len2 + 1]; len1 + 1];
+    let stride = len2 + 1;
+    let mut dp = vec![0;(len1 + 1) * (len2 + 1)];
 
     for i in 0..=len1 {
-        dp[i][0] = i;
+        dp[i * stride + 0] = i;
     }
 
     for j in 0..=len2 {
-        dp[0][j] = j;
+        dp[0 * stride + j] = j;
     }
 
     for (i, x) in s1.iter().enumerate() {
         for (j, y) in s2.iter().enumerate() {
-            dp[i + 1][j + 1] = if x == y {
-                dp[i][j]
+            dp[(i + 1) * stride + j + 1] = if x == y {
+                dp[i * stride + j]
             } else {
-                dp[i][j].min(dp[i][j + 1]).min(dp[i + 1][j]) + 1
+                dp[i * stride + j].min(dp[i * stride + j + 1]).min(dp[(i + 1) * stride + j]) + 1
             };
         }
     }
 
     let max_len = len1.max(len2) as f64;
-    (max_len - dp[len1][len2] as f64) / max_len
+    (max_len - dp[len1 * stride + len2] as f64) / max_len
 }
 
 fn process_asm_directory(dir: &str, files: &mut Vec<DupsFile>) {
