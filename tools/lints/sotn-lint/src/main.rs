@@ -1,6 +1,6 @@
-use std::collections::{BTreeMap, HashMap};
+use std::collections::BTreeMap;
 use std::fs::{self, File};
-use std::io::{self, BufRead, BufReader, BufWriter, Write};
+use std::io::{self, BufRead, BufReader};
 use std::path::{Path, PathBuf};
 use std::process::ExitCode;
 
@@ -66,8 +66,10 @@ fn transform_file(file_path: &PathBuf, transformers: &[&dyn LineTransformer], li
         }
 
         for linter in linters {
-            if let Err(msg) = linter.check_line(&line) {
-                println!("{file_path:?}:{i} \x1b[31m{msg}\x1b[0m -> {line}");
+            let errors = linter.check_line(&line);
+
+            for error in errors {
+                println!("{file_path:?}:{i} \x1b[31m{error}\x1b[0m -> {line}");
                 lint_passed = false;
             }
         }

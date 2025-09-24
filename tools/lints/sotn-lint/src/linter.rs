@@ -9,7 +9,7 @@ use once_cell::sync::Lazy;
 pub trait Linter: Sync {
     /// `check_line` determines if the line is acceptable (`Ok<()>`) or
     /// not (`Err<String>`)
-    fn check_line(&self, line: &str) -> Result<(), String>;
+    fn check_line(&self, line: &str) -> Vec<String>;
 }
 
 
@@ -49,12 +49,12 @@ impl RegexLinter {
 }
 
 impl Linter for RegexLinter {
-    fn check_line(&self, line: &str) -> Result<(), String> {
+    fn check_line(&self, line: &str) -> Vec<String> {
         let stripped = line.strip_line_comment();
         if self.regex.is_match(&stripped) {
-            Err(format!("{}: {}", self.name, self.regex))
+            vec![format!("{}: {}", self.name, self.regex)]
         } else {
-            Ok(())
+            vec![]
         }
     }
 }
@@ -67,12 +67,12 @@ pub struct LocalExternLinter;
 static LOCAL_EXTERN_PATTERN: Lazy<Regex> = Lazy::new(|| Regex::new(r"^extern [^ ]+ ([a-zA-Z0-9$_]+)[^ ]* = ").unwrap());
 
 impl Linter for LocalExternLinter {
-    fn check_line(&self, line: &str) -> Result<(), String> {
+    fn check_line(&self, line: &str) -> Vec<String> {
         let Some(captures) = LOCAL_EXTERN_PATTERN.captures(line) else {
-            return Ok(());
+            return vec![];
         };
         let symbol = captures.get(1).map(|m| m.as_str()).expect("symbol");
-        Err(format!("`{symbol}' definition should not be `extern`"))
+        vec![format!("`{symbol}' definition should not be `extern`")]
     }
 }
 
@@ -99,11 +99,11 @@ impl<O: Object + Sync> Default for ObjectRangeLinker<O> {
 }
 
 impl<O: Object + Sync> Linter for ObjectRangeLinker<O> {
-    fn check_line(&self, line: &str) -> Result<(), String> {
+    fn check_line(&self, line: &str) -> Vec<String> {
 
         let stripped = line.strip_line_comment();
         let Some(captures) = SYMBOL_PATTERN.captures(stripped) else {
-            return Ok(());
+            return vec![];
         };
 
         let addr_str = captures.get(2).map(|m| m.as_str());
@@ -111,10 +111,10 @@ impl<O: Object + Sync> Linter for ObjectRangeLinker<O> {
 
         if O::RANGES.iter().any(|r| r.contains(&addr)) {
             let var = captures.get(1).map(|m| m.as_str()).expect("entity global");
-            return Err(format!("`{var}' should index into {}", O::NAME));
+            return vec![format!("`{var}' should index into {}", O::NAME)];
         }
 
-        Ok(())
+        vec![]
     }
 }
 
