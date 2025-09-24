@@ -12,20 +12,23 @@ typedef struct {
     /* 0x28 */ s32 written;
 } FntStream;
 
-const char a0123456789abcd[] = "0123456789ABCDEF";
-
-extern FntStream Font[4];
-extern s32 D_8002B810;
-extern s32 D_8002B814;
-extern u_long D_8002B818[];
-extern s32 D_8002C218;
-extern char* D_8002C21C[];
 extern int (*GPU_printf)(const char*, ...);
-
 extern u16 clut;
 extern u16 tpage;
 extern char D_80033A18[];
 extern SPRT_8 D_80033E18[];
+
+static FntStream Font[4] = {0};
+static s32 D_8002B810 = 0;
+static s32 D_8002B814 = 0;
+static u16 D_8002B818[] = {
+#include "../../gen/D_8002B818.h"
+};
+static u8 D_8002BA18[] = {
+#include "../../gen/D_8002BA18.h"
+};
+static s32 D_8002C218 = 0;
+static char* D_8002C21C[] = {"0123456789ABCDEF"};
 
 void SetDumpFnt(int id) {
     if (id >= 0 && D_8002B810 >= id) {
@@ -36,7 +39,7 @@ void SetDumpFnt(int id) {
 
 void FntLoad(s32 tx, s32 ty) {
     clut = LoadClut(D_8002B818, tx, ty + 0x80);
-    tpage = LoadTPage(D_8002B818 + 0x80, 0, 0, tx, ty, 0x80, 0x20);
+    tpage = LoadTPage(D_8002B818 + 0x100, 0, 0, tx, ty, 0x80, 0x20);
     D_8002B810 = 0;
     memset(Font, 0, sizeof(Font));
 }
