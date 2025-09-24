@@ -70,7 +70,8 @@ lazy_static! {
 fn transform_line_relics(line: &str) -> Option<String> {
     match REGEX.replace_all(line, |captures: &regex::Captures| replace_enum(captures)) {
         Cow::Borrowed(_) => None,
-        Cow::Owned(s) => Some(s),
+        Cow::Owned(s) if s != line => Some(s),
+        Cow::Owned(_) => None,
     }
 }
 

@@ -60,9 +60,9 @@ mod tests {
     #[test]
     fn test_flags_zero() {
         let input_line = "self->flags = 0;";
-        let expected_line = "self->flags = 0;";
+        let _expected_line = "self->flags = 0;";
         let result = FT.transform_line(input_line);
-        assert_eq!(result.as_deref(), Some(expected_line))
+        assert_eq!(result, None)
     }
 
     #[test]
@@ -116,25 +116,25 @@ mod tests {
     #[test]
     fn test_flags_invalid_flags_ignored() {
         let input_line = "self->flags = 0xf;";
-        let expected_line = "self->flags = 0xf;";
+        let _expected_line = "self->flags = 0xf;";
         let result = FT.transform_line(input_line);
-        assert_eq!(result.as_deref(), Some(expected_line))
+        assert_eq!(result, None)
     }
 
     #[test]
     fn test_flags_not_gb_layers_flags() {
         let input_line = "g_BgLayers[0]->flags &= ~4;";
-        let expected_line = "g_BgLayers[0]->flags &= ~4;";
+        let _expected_line = "g_BgLayers[0]->flags &= ~4;";
         let result = FT.transform_line(input_line);
-        assert_eq!(result.as_deref(), Some(expected_line))
+        assert_eq!(result, None)
     }
 
     #[test]
     fn test_flags_not_tilemap_flags() {
         let input_line = "g_Tilemap->flags &= ~4;";
-        let expected_line = "g_Tilemap->flags &= ~4;";
+        let _expected_line = "g_Tilemap->flags &= ~4;";
         let result = FT.transform_line(input_line);
-        assert_eq!(result.as_deref(), Some(expected_line))
+        assert_eq!(result, None)
     }
 
     #[test]

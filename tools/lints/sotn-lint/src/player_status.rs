@@ -64,9 +64,9 @@ mod tests {
     #[test]
     fn test_player_status_zero() {
         let input_line = "g_Player.status = 0;";
-        let expected_line = "g_Player.status = 0;";
+        let _expected_line = "g_Player.status = 0;";
         let result = DMT.transform_line(input_line);
-        assert_eq!(result.as_deref(), Some(expected_line))
+        assert_eq!(result, None)
     }
 
     #[test]

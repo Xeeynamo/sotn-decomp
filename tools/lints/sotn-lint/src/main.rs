@@ -56,9 +56,7 @@ fn transform_file(file_path: &PathBuf, transformers: &[&dyn LineTransformer], li
         for transformer in transformers {
             line = match transformer.transform_line(&line) {
                 Some(s) => {
-                    if line != s {
-                        diffs.insert(i, (old.clone(), s.clone()));
-                    }
+                    diffs.insert(i, (old.clone(), s.clone()));
                     s
                 },
                 None => line,

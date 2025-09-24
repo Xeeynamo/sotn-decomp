@@ -168,7 +168,8 @@ impl<U: EnumValue> LineTransformer for BitFlagLineTransformer<U> where <U as Fro
     fn transform_line(&self, line: &str) -> Option<String> where {
         match self.regex.replace_all(line, |captures: &regex::Captures| self.replace_enum(captures)) {
             Cow::Borrowed(_) => None,
-            Cow::Owned(s) => Some(s),
+            Cow::Owned(s) if s != line => Some(s),
+            Cow::Owned(_) => None,
         }
     }
 }
