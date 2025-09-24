@@ -2,8 +2,8 @@
 #include "libsnd_i.h"
 
 u32 SpuVmVSetUp(s16 vabId, s16 prog) {
-    if ((vabId >= 0x10U) || (_svm_vab_used[vabId] != 1) ||
-        (prog >= kMaxPrograms)) {
+    if (vabId < 0 || vabId >= 0x10 || _svm_vab_used[vabId] != 1 ||
+        prog >= kMaxPrograms) {
         return -1;
     }
 
