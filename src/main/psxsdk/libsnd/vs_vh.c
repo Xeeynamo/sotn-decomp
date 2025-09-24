@@ -65,13 +65,13 @@ s16 SsVabOpenHeadWithMode(u8* addr, s16 vabid, s16 arg2, u32 sbaddr) {
     var_a2 = var_a2 + 0x20;
     vab_hdr_2 = addr;
     magic = vab_hdr_2->form;
-    if ((magic >> 8) != 0x564142) {
+    if ((magic >> 8) != ('V' << 0x10 | 'A' << 0x8 | 'B')) {
         _svm_vab_used[vabId_2] = 0;
         _spu_setInTransfer(0);
         _svm_vab_count -= 1;
         return -1;
     }
-    if ((magic & 0xFF) == 0x70) {
+    if ((magic & 0xFF) == 'p') {
         if (vab_hdr_2->ver >= 5) {
             kMaxPrograms = 0x80;
         } else {
