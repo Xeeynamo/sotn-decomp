@@ -1,3 +1,4 @@
+use std::collections::{BTreeMap, HashMap};
 use std::fs::{self, File};
 use std::io::{self, BufRead, BufReader, BufWriter, Write};
 use std::path::{Path, PathBuf};
@@ -36,68 +37,64 @@ use relics::RelicsTransformer;
 use crate::linter::{Gentries, ObjectRangeLinker};
 
 fn transform_file(file_path: &PathBuf, transformers: &[&dyn LineTransformer], linters: &[&dyn Linter]) -> (usize, bool) {
-    let mut alterations = 0;
     let mut lines = Vec::new();
-    let mut original_lines = Vec::new();
     let mut lint_passed = true;
-    let mut file_changed = false;
+    let mut diffs = BTreeMap::<usize, (String, String)>::new();
 
     let file = File::open(file_path).expect("Unable to open file");
     let reader = BufReader::new(file);
     
     for (i, line) in reader.lines().into_iter().enumerate() {
-        let mut line_str = line.unwrap();
-        original_lines.push(line_str.clone());
+        let mut line = line.unwrap();
+        let old = line.clone();
 
-        if !line_str.contains("sotn-lint-ignore") {
-            for transformer in transformers {
-                line_str = match transformer.transform_line(&line_str) {
-                    Some(s) => {
-                        if line_str != s {
-                            file_changed = true;
-                        }
+        if line.contains("sotn-lint-ignore") {
+            lines.push(line);
+            continue;
+        }
 
-                        s
-                    },
-                    None => line_str,
-                };
-            }
-
-            for linter in linters {
-                match linter.check_line(&line_str) {
-                    Ok(_) => (),
-                    Err(msg) => {
-                        println!("{file_path:?}:{i} \x1b[31m{msg}\x1b[0m -> {line_str}");
-                        lint_passed = false;
+        for transformer in transformers {
+            line = match transformer.transform_line(&line) {
+                Some(s) => {
+                    if line != s {
+                        diffs.insert(i, (old.clone(), line.clone()));
                     }
-                }
+                    s
+                },
+                None => line,
+            };
+        }
+
+        for linter in linters {
+            if let Err(msg) = linter.check_line(&line) {
+                println!("{file_path:?}:{i} \x1b[31m{msg}\x1b[0m -> {line}");
+                lint_passed = false;
             }
         }
 
-        lines.push(line_str);
+        lines.push(line);
     }
-    if file_changed {
-        let file = File::create(file_path).expect("Unable to create file");
-        let mut file = BufWriter::new(file);
-        for (i, line) in lines.iter().enumerate() {
-            if lines[i] != original_lines[i] {
-                alterations += 1;
-                println!("{file_path:?}:{i} {} -> {}", original_lines[i], lines[i]);
-            }
-            writeln!(file, "{line}").expect("Unable to write line to file");
+
+    if !diffs.is_empty() {
+        fs::write(file_path, lines.join("\n"))
+            .expect("failed to write changed file");
+
+        for (i, (old, new)) in diffs.iter() {
+            println!("{file_path:?}:{i} {old} -> {new}");
         }
     }
 
-    (alterations, lint_passed)
+    (diffs.len(), lint_passed)
 }
 
 
 
 fn collect_files(d: &Path) -> io::Result<Vec<PathBuf>> {
     let mut v = vec![];
-    for f in fs::read_dir(d)?.flatten() {
-        let t = f.file_type()?;
-        let p = f.path();
+
+    for entry in fs::read_dir(d)?.flatten() {
+        let t = entry.file_type()?;
+        let p = entry.path();
         if t.is_file() {
             if [Some("c"), Some("h")].contains(&p.extension().and_then(|ext| ext.to_str())) {
                 v.push(p);
@@ -105,12 +102,12 @@ fn collect_files(d: &Path) -> io::Result<Vec<PathBuf>> {
             continue;
         }
         if t.is_dir() {
-            if f.file_name().to_str() != Some("mednafen") {
-                v.extend_from_slice(&collect_files(&f.path())?);
+            if entry.file_name().to_str() != Some("mednafen") {
+                v.extend_from_slice(&collect_files(&entry.path())?);
             }
             continue;
         }
-        eprintln!("Unexpected path: {f:?}");
+        eprintln!("Unexpected path: {p:?}");
     }
     Ok(v)
 }
