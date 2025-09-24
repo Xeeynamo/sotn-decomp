@@ -29,13 +29,6 @@ impl<'a> CLang for &'a str {
     }
 }
 
-/// `EntityRangeLinter` is a linter which checks automatic
-/// variable names to determine if they are in the range
-/// of the the `g_Entities` table. These references should
-/// be replaced by indexing into the table and, if appropriate,
-/// using the appropriate `Entity` field.
-pub type EntityRangeLinter = ObjectLinker<Gentries>;
-
 static SYMBOL_PATTERN: Lazy<Regex> = Lazy::new(|| Regex::new(r"(D_(?:[a-zA-F0-9]*_)?([A-F0-9]{8}))").unwrap());
 
 
@@ -78,29 +71,34 @@ impl Linter for LocalExternLinter {
         let Some(captures) = LOCAL_EXTERN_PATTERN.captures(line) else {
             return Ok(());
         };
-        let symbol = captures.get(1).map(|m| m.as_str().to_string()).expect("symbol");
+        let symbol = captures.get(1).map(|m| m.as_str()).expect("symbol");
         Err(format!("`{symbol}' definition should not be `extern`"))
     }
 }
 
 
+
+
+/// `ObjectRangeLinter` is a linter which checks automatic
+/// variable names to determine if they are in the range
+/// of the the `Self::O` table. These references should
+/// be replaced by indexing into the table and, if appropriate,
+/// using the appropriate `Self::O` field.
+pub struct ObjectRangeLinker<O> {
+    _ph: PhantomData<O>,
+}
 pub trait Object {
     const NAME: &'static str;
     const RANGES: &'static [Range<u32>];
 }
 
-
-pub struct ObjectLinker<O> {
-    _ph: PhantomData<O>,
-}
-
-impl<O: Object + Sync> ObjectLinker<O> {
+impl<O: Object + Sync> ObjectRangeLinker<O> {
     pub fn new() -> Self {
         Self { _ph: PhantomData }
     }
 }
 
-impl<O: Object + Sync> Linter for ObjectLinker<O> {
+impl<O: Object + Sync> Linter for ObjectRangeLinker<O> {
     fn check_line(&self, line: &str) -> Result<(), String> {
 
         let stripped = line.strip_line_comment();

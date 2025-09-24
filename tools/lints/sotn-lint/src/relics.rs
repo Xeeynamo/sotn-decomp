@@ -55,7 +55,9 @@ fn replace_enum(captures: &regex::Captures) -> String {
     }
     captures
         .get(0)
-        .map_or_else(|| "".to_string(), |m| m.as_str().to_string())
+        .map( |m| m.as_str())
+        .unwrap_or_default()
+        .to_string()
 }
 
 lazy_static! {

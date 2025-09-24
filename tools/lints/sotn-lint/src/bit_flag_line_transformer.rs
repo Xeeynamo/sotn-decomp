@@ -85,21 +85,23 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
 
     fn replace_enum(&self, captures: &regex::Captures) -> String {
         if let (Some(prefix), Some(operator), Some(field_value_string), Some(terminal_string)) = (
-                captures.get(1).map(|m| m.as_str().to_string()),
-                captures.get(2).map(|m| m.as_str().to_string()),
-                captures.get(4).map(|m| m.as_str().to_string()),
-                captures.get(5).map(|m| m.as_str().to_string())) {
+                captures.get(1).map(|m| m.as_str()),
+                captures.get(2).map(|m| m.as_str()),
+                captures.get(4).map(|m| m.as_str()),
+                captures.get(5).map(|m| m.as_str())) {
 
             let inverted = captures.get(3).map(|m| m.as_str()) == Some("~");
 
             // if it starts with 0x, hex string, otherwise int
             let mut field_value: U;
-            if field_value_string.starts_with("0x") {
-                if let Ok(v) = U::from_str_radix(field_value_string.strip_prefix("0x").unwrap(), 16) {
+            if let Some(val) = field_value_string.strip_prefix("0x") {
+                if let Ok(v) = U::from_str_radix(val, 16) {
                     field_value = v;
                 } else {
                     return captures.get(0)
-                        .map_or_else(|| "".to_string(), |m| m.as_str().to_string())
+                        .map(|m| m.as_str())
+                        .unwrap_or_default()
+                        .to_string()
                 }
             } else {
                 field_value = field_value_string.parse::<U>().unwrap();
@@ -122,7 +124,9 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
             if !((field_value & !self.safe_mask).is_zero()) {
                 return captures
                     .get(0)
-                    .map_or_else(|| "".to_string(), |m| m.as_str().to_string());
+                    .map(|m| m.as_str())
+                    .unwrap_or_default()
+                    .to_string();
             }
 
             let mut rvalue: String;
@@ -138,17 +142,15 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
                         } else {
                             None
                         })
-                    .filter(|e| e.is_some())
-                    .map(|e| *e.unwrap())
-                    .collect::<Vec<&str>>()
+                    .flatten()
+                    .copied()
+                    .collect::<Vec<_>>()
                     .join(" | ");
 
-                if field_value.count_ones() > 1 &&
-                    (operator == "^" || operator == "&" || operator == "|" ||
-                     operator == "==" || operator == "!=" ||
-                     operator == "<=" || operator == ">=" ||
-                     operator == "<" || operator == ">" ||
-                     invert == "~" || inverted) {
+                if field_value.count_ones() > 1 && (
+                    ["^", "&", "|", "==", "!=", "<=", ">=", "<", ">"].contains(&operator) ||
+                    invert == "~" || inverted
+                ) {
                     rvalue = format!("({rvalue})");
                 }
             }
@@ -156,7 +158,9 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
         }
         captures
             .get(0)
-            .map_or_else(|| "".to_string(), |m| m.as_str().to_string())
+            .map(|m| m.as_str())
+            .unwrap_or_default()
+            .to_string()
     }
 }
 

@@ -82,11 +82,7 @@ impl LevenshteinHashMap {
             }
         }
 
-        if let Some(k) = closest_key {
-            self.map.get_mut(&k)
-        } else {
-            None
-        }
+        closest_key.and_then(|k| self.map.get_mut(&k))
     }
 
     pub fn insert(&mut self, key: Vec<u8>, mut value: Function) {
@@ -112,10 +108,8 @@ impl LevenshteinHashMap {
             value.similarity = closest_similarity;
             val.unwrap().push(value);
         } else {
-            let mut my_vec: Vec<Function> = Vec::new();
             value.similarity = 1.0;
-            my_vec.push(value);
-            self.map.insert(key, my_vec);
+            self.map.insert(key, vec![value]);
         }
     }
 }

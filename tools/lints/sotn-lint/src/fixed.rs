@@ -65,9 +65,7 @@ fn count_digits_after_decimal(number: f64) -> usize {
 
 fn count_digits_before_decimal(number: f64) -> usize {
     let binding = number.to_string();
-    let decimal_part: Vec<&str> = binding.split('.').collect();
-
-    decimal_part.first().map(|s| s.len()).unwrap_or_default()
+    binding.split('.').next().map(|s| s.len()).unwrap_or_default()
 }
 
 fn hex_string_to_float(hex_str: &str) -> Option<f64> {

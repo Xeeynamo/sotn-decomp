@@ -39,9 +39,9 @@ impl<U: EnumValue> EnumLineTransformer<U> where <U as FromStr>::Err: Debug {
 
     fn replace_enum(&self, captures: &regex::Captures) -> String {
         if let (Some(prefix), Some(field_value_string), Some(terminal_string)) = (
-                captures.get(1).map(|m| m.as_str().to_string()),
-                captures.get(4).map(|m| m.as_str().to_string()),
-                captures.get(5).map(|m| m.as_str().to_string())) {
+                captures.get(1).map(|m| m.as_str()),
+                captures.get(4).map(|m| m.as_str()),
+                captures.get(5).map(|m| m.as_str())) {
 
             let inverted = captures.get(3).map(|m| m.as_str()) == Some("~");
 
@@ -52,7 +52,9 @@ impl<U: EnumValue> EnumLineTransformer<U> where <U as FromStr>::Err: Debug {
                     field_value = v;
                 } else {
                     return captures.get(0)
-                        .map_or_else(|| "".to_string(), |m| m.as_str().to_string())
+                        .map(|m| m.as_str())
+                        .unwrap_or_default()
+                        .to_string()
                 }
             } else {
                 field_value = field_value_string.parse::<U>().unwrap();
@@ -62,7 +64,7 @@ impl<U: EnumValue> EnumLineTransformer<U> where <U as FromStr>::Err: Debug {
                 field_value = !field_value;
             }
 
-            if let Some(Some(rvalue)) = self.enum_values.iter()
+            if let Some(rvalue) = self.enum_values.iter()
                 .map(|(value, name)|
                     if *value == field_value {
                         Some(name)
@@ -70,7 +72,7 @@ impl<U: EnumValue> EnumLineTransformer<U> where <U as FromStr>::Err: Debug {
                         None
                     }
                 )
-                .filter(|e| e.is_some())
+                .flatten()
                 .next() {
                 return format!("{prefix}{rvalue}{terminal_string}");
             }
