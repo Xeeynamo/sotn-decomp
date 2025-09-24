@@ -140,7 +140,7 @@ mod tests {
         let input_line = "entity->velocityX += 0x8000 - (Random() << 8);";
         let _expected_line = "entity->velocityX += 0x8000 - (Random() << 8);";
         let result = transform_line_fixed(input_line);
-        assert_eq!(result.as_deref(), None);
+        assert_eq!(result, None);
     }
 
     #[test]

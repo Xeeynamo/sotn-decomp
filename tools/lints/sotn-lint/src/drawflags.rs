@@ -26,79 +26,79 @@ mod tests {
     fn test_draw_flags_hex() {
         let input_line = "self->drawFlags = 0x3;";
         let expected_line = "self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = FT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_flags_decimal() {
         let input_line = "self->drawFlags = 3;";
         let expected_line = "self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = FT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_flags_zero() {
         let input_line = "self->drawFlags = 0;";
         let expected_line = "self->drawFlags = FLAG_DRAW_DEFAULT;";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = FT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_flags_zero_hex() {
         let input_line = "self->drawFlags = 0x0;";
         let expected_line = "self->drawFlags = FLAG_DRAW_DEFAULT;";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = FT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_flags_flags() {
         let input_line = "self->drawFlags = FLAG_DRAW_SCALEX;";
-        let expected_line = "self->drawFlags = FLAG_DRAW_SCALEX;";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let _expected_line = "self->drawFlags = FLAG_DRAW_SCALEX;";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, None)
     }
 
     #[test]
     fn test_draw_flags_set() {
         let input_line = "self->drawFlags |= 0x80;";
         let expected_line = "self->drawFlags |= FLAG_BLINK;";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = FT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_flags_clear() {
         let input_line = "PLAYER.drawFlags &= 0xFF7F;";
         let expected_line = "PLAYER.drawFlags &= ~FLAG_BLINK;";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = FT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_flags_clear_many() {
         let input_line = "self->drawFlags &= 0xFFFC;";
         let expected_line = "self->drawFlags &= ~(FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = FT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_equality() {
         let input_line = "if (self->drawFlags == 8) {";
         let expected_line = "if (self->drawFlags == FLAG_DRAW_OPACITY) {";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = FT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_inequality() {
         let input_line = "if (self->drawFlags != 8) {";
         let expected_line = "if (self->drawFlags != FLAG_DRAW_OPACITY) {";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = FT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 }

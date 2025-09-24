@@ -32,87 +32,87 @@ mod tests {
     fn test_draw_mode_hex() {
         let input_line = "self->drawMode = 0x30;";
         let expected_line = "self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_mode_decimal() {
         let input_line = "self->drawMode = 32;";
         let expected_line = "self->drawMode = DRAW_TPAGE2;";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_mode_zero() {
         let input_line = "self->drawMode = 0;";
         let expected_line = "self->drawMode = DRAW_DEFAULT;";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_mode_zero_hex() {
         let input_line = "self->drawMode = 0x0;";
         let expected_line = "self->drawMode = DRAW_DEFAULT;";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_mode_flags() {
         let input_line = "self->drawMode = DRAW_TPAGE;";
-        let expected_line = "self->drawMode = DRAW_TPAGE;";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let _expected_line = "self->drawMode = DRAW_TPAGE;";
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result, None)
     }
 
     #[test]
     fn test_draw_mode_set() {
         let input_line = "self->drawMode |= 0x80;";
         let expected_line = "self->drawMode |= DRAW_MENU;";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_mode_clear() {
         let input_line = "self->drawMode &= 0xFF7F;";
         let expected_line = "self->drawMode &= ~DRAW_MENU;";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_mode_clear_many() {
         let input_line = "self->drawMode &= 0xFFCF;";
         let expected_line = "self->drawMode &= ~(DRAW_TPAGE2 | DRAW_TPAGE);";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_mode_inverted_many() {
         let input_line = "self->drawMode &= ~0x300;";
         let expected_line = "self->drawMode &= ~(DRAW_UNK_200 | DRAW_UNK_100);";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_equality() {
         let input_line = "if (self->drawMode == 8) {";
         let expected_line = "if (self->drawMode == DRAW_HIDE) {";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_inequality() {
         let input_line = "if (self->drawMode != 8) {";
         let expected_line = "if (self->drawMode != DRAW_HIDE) {";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 }

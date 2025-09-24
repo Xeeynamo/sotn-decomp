@@ -31,31 +31,31 @@ mod tests {
     fn test_type_hex() {
         let input_line = "prim->type = 0x5;";
         let expected_line = "prim->type = PRIM_GT3;";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_type_decimal() {
         let input_line = "prim->type = 0x6, ";
         let expected_line = "prim->type = PRIM_SPRT, ";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_type_zero_hex() {
         let input_line = "(prim->type == 0x0)";
         let expected_line = "(prim->type == PRIM_NONE)";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_type_not_prim() {
         let input_line = "quad->type == 5;";
-        let expected_line = "quad->type == 5;";
-        let result = DMT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let _expected_line = "quad->type == 5;";
+        let result = DMT.transform_line(input_line);
+        assert_eq!(result, None)
     }
 }

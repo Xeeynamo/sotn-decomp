@@ -35,39 +35,39 @@ mod tests {
     fn test_draw_flags_hex() {
         let input_line = "self->effects = 0x5;";
         let expected_line = "self->effects = EFFECT_QUICKSAND | EFFECT_SOLID;";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = FT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_flags_decimal() {
         let input_line = "self->effects = 5;";
         let expected_line = "self->effects = EFFECT_QUICKSAND | EFFECT_SOLID;";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = FT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_flags_zero() {
         let input_line = "self->effects = 0;";
         let expected_line = "self->effects = EFFECT_NONE;";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = FT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_flags_zero_hex() {
         let input_line = "self->effects = 0x0;";
         let expected_line = "self->effects = EFFECT_NONE;";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let result = FT.transform_line(input_line);
+        assert_eq!(result.as_deref(), Some(expected_line))
     }
 
     #[test]
     fn test_draw_flags_flags() {
         let input_line = "self->effects = EFFECT_WATER;";
-        let expected_line = "self->effects = EFFECT_WATER;";
-        let result = FT.transform_line_owned(input_line);
-        assert_eq!(result, expected_line)
+        let _expected_line = "self->effects = EFFECT_WATER;";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, None)
     }
 }

@@ -85,5 +85,5 @@ fn test_does_transform() {
 fn test_no_transform() {
     let input = "g_Status.equipment[0]";
     let _expected_output = "g_Status.equipment[0]".to_string();
-    assert_eq!(transform_line_relics(input).as_deref(), None);
+    assert_eq!(transform_line_relics(input), None);
 }
