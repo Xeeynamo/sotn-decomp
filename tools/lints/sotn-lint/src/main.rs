@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::{BufRead, BufReader, Write};
+use std::io::{BufRead, BufReader, BufWriter, Write};
 use std::process::ExitCode;
 
 mod attackelement;
@@ -44,6 +44,8 @@ fn transform_file(file_path: &str, transformers: &[&dyn LineTransformer], linter
 
     let file = File::open(file_path).expect("Unable to open file");
     let reader = BufReader::new(file);
+
+    let mut has_changes = false;
     for line in reader.lines() {
         i += 1;
         let mut line_str = line.unwrap();
@@ -52,7 +54,13 @@ fn transform_file(file_path: &str, transformers: &[&dyn LineTransformer], linter
         if !line_str.contains("sotn-lint-ignore") {
             for transformer in transformers {
                 line_str = match transformer.transform_line(&line_str) {
-                    Some(s) => s,
+                    Some(s) => {
+                        if line_str != s {
+                            has_changes = true;
+                        }
+
+                        s
+                    },
                     None => line_str,
                 };
             }
@@ -71,8 +79,9 @@ fn transform_file(file_path: &str, transformers: &[&dyn LineTransformer], linter
         lines.push(line_str);
     }
 
-    if original_lines.iter().zip(lines.iter()).any(|(a, b)| a != b) {
-        let mut file = File::create(file_path).expect("Unable to create file");
+    if has_changes {
+        let file = File::create(file_path).expect("Unable to create file");
+        let mut file = BufWriter::new(file);
         for (i, line) in lines.iter().enumerate() {
             if lines[i] != original_lines[i] {
                 alterations += 1;
