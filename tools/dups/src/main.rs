@@ -46,10 +46,7 @@ fn parse_instructions(input: &str, dir: &str, file: &str) -> Function {
             continue;
         };
         // splat's output for the instruction is apparently little-endian
-        let reversed_num = ((op >> 24) & 0xFF)
-            | (((op >> 16) & 0xFF) << 8)
-            | (((op >> 8) & 0xFF) << 16)
-            | ((op & 0xFF) << 24);
+        let reversed_num = op.swap_bytes();
 
         // if the file address, vram address, and instruction parsed, add it
         let instruction = Instruction {
