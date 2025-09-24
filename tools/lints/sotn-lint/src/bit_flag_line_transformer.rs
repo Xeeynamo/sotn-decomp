@@ -184,14 +184,15 @@ macro_rules! define_flag_transformer {
             pub const VALUES: &[($inner, &'static str)] = &[
                 $(((1 << $bit) as $inner, stringify!($name)),)*
             ];
-            pub fn new() -> Self {
+        }
+        impl Default for $kind {
+            fn default() -> Self {
                 Self {
                     transformer: crate::bit_flag_line_transformer::BitFlagLineTransformer::<$inner>::new(
                         stringify!($field), stringify!($default), &Self::VALUES.iter().collect()),
                 }
             }
         }
-
         impl crate::line_transformer::LineTransformer for $kind {
             fn transform_line(&self, line: &str) -> Option<String> {
                 self.transformer.transform_line(line)
@@ -207,14 +208,16 @@ macro_rules! define_flag_transformer {
             const VALUES: &[($inner, &'static str)] = &[
                 $(((1 << $bit) as $inner, stringify!($name)),)*
             ];
-            pub fn new() -> Self {
+        }
+
+        impl Default for $kind {
+            fn default() -> Self {
                 Self {
                     transformer: crate::bit_flag_line_transformer::BitFlagLineTransformer::<$inner>::new(
                         stringify!($field), stringify!($default), &Self::VALUES.iter().collect()),
                 }
             }
         }
-
         impl crate::line_transformer::LineTransformer for $kind {
             fn transform_line(&self, line: &str) -> Option<String> {
                 self.transformer.transform_line(line)

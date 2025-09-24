@@ -39,7 +39,7 @@ mod tests {
     use super::*;
     use once_cell::sync::Lazy;
 
-    static FT: Lazy<FlagsTransformer> = Lazy::new(|| FlagsTransformer::new());
+    static FT: Lazy<FlagsTransformer> = Lazy::new(|| FlagsTransformer::default());
 
     #[test]
     fn test_flags_hex() {

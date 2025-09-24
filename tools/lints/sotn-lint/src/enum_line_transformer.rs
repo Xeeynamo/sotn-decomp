@@ -103,7 +103,10 @@ macro_rules! define_enum_transformer {
             pub const VALUES: &[($inner, &'static str)] = &[
                 $(($value as $inner, stringify!($name)),)*
             ];
-            pub fn new() -> Self {
+        }
+
+        impl Default for $kind {
+            fn  default() -> Self {
                 Self {
                     transformer: crate::enum_line_transformer::EnumLineTransformer::<$inner>::new(
                         Some(stringify!($variable)), stringify!($field), &Self::VALUES.iter().collect()),

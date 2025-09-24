@@ -29,7 +29,7 @@ mod tests {
     use super::*;
     use once_cell::sync::Lazy;
 
-    static FT: Lazy<ColliderEffectsTransformer> = Lazy::new(|| ColliderEffectsTransformer::new());
+    static FT: Lazy<ColliderEffectsTransformer> = Lazy::new(|| ColliderEffectsTransformer::default());
 
     #[test]
     fn test_draw_flags_hex() {

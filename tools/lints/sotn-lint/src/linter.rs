@@ -92,8 +92,8 @@ pub trait Object {
     const RANGES: &'static [Range<u32>];
 }
 
-impl<O: Object + Sync> ObjectRangeLinker<O> {
-    pub fn new() -> Self {
+impl<O: Object + Sync> Default for ObjectRangeLinker<O> {
+    fn default() -> Self {
         Self { _ph: PhantomData }
     }
 }

@@ -88,13 +88,13 @@ fn transform_file(file_path: &str, transformers: &[&dyn LineTransformer], linter
 fn process_directory(dir_path: &str) -> bool {
     let fixed_transformer = FixedTransformer;
     let relics_transformer = RelicsTransformer;
-    let draw_mode_transformer = DrawModeTransformer::new();
-    let flags_transformer = FlagsTransformer::new();
-    let draw_flags_transformer = DrawFlagsTransformer::new();
-    let primitive_type_transformer = PrimitiveTypeTransformer::new();
-    let player_status_transformer = PlayerStatusTransformer::new();
-    let attack_element_transformer = AttackElementTransformer::new();
-    let collider_effects_transform = ColliderEffectsTransformer::new();
+    let draw_mode_transformer = DrawModeTransformer::default();
+    let flags_transformer = FlagsTransformer::default();
+    let draw_flags_transformer = DrawFlagsTransformer::default();
+    let primitive_type_transformer = PrimitiveTypeTransformer::default();
+    let player_status_transformer = PlayerStatusTransformer::default();
+    let attack_element_transformer = AttackElementTransformer::default();
+    let collider_effects_transform = ColliderEffectsTransformer::default();
 
     let transformers: &[&dyn LineTransformer] = &[
         &fixed_transformer,
@@ -108,7 +108,7 @@ fn process_directory(dir_path: &str) -> bool {
         &attack_element_transformer,
     ];
 
-    let g_entries = ObjectRangeLinker::<Gentries>::new();
+    let g_entries = ObjectRangeLinker::<Gentries>::default();
     let regex= RegexLinter::new("Static String Reference", r"FntPrint\(D_");
 
 

@@ -24,7 +24,7 @@ mod tests {
     use crate::line_transformer::LineTransformer;
     use once_cell::sync::Lazy;
 
-    static AET: Lazy<AttackElementTransformer> = Lazy::new(|| AttackElementTransformer::new());
+    static AET: Lazy<AttackElementTransformer> = Lazy::new(|| AttackElementTransformer::default());
 
     #[test]
     fn test_attack_element_hex() {

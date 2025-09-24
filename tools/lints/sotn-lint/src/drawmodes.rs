@@ -26,7 +26,7 @@ mod tests {
     use super::*;
     use once_cell::sync::Lazy;
 
-    static DMT: Lazy<DrawModeTransformer> = Lazy::new(|| DrawModeTransformer::new());
+    static DMT: Lazy<DrawModeTransformer> = Lazy::new(|| DrawModeTransformer::default());
 
     #[test]
     fn test_draw_mode_hex() {

@@ -25,7 +25,7 @@ mod tests {
     use super::*;
     use once_cell::sync::Lazy;
 
-    static DMT: Lazy<PrimitiveTypeTransformer> = Lazy::new(|| PrimitiveTypeTransformer::new());
+    static DMT: Lazy<PrimitiveTypeTransformer> = Lazy::new(|| PrimitiveTypeTransformer::default());
 
     #[test]
     fn test_type_hex() {

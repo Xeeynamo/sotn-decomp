@@ -43,7 +43,7 @@ mod tests {
     use super::*;
     use once_cell::sync::Lazy;
 
-    static DMT: Lazy<PlayerStatusTransformer> = Lazy::new(|| PlayerStatusTransformer::new());
+    static DMT: Lazy<PlayerStatusTransformer> = Lazy::new(|| PlayerStatusTransformer::default());
 
     #[test]
     fn test_player_status_hex() {
