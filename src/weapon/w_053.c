@@ -8,7 +8,6 @@ extern s32 g_HandId;
 #include "shared.h"
 #include "gen/w_053_1.h"
 #include "gen/w_053_2.h"
-#include "w_053_056.h"
 #define g_Animset w_053_1
 #define g_Animset2 w_053_2
 
@@ -82,13 +81,13 @@ void EntityWeaponAttack(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 }
 
-extern W053_056Config D_177000_8017AFC4[];
+extern WeaponParams D_177000_8017AFC4[];
 extern u16 D_177000_8017AF9C[];
 extern u16 D_177000_8017AFB0[];
 
 s32 func_ptr_80170004(Entity* self) {
     Primitive* prim;
-    W053_056Config* config;
+    WeaponParams* config;
     s16 angle;
     s32 shift;
     s16 x, y;
@@ -325,7 +324,7 @@ static void func_ptr_80170008(Entity* self) {
 
 void func_ptr_8017000C(Entity* self) {
     Primitive* prim;
-    W053_056Config* config;
+    WeaponParams* config;
     s32 params;
     s32 clut;
     u16 x, y;

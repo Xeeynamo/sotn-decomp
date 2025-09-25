@@ -4,21 +4,6 @@
 #include "menu.h"
 #include "servant.h" // for InitializeMode enum
 
-typedef struct EquipMenuHelper {
-    EquipKind equipTypeFilter;
-    s32 index;
-    s32 isAccessory;
-} EquipMenuHelper;
-
-// Struct for table of values to intitialize MenuContext structs
-typedef struct {
-    /* 0x00 */ s16 cursorX;
-    /* 0x02 */ s16 cursorY;
-    /* 0x04 */ u16 cursorW;
-    /* 0x06 */ u16 cursorH;
-    /* 0x08 */ s32 otIdx;
-} MenuContextInit; // size = 0x0C
-
 #if defined(VERSION_US)
 #define ShowText(str, y) func_800F99B8(str, y, false);
 #elif defined(VERSION_HD)
