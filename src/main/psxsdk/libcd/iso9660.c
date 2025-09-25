@@ -21,12 +21,13 @@ typedef struct {
 
 extern int CD_nopen;
 extern int D_80032AB0;
-extern int D_80032DB0;
-extern int D_80032DB4;
 extern CdlFILE file[CdlMAXFILE];
 extern CdlDIR D_80039860[];
 extern CdlDIR D_80039884[CdlMAXDIR];
 extern u8 load_buf[0x800];
+
+static int D_80032DB0 = 0;
+static int D_80032DB4 = -1;
 
 CdlFILE* CdSearchFile(CdlFILE* fp, char* name) {
     char buf[32];

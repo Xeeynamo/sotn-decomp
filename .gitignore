@@ -28,4 +28,6 @@ format-symbols.run
 # ninja stuff
 .ninja_lock
 .ninja_log
+.ninja_deps
 build.ninja
+personal.txt
