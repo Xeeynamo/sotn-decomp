@@ -50,13 +50,13 @@ u_long get_cs(short, short);
 u_long get_tw(RECT* tw);
 u_long get_ofs(short, short);
 
-extern int D_80037E20[12];
-extern DRAWENV D_80037E60;
-extern DISPENV D_80037EBC;
-extern int D_80039254;
-extern int D_80039258;
-extern int ctlbuf[];
-extern volatile struct QueueItem D_80037F54[];
+static int D_80037E20[0x10];
+static DRAWENV D_80037E60;
+static DISPENV D_80037EBC;
+static int ctlbuf[0x21];
+static volatile struct QueueItem D_80037F54[0x40];
+static int D_80039254;
+static int D_80039258;
 
 static gpu D_8002C220 = {
     .rcsid = "$Id: sys.c,v 1.83 1995/05/25 13:43:27 suzu Exp $",

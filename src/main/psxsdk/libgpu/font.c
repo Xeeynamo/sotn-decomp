@@ -13,10 +13,13 @@ typedef struct {
 } FntStream;
 
 extern int (*GPU_printf)(const char*, ...);
-extern u16 clut;
-extern u16 tpage;
-extern char D_80033A18[];
-extern SPRT_8 D_80033E18[];
+
+static char D_80033A18[0x400];
+static SPRT_8 D_80033E18[0x400];
+static u16 tpage;
+STATIC_PAD_BSS(2);
+static u16 clut;
+STATIC_PAD_BSS(2);
 
 static FntStream Font[4] = {0};
 static s32 D_8002B810 = 0;

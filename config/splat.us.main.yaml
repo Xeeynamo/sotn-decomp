@@ -303,9 +303,11 @@ segments:
       - [0x23DB8, .data, psxsdk/libspu/s_srmp]
       - [0x24060, .data, psxsdk/libspu/s_n2p]
       - [0x241E4, bss]
+      - [0x241F8, .bss, main]
+      - [0x24218, .bss, psxsdk/libgpu/font]
+      - [0x28620, .bss, psxsdk/libgpu/sys]
+      - [0x29A5C, .bss, psxsdk/libetc/pad]
       - [0x29A60, .bss, psxsdk/libcd/bios]
       - [0x29A84, bss]
-      - [0x63880, bss]
-      - [0x63884, bss]
   - [0x89800]
 

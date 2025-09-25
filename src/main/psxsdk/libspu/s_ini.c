@@ -5,8 +5,6 @@
 
 extern s32 _spu_fd;
 
-void SpuStart(void);
-
 void _SpuInit(s32 arg0) {
     s32 i;
     ResetCallback();

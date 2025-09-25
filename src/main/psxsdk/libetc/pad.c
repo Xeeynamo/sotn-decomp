@@ -3,7 +3,8 @@
 #include <libetc.h>
 
 extern int PadIdentifier;
-extern int pad_buf;
+
+int pad_buf;
 
 void PadInit(int mode) {
     PadIdentifier = mode;
