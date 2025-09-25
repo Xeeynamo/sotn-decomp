@@ -300,10 +300,12 @@ segments:
       - [0x23708, .data, psxsdk/libsnd/vs_vtbp] # needs to be ram address + 0x800
       - [0x23710, .data, psxsdk/libsnd/vmanager]
       - [0x23898, data]
-      - [0x29A5C, .data, psxsdk/libetc/pad]
+      - [0x23DB8, .data, psxsdk/libspu/s_srmp]
+      - [0x24060, .data, psxsdk/libspu/s_n2p]
+      - [0x241E4, bss]
       - [0x29A60, .bss, psxsdk/libcd/bios]
       - [0x29A84, bss]
-      - [0x63880, .bss, psxsdk/libetc/pad]
+      - [0x63880, bss]
       - [0x63884, bss]
   - [0x89800]
 
