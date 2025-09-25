@@ -7,6 +7,11 @@ struct _ss_spu_vm_rec_struct {
     u32 D_8003BD50;
 };
 
+static s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
+static char _svm_sreg_dirty[NUM_SPU_CHANNELS];
+static struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
+static s32 D_8003BD08;
+
 static u16* D_80032F10 = (u16*)0x1F801C00;
 static u16 D_80032F14[] = {
     0x1000, 0x100E, 0x101D, 0x102C, 0x103B, 0x104A, 0x1059, 0x1068, 0x1078,
@@ -38,7 +43,6 @@ extern s16 _svm_orev1;
 extern s16 _svm_orev2;
 extern u8 _svm_auto_kof_mode;
 extern s32 _svm_envx_hist[];
-extern s32 D_8003BD08;
 
 static inline u16 get_field_0x1a() { return _svm_cur.field_0x1a; }
 

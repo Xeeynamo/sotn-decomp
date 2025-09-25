@@ -3,12 +3,13 @@
 #include "registers.h"
 #include <psxsdk/libcd.h>
 
+static volatile u16* D_8003B68C;
+
 extern volatile s32* D_80032E78;
 extern volatile s32* D_80032E7C;
 extern volatile s32* D_80032E88;
 extern volatile s32* D_80032E98;
 extern s32 D_80032EB0;
-extern volatile u16* D_8003B68C;
 extern s32 D_8003C0FC;
 extern s16 D_8003C75C;
 extern s32 D_8003C764;

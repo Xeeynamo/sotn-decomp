@@ -19,12 +19,12 @@ typedef struct {
     char unkC[0x20];
 } CdlDIR;
 
+static CdlFILE file[CdlMAXFILE];
+static CdlDIR D_80039884[CdlMAXDIR];
+static u8 load_buf[0x800];
+
 extern int CD_nopen;
 extern int D_80032AB0;
-extern CdlFILE file[CdlMAXFILE];
-extern CdlDIR D_80039860[];
-extern CdlDIR D_80039884[CdlMAXDIR];
-extern u8 load_buf[0x800];
 
 static int D_80032DB0 = 0;
 static int D_80032DB4 = -1;
@@ -202,7 +202,7 @@ s32 CD_cachefile(s32 arg0) {
         return 1;
     }
 
-    if (cd_read(1, D_80039860[arg0].unk0, load_buf) != 1) {
+    if (cd_read(1, (D_80039884 - 1)[arg0].unk8.addr, load_buf) != 1) {
         if (D_80032AB0 > 0) {
             printf("CD_cachefile: dir not found\n");
         }
