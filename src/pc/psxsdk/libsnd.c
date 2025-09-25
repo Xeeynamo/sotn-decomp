@@ -91,13 +91,13 @@ void SsVabClose(short vab_id) { NOT_IMPLEMENTED; }
 
 u16* D_80032F10;
 
+struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
+
 void WaitEvent(s32 arg0) {}
 
-extern s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
-extern char _svm_sreg_dirty[NUM_SPU_CHANNELS];
-extern struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
-extern s32 D_8003BD08;
-extern s32 _svm_envx_hist[16];
+s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
+
+unsigned char _svm_sreg_dirty[NUM_SPU_CHANNELS];
 
 unsigned short _svm_okon1;
 unsigned short _svm_okon2;
@@ -250,6 +250,10 @@ typedef struct tagSpuMalloc {
 SPU_MALLOC* _spu_memList = NULL;
 
 s32 _spu_inTransfer;
+struct _ss_spu_vm_rec_struct {
+    u32 pad[2];
+    SPU_MALLOC D_8003BD50[364];
+};
 
 short D_80032EC0[] = {0x0000, 0x0000, 0x1000, 0x3000,
                       0x00BF, 0x0000, 0x0000, 0x0000};
@@ -258,12 +262,18 @@ union SpuUnion* _spu_RXX;
 u16 D_80032ED0[] = {0x3FFF, 0x3FFF, 0x0000, 0x0000, 0x0000, 0x0000,
                     0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
                     0x0000, 0x0000, 0x0000, 0x0000};
+
+struct _ss_spu_vm_rec_struct _ss_spu_vm_rec;
+
 s16 _svm_orev1;
 s16 _svm_orev2;
 
 void SpuVmKeyOn(s16 arg0, s16 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5) {
     assert(0);
 }
+
+s32 _svm_envx_hist[32];
+s32 D_8003BD08 = 0;
 
 void SpuVmFlush(void) {
     s32 var_s0;

@@ -3,13 +3,12 @@
 #include "libsnd_i.h"
 
 #ifdef VERSION_PC
-s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
-char _svm_sreg_dirty[NUM_SPU_CHANNELS];
-struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
-s32 D_8003BD08;
-s32 _svm_envx_hist[0x10];
-STATIC_PAD_BSS(4);
-u32 _ss_spu_vm_rec[0x20];
+extern s16 _svm_sreg_buf[];
+extern char _svm_sreg_dirty[];
+extern struct SpuVoice _svm_voice[];
+extern s32 D_8003BD08;
+extern s32 _svm_envx_hist[];
+extern u32 _ss_spu_vm_rec[];
 #else
 static s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
 static char _svm_sreg_dirty[NUM_SPU_CHANNELS];
@@ -44,7 +43,6 @@ static u16 D_80032F14[] = {
     0x1DA9, 0x1DC5, 0x1DE0, 0x1DFC, 0x1E18, 0x1E34, 0x1E50, 0x1E6C, 0x1E88,
     0x1EA4, 0x1EC1, 0x1EDD, 0x1EFA, 0x1F16, 0x1F33, 0x1F50, 0x1F6D, 0x1F8A,
     0x1FA7, 0x1FC5, 0x1FE2, 0x2000};
-
 
 extern s16 _svm_vcf;
 extern s16 _svm_orev1;
