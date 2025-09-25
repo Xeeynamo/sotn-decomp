@@ -91,13 +91,12 @@ void SsVabClose(short vab_id) { NOT_IMPLEMENTED; }
 
 u16* D_80032F10;
 
-struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
-
 void WaitEvent(s32 arg0) {}
 
-s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
-
-unsigned char _svm_sreg_dirty[NUM_SPU_CHANNELS];
+extern s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
+extern char _svm_sreg_dirty[NUM_SPU_CHANNELS];
+extern struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
+extern s32 D_8003BD08;
 
 unsigned short _svm_okon1;
 unsigned short _svm_okon2;
@@ -273,7 +272,6 @@ void SpuVmKeyOn(s16 arg0, s16 arg1, u8 arg2, s32 arg3, s32 arg4, s32 arg5) {
 }
 
 s32 _svm_envx_hist[32];
-s32 D_8003BD08 = 0;
 
 void SpuVmFlush(void) {
     s32 var_s0;

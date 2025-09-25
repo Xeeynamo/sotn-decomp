@@ -7,14 +7,17 @@ struct _ss_spu_vm_rec_struct {
     u32 D_8003BD50;
 };
 
-static s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
 #ifdef VERSION_PC
+s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
 char _svm_sreg_dirty[NUM_SPU_CHANNELS];
+struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
+s32 D_8003BD08;
 #else
+static s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
 static char _svm_sreg_dirty[NUM_SPU_CHANNELS];
-#endif
 static struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
 static s32 D_8003BD08;
+#endif
 
 static u16* D_80032F10 = (u16*)0x1F801C00;
 static u16 D_80032F14[] = {
