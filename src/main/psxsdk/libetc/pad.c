@@ -4,7 +4,7 @@
 
 extern int PadIdentifier;
 
-int pad_buf;
+static int pad_buf;
 
 void PadInit(int mode) {
     PadIdentifier = mode;
