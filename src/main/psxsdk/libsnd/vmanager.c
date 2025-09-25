@@ -8,7 +8,7 @@ struct _ss_spu_vm_rec_struct {
 };
 
 static s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
-static char _svm_sreg_dirty[NUM_SPU_CHANNELS];
+static unsigned char _svm_sreg_dirty[NUM_SPU_CHANNELS];
 static struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
 static s32 D_8003BD08;
 
