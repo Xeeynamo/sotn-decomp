@@ -3,67 +3,97 @@
 #include <psxsdk/libgpu.h>
 
 typedef struct {
-    /* 0x00 */ const char* rcsid;               // aIdSysCV1831995
-    /* 0x04 */ void (*addque)();                // _addque
-    /* 0x08 */ int (*addque2)();                // _addque2
-    /* 0x0C */ u32 clr;                         // _clr
-    /* 0x10 */ void (*ctl)(int);                // _ctl
-    /* 0x14 */ s32 (*cwb)(s32* arg0, s32 arg1); // _cwb
-    /* 0x18 */ u32 cwc;                         // _cwc
-    /* 0x1C */ u32 drs;                         // _drs
-    /* 0x20 */ u32 dws;                         // _dws
-    /* 0x24 */ u32 unk24;                       // _exeque
-    /* 0x28 */ int (*getctl)(int);              // _getctl
-    /* 0x2C */ void (*otc)(u32* ot, s32 n);     // _otc
-    /* 0x30 */ u32 unk30;                       // _param
-    /* 0x34 */ s32 (*reset)(int);               // _reset
-    /* 0x38 */ u_long (*status)(void);          // _status
-    /* 0x3C */ void (*sync)(int);               // _sync
-} gpu;                                          // size = 0x40
+    /* 0x00 */ const char* rcsid; // aIdSysCV1831995
+    /* 0x04 */ void (*addque)(void (*)(int*, int), int*, int);      // _addque
+    /* 0x08 */ int (*addque2)(void (*)(int*, int), int*, int, int); // _addque2
+    /* 0x0C */ int (*clr)(RECT*, int);                              // _clr
+    /* 0x10 */ void (*ctl)(u_long);                                 // _ctl
+    /* 0x14 */ int (*cwb)(int*, int);                               // _cwb
+    /* 0x18 */ void (*cwc)(int);                                    // _cwc
+    /* 0x1C */ int (*drs)(RECT*, int*);                             // _drs
+    /* 0x20 */ int (*dws)(RECT*, int*);                             // _dws
+    /* 0x24 */ int (*exeque)(void);                                 // _exeque
+    /* 0x28 */ int (*getctl)(int);                                  // _getctl
+    /* 0x2C */ int (*otc)(int, int);                                // _otc
+    /* 0x30 */ int (*param)(int);                                   // _param
+    /* 0x34 */ int (*reset)(int);                                   // _reset
+    /* 0x38 */ u_long (*status)(void);                              // _status
+    /* 0x3C */ int (*sync)(int);                                    // _sync
+} gpu; // size = 0x40
 
 struct QueueItem {
-    void (*unk0)(s32*, s32);
-    s32* unk4;
-    s32 unk8;
-    s32 unk[0x10];
+    void (*unk0)(int*, int);
+    int* unk4;
+    int unk8;
+    int unk[0x10];
 };
 
-s32 _exeque();
+void _addque(void (*)(int*, int), int*, int);
+int _addque2(void (*)(int*, int), int*, int, int);
+int _clr(RECT*, int);
+void _ctl(u_long);
+int _cwb(int*, int);
+void _cwc(int);
+int _drs(RECT*, int*);
+int _dws(RECT*, int*);
+int _exeque(void);
+int _getctl(int);
+int _otc(int, int);
+int _param(int);
+int _reset(int);
+u_long _status(void);
+int _sync(int);
+
 int printf(char*, ...);
 u_long get_ce(short, short);
 u_long get_cs(short, short);
 u_long get_tw(RECT* tw);
 u_long get_ofs(short, short);
 
-const char aIdSysCV1831995[] =
-    "$Id: sys.c,v 1.83 1995/05/25 13:43:27 suzu Exp $";
+static int D_80037E20[0x10];
+static DRAWENV D_80037E60;
+static DISPENV D_80037EBC;
+static int ctlbuf[0x21];
+static volatile struct QueueItem D_80037F54[0x40];
+static int D_80039254;
+static int D_80039258;
 
-extern gpu* D_8002C260;
-extern s32 D_80037E20[12];
-extern DRAWENV D_80037E60;
-extern DISPENV D_80037EBC;
-extern s32 D_80039254;
-extern s32 D_80039258;
-extern s32 ctlbuf[];
-extern volatile struct QueueItem D_80037F54[];
-
+static gpu D_8002C220 = {
+    .rcsid = "$Id: sys.c,v 1.83 1995/05/25 13:43:27 suzu Exp $",
+    .addque = _addque,
+    .addque2 = _addque2,
+    .clr = _clr,
+    .ctl = _ctl,
+    .cwb = _cwb,
+    .cwc = _cwc,
+    .drs = _drs,
+    .dws = _dws,
+    .exeque = _exeque,
+    .getctl = _getctl,
+    .otc = _otc,
+    .param = _param,
+    .reset = _reset,
+    .status = _status,
+    .sync = _sync,
+};
+static gpu* D_8002C260 = &D_8002C220;
 void (*GPU_printf)(const char* fmt, ...) = printf;
 static int D_8002C268 = 0; // log level
 static int D_8002C26C = 0; // graph type
 static int D_8002C270 = 0; // reverse
 static int D_8002C274 = 1; // graph queue mode
 static void (*D_8002C278)() = NULL;
-static volatile s32* GPU_DATA = (s32*)0x1F801810;
-static volatile s32* GPU_STATUS = (s32*)0x1F801814;
-static volatile s32* DMA2_MADR = (s32*)0x1F8010A0;
-static volatile s32* DMA2_BCR = (s32*)0x1F8010A4;
-static volatile s32* DMA2_CHCR = (s32*)0x1F8010A8;
-static volatile s32* DMA6_MADR = (s32*)0x1F8010E0;
-static volatile s32* DMA6_BCR = (s32*)0x1F8010E4;
-static volatile s32* DMA6_CHCR = (s32*)0x1F8010E8;
-static volatile s32* DPCR = (s32*)0x1F8010F0;
-static volatile s32 _qin = 0;
-static volatile s32 _qout = 0;
+static volatile int* GPU_DATA = (int*)0x1F801810;
+static volatile u_long* GPU_STATUS = (u_long*)0x1F801814;
+static volatile int* DMA2_MADR = (int*)0x1F8010A0;
+static volatile int* DMA2_BCR = (int*)0x1F8010A4;
+static volatile int* DMA2_CHCR = (int*)0x1F8010A8;
+static volatile int* DMA6_MADR = (int*)0x1F8010E0;
+static volatile int* DMA6_BCR = (int*)0x1F8010E4;
+static volatile int* DMA6_CHCR = (int*)0x1F8010E8;
+static volatile int* DPCR = (int*)0x1F8010F0;
+static volatile int _qin = 0;
+static volatile int _qout = 0;
 
 #define CLAMP(value, low, high)                                                \
     value < low ? low : (value > high ? high : value)
@@ -79,14 +109,14 @@ static volatile s32 _qout = 0;
 #define STATUS_READY_TO_RECEIVE_CMD (1 << 26)
 #define STATUS_READY_TO_SEND_VRAM_TO_CPU (1 << 27)
 
-s32 ResetGraph(s32 mode) {
+int ResetGraph(int mode) {
     if (D_8002C268 >= 2) {
         GPU_printf("ResetGraph(%d)...\n", mode);
     }
     if ((mode & 3) == 0) {
         ResetCallback();
         D_8002C26C = D_8002C260->reset(0);
-        GPU_cw((s32)D_8002C260 & 0xFFFFFF);
+        GPU_cw((int)D_8002C260 & 0xFFFFFF);
     } else {
         if ((mode & 3) >= 0) {
             if ((mode & 3) < 4) {
@@ -174,7 +204,7 @@ void SetDispMask(int mask) {
     D_8002C260->ctl(mask ? 0x03000000 : 0x03000001);
 }
 
-s32 DrawSync(s32 mode) {
+int DrawSync(int mode) {
     if (D_8002C268 >= 2) {
         GPU_printf("DrawSync(%d)...\n", mode);
     }
@@ -215,7 +245,7 @@ int StoreImage(RECT* rect, u_long* p) {
 }
 
 int MoveImage(RECT* rect, int x, int y) {
-    u32 param[5];
+    u_long param[5];
 
     checkRECT("MoveImage", rect);
     param[0] = 0x04FFFFFF;
@@ -253,7 +283,7 @@ OT_TYPE* ClearOTagR(OT_TYPE* ot, int n) {
 void DrawPrim(void* p) {
     int len = getlen(p);
     D_8002C260->sync(0);
-    D_8002C260->cwb((u32*)&((P_TAG*)p)->r0, len);
+    D_8002C260->cwb((u_long*)&((P_TAG*)p)->r0, len);
 }
 
 void DrawOTag(OT_TYPE* p) {
@@ -282,11 +312,11 @@ DRAWENV* GetDrawEnv(DRAWENV* env) {
 }
 
 DISPENV* PutDispEnv(DISPENV* env) {
-    s32 h_start;
-    s32 v_start;
-    s32 mode;
-    s32 v_end;
-    s32 h_end;
+    int h_start;
+    int v_start;
+    int mode;
+    int v_end;
+    int h_end;
 
     mode = 0x08000000;
     if (D_8002C268 >= 2) {
@@ -374,7 +404,7 @@ void SetDrawOffset(DR_OFFSET* p, u_short* ofs) {
     p->code[1] = 0;
 }
 
-void SetPriority(DR_PRIO* p, s32 pbc, s32 pbw) {
+void SetPriority(DR_PRIO* p, int pbc, int pbw) {
     setlen(p, 2);
     p->code[0] = (pbc ? 0xE6000002 : 0xE6000000) | (pbw ? 1 : 0);
     p->code[1] = 0;
@@ -388,7 +418,7 @@ void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw) {
 
 void SetDrawEnv(DR_ENV* dr_env_in, DRAWENV* env) {
     RECT clip_rect;
-    s32 offset;
+    int offset;
     DR_ENV* dr_env;
 
     dr_env = dr_env_in;
@@ -413,17 +443,17 @@ void SetDrawEnv(DR_ENV* dr_env_in, DRAWENV* env) {
         if ((clip_rect.x & 0x3F) || (clip_rect.w & 0x3F)) {
             clip_rect.x -= env->ofs[0];
             clip_rect.y -= env->ofs[1];
-            *((s32*)dr_env + offset++) =
+            *((int*)dr_env + offset++) =
                 0x60000000 | env->b0 << 0x10 | env->g0 << 8 | env->r0;
-            *((s32*)dr_env + offset++) = LOW(clip_rect.x);
-            *((s32*)dr_env + offset++) = LOW(clip_rect.w);
+            *((int*)dr_env + offset++) = LOW(clip_rect.x);
+            *((int*)dr_env + offset++) = LOW(clip_rect.w);
             clip_rect.x += env->ofs[0];
             clip_rect.y += env->ofs[1];
         } else {
-            *((s32*)dr_env + offset++) =
+            *((int*)dr_env + offset++) =
                 0x02000000 | env->b0 << 0x10 | env->g0 << 8 | env->r0;
-            *((s32*)dr_env + offset++) = LOW(clip_rect.x);
-            *((s32*)dr_env + offset++) = LOW(clip_rect.w);
+            *((int*)dr_env + offset++) = LOW(clip_rect.x);
+            *((int*)dr_env + offset++) = LOW(clip_rect.w);
         }
     }
 
@@ -469,13 +499,13 @@ u_long get_ofs(short x, short y) {
 }
 
 u_long get_tw(RECT* arg0) {
-    u32 pad[4];
+    u_long pad[4];
 
     if (arg0 != 0) {
         pad[0] = (u8)arg0->x >> 3;
-        pad[2] = (s32)(-arg0->w & 0xFF) >> 3;
+        pad[2] = (int)(-arg0->w & 0xFF) >> 3;
         pad[1] = (u8)arg0->y >> 3;
-        pad[3] = (s32)(-arg0->h & 0xFF) >> 3;
+        pad[3] = (int)(-arg0->h & 0xFF) >> 3;
         return (pad[1] << 0xF) | 0xE2000000 | (pad[0] << 0xA) | (pad[3] << 5) |
                pad[2];
     }
@@ -494,9 +524,9 @@ u_long get_dx(DISPENV* env) {
     }
 }
 
-s32 _status(void) { return *GPU_STATUS; }
+u_long _status(void) { return *GPU_STATUS; }
 
-s32 _otc(s32 arg0, s32 arg1) {
+int _otc(int arg0, int arg1) {
     *DPCR |= 0x08000000;
     *DMA6_CHCR = 0;
     *DMA6_MADR = arg0 - 4 + arg1 * 4;
@@ -512,9 +542,9 @@ s32 _otc(s32 arg0, s32 arg1) {
 }
 
 // Clears Frame Buffer
-s32 _clr(RECT* arg0, s32 color) {
+int _clr(RECT* arg0, int color) {
     RECT temp;
-    s32* ptr;
+    int* ptr;
 
     temp.x = arg0->x;
     temp.y = arg0->y;
@@ -526,7 +556,7 @@ s32 _clr(RECT* arg0, s32 color) {
 
     if ((temp.x & 0x3F) || (temp.w & 0x3F)) {
         ptr = &D_80037E20[8];
-        D_80037E20[0] = ((s32)ptr & 0xFFFFFF) | 0x07000000; // set up otag
+        D_80037E20[0] = ((int)ptr & 0xFFFFFF) | 0x07000000; // set up otag
         D_80037E20[1] = 0xE3000000; // set drawing area top left
         D_80037E20[2] = 0xE4FFFFFF; // set drawing area bottom right
         D_80037E20[3] = 0xE5000000; // set drawing offset
@@ -553,12 +583,12 @@ s32 _clr(RECT* arg0, s32 color) {
 }
 
 // LoadImage
-s32 _dws(RECT* arg0, s32* arg1) {
+int _dws(RECT* arg0, int* arg1) {
     RECT temp;
-    s32 temp_a0;
-    s32 size;
+    int temp_a0;
+    int size;
     int var_s0;
-    s32 var_s4;
+    int var_s4;
 
     set_alarm();
     temp.x = arg0->x;
@@ -605,10 +635,10 @@ s32 _dws(RECT* arg0, s32* arg1) {
 
 // StoreImage
 // Transfers image data from the frame buffer to main memory.
-s32 _drs(RECT* arg0, s32* arg1) {
+int _drs(RECT* arg0, int* arg1) {
     RECT temp;
-    s32 temp_a0;
-    s32 size;
+    int temp_a0;
+    int size;
     int var_s0;
 
     set_alarm();
@@ -659,14 +689,14 @@ s32 _drs(RECT* arg0, s32* arg1) {
     return 0;
 }
 
-void _ctl(u32 arg0) {
+void _ctl(u_long arg0) {
     *GPU_STATUS = arg0;
     ctlbuf[(arg0 >> 0x18)] = arg0 & 0xFFFFFF;
 }
 
-s32 _getctl(s32 arg0) { return (arg0 << 0x18) | ctlbuf[arg0]; }
+int _getctl(int arg0) { return (arg0 << 0x18) | ctlbuf[arg0]; }
 
-s32 _cwb(s32* arg0, int arg1) {
+int _cwb(int* arg0, int arg1) {
     *GPU_STATUS = 0x04000000;
     while (arg1--) {
         *GPU_DATA = *arg0++;
@@ -674,26 +704,26 @@ s32 _cwb(s32* arg0, int arg1) {
     return 0;
 }
 
-void _cwc(s32 arg0) {
+void _cwc(int arg0) {
     *GPU_STATUS = 0x04000002;
     *DMA2_MADR = arg0;
     *DMA2_BCR = 0;
     *DMA2_CHCR = 0x01000401;
 }
 
-s32 _param(s32 arg0) {
+int _param(int arg0) {
     *GPU_STATUS = arg0 | 0x10000000;
     return *GPU_DATA & 0xFFFFFF;
 }
 
-void _addque(void (*arg0)(s32*, s32), s32* arg1, s32 arg2) {
+void _addque(void (*arg0)(int*, int), int* arg1, int arg2) {
     _addque2(arg0, arg1, 0, arg2);
 }
 
-s32 _addque2(void (*arg0)(s32*, s32), s32* arg1, s32 arg2, s32 arg3) {
-    s32 temp_s0;
-    s32 intrMask;
-    s32 i;
+int _addque2(void (*arg0)(int*, int), int* arg1, int arg2, int arg3) {
+    int temp_s0;
+    int intrMask;
+    int i;
     struct QueueItem* queueItem;
 
     intrMask = SetIntrMask(0);
@@ -742,9 +772,9 @@ s32 _addque2(void (*arg0)(s32*, s32), s32* arg1, s32 arg2, s32 arg3) {
     return (_qin - _qout) & 0x3F;
 }
 
-s32 _exeque(void) {
-    s32 intrMask;
-    s32 ret;
+int _exeque(void) {
+    int intrMask;
+    int ret;
 
     intrMask = SetIntrMask(0);
 
@@ -804,9 +834,9 @@ temp2:
     return ret;
 }
 
-inline s32 _reset(s32 arg0) {
-    s32 intrMask;
-    s32 i;
+inline int _reset(int arg0) {
+    int intrMask;
+    int i;
 
     intrMask = SetIntrMask(0);
     DMACallback(2, NULL);
@@ -834,10 +864,10 @@ inline s32 _reset(s32 arg0) {
     }
     *GPU_DATA = (*GPU_STATUS & 0x3FFF) | 0xE1001000;
     SetIntrMask(intrMask);
-    return ((u32)*GPU_STATUS >> 0xC) & 1;
+    return ((u_long)*GPU_STATUS >> 0xC) & 1;
 }
 
-s32 _sync(s32 arg0) {
+int _sync(int arg0) {
     if (arg0 == 0) {
         if (D_8002C278 == NULL) {
             DMACallback(2, NULL);
@@ -882,7 +912,7 @@ void set_alarm(void) {
     D_80039258 = 0;
 }
 
-s32 get_alarm(void) {
+int get_alarm(void) {
     if (D_80039254 < VSync(-1) || D_80039258++ > 0x780000) {
         *GPU_STATUS;
         printf("GPU timeout:que=%d,stat=%08x,chcr=%08x,madr=%08x\n",

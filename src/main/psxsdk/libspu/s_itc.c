@@ -3,7 +3,6 @@
 #include "libspu_internal.h"
 
 s32 TestEvent(s32);
-extern s32 _spu_trans_mode;
 
 s32 SpuIsTransferCompleted(s32 arg0) {
     s32 in_transfer;

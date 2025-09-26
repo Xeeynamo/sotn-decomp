@@ -13,13 +13,13 @@
 s32 _spu_reset(void) {
     volatile s32 sp0;
     volatile s32 sp4;
-    u16 temp_a0;
+    u16 cnt;
 
-    temp_a0 = _spu_RXX->rxx.spucnt;
-    _spu_RXX->rxx.spucnt = temp_a0 & 0x7FCF;
+    cnt = _spu_RXX->rxx.spucnt;
+    _spu_RXX->rxx.spucnt = cnt & 0x7FCF;
     WASTE_TIME();
-    temp_a0 &= 0xFFCF;
-    _spu_RXX->rxx.spucnt = temp_a0;
+    cnt &= 0xFFCF;
+    _spu_RXX->rxx.spucnt = cnt;
     return 0;
 }
 
@@ -177,7 +177,7 @@ s32 _spu_writeByIO(u8* addr, u32 size) {
     u16* cur_pos;
     s32 spustat_cur;
     s32 i;
-    u16 spucnt;
+    u16 cnt;
 
     cur_pos = addr;
 #ifdef VERSION_PC
@@ -198,15 +198,15 @@ s32 _spu_writeByIO(u8* addr, u32 size) {
 #endif
         }
 #ifndef VERSION_PC
-        spucnt = _spu_RXX->rxx.spucnt;
-        spucnt &= ~0x30;
-        spucnt |= 0x10;
-        _spu_RXX->rxx.spucnt = spucnt;
+        cnt = _spu_RXX->rxx.spucnt;
+        cnt &= ~0x30;
+        cnt |= 0x10;
+        _spu_RXX->rxx.spucnt = cnt;
 #else
-        spucnt = read_16(0x1F801DAA, __FILE__, __LINE__);
-        spucnt &= ~0x30;
-        spucnt |= 0x10;
-        write_16(0x1F801DAA, spucnt, __FILE__, __LINE__);
+        cnt = read_16(0x1F801DAA, __FILE__, __LINE__);
+        cnt &= ~0x30;
+        cnt |= 0x10;
+        write_16(0x1F801DAA, cnt, __FILE__, __LINE__);
 #endif
         WASTE_TIME();
         D_800334FC = 0;
@@ -226,15 +226,15 @@ s32 _spu_writeByIO(u8* addr, u32 size) {
         size -= num_to_trans;
     }
 #ifndef VERSION_PC
-    spucnt = _spu_RXX->rxx.spucnt;
-    spucnt &= 0xffcf;
-    _spu_RXX->rxx.spucnt = spucnt;
+    cnt = _spu_RXX->rxx.spucnt;
+    cnt &= ~0x30;
+    _spu_RXX->rxx.spucnt = cnt;
     D_800334FC = 0;
     spustat_cur = _spu_RXX->rxx.spustat & 0x7FF;
 #else
-    spucnt = read_16(0x1F801DAA, __FILE__, __LINE__);
-    spucnt &= 0xffcf;
-    write_16(0x1F801DAA, spucnt, __FILE__, __LINE__);
+    cnt = read_16(0x1F801DAA, __FILE__, __LINE__);
+    cnt &= ~0x30;
+    write_16(0x1F801DAA, cnt, __FILE__, __LINE__);
     D_800334FC = 0;
     spustat_cur = read_16(0x1ae, __FILE__, __LINE__) & 0x7FF;
 #endif

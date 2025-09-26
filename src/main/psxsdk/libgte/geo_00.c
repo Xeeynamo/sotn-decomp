@@ -1,26 +1,28 @@
 // SPDX-License-Identifier: MIT
 #include "common.h"
 
-s32 rsin(s32 arg0) {
-    if (arg0 < 0) {
-        return -sin_1(-arg0 & 0xFFF);
+extern s16 rsin_tbl[];
+
+int rsin(int a) {
+    if (a < 0) {
+        return -sin_1(-a & 0xFFF);
+    } else {
+        return sin_1(a & 0xFFF);
     }
-    return sin_1(arg0 & 0xFFF);
 }
 
-extern s16 rsin_tbl[];
-s32 sin_1(s32 arg0) {
-    if (arg0 < 0x801) {
-        if (arg0 < 0x401) {
-            return rsin_tbl[arg0];
+int sin_1(int a) {
+    if (a <= 0x800) {
+        if (a <= 0x400) {
+            return rsin_tbl[a];
         } else {
-            return rsin_tbl[0x800 - arg0];
+            return rsin_tbl[0x800 - a];
         }
     } else {
-        if (arg0 < 0xC01) {
-            return -1 * rsin_tbl[arg0 - 0x800];
+        if (a <= 0xC00) {
+            return -rsin_tbl[a - 0x800];
         } else {
-            return -1 * rsin_tbl[0x1000 - arg0];
+            return -rsin_tbl[0x1000 - a];
         }
     }
 }
