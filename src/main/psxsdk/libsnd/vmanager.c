@@ -2,10 +2,22 @@
 #include "common.h"
 #include "libsnd_i.h"
 
-struct _ss_spu_vm_rec_struct {
-    u32 pad[2];
-    u32 D_8003BD50;
-};
+#ifdef VERSION_PC
+extern s16 _svm_sreg_buf[];
+extern char _svm_sreg_dirty[];
+extern struct SpuVoice _svm_voice[];
+extern s32 D_8003BD08;
+extern s32 _svm_envx_hist[];
+extern u32 _ss_spu_vm_rec[];
+#else
+static s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
+static char _svm_sreg_dirty[NUM_SPU_CHANNELS];
+static struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
+static s32 D_8003BD08;
+static s32 _svm_envx_hist[0x10];
+STATIC_PAD_BSS(4);
+static u32 _ss_spu_vm_rec[0x20];
+#endif
 
 static u16* D_80032F10 = (u16*)0x1F801C00;
 static u16 D_80032F14[] = {
@@ -32,13 +44,10 @@ static u16 D_80032F14[] = {
     0x1EA4, 0x1EC1, 0x1EDD, 0x1EFA, 0x1F16, 0x1F33, 0x1F50, 0x1F6D, 0x1F8A,
     0x1FA7, 0x1FC5, 0x1FE2, 0x2000};
 
-extern struct _ss_spu_vm_rec_struct _ss_spu_vm_rec;
 extern s16 _svm_vcf;
 extern s16 _svm_orev1;
 extern s16 _svm_orev2;
 extern u8 _svm_auto_kof_mode;
-extern s32 _svm_envx_hist[];
-extern s32 D_8003BD08;
 
 static inline u16 get_field_0x1a() { return _svm_cur.field_0x1a; }
 
@@ -216,7 +225,95 @@ void SpuVmDoAllocate(void) {
     _svm_sreg_dirty[_svm_cur.field_0x1a] |= 0x30;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", vmNoiseOn);
+void vmNoiseOn(u8 arg0) {
+    struct SeqStruct* score =
+        &_ss_score[_svm_cur.field_16_vag_idx & 0xFF]
+                  [(_svm_cur.field_16_vag_idx & 0xFF00) >> 8];
+    s16 voice;
+    u16 bitsUpper;
+    u16 bitsLower;
+    u32 voll_t, volr_t;
+    u32 voll, volr;
+    u16 cnd;
+    u32 temp;
+
+    cnd = D_80032F10[0x1AA / 2];
+
+    voll_t = score->unk74 * 0x81;
+    volr_t = score->unk76 * 0x81;
+
+    voll_t = (voll_t * _svm_cur.field_A_mvol) / 0x7F;
+    volr_t = (volr_t * _svm_cur.field_A_mvol) / 0x7F;
+
+    voll_t = (voll_t * _svm_cur.field_D_vol) / 0x7F;
+    volr_t = (volr_t * _svm_cur.field_D_vol) / 0x7F;
+
+    temp = _svm_cur.field_E_pan;
+    if (temp < 0x40) {
+        voll = voll_t;
+        volr = (volr_t * temp) / 0x3F;
+    } else {
+        voll = (voll_t * (0x7F - temp)) / 0x3F;
+        volr = volr_t;
+    }
+    temp = _svm_cur.field_B_mpan;
+    if (temp < 0x40) {
+        volr = (volr * temp) / 0x3F;
+    } else {
+        voll = (voll * (0x7F - temp)) / 0x3F;
+    }
+    temp = _svm_cur.field_0x5;
+    if (temp < 0x40) {
+        volr = (temp * volr) / 0x3F;
+    } else {
+        voll = (voll * (0x7F - temp)) / 0x3F;
+    }
+
+    if (_svm_stereo_mono == 1) {
+        if (voll < volr) {
+            voll = volr;
+        } else {
+            volr = voll;
+        }
+    }
+
+    cnd &= ~0x3F00;
+    cnd |= ((_svm_cur.field_2_note - _svm_cur.field_10_centre) & 0x3F) << 8;
+    D_80032F10[0x1AA / 2] = cnd;
+
+    _svm_sreg_buf[arg0 * 8 + 0] = voll;
+    _svm_sreg_buf[arg0 * 8 + 1] = volr;
+    _svm_sreg_dirty[arg0] |= 3;
+    if (arg0 < 0x10) {
+        bitsLower = 1 << arg0;
+        bitsUpper = 0;
+    } else {
+        bitsLower = 0;
+        bitsUpper = 1 << (arg0 - 0x10);
+    }
+    _svm_voice[arg0].unk04 = 0xA;
+    for (voice = 0; voice < spuVmMaxVoice; voice++) {
+        _svm_voice[voice].unk1b &= 1;
+    }
+    _svm_voice[arg0].unk1b = 2;
+
+    _svm_okon1 |= bitsLower;
+    _svm_okon2 |= bitsUpper;
+
+    _svm_okof1 &= ~_svm_okon1;
+    _svm_okof2 &= ~_svm_okon2;
+
+    if (_svm_cur.field_14_seq_sep_no & 4) {
+        _svm_orev1 |= bitsLower;
+        _svm_orev2 |= bitsUpper;
+    } else {
+        _svm_orev1 &= ~bitsLower;
+        _svm_orev2 &= ~bitsUpper;
+    }
+
+    D_80032F10[0x194 / 2] = bitsLower;
+    D_80032F10[0x196 / 2] = bitsUpper;
+}
 
 void vmNoiseOn2(u8 voice, u16 arg1, u16 arg2, u16 arg3, u16 arg4) {
     u16 i;
@@ -544,7 +641,7 @@ void SpuVmInit(u8 arg0) {
     _spu_setInTransfer(0);
     _svm_vcf = 0;
     _svm_damper = 0;
-    SpuInitMalloc(0x20, &_ss_spu_vm_rec.D_8003BD50);
+    SpuInitMalloc(0x20, _ss_spu_vm_rec);
     for (var_a1 = 0; var_a1 < 8 * NUM_SPU_CHANNELS; var_a1++) {
         _svm_sreg_buf[var_a1] = 0;
     }
@@ -869,7 +966,7 @@ s32 SpuVmKeyOn(s16 arg0, s16 vabId, s16 prog, u16 note, u16 voll, u16 volr) {
                     _svm_cur.field_18_voice_idx;
                 SpuVmDoAllocate();
                 if (_svm_cur.field_18_voice_idx == 0xFF) {
-                    vmNoiseOn(_svm_cur.field_0x1a & 0xFF);
+                    vmNoiseOn(_svm_cur.field_0x1a);
                 } else {
                     SpuVmKeyOnNow(vagCount, note2pitch() & 0xFFFF);
                 }
@@ -1068,7 +1165,86 @@ s32 SpuVmGetProgPan(s16 vabId, s16 prog) {
     return _svm_pg[prog].mpan;
 }
 
-INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/vmanager", SpuVmSetVol);
+#ifndef VERSION_PC
+s32 SpuVmSetVol(s16 seq_sep_no, s16 vabId, s16 prog, u16 arg3, u16 arg4) {
+    struct SeqStruct* score =
+        &_ss_score[seq_sep_no & 0xFF][(seq_sep_no & 0xFF00) >> 8];
+    s32 var_s2;
+    u8 voice;
+    s32 new_var;
+    u32 voll, volr;
+    u32 voll_t, volr_t;
+    s32 mvol_scaled;
+    u8 temp;
+    s16 new_var2;
+
+    var_s2 = 0;
+    SpuVmVSetUp(vabId, prog);
+    _svm_cur.field_16_vag_idx = seq_sep_no;
+    for (voice = 0; voice < spuVmMaxVoice; voice++) {
+        new_var2 = prog;
+        if ((_svm_voice[voice].unke == seq_sep_no) &&
+            (_svm_voice[voice].prog == new_var2) &&
+            (_svm_voice[voice].vabId == vabId)) {
+            if (score->vol[score->channel] != arg3 &&
+                score->vol[score->channel] == 0) {
+                score->vol[score->channel] = 1;
+            }
+            new_var = (_svm_voice[voice].unk8 * arg3) / 0x7F;
+            mvol_scaled = _svm_vh->mvol * 0x3FFF;
+            voll_t = ((new_var * mvol_scaled) / 0x7F) / 0x7F;
+            voll_t =
+                ((voll_t * _svm_pg[new_var2].mvol *
+                  _svm_tn[_svm_voice[voice].tone + (new_var2 * 0x10)].vol) /
+                 0x7F) /
+                0x7F;
+            volr_t = voll_t;
+
+            voll_t = (voll_t * score->unk74) / 0x7F;
+            volr_t = (volr_t * score->unk76) / 0x7F;
+
+            temp = _svm_tn[_svm_voice[voice].tone].pan;
+            if (temp < 0x40) {
+                voll = voll_t;
+                volr = (volr_t * temp) / 0x3F;
+            } else {
+                voll = (voll_t * (0x7F - temp)) / 0x3F;
+                volr = volr_t;
+            }
+            temp = _svm_pg[_svm_voice[voice].unk10].mpan;
+            if (temp < 0x40) {
+                volr = (volr * temp) / 0x3F;
+            } else {
+                voll = (voll * (0x7F - temp)) / 0x3F;
+            }
+            do {
+                do {
+                    temp = arg4;
+                } while (0);
+            } while (0);
+            if (temp < 0x40) {
+                volr = (volr * temp) / 0x3F;
+            } else {
+                voll = (voll * (0x7F - temp)) / 0x3F;
+            }
+            if (_svm_stereo_mono == 1) {
+                if (voll < volr) {
+                    voll = volr;
+                } else {
+                    volr = voll;
+                }
+            }
+            voll = (voll * voll) / 0x3FFF;
+            volr = (volr * volr) / 0x3FFF;
+            _svm_sreg_buf[voice * 8 + 0] = voll;
+            _svm_sreg_buf[voice * 8 + 1] = volr;
+            _svm_sreg_dirty[voice] |= 3;
+            var_s2++;
+        }
+    }
+    return var_s2;
+}
+#endif
 
 s16 SsUtKeyOn(
     s16 vabId, s16 prog, s16 tone, s16 note, s16 fine, s16 voll, s16 volr) {
@@ -1137,7 +1313,7 @@ s16 SsUtKeyOn(
 
     SpuVmDoAllocate();
     if (_svm_cur.field_18_voice_idx == 0xFF) {
-        vmNoiseOn(voice & 0xFF);
+        vmNoiseOn(voice);
     } else {
         SpuVmKeyOnNow(1, note2pitch2(note, fine));
     }
@@ -1257,7 +1433,7 @@ s16 SsUtKeyOnV(s16 voice, s16 vabId, s16 prog, s16 tone, s16 note, s16 fine,
     _svm_voice[voice].unk2 = 0;
     SpuVmDoAllocate();
     if (_svm_cur.field_18_voice_idx == 0xFF) {
-        vmNoiseOn(voice & 0xFF);
+        vmNoiseOn(voice);
     } else {
         SpuVmKeyOnNow(1, note2pitch2(note, fine));
     }

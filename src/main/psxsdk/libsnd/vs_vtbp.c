@@ -7,10 +7,9 @@ static s16 D_80032F0C = -1;
 
 short SsVabTransBodyPartly(
     unsigned char* addr, unsigned long bufsize, short vabid) {
-    s16 new_vabid;
     u32 new_bufsize;
 
-    if (vabid < 0 || vabid > 16 || _svm_vab_used[vabid] != 2) {
+    if (vabid < 0 || vabid > 0x10 || _svm_vab_used[vabid] != 2) {
         _spu_setInTransfer(0);
         return -1;
     }
@@ -20,8 +19,7 @@ short SsVabTransBodyPartly(
         SpuSetTransferMode(0);
         SpuSetTransferStartAddr(_svm_vab_start[vabid]);
     }
-    new_vabid = D_80032F0C;
-    if (new_vabid != vabid) {
+    if (D_80032F0C != vabid) {
         _spu_setInTransfer(0);
         return -1;
     }
@@ -37,6 +35,6 @@ short SsVabTransBodyPartly(
     }
     D_80032F0C = -1;
     D_80032F08 = 0;
-    _svm_vab_used[new_vabid] = 1;
-    return new_vabid;
+    _svm_vab_used[vabid] = 1;
+    return vabid;
 }

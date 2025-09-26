@@ -3,9 +3,10 @@
 #include "game.h"
 
 extern void (*g_MainGame)();
-extern CdlFILE main_cdlFile;
-extern u8 main_cdlMode[];
-extern s32 main_fd;
+
+static s32 main_fd;
+static CdlFILE main_cdlFile;
+static char main_cdlMode[4];
 
 void main(void) {
     ResetCallback();
