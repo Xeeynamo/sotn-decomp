@@ -2,10 +2,22 @@
 #include "common.h"
 #include "libsnd_i.h"
 
-struct _ss_spu_vm_rec_struct {
-    u32 pad[2];
-    u32 D_8003BD50;
-};
+#ifdef VERSION_PC
+extern s16 _svm_sreg_buf[];
+extern char _svm_sreg_dirty[];
+extern struct SpuVoice _svm_voice[];
+extern s32 D_8003BD08;
+extern s32 _svm_envx_hist[];
+extern u32 _ss_spu_vm_rec[];
+#else
+static s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
+static char _svm_sreg_dirty[NUM_SPU_CHANNELS];
+static struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
+static s32 D_8003BD08;
+static s32 _svm_envx_hist[0x10];
+STATIC_PAD_BSS(4);
+static u32 _ss_spu_vm_rec[0x20];
+#endif
 
 static u16* D_80032F10 = (u16*)0x1F801C00;
 static u16 D_80032F14[] = {
@@ -32,13 +44,10 @@ static u16 D_80032F14[] = {
     0x1EA4, 0x1EC1, 0x1EDD, 0x1EFA, 0x1F16, 0x1F33, 0x1F50, 0x1F6D, 0x1F8A,
     0x1FA7, 0x1FC5, 0x1FE2, 0x2000};
 
-extern struct _ss_spu_vm_rec_struct _ss_spu_vm_rec;
 extern s16 _svm_vcf;
 extern s16 _svm_orev1;
 extern s16 _svm_orev2;
 extern u8 _svm_auto_kof_mode;
-extern s32 _svm_envx_hist[];
-extern s32 D_8003BD08;
 
 static inline u16 get_field_0x1a() { return _svm_cur.field_0x1a; }
 
@@ -632,7 +641,7 @@ void SpuVmInit(u8 arg0) {
     _spu_setInTransfer(0);
     _svm_vcf = 0;
     _svm_damper = 0;
-    SpuInitMalloc(0x20, &_ss_spu_vm_rec.D_8003BD50);
+    SpuInitMalloc(0x20, _ss_spu_vm_rec);
     for (var_a1 = 0; var_a1 < 8 * NUM_SPU_CHANNELS; var_a1++) {
         _svm_sreg_buf[var_a1] = 0;
     }

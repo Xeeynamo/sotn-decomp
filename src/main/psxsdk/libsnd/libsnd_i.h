@@ -197,10 +197,6 @@ typedef struct ProgAtr { /* Program Headdings */
 
 #define NUM_SPU_CHANNELS 24
 
-extern s16 _svm_sreg_buf[NUM_SPU_CHANNELS * 8];
-
-extern unsigned char _svm_sreg_dirty[NUM_SPU_CHANNELS];
-
 extern u8 spuVmMaxVoice;
 
 struct SpuVoice {
@@ -234,7 +230,6 @@ struct SpuVoice {
     s16 end_pan;   /* 0x32 */
 };
 
-extern struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
 u32 SpuVmVSetUp(s16, s16);
 
 typedef struct VagAtr { /* VAG Tone Headdings */

@@ -4,13 +4,14 @@
 #include <psxsdk/libcd.h>
 
 extern StHEADER* D_800987C8;
-extern s32 D_8003B688;
 extern s32 D_8003C768;
 extern void (*D_8003C8BC)(void);
 extern s32 D_800730D4;
 extern s32 D_80097954;
 extern s32 D_80097958;
-extern CdlLOC fp_2;
+
+static CdlLOC fp_2;
+static s32 D_8003B688;
 
 void data_ready_callback(void) {
     StHEADER* ptr = &D_800987C8[D_80097958];
