@@ -103,9 +103,11 @@ u16 pal_skelerang_spittle_bone[] = {
 #include "gen/pal_skelerang_spittle_bone.h"
 };
 
+#ifndef VERSION_PSP
 u16 pal_unused[] = {
 #include "gen/pal_unused.h"
 };
+#endif
 
 u16 pal_corner_guard[] = {
 #include "gen/pal_corner_guard.h"
