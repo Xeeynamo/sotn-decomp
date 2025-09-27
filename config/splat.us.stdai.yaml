@@ -87,7 +87,7 @@ segments:
       - [0x3BA44, data] # e_corner_guard sprite banks
       - [0x3C1B4, data]
       - [0x3FE3C, .rodata, e_breakable]
-      - [0x3FE5C, .rodata, unk_40BA4]
+      - [0x3FE5C, .rodata, e_tower_exit]
       - [0x3FE98, .rodata, e_confessional]
       - [0x3FF00, .rodata, e_chair]
       - [0x3FF24, .rodata, e_cutscene]
@@ -109,7 +109,7 @@ segments:
       - [0x402F0, c, e_room_bg]
       - [0x403B8, c, e_lock_camera]
       - [0x40574, c, e_breakable]
-      - [0x40BA4, c, unk_40BA4]
+      - [0x40BA4, c, e_tower_exit]
       - [0x40F8C, c, e_statue_block]
       - [0x41298, c, e_bell]
       - [0x41EE4, c, e_room_fg_2]

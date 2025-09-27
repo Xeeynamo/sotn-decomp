@@ -22,7 +22,7 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801C0BA4(Entity* self);
+void EntityTowerExit(Entity* self);
 void EntityStainedGlass(Entity* self);
 void func_us_801D9F5C(Entity* self);
 void EntityBlock(Entity* self);
@@ -96,7 +96,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801C0BA4,
+    EntityTowerExit,
     EntityStainedGlass,
     func_us_801D9F5C,
     EntityBlock,
