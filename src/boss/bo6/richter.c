@@ -437,7 +437,7 @@ void OVL_EXPORT(RicMain)(void) {
         if (!(g_Ric.status & PLAYER_STATUS_UNK10000)) {
             if (g_Ric.unk5C) {
                 if (g_Status.hp < 2) {
-                    func_us_801BA880();
+                    OVL_EXPORT(RicSetDeadPrologue)();
                     BO6_RicSetInvincibilityFrames(1, 8);
                 }
             } else {
@@ -1075,8 +1075,8 @@ void EntityRichter(Entity* self) {
     g_Ric.unk6C = g_Ric.unk6A;
 }
 
-// possible file split
-
+// possible file split - pl_setstep
+ 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepStand);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepWalk);

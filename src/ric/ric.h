@@ -1,28 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 #include <sfx.h>
+#include <input.h>
 
 #define OVL_EXPORT(x) RIC_##x
 
 #define RIC_SPRITE_COUNT 197 // useful to sync PSX and PSP
 
 #define GAME_OVER 0x80000
-
-enum RicInputChecks {
-    CHECK_GROUND = 1,
-    CHECK_FALL = 4,
-    CHECK_FACING = 8,
-    CHECK_JUMP = 0x10,
-    CHECK_CRASH = 0x40,
-    CHECK_80 = 0x80,
-    CHECK_GRAVITY_HIT = 0x200,
-    CHECK_ATTACK = 0x1000,
-    CHECK_CROUCH = 0x2000,
-    CHECK_GRAVITY_FALL = 0x8000,
-    CHECK_GRAVITY_JUMP = 0x10000,
-    CHECK_GROUND_AFTER_HIT = 0x20000,
-    CHECK_SLIDE = 0x40000,
-};
 
 // Richter mostly uses the same steps as Alucard, or uses unused Alucard
 // steps.

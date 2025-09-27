@@ -3563,6 +3563,7 @@ typedef struct {
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s32 : 32;
     /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ s16 unkTimer;
 } ET_ShaftOrb;
 
 typedef union { // offset=0x7C
