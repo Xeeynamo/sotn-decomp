@@ -1953,6 +1953,19 @@ enum AluTimers {
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7
 
+typedef enum {
+    VRAM_FLAG_NONE = 0,
+    TOUCHING_GROUND = 1 << 0,
+    TOUCHING_CEILING = 1 << 1,
+    TOUCHING_WALL_RT = 1 << 2,
+    TOUCHING_WALL_LT = 1 << 3,
+    IN_AIR = 1 << 5,
+    TOUCHING_CEILING_SLOPE = 1 << 11,
+    TOUCHING_SLIGHT_SLOPE = 1 << 12,
+    TOUCHING_RAISING_SLOPE = 1 << 14,
+    TOUCHING_ANY_SLOPE = 1 << 15,
+} VramFlags;
+
 typedef struct {
     /* 80072BD0 */ Collider colFloor[NUM_HORIZONTAL_SENSORS];
     /* 80072C60 */ Collider colCeiling[NUM_HORIZONTAL_SENSORS];
