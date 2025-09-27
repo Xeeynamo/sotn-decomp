@@ -134,7 +134,7 @@ enum OVL_EXPORT(Entities) {
     E_BONE_PILLAR_FIRE,          // EntityBonePillarFireBreath,
     E_BONE_PILLAR_PIECES,        // EntityBonePillarDeathParts,
     E_BONE_PILLAR_SPIKE_BALL,    // EntityBonePillarSpikeBall,
-    E_UNK_2D,                    // func_us_801C3644,
+    E_UNK_2D,                    // EntityEndConfessionalChime,
     E_SPIKES,                    // EntitySpikes,
     E_SPIKES_PARTS,              // EntitySpikesParts,
     E_SPIKES_DUST,               // EntitySpikesDust,

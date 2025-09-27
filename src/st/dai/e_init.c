@@ -45,7 +45,7 @@ void EntityBonePillarHead(Entity* self);
 void EntityBonePillarFireBreath(Entity* self);
 void EntityBonePillarDeathParts(Entity* self);
 void EntityBonePillarSpikeBall(Entity* self);
-void func_us_801C3644(Entity* self);
+void EntityEndConfessionalChime(Entity* self);
 void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
@@ -119,7 +119,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBonePillarFireBreath,
     EntityBonePillarDeathParts,
     EntityBonePillarSpikeBall,
-    func_us_801C3644,
+    EntityEndConfessionalChime,
     EntitySpikes,
     EntitySpikesParts,
     EntitySpikesDust,
