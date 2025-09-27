@@ -15,9 +15,9 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetStep);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetAnimation);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B995C);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", DecelerateX);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B99A4);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", DecelerateY);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicCheckFacing);
 
@@ -53,9 +53,9 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoSubweapon);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoAttack);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BA598);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoCrash);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BA880);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetDeadPrologue);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetSlide);
 
@@ -123,7 +123,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityHitByLightning);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C03E8);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C0D90);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", EntityShaft);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C0FE8);
 
@@ -188,7 +188,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnAgunea);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityAguneaHitEnemy);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C7FEC);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityVibhutiCrashCloud);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashVibhuti);
 
