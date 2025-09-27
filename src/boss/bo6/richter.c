@@ -26,7 +26,8 @@ void func_us_801B4BD0(void) {
 
     RIC.animSet = ANIMSET_OVL(1);
     RIC.zPriority = g_unkGraphicsStruct.g_zEntityCenter + 8;
-    RIC.flags = FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_UNK_400000 | FLAG_UNK_2000;
+    RIC.flags = FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_UNK_400000 |
+                FLAG_UNK_2000;
     RIC.facingLeft = 0;
     RIC.unk5A = 8;
     RIC.palette = 0x8220;
@@ -34,14 +35,16 @@ void func_us_801B4BD0(void) {
     RIC.rotPivotY = 0x18;
     RIC.drawMode = DRAW_DEFAULT;
 
-    g_PlayerDraw[8].r0 = g_PlayerDraw[8].r1 = g_PlayerDraw[8].r2 = g_PlayerDraw[8].r3 =
-        g_PlayerDraw[8].g0 = g_PlayerDraw[8].g1 = g_PlayerDraw[8].g2 = g_PlayerDraw[8].g3 =
-        g_PlayerDraw[8].b0 = g_PlayerDraw[8].b1 = g_PlayerDraw[8].b2 = g_PlayerDraw[8].b3 = 0x80;
+    g_PlayerDraw[8].r0 = g_PlayerDraw[8].r1 = g_PlayerDraw[8].r2 =
+        g_PlayerDraw[8].r3 = g_PlayerDraw[8].g0 = g_PlayerDraw[8].g1 =
+            g_PlayerDraw[8].g2 = g_PlayerDraw[8].g3 = g_PlayerDraw[8].b0 =
+                g_PlayerDraw[8].b1 = g_PlayerDraw[8].b2 = g_PlayerDraw[8].b3 =
+                    0x80;
 
     g_PlayerDraw[8].enableColorBlend = 0;
 
     memset_len = sizeof(PlayerState) / sizeof(s32);
-    memset_ptr = (s32*) &g_Ric;
+    memset_ptr = (s32*)&g_Ric;
     for (i = 0; i < memset_len; i++) {
         *memset_ptr++ = 0;
     }
@@ -69,12 +72,13 @@ void func_us_801B4BD0(void) {
     primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
     prim = &g_PrimBuf[primIndex];
     g_Entities[65].primIndex = primIndex;
-    g_Entities[65].flags |= 0x800000;
+    g_Entities[65].flags |= FLAG_HAS_PRIMS;
     while (prim != NULL) {
         prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         prim = prim->next;
     }
-    g_api.TimeAttackController(TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_VISITED);
+    g_api.TimeAttackController(
+        TIMEATTACK_EVENT_SAVE_RICHTER, TIMEATTACK_SET_VISITED);
 }
 
 void func_us_801B4EAC(void) {
@@ -1055,7 +1059,7 @@ void EntityRichter(Entity* self) {
     g_Ric.unk6A = RIC.hitPoints;
     if (self->step == 0) {
         InitializeEntity(D_us_80180400);
-        func_us_801B4BD0(); // 
+        func_us_801B4BD0(); //
         entity = &g_Entities[STAGE_ENTITY_START + 4];
         for (i = STAGE_ENTITY_START + 4; i < 144; i++, entity++) {
             DestroyEntity(entity);
@@ -1076,7 +1080,7 @@ void EntityRichter(Entity* self) {
 }
 
 // possible file split - pl_setstep
- 
+
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepStand);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepWalk);

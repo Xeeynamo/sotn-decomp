@@ -32,21 +32,24 @@ void func_us_801B9144(void) {
     case 2:
         if (D_us_80181278 == 0x1E) {
             BO6_RicSetAnimation(D_us_801823C8);
-            BO6_RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(E_ID_24, 0x1), 0);
+            BO6_RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(E_ID_24, 0x1), 0);
             RIC.step_s++;
         }
         break;
     case 3:
         if (RIC.animCurFrame == 0xB5) {
             if (RIC.poseTimer == 1) {
-                BO6_RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(E_ID_23, 0), 0);
+                BO6_RicCreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(E_ID_23, 0), 0);
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
             }
         }
         if (RIC.poseTimer < 0) {
             D_us_80181278 = 0x28;
             BO6_RicSetStand(0);
-            BO6_RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(E_ID_21, 0x45), 0);
+            BO6_RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(E_ID_21, 0x45), 0);
             g_Ric.timers[ALU_T_POISON] = 0x800;
         }
         break;
@@ -67,7 +70,8 @@ void func_us_801B9340(void) {
         g_api.PlaySfx(0x83E);
         g_Ric.unk40 = 0x8166;
         g_Ric.timers[2] = 8;
-        BO6_RicCreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(E_ID_21, 0x58), 0);
+        BO6_RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(E_ID_21, 0x58), 0);
         RIC.step_s += 1;
         return;
     case 1:
@@ -81,7 +85,7 @@ void func_us_801B9340(void) {
         }
         return;
     case 2:
-        DecelerateX(0x2000);
+        DecelerateX(FIX(0.125));
         if ((PLAYER.posX.i.hi - RIC.posX.i.hi) > 0) {
             RIC.facingLeft = 0;
             return;
@@ -90,8 +94,6 @@ void func_us_801B9340(void) {
         break;
     }
 }
-
-
 
 // split pl_utils
 
@@ -315,7 +317,9 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoAttack);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoCrash);
 
-void OVL_EXPORT(RicSetDeadPrologue)() { OVL_EXPORT(RicSetStep)(PL_S_DEAD_PROLOGUE); }
+void OVL_EXPORT(RicSetDeadPrologue)() {
+    OVL_EXPORT(RicSetStep)(PL_S_DEAD_PROLOGUE);
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetSlide);
 
@@ -514,34 +518,34 @@ extern s32 D_us_801D169C;
 // possibly ShaftOrb?
 void func_us_801C03E8(Entity* self) {
     Primitive* prim; // s0
-    s32 i; // s1
+    s32 i;           // s1
 
-    u16 palette; // 0x6E(sp)
+    u16 palette;   // 0x6E(sp)
     s32 temp_s0_5; // 0x68(sp)
     s32 temp_v0_7; // 0x64(sp)
-    s32 var_v1_2; // 0x60(sp)
-    s32 var_a0_2; // 0x5C(sp)
+    s32 var_v1_2;  // 0x60(sp)
+    s32 var_a0_2;  // 0x5C(sp)
 
     s32 distanceX; // 0x58(sp)
     s32 distanceY; // 0x54(sp)
 
-    s32 scale; // 0x50(sp)
-    s32 posX; // 0x4C(sp)
-    s32 posY; // 0x48(sp)
-    s32 ricPosX;// 0x44(sp)
+    s32 scale;   // 0x50(sp)
+    s32 posX;    // 0x4C(sp)
+    s32 posY;    // 0x48(sp)
+    s32 ricPosX; // 0x44(sp)
     s32 ricPosY; // s8
 
     s32 anotherX;
     s32 anotherY;
 
-    s32 var_s4; // 0x38(sp)
-    s32 sp30; // 0x34(sp)
-    s32 j; // 0x30(sp)
-    s32 angle; // s7
-    s32 distance; // s6
+    s32 var_s4;    // 0x38(sp)
+    s32 sp30;      // 0x34(sp)
+    s32 j;         // 0x30(sp)
+    s32 angle;     // s7
+    s32 distance;  // s6
     s32 direction; // s5
-    s32 primX; // s4
-    s32 primY; // s3
+    s32 primX;     // s4
+    s32 primY;     // s3
     s32 temp_s0_2; // s2
 
     scale = 4;
@@ -549,7 +553,7 @@ void func_us_801C03E8(Entity* self) {
     var_s4 = 0;
     sp30 = 0;
 
-    if (self->flags & 0x100) {
+    if (self->flags & FLAG_DEAD) {
         if (self->step < 0x14) {
             D_us_801D169C = 1;
             self->step = 0x14;
@@ -585,7 +589,8 @@ void func_us_801C03E8(Entity* self) {
             prim->v0 = prim->v1 = 0;
             prim->v2 = prim->v3 = 0x1F;
             prim->priority = RIC.zPriority + 4;
-            prim->drawMode = 0x7F;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             D_us_801D0854[i] = 0;
             prim = prim->next;
         }
@@ -594,12 +599,13 @@ void func_us_801C03E8(Entity* self) {
             prim->priority = RIC.zPriority - 2;
             prim->r0 = prim->g0 = prim->r1 = prim->g1 = 0x3F;
             prim->b0 = prim->b1 = 0x7F;
-            prim->drawMode = 0x3B;
-            prim->type = 2;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_UNK02 | DRAW_TRANSP;
+            prim->type = PRIM_LINE_G2;
             prim = prim->next;
         }
 
-        self->flags |= 0x30800000;
+        self->flags |= FLAG_UNK_20000000 | FLAG_UNK_10000000 | FLAG_HAS_PRIMS;
         self->posX.i.hi = 0x80;
         self->posY.i.hi = 0x30;
         self->ext.ILLEGAL.s16[4] = 0x400;
@@ -615,15 +621,15 @@ void func_us_801C03E8(Entity* self) {
         self->zPriority = RIC.zPriority + 4;
         self->step = 1;
         self->opacity = 0;
-        self->drawFlags = 8;
-        self->drawMode = 0x30;
+        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         break;
 
     case 1:
         self->opacity++;
         if (self->opacity >= 0x80) {
-            self->drawFlags = 0;
-            self->drawMode = 0;
+            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawMode = DRAW_DEFAULT;
             self->step++;
         }
         break;
@@ -671,7 +677,7 @@ void func_us_801C03E8(Entity* self) {
         self->posY.val -= temp_v0_7;
         break;
     case 10:
-        if ((g_Timer & 1)) {
+        if (g_Timer & 1) {
             self->palette = 0x815F;
         } else {
             self->palette = 0x8168;
@@ -716,7 +722,8 @@ void func_us_801C03E8(Entity* self) {
 
     if (g_Timer % 0x100 == 0) {
         if (self->step == 2) {
-            if ((abs(self->posX.i.hi - RIC.posX.i.hi) < 0x20) && (RIC.step != PL_S_DEAD)) {
+            if ((abs(self->posX.i.hi - RIC.posX.i.hi) < 0x20) &&
+                (RIC.step != PL_S_DEAD)) {
                 sp30 = 1;
                 if (self->ext.ILLEGAL.s16[1]) {
                     BO6_RicCreateEntFactoryFromEntity(self, 0x590021, 0);
@@ -736,10 +743,10 @@ void func_us_801C03E8(Entity* self) {
                 prim->x1 = prim->x3 = posX + 0xF;
                 prim->y0 = prim->y1 = posY - 0x10;
                 prim->y2 = prim->y3 = posY + 0xF;
-                prim->drawMode &= 0xFFF7;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 =
-                    prim->g0 = prim->g1 = prim->g2 = prim->g3 =
-                    prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x80;
+                prim->drawMode &= ~DRAW_HIDE;
+                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
+                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
+                        prim->b2 = prim->b3 = 0x80;
                 D_us_801D0854[i] += 1;
             }
         } else {
@@ -747,12 +754,11 @@ void func_us_801C03E8(Entity* self) {
             if (prim->b3 < 0x10) {
                 D_us_801D0854[i] = 0;
             }
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 =
-                prim->g0 = prim->g1 = prim->g2 = prim->g3 =
-                prim->b0 = prim->b1 = prim->b2 = prim->b3;
+            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
+                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3;
         }
         if (!self->ext.ILLEGAL.s16[1]) {
-            prim->drawMode |= 8;
+            prim->drawMode |= DRAW_HIDE;
         }
         prim = prim->next;
     }
@@ -775,8 +781,9 @@ void func_us_801C03E8(Entity* self) {
         anotherY = ricPosY - posY;
         anotherX = ricPosX - posX;
         angle = ratan2(-anotherY, anotherX);
-        distance = (SquareRoot12(I_TO_FLT((anotherX * anotherX) +
-            (anotherY * anotherY))) / 7);
+        distance = (SquareRoot12(I_TO_FLT(
+                        (anotherX * anotherX) + (anotherY * anotherY))) /
+                    7);
         distance = FLT_TO_I(distance);
 
         for (i = 0; i < 8; i++) {
@@ -785,10 +792,10 @@ void func_us_801C03E8(Entity* self) {
                 if (sp30 != 0) {
                     prim->r2++;
                     prim->b2 = 0xC;
-                    prim->drawMode &= 0xFFF7;
+                    prim->drawMode &= ~DRAW_HIDE;
                 }
             } else if (--prim->b2 == 0) {
-                prim->drawMode |= 8;
+                prim->drawMode |= DRAW_HIDE;
                 prim->r2 = 0;
             }
             prim->x0 = primX;
@@ -804,7 +811,7 @@ void func_us_801C03E8(Entity* self) {
                 prim->y1 = ricPosY;
             }
             if (!self->ext.ILLEGAL.s16[1]) {
-                prim->drawMode |= 8;
+                prim->drawMode |= DRAW_HIDE;
             }
             prim = prim->next;
         }
@@ -882,7 +889,7 @@ void EntityShaft(Entity* self) {
             self->scaleY = 0x800;
         }
         self->opacity += 6;
-        if ( self->opacity > 0xF0) {
+        if (self->opacity > 0xF0) {
             self->step++;
         }
         break;
@@ -1029,7 +1036,6 @@ void func_us_801C13A8(Entity* self) {
     }
 }
 
-
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityWhip);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityArmBrandishWhip);
@@ -1049,9 +1055,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_DebugShowWaitInfo);
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_DebugInputWait);
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C310C);
 
-int WarpBackgroundBrightness() {
-    return 0;
-}
+int WarpBackgroundBrightness() { return 0; }
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C32C4);
 
@@ -1103,7 +1107,8 @@ void BO6_RicEntityVibhutiCrashCloud(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
         self->posX.val = self->ext.vibCrashCloud.parent->ext.vibhutiCrash.x;
         self->posY.val = self->ext.vibCrashCloud.parent->ext.vibhutiCrash.y;
-        self->facingLeft = self->ext.vibCrashCloud.parent->ext.vibhutiCrash.facing;
+        self->facingLeft =
+            self->ext.vibCrashCloud.parent->ext.vibhutiCrash.facing;
         self->flags |= FLAG_UNK_20000000;
         self->unk5A = 0x64;
         self->animSet = 0xE;
