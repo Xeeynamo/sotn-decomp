@@ -72,7 +72,7 @@ segments:
       - [0x19A40, c, dai/st_init_psp]
       - [0x19EA0, c, dai/e_breakable]
       - [0x1A770, c, dai/unk_40BA4]
-      - [0x1ADC8, c, dai/unk_434FC]
+      - [0x1ADC8, c, dai/e_room_bg_2]
       - [0x1AF48, c, dai/e_chair]
       - [0x1B400, c, dai/e_room_fg_2]
       - [0x1BAB8, c, dai/cutscene_init]

@@ -116,7 +116,7 @@ segments:
       - [0x423A4, c, e_gargoyle_statue]
       - [0x42534, c, e_confessional]
       - [0x43104, c, e_chair]
-      - [0x434FC, c, unk_434FC]
+      - [0x434FC, c, e_room_bg_2]
       - [0x43644, c, unk_43644]
       - [0x4379C, c, e_spikes]
       - [0x43F48, c, e_cutscene]
