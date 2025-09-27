@@ -1960,6 +1960,8 @@ typedef enum {
     TOUCHING_WALL_RT = 1 << 2,
     TOUCHING_WALL_LT = 1 << 3,
     IN_AIR = 1 << 5,
+    VRAM_FLAG_UNK_40 = 1 << 6,
+    VRAM_FLAG_UNK_400 = 1 << 10,
     TOUCHING_CEILING_SLOPE = 1 << 11,
     TOUCHING_SLIGHT_SLOPE = 1 << 12,
     TOUCHING_RAISING_SLOPE = 1 << 14,

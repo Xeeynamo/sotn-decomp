@@ -304,14 +304,14 @@ void EntityBell(Entity* self) {
                 if (posX > 0) {
                     self->ext.bell.swingVelocity = FIX(10.0);
                 } else {
-                    self->ext.bell.swingVelocity = -FIX(10.0);
+                    self->ext.bell.swingVelocity = FIX(-10.0);
                 }
             }
             if (g_Player.vram_flag & TOUCHING_CEILING) {
                 sfxFlag = true;
                 self->ext.bell.step = BELL_HIT_INSIDE;
                 if (posX > 0) {
-                    self->ext.bell.swingVelocity = -FIX(8.0);
+                    self->ext.bell.swingVelocity = FIX(-8.0);
                 } else {
                     self->ext.bell.swingVelocity = FIX(8.0);
                 }
