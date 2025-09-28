@@ -111,7 +111,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_13,                    // EntityUnkId13,
     E_EXPLOSION_VARIANTS,        // EntityExplosionVariants,
     E_GREY_PUFF,                 // EntityGreyPuff,
-    E_UNK_801C0BA4,              // func_us_801C0BA4,
+    E_TOWER_EXIT,                // EntityTowerExit,
     E_UNK_17,                    // EntityStainedGlass,
     E_UNK_18,                    // func_us_801D9F5C,
     E_BLOCK,                     // EntityBlock,
