@@ -1,21 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-// Used by e_confessional/EntityConfessionalGhost
-#ifdef VERSION_PSP
-bool g_confessionalChimeActive; // bss on pspeu
-#else
-bool g_confessionalChimeActive = {0};
-#endif
+enum EndChimeSteps {
+    END_CHIME_INIT,
+    END_CHIME_WAIT,
+    END_CHIME_START_MUSIC,
+};
 
-// Resets sound loop to DAI music
-void func_us_801C3644(Entity* self) {
+// Used by e_confessional/EntityConfessionalGhost
+bool g_confessionalChimeActive = {0}; // bss on pspeu
+
+// Switches from looping confessional chime to dai music
+void EntityEndConfessionalChime(Entity* self) {
     if (!g_confessionalChimeActive) {
         DestroyEntity(self);
         return;
     }
     switch (self->step) {
-    case 0:
+    case END_CHIME_INIT:
         InitializeEntity(g_EInitInteractable);
         g_api.PlaySfx(SET_STOP_SEQ);
         D_80097928 = true;
@@ -25,16 +27,16 @@ void func_us_801C3644(Entity* self) {
             self->step++;
         }
         break;
-    case 1:
+    case END_CHIME_WAIT: // Probably waiting for the chime sfx to not be going
         if (!g_api.func_80131F68()) {
             self->step++;
         }
         break;
-    case 2:
+    case END_CHIME_START_MUSIC:
         g_api.PlaySfx(D_80097910);
         D_80097928 = false;
         g_confessionalChimeActive = false;
-        self->step++;
+        self->step++; // No case defined, resulting in nop
         break;
     }
 }
