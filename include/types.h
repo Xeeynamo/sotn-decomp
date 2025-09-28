@@ -59,7 +59,8 @@ typedef unsigned short ushort;
 typedef unsigned int uint;
 
 #ifndef __cplusplus
-typedef enum { false, true } bool;
+enum { false, true };
+typedef signed int bool;
 #endif
 
 #ifndef NULL
