@@ -4,7 +4,6 @@
 extern RoomHeader OVL_EXPORT(rooms)[];
 extern SpriteParts* OVL_EXPORT(spriteBanks)[];
 extern u_long* OVL_EXPORT(cluts)[];
-extern LayoutEntity* OVL_EXPORT(pStObjLayoutHorizontal)[];
 extern RoomDef OVL_EXPORT(rooms_layers)[];
 extern GfxBank* OVL_EXPORT(gfxBanks)[];
 
@@ -21,8 +20,3 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
 };
-
-// #include "gen/sprite_banks.h"
-// #include "gen/palette_def.h"
-// #include "gen/layers.h"
-// #include "gen/graphics_banks.h"
