@@ -298,7 +298,7 @@ void EntityBell(Entity* self) {
         posX = playerPtr->posX.i.hi - self->posX.i.hi;
         posY = playerPtr->posY.i.hi - (tempPosY - 8);
         if ((u16)(posY) < 128 && (abs(posX) < 56)) {
-            if (g_Player.vram_flag & TOUCHING_GROUND) {
+            if (g_Player.vram_flag & 1) {
                 sfxFlag = true;
                 self->ext.bell.step = BELL_HIT_OUTSIDE;
                 if (posX > 0) {
@@ -307,7 +307,7 @@ void EntityBell(Entity* self) {
                     self->ext.bell.swingVelocity = FIX(-10.0);
                 }
             }
-            if (g_Player.vram_flag & TOUCHING_CEILING) {
+            if (g_Player.vram_flag & 2) {
                 sfxFlag = true;
                 self->ext.bell.step = BELL_HIT_INSIDE;
                 if (posX > 0) {
@@ -321,7 +321,7 @@ void EntityBell(Entity* self) {
     case BELL_HIT_OUTSIDE:
         playerPtr = &PLAYER;
         posX = playerPtr->posX.i.hi - self->posX.i.hi;
-        if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
+        if (!(g_Player.vram_flag & 1)) {
             sfxFlag = true;
             self->ext.bell.step = BELL_NEUTRAL;
             if (posX > 0) {
@@ -337,7 +337,7 @@ void EntityBell(Entity* self) {
         break;
     case BELL_HIT_INSIDE:
         self->ext.bell.maxSwing = 0;
-        if (!(g_Player.vram_flag & TOUCHING_CEILING)) {
+        if (!(g_Player.vram_flag & 2)) {
             sfxFlag = true;
             self->ext.bell.step = BELL_NEUTRAL;
         }
