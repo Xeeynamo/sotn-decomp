@@ -6,11 +6,7 @@
 //
 //         adds additional decrements based on `g_Tilemap`'s scroll position
 
-#ifdef VERSION_HD
-extern DialogueHD g_Dialogue;
-#else
 extern Dialogue g_Dialogue;
-#endif
 extern u32 g_CutsceneFlags;
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
 
