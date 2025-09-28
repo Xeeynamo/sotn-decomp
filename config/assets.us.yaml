@@ -745,6 +745,16 @@ files:
           - [0x435C, spritesheet, doppleganger]
           - [0x2AD74, spritesheet, bat_form]
           - [0x2BEA0, skip]
+  - target: disks/us/BOSS/BO6/BO6.BIN
+    asset_path: assets/boss/bo6
+    src_path: src/boss/bo6
+    splat_config_path: config/splat.us.bobo6.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+            - [0x1204, rooms, rooms]
+            - [0x1210, skip]
   - target: disks/us/BOSS/RBO3/RBO3.BIN
     asset_path: assets/boss/rbo3
     src_path: src/boss/rbo3
