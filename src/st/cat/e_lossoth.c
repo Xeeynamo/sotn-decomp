@@ -1,6 +1,47 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cat.h"
 
+static u8 D_us_801825D4[] = {
+    0x0D, 0x01, 0x10, 0x02, 0x0D, 0x03, 0x10, 0x02, 0x00};
+static u8 D_us_801825E0[] = {
+    0x08, 0x04, 0x07, 0x05, 0x03, 0x06, 0x03, 0x07, 0x06,
+    0x08, 0x05, 0x09, 0x04, 0x0A, 0x32, 0x03, 0xFF, 0x00};
+static u8 D_us_801825F4[] = {
+    0x06, 0x0B, 0x04, 0x0C, 0x03, 0x0D, 0x06, 0x0E, 0x06,
+    0x0F, 0x04, 0x10, 0x04, 0x11, 0x32, 0x03, 0xFF, 0x00};
+static u8 D_us_80182608[] = {
+    0x04, 0x12, 0x03, 0x13, 0x02, 0x14, 0x02, 0x15, 0xFF, 0x00};
+
+static u8 D_us_80182614[] = {
+    0x11, 0x18, 0x14, 0x17, 0x11, 0x16, 0x14, 0x17, 0x00, 0x00};
+
+static u8 D_us_80182620[] = {0x07, 0x19, 0x07, 0x1A, 0x07, 0x1B, 0x00, 0x00};
+
+static u8 D_us_80182628[] = {0x05, 0x1C, 0x06, 0x1D, 0x07, 0x1E, 0x02, 0x1F,
+                             0x05, 0x20, 0x05, 0x21, 0x08, 0x22, 0xFF, 0x00};
+static u8 D_us_80182638[] = {0x0A, 0x26, 0x06, 0x23, 0x04, 0x24, 0x03,
+                             0x23, 0x03, 0x25, 0x41, 0x23, 0xFF, 0x00};
+static u8 D_us_80182648[] = {
+    0x02, 0x27, 0x02, 0x28, 0x02, 0x29, 0x02, 0x28, 0x00};
+
+static s16 D_us_80182654[] = {0x0000, 0x0012, 0x000C, 0x0000};
+// nb. this resides in BSS on PSP
+static s16 D_us_8018265C[] = {0, 0, 0, 0};
+static s16 D_us_80182664[] = {
+    0x0000, 0x0012, 0x0000, 0x0004, 0x000C, 0xFFFC, 0xFFE8, 0x0000};
+static s16 D_us_80182674[] = {
+    0x0000, 0x0004, 0x0000, 0x0004, 0x0004, 0xFFFC, 0xFFF8, 0x0000};
+static Point16 D_us_80182684[3] = {{.x = 0x0020, .y = 0x0000},
+                                   {.x = 0x0014, .y = 0xFFEC},
+                                   {.x = 0x0000, .y = 0xFFE4}};
+static Point32 D_us_80182690[3] = {{.x = 0x00016000, .y = 0xFFFD8000},
+                                   {.x = 0x00020000, .y = 0xFFFD0000},
+                                   {.x = 0x00028000, .y = 0xFFFC0000}};
+static s16 D_us_801826A8[] = {0x0020, 0x0040, 0x0050, 0x0060};
+static Point16 D_us_801826B0[3] = {{.x = 0x0004, .y = 0xFFF0},
+                                   {.x = 0xFFF6, .y = 0xFFFE},
+                                   {.x = 0x0002, .y = 0x0004}};
+
 void func_us_801CF87C(Primitive* prim) {
     s32 primY;
 
@@ -64,16 +105,6 @@ void func_us_801CF87C(Primitive* prim) {
 }
 
 extern EInit D_us_80181248;
-extern u8 D_us_801825D4[];
-extern u8 D_us_801825E0[];
-extern u8 D_us_801825F4[];
-extern u8 D_us_80182614[];
-extern u8 D_us_80182638[];
-extern s16 D_us_80182654[];
-extern s16 D_us_80182664[];
-extern Point16 D_us_80182684[];
-extern s16 D_us_801826A8[];
-
 void func_us_801CFAE8(Entity* self) {
     Entity* newEntity; // s0
     s32 i;             // s1
@@ -322,10 +353,6 @@ void func_us_801CFAE8(Entity* self) {
 }
 
 extern EInit D_us_80181254;
-extern u8 D_us_80182628[];
-extern u8 D_us_80182648[];
-extern s16 D_us_80182674[];
-
 void func_us_801D033C(Entity* self) {
     Primitive* prim;
     s32 primIndex;
@@ -501,9 +528,6 @@ void func_us_801D033C(Entity* self) {
 }
 
 extern EInit D_us_80181260;
-extern u8 D_us_80182608[];
-extern Point32 D_us_80182690[];
-
 void func_us_801D08A8(Entity* self) {
     Collider collider;
     Entity* newEntity;
@@ -577,9 +601,7 @@ void func_us_801D08A8(Entity* self) {
     }
 }
 
-extern EInit D_us_80181260;
-extern s16 D_us_8018265C[];
-
+extern Primitive* FindFirstUnkPrim(Primitive* poly);
 void func_us_801D0B38(Entity* self) {
     Primitive* prim;
     Entity* newEntity;
@@ -705,10 +727,6 @@ void func_us_801D0B38(Entity* self) {
         }
     }
 }
-
-extern EInit D_us_80181248;
-extern u8 D_us_80182620[];
-extern Point16 D_us_801826B0[];
 
 void func_us_801D0F10(Entity* self) {
     Entity* entity;

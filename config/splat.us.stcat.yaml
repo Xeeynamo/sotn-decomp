@@ -56,7 +56,7 @@ segments:
       - [0x23F0, data]
       - [0x24C8, .data, e_particles]
       - [0x2548, .data, e_room_fg]
-      - [0x25D4, data]
+      - [0x25D4, .data, e_lossoth]
       - [0x26BC, .data, e_grave_keeper]
       - [0x2770, .data, e_tombstone]
       - [0x278C, .data, en_gremlin]
