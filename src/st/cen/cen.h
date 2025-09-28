@@ -72,7 +72,11 @@ extern u8 g_ESoulStealOrbAnim[];
 extern ObjInit D_8018125C[];
 
 extern s32 g_SkipCutscene;
+#ifdef VERSION_HD
+extern DialogueHD g_Dialogue;
+#else
 extern Dialogue g_Dialogue;
+#endif
 extern u32 g_CutsceneFlags;
 extern s32 g_IsCutsceneDone;
 

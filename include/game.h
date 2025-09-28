@@ -1595,6 +1595,27 @@ typedef struct {
     /* 0x40 */ u8* scriptEnd;    // pointer to the end of the script
 } Dialogue;                      // size = 0x44
 
+typedef struct {
+    /* 0x00 */ s16 startX;
+    /* 0x04 */ u8* scriptCur;
+    /* 0x08 */ s16 nextCharX;
+    /* 0x0A */ s16 startY;
+    /* 0x0C */ s16 nextLineY;
+    /* 0x0E */ s16 nextLineX;
+    /* 0x10 */ s16 unk10;
+    /* 0x12 */ s16 nextCharY;
+    /* 0x14 */ s16 portraitAnimTimer;
+    /* 0x16 */ s16 nextCharTimer;
+    /* 0x18 */ u16 clutIndex;
+    /* 0x1A */ u8 unk1A;
+    /* 0x1B */ u8 unk1B;
+    /* 0x1C */ Primitive* prim[5];
+    /* 0x30 */ s32 primIndex[3]; // primIndices: unk, actorName, unk
+    /* 0x3C */ u16 unk3C;        // maybe it is a begin flag?
+    /* 0x3E */ u16 timer;
+    /* 0x40 */ u8* scriptEnd;
+} DialogueHD;
+
 // st0_psp/3101C, st0/bss.c, st0/prologue_scroll.c, st0/3101C
 typedef struct {
     /* 0x00 */ u8* scriptCur;
