@@ -68,7 +68,7 @@ segments:
       - [0x174B8, c, prim_helpers]
       - [0x17C50, c, e_bone_halberd]
       - [0x18920, c, e_bell]
-      - [0x198E0, c, unk_43644]
+      - [0x198E0, c, e_end_chime]
       - [0x19A40, c, st_init_psp]
       - [0x19EA0, c, e_breakable]
       - [0x1A770, c, unk_40BA4]
@@ -106,22 +106,19 @@ segments:
       - [0x256C0, .data, st_common]
       - [0x258C0, .data, e_bone_halberd]
       - [0x25A70, .data, e_bell]
-      - [0x25B18, data] # gen/sprites
-      - [0x2B2C8, data] # sprite_banks
-      - [0x2B328, data] # layers
-      - [0x2B608, data] # palette_def
-      - [0x2B6F8, data] # graphics_banks
+      - [0x25B18, .data, gen/sprites]
+      - [0x2B2C8, .data, sprite_banks]
+      - [0x2B328, .data, layers]
+      - [0x2B608, .data, pal_stained_glass]
+      - [0x2B628, .data, palette_def]
+      - [0x2B6F8, .data, graphics_banks]
       - [0x2B8E0, .data, e_red_door_tiles]
       - [0x2B910, .data, e_init]
-      - [0x2BC20, data] # gen/rooms
-      - [0x2BCF8, .data, cutscene_script]
+      - [0x2BC20, .data, gen/rooms]
+      - [0x2BCF8, .data, cutscene_data]
       - [0x2C430, .data, e_breakable]
-      - [0x2C588, data] # e_cutscene_data
-      - [0x2C880, data] # stage_data
-      - [0x36BF0, data, e_cutscene_data]
-      - [0x386F0, data] # stage_data
-      - [0x3ADF0, data] # palettes
-      - [0x3BAD0, data] # tilemaps
+      - [0x2C588, .data, gfx_data]
+      - [0x3BAD0, .data, tilemaps]
       - [0x5ED00, .data, header]
       - [0x5ED30, .data, e_chair]
       - [0x5ED40, .data, d_prize_drops]
@@ -151,8 +148,8 @@ segments:
       - [0x5F9A0, .bss, e_collect]
       - [0x5FA00, .bss, e_sealed_door]
       - [0x5FA08, .bss, e_mist_door]
-      - [0x5FA20, .bss, unk_43644]
-      - [0x5FA28, bss, 5FA28]
+      - [0x5FA20, .bss, e_end_chime]
+      - [0x5FA28, .bss, layers]
       - [0x5FA38, .bss, st_init_psp]
       - [0x5FC04, .bss, e_cutscene]
       - [0x60210, .bss, e_lock_camera]
