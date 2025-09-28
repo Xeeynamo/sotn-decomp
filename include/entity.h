@@ -3522,6 +3522,40 @@ typedef struct {
     /* 0x85 */ u8 resetColliderEffects;
 } ET_GraveKeeper;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ struct Entity* unk9C;
+    /* 0xA0 */ struct Primitive* unkA0;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ u16 : 16;
+    /* 0xA8 */ struct Entity* unkA8;
+} ET_Lossoth;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ struct Primitive* unk9C;
+    /* 0xA0 */ f32 unkA0;
+    /* 0xA4 */ u8 unkA4;
+    /* 0xA5 */ u8 unkA5;
+    /* 0xA8 */ s32 : 32;
+} ET_LossothUnk;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3827,6 +3861,8 @@ typedef union { // offset=0x7C
     ET_StainedGlass stainedGlass;
     ET_DiscusLord discusLord;
     ET_GraveKeeper graveKeeper;
+    ET_Lossoth lossoth;
+    ET_LossothUnk lossothUnk;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
