@@ -327,7 +327,7 @@
 | dra   | func_psp_091160D0                        |       25 |          4 |        |                                 |       |
 | dra   | func_psp_09140E00                        |       25 |          6 |        |                                 |       |
 | dra   | 4AEA4.rodata                             |       26 |          0 | Yes    |                                 |       |
-| dai   | unk_40BA4.rodata                         |       26 |          0 | Yes    |                                 |       |
+| dai   | e_tower_exit.rodata                      |       26 |          0 | Yes    |                                 |       |
 | st0   | 2A218.rodata                             |       26 |          0 | Yes    |                                 |       |
 | dra   | func_psp_091032C8                        |       26 |          2 |        |                                 |       |
 | dra   | SetSpeedX                                |       26 |          2 |        | https://decomp.me/scratch/XhVNS | 0.559 |
