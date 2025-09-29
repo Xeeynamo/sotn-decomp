@@ -88,8 +88,8 @@ segments:
       # - [0x300C, .data, 5F60C] # g_CheatCodes
       # - [0x3014, .data, 5F60C] # D_800A3014
       - [0x3134, .data, 624DC] # D_800A3194
-      - [0x31B0, .data, 62EB8] # D_800A3210
-      # - [0x3330, .data, 62EB8] # D_800A33A0-D_800A35D0
+      - [0x31B0, .data, 62DEC] # D_800A3210
+      # - [0x3330, .data, 62DEC] # D_800A33A0-D_800A35D0
       - [0x37D8, .data, d_37d8] # Palette, GFX desc until D_800A3BB8
       - [0x3C40, .data, lba_stage]
       - [0x4A00, .data, config_us] # subweapons
@@ -187,8 +187,8 @@ segments:
       - [0x3CC0C, .rodata, 624DC] # func_801027C4
       # - [0x3CC2C, .rodata, 624DC] # func_801028AC
       # - [0x3CC54, .rodata, 624DC] # func_80102D70
-      - [0x3CC70, .rodata, 62EB8] # HandleSaveMenu
-      # - [0x3CDC0, .rodata, 62EB8] # func_80103ED4
+      - [0x3CC70, .rodata, 62DEC] # HandleSaveMenu
+      # - [0x3CDC0, .rodata, 62DEC] # func_80103ED4
       - [0x3CDDC, .rodata, lba_stage]
       - [0x3D188, .rodata, config_us]
       - [0x40D38, .rodata, cd] # func_801080DC
@@ -262,7 +262,6 @@ segments:
       - [0x5F60C, c, 5F60C]
       - [0x624DC, c, 624DC]
       - [0x62DEC, c, 62DEC]
-      - [0x62EB8, c, 62EB8]
       - [0x66590, c, 66590]
       - [0x673C0, c, cd]
       - [0x692E8, c, 692E8]
@@ -294,8 +293,8 @@ segments:
       - [0x97960, .bss, 5D5BC]
       - [0x9796C, .bss, 5F60C]
       - [0x9799C, .bss, 624DC]
-      - [0x979B8, .bss, 62EB8]
-      - [0x97E50, .bss, bss]
+      - [0x979B8, .bss, 62DEC]
+      - [0x97E6C, .bss, bss]
   - name: dra_data
     type: data
     start: 0x9B6A0

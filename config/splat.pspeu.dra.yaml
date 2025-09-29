@@ -43,7 +43,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, dra/62EB8]
+      - [0x80, c, dra/62DEC]
       - [0x3250, c, dra_psp/3250]
       - [0x42B0, c, dra/4DA70]
       - [0x5DA0, c, dra/624DC] # O4
@@ -83,7 +83,7 @@ segments:
       - [0x62FE0, c, dra_psp/62FE0] # O4
       - [0x63C08, c, dra_psp/63C08] # O4
       - [0x68310, c, dra/collider] # O4
-      - [0x68E00, .data, dra/62EB8]
+      - [0x68E00, .data, dra/62DEC]
       - [0x69578, .data, dra/624DC]
       - [0x69600, .data, dra/lba_stage]
       - [0x6A818, .data, dra/5F60C] # DrawHud arrays
@@ -129,7 +129,7 @@ segments:
       # - [0xB16F0, .data, dra/sound_data] # g_SfxData
       # - [0xB2C40, .data, dra/sound_data] # g_SfxScripts
       - [0xB4548, .data, dra_psp/d_B4548]
-      - [0xEE380, .rodata, dra/62EB8]
+      - [0xEE380, .rodata, dra/62DEC]
       - [0xEE3A0, .rodata, dra/624DC]
       - [0xEE408, .rodata, dra/5087C]
       - [0xEE4C8, .rodata, dra_psp/menu]
@@ -148,7 +148,7 @@ segments:
       - [0xEED48, .rodata, dra_psp/63C08]
       - {start: 0xEED80, type: .bss, vram: 0x091CB700, name: dra_psp/3250}
       - {start: 0xEED80, type: bss, vram: 0x091CD700, name: bss1}
-      - {start: 0xEED80, type: .bss, vram: 0x091CD7D0, name: dra/62EB8}
+      - {start: 0xEED80, type: .bss, vram: 0x091CD7A8, name: dra/62DEC}
       - {start: 0xEED80, type: .bss, vram: 0x091CDC58, name: dra/4DA70}
       - {start: 0xEED80, type: .bss, vram: 0x091CDC60, name: dra/624DC}
       - {start: 0xEED80, type: bss, vram: 0x091CDC80, name: bss2}

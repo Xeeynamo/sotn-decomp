@@ -597,7 +597,6 @@ extern RoomTeleport D_800A245C[];
 extern u32 D_800A2D24;
 extern const char* D_800A83AC[];
 
-extern MATRIX D_800A37B8;
 extern u16 D_800A37D8[2];
 extern u16 g_JosephsCloakColors[4];
 extern GfxBank** g_GfxSharedBank[];
@@ -831,7 +830,6 @@ void ClearStatBuff(s32 arg0);
 bool func_8010183C(s32 arg0);
 s32 func_801025F4(void);
 void func_80102CD8(s32);
-void func_80103EAC(void);
 Entity* GetFreeEntity(s16 start, s16 end);
 Entity* GetFreeEntityReverse(s16 start, s16 end);
 void DestroyEntitiesFromIndex(s16 startIndex);

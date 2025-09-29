@@ -2,13 +2,6 @@
 #include "dra.h"
 
 // BSS shared between 627C4.c and 63ED4.c
-extern s32 g_MemCardRetryCount;
-extern s32 D_80137E54;
-extern s32 D_80137E58;
-extern s32 D_80137E5C;
-extern s32 D_80137E60;
-extern s32 g_MemCardRStep;
-extern s32 g_MemCardRStepSub;
 extern s32 D_80137E6C;
 extern SVECTOR D_80137E70[14];
 extern s32 D_80137EE0;
