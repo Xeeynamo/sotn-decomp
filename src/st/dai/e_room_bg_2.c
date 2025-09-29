@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-// This function creates a single row of 5 tiles, but I could not pin down
-// precisely what triggers it. I believe it is the trees in the background of
-// some rooms.
-void func_us_801C34FC(Entity* self) {
+// This is the row of blue "land" tiles at the bottom of the sky background
+void EntityBackgroundSkyLand(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 x;
@@ -21,7 +19,7 @@ void func_us_801C34FC(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         for (x = 0; prim != NULL; prim = prim->next) {
             prim->tpage = 15;
-            prim->clut = PAL_434FC;
+            prim->clut = PAL_BACKGROUND_SKY_LAND;
             prim->u0 = prim->u2 = 65;
             prim->u1 = prim->u3 = 127;
             prim->v0 = prim->v1 = 169;
