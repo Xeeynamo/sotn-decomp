@@ -1573,23 +1573,13 @@ typedef struct {
 // These offsets may be right, but don't trust them because of all the version
 // differences.
 typedef struct {
-#ifdef VERSION_HD
-    /* 0x00 */ s16 startX;
-    /* 0x04 */ u8* scriptCur;
-    /* 0x08 */ s16 nextCharX;
-    /* 0x0A */ s16 startY;
-    /* 0x0C */ s16 nextLineY;
-    /* 0x0E */ s16 nextLineX;
-    /* 0x10 */ s16 unk10;
-#else
     /* 0x00 */ u8* scriptCur; // ptr to dialogue next character
     /* 0x04 */ s16 startX;
     /* 0x06 */ s16 nextLineY;
     /* 0x08 */ s16 startY;
     /* 0x0A */ s16 nextCharX;
     /* 0x0C */ s16 nextLineX;
-#endif
-    /* 0x0E*/ s16 nextCharY;
+    /* 0x0E */ s16 nextCharY;
     /* 0x10 */ s16 portraitAnimTimer;
     /* 0x12 */ u16 unk12;
     /* 0x14 */ u16 clutIndex;

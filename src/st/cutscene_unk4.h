@@ -21,12 +21,11 @@ static
     prim->tpage = CUTSCENE_UNK4_TPAGE;
     prim->clut = g_Dialogue.clutIndex;
 #ifdef VERSION_HD
-    prim->x0 = g_Dialogue.nextCharX;
-    prim->y0 = g_Dialogue.startY;
-    prim->u0 = 0;
-#else
+    prim->x0 = g_Dialogue.startX;
+#endif
     prim->y0 = g_Dialogue.nextLineY;
     prim->u0 = 0;
+#ifndef VERSION_HD
     prim->x0 = g_Dialogue.startX + 4;
 #endif
     prim->v0 = g_Dialogue.nextCharY * CUTSCENE_UNK4_V + 0x80;

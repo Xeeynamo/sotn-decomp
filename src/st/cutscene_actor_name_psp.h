@@ -83,11 +83,7 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
         prim->priority = 0x1FF;
         prim->drawMode = DRAW_HIDE;
         prim->x0 = x;
-#ifdef VERSION_HD
-        prim->y0 = g_Dialogue.nextLineY + 6;
-#else
         prim->y0 = g_Dialogue.startY + 6;
-#endif
         if (ch & 0xF000) {
             prim = prim->next;
             prim->type = PRIM_SPRT;
@@ -103,11 +99,7 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
             prim->priority = 0x1FF;
             prim->drawMode = DRAW_HIDE;
             prim->x0 = x;
-#ifdef VERSION_HD
-            prim->y0 = g_Dialogue.nextLineY - 2;
-#else
             prim->y0 = g_Dialogue.startY - 2;
-#endif
         }
         x += FONT_GAP;
         prim = prim->next;
