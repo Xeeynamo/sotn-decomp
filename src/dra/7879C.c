@@ -2325,36 +2325,36 @@ static bool func_8011BD48(Entity* entity) {
 // player turns white for some sort of status effect
 void EntityPlayerBlinkWhite(Entity* self) {
     Primitive* prim;
-    u8 var_s7;
-    u8 var_s6;
-    u8 sp7f;
-    u8 sp7e;
-    s16 sp7c;
-    s16 sp7a;
-    s16 var_s2;
-    s16 var_s5;
+    u8 xMargin;
+    u8 yMargin;
+    u8 wSprite;
+    u8 hSprite;
+    s16 xPivot;
+    s16 yPivot;
+    s16 width;
+    s16 height;
     s16 sp78;
     s16 sp76;
     s16 sp74;
-    s16 sp72;
-    s16 var_s3;
-    s16 var_s8;
+    s16 plSpriteIndex;
+    s16 selfX;
+    s16 selfY;
     s16* sp5c;
-    u8* sp58;
+    u8* plSprite;
     s32 sp54;
     s32 sp50;
 
-    s16 sp70;
+    s16 upperParams;
 
-    s16* sp4c;
-    s32 var_s1;
+    s16* dataPtr;
+    s32 i;
     s16 angle;
-    s16 sp6e;
-    s16 sp6c;
-    s16 sp6a;
-    s16 sp68;
-    s16 sp66;
-    s16 sp64;
+    s16 angleRedIndex;
+    s16 angleGreenIndex;
+    s16 angleBlueIndex;
+    s16 redDivide;
+    s16 blueDivide;
+    s16 greenDivide;
     s16 sp62;
     s16 sp60;
 
@@ -2364,32 +2364,34 @@ void EntityPlayerBlinkWhite(Entity* self) {
     Entity* sp3C;
     s32 sp38;
 
-    sp70 = (self->params & 0x7F00) >> 8;
+    upperParams = (self->params & 0x7F00) >> 8;
     sp48 = 0;
-    if ((PLAYER.animSet == 0xF) && (sp70 == 0x23) && g_Player.unk66 < 2) {
+    if ((PLAYER.animSet == 0xF) && (upperParams == 0x23) && g_Player.unk66 < 2) {
         sp48 = 1;
     }
-    if ((((sp70 & 0x3F) != 0x1D) &&
+    if ((((upperParams & 0x3F) != 0x1D) &&
          (g_Player.status & PLAYER_STATUS_MIST_FORM)) ||
         (g_Player.status & PLAYER_STATUS_AXEARMOR)) {
-        goto block_229;
+        goto set_unk6C_unk6E_0;
     }
-    if ((g_Player.unk6C) && sp70 != 0x20 && sp70 != 0x21 &&
-        ((sp70 & 0x3F) != 0x1D)) {
+    if ((g_Player.unk6C) && upperParams != 0x20 && upperParams != 0x21 &&
+        ((upperParams & 0x3F) != 0x1D)) {
         g_Player.unk6E = 0;
-        goto block_231;
+        DestroyEntity(self);
+        return;
     }
-    if ((g_Player.unk6E) && sp70 != 0x23 && sp70 != 0x24 &&
-        ((sp70 & 0x3F) != 0x1D)) {
+    if ((g_Player.unk6E) && upperParams != 0x23 && upperParams != 0x24 &&
+        ((upperParams & 0x3F) != 0x1D)) {
         g_Player.unk6C = 0;
-        goto block_231;
+        DestroyEntity(self);
+        return;
     }
     if (((PLAYER.step == Player_SpellHellfire) && (PLAYER.palette == 0x810D)) ||
         (!PLAYER.animSet) || !(PLAYER.animCurFrame & 0x7FFF)) {
-        goto block_229;
+        goto set_unk6C_unk6E_0;
     }
-    var_s8 = self->posY.i.hi = PLAYER.posY.i.hi;
-    var_s3 = self->posX.i.hi = PLAYER.posX.i.hi;
+    selfY = self->posY.i.hi = PLAYER.posY.i.hi;
+    selfX = self->posX.i.hi = PLAYER.posX.i.hi;
     self->facingLeft = PLAYER.facingLeft;
     if (PLAYER.animSet == 1) {
         sp5c = D_800CF324[PLAYER.animCurFrame & 0x7FFF];
@@ -2404,12 +2406,12 @@ void EntityPlayerBlinkWhite(Entity* self) {
 #ifdef VERSION_PSP
                 if (sp5c) {
 #endif
-                    sp72 = *sp5c++;
-                    sp72 &= 0x7FFF;
-                    sp58 = (*g_PlOvlAluBatSpritesheet)[sp72];
+                    plSpriteIndex = *sp5c++;
+                    plSpriteIndex &= 0x7FFF;
+                    plSprite = (*g_PlOvlAluBatSpritesheet)[plSpriteIndex];
 #ifdef VERSION_PSP
                 } else {
-                    sp58 = 0;
+                    plSprite = 0;
                 }
 #endif
             } else {
@@ -2417,72 +2419,72 @@ void EntityPlayerBlinkWhite(Entity* self) {
 #ifdef VERSION_PSP
                 if (sp5c) {
 #endif
-                    sp72 = *sp5c++;
-                    sp72 &= 0x7FFF;
-                    sp58 = ((u8**)SPRITESHEET_PTR)[sp72];
+                    plSpriteIndex = *sp5c++;
+                    plSpriteIndex &= 0x7FFF;
+                    plSprite = ((u8**)SPRITESHEET_PTR)[plSpriteIndex];
 #ifdef VERSION_PSP
                 } else {
-                    sp58 = 0;
+                    plSprite = 0;
                 }
 #endif
             }
         } else {
-            sp7c = 0x2C;
+            xPivot = 0x2C;
             if (PLAYER.facingLeft) {
 #ifdef VERSION_PSP
-                sp7c = 0x13;
+                xPivot = 0x13;
 #else
-                sp7c = 0x14;
+                xPivot = 0x14;
 #endif
             }
-            var_s7 = sp7c + D_8013AEBC[2];
-            sp7f = sp7c + D_8013AEBC[0];
+            xMargin = xPivot + D_8013AEBC[2];
+            wSprite = xPivot + D_8013AEBC[0];
 #ifdef VERSION_PSP
-            var_s6 = D_8013AEBC[3] + 24;
+            yMargin = D_8013AEBC[3] + 24;
 #else
-            var_s6 = D_8013AEBC[3] - 40;
+            yMargin = D_8013AEBC[3] - 40;
 #endif
-            sp7e = D_8013AEBC[1] + 24;
-            var_s2 = D_8013AEBC[0] - D_8013AEBC[2];
-            var_s5 = D_8013AEBC[1] - D_8013AEBC[3];
-            sp7c = D_8013AEBC[2];
-            sp7a = D_8013AEBC[3];
+            hSprite = D_8013AEBC[1] + 24;
+            width = D_8013AEBC[0] - D_8013AEBC[2];
+            height = D_8013AEBC[1] - D_8013AEBC[3];
+            xPivot = D_8013AEBC[2];
+            yPivot = D_8013AEBC[3];
             self->facingLeft = 0;
             self->drawFlags = FLAG_DRAW_DEFAULT;
             goto block_748;
         }
     } else {
-        sp72 = *sp5c++;
-        sp72 &= 0x7FFF;
+        plSpriteIndex = *sp5c++;
+        plSpriteIndex &= 0x7FFF;
         if (PLAYER.animSet == 1) {
-            sp58 = ((u8**)SPRITESHEET_PTR)[sp72];
+            plSprite = ((u8**)SPRITESHEET_PTR)[plSpriteIndex];
         }
         if (PLAYER.animSet == 0xD) {
-            sp58 = (*g_PlOvlAluBatSpritesheet)[sp72];
+            plSprite = (*g_PlOvlAluBatSpritesheet)[plSpriteIndex];
         }
     }
 #ifdef VERSION_PSP
-    if (sp58) {
+    if (plSprite) {
 #endif
-        var_s7 = 4;
-        var_s6 = 1;
-        sp7f = var_s7 + sp58[0];
-        sp7e = var_s6 + sp58[1];
-        var_s2 = sp7f - var_s7;
-        var_s5 = sp7e - var_s6;
-        sp7c = sp5c[0] + sp58[2];
-        sp7a = sp5c[1] + sp58[3];
+        xMargin = 4;
+        yMargin = 1;
+        wSprite = xMargin + plSprite[0];
+        hSprite = yMargin + plSprite[1];
+        width = wSprite - xMargin;
+        height = hSprite - yMargin;
+        xPivot = sp5c[0] + plSprite[2];
+        yPivot = sp5c[1] + plSprite[3];
 #ifdef VERSION_PSP
 
     } else {
-        var_s7 = 4;
-        var_s6 = 1;
-        sp7f = var_s7 + 0;
-        sp7e = var_s6 + 0;
-        var_s2 = sp7f - var_s7;
-        var_s5 = sp7e - var_s6;
-        sp7c = 0;
-        sp7a = 0;
+        xMargin = 4;
+        yMargin = 1;
+        wSprite = xMargin + 0;
+        hSprite = yMargin + 0;
+        width = wSprite - xMargin;
+        height = hSprite - yMargin;
+        xPivot = 0;
+        yPivot = 0;
     }
 #endif
 
@@ -2493,11 +2495,12 @@ void EntityPlayerBlinkWhite(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
     self->rotPivotX = PLAYER.rotPivotX;
 block_748:
-    sp4c = D_800AD670[sp70 & 0x3F];
+    dataPtr = D_800AD670[upperParams & 0x3F];
     switch (self->step) {
     case 0:
         if (func_8011BD48(self) != 0) {
-            goto block_231;
+            DestroyEntity(self);
+            return;
         }
         self->primIndex = AllocPrimitives(PRIM_GT4, 8);
         if (self->primIndex == -1) {
@@ -2509,63 +2512,63 @@ block_748:
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS |
                       FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000 | FLAG_UNK_10000;
         prim = &g_PrimBuf[self->primIndex];
-        for (var_s1 = 0; var_s1 < 8; var_s1++) {
-            D_800AD630[var_s1] = var_s1 << 9;
-            prim->clut = sp4c[3];
+        for (i = 0; i < 8; i++) {
+            D_800AD630[i] = i << 9;
+            prim->clut = dataPtr[3];
             prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
                 prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 =
                     prim->g3 = 0x80;
             prim->priority = PLAYER.zPriority + 2;
-            if (sp70 == 0x20 || sp70 == 0x21 || sp70 == 0x23 || sp70 == 0x24) {
+            if (upperParams == 0x20 || upperParams == 0x21 || upperParams == 0x23 || upperParams == 0x24) {
                 prim->priority = PLAYER.zPriority + 4;
             }
             prim->drawMode =
-                sp4c[8] + DRAW_UNK_200 + DRAW_UNK_100 + DRAW_COLORS;
+                dataPtr[8] + DRAW_UNK_200 + DRAW_UNK_100 + DRAW_COLORS;
             prim = prim->next;
         }
-        self->ext.playerBlink.unk8A = sp4c[9];
+        self->ext.playerBlink.unk8A = dataPtr[9];
         self->ext.playerBlink.unk90 = 0;
         self->ext.playerBlink.unk98 = 0;
         self->ext.playerBlink.unk9A = 0x100;
         self->step += 1;
-        if (sp70 == 0x20) {
+        if (upperParams == 0x20) {
             self->step = 8;
         }
-        if (sp70 == 0x21) {
+        if (upperParams == 0x21) {
             self->step = 0xA;
         }
-        if (sp70 == 0x23) {
+        if (upperParams == 0x23) {
             self->step = 0xC;
         }
-        if (sp70 == 0x24) {
+        if (upperParams == 0x24) {
             self->step = 0xE;
         }
-        if (sp70 == 0x26) {
+        if (upperParams == 0x26) {
             self->step = 0x10;
         }
-        if (sp70 == 0x29) {
+        if (upperParams == 0x29) {
             self->ext.playerBlink.unk90 = 0xFF;
             self->step = 0x13;
         }
         break;
     case 1:
-        if (sp4c[7] == 0x7008) {
+        if (dataPtr[7] == 0x7008) {
             self->ext.playerBlink.unk90 += 0x50;
         } else {
             self->ext.playerBlink.unk90 += 0xA;
         }
         if (self->ext.playerBlink.unk90 > 0x100) {
             self->ext.playerBlink.unk90 = 0x100;
-            self->ext.playerBlink.unk80 = sp4c[7];
+            self->ext.playerBlink.unk80 = dataPtr[7];
             self->step += 1;
         }
         break;
     case 2:
-        if (sp4c[7] >= 0x7000) {
+        if (dataPtr[7] >= 0x7000) {
             self->ext.playerBlink.unk80 = 8;
-            switch ((u32)sp4c[7]) {
+            switch ((u32)dataPtr[7]) {
             case 0x7000:
-                if (g_Player.timers[1] == 0) {
+                if (g_Player.timers[ALU_T_CURSE] == 0) {
                     self->step += 1;
                 }
                 break;
@@ -2576,7 +2579,7 @@ block_748:
                 }
                 break;
             case 0x7002:
-                sp40 = g_Player.timers[0];
+                sp40 = g_Player.timers[ALU_T_POISON];
                 if (sp40 == 0) {
                     self->step += 1;
                 }
@@ -2585,7 +2588,7 @@ block_748:
             case 0x7003:
                 sp38 = 0;
                 sp3C = &g_Entities[32];
-                for (var_s1 = 0; var_s1 < 16; var_s1++) {
+                for (i = 0; i < 16; i++) {
                     if (sp3C->entityId == 0x11) {
                         sp38 += 1;
                     }
@@ -2633,7 +2636,7 @@ block_748:
     case 3:
         self->ext.playerBlink.unk90 -= 10;
         if (self->ext.playerBlink.unk90 < 0) {
-            goto block_231;
+            goto destroy_entity;
         }
         break;
     case 8:
@@ -2662,7 +2665,7 @@ block_748:
             self->params = 0x1B00;
             self->step = 1;
             prim = &g_PrimBuf[self->primIndex];
-            for (var_s1 = 0; var_s1 < 8; var_s1++) {
+            for (i = 0; i < 8; i++) {
                 prim->clut = 0x15F;
                 prim = prim->next;
             }
@@ -2721,7 +2724,7 @@ block_748:
             self->params = 0x1B00;
             self->step = 1;
             prim = &g_PrimBuf[self->primIndex];
-            for (var_s1 = 0; var_s1 < 8; var_s1++) {
+            for (i = 0; i < 8; i++) {
                 prim->clut = 0x15F;
                 prim = prim->next;
             }
@@ -2745,27 +2748,27 @@ block_748:
         break;
     }
     sp44 = 0;
-    if (sp70 == 0x20 || sp70 == 0x21 || sp70 == 0x23 || sp70 == 0x24 ||
-        sp70 == 0x26) {
+    if (upperParams == 0x20 || upperParams == 0x21 || upperParams == 0x23 || upperParams == 0x24 ||
+        upperParams == 0x26) {
         sp44 = 1;
     }
     sp78 = self->ext.playerBlink.unk9C;
     sp76 = self->ext.playerBlink.unk98;
     sp54 = 3;
     sp50 = 6;
-    if (sp4c[7] == 0x700A) {
+    if (dataPtr[7] == 0x700A) {
         sp50 = 0;
         sp54 = 0;
     }
     self->ext.playerBlink.unk82 += self->ext.playerBlink.unk8A;
     if (self->facingLeft) {
-        var_s3 = var_s3 - sp7c;
+        selfX = selfX - xPivot;
     } else {
-        var_s3 = var_s3 + sp7c;
+        selfX = selfX + xPivot;
     }
-    var_s8 = var_s8 + sp7a;
+    selfY = selfY + yPivot;
     prim = &g_PrimBuf[self->primIndex];
-    for (var_s1 = 0; var_s1 < 8; var_s1++) {
+    for (i = 0; i < 8; i++) {
         if (PLAYER.animSet == 0xF && sp48 == 0) {
 #ifdef VERSION_PSP
             prim->tpage = 0x4118;
@@ -2775,130 +2778,130 @@ block_748:
         } else {
             prim->tpage = 0x18;
         }
-        if (sp70 & 0x40) {
-            switch (var_s1) {
+        if (upperParams & 0x40) {
+            switch (i) {
             case 0:
                 if (self->facingLeft) {
-                    prim->x1 = var_s3 - var_s2 / 2;
+                    prim->x1 = selfX - width / 2;
                 } else {
-                    prim->x1 = var_s3 + var_s2 / 2;
+                    prim->x1 = selfX + width / 2;
                 }
-                prim->x0 = var_s3;
-                prim->u0 = var_s7;
-                prim->u1 = var_s7 + var_s2 / 2;
-                prim->y1 = var_s8;
-                prim->y0 = var_s8;
-                prim->v1 = var_s6;
-                prim->v0 = var_s6;
+                prim->x0 = selfX;
+                prim->u0 = xMargin;
+                prim->u1 = xMargin + width / 2;
+                prim->y1 = selfY;
+                prim->y0 = selfY;
+                prim->v1 = yMargin;
+                prim->v0 = yMargin;
                 break;
             case 1:
                 if (self->facingLeft) {
-                    prim->x0 = var_s3 - var_s2 / 2;
-                    prim->x1 = var_s3 - var_s2;
+                    prim->x0 = selfX - width / 2;
+                    prim->x1 = selfX - width;
                 } else {
-                    prim->x0 = var_s3 + var_s2 / 2;
-                    prim->x1 = var_s3 + var_s2;
+                    prim->x0 = selfX + width / 2;
+                    prim->x1 = selfX + width;
                 }
-                prim->u0 = var_s7 + var_s2 / 2;
-                prim->u1 = var_s7 + var_s2;
-                prim->y1 = var_s8;
-                prim->y0 = var_s8;
-                prim->v1 = var_s6;
-                prim->v0 = var_s6;
+                prim->u0 = xMargin + width / 2;
+                prim->u1 = xMargin + width;
+                prim->y1 = selfY;
+                prim->y0 = selfY;
+                prim->v1 = yMargin;
+                prim->v0 = yMargin;
                 break;
             case 2:
                 if (self->facingLeft) {
-                    prim->x0 = prim->x1 = var_s3 - var_s2;
+                    prim->x0 = prim->x1 = selfX - width;
                 } else {
-                    prim->x0 = prim->x1 = var_s3 + var_s2;
+                    prim->x0 = prim->x1 = selfX + width;
                 }
-                prim->u0 = prim->u1 = var_s7 + var_s2;
-                prim->y0 = var_s8;
-                prim->y1 = var_s8 + var_s5 / 2;
-                prim->v0 = var_s6;
-                prim->v1 = var_s6 + var_s5 / 2;
+                prim->u0 = prim->u1 = xMargin + width;
+                prim->y0 = selfY;
+                prim->y1 = selfY + height / 2;
+                prim->v0 = yMargin;
+                prim->v1 = yMargin + height / 2;
                 break;
             case 3:
                 if (self->facingLeft) {
-                    prim->x0 = prim->x1 = var_s3 - var_s2;
+                    prim->x0 = prim->x1 = selfX - width;
                 } else {
-                    prim->x0 = prim->x1 = var_s3 + var_s2;
+                    prim->x0 = prim->x1 = selfX + width;
                 }
 
-                prim->u0 = prim->u1 = var_s7 + var_s2;
-                prim->y0 = var_s8 + var_s5 / 2;
-                prim->y1 = var_s8 + var_s5;
-                prim->v0 = var_s6 + var_s5 / 2;
-                prim->v1 = var_s6 + var_s5;
+                prim->u0 = prim->u1 = xMargin + width;
+                prim->y0 = selfY + height / 2;
+                prim->y1 = selfY + height;
+                prim->v0 = yMargin + height / 2;
+                prim->v1 = yMargin + height;
                 break;
             case 4:
                 if (self->facingLeft) {
-                    prim->x0 = var_s3 - var_s2;
-                    prim->x1 = var_s3 - var_s2 / 2;
+                    prim->x0 = selfX - width;
+                    prim->x1 = selfX - width / 2;
                 } else {
-                    prim->x0 = var_s3 + var_s2;
-                    prim->x1 = var_s3 + var_s2 / 2;
+                    prim->x0 = selfX + width;
+                    prim->x1 = selfX + width / 2;
                 }
-                prim->u0 = var_s7 + var_s2;
-                prim->u1 = var_s7 + var_s2 / 2;
-                prim->y0 = prim->y1 = var_s8 + var_s5;
-                prim->v0 = prim->v1 = var_s6 + var_s5;
+                prim->u0 = xMargin + width;
+                prim->u1 = xMargin + width / 2;
+                prim->y0 = prim->y1 = selfY + height;
+                prim->v0 = prim->v1 = yMargin + height;
                 break;
             case 5:
                 if (self->facingLeft) {
-                    prim->x0 = var_s3 - var_s2 / 2;
+                    prim->x0 = selfX - width / 2;
                 } else {
-                    prim->x0 = var_s3 + var_s2 / 2;
+                    prim->x0 = selfX + width / 2;
                 }
-                prim->x1 = var_s3;
-                prim->u0 = var_s7 + var_s2 / 2;
-                prim->u1 = var_s7;
-                prim->y0 = prim->y1 = var_s8 + var_s5;
-                prim->v0 = prim->v1 = var_s6 + var_s5;
+                prim->x1 = selfX;
+                prim->u0 = xMargin + width / 2;
+                prim->u1 = xMargin;
+                prim->y0 = prim->y1 = selfY + height;
+                prim->v0 = prim->v1 = yMargin + height;
 
                 break;
             case 6:
-                prim->x1 = var_s3;
-                prim->x0 = var_s3;
-                prim->u1 = var_s7;
-                prim->u0 = var_s7;
-                prim->y0 = var_s8 + var_s5;
-                prim->y1 = var_s8 + var_s5 / 2;
-                prim->v0 = var_s6 + var_s5;
-                prim->v1 = var_s6 + var_s5 / 2;
+                prim->x1 = selfX;
+                prim->x0 = selfX;
+                prim->u1 = xMargin;
+                prim->u0 = xMargin;
+                prim->y0 = selfY + height;
+                prim->y1 = selfY + height / 2;
+                prim->v0 = yMargin + height;
+                prim->v1 = yMargin + height / 2;
                 break;
             case 7:
-                prim->x1 = var_s3;
-                prim->x0 = var_s3;
-                prim->u1 = var_s7;
-                prim->u0 = var_s7;
-                prim->y0 = var_s8 + var_s5 / 2;
-                prim->y1 = var_s8;
-                prim->v0 = var_s6 + var_s5 / 2;
-                prim->v1 = var_s6;
+                prim->x1 = selfX;
+                prim->x0 = selfX;
+                prim->u1 = xMargin;
+                prim->u0 = xMargin;
+                prim->y0 = selfY + height / 2;
+                prim->y1 = selfY;
+                prim->v0 = yMargin + height / 2;
+                prim->v1 = yMargin;
                 break;
             }
             if (self->facingLeft) {
                 prim->x2 = prim->x3 =
-                    var_s3 - var_s2 / 2 +
+                    selfX - width / 2 +
                     ((rcos(self->ext.playerBlink.unk82) >> 4) * sp54 >> 0xC);
             } else {
                 prim->x2 = prim->x3 =
-                    var_s3 + var_s2 / 2 +
+                    selfX + width / 2 +
                     ((rcos(self->ext.playerBlink.unk82) >> 4) * sp54 >> 0xC);
             }
             prim->y2 = prim->y3 =
-                (var_s8 + var_s5 / 2) -
+                (selfY + height / 2) -
                 ((rsin(self->ext.playerBlink.unk82) >> 4) * sp50 >> 8);
-            prim->u2 = prim->u3 = var_s7 + var_s2 / 2;
-            prim->v2 = prim->v3 = var_s6 + var_s5 / 2;
+            prim->u2 = prim->u3 = xMargin + width / 2;
+            prim->v2 = prim->v3 = yMargin + height / 2;
         } else {
             if (self->facingLeft) {
-                prim->x0 = prim->x2 = (var_s3 - var_s2) + 1;
-                prim->x1 = prim->x3 = var_s3 + 1;
+                prim->x0 = prim->x2 = (selfX - width) + 1;
+                prim->x1 = prim->x3 = selfX + 1;
             } else {
-                prim->x0 = prim->x2 = var_s3;
-                prim->x1 = prim->x3 = var_s3 + var_s2;
+                prim->x0 = prim->x2 = selfX;
+                prim->x1 = prim->x3 = selfX + width;
             }
             if (sp44 != 0) {
                 sp74 = (rsin(sp78) >> 7) * sp76 / 256;
@@ -2909,17 +2912,17 @@ block_748:
                 prim->x2 += sp74;
                 prim->x3 += sp74;
             }
-            prim->y0 = prim->y1 = var_s8 + var_s5 * var_s1 / 8;
-            prim->y2 = prim->y3 = var_s8 + var_s5 * (var_s1 + 1) / 8;
+            prim->y0 = prim->y1 = selfY + height * i / 8;
+            prim->y2 = prim->y3 = selfY + height * (i + 1) / 8;
             if (self->facingLeft) {
-                prim->u0 = prim->u2 = sp7f - 1;
-                prim->u1 = prim->u3 = var_s7 - 1;
+                prim->u0 = prim->u2 = wSprite - 1;
+                prim->u1 = prim->u3 = xMargin - 1;
             } else {
-                prim->u0 = prim->u2 = var_s7;
-                prim->u1 = prim->u3 = sp7f;
+                prim->u0 = prim->u2 = xMargin;
+                prim->u1 = prim->u3 = wSprite;
             }
-            prim->v0 = prim->v1 = var_s6 + var_s5 * var_s1 / 8;
-            prim->v2 = prim->v3 = var_s6 + var_s5 * (var_s1 + 1) / 8;
+            prim->v0 = prim->v1 = yMargin + height * i / 8;
+            prim->v2 = prim->v3 = yMargin + height * (i + 1) / 8;
         }
         if (self->drawFlags &
             (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE)) {
@@ -2927,62 +2930,73 @@ block_748:
                           self->drawFlags, prim, self->facingLeft);
         }
         if (sp44 == 0) {
-            if (sp70 == 0x29) {
+            if (upperParams == 0x29) {
                 prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 =
                     prim->g1 = prim->r2 = prim->b2 = prim->g2 = prim->r3 =
                         prim->b3 = prim->g3 = self->ext.playerBlink.unk90;
             } else {
-                sp6e = sp4c[0];
-                sp6c = sp4c[2];
-                sp6a = sp4c[1];
-                sp68 = sp4c[4];
-                sp64 = sp4c[6];
-                sp66 = sp4c[5];
-                // clang-format off
-                if (sp70 & 0x40) {
-                    angle = D_800AD630[(var_s1 + sp6e) % 8];
-                    prim->r0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
-                    angle = D_800AD630[(var_s1 + sp6c) % 8];
-                    prim->g0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
-                    angle = D_800AD630[(var_s1 + sp6a) % 8];
-                    prim->b0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
-                    angle = D_800AD630[(var_s1 + sp6e + 1) % 8];
-                    prim->r1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
-                    angle = D_800AD630[(var_s1 + sp6c + 1) % 8];
-                    prim->g1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
-                    angle = D_800AD630[(var_s1 + sp6a + 1) % 8];
-                    prim->b1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                angleRedIndex = dataPtr[0];
+                angleGreenIndex = dataPtr[2];
+                angleBlueIndex = dataPtr[1];
+                redDivide = dataPtr[4];
+                greenDivide = dataPtr[6];
+                blueDivide = dataPtr[5];
+                if (upperParams & 0x40) {
+                    angle = D_800AD630[(i + angleRedIndex) % 8];
+                    prim->r0 = ((rsin(angle) + 0x1000) >> 6) *
+                                self->ext.playerBlink.unk90 / redDivide;
+                    angle = D_800AD630[(i + angleGreenIndex) % 8];
+                    prim->g0 = ((rsin(angle) + 0x1000) >> 6) *
+                                self->ext.playerBlink.unk90 / greenDivide;
+                    angle = D_800AD630[(i + angleBlueIndex) % 8];
+                    prim->b0 = ((rsin(angle) + 0x1000) >> 6) *
+                                self->ext.playerBlink.unk90 / blueDivide;
+                    angle = D_800AD630[(i + angleRedIndex + 1) % 8];
+                    prim->r1 = ((rsin(angle) + 0x1000) >> 6) *
+                                self->ext.playerBlink.unk90 / redDivide;
+                    angle = D_800AD630[(i + angleGreenIndex + 1) % 8];
+                    prim->g1 = ((rsin(angle) + 0x1000) >> 6) *
+                                self->ext.playerBlink.unk90 / greenDivide;
+                    angle = D_800AD630[(i + angleBlueIndex + 1) % 8];
+                    prim->b1 = ((rsin(angle) + 0x1000) >> 6) *
+                                self->ext.playerBlink.unk90 / blueDivide;
                     prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0;
-                    D_800AD630[var_s1] += self->ext.playerBlink.unk8A;
+                    D_800AD630[i] += self->ext.playerBlink.unk8A;
                 } else {
-                    angle = D_800AD630[(var_s1 + sp6e) % 8];
-                    prim->r0 = prim->r1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
-                    angle = D_800AD630[(var_s1 + sp6c) % 8];
-                    prim->g0 = prim->g1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
-                    angle = D_800AD630[(var_s1 + sp6a) % 8];
-                    prim->b0 = prim->b1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
-                    angle = D_800AD630[(var_s1 + sp6e + 1) % 8];
-                    prim->r2 = prim->r3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
-                    angle = D_800AD630[(var_s1 + sp6c + 1) % 8];
-                    prim->g2 = prim->g3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
-                    angle = D_800AD630[(var_s1 + sp6a + 1) % 8];
-                    prim->b2 = prim->b3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
-                    D_800AD630[var_s1] += self->ext.playerBlink.unk8A;
+                    angle = D_800AD630[(i + angleRedIndex) % 8];
+                    prim->r0 = prim->r1 =((rsin(angle) + 0x1000) >> 6) *
+                                self->ext.playerBlink.unk90 / redDivide;
+                    angle = D_800AD630[(i + angleGreenIndex) % 8];
+                    prim->g0 = prim->g1 =((rsin(angle) + 0x1000) >> 6) *
+                                self->ext.playerBlink.unk90 / greenDivide;
+                    angle = D_800AD630[(i + angleBlueIndex) % 8];
+                    prim->b0 = prim->b1 =((rsin(angle) + 0x1000) >> 6) *
+                                self->ext.playerBlink.unk90 / blueDivide;
+                    angle = D_800AD630[(i + angleRedIndex + 1) % 8];
+                    prim->r2 = prim->r3 =((rsin(angle) + 0x1000) >> 6) *
+                                self->ext.playerBlink.unk90 / redDivide;
+                    angle = D_800AD630[(i + angleGreenIndex + 1) % 8];
+                    prim->g2 = prim->g3 =((rsin(angle) + 0x1000) >> 6) *
+                                self->ext.playerBlink.unk90 / greenDivide;
+                    angle = D_800AD630[(i + angleBlueIndex + 1) % 8];
+                    prim->b2 = prim->b3 =((rsin(angle) + 0x1000) >> 6) *
+                                self->ext.playerBlink.unk90 / blueDivide;
+                    D_800AD630[i] += self->ext.playerBlink.unk8A;
                 }
-                // clang-format on
             }
         }
         prim = prim->next;
     }
     func_8010DFF0(1, 1);
-    if (((sp70 & 0x3F) == 0) || ((sp70 & 0x3F) == 7)) {
+    if (((upperParams & 0x3F) == 0) || ((upperParams & 0x3F) == 7)) {
+        // set invincibility frames
         func_8010E168(1, 0xA);
     }
     return;
 
-block_229:
+set_unk6C_unk6E_0:
     g_Player.unk6C = g_Player.unk6E = 0;
-block_231:
+destroy_entity:
     DestroyEntity(self);
 }
 
