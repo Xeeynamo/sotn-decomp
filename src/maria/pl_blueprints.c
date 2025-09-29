@@ -1978,22 +1978,22 @@ void MarEntityShrinkingPowerUpRing(Entity* self) {
         baseAngle = i * angleStart;
         angle = self->ext.ricPowerRing.unk7E + baseAngle;
         prim1->r0 = prim2->r2 =
-            ((rsin(angle) + 0x1000) >> 7) * self->ext.ricPowerRing.unk88 / rMod;
+            ((rsin(angle) + FLT(1.0)) >> 7) * self->ext.ricPowerRing.unk88 / rMod;
         angle = self->ext.ricPowerRing.unk7E + gOffset + baseAngle;
         prim1->g0 = prim2->g2 =
-            ((rsin(angle) + 0x1000) >> 7) * self->ext.ricPowerRing.unk88 / gMod;
+            ((rsin(angle) + FLT(1.0)) >> 7) * self->ext.ricPowerRing.unk88 / gMod;
         angle = self->ext.ricPowerRing.unk7E + bOffset + baseAngle;
         prim1->b0 = prim2->b2 =
-            ((rsin(angle) + 0x1000) >> 7) * self->ext.ricPowerRing.unk88 / bMod;
+            ((rsin(angle) + FLT(1.0)) >> 7) * self->ext.ricPowerRing.unk88 / bMod;
         angle = self->ext.ricPowerRing.unk7E + angleStart + baseAngle;
         prim1->r1 = prim2->r3 =
-            ((rsin(angle) + 0x1000) >> 7) * self->ext.ricPowerRing.unk88 / rMod;
+            ((rsin(angle) + FLT(1.0)) >> 7) * self->ext.ricPowerRing.unk88 / rMod;
         angle = self->ext.ricPowerRing.unk7E + gOffset + angleStart + baseAngle;
         prim1->g1 = prim2->g3 =
-            ((rsin(angle) + 0x1000) >> 7) * self->ext.ricPowerRing.unk88 / gMod;
+            ((rsin(angle) + FLT(1.0)) >> 7) * self->ext.ricPowerRing.unk88 / gMod;
         angle = self->ext.ricPowerRing.unk7E + bOffset + angleStart + baseAngle;
         prim1->b1 = prim2->b3 =
-            ((rsin(angle) + 0x1000) >> 7) * self->ext.ricPowerRing.unk88 / bMod;
+            ((rsin(angle) + FLT(1.0)) >> 7) * self->ext.ricPowerRing.unk88 / bMod;
         prim2->r0 = prim2->g0 = prim2->b0 = prim2->r1 = prim2->g1 = prim2->b1 =
             0;
         prim1->r2 = prim1->g2 = prim1->b2 = prim1->r3 = prim1->g3 = prim1->b3 =

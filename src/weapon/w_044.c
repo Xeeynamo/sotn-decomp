@@ -304,11 +304,11 @@ void EntityWeaponAttack(Entity* self) {
         prim->x1 = prim->x3 = offset + ((base - offset) * (i + 1) / 16);
         angle = D_138000_8017A260[i];
         prim->r0 = prim->g0 = prim->b0 = prim->r2 = prim->g2 = prim->b2 =
-            ((rsin(angle) + FIX(1.0 / 16.0)) >> 6) * self->ext.weapon.unk90 /
+            ((rsin(angle) + FLT(1.0)) >> 6) * self->ext.weapon.unk90 /
             256;
         angle = D_138000_8017A260[(i + 1) % 16];
         prim->r1 = prim->g1 = prim->b1 = prim->r3 = prim->g3 = prim->b3 =
-            ((rsin(angle) + FIX(1.0 / 16.0)) >> 6) * self->ext.weapon.unk90 /
+            ((rsin(angle) + FLT(1.0)) >> 6) * self->ext.weapon.unk90 /
             256;
 
         D_138000_8017A260[i] += self->ext.weapon.unk8A;
