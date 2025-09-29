@@ -47,7 +47,6 @@ segments:
       - [0x3250, c, dra_psp/3250]
       - [0x42B0, c, dra/4DA70]
       - [0x5DA0, c, dra/624DC] # O4
-      - [0x60F8, c, dra/628AC] # O4
       - [0x66B0, c, dra/5F60C] # O0
       - [0xA710, c, dra/5087C] # O4
       - [0xE588, c, dra_psp/menu]
@@ -85,7 +84,7 @@ segments:
       - [0x63C08, c, dra_psp/63C08] # O4
       - [0x68310, c, dra/collider] # O4
       - [0x68E00, .data, dra/62EB8]
-      - [0x69578, .data, dra/628AC]
+      - [0x69578, .data, dra/624DC]
       - [0x69600, .data, dra/lba_stage]
       - [0x6A818, .data, dra/5F60C] # DrawHud arrays
       #- [0x6A8B8, .data, dra/5F60C] # Subwpn clut/u/v
@@ -132,8 +131,6 @@ segments:
       - [0xB4548, .data, dra_psp/d_B4548]
       - [0xEE380, .rodata, dra/62EB8]
       - [0xEE3A0, .rodata, dra/624DC]
-      - [0xEE3C0, .rodata, dra/628AC]
-      - [0xEE3E8, .rodata, dra/628AC]
       - [0xEE408, .rodata, dra/5087C]
       - [0xEE4C8, .rodata, dra_psp/menu]
       - [0xEE570, .rodata, dra/game_handlers]
@@ -151,29 +148,34 @@ segments:
       - [0xEED48, .rodata, dra_psp/63C08]
       - {start: 0xEED80, type: .bss, vram: 0x091CB700, name: dra_psp/3250}
       - {start: 0xEED80, type: bss, vram: 0x091CD700, name: bss1}
+      - {start: 0xEED80, type: .bss, vram: 0x091CD7D0, name: dra/62EB8}
       - {start: 0xEED80, type: .bss, vram: 0x091CDC58, name: dra/4DA70}
-      - {start: 0xEED80, type: bss, vram: 0x091CDC60, name: bss2}
-      - {start: 0xEED80, type: .bss, vram: 0x091CDCE8, name: dra/5087C}
+      - {start: 0xEED80, type: .bss, vram: 0x091CDC60, name: dra/624DC}
+      - {start: 0xEED80, type: bss, vram: 0x091CDC80, name: bss2}
+      - {start: 0xEED80, type: .bss, vram: 0x091CDC90, name: dra/5F60C}
+      - {start: 0xEED80, type: bss, vram: 0x091CDCC0, name: bss3}
+      - {start: 0xEED80, type: .bss, vram: 0x091CDCD8, name: dra/5087C}
       - {start: 0xEED80, type: .bss, vram: 0x091CDD40, name: dra_psp/menu}
-      - {start: 0xEED80, type: bss, vram: 0x091CE1E8, name: bss3}
+      - {start: 0xEED80, type: bss, vram: 0x091CE1E8, name: bss4}
       - {start: 0xEED80, type: .bss, vram: 0x091CE268, name: dra_psp/186E8}
-      - {start: 0xEED80, type: bss, vram: 0x091CE2F0, name: bss4}
+      - {start: 0xEED80, type: bss, vram: 0x091CE2F0, name: bss5}
       - {start: 0xEED80, type: .bss, vram: 0x091CE310, name: dra/game_handlers}
       - {start: 0xEED80, type: .bss, vram: 0x091CE358, name: dra_psp/1DDC0}
-      - {start: 0xEED80, type: bss, vram: 0x091CE3A0, name: bss5}
+      - {start: 0xEED80, type: bss, vram: 0x091CE3A0, name: bss6}
       - {start: 0xEED80, type: .bss, vram: 0x091CE3C8, name: dra_psp/demo}
-      - {start: 0xEED80, type: bss, vram: 0x091CE3D0, name: bss6}
+      - {start: 0xEED80, type: .bss, vram: 0x091CE3D0, name: dra/5D5BC}
+      - {start: 0xEED80, type: bss, vram: 0x091CE3E8, name: bss7}
       - {start: 0xEED80, type: .bss, vram: 0x091CE428, name: dra/4AEA4}
-      - {start: 0xEED80, type: bss, vram: 0x091CE548, name: bss7}
+      - {start: 0xEED80, type: bss, vram: 0x091CE548, name: bss8}
       - {start: 0xEED80, type: .bss, vram: 0x09234A30, name: dra/d_2F324}
       - {start: 0xEED80, type: .bss, vram: 0x09234B68, name: dra/692E8}
-      - {start: 0xEED80, type: bss, vram: 0x09234B98, name: bss8}
+      - {start: 0xEED80, type: bss, vram: 0x09234B98, name: bss9}
       - {start: 0xEED80, type: .bss, vram: 0x09234CB0, name: dra/71830}
-      - {start: 0xEED80, type: bss, vram: 0x09234CC0, name: bss9}
+      - {start: 0xEED80, type: bss, vram: 0x09234CC0, name: bss10}
       - {start: 0xEED80, type: .bss, vram: 0x09234DB0, name: dra/6BF64}
-      - {start: 0xEED80, type: bss, vram: 0x09234DB8, name: bss10}
+      - {start: 0xEED80, type: bss, vram: 0x09234DB8, name: bss11}
       - {start: 0xEED80, type: .bss, vram: 0x092367C0, name: dra/pads}
-      - {start: 0xEED80, type: bss, vram: 0x092367D0, name: bss11}
+      - {start: 0xEED80, type: bss, vram: 0x092367D0, name: bss12}
       - {start: 0xEED80, type: .bss, vram: 0x09236830, name: dra_psp/63C08}
-      - {start: 0xEED80, type: bss, vram: 0x09237628, name: bss12}
+      - {start: 0xEED80, type: bss, vram: 0x09237628, name: bss13}
   - [0xEED80]

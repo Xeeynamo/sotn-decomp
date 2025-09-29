@@ -10,7 +10,6 @@ typedef struct {
     Point32 pos;
 } RoomLoadDefHolder;
 
-extern s32 D_801375C8;
 extern bool D_8C630C8;
 extern s32 D_psp_091CE578;
 extern void (*D_8CE9C48)();
@@ -19,7 +18,7 @@ extern s32 D_psp_091CE570;
 #if defined(VERSION_PSP)
 extern s32* D_8D97C40;
 #define SAVE_DATA_PTR &D_8D97C40
-#define CAN_PAUSE g_PauseAllowed&& D_psp_091CE578
+#define CAN_PAUSE g_PauseAllowed && D_psp_091CE578
 #else
 #define SAVE_DATA_PTR 0x801EA000
 #define CAN_PAUSE g_PauseAllowed
@@ -36,6 +35,10 @@ static s32 D_801375B0;
 static s32 D_801375B4;
 static s32 D_801375B8;
 static RoomLoadDefHolder D_801375BC;
+#ifdef VERSION_PSP
+bool g_canRevealMap;
+#endif
+static s32 D_801375C8;
 
 RoomTeleport D_800A245C[] = {
     {496, 392, 0x00A0, STAGE_NO0, STAGE_NZ0},

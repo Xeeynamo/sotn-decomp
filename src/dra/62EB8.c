@@ -2,6 +2,23 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+// BSS
+static s32 D_801379B8;
+static s32 D_801379BC;
+static SVECTOR D_801379C0;
+static SVECTOR D_801379C8;
+static VECTOR D_801379D0;
+static VECTOR D_801379E0[20];
+static VECTOR D_80137B20[24];
+static SVECTOR D_80137CA0[20];
+static SVECTOR D_80137D40[24];
+static MATRIX D_80137E00;
+static MATRIX D_80137E20;
+static s32 D_80137E40;
+static s32 D_80137E44;
+static s32 D_80137E48;
+static s32 D_80137E4C;
+
 void func_80102EB8(void) {
     Primitive *prim1, *prim2, *prim3;
     s32 i;

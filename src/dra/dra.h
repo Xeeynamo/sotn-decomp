@@ -486,6 +486,7 @@ typedef struct {
     u32 unk20;
     u32 unk24;
     s32 unk28;
+    s32 g_HealingMailTimer;
 } PlayerHud;
 
 // g_ButtonCombo is an array of 16, here is what each index is for
@@ -557,14 +558,6 @@ typedef struct {
     u16 palette;
     u8 unk2;
 } Unkstruct_800AE180;
-
-// Used in dra/bss, dra/dra_bss
-typedef struct {
-    u16 start;
-    s16 current;
-    s16* coords;
-    s16 unk8;
-} Unkstruct_80102CD8;
 
 // Used in dra/7E4BC, dra/d_DBD4
 typedef struct {
