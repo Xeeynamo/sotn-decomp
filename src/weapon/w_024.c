@@ -521,10 +521,10 @@ static void EntityWeaponShieldSpell(Entity* self) {
         prim->y3 = top + (((bottom - top) * (i + 1)) / 14) - baseCoord;
         angle = D_AC000_8017AD08[i];
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
-            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+            ((rsin(angle) + FLT(1.0)) >> 6) * self->ext.shield.unk90 / 256;
         angle = D_AC000_8017AD08[(i + 1) % 14];
         prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
-            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+            ((rsin(angle) + FLT(1.0)) >> 6) * self->ext.shield.unk90 / 256;
         D_AC000_8017AD08[i] += self->ext.shield.unk8A;
         prim = prim->next;
     }

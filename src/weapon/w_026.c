@@ -470,22 +470,22 @@ static void EntityWeaponShieldSpell(Entity* self) {
         prim->y3 = top + (((bottom - top) * (i + 1)) / 12) - baseCoord;
         angle = D_BA000_8017AA9C[i];
         prim->r0 = prim->r1 =
-            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+            ((rsin(angle) + FLT(1.0)) >> 6) * self->ext.shield.unk90 / 256;
         angle = D_BA000_8017AA9C[(i + 4) % 12];
         prim->g0 = prim->g1 =
-            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+            ((rsin(angle) + FLT(1.0)) >> 6) * self->ext.shield.unk90 / 256;
         angle = D_BA000_8017AA9C[(i + 8) % 12];
         prim->b0 = prim->b1 =
-            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+            ((rsin(angle) + FLT(1.0)) >> 6) * self->ext.shield.unk90 / 256;
         angle = D_BA000_8017AA9C[(i + 1) % 12];
         prim->r2 = prim->r3 =
-            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+            ((rsin(angle) + FLT(1.0)) >> 6) * self->ext.shield.unk90 / 256;
         angle = D_BA000_8017AA9C[(i + 5) % 12];
         prim->g2 = prim->g3 =
-            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+            ((rsin(angle) + FLT(1.0)) >> 6) * self->ext.shield.unk90 / 256;
         angle = D_BA000_8017AA9C[(i + 9) % 12];
         prim->b2 = prim->b3 =
-            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
+            ((rsin(angle) + FLT(1.0)) >> 6) * self->ext.shield.unk90 / 256;
         D_BA000_8017AA9C[i] += self->ext.shield.unk8A;
         prim = prim->next;
     }

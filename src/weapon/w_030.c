@@ -387,11 +387,11 @@ void func_ptr_80170004(Entity* self) {
 
         t = D_D6000_8017A5F4[i];
         prim->r0 = prim->r1 =
-            (((rcos(t) + 0x1000) >> 6) * self->ext.weapon.unk7E) / 0x100;
+            (((rcos(t) + FLT(1.0)) >> 6) * self->ext.weapon.unk7E) / 0x100;
 
         t = D_D6000_8017A5F4[i + 1];
         prim->r2 = prim->r3 =
-            (((rcos(t) + 0x1000) >> 6) * self->ext.weapon.unk7E) / 0x100;
+            (((rcos(t) + FLT(1.0)) >> 6) * self->ext.weapon.unk7E) / 0x100;
 
         D_D6000_8017A5F4[i] += 0x80;
 

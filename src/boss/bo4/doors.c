@@ -570,22 +570,22 @@ void EntityUnkId19(Entity* self) {
         for (i = 0; i < 16; i++) {
             angle = D_us_801805EC[(i + 0) % 16];
             prim->r0 =
-                ((rsin(angle) + FIX(1.0 / 16)) >> 6) * D_us_801D3104 / 256;
+                ((rsin(angle) + FLT(1.0)) >> 6) * D_us_801D3104 / 256;
             angle = D_us_801805EC[(i + 5) % 16];
             prim->g0 =
-                ((rsin(angle) + FIX(1.0 / 16)) >> 6) * D_us_801D3104 / 256;
+                ((rsin(angle) + FLT(1.0)) >> 6) * D_us_801D3104 / 256;
             angle = D_us_801805EC[(i + 10) % 16];
             prim->b0 =
-                ((rsin(angle) + FIX(1.0 / 16)) >> 6) * D_us_801D3104 / 256;
+                ((rsin(angle) + FLT(1.0)) >> 6) * D_us_801D3104 / 256;
             angle = D_us_801805EC[(i + 1) % 16];
             prim->r1 =
-                ((rsin(angle) + FIX(1.0 / 16)) >> 6) * D_us_801D3104 / 256;
+                ((rsin(angle) + FLT(1.0)) >> 6) * D_us_801D3104 / 256;
             angle = D_us_801805EC[(i + 6) % 16];
             prim->g1 =
-                ((rsin(angle) + FIX(1.0 / 16)) >> 6) * D_us_801D3104 / 256;
+                ((rsin(angle) + FLT(1.0)) >> 6) * D_us_801D3104 / 256;
             angle = D_us_801805EC[(i + 11) % 16];
             prim->b1 =
-                ((rsin(angle) + FIX(1.0 / 16)) >> 6) * D_us_801D3104 / 256;
+                ((rsin(angle) + FLT(1.0)) >> 6) * D_us_801D3104 / 256;
 
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
                 D_us_801D310C;

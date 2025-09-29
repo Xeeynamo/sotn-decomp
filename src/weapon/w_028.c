@@ -505,10 +505,10 @@ static void EntityWeaponShieldSpell(Entity* self) {
         prim->y3 = primBottom - sine;
 
         prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 = prim->b1 =
-            ((rsin((s16)D_C8000_8017AB1C[i]) + 0x1000) >> 6) *
+            ((rsin((s16)D_C8000_8017AB1C[i]) + FLT(1.0)) >> 6) *
             self->ext.shield.unk90 / 256;
         prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
-            ((rsin((s16)D_C8000_8017AB1C[(i + 1) % 10]) + 0x1000) >> 6) *
+            ((rsin((s16)D_C8000_8017AB1C[(i + 1) % 10]) + FLT(1.0)) >> 6) *
             self->ext.shield.unk90 / 256;
         D_C8000_8017AB1C[i] += self->ext.shield.unk8A;
         prim = prim->next;
