@@ -18,7 +18,7 @@ extern s32 D_psp_091CE570;
 #if defined(VERSION_PSP)
 extern s32* D_8D97C40;
 #define SAVE_DATA_PTR &D_8D97C40
-#define CAN_PAUSE g_PauseAllowed && D_psp_091CE578
+#define CAN_PAUSE g_PauseAllowed&& D_psp_091CE578
 #else
 #define SAVE_DATA_PTR 0x801EA000
 #define CAN_PAUSE g_PauseAllowed
