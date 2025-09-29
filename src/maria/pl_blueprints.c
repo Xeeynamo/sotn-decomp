@@ -1559,13 +1559,13 @@ void MarEntityPlayerBlinkWhite(Entity* self) {
             prim = prim->next;
         }
         self->ext.playerBlink.unk8A = dataPtr[9];
-        self->ext.playerBlink.unk90 = 0;
+        self->ext.playerBlink.colorIntensity = 0;
         self->step += 1;
         break;
     case 1:
-        self->ext.playerBlink.unk90 += 0xA;
-        if (self->ext.playerBlink.unk90 > 0x100) {
-            self->ext.playerBlink.unk90 = 0x100;
+        self->ext.playerBlink.colorIntensity += 0xA;
+        if (self->ext.playerBlink.colorIntensity > 0x100) {
+            self->ext.playerBlink.colorIntensity = 0x100;
             self->ext.playerBlink.unk80 = dataPtr[7];
             self->step += 1;
         }
@@ -1607,8 +1607,8 @@ void MarEntityPlayerBlinkWhite(Entity* self) {
         }
         break;
     case 3:
-        self->ext.playerBlink.unk90 -= 10;
-        if (self->ext.playerBlink.unk90 < 0) {
+        self->ext.playerBlink.colorIntensity -= 10;
+        if (self->ext.playerBlink.colorIntensity < 0) {
             DestroyEntity(self);
             return;
         }
@@ -1782,43 +1782,43 @@ void MarEntityPlayerBlinkWhite(Entity* self) {
         if (upperParams & 0x40) {
             angle = D_80154F7C[(i + angleRedIndex) % 8];
             prim->r0 = ((rsin(angle) + FLT(1.0)) >> 6) *
-                       self->ext.playerBlink.unk90 / redDivide;
+                       self->ext.playerBlink.colorIntensity / redDivide;
             angle = D_80154F7C[(i + angleGreenIndex) % 8];
             prim->g0 = ((rsin(angle) + FLT(1.0)) >> 6) *
-                       self->ext.playerBlink.unk90 / greenDivide;
+                       self->ext.playerBlink.colorIntensity / greenDivide;
             angle = D_80154F7C[(i + angleBlueIndex) % 8];
             prim->b0 = ((rsin(angle) + FLT(1.0)) >> 6) *
-                       self->ext.playerBlink.unk90 / blueDivide;
+                       self->ext.playerBlink.colorIntensity / blueDivide;
             angle = D_80154F7C[(i + angleRedIndex + 1) % 8];
             prim->r1 = ((rsin(angle) + FLT(1.0)) >> 6) *
-                       self->ext.playerBlink.unk90 / redDivide;
+                       self->ext.playerBlink.colorIntensity / redDivide;
             angle = D_80154F7C[(i + angleGreenIndex + 1) % 8];
             prim->g1 = ((rsin(angle) + FLT(1.0)) >> 6) *
-                       self->ext.playerBlink.unk90 / greenDivide;
+                       self->ext.playerBlink.colorIntensity / greenDivide;
             angle = D_80154F7C[(i + angleBlueIndex + 1) % 8];
             prim->b1 = ((rsin(angle) + FLT(1.0)) >> 6) *
-                       self->ext.playerBlink.unk90 / blueDivide;
+                       self->ext.playerBlink.colorIntensity / blueDivide;
             prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0;
             D_80154F7C[i] += self->ext.playerBlink.unk8A;
         } else {
             angle = D_80154F7C[(i + angleRedIndex) % 8];
             prim->r0 = prim->r1 = (((rsin(angle) + FLT(1.0)) >> 6) *
-                                   self->ext.playerBlink.unk90 / redDivide);
+                                   self->ext.playerBlink.colorIntensity / redDivide);
             angle = D_80154F7C[(i + angleGreenIndex) % 8];
             prim->g0 = prim->g1 = (((rsin(angle) + FLT(1.0)) >> 6) *
-                                   self->ext.playerBlink.unk90 / greenDivide);
+                                   self->ext.playerBlink.colorIntensity / greenDivide);
             angle = D_80154F7C[(i + angleBlueIndex) % 8];
             prim->b0 = prim->b1 = (((rsin(angle) + FLT(1.0)) >> 6) *
-                                   self->ext.playerBlink.unk90 / blueDivide);
+                                   self->ext.playerBlink.colorIntensity / blueDivide);
             angle = D_80154F7C[(i + angleRedIndex + 1) % 8];
             prim->r2 = prim->r3 = (((rsin(angle) + FLT(1.0)) >> 6) *
-                                   self->ext.playerBlink.unk90 / redDivide);
+                                   self->ext.playerBlink.colorIntensity / redDivide);
             angle = D_80154F7C[(i + angleGreenIndex + 1) % 8];
             prim->g2 = prim->g3 = (((rsin(angle) + FLT(1.0)) >> 6) *
-                                   self->ext.playerBlink.unk90 / greenDivide);
+                                   self->ext.playerBlink.colorIntensity / greenDivide);
             angle = D_80154F7C[(i + angleBlueIndex + 1) % 8];
             prim->b2 = prim->b3 = (((rsin(angle) + FLT(1.0)) >> 6) *
-                                   self->ext.playerBlink.unk90 / blueDivide);
+                                   self->ext.playerBlink.colorIntensity / blueDivide);
             D_80154F7C[i] += self->ext.playerBlink.unk8A;
         }
         prim->priority = PLAYER.zPriority + 2;
