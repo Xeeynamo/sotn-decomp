@@ -155,7 +155,12 @@ void OVL_EXPORT(DisableAfterImage)(s32 resetAnims, s32 time) {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B9C14);
+void func_us_801B9C14() {
+    g_Entities[65].ext.entSlot1.unk3 = 0;
+    g_Entities[65].ext.entSlot1.unk2 = 0;
+    g_Entities[65].ext.entSlot1.unk1 = 0;
+    g_Entities[65].ext.entSlot1.unk0 = 0;
+}
 
 void BO6_RicSetDebug() { OVL_EXPORT(RicSetStep)(PL_S_DEBUG); }
 
@@ -329,7 +334,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BA9D0);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicCheckInput);
 
-static Entity* OVL_EXPORT(RicGetFreeEntity)(s16 start, s16 end) {
+Entity* OVL_EXPORT(RicGetFreeEntity)(s16 start, s16 end) {
     Entity* entity = &g_Entities[start];
     s16 i;
 
@@ -499,721 +504,366 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BD384);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BD47C);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityPlayerBlinkWhite);
+extern s32 D_us_80181A64[];
+extern s16 D_us_80181AA4[][10];
+extern s16* D_us_801A39B0[];
+extern u8* D_us_8018303C[];
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BE79C);
+void BO6_RicEntityPlayerBlinkWhite(Entity* self) {
+    u8 xMargin;
+    u8 yMargin;
+    s16 angle;
+    u8 wSprite;
+    u8 hSprite;
+    s16 width;
+    s16 height;
+    s16 selfX;
+    s16 selfY;
+    s32 i;
+    Primitive* prim;
+    s16 xPivot;
+    s16 yPivot;
+    s16 plSpriteIndex;
+    s16 upperParams;
+    s16 angleRedIndex;
+    s16* sp44;
+    u8* plSprite;
+    s16* dataPtr;
+    s16 angleGreenIndex;
+    s16 angleBlueIndex;
+    s16 redDivide;
+    s16 blueDivide;
+    s16 greenDivide;
+    void* dummy48;
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityShrinkingPowerUpRing);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityHitByIce);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityHitByLightning);
-
-extern EInit D_us_801804B4;
-extern AnimationFrame D_us_80181E78[];
-extern s32 D_us_801D0850;
-extern s32 D_us_801D0854[];
-extern s32 D_us_801D169C;
-
-// possibly ShaftOrb?
-void func_us_801C03E8(Entity* self) {
-    Primitive* prim; // s0
-    s32 i;           // s1
-
-    u16 palette;   // 0x6E(sp)
-    s32 temp_s0_5; // 0x68(sp)
-    s32 temp_v0_7; // 0x64(sp)
-    s32 var_v1_2;  // 0x60(sp)
-    s32 var_a0_2;  // 0x5C(sp)
-
-    s32 distanceX; // 0x58(sp)
-    s32 distanceY; // 0x54(sp)
-
-    s32 scale;   // 0x50(sp)
-    s32 posX;    // 0x4C(sp)
-    s32 posY;    // 0x48(sp)
-    s32 ricPosX; // 0x44(sp)
-    s32 ricPosY; // s8
-
-    s32 anotherX;
-    s32 anotherY;
-
-    s32 var_s4;    // 0x38(sp)
-    s32 sp30;      // 0x34(sp)
-    s32 j;         // 0x30(sp)
-    s32 angle;     // s7
-    s32 distance;  // s6
-    s32 direction; // s5
-    s32 primX;     // s4
-    s32 primY;     // s3
-    s32 temp_s0_2; // s2
-
-    scale = 4;
-    D_us_801D169C = 0;
-    var_s4 = 0;
-    sp30 = 0;
-
-    if (self->flags & FLAG_DEAD) {
-        if (self->step < 0x14) {
-            D_us_801D169C = 1;
-            self->step = 0x14;
-        }
-    } else {
-#ifdef VERSION_PSP
-        if ((self->hitFlags) && (self->step != 10)) {
-#else
-        if ((self->hitFlags) && (self->step == 2)) {
-#endif
-            self->ext.shaftOrb.unkTimer = 10;
-            self->step = 0xA;
-        }
-        self->hitFlags = 0;
-    }
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_us_801804B4);
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
-
-        if (self->primIndex == -1) {
-            self->step = 0;
-            return;
-        }
-        prim = &g_PrimBuf[self->primIndex];
-
-        for (i = 0; i < 8; i++) {
-            prim->clut = 0x252;
-            prim->tpage = 0x12;
-            prim->u0 = prim->u2 = 0;
-            prim->u1 = prim->u3 = 0x1F;
-            prim->v0 = prim->v1 = 0;
-            prim->v2 = prim->v3 = 0x1F;
-            prim->priority = RIC.zPriority + 4;
-            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
-                             DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-            D_us_801D0854[i] = 0;
-            prim = prim->next;
-        }
-
-        for (i = 0; i < 24; i++) {
-            prim->priority = RIC.zPriority - 2;
-            prim->r0 = prim->g0 = prim->r1 = prim->g1 = 0x3F;
-            prim->b0 = prim->b1 = 0x7F;
-            prim->drawMode =
-                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_UNK02 | DRAW_TRANSP;
-            prim->type = PRIM_LINE_G2;
-            prim = prim->next;
-        }
-
-        self->flags |= FLAG_UNK_20000000 | FLAG_UNK_10000000 | FLAG_HAS_PRIMS;
-        self->posX.i.hi = 0x80;
-        self->posY.i.hi = 0x30;
-        self->ext.ILLEGAL.s16[4] = 0x400;
-        self->ext.ILLEGAL.s16[5] = 0x10;
-        self->ext.ILLEGAL.s16[6] = 0x30;
-        self->ext.ILLEGAL.s16[7] = 0xC00;
-        self->animSet = ANIMSET_OVL(5);
-        self->animCurFrame = 0;
-        self->unk5A = 0x48;
-        self->palette = 0x8252;
-        self->ext.ILLEGAL.s16[0] = self->hitboxState;
-        self->anim = D_us_80181E78;
-        self->zPriority = RIC.zPriority + 4;
-        self->step = 1;
-        self->opacity = 0;
-        self->drawFlags = FLAG_DRAW_OPACITY;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        break;
-
-    case 1:
-        self->opacity++;
-        if (self->opacity >= 0x80) {
-            self->drawFlags = FLAG_DRAW_DEFAULT;
-            self->drawMode = DRAW_DEFAULT;
-            self->step++;
-        }
-        break;
-
-    case 2:
-        distanceX = RIC.posX.i.hi + RIC.hitboxOffX;
-        distanceY = (RIC.posY.i.hi + RIC.hitboxOffY) - 0x40;
-
-        angle = self->ext.ILLEGAL.s16[4];
-
-        distanceX += (((rcos(angle) >> 4) * scale) >> 8);
-        distanceY -= (((rsin(angle) >> 4) * scale) >> 8);
-        self->ext.ILLEGAL.s16[4] += self->ext.ILLEGAL.s16[5];
-
-        posX = distanceX - self->posX.i.hi;
-        posY = distanceY - self->posY.i.hi;
-        angle = ratan2(-posY, posX) & 0xFFF;
-
-        temp_s0_2 = (self->ext.ILLEGAL.s16[7] & 0xFFF);
-        var_v1_2 = abs(temp_s0_2 - angle);
-
-        var_a0_2 = self->ext.ILLEGAL.s16[6];
-        if (self->ext.ILLEGAL.s16[6] > var_v1_2) {
-            var_a0_2 = var_v1_2;
-        }
-
-        if (temp_s0_2 < angle) {
-            if (var_v1_2 < 0x800) {
-                temp_s0_2 += var_a0_2;
-            } else {
-                temp_s0_2 -= var_a0_2;
-            }
-        } else {
-            if (var_v1_2 < 0x800) {
-                temp_s0_2 -= var_a0_2;
-            } else {
-                distance = var_a0_2;
-                temp_s0_2 += distance;
-            }
-        }
-        self->ext.ILLEGAL.s16[7] = temp_s0_2 & 0xFFF;
-        temp_s0_5 = rcos(temp_s0_2) * 0x10;
-        temp_v0_7 = rsin(temp_s0_2) * 0x10;
-        self->posX.val = temp_s0_5 + self->posX.val;
-        self->posY.val -= temp_v0_7;
-        break;
-    case 10:
-        if (g_Timer & 1) {
-            self->palette = 0x815F;
-        } else {
-            self->palette = 0x8168;
-        }
-
-        self->poseTimer++;
-        if (--self->ext.shaftOrb.unkTimer == 0) {
-            self->step = 2;
-        }
-
-        break;
-    case 20:
-        BO6_RicCreateEntFactoryFromEntity(self, 0x49, 0);
-        BO6_RicCreateEntFactoryFromEntity(self, 0x4B, 0);
-        self->step++;
-        break;
-    case 21:
+    if (!RIC.animSet || !(RIC.animCurFrame & 0x7FFF)) {
         DestroyEntity(self);
         return;
     }
+    self->posY.i.hi = RIC.posY.i.hi;
+    self->posX.i.hi = RIC.posX.i.hi;
+    self->facingLeft = RIC.facingLeft;
+#if defined(VERSION_PSP)
+    sp44 = D_92641C8[RIC.animCurFrame & 0x7FFF];
+#endif
+    sp44 = D_us_801A39B0[RIC.animCurFrame & 0x7FFF];
+    plSpriteIndex = *sp44++;
+    plSpriteIndex &= 0x7FFF;
+    selfX = self->posX.i.hi;
+    selfY = self->posY.i.hi;
+    plSprite = D_us_8018303C[plSpriteIndex];
+    xMargin = 4;
+    yMargin = 1;
+    wSprite = xMargin + plSprite[0];
+    hSprite = yMargin + plSprite[1];
+    width = wSprite - xMargin;
+    height = hSprite - yMargin;
+    xPivot = sp44[0] + plSprite[2];
+    yPivot = sp44[1] + plSprite[3];
 
-    if (g_api.CheckEquipmentItemCount(0x22U, 1U) != 0) {
-        palette = 0x8252;
-        self->hitboxState = self->ext.ILLEGAL.s16[0];
-        self->ext.ILLEGAL.s16[1] = 1;
-    } else {
-        palette = 0x810D;
-        self->hitboxState = 0;
-        self->ext.ILLEGAL.s16[1] = 0;
-    }
-    if (RIC.step == PL_S_DEAD || RIC.step == PL_S_ENDING_1) {
-        self->hitboxState = 0;
-    }
-    if (self->step != PL_S_9) {
-        self->palette = palette;
-    }
-    if (!(g_Timer % 4) && (self->step == 2)) {
-        D_us_801D0850++;
-        D_us_801D0850 %= 8;
-        var_s4 = 1;
-    }
-
-    if (g_Timer % 0x100 == 0) {
-        if (self->step == 2) {
-            if ((abs(self->posX.i.hi - RIC.posX.i.hi) < 0x20) &&
-                (RIC.step != PL_S_DEAD)) {
-                sp30 = 1;
-                if (self->ext.ILLEGAL.s16[1]) {
-                    BO6_RicCreateEntFactoryFromEntity(self, 0x590021, 0);
-                }
-            }
+    self->rotate = RIC.rotate;
+    self->drawFlags = RIC.drawFlags;
+    self->scaleX = RIC.scaleX;
+    self->scaleY = RIC.scaleY;
+    self->rotPivotY = RIC.rotPivotY;
+    self->rotPivotX = RIC.rotPivotX;
+    upperParams = (self->params & 0x7F00) >> 8;
+    dataPtr = D_us_80181AA4[upperParams & 0x3F];
+    switch (self->step) {
+    case 0:
+        if (func_us_801BD47C(self) != 0) {
+            DestroyEntity(self);
+            return;
         }
-    }
-
-    posX = self->posX.i.hi;
-    posY = self->posY.i.hi;
-    prim = &g_PrimBuf[self->primIndex];
-
-    for (i = 0; i < 8; i++) {
-        if (D_us_801D0854[i] == 0) {
-            if ((var_s4 != 0) && (D_us_801D0850 == i)) {
-                prim->x0 = prim->x2 = posX - 0x10;
-                prim->x1 = prim->x3 = posX + 0xF;
-                prim->y0 = prim->y1 = posY - 0x10;
-                prim->y2 = prim->y3 = posY + 0xF;
-                prim->drawMode &= ~DRAW_HIDE;
-                prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 =
-                    prim->g1 = prim->g2 = prim->g3 = prim->b0 = prim->b1 =
-                        prim->b2 = prim->b3 = 0x80;
-                D_us_801D0854[i] += 1;
-            }
-        } else {
-            prim->b3 -= 4;
-            if (prim->b3 < 0x10) {
-                D_us_801D0854[i] = 0;
-            }
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3;
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
         }
-        if (!self->ext.ILLEGAL.s16[1]) {
-            prim->drawMode |= DRAW_HIDE;
-        }
-        prim = prim->next;
-    }
 
-    ricPosX = RIC.posX.i.hi;
-    ricPosY = RIC.posY.i.hi;
+        self->flags = FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
 
-    if (g_Timer & 1) {
-        direction = -1;
-    } else {
-        direction = 1;
-    }
-    posX -= 3;
-
-    for (j = 0; j < 3; j++, posX += 3) {
-        primX = posX;
-        primY = posY;
-        distance = 3;
-        // > lw a1, 0x48(sp)
-        anotherY = ricPosY - posY;
-        anotherX = ricPosX - posX;
-        angle = ratan2(-anotherY, anotherX);
-        distance = (SquareRoot12(I_TO_FLT(
-                        (anotherX * anotherX) + (anotherY * anotherY))) /
-                    7);
-        distance = FLT_TO_I(distance);
-
+        prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 8; i++) {
-            direction = -direction;
-            if (prim->r2 == 0) {
-                if (sp30 != 0) {
-                    prim->r2++;
-                    prim->b2 = 0xC;
-                    prim->drawMode &= ~DRAW_HIDE;
-                }
-            } else if (--prim->b2 == 0) {
-                prim->drawMode |= DRAW_HIDE;
-                prim->r2 = 0;
-            }
-            prim->x0 = primX;
-            prim->y0 = primY;
-            temp_s0_2 = angle + (rand() & 0x1FF) * direction;
-            prim->x1 = (((rcos(temp_s0_2) >> 4) * distance) >> 8) + primX;
-            prim->y1 = -(((rsin(temp_s0_2) >> 4) * distance) >> 8) + primY;
-            primX = prim->x1;
-            primY = prim->y1;
-
-            if (i == 7) {
-                prim->x1 = ricPosX;
-                prim->y1 = ricPosY;
-            }
-            if (!self->ext.ILLEGAL.s16[1]) {
-                prim->drawMode |= DRAW_HIDE;
-            }
+            D_us_80181A64[i] = i << 9;
+            prim->tpage = 0x10;
+            prim->clut = dataPtr[3];
+            prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
+                prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 =
+                    prim->g3 = 0x80;
+            prim->priority = RIC.zPriority + 2;
+            prim->drawMode =
+                dataPtr[8] + DRAW_UNK_100 + DRAW_COLORS;
             prim = prim->next;
         }
-    }
-#ifndef VERSION_PSP
-    FntPrint("tama_step:%02x\n", self->step);
-#endif
-}
-
-#ifdef VERSION_PSP
-extern s32 D_pspeu_0927BAF8;
-#define E_ID_17 D_pspeu_0927BAF8
-#else
-#endif
-
-extern s32 g_CutsceneFlags;
-
-// TODO: I AM SHAFT!
-void EntityShaft(Entity* self) {
-    Entity* entity;
-    FntPrint("I AM SHAFT\n");
-    switch (self->step) {
-    case 0:
-#ifdef VERSION_PSP
-        self->flags = FLAG_UNK_10000000 | FLAG_HAS_PRIMS;
-#else
-        self->flags = FLAG_UNK_10000000;
-#endif
-        self->animSet = -0x7FFB;
-        self->animCurFrame = 0x8B;
-        self->unk5A = 0x48;
-        self->palette = PAL_OVL(0x250);
-        self->zPriority = RIC.zPriority + 2;
-        self->opacity = 0;
-        self->drawFlags = FLAG_DRAW_OPACITY;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->step++;
+        self->ext.playerBlink.unk8A = dataPtr[9];
+        self->ext.playerBlink.unk90 = 0;
+        self->step += 1;
         break;
-
     case 1:
-        self->opacity += 4;
-        if (self->opacity > 48) {
-            self->step++;
-            entity = &g_Entities[0xC8];
-            CreateEntityFromCurrentEntity(E_ID_17, entity);
-            entity->params = 3;
-            self->ext.ILLEGAL.s16[0] = 0x100;
+        self->ext.playerBlink.unk90 += 0xA;
+        if (self->ext.playerBlink.unk90 > 0x100) {
+            self->ext.playerBlink.unk90 = 0x100;
+            self->ext.playerBlink.unk80 = dataPtr[7];
+            self->step += 1;
         }
-        self->posY.val += rsin(self->ext.ILLEGAL.s16[1]) * 4;
-        self->ext.ILLEGAL.s16[1] += 0x20;
         break;
-
     case 2:
-        if (!self->ext.ILLEGAL.s16[0]) {
-            if ((g_CutsceneFlags & 0x40) || (g_DemoMode != Demo_None)) {
-                self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
-                self->scaleX = self->scaleY = 0x100;
-                self->step++;
+        if (dataPtr[7] >= 0x7000) {
+            switch ((u32)dataPtr[7]) {
+            case 0x7000:
+                if (g_Ric.timers[PL_T_POISON] == 0 ||
+                    (RIC.step == PL_S_DEAD || RIC.step == PL_S_ENDING_3 || RIC.step == PL_S_ENDING_4)) {
+                    self->step++;
+                }
+                break;
+            case 0x7001:
+                if (g_Ric.timers[PL_T_INVINCIBLE_SCENE] == 0) {
+                    self->step++;
+                }
+                break;
+            case 0x7007:
+            case 0x7002:
+                if (RIC.step != PL_S_HIT) {
+                    self->step++;
+                }
+                break;
+            case 0x7005:
+            case 0x7006:
+                if (RIC.step_s == 3) {
+                    self->step++;
+                }
+                break;
+            case 0x7003:
+            case 0x7004:
+            case 0x7008:
+
+                break;
             }
-        } else {
-            self->ext.ILLEGAL.s16[0]--;
+            self->ext.playerBlink.unk80 = 8;
         }
-        self->posY.val += rsin(self->ext.ILLEGAL.s16[1]) * 4;
-        self->ext.ILLEGAL.s16[1] += 0x20;
-        break;
-
-    case 3:
-        self->scaleX -= 0x20;
-        if (self->scaleX < 0x10) {
-            self->scaleX = 0x10;
-        }
-
-        self->scaleY += 64;
-        if (self->scaleY > 0x800) {
-            self->scaleY = 0x800;
-        }
-        self->opacity += 6;
-        if (self->opacity > 0xF0) {
+        if (--self->ext.playerBlink.unk80 == 0) {
             self->step++;
         }
         break;
-
-    case 4:
-        self->opacity -= 3;
-        if (self->opacity < 4) {
-            DestroyEntity(self);
-        }
-        break;
-    }
-}
-
-// TODO: rename ShaftOrb
-Entity* BO6_RicGetFreeEntity(s16, s16);
-extern u8 D_us_80181E9C[];
-
-void func_us_801C0FE8(Entity* self) {
-    Entity* entity;
-    Primitive* prim;
-    s32 posX;
-    s32 posY;
-    s32 accelX;
-    s32 accelY;
-    s16 primIndex;
-    s16 params;
-    s32 velocity;
-
-    params = self->params & 0xFF;
-    switch (self->step) {
-    case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (self->primIndex == -1) {
+    case 3:
+        self->ext.playerBlink.unk90 -= 10;
+        if (self->ext.playerBlink.unk90 < 0) {
             DestroyEntity(self);
             return;
         }
-        prim = &g_PrimBuf[self->primIndex];
-        prim->clut = 0x252;
-        prim->tpage = 0x12;
-
-        // temp_a1 = &D_us_80181E9C[temp_a0];
-        prim->u0 = prim->u2 = D_us_80181E9C[params * 2] - 2;
-        prim->u1 = prim->u3 = D_us_80181E9C[params * 2] + 2;
-
-        prim->v0 = prim->v1 = D_us_80181E9C[params * 2 + 1] - 2;
-        prim->v2 = prim->v3 = D_us_80181E9C[params * 2 + 1] + 2;
-
-        prim->priority = RIC.zPriority + 4;
-        prim->drawMode = DRAW_UNK02;
-
-        accelX = D_us_80181E9C[params * 2] - 16;
-        accelY = D_us_80181E9C[params * 2 + 1] - 16;
-        self->posX.i.hi += accelX;
-        self->posY.i.hi += accelY;
-
-        velocity = ratan2(-accelY, accelX);
-        velocity += ((rand() & 0x7F) - 0x40);
-        self->ext.shaftOrb.velocityAngle = velocity;
-        self->flags = FLAG_UNK_10000000 | FLAG_HAS_PRIMS;
-        self->ext.shaftOrb.timer = 8;
-        self->step++;
-        break;
-
-    case 1:
-        if (--self->ext.shaftOrb.timer == 0) {
-            self->ext.shaftOrb.timer = 16;
-            velocity = self->ext.shaftOrb.velocityAngle;
-            self->velocityX = (rcos(velocity) * 32) + (rand() & 0xF);
-            self->velocityY = -((rsin(velocity) * 32) + (rand() & 0xF));
-            self->step++;
-        }
-        break;
-
-    case 2:
-        self->posX.val += self->velocityX;
-        self->posY.val += self->velocityY;
-        if (--self->ext.shaftOrb.timer == 0) {
-            BO6_RicCreateEntFactoryFromEntity(self, 0x4A, 0);
-            self->velocityY = (rand() & 0x7FFF) + 0xFFFF0000;
-            self->velocityX = self->velocityX >> 2;
-            self->ext.shaftOrb.timer = 1;
-            self->step++;
-        }
-        break;
-    case 3:
-        if ((self->ext.shaftOrb.timer % 4) == 0) {
-            entity = BO6_RicGetFreeEntity(0x50, 0x8F);
-            if (entity != NULL) {
-                DestroyEntity(entity);
-                entity->entityId = 0x43;
-                entity->params = 0x100;
-                // not shaft orb
-                entity->ext.shaftOrb.parent = self->ext.shaftOrb.parent;
-                entity->posX.val = self->posX.val;
-                entity->posY.val = self->posY.val;
-            }
-        }
-        self->ext.shaftOrb.timer += 1;
-        self->velocityY += 0xC00;
-        self->posY.val += self->velocityY;
-        self->posX.val += self->velocityX;
-        self->flags &= ~FLAG_UNK_10000000;
         break;
     }
-
-    posX = self->posX.i.hi;
-    posY = self->posY.i.hi;
+    self->ext.playerBlink.unk82 += self->ext.playerBlink.unk8A;
+    if (self->facingLeft) {
+        selfX = selfX - xPivot;
+    } else {
+        selfX = selfX + xPivot;
+    }
+    selfY = selfY + yPivot;
     prim = &g_PrimBuf[self->primIndex];
-    prim->x0 = prim->x2 = posX - 2;
-    prim->x1 = prim->x3 = posX + 2;
-    prim->y0 = prim->y1 = posY - 2;
-    prim->y2 = prim->y3 = posY + 2;
-}
-
-extern AnimationFrame D_us_80181EDC[];
-
-void func_us_801C13A8(Entity* self) {
-    s16 params = self->params & 0x7F00;
-    switch (self->step) {
-    case 0:
-        self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
-        self->unk5A = 0x79;
-        self->animSet = 0xE;
-        self->zPriority = RIC.zPriority + 6;
-        self->palette = PAL_OVL(0x25E);
-        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
-        self->scaleX = self->scaleY = 0xC0;
-        self->anim = D_us_80181EDC;
-        if (params) {
-            self->scaleX = self->scaleY = 0x80;
-            self->anim = D_us_80181EDC;
-        }
-        self->velocityY = -FIX(0.25);
-        self->step++;
-        break;
-
-    case 1:
-        self->posY.val += self->velocityY;
-        if (self->poseTimer < 0) {
-            DestroyEntity(self);
-        }
-        break;
-    }
-}
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityWhip);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityArmBrandishWhip);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C2688);
-
-void func_us_801C277C(void) {}
-
-void func_us_801C2784(void) {}
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnHolyWaterBreakGlass);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashHydroStorm);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_DebugShowWaitInfo);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_DebugInputWait);
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C310C);
-
-int WarpBackgroundBrightness() { return 0; }
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C32C4);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnHolyWaterFlame);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnCrashCross);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C4200);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C488C);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnCrossTrail);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnCrashCrossParticles);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnThrownAxe);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C560C);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnKnife);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_ReboundStoneBounce1);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_ReboundStoneBounce2);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnReboundStone);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnThrownVibhuti);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_PrimDecreaseBrightness);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnAgunea);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityAguneaHitEnemy);
-
-extern AnimationFrame D_us_801829D4[];
-
-void BO6_RicEntityVibhutiCrashCloud(Entity* self) {
-    s32 angle;
-
-    switch (self->step) {
-    case 0:
-        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (self->primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-
-        self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
-        self->posX.val = self->ext.vibCrashCloud.parent->ext.vibhutiCrash.x;
-        self->posY.val = self->ext.vibCrashCloud.parent->ext.vibhutiCrash.y;
-        self->facingLeft =
-            self->ext.vibCrashCloud.parent->ext.vibhutiCrash.facing;
-        self->flags |= FLAG_UNK_20000000;
-        self->unk5A = 0x64;
-        self->animSet = 0xE;
-        self->palette = PAL_OVL(0x19E);
-        self->anim = D_us_801829D4;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->drawFlags = FLAG_DRAW_OPACITY;
-        self->opacity = 0x60;
-        self->hitboxWidth = 8;
-        self->hitboxHeight = 8;
-
-        angle = (rand() % 512) + 0x300;
-        self->velocityX = rcos(angle) << 5;
-        self->velocityY = -(rsin(angle) << 5);
-        self->step++;
-        break;
-
-    case 1:
-        self->ext.vibCrashCloud.unk7C++;
-        if (self->ext.vibCrashCloud.unk7C > 38) {
-            DestroyEntity(self);
+    for (i = 0; i < 8; i++) {
+        if (upperParams & 0x40) {
+            switch (i) {
+            case 0:
+                if (self->facingLeft) {
+                    prim->x0 = selfX;
+                    prim->x1 = selfX - width / 2;
+                    prim->u0 = xMargin;
+                    prim->u1 = xMargin + width / 2;
+                } else {
+                    prim->x0 = selfX;
+                    prim->x1 = selfX + width / 2;
+                    prim->u0 = xMargin;
+                    prim->u1 = xMargin + width / 2;
+                }
+                prim->y0 = prim->y1 = selfY;
+                prim->v0 = prim->v1 = yMargin;
+                break;
+            case 1:
+                if (self->facingLeft) {
+                    prim->x0 = selfX - width / 2;
+                    prim->x1 = selfX - width;
+                    prim->u0 = xMargin + width / 2;
+                    prim->u1 = xMargin + width;
+                } else {
+                    prim->x0 = selfX + width / 2;
+                    prim->x1 = selfX + width;
+                    prim->u0 = xMargin + width / 2;
+                    prim->u1 = xMargin + width;
+                }
+                prim->y0 = prim->y1 = selfY;
+                prim->v0 = prim->v1 = yMargin;
+                break;
+            case 2:
+                if (self->facingLeft) {
+                    prim->x0 = prim->x1 = selfX - width;
+                    prim->u0 = prim->u1 = xMargin + width;
+                } else {
+                    prim->x0 = prim->x1 = selfX + width;
+                    prim->u0 = prim->u1 = xMargin + width;
+                }
+                prim->y0 = selfY;
+                prim->y1 = selfY + height / 2;
+                prim->v0 = yMargin;
+                prim->v1 = yMargin + height / 2;
+                break;
+            case 3:
+                if (self->facingLeft) {
+                    prim->x0 = prim->x1 = selfX - width;
+                    prim->u0 = prim->u1 = xMargin + width;
+                } else {
+                    prim->x0 = prim->x1 = selfX + width;
+                    prim->u0 = prim->u1 = xMargin + width;
+                }
+                prim->y0 = selfY + height / 2;
+                prim->y1 = selfY + height;
+                prim->v0 = yMargin + height / 2;
+                prim->v1 = yMargin + height;
+                break;
+            case 4:
+                if (self->facingLeft) {
+                    prim->x0 = selfX - width;
+                    prim->x1 = selfX - width / 2;
+                    prim->u0 = xMargin + width;
+                    prim->u1 = xMargin + width / 2;
+                } else {
+                    prim->x0 = selfX + width;
+                    prim->x1 = selfX + width / 2;
+                    prim->u0 = xMargin + width;
+                    prim->u1 = xMargin + width / 2;
+                }
+                prim->y0 = prim->y1 = selfY + height;
+                prim->v0 = prim->v1 = yMargin + height;
+                break;
+            case 5:
+                if (self->facingLeft) {
+                    prim->x0 = selfX - width / 2;
+                    prim->x1 = selfX;
+                    prim->u0 = xMargin + width / 2;
+                    prim->u1 = xMargin;
+                } else {
+                    prim->x0 = selfX + width / 2;
+                    prim->x1 = selfX;
+                    prim->u0 = xMargin + width / 2;
+                    prim->u1 = xMargin;
+                }
+                prim->y0 = prim->y1 = selfY + height;
+                prim->v0 = prim->v1 = yMargin + height;
+                break;
+            case 6:
+                if (self->facingLeft) {
+                    prim->x0 = prim->x1 = selfX;
+                    prim->u0 = prim->u1 = xMargin;
+                } else {
+                    prim->x0 = prim->x1 = selfX;
+                    prim->u0 = prim->u1 = xMargin;
+                }
+                prim->y0 = selfY + height;
+                prim->y1 = selfY + height / 2;
+                prim->v0 = yMargin + height;
+                prim->v1 = yMargin + height / 2;
+                break;
+            case 7:
+                if (self->facingLeft) {
+                    prim->x0 = prim->x1 = selfX;
+                    prim->u0 = prim->u1 = xMargin;
+                } else {
+                    prim->x0 = prim->x1 = selfX;
+                    prim->u0 = prim->u1 = xMargin;
+                }
+                prim->y0 = selfY + height / 2;
+                prim->y1 = selfY;
+                prim->v0 = yMargin + height / 2;
+                prim->v1 = yMargin;
+                break;
+            }
+            if (self->facingLeft) {
+                prim->x2 = prim->x3 =
+                    selfX - width / 2 +
+                    (((rcos(self->ext.playerBlink.unk82) >> 4) * 3) >> 0xC);
+            } else {
+                prim->x2 = prim->x3 =
+                    selfX + width / 2 +
+                    (((rcos(self->ext.playerBlink.unk82) >> 4) * 3) >> 0xC);
+            }
+            prim->y2 = prim->y3 =
+                (selfY + height / 2) -
+                ((rsin(self->ext.playerBlink.unk82) >> 4) * 3 << 1 >> 8);
+            prim->u2 = prim->u3 = xMargin + width / 2;
+            prim->v2 = prim->v3 = yMargin + height / 2;
         } else {
-            self->posX.val += self->velocityX;
-            self->posY.val += self->velocityY;
+            if (self->facingLeft) {
+                prim->x0 = prim->x2 = (selfX - width) + 1;
+                prim->x1 = prim->x3 = selfX + 1;
+            } else {
+                prim->x0 = prim->x2 = selfX;
+                prim->x1 = prim->x3 = selfX + width;
+            }
+            prim->y0 = prim->y1 = selfY + height * i / 8;
+            prim->y2 = prim->y3 = selfY + height * (i + 1) / 8;
+            if (self->facingLeft) {
+                prim->u0 = prim->u2 = wSprite - 1;
+                prim->u1 = prim->u3 = xMargin - 1;
+            } else {
+                prim->u0 = prim->u2 = xMargin;
+                prim->u1 = prim->u3 = wSprite;
+            }
+            prim->v0 = prim->v1 = yMargin + height * i / 8;
+            prim->v2 = prim->v3 = yMargin + height * (i + 1) / 8;
         }
-        break;
+        angleRedIndex = dataPtr[0];
+        angleGreenIndex = dataPtr[2];
+        angleBlueIndex = dataPtr[1];
+        redDivide = dataPtr[4];
+        greenDivide = dataPtr[6];
+        blueDivide = dataPtr[5];
+        if (upperParams & 0x40) {
+            angle = D_us_80181A64[(i + angleRedIndex) % 8];
+            prim->r0 = ((rsin(angle) + 0x1000) >> 6) *
+                       self->ext.playerBlink.unk90 / redDivide;
+            angle = D_us_80181A64[(i + angleGreenIndex) % 8];
+            prim->g0 = ((rsin(angle) + 0x1000) >> 6) *
+                       self->ext.playerBlink.unk90 / greenDivide;
+            angle = D_us_80181A64[(i + angleBlueIndex) % 8];
+            prim->b0 = ((rsin(angle) + 0x1000) >> 6) *
+                       self->ext.playerBlink.unk90 / blueDivide;
+            angle = D_us_80181A64[(i + angleRedIndex + 1) % 8];
+            prim->r1 = ((rsin(angle) + 0x1000) >> 6) *
+                       self->ext.playerBlink.unk90 / redDivide;
+            angle = D_us_80181A64[(i + angleGreenIndex + 1) % 8];
+            prim->g1 = ((rsin(angle) + 0x1000) >> 6) *
+                       self->ext.playerBlink.unk90 / greenDivide;
+            angle = D_us_80181A64[(i + angleBlueIndex + 1) % 8];
+            prim->b1 = ((rsin(angle) + 0x1000) >> 6) *
+                       self->ext.playerBlink.unk90 / blueDivide;
+            prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0;
+            D_us_80181A64[i] += self->ext.playerBlink.unk8A;
+        } else {
+            angle = D_us_80181A64[(i + angleRedIndex) % 8];
+            prim->r0 = prim->r1 = (((rsin(angle) + 0x1000) >> 6) *
+                                   self->ext.playerBlink.unk90 / redDivide);
+            angle = D_us_80181A64[(i + angleGreenIndex) % 8];
+            prim->g0 = prim->g1 = (((rsin(angle) + 0x1000) >> 6) *
+                                   self->ext.playerBlink.unk90 / greenDivide);
+            angle = D_us_80181A64[(i + angleBlueIndex) % 8];
+            prim->b0 = prim->b1 = (((rsin(angle) + 0x1000) >> 6) *
+                                   self->ext.playerBlink.unk90 / blueDivide);
+            angle = D_us_80181A64[(i + angleRedIndex + 1) % 8];
+            prim->r2 = prim->r3 = (((rsin(angle) + 0x1000) >> 6) *
+                                   self->ext.playerBlink.unk90 / redDivide);
+            angle = D_us_80181A64[(i + angleGreenIndex + 1) % 8];
+            prim->g2 = prim->g3 = (((rsin(angle) + 0x1000) >> 6) *
+                                   self->ext.playerBlink.unk90 / greenDivide);
+            angle = D_us_80181A64[(i + angleBlueIndex + 1) % 8];
+            prim->b2 = prim->b3 = (((rsin(angle) + 0x1000) >> 6) *
+                                   self->ext.playerBlink.unk90 / blueDivide);
+            D_us_80181A64[i] += self->ext.playerBlink.unk8A;
+        }
+        prim->priority = RIC.zPriority + 2;
+        prim = prim->next;
+    }
+    if ((upperParams & 0x3F) == 0 || (upperParams & 0x3F) == 7) {
+        BO6_RicSetInvincibilityFrames(1, 10);
     }
 }
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashVibhuti);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C8590);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C8618);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashReboundStoneExplosion);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashReboundStone);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashBibleBeam);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashBible);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C9DE8);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801CA340);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_GetAguneaLightningAngle);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_AguneaShuffleParams);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityAguneaLightning);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityAguneaCircle);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnStopwatchCircle);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_EntityStopWatch);
-
-void OVL_EXPORT(RicEntitySubwpnBibleTrail)(Entity* entity) {
-    Primitive* prim;
-
-    switch (entity->step) {
-    case 0:
-        entity->primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
-        if (entity->primIndex == -1) {
-            DestroyEntity(entity);
-            return;
-        }
-        entity->flags = FLAG_UNK_10000000 | FLAG_HAS_PRIMS;
-        prim = &g_PrimBuf[entity->primIndex];
-        prim->tpage = 0x1C;
-        prim->clut = 0x19D;
-        prim->u0 = prim->u2 = 0x20;
-        prim->v0 = prim->v1 = 0;
-        prim->u1 = prim->u3 = 0x30;
-        prim->v2 = prim->v3 = 0x10;
-        prim->x0 = prim->x2 = entity->posX.i.hi - 8;
-        prim->x1 = prim->x3 = entity->posX.i.hi + 8;
-        prim->y0 = prim->y1 = entity->posY.i.hi - 8;
-        prim->y2 = prim->y3 = entity->posY.i.hi + 8;
-        prim->priority = entity->zPriority;
-        prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-        entity->ext.et_BibleSubwpn.unk7E = 0x60;
-        entity->step++;
-        break;
-    case 1:
-        entity->ext.et_BibleSubwpn.unk7C++;
-        if (entity->ext.et_BibleSubwpn.unk7C > 5) {
-            entity->step++;
-        }
-        entity->ext.et_BibleSubwpn.unk7E -= 8;
-        break;
-    case 2:
-        DestroyEntity(entity);
-        return;
-    }
-    prim = &g_PrimBuf[entity->primIndex];
-    PCOL(prim) = entity->ext.et_BibleSubwpn.unk7E;
-}
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnBible);
-
-INCLUDE_RODATA("boss/bo6/nonmatchings/us_39144", D_us_801A7028);
-
-INCLUDE_RODATA("boss/bo6/nonmatchings/us_39144", D_us_801A7030);
-
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashCrossBeam);
