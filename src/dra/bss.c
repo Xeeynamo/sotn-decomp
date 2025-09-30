@@ -5,6 +5,13 @@
 #include "dra.h"
 
 // 63ED4.c
+s32 g_MemCardRetryCount;
+s32 D_80137E54;
+s32 D_80137E58;
+s32 D_80137E5C;
+s32 D_80137E60;
+s32 g_MemCardRStep;
+s32 g_MemCardRStepSub;
 s32 D_80137E6C;
 SVECTOR D_80137E70[14];
 s32 D_80137EE0;
@@ -13,6 +20,8 @@ s32 D_80137EE8;
 s32 D_80137EEC;
 s32 D_80137EF0;
 s32 D_80137EF4;
+
+// 66590.c
 u8 D_80137EF8[0x60];
 
 // cd.c

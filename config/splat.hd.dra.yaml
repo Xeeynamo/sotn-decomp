@@ -218,7 +218,7 @@ segments:
       - [0x97540, .bss, 5F60C]
       - [0x97570, .bss, 624DC]
       - [0x979B8, .bss, 62DEC]
-      - [0x97E6C, .bss, bss]
+      - [0x97E50, .bss, bss]
   - name: dra_data
     type: data
     start: 0x9B270

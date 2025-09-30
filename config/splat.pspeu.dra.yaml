@@ -148,7 +148,7 @@ segments:
       - [0xEED48, .rodata, dra_psp/63C08]
       - {start: 0xEED80, type: .bss, vram: 0x091CB700, name: dra_psp/3250}
       - {start: 0xEED80, type: bss, vram: 0x091CD700, name: bss1}
-      - {start: 0xEED80, type: .bss, vram: 0x091CD7A8, name: dra/62DEC}
+      - {start: 0xEED80, type: .bss, vram: 0x091CD7D0, name: dra/62DEC}
       - {start: 0xEED80, type: .bss, vram: 0x091CDC58, name: dra/4DA70}
       - {start: 0xEED80, type: .bss, vram: 0x091CDC60, name: dra/624DC}
       - {start: 0xEED80, type: bss, vram: 0x091CDC80, name: bss2}

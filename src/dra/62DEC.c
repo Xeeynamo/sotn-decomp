@@ -18,13 +18,6 @@ static s32 D_80137E40;
 static s32 D_80137E44;
 static s32 D_80137E48;
 static s32 D_80137E4C;
-static s32 g_MemCardRetryCount;
-static s32 D_80137E54;
-static s32 D_80137E58;
-static s32 D_80137E5C;
-static s32 D_80137E60;
-static s32 g_MemCardRStep;
-static s32 g_MemCardRStepSub;
 
 #ifdef VERSION_PSP
 extern s32* D_psp_091CE248;
@@ -39,12 +32,12 @@ extern u32 D_psp_08B42050; // psp cross button
 extern u32 D_psp_08B42054; // psp triangle button
 #endif
 
-static void MemCardSetPort(s32 nPort) {
+void MemCardSetPort(s32 nPort) {
     g_MemCardRStep = 0;
     g_MemCardRStepSub = nPort;
 }
 
-static s32 MemCardInitAndFormat(void) {
+s32 MemCardInitAndFormat(void) {
     u32 nPort = g_MemCardRStepSub;
     s32 state = g_MemCardRStep;
 
