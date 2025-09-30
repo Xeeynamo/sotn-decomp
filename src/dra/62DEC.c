@@ -32,12 +32,12 @@ extern u32 D_psp_08B42050; // psp cross button
 extern u32 D_psp_08B42054; // psp triangle button
 #endif
 
-void MemCardSetPort(s32 nPort) {
+static void MemCardSetPort(s32 nPort) {
     g_MemCardRStep = 0;
     g_MemCardRStepSub = nPort;
 }
 
-s32 MemCardInitAndFormat(void) {
+static s32 MemCardInitAndFormat(void) {
     u32 nPort = g_MemCardRStepSub;
     s32 state = g_MemCardRStep;
 
