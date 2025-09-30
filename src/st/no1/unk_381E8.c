@@ -103,7 +103,7 @@ void func_us_801B84E4(Entity* self) {
                 (self - 1)->anim = D_us_80180FE0;
                 (self - 1)->poseTimer = (self - 1)->pose = 0;
                 self->ext.et_801B84E4.unk80 = 0x100;
-                g_api.PlaySfx(0x7B7);
+                g_api.PlaySfx(SFX_NO1_BIRD_CYCLE);
             }
             self->step++;
         }
