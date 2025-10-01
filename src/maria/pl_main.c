@@ -492,13 +492,13 @@ void MarMain(void) {
             break;
         case PL_T_4: {
             angle = (g_GameTimer & 0xF) * 256;
-            draw->r0 = draw->g0 = draw->b0 = (rsin(angle) + FLT(1.0)) / 64 + 0x60;
+            draw->r0 = draw->g0 = draw->b0 = (rsin(angle) + 0x1000) / 64 + 0x60;
             angle += 0x200;
-            draw->r1 = draw->g1 = draw->b1 = (rsin(angle) + FLT(1.0)) / 64 + 0x60;
+            draw->r1 = draw->g1 = draw->b1 = (rsin(angle) + 0x1000) / 64 + 0x60;
             angle += 0x200;
-            draw->r3 = draw->g3 = draw->b3 = (rsin(angle) + FLT(1.0)) / 64 + 0x60;
+            draw->r3 = draw->g3 = draw->b3 = (rsin(angle) + 0x1000) / 64 + 0x60;
             angle += 0x200;
-            draw->r2 = draw->g2 = draw->b2 = (rsin(angle) + FLT(1.0)) / 64 + 0x60;
+            draw->r2 = draw->g2 = draw->b2 = (rsin(angle) + 0x1000) / 64 + 0x60;
             draw->enableColorBlend = 1;
             break;
         }
