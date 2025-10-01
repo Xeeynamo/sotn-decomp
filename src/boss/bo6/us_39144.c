@@ -488,7 +488,40 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityFactory);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BC2F0);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BC3E0);
+extern EInit D_us_80180448;
+
+void func_us_801BC3E0(Entity* self) {
+    if (RIC.step != PL_S_SLIDE_KICK) {
+        DestroyEntity(self);
+        return;
+    }
+    self->posX.i.hi = RIC.posX.i.hi;
+    self->posY.i.hi = RIC.posY.i.hi;
+    self->facingLeft = RIC.facingLeft;
+    if (self->step == 0) {
+        InitializeEntity(D_us_80180448);
+        self->flags = 0x18000000;
+        self->hitboxOffX = 0x14;
+        self->hitboxWidth = self->hitboxHeight = 9;
+        self->step = 1;
+    }
+
+    if (RIC.animCurFrame == 140) {
+        self->hitboxOffY = 0;
+    }
+
+    if (RIC.animCurFrame == 141) {
+        self->hitboxOffY = 12;
+    }
+
+    if (self->hitFlags) {
+        g_Ric.unk44 |= 0x80;
+    } else {
+        g_Ric.unk44 &= ~0x80;
+    }
+    self->hitFlags = 0;
+}
+
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BC4F8);
 

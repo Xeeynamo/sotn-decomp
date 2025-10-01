@@ -215,3 +215,7 @@ g_Ric_unk6C = 0x801D1684;
 g_Ric_unk70 = 0x801D1688;
 g_IsCutsceneDone = 0x801D1698;
 g_ItemIconSlots = 0x801D16A8;
+
+BO6_RicEntityCrashAxe = 0x801C560C;
+anim_cross_boomerang = 0x80182970;
+BO6_RicEntitySubwpnCross = 0x801C4200;

@@ -540,7 +540,25 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityWhip);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityArmBrandishWhip);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801C2688);
+extern s16 D_us_80182870[];
+// same as `ric` `func_80167964` except `g_Ric`/`g_Player` reference and lookup table
+void func_us_801C2688(Entity* entity) {
+    if (g_Ric.unk46 == 0) {
+        DestroyEntity(entity);
+        return;
+    }
+    if (entity->step == 0) {
+        entity->flags = 0x18000000;
+    }
+    if (!(entity->params & 0xFF00)) {
+        g_Entities[D_us_80182870[entity->poseTimer]].palette = PAL_OVL(0x240);
+    }
+    g_Entities[D_us_80182870[entity->poseTimer]].ext.player.unkA4 = 4;
+    entity->poseTimer++;
+    if (entity->poseTimer == 15) {
+        DestroyEntity(entity);
+    }
+}
 
 void func_us_801C277C(void) {}
 
@@ -609,9 +627,219 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801C32C4);
 INCLUDE_ASM(
     "boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnHolyWaterFlame);
 
+// split pl_subweapon_cross
+
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnCrashCross);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801C4200);
+extern EInit D_us_80180454;
+extern s16 D_us_801D10C8;
+
+extern AnimationFrame anim_cross_boomerang[];
+#if defined(VERSION_PSP)
+extern Point16 D_us_801D08C4[4][128];
+extern s32 D_us_801D10C4;
+#else
+extern Point16 D_us_801D08C4[4][128];
+extern s32 D_us_801D10C4;
+#endif
+
+void OVL_EXPORT(RicEntitySubwpnCross)(Entity* self) {
+    s16 playerHitboxX;
+    s16 playerHitboxY;
+    s16 rotate;
+    s16* psp_s1;
+    s32 xAccel;
+
+    rotate = self->rotate;
+    switch (self->step) {
+    case 0:
+        self->ext.crossBoomerang.subweaponId = PL_W_CROSS;
+        InitializeEntity(D_us_80180454);
+        self->flags = 0x38000000;
+        D_us_801D10C8 = self->hitboxState;
+        // gets used by shadow, must align with that entity
+        self->ext.crossBoomerang.unk84 = D_us_801D08C4[D_us_801D10C4];
+        D_us_801D10C4++;
+        D_us_801D10C4 &= 3;
+        OVL_EXPORT(RicCreateEntFactoryFromEntity)(self, BP_5, 0);
+        self->animSet = ANIMSET_OVL(4);
+        self->unk5A = 0x44;
+        self->anim = anim_cross_boomerang;
+        self->facingLeft = RIC.facingLeft;
+        self->zPriority = RIC.zPriority;
+        OVL_EXPORT(RicSetSpeedX)(FIX(3.5625));
+        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->rotate = 0xC00;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 8;
+        self->posY.i.hi -= 8;
+        g_api.PlaySfx(SFX_THROW_WEAPON_MAGIC);
+        self->step = 1;
+        break;
+    case 1:
+        if (RIC.pose == 1) {
+            self->step++;
+        }
+    case 2:
+        // First phase. We spin at 0x80 angle units per frame.
+        // Velocity gets decremented by 1/16 per frame until we slow
+        // down to less than 0.75.
+        self->rotate -= 0x80;
+        self->posX.val += self->velocityX;
+        if (self->facingLeft) {
+            xAccel = FIX(-1.0 / 16);
+        } else {
+            xAccel = FIX(1.0 / 16);
+        }
+        self->velocityX -= xAccel;
+
+        if (abs(self->velocityX) < FIX(0.75)) {
+            self->step = 3;
+        }
+
+        if ((self->hitFlags == 2) || (self->flags & 0x100)) {
+            if (self->velocityX < 0) {
+                self->velocityX = -0x800;
+            } else {
+                self->velocityX = 0x800;
+            }
+            self->ext.crossBoomerang.timer = 0x1E;
+            self->step = 3;
+            self->ext.crossBoomerang.timer = 0x10;
+            self->hitboxState = 0;
+        }
+
+        break;
+    case 3:
+        // Second phase. Once we are slow, we spin twice as fast, and then
+        // wait until our speed gets higher once again (turned around).
+        self->rotate -= 0x100;
+        self->posX.val += self->velocityX;
+        if (self->facingLeft) {
+            xAccel = FIX(-1.0 / 16);
+        } else {
+            xAccel = FIX(1.0 / 16);
+        }
+        if (self->hitFlags == 2 || (self->flags & 0x100)) {
+            if (self->facingLeft) {
+                xAccel = FIX(-1.0 / 16);
+            } else {
+                xAccel = FIX(1.0 / 16);
+            }
+        }
+        self->velocityX -= xAccel;
+        if (abs(self->velocityX) > FIX(0.75)) {
+            self->step++;
+        }
+        break;
+    case 4:
+        // Third phase. We've now sped up and we're coming back.
+        // Increase speed until a terminal velocity of 2.5.
+        if (self->facingLeft) {
+            xAccel = FIX(-1.0 / 16);
+        } else {
+            xAccel = FIX(1.0 / 16);
+        }
+        self->velocityX -= xAccel;
+        if (abs(self->velocityX) > FIX(2.5)) {
+            self->hitboxState = D_us_801D10C8;
+            self->step++;
+        }
+    case 5:
+        if (--self->ext.crossBoomerang.timer < 0 && ((self->hitFlags == 2) || (self->flags & 0x100))) {
+            self->velocityY = -0x30000;
+            self->ext.ILLEGAL.u16[0] = 0x32;
+            self->hitboxState = 0;
+            self->step = 6;
+            self->velocityX = -((s32) self->velocityX / 2);
+        }
+
+        // Now we check 2 conditions. If we're within the player's hitbox...
+        playerHitboxX = (RIC.posX.i.hi + RIC.hitboxOffX);
+        playerHitboxY = (RIC.posY.i.hi + RIC.hitboxOffY);
+        if (abs(self->posX.i.hi - playerHitboxX) <
+                RIC.hitboxWidth + self->hitboxWidth &&
+            abs(self->posY.i.hi - playerHitboxY) <
+                RIC.hitboxHeight + self->hitboxHeight) {
+            // ... Then we go to step 7 to be destroyed.
+            self->step = 7;
+            self->ext.crossBoomerang.timer = 0x20;
+            return;
+        }
+        // Alternatively, if we're offscreen, we will also be destroyed.
+        if ((self->facingLeft == 0 && self->posX.i.hi < -0x20) ||
+            (self->facingLeft && self->posX.i.hi > 0x120)) {
+            self->step = 7;
+            self->ext.crossBoomerang.timer = 0x20;
+            return;
+        }
+        // Otherwise, we keep trucking. spin at the slower rate again.
+        self->rotate -= 0x80;
+        self->posX.val += self->velocityX;
+        break;
+    case 6:
+        if (--self->ext.crossBoomerang.timer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        self->velocityY += 0x2800;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        self->rotate += 0x180;
+        break;
+    case 7:
+        if (--self->ext.crossBoomerang.timer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        self->hitboxState = 0;
+        self->animSet = 0;
+        self->posX.val += self->velocityX;
+        break;
+    }
+    // We will increment through these states, creating trails.
+    // Factory 3 is entity #4, func_80169C10. Appears to make tiny sparkles.
+    // Factory 4 is entity #5, RicEntityHitByCutBlood. Appears to make a
+    // "shadow" of the cross boomerang.
+    self->ext.crossBoomerang.unk7E++;
+    if (1 < self->step && self->step < 6) {
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 1) {
+            OVL_EXPORT(RicCreateEntFactoryFromEntity)(self, BP_SUBWPN_CROSS_PARTICLES, 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 4) {
+            OVL_EXPORT(RicCreateEntFactoryFromEntity)(self, FACTORY(BP_EMBERS, 6), 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 6) {
+            OVL_EXPORT(RicCreateEntFactoryFromEntity)(self, BP_SUBWPN_CROSS_PARTICLES, 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 8) {
+            OVL_EXPORT(RicCreateEntFactoryFromEntity)(self, FACTORY(BP_EMBERS, 6), 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 12) {
+            OVL_EXPORT(RicCreateEntFactoryFromEntity)(self, FACTORY(BP_EMBERS, 6), 0);
+        }
+        if ((self->ext.crossBoomerang.unk7E & 0xF) == 11) {
+            OVL_EXPORT(RicCreateEntFactoryFromEntity)(self, BP_SUBWPN_CROSS_PARTICLES, 0);
+        }
+    }
+    // Applies a flickering effect
+    if ((g_GameTimer >> 1) & 1) {
+        self->palette = PAL_OVL(0x1B0);
+    } else {
+        self->palette = PAL_OVL(0x1B1);
+    }
+    psp_s1 = (s16*)self->ext.crossBoomerang.unk84;
+    psp_s1 = &psp_s1[self->ext.crossBoomerang.unk80 * 2];
+    *psp_s1 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+    psp_s1++;
+    *psp_s1 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+    self->ext.crossBoomerang.unk80++;
+    self->ext.crossBoomerang.unk80 &= 0x3F;
+    rotate ^= self->rotate;
+    g_Ric.timers[PL_T_3] = 2;
+   self->hitFlags = 0;
+    self->flags &= ~0x100;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801C488C);
 
@@ -620,9 +848,231 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnCrossTrail);
 INCLUDE_ASM(
     "boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnCrashCrossParticles);
 
+// split pl_subweapons
+
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnThrownAxe);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801C560C);
+extern EInit D_us_80180490;
+extern u8 D_us_8018299C[];
+
+void OVL_EXPORT(RicEntityCrashAxe)(Entity* self) {
+    Primitive* primFirst;
+    Primitive* prim;
+    s16 angle1;
+    s16 angle2;
+    s16 angle3;
+    s16 angle4;
+    s32 mod;
+    s32 i;
+    u8 r;
+    u8 g;
+    u8 b;
+    s16 angleMod;
+    s16 x;
+    s16 y;
+    s16 angle;
+    s32 pose;
+    s32 velocity;
+    s32 colorRef;
+
+    mod = 21;
+    switch (self->step) {
+    case 0:
+        self->ext.subwpnAxe.subweaponId = 2;
+        InitializeEntity(D_us_80180490);
+        self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 5);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = 0x18800000;
+        self->facingLeft = 0;
+        self->ext.subwpnAxe.unk7C = ((self->params & 0xFF) << 9) + 0xC00;
+        self->posY.i.hi -= 12;
+        prim = &g_PrimBuf[self->primIndex];
+        i = 0;
+        while (prim) {
+            prim->tpage = 0x1C;
+            prim->u0 = prim->v0 = prim->v1 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0x18;
+            prim->v2 = prim->v3 = 0x28;
+            prim->priority = RIC.zPriority + 4;
+            if (i != 0) {
+                prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                 DRAW_HIDE | DRAW_COLORS | DRAW_TRANSP;
+                self->ext.subwpnAxe.unk8C[i - 1] = 0;
+                self->ext.subwpnAxe.unk90[i - 1] = 0;
+                self->ext.subwpnAxe.unk94[i - 1] = 0;
+            } else {
+                prim->drawMode = DRAW_UNK_100 | DRAW_HIDE;
+            }
+            i++;
+            prim = prim->next;
+        }
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
+        self->ext.subwpnAxe.angle = (self->params & 0xFF) << 9;
+        self->ext.subwpnAxe.velocity = 16;
+        self->step = 1;
+        break;
+    case 1:
+        velocity = self->ext.subwpnAxe.velocity;
+        self->ext.subwpnAxe.velocity++;
+        if (self->ext.subwpnAxe.velocity > 0x28) {
+            self->ext.subwpnAxe.unkA2 = 16;
+            self->step++;
+        }
+        angle = self->ext.subwpnAxe.angle;
+        self->ext.subwpnAxe.angle += 0xC0;
+        self->ext.subwpnAxe.unk7C += 0x80;
+        self->velocityX = velocity * rcos(angle);
+        self->velocityY = velocity * -rsin(angle);
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        break;
+    case 2:
+        if (--self->ext.subwpnAxe.unkA2 == 0) {
+            self->ext.subwpnAxe.unkA2 = 8;
+            self->step++;
+        }
+        velocity = self->ext.subwpnAxe.velocity;
+        angle = self->ext.subwpnAxe.angle;
+        self->ext.subwpnAxe.angle += 0xC0;
+        self->ext.subwpnAxe.unk7C += 0x80;
+        self->velocityX = rcos(angle) * velocity;
+        self->velocityY = -rsin(angle) * velocity;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        break;
+    case 3:
+        if (--self->ext.subwpnAxe.unkA2 == 0) {
+            g_Ric.unk4E = 1;
+            self->flags &= 0xEFFFFFFF;
+        }
+        velocity = self->ext.subwpnAxe.velocity;
+        self->ext.subwpnAxe.velocity += 2;
+        angle = self->ext.subwpnAxe.angle;
+        self->ext.subwpnAxe.angle += 0x28;
+        self->ext.subwpnAxe.unk7C += 0x80;
+        self->velocityX = rcos(angle) * velocity;
+        self->velocityY = -rsin(angle) * velocity;
+        self->posX.val += self->velocityX;
+        self->posY.val += self->velocityY;
+        if (self->poseTimer == 0) {
+            pose = self->pose;
+            self->ext.subwpnAxe.unk8C[pose] = 0;
+            self->ext.subwpnAxe.unk90[pose] = 1;
+            self->ext.subwpnAxe.unk94[pose] = 1;
+            pose++;
+            pose &= 3;
+            self->pose = pose;
+            self->poseTimer = 2;
+        } else {
+            self->poseTimer--;
+        }
+        if ((self->hitFlags == 2) || (self->flags & 0x100)) {
+            self->velocityY = -0x30000;
+            self->hitboxState = 0;
+            self->step = 4;
+            self->velocityX = -((s32) self->velocityX / 2);
+        }
+
+        break;
+    case 4:
+        if (self->facingLeft) {
+            angleMod = 0xC0;
+        } else {
+            angleMod = -0xC0;
+
+        }
+        self->ext.subwpnAxe.unk7C += angleMod;
+        self->velocityY += 0x2400;
+        if (self->velocityY > 0x80000) {
+            self->velocityY = 0x80000;
+        }
+        self->posY.val += self->velocityY;
+        self->posX.val += self->velocityX;
+        if (self->posY.i.hi > 256) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    prim = &g_PrimBuf[self->primIndex];
+    primFirst = prim;
+    pose = ((g_GameTimer >> 1) & 1) + 0x1AB;
+    i = 0;
+    while (prim != NULL) {
+        prim->clut = pose;
+        if (i == 0) {
+            if (self->facingLeft) {
+                angle1 = 0x800 - 0x2A0;
+                angle2 = 0x2A0;
+                angle3 = 0x800 + 0x2A0;
+                angle4 = 0x800 + 0x800 - 0x2A0;
+            } else {
+                angle2 = 0x800 - 0x2A0;
+                angle1 = 0x2A0;
+                angle4 = 0x800 + 0x2A0;
+                angle3 = 0x800 + 0x800 - 0x2A0;
+            }
+            x = self->posX.i.hi;
+            y = self->posY.i.hi;
+            angleMod = self->ext.subwpnAxe.unk7C;
+            angle1 += angleMod;
+            angle2 += angleMod;
+            angle3 += angleMod;
+            angle4 += angleMod;
+
+            prim->x0 = x + +(((rcos(angle1) << 4) * mod) >> 0x10);
+            prim->y0 = y + -(((rsin(angle1) << 4) * mod) >> 0x10);
+            prim->x1 = x + +(((rcos(angle2) << 4) * mod) >> 0x10);
+            prim->y1 = y + -(((rsin(angle2) << 4) * mod) >> 0x10);
+            prim->x2 = x + +(((rcos(angle3) << 4) * mod) >> 0x10);
+            prim->y2 = y + -(((rsin(angle3) << 4) * mod) >> 0x10);
+            prim->x3 = x + +(((rcos(angle4) << 4) * mod) >> 0x10);
+            prim->y3 = y + -(((rsin(angle4) << 4) * mod) >> 0x10);
+            prim->drawMode &= ~DRAW_HIDE;
+        } else if (self->ext.subwpnAxe.unk90[i - 1]) {
+            if (self->ext.subwpnAxe.unk94[i - 1]) {
+                self->ext.subwpnAxe.unk94[i - 1] = 0;
+                prim->x0 = primFirst->x0;
+                prim->y0 = primFirst->y0;
+                prim->x1 = primFirst->x1;
+                prim->y1 = primFirst->y1;
+                prim->x2 = primFirst->x2;
+                prim->y2 = primFirst->y2;
+                prim->x3 = primFirst->x3;
+                prim->y3 = primFirst->y3;
+            }
+            colorRef = (self->ext.subwpnAxe.unk8C[i - 1]++);
+            if (colorRef < 10) {
+                r = D_us_8018299C[colorRef * 4 + 0];
+                g = D_us_8018299C[colorRef * 4 + 1];
+                b = D_us_8018299C[colorRef * 4 + 2];
+                prim->r0 = r;
+                prim->g0 = g;
+                prim->b0 = b;
+                prim->r1 = r;
+                prim->g1 = g;
+                prim->b1 = b;
+                prim->r2 = r;
+                prim->g2 = g;
+                prim->b2 = b;
+                prim->r3 = r;
+                prim->g3 = g;
+                prim->b3 = b;
+                prim->drawMode &= ~DRAW_HIDE;
+            } else {
+                self->ext.subwpnAxe.unk90[i - 1] = 0;
+                prim->drawMode |= DRAW_HIDE;
+            }
+        }
+        i++;
+        prim = prim->next;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnKnife);
 
