@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../sel/sel.h"
 
 extern Overlay OVL_EXPORT(Overlay);
@@ -232,23 +233,43 @@ static u_long* D_psp_0927C7E0[] = {
 #include "../../get_lang.h"
 
 void OVL_EXPORT(Load)(void) {
-    D_psp_09285BA8 = GetLangAt(8, D_psp_0924C7B0, D_psp_0924B590, D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
-    D_psp_09285BA0 = GetLangAt(0, D_psp_0924C7B0, D_psp_0924B590, D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
-    D_psp_09285B98 = GetLangAt(0, D_psp_0924E510, D_psp_0924DA50, D_psp_0924D4F0, D_psp_0924DFB0, D_psp_0924CF90);
-    D_psp_09285B90 = GetLangAt(0, D_psp_0924E510, D_psp_0924DA50, D_psp_0924D4F0, D_psp_0924DFB0, D_psp_0924CF90);
-    D_psp_09285B88 = GetLangAt(0, D_psp_0924C7B0, D_psp_0924B590, D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
-    D_psp_09285B80 = GetLangAt(4, D_psp_0924C7B0, D_psp_0924B590, D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
+    D_psp_09285BA8 = GetLangAt(8, D_psp_0924C7B0, D_psp_0924B590,
+                               D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
+    D_psp_09285BA0 = GetLangAt(0, D_psp_0924C7B0, D_psp_0924B590,
+                               D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
+    D_psp_09285B98 = GetLangAt(0, D_psp_0924E510, D_psp_0924DA50,
+                               D_psp_0924D4F0, D_psp_0924DFB0, D_psp_0924CF90);
+    D_psp_09285B90 = GetLangAt(0, D_psp_0924E510, D_psp_0924DA50,
+                               D_psp_0924D4F0, D_psp_0924DFB0, D_psp_0924CF90);
+    D_psp_09285B88 = GetLangAt(0, D_psp_0924C7B0, D_psp_0924B590,
+                               D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
+    D_psp_09285B80 = GetLangAt(4, D_psp_0924C7B0, D_psp_0924B590,
+                               D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
     func_8929FA8(D_psp_0924EA70, 0xC5);
     memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
-    D_psp_0927C6F0[3] = (u_long*)GetLang(D_psp_092630D8, D_psp_09264868, D_psp_09263700, D_psp_09264290, D_psp_09263CE0);
+    D_psp_0927C6F0[3] =
+        (u_long*)GetLang(D_psp_092630D8, D_psp_09264868, D_psp_09263700,
+                         D_psp_09264290, D_psp_09263CE0);
     func_892667C(0x8020, D_psp_0924EA78);
     func_91040A0(D_psp_0927C6F0);
-    D_psp_0927C708[3] = (u_long*)GetLang(D_psp_09266578, D_psp_092738F8, D_psp_0926A9E8, D_psp_09277F88, D_psp_0926F188);
-    D_psp_0927C738[3] = (u_long*)GetLang(D_psp_09267B08, D_psp_09274EC8, D_psp_0926BFB0, D_psp_09279558, D_psp_09270758);
-    D_psp_0927C750[3] = (u_long*)GetLang(D_psp_09269440, D_psp_092767E0, D_psp_0926D980, D_psp_0927AF10, D_psp_09272158);
-    D_psp_0927C768[3] = (u_long*)GetLang(D_psp_09269440, D_psp_092767E0, D_psp_0926D980, D_psp_0927AF10, D_psp_09272158);
-    D_psp_0927C780[3] = (u_long*)GetLang(D_psp_09266578, D_psp_092738F8, D_psp_0926A9E8, D_psp_09277F88, D_psp_0926F188);
-    D_psp_0927C798[3] = (u_long*)GetLang(D_psp_09267B08, D_psp_09274EC8, D_psp_0926BFB0, D_psp_09279558, D_psp_09270758);
+    D_psp_0927C708[3] =
+        (u_long*)GetLang(D_psp_09266578, D_psp_092738F8, D_psp_0926A9E8,
+                         D_psp_09277F88, D_psp_0926F188);
+    D_psp_0927C738[3] =
+        (u_long*)GetLang(D_psp_09267B08, D_psp_09274EC8, D_psp_0926BFB0,
+                         D_psp_09279558, D_psp_09270758);
+    D_psp_0927C750[3] =
+        (u_long*)GetLang(D_psp_09269440, D_psp_092767E0, D_psp_0926D980,
+                         D_psp_0927AF10, D_psp_09272158);
+    D_psp_0927C768[3] =
+        (u_long*)GetLang(D_psp_09269440, D_psp_092767E0, D_psp_0926D980,
+                         D_psp_0927AF10, D_psp_09272158);
+    D_psp_0927C780[3] =
+        (u_long*)GetLang(D_psp_09266578, D_psp_092738F8, D_psp_0926A9E8,
+                         D_psp_09277F88, D_psp_0926F188);
+    D_psp_0927C798[3] =
+        (u_long*)GetLang(D_psp_09267B08, D_psp_09274EC8, D_psp_0926BFB0,
+                         D_psp_09279558, D_psp_09270758);
     func_91040A0(D_psp_0927C708);
     func_91040A0(D_psp_0927C720);
     func_91040A0(D_psp_0927C738);
@@ -271,7 +292,7 @@ void func_psp_09237C78(void) {
 void func_psp_09237CB8(void) {
     RECT rect;
     s32 height = 0x80;
-    
+
     func_89264CC(0x8000, &D_psp_0925F850, 1);
     rect.x = D_psp_0924F800 << 6;
     rect.y = 0;
@@ -293,6 +314,8 @@ void func_psp_09237CB8(void) {
     rect.w = 0x40;
     rect.h = height;
     LoadImage(&rect, (u_long*)D_psp_0925B850);
-    D_psp_0927C7E0[3] = (u_long*)GetLang(D_psp_0925FA50, D_psp_09262618, D_psp_09260550, D_psp_09261AF8, D_psp_09261030);
+    D_psp_0927C7E0[3] =
+        (u_long*)GetLang(D_psp_0925FA50, D_psp_09262618, D_psp_09260550,
+                         D_psp_09261AF8, D_psp_09261030);
     func_91040A0(D_psp_0927C7E0);
 }
