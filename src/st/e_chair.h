@@ -6,6 +6,9 @@
 #define PARAMS params
 #endif
 
+#define LEFT_CHAIR 0x100
+#define RIGHT_CHAIR 0x200
+
 enum ChairSteps {
     CHAIR_INIT = 0,
     CHAIR_DESTROY = 1,
@@ -54,10 +57,11 @@ void EntityChair(Entity* self) {
     case CHAIR_INIT:
         InitializeEntity(g_EInitCommon);
 #ifdef STAGE_HAS_CONFESSIONAL
+        // Each chair spawns the curtain on the opposing side, which anchors the
+        // ghost
         if (self->params & 0xFF00) {
             confessionalGhost = self + 1;
-            // Left chair, params 0x513, spawns right curtain
-            if (self->params & 0x100) {
+            if (self->params & LEFT_CHAIR) {
                 CreateEntityFromCurrentEntity(
                     E_ID(CONFESSIONAL_GHOST), confessionalGhost);
                 confessionalGhost->posX.i.hi = 176;
@@ -68,8 +72,7 @@ void EntityChair(Entity* self) {
                 }
                 break;
             }
-            // Right chair, params 0x260, spawns left curtain
-            if (self->params & 0x200) {
+            if (self->params & RIGHT_CHAIR) {
                 CreateEntityFromCurrentEntity(
                     E_ID(CONFESSIONAL_GHOST), confessionalGhost);
                 confessionalGhost->posX.i.hi = 64;
