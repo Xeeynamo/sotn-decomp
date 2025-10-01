@@ -419,10 +419,10 @@ static void EntityWeaponAttack(Entity* self) {
         sp62 = prim->y3 += var_s8 + 0x30;
         angle_s3 = D_90000_8017AADC[var_s2];
         prim->b0 = prim->b2 = prim->g0 = prim->g2 = prim->r0 = prim->r2 =
-            ((rsin(angle_s3) + FLT(1.0)) >> 6) * self->ext.karmacoin.unk90 / 256;
+            ((rsin(angle_s3) + 0x1000) >> 6) * self->ext.karmacoin.unk90 / 256;
         angle_s3 = D_90000_8017AADC[(var_s2 + 1) % 24];
         prim->b1 = prim->b3 = prim->g1 = prim->g3 = prim->r1 = prim->r3 =
-            ((rsin(angle_s3) + FLT(1.0)) >> 6) * self->ext.karmacoin.unk90 / 256;
+            ((rsin(angle_s3) + 0x1000) >> 6) * self->ext.karmacoin.unk90 / 256;
         D_90000_8017AADC[var_s2] += self->ext.karmacoin.unk8A;
         prim = prim->next;
     }

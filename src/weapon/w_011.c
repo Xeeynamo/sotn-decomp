@@ -415,12 +415,12 @@ void EntityWeaponShieldSpell(Entity* self) {
         prim->y3 += baseCoord;
         angle = D_51000_8017ABF4[i];
         prim->g0 = prim->b0 = prim->g1 = prim->b1 = prim->b3 =
-            ((rsin(angle) + FLT(1.0)) >> 6) * self->ext.shield.unk90 / 256;
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
         prim->r0 = prim->r1 = 0;
         angle = D_51000_8017ABF4[(i + 1) % 8];
         // @bug: Writing to prim->b3 twice
         prim->g2 = prim->b2 = prim->g3 = prim->b3 = prim->b3 =
-            ((rsin(angle) + FLT(1.0)) >> 6) * self->ext.shield.unk90 / 256;
+            ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
         prim->r2 = prim->r3 = 0;
         D_51000_8017ABF4[i] += self->ext.shield.unk8A;
         prim = prim->next;

@@ -2943,43 +2943,43 @@ block_748:
                 blueDivide = dataPtr[5];
                 if (upperParams & 0x40) {
                     angle = D_800AD630[(i + angleRedIndex) % 8];
-                    prim->r0 = ((rsin(angle) + FLT(1.0)) >> 6) *
+                    prim->r0 = ((rsin(angle) + 0x1000) >> 6) *
                                 self->ext.playerBlink.colorIntensity / redDivide;
                     angle = D_800AD630[(i + angleGreenIndex) % 8];
-                    prim->g0 = ((rsin(angle) + FLT(1.0)) >> 6) *
+                    prim->g0 = ((rsin(angle) + 0x1000) >> 6) *
                                 self->ext.playerBlink.colorIntensity / greenDivide;
                     angle = D_800AD630[(i + angleBlueIndex) % 8];
-                    prim->b0 = ((rsin(angle) + FLT(1.0)) >> 6) *
+                    prim->b0 = ((rsin(angle) + 0x1000) >> 6) *
                                 self->ext.playerBlink.colorIntensity / blueDivide;
                     angle = D_800AD630[(i + angleRedIndex + 1) % 8];
-                    prim->r1 = ((rsin(angle) + FLT(1.0)) >> 6) *
+                    prim->r1 = ((rsin(angle) + 0x1000) >> 6) *
                                 self->ext.playerBlink.colorIntensity / redDivide;
                     angle = D_800AD630[(i + angleGreenIndex + 1) % 8];
-                    prim->g1 = ((rsin(angle) + FLT(1.0)) >> 6) *
+                    prim->g1 = ((rsin(angle) + 0x1000) >> 6) *
                                 self->ext.playerBlink.colorIntensity / greenDivide;
                     angle = D_800AD630[(i + angleBlueIndex + 1) % 8];
-                    prim->b1 = ((rsin(angle) + FLT(1.0)) >> 6) *
+                    prim->b1 = ((rsin(angle) + 0x1000) >> 6) *
                                 self->ext.playerBlink.colorIntensity / blueDivide;
                     prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0;
                     D_800AD630[i] += self->ext.playerBlink.unk8A;
                 } else {
                     angle = D_800AD630[(i + angleRedIndex) % 8];
-                    prim->r0 = prim->r1 =((rsin(angle) + FLT(1.0)) >> 6) *
+                    prim->r0 = prim->r1 =((rsin(angle) + 0x1000) >> 6) *
                                 self->ext.playerBlink.colorIntensity / redDivide;
                     angle = D_800AD630[(i + angleGreenIndex) % 8];
-                    prim->g0 = prim->g1 =((rsin(angle) + FLT(1.0)) >> 6) *
+                    prim->g0 = prim->g1 =((rsin(angle) + 0x1000) >> 6) *
                                 self->ext.playerBlink.colorIntensity / greenDivide;
                     angle = D_800AD630[(i + angleBlueIndex) % 8];
-                    prim->b0 = prim->b1 =((rsin(angle) + FLT(1.0)) >> 6) *
+                    prim->b0 = prim->b1 =((rsin(angle) + 0x1000) >> 6) *
                                 self->ext.playerBlink.colorIntensity / blueDivide;
                     angle = D_800AD630[(i + angleRedIndex + 1) % 8];
-                    prim->r2 = prim->r3 =((rsin(angle) + FLT(1.0)) >> 6) *
+                    prim->r2 = prim->r3 =((rsin(angle) + 0x1000) >> 6) *
                                 self->ext.playerBlink.colorIntensity / redDivide;
                     angle = D_800AD630[(i + angleGreenIndex + 1) % 8];
-                    prim->g2 = prim->g3 =((rsin(angle) + FLT(1.0)) >> 6) *
+                    prim->g2 = prim->g3 =((rsin(angle) + 0x1000) >> 6) *
                                 self->ext.playerBlink.colorIntensity / greenDivide;
                     angle = D_800AD630[(i + angleBlueIndex + 1) % 8];
-                    prim->b2 = prim->b3 =((rsin(angle) + FLT(1.0)) >> 6) *
+                    prim->b2 = prim->b3 =((rsin(angle) + 0x1000) >> 6) *
                                 self->ext.playerBlink.colorIntensity / blueDivide;
                     D_800AD630[i] += self->ext.playerBlink.unk8A;
                 }

@@ -2913,32 +2913,32 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
             // clang-format off
             if (upperParams & 0x40) {
                 angle = D_us_80181860[(i + angleRedIndex) % 8];
-                prim->r0 = (((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / redDivide);
+                prim->r0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.colorIntensity / redDivide);
                 angle = D_us_80181860[(i + angleGreenIndex) % 8];
-                prim->g0 = (((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / greenDivide);
+                prim->g0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.colorIntensity / greenDivide);
                 angle = D_us_80181860[(i + angleBlueIndex) % 8];
-                prim->b0 = (((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / blueDivide);
+                prim->b0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.colorIntensity / blueDivide);
                 angle = D_us_80181860[(i + angleRedIndex + 1) % 8];
-                prim->r1 = (((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / redDivide);
+                prim->r1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.colorIntensity / redDivide);
                 angle = D_us_80181860[(i + angleGreenIndex + 1) % 8];
-                prim->g1 = (((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / greenDivide);
+                prim->g1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.colorIntensity / greenDivide);
                 angle = D_us_80181860[(i + angleBlueIndex + 1) % 8];
-                prim->b1 = (((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / blueDivide);
+                prim->b1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.colorIntensity / blueDivide);
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0;
                 D_us_80181860[i] += self->ext.playerBlink.unk8A;
             } else {
                 angle = D_us_80181860[(i + angleRedIndex) % 8];
-                prim->r0 = prim->r1 =(((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / redDivide);
+                prim->r0 = prim->r1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.colorIntensity / redDivide);
                 angle = D_us_80181860[(i + angleGreenIndex) % 8];
-                prim->g0 = prim->g1 =(((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / greenDivide);
+                prim->g0 = prim->g1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.colorIntensity / greenDivide);
                 angle = D_us_80181860[(i + angleBlueIndex) % 8];
-                prim->b0 = prim->b1 =(((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / blueDivide);
+                prim->b0 = prim->b1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.colorIntensity / blueDivide);
                 angle = D_us_80181860[(i + angleRedIndex + 1) % 8];
-                prim->r2 = prim->r3 =(((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / redDivide);
+                prim->r2 = prim->r3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.colorIntensity / redDivide);
                 angle = D_us_80181860[(i + angleGreenIndex + 1) % 8];
-                prim->g2 = prim->g3 =(((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / greenDivide);
+                prim->g2 = prim->g3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.colorIntensity / greenDivide);
                 angle = D_us_80181860[(i + angleBlueIndex + 1) % 8];
-                prim->b2 = prim->b3 =(((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / blueDivide);
+                prim->b2 = prim->b3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.colorIntensity / blueDivide);
                 D_us_80181860[i] += self->ext.playerBlink.unk8A;
             }
         }
@@ -4824,7 +4824,6 @@ static u8 D_us_80181FE8[][8] = {
 };
 extern s32 g_stone_flag;
 
-// TODO
 // player dissolves into pixels
 void EntityDopplegangerDissolves(Entity* self) {
     const int PrimCount = 36;

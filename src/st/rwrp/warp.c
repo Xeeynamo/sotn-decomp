@@ -341,22 +341,22 @@ void EntityRWarpRoom(Entity* self) {
     for (i = 0; i < 16; i++) {
         angle = bg_color_angle[(i + 0) % 16];
         prim->r0 =
-            ((rsin(angle) + FLT(1.0)) >> 6) * WarpBackgroundAmplitiude / 256;
+            ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         angle = bg_color_angle[(i + 5) % 16];
         prim->g0 =
-            ((rsin(angle) + FLT(1.0)) >> 6) * WarpBackgroundAmplitiude / 256;
+            ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         angle = bg_color_angle[(i + 10) % 16];
         prim->b0 =
-            ((rsin(angle) + FLT(1.0)) >> 6) * WarpBackgroundAmplitiude / 256;
+            ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         angle = bg_color_angle[(i + 1) % 16];
         prim->r1 =
-            ((rsin(angle) + FLT(1.0)) >> 6) * WarpBackgroundAmplitiude / 256;
+            ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         angle = bg_color_angle[(i + 6) % 16];
         prim->g1 =
-            ((rsin(angle) + FLT(1.0)) >> 6) * WarpBackgroundAmplitiude / 256;
+            ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         angle = bg_color_angle[(i + 11) % 16];
         prim->b1 =
-            ((rsin(angle) + FLT(1.0)) >> 6) * WarpBackgroundAmplitiude / 256;
+            ((rsin(angle) + 0x1000) >> 6) * WarpBackgroundAmplitiude / 256;
         prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 =
             WarpBackgroundBrightness;
         bg_color_angle[i] += 0x20;
