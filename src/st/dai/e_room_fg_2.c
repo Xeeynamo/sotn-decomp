@@ -5,7 +5,7 @@
 
 /*
 There are two different entities used for the castle wall foreground tiles.
-EntityCastleWall1: Most castle wasll foregruond tiles
+EntityCastleWall1: Most castle wall foreground tiles
 EntityCastleWall2: The castle wall foreground tiles outside the confessional
 room
 */
