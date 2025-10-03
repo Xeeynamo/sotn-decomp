@@ -209,6 +209,21 @@ files:
           - [0x3ED78, palette, crash_dragon_pal, 16]
           - [0x3ED98, palette, crash_cardinal_pal, 16]
           - [0x3F338, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/cat.bin
+    asset_path: assets/st/cat
+    src_path: src/st/cat
+    splat_config_path: config/splat.pspeu.stcat.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x2B980, cmpgfx, stage_name_en, 128, 64, 4]
+          - [0x2BB20, cmpgfx, stage_name_it, 128, 64, 4]
+          - [0x2BCB8, cmpgfx, stage_name_sp, 128, 64, 4]
+          - [0x2BE78, cmpgfx, stage_name_ge, 128, 64, 4]
+          - [0x2C050, cmpgfx, stage_name_fr, 128, 64, 4]
+          - [0x2C208, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/chi.bin
     asset_path: assets/st/chi
     src_path: src/st/chi_psp
