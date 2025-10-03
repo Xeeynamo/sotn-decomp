@@ -3451,8 +3451,8 @@ typedef struct {
 } ET_BoneHalberd;
 
 typedef struct {
-    struct Primitive* prim1;
-    struct Primitive* prim2;
+    /* 0x7C */ struct Primitive* glassPrim;
+    /* 0x80 */ struct Primitive* lightPrim;
 } ET_StainedGlass;
 
 typedef struct {
