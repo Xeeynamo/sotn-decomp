@@ -1584,7 +1584,7 @@ typedef struct {
     /* 0x16 */ u8 nextCharTimer;      // timer to next character
     /* 0x17 */ u8 unk17;              // unknown
 // Of course, offsets beyond here won't be right in ST0_WEIRD_DIALOGUE.
-#if defined(VERSION_PSP)
+#if defined(VERSION_PSP) || defined(VERSION_HD)
     /* 0x18 */ Primitive* prim[5]; // for dialogue graphics rendering
 #else
     /* 0x18 */ Primitive* prim[6]; // for dialogue graphics rendering
