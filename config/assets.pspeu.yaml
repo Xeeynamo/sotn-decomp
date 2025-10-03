@@ -211,7 +211,7 @@ files:
           - [0x3F338, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/chi.bin
     asset_path: assets/st/chi
-    src_path: src/st/chi_psp
+    src_path: src/st/chi
     splat_config_path: config/splat.pspeu.stchi.yaml
     segments:
       - start: 0x80
