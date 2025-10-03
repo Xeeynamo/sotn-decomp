@@ -101,7 +101,64 @@ void func_us_801B9340(void) {
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B94CC);
 
 // maybe func_8015C6D4
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B96F4);
+extern u8 D_us_80181298[];
+extern u8 D_us_801812A8[];
+
+void func_us_801B96F4(void) {
+    byte pad[0x28];
+    Primitive* prim;
+    PlayerDraw* draw;
+    s32 i;
+    u8 var_s3;
+    u8 var_s5;
+    u8 resetAnim;
+
+    resetAnim = g_Entities[65].ext.entSlot1.unk1;
+    prim = &g_PrimBuf[g_Entities[65].primIndex];
+    i = 0;
+    draw = &g_PlayerDraw[9];
+    var_s5 = D_us_80181298[g_Entities[65].ext.entSlot1.unk2];
+    var_s3 = D_us_801812A8[g_Entities[65].ext.entSlot1.unk2];
+    while (prim != NULL) {
+        if (prim->r0 > var_s3) {
+            prim->r0 -= var_s5;
+        }
+        if (prim->r0 < 112 && prim->b0 < 240) {
+            prim->b0 += 6;
+        }
+        if (prim->r0 < 88) {
+            prim->y1 = 16;
+        } else {
+            prim->y1 = 0;
+        }
+        if (prim->r0 <= var_s3) {
+            prim->x1 = 0;
+        }
+        if ((i ^ g_Timer) & 1) {
+            g_Entities[i / 2 + 65].posX.i.hi = prim->x0;
+            g_Entities[i / 2 + 65].posY.i.hi = prim->y0;
+            g_Entities[i / 2 + 65].animCurFrame = prim->x1;
+            g_Entities[i / 2 + 65].drawMode = prim->y1;
+            g_Entities[i / 2 + 65].facingLeft = prim->x2;
+            g_Entities[i / 2 + 65].palette = prim->y2;
+            g_Entities[i / 2 + 65].zPriority = RIC.zPriority - 2;
+            if (resetAnim) {
+                g_Entities[i / 2 + 65].animCurFrame = 0;
+                prim->x1 = 0;
+            }
+
+            draw->r0 = draw->r1 = draw->r2 = draw->r3 = draw->g0 = draw->g1 =
+                draw->g2 = draw->g3 = prim->r0;
+            draw->b0 = draw->b1 = draw->b2 = draw->b3 = prim->b0;
+            draw->enableColorBlend = true;
+            draw++;
+        }
+        i++;
+        prim = prim->next;
+    }
+}
+
+
 
 // BO6_RicSetStep
 void OVL_EXPORT(RicSetStep)(s16 step) {
