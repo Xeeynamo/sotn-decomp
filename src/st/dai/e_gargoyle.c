@@ -2,42 +2,57 @@
 #include "dai.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(GARGOYLE_STATUE);
+extern s32 E_ID(GARGOYLE_TONGUE);
 #endif
 
-// Gargoyle statues at top of Hippogryph room
-void EntityGargoyleStatue(Entity* self) {
-    Entity* entity;
+enum GargoyleSteps {
+    GARGOYLE_INIT,
+    GARGOYLE_NOP,
+    GARGOYLE_ADJUST_DOWN,
+    GARGOYLE_ADJUST_UP,
+};
+
+enum GargoyleParams {
+    FACING_LEFT,
+    FACING_RIGHT,
+    BLOCK_ONLY,
+    GARGOYLE_POSITIONED = 16,
+};
+
+// This is the tongue and block in front of the statue and does not
+// include the statue itself.
+void EntityGargoyleTongue(Entity* self) {
+    Entity* block;
     s32 count;
     s32 tileIdx;
 
     switch (self->step) {
-    case 0:
+    case GARGOYLE_INIT:
         InitializeEntity(g_EInitStatueBlock);
         self->zPriority = 92;
         self->animCurFrame = 12;
-        if (self->params & 1) {
+        if (self->params & FACING_RIGHT) {
             self->animCurFrame = 13;
         }
-        if (self->params & 2) {
+        if (self->params & BLOCK_ONLY) {
             self->animCurFrame = 14;
             return;
         }
-        entity = self + 1;
-        CreateEntityFromEntity(E_ID(GARGOYLE_STATUE), self, entity);
-        entity->params = 2;
-        entity->posY.i.hi = 160;
+        block = self + 1;
+        CreateEntityFromEntity(E_ID(GARGOYLE_TONGUE), self, block);
+        block->params = BLOCK_ONLY;
+        block->posY.i.hi = 160;
         if (self->params) {
-            entity->posX.i.hi += 16;
+            block->posX.i.hi += 16;
         }
         break;
-    case 1:
+    case GARGOYLE_NOP:
         break;
-    case 2:
+    case GARGOYLE_ADJUST_DOWN:
         self->posY.val += FIX(1.125);
         if (self->posY.val > FIX(70.0)) {
             self->posY.val = FIX(70.0);
-            self->step = 16;
+            self->step = GARGOYLE_POSITIONED;
             if (self->params) {
                 tileIdx = 222;
             } else {
@@ -49,11 +64,11 @@ void EntityGargoyleStatue(Entity* self) {
             }
         }
         break;
-    case 3:
+    case GARGOYLE_ADJUST_UP:
         self->posY.val -= FIX(1.125);
         if (self->posY.val < FIX(129.0)) {
             self->posY.val = FIX(129.0);
-            self->step = 16;
+            self->step = GARGOYLE_POSITIONED;
         }
         break;
     }

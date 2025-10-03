@@ -33,7 +33,7 @@ void EntityCastleWall2(Entity* self);
 void EntityStaircase(Entity* self);
 void EntityClouds(Entity* self);
 void EntityBackgroundSkyLand(Entity* self);
-void EntityGargoyleStatue(Entity* self);
+void EntityGargoyleTongue(Entity* self);
 void EntityChair(Entity* self);
 void EntityConfessionalGhost(Entity* self);
 void EntityConfessionalBlades(Entity* self);
@@ -107,7 +107,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityStaircase,
     EntityClouds,
     EntityBackgroundSkyLand,
-    EntityGargoyleStatue,
+    EntityGargoyleTongue,
     EntityChair,
     EntityConfessionalGhost,
     EntityConfessionalBlades,
