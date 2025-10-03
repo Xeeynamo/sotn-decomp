@@ -10,13 +10,13 @@ enum GargoyleSteps {
     GARGOYLE_NOP,
     GARGOYLE_ADJUST_DOWN,
     GARGOYLE_ADJUST_UP,
+    GARGOYLE_POSITIONED = 16,
 };
 
 enum GargoyleParams {
     FACING_LEFT,
     FACING_RIGHT,
     BLOCK_ONLY,
-    GARGOYLE_POSITIONED = 16,
 };
 
 // This is the tongue and block in front of the statue and does not
