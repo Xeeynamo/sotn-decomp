@@ -13,39 +13,41 @@
 u16* func_80106A28(u32 arg0, u16 kind);
 
 // BSS
-extern s32 D_801375CC;
-extern s32 D_801375D0;
-extern s32 D_801375D4;
-extern s32* D_801375D8;
-extern s32 D_801375DC;
-extern s32 D_801375E0[NUM_FAMILIARS + 1];
-extern s32 g_IsCloakLiningUnlocked;
-extern s32 g_IsCloakColorUnlocked;
-extern s32 D_80137608;
-extern s32 g_IsSelectingEquipment;
-extern s32 g_EquipmentCursor;
-extern s32 D_80137614;
-extern s32 g_EquipOrderType;
-extern MenuContext g_Menus[NUM_MENU];
-extern s32 D_801377FC[NUM_MENU + 2];
-extern s32 D_80137844[2];
+static s32 D_801375CC;
+static s32 D_801375D0;
+static s32 D_801375D4;
+static s32* D_801375D8;
+static s32 D_801375DC;
+static s32 D_801375E0[NUM_FAMILIARS + 1];
+static s32 g_IsCloakLiningUnlocked;
+static s32 g_IsCloakColorUnlocked;
+static s32 D_80137608;
+static s32 g_IsSelectingEquipment;
+static s32 g_EquipmentCursor;
+static s32 D_80137614;
+static s32 g_EquipOrderType;
+static MenuContext g_Menus[NUM_MENU];
+static s32 D_801377FC[NUM_MENU + 2];
+static s32 D_80137844[2];
 #if defined(VERSION_US)
-extern s32 D_8013784C;
+static s32 D_8013784C;
 #endif
-extern s16 g_RelicMenuFadeTimer;
+static s16 g_RelicMenuFadeTimer;
+STATIC_PAD_BSS(2);
+static s32 g_TimeAttackEntryTimes[NUM_TIMEATTACK_EVENTS];
+static s32 c_strTimeAttackEntry[NUM_TIMEATTACK_EVENTS];
+static s32 g_NewAttackRightHand;
+static s32 g_NewAttackLeftHand;
+static s32 g_NewDefenseEquip;
+static s32 g_NewPlayerStatsTotal[4];
+static s32 D_80137948;
+static s8* D_8013794C; // Pointer to texture pattern
+static s32 D_80137950;
+static s32 D_80137954;
+static s32 D_80137958;
+static s32 g_ServantPrevious;
+
 extern s32 g_PrevEquippedWeapons[2];
-extern s32 g_TimeAttackEntryTimes[NUM_TIMEATTACK_EVENTS];
-extern s32 c_strTimeAttackEntry[NUM_TIMEATTACK_EVENTS];
-extern s32 g_NewAttackRightHand;
-extern s32 g_NewAttackLeftHand;
-extern s32 g_NewDefenseEquip;
-extern s32 g_NewPlayerStatsTotal[];
-extern s32 D_80137948;
-extern s8* D_8013794C; // Pointer to texture pattern
-extern s32 D_80137950;
-extern s32 D_80137954;
-extern s32 D_80137958;
-extern s32 g_ServantPrevious;
 
 const char* D_800A2D48[] = {
 #if defined(VERSION_US)

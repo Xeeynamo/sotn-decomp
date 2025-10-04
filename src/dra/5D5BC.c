@@ -2,6 +2,11 @@
 #include "dra.h"
 #include "dra_bss.h"
 
+// BSS
+static s32 D_80137960;
+static s32 D_80137964;
+static s32 D_80137968;
+
 s32 g_LevelHPIncrease[] = {1, 3, 6, 10, 20, 30, 40, 50, 100, 200};
 
 bool CalcPlayerDamage(DamageParam* damage) {
@@ -289,10 +294,6 @@ bool func_800FDD44(s32 itemType) {
     }
     return false;
 }
-
-extern s32 D_80137960;
-extern s32 D_80137964;
-extern s32 D_80137968;
 
 void func_800FDE00(void) {
     D_80137960 = 0;
