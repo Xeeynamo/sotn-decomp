@@ -94,7 +94,7 @@ static void CornerGuardDeath(EntranceCascadePrim* prim) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, explosion);
                 explosion->posX.i.hi = prim->next->x1;
                 explosion->posY.i.hi = prim->next->y0;
-                explosion->params = 0;
+                explosion->params = EXPLOSION_SMALL;
             }
             UnkPolyFunc0(prim);
         }
@@ -359,7 +359,7 @@ void EntityCornerGuard(Entity* self) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, entity);
-                entity->params = 2;
+                entity->params = EXPLOSION_SMALL_MULTIPLE;
             }
             self->animCurFrame = NULL;
             PlaySfxPositional(SFX_SKEL_EXPLODE);
