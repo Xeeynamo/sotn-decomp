@@ -72,7 +72,7 @@ segments:
       - [0x19A40, c, st_init_psp]
       - [0x19EA0, c, e_breakable]
       - [0x1A770, c, e_tower_exit]
-      - [0x1ADC8, c, unk_434FC]
+      - [0x1ADC8, c, e_room_bg_2]
       - [0x1AF48, c, e_chair]
       - [0x1B400, c, e_room_fg_2]
       - [0x1BAB8, c, cutscene_init]
