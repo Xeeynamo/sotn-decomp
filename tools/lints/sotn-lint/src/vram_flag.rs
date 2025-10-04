@@ -56,7 +56,7 @@ mod tests {
     #[test]
     fn test_vram_flag_hex() {
         let input_line = "g_Player.vram_flag = 0x80;";
-        let expected_line = "g_Player.vram_flag = VRAM_UNK80;";
+        let expected_line = "g_Player.vram_flag = VRAM_FLAG_UNK80;";
         let result = DMT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
@@ -96,7 +96,7 @@ mod tests {
     #[test]
     fn test_vram_flag_set() {
         let input_line = "g_Player.vram_flag |= 0x8000;";
-        let expected_line = "g_Player.vram_flag |= STANDING_ANY_SLOPE;";
+        let expected_line = "g_Player.vram_flag |= TOUCHING_ANY_SLOPE;";
         let result = DMT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
@@ -104,7 +104,7 @@ mod tests {
     #[test]
     fn test_vram_flag_clear() {
         let input_line = "g_Player.vram_flag &= 0xFFFFBFFF;";
-        let expected_line = "g_Player.vram_flag &= ~STANDING_RAISING_SLOPE;";
+        let expected_line = "g_Player.vram_flag &= ~TOUCHING_RAISING_SLOPE;";
         let result = DMT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
@@ -113,7 +113,7 @@ mod tests {
     fn test_vram_flag_clear_many() {
         let input_line = "g_Player.vram_flag &= 0xFFFF3FFF;";
         let expected_line =
-            "g_Player.vram_flag &= ~(STANDING_ANY_SLOPE | STANDING_RAISING_SLOPE);";
+            "g_Player.vram_flag &= ~(TOUCHING_ANY_SLOPE | TOUCHING_RAISING_SLOPE);";
         let result = DMT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
@@ -121,7 +121,7 @@ mod tests {
     #[test]
     fn test_vram_flag_inverted_many() {
         let input_line = "g_Player.vram_flag &= ~0x300;";
-        let expected_line = "g_Player.vram_flag &= ~(VRAM_UNK200 | VRAM_UNK100);";
+        let expected_line = "g_Player.vram_flag &= ~(VRAM_FLAG_UNK200 | VRAM_FLAG_UNK100);";
         let result = DMT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
