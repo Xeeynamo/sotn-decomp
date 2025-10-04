@@ -20,8 +20,7 @@ static u8 anim_fire_breath[] = {
     3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, 3, 7, 3, 8, 3, 9, 3, 10, 3, 11, 255, 0};
 static s16 D_us_80181D30[] = {16, 32, 48, 64, 80, 64, 48, 32};
 
-// extern s16* sprites_dai_5[];
-extern s16* D_us_801BC7B0[];
+extern s16* sprites_dai_5[];
 
 void EntityBonePillarHead(Entity* self) {
     Collider collider;
@@ -396,7 +395,7 @@ void EntityBonePillarFireBreath(Entity* self) {
             return;
         }
         prim = self->ext.et_bonePillar.prim;
-        ptr = D_us_801BC7B0[self->animCurFrame];
+        ptr = sprites_dai_5[self->animCurFrame];
         ptr += 8;
         prim->u0 = prim->u2 = *ptr++;
         prim->v0 = prim->v1 = *ptr++;

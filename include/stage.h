@@ -22,6 +22,11 @@ typedef enum {
 typedef u16 EInit[5];
 
 typedef struct {
+    u8 duration;
+    u8 pose;
+} AnimateEntityFrame;
+
+typedef struct {
     /* 0x0 */ u16 posX;
     /* 0x2 */ u16 posY;
     /* 0x4 */ u16 entityId;
