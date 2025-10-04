@@ -367,7 +367,6 @@ s32 func_801B3E2C(void) {
     return 0;
 }
 
-#ifndef HARD_LINK
 void MemCardSetPort(s32 port) {
     g_MemCardRStep = 0;
     g_MemCardRStepSub = port;
@@ -398,7 +397,6 @@ s32 MemCardInitAndFormat(void) {
 
     return 0;
 }
-#endif
 
 void SEL_Init(s32 objLayoutId) {
     switch (g_GameEngineStep) {

@@ -8,6 +8,14 @@
 #include "objects.h"
 #include "sfx.h"
 
+typedef enum {
+    EXPLOSION_SMALL,
+    EXPLOSION_FIREBALL,
+    EXPLOSION_SMALL_MULTIPLE,
+    EXPLOSION_BIG,
+    EXPLOSION_UNK_4
+} ExplosionTypes;
+
 // used by InitializeEntity to pre-fill certain entity fields
 // cannot be declared as a struct, field order:
 // animSet, animCurFrame, unk5A, palette, enemyID
@@ -126,13 +134,6 @@ typedef struct {
     /* 0x0A */ s16 x3;
     /* 0x0C */ ConfessionalGhostAnimSet* animations;
 } ConfessionalGhostParams;
-
-// Used in dai/e_bell
-typedef struct {
-    s16 segments;
-    s16 length;
-    s16 priority;
-} bellRopeParams;
 
 // Used in dai/e_hunting_girl
 typedef struct {
