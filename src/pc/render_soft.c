@@ -29,9 +29,6 @@ int get_mode(int dfe, int dtd, int tpage);
 u32 get_ofs(s16 arg0, s16 arg1);
 u32 get_tw(RECT* arg0);
 
-#define CLAMP(value, low, high)                                                \
-    value < low ? low : (value > high ? high : value)
-
 u32 D_8002C26C = 0;
 void GPU_Init(bool pal_clock_and_tv);
 void GPU_StartFrameC();
