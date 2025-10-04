@@ -465,9 +465,9 @@ typedef enum {
 // 0x08: touching the left wall
 // 0x20: in-air or near the edge
 // 0x0800: touching the ceiling slope
-// 0x1000: standing on a slightly ascending or descending slope
-// 0x4000: standing on a raising slope
-// 0x8000: standing on any slope
+// 0x1000: touching a slightly ascending or descending slope
+// 0x4000: touching a raising slope
+// 0x8000: touching any slope
 typedef enum {
     TOUCHING_GROUND = 1 << 0,
     TOUCHING_CEILING = 1 << 1,
@@ -1993,7 +1993,7 @@ typedef struct {
     /* 80072EF8 */ u32 D_80072EF8;
     /* 80072EFC */ s32 demo_timer; // player frozen timer
     /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
-    /* 80072F20 */ PlayerVramFlag vram_flag;
+    /* 80072F20 */ s32 vram_flag;
     /* 80072F24 */ s32 unk04; // copy of the previous field
     /* 80072F28 */ s32 unk08;
     /* 80072F2C */ PlayerStateStatus status;

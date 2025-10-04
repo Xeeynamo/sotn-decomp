@@ -134,7 +134,7 @@ void func_us_801AE8E8(Entity* self) {
                 if (dx >= 0) {
                     player->posX.i.hi -= dx;
                     D_80097488.x.i.hi -= dx;
-                    g_Player.vram_flag |= 0x44;
+                    g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_R_WALL;
                     if (!g_CastleFlags[LIB_BOOKSHELF_SECRET]) {
                         if (--self->ext.et_801AE8E8.unk82) {
                             break;
@@ -155,7 +155,7 @@ void func_us_801AE8E8(Entity* self) {
                 if (dx <= 0) {
                     player->posX.i.hi -= dx;
                     D_80097488.x.i.hi -= dx;
-                    g_Player.vram_flag |= 0x48;
+                    g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_L_WALL;
                     if (!g_CastleFlags[LIB_BOOKSHELF_SECRET]) {
                         if (--self->ext.et_801AE8E8.unk82) {
                             break;

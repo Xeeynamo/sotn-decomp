@@ -514,7 +514,8 @@ void EntityTriangleElevator(Entity* self) {
             offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi -
                       self->ext.topElevator.mapPos.y;
             if ((offsetY > 0) ||
-                ((offsetY < 0) && ((g_Player.vram_flag ^ 2) & 2))) {
+                ((offsetY < 0) &&
+                 ((g_Player.vram_flag ^ TOUCHING_CEILING) & 2))) {
                 player->posY.i.hi += offsetY;
                 D_80097488.y.i.hi += offsetY;
             }
@@ -738,7 +739,8 @@ void func_us_801AABA4(Entity* self) {
                       self->ext.topElevator.mapPos.y;
 
             if ((offsetY > 0) ||
-                ((offsetY < 0) && ((g_Player.vram_flag ^ 2) & 2))) {
+                ((offsetY < 0) &&
+                 ((g_Player.vram_flag ^ TOUCHING_CEILING) & 2))) {
                 player->posY.i.hi += offsetY;
                 D_80097488.y.i.hi += offsetY;
             }
