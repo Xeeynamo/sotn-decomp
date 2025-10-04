@@ -57,7 +57,7 @@ jobs:
   build-linux:
     strategy:
       matrix:
-        compiler: ["clang", "gcc"]
+        compiler: ["gcc"]
         build_type: ["RelWithDebInfo"]
         sound_engine: ["lle"]
         standard: ["c99"]

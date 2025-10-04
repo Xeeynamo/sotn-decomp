@@ -209,6 +209,51 @@ files:
           - [0x3ED78, palette, crash_dragon_pal, 16]
           - [0x3ED98, palette, crash_cardinal_pal, 16]
           - [0x3F338, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/sel.bin
+    asset_path: assets/st/sel
+    src_path: src/st/sel_psp
+    splat_config_path: config/splat.pspeu.stsel.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x173F8, palette, D_psp_0924EA78, 16]
+          - [0x17418, cmpgfx, D_psp_0924EA98, 128, 128, 4]
+          - [0x18180, skip]
+          - [0x18190, palette, D_psp_0924F810, 16]
+          - [0x181D0, rawgfx, D_psp_0924F850, 128, 128, 8]
+          - [0x1C1D0, rawgfx, D_psp_09253850, 128, 128, 8]
+          - [0x201D0, rawgfx, D_psp_09257850, 128, 128, 8]
+          - [0x241D0, rawgfx, D_psp_0925B850, 128, 128, 8]
+          - [0x281D0, palette, D_psp_0925F850, 256]
+          - [0x283D0, cmpgfx, D_psp_0925FA50, 128, 128, 4]
+          - [0x28ED0, cmpgfx, D_psp_09260550, 128, 128, 4]
+          - [0x299B0, cmpgfx, D_psp_09261030, 128, 128, 4]
+          - [0x2A478, cmpgfx, D_psp_09261AF8, 128, 128, 4]
+          - [0x2AF98, cmpgfx, D_psp_09262618, 128, 128, 4]
+          - [0x2BA58, cmpgfx, D_psp_092630D8, 128, 128, 4]
+          - [0x2C080, cmpgfx, D_psp_09263700, 128, 128, 4]
+          - [0x2C660, cmpgfx, D_psp_09263CE0, 128, 128, 4]
+          - [0x2CC10, cmpgfx, D_psp_09264290, 128, 128, 4]
+          - [0x2D1E8, cmpgfx, D_psp_09264868, 128, 128, 4]
+          - [0x2D810, cmpgfx, D_psp_09264E90, 128, 128, 4]
+          - [0x2EEF8, cmpgfx, D_psp_09266578, 128, 128, 4]
+          - [0x30488, cmpgfx, D_psp_09267B08, 128, 128, 4]
+          - [0x31DC0, cmpgfx, D_psp_09269440, 128, 128, 4]
+          - [0x33368, cmpgfx, D_psp_0926A9E8, 128, 128, 4]
+          - [0x34930, cmpgfx, D_psp_0926BFB0, 128, 128, 4]
+          - [0x36300, cmpgfx, D_psp_0926D980, 128, 128, 4]
+          - [0x37B08, cmpgfx, D_psp_0926F188, 128, 128, 4]
+          - [0x390D8, cmpgfx, D_psp_09270758, 128, 128, 4]
+          - [0x3AAD8, cmpgfx, D_psp_09272158, 128, 128, 4]
+          - [0x3C278, cmpgfx, D_psp_092738F8, 128, 128, 4]
+          - [0x3D848, cmpgfx, D_psp_09274EC8, 128, 128, 4]
+          - [0x3F160, cmpgfx, D_psp_092767E0, 128, 128, 4]
+          - [0x40908, cmpgfx, D_psp_09277F88, 128, 128, 4]
+          - [0x41ED8, cmpgfx, D_psp_09279558, 128, 128, 4]
+          - [0x43890, cmpgfx, D_psp_0927AF10, 128, 128, 4]
+          - [0x45070, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/cat.bin
     asset_path: assets/st/cat
     src_path: src/st/cat
