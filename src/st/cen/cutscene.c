@@ -33,11 +33,11 @@ static s16 D_801805F4[] = {
 };
 
 #if !defined(VERSION_HD)
-
 static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
-
 static const char _pad[4] = "";
-
+#else
+extern u16 D_hd_80180684[]; // actorNames
+extern u8 D_hd_801806B8;    // actorNameLength
 #endif
 
 extern Dialogue g_Dialogue;
@@ -45,35 +45,15 @@ extern Dialogue g_Dialogue;
 extern u32 g_CutsceneFlags;
 extern u32 D_8019D428;
 
-#if !defined(VERSION_HD)
 #include "../cutscene_unk1.h"
-#else
-INCLUDE_ASM("st/cen/nonmatchings/cutscene", CutsceneUnk1);
-#endif
 
-#if !defined(VERSION_HD)
 #include "../set_cutscene_script.h"
-#else
-INCLUDE_ASM("st/cen/nonmatchings/cutscene", SetCutsceneScript);
-#endif
 
-#if !defined(VERSION_HD)
 #include "../cutscene_unk3.h"
-#else
-INCLUDE_ASM("st/cen/nonmatchings/cutscene", CutsceneUnk3);
-#endif
 
-#if !defined(VERSION_HD)
 #include "../cutscene_unk4.h"
-#else
-INCLUDE_ASM("st/cen/nonmatchings/cutscene", CutsceneUnk4);
-#endif
 
-#if !defined(VERSION_HD)
 #include "../cutscene_actor_name.h"
-#else
-INCLUDE_ASM("st/cen/nonmatchings/cutscene", DrawCutsceneActorName);
-#endif
 
 #include "../set_cutscene_end.h"
 
