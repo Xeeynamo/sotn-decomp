@@ -600,6 +600,12 @@ extern int SetGraphReverse(int mode);
 extern int SetGraphQueue(int mode);
 extern u_long DrawSyncCallback(void (*func)());
 extern void FntLoad(int tx, int ty);
+// n.b.! FntPrint has an odd signature where the
+// first arg can be interpretted as a char* or int.
+// the SDK header uses a long, but all uses we've
+// come across so far use a char*. modern compilers
+// are strict about this type of thing, so this
+// doesn't match the docs.
 int FntPrint(const char* fmt, ...);
 extern void SetDispMask(int mask);
 extern void SetDrawMode(DR_MODE* p, int dfe, int dtd, int tpage, RECT* tw);
