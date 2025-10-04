@@ -62,7 +62,7 @@ void EntitySkelerang(Entity* self);
 void EntitySkelerangBoomerang(Entity* self);
 void EntitySkelerangUnknown(Entity* self);
 void EntityHuntingGirl(Entity* self);
-void EntityHuntingGirlSpirit(Entity* self);
+void EntityHuntingGirlAttack(Entity* self);
 void EntitySpectralSword(Entity* self);
 void EntitySpectralSwordAura(Entity* self);
 void EntitySpectralSwordWeapon(Entity* self);
@@ -136,7 +136,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkelerangBoomerang,
     EntitySkelerangUnknown,
     EntityHuntingGirl,
-    EntityHuntingGirlSpirit,
+    EntityHuntingGirlAttack,
     EntitySpectralSword,
     EntitySpectralSwordAura,
     EntitySpectralSwordWeapon,
@@ -183,7 +183,7 @@ EInit g_EInitBlueRaven = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 114};
 EInit g_EInitBlackCrow = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 115};
 EInit g_EInitSkelerang = {ANIMSET_OVL(11), 1, 72, PAL_SKELERANG, 11};
 EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(11), 43, 72, PAL_SKELERANG, 12};
-EInit g_EInitHuntingGirl = {ANIMSET_OVL(12), 0, 84, PAL_UNK_232, 227};
+EInit g_EInitHuntingGirl = {ANIMSET_OVL(12), 0, 84, PAL_HUNTING_GIRL_INIT, 227};
 EInit g_EInitSpectralSword = {ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 136};
 EInit g_EInitSpectralSwordAura = {
     ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 2};

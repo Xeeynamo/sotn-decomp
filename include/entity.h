@@ -3411,23 +3411,23 @@ typedef struct {
 } ET_Unk41EE4;
 
 typedef struct {
-    struct Primitive* prim;
-    s16 attackTimer;
-    s16 sinePhase;
-    u8 brightness;
-    u8 attackPatternIdx;
-    u8 attacking;
-    u8 random;
-    s32 : 32;
-    s16 nextStep;
-    s16 cycleTimer;
-    s16 scrollY;
-    struct Primitive* spiritPrim;
-    struct Primitive* attackPrim;
-    u16 attackStep;
-    u16 frames;
-    s16 rotate;
-    s32 attack;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 attackTimer;
+    /* 0x82 */ s16 sinePhase;
+    /* 0x84 */ u8 brightness;
+    /* 0x85 */ u8 attackPatternIdx;
+    /* 0x86 */ u8 attacking;
+    /* 0x87 */ u8 random;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s16 nextStep;
+    /* 0x8E */ s16 cycleTimer;
+    /* 0x90 */ s16 scrollY;
+    /* 0x92 */ struct Primitive* spiritPrim;
+    /* 0x96 */ struct Primitive* attackPrim;
+    /* 0x9A */ u16 attackStep;
+    /* 0x9C */ u16 frames;
+    /* 0x9E */ s16 rotate;
+    /* 0xA0 */ s32 attack;
 } ET_HuntingGirl;
 
 typedef struct {

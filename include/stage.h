@@ -134,13 +134,23 @@ typedef struct {
     s16 priority;
 } bellRopeParams;
 
-// Used in dai/e_hunting_girl
+/* Used in dai/e_hunting_girl
 typedef struct {
     s16 x;
     s16 y;
     s16 rotate;
     s16 frames;
-} huntingGirlAttackStep;
+} HuntingGirlAttackStep;
+
+typedef struct {
+    s16 u;
+    s16 v;
+    s16 width;
+    s16 height;
+    s16 offsetX;
+    s16 offsetY;
+} HuntingGirlSpiritParams;
+*/
 
 /*******/
 /* LIB */
