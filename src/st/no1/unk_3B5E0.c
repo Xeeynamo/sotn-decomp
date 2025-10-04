@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
+#include "sfx.h"
 
 static s16 D_us_80181508[][3] = {
     {0x1845, 0x1875, 0x18A5}, {0x1245, 0x1275, 0x12A5}, {0x945, 0x975, 0x9A5}};
@@ -25,7 +26,7 @@ void func_us_801BB5E0(void) {
     } else {
         if (!g_CurrentEntity->ext.et_801BBD90.unk95) {
             g_CurrentEntity->ext.et_801BBD90.unk95 = 1;
-            PlaySfxPositional(0x7B1);
+            PlaySfxPositional(SFX_ELEVATOR_DOOR);
         }
         prim->y2++;
     }
@@ -74,7 +75,7 @@ void func_us_801BB7B8(void) {
     } else {
         if (!g_CurrentEntity->ext.et_801BBD90.unk95) {
             g_CurrentEntity->ext.et_801BBD90.unk95 = 1;
-            PlaySfxPositional(0x7B1);
+            PlaySfxPositional(SFX_ELEVATOR_DOOR);
         }
         prim->y2--;
     }

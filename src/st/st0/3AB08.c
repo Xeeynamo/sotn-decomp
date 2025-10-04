@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
 #include "../clock_tower.h"
+#include "sfx.h"
 
 static s16 D_80182084[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181,
@@ -977,7 +978,7 @@ void EntityCutscenePhotograph(Entity* self) {
         prim->priority = 0x1FC;
         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         self->pose = 0;
-        g_api.PlaySfx(NA_SE_CS_BURNING_PHOTOGRAPH);
+        g_api.PlaySfx(SFX_BURNING_PHOTOGRAPH);
         self->step++;
 #ifdef VERSION_PSP
         func_891B0BC(1);

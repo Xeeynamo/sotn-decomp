@@ -73,11 +73,11 @@ enum OVL_EXPORT(Entities) {
     E_UNK_3B,                // func_us_801C774C
     E_UNK_3C,                // func_us_801C6360
     E_UNK_3D,                // func_us_801C7420
-    E_UNK_3E,                // func_us_801CFAE8
-    E_UNK_3F,                // func_us_801D033C
-    E_UNK_40,                // func_us_801D08A8
-    E_UNK_41,                // func_us_801D0B38
-    E_UNK_42,                // func_us_801D0F10
+    E_LOSSOTH,               // EntityLossoth
+    E_LOSSOTH_EFFECTS,       // EntityLossothEffects
+    E_LOSSOTH_FIREBALL,      // EntityLossothFireball
+    E_LOSSOTH_NAPALM,        // EntityLossothNapalmFlare
+    E_LOSSOTH_FLAMES,        // EntityLossothFlames
     E_UNK_43,                // func_us_801BB4CC
     E_GRAVE_KEEPER,          // EntityGraveKeeper
     E_GRAVE_KEEPER_HITBOX,   // EntityGraveKeeperHitbox

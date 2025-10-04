@@ -8,10 +8,23 @@
 #include "objects.h"
 #include "sfx.h"
 
+typedef enum {
+    EXPLOSION_SMALL,
+    EXPLOSION_FIREBALL,
+    EXPLOSION_SMALL_MULTIPLE,
+    EXPLOSION_BIG,
+    EXPLOSION_UNK_4
+} ExplosionTypes;
+
 // used by InitializeEntity to pre-fill certain entity fields
 // cannot be declared as a struct, field order:
 // animSet, animCurFrame, unk5A, palette, enemyID
 typedef u16 EInit[5];
+
+typedef struct {
+    u8 duration;
+    u8 pose;
+} AnimateEntityFrame;
 
 typedef struct {
     /* 0x0 */ u16 posX;
