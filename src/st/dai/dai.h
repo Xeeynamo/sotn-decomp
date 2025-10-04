@@ -49,8 +49,8 @@ enum OVL_EXPORT(Palette) {
     PAL_STAINED_GLASS_E = 0xE,
     PAL_STAINED_GLASS_F = 0xF,
     PAL_CASTLE_WALL_1 = 0x74,
-    PAL_BELL_1 = 0x75,
-    PAL_BELL_2 = 0x76,
+    PAL_BELL = 0x75,
+    PAL_BELL_ROPE = 0x76,
     PAL_CLOUDS = 0xC0,
     PAL_BACKGROUND_SKY_LAND = 0xC5,
     PAL_CASTLE_WALL_2 = 0xC8,
@@ -87,7 +87,7 @@ enum OVL_EXPORT(Palette) {
 
 // Used when a constant value E_ID is used for both psx and pspeu
 // The E_ID() macro should be used when psx uses a constant value, but pspeu
-// uses a bss reference
+// sometimes uses a bss reference
 enum OVL_EXPORT(Entities) {
     E_NONE,
     E_BREAKABLE,                 // DAI_EntityBreakable,
@@ -127,7 +127,7 @@ enum OVL_EXPORT(Entities) {
     E_CONFESSIONAL_GHOST,        // EntityConfessionalGhost,
     E_CONFESSIONAL_BLADES,       // EntityGhostBlades,
     E_CONFESSIONAL_BLADE_DEBRIS, // EntityGhostBladeDebris,
-    E_BELL_HELPER,               // EntityBellHelper,
+    E_BELL_SPAWNER,              // EntityBellSpawner,
     E_CORNER_GUARD,              // EntityCornerGuard,
     E_UNK_28,                    // func_us_801D1C24,
     E_BONE_PILLAR_HEAD,          // EntityBonePillarHead,
@@ -175,10 +175,8 @@ extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
-// extern EInit g_EInitUnused801809A4;
 extern EInit g_EInitStatueBlock;
 extern EInit g_EInitConfessionalGhost;
-// extern EInit g_EInitUnused801809C8;
 extern EInit g_EInitConfessionalBlades;
 extern EInit g_EInitCornerGuard;
 extern EInit D_us_801809EC;

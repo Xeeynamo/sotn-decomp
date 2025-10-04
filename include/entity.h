@@ -3388,13 +3388,13 @@ typedef struct {
 } ET_SkullLord;
 
 typedef struct {
-    s32 pada;
-    u32 swingStep;
-    s32 unk84;
-    s32 unk88;
-    s32 unk8C;
-    s32 padb[3];
-    u32 unk9C;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ u32 step;
+    /* 0x84 */ s32 swingDistance;
+    /* 0x88 */ s32 swingVelocity;
+    /* 0x8C */ s32 maxSwing;
+    /* 0x90 */ s32 pad[3];
+    /* 0x9C */ u32 ringTimer;
 } ET_Bell;
 
 typedef struct {
@@ -3837,7 +3837,7 @@ typedef union { // offset=0x7C
     ET_Yorick yorick;
     ET_YorickSkull yorickSkull;
     ET_SkullLord skullLord;
-    ET_Bell et_bell;
+    ET_Bell bell;
     ET_Unk41EE4 unk41EE4;
     ET_ConfessionalGhost confessionalGhost;
     ET_CornerGuard cornerGuard;

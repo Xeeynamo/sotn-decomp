@@ -152,5 +152,5 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutHorizontal = &D_8D2E2B0;
     g_pStObjLayoutVertical = &D_8D2E384;
     func_892A018();
-    memcpy(&g_api, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
 }
