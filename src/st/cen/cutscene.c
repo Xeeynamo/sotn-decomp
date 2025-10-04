@@ -36,8 +36,15 @@ static s16 D_801805F4[] = {
 static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
 static const char _pad[4] = "";
 #else
-extern u16 D_hd_80180684[]; // actorNames
-extern u8 D_hd_801806B8;    // actorNameLength
+// clang-format off
+static u16 actor_names[] = {
+    0x71, 0x99, 0x76, 0x70, 0x8084,
+    0x8F, 0x98, 0x71, 0x65, 0x97, 0x70, 0x88, 0x6F, 0x8084,
+    0x7C, 0x6C, 0x8C, 0x84,
+    0x7B, 0x77, 0x6D, 0x808A, 0x7D};
+// clang-format on
+static u8 actor_prims[] = {6, 10, 4, 6};
+static u8 actor_name_len[] = {5, 9, 4, 5};
 #endif
 
 extern Dialogue g_Dialogue;
@@ -46,15 +53,10 @@ extern u32 g_CutsceneFlags;
 extern u32 D_8019D428;
 
 #include "../cutscene_unk1.h"
-
 #include "../set_cutscene_script.h"
-
 #include "../cutscene_unk3.h"
-
 #include "../cutscene_unk4.h"
-
 #include "../cutscene_actor_name.h"
-
 #include "../set_cutscene_end.h"
 
 #define CUTSCENE_TILEMAP_SCROLL
