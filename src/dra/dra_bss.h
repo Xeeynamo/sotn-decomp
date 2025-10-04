@@ -1,28 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 
-// BSS TODO 5D5BC.c, 627C4.c
-extern u32 D_8013799C;
-extern s32 D_801379A0;
-extern s32 D_801379A4[2];
-
 // BSS shared between 627C4.c and 63ED4.c
-extern Unkstruct_80102CD8 D_801379AC;
-extern s32 D_801379B8;
-extern s32 D_801379BC;
-extern SVECTOR D_801379C0;
-extern SVECTOR D_801379C8;
-extern VECTOR D_801379D0;
-extern VECTOR D_801379E0[20];
-extern VECTOR D_80137B20[24];
-extern SVECTOR D_80137CA0[20];
-extern SVECTOR D_80137D40[24];
-extern MATRIX D_80137E00;
-extern MATRIX D_80137E20;
-extern s32 D_80137E40;
-extern s32 D_80137E44;
-extern s32 D_80137E48;
-extern s32 D_80137E4C;
 extern s32 g_MemCardRetryCount;
 extern s32 D_80137E54;
 extern s32 D_80137E58;
