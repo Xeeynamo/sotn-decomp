@@ -458,6 +458,35 @@ typedef enum {
     PLAYER_STATUS_UNK80000000 = 0x80000000, // exclusive to Maria
 } PlayerStateStatus;
 
+// Flags for g_Player.vram_flag
+// 0x01: touching the ground
+// 0x02: touching the ceiling
+// 0x04: touching the right wall
+// 0x08: touching the left wall
+// 0x20: in-air or near the edge
+// 0x0800: touching the ceiling slope
+// 0x1000: standing on a slightly ascending or descending slope
+// 0x4000: standing on a raising slope
+// 0x8000: standing on any slope
+typedef enum {
+    TOUCHING_GROUND = 1 << 0,
+    TOUCHING_CEILING = 1 << 1,
+    TOUCHING_R_WALL = 1 << 2,
+    TOUCHING_L_WALL = 1 << 3,
+    VRAM_FLAG_UNK10 = 1 << 4,
+    IN_AIR_OR_EDGE = 1 << 5,
+    VRAM_FLAG_UNK40 = 1 << 6,
+    VRAM_FLAG_UNK80 = 1 << 7,
+    VRAM_FLAG_UNK100 = 1 << 8,
+    VRAM_FLAG_UNK200 = 1 << 9,
+    VRAM_FLAG_UNK400 = 1 << 10,
+    TOUCHING_CEILING_SLOPE = 1 << 11,
+    TOUCHING_SLIGHT_SLOPE = 1 << 12,
+    VRAM_FLAG_UNK2000 = 1 << 13,
+    TOUCHING_RAISING_SLOPE = 1 << 14,
+    TOUCHING_ANY_SLOPE = 1 << 15
+} PlayerVramFlag;
+
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
@@ -1964,18 +1993,7 @@ typedef struct {
     /* 80072EF8 */ u32 D_80072EF8;
     /* 80072EFC */ s32 demo_timer; // player frozen timer
     /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
-
-    // 0x01: touching the ground
-    // 0x02: touching the ceiling
-    // 0x04: touching the right wall
-    // 0x08: touching the left wall
-    // 0x20: in-air or near the edge
-    // 0x0800: touching the ceiling slope
-    // 0x1000: standing on a slightly ascending or descending slope
-    // 0x4000: standing on a raising slope
-    // 0x8000: standing on any slope
-    /* 80072F20 */ s32 vram_flag;
-
+    /* 80072F20 */ PlayerVramFlag vram_flag;
     /* 80072F24 */ s32 unk04; // copy of the previous field
     /* 80072F28 */ s32 unk08;
     /* 80072F2C */ PlayerStateStatus status;
