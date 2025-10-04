@@ -133,9 +133,7 @@
 | dra   | func_80131F68                            |       17 |          2 |        | https://decomp.me/scratch/eERF0 | 0.38  |
 | dra   | func_psp_0913D5A8                        |       17 |          3 |        |                                 |       |
 | dra   | func_800F53A4                            |       17 |          4 |        |                                 |       |
-| dra   | 624DC.rodata                             |       18 |          0 | Yes    |                                 |       |
-| dra   | 628AC.rodata                             |       18 |          0 | Yes    |                                 |       |
-| dra   | 62EB8.rodata                             |       18 |          0 | Yes    |                                 |       |
+| dra   | 62DEC.rodata                             |       18 |          0 | Yes    |                                 |       |
 | dra   | 84B88.rodata                             |       18 |          0 | Yes    |                                 |       |
 | dra   | 8A0A4.rodata                             |       18 |          0 | Yes    |                                 |       |
 | dai   | cutscene_init.rodata                     |       18 |          0 | Yes    |                                 |       |
@@ -733,6 +731,7 @@
 | ric   | func_pspeu_092B05A8                      |       43 |          8 |        |                                 |       |
 | dra   | DebugInputWait                           |       43 |          9 |        |                                 |       |
 | dra   | func_psp_0910A9D0                        |       43 |         11 |        |                                 |       |
+| dra   | 624DC.rodata                             |       44 |          0 | Yes    |                                 |       |
 | chi   | en_venus_weed.rodata                     |       44 |          0 | Yes    |                                 |       |
 | dra   | SetVolumeCommand22_23                    |       44 |          3 |        |                                 |       |
 | st0   | func_pspeu_0924BB08                      |       44 |          3 |        |                                 |       |
@@ -2141,7 +2140,6 @@
 | no3   | EntityHeartRoomGoldDoor                  |      308 |         41 |        |                                 |       |
 | dra   | func_psp_09112E48                        |      309 |         43 | Yes    | https://decomp.me/scratch/UBBLN | 0.983 |
 | dra   | func_psp_090E4370                        |      310 |         19 |        | https://decomp.me/scratch/Dm0dt | 0.993 |
-| dra   | func_psp_090E2A78                        |      310 |         32 | Yes    | https://decomp.me/scratch/NaHl4 | 0.999 |
 | dra   | func_psp_090DD688                        |      310 |         46 | Yes    |                                 |       |
 | no3   | EntityFlyingOwlAndLeaves                 |      310 |         46 |        | https://decomp.me/scratch/Wkub1 | 0.945 |
 | dra   | EntityStopWatchExpandingCircle           |      312 |         24 |        | https://decomp.me/scratch/zcGFK | 1.0   |
@@ -2171,6 +2169,7 @@
 | np3   | EntityMermanWaterSplash                  |      324 |         34 |        | https://decomp.me/scratch/bBJhZ | 0.997 |
 | st0   | func_pspeu_09241708                      |      325 |          7 |        |                                 |       |
 | cat   | func_pspeu_09261BB8                      |      327 |         36 |        |                                 |       |
+| dra   | func_psp_090E2A78                        |      329 |         32 | Yes    | https://decomp.me/scratch/NaHl4 | 0.999 |
 | no2   | func_pspeu_0925B278                      |      330 |         40 |        | https://decomp.me/scratch/TynoM | 1.0   |
 | cat   | EntityThornweed                          |      330 |         47 | Yes    |                                 |       |
 | chi   | EntityThornweed                          |      330 |         47 | Yes    |                                 |       |
