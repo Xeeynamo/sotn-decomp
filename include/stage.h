@@ -135,14 +135,6 @@ typedef struct {
     /* 0x0C */ ConfessionalGhostAnimSet* animations;
 } ConfessionalGhostParams;
 
-/* Used in dai/e_bell
-typedef struct {
-    s16 ropeSegments;
-    s16 ropeLength;
-    s16 priority;
-} BellParams;
-*/
-
 // Used in dai/e_hunting_girl
 typedef struct {
     s16 x;
