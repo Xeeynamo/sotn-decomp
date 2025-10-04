@@ -2447,7 +2447,7 @@ void EntityTeleport(Entity* self) {
             var_s5 = true;
             self->step = Player_Unk20;
 #ifndef VERSION_PSP
-            PlaySfx(SFX_UNK_8BB);
+            PlaySfx(SFX_TELEPORT_SYNTH_DOWN);
 #endif
         } else {
             self->ext.teleport.unk90 = 0;
@@ -2456,7 +2456,7 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.colorIntensity = 0x80;
             self->step = 1;
             PlaySfx(SFX_TELEPORT_BANG_A);
-            PlaySfx(NA_SE_PL_TELEPORT);
+            PlaySfx(SFX_TELEPORT_SYNTH_UP);
         }
         break;
     case 1:
@@ -2532,7 +2532,7 @@ void EntityTeleport(Entity* self) {
         var_s5 = true;
         if (--self->ext.teleport.timer == 0) {
 #ifdef VERSION_PSP
-            PlaySfx(SFX_UNK_8BB);
+            PlaySfx(SFX_TELEPORT_SYNTH_DOWN);
 #endif
             self->step++;
         }

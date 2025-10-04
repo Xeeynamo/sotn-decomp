@@ -270,11 +270,18 @@ enum {
 #define NA_SE_VO_DR_HURT_2 0x85B
 #define NA_SE_VO_DR_HURT_3 0x85C
 #define NA_SE_VO_DR_HURT_4 0x85D
-#define NA_SE_PL_TELEPORT 0x8BA
-#define SFX_UNK_8BB 0x8BB
-#define NA_SE_CS_BURNING_PHOTOGRAPH 0x8BE
 // plays every 10 frames while using bible subweapon
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
+
+// STAGE CAT
+#define SFX_LOSSOTH_NAPALM_GRUNT 0x734
+#define SFX_LOSSOTH_DEATH 0x735
+#define SFX_GRAVE_KEEPER_GRAAH 0x754
+#define SFX_GRAVE_KEEPER_HIYAH 0x755
+#define SFX_GRAVE_KEEPER_DEATH 0x756
+#define SFX_DISCUS_LORD_HEY 0x763
+#define SFX_DISCUS_LORD_DEATH_VORTEX 0x764
+#define SFX_DISCUS_BUZZ 0x765
 
 // STAGE DAI
 // Unknown SFX related to the priest
@@ -676,11 +683,20 @@ enum Sfx {
     SFX_TELESCOPE_SHUTTER_CLICK = 0x7AC,
     SFX_ALU_ZZZ_SNORE,
     SFX_UNK_7AF = 0x7Af,
+    SFX_ELEVATOR_DOOR = 0x7B1,
+    SFX_ELEVATOR_SLAM = 0x7B3,
+    SFX_ELEVATOR_START = 0x7B5,
+    SFX_BAD_LUCK_JINGLE,
+    SFX_NO1_BIRD_CYCLE,
     SFX_CHAPEL_BELL = 0x7BC,
     SFX_UNK_7BD = 0x7BD,
     SFX_UNK_7BE = 0x7BE,
     SFX_SCIFI_BLAST = 0x7D1,
     SFX_BOSS_DEFEATED,
+    SFX_TELEPORT_SYNTH_UP = 0x8BA,
+    SFX_TELEPORT_SYNTH_DOWN,
+    SFX_BURNING_PHOTOGRAPH = 0x8BE,
+    SFX_UI_NAME_ENTRY = 0x8CD,
 
     // Exclusive to Maria PSP
     /* 0x8E6 */ SFX_VO_MAR_8E6 = 0x8E6,
@@ -702,5 +718,12 @@ enum Sfx {
 };
 
 #endif
+
+// related to SFX
+typedef struct {
+    /* 0x00 */ s16 sndId;
+    /* 0x02 */ u16 sndVol;
+    /* 0x04 */ s16 sndPan;
+} SfxRingBufferItem;
 
 #endif

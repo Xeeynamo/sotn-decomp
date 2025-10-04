@@ -2,49 +2,60 @@
 #include "common.h"
 #include "libsnd_i.h"
 
-void _SsGetSeqData(s16 arg0, s16 arg1);
-void _SsContPortamento(s16 arg0, s16 arg1, s32 arg2);
+void _SsGetMetaEvent(s16, s16, u8);
+void _SsNoteOn(s16, s16, s32, s32);
+s32 _SsReadDeltaValue(s16, s16);
+void _SsSetPitchBend(s16, s16);
+void _SsSetProgramChange(s16, s16, u8);
+void _SsGetSeqData(s16, s16);
+void _SsContPortamento(s16, s16, u8);
+void _SsSndSetVabAttr(s16, s16, s16, VagAtr, struct Unk, short, unsigned char);
+void _SsSetControlChange(s16, s16, u8);
+void _SsContDataEntry(s16, s16, u8);
+void _SsContNrpn2(s16, s16, u8);
+void _SsContRpn1(s16, s16, u8);
+void _SsContRpn2(s16, s16, u8);
+void _SsContResetAll(s16, s16);
+void _SsContNrpn1(s16, s16, s16);
+void SpuVmDamperOff();
+void SpuVmDamperOn();
+void SpuVmSetProgVol(s16, u8, u8);
+void SpuVmSetVol(s32, s16, u8, s16, s32);
+void SpuVmKeyOff(s16, s16, u8, s32);
+void SpuVmKeyOn(s16, s16, u8, s32, s32, s32);
+void SpuVmPitchBend(s32, s16, u8, u8);
 
 void _SsSeqPlay(s16 arg0, s16 arg1) {
-    struct SeqStruct* temp_s1;
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
     s32 var_s0;
 
-    temp_s1 = &_ss_score[arg0][arg1];
-    if (temp_s1->delta_value - temp_s1->unk70 > 0) {
-        if (temp_s1->unk6E > 0) {
-            temp_s1->unk6E--;
-        } else if (temp_s1->unk6E == 0) {
-            temp_s1->unk6E = temp_s1->unk70;
-            temp_s1->delta_value--;
+    if (score->delta_value - score->unk70 > 0) {
+        if (score->unk6E > 0) {
+            score->unk6E--;
+        } else if (score->unk6E == 0) {
+            score->unk6E = score->unk70;
+            score->delta_value--;
         } else {
-            temp_s1->delta_value -= temp_s1->unk70;
+            score->delta_value -= score->unk70;
         }
-    } else if (temp_s1->delta_value <= temp_s1->unk70) {
-        var_s0 = temp_s1->delta_value;
+    } else if (score->delta_value <= score->unk70) {
+        var_s0 = score->delta_value;
         do {
             do {
                 _SsGetSeqData(arg0, arg1);
-            } while (temp_s1->delta_value == 0);
-            var_s0 += temp_s1->delta_value;
-        } while (var_s0 < temp_s1->unk70);
-        temp_s1->delta_value = var_s0 - temp_s1->unk70;
+            } while (score->delta_value == 0);
+            var_s0 += score->delta_value;
+        } while (var_s0 < score->unk70);
+        score->delta_value = var_s0 - score->unk70;
     }
 }
 
-void _SsGetMetaEvent(s16, s16, u8);
-void _SsNoteOn(s16 arg0, s16 arg1, s32 arg2, s32 arg3);
-s32 _SsReadDeltaValue(s16, s16);
-void _SsSetControlChange(s16 arg0, s16 arg1, s32 arg2);
-void _SsSetPitchBend(s16, s16);
-void _SsSetProgramChange(s16 arg0, s16 arg1, u8 arg2);
-
 void _SsGetSeqData(s16 arg0, s16 arg1) {
-    struct SeqStruct* score;
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
     u8 temp_s0;
     u8 temp_s0_2;
     u8 var_s3;
 
-    score = &_ss_score[arg0][arg1];
     temp_s0 = *score->read_pos++;
     if (temp_s0 & 0x80) {
         score->channel = temp_s0 & 0xF;
@@ -98,204 +109,165 @@ void _SsGetSeqData(s16 arg0, s16 arg1) {
     }
 }
 
-void SpuVmKeyOff(s16, s16, u8, s32);
-void SpuVmKeyOn(s16, s16, u8, s32, s32, s32);
-
 void _SsNoteOn(s16 arg0, s16 arg1, s32 arg2, s32 arg3) {
-    s32 temp_a0;
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
+    u8 channel = score->channel;
     s32 temp_s1;
-    u8 channel;
     u8 pan;
-    struct SeqStruct* temp_s0;
-    temp_s0 = &_ss_score[arg0][arg1];
+
     pan = arg3;
-    channel = temp_s0->channel;
     temp_s1 = pan & 0xFF;
-    pan = temp_s0->panpot[channel];
-    if ((!((temp_s0->padaa >> channel) & 1)) && (temp_s0->unk74 != 0)) {
-        if (arg3 & 0xFF) {
-            SpuVmKeyOn(arg0 | (arg1 << 8), temp_s0->unk4c,
-                       temp_s0->programs[channel], arg2 & 0xFF, temp_s1, pan);
-            temp_s0->padA6 = temp_s1;
-            return;
-        }
-        SpuVmKeyOff(arg0 | (arg1 << 8), temp_s0->unk4c,
-                    temp_s0->programs[channel], arg2 & 0xFF);
+    pan = score->panpot[channel];
+    if ((score->padaa >> channel) & 1 || score->unk74 == 0) {
+        return;
+    }
+    if (arg3 & 0xFF) {
+        SpuVmKeyOn(arg0 | (arg1 << 8), score->unk4c, score->programs[channel],
+                   arg2 & 0xFF, temp_s1, pan);
+        score->padA6 = temp_s1;
+    } else {
+        SpuVmKeyOff(arg0 | (arg1 << 8), score->unk4c, score->programs[channel],
+                    arg2 & 0xFF);
     }
 }
 
-s32 _SsReadDeltaValue(s16, s16);
-
 void _SsSetProgramChange(s16 arg0, s16 arg1, u8 arg2) {
-    struct SeqStruct* temp_s0;
-    temp_s0 = &_ss_score[arg0][arg1];
-    temp_s0->programs[temp_s0->channel] = arg2;
-    temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
+    score->programs[score->channel] = arg2;
+    score->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
-void SpuVmDamperOff();
-void SpuVmDamperOn();
-void SpuVmSetProgVol(s16, u8, u8);
-void SpuVmSetVol(s32, s16, u8, s16, s32);
-void _SsContDataEntry(s16, s16, u8);
-void _SsContNrpn2(s16, s16, u8);
-void _SsContRpn1(s16, s16, u8);
-void _SsContRpn2(s16, s16, u8);
-void _SsContResetAll(s16 arg0, s16 arg1);
-void _SsContNrpn1(s16 arg0, s16 arg1, s16 arg2);
+void _SsSetControlChange(s16 arg0, s16 arg1, u8 control) {
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
+    s16 channel = score->channel;
+    s16 val = *score->read_pos++;
 
-void _SsSetControlChange(s16 arg0, s16 arg1, s32 arg2) {
-    u32 control;
-    s16 val;
-    s16 channel;
-    u8* read_pos;
-    struct SeqStruct* score;
-
-    control = arg2 & 0xFF;
-    score = &_ss_score[arg0][arg1];
-    read_pos = score->read_pos;
-    channel = score->channel;
-    score->read_pos++;
-    val = *read_pos;
     switch (control) {
     case 0x0:
         score->unk4c = val;
         score->delta_value = _SsReadDeltaValue(arg0, arg1);
-        return;
+        break;
     case 0x6:
         _SsContDataEntry(arg0, arg1, val);
-        return;
+        break;
     case 0x7:
         SpuVmSetVol((arg1 << 8) | arg0, score->unk4c, score->programs[channel],
                     val, score->panpot[channel]);
         score->vol[channel] = val;
         score->delta_value = _SsReadDeltaValue(arg0, arg1);
-        return;
+        break;
     case 0xA:
         SpuVmSetVol((arg1 << 8) | arg0, score->unk4c, score->programs[channel],
                     score->vol[channel], val);
         score->panpot[channel] = val;
         score->delta_value = _SsReadDeltaValue(arg0, arg1);
-        return;
+        break;
     case 0xB:
         SpuVmSetProgVol(score->unk4c, score->programs[channel], val);
         SpuVmSetVol((arg1 << 8) | arg0, score->unk4c, score->programs[channel],
                     score->vol[channel], score->panpot[channel]);
         score->delta_value = _SsReadDeltaValue(arg0, arg1);
-        return;
+        break;
     case 0x40:
-        if (val < 0x40U) {
+        if (val >= 0 && val < 0x40) {
             SpuVmDamperOff();
         } else {
             SpuVmDamperOn();
         }
         score->delta_value = _SsReadDeltaValue(arg0, arg1);
-        return;
+        break;
     case 0x41:
         _SsContPortamento(arg0, arg1, val);
-        return;
+        break;
     case 0x5B:
         SsUtSetReverbDepth(val, val);
         score->delta_value = _SsReadDeltaValue(arg0, arg1);
-        return;
+        break;
     case 0x62:
         _SsContNrpn1(arg0, arg1, val);
-        return;
+        break;
     case 0x63:
         _SsContNrpn2(arg0, arg1, val);
-        return;
+        break;
     case 0x64:
         _SsContRpn1(arg0, arg1, val);
-        return;
+        break;
     case 0x65:
         _SsContRpn2(arg0, arg1, val);
-        return;
+        break;
     case 0x79:
         _SsContResetAll(arg0, arg1);
-        return;
+        break;
     default:
         score->delta_value = _SsReadDeltaValue(arg0, arg1);
-        return;
+        break;
     }
 }
 
 void _SsContModulation(s16 arg0, s16 arg1, u8 arg2) {
-    ProgAtr sp10;
-    VagAtr sp20;
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
+    u8 channel = score->channel;
+    ProgAtr progAtr;
+    VagAtr vagAtr;
     s32 toneNum;
-    struct SeqStruct* temp_s2;
-    u8 channel;
 
-    temp_s2 = &_ss_score[arg0][arg1];
-    channel = temp_s2->channel;
-    SsUtGetProgAtr(temp_s2->unk4c, temp_s2->programs[channel], &sp10);
-    for (toneNum = 0; toneNum < sp10.tones; toneNum++) {
-        SsUtGetVagAtr(
-            temp_s2->unk4c, temp_s2->programs[channel], toneNum, &sp20);
-        sp20.vibW = arg2;
-        SsUtSetVagAtr(
-            temp_s2->unk4c, temp_s2->programs[channel], toneNum, &sp20);
+    SsUtGetProgAtr(score->unk4c, score->programs[channel], &progAtr);
+    for (toneNum = 0; toneNum < progAtr.tones; toneNum++) {
+        SsUtGetVagAtr(score->unk4c, score->programs[channel], toneNum, &vagAtr);
+        vagAtr.vibW = arg2;
+        SsUtSetVagAtr(score->unk4c, score->programs[channel], toneNum, &vagAtr);
     }
-    temp_s2->delta_value = _SsReadDeltaValue(arg0, arg1);
+    score->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
 void _SsContPortaTime(s16 arg0, s16 arg1, u8 arg2) {
-    ProgAtr sp10;
-    VagAtr sp20;
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
+    u8 channel = score->channel;
+    ProgAtr progAtr;
+    VagAtr vagAtr;
     s32 toneNum;
-    struct SeqStruct* temp_s2;
-    u8 channel;
 
-    temp_s2 = &_ss_score[arg0][arg1];
-    channel = temp_s2->channel;
-    SsUtGetProgAtr(temp_s2->unk4c, temp_s2->programs[channel], &sp10);
-    for (toneNum = 0; toneNum < sp10.tones; toneNum++) {
-        SsUtGetVagAtr(
-            temp_s2->unk4c, temp_s2->programs[channel], toneNum, &sp20);
-        sp20.porT = arg2;
-        SsUtSetVagAtr(
-            temp_s2->unk4c, temp_s2->programs[channel], toneNum, &sp20);
+    SsUtGetProgAtr(score->unk4c, score->programs[channel], &progAtr);
+    for (toneNum = 0; toneNum < progAtr.tones; toneNum++) {
+        SsUtGetVagAtr(score->unk4c, score->programs[channel], toneNum, &vagAtr);
+        vagAtr.porT = arg2;
+        SsUtSetVagAtr(score->unk4c, score->programs[channel], toneNum, &vagAtr);
     }
-    temp_s2->delta_value = _SsReadDeltaValue(arg0, arg1);
+    score->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
-void _SsContPortamento(s16 arg0, s16 arg1, s32 arg2) {
-    struct ProgAtr sp10;
-    struct VagAtr sp20;
-    s32 var_s0;
-    u8 channel;
-    struct SeqStruct* temp_s2;
-    u8 new_var;
-    temp_s2 = &_ss_score[arg0][arg1];
-    channel = temp_s2->channel;
-    SsUtGetProgAtr(temp_s2->unk4c, temp_s2->programs[channel], &sp10);
-    for (var_s0 = 0; var_s0 < sp10.tones; var_s0++) {
-        new_var = channel;
-        SsUtGetVagAtr(
-            temp_s2->unk4c, temp_s2->programs[new_var], var_s0, &sp20);
-        if ((arg2 & 0xFF) < 0x40U) {
-            sp20.mode = 2;
-        } else if (((arg2 + 0xC0) & 0xFF) < 0x40U) {
-            sp20.mode = 0;
+void _SsContPortamento(s16 arg0, s16 arg1, u8 arg2) {
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
+    u8 channel = score->channel;
+    ProgAtr progAtr;
+    VagAtr vagAtr;
+    s32 toneNum;
+
+    SsUtGetProgAtr(score->unk4c, score->programs[channel], &progAtr);
+    for (toneNum = 0; toneNum < progAtr.tones; toneNum++) {
+        SsUtGetVagAtr(score->unk4c, score->programs[channel], toneNum, &vagAtr);
+        if (arg2 >= 0 && arg2 < 0x40) {
+            vagAtr.mode = 2;
+        } else if (arg2 >= 0x40 && arg2 < 0x80) {
+            vagAtr.mode = 0;
         }
-        SsUtSetVagAtr(
-            temp_s2->unk4c, temp_s2->programs[new_var], var_s0, &sp20);
+        SsUtSetVagAtr(score->unk4c, score->programs[channel], toneNum, &vagAtr);
     }
 
-    temp_s2->delta_value = _SsReadDeltaValue(arg0, arg1);
+    score->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
 void _SsContResetAll(s16 arg0, s16 arg1) {
-    struct SeqStruct* temp_s0;
-    temp_s0 = &_ss_score[arg0][arg1];
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
+
     SsUtReverbOff();
     SpuVmDamperOff();
-    temp_s0->programs[temp_s0->channel] = temp_s0->channel;
-    temp_s0->unk13 = 0;
-    temp_s0->unk14 = 0;
-    temp_s0->vol[temp_s0->channel] = 0x7f;
-    temp_s0->panpot[temp_s0->channel] = 64;
-    temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
+    score->programs[score->channel] = score->channel;
+    score->unk13 = 0;
+    score->unk14 = 0;
+    score->vol[score->channel] = 0x7f;
+    score->panpot[score->channel] = 0x40;
+    score->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
 typedef void (*SndSsMarkCallbackProc)(short seq_no, short sep_no, short data);
@@ -303,88 +275,85 @@ typedef void (*SndSsMarkCallbackProc)(short seq_no, short sep_no, short data);
 extern SndSsMarkCallbackProc _SsMarkCallback[32][16];
 
 void _SsContNrpn1(s16 arg0, s16 arg1, s16 arg2) {
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
     SndSsMarkCallbackProc temp_v0;
-    struct SeqStruct* temp_s0;
-    temp_s0 = &_ss_score[arg0][arg1];
-    if ((temp_s0->unk27 == 1) && (temp_s0->unk10 == 0)) {
-        temp_s0->unk28 = arg2;
-        temp_s0->unk10 = 1U;
+
+    if ((score->unk27 == 1) && (score->unk10 == 0)) {
+        score->unk28 = arg2;
+        score->unk10 = 1;
     } else {
-        if (temp_s0->unk16 != 0x1E) {
-            if (temp_s0->unk16 != 0x14) {
-                temp_s0->unk15 = arg2;
-                temp_s0->unk2a++;
+        if (score->unk16 != 0x1E) {
+            if (score->unk16 != 0x14) {
+                score->unk15 = arg2;
+                score->unk2a++;
             }
         }
     }
-    if (temp_s0->unk16 == 0x28) {
+    if (score->unk16 == 0x28) {
         temp_v0 = _SsMarkCallback[arg0][arg1];
         if (temp_v0 != NULL) {
             temp_v0(arg0, arg1, arg2 & 0xFF);
         }
     }
-    temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
+    score->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
 #define NRPN_LOOP_START 20
 #define NRPN_LOOP_END 30
 
 void _SsContNrpn2(s16 arg0, s16 arg1, u8 arg2) {
-    struct SeqStruct* temp_s0;
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
 
-    temp_s0 = &_ss_score[arg0][arg1];
     switch (arg2) {
     case NRPN_LOOP_START:
-        temp_s0->unk16 = arg2;
-        temp_s0->unk27 = 1;
-        temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
-        temp_s0->loop_pos = temp_s0->read_pos;
+        score->unk16 = arg2;
+        score->unk27 = 1;
+        score->delta_value = _SsReadDeltaValue(arg0, arg1);
+        score->loop_pos = score->read_pos;
         break;
 
     case NRPN_LOOP_END:
-        temp_s0->unk16 = arg2;
-        if (temp_s0->unk28 == 0) {
-            temp_s0->unk10 = 0;
-            temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
-        } else if (temp_s0->unk28 < 0x7FU) {
-            temp_s0->unk28--;
-            temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
-            if (temp_s0->unk28 != 0) {
-                temp_s0->read_pos = temp_s0->loop_pos;
+        score->unk16 = arg2;
+        if (score->unk28 == 0) {
+            score->unk10 = 0;
+            score->delta_value = _SsReadDeltaValue(arg0, arg1);
+        } else if (score->unk28 < 0x7FU) {
+            score->unk28--;
+            score->delta_value = _SsReadDeltaValue(arg0, arg1);
+            if (score->unk28 != 0) {
+                score->read_pos = score->loop_pos;
             } else {
-                temp_s0->unk10 = 0;
+                score->unk10 = 0;
             }
         } else {
             _SsReadDeltaValue(arg0, arg1);
-            temp_s0->delta_value = 0;
-            temp_s0->read_pos = temp_s0->loop_pos;
+            score->delta_value = 0;
+            score->read_pos = score->loop_pos;
         }
         break;
 
     default:
-        temp_s0->unk16 = arg2;
-        temp_s0->unk2a += 1;
-        temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
+        score->unk16 = arg2;
+        score->unk2a += 1;
+        score->delta_value = _SsReadDeltaValue(arg0, arg1);
         break;
     }
 }
 
 void _SsContRpn1(s16 arg0, s16 arg1, u8 arg2) {
-    struct SeqStruct* temp_s0;
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
 
-    temp_s0 = &_ss_score[arg0][arg1];
-    temp_s0->unk13 = arg2;
-    temp_s0->unk29 += 1;
-    temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
+    score->unk13 = arg2;
+    score->unk29 += 1;
+    score->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
 void _SsContRpn2(s16 arg0, s16 arg1, u8 arg2) {
-    struct SeqStruct* temp_s0;
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
 
-    temp_s0 = &_ss_score[arg0][arg1];
-    temp_s0->unk14 = arg2;
-    temp_s0->unk29 += 1;
-    temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
+    score->unk14 = arg2;
+    score->unk29 += 1;
+    score->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
 INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContDataEntry);
@@ -412,39 +381,33 @@ INCLUDE_ASM("main/nonmatchings/psxsdk/libsnd/seqread", _SsContDataEntry);
 
 void _SsSndSetVabAttr(s16 vabId, s16 progNum, s16 toneNum, VagAtr vagAtr,
                       struct Unk adsrBuffer, short idx, unsigned char attr) {
-    s16 temp;
     SsUtGetVagAtr(vabId, progNum, toneNum, &vagAtr);
-    switch ((s16)idx) {
+    switch (idx) {
     case DE_PRIORITY:
         vagAtr.prior = attr;
         SsUtSetVagAtr(vabId, progNum, toneNum, &vagAtr);
-        return;
+        break;
     case DE_MODE:
         vagAtr.mode = attr;
         SsUtSetVagAtr(vabId, progNum, toneNum, &vagAtr);
 
         if (attr == 0) {
             SsUtReverbOff();
-            return;
         } else if (attr == 1) {
-            return;
         } else if (attr == 2) {
-            return;
         } else if (attr == 3) {
-            return;
         } else if (attr == 4) {
             SsUtReverbOn();
-            return;
         }
         break;
     case DE_LIMITL:
         vagAtr.min = attr;
         SsUtSetVagAtr(vabId, progNum, toneNum, &vagAtr);
-        return;
+        break;
     case DE_LIMITH:
         vagAtr.max = attr;
         SsUtSetVagAtr(vabId, progNum, toneNum, &vagAtr);
-        return;
+        break;
     case DE_ADSR_AR_L:
     case DE_ADSR_AR_E:
     case DE_ADSR_DR:
@@ -456,68 +419,65 @@ void _SsSndSetVabAttr(s16 vabId, s16 progNum, s16 toneNum, VagAtr vagAtr,
     case DE_ADSR_SR:
     case DE_VIB_TIME:
     case DE_PORTA_DEPTH:
-        temp = idx - 4;
         _SsUtResolveADSR(vagAtr.adsr1, vagAtr.adsr2, &adsrBuffer);
-        switch (temp) {
-        case 0:
+        switch (idx) {
+        case DE_ADSR_AR_L:
             adsrBuffer.unkA = 0;
             adsrBuffer.unk0 = attr;
             break;
-        case 1:
+        case DE_ADSR_AR_E:
             adsrBuffer.unkA = 1;
             adsrBuffer.unk0 = attr;
             break;
-        case 2:
+        case DE_ADSR_DR:
             adsrBuffer.unk2 = attr;
             break;
-        case 3:
+        case DE_ADSR_SL:
             adsrBuffer.unk4 = attr;
             break;
-        case 4:
+        case DE_ADSR_SR_L:
             adsrBuffer.unkC = 0;
             adsrBuffer.unk6 = attr;
             break;
-        case 5:
+        case DE_ADSR_SR_E:
             adsrBuffer.unkC = 1;
             adsrBuffer.unk6 = attr;
             break;
-        case 6:
+        case DE_ADSR_RR_L:
             adsrBuffer.unkE = 0;
             adsrBuffer.unk8 = attr;
             break;
-        case 7:
+        case DE_ADSR_RR_E:
             adsrBuffer.unkE = 1;
             adsrBuffer.unk8 = attr;
             break;
-        case 8:
-            if (attr != 0 && attr < 64) {
+        case DE_ADSR_SR:
+            if (attr > 0 && attr < 0x40) {
                 adsrBuffer.unk10 = 0;
-                break;
-            }
-            if ((attr - 64) < 64U) {
+            } else if (attr >= 0x40 && attr < 0x80) {
                 adsrBuffer.unk10 = 1;
             }
             break;
-        case 9:
+        case DE_VIB_TIME:
             vagAtr.vibT = attr;
             break;
-        case 10:
+        case DE_PORTA_DEPTH:
             vagAtr.porW = attr;
             break;
         }
 
         _SsUtBuildADSR(&adsrBuffer, &vagAtr.adsr1, &vagAtr.adsr2);
         SsUtSetVagAtr(vabId, progNum, toneNum, &vagAtr);
-        return;
+        break;
     case DE_REV_TYPE:
         SsUtSetReverbType(attr);
-        return;
+        break;
     case DE_REV_DEPTH:
         SsUtSetReverbDepth(attr, attr);
-        return;
+        break;
     case DE_ECHO_FB:
         SsUtSetReverbFeedback(attr);
-        return;
+        break;
     case DE_ECHO_DELAY:
     case DE_DELAY:
         SsUtSetReverbDelay(attr);
@@ -529,25 +489,20 @@ void _SsSndSetVabAttr(s16 vabId, s16 progNum, s16 toneNum, VagAtr vagAtr,
     }
 }
 
-void SpuVmPitchBend(s32, s16, u8, u8);
-s32 _SsReadDeltaValue(s16, s16);
-
 void _SsSetPitchBend(s16 arg0, s16 arg1) {
-    struct SeqStruct* temp_s0;
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
+    u8 channel = score->channel;
     u8* temp_v1;
-    u8 channel;
-    temp_s0 = &_ss_score[arg0][arg1];
-    channel = temp_s0->channel;
-    temp_v1 = temp_s0->read_pos++;
-    SpuVmPitchBend((arg1 << 8) | arg0, temp_s0->unk4c,
-                   temp_s0->programs[channel], *temp_v1);
-    temp_s0->delta_value = _SsReadDeltaValue(arg0, arg1);
+
+    temp_v1 = score->read_pos++;
+    SpuVmPitchBend(
+        (arg1 << 8) | arg0, score->unk4c, score->programs[channel], *temp_v1);
+    score->delta_value = _SsReadDeltaValue(arg0, arg1);
 }
 
 void _SsGetMetaEvent(s16 arg0, s16 arg1, u8 arg2) {
-    struct SeqStruct* score;
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
 
-    score = &_ss_score[arg0][arg1];
     switch (arg2) {
     case 0x51:
         score->unk8c = (*score->read_pos++) << 0x10 |
@@ -603,11 +558,12 @@ void _SsGetMetaEvent(s16 arg0, s16 arg1, u8 arg2) {
 }
 
 s32 _SsReadDeltaValue(s16 arg0, s16 arg1) {
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
     s32 temp_v0;
     u8 temp_v1_2;
     u32 var_a0;
-    struct SeqStruct* temp_a1 = &_ss_score[arg0][arg1];
-    var_a0 = *temp_a1->read_pos++;
+
+    var_a0 = *score->read_pos++;
     if (var_a0 == 0) {
         return 0;
     }
@@ -616,12 +572,12 @@ s32 _SsReadDeltaValue(s16 arg0, s16 arg1) {
     if (var_a0 & 0x80) {
         var_a0 &= 0x7F;
         do {
-            temp_v1_2 = *temp_a1->read_pos++;
+            temp_v1_2 = *score->read_pos++;
             var_a0 = (var_a0 << 7) + (temp_v1_2 & 0x7F);
         } while (temp_v1_2 & 0x80);
     }
 
     temp_v0 = var_a0 * 10;
-    temp_a1->unk80 += temp_v0;
+    score->unk80 += temp_v0;
     return temp_v0;
 }

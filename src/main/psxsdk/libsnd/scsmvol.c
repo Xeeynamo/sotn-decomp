@@ -4,7 +4,7 @@
 void SsSetMVol(short voll, short volr) {
     SpuCommonAttr attr;
     attr.mask = SPU_COMMON_MVOLL | SPU_COMMON_MVOLR;
-    attr.mvol.left = 129 * voll;
-    attr.mvol.right = 129 * volr;
+    attr.mvol.left = 0x81 * voll;
+    attr.mvol.right = 0x81 * volr;
     SpuSetCommonAttr(&attr);
 }

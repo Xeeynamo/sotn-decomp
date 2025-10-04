@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-static s8 g_hitbox[][2] = {{0, 0},  {0, 0},  {16, 6}, {8, 4},  {18, 6},
-                           {16, 3}, {0, 10}, {0, 10}, {0, 10}, {0, 0}};
+static s8 hitbox[][2] = {{0, 0},  {0, 0},  {16, 6}, {8, 4},  {18, 6},
+                         {16, 3}, {0, 10}, {0, 10}, {0, 10}, {0, 0}};
 
 static bool StepTowards(s16* val, s32 target, s32 step) {
     if (abs(*val - target) < step) {
@@ -453,7 +453,7 @@ void EntitySpectralSwordWeapon(Entity* self) {
         self->drawFlags = FLAG_DRAW_DEFAULT;
     }
     angle = self->rotate + 1024;
-    hitboxPtr = g_hitbox[self->animCurFrame];
+    hitboxPtr = hitbox[self->animCurFrame];
     hitboxRadius = *hitboxPtr++;
     self->hitboxWidth = self->hitboxHeight = *hitboxPtr;
     self->hitboxOffX = (hitboxRadius * rcos(angle)) >> 12;

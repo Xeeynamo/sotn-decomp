@@ -1559,7 +1559,7 @@ AnimationFrame* D_us_80183CB4[] = {
     &D_us_80183BC0, &D_us_80183C08, &D_us_80183C60, &D_us_801822BC,
 };
 
-AnimationFrame* D_800B0594[] = {
+AnimationFrame* g_DopAnimationFrames[] = {
     &D_us_801821B4, &D_us_801821E0, &D_us_80182274, &D_us_801822F8,
     &D_us_801823F8, &D_us_80182864, &D_us_80182904, &D_us_80182990,
     &D_us_801829CC, &D_us_80182A30, &D_us_80182960, &D_us_80182AD4,

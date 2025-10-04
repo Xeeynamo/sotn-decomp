@@ -1,7 +1,5 @@
-#ifndef STDARG_H
-#define STDARG_H
-
-typedef int* va_list;
+#ifndef _STDARG_H
+#define _STDARG_H
 
 #define __va_rounded_size(TYPE)                                                \
     (((sizeof(TYPE) + sizeof(int) - 1) / sizeof(int)) * sizeof(int))
@@ -15,4 +13,6 @@ typedef int* va_list;
     (AP = ((char*)(AP)) += __va_rounded_size(TYPE),                            \
      *((TYPE*)((char*)(AP) - __va_rounded_size(TYPE))))
 
-#endif // STDARG_H
+typedef void* va_list;
+
+#endif /* _STDARG_H */

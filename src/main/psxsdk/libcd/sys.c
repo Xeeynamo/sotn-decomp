@@ -84,11 +84,10 @@ CdlCB CdReadyCallback(CdlCB func) {
 }
 
 static inline cd_cw(u8 com, u8* param, Result_t* result, s32 arg3) {
-    s32 i;
-
     CdlCB old = CD_cbsync;
+    int count = 4;
 
-    for (i = 3; i != -1; i--) {
+    while (count--) {
         CD_cbsync = NULL;
         if (com != CdlNop && (CdStatus() & CdlStatShellOpen)) {
             CD_cw(CdlNop, NULL, NULL, 0);

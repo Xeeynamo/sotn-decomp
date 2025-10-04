@@ -38,13 +38,3 @@
 // order.
 #define DRAW_QUAD(textureIndex, v1, v2, v4, v3, priority)                      \
     (textureIndex), (v1), (v2), (v4), (v3), (priority)
-
-typedef struct {
-    u8 u0, v0, u1, v1, u2, v2;
-    u16 clut;
-} ClockTowerData;
-
-typedef struct {
-    u8 u, v, w, h;
-    u16 clut;
-} ClockTowerData2;

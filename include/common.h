@@ -1,29 +1,7 @@
 #ifndef COMMON_H
 #define COMMON_H
 
-#if defined(_internal_version_us)
-#define VERSION_US
-#define VERSION "us"
-#elif defined(_internal_version_hd)
-#define VERSION_HD
-#define VERSION "hd"
-#elif defined(_internal_version_pspeu)
-#define VERSION_PSP
-// use this to flag code as only non-psp due to deadstripping.
-// will make it easier to restore stripped code if we ever work out a
-// solution for doing proper deadstripping like the original.
-#define PSP_DEADSTRIP
-#define VERSION "psp"
-#define NOP                                                                    \
-    static asm nop_##line##() { nop }
-#elif defined(_internal_version_beta)
-#define VERSION_BETA
-#define VERSION "beta"
-#else
-#warning "Version not specified. Falling back to the US version."
-#define VERSION_US
-#define VERSION "us"
-#endif
+#include <version.h>
 
 #ifndef M2CTX
 #if defined(_MSC_VER)
@@ -70,9 +48,11 @@
 #ifndef _MSC_VER
 #define STATIC_ASSERT _Static_assert
 #define PACKED __attribute__((packed))
+#define UNUSED __attribute__((unused))
 #else
 #define STATIC_ASSERT(x, ...)
 #define PACKED
+#define UNUSED
 #endif
 #define ASSERT(x) assert(x)
 
@@ -80,12 +60,12 @@
 #define ASSERT(x)
 #define STATIC_ASSERT(x, y)
 #define PACKED
-
+#define UNUSED
 #else
 #define ASSERT(x)
 #define STATIC_ASSERT(x, ...)
 #define PACKED
-
+#define UNUSED
 #endif
 
 #define LOH(x) (*(s16*)&(x))

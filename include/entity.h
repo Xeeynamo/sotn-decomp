@@ -2378,16 +2378,6 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 attackTimer;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
-    /* 0x90 */ s32 unk90;
-} ET_OuijaTable;
-
-typedef struct {
-    /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s32 spawned;
@@ -2395,7 +2385,7 @@ typedef struct {
     /* 0x8C */ s16 : 16;
     /* 0x8E */ s16 unk8E;
     /* 0x90 */ s32 isThrown;
-} ET_OuijaTableContents;
+} ET_OuijaTable;
 
 typedef struct {
     /* 0x7C */ s16 unk7C;
@@ -3414,7 +3404,7 @@ typedef struct {
     s16 unk84;
     s16 unk86;
     s16 unk88;
-} ET_Priest;
+} ET_ConfessionalGhost;
 
 typedef struct {
     struct Primitive* prim;
@@ -3492,6 +3482,67 @@ typedef struct {
     /* 0xA0 */ u8 deathColorCycle;
     /* 0xA1 */ u8 largeSlimeDying;
 } ET_Slime;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ u8 thrownDisc;
+    /* 0x81 */ u8 angle;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u32 unk84;
+    /* 0x88 */ u32 unk88;
+    /* 0x8C */ s16 unk8C;
+    /* 0x8E */ s16 unk8E;
+    /* 0x90 */ struct Primitive* lastPrim;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 unk96;
+    /* 0x98 */ u32 unk98;
+    /* 0x9C */ s16 unk9C;
+    /* 0x9E */ s16 unk9E;
+    /* 0xA0 */ struct Primitive* unkA0;
+    /* 0xA4 */ struct Entity* entity;
+    /* 0xA8 */ s32 unkA8;
+    /* 0xAC */ s32 unkAC;
+} ET_DiscusLord;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 walkTimer;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u8 kickHitPlayer;
+    /* 0x85 */ u8 resetColliderEffects;
+} ET_GraveKeeper;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ struct Entity* unk9C;
+    /* 0xA0 */ struct Primitive* unkA0;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ u16 : 16;
+    /* 0xA8 */ struct Entity* lossothEntity;
+} ET_Lossoth;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ struct Primitive* unk9C;
+    /* 0xA0 */ f32 unkA0;
+    /* 0xA4 */ u8 paletteOffset;
+    /* 0xA5 */ u8 unkA5;
+} ET_LossothNapalmFlare;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3697,7 +3748,6 @@ typedef union { // offset=0x7C
     ET_BackgroundVortex bgVortex;
     ET_MedusaUnk1A medusaUnk1A;
     ET_OuijaTable ouijaTable;
-    ET_OuijaTableContents ouijaTableContents;
     ET_FleaMan fleaMan;
     ET_Ctulhu ctulhu;
     ET_StoneRose stoneRose;
@@ -3789,13 +3839,17 @@ typedef union { // offset=0x7C
     ET_SkullLord skullLord;
     ET_Bell et_bell;
     ET_Unk41EE4 unk41EE4;
-    ET_Priest priest;
+    ET_ConfessionalGhost confessionalGhost;
     ET_CornerGuard cornerGuard;
     ET_BoneHalberd boneHalberd;
     ET_Spikes spikes;
     ET_HuntingGirl huntingGirl;
     ET_Slime slime;
     ET_StainedGlass stainedGlass;
+    ET_DiscusLord discusLord;
+    ET_GraveKeeper graveKeeper;
+    ET_Lossoth lossoth;
+    ET_LossothNapalmFlare lossothNapalm;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

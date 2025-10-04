@@ -1,7 +1,29 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-void func_us_801C0BA4(Entity* self) {
+// Towers (T1, T2, T3) count from left to right
+// Skyway is the corridor between T1 and T2
+enum ExitLocation {
+    T1_TO_SKYWAY,
+    TO_SPIKES_HALL,
+    TO_NO2,
+    TOWARD_STAIRS,
+    TO_CONFESSIONAL,
+    SKYWAY_TO_T1,
+    SPIKES_HALL_TO_T1, // These two could
+    SKYWAY_TO_T2,      // be swapped
+    BO5_TO_T2,
+    BO5_TO_T3,
+    T2_TO_SKYWAY,
+    T2_TO_BO5,
+    T3_TO_BO5,
+    TO_TOP,
+    TO_SAVE,
+};
+
+// Handles when the screen transition is not at the edge of the screen when
+// leaving dai towers, but does not seem to handle transition into the towers.
+void EntityTowerExit(Entity* self) {
     s32 unkX;
     s16 params = self->params;
     s16 offsetY;
@@ -14,10 +36,10 @@ void func_us_801C0BA4(Entity* self) {
     case 0:
         InitializeEntity(g_EInitCommon);
         break;
-    case 1:
-    case 2:
-    case 3:
-    case 4:
+    case 1: // It seems that the specific exit logic will be run 3 times before
+    case 2: // the entity goes dormant
+    case 3: // Starting at step 1 after initialization, it falls through to step
+    case 4: // 4 and the specific params case increments self->step each time
         offsetY = self->posY.i.hi - PLAYER.posY.i.hi;
         deltaY = abs(offsetY);
 #ifdef VERSION_PSP
@@ -25,19 +47,19 @@ void func_us_801C0BA4(Entity* self) {
 #else
         if (deltaY < 48) {
             if (g_Player.status & PLAYER_STATUS_DEAD) {
-                PLAYER.velocityX = 0;
+                PLAYER.velocityX = NULL;
                 return;
             }
 #endif
             switch (params) {
-            case 0:
+            case T1_TO_SKYWAY:
                 if ((g_PlayerX > 640) && (unkX > 640)) {
                     g_Tilemap.width = 640;
                     g_Tilemap.right--;
                     self->step++;
                 }
                 break;
-            case 1:
+            case TO_SPIKES_HALL:
                 if ((g_PlayerX < 384) && (unkX < 384)) {
                     g_Tilemap.x = 384;
                     g_Tilemap.left++;
@@ -45,14 +67,14 @@ void func_us_801C0BA4(Entity* self) {
                     self->step++;
                 }
                 break;
-            case 2:
+            case TO_NO2:
                 if ((g_PlayerX > 768) && (unkX > 768)) {
                     g_Tilemap.width = 768;
                     g_Tilemap.right--;
                     self->step++;
                 }
                 break;
-            case 3:
+            case TOWARD_STAIRS:
                 if ((g_PlayerX < 256) && (unkX < 256)) {
                     g_Tilemap.x = 256;
                     g_Tilemap.left++;
@@ -60,44 +82,44 @@ void func_us_801C0BA4(Entity* self) {
                     self->step++;
                 }
                 break;
-            case 4:
+            case TO_CONFESSIONAL:
                 if ((g_PlayerX > 768) && (unkX > 768)) {
                     g_Tilemap.width = 768;
                     g_Tilemap.right--;
                     self->step++;
                 }
                 break;
-            case 5:
+            case SKYWAY_TO_T1:
                 if ((g_PlayerX < 128) && (unkX < 128)) {
                     g_Tilemap.x = 128;
                     self->step++;
                 }
                 break;
-            case 6:
+            case SPIKES_HALL_TO_T1:
                 if ((g_PlayerX > 1152) && (unkX > 1152)) {
                     g_Tilemap.width = 1152;
                     self->step++;
                 }
                 break;
-            case 7:
+            case SKYWAY_TO_T2:
                 if ((g_PlayerX > 1152) && (unkX > 1152)) {
                     g_Tilemap.width = 1152;
                     self->step++;
                 }
                 break;
-            case 8:
+            case BO5_TO_T2:
                 if ((g_PlayerX < 128) && (unkX < 128)) {
                     g_Tilemap.x = 128;
                     self->step++;
                 }
                 break;
-            case 9:
+            case BO5_TO_T3:
                 if ((g_PlayerX > 640) && (unkX > 640)) {
                     g_Tilemap.width = 640;
                     self->step++;
                 }
                 break;
-            case 10:
+            case T2_TO_SKYWAY:
                 if ((g_PlayerX < 384) && (unkX < 384)) {
                     g_Tilemap.x = 384;
                     g_Tilemap.left++;
@@ -105,14 +127,14 @@ void func_us_801C0BA4(Entity* self) {
                     self->step++;
                 }
                 break;
-            case 11:
+            case T2_TO_BO5:
                 if ((g_PlayerX > 640) && (unkX > 640)) {
                     g_Tilemap.width = 640;
                     g_Tilemap.right--;
                     self->step++;
                 }
                 break;
-            case 12:
+            case T3_TO_BO5:
                 if ((g_PlayerX < 384) && (unkX < 384)) {
                     g_Tilemap.x = 384;
                     g_Tilemap.left++;
@@ -120,14 +142,14 @@ void func_us_801C0BA4(Entity* self) {
                     self->step++;
                 }
                 break;
-            case 13:
+            case TO_TOP:
                 if ((g_PlayerX > 768) && (unkX > 768)) {
                     g_Tilemap.width = 768;
                     g_Tilemap.right--;
                     self->step++;
                 }
                 break;
-            case 14:
+            case TO_SAVE:
                 if ((g_PlayerX > 768) && (unkX > 768)) {
                     g_Tilemap.width = 768;
                     g_Tilemap.right--;

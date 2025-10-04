@@ -43,11 +43,7 @@ Callback setIntrVSync(int index, Callback callback) {
 }
 
 void VSync_memclr(int* ptr, int size) {
-    int i;
-    int* e = ptr;
-
-    for (i = size - 1; i != -1; i--) {
-        *e = 0;
-        e++;
+    while (size--) {
+        *ptr++ = 0;
     }
 }

@@ -3,10 +3,9 @@
 #include "libsnd_i.h"
 
 void _SsSndDecrescendo(s16 arg0, s16 arg1) {
+    struct SeqStruct* score = &_ss_score[arg0][arg1];
     u16 voll, volr;
-    struct SeqStruct* score;
 
-    score = &_ss_score[arg0][arg1];
     score->unk98--;
 
     if (score->unk42 > 0) {

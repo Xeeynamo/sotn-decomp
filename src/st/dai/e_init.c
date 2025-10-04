@@ -22,22 +22,22 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801C0BA4(Entity* self);
-void func_us_801D97D0(Entity* self);
+void EntityTowerExit(Entity* self);
+void EntityStainedGlass(Entity* self);
 void func_us_801D9F5C(Entity* self);
 void EntityBlock(Entity* self);
 void EntityStatue(Entity* self);
 void EntityBell(Entity* self);
-void func_us_801C1EE4(Entity* self);
-void func_us_801C2068(Entity* self);
-void func_us_801C220C(Entity* self);
+void EntityCastleWall1(Entity* self);
+void EntityCastleWall2(Entity* self);
+void EntityStaircase(Entity* self);
 void EntityClouds(Entity* self);
-void func_us_801C34FC(Entity* self);
-void func_us_801C23A4(Entity* self);
+void EntityBackgroundSkyLand(Entity* self);
+void EntityGargoyleStatue(Entity* self);
 void EntityChair(Entity* self);
-void EntityPriest(Entity* self);
-void EntityPriestBlades(Entity* self);
-void EntityPriestBladeDebris(Entity* self);
+void EntityConfessionalGhost(Entity* self);
+void EntityConfessionalBlades(Entity* self);
+void EntityConfessionalBladeDebris(Entity* self);
 void EntityBellHelper(Entity* self);
 void EntityCornerGuard(Entity* self);
 void func_us_801D1C24(Entity* self);
@@ -45,7 +45,7 @@ void EntityBonePillarHead(Entity* self);
 void EntityBonePillarFireBreath(Entity* self);
 void EntityBonePillarDeathParts(Entity* self);
 void EntityBonePillarSpikeBall(Entity* self);
-void func_us_801C3644(Entity* self);
+void EntityEndConfessionalChime(Entity* self);
 void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
@@ -96,22 +96,22 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801C0BA4,
-    func_us_801D97D0,
+    EntityTowerExit,
+    EntityStainedGlass,
     func_us_801D9F5C,
     EntityBlock,
     EntityStatue,
     EntityBell,
-    func_us_801C1EE4,
-    func_us_801C2068,
-    func_us_801C220C,
+    EntityCastleWall1,
+    EntityCastleWall2,
+    EntityStaircase,
     EntityClouds,
-    func_us_801C34FC,
-    func_us_801C23A4,
+    EntityBackgroundSkyLand,
+    EntityGargoyleStatue,
     EntityChair,
-    EntityPriest,
-    EntityPriestBlades,
-    EntityPriestBladeDebris,
+    EntityConfessionalGhost,
+    EntityConfessionalBlades,
+    EntityConfessionalBladeDebris,
     EntityBellHelper,
     EntityCornerGuard,
     func_us_801D1C24,
@@ -119,7 +119,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBonePillarFireBreath,
     EntityBonePillarDeathParts,
     EntityBonePillarSpikeBall,
-    func_us_801C3644,
+    EntityEndConfessionalChime,
     EntitySpikes,
     EntitySpikesParts,
     EntitySpikesDust,
@@ -158,12 +158,14 @@ EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 2};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 1};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
-EInit g_EInit_801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3}; // Unused
+EInit g_EInitUnused801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3};
 // This seems to be used as a common init and should probably be renamed
 EInit g_EInitStatueBlock = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
-EInit g_EInitPriest = {ANIMSET_OVL(2), 0, 72, PAL_UNK_C9, 5};
-EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_UNK_CA, 5}; // Unused
-EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_UNK_C9, 101};
+EInit g_EInitConfessionalGhost = {
+    ANIMSET_OVL(2), 0, 72, PAL_CONFESSIONAL_C9, 5};
+EInit g_EInitUnused801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_801809C8, 5};
+EInit g_EInitConfessionalBlades = {
+    ANIMSET_OVL(2), 37, 72, PAL_CONFESSIONAL_C9, 101};
 EInit g_EInitCornerGuard = {ANIMSET_OVL(4), 0, 72, PAL_CORNER_GUARD, 180};
 EInit D_us_801809EC = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 181};
 EInit g_EInitBonePillarHead = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 183};

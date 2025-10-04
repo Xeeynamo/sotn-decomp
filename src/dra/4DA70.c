@@ -66,7 +66,7 @@ s32 func_800EDB58(u8 primType, s32 count) {
 
     var_v1 = count;
     primStartIdx = 0;
-    for (i = 0, prim = g_PrimBuf; i < 0x400; prim++, i++) {
+    for (i = 0, prim = g_PrimBuf; i < MAX_PRIM_ALLOC_COUNT; prim++, i++) {
         if (prim->type != PRIM_NONE) {
             primStartIdx = i + 1;
             var_v1 = count;

@@ -3,25 +3,7 @@
 #include "libspu_internal.h"
 #include <psxsdk/kernel.h>
 
-struct SpuRevAttr {
-    s32 unk0;
-    s32 unk18;
-    s16 unk1c;
-    s16 unk1e;
-    s32 unk20;
-    s32 unk24;
-};
-
 extern s32 _spu_fd;
-extern s32 _spu_trans_mode;
-extern s32 _spu_rev_flag;
-extern s32 _spu_rev_reserve_wa;
-extern s32 _spu_rev_offsetaddr;
-extern struct SpuRevAttr _spu_rev_attr;
-extern u16 _spu_voice_centerNote[];
-extern s32 _spu_EVdma;
-extern s32 _spu_keystat;
-extern s32 _spu_rev_startaddr[];
 
 void SpuStart(void);
 
@@ -30,7 +12,7 @@ void _SpuInit(s32 arg0) {
     ResetCallback();
     _spu_init(arg0);
     if (arg0 == 0) {
-        for (i = 0; i < 0x18; i++) {
+        for (i = 0; i < NUM_SPU_CHANNELS; i++) {
             _spu_voice_centerNote[i] = 0xC000;
         }
     }
@@ -50,16 +32,13 @@ void _SpuInit(s32 arg0) {
 }
 
 void SpuStart(void) {
-    int event;
-
     if (_spu_isCalled == 0) {
         _spu_isCalled = 1;
         EnterCriticalSection();
         D_80033098 = 0;
         _SpuDataCallback(_spu_FiDMA);
-        event = OpenEvent(HwSPU, EvSpCOMP, EvMdNOINTR, NULL);
-        _spu_EVdma = event;
-        EnableEvent(event);
+        _spu_EVdma = OpenEvent(HwSPU, EvSpCOMP, EvMdNOINTR, NULL);
+        EnableEvent(_spu_EVdma);
         ExitCriticalSection();
     }
 }

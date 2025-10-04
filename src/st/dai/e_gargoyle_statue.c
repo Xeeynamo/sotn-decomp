@@ -2,10 +2,11 @@
 #include "dai.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_21);
+extern s32 E_ID(GARGOYLE_STATUE);
 #endif
 
-void func_us_801C23A4(Entity* self) {
+// Gargoyle statues at top of Hippogryph room
+void EntityGargoyleStatue(Entity* self) {
     Entity* entity;
     s32 count;
     s32 tileIdx;
@@ -23,7 +24,7 @@ void func_us_801C23A4(Entity* self) {
             return;
         }
         entity = self + 1;
-        CreateEntityFromEntity(E_ID(UNK_21), self, entity);
+        CreateEntityFromEntity(E_ID(GARGOYLE_STATUE), self, entity);
         entity->params = 2;
         entity->posY.i.hi = 160;
         if (self->params) {

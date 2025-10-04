@@ -457,6 +457,44 @@ set(SOURCE_FILES_STAGE_WRP
     src/st/wrp/bss.c
 )
 
+SET(SOURCE_FILES_BOSS_BO4
+    src/pc/bosses/boss_bo4.c
+    src/boss/bo4/background_block_init.c
+    src/boss/bo4/collision.c
+    src/boss/bo4/create_entity.c
+    src/boss/bo4/doors.c
+    src/boss/bo4/dop_anim.c
+    src/boss/bo4/doppleganger.c
+    src/boss/bo4/doppleganger_anim.c
+    src/boss/bo4/d_prize_drops.c
+    src/boss/bo4/e_breakable.c
+    src/boss/bo4/e_collect.c
+    src/boss/bo4/e_init.c
+    src/boss/bo4/e_life_up.c
+    src/boss/bo4/e_lock_camera.c
+    src/boss/bo4/e_misc.c
+    src/boss/bo4/e_particles.c
+    src/boss/bo4/e_red_door.c
+    src/boss/bo4/e_red_door_tiles.c
+    src/boss/bo4/e_room_bg.c
+    src/boss/bo4/e_room_fg.c
+    src/boss/bo4/e_stage_name.c
+    src/boss/bo4/gen/e_laydef.c
+    src/boss/bo4/gen/e_layout.c
+    src/boss/bo4/gen/rooms.c
+    src/boss/bo4/header.c
+    src/boss/bo4/popup.c
+    src/boss/bo4/prim_helpers.c
+    src/boss/bo4/spritesheets.c
+    src/boss/bo4/st_common.c
+    src/boss/bo4/st_update.c
+    src/boss/bo4/tile_data.c
+    src/boss/bo4/unk_365FC.c
+    src/boss/bo4/unk_45354.c
+    src/boss/bo4/unk_46E7C.c
+    src/boss/bo4/bss.c
+)
+
 set(SOURCE_FILES_WEAPON
     src/weapon/w_000.c
     src/weapon/w_002.c
@@ -503,6 +541,7 @@ set(SOURCE_FILES_CORE
     ${SOURCE_FILES_STAGE_CEN}
     ${SOURCE_FILES_STAGE_NZ0}
     ${SOURCE_FILES_STAGE_ST0}
+    ${SOURCE_FILES_BOSS_BO4}
     ${SOURCE_FILES_STAGE_WRP}
     ${SOURCE_FILES_WEAPON}
     ${SOURCE_FILES_TT_000}

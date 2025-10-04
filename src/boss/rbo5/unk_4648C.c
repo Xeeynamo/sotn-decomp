@@ -1,10 +1,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rbo5.h"
-#include "../../dra/mist.h"
 #include "../../dra/subwpn_dagger.h"
 
-// n.b.! this is the same as bo4/unk_46E7C.c
+// Used in dra/7E4BC, dra/bss, rbo5/unk_4648C, bo4/unk_46E7C
+typedef struct {
+    f32 posX;
+    f32 posY;
+    s16 angle1;
+    s16 angle2;
+    s16 size;
+    s16 xOffset;
+    s16 yOffset;
+    s16 pad;
+} mistStruct; // size = 0x14
 
+// n.b.! this is the same as bo4/unk_46E7C.c
 void func_us_801C648C(s32 arg0) {
     s32 move = DOPPLEGANGER.facingLeft != 0 ? -3 : 3;
 
@@ -1199,7 +1209,9 @@ void DopplegangerStepStone(s32 arg0) {
     }
 }
 
+#ifndef VERSION_PC
 #include "../../get_free_entity.h"
+#endif
 
 // this is the same as unionD_800ACFB4 in DRA
 typedef union {
@@ -1553,7 +1565,7 @@ void func_us_801C9624(void) {
                 DestroyEntity(g_CurrentEntity);
             } else {
                 if (entity->flags & FLAG_UNK_20000000) {
-                    UpdateAnim(0, &D_us_801813F8[0].af);
+                    OVL_EXPORT(UpdateAnim)(0, &D_us_801813F8[0].af);
                 }
                 entity->flags |= FLAG_NOT_AN_ENEMY;
             }
@@ -4519,7 +4531,7 @@ void EntitySubwpnReboundStone(Entity* self) {
     }
 }
 
-s32 UpdateUnarmedAnim(s8*, AnimationFrame*);
+s32 OVL_EXPORT(UpdateUnarmedAnim)(s8*, AnimationFrame*);
 extern EInit D_us_80180454;
 extern EInit D_us_80180460;
 extern DopWeaponAnimation D_us_80184304[];
@@ -4561,7 +4573,7 @@ void DopplegangerUnarmedAttack(Entity* self) {
     if (DOPPLEGANGER.poseTimer == 1 && DOPPLEGANGER.pose == anim->soundFrame) {
         g_api.PlaySfx(anim->soundId);
     }
-    if (UpdateUnarmedAnim(anim->frameProps, anim->frames) < 0) {
+    if (OVL_EXPORT(UpdateUnarmedAnim)(anim->frameProps, anim->frames) < 0) {
         DestroyEntity(self);
     }
 }

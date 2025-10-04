@@ -1,0 +1,101 @@
+options:
+  platform: psx
+  basename: bobo6
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/BOSS/BO6/BO6.BIN
+  asm_path: asm/us/boss/bo6
+  asset_path: assets/boss/bo6
+  src_path: src/boss/bo6
+  ld_script_path: build/us/bobo6.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.bobo6.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.bobo6.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.bobo6.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x80010000
+sha1: fe067af9b7adca08dc99b108129a0f45a7ad45cd
+segments:
+  - name: bobo6
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x328, .data, e_init]
+      - [0x4D8, data, background_block_init]
+      - [0x510, .data, e_red_door_tiles]
+      - [0x530, .data, e_lock_camera]
+      - [0x5B0, .data, e_breakable]
+      - [0x610, data, d_prize_drops]
+      - [0x618, data, cutscene]
+      - [0x6C8, .data, st_update]
+      - [0x714, .data, collision]
+      - [0xAD4, .data, e_red_door]
+      - [0xAEC, .data, st_common]
+      - [0xCEC, .data, e_collect]
+      - [0x1040, .data, e_misc]
+      - [0x10F8, .data, e_particles]
+      - [0x1178, .data, e_room_fg]
+      - [0x1204, .data, gen/rooms]
+      - [0x1210, data, richter]
+      - [0x1284, data, us_39144]
+      - [0x2F70, .data, e_life_up]
+      - [0x2FC4, data, gen/e_layout]
+      - [0x303C, data]
+      - [0x1F9A0, data, tile_data]
+      - [0x239B0, data]
+      - [0x26320, .rodata, cutscene]
+      - [0x263A4, .rodata, e_cutscene_actors]
+      - [0x263D0, .rodata, e_red_door]
+      - [0x263E8, .rodata, e_collect]
+      - [0x264BC, .rodata, e_stage_name]
+      - [0x264F0, .rodata, richter]
+      - [0x26C18, .rodata, us_39144]
+      - [0x27044, .rodata, prim_helpers]
+      - [0x2704C, .rodata, e_life_up]
+      - [0x27068, c, e_room_bg]
+      - [0x27130, c, e_lock_camera]
+      - [0x272EC, c, e_breakable]
+      - [0x27420, c, cutscene]
+      - [0x28FC0, c, e_cutscene_actors]
+      - [0x29B54, c, st_update]
+      - [0x29F88, c, collision]
+      - [0x2B744, c, create_entity]
+      - [0x2C2BC, c, e_red_door]
+      - [0x2CF6C, c, st_common]
+      - [0x2E41C, c, e_collect]
+      - [0x30D80, c, e_misc]
+      - [0x3311C, c, e_stage_name]
+      - [0x33F70, c, e_particles]
+      - [0x347B4, c, e_room_fg]
+      - [0x348A0, c, popup]
+      - [0x34BD0, c, richter]
+      - [0x39134, c, unused]
+      - [0x39144, c, us_39144]
+      - [0x4D674, c, prim_helpers]
+      - [0x4DEA4, c, e_life_up]
+      - [0x4E758, bss] # unused
+      - [0x4E7B8, .bss, create_entity]
+      - [0x4E7C8, bss] # unused
+      - [0x4FCC8, bss, ritcher]
+      - [0x507FC, bss, us_39144]
+      - [0x516A8, .bss, e_collect]
+  - [0x516E8]

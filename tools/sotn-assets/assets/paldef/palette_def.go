@@ -29,7 +29,11 @@ func (h *handler) Name() string { return "paldef" }
 
 func (h *handler) Extract(e assets.ExtractArgs) error {
 	r := bytes.NewReader(e.Data)
-	clutAddr := e.RamBase.Sum(e.End - 4)
+	alignment := 4
+	if sotn.GetPlatform() == sotn.PlatformPSP {
+		alignment = 8
+	}
+	clutAddr := e.RamBase.Sum(e.End - alignment)
 	if err := clutAddr.MoveFile(r, e.RamBase); err != nil {
 		return fmt.Errorf("invalid offset: %w", err)
 	}
