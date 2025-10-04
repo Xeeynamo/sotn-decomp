@@ -3408,10 +3408,6 @@ typedef struct {
 
 typedef struct {
     struct Primitive* prim;
-} ET_Unk41EE4;
-
-typedef struct {
-    struct Primitive* prim;
     s16 attackTimer;
     s16 sinePhase;
     u8 brightness;
@@ -3838,7 +3834,6 @@ typedef union { // offset=0x7C
     ET_YorickSkull yorickSkull;
     ET_SkullLord skullLord;
     ET_Bell bell;
-    ET_Unk41EE4 unk41EE4;
     ET_ConfessionalGhost confessionalGhost;
     ET_CornerGuard cornerGuard;
     ET_BoneHalberd boneHalberd;
