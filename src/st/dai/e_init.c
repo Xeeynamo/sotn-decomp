@@ -22,7 +22,7 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801C0BA4(Entity* self);
+void EntityTowerExit(Entity* self);
 void EntityStainedGlass(Entity* self);
 void func_us_801D9F5C(Entity* self);
 void EntityBlock(Entity* self);
@@ -32,7 +32,7 @@ void EntityCastleWall1(Entity* self);
 void EntityCastleWall2(Entity* self);
 void EntityStaircase(Entity* self);
 void EntityClouds(Entity* self);
-void func_us_801C34FC(Entity* self);
+void EntityBackgroundSkyLand(Entity* self);
 void EntityGargoyleStatue(Entity* self);
 void EntityChair(Entity* self);
 void EntityConfessionalGhost(Entity* self);
@@ -45,7 +45,7 @@ void EntityBonePillarHead(Entity* self);
 void EntityBonePillarFireBreath(Entity* self);
 void EntityBonePillarDeathParts(Entity* self);
 void EntityBonePillarSpikeBall(Entity* self);
-void func_us_801C3644(Entity* self);
+void EntityEndConfessionalChime(Entity* self);
 void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
@@ -96,7 +96,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801C0BA4,
+    EntityTowerExit,
     EntityStainedGlass,
     func_us_801D9F5C,
     EntityBlock,
@@ -106,7 +106,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCastleWall2,
     EntityStaircase,
     EntityClouds,
-    func_us_801C34FC,
+    EntityBackgroundSkyLand,
     EntityGargoyleStatue,
     EntityChair,
     EntityConfessionalGhost,
@@ -119,7 +119,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBonePillarFireBreath,
     EntityBonePillarDeathParts,
     EntityBonePillarSpikeBall,
-    func_us_801C3644,
+    EntityEndConfessionalChime,
     EntitySpikes,
     EntitySpikesParts,
     EntitySpikesDust,

@@ -239,17 +239,66 @@ files:
           - [0x24090, cmpgfx, stage_name_ge, 128, 64, 4]
           - [0x24360, cmpgfx, stage_name_fr, 128, 64, 4]
           - [0x2457C, skip]
+          - [0x2B2C8, sprite_banks, sprite_banks]
+          - [0x2B328, layers, layers]
+          - [0x2B608, palette, pal_stained_glass, 16] # 0x204
+          - [0x2B628, paldef, palette_def]
+          - [0x2B6F8, gfx_banks, graphics_banks]
+          - [0x2B8E0, skip]
+          - [0x2BC20, rooms, rooms]
           - [0x2BCF8, cutscene, cutscene_script_it]
-          - [0x2BE5C, skip] # trailing script data
+          - [0x2BE58, binary, cutscene_data_it]
           - [0x2BE70, cutscene, cutscene_script_sp]
-          - [0x2BFBC, skip] # trailing script data
+          - [0x2BFB0, binary, cutscene_data_sp]
           - [0x2BFC8, cutscene, cutscene_script_fr]
-          - [0x2C134, skip] # trailing script data
+          - [0x2C124, binary, cutscene_data_fr]
           - [0x2C138, cutscene, cutscene_script_ge]
-          - [0x2C2C4, skip] # trailing script data
+          - [0x2C2B4, binary, cutscene_data_ge]
           - [0x2C2C8, cutscene, cutscene_script_en]
-          - [0x2C428, skip] # trailing script data
-          - [0x2C4B8, skip]
+          - [0x2C41C, binary, cutscene_data_en]
+          - [0x2C430, skip]
+          # These gfx palette assignments are unconfirmed.
+          # They match psx, but the .png does not render correctly for psp.
+          - [0x2C588, cmpgfx, gfx_stage_name_jp_sm, 128, 128, 4]
+          - [0x2C880, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4]
+          - [0x2CD10, cmpgfx, gfx_confessional, 128, 128, 4]
+          - [0x2DF38, cmpgfx, gfx_chair, 128, 128, 4, 0x3ADF0]
+          - [0x2EB18, cmpgfx, gfx_corner_guard, 128, 128, 4, 0x3AE50]
+          - [0x2F4C0, cmpgfx, gfx_bone_pillar, 128, 128, 4, 0x3AE70]
+          - [0x30278, cmpgfx, gfx_bone_pillar_fire, 128, 128, 4, 0x3AEF0]
+          - [0x31060, cmpgfx, gfx_bone_halberd, 128, 128, 4, 0x3B1B0]
+          - [0x31B68, cmpgfx, gfx_winged_guard, 128, 128, 4, 0x3B1D0]
+          - [0x32530, cmpgfx, gfx_ghost_bat, 128, 128, 4, 0x3B1F0] # ghost palette
+          #- [0x32530, cmpgfx, gfx_ghost_bat, 128, 128, 4, 0x3B210] # bat palette
+          - [0x32FF8, cmpgfx, gfx_crow, 128, 128, 4, 0x3B250] # black crow palette
+          #- [0x32FF8, cmpgfx, gfx_crow, 128, 128, 4, 0x3B270] # blue raven palette
+          - [0x33690, cmpgfx, gfx_skelerang, 128, 128, 4, 0x3ADF0]
+          - [0x342E8, cmpgfx, gfx_skelerang_spittle_bone, 128, 128, 4, 0x3ADF0] # skelerang palette
+          #- [0x342E8, cmpgfx, gfx_skelerang_spittle_bone, 128, 128, 4, 0x3AE10] # spittle bone palette
+          - [0x34FE0, cmpgfx, gfx_hunting_girl, 128, 128, 4, 0x3B290]
+          - [0x35718, cmpgfx, gfx_spectral_sword, 128, 128, 4, 0x3B2F0]
+          - [0x36238, cmpgfx, gfx_breakable, 128, 128, 4, 0x3B5B0]
+          - [0x36BF0, rawgfx, gfx_portrait_alucard, 48, 72, 8, 0x3B6B0]
+          - [0x37970, rawgfx, gfx_portrait_maria, 48, 72, 8, 0x3B8B0]
+          - [0x386F0, cmpgfx, gfx_cutscene_1, 128, 128, 4, 0x3BAB0]
+          - [0x39820, cmpgfx, gfx_cutscene_2, 128, 128, 4, 0x3BAB0]
+          - [0x3A4E0, cmpgfx, gfx_sealed_door, 128, 128, 4, 0x3B4F0]
+          - [0x3ADF0, palette, pal_skelerang_spittle_bone, 16] # 0x200
+          - [0x3AE50, palette, pal_corner_guard, 16] # 0x215
+          - [0x3AE70, palette, pal_bone_pillar, 16] # 0x216
+          - [0x3AEF0, palette, pal_bone_pillar_fire, 16] # 0x21A, includes 0x221
+          - [0x3B1B0, palette, pal_bone_halberd, 16] # 0x22A
+          - [0x3B1D0, palette, pal_winged_guard, 16] # 0x22B
+          - [0x3B1F0, palette, pal_ghost_bat, 16] # 0x22C
+          - [0x3B250, palette, pal_crow, 16] # 0x22F
+          - [0x3B290, palette, pal_hunting_girl, 16] # 0x231
+          - [0x3B2F0, palette, pal_spectral_sword, 16] # 0x234
+          - [0x3B4F0, palette, pal_sealed_door, 16] # 0x244
+          - [0x3B5B0, palette, pal_breakable, 16] # 0x249
+          - [0x3B6B0, palette, pal_portrait_alucard, 16] # 0x258
+          - [0x3B8B0, palette, pal_portrait_maria, 16] # 0x260
+          - [0x3BAB0, palette, pal_cutscene, 16] # 0x251
+          - [0x3BAD0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
     asset_path: assets/st/lib
     src_path: src/st/lib_psp

@@ -14,7 +14,11 @@ static u8 SetCutsceneScript(u8* script) {
 
     if (g_Dialogue.primIndex[2] != -1) {
         g_Dialogue.scriptCur = script;
+#ifdef VERSION_HD
+        D_8019D374 = 0;
+#else
         g_Dialogue.unk3C = 0;
+#endif
         g_Dialogue.primIndex[1] = -1;
         g_Dialogue.primIndex[0] = -1;
         CutsceneUnk1();
@@ -33,7 +37,7 @@ static u8 SetCutsceneScript(u8* script) {
         prim->drawMode = DRAW_HIDE;
         prim = g_Dialogue.prim[4] = prim->next;
 
-#ifndef VERSION_PSP
+#if !defined(VERSION_PSP) && !defined(VERSION_HD)
         prim->drawMode = DRAW_HIDE;
         prim = g_Dialogue.prim[5] = prim->next;
 #endif

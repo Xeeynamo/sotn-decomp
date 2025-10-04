@@ -29,8 +29,8 @@ extern u8 OVL_EXPORT(cutscene_script)[];
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[]; // Defined by e_init
 #ifdef VERSION_PSP
 extern u_long D_pspeu_092970B8; // Defined by st_init
-extern u_long D_pspeu_0926E270;
-extern u_long D_pspeu_0926EFF0;
+extern u_long gfx_portrait_alucard;
+extern u_long gfx_portrait_maria;
 extern u_long D_893EA8C;
 extern u_long D_893F80C;
 extern u_long D_894058C;
@@ -567,10 +567,10 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 #ifdef VERSION_PSP
                         switch (ptr) {
                         case 0:
-                            ptr = (u_long)&D_pspeu_0926E270;
+                            ptr = (u_long)&gfx_portrait_alucard;
                             break;
                         case 1:
-                            ptr = (u_long)&D_pspeu_0926EFF0;
+                            ptr = (u_long)&gfx_portrait_maria;
                             break;
                         case 2:
                             ptr = (u_long)&D_893EA8C;
