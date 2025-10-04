@@ -1,58 +1,86 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-static s16 g_sensors[] = {0, 20, 0, 4, 4, -4, -8, 0};
-static s16 g_sensors2[] = {0, 20, 4, 0};
-// Possibly movement distance
-static s16 D_us_80181BA4[] = {-16, 38, 16, 6};
-// Possibly attack distance
-static s16 D_us_80181BAC[] = {32, 48, 64, 16};
-static u8 g_anim1[] = {5, 1, 5, 2, 5, 3, 5, 2, 0, 0, 0, 0};
-static u8 g_anim2[] = {
-    33, 1, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 1, 9, 33, 8, -1, 0, 0, 0};
-static u8 g_anim3[] = {1, 1,  1,  2,  1, 3, 1, 10, 1,  11, 1,  12,
-                       1, 13, 33, 12, 4, 3, 4, 2,  20, 1,  -1, 0};
-static u8 g_anim4[] = {9, 1, 9, 14, 9, 1, 9, 14, 9, 1, 9, 14, 0, 0, 0, 0};
-static u8 g_anim5[] = {5, 24, 5, 25, 5, 26, 5, 25, 0, 0, 0, 0};
-static u8 g_anim6[] = {
-    1, 14, 1, 15, 1, 16, 1,  17, 1, 18, 1, 19, 8,  18, 1,  20,
-    1, 21, 1, 22, 1, 23, 33, 22, 3, 21, 3, 15, 32, 14, -1, 0};
-static s8 g_hitbox[][4] = {
+enum CornerGuardSteps {
+    CORNER_GUARD_INIT,
+    CORNER_GUARD_HEAD_INIT,
+    CORNER_GUARD_MOVE,
+    CORNER_GUARD_SHAKE_HEAD,
+    CORNER_GUARD_MOVE_RIGHT,
+    CORNER_GUARD_MOVE_LEFT,
+    CORNER_GUARD_SLASH,
+    CORNER_GUARD_LUNGE,
+    CORNER_GUARD_DEATH,
+};
+
+enum CornerGuardSubsteps {
+    CORNER_GUARD_LUNGE_INIT,
+    CORNER_GUARD_LUNGE_START,
+    CORNER_GUARD_LUNGE_MOVE,
+    CORNER_GUARD_LUNGE_CONCLUDE,
+    CORNER_GUARD_LUNGE_LOOK,
+};
+
+enum CornerGuardDeathSteps {
+    CORNER_GUARD_DEATH_INIT,
+    CORNER_GUARD_DEATH_CONCLUDE,
+};
+
+static s16 sensors_head[] = {0, 20, 0, 4, 4, -4, -8, 0};
+static s16 sensors_body[] = {0, 20, 4, 0};
+static Point16 pos_offsets[] = {{-16, 38}, {16, 6}};
+static s16 attack_intervals[] = {32, 48, 64, 16};
+static AnimateEntityFrame anim_move_left[] = {
+    {5, 1}, {5, 2}, {5, 3}, {5, 2}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_wind_up[] = {
+    {33, 1}, {1, 4}, {1, 5}, {1, 6}, {1, 7}, {1, 8}, {1, 9}, {33, 8}, POSE_END};
+static AnimateEntityFrame anim_lunge[] = {
+    {1, 1},  {1, 2},   {1, 3}, {1, 10}, {1, 11}, {1, 12},
+    {1, 13}, {33, 12}, {4, 3}, {4, 2},  {20, 1}, POSE_END};
+static AnimateEntityFrame anim_shake_head[] = {
+    {9, 1}, {9, 14}, {9, 1}, {9, 14}, {9, 1}, {9, 14}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_move_right[] = {
+    {5, 24}, {5, 25}, {5, 26}, {5, 25}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_slash[] = {
+    {1, 14}, {1, 15}, {1, 16}, {1, 17},  {1, 18}, {1, 19}, {8, 18},  {1, 20},
+    {1, 21}, {1, 22}, {1, 23}, {33, 22}, {3, 21}, {3, 15}, {32, 14}, POSE_END};
+static FrameProperty hitboxes[] = {
     {0, 0, 0, 0}, {-63, -55, 0, 0}, {-33, 30, 8, 8}, {21, -23, 9, 9}};
-static u8 g_hitboxIdx[] = {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,
-                           1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 1, 1, 1, 0};
+static u8 hitboxIdx[] = {0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2,
+                         1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 1, 1, 1, 0};
 extern s16* sprites_dai_3[];
 
-// Corner Guard movement?
-static bool func_us_801D1010(s16* arg0) {
+// Checks if Corner Guard has more stairs to move forward to
+static bool CornerGuardCheckMovement(Point16* points) {
     Collider collider;
     s32 posX, posY;
 
     if (g_CurrentEntity->velocityX > 0) {
-        arg0 += 2;
+        points++;
     }
-    posX = g_CurrentEntity->posX.i.hi + arg0[0];
-    posY = g_CurrentEntity->posY.i.hi + arg0[1];
+    posX = g_CurrentEntity->posX.i.hi + points->x;
+    posY = g_CurrentEntity->posY.i.hi + points->y;
     g_api.CheckCollision(posX, posY, &collider, 0);
+    // Checks if the Corner Guard would land on stairs
     if (collider.effects & EFFECT_UNK_8000) {
         return true;
     }
     return false;
 }
 
-static void func_us_801D1084(EntranceCascadePrim* prim) {
-    Entity* entity;
+static void CornerGuardDeath(EntranceCascadePrim* prim) {
+    Entity* explosion;
     s32 psxSpPad[9];
 
     UnkPrimHelper(prim);
     switch (prim->next->step) {
-    case 0:
+    case CORNER_GUARD_DEATH_INIT:
         prim->next->unk10 = ((Random() & 0x1F) << 12) - FIX(1);
         prim->next->unk14 = -(Random() & 0x1F) * FLT(1);
-        prim->next->step = 1;
+        prim->next->step = CORNER_GUARD_DEATH_CONCLUDE;
         prim->next->velocityX.i.lo = (Random() & 0xF) + 8;
         // fallthrough
-    case 1:
+    case CORNER_GUARD_DEATH_CONCLUDE:
         if (prim->next->unk10 > 0) {
             prim->next->unk1E -= 32;
         } else {
@@ -61,12 +89,12 @@ static void func_us_801D1084(EntranceCascadePrim* prim) {
         prim->next->unk14 += FLT(1.5);
         prim->next->velocityX.i.lo--;
         if (!prim->next->velocityX.i.lo) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (entity != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
-                entity->posX.i.hi = prim->next->x1;
-                entity->posY.i.hi = prim->next->y0;
-                entity->params = 0;
+            explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (explosion != NULL) {
+                CreateEntityFromCurrentEntity(E_EXPLOSION, explosion);
+                explosion->posX.i.hi = prim->next->x1;
+                explosion->posY.i.hi = prim->next->y0;
+                explosion->params = 0;
             }
             UnkPolyFunc0(prim);
         }
@@ -74,187 +102,200 @@ static void func_us_801D1084(EntranceCascadePrim* prim) {
     }
 }
 
-// EntityCornerGuard
 void EntityCornerGuard(Entity* self) {
     Entity* entity;
     Primitive* prim;
     s32 primIndex;
     s32 uCoord, vCoord;
     s32 distance;
-    s32 facingLeft;
+    bool playerOnLeft;
     s16* dataPtr;
     s16 palette;
 
-    if ((self->flags & FLAG_DEAD) && ((self->step) < 8)) {
-        SetStep(8);
+    if ((self->flags & FLAG_DEAD) && ((self->step) < CORNER_GUARD_DEATH)) {
+        SetStep(CORNER_GUARD_DEATH);
     }
     switch (self->step) {
-    case 0:
+    case CORNER_GUARD_INIT:
         InitializeEntity(g_EInitCornerGuard);
         self->animCurFrame = 1;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_UNK_28, entity);
+        CreateEntityFromCurrentEntity(E_CORNER_GUARD_ATTACK, entity);
         // fallthrough
-    case 1:
-        if (UnkCollisionFunc3(g_sensors) & 1) {
-            self->ext.cornerGuard.unk84 = Random() & 1;
-            self->ext.cornerGuard.unk85 = self->ext.cornerGuard.unk84;
-            SetStep(2);
+    case CORNER_GUARD_HEAD_INIT:
+        if (UnkCollisionFunc3(sensors_head) & 1) {
+            self->ext.cornerGuard.prevPlayerOnLeft = Random() & 1;
+            self->ext.cornerGuard.facingLeft =
+                self->ext.cornerGuard.prevPlayerOnLeft;
+            SetStep(CORNER_GUARD_MOVE);
         }
         break;
-    case 2:
+    case CORNER_GUARD_MOVE:
         self->animCurFrame = 1;
         distance = GetDistanceToPlayerX();
         if (distance < 96) {
-            facingLeft = GetSideToPlayer() & 1;
-            if (facingLeft != self->ext.cornerGuard.unk84) {
-                SetStep(3);
-            } else if (self->ext.cornerGuard.unk84) {
-                SetStep(5);
+            playerOnLeft = GetSideToPlayer() & 1;
+            // Player has switched sides since last frame
+            if (playerOnLeft != self->ext.cornerGuard.prevPlayerOnLeft) {
+                SetStep(CORNER_GUARD_SHAKE_HEAD);
+                // Player is on the left or above
+            } else if (self->ext.cornerGuard.prevPlayerOnLeft) {
+                SetStep(CORNER_GUARD_MOVE_LEFT);
             } else {
-                SetStep(4);
+                SetStep(CORNER_GUARD_MOVE_RIGHT);
             }
         }
         break;
-    case 3:
-        if (!AnimateEntity(g_anim4, self)) {
-            self->ext.cornerGuard.unk84 = GetSideToPlayer() & 1;
-            self->ext.cornerGuard.unk85 = self->ext.cornerGuard.unk84;
-            if (self->ext.cornerGuard.unk84) {
-                SetStep(5);
+    case CORNER_GUARD_SHAKE_HEAD:
+        if (!AnimateEntity(anim_shake_head, self)) {
+            self->ext.cornerGuard.prevPlayerOnLeft = GetSideToPlayer() & 1;
+            self->ext.cornerGuard.facingLeft =
+                self->ext.cornerGuard.prevPlayerOnLeft;
+            if (self->ext.cornerGuard.prevPlayerOnLeft) {
+                SetStep(CORNER_GUARD_MOVE_LEFT);
             } else {
-                SetStep(4);
+                SetStep(CORNER_GUARD_MOVE_RIGHT);
             }
         }
         break;
-    case 4:
+    case CORNER_GUARD_MOVE_RIGHT:
         if (!self->step_s) {
             self->velocityX = FIX(0.5);
-            if ((self->ext.cornerGuard.unk84) ^ (self->ext.cornerGuard.unk85)) {
+            if ((self->ext.cornerGuard.prevPlayerOnLeft) ^
+                (self->ext.cornerGuard.facingLeft)) {
                 self->velocityX = FIX(-0.75);
             }
-            self->ext.cornerGuard.unk80 = D_us_80181BAC[Random() & 3];
+            self->ext.cornerGuard.attackInterval =
+                attack_intervals[Random() & 3];
             self->step_s++;
         }
-        AnimateEntity(g_anim5, self);
-        UnkCollisionFunc2(g_sensors2);
-        if (!func_us_801D1010(D_us_80181BA4)) {
+        AnimateEntity(anim_move_right, self);
+        UnkCollisionFunc2(sensors_body);
+        if (!CornerGuardCheckMovement(pos_offsets)) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }
-        if ((self->ext.cornerGuard.unk84 ^ self->ext.cornerGuard.unk85) &&
+        if ((self->ext.cornerGuard.prevPlayerOnLeft ^
+             self->ext.cornerGuard.facingLeft) &&
             (GetDistanceToPlayerX() > 96)) {
-            self->ext.cornerGuard.unk85 = self->ext.cornerGuard.unk84;
+            self->ext.cornerGuard.facingLeft =
+                self->ext.cornerGuard.prevPlayerOnLeft;
             self->velocityX = FIX(0.5);
         }
-        if (!self->ext.cornerGuard.unk80) {
+        if (!self->ext.cornerGuard.attackInterval) {
             if (GetDistanceToPlayerX() < 48) {
-                SetStep(6);
+                SetStep(CORNER_GUARD_SLASH);
             }
-            facingLeft = GetSideToPlayer() & 1;
-            if (facingLeft != self->ext.cornerGuard.unk84) {
-                SetStep(3);
+            playerOnLeft = GetSideToPlayer() & 1;
+            if (playerOnLeft != self->ext.cornerGuard.prevPlayerOnLeft) {
+                SetStep(CORNER_GUARD_SHAKE_HEAD);
             }
         } else {
-            self->ext.cornerGuard.unk80--;
+            self->ext.cornerGuard.attackInterval--;
         }
         break;
-    case 6:
+    case CORNER_GUARD_SLASH:
         if (!self->step_s) {
             PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
             self->step_s++;
         }
-        if (!AnimateEntity(g_anim6, self)) {
-            facingLeft = GetSideToPlayer() & 1;
-            if (facingLeft != self->ext.cornerGuard.unk84) {
-                SetStep(3);
+        if (!AnimateEntity(anim_slash, self)) {
+            playerOnLeft = GetSideToPlayer() & 1;
+            if (playerOnLeft != self->ext.cornerGuard.prevPlayerOnLeft) {
+                SetStep(CORNER_GUARD_SHAKE_HEAD);
             } else {
-                SetStep(4);
+                SetStep(CORNER_GUARD_MOVE_RIGHT);
             }
         }
         break;
-    case 5:
+    case CORNER_GUARD_MOVE_LEFT:
         if (!self->step_s) {
             self->velocityX = FIX(-0.75);
-            if (self->ext.cornerGuard.unk84 ^ (self->ext.cornerGuard.unk85)) {
+            if (self->ext.cornerGuard.prevPlayerOnLeft ^
+                (self->ext.cornerGuard.facingLeft)) {
                 self->velocityX = FIX(0.5);
             }
-            self->ext.cornerGuard.unk80 = D_us_80181BAC[Random() & 3];
+            self->ext.cornerGuard.attackInterval =
+                attack_intervals[Random() & 3];
             self->step_s++;
         }
-        AnimateEntity(g_anim1, self);
-        UnkCollisionFunc2(g_sensors2);
-        if (!func_us_801D1010(D_us_80181BA4)) {
+        AnimateEntity(anim_move_left, self);
+        UnkCollisionFunc2(sensors_body);
+        if (!CornerGuardCheckMovement(pos_offsets)) {
             self->posX.val -= self->velocityX;
             self->velocityX = 0;
         }
-        if ((self->ext.cornerGuard.unk84 ^ (self->ext.cornerGuard.unk85)) &&
+        if ((self->ext.cornerGuard.prevPlayerOnLeft ^
+             (self->ext.cornerGuard.facingLeft)) &&
             (GetDistanceToPlayerX() > 96)) {
-            self->ext.cornerGuard.unk85 = self->ext.cornerGuard.unk84;
+            self->ext.cornerGuard.facingLeft =
+                self->ext.cornerGuard.prevPlayerOnLeft;
             self->velocityX = FIX(-0.75);
         }
-        if (!self->ext.cornerGuard.unk80) {
+        if (!self->ext.cornerGuard.attackInterval) {
             if (GetDistanceToPlayerX() < 96) {
-                SetStep(7);
+                SetStep(CORNER_GUARD_LUNGE);
             }
-            facingLeft = GetSideToPlayer() & 1;
-            if (facingLeft != self->ext.cornerGuard.unk84) {
-                SetStep(3);
+            playerOnLeft = GetSideToPlayer() & 1;
+            if (playerOnLeft != self->ext.cornerGuard.prevPlayerOnLeft) {
+                SetStep(CORNER_GUARD_SHAKE_HEAD);
             }
         } else {
-            self->ext.cornerGuard.unk80--;
+            self->ext.cornerGuard.attackInterval--;
         }
         break;
-    case 7:
+    case CORNER_GUARD_LUNGE:
         switch (self->step_s) {
-        case 0:
-            if (!AnimateEntity(g_anim2, self)) {
-                SetSubStep(1);
+        case CORNER_GUARD_LUNGE_INIT:
+            if (!AnimateEntity(anim_wind_up, self)) {
+                SetSubStep(CORNER_GUARD_LUNGE_START);
             }
             break;
-        case 1:
+        case CORNER_GUARD_LUNGE_START:
             self->velocityX = FIX(-3.0);
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             PlaySfxPositional(SFX_SCRAPE_B);
             self->step_s++;
             // fallthrough
-        case 2:
-            UnkCollisionFunc2(g_sensors2);
-            if (!func_us_801D1010(D_us_80181BA4)) {
+        case CORNER_GUARD_LUNGE_MOVE:
+            UnkCollisionFunc2(sensors_body);
+            if (!CornerGuardCheckMovement(pos_offsets)) {
                 self->posX.val -= self->velocityX;
                 self->velocityX = 0;
             }
             self->velocityX -= self->velocityX / 16;
+            // Generates dust if there is enough speed
             if (!(g_Timer & 7) && (abs(self->velocityX) > FIX(0.75))) {
                 EntityExplosionVariantsSpawner(self, 1, 1, 12, 8, 5, 1);
             }
-            if (!AnimateEntity(g_anim3, self)) {
+            if (!AnimateEntity(anim_lunge, self)) {
                 self->step_s++;
             }
             break;
-        case 3:
+        case CORNER_GUARD_LUNGE_CONCLUDE:
             self->velocityX -= self->velocityX / 8;
             if (abs(self->velocityX) < FIX(0.25)) {
                 self->step_s++;
             }
             break;
-        case 4:
-            facingLeft = GetSideToPlayer() & 1;
-            if (facingLeft != self->ext.cornerGuard.unk84) {
-                SetStep(3);
+        case CORNER_GUARD_LUNGE_LOOK: // Looks back and forth after lunge if
+                                      // the player jumped over it
+            playerOnLeft = GetSideToPlayer() & 1;
+            if (playerOnLeft != self->ext.cornerGuard.prevPlayerOnLeft) {
+                SetStep(CORNER_GUARD_SHAKE_HEAD);
             } else {
                 if (GetDistanceToPlayerX() < 64) {
-                    self->ext.cornerGuard.unk85 =
-                        ((self->ext.cornerGuard.unk84) ^ 1);
+                    self->ext.cornerGuard.facingLeft =
+                        ((self->ext.cornerGuard.prevPlayerOnLeft) ^ 1);
                 }
-                SetStep(5);
+                SetStep(CORNER_GUARD_MOVE_LEFT);
             }
             break;
         }
         break;
-    case 8:
+    case CORNER_GUARD_DEATH:
         switch (self->step_s) {
-        case 0:
+        case CORNER_GUARD_DEATH_INIT:
             dataPtr = (s16*)g_EInitCornerGuard;
             palette = dataPtr[3];
             dataPtr = sprites_dai_3[self->animCurFrame];
@@ -320,19 +361,22 @@ void EntityCornerGuard(Entity* self) {
                 CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 2;
             }
-            self->animCurFrame = 0;
+            self->animCurFrame = NULL;
             PlaySfxPositional(SFX_SKEL_EXPLODE);
             self->step_s++;
             break;
-        case 1:
-            for (facingLeft = 0, prim = self->ext.cornerGuard.prim;
-                 prim != NULL; prim = prim->next, prim = prim->next) {
+        case CORNER_GUARD_DEATH_CONCLUDE:
+            // playerOnLeft reuse to represent whether the death sequence was
+            // still occurring during this frame
+            playerOnLeft = false;
+            for (prim = self->ext.cornerGuard.prim; prim != NULL;
+                 prim = prim->next, prim = prim->next) {
                 if (prim->p3 & 8) {
-                    func_us_801D1084((EntranceCascadePrim*)prim);
-                    facingLeft = 1;
+                    CornerGuardDeath((EntranceCascadePrim*)prim);
+                    playerOnLeft = true;
                 }
             }
-            if (!facingLeft) {
+            if (!playerOnLeft) {
                 DestroyEntity(self);
                 return;
             }
@@ -352,27 +396,25 @@ void EntityCornerGuard(Entity* self) {
     }
 }
 
-// Corner Guard attack?
-void func_us_801D1C24(Entity* self) {
+void EntityCornerGuardAttack(Entity* self) {
     s32 animCurFrame;
     s8* hitboxPtr;
-    Entity* entity;
+    Entity* cornerGuard;
 
     if (!self->step) {
-        InitializeEntity(D_us_801809EC);
+        InitializeEntity(g_EInitCornerGuardAttack);
     }
-    entity = self - 1;
-    if ((entity->entityId) != E_CORNER_GUARD) {
+    cornerGuard = self - 1;
+    if ((cornerGuard->entityId) != E_CORNER_GUARD) {
         DestroyEntity(self);
         return;
     }
-    animCurFrame = entity->animCurFrame;
-    self->facingLeft = entity->facingLeft;
-    self->posX.val = entity->posX.val;
-    self->posY.val = entity->posY.val;
-    // It doesn't seem like this is quite right
-    hitboxPtr = *g_hitbox;
-    hitboxPtr += g_hitboxIdx[animCurFrame] * 4;
+    animCurFrame = cornerGuard->animCurFrame;
+    self->facingLeft = cornerGuard->facingLeft;
+    self->posX.val = cornerGuard->posX.val;
+    self->posY.val = cornerGuard->posY.val;
+    hitboxPtr = (s8*)(&hitboxes);
+    hitboxPtr += hitboxIdx[animCurFrame] * 4;
     self->hitboxOffX = *hitboxPtr++;
     self->hitboxOffY = *hitboxPtr++;
     self->hitboxWidth = *hitboxPtr++;
