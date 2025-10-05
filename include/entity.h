@@ -104,6 +104,15 @@ typedef struct {
     /* 0x84 */ struct Primitive* unk84;
     /* 0x88 */ struct Primitive* unk88;
     /* 0x8C */ u8 unk8C;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s32 pad[3];
+    /* 0xA4 */ struct Primitive* primA4;
+    /* 0xA8 */ s16 unkA8;
+    /* 0xAA */ s16 unkAA;
+    /* 0xAC */ s16 unkAC;
+    /* 0xAE */ s16 unkAE;
+    /* 0xB0 */ s16 unkB0;
 } ET_StagePopupJP;
 
 typedef struct {
@@ -3388,13 +3397,13 @@ typedef struct {
 } ET_SkullLord;
 
 typedef struct {
-    s32 pada;
-    u32 swingStep;
-    s32 unk84;
-    s32 unk88;
-    s32 unk8C;
-    s32 padb[3];
-    u32 unk9C;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ u32 step;
+    /* 0x84 */ s32 swingDistance;
+    /* 0x88 */ s32 swingVelocity;
+    /* 0x8C */ s32 maxSwing;
+    /* 0x90 */ s32 pad[3];
+    /* 0x9C */ u32 ringTimer;
 } ET_Bell;
 
 typedef struct {
@@ -3405,10 +3414,6 @@ typedef struct {
     s16 unk86;
     s16 unk88;
 } ET_ConfessionalGhost;
-
-typedef struct {
-    struct Primitive* prim;
-} ET_Unk41EE4;
 
 typedef struct {
     struct Primitive* prim;
@@ -3837,8 +3842,7 @@ typedef union { // offset=0x7C
     ET_Yorick yorick;
     ET_YorickSkull yorickSkull;
     ET_SkullLord skullLord;
-    ET_Bell et_bell;
-    ET_Unk41EE4 unk41EE4;
+    ET_Bell bell;
     ET_ConfessionalGhost confessionalGhost;
     ET_CornerGuard cornerGuard;
     ET_BoneHalberd boneHalberd;

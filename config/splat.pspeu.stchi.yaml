@@ -61,7 +61,7 @@ segments:
       - [0x13DD8, c, chi/en_debug_cerberus_gate]
       - [0x144C0, c, chi_psp/st_init_chi]
       - [0x146A0, c, chi/en_breakable]
-      - [0x14F50, c, chi_psp/en_stage_name]
+      - [0x14F50, c, chi/en_stage_name]
       - [0x15E08, c, chi/e_room_bg]
       - [0x15F18, c, chi/e_lock_camera]
       - [0x16178, c, chi/en_falling_stairs]
@@ -83,8 +83,7 @@ segments:
       - [0x1D428, .data, chi_psp/dt_entity]
       - [0x1D630, data]
       - [0x1D6D0, .data, chi/en_breakable]
-      - [0x1D758, data]
-      - [0x1D790, .data, chi_psp/en_stage_name]
+      - [0x1D758, .data, chi/en_stage_name]
       - [0x1EA58, data]
       - [0x34080, .data, chi/background_block_init]
       - [0x340C0, .data, chi/e_lock_camera]
@@ -96,7 +95,7 @@ segments:
       - [0x34380, .rodata, chi/en_collect]
       - [0x343E0, .rodata, chi/en_thornweed_corpseweed]
       - [0x34420, .rodata, chi/en_debug_cerberus_gate]
-      - [0x34438, .rodata, chi_psp/en_stage_name]
+      - [0x34438, .rodata, chi/en_stage_name]
       - [0x34450, .rodata, chi_psp/en_breakable_wall]
       - {start: 0x34480, type: .bss, vram: 0x0926BB00, name: chi/ut_create_entity}
       - {start: 0x34480, type: .bss, vram: 0x0926BB20, name: chi/en_collect} # g_ItemIconSlots

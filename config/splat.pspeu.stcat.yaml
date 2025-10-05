@@ -46,7 +46,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, cat/create_entity]
-      - [0x1028, c, cat_psp/e_stage_name]
+      - [0x1028, c, cat/e_stage_name]
       - [0x1F28, c, cat/e_discus_lord]
       - [0x4820, c, cat/e_red_door]
       - [0x5B28, c, cat/st_update]
@@ -76,7 +76,7 @@ segments:
       - [0x288D0, c, cat/e_room_bg]
       - [0x289B0, c, cat/e_lock_camera]
       - [0x28C10, c, cat_psp/unk_28C10]
-      - [0x2B980, data]
+      - [0x2B980, .data, cat/e_stage_name]
       - [0x2C238, .data, cat/e_discus_lord]
       - [0x2C370, .data, cat/e_red_door]
       - [0x2C388, .data, cat/st_update]
