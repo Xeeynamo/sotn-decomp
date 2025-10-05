@@ -1,100 +1,48 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-#ifdef STAGE_HAS_CONFESSIONAL
-#define PARAMS params & 0xFF
-#else
-#define PARAMS params
-#endif
-
-#define LEFT_CHAIR 0x100
-#define RIGHT_CHAIR 0x200
-
-enum ChairSteps {
-    CHAIR_INIT = 0,
-    CHAIR_DESTROY = 1,
-    CHAIR_CHECK_SIT = 1,
-    CHAIR_POSITION_PLAYER = 2,
-    CHAIR_SEAT_PLAYER = 3,
-    CHAIR_PLAYER_SITTING = 4,
-};
-
-#if defined(VERSION_PSP) && defined(STAGE_HAS_CONFESSIONAL)
-extern s32 E_ID(CONFESSIONAL_GHOST);
-#endif
-
-static AnimationFrame anim[] = {{8, 8}, {8, 9}, {8, 10}, {8, 11}, POSE_END};
-
-static bool ChairSitCheck(Entity* self) {
-    s16 offsetX, offsetY;
+// check if "sit" has been triggered
+static s32 func_us_801BEDD8(Entity* self) {
+    s16 offsetX;
+    s16 offsetY;
 
     if (g_pads[0].pressed != PAD_UP) {
-        return false;
+        return 0;
     }
 
     offsetX = self->posX.i.hi - PLAYER.posX.i.hi;
     offsetY = self->posY.i.hi - PLAYER.posY.i.hi;
 
     if (offsetY > 4 || offsetY < -4) {
-        return false;
+        return 0;
     }
 
     if (offsetX > 4 || offsetX < -4) {
-        return false;
+        return 0;
     }
 
-    return true;
+    return 1;
 }
 
 void EntityChair(Entity* self) {
     s16 offsetX;
-#ifdef STAGE_HAS_CONFESSIONAL
-    Entity* confessionalGhost;
-
-    FntPrint("x:%02x,y:%02x\n", self->posX.i.hi, self->posY.i.hi);
-#endif
 
     switch (self->step) {
-    case CHAIR_INIT:
+    case 0:
         InitializeEntity(g_EInitCommon);
-#ifdef STAGE_HAS_CONFESSIONAL
-        // Each chair spawns the curtain on the opposing side, which anchors the
-        // ghost
-        if (self->params & 0xFF00) {
-            confessionalGhost = self + 1;
-            if (self->params & LEFT_CHAIR) {
-                CreateEntityFromCurrentEntity(
-                    E_ID(CONFESSIONAL_GHOST), confessionalGhost);
-                confessionalGhost->posX.i.hi = 176;
-                confessionalGhost->posY.i.hi = 128;
-                confessionalGhost->params = CONFESSIONAL_GHOST_PRIEST;
-                if (Random() & 1) {
-                    confessionalGhost->params |= CONFESSIONAL_GHOST_BAD;
-                }
-                break;
-            }
-            if (self->params & RIGHT_CHAIR) {
-                CreateEntityFromCurrentEntity(
-                    E_ID(CONFESSIONAL_GHOST), confessionalGhost);
-                confessionalGhost->posX.i.hi = 64;
-                confessionalGhost->posY.i.hi = 128;
-                confessionalGhost->params = CONFESSIONAL_GHOST_PARISHIONER;
-                if (Random() & 1) {
-                    confessionalGhost->params |= CONFESSIONAL_GHOST_BAD;
-                }
-            }
-        }
-#endif
         break;
-    case CHAIR_CHECK_SIT:
-        if (ChairSitCheck(self)) {
+
+    case 1:
+        if (func_us_801BEDD8(self) != 0) {
             g_Player.demo_timer = 10;
             g_Player.padSim = PAD_UP;
-            g_Player.unk14 = self->PARAMS;
+            g_Player.unk14 = self->params;
+
             self->step++;
         }
         break;
-    case CHAIR_POSITION_PLAYER:
-        g_Player.unk14 = self->PARAMS;
+
+    case 2:
+        g_Player.unk14 = self->params;
         offsetX = self->posX.i.hi - PLAYER.posX.i.hi;
         if (offsetX > 0) {
             PLAYER.posX.i.hi++;
@@ -106,33 +54,23 @@ void EntityChair(Entity* self) {
             self->step++;
         }
         break;
-    case CHAIR_SEAT_PLAYER:
-        g_Player.unk14 = self->PARAMS;
+
+    case 3:
+        g_Player.unk14 = self->params;
         if (PLAYER.poseTimer < 0) {
-#ifdef STAGE_HAS_CONFESSIONAL
-            if (self->params & 0xFF00) {
-                confessionalGhost = self + 1;
-                // Increments EntityConfessionalGhost to begin the seqence if it
-                // hasn't run yet
-                if (confessionalGhost->step == CONFESSIONAL_GHOST_READY) {
-                    confessionalGhost->step++;
-                }
-            }
-#else
-            self->ext.chair.unk0 = FLT(0.625);
-#endif
+            self->ext.chair.unk0 = 0xA00;
             self->step++;
         }
-        if (PLAYER.step != Player_Stand ||
-            PLAYER.step_s != Player_Stand_ChairSit) {
-            self->step = CHAIR_CHECK_SIT;
+
+        if (PLAYER.step != 0 || PLAYER.step_s != 4) {
+            self->step = 1;
         }
         break;
-    case CHAIR_PLAYER_SITTING:
-        g_Player.unk14 = self->PARAMS;
-        if (PLAYER.step != Player_Stand ||
-            PLAYER.step_s != Player_Stand_ChairSit) {
-            self->step = CHAIR_CHECK_SIT;
+
+    case 4:
+        g_Player.unk14 = self->params;
+        if (PLAYER.step != 0 || PLAYER.step_s != 4) {
+            self->step = 1;
         }
         break;
     }
@@ -144,37 +82,34 @@ void EntityChair(Entity* self) {
 #endif
 }
 
-// This function exists in dai, lib, and no1, but is completely unused
-// Best guess is that it applies to the destroyable table in BO0
+static AnimationFrame D_us_80180F8C[] = {
+    {8, 8}, {8, 9}, {8, 10}, {8, 11}, {-1, 0}};
+
 void func_us_801B81E8(Entity* self) {
     if (self->ext.chair.unkEntity->step != 4) {
         DestroyEntity(self);
         return;
     }
     switch (self->step) {
-    case CHAIR_INIT:
+    case 0:
         InitializeEntity(g_EInitCommon);
-#ifdef STAGE_HAS_CONFESSIONAL
-        self->animSet = ANIMSET_OVL(3);
-#else
         self->animSet = ANIMSET_OVL(2);
-#endif
-        self->velocityY = FIX(-0.375);
+        self->velocityY = FIX(-3.0 / 8.0);
         self->velocityX = FIX(0.25);
         if (self->facingLeft) {
             self->velocityX = -self->velocityX;
         }
-        self->unk5A = 32;
+        self->unk5A = 0x20;
         self->palette = PAL_OVL(0x19F);
-        self->anim = anim;
-        self->pose = NULL;
-        self->poseTimer = NULL;
+        self->anim = D_us_80180F8C;
+        self->pose = 0;
+        self->poseTimer = 0;
         self->facingLeft = false;
         self->posY.i.hi -= 16;
         self->posX.val += self->velocityX << 5;
         break;
 
-    case CHAIR_DESTROY:
+    case 1:
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (self->poseTimer < 0) {
