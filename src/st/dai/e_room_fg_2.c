@@ -1,16 +1,24 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
+// Used ext.prim because it didn't seem worthwhile to create an entire ext
+// simply for a prim
 
-// Castle wall foreground
+/*
+There are two different entities used for the castle wall foreground tiles.
+EntityCastleWall1: Most castle wall foreground tiles
+EntityCastleWall2: The castle wall foreground tiles outside the confessional
+room
+*/
+
 void EntityCastleWall1(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 posX;
     s32 count;
 
+    // Nop for when the tiles have been initialized
     if (self->step != 0) {
-        s32 nop; // This does nothing, but
-        nop;     // pspeu seems to require it to match
+        (void)1;
         return;
     }
 
@@ -23,7 +31,7 @@ void EntityCastleWall1(Entity* self) {
     self->flags |= FLAG_HAS_PRIMS;
     self->primIndex = primIndex;
     prim = &g_PrimBuf[primIndex];
-    self->ext.unk41EE4.prim = prim;
+    self->ext.prim = prim;
     posX = self->posX.i.hi;
     for (count = 0; count < 2; count++) {
         prim->tpage = 15;
@@ -47,7 +55,6 @@ void EntityCastleWall1(Entity* self) {
     }
 }
 
-// Foreground stone outside confessional room and other places
 void EntityCastleWall2(Entity* self) {
     Primitive* prim;
     s32 primIndex;
@@ -55,9 +62,9 @@ void EntityCastleWall2(Entity* self) {
     s32 rows;
     s32 countX, countY;
 
+    // Nop for when the tiles have been initialized
     if (self->step != 0) {
-        s32 nop; // This does nothing, but
-        nop;     // pspeu seems to require it to match
+        (void)1;
         return;
     }
 
@@ -71,7 +78,7 @@ void EntityCastleWall2(Entity* self) {
     self->flags |= FLAG_HAS_PRIMS;
     self->primIndex = primIndex;
     prim = &g_PrimBuf[primIndex];
-    self->ext.unk41EE4.prim = prim;
+    self->ext.prim = prim;
     posX = self->posX.i.hi;
     posY = self->posY.i.hi;
     for (countY = 0; countY < rows; countY++) {
@@ -98,6 +105,7 @@ void EntityCastleWall2(Entity* self) {
     }
 }
 
+// This entity renders the triangle shadow area underneath the staircase
 void EntityStaircase(Entity* self) {
     Primitive* prim;
     s32 primIndex;
@@ -105,7 +113,7 @@ void EntityStaircase(Entity* self) {
     Entity* playerPtr;
 
     switch (self->step) {
-    case 0:
+    case 0: // entity init
         InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
         if (primIndex == -1) {
@@ -115,7 +123,7 @@ void EntityStaircase(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.unk41EE4.prim = prim;
+        self->ext.prim = prim;
         prim->r0 = 64;
         prim->g0 = 56;
         prim->b0 = 48;
@@ -130,7 +138,7 @@ void EntityStaircase(Entity* self) {
         prim->y2 = prim->y3 = 240;
         prim->priority = 94;
         prim->drawMode = DRAW_DEFAULT;
-    case 1:
+    case 1: // render entity
         g_GpuBuffers[0].draw.r0 = 16;
         g_GpuBuffers[0].draw.g0 = 8;
         g_GpuBuffers[0].draw.b0 = 56;
@@ -142,7 +150,7 @@ void EntityStaircase(Entity* self) {
         if (offsetY < 0) {
             offsetY = 0;
         }
-        prim = self->ext.unk41EE4.prim;
+        prim = self->ext.prim;
         prim->y1 = 112 - offsetY;
         break;
     }
