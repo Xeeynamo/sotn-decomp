@@ -42,6 +42,12 @@
 #define NUM_CUTSCENE_PRIM 7
 #endif
 
+// These are used by both e_chair and e_confessional
+#define CONFESSIONAL_GHOST_PRIEST 0
+#define CONFESSIONAL_GHOST_PARISHIONER 1
+#define CONFESSIONAL_GHOST_BAD 0x100
+#define CONFESSIONAL_GHOST_READY 1
+
 // Used for cluts, palettes, and in g_EInits
 // Some of the PAL_STAGE_NAME items seem to be used as general palettes
 enum OVL_EXPORT(Palette) {
@@ -123,7 +129,7 @@ enum OVL_EXPORT(Entities) {
     E_CLOUDS,                    // EntityClouds,
     E_BACKGROUND_SKY_LAND,       // EntityBackgroundSkyLand,
     E_GARGOYLE_STATUE,           // EntityGargoyleStatue,
-    E_UNK_22,                    // EntityChair,
+    E_CHAIR,                     // EntityChair,
     E_CONFESSIONAL_GHOST,        // EntityConfessionalGhost,
     E_CONFESSIONAL_BLADES,       // EntityGhostBlades,
     E_CONFESSIONAL_BLADE_DEBRIS, // EntityGhostBladeDebris,
