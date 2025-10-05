@@ -43,7 +43,6 @@
 #endif
 
 // These are used by both e_chair and e_confessional
-#define STAGE_HAS_CONFESSIONAL
 #define CONFESSIONAL_GHOST_PRIEST 0
 #define CONFESSIONAL_GHOST_PARISHIONER 1
 #define CONFESSIONAL_GHOST_BAD 0x100

@@ -13,7 +13,7 @@ enum ChairSteps {
     CHAIR_PLAYER_SITTING = 4,
 };
 
-#if defined(VERSION_PSP) && defined(STAGE_HAS_CONFESSIONAL)
+#if defined(VERSION_PSP)
 extern s32 E_ID(CONFESSIONAL_GHOST);
 #endif
 
@@ -42,11 +42,9 @@ static bool ChairSitCheck(Entity* self) {
 
 void EntityChair(Entity* self) {
     s16 offsetX;
-#ifdef STAGE_HAS_CONFESSIONAL
     Entity* confessionalGhost;
 
     FntPrint("x:%02x,y:%02x\n", self->posX.i.hi, self->posY.i.hi);
-#endif
 
     switch (self->step) {
     case CHAIR_INIT:
