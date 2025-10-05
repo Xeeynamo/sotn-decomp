@@ -104,6 +104,15 @@ typedef struct {
     /* 0x84 */ struct Primitive* unk84;
     /* 0x88 */ struct Primitive* unk88;
     /* 0x8C */ u8 unk8C;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 unk94;
+    /* 0x98 */ s32 pad[3];
+    /* 0xA4 */ struct Primitive* primA4;
+    /* 0xA8 */ s16 unkA8;
+    /* 0xAA */ s16 unkAA;
+    /* 0xAC */ s16 unkAC;
+    /* 0xAE */ s16 unkAE;
+    /* 0xB0 */ s16 unkB0;
 } ET_StagePopupJP;
 
 typedef struct {
