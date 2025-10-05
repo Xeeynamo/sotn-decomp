@@ -361,7 +361,7 @@ files:
           - [0x3BAD0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
     asset_path: assets/st/lib
-    src_path: src/st/lib_psp
+    src_path: src/st/lib
     splat_config_path: config/splat.pspeu.stlib.yaml
     segments:
       - start: 0x80
@@ -421,7 +421,7 @@ files:
           - [0x347E0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no4.bin
     asset_path: assets/st/no4
-    src_path: src/st/no4_psp
+    src_path: src/st/no4
     splat_config_path: config/splat.pspeu.stno4.yaml
     segments:
       - start: 0x80
