@@ -606,8 +606,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
     func_800F53A4();
 }
 
-extern PlayerHud g_PlayerHud;
-extern s32 g_HealingMailTimer[1]; // maybe part of g_PlayerHud
+static PlayerHud g_PlayerHud;
 
 #ifdef VERSION_PSP
 #define RIC_HUD_NUM_SPRITES 10
@@ -1201,7 +1200,7 @@ void DrawHud(void) {
 
     D_8013B5E8 = 0;
     g_PlayerHud.displayHP = g_Status.hp;
-    g_HealingMailTimer[0] = 0;
+    g_PlayerHud.g_HealingMailTimer = 0;
 
     if ((g_StageId == STAGE_ST0) || (g_PlayableCharacter != PLAYER_ALUCARD)) {
         DrawRichterHud();
@@ -1326,14 +1325,14 @@ void DrawHudSubweapon() {
     if ((CheckEquipmentItemCount(ITEM_HEALING_MAIL, EQUIP_ARMOR)) &&
         (g_Player.status & PLAYER_STATUS_UNK4000000) &&
         !(g_Player.status & PLAYER_STATUS_TRANSFORM)) {
-        g_HealingMailTimer[0]++;
-        if (g_HealingMailTimer[0] >= 128) {
+        g_PlayerHud.g_HealingMailTimer++;
+        if (g_PlayerHud.g_HealingMailTimer >= 128) {
             g_Player.unk56 = 2;
             g_Player.unk58 = 1;
-            g_HealingMailTimer[0] = 0;
+            g_PlayerHud.g_HealingMailTimer = 0;
         }
     } else {
-        g_HealingMailTimer[0] = 0;
+        g_PlayerHud.g_HealingMailTimer = 0;
     }
 
     // Why in the world would this call be in the HUD code? This codebase is

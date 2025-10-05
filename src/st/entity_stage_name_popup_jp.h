@@ -29,6 +29,7 @@ void EntityStageNamePopup(Entity* self) {
     s16 var_s2;
 
 #ifdef STAGE_NAME_LOAD_GFX
+    defined(STAGE_NAME_LOAD_GFX)
     if (D_91CE570) {
         LoadStageNameGraphics();
     }
