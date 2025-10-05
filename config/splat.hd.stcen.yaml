@@ -48,7 +48,6 @@ segments:
       - [0x554, .data, e_breakable]
       - [0x5D8, .data, d_prize_drops]
       - [0x5D8, .data, cutscene]
-      - [0x684, data, cutscene]
       - [0x6BC, .data, F890]
       - [0x7E8, .data, st_update]
       - [0x814, .data, collision]
