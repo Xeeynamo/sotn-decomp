@@ -29,7 +29,7 @@ s32 E_ID(STAIRCASE);
 s32 E_ID(CLOUDS);
 s32 E_ID(BACKGROUND_SKY_LAND);
 s32 E_ID(GARGOYLE_TONGUE);
-s32 E_ID(UNK_22);
+s32 E_ID(CHAIR);
 s32 E_ID(CONFESSIONAL_GHOST);
 s32 E_ID(CONFESSIONAL_BLADES);
 s32 E_ID(CONFESSIONAL_BLADE_DEBRIS);
@@ -93,7 +93,7 @@ static void InitEntityIds(void) {
     E_ID(CLOUDS) = 0x1F;
     E_ID(BACKGROUND_SKY_LAND) = 0x20;
     E_ID(GARGOYLE_TONGUE) = 0x21;
-    E_ID(UNK_22) = 0x22;
+    E_ID(CHAIR) = 0x22;
     E_ID(CONFESSIONAL_GHOST) = 0x23;
     E_ID(CONFESSIONAL_BLADES) = 0x24;
     E_ID(CONFESSIONAL_BLADE_DEBRIS) = 0x25;
@@ -152,5 +152,5 @@ void OVL_EXPORT(Load)(void) {
     g_pStObjLayoutHorizontal = &D_8D2E2B0;
     g_pStObjLayoutVertical = &D_8D2E384;
     func_892A018();
-    memcpy(&g_api, &OVL_EXPORT(Overlay), sizeof(Overlay));
+    memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
 }

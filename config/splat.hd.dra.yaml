@@ -88,9 +88,9 @@ segments:
       # - [0x2FCC, .data, 5F60C] # g_CapePaletteDefs
       # - [0x301C, .data, 5F60C] # g_CheatCodes
       # - [0x3024, .data, 5F60C] # D_800A3014
-      - [0x3144, .data, 628AC] # D_800A3194
-      - [0x31C0, .data, 62EB8] # D_800A3210
-      # - [0x3340, .data, 62EB8] # D_800A33A0-D_800A35D0
+      - [0x3144, .data, 624DC] # D_800A3194
+      - [0x31C0, .data, 62DEC] # D_800A3210
+      # - [0x3340, .data, 62DEC] # D_800A33A0-D_800A35D0
       - [0x37E8, .data, d_37d8] # Palette, GFX desc until D_800A3BB8
       - [0x3C50, .data, lba_stage]
       - [0x4A10, .data, config_jp]
@@ -153,9 +153,7 @@ segments:
       - [0x3CC18, .rodata, 5D5BC]
       - [0x3CC60, .rodata, 5F60C]
       - [0x3CC78, .rodata, 624DC]
-      - [0x3CC98, .rodata, 628AC]
       - [0x3CCDC, .rodata, 62DEC]
-      - [0x3CED4, .rodata, 62EB8]
       - [0x3CEF0, .rodata, lba_stage]
       - [0x3D29C, .rodata, config_jp]
       - [0x40C74, .rodata, cd]
@@ -187,9 +185,7 @@ segments:
       - [0x5D570, c, 5D5BC]
       - [0x5D5C0, c, 5F60C]
       - [0x6236C, c, 624DC]
-      - [0x6273C, c, 628AC]
       - [0x62C7C, c, 62DEC]
-      - [0x62D48, c, 62EB8]
       - [0x663CC, c, 66590]
       - [0x67200, c, cd]
       - [0x69100, c, 692E8]
@@ -217,7 +213,12 @@ segments:
       - [0x97050, .bss, 4AEA4]
       - [0x97168, .bss, demo]
       - [0x97170, .bss, 5087C]
-      - [0x971A0, .bss, bss]
+      - [0x971A4, .bss, menu]
+      - [0x97534, .bss, 5D5BC]
+      - [0x97540, .bss, 5F60C]
+      - [0x97570, .bss, 624DC]
+      - [0x979B8, .bss, 62DEC]
+      - [0x97E50, .bss, bss]
   - name: dra_data
     type: data
     start: 0x9B270
