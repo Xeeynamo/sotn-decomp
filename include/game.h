@@ -1239,7 +1239,7 @@ typedef struct {
     /* 0x18 */ s32 playMinutes;
     /* 0x1C */ s32 playSeconds;
     /* 0x20 */ s32 cardIcon;
-    /* 0x24 */ s32 endGameFlags;
+    /* 0x24 */ u32 endGameFlags;
     /* 0x28 */ s16 stage;
     /* 0x2A */ u16 nRoomsExplored;
     /* 0x2C */ u16 roomX;
