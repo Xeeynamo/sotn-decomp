@@ -1,0 +1,879 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "../sel/sel.h"
+
+extern s32 D_psp_09286640;
+extern u8 D_psp_09285570[];
+extern u8 D_psp_09285548[];
+extern u8 D_psp_092855B0[];
+extern u8 D_psp_092855C8[];
+extern u8 D_psp_092855D0[];
+extern u8 D_psp_09285580[];
+extern u8 D_psp_092855A0[];
+extern s32 D_psp_09286C58;
+extern s8* D_psp_09285B80;
+extern s8* D_psp_09285B88;
+extern s32 D_psp_09286638;
+extern s32 D_psp_09286648;
+
+void func_psp_092431D0(Entity* entity) {
+    s32 i;
+    s32 length;
+    u32* ptr;
+
+    if (entity->flags & FLAG_HAS_PRIMS) {
+        g_api.FreePrimitives(entity->primIndex);
+    }
+
+    ptr = (u32*)entity;
+    length = sizeof(Entity) / sizeof(u32);
+    for (i = 0; i < length; i++)
+        *ptr++ = 0;
+}
+
+static void SEL_SetStep(Entity* entity, u16 step) {
+    entity->step = step;
+    entity->step_s = 0;
+    entity->pose = 0;
+    entity->poseTimer = 0;
+}
+
+#include "../animate_entity.h"
+
+void func_801B4C68(void) {
+    Entity* self = &g_Entities[0];
+    s32 primIndex;
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex != -1) {
+            prim = &g_PrimBuf[primIndex];
+
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            self->ext.unkSelEnts.prim = prim;
+            prim->tpage = 0x8A;
+            prim->clut = 0;
+
+            prim->u0 = prim->u2 = prim->v0 = prim->v1 = 0;
+            prim->u1 = prim->u3 = 0x7F;
+            prim->v2 = prim->v3 = 0xE0;
+
+            prim->x0 = prim->x2 = 0;
+            prim->x1 = prim->x3 = 0x80;
+            prim->y0 = prim->y1 = 0;
+            prim->y2 = prim->y3 = 0xE0;
+
+            prim->priority = 0x40;
+            prim->drawMode = DRAW_DEFAULT;
+            prim = prim->next;
+
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            self->ext.unkSelEnts.prim = prim;
+            prim->tpage = 0x8B;
+            prim->clut = 0;
+
+            prim->u0 = prim->u2 = prim->v0 = prim->v1 = 0;
+            prim->u1 = prim->u3 = 0x7F;
+            prim->v2 = prim->v3 = 0xE0;
+
+            prim->x0 = prim->x2 = 0x80;
+            prim->x1 = prim->x3 = 0x100;
+            prim->y0 = prim->y1 = 0;
+            prim->y2 = prim->y3 = 0xE0;
+
+            prim->priority = 0x40;
+            prim->drawMode = DRAW_DEFAULT;
+            self->step++;
+        }
+        break;
+
+    case 1:
+        break;
+    }
+}
+
+void func_801B4D78(void) {
+    Entity* self = &g_Entities[UNK_ENTITY_3];
+
+    switch (self->step) {
+    case 0:
+        self->animSet = ANIMSET_OVL(1);
+        self->animCurFrame = 1;
+        self->palette = PAL_DRA(0x200);
+        self->ext.unkSelEnts.unk80.val = FIX(92);
+        self->posY.i.hi = 0xD0;
+        self->zPriority = 0x80;
+        self->step++;
+        break;
+
+    case 1:
+        break;
+    }
+}
+
+void func_801B4DE0(void) {
+    Entity* self = &g_Entities[UNK_ENTITY_2];
+    s32 primIndex;
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        if (primIndex != -1) {
+            prim = &g_PrimBuf[primIndex];
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            self->ext.unkSelEnts.prim = prim;
+
+            prim->x0 = prim->x2 = 0;
+            prim->x1 = prim->x3 = 0xFF;
+            prim->y0 = prim->y1 = 0;
+            prim->y2 = prim->y3 = 0xFF;
+
+            PCOL(prim) = 0xFF;
+
+            prim->priority = 0xC8;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
+            D_psp_09286640 = 0;
+            self->step++;
+        }
+        break;
+
+    case 1:
+        prim = self->ext.unkSelEnts.prim;
+        if (D_psp_09286640 != 0) {
+            PCOL(prim) -= 2;
+            if (prim->r0 < 5) {
+                D_psp_09286640 = 0;
+                self->step++;
+            }
+        }
+        break;
+
+    case 2:
+        prim = self->ext.unkSelEnts.prim;
+        if (D_psp_09286640 != 0) {
+            PCOL(prim) += 1;
+            if (prim->r0 >= 254) {
+                D_psp_09286640 = 0;
+                self->step++;
+            }
+        }
+        break;
+
+    case 3:
+        break;
+    }
+}
+
+void func_801B4FFC(void) {
+    Entity* self = &g_Entities[UNK_ENTITY_2];
+    s32 primIndex;
+    Primitive* prim;
+
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
+        if (primIndex != -1) {
+            prim = &g_PrimBuf[primIndex];
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            self->ext.unkSelEnts.prim = prim;
+
+            prim->x0 = prim->x2 = 0;
+            prim->x1 = prim->x3 = 0x180;
+            prim->y0 = prim->y1 = 0;
+            prim->y2 = prim->y3 = 0xFF;
+
+            PCOL(prim) = 0;
+
+            prim->priority = 0xC8;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
+
+            self->step++;
+        }
+        break;
+
+    case 1:
+        prim = self->ext.unkSelEnts.prim;
+        if (D_psp_09286640 != 0) {
+            PCOL(prim) += 2;
+            if (prim->r0 >= 254) {
+                D_psp_09286640 = 0;
+                self->step++;
+            }
+        }
+
+    case 3:
+        break;
+    }
+}
+
+void func_801B519C(void) {
+    Entity* self = &g_Entities[UNK_ENTITY_1];
+    s32 primIndex;
+    Primitive* prim;
+    u16 angle;
+    u16 v;
+    s16 x, y;
+
+    switch (self->step) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x18);
+        if (primIndex == -1) {
+            break;
+        }
+        self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.unkSelEnts.prim = prim;
+
+        v = 0;
+        while (prim != NULL) {
+            prim->tpage = 8;
+            prim->clut = 0x201;
+            prim->u0 = prim->u2 = 0x38;
+            prim->u1 = prim->u3 = 0x80;
+            prim->v0 = prim->v1 = 0x38 + v;
+            v++;
+            prim->v2 = prim->v3 = 0x38 + v;
+            prim->priority = 0x41;
+            prim->drawMode =
+                DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+            prim = prim->next;
+        }
+        self->step++;
+
+    case 1:
+        self->ext.unkSelEnts.unk88 += 0x40;
+        angle = self->ext.unkSelEnts.unk88;
+        y = 0xA2;
+        prim = self->ext.unkSelEnts.prim;
+        while (prim != NULL) {
+            angle &= 0xFFF;
+            x = rsin(angle) / 0x800 + 0x40;
+            angle += 0x100;
+            prim->x0 = prim->x2 = x;
+            prim->x1 = prim->x3 = x + 0x48;
+            prim->y0 = prim->y1 = y;
+            y++;
+            prim->y2 = prim->y3 = y;
+            prim = prim->next;
+        }
+        break;
+    }
+}
+
+// Compare to func_801B585C
+// Probably handles Alucard sprite in the ending, did not confirm but uses his
+// palette.
+void func_801B5350(void) {
+    Entity* self = &g_Entities[UNK_ENTITY_5];
+
+    switch (self->step) {
+    case 0:
+        self->animSet = ANIMSET_DRA(1);
+        self->animCurFrame = 0x8E;
+        self->unk5A = 0;
+        self->ext.unkSelEnts.unk80.val = FIX(0x80);
+        self->posY.i.hi = 0x9F;
+        self->zPriority = 0xC0;
+        self->palette = PAL_OVL(0x100);
+        self->step++;
+        break;
+
+    case 1:
+        self->animCurFrame = 0x8E;
+        break;
+
+    case 2:
+        if (!AnimateEntity(D_psp_09285570, self)) {
+            SEL_SetStep(self, 3);
+        }
+        self->ext.unkSelEnts.unk80.val -= FIX(1.5);
+        break;
+
+    case 3:
+        AnimateEntity(D_psp_09285548, self);
+        self->ext.unkSelEnts.unk80.val -= FIX(1.5);
+        if (self->ext.unkSelEnts.unk80.i.hi < 0x40) {
+            self->step = 0xFF;
+        }
+        break;
+    }
+}
+
+// func_801B54C8 sets up the Richter sprite in the Alucard Mode ending scenes
+// where he was saved.
+void func_801B54C8(void) {
+    Entity* self = &g_Entities[UNK_ENTITY_7];
+
+    switch (self->step) {
+    case 0:
+        self->animSet = ANIMSET_OVL(2);
+        self->animCurFrame = 0x26;
+        self->facingLeft = 1;
+        self->unk5A = 0xF;
+        self->ext.unkSelEnts.unk80.val = FIX(0x78);
+        self->posY.i.hi = 0x9E;
+        self->zPriority = 0xC0;
+        self->palette = PAL_OVL(0x210);
+        self->step++;
+        break;
+
+    case 1:
+        break;
+    }
+}
+
+// func_801B5548 sets up the Richter sprite in the Richter Mode ending scene.
+static void func_801B5548(void) {
+    Entity* self = &g_Entities[UNK_ENTITY_7];
+
+    switch (self->step) {
+    case 0:
+        if (g_PlayableCharacter == PLAYER_MARIA) {
+            self->animSet = ANIMSET_OVL(3);
+            self->animCurFrame = 0xC;
+            self->unk5A = 0x46;
+            self->palette = PAL_DRA(0x258);
+            self->facingLeft = 0;
+            self->ext.unkSelEnts.unk80.val = FIX(0x80);
+            self->posY.i.hi = 0xA0;
+            self->zPriority = 0xC0;
+        } else {
+            self->animSet = ANIMSET_OVL(2);
+            self->animCurFrame = 7;
+            self->facingLeft = 0;
+            self->unk5A = 0xF;
+            self->ext.unkSelEnts.unk80.val = FIX(0x78);
+            self->posY.i.hi = 0x9E;
+            self->zPriority = 0xC0;
+            self->palette = PAL_OVL(0x210);
+        }
+        self->step++;
+        break;
+
+    case 1:
+        break;
+    }
+}
+
+// func_801B55C8 handles Maria's sprite in the ending scene.
+void func_801B55C8(void) {
+    Entity* self = &g_Entities[UNK_ENTITY_6];
+
+    switch (self->step) {
+    case 0:
+        self->animSet = ANIMSET_OVL(3);
+        self->animCurFrame = 0xC;
+        self->unk5A = 0x46;
+        self->palette = PAL_DRA(0x258);
+        self->facingLeft = 1;
+        self->ext.unkSelEnts.unk80.val = FIX(0x80);
+        self->posY.i.hi = 0xA0;
+        self->zPriority = 0xC0;
+        self->step++;
+        break;
+
+    case 1:
+        if (D_psp_09286C58 & 0x10) {
+            self->animSet = ANIMSET_OVL(4);
+            self->unk5A = 0x48;
+            self->animCurFrame = 0x2C;
+            self->velocityX = FIX(-0.75);
+            SEL_SetStep(self, 2);
+        }
+        break;
+
+    case 2:
+        self->ext.unkSelEnts.unk80.val -= FIX(0.75);
+        if (!AnimateEntity(D_psp_092855D0, self)) {
+            self->animSet = ANIMSET_OVL(3);
+            self->animCurFrame = 0xC;
+            self->unk5A = 0x46;
+            self->step++;
+        }
+        break;
+
+    case 3:
+        if (D_psp_09286C58 & 0x20) {
+            self->animSet = ANIMSET_OVL(4);
+            self->unk5A = 0x48;
+            self->animCurFrame = 0x2C;
+            self->facingLeft = 0;
+            SEL_SetStep(self, 4);
+        }
+        break;
+
+    case 4:
+        if (!AnimateEntity(D_psp_092855C8, self)) {
+            self->animSet = ANIMSET_OVL(3);
+            self->unk5A = 0x46;
+            self->animCurFrame = 0xC;
+            SEL_SetStep(self, 5);
+        }
+        break;
+
+    case 5:
+        if (D_psp_09286C58 & 0x40) {
+            self->animSet = ANIMSET_OVL(4);
+            self->unk5A = 0x48;
+            self->facingLeft = 1;
+            self->animCurFrame = 0x2C;
+            SEL_SetStep(self, 6);
+        }
+        break;
+
+    case 6:
+        if (!AnimateEntity(D_psp_092855C8, self)) {
+            self->animSet = ANIMSET_OVL(3);
+            self->unk5A = 0x46;
+            self->animCurFrame = 0x20;
+            SEL_SetStep(self, 7);
+        }
+        self->ext.unkSelEnts.unk80.val -= FIX(0.75);
+        break;
+
+    case 7:
+        AnimateEntity(D_psp_092855B0, self);
+        self->ext.unkSelEnts.unk80.val -= FIX(1.5);
+        if (self->ext.unkSelEnts.unk80.i.hi < 0x20) {
+            self->step = 0xFF;
+        }
+        break;
+    }
+}
+
+void func_801B585C(u16 arg0) {
+    Entity* self = &g_Entities[UNK_ENTITY_5];
+
+    switch (self->step) {
+    case 0:
+        self->animSet = ANIMSET_DRA(1);
+        self->animCurFrame = 0;
+        self->unk5A = 0;
+        self->ext.unkSelEnts.unk80.val = 0;
+        self->posY.i.hi = 0x9F;
+        self->zPriority = 0xC0;
+        self->palette = PAL_OVL(0x100);
+        self->step++;
+        break;
+
+    case 1:
+        AnimateEntity(D_psp_09285548, self);
+        if (D_psp_09286C58 & 4) {
+            self->step++;
+        }
+        break;
+
+    case 2:
+        AnimateEntity(D_psp_09285548, self);
+        self->ext.unkSelEnts.unk80.val += FIX(1.5);
+        if (self->ext.unkSelEnts.unk80.i.hi > 0x48) {
+            SEL_SetStep(self, 3);
+        }
+        break;
+
+    case 3:
+        if (!AnimateEntity(D_psp_09285580, self)) {
+            SEL_SetStep(self, 4);
+        }
+        break;
+
+    case 4:
+        AnimateEntity(D_psp_092855A0, self);
+        if (D_psp_09286C58 & 8) {
+            SEL_SetStep(self, 5);
+        }
+        break;
+
+    case 5:
+        self->facingLeft = 1;
+        if (!AnimateEntity(D_psp_09285570, self)) {
+            SEL_SetStep(self, 6);
+        }
+        self->ext.unkSelEnts.unk80.val -= FIX(1.5);
+        break;
+
+    case 6:
+        AnimateEntity(D_psp_09285548, self);
+        self->ext.unkSelEnts.unk80.val -= FIX(1.5);
+        if ((arg0 && self->ext.unkSelEnts.unk80.i.hi < 0x20) ||
+            (!arg0 && self->ext.unkSelEnts.unk80.i.hi < -0x10)) {
+            self->step = 0xFF;
+        }
+        break;
+    }
+}
+
+void func_801B5A7C(void) {
+    Entity* self = &g_Entities[UNK_ENTITY_8];
+    Entity* e;
+
+    switch (self->params) {
+    case 0:
+        switch (self->step) {
+        case 0:
+            D_psp_09285B88[0] = 0;
+            self->step++;
+            break;
+
+        case 1:
+            D_psp_09286640 = 1;
+            D_psp_09286648 = -0x400000;
+            self->step++;
+            break;
+
+        case 2:
+            if (D_psp_09286640 == 0) {
+                D_psp_09286C58 |= 1;
+            }
+            if (D_psp_09286648 != 0) {
+                D_psp_09286648 += 0x2000;
+            }
+            if (D_psp_09286C58 & 2) {
+                D_psp_09286640 = 1;
+                self->step++;
+            }
+            break;
+
+        case 3:
+            e = &g_Entities[UNK_ENTITY_5];
+            e->step = 2;
+            e->pose = 0;
+            e->poseTimer = 0;
+            e->facingLeft = 1;
+            self->step++;
+            break;
+
+        case 4:
+            if (D_psp_09286640 == 0) {
+                D_psp_09286638 = 1;
+            }
+            break;
+        }
+        func_801B5350();
+        break;
+
+    case 1:
+        switch (self->step) {
+        case 0:
+            D_psp_09285B88[0] = 1;
+            self->step++;
+            break;
+
+        case 1:
+            D_psp_09286640 = 1;
+            D_psp_09286648 = -0x400000;
+            self->step++;
+            break;
+
+        case 2:
+            if (D_psp_09286640 == 0) {
+                D_psp_09286C58 |= 1;
+                D_psp_09286C58 |= 4;
+                self->step++;
+            }
+            if (D_psp_09286648 != 0) {
+                D_psp_09286648 += 0x4000;
+            }
+            break;
+
+        case 3:
+            if (D_psp_09286648 != 0) {
+                D_psp_09286648 += 0x4000;
+            }
+            if (D_psp_09286C58 & 2) {
+                D_psp_09286640 = 1;
+                self->step++;
+            }
+            break;
+
+        case 4:
+            self->step++;
+            break;
+
+        case 5:
+            if (D_psp_09286640 == 0) {
+                D_psp_09286638 = 1;
+            }
+            break;
+        }
+        func_801B585C(1);
+        func_801B55C8();
+        break;
+
+    case 2:
+        switch (self->step) {
+        case 0:
+            D_psp_09285B88[0] = 2;
+            D_psp_09285B80[0] = 0;
+            self->step++;
+            break;
+
+        case 1:
+            D_psp_09286640 = 1;
+            D_psp_09286648 = -0x400000;
+            self->step++;
+            break;
+
+        case 2:
+            if (D_psp_09286640 == 0) {
+                D_psp_09286C58 |= 1;
+                D_psp_09286C58 |= 4;
+                self->step++;
+            }
+            if (D_psp_09286648 != 0) {
+                D_psp_09286648 += 0x4000;
+            }
+            break;
+
+        case 3:
+            if (D_psp_09286648 != 0) {
+                D_psp_09286648 += 0x4000;
+            }
+            if (D_psp_09286C58 & 2) {
+                D_psp_09286640 = 1;
+                self->step++;
+            }
+            break;
+
+        case 4:
+            self->step++;
+            break;
+
+        case 5:
+            if (D_psp_09286640 == 0) {
+                D_psp_09286638 = 1;
+            }
+            break;
+        }
+        func_801B585C(0);
+        func_801B54C8();
+        func_801B55C8();
+        break;
+
+    case 3:
+        switch (self->step) {
+        case 0:
+            D_psp_09285B88[0] = 3;
+            self->step++;
+            break;
+
+        case 1:
+            D_psp_09286640 = 1;
+            D_psp_09286648 = -0x400000;
+            self->step++;
+            break;
+
+        case 2:
+            if (D_psp_09286640 == 0) {
+                self->step++;
+            }
+            if (D_psp_09286648 != 0) {
+                D_psp_09286648 += 0x4000;
+            }
+            break;
+
+        case 3:
+            if (D_psp_09286648 != 0) {
+                D_psp_09286648 += 0x4000;
+            } else {
+                self->step++;
+                self->ext.unkSelEnts.unk8C = 0x80;
+            }
+            break;
+
+        case 4:
+            if (!--self->ext.unkSelEnts.unk8C) {
+                D_psp_09286C58 |= 1;
+                self->step++;
+            }
+            break;
+
+        case 5:
+            if (D_psp_09286C58 & 2) {
+                D_psp_09286640 = 1;
+                self->step++;
+            }
+            break;
+
+        case 6:
+            if (D_psp_09286640 == 0) {
+                D_psp_09286638 = 1;
+            }
+            break;
+        }
+        func_801B5548();
+        break;
+
+    case 4:
+        switch (self->step) {
+        case 0:
+            D_psp_09285B88[0] = 2;
+            D_psp_09285B80[0] = 1;
+            self->step++;
+            break;
+
+        case 1:
+            D_psp_09286640 = 1;
+            D_psp_09286648 = -0x400000;
+            self->step++;
+            break;
+
+        case 2:
+            if (D_psp_09286640 == 0) {
+                D_psp_09286C58 |= 1;
+                D_psp_09286C58 |= 4;
+                self->step++;
+            }
+            if (D_psp_09286648 != 0) {
+                D_psp_09286648 += 0x4000;
+            }
+            break;
+
+        case 3:
+            if (D_psp_09286648 != 0) {
+                D_psp_09286648 += 0x4000;
+            }
+            if (D_psp_09286C58 & 2) {
+                D_psp_09286640 = 1;
+                self->step++;
+            }
+            break;
+
+        case 4:
+            self->step++;
+            break;
+
+        case 5:
+            if (D_psp_09286640 == 0) {
+                D_psp_09286638 = 1;
+            }
+            break;
+        }
+        func_801B585C(0);
+        func_801B54C8();
+        func_801B55C8();
+        break;
+    }
+}
+
+extern RECT D_9185260;
+extern s32 D_91CE548;
+extern s32 D_91CE5E8;
+extern s32 D_91CE5F0;
+extern s32 D_psp_09286638;
+extern s32 D_psp_09286640;
+extern s32 D_psp_09286648;
+
+void func_psp_09244E10(void) {
+    Entity* ent;
+    s32 i;
+
+    switch (g_GameEngineStep) {
+    case 0:
+        if (!g_IsUsingCd) {
+            func_psp_09237C78();
+            D_91CE5F0 = 1;
+            if (D_91CE548 != 0) {
+                D_91CE5E8 = 3;
+            } else {
+                D_91CE5E8 = 2;
+            }
+            g_GameEngineStep++;
+        }
+        break;
+
+    case 1:
+        func_90FFAB8();
+        if (D_91CE5F0 == 0) {
+            D_91CE5E8 = 0;
+            func_psp_0923F498();
+        }
+        if (D_91CE548 != 0) {
+            g_GameStep++;
+        } else {
+            g_GameStep = 0x100;
+        }
+        g_GameEngineStep++;
+        break;
+
+    case 2:
+        ent = &g_Entities[0];
+        for (i = 0; i <= 8; i++, ent++) {
+            func_psp_092431D0(ent);
+        }
+        D_psp_09286648 = 0;
+        D_psp_09286638 = 0;
+        ent = &g_Entities[8];
+        ent->params = D_91CE548 - 1;
+        g_api.func_800EA5E4(ANIMSET_DRA(0x16));
+        g_api.func_800EA5E4(ANIMSET_DRA(0));
+        g_api.func_800EA5E4(ANIMSET_OVL(5));
+        g_api.LoadGfxAsync(ANIMSET_OVL(0));
+        g_GameEngineStep++;
+        break;
+
+    case 3:
+        func_801B5A7C();
+        ent = &g_Entities[4];
+        SEL_EntityCutscene(ent);
+        func_801B4C68();
+        func_801B519C();
+        func_801B4D78();
+        func_801B4DE0();
+        ent = &g_Entities[3];
+        for (i = 3; i < 8; i++, ent++) {
+            ent->posX.i.hi =
+                (D_psp_09286648 / 0x10000) + ent->ext.unkSelEnts.unk80.i.hi;
+        }
+        if (D_psp_09286638 != 0) {
+            ent = &g_Entities[0];
+            for (i = 0; i <= 8; i++, ent++) {
+                func_psp_092431D0(ent);
+            }
+            for (i = 0; i <= 8; i++, ent++) {
+                func_psp_092431D0(ent);
+            }
+            g_GameEngineStep++;
+        }
+        break;
+
+    case 4:
+        ClearImage(&D_9185260, 0, 0, 0);
+        g_GameEngineStep++;
+        break;
+
+    case 5:
+        func_psp_0923F760();
+        g_GameEngineStep++;
+        break;
+
+    case 6:
+        g_api.func_800EA5E4(ANIMSET_DRA(0));
+        g_GameEngineStep++;
+        break;
+
+    case 7:
+        ent = &g_Entities[4];
+        if (func_801B79D4(ent)) {
+            ent = &g_Entities[1];
+            ent->step = 0;
+            D_psp_09286640 = 1;
+            g_GameEngineStep++;
+        }
+        break;
+
+    case 8:
+        func_801B4FFC();
+        if (D_psp_09286640 == 0) {
+            g_GameStep++;
+        }
+        break;
+    }
+}

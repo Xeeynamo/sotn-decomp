@@ -3587,7 +3587,7 @@ block_4:
 #if defined(VERSION_PSP)
         if (D_psp_091CDD48) {
             D_psp_091CDD48 = 0;
-            SetGameState(3);
+            SetGameState(Game_GameOver);
             g_GameStep = 0x63;
         }
 #endif
@@ -4305,7 +4305,7 @@ void DrawHudSubweapon2(void) {
 
     case 0x64:
         if (D_psp_091CDD50 != 0) {
-            SetGameState(3);
+            SetGameState(Game_GameOver);
             g_GameStep = 0x63;
             PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
             PlaySfx(SET_KEY_ON_20_21);
