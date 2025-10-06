@@ -135,14 +135,6 @@ typedef struct {
     /* 0x0C */ ConfessionalGhostAnimSet* animations;
 } ConfessionalGhostParams;
 
-// Used in dai/e_hunting_girl
-typedef struct {
-    s16 x;
-    s16 y;
-    s16 rotate;
-    s16 frames;
-} huntingGirlAttackStep;
-
 /*******/
 /* LIB */
 /*******/
