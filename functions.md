@@ -2738,7 +2738,7 @@
 | np3   | EntityRelicOrb                           |     1166 |         87 | Yes    | https://decomp.me/scratch/i2u8T | 0.999 |
 | no3   | EntityMerman                             |     1166 |        174 | Yes    | https://decomp.me/scratch/rdRVz | 1.0   |
 | np3   | EntityMerman                             |     1166 |        174 | Yes    | https://decomp.me/scratch/rdRVz | 1.0   |
-| sel   | func_psp_09240B58                        |     1173 |        142 | Yes    | https://decomp.me/scratch/slvvV | 0.996 |
+| sel   | func_psp_09240B58                        |     1173 |        142 | Yes    | https://decomp.me/scratch/slvvV | 0.999 |
 | dra   | func_psp_0910F720                        |     1173 |        197 | Yes    | https://decomp.me/scratch/MBJNm | 0.971 |
 | dra   | func_psp_090DEAC8                        |     1174 |        181 |        |                                 |       |
 | cat   | func_pspeu_09255558                      |     1179 |        164 |        |                                 |       |
@@ -2829,4 +2829,4 @@
 | no4   | func_pspeu_09256330                      |     2580 |        253 | Yes    | https://decomp.me/scratch/JQPXI | 0.997 |
 | dra   | func_psp_09106238                        |     2716 |        467 | Yes    |                                 |       |
 | dra   | EntityPlayerBlinkWhite                   |     2950 |        257 | Yes    | https://decomp.me/scratch/GoMQZ | 0.996 |
-| sel   | func_psp_0923BE20                        |     3499 |        602 |        | https://decomp.me/scratch/6wjYN | 0.995 |
+| sel   | func_psp_0923BE20                        |     3499 |        602 |        | https://decomp.me/scratch/6wjYN | 0.996 |
