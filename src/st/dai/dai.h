@@ -128,7 +128,7 @@ enum OVL_EXPORT(Entities) {
     E_STAIRCASE,                 // EntityStaircase,
     E_CLOUDS,                    // EntityClouds,
     E_BACKGROUND_SKY_LAND,       // EntityBackgroundSkyLand,
-    E_GARGOYLE_STATUE,           // EntityGargoyleStatue,
+    E_GARGOYLE_TONGUE,           // EntityGargoyleTongue,
     E_CHAIR,                     // EntityChair,
     E_CONFESSIONAL_GHOST,        // EntityConfessionalGhost,
     E_CONFESSIONAL_BLADES,       // EntityGhostBlades,
