@@ -16,8 +16,6 @@ extern u16 actor_names_it[];
 void DrawCutsceneActorName(u16 actorIndex, Entity* self, u16* actorNames,
                            u8* arg3, u8* arg4, s32 nActors) {
 #else
-extern const u8 actor_names[];
-
 void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
 #endif
     Primitive* prim;
@@ -31,7 +29,7 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
     u8* len;
 
 #ifdef VERSION_HD
-    primIndex = g_api.AllocPrimitives(PRIM_SPRT, actor_names[actorIndex]);
+    primIndex = g_api.AllocPrimitives(PRIM_SPRT, actor_prims[actorIndex]);
 #else
     // Create a certain amount of sprites based on the actor name's letter count
     actorNameLength =
@@ -54,13 +52,13 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
     prim = &g_PrimBuf[primIndex];
 #ifdef VERSION_HD
     x = 0x38;
-    len = &D_hd_801806B8;
+    len = &actor_name_len;
     actorNameStartIndex = 0;
     for (i = 0; i < actorIndex; i++) {
         actorNameStartIndex += *len & 0x7F;
         len++;
     };
-    actorName = &D_hd_80180684[actorNameStartIndex];
+    actorName = &actor_names[actorNameStartIndex];
 #else
     len = actorNameLength;
     actorNameStartIndex = 0;

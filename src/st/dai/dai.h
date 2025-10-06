@@ -42,12 +42,18 @@
 #define NUM_CUTSCENE_PRIM 7
 #endif
 
+// These are used by both e_chair and e_confessional
+#define CONFESSIONAL_GHOST_PRIEST 0
+#define CONFESSIONAL_GHOST_PARISHIONER 1
+#define CONFESSIONAL_GHOST_BAD 0x100
+#define CONFESSIONAL_GHOST_READY 1
+
 // Used for cluts, palettes, and in g_EInits
 // Some of the PAL_STAGE_NAME items seem to be used as general palettes
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
-    PAL_STAINED_GLASS_E = 0xE,
-    PAL_STAINED_GLASS_F = 0xF,
+    PAL_STAINED_GLASS = 0xE,
+    PAL_STAINED_GLASS_BG = 0xF,
     PAL_CASTLE_WALL_1 = 0x74,
     PAL_BELL = 0x75,
     PAL_BELL_ROPE = 0x76,
@@ -58,15 +64,15 @@ enum OVL_EXPORT(Palette) {
     PAL_801809C8 = 0xCA,
     PAL_CONFESSIONAL_CC = 0xCC,
     PAL_CONFESSIONAL_CE = 0xCE,
-    PAL_STAGE_NAME_15F = 0x15F,
+    PAL_COLOR_GRADIENT = 0x15F,
     PAL_SPIKES_DUST = 0x161,
     PAL_SPECTRAL_SWORD_WEAPON_3 = 0x16B,
     PAL_STAGE_NAME_19D = 0x19D,
     PAL_STAGE_NAME_19E = 0x19E,
     PAL_STAGE_NAME_19F = 0x19F,
     PAL_SKELERANG = 0x200,
-    PAL_STAINED_GLASS_204 = 0x204,
-    PAL_STAINED_GLASS_205 = 0x205,
+    PAL_STAINED_GLASS_LIGHT = 0x204,
+    PAL_STAINED_GLASS_BG_LIGHT = 0x205,
     PAL_CORNER_GUARD = 0x215,
     PAL_BONE_PILLAR = 0x216,
     PAL_BONE_PILLAR_FIRE = 0x221,
@@ -112,8 +118,8 @@ enum OVL_EXPORT(Entities) {
     E_EXPLOSION_VARIANTS,        // EntityExplosionVariants,
     E_GREY_PUFF,                 // EntityGreyPuff,
     E_TOWER_EXIT,                // EntityTowerExit,
-    E_UNK_17,                    // EntityStainedGlass,
-    E_UNK_18,                    // func_us_801D9F5C,
+    E_STAINED_GLASS,             // EntityStainedGlass,
+    E_STAINED_GLASS_BACKGROUND,  // EntityStainedGlassBackground,
     E_BLOCK,                     // EntityBlock,
     E_STATUE,                    // EntityStatue,
     E_BELL,                      // EntityBell,
@@ -122,8 +128,8 @@ enum OVL_EXPORT(Entities) {
     E_STAIRCASE,                 // EntityStaircase,
     E_CLOUDS,                    // EntityClouds,
     E_BACKGROUND_SKY_LAND,       // EntityBackgroundSkyLand,
-    E_GARGOYLE_STATUE,           // EntityGargoyleStatue,
-    E_UNK_22,                    // EntityChair,
+    E_GARGOYLE_TONGUE,           // EntityGargoyleTongue,
+    E_CHAIR,                     // EntityChair,
     E_CONFESSIONAL_GHOST,        // EntityConfessionalGhost,
     E_CONFESSIONAL_BLADES,       // EntityGhostBlades,
     E_CONFESSIONAL_BLADE_DEBRIS, // EntityGhostBladeDebris,

@@ -28,8 +28,7 @@ void EntityStageNamePopup(Entity* self) {
     s16 var_s3;
     s16 var_s2;
 
-#if defined(STAGE_IS_LIB) || defined(STAGE_IS_NO2) || defined(STAGE_IS_NO4) || \
-    defined(STAGE_NAME_LOAD_GFX)
+#ifdef STAGE_NAME_LOAD_GFX
     if (D_91CE570) {
         LoadStageNameGraphics();
     }
@@ -41,8 +40,7 @@ void EntityStageNamePopup(Entity* self) {
             DestroyEntity(self);
             return;
         }
-#if defined(STAGE_IS_LIB) || defined(STAGE_IS_NO2) || defined(STAGE_IS_NO4) || \
-    defined(STAGE_NAME_LOAD_GFX)
+#ifdef STAGE_NAME_LOAD_GFX
         LoadStageNameGraphics();
 #endif
         InitializeEntity(g_EInitInteractable);

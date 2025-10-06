@@ -1,15 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-// This segment shares most code with e_chair.h, but EntityChair has some
-// additional blocks that make it more sensible to keep separate for the time
-// being.
+#define LEFT_CHAIR 0x100
+#define RIGHT_CHAIR 0x200
 
-#ifdef VERSION_PSP
+enum ChairSteps {
+    CHAIR_INIT = 0,
+    CHAIR_DESTROY = 1,
+    CHAIR_CHECK_SIT = 1,
+    CHAIR_POSITION_PLAYER = 2,
+    CHAIR_SEAT_PLAYER = 3,
+    CHAIR_PLAYER_SITTING = 4,
+};
+
+#if defined(VERSION_PSP)
 extern s32 E_ID(CONFESSIONAL_GHOST);
 #endif
 
-static AnimationFrame anim_1[] = {{8, 8}, {8, 9}, {8, 10}, {8, 11}, {-1, 0}};
+static AnimationFrame anim[] = {{8, 8}, {8, 9}, {8, 10}, {8, 11}, POSE_END};
 
 static bool ChairSitCheck(Entity* self) {
     s16 offsetX, offsetY;
@@ -34,36 +42,41 @@ static bool ChairSitCheck(Entity* self) {
 
 void EntityChair(Entity* self) {
     s16 offsetX;
-    Entity* entity;
+    Entity* confessionalGhost;
 
     FntPrint("x:%02x,y:%02x\n", self->posX.i.hi, self->posY.i.hi);
+
     switch (self->step) {
-    case 0:
+    case CHAIR_INIT:
         InitializeEntity(g_EInitCommon);
+        // Each chair spawns the curtain on the opposing side, which anchors the
+        // ghost
         if (self->params & 0xFF00) {
-            entity = self + 1;
-            if (self->params & 0x100) {
-                CreateEntityFromCurrentEntity(E_ID(CONFESSIONAL_GHOST), entity);
-                entity->posX.i.hi = 176;
-                entity->posY.i.hi = 128;
-                entity->params = 0;
+            confessionalGhost = self + 1;
+            if (self->params & LEFT_CHAIR) {
+                CreateEntityFromCurrentEntity(
+                    E_ID(CONFESSIONAL_GHOST), confessionalGhost);
+                confessionalGhost->posX.i.hi = 176;
+                confessionalGhost->posY.i.hi = 128;
+                confessionalGhost->params = CONFESSIONAL_GHOST_PRIEST;
                 if (Random() & 1) {
-                    entity->params |= 0x100;
+                    confessionalGhost->params |= CONFESSIONAL_GHOST_BAD;
                 }
                 break;
             }
-            if (self->params & 0x200) {
-                CreateEntityFromCurrentEntity(E_ID(CONFESSIONAL_GHOST), entity);
-                entity->posX.i.hi = 64;
-                entity->posY.i.hi = 128;
-                entity->params = 1;
+            if (self->params & RIGHT_CHAIR) {
+                CreateEntityFromCurrentEntity(
+                    E_ID(CONFESSIONAL_GHOST), confessionalGhost);
+                confessionalGhost->posX.i.hi = 64;
+                confessionalGhost->posY.i.hi = 128;
+                confessionalGhost->params = CONFESSIONAL_GHOST_PARISHIONER;
                 if (Random() & 1) {
-                    entity->params |= 0x100;
+                    confessionalGhost->params |= CONFESSIONAL_GHOST_BAD;
                 }
             }
         }
         break;
-    case 1:
+    case CHAIR_CHECK_SIT:
         if (ChairSitCheck(self)) {
             g_Player.demo_timer = 10;
             g_Player.padSim = PAD_UP;
@@ -71,7 +84,7 @@ void EntityChair(Entity* self) {
             self->step++;
         }
         break;
-    case 2:
+    case CHAIR_POSITION_PLAYER:
         g_Player.unk14 = self->params & 0xFF;
         offsetX = self->posX.i.hi - PLAYER.posX.i.hi;
         if (offsetX > 0) {
@@ -84,40 +97,43 @@ void EntityChair(Entity* self) {
             self->step++;
         }
         break;
-    case 3:
+    case CHAIR_SEAT_PLAYER:
         g_Player.unk14 = self->params & 0xFF;
         if (PLAYER.poseTimer < 0) {
             if (self->params & 0xFF00) {
-                entity = self + 1;
-                if (entity->step == 1) {
-                    entity->step++;
+                confessionalGhost = self + 1;
+                // Increments EntityConfessionalGhost to begin the seqence if it
+                // hasn't run yet
+                if (confessionalGhost->step == CONFESSIONAL_GHOST_READY) {
+                    confessionalGhost->step++;
                 }
             }
             self->step++;
         }
-        if (PLAYER.step != 0 || PLAYER.step_s != 4) {
-            self->step = 1;
+        if (PLAYER.step != Player_Stand ||
+            PLAYER.step_s != Player_Stand_ChairSit) {
+            self->step = CHAIR_CHECK_SIT;
         }
         break;
-    case 4:
+    case CHAIR_PLAYER_SITTING:
         g_Player.unk14 = self->params & 0xFF;
-        if (PLAYER.step != 0 || PLAYER.step_s != 4) {
-            self->step = 1;
+        if (PLAYER.step != Player_Stand ||
+            PLAYER.step_s != Player_Stand_ChairSit) {
+            self->step = CHAIR_CHECK_SIT;
         }
         break;
     }
     g_api.UpdateAnim(NULL, NULL);
 }
 
-// This function exists in dai, lib, and no1
-// It is completely unused within dai
-static void func_us_801B81E8(Entity* self) {
+// This function exists in dai, lib, and no1, but is completely unused
+void func_us_801B81E8(Entity* self) {
     if (self->ext.chair.unkEntity->step != 4) {
         DestroyEntity(self);
         return;
     }
     switch (self->step) {
-    case 0:
+    case CHAIR_INIT:
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(3);
         self->velocityY = FIX(-0.375);
@@ -126,16 +142,16 @@ static void func_us_801B81E8(Entity* self) {
             self->velocityX = -self->velocityX;
         }
         self->unk5A = 32;
-        self->palette = PAL_OVL(PAL_STAGE_NAME_19F);
-        self->anim = anim_1;
-        self->pose = 0;
-        self->poseTimer = 0;
+        self->palette = PAL_OVL(0x19F);
+        self->anim = anim;
+        self->pose = NULL;
+        self->poseTimer = NULL;
         self->facingLeft = false;
         self->posY.i.hi -= 16;
         self->posX.val += self->velocityX << 5;
         break;
 
-    case 1:
+    case CHAIR_DESTROY:
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (self->poseTimer < 0) {
