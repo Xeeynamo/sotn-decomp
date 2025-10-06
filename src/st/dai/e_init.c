@@ -24,7 +24,7 @@ void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void EntityTowerExit(Entity* self);
 void EntityStainedGlass(Entity* self);
-void func_us_801D9F5C(Entity* self);
+void EntityStainedGlassBackground(Entity* self);
 void EntityBlock(Entity* self);
 void EntityStatue(Entity* self);
 void EntityBell(Entity* self);
@@ -98,7 +98,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityGreyPuff,
     EntityTowerExit,
     EntityStainedGlass,
-    func_us_801D9F5C,
+    EntityStainedGlassBackground,
     EntityBlock,
     EntityStatue,
     EntityBell,
