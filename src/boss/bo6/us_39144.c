@@ -597,7 +597,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BD47C);
 extern s32 D_us_80181A64[];
 extern s16 D_us_80181AA4[][10];
 extern s16* D_us_801A39B0[];
-extern u8* D_us_8018303C[];
+extern u8* richter_sprites[];
 
 void BO6_RicEntityPlayerBlinkWhite(Entity* self) {
     u8 xMargin;
@@ -641,7 +641,7 @@ void BO6_RicEntityPlayerBlinkWhite(Entity* self) {
     plSpriteIndex &= 0x7FFF;
     selfX = self->posX.i.hi;
     selfY = self->posY.i.hi;
-    plSprite = D_us_8018303C[plSpriteIndex];
+    plSprite = richter_sprites[plSpriteIndex];
     xMargin = 4;
     yMargin = 1;
     wSprite = xMargin + plSprite[0];

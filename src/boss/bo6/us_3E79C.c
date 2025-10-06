@@ -1141,7 +1141,177 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashVibhuti);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801C8590);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801C8618);
+extern s32 D_us_80182A0C[];
+
+// same as RIC func_8016D9C4
+void func_us_801C8618(Entity* self) {
+    PrimLineG2* prim;
+    Primitive* prim2;
+    s32 i;
+    long angle;
+    s32 var_s6;
+    s32 var_s5;
+    s32 var_s7;
+    s32 brightness;
+
+    switch (self->step) {
+    case 0:
+        self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 20);
+        if (self->primIndex == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->flags = 0x10800000;
+        prim = (PrimLineG2*)&g_PrimBuf[self->primIndex];
+        for (i = 0; i < 4; i++) {
+            prim->preciseX.val = RIC.posX.val;
+            prim->preciseY.val = RIC.posY.val - FIX(40);
+            prim->priority = 194;
+            prim->drawMode = DRAW_HIDE;
+            prim->x0 = prim->x1 = RIC.posX.i.hi;
+            prim->y0 = prim->y1 = RIC.posY.i.hi - 0x1C;
+            prim->r0 = prim->g0 = prim->b0 = 0x80;
+            prim->r1 = prim->g1 = prim->b1 = 0x70;
+            prim->angle = D_us_80182A0C[i];
+            prim->delay = 1;
+            prim = (PrimLineG2*)prim->next;
+        }
+        for (brightness = 0x80; i < 20; i++) {
+            if (!(i % 4)) {
+                brightness -= 0x10;
+                switch (i / 4) {
+                case 1:
+                    self->ext.et_8016D9C4.lines[0] = prim;
+                    break;
+                case 2:
+                    self->ext.et_8016D9C4.lines[1] = prim;
+                    break;
+                case 3:
+                    self->ext.et_8016D9C4.lines[2] = prim;
+                    break;
+                case 4:
+                    self->ext.et_8016D9C4.lines[3] = prim;
+                    break;
+                }
+            }
+            prim->priority = 0xC2;
+            prim->drawMode = DRAW_HIDE;
+            prim->x0 = prim->x1 = RIC.posX.i.hi;
+            prim->y0 = prim->y1 = RIC.posY.i.hi - 0x1C;
+            prim->r0 = prim->g0 = prim->b0 = brightness;
+            prim->r1 = prim->g1 = prim->b1 = brightness - 0x10;
+            prim = (PrimLineG2*)prim->next;
+        }
+        self->ext.et_8016D9C4.unk90 = 4;
+        self->ext.et_8016D9C4.unk8C = self->ext.et_8016D9C4.unk8E = 0;
+        self->step++;
+        break;
+    case 1:
+        self->ext.et_8016D9C4.unk8E = 1;
+        switch (self->ext.et_8016D9C4.unk8C) {
+        case 0:
+            prim = (PrimLineG2*)&g_PrimBuf[self->primIndex];
+            break;
+        case 1:
+            prim = self->ext.et_8016D9C4.lines[0];
+            break;
+        case 2:
+            prim = self->ext.et_8016D9C4.lines[1];
+            break;
+        case 3:
+            prim = self->ext.et_8016D9C4.lines[2];
+            break;
+        case 4:
+            prim = self->ext.et_8016D9C4.lines[3];
+            break;
+        }
+        for (i = 0; i < 4; i++) {
+            prim->drawMode &= ~DRAW_HIDE;
+            prim = (PrimLineG2*)prim->next;
+        }
+        self->ext.et_8016D9C4.unk8C++;
+        if (self->ext.et_8016D9C4.unk8C > 4) {
+            self->step++;
+        }
+        break;
+    case 2:
+        if (!self->ext.et_8016D9C4.unk90) {
+            self->step++;
+            break;
+        }
+        break;
+    case 3:
+        self->ext.et_8016D9C4.unk90++;
+        if (self->ext.et_8016D9C4.unk90 > 4) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    if (!self->ext.et_8016D9C4.unk8E) {
+        return;
+    }
+    prim = (PrimLineG2*)&g_PrimBuf[self->primIndex];
+    for (i = 0; i < 4; i++) {
+        if (prim->delay) {
+            prim->x1 = prim->x0;
+            prim->y1 = prim->y0;
+            prim->x0 = prim->preciseX.i.hi;
+            prim->y0 = prim->preciseY.i.hi;
+            var_s7 = ratan2(prim->preciseY.val, FIX(128) - prim->preciseX.val) &
+                     0xFFF;
+            angle = prim->angle - var_s7;
+            if (labs(angle) > 0x800) {
+                if (angle < 0) {
+                    angle += 0x1000;
+                } else {
+                    angle -= 0x1000;
+                }
+            }
+            if (angle >= 0) {
+                if (angle > 0x80) {
+                    var_s6 = 0x80;
+                } else {
+                    var_s6 = angle;
+                }
+                angle = var_s6;
+            } else {
+                if (angle < -0x80) {
+                    var_s5 = -0x80;
+                } else {
+                    var_s5 = angle;
+                }
+                angle = var_s5;
+            }
+            prim->angle = prim->angle - angle;
+            prim->angle &= 0xFFF;
+            prim->velocityX.val = (rcos(prim->angle) << 4 << 4);
+            prim->velocityY.val = -(rsin(prim->angle) << 4 << 4);
+            prim->preciseX.val += prim->velocityX.val;
+            prim->preciseY.val += prim->velocityY.val;
+            self->posX.i.hi = prim->preciseX.i.hi;
+            self->posY.i.hi = prim->preciseY.i.hi;
+            OVL_EXPORT(RicCreateEntFactoryFromEntity)(
+                self, BP_CRASH_REBOUND_STONE_PARTICLES, 0);
+            if (prim->preciseY.val < 0) {
+                prim->delay = 0;
+                prim->drawMode |= DRAW_HIDE;
+                self->ext.et_8016D9C4.unk90--;
+            }
+        }
+        prim = (PrimLineG2*)prim->next;
+    }
+    prim = self->ext.et_8016D9C4.lines[0];
+    prim2 = &g_PrimBuf[self->primIndex];
+    for (i = 0; i < 16; i++) {
+        prim->x1 = prim->x0;
+        prim->y1 = prim->y0;
+        prim->x0 = prim2->x1;
+        prim->y0 = prim2->y1;
+        prim = (PrimLineG2*)prim->next;
+        prim2 = prim2->next;
+    }
+}
 
 INCLUDE_ASM(
     "boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashReboundStoneExplosion);

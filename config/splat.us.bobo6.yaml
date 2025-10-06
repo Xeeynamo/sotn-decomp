@@ -38,7 +38,8 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, header]
+      - [0x180, .data, gen/e_laydef]
       - [0x328, .data, e_init]
       - [0x4D8, data, background_block_init]
       - [0x510, .data, e_red_door_tiles]
@@ -58,7 +59,7 @@ segments:
       - [0x1210, data, richter]
       - [0x1284, data, us_39144]
       - [0x2F70, .data, e_life_up]
-      - [0x2FC4, data, gen/e_layout]
+      - [0x2FC4, .data, gen/e_layout]
       - [0x303C, data]
       - [0x1F9A0, data, tile_data]
       - [0x239B0, data]
