@@ -42,6 +42,12 @@
 #define NUM_CUTSCENE_PRIM 7
 #endif
 
+// These are used by both e_chair and e_confessional
+#define CONFESSIONAL_GHOST_PRIEST 0
+#define CONFESSIONAL_GHOST_PARISHIONER 1
+#define CONFESSIONAL_GHOST_BAD 0x100
+#define CONFESSIONAL_GHOST_READY 1
+
 // Used for cluts, palettes, and in g_EInits
 // Some of the PAL_STAGE_NAME items seem to be used as general palettes
 enum OVL_EXPORT(Palette) {
@@ -49,8 +55,8 @@ enum OVL_EXPORT(Palette) {
     PAL_STAINED_GLASS = 0xE,
     PAL_STAINED_GLASS_BG = 0xF,
     PAL_CASTLE_WALL_1 = 0x74,
-    PAL_BELL_1 = 0x75,
-    PAL_BELL_2 = 0x76,
+    PAL_BELL = 0x75,
+    PAL_BELL_ROPE = 0x76,
     PAL_CLOUDS = 0xC0,
     PAL_BACKGROUND_SKY_LAND = 0xC5,
     PAL_CASTLE_WALL_2 = 0xC8,
@@ -87,7 +93,7 @@ enum OVL_EXPORT(Palette) {
 
 // Used when a constant value E_ID is used for both psx and pspeu
 // The E_ID() macro should be used when psx uses a constant value, but pspeu
-// uses a bss reference
+// sometimes uses a bss reference
 enum OVL_EXPORT(Entities) {
     E_NONE,
     E_BREAKABLE,                 // DAI_EntityBreakable,
@@ -123,11 +129,11 @@ enum OVL_EXPORT(Entities) {
     E_CLOUDS,                    // EntityClouds,
     E_BACKGROUND_SKY_LAND,       // EntityBackgroundSkyLand,
     E_GARGOYLE_STATUE,           // EntityGargoyleStatue,
-    E_UNK_22,                    // EntityChair,
+    E_CHAIR,                     // EntityChair,
     E_CONFESSIONAL_GHOST,        // EntityConfessionalGhost,
     E_CONFESSIONAL_BLADES,       // EntityGhostBlades,
     E_CONFESSIONAL_BLADE_DEBRIS, // EntityGhostBladeDebris,
-    E_BELL_HELPER,               // EntityBellHelper,
+    E_BELL_SPAWNER,              // EntityBellSpawner,
     E_CORNER_GUARD,              // EntityCornerGuard,
     E_UNK_28,                    // func_us_801D1C24,
     E_BONE_PILLAR_HEAD,          // EntityBonePillarHead,
@@ -175,10 +181,8 @@ extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
-// extern EInit g_EInitUnused801809A4;
 extern EInit g_EInitStatueBlock;
 extern EInit g_EInitConfessionalGhost;
-// extern EInit g_EInitUnused801809C8;
 extern EInit g_EInitConfessionalBlades;
 extern EInit g_EInitCornerGuard;
 extern EInit D_us_801809EC;

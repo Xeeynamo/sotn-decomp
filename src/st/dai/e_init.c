@@ -38,7 +38,7 @@ void EntityChair(Entity* self);
 void EntityConfessionalGhost(Entity* self);
 void EntityConfessionalBlades(Entity* self);
 void EntityConfessionalBladeDebris(Entity* self);
-void EntityBellHelper(Entity* self);
+void EntityBellSpawner(Entity* self);
 void EntityCornerGuard(Entity* self);
 void func_us_801D1C24(Entity* self);
 void EntityBonePillarHead(Entity* self);
@@ -112,7 +112,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityConfessionalGhost,
     EntityConfessionalBlades,
     EntityConfessionalBladeDebris,
-    EntityBellHelper,
+    EntityBellSpawner,
     EntityCornerGuard,
     func_us_801D1C24,
     EntityBonePillarHead,

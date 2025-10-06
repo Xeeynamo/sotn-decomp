@@ -3,6 +3,12 @@
 #define CUTSCENE_UNK3_RECT_X 0
 #endif
 
+#ifdef VERSION_HD
+#define CUTSCENE_UNK3_RECT_H 16
+#else
+#define CUTSCENE_UNK3_RECT_H 12
+#endif
+
 #if defined(VERSION_PSP)
 extern u8 cutsceneUnk3Unknown[0x380]; // bss
 #endif
@@ -10,9 +16,9 @@ extern u8 cutsceneUnk3Unknown[0x380]; // bss
 static void CutsceneUnk3(s16 nextCharY) {
     RECT rect;
     rect.x = CUTSCENE_UNK3_RECT_X;
-    rect.y = (nextCharY * 12) + 384;
+    rect.y = (nextCharY * CUTSCENE_UNK3_RECT_H) + 384;
     rect.w = 64;
-    rect.h = 12;
+    rect.h = CUTSCENE_UNK3_RECT_H;
     ClearImage(&rect, 0, 0, 0);
 #if defined(VERSION_PSP)
     func_890A3C0(cutsceneUnk3Unknown, 0, LEN(cutsceneUnk3Unknown));
