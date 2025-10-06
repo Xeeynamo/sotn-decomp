@@ -754,10 +754,10 @@ s32 func_psp_09242BA0(s32 arg0) {
     u32 var_s3;
     u32 var_s2;
 
-    FntPrint(D_psp_09285530, D_psp_09285EC0,
+    FntPrint(D_psp_09285530, D_psp_09285EC0, // sotn-lint-ignore
              D_psp_09285E98 + (D_psp_09285EA0 * 0xF),
-             D_psp_09285E88 + (D_psp_09285E90 * 0xF)); // sotn-lint-ignore
-    FntPrint(D_psp_09285520, D_psp_09285EA8);          // sotn-lint-ignore
+             D_psp_09285E88 + (D_psp_09285E90 * 0xF));
+    FntPrint(D_psp_09285520, D_psp_09285EA8); // sotn-lint-ignore
     switch (D_psp_09285EC0) {
     case 0:
         func_913D618();
