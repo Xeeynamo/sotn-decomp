@@ -333,7 +333,7 @@ files:
           - [0x2B328, layers, layers]
           - [0x2B608, palette, pal_stained_glass, 16] # 0x204
           - [0x2B628, paldef, palette_def]
-          - [0x2B6F8, gfx_banks, graphics_banks]
+          - [0x2B6F8, gfx_banks, psp/graphics_banks]
           - [0x2B8E0, skip]
           - [0x2BC20, rooms, rooms]
           - [0x2BCF8, cutscene, cutscene_script_it]
@@ -350,7 +350,7 @@ files:
           # These gfx palette assignments are unconfirmed.
           # They match psx, but the .png does not render correctly for psp.
           - [0x2C588, cmpgfx, gfx_stage_name_jp_sm, 128, 128, 4]
-          - [0x2C880, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4]
+          - [0x2C880, cmpgfx, psp/gfx_stage_name_jp_lg, 128, 128, 4]
           - [0x2CD10, cmpgfx, gfx_confessional, 128, 128, 4]
           - [0x2DF38, cmpgfx, gfx_chair, 128, 128, 4, 0x3ADF0]
           - [0x2EB18, cmpgfx, gfx_corner_guard, 128, 128, 4, 0x3AE50]
