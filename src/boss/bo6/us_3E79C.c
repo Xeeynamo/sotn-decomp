@@ -573,7 +573,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_DebugShowWaitInfo);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_DebugInputWait);
 
-s32 func_us_801C310C(s16 height, s16 width) {
+s32 OVL_EXPORT(RicCheckHolyWaterCollision)(s16 height, s16 width) {
     Collider collider;
     Collider collider2;
     s16 maskedEffects;
@@ -622,7 +622,141 @@ s32 func_us_801C310C(s16 height, s16 width) {
 
 int WarpBackgroundBrightness() { return 0; }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801C32C4);
+extern EInit D_us_80180460;
+
+void OVL_EXPORT(RicEntitySubwpnHolyWater)(Entity* self) {
+    s16 xMod;
+    s32 colRes;
+
+    if (self->step > 2) {
+        self->posY.i.hi += 5;
+    }
+    switch (self->step) {
+    case 0:
+        self->ext.holywater.subweaponId = PL_W_HOLYWATER;
+        InitializeEntity(D_us_80180460);
+        self->flags = 0x08000000;
+        self->animSet = ANIMSET_OVL(3);
+        self->animCurFrame = 0x23;
+        self->zPriority = RIC.zPriority + 2;
+        self->unk5A = 0x24;
+        self->palette = PAL_OVL(0x22F);
+        xMod = 0;
+        if (self->facingLeft) {
+            xMod = -xMod;
+        }
+        self->posX.i.hi += xMod;
+        self->posY.i.hi += -16;
+        self->ext.holywater.angle = (rand() & 0x7F) + 0xDC0;
+        if (RIC.facingLeft == 1) {
+            self->ext.holywater.angle = (rand() & 0x7F) + 0x9C0;
+        }
+        self->velocityX = (FLT_TO_FIX(rcos(self->ext.holywater.angle)) * 0x600) >> 8;
+        self->velocityY =
+            -(FLT_TO_FIX(rsin(self->ext.holywater.angle)) * 0x600) >> 8;
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 4;
+        self->ext.holywater.unk80 = 0x200;
+        self->step = 1;
+        break;
+
+    case 1:
+        self->posY.val += self->velocityY;
+        colRes = BO6_RicCheckHolyWaterCollision(0, 0);
+        self->posX.val += self->velocityX;
+
+        if ((colRes & 1) || (self->hitFlags != 0)) {
+            BO6_RicCreateEntFactoryFromEntity(self, 0x28, 0);
+            g_api.PlaySfx(SFX_GLASS_BREAK_WHOOSH);
+            self->ext.ILLEGAL.u16[0] = 0x50;
+            self->animSet = 0;
+            self->step = 3;
+            self->velocityX = (s32) self->velocityX >> 2;
+        } else if (self->flags & 0x100) {
+            BO6_RicCreateEntFactoryFromEntity(self, 0x28, 0);
+            g_api.PlaySfx(SFX_GLASS_BREAK_WHOOSH);
+            self->ext.ILLEGAL.u16[0] = 0x50;
+            self->animSet = 0;
+            self->step = 3;
+            self->velocityX = -((s32) self->velocityX >> 2);
+        }
+        break;
+    case 2:
+        if (self->flags & 0x100) {
+            DestroyEntity(self);
+            return;
+        }
+        if (--self->ext.holywater.timer == 0) {
+            self->velocityX = self->velocityX >> 2;
+            self->ext.holywater.timer = 0x50;
+            self->step++;
+        }
+        break;
+    case 3:
+        if (self->flags & 0x100) {
+            self->velocityX = 0;
+        }
+        if (!(self->ext.holywater.timer & 3)) {
+            BO6_RicCreateEntFactoryFromEntity(
+                self, FACTORY(BP_HOLYWATER_FIRE, self->ext.holywater.unk82), 0);
+            self->ext.holywater.unk82 += 1;
+            self->velocityX -= (self->velocityX / 32);
+        }
+
+        self->posX.val += self->velocityX;
+        colRes = OVL_EXPORT(RicCheckHolyWaterCollision)(6, 0);
+        if (!(colRes & 1)) {
+            self->velocityX = self->velocityX >> 1;
+            self->step++;
+        }
+        break;
+    case 4:
+        if (self->flags & 0x100) {
+            self->velocityX = 0;
+        }
+
+        if (!(self->ext.holywater.timer & 3)) {
+            BO6_RicCreateEntFactoryFromEntity(
+                self, FACTORY(BP_HOLYWATER_FIRE, self->ext.holywater.unk82), 0);
+            self->ext.holywater.unk82 += 1;
+        }
+        self->velocityY += FIX(12.0 / 128);
+        if (self->velocityY > FIX(4)) {
+            self->velocityY = FIX(4);
+        }
+        self->posY.val += self->velocityY;
+        colRes = BO6_RicCheckHolyWaterCollision(0, 0);
+        self->posX.val += self->velocityX;
+        xMod = 4;
+        if (self->velocityX < 0) {
+            xMod = -xMod;
+        }
+        colRes |= WarpBackgroundBrightness(-7, xMod);
+        if (colRes & 1) {
+            self->velocityX <<= 1;
+            self->step--;
+        }
+        break;
+    case 5:
+        break;
+    }
+
+    if (self->step > 2) {
+        if (--self->ext.holywater.timer < 0) {
+            DestroyEntity(self);
+            return;
+        }
+        if (self->ext.holywater.timer == 2) {
+            self->step = 5;
+        }
+        self->posY.i.hi -= 5;
+        self->animCurFrame = 0;
+    }
+    g_Ric.timers[PL_T_3] = 2;
+    self->hitFlags = 0;
+    self->flags &= ~0x100;
+    FntPrint("judge:%02x\n", self->hitboxState);
+}
 
 INCLUDE_ASM(
     "boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnHolyWaterFlame);
