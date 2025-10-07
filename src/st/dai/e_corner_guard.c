@@ -361,7 +361,7 @@ void EntityCornerGuard(Entity* self) {
                 CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = EXPLOSION_SMALL_MULTIPLE;
             }
-            self->animCurFrame = NULL;
+            self->animCurFrame = 0;
             PlaySfxPositional(SFX_SKEL_EXPLODE);
             self->step_s++;
             break;
