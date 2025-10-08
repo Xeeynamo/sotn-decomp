@@ -2,7 +2,7 @@
 #include "sel.h"
 
 // BSS
-static s32 D_801BC300[16]; //unused
+static s32 D_801BC300[16]; // unused
 static s32 D_801BC340;
 static s32 g_StreamDiskIsReady;
 static s32 D_801BC348;

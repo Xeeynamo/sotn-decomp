@@ -224,8 +224,7 @@ void InitMainMenuUI(void) {
     prim->priority = 0x30;
     prim->drawMode = DRAW_HIDE;
 
-    D_801BAF18[GFX_WND_SAVE_SUMMARY][0] =
-        g_api.AllocPrimitives(PRIM_GT4, 1);
+    D_801BAF18[GFX_WND_SAVE_SUMMARY][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
     prim = &g_PrimBuf[D_801BAF18[GFX_WND_SAVE_SUMMARY][0]];
     SetTexturedPrimRect(prim, 0x68, 0x58, 0xB0, 0x50, 0, 0);
     func_801B1D88(prim);
@@ -449,9 +448,9 @@ void func_801ACF7C(void) { func_801B1ED0(); }
 
 void func_psp_092391A0(void) {
     D_801803A8 = GetLang(&D_psp_09283BE8, &D_psp_09283E48, &D_psp_09283CA8,
-                             &D_psp_09283DC8, &D_psp_09283D30);
+                         &D_psp_09283DC8, &D_psp_09283D30);
     D_80180454 = GetLang(&D_psp_09283E80, &D_psp_09283EE0, &D_psp_09283E98,
-                             &D_psp_09283EC8, &D_psp_09283EB0);
+                         &D_psp_09283EC8, &D_psp_09283EB0);
 }
 
 void PrintFileSelectPlaceName(s32 port, s32 slot, s32 y) {
@@ -727,9 +726,8 @@ void func_801AD78C(void) {
     SetTexturedPrimRect(
         prim, g_InputCursorPos * 0x10 + 0x80, 0x48, 0xF, 0xF, 0xF0, 0xF0);
     prim = &g_PrimBuf[D_801BAF18[GFX_UNK_10][0]];
-    SetTexturedPrimRect(
-        prim, (D_801BC3E0 & 7) * 0x20 + 0x40,
-        (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
+    SetTexturedPrimRect(prim, (D_801BC3E0 & 7) * 0x20 + 0x40,
+                        (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
     if (g_Timer & 8) {
         func_801ACBE4(GFX_UNK_8, 0);
     } else {
@@ -819,7 +817,7 @@ void UpdateFileSelect(s32 arg0) {
         }
 
         D_801D6B04 = (g_MemCardSelectorX % 3) + (g_MemCardSelectorY * 3) +
-                         (g_MemCardSelectorX / 3) * 0xF;
+                     (g_MemCardSelectorX / 3) * 0xF;
         if (temp_s0 != D_801D6B04 && arg0) {
             if (g_SaveSummary[temp_s0 / 15].slot[temp_s0 % 15] ==
                 func_8919560()) {
@@ -951,7 +949,8 @@ void func_801ADF94(s32 flags, s32 yOffset) {
                 x = 0x20 + (i % 3) * 0x18 + port * 0x100;
                 y = 0x90 - (i / 3) * 0x10;
                 if (((i % 3) + port * 3 == g_MemCardSelectorX) &&
-                    saveDescriptorString != 3 && ((i / 3) == g_MemCardSelectorY) &&
+                    saveDescriptorString != 3 &&
+                    ((i / 3) == g_MemCardSelectorY) &&
                     saveDescriptorString > 0 && !D_801BAF10) {
                     tge = 0;
 
@@ -974,9 +973,9 @@ void func_801ADF94(s32 flags, s32 yOffset) {
                         func_801B27A8(x, y, 0x10, 0x10, 0x90, 0x80, 0x200, 0x17,
                                       tge, color);
                     }
-                    func_801B27A8(x, y, 0x10, 0x10, icon * 0x10,
-                                  (D_801BAF08 % 3) * 0x10, icon + 0x220,
-                                  0x16, tge, color);
+                    func_801B27A8(
+                        x, y, 0x10, 0x10, icon * 0x10, (D_801BAF08 % 3) * 0x10,
+                        icon + 0x220, 0x16, tge, color);
                 }
             }
             break;
@@ -1612,8 +1611,8 @@ void func_psp_0923BE20(void) {
                     func_801B2608(0x17, 5);
                     g_api.PlaySfx(SFX_UI_CONFIRM);
                     g_GameEngineStep++;
-                    if (g_SaveSummary[D_801D6B04 / 15]
-                            .slot[D_801D6B04 % 15] == func_8919560()) {
+                    if (g_SaveSummary[D_801D6B04 / 15].slot[D_801D6B04 % 15] ==
+                        func_8919560()) {
                         var_s5 = func_8919570();
                     }
                 }

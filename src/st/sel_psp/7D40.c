@@ -196,8 +196,8 @@ void func_801B1FD8(char* str, s32 y) {
         for (i = 0; i < LEN; i++) {
             D_801BAFD0[i] = *chPix++;
         }
-        LoadTPage((u_long*)D_801BAFD0, 0, 0, D_801BAFD4 + x,
-                  D_801BAFD8 + y, W, H);
+        LoadTPage(
+            (u_long*)D_801BAFD0, 0, 0, D_801BAFD4 + x, D_801BAFD8 + y, W, H);
         D_801BAFD0 += LEN;
         x += 3;
     }
@@ -217,7 +217,7 @@ void func_801B2608(s32 strIdx, s32 id) {
     D_801BAFD8 = 0;
     if ((strIdx < 0) || (strIdx > 0x2B)) {
         (int)strIdx;
-        asm("breakc 0");
+        asm("breakc 0"); // TODO: MWCC builtin or macro ?
     }
     str = GetLang(D_psp_092843F0, D_psp_09284D68, D_psp_09284730,
                   D_psp_09285058, D_psp_09284A40);
