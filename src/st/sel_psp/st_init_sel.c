@@ -13,12 +13,14 @@ extern u8 D_psp_0924D4F0[];
 extern u8 D_psp_0924DA50[];
 extern u8 D_psp_0924DFB0[];
 extern u8 D_psp_0924E510[];
-extern u8* D_psp_09285B80;
-extern u8* D_psp_09285B88;
-extern u8* D_psp_09285B90;
-extern u8* D_psp_09285B98;
-extern u8* D_psp_09285BA0;
-extern u8* D_psp_09285BA8;
+
+// BSS
+u8* D_psp_09285BA8;
+u8* D_psp_09285BA0;
+u8* D_psp_09285B98;
+u8* D_psp_09285B90;
+u8* D_psp_09285B88;
+u8* D_psp_09285B80;
 
 s32 D_psp_0924EA70 = 0x08D39D3C;
 

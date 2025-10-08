@@ -1,6 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
 
+// BSS
+static s32 D_801BC300[16]; // unused
+static s32 D_801BC340;
+static s32 g_StreamDiskIsReady;
+static s32 D_801BC348;
+static s32 D_801BC34C;
+
 // Check if CD data is ready as long as its not related to reading the position
 // of the laser. The status is cached in the `g_StreamDiskIsReady` global.
 //

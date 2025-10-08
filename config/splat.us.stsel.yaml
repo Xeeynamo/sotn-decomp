@@ -38,11 +38,12 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, 2C048]
-      - [0x3A8, .data, 2C048]
-      - [0x454, .data, 2C048]
-      - [0x46C, .data, 2C048]
+      #- [0x3A8, .data, 2C048]
+      #- [0x454, .data, 2C048]
+      - [0x46C, .data, 318CC]
       - [0x4D0, .data, 3410C]
-      - [0x4E0, .data, banks]
+      - [0x4E0, .data, 34B30]
+      - [0x59C, .data, banks]
       - [0x728, data]
       - [0x824, .data, cutscene]
       - [0x8DC, .data, save_mgr_pre]
@@ -81,13 +82,13 @@ segments:
       - [0x22E4, .data, save_mgr]
       - [0x2584, data]
       - [0x25FC, .data, config_us] # subweapons
-      - [0x2700, .data, config_us] # equip
-      - [0x5314, .data, config_us] # accessories
-      - [0x5E54, .data, config_us] # menu
-      - [0x600C, .data, config_us] # spells
-      - [0x631C, .data, config_us] # relics
-      - [0x64FC, .data, config_us] # enemies
-      - [0xA37C, .data, config_us] # exp table
+      #- [0x2700, .data, config_us] # equip
+      #- [0x5314, .data, config_us] # accessories
+      #- [0x5E54, .data, config_us] # menu
+      #- [0x600C, .data, config_us] # spells
+      #- [0x631C, .data, config_us] # relics
+      #- [0x64FC, .data, config_us] # enemies
+      #- [0xA37C, .data, config_us] # exp table
       - [0xA50C, .data, lba_stage]
       - [0xB2CC, .data, stream_info]
       - [0xB304, data]
@@ -97,42 +98,50 @@ segments:
       - [0x16438, data]
       - [0x176C0, rodata]
       - [0x27438, .rodata, 2C048] # strings in D_80180128
-      - [0x27620, .rodata, 2C048] # strings in D_801803D0
-      - [0x276A4, .rodata, 2C048] # strings func_801ACFBC
-      - [0x276C0, .rodata, 2C048] # DrawNavigationTips jtbl
-      - [0x276D8, .rodata, 2C048] # strings in func_801AD490
-      - [0x276F0, .rodata, 2C048] # strings in D_80180454
-      - [0x27748, .rodata, 2C048] # strings in func_801AD66C
-      - [0x27760, .rodata, 2C048] # strings in func_801AD78C
-      - [0x277A0, .rodata, 2C048] # strings in func_801ADF94
-      - [0x277C8, .rodata, 2C048] # Update strings and jtbl
-      - [0x27AE4, .rodata, 2C048] # "BASLUS-00067DRAX00"
-      - [0x27AF8, .rodata, 2C048] # FntPrint strings
-      - [0x27B14, .rodata, 33164] # func_801B3164
+      #- [0x27620, .rodata, 2C048] # strings in D_801803D0
+      #- [0x276A4, .rodata, 2C048] # strings func_801ACFBC
+      #- [0x276C0, .rodata, 2C048] # DrawNavigationTips jtbl
+      #- [0x276D8, .rodata, 2C048] # strings in func_801AD490
+      #- [0x276F0, .rodata, 2C048] # strings in D_80180454
+      #- [0x27748, .rodata, 2C048] # strings in func_801AD66C
+      #- [0x27760, .rodata, 2C048] # strings in func_801AD78C
+      #- [0x277A0, .rodata, 2C048] # strings in func_801ADF94
+      #- [0x277C8, .rodata, 2C048] # Update strings and jtbl
+      - [0x27AE4, .rodata, 32D6C] # "BASLUS-00067DRAX00"
+      #- [0x27AF8, .rodata, 32D6C] # FntPrint strings
+      #- [0x27B14, .rodata, 32D6C] # func_801B3164
       - [0x27B60, .rodata, 3410C] # E3 selection strings
-      - [0x27B98, .rodata, 3410C] # TestCollision
-      - [0x27BD8, .rodata, 3410C] # func_801B55C8
-      - [0x27BF8, .rodata, 3585C]
+      - [0x27B98, .rodata, 34B30] # TestCollision
+      #- [0x27BD8, .rodata, 34B30] # func_801B55C8
+      #- [0x27BF8, .rodata, 34B30]
       - [0x27CD4, .rodata, cutscene] # g_DiagActors strings
-      - [0x27CF4, .rodata, cutscene] # SEL_EntityCutscene jtbl
+      #- [0x27CF4, .rodata, cutscene] # SEL_EntityCutscene jtbl
       - [0x27D78, .rodata, save_mgr]
       - [0x28040, .rodata, config_us] # equip strings
-      - [0x29B18, .rodata, config_us] # accessories strings
-      - [0x2A8B4, .rodata, config_us] # menu strings
-      - [0x2AE08, .rodata, config_us] # spells strings
-      - [0x2AFA0, .rodata, config_us] # relics strings
-      - [0x2B490, .rodata, config_us] # enemies strings
+      #- [0x29B18, .rodata, config_us] # accessories strings
+      #- [0x2A8B4, .rodata, config_us] # menu strings
+      #- [0x2AE08, .rodata, config_us] # spells strings
+      #- [0x2AFA0, .rodata, config_us] # relics strings
+      #- [0x2B490, .rodata, config_us] # enemies strings
       - [0x2BBF0, .rodata, lba_stage]
       - [0x2BF9C, .rodata, libpress]
       - [0x2C048, c, 2C048]
-      - [0x33164, c, 33164]
+      - [0x318CC, c, 318CC]
+      - [0x32D6C, c, 32D6C]
       - [0x3410C, c, 3410C]
-      - [0x3585C, c, 3585C]
+      - [0x34B30, c, 34B30]
       - [0x3642C, c, cutscene]
       - [0x380F0, c, save_mgr]
       - [0x39744, c, stream]
       - [0x3a460, c, libpress]
       - [0x3AB70, asm, handwritten/func_801BAB70]
       - [0x3ABA4, asm, handwritten/DecDCTvlc]
-      - [0x3AEE4, .bss, bss]
+      - [0x3AF08, .bss, 2C048]
+      - [0x3AFD0, .bss, 318CC]
+      - [0x3AFDC, .bss, 32D6C]
+      - [0x3B010, .bss, 3410C]
+      - [0x3B0F8, .bss, cutscene]
+      - [0x3C2F8, .bss, save_mgr]
+      - [0x3C300, .bss, stream]
+      - [0x3C350, .bss, bss]
   - [0x56B28]

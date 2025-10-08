@@ -429,26 +429,6 @@ typedef struct {
     s32 overlayLastBlockSize;
 } CdThing;
 
-typedef struct {
-    RECT D_800ACD80;
-    RECT D_800ACD88;
-    RECT D_800ACD90;
-    RECT D_800ACD98;
-    RECT D_800ACDA0;
-    RECT D_800ACDA8;
-    RECT D_800ACDB0;
-    RECT D_800ACDB8;
-    RECT D_800ACDC0;
-    RECT D_800ACDC8;
-    RECT D_800ACDD0;
-    RECT D_800ACDD8;
-    RECT D_800ACDE0;
-    RECT D_800ACDE8;
-#ifdef VERSION_US
-    RECT D_800ACDF0;
-#endif
-} Vram;
-
 #define NOW_LOADING_PRIM_COUNT 16
 typedef struct {
     /* 0x00 */ s32 step;
@@ -627,7 +607,6 @@ extern s32 g_ExpNext[];
 extern s16 D_800AC958[];
 extern CdFile* D_800ACC74[];
 extern s32 g_CurrentStream;
-extern Vram g_Vram;
 extern s32 D_800ACE44;
 extern s16 g_SensorsCeilingBat[];
 extern s16 g_SensorsFloorBat[];
