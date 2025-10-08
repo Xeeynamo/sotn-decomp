@@ -3,6 +3,9 @@
 #include "memcard.h"
 #include "sfx.h"
 
+void DrawImages8x8(u8* imgs, s32 x, s32 y, s32 tge);
+void DrawString16x16(const char* str, s32 x, s32 y, s32 tga);
+
 Overlay g_StageSel = {
     /* 0x00 */ SEL_Update,
     /* 0x04 */ HandleTitleScreen,

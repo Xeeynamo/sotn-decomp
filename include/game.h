@@ -1268,7 +1268,7 @@ typedef struct {
     /* 0x18 */ s32 playMinutes;
     /* 0x1C */ s32 playSeconds;
     /* 0x20 */ s32 cardIcon;
-    /* 0x24 */ s32 endGameFlags;
+    /* 0x24 */ u32 endGameFlags;
     /* 0x28 */ s16 stage;
     /* 0x2A */ u16 nRoomsExplored;
     /* 0x2C */ u16 roomX;
@@ -1672,6 +1672,23 @@ typedef struct {
 #endif
     /* 0x1C */ s32 primIndex[3]; // primIndices: unk, actorName, unk
 } Dialogue3;                     // size = 0x28
+
+// sel_psp/cutscene.c
+typedef struct {
+    /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character
+    /* 0x04 */ s16 startX;            // starting x coord
+    /* 0x06 */ s16 nextLineY;         // next line y coord
+    /* 0x08 */ s16 startY;            // starting y coord
+    /* 0x0A */ s16 nextCharX;         // next char x coord
+    /* 0x0C */ s16 nextLineX;         // next line x coord
+    /* 0x0E */ u16 nextCharY;         // next char y coord
+    /* 0x10 */ u16 portraitAnimTimer; // portrait animation timer
+    /* 0x12 */ u16 unk12;             // unknown
+    /* 0x14 */ u16 clutIndex;         // CLUT index
+    /* 0x16 */ u16 nextCharTimer;     // timer to next character
+    /* 0x18 */ Primitive* prim;       // for dialogue graphics rendering
+    /* 0x1C */ s32 primIndex;         // primIndex: unk
+} Dialogue4;                          // size = 0x20
 
 // Used for the damageKind of DamageParam
 typedef enum {

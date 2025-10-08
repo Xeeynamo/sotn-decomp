@@ -203,8 +203,6 @@ void func_801ACBE4(s32 arg0, u16 arg1);
 void func_801AD1D0(void);
 void func_801AD218(void);
 void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height);
-void DrawString16x16(const char* str, s32 x, s32 y, s32 tga);
-void DrawImages8x8(u8* imgs, s32 x, s32 y, s32 tge);
 void func_801B9C80(void);
 void SEL_Init(s32 objLayoutId);
 void func_801B60D4(void);
