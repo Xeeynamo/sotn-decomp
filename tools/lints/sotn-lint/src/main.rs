@@ -16,6 +16,7 @@ mod linter;
 mod player_status;
 mod primitive_type;
 mod relics;
+mod vram_flag;
 
 use attackelement::AttackElementTransformer;
 use collider_effects::ColliderEffectsTransformer;
@@ -32,6 +33,7 @@ use player_status::PlayerStatusTransformer;
 use primitive_type::PrimitiveTypeTransformer;
 use rayon::prelude::*;
 use relics::RelicsTransformer;
+use vram_flag::PlayerVramFlagTransformer;
 
 fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>, linters: &Vec<Box<dyn Linter>>) ->
 (usize, bool) {
@@ -90,6 +92,7 @@ fn process_directory(dir_path: &str) -> bool {
     let primitive_type_transformer = PrimitiveTypeTransformer::new();
     let player_status_transformer = PlayerStatusTransformer::new();
     let attack_element_transformer = AttackElementTransformer::new();
+    let vram_flag_transformer = PlayerVramFlagTransformer::new();
 
     let transformers: Vec<Box<dyn LineTransformer>> = vec![
         Box::new(fixed_transformer),
@@ -101,6 +104,7 @@ fn process_directory(dir_path: &str) -> bool {
         Box::new(primitive_type_transformer),
         Box::new(player_status_transformer),
         Box::new(attack_element_transformer),
+        Box::new(vram_flag_transformer)
         ];
 
     let linters: Vec<Box<dyn Linter>> = vec![

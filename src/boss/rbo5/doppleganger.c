@@ -42,7 +42,7 @@ static void func_us_801C096C(void) {
     }
 
     D_us_801D4344 = 1;
-    g_Dop.vram_flag = 1;
+    g_Dop.vram_flag = TOUCHING_GROUND;
     func_8010E570(0);
     entity = &g_Entities[E_ID_41];
 
@@ -761,7 +761,7 @@ void func_us_801C1DC8(void) {
                 }
             }
         } else {
-            if (g_Dop.vram_flag & 1) {
+            if (g_Dop.vram_flag & TOUCHING_GROUND) {
                 func_us_801C1DB0(0);
             } else {
                 g_Dop.padSim = PAD_CROSS;
@@ -789,7 +789,7 @@ void func_us_801C1DC8(void) {
                 g_Dop.padSim |= PAD_CROSS;
             }
             D_us_801D3304 = g_Dop.padSim & (PAD_LEFT | PAD_RIGHT);
-        } else if (g_Dop.vram_flag & 1) {
+        } else if (g_Dop.vram_flag & TOUCHING_GROUND) {
             func_us_801C1DB0(0);
         } else {
             g_Dop.padSim = D_us_801D3304 + PAD_CROSS;

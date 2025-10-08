@@ -316,14 +316,14 @@ void func_us_801C27A4(Entity* self) {
         g_Player.padSim = 0;
         self->posY.val += FIX(0.5);
         player->posY.i.hi = self->posY.i.hi + 4;
-        g_Player.vram_flag = 0x41;
+        g_Player.vram_flag = VRAM_FLAG_UNK40 | TOUCHING_GROUND;
         break;
     case 2:
         g_Player.demo_timer = 2;
         g_Player.padSim = 0;
         self->posY.val -= FIX(0.5);
         player->posY.i.hi = self->posY.i.hi + 4;
-        g_Player.vram_flag = 0x41;
+        g_Player.vram_flag = VRAM_FLAG_UNK40 | TOUCHING_GROUND;
         break;
     }
 

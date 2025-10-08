@@ -735,7 +735,7 @@ static void DopplegangerThinking(void) {
         }
         break;
     case THINK_STEP_6:
-        if (g_Dop.vram_flag & 1) {
+        if (g_Dop.vram_flag & TOUCHING_GROUND) {
             D_us_801D3D24 = THINK_STEP_0;
         } else {
             g_Dop.padSim |= PAD_CROSS;
@@ -745,7 +745,7 @@ static void DopplegangerThinking(void) {
         }
         break;
     case THINK_STEP_7:
-        if (g_Dop.vram_flag & 1) {
+        if (g_Dop.vram_flag & TOUCHING_GROUND) {
             D_us_801D3D24 = THINK_STEP_0;
         } else {
             if (playerDistanceX > 16) {

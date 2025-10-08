@@ -37,12 +37,12 @@ bool MarCheckInput(s32 checks) {
     if (PLAYER.velocityY > FIX(7)) {
         PLAYER.velocityY = FIX(7);
     }
-    if ((checks & CHECK_80) && (g_Player.vram_flag & 2) &&
+    if ((checks & CHECK_80) && (g_Player.vram_flag & TOUCHING_CEILING) &&
         (PLAYER.velocityY < FIX(-1))) {
         PLAYER.velocityY = FIX(-1);
     }
     if (PLAYER.velocityY >= 0) {
-        if ((checks & CHECK_GROUND) && (g_Player.vram_flag & 1)) {
+        if ((checks & CHECK_GROUND) && (g_Player.vram_flag & TOUCHING_GROUND)) {
             switch (g_Player.unk46) {
             case 0:
             default:
@@ -100,15 +100,15 @@ bool MarCheckInput(s32 checks) {
                 g_Player.unk44 = 0;
                 return true;
             }
-        } else if (
-            checks & CHECK_GROUND_AFTER_HIT && (g_Player.vram_flag & 1)) {
+        } else if (checks & CHECK_GROUND_AFTER_HIT &&
+                   (g_Player.vram_flag & TOUCHING_GROUND)) {
             MarSetCrouch(1, PLAYER.velocityX);
             g_api.PlaySfx(SFX_STOMP_HARD_E);
             MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
             return true;
         }
     }
-    if (checks & CHECK_FALL && !(g_Player.vram_flag & 1)) {
+    if (checks & CHECK_FALL && !(g_Player.vram_flag & TOUCHING_GROUND)) {
         if (g_Player.unk46) {
             if (g_Player.unk46 == 1) {
                 PLAYER.step_s = 0x40;

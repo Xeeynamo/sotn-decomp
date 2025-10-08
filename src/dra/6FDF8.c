@@ -42,14 +42,14 @@ bool func_8010FDF8(s32 branchFlags) {
     if (PLAYER.velocityY > FIX(7)) {
         PLAYER.velocityY = FIX(7);
     }
-    if ((branchFlags & 0x80) && (g_Player.vram_flag & 2) &&
+    if ((branchFlags & 0x80) && (g_Player.vram_flag & TOUCHING_CEILING) &&
         (PLAYER.velocityY < FIX(-1))) {
         PLAYER.velocityY = FIX(-1);
     }
 
     if (PLAYER.velocityY >= 0) {
         SFX_arg = 0x30;
-        if (branchFlags & 1 && g_Player.vram_flag & 1) {
+        if (branchFlags & 1 && g_Player.vram_flag & TOUCHING_GROUND) {
             if (g_Player.unk46) {
                 if ((g_Player.unk46 & 0x7FFF) == 0xFF) {
                     func_8010E570(0);
@@ -96,14 +96,14 @@ bool func_8010FDF8(s32 branchFlags) {
             }
             return 1;
         }
-        if (branchFlags & 0x20000 && g_Player.vram_flag & 1) {
+        if (branchFlags & 0x20000 && g_Player.vram_flag & TOUCHING_GROUND) {
             func_8010E470(3, PLAYER.velocityX);
             PlaySfx(SFX_STOMP_HARD_B);
             CreateEntFactoryFromEntity(g_CurrentEntity, BP_0, 0);
             return 1;
         }
     }
-    if (branchFlags & 4 && !(g_Player.vram_flag & 1)) {
+    if (branchFlags & 4 && !(g_Player.vram_flag & TOUCHING_GROUND)) {
         func_8010E7AC();
         return 1;
     }
