@@ -136,7 +136,6 @@ segments:
       - [0x3a460, c, libpress]
       - [0x3AB70, asm, handwritten/func_801BAB70]
       - [0x3ABA4, asm, handwritten/DecDCTvlc]
-      - [0x3AEE4, .bss, libpress]
       - [0x3AF08, .bss, 2C048]
       - [0x3AFD0, .bss, 318CC]
       - [0x3AFDC, .bss, 32D6C]
