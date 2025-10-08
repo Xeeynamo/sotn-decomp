@@ -11,29 +11,6 @@ extern s32 D_psp_09283E98;
 extern s32 D_psp_09283EB0;
 extern s32 D_psp_09283EC8;
 extern s32 D_psp_09283EE0;
-extern char** D_psp_09285BC0;
-extern char** D_psp_09285BC8;
-extern s32 D_psp_09285BD0;
-extern s32 D_psp_09285BD8;
-extern s32 D_psp_09285C28[][2];
-extern s32 D_psp_09283A78[];
-extern s32 D_psp_09283A98[];
-extern s32 D_psp_09283AB8[];
-extern s32 D_psp_09283AD8[];
-extern s32 D_psp_09283AF8[];
-extern s32 D_psp_09283B18[];
-extern s32 D_psp_09283A48[];
-extern s32 D_psp_09283A60[];
-extern s32 D_psp_09285C58;
-extern s32 D_psp_09285CD0;
-extern s32 D_psp_09285CD8;
-extern s32 D_psp_09285CE0;
-extern s32 D_psp_09285BF0;
-extern s32 D_psp_09285BF8;
-extern s32 D_psp_09285C00;
-extern s32 D_psp_09285C10;
-extern s32 D_psp_09285C18;
-extern s32 D_psp_09285C20;
 extern s32* D_91CE250;
 extern s32* D_91CE258;
 extern s32* D_91CE200;
@@ -41,15 +18,9 @@ extern s32* D_91CE208;
 extern s32* D_91CE210;
 extern char* D_psp_09283FF8[];
 extern char* D_psp_09284000[];
-extern s32 D_psp_09285CF0;
-extern s32 D_psp_09285CE8;
-extern s32 D_psp_0928628C;
-extern s32 D_psp_09286634;
-extern u8* D_9186CC8[];
 extern s32 D_psp_08B42050;
 extern s8* D_psp_09284098;
 extern s8* D_psp_092840B0;
-extern char D_psp_09285BE0[];
 extern char D_psp_092840B8[];
 extern char D_psp_092840C8[];
 extern char D_psp_092840D8[];
@@ -57,24 +28,49 @@ extern char D_psp_092840E8[];
 extern char D_psp_092840F8[];
 extern char D_9186D08[];
 extern s32 D_psp_08B42054;
-extern s32 D_psp_09285CF8;
 extern char D_psp_09284108[];
 extern char* D_91CE1F0;
 extern char* D_91CE1F8;
-extern s32 D_psp_09285D00;
-extern s32 D_psp_09285C08;
-extern s32 D_psp_09285CB8;
-extern s32 D_91FC478;
-extern s32 D_91FC488;
-extern s32 D_91FC490;
 extern s32 D_8B42044;
 extern s32 D_91ED288;
 extern char D_psp_09284110[];
 extern char D_psp_09284120[];
 extern char D_psp_09284140[];
 extern char D_psp_09284160[];
-extern u32 D_psp_09285BB0;
-extern u32 D_psp_09285BB8;
+
+// BSS
+static s32 D_801BAF08; // block icon animation index
+static s32 D_801BAF0C;
+static s32 D_801BAF10;
+static s32 D_801BAF14;
+static s32 D_801BAF18[NUM_GFX][2];
+static s32 g_MainMenuCursor;
+static s32 g_InputCursorPos;
+static s32 D_801BC3E0;
+static s32 D_801BC3EC;
+static s32 D_801D6B04;
+static s32 g_MemCardSelectorX;
+static s32 g_MemCardSelectorY;
+static char g_InputSaveName[0x10];
+static s32 D_801BAFC0;
+static s32 MainMenuMaskPrimIndex;
+static char** D_801803A8;
+static char** D_80180454;
+static s32 g_SelNextCrossPressEngStep;
+static s32 g_SelEng220NextStep;
+
+// The five possible header options that are displayed on the top-left for each
+// sub-menu in the main menu. The same graphics is also re-used for the main
+// menu selectable options.
+static s32 g_MenuHeadGfxU[] = {0x00, 0x80, 0x00, 0x00, 0x00};
+static s32 g_MenuHeadGfxV[] = {0xC0, 0x90, 0xE0, 0x80, 0xA0};
+
+static s32 g_MenuUnk084X[] = {0x10, 0x10, 0x18, 0x3D, 0x68, 0x80, 0x18, 0x98};
+static s32 g_MenuUnk084Y[] = {0x08, 0x18, 0x38, 0x38, 0x38, 0x38, 0x40, 0x40};
+static s32 g_MenuUnk084U0[] = {0x80, 0xA8, 0xE0, 0xE8, 0xE0, 0xE0, 0xE8, 0xF0};
+static s32 g_MenuUnk084V0[] = {0xF0, 0xF0, 0x80, 0x80, 0x88, 0x88, 0x88, 0x88};
+static s32 g_MenuUnk084U1[] = {0x28, 0x28, 0x08, 0x18, 0x08, 0x08, 0x08, 0x08};
+static s32 g_MenuUnk084V1[] = {0x10, 0x10, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08};
 
 #include "../../get_lang.h"
 
@@ -85,28 +81,28 @@ s32 func_psp_09237ED8(char* arg0, s32 arg1, s32 arg2) {
 
 void func_psp_092391A0(void);
 
-void func_psp_09237F40(void) {
-    D_psp_09285C20 = 1;
-    D_psp_09285C18 = 0;
-    D_psp_09285C10 = 0;
-    D_psp_09285C00 = 0;
-    D_psp_09285BF8 = 0;
-    D_psp_09285BF0 = 0;
+void SetupFileChoose(void) {
+    g_MainMenuCursor = 1;
+    g_InputCursorPos = 0;
+    D_801BC3E0 = 0;
+    D_801D6B04 = 0;
+    g_MemCardSelectorX = 0;
+    g_MemCardSelectorY = 0;
     func_psp_092391A0();
 }
 
-static void func_psp_09237F98(s32 arg0, s32 arg1) {
+static void func_801AC084(s32 arg0, s32 ypos) {
     Primitive* prim;
     s32 i;
 
-    prim = &g_PrimBuf[D_psp_09285C28[arg0][0]];
+    prim = &g_PrimBuf[D_801BAF18[arg0][0]];
     for (i = 0; i < 8; i++, prim = prim->next) {
-        prim->x0 = D_psp_09283A78[i] + 0x68;
-        prim->y0 = D_psp_09283A98[i] + 0x58 + arg1;
-        prim->u0 = D_psp_09283AB8[i];
-        prim->v0 = D_psp_09283AD8[i];
-        prim->u1 = D_psp_09283AF8[i];
-        prim->v1 = D_psp_09283B18[i];
+        prim->x0 = g_MenuUnk084X[i] + 0x68;
+        prim->y0 = g_MenuUnk084Y[i] + 0x58 + ypos;
+        prim->u0 = g_MenuUnk084U0[i];
+        prim->v0 = g_MenuUnk084V0[i];
+        prim->u1 = g_MenuUnk084U1[i];
+        prim->v1 = g_MenuUnk084V1[i];
         prim->tpage = 0xC;
         prim->clut = 0x200;
         prim->priority = 0x11;
@@ -114,24 +110,27 @@ static void func_psp_09237F98(s32 arg0, s32 arg1) {
     }
 }
 
-void func_psp_092380E8(void) {
+// Creates the buttons, displays, etc on main menu
+void InitMainMenuUI(void) {
     Primitive* prim;
     s32 i;
 
-    D_psp_09285C28[GFX_UNK_0][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_0][0]];
+    // Decoration at the top left for "Select Your Destiny"
+    D_801BAF18[GFX_UNK_0][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_0][0]];
     SetTexturedPrimRect(prim, 0xD8, 0x10, 0x90, 0x48, 0, 0);
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 0xD;
     prim->clut = 0x201;
     prim->priority = 0x10;
     prim->drawMode = DRAW_DEFAULT;
-    for (i = 0; i < 5; i++) {
-        D_psp_09285C28[i + 1][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
-        prim = &g_PrimBuf[D_psp_09285C28[i + 1][0]];
+
+    for (i = 0; i < NUM_MENU_OPTIONS; i++) {
+        D_801BAF18[i + 1][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+        prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
         SetTexturedPrimRect(prim, i * 0x40 - 0x20, i * 0x28, 0x7F, 0x1F,
-                            D_psp_09283A48[i], D_psp_09283A60[i]);
-        func_psp_0923F9B8(prim);
+                            g_MenuHeadGfxU[i], g_MenuHeadGfxV[i]);
+        func_801B1D88(prim);
         prim->tpage = 0xC;
         prim->clut = 0x200;
         prim->priority = 0x10;
@@ -141,65 +140,67 @@ void func_psp_092380E8(void) {
             prim->drawMode = DRAW_COLORS;
         }
     }
-    D_psp_09285C28[GFX_UNK_6][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_6][0]];
+
+    D_801BAF18[GFX_UNK_6][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_6][0]];
     SetTexturedPrimRect(prim, 0x20, 0xB0, 0x10, 0x30, 0xA0, 0x50);
-    func_psp_0923F9B8(prim);
-    prim->tpage = 0x17;
-    prim->clut = 0x200;
-    prim->priority = 0x10;
-    prim->drawMode = DRAW_DEFAULT;
-    memcpy(&D_psp_09285CD0, &D_psp_09285C58, 8U);
-    memcpy(&D_psp_09285CD8, &D_psp_09285C58, 8U);
-    memcpy(&D_psp_09285CE0, &D_psp_09285C58, 8U);
-    D_psp_09285CD0 = g_api.AllocPrimitives(PRIM_GT4, 1);
-    prim = &g_PrimBuf[D_psp_09285CD0];
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 0x17;
     prim->clut = 0x200;
     prim->priority = 0x10;
     prim->drawMode = DRAW_DEFAULT;
 
-    D_psp_09285CD8 = g_api.AllocPrimitives(PRIM_GT4, 1);
-    prim = &g_PrimBuf[D_psp_09285CD8];
-    func_psp_0923F9B8(prim);
+    memcpy(D_801BAF18[GFX_UNK_21], D_801BAF18[GFX_UNK_6], 8U);
+    memcpy(D_801BAF18[GFX_UNK_22], D_801BAF18[GFX_UNK_6], 8U);
+    memcpy(D_801BAF18[GFX_UNK_23], D_801BAF18[GFX_UNK_6], 8U);
+    D_801BAF18[GFX_UNK_21][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_21][0]];
+    func_801B1D88(prim);
     prim->tpage = 0x17;
     prim->clut = 0x200;
     prim->priority = 0x10;
     prim->drawMode = DRAW_DEFAULT;
 
-    D_psp_09285CE0 = g_api.AllocPrimitives(PRIM_GT4, 1);
-    prim = &g_PrimBuf[D_psp_09285CE0];
-    func_psp_0923F9B8(prim);
+    D_801BAF18[GFX_UNK_22][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_22][0]];
+    func_801B1D88(prim);
     prim->tpage = 0x17;
     prim->clut = 0x200;
     prim->priority = 0x10;
     prim->drawMode = DRAW_DEFAULT;
 
-    D_psp_09285C28[GFX_UNK_7][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_7][0]];
+    D_801BAF18[GFX_UNK_23][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_23][0]];
+    func_801B1D88(prim);
+    prim->tpage = 0x17;
+    prim->clut = 0x200;
+    prim->priority = 0x10;
+    prim->drawMode = DRAW_DEFAULT;
+
+    D_801BAF18[GFX_UNK_7][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_7][0]];
     SetTexturedPrimRect(prim, 0x70, 0x30, 0xA0, 0x30, 0, 0x50);
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x202;
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
 
-    D_psp_09285C28[GFX_UNK_8][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_8][0]];
+    D_801BAF18[GFX_UNK_8][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_8][0]];
     SetTexturedPrimRect(prim, 0x80, 0x48, 0xF, 0xF, 0xF0, 0xF0);
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x200;
     prim->priority = 0x30;
     prim->drawMode = DRAW_HIDE;
 
-    D_psp_09285C28[GFX_UNK_9][0] = g_api.AllocPrimitives(PRIM_SPRT, 3);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_9][0]];
-    for (i = 0; i < 3;) {
-        prim->x0 = (i << 7) + 0x30;
+    D_801BAF18[GFX_UNK_9][0] = g_api.AllocPrimitives(PRIM_SPRT, 3);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_9][0]];
+    for (i = 0; i < 3; i++, prim = prim->next) {
+        prim->x0 = (i * 0x80) + 0x30;
         prim->y0 = 0x60;
-        prim->u0 = i << 7;
+        prim->u0 = i * 0x80;
         prim->v0 = 0x78;
         prim->u1 = 0x80;
         prim->v1 = 0x78;
@@ -212,139 +213,138 @@ void func_psp_092380E8(void) {
         prim->clut = 0x202;
         prim->priority = 0x10;
         prim->drawMode = DRAW_HIDE;
-        i++;
-        prim = prim->next;
     }
-    D_psp_09285C28[GFX_UNK_10][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_10][0]];
+
+    D_801BAF18[GFX_UNK_10][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_10][0]];
     SetTexturedPrimRect(prim, 0x40, 0x68, 0x20, 0x20, 0, 0x48);
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 0xD;
     prim->clut = 0x204;
     prim->priority = 0x30;
     prim->drawMode = DRAW_HIDE;
 
-    D_psp_09285C28[GFX_WND_SAVE_SUMMARY][0] =
+    D_801BAF18[GFX_WND_SAVE_SUMMARY][0] =
         g_api.AllocPrimitives(PRIM_GT4, 1);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_WND_SAVE_SUMMARY][0]];
+    prim = &g_PrimBuf[D_801BAF18[GFX_WND_SAVE_SUMMARY][0]];
     SetTexturedPrimRect(prim, 0x68, 0x58, 0xB0, 0x50, 0, 0);
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x202;
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
 
-    D_psp_09285C28[GFX_UNK_12][0] = g_api.AllocPrimitives(PRIM_SPRT, 8);
-    func_psp_09237F98(0xC, 0);
+    D_801BAF18[GFX_UNK_12][0] = g_api.AllocPrimitives(PRIM_SPRT, 8);
+    func_801AC084(0xC, 0);
 
-    D_psp_09285C28[GFX_WND_CARD_1][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_WND_CARD_1][0]];
+    D_801BAF18[GFX_WND_CARD_1][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_WND_CARD_1][0]];
     prim->x0 = 0x18;
     prim->y0 = 0x38;
     prim->u0 = 0xB0;
     prim->v0 = 0;
     prim->u1 = 0x50;
     prim->v1 = 0x78;
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 0x17;
     prim->clut = 0x202;
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
 
-    D_psp_09285C28[GFX_WND_CARD_2][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_WND_CARD_2][0]];
+    D_801BAF18[GFX_WND_CARD_2][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_WND_CARD_2][0]];
     prim->x0 = 0x118;
     prim->y0 = 0x38;
     prim->u0 = 0xB0;
     prim->v0 = 0;
     prim->u1 = 0x50;
     prim->v1 = 0x78;
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 0x17;
     prim->clut = 0x202;
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
 
-    D_psp_09285C28[GFX_UNK_15][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_15][0]];
+    D_801BAF18[GFX_UNK_15][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_15][0]];
     prim->x0 = 0x98;
     prim->y0 = 0x10;
     prim->u0 = 0;
     prim->v0 = 0x40;
     prim->u1 = 0xD0;
     prim->v1 = 0x20;
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 6;
     prim->clut = 0x1A1;
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
 
-    D_psp_09285C28[GFX_UNK_16][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_16][0]];
+    D_801BAF18[GFX_UNK_16][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_16][0]];
     prim->x0 = 0xA0;
     prim->y0 = 0x60;
     prim->u0 = 0;
     prim->v0 = 0x60;
     prim->u1 = 0x70;
     prim->v1 = 0x30;
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 6;
     prim->clut = 0x1A1;
     prim->priority = 0x20;
     prim->drawMode = DRAW_HIDE;
 
-    D_psp_09285C28[GFX_UNK_17][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_17][0]];
+    D_801BAF18[GFX_UNK_17][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_17][0]];
     prim->x0 = 0x60;
     prim->y0 = 0xC0;
     prim->u0 = 0;
     prim->v0 = 0x90;
     prim->u1 = 0x70;
     prim->v1 = 0x10;
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 6;
     prim->clut = 0x1A1;
     prim->priority = 0x20;
     prim->drawMode = DRAW_DEFAULT;
 
-    D_psp_09285C28[GFX_UNK_18][0] = g_api.AllocPrimitives(PRIM_GT4, 2);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_18][0]];
+    D_801BAF18[GFX_UNK_18][0] = g_api.AllocPrimitives(PRIM_GT4, 2);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_18][0]];
     SetTexturedPrimRect(prim, 0x68, 0x30, 0xB0, 0x50, 0, 0);
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x202;
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
     prim = prim->next;
     SetTexturedPrimRect(prim, 0xA8, 0x80, 0x30, 0x10, 0xB0, 0x80);
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 0xC;
     prim->clut = 0x200;
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
 
-    D_psp_09285C28[GFX_UNK_19][0] = g_api.AllocPrimitives(PRIM_SPRT, 8);
-    func_psp_09237F98(0x13, -0x28);
+    D_801BAF18[GFX_UNK_19][0] = g_api.AllocPrimitives(PRIM_SPRT, 8);
+    func_801AC084(0x13, -0x28);
 
-    D_psp_09285C28[GFX_UNK_20][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_20][0]];
+    D_801BAF18[GFX_UNK_20][0] = g_api.AllocPrimitives(PRIM_SPRT, 1);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_20][0]];
     prim->x0 = 0xA0;
     prim->y0 = 0x38;
     prim->u0 = 0;
     prim->v0 = 0xA0;
     prim->u1 = 0x70;
     prim->v1 = 0x30;
-    func_psp_0923F9B8(prim);
+    func_801B1D88(prim);
     prim->tpage = 6;
     prim->clut = 0x1A1;
     prim->priority = 0x20;
     prim->drawMode = DRAW_HIDE;
 }
 
-static void func_psp_09238DA8(s32 gfxId, u16 drawMode) {
+static void func_801ACBE4(s32 gfxId, u16 drawMode) {
     Primitive* prim;
 
-    prim = &g_PrimBuf[D_psp_09285C28[gfxId][0]];
+    prim = &g_PrimBuf[D_801BAF18[gfxId][0]];
     while (prim != NULL) {
         prim->drawMode = drawMode;
         prim = prim->next;
@@ -354,117 +354,131 @@ static void func_psp_09238DA8(s32 gfxId, u16 drawMode) {
 void MenuHideAllGfx(void) {
     s32 i;
 
-    for (i = 0; i < 0x18; i++) {
-        func_psp_09238DA8(i, 8);
+    for (i = 0; i < NUM_GFX; i++) {
+        func_801ACBE4(i, 8);
     }
 }
 
-void func_psp_09238E68(void) {
-    s32 i;
+void InitMainMenuBackgroundAndFadeMask(void) {
     Primitive* prim;
+    s32 i;
 
-    D_psp_09285BD8 = g_api.AllocPrimitives(PRIM_GT4, 3);
-    prim = &g_PrimBuf[D_psp_09285BD8];
+    // Seems to be the background on the main menu (dark blue/grey door thing?)
+    D_801BAFC0 = g_api.AllocPrimitives(PRIM_GT4, 3);
+    prim = &g_PrimBuf[D_801BAFC0];
     for (i = 0; i < 3; i++, prim = prim->next) {
-        SetTexturedPrimRect(prim, i << 7, 0, 0x80, 0xF0, 0, 0);
-        func_psp_0923F9B8(prim);
+        SetTexturedPrimRect(prim, i * 0x80, 0, 0x80, 0xF0, 0, 0);
+        func_801B1D88(prim);
         prim->tpage = i + 0x89;
         prim->clut = 0x210;
         prim->drawMode = DRAW_COLORS;
     }
-    D_psp_09285BD0 = g_api.AllocPrimitives(PRIM_TILE, 2);
-    prim = &g_PrimBuf[D_psp_09285BD0];
+
+    // When the main menu is loaded in, it is covered by a black mask that fades
+    // away. This part creates the initial mask, then MainMenuFadeIn deals
+    // with fading it out.
+    MainMenuMaskPrimIndex = g_api.AllocPrimitives(PRIM_TILE, 2);
+    prim = &g_PrimBuf[MainMenuMaskPrimIndex];
     for (i = 0; prim != NULL; i++, prim = prim->next) {
         prim->x0 = (i & 1) * 0xC0;
         prim->u0 = 0xC0;
         prim->v0 = 0xF0;
-        func_psp_0923F948(prim, 0xFF);
+        SetPrimGrey(prim, 0xFF);
         prim->priority = 0x1FD;
         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
     }
 }
 
-s32 func_psp_09238FE8(void) {
-    s32 var_s1;
+// On title screen, you press START. Then the screen goes black,
+// and fades in gradually. This function handles that fade. Returns false
+// as long as the fade-in is ongoing.
+// Odd that this function can return false but not true. Perhaps there is a
+// default-true behavior when a bool function exits without an explicit value?
+// PSP version returns true at the end. True means the fade is complete.
+bool MainMenuFadeIn(void) {
     Primitive* prim;
+    s32 greyLevel;
 
-    prim = &g_PrimBuf[D_psp_09285BD0];
-    var_s1 = prim->r0;
-    var_s1 -= 0x10;
-    if (var_s1 < 0) {
-        var_s1 = 0;
+    prim = &g_PrimBuf[MainMenuMaskPrimIndex];
+    greyLevel = prim->r0;
+    greyLevel -= 0x10;
+    if (greyLevel < 0) {
+        greyLevel = 0;
     }
-    func_psp_0923F948(prim, var_s1);
+
+    SetPrimGrey(prim, greyLevel);
     prim = prim->next;
-    func_psp_0923F948(prim, var_s1);
-    if (var_s1 != 0) {
-        return 0;
+    SetPrimGrey(prim, greyLevel);
+
+    if (greyLevel != 0) {
+        return false;
     }
-    prim = &g_PrimBuf[D_psp_09285BD0];
+    // Once the greyLevel is exhaused, we hide them.
+    prim = &g_PrimBuf[MainMenuMaskPrimIndex];
     prim->drawMode = DRAW_HIDE;
     prim = prim->next;
     prim->drawMode = DRAW_HIDE;
-    return 1;
+    return true;
 }
 
-s32 func_psp_092390B8(void) {
-    s32 var_s1;
+s32 func_801ACEC0(void) {
     Primitive* prim;
+    s32 greyLevel;
 
-    prim = &g_PrimBuf[D_psp_09285BD0];
+    prim = &g_PrimBuf[MainMenuMaskPrimIndex];
     prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
-    var_s1 = prim->r0;
-    var_s1 += 0x10;
-    if (var_s1 > 0xFF) {
-        var_s1 = 0xFF;
+    greyLevel = prim->r0;
+    greyLevel += 0x10;
+    if (greyLevel > 0xFF) {
+        greyLevel = 0xFF;
     }
-    func_psp_0923F948(prim, var_s1);
+
+    SetPrimGrey(prim, greyLevel);
     prim = prim->next;
     prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
-    func_psp_0923F948(prim, var_s1);
+    SetPrimGrey(prim, greyLevel);
 
     if (g_api.func_80131F68()) {
         return 0;
     } else {
-        return var_s1 == 0xFF;
+        return greyLevel == 0xFF;
     }
 }
 
-void func_psp_09239180(void) { func_psp_0923FB40(); }
+void func_801ACF7C(void) { func_801B1ED0(); }
 
 void func_psp_092391A0(void) {
-    D_psp_09285BC8 = GetLang(&D_psp_09283BE8, &D_psp_09283E48, &D_psp_09283CA8,
+    D_801803A8 = GetLang(&D_psp_09283BE8, &D_psp_09283E48, &D_psp_09283CA8,
                              &D_psp_09283DC8, &D_psp_09283D30);
-    D_psp_09285BC0 = GetLang(&D_psp_09283E80, &D_psp_09283EE0, &D_psp_09283E98,
+    D_80180454 = GetLang(&D_psp_09283E80, &D_psp_09283EE0, &D_psp_09283E98,
                              &D_psp_09283EC8, &D_psp_09283EB0);
 }
 
-void PrintFileSelectPlaceName(s32 port, s32 slot, s32 arg2) {
-    DrawImages8x8(D_91CE258[g_SaveSummary[port].stage[slot]], 0xA0, arg2, 1);
-    DrawImages8x8(
-        D_91CE250[g_SaveSummary[port].stage[slot]], 0xA0, arg2 + 8, 1);
+void PrintFileSelectPlaceName(s32 port, s32 slot, s32 y) {
+    DrawImages8x8(D_91CE258[g_SaveSummary[port].stage[slot]], 0xA0, y, 1);
+    DrawImages8x8(D_91CE250[g_SaveSummary[port].stage[slot]], 0xA0, y + 8, 1);
 }
 
-void func_psp_092392F8(s32 port, s32 slot, s32 textId) {
+void func_801ACFBC(s32 port, s32 slot, s32 textId) {
     char playerName[0x20];
     s32 i;
 
     playerName[0] = '\0';
     for (i = 0; i < 8; i++) {
-        s32 charIndex = func_psp_092404A8(g_SaveSummary[port].name[slot][i]);
+        s32 charIndex = func_801B2984(g_SaveSummary[port].name[slot][i]);
         strcat(playerName, D_psp_09284000[charIndex]);
     }
-    func_psp_09240000(playerName, textId);
+    func_801B263C(playerName, textId);
     if (g_SaveSummary[port].character[slot] == 1) {
-        func_psp_0923FEC0(0, textId + 2);
+        func_801B2608(0, textId + 2);
     } else if (g_SaveSummary[port].character[slot] == 2) {
-        func_psp_0923FEC0(1, textId + 2);
-    } else if (g_SaveSummary[port].kind[slot] & 1) {
-        func_psp_0923FEC0(2, textId + 2);
-    } else if (g_SaveSummary[port].kind[slot] & 2) {
-        func_psp_0923FEC0(3, textId + 2);
+        func_801B2608(1, textId + 2);
+    } else if (g_SaveSummary[port].kind[slot] & SAVE_FLAG_CLEAR) {
+        func_801B2608(2, textId + 2);
+    } else if (g_SaveSummary[port].kind[slot] & SAVE_FLAG_REPLAY) {
+        func_801B2608(3, textId + 2);
     } else {
-        func_psp_0923FFB8(D_psp_09283FF8, textId + 2);
+        func_801B25D4(D_psp_09283FF8, textId + 2);
     }
 }
 
@@ -475,31 +489,51 @@ void func_psp_09239530(SaveData* arg0) {
 
     playerName[0] = '\0';
     for (i = 0; i < 8; i++) {
-        s32 charIndex = func_psp_092404A8(arg0->info.name[i]);
+        s32 charIndex = func_801B2984(arg0->info.name[i]);
         strcat(playerName, D_psp_09284000[charIndex]);
     }
     func_psp_0923FF70(playerName, id);
-    func_psp_0923FEC0(4, id + 2);
+    func_801B2608(4, id + 2);
 }
 
-void func_psp_092395E8(void) {
-    DrawImages8x8(D_psp_09285BC8[5], 0x30, 0xC4, 1);
-    DrawImages8x8(D_psp_09285BC8[6], 0x30, 0xD4, 1);
+#define STR_SELECT D_801803A8[0]
+#define STR_DECIDE D_801803A8[1]
+#define STR_CANCEL D_801803A8[2]
+#define STR_INPUT D_801803A8[3]
+#define STR_NOTFOR D_801803A8[4]
+#define STR_YES D_801803A8[5]
+#define STR_NO D_801803A8[6]
+#define STR_CONFIRM D_801803A8[7]
+#define STR_ERROR D_801803A8[8]
+#define STR_MATTED D_801803A8[9]
+
+typedef enum {
+    Tips_Generic,
+    Tips_Input,
+    Tips_YesNo,
+    Tips_Confirm,
+    Tips_MenuNavigation,
+    Tips_NoYes,
+} NavigationTips;
+
+void func_801AD1D0(void) {
+    DrawImages8x8(STR_YES, 0x30, 0xC4, 1);
+    DrawImages8x8(STR_NO, 0x30, 0xD4, 1);
 }
 
 void func_psp_09239640(s32 gfxId, s16 x, s16 y) {
     Primitive* prim;
 
-    func_psp_09238DA8(gfxId, 0);
-    prim = &g_PrimBuf[D_psp_09285C28[gfxId][0]];
+    func_801ACBE4(gfxId, 0);
+    prim = &g_PrimBuf[D_801BAF18[gfxId][0]];
     SetTexturedPrimRect(prim, x, y, 0x10, 0x10, 0xA0, 0x50);
 }
 
 void func_psp_092396D8(s32 gfxId, s16 x, s16 y) {
     Primitive* prim;
 
-    func_psp_09238DA8(gfxId, 0);
-    prim = &g_PrimBuf[D_psp_09285C28[gfxId][0]];
+    func_801ACBE4(gfxId, 0);
+    prim = &g_PrimBuf[D_801BAF18[gfxId][0]];
     if (D_psp_08B42050 == 0x2000) {
         SetTexturedPrimRect(prim, x, y, 0x10, 0x10, 0xA0, 0x60);
     } else {
@@ -510,8 +544,8 @@ void func_psp_092396D8(s32 gfxId, s16 x, s16 y) {
 void func_psp_092397B8(s32 gfxId, s16 x, s16 y) {
     Primitive* prim;
 
-    func_psp_09238DA8(gfxId, 0);
-    prim = &g_PrimBuf[D_psp_09285C28[gfxId][0]];
+    func_801ACBE4(gfxId, 0);
+    prim = &g_PrimBuf[D_801BAF18[gfxId][0]];
     if (D_psp_08B42050 == 0x2000) {
         SetTexturedPrimRect(prim, x, y, 0x10, 0x10, 0xA0, 0x70);
     } else {
@@ -522,83 +556,83 @@ void func_psp_092397B8(s32 gfxId, s16 x, s16 y) {
 void func_psp_09239898(s32 gfxId, s16 x, s16 y) {
     Primitive* prim;
 
-    func_psp_09238DA8(gfxId, 0);
-    prim = &g_PrimBuf[D_psp_09285C28[gfxId][0]];
+    func_801ACBE4(gfxId, 0);
+    prim = &g_PrimBuf[D_801BAF18[gfxId][0]];
     SetTexturedPrimRect(prim, x, y, 0x10, 0x10, 0xA0, 0x80);
 }
 
-void func_psp_09239930(s32 arg0) {
+void DrawNavigationTips(NavigationTips mode) {
     s32 y = 0;
 
-    func_psp_09238DA8(6, 8);
-    func_psp_09238DA8(0x15, 8);
-    func_psp_09238DA8(0x16, 8);
-    func_psp_09238DA8(0x17, 8);
-    switch (arg0) {
-    case 0:
-        func_psp_09239640(6, 0x20, y + 0xB0);
+    func_801ACBE4(GFX_UNK_6, 8);
+    func_801ACBE4(GFX_UNK_21, 8);
+    func_801ACBE4(GFX_UNK_22, 8);
+    func_801ACBE4(GFX_UNK_23, 8);
+    switch (mode) {
+    case Tips_Generic:
+        func_psp_09239640(GFX_UNK_6, 0x20, y + 0xB0);
         y += 0x10;
-        func_psp_092396D8(0x15, 0x20, y + 0xB0);
+        func_psp_092396D8(GFX_UNK_21, 0x20, y + 0xB0);
         y += 0x10;
-        func_psp_092397B8(0x16, 0x20, y + 0xB0);
-        y += 0x10;
-        break;
-
-    case 1:
-        func_psp_09239640(6, 0x120, y + 0x20);
-        y += 0x10;
-        func_psp_092396D8(0x15, 0x120, y + 0x20);
-        y += 0x10;
-        func_psp_092397B8(0x16, 0x120, y + 0x20);
-        y += 0x10;
-        func_psp_09239898(0x17, 0x120, y + 0x20);
+        func_psp_092397B8(GFX_UNK_22, 0x20, y + 0xB0);
         y += 0x10;
         break;
 
-    case 2:
-        func_psp_092396D8(6, 0x20, y + 0xC0);
+    case Tips_Input:
+        func_psp_09239640(GFX_UNK_6, 0x120, y + 0x20);
         y += 0x10;
-        func_psp_092397B8(0x15, 0x20, y + 0xC0);
+        func_psp_092396D8(GFX_UNK_21, 0x120, y + 0x20);
         y += 0x10;
-        func_psp_092395E8();
+        func_psp_092397B8(GFX_UNK_22, 0x120, y + 0x20);
+        y += 0x10;
+        func_psp_09239898(GFX_UNK_23, 0x120, y + 0x20);
+        y += 0x10;
         break;
 
-    case 3:
-        func_psp_092396D8(6, 0x18, y + 0xC0);
+    case Tips_YesNo:
+        func_psp_092396D8(GFX_UNK_6, 0x20, y + 0xC0);
         y += 0x10;
-        DrawImages8x8(D_psp_09285BC8[7], 0x28, 0xC4, 1);
+        func_psp_092397B8(GFX_UNK_21, 0x20, y + 0xC0);
+        y += 0x10;
+        func_801AD1D0();
         break;
 
-    case 4:
-        func_psp_09239640(6, 0x20, y + 0xB8);
+    case Tips_Confirm:
+        func_psp_092396D8(GFX_UNK_6, 0x18, y + 0xC0);
         y += 0x10;
-        func_psp_092396D8(0x15, 0x20, y + 0xB8);
+        DrawImages8x8(STR_CONFIRM, 0x28, 0xC4, 1);
+        break;
+
+    case Tips_MenuNavigation:
+        func_psp_09239640(GFX_UNK_6, 0x20, y + 0xB8);
+        y += 0x10;
+        func_psp_092396D8(GFX_UNK_21, 0x20, y + 0xB8);
         y += 0x10;
         break;
     }
 }
 
 void func_psp_09239B78(void) {
-    func_psp_09238DA8(6, 8);
-    func_psp_09238DA8(0x15, 8);
-    func_psp_09238DA8(0x16, 8);
-    func_psp_09238DA8(0x17, 8);
+    func_801ACBE4(GFX_UNK_6, 8);
+    func_801ACBE4(GFX_UNK_21, 8);
+    func_801ACBE4(GFX_UNK_22, 8);
+    func_801ACBE4(GFX_UNK_23, 8);
 }
 
-void func_psp_09239BD0(void) {
+void func_801AD490(void) {
     Primitive* prim;
     s32 i;
 
-    func_psp_09239930(4);
-    DrawImages8x8(D_psp_09285BC8[0], 0x30, 0xBC, 1);
-    DrawImages8x8(D_psp_09285BC8[1], 0x30, 0xCC, 1);
+    DrawNavigationTips(Tips_MenuNavigation);
+    DrawImages8x8(STR_SELECT, 0x30, 0xBC, 1);
+    DrawImages8x8(STR_DECIDE, 0x30, 0xCC, 1);
     func_psp_09240618(D_91CE210, 0xF0, 0x20, 0, 0x50);
     func_psp_09240618(D_91CE208, 0x100, 0x30, 0, 0x50);
     func_psp_09240618(D_91CE200, 0xE8, 0x40, 0, 0x50);
 
-    for (i = 0; i < 5; i++) {
-        prim = &g_PrimBuf[D_psp_09285C28[i + 1][0]];
-        if (i == D_psp_09285C20) {
+    for (i = 0; i < NUM_MENU_OPTIONS; i++) {
+        prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
+        if (i == g_MainMenuCursor) {
             prim->clut = 0x203;
         } else {
             prim->clut = 0x200;
@@ -606,25 +640,25 @@ void func_psp_09239BD0(void) {
     }
 }
 
-void func_psp_09239D18(void) {
+void func_801AD590(void) {
     if (g_pads[0].tapped & (PAD_RIGHT | PAD_DOWN)) {
-        g_api.PlaySfx(SFX_UI_MP_FULL);
-        D_psp_09285C20++;
-        if (D_psp_09285C20 == 5) {
-            D_psp_09285C20 = 1;
+        g_api.PlaySfx(SFX_UI_MP_FULL); // MP sfx also used for Main Menu Select
+        g_MainMenuCursor++;
+        if (g_MainMenuCursor == 5) {
+            g_MainMenuCursor = 1;
         }
     }
     if (g_pads[0].tapped & (PAD_LEFT | PAD_UP)) {
         g_api.PlaySfx(SFX_UI_MP_FULL);
-        D_psp_09285C20--;
-        if (D_psp_09285C20 == 0) {
-            D_psp_09285C20 = 4;
+        g_MainMenuCursor--;
+        if (g_MainMenuCursor == 0) {
+            g_MainMenuCursor = 4;
         }
     }
-    func_psp_0923FFB8(D_psp_09285BC0[D_psp_09285C20], 9);
+    func_801B25D4(D_80180454[g_MainMenuCursor], 9);
 }
 
-void func_psp_09239E18(void) {
+void func_801AD66C(void) {
     s32 i;
     s32 nSpaces;
     s8* strPtr;
@@ -632,8 +666,8 @@ void func_psp_09239E18(void) {
     // check if the name only contain spaces
     nSpaces = 0;
     for (i = 0; i < 8; i++) {
-        g_Status.saveName[i] = D_psp_09285BE0[i];
-        if (D_psp_09285BE0[i] == ' ') {
+        g_Status.saveName[i] = g_InputSaveName[i];
+        if (g_InputSaveName[i] == ' ') {
             nSpaces++;
         }
     }
@@ -678,120 +712,124 @@ void func_psp_09239E18(void) {
     }
 }
 
-void func_psp_0923A010(void) {
+void func_801AD78C(void) {
     Primitive* prim;
 
-    DrawImages8x8(D_psp_09285BC8[0], 0x130, 0x24, 1);
-    DrawImages8x8(D_psp_09285BC8[3], 0x130, 0x34, 1);
-    DrawImages8x8(D_psp_09285BC8[2], 0x130, 0x44, 1);
-    DrawImages8x8(D_psp_09285BC8[1], 0x130, 0x54, 1);
+    DrawImages8x8(STR_SELECT, 0x130, 0x24, 1);
+    DrawImages8x8(STR_INPUT, 0x130, 0x34, 1);
+    DrawImages8x8(STR_CANCEL, 0x130, 0x44, 1);
+    DrawImages8x8(STR_DECIDE, 0x130, 0x54, 1);
     DrawString16x16(D_psp_092840C8, 0x48, 0x70, 1);
     DrawString16x16(D_psp_092840D8, 0x48, 0x88, 1);
     DrawString16x16(D_psp_092840E8, 0x48, 0xA0, 1);
     DrawString16x16(D_psp_092840F8, 0x48, 0xB8, 1);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_8][0]];
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_8][0]];
     SetTexturedPrimRect(
-        prim, (D_psp_09285C18 * 0x10) + 0x80, 0x48, 0xF, 0xF, 0xF0, 0xF0);
-    prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_10][0]];
+        prim, g_InputCursorPos * 0x10 + 0x80, 0x48, 0xF, 0xF, 0xF0, 0xF0);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_10][0]];
     SetTexturedPrimRect(
-        prim, ((D_psp_09285C10 & 7) << 5) + 0x40,
-        ((D_psp_09285C10 & 0x18) * 3) + 0x68, 0x20, 0x20, 0, 0x48);
+        prim, (D_801BC3E0 & 7) * 0x20 + 0x40,
+        (D_801BC3E0 & 0x18) * 3 + 0x68, 0x20, 0x20, 0, 0x48);
     if (g_Timer & 8) {
-        func_psp_09238DA8(8, 0);
+        func_801ACBE4(GFX_UNK_8, 0);
     } else {
-        func_psp_09238DA8(8, 8);
+        func_801ACBE4(GFX_UNK_8, 8);
     }
-    DrawString16x16(D_psp_09285BE0, 0x80, 0x48, 1);
+    DrawString16x16(g_InputSaveName, 0x80, 0x48, 1);
 }
 
-void func_psp_0923A230(void) {
+void UpdateNameEntry(void) {
     if (g_pads[0].repeat & PAD_RIGHT) {
         g_api.PlaySfx(SFX_UI_MOVE);
-        D_psp_09285C10 = (D_psp_09285C10 & 0x18) | ((D_psp_09285C10 + 1) & 7);
+        D_801BC3E0 = (D_801BC3E0 & 0x18) | ((D_801BC3E0 + 1) & 7);
     }
 
     if (g_pads[0].repeat & PAD_DOWN) {
         g_api.PlaySfx(SFX_UI_MOVE);
-        D_psp_09285C10 = ((D_psp_09285C10 + 8) & 0x18) | (D_psp_09285C10 & 7);
+        D_801BC3E0 = ((D_801BC3E0 + 8) & 0x18) | (D_801BC3E0 & 7);
     }
 
     if (g_pads[0].repeat & PAD_LEFT) {
         g_api.PlaySfx(SFX_UI_MOVE);
-        D_psp_09285C10 = (D_psp_09285C10 & 0x18) | ((D_psp_09285C10 - 1) & 7);
+        D_801BC3E0 = (D_801BC3E0 & 0x18) | ((D_801BC3E0 - 1) & 7);
     }
 
     if (g_pads[0].repeat & PAD_UP) {
         g_api.PlaySfx(SFX_UI_MOVE);
-        D_psp_09285C10 = ((D_psp_09285C10 - 8) & 0x18) | (D_psp_09285C10 & 7);
+        D_801BC3E0 = ((D_801BC3E0 - 8) & 0x18) | (D_801BC3E0 & 7);
     }
 
     if (g_pads[0].tapped & (PAD_R1 | PAD_R2)) {
         g_api.PlaySfx(SFX_UI_MP_FULL);
-        D_psp_09285C18++;
-        if (D_psp_09285C18 == 8) {
-            D_psp_09285C18 = 0;
+        g_InputCursorPos++;
+        if (g_InputCursorPos == 8) {
+            g_InputCursorPos = 0;
         }
     }
 
     if (g_pads[0].tapped & (PAD_L1 | PAD_L2)) {
         g_api.PlaySfx(SFX_UI_MP_FULL);
-        D_psp_09285C18--;
-        if (D_psp_09285C18 == -1) {
-            D_psp_09285C18 = 7;
+        g_InputCursorPos--;
+        if (g_InputCursorPos == -1) {
+            g_InputCursorPos = 7;
         }
     }
 
-    if (g_pads[0].tapped & D_psp_08B42050) {
-        g_api.PlaySfx(0x8CD);
-        D_psp_09285BE0[D_psp_09285C18] = D_9186D08[D_psp_09285C10];
-        D_psp_09285C18++;
-        if (D_psp_09285C18 == 8) {
-            D_psp_09285C18 = 0;
+    if (g_pads[0].tapped & D_psp_08B42050) { // Input Character
+        g_api.PlaySfx(SFX_UI_NAME_ENTRY);
+        g_InputSaveName[g_InputCursorPos] = D_9186D08[D_801BC3E0];
+        g_InputCursorPos++;
+        if (g_InputCursorPos == 8) {
+            g_InputCursorPos = 0;
         }
     }
 
-    if (g_pads[0].tapped & D_psp_08B42054) {
-        D_psp_09285C18--;
-        if (D_psp_09285C18 == -1) {
-            D_psp_09285C18 = 7;
+    if (g_pads[0].tapped & D_psp_08B42054) { // Backspace
+        g_InputCursorPos--;
+        if (g_InputCursorPos == -1) {
+            g_InputCursorPos = 7;
         }
-        D_psp_09285BE0[D_psp_09285C18] = ' ';
+        g_InputSaveName[g_InputCursorPos] = ' ';
     }
 }
 
-void func_psp_0923A558(s32 arg0) {
+void UpdateFileSelect(s32 arg0) {
     s32 temp_s0;
 
-    temp_s0 = D_psp_09285C00;
-    if ((D_psp_0928628C >= 0) || (D_psp_09286634 >= 0)) {
-        if (g_pads[0].repeat & PAD_RIGHT) {
+    temp_s0 = D_801D6B04;
+    if (g_SaveSummary[0].padding >= 0 || g_SaveSummary[1].padding >= 0) {
+        if (g_pads[0].repeat & PAD_RIGHT) { // move selector to the right
             g_api.PlaySfx(SFX_UI_MOVE);
-            D_psp_09285BF8 = (D_psp_09285BF8 + 1) % 3;
+            g_MemCardSelectorX = (g_MemCardSelectorX + 1) % 3;
         }
-        if (g_pads[0].repeat & PAD_DOWN) {
+
+        if (g_pads[0].repeat & PAD_DOWN) { // move selector down
             g_api.PlaySfx(SFX_UI_MOVE);
-            D_psp_09285BF0 = (D_psp_09285BF0 + 4) % 5;
+            g_MemCardSelectorY = (g_MemCardSelectorY + 4) % 5;
         }
-        if (g_pads[0].repeat & PAD_LEFT) {
+
+        if (g_pads[0].repeat & PAD_LEFT) { // move selector to the left
             g_api.PlaySfx(SFX_UI_MOVE);
-            D_psp_09285BF8 = (D_psp_09285BF8 + 2) % 3;
+            g_MemCardSelectorX = (g_MemCardSelectorX + 2) % 3;
         }
-        if (g_pads[0].repeat & PAD_UP) {
+
+        if (g_pads[0].repeat & PAD_UP) { // move selector up
             g_api.PlaySfx(SFX_UI_MOVE);
-            D_psp_09285BF0 = (D_psp_09285BF0 + 1) % 5;
+            g_MemCardSelectorY = (g_MemCardSelectorY + 1) % 5;
         }
-        D_psp_09285C00 = (D_psp_09285BF8 % 3) + (D_psp_09285BF0 * 3) +
-                         (D_psp_09285BF8 / 3) * 0xF;
-        if (temp_s0 != D_psp_09285C00 && arg0) {
+
+        D_801D6B04 = (g_MemCardSelectorX % 3) + (g_MemCardSelectorY * 3) +
+                         (g_MemCardSelectorX / 3) * 0xF;
+        if (temp_s0 != D_801D6B04 && arg0) {
             if (g_SaveSummary[temp_s0 / 15].slot[temp_s0 % 15] ==
                 func_8919560()) {
-                D_psp_09285CF8 = 0xFF;
+                D_801BAF0C = 0xFF;
             }
         }
     }
 }
 
-void func_psp_0923A7C8(s32 flags, s32 arg1) {
+void func_801ADF94(s32 flags, s32 yOffset) {
     s32 slot;
     Primitive* prim;
     s32 percLo;
@@ -803,84 +841,84 @@ void func_psp_0923A7C8(s32 flags, s32 arg1) {
     s32 x;
     s32 y;
     s32 port;
-    s32 temp_v1;
+    s32 saveDescriptorString;
     s32 percHi;
     s32 color;
     s32 tge;
     s32 i;
 
-    temp_v1 = flags & 0x7F;
+    saveDescriptorString = flags & 0x7F;
     hideButtons = flags & 0x80;
-    port = D_psp_09285C00 / 15;
-    slot = D_psp_09285C00 % 15;
-    y = arg1 * 0x38;
-    prim = &g_PrimBuf[D_psp_09285C28[11][0]];
+    port = D_801D6B04 / 15;
+    slot = D_801D6B04 % 15;
+    y = yOffset * 0x38;
+    prim = &g_PrimBuf[D_801BAF18[GFX_WND_SAVE_SUMMARY][0]];
     SetTexturedPrimRect(prim, 0x68, y + 0x58, 0xB0, 0x50, 0, 0);
-    if (temp_v1 > 0) {
-        if ((g_SaveSummary[port].padding == -3) || (temp_v1 == 3)) {
-            func_psp_09238DA8(0xC, 8);
-            func_psp_09238DA8(0x10, 8);
+    if (saveDescriptorString > 0) {
+        if (g_SaveSummary[port].padding == -3 || saveDescriptorString == 3) {
+            func_801ACBE4(GFX_UNK_12, 8);
+            func_801ACBE4(GFX_UNK_16, 8);
             sp4c = func_psp_09237ED8(D_91CE1F8, 0x80, 8);
             DrawString16x16(D_91CE1F8, sp4c, y + 0x78, 1);
         } else if (
-            (temp_v1 == 4) ||
+            (saveDescriptorString == 4) ||
             ((port == 0) && g_SaveSummary[port].slot[slot] == func_8919560())) {
             func_8919638(g_Pix, 0x2000);
             save = (SaveData*)g_Pix;
-            func_psp_09237F98(0xC, y);
-            func_psp_09238DA8(0xC, 0);
-            func_psp_09238DA8(0x10, 0);
-            prim = &g_PrimBuf[D_psp_09285C28[16][0]];
+            func_801AC084(GFX_UNK_12, y);
+            func_801ACBE4(GFX_UNK_12, 0);
+            func_801ACBE4(GFX_UNK_16, 0);
+            prim = &g_PrimBuf[D_801BAF18[GFX_UNK_16][0]];
             prim->y0 = y + 0x60;
             func_psp_09239530(save);
             PrintFileSelectPlaceName(port, slot, y + 0x70);
-            func_psp_09240888(save->info.level, 0x94, y + 0x90, 1);
-            func_psp_09240888(save->info.playHours, 0xC8, y + 0x90, 1);
-            func_psp_09240920(save->info.playMinutes, 0xE0, y + 0x90, 1);
-            func_psp_09240920(save->info.playSeconds, 0xF8, y + 0x90, 1);
-            func_psp_09240888(save->info.gold, 0xB4, y + 0x98, 1);
+            func_801B2BD4(save->info.level, 0x94, y + 0x90, 1);
+            func_801B2BD4(save->info.playHours, 0xC8, y + 0x90, 1);
+            func_801B2C70(save->info.playMinutes, 0xE0, y + 0x90, 1);
+            func_801B2C70(save->info.playSeconds, 0xF8, y + 0x90, 1);
+            func_801B2BD4(save->info.gold, 0xB4, y + 0x98, 1);
             percHi = save->info.nRoomsExplored;
             percHi = (percHi * 1000) / 942;
             percLo = percHi % 10;
             percHi = percHi / 10;
-            func_psp_09240888(percHi, 0xE8, y + 0x98, 1);
-            func_psp_09240330(
+            func_801B2BD4(percHi, 0xE8, y + 0x98, 1);
+            func_801B27A8(
                 0xF0, y + 0x9C, 8, 4, 0xE0, 0x8C, 0x200, 0xC, 1, 0x80);
-            func_psp_09240888(percLo, 0xF8, y + 0x98, 1);
+            func_801B2BD4(percLo, 0xF8, y + 0x98, 1);
         } else {
             icon = g_SaveSummary[port].icon[slot];
-            if ((icon >= 0) && (g_SaveSummary[port].padding != -3)) {
-                func_psp_09237F98(0xC, y);
-                func_psp_09238DA8(0xC, 0);
-                func_psp_09238DA8(0x10, 0);
-                prim = &g_PrimBuf[D_psp_09285C28[16][0]];
+            if (icon >= 0 && g_SaveSummary[port].padding != -3) {
+                func_801AC084(0xC, y);
+                func_801ACBE4(GFX_UNK_12, 0);
+                func_801ACBE4(GFX_UNK_16, 0);
+                prim = &g_PrimBuf[D_801BAF18[GFX_UNK_16][0]];
                 prim->y0 = y + 0x60;
-                func_psp_092392F8(port, slot, 6);
+                func_801ACFBC(port, slot, 6);
                 PrintFileSelectPlaceName(port, slot, y + 0x70);
-                func_psp_09240888(
+                func_801B2BD4(
                     g_SaveSummary[port].level[slot], 0x94, y + 0x90, 1);
-                func_psp_09240888(
+                func_801B2BD4(
                     g_SaveSummary[port].playHours[slot], 0xC8, y + 0x90, 1);
-                func_psp_09240920(
+                func_801B2C70(
                     g_SaveSummary[port].playMinutes[slot], 0xE0, y + 0x90, 1);
-                func_psp_09240920(
+                func_801B2C70(
                     g_SaveSummary[port].playSeconds[slot], 0xF8, y + 0x90, 1);
-                func_psp_09240888(
+                func_801B2BD4(
                     g_SaveSummary[port].gold[slot], 0xB4, y + 0x98, 1);
                 percHi = g_SaveSummary[port].nRoomsExplored[slot];
                 percHi = (percHi * 1000) / 942;
                 percLo = percHi % 10;
                 percHi = percHi / 10;
-                func_psp_09240888(percHi, 0xE8, y + 0x98, 1);
-                func_psp_09240330(
+                func_801B2BD4(percHi, 0xE8, y + 0x98, 1);
+                func_801B27A8(
                     0xF0, y + 0x9C, 8, 4, 0xE0, 0x8C, 0x200, 0xC, 1, 0x80);
-                func_psp_09240888(percLo, 0xF8, y + 0x98, 1);
+                func_801B2BD4(percLo, 0xF8, y + 0x98, 1);
             } else {
-                func_psp_09238DA8(0xC, 8);
-                func_psp_09238DA8(0x10, 8);
+                func_801ACBE4(GFX_UNK_12, 8);
+                func_801ACBE4(GFX_UNK_16, 8);
                 if (icon == -2) {
                     DrawString16x16(D_psp_09284108, 0xA0, y + 0x78, 1);
-                } else if (temp_v1 == 2) {
+                } else if (saveDescriptorString == 2) {
                     sp4c = func_psp_09237ED8(D_91CE1F0, 0x88, 7);
                     DrawString16x16(D_91CE1F0, sp4c, y + 0x78, 1);
                 } else {
@@ -892,30 +930,31 @@ void func_psp_0923A7C8(s32 flags, s32 arg1) {
     }
 
     if (!hideButtons) {
-        DrawImages8x8(D_psp_09285BC8[0], 0x30, 0xB4, 1);
-        DrawImages8x8(D_psp_09285BC8[1], 0x30, 0xC4, 1);
-        DrawImages8x8(D_psp_09285BC8[2], 0x30, 0xD4, 1);
+        DrawImages8x8(STR_SELECT, 0x30, 0xB4, 1);
+        DrawImages8x8(STR_DECIDE, 0x30, 0xC4, 1);
+        DrawImages8x8(STR_CANCEL, 0x30, 0xD4, 1);
     }
 
-    for (port = 0; port < 2; port++) {
+    for (port = 0; port < PORT_COUNT; port++) {
         switch (g_SaveSummary[port].padding) {
         case -1:
             break;
         case -2:
-            DrawImages8x8(D_psp_09285BC8[4], (port << 8) + 0x28, 0x6C, 1);
+            DrawImages8x8(STR_NOTFOR, (port * 0x100) + 0x28, 0x6C, 1);
             break;
         case -3:
-            DrawImages8x8(D_psp_09285BC8[8], (port << 8) + 0x32, 0x6C, 1);
+            DrawImages8x8(STR_ERROR, (port * 0x100) + 0x32, 0x6C, 1);
             break;
         default:
-            for (i = 0; i < 0xF; i++) {
+            for (i = 0; i < BLOCK_PER_CARD; i++) {
                 icon = g_SaveSummary[port].icon[i];
                 x = 0x20 + (i % 3) * 0x18 + port * 0x100;
                 y = 0x90 - (i / 3) * 0x10;
-                if ((D_psp_09285BF8 == ((i % 3) + (port * 3))) &&
-                    (temp_v1 != 3) && ((i / 3) == D_psp_09285BF0) &&
-                    (temp_v1 > 0) && (D_psp_09285CF0 == 0)) {
+                if (((i % 3) + port * 3 == g_MemCardSelectorX) &&
+                    saveDescriptorString != 3 && ((i / 3) == g_MemCardSelectorY) &&
+                    saveDescriptorString > 0 && !D_801BAF10) {
                     tge = 0;
+
                     if (g_Timer & 0x10) {
                         color = g_Timer & 0xF;
                     } else {
@@ -927,17 +966,17 @@ void func_psp_0923A7C8(s32 flags, s32 arg1) {
                     color = 0x40;
                 }
                 if (icon == -3) {
-                    func_psp_09240330(
+                    func_801B27A8(
                         x, y, 0x10, 0x10, 0x80, 0x80, 0x200, 0xC, tge, color);
                 }
                 if (icon >= 0) {
                     if (g_SaveSummary[i / 15].slot[i % 15] == func_8919560()) {
-                        func_psp_09240330(x, y, 0x10, 0x10, 0x90, 0x80, 0x200,
-                                          0x17, tge, color);
+                        func_801B27A8(x, y, 0x10, 0x10, 0x90, 0x80, 0x200, 0x17,
+                                      tge, color);
                     }
-                    func_psp_09240330(x, y, 0x10, 0x10, icon * 0x10,
-                                      (D_psp_09285D00 % 3) * 0x10, icon + 0x220,
-                                      0x16, tge, color);
+                    func_801B27A8(x, y, 0x10, 0x10, icon * 0x10,
+                                  (D_801BAF08 % 3) * 0x10, icon + 0x220,
+                                  0x16, tge, color);
                 }
             }
             break;
@@ -945,7 +984,7 @@ void func_psp_0923A7C8(s32 flags, s32 arg1) {
     }
 }
 
-void func_psp_0923B498(void) {
+void func_801AE6D0(void) {
     Primitive* prim;
     s32 port;
     s32 slot;
@@ -953,85 +992,86 @@ void func_psp_0923B498(void) {
     s32 percHi;
     s32 icon;
 
-    port = D_psp_09285C08 / 15;
-    slot = D_psp_09285C08 % 15;
+    port = D_801BC3EC / 15;
+    slot = D_801BC3EC % 15;
     icon = g_SaveSummary[port].icon[slot];
-    func_psp_09238DA8(0x12, 0x11);
-    prim = &g_PrimBuf[D_psp_09285CB8];
+    func_801ACBE4(GFX_UNK_18, 0x11);
+    prim = &g_PrimBuf[D_801BAF18[GFX_UNK_18][0]];
     prim = prim->next;
     SetTexturedPrimRect(
-        prim, 0xA8, (D_psp_09285D00 % 3) + 0x7F, 0x30, 0x10, 0xB0, 0x80);
+        prim, 0xA8, (D_801BAF08 % 3) + 0x7F, 0x30, 0x10, 0xB0, 0x80);
     prim->drawMode = DRAW_DEFAULT;
-    func_psp_09238DA8(0x13, 0);
-    func_psp_09238DA8(0x14, 0);
-    func_psp_092392F8(port, slot, 0xA);
+    func_801ACBE4(GFX_UNK_19, 0);
+    func_801ACBE4(GFX_UNK_20, 0);
+    func_801ACFBC(port, slot, 0xA);
     PrintFileSelectPlaceName(port, slot, 0x48);
-    func_psp_09240888(g_SaveSummary[port].level[slot], 0x94, 0x68, 1);
-    func_psp_09240888(g_SaveSummary[port].playHours[slot], 0xC8, 0x68, 1);
-    func_psp_09240920(g_SaveSummary[port].playMinutes[slot], 0xE0, 0x68, 1);
-    func_psp_09240920(g_SaveSummary[port].playSeconds[slot], 0xF8, 0x68, 1);
-    func_psp_09240888(g_SaveSummary[port].gold[slot], 0xB4, 0x70, 1);
+    func_801B2BD4(g_SaveSummary[port].level[slot], 0x94, 0x68, 1);
+    func_801B2BD4(g_SaveSummary[port].playHours[slot], 0xC8, 0x68, 1);
+    func_801B2C70(g_SaveSummary[port].playMinutes[slot], 0xE0, 0x68, 1);
+    func_801B2C70(g_SaveSummary[port].playSeconds[slot], 0xF8, 0x68, 1);
+    func_801B2BD4(g_SaveSummary[port].gold[slot], 0xB4, 0x70, 1);
     percHi = g_SaveSummary[port].nRoomsExplored[slot];
     percHi = (percHi * 1000) / 942;
     percLo = percHi % 10;
     percHi = percHi / 10;
-    func_psp_09240888(percHi, 0xE8, 0x70, 1);
-    func_psp_09240330(0xF0, 0x74, 8, 4, 0xE0, 0x8C, 0x200, 0xC, 1, 0x80);
-    func_psp_09240888(percLo, 0xF8, 0x70, 1);
+    func_801B2BD4(percHi, 0xE8, 0x70, 1);
+    func_801B27A8(0xF0, 0x74, 8, 4, 0xE0, 0x8C, 0x200, 0xC, 1, 0x80);
+    func_801B2BD4(percLo, 0xF8, 0x70, 1);
 }
 
-void func_psp_0923B800(void) {
+void func_801AE9A8(void) {
     Primitive* prim;
     s32 i;
 
     MenuHideAllGfx();
-    func_psp_09238DA8(0, 0);
+    func_801ACBE4(GFX_UNK_0, 0);
 
-    for (i = 1; i < 5; i++) {
-        func_psp_09238DA8(i + 1, 4);
-        prim = &g_PrimBuf[D_psp_09285C28[i + 1][0]];
-        SetTexturedPrimRect(prim, (i << 6) - 0x20, i * 0x28, 0x7F, 0x1F,
-                            D_psp_09283A48[i], D_psp_09283A60[i]);
+    for (i = 1; i < NUM_MENU_OPTIONS; i++) {
+        func_801ACBE4(i + 1, 4);
+        prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
+        SetTexturedPrimRect(prim, (i * 0x40) - 0x20, i * 0x28, 0x7F, 0x1F,
+                            g_MenuHeadGfxU[i], g_MenuHeadGfxV[i]);
     }
 
-    func_psp_09239930(0);
-    func_psp_09238DA8(0x11, 0);
+    DrawNavigationTips(Tips_Generic);
+    func_801ACBE4(GFX_UNK_17, 0);
 }
 
-void func_psp_0923B908(s32 arg0) {
+void func_801AEA8C(s32 arg0) {
     Primitive* prim;
 
-    D_psp_09285C18 = 0;
-    D_psp_09285C10 = 0;
+    g_InputCursorPos = 0;
+    D_801BC3E0 = 0;
     MenuHideAllGfx();
-    func_psp_09238DA8(GFX_UNK_7, 0x11);
-    func_psp_09238DA8(GFX_UNK_8, 0);
-    func_psp_09238DA8(GFX_UNK_9, 0x11);
-    func_psp_09238DA8(GFX_UNK_10, 0);
+    func_801ACBE4(GFX_UNK_7, 0x11);
+    func_801ACBE4(GFX_UNK_8, 0);
+    func_801ACBE4(GFX_UNK_9, 0x11);
+    func_801ACBE4(GFX_UNK_10, 0);
+
     if (arg0 == 0) {
-        func_psp_09238DA8(1, 0);
-        prim = &g_PrimBuf[D_psp_09285C28[GFX_UNK_1][0]];
+        func_801ACBE4(GFX_UNK_1, 0);
+        prim = &g_PrimBuf[D_801BAF18[GFX_UNK_1][0]];
         SetPrimRect(prim, 0x18, 0x18, 0x7F, 0x1F);
     } else {
-        func_psp_09238DA8(3, 0);
-        prim = &g_PrimBuf[D_psp_09285C28[GFX_FILE_DELETE][0]];
+        func_801ACBE4(GFX_FILE_DELETE, 0);
+        prim = &g_PrimBuf[D_801BAF18[GFX_FILE_DELETE][0]];
         SetPrimRect(prim, 0x18, 0x18, 0x7F, 0x1F);
     }
 
-    func_psp_09239930(1);
+    DrawNavigationTips(Tips_Input);
 }
 
-void func_psp_0923BA40(s32 cursor) {
+void SelectMainMenuOption(MainMenuCursor cursor) {
     Primitive* prim;
     s32 gfxId;
 
     g_SaveSummary[0].padding = 0;
     g_SaveSummary[1].padding = 0;
     MenuHideAllGfx();
-    func_psp_09238DA8(GFX_WND_SAVE_SUMMARY, 0x11);
-    func_psp_09238DA8(GFX_WND_CARD_1, 0x11);
-    func_psp_09238DA8(GFX_WND_CARD_2, 0x11);
-    func_psp_09238DA8(GFX_UNK_15, 0);
+    func_801ACBE4(GFX_WND_SAVE_SUMMARY, 0x11);
+    func_801ACBE4(GFX_WND_CARD_1, 0x11);
+    func_801ACBE4(GFX_WND_CARD_2, 0x11);
+    func_801ACBE4(GFX_UNK_15, 0);
 
     switch (cursor) {
     case MAIN_MENU_CURSOR_FILE_SELECT:
@@ -1047,26 +1087,27 @@ void func_psp_0923BA40(s32 cursor) {
         gfxId = GFX_FILE_DELETE;
         break;
     }
-    func_psp_09238DA8(gfxId, 0);
+    func_801ACBE4(gfxId, 0);
+
     // Relocate the graphics at the top-left of the screen
-    prim = &g_PrimBuf[D_psp_09285C28[gfxId][0]];
+    prim = &g_PrimBuf[D_801BAF18[gfxId][0]];
     SetPrimRect(prim, 0x10, 0x10, 0x7F, 0x1F);
     prim->clut = 0x200;
 }
 
-void func_psp_0923BB88(void) {
+void func_801AECA0(void) {
     s32 i;
     u8* ptr;
 
     for (i = 0; i < 0x10; i++) {
-        ptr = D_9186CC8[i];
+        ptr = g_saveIconTexture[i];
         LoadTPage((u_long*)ptr, 0, 0, (i * 4) + 0x180, 0x100, 0x10, 0x30);
     }
 
     g_api.func_800EA5E4(ANIMSET_OVL(4));
 }
 
-static void func_psp_0923BC20(void) {
+static void CheckIfMemcardsCanBeUsed(void) {
     s32 isCard0Full;
     s32 isCard1Full;
     s32 i;
@@ -1082,13 +1123,13 @@ static void func_psp_0923BC20(void) {
         }
     }
 
-    D_psp_09285CF0 = 0;
+    D_801BAF10 = 0;
     if ((g_SaveSummary[0].padding < 0 || isCard0Full) &&
         (g_SaveSummary[1].padding < 0 || isCard1Full)) {
-        D_psp_09285CF0 = 1;
+        D_801BAF10 = 1;
     }
 
-    D_psp_09285CE8 = 0;
+    D_801BAF14 = 0;
     for (i = 0; i < BLOCK_PER_CARD; i++) {
         if ((g_SaveSummary[0].padding > 0 && g_SaveSummary[0].icon[i] == -3) ||
             (g_SaveSummary[1].padding > 0 && g_SaveSummary[1].icon[i] == -3)) {
@@ -1096,11 +1137,11 @@ static void func_psp_0923BC20(void) {
         }
     }
     if (i == BLOCK_PER_CARD) {
-        D_psp_09285CE8 = 1;
+        D_801BAF14 = 1;
     }
 }
 
-static void func_psp_0923BD98(void) {
+static void func_801AEE74(void) {
     s32 i;
 
     for (i = 0; i < BLOCK_PER_CARD; i++) {
@@ -1110,787 +1151,855 @@ static void func_psp_0923BD98(void) {
     }
 
     if (i == BLOCK_PER_CARD) {
-        D_psp_09285CF0 = 1;
+        D_801BAF10 = 1;
     }
 }
 
+// SEL seems to use these differently
+typedef enum {
+    Upd_Eng_Init,
+    Upd_Eng_MenuInit = -1,
+    Upd_Eng_MenuFadeIn = 1,
+    Upd_Eng_MainMenuIdle,
+    Upd_Eng_3,
+    Upd_Eng_0x10 = 0x10,
+    Upd_Eng_17,
+    Upd_Eng_18,
+    Upd_Eng_FileSelect = 0x30,
+    Upd_Eng_49,
+    Upd_Eng_50,
+    Upd_Eng_51,
+    Upd_Eng_64 = 0x40,
+    Upd_Eng_65,
+    Upd_Eng_FileCopy = 0x50,
+    Upd_Eng_81,
+    Upd_Eng_82,
+    Upd_Eng_83,
+    Upd_Eng_84,
+    Upd_Eng_85,
+    Upd_Eng_86,
+    Upd_Eng_87,
+    Upd_Eng_88,
+    Upd_Eng_89,
+    Upd_Eng_0x60 = 0x60,
+    Upd_Eng_FileDelete = 0x70,
+    Upd_Eng_113,
+    Upd_Eng_114,
+    Upd_Eng_115,
+    Upd_Eng_116,
+    Upd_Eng_117,
+    Upd_Eng_118,
+    Upd_Eng_119,
+    Upd_Eng_120,
+    Upd_Eng_0x80 = 0x80,
+    Upd_Eng_NameChange = 0x90,
+    Upd_Eng_145,
+    Upd_Eng_146,
+    Upd_Eng_147,
+    Upd_Eng_148,
+    Upd_Eng_149,
+    Upd_Eng_150,
+    Upd_Eng_151,
+    Upd_Eng_152,
+    Upd_Eng_153,
+    Upd_Eng_0xA0 = 0xA0,
+    Upd_Eng_0x100 = 0x100,
+    Upd_Eng_257,
+    Upd_Eng_258,
+    Upd_Eng_259,
+    Upd_Eng_260,
+    Upd_Eng_0x200 = 0x200,
+    Upd_Eng_513,
+    Upd_Eng_514,
+    Upd_Eng_515,
+    Upd_Eng_516,
+    Upd_Eng_0x210 = 0x210,
+    Upd_Eng_529,
+    Upd_Eng_530,
+    Upd_Eng_531,
+    Upd_Eng_532,
+    Upd_Eng_0x220 = 0x220,
+
+} SelGameEngineStep;
+
 void func_psp_0923BE20(void) {
+    s32 i;
     s32 port;
     s32 slot;
     s32 var_s5;
     s32 temp_s1;
-    s32 i;
     s32 var_s4;
 
-    func_psp_0923FBF0();
+    func_801B1F34();
     switch (g_GameEngineStep) {
-    case 0x0:
-        g_api.PlaySfx(0x32F);
+    case Upd_Eng_Init:
+        g_api.PlaySfx(MU_PRAYER);
         g_GameTimer = 0;
-        D_psp_09285D00 = 0;
+        D_801BAF08 = 0;
         func_psp_09241BF8();
-        func_psp_0923F760();
-        g_api.func_800EA5E4(0);
-        g_api.func_800EA5E4(0x8000);
-        g_api.func_800EA5E4(0x8001);
-        g_api.func_800EA5E4(0x8002);
-        g_api.func_800EA5E4(0x8003);
-        func_psp_09237F40();
-        func_psp_09238E68();
-        func_psp_092380E8();
-        func_psp_09239180();
+        SetTitleDisplayBuffer256();
+        g_api.func_800EA5E4(ANIMSET_DRA(0));
+        g_api.func_800EA5E4(ANIMSET_OVL(0));
+        g_api.func_800EA5E4(ANIMSET_OVL(1));
+        g_api.func_800EA5E4(ANIMSET_OVL(2));
+        g_api.func_800EA5E4(ANIMSET_OVL(3));
+        SetupFileChoose();
+        InitMainMenuBackgroundAndFadeMask();
+        InitMainMenuUI();
+        func_801ACF7C();
         func_psp_09237C38();
-        func_psp_0923BB88();
-        func_psp_0923FC08(9);
-        func_psp_09239BD0();
+        func_801AECA0();
+        func_801B1F4C(9);
+        func_801AD490();
         D_8B42044 = 0;
         g_GameEngineStep++;
         break;
-    case 0x1:
-        func_psp_09239D18();
-        func_psp_09239BD0();
-        if (func_psp_09238FE8()) {
+    case Upd_Eng_MenuFadeIn:
+        func_801AD590();
+        func_801AD490();
+        if (MainMenuFadeIn()) {
             g_GameEngineStep++;
         }
         break;
-    case 0x2:
-        func_psp_09239D18();
-        func_psp_09239BD0();
+    case Upd_Eng_MainMenuIdle:
+        func_801AD590();
+        func_801AD490();
         if (g_pads[0].tapped & D_psp_08B42050) {
-            switch (D_psp_09285C20) {
+            switch (g_MainMenuCursor) {
             case 0:
-                g_api.PlaySfx(0x633);
-                g_GameEngineStep = 0x10;
+                g_api.PlaySfx(SFX_UI_CONFIRM);
+                g_GameEngineStep = Upd_Eng_0x10;
                 break;
             case 1:
-                g_api.PlaySfx(0x633);
-                g_GameEngineStep = 0x30;
+                g_api.PlaySfx(SFX_UI_CONFIRM);
+                g_GameEngineStep = Upd_Eng_FileSelect;
                 break;
             case 2:
-                g_api.PlaySfx(0x633);
-                g_GameEngineStep = 0x90;
+                g_api.PlaySfx(SFX_UI_CONFIRM);
+                g_GameEngineStep = Upd_Eng_NameChange;
                 break;
             case 3:
-                g_api.PlaySfx(0x633);
-                g_GameEngineStep = 0x50;
+                g_api.PlaySfx(SFX_UI_CONFIRM);
+                g_GameEngineStep = Upd_Eng_FileCopy;
                 break;
             case 4:
-                g_api.PlaySfx(0x633);
-                g_GameEngineStep = 0x70;
+                g_api.PlaySfx(SFX_UI_CONFIRM);
+                g_GameEngineStep = Upd_Eng_FileDelete;
                 break;
             default:
-                g_api.PlaySfx(0x686);
+                g_api.PlaySfx(SFX_UI_ERROR);
                 break;
             }
         }
         break;
-    case 0x3:
-        func_psp_09239D18();
-        func_psp_09239BD0();
-        if (func_psp_092390B8()) {
-            func_psp_0923F460(1);
+    case Upd_Eng_3:
+        func_801AD590();
+        func_801AD490();
+        if (func_801ACEC0()) {
+            SetGameState(Game_Title);
         }
         break;
-    case 0x10:
-        STRCPY(D_psp_09285BE0, D_psp_09284110);
-        func_psp_0923B908(0);
+    case Upd_Eng_0x10:
+        STRCPY(g_InputSaveName, D_psp_09284110);
+        func_801AEA8C(0);
         g_GameEngineStep++;
         /* fallthrough */
-    case 0x11:
+    case Upd_Eng_17:
         for (i = 0; i < 8; i++) {
-            if (D_psp_09285BE0[i] != ' ') {
+            if (g_InputSaveName[i] != ' ') {
                 break;
             }
         }
-        if ((g_pads[0].tapped & 1) || ((g_pads[0].tapped & D_psp_08B42054) &&
-                                       (i == 8) && (D_psp_09285C18 == 0))) {
-            g_GameEngineStep = 0x30;
+        if ((g_pads[0].tapped & PAD_SELECT) ||
+            ((g_pads[0].tapped & D_psp_08B42054) && i == 8 &&
+             g_InputCursorPos == 0)) {
+            g_GameEngineStep = Upd_Eng_FileSelect;
         } else {
-            func_psp_0923A230();
-            func_psp_0923A010();
-            if (g_pads[0].tapped & 8) {
-                g_api.PlaySfx(0x633);
-                func_psp_09239E18();
+            UpdateNameEntry();
+            func_801AD78C();
+            if (g_pads[0].tapped & PAD_START) {
+                g_api.PlaySfx(SFX_UI_CONFIRM);
+                func_801AD66C();
                 if (g_PlayableCharacter == 0) {
                     g_StageId = STAGE_ST0;
                 } else {
                     g_StageId = STAGE_NO3;
                 }
                 D_8003C730 = 0;
-                D_91FC488 = -1;
-                if (D_psp_09285CF0 != NULL) {
-                    D_91FC490 = -1;
+                D_8006C378 = -1;
+                if (D_801BAF10) {
+                    D_80097924 = -1;
                 } else {
-                    D_91FC490 = D_psp_09285C00 / 15;
+                    D_80097924 = D_801D6B04 / 15;
                 }
-                g_api.PlaySfx(0x80);
+                g_api.PlaySfx(SET_UNK_80);
                 g_GameEngineStep++;
             }
         }
         break;
-    case 0x12:
-        func_psp_0923A010();
-        if (func_psp_092390B8()) {
-            func_psp_0923F498();
-            func_psp_0923F5C0();
-            func_psp_0923F9E8();
-            func_psp_09240A28();
+    case Upd_Eng_18:
+        func_801AD78C();
+        if (func_801ACEC0()) {
+            func_801B18F4();
+            func_801B19F4();
+            func_801B1DA8();
+            func_801B2D1C();
             g_api.func_800EA538(0);
             if (g_PlayableCharacter == 0) {
-                func_psp_0923F460(5);
+                SetGameState(Game_VideoPlayback);
             } else {
                 g_GameStep++;
             }
         }
         break;
-    case 0x30:
-        func_psp_0923BA40(0);
-        func_psp_0923FEC0(5, 4);
-        func_psp_0923FEC0(6, 5);
-        func_psp_09241F70();
+    case Upd_Eng_FileSelect:
+        SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_SELECT);
+        func_801B2608(5, 4);
+        func_801B2608(6, 5);
+        func_801B3120();
         g_GameEngineStep++;
         /* fallthrough */
-    case 0x31:
-        func_psp_0923A7C8(0x80, 0);
-        D_91FC478 = 0;
-        if (func_psp_09242010()) {
-            D_91FC478 = 1;
+    case Upd_Eng_49:
+        func_801ADF94(0x80, 0);
+        D_800978C4 = 0;
+        if (func_801B3164()) {
+            D_800978C4 = 1;
             g_GameEngineStep++;
-            func_psp_0923BC20();
+            CheckIfMemcardsCanBeUsed();
         }
         break;
-    case 0x32:
+    case Upd_Eng_50:
         if (g_IsTimeAttackUnlocked == 0) {
-            D_psp_09285CF8 = 0xFF;
+            D_801BAF0C = 0xFF;
         } else {
-            D_psp_09285CF8 = 0x2FF;
+            D_801BAF0C = 0x2FF;
         }
-        if (D_psp_0928628C < 0) {
-            D_psp_09285BF8 = (D_psp_09285BF8 % 3) + 3;
+        if (g_SaveSummary[0].padding < 0) {
+            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
         }
-        if (D_psp_09286634 < 0) {
-            D_psp_09285BF8 = D_psp_09285BF8 % 3;
+        if (g_SaveSummary[1].padding < 0) {
+            g_MemCardSelectorX = g_MemCardSelectorX % 3;
         }
-        if (D_psp_09285CF0 != NULL) {
-            func_psp_0923FEC0(7, 4);
-            func_psp_0923FEC0(8, 5);
-            func_psp_0923A7C8(0x83, 0);
-            func_psp_09239930(2);
-            g_GameEngineStep = 0x40;
+        if (D_801BAF10) {
+            func_801B2608(7, 4);
+            func_801B2608(8, 5);
+            func_801ADF94(0x83, 0);
+            DrawNavigationTips(Tips_YesNo);
+            g_GameEngineStep = Upd_Eng_64;
         } else if (func_8919560() == -1) {
-            func_psp_0923FEC0(D_psp_09284120, 4);
-            func_psp_0923FEC0(D_psp_09284140, 5);
-            func_psp_0923A7C8(0x83, 0);
-            func_psp_09239930(2);
+            func_801B2608(D_psp_09284120, 4);
+            func_801B2608(D_psp_09284140, 5);
+            func_801ADF94(0x83, 0);
+            DrawNavigationTips(Tips_YesNo);
             g_GameEngineStep = 0x1000;
         } else {
-            func_psp_09239930(0);
-            func_psp_0923A7C8(1, 0);
-            func_psp_0923FFB8(D_psp_09283FF8, 4);
-            func_psp_0923FFB8(D_psp_09283FF8, 5);
+            DrawNavigationTips(Tips_Generic);
+            func_801ADF94(1, 0);
+            func_801B25D4(D_psp_09283FF8, 4);
+            func_801B25D4(D_psp_09283FF8, 5);
             g_GameEngineStep++;
         }
         break;
     case 0x1000:
-        func_psp_0923A7C8(0x84, 0);
-        func_psp_09239930(2);
+        func_801ADF94(0x84, 0);
+        DrawNavigationTips(Tips_YesNo);
         if (g_pads[0].tapped & D_psp_08B42054) {
-            func_psp_09239930(0);
-            func_psp_0923A7C8(1, 0);
-            func_psp_0923FFB8(D_psp_09283FF8, 4);
-            func_psp_0923FFB8(D_psp_09283FF8, 5);
+            DrawNavigationTips(Tips_Generic);
+            func_801ADF94(1, 0);
+            func_801B25D4(D_psp_09283FF8, 4);
+            func_801B25D4(D_psp_09283FF8, 5);
             g_GameEngineStep = 0x33;
         } else if (g_pads[0].tapped & D_psp_08B42050) {
             func_8919638(g_Pix, 0x2000);
-            func_913E220(g_Pix);
+            LoadSaveData(g_Pix);
             if (g_Pix[0][0x1FFF] == 0xFF) {
                 (void)0; // fake
             } else {
                 D_8003C730 = 4;
                 D_91ED288 = g_Pix[0][0x1FFE];
-                D_91FC490 = 0;
-                D_91FC488 = -1;
+                D_80097924 = 0;
+                D_8006C378 = -1;
             }
 
-            g_api.PlaySfx(0x80);
-            g_GameEngineStep = 0x104;
+            g_api.PlaySfx(SET_UNK_80);
+            g_GameEngineStep = Upd_Eng_260;
         }
         break;
-    case 0x40:
-        func_psp_0923A7C8(0x81, 0);
-        func_psp_09239930(2);
+    case Upd_Eng_64:
+        func_801ADF94(0x81, 0);
+        DrawNavigationTips(Tips_YesNo);
         if (g_pads[0].tapped & D_psp_08B42054) {
-            func_psp_0923B800();
-            func_psp_09239BD0();
-            g_GameEngineStep = 2;
+            func_801AE9A8();
+            func_801AD490();
+            g_GameEngineStep = Upd_Eng_MainMenuIdle;
         } else if (g_pads[0].tapped & D_psp_08B42050) {
-            g_api.PlaySfx(0x633);
-            g_GameEngineStep = 0x10;
+            g_api.PlaySfx(SFX_UI_CONFIRM);
+            g_GameEngineStep = Upd_Eng_0x10;
         }
         break;
-    case 0x41:
-        func_psp_0923A7C8(0x83, 0);
-        func_psp_09239930(2);
+    case Upd_Eng_65:
+        func_801ADF94(0x83, 0);
+        DrawNavigationTips(Tips_YesNo);
         if (g_pads[0].tapped & D_psp_08B42054) {
-            D_psp_09285CF8 = 0xFF;
-            func_psp_09239930(0);
-            func_psp_0923FEC0(9, 4);
-            func_psp_0923FEC0(0xA, 5);
-            g_GameEngineStep = 0x33;
+            D_801BAF0C = 0xFF;
+            DrawNavigationTips(Tips_Generic);
+            func_801B2608(9, 4);
+            func_801B2608(0xA, 5);
+            g_GameEngineStep = Upd_Eng_51;
         } else if (g_pads[0].tapped & D_psp_08B42050) {
-            g_api.PlaySfx(0x633);
-            g_GameEngineStep = 0x10;
+            g_api.PlaySfx(SFX_UI_CONFIRM);
+            g_GameEngineStep = Upd_Eng_0x10;
         }
         break;
-    case 0x33:
+    case Upd_Eng_51:
         if (g_pads[0].tapped & D_psp_08B42054) {
-            func_psp_0923B800();
-            func_psp_09239BD0();
-            g_GameEngineStep = 2;
+            func_801AE9A8();
+            func_801AD490();
+            g_GameEngineStep = Upd_Eng_MainMenuIdle;
         } else {
-            func_psp_0923A558(1);
-            func_psp_0923A7C8(1, 0);
-            D_psp_09285CF8++;
-            if (D_psp_09285CF8 == 0x100) {
-                func_psp_0923FEC0(9, 4);
-                func_psp_0923FEC0(0xA, 5);
+            UpdateFileSelect(1);
+            func_801ADF94(1, 0);
+            D_801BAF0C++;
+            if (D_801BAF0C == 0x100) {
+                func_801B2608(9, 4);
+                func_801B2608(0xA, 5);
             }
-            if (D_psp_09285CF8 == 0x200) {
-                if (D_psp_09285CE8 != NULL) {
-                    func_psp_0923FEC0(0xB, 4);
-                    func_psp_0923FEC0(0xC, 5);
+            if (D_801BAF0C == 0x200) {
+                if (D_801BAF14) {
+                    func_801B2608(0xB, 4);
+                    func_801B2608(0xC, 5);
                 } else {
-                    func_psp_0923FEC0(0xD, 4);
-                    func_psp_0923FEC0(0xE, 5);
+                    func_801B2608(0xD, 4);
+                    func_801B2608(0xE, 5);
                 }
                 if (g_IsTimeAttackUnlocked == 0) {
-                    D_psp_09285CF8 = 0;
+                    D_801BAF0C = 0;
                 }
             }
-            if (D_psp_09285CF8 == 0x300) {
-                func_psp_0923FEC0(0xF, 4);
-                func_psp_0923FEC0(0x10, 5);
+            if (D_801BAF0C == 0x300) {
+                func_801B2608(0xF, 4);
+                func_801B2608(0x10, 5);
             }
-            if (D_psp_09285CF8 == 0x400) {
-                func_psp_0923FEC0(0x11, 4);
-                func_psp_0923FEC0(0x12, 5);
-                D_psp_09285CF8 = 0;
+            if (D_801BAF0C == 0x400) {
+                func_801B2608(0x11, 4);
+                func_801B2608(0x12, 5);
+                D_801BAF0C = 0;
             }
-            if ((g_pads[0].tapped & 8) && (D_psp_09285CE8 != NULL)) {
-                g_api.PlaySfx(0x633);
-                func_psp_0923FEC0(7, 4);
-                func_psp_0923FEC0(8, 5);
-                func_psp_0923A7C8(0x81, 0);
-                func_psp_09239930(2);
-                g_GameEngineStep = 0x41;
+            if ((g_pads[0].tapped & PAD_START) && D_801BAF14) {
+                g_api.PlaySfx(SFX_UI_CONFIRM);
+                func_801B2608(7, 4);
+                func_801B2608(8, 5);
+                func_801ADF94(0x81, 0);
+                DrawNavigationTips(Tips_YesNo);
+                g_GameEngineStep = Upd_Eng_65;
             } else if (g_pads[0].tapped & D_psp_08B42050) {
-                port = D_psp_09285C00 / 15;
-                slot = D_psp_09285C00 % 15;
+                port = D_801D6B04 / 15;
+                slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
-                    g_api.PlaySfx(0x633);
-                    g_GameEngineStep = 0x100;
+                    g_api.PlaySfx(SFX_UI_CONFIRM);
+                    g_GameEngineStep = Upd_Eng_0x100;
                 } else if (g_SaveSummary[port].icon[slot] == -3) {
-                    g_api.PlaySfx(0x633);
-                    g_GameEngineStep = 0x10;
+                    g_api.PlaySfx(SFX_UI_CONFIRM);
+                    g_GameEngineStep = Upd_Eng_0x10;
                 } else {
-                    g_api.PlaySfx(0x686);
+                    g_api.PlaySfx(SFX_UI_ERROR);
                 }
             }
         }
         break;
-    case 0x90:
-        func_psp_0923BA40(3);
-        func_psp_09238DA8(0xF, 0);
-        func_psp_0923FEC0(5, 4);
-        func_psp_0923FEC0(6, 5);
-        func_psp_09241F70();
+    case Upd_Eng_NameChange:
+        SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_DELETE);
+        func_801ACBE4(GFX_UNK_15, 0);
+        func_801B2608(5, 4);
+        func_801B2608(6, 5);
+        func_801B3120();
         g_GameEngineStep++;
         /* fallthrough */
-    case 0x91:
-        func_psp_0923A7C8(0x80, 0);
-        D_91FC478 = 0;
-        if (func_psp_09242010()) {
-            D_91FC478 = 1;
+    case Upd_Eng_145:
+        func_801ADF94(0x80, 0);
+        D_800978C4 = 0;
+        if (func_801B3164()) {
+            D_800978C4 = 1;
             g_GameEngineStep++;
-            func_psp_0923BC20();
+            CheckIfMemcardsCanBeUsed();
         }
         break;
-    case 0x92:
-        func_psp_09238DA8(0xF, 0);
-        if (D_psp_0928628C < 0) {
-            D_psp_09285BF8 = (D_psp_09285BF8 % 3) + 3;
+    case Upd_Eng_146:
+        func_801ACBE4(GFX_UNK_15, 0);
+        if (g_SaveSummary[0].padding < 0) {
+            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
         }
-
-        if (D_psp_09286634 < 0) {
-            D_psp_09285BF8 = D_psp_09285BF8 % 3;
+        if (g_SaveSummary[1].padding < 0) {
+            g_MemCardSelectorX = g_MemCardSelectorX % 3;
         }
-        func_psp_0923BD98();
-        if (D_psp_09285CF0 != NULL) {
-            func_psp_0923FC08(5);
-            func_psp_0923FEC0(0x13, 4);
-            func_psp_0923A7C8(0x82, 0);
-            func_psp_09239930(3);
-            g_GameEngineStep = 0xA0;
+        func_801AEE74();
+        if (D_801BAF10) {
+            func_801B1F4C(5);
+            func_801B2608(0x13, 4);
+            func_801ADF94(0x82, 0);
+            DrawNavigationTips(Tips_Confirm);
+            g_GameEngineStep = Upd_Eng_0xA0;
         } else {
-            func_psp_09239930(0);
-            func_psp_0923A7C8(2, 0);
-            func_psp_0923FEC0(0x14, 4);
-            func_psp_0923FEC0(0x15, 5);
+            DrawNavigationTips(Tips_Generic);
+            func_801ADF94(2, 0);
+            func_801B2608(0x14, 4);
+            func_801B2608(0x15, 5);
             g_GameEngineStep++;
         }
         break;
-    case 0xA0:
-        func_psp_09239930(3);
-        func_psp_0923A7C8(0x82, 0);
+    case Upd_Eng_0xA0:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & D_psp_08B42050) {
-            g_api.PlaySfx(0x633);
-            func_psp_0923B800();
-            func_psp_09239BD0();
-            g_GameEngineStep = 2;
+            g_api.PlaySfx(SFX_UI_CONFIRM);
+            func_801AE9A8();
+            func_801AD490();
+            g_GameEngineStep = Upd_Eng_MainMenuIdle;
         }
         break;
-    case 0x93:
+    case Upd_Eng_147:
         if (g_pads[0].tapped & D_psp_08B42054) {
-            func_psp_0923B800();
-            func_psp_09239BD0();
-            g_GameEngineStep = 2;
+            func_801AE9A8();
+            func_801AD490();
+            g_GameEngineStep = Upd_Eng_MainMenuIdle;
         } else {
-            func_psp_0923A558(0);
-            func_psp_0923A7C8(2, 0);
+            UpdateFileSelect(0);
+            func_801ADF94(2, 0);
             if (g_pads[0].tapped & D_psp_08B42050) {
-                port = D_psp_09285C00 / 15;
-                slot = D_psp_09285C00 % 15;
+                port = D_801D6B04 / 15;
+                slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
-                    g_api.PlaySfx(0x633);
+                    g_api.PlaySfx(SFX_UI_CONFIRM);
                     g_GameEngineStep++;
                 } else {
-                    g_api.PlaySfx(0x686);
+                    g_api.PlaySfx(SFX_UI_ERROR);
                 }
             }
         }
         break;
-    case 0x94:
-        STRCPY(D_psp_09285BE0, D_psp_09284110);
-        func_psp_0923B908(1);
+    case Upd_Eng_148:
+        STRCPY(g_InputSaveName, D_psp_09284110);
+        func_801AEA8C(1);
         g_GameEngineStep++;
         /* fallthrough */
-    case 0x95:
+    case Upd_Eng_149:
         for (i = 0; i < 8; i++) {
-            if (D_psp_09285BE0[i] != ' ') {
+            if (g_InputSaveName[i] != ' ') {
                 break;
             }
         }
-        if ((g_pads[0].tapped & 1) || ((g_pads[0].tapped & D_psp_08B42054) &&
-                                       (i == 8) && (D_psp_09285C18 == 0))) {
-            func_psp_0923BA40(3);
-            g_GameEngineStep = 0x92;
+        if ((g_pads[0].tapped & PAD_SELECT) ||
+            (g_pads[0].tapped & D_psp_08B42054 && i == 8 &&
+             g_InputCursorPos == 0)) {
+            SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_DELETE);
+            g_GameEngineStep = Upd_Eng_146;
         } else {
-            func_psp_0923A230();
-            func_psp_0923A010();
-            if (g_pads[0].tapped & 8) {
-                func_psp_0923BA40(3);
+            UpdateNameEntry();
+            func_801AD78C();
+            if (g_pads[0].tapped & PAD_START) {
+                SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_DELETE);
                 var_s4 = 0;
                 for (i = 0; i < 8; i++) {
-                    if (D_psp_09285BE0[i] == ' ') {
+                    if (g_InputSaveName[i] == ' ') {
                         var_s4++;
                     }
                 }
                 if (var_s4 == 8) {
-                    g_GameEngineStep = 0x92;
+                    g_GameEngineStep = Upd_Eng_146;
                 } else {
-                    func_psp_09238DA8(0xF, 0);
-                    func_psp_0923FEC0(0x16, 4);
-                    func_psp_0923FEC0(0x17, 5);
-                    g_api.PlaySfx(0x633);
+                    func_801ACBE4(GFX_UNK_15, 0);
+                    func_801B2608(0x16, 4);
+                    func_801B2608(0x17, 5);
+                    g_api.PlaySfx(SFX_UI_CONFIRM);
                     g_GameEngineStep++;
-                    if (g_SaveSummary[D_psp_09285C00 / 15]
-                            .slot[D_psp_09285C00 % 15] == func_8919560()) {
+                    if (g_SaveSummary[D_801D6B04 / 15]
+                            .slot[D_801D6B04 % 15] == func_8919560()) {
                         var_s5 = func_8919570();
                     }
                 }
             }
         }
         break;
-    case 0x96:
+    case Upd_Eng_150:
         func_psp_09239B78();
-        func_psp_0923A7C8(0x82, 0);
-        func_psp_09242920(D_psp_09285C00, D_psp_09285C00);
+        func_801ADF94(0x82, 0);
+        func_801B38B4(D_801D6B04, D_801D6B04);
         g_GameEngineStep++;
         break;
-    case 0x97:
-        func_psp_0923A7C8(0x82, 0);
-        D_91FC478 = 0;
-        temp_s1 = func_psp_09242BA0(&D_psp_09285BE0);
+    case Upd_Eng_151:
+        func_801ADF94(0x82, 0);
+        D_800978C4 = 0;
+        temp_s1 = func_801B3A94(g_InputSaveName);
         if (temp_s1 != 0) {
-            D_91FC478 = 1;
+            D_800978C4 = 1;
         }
         if (temp_s1 == 1) {
-            func_psp_0923FC08(5);
-            func_psp_0923FEC0(0x18, 4);
-            func_psp_0923FEC0(0x19, 5);
-            func_psp_09238DA8(0xF, 0);
+            func_801B1F4C(5);
+            func_801B2608(0x18, 4);
+            func_801B2608(0x19, 5);
+            func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep += 2;
         }
         if (temp_s1 == -1) {
-            func_psp_0923FC08(5);
-            func_psp_0923FEC0(0x1A, 4);
-            func_psp_09238DA8(0xF, 0);
+            func_801B1F4C(5);
+            func_801B2608(0x1A, 4);
+            func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
         if (temp_s1 == -3) {
-            func_psp_0923FC08(5);
-            func_psp_0923FEC0(0x1B, 4);
-            func_psp_09238DA8(0xF, 0);
+            func_801B1F4C(5);
+            func_801B2608(0x1B, 4);
+            func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
         break;
-    case 0x98:
-        func_psp_09239930(3);
-        func_psp_0923A7C8(0x82, 0);
+    case Upd_Eng_152:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & D_psp_08B42050) {
-            g_api.PlaySfx(0x633);
-            func_psp_09238DA8(0xF, 8);
-            g_GameEngineStep = 0x90;
+            g_api.PlaySfx(SFX_UI_CONFIRM);
+            func_801ACBE4(GFX_UNK_15, 8);
+            g_GameEngineStep = Upd_Eng_NameChange;
         }
         break;
-    case 0x99:
-        func_psp_09239930(3);
-        func_psp_0923A7C8(0x82, 0);
+    case Upd_Eng_153:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & D_psp_08B42050) {
-            g_api.PlaySfx(0x633);
-            g_GameEngineStep = 0x92;
+            g_api.PlaySfx(SFX_UI_CONFIRM);
+            g_GameEngineStep = Upd_Eng_146;
         }
         break;
-    case 0x50:
-        func_psp_0923BA40(1);
-        func_psp_0923FEC0(5, 4);
-        func_psp_0923FEC0(6, 5);
-        func_psp_09241F70();
+    case Upd_Eng_FileCopy:
+        SelectMainMenuOption(MAIN_MENU_CURSOR_NAME_CHANGE);
+        func_801B2608(5, 4);
+        func_801B2608(6, 5);
+        func_801B3120();
         g_GameEngineStep++;
         /* fallthrough */
-    case 0x51:
-        func_psp_0923A7C8(0x80, 0);
-        D_91FC478 = 0;
-        if (func_psp_09242010()) {
-            D_91FC478 = 1;
+    case Upd_Eng_81:
+        func_801ADF94(0x80, 0);
+        D_800978C4 = 0;
+        if (func_801B3164()) {
+            D_800978C4 = 1;
             g_GameEngineStep++;
-            func_psp_0923BC20();
+            CheckIfMemcardsCanBeUsed();
         }
         break;
-    case 0x52:
-        if (D_psp_0928628C < 0) {
-            D_psp_09285BF8 = (D_psp_09285BF8 % 3) + 3;
+    case Upd_Eng_82:
+        if (g_SaveSummary[0].padding < 0) {
+            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
         }
-        if (D_psp_09286634 < 0) {
-            D_psp_09285BF8 = D_psp_09285BF8 % 3;
+        if (g_SaveSummary[1].padding < 0) {
+            g_MemCardSelectorX = g_MemCardSelectorX % 3;
         }
-        func_psp_0923BD98();
-        if (D_psp_09285CF0 != NULL) {
-            func_psp_0923FC08(5);
-            func_psp_0923FEC0(0x13, 4);
-            func_psp_0923A7C8(0x82, 0);
-            func_psp_09239930(3);
-            g_GameEngineStep = 0x60;
+        func_801AEE74();
+        if (D_801BAF10) {
+            func_801B1F4C(5);
+            func_801B2608(0x13, 4);
+            func_801ADF94(0x82, 0);
+            DrawNavigationTips(Tips_Confirm);
+            g_GameEngineStep = Upd_Eng_0x60;
         } else {
-            func_psp_09239930(0);
-            func_psp_0923A7C8(2, 0);
-            func_psp_0923FEC0(0x1C, 4);
-            func_psp_0923FEC0(0x1D, 5);
+            DrawNavigationTips(Tips_Generic);
+            func_801ADF94(2, 0);
+            func_801B2608(0x1C, 4);
+            func_801B2608(0x1D, 5);
             g_GameEngineStep++;
         }
         break;
-    case 0x60:
-        func_psp_09239930(3);
-        func_psp_0923A7C8(0x82, 0);
+    case Upd_Eng_0x60:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & D_psp_08B42050) {
-            g_api.PlaySfx(0x633);
-            func_psp_0923B800();
-            func_psp_09239BD0();
-            g_GameEngineStep = 2;
+            g_api.PlaySfx(SFX_UI_CONFIRM);
+            func_801AE9A8();
+            func_801AD490();
+            g_GameEngineStep = Upd_Eng_MainMenuIdle;
         }
         break;
-    case 0x53:
+    case Upd_Eng_83:
         if (g_pads[0].tapped & D_psp_08B42054) {
-            func_psp_0923B800();
-            func_psp_09239BD0();
-            g_GameEngineStep = 2;
+            func_801AE9A8();
+            func_801AD490();
+            g_GameEngineStep = Upd_Eng_MainMenuIdle;
         } else {
-            func_psp_0923A558(0);
-            func_psp_0923A7C8(2, 0);
+            UpdateFileSelect(0);
+            func_801ADF94(2, 0);
             if (g_pads[0].tapped & D_psp_08B42050) {
-                port = D_psp_09285C00 / 15;
-                slot = D_psp_09285C00 % 15;
+                port = D_801D6B04 / 15;
+                slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
-                    func_psp_0923FC08(5);
-                    func_psp_0923FEC0(0x1E, 4);
-                    func_psp_0923FEC0(0x1F, 5);
-                    D_psp_09285C08 = D_psp_09285C00;
-                    g_api.PlaySfx(0x633);
+                    func_801B1F4C(5);
+                    func_801B2608(0x1E, 4);
+                    func_801B2608(0x1F, 5);
+                    D_801BC3EC = D_801D6B04;
+                    g_api.PlaySfx(SFX_UI_CONFIRM);
                     g_GameEngineStep++;
                 } else {
-                    g_api.PlaySfx(0x686);
+                    g_api.PlaySfx(SFX_UI_ERROR);
                 }
             }
         }
         break;
-    case 0x54:
-        func_psp_0923A558(0);
-        func_psp_0923A7C8(2, 1);
-        func_psp_0923B498();
+    case Upd_Eng_84:
+        UpdateFileSelect(0);
+        func_801ADF94(2, 1);
+        func_801AE6D0();
         if (g_pads[0].tapped & D_psp_08B42054) {
-            func_psp_09238DA8(0x12, 8);
-            func_psp_09238DA8(0x13, 8);
-            func_psp_09238DA8(0x14, 8);
-            func_psp_0923FEC0(0x1C, 4);
-            func_psp_0923FEC0(0x1D, 5);
+            func_801ACBE4(GFX_UNK_18, 8);
+            func_801ACBE4(GFX_UNK_19, 8);
+            func_801ACBE4(GFX_UNK_20, 8);
+            func_801B2608(0x1C, 4);
+            func_801B2608(0x1D, 5);
             g_GameEngineStep--;
         } else {
             if (g_pads[0].tapped & D_psp_08B42050) {
-                port = D_psp_09285C00 / 15;
-                slot = D_psp_09285C00 % 15;
-                if (D_psp_09285C08 != D_psp_09285C00) {
+                port = D_801D6B04 / 15;
+                slot = D_801D6B04 % 15;
+                if (D_801BC3EC != D_801D6B04) {
                     if (g_SaveSummary[port].icon[slot] >= 0) {
-                        func_psp_0923FEC0(0x20, 4);
-                        func_psp_0923FEC0(0x21, 5);
-                        g_api.PlaySfx(0x633);
-                        g_GameEngineStep = 0x59;
+                        func_801B2608(0x20, 4);
+                        func_801B2608(0x21, 5);
+                        g_api.PlaySfx(SFX_UI_CONFIRM);
+                        g_GameEngineStep = Upd_Eng_89;
                     } else if (g_SaveSummary[port].icon[slot] != -2) {
-                        func_psp_0923FEC0(0x22, 4);
-                        func_psp_0923FEC0(0x23, 5);
-                        g_api.PlaySfx(0x633);
+                        func_801B2608(0x22, 4);
+                        func_801B2608(0x23, 5);
+                        g_api.PlaySfx(SFX_UI_CONFIRM);
                         g_GameEngineStep++;
                     }
                 } else {
-                    g_api.PlaySfx(0x686);
+                    g_api.PlaySfx(SFX_UI_ERROR);
                 }
             }
         }
         break;
-    case 0x55:
+    case Upd_Eng_85:
         func_psp_09239B78();
-        func_psp_0923A7C8(0x82, 1);
-        func_psp_0923B498();
-        func_psp_09242920(D_psp_09285C08, D_psp_09285C00);
+        func_801ADF94(0x82, 1);
+        func_801AE6D0();
+        func_801B38B4(D_801BC3EC, D_801D6B04);
         g_GameEngineStep++;
         break;
-    case 0x56:
-        func_psp_0923B498();
-        D_91FC478 = 0;
-        temp_s1 = func_psp_09242BA0(NULL);
+    case Upd_Eng_86:
+        func_801AE6D0();
+        D_800978C4 = 0;
+        temp_s1 = func_801B3A94(0);
         if (temp_s1 != 0) {
-            D_91FC478 = 1;
+            D_800978C4 = 1;
         }
         if (temp_s1 == 1) {
-            func_psp_0923FC08(5);
-            func_psp_0923FEC0(0x24, 4);
-            func_psp_09238DA8(0xF, 0);
+            func_801B1F4C(5);
+            func_801B2608(0x24, 4);
+            func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep += 2;
         }
         if (temp_s1 == -1) {
-            func_psp_0923FC08(5);
-            func_psp_0923FEC0(0x1A, 4);
-            func_psp_09238DA8(0xF, 0);
+            func_801B1F4C(5);
+            func_801B2608(0x1A, 4);
+            func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
         if (temp_s1 == -3) {
-            func_psp_0923FC08(5);
-            func_psp_0923FEC0(0x1B, 4);
-            func_psp_09238DA8(0xF, 0);
+            func_801B1F4C(5);
+            func_801B2608(0x1B, 4);
+            func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
         break;
-    case 0x57:
-        func_psp_09239930(3);
-        func_psp_0923A7C8(0x82, 1);
-        func_psp_0923B498();
+    case Upd_Eng_87:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 1);
+        func_801AE6D0();
         if (g_pads[0].tapped & D_psp_08B42050) {
-            g_api.PlaySfx(0x633);
-            func_psp_09238DA8(0xF, 8);
-            g_GameEngineStep = 0x50;
+            g_api.PlaySfx(SFX_UI_CONFIRM);
+            func_801ACBE4(GFX_UNK_15, 8);
+            g_GameEngineStep = Upd_Eng_FileCopy;
         }
         break;
-    case 0x58:
-        func_psp_09239930(3);
-        func_psp_0923A7C8(0x82, 1);
-        func_psp_0923B498();
+    case Upd_Eng_88:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 1);
+        func_801AE6D0();
         if (g_pads[0].tapped & D_psp_08B42050) {
-            g_api.PlaySfx(0x633);
-            func_psp_09238DA8(0x12, 8);
-            func_psp_09238DA8(0x13, 8);
-            func_psp_09238DA8(0x14, 8);
-            g_GameEngineStep = 0x52;
+            g_api.PlaySfx(SFX_UI_CONFIRM);
+            func_801ACBE4(GFX_UNK_18, 8);
+            func_801ACBE4(GFX_UNK_19, 8);
+            func_801ACBE4(GFX_UNK_20, 8);
+            g_GameEngineStep = Upd_Eng_82;
         }
         break;
-    case 0x59:
-        func_psp_09239930(2);
-        func_psp_0923A7C8(0x82, 1);
-        func_psp_0923B498();
+    case Upd_Eng_89:
+        DrawNavigationTips(Tips_YesNo);
+        func_801ADF94(0x82, 1);
+        func_801AE6D0();
         if (g_pads[0].tapped & D_psp_08B42050) {
-            g_api.PlaySfx(0x633);
-            func_psp_0923FEC0(0x22, 4);
-            func_psp_0923FEC0(0x23, 5);
-            g_GameEngineStep = 0x55;
+            g_api.PlaySfx(SFX_UI_CONFIRM);
+            func_801B2608(0x22, 4);
+            func_801B2608(0x23, 5);
+            g_GameEngineStep = Upd_Eng_85;
         } else {
             if (g_pads[0].tapped & D_psp_08B42054) {
-                func_psp_0923FC08(5);
-                func_psp_0923FEC0(0x1E, 4);
-                func_psp_0923FEC0(0x1F, 5);
-                func_psp_09239930(0);
-                g_GameEngineStep = 0x54;
+                func_801B1F4C(5);
+                func_801B2608(0x1E, 4);
+                func_801B2608(0x1F, 5);
+                DrawNavigationTips(Tips_Generic);
+                g_GameEngineStep = Upd_Eng_84;
             }
-            func_psp_092395E8();
+            func_801AD1D0();
         }
         break;
-    case 0x70:
-        func_psp_0923BA40(2);
-        func_psp_0923FEC0(5, 4);
-        func_psp_0923FEC0(6, 5);
-        func_psp_09241F70();
+    case Upd_Eng_FileDelete:
+        SelectMainMenuOption(MAIN_MENU_CURSOR_FILE_COPY);
+        func_801B2608(5, 4);
+        func_801B2608(6, 5);
+        func_801B3120();
         g_GameEngineStep++;
         /* fallthrough */
-    case 0x71:
-        func_psp_0923A7C8(0x80, 0);
-        D_91FC478 = 0;
-        if (func_psp_09242010()) {
-            D_91FC478 = 1;
+    case Upd_Eng_113:
+        func_801ADF94(0x80, 0);
+        D_800978C4 = 0;
+        if (func_801B3164()) {
+            D_800978C4 = 1;
             g_GameEngineStep++;
-            func_psp_0923BC20();
+            CheckIfMemcardsCanBeUsed();
         }
         break;
-    case 0x72:
-        if (D_psp_0928628C < 0) {
-            D_psp_09285BF8 = (D_psp_09285BF8 % 3) + 3;
+    case Upd_Eng_114:
+        if (g_SaveSummary[0].padding < 0) {
+            g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
         }
-        if (D_psp_09286634 < 0) {
-            D_psp_09285BF8 = D_psp_09285BF8 % 3;
+        if (g_SaveSummary[1].padding < 0) {
+            g_MemCardSelectorX = g_MemCardSelectorX % 3;
         }
-        func_psp_0923BD98();
-        if (D_psp_09285CF0 != NULL) {
-            func_psp_0923FC08(5);
-            func_psp_0923FEC0(0x13, 4);
-            func_psp_0923A7C8(0x82, 0);
-            func_psp_09239930(3);
-            g_GameEngineStep = 0x80;
+        func_801AEE74();
+        if (D_801BAF10) {
+            func_801B1F4C(5);
+            func_801B2608(0x13, 4);
+            func_801ADF94(0x82, 0);
+            DrawNavigationTips(Tips_Confirm);
+            g_GameEngineStep = Upd_Eng_0x80;
         } else {
-            func_psp_09239930(0);
-            func_psp_0923A7C8(2, 0);
-            func_psp_0923FEC0(0x25, 4);
-            func_psp_0923FEC0(0x26, 5);
+            DrawNavigationTips(Tips_Generic);
+            func_801ADF94(2, 0);
+            func_801B2608(0x25, 4);
+            func_801B2608(0x26, 5);
             g_GameEngineStep++;
         }
         break;
-    case 0x80:
-        func_psp_09239930(3);
-        func_psp_0923A7C8(0x82, 0);
+    case Upd_Eng_0x80:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & D_psp_08B42050) {
-            g_api.PlaySfx(0x633);
-            func_psp_0923B800();
-            func_psp_09239BD0();
-            g_GameEngineStep = 2;
+            g_api.PlaySfx(SFX_UI_CONFIRM);
+            func_801AE9A8();
+            func_801AD490();
+            g_GameEngineStep = Upd_Eng_MainMenuIdle;
         }
         break;
-    case 0x73:
+    case Upd_Eng_115:
         if (g_pads[0].tapped & D_psp_08B42054) {
-            func_psp_0923B800();
-            func_psp_09239BD0();
-            g_GameEngineStep = 2;
+            func_801AE9A8();
+            func_801AD490();
+            g_GameEngineStep = Upd_Eng_MainMenuIdle;
         } else {
-            func_psp_0923A558(0);
-            func_psp_0923A7C8(2, 0);
-            func_psp_09239930(0);
+            UpdateFileSelect(0);
+            func_801ADF94(2, 0);
+            DrawNavigationTips(Tips_Generic);
             if (g_pads[0].tapped & D_psp_08B42050) {
-                port = D_psp_09285C00 / 15;
-                slot = D_psp_09285C00 % 15;
+                port = D_801D6B04 / 15;
+                slot = D_801D6B04 % 15;
                 if (g_SaveSummary[port].icon[slot] >= 0) {
-                    func_psp_0923FC08(5);
-                    func_psp_0923FEC0(0x27, 4);
-                    g_api.PlaySfx(0x633);
+                    func_801B1F4C(5);
+                    func_801B2608(0x27, 4);
+                    g_api.PlaySfx(SFX_UI_CONFIRM);
                     g_GameEngineStep++;
                 } else {
-                    g_api.PlaySfx(0x686);
+                    g_api.PlaySfx(SFX_UI_ERROR);
                 }
             }
         }
         break;
-    case 0x74:
-        func_psp_09239930(2);
-        func_psp_0923A7C8(0x82, 0);
+    case Upd_Eng_116:
+        DrawNavigationTips(Tips_YesNo);
+        func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & D_psp_08B42054) {
-            func_psp_0923FEC0(0x25, 4);
-            func_psp_0923FEC0(0x26, 5);
+            func_801B2608(0x25, 4);
+            func_801B2608(0x26, 5);
             g_GameEngineStep--;
         } else if (g_pads[0].tapped & D_psp_08B42050) {
-            port = D_psp_09285C00 / 15;
-            slot = D_psp_09285C00 % 15;
-            func_psp_09238DA8(0xF, 8);
-            g_api.PlaySfx(0x633);
+            port = D_801D6B04 / 15;
+            slot = D_801D6B04 % 15;
+            func_801ACBE4(GFX_UNK_15, 8);
+            g_api.PlaySfx(SFX_UI_CONFIRM);
             g_GameEngineStep++;
         }
         break;
-    case 0x75:
+    case Upd_Eng_117:
         func_psp_09239B78();
-        func_psp_0923A7C8(0x82, 0);
-        func_psp_09243000(D_psp_09285C00);
+        func_801ADF94(0x82, 0);
+        func_801B3E14(D_801D6B04);
         g_GameEngineStep++;
         break;
-    case 0x76:
-        func_psp_0923A7C8(0x82, 0);
-        D_91FC478 = 0;
-        temp_s1 = func_psp_09243028();
+    case Upd_Eng_118:
+        func_801ADF94(0x82, 0);
+        D_800978C4 = 0;
+        temp_s1 = func_801B3E2C();
         if (temp_s1 != 0) {
-            D_91FC478 = 1;
+            D_800978C4 = 1;
         }
         if (temp_s1 == 1) {
-            func_psp_0923FC08(5);
-            func_psp_0923FEC0(0x28, 4);
-            func_psp_09238DA8(0xF, 0);
+            func_801B1F4C(5);
+            func_801B2608(0x28, 4);
+            func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep += 2;
         }
         if (temp_s1 == -1) {
-            func_psp_0923FC08(5);
-            func_psp_0923FEC0(0x29, 4);
-            func_psp_09238DA8(0xF, 0);
+            func_801B1F4C(5);
+            func_801B2608(0x29, 4);
+            func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
         break;
-    case 0x77:
-        func_psp_09239930(3);
-        func_psp_0923A7C8(0x82, 0);
+    case Upd_Eng_119:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & D_psp_08B42050) {
-            g_api.PlaySfx(0x633);
-            func_psp_09238DA8(0xF, 8);
-            g_GameEngineStep = 0x70;
+            g_api.PlaySfx(SFX_UI_CONFIRM);
+            func_801ACBE4(GFX_UNK_15, 8);
+            g_GameEngineStep = Upd_Eng_FileDelete;
         }
         break;
-    case 0x78:
-        func_psp_09239930(3);
-        func_psp_0923A7C8(0x82, 0);
+    case Upd_Eng_120:
+        DrawNavigationTips(Tips_Confirm);
+        func_801ADF94(0x82, 0);
         if (g_pads[0].tapped & D_psp_08B42050) {
-            g_api.PlaySfx(0x633);
-            g_GameEngineStep = 0x72;
+            g_api.PlaySfx(SFX_UI_CONFIRM);
+            g_GameEngineStep = Upd_Eng_114;
         }
         break;
-    case 0x100:
+    case Upd_Eng_0x100:
         func_psp_09239B78();
-        func_psp_0923A7C8(0x81, 0);
-        func_psp_0923FEC0(0x2A, 4);
-        func_psp_0923FEC0(0x2B, 5);
-        func_psp_09238DA8(0xF, 0);
-        func_psp_092426B0(D_psp_09285C00);
+        func_801ADF94(0x81, 0);
+        func_801B2608(0x2A, 4);
+        func_801B2608(0x2B, 5);
+        func_801ACBE4(GFX_UNK_15, 0);
+        func_801B367C(D_801D6B04);
         g_GameEngineStep++;
         break;
-    case 0x101:
-        func_psp_0923A7C8(0x81, 0);
-        D_91FC478 = 0;
-        temp_s1 = func_psp_092426D8();
+    case Upd_Eng_257:
+        func_801ADF94(0x81, 0);
+        D_800978C4 = 0;
+        temp_s1 = TryLoadSaveData();
         if (temp_s1 != 0) {
-            D_91FC478 = 1;
+            D_800978C4 = 1;
         }
         if (temp_s1 == 1) {
-            if (g_SaveSummary[D_psp_09285C00 / 15].slot[D_psp_09285C00 % 15] ==
+            if (g_SaveSummary[D_801D6B04 / 15].slot[D_801D6B04 % 15] ==
                 func_8919560()) {
                 func_8919638(g_Pix, 0x2000);
-                func_913E220(g_Pix);
+                LoadSaveData(g_Pix);
                 if (g_Pix[0][0x1FFF] == 0xFF) {
                     D_8003C730 = 4;
                     D_91ED288 = g_Pix[0][0x1FFE];
@@ -1905,62 +2014,62 @@ void func_psp_0923BE20(void) {
                 D_8B42044 = 1;
                 D_8003C730 = 1;
             }
-            D_91FC490 = D_psp_09285C00 / 15;
-            D_91FC488 = g_SaveSummary[D_91FC490].slot[D_psp_09285C00 % 15];
-            g_api.PlaySfx(0x80);
-            g_GameEngineStep = 0x104;
+            D_80097924 = D_801D6B04 / 15;
+            D_8006C378 = g_SaveSummary[D_80097924].slot[D_801D6B04 % 15];
+            g_api.PlaySfx(SET_UNK_80);
+            g_GameEngineStep = Upd_Eng_260;
         }
         if (temp_s1 == -1) {
-            func_psp_0923FC08(5);
-            func_psp_0923FEC0(0x1A, 4);
-            func_psp_09238DA8(0xF, 0);
+            func_801B1F4C(5);
+            func_801B2608(0x1A, 4);
+            func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
         if (temp_s1 == -2) {
-            func_psp_0923FC08(5);
-            func_psp_0923FFB8(D_psp_09284160, 4);
-            func_psp_09238DA8(0xF, 0);
+            func_801B1F4C(5);
+            func_801B25D4(D_psp_09284160, 4);
+            func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }
         break;
-    case 0x102:
-        func_psp_0923A7C8(0x81, 0);
+    case Upd_Eng_258:
+        func_801ADF94(0x81, 0);
         if (g_pads[0].tapped) {
-            func_psp_09238DA8(0xF, 8);
-            g_GameEngineStep = 0x30;
+            func_801ACBE4(GFX_UNK_15, 8);
+            g_GameEngineStep = Upd_Eng_FileSelect;
         }
         break;
-    case 0x104:
+    case Upd_Eng_260:
         if (D_8003C730 == 4) {
-            func_psp_0923A7C8(0x84, 0);
+            func_801ADF94(0x84, 0);
         } else {
-            func_psp_0923A7C8(0x81, 0);
+            func_801ADF94(0x81, 0);
         }
-        if (func_psp_092390B8()) {
+        if (func_801ACEC0()) {
             g_GameStep++;
         }
         break;
-    case 0x200:
-    case 0x201:
-    case 0x202:
-    case 0x203:
-    case 0x204:
-    case 0x210:
-    case 0x211:
-    case 0x212:
-    case 0x213:
-    case 0x214:
-        g_GameEngineStep = D_psp_09285BB8;
+    case Upd_Eng_0x200:
+    case Upd_Eng_513:
+    case Upd_Eng_514:
+    case Upd_Eng_515:
+    case Upd_Eng_516:
+    case Upd_Eng_0x210:
+    case Upd_Eng_529:
+    case Upd_Eng_530:
+    case Upd_Eng_531:
+    case Upd_Eng_532:
+        g_GameEngineStep = g_SelNextCrossPressEngStep;
         break;
-    case 0x220:
-        g_GameEngineStep = D_psp_09285BB0;
+    case Upd_Eng_0x220:
+        g_GameEngineStep = g_SelEng220NextStep;
         break;
     }
     g_GameTimer++;
-    if (g_GameTimer == 0xA) {
+    if (g_GameTimer == 10) {
         g_GameTimer = 0;
-        D_psp_09285D00++;
-        D_psp_09285D00 = D_psp_09285D00 % 3;
+        D_801BAF08++;
+        D_801BAF08 = D_801BAF08 % 3;
     }
 }
 
@@ -1969,24 +2078,24 @@ void func_psp_0923F290(void) {
 
     switch (g_MenuStep) {
     case 0:
-        if (D_91FC490 == -1 || D_91FC488 == -1) {
+        if (D_80097924 == -1 || D_8006C378 == -1) {
             g_GameStep++;
         } else {
-            D_91FC478 = 0;
+            D_800978C4 = 0;
             g_MenuStep++;
         }
         break;
 
     case 1:
-        func_psp_09242B40(D_91FC490, D_91FC488);
+        func_801B3A54(D_80097924, D_8006C378);
         g_MenuStep++;
         break;
 
     case 2:
-        D_91FC478 = 0;
-        var_s0 = func_psp_09242BA0(1);
-        if (var_s0) {
-            D_91FC478 = 1;
+        D_800978C4 = 0;
+        var_s0 = func_801B3A94(1);
+        if (var_s0 != 0) {
+            D_800978C4 = 1;
             g_GameStep++;
         }
         break;

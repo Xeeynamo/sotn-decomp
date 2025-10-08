@@ -2,6 +2,9 @@
 #include <types.h>
 #include <libetc.h>
 
+// BSS
+u32 D_801BAEE4[9];
+
 typedef struct {
     u_char iq_y[64];
     u_char iq_c[64];
