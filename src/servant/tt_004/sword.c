@@ -21,15 +21,22 @@ static void func_us_80177480(Entity* self);
 static void func_us_80177590(Entity* self);
 
 ServantDesc sword_ServantDesc = {
-    ServantInit,      UpdateServantDefault,
+    .Init = ServantInit,
+    .Update = UpdateServantDefault,
     func_us_801746BC, // active target below level 70
     func_us_80174B6C, // active target above level 70
-    func_us_801758C8, func_us_80176270,
-    func_us_80176664, func_us_8017666C,
-    func_us_80176674, func_us_80176BF0,
-    func_us_80176BF8, func_us_80176F28,
-    func_us_801773CC, UpdateServantSfxPassthrough,
-    func_us_80177480, func_us_80177590,
+    func_us_801758C8,
+    func_us_80176270,
+    func_us_80176664,
+    func_us_8017666C,
+    func_us_80176674,
+    func_us_80176BF0,
+    func_us_80176BF8,
+    func_us_80176F28,
+    func_us_801773CC,
+    UpdateServantSfxPassthrough,
+    func_us_80177480,
+    func_us_80177590,
 };
 
 static s32 D_us_801782B0;
@@ -54,48 +61,48 @@ static s32 D_us_80178344[128];
 STATIC_PAD_BSS(4);
 static s32 D_us_80178548; // x
 static s32 D_us_8017854C; // y
-static s32 D_us_80178550; // x
-static s32 D_us_80178554; // y
-static s32 D_us_80178558; // z
+static s32 D_us_80178550; // x (ps)
+static s32 D_us_80178554; // y (ps)
+static s32 D_us_80178558; // z (ps)
 static s32 D_us_8017855C;
-static s32 D_us_80178560;
+static s32 D_us_80178560; // distance
 static s32 D_us_80178564;
-static s32 D_us_80178568;
+static s32 D_us_80178568; // x (ps)
 static s32 D_us_8017856C;
 static s32 D_us_80178570;
 static s32 D_us_80178574;
 static s32 D_us_80178578;
 static s32 D_us_8017857C;
-static s32 D_us_80178580;
-static s32 D_us_80178584;
-static s32 D_us_80178588;
-static s32 D_us_8017858C;
-static s32 D_us_80178590;
-static s32 D_us_80178594;
+static s32 D_us_80178580; // x (ps)
+static s32 D_us_80178584; // y (ps)
+static s32 D_us_80178588; // z (ps)
+static s32 D_us_8017858C; // x (ps)
+static s32 D_us_80178590; // y (ps)
+static s32 D_us_80178594; // z (ps)
 static s32 D_us_80178598;
-static s32 D_us_8017859C;
-static s32 D_us_801785A0;
-static s32 D_us_801785A4;
-static s32 D_us_801785A8;
-static s32 D_us_801785AC;
-static s32 D_us_801785B0;
+static s32 D_us_8017859C; // x (ps)
+static s32 D_us_801785A0; // y (ps)
+static s32 D_us_801785A4; // z (ps)
+static s32 D_us_801785A8; // x (ps)
+static s32 D_us_801785AC; // y (ps)
+static s32 D_us_801785B0; // distance (ps)
 static s32 D_us_801785B4;
-static s32 D_us_801785B8;
-static s32 D_us_801785BC;
-static s32 D_us_801785C0;
-static s32 D_us_801785C4;
-static s32 D_us_801785C8;
-static s32 D_us_801785CC;
+static s32 D_us_801785B8; // x (ps)
+static s32 D_us_801785BC; // y (ps)
+static s32 D_us_801785C0; // z (ps)
+static s32 D_us_801785C4; // x (ps)
+static s32 D_us_801785C8; // y (ps)
+static s32 D_us_801785CC; // x (ps)
 static s32 D_us_801785D0;
 static s32 D_us_801785D4;
 static s32 D_us_801785D8;
 static s32 D_us_801785DC;
-static s32 D_us_801785E0;
+static s32 D_us_801785E0; // distance
 static s32 D_us_801785E4;
 static s32 D_us_801785E8;
-static s32 D_us_801785EC;
-static s32 D_us_801785F0;
-static s32 D_us_801785F4;
+static s32 D_us_801785EC; // x (ps)
+static s32 D_us_801785F0; // y (ps)
+static s32 D_us_801785F4; // z (ps)
 static s32 D_us_801785F8;
 static s32 D_us_801785FC;
 static s32 D_us_80178600;
@@ -103,7 +110,7 @@ static s32 D_us_80178604;
 static s32 D_us_80178608;
 static s32 D_us_8017860C;
 static s32 D_us_80178610;
-static s32 D_us_80178614;
+static s32 D_us_80178614; // distance (ps)
 STATIC_PAD_BSS(4);
 static s32 D_us_8017861C; // x
 static s32 D_us_80178620; // y
@@ -112,7 +119,7 @@ static s32 D_us_80178628; // y
 static s32 D_us_8017862C; // z
 static s32 D_us_80178630;
 static s32 D_us_80178634;
-static s32 D_us_80178638;
+static s32 D_us_80178638; // (ps)
 static Primitive* D_us_8017863C;
 STATIC_PAD_BSS(4);
 static s32 D_us_80178644;
@@ -123,8 +130,7 @@ static s32 D_us_8017865C[1];
 static s32 D_us_80178660[3]; // should be part of the preceeding array
 static u32 D_us_8017866C;
 extern s32 D_us_80178670[4][5];
-extern Point16 D_us_801786C0[1];
-extern Point16 D_us_801786C4[4]; // should be part of the preceding array
+extern Point16 D_us_801786C0[5];
 extern s32 D_us_801786D4[96];
 extern s32 D_us_80178854[96];
 extern s32 D_us_801789D4[96];
@@ -302,8 +308,6 @@ void func_us_8017280C(Entity* self, s32 arg1, s32 arg2) {
 }
 
 extern SwordUnk_A0 D_us_801700A0[];
-extern s32 s_SwordCurrentLevel;
-extern FamiliarStats s_SwordStats;
 
 void func_us_80172940(Entity* self) {
     Primitive* prim;
@@ -333,7 +337,7 @@ void func_us_80172940(Entity* self) {
             self->ext.swordFamiliar.unk82 = 1;
             func_us_8017259C(self, self->ext.swordFamiliar.unk80, 1);
             self->ext.swordFamiliar.unk86 = self->ext.swordFamiliar.unk88 =
-                0x400;
+                FLT(1.0 / 4.0);
             self->ext.swordFamiliar.unk8c = self->ext.swordFamiliar.targetX = 0;
             s_SwordCurrentLevel = 0;
             D_us_80178B74 = 1;
@@ -394,10 +398,8 @@ static s32 Max3(s32 arg0, s32 arg1, s32 arg2) {
 
 // chooses the smallest magnitude of arg0, arg1, arg2
 //
-// this function is unused.
-//
 // see: Max3
-static s32 Min3(s32 arg0, s32 arg1, s32 arg2) {
+static s32 Min3(s32 arg0, s32 arg1, s32 arg2) UNUSED {
     arg0 = abs(arg0);
     arg1 = abs(arg1);
     arg2 = abs(arg2);
@@ -513,11 +515,6 @@ void CheckSwordLevel(Entity* self) {
         }
     }
 }
-
-#ifdef VERSION_PSP
-extern u16 D_91F8618[];
-extern u16 D_psp_092F1138[];
-#endif
 
 #define CLUT_INDEX_SERVANT_2 0x410
 extern u16 g_ServantClut[16];
@@ -688,13 +685,14 @@ void UpdateServantDefault(Entity* self) {
             D_us_80178548 = self->posX.i.hi > 128 ? FIX(0xC0) : FIX(0x40);
             break;
         }
-        D_us_8017854C = ((rcos(D_us_80178564) << 4) << 4) + FIX(0x90);
+        D_us_8017854C = (FLT_TO_FIX(rcos(D_us_80178564)) * 16) + FIX(0x90);
     } else {
         D_us_80178550 = PLAYER.facingLeft ? FIX(0x1C) : -FIX(0x1C);
         D_us_80178554 = FIX(0x1C);
         D_us_80178548 = PLAYER.posX.val + D_us_80178550;
-        D_us_8017854C = PLAYER.posY.val -
-                        (((rcos(D_us_80178564) << 4) << 4) + D_us_80178554);
+        D_us_8017854C =
+            PLAYER.posY.val -
+            ((FLT_TO_FIX(rcos(D_us_80178564)) * 16) + D_us_80178554);
     }
 
     switch (self->step) {
@@ -711,13 +709,13 @@ void UpdateServantDefault(Entity* self) {
         D_us_80178560 = FLT_TO_I(
             SquareRoot12(I_TO_FLT(SQ(D_us_80178550) + SQ(D_us_80178554))));
 
-        if (D_us_80178560 < 0x10) {
+        if (D_us_80178560 < 16) {
             self->velocityX = (D_us_80178548 - self->posX.val) >> 6;
             self->velocityY = (D_us_8017854C - self->posY.val) >> 6;
-        } else if (D_us_80178560 < 0x40) {
+        } else if (D_us_80178560 < 64) {
             self->velocityX = (D_us_80178548 - self->posX.val) >> 5;
             self->velocityY = (D_us_8017854C - self->posY.val) >> 5;
-        } else if (D_us_80178560 < 0x100) {
+        } else if (D_us_80178560 < 256) {
             self->velocityX = (D_us_80178548 - self->posX.val) >> 4;
             self->velocityY = (D_us_8017854C - self->posY.val) >> 4;
         } else {
@@ -728,7 +726,7 @@ void UpdateServantDefault(Entity* self) {
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
 
-        if (D_us_80178560 > 0x10) {
+        if (D_us_80178560 > 16) {
             self->ext.swordFamiliar.unk84 =
                 ratan2(D_us_80178554, D_us_80178550) & 0xFFF;
             self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
@@ -736,11 +734,11 @@ void UpdateServantDefault(Entity* self) {
                 8);
         } else {
             self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
-                0x400, self->ext.swordFamiliar.unk88, 8);
+                FLT(1.0 / 4.0), self->ext.swordFamiliar.unk88, 8);
         }
 
         self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
-        D_us_8017007C.x = self->ext.swordFamiliar.unk86 - 0x400;
+        D_us_8017007C.x = self->ext.swordFamiliar.unk86 - FLT(1.0 / 4.0);
 
         D_us_80178558 = -D_us_80170080.vz;
         D_us_80178550 = abs(D_us_80178550) << 5;
@@ -825,14 +823,14 @@ void func_us_801746BC(Entity* self) {
         self->ext.swordFamiliar.unk84 =
             ratan2(D_us_80178574, D_us_80178570) & 0xFFF;
         self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
-            self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 0x20);
+            self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 32);
         self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
 
         if (self->ext.swordFamiliar.unk84 == self->ext.swordFamiliar.unk86) {
             self->step++;
         }
 
-        D_us_8017007C.x = self->ext.swordFamiliar.unk86 - 0x400;
+        D_us_8017007C.x = self->ext.swordFamiliar.unk86 - FLT(1.0 / 4.0);
         break;
 
     case 3:
@@ -916,9 +914,586 @@ void func_us_801746BC(Entity* self) {
     }
 }
 
-INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_80174B6C);
+extern s32 D_us_8017021C;
+extern s32 D_us_80170220;
 
-INCLUDE_ASM("servant/tt_004/nonmatchings/sword", func_us_801758C8);
+#ifdef VERSION_PSP
+extern s32 D_psp_092F2000;
+#else
+#define D_psp_092F2000 FLT(-1.0 / 4.0);
+#endif
+
+void func_us_80174B6C(Entity* self) {
+    s32 roll;
+    s32 currentX;
+
+    CheckSwordLevel(self);
+    if (g_Player.unk70) {
+        self->entityId = SWORD_UNK_D4;
+        self->step = 0;
+        return;
+    }
+
+    D_us_80170080.vx = (self->posX.i.hi - 0x80) << 5;
+    D_us_80170080.vy = (self->posY.i.hi - 0x80) << 5;
+    // This is weird… why swap operands between game versions?
+#ifdef VERSION_PSP
+    self->ext.swordFamiliar.posX =
+        g_Tilemap.scrollX.i.hi + (g_Tilemap.left << 8);
+    self->ext.swordFamiliar.posY =
+        g_Tilemap.scrollY.i.hi + (g_Tilemap.top << 8);
+#else
+    self->ext.swordFamiliar.posX =
+        (g_Tilemap.left << 8) + g_Tilemap.scrollX.i.hi;
+    self->ext.swordFamiliar.posY =
+        (g_Tilemap.top << 8) + g_Tilemap.scrollY.i.hi;
+#endif
+    D_us_801785A8 = (self->ext.swordFamiliar.posX - 0x80) << 5;
+    D_us_801785AC = (self->ext.swordFamiliar.posY - 0x80) << 5;
+
+    switch (self->step) {
+    case 0:
+        func_us_80172940(self);
+        D_us_8017859C = (rand() & PSP_RANDMASK) - FLT(4);
+        D_us_801785A4 = (rand() & PSP_RANDMASK) - FLT(4);
+        break;
+
+    case 1:
+        D_us_80178580 = PLAYER.facingLeft ? FLT(1.0 / 2.0) : FLT(-1.0 / 2.0);
+        D_us_80178584 = FLT(-1.0 / 4.0);
+        D_us_80178588 = FLT(-1.0 / 4.0);
+        D_us_80178580 += D_us_801785A8;
+        D_us_80178584 = D_us_801785AC + D_psp_092F2000;
+        self->step++;
+
+        // fallthrough
+    case 2:
+
+        D_us_8017858C = D_us_80178580 - D_us_801785A8 - D_us_80170080.vx;
+        D_us_80178590 = D_us_80178584 - D_us_801785AC - D_us_80170080.vy;
+        D_us_80178594 = D_us_80178588 - D_us_80170080.vz;
+
+        self->ext.swordFamiliar.unk84 =
+            ratan2(D_us_80178590, D_us_8017858C) & 0xFFF;
+        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 0x80);
+        self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
+
+        D_us_8017859C =
+            FLT_TO_I(rcos(self->ext.swordFamiliar.unk86) * FLT(5.0 / 128.0));
+        D_us_801785A0 =
+            FLT_TO_I(rsin(self->ext.swordFamiliar.unk86) * FLT(5.0 / 128.0));
+
+        D_us_80170078[2] = self->ext.swordFamiliar.unk86 - FLT(1.0 / 4.0);
+        D_us_8017858C = abs(D_us_8017858C);
+        D_us_80178590 = abs(D_us_80178590);
+
+        D_us_80178598 = MAX(D_us_8017858C, D_us_80178590);
+
+        self->ext.swordFamiliar.currentX =
+            ratan2(D_us_80178594, D_us_80178598) & 0xFFF;
+        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
+            0x40);
+
+        self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
+        D_us_801785A4 = FLT_TO_I(rsin(self->ext.swordFamiliar.unk8c) * 0xA0);
+        D_us_80170078[0] = self->ext.swordFamiliar.unk8c;
+
+        D_us_80170080.vx += D_us_8017859C;
+        D_us_80170080.vy += D_us_801785A0;
+        D_us_80170080.vz += D_us_801785A4;
+        D_us_8017858C = D_us_80178580 - D_us_801785A8 - D_us_80170080.vx;
+        D_us_80178590 = D_us_80178584 - D_us_801785AC - D_us_80170080.vy;
+        D_us_80178594 = D_us_80178588 - D_us_80170080.vz;
+
+        D_us_801785B0 = SquareRoot0(
+            SQ(D_us_8017858C) + SQ(D_us_80178590) + SQ(D_us_80178594));
+
+        if (D_us_801785B0 < FLT(1.0 / 8.0)) {
+            self->step++;
+        }
+        break;
+
+    case 3:
+        D_us_8017859C = (D_us_80178580 - D_us_801785A8 - D_us_80170080.vx) >> 4;
+        D_us_801785A0 = (D_us_80178584 - D_us_801785AC - D_us_80170080.vy) >> 4;
+        D_us_801785A4 = (D_us_80178588 - D_us_80170080.vz) >> 4;
+
+        D_us_80170080.vx += D_us_8017859C;
+        D_us_80170080.vy += D_us_801785A0;
+        D_us_80170080.vz += D_us_801785A4;
+
+        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+            FLT(1.0 / 4.0), self->ext.swordFamiliar.unk88, 32);
+        self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
+        D_us_80170078[2] = self->ext.swordFamiliar.unk86 - FLT(1.0 / 4.0);
+
+        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
+            FLT(0), self->ext.swordFamiliar.targetX, 32);
+
+        self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
+        D_us_80170078[0] = self->ext.swordFamiliar.unk8c;
+
+        if ((self->ext.swordFamiliar.unk86 == FLT(1.0 / 4.0)) &&
+            (self->ext.swordFamiliar.unk8c == 0)) {
+            D_us_801785B4 = 0;
+            self->step++;
+        }
+        break;
+
+    case 4:
+        D_us_801785B4++;
+        if (D_us_801785B4 > D_us_8017021C) {
+            self->step++;
+        }
+        break;
+    case 5:
+        if (!CheckEntityValid(self->ext.swordFamiliar.follow)) {
+            if ((self->ext.swordFamiliar.follow = func_us_80173AA0(self)) ==
+                NULL) {
+                self->entityId = SWORD_DEFAULT;
+                self->step = 0;
+                break;
+            }
+        }
+        if (g_CutsceneHasControl) {
+            self->entityId = SWORD_DEFAULT;
+            self->step = 0;
+            break;
+        }
+
+        D_us_80178580 = D_us_8017859C >= 0 ? FLT(1.0 / 2.0) : FLT(-1.0 / 2.0);
+        D_us_80178584 = FLT(-1.0 / 2.0);
+        D_us_80178588 = D_us_801785A4 >= 0 ? FLT(1.0 / 2.0) : FLT(-1.0 / 2.0);
+        D_us_80178580 += D_us_801785A8;
+#ifdef VERSION_PSP
+        D_us_80178584 = D_us_801785AC + D_psp_092F2000;
+#else
+        D_us_80178584 = D_us_801785AC - FLT(1.0 / 2.0);
+#endif
+        g_api.PlaySfx(SFX_BOSS_WING_FLAP);
+        self->step++;
+        // fallthrough
+
+    case 6:
+        D_us_8017858C = D_us_80178580 - D_us_801785A8 - D_us_80170080.vx;
+        D_us_80178590 = D_us_80178584 - D_us_801785AC - D_us_80170080.vy;
+        D_us_80178594 = D_us_80178588 - D_us_80170080.vz;
+
+        self->ext.swordFamiliar.unk84 =
+            ratan2(D_us_80178590, D_us_8017858C) & 0xFFF;
+        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 0x80);
+        self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
+
+        D_us_8017859C =
+            FLT_TO_I(rcos(self->ext.swordFamiliar.unk86) * FLT(3.0 / 64.0));
+        D_us_801785A0 =
+            FLT_TO_I(rsin(self->ext.swordFamiliar.unk86) * FLT(3.0 / 64.0));
+
+        D_us_80170078[2] = self->ext.swordFamiliar.unk86 - FLT(1.0 / 4.0);
+
+        D_us_8017858C = abs(D_us_8017858C);
+        D_us_80178590 = abs(D_us_80178590);
+
+        D_us_80178598 = MAX(D_us_8017858C, D_us_80178590);
+
+        self->ext.swordFamiliar.currentX =
+            ratan2(D_us_80178594, D_us_80178598) & 0xFFF;
+        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
+            (s16)self->ext.swordFamiliar.currentX,
+            self->ext.swordFamiliar.targetX, 0x80);
+
+        self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
+        D_us_801785A4 =
+            FLT_TO_I(rsin(self->ext.swordFamiliar.unk8c) * FLT(3.0 / 64.0));
+
+        D_us_80170078[0] = self->ext.swordFamiliar.unk8c;
+        D_us_80170080.vx += D_us_8017859C;
+        D_us_80170080.vy += D_us_801785A0;
+        D_us_80170080.vz += D_us_801785A4;
+
+        D_us_8017858C = D_us_80178580 - D_us_801785A8 - D_us_80170080.vx;
+        D_us_80178590 = D_us_80178584 - D_us_801785AC - D_us_80170080.vy;
+        D_us_80178594 = D_us_80178588 - D_us_80170080.vz;
+
+        D_us_801785B0 = SquareRoot0(
+            SQ(D_us_8017858C) + SQ(D_us_80178590) + SQ(D_us_80178594));
+
+        if (D_us_801785B0 < FLT(1.0 / 8.0)) {
+            D_us_801785B4 = 0;
+            self->step++;
+        }
+
+        break;
+    case 7:
+    case 10:
+
+        D_us_80170080.vx += D_us_8017859C;
+        D_us_80170080.vy += D_us_801785A0;
+        D_us_80170080.vz += D_us_801785A4;
+
+        self->ext.swordFamiliar.unk84 =
+            ratan2(D_us_801785A0, D_us_8017859C) & 0xFFF;
+
+        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 0x80);
+        self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
+
+        D_us_80170078[2] = self->ext.swordFamiliar.unk86 - FLT(1.0 / 4.0);
+        D_us_80178594 = D_us_801785A4;
+        D_us_8017858C = abs(D_us_8017859C);
+        D_us_80178590 = abs(D_us_801785A0);
+
+        D_us_80178598 =
+            (D_us_8017858C > D_us_80178590) ? D_us_8017858C : D_us_80178590;
+
+        self->ext.swordFamiliar.currentX =
+            ratan2(D_us_801785A4, D_us_80178598) & 0xFFF;
+        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
+            0x80);
+        self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
+        D_us_80170078[0] = self->ext.swordFamiliar.unk8c;
+        D_us_801785B4++;
+
+        if (D_us_801785B4 > D_us_80170220) {
+            if (self->step == 10) {
+                self->step = 1;
+            } else {
+                self->step++;
+            }
+        }
+        break;
+
+    case 8:
+        if (!CheckEntityValid(self->ext.swordFamiliar.follow)) {
+            if ((self->ext.swordFamiliar.follow = func_us_80173AA0(self)) ==
+                NULL) {
+                self->entityId = SWORD_DEFAULT;
+                self->step = 0;
+                break;
+            }
+        }
+        if (g_CutsceneHasControl) {
+            self->entityId = SWORD_DEFAULT;
+            self->step = 0;
+            break;
+        }
+        self->ext.swordFamiliar.unk98 = 1;
+        self->step++;
+        // fallthrough
+    case 9:
+        D_us_80178580 = (self->ext.swordFamiliar.follow->posX.i.hi - 0x80) << 5;
+        D_us_80178584 = (self->ext.swordFamiliar.follow->posY.i.hi - 0x80) << 5;
+        D_us_80178588 = 0;
+        D_us_80178584 += D_us_801785AC;
+        D_us_80178580 += D_us_801785A8;
+
+        D_us_8017858C = D_us_80178580 - D_us_801785A8 - D_us_80170080.vx;
+        D_us_80178590 = D_us_80178584 - D_us_801785AC - D_us_80170080.vy;
+        D_us_80178594 = D_us_80178588 - D_us_80170080.vz;
+
+        self->ext.swordFamiliar.unk84 =
+            ratan2(D_us_80178590, D_us_8017858C) & 0xFFF;
+        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 0x80);
+        self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
+
+        D_us_8017859C =
+            FLT_TO_I(rcos(self->ext.swordFamiliar.unk86) * FLT(3.0 / 64.0));
+        D_us_801785A0 =
+            FLT_TO_I(rsin(self->ext.swordFamiliar.unk86) * FLT(3.0 / 64.0));
+
+        D_us_80170078[2] = self->ext.swordFamiliar.unk86 - FLT(1.0 / 4.0);
+        D_us_8017858C = abs(D_us_8017858C);
+        D_us_80178590 = abs(D_us_80178590);
+        D_us_80178598 =
+            (D_us_8017858C > D_us_80178590) ? D_us_8017858C : D_us_80178590;
+
+        self->ext.swordFamiliar.currentX =
+            ratan2(D_us_80178594, D_us_80178598) & 0xFFF;
+
+        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
+            128);
+        self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
+        D_us_801785A4 =
+            FLT_TO_I(rsin(self->ext.swordFamiliar.unk8c) * FLT(3.0 / 64.0));
+        D_us_80170078[0] = self->ext.swordFamiliar.unk8c;
+
+        D_us_80170080.vx += D_us_8017859C;
+        D_us_80170080.vy += D_us_801785A0;
+        D_us_80170080.vz += D_us_801785A4;
+        D_us_8017858C = D_us_80178580 - D_us_801785A8 - D_us_80170080.vx;
+        D_us_80178590 = D_us_80178584 - D_us_801785AC - D_us_80170080.vy;
+        D_us_80178594 = D_us_80178588 - D_us_80170080.vz;
+
+        D_us_801785B0 = SquareRoot0(
+            SQ(D_us_8017858C) + SQ(D_us_80178590) + SQ(D_us_80178594));
+
+        if (D_us_801785B0 < FLT(1.0 / 8.0)) {
+            self->step++;
+        }
+        break;
+    }
+
+    ProcessEvent(self, false);
+    self->posX.i.hi = D_us_80170080.vx / 32 + 128;
+    self->posY.i.hi = D_us_80170080.vy / 32 + 128;
+    func_us_80172E84(self, self->ext.swordFamiliar.unk80);
+
+    if (self->step < 5) {
+        return;
+    }
+
+    if (D_us_80170080.vz >= FLT(-1.0 / 8.0) &&
+        D_us_80170080.vz <= FLT(1.0 / 8.0)) {
+        if (self->ext.swordFamiliar.unk98) {
+            if ((roll = rand() % 16) < 2) {
+                g_api.PlaySfx(D_us_80170090[roll ? 0 : 1]);
+            }
+            self->ext.swordFamiliar.unk98 = 0;
+        }
+        func_us_801724E8(self, 0, false);
+        func_us_801724E8(self, 0, true);
+    }
+}
+
+extern s16 D_us_80170098[]; // sfx ids
+
+void func_us_801758C8(Entity* self) {
+    Primitive* next;
+    s32 i;
+    Primitive* prim;
+    Primitive* last;
+    s32 x;
+    s32 y;
+    s32 z;
+    s32 var_s7;
+
+    s16 x0, x1, x2, x3;
+    s16 y0, y1, y2, y3;
+
+    CheckSwordLevel(self);
+    D_us_80170080.vx = (self->posX.i.hi - 0x80) << 5;
+    D_us_80170080.vy = (self->posY.i.hi - 0x80) << 5;
+
+    switch (self->step) {
+    case 0:
+        func_us_80172940(self);
+        break;
+
+    case 1:
+        D_us_801785B8 = FLT(0);
+        D_us_801785BC = FLT(-1.0);
+        D_us_801785C0 = FLT(-3.0 / 4.0);
+        g_api.PlaySfx(SFX_ANIME_SWORD_A);
+        self->step++;
+        // fallthrough
+
+    case 2:
+
+        D_us_801785C4 = D_us_801785B8 - D_us_80170080.vx;
+        D_us_801785C8 = D_us_801785BC - D_us_80170080.vy;
+        D_us_801785CC = D_us_801785C0 - D_us_80170080.vz;
+        self->ext.swordFamiliar.unk84 =
+            ratan2(D_us_801785C8, D_us_801785C4) & 0xFFF;
+
+        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88,
+            0x180);
+        self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
+        D_us_801785D4 = FLT_TO_I(rcos(self->ext.swordFamiliar.unk86) << 7);
+        D_us_801785D8 = FLT_TO_I(rsin(self->ext.swordFamiliar.unk86) << 7);
+
+        D_us_8017007C.x = self->ext.swordFamiliar.unk86 - FLT(1.0 / 4.0);
+        D_us_801785C4 = abs(D_us_801785C4);
+        D_us_801785C8 = abs(D_us_801785C8);
+
+#ifdef VERSION_PSP
+        D_us_801785D0 = CLAMP_MAX(D_us_801785C4, D_us_801785C8);
+#else
+        D_us_801785D0 = CLAMP_MIN(D_us_801785C4, D_us_801785C8);
+#endif
+
+        self->ext.swordFamiliar.currentX =
+            ratan2(D_us_801785CC, D_us_801785D0) & 0xFFF;
+        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
+            self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
+            0x40);
+
+        self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
+
+        D_us_801785DC = FLT_TO_I(rsin(self->ext.swordFamiliar.unk8c) << 7);
+
+        D_us_80170078[0] = self->ext.swordFamiliar.unk8c;
+        D_us_80170080.vx += D_us_801785D4;
+        D_us_80170080.vy += D_us_801785D8;
+        D_us_80170080.vz += D_us_801785DC;
+
+        D_us_801785C4 = D_us_801785B8 - D_us_80170080.vx;
+        D_us_801785C8 = D_us_801785BC - D_us_80170080.vy;
+        D_us_801785CC = D_us_801785C0 - D_us_80170080.vz;
+
+        D_us_801785E0 = SquareRoot0(
+            SQ(D_us_801785C4) + SQ(D_us_801785C8) + SQ(D_us_801785CC));
+        if (D_us_801785E0 < FIX(1.0 / 256.0)) {
+            D_us_80170080.vx = 0;
+            D_us_80170080.vy = FIX(-1.0 / 16.0);
+            D_us_80170080.vz = FIX(-3.0 / 64.0);
+            self->step++;
+        }
+        break;
+
+    case 3:
+        func_us_8017280C(self, self->ext.swordFamiliar.unk80, 1);
+        D_us_80178B74 = 0;
+        D_us_80170078[0] = self->ext.swordFamiliar.targetX = 0;
+        D_us_8017007C.x = FLT(0);
+        self->ext.swordFamiliar.unk88 = FIX(1.0 / 64.0);
+        g_api.PlaySfx(SFX_ANIME_SWORD_A);
+        self->step++;
+        // fallthrough
+
+    case 4:
+        D_us_80170080.vy += FIX(1.0 / 256.0);
+        if (D_us_80170080.vy >= 0) {
+            D_us_80170080.vy = 0;
+            D_us_801785E4 = 0;
+            g_api.PlaySfx(D_us_80170098[0]);
+            g_PauseAllowed = false;
+            self->step++;
+        }
+        break;
+    case 5:
+        D_us_801785E4++;
+        if (D_us_801785E4 > 70) {
+            self->step++;
+        }
+        break;
+
+    case 6:
+        self->ext.swordFamiliar.unk88 += 0x40;
+        self->ext.swordFamiliar.unk88 &= 0xFFF;
+        D_us_8017007C.x = self->ext.swordFamiliar.unk88 - FLT(1.0 / 4.0);
+        D_us_80170080.vz += 0x60;
+
+        if (D_us_80170080.vz >= 0) {
+            D_us_80170080.vz = 0;
+            D_us_801785E8 = 0;
+            self->step++;
+        }
+
+        break;
+
+    case 7:
+        self->ext.swordFamiliar.unk88 += 0x40;
+        self->ext.swordFamiliar.unk88 &= 0xFFF;
+        D_us_8017007C.x = self->ext.swordFamiliar.unk88 - FLT(1.0 / 4.0);
+        if (self->ext.swordFamiliar.unk88 == FLT(3.0 / 4.0)) {
+            D_us_801785E4 = 0;
+            self->step++;
+        }
+
+        prim = &g_PrimBuf[self->primIndex];
+        next = prim->next;
+        for (i = 0; i < D_us_801785E8; i++) {
+            next = next->next;
+        }
+
+        last = next->next;
+        *next = *prim;
+        next->next = last;
+        next->clut = 0x142;
+        next->drawMode = DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                         DRAW_COLORS | DRAW_TRANSP;
+        next->r0 = next->r1 = next->r2 = next->r3 = next->g0 = next->g1 =
+            next->g2 = next->g3 = next->b0 = next->b1 = next->b2 = next->b3 =
+                128;
+        D_us_801785E8++;
+        break;
+
+    case 8:
+        D_us_801785E4++;
+        if (D_us_801785E4 > 15) {
+            D_us_801785E4 = 0;
+            g_PauseAllowed = true;
+            func_us_801724E8(self, 1, false);
+            g_api.PlaySfx(SFX_MAGIC_SWITCH);
+            self->step++;
+        }
+        break;
+
+    case 9:
+        prim = &g_PrimBuf[self->primIndex];
+        next = prim->next;
+        var_s7 = D_us_801785E4 * 32;
+        x0 = prim->x0 - 128;
+        x1 = prim->x1 - 128;
+        x2 = prim->x2 - 128;
+        x3 = prim->x3 - 128;
+        y0 = prim->y0 - 128;
+        y1 = prim->y1 - 128;
+        y2 = prim->y2 - 128;
+        y3 = prim->y3 - 128;
+
+        for (i = 0; i < 64; i++) {
+            s32 temp_s1 = rsin(var_s7);
+            s32 temp_s2 = rcos(var_s7);
+            D_us_801785C4 =
+                FLT_TO_I(rcos(var_s7 + ROT(270)) * (D_us_801785E4 * 16)) + 128;
+            D_us_801785C8 =
+                FLT_TO_I(rsin(var_s7 + ROT(270)) * (D_us_801785E4 * 16)) + 128;
+            next->x0 =
+                D_us_801785C4 + FLT_TO_I((temp_s2 * x0) - (temp_s1 * y0));
+            next->y0 =
+                D_us_801785C8 + FLT_TO_I((temp_s1 * x0) + (temp_s2 * y0));
+            next->x1 =
+                D_us_801785C4 + FLT_TO_I((temp_s2 * x1) - (temp_s1 * y1));
+            next->y1 =
+                D_us_801785C8 + FLT_TO_I((temp_s1 * x1) + (temp_s2 * y1));
+            next->x2 =
+                D_us_801785C4 + FLT_TO_I((temp_s2 * x2) - (temp_s1 * y2));
+            next->y2 =
+                D_us_801785C8 + FLT_TO_I((temp_s1 * x2) + (temp_s2 * y2));
+            next->x3 =
+                D_us_801785C4 + FLT_TO_I((temp_s2 * x3) - (temp_s1 * y3));
+            next->y3 =
+                D_us_801785C8 + FLT_TO_I((temp_s1 * x3) + (temp_s2 * y3));
+            next = next->next;
+            var_s7 += FLT(1.0 / 64.0);
+            var_s7 &= 0xFFF;
+        }
+
+        D_us_801785E4++;
+        if (D_us_801785E4 > 15) {
+            D_us_801785E4 = 0;
+            self->step++;
+        }
+        break;
+
+    case 10:
+        D_us_801785E4++;
+
+        if (D_us_801785E4 > 30) {
+            func_us_8017259C(self, self->ext.swordFamiliar.unk80,
+                             self->ext.swordFamiliar.unk82);
+            D_us_80178B74 = 1;
+            self->entityId = SWORD_DEFAULT;
+            self->step = 0;
+        }
+        break;
+    }
+
+    ProcessEvent(self, false);
+
+    self->posX.i.hi = D_us_80170080.vx / 32 + 128;
+    self->posY.i.hi = D_us_80170080.vy / 32 + 128;
+
+    func_us_80172E84(self, self->ext.swordFamiliar.unk80);
+}
 
 void func_us_80176270(Entity* self) {
     s32 i;
@@ -932,9 +1507,9 @@ void func_us_80176270(Entity* self) {
         break;
 
     case 1:
-        D_us_801785EC = 0x1000;
-        D_us_801785F0 = 0x1000;
-        D_us_801785F4 = -0x1000;
+        D_us_801785EC = FLT(1);
+        D_us_801785F0 = FLT(1);
+        D_us_801785F4 = FLT(-1);
         g_api.PlaySfx(SFX_ANIME_SWORD_A);
         self->step++;
 
@@ -954,7 +1529,7 @@ void func_us_80176270(Entity* self) {
         self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
         D_us_80178608 = FLT_TO_I(rcos(self->ext.swordFamiliar.unk86) << 8);
         D_us_8017860C = FLT_TO_I(rsin(self->ext.swordFamiliar.unk86) << 8);
-        D_us_8017007C.x = self->ext.swordFamiliar.unk86 - 0x400;
+        D_us_8017007C.x = self->ext.swordFamiliar.unk86 - FLT(1.0 / 4.0);
 
         D_us_801785F8 = abs(D_us_801785F8);
         D_us_801785FC = abs(D_us_801785FC);
@@ -982,18 +1557,17 @@ void func_us_80176270(Entity* self) {
         D_us_80178600 = D_us_801785F4 - D_us_80170080.vz;
 
         D_us_80178614 = SquareRoot0(
-            (D_us_801785F8 * D_us_801785F8) + (D_us_801785FC * D_us_801785FC) +
-            (D_us_80178600 * D_us_80178600));
+            SQ(D_us_801785F8) + SQ(D_us_801785FC) + SQ(D_us_80178600));
 
-        if (D_us_80178614 < 0x100) {
+        if (D_us_80178614 < FLT(1.0 / 16.0)) {
             if (self->step == 2) {
-                D_us_80170080.vx = 0x1000;
-                D_us_80170080.vy = 0x1000;
-                D_us_80170080.vz = -0x1000;
-                D_us_801785EC = -0x1000;
-                D_us_801785F0 = -0x1000;
-                D_us_801785F4 = -0x1000;
-                self->ext.swordFamiliar.unk88 = 0xA00;
+                D_us_80170080.vx = FLT(1);
+                D_us_80170080.vy = FLT(1);
+                D_us_80170080.vz = FLT(-1);
+                D_us_801785EC = FLT(-1);
+                D_us_801785F0 = FLT(-1);
+                D_us_801785F4 = FLT(-1);
+                self->ext.swordFamiliar.unk88 = FLT(5.0 / 8.0);
                 self->ext.swordFamiliar.targetX = 0;
                 g_api.PlaySfx(SFX_ANIME_SWORD_A);
             }
@@ -1025,39 +1599,36 @@ void func_us_80176664(Entity* self) {}
 
 void func_us_8017666C(Entity* self) {}
 
-extern s16 D_us_80170078[];
-extern Point16 D_us_8017007C;
-
 void func_us_80176674(Entity* self) {
     s32 params;
     s32 x, y;
 
     CheckSwordLevel(self);
 
-    D_us_80178638 += 16;
+    D_us_80178638 += FLT(1.0 / 256.0);
     D_us_80178638 &= 0xFFF;
 
     D_us_80178624 = PLAYER.facingLeft ? -FIX(24) : FIX(24);
     D_us_80178628 = FIX(28);
     D_us_8017861C = PLAYER.posX.val + D_us_80178624;
 
-    D_us_80178620 =
-        PLAYER.posY.val - (((rcos(D_us_80178638) << 4) << 4) + D_us_80178628);
+    D_us_80178620 = PLAYER.posY.val -
+                    ((FLT_TO_FIX(rcos(D_us_80178638)) << 4) + D_us_80178628);
     D_us_80178624 = FIX_TO_I(D_us_8017861C - self->posX.val);
     D_us_80178628 = FIX_TO_I(D_us_80178620 - self->posY.val);
 
     D_us_80178634 =
         FLT_TO_I(SquareRoot12(I_TO_FLT(SQ(D_us_80178624) + SQ(D_us_80178628))));
 
-    if (D_us_80178634 < 0x3C) {
-        self->velocityX = (s32)(D_us_8017861C - self->posX.val) >> 6;
-        self->velocityY = (s32)(D_us_80178620 - self->posY.val) >> 6;
-    } else if (D_us_80178634 < 0x64) {
-        self->velocityX = (s32)(D_us_8017861C - self->posX.val) >> 5;
-        self->velocityY = (s32)(D_us_80178620 - self->posY.val) >> 5;
+    if (D_us_80178634 < 60) {
+        self->velocityX = (D_us_8017861C - self->posX.val) >> 6;
+        self->velocityY = (D_us_80178620 - self->posY.val) >> 6;
+    } else if (D_us_80178634 < 100) {
+        self->velocityX = (D_us_8017861C - self->posX.val) >> 5;
+        self->velocityY = (D_us_80178620 - self->posY.val) >> 5;
     } else {
-        self->velocityX = (s32)(D_us_8017861C - self->posX.val) >> 4;
-        self->velocityY = (s32)(D_us_80178620 - self->posY.val) >> 4;
+        self->velocityX = (D_us_8017861C - self->posX.val) >> 4;
+        self->velocityY = (D_us_80178620 - self->posY.val) >> 4;
     }
 
     self->posX.val += self->velocityX;
@@ -1070,15 +1641,15 @@ void func_us_80176674(Entity* self) {
             self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 8);
     } else {
         self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
-            0x400, self->ext.swordFamiliar.unk88, 8);
+            FLT(1.0 / 4.0), self->ext.swordFamiliar.unk88, 8);
     }
 
     self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
-    D_us_8017007C.x = self->ext.swordFamiliar.unk86 - 0x400;
+    D_us_8017007C.x = self->ext.swordFamiliar.unk86 - FLT(1.0 / 4.0);
 
     D_us_8017862C = -D_us_80170080.vz;
-    D_us_80178624 = abs(D_us_80178624) << 5;
-    D_us_80178628 = abs(D_us_80178628) << 5;
+    D_us_80178624 = FLT_TO_FIX(abs(D_us_80178624)) << 1;
+    D_us_80178628 = FLT_TO_FIX(abs(D_us_80178628)) << 1;
     D_us_80178630 = MAX(D_us_80178624, D_us_80178628);
 
     self->ext.swordFamiliar.currentX =
@@ -1288,44 +1859,44 @@ void func_us_80176F28(Entity* self) {
 
                 if (i < 2) {
                     D_us_8017863C->r0 = D_us_8017863C->g0 =
-                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178644))) + 32;
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178644)) << 1) + 32;
                     D_us_8017863C->b0 =
-                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178648))) + 64;
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178648)) << 1) + 64;
 
                     D_us_8017863C->r1 = D_us_8017863C->g1 =
-                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178644))) + 96;
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178644)) << 1) + 96;
                     D_us_8017863C->b1 =
-                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178648))) + 192;
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178648)) << 1) + 192;
 
                     D_us_8017863C->r2 = D_us_8017863C->g2 =
-                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178644))) + 32;
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178644)) << 1) + 32;
                     D_us_8017863C->b2 =
-                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178648))) + 64;
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178648)) << 1) + 64;
 
                     D_us_8017863C->r3 = D_us_8017863C->g3 =
-                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178644))) + 32;
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178644)) << 1) + 32;
                     D_us_8017863C->b3 =
-                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178648))) + 64;
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178648)) << 1) + 64;
                 } else {
                     D_us_8017863C->r0 = D_us_8017863C->g0 =
-                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178644))) + 96;
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178644)) << 1) + 96;
                     D_us_8017863C->b0 =
-                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178648))) + 0xc0;
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178648)) << 1) + 0xc0;
 
                     D_us_8017863C->r1 = D_us_8017863C->g1 =
-                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178644))) + 96;
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178644)) << 1) + 96;
                     D_us_8017863C->b1 =
-                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178648))) + 192;
+                        FLT_TO_I(FLT_TO_FIX(rsin(D_us_80178648)) << 1) + 192;
 
                     D_us_8017863C->r2 = D_us_8017863C->g2 =
-                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178644))) + 32;
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178644)) << 1) + 32;
                     D_us_8017863C->b2 =
-                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178648))) + 64;
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178648)) << 1) + 64;
 
                     D_us_8017863C->r3 = D_us_8017863C->g3 =
-                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178644))) + 32;
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178644)) << 1) + 32;
                     D_us_8017863C->b3 =
-                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178648))) + 64;
+                        FLT_TO_I(FLT_TO_FIX(rcos(D_us_80178648)) << 1) + 64;
                 }
 
                 D_us_8017863C = D_us_8017863C->next;

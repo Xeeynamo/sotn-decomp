@@ -87,6 +87,7 @@ ratan2 = 0x08927CFC;
 func_80017008 = 0x08927D54;
 rcos = 0x08927E0C;
 rsin = 0x08927F2C;
+gte_stub = 0x892804C;
 InitGeom = 0x8928054;
 SetGeomScreen = 0x8928094;
 SetGeomOffset = 0x89280A0;
