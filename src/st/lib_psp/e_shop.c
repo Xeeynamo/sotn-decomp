@@ -15,6 +15,10 @@ extern s32 E_ID(ID_48);
 extern s32 E_ID(ID_4F);
 extern u8* OVL_EXPORT(cutscene_data_offset_four);
 
+extern s32 g_SkipCutscene;
+extern u32 g_CutsceneFlags;
+extern s32 g_IsCutsceneDone;
+
 // An inventory item consists of a category, which affects
 // how the other fields are interpretted, an "unlock level",
 // which is related to the number of things which have been

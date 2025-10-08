@@ -47,10 +47,11 @@ static u8 actor_prims[] = {6, 10, 4, 6};
 static u8 actor_name_len[] = {5, 9, 4, 5};
 #endif
 
-extern Dialogue g_Dialogue;
-
-extern u32 g_CutsceneFlags;
-extern u32 D_8019D428;
+static s32 g_SkipCutscene;
+static Dialogue g_Dialogue;
+static u32 __unused0[26];
+static u32 g_CutsceneFlags;
+static s32 g_IsCutsceneDone;
 
 #include "../cutscene_unk1.h"
 #include "../set_cutscene_script.h"

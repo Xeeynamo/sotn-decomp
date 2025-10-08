@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 #include "../pfn_entity_update.h"
+#include <cutscene.h>
 
 static u8 D_801813C8[] = {0x00, 0x40, 0x00, 0x00};
 static u8 D_801813CC[] = {0x00, 0x00, 0x00, 0x00};
@@ -18,6 +19,10 @@ static s16 D_801813DC[] = {
     0x0035, 0x0008, 0x000E, 0x004D, 0x0011, 0x0034, 0x0041, 0x0029, 0x0048};
 static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
 
+extern u32 g_SkipCutscene;
+extern Dialogue g_Dialogue;
+extern u32 g_CutsceneFlags;
+extern s32 g_IsCutsceneDone; // bss
 // This file consists of NZ0_EntityCutscene, and all the functions it calls.
 // No function in NZ0 calls anything in there, nor does anything in here call
 // any NZ0 functions, besides the ones in this file.

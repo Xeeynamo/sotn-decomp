@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
+#include <cutscene.h>
+
+extern s32 g_SkipCutscene;
+extern Dialogue g_Dialogue;
 
 #include "../cutscene_unk1.h"
 

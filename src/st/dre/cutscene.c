@@ -3,6 +3,13 @@
 #include "../pfn_entity_update.h"
 #include <cutscene.h>
 
+// bss
+s32 g_SkipCutscene;
+static Dialogue g_Dialogue;
+static u32 D_801A3F1C[26];
+u32 g_CutsceneFlags;
+static s32 g_IsCutsceneDone;
+
 #include "../cutscene_unk1.h"
 
 #include "../set_cutscene_script.h"
