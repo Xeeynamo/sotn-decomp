@@ -150,7 +150,6 @@ extern s32 D_801D6B24;
 
 void SEL_Update(void);
 void HandleTitleScreen(void);
-void func_801ACBE4(s32 arg0, u16 arg1);
 void func_801AD1D0(void);
 void func_801AD218(void);
 void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height);
