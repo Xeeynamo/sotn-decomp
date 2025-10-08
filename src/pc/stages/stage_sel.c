@@ -5,6 +5,8 @@
 #include "sfx.h"
 #include <string.h>
 
+extern const char* D_801803A8[10];
+
 void* SEL_g_EntityGfxs[] = {NULL, NULL};
 
 // stubs
