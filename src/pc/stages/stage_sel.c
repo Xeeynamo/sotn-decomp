@@ -4,6 +4,7 @@
 #include "../pc.h"
 #include "sfx.h"
 #include <string.h>
+#include <cutscene.h>
 
 void* SEL_g_EntityGfxs[] = {NULL, NULL};
 

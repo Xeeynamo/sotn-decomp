@@ -137,10 +137,5 @@ extern EInit g_EInitFleaMan;
 extern EInit g_EInitMudman;
 extern EInit D_us_801809EC;
 
-extern s32 g_SkipCutscene;
-extern s32 g_IsCutsceneDone;
-extern u32 g_CutsceneFlags;
-extern Dialogue g_Dialogue;
-
 extern s32 D_psp_08B42050; // psp cross button
 extern s32 D_psp_08B42054; // psp triangle button

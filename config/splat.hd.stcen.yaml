@@ -91,6 +91,6 @@ segments:
       - [0x1BDA0, .bss, header]
       - [0x1BE00, .bss, create_entity]
       - [0x1be10, bss, bss]
-      - [0x1CA10, bss, cutscene]
+      - [0x1CA10, .bss, cutscene]
       - [0x1CAC4, .bss, e_collect]
   - [0x1CB04]

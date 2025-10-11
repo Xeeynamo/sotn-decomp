@@ -109,6 +109,7 @@ segments:
       - [0x22018, c, prim_helpers]
       - [0x22848, c, e_background_house]
       - [0x23264, .bss, create_entity]
-      - [0x232CA, .bss, bss]
+      - [0x232CA, bss]
+      - [0x23ECC, .bss, cutscene]
       - [0x23FB6, .bss, e_collect]
   - [0x23FCC]

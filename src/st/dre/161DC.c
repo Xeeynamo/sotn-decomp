@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dre.h"
 
+extern s32 g_SkipCutscene;
+extern u32 g_CutsceneFlags;
+
 void func_801961DC(s16 arg0) {
     s16 temp_v0 = arg0 - g_unkGraphicsStruct.unkC;
 

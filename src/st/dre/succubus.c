@@ -2,6 +2,9 @@
 #include "dre.h"
 #include "sfx.h"
 
+extern s32 g_SkipCutscene;
+extern u32 g_CutsceneFlags;
+
 typedef enum {
     /* 0 */ SUCCUBUS_INIT,
     /* 1 */ SUCCUBUS_CS_1,

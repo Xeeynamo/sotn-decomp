@@ -293,6 +293,10 @@ STATIC_PAD_BSS(8);
 static ShopItem D_us_801D4364[75];
 STATIC_PAD_BSS(8);
 
+extern s32 g_SkipCutscene;
+extern u32 g_CutsceneFlags;
+extern s32 g_IsCutsceneDone;
+
 // This is probably EntityLibrarian, but I don't know for sure
 void func_us_801AFE0C(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
