@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../sel/sel.h"
+#include <cutscene.h>
 
 extern u16 D_psp_092855F0[];
 extern u8 D_psp_09285678[];
