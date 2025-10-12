@@ -143,5 +143,6 @@ segments:
       - [0x5415C, .bss, e_shop]
       - [0x545C4, .bss, create_entity]
       - [0x545D4, bss]
+      - [0x551D4, .bss, cutscene]
       - [0x5528C, .bss, e_collect]
   - [0x552CC]

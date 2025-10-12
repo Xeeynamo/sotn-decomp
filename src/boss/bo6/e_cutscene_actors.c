@@ -197,7 +197,7 @@ void func_us_801A95F4(Entity* self) {
     case 1:
         g_Player.padSim = PAD_NONE;
         if (func_us_801A8FC0() == 0 && self->step_s == 0 &&
-            (g_Player.vram_flag & 1)) {
+            (g_Player.vram_flag & TOUCHING_GROUND)) {
             if (self->posX.i.hi < richter->posX.i.hi) {
                 g_Player.padSim = PAD_RIGHT;
             } else {

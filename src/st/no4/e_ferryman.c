@@ -71,11 +71,11 @@ void MoveBoat(u16 playerInBoat, Entity* entity) {
     tempEntity = &PLAYER;
     if (playerInBoat) {
         if (posX > 0) {
-            if (!(g_Player.vram_flag & 4)) {
+            if (!(g_Player.vram_flag & TOUCHING_R_WALL)) {
                 tempEntity->posX.i.hi += posX;
                 D_80097488.x.i.hi += posX;
             }
-        } else if (!(g_Player.vram_flag & 8)) {
+        } else if (!(g_Player.vram_flag & TOUCHING_L_WALL)) {
             tempEntity->posX.i.hi += posX;
             D_80097488.x.i.hi += posX;
         }
@@ -921,11 +921,11 @@ void MoveBoatElevator(
         posXTemp = posX - entity->posX.i.hi;
         posYTemp = posY - entity->posY.i.hi;
         if (posXTemp > 0) {
-            if (!(g_Player.vram_flag & 4)) {
+            if (!(g_Player.vram_flag & TOUCHING_R_WALL)) {
                 player->posX.i.hi += posXTemp;
                 D_80097488.x.i.hi += posXTemp;
             }
-        } else if (!(g_Player.vram_flag & 8)) {
+        } else if (!(g_Player.vram_flag & TOUCHING_L_WALL)) {
             player->posX.i.hi += posXTemp;
             D_80097488.x.i.hi += posXTemp;
         }

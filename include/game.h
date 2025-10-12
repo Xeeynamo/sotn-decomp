@@ -458,6 +458,35 @@ typedef enum {
     PLAYER_STATUS_UNK80000000 = 0x80000000, // exclusive to Maria
 } PlayerStateStatus;
 
+// Flags for g_Player.vram_flag
+// 0x01: touching the ground
+// 0x02: touching the ceiling
+// 0x04: touching the right wall
+// 0x08: touching the left wall
+// 0x20: in-air or near the edge
+// 0x0800: touching the ceiling slope
+// 0x1000: touching a slightly ascending or descending slope
+// 0x4000: touching a raising slope
+// 0x8000: touching any slope
+typedef enum {
+    TOUCHING_GROUND = 1 << 0,
+    TOUCHING_CEILING = 1 << 1,
+    TOUCHING_R_WALL = 1 << 2,
+    TOUCHING_L_WALL = 1 << 3,
+    VRAM_FLAG_UNK10 = 1 << 4,
+    IN_AIR_OR_EDGE = 1 << 5,
+    VRAM_FLAG_UNK40 = 1 << 6,
+    VRAM_FLAG_UNK80 = 1 << 7,
+    VRAM_FLAG_UNK100 = 1 << 8,
+    VRAM_FLAG_UNK200 = 1 << 9,
+    VRAM_FLAG_UNK400 = 1 << 10,
+    TOUCHING_CEILING_SLOPE = 1 << 11,
+    TOUCHING_SLIGHT_SLOPE = 1 << 12,
+    VRAM_FLAG_UNK2000 = 1 << 13,
+    TOUCHING_RAISING_SLOPE = 1 << 14,
+    TOUCHING_ANY_SLOPE = 1 << 15
+} PlayerVramFlag;
+
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
@@ -1570,80 +1599,6 @@ typedef struct {
 #endif
 } RelicDesc; /* size=0x10 */
 
-typedef struct {
-    /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character
-    /* 0x04 */ s16 startX;            // starting x coord
-    /* 0x06 */ s16 nextLineY;         // next line y coord
-    /* 0x08 */ s16 startY;            // starting y coord
-    /* 0x0A */ s16 nextCharX;         // next char x coord
-    /* 0x0C */ s16 nextLineX;         // next line x coord
-    /* 0x0E */ s16 nextCharY;         // next char y coord
-    /* 0x10 */ s16 portraitAnimTimer; // portrait animation timer
-    /* 0x12 */ u16 unk12;             // unknown
-    /* 0x14 */ u16 clutIndex;         // CLUT index
-    /* 0x16 */ u8 nextCharTimer;      // timer to next character
-    /* 0x17 */ u8 unk17;              // unknown
-// Of course, offsets beyond here won't be right in ST0_WEIRD_DIALOGUE.
-#if defined(VERSION_PSP) || defined(VERSION_HD)
-    /* 0x18 */ Primitive* prim[5]; // for dialogue graphics rendering
-#else
-    /* 0x18 */ Primitive* prim[6]; // for dialogue graphics rendering
-#endif
-    /* 0x30 */ s32 primIndex[3]; // primIndices: unk, actorName, unk
-    /* 0x3C */ u16 unk3C;        // maybe it is a begin flag?
-    /* 0x3E */ u16 timer;        // global timer
-    /* 0x40 */ u8* scriptEnd;    // pointer to the end of the script
-} Dialogue;                      // size = 0x44
-
-// st0_psp/3101C, st0/bss.c, st0/prologue_scroll.c, st0/3101C
-typedef struct {
-    /* 0x00 */ u8* scriptCur;
-    /* 0x04 */ s16 startX;
-    /* 0x06 */ s16 nextLineY;
-    /* 0x08 */ s16 startY;
-    /* 0x0A */ s16 nextCharX;
-    /* 0x0C */ s16 nextLineX;
-    /* 0x0E */ u16 nextCharY;
-    /* 0x10 */ u16 portraitAnimTimer;
-    /* 0x12 */ u8 unk12;
-    /* 0x13 */ u8 clutIndex;
-#ifdef VERSION_PSP
-    /* 0x14 */ u8 nextCharTimer;
-    /* 0x15 */ u8 unk17;
-#endif
-    /* 0x14 */ Primitive* prim;
-    /* 0x18 */ u32 primIndex;
-    /* 0x1C */ u16* unk20;
-    /* 0x20 */ s32 : 32;
-    /* 0x24 */ u16* clutIndexes;
-    /* 0x28 */ s32 : 32;
-    /* 0x2C */ s32 clutArrLength;
-    /* 0x30 */ s32 : 32;
-    /* 0x34 */ u8* script;
-#ifndef VERSION_PSP
-    /* 0x38 */ u16 unk3C; // maybe it is a begin flag?
-    /* 0x3A */ u16 timer;
-#endif
-    /* 0x3C */ u8* scriptEnd;
-} Dialogue2;
-
-// no4/cutscene
-typedef struct {
-    /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character
-    /* 0x04 */ s16 nextCharX;         // starting x coord
-    /* 0x06 */ s16 nextCharY;         // next char y coord
-    /* 0x08 */ s16 portraitAnimTimer; // portrait animation timer
-    /* 0x0A */ u8 nextCharTimer;
-    /* 0x0B */ u8 unkB;
-    // Of course, offsets beyond here won't be right on PSP
-#if defined(VERSION_PSP)
-    /* 0x0C */ Primitive* prim[6]; // for dialogue graphics rendering
-#else
-    /* 0x0C */ Primitive* prim[4]; // for dialogue graphics rendering
-#endif
-    /* 0x1C */ s32 primIndex[3]; // primIndices: unk, actorName, unk
-} Dialogue3;                     // size = 0x28
-
 // Used for the damageKind of DamageParam
 typedef enum {
     DAMAGEKIND_0,
@@ -1964,18 +1919,7 @@ typedef struct {
     /* 80072EF8 */ u32 D_80072EF8;
     /* 80072EFC */ s32 demo_timer; // player frozen timer
     /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
-
-    // 0x01: touching the ground
-    // 0x02: touching the ceiling
-    // 0x04: touching the right wall
-    // 0x08: touching the left wall
-    // 0x20: in-air or near the edge
-    // 0x0800: touching the ceiling slope
-    // 0x1000: standing on a slightly ascending or descending slope
-    // 0x4000: standing on a raising slope
-    // 0x8000: standing on any slope
     /* 80072F20 */ s32 vram_flag;
-
     /* 80072F24 */ s32 unk04; // copy of the previous field
     /* 80072F28 */ s32 unk08;
     /* 80072F2C */ PlayerStateStatus status;

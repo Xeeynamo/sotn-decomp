@@ -127,7 +127,7 @@ void OVL_EXPORT(func_8010E570)(s32 arg0) {
     s32 anim = 0;
     bool atLedge = false;
 
-    if (g_Dop.vram_flag & 0x20) {
+    if (g_Dop.vram_flag & IN_AIR_OR_EDGE) {
         atLedge = true;
     }
 
@@ -172,7 +172,7 @@ void OVL_EXPORT(func_8010E6AC)(bool forceAnim13) {
     bool atLedge;
 
     atLedge = false;
-    if (g_Dop.vram_flag & 0x20) {
+    if (g_Dop.vram_flag & IN_AIR_OR_EDGE) {
         atLedge = true;
     }
 
@@ -286,7 +286,7 @@ s32 func_us_801C5B68(void) {
         return 1;
     }
 
-    if (g_Dop.vram_flag & 0x20) {
+    if (g_Dop.vram_flag & IN_AIR_OR_EDGE) {
         playerAnimOffset = 1;
     }
 
@@ -343,7 +343,7 @@ s32 func_us_801C5CF8(void) {
     s16 animBase;
 
     defaultAnimOffset = 0;
-    if (g_Dop.vram_flag & 0x20) {
+    if (g_Dop.vram_flag & IN_AIR_OR_EDGE) {
         defaultAnimOffset = 1;
     }
 
@@ -487,7 +487,7 @@ bool func_us_801C6040(s32 arg0) {
     }
 
     if (arg0 & 0x80) {
-        if (g_Dop.vram_flag & 2) {
+        if (g_Dop.vram_flag & TOUCHING_CEILING) {
             if (DOPPLEGANGER.velocityY < FIX(-1)) {
                 DOPPLEGANGER.velocityY = FIX(-1);
             }
@@ -506,7 +506,7 @@ bool func_us_801C6040(s32 arg0) {
     }
 
     if (DOPPLEGANGER.velocityY >= 0) {
-        if ((arg0 & 1) && (g_Dop.vram_flag & 1)) {
+        if ((arg0 & 1) && (g_Dop.vram_flag & TOUCHING_GROUND)) {
             if (g_Dop.unk46) {
                 if ((g_Dop.unk46 & 0x7FFF) == 0xFF) {
                     OVL_EXPORT(func_8010E570)(0);
@@ -553,7 +553,7 @@ bool func_us_801C6040(s32 arg0) {
             return true;
         }
 
-        if ((arg0 & 0x20000) && (g_Dop.vram_flag & 1)) {
+        if ((arg0 & 0x20000) && (g_Dop.vram_flag & TOUCHING_GROUND)) {
             OVL_EXPORT(func_8010E470)(3, DOPPLEGANGER.velocityX);
             g_api.PlaySfx(SFX_STOMP_HARD_B);
             OVL_EXPORT(CreateEntFactoryFromEntity)(g_CurrentEntity, 0, 0);
@@ -561,7 +561,7 @@ bool func_us_801C6040(s32 arg0) {
         }
     }
 
-    if ((arg0 & 4) && !(g_Dop.vram_flag & 1)) {
+    if ((arg0 & 4) && !(g_Dop.vram_flag & TOUCHING_GROUND)) {
         func_us_801C59DC();
         return true;
     }
@@ -613,7 +613,7 @@ void DopplegangerStepStand(void) {
 
     var_s0 = 3;
     anim = 0;
-    if (g_Dop.vram_flag & 0x20) {
+    if (g_Dop.vram_flag & IN_AIR_OR_EDGE) {
         anim = 1;
     }
 
@@ -708,7 +708,7 @@ void DopplegangerStepJump(void) {
         if (!(g_Dop.unk44 & 0x40) && !(g_Dop.padPressed & 0x40)) {
             DOPPLEGANGER.velocityY = FIX(-1);
         }
-        if (g_Dop.vram_flag & 2) {
+        if (g_Dop.vram_flag & TOUCHING_CEILING) {
             DOPPLEGANGER.velocityY = FIX(-0.25);
             g_Dop.unk44 |= 0x20;
         }
@@ -795,7 +795,7 @@ void DopplegangerStepCrouch(void) {
     // n.b.! much of this code is copied from `DopplegangerStepStand`,
     // but this variable is not used in this version of the function
     anim = 0;
-    if (g_Dop.vram_flag & 0x20) {
+    if (g_Dop.vram_flag & IN_AIR_OR_EDGE) {
         anim = 1;
     }
 

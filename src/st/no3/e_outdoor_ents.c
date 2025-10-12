@@ -700,13 +700,13 @@ void EntityCastleBridge(Entity* self) {
                         (xOffset < player->posY.i.hi + 30)) {
                         player->posY.i.hi = xOffset - 30;
                         g_api.PlaySfx(SFX_STOMP_SOFT_A);
-                        g_Player.vram_flag |= 0x41;
+                        g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
                         self->step_s++;
                     }
                     break;
                 case 2:
                     player->posY.i.hi = xOffset - 30;
-                    g_Player.vram_flag |= 0x41;
+                    g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
                     break;
                 }
             }

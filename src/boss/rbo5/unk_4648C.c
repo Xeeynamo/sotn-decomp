@@ -51,7 +51,7 @@ void DopplegangerStepHighJump(void) {
 
     switch (DOPPLEGANGER.step_s) {
     case 0:
-        if (g_Dop.vram_flag & 2) {
+        if (g_Dop.vram_flag & TOUCHING_CEILING) {
             func_us_801C648C(3);
             if (g_Dop.unk4A > 4) {
                 DOPPLEGANGER.step_s = 2;
@@ -72,7 +72,7 @@ void DopplegangerStepHighJump(void) {
         break;
 
     case 1:
-        if (g_Dop.vram_flag & 2) {
+        if (g_Dop.vram_flag & TOUCHING_CEILING) {
             DOPPLEGANGER.step_s = 2;
             func_us_801C648C(3);
         } else {
@@ -273,7 +273,7 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
     case 6:
     case 7:
         DecelerateX(FIX(1.0 / 8));
-        if (!(g_Dop.vram_flag & 1)) {
+        if (!(g_Dop.vram_flag & TOUCHING_GROUND)) {
             func_us_801C4FDC();
         }
         if (DOPPLEGANGER.poseTimer < 0) {
@@ -620,7 +620,7 @@ void ControlBatForm(void) {
             DecelerateX(FIX(9.0 / 128.0));
             break;
         case PAD_DOWN:
-            if (g_Dop.vram_flag & 1) {
+            if (g_Dop.vram_flag & TOUCHING_GROUND) {
                 DOPPLEGANGER.ext.player.anim = 0xC4;
             } else {
                 DOPPLEGANGER.ext.player.anim = 0xC5;
@@ -687,7 +687,7 @@ void ControlBatForm(void) {
             }
             break;
         case PAD_RIGHT | PAD_DOWN:
-            if (g_Dop.vram_flag & 1) {
+            if (g_Dop.vram_flag & TOUCHING_GROUND) {
                 DOPPLEGANGER.ext.player.anim = 0xC4;
             } else {
                 DOPPLEGANGER.ext.player.anim = 0xC5;
@@ -706,7 +706,7 @@ void ControlBatForm(void) {
             }
             break;
         case PAD_LEFT | PAD_DOWN:
-            if (g_Dop.vram_flag & 1) {
+            if (g_Dop.vram_flag & TOUCHING_GROUND) {
                 DOPPLEGANGER.ext.player.anim = 0xC4;
             } else {
                 DOPPLEGANGER.ext.player.anim = 0xC5;
@@ -727,8 +727,8 @@ void ControlBatForm(void) {
         }
         break;
     case 3:
-        if (!DOPPLEGANGER.facingLeft && (g_Dop.vram_flag & 4) ||
-            DOPPLEGANGER.facingLeft && (g_Dop.vram_flag & 8)) {
+        if (!DOPPLEGANGER.facingLeft && (g_Dop.vram_flag & TOUCHING_R_WALL) ||
+            DOPPLEGANGER.facingLeft && (g_Dop.vram_flag & TOUCHING_L_WALL)) {
             g_Dop.padTapped = PAD_R1;
             BatFormFinished();
             g_api.func_80102CD8(2);
@@ -758,15 +758,19 @@ void ControlBatForm(void) {
             if (!(directionsPressed & (PAD_DOWN | PAD_UP))) {
                 DecelerateY(FIX(1.0 / 8.0));
             }
-            if (g_Dop.vram_flag & 0x800) {
-                if (DOPPLEGANGER.facingLeft && (g_Dop.vram_flag & 0x400) ||
-                    !DOPPLEGANGER.facingLeft && !(g_Dop.vram_flag & 0x400)) {
+            if (g_Dop.vram_flag & TOUCHING_CEILING_SLOPE) {
+                if (DOPPLEGANGER.facingLeft &&
+                        (g_Dop.vram_flag & VRAM_FLAG_UNK400) ||
+                    !DOPPLEGANGER.facingLeft &&
+                        !(g_Dop.vram_flag & VRAM_FLAG_UNK400)) {
                     DOPPLEGANGER.velocityY = FIX(6);
                 }
             }
-            if (g_Dop.vram_flag & 0x8000) {
-                if (DOPPLEGANGER.facingLeft && (g_Dop.vram_flag & 0x4000) ||
-                    !DOPPLEGANGER.facingLeft && !(g_Dop.vram_flag & 0x4000)) {
+            if (g_Dop.vram_flag & TOUCHING_ANY_SLOPE) {
+                if (DOPPLEGANGER.facingLeft &&
+                        (g_Dop.vram_flag & TOUCHING_RAISING_SLOPE) ||
+                    !DOPPLEGANGER.facingLeft &&
+                        !(g_Dop.vram_flag & TOUCHING_RAISING_SLOPE)) {
                     DOPPLEGANGER.velocityY = FIX(-6);
                 }
             }
@@ -779,11 +783,11 @@ void ControlBatForm(void) {
             if (g_GameTimer % 3 == 0) {
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, BP_WING_SMASH_TRAIL, 0);
-                if (g_Dop.vram_flag & 1) {
+                if (g_Dop.vram_flag & TOUCHING_GROUND) {
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(BP_69, 9), 0);
                 }
-                if (g_Dop.vram_flag & 2) {
+                if (g_Dop.vram_flag & TOUCHING_CEILING) {
                     x_offset = 3;
                     if (DOPPLEGANGER.facingLeft) {
                         x_offset = -x_offset;
@@ -828,7 +832,7 @@ void DopplegangerStepUnmorphBat(void) {
 
     DOPPLEGANGER.drawFlags = FLAG_DRAW_ROTATE;
     DecelerateX(FIX(1.0 / 8.0));
-    if (g_Dop.vram_flag & 3) {
+    if (g_Dop.vram_flag & (TOUCHING_CEILING | TOUCHING_GROUND)) {
         DOPPLEGANGER.velocityY = 0;
     }
     DecelerateY(FIX(1.0 / 8.0));
@@ -850,7 +854,7 @@ void DopplegangerStepUnmorphBat(void) {
                 count++;
             }
 
-            if (i == 0 && (g_Dop.vram_flag & 0x8000)) {
+            if (i == 0 && (g_Dop.vram_flag & TOUCHING_ANY_SLOPE)) {
                 DOPPLEGANGER.posY.i.hi--;
             }
         }
@@ -868,7 +872,7 @@ void DopplegangerStepUnmorphBat(void) {
     case 1:
         if (g_Dop.unk66 == 3) {
             func_us_801C4EE4();
-            if (!(g_Dop.vram_flag & 0x8000)) {
+            if (!(g_Dop.vram_flag & TOUCHING_ANY_SLOPE)) {
                 DOPPLEGANGER.velocityY = FIX(-1);
             }
             DOPPLEGANGER.palette = PAL_OVL(0x200);
@@ -1041,10 +1045,10 @@ void DopplegangerStepUnmorphMist(void) {
     s32 count;
     u8 _pad[40];
 
-    if ((g_Dop.vram_flag & 1) && DOPPLEGANGER.velocityY > 0) {
+    if ((g_Dop.vram_flag & TOUCHING_GROUND) && DOPPLEGANGER.velocityY > 0) {
         DOPPLEGANGER.velocityY = 0;
     }
-    if ((g_Dop.vram_flag & 2) && DOPPLEGANGER.velocityY < 0) {
+    if ((g_Dop.vram_flag & TOUCHING_CEILING) && DOPPLEGANGER.velocityY < 0) {
         DOPPLEGANGER.velocityY = 0;
     }
 
@@ -1064,7 +1068,7 @@ void DopplegangerStepUnmorphMist(void) {
         } else {
             count++;
         }
-        if (i == 0 && (g_Dop.vram_flag & 0x8000)) {
+        if (i == 0 && (g_Dop.vram_flag & TOUCHING_ANY_SLOPE)) {
             DOPPLEGANGER.posY.i.hi--;
         }
     }
@@ -1085,7 +1089,7 @@ void DopplegangerStepUnmorphMist(void) {
             func_8010FAF4();
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x5B), 0);
             func_us_801C4EE4();
-            if (!(g_Dop.vram_flag & 0x8000)) {
+            if (!(g_Dop.vram_flag & TOUCHING_ANY_SLOPE)) {
                 DOPPLEGANGER.velocityY = FIX(-1);
             }
             func_80111CC0();
@@ -1881,7 +1885,7 @@ void EntitySmokePuff(Entity* self) {
             return;
         }
         if (paramsHi == 1) {
-            if (g_Dop.vram_flag & 0x8000) {
+            if (g_Dop.vram_flag & TOUCHING_ANY_SLOPE) {
                 posX /= 2;
             }
         }
@@ -3177,7 +3181,9 @@ void DopEntityHitByLightning(Entity* self) {
             -((rsin(self->ext.hitbylightning.unk7C) * temp_s2) >> 7) * 7 << 1;
         self->posX.val = xOffset + DOPPLEGANGER.posX.val;
         self->posY.val = yOffset + DOPPLEGANGER.posY.val;
-        if ((self->ext.hitbylightning.unk92) && (g_Dop.vram_flag & 0xE)) {
+        if ((self->ext.hitbylightning.unk92) &&
+            (g_Dop.vram_flag &
+             (TOUCHING_L_WALL | TOUCHING_R_WALL | TOUCHING_CEILING))) {
             var_s0 = true;
         }
         if (var_s0) {
@@ -3326,7 +3332,7 @@ void EntityHitByIce(Entity* self) {
         // Could rewrite as a series of && and || but that would probably reduce
         // readability
         if (self->ext.hitbyice.unk7E) {
-            if (g_Dop.vram_flag & 0xC) {
+            if (g_Dop.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
                 sp18 = true;
             }
             if (DOPPLEGANGER.step == Dop_Hit && DOPPLEGANGER.step_s == 5) {

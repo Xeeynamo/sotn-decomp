@@ -156,7 +156,7 @@ void EntityFallingStairs(Entity* self) {
         scrolledX -= TriggerBoxX;
         scrolledY -= TriggerBoxY;
         if ((scrolledX < TriggerBoxW) && (scrolledY < TriggerBoxH) &&
-            (g_Player.vram_flag & 1)) { // Touching the ground
+            (g_Player.vram_flag & TOUCHING_GROUND)) { // Touching the ground
             self->step++;
         }
         break;
@@ -334,7 +334,9 @@ void EntityFallingStairs(Entity* self) {
                    (player->posY.i.hi + 0x18);
             if (yPos <= 0) {
                 player->posY.i.hi += yPos + 1;
-                g_Player.vram_flag |= 0x41; // Grounded. What does 0x40 mean?
+                g_Player.vram_flag |=
+                    VRAM_FLAG_UNK40 |
+                    TOUCHING_GROUND; // Grounded. What does 0x40 mean?
             }
         }
         break;
@@ -424,7 +426,7 @@ void EntityFallingStep(Entity* self) {
         scrolledX -= TriggerBoxX;
         scrolledY -= TriggerBoxY;
         if ((scrolledX < TriggerBoxW) && (scrolledY < TriggerBoxH) &&
-            (g_Player.vram_flag & 1)) {
+            (g_Player.vram_flag & TOUCHING_GROUND)) {
             g_CastleFlags[CHI_TINY_STEPS_FALLEN] = 1;
             self->step++;
         }

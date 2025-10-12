@@ -51,7 +51,7 @@ void func_8010E570(s32 arg0) {
     s32 anim = 0;
     bool atLedge = false;
 
-    if (g_Player.vram_flag & 0x20) {
+    if (g_Player.vram_flag & IN_AIR_OR_EDGE) {
         atLedge = true;
     }
 
@@ -95,7 +95,7 @@ void func_8010E6AC(bool forceAnim13) {
     bool atLedge;
 
     atLedge = false;
-    if (g_Player.vram_flag & 0x20) {
+    if (g_Player.vram_flag & IN_AIR_OR_EDGE) {
         atLedge = true;
     }
 
@@ -274,7 +274,7 @@ static s32 func_8010EB5C(void) {
     if (!(g_Player.padPressed & PAD_UP)) {
         return 1;
     }
-    if (g_Player.vram_flag & 0x20) {
+    if (g_Player.vram_flag & IN_AIR_OR_EDGE) {
         atLedge = true;
     }
     subWpnId = func_800FE3C4(&subWpn, 0, false);
@@ -385,7 +385,7 @@ bool func_8010EDB8(void) {
     var_s7 = false;
 
     atLedge = false;
-    if (g_Player.vram_flag & 0x20) {
+    if (g_Player.vram_flag & IN_AIR_OR_EDGE) {
         atLedge = true;
     }
     attBtnsPressed = g_Player.padTapped & (PAD_SQUARE | PAD_CIRCLE);
@@ -465,8 +465,10 @@ block_32:
     var_s2 = equipped_item->specialMove;
     if (!var_s2 ||
         // Sword of Dawn
-        ((equipped_id == 0x11) && ((g_Player.vram_flag & 0x41) != 1)) ||
-        !(g_Player.vram_flag & 1)) {
+        ((equipped_id == 0x11) &&
+         ((g_Player.vram_flag & (VRAM_FLAG_UNK40 | TOUCHING_GROUND)) !=
+          TOUCHING_GROUND)) ||
+        !(g_Player.vram_flag & TOUCHING_GROUND)) {
         goto block_38c;
     }
     // Load up the item's special move as the new "virtual" equipped item since
@@ -539,7 +541,7 @@ block_45:
         }
     } else {
         ent6C = CreateEntFactoryFromEntity(
-            g_CurrentEntity, FACTORY((hand + 42), (hand << 7)), 0);
+            g_CurrentEntity, FACTORY(hand + 42, hand << 7), 0);
     }
 
     if (ent6C == NULL) {
@@ -600,7 +602,7 @@ block_45:
         }
         equipped_item = &g_EquipDefs[0];
         CreateEntFactoryFromEntity(
-            g_CurrentEntity, FACTORY((hand + BP_42), (hand << 7)), 0);
+            g_CurrentEntity, FACTORY(hand + BP_42, hand << 7), 0);
         var_s2 = equipped_item->playerAnim;
         goto block_1000;
 
@@ -647,7 +649,7 @@ block_45:
         PLAYER.velocityX >>= 1;
         PlaySfx(SFX_VO_ALU_ATTACK_B);
         animVariant = atLedge;
-        if (g_Player.vram_flag & 1) {
+        if (g_Player.vram_flag & TOUCHING_GROUND) {
             PLAYER.step = 0;
             g_CurrentEntity->velocityY = 0;
         } else {

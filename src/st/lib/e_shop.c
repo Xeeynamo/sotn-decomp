@@ -293,6 +293,10 @@ STATIC_PAD_BSS(8);
 static ShopItem D_us_801D4364[75];
 STATIC_PAD_BSS(8);
 
+extern s32 g_SkipCutscene;
+extern u32 g_CutsceneFlags;
+extern s32 g_IsCutsceneDone;
+
 // This is probably EntityLibrarian, but I don't know for sure
 void func_us_801AFE0C(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
@@ -483,7 +487,7 @@ void func_us_801AFE0C(Entity* self) {
         break;
 
     case 10:
-        if (!g_Player.demo_timer && (g_Player.vram_flag & 1)) {
+        if (!g_Player.demo_timer && (g_Player.vram_flag & TOUCHING_GROUND)) {
             g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
             g_Player.demo_timer = 1;
             self->step++;
@@ -602,7 +606,7 @@ void EntityLibrarianChair(Entity* self) {
         self->zPriority = 0x80;
     }
     // If the player touches the ground, reset the frames airborne.
-    if (g_Player.vram_flag & 1) {
+    if (g_Player.vram_flag & TOUCHING_GROUND) {
         self->ext.libraryChair.consecutiveHits = 0;
     }
     switch (self->step) {

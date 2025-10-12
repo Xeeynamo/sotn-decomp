@@ -19,6 +19,12 @@ static s16 D_us_801819D0[] = {
     0x0035, 0x0008, 0x000E, 0x004D, 0x0011, 0x0034, 0x0041, 0x0029, 0x0048};
 static const char* actor_names[] = {_S("Alucard"), _S("Master Librarian")};
 
+s32 g_SkipCutscene;
+static Dialogue g_Dialogue;
+STATIC_PAD_BSS(104);
+u32 g_CutsceneFlags;
+s32 g_IsCutsceneDone;
+
 #define CUTSCENE_UNK1_NEXT_X 0x42
 #include "../cutscene_unk1.h"
 

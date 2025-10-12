@@ -3436,11 +3436,11 @@ typedef struct {
 } ET_HuntingGirl;
 
 typedef struct {
-    struct Primitive* prim;
-    s16 unk80;
-    s16 : 16;
-    u8 unk84;
-    u8 unk85;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 attackInterval;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 prevPlayerOnLeft;
+    /* 0x85 */ u8 facingLeft;
 } ET_CornerGuard;
 
 typedef struct {

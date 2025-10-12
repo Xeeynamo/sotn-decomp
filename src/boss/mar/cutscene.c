@@ -5,8 +5,17 @@
 
 #include "mar.h"
 
-extern Dialogue g_Dialogue;
 static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
+
+// bss
+static s32 g_SkipCutscene;
+static Dialogue g_Dialogue;
+static s32 D_us_8019AEB8[26];
+static u32 g_CutsceneFlags;
+STATIC_PAD_BSS(4);
+u16 g_Statues[];
+static s16 D_us_8019AF2A;
+static s32 D_us_8019AF2C;
 
 #include "../../st/cutscene_unk1.h"
 
@@ -24,8 +33,6 @@ static const char* actor_names[] = {_S("Alucard"), _S("Maria")};
 
 #include "../../st/cutscene_scale_avatar.h"
 
-extern s32 g_SkipCutscene;
-extern s32 D_us_8019AF2C;
 extern u8 D_us_801805D4[];
 extern u8 D_us_801805D8[];
 extern u16 D_us_801805DC[];
