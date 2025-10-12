@@ -27,6 +27,12 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-return-type")
 endif()
 
+if(MSVC)
+    add_compile_options(/J)  # Treat char as unsigned
+else()
+    add_compile_options(-funsigned-char)
+endif()
+
 find_package(SDL2 REQUIRED)
 
 set(SOURCE_FILES_PC
