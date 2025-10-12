@@ -435,7 +435,7 @@ enum Sfx {
     /* 0x63C */ SFX_START_SLAM_A, // Dark Shield
     /* 0x63D */ SFX_START_SLAM_B, // Press Start, Door Open, Dracula Stomp, etc
     /* 0x63E */ SFX_START_SLAM_C,
-    /* 0x63F */ SFX_ANIME_SWORD_A,
+    /* 0x63F */ SFX_ANIME_SWORD_A, // Sword Familiar
     /* 0x640 */ SFX_ANIME_SWORD_B, // Holy Rod ("Anime shing" element)
     /* 0x641 */ SFX_ANIME_SWORD_C,
     /* 0x642 */ SFX_DOOR_OPEN,

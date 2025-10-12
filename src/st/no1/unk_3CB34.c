@@ -312,7 +312,7 @@ void func_us_801BCB34(Entity* self) {
             g_api.func_8010E168(1, 0x20);
             g_Player.padSim = 0x4000;
             g_Player.demo_timer = 2;
-            g_Player.vram_flag |= 0x41;
+            g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
         } else {
             MoveEntity();
         }

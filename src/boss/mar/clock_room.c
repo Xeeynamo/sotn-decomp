@@ -3,6 +3,8 @@
 #include "mar.h"
 #include "sfx.h"
 
+extern u16 g_Statues[];
+
 void EntityClockRoomController(Entity* self) {
     PlayerStatus* status = &g_Status;
     const int birdcageDoor1 = 7;

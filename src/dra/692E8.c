@@ -443,7 +443,7 @@ static void CheckStageCollision(s32 isTransformed) {
             !(g_Player.colCeiling[1].effects & EFFECT_SOLID_FROM_ABOVE) &&
             g_Player.colFloor[1].effects & 1 &&
             !(g_Player.colFloor[1].effects & EFFECT_SOLID_FROM_BELOW)) {
-            g_Player.vram_flag = 3;
+            g_Player.vram_flag = TOUCHING_CEILING | TOUCHING_GROUND;
             PLAYER.posX.val -= speed;
             return;
         }
@@ -543,7 +543,7 @@ void func_8010A234(s32 arg0) {
         func_8010FAF4();
         PLAYER.rotPivotY = 0;
         PLAYER.rotPivotX = 0;
-        if (g_Player.vram_flag & 1) {
+        if (g_Player.vram_flag & TOUCHING_GROUND) {
             func_8010E570(0);
         } else {
             func_8010E7AC();

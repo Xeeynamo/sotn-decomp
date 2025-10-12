@@ -29,7 +29,8 @@ void func_us_801CE2E0(Entity* self) {
         if (self->ext.et_801CE2E0.unk7C & 0x4) {
             offset = (self->posY.i.hi + g_Tilemap.scrollY.i.hi) -
                      self->ext.et_801CE2E0.posY;
-            if (offset > 0 || (offset < 0 && (g_Player.vram_flag ^ 2) & 2)) {
+            if (offset > 0 ||
+                (offset < 0 && (g_Player.vram_flag ^ TOUCHING_CEILING) & 2)) {
                 player->posY.i.hi += offset;
             }
         }
@@ -66,8 +67,8 @@ void func_us_801CE2E0(Entity* self) {
             }
             offset = self->posX.i.hi + g_Tilemap.scrollX.i.hi -
                      self->ext.et_801CE2E0.posX;
-            if ((offset > 0 && g_Player.vram_flag != 4) ||
-                (offset < 0 && g_Player.vram_flag != 8)) {
+            if ((offset > 0 && g_Player.vram_flag != TOUCHING_R_WALL) ||
+                (offset < 0 && g_Player.vram_flag != TOUCHING_L_WALL)) {
                 player->posX.i.hi += offset;
             }
         } else if (self->ext.et_801CE2E0.unk7C & 4) {

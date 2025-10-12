@@ -248,7 +248,7 @@ void PlayerStepStand(void) {
     s32 atLedge;
 
     atLedge = 0;
-    if (g_Player.vram_flag & 0x20) {
+    if (g_Player.vram_flag & IN_AIR_OR_EDGE) {
         atLedge = 1;
     }
 
@@ -438,8 +438,8 @@ void PlayerStepStand(void) {
     case 0x5B:
         func_8010DFF0(1, 1);
         local_flags = 0;
-        if ((PLAYER.pose < (g_Player.unk54 - 6)) && (g_Player.vram_flag & 1) &&
-            (g_GameTimer & 1)) {
+        if ((PLAYER.pose < (g_Player.unk54 - 6)) &&
+            (g_Player.vram_flag & TOUCHING_GROUND) && (g_GameTimer & 1)) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_69, 1), 0);
         }
         if (PLAYER.pose >= g_Player.unk54) {
@@ -450,7 +450,7 @@ void PlayerStepStand(void) {
             local_flags = 0xF;
         }
         if (PLAYER.pose == 4 && PLAYER.poseTimer == 1 &&
-            !(g_Player.vram_flag & 1)) {
+            !(g_Player.vram_flag & TOUCHING_GROUND)) {
             PLAYER.pose = 5;
             PLAYER.ext.player.anim = 0x6C;
             PLAYER.step = 4;
@@ -583,7 +583,7 @@ void PlayerStepJump(void) {
                 !(g_Player.padPressed & PAD_CROSS)) {
                 PLAYER.velocityY = FIX(-1);
             }
-            if (g_Player.vram_flag & 2) {
+            if (g_Player.vram_flag & TOUCHING_CEILING) {
                 PLAYER.velocityY = FIX(-0.25);
                 g_Player.unk44 |= 0x20;
             }
@@ -766,7 +766,7 @@ void PlayerStepCrouch(void) {
     local_flags = 0;
 
     atLedge = 0;
-    if (g_Player.vram_flag & 0x20) {
+    if (g_Player.vram_flag & IN_AIR_OR_EDGE) {
         atLedge = 1;
     }
 
@@ -1049,7 +1049,7 @@ void PlayerStepHighJump(void) {
 
     switch (PLAYER.step_s) {
     case 0:
-        if (g_Player.vram_flag & 2) {
+        if (g_Player.vram_flag & TOUCHING_CEILING) {
             func_801139CC(3);
             if (g_Player.unk4A > 4) {
                 PLAYER.step_s = 2;
@@ -1071,7 +1071,7 @@ void PlayerStepHighJump(void) {
         break;
 
     case 1:
-        if (g_Player.vram_flag & 2) {
+        if (g_Player.vram_flag & TOUCHING_CEILING) {
             PLAYER.step_s = 2;
             func_801139CC(3);
         } else {
@@ -1459,16 +1459,18 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         break;
     case 15:
     case 2:
-        if ((g_Player.unk04 & 0x8000) && !(g_Player.vram_flag & 0x8000)) {
+        if ((g_Player.unk04 & 0x8000) &&
+            !(g_Player.vram_flag & TOUCHING_ANY_SLOPE)) {
             goto deepcond;
         }
-        if ((g_Player.vram_flag & 0x8000) && !(g_GameTimer & 1)) {
+        if ((g_Player.vram_flag & TOUCHING_ANY_SLOPE) && !(g_GameTimer & 1)) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_69, 10), 0);
         }
-        if (!(g_Player.vram_flag & 0xE)) {
+        if (!(g_Player.vram_flag &
+              (TOUCHING_L_WALL | TOUCHING_R_WALL | TOUCHING_CEILING))) {
             break;
         }
-        if (g_Player.vram_flag & 2) {
+        if (g_Player.vram_flag & TOUCHING_CEILING) {
             func_801139CC(1);
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
@@ -1562,12 +1564,17 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     case 5:
         DecelerateX(FIX(1.0 / 8));
         if (g_Player.timers[8]) {
-            if ((g_Player.vram_flag & 2) && !(g_GameTimer & 3)) {
+            if ((g_Player.vram_flag & TOUCHING_CEILING) && !(g_GameTimer & 3)) {
                 func_801139CC(0);
             }
             break;
-        } else if (g_Player.vram_flag & 0xC) {
-            if (!(g_Player.vram_flag & 0xFF03)) {
+        } else if (g_Player.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
+            if (!(g_Player.vram_flag &
+                  (TOUCHING_ANY_SLOPE | TOUCHING_RAISING_SLOPE |
+                   VRAM_FLAG_UNK2000 | TOUCHING_SLIGHT_SLOPE |
+                   TOUCHING_CEILING_SLOPE | VRAM_FLAG_UNK400 |
+                   VRAM_FLAG_UNK200 | VRAM_FLAG_UNK100 | TOUCHING_CEILING |
+                   TOUCHING_GROUND))) {
                 PLAYER.velocityY += FIX(12.0 / 128);
                 if (PLAYER.velocityY > FIX(7)) {
                     PLAYER.velocityY = FIX(7);
@@ -1599,7 +1606,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
     case 6:
     case 7:
         DecelerateX(FIX(1.0 / 8));
-        if (!(g_Player.vram_flag & 1)) {
+        if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
             func_8010E7AC();
         }
         if (PLAYER.poseTimer < 0) {
@@ -1633,7 +1640,7 @@ void PlayerStepStoned(s32 arg0) {
         func_80113EE0();
         func_80113F7C();
         PLAYER.velocityY = FIX(-4);
-        if (!(g_Player.vram_flag & 1)) {
+        if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
             PLAYER.velocityY = FIX(-2);
         }
         func_8010E3B8(FIX(-1.25));
@@ -1685,7 +1692,7 @@ void PlayerStepStoned(s32 arg0) {
             yShift = yShift / 4;
         }
 
-        if (!(g_Player.vram_flag & 1)) {
+        if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
             PLAYER.velocityY += yShift;
             if (PLAYER.velocityY > FIX(7)) {
                 PLAYER.velocityY = FIX(7);
@@ -1971,7 +1978,7 @@ void PlayerStepUnk17(void) {
     PLAYER.poseTimer = 4;
 
     if (g_unkGraphicsStruct.unk20 == 0) {
-        if (g_Player.vram_flag & 1) {
+        if (g_Player.vram_flag & TOUCHING_GROUND) {
             func_8010E570(0);
         } else {
             func_8010E7AC();
@@ -2611,7 +2618,7 @@ void ControlBatForm(void) {
             DecelerateX(0x1200);
             break;
         case PAD_DOWN:
-            if (g_Player.vram_flag & 1) {
+            if (g_Player.vram_flag & TOUCHING_GROUND) {
                 PLAYER.ext.player.anim = 0xC4;
             } else {
                 PLAYER.ext.player.anim = 0xC5;
@@ -2685,7 +2692,7 @@ void ControlBatForm(void) {
             }
             break;
         case PAD_RIGHT | PAD_DOWN:
-            if (g_Player.vram_flag & 1) {
+            if (g_Player.vram_flag & TOUCHING_GROUND) {
                 PLAYER.ext.player.anim = 0xC4;
             } else {
                 PLAYER.ext.player.anim = 0xC5;
@@ -2704,7 +2711,7 @@ void ControlBatForm(void) {
             }
             break;
         case PAD_LEFT | PAD_DOWN:
-            if (g_Player.vram_flag & 1) {
+            if (g_Player.vram_flag & TOUCHING_GROUND) {
                 PLAYER.ext.player.anim = 0xC4;
             } else {
                 PLAYER.ext.player.anim = 0xC5;
@@ -2725,8 +2732,8 @@ void ControlBatForm(void) {
         }
         break;
     case 3:
-        if (!PLAYER.facingLeft && (g_Player.vram_flag & 4) ||
-            PLAYER.facingLeft && (g_Player.vram_flag & 8)) {
+        if (!PLAYER.facingLeft && (g_Player.vram_flag & TOUCHING_R_WALL) ||
+            PLAYER.facingLeft && (g_Player.vram_flag & TOUCHING_L_WALL)) {
             g_Player.padTapped = PAD_R1;
             BatFormFinished();
             func_80102CD8(2);
@@ -2756,15 +2763,19 @@ void ControlBatForm(void) {
             if (!(directionsPressed & (PAD_DOWN | PAD_UP))) {
                 DecelerateY(FIX(0.125));
             }
-            if (g_Player.vram_flag & 0x800) {
-                if (PLAYER.facingLeft && (g_Player.vram_flag & 0x400) ||
-                    !PLAYER.facingLeft && !(g_Player.vram_flag & 0x400)) {
+            if (g_Player.vram_flag & TOUCHING_CEILING_SLOPE) {
+                if (PLAYER.facingLeft &&
+                        (g_Player.vram_flag & VRAM_FLAG_UNK400) ||
+                    !PLAYER.facingLeft &&
+                        !(g_Player.vram_flag & VRAM_FLAG_UNK400)) {
                     PLAYER.velocityY = FIX(6);
                 }
             }
-            if (g_Player.vram_flag & 0x8000) {
-                if (PLAYER.facingLeft && (g_Player.vram_flag & 0x4000) ||
-                    !PLAYER.facingLeft && !(g_Player.vram_flag & 0x4000)) {
+            if (g_Player.vram_flag & TOUCHING_ANY_SLOPE) {
+                if (PLAYER.facingLeft &&
+                        (g_Player.vram_flag & TOUCHING_RAISING_SLOPE) ||
+                    !PLAYER.facingLeft &&
+                        !(g_Player.vram_flag & TOUCHING_RAISING_SLOPE)) {
                     PLAYER.velocityY = FIX(-6);
                 }
             }
@@ -2777,11 +2788,11 @@ void ControlBatForm(void) {
             if (g_GameTimer % 3 == 0) {
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, BP_WING_SMASH_TRAIL, 0);
-                if (g_Player.vram_flag & 1) {
+                if (g_Player.vram_flag & TOUCHING_GROUND) {
                     CreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(BP_69, 9), 0);
                 }
-                if (g_Player.vram_flag & 2) {
+                if (g_Player.vram_flag & TOUCHING_CEILING) {
                     x_offset = 3;
                     if (PLAYER.facingLeft) {
                         x_offset = -x_offset;
@@ -2845,7 +2856,7 @@ void PlayerStepUnmorphBat(void) {
 
     PLAYER.drawFlags = FLAG_DRAW_ROTATE;
     DecelerateX(FIX(0.125));
-    if (g_Player.vram_flag & 3) {
+    if (g_Player.vram_flag & (TOUCHING_CEILING | TOUCHING_GROUND)) {
         PLAYER.velocityY = 0;
     }
     DecelerateY(FIX(0.125));
@@ -2874,13 +2885,14 @@ void PlayerStepUnmorphBat(void) {
                 }
                 D_8013AECC++;
             } else {
-                if (g_Player.vram_flag & 0x8000) {
+                if (g_Player.vram_flag & TOUCHING_ANY_SLOPE) {
                     PLAYER.posY.i.hi--;
                 }
             }
         }
 
-        if ((g_Player.vram_flag & 3) == 3) {
+        if ((g_Player.vram_flag & (TOUCHING_CEILING | TOUCHING_GROUND)) ==
+            (TOUCHING_CEILING | TOUCHING_GROUND)) {
             g_Player.unk68 = 1;
             PLAYER.velocityX = PLAYER.velocityY = 0;
         }
@@ -2901,7 +2913,7 @@ void PlayerStepUnmorphBat(void) {
         if (g_Player.unk66 == 3) {
             func_8010E83C(0);
             PLAYER.posY.i.hi -= 3;
-            if (!(g_Player.vram_flag & 0x8000)) {
+            if (!(g_Player.vram_flag & TOUCHING_ANY_SLOPE)) {
                 PLAYER.velocityY = FIX(-1);
             }
             g_Player.unk44 |= 0x100;
@@ -2937,7 +2949,8 @@ void PlayerStepStuck(void) {
     if (collider.effects & EFFECT_SOLID) {
         collisionCount++;
     }
-    if ((g_Player.vram_flag & 0x41) == 0x41) {
+    if ((g_Player.vram_flag & (VRAM_FLAG_UNK40 | TOUCHING_GROUND)) ==
+        (VRAM_FLAG_UNK40 | TOUCHING_GROUND)) {
         collisionCount++;
     }
     PLAYER.rotate = 0;
@@ -3204,10 +3217,10 @@ void PlayerStepUnmorphMist(void) {
     s32 i;
     s32 else_cycles;
 
-    if ((g_Player.vram_flag & 1) && (PLAYER.velocityY > 0)) {
+    if ((g_Player.vram_flag & TOUCHING_GROUND) && (PLAYER.velocityY > 0)) {
         PLAYER.velocityY = 0;
     }
-    if ((g_Player.vram_flag & 2) && (PLAYER.velocityY < 0)) {
+    if ((g_Player.vram_flag & TOUCHING_CEILING) && (PLAYER.velocityY < 0)) {
         PLAYER.velocityY = 0;
     }
     DecelerateX(0x200);
@@ -3234,12 +3247,13 @@ void PlayerStepUnmorphMist(void) {
             }
             D_8013AECC++;
         } else {
-            if (g_Player.vram_flag & 0x8000) {
+            if (g_Player.vram_flag & TOUCHING_ANY_SLOPE) {
                 PLAYER.posY.i.hi--;
             }
         }
     }
-    if ((g_Player.vram_flag & 3) == 3) {
+    if ((g_Player.vram_flag & (TOUCHING_CEILING | TOUCHING_GROUND)) ==
+        (TOUCHING_CEILING | TOUCHING_GROUND)) {
         PLAYER.step_s = 1;
         PLAYER.velocityX = PLAYER.velocityY = 0;
     }
@@ -3268,7 +3282,7 @@ void PlayerStepUnmorphMist(void) {
             }
             func_8010E83C(0);
             PLAYER.posY.i.hi -= 3;
-            if (!(g_Player.vram_flag & 0x8000)) {
+            if (!(g_Player.vram_flag & TOUCHING_ANY_SLOPE)) {
                 PLAYER.velocityY = FIX(-1);
             }
             g_Player.unk44 |= 0x100;

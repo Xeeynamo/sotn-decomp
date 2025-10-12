@@ -921,7 +921,7 @@ void RicEntitySmokePuff(Entity* self) {
             return;
         }
         if (paramsHi == 1) {
-            if (g_Player.vram_flag & 0x8000) {
+            if (g_Player.vram_flag & TOUCHING_ANY_SLOPE) {
                 posX /= 2;
             }
         }
@@ -2474,7 +2474,8 @@ void RicEntityHitByIce(Entity* self) {
         if (self->ext.hitbyice.unk80 && --self->ext.hitbyice.unk82 == 0) {
             terminateFlag = true;
         }
-        if (self->ext.hitbyice.unk7E && g_Player.vram_flag & 0xC) {
+        if (self->ext.hitbyice.unk7E &&
+            g_Player.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
             terminateFlag = true;
         }
         if (terminateFlag) {
@@ -2641,7 +2642,9 @@ void RicEntityHitByLightning(Entity* self) {
         yMod = (-((rsin(self->ext.hitbylightning.unk7C) * mul) >> 7) * 7) << 1;
         self->posX.val = xMod + PLAYER.posX.val;
         self->posY.val = yMod + PLAYER.posY.val;
-        if (self->ext.hitbylightning.unk92 && g_Player.vram_flag & 0xE) {
+        if (self->ext.hitbylightning.unk92 &&
+            g_Player.vram_flag &
+                (TOUCHING_L_WALL | TOUCHING_R_WALL | TOUCHING_CEILING)) {
             terminate = true;
         }
         if (terminate) {

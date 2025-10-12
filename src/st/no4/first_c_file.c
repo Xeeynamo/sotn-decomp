@@ -1828,7 +1828,7 @@ void func_us_801C4520(Entity* self) {
     player = &PLAYER;
     collision = GetPlayerCollisionWith(self, 16, 17, 5);
 
-    if (collision & 1 && g_Player.vram_flag & 1) {
+    if (collision & 1 && g_Player.vram_flag & TOUCHING_GROUND) {
         if (player->posX.i.hi < self->posX.i.hi) {
             if (g_pads[0].pressed & PAD_RIGHT && player->step == 1) {
                 if (self->ext.timer.t) {
@@ -2324,7 +2324,7 @@ void func_us_801C5628(Entity* self) {
     player = &PLAYER;
 
     if ((((GetPlayerCollisionWith(self, 0x8, 16, 5) & 1) &&
-          (g_Player.vram_flag & 1)) &&
+          (g_Player.vram_flag & TOUCHING_GROUND)) &&
          (g_pads[0].pressed & PAD_LEFT)) &&
         (PLAYER.step == 1)) {
         if (self->ext.et_801C4520.unk7C != 0) {

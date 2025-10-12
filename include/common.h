@@ -108,10 +108,10 @@
 #define FLT(x) ((s32)((x) * 4096.0))
 // Converts an amount of rotation in degrees to a fixed-point value
 // fixed-point / 4096 * 360 = degrees
-#define ROT(x) ((s32)((x) * 4096.0 / 360))
+#define ROT(x) ((s32)(FLT(x) / 360))
 #define I_TO_FLT(x) ((s32)(x) << 12)
 #define FLT_TO_I(x) ((s32)(x) >> 12)
-#define FLT_TO_FIX(x) ((s32)(x) << 5)
+#define FLT_TO_FIX(x) ((s32)(x) << 4)
 
 // Access to the Scratchpad memory. Different on different systems.
 #if defined(VERSION_PC)

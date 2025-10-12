@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
+#include <cutscene.h>
 
 // As g_Dialogue can be either structs, we only care of the bigger one
 union DiagCombo {

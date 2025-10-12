@@ -55,7 +55,7 @@ void RicStepHydrostorm(void) {
         g_Player.unk46 = 0;
     }
 
-    if ((g_Player.vram_flag & 1) == 0) {
+    if ((g_Player.vram_flag & TOUCHING_GROUND) == 0) {
         RicSetFall();
         g_Player.unk46 = 0;
     }

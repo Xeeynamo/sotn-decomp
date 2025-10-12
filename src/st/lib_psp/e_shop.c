@@ -15,6 +15,10 @@ extern s32 E_ID(ID_48);
 extern s32 E_ID(ID_4F);
 extern u8* OVL_EXPORT(cutscene_data_offset_four);
 
+extern s32 g_SkipCutscene;
+extern u32 g_CutsceneFlags;
+extern s32 g_IsCutsceneDone;
+
 // An inventory item consists of a category, which affects
 // how the other fields are interpretted, an "unlock level",
 // which is related to the number of things which have been
@@ -2370,7 +2374,7 @@ void func_us_801AFE0C(Entity* self) {
         break;
 
     case 10:
-        if (!g_Player.demo_timer && (g_Player.vram_flag & 1)) {
+        if (!g_Player.demo_timer && (g_Player.vram_flag & TOUCHING_GROUND)) {
             g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
             g_Player.demo_timer = 1;
             self->step++;
@@ -2489,7 +2493,7 @@ void EntityLibrarianChair(Entity* self) {
         self->zPriority = 0x80;
     }
     // If the player touches the ground, reset the frames airborne.
-    if (g_Player.vram_flag & 1) {
+    if (g_Player.vram_flag & TOUCHING_GROUND) {
         self->ext.libraryChair.consecutiveHits = 0;
     }
     switch (self->step) {

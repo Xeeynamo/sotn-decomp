@@ -52,7 +52,7 @@ void func_us_801AD11C(Entity* self) {
                 self->step++;
             }
             if ((g_Status.wornEquipment[1] == 0x19) &&
-                (g_Player.vram_flag & 1)) {
+                (g_Player.vram_flag & TOUCHING_GROUND)) {
                 self->step += 2;
             }
         }
