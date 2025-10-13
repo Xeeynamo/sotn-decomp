@@ -1,1 +1,4 @@
 SEL_Overlay = 0x09283A08;
+g_SaveSummary = 0x09285EE8;
+g_Dialogue = 0x09286C10; // size:0x40
+DestroyEntity = 0x092ACF18;
