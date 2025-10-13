@@ -5,7 +5,6 @@
 #include "stage.h"
 
 #define OVL_EXPORT(x) DAI_##x
-#define STAGE_IS_DAI
 
 #include "../pfn_entity_update.h"
 
