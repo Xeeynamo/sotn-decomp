@@ -2,6 +2,7 @@
 #include "../sel/sel.h"
 #include <cutscene.h>
 
+extern Dialogue g_Dialogue;
 extern u16 D_psp_092855F0[];
 extern u8 D_psp_09285678[];
 extern u16 D_psp_09285688[];
