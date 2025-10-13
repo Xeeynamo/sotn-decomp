@@ -2,8 +2,8 @@
 #include "ric.h"
 #include "sfx.h"
 
-// Same function in DRA is func_8010D59C
-void func_8015C4AC(void) {
+// Same function in DRA is func_8010D59C (InitPlayerAfterImage)
+void InitRicAfterImage(void) {
     byte stackpad[40];
     Primitive* prim;
     s32 i;
@@ -57,8 +57,8 @@ void func_8015C4AC(void) {
     }
 }
 
-// Extremely similar to func_8010D800
-void func_8015C6D4(void) {
+// Extremely similar to func_8010D800 (DrawPlayerAfterImage)
+void DrawRicAfterImage(void) {
     byte pad[0x28];
     Primitive* prim;
     PlayerDraw* draw;

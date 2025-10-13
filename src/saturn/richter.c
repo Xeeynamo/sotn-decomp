@@ -252,7 +252,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9B9C, func_060A9B9C);
 // ===== pl_utils.c
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9C2C, func_060A9C2C);
 
-// func_8015C6D4
+// DrawRicAfterImage
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9DEC, func_060A9DEC);
 
 void RicSetStep(s16 step) {

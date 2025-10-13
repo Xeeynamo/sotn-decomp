@@ -787,7 +787,7 @@ void MarMain(void) {
     if (g_Player.status & (PLAYER_STATUS_UNK10 | PLAYER_STATUS_UNK40)) {
         return;
     }
-    func_maria_8015C4AC();
+    InitMariaAfterImage();
     if ((*D_80097448 > 0x28) && !g_CurrentEntity->nFramesInvincibility) {
         PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
         PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
@@ -824,7 +824,7 @@ void MarMain(void) {
         PLAYER.velocityX = (PLAYER.velocityX * 4) / 3;
     }
     g_CurrentEntity->nFramesInvincibility = 0;
-    func_maria_8015C6D4();
+    DrawMariaAfterImage();
 
     // this block is new to maria and it is related to the support for
     // the two subweapons

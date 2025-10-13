@@ -1446,7 +1446,7 @@ block_160:
             PLAYER.scaleY = 0x110;
             PLAYER.rotPivotY = 0x18;
         }
-        func_8010D59C();
+        InitPlayerAfterImage();
         if ((*D_80097448 >= 0x29 ||
              ((g_Player.status & PLAYER_STATUS_WOLF_FORM) &&
               *D_80097448 > 0xC)) &&
@@ -1505,7 +1505,7 @@ block_160:
             PLAYER.velocityX = PLAYER.velocityX * 4 / 3;
         }
         g_CurrentEntity->nFramesInvincibility = 0;
-        func_8010D800();
+        DrawPlayerAfterImage();
         if (PLAYER.animSet == 0xD) {
             sp3c = (AluFrame*)D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
             sp3c->pivotY = D_8013AECC + D_800ACE20[PLAYER.animCurFrame];

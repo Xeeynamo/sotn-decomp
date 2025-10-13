@@ -769,7 +769,7 @@ void RicMain(void) {
     if (g_Player.status & (PLAYER_STATUS_UNK10 | PLAYER_STATUS_UNK40)) {
         return;
     }
-    func_8015C4AC();
+    InitRicAfterImage();
     if ((*D_80097448 > 0x28) && !g_CurrentEntity->nFramesInvincibility) {
         PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
         PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
@@ -806,5 +806,5 @@ void RicMain(void) {
         PLAYER.velocityX = (PLAYER.velocityX * 4) / 3;
     }
     g_CurrentEntity->nFramesInvincibility = 0;
-    func_8015C6D4();
+    DrawRicAfterImage();
 }

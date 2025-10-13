@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "maria.h"
 
-// Same function in DRA is func_8010D59C
+// Same function in DRA is func_8010D59C (InitPlayerAfterImage)
 static u8 mar_801545B0[] = {
     10, 8, 8, 6, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, -1, -1, 0, 0};
-void func_maria_8015C4AC(void) {
+void InitMariaAfterImage(void) {
     byte stackpad[40];
     Primitive* prim;
     s32 i;
@@ -55,12 +55,12 @@ void func_maria_8015C4AC(void) {
     }
 }
 
-// Extremely similar to func_8010D800
+// Extremely similar to func_8010D800 (DrawPlayerAfterImage)
 static u8 mar_801545C4[] = {
     4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 16, 16, 16, 16, 16, 16};
 static u8 mar_801545D4[] = {
     8, 12, 16, 20, 24, 28, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32};
-void func_maria_8015C6D4(void) {
+void DrawMariaAfterImage(void) {
     byte pad[0x28];
     Primitive* prim;
     PlayerDraw* draw;

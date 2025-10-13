@@ -9,8 +9,8 @@ static u8 g_D_800ACF18[] = {
 
 extern PlayerState g_Dop;
 
-// Same function in RIC is func_8015C4AC
-void OVL_EXPORT(func_8010D59C)(void) {
+// Same function in RIC is func_8015C4AC (InitRicAfterImage)
+void OVL_EXPORT(InitPlayerAfterImage)(void) {
     byte stackpad[40];
     Primitive* prim;
     s32 i;
@@ -91,8 +91,8 @@ static u8 g_shadowOpacityReductionTable[] = {
 static u8 g_D_800ACF3C[] = {
     8, 12, 16, 20, 24, 28, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32};
 
-// Equivalent in RIC is func_8015C6D4
-void OVL_EXPORT(func_8010D800)(void) {
+// Equivalent in RIC is func_8015C6D4 (DrawRicAfterImage)
+void OVL_EXPORT(DrawPlayerAfterImage)(void) {
     PlayerDraw pad;
     PlayerDraw* plDraw;
     Primitive* prim;
