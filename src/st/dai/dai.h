@@ -5,7 +5,7 @@
 #include "stage.h"
 
 #define OVL_EXPORT(x) DAI_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG) // psx e_stage_name
+#define STAGE_IS_DAI
 
 #include "../pfn_entity_update.h"
 
@@ -49,7 +49,6 @@
 #define CONFESSIONAL_GHOST_READY 1
 
 // Used for cluts, palettes, and in g_EInits
-// Some of the PAL_STAGE_NAME items seem to be used as general palettes
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
     PAL_STAINED_GLASS = 0xE,

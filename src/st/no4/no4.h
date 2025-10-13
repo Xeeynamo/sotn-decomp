@@ -3,7 +3,6 @@
 
 #define STAGE_IS_NO4
 #define OVL_EXPORT(x) NO4_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,

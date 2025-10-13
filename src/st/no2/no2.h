@@ -5,7 +5,6 @@
 #define STAGE_IS_NO2
 
 #define OVL_EXPORT(x) NO2_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
