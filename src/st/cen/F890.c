@@ -124,7 +124,7 @@ void EntityPlatform(Entity* self) {
             } else {
                 g_Player.padSim = 0;
             }
-            g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 0;
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
             g_Player.demo_timer = 1;
             self->step++;
         }
@@ -227,7 +227,7 @@ void EntityPlatform(Entity* self) {
             if (g_unkGraphicsStruct.pauseEnemies != 0) {
                 g_unkGraphicsStruct.pauseEnemies = 0;
             }
-            g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 1;
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
             self->step++;
             g_api.PlaySfx(SFX_DOOR_CLOSE_A);
         }
@@ -447,7 +447,7 @@ void EntityElevatorStationary(Entity* self) {
             self->posY.i.hi = player->posY.i.hi;
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 10;
-            g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 1;
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
             SetStep(3);
         }
         break;
@@ -457,7 +457,7 @@ void EntityElevatorStationary(Entity* self) {
             posX = self->posX.i.hi - player->posX.i.hi;
             if (g_pads[0].pressed & PAD_UP) {
                 if (abs(posX) < 8) {
-                    g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 1;
+                    g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
                     g_Player.demo_timer = 2;
                     g_Player.padSim = 0;
 #if !defined(VERSION_HD)
@@ -490,7 +490,7 @@ void EntityElevatorStationary(Entity* self) {
             if (AnimateEntity(D_80180780, self) == 0) {
                 self->pose = 0;
                 self->poseTimer = 0;
-                g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 0;
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
                 self->step_s = 0;
                 self->step = 1;
             }
@@ -527,7 +527,7 @@ void EntityElevatorStationary(Entity* self) {
             if (AnimateEntity(D_80180780, self) == 0) {
                 self->pose = 0;
                 self->poseTimer = 0;
-                g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 0;
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
                 self->step_s = 0;
                 self->step = 1;
             }
@@ -639,7 +639,7 @@ void EntityMovingElevator(Entity* self) {
         }
 
         self->animCurFrame = 10;
-        g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 1;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
         SetStep(step);
         break;
 

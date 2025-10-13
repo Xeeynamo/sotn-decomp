@@ -8,7 +8,7 @@ void InitRicAfterImage(void) {
     Primitive* prim;
     s32 i;
 
-    if (g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag) {
+    if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag) {
         return;
     }
     if ((g_Player.padTapped & GAMEBUTTONS) ||
@@ -67,7 +67,7 @@ void DrawRicAfterImage(void) {
     u8 var_s5;
     u8 resetAnim;
 
-    resetAnim = g_Entities[E_AFTERIMAGE_1].ext.afterimage.resetFlag;
+    resetAnim = g_Entities[E_AFTERIMAGE_1].ext.afterImage.resetFlag;
     prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
     i = 0;
     draw = &g_PlayerDraw[1];
@@ -225,8 +225,8 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
 }
 
 void func_8015CC28(void) {
-    g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag =
-        g_Entities[E_AFTERIMAGE_1].ext.afterimage.resetFlag =
+    g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag =
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.resetFlag =
             g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2 =
                 g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 = 0;
 }

@@ -16,7 +16,7 @@ void OVL_EXPORT(InitPlayerAfterImage)(void) {
     s32 i;
 
     if (g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
-            .ext.afterimage.disableFlag) {
+            .ext.afterImage.disableFlag) {
         return;
     }
 
@@ -102,7 +102,7 @@ void OVL_EXPORT(DrawPlayerAfterImage)(void) {
     u8 temp_t2;
 
     temp_t2 = g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
-                  .ext.afterimage.resetFlag;
+                  .ext.afterImage.resetFlag;
     prim =
         &g_PrimBuf[g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].primIndex];
     plDraw = &g_PlayerDraw[9];

@@ -37,9 +37,9 @@ static void func_8010E0A8(void) UNUSED {
 #endif
 
 void OVL_EXPORT(func_8010E0B8)(void) {
-    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterimage.resetFlag =
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.resetFlag =
         0;
-    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterimage.disableFlag =
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.disableFlag =
         0;
 }
 

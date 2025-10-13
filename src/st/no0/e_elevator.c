@@ -120,7 +120,7 @@ void func_us_801C2184(Entity* self) {
             self->posY.i.hi = player->posY.i.hi;
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 0xA;
-            g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 1;
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
             SetStep(2);
         }
 
@@ -129,7 +129,7 @@ void func_us_801C2184(Entity* self) {
         if ((self - 1)->ext.cenElevator.unk80) {
             offset = self->posX.i.hi - player->posX.i.hi;
             if (g_pads[0].pressed & PAD_DOWN && abs(offset) < 8) {
-                g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 1;
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
                 g_Player.demo_timer = 2;
                 g_Player.padSim = PAD_DOWN;
 #ifndef VERSION_PSP
@@ -181,7 +181,7 @@ void func_us_801C2184(Entity* self) {
             if (!AnimateEntity(D_us_80180FD8, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
-                g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 0;
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 0;
                 self->step_s = 0;
                 self->step = 1;
             }
@@ -300,13 +300,13 @@ void func_us_801C27A4(Entity* self) {
             self->posY.i.hi = player->posY.i.hi;
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 10;
-            g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 1;
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
             SetStep(2);
         } else {
             self->posY.i.hi = player->posY.i.hi;
             player->posX.i.hi = self->posX.i.hi;
             self->animCurFrame = 10;
-            g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 1;
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
             SetStep(3);
         }
 

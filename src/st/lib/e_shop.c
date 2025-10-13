@@ -329,7 +329,7 @@ void func_us_801AFE0C(Entity* self) {
         break;
 
     case 1:
-        g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 1;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_LEFT;
@@ -393,7 +393,7 @@ void func_us_801AFE0C(Entity* self) {
     case 3:
         if (g_CutsceneFlags & 0x40) {
             if (player->posX.i.hi > 0x74) {
-                g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 1;
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
                 g_Player.padSim = PAD_LEFT;
             } else {
                 player->posX.i.hi = 0x74;
@@ -440,7 +440,7 @@ void func_us_801AFE0C(Entity* self) {
         if (player->posX.i.hi < 0x75) {
             switch (self->step_s) {
             case 0:
-                g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 1;
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
                 g_PauseAllowed = false;
                 g_unkGraphicsStruct.pauseEnemies = true;
                 g_Player.padSim = PAD_NONE;

@@ -17,7 +17,7 @@ void InitPlayerAfterImage(void) {
     Primitive* prim;
     s32 i;
 
-    if (g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag) {
+    if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag) {
         return;
     }
     switch (PLAYER.ext.player.anim) {
@@ -88,7 +88,7 @@ void DrawPlayerAfterImage(void) {
     u8 temp_t1;
     u8 temp_t2;
 
-    temp_t2 = g_Entities[E_AFTERIMAGE_1].ext.afterimage.resetFlag;
+    temp_t2 = g_Entities[E_AFTERIMAGE_1].ext.afterImage.resetFlag;
     prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
     plDraw = &g_PlayerDraw[1];
     temp_t1 = g_shadowOpacityReductionTable[g_Entities[E_AFTERIMAGE_1]
