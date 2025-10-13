@@ -8,39 +8,39 @@ void func_8015C4AC(void) {
     Primitive* prim;
     s32 i;
 
-    if (g_Entities[1].ext.entSlot1.unk0) {
+    if (g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag) {
         return;
     }
     if ((g_Player.padTapped & GAMEBUTTONS) ||
         ((g_Player.padHeld ^ g_Player.padPressed) & g_Player.padHeld &
          GAMEBUTTONS) ||
         (PLAYER.velocityY > FIX(0.5))) {
-        g_Entities[1].ext.entSlot1.unk2 = 0;
-        g_Entities[1].ext.entSlot1.unk3 = 0;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2 = 0;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 = 0;
     } else {
-        if (g_Entities[1].ext.entSlot1.unk2 >= 10) {
+        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2 >= 10) {
             return;
         }
-        if (g_Entities[1].ext.entSlot1.unk3 == 0) {
-            g_Entities[1].ext.entSlot1.unk3 =
-                D_801545B0[g_Entities[1].ext.entSlot1.unk2];
+        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 == 0) {
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 =
+                D_801545B0[g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2];
         }
-        if (--g_Entities[1].ext.entSlot1.unk3 == 0) {
-            g_Entities[1].ext.entSlot1.unk2++;
-            g_Entities[1].ext.entSlot1.unk3 =
-                D_801545B0[g_Entities[1].ext.entSlot1.unk2];
+        if (--g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 == 0) {
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2++;
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 =
+                D_801545B0[g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2];
         }
     }
-    if (g_Entities[1].pose) {
-        g_Entities[1].pose--;
+    if (g_Entities[E_AFTERIMAGE_1].pose) {
+        g_Entities[E_AFTERIMAGE_1].pose--;
         return;
     }
 #if !defined(VERSION_PSP)
-    prim = &g_PrimBuf[g_Entities[1].primIndex];
+    prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
 #endif
-    for (prim = &g_PrimBuf[g_Entities[1].primIndex], i = 0; prim != NULL; i++,
-        prim = prim->next) {
-        if (i == g_Entities[1].entityId) {
+    for (prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex], i = 0;
+         prim != NULL; i++, prim = prim->next) {
+        if (i == g_Entities[E_AFTERIMAGE_1].entityId) {
             prim->r0 = prim->g0 = prim->b0 = 0x80;
             prim->x0 = PLAYER.posX.i.hi;
             prim->y0 = PLAYER.posY.i.hi;
@@ -50,10 +50,10 @@ void func_8015C4AC(void) {
             prim->y2 = PLAYER.palette;
         }
     }
-    g_Entities[1].pose = 2;
-    g_Entities[1].entityId++;
-    if (g_Entities[1].entityId >= 6) {
-        g_Entities[1].entityId = 0;
+    g_Entities[E_AFTERIMAGE_1].pose = 2;
+    g_Entities[E_AFTERIMAGE_1].entityId++;
+    if (g_Entities[E_AFTERIMAGE_1].entityId >= 6) {
+        g_Entities[E_AFTERIMAGE_1].entityId = 0;
     }
 }
 
@@ -67,12 +67,12 @@ void func_8015C6D4(void) {
     u8 var_s5;
     u8 resetAnim;
 
-    resetAnim = g_Entities[1].ext.entSlot1.unk1;
-    prim = &g_PrimBuf[g_Entities[1].primIndex];
+    resetAnim = g_Entities[E_AFTERIMAGE_1].ext.afterimage.resetFlag;
+    prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
     i = 0;
     draw = &g_PlayerDraw[1];
-    var_s5 = D_801545C4[g_Entities[1].ext.entSlot1.unk2];
-    var_s3 = D_801545D4[g_Entities[1].ext.entSlot1.unk2];
+    var_s5 = D_801545C4[g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2];
+    var_s3 = D_801545D4[g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2];
     while (prim != NULL) {
         if (prim->r0 > var_s3) {
             prim->r0 -= var_s5;
@@ -207,26 +207,26 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
     FntPrint("op disable\n");
 #endif
     if (resetAnims) {
-        g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7D = 1;
-        g_Entities[UNK_ENTITY_1].animCurFrame =
-            g_Entities[UNK_ENTITY_2].animCurFrame =
-                g_Entities[UNK_ENTITY_3].animCurFrame = 0;
-        prim = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
+        g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7D = 1;
+        g_Entities[E_AFTERIMAGE_1].animCurFrame =
+            g_Entities[E_AFTERIMAGE_2].animCurFrame =
+                g_Entities[E_AFTERIMAGE_3].animCurFrame = 0;
+        prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
         while (prim) {
             prim->x1 = 0;
             prim = prim->next;
         }
     }
-    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7C = 1;
-    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 0xA;
+    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7C = 1;
+    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7E = 0xA;
     if (arg1) {
         g_Player.timers[PL_T_AFTERIMAGE_DISABLE] = 4;
     }
 }
 
 void func_8015CC28(void) {
-    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 =
-        g_Entities[UNK_ENTITY_1].ext.entSlot1.unk1 =
-            g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 =
-                g_Entities[UNK_ENTITY_1].ext.entSlot1.unk3 = 0;
+    g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag =
+        g_Entities[E_AFTERIMAGE_1].ext.afterimage.resetFlag =
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2 =
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 = 0;
 }

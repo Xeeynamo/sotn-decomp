@@ -338,7 +338,7 @@ void func_801B4C68(void) {
 }
 
 void func_801B4D78(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_3];
+    Entity* self = &g_Entities[3];
 
     if (self->step == 0) {
         self->animSet = ANIMSET_OVL(1);
@@ -352,7 +352,7 @@ void func_801B4D78(void) {
 }
 
 void func_801B4DE0(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_2];
+    Entity* self = &g_Entities[2];
     s16 primIndex;
     Primitive* prim;
 
@@ -403,7 +403,7 @@ void func_801B4DE0(void) {
 }
 
 void func_801B4FFC(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_2];
+    Entity* self = &g_Entities[2];
     s16 primIndex;
     Primitive* prim;
 

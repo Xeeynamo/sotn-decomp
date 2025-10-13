@@ -13,7 +13,7 @@ void func_us_801C4954(s32 resetAnims, s32 arg1) {
         g_Entities[E_ID_41].ext.disableAfterImage.unk7D = 1;
         g_Entities[E_ID_41].animCurFrame = g_Entities[E_ID_42].animCurFrame =
             g_Entities[E_ID_43].animCurFrame = 0;
-        prim = &g_PrimBuf[g_Entities[1].primIndex];
+        prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
         while (prim != NULL) {
             prim->x1 = 0;
             prim = prim->next;
@@ -31,12 +31,14 @@ void func_us_801C4954(s32 resetAnims, s32 arg1) {
 }
 
 void func_8010E0A8(void) {
-    g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk2 = 0;
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.unk2 = 0;
 }
 
 void func_8010E0B8(void) {
-    g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk1 = 0;
-    g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterimage.resetFlag =
+        0;
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterimage.disableFlag =
+        0;
 }
 
 void func_us_801C4A30(s16 a0, s16 a1) {

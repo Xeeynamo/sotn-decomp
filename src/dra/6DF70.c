@@ -19,11 +19,11 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
     s32 i;
 
     if (resetAnims) {
-        g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7D = 1;
-        g_Entities[UNK_ENTITY_1].animCurFrame =
-            g_Entities[UNK_ENTITY_2].animCurFrame =
-                g_Entities[UNK_ENTITY_3].animCurFrame = 0;
-        prim = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
+        g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7D = 1;
+        g_Entities[E_AFTERIMAGE_1].animCurFrame =
+            g_Entities[E_AFTERIMAGE_2].animCurFrame =
+                g_Entities[E_AFTERIMAGE_3].animCurFrame = 0;
+        prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
 
         for (i = 0; i < 6; i++) {
             prim->x1 = 0;
@@ -31,8 +31,8 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
         }
     }
 
-    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7C = 1;
-    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 10;
+    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7C = 1;
+    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7E = 10;
 
     if (arg1) {
         if (arg1 < 4) {
@@ -43,11 +43,11 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
     }
 }
 
-void func_8010E0A8(void) { g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 = 0; }
+void func_8010E0A8(void) { g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2 = 0; }
 
 void func_8010E0B8(void) {
-    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk1 = 0;
-    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
+    g_Entities[E_AFTERIMAGE_1].ext.afterimage.resetFlag = 0;
+    g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 0;
 }
 
 void func_8010E0D0(s32 arg0) {

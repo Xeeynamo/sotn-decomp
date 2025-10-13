@@ -141,17 +141,17 @@ void RicInit(s16 initParam) {
     *spriteptr = (SpriteParts*)D_80153D24;
     spriteptr++;
     *spriteptr = (SpriteParts*)D_801541A8;
-    for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
+    for (e = &g_Entities[E_AFTERIMAGE_1], i = 0; i < 3; i++, e++) {
         DestroyEntity(e);
         e->animSet = ANIMSET_OVL(0x10);
         e->unk5A = i + 1;
         e->palette = PAL_OVL(0x120);
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
-    g_Entities[1].primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
-    g_Entities[1].flags |= FLAG_HAS_PRIMS;
-    for (prim = &g_PrimBuf[g_Entities[1].primIndex], i = 0; prim != NULL; i++,
-        prim = prim->next) {
+    g_Entities[E_AFTERIMAGE_1].primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
+    g_Entities[E_AFTERIMAGE_1].flags |= FLAG_HAS_PRIMS;
+    for (prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex], i = 0;
+         prim != NULL; i++, prim = prim->next) {
         prim->drawMode = DRAW_UNK_100 | DRAW_UNK02 | DRAW_HIDE;
     }
     if (D_80097C98 == 6) {

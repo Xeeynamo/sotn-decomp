@@ -345,10 +345,10 @@ void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA438, func_060AA438);
 
 void func_8015CC28(void) {
-    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 =
-        g_Entities[UNK_ENTITY_1].ext.entSlot1.unk1 =
-            g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 =
-                g_Entities[UNK_ENTITY_1].ext.entSlot1.unk3 = 0;
+    g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag =
+        g_Entities[E_AFTERIMAGE_1].ext.afterimage.resetFlag =
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2 =
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 = 0;
 }
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4F4, func_060AA4F4);

@@ -118,11 +118,11 @@ typedef enum {
 } PlayerSteps;
 
 typedef struct {
-    u8 unk0;
-    u8 unk1;
+    u8 disableFlag;
+    u8 resetFlag;
     u8 unk2;
     u8 unk3;
-} ET_EntitySlot1;
+} ET_AfterImage;
 
 typedef struct {
     /* 0x7C */ u8 pad0[0x4];
@@ -157,7 +157,7 @@ typedef struct {
 
 typedef union { // offset=0x7C
     u8 base[0x38];
-    ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
+    ET_AfterImage afterImage; // g_Entities[1], not entityID 1
     ET_ExplosionPuffOpaque opaquePuff;
     ET_Subweapon subweapon;
 } Ext;
@@ -421,9 +421,9 @@ typedef struct {
 
 typedef enum {
     PLAYER_CHARACTER,
-    UNK_ENTITY_1,
-    UNK_ENTITY_2,
-    UNK_ENTITY_3,
+    E_AFTERIMAGE_1,
+    E_AFTERIMAGE_2,
+    E_AFTERIMAGE_3,
     UNK_ENTITY_4,
     UNK_ENTITY_5,
     UNK_ENTITY_6,

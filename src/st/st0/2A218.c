@@ -69,7 +69,7 @@ void EntityCutscene(Entity* self) {
                 } else {
                     g_Player.padSim = PAD_RIGHT;
                 }
-                g_Entities[1].ext.entSlot1.unk0 = 1;
+                g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 1;
                 g_Player.demo_timer = 255;
                 func_801AA218(posX);
                 SetStep(2);

@@ -15,7 +15,8 @@ void OVL_EXPORT(func_8010D59C)(void) {
     Primitive* prim;
     s32 i;
 
-    if (g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk0) {
+    if (g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+            .ext.afterimage.disableFlag) {
         return;
     }
 
@@ -25,39 +26,47 @@ void OVL_EXPORT(func_8010D59C)(void) {
     case 0x60:
     case 0x61:
     case 0x62:
-        g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk2 = 10;
+        g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.unk2 =
+            10;
         return;
     }
 
     if ((g_Dop.padTapped & GAMEBUTTONS) ||
         ((g_Dop.padHeld ^ g_Dop.padPressed) & g_Dop.padHeld & GAMEBUTTONS) ||
         (DOPPLEGANGER.velocityY > FIX(0.5))) {
-        g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk2 = 0;
-        g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk3 = 0;
+        g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.unk2 = 0;
+        g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.unk3 = 0;
     } else {
-        if (g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk2 >= 10) {
+        if (g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                .ext.afterImage.unk2 >= 10) {
             return;
         }
-        if (g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk3 == 0) {
-            g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk3 =
-                g_D_800ACF18[g_Entities[STAGE_ENTITY_START + 1]
-                                 .ext.entSlot1.unk2];
+        if (g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                .ext.afterImage.unk3 == 0) {
+            g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                .ext.afterImage.unk3 =
+                g_D_800ACF18[g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                                 .ext.afterImage.unk2];
         }
-        if (--g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk3 == 0) {
-            g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk2++;
-            g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk3 =
-                g_D_800ACF18[g_Entities[STAGE_ENTITY_START + 1]
-                                 .ext.entSlot1.unk2];
+        if (--g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                  .ext.afterImage.unk3 == 0) {
+            g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                .ext.afterImage.unk2++;
+            g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                .ext.afterImage.unk3 =
+                g_D_800ACF18[g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                                 .ext.afterImage.unk2];
         }
     }
-    if (g_Entities[STAGE_ENTITY_START + 1].pose) {
-        g_Entities[STAGE_ENTITY_START + 1].pose--;
+    if (g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].pose) {
+        g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].pose--;
         return;
     }
-    prim = &g_PrimBuf[g_Entities[STAGE_ENTITY_START + 1].primIndex];
+    prim =
+        &g_PrimBuf[g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].primIndex];
     i = 0;
     while (prim) {
-        if (i == g_Entities[STAGE_ENTITY_START + 1].entityId) {
+        if (i == g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].entityId) {
             prim->r0 = prim->g0 = prim->b0 = 0x80;
             prim->x0 = DOPPLEGANGER.posX.i.hi;
             prim->y0 = DOPPLEGANGER.posY.i.hi;
@@ -70,10 +79,10 @@ void OVL_EXPORT(func_8010D59C)(void) {
         prim = prim->next;
     }
 
-    g_Entities[STAGE_ENTITY_START + 1].pose = 2;
-    g_Entities[STAGE_ENTITY_START + 1].entityId++;
-    if (g_Entities[STAGE_ENTITY_START + 1].entityId >= 6) {
-        g_Entities[STAGE_ENTITY_START + 1].entityId = 0;
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].pose = 2;
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].entityId++;
+    if (g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].entityId >= 6) {
+        g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].entityId = 0;
     }
 }
 
@@ -92,13 +101,15 @@ void OVL_EXPORT(func_8010D800)(void) {
     u8 temp_t1;
     u8 temp_t2;
 
-    temp_t2 = g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk1;
-    prim = &g_PrimBuf[g_Entities[STAGE_ENTITY_START + 1].primIndex];
+    temp_t2 = g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                  .ext.afterimage.resetFlag;
+    prim =
+        &g_PrimBuf[g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].primIndex];
     plDraw = &g_PlayerDraw[9];
-    temp_t1 = g_shadowOpacityReductionTable[g_Entities[STAGE_ENTITY_START + 1]
-                                                .ext.entSlot1.unk2];
-    temp_t0 =
-        g_D_800ACF3C[g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk2];
+    temp_t1 = g_shadowOpacityReductionTable
+        [g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.unk2];
+    temp_t0 = g_D_800ACF3C[g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                               .ext.afterImage.unk2];
 
     for (i = 0; prim != NULL; i++, prim = prim->next) {
         if (prim->b0 > temp_t0) {
@@ -119,16 +130,23 @@ void OVL_EXPORT(func_8010D800)(void) {
             continue;
         }
 
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].posX.i.hi = prim->x0;
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].posY.i.hi = prim->y0;
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].animCurFrame = prim->x1;
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].drawMode = prim->y1;
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].facingLeft = prim->x2;
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].palette = prim->y2;
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].zPriority =
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].posX.i.hi =
+            prim->x0;
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].posY.i.hi =
+            prim->y0;
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].animCurFrame =
+            prim->x1;
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].drawMode =
+            prim->y1;
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].facingLeft =
+            prim->x2;
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].palette =
+            prim->y2;
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].zPriority =
             DOPPLEGANGER.zPriority - 2;
         if (temp_t2) {
-            g_Entities[STAGE_ENTITY_START + (i / 2) + 1].animCurFrame = 0;
+            g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1]
+                .animCurFrame = 0;
             prim->x1 = 0;
         }
 

@@ -921,11 +921,11 @@ typedef struct PACKED {
 } ET_Player;
 
 typedef struct {
-    u8 unk0;
-    u8 unk1;
+    u8 disableFlag;
+    u8 resetFlag;
     u8 unk2;
     u8 unk3;
-} ET_EntitySlot1;
+} ET_AfterImage;
 
 typedef struct {
     char pad[0x32];
@@ -3555,7 +3555,7 @@ typedef union { // offset=0x7C
     ET_TimerOnly timer;
     ET_UTimerOnly utimer;
     ET_EntFactory factory;
-    ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
+    ET_AfterImage afterImage; // g_Entities[1], not entityID 1
     ET_EntitySlot16 entSlot16;
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;

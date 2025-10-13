@@ -156,7 +156,7 @@ void func_801093C4(void) {
     Primitive* prim;
     s32 i;
 
-    prim = &g_PrimBuf[g_Entities[1].primIndex];
+    prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
     for (i = 0; i < 6; i++) {
         prim = prim->next;
     }
@@ -240,7 +240,7 @@ void AluInit() {
     g_Player.vram_flag = g_Player.unk04 = 1;
     func_8010E570(0);
 
-    for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
+    for (e = &g_Entities[E_AFTERIMAGE_1], i = 0; i < 3; i++, e++) {
         DestroyEntity(e);
         e->animSet = ANIMSET_DRA(1);
         e->unk5A = i + 1;
@@ -248,9 +248,9 @@ void AluInit() {
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
 
-    g_Entities[1].primIndex = AllocPrimitives(PRIM_TILE, 8);
-    g_Entities[1].flags |= FLAG_HAS_PRIMS;
-    prim = &g_PrimBuf[g_Entities[1].primIndex];
+    g_Entities[E_AFTERIMAGE_1].primIndex = AllocPrimitives(PRIM_TILE, 8);
+    g_Entities[E_AFTERIMAGE_1].flags |= FLAG_HAS_PRIMS;
+    prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
     for (i = 0; i < 6; i++) {
         prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         prim = prim->next;

@@ -46,7 +46,7 @@ void func_us_801A9084(Entity* self) {
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_LEFT;
-        g_Entities[1].ext.entSlot1.unk0 = 0;
+        g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 0;
         g_Player.demo_timer = 1;
         break;
 
@@ -74,7 +74,7 @@ void func_us_801A9084(Entity* self) {
         if (g_unkGraphicsStruct.pauseEnemies != false) {
             g_unkGraphicsStruct.pauseEnemies = false;
         }
-        g_Entities[1].ext.entSlot1.unk0 = 1;
+        g_Entities[E_AFTERIMAGE_1].ext.afterimage.disableFlag = 1;
         DestroyEntity(self);
         break;
     }

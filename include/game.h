@@ -2125,9 +2125,9 @@ extern BgLayer g_BgLayers[MAX_BG_LAYER_COUNT]; /* 800730D8 */
 #define MaxEntityCount 32
 #define PLAYER g_Entities[PLAYER_CHARACTER]
 typedef enum {
-    UNK_ENTITY_1 = 1,
-    UNK_ENTITY_2,
-    UNK_ENTITY_3,
+    E_AFTERIMAGE_1 = 1,
+    E_AFTERIMAGE_2,
+    E_AFTERIMAGE_3,
     UNK_ENTITY_4,
     UNK_ENTITY_5,
     UNK_ENTITY_6,
