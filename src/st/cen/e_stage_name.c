@@ -2,7 +2,7 @@
 #include "cen.h"
 
 #ifdef VERSION_US
-#include "../e_stage_name.h"
+#include "../e_stage_name_us.h"
 #endif
 
 #ifdef VERSION_PSP
@@ -24,5 +24,5 @@ static u8 stage_name_fr[] = {
 #endif
 
 #if defined(VERSION_PSP) || defined(VERSION_HD)
-#include "../e_stage_name_psp.h"
+#include "../e_stage_name_jp.h"
 #endif

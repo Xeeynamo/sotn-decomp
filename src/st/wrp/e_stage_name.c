@@ -4,9 +4,9 @@
 #define STAGE_NAME OVL_EXPORT(STAGE_NAME)
 
 #ifdef VERSION_US
-#include "../e_stage_name.h"
+#include "../e_stage_name_us.h"
 #endif
 
 #if defined(VERSION_PSP) || defined(VERSION_HD)
-#include "../e_stage_name_psp.h"
+#include "../e_stage_name_jp.h"
 #endif

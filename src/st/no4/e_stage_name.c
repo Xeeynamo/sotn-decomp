@@ -4,7 +4,7 @@
 #define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 #ifdef VERSION_US
-#include "../e_stage_name.h"
+#include "../e_stage_name_us.h"
 #endif
 
 #ifdef VERSION_PSP
@@ -26,5 +26,5 @@ static u8 stage_name_fr[] = {
 
 #define STAGE_NAME_LOAD_GFX
 #define STAGE_NAME_BOX_MARGIN 0
-#include "../e_stage_name_psp.h"
+#include "../e_stage_name_jp.h"
 #endif

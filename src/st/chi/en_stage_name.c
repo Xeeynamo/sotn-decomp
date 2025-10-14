@@ -415,5 +415,5 @@ void EntityStageNamePopup(Entity* self) {
 #else
 // func_801AD0EC: StageNamePopupHelper
 // func_801AD2BC: [E_STAGE_NAME_POPUP] EntityStageNamePopup
-#include "../e_stage_name.h"
+#include "../e_stage_name_us.h"
 #endif
