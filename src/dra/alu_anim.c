@@ -8,7 +8,9 @@ void SetPlayerStep(s16 step) {
     PLAYER.step_s = 0;
 }
 
-// Only the first ten values appear to be used
+// The afterimage effect is animated by using an index to step through each
+// animation table.  Interestingly, the tables are longer than the final max
+// value of 10, so the remaining numbers are never used.
 static u8 g_afterImageTimerTable[] = {
     10, 8, 8, 6, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 255, 255, 0, 0};
 
@@ -28,7 +30,7 @@ void InitPlayerAfterImage(void) {
     case 0x61:
     case 0x62:
         // If index reaches 10, stop the effect
-        g_Entities[E_AFTERIMAGE_1].ext.afterImage.index = 10;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.index = MaxAfterImageIndex;
         return;
     }
     if ((g_Player.padTapped & GAMEBUTTONS) ||
@@ -38,7 +40,8 @@ void InitPlayerAfterImage(void) {
         g_Entities[E_AFTERIMAGE_1].ext.afterImage.index = 0;
         g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer = 0;
     } else {
-        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.index >= 10) {
+        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.index >=
+            MaxAfterImageIndex) {
             return;
         }
         if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer == 0) {

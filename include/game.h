@@ -2127,6 +2127,9 @@ extern BgLayer g_BgLayers[MAX_BG_LAYER_COUNT]; /* 800730D8 */
 // The max number of afterimage sprites is 6 (two per entity)
 // Going over this number will crash the game.
 #define MaxAfterImages 6
+// The afterimage effect is animated by using an index to step through each
+// animation table.
+#define MaxAfterImageIndex 10
 typedef enum {
     E_AFTERIMAGE_1 = 1,
     E_AFTERIMAGE_2,

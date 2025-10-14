@@ -18,7 +18,8 @@ void InitRicAfterImage(void) {
         g_Entities[E_AFTERIMAGE_1].ext.afterImage.index = 0;
         g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer = 0;
     } else {
-        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.index >= 10) {
+        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.index >=
+            MaxAfterImageIndex) {
             return;
         }
         if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer == 0) {

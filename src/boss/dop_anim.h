@@ -40,7 +40,7 @@ void OVL_EXPORT(InitPlayerAfterImage)(void) {
             0;
     } else {
         if (g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
-                .ext.afterImage.index >= 10) {
+                .ext.afterImage.index >= MaxAfterImageIndex) {
             return;
         }
         if (g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]

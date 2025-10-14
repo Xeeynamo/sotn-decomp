@@ -20,7 +20,7 @@ void func_us_801C5354(s32 resetAnims, s32 arg1) {
         }
     }
     g_Entities[E_ID_41].ext.disableAfterImage.unk7C = 1;
-    g_Entities[E_ID_41].ext.disableAfterImage.unk7E = 0xA;
+    g_Entities[E_ID_41].ext.disableAfterImage.unk7E = MaxAfterImageIndex;
     if (arg1 != 0) {
         if (arg1 < 4) {
             g_Dop.timers[ALU_T_15] = 4;

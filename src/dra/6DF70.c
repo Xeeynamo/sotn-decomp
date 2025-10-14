@@ -32,7 +32,7 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
     }
 
     g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7C = 1;
-    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7E = 10;
+    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7E = MaxAfterImageIndex;
 
     if (arg1) {
         if (arg1 < 4) {
