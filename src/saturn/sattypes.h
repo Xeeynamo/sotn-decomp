@@ -120,8 +120,8 @@ typedef enum {
 typedef struct {
     u8 disableFlag;
     u8 resetFlag;
-    u8 unk2;
-    u8 unk3;
+    u8 index;
+    u8 timer;
 } ET_AfterImage;
 
 typedef struct {
