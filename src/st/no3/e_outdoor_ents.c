@@ -30,7 +30,7 @@ void EntityPushAlucard(Entity* self) {
         }
         player->animCurFrame = 0;
         g_Player.demo_timer = 1;
-        g_api.ResetAfterImageIndex();
+        g_api.ForceAfterImageOn();
         break;
 
     case 2:
@@ -41,7 +41,7 @@ void EntityPushAlucard(Entity* self) {
             self->ext.alucardController.unk80 = FIX(4.5);
         }
         g_Player.demo_timer = 1;
-        g_api.ResetAfterImageIndex();
+        g_api.ForceAfterImageOn();
         break;
 
     case 3:
@@ -56,7 +56,7 @@ void EntityPushAlucard(Entity* self) {
             self->step++;
         }
         g_Player.demo_timer = 1;
-        g_api.ResetAfterImageIndex();
+        g_api.ForceAfterImageOn();
         break;
 
     case 4:
@@ -68,7 +68,7 @@ void EntityPushAlucard(Entity* self) {
             self->step++;
         }
         g_Player.demo_timer = 1;
-        g_api.ResetAfterImageIndex();
+        g_api.ForceAfterImageOn();
         break;
 
     case 5:
@@ -78,7 +78,7 @@ void EntityPushAlucard(Entity* self) {
         } else {
             g_Player.padSim = PAD_RIGHT | PAD_CROSS;
         }
-        g_api.ResetAfterImageIndex();
+        g_api.ForceAfterImageOn();
         player->posX.val += FIX(4.5);
         g_Player.demo_timer = 1;
     }

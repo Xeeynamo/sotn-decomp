@@ -1678,7 +1678,7 @@ typedef struct {
     /* 8003C83C */ bool (*LoadMonsterLibrarianPreview)(s32 monsterId);
     /* 8003C840 */ s32 (*TimeAttackController)(
         TimeAttackEvents eventId, TimeAttackActions action);
-    /* 8003C844 */ void (*ResetAfterImageIndex)(void);
+    /* 8003C844 */ void (*ForceAfterImageOn)(void);
     /* 8003C848 */ s32 (*func_800FE044)(s32, s32);
     /* 8003C84C */ void (*AddToInventory)(u32 id, EquipKind kind);
     /* 8003C850 */ RelicDesc* relicDefs;
@@ -1786,7 +1786,7 @@ extern Accessory* g_api_accessoryDefs;
 extern void (*g_api_AddHearts)(s32 value);
 extern s32 (*g_api_TimeAttackController)(
     TimeAttackEvents eventId, TimeAttackActions action);
-extern void (*g_api_ResetAfterImageIndex)(void);
+extern void (*g_api_ForceAfterImageOn)(void);
 extern s32 (*g_api_func_800FE044)(s32, s32);
 extern void (*g_api_AddToInventory)(u32 id, EquipKind kind);
 extern RelicDesc* g_api_relicDefs;

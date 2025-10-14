@@ -30,7 +30,7 @@ void func_us_801C4954(s32 resetAnims, s32 arg1) {
     }
 }
 
-void ResetAfterImageIndex(void) {
+void ForceAfterImageOn(void) {
     g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.index = 0;
 }
 

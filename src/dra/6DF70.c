@@ -43,7 +43,9 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
     }
 }
 
-void ResetAfterImageIndex(void) {
+// Used by NO3 to make after image effect play forever
+// during cutscene by making sure the index never increases
+void ForceAfterImageOn(void) {
     g_Entities[E_AFTERIMAGE_1].ext.afterImage.index = 0;
 }
 

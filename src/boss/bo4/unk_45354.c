@@ -31,7 +31,7 @@ void func_us_801C5354(s32 resetAnims, s32 arg1) {
 }
 
 #ifndef VERSION_PC
-static void ResetAfterImageIndex(void) UNUSED {
+static void ForceAfterImageOn(void) UNUSED {
     g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.index = 0;
 }
 #endif
