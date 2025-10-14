@@ -1722,7 +1722,7 @@ typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ f32 unk80;
     /* 0x84 */ s32 : 32;
-    /* 0x88 */ s16 unk88;
+    /* 0x88 */ u16 unk88;
     /* 0x8A */ s16 : 16;
     /* 0x8C */ s32 unk8C;
 } ET_UnkSelEnts;

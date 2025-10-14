@@ -1,23 +1,56 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "sel.h"
+#include "../sel/sel.h"
 
 // BSS
 static s32 D_801BB010;
+static s32 D_psp_09285E70;
 static s32 D_801BB014;
-static u8 D_801BB018[0xE0];
+static u8 D_801BB018[0x100];
 static s32 D_801804D0 = 0;
 
-u8 D_801804D4[] = {STAGE_MEMORYCARD, STAGE_CAT};
-const char* D_801804D8[] = {
-    "NORMAL      ",
-    "SPECIAL     ",
-};
-const char D_801A7B80[] = "SELECT ！！";
+extern s32 g_UserLanguage;
+extern s32 D_psp_0924F800;
+extern s32 D_psp_0924F808;
+extern u8 D_psp_09285170[];
+extern s32 D_psp_09285480[];
+extern s32 D_psp_08B42050;
 
-void HandleTitleScreen(void) {
+void func_psp_09240A88(void) {
+    switch (g_GameEngineStep) {
+    case Engine_Init:
+        if (g_IsUsingCd) {
+            break;
+        }
+        g_IsTimeAttackUnlocked = 1;
+        D_8003C728 = 1;
+        g_CurrentStream = 0;
+        g_GameEngineStep++;
+        break;
+
+    case Engine_Normal:
+        func_90FFAB8();
+        if (D_8003C728) {
+            break;
+        }
+        g_IsTimeAttackUnlocked = 0;
+        g_CurrentStream = 0;
+        func_801B18F4();
+        g_GameState = Game_Title;
+        g_GameEngineStep = Engine_Init;
+        break;
+    }
+}
+
+void func_psp_09240B58(void) {
+    RECT rect;
     Primitive* prim;
     Primitive* prim15;
     s32 i;
+    s32 var_s3;
+
+    if (0) {
+        s32 var_s4 = 0; // fake
+    }
 
     func_801B1F34();
     switch (g_GameEngineStep) {
@@ -27,11 +60,17 @@ void HandleTitleScreen(void) {
             g_LoadFile = 0x8003;
             g_LoadOvlIdx = 0xFF;
         }
-        D_801BB010 = g_api.AllocPrimitives(PRIM_SPRT, 0x11);
+        rect.x = 0x220;
+        rect.y = 0x1AF;
+        rect.w = 2;
+        rect.h = 1;
+        StoreImage(&rect, (u_long*)D_801BB018);
+        func_psp_09237CB8();
+        D_801BB010 = g_api.AllocPrimitives(PRIM_SPRT, 0x15);
         prim = &g_PrimBuf[D_801BB010];
         for (i = 0; i < 3; i++, prim = prim->next) {
             prim->x0 = i * 0x80 + 0x70;
-            prim->y0 = 0xA8;
+            prim->y0 = 0xA0;
             prim->u0 = 0x80;
             prim->v0 = i * 0x10 + 0xB0;
             prim->u1 = 0x80;
@@ -70,9 +109,19 @@ void HandleTitleScreen(void) {
         for (i = 0; i < 4; i++, prim = prim->next) {
             prim->x0 = i * 0x80;
             prim->u1 = 0x80;
-            prim->y0 = 0x18;
-            prim->v1 = 0x88;
-            prim->tpage = i + 0x8C;
+            prim->y0 = 8;
+            prim->v1 = 0x80;
+            switch (i) {
+            case 0:
+            case 1:
+                prim->tpage = (D_psp_0924F800 | 0x80) + i;
+                break;
+            case 2:
+            case 3:
+                prim->tpage = ((D_psp_0924F808 | 0x80) + i) - 2;
+                break;
+            }
+            prim->clut = 0;
             prim->priority = 2;
             prim->drawMode = DRAW_HIDE;
         }
@@ -93,9 +142,67 @@ void HandleTitleScreen(void) {
         prim->clut = 0x22;
         prim->priority = 1;
         prim->drawMode = DRAW_HIDE;
+        prim = prim->next;
+
+        for (i = 0; i < 2; i++, prim = prim->next) {
+            prim->x0 = (i * 0x80) + 0xA0;
+            prim->y0 = 0x9C;
+            if (i == 0) {
+                prim->u0 = 0;
+                prim->v0 = 0;
+                prim->u1 = 0x80;
+                prim->v1 = 0x10;
+                prim->tpage = 0x1F;
+            } else if (g_UserLanguage != 1) {
+                prim->u0 = 0;
+                prim->v0 = 0x10;
+                prim->u1 = 0x80;
+                prim->v1 = 0x14;
+                prim->tpage = 0x1F;
+            } else {
+                prim->u0 = 0x85;
+                prim->v0 = 0xC0;
+                prim->u1 = 0x24;
+                prim->v1 = 0x10;
+                prim->tpage = 0x18;
+            }
+            prim->clut = 0x20;
+            prim->priority = 0;
+            prim->drawMode = DRAW_HIDE;
+        }
+        for (i = 0; i < 1; i++, prim = prim->next) {
+            prim->x0 = 0xA0;
+            prim->y0 = 0xBC;
+            prim->u0 = 0;
+            prim->v0 = 0x60;
+            prim->u1 = 0x80;
+            prim->v1 = 0x10;
+            prim->tpage = 0x1F;
+            prim->clut = 0x20;
+            prim->priority = 0;
+            prim->drawMode = DRAW_HIDE;
+        }
+        for (i = 0; i < 1; i++, prim = prim->next) {
+            prim->x0 = 0x78;
+            prim->y0 = 0x9C;
+            prim->u0 = 0x30;
+            prim->v0 = 0x50;
+            prim->u1 = 0x20;
+            prim->v1 = 0x10;
+            prim->tpage = 0x1F;
+            prim->clut = 0x20;
+            prim->priority = 0;
+            prim->drawMode = DRAW_HIDE;
+        }
+        D_psp_09285E70 = 0;
         func_801B18F4();
         D_801BB014 = 0;
         g_GameEngineStep++;
+        func_891CEB8(0x200, 0xF0);
+        func_891CEB8(0x200, 0xF1);
+        func_8925F7C(0x200, 0xF2, 0x10, 1);
+        func_8925F7C(0x210, 0xF2, 0x10, 1);
+        func_8925F7C(0x220, 0xF2, 0x10, 1);
         break;
 
     case 1:
@@ -106,11 +213,6 @@ void HandleTitleScreen(void) {
         while (prim != NULL) {
             prim->drawMode = DRAW_COLORS;
             SetPrimGrey(prim, D_801BB014);
-            if (i == 7 || i == 8 || i == 9 || i == 10) {
-                prim->r0 = D_801BB014 * 3 / 4;
-                prim->g0 = D_801BB014 * 7 / 8;
-                prim->b0 = D_801BB014 * 3 / 4;
-            }
             if (i == 15 || i == 16) {
                 prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             }
@@ -132,7 +234,7 @@ void HandleTitleScreen(void) {
                     prim->drawMode = DRAW_DEFAULT;
                 }
             }
-            if (i < 15 || i > 16) {
+            if ((i != 15) && (i != 16)) {
                 continue;
             }
             if (i == 15) {
@@ -223,21 +325,25 @@ void HandleTitleScreen(void) {
                 }
             }
         }
+        var_s3 = 0;
         if (g_pads[0].tapped & PAD_START) {
+            var_s3++;
+        }
+        if (var_s3 != 0) {
             g_api.PlaySfx(SFX_START_SLAM_B);
             g_GameEngineStep++;
         }
         break;
 
     case 3:
-        g_GameEngineStep = 6;
+        g_GameEngineStep = 7;
         break;
 
     case 4:
         if (g_pads[0].tapped & (PAD_RIGHT | PAD_DOWN)) {
             g_api.PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4++;
-            if (D_800987B4 >= 2) {
+            if (D_800987B4 >= 0x21) {
                 D_800987B4 = 0;
             }
         }
@@ -245,19 +351,13 @@ void HandleTitleScreen(void) {
             g_api.PlaySfx(SFX_DEBUG_SELECT);
             D_800987B4--;
             if (D_800987B4 < 0) {
-                D_800987B4 = 1;
+                D_800987B4 = 0x20;
             }
         }
-        prim = &g_PrimBuf[D_801BB010];
-        if (g_Timer & 0x1C) {
-            prim->drawMode = DRAW_DEFAULT;
-        } else {
-            prim->drawMode = DRAW_HIDE;
-        }
-        g_StageId = D_801804D4[D_800987B4];
+        g_StageId = D_psp_09285170[D_800987B4];
         func_801B1F4C(1);
-        func_801B259C(D_801804D8[D_800987B4], 1);
-        if (g_pads[0].tapped & (PAD_START | PAD_CIRCLE)) {
+        func_90F0DD8(D_psp_09285480[D_800987B4], 1);
+        if (g_pads[0].tapped & (D_psp_08B42050 | 8)) {
             g_api.PlaySfx(SFX_START_SLAM_B);
             g_GameEngineStep++;
         }
@@ -280,8 +380,8 @@ void HandleTitleScreen(void) {
         break;
 
     case 6:
-        prim = &g_PrimBuf[D_801BB010];
-        i = 0;
+        prim = &g_PrimBuf[D_801BB010] + 3;
+        i = 3;
         D_801BB014 -= 8;
         while (prim != NULL) {
             prim->drawMode = DRAW_COLORS;
@@ -296,6 +396,47 @@ void HandleTitleScreen(void) {
             g_StageId = STAGE_MEMORYCARD;
             g_GameEngineStep = 5;
         }
-        return;
+        if (D_psp_09285E70 == 1) {
+            SetGameState(Game_Boot);
+        }
+        break;
+
+    case 7:
+        prim = &g_PrimBuf[D_801BB010];
+        for (i = 0; i < 3; i++, prim = prim->next) {
+            prim->priority = 0;
+            prim->drawMode = DRAW_HIDE;
+        }
+        prim = &g_PrimBuf[D_801BB010] + 17;
+        for (i = 0; i < 3; i++, prim = prim->next) {
+            prim->priority = 2;
+        }
+        prim = &g_PrimBuf[D_801BB010] + 20;
+        for (i = 0; i < 1; i++, prim = prim->next) {
+            prim->priority = 2;
+            prim->x0 = 0x78;
+            prim->y0 = (D_psp_09285E70 << 5) + 0x9C;
+        }
+        if (g_pads[0].tapped & 0x40) {
+            D_psp_09285E70++;
+            if (D_psp_09285E70 >= 2) {
+                D_psp_09285E70 = 1;
+            } else {
+                g_api.PlaySfx(SFX_UI_MOVE);
+            }
+        }
+        if (g_pads[0].tapped & 0x10) {
+            D_psp_09285E70--;
+            if (D_psp_09285E70 < 0) {
+                D_psp_09285E70 = 0;
+            } else {
+                g_api.PlaySfx(SFX_UI_MOVE);
+            }
+        }
+        if (g_pads[0].tapped & (D_psp_08B42050 | 8)) {
+            g_api.PlaySfx(SFX_START_SLAM_B);
+            g_GameEngineStep = 6;
+        }
+        break;
     }
 }
