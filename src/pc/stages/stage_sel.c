@@ -6,6 +6,8 @@
 #include <string.h>
 #include <cutscene.h>
 
+extern const char* D_801803A8[10];
+
 void* SEL_g_EntityGfxs[] = {NULL, NULL};
 
 // stubs
@@ -58,36 +60,7 @@ const char D_801ABFC8[] = "MDEC_out_sync";
 const char D_801ABFD8[] = "DMA=(%d,%d), ADDR=(0x%08x->0x%08x)";
 const char D_801AC000[] = "FIFO";
 const char D_801AC038[] = "%s timeout:\n";
-s32 D_801BAEE4[9];
-s32 D_801BAF08; // block icon animation index
-s32 D_801BAF0C;
-s32 D_801BAF10;
-s32 D_801BAF14;
-s32 D_801BAF18[NUM_GFX][2];
-s32 D_801BAFC0;
-s32 MainMenuMaskPrimIndex;
-s32 g_SelNextCrossPressEngStep;
-s32 g_SelEng220NextStep;
-u8* D_801BAFD0; // Pointer to texture pattern
-s32 D_801BAFD4;
-s32 D_801BAFD8;
-s32 D_801BAFDC;
-s32 D_801BAFE0;
-u32 D_801BAFE4;
-s32 D_801BAFE8;
-s32 D_801BAFF4;
-s32 D_801BAFFC;
-s32 D_801BB000;
-s32 D_801BB004;
-s32 D_801BB008;
-s32 D_801BB00C;
-s32 D_801BB010;
-s32 D_801BB014;
-u16 D_801BB0F8[0x30][0x30];
-s32 D_801BC340;
 s32 g_StreamDiscStatus;
-s32 D_801BC348;
-s32 D_801BC34C;
 Dialogue g_Dialogue;
 u32 D_801BC398[16];
 s32 g_MemCardSelectorX;

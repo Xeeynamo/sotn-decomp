@@ -299,9 +299,10 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/banks.c
     src/st/sel/CD54.c
     src/st/sel/2C048.c
-    src/st/sel/33164.c
+    src/st/sel/318CC.c
+    src/st/sel/32D6C.c
     src/st/sel/3410C.c
-    src/st/sel/3585C.c
+    src/st/sel/34B30.c
     src/st/sel/cutscene.c
 )
 

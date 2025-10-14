@@ -3,16 +3,6 @@
 #include <cutscene.h>
 
 extern Dialogue g_Dialogue;
-extern u16 D_psp_092855F0[];
-extern u8 D_psp_09285678[];
-extern u16 D_psp_09285688[];
-extern u8 D_psp_09285710[];
-extern u16 D_psp_09285720[];
-extern u8 D_psp_092857B8[];
-extern u16 D_psp_092857C8[];
-extern u8 D_psp_09285850[];
-extern u16 D_psp_09285860[];
-extern u8 D_psp_092858E8[];
 extern u8 D_psp_09286868[];
 extern Dialogue4 D_psp_09287E60;
 extern u32 D_893F80C;
@@ -46,6 +36,69 @@ extern u16 D_psp_09286C60[][0x30];
 extern u32 D_psp_09285928[];
 extern u8* D_psp_09285B98;
 
+// clang-format off
+static u16 actor_names_en[] = {
+    CH('R'), CH('i'), CH('c'), CH('h'), CH('t'), CH('e'), CH('r'),
+    CH('D'), CH('r'), CH('a'), CH('c'), CH('u'), CH('l'), CH('a'),
+    CH('D'), CH('e'), CH('a'), CH('t'), CH('h'),
+    CH('A'), CH('l'), CH('u'), CH('c'), CH('a'), CH('r'), CH('d'),
+    CH('M'), CH('a'), CH('r'), CH('i'), CH('a'),
+    CH('L'), CH('i'), CH('b'), CH('r'), CH('a'), CH('r'), CH('i'), CH('a'), CH('n'),
+    CH('L'), CH('i'), CH('s'), CH('a'),
+    CH('S'), CH('u'), CH('c'), CH('c'), CH('u'), CH('b'), CH('u'), CH('s'),
+    CH('F'), CH('e'), CH('r'), CH('r'), CH('y'), CH('m'), CH('a'), CH('n'),
+    CH('S'), CH('h'), CH('a'), CH('f'), CH('t')};
+static u8 actor_name_len_en[] = {7, 7, 5, 7, 5, 9, 4, 8, 8, 5};
+static u16 actor_names_sp[] = {
+    CH('R'), CH('i'), CH('c'), CH('h'), CH('t'), CH('e'), CH('r'),
+    CH('D'), CH('r'), CH('a'), CH('c'), CH('u'), CH('l'), CH('a'),
+    CH('D'), CH('e'), CH('a'), CH('t'), CH('h'),
+    CH('A'), CH('l'), CH('u'), CH('c'), CH('a'), CH('r'), CH('d'),
+    CH('M'), CH('a'), CH('r'), CH('i'), CH('a'),
+    CH('B'), CH('i'), CH('b'), CH('l'), CH('i'), CH('o'), CH('t'), CH('e'), CH('c'), CH('a'), CH('r'), CH('i'), CH('o'),
+    CH('L'), CH('i'), CH('s'), CH('a'),
+    CH('S'), 0xAC, CH('c'), CH('u'), CH('b'), CH('o'),
+    CH('B'), CH('a'), CH('r'), CH('q'), CH('u'), CH('e'), CH('r'), CH('o'),
+    CH('S'), CH('h'), CH('a'), CH('f'), CH('t')};
+static u8 actor_name_len_sp[] = {7, 7, 5, 7, 5, 13, 4, 6, 8, 5};
+static u16 actor_names_it[] = {
+    CH('R'), CH('i'), CH('c'), CH('h'), CH('t'), CH('e'), CH('r'),
+    CH('D'), CH('r'), CH('a'), CH('c'), CH('u'), CH('l'), CH('a'),
+    CH('D'), CH('e'), CH('a'), CH('t'), CH('h'),
+    CH('A'), CH('l'), CH('u'), CH('c'), CH('a'), CH('r'), CH('d'),
+    CH('M'), CH('a'), CH('r'), CH('i'), CH('a'),
+    CH('B'), CH('i'), CH('b'), CH('l'), CH('i'), CH('o'), CH('t'), CH('e'), CH('c'), CH('a'), CH('r'), CH('i'), CH('o'),
+    CH('L'), CH('i'), CH('s'), CH('a'),
+    CH('S'), CH('u'), CH('c'), CH('c'), CH('u'), CH('b'), CH('u'), CH('s'),
+    CH('T'), CH('r'), CH('a'), CH('g'), CH('h'), CH('e'), CH('t'), CH('t'), CH('a'), CH('t'), CH('o'), CH('r'), CH('e'),
+    CH('S'), CH('h'), CH('a'), CH('f'), CH('t')};
+static u8 actor_name_len_it[] = {7, 7, 5, 7, 5, 13, 4, 8, 13, 5};
+static u16 actor_names_fr[] = {
+    CH('R'), CH('i'), CH('c'), CH('h'), CH('t'), CH('e'), CH('r'),
+    CH('D'), CH('r'), CH('a'), CH('c'), CH('u'), CH('l'), CH('a'),
+    CH('D'), CH('e'), CH('a'), CH('t'), CH('h'),
+    CH('A'), CH('l'), CH('u'), CH('c'), CH('a'), CH('r'), CH('d'),
+    CH('M'), CH('a'), CH('r'), CH('i'), CH('a'),
+    CH('B'), CH('i'), CH('b'), CH('l'), CH('i'), CH('o'), CH('t'), CH('h'), 0xA0, CH('c'), CH('a'), CH('i'), CH('r'), CH('e'),
+    CH('L'), CH('i'), CH('s'), CH('a'),
+    CH('S'), CH('u'), CH('c'), CH('c'), CH('u'), CH('b'), CH('e'),
+    CH('P'), CH('a'), CH('s'), CH('s'), CH('e'), CH('u'), CH('r'),
+    CH('S'), CH('h'), CH('a'), CH('f'), CH('t')};
+static u8 actor_name_len_fr[] = {7, 7, 5, 7, 5, 14, 4, 7, 7, 5};
+static u16 actor_names_ge[] = {
+    CH('R'), CH('i'), CH('c'), CH('h'), CH('t'), CH('e'), CH('r'),
+    CH('D'), CH('r'), CH('a'), CH('c'), CH('u'), CH('l'), CH('a'),
+    CH('D'), CH('e'), CH('a'), CH('t'), CH('h'),
+    CH('A'), CH('l'), CH('u'), CH('c'), CH('a'), CH('r'), CH('d'),
+    CH('M'), CH('a'), CH('r'), CH('i'), CH('a'),
+    CH('B'), CH('i'), CH('b'), CH('l'), CH('i'), CH('o'), CH('t'), CH('h'), CH('e'), CH('k'), CH('a'), CH('r'),
+    CH('L'), CH('i'), CH('s'), CH('a'),
+    CH('S'), CH('u'), CH('k'), CH('k'), CH('u'), CH('b'), CH('u'), CH('s'),
+    CH('F'), 0x9D, CH('h'), CH('r'), CH('m'), CH('a'), CH('n'), CH('n'),
+    CH('S'), CH('h'), CH('a'), CH('f'), CH('t')};
+static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
+// clang-format on
+
 #include "../../get_lang.h"
 
 void DrawCutsceneActorName(u16 actorIndex, Entity* self, u16* actorNames,
@@ -61,12 +114,12 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self, u16* actorNames,
     u8* len;
 
     actorNameLength =
-        (u8*)GetLang(D_psp_09285678, D_psp_09285850, D_psp_09285710,
-                     D_psp_092858E8, D_psp_092857B8);
+        (u8*)GetLang(actor_name_len_en, actor_name_len_fr, actor_name_len_sp,
+                     actor_name_len_ge, actor_name_len_it);
     ch = actorNameLength[arg3[actorIndex]];
     primIndex = g_api.AllocPrimitives(PRIM_SPRT, ch);
     if (primIndex == -1) {
-        DestroyEntity(self);
+        func_92ACF18(self);
         return;
     }
     x = 0x38;
@@ -77,8 +130,8 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self, u16* actorNames,
     for (i = 0; i < arg3[actorIndex]; i++) {
         actorNameStartIndex += actorNameLength[i];
     }
-    actorNames = (u16*)GetLang(D_psp_092855F0, D_psp_092857C8, D_psp_09285688,
-                               D_psp_09285860, D_psp_09285720);
+    actorNames = (u16*)GetLang(actor_names_en, actor_names_fr, actor_names_sp,
+                               actor_names_ge, actor_names_it);
     actorName = &actorNames[actorNameStartIndex];
     while (prim != NULL) {
         prim->type = PRIM_SPRT;
@@ -212,7 +265,7 @@ void SEL_EntityCutscene(Entity* entity) {
     Primitive* prim;
     u16 nextChar;
     s32 i;
-    s32 var_s4;
+    s32 nextChar2;
     s32 var_s7;
     u32 ptr;
     u32 var_s3_2;
@@ -307,8 +360,8 @@ void SEL_EntityCutscene(Entity* entity) {
                     }
                     i = *g_Dialogue.scriptCur++;
                     prim = g_Dialogue.prim[4];
-                    var_s4 = *g_Dialogue.scriptCur++;
-                    var_s7 = var_s4 & 1;
+                    nextChar2 = *g_Dialogue.scriptCur++;
+                    var_s7 = nextChar2 & 1;
                     x = D_psp_092858F8[var_s7];
                     y = D_psp_09286658[var_s7];
                     prim->clut = D_psp_09285900[i];
@@ -363,7 +416,7 @@ void SEL_EntityCutscene(Entity* entity) {
                     prim->y0 = g_Dialogue.startY - 1;
                     prim->u0 = 0;
                     prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
-                    g_Dialogue.portraitAnimTimer = 0x18;
+                    g_Dialogue.portraitAnimTimer = 24;
                     entity->step = 5;
                     entity->step_s = 0;
                     return;
@@ -372,7 +425,7 @@ void SEL_EntityCutscene(Entity* entity) {
                     if (D_psp_09286C50) {
                         continue;
                     }
-                    g_Dialogue.portraitAnimTimer = 0x18;
+                    g_Dialogue.portraitAnimTimer = 24;
                     entity->step = 6;
                     return;
 
@@ -450,16 +503,16 @@ void SEL_EntityCutscene(Entity* entity) {
                     continue;
 
                 case 16:
-                    if (!((D_psp_09286C58 >> (*g_Dialogue.scriptCur)) & 1)) {
+                    if (!((D_psp_09286C58 >> *g_Dialogue.scriptCur) & 1)) {
                         g_Dialogue.scriptCur--;
                         return;
                     }
-                    D_psp_09286C58 &= ~(1 << (*g_Dialogue.scriptCur));
+                    D_psp_09286C58 &= ~(1 << *g_Dialogue.scriptCur);
                     g_Dialogue.scriptCur++;
                     continue;
 
                 case 17:
-                    D_psp_09286C58 |= 1 << (*g_Dialogue.scriptCur++);
+                    D_psp_09286C58 |= 1 << *g_Dialogue.scriptCur++;
                     continue;
 
                 case 18:
@@ -513,9 +566,9 @@ void SEL_EntityCutscene(Entity* entity) {
                         ptr = (u32)&D_894568C;
                         break;
                     }
-                    var_s4 = *g_Dialogue.scriptCur++;
-                    LoadTPage((u_long*)ptr, 1, 0, D_psp_09285908[var_s4], 0x100,
-                              0x30, 0x48);
+                    nextChar2 = *g_Dialogue.scriptCur++;
+                    LoadTPage((u_long*)ptr, 1, 0, D_psp_09285908[nextChar2],
+                              0x100, 0x30, 0x48);
                     continue;
 
                 case 20:
@@ -611,11 +664,11 @@ void SEL_EntityCutscene(Entity* entity) {
             }
         }
         for (i = 0, var_s7 = 0; i < 8; i++) {
-            for (var_s4 = 0; var_s4 < 8; var_s4++) {
-                if ((var_s5[var_s4 / 2 + i * 8 / 2] &
-                     (0xF0 >> ((var_s4 & 1) * 4))) &&
-                    (var_s7 < var_s4)) {
-                    var_s7 = var_s4;
+            for (nextChar2 = 0; nextChar2 < 8; nextChar2++) {
+                if ((var_s5[nextChar2 / 2 + i * 8 / 2] &
+                     (0xF0 >> ((nextChar2 & 1) * 4))) &&
+                    (var_s7 < nextChar2)) {
+                    var_s7 = nextChar2;
                 }
             }
         }
