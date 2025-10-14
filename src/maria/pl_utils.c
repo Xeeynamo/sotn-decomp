@@ -210,7 +210,7 @@ void MarDisableAfterImage(s32 resetAnims, s32 arg1) {
     FntPrint("op disable\n");
 #endif
     if (resetAnims) {
-        g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7D = 1;
+        g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.resetFlag = 1;
         g_Entities[E_AFTERIMAGE_1].animCurFrame =
             g_Entities[E_AFTERIMAGE_2].animCurFrame =
                 g_Entities[E_AFTERIMAGE_3].animCurFrame = 0;
@@ -220,8 +220,8 @@ void MarDisableAfterImage(s32 resetAnims, s32 arg1) {
             prim = prim->next;
         }
     }
-    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7C = 1;
-    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7E = 0xA;
+    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.disableFlag = 1;
+    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.index = MaxAfterImageIndex;
     if (arg1) {
         g_Player.timers[PL_T_AFTERIMAGE_DISABLE] = 4;
     }

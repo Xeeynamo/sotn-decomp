@@ -1808,9 +1808,9 @@ typedef struct {
 } ET_StoneDoor;
 
 typedef struct {
-    /* 0x7C */ u8 unk7C;
-    /* 0x7D */ u8 unk7D;
-    /* 0x7E */ u8 unk7E;
+    /* 0x7C */ u8 disableFlag;
+    /* 0x7D */ u8 resetFlag;
+    /* 0x7E */ u8 index;
 } ET_DisableAfterImage;
 
 typedef struct {

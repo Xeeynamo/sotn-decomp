@@ -19,7 +19,7 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
     s32 i;
 
     if (resetAnims) {
-        g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7D = 1;
+        g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.resetFlag = 1;
         g_Entities[E_AFTERIMAGE_1].animCurFrame =
             g_Entities[E_AFTERIMAGE_2].animCurFrame =
                 g_Entities[E_AFTERIMAGE_3].animCurFrame = 0;
@@ -31,8 +31,8 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
         }
     }
 
-    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7C = 1;
-    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.unk7E = MaxAfterImageIndex;
+    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.disableFlag = 1;
+    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.index = MaxAfterImageIndex;
 
     if (arg1) {
         if (arg1 < 4) {
