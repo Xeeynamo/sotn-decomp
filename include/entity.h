@@ -89,30 +89,27 @@ typedef struct {
 } ET_SealedDoor; // Blue door that displays "Magically Sealed" prompt
 
 typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s32 unk80;
-    /* 0x84 */ struct Primitive* unk84;
-    /* 0x88 */ struct Primitive* unk88;
-    /* 0x8C */ struct Primitive* unk8C;
-    /* 0x90 */ s16 unk90;
-    /* 0x92 */ s16 unk92;
+    /* 0x7C */ struct Primitive* firstTextPrim;
+    /* 0x80 */ s32 timer;
+    /* 0x84 */ struct Primitive* boxPrim;
+    /* 0x88 */ struct Primitive* firstOutlinePrim;
+    /* 0x8C */ struct Primitive* firstDissolvePrim;
+    /* 0x90 */ s16 textOutlineBrightness;
+    /* 0x92 */ s16 textFillBrightness;
 } ET_StagePopup;
 
 typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
-    /* 0x84 */ struct Primitive* unk84;
-    /* 0x88 */ struct Primitive* unk88;
+    /* 0x7C */ struct Primitive* firstTextPrim;
+    /* 0x80 */ s16 timer;
+    /* 0x84 */ struct Primitive* boxPrim;
+    /* 0x88 */ struct Primitive* firstStarPrim; // Not used by CHI/NZ0
     /* 0x8C */ u8 unk8C;
+    // Only used by CHI/NZ0
     /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 unk94;
+    /* 0x94 */ s32 depth;
     /* 0x98 */ s32 pad[3];
-    /* 0xA4 */ struct Primitive* primA4;
-    /* 0xA8 */ s16 unkA8;
-    /* 0xAA */ s16 unkAA;
-    /* 0xAC */ s16 unkAC;
-    /* 0xAE */ s16 unkAE;
-    /* 0xB0 */ s16 unkB0;
+    /* 0xA4 */ struct Primitive* firstRollingTextPrim; // drum turn effect
+    /* 0xA8 */ s16 rotationSlices[5];
 } ET_StagePopupJP;
 
 typedef struct {

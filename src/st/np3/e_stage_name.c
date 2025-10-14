@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
 
-#if defined(VERSION_US)
-#include "../e_stage_name.h"
+#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
-#else
-#include "../entity_stage_name_popup_jp.h"
+#ifdef VERSION_US
+#include "../e_stage_name_us.h"
+#endif
+
+#ifdef VERSION_PSP
+#include "../e_stage_name_jp.h"
 #endif

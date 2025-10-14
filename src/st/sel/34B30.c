@@ -1,16 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../sel/sel.h"
+#include "sel.h"
 
-extern s32 D_psp_09286C58;
-extern s8* D_psp_09285B80;
-extern s8* D_psp_09285B88;
-
-// BSS
-static s32 D_801D6B24;
-static s32 D_801BC3E4;
-static s32 D_801BD030;
+extern u32 D_801BD030;
+extern s8 D_8018BC4A;
+extern s8 D_8018BC50;
 
 // DATA
+static u8 D_801804E0[] = {
+    0x02, 0x19, 0x02, 0x1A, 0x02, 0x1B, 0x02, 0x1C, 0x02, 0x1D, 0x02, 0x1E,
+    0x02, 0x1F, 0x02, 0x20, 0x02, 0x21, 0x02, 0x22, 0x02, 0x23, 0x02, 0x24,
+    0x02, 0x25, 0x02, 0x26, 0x02, 0x27, 0x02, 0x28, 0xFF, 0x00};
 static u8 D_80180504[] = {
     0x04, 0x29, 0x04, 0x2A, 0x04, 0x2B, 0x04, 0x2C, 0x04, 0x2D, 0x04, 0x2E,
     0x04, 0x2F, 0x04, 0x30, 0x04, 0x31, 0x04, 0x32, 0x04, 0x33, 0x04, 0x34,
@@ -32,7 +31,9 @@ static u8 D_80180580[] = {
     0x04, 0x31, 0x04, 0x32, 0x04, 0x33, 0x05, 0x34, 0x04, 0x35,
     0x04, 0x36, 0x04, 0x37, 0x02, 0x2C, 0xFF, 0x00};
 
+#ifndef HARD_LINK
 #include "../../destroy_entity.h"
+#endif
 
 static void SEL_SetStep(Entity* entity, u16 step) {
     entity->step = step;
@@ -41,7 +42,9 @@ static void SEL_SetStep(Entity* entity, u16 step) {
     entity->poseTimer = 0;
 }
 
+#ifndef HARD_LINK
 #include "../animate_entity.h"
+#endif
 
 // Note: SEL uses entities weirdly. This probably shouldn't be PLAYER.
 // g_Entities[0] is probably its own thing.
@@ -52,7 +55,7 @@ void func_801B4C68(void) {
 
     switch (self->step) {
     case 0:
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex != -1) {
             prim = &g_PrimBuf[primIndex];
 
@@ -63,30 +66,11 @@ void func_801B4C68(void) {
             prim->clut = 0;
 
             prim->u0 = prim->u2 = prim->v0 = prim->v1 = 0;
-            prim->u1 = prim->u3 = 0x7F;
+            prim->u1 = prim->u3 = 0xFF;
             prim->v2 = prim->v3 = 0xE0;
 
             prim->x0 = prim->x2 = 0;
-            prim->x1 = prim->x3 = 0x80;
-            prim->y0 = prim->y1 = 0;
-            prim->y2 = prim->y3 = 0xE0;
-
-            prim->priority = 0x40;
-            prim->drawMode = DRAW_DEFAULT;
-            prim = prim->next;
-
-            self->flags |= FLAG_HAS_PRIMS;
-            self->primIndex = primIndex;
-            self->ext.unkSelEnts.prim = prim;
-            prim->tpage = 0x8B;
-            prim->clut = 0;
-
-            prim->u0 = prim->u2 = prim->v0 = prim->v1 = 0;
-            prim->u1 = prim->u3 = 0x7F;
-            prim->v2 = prim->v3 = 0xE0;
-
-            prim->x0 = prim->x2 = 0x80;
-            prim->x1 = prim->x3 = 0x100;
+            prim->x1 = prim->x3 = 0xFF;
             prim->y0 = prim->y1 = 0;
             prim->y2 = prim->y3 = 0xE0;
 
@@ -136,8 +120,8 @@ void func_801B4DE0(void) {
 
             prim->x0 = prim->x2 = 0;
             prim->x1 = prim->x3 = 0xFF;
-            prim->y0 = prim->y1 = 0;
-            prim->y2 = prim->y3 = 0xFF;
+            prim->y0 = prim->y1 = 4;
+            prim->y2 = prim->y3 = 0xE4;
 
             PCOL(prim) = 0xFF;
 
@@ -191,8 +175,8 @@ void func_801B4FFC(void) {
 
             prim->x0 = prim->x2 = 0;
             prim->x1 = prim->x3 = 0x180;
-            prim->y0 = prim->y1 = 0;
-            prim->y2 = prim->y3 = 0xFF;
+            prim->y0 = prim->y1 = 4;
+            prim->y2 = prim->y3 = 0xE4;
 
             PCOL(prim) = 0;
 
@@ -213,7 +197,7 @@ void func_801B4FFC(void) {
             }
         }
 
-    case 3:
+    case 2:
         break;
     }
 }
@@ -341,25 +325,14 @@ static void func_801B5548(void) {
 
     switch (self->step) {
     case 0:
-        if (g_PlayableCharacter == PLAYER_MARIA) {
-            self->animSet = ANIMSET_OVL(3);
-            self->animCurFrame = 0xC;
-            self->unk5A = 0x46;
-            self->palette = PAL_DRA(0x258);
-            self->facingLeft = 0;
-            self->ext.unkSelEnts.unk80.val = FIX(0x80);
-            self->posY.i.hi = 0xA0;
-            self->zPriority = 0xC0;
-        } else {
-            self->animSet = ANIMSET_OVL(2);
-            self->animCurFrame = 7;
-            self->facingLeft = 0;
-            self->unk5A = 0xF;
-            self->ext.unkSelEnts.unk80.val = FIX(0x78);
-            self->posY.i.hi = 0x9E;
-            self->zPriority = 0xC0;
-            self->palette = PAL_OVL(0x210);
-        }
+        self->animSet = ANIMSET_OVL(2);
+        self->animCurFrame = 7;
+        self->facingLeft = 0;
+        self->unk5A = 0xF;
+        self->ext.unkSelEnts.unk80.val = FIX(0x78);
+        self->posY.i.hi = 0x9E;
+        self->zPriority = 0xC0;
+        self->palette = PAL_OVL(0x210);
         self->step++;
         break;
 
@@ -386,7 +359,7 @@ void func_801B55C8(void) {
         break;
 
     case 1:
-        if (D_psp_09286C58 & 0x10) {
+        if (D_801BC3E8 & 0x10) {
             self->animSet = ANIMSET_OVL(4);
             self->unk5A = 0x48;
             self->animCurFrame = 0x2C;
@@ -406,7 +379,7 @@ void func_801B55C8(void) {
         break;
 
     case 3:
-        if (D_psp_09286C58 & 0x20) {
+        if (D_801BC3E8 & 0x20) {
             self->animSet = ANIMSET_OVL(4);
             self->unk5A = 0x48;
             self->animCurFrame = 0x2C;
@@ -425,7 +398,7 @@ void func_801B55C8(void) {
         break;
 
     case 5:
-        if (D_psp_09286C58 & 0x40) {
+        if (D_801BC3E8 & 0x40) {
             self->animSet = ANIMSET_OVL(4);
             self->unk5A = 0x48;
             self->facingLeft = 1;
@@ -472,7 +445,7 @@ void func_801B585C(u16 arg0) {
 
     case 1:
         AnimateEntity(D_80180504, self);
-        if (D_psp_09286C58 & 4) {
+        if (D_801BC3E8 & 4) {
             self->step++;
         }
         break;
@@ -493,7 +466,7 @@ void func_801B585C(u16 arg0) {
 
     case 4:
         AnimateEntity(D_80180554, self);
-        if (D_psp_09286C58 & 8) {
+        if (D_801BC3E8 & 8) {
             SEL_SetStep(self, 5);
         }
         break;
@@ -526,7 +499,7 @@ void func_801B5A7C(void) {
     case 0:
         switch (self->step) {
         case 0:
-            D_psp_09285B88[0] = 0;
+            D_8018BC4A = 0;
             self->step++;
             break;
 
@@ -538,12 +511,12 @@ void func_801B5A7C(void) {
 
         case 2:
             if (D_801BC3E4 == 0) {
-                D_psp_09286C58 |= 1;
+                D_801BC3E8 |= 1;
             }
             if (D_801D6B24 != 0) {
                 D_801D6B24 += 0x2000;
             }
-            if (D_psp_09286C58 & 2) {
+            if (D_801BC3E8 & 2) {
                 D_801BC3E4 = 1;
                 self->step++;
             }
@@ -570,7 +543,7 @@ void func_801B5A7C(void) {
     case 1:
         switch (self->step) {
         case 0:
-            D_psp_09285B88[0] = 1;
+            D_8018BC4A = 1;
             self->step++;
             break;
 
@@ -582,8 +555,8 @@ void func_801B5A7C(void) {
 
         case 2:
             if (D_801BC3E4 == 0) {
-                D_psp_09286C58 |= 1;
-                D_psp_09286C58 |= 4;
+                D_801BC3E8 |= 1;
+                D_801BC3E8 |= 4;
                 self->step++;
             }
             if (D_801D6B24 != 0) {
@@ -595,7 +568,7 @@ void func_801B5A7C(void) {
             if (D_801D6B24 != 0) {
                 D_801D6B24 += 0x4000;
             }
-            if (D_psp_09286C58 & 2) {
+            if (D_801BC3E8 & 2) {
                 D_801BC3E4 = 1;
                 self->step++;
             }
@@ -618,8 +591,8 @@ void func_801B5A7C(void) {
     case 2:
         switch (self->step) {
         case 0:
-            D_psp_09285B88[0] = 2;
-            D_psp_09285B80[0] = 0;
+            D_8018BC4A = 2;
+            D_8018BC50 = 0;
             self->step++;
             break;
 
@@ -631,8 +604,8 @@ void func_801B5A7C(void) {
 
         case 2:
             if (D_801BC3E4 == 0) {
-                D_psp_09286C58 |= 1;
-                D_psp_09286C58 |= 4;
+                D_801BC3E8 |= 1;
+                D_801BC3E8 |= 4;
                 self->step++;
             }
             if (D_801D6B24 != 0) {
@@ -644,7 +617,7 @@ void func_801B5A7C(void) {
             if (D_801D6B24 != 0) {
                 D_801D6B24 += 0x4000;
             }
-            if (D_psp_09286C58 & 2) {
+            if (D_801BC3E8 & 2) {
                 D_801BC3E4 = 1;
                 self->step++;
             }
@@ -668,7 +641,7 @@ void func_801B5A7C(void) {
     case 3:
         switch (self->step) {
         case 0:
-            D_psp_09285B88[0] = 3;
+            D_8018BC4A = 3;
             self->step++;
             break;
 
@@ -698,13 +671,13 @@ void func_801B5A7C(void) {
 
         case 4:
             if (!--self->ext.unkSelEnts.unk8C) {
-                D_psp_09286C58 |= 1;
+                D_801BC3E8 |= 1;
                 self->step++;
             }
             break;
 
         case 5:
-            if (D_psp_09286C58 & 2) {
+            if (D_801BC3E8 & 2) {
                 D_801BC3E4 = 1;
                 self->step++;
             }
@@ -722,8 +695,8 @@ void func_801B5A7C(void) {
     case 4:
         switch (self->step) {
         case 0:
-            D_psp_09285B88[0] = 2;
-            D_psp_09285B80[0] = 1;
+            D_8018BC4A = 2;
+            D_8018BC50 = 1;
             self->step++;
             break;
 
@@ -735,8 +708,8 @@ void func_801B5A7C(void) {
 
         case 2:
             if (D_801BC3E4 == 0) {
-                D_psp_09286C58 |= 1;
-                D_psp_09286C58 |= 4;
+                D_801BC3E8 |= 1;
+                D_801BC3E8 |= 4;
                 self->step++;
             }
             if (D_801D6B24 != 0) {
@@ -748,7 +721,7 @@ void func_801B5A7C(void) {
             if (D_801D6B24 != 0) {
                 D_801D6B24 += 0x4000;
             }
-            if (D_psp_09286C58 & 2) {
+            if (D_801BC3E8 & 2) {
                 D_801BC3E4 = 1;
                 self->step++;
             }
@@ -771,14 +744,13 @@ void func_801B5A7C(void) {
     }
 }
 
-void func_psp_09244E10(void) {
+void func_801B60D4(void) {
     Entity* ent;
     s32 i;
 
     switch (g_GameEngineStep) {
     case 0:
         if (!g_IsUsingCd) {
-            func_psp_09237C78();
             D_8003C728 = 1;
             if (D_800978B4 != 0) {
                 g_CurrentStream = 3;
@@ -790,7 +762,7 @@ void func_psp_09244E10(void) {
         break;
 
     case 1:
-        func_90FFAB8();
+        func_801B9C80();
         if (D_8003C728 == 0) {
             g_CurrentStream = 0;
             func_801B18F4();
@@ -850,7 +822,7 @@ void func_psp_09244E10(void) {
         break;
 
     case 4:
-        ClearImage(&g_Vram.D_800ACD88, 0, 0, 0);
+        ClearImage(&D_8018258C, 0, 0, 0);
         g_GameEngineStep++;
         break;
 
