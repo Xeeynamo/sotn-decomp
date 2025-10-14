@@ -131,7 +131,6 @@ extern const char D_801AC000[]; // FIFO
 extern const char D_801AC038[]; // "%s timeout:\n"
 extern const char D_8018BC54[];
 extern s32 g_SkipCutscene;
-extern Dialogue g_Dialogue;
 extern s32 D_801BC3E4;
 extern u32 D_801BC3E8;
 extern s32 D_801BC650;
