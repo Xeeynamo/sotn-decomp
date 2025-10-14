@@ -25,6 +25,27 @@ void func_psp_09241BF8(void) {
     D_801BAFE8 = 0;
 }
 
+s32 func_801B2DAC(void) { return D_801BAFE4 < 2 || D_801BAFE4 == 2; }
+
+void func_801B2DDC(void) {}
+
+void func_801B2DE4(void) {}
+
+void func_801B2DEC(void) {}
+
+void func_801B2DF4(void) {
+    if (func_801B2DAC()) {
+        D_801BAFDC = func_800E9880(D_801BAFE8, 0);
+        if (D_801BAFDC != 0) {
+            D_801BAFE0 = D_801BAFDC;
+        }
+    }
+
+    func_801B2DDC();
+    func_801B2DE4();
+    func_801B2DEC();
+}
+
 s32 func_801B2E5C(s32 port) { return 0; }
 
 void HydrateSaveSummaryEntry(s32 port, s32 slot, s32 slotValue) {
@@ -312,7 +333,6 @@ s32 func_801B3A94(s32 arg0) {
     s32 ret;
     SaveData* save;
     u32 var_s3;
-    u32 var_s2;
 
     FntPrint("\nrstep:%d,%d,%d\n", g_MemCardRStep,
              D_801BB000 + (D_801BAFFC * 15), D_801BB008 + (D_801BB004 * 15));
@@ -369,12 +389,7 @@ s32 func_801B3A94(s32 arg0) {
             var_s3 = 1;
         }
         MakeMemcardPath(saveFile, D_801BB008);
-        if (D_801BB008 == func_8919560()) {
-            var_s2 = 1;
-        } else {
-            var_s2 = 0;
-        }
-        ret = func_913D890(D_801BB004, 0, saveFile, g_Pix, 1, var_s3, var_s2);
+        ret = func_913D890(D_801BB004, 0, saveFile, g_Pix, 1, var_s3, D_801BB008 == func_8919560() ? 1 : 0);
         if (ret != 0) {
             if (g_MemCardRetryCount-- == 0) {
                 return -3;
@@ -413,7 +428,6 @@ s32 func_801B3E2C(void) {
     s32 slot;
     s32 blockId;
     s32 ret;
-    s32 var_s2;
 
     port = g_MemCardRStepSub / 15;
     slot = g_MemCardRStepSub % 15;
@@ -427,12 +441,7 @@ s32 func_801B3E2C(void) {
 
     case 1:
         MakeMemcardPath(saveFile, blockId);
-        if (slot == func_8919560()) {
-            var_s2 = 1;
-        } else {
-            var_s2 = 0;
-        }
-        ret = func_913D930(port, 0, saveFile, var_s2);
+        ret = func_913D930(port, 0, saveFile, slot == func_8919560() ? 1 : 0);
         if (ret != 0) {
             if (g_MemCardRetryCount-- == 0) {
                 return -1;

@@ -230,6 +230,62 @@ static u_long* D_psp_0927C7E0[] = {
     GFX_TERMINATE(),
 };
 
+u8 gfx_portrait_alucard[] = {
+#include "gen/gfx_portrait_alucard.h"
+};
+
+u8 gfx_portrait_maria[] = {
+#include "gen/gfx_portrait_maria.h"
+};
+
+u8 gfx_portrait_richter[] = {
+#include "gen/gfx_portrait_richter.h"
+};
+
+u8 D_psp_0927F078[] = {
+#include "gen/D_psp_0927F078.h"
+};
+
+u8 D_psp_092801A8[] = {
+#include "gen/D_psp_092801A8.h"
+};
+
+u8 D_psp_09280E68[] = {
+#include "gen/D_psp_09280E68.h"
+};
+
+u8 D_psp_092820C8[] = {
+#include "gen/D_psp_092820C8.h"
+};
+
+u16 D_psp_09283148[] = {
+#include "gen/D_psp_09283148.h"
+};
+
+u16 D_psp_092831A8[] = {
+#include "gen/D_psp_092831A8.h"
+};
+
+u16 D_psp_092833A8[] = {
+#include "gen/D_psp_092833A8.h"
+};
+
+u16 D_psp_092835A8[] = {
+#include "gen/D_psp_092835A8.h"
+};
+
+u16 D_psp_092837A8[] = {
+#include "gen/D_psp_092837A8.h"
+};
+
+u16 D_psp_092839A8[] = {
+#include "gen/D_psp_092839A8.h"
+};
+
+u16 D_psp_092839C8[] = {
+#include "gen/D_psp_092839C8.h"
+};
+
 #include "../get_lang_at.h"
 
 #include "../../get_lang.h"
@@ -295,7 +351,7 @@ void func_psp_09237CB8(void) {
     RECT rect;
     s32 height = 0x80;
 
-    func_89264CC(0x8000, &D_psp_0925F850, 1);
+    func_89264CC(0x8000, D_psp_0925F850, 1);
     rect.x = D_psp_0924F800 << 6;
     rect.y = 0;
     rect.w = 0x40;
