@@ -181,7 +181,7 @@ extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
-extern EInit g_EInitStatueBlock;
+extern EInit g_EInitEnvironment;
 extern EInit g_EInitConfessionalGhost;
 extern EInit g_EInitConfessionalBlades;
 extern EInit g_EInitCornerGuard;
