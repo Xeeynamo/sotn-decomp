@@ -800,7 +800,7 @@ void EntityAlucard() {
                             func_8010E168(1, 0x10);
                             continue;
                         case 15:
-                            func_8010E0B8();
+                            EnableAfterImage();
                             continue;
                         case 11:
                             func_801092E8(0);

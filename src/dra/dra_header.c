@@ -40,7 +40,7 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void AddHearts(s32 value);
 bool LoadMonsterLibrarianPreview(s32 monsterId);
 s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action);
-void func_8010E0A8(void);
+void ResetAfterImageIndex(void);
 s32 func_800FE044(s32 amount, s32 type);
 void AddToInventory(u32 itemId, EquipKind itemCategory);
 void InitStatsAndGear(bool isDeathTakingItems);
@@ -117,7 +117,7 @@ GameApi g_ApiInit = {
     AddHearts,
     LoadMonsterLibrarianPreview,
     TimeAttackController,
-    func_8010E0A8,
+    ResetAfterImageIndex,
     func_800FE044,
     AddToInventory,
     g_RelicDefs,

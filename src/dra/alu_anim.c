@@ -8,7 +8,7 @@ void SetPlayerStep(s16 step) {
     PLAYER.step_s = 0;
 }
 
-static u8 g_D_800ACF18[] = {
+static u8 g_afterImageTimerTable[] = {
     10, 8, 8, 6, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 255, 255, 0, 0};
 
 // Same function in RIC is func_8015C4AC (InitRicAfterImage)
@@ -26,27 +26,29 @@ void InitPlayerAfterImage(void) {
     case 0x60:
     case 0x61:
     case 0x62:
-        g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2 = 10;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.index = 10;
         return;
     }
     if ((g_Player.padTapped & GAMEBUTTONS) ||
         ((g_Player.padHeld ^ g_Player.padPressed) & g_Player.padHeld &
          GAMEBUTTONS) ||
         (PLAYER.velocityY > FIX(0.5))) {
-        g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2 = 0;
-        g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 = 0;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.index = 0;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer = 0;
     } else {
-        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2 >= 10) {
+        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.index >= 10) {
             return;
         }
-        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 == 0) {
-            g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 =
-                g_D_800ACF18[g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2];
+        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer == 0) {
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer =
+                g_afterImageTimerTable[g_Entities[E_AFTERIMAGE_1]
+                                           .ext.afterImage.index];
         }
-        if (--g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 == 0) {
-            g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2++;
-            g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 =
-                g_D_800ACF18[g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2];
+        if (--g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer == 0) {
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.index++;
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer =
+                g_afterImageTimerTable[g_Entities[E_AFTERIMAGE_1]
+                                           .ext.afterImage.index];
         }
     }
     if (g_Entities[E_AFTERIMAGE_1].pose) {
@@ -92,8 +94,8 @@ void DrawPlayerAfterImage(void) {
     prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
     plDraw = &g_PlayerDraw[1];
     temp_t1 = g_shadowOpacityReductionTable[g_Entities[E_AFTERIMAGE_1]
-                                                .ext.afterImage.unk2];
-    temp_t0 = g_D_800ACF3C[g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2];
+                                                .ext.afterImage.index];
+    temp_t0 = g_D_800ACF3C[g_Entities[E_AFTERIMAGE_1].ext.afterImage.index];
 
     for (i = 0; i < 6; prim = prim->next, i++) {
         if (prim->r0 > temp_t0) {

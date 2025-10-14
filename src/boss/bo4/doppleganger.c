@@ -171,7 +171,7 @@ void EntityDoppleganger10(void) {
                         case 14:
                             break;
                         case 15:
-                            OVL_EXPORT(func_8010E0B8)();
+                            OVL_EXPORT(EnableAfterImage)();
                             break;
                         }
                     }

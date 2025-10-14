@@ -347,8 +347,8 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA438, func_060AA438);
 void func_8015CC28(void) {
     g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag =
         g_Entities[E_AFTERIMAGE_1].ext.afterImage.resetFlag =
-            g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2 =
-                g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 = 0;
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.index =
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer = 0;
 }
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4F4, func_060AA4F4);

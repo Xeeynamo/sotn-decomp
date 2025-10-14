@@ -174,7 +174,7 @@ void EntityDoppleganger40(void) {
                         case 14:
                             break;
                         case 15:
-                            func_8010E0B8();
+                            EnableAfterImage();
                             break;
                         }
                     }

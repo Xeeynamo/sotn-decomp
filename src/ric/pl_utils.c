@@ -15,20 +15,20 @@ void InitRicAfterImage(void) {
         ((g_Player.padHeld ^ g_Player.padPressed) & g_Player.padHeld &
          GAMEBUTTONS) ||
         (PLAYER.velocityY > FIX(0.5))) {
-        g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2 = 0;
-        g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 = 0;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.index = 0;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer = 0;
     } else {
-        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2 >= 10) {
+        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.index >= 10) {
             return;
         }
-        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 == 0) {
-            g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 =
-                D_801545B0[g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2];
+        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer == 0) {
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer =
+                D_801545B0[g_Entities[E_AFTERIMAGE_1].ext.afterImage.index];
         }
-        if (--g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 == 0) {
-            g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2++;
-            g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 =
-                D_801545B0[g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2];
+        if (--g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer == 0) {
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.index++;
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer =
+                D_801545B0[g_Entities[E_AFTERIMAGE_1].ext.afterImage.index];
         }
     }
     if (g_Entities[E_AFTERIMAGE_1].pose) {
@@ -71,8 +71,8 @@ void DrawRicAfterImage(void) {
     prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
     i = 0;
     draw = &g_PlayerDraw[1];
-    var_s5 = D_801545C4[g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2];
-    var_s3 = D_801545D4[g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2];
+    var_s5 = D_801545C4[g_Entities[E_AFTERIMAGE_1].ext.afterImage.index];
+    var_s3 = D_801545D4[g_Entities[E_AFTERIMAGE_1].ext.afterImage.index];
     while (prim != NULL) {
         if (prim->r0 > var_s3) {
             prim->r0 -= var_s5;
@@ -89,15 +89,15 @@ void DrawRicAfterImage(void) {
             prim->x1 = 0;
         }
         if ((i ^ g_Timer) & 1) {
-            g_Entities[i / 2 + 1].posX.i.hi = prim->x0;
-            g_Entities[i / 2 + 1].posY.i.hi = prim->y0;
-            g_Entities[i / 2 + 1].animCurFrame = prim->x1;
-            g_Entities[i / 2 + 1].drawMode = prim->y1;
-            g_Entities[i / 2 + 1].facingLeft = prim->x2;
-            g_Entities[i / 2 + 1].palette = prim->y2;
-            g_Entities[i / 2 + 1].zPriority = PLAYER.zPriority - 2;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].posX.i.hi = prim->x0;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].posY.i.hi = prim->y0;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].animCurFrame = prim->x1;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].drawMode = prim->y1;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].facingLeft = prim->x2;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].palette = prim->y2;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].zPriority = PLAYER.zPriority - 2;
             if (resetAnim) {
-                g_Entities[i / 2 + 1].animCurFrame = 0;
+                g_Entities[i / 2 + E_AFTERIMAGE_1].animCurFrame = 0;
                 prim->x1 = 0;
             }
 
@@ -227,6 +227,6 @@ void DisableAfterImage(s32 resetAnims, s32 arg1) {
 void func_8015CC28(void) {
     g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag =
         g_Entities[E_AFTERIMAGE_1].ext.afterImage.resetFlag =
-            g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk2 =
-                g_Entities[E_AFTERIMAGE_1].ext.afterImage.unk3 = 0;
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.index =
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer = 0;
 }

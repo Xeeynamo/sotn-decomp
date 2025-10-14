@@ -30,11 +30,11 @@ void func_us_801C4954(s32 resetAnims, s32 arg1) {
     }
 }
 
-void func_8010E0A8(void) {
-    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.unk2 = 0;
+void ResetAfterImageIndex(void) {
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.index = 0;
 }
 
-void func_8010E0B8(void) {
+void EnableAfterImage(void) {
     g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.resetFlag =
         0;
     g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.disableFlag =

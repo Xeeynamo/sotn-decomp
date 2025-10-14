@@ -31,12 +31,12 @@ void func_us_801C5354(s32 resetAnims, s32 arg1) {
 }
 
 #ifndef VERSION_PC
-static void func_8010E0A8(void) UNUSED {
-    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.unk2 = 0;
+static void ResetAfterImageIndex(void) UNUSED {
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.index = 0;
 }
 #endif
 
-void OVL_EXPORT(func_8010E0B8)(void) {
+void OVL_EXPORT(EnableAfterImage)(void) {
     g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.resetFlag =
         0;
     g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.disableFlag =

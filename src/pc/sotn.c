@@ -85,7 +85,7 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void AddHearts(s32 value);
 bool LoadMonsterLibrarianPreview(s32 monsterId);
 s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action);
-void func_8010E0A8(void);
+void ResetAfterImageIndex(void);
 s32 func_800FE044(s32 amount, s32 type);
 void AddToInventory(u16 itemId, s32 itemCategory);
 void InitStatsAndGear(bool isDeathTakingItems);
@@ -184,7 +184,7 @@ bool InitGame(struct InitGameParams* params) {
     api.AddHearts = AddHearts;
     api.LoadMonsterLibrarianPreview = LoadMonsterLibrarianPreview;
     api.TimeAttackController = TimeAttackController;
-    api.func_8010E0A8 = func_8010E0A8;
+    api.ResetAfterImageIndex = ResetAfterImageIndex;
     api.func_800FE044 = func_800FE044;
     api.AddToInventory = AddToInventory;
     api.relicDefs = g_RelicDefs;
