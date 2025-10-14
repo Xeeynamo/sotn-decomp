@@ -52,7 +52,7 @@ void InitRicAfterImage(void) {
     }
     g_Entities[E_AFTERIMAGE_1].pose = 2;
     g_Entities[E_AFTERIMAGE_1].entityId++;
-    if (g_Entities[E_AFTERIMAGE_1].entityId >= 6) {
+    if (g_Entities[E_AFTERIMAGE_1].entityId >= MaxAfterImages) {
         g_Entities[E_AFTERIMAGE_1].entityId = 0;
     }
 }

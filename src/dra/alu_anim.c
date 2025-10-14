@@ -56,7 +56,7 @@ void InitPlayerAfterImage(void) {
         return;
     }
     prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
-    for (i = 0; i < 6; i++) {
+    for (i = 0; i < MaxAfterImages; i++) {
         if (i == g_Entities[E_AFTERIMAGE_1].entityId) {
             prim->r0 = prim->g0 = prim->b0 = 0x80;
             prim->x0 = PLAYER.posX.i.hi;
@@ -70,7 +70,7 @@ void InitPlayerAfterImage(void) {
     }
     g_Entities[E_AFTERIMAGE_1].pose = 2;
     g_Entities[E_AFTERIMAGE_1].entityId++;
-    if (g_Entities[E_AFTERIMAGE_1].entityId >= 6) {
+    if (g_Entities[E_AFTERIMAGE_1].entityId >= MaxAfterImages) {
         g_Entities[E_AFTERIMAGE_1].entityId = 0;
     }
 }
@@ -97,7 +97,7 @@ void DrawPlayerAfterImage(void) {
                                                 .ext.afterImage.index];
     temp_t0 = g_D_800ACF3C[g_Entities[E_AFTERIMAGE_1].ext.afterImage.index];
 
-    for (i = 0; i < 6; prim = prim->next, i++) {
+    for (i = 0; i < MaxAfterImages; prim = prim->next, i++) {
         if (prim->r0 > temp_t0) {
             prim->r0 -= temp_t1;
         }

@@ -2124,6 +2124,9 @@ extern BgLayer g_BgLayers[MAX_BG_LAYER_COUNT]; /* 800730D8 */
 #define STAGE_ENTITY_START 64
 #define MaxEntityCount 32
 #define PLAYER g_Entities[PLAYER_CHARACTER]
+// The max number of afterimage sprites is 6 (two per entity)
+// Going over this number will crash the game.
+#define MaxAfterImages 6
 typedef enum {
     E_AFTERIMAGE_1 = 1,
     E_AFTERIMAGE_2,
