@@ -8,7 +8,6 @@
 #include "stage.h"
 
 #define OVL_EXPORT(x) CAT_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 enum OVL_EXPORT(Entities) {
     E_NONE,

@@ -5,7 +5,6 @@
 #include <stage.h>
 
 #define OVL_EXPORT(x) BO4_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 #include "../doppleganger.h"
 

@@ -14,8 +14,6 @@
 
 #define OVL_EXPORT(x) CHI_##x
 
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
-
 typedef enum {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,

@@ -2,7 +2,7 @@
 #include "stage.h"
 
 #define OVL_EXPORT(x) NP3_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
+#define STAGE_IS_NP3
 
 #define E_PUFF_OPAQUE_PALETTE_OFFSET 0xD0
 
