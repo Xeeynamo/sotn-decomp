@@ -79,7 +79,7 @@ segments:
       - [0x1C3F0, c, e_cutscene]
       - [0x1EF30, c, e_room_bg]
       - [0x1F010, c, e_lock_camera]
-      - [0x1F270, c, e_gargoyle_statue]
+      - [0x1F270, c, e_gargoyle]
       - [0x1F4A8, c, e_statue_block]
       - [0x1F868, c, e_confessional]
       - [0x20A58, c, e_spikes]

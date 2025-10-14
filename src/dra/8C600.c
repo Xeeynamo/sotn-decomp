@@ -121,7 +121,7 @@ void func_8012C97C(void) {
     if (!IsRelicActive(RELIC_SKILL_OF_WOLF)) {
         return;
     }
-    if (g_Player.vram_flag & 1) {
+    if (g_Player.vram_flag & TOUCHING_GROUND) {
         return;
     }
     if (!(g_Player.padPressed & PAD_TRIANGLE)) {
@@ -143,7 +143,7 @@ void func_8012CA64(void) {
     PLAYER.step_s = 1;
     D_800B0914 = 0;
 
-    if (g_Player.vram_flag & 0x20) {
+    if (g_Player.vram_flag & IN_AIR_OR_EDGE) {
         anim++;
     }
     SetPlayerAnim(anim);
@@ -152,7 +152,7 @@ void func_8012CA64(void) {
     PLAYER.velocityY = 0;
 
     D_800B0918 = 0x200;
-    if (g_Player.vram_flag & 0x40) {
+    if (g_Player.vram_flag & VRAM_FLAG_UNK40) {
         D_800B0914 = 1;
         SetPlayerAnim(0xE9);
     }
@@ -211,17 +211,29 @@ void func_8012CCE4(void) {
     if ((PLAYER.step_s == 2) & (D_800B0914 == 2)) {
         SetPlayerAnim(0xE7);
         if (PLAYER.facingLeft) {
-            if ((g_Player.vram_flag & 0xF000) == 0xC000) {
+            if ((g_Player.vram_flag &
+                 (TOUCHING_ANY_SLOPE | TOUCHING_RAISING_SLOPE |
+                  VRAM_FLAG_UNK2000 | TOUCHING_SLIGHT_SLOPE)) ==
+                (TOUCHING_ANY_SLOPE | TOUCHING_RAISING_SLOPE)) {
                 PLAYER.velocityY = -(abs(PLAYER.velocityX) + FIX(3.5));
             }
-            if ((g_Player.vram_flag & 0xF000) == 0x8000) {
+            if ((g_Player.vram_flag &
+                 (TOUCHING_ANY_SLOPE | TOUCHING_RAISING_SLOPE |
+                  VRAM_FLAG_UNK2000 | TOUCHING_SLIGHT_SLOPE)) ==
+                TOUCHING_ANY_SLOPE) {
                 PLAYER.velocityY = FIX(-0.5);
             }
         } else {
-            if ((g_Player.vram_flag & 0xF000) == 0x8000) {
+            if ((g_Player.vram_flag &
+                 (TOUCHING_ANY_SLOPE | TOUCHING_RAISING_SLOPE |
+                  VRAM_FLAG_UNK2000 | TOUCHING_SLIGHT_SLOPE)) ==
+                TOUCHING_ANY_SLOPE) {
                 PLAYER.velocityY = -(abs(PLAYER.velocityX) + FIX(3.5));
             }
-            if ((g_Player.vram_flag & 0xF000) == 0xC000) {
+            if ((g_Player.vram_flag &
+                 (TOUCHING_ANY_SLOPE | TOUCHING_RAISING_SLOPE |
+                  VRAM_FLAG_UNK2000 | TOUCHING_SLIGHT_SLOPE)) ==
+                (TOUCHING_ANY_SLOPE | TOUCHING_RAISING_SLOPE)) {
                 PLAYER.velocityY = FIX(-0.5);
             }
         }
@@ -285,7 +297,7 @@ void func_8012D024(void) {
         func_8012CCE4();
         return;
     }
-    if (!(g_Player.vram_flag & 1)) {
+    if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
         func_8012CED4();
         return;
     }
@@ -307,7 +319,7 @@ void func_8012D024(void) {
             --D_800B0918 == 0) {
             D_800B0914 = 1;
             SetPlayerAnim(0xE9);
-        } else if (g_Player.vram_flag & 0x40) {
+        } else if (g_Player.vram_flag & VRAM_FLAG_UNK40) {
             D_800B0914 = 1;
             SetPlayerAnim(0xE9);
         }
@@ -319,7 +331,7 @@ void func_8012D024(void) {
 void func_8012D178(void) {
     if (g_Player.padTapped & PAD_CROSS) {
         func_8012CCE4();
-    } else if (!(g_Player.vram_flag & 1)) {
+    } else if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
         func_8012CFA8();
     } else {
 #ifdef VERSION_US

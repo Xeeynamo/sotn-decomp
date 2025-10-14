@@ -163,7 +163,7 @@ void EntityStageNamePopup(Entity* self) {
         self->ext.stpopupj.unk84 = prim;
         prim->type = PRIM_G4;
         prim->tpage = 26;
-        prim->clut = PAL_STAGE_NAME_15F;
+        prim->clut = PAL_COLOR_GRADIENT;
         prim->u0 = 0;
         prim->u1 = 64;
         prim->u2 = prim->u0;

@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../sel/sel.h"
-
 extern u8 D_psp_09286868[];
 extern Dialogue4 D_psp_09287E60;
 extern u32 D_893F80C;
@@ -990,13 +989,11 @@ s32 func_801B79D4(Entity* entity) {
             if (D_psp_09287E60.nextLineX > 0xF) {
                 D_psp_09287E60.nextLineX = 0;
             }
-
             prim = D_psp_09287E60.prim;
             for (i = 0; i < D_psp_09287E60.nextLineX; i++) {
                 prim = prim->next;
                 prim = prim->next;
             }
-
             y0 = prim->y0;
             prim = D_psp_09287E60.prim;
             while (prim != NULL) {
@@ -1023,7 +1020,6 @@ s32 func_801B79D4(Entity* entity) {
                 prim = prim->next;
                 prim = prim->next;
             }
-
             y0 = prim->y0;
             prim = D_psp_09287E60.prim;
             while (prim != NULL) {
@@ -1076,7 +1072,6 @@ s32 func_801B79D4(Entity* entity) {
             return 0;
         }
     }
-
     if (!D_psp_09287E60.unk12) {
         func_801B786C(D_psp_09287E60.nextLineX);
         D_psp_09287E60.nextCharY = 1;

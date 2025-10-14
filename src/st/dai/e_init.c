@@ -24,7 +24,7 @@ void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void EntityTowerExit(Entity* self);
 void EntityStainedGlass(Entity* self);
-void func_us_801D9F5C(Entity* self);
+void EntityStainedGlassBackground(Entity* self);
 void EntityBlock(Entity* self);
 void EntityStatue(Entity* self);
 void EntityBell(Entity* self);
@@ -33,14 +33,14 @@ void EntityCastleWall2(Entity* self);
 void EntityStaircase(Entity* self);
 void EntityClouds(Entity* self);
 void EntityBackgroundSkyLand(Entity* self);
-void EntityGargoyleStatue(Entity* self);
+void EntityGargoyleTongue(Entity* self);
 void EntityChair(Entity* self);
 void EntityConfessionalGhost(Entity* self);
 void EntityConfessionalBlades(Entity* self);
 void EntityConfessionalBladeDebris(Entity* self);
 void EntityBellSpawner(Entity* self);
 void EntityCornerGuard(Entity* self);
-void func_us_801D1C24(Entity* self);
+void EntityCornerGuardAttack(Entity* self);
 void EntityBonePillarHead(Entity* self);
 void EntityBonePillarFireBreath(Entity* self);
 void EntityBonePillarDeathParts(Entity* self);
@@ -62,7 +62,7 @@ void EntitySkelerang(Entity* self);
 void EntitySkelerangBoomerang(Entity* self);
 void EntitySkelerangUnknown(Entity* self);
 void EntityHuntingGirl(Entity* self);
-void EntityHuntingGirlSpirit(Entity* self);
+void EntityHuntingGirlAttack(Entity* self);
 void EntitySpectralSword(Entity* self);
 void EntitySpectralSwordAura(Entity* self);
 void EntitySpectralSwordWeapon(Entity* self);
@@ -98,7 +98,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityGreyPuff,
     EntityTowerExit,
     EntityStainedGlass,
-    func_us_801D9F5C,
+    EntityStainedGlassBackground,
     EntityBlock,
     EntityStatue,
     EntityBell,
@@ -107,14 +107,14 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityStaircase,
     EntityClouds,
     EntityBackgroundSkyLand,
-    EntityGargoyleStatue,
+    EntityGargoyleTongue,
     EntityChair,
     EntityConfessionalGhost,
     EntityConfessionalBlades,
     EntityConfessionalBladeDebris,
     EntityBellSpawner,
     EntityCornerGuard,
-    func_us_801D1C24,
+    EntityCornerGuardAttack,
     EntityBonePillarHead,
     EntityBonePillarFireBreath,
     EntityBonePillarDeathParts,
@@ -136,7 +136,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkelerangBoomerang,
     EntitySkelerangUnknown,
     EntityHuntingGirl,
-    EntityHuntingGirlSpirit,
+    EntityHuntingGirlAttack,
     EntitySpectralSword,
     EntitySpectralSwordAura,
     EntitySpectralSwordWeapon,
@@ -167,7 +167,7 @@ EInit g_EInitUnused801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_801809C8, 5};
 EInit g_EInitConfessionalBlades = {
     ANIMSET_OVL(2), 37, 72, PAL_CONFESSIONAL_C9, 101};
 EInit g_EInitCornerGuard = {ANIMSET_OVL(4), 0, 72, PAL_CORNER_GUARD, 180};
-EInit D_us_801809EC = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 181};
+EInit g_EInitCornerGuardAttack = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 181};
 EInit g_EInitBonePillarHead = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 183};
 EInit g_EInitBonePillarPieces = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 2};
 EInit g_EInitBonePillarFireBreath = {
@@ -183,7 +183,7 @@ EInit g_EInitBlueRaven = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 114};
 EInit g_EInitBlackCrow = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 115};
 EInit g_EInitSkelerang = {ANIMSET_OVL(11), 1, 72, PAL_SKELERANG, 11};
 EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(11), 43, 72, PAL_SKELERANG, 12};
-EInit g_EInitHuntingGirl = {ANIMSET_OVL(12), 0, 84, PAL_UNK_232, 227};
+EInit g_EInitHuntingGirl = {ANIMSET_OVL(12), 0, 84, PAL_HUNTING_GIRL_INIT, 227};
 EInit g_EInitSpectralSword = {ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 136};
 EInit g_EInitSpectralSwordAura = {
     ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 2};

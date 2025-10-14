@@ -306,7 +306,7 @@ void MarStepCrouch(void) {
             mar_8015459C = 0x60;
         }
         if (!(g_Player.padPressed & PAD_DOWN) &&
-            ((!g_Player.unk72) || !(g_Player.vram_flag & 0x40))) {
+            ((!g_Player.unk72) || !(g_Player.vram_flag & VRAM_FLAG_UNK40))) {
             MarSetAnimation(mar_801554E0);
             PLAYER.step_s = 2;
             return;
@@ -314,7 +314,7 @@ void MarStepCrouch(void) {
         break;
     case 0x1:
         if (!(g_Player.padPressed & PAD_DOWN) &&
-            ((!g_Player.unk72) || !(g_Player.vram_flag & 0x40))) {
+            ((!g_Player.unk72) || !(g_Player.vram_flag & VRAM_FLAG_UNK40))) {
             if (MarCheckFacing()) {
                 MarSetWalk(0);
                 return;
@@ -333,7 +333,7 @@ void MarStepCrouch(void) {
         PLAYER.step_s = 0;
         break;
     case 0x2:
-        if (!g_Player.unk72 || !(g_Player.vram_flag & 0x40)) {
+        if (!g_Player.unk72 || !(g_Player.vram_flag & VRAM_FLAG_UNK40)) {
             if (MarCheckFacing()) {
                 MarSetWalk(0);
                 return;
@@ -596,7 +596,8 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
         }
         break;
     case 1:
-        if ((g_Player.vram_flag & 2) && (PLAYER.velocityY < FIX(-1))) {
+        if ((g_Player.vram_flag & TOUCHING_CEILING) &&
+            (PLAYER.velocityY < FIX(-1))) {
             PLAYER.velocityY = FIX(-1);
         }
         if (MarCheckInput(
@@ -605,17 +606,19 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
         }
         break;
     case 2:
-        if ((g_Player.unk04 & 0x8000) && !(g_Player.vram_flag & 0x8000)) {
+        if ((g_Player.unk04 & 0x8000) &&
+            !(g_Player.vram_flag & TOUCHING_ANY_SLOPE)) {
             goto block_6dc;
         }
-        if ((g_Player.vram_flag & 0x8000) && !(g_GameTimer & 1)) {
+        if ((g_Player.vram_flag & TOUCHING_ANY_SLOPE) && !(g_GameTimer & 1)) {
             MarCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_SMOKE_PUFF_2, 10), 0);
         }
-        if (!(g_Player.vram_flag & 0xE)) {
+        if (!(g_Player.vram_flag &
+              (TOUCHING_L_WALL | TOUCHING_R_WALL | TOUCHING_CEILING))) {
             break;
         }
-        if (g_Player.vram_flag & 2) {
+        if (g_Player.vram_flag & TOUCHING_CEILING) {
             func_80158B04(1);
             PLAYER.velocityX /= 2;
             PLAYER.velocityY = 0;
@@ -705,11 +708,11 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
     case 5:
         MarDecelerateX(FIX(0.125));
         if (mar_hit_stun_timer) {
-            if ((g_Player.vram_flag & 2) && !(g_GameTimer & 3)) {
+            if ((g_Player.vram_flag & TOUCHING_CEILING) && !(g_GameTimer & 3)) {
                 func_80158B04(0);
             }
             break;
-        } else if (g_Player.vram_flag & 0xC) {
+        } else if (g_Player.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
             if (!(g_Player.vram_flag & (u16)~0xFC)) {
                 PLAYER.velocityY += FIX(12.0 / 128);
                 if (PLAYER.velocityY > FIX(7)) {
@@ -727,7 +730,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
         break;
     case 6:
         MarDecelerateX(FIX(0.125));
-        if (!(g_Player.vram_flag & 1)) {
+        if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
             MarSetFall();
         }
         if (PLAYER.poseTimer < 0) {
@@ -736,7 +739,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
         break;
     case 7:
         MarDecelerateX(FIX(1.0 / 8.0));
-        if (!(g_Player.vram_flag & 1)) {
+        if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
             MarSetFall();
         }
         if (PLAYER.poseTimer < 0) {
@@ -1008,10 +1011,10 @@ void MarStepSlide(void) {
     s32 isTouchingGround;
 
     isTouchingGround = 0;
-    if (PLAYER.facingLeft == 0 && (g_Player.vram_flag & 4)) {
+    if (PLAYER.facingLeft == 0 && (g_Player.vram_flag & TOUCHING_R_WALL)) {
         isTouchingGround = 1;
     }
-    if (PLAYER.facingLeft && (g_Player.vram_flag & 8)) {
+    if (PLAYER.facingLeft && (g_Player.vram_flag & TOUCHING_L_WALL)) {
         isTouchingGround = 1;
     }
     if (PLAYER.posX.i.hi >= STAGE_WIDTH - 4 && PLAYER.facingLeft == 0) {
@@ -1063,10 +1066,10 @@ void MarStepRun(void) {
     halt = 0;
     isTouchingGround = 0;
     MarDecelerateX(FIX(0.375));
-    if (PLAYER.facingLeft == 0 && g_Player.vram_flag & 4) {
+    if (PLAYER.facingLeft == 0 && g_Player.vram_flag & TOUCHING_R_WALL) {
         isTouchingGround = 1;
     }
-    if (PLAYER.facingLeft && g_Player.vram_flag & 8) {
+    if (PLAYER.facingLeft && g_Player.vram_flag & TOUCHING_L_WALL) {
         isTouchingGround = 1;
     }
     if (PLAYER.posX.i.hi >= STAGE_WIDTH - 4 && PLAYER.facingLeft == 0) {
@@ -1087,23 +1090,23 @@ void MarStepRun(void) {
         if (PLAYER.velocityX == 0) {
             halt = 1;
         }
-        if (!(g_Player.vram_flag & 1)) {
+        if (!(g_Player.vram_flag & TOUCHING_GROUND)) {
             halt = 1;
             PLAYER.velocityX = 0;
         }
-    } else if (g_Player.vram_flag & 1) {
+    } else if (g_Player.vram_flag & TOUCHING_GROUND) {
         if (PLAYER.velocityX == 0) {
             halt = 1;
         }
     } else if (abs(PLAYER.velocityX) <= FIX(2)) {
         halt = 1;
     }
-    if (g_Player.vram_flag & 0xC) {
+    if (g_Player.vram_flag & (TOUCHING_L_WALL | TOUCHING_R_WALL)) {
         halt = 1;
         PLAYER.velocityX = 0;
     }
     if (halt) {
-        if (g_Player.vram_flag & 1) {
+        if (g_Player.vram_flag & TOUCHING_GROUND) {
             MarSetStand(0);
             return;
         }
@@ -1212,25 +1215,25 @@ void MarStepBladeDash(void) {
     if (PLAYER.poseTimer < 0) {
         g_Player.unk46 = 0;
         MarSetStand(0);
-    } else if (PLAYER.pose >= 0x10 && !(g_Player.vram_flag & 1)) {
+    } else if (PLAYER.pose >= 0x10 && !(g_Player.vram_flag & TOUCHING_GROUND)) {
         g_Player.unk46 = 0;
         g_Player.unk44 = 1;
         MarSetFall();
     } else {
         if (PLAYER.pose >= 14) {
-            if ((g_Player.vram_flag & 1) == 1) {
+            if ((g_Player.vram_flag & TOUCHING_GROUND) == TOUCHING_GROUND) {
                 g_Player.unk46 = 0;
                 MarSetWalk();
             }
         }
         if (!(g_GameTimer & 3) && PLAYER.pose < 0x12 &&
-            g_Player.vram_flag & 1) {
+            g_Player.vram_flag & TOUCHING_GROUND) {
             MarCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_SLIDE, 2), 0);
         }
 
         if (PLAYER.pose == 18 && PLAYER.poseTimer == 1 &&
-            (g_Player.vram_flag & 1)) {
+            (g_Player.vram_flag & TOUCHING_GROUND)) {
             MarCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
         }
     }
@@ -1243,7 +1246,7 @@ void MarStepHighJump(void) {
     g_Player.high_jump_timer++;
     switch (PLAYER.step_s) {
     case 0:
-        if (g_Player.vram_flag & 2) {
+        if (g_Player.vram_flag & TOUCHING_CEILING) {
             PLAYER.velocityY = FIX(1.5);
             PLAYER.step_s = 3;
             g_Player.high_jump_timer = 0;
@@ -1253,7 +1256,7 @@ void MarStepHighJump(void) {
         }
         break;
     case 1:
-        if (g_Player.vram_flag & 2) {
+        if (g_Player.vram_flag & TOUCHING_CEILING) {
             PLAYER.velocityY = FIX(1);
             PLAYER.step_s = 3;
             g_Player.high_jump_timer = 0;

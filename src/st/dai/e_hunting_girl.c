@@ -1,7 +1,102 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-static u8 anim[] = {1, 1, 1, 2};
+// HuntingGirlDrawAttack has conditions that can be expected to attempt to
+// divide by 0, therefore psp uses a division guard.
+#ifdef VERSION_PSP
+#define DIV_GUARD(q, a, b)                                                     \
+    if (b) {                                                                   \
+        q = a / b;                                                             \
+    } else {                                                                   \
+        q = 0;                                                                 \
+    }
+#else
+#define DIV_GUARD(q, a, b) q = a / b;
+#endif
+
+#define END_ATTACK 0xFFF
+#define HALT_ATTACK 0x7FFF
+// This is the reason for the div guard
+// The 0xFFF terminator is checked for after the division, so the 0's in this
+// group would cause a div by 0 error
+#define ATTACK_END {0xFFF, 0, 0, 0}
+#define ATTACK_HALT {0x7FFF, 0, 0, 0}
+
+enum HuntingGirlSteps {
+    HUNTING_GIRL_INIT,
+    HUNTING_GIRL_READY,
+    HUNTING_GIRL_IDLE,
+    HUNTING_GIRL_PREPARE_ATTACK,
+    HUNTING_GIRL_RECOVER,
+    HUNTING_GIRL_ATTACK,
+    HUNTING_GIRL_TRANSITION,
+    HUNTING_GIRL_RETURN_TO_READY,
+    HUNTING_GIRL_HIT,
+    HUNTING_GIRL_DEATH,
+};
+
+enum HuntingGirlSubsteps {
+    HUNTING_GIRL_IDLE_INIT,
+    HUNTING_GIRL_IDLE_PULSE,
+    HUNTING_GIRL_IDLE_FADE,
+};
+enum HuntingGirlRecoverSubsteps {
+
+    HUNTING_GIRL_RECOVER_INIT,
+    HUNTING_GIRL_RECOVER_FADE_IN,
+    HUNTING_GIRL_RECOVER_FADE_OUT,
+};
+enum HuntingGirlAttackSubsteps {
+    HUNTING_GIRL_ATTACK_INIT,
+    HUNTING_GIRL_ATTACK_FADE_IN,
+    HUNTING_GIRL_ATTACK_FADE_OUT,
+    HUNTING_GIRL_ATTACK_DRAW,
+};
+enum HuntingGirlTransitionSubsteps {
+    HUNTING_GIRL_TRANSITION_POS,
+    HUNTING_GIRL_TRANSITION_TURN,
+};
+
+enum HuntingGirlHitSubsteps {
+    HUNTING_GIRL_HIT_INIT,
+    HUNTING_GIRL_HIT_KNOCKBACK,
+    HUNTING_GIRL_HIT_FADE,
+};
+enum HuntingGirlDeathSubsteps {
+    HUNTING_GIRL_DEATH_INIT,
+    HUNTING_GIRL_DEATH_KNOCKBACK,
+    HUNTING_GIRL_DEATH_FADE,
+    HUNTING_GIRL_DEATH_EXPLODE,
+};
+
+enum SpiritSteps {
+    SPIRIT_IDLE,
+    SPIRIT_RECOVER,
+    SPIRIT_ATTACK,
+};
+enum SpiritSubSteps {
+    SPIRIT_INIT,
+    SPIRIT_PULSE,
+    SPIRIT_FADE,
+};
+
+typedef struct {
+    s16 x;
+    s16 y;
+    s16 rotate;
+    s16 frames;
+} HuntingGirlAttackStep;
+
+typedef struct {
+    s16 u;
+    s16 v;
+    s16 width;
+    s16 height;
+    s16 offsetX;
+    s16 offsetY;
+} HuntingGirlSpiritParams;
+
+static AnimateEntityFrame anim[] = {{1, 1}, {1, 2}};
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 46, 0, 4, 0, 0, 0};
 static s16 sensors[] = {0, 46, 0, 4, 4, -4, -8, 0};
 #ifdef VERSION_PSP
@@ -9,38 +104,41 @@ static s8 fade_interval[] = {8, 4, 3, 12, 8, 4, 0, 0};
 #else
 static u8 fade_interval[] = {8, 4, 3, 12, 8, 4, 0, 0};
 #endif
-// u, v, width, height, offxetX, offsetY
-static s16 params[][6] = {
+static HuntingGirlSpiritParams spirit_params[] = {
     {48, 0, 31, 79, -5, -32},
     {80, 0, 31, 79, -18, -38},
     {0, 0, 47, 55, -32, -16},
     {0, 56, 47, 71, -24, -8},
     {48, 80, 55, 47, -44, -44}};
-static huntingGirlAttackStep attack_pattern_1[] = {
-    {6, -1, ROT(22.5), 16}, {6, 1, ROT(28.125), 16}, {0xFFF, 0, 0, 0}};
-static huntingGirlAttackStep attack_pattern_2[] = {
-    {-5, -1, ROT(33.75), 16}, {-5, 1, ROT(39.375), 16}, {0xFFF, 0, 0, 0}};
-static huntingGirlAttackStep attack_pattern_3[] = {
-    {-16, 8, ROT(90), 8}, {0, 0, ROT(90), 16}, {0x7FFF, 0, 0, 0}};
-static huntingGirlAttackStep attack_pattern_4[] = {
-    {-10, 5, ROT(33.75), 16}, {0x7FFF, 0, 0, 0}};
-static huntingGirlAttackStep attack_pattern_5[] = {
+static HuntingGirlAttackStep attack_pattern_1[] = {
+    {6, -1, ROT(22.5), 16}, {6, 1, ROT(28.125), 16}, ATTACK_END};
+static HuntingGirlAttackStep attack_pattern_2[] = {
+    {-5, -1, ROT(33.75), 16}, {-5, 1, ROT(39.375), 16}, ATTACK_END};
+static HuntingGirlAttackStep attack_pattern_3[] = {
+    {-16, 8, ROT(90), 8}, {0, 0, ROT(90), 16}, ATTACK_HALT};
+static HuntingGirlAttackStep attack_pattern_4[] = {
+    {-10, 5, ROT(33.75), 16}, ATTACK_HALT};
+static HuntingGirlAttackStep attack_pattern_5[] = {
     {-12, 0, ROT(90), 16},       {44, 0, ROT(90), 8},
     {-44, -16, ROT(61.875), 12}, {44, 16, ROT(61.875), 8},
     {-44, 16, ROT(118.125), 12}, {44, -20, ROT(118.125), 8},
-    {-44, 0, ROT(78.75), 16},    {0x7FFF, 0, 0, 0}};
-static huntingGirlAttackStep attack_pattern_6[] = {
+    {-44, 0, ROT(78.75), 16},    ATTACK_HALT};
+static HuntingGirlAttackStep attack_pattern_6[] = {
     {-8, 0, ROT(90), 8}, {40, 0, ROT(90), 8},   {-4, -4, ROT(135), 8},
     {0, 8, ROT(45), 8},  {-32, -4, ROT(90), 8}, {64, 0, ROT(90), 8},
-    {0x7FFF, 0, 0, 0}};
-static huntingGirlAttackStep attack_pattern_7[] = {
-    {-8, -8, ROT(135), 8}, {24, 8, ROT(39.375), 8}, {-52, -16, 0x0400, 8},
-    {36, 0, ROT(90), 8},   {-16, 20, ROT(45), 8},   {7, -12, ROT(135), 8},
-    {0x7FFF, 0, 0, 0}};
-static huntingGirlAttackStep* attack_pattern_ptr[] = {
+    ATTACK_HALT};
+static HuntingGirlAttackStep attack_pattern_7[] = {
+    {-8, -8, ROT(135), 8},
+    {24, 8, ROT(39.375), 8},
+    {-52, -16, 0x0400, 8},
+    {36, 0, ROT(90), 8},
+    {-16, 20, ROT(45), 8},
+    {7, -12, ROT(135), 8},
+    ATTACK_HALT};
+static HuntingGirlAttackStep* attack_pattern_ptr[] = {
     attack_pattern_7, attack_pattern_5, attack_pattern_6};
 
-static bool HuntingGirlAttack(huntingGirlAttackStep* arg0) {
+static bool HuntingGirlDrawAttack(HuntingGirlAttackStep* attackPattern) {
     Primitive* prim;
     s32 velocityX;
     s32 velocityY;
@@ -50,62 +148,35 @@ static bool HuntingGirlAttack(huntingGirlAttackStep* arg0) {
     s32 tempX;
     s16 rotation;
 
-    arg0 = &arg0[g_CurrentEntity->ext.huntingGirl.attackStep];
+    attackPattern = &attackPattern[g_CurrentEntity->ext.huntingGirl.attackStep];
     if (!g_CurrentEntity->ext.huntingGirl.frames) {
-        if (arg0->x == 0x7FFF) {
+        if (attackPattern->x == HALT_ATTACK) {
             return true;
         }
-        frames = g_CurrentEntity->ext.huntingGirl.frames = arg0->frames;
-        tempX = arg0->x;
+        frames = g_CurrentEntity->ext.huntingGirl.frames =
+            attackPattern->frames;
+        tempX = attackPattern->x;
         if (!g_CurrentEntity->facingLeft) {
             tempX = -tempX;
         }
         tempX <<= 16;
 
-// It seems like there should be a way to coalesce these two
-#ifdef VERSION_PSP
-        if (frames) {
-            velocityX = tempX / frames;
-        } else {
-            velocityX = 0;
-        }
+        DIV_GUARD(velocityX, tempX, frames)
         g_CurrentEntity->velocityX = velocityX;
-        tempY = arg0->y;
+        tempY = attackPattern->y;
         tempY <<= 16;
-        if (frames) {
-            velocityY = tempY / frames;
-        } else {
-            velocityY = 0;
-        }
+        DIV_GUARD(velocityY, tempY, frames)
         g_CurrentEntity->velocityY = velocityY;
-        rotation = arg0->rotate - g_CurrentEntity->rotate;
-        if (rotation > FLT(0.5)) {
-            rotation = rotation - FLT(1);
-        }
-        if (rotation < FLT(-0.5)) {
-            rotation = rotation + FLT(1);
-        }
-        if (frames) {
-            angle = rotation / frames;
-        } else {
-            angle = 0;
-        }
-#else
-        velocityX = tempX / frames;
-        g_CurrentEntity->velocityX = velocityX;
-        tempY = arg0->y;
-        tempY <<= 16;
-        velocityY = tempY / frames;
-        g_CurrentEntity->velocityY = velocityY;
-        rotation = arg0->rotate - g_CurrentEntity->rotate;
+        rotation = attackPattern->rotate - g_CurrentEntity->rotate;
         if (rotation > ROT(180)) {
-            rotation -= ROT(360);
+            // pspeu doesn't like rotation -= ROT(360);
+            rotation = rotation - ROT(360);
         }
         if (rotation < ROT(-180)) {
-            rotation += ROT(360);
+            // pspeu doesn't like rotation += ROT(360);
+            rotation = rotation + ROT(360);
         }
-        angle = rotation / frames;
-#endif
+        DIV_GUARD(angle, rotation, frames)
         rotation = angle;
         g_CurrentEntity->ext.huntingGirl.rotate = rotation;
         if (g_CurrentEntity->ext.huntingGirl.attacking) {
@@ -154,7 +225,7 @@ static bool HuntingGirlAttack(huntingGirlAttackStep* arg0) {
     }
     if (!--g_CurrentEntity->ext.huntingGirl.frames) {
         g_CurrentEntity->ext.huntingGirl.attackStep++;
-        arg0++;
+        attackPattern++;
         prim = g_CurrentEntity->ext.huntingGirl.attackPrim;
 #ifdef VERSION_PSP
         if (!prim) {
@@ -164,7 +235,7 @@ static bool HuntingGirlAttack(huntingGirlAttackStep* arg0) {
         prim->p3 = 2;
         prim = prim->next;
         g_CurrentEntity->ext.huntingGirl.attackPrim = prim;
-        if (arg0->x == 0xFFF) {
+        if (attackPattern->x == END_ATTACK) {
             g_CurrentEntity->ext.huntingGirl.attackStep = 0;
             return true;
         }
@@ -172,34 +243,34 @@ static bool HuntingGirlAttack(huntingGirlAttackStep* arg0) {
     return false;
 }
 
-static bool HuntingGirlPrimHelper(s32 paramIdx, s32 type) {
+static bool HuntingGirlDrawSpirit(s32 spiritStep, s32 spiritSubStep) {
     u8 brightness;
-    s16* paramsPtr;
+    HuntingGirlSpiritParams* step_params;
     Primitive* prim;
 
     prim = g_CurrentEntity->ext.huntingGirl.prim;
-    paramsPtr = params[paramIdx];
+    step_params = &spirit_params[spiritStep];
     if (g_CurrentEntity->facingLeft) {
-        prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - paramsPtr[4];
-        prim->x1 = prim->x3 = prim->x0 - paramsPtr[2];
+        prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - step_params->offsetX;
+        prim->x1 = prim->x3 = prim->x0 - step_params->width;
     } else {
-        prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi + paramsPtr[4];
-        prim->x1 = prim->x3 = prim->x0 + paramsPtr[2];
+        prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi + step_params->offsetX;
+        prim->x1 = prim->x3 = prim->x0 + step_params->width;
     }
-    prim->y0 = prim->y1 = g_CurrentEntity->posY.i.hi + paramsPtr[5];
-    prim->y2 = prim->y3 = prim->y0 + paramsPtr[3];
-    switch (type) {
-    case 0:
+    prim->y0 = prim->y1 = g_CurrentEntity->posY.i.hi + step_params->offsetY;
+    prim->y2 = prim->y3 = prim->y0 + step_params->height;
+    switch (spiritSubStep) {
+    case SPIRIT_INIT:
         prim->clut = PAL_HUNTING_GIRL;
-        prim->u0 = prim->u2 = paramsPtr[0];
-        prim->u1 = prim->u3 = paramsPtr[0] + paramsPtr[2];
-        prim->v0 = prim->v1 = paramsPtr[1];
-        prim->v2 = prim->v3 = paramsPtr[1] + paramsPtr[3];
+        prim->u0 = prim->u2 = step_params->u;
+        prim->u1 = prim->u3 = step_params->u + step_params->width;
+        prim->v0 = prim->v1 = step_params->v;
+        prim->v2 = prim->v3 = step_params->v + step_params->height;
         prim->priority = g_CurrentEntity->zPriority + 1;
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
         g_CurrentEntity->ext.huntingGirl.brightness = 0;
         break;
-    case 1:
+    case SPIRIT_PULSE:
         brightness = (g_CurrentEntity->ext.huntingGirl.brightness *
                       abs(rsin(g_CurrentEntity->ext.huntingGirl.sinePhase))) >>
                      12;
@@ -214,7 +285,7 @@ static bool HuntingGirlPrimHelper(s32 paramIdx, s32 type) {
         }
         g_CurrentEntity->ext.huntingGirl.sinePhase += 64;
         break;
-    case 2:
+    case SPIRIT_FADE:
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         if (!PrimDecreaseBrightness(prim, 7)) {
@@ -226,11 +297,11 @@ static bool HuntingGirlPrimHelper(s32 paramIdx, s32 type) {
     return false;
 }
 
-static void HuntingGirlSetNextStep(s32 step) {
+static void HuntingGirlTransitionToStep(s32 step) {
     g_CurrentEntity->ext.huntingGirl.attackStep = 0;
-    g_CurrentEntity->ext.huntingGirl.frames = 0;
+    g_CurrentEntity->ext.huntingGirl.frames = NULL;
     g_CurrentEntity->ext.huntingGirl.nextStep = step;
-    SetStep(6);
+    SetStep(HUNTING_GIRL_TRANSITION);
 }
 
 void EntityHuntingGirl(Entity* self) {
@@ -247,15 +318,15 @@ void EntityHuntingGirl(Entity* self) {
     s32 color;
     s16 rotate;
 
-    if ((self->hitFlags & 3) && (self->step != 8)) {
+    if ((self->hitFlags & 3) && (self->step != HUNTING_GIRL_HIT)) {
         self->ext.huntingGirl.attacking = false;
-        SetStep(8);
+        SetStep(HUNTING_GIRL_HIT);
     }
-    if ((self->flags & FLAG_DEAD) && (self->step < 9)) {
-        SetStep(9);
+    if ((self->flags & FLAG_DEAD) && (self->step < HUNTING_GIRL_DEATH)) {
+        SetStep(HUNTING_GIRL_DEATH);
     }
     switch (self->step) {
-    case 0:
+    case HUNTING_GIRL_INIT:
         InitializeEntity(g_EInitHuntingGirl);
         self->hitboxWidth = self->hitboxHeight = 10;
         self->hitboxState = 2;
@@ -287,155 +358,156 @@ void EntityHuntingGirl(Entity* self) {
         }
         entity = self + 1;
         for (count = 0; count < 3; count++, entity++) {
-            CreateEntityFromCurrentEntity(E_HUNTING_GIRL_SPIRIT, entity);
+            CreateEntityFromCurrentEntity(E_HUNTING_GIRL_ATTACK, entity);
             entity->params = count + 1;
         }
         self->ext.huntingGirl.cycleTimer = 512;
         break;
-    case 1:
+    case HUNTING_GIRL_READY:
         if (UnkCollisionFunc3(sensors) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.huntingGirl.scrollY =
                 self->posY.i.hi + g_Tilemap.scrollY.i.hi;
-            HuntingGirlSetNextStep(2);
+            HuntingGirlTransitionToStep(HUNTING_GIRL_IDLE);
         }
         break;
-    case 2:
+    case HUNTING_GIRL_IDLE:
         switch (self->step_s) {
-        case 0:
-            HuntingGirlPrimHelper(0, 0);
+        case HUNTING_GIRL_IDLE_INIT:
+            HuntingGirlDrawSpirit(SPIRIT_IDLE, SPIRIT_INIT);
             self->step_s++;
             // fallthrough
-        case 1:
-            HuntingGirlPrimHelper(0, 1);
+        case HUNTING_GIRL_IDLE_PULSE:
+            HuntingGirlDrawSpirit(SPIRIT_IDLE, SPIRIT_PULSE);
             if (GetDistanceToPlayerX() < 80 && GetDistanceToPlayerY() < 48) {
                 self->step_s++;
             }
             break;
-        case 2:
-            if (HuntingGirlPrimHelper(0, 2)) {
-                HuntingGirlSetNextStep(3);
+        case HUNTING_GIRL_IDLE_FADE:
+            if (HuntingGirlDrawSpirit(SPIRIT_IDLE, SPIRIT_FADE)) {
+                HuntingGirlTransitionToStep(HUNTING_GIRL_PREPARE_ATTACK);
             }
             break;
         }
         break;
-    case 4:
+    case HUNTING_GIRL_RECOVER:
         switch (self->step_s) {
-        case 0:
-            HuntingGirlPrimHelper(1, 0);
+        case HUNTING_GIRL_RECOVER_INIT:
+            HuntingGirlDrawSpirit(SPIRIT_RECOVER, SPIRIT_INIT);
             self->ext.huntingGirl.attackTimer = 48;
             self->step_s++;
             // fallthrough
-        case 1:
-            HuntingGirlAttack(attack_pattern_4);
-            HuntingGirlPrimHelper(1, 1);
+        case HUNTING_GIRL_RECOVER_FADE_IN:
+            HuntingGirlDrawAttack(attack_pattern_4);
+            HuntingGirlDrawSpirit(SPIRIT_RECOVER, SPIRIT_PULSE);
             if (!--self->ext.huntingGirl.attackTimer) {
                 self->step_s++;
             }
             if (GetDistanceToPlayerX() < 64) {
-                HuntingGirlSetNextStep(5);
+                HuntingGirlTransitionToStep(HUNTING_GIRL_ATTACK);
             }
             break;
-        case 2:
-            if (HuntingGirlPrimHelper(1, 2)) {
-                HuntingGirlSetNextStep(3);
+        case HUNTING_GIRL_RECOVER_FADE_OUT:
+            if (HuntingGirlDrawSpirit(SPIRIT_RECOVER, SPIRIT_FADE)) {
+                HuntingGirlTransitionToStep(HUNTING_GIRL_PREPARE_ATTACK);
             }
             break;
         }
         break;
-    case 3:
+    case HUNTING_GIRL_PREPARE_ATTACK:
         if (!self->step_s) {
             self->ext.huntingGirl.attackTimer = 64;
             self->step_s++;
         }
-        HuntingGirlAttack(attack_pattern_1);
+        HuntingGirlDrawAttack(attack_pattern_1);
         if (GetDistanceToPlayerX() > 80) {
             self->ext.huntingGirl.cycleTimer--;
         }
         if (!self->ext.huntingGirl.cycleTimer) {
             self->ext.huntingGirl.cycleTimer = 512;
-            HuntingGirlSetNextStep(4);
+            HuntingGirlTransitionToStep(HUNTING_GIRL_RECOVER);
         }
         if (((GetSideToPlayer() & 1) ^ 1) != self->facingLeft) {
-            HuntingGirlSetNextStep(5);
+            HuntingGirlTransitionToStep(HUNTING_GIRL_ATTACK);
         }
         if (!self->ext.huntingGirl.attackTimer) {
             if (GetDistanceToPlayerX() < 80) {
-                HuntingGirlSetNextStep(5);
+                HuntingGirlTransitionToStep(HUNTING_GIRL_ATTACK);
             }
         } else {
             self->ext.huntingGirl.attackTimer--;
             if (GetDistanceToPlayerX() < 56) {
-                HuntingGirlSetNextStep(7);
+                HuntingGirlTransitionToStep(HUNTING_GIRL_RETURN_TO_READY);
             }
         }
         break;
-    case 7:
+    case HUNTING_GIRL_RETURN_TO_READY:
         if (!self->step_s) {
             self->ext.huntingGirl.attackTimer = 16;
             self->step_s++;
         }
-        HuntingGirlAttack(attack_pattern_2);
+        HuntingGirlDrawAttack(attack_pattern_2);
         if (GetDistanceToPlayerX() > 80) {
             self->ext.huntingGirl.cycleTimer--;
         }
         if (!self->ext.huntingGirl.cycleTimer) {
             self->ext.huntingGirl.cycleTimer = 512;
-            HuntingGirlSetNextStep(4);
+            HuntingGirlTransitionToStep(HUNTING_GIRL_RECOVER);
         }
         if (GetDistanceToPlayerX() > 96) {
-            HuntingGirlSetNextStep(3);
+            HuntingGirlTransitionToStep(HUNTING_GIRL_PREPARE_ATTACK);
         }
         if (((GetSideToPlayer() & 1) ^ 1) != self->facingLeft) {
-            HuntingGirlSetNextStep(5);
+            HuntingGirlTransitionToStep(HUNTING_GIRL_ATTACK);
         }
         if (!self->ext.huntingGirl.attackTimer) {
             if (GetDistanceToPlayerX() < 80) {
-                HuntingGirlSetNextStep(5);
+                HuntingGirlTransitionToStep(HUNTING_GIRL_ATTACK);
             }
         } else {
             self->ext.huntingGirl.attackTimer--;
         }
         break;
-    case 5:
+    case HUNTING_GIRL_ATTACK:
         switch (self->step_s) {
-        case 0:
-            HuntingGirlPrimHelper(2, 0);
+        case HUNTING_GIRL_ATTACK_INIT:
+            HuntingGirlDrawSpirit(SPIRIT_ATTACK, SPIRIT_INIT);
             self->step_s++;
             // fallthrough
-        case 1:
-            HuntingGirlPrimHelper(2, 1);
-            if (HuntingGirlAttack(attack_pattern_3)) {
+        case HUNTING_GIRL_ATTACK_FADE_IN:
+            HuntingGirlDrawSpirit(SPIRIT_ATTACK, SPIRIT_PULSE);
+            if (HuntingGirlDrawAttack(attack_pattern_3)) {
                 self->step_s++;
             }
             break;
-        case 2:
-            if (HuntingGirlPrimHelper(2, 2)) {
+        case HUNTING_GIRL_ATTACK_FADE_OUT:
+            if (HuntingGirlDrawSpirit(SPIRIT_ATTACK, SPIRIT_FADE)) {
                 self->ext.huntingGirl.attacking = true;
                 self->ext.huntingGirl.attackPrim =
                     self->ext.huntingGirl.spiritPrim;
                 self->ext.huntingGirl.attackStep = 0;
-                self->ext.huntingGirl.frames = 0;
+                self->ext.huntingGirl.frames = NULL;
                 PlaySfxPositional(SFX_UNK_72A);
                 self->step_s++;
             }
             break;
-        case 3:
-            if (HuntingGirlAttack(attack_pattern_ptr[self->ext.huntingGirl
-                                                         .attackPatternIdx])) {
+        case HUNTING_GIRL_ATTACK_DRAW:
+            if (HuntingGirlDrawAttack(
+                    attack_pattern_ptr[self->ext.huntingGirl
+                                           .attackPatternIdx])) {
                 self->ext.huntingGirl.attacking = false;
                 self->ext.huntingGirl.attackPatternIdx++;
                 if ((self->ext.huntingGirl.attackPatternIdx) > 2) {
                     self->ext.huntingGirl.attackPatternIdx = 0;
                 }
-                HuntingGirlSetNextStep(3);
+                HuntingGirlTransitionToStep(HUNTING_GIRL_PREPARE_ATTACK);
             }
             break;
         }
         break;
-    case 6:
+    case HUNTING_GIRL_TRANSITION:
         switch (self->step_s) {
-        case 0:
+        case HUNTING_GIRL_TRANSITION_POS:
             offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                 offsetY -= PLAYER.posY.i.hi + g_Tilemap.scrollY.i.hi;
@@ -450,8 +522,8 @@ void EntityHuntingGirl(Entity* self) {
                 self->posY.i.hi++;
             }
             break;
-        case 1:
-            tempVar = (GetSideToPlayer() & 1) ^ 1;
+        case HUNTING_GIRL_TRANSITION_TURN:
+            tempVar = (GetSideToPlayer() & 1) ^ 1; // Player on right
             if (tempVar != self->facingLeft) {
                 self->rotate = -self->rotate;
             }
@@ -460,13 +532,15 @@ void EntityHuntingGirl(Entity* self) {
             break;
         }
         break;
-    case 8:
+    case HUNTING_GIRL_HIT:
         switch (self->step_s) {
-        case 0:
+        case HUNTING_GIRL_HIT_INIT:
             tempVar = Random() & 1;
+            // hit and death spirit step
             self->ext.huntingGirl.random = tempVar;
-            HuntingGirlPrimHelper((self->ext.huntingGirl.random) + 3, 0);
-            if (GetSideToPlayer() & 1) {
+            HuntingGirlDrawSpirit(
+                self->ext.huntingGirl.random + 3, SPIRIT_INIT);
+            if (GetSideToPlayer() & 1) { // Player on left
                 self->velocityX = FIX(1.5);
             } else {
                 self->velocityX = FIX(-1.5);
@@ -480,8 +554,9 @@ void EntityHuntingGirl(Entity* self) {
             PlaySfxPositional(SFX_UNK_72B);
             self->step_s++;
             // fallthrough
-        case 1:
-            HuntingGirlPrimHelper((self->ext.huntingGirl.random) + 3, 1);
+        case HUNTING_GIRL_HIT_KNOCKBACK:
+            HuntingGirlDrawSpirit(
+                self->ext.huntingGirl.random + 3, SPIRIT_PULSE);
             MoveEntity();
             self->velocityX -= self->velocityX / 32;
             self->velocityY += FIX(0.125);
@@ -489,16 +564,17 @@ void EntityHuntingGirl(Entity* self) {
                 self->step_s++;
             }
             break;
-        case 2:
-            if (HuntingGirlPrimHelper(self->ext.huntingGirl.random + 3, 2)) {
-                HuntingGirlSetNextStep(4);
+        case HUNTING_GIRL_HIT_FADE:
+            if (HuntingGirlDrawSpirit(
+                    self->ext.huntingGirl.random + 3, SPIRIT_FADE)) {
+                HuntingGirlTransitionToStep(HUNTING_GIRL_RECOVER);
             }
             break;
         }
         break;
-    case 9:
+    case HUNTING_GIRL_DEATH:
         switch (self->step_s) {
-        case 0:
+        case HUNTING_GIRL_DEATH_INIT:
             entity = self + 1;
             for (count = 0; count < 3; count++, entity++) {
                 DestroyEntity(entity);
@@ -511,27 +587,30 @@ void EntityHuntingGirl(Entity* self) {
             }
             tempVar = Random() & 1;
             self->ext.huntingGirl.random = tempVar;
-            HuntingGirlPrimHelper((self->ext.huntingGirl.random) + 3, 0);
+            HuntingGirlDrawSpirit(
+                self->ext.huntingGirl.random + 3, SPIRIT_INIT);
             self->velocityX = 0;
             self->velocityY = FIX(-3.0);
             PlaySfxPositional(SFX_UNK_72C);
             self->step_s++;
             // fallthrough
-        case 1:
-            HuntingGirlPrimHelper((self->ext.huntingGirl.random) + 3, 1);
+        case HUNTING_GIRL_DEATH_KNOCKBACK:
+            HuntingGirlDrawSpirit(
+                self->ext.huntingGirl.random + 3, SPIRIT_PULSE);
             MoveEntity();
             self->velocityY += FIX(0.125);
             if (self->velocityY > 0) {
                 self->step_s++;
             }
             break;
-        case 2:
-            if (HuntingGirlPrimHelper(self->ext.huntingGirl.random + 3, 2)) {
+        case HUNTING_GIRL_DEATH_FADE:
+            if (HuntingGirlDrawSpirit(
+                    self->ext.huntingGirl.random + 3, SPIRIT_FADE)) {
                 self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
                 self->step_s++;
             }
             break;
-        case 3:
+        case HUNTING_GIRL_DEATH_EXPLODE:
             MoveEntity();
             self->velocityY += FIX(0.0625);
             if (!(g_Timer & 7)) {
@@ -597,7 +676,7 @@ void EntityHuntingGirl(Entity* self) {
     }
 }
 
-void EntityHuntingGirlSpirit(Entity* self) {
+void EntityHuntingGirlAttack(Entity* self) {
     Entity* entity;
 
     if (!self->step) {
