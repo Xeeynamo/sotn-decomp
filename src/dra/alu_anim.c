@@ -8,6 +8,7 @@ void SetPlayerStep(s16 step) {
     PLAYER.step_s = 0;
 }
 
+// Only the first ten values appear to be used
 static u8 g_afterImageTimerTable[] = {
     10, 8, 8, 6, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 255, 255, 0, 0};
 
@@ -26,6 +27,7 @@ void InitPlayerAfterImage(void) {
     case 0x60:
     case 0x61:
     case 0x62:
+        // If index reaches 10, stop the effect
         g_Entities[E_AFTERIMAGE_1].ext.afterImage.index = 10;
         return;
     }
@@ -75,6 +77,8 @@ void InitPlayerAfterImage(void) {
     }
 }
 
+// Again, because the index is hard-coded to never go above 10, the remaining
+// values appear to be unused.
 static u8 g_shadowOpacityReductionTable[] = {
     4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 16, 16, 16, 16, 16, 16};
 static u8 g_D_800ACF3C[] = {

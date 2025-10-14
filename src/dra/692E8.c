@@ -157,7 +157,7 @@ void func_801093C4(void) {
     s32 i;
 
     prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
-    for (i = 0; i < 6; i++) {
+    for (i = 0; i < MaxAfterImages; i++) {
         prim = prim->next;
     }
     switch (g_Player.unk6A) {

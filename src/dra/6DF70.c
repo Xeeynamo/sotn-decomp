@@ -25,7 +25,7 @@ void func_8010DFF0(s32 resetAnims, s32 arg1) {
                 g_Entities[E_AFTERIMAGE_3].animCurFrame = 0;
         prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
 
-        for (i = 0; i < 6; i++) {
+        for (i = 0; i < MaxAfterImages; i++) {
             prim->x1 = 0;
             prim = prim->next;
         }
