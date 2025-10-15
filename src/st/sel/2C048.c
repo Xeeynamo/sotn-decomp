@@ -503,7 +503,7 @@ void func_801ACF7C(void) {
 #endif
 }
 
-static char* D_801803A8[10] = {
+char* D_801803A8[10] = {
     _S("Select"), _S("Decide"), _S("Cancel"),  _S("Input"), _S("Not for-"),
     _S("Yes"),    _S("No"),     _S("Confirm"), _S("Error"), _S("matted"),
 };

@@ -45,15 +45,15 @@ static s32 g_SelEng220NextStep;
 // The five possible header options that are displayed on the top-left for each
 // sub-menu in the main menu. The same graphics is also re-used for the main
 // menu selectable options.
-extern s32 D_psp_09283A48[];// = {0x00, 0x80, 0x00, 0x00, 0x00};
-extern s32 D_psp_09283A60[];// = {0xC0, 0x90, 0xE0, 0x80, 0xA0};
+extern s32 D_psp_09283A48[];
+extern s32 D_psp_09283A60[];
 
-extern s32 D_psp_09283A78[];// = {0x10, 0x10, 0x18, 0x3D, 0x68, 0x80, 0x18, 0x98};
-extern s32 D_psp_09283A98[];// = {0x08, 0x18, 0x38, 0x38, 0x38, 0x38, 0x40, 0x40};
-extern s32 D_psp_09283AB8[];// = {0x80, 0xA8, 0xE0, 0xE8, 0xE0, 0xE0, 0xE8, 0xF0};
-extern s32 D_psp_09283AD8[];// = {0xF0, 0xF0, 0x80, 0x80, 0x88, 0x88, 0x88, 0x88};
-extern s32 D_psp_09283AF8[];// = {0x28, 0x28, 0x08, 0x18, 0x08, 0x08, 0x08, 0x08};
-extern s32 D_psp_09283B18[];// = {0x10, 0x10, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08};
+extern s32 D_psp_09283A78[];
+extern s32 D_psp_09283A98[];
+extern s32 D_psp_09283AB8[];
+extern s32 D_psp_09283AD8[];
+extern s32 D_psp_09283AF8[];
+extern s32 D_psp_09283B18[];
 
 #include "../../get_lang.h"
 
@@ -435,16 +435,21 @@ void func_801ACF7C(void) {
 #endif
 }
 
-static char D_psp_09283E80[] = "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
-                               "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
-static char D_psp_09283E98[] = "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
-                               "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
-static char D_psp_09283EB0[] = "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
-                               "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
-static char D_psp_09283EC8[] = "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
-                               "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
-static char D_psp_09283EE0[] = "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
-                               "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+static char D_psp_09283E80[] =
+    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
+    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+static char D_psp_09283E98[] =
+    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
+    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+static char D_psp_09283EB0[] =
+    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
+    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+static char D_psp_09283EC8[] =
+    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
+    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+static char D_psp_09283EE0[] =
+    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
+    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
 
 void func_psp_092391A0(void) {
     D_801803A8 = GetLang(&D_psp_09283BE8, &D_psp_09283E48, &D_psp_09283CA8,
