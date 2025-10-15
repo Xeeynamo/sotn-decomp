@@ -7,7 +7,6 @@
 #include <stage.h>
 
 #define OVL_EXPORT(x) TOP_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,

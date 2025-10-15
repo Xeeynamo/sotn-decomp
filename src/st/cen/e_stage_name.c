@@ -1,12 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cen.h"
 
-#if !defined(VERSION_HD)
+#ifdef VERSION_US
+#include "../e_stage_name_us.h"
+#endif
 
-#include "../e_stage_name.h"
+#ifdef VERSION_PSP
+static u8 stage_name_en[] = {
+#include "gen/stage_name_en.h"
+};
+static u8 stage_name_it[] = {
+#include "gen/stage_name_it.h"
+};
+static u8 stage_name_sp[] = {
+#include "gen/stage_name_sp.h"
+};
+static u8 stage_name_ge[] = {
+#include "gen/stage_name_ge.h"
+};
+static u8 stage_name_fr[] = {
+#include "gen/stage_name_fr.h"
+};
+#endif
 
-#else
-
-#include "../entity_stage_name_popup_jp.h"
-
+#if defined(VERSION_PSP) || defined(VERSION_HD)
+#include "../e_stage_name_jp.h"
 #endif

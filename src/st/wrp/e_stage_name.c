@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "wrp.h"
 
-#if defined(VERSION_US)
-#include "../e_stage_name.h"
+#define STAGE_NAME OVL_EXPORT(STAGE_NAME)
 
-#else
-#include "../entity_stage_name_popup_jp.h"
+#ifdef VERSION_US
+#include "../e_stage_name_us.h"
+#endif
+
+#if defined(VERSION_PSP) || defined(VERSION_HD)
+#include "../e_stage_name_jp.h"
 #endif

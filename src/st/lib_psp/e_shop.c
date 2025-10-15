@@ -4731,7 +4731,7 @@ void func_us_801B4830(Entity* self) {
     }
 }
 
-void func_psp_09264E08(void) { D_psp_092A5D38 = &g_Pix[0][0x2000]; }
+void func_psp_09264E08(void) { D_psp_092A5D38 = g_Pix[1]; }
 
 void* func_us_801B0C40(u8* pix, const char* str, s32 x, s32 y, s32 size) {
     const u16 DOUBLE_SPACE = 0x8140;
