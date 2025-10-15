@@ -22,6 +22,7 @@ void EntityPushAlucard(Entity* self) {
         g_PauseAllowed = false;
         break;
 
+    // Make Alucard run to the right, ensure his after-image never stops
     case 1:
         player->posX.val += FIX(6);
         if (tilemap->scrollX.i.hi > 0x800) {
@@ -35,6 +36,7 @@ void EntityPushAlucard(Entity* self) {
         g_api.ForceAfterImageOn();
         break;
 
+    // Give him a fake speed boost then return to center screen position
     case 2:
         player->posX.val += FIX(8.5);
         g_unkGraphicsStruct.unkC += 4;
@@ -61,6 +63,8 @@ void EntityPushAlucard(Entity* self) {
         g_api.ForceAfterImageOn();
         break;
 
+    // Alucard jumps while running to the right and shouts "RAH!"
+    // as he crosses the castle gate.
     case 4:
         player->posX.val += FIX(4.5);
         if (tilemap->scrollX.i.hi > 0xF80) {
