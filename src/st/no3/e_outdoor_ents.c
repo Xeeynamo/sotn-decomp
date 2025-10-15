@@ -12,7 +12,8 @@ void EntityPushAlucard(Entity* self) {
 #ifdef VERSION_PSP
         g_CastleFlags[PROLOGUE_COMPLETE] = 0;
 #endif
-        g_Entities[E_AFTERIMAGE_1].ext.alucardController.unk7C = true;
+        g_Entities[E_AFTERIMAGE_1].ext.alucardController.disableAfterImageFlag =
+            true;
         g_Player.padSim = 0;
         g_Player.demo_timer = 255;
         player->posX.i.hi = 0;
@@ -24,7 +25,8 @@ void EntityPushAlucard(Entity* self) {
     case 1:
         player->posX.val += FIX(6);
         if (tilemap->scrollX.i.hi > 0x800) {
-            g_Entities[E_AFTERIMAGE_1].ext.alucardController.unk7C = false;
+            g_Entities[E_AFTERIMAGE_1]
+                .ext.alucardController.disableAfterImageFlag = false;
             g_Player.padSim = PAD_RIGHT;
             self->step++;
         }
@@ -64,7 +66,7 @@ void EntityPushAlucard(Entity* self) {
         if (tilemap->scrollX.i.hi > 0xF80) {
             g_api.PlaySfx(SFX_VO_ALU_ATTACK_B);
             g_Player.padSim = PAD_RIGHT | PAD_CROSS;
-            self->ext.alucardController.unk7C = false;
+            self->ext.alucardController.disableAfterImageFlag = false;
             self->step++;
         }
         g_Player.demo_timer = 1;
@@ -72,9 +74,10 @@ void EntityPushAlucard(Entity* self) {
         break;
 
     case 5:
-        if ((player->velocityY > 0) && !self->ext.alucardController.unk7C) {
+        if ((player->velocityY > 0) &&
+            !self->ext.alucardController.disableAfterImageFlag) {
             g_Player.padSim = PAD_CROSS;
-            self->ext.alucardController.unk7C = true;
+            self->ext.alucardController.disableAfterImageFlag = true;
         } else {
             g_Player.padSim = PAD_RIGHT | PAD_CROSS;
         }
@@ -96,7 +99,8 @@ void EntityCastleDoorTransition(Entity* self) {
             return;
         }
         InitializeEntity(g_EInitSpawner);
-        g_Entities[E_AFTERIMAGE_1].ext.alucardController.unk7C = true;
+        g_Entities[E_AFTERIMAGE_1].ext.alucardController.disableAfterImageFlag =
+            true;
         g_Player.padSim = PAD_RIGHT;
         g_Player.demo_timer = 255;
         player->posX.i.hi = 8;

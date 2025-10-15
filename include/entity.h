@@ -880,7 +880,7 @@ typedef struct {
 } ET_CastleDoorTransition;
 
 typedef struct {
-    /* 0x7C */ u8 unk7C;
+    /* 0x7C */ u8 disableAfterImageFlag;
     s32 : 24;
     /* 0x80 */ u32 unk80;
 } ET_AlucardController;
