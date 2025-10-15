@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../sel/sel.h"
+#include <cutscene.h>
 
 extern Overlay OVL_EXPORT(Overlay);
 
@@ -8,11 +9,6 @@ extern u8 D_psp_0924AD10[];
 extern u8 D_psp_0924B590[];
 extern u8 D_psp_0924BE90[];
 extern u8 D_psp_0924C7B0[];
-extern u8 D_psp_0924CF90[];
-extern u8 D_psp_0924D4F0[];
-extern u8 D_psp_0924DA50[];
-extern u8 D_psp_0924DFB0[];
-extern u8 D_psp_0924E510[];
 
 // BSS
 u8* D_psp_09285BA8;
@@ -21,6 +17,26 @@ u8* D_psp_09285B98;
 u8* D_psp_09285B90;
 u8* D_psp_09285B88;
 u8* D_psp_09285B80;
+
+static u8 credits_data_it[] = {
+#include "credits_data.h"
+};
+
+static u8 credits_data_sp[] = {
+#include "credits_data.h"
+};
+
+static u8 credits_data_fr[] = {
+#include "credits_data.h"
+};
+
+static u8 credits_data_ge[] = {
+#include "credits_data.h"
+};
+
+static u8 credits_data_en[] = {
+#include "credits_data.h"
+};
 
 s32 D_psp_0924EA70 = 0x08D39D3C;
 
@@ -295,10 +311,10 @@ void OVL_EXPORT(Load)(void) {
                                D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
     D_psp_09285BA0 = GetLangAt(0, D_psp_0924C7B0, D_psp_0924B590,
                                D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
-    D_psp_09285B98 = GetLangAt(0, D_psp_0924E510, D_psp_0924DA50,
-                               D_psp_0924D4F0, D_psp_0924DFB0, D_psp_0924CF90);
-    D_psp_09285B90 = GetLangAt(0, D_psp_0924E510, D_psp_0924DA50,
-                               D_psp_0924D4F0, D_psp_0924DFB0, D_psp_0924CF90);
+    D_psp_09285B98 = GetLangAt(0, credits_data_en, credits_data_fr,
+                               credits_data_sp, credits_data_ge, credits_data_it);
+    D_psp_09285B90 = GetLangAt(0, credits_data_en, credits_data_fr,
+                               credits_data_sp, credits_data_ge, credits_data_it);
     D_psp_09285B88 = GetLangAt(0, D_psp_0924C7B0, D_psp_0924B590,
                                D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
     D_psp_09285B80 = GetLangAt(4, D_psp_0924C7B0, D_psp_0924B590,

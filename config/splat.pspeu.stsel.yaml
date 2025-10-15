@@ -51,7 +51,7 @@ segments:
       - [0xBB50, c, sel_psp/BB50]
       - [0xDBD8, c, sel_psp/cutscene]
       - [0x10D00, data]
-      - [0x173F0, .data, sel_psp/st_init_sel]
+      - [0x15910, .data, sel_psp/st_init_sel]
       - [0x4C388, data]
       - [0x4C800, .data, sel_psp/7B8]
       - [0x4CAF8, .data, sel_psp/7D40]
