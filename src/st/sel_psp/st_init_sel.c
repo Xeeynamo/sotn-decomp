@@ -311,10 +311,12 @@ void OVL_EXPORT(Load)(void) {
                                D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
     D_psp_09285BA0 = GetLangAt(0, D_psp_0924C7B0, D_psp_0924B590,
                                D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
-    D_psp_09285B98 = GetLangAt(0, credits_data_en, credits_data_fr,
-                               credits_data_sp, credits_data_ge, credits_data_it);
-    D_psp_09285B90 = GetLangAt(0, credits_data_en, credits_data_fr,
-                               credits_data_sp, credits_data_ge, credits_data_it);
+    D_psp_09285B98 =
+        GetLangAt(0, credits_data_en, credits_data_fr, credits_data_sp,
+                  credits_data_ge, credits_data_it);
+    D_psp_09285B90 =
+        GetLangAt(0, credits_data_en, credits_data_fr, credits_data_sp,
+                  credits_data_ge, credits_data_it);
     D_psp_09285B88 = GetLangAt(0, D_psp_0924C7B0, D_psp_0924B590,
                                D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
     D_psp_09285B80 = GetLangAt(4, D_psp_0924C7B0, D_psp_0924B590,
