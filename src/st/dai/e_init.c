@@ -188,4 +188,4 @@ EInit g_EInitSpectralSword = {ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 136};
 EInit g_EInitSpectralSwordAura = {
     ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 2};
 EInit g_EInitSpectralSwordWeapon = {
-    ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD_WEAPON_1, 137};
+    ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD_WEAPON, 137};
