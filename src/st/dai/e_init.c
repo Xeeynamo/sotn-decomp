@@ -69,9 +69,9 @@ void EntitySpectralSwordWeapon(Entity* self);
 void EntityWingedGuardSpawner(Entity* self);
 void EntitySealedDoor(Entity* self);
 void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
-void OVL_EXPORT(EntityCutscene)(Entity* self);
-void func_us_801C5920(Entity* self);
-void func_us_801C5B88(Entity* self);
+void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self);
+void OVL_EXPORT(EntityCutsceneStage)(Entity* self);
+void OVL_EXPORT(EntityCutsceneMaria)(Entity* self);
 void EntityMistDoor(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
@@ -143,9 +143,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityWingedGuardSpawner,
     EntitySealedDoor,
     OVL_EXPORT(EntityBreakableDebris),
-    OVL_EXPORT(EntityCutscene),
-    func_us_801C5920,
-    func_us_801C5B88,
+    OVL_EXPORT(EntityCutsceneDialogue),
+    OVL_EXPORT(EntityCutsceneStage),
+    OVL_EXPORT(EntityCutsceneMaria),
     EntityMistDoor,
 };
 

@@ -21,26 +21,6 @@
 #endif
 */
 
-// e_cutscene/cutscene_script_box
-#define CUTSCENE_UNK3_RECT_X 0
-#define CUTSCENE_UNK4_TPAGE 16
-
-// e_cutscene/cutscene_script_text
-#ifdef VERSION_PSP
-#define CUTSCENE_UNK1_NEXT_X 0
-#define CUTSCENE_UNK1_UNK17 2
-#else
-#define CUTSCENE_UNK1_NEXT_X 2
-#define CUTSCENE_UNK1_UNK17 8
-#endif
-
-// e_cutscene/set_cutscene_script
-#ifdef VERSION_PC
-#define NUM_CUTSCENE_PRIM 8
-#else
-#define NUM_CUTSCENE_PRIM 7
-#endif
-
 // These are used by both e_chair and e_confessional
 #define CONFESSIONAL_GHOST_PRIEST 0
 #define CONFESSIONAL_GHOST_PARISHIONER 1
@@ -87,6 +67,8 @@ enum OVL_EXPORT(Palette) {
     PAL_BREAKABLE = 0x249,
     PAL_BREAKABLE_DEBRIS = 0x24D,
     PAL_CUTSCENE = 0x251,
+    PAL_PORTRAIT_ALUCARD = 0x258,
+    PAL_PORTRAIT_MARIA = 0x260
 };
 
 // Used when a constant value E_ID is used for both psx and pspeu
@@ -162,9 +144,9 @@ enum OVL_EXPORT(Entities) {
     E_UNK_42,                    // EntityWingedGuardSpawner,
     E_SEALED_DOOR,               // EntitySealedDoor,
     E_BREAKABLE_DEBRIS,          // EntityBreakableDebris,
-    E_CUTSCENE,                  // DAI_EntityCutscene,
-    E_UNK_46,                    // func_us_801C5920,
-    E_UNK_47,                    // func_us_801C5B88,
+    E_CUTSCENE_DIALOGUE,         // DAI_EntityCutsceneDialogue,
+    E_CUTSCENE_STAGE,            // DAI_EntityCutsceneStage,
+    E_CUTSCENE_MARIA,            // DAI_EntityCutsceneMaria,
     E_MIST_DOOR,                 // EntityMistDoor,
     NUM_ENTITIES,
 };

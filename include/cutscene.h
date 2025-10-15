@@ -29,6 +29,8 @@ typedef enum {
     CSOP_WAIT_FOR_FLAG_RESET,
 } CutsceneOpcode;
 
+#define CUTSCENE_FLAG_NONE 0
+
 #define script_half(x) (((x) & 0xFF0) >> 4), ((x) & 0xFF)
 #define script_word(x) (x & 0xFF000) >> 12, (x & 0xFF00) >> 8, script_half(x)
 
