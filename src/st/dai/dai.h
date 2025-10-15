@@ -74,7 +74,7 @@ enum OVL_EXPORT(Palette) {
     PAL_CORNER_GUARD = 0x215,
     PAL_BONE_PILLAR = 0x216,
     PAL_BONE_PILLAR_FIRE = 0x221,
-    PAL_UNK_22A = 0x22A,
+    PAL_BONE_HALBERD = 0x22A,
     PAL_WINGED_GUARD = 0x22B,
     PAL_BAT = 0x22C,
     PAL_CROW = 0x22F,
@@ -144,7 +144,7 @@ enum OVL_EXPORT(Entities) {
     E_SPIKES_DUST,               // EntitySpikesDust,
     E_SPIKES_DAMAGE,             // EntitySpikesDamage,
     E_BONE_HALBERD,              // EntityBoneHalberd,
-    E_BONE_HALBERD_NAGINATA,     // EntityBoneHalberdNaginata,
+    E_BONE_HALBERD_ATTACK,       // EntityBoneHalberdAttack,
     E_BONE_HALBERD_PARTS,        // EntityBoneHalberdParts,
     E_WINGED_GUARD,              // EntityWingedGuard,
     E_WINGED_GUARD_PARTS,        // EntityWingedGuardParts,
@@ -189,7 +189,7 @@ extern EInit g_EInitBonePillarPieces;
 extern EInit g_EInitBonePillarFireBreath;
 extern EInit g_EInitBonePillarSpikeBall;
 extern EInit g_EInitBoneHalberd;
-extern EInit g_EInitBoneHalberdNaginata;
+extern EInit g_EInitBoneHalberdAttack;
 extern EInit g_EInitWingedGuard;
 extern EInit g_EInitWingedGuardParts;
 extern EInit g_EInitBat;

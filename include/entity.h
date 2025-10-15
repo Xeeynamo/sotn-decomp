@@ -3441,15 +3441,15 @@ typedef struct {
 } ET_CornerGuard;
 
 typedef struct {
-    u8 unk7C;
-    u8 pad0[3];
-    u8 facingLeft;
-    u8 pad1[3];
-    u8 unk84;
-    u8 pad2[3];
-    u8 unk88;
-    u8 pad3[3];
-    s16 unk8C;
+    /* 0x7C */ u8 timer;
+    /* 0x7D */ u8 pad0[3];
+    /* 0x80 */ u8 facingLeft;
+    /* 0x81 */ u8 pad1[3];
+    /* 0x84 */ u8 attackIntervalIdx;
+    /* 0x85 */ u8 pad2[3];
+    /* 0x88 */ u8 partLifespan;
+    /* 0x89 */ u8 pad3[3];
+    /* 0x8C */ s16 lungeTimer;
 } ET_BoneHalberd;
 
 typedef struct {

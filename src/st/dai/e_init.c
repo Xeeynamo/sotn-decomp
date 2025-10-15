@@ -51,7 +51,7 @@ void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
 void EntitySpikesDamage(Entity* self);
 void EntityBoneHalberd(Entity* self);
-void EntityBoneHalberdNaginata(Entity* self);
+void EntityBoneHalberdAttack(Entity* self);
 void EntityBoneHalberdParts(Entity* self);
 void EntityWingedGuard(Entity* self);
 void EntityWingedGuardParts(Entity* self);
@@ -125,7 +125,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySpikesDust,
     EntitySpikesDamage,
     EntityBoneHalberd,
-    EntityBoneHalberdNaginata,
+    EntityBoneHalberdAttack,
     EntityBoneHalberdParts,
     EntityWingedGuard,
     EntityWingedGuardParts,
@@ -174,8 +174,8 @@ EInit g_EInitBonePillarFireBreath = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 184};
 EInit g_EInitBonePillarSpikeBall = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 185};
-EInit g_EInitBoneHalberd = {ANIMSET_OVL(7), 1, 72, PAL_UNK_22A, 118};
-EInit g_EInitBoneHalberdNaginata = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
+EInit g_EInitBoneHalberd = {ANIMSET_OVL(7), 1, 72, PAL_BONE_HALBERD, 118};
+EInit g_EInitBoneHalberdAttack = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
 EInit g_EInitWingedGuard = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 128};
 EInit g_EInitWingedGuardParts = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 3};
 EInit g_EInitBat = {ANIMSET_OVL(9), 0, 74, PAL_BAT, 64};
