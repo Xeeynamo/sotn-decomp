@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // clang-format off
 0x1,0x17,
 'C','A','S','T','L','E','V','A','N','I','A',
