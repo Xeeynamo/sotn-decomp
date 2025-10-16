@@ -7,8 +7,12 @@ static s32 D_801BB014;
 static u8 D_801BB018[0xE0];
 static s32 D_801804D0 = 0;
 
-u8 D_801804D4[] = {STAGE_MEMORYCARD, STAGE_CAT};
-const char* D_801804D8[] = {
+// DATA
+static u8 D_801804D4[] = {
+    STAGE_MEMORYCARD,
+    STAGE_CAT,
+};
+static char* D_801804D8[] = {
     "NORMAL      ",
     "SPECIAL     ",
 };

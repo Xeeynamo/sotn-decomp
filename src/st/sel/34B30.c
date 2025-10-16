@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
 
+extern RECT D_8018258C;
+extern u32 D_801BC3E8;
 extern u32 D_801BD030;
 extern s8 D_8018BC4A;
 extern s8 D_8018BC50;
