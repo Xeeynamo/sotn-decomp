@@ -58,10 +58,10 @@ enum OVL_EXPORT(Palette) {
     PAL_CLOUDS = 0xC0,
     PAL_BACKGROUND_SKY_LAND = 0xC5,
     PAL_CASTLE_WALL_2 = 0xC8,
-    PAL_CONFESSIONAL_C9 = 0xC9,
+    PAL_CONFESSIONAL_GHOST = 0xC9,
     PAL_801809C8 = 0xCA,
-    PAL_CONFESSIONAL_CC = 0xCC,
-    PAL_CONFESSIONAL_CE = 0xCE,
+    PAL_CONFESSIONAL_CLUT = 0xCC,
+    PAL_CONFESSIONAL_GHOST_BAD = 0xCE,
     PAL_COLOR_GRADIENT = 0x15F,
     PAL_SPIKES_DUST = 0x161,
     PAL_SPECTRAL_SWORD_WEAPON_3 = 0x16B,
@@ -179,7 +179,7 @@ extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
-extern EInit g_EInitStatueBlock;
+extern EInit g_EInitEnvironment;
 extern EInit g_EInitConfessionalGhost;
 extern EInit g_EInitConfessionalBlades;
 extern EInit g_EInitCornerGuard;

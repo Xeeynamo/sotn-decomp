@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
 
+extern RECT D_8018258C;
+extern u32 D_801BC3E8;
 extern u32 D_801BD030;
 extern s8 D_8018BC4A;
 extern s8 D_8018BC50;
@@ -86,7 +88,7 @@ void func_801B4C68(void) {
 }
 
 void func_801B4D78(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_3];
+    Entity* self = &g_Entities[3];
 
     switch (self->step) {
     case 0:
@@ -105,7 +107,7 @@ void func_801B4D78(void) {
 }
 
 void func_801B4DE0(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_2];
+    Entity* self = &g_Entities[2];
     s32 primIndex;
     Primitive* prim;
 
@@ -160,7 +162,7 @@ void func_801B4DE0(void) {
 }
 
 void func_801B4FFC(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_2];
+    Entity* self = &g_Entities[2];
     s32 primIndex;
     Primitive* prim;
 
@@ -203,7 +205,7 @@ void func_801B4FFC(void) {
 }
 
 void func_801B519C(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_1];
+    Entity* self = &g_Entities[1];
     s32 primIndex;
     Primitive* prim;
     u16 angle;
@@ -801,7 +803,7 @@ void func_801B60D4(void) {
         func_801B519C();
         func_801B4D78();
         func_801B4DE0();
-        ent = &g_Entities[UNK_ENTITY_3];
+        ent = &g_Entities[3];
         for (i = 3; i < 8; i++, ent++) {
             ent->posX.i.hi =
                 (D_801D6B24 / 0x10000) + ent->ext.unkSelEnts.unk80.i.hi;
@@ -839,7 +841,7 @@ void func_801B60D4(void) {
     case 7:
         ent = &g_Entities[UNK_ENTITY_4];
         if (func_801B79D4(ent)) {
-            ent = &g_Entities[UNK_ENTITY_1];
+            ent = &g_Entities[1];
             ent->step = 0;
             D_801BC3E4 = 1;
             g_GameEngineStep++;

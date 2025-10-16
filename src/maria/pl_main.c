@@ -170,17 +170,17 @@ void MarInit(s16 initParam) {
     *spriteptr = (SpriteParts*)wpn_dragon_spr; // ANIMSET_WPN_DRAGON
     spriteptr++;
     *spriteptr = (SpriteParts*)wpn_doll_spr; // ANIMSET_WPN_DOLL
-    for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
+    for (e = &g_Entities[E_AFTERIMAGE_1], i = 0; i < 3; i++, e++) {
         DestroyEntity(e);
         e->animSet = ANIMSET_OVL(0x10);
         e->unk5A = i + 1;
         e->palette = PAL_MARIA;
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
-    g_Entities[1].primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
-    g_Entities[1].flags |= FLAG_HAS_PRIMS;
-    for (prim = &g_PrimBuf[g_Entities[1].primIndex], i = 0; prim != NULL; i++,
-        prim = prim->next) {
+    g_Entities[E_AFTERIMAGE_1].primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
+    g_Entities[E_AFTERIMAGE_1].flags |= FLAG_HAS_PRIMS;
+    for (prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex], i = 0;
+         prim != NULL; i++, prim = prim->next) {
         prim->drawMode = DRAW_UNK_100 | DRAW_UNK02 | DRAW_HIDE;
     }
     if (D_80097C98 == 6) {
@@ -787,7 +787,7 @@ void MarMain(void) {
     if (g_Player.status & (PLAYER_STATUS_UNK10 | PLAYER_STATUS_UNK40)) {
         return;
     }
-    func_maria_8015C4AC();
+    InitMariaAfterImage();
     if ((*D_80097448 > 0x28) && !g_CurrentEntity->nFramesInvincibility) {
         PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
         PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
@@ -824,7 +824,7 @@ void MarMain(void) {
         PLAYER.velocityX = (PLAYER.velocityX * 4) / 3;
     }
     g_CurrentEntity->nFramesInvincibility = 0;
-    func_maria_8015C6D4();
+    DrawMariaAfterImage();
 
     // this block is new to maria and it is related to the support for
     // the two subweapons
