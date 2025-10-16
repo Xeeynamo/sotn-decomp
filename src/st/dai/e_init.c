@@ -160,7 +160,7 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInitUnused801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3};
 // This seems to be used as a common init and should probably be renamed
-EInit g_EInitStatueBlock = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
+EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
 EInit g_EInitConfessionalGhost = {
     ANIMSET_OVL(2), 0, 72, PAL_CONFESSIONAL_C9, 5};
 EInit g_EInitUnused801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_801809C8, 5};
