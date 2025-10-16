@@ -10,17 +10,17 @@ void func_us_801C5354(s32 resetAnims, s32 arg1) {
     Primitive* prim;
 
     if (resetAnims) {
-        g_Entities[E_ID_41].ext.disableAfterImage.unk7D = 1;
+        g_Entities[E_ID_41].ext.disableAfterImage.resetFlag = 1;
         g_Entities[E_ID_41].animCurFrame = g_Entities[E_ID_42].animCurFrame =
             g_Entities[E_ID_43].animCurFrame = 0;
-        prim = &g_PrimBuf[g_Entities[1].primIndex];
+        prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
         while (prim != NULL) {
             prim->x1 = 0;
             prim = prim->next;
         }
     }
-    g_Entities[E_ID_41].ext.disableAfterImage.unk7C = 1;
-    g_Entities[E_ID_41].ext.disableAfterImage.unk7E = 0xA;
+    g_Entities[E_ID_41].ext.disableAfterImage.disableFlag = 1;
+    g_Entities[E_ID_41].ext.disableAfterImage.index = MaxAfterImageIndex;
     if (arg1 != 0) {
         if (arg1 < 4) {
             g_Dop.timers[ALU_T_15] = 4;
@@ -31,14 +31,16 @@ void func_us_801C5354(s32 resetAnims, s32 arg1) {
 }
 
 #ifndef VERSION_PC
-static void func_8010E0A8(void) UNUSED {
-    g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk2 = 0;
+static void ForceAfterImageOn(void) UNUSED {
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.index = 0;
 }
 #endif
 
-void OVL_EXPORT(func_8010E0B8)(void) {
-    g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk1 = 0;
-    g_Entities[STAGE_ENTITY_START + UNK_ENTITY_1].ext.entSlot1.unk0 = 0;
+void OVL_EXPORT(EnableAfterImage)(void) {
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.resetFlag =
+        0;
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.disableFlag =
+        0;
 }
 
 // similar to DRA's func_8010E168. share's the function signature but
