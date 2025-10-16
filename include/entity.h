@@ -3389,12 +3389,12 @@ typedef struct {
 } ET_Bell;
 
 typedef struct {
-    struct Primitive* prim;
-    s16 unk80;
-    s16 : 16;
-    s16 unk84;
-    s16 unk86;
-    s16 unk88;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 numBlades;
+    /* 0x86 */ s16 curtainShake;
+    /* 0x88 */ s16 activateChime;
 } ET_ConfessionalGhost;
 
 typedef struct {

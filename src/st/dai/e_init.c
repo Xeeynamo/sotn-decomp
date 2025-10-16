@@ -162,10 +162,10 @@ EInit g_EInitUnused801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3};
 // This seems to be used as a common init and should probably be renamed
 EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
 EInit g_EInitConfessionalGhost = {
-    ANIMSET_OVL(2), 0, 72, PAL_CONFESSIONAL_C9, 5};
+    ANIMSET_OVL(2), 0, 72, PAL_CONFESSIONAL_GHOST, 5};
 EInit g_EInitUnused801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_801809C8, 5};
 EInit g_EInitConfessionalBlades = {
-    ANIMSET_OVL(2), 37, 72, PAL_CONFESSIONAL_C9, 101};
+    ANIMSET_OVL(2), 37, 72, PAL_CONFESSIONAL_GHOST, 101};
 EInit g_EInitCornerGuard = {ANIMSET_OVL(4), 0, 72, PAL_CORNER_GUARD, 180};
 EInit g_EInitCornerGuardAttack = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 181};
 EInit g_EInitBonePillarHead = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 183};
