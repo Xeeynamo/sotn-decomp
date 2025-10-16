@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../sel/sel.h"
 
-extern s32 D_psp_09286C58;
+extern u32 D_801BC3E8;
 extern s8* D_psp_09285B80;
 extern s8* D_psp_09285B88;
 
@@ -102,7 +102,7 @@ void func_801B4C68(void) {
 }
 
 void func_801B4D78(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_3];
+    Entity* self = &g_Entities[3];
 
     switch (self->step) {
     case 0:
@@ -121,7 +121,7 @@ void func_801B4D78(void) {
 }
 
 void func_801B4DE0(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_2];
+    Entity* self = &g_Entities[2];
     s32 primIndex;
     Primitive* prim;
 
@@ -176,7 +176,7 @@ void func_801B4DE0(void) {
 }
 
 void func_801B4FFC(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_2];
+    Entity* self = &g_Entities[2];
     s32 primIndex;
     Primitive* prim;
 
@@ -219,7 +219,7 @@ void func_801B4FFC(void) {
 }
 
 void func_801B519C(void) {
-    Entity* self = &g_Entities[UNK_ENTITY_1];
+    Entity* self = &g_Entities[1];
     s32 primIndex;
     Primitive* prim;
     u16 angle;
@@ -386,7 +386,7 @@ void func_801B55C8(void) {
         break;
 
     case 1:
-        if (D_psp_09286C58 & 0x10) {
+        if (D_801BC3E8 & 0x10) {
             self->animSet = ANIMSET_OVL(4);
             self->unk5A = 0x48;
             self->animCurFrame = 0x2C;
@@ -406,7 +406,7 @@ void func_801B55C8(void) {
         break;
 
     case 3:
-        if (D_psp_09286C58 & 0x20) {
+        if (D_801BC3E8 & 0x20) {
             self->animSet = ANIMSET_OVL(4);
             self->unk5A = 0x48;
             self->animCurFrame = 0x2C;
@@ -425,7 +425,7 @@ void func_801B55C8(void) {
         break;
 
     case 5:
-        if (D_psp_09286C58 & 0x40) {
+        if (D_801BC3E8 & 0x40) {
             self->animSet = ANIMSET_OVL(4);
             self->unk5A = 0x48;
             self->facingLeft = 1;
@@ -472,7 +472,7 @@ void func_801B585C(u16 arg0) {
 
     case 1:
         AnimateEntity(D_80180504, self);
-        if (D_psp_09286C58 & 4) {
+        if (D_801BC3E8 & 4) {
             self->step++;
         }
         break;
@@ -493,7 +493,7 @@ void func_801B585C(u16 arg0) {
 
     case 4:
         AnimateEntity(D_80180554, self);
-        if (D_psp_09286C58 & 8) {
+        if (D_801BC3E8 & 8) {
             SEL_SetStep(self, 5);
         }
         break;
@@ -538,12 +538,12 @@ void func_801B5A7C(void) {
 
         case 2:
             if (D_801BC3E4 == 0) {
-                D_psp_09286C58 |= 1;
+                D_801BC3E8 |= 1;
             }
             if (D_801D6B24 != 0) {
                 D_801D6B24 += 0x2000;
             }
-            if (D_psp_09286C58 & 2) {
+            if (D_801BC3E8 & 2) {
                 D_801BC3E4 = 1;
                 self->step++;
             }
@@ -582,8 +582,8 @@ void func_801B5A7C(void) {
 
         case 2:
             if (D_801BC3E4 == 0) {
-                D_psp_09286C58 |= 1;
-                D_psp_09286C58 |= 4;
+                D_801BC3E8 |= 1;
+                D_801BC3E8 |= 4;
                 self->step++;
             }
             if (D_801D6B24 != 0) {
@@ -595,7 +595,7 @@ void func_801B5A7C(void) {
             if (D_801D6B24 != 0) {
                 D_801D6B24 += 0x4000;
             }
-            if (D_psp_09286C58 & 2) {
+            if (D_801BC3E8 & 2) {
                 D_801BC3E4 = 1;
                 self->step++;
             }
@@ -631,8 +631,8 @@ void func_801B5A7C(void) {
 
         case 2:
             if (D_801BC3E4 == 0) {
-                D_psp_09286C58 |= 1;
-                D_psp_09286C58 |= 4;
+                D_801BC3E8 |= 1;
+                D_801BC3E8 |= 4;
                 self->step++;
             }
             if (D_801D6B24 != 0) {
@@ -644,7 +644,7 @@ void func_801B5A7C(void) {
             if (D_801D6B24 != 0) {
                 D_801D6B24 += 0x4000;
             }
-            if (D_psp_09286C58 & 2) {
+            if (D_801BC3E8 & 2) {
                 D_801BC3E4 = 1;
                 self->step++;
             }
@@ -698,13 +698,13 @@ void func_801B5A7C(void) {
 
         case 4:
             if (!--self->ext.unkSelEnts.unk8C) {
-                D_psp_09286C58 |= 1;
+                D_801BC3E8 |= 1;
                 self->step++;
             }
             break;
 
         case 5:
-            if (D_psp_09286C58 & 2) {
+            if (D_801BC3E8 & 2) {
                 D_801BC3E4 = 1;
                 self->step++;
             }
@@ -735,8 +735,8 @@ void func_801B5A7C(void) {
 
         case 2:
             if (D_801BC3E4 == 0) {
-                D_psp_09286C58 |= 1;
-                D_psp_09286C58 |= 4;
+                D_801BC3E8 |= 1;
+                D_801BC3E8 |= 4;
                 self->step++;
             }
             if (D_801D6B24 != 0) {
@@ -748,7 +748,7 @@ void func_801B5A7C(void) {
             if (D_801D6B24 != 0) {
                 D_801D6B24 += 0x4000;
             }
-            if (D_psp_09286C58 & 2) {
+            if (D_801BC3E8 & 2) {
                 D_801BC3E4 = 1;
                 self->step++;
             }
@@ -829,7 +829,7 @@ void func_psp_09244E10(void) {
         func_801B519C();
         func_801B4D78();
         func_801B4DE0();
-        ent = &g_Entities[UNK_ENTITY_3];
+        ent = &g_Entities[3];
         for (i = 3; i < 8; i++, ent++) {
             ent->posX.i.hi =
                 (D_801D6B24 / 0x10000) + ent->ext.unkSelEnts.unk80.i.hi;
@@ -867,7 +867,7 @@ void func_psp_09244E10(void) {
     case 7:
         ent = &g_Entities[UNK_ENTITY_4];
         if (func_801B79D4(ent)) {
-            ent = &g_Entities[UNK_ENTITY_1];
+            ent = &g_Entities[1];
             ent->step = 0;
             D_801BC3E4 = 1;
             g_GameEngineStep++;
