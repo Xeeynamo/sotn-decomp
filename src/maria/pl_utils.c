@@ -1,44 +1,45 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "maria.h"
 
-// Same function in DRA is func_8010D59C
+// Same function in DRA is func_8010D59C (InitPlayerAfterImage)
 static u8 mar_801545B0[] = {
     10, 8, 8, 6, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, -1, -1, 0, 0};
-void func_maria_8015C4AC(void) {
+void InitMariaAfterImage(void) {
     byte stackpad[40];
     Primitive* prim;
     s32 i;
 
-    if (g_Entities[1].ext.entSlot1.unk0) {
+    if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag) {
         return;
     }
     if ((g_Player.padTapped & GAMEBUTTONS) ||
         ((g_Player.padHeld ^ g_Player.padPressed) & g_Player.padHeld &
          GAMEBUTTONS) ||
         (PLAYER.velocityY > FIX(0.5))) {
-        g_Entities[1].ext.entSlot1.unk2 = 0;
-        g_Entities[1].ext.entSlot1.unk3 = 0;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.index = 0;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer = 0;
     } else {
-        if (g_Entities[1].ext.entSlot1.unk2 >= 10) {
+        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.index >=
+            MaxAfterImageIndex) {
             return;
         }
-        if (g_Entities[1].ext.entSlot1.unk3 == 0) {
-            g_Entities[1].ext.entSlot1.unk3 =
-                mar_801545B0[g_Entities[1].ext.entSlot1.unk2];
+        if (g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer == 0) {
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer =
+                mar_801545B0[g_Entities[E_AFTERIMAGE_1].ext.afterImage.index];
         }
-        if (--g_Entities[1].ext.entSlot1.unk3 == 0) {
-            g_Entities[1].ext.entSlot1.unk2++;
-            g_Entities[1].ext.entSlot1.unk3 =
-                mar_801545B0[g_Entities[1].ext.entSlot1.unk2];
+        if (--g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer == 0) {
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.index++;
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer =
+                mar_801545B0[g_Entities[E_AFTERIMAGE_1].ext.afterImage.index];
         }
     }
-    if (g_Entities[1].pose) {
-        g_Entities[1].pose--;
+    if (g_Entities[E_AFTERIMAGE_1].pose) {
+        g_Entities[E_AFTERIMAGE_1].pose--;
         return;
     }
-    for (prim = &g_PrimBuf[g_Entities[1].primIndex], i = 0; prim != NULL; i++,
-        prim = prim->next) {
-        if (i == g_Entities[1].entityId) {
+    for (prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex], i = 0;
+         prim != NULL; i++, prim = prim->next) {
+        if (i == g_Entities[E_AFTERIMAGE_1].entityId) {
             prim->r0 = prim->g0 = prim->b0 = 0x80;
             prim->x0 = PLAYER.posX.i.hi;
             prim->y0 = PLAYER.posY.i.hi;
@@ -48,19 +49,19 @@ void func_maria_8015C4AC(void) {
             prim->y2 = PLAYER.palette;
         }
     }
-    g_Entities[1].pose = 2;
-    g_Entities[1].entityId++;
-    if (g_Entities[1].entityId >= 6) {
-        g_Entities[1].entityId = 0;
+    g_Entities[E_AFTERIMAGE_1].pose = 2;
+    g_Entities[E_AFTERIMAGE_1].entityId++;
+    if (g_Entities[E_AFTERIMAGE_1].entityId >= MaxAfterImages) {
+        g_Entities[E_AFTERIMAGE_1].entityId = 0;
     }
 }
 
-// Extremely similar to func_8010D800
+// Extremely similar to func_8010D800 (DrawPlayerAfterImage)
 static u8 mar_801545C4[] = {
     4, 4, 4, 4, 6, 6, 6, 6, 8, 8, 16, 16, 16, 16, 16, 16};
 static u8 mar_801545D4[] = {
     8, 12, 16, 20, 24, 28, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32};
-void func_maria_8015C6D4(void) {
+void DrawMariaAfterImage(void) {
     byte pad[0x28];
     Primitive* prim;
     PlayerDraw* draw;
@@ -69,12 +70,12 @@ void func_maria_8015C6D4(void) {
     u8 var_s5;
     u8 resetAnim;
 
-    resetAnim = g_Entities[1].ext.entSlot1.unk1;
-    prim = &g_PrimBuf[g_Entities[1].primIndex];
+    resetAnim = g_Entities[E_AFTERIMAGE_1].ext.afterImage.resetFlag;
+    prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
     i = 0;
     draw = &g_PlayerDraw[1];
-    var_s5 = mar_801545C4[g_Entities[1].ext.entSlot1.unk2];
-    var_s3 = mar_801545D4[g_Entities[1].ext.entSlot1.unk2];
+    var_s5 = mar_801545C4[g_Entities[E_AFTERIMAGE_1].ext.afterImage.index];
+    var_s3 = mar_801545D4[g_Entities[E_AFTERIMAGE_1].ext.afterImage.index];
     while (prim != NULL) {
         if (prim->r0 > var_s3) {
             prim->r0 -= var_s5;
@@ -91,15 +92,15 @@ void func_maria_8015C6D4(void) {
             prim->x1 = 0;
         }
         if ((i ^ g_Timer) & 1) {
-            g_Entities[i / 2 + 1].posX.i.hi = prim->x0;
-            g_Entities[i / 2 + 1].posY.i.hi = prim->y0;
-            g_Entities[i / 2 + 1].animCurFrame = prim->x1;
-            g_Entities[i / 2 + 1].drawMode = prim->y1;
-            g_Entities[i / 2 + 1].facingLeft = prim->x2;
-            g_Entities[i / 2 + 1].palette = prim->y2;
-            g_Entities[i / 2 + 1].zPriority = PLAYER.zPriority - 2;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].posX.i.hi = prim->x0;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].posY.i.hi = prim->y0;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].animCurFrame = prim->x1;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].drawMode = prim->y1;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].facingLeft = prim->x2;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].palette = prim->y2;
+            g_Entities[i / 2 + E_AFTERIMAGE_1].zPriority = PLAYER.zPriority - 2;
             if (resetAnim) {
-                g_Entities[i / 2 + 1].animCurFrame = 0;
+                g_Entities[i / 2 + E_AFTERIMAGE_1].animCurFrame = 0;
                 prim->x1 = 0;
             }
 
@@ -209,26 +210,26 @@ void MarDisableAfterImage(s32 resetAnims, s32 arg1) {
     FntPrint("op disable\n");
 #endif
     if (resetAnims) {
-        g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7D = 1;
-        g_Entities[UNK_ENTITY_1].animCurFrame =
-            g_Entities[UNK_ENTITY_2].animCurFrame =
-                g_Entities[UNK_ENTITY_3].animCurFrame = 0;
-        prim = &g_PrimBuf[g_Entities[UNK_ENTITY_1].primIndex];
+        g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.resetFlag = 1;
+        g_Entities[E_AFTERIMAGE_1].animCurFrame =
+            g_Entities[E_AFTERIMAGE_2].animCurFrame =
+                g_Entities[E_AFTERIMAGE_3].animCurFrame = 0;
+        prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
         while (prim) {
             prim->x1 = 0;
             prim = prim->next;
         }
     }
-    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7C = 1;
-    g_Entities[UNK_ENTITY_1].ext.disableAfterImage.unk7E = 0xA;
+    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.disableFlag = 1;
+    g_Entities[E_AFTERIMAGE_1].ext.disableAfterImage.index = MaxAfterImageIndex;
     if (arg1) {
         g_Player.timers[PL_T_AFTERIMAGE_DISABLE] = 4;
     }
 }
 
 void func_maria_8015CC28(void) {
-    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 =
-        g_Entities[UNK_ENTITY_1].ext.entSlot1.unk1 =
-            g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 =
-                g_Entities[UNK_ENTITY_1].ext.entSlot1.unk3 = 0;
+    g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag =
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.resetFlag =
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.index =
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer = 0;
 }

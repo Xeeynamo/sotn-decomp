@@ -1678,7 +1678,7 @@ typedef struct {
     /* 8003C83C */ bool (*LoadMonsterLibrarianPreview)(s32 monsterId);
     /* 8003C840 */ s32 (*TimeAttackController)(
         TimeAttackEvents eventId, TimeAttackActions action);
-    /* 8003C844 */ void (*func_8010E0A8)(void);
+    /* 8003C844 */ void (*ForceAfterImageOn)(void);
     /* 8003C848 */ s32 (*func_800FE044)(s32, s32);
     /* 8003C84C */ void (*AddToInventory)(u32 id, EquipKind kind);
     /* 8003C850 */ RelicDesc* relicDefs;
@@ -1786,7 +1786,7 @@ extern Accessory* g_api_accessoryDefs;
 extern void (*g_api_AddHearts)(s32 value);
 extern s32 (*g_api_TimeAttackController)(
     TimeAttackEvents eventId, TimeAttackActions action);
-extern void (*g_api_func_8010E0A8)(void);
+extern void (*g_api_ForceAfterImageOn)(void);
 extern s32 (*g_api_func_800FE044)(s32, s32);
 extern void (*g_api_AddToInventory)(u32 id, EquipKind kind);
 extern RelicDesc* g_api_relicDefs;
@@ -2145,10 +2145,16 @@ extern BgLayer g_BgLayers[MAX_BG_LAYER_COUNT]; /* 800730D8 */
 #define STAGE_ENTITY_START 64
 #define MaxEntityCount 32
 #define PLAYER g_Entities[PLAYER_CHARACTER]
+// The max number of afterimage sprites is 6 (two per entity)
+// Going over this number will crash the game.
+#define MaxAfterImages 6
+// The afterimage effect is animated by using an index to step through each
+// animation table.
+#define MaxAfterImageIndex 10
 typedef enum {
-    UNK_ENTITY_1 = 1,
-    UNK_ENTITY_2,
-    UNK_ENTITY_3,
+    E_AFTERIMAGE_1 = 1,
+    E_AFTERIMAGE_2,
+    E_AFTERIMAGE_3,
     UNK_ENTITY_4,
     UNK_ENTITY_5,
     UNK_ENTITY_6,
