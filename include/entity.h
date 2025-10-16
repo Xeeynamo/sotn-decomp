@@ -880,7 +880,7 @@ typedef struct {
 } ET_CastleDoorTransition;
 
 typedef struct {
-    /* 0x7C */ u8 unk7C;
+    /* 0x7C */ u8 disableAfterImageFlag;
     s32 : 24;
     /* 0x80 */ u32 unk80;
 } ET_AlucardController;
@@ -918,11 +918,11 @@ typedef struct PACKED {
 } ET_Player;
 
 typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u8 unk2;
-    u8 unk3;
-} ET_EntitySlot1;
+    u8 disableFlag;
+    u8 resetFlag;
+    u8 index;
+    u8 timer;
+} ET_AfterImage;
 
 typedef struct {
     char pad[0x32];
@@ -1805,9 +1805,9 @@ typedef struct {
 } ET_StoneDoor;
 
 typedef struct {
-    /* 0x7C */ u8 unk7C;
-    /* 0x7D */ u8 unk7D;
-    /* 0x7E */ u8 unk7E;
+    /* 0x7C */ u8 disableFlag;
+    /* 0x7D */ u8 resetFlag;
+    /* 0x7E */ u8 index;
 } ET_DisableAfterImage;
 
 typedef struct {
@@ -3552,7 +3552,7 @@ typedef union { // offset=0x7C
     ET_TimerOnly timer;
     ET_UTimerOnly utimer;
     ET_EntFactory factory;
-    ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
+    ET_AfterImage afterImage; // g_Entities[1], not entityID 1
     ET_EntitySlot16 entSlot16;
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
