@@ -7,7 +7,18 @@ extern s32 E_ID(SPIKES_DUST);
 extern s32 E_ID(SPIKES_DAMAGE);
 #endif
 
-static u8 anim_dust[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1, 0, 0, 0};
+enum SpikesSteps {
+    SPIKES_INIT,
+    SPIKES_INTERACT,
+};
+
+enum SpikesPartsSteps {
+    SPIKES_PARTS_INIT,
+    SPIKES_PARTS_MOVE,
+};
+
+static AnimateEntityFrame anim_dust[] = {
+    {2, 1}, {2, 2}, {2, 3}, {2, 4}, {2, 5}, {4, 6}, POSE_END};
 static u8 spikes_params[][3] = {{5, 4, 6}, {1, 0, 2}, {9, 8, 10}, {0, 0, 0}};
 
 void EntitySpikesDust(Entity* self) {
@@ -35,8 +46,8 @@ void EntitySpikesParts(Entity* self) {
     u8 params;
 
     switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitStatueBlock);
+    case SPIKES_PARTS_INIT:
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 15;
         self->drawFlags |= FLAG_DRAW_ROTATE;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
@@ -79,7 +90,7 @@ void EntitySpikesParts(Entity* self) {
         self->velocityY += ((Random() & 3) << 13) - FIX(0.1875);
         self->ext.spikes.rotate += ((Random() & 3) * 16) - 24;
         break;
-    case 1:
+    case SPIKES_PARTS_MOVE:
         MoveEntity();
         self->velocityY += FIX(0.15625);
         self->rotate += self->ext.spikes.rotate;
@@ -175,12 +186,12 @@ void EntitySpikes(Entity* self) {
 
     playerPtr = &PLAYER;
     switch (self->step) {
-    case 0:
+    case SPIKES_INIT:
         InitializeEntity(g_EInitSpawner);
         entity = self + 1;
         CreateEntityFromCurrentEntity(E_ID(SPIKES_DAMAGE), entity);
         break;
-    case 1:
+    case SPIKES_INTERACT:
         entity = self + 1;
         entity->posX.i.hi = -16;
         entity->posY.i.hi = -16;

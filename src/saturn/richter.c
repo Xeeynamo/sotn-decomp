@@ -252,7 +252,7 @@ INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9B9C, func_060A9B9C);
 // ===== pl_utils.c
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9C2C, func_060A9C2C);
 
-// func_8015C6D4
+// DrawRicAfterImage
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60A9DEC, func_060A9DEC);
 
 void RicSetStep(s16 step) {
@@ -345,10 +345,10 @@ void RicSetInvincibilityFrames(s32 kind, s16 invincibilityFrames) {
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA438, func_060AA438);
 
 void func_8015CC28(void) {
-    g_Entities[UNK_ENTITY_1].ext.entSlot1.unk0 =
-        g_Entities[UNK_ENTITY_1].ext.entSlot1.unk1 =
-            g_Entities[UNK_ENTITY_1].ext.entSlot1.unk2 =
-                g_Entities[UNK_ENTITY_1].ext.entSlot1.unk3 = 0;
+    g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag =
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.resetFlag =
+            g_Entities[E_AFTERIMAGE_1].ext.afterImage.index =
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.timer = 0;
 }
 
 INCLUDE_ASM("asm/saturn/richter/f_nonmat", f60AA4F4, func_060AA4F4);

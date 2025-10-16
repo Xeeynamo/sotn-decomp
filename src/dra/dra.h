@@ -588,7 +588,7 @@ extern SubweaponDef g_SubwpnDefs[13];
 // These are different on PSP since they have text that needs translating.
 #if defined(VERSION_PSP)
 extern char** g_SaveAreaNamesSecondPart;
-extern signed char** g_SaveAreaNames;
+extern char** g_SaveAreaNames;
 extern RelicDesc* g_RelicDefs;
 extern SpellDef* g_SpellDefs;
 extern char** g_MenuStr;
@@ -820,8 +820,8 @@ void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height);
 void SetPlayerStep(s16 step);
 u32 UpdateAnim(s8* frameProps, AnimationFrame** anims);
 void func_8010DFF0(s32 resetAnims, s32 arg1);
-void func_8010E0A8(void);
-void func_8010E0B8(void);
+void ForceAfterImageOn(void);
+void EnableAfterImage(void);
 s32 func_8010E334(s32 xStart, s32 xEnd);
 void func_8010E470(s32, s32);
 void func_8010E570(s32);
