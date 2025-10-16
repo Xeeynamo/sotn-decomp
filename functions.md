@@ -2807,7 +2807,7 @@
 | no4   | func_pspeu_09239B00                      |     1639 |        210 | Yes    | https://decomp.me/scratch/2QiaV | 0.998 |
 | np3   | EntityMerman2                            |     1649 |        195 | Yes    | https://decomp.me/scratch/rdRVz | 1.0   |
 | no3   | EntityMerman2                            |     1668 |        195 | Yes    | https://decomp.me/scratch/rdRVz | 1.0   |
-| no4   | NO4_EntityCutscene                       |     1731 |        172 | Yes    | https://decomp.me/scratch/vMqmj | 0.998 |
+| no4   | NO4_EntityCutscene                       |     1731 |        172 | Yes    | https://decomp.me/scratch/vMqmj | 0.999 |
 | st0   | EntityDraculaFinalForm                   |     1733 |        251 | Yes    | https://decomp.me/scratch/6KkQy | 0.997 |
 | dra   | EntityStopWatch                          |     1738 |        127 | Yes    | https://decomp.me/scratch/zcGFK | 1.0   |
 | ric   | RicEntityWhip                            |     1741 |        169 |        | https://decomp.me/scratch/zDPUB | 0.995 |
