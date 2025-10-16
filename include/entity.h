@@ -3231,23 +3231,14 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 unk85;
-    /* 0x86 */ u8 unk86;
-    /* 0x88 */ struct Entity* unkEntity;
-    /* 0x89 */ u8 : 8;
-    /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ s32 : 32;
-    /* 0xA0 */ s32 : 32;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
-    /* 0xB0 */ s16 : 16;
-    /* 0xB2 */ s16 unkB2;
+    /* 0x84 */ u8 attackIntervalIdx;
+    /* 0x85 */ u8 bottomDead;
+    /* 0x86 */ u8 isBouncing;
+    /* 0x88 */ struct Entity* linkEntity;
+    /* 0x8C */ s16 pad[19]; // This seems like too much of a pad for the
+    /* 0xB2 */ s16 unkB2;   // reference to unkB2 to be a part of this ext
 } ET_BonePillar;
 
 typedef struct {
@@ -3804,7 +3795,7 @@ typedef union { // offset=0x7C
     ET_SurfacingWater et_surfacingWater;
     ET_WaterAlcove et_waterAlcove;
     ET_801C12B0 et_801C12B0;
-    ET_BonePillar et_bonePillar;
+    ET_BonePillar bonePillar;
     ET_801C4520 et_801C4520;
     ET_801C4980 et_801C4980;
     ET_801C5268 et_801C5268;

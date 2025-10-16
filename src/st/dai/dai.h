@@ -134,9 +134,9 @@ enum OVL_EXPORT(Entities) {
     E_BELL_SPAWNER,              // EntityBellSpawner,
     E_CORNER_GUARD,              // EntityCornerGuard,
     E_CORNER_GUARD_ATTACK,       // EntityCornerGuardAttack,
-    E_BONE_PILLAR_HEAD,          // EntityBonePillarHead,
+    E_BONE_PILLAR_SKULL,         // EntityBonePillarSkull,
     E_BONE_PILLAR_FIRE,          // EntityBonePillarFireBreath,
-    E_BONE_PILLAR_PIECES,        // EntityBonePillarDeathParts,
+    E_BONE_PILLAR_PARTS,         // EntityBonePillarDeathParts,
     E_BONE_PILLAR_SPIKE_BALL,    // EntityBonePillarSpikeBall,
     E_UNK_2D,                    // EntityEndConfessionalChime,
     E_SPIKES,                    // EntitySpikes,
@@ -184,8 +184,8 @@ extern EInit g_EInitConfessionalGhost;
 extern EInit g_EInitConfessionalBlades;
 extern EInit g_EInitCornerGuard;
 extern EInit g_EInitCornerGuardAttack;
-extern EInit g_EInitBonePillarHead;
-extern EInit g_EInitBonePillarPieces;
+extern EInit g_EInitBonePillarSkull;
+extern EInit g_EInitBonePillarParts;
 extern EInit g_EInitBonePillarFireBreath;
 extern EInit g_EInitBonePillarSpikeBall;
 extern EInit g_EInitBoneHalberd;
