@@ -27,7 +27,7 @@
 |       | unused_3C24                              |        7 |          1 |        |                                 |       |
 | dra   | func_psp_090E4C58                        |        9 |          1 |        |                                 |       |
 | dra   | func_psp_090DD678                        |        9 |          1 |        |                                 |       |
-| dra   | func_8010E0A8                            |        9 |          1 |        | https://decomp.me/scratch/eozE3 | 1.0   |
+| dra   | ForceAfterImageOn                        |        9 |          1 |        |                                 |       |
 | dra   | func_psp_091088E0                        |        9 |          1 |        |                                 |       |
 | dra   | EntityNull                               |        9 |          1 |        |                                 |       |
 | dra   | func_8011E0E4                            |        9 |          1 |        |                                 |       |
