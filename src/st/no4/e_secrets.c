@@ -94,10 +94,9 @@ void EntityBreakableCrystalFloor(Entity* self) {
         break;
     case BREAKABLE_CRYSTAL_FLOOR_BREAK:
         // Update the tiles with every break and spawn puffs of smoke
-        self->ext.breakableTerrain.breakCount++;
+        self->ext.breakable.breakCount++;
         tileLayoutPtr =
-            &crystal_floor_tile_layout[self->ext.breakableTerrain.breakCount *
-                                       6];
+            &crystal_floor_tile_layout[self->ext.breakable.breakCount * 6];
         tilePos = 0x2D3;
         for (i = 0; i < 2; i++, tileLayoutPtr += 3) {
             (&g_Tilemap.fg[tilePos])[0] = tileLayoutPtr[0];
@@ -111,9 +110,9 @@ void EntityBreakableCrystalFloor(Entity* self) {
             newEntity->params = 0x11;
         }
         // There is a cooldown of 32 frames between breaks
-        self->ext.breakableTerrain.resetTimer = 32;
+        self->ext.breakable.resetTimer = 32;
         self->step += 1;
-        if (self->ext.breakableTerrain.breakCount == 3) {
+        if (self->ext.breakable.breakCount == 3) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
@@ -129,7 +128,7 @@ void EntityBreakableCrystalFloor(Entity* self) {
         break;
     case BREAKABLE_CRYSTAL_FLOOR_CHECK:
         // Wait for cooldown to finish, then switch to idle state
-        if (!--self->ext.breakableTerrain.resetTimer) {
+        if (!--self->ext.breakable.resetTimer) {
             self->step = BREAKABLE_CRYSTAL_FLOOR_IDLE;
             return;
         }
@@ -173,10 +172,9 @@ void EntityBreakableWall(Entity* self) {
         }
         break;
     case 2:
-        self->ext.breakableTerrain.breakCount++;
+        self->ext.breakable.breakCount++;
         tileLayoutPtr =
-            &breakable_wall_tile_layout[self->ext.breakableTerrain.breakCount *
-                                        8];
+            &breakable_wall_tile_layout[self->ext.breakable.breakCount * 8];
         tilePos = 0x60;
 
         for (i = 0; i < 4; tilePos += 0x10, i++, tileLayoutPtr += 2) {
@@ -188,9 +186,9 @@ void EntityBreakableWall(Entity* self) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x11;
         }
-        self->ext.breakableTerrain.resetTimer = 0x14;
+        self->ext.breakable.resetTimer = 0x14;
         self->step++;
-        if (self->ext.breakableTerrain.breakCount == 3) {
+        if (self->ext.breakable.breakCount == 3) {
             for (i = 0; i < 0x10; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
@@ -211,7 +209,7 @@ void EntityBreakableWall(Entity* self) {
         }
         break;
     case 3:
-        if (!--self->ext.breakableTerrain.resetTimer) {
+        if (!--self->ext.breakable.resetTimer) {
             self->step = 1;
         }
         break;
