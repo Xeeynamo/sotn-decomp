@@ -1,10 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-static u8 anim_1[] = {
-    6, 1, 4, 2, 4, 3, 6, 4, 4, 3, 4, 2, 0, 0, 0, 0,
+enum WingedGuardSteps {
+    WINGED_GUARD_INIT,
+    WINGED_GUARD_MOVE,
+    WINGED_GUARD_DEBUG = 255,
 };
-static u32 velocities[][2] = {
+
+enum WingedGuardPartsSteps {
+    WINGED_GUARD_PARTS_INIT,
+    WINGED_GUARD_PARTS_MOVE,
+};
+
+static AnimateEntityFrame anim_move[] = {
+    {6, 1}, {4, 2}, {4, 3}, {6, 4}, {4, 3}, {4, 2}, POSE_LOOP(0),
+};
+static u32 velocity_intervals[][2] = {
     {FIX(0), FIX(-0.5)},    {FIX(0.25), FIX(-1.125)}, {FIX(0.1875), FIX(0)},
     {FIX(-0.1875), FIX(0)}, {FIX(0), FIX(-0.75)},     {FIX(-0.25), FIX(-1.125)},
     {FIX(0.125), FIX(-1)},  {FIX(0), FIX(0)},
@@ -22,7 +33,7 @@ void EntityWingedGuard(Entity* self) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, entity);
-            entity->params = 2;
+            entity->params = EXPLOSION_SMALL_MULTIPLE;
         }
         for (guardPart = 0; guardPart < 8; guardPart++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -39,7 +50,7 @@ void EntityWingedGuard(Entity* self) {
         return;
     }
     switch (self->step) {
-    case 0:
+    case WINGED_GUARD_INIT:
         InitializeEntity(g_EInitWingedGuard);
         self->hitboxOffY = 2;
         self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
@@ -49,8 +60,8 @@ void EntityWingedGuard(Entity* self) {
             self->velocityX = FIX(-1.0);
         }
         // fallthrough
-    case 1:
-        AnimateEntity(anim_1, self);
+    case WINGED_GUARD_PARTS_MOVE:
+        AnimateEntity(anim_move, self);
         if (!self->poseTimer && self->pose == 2) {
             PlaySfxPositional(SFX_WING_FLAP_A);
         }
@@ -58,16 +69,16 @@ void EntityWingedGuard(Entity* self) {
         self->velocityY = (rsin(self->rotate) << 14) >> 12;
         self->rotate += 16;
         return;
-    case 255:
+    case WINGED_GUARD_DEBUG:
 #include "../pad2_anim_debug.h"
     }
 }
 
 void EntityWingedGuardParts(Entity* self) {
-    Entity* entity;
+    Entity* explosion;
 
     switch (self->step) {
-    case 0:
+    case WINGED_GUARD_PARTS_INIT:
         InitializeEntity(g_EInitWingedGuardParts);
         self->flags |= FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         self->animCurFrame = self->params + 5;
@@ -75,26 +86,26 @@ void EntityWingedGuardParts(Entity* self) {
             self->drawFlags |= FLAG_DRAW_ROTATE;
         }
         if (self->facingLeft) {
-            self->velocityX += velocities[self->params][0];
+            self->velocityX += velocity_intervals[self->params][0];
         } else {
-            self->velocityX -= velocities[self->params][0];
+            self->velocityX -= velocity_intervals[self->params][0];
         }
         if (GetSideToPlayer() & 1) {
             self->velocityX += FIX(0.5);
         } else {
             self->velocityX -= FIX(0.5);
         }
-        self->velocityY += velocities[self->params][1];
+        self->velocityY += velocity_intervals[self->params][1];
         return;
-    case 1:
+    case WINGED_GUARD_PARTS_MOVE:
         MoveEntity();
         self->rotate += 128;
         self->velocityY += FIX(0.1875);
         if (!(Random() & 0x3F)) {
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
-                entity->params = 0;
+            explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (explosion != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, explosion);
+                explosion->params = EXPLOSION_SMALL;
             }
         }
         return;

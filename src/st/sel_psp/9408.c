@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../sel/sel.h"
 
+extern s32 g_UserLanguage;
+extern s32 D_psp_0924F800;
+extern s32 D_psp_0924F808;
+extern s32 D_psp_08B42050;
+
 // BSS
 static s32 D_801BB010;
 static s32 D_psp_09285E70;
@@ -8,12 +13,51 @@ static s32 D_801BB014;
 static u8 D_801BB018[0x100];
 static s32 D_801804D0 = 0;
 
-extern s32 g_UserLanguage;
-extern s32 D_psp_0924F800;
-extern s32 D_psp_0924F808;
-extern u8 D_psp_09285170[];
-extern s32 D_psp_09285480[];
-extern s32 D_psp_08B42050;
+// DATA
+static u8 D_801804D4[] = {
+    STAGE_MEMORYCARD, STAGE_ST0,  STAGE_NO3,  STAGE_NP3,  STAGE_NZ0,
+    STAGE_DAI,        STAGE_NO0,  STAGE_NO1,  STAGE_LIB,  STAGE_NO4,
+    STAGE_NZ1,        STAGE_ARE,  STAGE_CAT,  STAGE_CHI,  STAGE_NO2,
+    STAGE_TOP,        STAGE_CEN,  STAGE_RNO3, STAGE_RNZ0, STAGE_RDAI,
+    STAGE_RNO0,       STAGE_RNO1, STAGE_RLIB, STAGE_RNO4, STAGE_RNZ1,
+    STAGE_RARE,       STAGE_RCAT, STAGE_RCHI, STAGE_RNO2, STAGE_RTOP,
+    STAGE_RCEN,       0x00,       0x00,
+};
+static char* D_801804D8[] = {
+    "メモリーカード　　　　",
+    "過去（リヒター編）　　",
+    "城入り口　　　　　　　",
+    "城に戻る　　　　　　　",
+    "錬金研究棟　　　　　　",
+    "礼拝堂　　　　　　　　",
+    "大理石の廊下　　　　　",
+    "崖側外壁　　　　　　　",
+    "蔵書庫　　　　　　　　",
+    "地下水脈　　　　　　　",
+    "時計塔　　　　　　　　",
+    "闘技場　　　　　　　　",
+    "カタコンベ　　　　　　",
+    "えん道　　　　　　　　",
+    "オルロックの間　　　　",
+    "最上部　　　　　　　　",
+    "中央部　　　　　　　　",
+    "逆　城入り口　　　　　",
+    "逆　錬金研究棟　　　　",
+    "逆　礼拝堂　　　　　　",
+    "逆　大理石の廊下　　　",
+    "逆　崖側外壁　　　　　",
+    "逆　蔵書庫　　　　　　",
+    "逆　地下水脈　　　　　",
+    "逆　時計塔　　　　　　",
+    "逆　闘技場　　　　　　",
+    "逆　カタコンベ　　　　",
+    "逆　えん道　　　　　　",
+    "逆　オルロックの間　　",
+    "逆　最上部　　　　　　",
+    "逆　中央部　　　　　　",
+    NULL,
+    NULL,
+};
 
 void func_psp_09240A88(void) {
     switch (g_GameEngineStep) {
@@ -354,9 +398,9 @@ void func_psp_09240B58(void) {
                 D_800987B4 = 0x20;
             }
         }
-        g_StageId = D_psp_09285170[D_800987B4];
+        g_StageId = D_801804D4[D_800987B4];
         func_801B1F4C(1);
-        func_90F0DD8(D_psp_09285480[D_800987B4], 1);
+        func_90F0DD8(D_801804D8[D_800987B4], 1);
         if (g_pads[0].tapped & (D_psp_08B42050 | 8)) {
             g_api.PlaySfx(SFX_START_SLAM_B);
             g_GameEngineStep++;

@@ -28,7 +28,7 @@ void EntityGargoyleTongue(Entity* self) {
 
     switch (self->step) {
     case GARGOYLE_INIT:
-        InitializeEntity(g_EInitStatueBlock);
+        InitializeEntity(g_EInitEnvironment);
         self->zPriority = 92;
         self->animCurFrame = 12;
         if (self->params & FACING_RIGHT) {

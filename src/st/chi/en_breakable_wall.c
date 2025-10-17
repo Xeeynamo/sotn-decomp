@@ -56,7 +56,7 @@ void EntityBreakableWallDebris(Entity* self) {
             self->velocityY = velY - FIX(1);
         }
 
-        self->ext.breakableWallDebris.rotSpeed = ((Random() & 3) + 1) * 32;
+        self->ext.breakableDebris.rotSpeed = ((Random() & 3) + 1) * 32;
         return;
 
     case CHECK_FLAG:
@@ -70,7 +70,7 @@ void EntityBreakableWallDebris(Entity* self) {
         return;
 
     case MOVEMENT:
-        self->rotate += self->ext.breakableWallDebris.rotSpeed;
+        self->rotate += self->ext.breakableDebris.rotSpeed;
 
         MoveEntity();
 
@@ -204,7 +204,7 @@ void EntityBreakableWall(Entity* self) {
         self->primIndex = newPrimIdx;
         prim = &g_PrimBuf[newPrimIdx];
 
-        self->ext.breakableWall.prim = prim;
+        self->ext.breakableDebris.prim = prim;
 
         // Calculate values for left prim
         xPos = self->posX.i.hi - 23;
@@ -257,7 +257,7 @@ void EntityBreakableWall(Entity* self) {
         if (self->flags & FLAG_DEAD) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
 
-            self->ext.breakableWall.breakCount++;
+            self->ext.breakableDebris.breakCount++;
 
             self->flags &= ~FLAG_DEAD;
             self->hitPoints = 0x20;
@@ -266,14 +266,14 @@ void EntityBreakableWall(Entity* self) {
 
             // Update collision via tilemap
             pSrcTile = BreakableWallTilesCollision;
-            pSrcTile += 0x18 - self->ext.breakableWall.breakCount * 4;
-            tileIdx = 0x163 - self->ext.breakableWall.breakCount;
+            pSrcTile += 0x18 - self->ext.breakableDebris.breakCount * 4;
+            tileIdx = 0x163 - self->ext.breakableDebris.breakCount;
             for (b = 0; b < WallHeightTiles; b++, pSrcTile++) {
                 *(&g_Tilemap.fg[tileIdx] + b * RoomWidthTiles) = *pSrcTile;
             }
 
             entity = self + 1;
-            entity += (self->ext.breakableWall.breakCount - 1) * 5;
+            entity += (self->ext.breakableDebris.breakCount - 1) * 5;
             for (c = 0; c < 5; c++, entity++) {
                 entity->step++;
             }
@@ -281,7 +281,7 @@ void EntityBreakableWall(Entity* self) {
             // Smoke
             xPos = self->posX.i.hi + 0x20;
             yPos = self->posY.i.hi;
-            xPos -= self->ext.breakableWall.breakCount * 0xC;
+            xPos -= self->ext.breakableDebris.breakCount * 0xC;
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, entity);
@@ -303,20 +303,20 @@ void EntityBreakableWall(Entity* self) {
                 }
             }
             // Dynamically set Break_1, Break_2, or Break_3
-            self->step += self->ext.breakableWall.breakCount;
+            self->step += self->ext.breakableDebris.breakCount;
         }
         return;
 
     case BREAK_1: // Dynamically calculated, never set directly
-        prim = self->ext.breakableWall.prim;
+        prim = self->ext.breakableDebris.prim;
         prim = prim->next;
         prim->drawMode = DRAW_HIDE;
-        self->ext.breakableWall.resetTimer = ResetTime;
+        self->ext.breakableDebris.resetTimer = ResetTime;
         self->step = WAIT_FOR_RESET;
         return;
 
     case BREAK_2: // Dynamically calculated, never set directly
-        prim = self->ext.breakableWall.prim;
+        prim = self->ext.breakableDebris.prim;
         prim->u1 = prim->u3 -= 0x10;
         prim->x1 = prim->x3 -= 0x10;
         entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -326,12 +326,12 @@ void EntityBreakableWall(Entity* self) {
             entity->posY.i.hi = 0x188 - g_Tilemap.scrollY.i.hi;
             entity->params = 3;
         }
-        self->ext.breakableWall.resetTimer = ResetTime;
+        self->ext.breakableDebris.resetTimer = ResetTime;
         self->step = WAIT_FOR_RESET;
         return;
 
     case BREAK_3: // Dynamically calculated, never set directly
-        prim = self->ext.breakableWall.prim;
+        prim = self->ext.breakableDebris.prim;
         prim->drawMode = DRAW_HIDE;
         self->hitboxState = 0;
         g_CastleFlags[CHI_SECRET_WALL_OPEN] = 1;
@@ -343,7 +343,7 @@ void EntityBreakableWall(Entity* self) {
         return;
 
     case WAIT_FOR_RESET:
-        if (!--self->ext.breakableWall.resetTimer) {
+        if (!--self->ext.breakableDebris.resetTimer) {
             self->step = IDLE;
         }
         return;

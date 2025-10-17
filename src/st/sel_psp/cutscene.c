@@ -2,9 +2,18 @@
 #include "../sel/sel.h"
 #include <cutscene.h>
 
-extern Dialogue g_Dialogue;
-extern u8 D_psp_09286868[];
-extern Dialogue4 D_psp_09287E60;
+// BSS
+static Dialogue4 D_psp_09287E60;
+static u16 D_801BB0F8[0x30][0x30];
+u32 D_801BC3E8;
+static s32 g_SkipCutscene;
+static Dialogue g_Dialogue;
+static u8 D_psp_09286C08;
+static u8 D_psp_09286BE8[0x20];
+static u8 cutsceneUnk3Unknown[0x380];
+static s32 D_psp_09286860;
+static u16 D_psp_09286660[0x100];
+
 extern u32 D_893F80C;
 extern u32 D_894058C;
 extern u32 D_894130C;
@@ -13,27 +22,11 @@ extern u32 D_8942E0C;
 extern u32 D_8943B8C;
 extern u32 D_894490C;
 extern u32 D_894568C;
-extern u32 D_psp_0927C7F8;
-extern u32 D_psp_0927D578;
-extern u32 D_psp_0927E2F8;
-extern u8 D_psp_092858F8[];
-extern u16 D_psp_09285900[];
-extern u16 D_psp_09285908[];
-extern u16 D_psp_09285910[];
-extern u8 D_psp_09285918[];
-extern u8 D_psp_09285920[];
+extern u8 gfx_portrait_alucard[];
+extern u8 gfx_portrait_maria[];
+extern u8 gfx_portrait_richter[];
 extern s32 D_psp_09285BA0;
 extern u8* D_psp_09285BA8;
-extern s32 D_psp_09286650;
-extern u8 D_psp_09286658[];
-extern u16 D_psp_09286660[];
-extern s32 D_psp_09286860;
-extern u8 D_psp_09286BE8[];
-extern u8 D_psp_09286C08;
-extern s32 D_psp_09286C50;
-extern u32 D_psp_09286C58;
-extern u16 D_psp_09286C60[][0x30];
-extern u32 D_psp_09285928[];
 extern u8* D_psp_09285B98;
 
 // clang-format off
@@ -98,6 +91,16 @@ static u16 actor_names_ge[] = {
     CH('S'), CH('h'), CH('a'), CH('f'), CH('t')};
 static u8 actor_name_len_ge[] = {7, 7, 5, 7, 5, 12, 4, 8, 8, 5};
 // clang-format on
+
+static u8 D_80180824[2] = {0x00, 0x40};
+static u8 D_80180828[2];
+static u16 D_8018082C[] = {0x240, 0x248, 0x250};
+static u16 D_80180834[] = {0x00, 0x20};
+static u16 D_80180838[] = {0x1A1, 0x1A1, 0x1A1};
+static u8 D_psp_09285918[] = {3, 4, 0};
+static u8 D_psp_09285920[] = {3, 4, 0};
+static u32 D_psp_09285928[] = {6, 5, 6, 5};
+static s32 D_801D6B00;
 
 #include "../../get_lang.h"
 
@@ -175,7 +178,7 @@ void CutsceneUnk3(s16 nextCharY) {
     rect.w = 0x40;
     rect.h = 0xC;
     ClearImage(&rect, 0, 0, 0);
-    func_890A3C0(D_psp_09286868, 0, 0x380);
+    func_890A3C0(cutsceneUnk3Unknown, 0, 0x380);
 }
 
 void CutsceneUnk4(void) {
@@ -279,9 +282,9 @@ void SEL_EntityCutscene(Entity* entity) {
         if (SetCutsceneScript(D_psp_09285BA8)) {
             entity->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             entity->primIndex = g_Dialogue.primIndex[2];
-            D_psp_09286C58 = 0;
-            D_psp_09286650 = 0;
-            D_psp_09286C50 = 0;
+            D_801BC3E8 = 0;
+            D_801D6B00 = 0;
+            g_SkipCutscene = 0;
             g_CutsceneHasControl = 1;
             entity->step++;
         }
@@ -295,7 +298,7 @@ void SEL_EntityCutscene(Entity* entity) {
             if (func_8919BA8() & 8) {
                 g_Dialogue.nextCharTimer = 0;
             }
-            if (g_Dialogue.nextCharTimer && !D_psp_09286C50) {
+            if (g_Dialogue.nextCharTimer && !g_SkipCutscene) {
                 g_Dialogue.nextCharTimer--;
                 g_Dialogue.scriptCur--;
                 return;
@@ -307,7 +310,7 @@ void SEL_EntityCutscene(Entity* entity) {
                     return;
 
                 case 1:
-                    if (D_psp_09286C50) {
+                    if (g_SkipCutscene) {
                         continue;
                     }
                     g_Dialogue.nextCharX = g_Dialogue.nextLineX;
@@ -337,13 +340,13 @@ void SEL_EntityCutscene(Entity* entity) {
 
                 case 3:
                     g_Dialogue.nextCharTimer = *g_Dialogue.scriptCur++;
-                    if (D_psp_09286C50) {
+                    if (g_SkipCutscene) {
                         continue;
                     }
                     return;
 
                 case 4:
-                    if (D_psp_09286C50) {
+                    if (g_SkipCutscene) {
                         continue;
                     }
                     prim = g_Dialogue.prim[0];
@@ -354,7 +357,7 @@ void SEL_EntityCutscene(Entity* entity) {
                     return;
 
                 case 5:
-                    if (D_psp_09286C50) {
+                    if (g_SkipCutscene) {
                         g_Dialogue.scriptCur += 2;
                         continue;
                     }
@@ -362,9 +365,9 @@ void SEL_EntityCutscene(Entity* entity) {
                     prim = g_Dialogue.prim[4];
                     nextChar2 = *g_Dialogue.scriptCur++;
                     var_s7 = nextChar2 & 1;
-                    x = D_psp_092858F8[var_s7];
-                    y = D_psp_09286658[var_s7];
-                    prim->clut = D_psp_09285900[i];
+                    x = D_80180824[var_s7];
+                    y = D_80180828[var_s7];
+                    prim->clut = D_8018082C[i];
                     prim->tpage = 0x90;
                     prim->u0 = prim->u2 = x;
                     prim->u1 = prim->u3 = x + 0x2F;
@@ -374,7 +377,7 @@ void SEL_EntityCutscene(Entity* entity) {
                         g_Dialogue.startX - 0x1E;
                     prim->y0 = prim->y1 = prim->y2 = prim->y3 =
                         g_Dialogue.startY + 0x24;
-                    g_Dialogue.clutIndex = D_psp_09285910[i];
+                    g_Dialogue.clutIndex = D_80180838[i];
                     CutsceneUnk1();
                     CutsceneUnk4();
                     prim->priority = 0x1FE;
@@ -386,7 +389,7 @@ void SEL_EntityCutscene(Entity* entity) {
                     return;
 
                 case 6:
-                    if (D_psp_09286C50) {
+                    if (g_SkipCutscene) {
                         continue;
                     }
                     prim = g_Dialogue.prim[0];
@@ -401,7 +404,7 @@ void SEL_EntityCutscene(Entity* entity) {
                     return;
 
                 case 7:
-                    if (D_psp_09286C50) {
+                    if (g_SkipCutscene) {
                         g_Dialogue.scriptCur += 2;
                         continue;
                     }
@@ -422,7 +425,7 @@ void SEL_EntityCutscene(Entity* entity) {
                     return;
 
                 case 8:
-                    if (D_psp_09286C50) {
+                    if (g_SkipCutscene) {
                         continue;
                     }
                     g_Dialogue.portraitAnimTimer = 24;
@@ -430,7 +433,7 @@ void SEL_EntityCutscene(Entity* entity) {
                     return;
 
                 case 9:
-                    if (D_psp_09286C50) {
+                    if (g_SkipCutscene) {
                         g_Dialogue.scriptCur += 2;
                         continue;
                     }
@@ -441,14 +444,14 @@ void SEL_EntityCutscene(Entity* entity) {
                     continue;
 
                 case 10:
-                    if (D_psp_09286C50 || g_api.func_80131F68() != 0) {
+                    if (g_SkipCutscene || g_api.func_80131F68() != false) {
                         continue;
                     }
                     g_Dialogue.scriptCur--;
                     return;
 
                 case 11:
-                    if (D_psp_09286C50 || g_api.func_80131F68() != 1) {
+                    if (g_SkipCutscene || g_api.func_80131F68() != true) {
                         continue;
                     }
                     g_Dialogue.scriptCur--;
@@ -503,16 +506,16 @@ void SEL_EntityCutscene(Entity* entity) {
                     continue;
 
                 case 16:
-                    if (!((D_psp_09286C58 >> *g_Dialogue.scriptCur) & 1)) {
+                    if (!((D_801BC3E8 >> *g_Dialogue.scriptCur) & 1)) {
                         g_Dialogue.scriptCur--;
                         return;
                     }
-                    D_psp_09286C58 &= ~(1 << *g_Dialogue.scriptCur);
+                    D_801BC3E8 &= ~(1 << *g_Dialogue.scriptCur);
                     g_Dialogue.scriptCur++;
                     continue;
 
                 case 17:
-                    D_psp_09286C58 |= 1 << *g_Dialogue.scriptCur++;
+                    D_801BC3E8 |= 1 << *g_Dialogue.scriptCur++;
                     continue;
 
                 case 18:
@@ -520,7 +523,7 @@ void SEL_EntityCutscene(Entity* entity) {
                     continue;
 
                 case 19:
-                    if (D_psp_09286C50) {
+                    if (g_SkipCutscene) {
                         g_Dialogue.scriptCur += 5;
                         continue;
                     }
@@ -533,13 +536,13 @@ void SEL_EntityCutscene(Entity* entity) {
                     ptr |= *g_Dialogue.scriptCur++;
                     switch (ptr) {
                     case 0:
-                        ptr = (u32)&D_psp_0927C7F8;
+                        ptr = (u32)gfx_portrait_alucard;
                         break;
                     case 1:
-                        ptr = (u32)&D_psp_0927D578;
+                        ptr = (u32)gfx_portrait_maria;
                         break;
                     case 2:
-                        ptr = (u32)&D_psp_0927E2F8;
+                        ptr = (u32)gfx_portrait_richter;
                         break;
                     case 3:
                         ptr = (u32)&D_893F80C;
@@ -567,8 +570,8 @@ void SEL_EntityCutscene(Entity* entity) {
                         break;
                     }
                     nextChar2 = *g_Dialogue.scriptCur++;
-                    LoadTPage((u_long*)ptr, 1, 0, D_psp_09285908[nextChar2],
-                              0x100, 0x30, 0x48);
+                    LoadTPage((u_long*)ptr, 1, 0, D_80180834[nextChar2], 0x100,
+                              0x30, 0x48);
                     continue;
 
                 case 20:
@@ -579,20 +582,20 @@ void SEL_EntityCutscene(Entity* entity) {
                     continue;
 
                 case 21:
-                    D_psp_09286C58 = 0;
-                    D_psp_09286C50 = 0;
-                    D_psp_09286650 = 0;
+                    D_801BC3E8 = 0;
+                    g_SkipCutscene = 0;
+                    D_801D6B00 = 0;
                     continue;
 
                 case 22:
-                    D_psp_09286C58 &= ~(1 << (*g_Dialogue.scriptCur++));
+                    D_801BC3E8 &= ~(1 << *g_Dialogue.scriptCur++);
                     continue;
 
                 case 23:
                     return;
 
                 case 24:
-                    if (!((D_psp_09286C58 >> (*g_Dialogue.scriptCur)) & 1)) {
+                    if (!((D_801BC3E8 >> *g_Dialogue.scriptCur) & 1)) {
                         g_Dialogue.scriptCur--;
                         return;
                     }
@@ -600,7 +603,7 @@ void SEL_EntityCutscene(Entity* entity) {
                     continue;
 
                 default:
-                    if (D_psp_09286C50) {
+                    if (g_SkipCutscene) {
                         continue;
                     }
                     g_Dialogue.nextCharTimer = g_Dialogue.unk17;
@@ -611,7 +614,7 @@ void SEL_EntityCutscene(Entity* entity) {
                 }
                 continue;
             } else {
-                if (D_psp_09286C50) {
+                if (g_SkipCutscene) {
                     g_Dialogue.scriptCur++;
                     continue;
                 }
@@ -679,10 +682,9 @@ void SEL_EntityCutscene(Entity* entity) {
         rect.w = var_s7;
         var_s5 = D_psp_09286BE8;
         for (i = 0; i < 8; i++) {
-            var_s1 =
-                &D_psp_09286868[(g_Dialogue.nextCharX - g_Dialogue.nextLineX) /
-                                    2 +
-                                (i * 0x70)];
+            var_s1 = &cutsceneUnk3Unknown
+                         [(g_Dialogue.nextCharX - g_Dialogue.nextLineX) / 2 +
+                          (i * 0x70)];
             if ((g_Dialogue.nextCharX - g_Dialogue.nextLineX) & 1) {
                 var_s1[0] = (var_s1[0] & 0xF0) | ((var_s5[0] & 0x0F) << 4);
                 var_s1[1] =
@@ -701,8 +703,8 @@ void SEL_EntityCutscene(Entity* entity) {
                 var_s5 += 4;
             }
         }
-        LoadTPage(
-            (u_long*)D_psp_09286868, 0, 0, g_Dialogue.nextLineX, y, 0xE0, 8);
+        LoadTPage((u_long*)cutsceneUnk3Unknown, 0, 0, g_Dialogue.nextLineX, y,
+                  0xE0, 8);
         if (nextChar != ' ') {
             g_Dialogue.nextCharX += rect.w;
         } else {
@@ -769,7 +771,7 @@ void SEL_EntityCutscene(Entity* entity) {
         break;
 
     case 5:
-        D_psp_09286650 = 1;
+        D_801D6B00 = 1;
         prim = g_Dialogue.prim[4];
         prim = prim->next;
         g_Dialogue.portraitAnimTimer--;
@@ -937,11 +939,11 @@ s32 func_801B79D4(Entity* entity) {
                 }
                 glyph = func_801B78BC(nextChar);
                 if (glyph != NULL) {
-                    var_s4 = D_psp_09286C60[glyphIndex];
+                    var_s4 = D_801BB0F8[glyphIndex];
                     for (i = 0; i < 0x30; i++) {
                         *var_s4++ = *glyph++;
                     }
-                    glyph = D_psp_09286C60[glyphIndex];
+                    glyph = D_801BB0F8[glyphIndex];
                     y = D_psp_09287E60.nextLineX * 0x10;
                     LoadTPage(
                         (u_long*)glyph, 0, 0, D_psp_09287E60.startY, y, 12, 16);

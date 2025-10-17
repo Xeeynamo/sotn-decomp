@@ -234,7 +234,7 @@ void EntityBreakableWall(Entity* self) {
         break;
 
     case 2:
-        self->ext.breakableWall2.unk84++;
+        self->ext.breakable.breakCount++;
         self->animCurFrame++;
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
@@ -242,9 +242,9 @@ void EntityBreakableWall(Entity* self) {
             entity->params = 0x13;
             entity->zPriority = self->zPriority + 1;
         }
-        self->ext.breakableWall2.unk80 = 0x20;
+        self->ext.breakable.resetTimer = 0x20;
         self->step++;
-        if (self->ext.breakableWall2.unk84 == 3) {
+        if (self->ext.breakable.breakCount == 3) {
             if (!self->params) {
                 g_CastleFlags[OVL_EXPORT(SECRET_WALL_1_BROKEN)] = 1;
             } else {
@@ -280,7 +280,7 @@ void EntityBreakableWall(Entity* self) {
         break;
 
     case 3:
-        if (--self->ext.breakableWall2.unk80 == 0) {
+        if (--self->ext.breakable.resetTimer == 0) {
             self->step = 1;
         }
         break;

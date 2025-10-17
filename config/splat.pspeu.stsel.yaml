@@ -51,24 +51,23 @@ segments:
       - [0xBB50, c, sel_psp/BB50]
       - [0xDBD8, c, sel_psp/cutscene]
       - [0x10D00, data]
-      - [0x173F0, .data, sel_psp/st_init_sel]
-      - [0x45178, data]
-      - [0x4C3C8, .data, sel_psp/7B8]
-      - [0x4C4B8, data]
-      - [0x4DE88, .data, sel_psp/9408]
+      - [0x15910, .data, sel_psp/st_init_sel]
+      - [0x4C388, data]
+      - [0x4C800, .data, sel_psp/7B8]
+      - [0x4CAF8, .data, sel_psp/7D40]
+      - [0x4DAF0, .data, sel_psp/9408]
       - [0x4DE90, .data, sel_psp/A578]
       - [0x4DEC8, .data, sel_psp/BB50]
       - [0x4DF70, .data, sel_psp/cutscene]
-      - [0x4E278, data]
       - [0x4E300, .rodata, sel_psp/9408]
       - [0x4E340, .rodata, sel_psp/A578]
       - [0x4E360, .rodata, sel_psp/BB50]
       - [0x4E430, .rodata, sel_psp/cutscene]
-      - {start: 0x4E500, type: .bss, vram: 0x09285B80, name: sel_psp/st_init_sel}
-      - {start: 0x4E500, type: .bss, vram: 0x09285BB0, name: sel_psp/7B8}
-      - {start: 0x4E500, type: .bss, vram: 0x09285D08, name: sel_psp/7D40}
-      - {start: 0x4E500, type: .bss, vram: 0x09285D60, name: sel_psp/9408}
-      - {start: 0x4E500, type: .bss, vram: 0x09285E80, name: sel_psp/A578}
-      - {start: 0x4E500, type: .bss, vram: 0x09286638, name: sel_psp/BB50}
-      - {start: 0x4E500, type: bss, vram: 0x09286650, name: bss}
+      - [0x4E500, .bss, sel_psp/st_init_sel]
+      - [0x4E530, .bss, sel_psp/7B8]
+      - [0x4E688, .bss, sel_psp/7D40]
+      - [0x4E6E0, .bss, sel_psp/9408]
+      - [0x4E800, .bss, sel_psp/A578]
+      - [0x4EFB8, .bss, sel_psp/BB50]
+      - [0x4EFD0, .bss, sel_psp/cutscene]
   - [0x50800]

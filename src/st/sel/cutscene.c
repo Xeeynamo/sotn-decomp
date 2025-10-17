@@ -2,13 +2,32 @@
 #include "sel.h"
 #include <cutscene.h>
 
-extern s32 g_SkipCutscene;
+extern u32 D_801BC3E8;
+extern s32 D_801D6B00;
 extern Dialogue g_Dialogue;
-
-#include "../cutscene_unk1.h"
+extern s32 g_SkipCutscene;
 
 // BSS
 static u16 D_801BB0F8[0x30][0x30];
+
+// DATA
+static u8 D_80180824[2] = {0x00, 0x40};
+static u8 D_80180828[2] = {0x00, 0x00};
+static u16 D_8018082C[] = {0x240, 0x248, 0x250};
+static u16 D_80180834[] = {0x00, 0x20};
+static u16 D_80180838[] = {0x1A1, 0x1A1, 0x1A1};
+static u16 D_80180840[] = {
+    0x08, 0x13, 0x11, 0x31, 0x4F, 0x26, 0x36, 0x1D, 0x1B, 0x33, 0x2C, 0x21,
+    0x19, 0x0A, 0x33, 0x1F, 0x48, 0x2F, 0x13, 0x19, 0x4D, 0x4B, 0x17, 0x1D,
+    0x12, 0x02, 0x1B, 0x2A, 0x50, 0x45, 0x32, 0x0D, 0x2A, 0x4D, 0x06, 0x27,
+    0x07, 0x48, 0x2F, 0x1B, 0x36, 0x22, 0x39, 0x14, 0x39, 0x1D, 0x0A, 0x35,
+    0x10, 0x1B, 0x3D, 0x17, 0x2E, 0x0B, 0x49, 0x42, 0x3D, 0x2A, 0x01, 0x0C,
+    0x1B, 0x34, 0x41, 0x35, 0x08, 0x0E, 0x4D, 0x11, 0x34, 0x41, 0x29, 0x48,
+};
+
+static const char* actor_names[] = {_S("Alucard"), _S("Maria"), _S("Richter")};
+
+#include "../cutscene_unk1.h"
 
 u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
@@ -69,45 +88,6 @@ u8 SetCutsceneScript(u8* script) {
 
 #include "../cutscene_unk4.h"
 
-u8 D_80180824[] = {
-    0x00,
-    0x40,
-    0x00,
-    0x00,
-};
-
-u8 D_80180828[] = {
-    0x00,
-    0x00,
-    0x00,
-    0x00,
-};
-
-u16 D_8018082C[] = {
-    0x0240,
-    0x0248,
-    0x0250,
-};
-
-u16 D_80180834[] = {
-    0x0000,
-    0x0020,
-};
-
-u16 D_80180838[] = {
-    0x01A1, 0x01A1, 0x01A1, 0x0000, 0x0008, 0x0013, 0x0011, 0x0031, 0x004F,
-    0x0026, 0x0036, 0x001D, 0x001B, 0x0033, 0x002C, 0x0021, 0x0019, 0x000A,
-    0x0033, 0x001F, 0x0048, 0x002F, 0x0013, 0x0019, 0x004D, 0x004B, 0x0017,
-    0x001D, 0x0012, 0x0002, 0x001B, 0x002A, 0x0050, 0x0045, 0x0032, 0x000D,
-    0x002A, 0x004D, 0x0006, 0x0027, 0x0007, 0x0048, 0x002F, 0x001B, 0x0036,
-    0x0022, 0x0039, 0x0014, 0x0039, 0x001D, 0x000A, 0x0035, 0x0010, 0x001B,
-    0x003D, 0x0017, 0x002E, 0x000B, 0x0049, 0x0042, 0x003D, 0x002A, 0x0001,
-    0x000C, 0x001B, 0x0034, 0x0041, 0x0035, 0x0008, 0x000E, 0x004D, 0x0011,
-    0x0034, 0x0041, 0x0029, 0x0048,
-};
-
-static const char* actor_names[] = {_S("Alucard"), _S("Maria"), _S("Richter")};
-
 #include "../cutscene_actor_name.h"
 
 #include "../set_cutscene_end.h"
@@ -158,7 +138,9 @@ void SEL_EntityCutscene(Entity* entity) {
         if (SetCutsceneScript(D_8018B304)) {
             entity->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
             entity->primIndex = g_Dialogue.primIndex[2];
-            g_SkipCutscene = D_801D6B00 = D_801BC3E8 = 0;
+            D_801BC3E8 = 0;
+            D_801D6B00 = 0;
+            g_SkipCutscene = 0;
             g_CutsceneHasControl = 1;
             entity->step++;
         }
@@ -233,8 +215,8 @@ void SEL_EntityCutscene(Entity* entity) {
                     continue;
                 }
                 i = *g_Dialogue.scriptCur++;
-                nextChar2 = *g_Dialogue.scriptCur++;
                 prim = g_Dialogue.prim[5];
+                nextChar2 = *g_Dialogue.scriptCur++;
                 var_s7 = nextChar2 & 1;
                 x = D_80180824[var_s7];
                 y = D_80180828[var_s7];
@@ -312,7 +294,9 @@ void SEL_EntityCutscene(Entity* entity) {
                     continue;
                 }
                 nextChar = *g_Dialogue.scriptCur++;
-                g_api.PlaySfx(*g_Dialogue.scriptCur++ | (nextChar << 4));
+                nextChar <<= 4;
+                nextChar |= *g_Dialogue.scriptCur++;
+                g_api.PlaySfx(nextChar);
                 continue;
 
             case 10:
@@ -410,11 +394,15 @@ void SEL_EntityCutscene(Entity* entity) {
 
             case 20:
                 nextChar = *g_Dialogue.scriptCur++;
-                g_api.PlaySfx(*g_Dialogue.scriptCur++ | (nextChar << 4));
+                nextChar <<= 4;
+                nextChar |= *g_Dialogue.scriptCur++;
+                g_api.PlaySfx(nextChar);
                 continue;
 
             case 21:
-                D_801D6B00 = g_SkipCutscene = D_801BC3E8 = 0;
+                D_801BC3E8 = 0;
+                g_SkipCutscene = 0;
+                D_801D6B00 = 0;
                 continue;
 
             case 22:
@@ -431,9 +419,10 @@ void SEL_EntityCutscene(Entity* entity) {
                 }
                 g_Dialogue.scriptCur++;
                 continue;
+
             default:
                 if (g_SkipCutscene) {
-                    ++g_Dialogue.scriptCur;
+                    g_Dialogue.scriptCur++;
                     continue;
                 }
                 g_Dialogue.nextCharTimer = g_Dialogue.unk17;
@@ -441,7 +430,7 @@ void SEL_EntityCutscene(Entity* entity) {
             break;
         }
 
-        if (nextChar == 0x20) {
+        if (nextChar == ' ') {
             g_Dialogue.nextCharX += 2;
             break;
         }
