@@ -3247,9 +3247,9 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 hoverTimer;
     /* 0x82 */ s16 : 16;
-    /* 0x84 */ s32 unk84;
+    /* 0x84 */ s32 referenceY;
 } ET_Crow;
 
 typedef struct {
@@ -3799,7 +3799,7 @@ typedef union { // offset=0x7C
     ET_801C4520 et_801C4520;
     ET_801C4980 et_801C4980;
     ET_801C5268 et_801C5268;
-    ET_Crow et_crow;
+    ET_Crow crow;
     ET_FerrymanBoat ferrymanBoat;
     ET_BoatElevator boatElevator;
     ET_BoatElevator_Child boatElevator_child;
