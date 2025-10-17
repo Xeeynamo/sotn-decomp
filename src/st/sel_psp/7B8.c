@@ -1,42 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../sel/sel.h"
 
+extern char g_AsciiSet[];
 extern s32 D_psp_09283BE8;
 extern s32 D_psp_09283CA8;
 extern s32 D_psp_09283D30;
 extern s32 D_psp_09283DC8;
 extern s32 D_psp_09283E48;
-extern s32 D_psp_09283E80;
-extern s32 D_psp_09283E98;
-extern s32 D_psp_09283EB0;
-extern s32 D_psp_09283EC8;
-extern s32 D_psp_09283EE0;
-extern s32* D_91CE250;
-extern s32* D_91CE258;
+extern char** g_SaveAreaNamesSecondPart;
+extern char** g_SaveAreaNames;
 extern s32* D_91CE200;
 extern s32* D_91CE208;
 extern s32* D_91CE210;
-extern char* D_psp_09283FF8[];
-extern char* D_psp_09284000[];
 extern s32 D_psp_08B42050;
-extern s8* D_psp_09284098;
-extern s8* D_psp_092840B0;
-extern char D_psp_092840B8[];
-extern char D_psp_092840C8[];
-extern char D_psp_092840D8[];
-extern char D_psp_092840E8[];
-extern char D_psp_092840F8[];
-extern char D_9186D08[];
 extern s32 D_psp_08B42054;
-extern char D_psp_09284108[];
 extern char* D_91CE1F0;
 extern char* D_91CE1F8;
 extern s32 D_8B42044;
 extern s32 D_91ED288;
-extern char D_psp_09284110[];
-extern char D_psp_09284120[];
-extern char D_psp_09284140[];
-extern char D_psp_09284160[];
 
 // BSS
 static s32 D_801BAF08; // block icon animation index
@@ -59,18 +40,20 @@ static char** D_80180454;
 static s32 g_SelNextCrossPressEngStep;
 static s32 g_SelEng220NextStep;
 
+// DATA
+
 // The five possible header options that are displayed on the top-left for each
 // sub-menu in the main menu. The same graphics is also re-used for the main
 // menu selectable options.
-static s32 g_MenuHeadGfxU[] = {0x00, 0x80, 0x00, 0x00, 0x00};
-static s32 g_MenuHeadGfxV[] = {0xC0, 0x90, 0xE0, 0x80, 0xA0};
+extern s32 D_psp_09283A48[];
+extern s32 D_psp_09283A60[];
 
-static s32 g_MenuUnk084X[] = {0x10, 0x10, 0x18, 0x3D, 0x68, 0x80, 0x18, 0x98};
-static s32 g_MenuUnk084Y[] = {0x08, 0x18, 0x38, 0x38, 0x38, 0x38, 0x40, 0x40};
-static s32 g_MenuUnk084U0[] = {0x80, 0xA8, 0xE0, 0xE8, 0xE0, 0xE0, 0xE8, 0xF0};
-static s32 g_MenuUnk084V0[] = {0xF0, 0xF0, 0x80, 0x80, 0x88, 0x88, 0x88, 0x88};
-static s32 g_MenuUnk084U1[] = {0x28, 0x28, 0x08, 0x18, 0x08, 0x08, 0x08, 0x08};
-static s32 g_MenuUnk084V1[] = {0x10, 0x10, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08};
+extern s32 D_psp_09283A78[];
+extern s32 D_psp_09283A98[];
+extern s32 D_psp_09283AB8[];
+extern s32 D_psp_09283AD8[];
+extern s32 D_psp_09283AF8[];
+extern s32 D_psp_09283B18[];
 
 #include "../../get_lang.h"
 
@@ -97,12 +80,12 @@ static void func_801AC084(s32 arg0, s32 ypos) {
 
     prim = &g_PrimBuf[D_801BAF18[arg0][0]];
     for (i = 0; i < 8; i++, prim = prim->next) {
-        prim->x0 = g_MenuUnk084X[i] + 0x68;
-        prim->y0 = g_MenuUnk084Y[i] + 0x58 + ypos;
-        prim->u0 = g_MenuUnk084U0[i];
-        prim->v0 = g_MenuUnk084V0[i];
-        prim->u1 = g_MenuUnk084U1[i];
-        prim->v1 = g_MenuUnk084V1[i];
+        prim->x0 = D_psp_09283A78[i] + 0x68;
+        prim->y0 = D_psp_09283A98[i] + 0x58 + ypos;
+        prim->u0 = D_psp_09283AB8[i];
+        prim->v0 = D_psp_09283AD8[i];
+        prim->u1 = D_psp_09283AF8[i];
+        prim->v1 = D_psp_09283B18[i];
         prim->tpage = 0xC;
         prim->clut = 0x200;
         prim->priority = 0x11;
@@ -129,7 +112,7 @@ void InitMainMenuUI(void) {
         D_801BAF18[i + 1][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
         prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
         SetTexturedPrimRect(prim, i * 0x40 - 0x20, i * 0x28, 0x7F, 0x1F,
-                            g_MenuHeadGfxU[i], g_MenuHeadGfxV[i]);
+                            D_psp_09283A48[i], D_psp_09283A60[i]);
         func_801B1D88(prim);
         prim->tpage = 0xC;
         prim->clut = 0x200;
@@ -444,55 +427,35 @@ s32 func_801ACEC0(void) {
     }
 }
 
-void func_801ACF7C(void) { func_801B1ED0(); }
+void func_801ACF7C(void) {
+    func_801B1ED0();
+#ifndef VERSION_PSP
+    func_801B25D4("…選択決定取消入力未初期化確認", 0);
+    func_801B25D4("はいえ不良", 1);
+#endif
+}
+
+static char D_psp_09283E80[] =
+    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
+    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+static char D_psp_09283E98[] =
+    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
+    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+static char D_psp_09283EB0[] =
+    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
+    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+static char D_psp_09283EC8[] =
+    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
+    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+static char D_psp_09283EE0[] =
+    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
+    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
 
 void func_psp_092391A0(void) {
     D_801803A8 = GetLang(&D_psp_09283BE8, &D_psp_09283E48, &D_psp_09283CA8,
                          &D_psp_09283DC8, &D_psp_09283D30);
-    D_80180454 = GetLang(&D_psp_09283E80, &D_psp_09283EE0, &D_psp_09283E98,
-                         &D_psp_09283EC8, &D_psp_09283EB0);
-}
-
-void PrintFileSelectPlaceName(s32 port, s32 slot, s32 y) {
-    DrawImages8x8(D_91CE258[g_SaveSummary[port].stage[slot]], 0xA0, y, 1);
-    DrawImages8x8(D_91CE250[g_SaveSummary[port].stage[slot]], 0xA0, y + 8, 1);
-}
-
-void func_801ACFBC(s32 port, s32 slot, s32 textId) {
-    char playerName[0x20];
-    s32 i;
-
-    playerName[0] = '\0';
-    for (i = 0; i < 8; i++) {
-        s32 charIndex = func_801B2984(g_SaveSummary[port].name[slot][i]);
-        strcat(playerName, D_psp_09284000[charIndex]);
-    }
-    func_801B263C(playerName, textId);
-    if (g_SaveSummary[port].character[slot] == 1) {
-        func_801B2608(0, textId + 2);
-    } else if (g_SaveSummary[port].character[slot] == 2) {
-        func_801B2608(1, textId + 2);
-    } else if (g_SaveSummary[port].kind[slot] & SAVE_FLAG_CLEAR) {
-        func_801B2608(2, textId + 2);
-    } else if (g_SaveSummary[port].kind[slot] & SAVE_FLAG_REPLAY) {
-        func_801B2608(3, textId + 2);
-    } else {
-        func_801B25D4(D_psp_09283FF8, textId + 2);
-    }
-}
-
-void func_psp_09239530(SaveData* arg0) {
-    char playerName[0x20];
-    s32 i;
-    s32 id = 6;
-
-    playerName[0] = '\0';
-    for (i = 0; i < 8; i++) {
-        s32 charIndex = func_801B2984(arg0->info.name[i]);
-        strcat(playerName, D_psp_09284000[charIndex]);
-    }
-    func_psp_0923FF70(playerName, id);
-    func_801B2608(4, id + 2);
+    D_80180454 = GetLang(D_psp_09283E80, D_psp_09283EE0, D_psp_09283E98,
+                         D_psp_09283EC8, D_psp_09283EB0);
 }
 
 #define STR_SELECT D_801803A8[0]
@@ -504,20 +467,64 @@ void func_psp_09239530(SaveData* arg0) {
 #define STR_NO D_801803A8[6]
 #define STR_CONFIRM D_801803A8[7]
 #define STR_ERROR D_801803A8[8]
-#define STR_MATTED D_801803A8[9]
 
-typedef enum {
-    Tips_Generic,
-    Tips_Input,
-    Tips_YesNo,
-    Tips_Confirm,
-    Tips_MenuNavigation,
-    Tips_NoYes,
-} NavigationTips;
+void PrintFileSelectPlaceName(s32 port, s32 slot, s32 y) {
+    DrawImages8x8(g_SaveAreaNames[g_SaveSummary[port].stage[slot]], 0xA0, y, 1);
+    DrawImages8x8(g_SaveAreaNamesSecondPart[g_SaveSummary[port].stage[slot]],
+                  0xA0, y + 8, 1);
+}
+
+static char* D_801803D0[] = {
+    "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ",
+    "Ｌ", "Ｍ", "Ｎ", "Ｏ", "Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ",
+    "Ｗ", "Ｘ", "Ｙ", "Ｚ", "＆", "！", "−",  "．", "’",  "？", "　",
+};
+
+void func_801ACFBC(s32 port, s32 slot, s32 textId) {
+    char playerName[0x20];
+    s32 i;
+
+    playerName[0] = '\0';
+    for (i = 0; i < 8; i++) {
+        s32 charIndex = func_801B2984(g_SaveSummary[port].name[slot][i]);
+        strcat(playerName, D_801803D0[charIndex]);
+    }
+    func_801B263C(playerName, textId);
+    if (g_SaveSummary[port].character[slot] == 1) {
+        func_801B2608(0, textId + 2);
+    } else if (g_SaveSummary[port].character[slot] == 2) {
+        func_801B2608(1, textId + 2);
+    } else if (g_SaveSummary[port].kind[slot] & SAVE_FLAG_CLEAR) {
+        func_801B2608(2, textId + 2);
+    } else if (g_SaveSummary[port].kind[slot] & SAVE_FLAG_REPLAY) {
+        func_801B2608(3, textId + 2);
+    } else {
+        func_801B25D4("　", textId + 2);
+    }
+}
+
+void func_psp_09239530(SaveData* save) {
+    char playerName[0x20];
+    s32 i;
+    s32 id = 6;
+
+    playerName[0] = '\0';
+    for (i = 0; i < 8; i++) {
+        s32 charIndex = func_801B2984(save->info.name[i]);
+        strcat(playerName, D_801803D0[charIndex]);
+    }
+    func_psp_0923FF70(playerName, id);
+    func_801B2608(4, id + 2);
+}
 
 void func_801AD1D0(void) {
     DrawImages8x8(STR_YES, 0x30, 0xC4, 1);
     DrawImages8x8(STR_NO, 0x30, 0xD4, 1);
+}
+
+void func_801AD218(void) {
+    DrawImages8x8(STR_NO, 0x30, 0xC4, 1);
+    DrawImages8x8(STR_YES, 0x30, 0xD4, 1);
 }
 
 void func_psp_09239640(s32 gfxId, s16 x, s16 y) {
@@ -657,6 +664,9 @@ void func_801AD590(void) {
     func_801B25D4(D_80180454[g_MainMenuCursor], 9);
 }
 
+static char* D_80180468[] = {"richter "};
+static char* D_psp_092840B0[] = {"maria   "};
+
 void func_801AD66C(void) {
     s32 i;
     s32 nSpaces;
@@ -673,14 +683,14 @@ void func_801AD66C(void) {
 
     // if it only contain spaces, set a default name
     if (nSpaces == 8) {
-        STRCPY(g_Status.saveName, D_psp_092840B8);
+        STRCPY(g_Status.saveName, "alucard ");
     }
 
     g_Status.saveName[8] = 0;
     g_Status.saveName[9] = 0;
 
     // check if the name is Richter
-    strPtr = D_psp_09284098;
+    strPtr = (s8*)D_80180468[0];
     for (i = 0; i < 8; i++) {
         if (g_Status.saveName[i] != *strPtr++) {
             break;
@@ -699,7 +709,7 @@ void func_801AD66C(void) {
     }
 
     if (g_PlayableCharacter == PLAYER_ALUCARD) {
-        strPtr = D_psp_092840B0;
+        strPtr = (s8*)D_psp_092840B0[0];
         for (i = 0; i < 8; i++) {
             if (g_Status.saveName[i] != *strPtr++) {
                 break;
@@ -718,10 +728,10 @@ void func_801AD78C(void) {
     DrawImages8x8(STR_INPUT, 0x130, 0x34, 1);
     DrawImages8x8(STR_CANCEL, 0x130, 0x44, 1);
     DrawImages8x8(STR_DECIDE, 0x130, 0x54, 1);
-    DrawString16x16(D_psp_092840C8, 0x48, 0x70, 1);
-    DrawString16x16(D_psp_092840D8, 0x48, 0x88, 1);
-    DrawString16x16(D_psp_092840E8, 0x48, 0xA0, 1);
-    DrawString16x16(D_psp_092840F8, 0x48, 0xB8, 1);
+    DrawString16x16("a b c d e f g h", 0x48, 0x70, 1);
+    DrawString16x16("i j k l m n o p", 0x48, 0x88, 1);
+    DrawString16x16("q r s t u v w x", 0x48, 0xA0, 1);
+    DrawString16x16("y z & ! - . '  ", 0x48, 0xB8, 1);
     prim = &g_PrimBuf[D_801BAF18[GFX_UNK_8][0]];
     SetTexturedPrimRect(
         prim, g_InputCursorPos * 0x10 + 0x80, 0x48, 0xF, 0xF, 0xF0, 0xF0);
@@ -775,7 +785,7 @@ void UpdateNameEntry(void) {
 
     if (g_pads[0].tapped & D_psp_08B42050) { // Input Character
         g_api.PlaySfx(SFX_UI_NAME_ENTRY);
-        g_InputSaveName[g_InputCursorPos] = D_9186D08[D_801BC3E0];
+        g_InputSaveName[g_InputCursorPos] = g_AsciiSet[D_801BC3E0];
         g_InputCursorPos++;
         if (g_InputCursorPos == 8) {
             g_InputCursorPos = 0;
@@ -915,7 +925,7 @@ void func_801ADF94(s32 flags, s32 yOffset) {
                 func_801ACBE4(GFX_UNK_12, 8);
                 func_801ACBE4(GFX_UNK_16, 8);
                 if (icon == -2) {
-                    DrawString16x16(D_psp_09284108, 0xA0, y + 0x78, 1);
+                    DrawString16x16("used", 0xA0, y + 0x78, 1);
                 } else if (saveDescriptorString == 2) {
                     sp4c = func_psp_09237ED8(D_91CE1F0, 0x88, 7);
                     DrawString16x16(D_91CE1F0, sp4c, y + 0x78, 1);
@@ -1029,7 +1039,7 @@ void func_801AE9A8(void) {
         func_801ACBE4(i + 1, 4);
         prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
         SetTexturedPrimRect(prim, (i * 0x40) - 0x20, i * 0x28, 0x7F, 0x1F,
-                            g_MenuHeadGfxU[i], g_MenuHeadGfxV[i]);
+                            D_psp_09283A48[i], D_psp_09283A60[i]);
     }
 
     DrawNavigationTips(Tips_Generic);
@@ -1154,73 +1164,6 @@ static void func_801AEE74(void) {
     }
 }
 
-// SEL seems to use these differently
-typedef enum {
-    Upd_Eng_Init,
-    Upd_Eng_MenuInit = -1,
-    Upd_Eng_MenuFadeIn = 1,
-    Upd_Eng_MainMenuIdle,
-    Upd_Eng_3,
-    Upd_Eng_0x10 = 0x10,
-    Upd_Eng_17,
-    Upd_Eng_18,
-    Upd_Eng_FileSelect = 0x30,
-    Upd_Eng_49,
-    Upd_Eng_50,
-    Upd_Eng_51,
-    Upd_Eng_64 = 0x40,
-    Upd_Eng_65,
-    Upd_Eng_FileCopy = 0x50,
-    Upd_Eng_81,
-    Upd_Eng_82,
-    Upd_Eng_83,
-    Upd_Eng_84,
-    Upd_Eng_85,
-    Upd_Eng_86,
-    Upd_Eng_87,
-    Upd_Eng_88,
-    Upd_Eng_89,
-    Upd_Eng_0x60 = 0x60,
-    Upd_Eng_FileDelete = 0x70,
-    Upd_Eng_113,
-    Upd_Eng_114,
-    Upd_Eng_115,
-    Upd_Eng_116,
-    Upd_Eng_117,
-    Upd_Eng_118,
-    Upd_Eng_119,
-    Upd_Eng_120,
-    Upd_Eng_0x80 = 0x80,
-    Upd_Eng_NameChange = 0x90,
-    Upd_Eng_145,
-    Upd_Eng_146,
-    Upd_Eng_147,
-    Upd_Eng_148,
-    Upd_Eng_149,
-    Upd_Eng_150,
-    Upd_Eng_151,
-    Upd_Eng_152,
-    Upd_Eng_153,
-    Upd_Eng_0xA0 = 0xA0,
-    Upd_Eng_0x100 = 0x100,
-    Upd_Eng_257,
-    Upd_Eng_258,
-    Upd_Eng_259,
-    Upd_Eng_260,
-    Upd_Eng_0x200 = 0x200,
-    Upd_Eng_513,
-    Upd_Eng_514,
-    Upd_Eng_515,
-    Upd_Eng_516,
-    Upd_Eng_0x210 = 0x210,
-    Upd_Eng_529,
-    Upd_Eng_530,
-    Upd_Eng_531,
-    Upd_Eng_532,
-    Upd_Eng_0x220 = 0x220,
-
-} SelGameEngineStep;
-
 void func_psp_0923BE20(void) {
     s32 i;
     s32 port;
@@ -1299,7 +1242,7 @@ void func_psp_0923BE20(void) {
         }
         break;
     case Upd_Eng_0x10:
-        STRCPY(g_InputSaveName, D_psp_09284110);
+        STRCPY(g_InputSaveName, "        ");
         func_801AEA8C(0);
         g_GameEngineStep++;
         /* fallthrough */
@@ -1319,7 +1262,7 @@ void func_psp_0923BE20(void) {
             if (g_pads[0].tapped & PAD_START) {
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 func_801AD66C();
-                if (g_PlayableCharacter == 0) {
+                if (g_PlayableCharacter == PLAYER_ALUCARD) {
                     g_StageId = STAGE_ST0;
                 } else {
                     g_StageId = STAGE_NO3;
@@ -1344,7 +1287,7 @@ void func_psp_0923BE20(void) {
             func_801B1DA8();
             func_801B2D1C();
             g_api.func_800EA538(0);
-            if (g_PlayableCharacter == 0) {
+            if (g_PlayableCharacter == PLAYER_ALUCARD) {
                 SetGameState(Game_VideoPlayback);
             } else {
                 g_GameStep++;
@@ -1386,16 +1329,16 @@ void func_psp_0923BE20(void) {
             DrawNavigationTips(Tips_YesNo);
             g_GameEngineStep = Upd_Eng_64;
         } else if (func_8919560() == -1) {
-            func_801B2608(D_psp_09284120, 4);
-            func_801B2608(D_psp_09284140, 5);
+            func_801B2608("中断データが見つかりました", 4);
+            func_801B2608("中断データから再開しますか？", 5);
             func_801ADF94(0x83, 0);
             DrawNavigationTips(Tips_YesNo);
             g_GameEngineStep = 0x1000;
         } else {
             DrawNavigationTips(Tips_Generic);
             func_801ADF94(1, 0);
-            func_801B25D4(D_psp_09283FF8, 4);
-            func_801B25D4(D_psp_09283FF8, 5);
+            func_801B25D4("　", 4);
+            func_801B25D4("　", 5);
             g_GameEngineStep++;
         }
         break;
@@ -1405,9 +1348,9 @@ void func_psp_0923BE20(void) {
         if (g_pads[0].tapped & D_psp_08B42054) {
             DrawNavigationTips(Tips_Generic);
             func_801ADF94(1, 0);
-            func_801B25D4(D_psp_09283FF8, 4);
-            func_801B25D4(D_psp_09283FF8, 5);
-            g_GameEngineStep = 0x33;
+            func_801B25D4("　", 4);
+            func_801B25D4("　", 5);
+            g_GameEngineStep = Upd_Eng_51;
         } else if (g_pads[0].tapped & D_psp_08B42050) {
             func_8919638(g_Pix, 0x2000);
             LoadSaveData(g_Pix);
@@ -1577,7 +1520,7 @@ void func_psp_0923BE20(void) {
         }
         break;
     case Upd_Eng_148:
-        STRCPY(g_InputSaveName, D_psp_09284110);
+        STRCPY(g_InputSaveName, "        ");
         func_801AEA8C(1);
         g_GameEngineStep++;
         /* fallthrough */
@@ -2026,7 +1969,7 @@ void func_psp_0923BE20(void) {
         }
         if (temp_s1 == -2) {
             func_801B1F4C(5);
-            func_801B25D4(D_psp_09284160, 4);
+            func_801B25D4("バージョンエラーです。", 4);
             func_801ACBE4(GFX_UNK_15, 0);
             g_GameEngineStep++;
         }

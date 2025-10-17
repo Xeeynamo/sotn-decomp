@@ -123,8 +123,8 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         break;
 
     case LEFT_SECRET_ROOM_WALL_BREAK:
-        self->ext.nz0311c0.unk84++;
-        tileLayoutPtr = D_80180E54 + (self->ext.nz0311c0.unk84 * 8);
+        self->ext.breakable.breakCount++;
+        tileLayoutPtr = D_80180E54 + (self->ext.breakable.breakCount * 8);
 
         tilePos = 0x260;
         for (i = 0; i < 4; i++) {
@@ -139,10 +139,10 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x13;
         }
-        self->ext.nz0311c0.unk80 = 32;
+        self->ext.breakable.resetTimer = 32;
         self->step++;
 
-        if (self->ext.nz0311c0.unk84 == 3) {
+        if (self->ext.breakable.breakCount == 3) {
             g_CastleFlags[NZ0_SECRET_WALL_OPEN] = 1;
             g_api.RevealSecretPassageAtPlayerPositionOnMap(
                 NZ0_SECRET_WALL_OPEN);
@@ -160,7 +160,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         break;
 
     case LEFT_SECRET_ROOM_WALL_CHECK:
-        if (--self->ext.nz0311c0.unk80 == 0) {
+        if (--self->ext.breakable.resetTimer == 0) {
             self->step = LEFT_SECRET_ROOM_WALL_IDLE;
         }
         break;
@@ -206,8 +206,8 @@ void EntityBottomSecretRoomFloor(
         return;
 
     case BOTTOM_SECRET_ROOM_FLOOR_BREAK:
-        self->ext.nz0311c0.unk84++;
-        tileLayoutPtr = D_80180E94 + (self->ext.nz0311c0.unk84 * 4);
+        self->ext.breakable.breakCount++;
+        tileLayoutPtr = D_80180E94 + (self->ext.breakable.breakCount * 4);
 
         tilePos = 0x2E7;
         for (i = 0; i < 2; i++) {
@@ -222,10 +222,10 @@ void EntityBottomSecretRoomFloor(
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x11;
         }
-        self->ext.nz0311c0.unk80 = 32;
+        self->ext.breakable.resetTimer = 32;
         self->step++;
 
-        if (self->ext.nz0311c0.unk84 == 3) {
+        if (self->ext.breakable.breakCount == 3) {
             g_CastleFlags[NZ0_SECRET_FLOOR_OPEN] = 1;
             g_api.RevealSecretPassageAtPlayerPositionOnMap(
                 NZ0_SECRET_FLOOR_OPEN);
@@ -234,7 +234,7 @@ void EntityBottomSecretRoomFloor(
         break;
 
     case BOTTOM_SECRET_ROOM_FLOOR_CHECK:
-        if (--self->ext.nz0311c0.unk80 == 0) {
+        if (--self->ext.breakable.resetTimer == 0) {
             self->step = BOTTOM_SECRET_ROOM_FLOOR_IDLE;
         }
         break;
