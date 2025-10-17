@@ -299,7 +299,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
 
     // writes room completion percentage
     strcat(h.Title, "　");
-    strcat(h.Title, (char*)g_SaveAreaNames[g_StageId]);
+    strcat(h.Title, g_SaveAreaNames[g_StageId]);
     strcat(h.Title, "　");
     i = g_RoomCount * 100 / RoomCount;
     if (i >= 100) {

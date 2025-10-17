@@ -171,7 +171,7 @@ void EntityDoppleganger10(void) {
                         case 14:
                             break;
                         case 15:
-                            OVL_EXPORT(func_8010E0B8)();
+                            OVL_EXPORT(EnableAfterImage)();
                             break;
                         }
                     }
@@ -446,7 +446,7 @@ void EntityDoppleganger10(void) {
             DOPPLEGANGER.hitboxState = 0;
         }
     }
-    OVL_EXPORT(func_8010D59C)();
+    OVL_EXPORT(InitPlayerAfterImage)();
     vram_flag = g_Dop.vram_flag;
     posX = DOPPLEGANGER.posX.val;
     posY = DOPPLEGANGER.posY.val;
@@ -486,7 +486,7 @@ void EntityDoppleganger10(void) {
     }
 
     g_Dop.unk04 = vram_flag;
-    OVL_EXPORT(func_8010D800)();
+    OVL_EXPORT(DrawPlayerAfterImage)();
 
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(2)) {
         parts = D_us_801B159C[DOPPLEGANGER.animCurFrame & 0x7FFF];

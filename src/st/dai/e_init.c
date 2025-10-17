@@ -41,7 +41,7 @@ void EntityConfessionalBladeDebris(Entity* self);
 void EntityBellSpawner(Entity* self);
 void EntityCornerGuard(Entity* self);
 void EntityCornerGuardAttack(Entity* self);
-void EntityBonePillarHead(Entity* self);
+void EntityBonePillarSkull(Entity* self);
 void EntityBonePillarFireBreath(Entity* self);
 void EntityBonePillarDeathParts(Entity* self);
 void EntityBonePillarSpikeBall(Entity* self);
@@ -115,7 +115,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBellSpawner,
     EntityCornerGuard,
     EntityCornerGuardAttack,
-    EntityBonePillarHead,
+    EntityBonePillarSkull,
     EntityBonePillarFireBreath,
     EntityBonePillarDeathParts,
     EntityBonePillarSpikeBall,
@@ -160,16 +160,16 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInitUnused801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3};
 // This seems to be used as a common init and should probably be renamed
-EInit g_EInitStatueBlock = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
+EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
 EInit g_EInitConfessionalGhost = {
-    ANIMSET_OVL(2), 0, 72, PAL_CONFESSIONAL_C9, 5};
+    ANIMSET_OVL(2), 0, 72, PAL_CONFESSIONAL_GHOST, 5};
 EInit g_EInitUnused801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_801809C8, 5};
 EInit g_EInitConfessionalBlades = {
-    ANIMSET_OVL(2), 37, 72, PAL_CONFESSIONAL_C9, 101};
+    ANIMSET_OVL(2), 37, 72, PAL_CONFESSIONAL_GHOST, 101};
 EInit g_EInitCornerGuard = {ANIMSET_OVL(4), 0, 72, PAL_CORNER_GUARD, 180};
 EInit g_EInitCornerGuardAttack = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 181};
-EInit g_EInitBonePillarHead = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 183};
-EInit g_EInitBonePillarPieces = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 2};
+EInit g_EInitBonePillarSkull = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 0x0B7};
+EInit g_EInitBonePillarParts = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 0x002};
 EInit g_EInitBonePillarFireBreath = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 184};
 EInit g_EInitBonePillarSpikeBall = {
@@ -188,4 +188,4 @@ EInit g_EInitSpectralSword = {ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 136};
 EInit g_EInitSpectralSwordAura = {
     ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 2};
 EInit g_EInitSpectralSwordWeapon = {
-    ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD_WEAPON_1, 137};
+    ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD_WEAPON, 137};

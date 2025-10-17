@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
-#include "memcard.h"
-#include "sfx.h"
 
+extern char g_AsciiSet[];
 extern s32 g_MainMenuCursor;
 extern s32 g_InputCursorPos;
 extern s32 D_801BC3E0; // on-screen keyboard key position
@@ -498,16 +497,29 @@ s32 func_801ACEC0(void) {
 
 void func_801ACF7C(void) {
     func_801B1ED0();
+#ifndef VERSION_PSP
     func_801B25D4("…選択決定取消入力未初期化確認", 0);
     func_801B25D4("はいえ不良", 1);
+#endif
 }
 
-const char* D_801803A8[10] = {
+char* D_801803A8[10] = {
     _S("Select"), _S("Decide"), _S("Cancel"),  _S("Input"), _S("Not for-"),
     _S("Yes"),    _S("No"),     _S("Confirm"), _S("Error"), _S("matted"),
 };
 
-const char* D_801803D0[] = {
+#define STR_SELECT D_801803A8[0]
+#define STR_DECIDE D_801803A8[1]
+#define STR_CANCEL D_801803A8[2]
+#define STR_INPUT D_801803A8[3]
+#define STR_NOTFOR D_801803A8[4]
+#define STR_YES D_801803A8[5]
+#define STR_NO D_801803A8[6]
+#define STR_CONFIRM D_801803A8[7]
+#define STR_ERROR D_801803A8[8]
+#define STR_MATTED D_801803A8[9]
+
+static char* D_801803D0[] = {
     "Ａ", "Ｂ", "Ｃ", "Ｄ", "Ｅ", "Ｆ", "Ｇ", "Ｈ", "Ｉ", "Ｊ", "Ｋ",
     "Ｌ", "Ｍ", "Ｎ", "Ｏ", "Ｐ", "Ｑ", "Ｒ", "Ｓ", "Ｔ", "Ｕ", "Ｖ",
     "Ｗ", "Ｘ", "Ｙ", "Ｚ", "＆", "！", "−",  "．", "’",  "？", "　",
@@ -542,28 +554,6 @@ void PrintFileSelectPlaceName(s32 port, s32 slot, s32 y) {
     DrawImages8x8(D_80180128[stage].line1, 0xA0, y, 1);
     DrawImages8x8(D_80180128[stage].line2, 0xA0, y + 8, 1);
 }
-
-#define STR_SELECT D_801803A8[0]
-#define STR_DECIDE D_801803A8[1]
-#define STR_CANCEL D_801803A8[2]
-#define STR_INPUT D_801803A8[3]
-#define STR_NOTFOR D_801803A8[4]
-#define STR_YES D_801803A8[5]
-#define STR_NO D_801803A8[6]
-#define STR_CONFIRM D_801803A8[7]
-#define STR_ERROR D_801803A8[8]
-#define STR_MATTED D_801803A8[9]
-
-typedef enum {
-    Tips_Generic,
-    Tips_Input,
-    Tips_YesNo,
-    Tips_Confirm,
-    Tips_MenuNavigation,
-    Tips_NoYes,
-} NavigationTips;
-
-extern char g_AsciiSet[];
 
 void func_801AD1D0(void) {
     DrawImages8x8(STR_YES, 0x34, 0xC4, 1);
@@ -664,6 +654,7 @@ const char* D_80180454[] = {
     "−＊＊＊＊＊−",  "− New Game −",   "− Change Name −",
     "− Copy File −", "− Erase File −",
 };
+
 void func_801AD590(void) {
     if (g_pads[0].tapped & (PAD_RIGHT | PAD_DOWN)) {
         g_api.PlaySfx(SFX_UI_MP_FULL); // MP sfx also used for Main Menu Select
@@ -682,7 +673,7 @@ void func_801AD590(void) {
     func_801B2608(D_80180454[g_MainMenuCursor], 9);
 }
 
-const char* D_80180468[] = {"richter "};
+static char* D_80180468[] = {"richter "};
 
 void func_801AD66C(void) {
     s32 i;
@@ -1146,73 +1137,6 @@ static void func_801AEE74(void) {
     }
 }
 
-// SEL seems to use these differently
-typedef enum {
-    Upd_Eng_Init,
-    Upd_Eng_MenuInit = -1,
-    Upd_Eng_MenuFadeIn = 1,
-    Upd_Eng_MainMenuIdle,
-    Upd_Eng_3,
-    Upd_Eng_0x10 = 0x10,
-    Upd_Eng_17,
-    Upd_Eng_18,
-    Upd_Eng_FileSelect = 0x30,
-    Upd_Eng_49,
-    Upd_Eng_50,
-    Upd_Eng_51,
-    Upd_Eng_64 = 0x40,
-    Upd_Eng_65,
-    Upd_Eng_FileCopy = 0x50,
-    Upd_Eng_81,
-    Upd_Eng_82,
-    Upd_Eng_83,
-    Upd_Eng_84,
-    Upd_Eng_85,
-    Upd_Eng_86,
-    Upd_Eng_87,
-    Upd_Eng_88,
-    Upd_Eng_89,
-    Upd_Eng_0x60 = 0x60,
-    Upd_Eng_FileDelete = 0x70,
-    Upd_Eng_113,
-    Upd_Eng_114,
-    Upd_Eng_115,
-    Upd_Eng_116,
-    Upd_Eng_117,
-    Upd_Eng_118,
-    Upd_Eng_119,
-    Upd_Eng_120,
-    Upd_Eng_0x80 = 0x80,
-    Upd_Eng_NameChange = 0x90,
-    Upd_Eng_145,
-    Upd_Eng_146,
-    Upd_Eng_147,
-    Upd_Eng_148,
-    Upd_Eng_149,
-    Upd_Eng_150,
-    Upd_Eng_151,
-    Upd_Eng_152,
-    Upd_Eng_153,
-    Upd_Eng_0xA0 = 0xA0,
-    Upd_Eng_0x100 = 0x100,
-    Upd_Eng_257,
-    Upd_Eng_258,
-    Upd_Eng_259,
-    Upd_Eng_260,
-    Upd_Eng_0x200 = 0x200,
-    Upd_Eng_513,
-    Upd_Eng_514,
-    Upd_Eng_515,
-    Upd_Eng_516,
-    Upd_Eng_0x210 = 0x210,
-    Upd_Eng_529,
-    Upd_Eng_530,
-    Upd_Eng_531,
-    Upd_Eng_532,
-    Upd_Eng_0x220 = 0x220,
-
-} SelGameEngineStep;
-
 void SEL_Update(void) {
     s32 i;
     s32 port;
@@ -1313,7 +1237,7 @@ void SEL_Update(void) {
             if (g_pads[0].tapped & PAD_START) {
                 g_api.PlaySfx(SFX_UI_CONFIRM);
                 func_801AD66C();
-                if (g_PlayableCharacter == 0) {
+                if (g_PlayableCharacter == PLAYER_ALUCARD) {
                     g_StageId = STAGE_ST0;
                 } else {
                     g_StageId = STAGE_NO3;
@@ -1338,7 +1262,7 @@ void SEL_Update(void) {
             func_801B1DA8();
             func_801B2D1C();
             g_api.func_800EA538(0);
-            if (g_PlayableCharacter == 0) {
+            if (g_PlayableCharacter == PLAYER_ALUCARD) {
                 SetGameState(Game_VideoPlayback);
             } else {
                 g_GameStep++;
@@ -1847,7 +1771,7 @@ void SEL_Update(void) {
             g_MemCardSelectorX = (g_MemCardSelectorX % 3) + 3;
         }
         if (g_SaveSummary[1].padding < 0) {
-            g_MemCardSelectorX %= 3;
+            g_MemCardSelectorX = g_MemCardSelectorX % 3;
         }
         func_801AEE74();
         if (D_801BAF10) {
@@ -2083,7 +2007,7 @@ void SEL_Update(void) {
             MemCardSetPort(1);
             g_GameEngineStep++;
         } else {
-            if (g_pads[0].tapped & 0x40) {
+            if (g_pads[0].tapped & PAD_CROSS) {
                 g_GameEngineStep = Upd_Eng_0x220;
             }
             func_801AD218();

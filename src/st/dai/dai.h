@@ -38,13 +38,13 @@ enum OVL_EXPORT(Palette) {
     PAL_CLOUDS = 0xC0,
     PAL_BACKGROUND_SKY_LAND = 0xC5,
     PAL_CASTLE_WALL_2 = 0xC8,
-    PAL_CONFESSIONAL_C9 = 0xC9,
+    PAL_CONFESSIONAL_GHOST = 0xC9,
     PAL_801809C8 = 0xCA,
-    PAL_CONFESSIONAL_CC = 0xCC,
-    PAL_CONFESSIONAL_CE = 0xCE,
+    PAL_CONFESSIONAL_CLUT = 0xCC,
+    PAL_CONFESSIONAL_GHOST_BAD = 0xCE,
     PAL_COLOR_GRADIENT = 0x15F,
     PAL_SPIKES_DUST = 0x161,
-    PAL_SPECTRAL_SWORD_WEAPON_3 = 0x16B,
+    PAL_SPECTRAL_SWORD_WEAPON_UNK_16B = 0x16B,
     PAL_STAGE_NAME_19D = 0x19D,
     PAL_STAGE_NAME_19E = 0x19E,
     PAL_STAGE_NAME_19F = 0x19F,
@@ -61,8 +61,8 @@ enum OVL_EXPORT(Palette) {
     PAL_HUNTING_GIRL = 0x231,
     PAL_HUNTING_GIRL_INIT = 0x232,
     PAL_SPECTRAL_SWORD = 0x234,
-    PAL_SPECTRAL_SWORD_WEAPON_1 = 0x235,
-    PAL_SPECTRAL_SWORD_WEAPON_2 = 0x236,
+    PAL_SPECTRAL_SWORD_WEAPON = 0x235,
+    PAL_SPECTRAL_SWORD_POLTERGEIST = 0x236,
     PAL_SEALED_DOOR = 0x245,
     PAL_BREAKABLE = 0x249,
     PAL_BREAKABLE_DEBRIS = 0x24D,
@@ -116,9 +116,9 @@ enum OVL_EXPORT(Entities) {
     E_BELL_SPAWNER,              // EntityBellSpawner,
     E_CORNER_GUARD,              // EntityCornerGuard,
     E_CORNER_GUARD_ATTACK,       // EntityCornerGuardAttack,
-    E_BONE_PILLAR_HEAD,          // EntityBonePillarHead,
+    E_BONE_PILLAR_SKULL,         // EntityBonePillarSkull,
     E_BONE_PILLAR_FIRE,          // EntityBonePillarFireBreath,
-    E_BONE_PILLAR_PIECES,        // EntityBonePillarDeathParts,
+    E_BONE_PILLAR_PARTS,         // EntityBonePillarDeathParts,
     E_BONE_PILLAR_SPIKE_BALL,    // EntityBonePillarSpikeBall,
     E_UNK_2D,                    // EntityEndConfessionalChime,
     E_SPIKES,                    // EntitySpikes,
@@ -141,7 +141,7 @@ enum OVL_EXPORT(Entities) {
     E_SPECTRAL_SWORD,            // EntitySpectralSword,
     E_SPECTRAL_SWORD_AURA,       // EntitySpectralSwordAura,
     E_SPECTRAL_SWORD_WEAPON,     // EntitySpectralSwordWeapon,
-    E_UNK_42,                    // EntityWingedGuardSpawner,
+    E_WINGED_GUARD_SPAWNER,      // EntityWingedGuardSpawner,
     E_SEALED_DOOR,               // EntitySealedDoor,
     E_BREAKABLE_DEBRIS,          // EntityBreakableDebris,
     E_CUTSCENE_DIALOGUE,         // DAI_EntityCutsceneDialogue,
@@ -161,13 +161,13 @@ extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
-extern EInit g_EInitStatueBlock;
+extern EInit g_EInitEnvironment;
 extern EInit g_EInitConfessionalGhost;
 extern EInit g_EInitConfessionalBlades;
 extern EInit g_EInitCornerGuard;
 extern EInit g_EInitCornerGuardAttack;
-extern EInit g_EInitBonePillarHead;
-extern EInit g_EInitBonePillarPieces;
+extern EInit g_EInitBonePillarSkull;
+extern EInit g_EInitBonePillarParts;
 extern EInit g_EInitBonePillarFireBreath;
 extern EInit g_EInitBonePillarSpikeBall;
 extern EInit g_EInitBoneHalberd;
