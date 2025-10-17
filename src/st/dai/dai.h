@@ -159,7 +159,7 @@ enum OVL_EXPORT(Entities) {
     E_SPECTRAL_SWORD,            // EntitySpectralSword,
     E_SPECTRAL_SWORD_AURA,       // EntitySpectralSwordAura,
     E_SPECTRAL_SWORD_WEAPON,     // EntitySpectralSwordWeapon,
-    E_UNK_42,                    // EntityWingedGuardSpawner,
+    E_WINGED_GUARD_SPAWNER,      // EntityWingedGuardSpawner,
     E_SEALED_DOOR,               // EntitySealedDoor,
     E_BREAKABLE_DEBRIS,          // EntityBreakableDebris,
     E_CUTSCENE,                  // DAI_EntityCutscene,
