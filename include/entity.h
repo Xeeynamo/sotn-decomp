@@ -3272,24 +3272,24 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u16 unk84;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 weaponCount;
+    /* 0x84 */ u16 hasWeapons;
     /* 0x86 */ s16 : 16;
-    /* 0x88 */ Pos unk88;
-    /* 0x90 */ s16 unk90;
+    /* 0x88 */ Pos weaponPos;
+    /* 0x90 */ s16 angle;
     /* 0x92 */ s16 : 16;
-    /* 0x94 */ s16 unk94;
-    /* 0x96 */ u8 unk96;
+    /* 0x94 */ s16 moveTimer;
+    /* 0x96 */ u8 weaponIndex;
     /* 0x97 */ s8 : 8;
-    /* 0x98 */ s16 unk98;
-    /* 0x9A */ s16 unk9A;
-    /* 0x9C */ s16 unk9C;
-    /* 0x9E */ s16 unk9E;
+    /* 0x98 */ s16 rotX;
+    /* 0x9A */ s16 rotY;
+    /* 0x9C */ s16 rotateTarget;
+    /* 0x9E */ s16 rotate;
     /* 0xA0 */ s16 : 16;
-    /* 0xA2 */ s16 unkA2;
+    /* 0xA2 */ s16 radius;
     /* 0xA4 */ s32 pad[2];
-    /* 0xAC */ struct Entity* unkAC;
+    /* 0xAC */ struct Entity* poltergeist;
     /* 0xB0 */ u8 unkB0;
 } ET_SpectralSword;
 
