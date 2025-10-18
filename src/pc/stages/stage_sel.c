@@ -8,13 +8,13 @@
 
 extern const char* D_801803A8[10];
 
-void* SEL_g_EntityGfxs[] = {NULL, NULL};
+GfxBank* g_EntityGfxs[] = {NULL, NULL};
 
 // stubs
 RECT D_80182584 = {0};
 RECT D_8018258C = {0};
 RECT D_801825A4 = {0};
-void* D_8018C404[100] = {NULL};
+u8* D_8018C404[100] = {NULL};
 s8 D_8018BC4A = 0;
 s8 D_8018BC50 = 0;
 
@@ -54,7 +54,6 @@ unsigned short D_80180804[16] = {
 };
 u16 D_801808E4[256]; // memcard palette
 
-const char D_801ABF9C[] = "MDEC_rest:bad option(%d)\n";
 const char D_801ABFB8[] = "MDEC_in_sync";
 const char D_801ABFC8[] = "MDEC_out_sync";
 const char D_801ABFD8[] = "DMA=(%d,%d), ADDR=(0x%08x->0x%08x)";
@@ -84,13 +83,13 @@ s32 g_MainMenuCursor;
 char g_InputSaveName[12];
 s32 D_801D6B24;
 
-extern Overlay g_StageSel;
+extern OVL_EXPORT(Overlay);
 
 s32 LoadFileSim(s32 fileId, s32 type);
 
 static bool g_WereStringsInitialised = false;
 void InitStageSEL(Overlay* o) {
-    memcpy(o, &g_StageSel, sizeof(Overlay));
+    memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
     if (!g_WereStringsInitialised) {
         g_WereStringsInitialised = true;
         for (int i = 0; i < LEN(D_80180128); i++) {

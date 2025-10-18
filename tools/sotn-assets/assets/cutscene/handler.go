@@ -210,7 +210,7 @@ func parseScript(r io.ReadSeeker, baseAddr, addr psx.Addr, length int) ([][]stri
 	}
 	for length > 0 {
 		op := int(read1(r))
-		if op < 0x20 {
+		if op < len(commandDefinitions) {
 			flushText()
 			command := []string{commandDefinitions[op].name}
 			for _, param := range commandDefinitions[op].params {
@@ -224,8 +224,14 @@ func parseScript(r io.ReadSeeker, baseAddr, addr psx.Addr, length int) ([][]stri
 				}
 			}
 			script = append(script, command)
+		} else if op < 0x20 {
+			text += fmt.Sprintf("\\x%02X", byte(op))
 		} else if op < 0x7F {
-			text += string([]byte{byte(op)})
+			if op == 0x22 {
+				text += "\\\""
+			} else {
+				text += string([]byte{byte(op)})
+			}
 		} else if platform == sotn.PlatformPSP && op >= 0xA0 && op <= 0xDF {
 			// PSP has multi-language support with characters that exceed the ASCII range
 			text += fmt.Sprintf("\\x%02X", byte(op))

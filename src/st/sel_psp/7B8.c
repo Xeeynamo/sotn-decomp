@@ -9,13 +9,13 @@ extern s32 D_psp_09283DC8;
 extern s32 D_psp_09283E48;
 extern char** g_SaveAreaNamesSecondPart;
 extern char** g_SaveAreaNames;
-extern s32* D_91CE200;
-extern s32* D_91CE208;
-extern s32* D_91CE210;
+extern char* D_psp_091CE200;
+extern char* D_psp_091CE208;
+extern char* D_psp_091CE210;
 extern s32 D_psp_08B42050;
 extern s32 D_psp_08B42054;
-extern char* D_91CE1F0;
-extern char* D_91CE1F8;
+extern char* D_psp_091CE1F0;
+extern char* D_psp_091CE1F8;
 extern s32 D_8B42044;
 extern s32 D_91ED288;
 
@@ -436,20 +436,35 @@ void func_801ACF7C(void) {
 }
 
 static char D_psp_09283E80[] =
-    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
-    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+    "\x70\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09";
 static char D_psp_09283E98[] =
-    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
-    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+    "\x70\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09";
 static char D_psp_09283EB0[] =
-    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
-    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+    "\x70\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09";
 static char D_psp_09283EC8[] =
-    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
-    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+    "\x70\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09";
 static char D_psp_09283EE0[] =
-    "\x70\x3E\x28\x09\x78\x3E\x28\x09\x78\x3E\x28"
-    "\x09\x78\x3E\x28\x09\x78\x3E\x28\x09";
+    "\x70\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09"
+    "\x78\x3E\x28\x09";
 
 void func_psp_092391A0(void) {
     D_801803A8 = GetLang(&D_psp_09283BE8, &D_psp_09283E48, &D_psp_09283CA8,
@@ -632,9 +647,9 @@ void func_801AD490(void) {
     DrawNavigationTips(Tips_MenuNavigation);
     DrawImages8x8(STR_SELECT, 0x30, 0xBC, 1);
     DrawImages8x8(STR_DECIDE, 0x30, 0xCC, 1);
-    func_psp_09240618(D_91CE210, 0xF0, 0x20, 0, 0x50);
-    func_psp_09240618(D_91CE208, 0x100, 0x30, 0, 0x50);
-    func_psp_09240618(D_91CE200, 0xE8, 0x40, 0, 0x50);
+    func_psp_09240618(D_psp_091CE210, 0xF0, 0x20, 0, 0x50);
+    func_psp_09240618(D_psp_091CE208, 0x100, 0x30, 0, 0x50);
+    func_psp_09240618(D_psp_091CE200, 0xE8, 0x40, 0, 0x50);
 
     for (i = 0; i < NUM_MENU_OPTIONS; i++) {
         prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
@@ -664,8 +679,8 @@ void func_801AD590(void) {
     func_801B25D4(D_80180454[g_MainMenuCursor], 9);
 }
 
-static char* D_80180468[] = {"richter "};
-static char* D_psp_092840B0[] = {"maria   "};
+static char* D_80180468 = "richter ";
+static char* D_psp_092840B0 = "maria   ";
 
 void func_801AD66C(void) {
     s32 i;
@@ -690,7 +705,7 @@ void func_801AD66C(void) {
     g_Status.saveName[9] = 0;
 
     // check if the name is Richter
-    strPtr = (s8*)D_80180468[0];
+    strPtr = (s8*)D_80180468;
     for (i = 0; i < 8; i++) {
         if (g_Status.saveName[i] != *strPtr++) {
             break;
@@ -709,7 +724,7 @@ void func_801AD66C(void) {
     }
 
     if (g_PlayableCharacter == PLAYER_ALUCARD) {
-        strPtr = (s8*)D_psp_092840B0[0];
+        strPtr = (s8*)D_psp_092840B0;
         for (i = 0; i < 8; i++) {
             if (g_Status.saveName[i] != *strPtr++) {
                 break;
@@ -866,8 +881,8 @@ void func_801ADF94(s32 flags, s32 yOffset) {
         if (g_SaveSummary[port].padding == -3 || saveDescriptorString == 3) {
             func_801ACBE4(GFX_UNK_12, 8);
             func_801ACBE4(GFX_UNK_16, 8);
-            sp4c = func_psp_09237ED8(D_91CE1F8, 0x80, 8);
-            DrawString16x16(D_91CE1F8, sp4c, y + 0x78, 1);
+            sp4c = func_psp_09237ED8(D_psp_091CE1F8, 0x80, 8);
+            DrawString16x16(D_psp_091CE1F8, sp4c, y + 0x78, 1);
         } else if (
             (saveDescriptorString == 4) ||
             ((port == 0) && g_SaveSummary[port].slot[slot] == func_8919560())) {
@@ -927,11 +942,11 @@ void func_801ADF94(s32 flags, s32 yOffset) {
                 if (icon == -2) {
                     DrawString16x16("used", 0xA0, y + 0x78, 1);
                 } else if (saveDescriptorString == 2) {
-                    sp4c = func_psp_09237ED8(D_91CE1F0, 0x88, 7);
-                    DrawString16x16(D_91CE1F0, sp4c, y + 0x78, 1);
+                    sp4c = func_psp_09237ED8(D_psp_091CE1F0, 0x88, 7);
+                    DrawString16x16(D_psp_091CE1F0, sp4c, y + 0x78, 1);
                 } else {
-                    sp4c = func_psp_09237ED8(D_91CE1F8, 0x80, 8);
-                    DrawString16x16(D_91CE1F8, sp4c, y + 0x78, 1);
+                    sp4c = func_psp_09237ED8(D_psp_091CE1F8, 0x80, 8);
+                    DrawString16x16(D_psp_091CE1F8, sp4c, y + 0x78, 1);
                 }
             }
         }
@@ -1164,7 +1179,7 @@ static void func_801AEE74(void) {
     }
 }
 
-void func_psp_0923BE20(void) {
+void OVL_EXPORT(Update)(void) {
     s32 i;
     s32 port;
     s32 slot;
@@ -1178,7 +1193,7 @@ void func_psp_0923BE20(void) {
         g_api.PlaySfx(MU_PRAYER);
         g_GameTimer = 0;
         D_801BAF08 = 0;
-        func_psp_09241BF8();
+        func_801B2D6C();
         SetTitleDisplayBuffer256();
         g_api.func_800EA5E4(ANIMSET_DRA(0));
         g_api.func_800EA5E4(ANIMSET_OVL(0));
@@ -2015,7 +2030,7 @@ void func_psp_0923BE20(void) {
     }
 }
 
-void func_psp_0923F290(void) {
+void func_801B17C8(void) {
     s32 var_s0;
 
     switch (g_MenuStep) {

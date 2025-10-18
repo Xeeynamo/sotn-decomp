@@ -22,17 +22,25 @@ static s32 MainMenuMaskPrimIndex;
 static s32 g_SelNextCrossPressEngStep;
 static s32 g_SelEng220NextStep;
 
-Overlay g_StageSel = {
-    /* 0x00 */ SEL_Update,
+void OVL_EXPORT(Update)(void);
+void HandleTitleScreen(void);
+void func_801B9C80(void);
+void OVL_EXPORT(Init)(s32 objLayoutId);
+void func_801B60D4(void);
+void func_801B17C8(void);
+
+// DATA
+Overlay OVL_EXPORT(Overlay) = {
+    /* 0x00 */ OVL_EXPORT(Update),
     /* 0x04 */ HandleTitleScreen,
     /* 0x08 */ func_801B9C80,
-    /* 0x0C */ SEL_Init,
+    /* 0x0C */ OVL_EXPORT(Init),
     /* 0x10 */ NULL,
     /* 0x14 */ g_SpriteBanks,
     /* 0x18 */ g_Cluts,
     /* 0x1C */ NULL,
     /* 0x20 */ NULL,
-    /* 0x24 */ OVL_EXPORT(g_EntityGfxs),
+    /* 0x24 */ g_EntityGfxs,
     /* 0x28 */ func_801B60D4,
     /* 0x2C */ NULL,
     /* 0x30 */ &D_8018C404,
@@ -673,7 +681,7 @@ void func_801AD590(void) {
     func_801B2608(D_80180454[g_MainMenuCursor], 9);
 }
 
-static char* D_80180468[] = {"richter "};
+static char* D_80180468 = "richter ";
 
 void func_801AD66C(void) {
     s32 i;
@@ -698,7 +706,7 @@ void func_801AD66C(void) {
     g_Status.saveName[9] = 0;
 
     // check if the name is Richter
-    strPtr = D_80180468[0];
+    strPtr = D_80180468;
     for (i = 0; i < 8; i++) {
         if (g_Status.saveName[i] != *strPtr++) {
             break;
@@ -1137,7 +1145,7 @@ static void func_801AEE74(void) {
     }
 }
 
-void SEL_Update(void) {
+void OVL_EXPORT(Update)(void) {
     s32 i;
     s32 port;
     s32 slot;

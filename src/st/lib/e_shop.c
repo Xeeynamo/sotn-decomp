@@ -4659,8 +4659,8 @@ static const char* D_us_801818C0[] = {
     _S("Immune"),     _S("Weak VS."), _S("Absorb")};
 #endif
 
-static const char* D_us_801818EC[] = {_S("????????")};
-static const char* D_us_801818F0[] = {_S("????")};
+static const char* D_us_801818EC = _S("????????");
+static const char* D_us_801818F0 = _S("????");
 
 const char* func_us_801B7C94(u16 itemId) {
     const char* name;
@@ -4762,7 +4762,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     prim = func_us_801B1064(prim, posX, 0x34, D_us_801818C0[1], 0x196); // "HP"
     posX += 0x12;
     if (enemyDef->hitPoints > 9999) {
-        func_us_801B3FB4(prim, D_us_801818F0[0], 4, 1); // "????"
+        func_us_801B3FB4(prim, D_us_801818F0, 4, 1); // "????"
     } else {
         func_us_801B3EC8(prim, enemyDef->hitPoints, 4);
     }
@@ -4804,7 +4804,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
             prim, 0x84, 0x99, func_us_801B7C94(enemyDef->rareItemId), clut);
     } else {
         prim = func_us_801B1064(
-            prim, 0x84, 0x99, D_us_801818EC[0], 0x196); // "????????"
+            prim, 0x84, 0x99, D_us_801818EC, 0x196); // "????????"
     }
     while (prim != NULL) {
         prim->drawMode = DRAW_HIDE;
