@@ -102,26 +102,26 @@ u_long* D_80180728[] = {
 
 GfxBank* g_EntityGfxs[] = {D_80180728};
 
-static u16 D_80180764[] = {
+u16 D_80180764[] = {
 #include "gen/D_80180764.h"
 };
 
-static u16 D_80180784[] = {
+u16 D_80180784[] = {
 #include "gen/D_80180784.h"
 };
 
-static u16 D_801807A4[] = {
+u16 D_801807A4[] = {
 #include "gen/D_801807A4.h"
 };
 
-static u16 D_801807C4[] = {
+u16 D_801807C4[] = {
 #include "gen/D_801807C4.h"
 };
 
-static u16 D_801807E4[] = {
+u16 D_801807E4[] = {
 #include "gen/D_801807E4.h"
 };
 
-static u16 D_80180804[] = {
+u16 D_80180804[] = {
 #include "gen/D_80180804.h"
 };
