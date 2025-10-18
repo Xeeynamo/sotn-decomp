@@ -83,7 +83,7 @@ s32 g_MainMenuCursor;
 char g_InputSaveName[12];
 s32 D_801D6B24;
 
-extern OVL_EXPORT(Overlay);
+extern Overlay OVL_EXPORT(Overlay);
 
 s32 LoadFileSim(s32 fileId, s32 type);
 
