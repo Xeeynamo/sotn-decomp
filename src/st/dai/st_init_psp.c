@@ -64,14 +64,14 @@ s32 E_ID(SPECTRAL_SWORD_WEAPON);
 s32 E_ID(WINGED_GUARD_SPAWNER);
 s32 E_ID(SEALED_DOOR);
 s32 E_ID(BREAKABLE_DEBRIS);
-s32 E_ID(CUTSCENE);
-s32 E_ID(UNK_46);
-s32 E_ID(UNK_47);
+s32 E_ID(CUTSCENE_DIALOGUE);
+s32 E_ID(CUTSCENE_STAGE);
+s32 E_ID(CUTSCENE_MARIA);
 s32 E_ID(MIST_DOOR);
 
-u8* OVL_EXPORT(cutscene_script); // bss
-// Used by dai/e_cutscene_psp/DAI_EntityCutscene
-u8* D_pspeu_092970B8; // bss
+// Used by dai/e_cutscene_dialogue/DAI_EntityCutsceneDialogue
+u8* OVL_EXPORT(cutscene_script);         // bss
+u8* OVL_EXPORT(cutscene_script_address); // bss
 
 #include "../get_lang_at.h"
 
@@ -128,9 +128,9 @@ static void InitEntityIds(void) {
     E_ID(WINGED_GUARD_SPAWNER) = 0x42;
     E_ID(SEALED_DOOR) = 0x43;
     E_ID(BREAKABLE_DEBRIS) = 0x44;
-    E_ID(CUTSCENE) = 0x45;
-    E_ID(UNK_46) = 0x46;
-    E_ID(UNK_47) = 0x47;
+    E_ID(CUTSCENE_DIALOGUE) = 0x45;
+    E_ID(CUTSCENE_STAGE) = 0x46;
+    E_ID(CUTSCENE_MARIA) = 0x47;
     E_ID(MIST_DOOR) = 0x48;
 }
 
@@ -141,7 +141,7 @@ void OVL_EXPORT(Load)(void) {
         (u8*)OVL_EXPORT(cutscene_script_sp),
         (u8*)OVL_EXPORT(cutscene_script_ge),
         (u8*)OVL_EXPORT(cutscene_script_it));
-    D_pspeu_092970B8 = GetLangAt(
+    OVL_EXPORT(cutscene_script_address) = GetLangAt(
         0, (u8*)OVL_EXPORT(cutscene_script_en),
         (u8*)OVL_EXPORT(cutscene_script_fr),
         (u8*)OVL_EXPORT(cutscene_script_sp),
