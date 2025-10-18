@@ -31,7 +31,7 @@ static u8 D_8002BA18[] = {
 #include "../../gen/D_8002BA18.h"
 };
 static s32 D_8002C218 = 0;
-static char* D_8002C21C[] = {"0123456789ABCDEF"};
+static char* D_8002C21C = "0123456789ABCDEF";
 
 void SetDumpFnt(int id) {
     if (id >= 0 && D_8002B810 >= id) {
@@ -263,7 +263,7 @@ int FntPrint(const char* id, ...) {
             num = va_arg(args, s32);
             do {
                 do {
-                    *--bufPtr = D_8002C21C[0][num % 16U];
+                    *--bufPtr = D_8002C21C[num % 16U];
                     num /= 16U;
                     len++;
                 } while (len == 0);

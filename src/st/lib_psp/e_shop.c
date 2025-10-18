@@ -6423,8 +6423,8 @@ static u16 D_us_801818A8[] = {
     ELEMENT_ICE,   ELEMENT_WATER, ELEMENT_STONE, ELEMENT_POISON,
     ELEMENT_CURSE, ELEMENT_CUT,   ELEMENT_HIT};
 
-static const char* D_us_801818EC[] = {_S("????????")};
-static const char* D_us_801818F0[] = {_S("????")};
+static const char* D_us_801818EC = _S("????????");
+static const char* D_us_801818F0 = _S("????");
 
 const char* func_us_801B7C94(u16 itemId) {
     const char* name;
@@ -6518,7 +6518,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     }
     posX += 2;
     if (enemyDef->hitPoints > 9999) {
-        func_us_801B3FB4(prim, D_us_801818F0[0], 4, 1); // "????"
+        func_us_801B3FB4(prim, D_us_801818F0, 4, 1); // "????"
     } else {
         func_us_801B3EC8(prim, enemyDef->hitPoints, 4);
     }
@@ -6574,7 +6574,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
                                 func_us_801B7C94(enemyDef->rareItemId), 0x196);
     } else {
         prim = func_us_801B1064(
-            prim, posX - xOffset, posY, D_us_801818EC[0], 0x196); // "????????"
+            prim, posX - xOffset, posY, D_us_801818EC, 0x196); // "????????"
     }
     for (i = 0; i < 4; i++) {
         prim = func_us_801B1064(

@@ -55,13 +55,13 @@ s32 D_psp_091CDD50;
 bool D_psp_091CDD48;
 s32 D_psp_091CDD40;
 
-char* D_800A2D10[] = {"装備技システム短剣必殺使攻撃力防"};
+static char* D_800A2D10 = "装備技システム短剣必殺使攻撃力防";
 
-char* D_800A2D14[] = {"御魔導器拳こ一覧棒両手食物爆弾盾"};
+static char* D_800A2D14 = "御魔導器拳こ一覧棒両手食物爆弾盾";
 
-char* D_800A2D18[] = {"投射薬ん右左武兜鎧マントその他い"};
+static char* D_800A2D18 = "投射薬ん右左武兜鎧マントその他い";
 
-char* D_800A2D58[] = {"再開中断終了決定戻る　　　　　　"};
+static char* D_800A2D58 = "再開中断終了決定戻る　　　　　　";
 
 char* D_psp_09147FD8[] = {
     _S("ATT"),
@@ -3573,16 +3573,16 @@ block_4:
             func_800F84CC();
             func_801027C4(2);
 #if defined(VERSION_US)
-            func_800F98AC(*D_800A2D64, 0);
+            func_800F98AC(D_800A2D64, 0);
 #elif defined(VERSION_PSP)
-            func_800F98AC(*D_800A2D10, 0);
-            func_800F98AC(*D_800A2D14, 0x100);
-            func_800F98AC(*D_800A2D18, 1);
-            func_800F98AC(*D_800A2D58, 0x101);
+            func_800F98AC(D_800A2D10, 0);
+            func_800F98AC(D_800A2D14, 0x100);
+            func_800F98AC(D_800A2D18, 1);
+            func_800F98AC(D_800A2D58, 0x101);
 #elif defined(VERSION_HD)
-            func_800F98AC(*D_800A2D10, 0);
-            func_800F98AC(*D_800A2D14, 0x100);
-            func_800F98AC(*D_800A2D18, 1);
+            func_800F98AC(D_800A2D10, 0);
+            func_800F98AC(D_800A2D14, 0x100);
+            func_800F98AC(D_800A2D18, 1);
 #endif
             func_800FABEC(MENU_DG_MAIN);
             func_800FABEC(MENU_DG_BG);
@@ -4341,7 +4341,7 @@ void DrawHudSubweapon2(void) {
     switch (g_MenuStep) {
     case MENU_STEP_INIT:
         func_800F84CC();
-        func_800F98AC(*D_800A2D58, 0x101);
+        func_800F98AC(D_800A2D58, 0x101);
         func_800FB9BC();
         D_psp_091CDD50 = 0;
         g_MenuNavigation.cursorMain = 0;

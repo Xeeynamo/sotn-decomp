@@ -105,6 +105,23 @@ files:
           - [0x188F4, skip]
           - [0x18A6C, blueprintsdef, us/blueprints, RicBlueprints, RicEntities]
           - [0x18C42, skip]
+  - target: disks/us/ST/SEL/SEL.BIN
+    asset_path: assets/st/sel
+    src_path: src/st/sel
+    splat_config_path: config/splat.us.stsel.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x5FC, palette, D_801805FC, 16]
+          - [0x61C, skip]
+          - [0x764, palette, D_80180764, 16]
+          - [0x784, palette, D_80180784, 16]
+          - [0x7A4, palette, D_801807A4, 16]
+          - [0x7C4, palette, D_801807C4, 16]
+          - [0x7E4, palette, D_801807E4, 16]
+          - [0x804, palette, D_80180804, 16]
+          - [0x824, skip]
   - target: disks/us/ST/CEN/CEN.BIN
     asset_path: assets/st/cen
     src_path: src/st/cen

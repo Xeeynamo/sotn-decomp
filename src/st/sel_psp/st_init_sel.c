@@ -2,14 +2,6 @@
 #include "../sel/sel.h"
 #include <cutscene.h>
 
-extern Overlay OVL_EXPORT(Overlay);
-
-extern u8 D_psp_0924A470[];
-extern u8 D_psp_0924AD10[];
-extern u8 D_psp_0924B590[];
-extern u8 D_psp_0924BE90[];
-extern u8 D_psp_0924C7B0[];
-
 // BSS
 u8* D_psp_09285BA8;
 u8* D_psp_09285BA0;
@@ -17,6 +9,27 @@ u8* D_psp_09285B98;
 u8* D_psp_09285B90;
 u8* D_psp_09285B88;
 u8* D_psp_09285B80;
+
+// DATA
+static u8 cutscene_script_it[] = {
+#include "gen/cutscene_script_it.h"
+};
+
+static u8 cutscene_script_sp[] = {
+#include "gen/cutscene_script_sp.h"
+};
+
+static u8 cutscene_script_fr[] = {
+#include "gen/cutscene_script_fr.h"
+};
+
+static u8 cutscene_script_ge[] = {
+#include "gen/cutscene_script_ge.h"
+};
+
+static u8 cutscene_script_en[] = {
+#include "gen/cutscene_script_en.h"
+};
 
 static u8 credits_data_it[] = {
 #include "credits_data.h"
@@ -38,7 +51,7 @@ static u8 credits_data_en[] = {
 #include "credits_data.h"
 };
 
-s32 D_psp_0924EA70 = 0x08D39D3C;
+static u8* D_8018C404 = (u8*)0x08D39D3C;
 
 static u16 D_psp_0924EA78[] = {
 #include "gen/D_psp_0924EA78.h"
@@ -302,26 +315,56 @@ u16 D_psp_092839C8[] = {
 #include "gen/D_psp_092839C8.h"
 };
 
+void OVL_EXPORT(Update)(void);
+void HandleTitleScreen(void);
+void func_psp_090FFAB8(void);
+void OVL_EXPORT(Init)(s32 objLayoutId);
+void func_801B60D4(void);
+void func_801B17C8(void);
+
+Overlay OVL_EXPORT(Overlay) = {
+    /* 0x00 */ OVL_EXPORT(Update),
+    /* 0x04 */ HandleTitleScreen,
+    /* 0x08 */ func_psp_090FFAB8,
+    /* 0x0C */ OVL_EXPORT(Init),
+    /* 0x10 */ NULL,
+    /* 0x14 */ g_SpriteBanks,
+    /* 0x18 */ g_Cluts,
+    /* 0x1C */ NULL,
+    /* 0x20 */ NULL,
+    /* 0x24 */ g_EntityGfxs,
+    /* 0x28 */ func_801B60D4,
+    /* 0x2C */ NULL,
+    /* 0x30 */ &D_8018C404,
+    /* 0x34 */ NULL,
+    /* 0x38 */ NULL,
+    /* 0x3C */ func_801B17C8,
+};
+
 #include "../get_lang_at.h"
 
 #include "../../get_lang.h"
 
 void OVL_EXPORT(Load)(void) {
-    D_psp_09285BA8 = GetLangAt(8, D_psp_0924C7B0, D_psp_0924B590,
-                               D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
-    D_psp_09285BA0 = GetLangAt(0, D_psp_0924C7B0, D_psp_0924B590,
-                               D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
+    D_psp_09285BA8 =
+        GetLangAt(8, cutscene_script_en, cutscene_script_fr, cutscene_script_sp,
+                  cutscene_script_ge, cutscene_script_it);
+    D_psp_09285BA0 =
+        GetLangAt(0, cutscene_script_en, cutscene_script_fr, cutscene_script_sp,
+                  cutscene_script_ge, cutscene_script_it);
     D_psp_09285B98 =
         GetLangAt(0, credits_data_en, credits_data_fr, credits_data_sp,
                   credits_data_ge, credits_data_it);
     D_psp_09285B90 =
         GetLangAt(0, credits_data_en, credits_data_fr, credits_data_sp,
                   credits_data_ge, credits_data_it);
-    D_psp_09285B88 = GetLangAt(0, D_psp_0924C7B0, D_psp_0924B590,
-                               D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
-    D_psp_09285B80 = GetLangAt(4, D_psp_0924C7B0, D_psp_0924B590,
-                               D_psp_0924AD10, D_psp_0924BE90, D_psp_0924A470);
-    func_8929FA8(D_psp_0924EA70, 0xC5);
+    D_psp_09285B88 =
+        GetLangAt(0, cutscene_script_en, cutscene_script_fr, cutscene_script_sp,
+                  cutscene_script_ge, cutscene_script_it);
+    D_psp_09285B80 =
+        GetLangAt(4, cutscene_script_en, cutscene_script_fr, cutscene_script_sp,
+                  cutscene_script_ge, cutscene_script_it);
+    func_8929FA8(D_8018C404, 0xC5);
     memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
     D_psp_0927C6F0[3] =
         (u_long*)GetLang(D_psp_092630D8, D_psp_09264868, D_psp_09263700,

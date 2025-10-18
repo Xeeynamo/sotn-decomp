@@ -1,3 +1,6 @@
+g_SpriteBanks = 0x09248440;
+g_Cluts = 0x092485A0;
+g_EntityGfxs = 0x092485F0;
 SEL_Overlay = 0x09283A08;
 g_SaveSummary = 0x09285EE8;
 g_Dialogue = 0x09286C10; // size:0x40

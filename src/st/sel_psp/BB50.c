@@ -771,7 +771,7 @@ void func_801B5A7C(void) {
     }
 }
 
-void func_psp_09244E10(void) {
+void func_801B60D4(void) {
     Entity* ent;
     s32 i;
 
@@ -790,7 +790,7 @@ void func_psp_09244E10(void) {
         break;
 
     case 1:
-        func_90FFAB8();
+        func_psp_090FFAB8();
         if (D_8003C728 == 0) {
             g_CurrentStream = 0;
             func_801B18F4();

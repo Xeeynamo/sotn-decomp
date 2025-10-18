@@ -174,21 +174,19 @@ extern s32 g_CurrentStream;
 extern StageName D_80180128[80];
 
 extern const s32 D_801A7B8C[2];
-extern void* g_Cluts[];
-extern void* OVL_EXPORT(g_EntityGfxs)[];
+extern u_long* g_Cluts[];
+extern GfxBank* g_EntityGfxs[];
 extern StreamInfo g_StreamInfo0;
 extern StreamInfo g_StreamInfo1;
 extern StreamInfo g_StreamInfo2;
 extern StreamInfo g_StreamInfo3;
 extern StreamInfo* g_Streams[4];
-extern s16** g_SpriteBanks[]; // g_SpriteBanks
-extern void* D_8018C404[];    // unknown type
+extern SpriteParts* g_SpriteBanks[];
 
 extern const char D_8018B304[];
 extern s32 g_StreamWidth;
 extern int g_StreamHeight;
 
-extern const char D_801ABF9C[]; // "MDEC_rest:bad option(%d)\n"
 extern const char D_801ABFB8[]; // MDEC_in_sync
 extern const char D_801ABFC8[]; // MDEC_out_sync
 extern const char D_801ABFD8[]; // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
@@ -208,19 +206,3 @@ extern StreamEnv g_StreamEnv;
 extern s32 g_MemcardBlockRead;
 extern s32 g_MemcardStep;
 extern s32 D_801D6B24;
-
-void SEL_Update(void);
-void HandleTitleScreen(void);
-void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height);
-void func_801B9C80(void);
-void SEL_Init(s32 objLayoutId);
-void func_801B60D4(void);
-void func_801B17C8(void);
-void SetTexturedPrimRect(
-    Primitive* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
-void func_801B3A54(s32, s32);
-s32 _card_event_x();
-void MemcardInit();
-void MDEC_rest(s32 option);
-void func_801BA880();
-void DecDCTvlc(s32, s32);

@@ -506,31 +506,3 @@ s32 MemCardInitAndFormat(void) {
 
     return 0;
 }
-
-void SEL_Init(s32 objLayoutId) {
-    switch (g_GameEngineStep) {
-    case 0:
-        if (g_IsUsingCd) {
-            break;
-        }
-        g_IsTimeAttackUnlocked = true;
-        D_8003C728 = 1;
-        g_CurrentStream = 0;
-        g_GameEngineStep = Engine_Normal;
-        break;
-
-    case 1:
-        func_801B9C80();
-#ifndef VERSION_PC // skip Konami logo
-        if (D_8003C728) {
-            break;
-        }
-#endif
-        g_IsTimeAttackUnlocked = false;
-        g_CurrentStream = 0;
-        func_801B18F4();
-        g_GameState = Game_Title;
-        g_GameEngineStep = Engine_Init;
-        break;
-    }
-}
