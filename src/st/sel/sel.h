@@ -182,7 +182,6 @@ extern StreamInfo g_StreamInfo2;
 extern StreamInfo g_StreamInfo3;
 extern StreamInfo* g_Streams[4];
 extern SpriteParts* g_SpriteBanks[];
-extern u8* D_8018C404; // unknown type
 
 extern const char D_8018B304[];
 extern s32 g_StreamWidth;
