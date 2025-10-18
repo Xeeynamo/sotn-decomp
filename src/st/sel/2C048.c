@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sel.h"
 
+extern u8* D_8018C404; // unknown type
 extern char g_AsciiSet[];
 extern s32 g_MainMenuCursor;
 extern s32 g_InputCursorPos;
