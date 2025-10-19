@@ -53,7 +53,7 @@ int CdPosToInt(CdlLOC* p) {
            DECODE_BCD(p->sector) - 150;
 }
 
-int CdControl(u_char com, u_char* param, Result_t* result) {
+int CdControl(u_char com, u_char* param, u_char* result) {
     DEBUGF("com %d %s", com, CdSyncModeToStr(com));
     CdlLOC* pos;
 
@@ -78,7 +78,7 @@ int CdControl(u_char com, u_char* param, Result_t* result) {
     return 1;
 }
 
-int CdSync(int mode, Result_t* result) {
+int CdSync(int mode, u_char* result) {
     DEBUGF("mode %0d %s", mode, CdSyncModeToStr(mode));
     return CdlComplete;
 }

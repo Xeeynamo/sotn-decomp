@@ -19,7 +19,7 @@ typedef struct {
 static CdlCB CD_ReadCallbackFunc = NULL;
 static volatile cdreadStruct D_80032DBC = {0};
 
-void cb_read(u_char arg0, Result_t* result) {
+void cb_read(u_char arg0, u_char* result) {
     int pos[3];
 
     if (arg0 == 1) {
@@ -122,7 +122,7 @@ int CdRead(int sectors, u_long* buf, int mode) {
     return cd_read_retry(false) > 0;
 }
 
-int CdReadSync(int mode, Result_t* result) {
+int CdReadSync(int mode, u_char* result) {
     int var_s0;
 
     while (true) {
