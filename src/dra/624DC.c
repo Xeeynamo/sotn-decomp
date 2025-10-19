@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
-#include "dra_bss.h"
+
+#define FADE_DONE (-1)
 
 typedef struct {
     u16 start;
@@ -9,39 +10,43 @@ typedef struct {
     s16 unk8;
 } Unkstruct_80102CD8;
 
+typedef struct {
+    s32 fadePrim; // four square on top of everything to make the fade working
+    s32 mapPrim;  // map texture when pressing the SELECT button
+    s32 step;
+    s32 stepFollowup;
+} FadeProps;
+
 // BSS
-static s32 D_8013799C[4];
+static FadeProps fade;
 static Unkstruct_80102CD8 D_801379AC;
 
 #define COORD_TERMINATOR 0x7FFF
 
-s16 D_800A3134[] = {
+static s16 D_800A3134[] = {
     3, -3, 2, -2, 1, -1, COORD_TERMINATOR,
 };
-
-s16 D_800A3144[] = {
+static s16 D_800A3144[] = {
     3, -3, 3, -3, 2, -2, 2, -2, 1, -1, 1, -1, COORD_TERMINATOR,
 };
-
-s16 D_800A3160[] = {
+static s16 D_800A3160[] = {
     +6, -6, +6, -6, +5,
     -5, +5, -5, +4, -4,
     +4, -4, +3, -3, +3,
     -3, +2, -2, +2, -2,
     +1, -1, +1, -1, COORD_TERMINATOR,
 };
-
-s16* D_800A3194[] = {
+static s16* D_800A3194[] = {
     D_800A3134, D_800A3134, D_800A3144, D_800A3134,
     D_800A3144, D_800A3144, D_800A3160,
 };
 
-void func_801024DC(void) {
+void InitFade(void) {
     Primitive* prim;
     s32 x;
 
-    D_8013799C[0] = AllocPrimitives(PRIM_TILE, 4);
-    prim = &g_PrimBuf[D_8013799C[0]];
+    fade.fadePrim = AllocPrimitives(PRIM_TILE, 4);
+    prim = &g_PrimBuf[fade.fadePrim];
     for (x = 0; prim != NULL; x++) {
         prim->x0 = (x & 1) * 128;
         prim->u0 = 0x80;
@@ -50,12 +55,10 @@ void func_801024DC(void) {
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
-
-    D_8013799C[3] = 0;
-    D_8013799C[2] = 0;
-
-    D_8013799C[1] = AllocPrimitives(PRIM_GT4, 1);
-    prim = &g_PrimBuf[D_8013799C[1]];
+    fade.stepFollowup = 0;
+    fade.step = 0;
+    fade.mapPrim = AllocPrimitives(PRIM_GT4, 1);
+    prim = &g_PrimBuf[fade.mapPrim];
     prim->u0 = 0;
     prim->v0 = 0;
     prim->u1 = 0xFF;
@@ -67,24 +70,23 @@ void func_801024DC(void) {
     prim->tpage = 0x1D;
     prim->clut = 0x1C0;
     prim->priority = 0x1FE;
-
     prim->drawMode = DRAW_HIDE;
 }
 
 s32 func_801025F4(void) {
-    Primitive* prim = &g_PrimBuf[D_8013799C[0]];
+    Primitive* prim = &g_PrimBuf[fade.fadePrim];
     return prim->clut;
 }
 
-void func_80102628(s32 arg0) {
+void SetFadeWidth(s32 fadeWidth) {
     Primitive* prim;
     s32 i;
 
-    prim = &g_PrimBuf[D_8013799C[0]];
+    prim = &g_PrimBuf[fade.fadePrim];
     for (i = 0; prim != NULL; i++) {
-        prim->x0 = arg0 / 2 * (i & 1);
+        prim->x0 = fadeWidth / 2 * (i & 1);
         prim->y0 = 0;
-        prim->u0 = arg0 / 2;
+        prim->u0 = fadeWidth / 2;
         prim->v0 = 0xF0;
         prim->b0 = 0;
         prim->g0 = 0;
@@ -95,10 +97,10 @@ void func_80102628(s32 arg0) {
     }
 }
 
-void func_801026BC(s32 arg0) {
-    Primitive* prim = &g_PrimBuf[D_8013799C[1]];
+static void SetMapOpacity(s32 opacity) {
+    Primitive* prim = &g_PrimBuf[fade.mapPrim];
 
-    if (arg0 == 0) {
+    if (opacity == 0) {
         prim->drawMode = DRAW_HIDE;
         return;
     } else if (!(g_StageId & STAGE_INVERTEDCASTLE_FLAG)) {
@@ -110,53 +112,48 @@ void func_801026BC(s32 arg0) {
         prim->y2 = prim->y3 = -15;
     }
 
-    func_80107250(prim, arg0 * 2);
-
-    if (arg0 == 0x40) {
+    func_80107250(prim, opacity * 2);
+    if (opacity == 0x40) {
         prim->drawMode = DRAW_DEFAULT;
     } else {
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
     }
 }
 
-void func_801027A4(void) { func_801026BC(0); }
+void HideMap(void) { SetMapOpacity(0); }
 
-void func_801027C4(u32 arg0) {
+void SetFadeMode(FadeModes fadeMode) {
     Primitive* prim1;
     Primitive* prim2;
 
-    prim1 = &g_PrimBuf[D_8013799C[0]];
+    prim1 = &g_PrimBuf[fade.fadePrim];
     prim2 = prim1->next;
-    switch (arg0) {
-    case 0:
-    case 3:
+    switch (fadeMode) {
+    case FADE_NONE:
+    case FADE_BLUE_TINT:
         prim1 = prim1->next;
-        do {
-            prim1 = prim1->next;
-            prim1->x1 = 0;
-            prim1->clut = 0;
-            D_8013799C[3] = arg0 + 1;
-        } while (0);
-        break;
-    case 1:
-    case 2:
-    case 5:
-    case 6:
-    case 7:
+        prim1 = prim1->next;
         prim1->x1 = 0;
         prim1->clut = 0;
-        D_8013799C[2] = arg0 + 1;
+        fade.stepFollowup = (s32)fadeMode + 1;
         break;
-    case 4:
+    case FADE_TO_BLACK:
+    case FADE_FROM_BLACK:
+    case FADE_TO_BLACK_SLOW:
+    case FADE_SHOW_MAP:
+    case FADE_HIDE_MAP:
+        prim1->x1 = 0;
+        prim1->clut = 0;
+        fade.step = (s32)fadeMode + 1;
+        break;
+    case FADE_TO_BLACK_FAST:
         prim1->x1 = 0xFF;
         prim1->clut = 1;
-        D_8013799C[2] = 2;
-        do {
-            prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 =
-                prim2->b0 = prim1->x1;
-            prim1->drawMode = prim2->drawMode =
-                DRAW_MENU | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
-        } while (0);
+        fade.step = 2;
+        prim1->r0 = prim1->g0 = prim1->b0 = prim2->r0 = prim2->g0 = prim2->b0 =
+            prim1->x1;
+        prim1->drawMode = prim2->drawMode =
+            DRAW_MENU | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         break;
     }
 }
@@ -167,36 +164,36 @@ void func_801027C4(u32 arg0) {
 #define IFSTATEMENT --prim1->y1 == -1
 #endif
 
-void func_801028AC(bool exitEarly) {
+void UpdateFade(bool skipFollowup) {
     Primitive* prim1;
     Primitive* prim2;
     s32 prim1clut;
 
-    prim1 = &g_PrimBuf[D_8013799C[0]];
+    prim1 = &g_PrimBuf[fade.fadePrim];
     prim2 = prim1->next;
     prim1clut = prim1->clut;
-    switch (D_8013799C[2] - 1) {
-    case -1:
+    switch (fade.step - 1) {
+    case FADE_DONE:
         prim2->drawMode = prim1->drawMode = DRAW_HIDE;
         break;
-    case 1:
-    case 5:
-    case 6:
+    case FADE_TO_BLACK:
+    case FADE_TO_BLACK_SLOW:
+    case FADE_SHOW_MAP:
         PGREY(prim1, 0) = PGREY(prim2, 0) = prim1->x1;
         if (prim1clut == 0) {
-            if (D_8013799C[2] - 1 == 1) {
+            if (fade.step - 1 == 1) {
                 prim1->x1 += 0x20;
-            } else if (D_8013799C[2] - 1 == 6) {
+            } else if (fade.step - 1 == 6) {
                 prim1->x1 += 8;
             } else {
                 prim1->x1 += 2;
             }
-            if ((D_8013799C[2] - 1) == 6) {
+            if ((fade.step - 1) == 6) {
                 if (prim1->x1 >= 0x40) {
                     prim1->clut++;
                     prim1->x1 = 0x40;
                 }
-                func_801026BC(prim1->x1);
+                SetMapOpacity(prim1->x1);
             } else {
                 if (prim1->x1 >= 0x100) {
                     prim1->clut++;
@@ -207,7 +204,7 @@ void func_801028AC(bool exitEarly) {
         prim1->drawMode = prim2->drawMode =
             DRAW_MENU | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         break;
-    case 7:
+    case FADE_HIDE_MAP:
         PGREY(prim1, 0) = PGREY(prim2, 0) = 0x40 - prim1->x1;
         if (prim1clut == 0) {
             prim1->x1 += 8;
@@ -215,15 +212,15 @@ void func_801028AC(bool exitEarly) {
                 prim1->clut++;
                 prim1->x1 = 0x40;
             }
-            func_801026BC(0x40 - prim1->x1);
+            SetMapOpacity(0x40 - prim1->x1);
         } else {
-            func_801026BC(0);
-            D_8013799C[2] = 0;
+            SetMapOpacity(0);
+            fade.step = 0;
         }
         prim1->drawMode = prim2->drawMode =
             DRAW_MENU | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         break;
-    case 2:
+    case FADE_FROM_BLACK:
         PGREY(prim1, 0) = PGREY(prim2, 0) = 0xFF - prim1->x1;
         if (prim1clut == 0) {
             prim1->x1 += 0x20;
@@ -232,24 +229,24 @@ void func_801028AC(bool exitEarly) {
                 prim1->x1 = 0xFF;
             }
         } else {
-            D_8013799C[2] = 0;
+            fade.step = 0;
         }
         prim1->drawMode = prim2->drawMode =
             DRAW_MENU | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         break;
     }
-    if (exitEarly) {
+    if (skipFollowup) {
         return;
     }
 
     prim1 = prim2->next;
     prim2 = prim1->next;
     prim1clut = prim1->clut;
-    switch (D_8013799C[3] - 1) {
-    case -1:
+    switch (fade.stepFollowup - 1) {
+    case FADE_DONE:
         prim2->drawMode = prim1->drawMode = DRAW_HIDE;
         break;
-    case 0:
+    case FADE_NONE:
         PGREY(prim1, 0) = PGREY(prim2, 0) = prim1->x1;
         if (prim1clut == 0) {
             prim1->x1 += 8;
@@ -261,15 +258,18 @@ void func_801028AC(bool exitEarly) {
             prim1->drawMode = prim2->drawMode =
                 DRAW_ABSPOS | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
         } else if (prim1clut == 1) {
-            if (IFSTATEMENT) {
+#ifdef VERSION_PSP
+            if (prim1->y1-- == 0) {
+#else
+            if (--prim1->y1 == -1) {
+#endif
                 prim1->clut++;
             }
-
         } else {
             prim1->x1 -= 4;
             if (prim1->x1 < 0) {
                 prim1->drawMode = prim2->drawMode = DRAW_HIDE;
-                D_8013799C[3] = 0;
+                fade.stepFollowup = 0;
             }
         }
         break;
@@ -285,12 +285,16 @@ void func_801028AC(bool exitEarly) {
             prim1->drawMode = prim2->drawMode =
                 DRAW_ABSPOS | DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
         } else if (prim1clut == 1) {
-            if (IFSTATEMENT) {
+#ifdef VERSION_PSP
+            if (prim1->y1-- == 0) {
+#else
+            if (--prim1->y1 == -1) {
+#endif
                 prim1->clut++;
             }
         } else if (--prim1->x1 < 0) {
             prim1->drawMode = prim2->drawMode = DRAW_HIDE;
-            D_8013799C[3] = 0;
+            fade.stepFollowup = 0;
         }
     }
 }

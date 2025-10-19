@@ -791,6 +791,13 @@ void MenuDrawRect(MenuContext* context, s32 posX, s32 posY, s32 width,
 s32 func_800F62E8(s32 arg0);
 void InitStatsAndGear(bool isDeathTakingItems);
 
+void InitFade(void);
+s32 func_801025F4(void);
+void SetFadeWidth(s32 fadeWidth);
+void SetFadeMode(FadeModes fadeMode);
+void UpdateFade(bool skipFollowup);
+void HideMap(void);
+
 s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action);
 s32 func_800FD664(s32 arg0);
 s32 func_800FD6C4(EquipKind equipTypeFilter);

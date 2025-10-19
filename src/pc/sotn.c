@@ -67,7 +67,7 @@ void LoadGfxAsync(s32 gfxId);
 void PlaySfx(s16 sfxId);
 void func_800EA538(s32 arg0);
 void func_800EA5AC(u16 a, u8 r, u8 g, u8 b);
-void func_801027C4(u32 arg0);
+void SetFadeMode(u32 arg0);
 void func_800EB758(s16 px, s16 py, Entity* e, u8 flags, POLY_GT4* p, u8 flipX);
 bool func_80131F68(void);
 DR_ENV* func_800EDB08(Primitive* prim);
@@ -162,7 +162,7 @@ bool InitGame(struct InitGameParams* params) {
     api.func_800EDB58 = func_800EDB58;
     api.func_800EA538 = func_800EA538;
     api.func_800EA5AC = func_800EA5AC;
-    api.func_801027C4 = func_801027C4;
+    api.SetFadeMode = SetFadeMode;
     api.func_800EB758 = func_800EB758;
     api.CreateEntFactoryFromEntity = CreateEntFactoryFromEntity;
     api.func_80131F68 = func_80131F68;

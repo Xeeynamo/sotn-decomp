@@ -1586,7 +1586,7 @@ void func_80105428(void) {
     case 0x6:
         func_80105408();
         if (D_80137EE0 != 0) {
-            func_801027C4(5);
+            SetFadeMode(FADE_TO_BLACK_SLOW);
             D_801379BC = 0x300;
 
         } else if (D_80137E4C >= 6 && HandleSaveMenu(0) != 0) {
