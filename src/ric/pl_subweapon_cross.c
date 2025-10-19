@@ -61,7 +61,7 @@ void RicEntitySubwpnCrashCross(Entity* self) {
         break;
     case 3:
         if (--self->ext.crashcross.unk84 == 0) {
-            g_api.func_801027C4(0);
+            g_api.SetFadeMode(FADE_NONE);
             left = self->posX.i.hi - self->ext.crashcross.unk7C;
             if (left < 0) {
                 left = 0;

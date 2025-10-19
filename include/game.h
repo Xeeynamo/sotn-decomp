@@ -1222,6 +1222,17 @@ typedef struct {
     /* 80097C44 */ FamiliarStats statsFamiliars[NUM_FAMILIARS];
 } PlayerStatus; /* size=0x334 */
 
+typedef enum {
+    FADE_NONE,
+    FADE_TO_BLACK,
+    FADE_FROM_BLACK,
+    FADE_BLUE_TINT,
+    FADE_TO_BLACK_FAST,
+    FADE_TO_BLACK_SLOW,
+    FADE_SHOW_MAP,
+    FADE_HIDE_MAP,
+} FadeModes;
+
 typedef struct {
     /* 0x00, 8003C9A8 */ s32 cursorMain;
     /* 0x04, 8003C9AC */ s32 cursorRelic;
@@ -1647,7 +1658,7 @@ typedef struct {
     /* 8003C7E0 */ s16 (*func_800EDB58)(u8, s32);
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
     /* 8003C7E8 */ void (*func_800EA5AC)(u32 a, u32 r, u32 g, u32 b);
-    /* 8003C7EC */ void (*func_801027C4)(u32 arg0);
+    /* 8003C7EC */ void (*SetFadeMode)(FadeModes fadeMode);
     // this signature differs from `func_800EB758`. the last
     // argument is 16-bits instead of 8.
     /* 8003C7F0 */ void (*func_800EB758)(

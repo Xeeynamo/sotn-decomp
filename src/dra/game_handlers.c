@@ -554,7 +554,7 @@ void HandlePlay(void) {
         DestroyEntitiesFromIndex(0);
         DestroyAllPrimitives();
         func_800EDAE4();
-        func_801024DC();
+        InitFade();
         if (g_CastleFlags[NO1_WEATHER] & 0x80) {
             g_CastleFlags[NO1_WEATHER] =
                 g_NO1WeatherOptions[rand() & 0xF] + 0x80;
