@@ -122,6 +122,14 @@ files:
           - [0x7E4, palette, D_801807E4, 16]
           - [0x804, palette, D_80180804, 16]
           - [0x824, skip]
+          - [0xCD54, palette, D_8018CD54, 16]
+          - [0xCDB4, palette, D_8018CDB4, 256]
+          - [0xCFB4, palette, D_8018CFB4, 256]
+          - [0xD1B4, palette, D_8018D1B4, 256]
+          - [0xD3B4, palette, D_8018D3B4, 256]
+          - [0xD5B4, palette, D_8018D5B4, 16]
+          - [0xD5D4, palette, D_8018D5D4, 16]
+          - [0xDBD4, skip]
   - target: disks/us/ST/CEN/CEN.BIN
     asset_path: assets/st/cen
     src_path: src/st/cen

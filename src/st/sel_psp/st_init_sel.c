@@ -287,32 +287,32 @@ u8 D_psp_092820C8[] = {
 #include "gen/D_psp_092820C8.h"
 };
 
-u16 D_psp_09283148[] = {
-#include "gen/D_psp_09283148.h"
+u16 D_8018CD54[] = {
+#include "gen/D_8018CD54.h"
 };
 
-u16 D_psp_092831A8[] = {
-#include "gen/D_psp_092831A8.h"
+u16 D_8018CDB4[] = {
+#include "gen/D_8018CDB4.h"
 };
 
-u16 D_psp_092833A8[] = {
-#include "gen/D_psp_092833A8.h"
+u16 D_8018CFB4[] = {
+#include "gen/D_8018CFB4.h"
 };
 
-u16 D_psp_092835A8[] = {
-#include "gen/D_psp_092835A8.h"
+u16 D_8018D1B4[] = {
+#include "gen/D_8018D1B4.h"
 };
 
-u16 D_psp_092837A8[] = {
-#include "gen/D_psp_092837A8.h"
+u16 D_8018D3B4[] = {
+#include "gen/D_8018D3B4.h"
 };
 
-u16 D_psp_092839A8[] = {
-#include "gen/D_psp_092839A8.h"
+u16 D_8018D5B4[] = {
+#include "gen/D_8018D5B4.h"
 };
 
-u16 D_psp_092839C8[] = {
-#include "gen/D_psp_092839C8.h"
+u16 D_8018D5D4[] = {
+#include "gen/D_8018D5D4.h"
 };
 
 void OVL_EXPORT(Update)(void);

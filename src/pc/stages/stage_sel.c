@@ -8,8 +8,6 @@
 
 extern const char* D_801803A8[10];
 
-GfxBank* g_EntityGfxs[] = {NULL, NULL};
-
 // stubs
 RECT D_80182584 = {0};
 RECT D_8018258C = {0};
@@ -27,6 +25,11 @@ s16* D_8018DC30[] = {NULL,      g_FakePal, g_FakePal, g_FakePal,
                      g_FakePal, g_FakePal, NULL};
 s16* D_8018E3B4[] = {NULL,      g_FakePal, g_FakePal, g_FakePal,
                      g_FakePal, g_FakePal, NULL};
+
+u8 D_80192228[4400] = {0};
+u8 D_80193358[3264] = {0};
+u8 D_80194018[4704] = {0};
+u8 D_80195274[4224] = {0};
 
 u16 D_801808E4[256]; // memcard palette
 

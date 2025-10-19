@@ -39,13 +39,13 @@ s16** g_SpriteBanks[] = {
     NULL, NULL,           NULL,           NULL,           NULL,           NULL,
 };
 
-extern u16 D_psp_09283148[0x30];
-extern u16 D_psp_092831A8[0x100];
-extern u16 D_psp_092833A8[0x80];
-extern u16 D_psp_092835A8[0x80];
-extern u16 D_psp_092837A8[0x80];
-extern u16 D_psp_092839A8[0x10];
-extern u16 D_psp_092839C8[0x300];
+extern u16 D_8018CD54[0x30];
+extern u16 D_8018CDB4[0x100];
+extern u16 D_8018CFB4[0x80];
+extern u16 D_8018D1B4[0x80];
+extern u16 D_8018D3B4[0x80];
+extern u16 D_8018D5B4[0x10];
+extern u16 D_8018D5D4[0x300];
 
 static u16 D_801805FC[] = {
 #include "gen/D_801805FC.h"
@@ -53,16 +53,16 @@ static u16 D_801805FC[] = {
 
 static u_long* D_8018061C[] = {
     MAKE_PAL_OP(PAL_BULK_COPY, 0),
-    PAL_BULK(0x2000, D_psp_09283148),
-    PAL_BULK(0x2100, D_psp_092831A8),
+    PAL_BULK(0x2000, D_8018CD54),
+    PAL_BULK(0x2100, D_8018CDB4),
     PAL_TERMINATE(),
 };
 
 static u_long* D_8018063C[] = {
-    MAKE_PAL_OP(PAL_BULK_COPY, 0),    PAL_BULK(0x1960, D_801805FC),
-    PAL_BULK(0x2100, D_psp_092839C8), PAL_BULK(0x2400, D_psp_092833A8),
-    PAL_BULK(0x2480, D_psp_092835A8), PAL_BULK(0x2500, D_psp_092837A8),
-    PAL_BULK(0x2580, D_psp_092839A8), PAL_TERMINATE(),
+    MAKE_PAL_OP(PAL_BULK_COPY, 0), PAL_BULK(0x1960, D_801805FC),
+    PAL_BULK(0x2100, D_8018D5D4),  PAL_BULK(0x2400, D_8018CFB4),
+    PAL_BULK(0x2480, D_8018D1B4),  PAL_BULK(0x2500, D_8018D3B4),
+    PAL_BULK(0x2580, D_8018D5B4),  PAL_TERMINATE(),
 };
 
 static u_long* D_801806A0[] = {
