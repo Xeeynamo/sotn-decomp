@@ -1,4 +1,4 @@
-SEL_g_EntityGfxs = 0x80180760;
+g_EntityGfxs = 0x80180760;
 g_Streams = 0x8018B2EC;
 mdec_iq = 0x801962F4;
 mdec_coef = 0x80196378;

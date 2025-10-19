@@ -8,13 +8,11 @@
 
 extern const char* D_801803A8[10];
 
-void* SEL_g_EntityGfxs[] = {NULL, NULL};
-
 // stubs
 RECT D_80182584 = {0};
 RECT D_8018258C = {0};
 RECT D_801825A4 = {0};
-void* D_8018C404[100] = {NULL};
+u8* D_8018C404[100] = {NULL};
 s8 D_8018BC4A = 0;
 s8 D_8018BC50 = 0;
 
@@ -28,33 +26,13 @@ s16* D_8018DC30[] = {NULL,      g_FakePal, g_FakePal, g_FakePal,
 s16* D_8018E3B4[] = {NULL,      g_FakePal, g_FakePal, g_FakePal,
                      g_FakePal, g_FakePal, NULL};
 
-unsigned short D_80180764[16] = {
-    0x0000, 0x8C63, 0xAD6B, 0xD6B5, 0xFFFF, 0xFFFF, 0xA840, 0xB8C4,
-    0xD9CC, 0x80EE, 0x81F4, 0x8F5F, 0xBFFF, 0x800A, 0x8010, 0x8016,
-};
-unsigned short D_80180784[16] = {
-    0x0000, 0xAD6B, 0xD6B5, 0xFFFF, 0xFFFF, 0xFFFF, 0xB8C4, 0xD9CC,
-    0xE9CC, 0x81F4, 0x8F5F, 0xBFFF, 0xF3FF, 0x800A, 0x8010, 0x8016,
-};
-unsigned short D_801807A4[16] = {
-    0x0000, 0x8421, 0x8C63, 0xAD6B, 0xD6B5, 0xFFFF, 0xA840, 0xB8C4,
-    0xD9CC, 0x81F4, 0x8F5F, 0xBFFF, 0x80EE, 0x800A, 0x8010, 0x8016,
-};
-unsigned short D_801807C4[16] = {
-    0x0000, 0x8421, 0x8C63, 0xAD6B, 0xD6B5, 0xFFFF, 0xA840, 0xB8C4,
-    0xD9CC, 0x8F5F, 0xBFFF, 0x80EE, 0x81F4, 0x800A, 0x8010, 0x8016,
-};
-unsigned short D_801807E4[16] = {
-    0x0000, 0x8421, 0x8C63, 0xAD6B, 0xD6B5, 0xFFFF, 0xA840, 0xB8C4,
-    0xD9CC, 0xBFFF, 0x80EE, 0x81F4, 0x8F5F, 0x800A, 0x8010, 0x8016,
-};
-unsigned short D_80180804[16] = {
-    0x0000, 0x8421, 0x8C63, 0xAD6B, 0xD6B5, 0xFFFF, 0xA840, 0xB8C4,
-    0xD9CC, 0x80EE, 0x81F4, 0x8F5F, 0xBFFF, 0x800A, 0x8010, 0x8016,
-};
+u8 D_80192228[4400] = {0};
+u8 D_80193358[3264] = {0};
+u8 D_80194018[4704] = {0};
+u8 D_80195274[4224] = {0};
+
 u16 D_801808E4[256]; // memcard palette
 
-const char D_801ABF9C[] = "MDEC_rest:bad option(%d)\n";
 const char D_801ABFB8[] = "MDEC_in_sync";
 const char D_801ABFC8[] = "MDEC_out_sync";
 const char D_801ABFD8[] = "DMA=(%d,%d), ADDR=(0x%08x->0x%08x)";
@@ -84,13 +62,13 @@ s32 g_MainMenuCursor;
 char g_InputSaveName[12];
 s32 D_801D6B24;
 
-extern Overlay g_StageSel;
+extern Overlay OVL_EXPORT(Overlay);
 
 s32 LoadFileSim(s32 fileId, s32 type);
 
 static bool g_WereStringsInitialised = false;
 void InitStageSEL(Overlay* o) {
-    memcpy(o, &g_StageSel, sizeof(Overlay));
+    memcpy(o, &OVL_EXPORT(Overlay), sizeof(Overlay));
     if (!g_WereStringsInitialised) {
         g_WereStringsInitialised = true;
         for (int i = 0; i < LEN(D_80180128); i++) {

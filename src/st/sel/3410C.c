@@ -136,7 +136,7 @@ void HandleTitleScreen(void) {
                     prim->drawMode = DRAW_DEFAULT;
                 }
             }
-            if (i < 15 || i > 16) {
+            if ((i != 15) && (i != 16)) {
                 continue;
             }
             if (i == 15) {

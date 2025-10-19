@@ -80,9 +80,7 @@ const char* D_800A2D48[] = {
 #endif
 
 #if defined(VERSION_US)
-static const char* D_800A2D64[] = {
-    "ＡＴＤＥＦ",
-};
+static const char* D_800A2D64 = "ＡＴＤＥＦ";
 
 static const char* D_800A2D68[] = {
 #if !defined(VERSION_PC)
@@ -94,11 +92,11 @@ static const char* D_800A2D68[] = {
 #endif
 };
 #elif defined(VERSION_HD)
-static const char* D_800A2D10[] = {"装備技システム短剣必殺使攻撃力防"};
+static const char* D_800A2D10 = "装備技システム短剣必殺使攻撃力防";
 
-static const char* D_800A2D14[] = {"御魔導器拳こ一覧棒両手食物爆弾盾"};
+static const char* D_800A2D14 = "御魔導器拳こ一覧棒両手食物爆弾盾";
 
-static const char* D_800A2D18[] = {"投射薬ん右左武兜鎧マントその他い"};
+static const char* D_800A2D18 = "投射薬ん右左武兜鎧マントその他い";
 
 static const char* D_800A2D68[] = {
     _S2_HD("攻撃力"),     //
@@ -3439,16 +3437,16 @@ block_4:
             func_800F84CC();
             func_801027C4(2);
 #if defined(VERSION_US)
-            func_800F98AC(*D_800A2D64, 0);
+            func_800F98AC(D_800A2D64, 0);
 #elif defined(VERSION_PSP)
-            func_800F98AC(*D_800A2D10, 0);
-            func_800F98AC(*D_800A2D14, 0x100);
-            func_800F98AC(*D_800A2D18, 1);
-            func_800F98AC(*D_800A2D58, 0x101);
+            func_800F98AC(D_800A2D10, 0);
+            func_800F98AC(D_800A2D14, 0x100);
+            func_800F98AC(D_800A2D18, 1);
+            func_800F98AC(D_800A2D58, 0x101);
 #elif defined(VERSION_HD)
-            func_800F98AC(*D_800A2D10, 0);
-            func_800F98AC(*D_800A2D14, 0x100);
-            func_800F98AC(*D_800A2D18, 1);
+            func_800F98AC(D_800A2D10, 0);
+            func_800F98AC(D_800A2D14, 0x100);
+            func_800F98AC(D_800A2D18, 1);
 #endif
             func_800FABEC(MENU_DG_MAIN);
             func_800FABEC(MENU_DG_BG);

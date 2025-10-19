@@ -59,33 +59,7 @@ static char* D_801804D8[] = {
     NULL,
 };
 
-void func_psp_09240A88(void) {
-    switch (g_GameEngineStep) {
-    case Engine_Init:
-        if (g_IsUsingCd) {
-            break;
-        }
-        g_IsTimeAttackUnlocked = 1;
-        D_8003C728 = 1;
-        g_CurrentStream = 0;
-        g_GameEngineStep++;
-        break;
-
-    case Engine_Normal:
-        func_90FFAB8();
-        if (D_8003C728) {
-            break;
-        }
-        g_IsTimeAttackUnlocked = 0;
-        g_CurrentStream = 0;
-        func_801B18F4();
-        g_GameState = Game_Title;
-        g_GameEngineStep = Engine_Init;
-        break;
-    }
-}
-
-void func_psp_09240B58(void) {
+void HandleTitleScreen(void) {
     RECT rect;
     Primitive* prim;
     Primitive* prim15;
@@ -401,7 +375,7 @@ void func_psp_09240B58(void) {
         g_StageId = D_801804D4[D_800987B4];
         func_801B1F4C(1);
         func_90F0DD8(D_801804D8[D_800987B4], 1);
-        if (g_pads[0].tapped & (D_psp_08B42050 | 8)) {
+        if (g_pads[0].tapped & (D_psp_08B42050 | PAD_START)) {
             g_api.PlaySfx(SFX_START_SLAM_B);
             g_GameEngineStep++;
         }
@@ -461,7 +435,7 @@ void func_psp_09240B58(void) {
             prim->x0 = 0x78;
             prim->y0 = (D_psp_09285E70 << 5) + 0x9C;
         }
-        if (g_pads[0].tapped & 0x40) {
+        if (g_pads[0].tapped & PAD_DOWN) {
             D_psp_09285E70++;
             if (D_psp_09285E70 >= 2) {
                 D_psp_09285E70 = 1;
@@ -469,7 +443,7 @@ void func_psp_09240B58(void) {
                 g_api.PlaySfx(SFX_UI_MOVE);
             }
         }
-        if (g_pads[0].tapped & 0x10) {
+        if (g_pads[0].tapped & PAD_UP) {
             D_psp_09285E70--;
             if (D_psp_09285E70 < 0) {
                 D_psp_09285E70 = 0;
@@ -477,7 +451,7 @@ void func_psp_09240B58(void) {
                 g_api.PlaySfx(SFX_UI_MOVE);
             }
         }
-        if (g_pads[0].tapped & (D_psp_08B42050 | 8)) {
+        if (g_pads[0].tapped & (D_psp_08B42050 | PAD_START)) {
             g_api.PlaySfx(SFX_START_SLAM_B);
             g_GameEngineStep = 6;
         }

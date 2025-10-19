@@ -17,7 +17,7 @@ static s32 D_801BB004;
 static s32 D_801BB008;
 static s32 D_801BB00C;
 
-void func_psp_09241BF8(void) {
+void func_801B2D6C(void) {
     MemcardInit();
     D_801BAFDC = 0;
     D_801BAFE0 = 0;
