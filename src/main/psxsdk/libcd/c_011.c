@@ -33,7 +33,7 @@ extern s32 D_80098894;
 void StCdInterrupt(void) {
     volatile s16 subroutine_arg8[4];
     CdlLOC loc;
-    Result_t result;
+    u_char result[8];
     u32* var_a1;
     s32 var_t0;
     u32* var_a0;
@@ -52,7 +52,7 @@ void StCdInterrupt(void) {
         D_80032EB0 = 1;
         return;
     }
-    if (CdReady(1, &result) == CdlDiskError) {
+    if (CdReady(1, result) == CdlDiskError) {
         return;
     }
     subroutine_arg8[1] = result[0];

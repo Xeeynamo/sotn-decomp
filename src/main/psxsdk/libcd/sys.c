@@ -67,9 +67,9 @@ char* CdIntstr(u8 intr) {
     return D_80032B48[intr];
 }
 
-int CdSync(int mode, Result_t* result) { return CD_sync(mode, result); }
+int CdSync(int mode, u_char* result) { return CD_sync(mode, result); }
 
-int CdReady(int mode, Result_t* result) { return CD_ready(mode, result); }
+int CdReady(int mode, u_char* result) { return CD_ready(mode, result); }
 
 CdlCB CdSyncCallback(CdlCB func) {
     CdlCB old = CD_cbsync;
@@ -83,7 +83,7 @@ CdlCB CdReadyCallback(CdlCB func) {
     return old;
 }
 
-static inline cd_cw(u8 com, u8* param, Result_t* result, s32 arg3) {
+static inline cd_cw(u8 com, u8* param, u_char* result, s32 arg3) {
     CdlCB old = CD_cbsync;
     int count = 4;
 
@@ -105,13 +105,13 @@ static inline cd_cw(u8 com, u8* param, Result_t* result, s32 arg3) {
     return -1;
 }
 
-int CdControl(u8 com, u8* param, Result_t* result) {
+int CdControl(u8 com, u8* param, u_char* result) {
     return cd_cw(com, param, result, 0) == 0;
 }
 
 int CdControlF(u8 com, u8* param) { return cd_cw(com, param, NULL, 1) == 0; }
 
-int CdControlB(u8 com, u8* param, Result_t* result) {
+int CdControlB(u8 com, u8* param, u_char* result) {
     if (cd_cw(com, param, result, 0)) {
         return 0;
     }

@@ -5,7 +5,7 @@
 void data_ready_callback();
 extern s32 D_8003C768;
 
-static inline void StCdInterrupt2(u_char intr, Result_t* result) {
+static inline void StCdInterrupt2(u_char intr, u_char* result) {
     StCdInterrupt();
 }
 

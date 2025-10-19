@@ -3,15 +3,15 @@
 #include <kernel.h>
 #include "libcd_internal.h"
 
-static inline void def_cbsync(u_char intr, Result_t* result) {
+static inline void def_cbsync(u_char intr, u_char* result) {
     DeliverEvent(HwCdRom, EvSpCOMP);
 }
 
-static inline void def_cbready(u_char intr, Result_t* result) {
+static inline void def_cbready(u_char intr, u_char* result) {
     DeliverEvent(HwCdRom, EvSpDR);
 }
 
-static inline void def_cbread(u_char intr, Result_t* result) {
+static inline void def_cbread(u_char intr, u_char* result) {
     DeliverEvent(HwCdRom, EvSpDR);
 }
 
