@@ -9,6 +9,8 @@
 
 #define OVL_EXPORT(x) CAT_##x
 
+#include "../pfn_entity_update.h"
+
 enum OVL_EXPORT(Entities) {
     E_NONE,
     E_UNK_BREAKABLE,         // EntityUnkBreakable
@@ -38,11 +40,11 @@ enum OVL_EXPORT(Entities) {
     E_UNK_19,                // func_us_801C56A0
     E_UNK_1A,                // func_us_801CA13C
     E_UNK_1B,                // func_us_801B732C
-    E_UNK_1C,                // func_us_801B852C
-    E_UNK_1D,                // func_us_801B7FE0
-    E_UNK_1E,                // func_us_801B7F2C
+    E_SPIKES,                // func_us_801B852C
+    E_SPIKES_PARTS,          // func_us_801B7FE0
+    E_SPIKES_DUST,           // func_us_801B7F2C
     E_UNK_1F,                // func_us_801B7B64
-    E_UNK_20,                // func_us_801B86B0
+    E_SPIKES_DAMAGE,         // func_us_801B86B0
     E_UNK_21,                // func_us_801B8AD0
     E_UNK_22,                // func_us_801B87E8
     E_UNK_23,                // func_us_801BACF4
