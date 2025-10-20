@@ -186,7 +186,6 @@ extern u8 D_80182414[];
 extern s32 D_80182440[];
 extern u8 D_80182454[];
 extern u16 D_80182458[];
-extern u8 D_8018258C[];
 extern u8 D_80182594[];
 extern u8 D_801825A8[];
 extern u8 D_801825BC[];

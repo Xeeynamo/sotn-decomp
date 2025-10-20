@@ -180,7 +180,6 @@ set(SOURCE_FILES_DRA
     src/dra/42398.c
     src/dra/game_handlers.c
     src/dra/pads.c
-    src/dra/save_mgr_pre.c
     src/dra/save_mgr.c
     src/dra/4A538.c
     src/dra/4AEA4.c

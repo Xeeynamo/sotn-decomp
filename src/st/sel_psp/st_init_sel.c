@@ -2,6 +2,8 @@
 #include "../sel/sel.h"
 #include <cutscene.h>
 
+extern u8 D_psp_08D39D3C[];
+
 // BSS
 u8* D_psp_09285BA8;
 u8* D_psp_09285BA0;
@@ -51,7 +53,7 @@ static u8 credits_data_en[] = {
 #include "credits_data.h"
 };
 
-static u8* D_8018C404 = (u8*)0x08D39D3C;
+static u8* D_8018C404 = D_psp_08D39D3C;
 
 static u16 D_psp_0924EA78[] = {
 #include "gen/D_psp_0924EA78.h"
@@ -271,20 +273,20 @@ u8 gfx_portrait_richter[] = {
 #include "gen/gfx_portrait_richter.h"
 };
 
-u8 D_psp_0927F078[] = {
-#include "gen/D_psp_0927F078.h"
+u8 D_80192228[] = {
+#include "gen/D_80192228.h"
 };
 
-u8 D_psp_092801A8[] = {
-#include "gen/D_psp_092801A8.h"
+u8 D_80193358[] = {
+#include "gen/D_80193358.h"
 };
 
-u8 D_psp_09280E68[] = {
-#include "gen/D_psp_09280E68.h"
+u8 D_80194018[] = {
+#include "gen/D_80194018.h"
 };
 
-u8 D_psp_092820C8[] = {
-#include "gen/D_psp_092820C8.h"
+u8 D_80195274[] = {
+#include "gen/D_80195274.h"
 };
 
 u16 D_8018CD54[] = {

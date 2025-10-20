@@ -16,23 +16,6 @@ u8* D_8018C404[100] = {NULL};
 s8 D_8018BC4A = 0;
 s8 D_8018BC50 = 0;
 
-s16 g_FakePal[0x100] = {0};
-s16* D_8018DBD4[] = {NULL,      g_FakePal, g_FakePal, g_FakePal,
-                     g_FakePal, g_FakePal, NULL};
-s16* D_8018EFB4[] = {NULL,      g_FakePal, g_FakePal, g_FakePal,
-                     g_FakePal, g_FakePal, NULL};
-s16* D_8018DC30[] = {NULL,      g_FakePal, g_FakePal, g_FakePal,
-                     g_FakePal, g_FakePal, NULL};
-s16* D_8018E3B4[] = {NULL,      g_FakePal, g_FakePal, g_FakePal,
-                     g_FakePal, g_FakePal, NULL};
-
-u8 D_80192228[4400] = {0};
-u8 D_80193358[3264] = {0};
-u8 D_80194018[4704] = {0};
-u8 D_80195274[4224] = {0};
-
-u16 D_801808E4[256]; // memcard palette
-
 const char D_801ABFB8[] = "MDEC_in_sync";
 const char D_801ABFC8[] = "MDEC_out_sync";
 const char D_801ABFD8[] = "DMA=(%d,%d), ADDR=(0x%08x->0x%08x)";

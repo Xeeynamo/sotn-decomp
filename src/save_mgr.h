@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "memcard.h"
 
-static s32 g_MemcardRetryCount;
-static s32 g_MemcardFd;
-
 void SetupEvents(void) {
     EnterCriticalSection();
     g_EvSwCardEnd = OpenEvent(SwCARD, EvSpIOE, EvMdNOINTR, NULL);
@@ -370,29 +367,13 @@ s32 MemcardFormat(s32 nPort, s32 nCard) {
 void GetSavePalette(u8* dst, s32 palIdx) {
     u16* dst_u16 = (u16*)dst;
     s32 i;
-    u16* src = g_saveIconPal0;
+    u16* src = g_saveIconPal;
 
     src += palIdx * 16;
     for (i = 0; i < COLORS_PER_PAL; i++) {
         *dst_u16++ = *src++;
     }
 }
-extern u8 g_saveIcon0[];
-extern u8 g_saveIcon1[];
-extern u8 g_saveIcon2[];
-extern u8 g_saveIcon3[];
-extern u8 g_saveIcon4[];
-extern u8 g_saveIcon5[];
-extern u8 g_saveIcon6[];
-extern u8 g_saveIcon7[];
-extern u8 g_saveIcon8[];
-extern u8 g_saveIcon9[];
-extern u8 g_saveIcon10[];
-extern u8 g_saveIcon11[];
-extern u8 g_saveIcon12[];
-extern u8 g_saveIcon13[];
-extern u8 g_saveIcon14[];
-extern u8 g_saveIcon15[];
 
 u8* g_saveIconTexture[] = {
     g_saveIcon0,  g_saveIcon1,  g_saveIcon2,  g_saveIcon3,

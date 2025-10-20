@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "game.h"
 
+extern u16 g_saveIconPal[0x100];
+
 extern s16* D_8018DBD4[];
 extern s16* D_8018EFB4[];
 extern s16* D_8018DC30[];
 extern s16* D_8018E3B4[];
+
 s16** g_SpriteBanks[] = {
     NULL, D_8018DBD4, D_8018EFB4, D_8018DC30, D_8018E3B4, NULL, NULL, NULL,
     NULL, NULL,       NULL,       NULL,       NULL,       NULL, NULL, NULL,
@@ -13,18 +16,17 @@ s16** g_SpriteBanks[] = {
 
 extern u16 D_8018CD54[0x30];
 extern u16 D_8018CDB4[0x100];
-extern u16 D_8018D5D4[0x300];
 extern u16 D_8018CFB4[0x80];
 extern u16 D_8018D1B4[0x80];
 extern u16 D_8018D3B4[0x80];
 extern u16 D_8018D5B4[0x10];
+extern u16 D_8018D5D4[0x300];
 extern u16 D_80180764[0x10];
 extern u16 D_80180784[0x10];
 extern u16 D_801807A4[0x10];
 extern u16 D_801807C4[0x10];
 extern u16 D_801807E4[0x10];
 extern u16 D_80180804[0x10];
-extern u16 D_801808E4[0x100];
 
 static u16 D_801805FC[] = {
 #include "gen/D_801805FC.h"
@@ -77,13 +79,16 @@ static u_long* D_801806D8[] = {
 
 static u_long* D_801806F8[] = {
     MAKE_PAL_OP(PAL_BULK_COPY, 0),
-    PAL_BULK(0x2200, D_801808E4),
+    PAL_BULK(0x2200, g_saveIconPal),
     PAL_TERMINATE(),
 };
 
 u_long* g_Cluts[] = {
-    D_8018061C, D_801806A0, D_801806C0, D_801806D8,
-    D_801806F8, D_8018063C, D_8018068C,
+    (u_long*)D_8018061C, (u_long*)D_801806A0, (u_long*)D_801806C0,
+    (u_long*)D_801806D8, (u_long*)D_801806F8, (u_long*)D_8018063C,
+#ifndef VERSION_PSP
+    (u_long*)D_8018068C,
+#endif
 };
 
 extern u8 D_80192228[];
@@ -100,28 +105,4 @@ u_long* D_80180728[] = {
     GFX_TERMINATE(),
 };
 
-GfxBank* g_EntityGfxs[] = {D_80180728};
-
-u16 D_80180764[] = {
-#include "gen/D_80180764.h"
-};
-
-u16 D_80180784[] = {
-#include "gen/D_80180784.h"
-};
-
-u16 D_801807A4[] = {
-#include "gen/D_801807A4.h"
-};
-
-u16 D_801807C4[] = {
-#include "gen/D_801807C4.h"
-};
-
-u16 D_801807E4[] = {
-#include "gen/D_801807E4.h"
-};
-
-u16 D_80180804[] = {
-#include "gen/D_80180804.h"
-};
+GfxBank* g_EntityGfxs[] = {(GfxBank*)D_80180728};
