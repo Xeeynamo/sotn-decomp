@@ -9,7 +9,8 @@
 #ifdef VERSION_US
 static
 #endif
-    void CutsceneUnk1(void) {
+    void
+    CutsceneUnk1(void) {
     g_Dialogue.nextCharX = CUTSCENE_UNK1_NEXT_X;
     g_Dialogue.nextCharY = 0;
     g_Dialogue.nextCharTimer = 0;
