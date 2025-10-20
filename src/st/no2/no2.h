@@ -58,7 +58,7 @@ enum OVL_EXPORT(Entities) {
     E_3D_BACKGROUND_HOUSE, // Entity3DBackgroundHouse
     E_3D_HOUSE_SPAWNER,    // Entity3DHouseSpawner
     E_UNK_20,              // func_us_801B4DA4
-    E_UNK_21,              // EntitySpikes
+    E_SPIKES,              // EntitySpikes
     E_SPIKES_PARTS,        // EntitySpikesParts
     E_SPIKES_DUST,         // EntitySpikesDust
     E_UNK_24,              // func_us_801B5FB8
