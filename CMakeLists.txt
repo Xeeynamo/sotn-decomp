@@ -307,6 +307,7 @@ set(SOURCE_FILES_STAGE_SEL
     src/st/sel/2C048.c
     src/st/sel/318CC.c
     src/st/sel/32D6C.c
+    src/st/sel/34048.c
     src/st/sel/3410C.c
     src/st/sel/34B30.c
     src/st/sel/cutscene.c

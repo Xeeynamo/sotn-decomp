@@ -55,13 +55,13 @@ s32 D_psp_091CDD50;
 bool D_psp_091CDD48;
 s32 D_psp_091CDD40;
 
-char* D_800A2D10[] = {"装備技システム短剣必殺使攻撃力防"};
+static char* D_800A2D10 = "装備技システム短剣必殺使攻撃力防";
 
-char* D_800A2D14[] = {"御魔導器拳こ一覧棒両手食物爆弾盾"};
+static char* D_800A2D14 = "御魔導器拳こ一覧棒両手食物爆弾盾";
 
-char* D_800A2D18[] = {"投射薬ん右左武兜鎧マントその他い"};
+static char* D_800A2D18 = "投射薬ん右左武兜鎧マントその他い";
 
-char* D_800A2D58[] = {"再開中断終了決定戻る　　　　　　"};
+static char* D_800A2D58 = "再開中断終了決定戻る　　　　　　";
 
 char* D_psp_09147FD8[] = {
     _S("ATT"),
@@ -3559,7 +3559,7 @@ block_4:
             break;
         }
         SetGPUBuffRGBZero();
-        func_80102628(0x180);
+        SetFadeWidth(DISP_MENU_W);
         SetMenuDisplayBuffer();
         func_800FAC48();
         D_800973EC = 1;
@@ -3571,18 +3571,18 @@ block_4:
             D_80097910 = 0;
             func_800F6A48();
             func_800F84CC();
-            func_801027C4(2);
+            SetFadeMode(FADE_FROM_BLACK);
 #if defined(VERSION_US)
-            func_800F98AC(*D_800A2D64, 0);
+            func_800F98AC(D_800A2D64, 0);
 #elif defined(VERSION_PSP)
-            func_800F98AC(*D_800A2D10, 0);
-            func_800F98AC(*D_800A2D14, 0x100);
-            func_800F98AC(*D_800A2D18, 1);
-            func_800F98AC(*D_800A2D58, 0x101);
+            func_800F98AC(D_800A2D10, 0);
+            func_800F98AC(D_800A2D14, 0x100);
+            func_800F98AC(D_800A2D18, 1);
+            func_800F98AC(D_800A2D58, 0x101);
 #elif defined(VERSION_HD)
-            func_800F98AC(*D_800A2D10, 0);
-            func_800F98AC(*D_800A2D14, 0x100);
-            func_800F98AC(*D_800A2D18, 1);
+            func_800F98AC(D_800A2D10, 0);
+            func_800F98AC(D_800A2D14, 0x100);
+            func_800F98AC(D_800A2D18, 1);
 #endif
             func_800FABEC(MENU_DG_MAIN);
             func_800FABEC(MENU_DG_BG);
@@ -3592,12 +3592,12 @@ block_4:
         }
         break;
     case MENU_STEP_EXIT_BEGIN:
-        func_801027C4(1);
+        SetFadeMode(FADE_TO_BLACK);
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_4:
         if (func_801025F4()) {
-            func_80102628(0x100);
+            SetFadeWidth(DISP_STAGE_W);
             SetStageDisplayBuffer();
             func_800FAC48();
             func_800EB6B4();
@@ -3718,7 +3718,7 @@ block_4:
         if (!func_80133950()) {
             break;
         }
-        func_801027C4(2);
+        SetFadeMode(FADE_FROM_BLACK);
         g_MenuStep++;
 #if defined(VERSION_PSP)
         if (D_psp_091CDD48) {
@@ -4148,7 +4148,7 @@ block_4:
         break;
     case MENU_STEP_UNK_32:
         if (func_801025F4()) {
-            func_80102628(0x100);
+            SetFadeWidth(0x100);
             SetStageDisplayBuffer();
             func_800FAC48();
             g_MenuStep++;
@@ -4172,14 +4172,14 @@ block_4:
             func_801073C0();
             g_CdStep = CdStep_None;
             SetGPUBuffRGBZero();
-            func_80102628(0x180);
+            SetFadeWidth(DISP_MENU_W);
             SetMenuDisplayBuffer();
             func_800FAC48();
             g_MenuStep++;
         }
         break;
     case MENU_STEP_UNK_36:
-        func_801027C4(2);
+        SetFadeMode(FADE_FROM_BLACK);
         func_800F9808(2);
         id = g_Status.spells[g_MenuNavigation.cursorSpells];
         id ^= SPELL_FLAG_KNOWN;
@@ -4341,7 +4341,7 @@ void DrawHudSubweapon2(void) {
     switch (g_MenuStep) {
     case MENU_STEP_INIT:
         func_800F84CC();
-        func_800F98AC(*D_800A2D58, 0x101);
+        func_800F98AC(D_800A2D58, 0x101);
         func_800FB9BC();
         D_psp_091CDD50 = 0;
         g_MenuNavigation.cursorMain = 0;

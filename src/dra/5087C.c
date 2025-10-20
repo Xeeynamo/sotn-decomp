@@ -1370,10 +1370,10 @@ void RunMainEngine(void) {
         g_api.o.Update();
         g_api.o.Update();
         func_800F0940();
-        func_801024DC();
+        InitFade();
         if ((D_80097C98 != 4) && (D_80097C98 != 5) && (D_80097C98 != 6)) {
-            func_801027C4(4);
-            func_801027C4(2);
+            SetFadeMode(FADE_TO_BLACK_FAST);
+            SetFadeMode(FADE_FROM_BLACK);
         }
         D_80097C98 = 0;
         if (D_8003C730 == 1) {
@@ -1512,7 +1512,7 @@ void RunMainEngine(void) {
         }
         i = func_800F0CD8(1);
         if (i != 0) {
-            func_801027A4();
+            HideMap();
             if (i > 1) {
                 D_8006C374 = i - 2;
                 g_GameStep = Play_PrepareNextStage;
@@ -1602,7 +1602,7 @@ void RunMainEngine(void) {
             }
         }
         func_80102D70();
-        func_801028AC(0);
+        UpdateFade(false);
         DrawHudSubweapon();
         func_800E414C();
         if (D_80137598) {
@@ -1641,7 +1641,7 @@ void RunMainEngine(void) {
             break;
         }
         if ((g_pads[0].tapped & PAD_START) && CAN_PAUSE) {
-            func_801027A4();
+            HideMap();
             if ((g_StageId == STAGE_ST0) ||
                 (g_PlayableCharacter != PLAYER_ALUCARD)) {
 #if !defined(VERSION_PSP)
@@ -1666,7 +1666,7 @@ void RunMainEngine(void) {
                 PlaySfx(SET_RELEASE_RATE_LOW_22_23);
                 PlaySfx(SET_RELEASE_RATE_LOW_20_21);
                 PlaySfx(SET_PAUSE_SFX_SCRIPTS);
-                func_801027C4(1);
+                SetFadeMode(FADE_TO_BLACK);
                 g_GameEngineStep++; // Goes from 1 to 2, into Engine_Menu
                 g_MenuStep = MENU_STEP_INIT;
 #if defined(VERSION_PSP)
@@ -1677,7 +1677,7 @@ void RunMainEngine(void) {
         }
         if ((g_pads[0].tapped & PAD_SELECT) && (g_StageId != STAGE_ST0) &&
             CAN_PAUSE) {
-            func_801027C4(6);
+            SetFadeMode(FADE_SHOW_MAP);
             D_800974A4 = 1;
             g_GameEngineStep = Engine_Map;
         }
@@ -1700,24 +1700,24 @@ void RunMainEngine(void) {
 #endif
         }
 #endif
-        func_801028AC(1);
+        UpdateFade(true);
         break;
     case Engine_Menu:
         MenuHandle();
-        func_801028AC(1);
+        UpdateFade(true);
         break;
     case Engine_Map:
         if (g_canRevealMap) {
             DrawMapCursor();
         }
         if (g_pads[0].tapped & (PAD_START | PAD_SELECT)) {
-            func_801027C4(7);
+            SetFadeMode(FADE_HIDE_MAP);
             D_800974A4 = 0;
             g_GameEngineStep = Engine_Normal;
         }
         g_api.o.UpdateStageEntities();
         func_80102D70();
-        func_801028AC(1);
+        UpdateFade(true);
         break;
     case Engine_3:
         switch (g_MenuStep) {
@@ -1726,7 +1726,7 @@ void RunMainEngine(void) {
                 func_800EA5AC(0xFF, 0xFF, 0xFF, 0xFF);
                 g_MenuStep = MENU_STEP_EXIT_BEGIN;
             } else {
-                func_801027C4(1);
+                SetFadeMode(FADE_TO_BLACK);
                 g_MenuStep++;
             }
             break;
@@ -1908,7 +1908,7 @@ void RunMainEngine(void) {
             break;
         case MENU_STEP_EXIT_4:
             if (!func_800EB720()) {
-                func_801027C4(2);
+                SetFadeMode(FADE_FROM_BLACK);
                 g_MenuStep++;
             }
             break;
@@ -1918,8 +1918,8 @@ void RunMainEngine(void) {
             }
             break;
         }
-        func_801028AC(1);
-        func_801028AC(1);
+        UpdateFade(true);
+        UpdateFade(true);
         break;
     case 0x5:
         if (g_unkGraphicsStruct.unk20 != 0) {
@@ -2005,7 +2005,7 @@ void RunMainEngine(void) {
             SetGPUBuffRGBZero();
             break;
         }
-        func_801028AC(0);
+        UpdateFade(false);
         break;
     }
 }

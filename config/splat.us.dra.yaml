@@ -184,8 +184,8 @@ segments:
       # - [0x3CBC4, .rodata, 5D5BC] # func_800FD7C0
       # - [0x3CBDC, .rodata, 5D5BC] # GetStatusAilmentTimer
       - [0x3CBF4, .rodata, 5F60C] # g_CheatCodes
-      - [0x3CC0C, .rodata, 624DC] # func_801027C4
-      # - [0x3CC2C, .rodata, 624DC] # func_801028AC
+      - [0x3CC0C, .rodata, 624DC] # SetFadeMode
+      # - [0x3CC2C, .rodata, 624DC] # UpdateFade
       # - [0x3CC54, .rodata, 624DC] # func_80102D70
       - [0x3CC70, .rodata, 62DEC] # HandleSaveMenu
       # - [0x3CDC0, .rodata, 62DEC] # func_80103ED4
