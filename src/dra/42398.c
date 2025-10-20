@@ -637,7 +637,7 @@ s32 LoadVabData(void) {
     LOAD_VAB(1, aPbav_0, g_VabAddrs[1], D_8017D350, vab1Len);
     LOAD_VAB(2, aPbav_1, g_VabAddrs[2], D_801A9C80, vab2Len);
     LOAD_VAB(3, aPbav_2, g_VabAddrs[3], D_8018B4E0, vab3Len);
-    func_80131EBC(aPqes, SFX_UNK_618);
+    func_80131EBC(aPqes, 0x618);
     func_80131EBC(aPqes_0, 0x201);
     func_80131EBC(aPqes_1, 0x205);
     return 0;
