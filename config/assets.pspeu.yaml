@@ -454,6 +454,8 @@ files:
           - [0x309A0, cutscene, cutscene_data_ferryman_left_ge]
           - [0x30A08, cutscene, cutscene_data_ferryman_left_en]
           - [0x30A68, skip]
+          - [0x37EE0, rawgfx, gfx_portrait_ferryman, 48, 72, 8]
+          - [0x38C60, skip]
           - [0x66460, cmpgfx, stage_name_en, 128, 64, 4]
           - [0x66748, cmpgfx, stage_name_it, 128, 64, 4]
           - [0x669E0, cmpgfx, stage_name_sp, 128, 64, 4]
