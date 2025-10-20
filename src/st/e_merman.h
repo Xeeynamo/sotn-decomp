@@ -79,7 +79,7 @@ void EntityMerman(Entity* self) {
     }
 
     if ((self->flags & FLAG_DEAD) && (self->step < MERMAN_DYING)) {
-        PlaySfxPositional(0x71D);
+        PlaySfxPositional(SFX_MERMAN_DEATH);
         self->hitboxState = 0;
         if (self->step == MERMAN_LUNGE) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
