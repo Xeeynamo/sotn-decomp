@@ -302,7 +302,10 @@ set(SOURCE_FILES_TT_002
 set(SOURCE_FILES_STAGE_SEL
     src/pc/stages/stage_sel.c
     src/st/sel/banks.c
+    src/st/sel/764.c
     src/st/sel/CD54.c
+    src/st/sel/sprites.c
+    src/st/sel/F9A8.c
     src/st/sel/2C048.c
     src/st/sel/318CC.c
     src/st/sel/32D6C.c
