@@ -8,6 +8,7 @@
 
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
+    PAL_SPIKES_DUST = 0x161,
     PAL_SKELERANG = 0x200,
     PAL_UNK_203 = 0x203,
     PAL_VALHALLA_KNIGHT = 0x207,
@@ -57,9 +58,9 @@ enum OVL_EXPORT(Entities) {
     E_3D_BACKGROUND_HOUSE, // Entity3DBackgroundHouse
     E_3D_HOUSE_SPAWNER,    // Entity3DHouseSpawner
     E_UNK_20,              // func_us_801B4DA4
-    E_UNK_21,              // func_us_801B5750
-    E_ID_22,               // func_us_801B5368
-    E_ID_23,               // func_us_801B52B4
+    E_UNK_21,              // EntitySpikes
+    E_SPIKES_PARTS,        // EntitySpikesParts
+    E_SPIKES_DUST,         // EntitySpikesDust
     E_UNK_24,              // func_us_801B5FB8
     E_UNK_25,              // func_us_801B68EC
     E_UNK_26,              // func_us_801B65A4
@@ -73,7 +74,7 @@ enum OVL_EXPORT(Entities) {
     E_BLOOD_DRIPS,         // EntityBloodDrips
     E_BLOOD_SPLATTER,      // EntityBloodSplatter
     E_UNK_30,              // func_us_801B72E8
-    E_ID_31,               // func_us_801B5948
+    E_SPIKES_DAMAGE,       // EntitySpikesDamage
     E_ID_32,               // func_us_801B7580
     E_UNK_33,              // func_us_801B7980
     E_VALHALLA_KNIGHT,     // EntityValhallaKnight
@@ -99,7 +100,7 @@ extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 extern EInit g_EInitBreakable;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
-extern EInit D_us_80180844;
+extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
@@ -107,7 +108,7 @@ extern EInit g_EInitCommon;
 extern EInit g_EInitDamageNum;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
-extern EInit D_us_801808A4;
+extern EInit g_EInitEnvironment;
 extern EInit D_us_801808B0;
 extern EInit g_EInitOwlKnight;
 extern EInit g_EInitOwlKnightSword;

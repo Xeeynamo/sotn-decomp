@@ -32,9 +32,9 @@ void func_us_801B4210(Entity* self);
 void Entity3DBackgroundHouse(Entity* self);
 void Entity3DHouseSpawner(Entity* self);
 void func_us_801B4DA4(Entity* self);
-void func_us_801B5750(Entity* self);
-void func_us_801B5368(Entity* self);
-void func_us_801B52B4(Entity* self);
+void EntitySpikes(Entity* self);
+void EntitySpikesParts(Entity* self);
+void EntitySpikesDust(Entity* self);
 void func_us_801B5FB8(Entity* self);
 void func_us_801B68EC(Entity* self);
 void func_us_801B65A4(Entity* self);
@@ -48,7 +48,7 @@ void EntityBloodyZombie(Entity* self);
 void EntityBloodDrips(Entity* self);
 void EntityBloodSplatter(Entity* self);
 void func_us_801B72E8(Entity* self);
-void func_us_801B5948(Entity* self);
+void EntitySpikesDamage(Entity* self);
 void func_us_801B7580(Entity* self);
 void EntitySealedDoor(Entity* self);
 void EntityValhallaKnight(Entity* self);
@@ -99,9 +99,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     Entity3DBackgroundHouse,
     Entity3DHouseSpawner,
     func_us_801B4DA4,
-    func_us_801B5750,
-    func_us_801B5368,
-    func_us_801B52B4,
+    EntitySpikes,
+    EntitySpikesParts,
+    EntitySpikesDust,
     func_us_801B5FB8,
     func_us_801B68EC,
     func_us_801B65A4,
@@ -115,7 +115,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBloodDrips,
     EntityBloodSplatter,
     func_us_801B72E8,
-    func_us_801B5948,
+    EntitySpikesDamage,
     func_us_801B7580,
     EntitySealedDoor,
     EntityValhallaKnight,
@@ -137,7 +137,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 EInit g_EInitBreakable = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x002};
-EInit D_us_80180844 = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x004};
+EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x005};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x001};
@@ -146,7 +146,7 @@ EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x003};
 EInit g_EInitSkelerang = {ANIMSET_OVL(0x01), 0x01, 0x48, PAL_SKELERANG, 0x00B};
 EInit g_EInitSkelerangBoomerang = {
     ANIMSET_OVL(0x01), 0x2B, 0x48, PAL_SKELERANG, 0x00C};
-EInit D_us_801808A4 = {ANIMSET_OVL(0x02), 0x0B, 0x00, PAL_NONE, 0x003};
+EInit g_EInitEnvironment = {ANIMSET_OVL(0x02), 0x0B, 0x00, PAL_NONE, 0x003};
 EInit D_us_801808B0 = {ANIMSET_OVL(0x03), 0x01, 0x49, PAL_UNK_203, 0x003};
 EInit g_EInitOwlKnight = {ANIMSET_OVL(0x08), 0x10, 0x49, PAL_OWL_KNIGHT, 0x014};
 EInit g_EInitOwlKnightSword = {
