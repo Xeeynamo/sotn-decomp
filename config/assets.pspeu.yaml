@@ -211,7 +211,7 @@ files:
           - [0x3F338, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/sel.bin
     asset_path: assets/st/sel
-    src_path: src/st/sel_psp
+    src_path: src/st/sel
     splat_config_path: config/splat.pspeu.stsel.yaml
     segments:
       - start: 0x80
