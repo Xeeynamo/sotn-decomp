@@ -46,7 +46,6 @@ typedef enum EntityIDs {
 } EntityIDs;
 
 void MoveEntity();
-void SetStep(u8);
 void EntityExplosion(Entity*);
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);

@@ -3,6 +3,7 @@
 #include <cutscene.h>
 
 extern u8 D_psp_08D39D3C[];
+extern Overlay OVL_EXPORT(Overlay);
 
 // BSS
 u8* D_psp_09285BA8;
@@ -53,7 +54,7 @@ static u8 credits_data_en[] = {
 #include "credits_data.h"
 };
 
-static u8* D_8018C404 = D_psp_08D39D3C;
+u8* D_8018C404 = D_psp_08D39D3C;
 
 static u16 D_psp_0924EA78[] = {
 #include "../sel/gen/D_psp_0924EA78.h"
@@ -259,88 +260,6 @@ static u_long* D_psp_0927C7E0[] = {
     (u_long*)GFX_BANK_COMPRESSED,
     GFX_ENTRY(0x180, 0x220, 128, 128, D_psp_0925FA50),
     GFX_TERMINATE(),
-};
-
-u8 gfx_portrait_alucard[] = {
-#include "../sel/gen/gfx_portrait_alucard.h"
-};
-
-u8 gfx_portrait_maria[] = {
-#include "../sel/gen/gfx_portrait_maria.h"
-};
-
-u8 gfx_portrait_richter[] = {
-#include "../sel/gen/gfx_portrait_richter.h"
-};
-
-u8 D_80192228[] = {
-#include "../sel/gen/D_80192228.h"
-};
-
-u8 D_80193358[] = {
-#include "../sel/gen/D_80193358.h"
-};
-
-u8 D_80194018[] = {
-#include "../sel/gen/D_80194018.h"
-};
-
-u8 D_80195274[] = {
-#include "../sel/gen/D_80195274.h"
-};
-
-u16 D_8018CD54[] = {
-#include "../sel/gen/D_8018CD54.h"
-};
-
-u16 D_8018CDB4[] = {
-#include "../sel/gen/D_8018CDB4.h"
-};
-
-u16 D_8018CFB4[] = {
-#include "../sel/gen/D_8018CFB4.h"
-};
-
-u16 D_8018D1B4[] = {
-#include "../sel/gen/D_8018D1B4.h"
-};
-
-u16 D_8018D3B4[] = {
-#include "../sel/gen/D_8018D3B4.h"
-};
-
-u16 D_8018D5B4[] = {
-#include "../sel/gen/D_8018D5B4.h"
-};
-
-u16 D_8018D5D4[] = {
-#include "../sel/gen/D_8018D5D4.h"
-};
-
-void OVL_EXPORT(Update)(void);
-void HandleTitleScreen(void);
-void func_psp_090FFAB8(void);
-void OVL_EXPORT(Init)(s32 objLayoutId);
-void func_801B60D4(void);
-void func_801B17C8(void);
-
-Overlay OVL_EXPORT(Overlay) = {
-    /* 0x00 */ OVL_EXPORT(Update),
-    /* 0x04 */ HandleTitleScreen,
-    /* 0x08 */ func_psp_090FFAB8,
-    /* 0x0C */ OVL_EXPORT(Init),
-    /* 0x10 */ NULL,
-    /* 0x14 */ g_SpriteBanks,
-    /* 0x18 */ g_Cluts,
-    /* 0x1C */ NULL,
-    /* 0x20 */ NULL,
-    /* 0x24 */ g_EntityGfxs,
-    /* 0x28 */ func_801B60D4,
-    /* 0x2C */ NULL,
-    /* 0x30 */ &D_8018C404,
-    /* 0x34 */ NULL,
-    /* 0x38 */ NULL,
-    /* 0x3C */ func_801B17C8,
 };
 
 #include "../get_lang_at.h"
