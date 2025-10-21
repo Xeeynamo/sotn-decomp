@@ -45,7 +45,6 @@ EntityCorpseweedProjectile = 0x0924AE40;
 EntityCerberusGateDebug = 0x0924B458;
 EntityBreakableWithDebris = 0x0924BD20;
 EntityBreakableDebris = 0x0924C060;
-LoadStageNameGraphics = 0x0924C5D0;
 EntityStageNamePopup = 0x0924C620;
 CHI_EntityBackgroundBlock = 0x0924D488;
 CHI_EntityLockCamera = 0x0924D598;

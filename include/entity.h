@@ -3525,12 +3525,12 @@ typedef struct {
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ struct Primitive* primTwo;
-    /* 0x84 */ s16 unk84;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ u8 unk88;
+    /* 0x84 */ s16 timer;
+    /* 0x86 */ s16 deathPartsRotate;
+    /* 0x88 */ u8 attackChoice;
     /* 0x89 */ u8 : 8;
     /* 0x8A */ u16 : 16;
-    /* 0x8C */ struct Entity* entity;
+    /* 0x8C */ struct Entity* attackEntity;
     /* 0x90 */ u32 : 32;
     /* 0x94 */ u32 : 32;
     /* 0x98 */ u32 : 32;
@@ -3542,7 +3542,7 @@ typedef struct {
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ struct Entity* entity;
-    /* 0x84 */ s16 unk84;
+    /* 0x84 */ s16 castTimer;
     /* 0x86 */ s16 unk86;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 unk8A;
@@ -3552,14 +3552,14 @@ typedef struct {
     /* 0x95 */ u8 : 8;
     /* 0x96 */ u16 : 16;
     /* 0x98 */ u32 : 32;
-} ET_HellfireBeast_Unk;
+} ET_HellfireBeastThorsHammer;
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 : 16;
-    /* 0x82 */ s16 unk84;
-} ET_HellfireBeast_Unk2;
+    /* 0x84 */ s16 castTimer;
+} ET_HellfireBeastFlamePillar;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -3867,8 +3867,8 @@ typedef union { // offset=0x7C
     ET_Lossoth lossoth;
     ET_LossothNapalmFlare lossothNapalm;
     ET_HellfireBeast hellfireBeast;
-    ET_HellfireBeast_Unk hellfireBeastUnk;
-    ET_HellfireBeast_Unk2 hellfireBeastUnk2;
+    ET_HellfireBeastThorsHammer hellfireBeastThorsHammer;
+    ET_HellfireBeastFlamePillar hellfireBeastFlamePillar;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

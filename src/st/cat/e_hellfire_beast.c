@@ -1,54 +1,71 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cat.h"
 
-static u8 D_us_801823F0[2][3] = {{0x02, 0x01, 0x07}, {0x07, 0x04, 0x01}};
-static u16 D_us_801823F8[] = {0x016C, 0x016D};
-static u16 D_us_801823FC[] = {0x0033, 0x0034};
-static s16 D_us_80182400[] = {
-    0x0000, 0x002E, 0x0000, 0x0004, 0x0008, 0xFFFC, 0xFFF0, 0x0000};
-static s16 D_us_80182410[] = {
-    0x0000, 0x0008, 0x0000, 0x0004, 0x0008, 0xFFFC, 0xFFF0, 0x0000};
-static s16 D_us_80182420[] = {0x0000, 0x002E, 0x0020, 0x0000};
-static u8 D_us_80182428[] = {
+// Used to set prim->r0,g0,b0 for the Thor's Hammer / Flame Pillar casts
+static u8 attack_rgbs[2][3] = {{2, 1, 7}, {7, 4, 1}};
+// EntityHellfireBeastThorsHammer, EntityHellfireBeastFlamePillar
+static u16 attack_cluts[] = {PAL_DRA(0x16C), PAL_DRA(0x16D)};
+static u16 attack_entityIds[] = {
+    E_HELLFIRE_BEAST_THORS_HAMMER, E_HELLFIRE_BEAST_FLAME_PILLAR};
+static s16 sensors_ground[] = {0, 46, 0, 4, 8, -4, -16, 0};
+static s16 death_parts_sensors_ground[] = {0, 8, 0, 4, 8, -4, -16, 0};
+static s16 sensors_wall[] = {0, 46, 32, 0};
+
+static u8 anim_idle_breathe[] = {
     0x07, 0x19, 0x07, 0x1A, 0x07, 0x1B, 0x06, 0x1C, 0x07, 0x1D, 0x00, 0x00};
-static u8 D_us_80182434[] = {0x26, 0x1E, 0x05, 0x1F, 0x03, 0x20, 0x03, 0x21,
-                             0x01, 0x22, 0x01, 0x23, 0xFF, 0x00, 0x00, 0x00};
-static u8 D_us_80182444[] = {
+static u8 anim_punch[] = {0x26, 0x1E, 0x05, 0x1F, 0x03, 0x20, 0x03, 0x21,
+                          0x01, 0x22, 0x01, 0x23, 0xFF, 0x00, 0x00, 0x00};
+static u8 anim_punch_skid_stop[] = {
     0x04, 0x24, 0x04, 0x25, 0x06, 0x26, 0x02, 0x27, 0x03, 0x28,
     0x02, 0x29, 0x10, 0x2A, 0x05, 0x25, 0xFF, 0x00, 0x00, 0x00};
-static u8 D_us_80182458[] = {
+static u8 anim_punch_hard_stop[] = {
     0x01, 0x22, 0x03, 0x21, 0x03, 0x20, 0x05, 0x1F, 0x04, 0x19, 0xFF, 0x00};
-static u8 D_us_80182464[] = {
+static u8 anim_unused_stutter[] = {
     0x04, 0x24, 0x02, 0x25, 0x02, 0x27, 0x04, 0x19, 0xFF, 0x00, 0x00, 0x00};
-static u8 D_us_80182470[] = {
+static u8 anim_raise_arms_attack[] = {
     0x27, 0x19, 0x02, 0x24, 0x02, 0x25, 0x02, 0x28, 0x03, 0x33,
     0x02, 0x34, 0x02, 0x35, 0x02, 0x34, 0xFF, 0x00, 0x00, 0x00};
-static u8 D_us_80182484[] = {0x01, 0x34, 0x01, 0x36, 0x00, 0x00, 0x00, 0x00};
+static u8 anim_attack_cast_wiggle[] = {
+    0x01, 0x34, 0x01, 0x36, 0x00, 0x00, 0x00, 0x00};
 
-extern Point16 D_us_8018248C[] = {
-    {.x = 0xFFE0, .y = 0xFFE6}, {.x = 0xFFFF, .y = 0xFFDE},
-    {.x = 0xFFEB, .y = 0xFFD4}, {.x = 0xFFF0, .y = 0xFFE8},
-    {.x = 0xFFE2, .y = 0x0001}, {.x = 0xFFF3, .y = 0x0001}};
-extern s16 D_us_801824A4[] = {0x0020, 0x0028, 0x0040, 0x0068, 0x0060, 0x0064};
-extern s16 D_us_801824B0[] = {
+static Point16 death_parts_positions[6] = {
+    {.x = -32, .y = -26}, {.x = -1, .y = -34}, {.x = -21, .y = -44},
+    {.x = -16, .y = -24}, {.x = -30, .y = 1},  {.x = -13, .y = 1}};
+// Indexed off self->params
+static s16 death_parts_timer[6] = {32, 40, 64, 104, 96, 100};
+// Sets sVec vy for each of 8 death part prims
+static s16 death_parts_yOffsets[] = {
     0x0000, 0x0200, 0x0380, 0x0600, 0xF800, 0xFE00, 0xF280, 0xFA00};
-extern u8 D_us_801824C0[] = {0x28, 0x1E, 0x10, 0x00, 0x2C, 0x08, 0x20, 0x1C};
+// Sets the delay for each of 8 death part prims
+static u8 death_parts_fall_delay[] = {40, 30, 16, 0, 44, 8, 32, 28};
 
-void func_us_801CBE14(void) {
+typedef enum {
+    INIT = 0,
+    DROP_TO_GROUND = 1,
+    IDLE = 2,
+    UNUSED_STUTTER = 3,
+    PUNCH_ATTACK = 4,
+    ATTACK_INIT = 5,
+    DEATH_INIT = 16,
+    DEATH_PARTS_DROP = 17,
+    DEATH_PARTS_EXPLODE = 19
+} HellfireBeast_Step;
+
+static void SpawnDeathParts(void) {
     long p, flag;
-    SVECTOR svecTwo;    // sp90
-    VECTOR vec;         // sp80
-    MATRIX matrix;      // sp60
-    SVECTOR svec = {0}; // sp58
+    SVECTOR svecTwo;
+    VECTOR vec;
+    MATRIX matrix;
+    SVECTOR emptySvec = {0};
     SVECTOR p0, p1, p2, p3;
 
-    Primitive* prim;   // s0
-    Entity* newEntity; // s1
-    s32 i;             // s2
-    s16 posX;          // s3
-    s16 posY;          // s4
-    s32 var_s5;        // s5
-    s32 primIndex;     // s6
+    Primitive* prim;
+    Entity* newEntity;
+    s32 i;
+    s16 posX;
+    s16 posY;
+    s32 rotAvg;
+    s32 primIndex;
 
     switch (g_CurrentEntity->step_s) {
     case 0:
@@ -59,9 +76,10 @@ void func_us_801CBE14(void) {
         for (i = 5; i >= 0; i--) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(0x32, g_CurrentEntity, newEntity);
-                posX = D_us_8018248C[i].x;
-                posY = D_us_8018248C[i].y;
+                CreateEntityFromEntity(
+                    E_HELLFIRE_BEAST, g_CurrentEntity, newEntity);
+                posX = death_parts_positions[i].x;
+                posY = death_parts_positions[i].y;
                 posX += 0x10;
                 posY += 0x14;
                 if (g_CurrentEntity->facingLeft) {
@@ -71,17 +89,17 @@ void func_us_801CBE14(void) {
                 posY = newEntity->posY.i.hi += posY;
                 newEntity->params = i;
                 newEntity->facingLeft = g_CurrentEntity->facingLeft;
-                newEntity->step = 0x11;
-                newEntity->flags |= 0x2000;
+                newEntity->step = DEATH_PARTS_DROP;
+                newEntity->flags |= FLAG_UNK_2000;
             }
         }
 
         primIndex = g_api.AllocPrimitives(PRIM_G4, 8);
         if (primIndex != -1) {
-            g_CurrentEntity->flags |= 0x800000;
+            g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.prim = prim; // TODO
+            g_CurrentEntity->ext.hellfireBeast.prim = prim;
 
             i = 0;
             while (prim != NULL) {
@@ -95,14 +113,15 @@ void func_us_801CBE14(void) {
                 prim->b2 = 0xD0;
                 LOW(prim->r3) = LOW(prim->r2);
 
-                prim->u0 = D_us_801824C0[i];
-                LOH(prim->u2) = D_us_801824B0[i];
+                prim->u0 = death_parts_fall_delay[i];
+                LOH(prim->u2) = death_parts_yOffsets[i];
                 prim->v0 = 0;
                 prim->u1 = 1;
                 prim->v1 = 0;
 
                 prim->priority = g_CurrentEntity->zPriority + 1;
-                prim->drawMode = 0x433;
+                prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                 DRAW_UNK02 | DRAW_TRANSP;
                 prim = prim->next;
                 i++;
             }
@@ -113,7 +132,7 @@ void func_us_801CBE14(void) {
         g_CurrentEntity->step_s++;
         break;
     case 1:
-        prim = g_CurrentEntity->ext.prim; // TODO
+        prim = g_CurrentEntity->ext.hellfireBeast.prim;
         SetGeomScreen(0x400);
         posX = g_CurrentEntity->posX.i.hi;
         posY = g_CurrentEntity->posY.i.hi + 0x2F;
@@ -126,7 +145,7 @@ void func_us_801CBE14(void) {
                 svecTwo.vx = 0;
                 svecTwo.vy = LOH(prim->u2);
                 svecTwo.vz = 0;
-                RotMatrix(&svec, &matrix);
+                RotMatrix(&emptySvec, &matrix);
                 RotMatrixY(svecTwo.vy, &matrix);
                 vec.vx = 0;
                 vec.vy = 0;
@@ -140,10 +159,10 @@ void func_us_801CBE14(void) {
                 p0.vy = p1.vy = -prim->v0;
                 p2.vy = p3.vy = 0;
                 p0.vz = p1.vz = p2.vz = p3.vz = -0x18;
-                var_s5 = RotAverage4(
+                rotAvg = RotAverage4(
                     &p0, &p1, &p2, &p3, (long*)&prim->x0, (long*)&prim->x1,
                     (long*)&prim->x2, (long*)&prim->x3, &p, &flag);
-                if (var_s5 < 0x100) {
+                if (rotAvg < 0x100) {
                     prim->priority = g_CurrentEntity->zPriority + 2;
                 } else {
                     prim->priority = g_CurrentEntity->zPriority - 2;
@@ -152,7 +171,7 @@ void func_us_801CBE14(void) {
                 if (prim->v0 > 0xF0) {
                     if (prim->u1 > 0xA) {
                         if (prim->v1 > prim->u1) {
-                            prim->drawMode = 8;
+                            prim->drawMode = DRAW_HIDE;
                         } else {
                             prim->v1++;
                         }
@@ -162,7 +181,7 @@ void func_us_801CBE14(void) {
                 } else {
                     prim->v0 += 0xF;
                     if (prim->v0 > 0xF0 && LOH(prim->u2) < 0) {
-                        PlaySfxPositional(0x66D);
+                        PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
                     }
                 }
                 prim = prim->next;
@@ -172,54 +191,55 @@ void func_us_801CBE14(void) {
     }
 }
 
-extern EInit D_us_80181218;
-void func_us_801CC2E4(Entity* self) {
-    Primitive* prim; // s0
-    Entity* entity;  // s1
-    s32 primIndex;   // s2
-    u8* ptr;         // s3
-    s16 var_s4;      // s4
-    s16 var_s5;      // s5
-    u8 animResult;   // s6
-    u16 var_s7;      // s7
+extern EInit g_EInitHellfireBeast;
+void EntityHellfireBeast(Entity* self) {
+    Primitive* prim;
+    Entity* entity;
+    s32 primIndex;
+    u8* ptr;
+    s16 attackCastPosX;
+    s16 attackCastPosY;
+    u8 animResult;
+    u16 newEntityId;
 
-    if (self->flags & 0x100 && self->step < 0x10) {
-        if (self->flags & 0x800000) {
+    if (self->flags & FLAG_DEAD && self->step < DEATH_INIT) {
+        if (self->flags & FLAG_HAS_PRIMS) {
             primIndex = self->primIndex;
             g_api.FreePrimitives(primIndex);
-            self->flags &= 0xFF7FFFFF;
+            self->flags &= ~FLAG_HAS_PRIMS;
         }
-        if (self->ext.hellfireBeast.entity != NULL) {
-            entity = self->ext.hellfireBeast.entity;
+        if (self->ext.hellfireBeast.attackEntity != NULL) {
+            entity = self->ext.hellfireBeast.attackEntity;
             DestroyEntity(entity);
         }
         self->hitboxState = 0;
-        self->ext.hellfireBeast.unk84 = 0x100;
-        PlaySfxPositional(0x775);
-        SetStep(0x10);
+        self->ext.hellfireBeast.timer = 0x100;
+        PlaySfxPositional(SFX_HELLFIRE_BEAST_DEATH);
+        SetStep(DEATH_INIT);
     }
 
     switch (self->step) {
-    case 0:
-        InitializeEntity(D_us_80181218);
+    case INIT:
+        InitializeEntity(g_EInitHellfireBeast);
+        // Spawn facing the player
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(0x36, entity);
+        CreateEntityFromCurrentEntity(E_HELLFIRE_BEAST_HITBOX, entity);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
         if (primIndex != -1) {
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
             self->ext.hellfireBeast.prim = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x1A;
-            prim->clut = 0x208;
+            prim->clut = PAL_DRA(0x208);
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = 0x3F;
             prim->v0 = prim->v1 = 0xC0;
             prim->v2 = prim->v3 = 0xFF;
             prim->priority = self->zPriority - 2;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim->p3 |= 0x10;
             LOH(prim->next->r2) = 0x40;
             LOH(prim->next->b2) = 0x40;
@@ -228,7 +248,7 @@ void func_us_801CC2E4(Entity* self) {
 
             self->ext.hellfireBeast.primTwo = prim;
             prim->tpage = 0x12;
-            prim->clut = 0x230;
+            prim->clut = PAL_DRA(0x230);
             prim->u0 = prim->u2 = 0xA0;
             prim->u1 = prim->u3 = 0xBF;
             prim->v0 = prim->v1 = 0xC0;
@@ -239,39 +259,44 @@ void func_us_801CC2E4(Entity* self) {
             return;
         }
         break;
-    case 1:
-        if (UnkCollisionFunc3(D_us_80182400) & 1) {
+    case DROP_TO_GROUND:
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             self->step++;
         }
         break;
-    case 2:
+    case IDLE:
         if (!self->step_s) {
-            self->ext.hellfireBeast.unk84 = 0x40;
+            self->ext.hellfireBeast.timer = 0x40;
             self->step_s++;
         } else {
-            if (!AnimateEntity(D_us_80182428, self)) {
+            if (!AnimateEntity(anim_idle_breathe, self)) {
                 self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             }
-            if (self->ext.hellfireBeast.unk84) {
-                self->ext.hellfireBeast.unk84--;
-            } else if (GetDistanceToPlayerX() < 0x40) {
-                SetStep(4);
+
+            if (self->ext.hellfireBeast.timer) {
+                self->ext.hellfireBeast.timer--;
+            } else if (GetDistanceToPlayerX() < 64) {
+                // If player is close, use slide punch attack
+                SetStep(PUNCH_ATTACK);
             } else {
-                SetStep(5);
+                // Otherwise prep lightning / flame pillar attack
+                SetStep(ATTACK_INIT);
             }
         }
         break;
-    case 3:
-        animResult = AnimateEntity(D_us_80182464, self);
+    case UNUSED_STUTTER:
+        // This case appears unused - the animation is similar to part of the
+        // punch animation so may have been intended to be part of that logic
+        animResult = AnimateEntity(anim_unused_stutter, self);
         if (animResult & 0x80 && self->pose == 4) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
 
         if (!animResult) {
-            SetStep(2);
+            SetStep(IDLE);
         }
         break;
-    case 4:
+    case PUNCH_ATTACK:
         switch (self->step_s) {
         case 0:
             self->velocityX = 0;
@@ -279,28 +304,28 @@ void func_us_801CC2E4(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            UnkCollisionFunc2(D_us_80182420);
-            if (!AnimateEntity(D_us_80182434, self)) {
-                PlaySfxPositional(0x66D);
-                self->ext.hellfireBeast.unk84 = 0xC;
+            UnkCollisionFunc2(sensors_wall);
+            if (!AnimateEntity(anim_punch, self)) {
+                PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
+                self->ext.hellfireBeast.timer = 0xC;
                 SetSubStep(2);
             }
             if (self->pose == 4) {
-                self->velocityX = -0x40000;
+                self->velocityX = FIX(-4.0);
                 if (self->facingLeft) {
                     self->velocityX = -self->velocityX;
                 }
             }
             break;
         case 2:
-            UnkCollisionFunc2(D_us_80182420);
+            UnkCollisionFunc2(sensors_wall);
             if (self->facingLeft) {
-                self->velocityX -= 0x2AAA;
+                self->velocityX -= FIX(1.0 / 6.0);
             } else {
-                self->velocityX += 0x2AAA;
+                self->velocityX += FIX(1.0 / 6.0);
             }
 
-            if (!--self->ext.hellfireBeast.unk84) {
+            if (!--self->ext.hellfireBeast.timer) {
                 SetSubStep(3);
                 if (!self->velocityX) {
                     SetSubStep(4);
@@ -312,60 +337,68 @@ void func_us_801CC2E4(Entity* self) {
             }
             break;
         case 3:
-            UnkCollisionFunc2(D_us_80182420);
+            UnkCollisionFunc2(sensors_wall);
             if (self->pose > 2) {
                 self->velocityX -= self->velocityX / 8;
             }
 
-            if (!AnimateEntity(D_us_80182444, self)) {
-                SetStep(2);
+            if (!AnimateEntity(anim_punch_skid_stop, self)) {
+                SetStep(IDLE);
             }
             break;
         case 4:
-            if (!AnimateEntity(D_us_80182458, self)) {
-                SetStep(2);
+            if (!AnimateEntity(anim_punch_hard_stop, self)) {
+                SetStep(IDLE);
             }
             break;
         }
         break;
-    case 5:
+    case ATTACK_INIT:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_us_80182470, self)) {
-                self->ext.hellfireBeast.unk88 = Random() & 1;
+            if (!AnimateEntity(anim_raise_arms_attack, self)) {
+                // Pick a random cast attack
+                // 0 = Lightning
+                // 1 = Flame pillar
+                self->ext.hellfireBeast.attackChoice = Random() & 1;
                 SetSubStep(1);
             }
             break;
         case 1:
-            switch (self->ext.hellfireBeast.unk88) {
+            // Begin the cast
+            switch (self->ext.hellfireBeast.attackChoice) {
+            // Lightning
             case 0:
                 if (self->facingLeft) {
-                    var_s4 = 0x24;
+                    attackCastPosX = 0x24;
                 } else {
-                    var_s4 = -0x24;
+                    attackCastPosX = -0x24;
                 }
-                var_s5 = -8;
+                attackCastPosY = -8;
                 break;
+            // Flame pillar
             case 1:
-                var_s4 = PLAYER.posX.i.hi - self->posX.i.hi;
-                var_s5 = 0x2F;
+                // Pillar appears beneath the player's feet
+                attackCastPosX = PLAYER.posX.i.hi - self->posX.i.hi;
+                attackCastPosY = 0x2F;
                 break;
             default:
-                var_s4 = 0x24;
-                var_s5 = -8;
+                attackCastPosX = 0x24;
+                attackCastPosY = -8;
                 break;
             }
 
             prim = self->ext.hellfireBeast.prim;
-            prim->clut = D_us_801823F8[self->ext.hellfireBeast.unk88];
+            prim->clut = attack_cluts[self->ext.hellfireBeast.attackChoice];
             LOH(prim->next->u1) = 0;
             prim->next->x2 = 0;
             prim->next->y2 = 0;
             prim->next->b3 = 0;
             prim->next->x1 = self->posX.i.hi;
-            prim->next->x1 += var_s4;
-            prim->next->y0 = self->posY.i.hi + var_s5;
-            prim->drawMode = 0x77;
+            prim->next->x1 += attackCastPosX;
+            prim->next->y0 = self->posY.i.hi + attackCastPosY;
+            prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             prim = self->ext.hellfireBeast.primTwo;
             if (self->facingLeft) {
                 prim->x0 = prim->x2 = self->posX.i.hi - 0xFFDF;
@@ -381,60 +414,63 @@ void func_us_801CC2E4(Entity* self) {
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
             LOW(prim->r3) = LOW(prim->r0);
-            prim->drawMode = 0x437U;
-            self->ext.hellfireBeast.unk84 = 0x20;
+            prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_COLORS |
+                             DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_400;
+            self->ext.hellfireBeast.timer = 0x20;
             self->step_s++;
             break;
         case 2:
+            // Spawn the attack entity of choice
             prim = self->ext.hellfireBeast.prim;
             prim->next->b3 += 4;
             prim->next->x2 = prim->next->y2 += 0x30;
 
             prim = self->ext.hellfireBeast.primTwo;
-            ptr = D_us_801823F0[self->ext.hellfireBeast.unk88];
+            ptr = attack_rgbs[self->ext.hellfireBeast.attackChoice];
             prim->r0 += *ptr++;
             prim->g0 += *ptr++;
             prim->b0 += *ptr++;
             LOW(prim->r2) = LOW(prim->r0);
 
-            if (self->ext.hellfireBeast.unk84 % 2) {
-                prim->drawMode |= 8;
+            if (self->ext.hellfireBeast.timer % 2) {
+                prim->drawMode |= DRAW_HIDE;
             } else {
-                prim->drawMode &= 0xFFF7;
+                prim->drawMode &= ~DRAW_HIDE;
             }
 
-            if (!--self->ext.hellfireBeast.unk84) {
+            if (!--self->ext.hellfireBeast.timer) {
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
-                    var_s7 = D_us_801823FC[self->ext.hellfireBeast.unk88];
-                    CreateEntityFromEntity(var_s7, self, entity);
+                    newEntityId =
+                        attack_entityIds[self->ext.hellfireBeast.attackChoice];
+                    CreateEntityFromEntity(newEntityId, self, entity);
                     entity->facingLeft = self->facingLeft;
                     prim = self->ext.hellfireBeast.prim;
                     entity->posX.i.hi = prim->next->x1;
                     entity->posY.i.hi = prim->next->y0;
-                    self->ext.hellfireBeast.entity = entity;
+                    self->ext.hellfireBeast.attackEntity = entity;
                     self->step_s++;
                 } else {
-                    self->ext.hellfireBeast.entity = NULL;
-                    SetStep(2);
+                    self->ext.hellfireBeast.attackEntity = NULL;
+                    SetStep(IDLE);
                     return;
                 }
             }
             break;
         case 3:
-            AnimateEntity(D_us_80182484, self);
+            AnimateEntity(anim_attack_cast_wiggle, self);
             prim = self->ext.hellfireBeast.primTwo;
             if (self->animCurFrame == 0x34) {
-                prim->drawMode |= 8;
+                prim->drawMode |= DRAW_HIDE;
             } else {
-                prim->drawMode &= 0xFFF7;
+                prim->drawMode &= ~DRAW_HIDE;
             }
 
-            entity = self->ext.hellfireBeast.entity;
+            entity = self->ext.hellfireBeast.attackEntity;
             if (!entity->entityId) {
-                self->ext.hellfireBeast.entity = NULL;
+                self->ext.hellfireBeast.attackEntity = NULL;
                 prim = self->ext.hellfireBeast.primTwo;
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 self->animCurFrame = 0x25;
                 self->step_s++;
             }
@@ -443,8 +479,8 @@ void func_us_801CC2E4(Entity* self) {
             prim = self->ext.hellfireBeast.prim;
             prim->next->b3 -= 8;
             if (prim->next->b3 < 0x10) {
-                prim->drawMode = 8;
-                SetStep(2);
+                prim->drawMode = DRAW_HIDE;
+                SetStep(IDLE);
             }
             break;
         }
@@ -453,63 +489,65 @@ void func_us_801CC2E4(Entity* self) {
         UnkPrimHelper(prim);
         switch (g_Timer % 3) {
         case 0:
-            prim->clut = 0x300;
+            prim->clut = PAL_DRA(0x300);
             break;
         case 1:
-            prim->clut = 0x15F;
+            prim->clut = PAL_DRA(0x15F);
             break;
         case 2:
-            prim->clut = D_us_801823F8[self->ext.hellfireBeast.unk88];
+            prim->clut = attack_cluts[self->ext.hellfireBeast.attackChoice];
             break;
         }
 
         break;
-    case 16:
-        func_us_801CBE14();
-        if (!--self->ext.hellfireBeast.unk84) {
+    case DEATH_INIT:
+        SpawnDeathParts();
+        if (!--self->ext.hellfireBeast.timer) {
             DestroyEntity(self);
             return;
         }
         break;
-    case 17:
-        InitializeEntity(D_us_80181218);
+    case DEATH_PARTS_DROP:
+        // Death parts are spawned with params 0-5 (6 total)
+        InitializeEntity(g_EInitHellfireBeast);
         self->hitboxState = 0;
         self->animCurFrame = self->params + 0x2B;
-        self->ext.hellfireBeast.unk84 = D_us_801824A4[self->params];
+        self->ext.hellfireBeast.timer = death_parts_timer[self->params];
         if (self->params < 3) {
             self->zPriority += 4;
         }
         if (self->params < 4) {
             self->zPriority++;
         } else {
-            self->drawFlags |= 4;
+            self->drawFlags |= FLAG_DRAW_ROTATE;
         }
-        SetStep(0x13);
+        SetStep(DEATH_PARTS_EXPLODE);
         break;
-    case 19:
-        if (self->ext.hellfireBeast.unk84) {
-            self->ext.hellfireBeast.unk84--;
-            if (!self->ext.hellfireBeast.unk84) {
+    case DEATH_PARTS_EXPLODE:
+        if (self->ext.hellfireBeast.timer) {
+            self->ext.hellfireBeast.timer--;
+            if (!self->ext.hellfireBeast.timer) {
                 // BUG! This plays the same sound effect either way
                 if (self->params == 2) {
-                    PlaySfxPositional(0x62E);
+                    PlaySfxPositional(SFX_WEAPON_STAB_B);
                 } else {
-                    PlaySfxPositional(0x62E);
+                    PlaySfxPositional(SFX_WEAPON_STAB_B);
                 }
             }
             break;
         }
 
-        if (UnkCollisionFunc3(D_us_80182410) & 1) {
-            PlaySfxPositional(0x655);
+        // Once the death parts hit the ground, burst into flames and despawn
+        if (UnkCollisionFunc3(death_parts_sensors_ground) & 1) {
+            PlaySfxPositional(SFX_EXPLODE_B);
             MakeExplosions();
             DestroyEntity(self);
             return;
         }
 
-        self->rotate += self->ext.hellfireBeast.unk86;
-        self->ext.hellfireBeast.unk86 += 2;
-        self->velocityY -= 0x2000;
+        self->rotate += self->ext.hellfireBeast.deathPartsRotate;
+        self->ext.hellfireBeast.deathPartsRotate += 2;
+        self->velocityY -= FIX(0.125);
         break;
     }
 
@@ -526,37 +564,38 @@ void func_us_801CC2E4(Entity* self) {
     }
 }
 
-extern EInit D_us_8018123C;
-void func_us_801CCEF0(Entity* self) {
-    u8 sp3F;       // sp3F
-    s16 angle;     // sp3C
-    s16 posX;      // sp3A
-    s16 posY;      // sp38
-    s32 primIndex; // sp34
+// Horizontal lightning attack cast
+extern EInit g_EInitHellfireBeastThorsHammer;
+void EntityHellfireBeastThorsHammer(Entity* self) {
+    u8 prevV0;
+    s16 angle;
+    s16 posX;
+    s16 posY;
+    s32 primIndex;
 
-    Primitive* prim;    // s0
-    Primitive* primTwo; // s1
-    s16 var_s2;         // s2
-    s32 dx;             // s3
-    s16 var_s4;         // s4
-    s32 dy;             // s5
-    u8 var_s6;          // s6
-    u8 var_s7;          // s7
-    s16 var_s8;         // s8
-    int x;
+    Primitive* prim;
+    Primitive* nextPrim;
+    s16 var_s2;
+    s32 dx;
+    s16 var_s4;
+    s32 dy;
+    u8 var_s6;
+    u8 var_s7;
+    s16 i;
+    s32 fake;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_8018123C);
+        InitializeEntity(g_EInitHellfireBeastThorsHammer);
         self->hitboxWidth = self->hitboxHeight = 0;
         self->animSet = 2;
         self->animCurFrame = 0;
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex != -1) {
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.hellfireBeastUnk.prim = prim;
+            self->ext.hellfireBeastThorsHammer.prim = prim;
             prim->x0 = prim->x1 = self->posX.i.hi;
             prim->y0 = prim->y1 = self->posY.i.hi;
             prim->r0 = 0x60;
@@ -564,15 +603,16 @@ void func_us_801CCEF0(Entity* self) {
             prim->b0 = 0x80;
             PGREY(prim, 1) = 0x20;
             prim->priority = self->zPriority + 8;
-            prim->drawMode = 0x33;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         } else {
             DestroyEntity(self);
             break;
         }
-        PlaySfxPositional(0x620);
+        PlaySfxPositional(SFX_BAT_ECHO_C);
         // fallthrough
     case 1:
-        prim = self->ext.hellfireBeastUnk.prim;
+        prim = self->ext.hellfireBeastThorsHammer.prim;
         if (!self->step_s) {
             if (self->facingLeft) {
                 prim->x0 += 0x20;
@@ -590,16 +630,16 @@ void func_us_801CCEF0(Entity* self) {
     case 2:
         primIndex = self->primIndex;
         g_api.FreePrimitives(primIndex);
-        self->flags &= 0xFF7FFFFF;
+        self->flags &= ~FLAG_HAS_PRIMS;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x40);
         if (primIndex != -1) {
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.hellfireBeastUnk.prim = prim;
+            self->ext.hellfireBeastThorsHammer.prim = prim;
             while (prim != NULL) {
                 prim->tpage = 0x13;
-                prim->clut = 0x24A;
+                prim->clut = PAL_DRA(0x24A);
                 prim->v0 = prim->v2 = 0x20;
                 prim->v1 = prim->v3 = 0x10;
 #ifdef VERSION_PSP
@@ -611,22 +651,23 @@ void func_us_801CCEF0(Entity* self) {
                 LOW(prim->r2) = LOW(prim->r0);
                 LOW(prim->r3) = LOW(prim->r0);
                 prim->priority = self->zPriority;
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
         } else {
             DestroyEntity(self);
             break;
         }
-        self->ext.hellfireBeastUnk.unk8C = 0;
-        self->ext.hellfireBeastUnk.unk90 = 0;
-        self->ext.hellfireBeastUnk.unk8A = 4;
+        self->ext.hellfireBeastThorsHammer.unk8C = 0;
+        self->ext.hellfireBeastThorsHammer.unk90 = 0;
+        self->ext.hellfireBeastThorsHammer.unk8A = 4;
         self->hitboxState = 1;
-        self->ext.hellfireBeastUnk.unk84 = 0x80;
+        self->ext.hellfireBeastThorsHammer.castTimer = 0x80;
         self->step++;
         // fallthrough
     case 3:
-        posX = self->posX.i.hi + (self->ext.hellfireBeastUnk.unk8C >> 0x10);
+        posX = self->posX.i.hi +
+               (self->ext.hellfireBeastThorsHammer.unk8C >> 0x10);
         posY = self->posY.i.hi;
         if (self->facingLeft) {
             posY -= 8;
@@ -634,11 +675,12 @@ void func_us_801CCEF0(Entity* self) {
             posY += 8;
         }
 
-        self->ext.hellfireBeastUnk.unk8C += self->ext.hellfireBeastUnk.unk90;
+        self->ext.hellfireBeastThorsHammer.unk8C +=
+            self->ext.hellfireBeastThorsHammer.unk90;
         if (self->facingLeft) {
-            self->ext.hellfireBeastUnk.unk90 += 0x4000;
+            self->ext.hellfireBeastThorsHammer.unk90 += 0x4000;
         } else {
-            self->ext.hellfireBeastUnk.unk90 -= 0x4000;
+            self->ext.hellfireBeastThorsHammer.unk90 -= 0x4000;
         }
 
         if (self->facingLeft) {
@@ -648,14 +690,14 @@ void func_us_801CCEF0(Entity* self) {
         }
 
         var_s4 += (0xD0 - ((Random() & 7) << 6));
-        var_s6 = self->ext.hellfireBeastUnk.unk94 * 0x10;
-        self->ext.hellfireBeastUnk.unk94++;
-        if (self->ext.hellfireBeastUnk.unk94 > 6) {
-            self->ext.hellfireBeastUnk.unk94 = 1;
+        var_s6 = self->ext.hellfireBeastThorsHammer.unk94 * 0x10;
+        self->ext.hellfireBeastThorsHammer.unk94++;
+        if (self->ext.hellfireBeastThorsHammer.unk94 > 6) {
+            self->ext.hellfireBeastThorsHammer.unk94 = 1;
         }
 
-        var_s8 = 1;
-        prim = self->ext.hellfireBeastUnk.prim;
+        i = 1;
+        prim = self->ext.hellfireBeastThorsHammer.prim;
         prim->x0 = self->posX.i.hi;
         prim->x1 = prim->x0;
         prim->y0 = self->posY.i.hi;
@@ -675,8 +717,8 @@ void func_us_801CCEF0(Entity* self) {
         while (true) {
             dx = posX - prim->x2;
             dy = posY - prim->y2;
-            if (!self->ext.hellfireBeastUnk.unk88) {
-                self->ext.hellfireBeastUnk.unk88 = 4;
+            if (!self->ext.hellfireBeastThorsHammer.unk88) {
+                self->ext.hellfireBeastThorsHammer.unk88 = 4;
                 angle = ratan2(-dy, dx);
                 var_s2 = angle - var_s4;
                 if (var_s2 > 0x800) {
@@ -686,55 +728,55 @@ void func_us_801CCEF0(Entity* self) {
                     var_s2 = 0x1000 + var_s2;
                 }
                 var_s2 /= 4;
-                self->ext.hellfireBeastUnk.unk86 = var_s2;
+                self->ext.hellfireBeastThorsHammer.unk86 = var_s2;
             }
 
-            var_s4 += self->ext.hellfireBeastUnk.unk86;
+            var_s4 += self->ext.hellfireBeastThorsHammer.unk86;
             var_s4 &= 0xFFF;
 
-            primTwo = prim->next;
-            if (primTwo == NULL) {
+            nextPrim = prim->next;
+            if (nextPrim == NULL) {
                 self->step++;
                 break; // exits while loop
             }
 
-            LOW(primTwo->x0) = LOW(prim->x2);
-            LOW(primTwo->x1) = LOW(prim->x3);
+            LOW(nextPrim->x0) = LOW(prim->x2);
+            LOW(nextPrim->x1) = LOW(prim->x3);
             dx = (rcos(var_s4) * 0xC) >> 0xC;
             dy = -((rsin(var_s4) * 0xC) >> 0xC);
-            primTwo->x2 = primTwo->x0 + dx;
-            primTwo->y2 = primTwo->y0 + dy;
+            nextPrim->x2 = nextPrim->x0 + dx;
+            nextPrim->y2 = nextPrim->y0 + dy;
 
             var_s2 = var_s4 - 0x400;
             var_s7 = 0x10;
             dx = (var_s7 * rcos(var_s2)) >> 0xC;
             dy = -(var_s7 * rsin(var_s2) >> 0xC);
-            primTwo->x3 = primTwo->x2 + dx;
-            primTwo->y3 = primTwo->y2 + dy;
+            nextPrim->x3 = nextPrim->x2 + dx;
+            nextPrim->y3 = nextPrim->y2 + dy;
 
-            primTwo->u1 = var_s6;
-            primTwo->u0 = var_s6;
-            primTwo->u2 = primTwo->u3 = primTwo->u0 + 0xF;
+            nextPrim->u1 = var_s6;
+            nextPrim->u0 = var_s6;
+            nextPrim->u2 = nextPrim->u3 = nextPrim->u0 + 0xF;
             var_s6 += 0x10;
             if (var_s6 > 0x60) {
                 var_s6 = 0x10;
             }
 
             if (!(g_Timer % 2)) {
-                sp3F = primTwo->v0;
-                primTwo->v0 = primTwo->v2 = primTwo->v1;
-                primTwo->v1 = primTwo->v3 = sp3F;
+                prevV0 = nextPrim->v0;
+                nextPrim->v0 = nextPrim->v2 = nextPrim->v1;
+                nextPrim->v1 = nextPrim->v3 = prevV0;
             }
-            primTwo->drawMode = 6;
-            prim = primTwo;
-            self->ext.hellfireBeastUnk.unk88--;
-            var_s8++;
+            nextPrim->drawMode = DRAW_COLORS | DRAW_UNK02;
+            prim = nextPrim;
+            self->ext.hellfireBeastThorsHammer.unk88--;
+            i++;
 
-            if (var_s8 <= self->ext.hellfireBeastUnk.unk8A) {
+            if (i <= self->ext.hellfireBeastThorsHammer.unk8A) {
                 continue;
             }
 
-            dx = primTwo->x0 - self->posX.i.hi;
+            dx = nextPrim->x0 - self->posX.i.hi;
             dx = abs(dx);
             if (dx > 0x1FF) {
                 dx = 0x1FF;
@@ -744,33 +786,34 @@ void func_us_801CCEF0(Entity* self) {
             self->hitboxHeight = 8;
             self->hitboxOffY = 8;
 
+            // FAKE! PSX requires some trickery here, was not able to resolve
 #ifdef VERSION_US
-            x = 8;
+            fake = 8;
             while (prim != NULL) {
-                prim->drawMode = x;
+                prim->drawMode = fake;
                 prim = prim->next;
             }
 
-            // Fake!
             if (0) {
                 while (posY)
                     ;
             }
 #else
             while (prim != NULL) {
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
 #endif
 
-            if (!(g_Timer % 3) && self->ext.hellfireBeastUnk.unk8A < 0x40) {
-                self->ext.hellfireBeastUnk.unk8A++;
+            if (!(g_Timer % 3) &&
+                self->ext.hellfireBeastThorsHammer.unk8A < 0x40) {
+                self->ext.hellfireBeastThorsHammer.unk8A++;
             }
-            if (!(self->ext.hellfireBeastUnk.unk84 & 0x1F)) {
-                g_api.PlaySfx(0x614);
+            if (!(self->ext.hellfireBeastThorsHammer.castTimer & 0x1F)) {
+                g_api.PlaySfx(SFX_ELECTRICITY);
             }
 
-            if (!--self->ext.hellfireBeastUnk.unk84) {
+            if (!--self->ext.hellfireBeastThorsHammer.castTimer) {
                 self->step++;
             }
             break; // exits while loop
@@ -782,20 +825,21 @@ void func_us_801CCEF0(Entity* self) {
     }
 }
 
+// Related entity for the flame pillar
 void func_us_801CD614(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = 2;
         self->animCurFrame = 1;
         self->zPriority = 0x100;
-        self->drawFlags |= 4;
-        self->flags &= 0xF7FFFFFF;
+        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         if (self->params) {
             self->rotate = 0x800;
-            self->velocityY = 0x10000;
+            self->velocityY = FIX(1.0);
         } else {
             self->rotate = 0;
-            self->velocityY = -0x10000;
+            self->velocityY = FIX(-1.0);
         }
     }
     self->posY.val += self->velocityY;
@@ -808,10 +852,10 @@ void func_us_801CD614(Entity* self) {
     }
 
 #ifdef VERSION_PSP
-    if (self->ext.hellfireBeastUnk.entity != NULL &&
-        !self->ext.hellfireBeastUnk.entity->entityId) {
+    if (self->ext.hellfireBeastThorsHammer.entity != NULL &&
+        !self->ext.hellfireBeastThorsHammer.entity->entityId) {
 #else
-    if (!self->ext.hellfireBeastUnk.entity->entityId) {
+    if (!self->ext.hellfireBeastThorsHammer.entity->entityId) {
 #endif
         DestroyEntity(self);
     }
@@ -820,60 +864,66 @@ void func_us_801CD614(Entity* self) {
 extern Primitive* FindFirstUnkPrim(Primitive* prim);
 void func_us_801CD728(Primitive* prim) {
     Primitive* p;
-    s16 posX;   // s3
-    s16 posY;   // s4
-    s16 var_s1; // s1
-    s16 var_s2; // s2
+    s16 posX;
+    s16 posY;
+    s16 var_s1;
+    s16 var_s2;
 
     posX = g_CurrentEntity->posX.i.hi;
     posY = g_CurrentEntity->posY.i.hi - prim->p1;
     var_s1 = -prim->p1 * 6;
-    prim->y0 = posY - ((g_CurrentEntity->ext.hellfireBeastUnk2.unk80 *
+    prim->y0 = posY - ((g_CurrentEntity->ext.hellfireBeastFlamePillar.unk80 *
                         rsin(var_s1 + 0x800)) >>
                        0xC);
     prim->y1 =
         posY -
-        ((g_CurrentEntity->ext.hellfireBeastUnk2.unk80 * rsin(var_s1)) >> 0xC);
+        ((g_CurrentEntity->ext.hellfireBeastFlamePillar.unk80 * rsin(var_s1)) >>
+         0xC);
     if (g_CurrentEntity->facingLeft) {
-        prim->x0 = posX - ((g_CurrentEntity->ext.hellfireBeastUnk2.unk80 *
-                            rcos(var_s1 + 0x800)) >>
-                           0xC);
+        prim->x0 =
+            posX - ((g_CurrentEntity->ext.hellfireBeastFlamePillar.unk80 *
+                     rcos(var_s1 + 0x800)) >>
+                    0xC);
         prim->x1 =
-            posX -
-            ((g_CurrentEntity->ext.hellfireBeastUnk2.unk80 * rcos(var_s1)) >>
-             0xC);
+            posX - ((g_CurrentEntity->ext.hellfireBeastFlamePillar.unk80 *
+                     rcos(var_s1)) >>
+                    0xC);
     } else {
-        prim->x0 = posX + ((g_CurrentEntity->ext.hellfireBeastUnk2.unk80 *
-                            rcos(var_s1 + 0x800)) >>
-                           0xC);
+        prim->x0 =
+            posX + ((g_CurrentEntity->ext.hellfireBeastFlamePillar.unk80 *
+                     rcos(var_s1 + 0x800)) >>
+                    0xC);
         prim->x1 =
-            posX +
-            ((g_CurrentEntity->ext.hellfireBeastUnk2.unk80 * rcos(var_s1)) >>
-             0xC);
+            posX + ((g_CurrentEntity->ext.hellfireBeastFlamePillar.unk80 *
+                     rcos(var_s1)) >>
+                    0xC);
     }
 
     posY += 0x20;
     var_s1 = -(g_CurrentEntity->posY.i.hi - posY) * 6;
     prim->y3 =
         posY -
-        ((g_CurrentEntity->ext.hellfireBeastUnk2.unk80 * rsin(var_s1)) >> 0xC);
+        ((g_CurrentEntity->ext.hellfireBeastFlamePillar.unk80 * rsin(var_s1)) >>
+         0xC);
 
     if (g_CurrentEntity->facingLeft) {
-        prim->x2 = posX - ((g_CurrentEntity->ext.hellfireBeastUnk2.unk80 *
-                            rcos(var_s1 + 0x800)) >>
-                           0xC);
+        prim->x2 =
+            posX - ((g_CurrentEntity->ext.hellfireBeastFlamePillar.unk80 *
+                     rcos(var_s1 + 0x800)) >>
+                    0xC);
         prim->x3 =
-            posX -
-            ((g_CurrentEntity->ext.hellfireBeastUnk2.unk80 * rcos(var_s1)) >>
-             0xC);
+            posX - ((g_CurrentEntity->ext.hellfireBeastFlamePillar.unk80 *
+                     rcos(var_s1)) >>
+                    0xC);
     } else {
-        prim->x2 = posX + ((g_CurrentEntity->ext.hellfireBeastUnk2.unk80 *
-                            rcos(var_s1 + 0x800)) >>
-                           0xC);
+        prim->x2 =
+            posX + ((g_CurrentEntity->ext.hellfireBeastFlamePillar.unk80 *
+                     rcos(var_s1 + 0x800)) >>
+                    0xC);
         prim->x3 =
-            posX +
-            ((g_CurrentEntity->ext.hellfireBeastUnk2.unk80 * rcos(var_s1)) >>
-             0xC);
+            posX + ((g_CurrentEntity->ext.hellfireBeastFlamePillar.unk80 *
+                     rcos(var_s1)) >>
+                    0xC);
     }
 
     var_s2 = g_CurrentEntity->posY.i.hi - 0x88;
@@ -899,46 +949,47 @@ void func_us_801CD728(Primitive* prim) {
     }
 
     if (prim->p1 > 0xA8) {
-        prim->drawMode = 8;
+        prim->drawMode = DRAW_HIDE;
         prim->p3 = 0;
     }
 
     if (prim->p1 == 0x20) {
-        p = g_CurrentEntity->ext.prim;
+        p = g_CurrentEntity->ext.hellfireBeastFlamePillar.prim;
         p = FindFirstUnkPrim(p);
         if (p != NULL) {
             p->p3 = 1;
             p->p1 = 0;
             p->y0 = p->y1 = g_CurrentEntity->posY.i.hi;
             p->y2 = p->y3 = g_CurrentEntity->posY.i.hi;
-            p->drawMode = 0x37;
+            p->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 |
+                          DRAW_TRANSP;
         }
     }
 }
 
-extern EInit D_us_80181230;
-void func_us_801CDB50(Entity* self) {
-    DRAWENV drawEnv;                                  // sp2C
-    RECT rect = {.x = 0, .y = 256, .w = 64, .h = 64}; // sp24
+extern EInit g_EInitHellfireBeastFlamePillar;
+void EntityHellfireBeastFlamePillar(Entity* self) {
+    DRAWENV drawEnv;
+    RECT rect = {.x = 0, .y = 256, .w = 64, .h = 64};
 
-    Primitive* prim;   // s0
-    Entity* newEntity; // s1
-    s32 i;             // s2
-    s32 primIndex;     // s3
-    DR_ENV* drEnv;     // s4
+    Primitive* prim;
+    Entity* newEntity;
+    s32 i;
+    s32 primIndex;
+    DR_ENV* drEnv;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80181230);
+        InitializeEntity(g_EInitHellfireBeastFlamePillar);
         self->animSet = 2;
         self->animCurFrame = 0;
         self->hitboxWidth = self->hitboxHeight = 0;
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
         if (primIndex != -1) {
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.hellfireBeastUnk2.prim = prim;
+            self->ext.hellfireBeastFlamePillar.prim = prim;
 
             prim->x0 = prim->x1 = self->posX.i.hi;
             prim->y0 = prim->y1 = self->posY.i.hi;
@@ -947,16 +998,17 @@ void func_us_801CDB50(Entity* self) {
             prim->b0 = 0x20;
             PGREY(prim, 1) = 0x20;
             prim->priority = self->zPriority + 8;
-            prim->drawMode = 0x33;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         } else {
             DestroyEntity(self);
             break;
         }
 
-        PlaySfxPositional(0x620);
+        PlaySfxPositional(SFX_BAT_ECHO_C);
         // fallthrough
     case 1:
-        prim = self->ext.hellfireBeastUnk2.prim;
+        prim = self->ext.hellfireBeastFlamePillar.prim;
         if (!self->step_s) {
             prim->y0 -= 0x20;
             if (prim->y0 & 0xFF00) {
@@ -969,10 +1021,10 @@ void func_us_801CDB50(Entity* self) {
     case 2:
         primIndex = self->primIndex;
         g_api.FreePrimitives(primIndex);
-        self->flags &= 0xFF7FFFFF;
+        self->flags &= ~FLAG_HAS_PRIMS;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x12);
         if (primIndex != -1) {
-            self->flags |= 0x800000;
+            self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
             self->ext.hellfireBeast.primThree = prim;
@@ -983,7 +1035,7 @@ void func_us_801CDB50(Entity* self) {
                 break;
             }
 
-            prim->type = 7;
+            prim->type = PRIM_ENV;
             drawEnv = g_CurrentBuffer->draw;
             drawEnv.isbg = 1;
             drawEnv.clip = rect;
@@ -991,7 +1043,7 @@ void func_us_801CDB50(Entity* self) {
             drawEnv.ofs[1] = 0x100;
             SetDrawEnv(drEnv, &drawEnv);
             prim->priority = 0xFF;
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
 
             drEnv = g_api.func_800EDB08((POLY_GT4*)prim);
@@ -1000,12 +1052,12 @@ void func_us_801CDB50(Entity* self) {
                 break;
             }
 
-            prim->type = 7;
+            prim->type = PRIM_ENV;
             prim->priority = 0x101;
-            prim->drawMode = 0x808;
+            prim->drawMode = DRAW_UNK_800 | DRAW_HIDE;
             prim = prim->next;
 
-            self->ext.hellfireBeastUnk2.prim = prim;
+            self->ext.hellfireBeastFlamePillar.prim = prim;
             while (prim != NULL) {
                 prim->tpage = 0x110;
                 prim->u0 = prim->u1 = 0;
@@ -1022,7 +1074,7 @@ void func_us_801CDB50(Entity* self) {
                 LOW(prim->r3) = LOW(prim->r0);
                 prim->p3 = 0;
                 prim->priority = self->zPriority;
-                prim->drawMode = 8;
+                prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
         } else {
@@ -1030,42 +1082,44 @@ void func_us_801CDB50(Entity* self) {
             break;
         }
 
-        prim = self->ext.hellfireBeastUnk2.prim;
+        prim = self->ext.hellfireBeastFlamePillar.prim;
         prim = FindFirstUnkPrim(prim);
         if (prim != NULL) {
             prim->p3 = 1;
             prim->p1 = 0;
             prim->y0 = prim->y1 = self->posY.i.hi;
             prim->y2 = prim->y3 = self->posY.i.hi;
-            prim->drawMode = 0x37;
+            prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                             DRAW_UNK02 | DRAW_TRANSP;
         }
-        self->ext.hellfireBeastUnk2.unk80 = 0x18;
-        self->ext.hellfireBeastUnk2.unk84 = -0x10;
-        PlaySfxPositional(0x660);
+        self->ext.hellfireBeastFlamePillar.unk80 = 0x18;
+        self->ext.hellfireBeastFlamePillar.castTimer = -0x10;
+        PlaySfxPositional(SFX_FIREBALL_SHOT_A);
         self->step++;
 
         break;
     case 3:
         prim = self->ext.hellfireBeast.primThree;
-        prim->drawMode = 0;
+        prim->drawMode = DRAW_DEFAULT;
 
         prim = prim->next;
-        prim->drawMode = 0x800;
+        prim->drawMode = DRAW_UNK_800;
 
         // NB. Strange way to write a single loop iteration...
-        // Changed during development? Macro?
+        // Maybe the number of iterations changed during development?
         for (i = 0; i <= 0; i++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(0x35, newEntity);
+                // func_us_801CD614
+                CreateEntityFromCurrentEntity(E_UNK_35, newEntity);
                 newEntity->posX.i.hi = Random() & 0xF;
                 newEntity->posY.i.hi = 0x20;
                 newEntity->params = Random() & 1;
-                newEntity->ext.hellfireBeastUnk.entity = self;
+                newEntity->ext.hellfireBeastThorsHammer.entity = self;
             }
         }
 
-        prim = self->ext.hellfireBeastUnk2.prim;
+        prim = self->ext.hellfireBeastFlamePillar.prim;
         while (prim != NULL) {
             if (prim->p3) {
                 func_us_801CD728(prim);
@@ -1073,36 +1127,36 @@ void func_us_801CDB50(Entity* self) {
             prim = prim->next;
         }
 
-        prim = self->ext.hellfireBeastUnk2.prim;
+        prim = self->ext.hellfireBeastFlamePillar.prim;
         while (prim != NULL) {
             prim->p1 += 2;
             prim = prim->next;
         }
 
-        self->ext.hellfireBeastUnk2.unk84++;
-        if (self->ext.hellfireBeastUnk2.unk84 < 0) {
-            prim = self->ext.hellfireBeastUnk2.prim;
+        self->ext.hellfireBeastFlamePillar.castTimer++;
+        if (self->ext.hellfireBeastFlamePillar.castTimer < 0) {
+            prim = self->ext.hellfireBeastFlamePillar.prim;
             while (prim != NULL) {
                 prim->p1 += 6;
                 prim = prim->next;
             }
 
-            if (self->ext.hellfireBeastUnk2.unk80 < 0x20) {
-                self->ext.hellfireBeastUnk2.unk80++;
+            if (self->ext.hellfireBeastFlamePillar.unk80 < 0x20) {
+                self->ext.hellfireBeastFlamePillar.unk80++;
             }
         } else {
             self->hitboxWidth = 0xC;
             self->hitboxHeight = 0x30;
             self->hitboxOffX = -4;
             self->hitboxOffY = -0x30;
-            if (!(self->ext.hellfireBeastUnk2.unk84 % 8)) {
-                PlaySfxPositional(0x655);
+            if (!(self->ext.hellfireBeastFlamePillar.castTimer % 8)) {
+                PlaySfxPositional(SFX_EXPLODE_B);
             }
         }
-        if (self->ext.hellfireBeastUnk2.unk84 > 0x60) {
-            self->ext.hellfireBeastUnk2.unk80--;
+        if (self->ext.hellfireBeastFlamePillar.castTimer > 0x60) {
+            self->ext.hellfireBeastFlamePillar.unk80--;
             self->hitboxState = 0;
-            if (self->ext.hellfireBeastUnk2.unk80 < 0) {
+            if (self->ext.hellfireBeastFlamePillar.unk80 < 0) {
                 DestroyEntity(self);
             }
         }
@@ -1110,26 +1164,26 @@ void func_us_801CDB50(Entity* self) {
     }
 }
 
-extern EInit D_us_80181224;
-void func_us_801CE170(Entity* self) {
-    Entity* parent = self - 1;
+extern EInit g_EInitHellfireBeastHitbox;
+void EntityHellfireBeastHitbox(Entity* self) {
+    Entity* hellfireBeast = self - 1;
 
     if (!self->step) {
-        InitializeEntity(D_us_80181224);
+        InitializeEntity(g_EInitHellfireBeastHitbox);
         self->hitboxWidth = 0xA;
         self->hitboxHeight = 4;
         self->hitboxOffX = -0x24;
         self->hitboxOffY = 4;
     }
-    self->posX.i.hi = parent->posX.i.hi;
-    self->posY.i.hi = parent->posY.i.hi;
-    self->facingLeft = parent->facingLeft;
-    if (parent->animCurFrame == 0x23) {
+    self->posX.i.hi = hellfireBeast->posX.i.hi;
+    self->posY.i.hi = hellfireBeast->posY.i.hi;
+    self->facingLeft = hellfireBeast->facingLeft;
+    if (hellfireBeast->animCurFrame == 0x23) {
         self->hitboxState = 1;
     } else {
         self->hitboxState = 0;
     }
-    if (!parent->entityId) {
+    if (!hellfireBeast->entityId) {
         DestroyEntity(self);
     }
 }
