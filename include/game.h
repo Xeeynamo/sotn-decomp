@@ -334,6 +334,9 @@ extern u8 D_8D95C40[];
 typedef enum Elements {
     ELEMENT_NONE = 0,
     ELEMENT_UNK_1 = 0x1,
+    ELEMENT_UNK_2 = 0x2,
+    ELEMENT_UNK_4 = 0x4,
+    ELEMENT_UNK_8 = 0x8,
     ELEMENT_UNK_10 = 0x10, // Possibly unresistable, used by e_spikes
     ELEMENT_HIT = 0x20,
     ELEMENT_CUT = 0x40,

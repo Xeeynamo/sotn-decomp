@@ -38,64 +38,23 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, 2C048]
-      #- [0x3A8, .data, 2C048]
-      #- [0x454, .data, 2C048]
       - [0x46C, .data, 318CC]
       - [0x4D0, .data, 3410C]
       - [0x4E0, .data, 34B30]
       - [0x59C, .data, banks]
+      - [0x764, .data, 764]
       - [0x824, .data, cutscene]
-      - [0x8DC, .data, save_mgr_pre]
-      - [0x8E4, palette, memcard_0]
-      - [0x904, palette, memcard_1]
-      - [0x924, palette, memcard_2]
-      - [0x944, palette, memcard_3]
-      - [0x964, palette, memcard_4]
-      - [0x984, palette, memcard_5]
-      - [0x9A4, palette, memcard_6]
-      - [0x9C4, palette, memcard_7]
-      - [0x9E4, palette, memcard_8]
-      - [0xA04, palette, memcard_9]
-      - [0xA24, palette, memcard_10]
-      - [0xA44, palette, memcard_11]
-      - [0xA64, palette, memcard_12]
-      - [0xA84, palette, memcard_13]
-      - [0xAA4, palette, memcard_14]
-      - [0xAC4, palette, memcard_15]
-      - [0xAE4, ci4, memcard_0, 16, 48]
-      - [0xC64, ci4, memcard_1, 16, 48]
-      - [0xDE4, ci4, memcard_2, 16, 48]
-      - [0xF64, ci4, memcard_3, 16, 48]
-      - [0x10E4, ci4, memcard_4, 16, 48]
-      - [0x1264, ci4, memcard_5, 16, 48]
-      - [0x13E4, ci4, memcard_6, 16, 48]
-      - [0x1564, ci4, memcard_7, 16, 48]
-      - [0x16E4, ci4, memcard_8, 16, 48]
-      - [0x1864, ci4, memcard_9, 16, 48]
-      - [0x19E4, ci4, memcard_10, 16, 48]
-      - [0x1B64, ci4, memcard_11, 16, 48]
-      - [0x1CE4, ci4, memcard_12, 16, 48]
-      - [0x1E64, ci4, memcard_13, 16, 48]
-      - [0x1FE4, ci4, memcard_14, 16, 48]
-      - [0x2164, ci4, memcard_15, 16, 48]
-      - [0x22E4, .data, save_mgr]
+      - [0x8DC, .data, save_mgr]
       - [0x2584, data]
-      - [0x25FC, .data, config_us] # subweapons
-      #- [0x2700, .data, config_us] # equip
-      #- [0x5314, .data, config_us] # accessories
-      #- [0x5E54, .data, config_us] # menu
-      #- [0x600C, .data, config_us] # spells
-      #- [0x631C, .data, config_us] # relics
-      #- [0x64FC, .data, config_us] # enemies
-      #- [0xA37C, .data, config_us] # exp table
+      - [0x25FC, .data, config_us]
       - [0xA50C, .data, lba_stage]
       - [0xB2CC, .data, stream_info]
       - [0xB304, data]
       - [0xCD54, .data, CD54]
-      - [0xDBD4, data]
+      - [0xDBD4, .data, sprites]
+      - [0xF9A8, .data, F9A8]
       - [0x162F4, .data, libpress]
       - [0x16438, data]
-      - [0x176C0, rodata]
       - [0x27438, .rodata, 2C048] # strings in D_80180128
       #- [0x27620, .rodata, 2C048] # strings in D_801803D0
       #- [0x276A4, .rodata, 2C048] # strings func_801ACFBC

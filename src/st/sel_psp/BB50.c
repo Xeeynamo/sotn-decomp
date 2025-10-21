@@ -34,7 +34,7 @@ static u8 D_80180580[] = {
 
 #include "../../destroy_entity.h"
 
-static void SEL_SetStep(Entity* entity, u16 step) {
+static void SetStep(Entity* entity, u16 step) {
     entity->step = step;
     entity->step_s = 0;
     entity->pose = 0;
@@ -297,7 +297,7 @@ void func_801B5350(void) {
 
     case 2:
         if (!AnimateEntity(D_80180528, self)) {
-            SEL_SetStep(self, 3);
+            SetStep(self, 3);
         }
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         break;
@@ -391,7 +391,7 @@ void func_801B55C8(void) {
             self->unk5A = 0x48;
             self->animCurFrame = 0x2C;
             self->velocityX = FIX(-0.75);
-            SEL_SetStep(self, 2);
+            SetStep(self, 2);
         }
         break;
 
@@ -411,7 +411,7 @@ void func_801B55C8(void) {
             self->unk5A = 0x48;
             self->animCurFrame = 0x2C;
             self->facingLeft = 0;
-            SEL_SetStep(self, 4);
+            SetStep(self, 4);
         }
         break;
 
@@ -420,7 +420,7 @@ void func_801B55C8(void) {
             self->animSet = ANIMSET_OVL(3);
             self->unk5A = 0x46;
             self->animCurFrame = 0xC;
-            SEL_SetStep(self, 5);
+            SetStep(self, 5);
         }
         break;
 
@@ -430,7 +430,7 @@ void func_801B55C8(void) {
             self->unk5A = 0x48;
             self->facingLeft = 1;
             self->animCurFrame = 0x2C;
-            SEL_SetStep(self, 6);
+            SetStep(self, 6);
         }
         break;
 
@@ -439,7 +439,7 @@ void func_801B55C8(void) {
             self->animSet = ANIMSET_OVL(3);
             self->unk5A = 0x46;
             self->animCurFrame = 0x20;
-            SEL_SetStep(self, 7);
+            SetStep(self, 7);
         }
         self->ext.unkSelEnts.unk80.val -= FIX(0.75);
         break;
@@ -481,27 +481,27 @@ void func_801B585C(u16 arg0) {
         AnimateEntity(D_80180504, self);
         self->ext.unkSelEnts.unk80.val += FIX(1.5);
         if (self->ext.unkSelEnts.unk80.i.hi > 0x48) {
-            SEL_SetStep(self, 3);
+            SetStep(self, 3);
         }
         break;
 
     case 3:
         if (!AnimateEntity(D_80180538, self)) {
-            SEL_SetStep(self, 4);
+            SetStep(self, 4);
         }
         break;
 
     case 4:
         AnimateEntity(D_80180554, self);
         if (D_801BC3E8 & 8) {
-            SEL_SetStep(self, 5);
+            SetStep(self, 5);
         }
         break;
 
     case 5:
         self->facingLeft = 1;
         if (!AnimateEntity(D_80180528, self)) {
-            SEL_SetStep(self, 6);
+            SetStep(self, 6);
         }
         self->ext.unkSelEnts.unk80.val -= FIX(1.5);
         break;
@@ -824,7 +824,7 @@ void func_801B60D4(void) {
     case 3:
         func_801B5A7C();
         ent = &g_Entities[UNK_ENTITY_4];
-        SEL_EntityCutscene(ent);
+        OVL_EXPORT(EntityCutscene)(ent);
         func_801B4C68();
         func_801B519C();
         func_801B4D78();

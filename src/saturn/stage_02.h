@@ -60,7 +60,6 @@ Entity* AllocEntity(Entity*, Entity*);
 void InitializeEntity(u16 arg0[]);
 void func_801C29B0(s32 sfxId); // sfx
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
-void SetStep(u8 step);
 
 void func_0600AFA8(Unk0600B344*, u32);
 void func_0600B004(Unk0600B344*, s32);
