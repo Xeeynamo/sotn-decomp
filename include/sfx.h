@@ -273,9 +273,7 @@ enum {
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
 // STAGE CAT
-#define SFX_GRAVE_KEEPER_GRAAH 0x754
-#define SFX_GRAVE_KEEPER_HIYAH 0x755
-#define SFX_GRAVE_KEEPER_DEATH 0x756
+
 #define SFX_DISCUS_LORD_HEY 0x763
 #define SFX_DISCUS_LORD_DEATH_VORTEX 0x764
 #define SFX_DISCUS_BUZZ 0x765
@@ -347,6 +345,12 @@ enum {
 
 // The VAB IDs appear in large chunks so all sounds proceeding
 // a vabid label comment will belong in that VAB group unless noted.
+//
+// Some enemy sfxIDs in vabID 3 can sound different depending on which
+// overlay is loaded.  For example, Grave Keeper has three sound calls
+// in ARE and CAT, but the VH files are different between them so 0x754
+// plays a different sample in ARE.  0x709 is another example; the pitch
+// is higher in NP3, but normal for RCHI and NZ0.
 
 #ifdef VERSION_BETA
 // MAD uses an earlier build and has different sfx IDs
@@ -638,7 +642,7 @@ enum Sfx {
     /* 0x708 */ SFX_RIC_HYDRO_STORM_ATTACK,
 
     // vabid 3
-    /* 0x709 */ SFX_SLOGRA_ROAR,
+    /* 0x709 */ SFX_SLOGRA_ROAR, // different pitch in NP3
     /* 0x70A */ SFX_SLOGRA_ROAR_DEFEAT,
     /* 0x70B */ SFX_SLOGRA_PAIN_A, // Used for Gaibon
     /* 0x70C */ SFX_SLOGRA_PAIN_B,
@@ -714,8 +718,15 @@ enum Sfx {
     /* 0x74E */ SFX_BLADE_ENEMY_ATTACK,
     /* 0x74F */ SFX_BLADE_ENEMY_PAIN,
     /* 0x750 */ SFX_BLADE_ENEMY_DEATH,
-    SFX_CTULHU_LAUGH = 0x758,
-    SFX_CTULHU_ROAR,
+    /* 0x751 */ SFX_ARMOR_LORD_ATTACK,
+    /* 0x752 */ SFX_ARMOR_LORD_FIRE_ATTACK,
+    /* 0x753 */ SFX_ARMOR_LORD_DEATH,
+    /* 0x754 */ SFX_GRAVE_KEEPER_GRAAH, // Audio is different in ARE
+    /* 0x755 */ SFX_GRAVE_KEEPER_HIYAH, // Same audio in ARE and CAT
+    /* 0x756 */ SFX_GRAVE_KEEPER_DEATH,
+    /* 0x757 */ SFX_CTULHU_DEATH,
+    /* 0x758 */ SFX_CTULHU_LAUGH,
+    /* 0x759 */ SFX_CTULHU_ROAR,
     SFX_UNK_761 = 0x761,
     SFX_SPEAR_GUARD_DEATH = 0x771,
     SFX_UNK_77C = 0x77C,
