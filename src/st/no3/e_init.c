@@ -86,7 +86,7 @@ void EntityCastleDoorTransition(Entity* self);
 void EntityCastleBridge(Entity* self);
 void EntityDistantBackgroundTrees(Entity* self);
 void EntityBackgroundCastleWall(Entity* self);
-void NO3_EntityCutscene(Entity* self);
+void OVL_EXPORT(EntityCutscene)(Entity* self);
 void EntityDeathCutsceneManager(Entity* self);
 void EntityDeathStolenItem(Entity* self);
 void EntityDeath(Entity* self);
@@ -186,7 +186,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCastleBridge,
     EntityDistantBackgroundTrees,
     EntityBackgroundCastleWall,
-    NO3_EntityCutscene,
+    OVL_EXPORT(EntityCutscene),
     EntityDeathCutsceneManager,
     EntityDeathStolenItem,
     EntityDeath,
