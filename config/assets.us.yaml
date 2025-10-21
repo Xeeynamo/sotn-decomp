@@ -526,6 +526,17 @@ files:
           - [0x18838, skip] # tile data
           - [0x26638, skip] # tile definitions
           - [0x2EA68, skip] # sprites
+  - target: disks/us/ST/NO4/NO4.BIN
+    asset_path: assets/st/no4
+    src_path: src/st/no4
+    splat_config_path: config/splat.us.stno4.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x5354, cutscene, cutscene_data_ferryman_left_psx]
+          - [0x53B7, cutscene, cutscene_data_ferryman_right_psx]
+          - [0x5400, skip]
   - target: disks/us/ST/NP3/NP3.BIN
     asset_path: assets/st/np3
     src_path: src/st/np3

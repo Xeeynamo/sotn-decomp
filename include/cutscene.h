@@ -65,6 +65,7 @@ typedef enum {
 #define CS_LINE_SPACING 12
 #define CS_LINE_MAX 4
 #endif
+#define ASCII_SPACE 32
 
 typedef struct {
     /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character
@@ -130,15 +131,23 @@ typedef struct {
     /* 0x06 */ s16 nextCharY;         // next char y coord
     /* 0x08 */ s16 portraitAnimTimer; // portrait animation timer
     /* 0x0A */ u8 nextCharTimer;
-    /* 0x0B */ u8 unkB;
+    /* 0x0B */ u8 unk17;
     // Of course, offsets beyond here won't be right on PSP
 #if defined(VERSION_PSP)
-    /* 0x0C */ Primitive* prim[6]; // for dialogue graphics rendering
+    /* 0x0C */ Primitive* prim[5]; // for dialogue graphics rendering
+    /* 0x20 */ s32 nextLineX;
 #else
     /* 0x0C */ Primitive* prim[4]; // for dialogue graphics rendering
 #endif
     /* 0x1C */ s32 primIndex[3]; // primIndices: unk, actorName, unk
-} Dialogue3;                     // size = 0x28
+    /* 0x30 */ s16 startX;
+    /* 0x32 */ s16 nextLineY;
+    /* 0x34 */ s16 startY;
+    /* 0x36 */ u16 clutIndex;
+    /* 0x38 */ u16 unk12;
+    /* 0x3A */ s16 : 16;
+    /* 0x3C */ u16 unk3C;
+} Dialogue3; // size = 0x28
 
 // sel_psp/cutscene.c
 typedef struct {
