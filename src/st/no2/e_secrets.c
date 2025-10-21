@@ -170,7 +170,7 @@ void func_us_801B5FB8(Entity* self) {
     FntPrint("timer %x\n", self->ext.breakableNo2.unk80);
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801808A4);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 0;
         if (g_CastleFlags[NO2_SECRET_WALL_OPEN]) {
             for (i = 0; i < 10; i++) {
@@ -326,7 +326,7 @@ void func_us_801B65A4(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801808A4);
+        InitializeEntity(g_EInitEnvironment);
         self->hitboxState = 0;
         self->animCurFrame = 0;
         break;
@@ -444,7 +444,7 @@ void func_us_801B68EC(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801808A4);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 0;
         self->drawFlags |= FLAG_DRAW_ROTATE;
         self->rotate = 0xC00;

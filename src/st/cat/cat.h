@@ -11,6 +11,11 @@
 
 #include "../pfn_entity_update.h"
 
+enum OVL_EXPORT(Palette) {
+    PAL_NONE = 0,
+    PAL_SPIKES_DUST = 0x09B,
+};
+
 enum OVL_EXPORT(Entities) {
     E_NONE,
     E_UNK_BREAKABLE,         // EntityUnkBreakable
@@ -40,11 +45,11 @@ enum OVL_EXPORT(Entities) {
     E_UNK_19,                // func_us_801C56A0
     E_UNK_1A,                // func_us_801CA13C
     E_UNK_1B,                // func_us_801B732C
-    E_SPIKES,                // func_us_801B852C
-    E_SPIKES_PARTS,          // func_us_801B7FE0
-    E_SPIKES_DUST,           // func_us_801B7F2C
+    E_SPIKES,                // EntitySpikes
+    E_SPIKES_PARTS,          // EntitySpikesParts
+    E_SPIKES_DUST,           // EntitySpikesDust
     E_UNK_1F,                // func_us_801B7B64
-    E_SPIKES_DAMAGE,         // func_us_801B86B0
+    E_SPIKES_DAMAGE,         // EntitySpikesDamage
     E_UNK_21,                // func_us_801B8AD0
     E_UNK_22,                // func_us_801B87E8
     E_UNK_23,                // func_us_801BACF4
@@ -100,8 +105,11 @@ enum OVL_EXPORT(Entities) {
     NUM_ENTITIES,
 };
 
-extern EInit g_EInitDamageNum;
+extern EInit g_EInitParticle;
+extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
+extern EInit g_EInitDamageNum;
+extern EInit g_EInitEnvironment;
 extern EInit g_EInitGremlin;
 extern EInit g_EInitGremlinFire;
 extern EInit g_EInitLockCamera;
