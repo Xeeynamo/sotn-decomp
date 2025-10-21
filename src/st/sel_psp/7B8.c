@@ -1,12 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../sel/sel.h"
 
+extern u8* D_8018C404;
 extern char g_AsciiSet[];
-extern s32 D_psp_09283BE8;
-extern s32 D_psp_09283CA8;
-extern s32 D_psp_09283D30;
-extern s32 D_psp_09283DC8;
-extern s32 D_psp_09283E48;
 extern char** g_SaveAreaNamesSecondPart;
 extern char** g_SaveAreaNames;
 extern char* D_psp_091CE200;
@@ -40,20 +36,45 @@ static char** D_80180454;
 static s32 g_SelNextCrossPressEngStep;
 static s32 g_SelEng220NextStep;
 
+void OVL_EXPORT(Update)(void);
+void HandleTitleScreen(void);
+void func_psp_090FFAB8(void);
+void OVL_EXPORT(Init)(s32 objLayoutId);
+void func_801B60D4(void);
+void func_801B17C8(void);
+
 // DATA
+Overlay OVL_EXPORT(Overlay) = {
+    /* 0x00 */ OVL_EXPORT(Update),
+    /* 0x04 */ HandleTitleScreen,
+    /* 0x08 */ func_psp_090FFAB8,
+    /* 0x0C */ OVL_EXPORT(Init),
+    /* 0x10 */ NULL,
+    /* 0x14 */ g_SpriteBanks,
+    /* 0x18 */ g_Cluts,
+    /* 0x1C */ NULL,
+    /* 0x20 */ NULL,
+    /* 0x24 */ g_EntityGfxs,
+    /* 0x28 */ func_801B60D4,
+    /* 0x2C */ NULL,
+    /* 0x30 */ &D_8018C404,
+    /* 0x34 */ NULL,
+    /* 0x38 */ NULL,
+    /* 0x3C */ func_801B17C8,
+};
 
 // The five possible header options that are displayed on the top-left for each
 // sub-menu in the main menu. The same graphics is also re-used for the main
 // menu selectable options.
-extern s32 D_psp_09283A48[];
-extern s32 D_psp_09283A60[];
+static s32 g_MenuHeadGfxU[] = {0x00, 0x80, 0x00, 0x00, 0x00};
+static s32 g_MenuHeadGfxV[] = {0xC0, 0x90, 0xE0, 0x80, 0xA0};
 
-extern s32 D_psp_09283A78[];
-extern s32 D_psp_09283A98[];
-extern s32 D_psp_09283AB8[];
-extern s32 D_psp_09283AD8[];
-extern s32 D_psp_09283AF8[];
-extern s32 D_psp_09283B18[];
+static s32 g_MenuUnk084X[] = {0x10, 0x10, 0x18, 0x3D, 0x68, 0x80, 0x18, 0x98};
+static s32 g_MenuUnk084Y[] = {0x08, 0x18, 0x38, 0x38, 0x38, 0x38, 0x40, 0x40};
+static s32 g_MenuUnk084U0[] = {0x80, 0xA8, 0xE0, 0xE8, 0xE0, 0xE0, 0xE8, 0xF0};
+static s32 g_MenuUnk084V0[] = {0xF0, 0xF0, 0x80, 0x80, 0x88, 0x88, 0x88, 0x88};
+static s32 g_MenuUnk084U1[] = {0x28, 0x28, 0x08, 0x18, 0x08, 0x08, 0x08, 0x08};
+static s32 g_MenuUnk084V1[] = {0x10, 0x10, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08};
 
 #include "../../get_lang.h"
 
@@ -80,12 +101,12 @@ static void func_801AC084(s32 arg0, s32 ypos) {
 
     prim = &g_PrimBuf[D_801BAF18[arg0][0]];
     for (i = 0; i < 8; i++, prim = prim->next) {
-        prim->x0 = D_psp_09283A78[i] + 0x68;
-        prim->y0 = D_psp_09283A98[i] + 0x58 + ypos;
-        prim->u0 = D_psp_09283AB8[i];
-        prim->v0 = D_psp_09283AD8[i];
-        prim->u1 = D_psp_09283AF8[i];
-        prim->v1 = D_psp_09283B18[i];
+        prim->x0 = g_MenuUnk084X[i] + 0x68;
+        prim->y0 = g_MenuUnk084Y[i] + 0x58 + ypos;
+        prim->u0 = g_MenuUnk084U0[i];
+        prim->v0 = g_MenuUnk084V0[i];
+        prim->u1 = g_MenuUnk084U1[i];
+        prim->v1 = g_MenuUnk084V1[i];
         prim->tpage = 0xC;
         prim->clut = 0x200;
         prim->priority = 0x11;
@@ -112,7 +133,7 @@ void InitMainMenuUI(void) {
         D_801BAF18[i + 1][0] = g_api.AllocPrimitives(PRIM_GT4, 1);
         prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
         SetTexturedPrimRect(prim, i * 0x40 - 0x20, i * 0x28, 0x7F, 0x1F,
-                            D_psp_09283A48[i], D_psp_09283A60[i]);
+                            g_MenuHeadGfxU[i], g_MenuHeadGfxV[i]);
         func_801B1D88(prim);
         prim->tpage = 0xC;
         prim->clut = 0x200;
@@ -435,40 +456,44 @@ void func_801ACF7C(void) {
 #endif
 }
 
-static char D_psp_09283E80[] =
-    "\x70\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09";
-static char D_psp_09283E98[] =
-    "\x70\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09";
-static char D_psp_09283EB0[] =
-    "\x70\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09";
-static char D_psp_09283EC8[] =
-    "\x70\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09";
-static char D_psp_09283EE0[] =
-    "\x70\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09"
-    "\x78\x3E\x28\x09";
+static char* D_psp_09283BE8[] = {
+    _S("Select"),           _S("Decide          "), _S("Cancel          "),
+    _S("Input           "), _S("none            "), _S("Yes             "),
+    _S("No              "), _S("Confirm         "), _S("none            "),
+};
+static char* D_psp_09283CA8[] = {
+    _S("Elegir"),
+    _S("Decidir          "),
+    _S("Anular          "),
+    _S("Entrada          "),
+    _S("ninguno            "),
+    _S("Sí             "),
+    _S("No              "),
+    _S("Confirmar        "),
+    _S("ninguno            "),
+};
+static char* D_psp_09283D30[] = {
+    _S("Selez."), _S("Decidi"), _S("Annulla"), _S("Immetti"), _S("nessuno"),
+    _S("Sì"),     _S("No"),     _S("Confer."), _S("nessuno"),
+};
+static char* D_psp_09283DC8[] = {
+    _S("Wählen"), _S("Entsch."), _S("Abbruch"), _S("Eingabe"), _S("none"),
+    _S("Ja"),     _S("Nein"),    _S("Confirm"), _S("Bestät."),
+};
+static char* D_psp_09283E48[] = {
+    _S("Sélect."), _S("Décider"), _S("Annuler"), _S("Saisir"), _S("none"),
+    _S("Oui"),     _S("Non"),     _S("Valider"), _S("none"),
+};
+
+static char* D_psp_09283E80[] = {"-*****-", " ", " ", " ", " "};
+static char* D_psp_09283E98[] = {"-*****-", " ", " ", " ", " "};
+static char* D_psp_09283EB0[] = {"-*****-", " ", " ", " ", " "};
+static char* D_psp_09283EC8[] = {"-*****-", " ", " ", " ", " "};
+static char* D_psp_09283EE0[] = {"-*****-", " ", " ", " ", " "};
 
 void func_psp_092391A0(void) {
-    D_801803A8 = GetLang(&D_psp_09283BE8, &D_psp_09283E48, &D_psp_09283CA8,
-                         &D_psp_09283DC8, &D_psp_09283D30);
+    D_801803A8 = GetLang(D_psp_09283BE8, D_psp_09283E48, D_psp_09283CA8,
+                         D_psp_09283DC8, D_psp_09283D30);
     D_80180454 = GetLang(D_psp_09283E80, D_psp_09283EE0, D_psp_09283E98,
                          D_psp_09283EC8, D_psp_09283EB0);
 }
@@ -1054,7 +1079,7 @@ void func_801AE9A8(void) {
         func_801ACBE4(i + 1, 4);
         prim = &g_PrimBuf[D_801BAF18[i + 1][0]];
         SetTexturedPrimRect(prim, (i * 0x40) - 0x20, i * 0x28, 0x7F, 0x1F,
-                            D_psp_09283A48[i], D_psp_09283A60[i]);
+                            g_MenuHeadGfxU[i], g_MenuHeadGfxV[i]);
     }
 
     DrawNavigationTips(Tips_Generic);

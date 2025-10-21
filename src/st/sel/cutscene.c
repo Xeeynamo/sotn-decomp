@@ -124,7 +124,7 @@ static void ScaleCutsceneAvatar(u8 ySteps, Entity* self) {
     g_Dialogue.portraitAnimTimer++;
 }
 
-void SEL_EntityCutscene(Entity* entity) {
+void OVL_EXPORT(EntityCutscene)(Entity* self) {
     s16 x, y;
     RECT* rect;
     Primitive* prim;
@@ -133,16 +133,16 @@ void SEL_EntityCutscene(Entity* entity) {
     s32 nextChar2;
     s32 var_s7;
     u32 ptr;
-    switch (entity->step) {
+    switch (self->step) {
     case 0:
         if (SetCutsceneScript(D_8018B304)) {
-            entity->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
-            entity->primIndex = g_Dialogue.primIndex[2];
+            self->flags |= FLAG_HAS_PRIMS | FLAG_UNK_2000;
+            self->primIndex = g_Dialogue.primIndex[2];
             D_801BC3E8 = 0;
             D_801D6B00 = 0;
             g_SkipCutscene = 0;
             g_CutsceneHasControl = 1;
-            entity->step++;
+            self->step++;
         }
         break;
 
@@ -155,7 +155,7 @@ void SEL_EntityCutscene(Entity* entity) {
             nextChar = *g_Dialogue.scriptCur++;
             switch (nextChar) {
             case 0:
-                entity->step = 7;
+                self->step = 7;
                 return;
 
             case 1:
@@ -175,15 +175,15 @@ void SEL_EntityCutscene(Entity* entity) {
                     if (g_Dialogue.nextCharY > 3) {
                         g_Dialogue.unk12 |= 1;
                         g_Dialogue.portraitAnimTimer = 0;
-                        entity->step_s = 0;
-                        entity->step++;
+                        self->step_s = 0;
+                        self->step++;
                     } else {
                         continue;
                     }
                 } else {
                     g_Dialogue.portraitAnimTimer = 0;
-                    entity->step_s = 0;
-                    entity->step++;
+                    self->step_s = 0;
+                    self->step++;
                 }
                 return;
 
@@ -240,9 +240,9 @@ void SEL_EntityCutscene(Entity* entity) {
                 CutsceneUnk4();
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_DEFAULT;
-                DrawCutsceneActorName(i, entity);
+                DrawCutsceneActorName(i, self);
                 g_Dialogue.portraitAnimTimer = 6;
-                entity->step = 3;
+                self->step = 3;
                 return;
 
             case 6:
@@ -257,7 +257,7 @@ void SEL_EntityCutscene(Entity* entity) {
                 g_api.FreePrimitives(g_Dialogue.primIndex[1]);
                 g_Dialogue.primIndex[1] = -1;
                 g_Dialogue.portraitAnimTimer = 6;
-                entity->step = 4;
+                self->step = 4;
                 return;
 
             case 7:
@@ -276,8 +276,8 @@ void SEL_EntityCutscene(Entity* entity) {
                 prim->u0 = 0;
                 prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_TRANSP;
                 g_Dialogue.portraitAnimTimer = 24;
-                entity->step = 5;
-                entity->step_s = 0;
+                self->step = 5;
+                self->step_s = 0;
                 return;
 
             case 8:
@@ -285,7 +285,7 @@ void SEL_EntityCutscene(Entity* entity) {
                     continue;
                 }
                 g_Dialogue.portraitAnimTimer = 24;
-                entity->step = 6;
+                self->step = 6;
                 return;
 
             case 9:
@@ -443,9 +443,9 @@ void SEL_EntityCutscene(Entity* entity) {
         g_Dialogue.nextCharX += 2;
         break;
     case 2:
-        ScaleCutsceneAvatar(2, entity);
+        ScaleCutsceneAvatar(2, self);
         if (g_Dialogue.portraitAnimTimer >= 6) {
-            entity->step--;
+            self->step--;
         }
         break;
 
@@ -457,7 +457,7 @@ void SEL_EntityCutscene(Entity* entity) {
         prim->y2 = prim->y3 += 6;
         g_Dialogue.portraitAnimTimer--;
         if (!g_Dialogue.portraitAnimTimer) {
-            entity->step = 1;
+            self->step = 1;
             prim = &g_PrimBuf[g_Dialogue.primIndex[1]];
             while (prim != NULL) {
                 prim->drawMode = DRAW_DEFAULT;
@@ -477,7 +477,7 @@ void SEL_EntityCutscene(Entity* entity) {
         }
         g_Dialogue.portraitAnimTimer--;
         if (!g_Dialogue.portraitAnimTimer) {
-            entity->step = 1;
+            self->step = 1;
         }
         break;
 
@@ -494,7 +494,7 @@ void SEL_EntityCutscene(Entity* entity) {
             }
         } else {
             if (!g_Dialogue.portraitAnimTimer) {
-                entity->step = 1;
+                self->step = 1;
             }
             prim->y2 = prim->y3 += 6;
         }
@@ -512,7 +512,7 @@ void SEL_EntityCutscene(Entity* entity) {
             }
         } else {
             if (!g_Dialogue.portraitAnimTimer) {
-                entity->step = 1;
+                self->step = 1;
                 prim->drawMode = DRAW_HIDE;
             } else {
                 prim->y2 = prim->y3 -= 6;
