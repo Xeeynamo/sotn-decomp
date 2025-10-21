@@ -75,7 +75,7 @@ void EntityElevator(Entity*);
 void func_801B6DE4(Entity*);
 void EntityLifeUpSpawn(Entity*);
 void EntitySealedDoor(Entity*);
-void NZ0_EntityCutscene(Entity*);
+void OVL_EXPORT(EntityCutscene)(Entity*);
 void EntityMariaNZ0(Entity*);
 void func_801B8E0C(Entity*);
 

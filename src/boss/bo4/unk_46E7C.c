@@ -930,7 +930,7 @@ void OVL_EXPORT(ControlMistForm)(void) {
         case 0:
             OVL_EXPORT(CheckMoveDirection)();
             g_Dop.unk44 = g_Dop.unk46 = g_Dop.unk48 = 0;
-            g_api.func_800EA5E4(0x8003U);
+            g_api.func_800EA5E4(ANIMSET_OVL(3));
             OVL_EXPORT(func_8010FAF4)();
             OVL_EXPORT(CreateEntFactoryFromEntity)(g_CurrentEntity, 0x49U, 0);
             if (DOPPLEGANGER.velocityX > 0) {

@@ -28,11 +28,11 @@ void func_us_801C5DF4(Entity* self);
 void func_us_801C56A0(Entity* self);
 void func_us_801CA13C(Entity* self);
 void func_us_801B732C(Entity* self);
-void func_us_801B852C(Entity* self);
-void func_us_801B7FE0(Entity* self);
-void func_us_801B7F2C(Entity* self);
+void EntitySpikes(Entity* self);
+void EntitySpikesParts(Entity* self);
+void EntitySpikesDust(Entity* self);
 void func_us_801B7B64(Entity* self);
-void func_us_801B86B0(Entity* self);
+void EntitySpikesDamage(Entity* self);
 void func_us_801B8AD0(Entity* self);
 void func_us_801B87E8(Entity* self);
 void func_us_801BACF4(Entity* self);
@@ -114,11 +114,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C56A0,
     func_us_801CA13C,
     func_us_801B732C,
-    func_us_801B852C,
-    func_us_801B7FE0,
-    func_us_801B7F2C,
+    EntitySpikes,
+    EntitySpikesParts,
+    EntitySpikesDust,
     func_us_801B7B64,
-    func_us_801B86B0,
+    EntitySpikesDamage,
     func_us_801B8AD0,
     func_us_801B87E8,
     func_us_801BACF4,
@@ -177,7 +177,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 EInit D_us_8018111C = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x002};
-EInit D_us_80181140 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x004};
+EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x005};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x001};
@@ -193,7 +193,7 @@ EInit D_us_801811B8 = {ANIMSET_OVL(0x05), 0x15, 0x48, 0x0200, 0x02F};
 
 EInit D_us_801811C4 = {ANIMSET_OVL(0x02), 0x01, 0x00, 0x0000, 0x005};
 EInit D_us_801811D0 = {ANIMSET_OVL(0x02), 0x03, 0x00, 0x0000, 0x005};
-EInit D_us_801811DC = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
+EInit g_EInitEnvironment = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
 EInit D_us_801811E8 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x005};
 EInit D_us_801811F4 = {ANIMSET_OVL(0x01), 0x13, 0x00, 0x0000, 0x000};
 
@@ -221,7 +221,7 @@ EInit g_EInitTombstone = {ANIMSET_OVL(0x09), 0x15, 0x4D, 0x0236, 0x071};
 
 // Gremlin
 EInit g_EInitGremlin = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x0E1};
-EInit D_us_801812F0 = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x005};
+EInit D_us_801812F0 = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x005}; // unused
 EInit g_EInitGremlinFire = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x0E2};
 
 // Large Slime
@@ -238,7 +238,7 @@ EInit D_us_80180A88 = {ANIMSET_OVL(0x06), 0x00, 0x49, 0x0250, 0x03E};
 EInit g_EInitThornweed = {ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x09D};
 
 // Corpseweed
-EInit D_us_801812F4 = {ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x09E};
+EInit D_us_801812F4 = {ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x09E}; // unused
 EInit g_EInitCorpseweed = {ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x09F};
 EInit g_EInitCorpseweedProjectile = {
     ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x0A0};

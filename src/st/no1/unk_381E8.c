@@ -738,7 +738,7 @@ void func_us_801B9BE4(Entity* self) {
             self->animCurFrame = 0x1D;
             self->step = 1;
             if (g_CastleFlags[NO1_ELEVATOR_ACTIVATED]) {
-                g_api.func_800EA5E4(0x8003);
+                g_api.func_800EA5E4(ANIMSET_OVL(3));
                 g_api.PlaySfxVolPan(0x7AA, 0, 0);
                 self->hitboxState = 0;
                 self->step = 2;
@@ -779,7 +779,7 @@ void func_us_801B9BE4(Entity* self) {
 #endif
                 }
                 g_api.func_80102CD8(1);
-                g_api.func_800EA5E4(0x8003);
+                g_api.func_800EA5E4(ANIMSET_OVL(3));
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
                 g_api.PlaySfxVolPan(0x7AA, 0x7F, 0);
                 g_CastleFlags[NO1_ELEVATOR_ACTIVATED] = 1;
