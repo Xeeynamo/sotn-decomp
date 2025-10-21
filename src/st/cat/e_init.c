@@ -53,8 +53,8 @@ void EntityDiscusChain(Entity* self);
 void EntityHellfireBeast(Entity* self);
 void EntityHellfireBeastThorsHammer(Entity* self);
 void EntityHellfireBeastFlamePillar(Entity* self);
-void func_us_801CD614(Entity* self);
-void EntityHellfireBeastHitbox(Entity* self);
+void EntityHellfireBeastFlamePillarAnimation(Entity* self);
+void EntityHellfireBeastPunchHitbox(Entity* self);
 void func_us_801C839C(Entity* self);
 void func_us_801C8CE0(Entity* self);
 void func_us_801C7F84(Entity* self);
@@ -139,8 +139,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityHellfireBeast,
     EntityHellfireBeastThorsHammer,
     EntityHellfireBeastFlamePillar,
-    func_us_801CD614,
-    EntityHellfireBeastHitbox,
+    EntityHellfireBeastFlamePillarAnimation,
+    EntityHellfireBeastPunchHitbox,
     func_us_801C839C,
     func_us_801C8CE0,
     func_us_801C7F84,
@@ -203,7 +203,7 @@ EInit g_EInitDiscus = {ANIMSET_OVL(0x04), 0x10, 0x49, 0x0224, 0x04E};
 
 // Hellfire Beast
 EInit g_EInitHellfireBeast = {ANIMSET_OVL(0x04), 0x19, 0x49, 0x0224, 0x047};
-EInit g_EInitHellfireBeastHitbox = {
+EInit g_EInitHellfireBeastPunchHitbox = {
     ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x04A};
 EInit g_EInitHellfireBeastFlamePillar = {
     ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x048};
