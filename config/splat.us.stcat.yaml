@@ -55,7 +55,7 @@ segments:
       - [0x1E50, .data, e_collect]
       - [0x21A4, data]
       - [0x22D4, .data, e_discus_lord]
-      - [0x23F0, data]
+      - [0x23F0, .data, e_hellfire_beast]
       - [0x24C8, .data, e_particles]
       - [0x2548, .data, e_room_fg]
       - [0x25D4, .data, e_lossoth]

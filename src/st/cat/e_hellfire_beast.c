@@ -1,9 +1,38 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cat.h"
 
-extern Point16 D_us_8018248C[];
-extern s16 D_us_801824B0[];
-extern u8 D_us_801824C0[];
+static u8 D_us_801823F0[2][3] = {{0x02, 0x01, 0x07}, {0x07, 0x04, 0x01}};
+static u16 D_us_801823F8[] = {0x016C, 0x016D};
+static u16 D_us_801823FC[] = {0x0033, 0x0034};
+static s16 D_us_80182400[] = {
+    0x0000, 0x002E, 0x0000, 0x0004, 0x0008, 0xFFFC, 0xFFF0, 0x0000};
+static s16 D_us_80182410[] = {
+    0x0000, 0x0008, 0x0000, 0x0004, 0x0008, 0xFFFC, 0xFFF0, 0x0000};
+static s16 D_us_80182420[] = {0x0000, 0x002E, 0x0020, 0x0000};
+static u8 D_us_80182428[] = {
+    0x07, 0x19, 0x07, 0x1A, 0x07, 0x1B, 0x06, 0x1C, 0x07, 0x1D, 0x00, 0x00};
+static u8 D_us_80182434[] = {0x26, 0x1E, 0x05, 0x1F, 0x03, 0x20, 0x03, 0x21,
+                             0x01, 0x22, 0x01, 0x23, 0xFF, 0x00, 0x00, 0x00};
+static u8 D_us_80182444[] = {
+    0x04, 0x24, 0x04, 0x25, 0x06, 0x26, 0x02, 0x27, 0x03, 0x28,
+    0x02, 0x29, 0x10, 0x2A, 0x05, 0x25, 0xFF, 0x00, 0x00, 0x00};
+static u8 D_us_80182458[] = {
+    0x01, 0x22, 0x03, 0x21, 0x03, 0x20, 0x05, 0x1F, 0x04, 0x19, 0xFF, 0x00};
+static u8 D_us_80182464[] = {
+    0x04, 0x24, 0x02, 0x25, 0x02, 0x27, 0x04, 0x19, 0xFF, 0x00, 0x00, 0x00};
+static u8 D_us_80182470[] = {
+    0x27, 0x19, 0x02, 0x24, 0x02, 0x25, 0x02, 0x28, 0x03, 0x33,
+    0x02, 0x34, 0x02, 0x35, 0x02, 0x34, 0xFF, 0x00, 0x00, 0x00};
+static u8 D_us_80182484[] = {0x01, 0x34, 0x01, 0x36, 0x00, 0x00, 0x00, 0x00};
+
+extern Point16 D_us_8018248C[] = {
+    {.x = 0xFFE0, .y = 0xFFE6}, {.x = 0xFFFF, .y = 0xFFDE},
+    {.x = 0xFFEB, .y = 0xFFD4}, {.x = 0xFFF0, .y = 0xFFE8},
+    {.x = 0xFFE2, .y = 0x0001}, {.x = 0xFFF3, .y = 0x0001}};
+extern s16 D_us_801824A4[] = {0x0020, 0x0028, 0x0040, 0x0068, 0x0060, 0x0064};
+extern s16 D_us_801824B0[] = {
+    0x0000, 0x0200, 0x0380, 0x0600, 0xF800, 0xFE00, 0xF280, 0xFA00};
+extern u8 D_us_801824C0[] = {0x28, 0x1E, 0x10, 0x00, 0x2C, 0x08, 0x20, 0x1C};
 
 void func_us_801CBE14(void) {
     long p, flag;
@@ -144,21 +173,6 @@ void func_us_801CBE14(void) {
 }
 
 extern EInit D_us_80181218;
-extern u8 D_us_801823F0[2][3];
-extern u16 D_us_801823F8[];
-extern u16 D_us_801823FC[];
-extern s16 D_us_80182400[];
-extern s16 D_us_80182410[];
-extern s16 D_us_80182420[];
-extern u8 D_us_80182428[];
-extern u8 D_us_80182434[];
-extern u8 D_us_80182444[];
-extern u8 D_us_80182458[];
-extern u8 D_us_80182464[];
-extern u8 D_us_80182470[];
-extern u8 D_us_80182484[];
-extern s16 D_us_801824A4[];
-
 void func_us_801CC2E4(Entity* self) {
     Primitive* prim; // s0
     Entity* entity;  // s1
@@ -513,7 +527,6 @@ void func_us_801CC2E4(Entity* self) {
 }
 
 extern EInit D_us_8018123C;
-
 void func_us_801CCEF0(Entity* self) {
     u8 sp3F;       // sp3F
     s16 angle;     // sp3C
@@ -804,6 +817,7 @@ void func_us_801CD614(Entity* self) {
     }
 }
 
+extern Primitive* FindFirstUnkPrim(Primitive* prim);
 void func_us_801CD728(Primitive* prim) {
     Primitive* p;
     s16 posX;   // s3
@@ -903,7 +917,6 @@ void func_us_801CD728(Primitive* prim) {
 }
 
 extern EInit D_us_80181230;
-
 void func_us_801CDB50(Entity* self) {
     DRAWENV drawEnv;                                  // sp2C
     RECT rect = {.x = 0, .y = 256, .w = 64, .h = 64}; // sp24
@@ -1098,7 +1111,6 @@ void func_us_801CDB50(Entity* self) {
 }
 
 extern EInit D_us_80181224;
-
 void func_us_801CE170(Entity* self) {
     Entity* parent = self - 1;
 
