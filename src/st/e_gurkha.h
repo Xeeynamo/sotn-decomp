@@ -216,7 +216,7 @@ void EntityGurkha(Entity* self) {
         func_801CE1E8(12);
     }
     if ((self->flags & FLAG_DEAD) && (self->step < 24)) {
-        PlaySfxPositional(0x742);
+        PlaySfxPositional(SFX_GURKHA_DEATH);
         func_801CE1E8(24);
     }
     switch (self->step) {
@@ -428,7 +428,7 @@ void EntityGurkha(Entity* self) {
             func_801CE2CC(var_s1);
             polarPlacePartsList(D_80182F9C);
             if (!self->ext.GH_Props.unkB0[0] && !self->ext.GH_Props.unkB4[0]) {
-                PlaySfxPositional(0x740);
+                PlaySfxPositional(SFX_GURKHA_ATTACK);
                 // we appear to write 0x10 twice here, weird
                 self->ext.GH_Props.unk80 = 0x10;
                 ent_s0 = self + 15;
@@ -547,7 +547,7 @@ void EntityGurkha(Entity* self) {
         break;
     case 12:
         if (!self->step_s) {
-            PlaySfxPositional(0x741);
+            PlaySfxPositional(SFX_GURKHA_PAIN);
             self->step_s++;
         }
         if (self->ext.GH_Props.unk84 == 1) {

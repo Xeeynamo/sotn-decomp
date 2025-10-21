@@ -13,7 +13,7 @@ void EntitySkullLord(Entity* self) {
     s16 angle;
 
     if ((self->flags & FLAG_DEAD) && self->step != 4) {
-        PlaySfxPositional(SFX_UNK_73F);
+        PlaySfxPositional(SFX_SKULL_LORD_DEATH);
         SetStep(4);
     }
 
