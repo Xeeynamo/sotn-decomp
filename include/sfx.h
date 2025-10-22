@@ -251,7 +251,6 @@ enum {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_EN_SPITTLEBONE_ACID_SPLAT 0x73C
 #define NA_SE_VO_AXE_KNIGHT_THROW 0x766
 #define NA_SE_VO_AXE_KNIGHT_SCREAM 0x767
 #define NA_SE_EV_WATER_SPLASH 0x7C2
@@ -274,11 +273,7 @@ enum {
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
 // STAGE CAT
-#define SFX_LOSSOTH_NAPALM_GRUNT 0x734
-#define SFX_LOSSOTH_DEATH 0x735
-#define SFX_GRAVE_KEEPER_GRAAH 0x754
-#define SFX_GRAVE_KEEPER_HIYAH 0x755
-#define SFX_GRAVE_KEEPER_DEATH 0x756
+
 #define SFX_DISCUS_LORD_HEY 0x763
 #define SFX_DISCUS_LORD_DEATH_VORTEX 0x764
 #define SFX_DISCUS_BUZZ 0x765
@@ -313,8 +308,6 @@ enum {
 #define SE_CASTLE_GATE_RISE 0x7A5
 
 // STAGE NO4
-#define SFX_TOAD_CROAK 0x71A
-#define SFX_FROG_CROAK 0x71B
 #define SFX_OAR_ROW 0x7BF
 #define SFX_WATER_BUBBLE 0x7C4
 
@@ -352,6 +345,12 @@ enum {
 
 // The VAB IDs appear in large chunks so all sounds proceeding
 // a vabid label comment will belong in that VAB group unless noted.
+//
+// Some enemy sfxIDs in vabID 3 can sound different depending on which
+// overlay is loaded.  For example, Grave Keeper has three sound calls
+// in ARE and CAT, but the VH files are different between them so 0x754
+// plays a different sample in ARE.  0x709 is another example; the pitch
+// is higher in NP3, but normal for RCHI and NZ0.
 
 #ifdef VERSION_BETA
 // MAD uses an earlier build and has different sfx IDs
@@ -643,7 +642,7 @@ enum Sfx {
     /* 0x708 */ SFX_RIC_HYDRO_STORM_ATTACK,
 
     // vabid 3
-    /* 0x709 */ SFX_SLOGRA_ROAR,
+    /* 0x709 */ SFX_SLOGRA_ROAR, // different pitch in NP3
     /* 0x70A */ SFX_SLOGRA_ROAR_DEFEAT,
     /* 0x70B */ SFX_SLOGRA_PAIN_A, // Used for Gaibon
     /* 0x70C */ SFX_SLOGRA_PAIN_B,
@@ -651,25 +650,83 @@ enum Sfx {
     /* 0x70E */ SFX_LESSER_DEMON_POISON,
     /* 0x70F */ SFX_VENUS_WEED_HURT,
     /* 0x710 */ SFX_VENUS_WEED_DEATH,
-    SFX_MARIONETTE_LAUGH = 0x724,
-    SFX_MARIONETTE_YELL,
-    SFX_GREMLIN_HURT = 0x728,
-    SFX_GREMLIN_DEATH,
-    SFX_UNK_72A = 0x72A,
-    SFX_UNK_72B = 0x72B,
-    SFX_UNK_72C = 0x72C,
-    SFX_FROZEN_SHADE_SCREAM = 0x733,
-    SFX_SALEM_WITCH_ATTACK = 0x736,
-    SFX_SALEM_WITCH_HURT,
-    SFX_SALEM_WITCH_DEATH,
-    SFX_GHOST_ENEMY_HOWL = 0x739,
-    SFX_UNK_73F = 0x73F,
-    SFX_BLOODY_ZOMBIE_HIT_GRUNT = 0x746,
-    SFX_BLOODY_ZOMBIE_DEATH,
-    SFX_BLOODY_ZOMBIE_HIT,
-    SFX_BLOODY_ZOMBIE_SPLATTER,
-    SFX_CTULHU_LAUGH = 0x758,
-    SFX_CTULHU_ROAR,
+    /* 0x711 */ SFX_RNZ0_UNK_711,
+    /* 0x712 */ SFX_UNUSED_712,
+    /* 0x713 */ SFX_UNUSED_713,
+    /* 0x714 */ SFX_FLYING_ZOMBIE_PAIN,
+    /* 0x715 */ SFX_FLYING_ZOMBIE_DEATH,
+    /* 0x716 */ SFX_FLYING_ZOMBIE_BODY_RIP,
+    /* 0x717 */ SFX_RDAI_UNK_717,
+    /* 0x718 */ SFX_VALHALLA_KNIGHT_NEIGH,
+    /* 0x719 */ SFX_VALHALLA_KNIGHT_GALLOP,
+    /* 0x71A */ SFX_TOAD_CROAK,
+    /* 0x71B */ SFX_FROG_CROAK,
+    /* 0x71C */ SFX_UNUSED_71C,
+    /* 0x71D */ SFX_MERMAN_DEATH,
+    /* 0x71E */ SFX_CLOAKED_KNIGHT_ATTACK,
+    /* 0x71F */ SFX_CLOAKED_KNIGHT_UNK_71F, // referenced but no sound
+    /* 0x720 */ SFX_CLOAKED_KNIGHT_DEATH,
+    /* 0x721 */ SFX_NZ1_UNK_721,
+    /* 0x722 */ SFX_NZ1_UNK_722,
+    /* 0x723 */ SFX_NZ1_UNK_723,
+    /* 0x724 */ SFX_RNO2_ANIME_SWORD,
+    /* 0x725 */ SFX_MARIONETTE_LAUGH,
+    /* 0x726 */ SFX_MARIONETTE_YELL,
+    /* 0x727 */ SFX_UNUSED_727,
+    /* 0x728 */ SFX_GREMLIN_HURT,
+    /* 0x729 */ SFX_GREMLIN_DEATH,
+    /* 0x72A */ SFX_HUNTING_GIRL_ATTACK,
+    /* 0x72B */ SFX_HUNTING_GIRL_PAIN,
+    /* 0x72C */ SFX_HUNTING_GIRL_DEATH,
+    /* 0x72D */ SFX_VANDAL_SWORD_ATTACK,
+    /* 0x72E */ SFX_VANDAL_SWORD_PAIN,
+    /* 0x72F */ SFX_VANDAL_SWORD_DEATH,
+    /* 0x730 */ SFX_STONE_ROSE_PAIN,
+    /* 0x731 */ SFX_STONE_ROSE_DEATH,
+    /* 0x732 */ SFX_RLIB_UNK_732,
+    /* 0x733 */ SFX_FROZEN_SHADE_SCREAM,
+    /* 0x734 */ SFX_LOSSOTH_NAPALM_GRUNT,
+    /* 0x735 */ SFX_LOSSOTH_DEATH,
+    /* 0x736 */ SFX_SALEM_WITCH_ATTACK,
+    /* 0x737 */ SFX_SALEM_WITCH_HURT,
+    /* 0x738 */ SFX_SALEM_WITCH_DEATH,
+    /* 0x739 */ SFX_GHOST_ENEMY_HOWL,
+    /* 0x73A */ SFX_ECTOPLASM_BOING,
+    /* 0x73B */ SFX_ECTOPLASM_DEATH,
+    /* 0x73C */ SFX_SPITTLEBONE_ACID_SPLAT,
+    /* 0x73D */ SFX_RLIB_UNK_73D,
+
+    // vabid 9
+    /* 0x73E */ SFX_UNUSED_73E,
+
+    // vabid 3
+    /* 0x73F */ SFX_SKULL_LORD_DEATH,
+    /* 0x740 */ SFX_GURKHA_ATTACK,
+    /* 0x741 */ SFX_GURKHA_PAIN,
+    /* 0x742 */ SFX_GURKHA_DEATH,
+    /* 0x743 */ SFX_HAMMER_ATTACK,
+    /* 0x744 */ SFX_HAMMER_PAIN,
+    /* 0x745 */ SFX_HAMMER_DEATH,
+    /* 0x746 */ SFX_BLOODY_ZOMBIE_PAIN,
+    /* 0x747 */ SFX_BLOODY_ZOMBIE_DEATH,
+    /* 0x748 */ SFX_BLOODY_ZOMBIE_BODY_HIT,
+    /* 0x749 */ SFX_BLOODY_ZOMBIE_SPLATTER,
+    /* 0x74A */ SFX_SALOME_ATTACK,
+    /* 0x74B */ SFX_SALOME_PAIN,
+    /* 0x74C */ SFX_SALOME_MEOW_SHORT,
+    /* 0x74D */ SFX_SALOME_MEOW,
+    /* 0x74E */ SFX_BLADE_ENEMY_ATTACK,
+    /* 0x74F */ SFX_BLADE_ENEMY_PAIN,
+    /* 0x750 */ SFX_BLADE_ENEMY_DEATH,
+    /* 0x751 */ SFX_ARMOR_LORD_ATTACK,
+    /* 0x752 */ SFX_ARMOR_LORD_FIRE_ATTACK,
+    /* 0x753 */ SFX_ARMOR_LORD_DEATH,
+    /* 0x754 */ SFX_GRAVE_KEEPER_GRAAH, // Audio is different in ARE
+    /* 0x755 */ SFX_GRAVE_KEEPER_HIYAH, // Same audio in ARE and CAT
+    /* 0x756 */ SFX_GRAVE_KEEPER_DEATH,
+    /* 0x757 */ SFX_CTULHU_DEATH,
+    /* 0x758 */ SFX_CTULHU_LAUGH,
+    /* 0x759 */ SFX_CTULHU_ROAR,
     SFX_UNK_761 = 0x761,
     SFX_SPEAR_GUARD_DEATH = 0x771,
     SFX_UNK_77C = 0x77C,

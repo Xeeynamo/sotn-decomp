@@ -142,7 +142,7 @@ void func_us_801CD318(Entity* self) {
     if (self->hitFlags & 3) {
         if (self->step < 4) {
             if (self->flags & FLAG_DEAD) {
-                PlaySfxPositional(0x73B);
+                PlaySfxPositional(SFX_ECTOPLASM_DEATH);
                 self->hitboxState = 0;
                 self->ext.ectoplasm.unk90 = 0;
                 self->ext.ectoplasm.unk96 = 0x100;
@@ -150,7 +150,7 @@ void func_us_801CD318(Entity* self) {
                 self->step = 4;
                 self->ext.ectoplasm.unk82 = 0;
             } else if (self->step != 3) {
-                PlaySfxPositional(0x73A);
+                PlaySfxPositional(SFX_ECTOPLASM_BOING);
                 self->ext.ectoplasm.unk90 = 0;
                 self->step_s = self->step;
                 self->step = 3;

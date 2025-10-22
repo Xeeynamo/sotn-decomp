@@ -231,7 +231,7 @@ void EntityHammer(Entity* self) {
         func_801CE1E8(12);
     }
     if ((self->flags & FLAG_DEAD) && (self->step < 24)) {
-        PlaySfxPositional(0x745);
+        PlaySfxPositional(SFX_HAMMER_DEATH);
         func_801CE1E8(24);
     }
     switch (self->step) {
@@ -422,7 +422,7 @@ void EntityHammer(Entity* self) {
             func_801CDFD8(var_s3, 0x10);
             polarPlacePartsList(D_us_80182244);
             if (!self->ext.GH_Props.unkB0[0] && !self->ext.GH_Props.unkB4[0]) {
-                PlaySfxPositional(0x743);
+                PlaySfxPositional(SFX_HAMMER_ATTACK);
                 self->step_s++;
             }
             break;
@@ -499,7 +499,7 @@ void EntityHammer(Entity* self) {
 
     case 12:
         if (!self->step_s) {
-            PlaySfxPositional(0x744);
+            PlaySfxPositional(SFX_HAMMER_PAIN);
             self->step_s++;
         }
         if (self->ext.GH_Props.unk84 == 1) {

@@ -90,7 +90,7 @@ void EntityMerman2(Entity* self) {
     }
 
     if ((self->flags & FLAG_DEAD) && (self->step < MERMAN2_DYING)) {
-        PlaySfxPositional(0x71D);
+        PlaySfxPositional(SFX_MERMAN_DEATH);
         self->drawFlags = FLAG_DRAW_DEFAULT;
         if (self->flags & FLAG_HAS_PRIMS) {
             primIndex = self->primIndex;
