@@ -7,8 +7,8 @@ extern EInit g_EInitHellfireBeastFlamePillar;
 
 // Used to set prim->r0,g0,b0 for the Thor's Hammer / Flame Pillar casts
 static u8 attack_rgbs[2][3] = {{2, 1, 7}, {7, 4, 1}};
-// EntityHellfireBeastThorsHammer, EntityHellfireBeastFlamePillar
-static u16 attack_cluts[] = {PAL_DRA(0x16C), PAL_DRA(0x16D)};
+static u16 attack_cluts[] = {
+    PAL_HELLFIRE_BEAST_THORSHAMMER, PAL_HELLFIRE_BEAST_FLAMEPILLAR};
 static u16 attack_entityIds[] = {
     E_HELLFIRE_BEAST_THORS_HAMMER, E_HELLFIRE_BEAST_FLAME_PILLAR};
 static s16 sensors_ground[] = {0, 46, 0, 4, 8, -4, -16, 0};
@@ -264,7 +264,7 @@ void EntityHellfireBeast(Entity* self) {
             self->ext.hellfireBeast.prim = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x1A;
-            prim->clut = PAL_DRA(0x208);
+            prim->clut = PAL_HELLFIRE_BEAST_PRIMONE;
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = 0x3F;
             prim->v0 = prim->v1 = 0xC0;
@@ -279,7 +279,7 @@ void EntityHellfireBeast(Entity* self) {
 
             self->ext.hellfireBeast.primTwo = prim;
             prim->tpage = 0x12;
-            prim->clut = PAL_DRA(0x230);
+            prim->clut = PAL_HELLFIRE_BEAST_PRIMTWO;
             prim->u0 = prim->u2 = 0xA0;
             prim->u1 = prim->u3 = 0xBF;
             prim->v0 = prim->v1 = 0xC0;
@@ -520,10 +520,10 @@ void EntityHellfireBeast(Entity* self) {
         UnkPrimHelper(prim);
         switch (g_Timer % 3) {
         case 0:
-            prim->clut = PAL_DRA(0x300);
+            prim->clut = PAL_HELLFIRE_BEAST_CAST_ONE;
             break;
         case 1:
-            prim->clut = PAL_DRA(0x15F);
+            prim->clut = PAL_HELLFIRE_BEAST_CAST_TWO;
             break;
         case 2:
             prim->clut = attack_cluts[self->ext.hellfireBeast.attackChoice];
@@ -669,7 +669,7 @@ void EntityHellfireBeastThorsHammer(Entity* self) {
             self->ext.hellfireBeastThorsHammer.prim = prim;
             while (prim != NULL) {
                 prim->tpage = 0x13;
-                prim->clut = PAL_DRA(0x24A);
+                prim->clut = PAL_HELLFIRE_BEAST_LIGHTNING;
                 prim->v0 = prim->v2 = 0x20;
                 prim->v1 = prim->v3 = 0x10;
 #ifdef VERSION_PSP
