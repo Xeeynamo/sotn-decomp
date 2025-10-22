@@ -37,9 +37,9 @@ parser.add_argument(
     type=str,  # Expecting a string as input
     help="Output directory",
 )
-output_dir = "function_calls"
+output_dir = "build/us/reports/function_calls"
 # All functions I've found that are used in a 'jalr' instruction in the game
-callable_registers = ["$v0", "$v1", "$a0", "$a1", "$t2"]
+callable_registers = ["$v0", "$v1", "$a0", "$a1", "$a2", "$a3", "$t2"]
 # Handles drawing in the blobs
 graph_colors = {"N/A": "lightblue", "True": "green", "False": "red"}
 
@@ -81,11 +81,16 @@ def handle_jal_call(full_file, call_index):
         # Calling something held in a variable, usually a D_ or a g_
         variable_pattern = r"lw\s+" + "\\" + call_target + r", %lo\(([^)]+)\)"
         if match := re.search(variable_pattern, callreg_setline):
+            # this is a function table lookup
+            if match.group(1) == "g_AttackFunctions":
+                return "DestroyEntityPassthrough"
             return match.group(1)
         if "0x28($s0)" in callreg_setline or "-0xC($s0)" in callreg_setline:
             return "UnknownpfnEntityUpdate"
         # happens in NZ0/func_801C1034. v0 is set by dereferencing a register.
-        target_setter_pattern = r"lw\s+" + "\\" + call_target + r", 0x.{,2}\((\$\w+)"
+        target_setter_pattern = (
+            r"lw\s+" + "\\" + call_target + r", (?:-)?0x.{,2}\((\$\w+)"
+        )
         if match := re.search(target_setter_pattern, callreg_setline):
             source_register = match.group(1)
             pattern = r"\s{3,}" + "\\" + source_register
@@ -109,7 +114,12 @@ def handle_jal_call(full_file, call_index):
             "8016B3E4" in callreg_setline
         ):  # weird case in one function with compiler optimizing two calls into one
             return "PlaySfx"
-        if "0xB8($a2)" in callreg_setline or "-0x20($s0)" in callreg_setline:
+        # cases where jalr is using the value set earlier in a register
+        if (
+            "0xB8($a2)" in callreg_setline
+            or "-0x20($s0)" in callreg_setline
+            or "0x0($v0)" in callreg_setline
+        ):
             return "UnknownEntityFunction"
         if "8017B5A8" in callreg_setline:
             return "g_api_CreateEntFactoryFromEntity"
@@ -193,20 +203,23 @@ def is_decompiled(srcfile, fname):
 
 
 def get_c_filename(asm_filename):
-    assert "asm/us" in asm_filename and "/nonmatchings/" in asm_filename
+    assert "asm/us" in asm_filename and "matchings/" in asm_filename
+    matching_dir = "matchings"
+    if "/nonmatchings/" in asm_filename:
+        matching_dir = "nonmatchings"
     # Convert a path in asm/us to a path in src
     srcpath = asm_filename.replace("asm/us", "src")
     # Count the number of paths after "nonmatchings". If there are two directories,
     # then the file must be specifying a path in src. If not, then it's a path in the overlay.
     # Example: specifying wrp/collision should be treated differently than if it was just "collision"
-    paths_after_nonmatchings = srcpath.split("/nonmatchings/")[1].count("/")
+    paths_after_nonmatchings = srcpath.split(f"/{matching_dir}/")[1].count("/")
     # Raw file which goes in the default overlay directory
     if paths_after_nonmatchings == 1 or srcpath.startswith("src/main"):
-        no_nonmatchings = srcpath.replace("/nonmatchings/", "/")
+        no_nonmatchings = srcpath.replace(f"/{matching_dir}/", "/")
     # Has an extra directory, so remove overlay specified before /nonmatchings/
     if paths_after_nonmatchings == 2:
         overlay = srcpath.split("/")[2]
-        no_nonmatchings = srcpath.replace("/" + overlay + "/nonmatchings/", "/")
+        no_nonmatchings = srcpath.replace(f"/{overlay}/{matching_dir}/", "/")
     # Little known rpartition drops the function name to get the last directory, which should be c file name.
     c_filename = no_nonmatchings.rpartition("/")[0] + ".c"
     assert os.path.exists(c_filename)
@@ -311,7 +324,11 @@ def generate_html(function_list):
 # Create a markdown file pointing us toward all the different function graphs
 def generate_md(function_list):
     sorted_funcs = sorted(
-        [f for f in function_list if f.overlay != "mad"],
+        [
+            f
+            for f in function_list
+            if f.overlay != "mad" and ".NON_MATCHING" not in f.name
+        ],
         key=lambda x: (x.overlay, x.name),
     )
     md_page = ""
@@ -426,7 +443,7 @@ if __name__ == "__main__":
     functions = [
         sotn_function(s.stem, str(s))
         for s in Path("asm/us").rglob("*.s")
-        if "nonmatchings" in str(s)
+        if "matchings" in str(s)
     ]
     if len(functions) == 0:
         print("Error! You probably didn't run `make force_extract` first")

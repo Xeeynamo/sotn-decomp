@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-/// An inventory item consists of a category, which affects
-/// how the other fields are interpretted, an "unlock level",
-/// which is related to the number of things which have been
-/// accomplished in the castle (beating the game unlocks all),
-/// an item ID which corresponds to known item IDs, except for
-/// Jewel of Open, and the final item, which doesn't follow
-/// the pattern and doesn't appear in the shop
+// An inventory item consists of a category, which affects
+// how the other fields are interpretted, an "unlock level",
+// which is related to the number of things which have been
+// accomplished in the castle (beating the game unlocks all),
+// an item ID which corresponds to known item IDs, except for
+// Jewel of Open, and the final item, which doesn't follow
+// the pattern and doesn't appear in the shop
 typedef struct {
     /* 0x0 */ u8 category;
     /* 0x1 */ u8 unlockLevel;
@@ -293,6 +293,10 @@ STATIC_PAD_BSS(8);
 static ShopItem D_us_801D4364[75];
 STATIC_PAD_BSS(8);
 
+extern s32 g_SkipCutscene;
+extern u32 g_CutsceneFlags;
+extern s32 g_IsCutsceneDone;
+
 // This is probably EntityLibrarian, but I don't know for sure
 void func_us_801AFE0C(Entity* self) {
     Tilemap* tilemap = &g_Tilemap;
@@ -325,7 +329,7 @@ void func_us_801AFE0C(Entity* self) {
         break;
 
     case 1:
-        g_Entities[1].ext.entSlot1.unk0 = 1;
+        g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
         g_PauseAllowed = false;
         g_unkGraphicsStruct.pauseEnemies = true;
         g_Player.padSim = PAD_LEFT;
@@ -389,7 +393,7 @@ void func_us_801AFE0C(Entity* self) {
     case 3:
         if (g_CutsceneFlags & 0x40) {
             if (player->posX.i.hi > 0x74) {
-                g_Entities[1].ext.entSlot1.unk0 = 1;
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
                 g_Player.padSim = PAD_LEFT;
             } else {
                 player->posX.i.hi = 0x74;
@@ -436,7 +440,7 @@ void func_us_801AFE0C(Entity* self) {
         if (player->posX.i.hi < 0x75) {
             switch (self->step_s) {
             case 0:
-                g_Entities[1].ext.entSlot1.unk0 = 1;
+                g_Entities[E_AFTERIMAGE_1].ext.afterImage.disableFlag = 1;
                 g_PauseAllowed = false;
                 g_unkGraphicsStruct.pauseEnemies = true;
                 g_Player.padSim = PAD_NONE;
@@ -483,7 +487,7 @@ void func_us_801AFE0C(Entity* self) {
         break;
 
     case 10:
-        if (!g_Player.demo_timer && (g_Player.vram_flag & 1)) {
+        if (!g_Player.demo_timer && (g_Player.vram_flag & TOUCHING_GROUND)) {
             g_Player.padSim = PAD_NONE | PAD_SIM_UNK20000;
             g_Player.demo_timer = 1;
             self->step++;
@@ -602,7 +606,7 @@ void EntityLibrarianChair(Entity* self) {
         self->zPriority = 0x80;
     }
     // If the player touches the ground, reset the frames airborne.
-    if (g_Player.vram_flag & 1) {
+    if (g_Player.vram_flag & TOUCHING_GROUND) {
         self->ext.libraryChair.consecutiveHits = 0;
     }
     switch (self->step) {
@@ -4655,8 +4659,8 @@ static const char* D_us_801818C0[] = {
     _S("Immune"),     _S("Weak VS."), _S("Absorb")};
 #endif
 
-static const char* D_us_801818EC[] = {_S("????????")};
-static const char* D_us_801818F0[] = {_S("????")};
+static const char* D_us_801818EC = _S("????????");
+static const char* D_us_801818F0 = _S("????");
 
 const char* func_us_801B7C94(u16 itemId) {
     const char* name;
@@ -4758,7 +4762,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     prim = func_us_801B1064(prim, posX, 0x34, D_us_801818C0[1], 0x196); // "HP"
     posX += 0x12;
     if (enemyDef->hitPoints > 9999) {
-        func_us_801B3FB4(prim, D_us_801818F0[0], 4, 1); // "????"
+        func_us_801B3FB4(prim, D_us_801818F0, 4, 1); // "????"
     } else {
         func_us_801B3EC8(prim, enemyDef->hitPoints, 4);
     }
@@ -4800,7 +4804,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
             prim, 0x84, 0x99, func_us_801B7C94(enemyDef->rareItemId), clut);
     } else {
         prim = func_us_801B1064(
-            prim, 0x84, 0x99, D_us_801818EC[0], 0x196); // "????????"
+            prim, 0x84, 0x99, D_us_801818EC, 0x196); // "????????"
     }
     while (prim != NULL) {
         prim->drawMode = DRAW_HIDE;

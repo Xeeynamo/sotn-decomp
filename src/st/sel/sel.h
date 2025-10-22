@@ -8,7 +8,6 @@
 #define DISP_W 512
 
 #define NUM_MENU_OPTIONS 5
-#define NUM_MENU_UNK_084 8
 
 typedef enum {
     MAIN_MENU_CURSOR_INVALID = -1,
@@ -17,6 +16,15 @@ typedef enum {
     MAIN_MENU_CURSOR_FILE_COPY,
     MAIN_MENU_CURSOR_FILE_DELETE,
 } MainMenuCursor;
+
+typedef enum {
+    Tips_Generic,
+    Tips_Input,
+    Tips_YesNo,
+    Tips_Confirm,
+    Tips_MenuNavigation,
+    Tips_NoYes,
+} NavigationTips;
 
 typedef enum {
     GFX_UNK_0 = 0,
@@ -40,8 +48,79 @@ typedef enum {
     GFX_UNK_18,
     GFX_UNK_19,
     GFX_UNK_20,
+#ifdef VERSION_PSP
+    GFX_UNK_21,
+    GFX_UNK_22,
+    GFX_UNK_23,
+#endif
     NUM_GFX,
 } MenuGfx;
+
+// SEL seems to use these differently
+typedef enum {
+    Upd_Eng_Init,
+    Upd_Eng_MenuInit = -1,
+    Upd_Eng_MenuFadeIn = 1,
+    Upd_Eng_MainMenuIdle,
+    Upd_Eng_3,
+    Upd_Eng_0x10 = 0x10,
+    Upd_Eng_17,
+    Upd_Eng_18,
+    Upd_Eng_FileSelect = 0x30,
+    Upd_Eng_49,
+    Upd_Eng_50,
+    Upd_Eng_51,
+    Upd_Eng_64 = 0x40,
+    Upd_Eng_65,
+    Upd_Eng_FileCopy = 0x50,
+    Upd_Eng_81,
+    Upd_Eng_82,
+    Upd_Eng_83,
+    Upd_Eng_84,
+    Upd_Eng_85,
+    Upd_Eng_86,
+    Upd_Eng_87,
+    Upd_Eng_88,
+    Upd_Eng_89,
+    Upd_Eng_0x60 = 0x60,
+    Upd_Eng_FileDelete = 0x70,
+    Upd_Eng_113,
+    Upd_Eng_114,
+    Upd_Eng_115,
+    Upd_Eng_116,
+    Upd_Eng_117,
+    Upd_Eng_118,
+    Upd_Eng_119,
+    Upd_Eng_120,
+    Upd_Eng_0x80 = 0x80,
+    Upd_Eng_NameChange = 0x90,
+    Upd_Eng_145,
+    Upd_Eng_146,
+    Upd_Eng_147,
+    Upd_Eng_148,
+    Upd_Eng_149,
+    Upd_Eng_150,
+    Upd_Eng_151,
+    Upd_Eng_152,
+    Upd_Eng_153,
+    Upd_Eng_0xA0 = 0xA0,
+    Upd_Eng_0x100 = 0x100,
+    Upd_Eng_257,
+    Upd_Eng_258,
+    Upd_Eng_259,
+    Upd_Eng_260,
+    Upd_Eng_0x200 = 0x200,
+    Upd_Eng_513,
+    Upd_Eng_514,
+    Upd_Eng_515,
+    Upd_Eng_516,
+    Upd_Eng_0x210 = 0x210,
+    Upd_Eng_529,
+    Upd_Eng_530,
+    Upd_Eng_531,
+    Upd_Eng_532,
+    Upd_Eng_0x220 = 0x220,
+} SelGameEngineStep;
 
 typedef struct {
     /* 801BC8E0 */ s32 icon[BLOCK_PER_CARD];
@@ -92,95 +171,31 @@ typedef struct {
 } StreamInfo;
 
 extern s32 g_CurrentStream;
-extern const char* D_801803A8[10];
 extern StageName D_80180128[80];
 
 extern const s32 D_801A7B8C[2];
-extern void* g_Cluts[];
-extern void* OVL_EXPORT(g_EntityGfxs)[];
+extern u_long* g_Cluts[];
+extern GfxBank* g_EntityGfxs[];
 extern StreamInfo g_StreamInfo0;
 extern StreamInfo g_StreamInfo1;
 extern StreamInfo g_StreamInfo2;
 extern StreamInfo g_StreamInfo3;
 extern StreamInfo* g_Streams[4];
-extern s16** g_SpriteBanks[]; // g_SpriteBanks
-extern void* D_8018C404[];    // unknown type
+extern SpriteParts* g_SpriteBanks[];
 
-extern s32 D_80180040[];
-extern s32 D_80180054[];
-extern const char* D_801803A8[];
-extern const char* D_801803D0[];
-extern const char* D_80180454[];
-extern const char* D_80180468[];
-extern u8 D_80180504[];
-extern u8 D_80180528[];
-extern u8 D_80180564[];
-extern u8 D_80180578[];
-extern u8 D_80180580[];
-extern s8 D_801823A0[]; // on-screen keyboard
-extern RECT D_80182584;
-extern RECT D_8018258C;
-extern RECT D_801825A4;
 extern const char D_8018B304[];
 extern s32 g_StreamWidth;
 extern int g_StreamHeight;
 
-extern const char D_801A7AF8[]; // rstep:%d,%d
-extern const char D_801A7B08[]; // retry:%d
-extern const char D_801ABF9C[]; // "MDEC_rest:bad option(%d)\n"
 extern const char D_801ABFB8[]; // MDEC_in_sync
 extern const char D_801ABFC8[]; // MDEC_out_sync
 extern const char D_801ABFD8[]; // DMA=(%d,%d), ADDR=(0x%08x->0x%08x)
 extern const char D_801AC000[]; // FIFO
 extern const char D_801AC038[]; // "%s timeout:\n"
-extern s32 D_801BAEE4[9];
-extern s32 D_801BAF08; // block icon animation index
-extern s32 D_801BAF0C;
-extern s32 D_801BAF10;
-extern s32 D_801BAF14;
-extern s32 D_801BAF18[NUM_GFX][2];
-extern s32 D_801BAFC0;
-extern s32 MainMenuMaskPrimIndex;
-extern s32 g_SelNextCrossPressEngStep;
-extern s32 g_SelEng220NextStep;
-extern u8* D_801BAFD0; // Pointer to texture pattern
-extern s32 D_801BAFD4;
-extern s32 D_801BAFD8;
-extern s32 D_801BAFDC;
-extern s32 D_801BAFE0;
-extern u32 D_801BAFE4;
-extern s32 D_801BAFE8;
-extern s32 g_MemCardRStep;
-extern s32 g_MemCardRStepSub; // rstep sub
-extern s32 D_801BAFF4;
-extern s32 g_MemCardRetryCount;
-extern s32 D_801BAFFC;
-extern s32 D_801BB000;
-extern s32 D_801BB004;
-extern s32 D_801BB008;
-extern s32 D_801BB00C;
-extern s32 D_801BB010;
-extern s32 D_801BB014;
-extern u16 D_801BB0F8[0x30][0x30];
 extern const char D_8018BC54[];
-extern s32 g_MemcardRetryCount;
-extern s32 g_MemcardFd;
-extern s32 D_801BC340;
-extern s32 g_StreamDiskIsReady;
-extern s32 D_801BC348;
-extern s32 D_801BC34C;
-extern s32 g_SkipCutscene;
-extern Dialogue g_Dialogue;
-extern u32 D_801BC398[16];
-extern s32 g_MemCardSelectorX;
-extern s32 g_MemCardSelectorY;
-extern s32 D_801BC3E0; // on-screen keyboard key position
 extern s32 D_801BC3E4;
-extern u32 D_801BC3E8;
-extern s32 D_801BC3EC; // selected memory card block
 extern s32 D_801BC650;
 extern SaveSummary g_SaveSummary[PORT_COUNT];
-extern u32 D_801BD030;
 extern u32 g_StreamEndFrame;
 extern u32 D_801BD03C;
 extern u32 D_801BD040;
@@ -188,36 +203,6 @@ extern s32 g_StreamRewindSwitch[1];
 extern u8 g_StreamImageBuffer[0x14000];
 extern s32 D_801D104C[0x1680];
 extern StreamEnv g_StreamEnv;
-extern s32 D_801D6B04;
-extern s32 g_InputCursorPos;
-extern s32 g_MainMenuCursor;
 extern s32 g_MemcardBlockRead;
-extern char g_InputSaveName[12];
 extern s32 g_MemcardStep;
-extern s32 D_801D6B00;
 extern s32 D_801D6B24;
-
-void SEL_Update(void);
-void HandleTitleScreen(void);
-void func_801ACBE4(s32 arg0, u16 arg1);
-void func_801AD1D0(void);
-void func_801AD218(void);
-void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height);
-void DrawString16x16(const char* str, s32 x, s32 y, s32 tga);
-void DrawImages8x8(u8* imgs, s32 x, s32 y, s32 tge);
-void func_801B9C80(void);
-void SEL_Init(s32 objLayoutId);
-void func_801B60D4(void);
-void func_801B17C8(void);
-void SetPrimGrey(Primitive* prim, s32 colorIntensity);
-void SetTexturedPrimRect(
-    Primitive* poly, s32 x, s32 y, s32 width, s32 height, s32 u, s32 v);
-void func_801B1ED0();
-void func_801B3A54(s32, s32);
-s32 func_801B3A94(s32);
-s32 _card_event_x();
-void MemcardInit();
-s32 func_800E9880(s32, s32);
-void MDEC_rest(s32 option);
-void func_801BA880();
-void DecDCTvlc(s32, s32);

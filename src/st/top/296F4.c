@@ -349,7 +349,7 @@ void EntityBreakableWall(Entity* self) {
         break;
 
     case 2:
-        self->ext.breakableWall2.unk84++;
+        self->ext.breakable.breakCount++;
         self->animCurFrame++;
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
@@ -357,9 +357,9 @@ void EntityBreakableWall(Entity* self) {
             entity->params = 0x13;
             entity->zPriority = self->zPriority + 1;
         }
-        self->ext.breakableWall2.unk80 = 0x20;
+        self->ext.breakable.resetTimer = 0x20;
         self->step++;
-        if (self->ext.breakableWall2.unk84 == 3) {
+        if (self->ext.breakable.breakCount == 3) {
             if (!self->params) {
                 g_CastleFlags[OVL_EXPORT(SECRET_WALL_1_BROKEN)] = 1;
             } else {
@@ -395,7 +395,7 @@ void EntityBreakableWall(Entity* self) {
         break;
 
     case 3:
-        if (--self->ext.breakableWall2.unk80 == 0) {
+        if (--self->ext.breakable.resetTimer == 0) {
             self->step = 1;
         }
         break;
@@ -514,7 +514,8 @@ void EntityTriangleElevator(Entity* self) {
             offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi -
                       self->ext.topElevator.mapPos.y;
             if ((offsetY > 0) ||
-                ((offsetY < 0) && ((g_Player.vram_flag ^ 2) & 2))) {
+                ((offsetY < 0) &&
+                 ((g_Player.vram_flag ^ TOUCHING_CEILING) & 2))) {
                 player->posY.i.hi += offsetY;
                 D_80097488.y.i.hi += offsetY;
             }
@@ -738,7 +739,8 @@ void func_us_801AABA4(Entity* self) {
                       self->ext.topElevator.mapPos.y;
 
             if ((offsetY > 0) ||
-                ((offsetY < 0) && ((g_Player.vram_flag ^ 2) & 2))) {
+                ((offsetY < 0) &&
+                 ((g_Player.vram_flag ^ TOUCHING_CEILING) & 2))) {
                 player->posY.i.hi += offsetY;
                 D_80097488.y.i.hi += offsetY;
             }

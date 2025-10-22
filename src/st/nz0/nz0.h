@@ -4,7 +4,6 @@
 #define STAGE_IS_NZ0
 
 #define OVL_EXPORT(x) NZ0_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
@@ -251,7 +250,6 @@ extern u8 g_ESoulStealOrbAnim[];
 
 // *** EntitySoulStealOrb properties END ***
 
-extern Dialogue g_Dialogue;
 // For EntityLifeUpSpawn
 extern u16 D_80182850[];
 extern SVECTOR D_8018287C;
@@ -259,11 +257,6 @@ extern SVECTOR D_80182830;
 extern SVECTOR D_80182838;
 extern SVECTOR D_80182840;
 extern SVECTOR D_80182848;
-
-// For NZ0_EntityCutscene
-extern s32 g_SkipCutscene;
-extern s32 g_IsCutsceneDone;
-extern u32 g_CutsceneFlags;
 
 // EntityMaria, mostly animations
 extern EInit g_EInitSpawner;

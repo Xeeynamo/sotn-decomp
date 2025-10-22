@@ -14,21 +14,29 @@ extern s32 D_80033098;
 extern s32 _spu_EVdma;
 extern s32 _spu_isCalled;
 extern s32 _spu_inTransfer;
+extern s32 _spu_keystat;
+extern s32 _spu_transMode;
+extern u16 _spu_tsa;
+extern s32 _spu_rev_flag;
+extern s32 _spu_rev_reserve_wa;
+extern s32 _spu_rev_offsetaddr;
+extern s32 _spu_rev_startaddr[];
+extern s32 _spu_trans_mode;
 
+extern s32 D_80033550;
 extern s32 D_8003355C;
 extern s32 D_80033560;
 extern s8* D_80033564;
 extern s32 _spu_mem_mode_plus;
 extern s32 _spu_mem_mode_unitM;
+extern u16 _spu_voice_centerNote[];
 
 typedef struct tagSpuMalloc {
     u32 addr;
     u32 size;
 } SPU_MALLOC;
 
-extern s32 D_80033550;
 extern void (* volatile _spu_transferCallback)();
-extern s32 _spu_inTransfer;
 
 void _SpuCallback(s32 arg0);
 extern void (* volatile _spu_IRQCallback)();
@@ -36,14 +44,9 @@ extern void (* volatile _spu_IRQCallback)();
 s32 SpuSetAnyVoice(s32 on_off, u32 bits, s32 addr1, s32 addr2);
 
 s32 _spu_t(s32, ...);
-extern s32 _spu_transMode;
-extern u16 _spu_tsa;
 
 u32 _spu_FsetRXXa(s32 arg0, u32 arg1);
 s32 _spu_write(u8*, u32);
-extern s32 _spu_inTransfer;
-
-void _SpuSetVoiceAttr(SpuVoiceAttr* arg, s32, s32, s32);
 
 struct rev_param_entry {
     u32 flags;
@@ -81,6 +84,17 @@ struct rev_param_entry {
     u16 vRIN;
 };
 
+struct SpuRevAttr {
+    s32 unk0;
+    s32 unk18;
+    s16 unk1c;
+    s16 unk1e;
+    s32 unk20;
+    s32 unk24;
+};
+
+extern struct SpuRevAttr _spu_rev_attr;
+
 typedef struct tagSpuVoiceRegister {
     SpuVolume volume; // 0-2
     u16 pitch;        // 4
@@ -91,7 +105,7 @@ typedef struct tagSpuVoiceRegister {
 } SPU_VOICE_REG;      // 16 bytes
 
 typedef struct tagSpuControl {
-    SPU_VOICE_REG voice[24];
+    SPU_VOICE_REG voice[NUM_SPU_CHANNELS];
     SpuVolume main_vol; // 180
     SpuVolume rev_vol;  // 184
     // bit flags
@@ -149,7 +163,6 @@ typedef struct tagSpuControl {
 } SPU_RXX;
 
 union SpuUnion {
-    SPU_RXX rxxnv;
     volatile SPU_RXX rxx;
     volatile u16 raw[0x100];
 };
@@ -157,12 +170,6 @@ union SpuUnion {
 extern union SpuUnion* _spu_RXX;
 
 s32 _SpuIsInAllocateArea_(u32);
-extern s32 _spu_rev_flag;
-extern s32 _spu_rev_reserve_wa;
-extern s32 _spu_rev_offsetaddr;
-
-extern s32 _spu_trans_mode;
-extern s32 _spu_transMode;
 
 #define SPU_TRANSFER_BY_DMA 0
 #define SPU_TRANSFER_BY_IO 1

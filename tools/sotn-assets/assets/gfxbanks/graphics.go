@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/datarange"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
 	"path/filepath"
@@ -87,10 +88,10 @@ func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, symbol func(addr psx.
 	pool[psx.RamNull] = -1
 	var banks []GfxBank
 	var ranges []datarange.DataRange
-	for _, addrGfxBank := range util.SortUniqueOffsets(addrGfxBanks) {
-		if addrGfxBank == psx.RamNull { // exception for ST0
-			continue
-		}
+	var newRange datarange.DataRange
+	sortedBanks := util.SortAndFilterOffsets(addrGfxBanks)
+	lastAddr := sortedBanks[len(sortedBanks)-1]
+	for addrGfxBank := sortedBanks[0]; addrGfxBank <= lastAddr; addrGfxBank = newRange.End() {
 		if err := addrGfxBank.MoveFile(r, ramBase); err != nil {
 			return GfxBanks{}, datarange.DataRange{}, err
 		}
@@ -99,32 +100,35 @@ func ReadGraphics(r io.ReadSeeker, ramBase, addr psx.Addr, symbol func(addr psx.
 			return GfxBanks{}, datarange.DataRange{}, err
 		}
 		if bank.isTerminate() { // ST0 exception where no gfx entries are found
-			pool[addrGfxBank] = len(banks)
-			banks = append(banks, bank)
-			ranges = append(ranges, datarange.FromAddr(addrGfxBank, 4))
-			continue
-		}
-		for {
-			var entry GfxEntry
-			_ = binary.Read(r, binary.LittleEndian, &entry.X)
-			_ = binary.Read(r, binary.LittleEndian, &entry.Y)
-			if entry.isTerminate() {
-				break
-			}
-			_ = binary.Read(r, binary.LittleEndian, &entry.Width)
-			_ = binary.Read(r, binary.LittleEndian, &entry.Height)
-			_ = binary.Read(r, binary.LittleEndian, &entry.addr)
-			if !entry.isEmpty() {
-				entry.Name = symbol(entry.addr)
-				if entry.Name == "" {
-					entry.Name = fmt.Sprintf("D_%08X", uint32(entry.addr))
+			newRange = datarange.FromAddr(addrGfxBank, 4)
+		} else {
+			for {
+				var entry GfxEntry
+				_ = binary.Read(r, binary.LittleEndian, &entry.X)
+				_ = binary.Read(r, binary.LittleEndian, &entry.Y)
+				if entry.isTerminate() {
+					break
 				}
+				_ = binary.Read(r, binary.LittleEndian, &entry.Width)
+				_ = binary.Read(r, binary.LittleEndian, &entry.Height)
+				_ = binary.Read(r, binary.LittleEndian, &entry.addr)
+				if !entry.isEmpty() {
+					entry.Name = symbol(entry.addr)
+					if entry.Name == "" {
+						entry.Name = fmt.Sprintf("D_%08X", uint32(entry.addr))
+					}
+				}
+				bank.Entries = append(bank.Entries, entry)
 			}
-			bank.Entries = append(bank.Entries, entry)
+			alignment := 4
+			if sotn.GetPlatform() == sotn.PlatformPSP {
+				alignment = 8
+			}
+			newRange = datarange.FromAlignedAddr(addrGfxBank, 4+len(bank.Entries)*12+4, alignment)
 		}
 		pool[addrGfxBank] = len(banks)
 		banks = append(banks, bank)
-		ranges = append(ranges, datarange.FromAddr(addrGfxBank, 4+len(bank.Entries)*12+4))
+		ranges = append(ranges, newRange)
 	}
 
 	var g GfxBanks

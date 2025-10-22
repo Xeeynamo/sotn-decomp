@@ -62,11 +62,11 @@ void func_us_801C7D98(Entity* self);
 void func_us_801C774C(Entity* self);
 void func_us_801C6360(Entity* self);
 void func_us_801C7420(Entity* self);
-void func_us_801CFAE8(Entity* self);
-void func_us_801D033C(Entity* self);
-void func_us_801D08A8(Entity* self);
-void func_us_801D0B38(Entity* self);
-void func_us_801D0F10(Entity* self);
+void EntityLossoth(Entity* self);
+void EntityLossothEffects(Entity* self);
+void EntityLossothFireball(Entity* self);
+void EntityLossothNapalmFlare(Entity* self);
+void EntityLossothFlames(Entity* self);
 void func_us_801BB4CC(Entity* self);
 void EntityGraveKeeper(Entity* self);
 void EntityGraveKeeperHitbox(Entity* self);
@@ -148,11 +148,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C774C,
     func_us_801C6360,
     func_us_801C7420,
-    func_us_801CFAE8,
-    func_us_801D033C,
-    func_us_801D08A8,
-    func_us_801D0B38,
-    func_us_801D0F10,
+    EntityLossoth,
+    EntityLossothEffects,
+    EntityLossothFireball,
+    EntityLossothNapalmFlare,
+    EntityLossothFlames,
     func_us_801BB4CC,
     EntityGraveKeeper,
     EntityGraveKeeperHitbox,
@@ -208,9 +208,9 @@ EInit D_us_80181230 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x048};
 EInit D_us_8018123C = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x049};
 
 // Lossoth
-EInit D_us_80181248 = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x083};
-EInit D_us_80181254 = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x005};
-EInit D_us_80181260 = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x084};
+EInit g_EInitLossoth = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x083};
+EInit g_EInitLossothEffects = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x005};
+EInit g_EInitLossothAttack = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x084};
 
 // Grave Keeper
 EInit g_EInitGraveKeeper = {ANIMSET_OVL(0x09), 0x01, 0x4D, 0x0236, 0x06F};

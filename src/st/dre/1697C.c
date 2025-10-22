@@ -2,6 +2,8 @@
 #include "dre.h"
 #include "sfx.h"
 
+extern u32 g_CutsceneFlags;
+
 void EntityFadeToWhite1(Entity* self) {
     Primitive* prim;
     s16 primIndex;

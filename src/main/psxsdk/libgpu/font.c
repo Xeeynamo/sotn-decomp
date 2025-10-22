@@ -12,20 +12,26 @@ typedef struct {
     /* 0x28 */ s32 written;
 } FntStream;
 
-const char a0123456789abcd[] = "0123456789ABCDEF";
-
-extern FntStream Font[4];
-extern s32 D_8002B810;
-extern s32 D_8002B814;
-extern u_long D_8002B818[];
-extern s32 D_8002C218;
-extern char* D_8002C21C[];
 extern int (*GPU_printf)(const char*, ...);
 
-extern u16 clut;
-extern u16 tpage;
-extern char D_80033A18[];
-extern SPRT_8 D_80033E18[];
+static char D_80033A18[0x400];
+static SPRT_8 D_80033E18[0x400];
+static u16 tpage;
+STATIC_PAD_BSS(2);
+static u16 clut;
+STATIC_PAD_BSS(2);
+
+static FntStream Font[4] = {0};
+static s32 D_8002B810 = 0;
+static s32 D_8002B814 = 0;
+static u16 D_8002B818[] = {
+#include "../../gen/D_8002B818.h"
+};
+static u8 D_8002BA18[] = {
+#include "../../gen/D_8002BA18.h"
+};
+static s32 D_8002C218 = 0;
+static char* D_8002C21C = "0123456789ABCDEF";
 
 void SetDumpFnt(int id) {
     if (id >= 0 && D_8002B810 >= id) {
@@ -36,7 +42,7 @@ void SetDumpFnt(int id) {
 
 void FntLoad(s32 tx, s32 ty) {
     clut = LoadClut(D_8002B818, tx, ty + 0x80);
-    tpage = LoadTPage(D_8002B818 + 0x80, 0, 0, tx, ty, 0x80, 0x20);
+    tpage = LoadTPage(D_8002B818 + 0x100, 0, 0, tx, ty, 0x80, 0x20);
     D_8002B810 = 0;
     memset(Font, 0, sizeof(Font));
 }
@@ -178,7 +184,7 @@ u_long* FntFlush(s32 id) {
         return -1;                                                             \
     }
 
-long FntPrint(long id, ...) {
+int FntPrint(const char* id, ...) {
     char buf[0x200];
     va_list args;
     FntStream* font;
@@ -192,17 +198,17 @@ long FntPrint(long id, ...) {
     u32 ch;
 
     va_start(args, id);
-    if (id < 0 || id >= D_8002B810) {
+    if (LOW(id) < 0 || LOW(id) >= D_8002B810) {
         f = (char*)id;
         id = D_8002B814;
-        if (Font[id].buffer == NULL) {
+        if (Font[LOW(id)].buffer == NULL) {
             return -1;
         }
     } else {
         f = va_arg(args, char*);
     }
 
-    font = &Font[id];
+    font = &Font[LOW(id)];
     if (font->written > font->capacity) {
         return -1;
     }
@@ -257,7 +263,7 @@ long FntPrint(long id, ...) {
             num = va_arg(args, s32);
             do {
                 do {
-                    *--bufPtr = D_8002C21C[0][num % 16U];
+                    *--bufPtr = D_8002C21C[num % 16U];
                     num /= 16U;
                     len++;
                 } while (len == 0);

@@ -122,11 +122,48 @@ typedef enum {
     (WIDTH_OF_MAP_TILE_IN_PIXELS / PIXELS_PER_BYTE)
 #define WIDTH_OF_MAP_ROW_IN_PIXELS (256)
 #define WIDTH_OF_MAP_ROW_IN_BYTES (WIDTH_OF_MAP_ROW_IN_PIXELS / PIXELS_PER_BYTE)
+
+// Color macros
 #define COLORS_PER_PAL (16)
 #define COLOR_BPP (16)
 #define COLOR_LEN ((COLOR_BPP) / 8)
-#define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
 #define COLOR16(r, g, b, a) (r) + ((g) << 5) + ((b) << 10) + ((a) << 15)
+
+// Palette macros
+#define PAL_OVL_FLAG 0x8000
+#define PAL_DRA(x) (x)
+#define PAL_OVL(x) ((x) | PAL_OVL_FLAG)
+
+#define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
+
+#define MAKE_PAL_OP(kind, freq) (u_long*)((kind) | ((freq) << 0x10))
+#define GET_PAL_OP_KIND(x) (LOHU(x))
+#define GET_PAL_OP_FREQ(x) (HIH(x))
+
+#define PAL_COPY 1
+#define PAL_COPY_INFO() MAKE_PAL_OP(PAL_COPY, 0)
+#define PAL_COPY_DATA(dst, data)                                               \
+    (u_long*)(dst), (u_long*)LEN(data), (u_long*)(data)
+#define PAL_COPY_DATA_(dst, data, len)                                         \
+    (u_long*)(dst), (u_long*)(len), (u_long*)(data)
+
+#define PAL_UNK_OP2 2
+#define PAL_UNK_OP2_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
+#define PAL_UNK_OP2_DATA(data) (u_long*)(data)
+
+#define PAL_UNK_OP3 3
+#define PAL_UNK_OP3_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
+#define PAL_UNK_OP3_DATA(data) (u_long*)(data)
+
+#define PAL_GLOW_ANIM 4
+#define PAL_GLOW_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
+#define PAL_GLOW_DATA(data) (u_long*)(data)
+
+#define PAL_BULK_COPY 5
+#define PAL_BULK_COPY_INFO(dst, n) (u_long*)(dst), (u_long*)(n)
+#define PAL_BULK(dst, data) (u_long*)(dst), (u_long*)LEN(data), (u_long*)(data)
+
+#define PAL_TERMINATE() ((u_long*)-1)
 
 #define OTSIZE 0x200
 #define MAX_ENV_COUNT 0x10
@@ -421,13 +458,38 @@ typedef enum {
     PLAYER_STATUS_UNK80000000 = 0x80000000, // exclusive to Maria
 } PlayerStateStatus;
 
+// Flags for g_Player.vram_flag
+// 0x01: touching the ground
+// 0x02: touching the ceiling
+// 0x04: touching the right wall
+// 0x08: touching the left wall
+// 0x20: in-air or near the edge
+// 0x0800: touching the ceiling slope
+// 0x1000: touching a slightly ascending or descending slope
+// 0x4000: touching a raising slope
+// 0x8000: touching any slope
+typedef enum {
+    TOUCHING_GROUND = 1 << 0,
+    TOUCHING_CEILING = 1 << 1,
+    TOUCHING_R_WALL = 1 << 2,
+    TOUCHING_L_WALL = 1 << 3,
+    VRAM_FLAG_UNK10 = 1 << 4,
+    IN_AIR_OR_EDGE = 1 << 5,
+    VRAM_FLAG_UNK40 = 1 << 6,
+    VRAM_FLAG_UNK80 = 1 << 7,
+    VRAM_FLAG_UNK100 = 1 << 8,
+    VRAM_FLAG_UNK200 = 1 << 9,
+    VRAM_FLAG_UNK400 = 1 << 10,
+    TOUCHING_CEILING_SLOPE = 1 << 11,
+    TOUCHING_SLIGHT_SLOPE = 1 << 12,
+    VRAM_FLAG_UNK2000 = 1 << 13,
+    TOUCHING_RAISING_SLOPE = 1 << 14,
+    TOUCHING_ANY_SLOPE = 1 << 15
+} PlayerVramFlag;
+
 #define ANIMSET_OVL_FLAG 0x8000
 #define ANIMSET_DRA(x) (x)
 #define ANIMSET_OVL(x) ((x) | ANIMSET_OVL_FLAG)
-
-#define PAL_OVL_FLAG 0x8000
-#define PAL_DRA(x) (x)
-#define PAL_OVL(x) ((x) | PAL_OVL_FLAG)
 
 #ifndef SOTN_STR
 // Decorator to re-encode strings with ./tools/sotn_str when building
@@ -718,8 +780,6 @@ typedef enum {
 } TimeAttackEvents;
 
 struct Entity;
-
-#include "unkstruct.h"
 
 typedef struct {
     f32 posX;
@@ -1162,6 +1222,17 @@ typedef struct {
     /* 80097C44 */ FamiliarStats statsFamiliars[NUM_FAMILIARS];
 } PlayerStatus; /* size=0x334 */
 
+typedef enum {
+    FADE_NONE,
+    FADE_TO_BLACK,
+    FADE_FROM_BLACK,
+    FADE_BLUE_TINT,
+    FADE_TO_BLACK_FAST,
+    FADE_TO_BLACK_SLOW,
+    FADE_SHOW_MAP,
+    FADE_HIDE_MAP,
+} FadeModes;
+
 typedef struct {
     /* 0x00, 8003C9A8 */ s32 cursorMain;
     /* 0x04, 8003C9AC */ s32 cursorRelic;
@@ -1208,7 +1279,7 @@ typedef struct {
     /* 0x18 */ s32 playMinutes;
     /* 0x1C */ s32 playSeconds;
     /* 0x20 */ s32 cardIcon;
-    /* 0x24 */ s32 endGameFlags;
+    /* 0x24 */ u32 endGameFlags;
     /* 0x28 */ s16 stage;
     /* 0x2A */ u16 nRoomsExplored;
     /* 0x2C */ u16 roomX;
@@ -1539,31 +1610,6 @@ typedef struct {
 #endif
 } RelicDesc; /* size=0x10 */
 
-typedef struct {
-    /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character
-    /* 0x04 */ s16 startX;            // starting x coord
-    /* 0x06 */ s16 nextLineY;         // next line y coord
-    /* 0x08 */ s16 startY;            // starting y coord
-    /* 0x0A */ s16 nextCharX;         // next char x coord
-    /* 0x0C */ s16 nextLineX;         // next line x coord
-    /* 0x0E */ s16 nextCharY;         // next char y coord
-    /* 0x10 */ s16 portraitAnimTimer; // portrait animation timer
-    /* 0x12 */ u16 unk12;             // unknown
-    /* 0x14 */ u16 clutIndex;         // CLUT index
-    /* 0x16 */ u8 nextCharTimer;      // timer to next character
-    /* 0x17 */ u8 unk17;              // unknown
-// Of course, offsets beyond here won't be right in ST0_WEIRD_DIALOGUE.
-#if defined(VERSION_PSP)
-    /* 0x18 */ Primitive* prim[5]; // for dialogue graphics rendering
-#else
-    /* 0x18 */ Primitive* prim[6]; // for dialogue graphics rendering
-#endif
-    /* 0x30 */ s32 primIndex[3]; // primIndices: unk, actorName, unk
-    /* 0x3C */ u16 unk3C;        // maybe it is a begin flag?
-    /* 0x3E */ u16 timer;        // global timer
-    /* 0x40 */ u8* scriptEnd;    // pointer to the end of the script
-} Dialogue;                      // size = 0x44
-
 // Used for the damageKind of DamageParam
 typedef enum {
     DAMAGEKIND_0,
@@ -1612,7 +1658,7 @@ typedef struct {
     /* 8003C7E0 */ s16 (*func_800EDB58)(u8, s32);
     /* 8003C7E4 */ void (*func_800EA538)(s32 arg0);
     /* 8003C7E8 */ void (*func_800EA5AC)(u32 a, u32 r, u32 g, u32 b);
-    /* 8003C7EC */ void (*func_801027C4)(u32 arg0);
+    /* 8003C7EC */ void (*SetFadeMode)(FadeModes fadeMode);
     // this signature differs from `func_800EB758`. the last
     // argument is 16-bits instead of 8.
     /* 8003C7F0 */ void (*func_800EB758)(
@@ -1643,7 +1689,7 @@ typedef struct {
     /* 8003C83C */ bool (*LoadMonsterLibrarianPreview)(s32 monsterId);
     /* 8003C840 */ s32 (*TimeAttackController)(
         TimeAttackEvents eventId, TimeAttackActions action);
-    /* 8003C844 */ void (*func_8010E0A8)(void);
+    /* 8003C844 */ void (*ForceAfterImageOn)(void);
     /* 8003C848 */ s32 (*func_800FE044)(s32, s32);
     /* 8003C84C */ void (*AddToInventory)(u32 id, EquipKind kind);
     /* 8003C850 */ RelicDesc* relicDefs;
@@ -1675,6 +1721,32 @@ typedef struct {
     /* 8003C8AC */ u16 (*func_psp_0913F960)(char*, u8* ch);
     /* 8003C8B4 */ void* unused13C;
 } GameApi; /* size=0x140 */
+
+// Used in dra/7879C, ric/pl_blueprints, maria/pl_blueprints, rbo5/unk_4648C,
+// bo4/unk_46E7C
+typedef struct {
+    u8 childId;
+    u8 unk1;
+    u8 unk2;
+    u8 unk3;
+    u8 unk4;
+    u8 unk5;
+} FactoryBlueprint;
+
+// Used in dra/7E4BC, ric/pl_blueprints, maria/pl_blueprints, rbo5/unk_4648C,
+// bo4/unk_46E7C
+typedef struct {
+    /* 0x00 */ u8 count;
+    /* 0x01 */ u8 r;
+    /* 0x02 */ u8 g;
+    /* 0x03 */ u8 b;
+    /* 0x04 */ u8 w;
+    /* 0x05 */ u8 h;
+    /* 0x06 */ s16 priority;
+    /* 0x08 */ s16 drawMode;
+    /* 0x0A */ s16 unkA;
+    /* 0x0C */ u32 flags;
+} unkStr_8011E4BC; // size = 0x10
 
 typedef struct {
     void (*D_8013C000)(void);
@@ -1725,7 +1797,7 @@ extern Accessory* g_api_accessoryDefs;
 extern void (*g_api_AddHearts)(s32 value);
 extern s32 (*g_api_TimeAttackController)(
     TimeAttackEvents eventId, TimeAttackActions action);
-extern void (*g_api_func_8010E0A8)(void);
+extern void (*g_api_ForceAfterImageOn)(void);
 extern s32 (*g_api_func_800FE044)(s32, s32);
 extern void (*g_api_AddToInventory)(u32 id, EquipKind kind);
 extern RelicDesc* g_api_relicDefs;
@@ -1858,18 +1930,7 @@ typedef struct {
     /* 80072EF8 */ u32 D_80072EF8;
     /* 80072EFC */ s32 demo_timer; // player frozen timer
     /* 80072F00 */ s16 timers[16]; /// Indexed with AluTimers
-
-    // 0x01: touching the ground
-    // 0x02: touching the ceiling
-    // 0x04: touching the right wall
-    // 0x08: touching the left wall
-    // 0x20: in-air or near the edge
-    // 0x0800: touching the ceiling slope
-    // 0x1000: standing on a slightly ascending or descending slope
-    // 0x4000: standing on a raising slope
-    // 0x8000: standing on any slope
     /* 80072F20 */ s32 vram_flag;
-
     /* 80072F24 */ s32 unk04; // copy of the previous field
     /* 80072F28 */ s32 unk08;
     /* 80072F2C */ PlayerStateStatus status;
@@ -1965,6 +2026,57 @@ typedef struct {
     s16 enabled;
 } DebugInfo;
 
+// Used in game.h
+typedef struct {
+    /* 0x800973F8 */ s32 D_800973F8;
+    /* 0x800973FC */ s32 D_800973FC;
+    /* 0x80097400 */ bool pauseEnemies; // True for Stopwatch and cutscenes
+    /* 0x80097404 */ s32 unk4;
+    /* 0x80097408 */ s32 g_zEntityCenter;
+    /* 0x8009740C */ s32 unkC;
+    /* 0x80097410 */ s32 BottomCornerTextTimer;
+    /* 0x80097414 */ s32 BottomCornerTextPrims;
+    /* 0x80097418 */ s32 unk18;
+    /* 0x8009741C */ s32 unk1C;
+    /* 0x80097420 */ s32 unk20;
+    /* 0x80097424 */ s32 unk24;
+
+    // size must be 8 for the loop in RunMainEngine, while
+    // PreventEntityFromRespawning suggests it has a size of 32
+    /* 0x80097428 */ s32 D_80097428[8];
+} unkGraphicsStruct;
+
+typedef struct {
+    RECT D_800ACD80;
+    RECT D_800ACD88;
+    RECT D_800ACD90;
+    RECT D_800ACD98;
+    RECT D_800ACDA0;
+    RECT D_800ACDA8;
+    RECT D_800ACDB0;
+    RECT D_800ACDB8;
+    RECT D_800ACDC0;
+    RECT D_800ACDC8;
+    RECT D_800ACDD0;
+    RECT D_800ACDD8;
+    RECT D_800ACDE0;
+    RECT D_800ACDE8;
+#ifdef VERSION_US
+    RECT D_800ACDF0;
+#endif
+} Vram;
+
+// Used in dra/4A538, dra_psp/3250, game.h
+typedef struct {
+    /* 0x00 */ u_long* desc;
+    /* 0x04 */ u_long* data;
+    /* 0x08 */ u16 unk8; // anim mode?
+    /* 0x0A */ u16 index;
+    /* 0x0C */ u16 unkC;
+    /* 0x0E */ u16 unkE;
+    /* 0x10 */ u8 unkArray[0x30]; // color buffer
+} Unkstruct_8006C3C4;             // size = 0x40
+
 extern s32 D_8003925C;
 extern s32 g_IsTimeAttackUnlocked;
 
@@ -1982,6 +2094,7 @@ extern s32 D_8003C738;
 extern s32 D_8003C73C;
 extern u32 D_8003C744;
 extern u32 g_RoomCount;
+extern Vram g_Vram;
 extern GameApi g_api;
 extern bool g_PauseAllowed;
 extern u32 g_GameTimer; // Increases when unpaused
@@ -2043,10 +2156,16 @@ extern BgLayer g_BgLayers[MAX_BG_LAYER_COUNT]; /* 800730D8 */
 #define STAGE_ENTITY_START 64
 #define MaxEntityCount 32
 #define PLAYER g_Entities[PLAYER_CHARACTER]
+// The max number of afterimage sprites is 6 (two per entity)
+// Going over this number will crash the game.
+#define MaxAfterImages 6
+// The afterimage effect is animated by using an index to step through each
+// animation table.
+#define MaxAfterImageIndex 10
 typedef enum {
-    UNK_ENTITY_1 = 1,
-    UNK_ENTITY_2,
-    UNK_ENTITY_3,
+    E_AFTERIMAGE_1 = 1,
+    E_AFTERIMAGE_2,
+    E_AFTERIMAGE_3,
     UNK_ENTITY_4,
     UNK_ENTITY_5,
     UNK_ENTITY_6,

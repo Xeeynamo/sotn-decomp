@@ -429,26 +429,6 @@ typedef struct {
     s32 overlayLastBlockSize;
 } CdThing;
 
-typedef struct {
-    RECT D_800ACD80;
-    RECT D_800ACD88;
-    RECT D_800ACD90;
-    RECT D_800ACD98;
-    RECT D_800ACDA0;
-    RECT D_800ACDA8;
-    RECT D_800ACDB0;
-    RECT D_800ACDB8;
-    RECT D_800ACDC0;
-    RECT D_800ACDC8;
-    RECT D_800ACDD0;
-    RECT D_800ACDD8;
-    RECT D_800ACDE0;
-    RECT D_800ACDE8;
-#ifdef VERSION_US
-    RECT D_800ACDF0;
-#endif
-} Vram;
-
 #define NOW_LOADING_PRIM_COUNT 16
 typedef struct {
     /* 0x00 */ s32 step;
@@ -486,9 +466,8 @@ typedef struct {
     u32 unk20;
     u32 unk24;
     s32 unk28;
+    s32 g_HealingMailTimer;
 } PlayerHud;
-
-#include "mist.h"
 
 // g_ButtonCombo is an array of 16, here is what each index is for
 // Names should be updated as each one is decompiled.
@@ -525,6 +504,58 @@ typedef struct Cmd14 {
     u8 unke;
 } Cmd14;
 
+// Used in dra/7E4BC, dra/bss, rbo5/unk_4648C, bo4/unk_46E7C
+typedef struct {
+    f32 posX;
+    f32 posY;
+    s16 angle1;
+    s16 angle2;
+    s16 size;
+    s16 xOffset;
+    s16 yOffset;
+    s16 pad;
+} mistStruct; // size = 0x14
+
+// Used in dra/menu, dra_psp/menu
+typedef struct EquipMenuHelper {
+    EquipKind equipTypeFilter;
+    s32 index;
+    s32 isAccessory;
+} EquipMenuHelper;
+
+// Used in dra/menu, dra_psp/menu
+// Struct for table of values to intitialize MenuContext structs
+typedef struct {
+    /* 0x00 */ s16 cursorX;
+    /* 0x02 */ s16 cursorY;
+    /* 0x04 */ u16 cursorW;
+    /* 0x06 */ u16 cursorH;
+    /* 0x08 */ s32 otIdx;
+} MenuContextInit; // size = 0x0C
+
+// Used in dra/dra, dra/7E4BC, dra/d_DBD4
+typedef struct {
+    u16 palette;
+    u8 unk2;
+} Unkstruct_800AE180;
+
+// Used in dra/7E4BC, dra/d_DBD4
+typedef struct {
+    u8 timers[8];
+    u8 blueprints[8];
+    u8 blueprintParams[8];
+    u32 unk18;
+} Unkstruct_800ADEF0; // size:0x1C
+
+// Used in dra/d_10798, dra/8D3E8, dra/dra.h
+// This appears to be a super miniature Entity or something
+// All it has is a state, a timer, and a facing direction.
+typedef struct {
+    s32 state;
+    s32 timer;
+    s32 facingLeft;
+} helper_8012F178;
+
 // Used for the button combos to signal successfully completing the sequence
 #define COMBO_COMPLETE 0xFF
 
@@ -546,7 +577,6 @@ extern RoomTeleport D_800A245C[];
 extern u32 D_800A2D24;
 extern const char* D_800A83AC[];
 
-extern MATRIX D_800A37B8;
 extern u16 D_800A37D8[2];
 extern u16 g_JosephsCloakColors[4];
 extern GfxBank** g_GfxSharedBank[];
@@ -558,7 +588,7 @@ extern SubweaponDef g_SubwpnDefs[13];
 // These are different on PSP since they have text that needs translating.
 #if defined(VERSION_PSP)
 extern char** g_SaveAreaNamesSecondPart;
-extern signed char** g_SaveAreaNames;
+extern char** g_SaveAreaNames;
 extern RelicDesc* g_RelicDefs;
 extern SpellDef* g_SpellDefs;
 extern char** g_MenuStr;
@@ -577,7 +607,6 @@ extern s32 g_ExpNext[];
 extern s16 D_800AC958[];
 extern CdFile* D_800ACC74[];
 extern s32 g_CurrentStream;
-extern Vram g_Vram;
 extern s32 D_800ACE44;
 extern s16 g_SensorsCeilingBat[];
 extern s16 g_SensorsFloorBat[];
@@ -699,13 +728,6 @@ extern Unkstruct_800BF554 g_SfxData[];
 extern char* aLightTimer02x;
 extern SVECTOR D_800E2024;
 extern SVECTOR D_800E202C;
-// This appears to be a super miniature Entity or something
-// All it has is a state, a timer, and a facing direction.
-typedef struct {
-    s32 state;
-    s32 timer;
-    s32 facingLeft;
-} helper_8012F178;
 extern helper_8012F178 D_800B08CC[6];
 extern s32 D_800B0914;
 extern s32 D_800B0918;
@@ -769,6 +791,13 @@ void MenuDrawRect(MenuContext* context, s32 posX, s32 posY, s32 width,
 s32 func_800F62E8(s32 arg0);
 void InitStatsAndGear(bool isDeathTakingItems);
 
+void InitFade(void);
+s32 func_801025F4(void);
+void SetFadeWidth(s32 fadeWidth);
+void SetFadeMode(FadeModes fadeMode);
+void UpdateFade(bool skipFollowup);
+void HideMap(void);
+
 s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action);
 s32 func_800FD664(s32 arg0);
 s32 func_800FD6C4(EquipKind equipTypeFilter);
@@ -787,7 +816,6 @@ void ClearStatBuff(s32 arg0);
 bool func_8010183C(s32 arg0);
 s32 func_801025F4(void);
 void func_80102CD8(s32);
-void func_80103EAC(void);
 Entity* GetFreeEntity(s16 start, s16 end);
 Entity* GetFreeEntityReverse(s16 start, s16 end);
 void DestroyEntitiesFromIndex(s16 startIndex);
@@ -799,8 +827,8 @@ void SetPrimRect(Primitive* poly, s32 x, s32 y, s32 width, s32 height);
 void SetPlayerStep(s16 step);
 u32 UpdateAnim(s8* frameProps, AnimationFrame** anims);
 void func_8010DFF0(s32 resetAnims, s32 arg1);
-void func_8010E0A8(void);
-void func_8010E0B8(void);
+void ForceAfterImageOn(void);
+void EnableAfterImage(void);
 s32 func_8010E334(s32 xStart, s32 xEnd);
 void func_8010E470(s32, s32);
 void func_8010E570(s32);

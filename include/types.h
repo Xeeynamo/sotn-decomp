@@ -19,6 +19,7 @@ typedef unsigned int size_t;
 #define INT16_MAX (0x7FFF)
 #else
 
+#include <stdint.h>
 #include <sys/types.h>
 typedef unsigned char u_char;
 typedef unsigned short u_short;
@@ -58,7 +59,8 @@ typedef unsigned short ushort;
 typedef unsigned int uint;
 
 #ifndef __cplusplus
-typedef enum { false, true } bool;
+enum { false, true };
+typedef signed int bool;
 #endif
 
 #ifndef NULL

@@ -1,18 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
 
-typedef struct {
-    Point16 unk0;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-    s16 unkC;
-    s16 unkE;
-    s32 unk10;
-    s16 unk14;
-} unkstr_801C06B0;
-
 static SVECTOR D_80182690 = {-8, -8, 0};
 static SVECTOR D_80182698 = {8, -8, 0};
 static SVECTOR D_801826A0 = {-8, 8, 0};

@@ -3,7 +3,6 @@
 #define STAGE_IS_DRE
 
 #define OVL_EXPORT(x) DRE_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
@@ -139,10 +138,5 @@ extern u16 D_80180894[];
 extern u16 D_8018089C[];
 extern u16 D_801808A0[];
 extern s16 D_801808A8[];
-extern s32 g_SkipCutscene;
-extern u32 g_CutsceneFlags;
-extern s32 g_IsCutsceneDone;
 
 extern u8 D_80180944[]; // Animation, EntityCSMoveAlucard
-
-extern Dialogue g_Dialogue;

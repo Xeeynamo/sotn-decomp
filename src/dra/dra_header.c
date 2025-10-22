@@ -20,7 +20,7 @@ void PlaySfx(s32 sfxId);
 s16 func_800EDB58(u8 primType, s32 count);
 void func_800EA538(s32 arg0);
 void func_800EA5AC(u32 a, u32 r, u32 g, u32 b);
-void func_801027C4(u32 arg0);
+void SetFadeMode(FadeModes fadeMode);
 void func_800EB758(
     s16 pivotX, s16 pivotY, Entity* e, u16 flags, POLY_GT4* p, u16 flipX);
 Entity* CreateEntFactoryFromEntity(Entity* source, u32 flags, s32 arg2);
@@ -40,7 +40,7 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index);
 void AddHearts(s32 value);
 bool LoadMonsterLibrarianPreview(s32 monsterId);
 s32 TimeAttackController(TimeAttackEvents eventId, TimeAttackActions action);
-void func_8010E0A8(void);
+void ForceAfterImageOn(void);
 s32 func_800FE044(s32 amount, s32 type);
 void AddToInventory(u32 itemId, EquipKind itemCategory);
 void InitStatsAndGear(bool isDeathTakingItems);
@@ -91,7 +91,7 @@ GameApi g_ApiInit = {
     func_800EDB58,
     func_800EA538,
     func_800EA5AC,
-    func_801027C4,
+    SetFadeMode,
     func_800EB758,
     CreateEntFactoryFromEntity,
     func_80131F68,
@@ -117,7 +117,7 @@ GameApi g_ApiInit = {
     AddHearts,
     LoadMonsterLibrarianPreview,
     TimeAttackController,
-    func_8010E0A8,
+    ForceAfterImageOn,
     func_800FE044,
     AddToInventory,
     g_RelicDefs,

@@ -4,21 +4,6 @@
 #include "../dra/menu.h"
 #include "servant.h" // for InitializeMode enum
 
-typedef struct EquipMenuHelper {
-    EquipKind equipTypeFilter;
-    s32 index;
-    s32 isAccessory;
-} EquipMenuHelper;
-
-// Struct for table of values to intitialize MenuContext structs
-typedef struct {
-    /* 0x00 */ s16 cursorX;
-    /* 0x02 */ s16 cursorY;
-    /* 0x04 */ u16 cursorW;
-    /* 0x06 */ u16 cursorH;
-    /* 0x08 */ s32 otIdx;
-} MenuContextInit; // size = 0x0C
-
 #define ShowText(str, y) func_800F99B8(str, y, false);
 
 void MenuDrawStr(const char* str, s32 x, s32 y, MenuContext* ctx);
@@ -32,51 +17,51 @@ extern u32 D_psp_08B42054; // psp triangle button
 
 // BSS
 s32 D_8013784C;
-s32 D_801375CC;
-u32 D_801375D0;
-s32 D_801375D4;
-s32* D_801375D8;
-s32 D_801375DC;
-s32 D_801375E0[NUM_FAMILIARS + 1];
-s32 g_IsCloakLiningUnlocked;
-s32 g_IsCloakColorUnlocked;
-s32 D_80137608;
-s32 g_IsSelectingEquipment;
-s32 g_EquipmentCursor;
-s32 D_80137614;
-s32 g_EquipOrderType;
-MenuContext g_Menus[NUM_MENU];
-s32 D_801377FC[NUM_MENU + 2];
-s32 D_80137844[2];
+static s32 D_801375CC;
+static u32 D_801375D0;
+static s32 D_801375D4;
+static s32* D_801375D8;
+static s32 D_801375DC;
+static s32 D_801375E0[NUM_FAMILIARS + 1];
+static s32 g_IsCloakLiningUnlocked;
+static s32 g_IsCloakColorUnlocked;
+static s32 D_80137608;
+static s32 g_IsSelectingEquipment;
+static s32 g_EquipmentCursor;
+static s32 D_80137614;
+static s32 g_EquipOrderType;
+static MenuContext g_Menus[NUM_MENU];
+static s32 D_801377FC[NUM_MENU + 2];
+static s32 D_80137844[2];
 char** D_800A2D68;
 char** D_800A2D48;
-s16 g_RelicMenuFadeTimer;
+static s16 g_RelicMenuFadeTimer;
 char* g_ChRgb;
-s32 g_TimeAttackEntryTimes[NUM_TIMEATTACK_EVENTS];
-s32 c_strTimeAttackEntry[NUM_TIMEATTACK_EVENTS];
-s32 g_NewAttackRightHand;
-s32 g_NewAttackLeftHand;
-s32 g_NewDefenseEquip;
-s32 g_NewPlayerStatsTotal[4];
-s32 D_80137948;
-u8* D_8013794C;
-s32 D_80137950;
-s32 D_80137954;
+static s32 g_TimeAttackEntryTimes[NUM_TIMEATTACK_EVENTS];
+static s32 c_strTimeAttackEntry[NUM_TIMEATTACK_EVENTS];
+static s32 g_NewAttackRightHand;
+static s32 g_NewAttackLeftHand;
+static s32 g_NewDefenseEquip;
+static s32 g_NewPlayerStatsTotal[4];
+static s32 D_80137948;
+static u8* D_8013794C;
+static s32 D_80137950;
+static s32 D_80137954;
 s32 D_psp_091CDD70[2];
 s32 g_PrevEquippedWeapons[2];
-s32 D_80137958;
-s32 g_ServantPrevious;
+static s32 D_80137958;
+static s32 g_ServantPrevious;
 s32 D_psp_091CDD50;
 bool D_psp_091CDD48;
 s32 D_psp_091CDD40;
 
-char* D_800A2D10[] = {"装備技システム短剣必殺使攻撃力防"};
+static char* D_800A2D10 = "装備技システム短剣必殺使攻撃力防";
 
-char* D_800A2D14[] = {"御魔導器拳こ一覧棒両手食物爆弾盾"};
+static char* D_800A2D14 = "御魔導器拳こ一覧棒両手食物爆弾盾";
 
-char* D_800A2D18[] = {"投射薬ん右左武兜鎧マントその他い"};
+static char* D_800A2D18 = "投射薬ん右左武兜鎧マントその他い";
 
-char* D_800A2D58[] = {"再開中断終了決定戻る　　　　　　"};
+static char* D_800A2D58 = "再開中断終了決定戻る　　　　　　";
 
 char* D_psp_09147FD8[] = {
     _S("ATT"),
@@ -3574,7 +3559,7 @@ block_4:
             break;
         }
         SetGPUBuffRGBZero();
-        func_80102628(0x180);
+        SetFadeWidth(DISP_MENU_W);
         SetMenuDisplayBuffer();
         func_800FAC48();
         D_800973EC = 1;
@@ -3586,18 +3571,18 @@ block_4:
             D_80097910 = 0;
             func_800F6A48();
             func_800F84CC();
-            func_801027C4(2);
+            SetFadeMode(FADE_FROM_BLACK);
 #if defined(VERSION_US)
-            func_800F98AC(*D_800A2D64, 0);
+            func_800F98AC(D_800A2D64, 0);
 #elif defined(VERSION_PSP)
-            func_800F98AC(*D_800A2D10, 0);
-            func_800F98AC(*D_800A2D14, 0x100);
-            func_800F98AC(*D_800A2D18, 1);
-            func_800F98AC(*D_800A2D58, 0x101);
+            func_800F98AC(D_800A2D10, 0);
+            func_800F98AC(D_800A2D14, 0x100);
+            func_800F98AC(D_800A2D18, 1);
+            func_800F98AC(D_800A2D58, 0x101);
 #elif defined(VERSION_HD)
-            func_800F98AC(*D_800A2D10, 0);
-            func_800F98AC(*D_800A2D14, 0x100);
-            func_800F98AC(*D_800A2D18, 1);
+            func_800F98AC(D_800A2D10, 0);
+            func_800F98AC(D_800A2D14, 0x100);
+            func_800F98AC(D_800A2D18, 1);
 #endif
             func_800FABEC(MENU_DG_MAIN);
             func_800FABEC(MENU_DG_BG);
@@ -3607,12 +3592,12 @@ block_4:
         }
         break;
     case MENU_STEP_EXIT_BEGIN:
-        func_801027C4(1);
+        SetFadeMode(FADE_TO_BLACK);
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_4:
         if (func_801025F4()) {
-            func_80102628(0x100);
+            SetFadeWidth(DISP_STAGE_W);
             SetStageDisplayBuffer();
             func_800FAC48();
             func_800EB6B4();
@@ -3733,12 +3718,12 @@ block_4:
         if (!func_80133950()) {
             break;
         }
-        func_801027C4(2);
+        SetFadeMode(FADE_FROM_BLACK);
         g_MenuStep++;
 #if defined(VERSION_PSP)
         if (D_psp_091CDD48) {
             D_psp_091CDD48 = 0;
-            SetGameState(3);
+            SetGameState(Game_GameOver);
             g_GameStep = 0x63;
         }
 #endif
@@ -4163,7 +4148,7 @@ block_4:
         break;
     case MENU_STEP_UNK_32:
         if (func_801025F4()) {
-            func_80102628(0x100);
+            SetFadeWidth(0x100);
             SetStageDisplayBuffer();
             func_800FAC48();
             g_MenuStep++;
@@ -4187,14 +4172,14 @@ block_4:
             func_801073C0();
             g_CdStep = CdStep_None;
             SetGPUBuffRGBZero();
-            func_80102628(0x180);
+            SetFadeWidth(DISP_MENU_W);
             SetMenuDisplayBuffer();
             func_800FAC48();
             g_MenuStep++;
         }
         break;
     case MENU_STEP_UNK_36:
-        func_801027C4(2);
+        SetFadeMode(FADE_FROM_BLACK);
         func_800F9808(2);
         id = g_Status.spells[g_MenuNavigation.cursorSpells];
         id ^= SPELL_FLAG_KNOWN;
@@ -4356,7 +4341,7 @@ void DrawHudSubweapon2(void) {
     switch (g_MenuStep) {
     case MENU_STEP_INIT:
         func_800F84CC();
-        func_800F98AC(*D_800A2D58, 0x101);
+        func_800F98AC(D_800A2D58, 0x101);
         func_800FB9BC();
         D_psp_091CDD50 = 0;
         g_MenuNavigation.cursorMain = 0;
@@ -4455,7 +4440,7 @@ void DrawHudSubweapon2(void) {
 
     case 0x64:
         if (D_psp_091CDD50 != 0) {
-            SetGameState(3);
+            SetGameState(Game_GameOver);
             g_GameStep = 0x63;
             PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
             PlaySfx(SET_KEY_ON_20_21);

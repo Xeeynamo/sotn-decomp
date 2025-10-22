@@ -71,11 +71,11 @@ void MoveBoat(u16 playerInBoat, Entity* entity) {
     tempEntity = &PLAYER;
     if (playerInBoat) {
         if (posX > 0) {
-            if (!(g_Player.vram_flag & 4)) {
+            if (!(g_Player.vram_flag & TOUCHING_R_WALL)) {
                 tempEntity->posX.i.hi += posX;
                 D_80097488.x.i.hi += posX;
             }
-        } else if (!(g_Player.vram_flag & 8)) {
+        } else if (!(g_Player.vram_flag & TOUCHING_L_WALL)) {
             tempEntity->posX.i.hi += posX;
             D_80097488.x.i.hi += posX;
         }
@@ -113,9 +113,11 @@ void EntityFerrymanController(Entity* self) {
         self->posX.i.hi -= 0x50;
         GetPlayerCollisionWith(self, 4, 9, 9);
         self->posX.i.hi += 0x28;
-        g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
+        g_Entities[E_AFTERIMAGE_1].ext.alucardController.disableAfterImageFlag =
+            true;
     } else {
-        g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = false;
+        g_Entities[E_AFTERIMAGE_1].ext.alucardController.disableAfterImageFlag =
+            false;
     }
 
     if (self->step && !self->ext.ferrymanBoat.unk94) {
@@ -174,7 +176,8 @@ void EntityFerrymanController(Entity* self) {
             self->step += 2;
         } else {
             // Otherwise pause world state and put Alucard into human form
-            g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
+            g_Entities[E_AFTERIMAGE_1]
+                .ext.alucardController.disableAfterImageFlag = true;
             g_PauseAllowed = false;
             g_unkGraphicsStruct.pauseEnemies = true;
             g_Player.demo_timer = 1;
@@ -921,11 +924,11 @@ void MoveBoatElevator(
         posXTemp = posX - entity->posX.i.hi;
         posYTemp = posY - entity->posY.i.hi;
         if (posXTemp > 0) {
-            if (!(g_Player.vram_flag & 4)) {
+            if (!(g_Player.vram_flag & TOUCHING_R_WALL)) {
                 player->posX.i.hi += posXTemp;
                 D_80097488.x.i.hi += posXTemp;
             }
-        } else if (!(g_Player.vram_flag & 8)) {
+        } else if (!(g_Player.vram_flag & TOUCHING_L_WALL)) {
             player->posX.i.hi += posXTemp;
             D_80097488.x.i.hi += posXTemp;
         }

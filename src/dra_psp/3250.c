@@ -10,7 +10,7 @@ extern s32 g_DebugEnabled2;
 u8 D_psp_091CB700[0x2000];
 
 void func_psp_090DFBD0(void) {
-    if (g_SaveAreaNames[g_StageId][0] != 0) {
+    if ((s8)g_SaveAreaNames[g_StageId][0] != 0) {
         StoreSaveData((SaveData*)D_psp_091CB700, 0, rand() & 0xF);
         if (D_8B42044 != 0) {
             D_8B42044 = 0;

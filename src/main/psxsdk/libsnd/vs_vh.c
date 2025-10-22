@@ -34,11 +34,11 @@ s16 SsVabOpenHeadWithMode(u8* addr, s16 vabid, s16 arg2, u32 sbaddr) {
         return -1;
     }
     _spu_setInTransfer(1);
-    if (!(vabid < 0x10)) {
+    if (vabid >= 0x10) {
         _spu_setInTransfer(0);
         return -1;
     }
-    if (vabid == (-1)) {
+    if (vabid == -1) {
         for (i = 0; i < 16; i++) {
             if (_svm_vab_used[i] == 0) {
                 _svm_vab_used[i] = 1;
@@ -47,7 +47,6 @@ s16 SsVabOpenHeadWithMode(u8* addr, s16 vabid, s16 arg2, u32 sbaddr) {
                 break;
             }
         }
-
     } else {
         var_a2 = _svm_vab_used;
         if (var_a2[vabid] == 0) {
@@ -66,13 +65,13 @@ s16 SsVabOpenHeadWithMode(u8* addr, s16 vabid, s16 arg2, u32 sbaddr) {
     var_a2 = var_a2 + 0x20;
     vab_hdr_2 = addr;
     magic = vab_hdr_2->form;
-    if ((magic >> 8) != 0x564142) {
+    if ((magic >> 8) != ('V' << 0x10 | 'A' << 0x8 | 'B')) {
         _svm_vab_used[vabId_2] = 0;
         _spu_setInTransfer(0);
         _svm_vab_count -= 1;
         return -1;
     }
-    if ((magic & 0xFF) == 0x70) {
+    if ((magic & 0xFF) == 'p') {
         if (vab_hdr_2->ver >= 5) {
             kMaxPrograms = 0x80;
         } else {

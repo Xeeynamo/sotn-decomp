@@ -42,7 +42,7 @@ static void func_us_801C096C(void) {
     }
 
     D_us_801D4344 = 1;
-    g_Dop.vram_flag = 1;
+    g_Dop.vram_flag = TOUCHING_GROUND;
     func_8010E570(0);
     entity = &g_Entities[E_ID_41];
 
@@ -174,7 +174,7 @@ void EntityDoppleganger40(void) {
                         case 14:
                             break;
                         case 15:
-                            func_8010E0B8();
+                            EnableAfterImage();
                             break;
                         }
                     }
@@ -440,7 +440,7 @@ void EntityDoppleganger40(void) {
         g_Dop.timers[15] = 4;
         DOPPLEGANGER.palette = PAL_OVL(0x200);
     }
-    PlayAnimation(D_us_80183CFC, D_us_80183D40);
+    OVL_EXPORT(PlayAnimation)(D_us_80183CFC, D_us_80183D40);
     if (g_Dop.status & PLAYER_STATUS_DEAD) {
         if (DOPPLEGANGER.poseTimer < 0) {
             DOPPLEGANGER.animCurFrame |= 0x8000;
@@ -455,7 +455,7 @@ void EntityDoppleganger40(void) {
             DOPPLEGANGER.hitboxState = 0;
         }
     }
-    func_8010D59C();
+    OVL_EXPORT(InitPlayerAfterImage)();
     vram_flag = g_Dop.vram_flag;
     posX = DOPPLEGANGER.posX.val;
     posY = DOPPLEGANGER.posY.val;
@@ -495,7 +495,7 @@ void EntityDoppleganger40(void) {
     }
 
     g_Dop.unk04 = vram_flag;
-    func_8010D800();
+    OVL_EXPORT(DrawPlayerAfterImage)();
 
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(2)) {
         parts = D_us_801B1674[DOPPLEGANGER.animCurFrame & 0x7FFF];
@@ -761,7 +761,7 @@ void func_us_801C1DC8(void) {
                 }
             }
         } else {
-            if (g_Dop.vram_flag & 1) {
+            if (g_Dop.vram_flag & TOUCHING_GROUND) {
                 func_us_801C1DB0(0);
             } else {
                 g_Dop.padSim = PAD_CROSS;
@@ -789,7 +789,7 @@ void func_us_801C1DC8(void) {
                 g_Dop.padSim |= PAD_CROSS;
             }
             D_us_801D3304 = g_Dop.padSim & (PAD_LEFT | PAD_RIGHT);
-        } else if (g_Dop.vram_flag & 1) {
+        } else if (g_Dop.vram_flag & TOUCHING_GROUND) {
             func_us_801C1DB0(0);
         } else {
             g_Dop.padSim = D_us_801D3304 + PAD_CROSS;

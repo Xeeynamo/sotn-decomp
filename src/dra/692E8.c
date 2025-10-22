@@ -156,8 +156,8 @@ void func_801093C4(void) {
     Primitive* prim;
     s32 i;
 
-    prim = &g_PrimBuf[g_Entities[1].primIndex];
-    for (i = 0; i < 6; i++) {
+    prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
+    for (i = 0; i < MaxAfterImages; i++) {
         prim = prim->next;
     }
     switch (g_Player.unk6A) {
@@ -240,7 +240,7 @@ void AluInit() {
     g_Player.vram_flag = g_Player.unk04 = 1;
     func_8010E570(0);
 
-    for (e = &g_Entities[1], i = 0; i < 3; i++, e++) {
+    for (e = &g_Entities[E_AFTERIMAGE_1], i = 0; i < 3; i++, e++) {
         DestroyEntity(e);
         e->animSet = ANIMSET_DRA(1);
         e->unk5A = i + 1;
@@ -248,9 +248,9 @@ void AluInit() {
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
 
-    g_Entities[1].primIndex = AllocPrimitives(PRIM_TILE, 8);
-    g_Entities[1].flags |= FLAG_HAS_PRIMS;
-    prim = &g_PrimBuf[g_Entities[1].primIndex];
+    g_Entities[E_AFTERIMAGE_1].primIndex = AllocPrimitives(PRIM_TILE, 8);
+    g_Entities[E_AFTERIMAGE_1].flags |= FLAG_HAS_PRIMS;
+    prim = &g_PrimBuf[g_Entities[E_AFTERIMAGE_1].primIndex];
     for (i = 0; i < 6; i++) {
         prim->drawMode = DRAW_UNK_100 | DRAW_HIDE | DRAW_UNK02;
         prim = prim->next;
@@ -443,7 +443,7 @@ static void CheckStageCollision(s32 isTransformed) {
             !(g_Player.colCeiling[1].effects & EFFECT_SOLID_FROM_ABOVE) &&
             g_Player.colFloor[1].effects & 1 &&
             !(g_Player.colFloor[1].effects & EFFECT_SOLID_FROM_BELOW)) {
-            g_Player.vram_flag = 3;
+            g_Player.vram_flag = TOUCHING_CEILING | TOUCHING_GROUND;
             PLAYER.posX.val -= speed;
             return;
         }
@@ -543,7 +543,7 @@ void func_8010A234(s32 arg0) {
         func_8010FAF4();
         PLAYER.rotPivotY = 0;
         PLAYER.rotPivotX = 0;
-        if (g_Player.vram_flag & 1) {
+        if (g_Player.vram_flag & TOUCHING_GROUND) {
             func_8010E570(0);
         } else {
             func_8010E7AC();
@@ -800,7 +800,7 @@ void EntityAlucard() {
                             func_8010E168(1, 0x10);
                             continue;
                         case 15:
-                            func_8010E0B8();
+                            EnableAfterImage();
                             continue;
                         case 11:
                             func_801092E8(0);
@@ -1446,7 +1446,7 @@ block_160:
             PLAYER.scaleY = 0x110;
             PLAYER.rotPivotY = 0x18;
         }
-        func_8010D59C();
+        InitPlayerAfterImage();
         if ((*D_80097448 >= 0x29 ||
              ((g_Player.status & PLAYER_STATUS_WOLF_FORM) &&
               *D_80097448 > 0xC)) &&
@@ -1505,7 +1505,7 @@ block_160:
             PLAYER.velocityX = PLAYER.velocityX * 4 / 3;
         }
         g_CurrentEntity->nFramesInvincibility = 0;
-        func_8010D800();
+        DrawPlayerAfterImage();
         if (PLAYER.animSet == 0xD) {
             sp3c = (AluFrame*)D_800CFE48[PLAYER.animCurFrame & 0x7FFF];
             sp3c->pivotY = D_8013AECC + D_800ACE20[PLAYER.animCurFrame];

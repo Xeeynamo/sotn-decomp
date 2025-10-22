@@ -2,5 +2,5 @@
 #include "../cat/cat.h"
 
 // clang-format off
-INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/func_pspeu_09253988", func_pspeu_09253988);
+INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/func_pspeu_09253988", func_us_801CA13C);
 // clang-format on

@@ -1121,7 +1121,7 @@ void EntityGuardText(Entity* self) {
         self->step++;
         return;
     case 1:
-        if ((g_Player.vram_flag & 1) || (g_Player.unk04 & 1)) {
+        if ((g_Player.vram_flag & TOUCHING_GROUND) || (g_Player.unk04 & 1)) {
             self->step++;
         }
         return;
@@ -1841,7 +1841,7 @@ Entity* CreateEntFactoryFromEntity(
 }
 
 static FactoryBlueprint blueprints[] = {
-#include "gen/blueprints.h"
+#include GEN_VERSION(blueprints.h)
 };
 STATIC_ASSERT(LEN(blueprints) == NUM_BLUEPRINTS, "bp array wrong size");
 
@@ -2227,7 +2227,7 @@ void EntitySmokePuff(Entity* self) {
             return;
         }
         if (paramsHi == 1) {
-            if (g_Player.vram_flag & 0x8000) {
+            if (g_Player.vram_flag & TOUCHING_ANY_SLOPE) {
                 posX /= 2;
             }
         }

@@ -91,8 +91,8 @@ void EntitySpectralSword(Entity* self) {
             ent->zPriority = self->zPriority;
         }
         self->step = 1;
-        self->ext.spectralSword.unk84 = 0;
-        self->ext.spectralSword.unk82 = 0xF;
+        self->ext.spectralSword.hasWeapons = 0;
+        self->ext.spectralSword.weaponCount = 0xF;
         break;
 
     case 1:
@@ -104,8 +104,8 @@ void EntitySpectralSword(Entity* self) {
     case 2:
         switch (self->step_s) {
         case 0:
-            self->ext.spectralSword.unk80 = 0x100;
-            self->ext.spectralSword.unk84 = 1;
+            self->ext.spectralSword.timer = 0x100;
+            self->ext.spectralSword.hasWeapons = 1;
             ent = self + 1;
             for (i = 0; i < 15; i++, ent++) {
                 ent->posY.i.hi = 0x120;
@@ -114,7 +114,7 @@ void EntitySpectralSword(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (!--self->ext.spectralSword.unk80) {
+            if (!--self->ext.spectralSword.timer) {
                 SetStep(4);
             }
             break;
@@ -128,8 +128,8 @@ void EntitySpectralSword(Entity* self) {
     case 4:
         switch (self->step_s) {
         case 0:
-            self->ext.spectralSword.unk94 = 0x200;
-            self->ext.spectralSword.unk84 = 3;
+            self->ext.spectralSword.moveTimer = 0x200;
+            self->ext.spectralSword.hasWeapons = 3;
             ent = self + 1;
             for (i = 0; i < 15; i++, ent++) {
                 if ((ent->flags & FLAG_DEAD) == 0) {
@@ -146,11 +146,11 @@ void EntitySpectralSword(Entity* self) {
             prim = self->ext.spectralSword.prim;
             prim->x0 = ent->posX.i.hi + dx;
             prim->y0 = ent->posY.i.hi + dy;
-            self->ext.spectralSword.unk80 = 0x80;
+            self->ext.spectralSword.timer = 0x80;
             self->step_s++;
             /* fallthrough */
         case 2:
-            if (!--self->ext.spectralSword.unk80) {
+            if (!--self->ext.spectralSword.timer) {
                 self->step_s = 1;
             }
             prim = self->ext.spectralSword.prim;
@@ -161,7 +161,7 @@ void EntitySpectralSword(Entity* self) {
             if (dx < 8 && dy < 8) {
                 self->step_s = 1;
             }
-            if (!--self->ext.spectralSword.unk94) {
+            if (!--self->ext.spectralSword.moveTimer) {
                 SetStep(5);
             }
             break;
@@ -171,17 +171,17 @@ void EntitySpectralSword(Entity* self) {
         dx = prim->x0 - self->posX.i.hi;
         dy = prim->y0 - self->posY.i.hi;
         angle = ratan2(dy, dx);
-        angle = GetNormalizedAngle(0x20, self->ext.spectralSword.unk90, angle);
+        angle = GetNormalizedAngle(0x20, self->ext.spectralSword.angle, angle);
         self->velocityX = rcos(angle) * 0x10;
         self->velocityY = rsin(angle) * 0x10;
-        self->ext.spectralSword.unk90 = angle;
+        self->ext.spectralSword.angle = angle;
         break;
 
     case 5:
         switch (self->step_s) {
         case 0:
-            self->ext.spectralSword.unk84 = 2;
-            self->ext.spectralSword.unk80 = 0x100;
+            self->ext.spectralSword.hasWeapons = 2;
+            self->ext.spectralSword.timer = 0x100;
             ent = self + 1;
             for (i = 0; i < 15; i++, ent++) {
                 if ((ent->flags & FLAG_DEAD) == 0) {
@@ -191,7 +191,7 @@ void EntitySpectralSword(Entity* self) {
             self->step_s++;
             /* fallthrough */
         case 1:
-            if (!--self->ext.spectralSword.unk80) {
+            if (!--self->ext.spectralSword.timer) {
                 if (GetDistanceToPlayerX() < 0x40) {
                     self->step_s++;
                 } else {
@@ -207,34 +207,34 @@ void EntitySpectralSword(Entity* self) {
                     ent->step = 1;
                 }
             }
-            self->ext.spectralSword.unk84 = 1;
-            self->ext.spectralSword.unk94 = 0x20;
-            self->ext.spectralSword.unk96 = 0;
+            self->ext.spectralSword.hasWeapons = 1;
+            self->ext.spectralSword.moveTimer = 0x20;
+            self->ext.spectralSword.weaponIndex = 0;
             self->step_s++;
             /* fallthrough */
         case 3:
-            if (!--self->ext.spectralSword.unk94) {
-                self->ext.spectralSword.unk94 = 0x20;
+            if (!--self->ext.spectralSword.moveTimer) {
+                self->ext.spectralSword.moveTimer = 0x20;
                 do {
-                    self->ext.spectralSword.unk96++;
-                    ent = self + self->ext.spectralSword.unk96;
-                    if (self->ext.spectralSword.unk96 > 15) {
+                    self->ext.spectralSword.weaponIndex++;
+                    ent = self + self->ext.spectralSword.weaponIndex;
+                    if (self->ext.spectralSword.weaponIndex > 15) {
                         ent = NULL;
                         break;
                     }
                 } while (ent->flags & FLAG_DEAD);
                 if (ent != NULL) {
-                    ent = self + self->ext.spectralSword.unk96;
-                    ent->ext.spectralSword.unk96 |= 1;
+                    ent = self + self->ext.spectralSword.weaponIndex;
+                    ent->ext.spectralSword.weaponIndex |= 1;
                 } else {
-                    self->ext.spectralSword.unk80 = 0x40;
+                    self->ext.spectralSword.timer = 0x40;
                     self->step_s++;
                 }
             }
             break;
 
         case 4:
-            if (!--self->ext.spectralSword.unk80) {
+            if (!--self->ext.spectralSword.timer) {
                 SetStep(4);
             }
             break;
@@ -294,26 +294,26 @@ void EntitySpectralSword(Entity* self) {
     }
 
     if ((self->flags & FLAG_DEAD) == 0) {
-        if (!self->ext.spectralSword.unk82) {
-            self->ext.spectralSword.unk84 = 0;
+        if (!self->ext.spectralSword.weaponCount) {
+            self->ext.spectralSword.hasWeapons = 0;
         }
-        switch (self->ext.spectralSword.unk84) {
+        switch (self->ext.spectralSword.hasWeapons) {
         case 0:
             break;
 
         case 1:
-            mag = 0xF - self->ext.spectralSword.unk82;
+            mag = 0xF - self->ext.spectralSword.weaponCount;
             self->rotate += (mag * 4) + 8;
             sp40 = (mag * 8) + 0x40;
             ent = self + 1;
-            angle = 0x1000 / self->ext.spectralSword.unk82;
+            angle = 0x1000 / self->ext.spectralSword.weaponCount;
             for (i = 0; i < 15; i++, ent++) {
                 if ((ent->flags & FLAG_DEAD) == 0) {
                     dx = self->posX.val;
                     dy = self->posY.val;
                     dx += sp40 * rcos((i * angle) + self->rotate) * 0x10;
                     dy += sp40 * rsin((i * angle) + self->rotate) * 0x10;
-                    temp_s3 = &ent->ext.spectralSword.unk88;
+                    temp_s3 = &ent->ext.spectralSword.weaponPos;
                     temp_s3->x.val = dx;
                     temp_s3->y.val = dy;
                 }
@@ -327,19 +327,19 @@ void EntitySpectralSword(Entity* self) {
             SetGeomScreen(0x400);
             SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
             gte_ldtr(0, 0, 0x400);
-            mag = 0xF - self->ext.spectralSword.unk82;
-            self->ext.spectralSword.unk98 += 8;
-            self->ext.spectralSword.unk9C += (mag * 4) + 8;
+            mag = 0xF - self->ext.spectralSword.weaponCount;
+            self->ext.spectralSword.rotX += 8;
+            self->ext.spectralSword.rotateTarget += (mag * 4) + 8;
             vec->vx = 0;
             vec->vy = (mag * 8) + 0x40;
             vec->vz = 0;
             gte_ldv0(vec);
-            rot->vx = self->ext.spectralSword.unk98;
-            rot->vy = self->ext.spectralSword.unk9A;
+            rot->vx = self->ext.spectralSword.rotX;
+            rot->vy = self->ext.spectralSword.rotY;
             var_s7 = (s32*)SP(0x80);
             var_fp = (s32*)SP(0x40);
-            sp44 = self->ext.spectralSword.unk9C;
-            angle = 0x1000 / self->ext.spectralSword.unk82;
+            sp44 = self->ext.spectralSword.rotateTarget;
+            angle = 0x1000 / self->ext.spectralSword.weaponCount;
             for (i = 0; i < 15;) {
                 rot->vz = sp44 + (angle * i);
                 RotMatrix(rot, m);
@@ -358,7 +358,7 @@ void EntitySpectralSword(Entity* self) {
             dx = self->zPriority;
             for (i = 0; i < 15; i++, ent++) {
                 if ((ent->flags & FLAG_DEAD) == 0) {
-                    temp_s3 = &ent->ext.spectralSword.unk88;
+                    temp_s3 = &ent->ext.spectralSword.weaponPos;
                     temp_s3->x.i.hi = *var_fp & 0xFFFF;
                     temp_s3->y.i.hi = *var_fp >> 0x10;
                     mag = dx - *var_s7;
@@ -375,7 +375,7 @@ void EntitySpectralSword(Entity* self) {
         case 2:
             ent = self + 1;
             dx = self->posX.i.hi -
-                 ((self->ext.spectralSword.unk82 / 2 + 1) * 0x10);
+                 ((self->ext.spectralSword.weaponCount / 2 + 1) * 0x10);
             dy = self->posY.i.hi;
             for (i = 0; i < 15; i++, ent++) {
                 if ((ent->flags & FLAG_DEAD) == 0) {
@@ -383,7 +383,7 @@ void EntitySpectralSword(Entity* self) {
                     if (self->posX.i.hi == dx) {
                         dx += 0x10;
                     }
-                    temp_s3 = &ent->ext.spectralSword.unk88;
+                    temp_s3 = &ent->ext.spectralSword.weaponPos;
                     temp_s3->x.i.hi = dx;
                     temp_s3->y.i.hi = dy;
                 }
@@ -454,13 +454,13 @@ void EntityPoltergeist(Entity* self) {
         self->hitboxWidth = *hitboxPtr++;
         self->hitboxHeight = *hitboxPtr++;
         self->hitboxState = 0;
-        self->ext.spectralSword.unk80 = 0x40;
+        self->ext.spectralSword.timer = 0x40;
         self->step = 1;
         break;
 
     case 1:
-        if (self->ext.spectralSword.unk96) {
-            self->ext.spectralSword.unk96 = 0;
+        if (self->ext.spectralSword.weaponIndex) {
+            self->ext.spectralSword.weaponIndex = 0;
             SetStep(3);
         }
         break;
@@ -468,14 +468,14 @@ void EntityPoltergeist(Entity* self) {
     case 2:
         MoveEntity();
         StepTowards(&self->rotate, 0, 8);
-        pos = &self->ext.spectralSword.unk88;
+        pos = &self->ext.spectralSword.weaponPos;
         dx = pos->x.i.hi - self->posX.i.hi;
         dy = pos->y.i.hi - self->posY.i.hi;
         mag = (dx * dx) + (dy * dy);
         mag = SquareRoot0(mag);
         mag2 = mag / 2; // ????
         mag2 = mag;
-        if (!--self->ext.spectralSword.unk80) {
+        if (!--self->ext.spectralSword.timer) {
             self->hitboxState = 3;
         }
         if (mag2 > 0x38) {
@@ -484,9 +484,9 @@ void EntityPoltergeist(Entity* self) {
         angle = ratan2(dy, dx);
         self->velocityX = mag2 * rcos(angle);
         self->velocityY = mag2 * rsin(angle);
-        if (self->ext.spectralSword.unk96) {
+        if (self->ext.spectralSword.weaponIndex) {
             PlaySfxPositional(SFX_BONE_SWORD_SWISH_B);
-            self->ext.spectralSword.unk96 = 0;
+            self->ext.spectralSword.weaponIndex = 0;
             SetStep(3);
         }
         break;
@@ -496,28 +496,28 @@ void EntityPoltergeist(Entity* self) {
         case 0:
             tempEntity = &PLAYER;
             angle = GetAngleBetweenEntities(self, tempEntity);
-            self->ext.spectralSword.unk90 = angle + 0x1000;
+            self->ext.spectralSword.angle = angle + 0x1000;
             self->step_s++;
             /* fallthrough */
         case 1:
-            angle = self->ext.spectralSword.unk90 - D_us_801833D0[self->params];
+            angle = self->ext.spectralSword.angle - D_us_801833D0[self->params];
             if (StepTowards(&self->rotate, angle, 0x100)) {
                 self->step_s++;
             }
             break;
 
         case 2:
-            self->ext.spectralSword.unk90 &= 0xFFF;
+            self->ext.spectralSword.angle &= 0xFFF;
             self->rotate &= 0xFFF;
-            self->velocityX = rcos(self->ext.spectralSword.unk90) << 6;
-            self->velocityY = rsin(self->ext.spectralSword.unk90) << 6;
-            self->ext.spectralSword.unk80 = 0x30;
+            self->velocityX = rcos(self->ext.spectralSword.angle) << 6;
+            self->velocityY = rsin(self->ext.spectralSword.angle) << 6;
+            self->ext.spectralSword.timer = 0x30;
             PlaySfxPositional(SFX_BONE_THROW);
             self->step_s++;
             /* fallthrough */
         case 3:
             MoveEntity();
-            if (!--self->ext.spectralSword.unk80) {
+            if (!--self->ext.spectralSword.timer) {
                 SetStep(2);
             }
             if (self->posY.i.hi > 0xE0) {
@@ -531,7 +531,7 @@ void EntityPoltergeist(Entity* self) {
         switch (self->step_s) {
         case 0:
             tempEntity = self - self->params;
-            tempEntity->ext.spectralSword.unk82--;
+            tempEntity->ext.spectralSword.weaponCount--;
             self->hitboxState = 0;
             PlaySfxPositional(SFX_EXPLODE_B);
             self->step_s++;

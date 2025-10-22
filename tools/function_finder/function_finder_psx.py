@@ -176,12 +176,12 @@ if __name__ == "__main__":
 
     base_url = "https://raw.githubusercontent.com/Xeeynamo/sotn-decomp/gh-duplicates"
 
-    if os.path.isfile("gh-duplicates/duplicates.txt"):
-        with open("gh-duplicates/duplicates.txt", "r") as f:
+    if os.path.isfile("build/us/reports/duplicates.txt"):
+        with open("build/us/reports/duplicates.txt", "r") as f:
             dups_text = f.read()
     else:
         print(
-            "'warning: gh-duplicates/duplicates.txt' file not found, skipping duplicate check",
+            "'warning: build/us/reports/duplicates.txt' file not found, skipping duplicate check",
             file=sys.stderr,
         )
         dups_text = None

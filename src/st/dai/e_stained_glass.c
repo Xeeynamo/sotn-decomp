@@ -1,18 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-static s16 D_us_80182564[] = {0, 2, 3, 5, 3, 5, 6, 8};
-static SVECTOR D_us_80182574 = {-208, -192, 0};
-static SVECTOR D_us_8018257C = {208, -192, 0};
-static SVECTOR D_us_80182584 = {-208, 192, 0};
-static SVECTOR D_us_8018258C = {208, 192, 0};
-static SVECTOR D_us_80182594 = {-208, -96, 0};
-static SVECTOR D_us_8018259C = {208, -96, 0};
-static SVECTOR D_us_801825A4 = {-208, 96, 0};
-static SVECTOR D_us_801825AC = {208, 96, 0};
-// Atypical use of this vector.  It uses the vector values, but also uses pad to
-// store the number of recursions of func_801ADB10
-static VECTOR g_params[] = {
+static s16 indices[] = {0, 2, 3, 5, 3, 5, 6, 8};
+static SVECTOR glass_points_0 = {-208, -192, 0};
+static SVECTOR glass_points_1 = {208, -192, 0};
+static SVECTOR glass_points_2 = {-208, 192, 0};
+static SVECTOR glass_points_3 = {208, 192, 0};
+static SVECTOR light_points_0 = {-208, -96, 0};
+static SVECTOR light_points_1 = {208, -96, 0};
+static SVECTOR light_points_2 = {-208, 96, 0};
+static SVECTOR light_points_3 = {208, 96, 0};
+// Atypical use of this vector.  It uses the normal vector values normally, but
+// also uses pad to store the number of recursions of StainedGlassRecurseDepth
+static VECTOR params[] = {
     {FLT(0.0625), 0, FLT(0.125), 3},   {FLT(0.0625), 0, FLT(0.28125), 2},
     {FLT(0.0625), 0, FLT(0.4375), 2},  {FLT(0.0625), 0, FLT(0.59375), 0},
     {FLT(0.0625), 0, FLT(0.75), 0},    {FLT(0.0625), 0, FLT(0.90625), 0},
@@ -20,43 +20,26 @@ static VECTOR g_params[] = {
     {FLT(-0.0625), 0, FLT(0.4375), 2}, {FLT(-0.0625), 0, FLT(0.59375), 0},
     {FLT(-0.0625), 0, FLT(0.75), 0},   {FLT(-0.0625), 0, FLT(0.90625), 0}};
 
-static s16 D_us_80182674[] = {1024,  1024,  1024,  1024,  1024,  1024,
-                              -1024, -1024, -1024, -1024, -1024, -1024};
-static CVECTOR D_us_8018268C[] = {
+static s16 y_vals[] = {1024,  1024,  1024,  1024,  1024,  1024,
+                       -1024, -1024, -1024, -1024, -1024, -1024};
+static CVECTOR colors[] = {
     {128, 128, 128, 32}, {120, 120, 120, 36}, {112, 112, 112, 40},
     {104, 104, 104, 48}, {96, 96, 96, 56},    {88, 88, 88, 64},
     {96, 96, 96, 4},     {88, 88, 88, 4},     {80, 80, 80, 4},
     {72, 72, 72, 4},     {64, 64, 64, 4},     {56, 56, 56, 4}};
-
-// pspeu has D_us_8018277C and D_us_801826BC swapped vs psx
-#ifdef VERSION_PSP
-static SVECTOR D_us_8018277C; // bss
-#else
-static SVECTOR D_us_801826BC = {0, 0, 0};
-#endif
-
-static SVECTOR D_us_801826C4 = {-192, -64, 0};
-static SVECTOR D_us_801826CC = {192, -64, 0};
-static SVECTOR D_us_801826D4 = {-192, 64, 0};
-static SVECTOR D_us_801826DC = {192, 64, 0};
-
-#ifdef VERSION_PSP
-static SVECTOR D_us_801826E4; // bss D_pspeu_092978A0
-#else
-static SVECTOR D_us_801826E4 = {0, 0, 0};
-#endif
-
-static VECTOR D_us_801826EC[] = {
+static SVECTOR light_rot_vector = {0, 0, 0}; // bss on pspeu
+static SVECTOR bg_points_0 = {-192, -64, 0};
+static SVECTOR bg_points_1 = {192, -64, 0};
+static SVECTOR bg_points_2 = {-192, 64, 0};
+static SVECTOR bg_points_3 = {192, 64, 0};
+static SVECTOR bg_pos_vector = {0, 0, 0}; // bss on pspeu
+static VECTOR trans_vectors[] = {
     {0, 0, FLT(1)},        {0, -224, FLT(0.125)}, {0, -224, FLT(0.25)},
     {0, -224, FLT(0.375)}, {0, -224, FLT(0.5)},   {0, -224, FLT(0.625)},
     {0, -224, FLT(0.75)},  {0, -224, FLT(0.875)}, {0, -224, FLT(1)}};
-#ifdef VERSION_PSP
-static SVECTOR D_us_801826BC; // bss
-#else
-static SVECTOR D_us_8018277C = {0, 0, 0};
-#endif
+static SVECTOR bg_rot_vector = {0, 0, 0}; // bss on pspeu
 
-void func_801ADB10(
+void StainedGlassBlendPalette(
     RECT* arg0, u16 srcPalIdx, u16 destPalIdx, s32 steps, CVECTOR* color) {
     u16 buffer[COLORS_PER_PAL];
     RECT rect;
@@ -92,21 +75,21 @@ void func_801ADB10(
                     buffer[index];
             }
         }
-        // These don't seem like they're x and y values
+        // These don't seem like they are x and y values
         rect.y = ((destPalIdx - 512) / COLORS_PER_PAL) + 240;
         rect.x = (((destPalIdx - 512) % COLORS_PER_PAL) * COLORS_PER_PAL) + 256;
         LoadImage(&rect, (u_long*)buffer);
     }
 }
 
-Primitive* func_us_801D9394(
+Primitive* StainedGlassRecurseDepth(
     SVECTOR* p0, SVECTOR* p1, SVECTOR* p2, SVECTOR* p3, Primitive* srcPrim,
     s32 iterations, Primitive* dstPrim, u8* dataPtr) {
     s32 index0;
     s32 index1;
     s32 index2;
     s32 index3;
-    s16* indices;
+    s16* indexPtr;
     uvPair* uvValues;
     Primitive* tempPrim;
     SVECTOR* points;
@@ -144,12 +127,12 @@ Primitive* func_us_801D9394(
     uvValues[5].v = (((uvValues[2].v) + (uvValues[8].v) + 1) >> 1);
 
     *tempPrim = *srcPrim;
-    indices = D_us_80182564;
+    indexPtr = indices;
     for (count = 0; count < 2; count++) {
-        index0 = *indices++;
-        index1 = *indices++;
-        index2 = *indices++;
-        index3 = *indices++;
+        index0 = *indexPtr++;
+        index1 = *indexPtr++;
+        index2 = *indexPtr++;
+        index3 = *indexPtr++;
 
         gte_ldv0(&points[index3]);
         gte_rtps();
@@ -183,7 +166,7 @@ Primitive* func_us_801D9394(
                     return NULL;
                 }
             } else {
-                dstPrim = func_us_801D9394(
+                dstPrim = StainedGlassRecurseDepth(
                     &points[index0], &points[index1], &points[index2],
                     &points[index3], tempPrim, iterations - 1, dstPrim,
                     dataPtr);
@@ -193,7 +176,8 @@ Primitive* func_us_801D9394(
     return dstPrim;
 }
 
-void func_us_801D97D0(Entity* self) {
+// Renders the stained glass and "sunlight" effect
+void EntityStainedGlass(Entity* self) {
     s16 midpointX, midpointY;
     s32 primIndex;
     SVECTOR rotVector;
@@ -201,126 +185,129 @@ void func_us_801D97D0(Entity* self) {
     MATRIX mtx;
     u8 transparent; // u8, but used as bool
     s32 iterations;
-    s16* yVals;
-    VECTOR* params;
-    CVECTOR* colors;
+    s16* yValsPtr;
+    VECTOR* paramsPtr;
+    CVECTOR* colorPtr;
     s32 count;
-    Primitive* prim1;
-    Primitive* prim2;
+    Primitive* glassPrim;
+    Primitive* lightPrim;
     Primitive* tempPrim;
 
     switch (self->step) {
-    case 0:
+    case 0: // init
         InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 60);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
-            prim1 = &g_PrimBuf[primIndex];
-            self->ext.stainedGlass.prim1 = prim1;
+            glassPrim = &g_PrimBuf[primIndex];
+            self->ext.stainedGlass.glassPrim = glassPrim;
             for (count = 0; count < 12; count++) {
-                prim1->tpage = 15;
-                prim1->clut = PAL_STAINED_GLASS_E;
-                prim1->u0 = prim1->u2 = 4;
-                prim1->u1 = prim1->u3 = 28;
-                prim1->v0 = prim1->v1 = 1;
-                prim1->v2 = prim1->v3 = 174;
-                PGREY(prim1, 0) = 96;
-                LOW(prim1->r1) = LOW(prim1->r0);
-                LOW(prim1->r2) = LOW(prim1->r0);
-                LOW(prim1->r3) = LOW(prim1->r0);
-                prim1->priority = 86;
-                prim1->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-                prim1 = prim1->next;
+                glassPrim->tpage = 15;
+                glassPrim->clut = PAL_STAINED_GLASS;
+                glassPrim->u0 = glassPrim->u2 = 4;
+                glassPrim->u1 = glassPrim->u3 = 28;
+                glassPrim->v0 = glassPrim->v1 = 1;
+                glassPrim->v2 = glassPrim->v3 = 174;
+                PGREY(glassPrim, 0) = 96;
+                LOW(glassPrim->r1) = LOW(glassPrim->r0);
+                LOW(glassPrim->r2) = LOW(glassPrim->r0);
+                LOW(glassPrim->r3) = LOW(glassPrim->r0);
+                glassPrim->priority = 86;
+                glassPrim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+                glassPrim = glassPrim->next;
             }
-            for (self->ext.stainedGlass.prim2 = prim1; prim1 != NULL;
-                 prim1 = prim1->next) {
-                prim1->drawMode = DRAW_HIDE;
+            for (self->ext.stainedGlass.lightPrim = glassPrim;
+                 glassPrim != NULL; glassPrim = glassPrim->next) {
+                glassPrim->drawMode = DRAW_HIDE;
             }
             return;
         }
         DestroyEntity(self);
         return;
-    case 1:
+    case 1: // render
         SetGeomScreen(1024);
         SetGeomOffset(128, 160);
-        prim1 = self->ext.stainedGlass.prim1;
-        prim2 = self->ext.stainedGlass.prim2;
-        params = g_params;
-        yVals = D_us_80182674;
-        colors = D_us_8018268C;
+        glassPrim = self->ext.stainedGlass.glassPrim;
+        lightPrim = self->ext.stainedGlass.lightPrim;
+        paramsPtr = params;
+        yValsPtr = y_vals;
+        colorPtr = colors;
         for (count = 0; count < 12; count++) {
             rotVector.vx = 0;
-            rotVector.vy = *yVals;
+            rotVector.vy = *yValsPtr;
             rotVector.vz = 0;
             RotMatrix(&rotVector, &mtx);
-            transVector = *params;
+            transVector = *paramsPtr;
             if (transVector.vx > 0) {
                 transparent = true;
-                prim1->drawMode =
+                glassPrim->drawMode =
                     DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             } else {
                 transparent = false;
-                prim1->drawMode = DRAW_COLORS;
+                glassPrim->drawMode = DRAW_COLORS;
             }
-            iterations = params->pad;
+            iterations = paramsPtr->pad;
             transVector.vx += self->posX.i.hi - 128;
             transVector.vy += self->posY.i.hi - 160;
-            transVector.vz += 1024;
+            transVector.vz += FLT(0.25);
 #ifdef VERSION_PSP
             SetRotMatrix(&mtx);
 #else
             gte_SetRotMatrix(&mtx);
 #endif
             gte_SetTransVector(&transVector);
-            CVEC(prim1->r0) = *colors;
-            LOW(prim1->r1) = LOW(prim1->r0);
-            LOW(prim1->r2) = LOW(prim1->r0);
-            LOW(prim1->r3) = LOW(prim1->r0);
-            prim1->type = 4;
+            CVEC(glassPrim->r0) = *colorPtr;
+            LOW(glassPrim->r1) = LOW(glassPrim->r0);
+            LOW(glassPrim->r2) = LOW(glassPrim->r0);
+            LOW(glassPrim->r3) = LOW(glassPrim->r0);
+            glassPrim->type = PRIM_GT4;
             if (iterations) {
-                prim2 = func_us_801D9394(
-                    &D_us_80182574, &D_us_8018257C, &D_us_80182584,
-                    &D_us_8018258C, prim1, iterations, prim2, (u8*)SP(0));
-                prim1->drawMode = DRAW_HIDE;
+                lightPrim = StainedGlassRecurseDepth(
+                    &glass_points_0, &glass_points_1, &glass_points_2,
+                    &glass_points_3, glassPrim, iterations, lightPrim,
+                    (u8*)SP(0));
+                glassPrim->drawMode = DRAW_HIDE;
             }
 #ifdef VERSION_PSP
-            gte_ldv0(&D_us_80182574);
-            gte_ldv1(&D_us_8018257C);
-            gte_ldv2(&D_us_80182584);
+            gte_ldv0(&glass_points_0);
+            gte_ldv1(&glass_points_1);
+            gte_ldv2(&glass_points_2);
 #else
-            gte_ldv3(&D_us_80182574, &D_us_8018257C, &D_us_80182584);
+            gte_ldv3(&glass_points_0, &glass_points_1, &glass_points_2);
 #endif
             gte_rtpt();
-            gte_stsxy3_gt3(prim1);
-            gte_ldv0(&D_us_8018258C);
+            gte_stsxy3_gt3(glassPrim);
+            gte_ldv0(&glass_points_3);
             gte_rtps();
-            gte_stsxy((long*)&prim1->x3);
+            gte_stsxy((long*)&glassPrim->x3);
+            // Renders the light "coming through" the right side glass
             if (transparent) {
-                tempPrim = prim2->next;
-                *prim2 = *prim1;
-                prim2->next = tempPrim;
+                tempPrim = lightPrim->next;
+                *lightPrim = *glassPrim;
+                lightPrim->next = tempPrim;
 
-                prim2->clut = PAL_STAGE_NAME_15F;
-                prim2->priority = prim1->priority - 1;
-                prim2->drawMode = DRAW_COLORS;
-                prim2->r0 = prim2->g0 = prim2->b0 = colors->cd;
-                LOW(prim2->r1) = LOW(prim2->r0);
-                prim2->r2 = prim2->g2 = prim2->b2 = colors->cd / 2;
-                LOW(prim2->r3) = LOW(prim2->r2);
+                lightPrim->clut = PAL_COLOR_GRADIENT;
+                lightPrim->priority = glassPrim->priority - 1;
+                lightPrim->drawMode = DRAW_COLORS;
+                lightPrim->r0 = lightPrim->g0 = lightPrim->b0 = colorPtr->cd;
+                LOW(lightPrim->r1) = LOW(lightPrim->r0);
+                lightPrim->r2 = lightPrim->g2 = lightPrim->b2 =
+                    colorPtr->cd / 2;
+                LOW(lightPrim->r3) = LOW(lightPrim->r2);
 
-                prim2 = prim2->next;
-                tempPrim = prim2->next;
-                *prim2 = *prim1;
-                prim2->next = tempPrim;
+                lightPrim = lightPrim->next;
+                tempPrim = lightPrim->next;
+                *lightPrim = *glassPrim;
+                lightPrim->next = tempPrim;
 
                 rotVector.vx = 0;
-                rotVector.vy = *yVals;
+                rotVector.vy = *yValsPtr;
                 rotVector.vz = -1024;
-                RotMatrix(&D_us_801826BC, &mtx);
+                RotMatrix(&light_rot_vector, &mtx);
                 RotMatrixY(rotVector.vy, &mtx);
                 RotMatrixZ(rotVector.vz, &mtx);
-                transVector = *params;
+                transVector = *paramsPtr;
                 transVector.vx = 96;
                 transVector.vy = 256;
                 transVector.vx += self->posX.i.hi - 128;
@@ -332,59 +319,59 @@ void func_us_801D97D0(Entity* self) {
                 gte_SetRotMatrix(&mtx);
 #endif
                 gte_SetTransVector(&transVector);
-                CVEC(prim2->r0) = *colors;
-                LOW(prim2->r1) = LOW(prim2->r0);
-                LOW(prim2->r2) = LOW(prim2->r0);
-                LOW(prim2->r3) = LOW(prim2->r0);
-                prim2->type = 4;
+                CVEC(lightPrim->r0) = *colorPtr;
+                LOW(lightPrim->r1) = LOW(lightPrim->r0);
+                LOW(lightPrim->r2) = LOW(lightPrim->r0);
+                LOW(lightPrim->r3) = LOW(lightPrim->r0);
+                lightPrim->type = PRIM_GT4;
 #ifdef VERSION_PSP
-                gte_ldv0(&D_us_80182594);
-                gte_ldv1(&D_us_8018259C);
-                gte_ldv2(&D_us_801825A4);
+                gte_ldv0(&light_points_0);
+                gte_ldv1(&light_points_1);
+                gte_ldv2(&light_points_2);
 #else
-                gte_ldv3(&D_us_80182594, &D_us_8018259C, &D_us_801825A4);
+                gte_ldv3(&light_points_0, &light_points_1, &light_points_2);
 #endif
                 gte_rtpt();
-                gte_stsxy3_gt3(prim2);
-                gte_ldv0(&D_us_801825AC);
+                gte_stsxy3_gt3(lightPrim);
+                gte_ldv0(&light_points_3);
                 gte_rtps();
-                gte_stsxy((long*)&prim2->x3);
-                prim2->clut = PAL_STAINED_GLASS_204;
-                prim2->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
-                                  DRAW_COLORS | DRAW_TRANSP;
-                midpointX = (prim2->x0 + prim2->x2) / 2;
-                midpointY = (prim2->y0 + prim2->y1) / 2;
-                prim2 = prim2->next;
-                tempPrim = prim2->next;
-                *prim2 = *prim1;
-                prim2->next = tempPrim;
-                prim2->clut = PAL_STAGE_NAME_15F;
-                prim2->priority = prim1->priority + 1;
-                prim2->drawMode =
+                gte_stsxy((long*)&lightPrim->x3);
+                lightPrim->clut = PAL_STAINED_GLASS_LIGHT;
+                lightPrim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
+                                      DRAW_COLORS | DRAW_TRANSP;
+                midpointX = (lightPrim->x0 + lightPrim->x2) / 2;
+                midpointY = (lightPrim->y0 + lightPrim->y1) / 2;
+                lightPrim = lightPrim->next;
+                tempPrim = lightPrim->next;
+                *lightPrim = *glassPrim;
+                lightPrim->next = tempPrim;
+                lightPrim->clut = PAL_COLOR_GRADIENT;
+                lightPrim->priority = glassPrim->priority + 1;
+                lightPrim->drawMode =
                     DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-                prim2->r0 = 24;
-                prim2->g0 = 8;
-                prim2->b0 = 32;
-                LOW(prim2->r1) = LOW(prim2->r0);
-                prim2->r2 = 8;
-                prim2->g2 = 24;
-                prim2->b2 = 8;
-                prim2->r3 = prim2->g3 = prim2->b3 = 0;
-                LOW(prim2->x0) = LOW(prim1->x1);
-                LOW(prim2->x1) = LOW(prim1->x0);
-                LOW(prim2->x2) = LOW(prim1->x3);
-                prim2->x3 = midpointX;
-                prim2->y3 = midpointY;
-                prim2 = prim2->next;
+                lightPrim->r0 = 24;
+                lightPrim->g0 = 8;
+                lightPrim->b0 = 32;
+                LOW(lightPrim->r1) = LOW(lightPrim->r0);
+                lightPrim->r2 = 8;
+                lightPrim->g2 = 24;
+                lightPrim->b2 = 8;
+                lightPrim->r3 = lightPrim->g3 = lightPrim->b3 = 0;
+                LOW(lightPrim->x0) = LOW(glassPrim->x1);
+                LOW(lightPrim->x1) = LOW(glassPrim->x0);
+                LOW(lightPrim->x2) = LOW(glassPrim->x3);
+                lightPrim->x3 = midpointX;
+                lightPrim->y3 = midpointY;
+                lightPrim = lightPrim->next;
             }
-            colors++;
-            yVals++;
-            params++;
-            prim1 = prim1->next;
+            colorPtr++;
+            yValsPtr++;
+            paramsPtr++;
+            glassPrim = glassPrim->next;
         }
-        for (count = 0; prim2; prim2 = prim2->next) {
+        for (count = 0; lightPrim; lightPrim = lightPrim->next) {
             count++;
-            prim2->drawMode = DRAW_HIDE;
+            lightPrim->drawMode = DRAW_HIDE;
         }
     }
 }
@@ -397,7 +384,8 @@ void func_us_801D97D0(Entity* self) {
 
 // There are a few things about this function that probably aren't quite right,
 // but it is close enough for now
-void func_us_801D9F5C(Entity* self) {
+// Renders the non-stained glass portion of the background
+void EntityStainedGlassBackground(Entity* self) {
 // psp wants this higher in the stack than psx
 #ifdef VERSION_PSP
     RECT rect2, rect1;
@@ -418,8 +406,8 @@ void func_us_801D9F5C(Entity* self) {
 
     s32 primIndex;
     VECTOR* transVectorPtr;
-    s32 midpoint1, midpoint2;
-    s32 count;
+    s32 midindex1, midindex2;
+    s32 idx;
     Primitive* prim;
     s16 tempY, tempX;
 
@@ -430,17 +418,17 @@ void func_us_801D9F5C(Entity* self) {
     g_GpuBuffers[1].draw.g0 = 24;
     g_GpuBuffers[1].draw.b0 = 24;
     switch (self->step) {
-    case 0:
+    case 0: // init
         InitializeEntity(g_EInitInteractable);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 19);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            for (self->ext.stainedGlass.prim1 = prim; prim != NULL;
+            for (self->ext.stainedGlass.glassPrim = prim; prim != NULL;
                  prim = prim->next) {
                 prim->tpage = 15;
-                prim->clut = PAL_STAINED_GLASS_F;
+                prim->clut = PAL_STAINED_GLASS_BG;
                 prim->u0 = prim->u2 = 35;
                 prim->u1 = prim->u3 = 92;
                 prim->v0 = prim->v1 = 1;
@@ -452,8 +440,8 @@ void func_us_801D9F5C(Entity* self) {
                 prim->priority = 84;
                 prim->drawMode = DRAW_DEFAULT;
             }
-            for (prim = self->ext.stainedGlass.prim1, count = 0; count < 4;
-                 prim = prim->next, count++) {
+            for (prim = self->ext.stainedGlass.glassPrim, idx = 0; idx < 4;
+                 prim = prim->next, idx++) {
                 prim->clut = 5;
                 prim->u0 = prim->u2 = 129;
                 prim->u1 = prim->u3 = 174;
@@ -461,13 +449,13 @@ void func_us_801D9F5C(Entity* self) {
                 prim->v2 = prim->v3 = 126;
                 prim->priority = 80;
             }
-            prim = self->ext.stainedGlass.prim1;
+            prim = self->ext.stainedGlass.glassPrim;
             PGREY(prim, 0) = 32;
             PGREY(prim, 1) = 48;
             PGREY(prim, 2) = 64;
             PGREY(prim, 3) = 48;
             prim = prim->next;
-            prim->clut = PAL_STAGE_NAME_15F;
+            prim->clut = PAL_COLOR_GRADIENT;
             PGREY(prim, 0) = 24;
             PGREY(prim, 1) = 24;
             PGREY(prim, 2) = 24;
@@ -480,7 +468,7 @@ void func_us_801D9F5C(Entity* self) {
             PGREY(prim, 2) = 160;
             PGREY(prim, 3) = 48;
             prim = prim->next;
-            prim->clut = PAL_STAGE_NAME_15F;
+            prim->clut = PAL_COLOR_GRADIENT;
             prim->r0 = 24;
             prim->g0 = 24;
             prim->b0 = 24;
@@ -514,24 +502,25 @@ void func_us_801D9F5C(Entity* self) {
         color.r = 24;
         color.g = 24;
         color.b = 24;
-        func_801ADB10(&rect, PAL_STAINED_GLASS_F, PAL_STAINED_GLASS_205,
-                      COLORS_PER_PAL, &color);
+        StainedGlassBlendPalette(
+            &rect, PAL_STAINED_GLASS_BG, PAL_STAINED_GLASS_BG_LIGHT,
+            COLORS_PER_PAL, &color);
         break;
-    case 1:
+    case 1: // render
         SetGeomScreen(1024);
         SetGeomOffset(128, 160);
-        prim = self->ext.stainedGlass.prim1;
-        for (transVectorPtr = D_us_801826EC, count = 0; count < 8; count++,
+        prim = self->ext.stainedGlass.glassPrim;
+        for (transVectorPtr = trans_vectors, idx = 0; idx < 8; idx++,
             transVectorPtr++) {
-            RotMatrix(&D_us_8018277C, &mtx);
+            RotMatrix(&bg_rot_vector, &mtx);
             transVector = *transVectorPtr;
             transVector.vx += self->posX.i.hi - 128;
             transVector.vy += self->posY.i.hi - 160;
             transVector.vz += 1024;
             SETROTMATRIX(&mtx);
             gte_SetTransVector(&transVector);
-            if (!count) {
-                gte_ldv0(&D_us_801826E4);
+            if (idx == 0) {
+                gte_ldv0(&bg_pos_vector);
                 gte_rtps();
 #ifdef VERSION_PSP
                 gte_stsxy((long*)&rect2.w);
@@ -580,67 +569,67 @@ void func_us_801D9F5C(Entity* self) {
                 prim = prim->next;
             } else {
 #ifdef VERSION_PSP
-                gte_ldv0(&D_us_801826C4);
-                gte_ldv1(&D_us_801826CC);
-                gte_ldv2(&D_us_801826D4);
+                gte_ldv0(&bg_points_0);
+                gte_ldv1(&bg_points_1);
+                gte_ldv2(&bg_points_2);
                 gte_rtpt();
                 gte_stsxy3(&rect2.w, &rect2.x, &rect1.w);
                 if (rect1.h >= 0) {
 #else
-                gte_ldv3(&D_us_801826C4, &D_us_801826CC, &D_us_801826D4);
+                gte_ldv3(&bg_points_0, &bg_points_1, &bg_points_2);
                 gte_rtpt();
                 gte_stsxy3(&rect1.x, &rect1.w, &rect2.x);
                 if (rect2.y >= 0) {
 #endif
-                    gte_ldv0(&D_us_801826DC);
+                    gte_ldv0(&bg_points_3);
                     gte_rtps();
 
 // psx uses temp variables here where psp does not and the ordering is a bit
 // different between the two
 #ifdef VERSION_PSP
                     gte_stsxy((long*)&rect1.x);
-                    midpoint1 =
+                    midindex1 =
                         ((LOW(rect2.w) + LOW(rect2.x)) / 2) & 0xFFFF0000;
-                    midpoint1 |= (rect2.w + rect2.x) >> 1;
-                    midpoint2 =
+                    midindex1 |= (rect2.w + rect2.x) >> 1;
+                    midindex2 =
                         (((LOW(rect1.w) + LOW(rect1.x)) / 2) & 0xFFFF0000);
-                    midpoint2 |= ((rect1.w + rect1.x) >> 1);
-                    prim->clut = ((count * 2) + PAL_STAINED_GLASS_205);
+                    midindex2 |= ((rect1.w + rect1.x) >> 1);
+                    prim->clut = ((idx * 2) + PAL_STAINED_GLASS_BG_LIGHT);
                     LOW(prim->x0) = LOW(rect2.w);
-                    LOW(prim->x1) = midpoint1;
+                    LOW(prim->x1) = midindex1;
                     LOW(prim->x2) = LOW(rect1.w);
-                    LOW(prim->x3) = midpoint2;
+                    LOW(prim->x3) = midindex2;
                     prim->drawMode = DRAW_DEFAULT;
                     prim = prim->next;
-                    prim->clut = ((count * 2) + PAL_STAINED_GLASS_205);
+                    prim->clut = ((idx * 2) + PAL_STAINED_GLASS_BG_LIGHT);
                     LOW(prim->x0) = LOW(rect2.x);
-                    LOW(prim->x1) = midpoint1;
+                    LOW(prim->x1) = midindex1;
                     LOW(prim->x2) = LOW(rect1.x);
-                    LOW(prim->x3) = midpoint2;
+                    LOW(prim->x3) = midindex2;
                     prim->drawMode = DRAW_DEFAULT;
                     prim = prim->next;
 #else
                     gte_stsxy((long*)&rect2.w);
                     tempRect1x = LOW(rect1.x);
                     tempRect1w = LOW(rect1.w);
-                    prim->clut = ((count * 2) + PAL_STAINED_GLASS_205);
+                    prim->clut = ((idx * 2) + PAL_STAINED_GLASS_BG_LIGHT);
                     prim->drawMode = DRAW_DEFAULT;
                     tempRect2x = LOW(rect2.x);
                     tempRect2w = LOW(rect2.w);
-                    midpoint1 = ((tempRect1x + tempRect1w) / 2) & 0xFFFF0000;
-                    midpoint1 |= (rect1.x + rect1.w) >> 1;
-                    midpoint2 = (((tempRect2x + tempRect2w) / 2) & 0xFFFF0000);
-                    midpoint2 |= ((rect2.x + rect2.w) >> 1);
+                    midindex1 = ((tempRect1x + tempRect1w) / 2) & 0xFFFF0000;
+                    midindex1 |= (rect1.x + rect1.w) >> 1;
+                    midindex2 = (((tempRect2x + tempRect2w) / 2) & 0xFFFF0000);
+                    midindex2 |= ((rect2.x + rect2.w) >> 1);
                     LOW(prim->x0) = tempRect1x;
-                    LOW(prim->x1) = midpoint1;
+                    LOW(prim->x1) = midindex1;
                     LOW(prim->x2) = tempRect2x;
-                    LOW(prim->x3) = midpoint2;
+                    LOW(prim->x3) = midindex2;
                     prim = prim->next;
-                    prim->clut = ((count * 2) + PAL_STAINED_GLASS_205);
+                    prim->clut = ((idx * 2) + PAL_STAINED_GLASS_BG_LIGHT);
                     LOW(prim->x0) = tempRect1w;
-                    LOW(prim->x1) = midpoint1;
+                    LOW(prim->x1) = midindex1;
                     LOW(prim->x2) = tempRect2w;
-                    LOW(prim->x3) = midpoint2;
+                    LOW(prim->x3) = midindex2;
                     prim->drawMode = DRAW_DEFAULT;
                     prim = prim->next;
 #endif

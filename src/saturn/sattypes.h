@@ -118,11 +118,11 @@ typedef enum {
 } PlayerSteps;
 
 typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u8 unk2;
-    u8 unk3;
-} ET_EntitySlot1;
+    u8 disableFlag;
+    u8 resetFlag;
+    u8 index;
+    u8 timer;
+} ET_AfterImage;
 
 typedef struct {
     /* 0x7C */ u8 pad0[0x4];
@@ -157,7 +157,7 @@ typedef struct {
 
 typedef union { // offset=0x7C
     u8 base[0x38];
-    ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
+    ET_AfterImage afterImage; // g_Entities[1], not entityID 1
     ET_ExplosionPuffOpaque opaquePuff;
     ET_Subweapon subweapon;
 } Ext;
@@ -362,6 +362,35 @@ typedef struct Unkstruct_800A7734 {
     /* 0x1E */ char pad_1E[0x2];
 } Unkstruct_800A7734; // size = 0x20
 
+// Flags for g_Player.vram_flag
+// 0x01: touching the ground
+// 0x02: touching the ceiling
+// 0x04: touching the right wall
+// 0x08: touching the left wall
+// 0x20: in-air or near the edge
+// 0x0800: touching the ceiling slope
+// 0x1000: touching a slightly ascending or descending slope
+// 0x4000: touching a raising slope
+// 0x8000: touching any slope
+typedef enum {
+    TOUCHING_GROUND = 1 << 0,
+    TOUCHING_CEILING = 1 << 1,
+    TOUCHING_R_WALL = 1 << 2,
+    TOUCHING_L_WALL = 1 << 3,
+    VRAM_FLAG_UNK10 = 1 << 4,
+    IN_AIR_OR_EDGE = 1 << 5,
+    VRAM_FLAG_UNK40 = 1 << 6,
+    VRAM_FLAG_UNK80 = 1 << 7,
+    VRAM_FLAG_UNK100 = 1 << 8,
+    VRAM_FLAG_UNK200 = 1 << 9,
+    VRAM_FLAG_UNK400 = 1 << 10,
+    TOUCHING_CEILING_SLOPE = 1 << 11,
+    TOUCHING_SLIGHT_SLOPE = 1 << 12,
+    VRAM_FLAG_UNK2000 = 1 << 13,
+    TOUCHING_RAISING_SLOPE = 1 << 14,
+    TOUCHING_ANY_SLOPE = 1 << 15
+} PlayerVramFlag;
+
 typedef struct {
     char pad0[0x3B0];
     /* 0x3B0 */ u32 padPressed;
@@ -392,9 +421,9 @@ typedef struct {
 
 typedef enum {
     PLAYER_CHARACTER,
-    UNK_ENTITY_1,
-    UNK_ENTITY_2,
-    UNK_ENTITY_3,
+    E_AFTERIMAGE_1,
+    E_AFTERIMAGE_2,
+    E_AFTERIMAGE_3,
     UNK_ENTITY_4,
     UNK_ENTITY_5,
     UNK_ENTITY_6,

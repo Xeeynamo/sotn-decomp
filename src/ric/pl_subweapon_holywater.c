@@ -165,7 +165,7 @@ void RicEntityCrashHydroStorm(Entity* self) {
             line = line->next;
         }
         if (self->params == 1) {
-            g_api.func_801027C4(3);
+            g_api.SetFadeMode(FADE_BLUE_TINT);
         }
         self->ext.subweapon.timer = 0x160;
         if ((self->params < 32) && !(self->params & 3)) {

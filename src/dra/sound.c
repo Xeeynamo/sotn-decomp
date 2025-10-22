@@ -3,16 +3,16 @@
 #include "dra_bss.h"
 
 u8 aPbav[] = {
-#include "gen/vh_0.h"
+#include GEN_VERSION(vh_0.h)
 };
 u8 aPbav_0[] = {
-#include "gen/vh_1.h"
+#include GEN_VERSION(vh_1.h)
 };
 u8 aPbav_2[] = {
-#include "gen/vh_2.h"
+#include GEN_VERSION(vh_2.h)
 };
 u8 aPbav_1[] = {
-#include "gen/vh_3.h"
+#include GEN_VERSION(vh_3.h)
 };
 
 // files included as headers as data should not be aligned by 4
@@ -109,7 +109,7 @@ void func_80131FCC(void) {
 }
 
 u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
-    g_CdCommandStatus = CdSync(CdlNop, (Result_t*)g_CdCommandResult);
+    g_CdCommandStatus = CdSync(CdlNop, g_CdCommandResult);
 
     if (com == CdlGetlocL) {
         if (g_CdCommandStatus != CdlComplete) {
@@ -128,7 +128,7 @@ u8 DoCdCommand(u_char com, u_char* param, u_char* result) {
     }
 
     if (g_CdCommandStatus == CdlComplete) {
-        if (CdControl(com, param, (Result_t*)result)) {
+        if (CdControl(com, param, result)) {
             D_8013B680 = 0;
             return D_8013B680;
         }

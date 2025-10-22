@@ -5,7 +5,6 @@
 #include "stage.h"
 
 #define OVL_EXPORT(x) DAI_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG) // psx e_stage_name
 
 #include "../pfn_entity_update.h"
 
@@ -22,146 +21,133 @@
 #endif
 */
 
-// e_cutscene/cutscene_script_box
-#define CUTSCENE_UNK3_RECT_X 0
-#define CUTSCENE_UNK4_TPAGE 16
-
-// e_cutscene/cutscene_script_text
-#ifdef VERSION_PSP
-#define CUTSCENE_UNK1_NEXT_X 0
-#define CUTSCENE_UNK1_UNK17 2
-#else
-#define CUTSCENE_UNK1_NEXT_X 2
-#define CUTSCENE_UNK1_UNK17 8
-#endif
-
-// e_cutscene/set_cutscene_script
-#ifdef VERSION_PC
-#define NUM_CUTSCENE_PRIM 8
-#else
-#define NUM_CUTSCENE_PRIM 7
-#endif
+// These are used by both e_chair and e_confessional
+#define CONFESSIONAL_GHOST_PRIEST 0
+#define CONFESSIONAL_GHOST_PARISHIONER 1
+#define CONFESSIONAL_GHOST_BAD 0x100
+#define CONFESSIONAL_GHOST_READY 1
 
 // Used for cluts, palettes, and in g_EInits
-// Some of the PAL_STAGE_NAME items seem to be used as general palettes
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
-    PAL_STAINED_GLASS_E = 0xE,
-    PAL_STAINED_GLASS_F = 0xF,
-    PAL_41EE4_74 = 0x74,
-    PAL_BELL_1 = 0x75,
-    PAL_BELL_2 = 0x76,
+    PAL_STAINED_GLASS = 0xE,
+    PAL_STAINED_GLASS_BG = 0xF,
+    PAL_CASTLE_WALL_1 = 0x74,
+    PAL_BELL = 0x75,
+    PAL_BELL_ROPE = 0x76,
     PAL_CLOUDS = 0xC0,
-    PAL_434FC = 0xC5,
-    PAL_41EE4_C8 = 0xC8,
-    PAL_UNK_C9 = 0xC9,
-    PAL_UNK_CA = 0xCA,
-    PAL_UNK_CC = 0xCC,
-    PAL_UNK_CE = 0xCE,
-    PAL_STAGE_NAME_15F = 0x15F,
+    PAL_BACKGROUND_SKY_LAND = 0xC5,
+    PAL_CASTLE_WALL_2 = 0xC8,
+    PAL_CONFESSIONAL_GHOST = 0xC9,
+    PAL_801809C8 = 0xCA,
+    PAL_CONFESSIONAL_CLUT = 0xCC,
+    PAL_CONFESSIONAL_GHOST_BAD = 0xCE,
+    PAL_COLOR_GRADIENT = 0x15F,
     PAL_SPIKES_DUST = 0x161,
-    PAL_SPECTRAL_SWORD_WEAPON_3 = 0x16B,
+    PAL_SPECTRAL_SWORD_WEAPON_UNK_16B = 0x16B,
     PAL_STAGE_NAME_19D = 0x19D,
     PAL_STAGE_NAME_19E = 0x19E,
     PAL_STAGE_NAME_19F = 0x19F,
     PAL_SKELERANG = 0x200,
-    PAL_STAINED_GLASS_204 = 0x204,
-    PAL_STAINED_GLASS_205 = 0x205,
+    PAL_STAINED_GLASS_LIGHT = 0x204,
+    PAL_STAINED_GLASS_BG_LIGHT = 0x205,
     PAL_CORNER_GUARD = 0x215,
     PAL_BONE_PILLAR = 0x216,
     PAL_BONE_PILLAR_FIRE = 0x221,
-    PAL_UNK_22A = 0x22A,
+    PAL_BONE_HALBERD = 0x22A,
     PAL_WINGED_GUARD = 0x22B,
     PAL_BAT = 0x22C,
     PAL_CROW = 0x22F,
     PAL_HUNTING_GIRL = 0x231,
-    PAL_UNK_232 = 0x232,
+    PAL_HUNTING_GIRL_INIT = 0x232,
     PAL_SPECTRAL_SWORD = 0x234,
-    PAL_SPECTRAL_SWORD_WEAPON_1 = 0x235,
-    PAL_SPECTRAL_SWORD_WEAPON_2 = 0x236,
+    PAL_SPECTRAL_SWORD_WEAPON = 0x235,
+    PAL_SPECTRAL_SWORD_POLTERGEIST = 0x236,
     PAL_SEALED_DOOR = 0x245,
     PAL_BREAKABLE = 0x249,
     PAL_BREAKABLE_DEBRIS = 0x24D,
     PAL_CUTSCENE = 0x251,
+    PAL_PORTRAIT_ALUCARD = 0x258,
+    PAL_PORTRAIT_MARIA = 0x260
 };
 
 // Used when a constant value E_ID is used for both psx and pspeu
 // The E_ID() macro should be used when psx uses a constant value, but pspeu
-// uses a bss reference
+// sometimes uses a bss reference
 enum OVL_EXPORT(Entities) {
     E_NONE,
-    E_BREAKABLE,              // DAI_EntityBreakable,
-    E_EXPLOSION,              // EntityExplosion,
-    E_PRIZE_DROP,             // EntityPrizeDrop,
-    E_DAMAGE_DISPLAY,         // EntityDamageDisplay,
-    E_RED_DOOR,               // DAI_EntityRedDoor,
-    E_INTENSE_EXPLOSION,      // EntityIntenseExplosion,
-    E_SOUL_STEAL_ORB,         // EntitySoulStealOrb,
-    E_ROOM_FOREGROUND,        // EntityRoomForeground,
-    E_STAGE_NAME_POPUP,       // EntityStageNamePopup,
-    E_EQUIP_ITEM_DROP,        // EntityEquipItemDrop,
-    E_RELIC_ORB,              // EntityRelicOrb,
-    E_HEART_DROP,             // EntityHeartDrop,
-    E_ENEMY_BLOOD,            // EntityEnemyBlood,
-    E_MESSAGE_BOX,            // EntityMessageBox,
-    E_DUMMY_F,                // EntityDummy,
-    E_DUMMY_10,               // EntityDummy,
-    E_BACKGROUND_BLOCK,       // DAI_EntityBackgroundBlock,
-    E_LOCK_CAMERA,            // DAI_EntityLockCamera,
-    E_UNK_13,                 // EntityUnkId13,
-    E_EXPLOSION_VARIANTS,     // EntityExplosionVariants,
-    E_GREY_PUFF,              // EntityGreyPuff,
-    E_UNK_16,                 // func_us_801C0BA4,
-    E_UNK_17,                 // func_us_801D97D0,
-    E_UNK_18,                 // func_us_801D9F5C,
-    E_UNK_19,                 // EntityBlock,
-    E_STATUE,                 // EntityStatue,
-    E_BELL,                   // EntityBell,
-    E_UNK_1C,                 // func_us_801C1EE4,
-    E_UNK_1D,                 // func_us_801C2068,
-    E_UNK_1E,                 // func_us_801C220C,
-    E_CLOUDS,                 // EntityClouds,
-    E_UNK_20,                 // func_us_801C34FC,
-    E_UNK_21,                 // func_us_801C23A4,
-    E_UNK_22,                 // EntityChair,
-    E_PRIEST,                 // EntityPriest,
-    E_PRIEST_BLADES,          // EntityPriestBlades,
-    E_PRIEST_BLADE_DEBRIS,    // EntityPriestBladeDebris,
-    E_UNK_26,                 // EntityBellHelper,
-    E_CORNER_GUARD,           // EntityCornerGuard,
-    E_UNK_28,                 // func_us_801D1C24,
-    E_BONE_PILLAR_HEAD,       // EntityBonePillarHead,
-    E_BONE_PILLAR_FIRE,       // EntityBonePillarFireBreath,
-    E_BONE_PILLAR_PIECES,     // EntityBonePillarDeathParts,
-    E_BONE_PILLAR_SPIKE_BALL, // EntityBonePillarSpikeBall,
-    E_UNK_2D,                 // func_us_801C3644,
-    E_SPIKES,                 // EntitySpikes,
-    E_SPIKES_PARTS,           // EntitySpikesParts,
-    E_SPIKES_DUST,            // EntitySpikesDust,
-    E_SPIKES_DAMAGE,          // EntitySpikesDamage,
-    E_BONE_HALBERD,           // EntityBoneHalberd,
-    E_BONE_HALBERD_NAGINATA,  // EntityBoneHalberdNaginata,
-    E_BONE_HALBERD_PARTS,     // EntityBoneHalberdParts,
-    E_WINGED_GUARD,           // EntityWingedGuard,
-    E_WINGED_GUARD_PARTS,     // EntityWingedGuardParts,
-    E_BAT,                    // EntityBat,
-    E_BLACK_CROW,             // EntityBlackCrow,
-    E_BLUE_CROW,              // EntityBlueRaven,
-    E_SKELERANG,              // EntitySkelerang,
-    E_SKELERANG_BOOMERANG,    // EntitySkelerangBoomerang,
-    E_SKELERANG_UNKNOWN,      // EntitySkelerangUnknown,
-    E_HUNTING_GIRL,           // EntityHuntingGirl,
-    E_HUNTING_GIRL_SPIRIT,    // EntityHuntingGirlSpirit,
-    E_SPECTRAL_SWORD,         // EntitySpectralSword,
-    E_SPECTRAL_SWORD_AURA,    // EntitySpectralSwordAura,
-    E_SPECTRAL_SWORD_WEAPON,  // EntitySpectralSwordWeapon,
-    E_UNK_42,                 // EntityWingedGuardSpawner,
-    E_SEALED_DOOR,            // EntitySealedDoor,
-    E_BREAKABLE_DEBRIS,       // EntityBreakableDebris,
-    E_CUTSCENE,               // DAI_EntityCutscene,
-    E_UNK_46,                 // func_us_801C5920,
-    E_UNK_47,                 // func_us_801C5B88,
-    E_MIST_DOOR,              // EntityMistDoor,
+    E_BREAKABLE,                 // DAI_EntityBreakable,
+    E_EXPLOSION,                 // EntityExplosion,
+    E_PRIZE_DROP,                // EntityPrizeDrop,
+    E_DAMAGE_DISPLAY,            // EntityDamageDisplay,
+    E_RED_DOOR,                  // DAI_EntityRedDoor,
+    E_INTENSE_EXPLOSION,         // EntityIntenseExplosion,
+    E_SOUL_STEAL_ORB,            // EntitySoulStealOrb,
+    E_ROOM_FOREGROUND,           // EntityRoomForeground,
+    E_STAGE_NAME_POPUP,          // EntityStageNamePopup,
+    E_EQUIP_ITEM_DROP,           // EntityEquipItemDrop,
+    E_RELIC_ORB,                 // EntityRelicOrb,
+    E_HEART_DROP,                // EntityHeartDrop,
+    E_ENEMY_BLOOD,               // EntityEnemyBlood,
+    E_MESSAGE_BOX,               // EntityMessageBox,
+    E_DUMMY_F,                   // EntityDummy,
+    E_DUMMY_10,                  // EntityDummy,
+    E_BACKGROUND_BLOCK,          // DAI_EntityBackgroundBlock,
+    E_LOCK_CAMERA,               // DAI_EntityLockCamera,
+    E_UNK_13,                    // EntityUnkId13,
+    E_EXPLOSION_VARIANTS,        // EntityExplosionVariants,
+    E_GREY_PUFF,                 // EntityGreyPuff,
+    E_TOWER_EXIT,                // EntityTowerExit,
+    E_STAINED_GLASS,             // EntityStainedGlass,
+    E_STAINED_GLASS_BACKGROUND,  // EntityStainedGlassBackground,
+    E_BLOCK,                     // EntityBlock,
+    E_STATUE,                    // EntityStatue,
+    E_BELL,                      // EntityBell,
+    E_CASTLE_WALL_1,             // EntityCastleWall1,
+    E_CASTLE_WALL_2,             // EntityCastleWall2,
+    E_STAIRCASE,                 // EntityStaircase,
+    E_CLOUDS,                    // EntityClouds,
+    E_BACKGROUND_SKY_LAND,       // EntityBackgroundSkyLand,
+    E_GARGOYLE_TONGUE,           // EntityGargoyleTongue,
+    E_CHAIR,                     // EntityChair,
+    E_CONFESSIONAL_GHOST,        // EntityConfessionalGhost,
+    E_CONFESSIONAL_BLADES,       // EntityGhostBlades,
+    E_CONFESSIONAL_BLADE_DEBRIS, // EntityGhostBladeDebris,
+    E_BELL_SPAWNER,              // EntityBellSpawner,
+    E_CORNER_GUARD,              // EntityCornerGuard,
+    E_CORNER_GUARD_ATTACK,       // EntityCornerGuardAttack,
+    E_BONE_PILLAR_SKULL,         // EntityBonePillarSkull,
+    E_BONE_PILLAR_FIRE,          // EntityBonePillarFireBreath,
+    E_BONE_PILLAR_PARTS,         // EntityBonePillarDeathParts,
+    E_BONE_PILLAR_SPIKE_BALL,    // EntityBonePillarSpikeBall,
+    E_UNK_2D,                    // EntityEndConfessionalChime,
+    E_SPIKES,                    // EntitySpikes,
+    E_SPIKES_PARTS,              // EntitySpikesParts,
+    E_SPIKES_DUST,               // EntitySpikesDust,
+    E_SPIKES_DAMAGE,             // EntitySpikesDamage,
+    E_BONE_HALBERD,              // EntityBoneHalberd,
+    E_BONE_HALBERD_ATTACK,       // EntityBoneHalberdAttack,
+    E_BONE_HALBERD_PARTS,        // EntityBoneHalberdParts,
+    E_WINGED_GUARD,              // EntityWingedGuard,
+    E_WINGED_GUARD_PARTS,        // EntityWingedGuardParts,
+    E_BAT,                       // EntityBat,
+    E_BLACK_CROW,                // EntityBlackCrow,
+    E_BLUE_CROW,                 // EntityBlueRaven,
+    E_SKELERANG,                 // EntitySkelerang,
+    E_SKELERANG_BOOMERANG,       // EntitySkelerangBoomerang,
+    E_SKELERANG_UNKNOWN,         // EntitySkelerangUnknown,
+    E_HUNTING_GIRL,              // EntityHuntingGirl,
+    E_HUNTING_GIRL_ATTACK,       // EntityHuntingGirlAttack,
+    E_SPECTRAL_SWORD,            // EntitySpectralSword,
+    E_SPECTRAL_SWORD_AURA,       // EntitySpectralSwordAura,
+    E_SPECTRAL_SWORD_WEAPON,     // EntitySpectralSwordWeapon,
+    E_WINGED_GUARD_SPAWNER,      // EntityWingedGuardSpawner,
+    E_SEALED_DOOR,               // EntitySealedDoor,
+    E_BREAKABLE_DEBRIS,          // EntityBreakableDebris,
+    E_CUTSCENE_DIALOGUE,         // DAI_EntityCutsceneDialogue,
+    E_CUTSCENE_STAGE,            // DAI_EntityCutsceneStage,
+    E_CUTSCENE_MARIA,            // DAI_EntityCutsceneMaria,
+    E_MIST_DOOR,                 // EntityMistDoor,
     NUM_ENTITIES,
 };
 
@@ -175,19 +161,17 @@ extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
-// extern EInit g_EInit_801809A4; // Unused
-extern EInit g_EInitStatueBlock;
-extern EInit g_EInitPriest;
-// extern EInit g_EInit_801809C8; // Unused
-extern EInit D_us_801809D4;
+extern EInit g_EInitEnvironment;
+extern EInit g_EInitConfessionalGhost;
+extern EInit g_EInitConfessionalBlades;
 extern EInit g_EInitCornerGuard;
-extern EInit D_us_801809EC;
-extern EInit g_EInitBonePillarHead;
-extern EInit g_EInitBonePillarPieces;
+extern EInit g_EInitCornerGuardAttack;
+extern EInit g_EInitBonePillarSkull;
+extern EInit g_EInitBonePillarParts;
 extern EInit g_EInitBonePillarFireBreath;
 extern EInit g_EInitBonePillarSpikeBall;
 extern EInit g_EInitBoneHalberd;
-extern EInit g_EInitBoneHalberdNaginata;
+extern EInit g_EInitBoneHalberdAttack;
 extern EInit g_EInitWingedGuard;
 extern EInit g_EInitWingedGuardParts;
 extern EInit g_EInitBat;

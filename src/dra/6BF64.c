@@ -69,7 +69,7 @@ void func_8010BFFC(void) {
     bool collided = false;
     s16 original_Y = PLAYER.posY.i.hi;
 
-    if ((g_Player.vram_flag & 1) || D_801396EA) {
+    if ((g_Player.vram_flag & TOUCHING_GROUND) || D_801396EA) {
         return;
     }
 #ifdef VERSION_US

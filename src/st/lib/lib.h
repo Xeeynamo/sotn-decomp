@@ -3,7 +3,6 @@
 
 #define STAGE_IS_LIB
 #define OVL_EXPORT(x) LIB_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
@@ -136,11 +135,6 @@ extern EInit D_us_801809C8;
 extern EInit g_EInitFleaMan;
 extern EInit g_EInitMudman;
 extern EInit D_us_801809EC;
-
-extern s32 g_SkipCutscene;
-extern s32 g_IsCutsceneDone;
-extern u32 g_CutsceneFlags;
-extern Dialogue g_Dialogue;
 
 extern s32 D_psp_08B42050; // psp cross button
 extern s32 D_psp_08B42054; // psp triangle button

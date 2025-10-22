@@ -22,36 +22,36 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801C0BA4(Entity* self);
-void func_us_801D97D0(Entity* self);
-void func_us_801D9F5C(Entity* self);
+void EntityTowerExit(Entity* self);
+void EntityStainedGlass(Entity* self);
+void EntityStainedGlassBackground(Entity* self);
 void EntityBlock(Entity* self);
 void EntityStatue(Entity* self);
 void EntityBell(Entity* self);
-void func_us_801C1EE4(Entity* self);
-void func_us_801C2068(Entity* self);
-void func_us_801C220C(Entity* self);
+void EntityCastleWall1(Entity* self);
+void EntityCastleWall2(Entity* self);
+void EntityStaircase(Entity* self);
 void EntityClouds(Entity* self);
-void func_us_801C34FC(Entity* self);
-void func_us_801C23A4(Entity* self);
+void EntityBackgroundSkyLand(Entity* self);
+void EntityGargoyleTongue(Entity* self);
 void EntityChair(Entity* self);
-void EntityPriest(Entity* self);
-void EntityPriestBlades(Entity* self);
-void EntityPriestBladeDebris(Entity* self);
-void EntityBellHelper(Entity* self);
+void EntityConfessionalGhost(Entity* self);
+void EntityConfessionalBlades(Entity* self);
+void EntityConfessionalBladeDebris(Entity* self);
+void EntityBellSpawner(Entity* self);
 void EntityCornerGuard(Entity* self);
-void func_us_801D1C24(Entity* self);
-void EntityBonePillarHead(Entity* self);
+void EntityCornerGuardAttack(Entity* self);
+void EntityBonePillarSkull(Entity* self);
 void EntityBonePillarFireBreath(Entity* self);
 void EntityBonePillarDeathParts(Entity* self);
 void EntityBonePillarSpikeBall(Entity* self);
-void func_us_801C3644(Entity* self);
+void EntityEndConfessionalChime(Entity* self);
 void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
 void EntitySpikesDamage(Entity* self);
 void EntityBoneHalberd(Entity* self);
-void EntityBoneHalberdNaginata(Entity* self);
+void EntityBoneHalberdAttack(Entity* self);
 void EntityBoneHalberdParts(Entity* self);
 void EntityWingedGuard(Entity* self);
 void EntityWingedGuardParts(Entity* self);
@@ -62,16 +62,16 @@ void EntitySkelerang(Entity* self);
 void EntitySkelerangBoomerang(Entity* self);
 void EntitySkelerangUnknown(Entity* self);
 void EntityHuntingGirl(Entity* self);
-void EntityHuntingGirlSpirit(Entity* self);
+void EntityHuntingGirlAttack(Entity* self);
 void EntitySpectralSword(Entity* self);
 void EntitySpectralSwordAura(Entity* self);
 void EntitySpectralSwordWeapon(Entity* self);
 void EntityWingedGuardSpawner(Entity* self);
 void EntitySealedDoor(Entity* self);
 void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
-void OVL_EXPORT(EntityCutscene)(Entity* self);
-void func_us_801C5920(Entity* self);
-void func_us_801C5B88(Entity* self);
+void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self);
+void OVL_EXPORT(EntityCutsceneStage)(Entity* self);
+void OVL_EXPORT(EntityCutsceneMaria)(Entity* self);
 void EntityMistDoor(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
@@ -96,36 +96,36 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801C0BA4,
-    func_us_801D97D0,
-    func_us_801D9F5C,
+    EntityTowerExit,
+    EntityStainedGlass,
+    EntityStainedGlassBackground,
     EntityBlock,
     EntityStatue,
     EntityBell,
-    func_us_801C1EE4,
-    func_us_801C2068,
-    func_us_801C220C,
+    EntityCastleWall1,
+    EntityCastleWall2,
+    EntityStaircase,
     EntityClouds,
-    func_us_801C34FC,
-    func_us_801C23A4,
+    EntityBackgroundSkyLand,
+    EntityGargoyleTongue,
     EntityChair,
-    EntityPriest,
-    EntityPriestBlades,
-    EntityPriestBladeDebris,
-    EntityBellHelper,
+    EntityConfessionalGhost,
+    EntityConfessionalBlades,
+    EntityConfessionalBladeDebris,
+    EntityBellSpawner,
     EntityCornerGuard,
-    func_us_801D1C24,
-    EntityBonePillarHead,
+    EntityCornerGuardAttack,
+    EntityBonePillarSkull,
     EntityBonePillarFireBreath,
     EntityBonePillarDeathParts,
     EntityBonePillarSpikeBall,
-    func_us_801C3644,
+    EntityEndConfessionalChime,
     EntitySpikes,
     EntitySpikesParts,
     EntitySpikesDust,
     EntitySpikesDamage,
     EntityBoneHalberd,
-    EntityBoneHalberdNaginata,
+    EntityBoneHalberdAttack,
     EntityBoneHalberdParts,
     EntityWingedGuard,
     EntityWingedGuardParts,
@@ -136,16 +136,16 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkelerangBoomerang,
     EntitySkelerangUnknown,
     EntityHuntingGirl,
-    EntityHuntingGirlSpirit,
+    EntityHuntingGirlAttack,
     EntitySpectralSword,
     EntitySpectralSwordAura,
     EntitySpectralSwordWeapon,
     EntityWingedGuardSpawner,
     EntitySealedDoor,
     OVL_EXPORT(EntityBreakableDebris),
-    OVL_EXPORT(EntityCutscene),
-    func_us_801C5920,
-    func_us_801C5B88,
+    OVL_EXPORT(EntityCutsceneDialogue),
+    OVL_EXPORT(EntityCutsceneStage),
+    OVL_EXPORT(EntityCutsceneMaria),
     EntityMistDoor,
 };
 
@@ -158,22 +158,24 @@ EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 2};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 1};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
-EInit g_EInit_801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3}; // Unused
+EInit g_EInitUnused801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3};
 // This seems to be used as a common init and should probably be renamed
-EInit g_EInitStatueBlock = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
-EInit g_EInitPriest = {ANIMSET_OVL(2), 0, 72, PAL_UNK_C9, 5};
-EInit g_EInit_801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_UNK_CA, 5}; // Unused
-EInit D_us_801809D4 = {ANIMSET_OVL(2), 37, 72, PAL_UNK_C9, 101};
+EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
+EInit g_EInitConfessionalGhost = {
+    ANIMSET_OVL(2), 0, 72, PAL_CONFESSIONAL_GHOST, 5};
+EInit g_EInitUnused801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_801809C8, 5};
+EInit g_EInitConfessionalBlades = {
+    ANIMSET_OVL(2), 37, 72, PAL_CONFESSIONAL_GHOST, 101};
 EInit g_EInitCornerGuard = {ANIMSET_OVL(4), 0, 72, PAL_CORNER_GUARD, 180};
-EInit D_us_801809EC = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 181};
-EInit g_EInitBonePillarHead = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 183};
-EInit g_EInitBonePillarPieces = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 2};
+EInit g_EInitCornerGuardAttack = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 181};
+EInit g_EInitBonePillarSkull = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 0x0B7};
+EInit g_EInitBonePillarParts = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 0x002};
 EInit g_EInitBonePillarFireBreath = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 184};
 EInit g_EInitBonePillarSpikeBall = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 185};
-EInit g_EInitBoneHalberd = {ANIMSET_OVL(7), 1, 72, PAL_UNK_22A, 118};
-EInit g_EInitBoneHalberdNaginata = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
+EInit g_EInitBoneHalberd = {ANIMSET_OVL(7), 1, 72, PAL_BONE_HALBERD, 118};
+EInit g_EInitBoneHalberdAttack = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
 EInit g_EInitWingedGuard = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 128};
 EInit g_EInitWingedGuardParts = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 3};
 EInit g_EInitBat = {ANIMSET_OVL(9), 0, 74, PAL_BAT, 64};
@@ -181,9 +183,9 @@ EInit g_EInitBlueRaven = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 114};
 EInit g_EInitBlackCrow = {ANIMSET_OVL(10), 0, 79, PAL_CROW, 115};
 EInit g_EInitSkelerang = {ANIMSET_OVL(11), 1, 72, PAL_SKELERANG, 11};
 EInit g_EInitSkelerangBoomerang = {ANIMSET_OVL(11), 43, 72, PAL_SKELERANG, 12};
-EInit g_EInitHuntingGirl = {ANIMSET_OVL(12), 0, 84, PAL_UNK_232, 227};
+EInit g_EInitHuntingGirl = {ANIMSET_OVL(12), 0, 84, PAL_HUNTING_GIRL_INIT, 227};
 EInit g_EInitSpectralSword = {ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 136};
 EInit g_EInitSpectralSwordAura = {
     ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD, 2};
 EInit g_EInitSpectralSwordWeapon = {
-    ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD_WEAPON_1, 137};
+    ANIMSET_OVL(13), 0, 81, PAL_SPECTRAL_SWORD_WEAPON, 137};

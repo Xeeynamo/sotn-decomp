@@ -1,0 +1,77 @@
+options:
+  platform: psp
+  basename: stsel
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/sel.bin
+  asm_path: asm/pspeu/st/sel_psp
+  asset_path: assets/st/sel
+  src_path: src/st
+  ld_script_path: build/pspeu/stsel.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.stsel.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.stsel.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.stsel.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: psp_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+  ld_generate_symbol_per_data_segment: true
+sha1: 38fdfe8c3e0e3260e8462aaaf2261d7d6a4b8961
+segments:
+  - [0x0, bin, mwo_header]
+  - name: stsel
+    type: code
+    start: 0x00000080
+    vram: 0x09237700
+    bss_size: 0x2300
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, sel_psp/st_init_sel]
+      - [0x7B8, c, sel_psp/7B8]
+      - [0x7D40, c, sel_psp/7D40]
+      - [0x9408, c, sel/34048]
+      - [0x94D8, c, sel_psp/94D8]
+      - [0xA578, c, sel_psp/A578]
+      - [0xBB50, c, sel_psp/BB50]
+      - [0xDBD8, c, sel_psp/cutscene]
+      - [0x10D00, .data, sel/764]
+      - [0x10DC0, .data, sel/banks]
+      - [0x10F78, .data, sel/sprites]
+      - [0x12DF0, .data, sel_psp/st_init_sel]
+      - [0x45178, .data, sel/F9A8]
+      - [0x4BAC8, .data, sel/CD54]
+      - [0x4C388, .data, sel_psp/7B8]
+      - [0x4CAF8, .data, sel_psp/7D40]
+      - [0x4DAF0, .data, sel_psp/94D8]
+      - [0x4DE90, .data, sel_psp/A578]
+      - [0x4DEC8, .data, sel_psp/BB50]
+      - [0x4DF70, .data, sel_psp/cutscene]
+      - [0x4E300, .rodata, sel_psp/94D8]
+      - [0x4E340, .rodata, sel_psp/A578]
+      - [0x4E360, .rodata, sel_psp/BB50]
+      - [0x4E430, .rodata, sel_psp/cutscene]
+      - [0x4E500, .bss, sel_psp/st_init_sel]
+      - [0x4E530, .bss, sel_psp/7B8]
+      - [0x4E688, .bss, sel_psp/7D40]
+      - [0x4E6E0, .bss, sel_psp/94D8]
+      - [0x4E800, .bss, sel_psp/A578]
+      - [0x4EFB8, .bss, sel_psp/BB50]
+      - [0x4EFD0, .bss, sel_psp/cutscene]
+  - [0x50800]

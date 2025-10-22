@@ -12,7 +12,8 @@ void EntityPushAlucard(Entity* self) {
 #ifdef VERSION_PSP
         g_CastleFlags[PROLOGUE_COMPLETE] = 0;
 #endif
-        g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
+        g_Entities[E_AFTERIMAGE_1].ext.alucardController.disableAfterImageFlag =
+            true;
         g_Player.padSim = 0;
         g_Player.demo_timer = 255;
         player->posX.i.hi = 0;
@@ -21,18 +22,21 @@ void EntityPushAlucard(Entity* self) {
         g_PauseAllowed = false;
         break;
 
+    // Make Alucard run to the right, ensure his after-image never stops
     case 1:
         player->posX.val += FIX(6);
         if (tilemap->scrollX.i.hi > 0x800) {
-            g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = false;
+            g_Entities[E_AFTERIMAGE_1]
+                .ext.alucardController.disableAfterImageFlag = false;
             g_Player.padSim = PAD_RIGHT;
             self->step++;
         }
         player->animCurFrame = 0;
         g_Player.demo_timer = 1;
-        g_api.func_8010E0A8();
+        g_api.ForceAfterImageOn();
         break;
 
+    // Give him a fake speed boost then return to center screen position
     case 2:
         player->posX.val += FIX(8.5);
         g_unkGraphicsStruct.unkC += 4;
@@ -41,7 +45,7 @@ void EntityPushAlucard(Entity* self) {
             self->ext.alucardController.unk80 = FIX(4.5);
         }
         g_Player.demo_timer = 1;
-        g_api.func_8010E0A8();
+        g_api.ForceAfterImageOn();
         break;
 
     case 3:
@@ -56,29 +60,32 @@ void EntityPushAlucard(Entity* self) {
             self->step++;
         }
         g_Player.demo_timer = 1;
-        g_api.func_8010E0A8();
+        g_api.ForceAfterImageOn();
         break;
 
+    // Alucard jumps while running to the right and shouts "RAH!"
+    // as he crosses the castle gate.
     case 4:
         player->posX.val += FIX(4.5);
         if (tilemap->scrollX.i.hi > 0xF80) {
             g_api.PlaySfx(SFX_VO_ALU_ATTACK_B);
             g_Player.padSim = PAD_RIGHT | PAD_CROSS;
-            self->ext.alucardController.unk7C = false;
+            self->ext.alucardController.disableAfterImageFlag = false;
             self->step++;
         }
         g_Player.demo_timer = 1;
-        g_api.func_8010E0A8();
+        g_api.ForceAfterImageOn();
         break;
 
     case 5:
-        if ((player->velocityY > 0) && !self->ext.alucardController.unk7C) {
+        if ((player->velocityY > 0) &&
+            !self->ext.alucardController.disableAfterImageFlag) {
             g_Player.padSim = PAD_CROSS;
-            self->ext.alucardController.unk7C = true;
+            self->ext.alucardController.disableAfterImageFlag = true;
         } else {
             g_Player.padSim = PAD_RIGHT | PAD_CROSS;
         }
-        g_api.func_8010E0A8();
+        g_api.ForceAfterImageOn();
         player->posX.val += FIX(4.5);
         g_Player.demo_timer = 1;
     }
@@ -96,7 +103,8 @@ void EntityCastleDoorTransition(Entity* self) {
             return;
         }
         InitializeEntity(g_EInitSpawner);
-        g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = true;
+        g_Entities[E_AFTERIMAGE_1].ext.alucardController.disableAfterImageFlag =
+            true;
         g_Player.padSim = PAD_RIGHT;
         g_Player.demo_timer = 255;
         player->posX.i.hi = 8;
@@ -700,13 +708,13 @@ void EntityCastleBridge(Entity* self) {
                         (xOffset < player->posY.i.hi + 30)) {
                         player->posY.i.hi = xOffset - 30;
                         g_api.PlaySfx(SFX_STOMP_SOFT_A);
-                        g_Player.vram_flag |= 0x41;
+                        g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
                         self->step_s++;
                     }
                     break;
                 case 2:
                     player->posY.i.hi = xOffset - 30;
-                    g_Player.vram_flag |= 0x41;
+                    g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
                     break;
                 }
             }

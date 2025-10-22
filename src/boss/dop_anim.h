@@ -4,18 +4,19 @@ void SetDopplegangerStep(s16 step) {
     DOPPLEGANGER.step_s = 0;
 }
 
-static u8 g_D_800ACF18[] = {
+static u8 g_afterImageTimerTable[] = {
     10, 8, 8, 6, 6, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 255, 255, 0, 0};
 
 extern PlayerState g_Dop;
 
-// Same function in RIC is func_8015C4AC
-void func_8010D59C(void) {
+// Same function in RIC is func_8015C4AC (InitRicAfterImage)
+void OVL_EXPORT(InitPlayerAfterImage)(void) {
     byte stackpad[40];
     Primitive* prim;
     s32 i;
 
-    if (g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk0) {
+    if (g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+            .ext.afterImage.disableFlag) {
         return;
     }
 
@@ -25,39 +26,49 @@ void func_8010D59C(void) {
     case 0x60:
     case 0x61:
     case 0x62:
-        g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk2 = 10;
+        g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.index =
+            10;
         return;
     }
 
     if ((g_Dop.padTapped & GAMEBUTTONS) ||
         ((g_Dop.padHeld ^ g_Dop.padPressed) & g_Dop.padHeld & GAMEBUTTONS) ||
         (DOPPLEGANGER.velocityY > FIX(0.5))) {
-        g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk2 = 0;
-        g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk3 = 0;
+        g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.index =
+            0;
+        g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.timer =
+            0;
     } else {
-        if (g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk2 >= 10) {
+        if (g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                .ext.afterImage.index >= MaxAfterImageIndex) {
             return;
         }
-        if (g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk3 == 0) {
-            g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk3 =
-                g_D_800ACF18[g_Entities[STAGE_ENTITY_START + 1]
-                                 .ext.entSlot1.unk2];
+        if (g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                .ext.afterImage.timer == 0) {
+            g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                .ext.afterImage.timer = g_afterImageTimerTable
+                [g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                     .ext.afterImage.index];
         }
-        if (--g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk3 == 0) {
-            g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk2++;
-            g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk3 =
-                g_D_800ACF18[g_Entities[STAGE_ENTITY_START + 1]
-                                 .ext.entSlot1.unk2];
+        if (--g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                  .ext.afterImage.timer == 0) {
+            g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                .ext.afterImage.index++;
+            g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                .ext.afterImage.timer = g_afterImageTimerTable
+                [g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                     .ext.afterImage.index];
         }
     }
-    if (g_Entities[STAGE_ENTITY_START + 1].pose) {
-        g_Entities[STAGE_ENTITY_START + 1].pose--;
+    if (g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].pose) {
+        g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].pose--;
         return;
     }
-    prim = &g_PrimBuf[g_Entities[STAGE_ENTITY_START + 1].primIndex];
+    prim =
+        &g_PrimBuf[g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].primIndex];
     i = 0;
     while (prim) {
-        if (i == g_Entities[STAGE_ENTITY_START + 1].entityId) {
+        if (i == g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].entityId) {
             prim->r0 = prim->g0 = prim->b0 = 0x80;
             prim->x0 = DOPPLEGANGER.posX.i.hi;
             prim->y0 = DOPPLEGANGER.posY.i.hi;
@@ -70,10 +81,11 @@ void func_8010D59C(void) {
         prim = prim->next;
     }
 
-    g_Entities[STAGE_ENTITY_START + 1].pose = 2;
-    g_Entities[STAGE_ENTITY_START + 1].entityId++;
-    if (g_Entities[STAGE_ENTITY_START + 1].entityId >= 6) {
-        g_Entities[STAGE_ENTITY_START + 1].entityId = 0;
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].pose = 2;
+    g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].entityId++;
+    if (g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].entityId >=
+        MaxAfterImages) {
+        g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].entityId = 0;
     }
 }
 
@@ -82,8 +94,8 @@ static u8 g_shadowOpacityReductionTable[] = {
 static u8 g_D_800ACF3C[] = {
     8, 12, 16, 20, 24, 28, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32};
 
-// Equivalent in RIC is func_8015C6D4
-void func_8010D800(void) {
+// Equivalent in RIC is func_8015C6D4 (DrawRicAfterImage)
+void OVL_EXPORT(DrawPlayerAfterImage)(void) {
     PlayerDraw pad;
     PlayerDraw* plDraw;
     Primitive* prim;
@@ -92,13 +104,15 @@ void func_8010D800(void) {
     u8 temp_t1;
     u8 temp_t2;
 
-    temp_t2 = g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk1;
-    prim = &g_PrimBuf[g_Entities[STAGE_ENTITY_START + 1].primIndex];
+    temp_t2 = g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                  .ext.afterImage.resetFlag;
+    prim =
+        &g_PrimBuf[g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].primIndex];
     plDraw = &g_PlayerDraw[9];
-    temp_t1 = g_shadowOpacityReductionTable[g_Entities[STAGE_ENTITY_START + 1]
-                                                .ext.entSlot1.unk2];
-    temp_t0 =
-        g_D_800ACF3C[g_Entities[STAGE_ENTITY_START + 1].ext.entSlot1.unk2];
+    temp_t1 = g_shadowOpacityReductionTable
+        [g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1].ext.afterImage.index];
+    temp_t0 = g_D_800ACF3C[g_Entities[STAGE_ENTITY_START + E_AFTERIMAGE_1]
+                               .ext.afterImage.index];
 
     for (i = 0; prim != NULL; i++, prim = prim->next) {
         if (prim->b0 > temp_t0) {
@@ -119,16 +133,23 @@ void func_8010D800(void) {
             continue;
         }
 
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].posX.i.hi = prim->x0;
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].posY.i.hi = prim->y0;
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].animCurFrame = prim->x1;
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].drawMode = prim->y1;
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].facingLeft = prim->x2;
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].palette = prim->y2;
-        g_Entities[STAGE_ENTITY_START + (i / 2) + 1].zPriority =
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].posX.i.hi =
+            prim->x0;
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].posY.i.hi =
+            prim->y0;
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].animCurFrame =
+            prim->x1;
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].drawMode =
+            prim->y1;
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].facingLeft =
+            prim->x2;
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].palette =
+            prim->y2;
+        g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1].zPriority =
             DOPPLEGANGER.zPriority - 2;
         if (temp_t2) {
-            g_Entities[STAGE_ENTITY_START + (i / 2) + 1].animCurFrame = 0;
+            g_Entities[STAGE_ENTITY_START + (i / 2) + E_AFTERIMAGE_1]
+                .animCurFrame = 0;
             prim->x1 = 0;
         }
 
@@ -139,7 +160,7 @@ void func_8010D800(void) {
     }
 }
 
-void func_8010DA2C(AnimationFrame* frames) {
+void OVL_EXPORT(func_8010DA2C)(AnimationFrame* frames) {
     g_CurrentEntity->anim = frames;
     g_CurrentEntity->poseTimer = 0;
     g_CurrentEntity->pose = 0;
@@ -151,9 +172,9 @@ void SetDopplegangerAnim(u8 anim) {
     g_CurrentEntity->pose = 0;
 }
 
-extern AnimationFrame* D_800B0594[];
+extern AnimationFrame* g_DopAnimationFrames[];
 
-AnimationFrame* func_8010DA70(AnimationFrame** frames) {
+static AnimationFrame* OVL_EXPORT(func_8010DA70)(AnimationFrame** frames) {
     u16* anim;
     s32 idx;
     u16* subanim;
@@ -166,7 +187,8 @@ AnimationFrame* func_8010DA70(AnimationFrame** frames) {
     while (true) {
         if ((&anim[idx * 2])[0] == 0xFFFD) {
             for (idxSub = 0; true; idxSub++, var_s1++) {
-                subanim = (u16*)D_800B0594[(&anim[idx * 2])[1] & 0xFF];
+                subanim =
+                    (u16*)g_DopAnimationFrames[(&anim[idx * 2])[1] & 0xFF];
                 if ((&subanim[idxSub * 2])[0] == 0xFFFF) {
                     idx++;
                     // Probably fake. Makes PSP registers match.
@@ -186,7 +208,7 @@ AnimationFrame* func_8010DA70(AnimationFrame** frames) {
     }
 }
 
-s32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
+s32 OVL_EXPORT(UpdateUnarmedAnim)(s8* frameProps, u16** frames) {
     u16* frameIndex;
 
     frameIndex = frames[g_CurrentEntity->ext.player.anim] + DOPPLEGANGER.pose;
@@ -211,29 +233,29 @@ s32 UpdateUnarmedAnim(s8* frameProps, u16** frames) {
     }
 }
 
-void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
+void OVL_EXPORT(PlayAnimation)(s8* frameProps, AnimationFrame** frames) {
     AnimationFrame* animFrame;
 
-    animFrame = func_8010DA70(frames);
+    animFrame = OVL_EXPORT(func_8010DA70)(frames);
     if (g_CurrentEntity->poseTimer != -1) {
         if (g_CurrentEntity->poseTimer == 0) {
             g_CurrentEntity->poseTimer = animFrame->duration;
         } else if (--g_CurrentEntity->poseTimer == 0) {
             g_CurrentEntity->pose++;
-            animFrame = func_8010DA70(frames);
+            animFrame = OVL_EXPORT(func_8010DA70)(frames);
             // Using a switch doesn't work
             if (animFrame->duration == 0x0) {
                 g_CurrentEntity->pose = animFrame->pose;
-                animFrame = func_8010DA70(frames);
+                animFrame = OVL_EXPORT(func_8010DA70)(frames);
                 g_CurrentEntity->poseTimer = animFrame->duration;
             } else if (animFrame->duration == 0xFFFF) {
                 g_CurrentEntity->pose--;
                 g_CurrentEntity->poseTimer = -1;
-                animFrame = func_8010DA70(frames);
+                animFrame = OVL_EXPORT(func_8010DA70)(frames);
             } else if (animFrame->duration == 0xFFFE) {
                 g_CurrentEntity->ext.player.anim = animFrame->pose & 0xFF;
                 g_CurrentEntity->pose = animFrame->pose >> 8;
-                animFrame = func_8010DA70(frames);
+                animFrame = OVL_EXPORT(func_8010DA70)(frames);
                 g_CurrentEntity->poseTimer = animFrame->duration;
             } else {
                 g_CurrentEntity->poseTimer = animFrame->duration;
@@ -267,7 +289,7 @@ void PlayAnimation(s8* frameProps, AnimationFrame** frames) {
     (*((AnimationFrame*)(&(                                                    \
         ((u16*)g_CurrentEntity->anim)[g_CurrentEntity->pose * 2]))))
 
-u32 UpdateAnim(s8* hitboxes, AnimationFrame** anims) {
+u32 OVL_EXPORT(UpdateAnim)(s8* hitboxes, AnimationFrame** anims) {
 #if defined(VERSION_PC)
     s32 ret = 0;
 #else

@@ -39,40 +39,7 @@ segments:
       - [0x144, .data, 42398]
       - [0x160, .data, game_handlers]
       - [0x248, .data, 47BB8]
-      - [0x510, .data, save_mgr_pre]
-      - [0x518, palette, memcard_0]
-      - [0x538, palette, memcard_1]
-      - [0x558, palette, memcard_2]
-      - [0x578, palette, memcard_3]
-      - [0x598, palette, memcard_4]
-      - [0x5B8, palette, memcard_5]
-      - [0x5D8, palette, memcard_6]
-      - [0x5F8, palette, memcard_7]
-      - [0x618, palette, memcard_8]
-      - [0x638, palette, memcard_9]
-      - [0x658, palette, memcard_10]
-      - [0x678, palette, memcard_11]
-      - [0x698, palette, memcard_12]
-      - [0x6B8, palette, memcard_13]
-      - [0x6D8, palette, memcard_14]
-      - [0x6F8, palette, memcard_15]
-      - [0x718, ci4, memcard_0, 16, 48]
-      - [0x898, ci4, memcard_1, 16, 48]
-      - [0xA18, ci4, memcard_2, 16, 48]
-      - [0xB98, ci4, memcard_3, 16, 48]
-      - [0xD18, ci4, memcard_4, 16, 48]
-      - [0xE98, ci4, memcard_5, 16, 48]
-      - [0x1018, ci4, memcard_6, 16, 48]
-      - [0x1198, ci4, memcard_7, 16, 48]
-      - [0x1318, ci4, memcard_8, 16, 48]
-      - [0x1498, ci4, memcard_9, 16, 48]
-      - [0x1618, ci4, memcard_10, 16, 48]
-      - [0x1798, ci4, memcard_11, 16, 48]
-      - [0x1918, ci4, memcard_12, 16, 48]
-      - [0x1A98, ci4, memcard_13, 16, 48]
-      - [0x1C18, ci4, memcard_14, 16, 48]
-      - [0x1D98, ci4, memcard_15, 16, 48]
-      - [0x1F18, .data, save_mgr]
+      - [0x510, .data, save_mgr]
       - [0x2178, .data, 4B758] # D_800A21B8
       - [0x23F8, .data, 4DA70] # D_800A2438
       - [0x23FC, .data, demo] # D_800A243C
@@ -88,9 +55,9 @@ segments:
       # - [0x2FCC, .data, 5F60C] # g_CapePaletteDefs
       # - [0x301C, .data, 5F60C] # g_CheatCodes
       # - [0x3024, .data, 5F60C] # D_800A3014
-      - [0x3144, .data, 628AC] # D_800A3194
-      - [0x31C0, .data, 62EB8] # D_800A3210
-      # - [0x3340, .data, 62EB8] # D_800A33A0-D_800A35D0
+      - [0x3144, .data, 624DC] # D_800A3194
+      - [0x31C0, .data, 62DEC] # D_800A3210
+      # - [0x3340, .data, 62DEC] # D_800A33A0-D_800A35D0
       - [0x37E8, .data, d_37d8] # Palette, GFX desc until D_800A3BB8
       - [0x3C50, .data, lba_stage]
       - [0x4A10, .data, config_jp]
@@ -153,9 +120,7 @@ segments:
       - [0x3CC18, .rodata, 5D5BC]
       - [0x3CC60, .rodata, 5F60C]
       - [0x3CC78, .rodata, 624DC]
-      - [0x3CC98, .rodata, 628AC]
       - [0x3CCDC, .rodata, 62DEC]
-      - [0x3CED4, .rodata, 62EB8]
       - [0x3CEF0, .rodata, lba_stage]
       - [0x3D29C, .rodata, config_jp]
       - [0x40C74, .rodata, cd]
@@ -187,9 +152,7 @@ segments:
       - [0x5D570, c, 5D5BC]
       - [0x5D5C0, c, 5F60C]
       - [0x6236C, c, 624DC]
-      - [0x6273C, c, 628AC]
       - [0x62C7C, c, 62DEC]
-      - [0x62D48, c, 62EB8]
       - [0x663CC, c, 66590]
       - [0x67200, c, cd]
       - [0x69100, c, 692E8]
@@ -217,7 +180,12 @@ segments:
       - [0x97050, .bss, 4AEA4]
       - [0x97168, .bss, demo]
       - [0x97170, .bss, 5087C]
-      - [0x971A0, .bss, bss]
+      - [0x971A4, .bss, menu]
+      - [0x97534, .bss, 5D5BC]
+      - [0x97540, .bss, 5F60C]
+      - [0x97570, .bss, 624DC]
+      - [0x979B8, .bss, 62DEC]
+      - [0x97E50, .bss, bss]
   - name: dra_data
     type: data
     start: 0x9B270

@@ -5,7 +5,6 @@
 #define STAGE_IS_NO2
 
 #define OVL_EXPORT(x) NO2_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
@@ -128,18 +127,3 @@ extern EInit g_EInitBladeWeapon;
 extern EInit g_EInitSpectralSword;
 extern EInit D_us_8018097C;
 extern EInit g_EInitPoltergeist;
-
-typedef struct {
-    s16 unk0;
-    s16* unk4;
-} unkStr_801CDD80;
-
-// note on member types: length and zOffset definitely look signed
-// in the data, but psp uses lhu instead of lh.
-typedef struct {
-    s16 eArrayOffset;
-    s16 eArrayParentOffset;
-    u16 length;
-    u16 params;
-    u16 zOffset;
-} giantBroBodyPartsInit;

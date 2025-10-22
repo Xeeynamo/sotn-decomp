@@ -78,39 +78,6 @@ extern s16 _svm_stereo_mono;
 
 void vmNoiseOn2(u8 arg0, u16 arg1, u16 arg2, u16 arg3, u16 arg4);
 
-#ifdef VERSION_PC
-struct thing {
-    s16 a, b;
-};
-
-struct struct_svm {
-    char field_0_sep_sep_no_tonecount;
-    char field_1_vabId;
-    char field_2_note;
-    char field_0x3;
-    char field_4_voll;
-    char field_0x5;
-    char field_6_program;
-    char field_7_fake_program;
-    char field_8_unknown;
-    char field_0x9;
-    char field_A_mvol;
-    char field_B_mpan;
-    char field_C_vag_idx;
-    char field_D_vol;
-    char field_E_pan;
-    char field_F_prior;
-    char field_10_centre;
-    unsigned char field_11_shift;
-    char field_12_mode;
-    char field_0x13;
-    short field_14_seq_sep_no;
-    short field_16_vag_idx;
-    short field_18_voice_idx;
-    short field_0x1a;
-    struct thing unk1c;
-};
-#else
 struct struct_svm {
     char field_0_sep_sep_no_tonecount;
     char field_1_vabId;
@@ -137,8 +104,9 @@ struct struct_svm {
     short field_16_vag_idx;
     short field_18_voice_idx;
     short field_0x1a;
+    short field_0x1c;
+    short field_0x1e;
 };
-#endif
 
 extern struct struct_svm _svm_cur;
 
@@ -208,24 +176,6 @@ extern struct SeqStruct* _ss_score[34];
 extern struct SeqStruct* _ss_score[32];
 #endif
 
-typedef struct {
-    SpuVolume volume; /* volume       */
-    long reverb;      /* reverb on/off */
-    long mix;         /* mixing on/off */
-} SpuExtAttr;
-
-typedef struct {
-    unsigned long mask; /* settings mask */
-
-    SpuVolume mvol;     /* master volume */
-    SpuVolume mvolmode; /* master volume mode */
-    SpuVolume mvolx;    /* current master volume */
-    SpuExtAttr cd;      /* CD input attributes */
-    SpuExtAttr ext;     /* external digital input attributes */
-} SpuCommonAttr;
-
-#define SPU_COMMON_MVOLL (0x01 << 0) /* master volume (left) */
-#define SPU_COMMON_MVOLR (0x01 << 1) /* master volume (right) */
 extern void SpuSetCommonAttr(SpuCommonAttr* attr);
 
 extern s16 _snd_seq_s_max;
@@ -245,29 +195,7 @@ typedef struct ProgAtr { /* Program Headdings */
     unsigned short reserved3; // odd vag spu ptr
 } ProgAtr;                    /* 16 byte */
 
-extern ProgAtr* _svm_pg;
-
-struct RegBufStruct {
-    short field_0_vol_left;
-    short field_2_vol_right;
-    short field_4_pitch;
-    unsigned short field_6_vagAddr;
-    unsigned short field_8_adsr1;
-    unsigned short field_A_adsr2;
-    short field_0xc;
-    short field_0xe;
-};
-
 #define NUM_SPU_CHANNELS 24
-
-union RegBuf {
-    struct RegBufStruct buf[NUM_SPU_CHANNELS];
-    s16 raw[192];
-};
-
-extern union RegBuf _svm_sreg_buf;
-
-extern unsigned char _svm_sreg_dirty[NUM_SPU_CHANNELS];
 
 extern u8 spuVmMaxVoice;
 
@@ -302,7 +230,6 @@ struct SpuVoice {
     s16 end_pan;   /* 0x32 */
 };
 
-extern struct SpuVoice _svm_voice[NUM_SPU_CHANNELS];
 u32 SpuVmVSetUp(s16, s16);
 
 typedef struct VagAtr { /* VAG Tone Headdings */

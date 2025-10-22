@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
+#include "sfx.h"
 
 // Mask for all of the statuses where the UP or DOWN button will
 // be ignored when in elevator
@@ -279,7 +280,7 @@ void func_us_801BCB34(Entity* self) {
             g_Player.demo_timer = 64;
         }
         if (AnimateEntity(D_us_80181550, self) == 0) {
-            PlaySfxPositional(0x7B5);
+            PlaySfxPositional(SFX_ELEVATOR_START);
             if (!self->ext.et_801BCB34.unk94) {
                 g_unkGraphicsStruct.unk1C |= 1;
             }
@@ -311,7 +312,7 @@ void func_us_801BCB34(Entity* self) {
             g_api.func_8010E168(1, 0x20);
             g_Player.padSim = 0x4000;
             g_Player.demo_timer = 2;
-            g_Player.vram_flag |= 0x41;
+            g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
         } else {
             MoveEntity();
         }
@@ -334,7 +335,7 @@ void func_us_801BCB34(Entity* self) {
             }
             if (posY < D_us_80181568[self->ext.et_801BCB34.unk85]) {
                 if (self->ext.et_801BCB34.unk85 == 2) {
-                    g_api.PlaySfx(0x7B3);
+                    g_api.PlaySfx(SFX_ELEVATOR_SLAM);
                     posX = self->posX.i.hi;
                     posY = self->posY.i.hi - 0x18;
                     g_api.CheckCollision(posX, posY, &collider, 0);
@@ -433,7 +434,7 @@ void func_us_801BCB34(Entity* self) {
             if (posY > D_us_80181568[self->ext.et_801BCB34.unk85]) {
                 self->ext.et_801BCB34.unk87 = 1;
                 if (!self->ext.et_801BCB34.unk85) {
-                    g_api.PlaySfx(0x7B3);
+                    g_api.PlaySfx(SFX_ELEVATOR_SLAM);
                     self->velocityY = -self->velocityY / 2;
                     posX = self->posX.i.hi;
                     posY = self->posY.i.hi + 0x24;

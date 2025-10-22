@@ -4,21 +4,6 @@
 #include "menu.h"
 #include "servant.h" // for InitializeMode enum
 
-typedef struct EquipMenuHelper {
-    EquipKind equipTypeFilter;
-    s32 index;
-    s32 isAccessory;
-} EquipMenuHelper;
-
-// Struct for table of values to intitialize MenuContext structs
-typedef struct {
-    /* 0x00 */ s16 cursorX;
-    /* 0x02 */ s16 cursorY;
-    /* 0x04 */ u16 cursorW;
-    /* 0x06 */ u16 cursorH;
-    /* 0x08 */ s32 otIdx;
-} MenuContextInit; // size = 0x0C
-
 #if defined(VERSION_US)
 #define ShowText(str, y) func_800F99B8(str, y, false);
 #elif defined(VERSION_HD)
@@ -28,39 +13,41 @@ typedef struct {
 u16* func_80106A28(u32 arg0, u16 kind);
 
 // BSS
-extern s32 D_801375CC;
-extern s32 D_801375D0;
-extern s32 D_801375D4;
-extern s32* D_801375D8;
-extern s32 D_801375DC;
-extern s32 D_801375E0[NUM_FAMILIARS + 1];
-extern s32 g_IsCloakLiningUnlocked;
-extern s32 g_IsCloakColorUnlocked;
-extern s32 D_80137608;
-extern s32 g_IsSelectingEquipment;
-extern s32 g_EquipmentCursor;
-extern s32 D_80137614;
-extern s32 g_EquipOrderType;
-extern MenuContext g_Menus[NUM_MENU];
-extern s32 D_801377FC[NUM_MENU + 2];
-extern s32 D_80137844[2];
+static s32 D_801375CC;
+static s32 D_801375D0;
+static s32 D_801375D4;
+static s32* D_801375D8;
+static s32 D_801375DC;
+static s32 D_801375E0[NUM_FAMILIARS + 1];
+static s32 g_IsCloakLiningUnlocked;
+static s32 g_IsCloakColorUnlocked;
+static s32 D_80137608;
+static s32 g_IsSelectingEquipment;
+static s32 g_EquipmentCursor;
+static s32 D_80137614;
+static s32 g_EquipOrderType;
+static MenuContext g_Menus[NUM_MENU];
+static s32 D_801377FC[NUM_MENU + 2];
+static s32 D_80137844[2];
 #if defined(VERSION_US)
-extern s32 D_8013784C;
+static s32 D_8013784C;
 #endif
-extern s16 g_RelicMenuFadeTimer;
+static s16 g_RelicMenuFadeTimer;
+STATIC_PAD_BSS(2);
+static s32 g_TimeAttackEntryTimes[NUM_TIMEATTACK_EVENTS];
+static s32 c_strTimeAttackEntry[NUM_TIMEATTACK_EVENTS];
+static s32 g_NewAttackRightHand;
+static s32 g_NewAttackLeftHand;
+static s32 g_NewDefenseEquip;
+static s32 g_NewPlayerStatsTotal[4];
+static s32 D_80137948;
+static s8* D_8013794C; // Pointer to texture pattern
+static s32 D_80137950;
+static s32 D_80137954;
+static s32 D_80137958;
+static s32 g_ServantPrevious;
+
 extern s32 g_PrevEquippedWeapons[2];
-extern s32 g_TimeAttackEntryTimes[NUM_TIMEATTACK_EVENTS];
-extern s32 c_strTimeAttackEntry[NUM_TIMEATTACK_EVENTS];
-extern s32 g_NewAttackRightHand;
-extern s32 g_NewAttackLeftHand;
-extern s32 g_NewDefenseEquip;
-extern s32 g_NewPlayerStatsTotal[];
-extern s32 D_80137948;
-extern s8* D_8013794C; // Pointer to texture pattern
-extern s32 D_80137950;
-extern s32 D_80137954;
-extern s32 D_80137958;
-extern s32 g_ServantPrevious;
 
 const char* D_800A2D48[] = {
 #if defined(VERSION_US)
@@ -93,9 +80,7 @@ const char* D_800A2D48[] = {
 #endif
 
 #if defined(VERSION_US)
-static const char* D_800A2D64[] = {
-    "ＡＴＤＥＦ",
-};
+static const char* D_800A2D64 = "ＡＴＤＥＦ";
 
 static const char* D_800A2D68[] = {
 #if !defined(VERSION_PC)
@@ -107,11 +92,11 @@ static const char* D_800A2D68[] = {
 #endif
 };
 #elif defined(VERSION_HD)
-static const char* D_800A2D10[] = {"装備技システム短剣必殺使攻撃力防"};
+static const char* D_800A2D10 = "装備技システム短剣必殺使攻撃力防";
 
-static const char* D_800A2D14[] = {"御魔導器拳こ一覧棒両手食物爆弾盾"};
+static const char* D_800A2D14 = "御魔導器拳こ一覧棒両手食物爆弾盾";
 
-static const char* D_800A2D18[] = {"投射薬ん右左武兜鎧マントその他い"};
+static const char* D_800A2D18 = "投射薬ん右左武兜鎧マントその他い";
 
 static const char* D_800A2D68[] = {
     _S2_HD("攻撃力"),     //
@@ -3438,7 +3423,7 @@ block_4:
             break;
         }
         SetGPUBuffRGBZero();
-        func_80102628(0x180);
+        SetFadeWidth(DISP_MENU_W);
         SetMenuDisplayBuffer();
         func_800FAC48();
         D_800973EC = 1;
@@ -3450,18 +3435,18 @@ block_4:
             D_80097910 = 0;
             func_800F6A48();
             func_800F84CC();
-            func_801027C4(2);
+            SetFadeMode(FADE_FROM_BLACK);
 #if defined(VERSION_US)
-            func_800F98AC(*D_800A2D64, 0);
+            func_800F98AC(D_800A2D64, 0);
 #elif defined(VERSION_PSP)
-            func_800F98AC(*D_800A2D10, 0);
-            func_800F98AC(*D_800A2D14, 0x100);
-            func_800F98AC(*D_800A2D18, 1);
-            func_800F98AC(*D_800A2D58, 0x101);
+            func_800F98AC(D_800A2D10, 0);
+            func_800F98AC(D_800A2D14, 0x100);
+            func_800F98AC(D_800A2D18, 1);
+            func_800F98AC(D_800A2D58, 0x101);
 #elif defined(VERSION_HD)
-            func_800F98AC(*D_800A2D10, 0);
-            func_800F98AC(*D_800A2D14, 0x100);
-            func_800F98AC(*D_800A2D18, 1);
+            func_800F98AC(D_800A2D10, 0);
+            func_800F98AC(D_800A2D14, 0x100);
+            func_800F98AC(D_800A2D18, 1);
 #endif
             func_800FABEC(MENU_DG_MAIN);
             func_800FABEC(MENU_DG_BG);
@@ -3471,12 +3456,12 @@ block_4:
         }
         break;
     case MENU_STEP_EXIT_BEGIN:
-        func_801027C4(1);
+        SetFadeMode(FADE_TO_BLACK);
         g_MenuStep++;
         break;
     case MENU_STEP_EXIT_4:
         if (func_801025F4()) {
-            func_80102628(0x100);
+            SetFadeWidth(DISP_STAGE_W);
             SetStageDisplayBuffer();
             func_800FAC48();
             func_800EB6B4();
@@ -3595,12 +3580,12 @@ block_4:
         if (!func_80133950()) {
             break;
         }
-        func_801027C4(2);
+        SetFadeMode(FADE_FROM_BLACK);
         g_MenuStep++;
 #if defined(VERSION_PSP)
         if (D_psp_091CDD48) {
             D_psp_091CDD48 = 0;
-            SetGameState(3);
+            SetGameState(Game_GameOver);
             g_GameStep = 0x63;
         }
 #endif
@@ -4026,7 +4011,7 @@ block_4:
         break;
     case MENU_STEP_UNK_32:
         if (func_801025F4()) {
-            func_80102628(0x100);
+            SetFadeWidth(DISP_STAGE_W);
             SetStageDisplayBuffer();
             func_800FAC48();
             g_MenuStep++;
@@ -4050,14 +4035,14 @@ block_4:
             func_801073C0();
             g_CdStep = CdStep_None;
             SetGPUBuffRGBZero();
-            func_80102628(0x180);
+            SetFadeWidth(DISP_MENU_W);
             SetMenuDisplayBuffer();
             func_800FAC48();
             g_MenuStep++;
         }
         break;
     case MENU_STEP_UNK_36:
-        func_801027C4(2);
+        SetFadeMode(FADE_FROM_BLACK);
         func_800F9808(2);
         id = g_Status.spells[g_MenuNavigation.cursorSpells];
         id ^= SPELL_FLAG_KNOWN;
@@ -4318,7 +4303,7 @@ void DrawHudSubweapon2(void) {
 
     case 0x64:
         if (D_psp_091CDD50 != 0) {
-            SetGameState(3);
+            SetGameState(Game_GameOver);
             g_GameStep = 0x63;
             PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);
             PlaySfx(SET_KEY_ON_20_21);

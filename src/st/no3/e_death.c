@@ -36,7 +36,8 @@ void EntityDeathCutsceneManager(Entity* self) {
     case 1:
         // other ent is player right now
         if (otherEnt->posX.i.hi < 52) {
-            g_Entities[UNK_ENTITY_1].ext.alucardController.unk7C = 1;
+            g_Entities[E_AFTERIMAGE_1]
+                .ext.alucardController.disableAfterImageFlag = 1;
             g_Player.padSim = PAD_RIGHT;
         } else {
             g_CutsceneFlags |= 0x80;

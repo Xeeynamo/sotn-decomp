@@ -11,6 +11,7 @@ extern Dialogue g_Dialogue;
 #include "../cutscene_unk4.h"
 #include "../cutscene_actor_name.h"
 #include "../set_cutscene_end.h"
+#define CUTSCENE_TILEMAP_SCROLL
 #include "../cutscene_run.h"
 #include "../cutscene_skip.h"
 #include "../cutscene_scale_avatar.h"
@@ -23,7 +24,6 @@ INCLUDE_RODATA("st/top/nonmatchings/cutscene", D_us_801A89A0);
 
 extern u8 OVL_EXPORT(cutscene_data)[];
 extern bool g_IsCutsceneDone;
-extern Dialogue g_Dialogue;
 extern u32 g_CutsceneFlags;
 extern u8 D_us_80180D38[];
 extern u8 D_us_80180D3C[];

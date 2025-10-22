@@ -13,8 +13,8 @@ static char D_psp_091870C0[] =
     "ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺ"
     "ａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ"
     "０１２３４５６７８９”　．＋−＝＿’？／！［］”：；，（）";
-static char* D_psp_09187168[] = {D_psp_091870C0};
-static char* D_psp_09187170[] = {D_psp_09187068};
+static char* D_psp_09187168 = D_psp_091870C0;
+static char* D_psp_09187170 = D_psp_09187068;
 static char D_psp_09187178[] =
     "ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜｦﾝｧｨｩｪｫｬｭｮ";
 static u16 D_psp_091871B0[] = {
@@ -33,10 +33,10 @@ u16 func_psp_0913F960(char* str, u8* type) {
     u16 ret;
     char* ptr;
 
-    ptr = D_psp_09187170[0];
-    for (i = 0; i < LEN(D_psp_09187068); i++) {
+    ptr = D_psp_09187170;
+    for (i = 0; i < 0x52; i++) {
         if (str[0] == *ptr) {
-            char* ch = &D_psp_09187168[0][i * 2];
+            char* ch = &D_psp_09187168[i * 2];
             ret = ch[0] << 8;
             ret |= ch[1];
             *type = 1;

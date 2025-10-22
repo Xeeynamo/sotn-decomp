@@ -89,21 +89,27 @@ typedef struct {
 } ET_SealedDoor; // Blue door that displays "Magically Sealed" prompt
 
 typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s32 unk80;
-    /* 0x84 */ struct Primitive* unk84;
-    /* 0x88 */ struct Primitive* unk88;
-    /* 0x8C */ struct Primitive* unk8C;
-    /* 0x90 */ s16 unk90;
-    /* 0x92 */ s16 unk92;
+    /* 0x7C */ struct Primitive* firstTextPrim;
+    /* 0x80 */ s32 timer;
+    /* 0x84 */ struct Primitive* boxPrim;
+    /* 0x88 */ struct Primitive* firstOutlinePrim;
+    /* 0x8C */ struct Primitive* firstDissolvePrim;
+    /* 0x90 */ s16 textOutlineBrightness;
+    /* 0x92 */ s16 textFillBrightness;
 } ET_StagePopup;
 
 typedef struct {
-    /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
-    /* 0x84 */ struct Primitive* unk84;
-    /* 0x88 */ struct Primitive* unk88;
+    /* 0x7C */ struct Primitive* firstTextPrim;
+    /* 0x80 */ s16 timer;
+    /* 0x84 */ struct Primitive* boxPrim;
+    /* 0x88 */ struct Primitive* firstStarPrim; // Not used by CHI/NZ0
     /* 0x8C */ u8 unk8C;
+    // Only used by CHI/NZ0
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 depth;
+    /* 0x98 */ s32 pad[3];
+    /* 0xA4 */ struct Primitive* firstRollingTextPrim; // drum turn effect
+    /* 0xA8 */ s16 rotationSlices[5];
 } ET_StagePopupJP;
 
 typedef struct {
@@ -874,7 +880,7 @@ typedef struct {
 } ET_CastleDoorTransition;
 
 typedef struct {
-    /* 0x7C */ u8 unk7C;
+    /* 0x7C */ u8 disableAfterImageFlag;
     s32 : 24;
     /* 0x80 */ u32 unk80;
 } ET_AlucardController;
@@ -912,11 +918,11 @@ typedef struct PACKED {
 } ET_Player;
 
 typedef struct {
-    u8 unk0;
-    u8 unk1;
-    u8 unk2;
-    u8 unk3;
-} ET_EntitySlot1;
+    u8 disableFlag;
+    u8 resetFlag;
+    u8 index;
+    u8 timer;
+} ET_AfterImage;
 
 typedef struct {
     char pad[0x32];
@@ -1716,7 +1722,7 @@ typedef struct {
     /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ f32 unk80;
     /* 0x84 */ s32 : 32;
-    /* 0x88 */ s16 unk88;
+    /* 0x88 */ u16 unk88;
     /* 0x8A */ s16 : 16;
     /* 0x8C */ s32 unk8C;
 } ET_UnkSelEnts;
@@ -1799,9 +1805,9 @@ typedef struct {
 } ET_StoneDoor;
 
 typedef struct {
-    /* 0x7C */ u8 unk7C;
-    /* 0x7D */ u8 unk7D;
-    /* 0x7E */ u8 unk7E;
+    /* 0x7C */ u8 disableFlag;
+    /* 0x7D */ u8 resetFlag;
+    /* 0x7E */ u8 index;
 } ET_DisableAfterImage;
 
 typedef struct {
@@ -1809,30 +1815,22 @@ typedef struct {
     /* 0x80 */ s32 : 32;
     /* 0x84 */ u8 unk84;
 } ET_EntityMermanFireSpit;
-// ====== CHI ENTITIES ======
 
 typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
-    /* 0x80 */ s16 angle;
-} ET_BreakableDebris;
-
-// CHI Room3, Top, Demon Switch Wall
-typedef struct {
-    /* 0x7C */ char pad_7C[0x4];
-    /* 0x80 */ s32 unk80;
-} ET_DemonSwitchWall;
-
-// CHI Room5, Bottom, Breakable Wall
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ u32 resetTimer;
+    /* 0x84 */ u32 breakCount;
+} ET_Breakable;
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s32 : 32;
+    /* 0x80 */ s16 angle;
+    /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 breakCount;
-    /* 0x86 */ s16 : 16;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
-    /* 0x90 */ s32 : 32;
+    /* 0x86 */ s16 pad[7];
     /* 0x94 */ s16 resetTimer;
-} ET_BreakableWall;
+    /* 0x96 */ s16 pad2[3];
+    /* 0x9C */ s16 rotSpeed;
+} ET_BreakableDebris;
 
 typedef struct {
     /* 0x7C */ struct Primitive* unk7C;
@@ -1842,23 +1840,23 @@ typedef struct {
     /* 0x88 */ u8 unk88;
 } ET_BreakableNO2;
 
+// This is for the no1 wall chicken secret breakable wall and while it seems to
+// align with ET_BreakableDebris, the type of offset 0x84 is different and there
+// seems to be additional uses by func_us_801BEB54 that don't seem to be shared
+// with ET_BreakableDebris.
 typedef struct {
-    /* 0x7C */ char pad_7C[0x20];
-    /* 0x9C */ s16 rotSpeed;
-} ET_BreakableWallDebris;
+    /* 0x7C */ struct Primitive* unk7C;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u8 unk84;
+} ET_801BE880;
 
+// ====== CHI ENTITIES ======
+// CHI Room3, Top, Demon Switch Wall
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ char pad_7C[0x4];
     /* 0x80 */ s32 unk80;
-    /* 0x84 */ s32 unk84;
-} ET_BreakableWall2;
-
-// NO4 Room 1, Bottom, Breakable Crystal Floor
-typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ u32 resetTimer;
-    /* 0x84 */ u32 breakCount;
-} ET_BreakableTerrain;
+} ET_DemonSwitchWall;
 
 // CHI Unused Debug Cerberus Gate
 typedef struct {
@@ -2378,16 +2376,6 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 attackTimer;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ s32 : 32;
-    /* 0x90 */ s32 unk90;
-} ET_OuijaTable;
-
-typedef struct {
-    /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s32 spawned;
@@ -2395,7 +2383,7 @@ typedef struct {
     /* 0x8C */ s16 : 16;
     /* 0x8E */ s16 unk8E;
     /* 0x90 */ s32 isThrown;
-} ET_OuijaTableContents;
+} ET_OuijaTable;
 
 typedef struct {
     /* 0x7C */ s16 unk7C;
@@ -2886,13 +2874,6 @@ typedef struct {
 } ET_801D4558;
 
 typedef struct {
-    /* 0x7C */ struct Primitive* unk7C;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u8 unk84;
-} ET_801BE880;
-
-typedef struct {
     /* 0x7C */ s16 timer;
     /* 0x7E */ s16 unk7E;
 } ET_801B7D34;
@@ -3250,23 +3231,14 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 timer;
     /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 unk85;
-    /* 0x86 */ u8 unk86;
-    /* 0x88 */ struct Entity* unkEntity;
-    /* 0x89 */ u8 : 8;
-    /* 0x90 */ s32 : 32;
-    /* 0x94 */ s32 : 32;
-    /* 0x98 */ s32 : 32;
-    /* 0x9C */ s32 : 32;
-    /* 0xA0 */ s32 : 32;
-    /* 0xA4 */ s32 : 32;
-    /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
-    /* 0xB0 */ s16 : 16;
-    /* 0xB2 */ s16 unkB2;
+    /* 0x84 */ u8 attackIntervalIdx;
+    /* 0x85 */ u8 bottomDead;
+    /* 0x86 */ u8 isBouncing;
+    /* 0x88 */ struct Entity* linkEntity;
+    /* 0x8C */ s16 pad[19]; // This seems like too much of a pad for the
+    /* 0xB2 */ s16 unkB2;   // reference to unkB2 to be a part of this ext
 } ET_BonePillar;
 
 typedef struct {
@@ -3275,9 +3247,9 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 hoverTimer;
     /* 0x82 */ s16 : 16;
-    /* 0x84 */ s32 unk84;
+    /* 0x84 */ s32 referenceY;
 } ET_Crow;
 
 typedef struct {
@@ -3300,24 +3272,24 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u16 unk84;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 weaponCount;
+    /* 0x84 */ u16 hasWeapons;
     /* 0x86 */ s16 : 16;
-    /* 0x88 */ Pos unk88;
-    /* 0x90 */ s16 unk90;
+    /* 0x88 */ Pos weaponPos;
+    /* 0x90 */ s16 angle;
     /* 0x92 */ s16 : 16;
-    /* 0x94 */ s16 unk94;
-    /* 0x96 */ u8 unk96;
+    /* 0x94 */ s16 moveTimer;
+    /* 0x96 */ u8 weaponIndex;
     /* 0x97 */ s8 : 8;
-    /* 0x98 */ s16 unk98;
-    /* 0x9A */ s16 unk9A;
-    /* 0x9C */ s16 unk9C;
-    /* 0x9E */ s16 unk9E;
+    /* 0x98 */ s16 rotX;
+    /* 0x9A */ s16 rotY;
+    /* 0x9C */ s16 rotateTarget;
+    /* 0x9E */ s16 rotate;
     /* 0xA0 */ s16 : 16;
-    /* 0xA2 */ s16 unkA2;
+    /* 0xA2 */ s16 radius;
     /* 0xA4 */ s32 pad[2];
-    /* 0xAC */ struct Entity* unkAC;
+    /* 0xAC */ struct Entity* poltergeist;
     /* 0xB0 */ u8 unkB0;
 } ET_SpectralSword;
 
@@ -3398,27 +3370,23 @@ typedef struct {
 } ET_SkullLord;
 
 typedef struct {
-    s32 pada;
-    u32 swingStep;
-    s32 unk84;
-    s32 unk88;
-    s32 unk8C;
-    s32 padb[3];
-    u32 unk9C;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ u32 step;
+    /* 0x84 */ s32 swingDistance;
+    /* 0x88 */ s32 swingVelocity;
+    /* 0x8C */ s32 maxSwing;
+    /* 0x90 */ s32 pad[3];
+    /* 0x9C */ u32 ringTimer;
 } ET_Bell;
 
 typedef struct {
-    struct Primitive* prim;
-    s16 unk80;
-    s16 : 16;
-    s16 unk84;
-    s16 unk86;
-    s16 unk88;
-} ET_Priest;
-
-typedef struct {
-    struct Primitive* prim;
-} ET_Unk41EE4;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s16 numBlades;
+    /* 0x86 */ s16 curtainShake;
+    /* 0x88 */ s16 activateChime;
+} ET_ConfessionalGhost;
 
 typedef struct {
     struct Primitive* prim;
@@ -3441,28 +3409,28 @@ typedef struct {
 } ET_HuntingGirl;
 
 typedef struct {
-    struct Primitive* prim;
-    s16 unk80;
-    s16 : 16;
-    u8 unk84;
-    u8 unk85;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 attackInterval;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 prevPlayerOnLeft;
+    /* 0x85 */ u8 facingLeft;
 } ET_CornerGuard;
 
 typedef struct {
-    u8 unk7C;
-    u8 pad0[3];
-    u8 facingLeft;
-    u8 pad1[3];
-    u8 unk84;
-    u8 pad2[3];
-    u8 unk88;
-    u8 pad3[3];
-    s16 unk8C;
+    /* 0x7C */ u8 timer;
+    /* 0x7D */ u8 pad0[3];
+    /* 0x80 */ u8 facingLeft;
+    /* 0x81 */ u8 pad1[3];
+    /* 0x84 */ u8 attackIntervalIdx;
+    /* 0x85 */ u8 pad2[3];
+    /* 0x88 */ u8 partLifespan;
+    /* 0x89 */ u8 pad3[3];
+    /* 0x8C */ s16 lungeTimer;
 } ET_BoneHalberd;
 
 typedef struct {
-    struct Primitive* prim1;
-    struct Primitive* prim2;
+    /* 0x7C */ struct Primitive* glassPrim;
+    /* 0x80 */ struct Primitive* lightPrim;
 } ET_StainedGlass;
 
 typedef struct {
@@ -3522,13 +3490,45 @@ typedef struct {
     /* 0x85 */ u8 resetColliderEffects;
 } ET_GraveKeeper;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ struct Entity* unk9C;
+    /* 0xA0 */ struct Primitive* unkA0;
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ u16 : 16;
+    /* 0xA8 */ struct Entity* lossothEntity;
+} ET_Lossoth;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ struct Primitive* unk9C;
+    /* 0xA0 */ f32 unkA0;
+    /* 0xA4 */ u8 paletteOffset;
+    /* 0xA5 */ u8 unkA5;
+} ET_LossothNapalmFlare;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
     ET_TimerOnly timer;
     ET_UTimerOnly utimer;
     ET_EntFactory factory;
-    ET_EntitySlot1 entSlot1; // g_Entities[1], not entityID 1
+    ET_AfterImage afterImage; // g_Entities[1], not entityID 1
     ET_EntitySlot16 entSlot16;
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
@@ -3684,12 +3684,14 @@ typedef union { // offset=0x7C
     ET_UnusedCENEnt unusedCENEnt;
     ET_SmallRisingHeart smallRisingHeart;
     ET_EntranceUnk16 entrance16;
+
+    // Breakable exts
+    ET_Breakable breakable;
     ET_BreakableDebris breakableDebris;
+    ET_BreakableNO2 breakableNo2;
+    ET_801BE880 et_801BE880;
+
     ET_DemonSwitchWall demonSwitchWall;
-    ET_BreakableWall breakableWall;
-    ET_BreakableWallDebris breakableWallDebris;
-    ET_BreakableWall2 breakableWall2;
-    ET_BreakableTerrain breakableTerrain;
     ET_DebugCerberusGate debugCerberusGate;
     ET_FallingStairs fallingStairs;
     ET_SalemWitch salemWitch;
@@ -3726,7 +3728,6 @@ typedef union { // offset=0x7C
     ET_BackgroundVortex bgVortex;
     ET_MedusaUnk1A medusaUnk1A;
     ET_OuijaTable ouijaTable;
-    ET_OuijaTableContents ouijaTableContents;
     ET_FleaMan fleaMan;
     ET_Ctulhu ctulhu;
     ET_StoneRose stoneRose;
@@ -3764,7 +3765,6 @@ typedef union { // offset=0x7C
     ET_Chair chair;
     ET_LesserDemon lesserDemon;
     ET_801D4558 et_801D4558;
-    ET_801BE880 et_801BE880;
     ET_801B7D34 et_801B7D34;
     ET_Fish fish;
     ET_Bird bird;
@@ -3795,11 +3795,11 @@ typedef union { // offset=0x7C
     ET_SurfacingWater et_surfacingWater;
     ET_WaterAlcove et_waterAlcove;
     ET_801C12B0 et_801C12B0;
-    ET_BonePillar et_bonePillar;
+    ET_BonePillar bonePillar;
     ET_801C4520 et_801C4520;
     ET_801C4980 et_801C4980;
     ET_801C5268 et_801C5268;
-    ET_Crow et_crow;
+    ET_Crow crow;
     ET_FerrymanBoat ferrymanBoat;
     ET_BoatElevator boatElevator;
     ET_BoatElevator_Child boatElevator_child;
@@ -3808,7 +3808,6 @@ typedef union { // offset=0x7C
     ET_801CEB08 et_801CEB08;
     ET_801B3F30 et_801B3F30;
     ET_801B4210 et_801B4210;
-    ET_BreakableNO2 breakableNo2;
     ET_801B6E34 et_801B6E34;
     ET_801B72E8 et_801B72E8;
     ET_FleaRider fleaRider;
@@ -3816,9 +3815,8 @@ typedef union { // offset=0x7C
     ET_Yorick yorick;
     ET_YorickSkull yorickSkull;
     ET_SkullLord skullLord;
-    ET_Bell et_bell;
-    ET_Unk41EE4 unk41EE4;
-    ET_Priest priest;
+    ET_Bell bell;
+    ET_ConfessionalGhost confessionalGhost;
     ET_CornerGuard cornerGuard;
     ET_BoneHalberd boneHalberd;
     ET_Spikes spikes;
@@ -3827,6 +3825,8 @@ typedef union { // offset=0x7C
     ET_StainedGlass stainedGlass;
     ET_DiscusLord discusLord;
     ET_GraveKeeper graveKeeper;
+    ET_Lossoth lossoth;
+    ET_LossothNapalmFlare lossothNapalm;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

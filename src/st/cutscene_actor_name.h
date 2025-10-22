@@ -1,8 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#ifdef VERSION_PSP
+#if defined(VERSION_PSP) || defined(VERSION_HD)
 #include "cutscene_actor_name_psp.h"
 #else
 extern const char* actor_names[];
+
+#ifndef DRAW_NAME_ACTOR_INDEX
+#define DRAW_NAME_ACTOR_INDEX actorIndex
+#endif
 
 // Creates primitives for the actor name at the head of the dialogue
 static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
@@ -13,7 +17,7 @@ static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
     const char* actorName;
     char ch;
 
-    actorName = actor_names[actorIndex];
+    actorName = actor_names[DRAW_NAME_ACTOR_INDEX];
     chCount = 0;
     while (true) {
         ch = *actorName++;
@@ -39,7 +43,7 @@ static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
     // Fill prims to render the actor name on screen
     prim = &g_PrimBuf[primIndex];
     g_Dialogue.primIndex[1] = primIndex;
-    actorName = actor_names[actorIndex];
+    actorName = actor_names[DRAW_NAME_ACTOR_INDEX];
     x = 0x38;
     while (prim != NULL) {
         ch = *actorName++;
@@ -56,7 +60,11 @@ static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
             prim->priority = 0x1FF;
             prim->drawMode = DRAW_HIDE;
             prim->x0 = x;
+#ifdef DRAW_NAME_PRIM_Y0
+            prim->y0 = DRAW_NAME_PRIM_Y0;
+#else
             prim->y0 = g_Dialogue.startY + 6;
+#endif
             prim = prim->next;
             x += FONT_GAP;
         }

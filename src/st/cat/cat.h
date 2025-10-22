@@ -8,7 +8,8 @@
 #include "stage.h"
 
 #define OVL_EXPORT(x) CAT_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
+
+#include "../pfn_entity_update.h"
 
 enum OVL_EXPORT(Entities) {
     E_NONE,
@@ -39,11 +40,11 @@ enum OVL_EXPORT(Entities) {
     E_UNK_19,                // func_us_801C56A0
     E_UNK_1A,                // func_us_801CA13C
     E_UNK_1B,                // func_us_801B732C
-    E_UNK_1C,                // func_us_801B852C
-    E_UNK_1D,                // func_us_801B7FE0
-    E_UNK_1E,                // func_us_801B7F2C
+    E_SPIKES,                // func_us_801B852C
+    E_SPIKES_PARTS,          // func_us_801B7FE0
+    E_SPIKES_DUST,           // func_us_801B7F2C
     E_UNK_1F,                // func_us_801B7B64
-    E_UNK_20,                // func_us_801B86B0
+    E_SPIKES_DAMAGE,         // func_us_801B86B0
     E_UNK_21,                // func_us_801B8AD0
     E_UNK_22,                // func_us_801B87E8
     E_UNK_23,                // func_us_801BACF4
@@ -73,11 +74,11 @@ enum OVL_EXPORT(Entities) {
     E_UNK_3B,                // func_us_801C774C
     E_UNK_3C,                // func_us_801C6360
     E_UNK_3D,                // func_us_801C7420
-    E_UNK_3E,                // func_us_801CFAE8
-    E_UNK_3F,                // func_us_801D033C
-    E_UNK_40,                // func_us_801D08A8
-    E_UNK_41,                // func_us_801D0B38
-    E_UNK_42,                // func_us_801D0F10
+    E_LOSSOTH,               // EntityLossoth
+    E_LOSSOTH_EFFECTS,       // EntityLossothEffects
+    E_LOSSOTH_FIREBALL,      // EntityLossothFireball
+    E_LOSSOTH_NAPALM,        // EntityLossothNapalmFlare
+    E_LOSSOTH_FLAMES,        // EntityLossothFlames
     E_UNK_43,                // func_us_801BB4CC
     E_GRAVE_KEEPER,          // EntityGraveKeeper
     E_GRAVE_KEEPER_HITBOX,   // EntityGraveKeeperHitbox
@@ -107,10 +108,5 @@ extern EInit g_EInitLockCamera;
 extern EInit g_EInitObtainable;
 extern EInit g_EInitWereskeleton;
 extern EInit D_us_80180A88;
-
-typedef struct {
-    s16 unk0;
-    s16* unk4;
-} unkStr_801CDD80;
 
 #endif

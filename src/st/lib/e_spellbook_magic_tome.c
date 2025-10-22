@@ -1,15 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-typedef struct {
-    EInit* unk0;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-    u8 unkC;
-} unkBookStruct;
-
 static SVECTOR D_us_80182F44 = {4, 0, 16};
 static SVECTOR D_us_80182F4C = {0, 0, 16};
 static SVECTOR D_us_80182F54 = {4, 28, 16};

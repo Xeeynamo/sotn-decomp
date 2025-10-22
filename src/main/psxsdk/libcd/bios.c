@@ -3,6 +3,9 @@
 #include "../libspu/libspu_internal.h"
 #include <common.h>
 
+// internal type representing the CD buffer size
+typedef char Result_t[8];
+
 typedef struct {
     unsigned char sync;  // sync state
     unsigned char ready; // ready state
@@ -226,7 +229,7 @@ static inline void callback(void) {
     *libcd_CDRegister0 = temp_s1;
 }
 
-int CD_sync(int mode, Result_t* result) {
+int CD_sync(int mode, u_char* result) {
     int i;
     int sync;
 
@@ -254,7 +257,7 @@ int CD_sync(int mode, Result_t* result) {
     }
 }
 
-int CD_ready(int mode, Result_t* result) {
+int CD_ready(int mode, u_char* result) {
     int i;
     int c;
     int ready;
@@ -285,7 +288,7 @@ int CD_ready(int mode, Result_t* result) {
     }
 }
 
-int CD_cw(u8 com, u8* param, Result_t* result, s32 arg3) {
+int CD_cw(u8 com, u8* param, u_char* result, s32 arg3) {
     int i;
 
     if (D_80032AB0 > 1) {

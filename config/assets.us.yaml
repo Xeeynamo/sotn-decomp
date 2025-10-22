@@ -1,5 +1,17 @@
 version: us
 files:
+  - target: disks/us/SLUS_000.67
+    asset_path: assets/main
+    src_path: src/main
+    splat_config_path: config/splat.us.main.yaml
+    segments:
+      - start: 0x00000800
+        vram: 0x80010000
+        assets:
+          - [0x0, skip]
+          - [0x1C018, palette, D_8002B818, 256]
+          - [0x1C218, rawgfx, D_8002BA18, 128, 32, 4]
+          - [0x1CA18, skip]
   - target: disks/us/DRA.BIN
     asset_path: assets/dra
     src_path: src/dra
@@ -9,24 +21,42 @@ files:
         vram: 0x800A0000
         assets:
           - [0x0, skip]
-          - [0xD1D4, blueprintsdef, blueprints, AluBlueprints, AluEntities]
+          - [0x518, palette, g_saveIconPal, 256]
+          - [0x718, rawgfx, g_saveIcon0, 16, 48, 4, 0x518]
+          - [0x898, rawgfx, g_saveIcon1, 16, 48, 4, 0x538]
+          - [0xA18, rawgfx, g_saveIcon2, 16, 48, 4, 0x558]
+          - [0xB98, rawgfx, g_saveIcon3, 16, 48, 4, 0x578]
+          - [0xD18, rawgfx, g_saveIcon4, 16, 48, 4, 0x598]
+          - [0xE98, rawgfx, g_saveIcon5, 16, 48, 4, 0x5B8]
+          - [0x1018, rawgfx, g_saveIcon6, 16, 48, 4, 0x5D8]
+          - [0x1198, rawgfx, g_saveIcon7, 16, 48, 4, 0x5F8]
+          - [0x1318, rawgfx, g_saveIcon8, 16, 48, 4, 0x618]
+          - [0x1498, rawgfx, g_saveIcon9, 16, 48, 4, 0x638]
+          - [0x1618, rawgfx, g_saveIcon10, 16, 48, 4, 0x658]
+          - [0x1798, rawgfx, g_saveIcon11, 16, 48, 4, 0x678]
+          - [0x1918, rawgfx, g_saveIcon12, 16, 48, 4, 0x698]
+          - [0x1A98, rawgfx, g_saveIcon13, 16, 48, 4, 0x6A8]
+          - [0x1C18, rawgfx, g_saveIcon14, 16, 48, 4, 0x6C8]
+          - [0x1D98, rawgfx, g_saveIcon15, 16, 48, 4, 0x6E8]
+          - [0x22E4, skip]
+          - [0xD1D4, blueprintsdef, us/blueprints, AluBlueprints, AluEntities]
           - [0xD4B8, skip]
-          - [0x1107C, binary, vh_0, vh]
-          - [0x1407C, binary, vh_1, vh]
-          - [0x1607C, binary, vh_2, vh]
-          - [0x1807C, binary, vh_3, vh]
+          - [0x1107C, binary, us/vh_0, vh]
+          - [0x1407C, binary, us/vh_1, vh]
+          - [0x1607C, binary, us/vh_2, vh]
+          - [0x1807C, binary, us/vh_3, vh]
           - [0x1A07C, binary, sd_eve1, seq, --skip-build]
           - [0x1C37D, binary, sd_eve3, seq, --skip-build]
           - [0x1CAC3, binary, sd_eve2, seq, --skip-build]
           - [0x1D07C, skip]
-          - [0x1D224, xamusicconfig, xa_music_config]
-          - [0x1F554, sfxconfig, sfx_config]
+          - [0x1D224, xamusicconfig, us/xa_music_config]
+          - [0x1F554, sfxconfig, us/sfx_config]
           - [0x2097B, skip]
-          - [0x2217C, cmpgfx, text_item_up, 128, 128, 4]
-          - [0x227B0, cmpgfx, load_room_obj, 128, 128, 4]
-          - [0x23560, cmpgfx, save_room_obj, 128, 128, 4]
-          - [0x24864, cmpgfx, load_room_tile, 80, 16, 4]
-          - [0x24A90, cmpgfx, save_room_tile, 80, 16, 4]
+          - [0x2217C, cmpgfx, us/text_item_up, 128, 128, 4]
+          - [0x227B0, cmpgfx, us/load_room_obj, 128, 128, 4]
+          - [0x23560, cmpgfx, us/save_room_obj, 128, 128, 4]
+          - [0x24864, cmpgfx, us/load_room_tile, 80, 16, 4]
+          - [0x24A90, cmpgfx, us/save_room_tile, 80, 16, 4]
           - [0x24CEC, headergfx, D_800C4CEC]
           - [0x24D70, headergfx, D_800C4D70]
           - [0x24DF4, headergfx, D_800C4DF4]
@@ -41,20 +71,20 @@ files:
           - [0x252F8, skip]
           - [0x25324, rawgfx, g_GfxEquipIcon, 16, 5120, 4]
           - [0x2F324, skip]
-          - [0x2FF10, spriteset, D_800CFF10]
-          - [0x30F68, spriteset, D_800D0F68]
-          - [0x32BF4, spriteset, D_800D2BF4]
-          - [0x32CF8, spriteset, D_800D2CF8]
-          - [0x32FFC, spriteset, D_800D2FFC]
-          - [0x3327C, spriteset, D_800D327C]
-          - [0x33428, spriteset, D_800D3428]
-          - [0x334B8, spriteset, D_800D34B8]
-          - [0x3372C, spriteset, D_800D372C]
-          - [0x33B88, spriteset, D_800D3B88]
-          - [0x35628, spriteset, D_800D5628]
-          - [0x356AC, spriteset, D_800D56AC]
-          - [0x35868, spriteset, D_800D5868]
-          - [0x3684C, spriteset, D_800D684C]
+          - [0x2FF10, spriteset, us/D_800CFF10]
+          - [0x30F68, spriteset, us/D_800D0F68]
+          - [0x32BF4, spriteset, us/D_800D2BF4]
+          - [0x32CF8, spriteset, us/D_800D2CF8]
+          - [0x32FFC, spriteset, us/D_800D2FFC]
+          - [0x3327C, spriteset, us/D_800D327C]
+          - [0x33428, spriteset, us/D_800D3428]
+          - [0x334B8, spriteset, us/D_800D34B8]
+          - [0x3372C, spriteset, us/D_800D372C]
+          - [0x33B88, spriteset, us/D_800D3B88]
+          - [0x35628, spriteset, us/D_800D5628]
+          - [0x356AC, spriteset, us/D_800D56AC]
+          - [0x35868, spriteset, us/D_800D5868]
+          - [0x3684C, spriteset, us/D_800D684C]
           - [0x368D4, palette, D_800D68D4, 16]
           - [0x368F4, palette, D_800D68F4, 16]
           - [0x36914, palette, D_800D6914, 16]
@@ -91,8 +121,59 @@ files:
           - [0x170AC, skip]
           - [0x18688, subweaponsdef, subweapons, RicSubweapons, RicBlueprints]
           - [0x188F4, skip]
-          - [0x18A6C, blueprintsdef, blueprints, RicBlueprints, RicEntities]
+          - [0x18A6C, blueprintsdef, us/blueprints, RicBlueprints, RicEntities]
           - [0x18C42, skip]
+  - target: disks/us/ST/SEL/SEL.BIN
+    asset_path: assets/st/sel
+    src_path: src/st/sel
+    splat_config_path: config/splat.us.stsel.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x5FC, palette, D_801805FC, 16]
+          - [0x61C, skip]
+          - [0x764, palette, D_80180764, 16]
+          - [0x784, palette, D_80180784, 16]
+          - [0x7A4, palette, D_801807A4, 16]
+          - [0x7C4, palette, D_801807C4, 16]
+          - [0x7E4, palette, D_801807E4, 16]
+          - [0x804, palette, D_80180804, 16]
+          - [0x824, skip]
+          - [0x8E4, palette, g_saveIconPal, 256]
+          - [0xAE4, rawgfx, g_saveIcon0, 16, 48, 4, 0x8E4]
+          - [0xC64, rawgfx, g_saveIcon1, 16, 48, 4, 0x904]
+          - [0xDE4, rawgfx, g_saveIcon2, 16, 48, 4, 0x924]
+          - [0xF64, rawgfx, g_saveIcon3, 16, 48, 4, 0x944]
+          - [0x10E4, rawgfx, g_saveIcon4, 16, 48, 4, 0x964]
+          - [0x1264, rawgfx, g_saveIcon5, 16, 48, 4, 0x984]
+          - [0x13E4, rawgfx, g_saveIcon6, 16, 48, 4, 0x9A4]
+          - [0x1564, rawgfx, g_saveIcon7, 16, 48, 4, 0x9C4]
+          - [0x16E4, rawgfx, g_saveIcon8, 16, 48, 4, 0x9E4]
+          - [0x1864, rawgfx, g_saveIcon9, 16, 48, 4, 0xA04]
+          - [0x19E4, rawgfx, g_saveIcon10, 16, 48, 4, 0xA24]
+          - [0x1B64, rawgfx, g_saveIcon11, 16, 48, 4, 0xA44]
+          - [0x1CE4, rawgfx, g_saveIcon12, 16, 48, 4, 0xA64]
+          - [0x1E64, rawgfx, g_saveIcon13, 16, 48, 4, 0xA84]
+          - [0x1FE4, rawgfx, g_saveIcon14, 16, 48, 4, 0xAA4]
+          - [0x2164, rawgfx, g_saveIcon15, 16, 48, 4, 0xAC4]
+          - [0x22E4, skip]
+          - [0xCD54, palette, D_8018CD54, 16]
+          - [0xCDB4, palette, D_8018CDB4, 256]
+          - [0xCFB4, palette, D_8018CFB4, 256]
+          - [0xD1B4, palette, D_8018D1B4, 256]
+          - [0xD3B4, palette, D_8018D3B4, 256]
+          - [0xD5B4, palette, D_8018D5B4, 16]
+          - [0xD5D4, palette, D_8018D5D4, 16]
+          - [0xDBD4, skip]
+          - [0xF9A8, rawgfx, gfx_portrait_alucard, 48, 72, 8]
+          - [0x10728, rawgfx, gfx_portrait_maria, 48, 72, 8]
+          - [0x114A8, rawgfx, gfx_portrait_richter, 48, 72, 8]
+          - [0x12228, cmpgfx, D_80192228, 128, 128, 4]
+          - [0x13358, cmpgfx, D_80193358, 128, 128, 4]
+          - [0x14018, cmpgfx, D_80194018, 128, 128, 4]
+          - [0x15274, cmpgfx, D_80195274, 128, 128, 4]
+          - [0x162F4, skip]
   - target: disks/us/ST/CEN/CEN.BIN
     asset_path: assets/st/cen
     src_path: src/st/cen
@@ -173,16 +254,57 @@ files:
         vram: 0x80180000
         assets:
           - [0x2C, sprite_banks, sprite_banks]
-          - [0x8C, skip]
-          #- [0x8C, paldef, palette_def]
-          #- [0x178, layers, layers]
-          #- [0x468, gfx_banks, graphics_banks]
-          #- [0x670, layout, entity_layouts]
-          #- [0x818, skip]
-          #- [0x2358, rooms, rooms]
-          #- [0x2F44, skip]
+          - [0x8C, palette, pal_stained_glass, 16] # 0x204
+          - [0xAC, paldef, palette_def]
+          - [0x178, layers, layers]
+          - [0x468, gfx_banks, graphics_banks]
+          - [0x670, layout, entity_layouts]
+          - [0x818, skip]
+          - [0x2358, rooms, rooms]
+          - [0x2F44, skip]
           - [0x3A94, cutscene, cutscene_script_psx]
-          - [0x3C18, skip]
+          - [0x3C18, binary, cutscene_data_psx] # May be gfx data, unsure
+          - [0x3F20, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4]
+          - [0x8498, cmpgfx, gfx_confessional, 128, 128, 4]
+          - [0x96BC, cmpgfx, gfx_chair, 128, 128, 4, 0x1692C]
+          - [0xA298, cmpgfx, gfx_corner_guard, 128, 128, 4, 0x16BAC]
+          - [0xAC40, cmpgfx, gfx_bone_pillar, 128, 128, 4, 0x16BCC]
+          - [0xB9F4, cmpgfx, gfx_bone_pillar_fire, 128, 128, 4, 0x16C4C]
+          - [0xC7D8, cmpgfx, gfx_bone_halberd, 128, 128, 4, 0x16F0C]
+          - [0xD2DC, cmpgfx, gfx_winged_guard, 128, 128, 4, 0x16F2C]
+          - [0xDCA4, cmpgfx, gfx_ghost_bat, 128, 128, 4, 0x16F4C] # ghost palette
+          #- [0xDCA4, cmpgfx, gfx_ghost_bat, 128, 128, 4, 0x16F8C] # bat palette
+          - [0xE768, cmpgfx, gfx_crow, 128, 128, 4, 0x16FAC] # black crow palette
+          #- [0xE768, cmpgfx, gfx_crow, 128, 128, 4, 0x16FCC] # blue raven palette
+          - [0xEDFC, cmpgfx, gfx_skelerang, 128, 128, 4, 0x1692C]
+          - [0xFA54, cmpgfx, gfx_skelerang_spittle_bone, 128, 128, 4, 0x1692C] # skelerang palette
+          #- [0xFA54, cmpgfx, gfx_skelerang_spittle_bone, 128, 128, 4, 0x1694C] # spittle bone palette
+          - [0x1074C, cmpgfx, gfx_hunting_girl, 128, 128, 4, 0x16FEC]
+          - [0x10E84, cmpgfx, gfx_spectral_sword, 128, 128, 4, 0x1704C]
+          - [0x119A0, cmpgfx, gfx_sealed_door, 128, 128, 4, 0x1724C]
+          - [0x122B0, cmpgfx, gfx_breakable, 128, 128, 4, 0x1730C]
+          - [0x12C64, rawgfx, gfx_portrait_alucard, 48, 72, 8, 0x1740C]
+          - [0x139E4, rawgfx, gfx_portrait_maria, 48, 72, 8, 0x1760C]
+          - [0x14764, cmpgfx, gfx_cutscene_1, 128, 128, 4, 0x1780C]
+          - [0x15894, cmpgfx, gfx_cutscene_2, 128, 128, 4, 0x1780C]
+          - [0x16554, cmpgfx, gfx_stage_name_en, 128, 128, 4]
+          - [0x1692C, palette, pal_skelerang_spittle_bone, 16] # 0x200
+          - [0x1698C, palette, pal_unused, 16] # does not exist for pspeu
+          - [0x16BAC, palette, pal_corner_guard, 16] # 0x215
+          - [0x16BCC, palette, pal_bone_pillar, 16] # 0x216
+          - [0x16C4C, palette, pal_bone_pillar_fire, 16] # 0x21A, includes 0x221
+          - [0x16F0C, palette, pal_bone_halberd, 16] # 0x22A
+          - [0x16F2C, palette, pal_winged_guard, 16] # 0x22B
+          - [0x16F4C, palette, pal_ghost_bat, 16] # 0x22C
+          - [0x16FAC, palette, pal_crow, 16] # 0x22F
+          - [0x16FEC, palette, pal_hunting_girl, 16] # 0x231
+          - [0x1704C, palette, pal_spectral_sword, 16] # 0x234
+          - [0x1724C, palette, pal_sealed_door, 16] # 0x244
+          - [0x1730C, palette, pal_breakable, 16] # 0x249
+          - [0x1740C, palette, pal_portrait_alucard, 16] # 0x258
+          - [0x1760C, palette, pal_portrait_maria, 16] # 0x260
+          - [0x1780C, palette, pal_cutscene, 16] # 0x251
+          - [0x1782C, skip]
   - target: disks/us/ST/DRE/DRE.BIN
     asset_path: assets/st/dre
     src_path: src/st/dre
@@ -448,6 +570,17 @@ files:
           - [0x18838, skip] # tile data
           - [0x26638, skip] # tile definitions
           - [0x2EA68, skip] # sprites
+  - target: disks/us/ST/NO4/NO4.BIN
+    asset_path: assets/st/no4
+    src_path: src/st/no4
+    splat_config_path: config/splat.us.stno4.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x5354, cutscene, cutscene_data_ferryman_left_psx]
+          - [0x53B7, cutscene, cutscene_data_ferryman_right_psx]
+          - [0x5400, skip]
   - target: disks/us/ST/NP3/NP3.BIN
     asset_path: assets/st/np3
     src_path: src/st/np3
@@ -733,6 +866,16 @@ files:
           - [0x435C, spritesheet, doppleganger]
           - [0x2AD74, spritesheet, bat_form]
           - [0x2BEA0, skip]
+  - target: disks/us/BOSS/BO6/BO6.BIN
+    asset_path: assets/boss/bo6
+    src_path: src/boss/bo6
+    splat_config_path: config/splat.us.bobo6.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+            - [0x1204, rooms, rooms]
+            - [0x1210, skip]
   - target: disks/us/BOSS/RBO3/RBO3.BIN
     asset_path: assets/boss/rbo3
     src_path: src/boss/rbo3

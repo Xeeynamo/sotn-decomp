@@ -34,6 +34,7 @@ ASSETS_DIR      := assets
 CONFIG_DIR      := config
 TOOLS_DIR       := tools
 BUILD_DIR       := build/$(VERSION)
+REPORTS_DIR     := $(BUILD_DIR)/reports
 PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_permuter/permuter_loader)
 RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
@@ -74,7 +75,8 @@ CLANG			:= $(BIN_DIR)/clang-format
 GOPATH          := $(HOME)/go
 GO              := $(GOPATH)/bin/go
 SOTNLINT		:= cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)/
-DUPS			:= cd $(TOOLS_DIR)/dups; cargo run --release -- --threshold .90 --output-file ../gh-duplicates/duplicates.txt
+DUPS_THRESHOLD  ?= .90
+DUPS			:= cd $(TOOLS_DIR)/dups; cargo run --release -- --threshold $(DUPS_THRESHOLD) --output-file ../../$(REPORTS_DIR)/duplicates.txt
 MIPSMATCH_APP   := $(BIN_DIR)/mipsmatch
 SOTNSTR_APP     := $(TOOLS_DIR)/sotn_str/target/release/sotn_str
 ASMDIFFER_APP	:= $(TOOLS_DIR)/asm-differ/diff.py
@@ -153,11 +155,18 @@ build_hd: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
 build_pspeu: $(SOTNSTR_APP) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
 	VERSION=pspeu .venv/bin/python3 tools/builds/gen.py
 	ninja
+.PHONY: build_all
+build_all:
+	$(MAKE) VERSION=us
+	$(MAKE) VERSION=pspeu
+	$(MAKE) VERSION=hd
 
-.PHONY: clean
+.PHONY: clean clean_asm
+clean_asm:
+	git clean -fdx $(ASM_DIR)
 clean: ##@ clean extracted files, assets, and build artifacts
+clean: clean_asm
 	git clean -fdx assets/
-	git clean -fdx asm/$(VERSION)/
 	git clean -fdx build/$(VERSION)/
 	git clean -fdx src/**/gen/
 	git clean -fdx config/*$(VERSION)*
@@ -265,45 +274,20 @@ expected: build
 
 # Force to extract all the assembly code regardless if a function is already decompiled
 force_extract:
-	mv src src_tmp
 	find $(BUILD_DIR) -type f -name "*.ld" -delete
-	make extract -j
-	rm -rf src/
-	mv src_tmp src
+	$(MAKE) extract -j
+	$(MAKE) -j
 
+.PHONY: force_symbols
 force_symbols: ##@ Extract a full list of symbols from a successful build
-	$(PYTHON) ./tools/symbols.py elf build/us/dra.elf > config/symbols.us.dra.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/ric.elf > config/symbols.us.ric.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stcat.elf > config/symbols.us.stcat.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stcen.elf > config/symbols.us.stcen.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stchi.elf > config/symbols.us.stchi.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stdai.elf > config/symbols.us.stdai.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stdre.elf > config/symbols.us.stdre.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stlib.elf > config/symbols.us.stlib.txt
-	# note the lack of `version` for mad
-	$(PYTHON) ./tools/symbols.py elf build/us/stmad.elf > config/symbols.stmad.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno0.elf > config/symbols.us.stno0.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno1.elf > config/symbols.us.stno1.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno2.elf > config/symbols.us.stno2.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno3.elf > config/symbols.us.stno3.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stno4.elf > config/symbols.us.stno4.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stnp3.elf > config/symbols.us.stnp3.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stnz0.elf > config/symbols.us.stnz0.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stsel.elf > config/symbols.us.stsel.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stst0.elf > config/symbols.us.stst0.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/sttop.elf > config/symbols.us.sttop.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/stwrp.elf > config/symbols.us.stwrp.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/strtop.elf > config/symbols.us.strtop.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/strwrp.elf > config/symbols.us.strwrp.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/bomar.elf > config/symbols.us.bomar.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/bobo4.elf > config/symbols.us.bobo4.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/borbo3.elf > config/symbols.us.borbo3.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/borbo5.elf > config/symbols.us.borbo5.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_000.elf > config/symbols.us.tt_000.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_001.elf > config/symbols.us.tt_001.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_002.elf > config/symbols.us.tt_002.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_003.elf > config/symbols.us.tt_003.txt
-	$(PYTHON) ./tools/symbols.py elf build/us/tt_004.elf > config/symbols.us.tt_004.txt
+force_symbols: clean_asm
+	FORCE_SYMBOLS= $(PYTHON) tools/builds/gen.py $(BUILD_DIR)/dynsyms.ninja
+	# only force symbols for overlays that are built. weapons are excluded with `-maxdepth 1`
+	linker_scripts="$$(find $(BUILD_DIR) -maxdepth 1 -type f -name '*.elf' | sed 's/\.elf/\.ld/')" && \
+	   if [[ -n $$linker_scripts ]]; then \
+		   xargs rm -f <<< "$$linker_scripts" && \
+		   xargs ninja -j0 -f $(BUILD_DIR)/dynsyms.ninja <<< "$$linker_scripts" ; \
+	   fi
 
 context: ##@ create a context for decomp.me. Set the SOURCE variable prior to calling this target
 	VERSION=$(VERSION) $(M2CTX) $(SOURCE)
@@ -395,29 +379,6 @@ extract_disk_psp%:
 test:
 	$(PYTHON) tools/symbols_test.py
 
-function-finder:
-	# TODO: make sure graphviz is installed
-	$(MAKE) force_symbols
-	$(MAKE) force_extract
-	$(PYTHON) tools/analyze_calls.py
-	git clean -fdx asm/
-	git checkout config/
-	rm -f build/us/main.ld
-	rm -rf build/us/weapon.ld
-	$(MAKE) -j extract
-	$(PYTHON) tools/function_finder/function_finder_psx.py --use-call-trees > gh-duplicates/functions.md
-	rm -rf gh-duplicates/function_calls || true
-	mv function_calls gh-duplicates/
-	mv function_graphs.md gh-duplicates/
-
-duplicates-report:
-	$(MAKE) force_symbols
-	$(MAKE) force_extract
-	cd tools/dups; \
-	    cargo run --release -- \
-            --threshold .90 \
-            --output-file ../../gh-duplicates/duplicates.txt
-
 .PHONY: python-dependencies
 python-dependencies: $(VENV_DIR)
 	$(PIP) install -r $(TOOLS_DIR)/requirements-python.txt
@@ -479,6 +440,32 @@ $(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
 
 build/$(VERSION)/src/%.o: src/%
 	ninja $@
+
+
+##@
+##@ Reporting Targets
+##@
+
+.PHONY: reports prepare-reports
+reports: duplicates-report function-finder
+prepare-reports: build $(REPORTS_DIR)
+	$(MAKE) force_symbols -j
+	$(PYTHON) tools/function_finder/fix_matchings.py
+
+function-finder: ##@ generates lists of files, their decomp status, and call graphs
+function-finder: prepare-reports
+	# TODO: make sure graphviz is installed
+	$(PYTHON) tools/function_finder/function_finder_psx.py > $(REPORTS_DIR)/functions.md
+
+$(REPORTS_DIR):
+	mkdir -p $(REPORTS_DIR)
+
+.PHONY: duplicates-report
+duplicates-report: ##@ generate a report of duplicate functions
+duplicates-report: $(REPORTS_DIR)/duplicates.txt
+$(REPORTS_DIR)/duplicates.txt: prepare-reports
+	$(DUPS)
+
 
 ##@
 ##@ Disc Dumping Targets

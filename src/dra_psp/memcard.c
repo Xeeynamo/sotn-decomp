@@ -114,14 +114,14 @@ s32 func_800E9880(s32 nPort, s32 nCard) {
     return 1;
 }
 
-u16 g_saveIconPal0[] = {
-#include "../dra/gen/g_saveIconPal0.h"
+u16 g_saveIconPal[] = {
+#include "../dra/gen/g_saveIconPal.h"
 };
 
 void GetSavePalette(u8* dst, s32 palIdx) {
     u16* dst_u16 = (u16*)dst;
     s32 i;
-    u16* src = g_saveIconPal0;
+    u16* src = g_saveIconPal;
 
     src += palIdx * 16;
     for (i = 0; i < COLORS_PER_PAL; i++) {
@@ -129,74 +129,75 @@ void GetSavePalette(u8* dst, s32 palIdx) {
     }
 }
 
-u8 memcard_0[] = {
-#include "../dra/gen/memcard_0.h"
+u8 g_saveIcon0[] = {
+#include "../dra/gen/psp/g_saveIcon0.h"
 };
 
-u8 memcard_1[] = {
-#include "../dra/gen/memcard_1.h"
+u8 g_saveIcon1[] = {
+#include "../dra/gen/psp/g_saveIcon1.h"
 };
 
-u8 memcard_2[] = {
-#include "../dra/gen/memcard_2.h"
+u8 g_saveIcon2[] = {
+#include "../dra/gen/psp/g_saveIcon2.h"
 };
 
-u8 memcard_3[] = {
-#include "../dra/gen/memcard_3.h"
+u8 g_saveIcon3[] = {
+#include "../dra/gen/psp/g_saveIcon3.h"
 };
 
-u8 memcard_4[] = {
-#include "../dra/gen/memcard_4.h"
+u8 g_saveIcon4[] = {
+#include "../dra/gen/psp/g_saveIcon4.h"
 };
 
-u8 memcard_5[] = {
-#include "../dra/gen/memcard_5.h"
+u8 g_saveIcon5[] = {
+#include "../dra/gen/psp/g_saveIcon5.h"
 };
 
-u8 memcard_6[] = {
-#include "../dra/gen/memcard_6.h"
+u8 g_saveIcon6[] = {
+#include "../dra/gen/psp/g_saveIcon6.h"
 };
 
-u8 memcard_7[] = {
-#include "../dra/gen/memcard_7.h"
+u8 g_saveIcon7[] = {
+#include "../dra/gen/psp/g_saveIcon7.h"
 };
 
-u8 memcard_8[] = {
-#include "../dra/gen/memcard_8.h"
+u8 g_saveIcon8[] = {
+#include "../dra/gen/psp/g_saveIcon8.h"
 };
 
-u8 memcard_9[] = {
-#include "../dra/gen/memcard_9.h"
+u8 g_saveIcon9[] = {
+#include "../dra/gen/psp/g_saveIcon9.h"
 };
 
-u8 memcard_10[] = {
-#include "../dra/gen/memcard_10.h"
+u8 g_saveIcon10[] = {
+#include "../dra/gen/psp/g_saveIcon10.h"
 };
 
-u8 memcard_11[] = {
-#include "../dra/gen/memcard_11.h"
+u8 g_saveIcon11[] = {
+#include "../dra/gen/psp/g_saveIcon11.h"
 };
 
-u8 memcard_12[] = {
-#include "../dra/gen/memcard_12.h"
+u8 g_saveIcon12[] = {
+#include "../dra/gen/psp/g_saveIcon12.h"
 };
 
-u8 memcard_13[] = {
-#include "../dra/gen/memcard_13.h"
+u8 g_saveIcon13[] = {
+#include "../dra/gen/psp/g_saveIcon13.h"
 };
 
-u8 memcard_14[] = {
-#include "../dra/gen/memcard_14.h"
+u8 g_saveIcon14[] = {
+#include "../dra/gen/psp/g_saveIcon14.h"
 };
 
-u8 memcard_15[] = {
-#include "../dra/gen/memcard_15.h"
+u8 g_saveIcon15[] = {
+#include "../dra/gen/psp/g_saveIcon15.h"
 };
 
 u8* g_saveIconTexture[] = {
-    memcard_0,  memcard_1,  memcard_2,  memcard_3,  memcard_4,  memcard_5,
-    memcard_6,  memcard_7,  memcard_8,  memcard_9,  memcard_10, memcard_11,
-    memcard_12, memcard_13, memcard_14, memcard_15,
+    g_saveIcon0,  g_saveIcon1,  g_saveIcon2,  g_saveIcon3,
+    g_saveIcon4,  g_saveIcon5,  g_saveIcon6,  g_saveIcon7,
+    g_saveIcon8,  g_saveIcon9,  g_saveIcon10, g_saveIcon11,
+    g_saveIcon12, g_saveIcon13, g_saveIcon14, g_saveIcon15,
 };
 
 void GetSaveIcon(u8* dst, s32 iconIdx) {
@@ -299,7 +300,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
 
     // writes room completion percentage
     strcat(h.Title, "　");
-    strcat(h.Title, (char*)g_SaveAreaNames[g_StageId]);
+    strcat(h.Title, g_SaveAreaNames[g_StageId]);
     strcat(h.Title, "　");
     i = g_RoomCount * 100 / RoomCount;
     if (i >= 100) {

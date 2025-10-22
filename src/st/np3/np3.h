@@ -2,7 +2,7 @@
 #include "stage.h"
 
 #define OVL_EXPORT(x) NP3_##x
-#define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
+#define STAGE_IS_NP3
 
 #define E_PUFF_OPAQUE_PALETTE_OFFSET 0xD0
 
@@ -186,7 +186,6 @@ extern u8 D_80182414[];
 extern s32 D_80182440[];
 extern u8 D_80182454[];
 extern u16 D_80182458[];
-extern u8 D_8018258C[];
 extern u8 D_80182594[];
 extern u8 D_801825A8[];
 extern u8 D_801825BC[];
@@ -241,18 +240,3 @@ extern s16 D_80182E48[];
 extern s16 D_80182EDC[];
 
 extern bool slograGaibonRetreat;
-
-typedef struct {
-    s16 unk0;
-    s16* unk4;
-} unkStr_801CDD80;
-
-// note on member types: length and zOffset definitely look signed
-// in the data, but psp uses lhu instead of lh.
-typedef struct {
-    s16 eArrayOffset;
-    s16 eArrayParentOffset;
-    u16 length;
-    u16 params;
-    u16 zOffset;
-} giantBroBodyPartsInit;

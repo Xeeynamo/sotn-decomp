@@ -121,9 +121,7 @@ typedef struct {
     char name[16]; /* file name (body) */
 } CdlFILE;
 
-typedef char Result_t[8];
-
-typedef void (*CdlCB)(u_char, Result_t*);
+typedef void (*CdlCB)(u_char, u_char*);
 
 int CdInit(void);
 char CdStatus(void);
@@ -134,14 +132,14 @@ void CdFlush(void);
 int CdSetDebug(int level);
 char* CdComstr(u_char com);
 char* CdIntstr(u_char intr);
-int CdSync(int mode, Result_t* result);
-int CdReady(int mode, Result_t* result);
+int CdSync(int mode, u_char* result);
+int CdReady(int mode, u_char* result);
 CdlCB CdSyncCallback(CdlCB func);
 CdlCB CdReadyCallback(CdlCB func);
 
 // Issues direct primitive commands to the CD-ROM subsystem
-int CdControl(u_char com, u_char* param, Result_t* result);
-int CdControlB(u_char com, u_char* param, Result_t* result);
+int CdControl(u_char com, u_char* param, u_char* result);
+int CdControlB(u_char com, u_char* param, u_char* result);
 int CdControlF(u_char com, u_char* param);
 
 /*
@@ -157,7 +155,7 @@ CdlLOC* CdIntToPos(int i, CdlLOC* p);
 int CdPosToInt(CdlLOC* p);
 CdlFILE* CdSearchFile(CdlFILE* fp, char* name);
 int CdRead(int sectors, u_long* buf, int mode);
-int CdReadSync(int mode, Result_t* result);
+int CdReadSync(int mode, u_char* result);
 CdlCB CdReadCallback(CdlCB func);
 int CdRead2(long mode);
 

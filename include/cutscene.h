@@ -29,6 +29,8 @@ typedef enum {
     CSOP_WAIT_FOR_FLAG_RESET,
 } CutsceneOpcode;
 
+#define CUTSCENE_FLAG_NONE 0
+
 #define script_half(x) (((x) & 0xFF0) >> 4), ((x) & 0xFF)
 #define script_word(x) (x & 0xFF000) >> 12, (x & 0xFF00) >> 8, script_half(x)
 
@@ -56,5 +58,112 @@ typedef enum {
 #define SCRIPT_UNKNOWN_21() CSOP_SCRIPT_UNKNOWN_21
 #define SCRIPT_UNKNOWN_23() CSOP_SCRIPT_UNKNOWN_23
 #define WAIT_FOR_FLAG_RESET(x) CSOP_WAIT_FOR_FLAG_RESET, x
+#if defined(VERSION_PSP) || defined(VERSION_HD)
+#define CS_LINE_SPACING 16
+#define CS_LINE_MAX 3
+#else
+#define CS_LINE_SPACING 12
+#define CS_LINE_MAX 4
+#endif
+#define ASCII_SPACE 32
+
+typedef struct {
+    /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character
+    /* 0x04 */ s16 startX;            // starting x coord
+    /* 0x06 */ s16 nextLineY;         // next line y coord
+    /* 0x08 */ s16 startY;            // starting y coord
+    /* 0x0A */ s16 nextCharX;         // next char x coord
+    /* 0x0C */ s16 nextLineX;         // next line x coord
+    /* 0x0E */ s16 nextCharY;         // next char y coord
+    /* 0x10 */ s16 portraitAnimTimer; // portrait animation timer
+    /* 0x12 */ u16 unk12;             // unknown
+    /* 0x14 */ u16 clutIndex;         // CLUT index
+    /* 0x16 */ u8 nextCharTimer;      // timer to next character
+    /* 0x17 */ u8 unk17;              // unknown
+// Of course, offsets beyond here won't be right in ST0_WEIRD_DIALOGUE.
+#if defined(VERSION_PSP) || defined(VERSION_HD)
+    /* 0x18 */ Primitive* prim[5]; // for dialogue graphics rendering
+#else
+    /* 0x18 */ Primitive* prim[6]; // for dialogue graphics rendering
+#endif
+    /* 0x30 */ s32 primIndex[3]; // primIndices: unk, actorName, unk
+    /* 0x3C */ u16 unk3C;        // maybe it is a begin flag?
+    /* 0x3E */ u16 timer;        // global timer
+    /* 0x40 */ u8* scriptEnd;    // pointer to the end of the script
+} Dialogue;                      // size = 0x44
+
+// st0_psp/3101C, st0/bss.c, st0/prologue_scroll.c, st0/3101C
+typedef struct {
+    /* 0x00 */ u8* scriptCur;
+    /* 0x04 */ s16 startX;
+    /* 0x06 */ s16 nextLineY;
+    /* 0x08 */ s16 startY;
+    /* 0x0A */ s16 nextCharX;
+    /* 0x0C */ s16 nextLineX;
+    /* 0x0E */ u16 nextCharY;
+    /* 0x10 */ u16 portraitAnimTimer;
+    /* 0x12 */ u8 unk12;
+    /* 0x13 */ u8 clutIndex;
+#ifdef VERSION_PSP
+    /* 0x14 */ u8 nextCharTimer;
+    /* 0x15 */ u8 unk17;
+#endif
+    /* 0x14 */ Primitive* prim;
+    /* 0x18 */ u32 primIndex;
+    /* 0x1C */ u16* unk20;
+    /* 0x20 */ s32 : 32;
+    /* 0x24 */ u16* clutIndexes;
+    /* 0x28 */ s32 : 32;
+    /* 0x2C */ s32 clutArrLength;
+    /* 0x30 */ s32 : 32;
+    /* 0x34 */ u8* script;
+#ifndef VERSION_PSP
+    /* 0x38 */ u16 unk3C; // maybe it is a begin flag?
+    /* 0x3A */ u16 timer;
+#endif
+    /* 0x3C */ u8* scriptEnd;
+} Dialogue2;
+
+// no4/cutscene
+typedef struct {
+    /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character
+    /* 0x04 */ s16 nextCharX;         // starting x coord
+    /* 0x06 */ s16 nextCharY;         // next char y coord
+    /* 0x08 */ s16 portraitAnimTimer; // portrait animation timer
+    /* 0x0A */ u8 nextCharTimer;
+    /* 0x0B */ u8 unk17;
+    // Of course, offsets beyond here won't be right on PSP
+#if defined(VERSION_PSP)
+    /* 0x0C */ Primitive* prim[5]; // for dialogue graphics rendering
+    /* 0x20 */ s32 nextLineX;
+#else
+    /* 0x0C */ Primitive* prim[4]; // for dialogue graphics rendering
+#endif
+    /* 0x1C */ s32 primIndex[3]; // primIndices: unk, actorName, unk
+    /* 0x30 */ s16 startX;
+    /* 0x32 */ s16 nextLineY;
+    /* 0x34 */ s16 startY;
+    /* 0x36 */ u16 clutIndex;
+    /* 0x38 */ u16 unk12;
+    /* 0x3A */ s16 : 16;
+    /* 0x3C */ u16 unk3C;
+} Dialogue3; // size = 0x28
+
+// sel_psp/cutscene.c
+typedef struct {
+    /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character
+    /* 0x04 */ s16 startX;            // starting x coord
+    /* 0x06 */ s16 nextLineY;         // next line y coord
+    /* 0x08 */ s16 startY;            // starting y coord
+    /* 0x0A */ s16 nextCharX;         // next char x coord
+    /* 0x0C */ s16 nextLineX;         // next line x coord
+    /* 0x0E */ u16 nextCharY;         // next char y coord
+    /* 0x10 */ u16 portraitAnimTimer; // portrait animation timer
+    /* 0x12 */ u16 unk12;             // unknown
+    /* 0x14 */ u16 clutIndex;         // CLUT index
+    /* 0x16 */ u16 nextCharTimer;     // timer to next character
+    /* 0x18 */ Primitive* prim;       // for dialogue graphics rendering
+    /* 0x1C */ s32 primIndex;         // primIndex: unk
+} Dialogue4;                          // size = 0x20
 
 #endif // CUTSCENE_H

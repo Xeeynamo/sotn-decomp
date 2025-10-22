@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
+#include "sfx.h"
 
 extern u16 D_us_801815F4[];
 extern u16 D_us_80181604[][8];
@@ -437,7 +438,7 @@ void func_us_801BF3F4(Entity* self) {
         g_Player.padSim = 0;
         g_Player.demo_timer = 2;
         D_us_80181664 = 1;
-        g_api.PlaySfx(0x7B6);
+        g_api.PlaySfx(SFX_BAD_LUCK_JINGLE);
         self->step++;
         break;
 
