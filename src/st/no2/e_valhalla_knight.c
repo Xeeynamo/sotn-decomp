@@ -78,7 +78,7 @@ void EntityValhallaKnight(Entity* self) {
             self->step_s++;
         }
         if (!AnimateEntity(D_us_8018204C, self)) {
-            PlaySfxPositional(0x719);
+            PlaySfxPositional(SFX_VALHALLA_KNIGHT_GALLOP);
         }
         temp_a0_2 = UnkCollisionFunc2(D_us_80182038);
         if (self->facingLeft) {
@@ -103,7 +103,7 @@ void EntityValhallaKnight(Entity* self) {
 
     case 3:
         if (!self->step_s) {
-            PlaySfxPositional(0x718);
+            PlaySfxPositional(SFX_VALHALLA_KNIGHT_NEIGH);
             self->step_s++;
         }
         UnkCollisionFunc2(D_us_80182038);
@@ -141,7 +141,7 @@ void EntityValhallaKnight(Entity* self) {
             /* fallthrough */
         case 1:
             if (!AnimateEntity(D_us_80182040, self)) {
-                PlaySfxPositional(0x719);
+                PlaySfxPositional(SFX_VALHALLA_KNIGHT_GALLOP);
             }
             UnkCollisionFunc2(D_us_80182038);
             if (!self->ext.valhallaKnight.unk80) {

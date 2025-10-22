@@ -6,7 +6,6 @@
 #define OVL_EXPORT(x) NO3_##x
 
 // NO3 Sound IDs
-#define SE_MERMAN_DEATH 0x71D
 #define SE_VO_DEATH_STEALS 0x7A0
 #define SE_VO_DEATH_LAUGH 0x7A1
 #define SE_ITEM_YOINK 0x7A2

@@ -27,7 +27,7 @@ void EntityFlyingZombie2(Entity* self) {
         self->hitboxState = 0;
         self->hitPoints = g_api.enemyDefs[15].hitPoints;
         SetStep(3);
-        PlaySfxPositional(0x714);
+        PlaySfxPositional(SFX_FLYING_ZOMBIE_PAIN);
     }
     if (self->flags & FLAG_DEAD) {
         if (!self->ext.flyingZombie.unk81) {
@@ -35,7 +35,7 @@ void EntityFlyingZombie2(Entity* self) {
             self->flags &= ~FLAG_DEAD;
             self->hitPoints = g_api.enemyDefs[15].hitPoints;
             SetStep(3);
-            PlaySfxPositional(0x714);
+            PlaySfxPositional(SFX_FLYING_ZOMBIE_PAIN);
         } else if (self->step != 7) {
             self->hitboxState = 0;
             SetStep(7);
@@ -100,7 +100,7 @@ void EntityFlyingZombie2(Entity* self) {
 
     case 3:
         if (!self->step_s) {
-            PlaySfxPositional(0x716);
+            PlaySfxPositional(SFX_FLYING_ZOMBIE_BODY_RIP);
             self->ext.flyingZombie.unk81 = 1;
             for (i = 0; i < 2; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -260,7 +260,7 @@ void EntityFlyingZombie1(Entity* self) {
         self->hitboxState = 0;
         self->ext.flyingZombie.unk7E = 0;
         self->ext.flyingZombie.unk80 = 0;
-        PlaySfxPositional(0x715);
+        PlaySfxPositional(SFX_FLYING_ZOMBIE_DEATH);
         PlaySfxPositional(SFX_SMALL_FLAME_IGNITE);
     }
     switch (self->step) {
