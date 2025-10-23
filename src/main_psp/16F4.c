@@ -56,6 +56,22 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_08900678);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_089007B4);
 
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893AE30);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893AE38);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893AE64);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893AE68);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893AE98);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893B1E8);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893B1F8);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893B210);
+
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_08900A1C);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_08900B3C);
@@ -364,6 +380,55 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_08906C8C);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_08906CE8);
 
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893B2F0);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893B5F0);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893B6F8);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893B7C8);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893B7D8);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893B838);
+
+const float D_psp_0893B83C[] = {
+    0.463647604,
+    0.7853981256,
+    0.9827936888,
+    1.570796251,
+};
+
+const float D_psp_0893B84C[] = {
+    5.012158244e-09,
+    3.774894708e-08,
+    3.447321717e-08,
+    7.549789416e-08,
+    0.3333333433,
+    -0.200000003,
+    0.1428571492,
+    -0.1111111045,
+    0.0909088701,
+    -0.07691875845,
+    0.06661073118,
+    -0.05833570287,
+    0.04976877943,
+    -0.0365315713,
+    0.01628581993,
+    1,
+    1.000000015e+30,
+};
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893B890);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893B918);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BA18);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BA1C);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BA28);
+
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_08906F30);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_0890837C);
@@ -551,6 +616,54 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_0890CB48);
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_0890CB94);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_0890CC3C);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BA44);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BA48);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BA4C);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BA50);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BA8C);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BA90);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BAB4);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BAC4);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BAE4);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BAE8);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BAF8);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BBC0);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BBE0);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BBE4);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BC10);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BC20);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BC30);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BC4C);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BC50);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BC54);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BC68);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BC6C);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BC70);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BC84);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_0890CCB8);
 
@@ -1111,3 +1224,17 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_0891A104);
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_0891A14C);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_0891A1CC);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BDF0);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BDF8);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BE00);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BE08);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BE28);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", D_psp_0893BE34);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/16F4", jtbl_psp_0893BE40);

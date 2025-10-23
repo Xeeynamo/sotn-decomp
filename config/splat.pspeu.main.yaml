@@ -17,6 +17,7 @@ options:
   find_file_boundaries: true
   use_legacy_include_asm: false
   migrate_rodata_to_functions: true
+  rodata_string_guesser_level: 0
   asm_jtbl_label_macro: jlabel
   symbol_name_format: psp_$VRAM
   disassemble_all: true
@@ -101,6 +102,10 @@ segments:
       - [0x360CC, textbin, func_psp_089349D8]
       - [0x3613C, textbin, func_psp_08934A48]
       - [0x36174, c, main_psp/36174]
-      - [0x3B9FC, rodata]
-      - [0x3E3C8, data]
+      - [0x3BBDC, rodata]
+      - [0x3C524, .rodata, main_psp/16F4]
+      - [0x3D564, .rodata, main_psp/277E8]
+      - [0x3D580, .rodata, main_psp/2EF0C]
+      - [0x3D760, .rodata, main_psp/36174]
+      - [0x3DA1C, data]
   - [0xB3E1C]

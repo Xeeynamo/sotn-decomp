@@ -571,6 +571,8 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     ]
     if ovl_name != "main":
         symbols_lists.append(f"-T {undefined_funcs_auto_path}")
+    if ovl_name == "main" and platform == "psp":
+        symbols_lists.append(f"-T {undefined_funcs_auto_path}")
     if platform == "psp":
         symbols_lists.append(f"-T config/symexport.{version}.{ovl_name}.txt")
     nw.build(

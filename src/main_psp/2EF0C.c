@@ -98,6 +98,12 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/2EF0C", func_psp_08930120);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2EF0C", func_psp_08930290);
 
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/2EF0C", D_psp_0893BE8C);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/2EF0C", D_psp_0893BEA8);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/2EF0C", D_psp_0893BEC0);
+
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2EF0C", func_psp_08930324);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2EF0C", func_psp_08930484);
