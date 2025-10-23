@@ -1,0 +1,3 @@
+func_psp_08900A1C = 0x08900A1C; // size:0x1A4
+func_psp_089016CC = 0x089016CC; // size:0x6C
+func_psp_08903B08 = 0x08903B08; // size:0x104

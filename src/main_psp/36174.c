@@ -53,13 +53,19 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_08935808);
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_08935934);
 
 const u32 D_psp_0893C06C[] = {
-    0x28D59A08,
+    0x089AD528,
     0x00000000,
 };
 
 INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36174", D_psp_0893C074);
 
-INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36174", D_psp_0893C080);
+const u32 D_psp_0893C080[] = {
+    0x0893C06C,
+    0x00000000,
+    0x00000000,
+    0x089AD538,
+    0x0893C080,
+};
 
 INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36174", D_psp_0893C094);
 
