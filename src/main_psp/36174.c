@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_08934A80);
@@ -60,11 +61,7 @@ const u32 D_psp_0893C06C[] = {
 INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36174", D_psp_0893C074);
 
 const u32 D_psp_0893C080[] = {
-    0x0893C06C,
-    0x00000000,
-    0x00000000,
-    0x089AD538,
-    0x0893C080,
+    0x0893C06C, 0x00000000, 0x00000000, 0x089AD538, 0x0893C080,
 };
 
 INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36174", D_psp_0893C094);
@@ -155,8 +152,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_089375A0);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_089375C0);
 
-void func_psp_08937650(void) {
-}
+void func_psp_08937650(void) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_08937658);
 
@@ -218,575 +214,385 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_08939A48);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_08939CD8);
 
-void func_psp_08939D08(void) {
-}
+void func_psp_08939D08(void) {}
 
-void func_psp_08939D10(void) {
-}
+void func_psp_08939D10(void) {}
 
-void func_psp_08939D18(void) {
-}
+void func_psp_08939D18(void) {}
 
-void func_psp_08939D20(void) {
-}
+void func_psp_08939D20(void) {}
 
-void func_psp_08939D28(void) {
-}
+void func_psp_08939D28(void) {}
 
-void func_psp_08939D30(void) {
-}
+void func_psp_08939D30(void) {}
 
-void func_psp_08939D38(void) {
-}
+void func_psp_08939D38(void) {}
 
-void func_psp_08939D40(void) {
-}
+void func_psp_08939D40(void) {}
 
-void func_psp_08939D48(void) {
-}
+void func_psp_08939D48(void) {}
 
-void func_psp_08939D50(void) {
-}
+void func_psp_08939D50(void) {}
 
-void func_psp_08939D58(void) {
-}
+void func_psp_08939D58(void) {}
 
-void func_psp_08939D60(void) {
-}
+void func_psp_08939D60(void) {}
 
-void func_psp_08939D68(void) {
-}
+void func_psp_08939D68(void) {}
 
-void func_psp_08939D70(void) {
-}
+void func_psp_08939D70(void) {}
 
-void func_psp_08939D78(void) {
-}
+void func_psp_08939D78(void) {}
 
-void func_psp_08939D80(void) {
-}
+void func_psp_08939D80(void) {}
 
-void func_psp_08939D88(void) {
-}
+void func_psp_08939D88(void) {}
 
-void func_psp_08939D90(void) {
-}
+void func_psp_08939D90(void) {}
 
-void func_psp_08939D98(void) {
-}
+void func_psp_08939D98(void) {}
 
-void func_psp_08939DA0(void) {
-}
+void func_psp_08939DA0(void) {}
 
-void func_psp_08939DA8(void) {
-}
+void func_psp_08939DA8(void) {}
 
-void func_psp_08939DB0(void) {
-}
+void func_psp_08939DB0(void) {}
 
-void func_psp_08939DB8(void) {
-}
+void func_psp_08939DB8(void) {}
 
-void func_psp_08939DC0(void) {
-}
+void func_psp_08939DC0(void) {}
 
-void func_psp_08939DC8(void) {
-}
+void func_psp_08939DC8(void) {}
 
-void func_psp_08939DD0(void) {
-}
+void func_psp_08939DD0(void) {}
 
-void func_psp_08939DD8(void) {
-}
+void func_psp_08939DD8(void) {}
 
-void func_psp_08939DE0(void) {
-}
+void func_psp_08939DE0(void) {}
 
-void func_psp_08939DE8(void) {
-}
+void func_psp_08939DE8(void) {}
 
-void func_psp_08939DF0(void) {
-}
+void func_psp_08939DF0(void) {}
 
-void func_psp_08939DF8(void) {
-}
+void func_psp_08939DF8(void) {}
 
-void func_psp_08939E00(void) {
-}
+void func_psp_08939E00(void) {}
 
-void func_psp_08939E08(void) {
-}
+void func_psp_08939E08(void) {}
 
-void func_psp_08939E10(void) {
-}
+void func_psp_08939E10(void) {}
 
-void func_psp_08939E18(void) {
-}
+void func_psp_08939E18(void) {}
 
-void func_psp_08939E20(void) {
-}
+void func_psp_08939E20(void) {}
 
-void func_psp_08939E28(void) {
-}
+void func_psp_08939E28(void) {}
 
-void func_psp_08939E30(void) {
-}
+void func_psp_08939E30(void) {}
 
-void func_psp_08939E38(void) {
-}
+void func_psp_08939E38(void) {}
 
-void func_psp_08939E40(void) {
-}
+void func_psp_08939E40(void) {}
 
-void func_psp_08939E48(void) {
-}
+void func_psp_08939E48(void) {}
 
-void func_psp_08939E50(void) {
-}
+void func_psp_08939E50(void) {}
 
-void func_psp_08939E58(void) {
-}
+void func_psp_08939E58(void) {}
 
-void func_psp_08939E60(void) {
-}
+void func_psp_08939E60(void) {}
 
-void func_psp_08939E68(void) {
-}
+void func_psp_08939E68(void) {}
 
-void func_psp_08939E70(void) {
-}
+void func_psp_08939E70(void) {}
 
-void func_psp_08939E78(void) {
-}
+void func_psp_08939E78(void) {}
 
-void func_psp_08939E80(void) {
-}
+void func_psp_08939E80(void) {}
 
-void func_psp_08939E88(void) {
-}
+void func_psp_08939E88(void) {}
 
-void func_psp_08939E90(void) {
-}
+void func_psp_08939E90(void) {}
 
-void func_psp_08939E98(void) {
-}
+void func_psp_08939E98(void) {}
 
-void func_psp_08939EA0(void) {
-}
+void func_psp_08939EA0(void) {}
 
-void func_psp_08939EA8(void) {
-}
+void func_psp_08939EA8(void) {}
 
-void func_psp_08939EB0(void) {
-}
+void func_psp_08939EB0(void) {}
 
-void func_psp_08939EB8(void) {
-}
+void func_psp_08939EB8(void) {}
 
-void func_psp_08939EC0(void) {
-}
+void func_psp_08939EC0(void) {}
 
-void func_psp_08939EC8(void) {
-}
+void func_psp_08939EC8(void) {}
 
-void func_psp_08939ED0(void) {
-}
+void func_psp_08939ED0(void) {}
 
-void func_psp_08939ED8(void) {
-}
+void func_psp_08939ED8(void) {}
 
-void func_psp_08939EE0(void) {
-}
+void func_psp_08939EE0(void) {}
 
-void func_psp_08939EE8(void) {
-}
+void func_psp_08939EE8(void) {}
 
-void func_psp_08939EF0(void) {
-}
+void func_psp_08939EF0(void) {}
 
-void func_psp_08939EF8(void) {
-}
+void func_psp_08939EF8(void) {}
 
-void func_psp_08939F00(void) {
-}
+void func_psp_08939F00(void) {}
 
-void func_psp_08939F08(void) {
-}
+void func_psp_08939F08(void) {}
 
-void func_psp_08939F10(void) {
-}
+void func_psp_08939F10(void) {}
 
-void func_psp_08939F18(void) {
-}
+void func_psp_08939F18(void) {}
 
-void func_psp_08939F20(void) {
-}
+void func_psp_08939F20(void) {}
 
-void func_psp_08939F28(void) {
-}
+void func_psp_08939F28(void) {}
 
-void func_psp_08939F30(void) {
-}
+void func_psp_08939F30(void) {}
 
-void func_psp_08939F38(void) {
-}
+void func_psp_08939F38(void) {}
 
-void func_psp_08939F40(void) {
-}
+void func_psp_08939F40(void) {}
 
-void func_psp_08939F48(void) {
-}
+void func_psp_08939F48(void) {}
 
-void func_psp_08939F50(void) {
-}
+void func_psp_08939F50(void) {}
 
-void func_psp_08939F58(void) {
-}
+void func_psp_08939F58(void) {}
 
-void func_psp_08939F60(void) {
-}
+void func_psp_08939F60(void) {}
 
-void func_psp_08939F68(void) {
-}
+void func_psp_08939F68(void) {}
 
-void func_psp_08939F70(void) {
-}
+void func_psp_08939F70(void) {}
 
-void func_psp_08939F78(void) {
-}
+void func_psp_08939F78(void) {}
 
-void func_psp_08939F80(void) {
-}
+void func_psp_08939F80(void) {}
 
-void func_psp_08939F88(void) {
-}
+void func_psp_08939F88(void) {}
 
-void func_psp_08939F90(void) {
-}
+void func_psp_08939F90(void) {}
 
-void func_psp_08939F98(void) {
-}
+void func_psp_08939F98(void) {}
 
-void func_psp_08939FA0(void) {
-}
+void func_psp_08939FA0(void) {}
 
-void func_psp_08939FA8(void) {
-}
+void func_psp_08939FA8(void) {}
 
-void func_psp_08939FB0(void) {
-}
+void func_psp_08939FB0(void) {}
 
-void func_psp_08939FB8(void) {
-}
+void func_psp_08939FB8(void) {}
 
-void func_psp_08939FC0(void) {
-}
+void func_psp_08939FC0(void) {}
 
-void func_psp_08939FC8(void) {
-}
+void func_psp_08939FC8(void) {}
 
-void func_psp_08939FD0(void) {
-}
+void func_psp_08939FD0(void) {}
 
-void func_psp_08939FD8(void) {
-}
+void func_psp_08939FD8(void) {}
 
-void func_psp_08939FE0(void) {
-}
+void func_psp_08939FE0(void) {}
 
-void func_psp_08939FE8(void) {
-}
+void func_psp_08939FE8(void) {}
 
-void func_psp_08939FF0(void) {
-}
+void func_psp_08939FF0(void) {}
 
-void func_psp_08939FF8(void) {
-}
+void func_psp_08939FF8(void) {}
 
-void func_psp_0893A000(void) {
-}
+void func_psp_0893A000(void) {}
 
-void func_psp_0893A008(void) {
-}
+void func_psp_0893A008(void) {}
 
-void func_psp_0893A010(void) {
-}
+void func_psp_0893A010(void) {}
 
-void func_psp_0893A018(void) {
-}
+void func_psp_0893A018(void) {}
 
-void func_psp_0893A020(void) {
-}
+void func_psp_0893A020(void) {}
 
-void func_psp_0893A028(void) {
-}
+void func_psp_0893A028(void) {}
 
-void func_psp_0893A030(void) {
-}
+void func_psp_0893A030(void) {}
 
-void func_psp_0893A038(void) {
-}
+void func_psp_0893A038(void) {}
 
-void func_psp_0893A040(void) {
-}
+void func_psp_0893A040(void) {}
 
-void func_psp_0893A048(void) {
-}
+void func_psp_0893A048(void) {}
 
-void func_psp_0893A050(void) {
-}
+void func_psp_0893A050(void) {}
 
-void func_psp_0893A058(void) {
-}
+void func_psp_0893A058(void) {}
 
-void func_psp_0893A060(void) {
-}
+void func_psp_0893A060(void) {}
 
-void func_psp_0893A068(void) {
-}
+void func_psp_0893A068(void) {}
 
-void func_psp_0893A070(void) {
-}
+void func_psp_0893A070(void) {}
 
-void func_psp_0893A078(void) {
-}
+void func_psp_0893A078(void) {}
 
-void func_psp_0893A080(void) {
-}
+void func_psp_0893A080(void) {}
 
-void func_psp_0893A088(void) {
-}
+void func_psp_0893A088(void) {}
 
-void func_psp_0893A090(void) {
-}
+void func_psp_0893A090(void) {}
 
-void func_psp_0893A098(void) {
-}
+void func_psp_0893A098(void) {}
 
-void func_psp_0893A0A0(void) {
-}
+void func_psp_0893A0A0(void) {}
 
-void func_psp_0893A0A8(void) {
-}
+void func_psp_0893A0A8(void) {}
 
-void func_psp_0893A0B0(void) {
-}
+void func_psp_0893A0B0(void) {}
 
-void func_psp_0893A0B8(void) {
-}
+void func_psp_0893A0B8(void) {}
 
-void func_psp_0893A0C0(void) {
-}
+void func_psp_0893A0C0(void) {}
 
-void func_psp_0893A0C8(void) {
-}
+void func_psp_0893A0C8(void) {}
 
-void func_psp_0893A0D0(void) {
-}
+void func_psp_0893A0D0(void) {}
 
-void func_psp_0893A0D8(void) {
-}
+void func_psp_0893A0D8(void) {}
 
-void func_psp_0893A0E0(void) {
-}
+void func_psp_0893A0E0(void) {}
 
-void func_psp_0893A0E8(void) {
-}
+void func_psp_0893A0E8(void) {}
 
-void func_psp_0893A0F0(void) {
-}
+void func_psp_0893A0F0(void) {}
 
-void func_psp_0893A0F8(void) {
-}
+void func_psp_0893A0F8(void) {}
 
-void func_psp_0893A100(void) {
-}
+void func_psp_0893A100(void) {}
 
-void func_psp_0893A108(void) {
-}
+void func_psp_0893A108(void) {}
 
-void func_psp_0893A110(void) {
-}
+void func_psp_0893A110(void) {}
 
-void func_psp_0893A118(void) {
-}
+void func_psp_0893A118(void) {}
 
-void func_psp_0893A120(void) {
-}
+void func_psp_0893A120(void) {}
 
-void func_psp_0893A128(void) {
-}
+void func_psp_0893A128(void) {}
 
-void func_psp_0893A130(void) {
-}
+void func_psp_0893A130(void) {}
 
-void func_psp_0893A138(void) {
-}
+void func_psp_0893A138(void) {}
 
-void func_psp_0893A140(void) {
-}
+void func_psp_0893A140(void) {}
 
-void func_psp_0893A148(void) {
-}
+void func_psp_0893A148(void) {}
 
-void func_psp_0893A150(void) {
-}
+void func_psp_0893A150(void) {}
 
-void func_psp_0893A158(void) {
-}
+void func_psp_0893A158(void) {}
 
-void func_psp_0893A160(void) {
-}
+void func_psp_0893A160(void) {}
 
-void func_psp_0893A168(void) {
-}
+void func_psp_0893A168(void) {}
 
-void func_psp_0893A170(void) {
-}
+void func_psp_0893A170(void) {}
 
-void func_psp_0893A178(void) {
-}
+void func_psp_0893A178(void) {}
 
-void func_psp_0893A180(void) {
-}
+void func_psp_0893A180(void) {}
 
-void func_psp_0893A188(void) {
-}
+void func_psp_0893A188(void) {}
 
-void func_psp_0893A190(void) {
-}
+void func_psp_0893A190(void) {}
 
-void func_psp_0893A198(void) {
-}
+void func_psp_0893A198(void) {}
 
-void func_psp_0893A1A0(void) {
-}
+void func_psp_0893A1A0(void) {}
 
-void func_psp_0893A1A8(void) {
-}
+void func_psp_0893A1A8(void) {}
 
-void func_psp_0893A1B0(void) {
-}
+void func_psp_0893A1B0(void) {}
 
-void func_psp_0893A1B8(void) {
-}
+void func_psp_0893A1B8(void) {}
 
-void func_psp_0893A1C0(void) {
-}
+void func_psp_0893A1C0(void) {}
 
-void func_psp_0893A1C8(void) {
-}
+void func_psp_0893A1C8(void) {}
 
-void func_psp_0893A1D0(void) {
-}
+void func_psp_0893A1D0(void) {}
 
-void func_psp_0893A1D8(void) {
-}
+void func_psp_0893A1D8(void) {}
 
-void func_psp_0893A1E0(void) {
-}
+void func_psp_0893A1E0(void) {}
 
-void func_psp_0893A1E8(void) {
-}
+void func_psp_0893A1E8(void) {}
 
-void func_psp_0893A1F0(void) {
-}
+void func_psp_0893A1F0(void) {}
 
-void func_psp_0893A1F8(void) {
-}
+void func_psp_0893A1F8(void) {}
 
-void func_psp_0893A200(void) {
-}
+void func_psp_0893A200(void) {}
 
-void func_psp_0893A208(void) {
-}
+void func_psp_0893A208(void) {}
 
-void func_psp_0893A210(void) {
-}
+void func_psp_0893A210(void) {}
 
-void func_psp_0893A218(void) {
-}
+void func_psp_0893A218(void) {}
 
-void func_psp_0893A220(void) {
-}
+void func_psp_0893A220(void) {}
 
-void func_psp_0893A228(void) {
-}
+void func_psp_0893A228(void) {}
 
-void func_psp_0893A230(void) {
-}
+void func_psp_0893A230(void) {}
 
-void func_psp_0893A238(void) {
-}
+void func_psp_0893A238(void) {}
 
-void func_psp_0893A240(void) {
-}
+void func_psp_0893A240(void) {}
 
-void func_psp_0893A248(void) {
-}
+void func_psp_0893A248(void) {}
 
-void func_psp_0893A250(void) {
-}
+void func_psp_0893A250(void) {}
 
-void func_psp_0893A258(void) {
-}
+void func_psp_0893A258(void) {}
 
-void func_psp_0893A260(void) {
-}
+void func_psp_0893A260(void) {}
 
-void func_psp_0893A268(void) {
-}
+void func_psp_0893A268(void) {}
 
-void func_psp_0893A270(void) {
-}
+void func_psp_0893A270(void) {}
 
-void func_psp_0893A278(void) {
-}
+void func_psp_0893A278(void) {}
 
-void func_psp_0893A280(void) {
-}
+void func_psp_0893A280(void) {}
 
-void func_psp_0893A288(void) {
-}
+void func_psp_0893A288(void) {}
 
-void func_psp_0893A290(void) {
-}
+void func_psp_0893A290(void) {}
 
-void func_psp_0893A298(void) {
-}
+void func_psp_0893A298(void) {}
 
-void func_psp_0893A2A0(void) {
-}
+void func_psp_0893A2A0(void) {}
 
-void func_psp_0893A2A8(void) {
-}
+void func_psp_0893A2A8(void) {}
 
-void func_psp_0893A2B0(void) {
-}
+void func_psp_0893A2B0(void) {}
 
-void func_psp_0893A2B8(void) {
-}
+void func_psp_0893A2B8(void) {}
 
-void func_psp_0893A2C0(void) {
-}
+void func_psp_0893A2C0(void) {}
 
-void func_psp_0893A2C8(void) {
-}
+void func_psp_0893A2C8(void) {}
 
-void func_psp_0893A2D0(void) {
-}
+void func_psp_0893A2D0(void) {}
 
-void func_psp_0893A2D8(void) {
-}
+void func_psp_0893A2D8(void) {}
 
-void func_psp_0893A2E0(void) {
-}
+void func_psp_0893A2E0(void) {}
 
-void func_psp_0893A2E8(void) {
-}
+void func_psp_0893A2E8(void) {}
 
-void func_psp_0893A2F0(void) {
-}
+void func_psp_0893A2F0(void) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A2F8);
 

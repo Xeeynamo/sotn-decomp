@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_08900000);
@@ -388,22 +389,10 @@ const float D_psp_0893B83C[] = {
 };
 
 const float D_psp_0893B84C[] = {
-    5.012158244e-09,
-    3.774894708e-08,
-    3.447321717e-08,
-    7.549789416e-08,
-    0.3333333433,
-    -0.200000003,
-    0.1428571492,
-    -0.1111111045,
-    0.0909088701,
-    -0.07691875845,
-    0.06661073118,
-    -0.05833570287,
-    0.04976877943,
-    -0.0365315713,
-    0.01628581993,
-    1,
+    5.012158244e-09, 3.774894708e-08, 3.447321717e-08, 7.549789416e-08,
+    0.3333333433,    -0.200000003,    0.1428571492,    -0.1111111045,
+    0.0909088701,    -0.07691875845,  0.06661073118,   -0.05833570287,
+    0.04976877943,   -0.0365315713,   0.01628581993,   1,
     1.000000015e+30,
 };
 
@@ -1157,11 +1146,9 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_0891985C);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_08919928);
 
-void func_psp_089199FC(void) {
-}
+void func_psp_089199FC(void) {}
 
-void func_psp_08919A04(void) {
-}
+void func_psp_08919A04(void) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_08919A0C);
 
