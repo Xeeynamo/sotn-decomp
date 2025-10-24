@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../chi/chi.h"
 
-void EntityBreakableWithDebris(Entity*);
+void OVL_EXPORT(EntityBreakable)(Entity*);
 void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
 void EntityDamageDisplay(Entity*);
@@ -25,7 +25,7 @@ void EntityDemonSwitchWall(Entity*);
 void EntityDemonSwitch(Entity*);
 void EntityBreakableWall(Entity*);
 void EntityBreakableWallDebris(Entity*);
-void EntityBreakableDebris(Entity*);
+void OVL_EXPORT(EntityBreakableDebris)(Entity*);
 void EntityFallingStairs(Entity*);
 void EntityCerberusGateDebug(Entity*);
 void EntityFallingStep(Entity*);
@@ -48,7 +48,7 @@ void EntityVenusWeedSpike(Entity*);
 
 // D_8018055C
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    EntityBreakableWithDebris,
+    OVL_EXPORT(EntityBreakable),
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
@@ -73,7 +73,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDemonSwitch,
     EntityBreakableWall,
     EntityBreakableWallDebris,
-    EntityBreakableDebris,
+    OVL_EXPORT(EntityBreakableDebris),
     EntityCerberusGateDebug,
     EntityFallingStairs,
     EntityFallingStep,
