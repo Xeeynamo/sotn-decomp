@@ -10,7 +10,7 @@ enum OVL_EXPORT(BreakableTypes) {
     HANGING_LAMP_SHORT,
     CANDELABRA_TABLE,
     BRAZIER,
-    CANDELABRA_WALL_TIPLE,
+    CANDELABRA_WALL_TRIPLE,
     URN,
     JUG,
     BUST,
@@ -32,23 +32,23 @@ static AnimateEntityFrame anim_candelabra_table[] = {
     {5, 9}, {5, 10}, {5, 11}, {5, 12}, POSE_LOOP(0)};
 static AnimateEntityFrame anim_brazier[] = {
     {5, 13}, {5, 14}, {5, 15}, {5, 16}, POSE_LOOP(0)};
-static AnimateEntityFrame anim_candelabra_triple[] = {
+static AnimateEntityFrame anim_candelabra_wall_triple[] = {
     {5, 17}, {5, 18}, {5, 19}, POSE_LOOP(0)};
 static AnimateEntityFrame anim_urn[] = {{5, 23}, POSE_LOOP(0)};
 static AnimateEntityFrame anim_jug[] = {{5, 22}, POSE_LOOP(0)};
 static AnimateEntityFrame anim_bust[] = {
     {5, 20}, {-1, -1}, {5, 21}, {5, 21}, POSE_END};
 static AnimateEntityFrame* animations[] = {
-    anim_hanging_lamp_flame, // params 0x0000-0xFFF
-    anim_hanging_lamp_flame, // params 0x1000-0x1FFF
-    anim_hanging_lamp_long,  // params 0x2000-0x2FFF
-    anim_hanging_lamp_short, // params 0x3000-0x3FFF
-    anim_candelabra_table,   // params 0x4000-0x4FFF
-    anim_brazier,            // params 0x5000-0x5FFF
-    anim_candelabra_triple,  // params 0x6000-0x6FFF
-    anim_urn,                // params 0x7000-0x7FFF
-    anim_jug,                // params 0x8000-0x8FFF
-    anim_bust,               // params 0x9000-0x9FFF
+    anim_hanging_lamp_flame,     // params 0x0000-0xFFF
+    anim_hanging_lamp_flame,     // params 0x1000-0x1FFF
+    anim_hanging_lamp_long,      // params 0x2000-0x2FFF
+    anim_hanging_lamp_short,     // params 0x3000-0x3FFF
+    anim_candelabra_table,       // params 0x4000-0x4FFF
+    anim_brazier,                // params 0x5000-0x5FFF
+    anim_candelabra_wall_triple, // params 0x6000-0x6FFF
+    anim_urn,                    // params 0x7000-0x7FFF
+    anim_jug,                    // params 0x8000-0x8FFF
+    anim_bust,                   // params 0x9000-0x9FFF
 };
 static u8 hitbox_heights[] = {8, 8, 8, 8, 16, 16, 8, 8, 8, 8, 8};
 static u8 explosion_types[] = {
