@@ -20,12 +20,13 @@ enum OVL_EXPORT(Palette) {
     PAL_HELLFIRE_BEAST_PRIMONE = 0x208,
     PAL_HELLFIRE_BEAST_PRIMTWO = 0x230,
     PAL_HELLFIRE_BEAST_LIGHTNING = 0x24A,
+    PAL_BREAKABLE = 0x256,
     PAL_HELLFIRE_BEAST_CAST_ONE = 0x300,
 };
 
 enum OVL_EXPORT(Entities) {
     E_NONE,
-    E_UNK_BREAKABLE,                    // EntityUnkBreakable
+    E_BREAKABLE,                        // OVL_EXPORT(EntityBreakable)
     E_EXPLOSION,                        // EntityExplosion
     E_PRIZE_DROP,                       // EntityPrizeDrop
     E_DAMAGE_DISPLAY,                   // EntityDamageDisplay
