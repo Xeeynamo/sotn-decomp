@@ -65,7 +65,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if err := util.WriteFile(assetPathAsRAW(e.AssetDir, e.Name), cmp); err != nil {
 		return fmt.Errorf("error writing file: %v", err)
 	}
-	fout, err := os.Create(assetPathAsPNG(e.AssetDir, e.Name))
+	fout, err := util.CreateAtomicWriter(assetPathAsPNG(e.AssetDir, e.Name))
 	if err != nil {
 		return fmt.Errorf("error creating file: %v", err)
 	}
