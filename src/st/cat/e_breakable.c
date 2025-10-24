@@ -92,11 +92,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
         self->animSet = anim_sets[breakableType];
         self->unk5A = unk_5A[breakableType];
         self->palette = palettes[breakableType];
-#ifdef INVERTED_STAGE
-        self->hitboxOffY = -hitbox_offsets_y[breakableType];
-#else
         self->hitboxOffY = hitbox_offsets_y[breakableType];
-#endif
     }
     AnimateEntity(animations[breakableType], self);
     if (self->hitParams) {
@@ -116,8 +112,6 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             PreventEntityFromRespawning(self);
             DestroyEntity(self);
             return;
-            g_api.PlaySfx(SFX_GLASS_BREAK_E);
-            break;
         case URN:
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
