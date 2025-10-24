@@ -2,10 +2,10 @@
 #include "cat.h"
 
 enum OVL_EXPORT(BreakableTypes) {
-    HANGING_LAMP_FLAME,
-    HANGING_LAMP_FLAME_,
-    HANGING_LAMP_LONG,
-    HANGING_LAMP_SHORT,
+    WALL_LAMP_LEFT,
+    WALL_LAMP_RIGHT,
+    HANGING_LAMP,
+    CANDELABRA_SHORT,
     CANDELABRA_TABLE,
     BRAZIER,
     CANDELABRA_WALL_TRIPLE,
@@ -14,9 +14,9 @@ enum OVL_EXPORT(BreakableTypes) {
     BUST,
 };
 
-static AnimateEntityFrame anim_left_wall_lamp[] = {
+static AnimateEntityFrame anim_wall_lamp_left[] = {
     {6, 4}, {6, 5}, {6, 6}, {6, 7}, {6, 8}, POSE_LOOP(0)};
-static AnimateEntityFrame anim_right_wall_lamp[] = {
+static AnimateEntityFrame anim_wall_lamp_right[] = {
     {6, 9}, {6, 10}, {6, 11}, {6, 12}, {6, 13}, POSE_LOOP(0)};
 static AnimateEntityFrame anim_hanging_lamp[] = {
     {4, 14}, {4, 15}, {4, 14}, {4, 15}, {6, 16}, POSE_LOOP(0)};
@@ -33,8 +33,8 @@ static AnimateEntityFrame anim_jug[] = {{5, 22}, POSE_LOOP(0)};
 static AnimateEntityFrame anim_bust[] = {
     {5, 20}, {-1, -1}, {5, 21}, {5, 21}, POSE_END};
 static AnimateEntityFrame* animations[] = {
-    anim_left_wall_lamp,   // params 0x0000-0x0FFF
-    anim_right_wall_lamp,  // params 0x1000-0x1FFF
+    anim_wall_lamp_left,   // params 0x0000-0x0FFF
+    anim_wall_lamp_right,  // params 0x1000-0x1FFF
     anim_hanging_lamp,     // params 0x2000-0x2FFF
     anim_candelabra_short, // params 0x3000-0x3FFF
     anim_candelabra_table, // params 0x4000-0x4FFF
