@@ -32,7 +32,6 @@ g_bigRedFireballAnim = 0x801820A8;
 CAT_rooms = 0x80182AF0;
 CAT_EntityBackgroundBlock = 0x801B6DFC;
 CAT_EntityLockCamera = 0x801B6EC4;
-EntityUnkBreakable = 0x801B7080;
 Random = 0x801BB6A4;
 Update = 0x801BB6D4;
 UpdateStageEntities = 0x801BB9D0;
