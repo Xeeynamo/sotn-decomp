@@ -5,7 +5,6 @@
 #include "sfx.h"
 
 #define BREAKABLE_ZPRIORITY 176
-#define BREAKABLE_PRIORITY 178
 #define NO_HITBOX_STATE
 
 // These functions are unused since there are no breakables in CEN

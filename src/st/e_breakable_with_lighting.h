@@ -197,7 +197,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
                 LOH(prim->next->b2) = 32;
                 prim->next->b3 = 16;
 
-                prim->priority = BREAKABLE_PRIORITY;
+                prim->priority = BREAKABLE_ZPRIORITY + 2;
                 prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_COLORS |
                                  DRAW_TPAGE | DRAW_TPAGE2;
             }
