@@ -123,17 +123,53 @@ jobs:
           submodules: false
       - name: Install tools requirements
         run: make update-dependencies
-      - name: Get PSX dependencies
+      - name: Get dependencies (us)
         uses: actions/cache@v4
-        id: get-dependencies
+        id: get-dependencies-us
         with:
-          path: 'disks/dependencies'
+          path: 'disks/dependencies/us'
+          key: sotn-us-deps
+      - name: Get dependencies (us) (uncached)
+        if: steps.get-dependencies-us.outputs.cache-hit != 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: xeeynamo/sotn-decomp-dependencies
+          ref: us
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
+          path: 'disks/dependencies/us'
+      - name: Cache dependencies (us)
+        if: steps.get-dependencies-us.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v3
+        with:
+          path: 'disks/dependencies/us'
+          key: sotn-us-deps
+      - name: Get dependencies (pspeu/hd)
+        uses: actions/cache@v4
+        id: get-dependencies-pspeu
+        with:
+          path: 'disks/dependencies/pspeu'
+          key: sotn-pspeu-deps
+      - name: Get dependencies (pspeu/hd) (uncached)
+        if: steps.get-dependencies-pspeu.outputs.cache-hit != 'true'
+        uses: actions/checkout@v4
+        with:
+          repository: xeeynamo/sotn-decomp-dependencies
+          ref: pspeu
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
+          path: 'disks/dependencies/pspeu'
+      - name: Cache dependencies (pspeu/hd)
+        if: steps.get-dependencies-pspeu.outputs.cache-hit != 'true'
+        uses: actions/cache/save@v3
+        with:
+          path: 'disks/dependencies/pspeu'
           key: sotn-pspeu-deps
       - name: Setting up dependencies
         working-directory: disks
-        run: cat dependencies/* | tar -zxf -
+        run: |
+            cat dependencies/us/* | tar -zxf - ; \
+            cat dependencies/pspeu/* | tar -zxf -
       - name: Extract dependencies
-        run: make extract_disk
+        run: make extract_disk && make VERSION=pspeu extract_disk
       - name: Build binaries and check if they match
         run: make
 
