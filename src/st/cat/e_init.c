@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cat.h"
 
-void EntityUnkBreakable(Entity* self);
+void OVL_EXPORT(EntityBreakable)(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
@@ -87,7 +87,7 @@ void EntityCorpseweedProjectile(Entity* self);
 void EntityBloodSkeleton(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    EntityUnkBreakable,
+    OVL_EXPORT(EntityBreakable),
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
@@ -174,7 +174,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 };
 
 // Common
-EInit D_us_8018111C = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x000};
+EInit OVL_EXPORT(
+    EInitBreakable) = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x002};
 EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x004};
