@@ -4,7 +4,7 @@
 #define STAGE_IS_LIB
 #define OVL_EXPORT(x) LIB_##x
 
-enum OVL_EXPORT(Palette) {
+enum Palettes {
     PAL_NONE = 0,
     PAL_BREAKABLE = 0x26C,
 };
