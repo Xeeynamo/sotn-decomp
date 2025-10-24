@@ -4,9 +4,14 @@
 #define STAGE_IS_LIB
 #define OVL_EXPORT(x) LIB_##x
 
+enum OVL_EXPORT(Palette) {
+    PAL_NONE = 0,
+    PAL_BREAKABLE = 0x26C,
+};
+
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
-    // /* 0x01 */ E_BREAKABLE,
+    /* 0x01 */ E_BREAKABLE,
     /* 0x02 */ E_EXPLOSION = 0x02,
     /* 0x03 */ E_PRIZE_DROP,
     // /* 0x04 */ E_NUMERIC_DAMAGE,
@@ -76,7 +81,7 @@ typedef enum EntityIDs {
     /* 0x44 */ E_SKELETON_THROWN_BONE,
     /* 0x45 */ E_SKELETON_PIECES,
     /* 0x46 */ E_ID_46,
-    /* 0x47 */ E_ID_47,
+    /* 0x47 */ E_BREAKABLE_DEBRIS,
     /* 0x48 */ E_ID_48,
     /* 0x49 */ E_ID_49,
     /* 0x4A */ E_ID_4A,
@@ -93,7 +98,7 @@ extern void EntityGreyPuff(Entity* entity);
 extern Primitive* FindFirstUnkPrim(Primitive* prim);
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
-extern EInit D_us_80180800;
+extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit D_us_80180824;
