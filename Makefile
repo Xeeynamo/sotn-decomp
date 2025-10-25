@@ -126,7 +126,7 @@ endif
 
 .PHONY: all
 all: ##@ (Default) build and check
-all: build_all check
+all: build check
 
 .PHONY: extract_assets
 extract_assets:
@@ -157,8 +157,9 @@ build_pspeu: $(SOTNSTR_APP) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) 
 	ninja
 .PHONY: build_all
 build_all:
-	$(PYTHON) tools/builds/gen.py
-	ninja
+	$(MAKE) VERSION=us
+	$(MAKE) VERSION=pspeu
+	$(MAKE) VERSION=hd
 
 .PHONY: clean clean_asm
 clean_asm:
@@ -166,9 +167,9 @@ clean_asm:
 clean: ##@ clean extracted files, assets, and build artifacts
 clean: clean_asm
 	git clean -fdx assets/
-	git clean -fdx build/
+	git clean -fdx build/$(VERSION)/
 	git clean -fdx src/**/gen/
-	git clean -fdx config/
+	git clean -fdx config/*$(VERSION)*
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
 
