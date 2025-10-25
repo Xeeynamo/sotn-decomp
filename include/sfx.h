@@ -277,6 +277,7 @@ enum {
 #define SFX_DISCUS_LORD_HEY 0x763
 #define SFX_DISCUS_LORD_DEATH_VORTEX 0x764
 #define SFX_DISCUS_BUZZ 0x765
+#define SFX_HELLFIRE_BEAST_DEATH 0x775
 
 // STAGE DAI
 // Unknown SFX related to the priest
