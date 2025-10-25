@@ -257,14 +257,14 @@ files:
           - [0x8C, palette, pal_stained_glass, 16] # 0x204
           - [0xAC, paldef, palette_def]
           - [0x178, layers, layers]
-          - [0x468, gfx_banks, us/graphics_banks]
+          - [0x468, gfx_banks, graphics_banks]
           - [0x670, layout, entity_layouts]
           - [0x818, skip]
           - [0x2358, rooms, rooms]
           - [0x2F44, skip]
           - [0x3A94, cutscene, cutscene_script_psx]
           - [0x3C18, binary, cutscene_data_psx] # May be gfx data, unsure
-          - [0x3F20, cmpgfx, us/gfx_stage_name_jp_lg, 128, 128, 4]
+          - [0x3F20, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4]
           - [0x8498, cmpgfx, gfx_confessional, 128, 128, 4]
           - [0x96BC, cmpgfx, gfx_chair, 128, 128, 4, 0x1692C]
           - [0xA298, cmpgfx, gfx_corner_guard, 128, 128, 4, 0x16BAC]

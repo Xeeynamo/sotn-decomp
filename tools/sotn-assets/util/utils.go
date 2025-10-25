@@ -6,7 +6,6 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"golang.org/x/exp/constraints"
 	"image/color"
-    "io"
 	"os"
 	"path/filepath"
 	"slices"
@@ -142,19 +141,7 @@ func WriteFile(name string, content []byte) error {
 	if err := os.MkdirAll(dir, 0755); err != nil {
 		return fmt.Errorf("failed to create directory %q: %v\n", dir, err)
 	}
-    return WriteFileAtomic(name, content)
-}
-
-func WriteFileAtomic(name string, content []byte) error {
-    w, err := CreateAtomicWriter(name)
-    if err != nil {
-        return fmt.Errorf("could not create writer for %q: %v\n", name, err)
-    }
-    defer w.Close()
-    if _, err := w.Write(content); err != nil {
-        return fmt.Errorf("could not write  %q: %v\n", name, err)
-    }
-    return nil
+	return os.WriteFile(name, content, 0644)
 }
 
 // WriteJsonFile converts the passed object as a JSON and internally calls WriteFile
@@ -270,53 +257,4 @@ func Make4bppFromBitmap(data []byte) []byte {
 		out[i>>1] = (data[i] & 0xF) | ((data[i+1] & 0xF) << 4)
 	}
 	return out
-}
-
-type StringWriteCloser interface {
-    io.WriteCloser
-    io.StringWriter
-
-    Name() string
-}
-
-type AtomicWriter struct {
-    name string
-    f *os.File
-}
-
-func CreateAtomicWriter(name string) (StringWriteCloser, error) {
-    base := filepath.Base(name)
-    dir := filepath.Dir(name)
-    f, err := os.CreateTemp(dir, base)
-    if err != nil {
-        return nil, fmt.Errorf("failed to create temp file for %q: %v\n", name, err)
-    }
-
-    a := AtomicWriter { name: name, f: f }
-
-    return a, nil
-}
-
-func (a AtomicWriter) Close() error {
-    a.f.Close()
-    if err := os.Rename(a.f.Name(), a.name); err != nil {
-        // in the common case, a.f will already be renamed
-        // in case it isn't remove the temp file
-        os.Remove(a.f.Name())
-        return fmt.Errorf("failed to move temp file to destination %q: %v\n", a.name, err)
-    }
-
-    return nil
-}
-
-func (a AtomicWriter) Write(p []byte) (int, error) {
-    return a.f.Write(p)
-}
-
-func (a AtomicWriter) WriteString(s string) (int, error) {
-    return a.f.WriteString(s)
-}
-
-func (a AtomicWriter) Name() string {
-    return a.f.Name()
 }

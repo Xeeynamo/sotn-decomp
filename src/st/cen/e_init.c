@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cen.h"
 
-void EntityBreakable(Entity*);
+void OVL_EXPORT(EntityBreakable)(Entity*);
 void EntityExplosion(Entity*);
 void EntityPrizeDrop(Entity*);
 void EntityDamageDisplay(Entity*);
@@ -30,7 +30,7 @@ void EntityUnkId1B(Entity*);
 void EntityMovingElevator(Entity*);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    EntityBreakable,
+    OVL_EXPORT(EntityBreakable),
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,

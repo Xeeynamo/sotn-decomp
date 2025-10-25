@@ -118,11 +118,10 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 			if err != nil {
 				return fmt.Errorf("error generating image: %v", err)
 			}
-			f, err := util.CreateAtomicWriter(filepath.Join(e.AssetDir, entry.Name))
+			f, err := os.Create(filepath.Join(e.AssetDir, entry.Name))
 			if err != nil {
 				return err
 			}
-            defer f.Close()
 			if err := util.PngEncode(f, bitmap, w, h, palette); err != nil {
 				return fmt.Errorf("failed to encode %s: %w", entry.Name, err)
 			}
@@ -220,7 +219,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	if err := os.MkdirAll(filepath.Dir(dstFile), 0755); err != nil {
 		return fmt.Errorf("failed to create directory: %w", err)
 	}
-	f, err := util.CreateAtomicWriter(dstFile)
+	f, err := os.Create(dstFile)
 	if err != nil {
 		return err
 	}

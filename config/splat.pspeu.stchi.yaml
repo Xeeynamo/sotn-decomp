@@ -80,7 +80,7 @@ segments:
       - [0x19770, .data, chi/en_thornweed_corpseweed]
       - [0x19840, data]
       - [0x1D3F8, .data, chi/e_red_door_tiles]
-      - [0x1D428, .data, chi_psp/dt_entity]
+      - [0x1D428, .data, chi/dt_entity]
       - [0x1D630, data]
       - [0x1D6D0, .data, chi/en_breakable]
       - [0x1D758, .data, chi/en_stage_name]
