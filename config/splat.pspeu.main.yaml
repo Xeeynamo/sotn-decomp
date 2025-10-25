@@ -12,6 +12,7 @@ options:
   symbol_addrs_path:
     - config/symbols.pspeu.txt
     - config/symbols.pspeu.main.txt
+  create_undefined_funcs_auto: true
   undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.main.txt
   undefined_syms_auto_path: config/undefined_syms_auto.pspeu.main.txt
   find_file_boundaries: true
@@ -35,11 +36,12 @@ options:
   ld_generate_symbol_per_data_segment: true
 sha1: a3bc73aaa3dc4b873c84a3c0b90e46366f5bbaa9
 segments:
-  - [0x0, bin, mwo_header]
+  - [0, bin, elf_header]
   - name: main
     type: code
     start: 0x16F4
     vram: 0x08900000
+    bss_size: 0x72F150
     align: 128
     subalign: 8
     subsegments:
@@ -109,4 +111,5 @@ segments:
       - [0x3D580, .rodata, main_psp/2EF0C]
       - [0x3D760, .rodata, main_psp/36174]
       - [0x3DA1C, data]
-  - [0xB3E1C]
+      - {start: 0xAEF24, type: bss, vram: 0x089AD830, name: main_bss}
+  - [0xAEF24]
