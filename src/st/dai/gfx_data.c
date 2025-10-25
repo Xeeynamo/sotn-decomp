@@ -8,7 +8,7 @@ u8 gfx_stage_name_jp_sm[] = {
 #endif
 
 u8 gfx_stage_name_jp_lg[] = {
-#include GEN_VERSION(gfx_stage_name_jp_lg.h)
+#include "gen/gfx_stage_name_jp_lg.h"
 };
 
 u8 gfx_confessional[] = {
