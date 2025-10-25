@@ -478,7 +478,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     else:
         raise Exception(f"platform {platform} not recognized")
     objs = []
-    if ovl_name == "main":
+    if ovl_name == "main" and platform != "psp":
         objs.append(add_s(nw, version, f"{asm_path}/header.s", ld_path))
     for segment in splat_config["segments"]:
         if not "type" in segment:
@@ -513,6 +513,8 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
             elif kind == "data" or kind == "rodata" or kind == "bss" or kind == "sbss":
                 obj = add_s(nw, version, f"{asm_path}/data/{name}.{kind}.s", ld_path)
                 objs.append(obj)
+            elif kind == "textbin":
+                objs.append(add_s(nw, version, f"{asm_path}/data/{name}.s", ld_path))
             elif kind == "asm":
                 objs.append(add_s(nw, version, f"{asm_path}/{name}.s", ld_path))
             elif kind == "raw" or kind == "cmp":
@@ -556,7 +558,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 objs += objs_memcard
             else:
                 continue
-    if platform == "psp" and file_name != "PS.ELF":
+    if platform == "psp":
         mwo = os.path.join(asset_path, "mwo_header.bin")
         objs.append(add_copy_psx(nw, version, mwo, mwo, ld_path))
     output_elf = f"build/{version}/{ovl_name}.elf"
@@ -568,6 +570,8 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
         f"-T {undefined_syms_auto_path}",
     ]
     if ovl_name != "main":
+        symbols_lists.append(f"-T {undefined_funcs_auto_path}")
+    if ovl_name == "main" and platform == "psp":
         symbols_lists.append(f"-T {undefined_funcs_auto_path}")
     if platform == "psp":
         symbols_lists.append(f"-T config/symexport.{version}.{ovl_name}.txt")
