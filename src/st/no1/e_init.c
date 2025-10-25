@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
-void func_us_801B5E20(Entity* self);
+void OVL_EXPORT(EntityBreakable)(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
@@ -92,12 +92,12 @@ void EntityThrownSpear(Entity* self);
 void EntityMedusaHeadSpawner(Entity* self);
 void EntityMedusaHeadBlue(Entity* self);
 void EntityMedusaHeadYellow(Entity* self);
-void func_us_801B6198(Entity* self);
+void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
 void EntityMistDoor(Entity* self);
 void func_us_801C10F4(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    /* 0x00 */ func_us_801B5E20,
+    /* 0x00 */ OVL_EXPORT(EntityBreakable),
     /* 0x01 */ EntityExplosion,
     /* 0x02 */ EntityPrizeDrop,
     /* 0x03 */ EntityDamageDisplay,
@@ -188,11 +188,12 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x58 */ EntityMedusaHeadSpawner,
     /* 0x59 */ EntityMedusaHeadBlue,
     /* 0x5A */ EntityMedusaHeadYellow,
-    /* 0x5B */ func_us_801B6198,
+    /* 0x5B */ OVL_EXPORT(EntityBreakableDebris),
     /* 0x5C */ EntityMistDoor,
     /* 0x5D */ func_us_801C10F4};
 
-EInit D_us_80180938 = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x000};
+EInit OVL_EXPORT(
+    EInitBreakable) = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x002};
 EInit D_us_8018095C = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x004};

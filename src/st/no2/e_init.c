@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
 
-void EntityBreakable(Entity* self);
+void OVL_EXPORT(EntityBreakable)(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
@@ -64,10 +64,10 @@ void EntityBladeWeapon(Entity* self);
 void EntitySpectralSword(Entity* self);
 void func_us_801CEB08(Entity* self);
 void EntityPoltergeist(Entity* self);
-void EntityBreakableDebris(Entity* self);
+void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    EntityBreakable,
+    OVL_EXPORT(EntityBreakable),
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
@@ -131,10 +131,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySpectralSword,
     func_us_801CEB08,
     EntityPoltergeist,
-    EntityBreakableDebris,
+    OVL_EXPORT(EntityBreakableDebris),
 };
 
-EInit g_EInitBreakable = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x000};
+EInit OVL_EXPORT(
+    EInitBreakable) = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x002};
 EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x004};

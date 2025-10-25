@@ -8,9 +8,15 @@
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
+enum OVL_EXPORT(Palette) {
+    PAL_NONE = 0,
+    PAL_BREAKABLE = 0x22D,
+    PAL_BREAKABLE_DEBRIS = 0x231,
+};
+
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
-    // /* 0x01 */ E_BREAKABLE,
+    /* 0x01 */ E_BREAKABLE, // OVL_EXPORT(EntityBreakable)
     /* 0x02 */ E_EXPLOSION = 0x02,
     /* 0x03 */ E_PRIZE_DROP = 0x03,
     // /* 0x04 */ E_NUMERIC_DAMAGE,
@@ -74,12 +80,12 @@ typedef enum EntityIDs {
     // /* 0x59 */ E_MEDUSA_HEAD_SPAWNER = 0x59,
     /* 0x5A */ E_MEDUSA_HEAD_BLUE = 0x5A,
     /* 0x5B */ E_MEDUSA_HEAD_YELLOW,
-    /* 0x5C */ E_ID_5C,
-    // /* 0x5D */ E_MIST_DOOR = 0x5D,
+    /* 0x5C */ E_BREAKABLE_DEBRIS, // OVL_EXPORT(EntityBreakableDebris)
+    /* 0x5D */ E_MIST_DOOR = 0x5D,
     /* 0x5E */ E_ID_5E = 0x5E,
 } EntityIDs;
 
-extern EInit D_us_80180938;
+extern EInit OVL_EXPORT(EInitBreakable);
 // extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit D_us_8018095C;
