@@ -2096,11 +2096,6 @@ typedef struct {
 } ET_BloodSkeleton;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 angle;
-} ET_UnusedCENEnt;
-
-typedef struct {
     // not a physical angular direction, but the swaying left and right
     // moves in a sinusoidal manner so uses an angle internally.
     /* 0x7C */ s16 swayAngle;
@@ -3720,7 +3715,6 @@ typedef union { // offset=0x7C
     ET_CEN_Elevator cenElevator;
     ET_TOP_Elevator topElevator;
     ET_BloodSkeleton bloodSkeleton;
-    ET_UnusedCENEnt unusedCENEnt;
     ET_SmallRisingHeart smallRisingHeart;
     ET_EntranceUnk16 entrance16;
 
