@@ -2646,7 +2646,7 @@
 | 1.00 | true     | StageNamePopupDissolver             | asm/us/st/top/matchings/e_stage_name/StageNamePopupDissolver.s 
 | 1.00 | true     | StageNamePopupDissolver             | asm/us/st/wrp/matchings/e_stage_name/StageNamePopupDissolver.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_801027A4                       | asm/us/dra/matchings/624DC/func_801027A4.s 
+| 1.00 | true     | HideMap                             | asm/us/dra/matchings/624DC/HideMap.s 
 | 1.00 | true     | func_801072BC                       | asm/us/dra/matchings/66590/func_801072BC.s 
 | 1.00 | true     | StCdInterrupt2                      | asm/us/main/matchings/psxsdk/libcd/cdread2/StCdInterrupt2.s 
 | 1.00 | true     | CdDataSync                          | asm/us/main/matchings/psxsdk/libcd/sys/CdDataSync.s 
@@ -2743,7 +2743,7 @@
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/boss/bo6/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/boss/mar/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/cen/matchings/cutscene/ScaleCutsceneAvatar.s 
-| 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/dai/matchings/e_cutscene/ScaleCutsceneAvatar.s 
+| 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/dai/matchings/e_cutscene_dialogue/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/dre/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/lib/matchings/cutscene/ScaleCutsceneAvatar.s 
 | 1.00 | true     | ScaleCutsceneAvatar                 | asm/us/st/no3/matchings/cutscene/ScaleCutsceneAvatar.s 
@@ -2768,7 +2768,7 @@
 | 1.00 | true     | CutsceneUnk1                        | asm/us/boss/bo6/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/boss/mar/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/cen/matchings/cutscene/CutsceneUnk1.s 
-| 1.00 | true     | CutsceneUnk1                        | asm/us/st/dai/matchings/e_cutscene/CutsceneUnk1.s 
+| 1.00 | true     | CutsceneUnk1                        | asm/us/st/dai/matchings/e_cutscene_dialogue/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/dre/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/lib/matchings/cutscene/CutsceneUnk1.s 
 | 1.00 | true     | CutsceneUnk1                        | asm/us/st/no3/matchings/cutscene/CutsceneUnk1.s 
@@ -2780,7 +2780,7 @@
 | 1.00 | true     | CutsceneUnk4                        | asm/us/boss/bo6/matchings/cutscene/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/boss/mar/matchings/cutscene/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/st/cen/matchings/cutscene/CutsceneUnk4.s 
-| 1.00 | true     | CutsceneUnk4                        | asm/us/st/dai/matchings/e_cutscene/CutsceneUnk4.s 
+| 1.00 | true     | CutsceneUnk4                        | asm/us/st/dai/matchings/e_cutscene_dialogue/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/st/dre/matchings/cutscene/CutsceneUnk4.s 
 | 1.00 | true     | CutsceneUnk4                        | asm/us/st/lib/matchings/cutscene/CutsceneUnk4.s 
 | 0.98 | true     | CutsceneUnk4                        | asm/us/st/no3/matchings/cutscene/CutsceneUnk4.s 
@@ -2792,7 +2792,7 @@
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/boss/bo6/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/boss/mar/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/cen/matchings/cutscene/DrawCutsceneActorName.s 
-| 1.00 | true     | DrawCutsceneActorName               | asm/us/st/dai/matchings/e_cutscene/DrawCutsceneActorName.s 
+| 1.00 | true     | DrawCutsceneActorName               | asm/us/st/dai/matchings/e_cutscene_dialogue/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/dre/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/lib/matchings/cutscene/DrawCutsceneActorName.s 
 | 1.00 | true     | DrawCutsceneActorName               | asm/us/st/no3/matchings/cutscene/DrawCutsceneActorName.s 
@@ -2804,7 +2804,7 @@
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/boss/bo6/matchings/cutscene/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/boss/mar/matchings/cutscene/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/cen/matchings/cutscene/SetCutsceneEnd.s 
-| 1.00 | true     | SetCutsceneEnd                      | asm/us/st/dai/matchings/e_cutscene/SetCutsceneEnd.s 
+| 1.00 | true     | SetCutsceneEnd                      | asm/us/st/dai/matchings/e_cutscene_dialogue/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/dre/matchings/cutscene/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/lib/matchings/cutscene/SetCutsceneEnd.s 
 | 1.00 | true     | SetCutsceneEnd                      | asm/us/st/no3/matchings/cutscene/SetCutsceneEnd.s 
@@ -2816,7 +2816,7 @@
 | 1.00 | true     | SetCutsceneScript                   | asm/us/boss/bo6/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/boss/mar/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/cen/matchings/cutscene/SetCutsceneScript.s 
-| 1.00 | true     | SetCutsceneScript                   | asm/us/st/dai/matchings/e_cutscene/SetCutsceneScript.s 
+| 1.00 | true     | SetCutsceneScript                   | asm/us/st/dai/matchings/e_cutscene_dialogue/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/dre/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/lib/matchings/cutscene/SetCutsceneScript.s 
 | 1.00 | true     | SetCutsceneScript                   | asm/us/st/no3/matchings/cutscene/SetCutsceneScript.s 
@@ -2838,7 +2838,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | CutsceneUnk3                        | asm/us/boss/mar/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/cen/matchings/cutscene/CutsceneUnk3.s 
-| 1.00 | true     | CutsceneUnk3                        | asm/us/st/dai/matchings/e_cutscene/CutsceneUnk3.s 
+| 1.00 | true     | CutsceneUnk3                        | asm/us/st/dai/matchings/e_cutscene_dialogue/CutsceneUnk3.s 
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/dre/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/no4/matchings/cutscene/CutsceneUnk3.s 
 | 1.00 | true     | CutsceneUnk3                        | asm/us/st/nz0/matchings/cutscene/CutsceneUnk3.s 
@@ -2877,7 +2877,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | MAR_EntityCutscene                  | asm/us/boss/mar/matchings/cutscene/MAR_EntityCutscene.s 
 | 0.97 | true     | CEN_EntityCutscene                  | asm/us/st/cen/matchings/cutscene/CEN_EntityCutscene.s 
-| 0.96 | true     | DAI_EntityCutscene                  | asm/us/st/dai/matchings/e_cutscene/DAI_EntityCutscene.s 
+| 0.96 | true     | DAI_EntityCutscene                  | asm/us/st/dai/matchings/e_cutscene_dialogue/DAI_EntityCutscene.s 
 | 0.91 | true     | DRE_EntityCutscene                  | asm/us/st/dre/matchings/cutscene/DRE_EntityCutscene.s 
 | 0.91 | true     | LIB_EntityCutscene                  | asm/us/st/lib/matchings/cutscene/LIB_EntityCutscene.s 
 | 0.94 | true     | NO3_EntityCutscene                  | asm/us/st/no3/matchings/cutscene/NO3_EntityCutscene.s 
@@ -3030,7 +3030,7 @@
 | 1.00 | true     | CutsceneRun                         | asm/us/boss/bo6/matchings/cutscene/CutsceneRun.s 
 | 0.93 | true     | CutsceneRun                         | asm/us/boss/mar/matchings/cutscene/CutsceneRun.s 
 | 1.00 | true     | CutsceneRun                         | asm/us/st/cen/matchings/cutscene/CutsceneRun.s 
-| 1.00 | true     | CutsceneRun                         | asm/us/st/dai/matchings/e_cutscene/CutsceneRun.s 
+| 1.00 | true     | CutsceneRun                         | asm/us/st/dai/matchings/e_cutscene_dialogue/CutsceneRun.s 
 | 1.00 | true     | CutsceneRun                         | asm/us/st/top/matchings/cutscene/CutsceneRun.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CutsceneSkip                        | asm/us/boss/bo6/matchings/cutscene/CutsceneSkip.s 
@@ -3152,7 +3152,7 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801961DC                       | asm/us/boss/bo6/matchings/e_cutscene_actors/func_801961DC.s 
 | 1.00 | true     | func_8018F890                       | asm/us/st/cen/matchings/F890/func_8018F890.s 
-| 1.00 | true     | func_801961DC                       | asm/us/st/dai/matchings/cutscene_init/func_801961DC.s 
+| 1.00 | true     | CutsceneCameraPan                   | asm/us/st/dai/matchings/e_cutscene_actors/CutsceneCameraPan.s 
 | 1.00 | true     | func_801961DC                       | asm/us/st/dre/matchings/161DC/func_801961DC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DebugInputWait                      | asm/us/dra/matchings/42398/DebugInputWait.s 
@@ -3521,6 +3521,14 @@
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
 | 0.92 | true     | SsVabOpenHeadSticky                 | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHeadSticky.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | EntitySpikesDamage                  | asm/us/st/cat/matchings/e_spikes/EntitySpikesDamage.s 
+| 0.90 | true     | EntitySpikesDamage                  | asm/us/st/dai/matchings/e_spikes/EntitySpikesDamage.s 
+| 1.00 | true     | EntitySpikesDamage                  | asm/us/st/no2/matchings/e_spikes/EntitySpikesDamage.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntitySpikesDust                    | asm/us/st/cat/matchings/e_spikes/EntitySpikesDust.s 
+| 1.00 | true     | EntitySpikesDust                    | asm/us/st/dai/matchings/e_spikes/EntitySpikesDust.s 
+| 1.00 | true     | EntitySpikesDust                    | asm/us/st/no2/matchings/e_spikes/EntitySpikesDust.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | EntityCorpseweed                    | asm/us/st/cat/matchings/en_thornweed_corpseweed/EntityCorpseweed.s 
 | 1.00 | true     | EntityCorpseweed                    | asm/us/st/chi/matchings/en_thornweed_corpseweed/EntityCorpseweed.s 
 | 1.00 | true     | EntityCorpseweed                    | asm/us/st/lib/matchings/en_thornweed_corpseweed/EntityCorpseweed.s 
@@ -3620,14 +3628,6 @@
 | 1.00 | true     | StepTowards                         | asm/us/st/dai/matchings/e_spectral_sword/StepTowards.s 
 | 1.00 | true     | StepTowards                         | asm/us/st/no0/matchings/e_plate_lord/StepTowards.s 
 | 1.00 | true     | StepTowards                         | asm/us/st/no2/matchings/e_spectral_sword/StepTowards.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | EntitySpikesDamage                  | asm/us/st/dai/matchings/e_spikes/EntitySpikesDamage.s 
-| 0.90 | true     | func_us_801B5948                    | asm/us/st/no2/matchings/352B4/func_us_801B5948.s 
-| 0.90 | false    | func_us_801B86B0                    | asm/us/st/cat/nonmatchings/unk_3732C/func_us_801B86B0.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | EntitySpikesDust                    | asm/us/st/dai/matchings/e_spikes/EntitySpikesDust.s 
-| 1.00 | true     | func_us_801B52B4                    | asm/us/st/no2/matchings/352B4/func_us_801B52B4.s 
-| 1.00 | false    | func_us_801B7F2C                    | asm/us/st/cat/nonmatchings/unk_3732C/func_us_801B7F2C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | BoneScimitarAttackCheck             | asm/us/st/no3/matchings/e_bone_scimitar/BoneScimitarAttackCheck.s 
 | 1.00 | true     | BoneScimitarAttackCheck             | asm/us/st/np3/matchings/e_bone_scimitar/BoneScimitarAttackCheck.s 
@@ -4237,6 +4237,15 @@
 | 1.00 | true     | Max3                                | asm/us/servant/tt_004/matchings/sword/Max3.s 
 | 1.00 | true     | Min3                                | asm/us/servant/tt_004/matchings/sword/Min3.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | EntitySpikes                        | asm/us/st/cat/matchings/e_spikes/EntitySpikes.s 
+| 0.96 | true     | EntitySpikes                        | asm/us/st/dai/matchings/e_spikes/EntitySpikes.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntitySpikesParts                   | asm/us/st/cat/matchings/e_spikes/EntitySpikesParts.s 
+| 1.00 | true     | EntitySpikesParts                   | asm/us/st/dai/matchings/e_spikes/EntitySpikesParts.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SpikesBreak                         | asm/us/st/cat/matchings/e_spikes/SpikesBreak.s 
+| 1.00 | true     | SpikesBreak                         | asm/us/st/dai/matchings/e_spikes/SpikesBreak.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | EntityTombstone                     | asm/us/st/cat/matchings/e_tombstone/EntityTombstone.s 
 | 1.00 | true     | EntityTombstone                     | asm/us/st/rtop/matchings/e_tombstone/EntityTombstone.s 
 -------------------------------------------------------------------------------
@@ -4267,29 +4276,20 @@
 | 1.00 | false    | func_us_801C589C                    | asm/us/st/cat/nonmatchings/unk_44C7C/func_us_801C589C.s 
 | 0.98 | false    | func_us_801C5DF4                    | asm/us/st/cat/nonmatchings/unk_44C7C/func_us_801C5DF4.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | UnusedCENEntity                     | asm/us/st/cen/matchings/DB18/UnusedCENEntity.s 
-| 1.00 | true     | EntityBreakableDebris               | asm/us/st/chi/matchings/en_breakable/EntityBreakableDebris.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | EntityUnkId1B                       | asm/us/st/cen/matchings/F890/EntityUnkId1B.s 
 | 1.00 | true     | func_us_801C26B8                    | asm/us/st/no0/matchings/e_elevator/func_us_801C26B8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_8019040C                       | asm/us/st/cen/matchings/F890/func_8019040C.s 
 | 1.00 | true     | func_us_801C1F98                    | asm/us/st/no0/matchings/e_elevator/func_us_801C1F98.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | EntityBreakable                     | asm/us/st/cen/matchings/e_breakable/EntityBreakable.s 
-| 0.99 | true     | EntityBreakableWithDebris           | asm/us/st/chi/matchings/en_breakable/EntityBreakableWithDebris.s 
+| 1.00 | true     | CEN_EntityBreakable                 | asm/us/st/cen/matchings/e_breakable/CEN_EntityBreakable.s 
+| 0.99 | true     | CHI_EntityBreakable                 | asm/us/st/chi/matchings/en_breakable/CHI_EntityBreakable.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | CEN_EntityBreakableDebris           | asm/us/st/cen/matchings/e_breakable/CEN_EntityBreakableDebris.s 
+| 1.00 | true     | CHI_EntityBreakableDebris           | asm/us/st/chi/matchings/en_breakable/CHI_EntityBreakableDebris.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySpectralSwordAura             | asm/us/st/dai/matchings/e_spectral_sword/EntitySpectralSwordAura.s 
 | 0.98 | true     | func_us_801CEB08                    | asm/us/st/no2/matchings/e_spectral_sword/func_us_801CEB08.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | EntitySpikes                        | asm/us/st/dai/matchings/e_spikes/EntitySpikes.s 
-| 0.96 | false    | func_us_801B852C                    | asm/us/st/cat/nonmatchings/unk_3732C/func_us_801B852C.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | EntitySpikesParts                   | asm/us/st/dai/matchings/e_spikes/EntitySpikesParts.s 
-| 1.00 | false    | func_us_801B7FE0                    | asm/us/st/cat/nonmatchings/unk_3732C/func_us_801B7FE0.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SpikesBreak                         | asm/us/st/dai/matchings/e_spikes/SpikesBreak.s 
-| 1.00 | false    | func_us_801B82A0                    | asm/us/st/cat/nonmatchings/unk_3732C/func_us_801B82A0.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DrawFacade                          | asm/us/st/dre/matchings/e_background_house/DrawFacade.s 
 | 1.00 | true     | DrawFacade                          | asm/us/st/no2/matchings/e_background_house/DrawFacade.s 
@@ -4406,7 +4406,7 @@
 | 1.00 | true     | func_us_801D3918                    | asm/us/st/no4/matchings/e_spear_guard/func_us_801D3918.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801BEB54                    | asm/us/st/no1/matchings/e_wall_chicken_secret/func_us_801BEB54.s 
-| 0.91 | false    | func_us_801B9A74                    | asm/us/st/cat/nonmatchings/unk_3732C/func_us_801B9A74.s 
+| 0.91 | false    | func_us_801B9A74                    | asm/us/st/cat/nonmatchings/unk_3872C/func_us_801B9A74.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801CE04C                       | asm/us/st/no2/matchings/4966C/func_801CE04C.s 
 | 1.00 | true     | func_801CE04C                       | asm/us/st/np3/matchings/4E04C/func_801CE04C.s 
