@@ -70,7 +70,7 @@ s32 E_ID(SKELETON);
 static s32 E_ID(SKELETON_THROWN_BONE);
 static s32 E_ID(SKELETON_PIECES);
 static s32 E_ID(ID_46);
-static s32 E_ID(ID_47);
+static s32 E_ID(BREAKABLE_DEBRIS);
 s32 E_ID(ID_48);
 static s32 E_ID(ID_49);
 static s32 E_ID(ID_4A);
@@ -140,7 +140,7 @@ void InitEntityIds(void) {
     E_ID(SKELETON_THROWN_BONE) = 0x44;
     E_ID(SKELETON_PIECES) = 0x45;
     E_ID(ID_46) = 0x46;
-    E_ID(ID_47) = 0x47;
+    E_ID(BREAKABLE_DEBRIS) = 0x47;
     E_ID(ID_48) = 0x48;
     E_ID(ID_49) = 0x49;
     E_ID(ID_4A) = 0x4A;

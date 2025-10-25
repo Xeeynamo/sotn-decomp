@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-void EntityBreakable(Entity* self);
+void OVL_EXPORT(EntityBreakable)(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
@@ -63,7 +63,7 @@ void EntityCorpseweed(Entity* self);
 void EntityCorpseweedProjectile(Entity* self);
 void EntityCandleTable(Entity* self);
 void func_us_801D35B8(Entity* self);
-void func_us_801AE7AC(Entity* self);
+void EntityBreakableHelper(Entity* self);
 void func_us_801BB200(Entity* self);
 void func_us_801BB53C(Entity* self);
 void EntityLifeUpSpawn(Entity* self);
@@ -71,7 +71,7 @@ void EntitySkeleton(Entity* self);
 void EntitySkeletonThrownBone(Entity* self);
 void EntitySkeletonPieces(Entity* self);
 void EntityChair(Entity* self);
-void func_us_801AE84C(Entity* self);
+void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
 void func_us_801B8A00(Entity* self);
 void EntityMistDoor(Entity* self);
 void EntityFleaArmor(Entity* self);
@@ -84,7 +84,7 @@ void func_psp_0926AED0(Entity* self);
 #endif
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    /* 0x00 */ EntityBreakable,
+    /* 0x00 */ OVL_EXPORT(EntityBreakable),
     /* 0x01 */ EntityExplosion,
     /* 0x02 */ EntityPrizeDrop,
     /* 0x03 */ EntityDamageDisplay,
@@ -146,7 +146,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x3B */ EntityCorpseweedProjectile,
     /* 0x3C */ EntityCandleTable,
     /* 0x3D */ func_us_801D35B8,
-    /* 0x3E */ func_us_801AE7AC,
+    /* 0x3E */ EntityBreakableHelper,
     /* 0x3F */ func_us_801BB200,
     /* 0x40 */ func_us_801BB53C,
     /* 0x41 */ EntityLifeUpSpawn,
@@ -154,7 +154,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x43 */ EntitySkeletonThrownBone,
     /* 0x44 */ EntitySkeletonPieces,
     /* 0x45 */ EntityChair,
-    /* 0x46 */ func_us_801AE84C,
+    /* 0x46 */ OVL_EXPORT(EntityBreakableDebris),
 #ifdef VERSION_PSP
     /* 0x47 */ func_psp_0926AED0,
 #else
@@ -171,7 +171,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 #endif
 };
 
-EInit D_us_80180800 = {0};
+EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(0x00), 0, 0, 0x0000, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x002};
 EInit D_us_80180824 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x004};
