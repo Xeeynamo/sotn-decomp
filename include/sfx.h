@@ -764,11 +764,16 @@ enum Sfx {
     /* 0x777 */ SFX_DIPLOCEPHALUS_PAIN,
     /* 0x778 */ SFX_DIPLOCEPHALUS_DEATH,
     /* 0x779 */ SFX_DIPLOCEPHALUS_STOMP, // also used by Plate Lord
-    SFX_FLEA_RIDER_DEATH = 0x77C,
-    SFX_WARG_DEATH_HOWL = 0x780, // also used for Scylla Worm (phase 2)
-    SFX_WARG_PAIN,
-    SFX_WARG_ATTACK,
-    SFX_WARG_GROWL,
+    /* 0x77A */ SFX_GORGON_SNORT,
+    /* 0x77B */ SFX_GORGON_ATTACK,
+    /* 0x77C */ SFX_FLEA_RIDER_DEATH,
+    /* 0x77D */ SFX_SWORD_LORD_SWIPE_ATTACK,
+    /* 0x77E */ SFX_SWORD_LORD_STAB_ATTACK,
+    /* 0x77F */ SFX_SWORD_LORD_DEATH,
+    /* 0x780 */ SFX_WARG_DEATH_HOWL, // also used for Scylla Worm (phase 2)
+    /* 0x781 */ SFX_WARG_PAIN,
+    /* 0x782 */ SFX_WARG_ATTACK,
+    /* 0x783 */ SFX_WARG_GROWL,
     SFX_UNK_797 = 0x797,
     SFX_CLOCK_BELL = 0x7A6,
     SFX_CLOCK_ROOM_TICK = 0x7A9,
