@@ -209,227 +209,227 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_08939A48);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_08939CD8);
 
-void func_psp_08939D08(void) {}
+void sceKernelRegisterSubIntrHandler(void) {}
 
-void func_psp_08939D10(void) {}
+void sceKernelReleaseSubIntrHandler(void) {}
 
-void func_psp_08939D18(void) {}
+void sceKernelEnableSubIntr(void) {}
 
-void func_psp_08939D20(void) {}
+void sceIoWrite(void) {}
 
-void func_psp_08939D28(void) {}
+void sceIoRead(void) {}
 
-void func_psp_08939D30(void) {}
+void sceIoLseekAsync(void) {}
 
-void func_psp_08939D38(void) {}
+void sceIoRename(void) {}
 
-void func_psp_08939D40(void) {}
+void sceIoClose(void) {}
 
-void func_psp_08939D48(void) {}
+void sceIoOpenAsync(void) {}
 
-void func_psp_08939D50(void) {}
+void sceIoReadAsync(void) {}
 
-void func_psp_08939D58(void) {}
+void sceIoGetstat(void) {}
 
-void func_psp_08939D60(void) {}
+void sceIoWaitAsync(void) {}
 
-void func_psp_08939D68(void) {}
+void sceIoOpen(void) {}
 
-void func_psp_08939D70(void) {}
+void sceIoLseek(void) {}
 
-void func_psp_08939D78(void) {}
+void sceIoPollAsync(void) {}
 
-void func_psp_08939D80(void) {}
+void sceKernelCpuSuspendIntr(void) {}
 
-void func_psp_08939D88(void) {}
+void sceKernelCpuResumeIntr(void) {}
 
-void func_psp_08939D90(void) {}
+void sceKernelExitGame(void) {}
 
-void func_psp_08939D98(void) {}
+void sceKernelRegisterExitCallback(void) {}
 
-void func_psp_08939DA0(void) {}
+void sceKernelLoadExec(void) {}
 
-void func_psp_08939DA8(void) {}
+void sceKernelUnloadModule(void) {}
 
-void func_psp_08939DB0(void) {}
+void sceKernelGetModuleIdByAddress(void) {}
 
-void func_psp_08939DB8(void) {}
+void sceKernelGetModuleId(void) {}
 
-void func_psp_08939DC0(void) {}
+void sceKernelStopUnloadSelfModule__WithStatus__(void) {}
 
-void func_psp_08939DC8(void) {}
+void sceKernelStopModule(void) {}
 
-void func_psp_08939DD0(void) {}
+void sceKernelStdin(void) {}
 
-void func_psp_08939DD8(void) {}
+void sceKernelStdout(void) {}
 
-void func_psp_08939DE0(void) {}
+void sceKernelStderr(void) {}
 
-void func_psp_08939DE8(void) {}
+void KprintfForUser(void) {}
 
-void func_psp_08939DF0(void) {}
+void sceKernelAllocPartitionMemoryForUser(void) {}
 
-void func_psp_08939DF8(void) {}
+void sceKernelSetCompiledSdkVersion100(void) {}
 
-void func_psp_08939E00(void) {}
+void sceKernelGetBlockHeadAddrForUser(void) {}
 
-void func_psp_08939E08(void) {}
+void sceKernelFreePartitionMemoryForUser(void) {}
 
-void func_psp_08939E10(void) {}
+void sceKernelSetCompilerVersion(void) {}
 
-void func_psp_08939E18(void) {}
+void sceKernelDelayThread(void) {}
 
-void func_psp_08939E20(void) {}
+void sceKernelSetEventFlag(void) {}
 
-void func_psp_08939E28(void) {}
+void sceKernelCreateSema(void) {}
 
-void func_psp_08939E30(void) {}
+void sceKernelCreateCallback(void) {}
 
-void func_psp_08939E38(void) {}
+void sceKernelChangeCurrentThreadAttr(void) {}
 
-void func_psp_08939E40(void) {}
+void sceKernelDeleteCallback(void) {}
 
-void func_psp_08939E48(void) {}
+void sceKernelDeleteEventFlag(void) {}
 
-void func_psp_08939E50(void) {}
+void sceKernelStartThread(void) {}
 
-void func_psp_08939E58(void) {}
+void sceKernelWaitThreadEnd(void) {}
 
-void func_psp_08939E60(void) {}
+void sceKernelDeleteSema(void) {}
 
-void func_psp_08939E68(void) {}
+void sceKernelGetThreadId(void) {}
 
-void func_psp_08939E70(void) {}
+void sceKernelPollEventFlag(void) {}
 
-void func_psp_08939E78(void) {}
+void sceKernelGetSystemTimeLow(void) {}
 
-void func_psp_08939E80(void) {}
+void sceKernelTerminateDeleteThread(void) {}
 
-void func_psp_08939E88(void) {}
+void sceKernelSignalSema(void) {}
 
-void func_psp_08939E90(void) {}
+void sceKernelWaitEventFlag(void) {}
 
-void func_psp_08939E98(void) {}
+void sceKernelCreateThread(void) {}
 
-void func_psp_08939EA0(void) {}
+void sceKernelWaitSema(void) {}
 
-void func_psp_08939EA8(void) {}
+void sceKernelCreateEventFlag(void) {}
 
-void func_psp_08939EB0(void) {}
+void sceKernelPollSema(void) {}
 
-void func_psp_08939EB8(void) {}
+void sceKernelDelayThreadCB(void) {}
 
-void func_psp_08939EC0(void) {}
+void sceKernelWaitSemaCB(void) {}
 
-void func_psp_08939EC8(void) {}
+void sceKernelChangeThreadPriority(void) {}
 
-void func_psp_08939ED0(void) {}
+void sceKernelExitDeleteThread(void) {}
 
-void func_psp_08939ED8(void) {}
+void sceKernelClearEventFlag(void) {}
 
-void func_psp_08939EE0(void) {}
+void sceKernelSleepThread(void) {}
 
-void func_psp_08939EE8(void) {}
+void sceKernelDeleteThread(void) {}
 
-void func_psp_08939EF0(void) {}
+void sceKernelExitThread(void) {}
 
-void func_psp_08939EF8(void) {}
+void sceKernelLibcGettimeofday(void) {}
 
-void func_psp_08939F00(void) {}
+void sceKernelDcacheWritebackAll(void) {}
 
-void func_psp_08939F08(void) {}
+void sceKernelLibcClock(void) {}
 
-void func_psp_08939F10(void) {}
+void sceKernelIcacheInvalidateAll(void) {}
 
-void func_psp_08939F18(void) {}
+void sceKernelLibcTime(void) {}
 
-void func_psp_08939F20(void) {}
+void sceAtracGetBufferInfoForResetting(void) {}
 
-void func_psp_08939F28(void) {}
+void sceAtracGetStreamDataInfo(void) {}
 
-void func_psp_08939F30(void) {}
+void sceAtracReleaseAtracID(void) {}
 
-void func_psp_08939F38(void) {}
+void sceAtracResetPlayPosition(void) {}
 
-void func_psp_08939F40(void) {}
+void sceAtracDecodeData(void) {}
 
-void func_psp_08939F48(void) {}
+void sceAtracSetDataAndGetID(void) {}
 
-void func_psp_08939F50(void) {}
+void sceAtracAddStreamData(void) {}
 
-void func_psp_08939F58(void) {}
+void sceAtracSetSecondBuffer(void) {}
 
-void func_psp_08939F60(void) {}
+void sceAtracGetSecondBufferInfo(void) {}
 
-void func_psp_08939F68(void) {}
+void sceAtracSetLoopNum(void) {}
 
-void func_psp_08939F70(void) {}
+void sceAtracGetRemainFrame(void) {}
 
-void func_psp_08939F78(void) {}
+void sceAtracGetSoundSample(void) {}
 
-void func_psp_08939F80(void) {}
+void sceAtracGetBitrate(void) {}
 
-void func_psp_08939F88(void) {}
+void sceAtracGetOutputChannel(void) {}
 
-void func_psp_08939F90(void) {}
+void sceAtracGetInternalErrorInfo(void) {}
 
-void func_psp_08939F98(void) {}
+void sceAudioOutputBlocking(void) {}
 
-void func_psp_08939FA0(void) {}
+void sceAudioOutputPannedBlocking(void) {}
 
-void func_psp_08939FA8(void) {}
+void sceAudioChReserve(void) {}
 
-void func_psp_08939FB0(void) {}
+void sceAudioChRelease(void) {}
 
-void func_psp_08939FB8(void) {}
+void sceAudioChangeChannelConfig(void) {}
 
-void func_psp_08939FC0(void) {}
+void sceAudioGetChannelRestLength(void) {}
 
-void func_psp_08939FC8(void) {}
+void sceAudioChangeChannelVolume(void) {}
 
-void func_psp_08939FD0(void) {}
+void sceAudioSetChannelDataLen(void) {}
 
-void func_psp_08939FD8(void) {}
+void sceAudioOutputPanned(void) {}
 
-void func_psp_08939FE0(void) {}
+void sceCtrlSetSamplingMode(void) {}
 
-void func_psp_08939FE8(void) {}
+void sceCtrlReadBufferPositive(void) {}
 
-void func_psp_08939FF0(void) {}
+void sceCtrlPeekBufferPositive(void) {}
 
-void func_psp_08939FF8(void) {}
+void sceCtrlSetSamplingCycle(void) {}
 
-void func_psp_0893A000(void) {}
+void sceDisplaySetMode(void) {}
 
-void func_psp_0893A008(void) {}
+void sceDisplaySetFrameBuf(void) {}
 
-void func_psp_0893A010(void) {}
+void sceDisplayWaitVblankStartCB(void) {}
 
-void func_psp_0893A018(void) {}
+void sceDisplaySetHoldMode(void) {}
 
-void func_psp_0893A020(void) {}
+void sceDisplayWaitVblankStart(void) {}
 
-void func_psp_0893A028(void) {}
+void sceDisplayGetVcount(void) {}
 
-void func_psp_0893A030(void) {}
+void sceGeListSync(void) {}
 
-void func_psp_0893A038(void) {}
+void sceGeUnsetCallback(void) {}
 
-void func_psp_0893A040(void) {}
+void sceGeListEnQueueHead(void) {}
 
-void func_psp_0893A048(void) {}
+void sceGeContinue(void) {}
 
-void func_psp_0893A050(void) {}
+void sceGeSetCallback(void) {}
 
-void func_psp_0893A058(void) {}
+void sceGeListEnQueue(void) {}
 
-void func_psp_0893A060(void) {}
+void sceGeDrawSync(void) {}
 
-void func_psp_0893A068(void) {}
+void sceGeBreak(void) {}
 
-void func_psp_0893A070(void) {}
+void sceGeListUpdateStallAddr(void) {}
 
-void func_psp_0893A078(void) {}
+void sceGeEdramGetAddr(void) {}
 
 void func_psp_0893A080(void) {}
 
@@ -539,35 +539,35 @@ void func_psp_0893A220(void) {}
 
 void func_psp_0893A228(void) {}
 
-void func_psp_0893A230(void) {}
+void sceKernelPowerTick(void) {}
 
-void func_psp_0893A238(void) {}
+void sceKernelPowerUnlock(void) {}
 
-void func_psp_0893A240(void) {}
+void sceKernelVolatileMemUnlock(void) {}
 
-void func_psp_0893A248(void) {}
+void sceKernelPowerLock(void) {}
 
-void func_psp_0893A250(void) {}
+void sceUmdGetErrorStat(void) {}
 
-void func_psp_0893A258(void) {}
+void sceUmdCheckMedium(void) {}
 
-void func_psp_0893A260(void) {}
+void sceUmdWaitDriveStatCB(void) {}
 
-void func_psp_0893A268(void) {}
+void sceUmdCancelWaitDriveStat(void) {}
 
-void func_psp_0893A270(void) {}
+void sceUmdGetDriveStat(void) {}
 
-void func_psp_0893A278(void) {}
+void sceUmdReplaceProhibit(void) {}
 
-void func_psp_0893A280(void) {}
+void sceUmdWaitDriveStat(void) {}
 
-void func_psp_0893A288(void) {}
+void sceUmdRegisterUMDCallBack(void) {}
 
-void func_psp_0893A290(void) {}
+void sceUmdUnRegisterUMDCallBack(void) {}
 
-void func_psp_0893A298(void) {}
+void sceUmdActivate(void) {}
 
-void func_psp_0893A2A0(void) {}
+void sceUmdDeactivate(void) {}
 
 void func_psp_0893A2A8(void) {}
 
