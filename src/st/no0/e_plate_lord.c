@@ -480,7 +480,7 @@ void EntityPlateLord(Entity* self) {
             func_us_801D27C4(unkStructB, false);
             if (counter == 3) {
                 self->ext.plateLord.unk84 ^= 1;
-                PlaySfxPositional(0x779);
+                PlaySfxPositional(SFX_DIPLOCEPHALUS_STOMP);
                 self->step_s--;
             }
             break;
@@ -583,7 +583,7 @@ void EntityPlateLord(Entity* self) {
             }
             func_us_801D27C4(unkStructB, false);
             if (counter == 3) {
-                PlaySfxPositional(0x779);
+                PlaySfxPositional(SFX_DIPLOCEPHALUS_STOMP);
                 self->step_s++;
             }
             break;
@@ -613,7 +613,7 @@ void EntityPlateLord(Entity* self) {
             }
             func_us_801D27C4(unkStructB, true);
             if (counter == 3) {
-                PlaySfxPositional(0x779);
+                PlaySfxPositional(SFX_DIPLOCEPHALUS_STOMP);
                 self->step_s--;
             }
             break;

@@ -270,9 +270,6 @@ enum {
 // plays every 10 frames while using bible subweapon
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
-// STAGE CAT
-#define SFX_HELLFIRE_BEAST_DEATH 0x775
-
 // STAGE DAI
 // Unknown SFX related to the priest
 #define SFX_UNK_204 0x204
@@ -340,6 +337,11 @@ enum {
 
 // The VAB IDs appear in large chunks so all sounds proceeding
 // a vabid label comment will belong in that VAB group unless noted.
+//
+// vabid 0 = Shared or common sfx
+// vabid 1 = Player VO sfx
+// vabid 3 = Enemy sfx
+// vabid 9 = All sequenced sfx (sounds that use multiple notes)
 //
 // Some enemy sfxIDs in vabID 3 can sound different depending on which
 // overlay is loaded.  For example, Grave Keeper has three sound calls
@@ -736,7 +738,32 @@ enum Sfx {
     /* 0x765 */ SFX_DISCUS_BUZZ,
     /* 0x766 */ SFX_AXE_KNIGHT_ATTACK,
     /* 0x767 */ SFX_AXE_KNIGHT_DEATH,
-    SFX_SPEAR_GUARD_DEATH = 0x771,
+    /* 0x768 */ SFX_HIPPOGRYPH_WING_FLAP,
+    /* 0x769 */ SFX_HIPPOGRYPH_SQUAWK, // unused?
+    /* 0x76A */ SFX_RDAI_UNK_76A,
+    /* 0x76B */ SFX_FROZEN_HALF_DEATH, // normally, enemy attack sfx is first!
+    /* 0x76C */ SFX_FROZEN_HALF_ATTACK,
+    /* 0x76D */ SFX_FROZEN_HALF_MAXIMUM_POWER,
+
+    // vabid 9
+    /* 0x76E */ SFX_FROZEN_HALF_BLIZZARD, // sequenced sfx
+
+    // vabid 3
+    /* 0x76F */ SFX_UNUSED_76F, // blank space after switching vabid
+    /* 0x770 */ SFX_SPEAR_GUARD_ATTACK,
+    /* 0x771 */ SFX_SPEAR_GUARD_DEATH,
+    /* 0x772 */ SFX_SPEAR_GUARD_UNUSED_MOVE, // not referenced
+
+    // vabid 9
+    /* 0x773 */ SFX_SPEAR_GUARD_MOVE, // sequenced version of 0x772
+
+    // vabid 3
+    /* 0x774 */ SFX_UNUSED_774,
+    /* 0x775 */ SFX_HELLFIRE_BEAST_DEATH,
+    /* 0x776 */ SFX_DIPLOCEPHALUS_ATTACK,
+    /* 0x777 */ SFX_DIPLOCEPHALUS_PAIN,
+    /* 0x778 */ SFX_DIPLOCEPHALUS_DEATH,
+    /* 0x779 */ SFX_DIPLOCEPHALUS_STOMP, // also used by Plate Lord
     SFX_UNK_77C = 0x77C,
     SFX_WARG_DEATH_HOWL = 0x780, // also used for Scylla Worm (phase 2)
     SFX_WARG_PAIN,
