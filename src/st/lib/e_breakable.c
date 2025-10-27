@@ -1,114 +1,156 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
 
-static u8 D_us_80180B58[] = {3, 4, 3, 5, 0, 0};
-static u8 D_us_80180B60[] = {3, 6, 3, 7, 0, 0};
-static u8 D_us_80180B68[] = {6, 8, 6, 9, 6, 10, 6, 11, 6, 12, 0, 0};
-static u8 D_us_80180B74[] = {5, 9, 5, 10, 5, 11, 5, 12, 0, 0};
-static u8 D_us_80180B80[] = {5, 13, 5, 14, 5, 15, 5, 16, 0, 0};
-static u8 D_us_80180B8C[] = {5, 17, 5, 18, 5, 19, 0, 0};
-static u8 D_us_80180B94[] = {5, 23, 0, 0};
-static u8 D_us_80180B98[] = {5, 22, 0, 0};
-static u8 D_us_80180B9C[] = {5, 20, -1, -1, 5, 21, 5, 21, -1, 0};
-static u8* D_us_80180BA8[] = {
-    D_us_80180B68, D_us_80180B68, D_us_80180B58, D_us_80180B60, D_us_80180B74,
-    D_us_80180B80, D_us_80180B8C, D_us_80180B94, D_us_80180B98, D_us_80180B9C};
-static u8 D_us_80180BD0[] = {8, 8, 8, 8, 16, 16, 8, 8, 8, 8, 8};
-static u8 D_us_80180BDC[] = {2, 2, 0, 0, 2, 2, 2, 2, 2, 2};
-static u16 D_us_80180BE8[] = {
-    PAL_DRA(0x000), PAL_DRA(0x000), PAL_DRA(0x000), PAL_DRA(0x000),
-    PAL_DRA(0x26C), PAL_DRA(0x26C), PAL_DRA(0x26C), PAL_DRA(0x26C),
-    PAL_DRA(0x26C), PAL_DRA(0x26C)};
-static u16 D_us_80180BFC[] = {
-    ANIMSET_OVL(0x1), ANIMSET_OVL(0x1), ANIMSET_OVL(0x1), ANIMSET_OVL(0x1),
-    ANIMSET_OVL(0xC), ANIMSET_OVL(0xC), ANIMSET_OVL(0xC), ANIMSET_OVL(0xC),
-    ANIMSET_OVL(0xC), ANIMSET_OVL(0xC)};
-static u8 D_us_80180C10[] = {
+#define BREAKABLE_ANIMSET ANIMSET_OVL(12)
+
+enum OVL_EXPORT(BreakableTypes) {
+    HANGING_LAMP_FLAME,
+    HANGING_LAMP_FLAME_,
+    HANGING_LAMP_LONG,
+    HANGING_LAMP_SHORT,
+    CANDELABRA_TABLE,
+    BRAZIER,
+    CANDELABRA_WALL_TRIPLE,
+    URN,
+    JUG,
+    BUST,
+};
+
+enum OVL_EXPORT(BreakableDebrisSteps) {
+    INIT,
+    UPDATE,
+    DEBRIS_NOP = 256,
+};
+
+static AnimateEntityFrame anim_hanging_lamp_long[] = {
+    {3, 4}, {3, 5}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_hanging_lamp_short[] = {
+    {3, 6}, {3, 7}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_hanging_lamp_flame[] = {
+    {6, 8}, {6, 9}, {6, 10}, {6, 11}, {6, 12}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_candelabra_table[] = {
+    {5, 9}, {5, 10}, {5, 11}, {5, 12}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_brazier[] = {
+    {5, 13}, {5, 14}, {5, 15}, {5, 16}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_candelabra_wall_triple[] = {
+    {5, 17}, {5, 18}, {5, 19}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_urn[] = {{5, 23}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_jug[] = {{5, 22}, POSE_LOOP(0)};
+static AnimateEntityFrame anim_bust[] = {
+    {5, 20}, {-1, -1}, {5, 21}, {5, 21}, POSE_END};
+static AnimateEntityFrame* animations[] = {
+    anim_hanging_lamp_flame,     // params 0x0000-0xFFF
+    anim_hanging_lamp_flame,     // params 0x1000-0x1FFF
+    anim_hanging_lamp_long,      // params 0x2000-0x2FFF
+    anim_hanging_lamp_short,     // params 0x3000-0x3FFF
+    anim_candelabra_table,       // params 0x4000-0x4FFF
+    anim_brazier,                // params 0x5000-0x5FFF
+    anim_candelabra_wall_triple, // params 0x6000-0x6FFF
+    anim_urn,                    // params 0x7000-0x7FFF
+    anim_jug,                    // params 0x8000-0x8FFF
+    anim_bust,                   // params 0x9000-0x9FFF
+};
+static u8 hitbox_heights[] = {8, 8, 8, 8, 16, 16, 8, 8, 8, 8, 8};
+static u8 explosion_types[] = {
+    EXPLOSION_SMALL_MULTIPLE, EXPLOSION_SMALL_MULTIPLE,
+    EXPLOSION_SMALL,          EXPLOSION_SMALL,
+    EXPLOSION_SMALL_MULTIPLE, EXPLOSION_SMALL_MULTIPLE,
+    EXPLOSION_SMALL_MULTIPLE, EXPLOSION_SMALL_MULTIPLE,
+    EXPLOSION_SMALL_MULTIPLE, EXPLOSION_SMALL_MULTIPLE};
+static u16 palettes[] = {
+    PAL_NONE,      PAL_NONE,      PAL_NONE,      PAL_NONE,      PAL_BREAKABLE,
+    PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE, PAL_BREAKABLE};
+static u16 anim_sets[] = {
+    ANIMSET_OVL(1),    ANIMSET_OVL(1),    ANIMSET_OVL(1),    ANIMSET_OVL(1),
+    BREAKABLE_ANIMSET, BREAKABLE_ANIMSET, BREAKABLE_ANIMSET, BREAKABLE_ANIMSET,
+    BREAKABLE_ANIMSET, BREAKABLE_ANIMSET};
+static u8 draw_modes[] = {
     DRAW_TPAGE2 | DRAW_TPAGE, DRAW_TPAGE2 | DRAW_TPAGE,
     DRAW_TPAGE2 | DRAW_TPAGE, DRAW_TPAGE2 | DRAW_TPAGE,
     DRAW_TPAGE2 | DRAW_TPAGE, DRAW_TPAGE2 | DRAW_TPAGE,
     DRAW_TPAGE2 | DRAW_TPAGE, DRAW_TPAGE2 | DRAW_TPAGE,
     DRAW_TPAGE2 | DRAW_TPAGE, DRAW_TPAGE2 | DRAW_TPAGE};
-static u16 D_us_80180C1C[] = {
+static u16 unk_5A[] = {
     0x00, 0x00, 0x00, 0x00, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B, 0x5B};
-static u16 D_us_80180C30[12] = {0};
+static u16 hitbox_offsets_y[12] = {0};
 
-void EntityBreakable(Entity* self) {
-    Entity* tempEntity;
-    u16 params;
+extern EInit OVL_EXPORT(EInitBreakable);
 
-    params = self->params >> 0xC;
+void OVL_EXPORT(EntityBreakable)(Entity* self) {
+    Entity* entity;
+    u16 breakableType;
+
+    breakableType = self->params >> 12;
     if (!self->step) {
-        InitializeEntity(D_us_80180800);
-        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
-        if (params < 5) {
-            tempEntity = self + 1;
-            CreateEntityFromEntity(E_ID_3F, self, tempEntity);
-            tempEntity->params = params;
-            tempEntity->zPriority = self->zPriority;
+        InitializeEntity(OVL_EXPORT(EInitBreakable));
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
+        if (breakableType < 5) {
+            entity = self + 1;
+            CreateEntityFromEntity(E_ID_3F, self, entity);
+            entity->params = breakableType;
+            entity->zPriority = self->zPriority;
         }
-        self->drawMode = D_us_80180C10[params];
-        self->hitboxHeight = D_us_80180BD0[params];
-        self->animSet = D_us_80180BFC[params];
-        self->unk5A = D_us_80180C1C[params];
-        self->palette = D_us_80180BE8[params];
-        self->hitboxOffY = D_us_80180C30[params];
+        self->drawMode = draw_modes[breakableType];
+        self->hitboxHeight = hitbox_heights[breakableType];
+        self->animSet = anim_sets[breakableType];
+        self->unk5A = unk_5A[breakableType];
+        self->palette = palettes[breakableType];
+#ifdef INVERTED_STAGE
+        self->hitboxOffY = -hitbox_offsets_y[breakableType];
+#else
+        self->hitboxOffY = hitbox_offsets_y[breakableType];
+#endif
     }
-    AnimateEntity(D_us_80180BA8[params], self);
+    AnimateEntity(animations[breakableType], self);
     if (self->hitParams) {
-        tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (tempEntity != NULL) {
-            CreateEntityFromCurrentEntity(E_EXPLOSION, tempEntity);
-            tempEntity->params = D_us_80180BDC[params];
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+        if (entity != NULL) {
+            CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
+            entity->params = explosion_types[breakableType];
         }
-        switch (params) {
-        case 0:
+        switch (breakableType) {
+        case HANGING_LAMP_FLAME:
             PlaySfxPositional(SFX_GLASS_BREAK_D);
             break;
-
-        case 2:
-        case 3:
+        case HANGING_LAMP_LONG:
+        case HANGING_LAMP_SHORT:
             PlaySfxPositional(SFX_GLASS_BREAK_E);
             break;
-
-        case 9:
-            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (tempEntity != NULL) {
-                CreateEntityFromCurrentEntity(E_ID_47, tempEntity);
-                tempEntity->params = 0x100;
+        case BUST:
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (entity != NULL) {
+                CreateEntityFromCurrentEntity(E_BREAKABLE_DEBRIS, entity);
+                entity->params = 256;
             }
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
-            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, tempEntity);
-                tempEntity->params = self->params & 0x1FF;
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                entity->params = self->params & 0x1FF;
             }
             PreventEntityFromRespawning(self);
             DestroyEntity(self);
             return;
-
-        case 7:
+        case URN:
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
-            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, tempEntity);
-                tempEntity->params = self->params & 0x1FF;
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                entity->params = self->params & 0x1FF;
             }
             PreventEntityFromRespawning(self);
             DestroyEntity(self);
             return;
-
-        case 8:
+        case JUG:
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
-            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_HEART_DROP, self, tempEntity);
-                tempEntity->params = 3;
+            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (entity != NULL) {
+                CreateEntityFromEntity(E_HEART_DROP, self, entity);
+                entity->params = 3;
             }
             PreventEntityFromRespawning(self);
             DestroyEntity(self);
             return;
-
         default:
             g_api.PlaySfx(SFX_CANDLE_HIT);
             break;
@@ -117,20 +159,20 @@ void EntityBreakable(Entity* self) {
     }
 }
 
-void func_us_801AE7AC(Entity* self) {
-    Entity* tempEntity;
+void EntityBreakableHelper(Entity* self) {
+    Entity* entity;
     if (!self->step) {
         InitializeEntity(g_EInitInteractable);
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->animSet = ANIMSET_OVL(0x1);
+        self->animSet = ANIMSET_OVL(1);
     }
     if (!self->params) {
-        AnimateEntity(D_us_80180B58, self);
+        AnimateEntity(anim_hanging_lamp_long, self);
     } else {
-        AnimateEntity(D_us_80180B60, self);
+        AnimateEntity(anim_hanging_lamp_short, self);
     }
-    tempEntity = self - 1;
-    if (tempEntity->entityId != 1) {
+    entity = self - 1;
+    if (entity->entityId != E_BREAKABLE) {
         if (!self->params) {
             self->animCurFrame = 13;
         } else {
@@ -139,24 +181,24 @@ void func_us_801AE7AC(Entity* self) {
     }
 }
 
-void func_us_801AE84C(Entity* self) {
+void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
     u32 pad[10];
+
     switch (self->step) {
-    case 0:
-        if (self->params & 0x100) {
+    case INIT:
+        if (self->params & 256) {
             InitializeEntity(g_EInitInteractable);
-            self->animSet = ANIMSET_OVL(0xC);
-            self->unk5A = 0x5B;
-            self->palette = PAL_DRA(0x26C);
-            self->animCurFrame = 0x15;
-            self->zPriority = 0x6A;
-            self->step = 256;
+            self->animSet = BREAKABLE_ANIMSET;
+            self->unk5A = 91;
+            self->palette = PAL_BREAKABLE;
+            self->animCurFrame = 21;
+            self->zPriority = 106;
+            self->step = DEBRIS_NOP; // No case defined, resulting in nop
         } else {
             InitializeEntity(g_EInitParticle);
         }
         break;
-
-    case 1:
+    case UPDATE:
         break;
     }
 }

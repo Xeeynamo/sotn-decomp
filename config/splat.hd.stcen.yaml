@@ -72,7 +72,6 @@ segments:
       - [0xD5E8, c, e_room_bg]
       - [0xD6C8, c, e_lock_camera]
       - [0xD884, c, e_breakable]
-      - [0xDB00, c, DB18]
       - [0xDEF4, c, cutscene]
       - [0xF818, c, F890]
       - [0x10DA0, c, st_update]

@@ -68,7 +68,6 @@ LIB_cutscene_data = 0x80183F68;
 g_UnkPrimHelperRot = 0x801ADDA4;
 LIB_EntityBackgroundBlock = 0x801ADED0;
 LIB_EntityLockCamera = 0x801AE01C;
-EntityBreakable = 0x801AE4BC;
 EntityBackgroundBookcase = 0x801AF280;
 EntityBackgroundFurniture = 0x801AF538;
 EntityBackgroundShadow = 0x801AF7B8;

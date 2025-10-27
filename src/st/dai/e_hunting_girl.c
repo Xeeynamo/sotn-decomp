@@ -487,7 +487,7 @@ void EntityHuntingGirl(Entity* self) {
                     self->ext.huntingGirl.spiritPrim;
                 self->ext.huntingGirl.attackStep = 0;
                 self->ext.huntingGirl.frames = NULL;
-                PlaySfxPositional(SFX_UNK_72A);
+                PlaySfxPositional(SFX_HUNTING_GIRL_ATTACK);
                 self->step_s++;
             }
             break;
@@ -551,7 +551,7 @@ void EntityHuntingGirl(Entity* self) {
                  prim = prim->next) {
                 prim->drawMode = DRAW_HIDE;
             }
-            PlaySfxPositional(SFX_UNK_72B);
+            PlaySfxPositional(SFX_HUNTING_GIRL_PAIN);
             self->step_s++;
             // fallthrough
         case HUNTING_GIRL_HIT_KNOCKBACK:
@@ -591,7 +591,7 @@ void EntityHuntingGirl(Entity* self) {
                 self->ext.huntingGirl.random + 3, SPIRIT_INIT);
             self->velocityX = 0;
             self->velocityY = FIX(-3.0);
-            PlaySfxPositional(SFX_UNK_72C);
+            PlaySfxPositional(SFX_HUNTING_GIRL_DEATH);
             self->step_s++;
             // fallthrough
         case HUNTING_GIRL_DEATH_KNOCKBACK:

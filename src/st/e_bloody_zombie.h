@@ -251,8 +251,8 @@ void EntityBloodyZombie(Entity* self) {
     s32 animStatus;
 
     if (self->hitParams && self->step % 2) {
-        PlaySfxPositional(SFX_BLOODY_ZOMBIE_HIT_GRUNT);
-        PlaySfxPositional(SFX_BLOODY_ZOMBIE_HIT);
+        PlaySfxPositional(SFX_BLOODY_ZOMBIE_PAIN);
+        PlaySfxPositional(SFX_BLOODY_ZOMBIE_BODY_HIT);
         SetStep(BLOODY_ZOMBIE_TAKE_HIT);
     }
 

@@ -230,7 +230,7 @@ void EntitySpittleBoneSpit(Entity* self) {
         self->velocityY += FIX(0.0625);
         g_api.CheckCollision(self->posX.i.hi, self->posY.i.hi, &collider, 0);
         if (collider.effects != EFFECT_NONE) {
-            PlaySfxPositional(NA_SE_EN_SPITTLEBONE_ACID_SPLAT);
+            PlaySfxPositional(SFX_SPITTLEBONE_ACID_SPLAT);
             EntityExplosionVariantsSpawner(self, 1, 2, 0, 0, 5, 0);
             self->animCurFrame = 0;
             self->hitboxState = 0;
