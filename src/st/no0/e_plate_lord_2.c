@@ -481,7 +481,7 @@ void func_us_801D542C(Entity* self) {
                 tempEntity->ext.plateLordUnknown.unk82;
             tempEntity = self - 5;
             PlaySfxPositional(SFX_WEAPON_SWISH_C);
-            PlaySfxPositional(0x75E);
+            PlaySfxPositional(SFX_PLATE_LORD_ATTACK);
             tempEntity->step = 0xB;
             tempEntity->step_s = 0;
             self->step = 0xB;
