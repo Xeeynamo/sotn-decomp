@@ -251,8 +251,6 @@ enum {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_VO_AXE_KNIGHT_THROW 0x766
-#define NA_SE_VO_AXE_KNIGHT_SCREAM 0x767
 #define NA_SE_EV_WATER_SPLASH 0x7C2
 #define SFX_WATER_SURFACING 0x7C3
 
@@ -736,6 +734,8 @@ enum Sfx {
     /* 0x763 */ SFX_DISCUS_LORD_ATTACK,
     /* 0x764 */ SFX_DISCUS_LORD_DEATH,
     /* 0x765 */ SFX_DISCUS_BUZZ,
+    /* 0x766 */ SFX_AXE_KNIGHT_ATTACK,
+    /* 0x767 */ SFX_AXE_KNIGHT_DEATH,
     SFX_SPEAR_GUARD_DEATH = 0x771,
     SFX_UNK_77C = 0x77C,
     SFX_WARG_DEATH_HOWL = 0x780, // also used for Scylla Worm (phase 2)
