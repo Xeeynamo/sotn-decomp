@@ -310,7 +310,7 @@ void func_us_801D542C(Entity* self) {
                 tempEntity->velocityX = FIX(0.375);
             }
             self->ext.plateLordUnknown.unk9C = 0;
-            PlaySfxPositional(0x761);
+            PlaySfxPositional(SFX_PLATE_LORD_BALL_IMPACT);
             g_api.func_80102CD8(1);
             self->step = 0xD;
         } else {
@@ -334,7 +334,7 @@ void func_us_801D542C(Entity* self) {
         tempPosY = tempEntity->posY.i.hi + 0xA;
         g_api.CheckCollision(tempPosX, tempPosY, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            PlaySfxPositional(0x761);
+            PlaySfxPositional(SFX_PLATE_LORD_BALL_IMPACT);
             tempEntity->posY.i.hi += collider.unk18;
             if (!self->ext.plateLordUnknown.unk9C) {
                 tempEntity->velocityY = -(tempEntity->velocityY) / 2;
