@@ -104,7 +104,7 @@ segments:
       - [0x360CC, textbin, func_psp_089349D8]
       - [0x3613C, textbin, func_psp_08934A48]
       - [0x36174, c, main_psp/36174]
-      - [0x3BBDC, rodata]
+      - [0x3B9F4, rodata]
       - [0x3C524, .rodata, main_psp/16F4]
       - [0x3D534, .rodata, main_psp/1BD9C]
       - [0x3D564, .rodata, main_psp/277E8]

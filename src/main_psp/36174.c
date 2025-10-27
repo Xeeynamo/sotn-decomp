@@ -53,16 +53,11 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_08935808);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_08935934);
 
-const u32 D_psp_0893C06C[] = {
-    0x089AD528,
-    0x00000000,
-};
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36174", D_psp_0893C06C);
 
 INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36174", D_psp_0893C074);
 
-const u32 D_psp_0893C080[] = {
-    0x0893C06C, 0x00000000, 0x00000000, 0x089AD538, 0x0893C080,
-};
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36174", D_psp_0893C080);
 
 INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36174", D_psp_0893C094);
 
@@ -594,95 +589,7 @@ void func_psp_0893A2E8(void) {}
 
 void func_psp_0893A2F0(void) {}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A2F8);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A308);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A31C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A324);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A330);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A338);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A344);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A34C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A358);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A360);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A36C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A374);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A380);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A388);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A394);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A39C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A3A8);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A3B0);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A3BC);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A3C4);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A3D0);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A3D8);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A3E4);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A3EC);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A3F8);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A400);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A40C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A414);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A420);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A428);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A434);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A43C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A448);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A450);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A45C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A464);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A470);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A478);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A484);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A48C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A498);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A4A0);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A4B0);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A4D8);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_0893A4E0);
+void func_psp_0893A2F8(void) {}
 
 INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36174", D_psp_0893C1A0);
 
