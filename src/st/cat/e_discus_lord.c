@@ -234,7 +234,7 @@ void EntityDiscusLord(Entity* self) {
 
             self->animCurFrame = 0;
             PlaySfxPositional(SFX_DISCUS_LORD_DEATH);
-            PlaySfxPositional(SFX_CAT_MULTI_EXPLODE);
+            PlaySfxPositional(SFX_DISCUS_LORD_EXPLODE);
             self->step_s++;
             // fallthrough
         case 1:

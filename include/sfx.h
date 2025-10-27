@@ -564,7 +564,7 @@ enum Sfx {
     /* 0x6BF */ SFX_UNK_BLIPS_B,
     /* 0x6C0 */ SFX_BLIPS_C,
     /* 0x6C1 */ SFX_BLIPS_D, // Fleaman movement
-    /* 0x6C2 */ SFX_CAT_MULTI_EXPLODE,
+    /* 0x6C2 */ SFX_DISCUS_LORD_EXPLODE,
     /* 0x6C3 */ SFX_SWISHES_ECHO_REPEAT,
     /* 0x6C4 */ SFX_RCAT_DISSONANT_DINK,
     /* 0x6C5 */ SFX_MAGIC_NOISE_SWEEP,
