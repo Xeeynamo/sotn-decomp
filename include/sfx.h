@@ -80,6 +80,7 @@ enum SfxModes {
 
 // SEQ music tracks
 // Only LIB and DAI have sequenced music data.  The IDs are different on PSP.
+// LIB on PSP references both 0x202 and 0x302, so an ifdef cannot be used here.
 enum SeqTracks {
     MU_SEQ_LIBRARY = 0x202,
     MU_SEQ_DAI_CHIMES = 0x204,

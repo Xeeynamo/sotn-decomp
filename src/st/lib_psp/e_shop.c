@@ -7363,6 +7363,8 @@ void func_psp_0926AED0(Entity* self) {
             self->ext.et_801B6F30.unk7E = 0x400;
             self->ext.et_801B6F30.unk7C = 0x10;
             self->step++;
+            // This sfxID appears to be a bug since PSP uses a different value
+            // for this music cue everywhere else
             g_api.PlaySfx(MU_SEQ_LIBRARY);
             g_CutsceneFlags |= 0x200;
         }
@@ -7708,6 +7710,8 @@ void func_us_801B8A00(Entity* self) {
             self->ext.et_801B6F30.unk7E = 0x400;
             self->ext.et_801B6F30.unk7C = 0x10;
             self->step++;
+            // This sfxID appears to be a bug since PSP uses a different value
+            // for this music cue everywhere else
             g_api.PlaySfx(MU_SEQ_LIBRARY);
             g_CutsceneFlags |= 0x200;
         }
