@@ -309,13 +309,11 @@ void func_us_801AFE0C(Entity* self) {
 #endif
         InitializeEntity(D_us_80180824);
         if (player->posX.i.hi < 0x100) {
-// I expect these two sounds to be the same, but 0x202 has not yet been defined.
-// This leads me to think that the macro that has been defined for sfx 0x302
-// is only accurate for PSX and does not align with the sfx for PSP here.
+            // sfxID for SEQ_LIB was originally 0x202 but is 0x302 on PSP
 #ifdef VERSION_PSP
-            g_api.PlaySfx(0x302);
+            g_api.PlaySfx(MU_SEQ_LIBRARY_PSP);
 #else
-            g_api.PlaySfx(0x202);
+            g_api.PlaySfx(MU_SEQ_LIBRARY);
 #endif
         }
         if (g_CastleFlags[MET_LIBRARIAN]) {
@@ -5574,7 +5572,7 @@ void func_us_801B8A00(Entity* self) {
             self->ext.et_801B6F30.unk7E = 0x400;
             self->ext.et_801B6F30.unk7C = 0x10;
             self->step++;
-            g_api.PlaySfx(0x202);
+            g_api.PlaySfx(MU_SEQ_LIBRARY);
             g_CutsceneFlags |= 0x200;
         }
         break;
@@ -5601,7 +5599,7 @@ void func_us_801B8A00(Entity* self) {
     case 9:
 #ifdef VERSION_PSP
         if (self->ext.et_801B6F30.unk86) {
-            g_api.PlaySfx(0x302);
+            g_api.PlaySfx(MU_SEQ_LIBRARY_PSP);
         }
 #endif
         g_CutsceneFlags &= ~0x400;

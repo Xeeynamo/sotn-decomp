@@ -78,6 +78,15 @@ enum SfxModes {
 #define CD_SOUND_COMMAND_14 14
 #define CD_SOUND_COMMAND_16 16
 
+// SEQ music tracks
+// Only LIB and DAI have sequenced music data.  The IDs are different on PSP.
+enum SeqTracks {
+    MU_SEQ_LIBRARY = 0x202,
+    MU_SEQ_DAI_CHIMES = 0x204,
+    MU_SEQ_LIBRARY_PSP = 0x302,
+    MU_SEQ_DAI_CHIMES_PSP = 0x304
+};
+
 // XA music tracks
 // LOOP_POINT means it starts playing from part way into the song
 enum {
@@ -272,8 +281,6 @@ enum {
 
 // STAGE DAI
 // Unknown SFX related to the priest
-#define SFX_UNK_204 0x204
-#define SFX_UNK_PSP_304 0x304
 #define SFX_UNK_4E5 0x4E5
 #define SFX_UNK_7BB 0x7BB
 
