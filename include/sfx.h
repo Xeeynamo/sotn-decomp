@@ -79,13 +79,18 @@ enum SfxModes {
 #define CD_SOUND_COMMAND_16 16
 
 // SEQ music tracks
-// Only LIB and DAI have sequenced music data.  The IDs are different on PSP.
-// LIB on PSP references both 0x202 and 0x302, so an ifdef cannot be used here.
+// While there is unused SEQ data in DRA, LIB and DAI are the only two
+// overlays that use sequenced music heard in-game.
+//
+// For the PSP port, the SEQ files were replaced with pre-recorded versions
+// and saved as ATRAC3 streaming audio.  To reference these new audio streams,
+// the loop points for "Lost Painting" and "Curse Zone" were also replaced.
+// Reusing the loop point IDs makes sense as .AT3 files support looping.
 enum SeqTracks {
-    MU_SEQ_LIBRARY = 0x202,
-    MU_SEQ_DAI_CHIMES = 0x204,
-    MU_SEQ_LIBRARY_PSP = 0x302,
-    MU_SEQ_DAI_CHIMES_PSP = 0x304
+    MU_SEQ_LIBRARIAN = 0x202,
+    MU_SEQ_CONFESSIONAL_BELLS = 0x204,
+    MU_SEQ_LIBRARIAN_PSP = 0x302,
+    MU_SEQ_CONFESSIONAL_BELLS_PSP = 0x304
 };
 
 // XA music tracks

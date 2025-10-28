@@ -2198,9 +2198,9 @@ void func_us_801AFE0C(Entity* self) {
         if (player->posX.i.hi < 0x100) {
             // sfxID for SEQ_LIB was originally 0x202 but is 0x302 on PSP
 #ifdef VERSION_PSP
-            g_api.PlaySfx(MU_SEQ_LIBRARY_PSP);
+            g_api.PlaySfx(MU_SEQ_LIBRARIAN_PSP);
 #else
-            g_api.PlaySfx(MU_SEQ_LIBRARY);
+            g_api.PlaySfx(MU_SEQ_LIBRARIAN);
 #endif
         }
         if (g_CastleFlags[MET_LIBRARIAN]) {
@@ -7365,7 +7365,7 @@ void func_psp_0926AED0(Entity* self) {
             self->step++;
             // This sfxID appears to be a bug since PSP uses a different value
             // for this music cue everywhere else
-            g_api.PlaySfx(MU_SEQ_LIBRARY);
+            g_api.PlaySfx(MU_SEQ_LIBRARIAN);
             g_CutsceneFlags |= 0x200;
         }
         break;
@@ -7392,7 +7392,7 @@ void func_psp_0926AED0(Entity* self) {
     case 9:
 #ifdef VERSION_PSP
         if (self->ext.et_801B6F30.unk86) {
-            g_api.PlaySfx(MU_SEQ_LIBRARY_PSP);
+            g_api.PlaySfx(MU_SEQ_LIBRARIAN_PSP);
         }
 #endif
         g_CutsceneFlags &= ~0x400;
@@ -7712,7 +7712,7 @@ void func_us_801B8A00(Entity* self) {
             self->step++;
             // This sfxID appears to be a bug since PSP uses a different value
             // for this music cue everywhere else
-            g_api.PlaySfx(MU_SEQ_LIBRARY);
+            g_api.PlaySfx(MU_SEQ_LIBRARIAN);
             g_CutsceneFlags |= 0x200;
         }
         break;
@@ -7739,7 +7739,7 @@ void func_us_801B8A00(Entity* self) {
     case 9:
         g_CutsceneFlags &= ~0x400;
         if (self->ext.et_801B6F30.unk86) {
-            g_api.PlaySfx(MU_SEQ_LIBRARY_PSP);
+            g_api.PlaySfx(MU_SEQ_LIBRARIAN_PSP);
         }
         DestroyEntity(self);
         return;

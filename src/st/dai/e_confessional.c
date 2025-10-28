@@ -156,7 +156,7 @@ void EntityConfessionalGhost(Entity* self) {
         self->ext.confessionalGhost.activateChime++;
         if ((self->ext.confessionalGhost.activateChime == true) &&
             (self->params & CONFESSIONAL_GHOST_PARISHIONER)) {
-            g_api.PlaySfx(MU_SEQ_DAI_CHIMES_PSP);
+            g_api.PlaySfx(MU_SEQ_CONFESSIONAL_BELLS_PSP);
             g_confessionalChimeActive = true;
             D_80097928 = 0;
         }
@@ -164,7 +164,7 @@ void EntityConfessionalGhost(Entity* self) {
 #else
         if (self->params & CONFESSIONAL_GHOST_PARISHIONER) {
             g_api.PlaySfx(SET_UNK_90);
-            g_api.PlaySfx(MU_SEQ_DAI_CHIMES);
+            g_api.PlaySfx(MU_SEQ_CONFESSIONAL_BELLS);
             D_80097928 = 0;
             g_confessionalChimeActive = true;
         }
