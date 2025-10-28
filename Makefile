@@ -58,11 +58,6 @@ WIBO            := $(BIN_DIR)/wibo
 MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
 CYGNUS			:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
 
-# Symbols
-BASE_SYMBOLS	 = $(CONFIG_DIR)/symbols.$(if $(filter mad,$(1)),beta,$(VERSION)).txt
-UNDEFINED_SYMS 	 = $(CONFIG_DIR)/undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt
-AUTO_UNDEFINED	 = TYPE_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt
-
 # Other tooling
 BLACK			:= $(and $(PYTHON_BIN),$(PYTHON_BIN)/)black
 SPLAT           := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)splat split
@@ -168,9 +163,10 @@ clean: clean_asm
 	git clean -fdx assets/
 	git clean -fdx build/$(VERSION)/
 	git clean -fdx src/**/gen/
-	git clean -fdx config/*$(VERSION)*
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
+	# n.b.! temporary clean for old auto sym files. remove 12/2025
+	rm -f config/*auto.*.txt
 clean_all: clean
 	git clean -fdx build/
 	git clean -fdx config/

@@ -14,9 +14,9 @@ options:
     - config/symbols.beta.txt
     - config/symbols.stmad.txt
   create_undefined_funcs_auto: yes
-  undefined_funcs_auto_path: config/undefined_funcs_auto.stmad.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.stmad.txt
   create_undefined_syms_auto: yes
-  undefined_syms_auto_path:  config/undefined_syms_auto.stmad.txt
+  undefined_syms_auto_path:  build/us/config/undefined_syms_auto.stmad.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: yes

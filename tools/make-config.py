@@ -415,6 +415,7 @@ def get_splat_config(
     file_stuff = make_ovl_fullname(name)
     platform = "psx"
     asm_path = f"asm/{ver}/{path_stuff}"
+    build_path = f"build/{ver}"
     bss_is_no_load = False
     section_order = [".data", ".rodata", ".text", ".bss", ".sbss"]
     if is_psp(ver):
@@ -428,19 +429,19 @@ def get_splat_config(
             "platform": platform,
             "basename": file_stuff,
             "base_path": "..",
-            "build_path": f"build/{ver}",
+            "build_path": build_path,
             "target_path": input,
             "asm_path": asm_path,
             "asset_path": f"assets/{path_stuff}",
             "src_path": f"src/{path_stuff}",
-            "ld_script_path": f"build/{ver}/{file_stuff}.ld",
+            "ld_script_path": f"{build_path}/{file_stuff}.ld",
             "compiler": "GCC",
             "symbol_addrs_path": [
                 f"config/symbols.{ver}.txt",
                 f"config/symbols.{ver}.{file_stuff}.txt",
             ],
-            "undefined_funcs_auto_path": f"config/undefined_funcs_auto.{ver}.{file_stuff}.txt",
-            "undefined_syms_auto_path": f"config/undefined_syms_auto.{ver}.{file_stuff}.txt",
+            "undefined_funcs_auto_path": f"{build_path}/config/undefined_funcs_auto.{ver}.{file_stuff}.txt",
+            "undefined_syms_auto_path": f"{build_path}/config/undefined_syms_auto.{ver}.{file_stuff}.txt",
             "find_file_boundaries": True,
             "use_legacy_include_asm": False,
             "migrate_rodata_to_functions": True,
@@ -1564,9 +1565,6 @@ def make_config(ovl_name: str, version: str, options):
             spinner_start(f"renamed {found} data/bss symbols, splitting again")
             shutil.rmtree(get_asm_path(splat_config))
             split(splat_config_path, False)
-
-    # automatically stage new files in config/ so make clean will not nuke them
-    git("add", splat_config_path, splat_config["options"]["symbol_addrs_path"][1])
 
     spinner_stop(True)  # done 🫡
 

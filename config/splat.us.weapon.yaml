@@ -13,8 +13,8 @@ options:
     - config/symbols.us.txt
     - config/symbols.us.weapon.txt
     - config/symbols.us.weapon.txt.in
-  undefined_funcs_auto_path: config/undefined_funcs_auto.us.weapon.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.us.weapon.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.weapon.txt
+  undefined_syms_auto_path:  build/us/config/undefined_syms_auto.us.weapon.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   extensions_path: tools/splat_ext
