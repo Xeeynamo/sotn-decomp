@@ -341,7 +341,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             if (!self->ext.bonePillar.isBouncing) {
                 self->ext.bonePillar.isBouncing = true;
-                PlaySfxPositional(SFX_UNK_761);
+                PlaySfxPositional(SFX_PLATE_LORD_BALL_IMPACT);
             } else {
                 PlaySfxPositional(SFX_METAL_CLANG_B);
             }

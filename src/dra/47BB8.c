@@ -427,10 +427,10 @@ s32 LoadFileSimToMem(SimKind kind) {
         break;
     case SIM_SEQ:
         if (g_StageId == STAGE_LIB) {
-            func_80131EBC(aPqes_1, 0x202);
+            func_80131EBC(aPqes_1, MU_SEQ_LIBRARIAN);
         }
         if (g_StageId == STAGE_DAI) {
-            func_80131EBC(aPqes_1, 0x204);
+            func_80131EBC(aPqes_1, MU_SEQ_CONFESSIONAL_BELLS);
         }
         break;
     case SIM_6:
