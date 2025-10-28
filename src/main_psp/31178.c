@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_0892FA84);
@@ -436,8 +437,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089375A0);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089375C0);
 
-void func_psp_08937650(void) {
-}
+void func_psp_08937650(void) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08937658);
 

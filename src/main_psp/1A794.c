@@ -1,3 +1,4 @@
++// SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_089190A0);
@@ -44,11 +45,9 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891985C);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919928);
 
-void func_psp_089199FC(void) {
-}
+void func_psp_089199FC(void) {}
 
-void func_psp_08919A04(void) {
-}
+void func_psp_08919A04(void) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919A0C);
 
@@ -324,14 +323,11 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", InitCARD);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", StartCARD);
 
-void _bu_init(void) {
-}
+void _bu_init(void) {}
 
-void SsSetStereo(void) {
-}
+void SsSetStereo(void) {}
 
-void SsSetMono(void) {
-}
+void SsSetMono(void) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", SsSetMVol);
 
@@ -429,8 +425,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", rcos);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", rsin);
 
-void gte_stub(void) {
-}
+void gte_stub(void) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", InitGeom);
 
@@ -438,11 +433,9 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", SetGeomScreen);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", SetGeomOffset);
 
-void SetFarColor(void) {
-}
+void SetFarColor(void) {}
 
-void SetFogNear(void) {
-}
+void SetFogNear(void) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_089280CC);
 
@@ -508,8 +501,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", gte_stotz);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", gte_stopz);
 
-void gte_dpcs(void) {
-}
+void gte_dpcs(void) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", gte_strgb);
 
