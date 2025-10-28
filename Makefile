@@ -156,12 +156,11 @@ build_pspeu: $(SOTNSTR_APP) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) 
 	VERSION=pspeu .venv/bin/python3 tools/builds/gen.py
 	ninja
 .PHONY: build_all
-build_all:
-	$(MAKE) VERSION=us
-	$(MAKE) VERSION=pspeu
-	$(MAKE) VERSION=hd
+build_all: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNSTR_APP) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
+	$(PYTHON) tools/builds/gen.py
+	ninja
 
-.PHONY: clean clean_asm
+.PHONY: clean clean_asm clean_all
 clean_asm:
 	git clean -fdx $(ASM_DIR)
 clean: ##@ clean extracted files, assets, and build artifacts
@@ -172,6 +171,9 @@ clean: clean_asm
 	git clean -fdx config/*$(VERSION)*
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
+clean_all: clean
+	git clean -fdx build/
+	git clean -fdx config/
 
 ##@
 ##@ Misc Targets
