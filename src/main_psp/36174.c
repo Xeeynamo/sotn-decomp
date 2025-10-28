@@ -255,7 +255,7 @@ void sceKernelGetModuleIdByAddress(void) {}
 
 void sceKernelGetModuleId(void) {}
 
-void sceKernelStopUnloadSelfModule__WithStatus__(void) {}
+void sceKernelStopUnloadSelfModuleWithStatus(void) {}
 
 void sceKernelStopModule(void) {}
 
@@ -431,113 +431,113 @@ void sceGeListUpdateStallAddr(void) {}
 
 void sceGeEdramGetAddr(void) {}
 
-void func_psp_0893A080(void) {}
+void sceMpegAvcDecode(void) {}
 
-void func_psp_0893A088(void) {}
+void sceMpegAvcDecodeDetail(void) {}
 
-void func_psp_0893A090(void) {}
+void sceMpegRingbufferDestruct(void) {}
 
-void func_psp_0893A098(void) {}
+void sceMpegInitAu(void) {}
 
-void func_psp_0893A0A0(void) {}
+void sceMpegQueryStreamOffset(void) {}
 
-void func_psp_0893A0A8(void) {}
+void sceMpegRingbufferConstruct(void) {}
 
-void func_psp_0893A0B0(void) {}
+void sceMpegNextAvcRpAu(void) {}
 
-void func_psp_0893A0B8(void) {}
+void sceMpegRegistStream(void) {}
 
-void func_psp_0893A0C0(void) {}
+void sceMpegAvcDecodeFlush(void) {}
 
-void func_psp_0893A0C8(void) {}
+void sceMpegUnRegistStream(void) {}
 
-void func_psp_0893A0D0(void) {}
+void sceMpegDelete(void) {}
 
-void func_psp_0893A0D8(void) {}
+void sceMpegQueryStreamSize(void) {}
 
-void func_psp_0893A0E0(void) {}
+void sceMpegInit(void) {}
 
-void func_psp_0893A0E8(void) {}
+void sceMpegFlushAllStream(void) {}
 
-void func_psp_0893A0F0(void) {}
+void sceMpegAvcDecodeStop(void) {}
 
-void func_psp_0893A0F8(void) {}
+void sceMpegAtracDecode(void) {}
 
-void func_psp_0893A100(void) {}
+void sceMpegFinish(void) {}
 
-void func_psp_0893A108(void) {}
+void sceMpegAvcDecodeMode(void) {}
 
-void func_psp_0893A110(void) {}
+void sceMpegMallocAvcEsBuf(void) {}
 
-void func_psp_0893A118(void) {}
+void sceMpegRingbufferPut(void) {}
 
-void func_psp_0893A120(void) {}
+void sceMpegRingbufferAvailableSize(void) {}
 
-void func_psp_0893A128(void) {}
+void sceMpegQueryMemSize(void) {}
 
-void func_psp_0893A130(void) {}
+void sceMpegFreeAvcEsBuf(void) {}
 
-void func_psp_0893A138(void) {}
+void sceMpegRingbufferQueryMemSize(void) {}
 
-void func_psp_0893A140(void) {}
+void sceMpegCreate(void) {}
 
-void func_psp_0893A148(void) {}
+void sceMpegGetAtracAu(void) {}
 
-void func_psp_0893A150(void) {}
+void sceMpegQueryAtracEsSize(void) {}
 
-void func_psp_0893A158(void) {}
+void sceMpegGetAvcAu(void) {}
 
-void func_psp_0893A160(void) {}
+void scePowerRegisterCallback(void) {}
 
-void func_psp_0893A168(void) {}
+void __sceSasSetADSR(void) {}
 
-void func_psp_0893A170(void) {}
+void __sceSasRevParam(void) {}
 
-void func_psp_0893A178(void) {}
+void __sceSasGetPauseFlag(void) {}
 
-void func_psp_0893A180(void) {}
+void __sceSasRevType(void) {}
 
-void func_psp_0893A188(void) {}
+void __sceSasInit(void) {}
 
-void func_psp_0893A190(void) {}
+void __sceSasSetVolume(void) {}
 
-void func_psp_0893A198(void) {}
+void __sceSasCoreWithMix(void) {}
 
-void func_psp_0893A1A0(void) {}
+void __sceSasSetSL(void) {}
 
-void func_psp_0893A1A8(void) {}
+void __sceSasGetEndFlag(void) {}
 
-void func_psp_0893A1B0(void) {}
+void __sceSasGetEnvelopeHeight(void) {}
 
-void func_psp_0893A1B8(void) {}
+void __sceSasSetKeyOn(void) {}
 
-void func_psp_0893A1C0(void) {}
+void __sceSasSetPause(void) {}
 
-void func_psp_0893A1C8(void) {}
+void __sceSasSetVoice(void) {}
 
-void func_psp_0893A1D0(void) {}
+void __sceSasSetADSRmode(void) {}
 
-void func_psp_0893A1D8(void) {}
+void __sceSasSetKeyOff(void) {}
 
-void func_psp_0893A1E0(void) {}
+void __sceSasCore(void) {}
 
-void func_psp_0893A1E8(void) {}
+void __sceSasSetPitch(void) {}
 
-void func_psp_0893A1F0(void) {}
+void __sceSasSetNoise(void) {}
 
-void func_psp_0893A1F8(void) {}
+void __sceSasGetGrain(void) {}
 
-void func_psp_0893A200(void) {}
+void __sceSasSetSimpleADSR(void) {}
 
-void func_psp_0893A208(void) {}
+void __sceSasSetGrain(void) {}
 
-void func_psp_0893A210(void) {}
+void __sceSasRevEVOL(void) {}
 
-void func_psp_0893A218(void) {}
+void __sceSasGetOutputmode(void) {}
 
-void func_psp_0893A220(void) {}
+void __sceSasSetOutputmode(void) {}
 
-void func_psp_0893A228(void) {}
+void __sceSasRevVON(void) {}
 
 void sceKernelPowerTick(void) {}
 
@@ -569,27 +569,27 @@ void sceUmdActivate(void) {}
 
 void sceUmdDeactivate(void) {}
 
-void func_psp_0893A2A8(void) {}
+void sceUtilityLoadModule(void) {}
 
-void func_psp_0893A2B0(void) {}
+void sceUtilityMsgDialogInitStart(void) {}
 
-void func_psp_0893A2B8(void) {}
+void sceUtilitySavedataInitStart(void) {}
 
-void func_psp_0893A2C0(void) {}
+void sceUtilityMsgDialogShutdownStart(void) {}
 
-void func_psp_0893A2C8(void) {}
+void sceUtilitySavedataGetStatus(void) {}
 
-void func_psp_0893A2D0(void) {}
+void sceUtilityMsgDialogUpdate(void) {}
 
-void func_psp_0893A2D8(void) {}
+void sceUtilitySavedataShutdownStart(void) {}
 
-void func_psp_0893A2E0(void) {}
+void sceUtilityMsgDialogGetStatus(void) {}
 
-void func_psp_0893A2E8(void) {}
+void sceUtilityGetSystemParamInt(void) {}
 
-void func_psp_0893A2F0(void) {}
+void sceUtilitySavedataUpdate(void) {}
 
-void func_psp_0893A2F8(void) {}
+void sceUtilityUnloadModule(void) {}
 
 INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36174", D_psp_0893C1A0);
 
