@@ -337,6 +337,8 @@ disk_prepare: build $(SOTNDISK)
 	cp $(BUILD_DIR)/F_NP3.BIN $(DISK_DIR)/ST/NP3/F_NP3.BIN
 	cp $(BUILD_DIR)/NZ0.BIN $(DISK_DIR)/ST/NZ0/NZ0.BIN
 	cp $(BUILD_DIR)/F_NZ0.BIN $(DISK_DIR)/ST/NZ0/F_NZ0.BIN
+	cp $(BUILD_DIR)/NZ1.BIN $(DISK_DIR)/ST/NZ0/NZ1.BIN
+	cp $(BUILD_DIR)/F_NZ1.BIN $(DISK_DIR)/ST/NZ0/F_NZ1.BIN
 	cp $(BUILD_DIR)/SEL.BIN $(DISK_DIR)/ST/SEL/SEL.BIN
 	cp $(BUILD_DIR)/ST0.BIN $(DISK_DIR)/ST/ST0/ST0.BIN
 	cp $(BUILD_DIR)/F_ST0.BIN $(DISK_DIR)/ST/ST0/F_ST0.BIN
@@ -455,7 +457,7 @@ prepare-reports: build $(REPORTS_DIR)
 function-finder: ##@ generates lists of files, their decomp status, and call graphs
 function-finder: prepare-reports
 	# TODO: make sure graphviz is installed
-	$(PYTHON) tools/function_finder/function_finder_psx.py > $(REPORTS_DIR)/functions.md
+	$(PYTHON) tools/function_finder/function_finder_psx.py --no-fetch > $(REPORTS_DIR)/functions.md
 
 $(REPORTS_DIR):
 	mkdir -p $(REPORTS_DIR)

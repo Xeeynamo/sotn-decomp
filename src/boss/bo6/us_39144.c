@@ -87,8 +87,7 @@ void func_us_801BBBC8(void) {}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BBBD0);
 
-INCLUDE_ASM(
-    "boss/bo6/nonmatchings/us_39144", BO6_RicCreateEntFactoryFromEntity);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicCreateEntFactoryFromEntity);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityFactory);
 
@@ -114,8 +113,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityPlayerBlinkWhite);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BE79C);
 
-INCLUDE_ASM(
-    "boss/bo6/nonmatchings/us_39144", BO6_RicEntityShrinkingPowerUpRing);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityShrinkingPowerUpRing);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityHitByIce);
 
@@ -139,8 +137,7 @@ void func_us_801C277C(void) {}
 
 void func_us_801C2784(void) {}
 
-INCLUDE_ASM(
-    "boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnHolyWaterBreakGlass);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnHolyWaterBreakGlass);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashHydroStorm);
 
@@ -154,8 +151,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", WarpBackgroundBrightness);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C32C4);
 
-INCLUDE_ASM(
-    "boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnHolyWaterFlame);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnHolyWaterFlame);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnCrashCross);
 
@@ -165,8 +161,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C488C);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnCrossTrail);
 
-INCLUDE_ASM(
-    "boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnCrashCrossParticles);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnCrashCrossParticles);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnThrownAxe);
 
@@ -196,8 +191,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C8590);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801C8618);
 
-INCLUDE_ASM(
-    "boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashReboundStoneExplosion);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashReboundStoneExplosion);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityCrashReboundStone);
 
@@ -217,8 +211,7 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityAguneaLightning);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityAguneaCircle);
 
-INCLUDE_ASM(
-    "boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnStopwatchCircle);
+INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntitySubwpnStopwatchCircle);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_EntityStopWatch);
 

@@ -256,19 +256,19 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     }
 
 #if defined(VERSION_US)
-    STRCPY(h.Title, "ＣＡＳＴＬＥＶＡＮＩＡ−");
+    strcpy(h.Title, "ＣＡＳＴＬＥＶＡＮＩＡ−");
 #else
-    STRCPY(h.Title, "ドラキュラＸ−");
+    strcpy(h.Title, "ドラキュラＸ−");
 #endif
 
     // writes slot number
     if (block > 8) {
-        STRCPY(saveTitle, "００");
+        strcpy(saveTitle, "００");
         saveTitle[1] += (block + 1) / 10;
         saveTitle[3] += (block + 1) % 10;
         strcat(h.Title, saveTitle);
     } else {
-        STRCPY(saveTitle, "０");
+        strcpy(saveTitle, "０");
         saveTitle[1] += block + 1;
         strcat(h.Title, saveTitle);
     }
@@ -304,18 +304,18 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     strcat(h.Title, "　");
     i = g_RoomCount * 100 / RoomCount;
     if (i >= 100) {
-        STRCPY(saveTitle, "０００");
+        strcpy(saveTitle, "０００");
         saveTitle[1] += i / 100;
         saveTitle[3] += (i / 10) % 10;
         saveTitle[5] += i % 10;
         strcat(h.Title, saveTitle);
     } else if (i > 9) {
-        STRCPY(saveTitle, "００");
+        strcpy(saveTitle, "００");
         saveTitle[1] += i / 10;
         saveTitle[3] += i % 10;
         strcat(h.Title, saveTitle);
     } else {
-        STRCPY(saveTitle, "０");
+        strcpy(saveTitle, "０");
         saveTitle[1] += i;
         strcat(h.Title, saveTitle);
     }
@@ -418,7 +418,7 @@ s32 LoadSaveData(SaveData* save) {
 }
 
 void MakeMemcardPath(char* dstSaveName, s32 block) {
-    STRCPY(dstSaveName, MEMCARD_ID);
+    strcpy(dstSaveName, MEMCARD_ID);
     dstSaveName[0x10] += block / 10;
     dstSaveName[0x11] += block % 10;
 }

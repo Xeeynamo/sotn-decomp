@@ -64,7 +64,7 @@ void EntityCtulhu(Entity* self) {
 
     if ((self->flags & FLAG_DEAD) && self->step < CTULHU_DEATH) {
         self->hitboxState = 0;
-        PlaySfxPositional(0x757);
+        PlaySfxPositional(SFX_CTULHU_DEATH);
         SetStep(CTULHU_DEATH);
     }
 

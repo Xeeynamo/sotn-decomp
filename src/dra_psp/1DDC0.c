@@ -707,8 +707,8 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
             var_s2 = 0x34;
         }
         g_SimFile = &D_80136450;
-        STRCPY(buf, "hdbin/");
-        STRCPY(buf1, g_StagesLba[g_StageId].ovlName);
+        strcpy(buf, "hdbin/");
+        strcpy(buf1, g_StagesLba[g_StageId].ovlName);
         func_890CAF8(buf1);
         strcat(buf, buf1);
         strcat(buf, ".bin;1");
@@ -738,8 +738,8 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
             }
         } else {
             g_SimFile = &D_80136450;
-            STRCPY(buf, D_psp_08B42060);
-            STRCPY(buf, "data/sd_");
+            strcpy(buf, D_psp_08B42060);
+            strcpy(buf, "data/sd_");
             strcat(buf, g_StagesLba[g_StageId].name);
             strcat(buf, ".vh;1");
             g_SimFile->path = buf;
@@ -776,8 +776,8 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
             }
         } else {
             g_SimFile = &D_80136450;
-            STRCPY(buf, D_psp_08B42060);
-            STRCPY(buf, "data/sd_");
+            strcpy(buf, D_psp_08B42060);
+            strcpy(buf, "data/sd_");
             strcat(buf, g_StagesLba[g_StageId].name);
             strcat(buf, ".vb;1");
             g_SimFile->path = buf;
@@ -797,8 +797,8 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     }
     if (type == SimFileType_StageChr) {
         g_SimFile = &D_80136450;
-        STRCPY(buf, "hdbin/");
-        STRCPY(buf2, g_StagesLba[g_StageId].gfxName);
+        strcpy(buf, "hdbin/");
+        strcpy(buf2, g_StagesLba[g_StageId].gfxName);
         func_890CAF8(buf2);
         strcat(buf, buf2);
         strcat(buf, ".bin;1");

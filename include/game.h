@@ -334,6 +334,9 @@ extern u8 D_8D95C40[];
 typedef enum Elements {
     ELEMENT_NONE = 0,
     ELEMENT_UNK_1 = 0x1,
+    ELEMENT_UNK_2 = 0x2,
+    ELEMENT_UNK_4 = 0x4,
+    ELEMENT_UNK_8 = 0x8,
     ELEMENT_UNK_10 = 0x10, // Possibly unresistable, used by e_spikes
     ELEMENT_HIT = 0x20,
     ELEMENT_CUT = 0x40,
@@ -1184,7 +1187,7 @@ typedef struct {
     /* 80097A33 */ u8 equipBodyCount[90];
     /* 80097A8D */ u8 equipHandOrder[169];
     /* 80097B36 */ u8 equipBodyOrder[90];
-    /* 80097B90 */ u8 saveName[12];
+    /* 80097B90 */ char saveName[12];
     /* 80097B9C */ u32 spellsLearnt;
     /* 80097BA0 */ s32 hp;
     /* 80097BA4 */ s32 hpMax;

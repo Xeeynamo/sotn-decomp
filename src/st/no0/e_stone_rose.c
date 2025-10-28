@@ -163,7 +163,7 @@ void func_us_801D8150(Entity* self) {
     }
     if ((entity->hitFlags & 0xF) && (self->step < 7)) {
         if (entity->flags & FLAG_DEAD) {
-            PlaySfxPositional(0x731);
+            PlaySfxPositional(SFX_STONE_ROSE_DEATH);
             entity -= 0xB;
             for (i = 0; i < 0xC; i++, entity++) {
                 entity->hitboxState = 0;
@@ -175,7 +175,7 @@ void func_us_801D8150(Entity* self) {
             (entity->step != 3) && (entity->step != 5) && (entity->step != 6)) {
             if ((entity->hitPoints >= 0x1F) || (params != 0xB) ||
                 self->ext.stoneRose.unk8A) {
-                PlaySfxPositional(0x730);
+                PlaySfxPositional(SFX_STONE_ROSE_PAIN);
                 if ((self->step != 6) && (self->step != 5)) {
                     self->step_s = self->step;
                 }

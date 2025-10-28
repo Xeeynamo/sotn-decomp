@@ -314,7 +314,7 @@ void EntityBlade(Entity* self) {
         ent_s4 = self + 10;
 
         if (ent_s0->ext.GH_Props.unk88 || ent_s4->ext.GH_Props.unk88) {
-            PlaySfxPositional(0x750);
+            PlaySfxPositional(SFX_BLADE_ENEMY_DEATH);
             func_801CE1E8(24);
         }
     }
@@ -573,7 +573,7 @@ void EntityBlade(Entity* self) {
         break;
     case 10:
         if (!self->step_s) {
-            PlaySfxPositional(0x74E);
+            PlaySfxPositional(SFX_BLADE_ENEMY_ATTACK);
             self->step_s++;
         }
         if (self->ext.GH_Props.unk84 == 1) {
@@ -624,7 +624,7 @@ void EntityBlade(Entity* self) {
         break;
     case 14:
         if (!self->step_s) {
-            PlaySfxPositional(0x74F);
+            PlaySfxPositional(SFX_BLADE_ENEMY_PAIN);
             self->step_s++;
         }
         if (self->ext.GH_Props.unk84 == 1) {

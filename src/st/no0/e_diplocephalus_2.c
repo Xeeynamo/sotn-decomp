@@ -409,7 +409,7 @@ void EntityDiplocephalusTail(Entity* self) {
         AnimateEntity(D_us_80181DBC, self);
         if (self->ext.diplocephalusUnk.parent->ext.diplocephalus.hitParams2 !=
             0) {
-            PlaySfxPositional(0x777);
+            PlaySfxPositional(SFX_DIPLOCEPHALUS_PAIN);
             self->poseTimer = 0;
             self->pose = 0;
             self->step = 6;
@@ -447,7 +447,7 @@ void EntityDiplocephalusTail(Entity* self) {
         self->ext.diplocephalusUnk.unk9C = 0;
         self->ext.diplocephalusUnk.entity->step = 7;
         self->ext.diplocephalusUnk.entity->flags &= ~FLAG_UNK_20000000;
-        PlaySfxPositional(0x778);
+        PlaySfxPositional(SFX_DIPLOCEPHALUS_DEATH);
         tempEntity = self;
         while (tempEntity->ext.diplocephalusUnk.unk90 != NULL) {
             tempEntity->hitboxState = 0;
@@ -484,7 +484,7 @@ void EntityDiplocephalusTail(Entity* self) {
             return;
         }
         if (self->pose == 8 && self->params) {
-            PlaySfxPositional(0x776);
+            PlaySfxPositional(SFX_DIPLOCEPHALUS_ATTACK);
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);

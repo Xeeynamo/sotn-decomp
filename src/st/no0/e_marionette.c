@@ -162,7 +162,7 @@ void EntityMarionette(Entity* self) {
         self->hitboxState = 0;
         self->palette = self->hitEffect = g_EInitSlinger[5] + 1;
         SetStep(10);
-        PlaySfxPositional(0x726);
+        PlaySfxPositional(SFX_MARIONETTE_YELL);
     }
     switch (self->step) {
     case 0:
@@ -445,7 +445,7 @@ void EntityMarionette(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->ext.marionette.unk84 = 0x80;
-            PlaySfxPositional(SFX_MARIONETTE_YELL);
+            PlaySfxPositional(SFX_MARIONETTE_LAUGH);
             self->step_s++;
             break;
 

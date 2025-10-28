@@ -217,7 +217,7 @@ jobs:
         run: |
             make clean && make build
             find asm -print
-            .venv/bin/python3 tools/function_finder/function_finder_psp.py > gh-duplicates/functions.md
+            .venv/bin/python3 tools/function_finder/function_finder_psp.py --no-fetch > gh-duplicates/functions.md
       - name: Commit all reports
         run: |
             git config --global user.name 'GitHub Action'

@@ -9,6 +9,11 @@
 
 #define OVL_EXPORT(x) CEN_##x
 
+enum OVL_EXPORT(Palette) {
+    PAL_NONE = 0,
+    PAL_BREAKABLE_DEBRIS = 0x159,
+};
+
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_ID_01,
@@ -39,7 +44,7 @@ typedef enum EntityIDs {
     /* 0x1A */ E_ELEVATOR_STATIONARY_UNUSED,
     /* 0x1B */ E_ELEVATOR_STATIONARY,
     /* 0x1C */ E_MOVING_ELEVATOR,
-    /* 0x80 */ E_BREAKABLE_UNK0 = 0x80,
+    /* 0x80 */ E_BREAKABLE_DEBRIS = 0x80,
 } EntityIDs;
 
 void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);

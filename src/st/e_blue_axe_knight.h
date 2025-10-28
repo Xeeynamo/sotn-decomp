@@ -360,7 +360,7 @@ void EntityAxeKnightBlue(Entity* self) {
     }
 
     if (self->flags & FLAG_DEAD && self->step != AXE_KNIGHT_DYING) {
-        PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_SCREAM);
+        PlaySfxPositional(SFX_AXE_KNIGHT_DEATH);
         self->hitboxState = 0;
         self->zPriority -= 0x10;
         self->ext.axeknight.unk80 = 65;
@@ -507,7 +507,7 @@ void EntityAxeKnightBlue(Entity* self) {
                 self->ext.axeknight.unk7C = 1;
             }
         } else if ((animStatus & 0x80) && (self->pose == 7)) {
-            PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
+            PlaySfxPositional(SFX_AXE_KNIGHT_ATTACK);
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
@@ -539,7 +539,7 @@ void EntityAxeKnightBlue(Entity* self) {
                 self->ext.axeknight.unk7C = 1;
             }
         } else if ((animStatus & 0x80) && (self->pose == 6)) {
-            PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
+            PlaySfxPositional(SFX_AXE_KNIGHT_ATTACK);
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
@@ -586,7 +586,7 @@ void EntityAxeKnightBlue(Entity* self) {
             }
 
             if (!self->ext.axeknight.unk80 || GetDistanceToPlayerX() < 0x20) {
-                PlaySfxPositional(0x766);
+                PlaySfxPositional(SFX_AXE_KNIGHT_ATTACK);
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;
@@ -651,7 +651,7 @@ void EntityAxeKnightBlue(Entity* self) {
                 self->ext.axeknight.unk7C = 1;
             }
         } else if ((animStatus & 0x80) && (self->pose == 7)) {
-            PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
+            PlaySfxPositional(SFX_AXE_KNIGHT_ATTACK);
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {

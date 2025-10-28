@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cat.h"
 
-void EntityUnkBreakable(Entity* self);
+void OVL_EXPORT(EntityBreakable)(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
 void EntityDamageDisplay(Entity* self);
@@ -28,11 +28,11 @@ void func_us_801C5DF4(Entity* self);
 void func_us_801C56A0(Entity* self);
 void func_us_801CA13C(Entity* self);
 void func_us_801B732C(Entity* self);
-void func_us_801B852C(Entity* self);
-void func_us_801B7FE0(Entity* self);
-void func_us_801B7F2C(Entity* self);
+void EntitySpikes(Entity* self);
+void EntitySpikesParts(Entity* self);
+void EntitySpikesDust(Entity* self);
 void func_us_801B7B64(Entity* self);
-void func_us_801B86B0(Entity* self);
+void EntitySpikesDamage(Entity* self);
 void func_us_801B8AD0(Entity* self);
 void func_us_801B87E8(Entity* self);
 void func_us_801BACF4(Entity* self);
@@ -50,11 +50,11 @@ void EntityDiscusLord(Entity* self);
 void EntityDiscus(Entity* self);
 void EntityDiscusTrail(Entity* self);
 void EntityDiscusChain(Entity* self);
-void func_us_801CC2E4(Entity* self);
-void func_us_801CCEF0(Entity* self);
-void func_us_801CDB50(Entity* self);
-void func_us_801CD614(Entity* self);
-void func_us_801CE170(Entity* self);
+void EntityHellfireBeast(Entity* self);
+void EntityHellfireBeastThorsHammer(Entity* self);
+void EntityHellfireBeastFlamePillar(Entity* self);
+void EntityHellfireBeastFlamePillarAnimation(Entity* self);
+void EntityHellfireBeastPunchHitbox(Entity* self);
 void func_us_801C839C(Entity* self);
 void func_us_801C8CE0(Entity* self);
 void func_us_801C7F84(Entity* self);
@@ -87,7 +87,7 @@ void EntityCorpseweedProjectile(Entity* self);
 void EntityBloodSkeleton(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    EntityUnkBreakable,
+    OVL_EXPORT(EntityBreakable),
     EntityExplosion,
     EntityPrizeDrop,
     EntityDamageDisplay,
@@ -114,11 +114,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C56A0,
     func_us_801CA13C,
     func_us_801B732C,
-    func_us_801B852C,
-    func_us_801B7FE0,
-    func_us_801B7F2C,
+    EntitySpikes,
+    EntitySpikesParts,
+    EntitySpikesDust,
     func_us_801B7B64,
-    func_us_801B86B0,
+    EntitySpikesDamage,
     func_us_801B8AD0,
     func_us_801B87E8,
     func_us_801BACF4,
@@ -136,11 +136,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDiscus,
     EntityDiscusTrail,
     EntityDiscusChain,
-    func_us_801CC2E4,
-    func_us_801CCEF0,
-    func_us_801CDB50,
-    func_us_801CD614,
-    func_us_801CE170,
+    EntityHellfireBeast,
+    EntityHellfireBeastThorsHammer,
+    EntityHellfireBeastFlamePillar,
+    EntityHellfireBeastFlamePillarAnimation,
+    EntityHellfireBeastPunchHitbox,
     func_us_801C839C,
     func_us_801C8CE0,
     func_us_801C7F84,
@@ -174,10 +174,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 };
 
 // Common
-EInit D_us_8018111C = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x000};
+EInit OVL_EXPORT(
+    EInitBreakable) = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x0000, 0x002};
-EInit D_us_80181140 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x004};
+EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x005};
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x001};
@@ -193,7 +194,7 @@ EInit D_us_801811B8 = {ANIMSET_OVL(0x05), 0x15, 0x48, 0x0200, 0x02F};
 
 EInit D_us_801811C4 = {ANIMSET_OVL(0x02), 0x01, 0x00, 0x0000, 0x005};
 EInit D_us_801811D0 = {ANIMSET_OVL(0x02), 0x03, 0x00, 0x0000, 0x005};
-EInit D_us_801811DC = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
+EInit g_EInitEnvironment = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
 EInit D_us_801811E8 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x005};
 EInit D_us_801811F4 = {ANIMSET_OVL(0x01), 0x13, 0x00, 0x0000, 0x000};
 
@@ -202,10 +203,13 @@ EInit g_EInitDiscusLord = {ANIMSET_OVL(0x04), 0x01, 0x49, 0x0224, 0x04D};
 EInit g_EInitDiscus = {ANIMSET_OVL(0x04), 0x10, 0x49, 0x0224, 0x04E};
 
 // Hellfire Beast
-EInit D_us_80181218 = {ANIMSET_OVL(0x04), 0x19, 0x49, 0x0224, 0x047};
-EInit D_us_80181224 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x04A};
-EInit D_us_80181230 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x048};
-EInit D_us_8018123C = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x049};
+EInit g_EInitHellfireBeast = {ANIMSET_OVL(0x04), 0x19, 0x49, 0x0224, 0x047};
+EInit g_EInitHellfireBeastPunchHitbox = {
+    ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x04A};
+EInit g_EInitHellfireBeastFlamePillar = {
+    ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x048};
+EInit g_EInitHellfireBeastThorsHammer = {
+    ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x049};
 
 // Lossoth
 EInit g_EInitLossoth = {ANIMSET_OVL(0x03), 0x00, 0x50, 0x0216, 0x083};
@@ -221,7 +225,7 @@ EInit g_EInitTombstone = {ANIMSET_OVL(0x09), 0x15, 0x4D, 0x0236, 0x071};
 
 // Gremlin
 EInit g_EInitGremlin = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x0E1};
-EInit D_us_801812F0 = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x005};
+EInit D_us_801812F0 = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x005}; // unused
 EInit g_EInitGremlinFire = {ANIMSET_OVL(0x0A), 0x00, 0x4F, 0x0238, 0x0E2};
 
 // Large Slime
@@ -238,7 +242,7 @@ EInit D_us_80180A88 = {ANIMSET_OVL(0x06), 0x00, 0x49, 0x0250, 0x03E};
 EInit g_EInitThornweed = {ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x09D};
 
 // Corpseweed
-EInit D_us_801812F4 = {ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x09E};
+EInit D_us_801812F4 = {ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x09E}; // unused
 EInit g_EInitCorpseweed = {ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x09F};
 EInit g_EInitCorpseweedProjectile = {
     ANIMSET_OVL(0x0B), 0x00, 0x50, 0x0252, 0x0A0};

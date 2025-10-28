@@ -126,7 +126,7 @@ void EntityDiscusLord(Entity* self) {
             }
             if (self->animCurFrame == 9 && !self->poseTimer) {
                 PlaySfxPositional(SFX_DISCUS_BUZZ);
-                PlaySfxPositional(SFX_DISCUS_LORD_HEY);
+                PlaySfxPositional(SFX_DISCUS_LORD_ATTACK);
                 discus->ext.discusLord.thrownDisc = 1;
                 if (self->facingLeft) {
                     EntityGreyPuffSpawner(self, 5, 3, -4, 0x30, 2, 7);
@@ -233,8 +233,8 @@ void EntityDiscusLord(Entity* self) {
             }
 
             self->animCurFrame = 0;
-            PlaySfxPositional(SFX_DISCUS_LORD_DEATH_VORTEX);
-            PlaySfxPositional(SFX_CAT_MULTI_EXPLODE);
+            PlaySfxPositional(SFX_DISCUS_LORD_DEATH);
+            PlaySfxPositional(SFX_DISCUS_LORD_EXPLODE);
             self->step_s++;
             // fallthrough
         case 1:
