@@ -6,6 +6,7 @@ rand = 0x0890B954;
 sprintf = 0x0890C6FC;
 strcat = 0x0890C928;
 STRCPY = 0x0890CA48;
+func_psp_089195C0 = 0x089195C0;
 PadRead_PSP = 0x8919BE0;
 DrawSync = 0x0891B448;
 VSync = 0x0891B5BC;

@@ -523,8 +523,6 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
             elif kind == "data" or kind == "rodata" or kind == "bss" or kind == "sbss":
                 obj = add_s(nw, version, f"{asm_path}/data/{name}.{kind}.s", ld_path)
                 objs.append(obj)
-            elif kind == "textbin":
-                objs.append(add_s(nw, version, f"{asm_path}/data/{name}.s", ld_path))
             elif kind == "asm":
                 objs.append(add_s(nw, version, f"{asm_path}/{name}.s", ld_path))
             elif kind == "raw" or kind == "cmp":
@@ -731,7 +729,7 @@ with open(build_ninja, "w") as f:
             "VERSION=$version"
             " tools/sotn_str/target/release/sotn_str process -p -f $in"
             " | .venv/bin/python3 tools/mwccgap/mwccgap.py $out --src-dir $src_dir"
-            " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path bin/allegrex-as"
+            " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path tools/pspas.py"
             " --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc"
             " -gccinc -Iinclude -D_internal_version_$version -DSOTN_STR -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
             " $opt_level -opt nointrinsics"
