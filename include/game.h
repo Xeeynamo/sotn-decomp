@@ -1187,7 +1187,7 @@ typedef struct {
     /* 80097A33 */ u8 equipBodyCount[90];
     /* 80097A8D */ u8 equipHandOrder[169];
     /* 80097B36 */ u8 equipBodyOrder[90];
-    /* 80097B90 */ u8 saveName[12];
+    /* 80097B90 */ char saveName[12];
     /* 80097B9C */ u32 spellsLearnt;
     /* 80097BA0 */ s32 hp;
     /* 80097BA4 */ s32 hpMax;

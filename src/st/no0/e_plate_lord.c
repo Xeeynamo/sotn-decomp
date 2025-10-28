@@ -183,7 +183,7 @@ void EntityPlateLord(Entity* self) {
         self->ext.plateLord.unkB0--;
     } else if (
         ((self->step == 5) || (self->step == 6)) && (self->hitFlags & 3)) {
-        PlaySfxPositional(0x75F);
+        PlaySfxPositional(SFX_PLATE_LORD_PAIN);
         self->step_s = 0;
         self->step = 7;
     }
@@ -195,7 +195,7 @@ void EntityPlateLord(Entity* self) {
         }
         self->step_s = 0;
         self->step = 0x10;
-        PlaySfxPositional(0x760);
+        PlaySfxPositional(SFX_PLATE_LORD_DEATH);
     }
     switch (self->step) {
     case 0:
@@ -480,7 +480,7 @@ void EntityPlateLord(Entity* self) {
             func_us_801D27C4(unkStructB, false);
             if (counter == 3) {
                 self->ext.plateLord.unk84 ^= 1;
-                PlaySfxPositional(0x779);
+                PlaySfxPositional(SFX_DIPLOCEPHALUS_STOMP);
                 self->step_s--;
             }
             break;
@@ -583,7 +583,7 @@ void EntityPlateLord(Entity* self) {
             }
             func_us_801D27C4(unkStructB, false);
             if (counter == 3) {
-                PlaySfxPositional(0x779);
+                PlaySfxPositional(SFX_DIPLOCEPHALUS_STOMP);
                 self->step_s++;
             }
             break;
@@ -613,7 +613,7 @@ void EntityPlateLord(Entity* self) {
             }
             func_us_801D27C4(unkStructB, true);
             if (counter == 3) {
-                PlaySfxPositional(0x779);
+                PlaySfxPositional(SFX_DIPLOCEPHALUS_STOMP);
                 self->step_s--;
             }
             break;

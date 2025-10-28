@@ -552,7 +552,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", strcat);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_0890C9D4);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", STRCPY);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", strcpy);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/16F4", func_psp_0890CAE0);
 

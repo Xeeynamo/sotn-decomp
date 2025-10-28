@@ -232,5 +232,7 @@ WhitespaceSensitiveMacros:
   - NS_SWIFT_NAME
   - PP_STRINGIZE
   - STRINGIZE
+  - INCLUDE_ASM
+  - INCLUDE_RODATA
 ...
 

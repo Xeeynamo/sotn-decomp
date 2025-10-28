@@ -165,7 +165,7 @@ void EntitySpearGuard(Entity* self) {
         func_us_801D3918(self, tempVar);
         if (GetDistanceToPlayerY() < 0x20) {
             SetStep(4);
-            PlaySfxPositional(0x773);
+            PlaySfxPositional(SFX_SPEAR_GUARD_MOVE);
             self->velocityX = 0;
         } else if (GetDistanceToPlayerX() < 0x18) {
             SetStep(7);
@@ -203,7 +203,7 @@ void EntitySpearGuard(Entity* self) {
         tempVar = AnimateEntity(D_us_80182FB0, self);
         if (!tempVar) {
             SetStep(4);
-            PlaySfxPositional(0x773);
+            PlaySfxPositional(SFX_SPEAR_GUARD_MOVE);
         } else if ((tempVar & 0x80) && (self->animCurFrame == 7)) {
             PlaySfxPositional(SFX_WEAPON_SWISH_B);
             if (self->facingLeft) {
@@ -275,11 +275,11 @@ void EntitySpearGuard(Entity* self) {
         tempVar = AnimateEntity(D_us_80182FDC, self);
         if (!tempVar) {
             SetStep(4);
-            PlaySfxPositional(0x773);
+            PlaySfxPositional(SFX_SPEAR_GUARD_MOVE);
         } else if (tempVar & 0x80) {
             tempVar = self->pose - 6;
             if (tempVar == 3) {
-                PlaySfxPositional(0x770);
+                PlaySfxPositional(SFX_SPEAR_GUARD_ATTACK);
             }
             if (!tempVar) {
                 if (self->facingLeft) {
@@ -314,7 +314,7 @@ void EntitySpearGuard(Entity* self) {
         tempVar = AnimateEntity(D_us_80182FF4, self);
         if (!tempVar) {
             SetStep(4);
-            PlaySfxPositional(0x773);
+            PlaySfxPositional(SFX_SPEAR_GUARD_MOVE);
         } else if (tempVar & 0x80) {
             tempVar = self->pose - 7;
             if (!tempVar) {
@@ -356,7 +356,7 @@ void EntitySpearGuard(Entity* self) {
         for (i = 0; i < 16; i++) {
             if (self->ext.spearGuard.unk7C == D_us_80182F14[i]) {
                 if (i == 14) {
-                    PlaySfxPositional(0x771);
+                    PlaySfxPositional(SFX_SPEAR_GUARD_DEATH);
                 } else if ((i & 1) == 0) {
                     PlaySfxPositional(SFX_EXPLODE_FAST_B);
                 }

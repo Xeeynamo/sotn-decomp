@@ -1,0 +1,109 @@
+options:
+  platform: psx
+  basename: stnz1
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/NZ1/NZ1.BIN
+  asm_path: asm/us/st/nz1
+  asset_path: assets/st/nz1
+  src_path: src/st/nz1
+  ld_script_path: build/us/stnz1.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.stnz1.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stnz1.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.us.stnz1.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x80010000
+sha1: c0aef5c7a2c3260005478b6a4c950d28680ce031
+segments:
+  - name: stnz1
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data, header]
+      - [0xA0, data]
+      - [0x9C8, data, e_init]
+      - [0xCF0, data]
+      - [0xDA0, .data, e_lock_camera]
+      - [0xDC8, data]
+      - [0x1318, .data, st_update]
+      - [0x1344, .data, collision]
+      - [0x1704, data, e_red_door]
+      - [0x171C, .data, st_common]
+      - [0x191C, .data, e_collect]
+      - [0x1C70, .data, e_misc]
+      - [0x1D28, .data, e_particles]
+      - [0x1DA8, .data, e_room_fg]
+      - [0x1E34, data]
+      - [0x2268, data, e_flea_man]
+      - [0x22B8, data]
+      - [0x258D4, .rodata, 262E4]
+      - [0x258F8, .rodata, 26C54]
+      - [0x2591C, .rodata, 274E4]
+      - [0x25948, .rodata, 2A48C]
+      - [0x25A10, .rodata, e_red_door]
+      - [0x25A28, .rodata, e_collect]
+      - [0x25AFC, .rodata, e_stage_name]
+      - [0x25B30, .rodata, e_skull_lord]
+      - [0x25B54, .rodata, e_harpy]
+      - [0x25B60, .rodata, 3A92C]
+      - [0x25BAC, .rodata, e_sword_lord]
+      - [0x25C10, .rodata, 3DA50]
+      - [0x25C7C, .rodata, 3EC98]
+      - [0x25CB4, .rodata, e_flea_armor]
+      - [0x25CF8, .rodata, e_flea_man]
+      - [0x25D0C, .rodata, e_medusa_head]
+      - [0x25D14, .rodata, prim_helpers]
+      - [0x25D1C, .rodata, e_life_up]
+      - [0x25D38, c, e_room_bg]
+      - [0x25E18, c, e_lock_camera]
+      - [0x262E4, c]
+      - [0x26C54, c]
+      - [0x274E4, c]
+      - [0x2A48C, c]
+      - [0x2C6E0, c, st_update]
+      - [0x2CB14, c, collision]
+      - [0x2E2D0, c, create_entity]
+      - [0x2EE48, c, e_red_door]
+      - [0x2FB1C, c, st_common]
+      - [0x30FCC, c, e_collect]
+      - [0x3393C, c, e_misc]
+      - [0x35CD8, c, e_stage_name]
+      - [0x36B2C, c, e_particles]
+      - [0x37370, c, e_room_fg]
+      - [0x3745C, c, popup]
+      - [0x3778C, c, water_effects]
+      - [0x39AA0, c, e_skull_lord]
+      - [0x3A92C, c, e_harpy]
+      - [0x3BBA0, c, 3A92C]
+      - [0x3C9BC, c, e_sword_lord]
+      - [0x3DA50, c]
+      - [0x3EC98, c]
+      - [0x3F5BC, c, e_flea_armor]
+      - [0x3FD64, c, e_flea_man]
+      - [0x401C8, c, e_medusa_head]
+      - [0x4059C, c, prim_helpers]
+      - [0x40DCC, c, e_life_up]
+      - [0x41680, bss]
+      - [0x41688, .bss, create_entity]
+      - [0x41698, bss]
+      - [0x42300, .bss, e_collect]
+  - [0x42340]
