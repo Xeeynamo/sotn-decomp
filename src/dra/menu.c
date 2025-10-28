@@ -2490,7 +2490,7 @@ void func_800F9E18(s32 arg0) {
     s32 i;
 
     for (i = arg0 * 5; i < nItems; i++) {
-        STRCPY(buffer, "　　　　　　　　　　　　　　　　　　　　　");
+        strcpy(buffer, "　　　　　　　　　　　　　　　　　　　　　");
         func_800F9DD0(g_RelicDefs[i * ItemsPerRow + 0].name, buffer[0]);
         func_800F9DD0(g_RelicDefs[i * ItemsPerRow + 1].name, buffer[1]);
         if ((i % ItemsPerRow) == 0) {
@@ -2511,7 +2511,7 @@ void func_800F9F40(void) {
         spellId = g_Status.spells[i];
         if (spellId & 0x80) {
             spellId ^= 0x80;
-            STRCPY(buffer, "　　　　　　　　　　　　　　　　　　　　　");
+            strcpy(buffer, "　　　　　　　　　　　　　　　　　　　　　");
             func_800F9DD0(g_SpellDefs[spellId].name, buffer);
             ShowText(buffer, 0x80 + i);
         }

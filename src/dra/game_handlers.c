@@ -507,14 +507,14 @@ void HandlePlay(void) {
             return;
 #else
             if (D_8C630D4 != 0) {
-                STRCPY(g_Status.saveName, D_psp_0914C3D8[D_8C630D8]);
+                strcpy(g_Status.saveName, D_psp_0914C3D8[D_8C630D8]);
                 g_IsTimeAttackUnlocked = true;
                 if (D_8C630D8 == 1) {
-                    STRCPY(g_Status.saveName, "richter ");
+                    strcpy(g_Status.saveName, "richter ");
                     g_PlayableCharacter = PLAYER_RICHTER;
                     g_IsTimeAttackUnlocked = true;
                 } else if (D_8C630D8 == 2) {
-                    STRCPY(g_Status.saveName, "maria   ");
+                    strcpy(g_Status.saveName, "maria   ");
                     g_PlayableCharacter = PLAYER_MARIA;
                     g_IsTimeAttackUnlocked = true;
                 } else {
@@ -1389,23 +1389,23 @@ void HandleNowLoading(void) {
 #endif
                 SetGameState(Game_Ending);
             } else {
-                STRCPY(g_Status.saveName, "alucard ");
+                strcpy(g_Status.saveName, "alucard ");
                 g_DemoMode = Demo_None;
                 if (g_DebugPlayer != 0) {
 #ifdef VERSION_PSP
-                    STRCPY(
+                    strcpy(
                         g_Status.saveName, D_psp_0915E500[g_PlayableCharacter]);
                     g_IsTimeAttackUnlocked = true;
                     if (g_PlayableCharacter == PLAYER_RICHTER) {
 #else
                     if (g_pads[1].pressed & PAD_UP) {
 #endif
-                        STRCPY(g_Status.saveName, "richter ");
+                        strcpy(g_Status.saveName, "richter ");
                         g_PlayableCharacter = PLAYER_RICHTER;
                         g_IsTimeAttackUnlocked = true;
 #ifdef VERSION_PSP
                     } else if (g_PlayableCharacter == PLAYER_MARIA) {
-                        STRCPY(g_Status.saveName, "maria   ");
+                        strcpy(g_Status.saveName, "maria   ");
                         g_PlayableCharacter = PLAYER_MARIA;
                         g_IsTimeAttackUnlocked = true;
 #endif

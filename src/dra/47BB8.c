@@ -467,7 +467,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     D_800A04EC = 1;
     g_SimFile = &D_800A024C[fileId];
     if (type == SimFileType_StagePrg) {
-        STRCPY(buf, "sim:c:\\bin\\");
+        strcpy(buf, "sim:c:\\bin\\");
         g_SimFile = &D_80136450;
         strcat(buf, g_StagesLba[g_StageId].ovlName);
         strcat(buf, ".bin");
@@ -480,7 +480,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
         if (fileId & 0x8000) {
             g_SimFile = &D_800A036C[fileId & 0x7FFF];
         } else {
-            STRCPY(buf, "sim:c:\\sound\\data\\sd_");
+            strcpy(buf, "sim:c:\\sound\\data\\sd_");
             g_SimFile = &D_80136450;
             strcat(buf, g_StagesLba[g_StageId].name);
             strcat(buf, ".vh");
@@ -508,7 +508,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
             g_SimFile = &D_800A036C[fileId & 0x7FFF];
         } else {
             g_SimFile = &D_80136450;
-            STRCPY(buf, "sim:c:\\sound\\data\\sd_");
+            strcpy(buf, "sim:c:\\sound\\data\\sd_");
             strcat(buf, g_StagesLba[g_StageId].name);
             strcat(buf, ".vb");
             g_SimFile->path = buf;
@@ -522,7 +522,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     }
     if (type == SimFileType_StageChr) {
         g_SimFile = &D_80136450;
-        STRCPY(buf, "sim:c:\\bin\\");
+        strcpy(buf, "sim:c:\\bin\\");
         strcat(buf, g_StagesLba[g_StageId].gfxName);
         strcat(buf, ".bin");
         g_SimFile->path = buf;
@@ -532,7 +532,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     }
     if (type == SimFileType_Weapon0Prg) {
         g_SimFile = &D_80136450;
-        STRCPY(buf, "sim:c:\\bin\\w0_000.bin");
+        strcpy(buf, "sim:c:\\bin\\w0_000.bin");
         buf[15] = ((fileId / 10) % 10) + '0';
         buf[16] = (fileId % 10) + '0';
         g_SimFile->path = buf;
@@ -542,7 +542,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     }
     if (type == SimFileType_Weapon1Prg) {
         g_SimFile = &D_80136450;
-        STRCPY(buf, "sim:c:\\bin\\w1_000.bin");
+        strcpy(buf, "sim:c:\\bin\\w1_000.bin");
         buf[15] = ((fileId / 10) % 10) + '0';
         buf[16] = (fileId % 10) + '0';
         g_SimFile->path = buf;
@@ -552,7 +552,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     }
     if (type == SimFileType_Weapon0Chr) {
         g_SimFile = &D_80136450;
-        STRCPY(buf, "sim:c:\\bin\\f0_000.bin");
+        strcpy(buf, "sim:c:\\bin\\f0_000.bin");
         buf[15] = ((fileId / 10) % 10) + '0';
         buf[16] = (fileId % 10) + '0';
         g_SimFile->path = buf;
@@ -562,7 +562,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     }
     if (type == SimFileType_Weapon1Chr) {
         g_SimFile = &D_80136450;
-        STRCPY(buf, "sim:c:\\bin\\f1_000.bin");
+        strcpy(buf, "sim:c:\\bin\\f1_000.bin");
         buf[15] = ((fileId / 10) % 10) + '0';
         buf[16] = (fileId % 10) + '0';
         g_SimFile->path = buf;
@@ -572,7 +572,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     }
     if (type == SimFileType_FamiliarPrg) {
         g_SimFile = &D_80136450;
-        STRCPY(buf, "sim:c:\\bin\\tt_000.bin");
+        strcpy(buf, "sim:c:\\bin\\tt_000.bin");
         buf[16] = (fileId % 10) + '0';
         g_SimFile->path = buf;
         g_SimFile->addr = FAMILIAR_PTR;
@@ -581,7 +581,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     }
     if (type == SimFileType_FamiliarChr) {
         g_SimFile = &D_80136450;
-        STRCPY(buf, "sim:c:\\bin\\ft_000.bin");
+        strcpy(buf, "sim:c:\\bin\\ft_000.bin");
         buf[16] = (fileId % 10) + '0';
         g_SimFile->path = buf;
         g_SimFile->addr = SIM_PTR;
@@ -590,7 +590,7 @@ s32 LoadFileSim(s32 fileId, SimFileType type) {
     }
     if (type == SimFileType_Monster) {
         g_SimFile = &D_80136450;
-        STRCPY(buf, "sim:c:\\bin\\mo_000.bin");
+        strcpy(buf, "sim:c:\\bin\\mo_000.bin");
         buf[14] = fileId / 100 + '0';
         buf[15] = fileId / 10 - fileId / 100 * 10 + '0';
         buf[16] = fileId % 10 + '0';

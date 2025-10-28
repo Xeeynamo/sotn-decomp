@@ -83,7 +83,7 @@ void DebugCaptureScreen(void) {
     DrawSync(0);
 
     for (i = 0; i < MaxScreenshotCount; i++) {
-        STRCPY(fileName, "sim:c:\\bin\\dra000.bmp");
+        strcpy(fileName, "sim:c:\\bin\\dra000.bmp");
         fileName[14] += i / 100;
         fileName[15] += i / 10 - i / 100 * 10;
         fileName[16] += i % 10;
@@ -184,7 +184,7 @@ void DebugCaptureVideo(void) {
         }
 
         for (i = 0; i < MaxVideoFramesCount; i++) {
-            STRCPY(fileName, "sim:c:\\bin\\dra000.mov");
+            strcpy(fileName, "sim:c:\\bin\\dra000.mov");
             fileName[14] += i / 100;
             fileName[15] += i / 10 - i / 100 * 10;
             fileName[16] += i % 10;

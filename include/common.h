@@ -26,9 +26,6 @@
 
 #define LEN(x) ((s32)(sizeof(x) / sizeof(*(x))))
 #define OFF(type, field) ((size_t)(&((type*)0)->field))
-#ifndef VERSION_PSP // PSP has a dedicated real function call
-#define STRCPY(dst, src) __builtin_memcpy(dst, src, sizeof(src))
-#endif
 #define SQ(x) ((x) * (x))
 #define MIN(a, b) ((a) > (b) ? (b) : (a))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
