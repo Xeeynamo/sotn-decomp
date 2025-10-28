@@ -1,0 +1,5 @@
+#include "common.h"
+
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/BAB4", func_psp_0890A3C0);
+
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/BAB4", func_psp_0890A478);
