@@ -1,0 +1,111 @@
+options:
+  platform: psp
+  basename: stnz1
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/nz1.bin
+  asm_path: asm/pspeu/st/nz1_psp
+  asset_path: assets/st/nz1
+  src_path: src/st
+  ld_script_path: build/pspeu/stnz1.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.stnz1.txt
+  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.stnz1.txt
+  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.stnz1.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x8000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: dcb6e7584126ea9711f5832d486bd163e3b266b0
+segments:
+  - [0x0, bin, mwo_header]
+  - name: stnz1
+    type: code
+    start: 0x80
+    vram:  0x09237700
+    bss_start_address: 0x09281180
+    bss_size: 0x300
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, nz1/create_entity]
+      - [0x1028, c, nz1_psp/1028]
+      - [0x3948, c, nz1_psp/e_life_up]
+      - [0x45C8, c, nz1_psp/e_stage_name]
+      - [0x54C8, c, nz1_psp/e_red_door]
+      - [0x67F8, c, nz1/st_update]
+      - [0x6D30, c, nz1_psp/6D30]
+      - [0x7180, c, nz1_psp/e_harpy]
+      - [0x8B10, c, nz1_psp/8B10]
+      - [0x8C10, c, nz1/e_particles]
+      - [0xA1A0, c, nz1/e_collect]
+      - [0xE3F0, c, nz1/e_misc]
+      - [0xED80, c, nz1/collision]
+      - [0x10F58, c, nz1_psp/10F58]
+      - [0x12890, c, nz1_psp/water_effects]
+      - [0x15900, c, nz1_psp/popup]
+      - [0x15EF8, c, nz1_psp/e_flea_man]
+      - [0x16550, c, nz1/e_room_fg]
+      - [0x16668, c, nz1_psp/16668]
+      - [0x17408, c, nz1_psp/e_flea_armor]
+      - [0x17EB8, c, nz1/st_common]
+      - [0x19780, c, nz1/prim_helpers]
+      - [0x19EC0, c, nz1_psp/19EC0]
+      - [0x1BA78, c, nz1_psp/st_init]
+      - [0x1BE58, c, nz1_psp/1BE58]
+      - [0x1D3A0, c, nz1_psp/e_breakable]
+      - [0x1DA88, c, nz1_psp/1DA88]
+      - [0x20AF0, c, nz1/e_room_bg]
+      - [0x20C00, c, nz1/e_lock_camera]
+      - [0x21380, c, nz1_psp/21380]
+      - [0x24A00, data]
+      - [0x24A50, data, nz1_psp/e_life_up]
+      - [0x24AA0, data, nz1/e_stage_name]
+      - [0x25380, data]
+      - [0x25398, .data, nz1/st_update]
+      - [0x253C8, data]
+      - [0x254D8, .data, nz1/e_particles]
+      - [0x25558, .data, nz1/e_collect]
+      - [0x25AA0, .data, nz1/e_misc]
+      - [0x25B00, .data, nz1/collision]
+      - [0x25ED8, data]
+      - [0x26028, data, nz1/e_flea_man]
+      - [0x26090, .data, nz1/e_room_fg]
+      - [0x26130, data]
+      - [0x26240, .data, nz1/st_common]
+      - [0x26440, data]
+      - [0x2BCE8, data, nz1/e_init]
+      - [0x2C0A8, data]
+      - [0x49740, .data, nz1/e_lock_camera]
+      - [0x49770, data]
+      - [0x49900, .rodata, nz1_psp/1028]
+      - [0x49918, .rodata, nz1_psp/e_life_up]
+      - [0x49938, .rodata, nz1_psp/e_red_door]
+      - [0x49950, .rodata, nz1/e_collect]
+      - [0x499B0, .rodata, nz1_psp/10F58]
+      - [0x499D8, .rodata, nz1_psp/16668]
+      - [0x49A18, .rodata, nz1_psp/19EC0]
+      - [0x49A18, .rodata, nz1_psp/1BE58]
+      - [0x49A68, .rodata, nz1_psp/1DA88]
+      # - {start: 0x49B00, type: bss, vram: 0x9281180}
+      - [0x49B00, .bss, nz1/create_entity]
+      - [0x49B20, bss, nz1_psp/e_life_up]
+      - [0x49B28, .bss, nz1/e_collect]
+      - [0x49B88, bss, nz1_psp/49B88]
+  - [0x49B00]
