@@ -68,7 +68,7 @@ void HydrateSaveSummaryEntry(s32 port, s32 slot, s32 slotValue) {
     }
     g_SaveSummary[port].kind[slot] = save->info.endGameFlags;
     g_SaveSummary[port].character[slot] = save->info.character;
-    STRCPY(g_SaveSummary[port].name[slot], save->info.name);
+    strcpy(g_SaveSummary[port].name[slot], save->info.name);
     g_IsTimeAttackUnlocked |= save->info.endGameFlags;
 }
 
@@ -370,8 +370,8 @@ s32 func_801B3A94(s32 arg0) {
                     if (arg0 == 1) {
                         save->info.endGameFlags |= 1;
                     } else {
-                        STRCPY(save->info.name, arg0);
-                        STRCPY(save->status.saveName, arg0);
+                        strcpy(save->info.name, (char*)arg0);
+                        strcpy(save->status.saveName, (char*)arg0);
                     }
                 }
                 LoadSaveData(g_Pix);

@@ -2,7 +2,7 @@
 #include "game.h"
 
 u16 D_8018CD54[] = {
-#include "gen/D_8018CD54.h"
+#include GEN_VERSION(D_8018CD54.h)
 };
 
 u16 D_8018CDB4[] = {
@@ -26,5 +26,5 @@ u16 D_8018D5B4[] = {
 };
 
 u16 D_8018D5D4[] = {
-#include "gen/D_8018D5D4.h"
+#include GEN_VERSION(D_8018D5D4.h)
 };

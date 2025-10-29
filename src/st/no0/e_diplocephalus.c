@@ -131,7 +131,7 @@ void EntityDiplocephalusFoot(Entity* self) {
 
         // Walk forward, spawning dust cloud when stepping
         if (UnkCollisionFunc3(D_us_80181D54) & EFFECT_SOLID) {
-            PlaySfxPositional(0x779);
+            PlaySfxPositional(SFX_DIPLOCEPHALUS_STOMP);
             self->velocityX = 0;
             self->velocityY = 0;
             self->animCurFrame++;

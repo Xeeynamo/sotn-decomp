@@ -386,7 +386,7 @@ void HandleTitleScreen(void) {
         func_801B19F4();
         func_801B1DA8();
         g_api.FreePrimitives(D_801BB010);
-        STRCPY(g_Status.saveName, "alucard");
+        strcpy(g_Status.saveName, "alucard");
         if (g_StageId == STAGE_ST0) {
             SetGameState(Game_VideoPlayback);
         } else if (g_StageId == STAGE_MEMORYCARD) {

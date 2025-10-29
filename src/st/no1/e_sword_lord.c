@@ -111,7 +111,7 @@ void EntitySwordLord(Entity* self) {
     s32 s8;
 
     if ((self->flags & FLAG_DEAD) && (self->step < 6)) {
-        PlaySfxPositional(0x77F);
+        PlaySfxPositional(SFX_SWORD_LORD_DEATH);
         self->hitboxState = 0;
         (self + 1)->hitboxState = 0;
         self->pose = 0;
@@ -221,7 +221,7 @@ void EntitySwordLord(Entity* self) {
             self->step = 3;
         }
         if (self->animCurFrame == 9 && !self->step_s) {
-            PlaySfxPositional(0x77D);
+            PlaySfxPositional(SFX_SWORD_LORD_SWIPE_ATTACK);
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
             if (self->facingLeft) {
                 self->velocityX = FIX(-4.0);
@@ -293,7 +293,7 @@ void EntitySwordLord(Entity* self) {
                     EntityExplosionVariantsSpawner(self, 5, 3, -16, 30, 0, -4);
                     EntityExplosionVariantsSpawner(self, 5, 3, 16, 30, 0, -4);
                 }
-                PlaySfxPositional(0x77E);
+                PlaySfxPositional(SFX_SWORD_LORD_STAB_ATTACK);
                 PlaySfxPositional(SFX_WEAPON_SWISH_B);
                 PlaySfxPositional(SFX_STOMP_HARD_D);
                 self->ext.et_801CF850.unk7E = 1;
