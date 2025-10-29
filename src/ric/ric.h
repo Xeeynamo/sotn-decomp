@@ -65,24 +65,7 @@ enum RicSteps {
     PL_S_DEBUG = 0xF0,
 };
 
-enum RicTimers {
-    PL_T_POISON,
-    PL_T_CURSE,
-    PL_T_2,
-    PL_T_3,
-    PL_T_4,
-    PL_T_5,
-    PL_T_6,
-    PL_T_7,
-    PL_T_8,
-    PL_T_ATTACK,
-    PL_T_10,
-    PL_T_RUN,
-    PL_T_12,
-    PL_T_INVINCIBLE_SCENE, // "dying" in the prologue
-    PL_T_INVINCIBLE,
-    PL_T_AFTERIMAGE_DISABLE,
-};
+#include "common.h"
 
 enum RicEntities {
     E_NONE,
@@ -156,6 +139,8 @@ enum RicEntities {
     NUM_ENTITIES,
 };
 
+#ifndef RIC_COMMON_H
+// TODO: remove once sotn-assets subweapons supports header preprocessing
 enum RicBlueprints {
     BP_SKID_SMOKE,
     BP_SMOKE_PUFF,
@@ -241,6 +226,7 @@ enum RicBlueprints {
     BP_TELEPORT,
     NUM_BLUEPRINTS,
 };
+#endif
 
 // NOTE: B_MAKE from DRA is different than RIC or MARIA!
 // Parsing is done in RicEntityFactory
@@ -334,6 +320,8 @@ enum BlueprintOrigin {
     B_ORIGIN_SUBWEAPON_CRASH_PARTICLE,
 };
 
+#ifndef RIC_COMMON_H
+// TODO: remove once sotn-assets subweapons supports header preprocessing
 enum RicSubweapons {
     PL_W_NONE,
     PL_W_DAGGER,
@@ -368,6 +356,7 @@ enum RicSubweapons {
     PL_W_30,
     NUM_WEAPONS,
 };
+#endif
 
 extern PlayerOvl RIC_player;
 
