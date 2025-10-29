@@ -478,17 +478,24 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     else:
         raise Exception(f"platform {platform} not recognized")
     objs = []
-    if ovl_name == "main":
-        if platform != "psp":
-            obj = add_s(nw, version, f"{asm_path}/header.s", ld_path)
-        else:
-            obj = add_copy_psx(
-                nw,
-                version,
-                f"{asset_path}/elf_header.bin",
-                f"{asset_path}/elf_header.bin",
-                ld_path,
-            )
+    if ovl_name == "main" and platform != "psp":
+        objs.append(add_s(nw, version, f"{asm_path}/header.s", ld_path))
+    if ovl_name == "main" and platform == "psp":
+        obj = add_copy_psx(
+            nw,
+            version,
+            f"{asset_path}/elf_header.bin",
+            f"{asset_path}/elf_header.bin",
+            ld_path,
+        )
+        objs.append(obj)
+        obj = add_copy_psx(
+            nw,
+            version,
+            f"{asset_path}/elf_footer.bin",
+            f"{asset_path}/elf_footer.bin",
+            ld_path,
+        )
         objs.append(obj)
     for segment in splat_config["segments"]:
         if not "type" in segment:
