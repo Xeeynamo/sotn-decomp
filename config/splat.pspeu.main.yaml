@@ -43,8 +43,8 @@ segments:
     start: 0x16F4
     vram: 0x08900000
     bss_size: 0x72F150
-    align: 128
-    subalign: 8
+    align: 16
+    subalign: 4
     subsegments:
       - [0x16F4, asm, func_psp_08900000]
       - [0x178C, asm, func_psp_08900098]
