@@ -66,21 +66,36 @@ segments:
       - [0x1D64, asm, sigprocmask] # kernel_bridge.c
       - [0x1D6C, asm, sceGuInit] # libgu.c
       - [0x1EA8, asm, sceGuStart] # libgu.c
-      - [0x2110, asm, func_psp_08900A1C]
+      - [0x2110, asm, sceGuFinishId] # libgu.c
       - [0x2368, asm, func_psp_08900C74]
-      - [0x24C0, asm, func_psp_08900DCC]
-      - [0x259C, asm, func_psp_08900EA8]
+      - [0x241C, asm, sceGuSendList] # libgu.c
+      - [0x24C0, asm, sceGuDispBuffer2] # libgu.c
+      - [0x259C, asm, sceGuSwapBuffers] # libgu.c
       - [0x2664, asm, func_psp_08900F70]
       - [0x2828, asm, sceGuSetDither] # libgu.c
-      - [0x2954, asm, func_psp_08901260]
-      - [0x29F0, c, main_psp/29F0]
-      - [0x2CF8, asm, func_psp_08901604]
-      - [0x2D54, asm, func_psp_08901660]
+      - [0x2954, asm, sceGuEndObject] # libgu.c
+      - [0x29F0, asm, sceGuPatchDivide] # libgu.c
+      - [0x2A1C, asm, sceGuColorMaterial] # libgu.c
+      - [0x2A44, asm, sceGuSpecular] # libgu.c
+      - [0x2A70, asm, sceGuTexScale] # libgu.c
+      - [0x2AB4, asm, func_psp_089013C0] # libgu.c
+      - [0x2B20, asm, sceGuTerm] # libgu.c
+      - [0x2B98, asm, sceGuFinish] # libgu.c
+      - [0x2BB4, asm, sceGuGetMemory] # libgu.c
+      - [0x2C04, asm, sceGuGetAlignedMemory] # libgu.c
+      - [0x2C5C, asm, sceGuCheckList] # libgu.c
+      - [0x2C74, asm, sceGuBeginPacket] # libgu.c
+      - [0x2CB0, asm, sceGuEndPacket] # libgu.c
+      - [0x2CC0, asm, sceGuSignal] # libgu.c
+      - [0x2CF8, asm, sceGuSetCallback2] # libgu.c
+      - [0x2D34, asm, sceGuBreak] # libgu.c
+      - [0x2D54, asm, sceGuContinue] # libgu.c
       - [0x2D70, asm, func_psp_0890167C]
       - [0x2D7C, asm, func_psp_08901688]
-      - [0x2DC0, asm, func_psp_089016CC]
-      - [0x2E48, asm, func_psp_08901754]
-      - [0x2EB4, asm, func_psp_089017C0]
+      - [0x2DC0, asm, sceGuSync] # libgu.c
+      - [0x2E2C, asm, sceGuFlush] # libgu.c
+      - [0x2E48, asm, sceGuDisplay] # libgu.c
+      - [0x2EB4, asm, sceGuDispBuffer] # libgu.c
       - [0x2F28, asm, func_psp_08901834]
       - [0x3030, c, main_psp/3030]
       - [0x3138, asm, func_psp_08901A44]
@@ -99,7 +114,7 @@ segments:
       - [0x53F0, asm, _sceGuCallbackSignal] # libgu.c
       - [0x546C, asm, _sceGuCallbackFinish] # libgu.c
       - [0x549C, asm, _sceGuResetGlobalVariables] # libgu.c
-      - [0x55A8, asm, func_psp_08903EB4]
+      - [0x55A8, asm, _sceGuUpdateStallAddr] # libgu.c
       - [0x5600, asm, func_psp_08903F0C]
       - [0x57E8, asm, func_psp_089040F4]
       - [0x5AB8, c, main_psp/5AB8]

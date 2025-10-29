@@ -119,4 +119,4 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", func_psp_08902BD0);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", func_psp_08902C98);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", func_psp_08902CD4);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", sceGupSignal);
