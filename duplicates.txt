@@ -2992,15 +2992,6 @@
 | 0.97 | true     | NZ0_EntityCutscene                  | asm/us/st/nz0/matchings/cutscene/NZ0_EntityCutscene.s 
 | 0.93 | true     | TOP_EntityCutscene                  | asm/us/st/top/matchings/cutscene/TOP_EntityCutscene.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/sound/SetReverbDepth.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | EntityHeartDrop                     | asm/us/boss/bo4/matchings/e_misc/EntityHeartDrop.s 
 | 1.00 | true     | EntityHeartDrop                     | asm/us/boss/bo6/matchings/e_collect/EntityHeartDrop.s 
 | 1.00 | true     | EntityHeartDrop                     | asm/us/boss/mar/matchings/e_misc/EntityHeartDrop.s 
@@ -3008,6 +2999,14 @@
 | 1.00 | true     | EntityHeartDrop                     | asm/us/boss/rbo5/matchings/e_misc/EntityHeartDrop.s 
 | 1.00 | true     | EntityHeartDrop                     | asm/us/st/mad/matchings/e_misc/EntityHeartDrop.s 
 | 1.00 | true     | EntityHeartDrop                     | asm/us/st/no0/matchings/e_misc/EntityHeartDrop.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/sound/SetReverbDepth.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | DMACallback                         | asm/us/main/matchings/psxsdk/libetc/intr/DMACallback.s 
 | 0.92 | true     | InterruptCallback                   | asm/us/main/matchings/psxsdk/libetc/intr/InterruptCallback.s 
@@ -3026,8 +3025,8 @@
 | 0.97 | true     | EntitySkeletonPieces                | asm/us/st/rtop/matchings/e_yorick/EntitySkeletonPieces.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801A8328                       | asm/us/st/dai/matchings/e_breakable/func_801A8328.s 
-| 1.00 | true     | func_us_801B6198                    | asm/us/st/no1/matchings/unk_35E20/func_us_801B6198.s 
-| 1.00 | true     | EntityBreakableDebris               | asm/us/st/no2/matchings/e_breakable/EntityBreakableDebris.s 
+| 1.00 | true     | NO1_EntityBreakableDebris           | asm/us/st/no1/matchings/e_breakable/NO1_EntityBreakableDebris.s 
+| 1.00 | true     | NO2_EntityBreakableDebris           | asm/us/st/no2/matchings/e_breakable/NO2_EntityBreakableDebris.s 
 | 1.00 | true     | RTOP_EntityBreakableDebris          | asm/us/st/rtop/matchings/e_breakable/RTOP_EntityBreakableDebris.s 
 | 1.00 | true     | func_801A8328                       | asm/us/st/st0/matchings/2805C/func_801A8328.s 
 | 1.00 | true     | TOP_EntityBreakableDebris           | asm/us/st/top/matchings/e_breakable/TOP_EntityBreakableDebris.s 
@@ -3235,10 +3234,10 @@
 | 1.00 | false    | func_us_801BDE3C                    | asm/us/st/nz1/nonmatchings/3DA50/func_us_801BDE3C.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DAI_EntityBreakable                 | asm/us/st/dai/matchings/e_breakable/DAI_EntityBreakable.s 
-| 0.92 | true     | func_us_801B5E20                    | asm/us/st/no1/matchings/unk_35E20/func_us_801B5E20.s 
-| 0.99 | true     | EntityBreakable                     | asm/us/st/no2/matchings/e_breakable/EntityBreakable.s 
+| 0.92 | true     | NO1_EntityBreakable                 | asm/us/st/no1/matchings/e_breakable/NO1_EntityBreakable.s 
+| 0.99 | true     | NO2_EntityBreakable                 | asm/us/st/no2/matchings/e_breakable/NO2_EntityBreakable.s 
 | 0.92 | true     | RTOP_EntityBreakable                | asm/us/st/rtop/matchings/e_breakable/RTOP_EntityBreakable.s 
-| 0.92 | true     | EntityBreakable                     | asm/us/st/top/matchings/e_breakable/EntityBreakable.s 
+| 0.92 | true     | TOP_EntityBreakable                 | asm/us/st/top/matchings/e_breakable/TOP_EntityBreakable.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CutsceneRun                         | asm/us/st/dre/matchings/cutscene/CutsceneRun.s 
 | 0.96 | true     | CutsceneRun                         | asm/us/st/lib/matchings/cutscene/CutsceneRun.s 
@@ -4205,6 +4204,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | RicEntityCrashReboundStoneParticles | asm/us/ric/matchings/2F8E8/RicEntityCrashReboundStoneParticles.s 
 | 1.00 | true     | RicEntityStopwatchCrashLightning    | asm/us/ric/matchings/319C4/RicEntityStopwatchCrashLightning.s 
