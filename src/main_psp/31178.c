@@ -203,101 +203,101 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08933F6C);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08933F7C);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934304);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Set);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_0893431C);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4SetXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934330);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Copy);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934358);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4PositiveZero);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934370);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4NegativeZero);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_0893438C);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Ceil);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089343A4);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Trunc);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089343BC);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Round);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089343D4);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Floor);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089343EC);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4FromIVector);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934404);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Add);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934420);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4AddXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_0893443C);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Sub);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934458);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4SubXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934474);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Mul);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934490);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4MulXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089344AC);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Div);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089344D4);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4DivXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089344FC);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Neg);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934538);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Abs);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934570);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Lerp);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_0893459C);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4LerpXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089345C8);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Hermite);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934628);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4HermiteXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_0893468C);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Scale);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089346AC);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4ScaleXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089346CC);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Clamp);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934700);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4ClampXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934734);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Max);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934750);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Min);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_0893476C);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4InnerProduct);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_0893478C);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4InnerProductXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089347AC);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4OuterProductXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089347CC);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Funnel);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089347E8);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Average);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934804);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4IsEqual);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934824);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4IsZero);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_0893484C);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4SignFloat);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934864);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4SignInt);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934880);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4Normalize);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089348B0);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4NormalizeXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089348E0);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4NormalizePhase);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934918);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4LengthXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934938);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4DistanceXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934960);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4FaceForwardXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934990);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4ReflectXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089349D8);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4RefractXYZ);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934A48);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", sceVfpuVector4TruncatePrecision24);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08934A80);
 

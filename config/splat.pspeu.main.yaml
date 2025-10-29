@@ -46,15 +46,24 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x16F4, asm, func_psp_08900000]
-      - [0x178C, asm, func_psp_08900098]
-      - [0x18BC, c, main_psp/18BC]
-      - [0x1A74, asm, func_psp_08900380]
-      - [0x1B18, asm, func_psp_08900424]
-      - [0x1BBC, asm, func_psp_089004C8]
-      - [0x1C40, c, main_psp/1C40]
-      - [0x1CBC, asm, func_psp_089005C8]
-      - [0x1D14, c, main_psp/1D14]
+      - [0x16F4, asm, _open] # kernel_bridge.c
+      - [0x178C, asm, _lseek] # kernel_bridge.c
+      - [0x18BC, asm, _exit] # kernel_bridge.c
+      - [0x1984, asm, _sbrk] # kernel_bridge.c
+      - [0x1A74, asm, _read] # kernel_bridge.c
+      - [0x1B18, asm, _write] # kernel_bridge.c
+      - [0x1BBC, asm, _close] # kernel_bridge.c
+      - [0x1C40, asm, _fstat] # kernel_bridge.c
+      - [0x1C50, asm, isatty] # kernel_bridge.c
+      - [0x1C58, asm, _rename] # kernel_bridge.c
+      - [0x1C74, c, main_psp/1C74] # kernel_bridge.c
+      - [0x1CBC, asm, __free_heap] # kernel_bridge.c
+      - [0x1CF8, asm, clock] # kernel_bridge.c
+      - [0x1D14, asm, time] # kernel_bridge.c
+      - [0x1D30, asm, _gettimeofday] # kernel_bridge.c
+      - [0x1D4C, asm, _times] # kernel_bridge.c
+      - [0x1D54, asm, sigfillset] # kernel_bridge.c
+      - [0x1D64, asm, sigprocmask] # kernel_bridge.c
       - [0x1D6C, asm, func_psp_08900678]
       - [0x1EA8, asm, func_psp_089007B4]
       - [0x2110, asm, func_psp_08900A1C]
@@ -112,13 +121,13 @@ segments:
       - [0x8088, asm, func_psp_08906994]
       - [0x81CC, asm, func_psp_08906AD8]
       - [0x81E4, asm, abs]
-      - [0x81F0, asm, func_psp_08906AFC]
+      - [0x81F0, asm, atexit]
       - [0x82C4, asm, func_psp_08906BD0]
       - [0x8380, asm, func_psp_08906C8C]
       - [0x83DC, asm, func_psp_08906CE8]
       - [0x8624, asm, func_psp_08906F30]
       - [0x9A70, asm, func_psp_0890837C]
-      - [0x9AB4, asm, func_psp_089083C0]
+      - [0x9AB4, asm, exit]
       - [0x9BB4, asm, func_psp_089084C0]
       - [0x9CB0, c, main_psp/9CB0]
       - [0x9D7C, asm, func_psp_08908688]
@@ -144,10 +153,10 @@ segments:
       - [0xB7B4, asm, func_psp_0890A0C0]
       - [0xBAB4, c, main_psp/BAB4]
       - [0xBBA8, asm, func_psp_0890A4B4]
-      - [0xBBF4, asm, func_psp_0890A500]
-      - [0xBD04, asm, func_psp_0890A610]
-      - [0xBE10, asm, func_psp_0890A71C]
-      - [0xBE94, asm, func_psp_0890A7A0]
+      - [0xBBF4, asm, _getmodreent]
+      - [0xBD04, asm, _setmodreent]
+      - [0xBE10, asm, _clrmodreent]
+      - [0xBE94, asm, _reent_init_ptr]
       - [0xC074, asm, func_psp_0890A980]
       - [0xC12C, asm, func_psp_0890AA38]
       - [0xC158, asm, func_psp_0890AA64]
@@ -165,7 +174,7 @@ segments:
       - [0xD13C, asm, func_psp_0890BA48]
       - [0xD694, asm, func_psp_0890BFA0]
       - [0xD6E8, asm, func_psp_0890BFF4]
-      - [0xD77C, asm, func_psp_0890C088]
+      - [0xD77C, asm, _reclaim_reent]
       - [0xD9A0, asm, func_psp_0890C2AC]
       - [0xD9FC, asm, func_psp_0890C308]
       - [0xDA5C, asm, func_psp_0890C368]
@@ -243,9 +252,9 @@ segments:
       - [0x3AF78, asm, func_psp_08939884]
       - [0x3AFBC, asm, func_psp_089398C8]
       - [0x3AFF0, asm, func_psp_089398FC]
-      - [0x3B068, asm, func_psp_08939974]
-      - [0x3B13C, asm, func_psp_08939A48]
-      - [0x3B3CC, asm, func_psp_08939CD8]
+      - [0x3B068, asm, _start] # crt0.c
+      - [0x3B13C, asm, _main] # crt0.c
+      - [0x3B3CC, asm, _stop] # crt0.c
       - [0x3B3FC, textbin, sce_stub]
       - [0x3C524, rodata]
       - [0x3D528, .rodata, main_psp/192C0]

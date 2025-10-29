@@ -45,9 +45,9 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891985C);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919928);
 
-void func_psp_089199FC(void) {}
+void _init(void) {}
 
-void func_psp_08919A04(void) {}
+void _fini(void) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919A0C);
 
@@ -97,7 +97,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A104);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A14C);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A1CC);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", main);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A608);
 
