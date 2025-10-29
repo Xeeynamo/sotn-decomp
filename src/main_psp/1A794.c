@@ -655,11 +655,27 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892CB30);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892CB40);
 
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892CC48);
+
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892CD48);
+
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892CDE0);
+
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892CEB0);
+
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892CF34);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892CF7C);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892CF88);
+
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892D030);
+
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892D154);
+
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892D1D8);
+
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892D220);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892D2E8);
 
