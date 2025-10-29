@@ -64,14 +64,14 @@ segments:
       - [0x1D4C, asm, _times] # kernel_bridge.c
       - [0x1D54, asm, sigfillset] # kernel_bridge.c
       - [0x1D64, asm, sigprocmask] # kernel_bridge.c
-      - [0x1D6C, asm, func_psp_08900678]
-      - [0x1EA8, asm, func_psp_089007B4]
+      - [0x1D6C, asm, sceGuInit] # libgu.c
+      - [0x1EA8, asm, sceGuStart] # libgu.c
       - [0x2110, asm, func_psp_08900A1C]
       - [0x2368, asm, func_psp_08900C74]
       - [0x24C0, asm, func_psp_08900DCC]
       - [0x259C, asm, func_psp_08900EA8]
       - [0x2664, asm, func_psp_08900F70]
-      - [0x2828, asm, func_psp_08901134]
+      - [0x2828, asm, sceGuSetDither] # libgu.c
       - [0x2954, asm, func_psp_08901260]
       - [0x29F0, c, main_psp/29F0]
       - [0x2CF8, asm, func_psp_08901604]
@@ -96,9 +96,9 @@ segments:
       - [0x5300, asm, func_psp_08903C0C]
       - [0x5344, asm, func_psp_08903C50]
       - [0x53C4, asm, func_psp_08903CD0]
-      - [0x53F0, asm, func_psp_08903CFC]
-      - [0x546C, asm, func_psp_08903D78]
-      - [0x549C, asm, func_psp_08903DA8]
+      - [0x53F0, asm, _sceGuCallbackSignal] # libgu.c
+      - [0x546C, asm, _sceGuCallbackFinish] # libgu.c
+      - [0x549C, asm, _sceGuResetGlobalVariables] # libgu.c
       - [0x55A8, asm, func_psp_08903EB4]
       - [0x5600, asm, func_psp_08903F0C]
       - [0x57E8, asm, func_psp_089040F4]
