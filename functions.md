@@ -1060,7 +1060,7 @@
 | nz1   | EntityExplosionSpawn                     |       60 |          6 |        |       |     |
 | sel   | func_psp_09238FE8                        |       60 |          6 |        |       |     |
 | ric   | RicEntityStopwatchCrashLightning         |       60 |          8 |        |       |     |
-| lib   | func_us_801AE84C                         |       60 |          8 |        |       |     |
+| lib   | func_psp_09254C00                        |       60 |          8 |        |       |     |
 | nz1   | EntityHarpy                              |       60 |          8 |        |       |     |
 | sel   | func_psp_09240A88                        |       60 |          9 |        |       |     |
 | dra   | func_psp_09113E70                        |       60 |         11 |        |       |     |
@@ -1214,7 +1214,7 @@
 | ric   | func_pspeu_092BF628                      |       68 |          6 |        |       |     |
 | lib   | func_psp_0925B380                        |       68 |          8 |        |       |     |
 | no3   | func_pspeu_09243748                      |       68 |          8 |        |       |     |
-| lib   | func_us_801AE7AC                         |       68 |         10 |        |       |     |
+| lib   | func_psp_09254B18                        |       68 |         10 |        |       |     |
 | lib   | func_psp_0923A448                        |       68 |         11 |        |       |     |
 | dra   | func_psp_090EDA78                        |       69 |          6 |        |       |     |
 |       | func_092EBEC8                            |       69 |          6 |        |       |     |
@@ -2293,7 +2293,7 @@
 | maria | func_pspeu_092B28B0                      |      261 |         51 |        |       |     |
 | cat   | func_pspeu_0924FC98                      |      262 |         20 |        |       |     |
 | dai   | func_801A8328                            |      262 |         27 |        |       |     |
-| no2   | EntityBreakableDebris                    |      262 |         27 |        |       |     |
+| no2   | func_pspeu_092571F8                      |      262 |         27 |        |       |     |
 | nz1   | NZ1_EntityBreakableDebris                |      262 |         27 |        |       |     |
 | st0   | func_801A8328                            |      262 |         27 |        |       |     |
 | chi   | EntityBreakableWallDebris                |      262 |         33 |        |       |     |
@@ -2461,7 +2461,7 @@
 | st0   | func_pspeu_09251410                      |      338 |         36 |        |       |     |
 | wrp   | func_psp_09244020                        |      338 |         36 |        |       |     |
 | dai   | EntityUnkBreakable                       |      340 |         49 |        |       |     |
-| no2   | EntityBreakable                          |      340 |         49 |        |       |     |
+| no2   | func_pspeu_09256D08                      |      340 |         49 |        |       |     |
 | no2   | func_pspeu_09248630                      |      341 |         23 |        |       |     |
 | np3   | func_pspeu_092575D0                      |      341 |         23 |        |       |     |
 | dra   | func_80123B40                            |      342 |         25 |        |       |     |
