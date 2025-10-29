@@ -523,6 +523,8 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
             elif kind == "data" or kind == "rodata" or kind == "bss" or kind == "sbss":
                 obj = add_s(nw, version, f"{asm_path}/data/{name}.{kind}.s", ld_path)
                 objs.append(obj)
+            elif kind == "textbin":
+                objs.append(add_s(nw, version, f"{asm_path}/data/{name}.s", ld_path))
             elif kind == "asm":
                 objs.append(add_s(nw, version, f"{asm_path}/{name}.s", ld_path))
             elif kind == "raw" or kind == "cmp":

@@ -748,3 +748,5 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", SpuSetKey);
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", SpuSetVoiceAttr);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892F83C);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/1A794", D_psp_0893BE8C);

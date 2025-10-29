@@ -28,3 +28,5 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/192C0", func_psp_08918004);
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/192C0", func_psp_08918040);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/192C0", func_psp_0891807C);
+
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/192C0", D_psp_0893BE34);
