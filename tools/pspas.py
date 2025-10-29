@@ -19,14 +19,18 @@ def patch(line: str) -> str:
         line,
     )
     if match:
-        comment_prefix, byte1, byte2, byte3, byte4, comment_suffix, opcode = match.groups()
+        comment_prefix, byte1, byte2, byte3, byte4, comment_suffix, opcode = (
+            match.groups()
+        )
         return f"{comment_prefix}{byte1}{byte2}{byte3}{byte4}{comment_suffix}.word 0x{byte4}{byte3}{byte2}{byte1}"
     match = re.match(
         r"^(.*/\*\s*[0-9A-Fa-fX]+\s+[0-9A-Fa-fX]+\s+)([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})([0-9A-Fa-f]{2})(\s+\*/.*?)(mtv|mfv|vpfxs|vpfxt|bvtl|vpfxd).*$",
         line,
     )
     if match:
-        comment_prefix, byte1, byte2, byte3, byte4, comment_suffix, opcode = match.groups()
+        comment_prefix, byte1, byte2, byte3, byte4, comment_suffix, opcode = (
+            match.groups()
+        )
         return f"{comment_prefix}{byte1}{byte2}{byte3}{byte4}{comment_suffix}.word 0x{byte4}{byte3}{byte2}{byte1}"
     return line
 
