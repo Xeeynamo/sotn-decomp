@@ -5,6 +5,7 @@ srand = 0x0890B91C;
 rand = 0x0890B954;
 sprintf = 0x0890C6FC;
 strcat = 0x0890C928;
+strcmp = 0x0890C9D4;
 strcpy = 0x0890CA48;
 PadRead_PSP = 0x8919BE0;
 DrawSync = 0x0891B448;
