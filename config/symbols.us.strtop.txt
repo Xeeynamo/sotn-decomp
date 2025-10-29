@@ -16,15 +16,6 @@ g_EInitCommon = 0x8018059C;
 g_EInitDamageNum = 0x801805A8;
 g_EInitSkeletonPieces = 0x801805D8;
 RTOP_RedDoorTiles = 0x80180640;
-g_eBreakableAnimations = 0x80180714;
-g_eBreakableHitboxes = 0x8018073C;
-g_eBreakableExplosionTypes = 0x80180748;
-g_eBreakablePalettes = 0x80180754;
-g_eBreakableAnimSets = 0x80180768;
-g_eBreakableUnk5A = 0x8018077C;
-g_eBreakableDrawModes = 0x80180790;
-g_eBreakableHitboxOffsets = 0x8018079C;
-g_eBreakableDebrisOffsets = 0x801807B4;
 RTOP_PrizeDrops = 0x801807C8;
 D_us_801808C8 = 0x801808C8;
 LionLampAnim = 0x801808F0;
@@ -46,8 +37,6 @@ s_ClockTowerScript = 0x801819C0;
 s_ClockVertexSets = 0x80181A34;
 RTOP_EntityBackgroundBlock = 0x8019FDFC; // source=match
 RTOP_EntityLockCamera = 0x8019FF60; // source=match
-RTOP_EntityBreakable = 0x801A04E8;
-RTOP_EntityBreakableDebris = 0x801A0850;
 EntitySecretStairs = 0x801A0D4C;
 EntityBreakableWall = 0x801A1108;
 EntityTriangleElevator = 0x801A13C0;
