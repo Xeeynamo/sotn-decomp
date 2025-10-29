@@ -78,21 +78,6 @@ enum SfxModes {
 #define CD_SOUND_COMMAND_14 14
 #define CD_SOUND_COMMAND_16 16
 
-// SEQ music tracks
-// While there is unused SEQ data in DRA, LIB and DAI are the only two
-// overlays that use sequenced music heard in-game.
-//
-// For the PSP port, the SEQ files were replaced with pre-recorded versions
-// and saved as ATRAC3 streaming audio.  To reference these new audio streams,
-// the loop points for "Lost Painting" and "Curse Zone" were also replaced.
-// Reusing the loop point IDs makes sense as .AT3 files support looping.
-enum SeqTracks {
-    MU_SEQ_LIBRARIAN = 0x202,
-    MU_SEQ_CONFESSIONAL_BELLS = 0x204,
-    MU_SEQ_LIBRARIAN_PSP = 0x302,
-    MU_SEQ_CONFESSIONAL_BELLS_PSP = 0x304
-};
-
 // XA music tracks
 // LOOP_POINT means it starts playing from part way into the song
 enum {
@@ -377,6 +362,22 @@ enum Sfx {
 };
 #else
 enum Sfx {
+    // SEQ music tracks
+    // While there is unused SEQ data in DRA, LIB and DAI are the only two
+    // overlays that use sequenced music heard in-game.
+    //
+    // For the PSP port, the SEQ files were replaced with pre-recorded versions
+    // and saved as ATRAC3 streaming audio.  To reference these new audio
+    // streams, the loop points for "Lost Painting" and "Curse Zone" were also
+    // replaced.  Reusing the loop point IDs makes sense as .AT3 files support
+    // looping.
+    MU_SEQ_LIBRARIAN = 0x202,
+    MU_SEQ_CONFESSIONAL_BELLS = 0x204,
+    MU_SEQ_LIBRARIAN_PSP = 0x302,
+    MU_SEQ_CONFESSIONAL_BELLS_PSP = 0x304,
+
+    // Common sfxIDs (0x601-0x6E6)
+
     // vabid 0
     /* 0x601 */ SFX_HARPY_WING_FLAP = 0x601,
     /* 0x602 */ SFX_RIC_WHIP_RATTLE_A,
@@ -615,6 +616,8 @@ enum Sfx {
     /* 0x6E5 */ SFX_UNK_ANIME_EXPLODE,
     /* 0x6E6 */ SFX_LOW_SYNTH_BUBBLES,
 
+    // Player sfx (0x6E7-0x708)
+
     // vabid 1
     /* 0x6E7 */ SFX_VO_ALU_PAIN_A,
     /* 0x6E8 */ SFX_VO_ALU_PAIN_B,
@@ -650,6 +653,8 @@ enum Sfx {
     /* 0x706 */ SFX_RIC_WHIP_ATTACK,
     /* 0x707 */ SFX_RIC_SLIDE_SKID,
     /* 0x708 */ SFX_RIC_HYDRO_STORM_ATTACK,
+
+    // Enemy and misc sfx (0x709-0x8F5)
 
     // vabid 3
     /* 0x709 */ SFX_SLOGRA_ROAR, // different pitch in NP3

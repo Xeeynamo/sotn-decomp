@@ -261,13 +261,13 @@ SimFile D_800A04AC[] = {
     {
         "sound/data/sd_eve1.seq;1",
         aPqes_1,
-        0x00001EB3,
+        SEQ_LIB_SEQ_LEN,
         SIM_SEQ,
     },
     {
         "sound/data/sd_eve3.seq;1",
         aPqes_1,
-        0x00000178,
+        SEQ_DAI_SEQ_LEN,
         SIM_SEQ,
     },
 };
@@ -411,13 +411,13 @@ SimFile D_psp_091605D0[] = {
     {
         "snd_e/data/sd_eve1.seq;1",
         aPqes_1,
-        0x00001EB3,
+        SEQ_LIB_SEQ_LEN,
         SIM_SEQ,
     },
     {
         "snd_e/data/sd_eve3.seq;1",
         aPqes_1,
-        0x00000178,
+        SEQ_DAI_SEQ_LEN,
         SIM_SEQ,
     },
 };
