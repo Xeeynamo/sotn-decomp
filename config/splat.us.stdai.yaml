@@ -85,7 +85,7 @@ segments:
       - [0x3A94, .data, cutscene_data]
       - [0x3F20, .data, gfx_data]
       - [0x1782C, .data, tilemaps]
-      - [0x3AA5C, .data, gen/sprites]
+      - [0x3AA5C, .data, gen/us/sprites]
       - [0x3FE3C, .rodata, e_breakable]
       - [0x3FE5C, .rodata, e_tower_exit]
       - [0x3FE98, .rodata, e_confessional]
