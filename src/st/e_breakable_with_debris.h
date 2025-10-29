@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-enum OVL_EXPORT(BreakableTypes) {
+enum BreakableTypes {
     CANDELABRA_WALL_DOUBLE,
     NONE,
     CANDELABRA_TALL,
@@ -12,7 +12,7 @@ enum OVL_EXPORT(BreakableTypes) {
     BUST,
 };
 
-enum OVL_EXPORT(BreakableDebrisSteps) {
+enum BreakableDebrisSteps {
     INIT,
     UPDATE,
     DEBRIS_NOP = 256,
@@ -101,7 +101,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
                 entity->params = 256;
             }
             g_api.PlaySfx(SFX_GLASS_BREAK_E);
-#ifdef PREVENT_BUST_RESPAWN
+#if defined(STAGE_IS_TOP) || defined(STAGE_IS_RTOP)
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_HEART_DROP, self, entity);
@@ -127,8 +127,8 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 CreateEntityFromEntity(E_HEART_DROP, self, entity);
-#ifdef JUG_PARAMS
-                entity->params = JUG_PARAMS;
+#ifdef STAGE_IS_NO1
+                entity->params = 3; // item drop index
 #else
                 entity->params = self->params & 0x1FF;
 #endif

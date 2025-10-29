@@ -4,7 +4,6 @@
 #define CANDELABRA_HIT_SFX SFX_CANDLE_HIT
 #define BREAKABLE_HIT_SFX SFX_QUICK_STUTTER_EXPLODE_B
 #define OVL_BREAKABLE_ANIMSET ANIMSET_OVL(24)
-#define JUG_PARAMS 3
 
 static AnimateEntityFrame anim_candelabra_wall_double[] = {
     {4, 1}, {4, 2}, POSE_LOOP(0)};
