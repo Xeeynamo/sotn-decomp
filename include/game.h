@@ -2274,8 +2274,8 @@ typedef enum {
     PAL_ALUCARD_BLUE_OUTLINE_MASK, // EntityWingSmashTrail
     PAL_ALUCARD_GRAY_OUTLINE_MASK,
     PAL_ALUCARD_WOLF,
-    PAL_PLAYER_HIDDEN,   // used during teleporting and transforming
-    PAL_UNK_110 = 0x110, // weapon
+    PAL_PLAYER_HIDDEN = 0x10D, // used during teleporting and transforming
+    PAL_UNK_110 = 0x110,       // weapon
     PAL_UNK_111 = 0x111,
     PAL_UNK_117 = 0x117,
     PAL_RICHTER = 0x120,
