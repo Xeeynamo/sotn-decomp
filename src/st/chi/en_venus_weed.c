@@ -884,7 +884,7 @@ void EntityVenusWeedFlower(Entity* self) {
         if (self->ext.venusWeedFlower.clutOffset) {
             entity = self - 1; // Root
             entity->ext.venusWeed.triggerAttack = true;
-            if (!(self->palette & PAL_OVL_FLAG)) {
+            if (!(self->palette & PAL_UNK_FLAG)) {
                 self->palette += self->ext.venusWeedFlower.clutOffset;
                 if (self->palette > PAL_DRA(0x219)) {
                     self->palette = PAL_DRA(0x219);
@@ -1241,7 +1241,7 @@ void EntityVenusWeedDart(Entity* self) {
         break;
 
     case DECAY:
-        if (!(self->palette & PAL_OVL_FLAG)) {
+        if (!(self->palette & PAL_UNK_FLAG)) {
             self->ext.venusWeedDart.clutIndex++;
             self->palette = self->ext.venusWeedDart.clutIndex + PAL_DRA(0x20A);
 
@@ -1306,7 +1306,7 @@ void EntityVenusWeedSpike(Entity* self) {
 
         self->flags |= FLAG_UNK_2000 | FLAG_UNK_00200000;
         self->hitboxState = 0;
-        self->palette = PAL_OVL(0x224);
+        self->palette = PAL_FLAG(0x224);
 
         primIdx = g_api.AllocPrimitives(PRIM_GT4, SpikeParts);
         if (primIdx == -1) {

@@ -470,7 +470,7 @@ void EntityLossothEffects(Entity* self) {
             // fallthrough
         case 5:
             self->animCurFrame = 0x2E;
-            self->palette = PAL_OVL(0x21A);
+            self->palette = PAL_FLAG(0x21A);
             self->opacity = 0;
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             self->drawFlags = FLAG_DRAW_OPACITY;

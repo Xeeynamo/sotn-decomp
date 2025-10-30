@@ -355,7 +355,7 @@ static void func_ptr_80170008(Entity* self) {
             g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_B);
             self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
             self->scaleX = self->scaleY = 0x100;
-            self->palette = PAL_OVL(0x15F);
+            self->palette = PAL_FLAG(0x15F);
             self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
             if (self->primIndex != -1) {
                 self->flags |= FLAG_HAS_PRIMS;

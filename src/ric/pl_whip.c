@@ -89,7 +89,7 @@ void RicEntityWhip(Entity* self) {
         self->step = 1;
         self->velocityX = 0;
         self->velocityY = 0;
-        self->palette = PAL_OVL(0x148);
+        self->palette = PAL_FLAG(0x148);
         if (PLAYER.facingLeft == 0) {
             self->ext.whip.unk88 = 2;
         } else {
@@ -188,7 +188,7 @@ void RicEntityWhip(Entity* self) {
         self->animSet = ANIMSET_OVL(18);
         self->animCurFrame = 0x1D;
         self->animCurFrame = 0x1E;
-        self->palette = PAL_OVL(0x138);
+        self->palette = PAL_FLAG(0x138);
         self->unk5A = 0x46;
         if (psp_s4 < 8) {
             self->hitboxWidth = 3;
@@ -317,12 +317,12 @@ void RicEntityWhip(Entity* self) {
             }
             if (PLAYER.pose == 6) {
                 if (PLAYER.poseTimer > 14) {
-                    self->palette = PAL_OVL(0x138);
+                    self->palette = PAL_FLAG(0x138);
                 } else if (PLAYER.poseTimer == 0) {
-                    self->palette = PAL_OVL(0x138);
+                    self->palette = PAL_FLAG(0x138);
                 } else if ((PLAYER.poseTimer == 11 || PLAYER.poseTimer == 12) ||
                            (PLAYER.poseTimer == 13 || PLAYER.poseTimer == 14)) {
-                    self->palette = PAL_OVL(0x13C);
+                    self->palette = PAL_FLAG(0x13C);
                 } else {
 // poseTimer can be -1 apparently.
 // todo this should read the previous element out of bounds?
@@ -378,12 +378,12 @@ void RicEntityWhip(Entity* self) {
                 }
                 // This very well might be a switch
                 if (PLAYER.poseTimer > 14) {
-                    self->palette = PAL_OVL(0x138);
+                    self->palette = PAL_FLAG(0x138);
                 } else if (PLAYER.poseTimer == 0) {
-                    self->palette = PAL_OVL(0x138);
+                    self->palette = PAL_FLAG(0x138);
                 } else if (PLAYER.poseTimer == 11 || PLAYER.poseTimer == 12 ||
                            PLAYER.poseTimer == 13 || PLAYER.poseTimer == 14) {
-                    self->palette = PAL_OVL(0x13C);
+                    self->palette = PAL_FLAG(0x13C);
                 } else {
 // poseTimer can be -1 apparently.
 // todo this should read the previous element out of bounds?
@@ -482,7 +482,7 @@ void RicEntityWhip(Entity* self) {
             self->drawFlags |= DRAW_HIDE;
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         }
-        self->palette = PAL_OVL(0x160);
+        self->palette = PAL_FLAG(0x160);
     }
 }
 
@@ -503,7 +503,7 @@ void RicEntityArmBrandishWhip(Entity* entity) {
                         FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_10000;
         entity->animSet = ANIMSET_OVL(18);
         entity->unk5A = 0x46;
-        entity->palette = PAL_OVL(0x120);
+        entity->palette = PAL_FLAG(0x120);
         entity->zPriority = PLAYER.zPriority + 2;
     }
     if (PLAYER.step == PL_S_CROUCH) {
@@ -540,7 +540,7 @@ void func_80167964(Entity* entity) {
                         FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_10000;
     }
     if (!(entity->params & 0xFF00)) {
-        g_Entities[D_80155D30[entity->poseTimer]].palette = PAL_OVL(0x140);
+        g_Entities[D_80155D30[entity->poseTimer]].palette = PAL_FLAG(0x140);
     }
     g_Entities[D_80155D30[entity->poseTimer]].ext.player.unkA4 = 4;
     entity->poseTimer++;

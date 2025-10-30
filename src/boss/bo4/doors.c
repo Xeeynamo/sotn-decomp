@@ -227,7 +227,7 @@ void EntityUnkId17(Entity* self) {
         self->ext.et_801BDA0C.unk80 = 0;
         break;
     case 1:
-        self->palette = PAL_OVL(0x4F);
+        self->palette = PAL_FLAG(0x4F);
         if (self->ext.et_801BDA0C.unk84) {
             self->ext.et_801BDA0C.unk9C = 64;
             self->step++;
@@ -256,9 +256,9 @@ void EntityUnkId17(Entity* self) {
     case 3:
         if (g_Timer % 2 == 0) {
             self->palette++;
-            if (self->palette > PAL_OVL(0x58)) {
+            if (self->palette > PAL_FLAG(0x58)) {
                 g_api.PlaySfx(SFX_ELECTRICITY);
-                self->palette = PAL_OVL(0x4F);
+                self->palette = PAL_FLAG(0x4F);
                 self->step++;
                 if (self->params == 5) {
                     (self + 1)->ext.et_801BDA0C.unk84 = 1;

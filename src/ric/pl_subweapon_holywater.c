@@ -304,7 +304,7 @@ void RicEntitySubwpnHolyWater(Entity* self) {
         self->animCurFrame = 0x23;
         self->zPriority = PLAYER.zPriority + 2;
         self->unk5A = 0x46;
-        self->palette = PAL_OVL(0x12F);
+        self->palette = PAL_FLAG(0x12F);
         xMod = 0;
         if (self->facingLeft) {
             xMod = -xMod;

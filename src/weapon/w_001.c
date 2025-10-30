@@ -404,7 +404,7 @@ static void func_ptr_80170008(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(FIX(-4.5));
-        self->palette = PAL_OVL(0x1B0);
+        self->palette = PAL_FLAG(0x1B0);
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->posX.val += self->velocityX * 6;
         self->posY.i.hi -= 0xD;

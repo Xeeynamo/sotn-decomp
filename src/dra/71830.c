@@ -2335,7 +2335,7 @@ bool BatFormFinished(void) {
         SetPlayerStep(Player_UnmorphBat);
         SetPlayerAnim(0xCA);
         D_800AFDA4[0].pose = 6;
-        PLAYER.palette = PAL_OVL(0x10D);
+        PLAYER.palette = PAL_FLAG(0x10D);
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
         CreateEntFactoryFromEntity(
@@ -3329,7 +3329,7 @@ void PlayerStepSwordWarp(void) {
             PLAYER.step_s++;
         }
     } else if (--D_80138008 == 0) {
-        PLAYER.palette = PAL_OVL(0x100);
+        PLAYER.palette = PAL_FLAG(0x100);
         func_8010E570(0);
     }
 }

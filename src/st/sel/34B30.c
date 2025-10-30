@@ -273,7 +273,7 @@ void func_801B5350(void) {
         self->ext.unkSelEnts.unk80.val = FIX(0x80);
         self->posY.i.hi = 0x9F;
         self->zPriority = 0xC0;
-        self->palette = PAL_OVL(0x100);
+        self->palette = PAL_FLAG(0x100);
         self->step++;
         break;
 
@@ -312,7 +312,7 @@ void func_801B54C8(void) {
         self->ext.unkSelEnts.unk80.val = FIX(0x78);
         self->posY.i.hi = 0x9E;
         self->zPriority = 0xC0;
-        self->palette = PAL_OVL(0x210);
+        self->palette = PAL_FLAG(0x210);
         self->step++;
         break;
 
@@ -334,7 +334,7 @@ static void func_801B5548(void) {
         self->ext.unkSelEnts.unk80.val = FIX(0x78);
         self->posY.i.hi = 0x9E;
         self->zPriority = 0xC0;
-        self->palette = PAL_OVL(0x210);
+        self->palette = PAL_FLAG(0x210);
         self->step++;
         break;
 
@@ -441,7 +441,7 @@ void func_801B585C(u16 arg0) {
         self->ext.unkSelEnts.unk80.val = 0;
         self->posY.i.hi = 0x9F;
         self->zPriority = 0xC0;
-        self->palette = PAL_OVL(0x100);
+        self->palette = PAL_FLAG(0x100);
         self->step++;
         break;
 

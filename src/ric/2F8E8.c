@@ -815,7 +815,7 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
         entity->flags |= FLAG_UNK_100000;
         entity->unk5A = 0x79;
         entity->animSet = ANIMSET_DRA(14);
-        entity->palette = PAL_OVL(0x19E);
+        entity->palette = PAL_FLAG(0x19E);
         entity->anim = D_80155EA8;
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->drawFlags = FLAG_DRAW_OPACITY;

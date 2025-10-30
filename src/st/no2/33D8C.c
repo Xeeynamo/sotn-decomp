@@ -2,8 +2,8 @@
 #include "no2.h"
 
 u16 D_us_80180B7C[] = {
-    PAL_OVL(0x44), PAL_OVL(0x48), PAL_OVL(0x49), PAL_OVL(0x4A),
-    PAL_OVL(0x4B), PAL_OVL(0x4C), PAL_OVL(0x4D)};
+    PAL_FLAG(0x44), PAL_FLAG(0x48), PAL_FLAG(0x49), PAL_FLAG(0x4A),
+    PAL_FLAG(0x4B), PAL_FLAG(0x4C), PAL_FLAG(0x4D)};
 u32 D_us_80180B8C[] = {4, 8, 9, 10, 11, 12, 13};
 u8 D_us_80180BA8[] = {10, 4, 10, 5, 10, 6, 10, 7, 10, 8, 0, 0};
 u8 D_us_80180BB4[] = {10, 10, 0, 0};

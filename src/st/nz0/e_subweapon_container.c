@@ -204,7 +204,7 @@ void func_801C7654(Entity* entity) {
     case 0:
         InitializeEntity(g_EInitParticle);
         entity->animSet = ANIMSET_DRA(2);
-        entity->palette = PAL_OVL(0x16D);
+        entity->palette = PAL_FLAG(0x16D);
         entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         entity->velocityX = rcos(entity->rotate) * 0x10;
         entity->velocityY = rsin(entity->rotate) * 0x10;

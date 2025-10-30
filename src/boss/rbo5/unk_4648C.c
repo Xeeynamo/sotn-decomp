@@ -116,7 +116,7 @@ void DopplegangerStepHighJump(void) {
         if ((var_s1 - 1) != temp) {
             SetDopplegangerAnim(0x1C);
         }
-        DOPPLEGANGER.palette = PAL_OVL(0x200);
+        DOPPLEGANGER.palette = PAL_FLAG(0x200);
         DOPPLEGANGER.step_s = 1;
         DOPPLEGANGER.step = Dop_Jump;
     }
@@ -268,7 +268,7 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
         }
         break;
     case 8:
-        DOPPLEGANGER.palette = PAL_OVL(0x200);
+        DOPPLEGANGER.palette = PAL_FLAG(0x200);
         // fallthrough
     case 6:
     case 7:
@@ -475,7 +475,7 @@ bool BatFormFinished(void) {
     SetDopplegangerStep(10);
     SetDopplegangerAnim(202);
     D_us_80183B98[0].pose = 6;
-    DOPPLEGANGER.palette = PAL_OVL(0x20D);
+    DOPPLEGANGER.palette = PAL_FLAG(0x20D);
     g_Dop.unk66 = 0;
     g_Dop.unk68 = 0;
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x21), 0);
@@ -569,7 +569,7 @@ void ControlBatForm(void) {
             }
             SetDopplegangerAnim(0xCA);
             D_us_80183B98[0].pose = DOPPLEGANGER.animCurFrame;
-            DOPPLEGANGER.palette = PAL_OVL(0x20D);
+            DOPPLEGANGER.palette = PAL_FLAG(0x20D);
             if (g_Dop.unk66 == 1) {
                 return;
             }
@@ -582,7 +582,7 @@ void ControlBatForm(void) {
         SetDopplegangerAnim(0xC3);
         DOPPLEGANGER.poseTimer = 1;
         DOPPLEGANGER.pose = 2;
-        DOPPLEGANGER.palette = PAL_OVL(0x200);
+        DOPPLEGANGER.palette = PAL_FLAG(0x200);
         CheckMoveDirection();
         DOPPLEGANGER.step_s++;
         break;
@@ -875,7 +875,7 @@ void DopplegangerStepUnmorphBat(void) {
             if (!(g_Dop.vram_flag & TOUCHING_ANY_SLOPE)) {
                 DOPPLEGANGER.velocityY = FIX(-1);
             }
-            DOPPLEGANGER.palette = PAL_OVL(0x200);
+            DOPPLEGANGER.palette = PAL_FLAG(0x200);
             func_80111CC0();
         }
         break;
@@ -1085,7 +1085,7 @@ void DopplegangerStepUnmorphMist(void) {
             return;
         }
         if (g_Entities[E_ID_50].step == 5) {
-            DOPPLEGANGER.palette = PAL_OVL(0x200);
+            DOPPLEGANGER.palette = PAL_FLAG(0x200);
             func_8010FAF4();
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x5B), 0);
             func_us_801C4EE4();
@@ -1107,7 +1107,7 @@ void DopplegangerStepSwordWarp(void) {
             DOPPLEGANGER.step_s++;
         }
     } else if (--D_us_801D331C == 0) {
-        DOPPLEGANGER.palette = PAL_OVL(0x200);
+        DOPPLEGANGER.palette = PAL_FLAG(0x200);
         func_8010E570(0);
     }
 }
@@ -1127,7 +1127,7 @@ void DopplegangerStepStone(s32 arg0) {
         DOPPLEGANGER.velocityY = FIX(-4);
         func_8010E3B8(FIX(-0.625));
         func_80113E68();
-        DOPPLEGANGER.palette = PAL_OVL(0x161);
+        DOPPLEGANGER.palette = PAL_FLAG(0x161);
         g_api.PlaySfx(SFX_BO4_UNK_7DC);
         g_Dop.unk5E = 8;
         g_Dop.timers[2] = 0;
@@ -1136,7 +1136,7 @@ void DopplegangerStepStone(s32 arg0) {
 
     case 1:
         func_us_801C4A30(1, 4);
-        DOPPLEGANGER.palette = PAL_OVL(0x161);
+        DOPPLEGANGER.palette = PAL_FLAG(0x161);
         if (func_us_801C5650(0x20280) != 0) {
             DOPPLEGANGER.step = Dop_StatusStone;
             DOPPLEGANGER.velocityX = DOPPLEGANGER.velocityY = 0;
@@ -1146,7 +1146,7 @@ void DopplegangerStepStone(s32 arg0) {
             if (g_Dop.unk6A == 0) {
                 D_us_801D3320 = 0x20;
             }
-            DOPPLEGANGER.palette = PAL_OVL(0x19E);
+            DOPPLEGANGER.palette = PAL_FLAG(0x19E);
             SetDopplegangerAnim(0x38);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(16, 3), 0);
             DOPPLEGANGER.step_s = 2;
@@ -1177,16 +1177,16 @@ void DopplegangerStepStone(s32 arg0) {
                 g_api.PlaySfx(SFX_BO4_UNK_7DD);
                 DOPPLEGANGER.step = Dop_Hit;
                 DOPPLEGANGER.step_s = 8;
-                DOPPLEGANGER.palette = PAL_OVL(0x200);
+                DOPPLEGANGER.palette = PAL_FLAG(0x200);
             } else {
                 func_us_801C4A30(1, 4);
                 DOPPLEGANGER.step_s = 3;
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(13, 3), 0);
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(31, 3), 0);
-                DOPPLEGANGER.palette = PAL_OVL(0x19E);
+                DOPPLEGANGER.palette = PAL_FLAG(0x19E);
             }
         } else {
-            DOPPLEGANGER.palette = PAL_OVL(0x19E);
+            DOPPLEGANGER.palette = PAL_FLAG(0x19E);
         }
 
         break;
@@ -1208,7 +1208,7 @@ void DopplegangerStepStone(s32 arg0) {
                 DOPPLEGANGER.rotPivotY = 20;
             }
         }
-        DOPPLEGANGER.palette = PAL_OVL(0x19E);
+        DOPPLEGANGER.palette = PAL_FLAG(0x19E);
         break;
     }
 }
@@ -1807,7 +1807,7 @@ void EntitySmokePuff(Entity* self) {
         self->anim = D_800AD57C;
         self->zPriority = DOPPLEGANGER.zPriority + 2;
         self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
-        self->palette = PAL_OVL(0x195);
+        self->palette = PAL_FLAG(0x195);
         self->drawMode = DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
 
@@ -1936,7 +1936,7 @@ void DopEntityHitByDark(Entity* self) {
         self->unk5A = 0x79;
         self->animSet = ANIMSET_DRA(14);
         self->zPriority = DOPPLEGANGER.zPriority + 2;
-        self->palette = PAL_OVL(0x19F);
+        self->palette = PAL_FLAG(0x19F);
 
         if (D_us_801D3374 & 1) {
             self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
@@ -2799,7 +2799,7 @@ void EntityWingSmashTrail(Entity* self) {
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->rotate = DOPPLEGANGER.rotate;
         self->facingLeft = DOPPLEGANGER.facingLeft;
-        self->palette = PAL_OVL(0x202);
+        self->palette = PAL_FLAG(0x202);
         self->scaleX = self->scaleY = 0x100;
         self->step++;
         return;
@@ -3066,7 +3066,7 @@ void func_8011EDA8(Entity* self) {
             } else {
                 self->animSet = ANIMSET_DRA(5);
                 self->anim = D_800AD57C;
-                self->palette = PAL_OVL(0x170);
+                self->palette = PAL_FLAG(0x170);
             }
         }
         self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;

@@ -148,7 +148,7 @@ void EntityWeaponAttack(Entity* self) {
 s32 func_ptr_80170004(Entity* self) {
     switch (self->step) {
     case 0:
-        self->palette = PAL_OVL(0x100);
+        self->palette = PAL_FLAG(0x100);
         self->zPriority = PLAYER.zPriority;
         self->facingLeft = PLAYER.facingLeft;
         // this toggles the high bit, but xor does not

@@ -854,7 +854,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
     case INIT:
         InitializeEntity(g_EInitInteractable);
         self->animSet = 5;
-        self->palette = PAL_OVL(0x2EB);
+        self->palette = PAL_FLAG(0x2EB);
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
         self->drawFlags |= FLAG_DRAW_OPACITY;
         self->opacity = 0x60;

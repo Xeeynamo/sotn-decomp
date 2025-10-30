@@ -106,7 +106,7 @@ void EntityWeaponAttack(Entity* self) {
             g_api.CreateEntFactoryFromEntity(self, FACTORY(4, 12), 0);
         }
         if (self->scaleX == 32) {
-            self->palette = PAL_OVL(0x15F);
+            self->palette = PAL_FLAG(0x15F);
         }
         if (self->scaleX <= 0) {
             self->scaleX = 6;

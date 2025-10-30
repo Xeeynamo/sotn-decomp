@@ -1505,7 +1505,7 @@ void func_us_801765A0(Entity* self) {
         }
 
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
-        self->palette = PAL_OVL(0x143);
+        self->palette = PAL_FLAG(0x143);
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->animSet = 0xE;
         self->unk5A = 0x79;

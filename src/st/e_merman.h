@@ -502,7 +502,7 @@ static u16 explosionDurations[] = {16, 24, 42, 47};
 void EntityMermanExplosion(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
-        self->palette = PAL_OVL(0x2BB);
+        self->palette = PAL_FLAG(0x2BB);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = explosionFrames[self->params];
         self->velocityY = explosionYVels[self->params];

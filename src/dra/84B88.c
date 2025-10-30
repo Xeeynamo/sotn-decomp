@@ -2311,7 +2311,7 @@ void func_80129864(Entity* self) {
         self->ext.et_80129864.unk80 = D_800B0858[self->params & 0xFF];
         self->animSet = 9;
         self->anim = D_800B0798;
-        self->palette = PAL_OVL(0x19F);
+        self->palette = PAL_FLAG(0x19F);
         self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         self->zPriority = 0x1C3;
         self->flags =

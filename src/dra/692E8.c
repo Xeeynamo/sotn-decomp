@@ -244,7 +244,7 @@ void AluInit() {
         DestroyEntity(e);
         e->animSet = ANIMSET_DRA(1);
         e->unk5A = i + 1;
-        e->palette = PAL_OVL(0x100);
+        e->palette = PAL_FLAG(0x100);
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
 
@@ -1253,13 +1253,13 @@ block_160:
         func_8010E168(1, 4);
         newStatus = PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
                     PLAYER_STATUS_UNK100000 | PLAYER_STATUS_MIST_FORM;
-        PLAYER.palette = PAL_OVL(0x10D);
+        PLAYER.palette = PAL_FLAG(0x10D);
         break;
     case Player_UnmorphMist:
         newStatus = PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
                     PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK800000 |
                     PLAYER_STATUS_MIST_FORM;
-        PLAYER.palette = PAL_OVL(0x10D);
+        PLAYER.palette = PAL_FLAG(0x10D);
         func_8010E168(1, 4);
         break;
     case Player_AlucardStuck:
@@ -1352,7 +1352,7 @@ block_160:
         newStatus =
             PLAYER_STATUS_UNK10000000 | NO_AFTERIMAGE | PLAYER_STATUS_UNK100000;
         func_8010E168(4, 0xC);
-        PLAYER.palette = PAL_OVL(0x10D);
+        PLAYER.palette = PAL_FLAG(0x10D);
         break;
     case Player_MorphWolf:
         g_unkGraphicsStruct.unk1C |= 2;
@@ -1418,7 +1418,7 @@ block_160:
         if (!(g_Player.status & (PLAYER_STATUS_POISON | PLAYER_STATUS_CURSE))) {
             g_Player.timers[4] = 0xC;
             g_Player.timers[15] = 4;
-            PLAYER.palette = PAL_OVL(0x100);
+            PLAYER.palette = PAL_FLAG(0x100);
         }
     }
     PlayAnimation(D_800B0130, D_800B01B8);

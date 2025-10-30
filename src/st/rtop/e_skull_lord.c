@@ -227,7 +227,7 @@ void EntitySkullLord(Entity* self) {
         break;
     }
 
-    if (!(self->palette & PAL_OVL_FLAG)) {
+    if (!(self->palette & PAL_UNK_FLAG)) {
         self->palette = g_EInitSkullLord[3] + self->ext.skullLord.unk84;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
     } else {

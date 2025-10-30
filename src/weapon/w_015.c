@@ -61,7 +61,7 @@ void EntityWeaponAttack(Entity* self) {
             self->drawFlags |= FLAG_DRAW_ROTATE;
         }
         if (((self->params >> 8) & 0x7F) == 3) {
-            self->palette = PAL_OVL(0x160);
+            self->palette = PAL_FLAG(0x160);
             self->drawFlags |= FLAG_DRAW_ROTATE;
         }
         if (!((self->params >> 8) & 0x7F)) {

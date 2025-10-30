@@ -728,7 +728,7 @@ void func_us_801B9BE4(Entity* self) {
             (self + 1)->posY.i.hi += 0x10;
             self->step = 3;
         } else {
-            self->palette = PAL_OVL(0x41);
+            self->palette = PAL_FLAG(0x41);
             self->hitboxState = 3;
             self->hitboxWidth = 6;
             self->hitboxHeight = 0x12;
