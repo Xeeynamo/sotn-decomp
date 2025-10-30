@@ -2282,7 +2282,7 @@ typedef enum {
     PAL_UNK_128 = 0x128,
 
     // Fill colors (color 0 in palette is still used for transparent bg)
-    /* 0x158 */ PAL_FILL_YELLOW,
+    /* 0x158 */ PAL_FILL_YELLOW = 0x158,
     /* 0x159 */ PAL_FILL_ORANGE,
     /* 0x15A */ PAL_FILL_PURPLE,
     /* 0x15B */ PAL_FILL_BLUE,
