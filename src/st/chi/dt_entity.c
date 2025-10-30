@@ -106,7 +106,7 @@ EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 
 #include "../e_init_common.h"
 
-EInit g_EInitSecret = {ANIMSET_OVL(1), 0, 0, PAL_UNK_000, 5};
+EInit g_EInitSecret = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
 
 // D_80180688
 EInit g_EInitSalemWitch = {ANIMSET_OVL(3), 1, 72, PAL_UNK_204, 221};

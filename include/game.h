@@ -2260,7 +2260,7 @@ void func_91040A0(u_long** gfxBank);
 
 // Palettes
 typedef enum {
-    PAL_UNK_000 = 0x0, // breakable
+    PAL_NONE = 0x0, // breakable
     PAL_ALUCARD = 0x100,
     PAL_ALUCARD_RED_OUTLINE,
     PAL_UNK_110 = 0x110, // weapon

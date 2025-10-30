@@ -24,7 +24,7 @@ static u8 hitbox_heights[] = {
 static u8 params_arr[] = {
     0x00, 0x00, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x00, 0x00};
 static u16 palettes[] = {
-    PAL_UNK_000, PAL_UNK_000, PAL_UNK_228, PAL_UNK_228, PAL_UNK_228,
+    PAL_NONE,    PAL_NONE,    PAL_UNK_228, PAL_UNK_228, PAL_UNK_228,
     PAL_UNK_228, PAL_UNK_228, PAL_UNK_228, PAL_UNK_228, PAL_UNK_228};
 static u16 anim_sets[] = {
     ANIMSET_DRA(0x3), ANIMSET_DRA(0x3), ANIMSET_OVL(0xB), ANIMSET_OVL(0xB),
