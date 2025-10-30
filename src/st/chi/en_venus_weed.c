@@ -1243,7 +1243,7 @@ void EntityVenusWeedDart(Entity* self) {
     case DECAY:
         if (!(self->palette & PAL_UNK_FLAG)) {
             self->ext.venusWeedDart.clutIndex++;
-            self->palette = self->ext.venusWeedDart.clutIndex + PAL_UNK_20A);
+            self->palette = self->ext.venusWeedDart.clutIndex + PAL_UNK_20A;
 
             if (self->palette > PAL_UNK_219) {
                 self->palette = PAL_UNK_219;

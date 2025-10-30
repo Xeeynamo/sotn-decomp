@@ -2286,6 +2286,7 @@ typedef enum {
     PAL_UNK_202 = 0x202,
     PAL_UNK_204 = 0x204,
     PAL_UNK_205 = 0x205,
+    PAL_UNK_20A = 0x20A,
     PAL_UNK_210 = 0x210,
     PAL_UNK_212 = 0x212,
     PAL_UNK_216 = 0x216,
