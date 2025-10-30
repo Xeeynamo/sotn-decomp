@@ -85,7 +85,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919F48);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919F70);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919FBC);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", exit_func);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919FF8);
 
@@ -571,45 +571,45 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", SsSetSerialVol);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892A9E0);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892A9EC);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", strFileOpen);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892AB14);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", strFileClose);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892AB74);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", strFileRead);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892ABE8);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", strFileLseek);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892ABF0);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", play_bgm);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892AC94);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", init_atrac3plus);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892AF44);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", play_atrac3plus);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892B2D8);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", createPlayModeFlag);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892B2E8);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", setPlayMode);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892B31C);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", checkPlayMode);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892B384);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", waitPlayMode);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892B394);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", clearPlayMode);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892B3C8);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", release_arg);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892B440);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", at3plus_addData);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892B5CC);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", reset_position);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892B760);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", fadeoutOperation);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892BAE0);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", DvdUmdIoInit);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892BB60);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", DvdUmdIoTerm);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892BBD4);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", DvdUmdRetryOpenCB);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892BD3C);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", DvdUmdRetryRead);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892BF14);
 

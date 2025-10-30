@@ -149,7 +149,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_0891214C);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_089121BC);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_0891228C);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", DVDUMDSampleStart);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_08912398);
 
@@ -239,7 +239,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_08914BF4);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_08914C20);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_08914C40);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", dispbuf_func);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_08914E44);
 
@@ -279,7 +279,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_08915454);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_08915470);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_0891567C);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", read_func);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_08915C70);
 
@@ -305,7 +305,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_089162F0);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_08916310);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_08916340);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", soundbuf_func);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_08916550);
 
