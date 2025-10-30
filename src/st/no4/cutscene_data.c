@@ -48,7 +48,7 @@ u8 cutscene_data_ferryman_left_en[] = {
 // The ferryman_right script starts one byte to the left of alignment, so having
 // it as a second variable results in a byte of padding that breaks the match.
 u8 cutscene_data_ferryman_left[] = {
-#include "gen/cutscene_data_ferryman_left_psx.h",
+#include "gen/cutscene_data_ferryman_left_psx.h"
 #include "gen/cutscene_data_ferryman_right_psx.h"
 };
 #endif

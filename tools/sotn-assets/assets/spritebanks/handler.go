@@ -32,7 +32,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
-	return buildSprites(assetPath(e.AssetDir, e.Name), e.SrcDir, e.OvlName)
+	return buildSprites(assetPath(e.AssetDir, e.Name), e.Name, e.SrcDir, e.OvlName)
 }
 
 func (h *handler) Info(a assets.InfoArgs) (assets.InfoResult, error) {

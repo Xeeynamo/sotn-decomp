@@ -700,7 +700,7 @@ void func_801AD66C(void) {
 
     // if it only contain spaces, set a default name
     if (nSpaces == 8) {
-        STRCPY(g_Status.saveName, "alucard ");
+        strcpy(g_Status.saveName, "alucard ");
     }
 
     g_Status.saveName[8] = 0;
@@ -1226,7 +1226,7 @@ void OVL_EXPORT(Update)(void) {
         }
         break;
     case Upd_Eng_0x10:
-        STRCPY(g_InputSaveName, "        ");
+        strcpy(g_InputSaveName, "        ");
         func_801AEA8C(0);
         g_GameEngineStep++;
         /* fallthrough */
@@ -1481,7 +1481,7 @@ void OVL_EXPORT(Update)(void) {
         }
         break;
     case Upd_Eng_148:
-        STRCPY(g_InputSaveName, "        ");
+        strcpy(g_InputSaveName, "        ");
         func_801AEA8C(1);
         g_GameEngineStep++;
         /* fallthrough */

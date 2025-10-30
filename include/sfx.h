@@ -78,6 +78,21 @@ enum SfxModes {
 #define CD_SOUND_COMMAND_14 14
 #define CD_SOUND_COMMAND_16 16
 
+// SEQ music tracks
+// While there is unused SEQ data in DRA, LIB and DAI are the only two
+// overlays that use sequenced music heard in-game.
+//
+// For the PSP port, the SEQ files were replaced with pre-recorded versions
+// and saved as ATRAC3 streaming audio.  To reference these new audio streams,
+// the loop points for "Lost Painting" and "Curse Zone" were also replaced.
+// Reusing the loop point IDs makes sense as .AT3 files support looping.
+enum SeqTracks {
+    MU_SEQ_LIBRARIAN = 0x202,
+    MU_SEQ_CONFESSIONAL_BELLS = 0x204,
+    MU_SEQ_LIBRARIAN_PSP = 0x302,
+    MU_SEQ_CONFESSIONAL_BELLS_PSP = 0x304
+};
+
 // XA music tracks
 // LOOP_POINT means it starts playing from part way into the song
 enum {
@@ -251,8 +266,6 @@ enum {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_VO_AXE_KNIGHT_THROW 0x766
-#define NA_SE_VO_AXE_KNIGHT_SCREAM 0x767
 #define NA_SE_EV_WATER_SPLASH 0x7C2
 #define SFX_WATER_SURFACING 0x7C3
 
@@ -272,17 +285,8 @@ enum {
 // plays every 10 frames while using bible subweapon
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
-// STAGE CAT
-
-#define SFX_DISCUS_LORD_HEY 0x763
-#define SFX_DISCUS_LORD_DEATH_VORTEX 0x764
-#define SFX_DISCUS_BUZZ 0x765
-#define SFX_HELLFIRE_BEAST_DEATH 0x775
-
 // STAGE DAI
 // Unknown SFX related to the priest
-#define SFX_UNK_204 0x204
-#define SFX_UNK_PSP_304 0x304
 #define SFX_UNK_4E5 0x4E5
 #define SFX_UNK_7BB 0x7BB
 
@@ -346,6 +350,11 @@ enum {
 
 // The VAB IDs appear in large chunks so all sounds proceeding
 // a vabid label comment will belong in that VAB group unless noted.
+//
+// vabid 0 = Shared or common sfx
+// vabid 1 = Player VO sfx
+// vabid 3 = Enemy sfx
+// vabid 9 = All sequenced sfx (sounds that use multiple notes)
 //
 // Some enemy sfxIDs in vabID 3 can sound different depending on which
 // overlay is loaded.  For example, Grave Keeper has three sound calls
@@ -568,9 +577,9 @@ enum Sfx {
     /* 0x6BF */ SFX_UNK_BLIPS_B,
     /* 0x6C0 */ SFX_BLIPS_C,
     /* 0x6C1 */ SFX_BLIPS_D, // Fleaman movement
-    /* 0x6C2 */ SFX_CAT_MULTI_EXPLODE,
+    /* 0x6C2 */ SFX_DISCUS_LORD_EXPLODE,
     /* 0x6C3 */ SFX_SWISHES_ECHO_REPEAT,
-    /* 0x6C4 */ SFX_RCAT_DISSONANT_DINK,
+    /* 0x6C4 */ SFX_SALOME_MAGIC_ATTACK,
     /* 0x6C5 */ SFX_MAGIC_NOISE_SWEEP,
     /* 0x6C6 */ SFX_BOSS_WING_FLAP,
     /* 0x6C7 */ SFX_WHIP_TWIRL_SWISH,
@@ -728,13 +737,56 @@ enum Sfx {
     /* 0x757 */ SFX_CTULHU_DEATH,
     /* 0x758 */ SFX_CTULHU_LAUGH,
     /* 0x759 */ SFX_CTULHU_ROAR,
-    SFX_UNK_761 = 0x761,
-    SFX_SPEAR_GUARD_DEATH = 0x771,
-    SFX_UNK_77C = 0x77C,
-    SFX_WARG_DEATH_HOWL = 0x780, // also used for Scylla Worm (phase 2)
-    SFX_WARG_PAIN,
-    SFX_WARG_ATTACK,
-    SFX_WARG_GROWL,
+    /* 0x75A */ SFX_ROCK_KNIGHT_ATTACK,
+    /* 0x75B */ SFX_ROCK_KNIGHT_PAIN,
+    /* 0x75C */ SFX_RNO4_UNK_75C,
+    /* 0x75D */ SFX_ROCK_KNIGHT_DEATH,
+    /* 0x75E */ SFX_PLATE_LORD_ATTACK,
+    /* 0x75F */ SFX_PLATE_LORD_PAIN,
+    /* 0x760 */ SFX_PLATE_LORD_DEATH,
+    /* 0x761 */ SFX_PLATE_LORD_BALL_IMPACT,
+    /* 0x762 */ SFX_CAT_UNK_762,
+    /* 0x763 */ SFX_DISCUS_LORD_ATTACK,
+    /* 0x764 */ SFX_DISCUS_LORD_DEATH,
+    /* 0x765 */ SFX_DISCUS_BUZZ,
+    /* 0x766 */ SFX_AXE_KNIGHT_ATTACK,
+    /* 0x767 */ SFX_AXE_KNIGHT_DEATH,
+    /* 0x768 */ SFX_HIPPOGRYPH_WING_FLAP,
+    /* 0x769 */ SFX_HIPPOGRYPH_SQUAWK, // unused?
+    /* 0x76A */ SFX_RDAI_UNK_76A,
+    /* 0x76B */ SFX_FROZEN_HALF_DEATH, // normally, enemy attack sfx is first!
+    /* 0x76C */ SFX_FROZEN_HALF_ATTACK,
+    /* 0x76D */ SFX_FROZEN_HALF_MAXIMUM_POWER,
+
+    // vabid 9
+    /* 0x76E */ SFX_FROZEN_HALF_BLIZZARD, // sequenced sfx
+
+    // vabid 3
+    /* 0x76F */ SFX_UNUSED_76F, // blank space after switching vabid
+    /* 0x770 */ SFX_SPEAR_GUARD_ATTACK,
+    /* 0x771 */ SFX_SPEAR_GUARD_DEATH,
+    /* 0x772 */ SFX_SPEAR_GUARD_UNUSED_MOVE, // not referenced
+
+    // vabid 9
+    /* 0x773 */ SFX_SPEAR_GUARD_MOVE, // sequenced version of 0x772
+
+    // vabid 3
+    /* 0x774 */ SFX_UNUSED_774,
+    /* 0x775 */ SFX_HELLFIRE_BEAST_DEATH,
+    /* 0x776 */ SFX_DIPLOCEPHALUS_ATTACK,
+    /* 0x777 */ SFX_DIPLOCEPHALUS_PAIN,
+    /* 0x778 */ SFX_DIPLOCEPHALUS_DEATH,
+    /* 0x779 */ SFX_DIPLOCEPHALUS_STOMP, // also used by Plate Lord
+    /* 0x77A */ SFX_GORGON_SNORT,
+    /* 0x77B */ SFX_GORGON_ATTACK,
+    /* 0x77C */ SFX_FLEA_RIDER_DEATH,
+    /* 0x77D */ SFX_SWORD_LORD_SWIPE_ATTACK,
+    /* 0x77E */ SFX_SWORD_LORD_STAB_ATTACK,
+    /* 0x77F */ SFX_SWORD_LORD_DEATH,
+    /* 0x780 */ SFX_WARG_DEATH_HOWL, // also used for Scylla Worm (phase 2)
+    /* 0x781 */ SFX_WARG_PAIN,
+    /* 0x782 */ SFX_WARG_ATTACK,
+    /* 0x783 */ SFX_WARG_GROWL,
     SFX_UNK_797 = 0x797,
     SFX_CLOCK_BELL = 0x7A6,
     SFX_CLOCK_ROOM_TICK = 0x7A9,

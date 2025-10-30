@@ -786,7 +786,7 @@ void EntityArmorLord(Entity* self) {
     if ((self->flags & FLAG_DEAD) && (self->step < 8)) {
         tempEntity = self + 1;
         DestroyEntity(tempEntity);
-        PlaySfxPositional(0x753);
+        PlaySfxPositional(SFX_ARMOR_LORD_DEATH);
         if (self->flags & FLAG_HAS_PRIMS) {
             primIndex = self->primIndex;
             g_api.FreePrimitives(primIndex);
@@ -899,7 +899,7 @@ void EntityArmorLord(Entity* self) {
         }
         if (!self->poseTimer && self->animCurFrame == 0x14) {
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
-            PlaySfxPositional(0x751);
+            PlaySfxPositional(SFX_ARMOR_LORD_ATTACK);
             g_api.func_80102CD8(4);
         }
         if (!self->poseTimer && self->pose == 5) {
@@ -919,7 +919,7 @@ void EntityArmorLord(Entity* self) {
     case 6:
         if (self->pose > 5 && !self->step_s) {
             PlaySfxPositional(SFX_FIREBALL_SHOT_A);
-            PlaySfxPositional(0x752);
+            PlaySfxPositional(SFX_ARMOR_LORD_FIRE_ATTACK);
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(
