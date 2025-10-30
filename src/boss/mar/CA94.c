@@ -34,7 +34,7 @@ void func_us_8018CA94(Entity* self) {
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 1;
         self->unk5A = 0x48;
-        self->palette = PAL_DRA(0x210);
+        self->palette = PAL_UNK_210;
         break;
 
     case 1:

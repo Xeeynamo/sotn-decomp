@@ -331,7 +331,7 @@ void EntityVenusWeed(Entity* self) {
     const int FlowerOffsetY = 0x1B;
     const int WiggleLeavesSpeed = 0x180;
     const int AttackDuration = 0x30;
-    const int DeathFinalClut = PAL_DRA(0x210);
+    const int DeathFinalClut = PAL_UNK_210;
 
     typedef enum Grow_Substep {
         GROW_LEAVES = 0,
@@ -382,7 +382,7 @@ void EntityVenusWeed(Entity* self) {
         // Leaves
         for (i = 0; i < 2; i++) {
             prim->tpage = 0x14;
-            prim->clut = PAL_DRA(0x21A);
+            prim->clut = PAL_UNK_21A;
             prim->u0 = prim->u2 = SpriteLeavesX;
             prim->u1 = prim->u3 = SpriteLeavesX + SpriteLeavesW;
             prim->v0 = prim->v1 = SpriteLeavesY;
@@ -396,7 +396,7 @@ void EntityVenusWeed(Entity* self) {
         // Stem
         self->ext.venusWeed.stemPrim = prim;
         prim->tpage = 0x14;
-        prim->clut = PAL_DRA(0x21A);
+        prim->clut = PAL_UNK_21A;
         prim->u0 = prim->u2 = SpriteStemX;
         prim->u1 = prim->u3 = SpriteStemX + SpriteStemW;
         prim->v0 = prim->v1 = SpriteStemY;
@@ -886,8 +886,8 @@ void EntityVenusWeedFlower(Entity* self) {
             entity->ext.venusWeed.triggerAttack = true;
             if (!(self->palette & PAL_UNK_FLAG)) {
                 self->palette += self->ext.venusWeedFlower.clutOffset;
-                if (self->palette > PAL_DRA(0x219)) {
-                    self->palette = PAL_DRA(0x219);
+                if (self->palette > PAL_UNK_219) {
+                    self->palette = PAL_UNK_219;
                 }
                 self->ext.venusWeedFlower.clutOffset = 0;
                 return;
@@ -1243,10 +1243,10 @@ void EntityVenusWeedDart(Entity* self) {
     case DECAY:
         if (!(self->palette & PAL_UNK_FLAG)) {
             self->ext.venusWeedDart.clutIndex++;
-            self->palette = self->ext.venusWeedDart.clutIndex + PAL_DRA(0x20A);
+            self->palette = self->ext.venusWeedDart.clutIndex + PAL_UNK_20A);
 
-            if (self->palette > PAL_DRA(0x219)) {
-                self->palette = PAL_DRA(0x219);
+            if (self->palette > PAL_UNK_219) {
+                self->palette = PAL_UNK_219;
             }
         }
         if (self->ext.venusWeedDart.clutIndex > ClutIdxMax) {
@@ -1358,7 +1358,7 @@ void EntityVenusWeedSpike(Entity* self) {
         self->animCurFrame = entity->animCurFrame;
         self->palette++;
         clut = self->palette & 0xFFF;
-        if (clut > PAL_DRA(0x232)) {
+        if (clut > PAL_UNK_232) {
             DestroyEntity(self);
         } else {
             if (entity->entityId != E_VENUS_WEED_FLOWER) {

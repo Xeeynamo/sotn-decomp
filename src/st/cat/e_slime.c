@@ -26,9 +26,9 @@ void EntityLargeSlime(Entity* self) {
     }
 
     if (self->ext.slime.largeSlimePaletteCycle) {
-        self->ext.slime.palette = PAL_DRA(0x204);
+        self->ext.slime.palette = PAL_UNK_204;
     } else {
-        self->ext.slime.palette = PAL_DRA(0x205);
+        self->ext.slime.palette = PAL_UNK_205;
     }
 
     if (self->flags & FLAG_DEAD && self->step < 7) {
@@ -62,7 +62,7 @@ void EntityLargeSlime(Entity* self) {
             i++) {
             if (self->params & 0x10) {
                 prim->tpage = 0x13;
-                prim->clut = PAL_DRA(0x204);
+                prim->clut = PAL_UNK_204;
                 prim->u0 = i * 8;
                 prim->u1 = (i * 8) + 7;
                 prim->u2 = i * 8;
@@ -73,7 +73,7 @@ void EntityLargeSlime(Entity* self) {
                 prim->v3 = 0x1F;
             } else {
                 prim->tpage = 0x13;
-                prim->clut = PAL_DRA(0x168);
+                prim->clut = PAL_UNK_168;
                 prim->u0 = (i * 8) + 0x40;
                 prim->u1 = (i * 8) + 0x47;
                 prim->u2 = (i * 8) + 0x40;
@@ -691,7 +691,7 @@ void EntitySlime(Entity* self) {
         for (prim = self->ext.slime.unk80, i = 0; i < 4; prim = prim->next,
             i++) {
             prim->tpage = 0x13;
-            prim->clut = PAL_DRA(0x168);
+            prim->clut = PAL_UNK_168;
             prim->u0 = (i * 0x10) + 0x40;
             prim->u1 = (i * 0x10) + 0x4F;
             prim->u2 = (i * 0x10) + 0x40;
@@ -880,7 +880,7 @@ void func_us_801D4744(Entity* self) {
     } else {
         hasPalette = false;
         while (prim != NULL) {
-            prim->clut = PAL_DRA(0x168);
+            prim->clut = PAL_UNK_168;
             prim = prim->next;
         }
     }

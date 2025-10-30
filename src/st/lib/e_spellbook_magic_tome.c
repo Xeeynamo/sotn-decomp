@@ -244,7 +244,7 @@ void EntitySpellbook(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.spellbookMagicTome.unk7C = prim;
-        palette = PAL_DRA(0x25A);
+        palette = PAL_UNK_25A;
         self->palette = palette;
         for (i = 0; i < 12; i++) {
             ptr = D_us_801830DC[i];
@@ -537,7 +537,7 @@ void EntityMagicTome(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.spellbookMagicTome.unk7C = prim;
-        palette = PAL_DRA(0x25E);
+        palette = PAL_UNK_25E;
         self->palette = palette;
         for (i = 0; i < 12; i++) {
             ptr = D_us_8018310C[i];

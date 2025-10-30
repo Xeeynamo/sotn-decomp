@@ -315,8 +315,8 @@ void EntityLossoth(Entity* self) {
 
             if (!(g_Timer & 3)) {
                 self->palette++;
-                if (self->palette > PAL_DRA(0x21A)) {
-                    self->palette = PAL_DRA(0x216);
+                if (self->palette > PAL_UNK_21A) {
+                    self->palette = PAL_UNK_216;
                 }
             }
             break;
@@ -340,8 +340,8 @@ void EntityLossoth(Entity* self) {
 
             if (!(g_Timer & 3)) {
                 self->palette++;
-                if (self->palette > PAL_DRA(0x21A)) {
-                    self->palette = PAL_DRA(0x216);
+                if (self->palette > PAL_UNK_21A) {
+                    self->palette = PAL_UNK_216;
                 }
             }
             break;
@@ -353,8 +353,8 @@ void EntityLossoth(Entity* self) {
 
             if (!(g_Timer & 3)) {
                 self->palette++;
-                if (self->palette > PAL_DRA(0x21A)) {
-                    self->palette = PAL_DRA(0x216);
+                if (self->palette > PAL_UNK_21A) {
+                    self->palette = PAL_UNK_216;
                 }
             }
             break;
@@ -449,7 +449,7 @@ void EntityLossothEffects(Entity* self) {
 
             while (prim != NULL) {
                 prim->tpage = 0x14;
-                prim->clut = PAL_DRA(0x21F);
+                prim->clut = PAL_UNK_21F;
                 prim->u0 = prim->u2 = 0xD4;
                 prim->u1 = prim->u3 = 0xD6;
                 prim->v0 = prim->v1 = prim->v2 = prim->v3 = 0x50;
@@ -661,7 +661,7 @@ void EntityLossothNapalmFlare(Entity* self) {
         self->ext.lossoth.prim = prim;
         while (prim != NULL) {
             prim->tpage = 0x14;
-            prim->clut = PAL_DRA(0x21A);
+            prim->clut = PAL_UNK_21A;
             prim->u0 = prim->u2 = 0x80;
             prim->u1 = prim->u3 = 0x90;
             prim->v0 = prim->v1 = 0x58;
@@ -736,7 +736,7 @@ void EntityLossothNapalmFlare(Entity* self) {
     var_s2 = 0;
     paletteOffset = self->ext.lossothNapalm.paletteOffset;
     while (prim != NULL) {
-        prim->clut = paletteOffset + PAL_DRA(0x21A);
+        prim->clut = paletteOffset + PAL_UNK_21A;
         if (prim->p3) {
             DrawNapalmEffect(prim);
             var_s2++;

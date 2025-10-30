@@ -680,7 +680,7 @@ void EntitySalemWitchCurse(Entity* self) {
         self->ext.prim = prim;
         while (prim != NULL) {
             prim->tpage = 0x12;
-            prim->clut = PAL_DRA(0x2EB);
+            prim->clut = PAL_UNK_2EB;
             prim->p3 = 0;
             prim->priority = self->zPriority + 1;
             prim->drawMode = DRAW_HIDE;

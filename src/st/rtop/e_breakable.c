@@ -127,8 +127,8 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
     }
 }
 
-#define PAL_BREAKABLE PAL_DRA(0x200)
-#define PAL_BREAKABLE_DEBRIS PAL_DRA(0x204)
+#define PAL_BREAKABLE PAL_UNK_200
+#define PAL_BREAKABLE_DEBRIS PAL_UNK_204
 
 extern EInit g_EInitInteractable;
 extern EInit g_EInitParticle;

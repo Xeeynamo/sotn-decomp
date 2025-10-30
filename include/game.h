@@ -2259,4 +2259,55 @@ void func_892667C(s32 paletteID, u16* palette);
 s16 func_90E0E30(PrimitiveType, s32);
 void func_91040A0(u_long** gfxBank);
 
+// Palettes
+typedef enum {
+    PAL_UNK_000 = 0x0, // breakable
+    PAL_ALUCARD = 0x100,
+    PAL_ALUCARD_RED_OUTLINE,
+    PAL_UNK_110 = 0x110, // weapon
+    PAL_UNK_111 = 0x111,
+    PAL_UNK_117 = 0x117,
+    PAL_UNK_128 = 0x128,
+    PAL_UNK_168 = 0x168, // slime
+    PAL_UNK_194 = 0x194,
+    PAL_UNK_199 = 0x199,
+    PAL_UNK_19F = 0x19F,
+    // eDamageDisplay
+    PAL_UNK_1B0 = 0x1B0,
+    PAL_UNK_1B1 = 0x1B1,
+    PAL_UNK_1B2 = 0x1B2,
+    PAL_UNK_1B3 = 0x1B3,
+    PAL_UNK_1B4 = 0x1B4,
+    PAL_UNK_1B5 = 0x1B5,
+    PAL_UNK_1B6 = 0x1B6,
+    PAL_UNK_1B7 = 0x1B7,
+    //
+    PAL_UNK_200 = 0x200,
+    PAL_UNK_204 = 0x204,
+    PAL_UNK_205 = 0x205,
+    PAL_UNK_210 = 0x210,
+    PAL_UNK_212 = 0x212,
+    PAL_UNK_216 = 0x216,
+    PAL_UNK_219 = 0x219,
+    PAL_UNK_21A = 0x21A,
+    PAL_UNK_21F = 0x21F,
+    PAL_UNK_21D = 0x21D,
+    PAL_UNK_220 = 0x220,
+    PAL_UNK_224 = 0x224,
+    PAL_UNK_228 = 0x228,
+    PAL_UNK_22D = 0x22D,
+    PAL_UNK_231 = 0x231,
+    PAL_UNK_232 = 0x232,
+    PAL_UNK_235 = 0x235,
+    PAL_UNK_258 = 0x258,
+    PAL_UNK_25A = 0x25A,
+    PAL_UNK_25E = 0x25E,
+    PAL_UNK_2B2 = 0x2B2,
+    PAL_UNK_2BC = 0x2BC,
+    PAL_UNK_2C0 = 0x2C0,
+    PAL_UNK_2C4 = 0x2C4,
+    PAL_UNK_2E8 = 0x2E8,
+    PAL_UNK_2EB = 0x2EB,
+};
+
 #endif

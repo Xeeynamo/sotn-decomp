@@ -25,11 +25,11 @@ void EntityWeaponAttack(Entity* self) {
     case 0:
         SetSpriteBank1(g_Animset);
         self->animSet = ANIMSET_OVL(0x10);
-        self->palette = PAL_DRA(0x110);
+        self->palette = PAL_UNK_110;
         self->unk5A = 0x64;
         if (g_HandId) {
             self->animSet += 2;
-            self->palette = PAL_DRA(0x128);
+            self->palette = PAL_UNK_128;
             self->unk5A = 0x66;
         }
         self->animCurFrame = D_6D000_8017A6B8[((self->params >> 8) & 0x7F)];
@@ -182,10 +182,10 @@ void func_ptr_8017000C(Entity* self) {
 
         self->animSet = ANIMSET_OVL(0x10);
         self->unk5A = 0x64;
-        self->palette = PAL_DRA(0x110);
+        self->palette = PAL_UNK_110;
 
         if (g_HandId) {
-            self->palette = PAL_DRA(0x128);
+            self->palette = PAL_UNK_128;
             self->unk5A = 0x66;
             self->animSet += 2;
         }
@@ -402,7 +402,7 @@ s32 func_ptr_80170010(Entity* self) {
         }
         SetSpriteBank2(D_6D000_8017A2B0);
         self->animSet = ANIMSET_OVL(0x11);
-        self->palette = PAL_DRA(0x111);
+        self->palette = PAL_UNK_111;
         self->unk5A = 0x65;
         if (g_HandId != 0) {
             self->animSet += 2;

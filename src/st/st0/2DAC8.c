@@ -219,9 +219,9 @@ void EntityDraculaFinalForm(Entity* self) {
 
     if (!self->params) {
         if (g_Timer & 1) {
-            self->palette = PAL_DRA(0x202);
+            self->palette = PAL_UNK_202);
         } else {
-            self->palette = PAL_DRA(0x204);
+            self->palette = PAL_UNK_204;
         }
     }
 

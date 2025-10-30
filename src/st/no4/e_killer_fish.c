@@ -137,7 +137,7 @@ void EntityKillerFishDeathPuff(Entity* self) {
         self->poseTimer = 0;
         self->animSet = 0xE;
         self->unk5A = 0x79;
-        self->palette = PAL_DRA(0x2E8);
+        self->palette = PAL_UNK_2E8;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_OPACITY;
         self->opacity = 0x60;
