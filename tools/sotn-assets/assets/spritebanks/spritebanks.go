@@ -85,8 +85,8 @@ func ReadSpritesBanks(r io.ReadSeeker, baseAddr, addr psx.Addr, numBanks int) (S
 	}, datarange.MergeDataRanges(spriteRanges), nil
 }
 
-func buildSprites(fileName, outputDir, ovlName string) error {
-	data, err := os.ReadFile(fileName)
+func buildSprites(jsonFileName, name, outputDir, ovlName string) error {
+	data, err := os.ReadFile(jsonFileName)
 	if err != nil {
 		return err
 	}
@@ -125,8 +125,10 @@ func buildSprites(fileName, outputDir, ovlName string) error {
 		}
 	}
 	sbHeader.WriteString("};\n")
-	if err := util.WriteFile(filepath.Join(outputDir, "gen/sprites.c"), []byte(sbData.String())); err != nil {
+
+    spriteBanksFileName := filepath.Join(outputDir, "gen", fmt.Sprintf("%s.h", name))
+	if err := util.WriteFile(filepath.Join(filepath.Dir(spriteBanksFileName), "sprites.c"), []byte(sbData.String())); err != nil {
 		return err
 	}
-	return util.WriteFile(filepath.Join(outputDir, "gen/sprite_banks.h"), []byte(sbHeader.String()))
+	return util.WriteFile(spriteBanksFileName, []byte(sbHeader.String()))
 }

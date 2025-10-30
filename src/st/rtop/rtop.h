@@ -7,6 +7,13 @@
 #include <stage.h>
 
 #define OVL_EXPORT(x) RTOP_##x
+#define INVERTED_STAGE
+
+enum OVL_EXPORT(Palette) {
+    PAL_NONE = 0,
+    PAL_BREAKABLE = 0x200,
+    PAL_BREAKABLE_DEBRIS = 0x204,
+};
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,

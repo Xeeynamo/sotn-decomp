@@ -54,12 +54,12 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	paletteCount := (e.End - e.Start) / byteCountPerPalette
 	paletteNames := make([]string, paletteCount)
 	if paletteCount == 1 {
-		fileName := fmt.Sprintf("%s.%s", e.Name, extensions[format])
+		fileName := fmt.Sprintf("%s.%s", filepath.Base(e.Name), extensions[format])
 		paletteNames[0] = filepath.Join(e.Name, fileName)
 	} else {
 		extension := extensions[format]
 		for i := 0; i < paletteCount; i++ {
-			fileName := fmt.Sprintf("%s_%d.%s", e.Name, i, extension)
+			fileName := fmt.Sprintf("%s_%d.%s", filepath.Base(e.Name), i, extension)
 			paletteNames[i] = filepath.Join(e.Name, fileName)
 		}
 	}
@@ -81,7 +81,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	for i, paletteFileName := range paletteNames {
 		i, paletteFileName := i, paletteFileName
 		eg.Go(func() error {
-			f, err := os.Create(filepath.Join(e.AssetDir, paletteFileName))
+			f, err := util.CreateAtomicWriter(filepath.Join(e.AssetDir, paletteFileName))
 			if err != nil {
 				return err
 			}
