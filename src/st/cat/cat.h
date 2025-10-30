@@ -12,7 +12,6 @@
 #include "../pfn_entity_update.h"
 
 enum OVL_EXPORT(Palette) {
-    PAL_NONE = 0,
     PAL_SPIKES_DUST = 0x09B,
     PAL_HELLFIRE_BEAST_CAST_TWO = 0x15F,
     PAL_HELLFIRE_BEAST_THORSHAMMER = 0x16C,

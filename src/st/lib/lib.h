@@ -5,7 +5,6 @@
 #define OVL_EXPORT(x) LIB_##x
 
 enum Palettes {
-    PAL_NONE = 0,
     PAL_BREAKABLE = 0x26C,
 };
 

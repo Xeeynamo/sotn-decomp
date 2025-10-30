@@ -9,7 +9,6 @@
 #define OVL_EXPORT(x) TOP_##x
 
 enum OVL_EXPORT(Palette) {
-    PAL_NONE = 0,
     PAL_BREAKABLE = 0x238,
     PAL_BREAKABLE_DEBRIS = 0x23C,
 };
