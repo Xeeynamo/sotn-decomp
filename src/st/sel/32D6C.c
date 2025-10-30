@@ -53,7 +53,7 @@ s32 func_801B2E5C(s32 port) {
     s32 totalSize;
     s32 nBlockUsed;
 
-    STRCPY(cardName, "BASLUS-00067DRAX00");
+    strcpy(cardName, "BASLUS-00067DRAX00");
     totalSize = 0;
     nBlockUsed = g_MemcardInfo[port].nBlockUsed;
     dirent = &g_MemcardInfo[port].entries;

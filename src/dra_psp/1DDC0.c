@@ -550,165 +550,165 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     g_SimFile = &D_800A024C[fileId];
     var_s2 = -1;
     if (type == SimFileType_StagePrg) {
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "SEL")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "SEL") == 0) {
             var_s2 = 1;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "ST0")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "ST0") == 0) {
             var_s2 = 2;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "ARE")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "ARE") == 0) {
             var_s2 = 3;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "CAT")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "CAT") == 0) {
             var_s2 = 4;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "CEN")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "CEN") == 0) {
             var_s2 = 5;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "CHI")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "CHI") == 0) {
             var_s2 = 6;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "DAI")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "DAI") == 0) {
             var_s2 = 7;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "DRE")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "DRE") == 0) {
             var_s2 = 8;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "LIB")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "LIB") == 0) {
             var_s2 = 9;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "NO0")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "NO0") == 0) {
             var_s2 = 0xA;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "NO1")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "NO1") == 0) {
             var_s2 = 0xB;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "NO2")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "NO2") == 0) {
             var_s2 = 0xC;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "NO3")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "NO3") == 0) {
             var_s2 = 0xD;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "NO4")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "NO4") == 0) {
             var_s2 = 0xE;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "NP3")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "NP3") == 0) {
             var_s2 = 0xF;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "NZ0")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "NZ0") == 0) {
             var_s2 = 0x10;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "NZ1")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "NZ1") == 0) {
             var_s2 = 0x11;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "TOP")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "TOP") == 0) {
             var_s2 = 0x12;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "WRP")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "WRP") == 0) {
             var_s2 = 0x13;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RARE")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RARE") == 0) {
             var_s2 = 0x14;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RCAT")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RCAT") == 0) {
             var_s2 = 0x15;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RCEN")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RCEN") == 0) {
             var_s2 = 0x16;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RCHI")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RCHI") == 0) {
             var_s2 = 0x17;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RDAI")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RDAI") == 0) {
             var_s2 = 0x18;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RLIB")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RLIB") == 0) {
             var_s2 = 0x19;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RNO0")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RNO0") == 0) {
             var_s2 = 0x1A;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RNO1")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RNO1") == 0) {
             var_s2 = 0x1B;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RNO2")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RNO2") == 0) {
             var_s2 = 0x1C;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RNO3")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RNO3") == 0) {
             var_s2 = 0x1D;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RNO4")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RNO4") == 0) {
             var_s2 = 0x1E;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RNZ0")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RNZ0") == 0) {
             var_s2 = 0x1F;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RNZ1")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RNZ1") == 0) {
             var_s2 = 0x20;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RTOP")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RTOP") == 0) {
             var_s2 = 0x21;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RWRP")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RWRP") == 0) {
             var_s2 = 0x22;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "MAR")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "MAR") == 0) {
             var_s2 = 0x23;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "BO0")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "BO0") == 0) {
             var_s2 = 0x24;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "BO1")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "BO1") == 0) {
             var_s2 = 0x25;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "BO2")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "BO2") == 0) {
             var_s2 = 0x26;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "BO3")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "BO3") == 0) {
             var_s2 = 0x27;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "BO4")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "BO4") == 0) {
             var_s2 = 0x28;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "BO5")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "BO5") == 0) {
             var_s2 = 0x29;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "BO6")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "BO6") == 0) {
             var_s2 = 0x2A;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "BO7")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "BO7") == 0) {
             var_s2 = 0x2B;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RBO0")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO0") == 0) {
             var_s2 = 0x2C;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RBO1")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO1") == 0) {
             var_s2 = 0x2D;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RBO2")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO2") == 0) {
             var_s2 = 0x2E;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RBO3")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO3") == 0) {
             var_s2 = 0x2F;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RBO4")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO4") == 0) {
             var_s2 = 0x30;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RBO5")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO5") == 0) {
             var_s2 = 0x31;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RBO6")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO6") == 0) {
             var_s2 = 0x32;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RBO7")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO7") == 0) {
             var_s2 = 0x33;
         }
-        if (!func_890C9D4(g_StagesLba[g_StageId].ovlName, "RBO8")) {
+        if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO8") == 0) {
             var_s2 = 0x34;
         }
         g_SimFile = &D_80136450;
-        STRCPY(buf, "hdbin/");
-        STRCPY(buf1, g_StagesLba[g_StageId].ovlName);
+        strcpy(buf, "hdbin/");
+        strcpy(buf1, g_StagesLba[g_StageId].ovlName);
         func_890CAF8(buf1);
         strcat(buf, buf1);
         strcat(buf, ".bin;1");
@@ -738,8 +738,8 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
             }
         } else {
             g_SimFile = &D_80136450;
-            STRCPY(buf, D_psp_08B42060);
-            STRCPY(buf, "data/sd_");
+            strcpy(buf, D_psp_08B42060);
+            strcpy(buf, "data/sd_");
             strcat(buf, g_StagesLba[g_StageId].name);
             strcat(buf, ".vh;1");
             g_SimFile->path = buf;
@@ -776,8 +776,8 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
             }
         } else {
             g_SimFile = &D_80136450;
-            STRCPY(buf, D_psp_08B42060);
-            STRCPY(buf, "data/sd_");
+            strcpy(buf, D_psp_08B42060);
+            strcpy(buf, "data/sd_");
             strcat(buf, g_StagesLba[g_StageId].name);
             strcat(buf, ".vb;1");
             g_SimFile->path = buf;
@@ -797,8 +797,8 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     }
     if (type == SimFileType_StageChr) {
         g_SimFile = &D_80136450;
-        STRCPY(buf, "hdbin/");
-        STRCPY(buf2, g_StagesLba[g_StageId].gfxName);
+        strcpy(buf, "hdbin/");
+        strcpy(buf2, g_StagesLba[g_StageId].gfxName);
         func_890CAF8(buf2);
         strcat(buf, buf2);
         strcat(buf, ".bin;1");
@@ -950,7 +950,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
                 }};
             g_SimFile = &buf4[g_UserLanguage - 1];
         }
-        if (!func_890C9D4(g_SimFile->path, "hdbin/ric.bin;1")) {
+        if (strcmp(g_SimFile->path, "hdbin/ric.bin;1") == 0) {
             if (g_PlayableCharacter != 2) {
                 var_s1 = func_89330C4();
                 var_s2 = 0x35;
@@ -958,7 +958,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
                 var_s1 = func_89330C4();
                 var_s2 = 0x37;
             }
-        } else if (!func_890C9D4(g_SimFile->path, "hdbin/arc_f.bin;1")) {
+        } else if (strcmp(g_SimFile->path, "hdbin/arc_f.bin;1") == 0) {
             var_s2 = 0x36;
             var_s1 = func_89330C4();
         }

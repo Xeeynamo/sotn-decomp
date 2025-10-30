@@ -2590,7 +2590,7 @@ void func_800F9E18(s32 arg0) {
 #endif
 
     for (nHalfScreenSize = i; i < nItems; i++, nHalfScreenSize++) {
-        STRCPY(buffer, g_RelicDefs[i * ItemsPerRow + 0].name);
+        strcpy(buffer, g_RelicDefs[i * ItemsPerRow + 0].name);
         if ((nHalfScreenSize & 1) == 0) {
             func_800F99B8(buffer, (nHalfScreenSize / ItemsPerRow) + 0x80, true);
         } else {
@@ -2598,7 +2598,7 @@ void func_800F9E18(s32 arg0) {
                 buffer, (nHalfScreenSize / ItemsPerRow) + 0x103, true);
         }
 
-        STRCPY(buffer, g_RelicDefs[i * ItemsPerRow + 1].name);
+        strcpy(buffer, g_RelicDefs[i * ItemsPerRow + 1].name);
         if ((nHalfScreenSize & 1) == 0) {
             func_800F99B8(
                 buffer, (nHalfScreenSize / ItemsPerRow) + 0x280, true);
@@ -2616,7 +2616,7 @@ void func_800F9E18(s32 arg0) {
     s32 i;
 
     for (i = arg0 * 5; i < nItems; i++) {
-        STRCPY(buffer, "　　　　　　　　　　　　　　　　　　　　　");
+        strcpy(buffer, "　　　　　　　　　　　　　　　　　　　　　");
         func_800F9DD0(g_RelicDefs[i * ItemsPerRow + 0].name, buffer[0]);
         func_800F9DD0(g_RelicDefs[i * ItemsPerRow + 1].name, buffer[1]);
         if ((i % ItemsPerRow) == 0) {
@@ -2637,7 +2637,7 @@ void func_800F9F40(void) {
         spellId = g_Status.spells[i];
         if (spellId & 0x80) {
             spellId ^= 0x80;
-            STRCPY(buffer, "　　　　　　　　　　　　　　　　　　　　　");
+            strcpy(buffer, "　　　　　　　　　　　　　　　　　　　　　");
             func_800F9DD0(g_SpellDefs[spellId].name, buffer);
             ShowText(buffer, 0x80 + i);
         }

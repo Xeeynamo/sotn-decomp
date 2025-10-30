@@ -238,7 +238,7 @@ void EntityAxeKnight(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         if (self->step != AXE_KNIGHT_DYING) {
-            PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_SCREAM);
+            PlaySfxPositional(SFX_AXE_KNIGHT_DEATH);
             CreateExplosionPuff();
             self->hitboxState = 0;
             self->ext.axeknight.unk80 = 65;
@@ -366,7 +366,7 @@ void EntityAxeKnight(Entity* self) {
                 self->ext.axeknight.unk7C = 0;
             }
         } else if ((animStatus & 0x80) && (self->pose == 7)) {
-            PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
+            PlaySfxPositional(SFX_AXE_KNIGHT_ATTACK);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
@@ -385,7 +385,7 @@ void EntityAxeKnight(Entity* self) {
         animStatus = AnimateEntity(anim_throw_duck, self);
         if (animStatus != 0) {
             if ((animStatus & 0x80) && (self->pose == 6)) {
-                PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
+                PlaySfxPositional(SFX_AXE_KNIGHT_ATTACK);
                 newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);
@@ -418,7 +418,7 @@ void EntityAxeKnight(Entity* self) {
         }
 
         if ((animStatus & 0x80) && (self->pose == 7)) {
-            PlaySfxPositional(NA_SE_VO_AXE_KNIGHT_THROW);
+            PlaySfxPositional(SFX_AXE_KNIGHT_ATTACK);
             newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (newEntity != NULL) {
                 CreateEntityFromCurrentEntity(E_AXE_KNIGHT_AXE, newEntity);

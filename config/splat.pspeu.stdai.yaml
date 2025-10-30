@@ -106,7 +106,7 @@ segments:
       - [0x256C0, .data, st_common]
       - [0x258C0, .data, e_bone_halberd]
       - [0x25A70, .data, e_bell]
-      - [0x25B18, .data, gen/sprites]
+      - [0x25B18, .data, gen/psp/sprites]
       - [0x2B2C8, .data, sprite_banks]
       - [0x2B328, .data, layers]
       - [0x2B608, .data, pal_stained_glass]
