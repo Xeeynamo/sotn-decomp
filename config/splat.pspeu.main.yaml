@@ -71,7 +71,7 @@ segments:
       - [0x241C, asm, sceGuSendList] # libgu.c
       - [0x24C0, asm, sceGuDispBuffer2] # libgu.c
       - [0x259C, asm, sceGuSwapBuffers] # libgu.c
-      - [0x2664, asm, func_psp_08900F70]
+      - [0x2664, asm, sceGuDrawBuffer] # libgu.c
       - [0x277C, asm, func_psp_08901088]
       - [0x2828, asm, sceGuSetDither] # libgu.c
       - [0x2954, asm, sceGuEndObject] # libgu.c
@@ -97,8 +97,8 @@ segments:
       - [0x2E2C, asm, sceGuFlush] # libgu.c
       - [0x2E48, asm, sceGuDisplay] # libgu.c
       - [0x2EB4, asm, sceGuDispBuffer] # libgu.c
-      - [0x2F28, asm, func_psp_08901834]
-      - [0x2FE0, asm, func_psp_089018EC]
+      - [0x2F28, asm, sceGuDrawBuffer2] # libgu.c
+      - [0x2FE0, asm, sceGuDrawBufferList] # libgu.c
       - [0x3030, c, main_psp/3030]
       - [0x3138, asm, func_psp_08901A44]
       - [0x31E8, c, main_psp/31E8]
