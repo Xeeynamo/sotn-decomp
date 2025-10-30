@@ -131,7 +131,6 @@ typedef enum {
 
 // Palette macros
 #define PAL_UNK_FLAG 0x8000
-#define PAL_DRA(x) (x)
 #define PAL_FLAG(x) ((x) | PAL_UNK_FLAG)
 
 #define PALETTE_LEN ((COLORS_PER_PAL) * ((COLOR_BPP) / 8))
