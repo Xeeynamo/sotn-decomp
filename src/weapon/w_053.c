@@ -266,7 +266,7 @@ s32 func_ptr_80170004(Entity* self) {
 static void func_ptr_80170008(Entity* self) {
     switch (self->step) {
     case 0:
-        self->palette = PAL_FLAG(0x100);
+        self->palette = PAL_FLAG(PAL_ALUCARD);
         self->zPriority = PLAYER.zPriority;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;

@@ -83,7 +83,7 @@ bool func_801119C4(void) {
         if (D_80137FDC & 1) {
             PLAYER.palette = 0x810D;
         } else {
-            PLAYER.palette = 0x8100;
+            PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
         }
         D_80137FDC++;
     }
@@ -1117,7 +1117,7 @@ void PlayerStepHighJump(void) {
         if (--var_s1) {
             SetPlayerAnim(0x1C);
         }
-        PLAYER.palette = 0x8100;
+        PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
         PLAYER.step_s = 1;
         PLAYER.step = Player_Jump;
     }
@@ -1735,7 +1735,7 @@ void PlayerStepStoned(s32 arg0) {
                 PlaySfx(SFX_VO_ALU_PAIN_A);
                 PLAYER.step = Player_Hit;
                 PLAYER.step_s = 6;
-                PLAYER.palette = 0x8100;
+                PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
                 break;
             }
             func_8010E168(1, 0x1C);
@@ -2580,7 +2580,7 @@ void ControlBatForm(void) {
         SetPlayerAnim(0xC3);
         PLAYER.poseTimer = 1;
         PLAYER.pose = 2;
-        PLAYER.palette = 0x8100;
+        PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
         CheckMoveDirection();
         PLAYER.step_s++;
         break;
@@ -2917,7 +2917,7 @@ void PlayerStepUnmorphBat(void) {
                 PLAYER.velocityY = FIX(-1);
             }
             g_Player.unk44 |= 0x100;
-            PLAYER.palette = 0x8100;
+            PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
             TRANSFORM_LOCKOUT_TIMER = 0x18;
             func_80111CC0();
         }
@@ -3272,7 +3272,7 @@ void PlayerStepUnmorphMist(void) {
             return;
         }
         if (g_Entities[16].step == 5) {
-            PLAYER.palette = 0x8100;
+            PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
             func_8010FAF4();
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x5b), 0);
@@ -3329,7 +3329,7 @@ void PlayerStepSwordWarp(void) {
             PLAYER.step_s++;
         }
     } else if (--D_80138008 == 0) {
-        PLAYER.palette = PAL_FLAG(0x100);
+        PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
         func_8010E570(0);
     }
 }

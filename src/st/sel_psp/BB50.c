@@ -287,7 +287,7 @@ void func_801B5350(void) {
         self->ext.unkSelEnts.unk80.val = FIX(0x80);
         self->posY.i.hi = 0x9F;
         self->zPriority = 0xC0;
-        self->palette = PAL_FLAG(0x100);
+        self->palette = PAL_FLAG(PAL_ALUCARD);
         self->step++;
         break;
 
@@ -466,7 +466,7 @@ void func_801B585C(u16 arg0) {
         self->ext.unkSelEnts.unk80.val = 0;
         self->posY.i.hi = 0x9F;
         self->zPriority = 0xC0;
-        self->palette = PAL_FLAG(0x100);
+        self->palette = PAL_FLAG(PAL_ALUCARD);
         self->step++;
         break;
 

@@ -1095,7 +1095,7 @@ void EntityHellfire(Entity* self) {
         }
         break;
     case HFH_PLAYER_REAPPEAR:
-        PLAYER.palette = 0x8100;
+        PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
         self->ext.hellfireHandler.beamwidth += four;
         if (self->ext.hellfireHandler.beamwidth >= 0x16) {
             self->step++;

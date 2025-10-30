@@ -653,7 +653,7 @@ void PlayerStepUnmorphWolf(void) {
                 PLAYER.velocityY = FIX(-1);
             }
             g_Player.unk44 |= 0x100;
-            PLAYER.palette = 0x8100;
+            PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
             PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
             TRANSFORM_LOCKOUT_TIMER = 0x18;
             func_80111CC0();
