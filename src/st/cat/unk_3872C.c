@@ -9,6 +9,7 @@ void func_us_801B87E8(Entity *self)
   s32 primIndex;
   s16 base_x;
   s32 cntr;
+  u8 castleFlag;
 
   for (base_x = -g_Tilemap.scrollX.i.hi; base_x < (-0x3E); base_x += 0x3E);
 
@@ -79,9 +80,9 @@ void func_us_801B87E8(Entity *self)
         {
           prim->r0 = prim->r0 + 2;
           prim->g0 = (prim->b0 = prim->r0);
-          *(u32 *)&prim->r1 = *(u32 *)&prim->r0;
-          *(u32 *)&prim->r2 = *(u32 *)&prim->r0;
-          *(u32 *)&prim->r3 = *(u32 *)&prim->r0;
+          LOWU(prim->r1) = LOWU(prim->r0);
+          LOWU(prim->r2) = LOWU(prim->r0);
+          LOWU(prim->r3) = LOWU(prim->r0);
         }
       }
       prim->x0 = prim->x2 = base_x + (2 * ((cntr & 7) * 31));
@@ -90,9 +91,15 @@ void func_us_801B87E8(Entity *self)
       cntr++;
     }
 
-    self->ext.ILLEGAL.u8[4] = g_CastleFlags[0x42];
   }
-  FntPrint("base_x:%04x\n", base_x);
+
+  castleFlag = g_CastleFlags[0x42];
+  do
+  {
+    self->ext.ILLEGAL.u8[4] = castleFlag;
+    FntPrint("base_x:%04x\n", base_x);
+  }
+  while (0);
 }
 
 INCLUDE_ASM("st/cat/nonmatchings/unk_3872C", func_us_801B8AD0);
