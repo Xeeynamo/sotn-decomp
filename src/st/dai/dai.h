@@ -29,6 +29,7 @@
 
 // Used for cluts, palettes, and in g_EInits
 enum OVL_EXPORT(Palette) {
+    PAL_NONE = 0,
     PAL_STAINED_GLASS = 0xE,
     PAL_STAINED_GLASS_BG = 0xF,
     PAL_CASTLE_WALL_1 = 0x74,

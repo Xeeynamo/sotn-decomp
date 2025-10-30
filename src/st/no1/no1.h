@@ -9,6 +9,7 @@ void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
 enum OVL_EXPORT(Palette) {
+    PAL_NONE = 0,
     PAL_BREAKABLE = 0x22D,
     PAL_BREAKABLE_DEBRIS = 0x231,
 };
