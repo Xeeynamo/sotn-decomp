@@ -67,18 +67,19 @@ segments:
       - [0x1D6C, asm, sceGuInit] # libgu.c
       - [0x1EA8, asm, sceGuStart] # libgu.c
       - [0x2110, asm, sceGuFinishId] # libgu.c
-      - [0x2368, asm, func_psp_08900C74]
+      - [0x2368, asm, sceGuCallList] # libgu.c
       - [0x241C, asm, sceGuSendList] # libgu.c
       - [0x24C0, asm, sceGuDispBuffer2] # libgu.c
       - [0x259C, asm, sceGuSwapBuffers] # libgu.c
       - [0x2664, asm, func_psp_08900F70]
+      - [0x277C, asm, func_psp_08901088]
       - [0x2828, asm, sceGuSetDither] # libgu.c
       - [0x2954, asm, sceGuEndObject] # libgu.c
       - [0x29F0, asm, sceGuPatchDivide] # libgu.c
       - [0x2A1C, asm, sceGuColorMaterial] # libgu.c
       - [0x2A44, asm, sceGuSpecular] # libgu.c
       - [0x2A70, asm, sceGuTexScale] # libgu.c
-      - [0x2AB4, asm, func_psp_089013C0] # libgu.c
+      - [0x2AB4, asm, _sceGuSetDebugFontCallback] # libgu.c
       - [0x2B20, asm, sceGuTerm] # libgu.c
       - [0x2B98, asm, sceGuFinish] # libgu.c
       - [0x2BB4, asm, sceGuGetMemory] # libgu.c
@@ -97,6 +98,7 @@ segments:
       - [0x2E48, asm, sceGuDisplay] # libgu.c
       - [0x2EB4, asm, sceGuDispBuffer] # libgu.c
       - [0x2F28, asm, func_psp_08901834]
+      - [0x2FE0, asm, func_psp_089018EC]
       - [0x3030, c, main_psp/3030]
       - [0x3138, asm, func_psp_08901A44]
       - [0x31E8, c, main_psp/31E8]
