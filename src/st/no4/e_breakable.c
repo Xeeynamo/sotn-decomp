@@ -124,7 +124,7 @@ void func_us_801C123C(Entity* self) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(0xB);
         self->unk5A = 0x5B;
-        self->palette = PAL_UNK_228);
+        self->palette = PAL_UNK_228;
         self->animCurFrame = 0x15;
         self->zPriority = 0x6A;
         self->step = 0x100;
