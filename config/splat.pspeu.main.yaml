@@ -91,21 +91,21 @@ segments:
       - [0x2CF8, asm, sceGuSetCallback2] # libgu.c
       - [0x2D34, asm, sceGuBreak] # libgu.c
       - [0x2D54, asm, sceGuContinue] # libgu.c
-      - [0x2D70, asm, func_psp_0890167C]
-      - [0x2D7C, asm, func_psp_08901688]
+      - [0x2D70, asm, sceGuCallMode] # libgu.c
+      - [0x2D7C, asm, sceGuJumpList] # libgu.c
       - [0x2DC0, asm, sceGuSync] # libgu.c
       - [0x2E2C, asm, sceGuFlush] # libgu.c
       - [0x2E48, asm, sceGuDisplay] # libgu.c
       - [0x2EB4, asm, sceGuDispBuffer] # libgu.c
       - [0x2F28, asm, sceGuDrawBuffer2] # libgu.c
       - [0x2FE0, asm, sceGuDrawBufferList] # libgu.c
-      - [0x3030, asm, func_psp_0890193C]
-      - [0x3084, asm, func_psp_08901990]
-      - [0x30DC, asm, func_psp_089019E8]
-      - [0x3138, asm, func_psp_08901A44]
+      - [0x3030, asm, sceGuDepthBuffer] # libgu.c
+      - [0x3084, asm, sceGuEnable] # libgu.c
+      - [0x30DC, asm, sceGuDisable] # libgu.c
+      - [0x3138, asm, sceGuSetStatus] # libgu.c
       - [0x31E8, c, main_psp/31E8]
       - [0x4484, asm, sceGupSetStatus] # libgu.c
-      - [0x4690, asm, func_psp_08902F9C]
+      - [0x4690, asm, sceGupSetMatrix] # libgu.c
       - [0x4994, asm, func_psp_089032A0]
       - [0x4B30, asm, func_psp_0890343C]
       - [0x4E84, c, main_psp/4E84]
@@ -119,9 +119,12 @@ segments:
       - [0x546C, asm, _sceGuCallbackFinish] # libgu.c
       - [0x549C, asm, _sceGuResetGlobalVariables] # libgu.c
       - [0x55A8, asm, _sceGuUpdateStallAddr] # libgu.c
-      - [0x5600, asm, func_psp_08903F0C]
-      - [0x57E8, asm, func_psp_089040F4]
-      - [0x5AB8, c, main_psp/5AB8]
+      - [0x5600, asm, sceGuDebugPrint] # libgu.c
+      - [0x57E8, asm, sceGuDebugFlush] # libgu.c
+      - [0x5A5C, asm, _sceGuDebugFontInit] # libgu.c
+      - [0x5AB8, asm, _sceGuDebugSwapBuffer] # libgu.c
+      - [0x5ACC, asm, _sceGuDebugDispBuffer] # libgu.c
+      - [0x5AE8, asm, _sceGuDebugDrawBuffer] # libgu.c
       - [0x5AFC, asm, func_psp_08904408]
       - [0x5B64, asm, func_psp_08904470]
       - [0x622C, asm, func_psp_08904B38]
@@ -161,7 +164,7 @@ segments:
       - [0xA314, asm, func_psp_08908C20]
       - [0xA378, asm, func_psp_08908C84]
       - [0xA758, asm, func_psp_08909064]
-      - [0xA860, asm, func_psp_0890916C]
+      - [0xA860, asm, __getreent]
       - [0xA888, asm, labs]
       - [0xA894, asm, func_psp_089091A0]
       - [0xA934, asm, func_psp_08909240]

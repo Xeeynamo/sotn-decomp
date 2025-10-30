@@ -25,7 +25,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/192C0", func_psp_08917FCC);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/192C0", func_psp_08918004);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/192C0", func_psp_08918040);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/192C0", sceWaveAudioGetRestSample);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/192C0", func_psp_0891807C);
 
