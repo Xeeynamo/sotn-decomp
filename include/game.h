@@ -2259,7 +2259,7 @@ s16 func_90E0E30(PrimitiveType, s32);
 void func_91040A0(u_long** gfxBank);
 
 // Palettes
-// Each palette is made up of 16 colors and range from 0x000 to 0x2FF. 
+// Each palette is made up of 16 colors and range from 0x000 to 0x2FF.
 // Each 0x100 is its own category.
 // - 0x000-0x0FF = believed to be used by stage overlay
 // - 0x100-0x1FF = from F_GAME.BIN and F_GAME2.BIN, used by player characters
@@ -2267,18 +2267,47 @@ void func_91040A0(u_long** gfxBank);
 // - 0x200-0x2FF = enemies and other overlay-specific palettes
 typedef enum {
     PAL_NULL = 0x0, // breakable
+
+    // 0x100-0x1FF
     PAL_ALUCARD = 0x100,
     PAL_ALUCARD_RED_OUTLINE,
     PAL_ALUCARD_BLUE_OUTLINE_MASK, // EntityWingSmashTrail
     PAL_ALUCARD_GRAY_OUTLINE_MASK,
     PAL_ALUCARD_WOLF,
-    PAL_PLAYER_HIDDEN, // used during teleporting and transforming
+    PAL_PLAYER_HIDDEN,   // used during teleporting and transforming
     PAL_UNK_110 = 0x110, // weapon
     PAL_UNK_111 = 0x111,
     PAL_UNK_117 = 0x117,
     PAL_RICHTER = 0x120,
     PAL_UNK_128 = 0x128,
-    PAL_UNK_168 = 0x168, // slime
+
+    // Fill colors (color 0 in palette is still used for transparent bg)
+    /* 0x158 */ PAL_FILL_YELLOW,
+    /* 0x159 */ PAL_FILL_ORANGE,
+    /* 0x15A */ PAL_FILL_PURPLE,
+    /* 0x15B */ PAL_FILL_BLUE,
+    /* 0x15C */ PAL_FILL_GREEN,
+    /* 0x15D */ PAL_FILL_RED,
+    /* 0x15E */ PAL_FILL_BLACK,
+    /* 0x15F */ PAL_FILL_WHITE,
+
+    // Color-cycling effects
+    /* 0x160 */ PAL_CC_FIRE_EFFECT,
+    /* 0x161 */ PAL_CC_STONE_EFFECT,
+    /* 0x162 */ PAL_CC_MAGIC_HUD_EFFECT,
+    /* 0x163 */ PAL_CC_CRITICAL_EFFECT,
+    /* 0x164 */ PAL_CC_DARK_EFFECT,
+    /* 0x165 */ PAL_CC_POISON_EFFECT,
+    /* 0x166 */ PAL_CC_RED_EFFECT_A,
+    /* 0x167 */ PAL_CC_YELLOW_EFFECT,
+    /* 0x168 */ PAL_CC_GREEN_EFFECT_A, // slime
+    /* 0x169 */ PAL_CC_BLUE_EFFECT_A,
+    /* 0x16A */ PAL_CC_PURPLE_EFFECT_A,
+    /* 0x16B */ PAL_CC_TURQUOISE_EFFECT, // spectral sword
+    /* 0x16C */ PAL_CC_PURPLE_EFFECT_B,
+    /* 0x16D */ PAL_CC_RED_EFFECT_B,
+    /* 0x16E */ PAL_CC_GREEN_EFFECT_B,
+    /* 0x16F */ PAL_CC_BLUE_EFFECT_B,
     PAL_UNK_194 = 0x194,
     PAL_UNK_199 = 0x199,
     PAL_UNK_19F = 0x19F,
@@ -2291,7 +2320,8 @@ typedef enum {
     PAL_UNK_1B5 = 0x1B5,
     PAL_UNK_1B6 = 0x1B6,
     PAL_UNK_1B7 = 0x1B7,
-    //
+
+    // 0x200-0x2FF
     PAL_UNK_200 = 0x200,
     PAL_UNK_202 = 0x202,
     PAL_UNK_204 = 0x204,
