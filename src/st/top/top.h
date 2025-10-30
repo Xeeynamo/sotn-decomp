@@ -8,6 +8,12 @@
 
 #define OVL_EXPORT(x) TOP_##x
 
+enum OVL_EXPORT(Palette) {
+    PAL_NONE = 0,
+    PAL_BREAKABLE = 0x238,
+    PAL_BREAKABLE_DEBRIS = 0x23C,
+};
+
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
@@ -34,7 +40,7 @@ typedef enum EntityIDs {
     /* 0x18 */ E_SECRET_STAIRS,
     /* 0x21 */ E_FLEA_RIDER = 0x21,
     /* 0x23 */ E_CUTSCENE = 0x23,
-    /* 0x27 */ E_BREAKABLE_2 = 0x27,
+    /* 0x27 */ E_BREAKABLE_DEBRIS = 0x27,
     /* 0x28 */ E_AXE_KNIGHT_BLUE,
     /* 0x29 */ E_AXE_KNIGHT_AXE,
     /* 0x2A */ E_AXE_KNIGHT_AXE_2,
