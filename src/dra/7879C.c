@@ -3356,7 +3356,7 @@ void EntityWingSmashTrail(Entity* entity) {
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->rotate = PLAYER.rotate;
         entity->facingLeft = PLAYER.facingLeft;
-        entity->palette = PAL_FLAG(0x102);
+        entity->palette = PAL_FLAG(PAL_ALUCARD_BLUE_OUTLINE_MASK);
         entity->scaleX = entity->scaleY = 0x100;
         entity->step++;
         return;

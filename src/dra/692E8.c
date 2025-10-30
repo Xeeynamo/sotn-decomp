@@ -1253,13 +1253,13 @@ block_160:
         func_8010E168(1, 4);
         newStatus = PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
                     PLAYER_STATUS_UNK100000 | PLAYER_STATUS_MIST_FORM;
-        PLAYER.palette = PAL_FLAG(0x10D);
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         break;
     case Player_UnmorphMist:
         newStatus = PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
                     PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK800000 |
                     PLAYER_STATUS_MIST_FORM;
-        PLAYER.palette = PAL_FLAG(0x10D);
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         func_8010E168(1, 4);
         break;
     case Player_AlucardStuck:
@@ -1352,7 +1352,7 @@ block_160:
         newStatus =
             PLAYER_STATUS_UNK10000000 | NO_AFTERIMAGE | PLAYER_STATUS_UNK100000;
         func_8010E168(4, 0xC);
-        PLAYER.palette = PAL_FLAG(0x10D);
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         break;
     case Player_MorphWolf:
         g_unkGraphicsStruct.unk1C |= 2;

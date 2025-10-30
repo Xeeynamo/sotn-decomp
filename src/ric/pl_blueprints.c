@@ -2874,7 +2874,7 @@ void RicEntityTeleport(Entity* self) {
             self->ext.teleport.colorIntensity = 0x100;
         }
         if (--self->ext.teleport.timer == 0) {
-            PLAYER.palette = PAL_FLAG(0x10D);
+            PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
             self->step++;
         }
         break;

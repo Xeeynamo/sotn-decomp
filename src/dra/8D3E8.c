@@ -602,7 +602,7 @@ void func_8012E9C0(void) {
     } else if (g_Player.unk66 != 3) {
         return;
     }
-    PLAYER.palette = 0x104;
+    PLAYER.palette = PAL_ALUCARD_WOLF;
     PLAYER.step_s = 5;
     PLAYER.velocityY = FIX(-1.5);
 }
@@ -726,7 +726,7 @@ void PlayerStepMorphWolf(void) {
     s32 xSpeed;
     s32 var_s0;
 
-    PLAYER.palette = 0x104;
+    PLAYER.palette = PAL_ALUCARD_WOLF;
     PLAYER.drawMode = DRAW_DEFAULT;
 #if defined(VERSION_US)
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
@@ -1296,7 +1296,7 @@ void func_8012F894(Entity* self) {
     f178_finish = false;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         f178_finish = true;
-        self->palette = PLAYER.palette = PAL_FLAG(0x10D);
+        self->palette = PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
     }
     prim = &g_PrimBuf[self->primIndex];
     func_8012F178(prim, f178_count, f178_finish);

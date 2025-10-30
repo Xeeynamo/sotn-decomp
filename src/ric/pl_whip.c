@@ -503,7 +503,7 @@ void RicEntityArmBrandishWhip(Entity* entity) {
                         FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_10000;
         entity->animSet = ANIMSET_OVL(18);
         entity->unk5A = 0x46;
-        entity->palette = PAL_FLAG(0x120);
+        entity->palette = PAL_FLAG(PAL_RICHTER);
         entity->zPriority = PLAYER.zPriority + 2;
     }
     if (PLAYER.step == PL_S_CROUCH) {

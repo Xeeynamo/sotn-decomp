@@ -2335,7 +2335,7 @@ bool BatFormFinished(void) {
         SetPlayerStep(Player_UnmorphBat);
         SetPlayerAnim(0xCA);
         D_800AFDA4[0].pose = 6;
-        PLAYER.palette = PAL_FLAG(0x10D);
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
         CreateEntFactoryFromEntity(

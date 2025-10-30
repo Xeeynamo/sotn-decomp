@@ -2214,7 +2214,7 @@ void func_80123B40(Entity* self) {
     if (!self->step) {
         self->animSet = PLAYER.animSet = 1;
         self->animCurFrame = PLAYER.animCurFrame = 0x9F;
-        self->palette = PAL_FLAG(0x10D);
+        self->palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         self->unk5A = 0xC;
         self->params = 0x2600;
         EntityPlayerBlinkWhite(self);
@@ -2482,12 +2482,12 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.colorIntensity = 0x100;
         }
         if (--self->ext.teleport.timer == 0) {
-            PLAYER.palette = PAL_FLAG(0x10D);
+            PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
             self->step++;
         }
         break;
     case 4:
-        PLAYER.palette = PAL_FLAG(0x10D);
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         self->ext.teleport.width--;
         if (self->ext.teleport.width <= 0) {
             self->ext.teleport.width = 0;
@@ -2495,7 +2495,7 @@ void EntityTeleport(Entity* self) {
         }
         break;
     case 5:
-        PLAYER.palette = PAL_FLAG(0x10D);
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         var_s5 = true;
         self->ext.teleport.unk90 += 4;
         if (self->ext.teleport.unk90 >= 0x100) {
@@ -2505,7 +2505,7 @@ void EntityTeleport(Entity* self) {
         }
         break;
     case 6:
-        PLAYER.palette = PAL_FLAG(0x10D);
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
 #ifdef VERSION_PSP
         func_892A620(0, 1);
         func_892A620(1, 1);
