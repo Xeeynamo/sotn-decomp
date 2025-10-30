@@ -6,22 +6,21 @@ INCLUDE_ASM("st/cat/nonmatchings/unk_3872C", func_us_801B872C);
 void func_us_801B87E8(Entity *self)
 {
   Primitive *prim;
-  s32 primIndex;
   s16 base_x;
   s32 cntr;
   u8 castleFlag;
 
   for (base_x = -g_Tilemap.scrollX.i.hi; base_x < (-0x3E); base_x += 0x3E);
 
-  if (self->step == 0)
+  if (!self->step)
   {
-    self->step += 1;
+    self->step++;
     do
     {
-      primIndex = (self->primIndex = g_api_AllocPrimitives(PRIM_GT4, 0x10));
+      self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
     }
     while (0);
-    if (primIndex == (-1))
+    if (self->primIndex == -1)
     {
       DestroyEntity(self);
       return;
@@ -29,7 +28,7 @@ void func_us_801B87E8(Entity *self)
     self->flags = 0x04800000;
     prim = &g_PrimBuf[self->primIndex];
     cntr = 0;
-    while (prim != 0)
+    while (prim)
     {
       prim->x0 = prim->x2 = base_x + ((cntr & 0x7) * 0x3E);
       prim->x1 = prim->x3 = prim->x0 + 0x3E;
@@ -46,8 +45,8 @@ void func_us_801B87E8(Entity *self)
       prim->u3 = 0x3F;
       prim->v3 = 0xDE;
       prim->drawMode = 2;
-      prim->y3 = prim->y2 = ((u16) prim->y0) - (-0x5F);
-      if (g_CastleFlags[0x42] == 0)
+      prim->y3 = prim->y2 = prim->y0 + 0x5F;
+      if (g_CastleFlags[CAT_SPIKE_ROOM_LIT] == 0)
       {
         prim->drawMode = 0xE;
       }
@@ -59,22 +58,22 @@ void func_us_801B87E8(Entity *self)
   else
   {
     cntr = 0;
-    if (self->ext.ILLEGAL.u8[4] != g_CastleFlags[0x42])
+    if (self->ext.et_801B87E8.unk80 != g_CastleFlags[CAT_SPIKE_ROOM_LIT])
     {
-      self->ext.ILLEGAL.u8[5] = 01;
+      self->ext.et_801B87E8.unk81 = 1;
     }
     prim = &g_PrimBuf[self->primIndex];
     while (prim != 0)
     {
-      if (g_CastleFlags[0x42] != 0)
+      if (g_CastleFlags[CAT_SPIKE_ROOM_LIT] != 0)
       {
         prim->drawMode &= 0xFFF7;
       }
-      if (self->ext.ILLEGAL.u8[5] != 0)
+      if (self->ext.et_801B87E8.unk81 != 0)
       {
         if (prim->r0 > 0x7f)
         {
-          self->ext.ILLEGAL.u8[5] = 0;
+          self->ext.et_801B87E8.unk81 = 0;
         }
         else
         {
@@ -90,13 +89,12 @@ void func_us_801B87E8(Entity *self)
       prim = prim->next;
       cntr++;
     }
-
   }
 
-  castleFlag = g_CastleFlags[0x42];
+  castleFlag = g_CastleFlags[CAT_SPIKE_ROOM_LIT];
   do
   {
-    self->ext.ILLEGAL.u8[4] = castleFlag;
+    self->ext.et_801B87E8.unk80 = castleFlag;
     FntPrint("base_x:%04x\n", base_x);
   }
   while (0);
