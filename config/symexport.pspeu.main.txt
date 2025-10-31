@@ -1,0 +1,2 @@
+EXTERN(_binary_assets_main_psp_mwo_header_bin_start);
+EXTERN(_start)

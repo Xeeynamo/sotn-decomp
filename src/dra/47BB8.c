@@ -242,13 +242,13 @@ SimFile D_800A04AC[] = {
     {
         "sim:c:\\sound\\data\\sd_eve1.seq",
         aPqes_1,
-        0x00001EB3,
+        SEQ_LIB_SEQ_LEN,
         SIM_SEQ,
     },
     {
         "sim:c:\\sound\\data\\sd_eve3.seq",
         aPqes_1,
-        0x00000178,
+        SEQ_DAI_SEQ_LEN,
         SIM_SEQ,
     },
 };

@@ -53,4 +53,7 @@
 
 #endif
 
+#define SEQ_LIB_SEQ_LEN 7859
+#define SEQ_DAI_SEQ_LEN 376
+
 #endif // LBA_H

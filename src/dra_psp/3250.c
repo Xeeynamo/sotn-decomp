@@ -27,7 +27,7 @@ void func_psp_090DFC68() {
 }
 
 void func_psp_090DFC80() {
-    func_89195C0(D_psp_091CB700, sizeof(D_psp_091CB700), D_8006C378);
+    func_psp_089195C0(D_psp_091CB700, sizeof(D_psp_091CB700), D_8006C378);
 }
 
 void func_800EA538(s32 arg0) {

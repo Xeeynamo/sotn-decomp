@@ -499,8 +499,25 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     else:
         raise Exception(f"platform {platform} not recognized")
     objs = []
-    if ovl_name == "main":
+    if ovl_name == "main" and platform != "psp":
         objs.append(add_s(nw, version, f"{asm_path}/header.s", ld_path))
+    if ovl_name == "main" and platform == "psp":
+        obj = add_copy_psx(
+            nw,
+            version,
+            f"{asset_path}/elf_header.bin",
+            f"{asset_path}/elf_header.bin",
+            ld_path,
+        )
+        objs.append(obj)
+        obj = add_copy_psx(
+            nw,
+            version,
+            f"{asset_path}/elf_footer.bin",
+            f"{asset_path}/elf_footer.bin",
+            ld_path,
+        )
+        objs.append(obj)
     for segment in splat_config["segments"]:
         if not "type" in segment:
             continue
@@ -534,6 +551,8 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
             elif kind == "data" or kind == "rodata" or kind == "bss" or kind == "sbss":
                 obj = add_s(nw, version, f"{asm_path}/data/{name}.{kind}.s", ld_path)
                 objs.append(obj)
+            elif kind == "textbin":
+                objs.append(add_s(nw, version, f"{asm_path}/data/{name}.s", ld_path))
             elif kind == "asm":
                 objs.append(add_s(nw, version, f"{asm_path}/{name}.s", ld_path))
             elif kind == "raw" or kind == "cmp":
@@ -577,7 +596,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 objs += objs_memcard
             else:
                 continue
-    if platform == "psp" and file_name != "PS.ELF":
+    if platform == "psp" and ovl_name != "main":
         mwo = os.path.join(asset_path, "mwo_header.bin")
         objs.append(add_copy_psx(nw, version, mwo, mwo, ld_path))
     output_elf = f"build/{version}/{ovl_name}.elf"
@@ -590,6 +609,8 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     ]
     if ovl_name != "main":
         symbols_lists.append(f"-T {undefined_funcs_auto_path}")
+    if ovl_name == "main" and platform == "psp":
+        symbols_lists.append(f"-T {undefined_funcs_auto_path}")
     if platform == "psp":
         symbols_lists.append(f"-T config/symexport.{version}.{ovl_name}.txt")
     nw.build(
@@ -598,7 +619,11 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
         inputs=[ld_path],
         implicit=[x for x in objs if x],
         variables={
-            "ld_flags": "--gc-sections" if platform == "psp" else "",
+            "ld_flags": (
+                "--gc-sections"
+                if platform == "psp" and not ld_path.endswith("main.ld")
+                else ""
+            ),
             "map_out": f"build/{version}/{ovl_name}.map",
             "symbols_arg": str.join(" ", symbols_lists),
         },
@@ -734,7 +759,7 @@ with open(build_ninja, "w") as f:
             "VERSION=$version"
             " tools/sotn_str/target/release/sotn_str process -p -f $in"
             " | .venv/bin/python3 tools/mwccgap/mwccgap.py $out --src-dir $src_dir"
-            " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path bin/allegrex-as"
+            " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path tools/pspas.py"
             " --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc"
             " -gccinc -Iinclude -D_internal_version_$version -DSOTN_STR -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
             " $opt_level -opt nointrinsics"
