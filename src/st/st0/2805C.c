@@ -18,9 +18,8 @@ static u8* anims_801A805C[] = {
     D_801806A8, D_801806B4, D_801806BC, D_801806C0, D_801806C4};
 static u8 hitbox_height[] = {8, 8, 40, 24, 16, 16, 8, 8, 8, 8, 8};
 static u8 explosion_params[] = {0, 0, 2, 2, 2, 2, 2, 2, 2, 2};
-static u16 palette[] = {
-    PAL_ALUCARD, PAL_ALUCARD, PAL_UNK_212, PAL_UNK_212, PAL_UNK_212,
-    PAL_UNK_212, PAL_UNK_212, PAL_UNK_212, PAL_UNK_212, PAL_UNK_212};
+static u16 palette[] = {PAL_ALUCARD, PAL_ALUCARD, 0x212, 0x212, 0x212,
+                        0x212,       0x212,       0x212, 0x212, 0x212};
 static u16 animset[] = {
     ANIMSET_OVL(3), ANIMSET_OVL(3), ANIMSET_OVL(4), ANIMSET_OVL(4),
     ANIMSET_OVL(4), ANIMSET_OVL(4), ANIMSET_OVL(4), ANIMSET_OVL(4),

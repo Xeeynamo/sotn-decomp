@@ -217,7 +217,7 @@ void EntityMerman(Entity* self) {
                     newEntity->velocityX = jumpAirXVels[self->pose - 1];
                 }
             } else {
-                self->palette = PAL_UNK_2B2;
+                self->palette = 0x2B2;
                 if (self->velocityY > 0) {
                     CheckMermanEnteringWater(0x15);
                 }
@@ -390,7 +390,7 @@ void EntityMerman(Entity* self) {
     case MERMAN_DYING:
         switch (self->step_s) {
         case MERMAN_DYING_SETUP:
-            self->ext.merman.palette = PAL_UNK_2BC;
+            self->ext.merman.palette = 0x2BC;
             self->velocityY = 0;
             self->step_s++;
 
@@ -411,7 +411,7 @@ void EntityMerman(Entity* self) {
             self->palette = self->ext.merman.palette;
             if (!(g_Timer % 8)) {
                 self->ext.merman.palette++;
-                if (self->ext.merman.palette == PAL_UNK_2C0) {
+                if (self->ext.merman.palette == 0x2C0) {
                     PlaySfxPositional(SFX_FM_EXPLODE_B);
                     newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (newEntity != NULL) {
@@ -420,7 +420,7 @@ void EntityMerman(Entity* self) {
                     }
                 }
             }
-            if (self->ext.merman.palette > PAL_UNK_2C4) {
+            if (self->ext.merman.palette > 0x2C4) {
                 DestroyEntity(self);
             }
             break;

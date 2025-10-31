@@ -186,7 +186,7 @@ void EntityDiscusLord(Entity* self) {
                 self->ext.discusLord.prim = prim;
                 UnkPolyFunc2(prim);
                 prim->tpage = 0x1A;
-                prim->clut = PAL_UNK_235;
+                prim->clut = 0x235;
                 prim->u0 = prim->u2 = 0;
                 prim->u1 = prim->u3 = 0x3F;
                 prim->v0 = prim->v1 = 0xC0;
@@ -278,8 +278,8 @@ void EntityDiscusLord(Entity* self) {
         if (g_Timer % 2) {
             prim = self->ext.discusLord.prim;
             prim->clut--;
-            if (prim->clut < PAL_UNK_231) {
-                prim->clut = PAL_UNK_235;
+            if (prim->clut < 0x231) {
+                prim->clut = 0x235;
             }
         }
 
@@ -470,13 +470,13 @@ void EntityDiscus(Entity* self) {
 
     if (self->ext.discusLord.unk94) {
         if (self->ext.discusLord.unk94 > 0x15) {
-            self->palette = PAL_UNK_21D;
+            self->palette = 0x21D;
         } else {
-            self->palette = PAL_UNK_224 - (self->ext.discusLord.unk94 / 3);
+            self->palette = 0x224 - (self->ext.discusLord.unk94 / 3);
         }
         self->ext.discusLord.unk94--;
     } else {
-        self->palette = PAL_UNK_224;
+        self->palette = 0x224;
     }
 
     if (!(--self->ext.discusLord.angle)) {
@@ -515,7 +515,7 @@ void EntityDiscus(Entity* self) {
             self->ext.discusLord.unkA0 = prim;
             prim->type = PRIM_GT4;
             prim->tpage = 0x12;
-            prim->clut = PAL_UNK_22D;
+            prim->clut = 0x22D;
             prim->u0 = prim->u2 = 0x6A;
             prim->u1 = prim->u3 = 0x7F;
             prim->v0 = prim->v1 = 0xD0;
@@ -815,9 +815,9 @@ void EntityDiscusTrail(Entity* self) {
             self->opacity = 0x80;
         }
         if (self->ext.discusLord.unk94 > 0x15) {
-            self->palette = PAL_UNK_21D;
+            self->palette = 0x21D;
         } else {
-            self->palette = PAL_UNK_224 - (self->ext.discusLord.unk94 / 3);
+            self->palette = 0x224 - (self->ext.discusLord.unk94 / 3);
         }
     }
     self->rotate += self->ext.discusLord.unk8C;

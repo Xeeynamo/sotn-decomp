@@ -94,7 +94,7 @@ void func_801B4D78(void) {
     case 0:
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 1;
-        self->palette = PAL_UNK_200;
+        self->palette = 0x200;
         self->ext.unkSelEnts.unk80.val = FIX(92);
         self->posY.i.hi = 0xD0;
         self->zPriority = 0x80;
@@ -352,7 +352,7 @@ void func_801B55C8(void) {
         self->animSet = ANIMSET_OVL(3);
         self->animCurFrame = 0xC;
         self->unk5A = 0x46;
-        self->palette = PAL_UNK_258;
+        self->palette = 0x258;
         self->facingLeft = 1;
         self->ext.unkSelEnts.unk80.val = FIX(0x80);
         self->posY.i.hi = 0xA0;

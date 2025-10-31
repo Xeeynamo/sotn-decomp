@@ -26,9 +26,9 @@ void EntityLargeSlime(Entity* self) {
     }
 
     if (self->ext.slime.largeSlimePaletteCycle) {
-        self->ext.slime.palette = PAL_UNK_204;
+        self->ext.slime.palette = 0x204;
     } else {
-        self->ext.slime.palette = PAL_UNK_205;
+        self->ext.slime.palette = 0x205;
     }
 
     if (self->flags & FLAG_DEAD && self->step < 7) {
@@ -62,7 +62,7 @@ void EntityLargeSlime(Entity* self) {
             i++) {
             if (self->params & 0x10) {
                 prim->tpage = 0x13;
-                prim->clut = PAL_UNK_204;
+                prim->clut = 0x204;
                 prim->u0 = i * 8;
                 prim->u1 = (i * 8) + 7;
                 prim->u2 = i * 8;
