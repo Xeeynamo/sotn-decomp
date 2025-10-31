@@ -420,7 +420,7 @@ void func_us_801BC57C(void) {
             g_CurrentEntity->ext.lesserDemon.unk7C = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x1A;
-            prim->clut = 0x169;
+            prim->clut = PAL_CC_BLUE_EFFECT_A;
             prim->u0 = prim->u2 = 0xE0;
             prim->u1 = prim->u3 = 0xFF;
             prim->v0 = prim->v1 = 0x40;
@@ -623,7 +623,7 @@ void func_us_801BCC10(Entity* self) {
         prim->p3 = 4;
         prim->type = PRIM_GT4;
         prim->tpage = 0x1A;
-        prim->clut = 0x169;
+        prim->clut = PAL_CC_BLUE_EFFECT_A;
         prim->u0 = prim->u2 = 0xE0;
         prim->u1 = prim->u3 = 0xFF;
         prim->v0 = prim->v1 = 0x40;

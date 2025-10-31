@@ -1410,7 +1410,7 @@ void DopEntityHitByHoly(Entity* self) {
             yRand = hitboxY + rand() % 48 - 24;
             D_us_801D3334[i].x = xRand;
             D_us_801D3334[i].y = yRand;
-            prim->clut = 0x1B2;
+            prim->clut = PAL_UNK_1B2;
             prim->tpage = 0x1A;
             prim->b0 = 0;
             prim->b1 = 0;
@@ -4625,7 +4625,7 @@ void EntitySubwpnKnife(Entity* self) {
         }
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1C;
-        prim->clut = 0x1AB;
+        prim->clut = PAL_UNK_1AB;
         prim->u0 = prim->u1 = 0x18;
         prim->v0 = prim->v2 = 0x18;
         prim->u2 = prim->u3 = 0x20;
@@ -4704,7 +4704,7 @@ void EntitySubwpnKnife(Entity* self) {
         prim->y2 = y + 4;
         prim->x3 = x + offsetX;
         prim->y3 = y + 4;
-        prim->clut = 0x1AB;
+        prim->clut = PAL_UNK_1AB;
         (g_GameTimer >> 1) & 1; // no-op
         prim->drawMode &= ~DRAW_HIDE;
         prim = prim->next;
@@ -4773,7 +4773,7 @@ void EntitySubwpnKnife(Entity* self) {
         modY = -(rsin(angle4) * 0xCA0) >> 0x14;
         prim->x3 = x + (s16)modX;
         prim->y3 = y - (s16)modY;
-        prim->clut = 0x1AB;
+        prim->clut = PAL_UNK_1AB;
 
         (g_GameTimer >> 1) & 1; // no-op
         if (self->ext.timer.t < 0x21) {

@@ -328,7 +328,7 @@ void HitDetection(void) {
                         for (prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
                              prim != NULL; prim = prim->next) {
                             if (prim->drawMode == DRAW_HIDE) {
-                                prim->clut = 0x199;
+                                prim->clut = PAL_UNK_199;
                                 temp_rand = (Random() & 7) - 13;
                                 prim->x0 = prim->x2 = xCoord + temp_rand - 3;
                                 prim->x1 = prim->x3 = prim->x0 + 0x20;

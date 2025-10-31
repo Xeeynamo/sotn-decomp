@@ -1736,7 +1736,7 @@ void func_us_80176C1C(Entity* self) {
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE |
                              DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             prim->tpage = 0x1A;
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
 
             prim->u0 = prim->u2 = (rand() % 5) * 0x10 + 0x90;
             prim->u1 = prim->u3 = prim->u0 + 0x10;

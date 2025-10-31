@@ -267,7 +267,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
         self->scaleX = self->scaleY = 0;
         prim = &g_PrimBuf[self->primIndex];
-        prim->clut = 0x19F;
+        prim->clut = PAL_UNK_19F;
         prim->tpage = 0x19;
 
         prim->u0 = prim->u2 = 0x80;

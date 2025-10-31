@@ -479,7 +479,7 @@ void RicEntitySubwpnHolyWaterFlame(Entity* self) {
                 prim->g0 = prim->g1 = 0;
                 prim->b0 = prim->b1 = 0;
             }
-            prim->clut = 0x1B0;
+            prim->clut = PAL_UNK_1B0;
             prim->tpage = 0x1A;
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |

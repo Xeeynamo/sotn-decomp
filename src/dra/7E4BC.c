@@ -2288,7 +2288,7 @@ void func_80123B40(Entity* self) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = self->ext.et_80123B40.unk29;
-            prim->clut = 0x100;
+            prim->clut = PAL_ALUCARD;
             prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_COLORS |
                              DRAW_UNK02 | DRAW_TRANSP;
         }
@@ -2425,9 +2425,9 @@ void EntityTeleport(Entity* self) {
             D_8013839C[i].x = xVar;
             D_8013839C[i].y = yVar;
             // SOTN please why do you do this
-            prim->clut = 0x1B2;
-            prim->clut = 0x1B5;
-            prim->clut = 0x1BA;
+            prim->clut = PAL_UNK_1B2;
+            prim->clut = PAL_UNK_1B5;
+            prim->clut = PAL_UNK_1BA;
             prim->tpage = 0x1A;
             prim->b0 = 0;
             prim->b1 = 0;

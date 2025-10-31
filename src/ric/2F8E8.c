@@ -641,7 +641,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         self->ext.et_801291C4.prim2 = prim;
         for (i = 0; prim != NULL;) {
             prim->tpage = 0x1A;
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim->u0 = prim->u1 = i * 0x10 + 0x90;
             prim->u2 = prim->u3 = prim->u0 + 0x10;
             prim->v0 = prim->v2 = 0xD0;
@@ -673,7 +673,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         prim->y3 = prim->y2 - 0x10;
         self->ext.et_801291C4.prim2 = prim;
         while (prim != NULL) {
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim->r0 = prim->g0 = prim->b0 = 0x80;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
@@ -760,7 +760,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         }
         prim = self->ext.et_801291C4.prim1;
         while (prim != NULL) {
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim->r0 = prim->g0 = prim->b0 = 0x60;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);

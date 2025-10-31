@@ -447,7 +447,7 @@ void EntitySubwpnBibleTrail(Entity* self) {
             FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1C;
-        prim->clut = 0x19D;
+        prim->clut = PAL_UNK_19D;
         prim->u0 = prim->u2 = 0x20;
         prim->v0 = prim->v1 = 0;
         prim->u1 = prim->u3 = 0x30;

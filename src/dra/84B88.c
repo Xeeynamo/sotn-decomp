@@ -39,7 +39,7 @@ void EntitySubwpnKnife(Entity* self) {
         }
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1C;
-        prim->clut = 0x1AB;
+        prim->clut = PAL_UNK_1AB;
         prim->u0 = prim->u1 = 0x18;
         prim->v0 = prim->v2 = 0x18;
         prim->u2 = prim->u3 = 0x20;
@@ -114,7 +114,7 @@ void EntitySubwpnKnife(Entity* self) {
         prim->y2 = y + 4;
         prim->x3 = x + offsetX;
         prim->y3 = y + 4;
-        prim->clut = 0x1AB;
+        prim->clut = PAL_UNK_1AB;
         (g_GameTimer >> 1) & 1; // no-op
         prim->drawMode &= ~DRAW_HIDE;
         prim = prim->next;
@@ -183,7 +183,7 @@ void EntitySubwpnKnife(Entity* self) {
         modY = -(rsin(angle4) * 0xCA0) >> 0x14;
         prim->x3 = x + (s16)modX;
         prim->y3 = y - (s16)modY;
-        prim->clut = 0x1AB;
+        prim->clut = PAL_UNK_1AB;
 
         (g_GameTimer >> 1) & 1; // no-op
         if (self->ext.timer.t < 0x21) {
@@ -709,7 +709,7 @@ void EntitySubwpnHolyWaterFlame(Entity* self) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = randR;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = randG;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = randB;
-            prim->clut = 0x1B2;
+            prim->clut = PAL_UNK_1B2;
             prim->tpage = 0x1A;
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP |
@@ -964,7 +964,7 @@ void EntitySubwpnCrashCrossParticles(Entity* self) {
                 rand63 = rand() & 0x3F; // random integer 0-63
                 prim->g0 = (rand() % 237) + 9;
                 prim->g1 = 0xF0 - (rand() & 0x20);
-                prim->clut = 0x1B0;
+                prim->clut = PAL_UNK_1B0;
                 prim->tpage = 0x1A;
                 prim->b0 = 0;
                 prim->b1 = 0;
@@ -2105,7 +2105,7 @@ void EntityAguneaHitEnemy(Entity* self) {
         self->ext.et_801291C4.prim2 = prim;
         for (i = 0; prim != NULL;) {
             prim->tpage = 0x1A;
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim->u0 = prim->u1 = i * 0x10 + 0x90;
             prim->u2 = prim->u3 = prim->u0 + 0x10;
             prim->v0 = prim->v2 = 0xD0;
@@ -2138,7 +2138,7 @@ void EntityAguneaHitEnemy(Entity* self) {
         prim->y3 = prim->y2 - 0x10;
         self->ext.et_801291C4.prim2 = prim;
         while (prim != NULL) {
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim->r0 = prim->g0 = prim->b0 = 0x80;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
@@ -2225,7 +2225,7 @@ void EntityAguneaHitEnemy(Entity* self) {
         }
         prim = self->ext.et_801291C4.prim1;
         while (prim != NULL) {
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim->r0 = prim->g0 = prim->b0 = 0x60;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
@@ -2304,7 +2304,7 @@ void func_80129864(Entity* self) {
                 DRAW_UNK_100 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
                 DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             prim->tpage = 0x1A;
-            prim->clut = 0x19F;
+            prim->clut = PAL_UNK_19F;
             prim = prim->next;
         }
         self->facingLeft = (PLAYER.facingLeft + 1) & 1; // !PLAYER.facingLeft

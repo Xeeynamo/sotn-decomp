@@ -542,7 +542,7 @@ void func_us_801923DC(Entity* self) {
 
         for (i = 0; i < PrimCount; i++) {
             prim->tpage = 0x1A;
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
 
             prim->u0 = prim->u1 = i * 4 + 144;
             prim->u2 = prim->u3 = i * 4 + 148;

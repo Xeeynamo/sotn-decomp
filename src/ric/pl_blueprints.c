@@ -220,7 +220,7 @@ void RicEntityHitByHoly(Entity* entity) {
             temp_yRand = hitboxY + rand() % 48 - 24;
             D_80174FBC[i].x = temp_xRand;
             D_80174FBC[i].y = temp_yRand;
-            prim->clut = 0x1B2;
+            prim->clut = PAL_UNK_1B2;
             prim->tpage = 0x1A;
             prim->b0 = 0;
             prim->b1 = 0;
@@ -1499,7 +1499,7 @@ void func_80162604(Entity* self) {
         prim->v2 = prim->v3 = 255;
         prim->tpage = 0x1A;
 
-        prim->clut = 0x162;
+        prim->clut = PAL_CC_MAGIC_HUD_EFFECT;
         prim->priority = PLAYER.zPriority - 4;
         prim->drawMode = DRAW_DEFAULT;
         self->flags = FLAG_UNK_10000 | FLAG_POS_PLAYER_LOCKED |
@@ -2128,7 +2128,7 @@ void func_801641A0(Entity* self) {
         prim->v2 = prim->v3 = 255;
         PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = PGREY(prim, 3) = 128;
         prim->tpage = 0x1A;
-        prim->clut = 0x160;
+        prim->clut = PAL_CC_FIRE_EFFECT;
         prim->priority = PLAYER.zPriority + 8;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         self->flags =
@@ -2817,9 +2817,9 @@ void RicEntityTeleport(Entity* self) {
             yVar = 0xE0 - (rand() & 0x3F);
             D_80175000[i].x = xVar;
             D_80175000[i].y = yVar;
-            prim->clut = 0x1B2;
-            prim->clut = 0x1B5;
-            prim->clut = 0x1BA;
+            prim->clut = PAL_UNK_1B2;
+            prim->clut = PAL_UNK_1B5;
+            prim->clut = PAL_UNK_1BA;
             prim->tpage = 0x1A;
             prim->b0 = 0;
             prim->b1 = 0;

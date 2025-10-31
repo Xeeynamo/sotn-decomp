@@ -125,9 +125,9 @@ void EntityStageNamePopup(Entity* self) {
 #endif
         for (i = 0; i < 2; i++) {
             prim->tpage = 17;
-            prim->clut = 0x19F; // Black to white gradient
+            prim->clut = PAL_UNK_19F; // Black to white gradient
             if (i != 0) {
-                prim->clut = 0x19D; // Light grey to black gradient
+                prim->clut = PAL_UNK_19D; // Light grey to black gradient
             }
             prim->x2 = prim->x0 = PRIM_LEFT_SIDE_X;
             prim->y1 = prim->y0 = 157;
@@ -161,9 +161,9 @@ void EntityStageNamePopup(Entity* self) {
         }
         for (i = 0; i < 2; i++) {
             prim->tpage = 17;
-            prim->clut = 0x19F; // Black to white gradient
+            prim->clut = PAL_UNK_19F; // Black to white gradient
             if (i != 0) {
-                prim->clut = 0x19D; // Light grey to black gradient
+                prim->clut = PAL_UNK_19D; // Light grey to black gradient
             }
             prim->x2 = prim->x0 = 128;
             prim->y1 = prim->y0 = 173;
@@ -196,7 +196,7 @@ void EntityStageNamePopup(Entity* self) {
         self->ext.stpopupj.firstStarPrim = prim;
         UnkPolyFunc2(prim);
         prim->tpage = 26;
-        prim->clut = 0x19E; // Black to light grey gradient
+        prim->clut = PAL_UNK_19E; // Black to light grey gradient
         prim->u0 = 0;
         prim->u1 = 16;
         prim->u2 = prim->u0;

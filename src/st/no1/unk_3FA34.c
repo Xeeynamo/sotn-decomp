@@ -835,7 +835,7 @@ void func_us_801C10F4(Entity* self) {
     prim = self->ext.et_801C10F4.unk7C;
     prim->tpage = 0x11;
     prim->type = PRIM_GT4;
-    prim->clut = 0x19F;
+    prim->clut = PAL_UNK_19F;
     prim->u0 = prim->u2 = D_us_801D7004;
     prim->u1 = prim->u3 = D_us_801D7004 + (D_us_801D7008 - D_us_801D7004) / 2;
     prim->v0 = prim->v1 = 0;
@@ -853,7 +853,7 @@ void func_us_801C10F4(Entity* self) {
     prim = prim->next;
     prim->type = PRIM_GT4;
     prim->tpage = 0x11;
-    prim->clut = 0x19F;
+    prim->clut = PAL_UNK_19F;
     prim->u0 = prim->u2 = D_us_801D7004 + (D_us_801D7008 - D_us_801D7004) / 2;
     prim->u1 = prim->u3 = D_us_801D7008;
     prim->v0 = prim->v1 = 0;
@@ -923,7 +923,7 @@ void func_us_801C10F4(Entity* self) {
     prim = prim->next;
     prim->type = PRIM_GT4;
     prim->tpage = 0x11;
-    prim->clut = 0x19C;
+    prim->clut = PAL_UNK_19C;
     prim->u0 = prim->u2 = D_us_801D6FFC;
     prim->u1 = prim->u3 = D_us_801D7000;
     prim->v0 = prim->v1 = 0;

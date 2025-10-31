@@ -25,7 +25,7 @@ static void CutsceneUnk4(void) {
     prim = g_Dialogue.prim[g_Dialogue.nextCharY];
     prim->tpage = CUTSCENE_UNK4_TPAGE;
 #ifdef CUTSCENE_UNK4_HAS_ARGS
-    prim->clut = 0x1A1;
+    prim->clut = PAL_UNK_1A1;
     prim->x0 = 56;
     prim->u0 = 0;
     prim->y0 = nextLineY + 44;

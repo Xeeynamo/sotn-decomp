@@ -336,7 +336,7 @@ void func_us_801CC984(Entity* self) {
         i = 0;
         while (prim != NULL) {
             prim->tpage = 0x1A;
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim->u0 = prim->u1 = (i * 0x10) + 0x90;
             prim->u2 = prim->u3 = prim->u0 + 0x10;
             prim->v0 = prim->v2 = 0xD0;

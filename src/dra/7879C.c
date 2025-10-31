@@ -254,15 +254,15 @@ void EntityNumberMovesToHpMeter(Entity* self) {
         // batches
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < PrimCountA; i++) {
-            prim->clut = 0x1B2;
+            prim->clut = PAL_UNK_1B2;
             if (self->ext.hpNumMove.number == 0) {
-                prim->clut = 0x1B4;
+                prim->clut = PAL_UNK_1B4;
             }
             if (self->ext.hpNumMove.type == 1) {
-                prim->clut = 0x1B8;
+                prim->clut = PAL_UNK_1B8;
             }
             if (self->ext.hpNumMove.type == 2) {
-                prim->clut = 0x1B6;
+                prim->clut = PAL_UNK_1B6;
             }
             prim->tpage = 0x1A;
             prim->priority = 0x1B8;
@@ -1448,7 +1448,7 @@ void func_80119F70(Entity* self) {
             yRand = hitboxY + rand() % 48 - 24;
             D_8013804C[i].x = xRand;
             D_8013804C[i].y = yRand;
-            prim->clut = 0x1B2;
+            prim->clut = PAL_UNK_1B2;
             prim->tpage = 0x1A;
             prim->b0 = 0;
             prim->b1 = 0;
