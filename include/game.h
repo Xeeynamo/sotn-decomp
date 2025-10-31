@@ -2261,7 +2261,7 @@ void func_91040A0(u_long** gfxBank);
 // Palettes
 // Each palette is made up of 16 colors and range from 0x000 to 0x2FF.
 // Each 0x100 is its own category.
-// - 0x000-0x0FF = believed to be used by stage overlay
+// - 0x000-0x0FF = used by stage overlay
 // - 0x100-0x1FF = from F_GAME.BIN and F_GAME2.BIN, used by player characters
 //                 weapons, and common objects across all stages overlays.
 // - 0x200-0x2FF = enemies and other overlay-specific palettes
