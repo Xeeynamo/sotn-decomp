@@ -16,22 +16,7 @@ static s16 D_us_801833D0[] = {
     0x200, 0x500, 0x700, 0x640, 0x400, -0x400, -0x7C0, 0x800};
 STATIC_PAD_DATA(8);
 
-static bool StepTowards(s16* val, s32 target, s32 step) {
-    if (abs(*val - target) < step) {
-        *val = target;
-        return true;
-    }
-
-    if (*val > target) {
-        *val -= step;
-    }
-
-    if (*val < target) {
-        *val += step;
-    }
-
-    return false;
-}
+#include "../step_towards.h"
 
 void EntitySpectralSword(Entity* self) {
     s32 primIndex;

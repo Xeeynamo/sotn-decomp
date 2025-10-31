@@ -28,4 +28,18 @@ typedef enum EntityIDs {
     /* 0x13 */ E_ID_13,
     /* 0x14 */ E_EXPLOSION_VARIANTS,
     /* 0x15 */ E_GREY_PUFF,
+
+    /* 0x32 */ E_SKULL_LORD = 0x32,
+    /* 0x33 */ E_SKULL_LORD_OUTLINE,
+    /* 0x34 */ E_SKULL_LORD_FLAMES,
+    /* 0x35 */ E_SKULL_LORD_PIECES,
+    /* 0x36 */ E_HARPY_HARPY,
+    /* 0x37 */ E_HARPY_DAGGER,
+    /* 0x38 */ E_HARPY_FLAME,
+    /* 0x39 */ E_HARPY_KICK,
+    /* 0x3A */ E_HARPY_FEATHER,
+    /* 0x3B */ E_CLOAK_KNIGHT,
+    /* 0x3C */ E_CLOAK_KNIGHT_CLOAK,
+    /* 0x3D */ E_CLOAK_KNIGHT_SWORD,
+    /* 0x3E */ E_CLOAK_KNIGHT_AURA,
 } EntityIDs;
