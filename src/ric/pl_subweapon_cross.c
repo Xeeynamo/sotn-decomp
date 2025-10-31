@@ -346,9 +346,9 @@ void RicEntitySubwpnCross(Entity* self) {
     }
     // Applies a flickering effect
     if ((g_GameTimer >> 1) & 1) {
-        self->palette = PAL_FLAG(0x1B0);
+        self->palette = PAL_FLAG(PAL_UNK_1B0);
     } else {
-        self->palette = PAL_FLAG(0x1B1);
+        self->palette = PAL_FLAG(PAL_UNK_1B1);
     }
     psp_s1 = (s16*)self->ext.crossBoomerang.unk84;
     psp_s1 = &psp_s1[self->ext.crossBoomerang.unk80 * 2];
@@ -419,7 +419,7 @@ void RicEntitySubwpnCrossTrail(Entity* self) {
         self->animSet = ANIMSET_OVL(17);
         self->animCurFrame = D_80155E68[self->params];
         self->unk5A = 0x66;
-        self->palette = PAL_FLAG(0x1B0);
+        self->palette = PAL_FLAG(PAL_UNK_1B0);
         self->drawMode = DRAW_TPAGE;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;

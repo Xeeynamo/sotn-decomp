@@ -100,7 +100,7 @@ void func_us_801B81E8(Entity* self) {
             self->velocityX = -self->velocityX;
         }
         self->unk5A = 0x20;
-        self->palette = PAL_FLAG(0x19F);
+        self->palette = PAL_FLAG(PAL_UNK_19F);
         self->anim = D_us_80180F8C;
         self->pose = 0;
         self->poseTimer = 0;

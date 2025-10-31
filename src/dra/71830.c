@@ -81,7 +81,7 @@ bool func_801119C4(void) {
 #ifndef VERSION_HD
     if (g_Player.padTapped & PAD_TRIANGLE) {
         if (D_80137FDC & 1) {
-            PLAYER.palette = 0x810D;
+            PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         } else {
             PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
         }
@@ -1645,7 +1645,7 @@ void PlayerStepStoned(s32 arg0) {
         }
         func_8010E3B8(FIX(-1.25));
         func_80113E68();
-        PLAYER.palette = 0x8161;
+        PLAYER.palette = PAL_FLAG(PAL_CC_STONE_EFFECT);
         PlaySfx(SFX_VO_ALU_SILENCE);
         g_Player.timers[2] = 0;
         g_Player.timers[0] = 0;
@@ -1657,7 +1657,7 @@ void PlayerStepStoned(s32 arg0) {
         break;
     case 1:
         func_8010E168(1, 4);
-        PLAYER.palette = 0x8161;
+        PLAYER.palette = PAL_FLAG(PAL_CC_STONE_EFFECT);
         if (func_8010FDF8(0x20280) != 0) {
             PLAYER.step = Player_StatusStone;
             PLAYER.velocityX = PLAYER.velocityY = 0;
@@ -1673,12 +1673,12 @@ void PlayerStepStoned(s32 arg0) {
             }
             if (animVariant) {
                 animVariant &= 1;
-                PLAYER.palette = 0x819E + animVariant;
+                PLAYER.palette = PAL_FLAG(PAL_UNK_19E) + animVariant;
                 SetPlayerAnim(0x38 + animVariant);
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(BP_16, 3), 0);
             } else {
-                PLAYER.palette = 0x819E;
+                PLAYER.palette = PAL_FLAG(PAL_UNK_19E);
                 SetPlayerAnim(0x3A);
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(BP_29, 7), 0);
@@ -1941,7 +1941,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
         }
         if (--D_80137FF0 == 0) {
             D_800AFC50[0].pose |= PLAYER.animCurFrame;
-            PLAYER.palette = 0x810D;
+            PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
             SetPlayerAnim(0x3E);
             // Blueprint 16 has child 2, EntitySmokePuff
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_16, 3), 0);
@@ -2566,7 +2566,7 @@ void ControlBatForm(void) {
             }
             SetPlayerAnim(0xCA);
             D_800AFDA4[0].pose = PLAYER.animCurFrame;
-            PLAYER.palette = 0x810D;
+            PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
             if (g_Player.unk66 == 1) {
                 return;
             }

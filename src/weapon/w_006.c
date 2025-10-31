@@ -166,7 +166,7 @@ static void func_ptr_80170004(Entity* self) {
         self->hitboxWidth = hitboxSize;
         self->hitboxHeight = hitboxSize;
         if (self->hitFlags != 0) {
-            self->palette = PAL_FLAG(0x15F);
+            self->palette = PAL_FLAG(PAL_FILL_WHITE);
             self->drawMode = DRAW_TPAGE;
             self->ext.weapon_006.lifetime = 8;
             self->step = 4;

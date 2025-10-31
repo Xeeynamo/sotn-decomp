@@ -4,7 +4,7 @@
 void func_us_801BFA34(Entity* self) {
     if (self->step == 0) {
         InitializeEntity(g_EInitParticle);
-        self->palette = PAL_FLAG(0x19E);
+        self->palette = PAL_FLAG(PAL_UNK_19E);
         self->animSet = 2;
         self->animCurFrame = 9;
         self->drawMode = DRAW_TPAGE;

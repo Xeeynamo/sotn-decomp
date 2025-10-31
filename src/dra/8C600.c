@@ -94,7 +94,7 @@ bool WolfFormFinished(void) {
         SetPlayerStep(Player_UnmorphWolf);
         SetPlayerAnim(0xCA);
         D_800AFDA4[0].pose = 1;
-        PLAYER.palette = 0x810D;
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         g_Player.unk66 = 0;
         g_Player.unk68 = 0;
         // Create factory for EntityPlayerBlinkWhite

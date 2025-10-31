@@ -199,7 +199,7 @@ s32 func_ptr_80170004(Entity* self) {
     self->posY.i.hi = PLAYER.posY.i.hi;
     if (self->step == 0) {
         self->animSet = self->ext.weapon.parent->animSet;
-        self->palette = PAL_FLAG(0x194);
+        self->palette = PAL_FLAG(PAL_UNK_194);
         self->zPriority = self->ext.weapon.parent->zPriority + 4;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->flags = FLAG_UNK_100000 | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;

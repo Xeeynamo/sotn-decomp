@@ -90,7 +90,7 @@ void func_us_801BB8DC(s16* unkArg) {
         if (g_CurrentEntity->ext.lesserDemon.unkB0 % 2) {
             g_CurrentEntity->palette = g_CurrentEntity->ext.lesserDemon.unkB2;
         } else {
-            g_CurrentEntity->palette = PAL_FLAG(0x19F);
+            g_CurrentEntity->palette = PAL_FLAG(PAL_UNK_19F);
         }
         if (!(--g_CurrentEntity->ext.lesserDemon.unkB0)) {
             g_CurrentEntity->palette = g_CurrentEntity->ext.lesserDemon.unkB2;
@@ -1444,7 +1444,7 @@ void EntityLesserDemon(Entity* self) {
         break;
 
     case 15:
-        self->palette = PAL_FLAG(0x160);
+        self->palette = PAL_FLAG(PAL_CC_FIRE_EFFECT);
         if (g_Timer % 7 == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {

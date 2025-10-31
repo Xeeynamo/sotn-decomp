@@ -176,7 +176,7 @@ void EntityExplosionVariants(Entity* self) {
         self->velocityY = explode_yVel[self->ext.destructAnim.index];
         self->flags =
             FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
-        self->palette = PAL_FLAG(0x195);
+        self->palette = PAL_FLAG(PAL_UNK_195);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = explode_startFrame[self->params];
         self->drawMode = DRAW_TPAGE;
@@ -200,7 +200,7 @@ void EntityGreyPuff(Entity* self) {
     if (!self->step) {
         self->flags =
             FLAG_UNK_2000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
-        self->palette = PAL_FLAG(0x195);
+        self->palette = PAL_FLAG(PAL_UNK_195);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
         self->drawMode = DRAW_TPAGE;
@@ -504,12 +504,12 @@ u8 UnkCollisionFunc4(u8 arg0) {
 void EntityIntenseExplosion(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
-        self->palette = PAL_FLAG(0x170);
+        self->palette = PAL_FLAG(PAL_UNK_170);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         if (self->params & 0xF0) {
-            self->palette = PAL_FLAG(0x195);
+            self->palette = PAL_FLAG(PAL_UNK_195);
             self->drawMode = DRAW_TPAGE;
         }
 
@@ -547,7 +547,7 @@ void InitializeUnkEntity(Entity* self) {
         if (self->params) {
             self->palette = self->params;
         } else {
-            self->palette = PAL_FLAG(0x160);
+            self->palette = PAL_FLAG(PAL_CC_FIRE_EFFECT);
         }
 
         self->step++;
@@ -590,7 +590,7 @@ void func_801966B0(u16* sensors) {
         if (D_80199DE8 & 1) {
             g_CurrentEntity->palette = g_CurrentEntity->hitEffect;
         } else {
-            g_CurrentEntity->palette = PAL_FLAG(0x19F);
+            g_CurrentEntity->palette = PAL_FLAG(PAL_UNK_19F);
         }
         if (!--D_80199DE8) {
             g_CurrentEntity->hitboxState = 3;
@@ -660,7 +660,7 @@ void EntityBigRedFireball(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
         self->animSet = ANIMSET_DRA(2);
-        self->palette = PAL_FLAG(0x1B6);
+        self->palette = PAL_FLAG(PAL_UNK_1B6);
         self->drawFlags |= (FLAG_DRAW_ROTATE + FLAG_DRAW_OPACITY);
         self->drawMode |= (DRAW_TPAGE + DRAW_TPAGE2);
         self->opacity = 0x70;

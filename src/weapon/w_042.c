@@ -255,7 +255,7 @@ static void func_ptr_80170008(Entity* self) {
         self->velocityY += FIX(0.15625);
         if (self->hitFlags != 0) {
             self->animSet = 2;
-            self->palette = PAL_FLAG(0x170);
+            self->palette = PAL_FLAG(PAL_UNK_170);
             self->anim = D_12A000_8017A704;
             self->unk5A = 0;
             self->poseTimer = 0;

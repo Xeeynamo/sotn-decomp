@@ -720,7 +720,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
         self->velocityX = (rcos(self->rotate) * FIX(2.5)) >> 0xC;
         self->velocityY = (rsin(self->rotate) * FIX(2.5)) >> 0xC;
         self->rotate -= 0x400;
-        self->palette = PAL_FLAG(0x1B6);
+        self->palette = PAL_FLAG(PAL_UNK_1B6);
 
     case 1:
         MoveEntity();
@@ -750,7 +750,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
             self->velocityX = (rcos(self->rotate) * FIX(3.5)) >> 0xC;
             self->velocityY = (rsin(self->rotate) * FIX(3.5)) >> 0xC;
             self->rotate -= 0x400;
-            self->palette = PAL_FLAG(0x1B6);
+            self->palette = PAL_FLAG(PAL_UNK_1B6);
         } else {
             self->animSet = ANIMSET_DRA(14);
             self->unk5A = 0x79;
@@ -758,7 +758,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
                 FLAG_DRAW_SCALEX | FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
             self->scaleX = 0x100;
             self->opacity = 0x80;
-            self->palette = PAL_FLAG(0x1F3);
+            self->palette = PAL_FLAG(PAL_UNK_1F3);
             self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
             self->step = 2;
             self->hitboxState = 0;

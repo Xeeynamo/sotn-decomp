@@ -716,7 +716,7 @@ void func_us_80192998(Entity* self) {
         }
 
         if (self->params & 0xF0) {
-            self->palette = PAL_FLAG(0x19F);
+            self->palette = PAL_FLAG(PAL_UNK_19F);
             self->drawMode = DRAW_TPAGE;
             self->facingLeft = 1;
         }

@@ -1159,7 +1159,7 @@ void DopplegangerStepStone(s32 arg0) {
         DOPPLEGANGER.velocityY = FIX(-4);
         DopSetVelocity(FIX(-0.625));
         OVL_EXPORT(func_801133E68)();
-        DOPPLEGANGER.palette = PAL_FLAG(0x161);
+        DOPPLEGANGER.palette = PAL_FLAG(PAL_CC_STONE_EFFECT);
         g_api.PlaySfx(SFX_BO4_UNK_7DC);
         g_Dop.unk5E = 8;
         g_Dop.timers[ALU_T_HITEFFECT] = 0;
@@ -1168,7 +1168,7 @@ void DopplegangerStepStone(s32 arg0) {
 
     case 1:
         OVL_EXPORT(func_us_801C5430)(1, 4);
-        DOPPLEGANGER.palette = PAL_FLAG(0x161);
+        DOPPLEGANGER.palette = PAL_FLAG(PAL_CC_STONE_EFFECT);
         if (func_us_801C6040(0x20280) != 0) {
             DOPPLEGANGER.step = Dop_StatusStone;
             DOPPLEGANGER.velocityX = DOPPLEGANGER.velocityY = 0;
@@ -1179,7 +1179,7 @@ void DopplegangerStepStone(s32 arg0) {
             if (g_Dop.unk6A == 0) {
                 D_us_801D3D48 = 0x20;
             }
-            DOPPLEGANGER.palette = PAL_FLAG(0x19E);
+            DOPPLEGANGER.palette = PAL_FLAG(PAL_UNK_19E);
             SetDopplegangerAnim(0x38);
             OVL_EXPORT(CreateEntFactoryFromEntity)
             (g_CurrentEntity, FACTORY(16, 3), 0);
@@ -1221,10 +1221,10 @@ void DopplegangerStepStone(s32 arg0) {
                 (g_CurrentEntity, FACTORY(13, 3), 0);
                 OVL_EXPORT(CreateEntFactoryFromEntity)
                 (g_CurrentEntity, FACTORY(31, 3), 0);
-                DOPPLEGANGER.palette = PAL_FLAG(0x19E);
+                DOPPLEGANGER.palette = PAL_FLAG(PAL_UNK_19E);
             }
         } else {
-            DOPPLEGANGER.palette = PAL_FLAG(0x19E);
+            DOPPLEGANGER.palette = PAL_FLAG(PAL_UNK_19E);
         }
 
         break;
@@ -1246,7 +1246,7 @@ void DopplegangerStepStone(s32 arg0) {
                 DOPPLEGANGER.rotPivotY = 20;
             }
         }
-        DOPPLEGANGER.palette = PAL_FLAG(0x19E);
+        DOPPLEGANGER.palette = PAL_FLAG(PAL_UNK_19E);
         break;
     }
 }
@@ -1883,7 +1883,7 @@ void OVL_EXPORT(EntitySmokePuff)(Entity* self) {
         self->anim = D_us_801817A8;
         self->zPriority = DOPPLEGANGER.zPriority + 2;
         self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
-        self->palette = PAL_FLAG(0x195);
+        self->palette = PAL_FLAG(PAL_UNK_195);
         self->drawMode = DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
 
@@ -2017,7 +2017,7 @@ void DopEntityHitByDark(Entity* self) {
         self->unk5A = 0x79;
         self->animSet = ANIMSET_DRA(14);
         self->zPriority = DOPPLEGANGER.zPriority + 2;
-        self->palette = PAL_FLAG(0x19F);
+        self->palette = PAL_FLAG(PAL_UNK_19F);
 
         if (D_us_801D3D9C & 1) {
             self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
@@ -3834,7 +3834,7 @@ void func_us_801CD89C(Entity* self) {
             } else {
                 self->animSet = ANIMSET_DRA(5);
                 self->anim = D_us_801817A8;
-                self->palette = PAL_FLAG(0x170);
+                self->palette = PAL_FLAG(PAL_UNK_170);
             }
         }
         self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;

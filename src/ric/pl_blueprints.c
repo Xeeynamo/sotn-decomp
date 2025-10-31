@@ -293,7 +293,7 @@ void RicEntityHitByDark(Entity* entity) {
         entity->unk5A = 0x79;
         entity->animSet = ANIMSET_DRA(14);
         entity->zPriority = PLAYER.zPriority + 2;
-        entity->palette = PAL_FLAG(0x19F);
+        entity->palette = PAL_FLAG(PAL_UNK_19F);
         if (D_80174FFC & 1) {
             entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         } else {
@@ -1262,7 +1262,7 @@ void func_80161C2C(Entity* self) {
             } else {
                 self->animSet = ANIMSET_DRA(5);
                 self->anim = anim_smoke_puff;
-                self->palette = PAL_FLAG(0x170);
+                self->palette = PAL_FLAG(PAL_UNK_170);
             }
         }
         self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
@@ -1651,7 +1651,7 @@ void RicEntityMaria(Entity* self) {
         self->facingLeft = 1;
         self->unk5A = 0x66;
         self->zPriority = PLAYER.zPriority - 8;
-        self->palette = PAL_FLAG(0x149);
+        self->palette = PAL_FLAG(PAL_UNK_149);
         self->animSet = ANIMSET_OVL(19);
         RicSetAnimation(anim_maria_walk);
         self->velocityX = FIX(-1.75);
@@ -2753,12 +2753,12 @@ static void func_80165DD8(
 }
 
 static void func_80166024() {
-    PLAYER.palette = 0x815E;
+    PLAYER.palette = PAL_FLAG(PAL_FILL_BLACK);
     PLAYER.drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
 }
 
 static void func_80166044() {
-    PLAYER.palette = 0x8120;
+    PLAYER.palette = PAL_FLAG(PAL_RICHTER);
     PLAYER.drawMode = DRAW_DEFAULT;
 }
 

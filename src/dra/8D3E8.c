@@ -569,7 +569,7 @@ void func_8012E7A4(void) {
     PLAYER.velocityY = 0;
     PLAYER.unk5A = 0x7E;
     PLAYER.animSet = 0xF;
-    PLAYER.palette = 0x810D;
+    PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
 
 #if !defined(VERSION_US)
     if (g_Entities[16].entityId != 0x22) {
@@ -584,7 +584,7 @@ void func_8012E7A4(void) {
 void func_8012E9C0(void) {
     s32 i;
 
-    PLAYER.palette = 0x810D;
+    PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
     for (i = 0; i < 4; i++) {
         if (g_SensorsFloor[i].y < g_SensorsFloorDefault[i]) {
             g_SensorsFloor[i].y++;

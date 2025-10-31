@@ -1063,12 +1063,12 @@ void EntityHellfire(Entity* self) {
         break;
     case HFH_BEAMFLICKER:
         if (--self->ext.hellfireHandler.timer == 0) {
-            PLAYER.palette = 0x810D;
+            PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
             self->step++;
         }
         break;
     case HFH_BEAMSHRINK:
-        PLAYER.palette = 0x810D;
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         self->ext.hellfireHandler.beamwidth -= four * 2;
         if (self->ext.hellfireHandler.beamwidth < 0) {
             self->step++;
@@ -1079,7 +1079,7 @@ void EntityHellfire(Entity* self) {
         }
         break;
     case HFH_PLAYER_DISAPPEAR:
-        PLAYER.palette = 0x810D;
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         if (self->ext.hellfireHandler.timer == 0x10) {
             // Red flickering beam. Blueprint 38 has child 29 or func_80127CC8
             CreateEntFactoryFromEntity(self, FACTORY(BP_38, 0), 0);
@@ -2311,7 +2311,7 @@ void func_80129864(Entity* self) {
         self->ext.et_80129864.unk80 = D_800B0858[self->params & 0xFF];
         self->animSet = 9;
         self->anim = D_800B0798;
-        self->palette = PAL_FLAG(0x19F);
+        self->palette = PAL_FLAG(PAL_UNK_19F);
         self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         self->zPriority = 0x1C3;
         self->flags =

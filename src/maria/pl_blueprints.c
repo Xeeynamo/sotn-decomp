@@ -1024,7 +1024,7 @@ void func_maria_80161C2C(Entity* self) {
             } else {
                 self->animSet = ANIMSET_DRA(5);
                 self->anim = anim_smoke_puff;
-                self->palette = PAL_FLAG(0x170);
+                self->palette = PAL_FLAG(PAL_UNK_170);
             }
         }
         self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
@@ -2418,12 +2418,12 @@ static void func_80165DD8(
 }
 
 static void func_80166024() {
-    PLAYER.palette = 0x815E;
+    PLAYER.palette = PAL_FLAG(PAL_FILL_BLACK);
     PLAYER.drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
 }
 
 static void func_80166044() {
-    PLAYER.palette = 0x8120;
+    PLAYER.palette = PAL_FLAG(PAL_RICHTER);
     PLAYER.drawMode = DRAW_DEFAULT;
 }
 

@@ -2280,6 +2280,14 @@ typedef enum {
     PAL_UNK_117 = 0x117,
     PAL_RICHTER = 0x120,
     PAL_UNK_128 = 0x128,
+    PAL_UNK_12F = 0x12F,
+    PAL_UNK_138 = 0x138,
+    PAL_UNK_13C = 0x13C,
+    PAL_UNK_13D = 0x13D, // richter
+    PAL_UNK_140 = 0x140,
+    PAL_UNK_143 = 0x143,
+    PAL_UNK_149 = 0x149,
+    PAL_UNK_14E = 0x14E, // richter
 
     // Fill colors (color 0 in palette is still used for transparent bg)
     /* 0x158 */ PAL_FILL_YELLOW = 0x158,
@@ -2308,8 +2316,11 @@ typedef enum {
     /* 0x16D */ PAL_CC_RED_EFFECT_B,
     /* 0x16E */ PAL_CC_GREEN_EFFECT_B,
     /* 0x16F */ PAL_CC_BLUE_EFFECT_B,
+    PAL_UNK_170 = 0x170,
     PAL_UNK_194 = 0x194,
+    PAL_UNK_195 = 0x195,
     PAL_UNK_199 = 0x199,
+    PAL_UNK_19E = 0x19E,
     PAL_UNK_19F = 0x19F,
     // eDamageDisplay
     PAL_UNK_1B0 = 0x1B0,
@@ -2320,7 +2331,8 @@ typedef enum {
     PAL_UNK_1B5 = 0x1B5,
     PAL_UNK_1B6 = 0x1B6,
     PAL_UNK_1B7 = 0x1B7,
-
+    PAL_UNK_1AF = 0x1AF,
+    PAL_UNK_1F3 = 0x1F3,
     // 0x200-0x2FF is not included here
 };
 

@@ -823,7 +823,7 @@ void EntityHighWaterSplash(Entity* self) {
         InitializeEntity(g_EInitParticle);
         self->animSet = ANIMSET_DRA(2);
         self->velocityY = FIX(-5);
-        self->palette = PAL_FLAG(0x162);
+        self->palette = PAL_FLAG(PAL_CC_MAGIC_HUD_EFFECT);
         self->drawMode = DRAW_TPAGE;
         self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
         self->palette = PAL_FLAG(0x18);

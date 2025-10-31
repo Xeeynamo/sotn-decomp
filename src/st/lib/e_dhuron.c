@@ -454,7 +454,7 @@ void func_us_801CC984(Entity* self) {
         self->scaleY = 0x180;
         self->opacity = 0x80;
         self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
-        self->palette = PAL_FLAG(0x15B);
+        self->palette = PAL_FLAG(PAL_FILL_BLUE);
         self->unk5A = 0x4E;
         self->animSet = ANIMSET_OVL(4);
         self->animCurFrame = 0;

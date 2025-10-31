@@ -657,7 +657,7 @@ void EntityExplosion(Entity* entity) {
         entity->animSet = ANIMSET_DRA(2);
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         if (entity->params & 0xF0) {
-            entity->palette = PAL_FLAG(0x195);
+            entity->palette = PAL_FLAG(PAL_UNK_195);
             entity->drawMode = DRAW_TPAGE;
         }
 
