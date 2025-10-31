@@ -1106,7 +1106,7 @@ void func_us_801BA290(Entity* self) {
         self->ext.et_801BA290.unk8C = prim;
         for (i = 0; i < 2; i++) {
             prim->tpage = 0x1A;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->u0 = 0;
             prim->u1 = 0x3F;
             prim->u2 = prim->u0;

@@ -482,7 +482,7 @@ void EntitySplashWater(Entity* self) {
             if (i & 1) {
                 PGREY(prim, 0) = PGREY(prim, 1) = 0x00;
                 PGREY(prim, 2) = PGREY(prim, 3) = 0x60;
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim->priority += 2;
                 prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                                  DRAW_UNK02 | DRAW_TRANSP;

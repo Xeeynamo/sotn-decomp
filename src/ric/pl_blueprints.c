@@ -2234,7 +2234,7 @@ void RicEntityShrinkingPowerUpRing(Entity* self) {
             prim2->u3 = prim1->u1 = (prim2->u1 + prim1->u3) / 2;
             prim2->v3 = prim1->v1 = (prim2->v1 + prim1->v3) / 2;
             prim1->tpage = prim2->tpage = 0x1A;
-            prim1->clut = prim2->clut = 0x15F;
+            prim1->clut = prim2->clut = PAL_FILL_WHITE;
             prim1->priority = prim2->priority = PLAYER.zPriority + 2;
             prim1->drawMode = prim2->drawMode =
                 DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |

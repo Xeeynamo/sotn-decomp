@@ -158,7 +158,7 @@ void EntityStageNamePopup(Entity* self) {
         self->ext.stpopupj.boxPrim = prim;
         prim->type = PRIM_G4;
         prim->tpage = 26;
-        prim->clut = 0x15F; // All white palette
+        prim->clut = PAL_FILL_WHITE; // All white palette
         prim->u0 = 0;
         prim->u1 = 64;
         prim->u2 = prim->u0;

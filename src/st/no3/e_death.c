@@ -332,7 +332,7 @@ void EntityDeath(Entity* self) {
                         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE |
                                          DRAW_COLORS | DRAW_TRANSP;
                     } else {
-                        prim->clut = 0x15F;
+                        prim->clut = PAL_FILL_WHITE;
                         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE |
                                          DRAW_COLORS | DRAW_TRANSP;
                     }

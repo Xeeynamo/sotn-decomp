@@ -2722,7 +2722,7 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
             self->step = 1;
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 8; i++) {
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim = prim->next;
             }
             D_us_80181B70 = 0;

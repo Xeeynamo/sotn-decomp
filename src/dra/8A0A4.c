@@ -26,7 +26,7 @@ void EntityStopWatchExpandingCircle(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; prim = prim->next, i++) {
             prim->tpage = 0x1A;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->priority = self->zPriority = 0xC2;
             prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
@@ -215,7 +215,7 @@ void EntityStopWatch(Entity* self) {
         self->ext.stopwatch.t += 1;
         if (self->ext.stopwatch.t >= 4) {
             prim = &g_PrimBuf[self->primIndex];
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->drawMode |= DRAW_COLORS;
             PRED(prim) = 0x40;
             PGRN(prim) = 0x40;

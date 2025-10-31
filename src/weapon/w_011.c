@@ -250,7 +250,7 @@ void EntityWeaponShieldSpell(Entity* self) {
             prim->v0 = prim->v1 = self->ext.shield.unk7D + 0x30 + i * 64 / 8;
             prim->v2 = prim->v3 =
                 self->ext.shield.unk7D + 0x30 + (i + 1) * 64 / 8 - 1;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->priority = 0x1BE;
             prim->drawMode |=
                 (DRAW_TPAGE2 + DRAW_TPAGE + DRAW_COLORS + DRAW_TRANSP);

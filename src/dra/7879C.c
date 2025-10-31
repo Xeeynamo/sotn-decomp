@@ -2663,7 +2663,7 @@ block_748:
             self->step = 1;
             prim = &g_PrimBuf[self->primIndex];
             for (var_s1 = 0; var_s1 < 8; var_s1++) {
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim = prim->next;
             }
             g_Player.unk6C = 0;
@@ -2722,7 +2722,7 @@ block_748:
             self->step = 1;
             prim = &g_PrimBuf[self->primIndex];
             for (var_s1 = 0; var_s1 < 8; var_s1++) {
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim = prim->next;
             }
             g_Player.unk6E = 0;

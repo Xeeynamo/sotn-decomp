@@ -1296,7 +1296,7 @@ void RicEntityAguneaLightning(Entity* self) {
             for (i = 0; i < 15; i++) {
                 prim->v0 = prim->v1 = prim->v0 - 0x10;
                 prim->v2 = prim->v3 = prim->v2 - 0x10;
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
                     prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
                         prim->g3 = prim->b3 = 0xFF;
@@ -1318,7 +1318,7 @@ void RicEntityAguneaLightning(Entity* self) {
     case 4:
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim = prim->next;
         }
         self->step++;
@@ -1524,7 +1524,7 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim->tpage = 0x1A;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->priority = self->zPriority = 0xC2;
             prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
@@ -1739,7 +1739,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         self->ext.ricStopWatch.t++;
         if (self->ext.ricStopWatch.t >= 4) {
             prim = &g_PrimBuf[self->primIndex];
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->drawMode |= DRAW_COLORS;
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x40;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x40;

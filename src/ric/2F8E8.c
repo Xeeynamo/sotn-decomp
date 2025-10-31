@@ -752,7 +752,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         if (!self->step_s) {
             prim = self->ext.et_801291C4.prim1;
             while (prim != NULL) {
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim = prim->next;
             }
             self->step_s++;

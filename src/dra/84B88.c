@@ -1352,7 +1352,7 @@ void EntityExpandingCircle(Entity* self) {
         PBLU(prim) = 64;
 
         prim->tpage = 0x1A;
-        prim->clut = 0x15F;
+        prim->clut = PAL_FILL_WHITE;
         prim->priority = PLAYER.zPriority + 1;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         self->flags =
@@ -2217,7 +2217,7 @@ void EntityAguneaHitEnemy(Entity* self) {
         if (!self->step_s) {
             prim = self->ext.et_801291C4.prim1;
             while (prim != NULL) {
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim = prim->next;
             }
             self->step_s++;

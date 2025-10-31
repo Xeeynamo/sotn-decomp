@@ -287,7 +287,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             prim->next = nextPtr;
             prim->v0 = prim->v1 = self->ext.shield.unk7D + ((i * 8) + 0x30);
             prim->v2 = prim->v3 = self->ext.shield.unk7D + ((i + 1) * 8) + 0x2F;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->drawMode |=
                 (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP);
             prim->priority = 0x1B8;
@@ -545,7 +545,7 @@ static void func_ptr_80170024(Entity* self) {
         self->posX.i.hi = xShift + self->posX.i.hi;
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1A;
-        prim->clut = 0x15E;
+        prim->clut = PAL_FILL_BLACK;
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 63;
         prim->v0 = prim->v1 = 192;

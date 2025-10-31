@@ -386,7 +386,7 @@ void func_us_801BE2C8(Entity* self) {
             self->ext.et_801BE2C8.unk7C = prim;
             while (prim != NULL) {
                 prim->tpage = 0x1A;
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim->u0 = prim->u2 = 0x20;
                 prim->u1 = prim->u3 = 0x28;
                 prim->v0 = prim->v1 = 0xA0;

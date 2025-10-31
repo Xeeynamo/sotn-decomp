@@ -316,7 +316,7 @@ void EntityWeaponShieldSpell(Entity* self) {
             nextPrim = prim->next;
             *prim = *prevPrim;
             prim->next = nextPrim;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->priority = 0x1BA;
             prim->drawMode |=
                 (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP);
@@ -482,7 +482,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         prim->g1 = prim->r1 =
             ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
         D_4A000_8017ABBC[i] += self->ext.shield.unk8A;
-        prim->clut = 0x15F;
+        prim->clut = PAL_FILL_WHITE;
         prim->priority = 0x1BA;
         prim->drawMode = (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP);
         prim = prim->next;
@@ -559,7 +559,7 @@ void func_ptr_80170024(Entity* self) {
             prim->next = nextPrim;
             prim->u0 = prim->u2 = i * 128 / 16;
             prim->u1 = prim->u3 = ((i + 1) * 128) / 16 - 1;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->priority = 0x1BE;
             prim->drawMode |=
                 (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP);

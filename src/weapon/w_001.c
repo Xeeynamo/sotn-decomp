@@ -278,7 +278,7 @@ s32 func_ptr_80170004(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
 
         for (i = 0; i < 16; i++) {
-            prim->clut = 0x100;
+            prim->clut = PAL_ALUCARD;
             prim->tpage = 0x19;
             p = D_B000_8017AFB8;
 

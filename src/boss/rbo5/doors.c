@@ -561,7 +561,7 @@ void EntityUnkId19(Entity* self) {
             prim->v2 = prim->v3 = 0xE0;
 
             prim->tpage = 0x1A;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->priority = 0x40;
             prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_UNK02;
             prim = prim->next;
@@ -663,7 +663,7 @@ void EntityUnkId1A(Entity* self) {
             self->ext.et_801BE2C8.unk7C = prim;
             while (prim != NULL) {
                 prim->tpage = 0x1A;
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim->u0 = prim->u2 = 0x20;
                 prim->u1 = prim->u3 = 0x28;
                 prim->v0 = prim->v1 = 0xA0;

@@ -334,7 +334,7 @@ void func_ptr_80170008(Entity* self) {
             prim->u2 = prim->u3 = 0x20;
             prim->v2 = prim->v3 = 0xE0;
             prim->b2 = prim->b3 = 0x80;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->tpage = 0x1A;
             prim->r1 = prim->b1 = prim->g1 = 0;
             prim->r0 = prim->b0 = prim->g0 = 0;
