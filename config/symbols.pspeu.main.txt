@@ -490,3 +490,5 @@ gu_debug_sw = 0x089B61E8;
 gu_debug_sh = 0x089B61EC;
 gDVDUMDSampleCallBackId = 0x08B1FB50;
 sce_newlib_heap_delayed_alloc = 0x08B41F30;
+D_psp_08B41F40 = 0x08B41F40; // size:0x10
+D_psp_08B41F50 = 0x08B41F50; // size:0x10

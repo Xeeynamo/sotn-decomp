@@ -51,11 +51,74 @@ void _fini(void) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919A0C);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919A58);
+typedef struct {
+    unsigned int TimeStamp;
+    unsigned int Buttons;
+    unsigned char Lx;
+    unsigned char Ly;
+    unsigned char Rx;
+    unsigned char Ry;
+    unsigned char Reserved[4];
+} SceCtrlData; // https://pspdev.github.io/pspsdk/structSceCtrlData.html
+typedef enum {
+    PSP_CTRL_SELECT = 0x000001,
+    PSP_CTRL_START = 0x000008,
+    PSP_CTRL_UP = 0x000010,
+    PSP_CTRL_RIGHT = 0x000020,
+    PSP_CTRL_DOWN = 0x000040,
+    PSP_CTRL_LEFT = 0x000080,
+    PSP_CTRL_LTRIGGER = 0x000100,
+    PSP_CTRL_RTRIGGER = 0x000200,
+    PSP_CTRL_TRIANGLE = 0x001000,
+    PSP_CTRL_CIRCLE = 0x002000,
+    PSP_CTRL_CROSS = 0x004000,
+    PSP_CTRL_SQUARE = 0x008000,
+    PSP_CTRL_HOME = 0x010000,
+    PSP_CTRL_HOLD = 0x020000,
+    PSP_CTRL_NOTE = 0x800000,
+    PSP_CTRL_SCREEN = 0x400000,
+    PSP_CTRL_VOLUP = 0x100000,
+    PSP_CTRL_VOLDOWN = 0x200000,
+    PSP_CTRL_WLAN_UP = 0x040000,
+    PSP_CTRL_REMOTE = 0x080000,
+    PSP_CTRL_DISC = 0x1000000,
+    PSP_CTRL_MS = 0x2000000
+} PspCtrlButtons; // https://pspdev.github.io/pspsdk/group__Ctrl.html
+extern SceCtrlData D_psp_08B41F40;
+extern SceCtrlData D_psp_08B41F50;
+extern u16 D_psp_08B41F60;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919BA8);
+s32 func_psp_08933F7C(u8, u8);
+void func_psp_08919A58(void) {
+    u32 buttons = 0;
+    sceCtrlPeekBufferPositive(&D_psp_08B41F40, 1);
+    if (func_psp_08932790()) {
+        D_psp_08B41F40.Buttons &=
+            ~(PSP_CTRL_UP | PSP_CTRL_RIGHT | PSP_CTRL_DOWN | PSP_CTRL_LEFT);
+        if (!(D_psp_08B41F40.Buttons & PSP_CTRL_HOLD)) {
+            buttons = func_psp_08933F7C(D_psp_08B41F40.Lx, D_psp_08B41F40.Ly);
+        }
+        if (buttons) {
+            sceKernelPowerTick(6);
+        }
+        D_psp_08B41F40.Buttons |= buttons;
+    }
+    if (D_psp_08B41F40.TimeStamp != D_psp_08B41F50.TimeStamp) {
+        D_psp_08B41F60 = D_psp_08B41F40.Buttons & 0xFFFF;
+        D_psp_08B41F60 ^= D_psp_08B41F50.Buttons & 0xFFFF;
+        D_psp_08B41F60 &= D_psp_08B41F40.Buttons & 0xFFFF;
+        memcpy(&D_psp_08B41F50, &D_psp_08B41F40, sizeof(SceCtrlData));
+    }
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", PadRead_PSP);
+u32 func_psp_08919BA8(void) {
+    u32 buttons;
+    func_psp_08919A58();
+    buttons = D_psp_08B41F40.Buttons & 0xFFFF;
+    return buttons;
+}
+
+u32 PadRead_PSP(void) { return func_psp_08919BA8(); }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919C00);
 
