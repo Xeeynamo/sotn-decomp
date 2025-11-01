@@ -759,7 +759,7 @@ with open(build_ninja, "w") as f:
             "VERSION=$version"
             " tools/sotn_str/target/release/sotn_str process -p -f $in"
             " | .venv/bin/python3 tools/mwccgap/mwccgap.py $out --src-dir $src_dir"
-            " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path tools/pspas.py"
+            " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path tools/pspas/target/release/pspas"
             " --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc"
             " -gccinc -Iinclude -D_internal_version_$version -DSOTN_STR -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
             " $opt_level -opt nointrinsics"
