@@ -254,15 +254,15 @@ void EntityNumberMovesToHpMeter(Entity* self) {
         // batches
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < PrimCountA; i++) {
-            prim->clut = 0x1B2;
+            prim->clut = PAL_UNK_1B2;
             if (self->ext.hpNumMove.number == 0) {
-                prim->clut = 0x1B4;
+                prim->clut = PAL_UNK_1B4;
             }
             if (self->ext.hpNumMove.type == 1) {
-                prim->clut = 0x1B8;
+                prim->clut = PAL_UNK_1B8;
             }
             if (self->ext.hpNumMove.type == 2) {
-                prim->clut = 0x1B6;
+                prim->clut = PAL_UNK_1B6;
             }
             prim->tpage = 0x1A;
             prim->priority = 0x1B8;
@@ -1448,7 +1448,7 @@ void func_80119F70(Entity* self) {
             yRand = hitboxY + rand() % 48 - 24;
             D_8013804C[i].x = xRand;
             D_8013804C[i].y = yRand;
-            prim->clut = 0x1B2;
+            prim->clut = PAL_UNK_1B2;
             prim->tpage = 0x1A;
             prim->b0 = 0;
             prim->b1 = 0;
@@ -2153,7 +2153,7 @@ void EntitySmokePuff(Entity* self) {
         self->anim = D_800AD57C;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
-        self->palette = PAL_OVL(0x195);
+        self->palette = PAL_FLAG(PAL_UNK_195);
         self->drawMode = DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
 
@@ -2287,14 +2287,14 @@ void EntityUnkId24(Entity* self) {
             self->posX.i.hi += (rand() & 63) - 32;
             self->posY.i.hi += (rand() & 63) - 48;
             self->drawMode = DRAW_TPAGE;
-            self->palette = PAL_OVL(0x195);
+            self->palette = PAL_FLAG(PAL_UNK_195);
         }
         // Silly, this should just be an "else"
         if (upperparams) {
             self->posY.i.hi += rand() % 24 - 12;
             self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
             self->scaleX = self->scaleY = 0x80;
-            self->palette = PAL_OVL(0x170);
+            self->palette = PAL_FLAG(PAL_UNK_170);
         }
         self->step++;
         return;
@@ -2663,7 +2663,7 @@ block_748:
             self->step = 1;
             prim = &g_PrimBuf[self->primIndex];
             for (var_s1 = 0; var_s1 < 8; var_s1++) {
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim = prim->next;
             }
             g_Player.unk6C = 0;
@@ -2722,7 +2722,7 @@ block_748:
             self->step = 1;
             prim = &g_PrimBuf[self->primIndex];
             for (var_s1 = 0; var_s1 < 8; var_s1++) {
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim = prim->next;
             }
             g_Player.unk6E = 0;
@@ -3356,7 +3356,7 @@ void EntityWingSmashTrail(Entity* entity) {
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->rotate = PLAYER.rotate;
         entity->facingLeft = PLAYER.facingLeft;
-        entity->palette = PAL_OVL(0x102);
+        entity->palette = PAL_FLAG(PAL_ALUCARD_BLUE_OUTLINE_MASK);
         entity->scaleX = entity->scaleY = 0x100;
         entity->step++;
         return;

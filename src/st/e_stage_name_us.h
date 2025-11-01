@@ -128,7 +128,7 @@ void EntityStageNamePopup(Entity* self) {
         prim = self->ext.stpopup.firstTextPrim;
         for (i = 0; i < 2; i++) {
             prim->tpage = 17;
-            prim->clut = 0x19F; // Black to white gradient
+            prim->clut = PAL_UNK_19F; // Black to white gradient
             prim->u0 = prim->u2 = 4;
             prim->u1 = prim->u3 = 120;
             prim->v0 = prim->v1 = 0;
@@ -142,7 +142,7 @@ void EntityStageNamePopup(Entity* self) {
             prim = prim->next;
 
             prim->tpage = 17;
-            prim->clut = 0x19F;
+            prim->clut = PAL_UNK_19F;
             prim->u0 = prim->u2 = 8;
             prim->u1 = prim->u3 = 124;
             prim->v0 = prim->v1 = 64;
@@ -159,7 +159,7 @@ void EntityStageNamePopup(Entity* self) {
         i = 0;
         self->ext.stpopup.firstOutlinePrim = prim;
         prim->tpage = 17;
-        prim->clut = 0x19D; // Light grey to black gradient
+        prim->clut = PAL_UNK_19D; // Light grey to black gradient
         prim->u0 = prim->u2 = 4;
         prim->u1 = prim->u3 = 120;
         prim->v0 = prim->v1 = 0;
@@ -171,7 +171,7 @@ void EntityStageNamePopup(Entity* self) {
         prim->priority = 191;
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
-        prim->clut = 0x19D;
+        prim->clut = PAL_UNK_19D;
         prim->tpage = 17;
         prim->u0 = prim->u2 = 8;
         prim->u1 = prim->u3 = 124;
@@ -187,7 +187,7 @@ void EntityStageNamePopup(Entity* self) {
         self->ext.stpopup.boxPrim = prim;
         prim->type = PRIM_G4;
         prim->tpage = 26;
-        prim->clut = 0x15F; // All white
+        prim->clut = PAL_FILL_WHITE; // All white
         prim->u0 = 0;
         prim->u1 = 64;
         prim->u2 = prim->u0;
@@ -214,7 +214,7 @@ void EntityStageNamePopup(Entity* self) {
         self->ext.stpopup.firstDissolvePrim = prim;
         for (i = 0; i < 40; i++) {
             prim->tpage = 17;
-            prim->clut = 0x19F; // Black to white gradient
+            prim->clut = PAL_UNK_19F; // Black to white gradient
             prim->v2 = prim->v3 = i + 1;
             prim->y1 = prim->y0 = i + 157;
             prim->r0 = 120;
@@ -236,7 +236,7 @@ void EntityStageNamePopup(Entity* self) {
         }
         for (i = 0; i < 40; i++) {
             prim->tpage = 17;
-            prim->clut = 0x19F;
+            prim->clut = PAL_UNK_19F;
             prim->y1 = prim->y0 = i + 157;
             prim->y3 = prim->y2 = i + 158;
             prim->v0 = prim->v1 = i + 64;

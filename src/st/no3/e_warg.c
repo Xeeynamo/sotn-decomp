@@ -472,7 +472,7 @@ void EntityWarg(Entity* self) {
                 break;
             }
 
-            self->palette = 0x15F;
+            self->palette = PAL_FILL_WHITE;
             self->opacity = 0x80;
             primIndex = g_api.AllocPrimitives(4, 3);
             // That's weird, it should do == -1, right?

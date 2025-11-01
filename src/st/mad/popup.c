@@ -85,7 +85,7 @@ void BottomCornerText(u8* str, u8 lowerLeft) {
     prim = prim->next;
 
     prim->tpage = 0x1F;
-    prim->clut = 0x197;
+    prim->clut = PAL_UNK_197;
     prim->x0 = xpos - 6;
     prim->y0 = 0xCB;
     prim->u0 = 0x80;
@@ -97,7 +97,7 @@ void BottomCornerText(u8* str, u8 lowerLeft) {
     prim = prim->next;
 
     prim->tpage = 0x1F;
-    prim->clut = 0x197;
+    prim->clut = PAL_UNK_197;
     prim->x0 = xpos + textWidth + 0x16;
     prim->y0 = 0xCB;
     prim->u0 = 0xA8;
@@ -111,7 +111,7 @@ void BottomCornerText(u8* str, u8 lowerLeft) {
     prim->type = PRIM_GT4;
     prim->y0 = prim->y1 = 0xCD;
     prim->tpage = 0x1F;
-    prim->clut = 0x197;
+    prim->clut = PAL_UNK_197;
     prim->y2 = prim->y3 = 0xE1;
     prim->u0 = prim->u2 = 0x98;
     prim->u1 = prim->u3 = 0x9C;
@@ -131,7 +131,7 @@ void BottomCornerText(u8* str, u8 lowerLeft) {
             prim->u0 = (ch & 0xF) * 8;
             prim->v0 = (ch & 0xF0) >> 1;
             prim->tpage = 0x1E;
-            prim->clut = 0x196;
+            prim->clut = PAL_UNK_196;
             prim->v1 = 8;
             prim->u1 = 8;
             prim->priority = 0x1F0;
@@ -145,7 +145,7 @@ void BottomCornerText(u8* str, u8 lowerLeft) {
             prim->u0 = (ch & 0xF) * 8;
             prim->v0 = (ch & 0xF0) >> 1;
             prim->tpage = 0x1E;
-            prim->clut = 0x196;
+            prim->clut = PAL_UNK_196;
             prim->v1 = 8;
             prim->u1 = 8;
             prim->priority = 0x1F0;

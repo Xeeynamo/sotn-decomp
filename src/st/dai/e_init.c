@@ -149,25 +149,25 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityMistDoor,
 };
 
-EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 0};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 1};
-EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, PAL_NONE, 2};
-EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 4};
-EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 5};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 2};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 1};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 3};
+EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, PAL_NULL, 0};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, PAL_NULL, 1};
+EInit g_EInitParticle = {ANIMSET_DRA(3), 0, 0, PAL_NULL, 2};
+EInit g_EInitSpawner = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 4};
+EInit g_EInitInteractable = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 5};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 2};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 1};
+EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 3};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 3};
 EInit g_EInitUnused801809A4 = {ANIMSET_OVL(1), 43, 72, PAL_SKELERANG, 3};
 // This seems to be used as a common init and should probably be renamed
-EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 5};
+EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 5};
 EInit g_EInitConfessionalGhost = {
     ANIMSET_OVL(2), 0, 72, PAL_CONFESSIONAL_GHOST, 5};
 EInit g_EInitUnused801809C8 = {ANIMSET_OVL(2), 0, 72, PAL_801809C8, 5};
 EInit g_EInitConfessionalBlades = {
     ANIMSET_OVL(2), 37, 72, PAL_CONFESSIONAL_GHOST, 101};
 EInit g_EInitCornerGuard = {ANIMSET_OVL(4), 0, 72, PAL_CORNER_GUARD, 180};
-EInit g_EInitCornerGuardAttack = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 181};
+EInit g_EInitCornerGuardAttack = {ANIMSET_OVL(0), 0, 0, PAL_NULL, 181};
 EInit g_EInitBonePillarSkull = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 0x0B7};
 EInit g_EInitBonePillarParts = {ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 0x002};
 EInit g_EInitBonePillarFireBreath = {
@@ -175,7 +175,7 @@ EInit g_EInitBonePillarFireBreath = {
 EInit g_EInitBonePillarSpikeBall = {
     ANIMSET_OVL(5), 0, 73, PAL_BONE_PILLAR, 185};
 EInit g_EInitBoneHalberd = {ANIMSET_OVL(7), 1, 72, PAL_BONE_HALBERD, 118};
-EInit g_EInitBoneHalberdAttack = {ANIMSET_OVL(0), 0, 0, PAL_NONE, 119};
+EInit g_EInitBoneHalberdAttack = {ANIMSET_OVL(0), 0, 0, PAL_NULL, 119};
 EInit g_EInitWingedGuard = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 128};
 EInit g_EInitWingedGuardParts = {ANIMSET_OVL(8), 0, 75, PAL_WINGED_GUARD, 3};
 EInit g_EInitBat = {ANIMSET_OVL(9), 0, 74, PAL_BAT, 64};

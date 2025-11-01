@@ -87,7 +87,7 @@ void EntityBloodSplatter(Entity* self) {
             self->ext.bloodSplatter.prim2 = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x1A;
-            prim->clut = 0x1B7;
+            prim->clut = PAL_UNK_1B7;
             prim->u0 = 0x50;
             prim->u1 = 0x50;
             prim->u2 = 0x40;
@@ -122,7 +122,7 @@ void EntityBloodSplatter(Entity* self) {
             self->ext.bloodSplatter.prim3 = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x1A;
-            prim->clut = 0x1B7;
+            prim->clut = PAL_UNK_1B7;
             prim->u0 = 0x20;
             prim->u1 = 0x20;
             prim->u2 = 0;
@@ -158,9 +158,9 @@ void EntityBloodSplatter(Entity* self) {
         if (g_Timer % 2) {
             LOH(prim->next->r2)++;
             LOH(prim->next->b2)++;
-            prim->clut = 0x1B7;
+            prim->clut = PAL_UNK_1B7;
         } else {
-            prim->clut = 0x16D;
+            prim->clut = PAL_CC_RED_EFFECT_B;
         }
 
         LOW(prim->next->r1) += 0xC00;
@@ -204,7 +204,7 @@ static void func_801C53AC(Primitive* prim) {
     switch (prim->next->u2) {
     case 0:
         prim->tpage = 0x12;
-        prim->clut = 0x16D;
+        prim->clut = PAL_CC_RED_EFFECT_B;
         prim->u0 = 80;
         prim->u1 = 96;
         prim->u2 = prim->u0;

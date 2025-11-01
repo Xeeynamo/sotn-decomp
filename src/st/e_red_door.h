@@ -98,7 +98,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             prim->v2 = uv[6];
             prim->v3 = uv[7];
             prim->tpage = 0x1F;
-            prim->clut = 0x198;
+            prim->clut = PAL_UNK_198;
 #ifdef STAGE_IS_NO1
             if (self->ext.redDoor.unk88) {
                 prim->priority = 0x58;

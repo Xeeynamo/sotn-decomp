@@ -199,7 +199,7 @@ s32 func_ptr_80170004(Entity* self) {
     self->posY.i.hi = PLAYER.posY.i.hi;
     if (self->step == 0) {
         self->animSet = self->ext.weapon.parent->animSet;
-        self->palette = PAL_OVL(0x194);
+        self->palette = PAL_FLAG(PAL_UNK_194);
         self->zPriority = self->ext.weapon.parent->zPriority + 4;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->flags = FLAG_UNK_100000 | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
@@ -267,7 +267,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
         self->scaleX = self->scaleY = 0;
         prim = &g_PrimBuf[self->primIndex];
-        prim->clut = 0x19F;
+        prim->clut = PAL_UNK_19F;
         prim->tpage = 0x19;
 
         prim->u0 = prim->u2 = 0x80;
@@ -316,7 +316,7 @@ void EntityWeaponShieldSpell(Entity* self) {
             nextPrim = prim->next;
             *prim = *prevPrim;
             prim->next = nextPrim;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->priority = 0x1BA;
             prim->drawMode |=
                 (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP);
@@ -482,7 +482,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         prim->g1 = prim->r1 =
             ((rsin(angle) + 0x1000) >> 6) * self->ext.shield.unk90 / 256;
         D_4A000_8017ABBC[i] += self->ext.shield.unk8A;
-        prim->clut = 0x15F;
+        prim->clut = PAL_FILL_WHITE;
         prim->priority = 0x1BA;
         prim->drawMode = (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP);
         prim = prim->next;
@@ -559,7 +559,7 @@ void func_ptr_80170024(Entity* self) {
             prim->next = nextPrim;
             prim->u0 = prim->u2 = i * 128 / 16;
             prim->u1 = prim->u3 = ((i + 1) * 128) / 16 - 1;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->priority = 0x1BE;
             prim->drawMode |=
                 (DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP);

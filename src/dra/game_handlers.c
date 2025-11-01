@@ -1175,7 +1175,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
             prim->u2 = prim->u0;
             prim->u3 = prim->u1;
             prim->tpage = 0x1A;
-            prim->clut = 0x19F;
+            prim->clut = PAL_UNK_19F;
             prim->priority = 0x1FE;
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             prim = prim->next;

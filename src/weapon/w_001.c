@@ -278,7 +278,7 @@ s32 func_ptr_80170004(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
 
         for (i = 0; i < 16; i++) {
-            prim->clut = 0x100;
+            prim->clut = PAL_ALUCARD;
             prim->tpage = 0x19;
             p = D_B000_8017AFB8;
 
@@ -404,7 +404,7 @@ static void func_ptr_80170008(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = (PLAYER.facingLeft + 1) & 1;
         SetSpeedX(FIX(-4.5));
-        self->palette = PAL_OVL(0x1B0);
+        self->palette = PAL_FLAG(PAL_UNK_1B0);
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->posX.val += self->velocityX * 6;
         self->posY.i.hi -= 0xD;

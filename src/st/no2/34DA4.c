@@ -100,7 +100,7 @@ void func_us_801B4DA4(Entity* self) {
 #else
         prim->tpage = 0x1A;
 #endif
-        prim->clut = 0x15F;
+        prim->clut = PAL_FILL_WHITE;
         prim->u0 = prim->u2 = 0x10;
         prim->u1 = prim->u3 = 0x20;
         prim->v0 = prim->v1 = 0xD0;

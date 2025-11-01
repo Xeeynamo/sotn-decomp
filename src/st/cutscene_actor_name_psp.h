@@ -73,7 +73,7 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
     while (prim) {
         prim->type = PRIM_SPRT;
         prim->tpage = 0x1E;
-        prim->clut = 0x196;
+        prim->clut = PAL_UNK_196;
         ch = *actorName++;
         prim->u0 = (s8)((ch & 0xF) * FONT_W);
         prim->v0 = (s8)((ch & 0xF0) >> 1);
@@ -86,7 +86,7 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
             prim = prim->next;
             prim->type = PRIM_SPRT;
             prim->tpage = 0x1E;
-            prim->clut = 0x196;
+            prim->clut = PAL_UNK_196;
             if (ch & 0x4000) {
                 prim->u0 = 0x78;
             } else {

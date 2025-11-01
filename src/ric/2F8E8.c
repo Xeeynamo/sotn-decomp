@@ -641,7 +641,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         self->ext.et_801291C4.prim2 = prim;
         for (i = 0; prim != NULL;) {
             prim->tpage = 0x1A;
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim->u0 = prim->u1 = i * 0x10 + 0x90;
             prim->u2 = prim->u3 = prim->u0 + 0x10;
             prim->v0 = prim->v2 = 0xD0;
@@ -673,7 +673,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         prim->y3 = prim->y2 - 0x10;
         self->ext.et_801291C4.prim2 = prim;
         while (prim != NULL) {
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim->r0 = prim->g0 = prim->b0 = 0x80;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
@@ -752,7 +752,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         if (!self->step_s) {
             prim = self->ext.et_801291C4.prim1;
             while (prim != NULL) {
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim = prim->next;
             }
             self->step_s++;
@@ -760,7 +760,7 @@ void RicEntityAguneaHitEnemy(Entity* self) {
         }
         prim = self->ext.et_801291C4.prim1;
         while (prim != NULL) {
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim->r0 = prim->g0 = prim->b0 = 0x60;
             LOW(prim->r1) = LOW(prim->r0);
             LOW(prim->r2) = LOW(prim->r0);
@@ -815,7 +815,7 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
         entity->flags |= FLAG_UNK_100000;
         entity->unk5A = 0x79;
         entity->animSet = ANIMSET_DRA(14);
-        entity->palette = PAL_OVL(0x19E);
+        entity->palette = PAL_FLAG(PAL_UNK_19E);
         entity->anim = D_80155EA8;
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         entity->drawFlags = FLAG_DRAW_OPACITY;

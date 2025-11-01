@@ -346,9 +346,9 @@ void RicEntitySubwpnCross(Entity* self) {
     }
     // Applies a flickering effect
     if ((g_GameTimer >> 1) & 1) {
-        self->palette = PAL_OVL(0x1B0);
+        self->palette = PAL_FLAG(PAL_UNK_1B0);
     } else {
-        self->palette = PAL_OVL(0x1B1);
+        self->palette = PAL_FLAG(PAL_UNK_1B1);
     }
     psp_s1 = (s16*)self->ext.crossBoomerang.unk84;
     psp_s1 = &psp_s1[self->ext.crossBoomerang.unk80 * 2];
@@ -378,10 +378,10 @@ void func_80169C10(Entity* self) {
         self->posY.i.hi += (rand() & 0xF) - 4;
 #if defined(VERSION_PSP)
         prim = &g_PrimBuf[self->primIndex];
-        prim->clut = 0x1B0;
+        prim->clut = PAL_UNK_1B0;
 #endif
         prim = &g_PrimBuf[self->primIndex];
-        prim->clut = 0x1B0;
+        prim->clut = PAL_UNK_1B0;
         prim->tpage = 0x1A;
         prim->b0 = 0;
         prim->b1 = 0;
@@ -419,7 +419,7 @@ void RicEntitySubwpnCrossTrail(Entity* self) {
         self->animSet = ANIMSET_OVL(17);
         self->animCurFrame = D_80155E68[self->params];
         self->unk5A = 0x66;
-        self->palette = PAL_OVL(0x1B0);
+        self->palette = PAL_FLAG(PAL_UNK_1B0);
         self->drawMode = DRAW_TPAGE;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
@@ -496,7 +496,7 @@ void RicEntitySubwpnCrashCrossParticles(Entity* self) {
             temp_s0 = rand() & 0x3F;
             prim->g0 = (rand() % 237) + 9;
             prim->g1 = 0xF0 - (rand() & 0x20);
-            prim->clut = 0x1B0;
+            prim->clut = PAL_UNK_1B0;
             prim->tpage = 0x1A;
             prim->b0 = 0;
             prim->priority = PLAYER.zPriority + temp_s0 - 0x20;

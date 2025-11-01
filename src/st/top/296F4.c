@@ -833,7 +833,7 @@ void func_us_801AB45C(Entity* self) {
         self->animSet = 7;
         self->animCurFrame = 3;
         self->zPriority = 0x5C;
-        self->palette = PAL_OVL(0x15E);
+        self->palette = PAL_FLAG(PAL_FILL_BLACK);
         if (g_CastleFlags[TOP_LION_LIGHTS] & (1 << (self->params + 2))) {
             self->step = 3;
         }

@@ -106,48 +106,48 @@ EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0x00, 0x000, 0};
 
 #include "../e_init_common.h"
 
-EInit g_EInitSecret = {ANIMSET_OVL(1), 0, 0, PAL_DRA(0), 5};
+EInit g_EInitSecret = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 5};
 
 // D_80180688
-EInit g_EInitSalemWitch = {ANIMSET_OVL(3), 1, 72, PAL_DRA(516), 221};
+EInit g_EInitSalemWitch = {ANIMSET_OVL(3), 1, 72, 0x204, 221};
 
 // D_80180694
-EInit g_EInitSalemWitchCurse = {ANIMSET_OVL(3), 0, 72, PAL_DRA(516), 222};
+EInit g_EInitSalemWitchCurse = {ANIMSET_OVL(3), 0, 72, 0x204, 222};
 
 // D_801806A0
-EInit g_EInitSalemWitchTribolt = {ANIMSET_OVL(4), 0, 92, PAL_DRA(747), 223};
+EInit g_EInitSalemWitchTribolt = {ANIMSET_OVL(4), 0, 92, 0x2EB, 223};
 
 // D_801806AC
-EInit g_EInitGremlin = {ANIMSET_OVL(2), 0, 72, PAL_DRA(512), 225};
+EInit g_EInitGremlin = {ANIMSET_OVL(2), 0, 72, 0x200, 225};
 
 // Unused
 // D_801806B8
-EInit g_EInit801806B8 = {ANIMSET_OVL(2), 0, 72, PAL_DRA(512), 5};
+EInit g_EInit801806B8 = {ANIMSET_OVL(2), 0, 72, 0x200, 5};
 
 // D_801806C4
-EInit g_EInitGremlinFire = {ANIMSET_OVL(2), 0, 72, PAL_DRA(512), 226};
+EInit g_EInitGremlinFire = {ANIMSET_OVL(2), 0, 72, 0x200, 226};
 
 // D_801806D0
-EInit g_EInitThornweed = {ANIMSET_OVL(7), 0, 76, PAL_DRA(518), 157};
+EInit g_EInitThornweed = {ANIMSET_OVL(7), 0, 76, 0x206, 157};
 
 // Unused (Alternate Corpseweed)
 // D_801806DC
-EInit g_EInit801806DC = {ANIMSET_OVL(7), 0, 76, PAL_DRA(518), 158};
+EInit g_EInit801806DC = {ANIMSET_OVL(7), 0, 76, 0x206, 158};
 
 // D_801806E8
-EInit g_EInitCorpseweed = {ANIMSET_OVL(7), 0, 76, PAL_DRA(518), 159};
+EInit g_EInitCorpseweed = {ANIMSET_OVL(7), 0, 76, 0x206, 159};
 
 // D_801806F4
-EInit g_EInitCorpseweedProjectile = {ANIMSET_OVL(7), 0, 76, PAL_DRA(518), 160};
+EInit g_EInitCorpseweedProjectile = {ANIMSET_OVL(7), 0, 76, 0x206, 160};
 
 // D_80180700
-EInit g_EInitVenusWeedRoot = {ANIMSET_OVL(8), 0, 80, PAL_DRA(522), 161};
+EInit g_EInitVenusWeedRoot = {ANIMSET_OVL(8), 0, 80, 0x20A, 161};
 
 // D_8018070C
-EInit g_EInitVenusWeedFlower = {ANIMSET_OVL(8), 0, 80, PAL_DRA(522), 162};
+EInit g_EInitVenusWeedFlower = {ANIMSET_OVL(8), 0, 80, 0x20A, 162};
 
 // D_80180718
-EInit g_EInitVenusWeedTendril = {ANIMSET_OVL(8), 0, 80, PAL_DRA(522), 163};
+EInit g_EInitVenusWeedTendril = {ANIMSET_OVL(8), 0, 80, 0x20A, 163};
 
 // D_80180724
-EInit g_EInitVenusWeedDart = {ANIMSET_OVL(8), 55, 80, PAL_DRA(522), 164};
+EInit g_EInitVenusWeedDart = {ANIMSET_OVL(8), 55, 80, 0x20A, 164};

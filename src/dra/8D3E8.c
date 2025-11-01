@@ -569,7 +569,7 @@ void func_8012E7A4(void) {
     PLAYER.velocityY = 0;
     PLAYER.unk5A = 0x7E;
     PLAYER.animSet = 0xF;
-    PLAYER.palette = 0x810D;
+    PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
 
 #if !defined(VERSION_US)
     if (g_Entities[16].entityId != 0x22) {
@@ -584,7 +584,7 @@ void func_8012E7A4(void) {
 void func_8012E9C0(void) {
     s32 i;
 
-    PLAYER.palette = 0x810D;
+    PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
     for (i = 0; i < 4; i++) {
         if (g_SensorsFloor[i].y < g_SensorsFloorDefault[i]) {
             g_SensorsFloor[i].y++;
@@ -602,7 +602,7 @@ void func_8012E9C0(void) {
     } else if (g_Player.unk66 != 3) {
         return;
     }
-    PLAYER.palette = 0x104;
+    PLAYER.palette = PAL_ALUCARD_WOLF;
     PLAYER.step_s = 5;
     PLAYER.velocityY = FIX(-1.5);
 }
@@ -653,7 +653,7 @@ void PlayerStepUnmorphWolf(void) {
                 PLAYER.velocityY = FIX(-1);
             }
             g_Player.unk44 |= 0x100;
-            PLAYER.palette = 0x8100;
+            PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
             PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
             TRANSFORM_LOCKOUT_TIMER = 0x18;
             func_80111CC0();
@@ -726,7 +726,7 @@ void PlayerStepMorphWolf(void) {
     s32 xSpeed;
     s32 var_s0;
 
-    PLAYER.palette = 0x104;
+    PLAYER.palette = PAL_ALUCARD_WOLF;
     PLAYER.drawMode = DRAW_DEFAULT;
 #if defined(VERSION_US)
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
@@ -1296,7 +1296,7 @@ void func_8012F894(Entity* self) {
     f178_finish = false;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         f178_finish = true;
-        self->palette = PLAYER.palette = PAL_OVL(0x10D);
+        self->palette = PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
     }
     prim = &g_PrimBuf[self->primIndex];
     func_8012F178(prim, f178_count, f178_finish);

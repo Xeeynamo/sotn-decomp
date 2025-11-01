@@ -106,7 +106,7 @@ void RicInit(s16 initParam) {
     PLAYER.animSet = ANIMSET_OVL(0x10);
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
     PLAYER.facingLeft = 0;
-    PLAYER.palette = 0x8120;
+    PLAYER.palette = PAL_FLAG(PAL_RICHTER);
     PLAYER.scaleY = 0x100;
     PLAYER.scaleX = 0x100;
     PLAYER.rotPivotY = 0x18;
@@ -145,7 +145,7 @@ void RicInit(s16 initParam) {
         DestroyEntity(e);
         e->animSet = ANIMSET_OVL(0x10);
         e->unk5A = i + 1;
-        e->palette = PAL_OVL(0x120);
+        e->palette = PAL_FLAG(PAL_RICHTER);
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
     g_Entities[E_AFTERIMAGE_1].primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
@@ -477,7 +477,7 @@ void RicMain(void) {
         case PL_T_INVINCIBLE:
             break;
         case PL_T_2:
-            PLAYER.palette = 0x8120;
+            PLAYER.palette = PAL_FLAG(PAL_RICHTER);
             break;
         case PL_T_4:
             draw->enableColorBlend = 0;
@@ -735,7 +735,7 @@ void RicMain(void) {
         } else {
             RicSetInvincibilityFrames(1, 16);
             g_Player.timers[PL_T_4] = 0x10;
-            PLAYER.palette = 0x8120;
+            PLAYER.palette = PAL_FLAG(PAL_RICHTER);
         }
     }
     if (newStatus & NO_AFTERIMAGE) {

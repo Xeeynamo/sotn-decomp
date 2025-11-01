@@ -203,7 +203,7 @@ void func_us_801BEE00(Entity* self) {
         InitializeEntity(g_EInitParticle);
         self->animSet = 8;
         self->animCurFrame = 1;
-        self->palette = PAL_OVL(4);
+        self->palette = PAL_FLAG(4);
         break;
 
     case 1:
@@ -276,7 +276,7 @@ void func_us_801BF074(Entity* self) {
         InitializeEntity(g_EInitParticle);
         self->animSet = 8;
         self->animCurFrame = 1;
-        self->palette = PAL_OVL(4);
+        self->palette = PAL_FLAG(4);
         break;
 
     case 1:

@@ -1195,7 +1195,7 @@ void RicStepDeadPrologue(void) {
         // Cross subweapon crash.
         if (--g_DeadPrologueTimer == 0) {
             RicSetAnimation(D_801558B4);
-            PLAYER.palette = 0x814E;
+            PLAYER.palette = PAL_FLAG(PAL_UNK_14E);
             g_CurrentEntity->velocityY = FIX(-1);
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, BP_REVIVAL_COLUMN, 0);
@@ -1216,7 +1216,7 @@ void RicStepDeadPrologue(void) {
                 g_CurrentEntity, FACTORY(BP_38, 3), 0);
             RicCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_39, 4), 0);
-            PLAYER.palette = 0x813D;
+            PLAYER.palette = PAL_FLAG(PAL_UNK_13D);
             g_Player.timers[PL_T_INVINCIBLE_SCENE] = 0;
             PLAYER.step_s++;
         }
@@ -1244,7 +1244,7 @@ void RicStepDeadPrologue(void) {
     case 5:
         if (g_DeadPrologueTimer == 5) {
             PLAYER.pose = 6;
-            PLAYER.palette = 0x8120;
+            PLAYER.palette = PAL_FLAG(PAL_RICHTER);
             RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_BLUE_SPHERE, 0);
         }
         if (--g_DeadPrologueTimer == 0) {

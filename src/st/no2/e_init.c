@@ -135,19 +135,19 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 };
 
 EInit OVL_EXPORT(
-    EInitBreakable) = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x001};
-EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NONE, 0x002};
-EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x004};
-EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x005};
-EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x002};
-EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x003};
-EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NONE, 0x003};
+    EInitBreakable) = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NULL, 0x000};
+EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NULL, 0x001};
+EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, PAL_NULL, 0x002};
+EInit g_EInitSpawner = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x004};
+EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x005};
+EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x002};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x001};
+EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x003};
+EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, PAL_NULL, 0x003};
 EInit g_EInitSkelerang = {ANIMSET_OVL(0x01), 0x01, 0x48, PAL_SKELERANG, 0x00B};
 EInit g_EInitSkelerangBoomerang = {
     ANIMSET_OVL(0x01), 0x2B, 0x48, PAL_SKELERANG, 0x00C};
-EInit g_EInitEnvironment = {ANIMSET_OVL(0x02), 0x0B, 0x00, PAL_NONE, 0x003};
+EInit g_EInitEnvironment = {ANIMSET_OVL(0x02), 0x0B, 0x00, PAL_NULL, 0x003};
 EInit D_us_801808B0 = {ANIMSET_OVL(0x03), 0x01, 0x49, PAL_UNK_203, 0x003};
 EInit g_EInitOwlKnight = {ANIMSET_OVL(0x08), 0x10, 0x49, PAL_OWL_KNIGHT, 0x014};
 EInit g_EInitOwlKnightSword = {
@@ -155,13 +155,13 @@ EInit g_EInitOwlKnightSword = {
 EInit g_EInitOwl = {ANIMSET_OVL(0x08), 0x01, 0x49, PAL_OWL_KNIGHT, 0x016};
 EInit g_EInitBloodyZombie = {
     ANIMSET_OVL(0x09), 0x01, 0x4A, PAL_BLOODY_ZOMBIE, 0x00D};
-EInit D_us_801808EC = {ANIMSET_OVL(0x02), 0x0E, 0x00, PAL_NONE, 0x005};
+EInit D_us_801808EC = {ANIMSET_OVL(0x02), 0x0E, 0x00, PAL_NULL, 0x005};
 EInit g_EInitValhallaKnight = {
     ANIMSET_OVL(0x05), 0x01, 0x4C, PAL_VALHALLA_KNIGHT, 0x085};
 EInit D_us_80180904 = {
     ANIMSET_OVL(0x05), 0x01, 0x4C, PAL_VALHALLA_KNIGHT, 0x003};
-EInit D_us_80180910 = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NONE, 0x086};
-EInit D_us_8018091C = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NONE, 0x087};
+EInit D_us_80180910 = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NULL, 0x086};
+EInit D_us_8018091C = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NULL, 0x087};
 EInit g_EInitHammer = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_UNK_23E, 0x0BA};
 EInit g_EInitHammerWeapon = {ANIMSET_OVL(0x06), 0x12, 0x4C, PAL_UNK_23E, 0x0BB};
 EInit g_EInitGurkha = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_GURKHA, 0x0BC};

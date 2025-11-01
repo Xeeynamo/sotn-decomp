@@ -30,7 +30,7 @@ void EntityWeaponAttack(Entity* self) {
         if (self->step == 0) {
             SetSpriteBank1(g_Animset);
             self->animSet = ANIMSET_OVL(0x10);
-            self->palette = PAL_DRA(0x110);
+            self->palette = PAL_UNK_110;
             self->unk5A = 0x64;
             if (g_HandId != 0) {
                 self->animSet += 2;
@@ -266,7 +266,7 @@ s32 func_ptr_80170004(Entity* self) {
 static void func_ptr_80170008(Entity* self) {
     switch (self->step) {
     case 0:
-        self->palette = PAL_OVL(0x100);
+        self->palette = PAL_FLAG(PAL_ALUCARD);
         self->zPriority = PLAYER.zPriority;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;

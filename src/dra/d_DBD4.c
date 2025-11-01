@@ -21,7 +21,7 @@ AnimationFrame D_800ADC44[] = {
     POSE(2, 13, 0), POSE_END,
 };
 
-u16 D_800ADC7C[] = {PAL_DRA(0x194), PAL_DRA(0x199)};
+u16 D_800ADC7C[] = {PAL_UNK_194, PAL_UNK_199};
 // disable format to allow for extra spaces, to space these out nicely
 // clang-format off
 static Point16 D_800ADC80 = { -2, -24};
@@ -130,10 +130,10 @@ u8 D_800AE140[][8] = {
 };
 
 Unkstruct_800AE180 D_800AE180[] = {
-    {PAL_DRA(0x19F), 0x0030},
-    {PAL_DRA(0x19F), 0x0018},
-    {PAL_DRA(0x19F), 0x0000},
-    {PAL_DRA(0x19F), 0x0048},
+    {PAL_UNK_19F, 0x0030},
+    {PAL_UNK_19F, 0x0018},
+    {PAL_UNK_19F, 0x0000},
+    {PAL_UNK_19F, 0x0048},
 };
 
 s16 D_800AE190[] = {

@@ -1078,7 +1078,7 @@ void func_us_801C2E60(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         self->ext.et_801C12B0.prim = prim;
         while (prim != NULL) {
-            prim->clut = 0x161;
+            prim->clut = PAL_CC_STONE_EFFECT;
             prim->tpage = 0x1A;
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = 0x1E;
@@ -1520,7 +1520,7 @@ void func_us_801C3CC4(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         self->ext.et_801C12B0.prim = prim;
         while (prim != NULL) {
-            prim->clut = 0x161;
+            prim->clut = PAL_CC_STONE_EFFECT;
             prim->tpage = 0x1A;
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = 0x1E;

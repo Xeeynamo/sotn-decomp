@@ -79,7 +79,7 @@ static void func_80102EB8(void) {
         SetTexturedPrimRect(prim1, 98, 79, 96, 0, 0, 0);
         func_801072DC(prim1);
         prim1->tpage = 0x10;
-        prim1->clut = 0x1A1;
+        prim1->clut = PAL_UNK_1A1;
 #ifdef VERSION_PSP
         prim1->priority = 0x1FF;
 #else

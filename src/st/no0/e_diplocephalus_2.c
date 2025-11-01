@@ -135,7 +135,7 @@ void EntityDiplocephalusFireball(Entity* self) {
             self->drawFlags = FLAG_DRAW_DEFAULT;
             self->step_s++;
             self->flags = 0xFFFFFFF0;
-            self->palette = PAL_DRA(0x2C0);
+            self->palette = 0x2C0;
             // fallthrough
         case 1:
             MoveEntity();

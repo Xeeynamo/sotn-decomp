@@ -94,13 +94,13 @@ void EntityBackgroundVortex(Entity* self) {
         prim = self->ext.prim;
         while (prim != NULL) {
 #ifdef VERSION_PSP
-            prim->clut = 0x19E;
+            prim->clut = PAL_UNK_19E;
             prim->tpage = 6;
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = 0x3F;
 #else
             prim->tpage = 0x16;
-            prim->clut = 0x19E;
+            prim->clut = PAL_UNK_19E;
             prim->u0 = prim->u2 = 0x40;
             prim->u1 = prim->u3 = 0x80;
 #endif

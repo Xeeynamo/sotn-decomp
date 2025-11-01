@@ -995,7 +995,7 @@ void EntityPlateLord(Entity* self) {
         tempRect = unkStructC->unk10;
         func_us_801D2424((Point32*)&self->posX, tempS16, tempRect->y,
                          tempPoint32, tempS16, tempRect->y, prim);
-        if (self->palette & PAL_OVL_FLAG) {
+        if (self->palette & PAL_UNK_FLAG) {
             prim->clut = self->palette & 0xFFF;
         } else {
             prim->clut = 0x22C;
@@ -1006,7 +1006,7 @@ void EntityPlateLord(Entity* self) {
         func_us_801D2424(
             &point32, tempS16, tempRect->h, (Point32*)&tempEntity->posX,
             tempS16, tempRect->h, prim);
-        if (self->palette & PAL_OVL_FLAG) {
+        if (self->palette & PAL_UNK_FLAG) {
             prim->clut = self->palette & 0xFFF;
         } else {
             prim->clut = 0x22B;
@@ -1209,7 +1209,7 @@ void func_us_801D44A0(Entity* self) {
     F(sp28.y).i.hi = sp70 >> 0x10;
     prim = self->ext.prim;
     func_us_801D2424(&sp20, rot.vz, 4, &sp28, rot.vz, 4, prim);
-    if (self->palette & PAL_OVL_FLAG) {
+    if (self->palette & PAL_UNK_FLAG) {
         prim->clut = self->palette & 0xFFF;
     } else {
         prim->clut = 0x22C;
@@ -1239,7 +1239,7 @@ void func_us_801D44A0(Entity* self) {
     func_us_801D2424(
         &sp20, var_s3, 8, (Point32*)&tempEntity->posX, var_s3, 8, prim);
 
-    if (self->palette & PAL_OVL_FLAG) {
+    if (self->palette & PAL_UNK_FLAG) {
         prim->clut = self->palette & 0xFFF;
     } else {
         prim->clut = 0x22B;

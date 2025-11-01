@@ -33,7 +33,7 @@ void func_us_801BC598(Primitive* prim) {
     switch (prim->next->u2) {
     case 0:
         prim->tpage = 0x1A;
-        prim->clut = 0x1B0;
+        prim->clut = PAL_UNK_1B0;
         prim->u0 = 0x70;
         prim->u1 = 0x7F;
         prim->u2 = prim->u1;

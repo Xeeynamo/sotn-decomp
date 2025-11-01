@@ -407,7 +407,7 @@ static void func_ptr_80170008(Entity* self) {
         self->posY.i.hi += rand() % range;
 
         prim = &g_PrimBuf[self->primIndex];
-        prim->clut = 0x1B0;
+        prim->clut = PAL_UNK_1B0;
         prim->tpage = 0x1A;
         prim->b0 = 0;
         prim->b1 = 0;

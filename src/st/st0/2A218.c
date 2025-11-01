@@ -54,7 +54,7 @@ void EntityCutscene(Entity* self) {
     case 0:
         InitializeEntity(g_EInitCutscene);
         self->unk5A = 0x46;
-        self->palette = 0x120;
+        self->palette = PAL_RICHTER;
         break;
 
     case 1:

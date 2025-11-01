@@ -108,7 +108,7 @@ void func_801B4D78(void) {
     case 0:
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 1;
-        self->palette = PAL_DRA(0x200);
+        self->palette = 0x200;
         self->ext.unkSelEnts.unk80.val = FIX(92);
         self->posY.i.hi = 0xD0;
         self->zPriority = 0x80;
@@ -287,7 +287,7 @@ void func_801B5350(void) {
         self->ext.unkSelEnts.unk80.val = FIX(0x80);
         self->posY.i.hi = 0x9F;
         self->zPriority = 0xC0;
-        self->palette = PAL_OVL(0x100);
+        self->palette = PAL_FLAG(PAL_ALUCARD);
         self->step++;
         break;
 
@@ -326,7 +326,7 @@ void func_801B54C8(void) {
         self->ext.unkSelEnts.unk80.val = FIX(0x78);
         self->posY.i.hi = 0x9E;
         self->zPriority = 0xC0;
-        self->palette = PAL_OVL(0x210);
+        self->palette = PAL_FLAG(0x210);
         self->step++;
         break;
 
@@ -345,7 +345,7 @@ static void func_801B5548(void) {
             self->animSet = ANIMSET_OVL(3);
             self->animCurFrame = 0xC;
             self->unk5A = 0x46;
-            self->palette = PAL_DRA(0x258);
+            self->palette = 0x258;
             self->facingLeft = 0;
             self->ext.unkSelEnts.unk80.val = FIX(0x80);
             self->posY.i.hi = 0xA0;
@@ -358,7 +358,7 @@ static void func_801B5548(void) {
             self->ext.unkSelEnts.unk80.val = FIX(0x78);
             self->posY.i.hi = 0x9E;
             self->zPriority = 0xC0;
-            self->palette = PAL_OVL(0x210);
+            self->palette = PAL_FLAG(0x210);
         }
         self->step++;
         break;
@@ -377,7 +377,7 @@ void func_801B55C8(void) {
         self->animSet = ANIMSET_OVL(3);
         self->animCurFrame = 0xC;
         self->unk5A = 0x46;
-        self->palette = PAL_DRA(0x258);
+        self->palette = 0x258;
         self->facingLeft = 1;
         self->ext.unkSelEnts.unk80.val = FIX(0x80);
         self->posY.i.hi = 0xA0;
@@ -466,7 +466,7 @@ void func_801B585C(u16 arg0) {
         self->ext.unkSelEnts.unk80.val = 0;
         self->posY.i.hi = 0x9F;
         self->zPriority = 0xC0;
-        self->palette = PAL_OVL(0x100);
+        self->palette = PAL_FLAG(PAL_ALUCARD);
         self->step++;
         break;
 

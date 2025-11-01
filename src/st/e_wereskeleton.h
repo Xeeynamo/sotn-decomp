@@ -238,7 +238,7 @@ void EntityWereskeleton(Entity* self) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 MakeEntityFromId(E_WERESKELETON, self, tempEntity);
-                tempEntity->palette = PAL_OVL(0x160);
+                tempEntity->palette = PAL_FLAG(PAL_CC_FIRE_EFFECT);
                 tempEntity->hitboxState = 0;
                 tempEntity->facingLeft = self->facingLeft;
                 tempEntity->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA |

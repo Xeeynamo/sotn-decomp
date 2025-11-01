@@ -718,7 +718,7 @@ void EntityCannonShot(Entity* self) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
-        self->palette = PAL_OVL(0x1AF);
+        self->palette = PAL_FLAG(PAL_UNK_1AF);
         self->zPriority = 0x6F;
         self->velocityX = FIX(-8);
 

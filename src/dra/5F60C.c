@@ -1345,7 +1345,7 @@ void DrawHudSubweapon() {
         (u_long*)(D_800C52F8[10] + 4), 0, 0, 0x3DC, 0x100, 8, mpFillSteps);
     // Use one clut if MP is full, otherwise a different one
     if (mpFillSteps == 50) {
-        prim->clut = 0x162;
+        prim->clut = PAL_CC_MAGIC_HUD_EFFECT;
     } else {
         prim->clut = 0x174;
     }

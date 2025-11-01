@@ -510,7 +510,7 @@ void func_8011EDA8(Entity* self) {
             } else {
                 self->animSet = ANIMSET_DRA(5);
                 self->anim = D_800AD57C;
-                self->palette = PAL_OVL(0x170);
+                self->palette = PAL_FLAG(PAL_UNK_170);
             }
         }
         self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
@@ -565,7 +565,7 @@ void func_8011F074(Entity* self) {
         self->unk5A = 0x79;
         self->animSet = ANIMSET_DRA(14);
         self->zPriority = PLAYER.zPriority + 2;
-        self->palette = PAL_OVL(0x19F);
+        self->palette = PAL_FLAG(PAL_UNK_19F);
 
         if (D_8013808C & 1) {
             self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
@@ -972,7 +972,7 @@ void EntityTransparentWhiteCircle(Entity* self) {
             prim2->u3 = prim1->u1 = (prim2->u1 + prim1->u3) / 2;
             prim2->v3 = prim1->v1 = (prim2->v1 + prim1->v3) / 2;
             prim1->tpage = prim2->tpage = 0x1A;
-            prim1->clut = prim2->clut = 0x15F;
+            prim1->clut = prim2->clut = PAL_FILL_WHITE;
             prim1->priority = prim2->priority = PLAYER.zPriority + 2;
             prim1->drawMode = prim2->drawMode =
                 DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
@@ -2214,7 +2214,7 @@ void func_80123B40(Entity* self) {
     if (!self->step) {
         self->animSet = PLAYER.animSet = 1;
         self->animCurFrame = PLAYER.animCurFrame = 0x9F;
-        self->palette = PAL_OVL(0x10D);
+        self->palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         self->unk5A = 0xC;
         self->params = 0x2600;
         EntityPlayerBlinkWhite(self);
@@ -2288,7 +2288,7 @@ void func_80123B40(Entity* self) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = self->ext.et_80123B40.unk29;
-            prim->clut = 0x100;
+            prim->clut = PAL_ALUCARD;
             prim->drawMode = DRAW_UNK_100 | DRAW_TPAGE | DRAW_COLORS |
                              DRAW_UNK02 | DRAW_TRANSP;
         }
@@ -2318,7 +2318,7 @@ void func_80123F78(Entity* self) {
         self->unk5A = 0xD;
         self->drawFlags = PLAYER.drawFlags;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        self->palette = PAL_OVL(0x15F);
+        self->palette = PAL_FLAG(PAL_FILL_WHITE);
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
 
@@ -2425,9 +2425,9 @@ void EntityTeleport(Entity* self) {
             D_8013839C[i].x = xVar;
             D_8013839C[i].y = yVar;
             // SOTN please why do you do this
-            prim->clut = 0x1B2;
-            prim->clut = 0x1B5;
-            prim->clut = 0x1BA;
+            prim->clut = PAL_UNK_1B2;
+            prim->clut = PAL_UNK_1B5;
+            prim->clut = PAL_UNK_1BA;
             prim->tpage = 0x1A;
             prim->b0 = 0;
             prim->b1 = 0;
@@ -2482,12 +2482,12 @@ void EntityTeleport(Entity* self) {
             self->ext.teleport.colorIntensity = 0x100;
         }
         if (--self->ext.teleport.timer == 0) {
-            PLAYER.palette = PAL_OVL(0x10D);
+            PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
             self->step++;
         }
         break;
     case 4:
-        PLAYER.palette = PAL_OVL(0x10D);
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         self->ext.teleport.width--;
         if (self->ext.teleport.width <= 0) {
             self->ext.teleport.width = 0;
@@ -2495,7 +2495,7 @@ void EntityTeleport(Entity* self) {
         }
         break;
     case 5:
-        PLAYER.palette = PAL_OVL(0x10D);
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         var_s5 = true;
         self->ext.teleport.unk90 += 4;
         if (self->ext.teleport.unk90 >= 0x100) {
@@ -2505,7 +2505,7 @@ void EntityTeleport(Entity* self) {
         }
         break;
     case 6:
-        PLAYER.palette = PAL_OVL(0x10D);
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
 #ifdef VERSION_PSP
         func_892A620(0, 1);
         func_892A620(1, 1);
@@ -2631,7 +2631,7 @@ void EntityPlayerSleepZ(Entity* self) {
         self->velocityY = FIX(-0.375);
         SetSpeedX(FIX(0.25));
         self->unk5A = 0x50;
-        self->palette = PAL_OVL(0x19F);
+        self->palette = PAL_FLAG(PAL_UNK_19F);
         self->anim = D_800AE294;
 
         self->posY.i.hi -= 16;

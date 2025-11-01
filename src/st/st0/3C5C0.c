@@ -91,7 +91,7 @@ void func_801BC5C0(Entity* self) {
         for (i = 0; i < 20; i++) {
             prim->type = PRIM_GT3;
             prim->tpage = 0x1A;
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim->u0 = 0x30;
             prim->v0 = 0x40;
             prim->u1 = 0x48;
@@ -312,7 +312,7 @@ void func_801BC5C0(Entity* self) {
                 var_s3 = (s32*)SP(offsetof(ST0_SCRATCHPAD, var_s3));
                 for (j = 0; j < 8; j++) {
                     prim->tpage = 0x1A;
-                    prim->clut = 0x19F;
+                    prim->clut = PAL_UNK_19F;
 
                     prim->u0 = prim->u2 = j * 0x10 + 0x7F;
                     prim->u1 = prim->u3 = prim->u0 + 0xF;
