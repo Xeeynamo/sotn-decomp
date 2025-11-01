@@ -230,9 +230,9 @@
 | main  | sceVfpuVector4ScaleXYZ                   |       13 |          1 |        |       |     |
 | maria | func_pspeu_092BDFC8                      |       13 |          1 |        |       |     |
 | ric   | func_pspeu_092C77B8                      |       13 |          1 |        |       |     |
+| main  | PadRead_PSP                              |       13 |          2 |        |       |     |
 | main  | GsInitVcount                             |       13 |          2 |        |       |     |
 | main  | InitCARD                                 |       13 |          2 |        |       |     |
-| main  | PadRead_PSP                              |       13 |          2 |        |       |     |
 | main  | func_psp_08934F04                        |       13 |          2 |        |       |     |
 | main  | func_psp_08934F24                        |       13 |          2 |        |       |     |
 | main  | func_psp_089375A0                        |       13 |          2 |        |       |     |
@@ -543,9 +543,9 @@
 | main  | clock                                    |       19 |          2 |        |       |     |
 | main  | func_psp_0890C678                        |       19 |          2 |        |       |     |
 | main  | func_psp_089172E4                        |       19 |          2 |        |       |     |
+| main  | func_psp_08919BA8                        |       19 |          2 |        |       |     |
 | main  | func_psp_08912608                        |       19 |          2 |        |       |     |
 | main  | func_psp_089178A8                        |       19 |          2 |        |       |     |
-| main  | func_psp_08919BA8                        |       19 |          2 |        |       |     |
 | main  | func_psp_0892CAD8                        |       19 |          2 |        |       |     |
 | main  | sceGuContinue                            |       19 |          2 |        |       |     |
 | main  | sceGuFinish                              |       19 |          2 |        |       |     |
