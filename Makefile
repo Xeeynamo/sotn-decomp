@@ -210,14 +210,14 @@ format-sotn-lint:
 format-src: bin/clang-format format-sotn-lint
 	@# find explainer:
 	@#    find $(SRC_DIR) $(INCLUDE_DIR)                      : look in src and include
-	@#    -type d \( -name 3rd -o -name CMakeFiles \) -prune  : if an entry is both a directory and 3rd or CMakeFiles
+	@#    -type d \( -name 3rd -o -name pspsdk -o -name CMakeFiles \) -prune  : if an entry is both a directory and 3rd or CMakeFiles
 	@#                                                          ignore it and don't traverse it
 	@#    -o \( -type f \( -name '*.h' -o -name '*.c' \) \)   : or if an entry is a file and named *.h or *.c, include it
 	@#    -print0                                             : print only the matching entries, delimit by NULL to
 	@#                                                          ensure files with characters xargs uses as delimiters are
 	@#                                                          properly handled
 	find $(SRC_DIR) $(INCLUDE_DIR) mods \
-        -type d \( -name 3rd -o -name CMakeFiles -o -name gen \) -prune \
+        -type d \( -name 3rd -o -name pspsdk -o -name CMakeFiles -o -name gen \) -prune \
         -o \( -type f \( -name '*.c' -o -name '*.h' \) \) \
         -print0 \
         | xargs -0 -n10 -P$$(nproc) bin/clang-format -i
@@ -251,7 +251,7 @@ format-symbols-pspeu: $(patsubst config/splat.pspeu.%.yaml,format-symbols-pspeu-
 format-symbols: format-symbols-us format-symbols-hd format-symbols-pspeu
 
 format-license:
-	find src/ mods/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
+	find src/ mods/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|pspsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
 	find src/main/psxsdk | grep -E '\.c$$|\.h$$' | $(PYTHON) ./tools/lint-license.py - MIT
 	$(PYTHON) ./tools/lint-license.py include/game.h AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
