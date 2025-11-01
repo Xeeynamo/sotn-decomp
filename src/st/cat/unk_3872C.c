@@ -15,11 +15,8 @@ void func_us_801B87E8(Entity *self)
   if (!self->step)
   {
     self->step++;
-    do
-    {
-      self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
-    }
-    while (0);
+    self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x10);
+
     if (self->primIndex == -1)
     {
       DestroyEntity(self);
