@@ -1,8 +1,112 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include <game_psp.h>
 
 // https://pspdev.github.io/pspsdk/
+#define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
 #include <pspctrl.h>
+#include <pspgu.h>
+#include <pspthreadman.h>
+#include <psputility_modules.h>
+#include <psputility_sysparam.h>
+
+typedef enum {
+    SCREEN_MODE_ZERO,
+    SCREEN_MODE_ONE,
+} ScreenMode;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+    s32 unkC;
+    s32* unk10;
+} Unk08919CF4;
+
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+    s32 unk8;
+} Unk08919D98;
+
+extern s32 D_psp_0893CED0;
+extern s32 D_psp_0893CF74[];
+extern char D_psp_08946410[];
+extern s32 D_psp_08946424;
+extern s32 D_psp_08946430;
+extern s32 D_psp_0894643C;
+extern s32 D_psp_08946448;
+extern char D_psp_0894644C[];
+extern char D_psp_08946458[];
+extern char D_psp_08946468[];
+extern char D_psp_08946478[];
+extern char D_psp_08946494[];
+extern s32 /*?*/ D_psp_089464B0;
+extern s32 D_psp_089464D0;
+extern u32 D_psp_089464D4;
+extern s32 D_psp_089464D8; // screen_w
+extern s32 D_psp_089464DC; // screen_h
+extern s32 D_psp_089464E8;
+extern s32 D_psp_089464F0;
+extern u8 D_psp_089466A0[];
+extern SceCtrlData D_psp_08B41F40;
+extern SceCtrlData D_psp_08B41F50;
+extern u16 D_psp_08B41F60;
+extern s32 D_psp_08B41F64;
+extern s32 D_psp_08B41F68;
+extern s32 D_psp_08B41F9C;
+extern s32 D_psp_08B41FB4;
+extern s32 D_psp_08B41FB8;
+extern s32 D_psp_08B41FBC;
+extern s32 D_psp_08B41FC0;
+extern s32 D_psp_08B41FD0; // exit callback ID
+extern s32 D_psp_08B41FE0;
+extern s32 D_psp_08B42000; // kernel thread ID
+extern s32 D_psp_08B42044;
+extern s32 D_psp_08B42048;
+extern int D_psp_08B4204C; // button swap
+extern s32 D_psp_08B42050;
+extern s32 D_psp_08B42054;
+extern s32 g_UserLanguage;
+extern s32 D_psp_08B4205C;
+extern s32 D_psp_08B42060;
+extern s32 D_psp_08B42064;
+extern s32 D_psp_08B42068;
+extern u8 D_psp_08B42080[0x20][0x8000];
+extern s32 D_psp_08C42080[0x20];
+extern u8* D_psp_08C42100[0x20];
+extern s32 D_psp_08C42180;
+extern void (*D_psp_08C42184)();
+extern s32 D_psp_08C42188;
+extern s32 D_psp_08C629C0;
+extern s32 D_psp_08C629C4;
+extern s32 D_psp_08C629C8;
+extern s32 D_psp_08C629CC;
+extern s32 D_psp_08C62A30; // screen_mode
+extern s32 D_psp_08C62A34; // screen_center_x
+extern s32 D_psp_08C62A38; // screen_center_y
+extern s32 D_psp_08C62A40;
+extern s32 D_psp_08C62A44;
+extern s32 D_psp_08C62A58;
+extern s32 D_psp_08C62A5C;
+extern s32 D_psp_08C62A60;
+extern s32 D_psp_08C62A64;
+extern u8 D_psp_08C62A78[0x20];
+extern s8 D_psp_08C62A98;
+extern s32 D_psp_08C62A9C;
+extern s32 D_psp_08C62AA0;
+extern s32 D_psp_08C62AA8;
+extern s32 D_psp_08C62AAC;
+extern s32 D_psp_08C62AB0;
+extern u8 g_BmpCastleMap[0x8000];
+
+void func_psp_08919D98(Unk08919D98* arg0);
+void func_psp_0891A6A8(s32 screen_mode);
+extern void func_psp_0891B538(s32 arg0);
+extern void func_psp_0891B570(int arg0, int arg1);
+void func_psp_08934D20(Unk08919D98* arg0);
+s32 func_psp_0893277C();
+void sceGuDebugPrint(int x, int y, unsigned int color, const char* msg);
+void func_psp_089117F4(s32, s32, s32, s32, s32, s32, u8*, s32, s32, s32, u8*);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_089190A0);
 
@@ -54,12 +158,8 @@ void _fini(void) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919A0C);
 
-extern SceCtrlData D_psp_08B41F40;
-extern SceCtrlData D_psp_08B41F50;
-extern u16 D_psp_08B41F60;
-
 s32 func_psp_08933F7C(u8, u8);
-void func_psp_08919A58(void) {
+static void func_psp_08919A58(void) {
     u32 buttons = 0;
     sceCtrlPeekBufferPositive(&D_psp_08B41F40, 1);
     if (func_psp_08932790()) {
@@ -92,103 +192,534 @@ u32 PadRead_PSP(void) { return func_psp_08919BA8(); }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919C00);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919C4C);
+static void func_psp_08919C4C(void) {
+    if (D_psp_08B41F64) {
+        func_psp_08909678(D_psp_08B41F64);
+        D_psp_08B41F64 = 0;
+    }
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919C8C);
+s32 func_psp_08919C8C(s32 arg0) {
+    s32 sp10 = arg0;
+    if (func_psp_08919CE4() < sp10) {
+        return 0;
+    }
+    return D_psp_08B41F64 + arg0;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919CE4);
+static s32 func_psp_08919CE4() { return D_psp_08B41F68; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919CF4);
+static void* func_psp_08919CF4(Unk08919CF4* arg0) {
+    arg0->unk10 = &D_psp_0893CED0;
+    arg0->unk0 = 0;
+    arg0->unk4 = 0;
+    arg0->unk8 = 0;
+    arg0->unkC = -1;
+    return arg0;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919D40);
+Unk08919D98* func_psp_08919D40(Unk08919D98* arg0, s16 arg1) {
+    if (arg0) {
+        func_psp_08919D98(arg0);
+        if (arg1 > 0) {
+            func_psp_08934D20(arg0);
+        }
+    }
+    return arg0;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919D98);
+static void func_psp_08919D98(Unk08919D98* arg0) {
+    if (arg0->unk0) {
+        sceKernelVolatileMemUnlock(0);
+        sceKernelDelayThreadCB(1);
+        arg0->unk0 = 0;
+        arg0->unk4 = 0;
+        arg0->unk8 = 0;
+    }
+}
+static void func_psp_08919DF4(int arg0) { func_psp_08932978(&D_psp_08B41F9C); }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919DF4);
+static void func_psp_08919E1C(int arg0) { func_psp_08932994(&D_psp_08B41F9C); }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919E1C);
+static void func_psp_08919E44() { func_psp_08932994(&D_psp_08B41F9C); }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919E44);
+static s32 func_psp_08919E6C(s32 arg0, u8* src) {
+    s32 temp_v0;
+    s32 var_s0;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919E6C);
+    if (arg0 < 0 || arg0 > 0) {
+        return -1;
+    }
+    var_s0 = func_psp_08932768();
+    if (var_s0 < 0) {
+        var_s0 = 0;
+    }
+    temp_v0 = func_psp_0890FB70(D_psp_0893CF74[var_s0], src, 0, 0x20040);
+    if (temp_v0 > 0) {
+        func_psp_08932830(&D_psp_08B41F9C, src);
+    }
+    return temp_v0;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919F28);
+static void func_psp_08919F28(void) {
+    D_psp_08B41FB4 = 0;
+    D_psp_08B41FB8 = 0;
+    D_psp_08B41FBC = 0;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919F48);
+static void func_psp_08919F48(void) {
+    D_psp_08B41FB4 = sceKernelGetSystemTimeLow();
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919F70);
+static s32 func_psp_08919F70(void) {
+    D_psp_08B41FB8 = sceKernelGetSystemTimeLow();
+    D_psp_08B41FBC = D_psp_08B41FB8 - D_psp_08B41FB4;
+    return D_psp_08B41FBC;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", exit_func);
+static s32 exit_func(int arg1, int arg2, void* common) {
+    func_psp_08933BA0();
+    func_psp_0892A3D4();
+    func_psp_0892E9E4();
+    sceKernelExitGame();
+    return 0;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919FF8);
+static s32 func_psp_08919FF8(void) {
+    D_psp_08B41FD0 = sceKernelCreateCallback(D_psp_08946410, exit_func, 0);
+    if (D_psp_08B41FD0 <= 0) {
+        return 0;
+    }
+    sceKernelRegisterExitCallback(D_psp_08B41FD0);
+    return 1;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A064);
+static s32 func_psp_0891A064(int module) {
+    volatile s32 status;
+    do {
+        status = sceUtilityLoadModule(module);
+        if (status < 0) {
+            sceKernelDelayThreadCB(100000);
+        }
+    } while (status < 0);
+    return 0;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A0BC);
+static void func_psp_0891A0BC(void) {
+    func_psp_0891A064(PSP_MODULE_AV_SASCORE);
+    func_psp_0891A064(PSP_MODULE_AV_AVCODEC);
+    func_psp_0891A064(PSP_MODULE_AV_MPEGBASE);
+    func_psp_0891A064(PSP_MODULE_AV_ATRAC3PLUS);
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A104);
+static void func_psp_0891A104(void) {
+    sceUtilityUnloadModule(PSP_MODULE_AV_ATRAC3PLUS);
+    sceUtilityUnloadModule(PSP_MODULE_AV_MPEGBASE);
+    sceUtilityUnloadModule(PSP_MODULE_AV_AVCODEC);
+    sceUtilityUnloadModule(PSP_MODULE_AV_SASCORE);
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A14C);
+static void func_psp_0891A14C(void) {
+    D_psp_08B42064 = func_psp_0893277C();
+    if (D_psp_08B42064 == 0) {
+        D_psp_08B4205C = D_psp_08946424;
+        D_psp_08B42060 = D_psp_08946430;
+        return;
+    }
+    D_psp_08B4205C = D_psp_0894643C;
+    D_psp_08B42060 = D_psp_08946448;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", main);
+void GameEntrypoint(void);
+void func_psp_0891ACBC(void);
+int main(int argc, char* argv[]) {
+    int language;
+
+    printf(D_psp_0894644C);
+    func_psp_08919FF8();
+    D_psp_08B42044 = 0;
+    sceGuInit();
+    sceGuDisplay(GU_FALSE);
+    memset(sceGeEdramGetAddr(), 0, 0x22100);
+    sceUtilityGetSystemParamInt(PSP_SYSTEMPARAM_ID_INT_LANGUAGE, &language);
+    switch (language) {
+    default:
+    case PSP_SYSTEMPARAM_LANGUAGE_ENGLISH:
+        g_UserLanguage = LANG_EN;
+        break;
+    case PSP_SYSTEMPARAM_LANGUAGE_FRENCH:
+        g_UserLanguage = LANG_FR;
+        break;
+    case PSP_SYSTEMPARAM_LANGUAGE_SPANISH:
+        g_UserLanguage = LANG_SP;
+        break;
+    case PSP_SYSTEMPARAM_LANGUAGE_GERMAN:
+        g_UserLanguage = LANG_GE;
+        break;
+    case PSP_SYSTEMPARAM_LANGUAGE_ITALIAN:
+        g_UserLanguage = LANG_IT;
+        break;
+    }
+    switch (g_UserLanguage) {
+    default:
+    case LANG_EN:
+        D_psp_08B42048 = LANG_EN;
+        break;
+    case LANG_FR:
+        D_psp_08B42048 = LANG_FR;
+        break;
+    case LANG_SP:
+        D_psp_08B42048 = LANG_SP;
+        break;
+    case LANG_GE:
+        D_psp_08B42048 = LANG_GE;
+        break;
+    case LANG_IT:
+        D_psp_08B42048 = LANG_IT;
+        break;
+    }
+    sceUtilityGetSystemParamInt(
+        PSP_SYSTEMPARAM_ID_INT_UNKNOWN, &D_psp_08B4204C);
+    if (D_psp_08B4204C == 0) {
+        D_psp_08B42050 = PSP_CTRL_CIRCLE;
+        D_psp_08B42054 = PSP_CTRL_CROSS;
+    } else if (D_psp_08B4204C == 1) {
+        D_psp_08B42050 = PSP_CTRL_CROSS;
+        D_psp_08B42054 = PSP_CTRL_CIRCLE;
+    }
+    func_psp_0891A0BC();
+    func_psp_089127E8();
+    D_psp_08B42000 = sceKernelGetThreadId();
+    func_psp_0891269C();
+    func_psp_0891249C();
+    D_psp_08B41FE0 = sceKernelCreateEventFlag(D_psp_08946458, 0x200, 0, 0);
+    sceKernelChangeCurrentThreadAttr(0, PSP_THREAD_ATTR_VFPU);
+    func_psp_0891B400();
+    func_psp_08937560();
+    sceCtrlSetSamplingCycle(0);
+    sceGuSetCallback2(GU_CALLBACK_FINISH, &func_psp_0891B538);
+    func_psp_08904408(0, &func_psp_0891B570, 0);
+    func_psp_08919C00(0x480000);
+    func_psp_0891273C();
+    func_psp_08919A0C();
+    func_psp_0891ACBC();
+    func_psp_08930324();
+    func_psp_0891A6A8(SCREEN_MODE_ZERO);
+    printf(D_psp_08946468);
+    sceGuDisplay(GU_TRUE);
+    func_psp_08910044();
+    sceGuSync(0, 0);
+    printf(D_psp_08946478);
+    func_psp_0891979C(4);
+    printf(D_psp_08946494);
+    func_psp_0891A14C();
+    func_psp_0891A6A8(
+        func_psp_08932754() == 0 ? SCREEN_MODE_ONE : SCREEN_MODE_ZERO);
+    func_psp_08933A10();
+    func_psp_0892E9B0();
+    func_psp_0892A2D8();
+    GameEntrypoint();
+    func_psp_0892A3D4();
+    func_psp_0892E9E4();
+    func_psp_08933BA0();
+    sceGuTerm();
+    func_psp_08919C4C();
+    func_psp_0891A104();
+    func_psp_089375A0();
+    func_psp_0892FAA8(0, &D_psp_089464B0);
+    func_psp_0892FA84(g_UserLanguage);
+    func_psp_0892FCA8(1);
+    func_psp_0892FC80();
+    return 0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A608);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A650);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A6A8);
+static void func_psp_0891A6A8(s32 screen_mode) {
+    D_psp_08C62A30 = screen_mode;
+    switch (D_psp_08C62A30) {
+    case SCREEN_MODE_ZERO:
+        D_psp_089464D8 = 362;
+        D_psp_089464DC = 272;
+        break;
+    case SCREEN_MODE_ONE:
+        D_psp_089464D8 = 320;
+        D_psp_089464DC = 240;
+        break;
+    }
+    D_psp_08C62A34 = (480 - D_psp_089464D8) / 2;
+    D_psp_08C62A38 = (272 - D_psp_089464DC) / 2;
+    D_psp_089464E8 = 2;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A790);
+void func_psp_0891A790(void) {
+    s32 i;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A800);
+    for (i = 0; i < LEN(D_psp_08C42080); i++) {
+        D_psp_08C42080[i] = -1;
+        D_psp_08C42100[i] = D_psp_08B42080[i];
+    }
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A868);
+void func_psp_0891A800(void) {
+    s32 i;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891A99C);
+    for (i = 0; i < LEN(D_psp_08C42080); i++) {
+        if (D_psp_08C42080[i] >= 0) {
+            D_psp_08C42080[i] = 1;
+        }
+    }
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891AA00);
+static void func_psp_0891A868(s32 arg0, s32 arg1) {
+    s32 i;
+    u8* addr;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891AAC8);
+    arg0 &= 0x1F;
+    if (arg1) {
+        D_psp_08C42080[arg0] = 1;
+        D_psp_08C42100[arg0] = NULL;
+    } else {
+        D_psp_08C42080[arg0] = -1;
+        D_psp_08C42100[arg0] = D_psp_08B42080[arg0];
+    }
+    addr = (u8*)((long)sceGeEdramGetAddr() + 0x12E200);
+    for (i = 0; i < LEN(D_psp_08C42080); i++) {
+        if (D_psp_08C42080[i] >= 0) {
+            D_psp_08C42100[i] = addr;
+            addr += 0x7FFF + 1;
+        }
+    }
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891AAF8);
+static void func_psp_0891A99C(s32 arg0) {
+    arg0 &= 0x1F;
+    if (D_psp_08C42080[arg0] >= 0) {
+        D_psp_08C42080[arg0 & 0x1F]++;
+    }
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891ABE4);
+static u8* func_psp_0891AA00(void) {
+    s32 i;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891AC24);
+    D_psp_08C62A98 = 0;
+    for (i = 0; i < LEN(D_psp_08C42080); i++) {
+        if (D_psp_08C42080[i] < 0) {
+            D_psp_08C62A78[i] = 0x58;
+        } else if (D_psp_08C42080[i] == 0) {
+            D_psp_08C62A78[i] = 0x2D;
+        } else {
+            D_psp_08C62A78[i] = 0x4F;
+        }
+    }
+    return D_psp_08C62A78;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891AC60);
+static u8* func_psp_0891AAC8(s32 arg0) { return D_psp_08C42100[arg0 & 0x1F]; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891ACBC);
+static void func_psp_0891AAF8() {
+    s32 i;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891AE04);
+    if (D_psp_08C62A44) {
+        sceGuDebugPrint(0, 0x100, 0xFFFFFFFF, (const char*)func_psp_0891AA00());
+    }
+    for (i = 0; i < LEN(D_psp_08C42080); i++) {
+        if (D_psp_08C42080[i] > 0) {
+            func_psp_089117F4(1, 0, 0, 0x40, 0x100, 0x40, D_psp_08B42080[i], 0,
+                              0, 0x40, func_psp_0891AAC8(i));
+            D_psp_08C42080[i] = 0;
+        }
+    }
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891AE68);
+static void func_psp_0891ABE4(void) { D_psp_08C62A9C = D_psp_08C62A9C ? 0 : 1; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891AEC8);
+static u8* func_psp_0891AC24(void) {
+    return (u8*)((long)sceGeEdramGetAddr() + 0xEC000 + D_psp_08C62A9C * 0x200);
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891AF48);
+static u8* func_psp_0891AC60(void) {
+    return (u8*)((long)sceGeEdramGetAddr() + 0xEC000 +
+                 (D_psp_08C62A9C ? 0 : 1) * 0x200);
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B0BC);
+static void func_psp_0891ACBC(void) {
+    func_psp_0891B6FC();
+    D_psp_08C629C0 = 0;
+    D_psp_08C629C4 = 0;
+    D_psp_08C629C8 = 0;
+    D_psp_08C629CC = 0;
+    func_psp_0891A608();
+    D_psp_08C62A40 = 0;
+    D_psp_089464D0 = -1;
+    D_psp_089464D4 = -1;
+    D_psp_08C42180 = 0;
+    D_psp_08C42184 = NULL;
+    D_psp_08C42188 = 0;
+    func_psp_0891A790();
+    func_psp_0891A800();
+    func_psp_0891A6A8(0);
+    func_psp_0891A868(24, 1);
+    func_psp_0891A868(8, 1);
+    func_psp_0891A868(9, 1);
+    func_psp_0891A868(10, 1);
+    func_psp_0891A868(11, 1);
+    func_psp_0891A868(12, 1);
+    func_psp_0891A868(13, 1);
+    func_psp_0891A868(14, 1);
+    func_psp_0891A868(15, 1);
+    func_psp_08911C3C(0, 0, 0);
+    func_psp_0891A650();
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B0DC);
+void func_psp_0891AE04(void) {
+    func_psp_0891A868(1, 1);
+    func_psp_0891A868(2, 1);
+    func_psp_0891A868(3, 1);
+    func_psp_0891A868(4, 1);
+    D_psp_08C62AA0 = 1;
+}
+
+void func_psp_0891AE68(void) {
+    func_psp_0891A868(1, 0);
+    func_psp_0891A868(2, 0);
+    func_psp_0891A868(3, 0);
+    func_psp_0891A868(4, 0);
+    D_psp_08C62AA0 = 0;
+}
+
+void func_psp_0891AEC8(void) {
+    D_psp_08B41FC0 = D_psp_08B41FC0 ? 0 : 1;
+    sceGuSwapBuffers();
+    if (D_psp_08C62A58) {
+        D_psp_08C62A64 = func_psp_08919F70();
+        func_psp_08919F28();
+        func_psp_08919F48();
+    }
+}
+
+void func_psp_0891AF48(s32 arg0) {
+    s32 base_addr;
+
+    switch (arg0) {
+    case 1:
+        D_psp_08C62A40 = 1;
+        func_psp_08910A20((u8*)sceGeEdramGetAddr() + 0xCC000, 0x100);
+        func_psp_08910944(0, 0);
+        break;
+    case 3:
+        D_psp_08C62A40 = 3;
+        func_psp_08910A20((u8*)sceGeEdramGetAddr() + 0x12C200, 0x40);
+        func_psp_08910944(0, 0);
+        break;
+    case 2:
+        D_psp_08C62A40 = 2;
+        func_psp_08910A20(func_psp_0891AC24(), 0x200);
+        func_psp_08910944(0, 0);
+        break;
+    default:
+    case 0:
+        D_psp_08C62A40 = 0;
+        if (D_psp_08B41FC0 != 0) {
+            base_addr = 0x44000;
+        } else {
+            base_addr = 0;
+        }
+        func_psp_08910A20((u8*)sceGeEdramGetAddr() + base_addr, 0x200);
+        func_psp_08910944(1, 1);
+        break;
+    }
+}
+
+void func_psp_0891B0BC(s32 arg0) { D_psp_089464F0 = arg0; }
+
+void func_psp_0891B0DC(s32 arg0, s32 arg1) {
+    D_psp_08C62AA8 = 1;
+    D_psp_08C62AAC = arg0;
+    D_psp_08C62AB0 = arg1;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B118);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B1F8);
+s32 func_psp_0891B1F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    if (D_psp_08B42068 == 1) {
+        func_psp_0891B118(arg0, arg1, arg2 - 1, arg1, arg4);
+        func_psp_0891B118(arg2 - 1, arg1, arg2 - 1, arg3 - 1, arg4);
+        func_psp_0891B118(arg2 - 1, arg3 - 1, arg0, arg3 - 1, arg4);
+        func_psp_0891B118(arg0, arg3 - 1, arg0, arg1, arg4);
+    }
+    return 0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B2CC);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B400);
+s32 func_psp_0891B400(void) {
+    if (~D_psp_089464D4 > 0) {
+    }
+    D_psp_08C42180 = 0;
+    D_psp_089464D4 = sceDisplayGetVcount();
+    return D_psp_089464D4;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", DrawSync);
+s32 func_psp_08919F70(); /* extern */
+extern const char D_psp_089464F4[];
+extern const char D_psp_089464F8[];
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B528);
+s32 DrawSync(s32 arg0) {
+    if (D_psp_08C62A44) {
+        if (sceGuSync(0, 1) == 1) {
+            sceGuDebugPrint(472, 0, 0xFFFFFFFF, D_psp_089464F4);
+        } else {
+            sceGuDebugPrint(472, 0, 0xFFFFFFFF, D_psp_089464F8);
+        }
+    }
+    if (arg0 == 0) {
+        if (D_psp_08C62A58) {
+            D_psp_08C62A5C = func_psp_08919F70();
+        }
+        sceGuSync(0, 0);
+        return 0;
+    }
+    return sceGuSync(0, 1);
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B538);
+s32 func_psp_0891B528() { return D_psp_08C42180; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B570);
+void func_psp_0891B538(s32 arg0) {
+    if (D_psp_08C62A58 != 0) {
+        D_psp_08C62A60 = func_psp_08919F70();
+    }
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", VSync);
+void func_psp_0891B570(int arg0, int arg1) {
+    D_psp_08C42180++;
+    if (D_psp_08C42184) {
+        D_psp_08C42184();
+    }
+}
+
+s32 VSync(s32 arg0) {
+    s32 vCount;
+    if (arg0 == 0) {
+        sceDisplayWaitVblankStartCB();
+        D_psp_089464D0 = sceDisplayGetVcount();
+    } else if (arg0 == 1) {
+        vCount = sceDisplayGetVcount();
+        return D_psp_089464D0 - vCount;
+    } else if (arg0 > 1) {
+        while (arg0) {
+            sceDisplayWaitVblankStartCB();
+            D_psp_089464D0 = sceDisplayGetVcount();
+            arg0--;
+        }
+    } else {
+        vCount = sceDisplayGetVcount();
+        return vCount - D_psp_089464D4;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", ResetGraph);
 
@@ -410,7 +941,14 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0892667C);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08926808);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", main_);
+static void GameEntrypoint(void) {
+    func_psp_08926348();
+    func_psp_0892A1EC(0);
+    while (func_psp_0890FB70(&D_psp_089466A0, g_BmpCastleMap, 0, 0x8000) == 0) {
+        sceKernelDelayThreadCB(1000000);
+    }
+    MainGame();
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08926A08);
 
@@ -466,9 +1004,9 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", SetGeomScreen);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", SetGeomOffset);
 
-void SetFarColor(void) {}
+void SetFarColor() {}
 
-void SetFogNear(void) {}
+void SetFogNear() {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_089280CC);
 

@@ -18,8 +18,6 @@
 #ifndef _PSPTYPES_H_
 #define _PSPTYPES_H_ 1
 
-#include <stdint.h>
-
 #ifdef __cplusplus
 extern "C" {
 #endif
