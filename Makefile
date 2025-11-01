@@ -85,6 +85,7 @@ M2C_APP         := $(TOOLS_DIR)/m2c/m2c.py
 PERMUTER_APP	:= $(TOOLS_DIR)/decomp-permuter
 MASPSX_APP      := $(TOOLS_DIR)/maspsx/maspsx.py
 MWCCGAP_APP     := $(TOOLS_DIR)/mwccgap/mwccgap.py
+PSPAS           := $(TOOLS_DIR)/pspas/target/release/pspas
 DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
 SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
@@ -152,11 +153,11 @@ build_us: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
 build_hd: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
 	VERSION=hd .venv/bin/python3 tools/builds/gen.py
 	ninja
-build_pspeu: $(SOTNSTR_APP) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
+build_pspeu: $(SOTNSTR_APP) $(PSPAS) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
 	VERSION=pspeu .venv/bin/python3 tools/builds/gen.py
 	ninja
 .PHONY: build_all
-build_all: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNSTR_APP) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
+build_all: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNSTR_APP) $(PSPAS) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
 	$(PYTHON) tools/builds/gen.py
 	ninja
 
@@ -413,6 +414,8 @@ bin/%: bin/%.tar.gz
 	touch $@
 bin/%.tar.gz: bin/%.tar.gz.sha256
 	wget -O $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
+$(PSPAS): tools/pspas/Cargo.toml tools/pspas/src/main.rs
+	cargo build --release --manifest-path $<
 $(ASMDIFFER_APP):
 	git submodule init $(ASMDIFFER_DIR)
 	git submodule update $(ASMDIFFER_DIR)

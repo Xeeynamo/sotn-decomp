@@ -1,0 +1,13 @@
+[package]
+name = "pspas"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+
+[profile.release]
+opt-level = "z"        # Optimize for size ("s" = small, "z" = smaller)
+lto = "fat"            # Full link-time optimization
+codegen-units = 1      # Compile whole crate as one unit for best optimization
+strip = true           # Remove debug symbols
+panic = "abort"        # Avoid unwinding machinery
