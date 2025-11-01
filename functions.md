@@ -3991,6 +3991,7 @@
 | dra   | func_psp_090E62B8                        |      934 |         73 |        |       |     |
 | maria | func_pspeu_092BEB40                      |      944 |         70 | Yes    |       |     |
 |       | UpdateBatBlueTrailEntities               |      963 |         44 |        |       |     |
+| main  | sce_stub                                 |      964 |        191 |        |       |     |
 | lib   | func_psp_09239650                        |      965 |        124 | Yes    |       |     |
 | cat   | EntityPrizeDrop                          |      972 |        120 | Yes    |       |     |
 | chi   | EntityPrizeDrop                          |      972 |        120 | Yes    |       |     |
