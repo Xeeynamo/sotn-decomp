@@ -223,7 +223,7 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
             break;
         }
 
-        g_Dop.unk40 = 0x8166;
+        g_Dop.unk40 = PAL_FLAG(PAL_CC_RED_EFFECT_A);
         g_Dop.timers[ALU_T_HITEFFECT] = 6;
         g_api.PlaySfx(D_us_8018133C[sfxIndex]);
 
@@ -231,7 +231,7 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
             g_api.PlaySfx(SFX_FM_EXPLODE_SWISHES);
             OVL_EXPORT(CreateEntFactoryFromEntity)
             (g_CurrentEntity, FACTORY(0x2C, 0x45), 0);
-            g_Dop.unk40 = 0x8160;
+            g_Dop.unk40 = PAL_FLAG(PAL_CC_FIRE_EFFECT);
             OVL_EXPORT(CreateEntFactoryFromEntity)
             (g_CurrentEntity, FACTORY(17, 1), 0);
             OVL_EXPORT(CreateEntFactoryFromEntity)
@@ -239,12 +239,12 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
             g_Dop.timers[ALU_T_HITEFFECT] = 0x10;
         } else if (damage->effects & EFFECT_UNK_0100) {
             g_Dop.timers[ALU_T_CURSE] = 0x400;
-            g_Dop.unk40 = 0x8165;
+            g_Dop.unk40 = PAL_FLAG(PAL_CC_CURSE_EFFECT);
             OVL_EXPORT(CreateEntFactoryFromEntity)
             (g_CurrentEntity, FACTORY(0x2C, 23), 0);
         } else if (damage->effects & EFFECT_SOLID_FROM_BELOW) {
             g_Dop.timers[ALU_T_POISON] = 0x400;
-            g_Dop.unk40 = 0x8164;
+            g_Dop.unk40 = PAL_FLAG(PAL_CC_DARK_EFFECT);
             OVL_EXPORT(CreateEntFactoryFromEntity)
             (g_CurrentEntity, FACTORY(0x2C, 22), 0);
         } else if (damage->effects & EFFECT_UNK_4000) {
@@ -258,7 +258,7 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
             OVL_EXPORT(CreateEntFactoryFromEntity)
             (g_CurrentEntity, FACTORY(0x2E, 0), 0);
             g_Dop.timers[ALU_T_HITEFFECT] = 0xC;
-            g_Dop.unk40 = 0x8169;
+            g_Dop.unk40 = PAL_FLAG(PAL_CC_BLUE_EFFECT_A);
             DOPPLEGANGER.ext.player.anim = 0x2E;
         } else if (damage->effects & EFFECT_UNK_1000) {
             OVL_EXPORT(CreateEntFactoryFromEntity)
@@ -266,14 +266,14 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
             OVL_EXPORT(CreateEntFactoryFromEntity)
             (g_CurrentEntity, FACTORY(0x2C, 0x63), 0);
             g_Dop.timers[ALU_T_HITEFFECT] = 8;
-            g_Dop.unk40 = 0x8164;
+            g_Dop.unk40 = PAL_FLAG(PAL_CC_DARK_EFFECT);
         } else if (damage->effects & EFFECT_UNK_0800) {
             OVL_EXPORT(CreateEntFactoryFromEntity)
             (g_CurrentEntity, FACTORY(0x71, 0), 0);
             OVL_EXPORT(CreateEntFactoryFromEntity)
             (g_CurrentEntity, FACTORY(0x2C, 0x62), 0);
             g_Dop.timers[ALU_T_HITEFFECT] = 16;
-            g_Dop.unk40 = 0x8164;
+            g_Dop.unk40 = PAL_FLAG(PAL_CC_DARK_EFFECT);
         } else if (!(damage->effects &
                      (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
                       EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0200 |
