@@ -28,6 +28,14 @@ typedef struct {
     s32 unk8;
 } Unk08919D98;
 
+typedef struct {
+    s32 unk0;
+    s32 unk4;
+} Unk08C4218C;
+
+typedef struct {
+    short x, y, w, h;
+} RECT;
 extern s32 D_psp_0893CED0;
 extern s32 D_psp_0893CF74[];
 extern char D_psp_08946410[];
@@ -77,6 +85,8 @@ extern u8* D_psp_08C42100[0x20];
 extern s32 D_psp_08C42180;
 extern void (*D_psp_08C42184)();
 extern s32 D_psp_08C42188;
+extern Unk08C4218C D_psp_08C4218C[];
+extern u8 D_psp_08C429C0[][0x200];
 extern s32 D_psp_08C629C0;
 extern s32 D_psp_08C629C4;
 extern s32 D_psp_08C629C8;
@@ -97,12 +107,14 @@ extern s32 D_psp_08C62AA0;
 extern s32 D_psp_08C62AA8;
 extern s32 D_psp_08C62AAC;
 extern s32 D_psp_08C62AB0;
+extern u16 D_psp_08C62ABC[];
 extern u8 g_BmpCastleMap[0x8000];
 
 void func_psp_08919D98(Unk08919D98* arg0);
 void func_psp_0891A6A8(s32 screen_mode);
 extern void func_psp_0891B538(s32 arg0);
 extern void func_psp_0891B570(int arg0, int arg1);
+static void func_psp_0891B6FC(void);
 void func_psp_08934D20(Unk08919D98* arg0);
 s32 func_psp_0893277C();
 void sceGuDebugPrint(int x, int y, unsigned int color, const char* msg);
@@ -723,33 +735,305 @@ s32 VSync(s32 arg0) {
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", ResetGraph);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B6FC);
+static void func_psp_0891B6FC() { D_psp_08C629C0 = 0; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B70C);
+static s32 func_psp_0891B70C(s32 arg0, s32 arg1) {
+    s32 i;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B7A0);
+    for (i = 0; i < D_psp_08C629C0; i++) {
+        if (arg0 == D_psp_08C4218C[i].unk0 && arg1 == D_psp_08C4218C[i].unk4) {
+            return i;
+        }
+    }
+    return -1;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B878);
+static s32 func_psp_0891B7A0(s32 x, s32 y, s32 w, void* ptr) {
+    s32 var_s1;
+    Unk08C4218C* var_s0;
+
+    if ((var_s1 = func_psp_0891B70C(x, y)) < 0) {
+        if (D_psp_08C629C0 < 0x100) {
+            var_s1 = D_psp_08C629C0;
+            D_psp_08C629C0 = var_s1 + 1;
+        } else {
+            return 0;
+            var_s0 = var_s0; // FAKE!
+        }
+    }
+    var_s0 = &D_psp_08C4218C[var_s1];
+    var_s0->unk0 = x;
+    var_s0->unk4 = y;
+    memcpy(D_psp_08C429C0[var_s1], ptr, w * 2);
+    return 1;
+}
+
+static u16 func_psp_0891B878(s32 arg0, s32 arg1) {
+    s32 temp_v0 = func_psp_0891B70C(arg0, arg1);
+    if (temp_v0 >= 0) {
+        return (u16)temp_v0 | 0x8000;
+    }
+    return (arg1 << 6) | ((arg0 >> 4) & 0x3F);
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B8F0);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891BB18);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891BCA0);
+static s32 func_psp_0891BCA0(RECT* rect, u_long* p, s32 width, s32 arg3) {
+    s32 sp3C;
+    s32 sp38;
+    s32 sp34;
+    u8* ptr;
+    s32 var_s7;
+    s32 y;
+    s32 size;
+    s32 x;
+    s32 var_s3;
+    s32 i;
+    u8* dst;
+    u8* src;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", LoadImage);
+    ptr = (u8*)p;
+    if (rect->h == 1) {
+        func_psp_0891BB18(rect, p, width);
+        return 0;
+    }
+    var_s7 = rect->x + rect->w;
+    sp38 = rect->y + rect->h;
+    if (arg3) {
+        sp34 = 0x100;
+    } else {
+        sp34 = 0x100;
+    }
+    sp3C = sp34;
+    y = rect->y;
+    while (y < sp38) {
+        size = sp3C - (y % sp3C);
+        if (y + size > sp38) {
+            size = sp38 - y;
+        }
+        x = rect->x;
+        while (x < var_s7) {
+            var_s3 = 0x40 - (x % 0x40);
+            if (var_s7 < x + var_s3) {
+                var_s3 = var_s7 - x;
+            }
+            var_s3 = var_s3 * 2;
+            func_psp_0891A99C(x / 0x40 + y / 0x100 * 0x10);
+            dst = &D_psp_08B42080[x / 0x40 + y / 256 * 0x10]
+                                 [(x % 0x40) * 2 + (y % 0x100) * 128];
+            src = &ptr[width * (y - rect->y) + (x - rect->x) * 2];
+            for (i = 0; i < size; i++) {
+                memcpy(dst, src, var_s3);
+                src = &src[width];
+                dst += 0x80;
+            }
+            x += var_s3 / 2;
+        }
+        y += size;
+        if (y >= 0x200) {
+            break;
+        }
+    }
+    return 0;
+}
+
+s32 LoadImage(RECT* rect, u_long* p) {
+    s32 var_a4;
+    u16* var_a3;
+    s32 w, h;
+    s32 i;
+
+    var_a4 = 0;
+    if (rect->h == 1 &&
+        (rect->w == 0x10 || rect->w == 0x100 || rect->w == 0x80)) {
+        h = rect->h;
+        w = rect->w;
+        for (i = 0; i < w * h; i++) {
+            if (((u16*)p)[i] == 0x8000) {
+                D_psp_08C62ABC[i] = 0x8001;
+            } else {
+                D_psp_08C62ABC[i] = ((u16*)p)[i];
+            }
+        }
+        var_a3 = D_psp_08C62ABC;
+        p = (u_long*)var_a3;
+    }
+    if (rect->h == 1 && rect->w == 0x100) {
+        func_psp_0891B7A0(rect->x, rect->y, rect->w, p);
+    }
+    return func_psp_0891BCA0(rect, p, rect->w * 2, var_a4);
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891C1C0);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891C204);
+static int func_psp_0891C204(RECT* rect, u_long* p, s32 width, s32 arg3) {
+    u8* ptr;
+    s32 sp38;
+    s32 sp34;
+    s32 sp30;
+    s32 var_fp;
+    s32 size;
+    s32 toRead;
+    s32 y;
+    s32 x;
+    s32 var_s3;
+    s32 i;
+    u8* src;
+    u8* dst;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", StoreImage);
+    ptr = (u8*)p;
+    if (arg3) {
+        sp34 = 0x100;
+    } else {
+        sp34 = 0x100;
+    }
+    sp38 = sp34;
+    y = rect->y;
+    while (y < rect->y + rect->h) {
+        x = rect->x;
+        while (x < rect->x + rect->w) {
+            if (rect->x + rect->w - x < 0x40) {
+                sp30 = rect->x + rect->w - x;
+            } else {
+                sp30 = 0x40;
+            }
+            var_s3 = sp30;
+            if (x % 0x40) {
+                if (var_s3 < 0x40 - (x % 0x40)) {
+                    var_fp = var_s3;
+                } else {
+                    var_fp = 0x40 - (x % 0x40);
+                }
+                var_s3 = var_fp;
+            }
+            var_s3 = var_s3 * 2;
+            if (rect->y + rect->h - y < sp38) {
+                size = rect->y + rect->h - y;
+            } else {
+                size = sp38;
+            }
+            toRead = size;
+            src = &D_psp_08B42080[x / 0x40 + y / 256 * 0x10]
+                                 [(x % 0x40) * 2 + (y % 0x100) * 128];
+            dst = &ptr[width * (y - rect->y) + (x - rect->x) * 2];
+            for (i = 0; i < toRead; i++) {
+                memcpy(dst, src, var_s3);
+                dst += width;
+                src += 0x80;
+            }
+            x += var_s3 / 2;
+        }
+        y += sp38;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891C668);
+s32 StoreImage(RECT* rect, u_long* p) {
+    if ((rect->y + rect->h <= 0x200) ^ 1) {
+    }
+    if (rect->w == 0x100 && rect->h == 1) {
+        func_psp_0891CD28(p, rect->x, rect->y);
+        return 0;
+    }
+    return func_psp_0891C204(rect, p, rect->w * 2, 0);
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", ClearImage);
+static int func_psp_0891C668(RECT* rect, u8 r, u8 g, u8 b, s32 arg4) {
+    s32 sp4C;
+    s32 sp48;
+    s32 sp44;
+    s32 sp40;
+    s32 size;
+    s32 y;
+    s32 toWrite;
+    s32 x;
+    s32 var_s5;
+    s32 i;
+    u8* data;
+    u16 color;
+    u16* var_s1;
+    u16* var_s0;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", MoveImage);
+    color = b >> 3 << 11 | g >> 2 << 5 | r >> 2;
+    if (color) {
+        color |= 0x8000;
+    }
+    if (arg4) {
+        sp48 = 0x100;
+    } else {
+        sp48 = 0x100;
+    }
+    sp4C = sp48;
+    y = rect->y;
+    while (y < rect->y + rect->h) {
+        x = rect->x;
+        while (x < rect->x + rect->w) {
+            if (rect->x + rect->w - x < 0x40) {
+                sp44 = (rect->x + rect->w) - x;
+            } else {
+                sp44 = 0x40;
+            }
+            var_s5 = sp44;
+            if (x % 0x40) {
+                if (var_s5 < 0x40 - (x % 0x40)) {
+                    sp40 = var_s5;
+                } else {
+                    sp40 = 0x40 - (x % 0x40);
+                }
+                var_s5 = sp40;
+            }
+            var_s5 = var_s5 * 2;
+            if (rect->y + rect->h - y < sp4C) {
+                size = rect->y + rect->h - y;
+            } else {
+                size = sp4C;
+            }
+            toWrite = size;
+            func_psp_0891A99C(x / 0x40 + y / 256 * 0x10);
+            data = &D_psp_08B42080[x / 0x40 + y / 256 * 0x10]
+                                  [(x % 0x40) * 2 + (y % 0x100) * 128];
+            for (i = 0; i < toWrite; i++) {
+                var_s0 = (u16*)data;
+                var_s1 = (u16*)(data + var_s5);
+                while (var_s0 != var_s1) {
+                    *var_s0 = color;
+                    var_s0++;
+                }
+                data += 0x80;
+            }
+            x += var_s5 / 2;
+        }
+        y += sp4C;
+    }
+    return 0;
+}
+
+void ClearImage(RECT* rect, u_char r, u_char g, u_char b) {
+    s32 var_s0 = 0;
+    func_psp_0891C668(rect, r, g, b, var_s0);
+}
+
+s32 MoveImage(RECT* rect, s32 x, s32 y) {
+    RECT load;
+    u_long* ptr;
+    s32 size;
+    s32 w, h;
+
+    size = rect->w * rect->h * 2;
+    ptr = (u_long*)func_psp_08909648(size);
+    if (ptr) {
+        StoreImage(rect, ptr);
+        load.x = x;
+        load.y = y;
+        load.w = rect->w;
+        load.h = rect->h;
+        LoadImage(&load, ptr);
+        func_psp_08909678(ptr);
+    }
+    return 0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891CB80);
 
