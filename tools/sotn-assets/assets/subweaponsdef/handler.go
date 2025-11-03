@@ -72,15 +72,15 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if len(e.Args) < 2 {
 		return fmt.Errorf("require blueprint enum name as second argument")
 	}
-	elementFields, err := fetchEnum("include", "game", "Elements")
+	elementFields, err := sotn.FetchEnum("include", "game", "Elements")
 	if err != nil || len(elementFields) == 0 {
 		return fmt.Errorf("fetch enum %s: %w", "Elements", err)
 	}
-	weaponFields, err := fetchEnum(e.SrcDir, e.OvlName, e.Args[0])
+	weaponFields, err := sotn.FetchEnum(e.SrcDir, e.OvlName, e.Args[0])
 	if err != nil || len(weaponFields) == 0 {
 		return fmt.Errorf("fetch enum %s: %w", e.Args[0], err)
 	}
-	blueprintFields, err := fetchEnum(e.SrcDir, e.OvlName, e.Args[1])
+	blueprintFields, err := sotn.FetchEnum(e.SrcDir, e.OvlName, e.Args[1])
 	if err != nil || len(blueprintFields) == 0 {
 		return fmt.Errorf("fetch enum %s: %w", e.Args[1], err)
 	}
@@ -115,7 +115,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	}
 	enumName := e.Args[0]
 	ovlName := filepath.Base(e.AssetDir)
-	fields, err := fetchEnum(e.SrcDir, ovlName, enumName)
+	fields, err := sotn.FetchEnum(e.SrcDir, ovlName, enumName)
 	if err != nil {
 		return fmt.Errorf("fetch enum %s: %w", enumName, err)
 	}
@@ -173,15 +173,6 @@ func assetPath(dir, name string) string {
 
 func sourcePath(dir, name string) string {
 	return filepath.Join(dir, fmt.Sprintf("gen/%s.h", name))
-}
-
-func fetchEnum(srcDir, ovlName, enumName string) (map[int]string, error) {
-	f, err := os.Open(fmt.Sprintf("%s/%s.h", srcDir, ovlName))
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-	return sotn.ParseCEnum(f, enumName, 0)
 }
 
 func parse(data []byte, elements map[int]string, blueprints map[int]string, weapons map[int]string) ([]subweaponModel, error) {

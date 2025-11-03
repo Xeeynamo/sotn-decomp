@@ -38,7 +38,8 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, header]
+      - [0x180, .data, gen/e_laydef]
       - [0x328, .data, e_init]
       - [0x4D8, data, background_block_init]
       - [0x510, .data, e_red_door_tiles]
@@ -58,7 +59,7 @@ segments:
       - [0x1210, data, richter]
       - [0x1284, data, us_39144]
       - [0x2F70, .data, e_life_up]
-      - [0x2FC4, data, gen/e_layout]
+      - [0x2FC4, .data, gen/e_layout]
       - [0x303C, data]
       - [0x1F9A0, data, tile_data]
       - [0x239B0, data]
@@ -69,6 +70,7 @@ segments:
       - [0x264BC, .rodata, e_stage_name]
       - [0x264F0, .rodata, richter]
       - [0x26C18, .rodata, us_39144]
+      - [0x26E20, .rodata, us_3E79C]
       - [0x27044, .rodata, prim_helpers]
       - [0x2704C, .rodata, e_life_up]
       - [0x27068, c, e_room_bg]
@@ -90,6 +92,7 @@ segments:
       - [0x34BD0, c, richter]
       - [0x39134, c, unused]
       - [0x39144, c, us_39144]
+      - [0x3E79C, c, us_3E79C]
       - [0x4D674, c, prim_helpers]
       - [0x4DEA4, c, e_life_up]
       - [0x4E758, bss] # unused
