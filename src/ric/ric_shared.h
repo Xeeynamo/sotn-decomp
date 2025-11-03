@@ -3,10 +3,8 @@
 // This contains enums and other declarations that are shared between Player and
 // Boss Richter.
 
-#ifndef RIC_COMMON_H
-#define RIC_COMMON_H
-
-#include <types.h>
+#ifndef RIC_SHARED_H
+#define RIC_SHARED_H
 
 enum RicTimers {
     PL_T_POISON,
@@ -148,4 +146,4 @@ enum RicSubweapons {
     NUM_WEAPONS,
 };
 
-#endif // RIC_COMMON_H
+#endif // RIC_SHARED_H

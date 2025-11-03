@@ -87,7 +87,7 @@ typedef enum RicSteps {
     /* 0xF0 */ PL_S_DEBUG = 0xF0,
 } OVL_EXPORT(RicSteps);
 
-#include "../../ric/common.h"
+#include "../../ric/ric_shared.h"
 
 #define RIC g_Entities[STAGE_ENTITY_START]
 
