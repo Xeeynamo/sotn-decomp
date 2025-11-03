@@ -580,9 +580,9 @@
 | main  | func_psp_089106B8                        |       20 |          1 |        |       |     |
 | main  | func_psp_089109E4                        |       20 |          1 |        |       |     |
 | main  | func_psp_08902220                        |       20 |          1 |        |       |     |
-| main  | func_psp_08902894                        |       20 |          1 |        |       |     |
 | main  | func_psp_089029E8                        |       20 |          1 |        |       |     |
 | main  | func_psp_08902C98                        |       20 |          1 |        |       |     |
+| main  | sceGuClutMode                            |       20 |          1 |        |       |     |
 | main  | sceVfpuVector4Neg                        |       20 |          1 |        |       |     |
 | dra   | func_psp_090E0C30                        |       20 |          2 |        |       |     |
 | dra   | func_800FD664                            |       20 |          2 |        |       |     |
@@ -594,7 +594,7 @@
 | main  | func_psp_0890235C                        |       20 |          2 |        |       |     |
 | main  | func_psp_089023E8                        |       20 |          2 |        |       |     |
 | main  | func_psp_08902588                        |       20 |          2 |        |       |     |
-| main  | func_psp_08902AAC                        |       20 |          2 |        |       |     |
+| main  | sceGuScissor                             |       20 |          2 |        |       |     |
 | main  | func_psp_08934EB0                        |       20 |          2 |        |       |     |
 | main  | sceGuBreak                               |       20 |          2 |        |       |     |
 | cat   | EntityDummy                              |       20 |          2 |        |       |     |
@@ -625,7 +625,7 @@
 | main  | CdDataCallback                           |       20 |          3 |        |       |     |
 | main  | func_psp_0892A998                        |       20 |          3 |        |       |     |
 | no4   | func_pspeu_0925CB30                      |       20 |          4 |        |       |     |
-| main  | exit_func                                |       20 |          5 |        |       |     |
+| main  | func_psp_08919FBC                        |       20 |          5 |        |       |     |
 | dra   | func_psp_09116B48                        |       21 |          1 |        |       |     |
 | dra   | IsMemcardBlockUsed                       |       21 |          1 |        |       |     |
 | main  | func_psp_089063F8                        |       21 |          1 |        |       |     |
@@ -694,8 +694,8 @@
 | main  | func_psp_08902804                        |       22 |          1 |        |       |     |
 | main  | sceGuColorMaterial                       |       22 |          1 |        |       |     |
 | dra   | func_psp_090E4C18                        |       22 |          2 |        |       |     |
-| main  | func_psp_089168E8                        |       22 |          2 |        |       |     |
 | main  | func_psp_0891C1C0                        |       22 |          2 |        |       |     |
+| main  | func_psp_089168E8                        |       22 |          2 |        |       |     |
 | main  | func_psp_089337A8                        |       22 |          2 |        |       |     |
 | main  | func_psp_089337EC                        |       22 |          2 |        |       |     |
 | dra   | func_psp_090E0C68                        |       22 |          3 |        |       |     |
@@ -762,7 +762,7 @@
 | main  | func_psp_08914B58                        |       24 |          1 |        |       |     |
 | main  | gte_stsxy3_gt3                           |       24 |          1 |        |       |     |
 | main  | func_psp_08933870                        |       24 |          1 |        |       |     |
-| main  | func_psp_089028D0                        |       24 |          1 |        |       |     |
+| main  | sceGuClutLoad                            |       24 |          1 |        |       |     |
 | dra   | func_psp_09103F90                        |       24 |          2 |        |       |     |
 | dra   | func_psp_090E0CA8                        |       24 |          2 |        |       |     |
 | dra   | func_psp_09117B78                        |       24 |          2 |        |       |     |
