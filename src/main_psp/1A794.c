@@ -780,7 +780,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B8F0);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891BB18);
 
-s32 func_psp_0891BCA0(RECT* rect, u_long* p, s32 width, s32 arg3) {
+static s32 func_psp_0891BCA0(RECT* rect, u_long* p, s32 width, s32 arg3) {
     s32 sp3C;
     s32 sp38;
     s32 sp34;
@@ -868,7 +868,67 @@ s32 LoadImage(RECT* rect, u_long* p) {
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891C1C0);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891C204);
+static int func_psp_0891C204(RECT* rect, u_long* p, s32 width, s32 arg3) {
+    u8* ptr;
+    s32 sp38;
+    s32 sp34;
+    s32 sp30;
+    s32 var_fp;
+    s32 size;
+    s32 toRead;
+    s32 y;
+    s32 x;
+    s32 var_s3;
+    s32 i;
+    u8* src;
+    u8* dst;
+
+    ptr = (u8*)p;
+    if (arg3) {
+        sp34 = 0x100;
+    } else {
+        sp34 = 0x100;
+    }
+    sp38 = sp34;
+    y = rect->y;
+    while (y < rect->y + rect->h) {
+        x = rect->x;
+        while (x < rect->x + rect->w) {
+            if (rect->x + rect->w - x < 0x40) {
+                sp30 = rect->x + rect->w - x;
+            } else {
+                sp30 = 0x40;
+            }
+            var_s3 = sp30;
+            if (x % 0x40) {
+                if (var_s3 < 0x40 - (x % 0x40)) {
+                    var_fp = var_s3;
+                } else {
+                    var_fp = 0x40 - (x % 0x40);
+                }
+                var_s3 = var_fp;
+            }
+            var_s3 = var_s3 * 2;
+            if (rect->y + rect->h - y < sp38) {
+                size = rect->y + rect->h - y;
+            } else {
+                size = sp38;
+            }
+            toRead = size;
+            src = &D_psp_08B42080[x / 0x40 + y / 256 * 0x10]
+                                 [(x % 0x40) * 2 + (y % 0x100) * 128];
+            dst = &ptr[width * (y - rect->y) + (x - rect->x) * 2];
+            for (i = 0; i < toRead; i++) {
+                memcpy(dst, src, var_s3);
+                dst += width;
+                src += 0x80;
+            }
+            x += var_s3 / 2;
+        }
+        y += sp38;
+    }
+    return 0;
+}
 
 s32 StoreImage(RECT* rect, u_long* p) {
     if ((rect->y + rect->h <= 0x200) ^ 1) {
