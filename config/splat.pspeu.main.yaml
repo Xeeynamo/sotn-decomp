@@ -103,18 +103,22 @@ segments:
       - [0x3084, asm, sceGuEnable] # libgu.c
       - [0x30DC, asm, sceGuDisable] # libgu.c
       - [0x3138, asm, sceGuSetStatus] # libgu.c
-      - [0x31E8, c, main_psp/31E8]
+      - [0x31E8, c, main_psp/31E8] # libgu.c
       - [0x4484, asm, sceGupSetStatus] # libgu.c
       - [0x4690, asm, sceGupSetMatrix] # libgu.c
-      - [0x4994, asm, func_psp_089032A0]
-      - [0x4B30, asm, func_psp_0890343C]
-      - [0x4E84, c, main_psp/4E84]
-      - [0x513C, asm, func_psp_08903A48]
-      - [0x5168, asm, func_psp_08903A74]
-      - [0x51FC, asm, func_psp_08903B08]
-      - [0x5300, asm, func_psp_08903C0C]
+      - [0x4994, asm, sceGupDrawSprite] # libgu.c
+      - [0x4B30, asm, sceGupClear] # libgu.c
+      - [0x4E84, asm, sceGupDepthRange] # libgu.c
+      - [0x4F2C, asm, sceGupDepthOffset] # libgu.c
+      - [0x4FD8, asm, sceGupPatchPrim] # libgu.c
+      - [0x5048, asm, sceGupModelColor] # libgu.c
+      - [0x50AC, asm, sceGupMaterial] # libgu.c
+      - [0x513C, asm, sceGupFrontFace] # libgu.c
+      - [0x5168, asm, sceGupLight] # libgu.c
+      - [0x51FC, asm, sceGupLightColor] # libgu.c
+      - [0x5300, asm, sceGupTexMode] # libgu.c
       - [0x5344, asm, func_psp_08903C50]
-      - [0x53C4, asm, func_psp_08903CD0]
+      - [0x53C4, asm, sceGupShadeModel] # libgu.c
       - [0x53F0, asm, _sceGuCallbackSignal] # libgu.c
       - [0x546C, asm, _sceGuCallbackFinish] # libgu.c
       - [0x549C, asm, _sceGuResetGlobalVariables] # libgu.c
