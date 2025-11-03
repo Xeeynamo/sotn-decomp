@@ -23,6 +23,10 @@ extern "C" {
 /* PI, float-sized */
 #define GU_PI			(3.141593f)
 
+/* display ON/OFF switch */
+#define GU_DISPLAY_OFF		(0)
+#define GU_DISPLAY_ON		(1)
+
 /* Boolean values for convenience */
 #define GU_FALSE		(0)
 #define GU_TRUE			(1)

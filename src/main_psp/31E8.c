@@ -89,9 +89,9 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", func_psp_08902848);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", func_psp_08902868);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", func_psp_08902894);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", sceGuClutMode);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", func_psp_089028D0);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", sceGuClutLoad);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", func_psp_0890291C);
 
@@ -105,7 +105,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", func_psp_08902A48);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", func_psp_08902A6C);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", func_psp_08902AAC);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", sceGuScissor);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31E8", func_psp_08902AE8);
 
