@@ -113,6 +113,7 @@ extern s32 D_psp_08C62AB0;
 extern u16 D_psp_08C62AB4;
 extern u8* D_psp_08C62AB8;
 extern u16 D_psp_08C62ABC[];
+extern u16 D_psp_08C62CBC[];
 extern u8 g_BmpCastleMap[0x8000];
 
 s32 func_psp_08919F70();
@@ -128,6 +129,7 @@ void func_psp_08934D20(Unk08919D98* arg0);
 s32 func_psp_0893277C();
 void sceGuDebugPrint(int x, int y, unsigned int color, const char* msg);
 void func_psp_089117F4(s32, s32, s32, s32, s32, s32, u8*, s32, s32, s32, u8*);
+static void func_psp_0891CD28(u_long* p, s32 x, s32 y);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_089190A0);
 
@@ -1082,17 +1084,81 @@ s32 MoveImage(RECT* rect, s32 x, s32 y) {
     return 0;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891CB80);
+static s32 func_psp_0891CB80(
+    s32 x, s32 y, s32 w, s32 h, s32 dstx, s32 dsty, s32 unused) {
+    RECT rect;
+    s32 var_s1;
+    s32 i;
+
+    for (i = 0; i < w; i += 0x100) {
+        rect.x = x + i;
+        rect.y = y;
+        if (i + 0x100 < w) {
+            var_s1 = 0x100;
+        } else {
+            var_s1 = w - i;
+        }
+        rect.w = var_s1;
+        rect.h = h;
+        MoveImage(&rect, dstx, dsty);
+    }
+    return 0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", LoadClut);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891CCBC);
+static void func_psp_0891CCBC(u_long* clut, s32 x, s32 y) {
+    RECT rect;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891CD28);
+    rect.x = x;
+    rect.y = y;
+    rect.w = 0x10;
+    rect.h = 1;
+    LoadImage(&rect, clut);
+    func_psp_0891B878(x, y);
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891CDE0);
+static void func_psp_0891CD28(u_long* p, s32 x, s32 y) {
+    RECT rect;
+    s32 index;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891CEB8);
+    if ((index = func_psp_0891B70C(x, y)) < 0) {
+        rect.x = x;
+        rect.y = y;
+        rect.w = 0x100;
+        rect.h = 1;
+        func_psp_0891C204(&rect, p, rect.w * 2, 0);
+        return;
+    }
+    memcpy(p, &D_psp_08C429C0[index], sizeof(*D_psp_08C429C0));
+}
+
+static void func_psp_0891CDE0(u16* clut, s32 x, s32 y) {
+    u16* var_s1;
+    s32 i;
+
+    for (i = 0; i < 0x100; i++) {
+        if (clut[i] == 0x8000) {
+            D_psp_08C62ABC[i] = 0x8001;
+        } else {
+            D_psp_08C62ABC[i] = clut[i];
+        }
+    }
+    var_s1 = D_psp_08C62ABC;
+    clut = var_s1;
+    func_psp_0891B7A0(x, y, 0x100, clut);
+}
+
+void func_psp_0891CEB8(s32 x, s32 y) {
+    RECT rect;
+
+    rect.x = x;
+    rect.y = y;
+    rect.w = 0x100;
+    rect.h = 1;
+    func_psp_0891C204(&rect, (u_long*)D_psp_08C62CBC, rect.w * 2, 0);
+    func_psp_0891CDE0(D_psp_08C62CBC, x, y);
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", LoadTPage);
 
