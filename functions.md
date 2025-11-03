@@ -84,6 +84,7 @@
 | dra   | MemcardInit                              |        9 |          1 |        |       |     |
 | main  | func_psp_08919CE4                        |        9 |          1 |        |       |     |
 | main  | func_psp_0891B528                        |        9 |          1 |        |       |     |
+| main  | func_psp_0891B6FC                        |        9 |          1 |        |       |     |
 | main  | func_psp_08910088                        |        9 |          1 |        |       |     |
 | main  | func_psp_089125F8                        |        9 |          1 |        |       |     |
 | main  | func_psp_0891273C                        |        9 |          1 |        |       |     |
@@ -103,7 +104,6 @@
 | main  | SsUtSetReverbDepth                       |        9 |          1 |        |       |     |
 | main  | createPlayModeFlag                       |        9 |          1 |        |       |     |
 | main  | func_psp_08919560                        |        9 |          1 |        |       |     |
-| main  | func_psp_0891B6FC                        |        9 |          1 |        |       |     |
 | main  | func_psp_08920488                        |        9 |          1 |        |       |     |
 | main  | func_psp_0892CB30                        |        9 |          1 |        |       |     |
 | main  | gte_ldrgb                                |        9 |          1 |        |       |     |
@@ -1282,8 +1282,8 @@
 | sel   | func_psp_09245610                        |       37 |          3 |        |       |     |
 | st0   | func_pspeu_09238F10                      |       37 |          3 |        |       |     |
 | dra   | func_psp_090ED958                        |       37 |          4 |        |       |     |
-| main  | func_psp_08919278                        |       37 |          4 |        |       |     |
 | main  | func_psp_0891B878                        |       37 |          4 |        |       |     |
+| main  | func_psp_08919278                        |       37 |          4 |        |       |     |
 | dra   | func_psp_091163A8                        |       37 |          5 |        |       |     |
 | dra   | func_psp_0913E658                        |       37 |          5 |        |       |     |
 | dra   | func_psp_09141570                        |       37 |          5 |        |       |     |
