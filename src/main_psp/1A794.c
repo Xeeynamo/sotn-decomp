@@ -1015,7 +1015,25 @@ void ClearImage(RECT* rect, u_char r, u_char g, u_char b) {
     func_psp_0891C668(rect, r, g, b, var_s0);
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", MoveImage);
+s32 MoveImage(RECT* rect, s32 x, s32 y) {
+    RECT load;
+    u_long* ptr;
+    s32 size;
+    s32 w, h;
+
+    size = rect->w * rect->h * 2;
+    ptr = (u_long*)func_psp_08909648(size);
+    if (ptr) {
+        StoreImage(rect, ptr);
+        load.x = x;
+        load.y = y;
+        load.w = rect->w;
+        load.h = rect->h;
+        LoadImage(&load, ptr);
+        func_psp_08909678(ptr);
+    }
+    return 0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891CB80);
 
