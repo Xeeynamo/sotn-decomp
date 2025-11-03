@@ -685,7 +685,7 @@ s32 func_psp_0891B400(void) {
 
 s32 DrawSync(s32 arg0) {
     if (D_psp_08C62A44) {
-        if (sceGuSync(0, 1) == 1) {
+        if (sceGuSync(GU_SYNC_FINISH, GU_SYNC_NOWAIT) == 1) {
             sceGuDebugPrint(472, 0, 0xFFFFFFFF, D_psp_089464F4);
         } else {
             sceGuDebugPrint(472, 0, 0xFFFFFFFF, D_psp_089464F8);
@@ -695,10 +695,10 @@ s32 DrawSync(s32 arg0) {
         if (D_psp_08C62A58) {
             D_psp_08C62A5C = func_psp_08919F70();
         }
-        sceGuSync(0, 0);
+        sceGuSync(GU_SYNC_FINISH, GU_SYNC_WAIT);
         return 0;
     }
-    return sceGuSync(0, 1);
+    return sceGuSync(GU_SYNC_FINISH, GU_SYNC_NOWAIT);
 }
 
 s32 func_psp_0891B528() { return D_psp_08C42180; }
@@ -711,7 +711,7 @@ void func_psp_0891B538(s32 arg0) {
 
 void func_psp_0891B570(int arg0, int arg1) {
     D_psp_08C42180++;
-    if (D_psp_08C42184) {
+    if (D_psp_08C42184 != NULL) {
         D_psp_08C42184();
     }
 }

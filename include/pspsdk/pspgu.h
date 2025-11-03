@@ -282,13 +282,6 @@ extern "C" {
 #define GU_SYNC_WAIT	(0)
 #define GU_SYNC_NOWAIT	(1)
 
-/* Sync behavior (what) [see pspge.h] */
-#define GU_SYNC_WHAT_DONE (0)
-#define GU_SYNC_WHAT_QUEUED (1)
-#define GU_SYNC_WHAT_DRAW (2)
-#define GU_SYNC_WHAT_STALL (3)
-#define GU_SYNC_WHAT_CANCEL (4)
-
 /* Signals */
 #define GU_CALLBACK_SIGNAL	(1)
 #define GU_CALLBACK_FINISH	(4)
@@ -588,11 +581,8 @@ void* sceGuSwapBuffers(void);
   * @endcode
   *
   * Available what are:
-  *   - GU_SYNC_WHAT_DONE
-  *   - GU_SYNC_WHAT_QUEUED
-  *   - GU_SYNC_WHAT_DRAW
-  *   - GU_SYNC_WHAT_STALL
-  *   - GU_SYNC_WHAT_CANCEL
+  *   - GU_SYNC_WAIT
+  *   - GU_SYNC_NOWAIT
   *
   * Available mode are:
   *   - GU_SYNC_FINISH - Wait until the last sceGuFinish command is reached
