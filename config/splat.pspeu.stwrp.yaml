@@ -12,8 +12,8 @@ options:
   symbol_addrs_path:
     - config/symbols.pspeu.txt
     - config/symbols.pspeu.stwrp.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.stwrp.txt
-  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.stwrp.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.stwrp.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.stwrp.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: yes

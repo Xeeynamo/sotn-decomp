@@ -2786,6 +2786,16 @@ typedef struct {
 } ET_801B84E4;
 
 typedef struct {
+    // fields 0x7D to 0x7F are unknown
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 unk7D;
+    /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 unk7F;
+    /* 0x80 */ u8 unk80;
+    /* 0x81 */ u8 unk81;
+} ET_801B87E8;
+
+typedef struct {
     /* 0x7C */ s16 : 16;
     /* 0x7E */ s16 : 16;
     /* 0x80 */ s16 : 16;
@@ -3842,6 +3852,7 @@ typedef union { // offset=0x7C
     ET_801B3F30 et_801B3F30;
     ET_801B4210 et_801B4210;
     ET_801B6E34 et_801B6E34;
+    ET_801B87E8 et_801B87E8;
     ET_801B72E8 et_801B72E8;
     ET_FleaRider fleaRider;
     ET_Tombstone tombstone;

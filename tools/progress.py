@@ -383,6 +383,8 @@ def report_discord(progresses: dict[str, DecompProgressStats]):
             funcs_diff = funcs - (stat.functions_prev / stat.functions_total)
             data = stat.data_imported / stat.data_total
             data_diff = (stat.data_imported - stat.data_prev) / stat.data_total
+            if coverage == 1.0 and coverage_diff < 0 and data == 1.0 and data_diff < 0:
+                continue  # ignore flukes of negative reports with 100% progress on refactor commits
 
             report += f"**{overlay.upper()} ({args.version})**:"
             if stat.code_matching != stat.code_matching_prev:
@@ -429,7 +431,7 @@ if __name__ == "__main__":
     progress["stno4"] = DecompProgressStats("stno4", "st/no4")
     progress["stnp3"] = DecompProgressStats("stnp3", "st/np3")
     progress["stnz0"] = DecompProgressStats("stnz0", "st/nz0")
-    progress["stnz1"] = DecompProgressStats("stnz0", "st/nz1")
+    progress["stnz1"] = DecompProgressStats("stnz1", "st/nz1")
     progress["stsel"] = DecompProgressStats("stsel", "st/sel")
     progress["stst0"] = DecompProgressStats("stst0", "st/st0")
     progress["sttop"] = DecompProgressStats("sttop", "st/top")

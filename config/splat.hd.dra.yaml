@@ -12,8 +12,8 @@ options:
   symbol_addrs_path:
     - config/symbols.hd.txt
     - config/symbols.hd.dra.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.hd.dra.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.hd.dra.txt
+  undefined_funcs_auto_path: build/hd/config/undefined_funcs_auto.hd.dra.txt
+  undefined_syms_auto_path:  build/hd/config/undefined_syms_auto.hd.dra.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   asm_jtbl_label_macro: jlabel

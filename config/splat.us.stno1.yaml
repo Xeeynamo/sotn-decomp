@@ -12,8 +12,8 @@ options:
   symbol_addrs_path:
     - config/symbols.us.txt
     - config/symbols.us.stno1.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stno1.txt
-  undefined_syms_auto_path: config/undefined_syms_auto.us.stno1.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.stno1.txt
+  undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.stno1.txt
   find_file_boundaries: true
   use_legacy_include_asm: false
   migrate_rodata_to_functions: true

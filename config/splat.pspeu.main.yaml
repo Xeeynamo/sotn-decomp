@@ -13,8 +13,8 @@ options:
     - config/symbols.pspeu.txt
     - config/symbols.pspeu.main.txt
   create_undefined_funcs_auto: true
-  undefined_funcs_auto_path: config/undefined_funcs_auto.pspeu.main.txt
-  undefined_syms_auto_path: config/undefined_syms_auto.pspeu.main.txt
+  undefined_funcs_auto_path: build/pspeu/undefined_funcs_auto.pspeu.main.txt
+  undefined_syms_auto_path: build/pspeu/undefined_syms_auto.pspeu.main.txt
   find_file_boundaries: true
   use_legacy_include_asm: false
   migrate_rodata_to_functions: true
@@ -298,7 +298,8 @@ segments:
       - [0x3B068, asm, _start] # crt0.c
       - [0x3B13C, asm, _main] # crt0.c
       - [0x3B3CC, asm, _stop] # crt0.c
-      - [0x3B3FC, textbin, sce_stub]
+      - [0x3B3FC, asm, sce_stub]
+      - [0x3B9F4, textbin, sce_stub]
       - [0x3C524, rodata]
       - [0x3D528, .rodata, main_psp/192C0]
       - [0x3D534, .rodata, main_psp/1A794]

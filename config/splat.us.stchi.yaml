@@ -12,8 +12,8 @@ options:
   symbol_addrs_path:
     - config/symbols.us.txt
     - config/symbols.us.stchi.txt
-  undefined_funcs_auto_path: config/undefined_funcs_auto.us.stchi.txt
-  undefined_syms_auto_path:  config/undefined_syms_auto.us.stchi.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.stchi.txt
+  undefined_syms_auto_path:  build/us/config/undefined_syms_auto.us.stchi.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: no

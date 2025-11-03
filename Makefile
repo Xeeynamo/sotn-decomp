@@ -58,11 +58,6 @@ WIBO            := $(BIN_DIR)/wibo
 MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
 CYGNUS			:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
 
-# Symbols
-BASE_SYMBOLS	 = $(CONFIG_DIR)/symbols.$(if $(filter mad,$(1)),beta,$(VERSION)).txt
-UNDEFINED_SYMS 	 = $(CONFIG_DIR)/undefined_syms.$(if $(filter stmad,$(1)),beta,$(VERSION)).txt
-AUTO_UNDEFINED	 = TYPE_auto$(if $(filter-out stmad,$(1)),.$(VERSION)).$(1).txt
-
 # Other tooling
 BLACK			:= $(and $(PYTHON_BIN),$(PYTHON_BIN)/)black
 SPLAT           := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)splat split
@@ -85,6 +80,7 @@ M2C_APP         := $(TOOLS_DIR)/m2c/m2c.py
 PERMUTER_APP	:= $(TOOLS_DIR)/decomp-permuter
 MASPSX_APP      := $(TOOLS_DIR)/maspsx/maspsx.py
 MWCCGAP_APP     := $(TOOLS_DIR)/mwccgap/mwccgap.py
+PSPAS           := $(TOOLS_DIR)/pspas/target/release/pspas
 DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
 SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
@@ -152,11 +148,11 @@ build_us: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
 build_hd: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
 	VERSION=hd .venv/bin/python3 tools/builds/gen.py
 	ninja
-build_pspeu: $(SOTNSTR_APP) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
+build_pspeu: $(SOTNSTR_APP) $(PSPAS) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
 	VERSION=pspeu .venv/bin/python3 tools/builds/gen.py
 	ninja
 .PHONY: build_all
-build_all: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNSTR_APP) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
+build_all: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNSTR_APP) $(PSPAS) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
 	$(PYTHON) tools/builds/gen.py
 	ninja
 
@@ -168,9 +164,10 @@ clean: clean_asm
 	git clean -fdx assets/
 	git clean -fdx build/$(VERSION)/
 	git clean -fdx src/**/gen/
-	git clean -fdx config/*$(VERSION)*
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
+	# n.b.! temporary clean for old auto sym files. remove 12/2025
+	rm -f config/*auto.*.txt
 clean_all: clean
 	git clean -fdx build/
 	git clean -fdx config/
@@ -213,14 +210,14 @@ format-sotn-lint:
 format-src: bin/clang-format format-sotn-lint
 	@# find explainer:
 	@#    find $(SRC_DIR) $(INCLUDE_DIR)                      : look in src and include
-	@#    -type d \( -name 3rd -o -name CMakeFiles \) -prune  : if an entry is both a directory and 3rd or CMakeFiles
+	@#    -type d \( -name 3rd -o -name pspsdk -o -name CMakeFiles \) -prune  : if an entry is both a directory and 3rd or CMakeFiles
 	@#                                                          ignore it and don't traverse it
 	@#    -o \( -type f \( -name '*.h' -o -name '*.c' \) \)   : or if an entry is a file and named *.h or *.c, include it
 	@#    -print0                                             : print only the matching entries, delimit by NULL to
 	@#                                                          ensure files with characters xargs uses as delimiters are
 	@#                                                          properly handled
 	find $(SRC_DIR) $(INCLUDE_DIR) mods \
-        -type d \( -name 3rd -o -name CMakeFiles -o -name gen \) -prune \
+        -type d \( -name 3rd -o -name pspsdk -o -name CMakeFiles -o -name gen \) -prune \
         -o \( -type f \( -name '*.c' -o -name '*.h' \) \) \
         -print0 \
         | xargs -0 -n10 -P$$(nproc) bin/clang-format -i
@@ -254,7 +251,7 @@ format-symbols-pspeu: $(patsubst config/splat.pspeu.%.yaml,format-symbols-pspeu-
 format-symbols: format-symbols-us format-symbols-hd format-symbols-pspeu
 
 format-license:
-	find src/ mods/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
+	find src/ mods/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|pspsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
 	find src/main/psxsdk | grep -E '\.c$$|\.h$$' | $(PYTHON) ./tools/lint-license.py - MIT
 	$(PYTHON) ./tools/lint-license.py include/game.h AGPL-3.0-or-later
 	$(PYTHON) ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
@@ -413,6 +410,8 @@ bin/%: bin/%.tar.gz
 	touch $@
 bin/%.tar.gz: bin/%.tar.gz.sha256
 	wget -O $@ https://github.com/Xeeynamo/sotn-decomp/releases/download/cc1-psx-26/$*.tar.gz
+$(PSPAS): tools/pspas/Cargo.toml tools/pspas/src/main.rs
+	cargo build --release --manifest-path $<
 $(ASMDIFFER_APP):
 	git submodule init $(ASMDIFFER_DIR)
 	git submodule update $(ASMDIFFER_DIR)

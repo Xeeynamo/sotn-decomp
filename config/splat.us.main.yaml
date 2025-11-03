@@ -13,9 +13,9 @@ options:
     - config/symbols.us.txt
     - config/symbols.us.main.txt
   create_undefined_funcs_auto: no
-  undefined_funcs_auto_path: config/undefined_funcs_auto.us.main.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.main.txt
   create_undefined_syms_auto: yes
-  undefined_syms_auto_path:  config/undefined_syms_auto.us.main.txt
+  undefined_syms_auto_path:  build/us/config/undefined_syms_auto.us.main.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   asm_jtbl_label_macro: jlabel
