@@ -23,6 +23,10 @@ extern "C" {
 /* PI, float-sized */
 #define GU_PI			(3.141593f)
 
+/* display ON/OFF switch */
+#define GU_DISPLAY_OFF		(0)
+#define GU_DISPLAY_ON		(1)
+
 /* Boolean values for convenience */
 #define GU_FALSE		(0)
 #define GU_TRUE			(1)
@@ -277,13 +281,6 @@ extern "C" {
 /* behavior (what) */
 #define GU_SYNC_WAIT	(0)
 #define GU_SYNC_NOWAIT	(1)
-
-/* Sync behavior (what) [see pspge.h] */
-#define GU_SYNC_WHAT_DONE (0)
-#define GU_SYNC_WHAT_QUEUED (1)
-#define GU_SYNC_WHAT_DRAW (2)
-#define GU_SYNC_WHAT_STALL (3)
-#define GU_SYNC_WHAT_CANCEL (4)
 
 /* Signals */
 #define GU_CALLBACK_SIGNAL	(1)
@@ -584,11 +581,8 @@ void* sceGuSwapBuffers(void);
   * @endcode
   *
   * Available what are:
-  *   - GU_SYNC_WHAT_DONE
-  *   - GU_SYNC_WHAT_QUEUED
-  *   - GU_SYNC_WHAT_DRAW
-  *   - GU_SYNC_WHAT_STALL
-  *   - GU_SYNC_WHAT_CANCEL
+  *   - GU_SYNC_WAIT
+  *   - GU_SYNC_NOWAIT
   *
   * Available mode are:
   *   - GU_SYNC_FINISH - Wait until the last sceGuFinish command is reached

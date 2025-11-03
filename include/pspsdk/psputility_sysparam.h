@@ -39,7 +39,7 @@ extern "C" {
  * is 0 on JAP v1.5s
  * is read-only
  */
-#define PSP_SYSTEMPARAM_ID_INT_UNKNOWN		9
+#define PSP_SYSTEMPARAM_ID_INT_CTRL_ASSIGN		9
 
 /**
  * Return values for the SystemParam functions
@@ -95,6 +95,12 @@ extern "C" {
 #define PSP_SYSTEMPARAM_LANGUAGE_KOREAN			9
 #define PSP_SYSTEMPARAM_LANGUAGE_CHINESE_TRADITIONAL	10
 #define PSP_SYSTEMPARAM_LANGUAGE_CHINESE_SIMPLIFIED	11
+
+/**
+ * Valid values for PSP_SYSTEMPARAM_ID_INT_CTRL_ASSIGN
+ */
+#define PSP_SYSTEMPARAM_CTRL_ASSIGN_CIRCLE_IS_ENTER		0
+#define PSP_SYSTEMPARAM_CTRL_ASSIGN_CROSS_IS_ENTER		1
 
 /**
  * Set Integer System Parameter
