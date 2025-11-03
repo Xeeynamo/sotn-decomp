@@ -780,7 +780,64 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B8F0);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891BB18);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891BCA0);
+s32 func_psp_0891BCA0(RECT* rect, u_long* p, s32 width, s32 arg3) {
+    s32 sp3C;
+    s32 sp38;
+    s32 sp34;
+    u8* ptr;
+    s32 var_s7;
+    s32 y;
+    s32 size;
+    s32 x;
+    s32 var_s3;
+    s32 i;
+    u8* dst;
+    u8* src;
+
+    ptr = (u8*)p;
+    if (rect->h == 1) {
+        func_psp_0891BB18(rect, p, width);
+        return 0;
+    }
+    var_s7 = rect->x + rect->w;
+    sp38 = rect->y + rect->h;
+    if (arg3) {
+        sp34 = 0x100;
+    } else {
+        sp34 = 0x100;
+    }
+    sp3C = sp34;
+    y = rect->y;
+    while (y < sp38) {
+        size = sp3C - (y % sp3C);
+        if (y + size > sp38) {
+            size = sp38 - y;
+        }
+        x = rect->x;
+        while (x < var_s7) {
+            var_s3 = 0x40 - (x % 0x40);
+            if (var_s7 < x + var_s3) {
+                var_s3 = var_s7 - x;
+            }
+            var_s3 = var_s3 * 2;
+            func_psp_0891A99C(x / 0x40 + y / 0x100 * 0x10);
+            dst = &D_psp_08B42080[x / 0x40 + y / 256 * 0x10]
+                                 [(x % 0x40) * 2 + (y % 0x100) * 128];
+            src = &ptr[width * (y - rect->y) + (x - rect->x) * 2];
+            for (i = 0; i < size; i++) {
+                memcpy(dst, src, var_s3);
+                src = &src[width];
+                dst += 0x80;
+            }
+            x += var_s3 / 2;
+        }
+        y += size;
+        if (y >= 0x200) {
+            break;
+        }
+    }
+    return 0;
+}
 
 s32 LoadImage(RECT* rect, u_long* p) {
     s32 var_a4;
