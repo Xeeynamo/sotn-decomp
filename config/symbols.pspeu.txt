@@ -247,6 +247,7 @@ g_Pix = 0x091ED5F8;
 g_Clut = 0x091F5DF8; // size:0x6000
 g_ClutIds = 0x091FBDF8;
 g_IsTimeAttackUnlocked = 0x091FC418;
+g_DemoMode = 0x91FC420;
 g_MenuStep = 0x091FC438;
 g_GameEngineStep = 0x091fc440;
 g_GameStep = 0x091FC448;

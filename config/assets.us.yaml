@@ -735,7 +735,7 @@ files:
           - [0x4BC, skip]
           - [0x2060, rooms, rooms]
           - [0x2084, skip]
-          - [0x29D8, cutscene, cutscene_data]
+          - [0x29D8, cutscene, cutscene_script_psx]
           - [0x2C4C, skip]
           - [0x3124, cmpgfx, richter_subweapons, 128, 128, 4]
           - [0x3D1C, cmpgfx, e_dracula1_g0, 128, 128, 4, 0x1A750]
@@ -751,8 +751,8 @@ files:
           - [0xCAA8, cmpgfx, e_dracula_particles_g, 128, 128, 4, 0x1A790]
           - [0xDE38, cmpgfx, e_dracula1_g9, 128, 128, 4, 0x1A750]
           - [0xE3D0, cmpgfx, e_dracula2_g9, 128, 128, 4, 0x1A7D0]
-          - [0xF130, binary, cutscene_richter]
-          - [0xFEB0, binary, cutscene_dracula]
+          - [0xF130, rawgfx, gfx_portrait_richter, 48, 72, 8, 0x1A750]
+          - [0xFEB0, rawgfx, gfx_portrait_dracula, 48, 72, 8, 0x1A830]
           - [0x10C30, cmpgfx, stage_title_st0_jp, 128, 128, 4, 0x1AD30] # unused
           - [0x111D8, cmpgfx, e_breakables_g, 128, 128, 4, 0x1AC30]
           - [0x11B8C, cmpgfx, D_80191B8C, 128, 128, 4, 0x1AD70] # unseen?
