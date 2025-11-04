@@ -874,6 +874,10 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+            - [0xDC, layers, layers]
+            - [0x104, gfx_banks, graphics_banks]
+            - [0x180, layout, entity_layouts]
+            - [0x328, skip]
             - [0x1204, rooms, rooms]
             - [0x1210, skip]
   - target: disks/us/BOSS/RBO3/RBO3.BIN

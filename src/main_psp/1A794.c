@@ -34,6 +34,13 @@ typedef struct {
 } Unk08C4218C;
 
 typedef struct {
+    s32 unk0;
+    float unk4;
+    float unk8;
+    float unkC;
+} Unk0891B118;
+
+typedef struct {
     short x, y, w, h;
 } RECT;
 
@@ -664,7 +671,22 @@ void func_psp_0891B0DC(s32 arg0, s32 arg1) {
     D_psp_08C62AB0 = arg1;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B118);
+s32 func_psp_0891B118(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    Unk0891B118 a[2];
+
+    a[0].unk4 = arg0;
+    a[0].unk8 = arg1;
+    a[1].unk4 = arg2;
+    a[1].unk8 = arg3;
+    if (a[0].unk4 > a[1].unk4) {
+        a[0].unk4++;
+    }
+    a[0].unkC = a[1].unkC = 1.0f;
+    a[0].unk0 = a[1].unk0 = arg4;
+    func_psp_08912008();
+    func_psp_08910A80(&a, 2, 0x10, 1, 0x0080019C);
+    return 0;
+}
 
 s32 func_psp_0891B1F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     if (D_psp_08B42068 == 1) {
@@ -676,7 +698,24 @@ s32 func_psp_0891B1F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     return 0;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891B2CC);
+s32 func_psp_0891B2CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+    Unk0891B118 a[4];
+
+    a[0].unk4 = arg0;
+    a[0].unk8 = arg1;
+    a[1].unk4 = arg0 + arg2;
+    a[1].unk8 = arg1;
+    a[2].unk4 = arg0;
+    a[2].unk8 = arg1 + arg3;
+    a[3].unk4 = arg0 + arg2;
+    a[3].unk8 = arg1 + arg3;
+    a[0].unkC = a[1].unkC = a[2].unkC = a[3].unkC = 1.0f;
+    a[1].unk0 = a[0].unk0 = a[3].unk0 = a[2].unk0 = arg4;
+    func_psp_08912008();
+    func_psp_089113A8(-1, 0x80);
+    func_psp_08910A80(&a, 4, 0x10, 4, 0x0080019C);
+    return 0;
+}
 
 s32 func_psp_0891B400(void) {
     if (~D_psp_089464D4 > 0) {

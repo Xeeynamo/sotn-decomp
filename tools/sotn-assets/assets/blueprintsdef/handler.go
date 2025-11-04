@@ -3,7 +3,6 @@ package blueprintsdef
 import (
 	"bytes"
 	"encoding/binary"
-	"os/exec"
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
@@ -48,28 +47,28 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	if len(e.Args) < 2 {
 		return fmt.Errorf("require blueprint enum name as second argument")
 	}
-	bpKindFields, err := fetchEnum(e.SrcDir, e.OvlName, "BlueprintKind")
+	bpKindFields, err := sotn.FetchEnum(e.SrcDir, e.OvlName, "BlueprintKind")
 	if err != nil || len(bpKindFields) == 0 {
 		if err == nil {
 			err = fmt.Errorf("not found")
 		}
 		return fmt.Errorf("fetch enum %s: %w", "BlueprintKind", err)
 	}
-	bpOriginFields, err := fetchEnum(e.SrcDir, e.OvlName, "BlueprintOrigin")
+	bpOriginFields, err := sotn.FetchEnum(e.SrcDir, e.OvlName, "BlueprintOrigin")
 	if err != nil || len(bpOriginFields) == 0 {
 		if err == nil {
 			err = fmt.Errorf("not found")
 		}
 		return fmt.Errorf("fetch enum %s: %w", "BlueprintOrigin", err)
 	}
-	blueprintFields, err := fetchEnum(e.SrcDir, e.OvlName, e.Args[0])
+	blueprintFields, err := sotn.FetchEnum(e.SrcDir, e.OvlName, e.Args[0])
 	if err != nil || len(blueprintFields) == 0 {
 		if err == nil {
 			err = fmt.Errorf("not found")
 		}
 		return fmt.Errorf("fetch enum %s: %w", e.Args[0], err)
 	}
-	entityFields, err := fetchEnum(e.SrcDir, e.OvlName, e.Args[1])
+	entityFields, err := sotn.FetchEnum(e.SrcDir, e.OvlName, e.Args[1])
 	if err != nil || len(entityFields) == 0 {
 		if err == nil {
 			err = fmt.Errorf("not found")
@@ -106,7 +105,7 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		return fmt.Errorf("failed to read file: %w", err)
 	}
 	enumName := e.Args[0]
-	fields, err := fetchEnum(e.SrcDir, e.OvlName, enumName)
+	fields, err := sotn.FetchEnum(e.SrcDir, e.OvlName, enumName)
 	if err != nil {
 		return fmt.Errorf("fetch enum %s: %w", enumName, err)
 	}
@@ -160,26 +159,6 @@ func assetPath(dir, name string) string {
 
 func sourcePath(dir, name string) string {
 	return filepath.Join(dir, fmt.Sprintf("gen/%s.h", name))
-}
-
-func fetchEnum(srcDir, ovlName, enumName string) (map[int]string, error) {
-    cpp, err := exec.LookPath("cpp")
-    cmd := exec.Command(cpp,
-                        fmt.Sprintf("-DVERSION=%s"),
-                        "-lang-c",
-                        "-Iinclude",
-                        "-Iinclude/psxsdk",
-                        "-fno-builtin",
-                        "-undef",
-                        "-P",
-                        fmt.Sprintf("%s/%s.h", srcDir, ovlName))
-    o, err := cmd.Output()
-
-	if err != nil {
-		return nil, fmt.Errorf("failed preprocess header: %s %s: %w", cmd.Path, cmd.Args, err)
-	}
-    r := strings.NewReader(string(o))
-	return sotn.ParseCEnum(r, enumName, 0)
 }
 
 func parse(
