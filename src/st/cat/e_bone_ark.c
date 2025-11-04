@@ -1,53 +1,87 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cat.h"
 
-extern EInit D_us_80181188;
-extern EInit D_us_80181194;
-extern EInit D_us_801811A0;
-extern EInit D_us_801811AC;
-extern EInit D_us_801811B8;
+extern EInit g_EInitBoneArk;
+extern EInit g_EInitBoneArkSkeleton;
+extern EInit g_EInitBoneArkNeck;
+extern EInit g_EInitBoneArkAttackEffects;
+extern EInit g_EInitBoneArkProjectile;
 
-static s16 D_us_80182234[] = {0, 22, 4, 0};
-static s16 D_us_8018223C[] = {0, 22, 0, 4, 8, -4, -16, 0};
-static u8 D_us_8018224C[] = {
-    0x07, 0x01, 0x07, 0x02, 0x07, 0x03, 0x07, 0x02, 0x00, 0x00, 0x00, 0x00};
-static u8 D_us_80182258[] = {
-    0x02, 0x27, 0x02, 0x28, 0x02, 0x29, 0x02, 0x28, 0x02, 0x27,
-    0x02, 0x28, 0x02, 0x29, 0x02, 0x28, 0x00, 0x00, 0x00, 0x00};
-static u8 D_us_8018226C[] = {
-    0x10, 0x01, 0x05, 0x05, 0x04, 0x06, 0x05, 0x07, 0x04, 0x08, 0x05, 0x09,
-    0x04, 0x0A, 0x05, 0x0B, 0x05, 0x0C, 0x05, 0x0B, 0x51, 0x0C, 0xFF, 0x00};
-static u8 D_us_80182284[] = {
-    0x02, 0x15, 0x01, 0x19, 0x02, 0x16, 0x01, 0x19, 0x02, 0x17,
-    0x01, 0x19, 0x02, 0x18, 0x01, 0x19, 0x00, 0x00, 0x00, 0x00};
-static u8 D_us_80182298[] = {
-    0x01, 0x1B, 0x01, 0x1C, 0x02, 0x1D, 0x03, 0x1E, 0x02, 0x1F,
-    0x01, 0x20, 0x01, 0x21, 0x02, 0x22, 0x01, 0x23, 0x02, 0x24,
-    0x01, 0x25, 0x01, 0x26, 0x00, 0x00, 0x00, 0x00};
+static s16 sensors_skeleton[] = {0, 22, 4, 0};
+static s16 sensors_ground[] = {0, 22, 0, 4, 8, -4, -16, 0};
+static AnimateEntityFrame anim_skeleton_walk[] = {
+    {.duration = 7, .pose = 0x01},
+    {.duration = 7, .pose = 0x02},
+    {.duration = 7, .pose = 0x03},
+    {.duration = 7, .pose = 0x02},
+    POSE_LOOP(0)};
+static AnimateEntityFrame anim_skeleton_flee[] = {
+    {.duration = 2, .pose = 0x27},
+    {.duration = 2, .pose = 0x28},
+    {.duration = 2, .pose = 0x29},
+    {.duration = 2, .pose = 0x28},
+    {.duration = 2, .pose = 0x27},
+    {.duration = 2, .pose = 0x28},
+    {.duration = 2, .pose = 0x29},
+    {.duration = 2, .pose = 0x28},
+    POSE_LOOP(0)};
+static AnimateEntityFrame anim_skeleton_death[] = {
+    {.duration = 16, .pose = 0x01}, {.duration = 5, .pose = 0x05},
+    {.duration = 4, .pose = 0x06},  {.duration = 5, .pose = 0x07},
+    {.duration = 4, .pose = 0x08},  {.duration = 5, .pose = 0x09},
+    {.duration = 4, .pose = 0x0A},  {.duration = 5, .pose = 0x0B},
+    {.duration = 5, .pose = 0x0C},  {.duration = 5, .pose = 0x0B},
+    {.duration = 81, .pose = 0x0C}, POSE_END};
+static AnimateEntityFrame anim_projectile[] = {
+    {.duration = 2, .pose = 0x15},
+    {.duration = 1, .pose = 0x19},
+    {.duration = 2, .pose = 0x16},
+    {.duration = 1, .pose = 0x19},
+    {.duration = 2, .pose = 0x17},
+    {.duration = 1, .pose = 0x19},
+    {.duration = 2, .pose = 0x18},
+    {.duration = 1, .pose = 0x19},
+    POSE_LOOP(0)};
+static AnimateEntityFrame anim_lightning[] = {
+    {.duration = 1, .pose = 0x1B},
+    {.duration = 1, .pose = 0x1C},
+    {.duration = 2, .pose = 0x1D},
+    {.duration = 3, .pose = 0x1E},
+    {.duration = 2, .pose = 0x1F},
+    {.duration = 1, .pose = 0x20},
+    {.duration = 1, .pose = 0x21},
+    {.duration = 2, .pose = 0x22},
+    {.duration = 1, .pose = 0x23},
+    {.duration = 2, .pose = 0x24},
+    {.duration = 1, .pose = 0x25},
+    {.duration = 1, .pose = 0x26},
+    POSE_LOOP(0)};
 
-void func_us_801C6360(Entity* self) {
-    Primitive* prim; // s0
-    Entity* entity;  // s2
-    s32 i;           // s1
-    s32 primIndex;   // s3
-    s16 var_s4;      // s4
+// params 0 = projectile
+// params 1 = lightning ball
+void EntityBoneArkProjectile(Entity* self) {
+    Primitive* prim;
+    Entity* lightningBallEntity;
+    s32 i;
+    s32 primIndex;
+    s16 projectileVelocity;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801811B8);
+        InitializeEntity(g_EInitBoneArkProjectile);
         self->drawFlags |= FLAG_DRAW_ROTATE;
         if (self->params) {
             self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
             self->scaleX = self->scaleY = 0;
             self->animCurFrame = 0x1A;
-            self->palette = 0x8162;
-            entity = self->ext.boneArk.entity;
-            self->zPriority = entity->zPriority - 2;
+            self->palette = PAL_OVL(PAL_BONE_ARK_LIGHTNING_BALL);
+            lightningBallEntity = self->ext.boneArk.entity;
+            self->zPriority = lightningBallEntity->zPriority - 2;
             self->ext.boneArk.unk8C.i.lo = 8;
-            self->step = 0x10;
+            self->step = 16;
         } else {
-            self->palette = 0x8160;
-            self->ext.boneArk.unk98 = 0x80000;
+            self->palette = PAL_OVL(PAL_BONE_ARK_PROJECTILE);
+            self->ext.boneArk.projectileVelocity = FIX(8);
         }
         if (self->params) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
@@ -74,7 +108,7 @@ void func_us_801C6360(Entity* self) {
                 prim->next->x1 = self->posX.i.hi;
                 prim->next->y0 = self->posY.i.hi;
                 if (self->params) {
-                    prim->clut = 0x19F;
+                    prim->clut = PAL_DRA(PAL_BONE_ARK_LIGHTNING_PRIM);
                     prim->priority = self->zPriority - 1;
                     prim->drawMode =
                         DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
@@ -85,7 +119,7 @@ void func_us_801C6360(Entity* self) {
                     prim->next->y2 = 0;
                     prim->p3 |= 0x10;
                 } else {
-                    prim->clut = 0x15F;
+                    prim->clut = PAL_DRA(PAL_HELLFIRE_BEAST_CAST_TWO);
                     prim->priority = self->zPriority - 3;
                     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                                      DRAW_UNK02 | DRAW_TRANSP;
@@ -98,8 +132,8 @@ void func_us_801C6360(Entity* self) {
             }
         } else {
             if (self->params) {
-                entity = self->ext.boneArk.entity;
-                entity->ext.boneArk.entity = NULL;
+                lightningBallEntity = self->ext.boneArk.entity;
+                lightningBallEntity->ext.boneArk.entity = NULL;
             }
             DestroyEntity(self);
             return;
@@ -107,38 +141,47 @@ void func_us_801C6360(Entity* self) {
 
         break;
     case 1:
-        AnimateEntity(D_us_80182284, self);
+        AnimateEntity(anim_projectile, self);
         MoveEntity();
-        self->ext.boneArk.unk98 -= 0x4000;
-        var_s4 = self->ext.boneArk.unk98 >> 0xC;
-        self->velocityX = rcos(self->ext.boneArk.unk94) * var_s4;
-        self->velocityY = -rsin(self->ext.boneArk.unk94) * var_s4;
-        if (!self->ext.boneArk.unk98) {
-            g_api.PlaySfx(0x65B);
-            self->palette = 0x200;
+
+        // Projectile decreases in speed as it travels
+        self->ext.boneArk.projectileVelocity -= FIX(0.25);
+        projectileVelocity = self->ext.boneArk.projectileVelocity >> 0xC;
+        self->velocityX = rcos(self->ext.boneArk.unk94) * projectileVelocity;
+        self->velocityY = -rsin(self->ext.boneArk.unk94) * projectileVelocity;
+
+        // Once the projectile has completely stopped,
+        // it explodes and spawns the lightning ball
+        if (!self->ext.boneArk.projectileVelocity) {
+            g_api.PlaySfx(SFX_FM_EXPLODE_B);
+            self->palette = PAL_DRA(PAL_BONE_ARK_PROJECTILE_EXPLODE);
             self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
             self->scaleX = self->scaleY = 0;
             self->pose = 0;
             self->poseTimer = 0;
             self->step_s = 0;
             self->ext.boneArk.unk90 = 0;
-            self->ext.boneArk.unk92 = 0x10;
+
+            // nb. likely this should be a different struct
+            self->ext.boneArk.skeletonDied = 0x10;
             self->ext.boneArk.unk8C.i.lo = 0;
             self->step++;
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (entity != NULL) {
-                CreateEntityFromEntity(0x3C, self, entity);
-                entity->params = 1;
-                entity->ext.boneArk.entity = self;
-                self->ext.boneArk.entity = entity;
+            lightningBallEntity =
+                AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (lightningBallEntity != NULL) {
+                CreateEntityFromEntity(
+                    E_BONE_ARK_PROJECTILE, self, lightningBallEntity);
+                lightningBallEntity->params = 1;
+                lightningBallEntity->ext.boneArk.entity = self;
+                self->ext.boneArk.entity = lightningBallEntity;
             } else {
                 self->ext.boneArk.entity = NULL;
             }
         }
         break;
     case 2:
-        self->rotate += 0x600;
-        AnimateEntity(D_us_80182298, self);
+        self->rotate += ROT(135);
+        AnimateEntity(anim_lightning, self);
         switch (self->step_s) {
         case 0:
             self->scaleX += 0x10;
@@ -164,7 +207,7 @@ void func_us_801C6360(Entity* self) {
             self->scaleY = self->scaleX;
             self->ext.boneArk.unk8C.i.lo++;
             if (!(self->ext.boneArk.unk8C.i.lo & 0xF)) {
-                g_api.PlaySfx(0x665);
+                g_api.PlaySfx(SFX_THUNDER_B);
             }
             if (self->ext.boneArk.unk8C.i.lo > 0x40) {
                 self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
@@ -175,13 +218,13 @@ void func_us_801C6360(Entity* self) {
                 LOH(prim->next->b2) = 0x40;
                 self->ext.boneArk.unk90++;
                 self->hitboxState = 0;
-                g_api.PlaySfx(0x684);
+                g_api.PlaySfx(SFX_FM_THUNDER_EXPLODE);
                 self->step++;
             }
             break;
         }
 
-        if (!self->ext.boneArk.unk92) {
+        if (!self->ext.boneArk.skeletonDied) {
             switch (self->ext.boneArk.unk90) {
             case 0:
                 prim = self->ext.boneArk.prim;
@@ -211,12 +254,12 @@ void func_us_801C6360(Entity* self) {
                 break;
             }
         } else {
-            self->ext.boneArk.unk92--;
+            self->ext.boneArk.skeletonDied--;
         }
         break;
     case 3:
         if (self->animCurFrame) {
-            AnimateEntity(D_us_80182298, self);
+            AnimateEntity(anim_lightning, self);
         }
         self->opacity -= 4;
         self->scaleX += 0x20;
@@ -371,12 +414,12 @@ void func_us_801C6360(Entity* self) {
     }
 }
 
-static void func_us_801C6F9C(Primitive* prim) {
-    Pos pos; // sp18
-
-    s32 dx;    // s0
-    s32 dy;    // s1
-    u8 var_s2; // s2
+// Draws the charge lines which seek towards the attacking skull
+static void DrawChargeLines(Primitive* prim) {
+    Pos pos;
+    s32 dx;
+    s32 dy;
+    u8 var_s2;
 
     switch (prim->p1) {
     case 0:
@@ -486,16 +529,16 @@ static void func_us_801C6F9C(Primitive* prim) {
 }
 
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
-void func_us_801C7420(Entity* self) {
+void EntityBoneArkAttackEffects(Entity* self) {
     Primitive* prim;
     Entity* entity;
     s32 primIndex;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801811AC);
+        InitializeEntity(g_EInitBoneArkAttackEffects);
         self->animCurFrame = 0x2A;
-        self->palette = 0x8160;
+        self->palette = PAL_OVL(PAL_BONE_ARK_PROJECTILE);
         self->drawFlags =
             FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEX;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
@@ -532,13 +575,13 @@ void func_us_801C7420(Entity* self) {
         }
 
         if (!(g_Timer & 0x1F)) {
-            PlaySfxPositional(0x762);
+            PlaySfxPositional(SFX_BONE_ARK_CHARGE_ATTACK);
         }
 
         prim = self->ext.boneArk.prim;
         while (prim != NULL) {
             if (prim->p3 & 2) {
-                func_us_801C6F9C(prim);
+                DrawChargeLines(prim);
             }
             prim = prim->next;
         }
@@ -557,7 +600,7 @@ void func_us_801C7420(Entity* self) {
             prim = self->ext.boneArk.prim;
             while (prim != NULL) {
                 if (prim->p3 & 2) {
-                    func_us_801C6F9C(prim);
+                    DrawChargeLines(prim);
                 }
                 prim = prim->next;
             }
@@ -582,21 +625,21 @@ void func_us_801C7420(Entity* self) {
     }
 }
 
-void func_us_801C774C(Entity* self) {
-    Entity* entity; // s0
-    Entity* var_s1; // s1
-    s16 angle;      // s2
-    s16 dx;         // s4
-    s16 dy;         // s3
-    s32 primIndex;  // s5
+void EntityBoneArkSkull(Entity* self) {
+    Entity* entity;
+    Entity* boneArkEntity;
+    s16 angle;
+    s16 dx;
+    s16 dy;
+    s32 primIndex;
 
-    var_s1 = self - self->params;
-    if (self->flags & 0x100 && self->step < 7) {
-        PlaySfxPositional(0x683);
+    boneArkEntity = self - self->params;
+    if (self->flags & FLAG_DEAD && self->step < 7) {
+        PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
         self->animCurFrame = 0;
         self->hitboxState = 0;
         SetStep(7);
-        var_s1->ext.boneArk.unk93 |= 1;
+        boneArkEntity->ext.boneArk.headDying |= 1;
         if (self->flags & FLAG_HAS_PRIMS) {
             primIndex = self->primIndex;
             g_api.FreePrimitives(primIndex);
@@ -611,7 +654,7 @@ void func_us_801C774C(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801811AC);
+        InitializeEntity(g_EInitBoneArkAttackEffects);
         self->ext.boneArk.unk80 = 0x800;
         self->zPriority = (self - self->params)->zPriority + 2;
         self->drawFlags |= FLAG_DRAW_ROTATE;
@@ -619,15 +662,15 @@ void func_us_801C774C(Entity* self) {
         break;
     case 1:
         self->ext.boneArk.unk80 += self->ext.boneArk.unk82;
-        if (self->ext.boneArk.unk80 > (0x900 - var_s1->rotate)) {
+        if (self->ext.boneArk.unk80 > (0x900 - boneArkEntity->rotate)) {
             self->ext.boneArk.unk82 = -8;
         }
 
-        if (self->ext.boneArk.unk80 < (0x6D0 - var_s1->rotate)) {
+        if (self->ext.boneArk.unk80 < (0x6D0 - boneArkEntity->rotate)) {
             self->ext.boneArk.unk82 = 8;
         }
 
-        if (self->ext.boneArk.unk91) {
+        if (self->ext.boneArk.crouching) {
             self->ext.boneArk.unk8C.i.lo = 0x20;
             self->step_s = 0;
             self->step++;
@@ -644,11 +687,12 @@ void func_us_801C774C(Entity* self) {
             angle += ROT(360);
             angle &= 0xF80;
 
-            if (angle > (0xA00 - var_s1->rotate)) {
-                angle = 0xA00 - var_s1->rotate;
+            if (angle > (ROT(225) - boneArkEntity->rotate)) {
+                angle = ROT(225) - boneArkEntity->rotate;
             }
-            if (angle < (0x500 - var_s1->rotate)) {
-                angle = 0x500 - var_s1->rotate;
+
+            if (angle < (0x500 - boneArkEntity->rotate)) {
+                angle = 0x500 - boneArkEntity->rotate;
             }
 
             angle &= 0xF00;
@@ -660,7 +704,7 @@ void func_us_801C774C(Entity* self) {
                 if (!--self->ext.boneArk.unk8C.i.lo) {
                     self->step++;
                     self->animCurFrame = 0xF;
-                    var_s1->ext.boneArk.unk90 |= 1;
+                    boneArkEntity->ext.boneArk.unk90 |= 1;
                 }
             } else if (self->ext.boneArk.unk80 > self->ext.boneArk.unk94) {
                 self->ext.boneArk.unk80 -= 4;
@@ -673,7 +717,7 @@ void func_us_801C774C(Entity* self) {
     case 3:
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(0x3D, self, entity);
+            CreateEntityFromEntity(E_BONE_ARK_ATTACK_EFFECTS, self, entity);
             entity->ext.boneArk.entity = self;
             self->ext.boneArk.entity = entity;
         } else {
@@ -685,20 +729,20 @@ void func_us_801C774C(Entity* self) {
         entity = self->ext.boneArk.entity;
         if (entity != NULL) {
             if (entity->opacity > 0x80) {
-                var_s1->ext.boneArk.unk90 |= 8;
+                boneArkEntity->ext.boneArk.unk90 |= 8;
                 self->step++;
             }
         } else {
-            var_s1->ext.boneArk.unk90 |= 8;
+            boneArkEntity->ext.boneArk.unk90 |= 8;
             self->step++;
         }
         break;
     case 5:
         if (self->ext.boneArk.unk90) {
-            g_api.PlaySfx(0x63D);
+            g_api.PlaySfx(SFX_START_SLAM_B);
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(0x3C, self, entity);
+                CreateEntityFromEntity(E_BONE_ARK_PROJECTILE, self, entity);
                 entity->facingLeft = self->facingLeft;
                 entity->ext.boneArk.unk94 = self->ext.boneArk.unk94;
                 if (self->facingLeft) {
@@ -707,7 +751,7 @@ void func_us_801C774C(Entity* self) {
                     entity->posX.i.hi -= 0x10;
                 }
             }
-            var_s1->ext.boneArk.unk90 = 0;
+            boneArkEntity->ext.boneArk.unk90 = 0;
             self->ext.boneArk.unk90 = 0;
             self->step_s = 0;
             self->step++;
@@ -734,7 +778,7 @@ void func_us_801C774C(Entity* self) {
             break;
         case 2:
             self->ext.boneArk.unk80 -= 8;
-            if (self->ext.boneArk.unk80 < 0x800 - var_s1->rotate) {
+            if (self->ext.boneArk.unk80 < ROT(180) - boneArkEntity->rotate) {
                 self->step = 1;
                 self->step_s = 0;
             }
@@ -746,24 +790,24 @@ void func_us_801C774C(Entity* self) {
         case 0:
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(2, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 1;
             }
             self->step_s++;
             break;
         case 1:
             self->ext.boneArk.unk80 += self->ext.boneArk.unk82;
-            if (self->ext.boneArk.unk80 > (0xA00 - var_s1->rotate)) {
+            if (self->ext.boneArk.unk80 > (ROT(225) - boneArkEntity->rotate)) {
                 self->ext.boneArk.unk82 = -0x30;
             }
-            if (self->ext.boneArk.unk80 < (0x400 - var_s1->rotate)) {
+            if (self->ext.boneArk.unk80 < (ROT(90) - boneArkEntity->rotate)) {
                 self->ext.boneArk.unk82 = 0x30;
             }
             break;
         }
         break;
     }
-    self->rotate = 0x800 - self->ext.boneArk.unk80;
+    self->rotate = ROT(180) - self->ext.boneArk.unk80;
     entity = self - 1;
     dx = (rcos(self->ext.boneArk.unk80) * 2) >> 0xC;
     dy = (rsin(self->ext.boneArk.unk80) * 2) >> 0xC;
@@ -771,26 +815,28 @@ void func_us_801C774C(Entity* self) {
     self->posY.i.hi = entity->posY.i.hi - dy;
 }
 
-void func_us_801C7D98(Entity* self) {
-    Entity* entity; // s0
-    Entity* var_s1; // s1
-    s16 posX;       // s3
-    s16 posY;       // s2
+void EntityBoneArkUpperNeck(Entity* self) {
+    Entity* entity;
+    Entity* boneArkEntity;
+    s16 posX;
+    s16 posY;
 
-    var_s1 = self - self->params;
+    boneArkEntity = self - self->params;
     entity = self + 1;
-    if (var_s1->ext.boneArk.unk93 && self->step < 2) {
+    if (boneArkEntity->ext.boneArk.headDying && self->step < 2) {
         self->ext.boneArk.unk8C.i.lo = 8;
         self->step = 2;
     }
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801811A0);
+        InitializeEntity(g_EInitBoneArkNeck);
         self->animCurFrame = 0x10;
         self->zPriority = (self - self->params)->zPriority + 1;
         // fallthrough
     case 1:
+        // One piece is positioned off the bone ark entity,
+        // the others are positioned off the prior neck piece in the chain
         if (self->params == 5) {
             entity = self - self->params;
         } else {
@@ -802,13 +848,14 @@ void func_us_801C7D98(Entity* self) {
         self->posY.i.hi = entity->posY.i.hi - posY;
         break;
     case 2:
+        // Wait a short delay after the head explodes to also explode the neck
         if (!self->ext.boneArk.unk8C.i.lo) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(2, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 0;
                 entity->drawFlags |= FLAG_DRAW_ROTATE;
-                entity->rotate = self->ext.boneArk.unk80 - 0x400;
+                entity->rotate = self->ext.boneArk.unk80 - ROT(90);
             }
             self->animCurFrame = 0;
             self->flags |= FLAG_DEAD;
@@ -827,28 +874,30 @@ void func_us_801C7D98(Entity* self) {
     }
 }
 
-void func_us_801C7F84(Entity* self) {
-    Entity* parent; // s1
-    s32 dx;         // s2
-    s32 dy;         // s0
-    s16 angle;      // s3
-    s32 xOffset;    // s5
-    s32 yOffset;    // s4
+void EntityBoneArkLowerNeck(Entity* self) {
+    Entity* siblingEntity;
+    s32 dx;
+    s32 dy;
+    s16 angle;
+    s32 xOffset;
+    s32 yOffset;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801811A0);
+        InitializeEntity(g_EInitBoneArkNeck);
         self->animCurFrame += self->params - 1;
         // fallthrough
     case 1:
-        parent = self - 1;
-        dx = self->posX.val - parent->posX.val;
-        dy = parent->posY.val - self->posY.val;
+        // One piece is positioned off the bone ark entity,
+        // the others are positioned off the prior neck piece in the chain
+        siblingEntity = self - 1;
+        dx = self->posX.val - siblingEntity->posX.val;
+        dy = siblingEntity->posY.val - self->posY.val;
         xOffset = dx;
         yOffset = dy;
-        dy -= 0x18000;
-        dy -= (parent->ext.boneArk.unk8C.val << 8) >> 8;
-        dx += (parent->ext.boneArk.unk88.val << 8) >> 8;
+        dy -= FIX(1.5);
+        dy -= (siblingEntity->ext.boneArk.unk8C.val << 8) >> 8;
+        dx += (siblingEntity->ext.boneArk.unk88.val << 8) >> 8;
 
         angle = ((dx >> 0x10) * dx + (dy >> 0x10) * dy) >> 0x10;
         if (angle > 0x24) {
@@ -856,15 +905,16 @@ void func_us_801C7F84(Entity* self) {
             dx = rcos(angle) * 4 * 16;
             dy = rsin(angle) * 4 * 16;
         }
-        self->posX.val = parent->posX.val + dx;
-        self->posY.val = parent->posY.val - dy;
+        self->posX.val = siblingEntity->posX.val + dx;
+        self->posY.val = siblingEntity->posY.val - dy;
         self->ext.boneArk.unk88.val = -(dx - xOffset);
         self->ext.boneArk.unk8C.val = -(yOffset - dy);
         break;
     }
 }
 
-static void func_us_801C80E0(Primitive* prim) {
+// Renders the flying pieces of ark which burst into flames
+static void RenderDeathParts(Primitive* prim) {
     Entity* newEntity;
 
     switch (prim->next->u2) {
@@ -892,7 +942,7 @@ static void func_us_801C80E0(Primitive* prim) {
         if (LOW(prim->next->r1) > ((prim->next->r3 >> 1) << 0xF) + 0x34000) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromCurrentEntity(2, newEntity);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
 
                 if (prim->next->r3 >> 1) {
                     newEntity->params = 2;
@@ -910,94 +960,108 @@ static void func_us_801C80E0(Primitive* prim) {
     }
 }
 
-extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
-void func_us_801C839C(Entity* self) {
-    s16 xOffset; // sp3E
-    s16 yOffset; // sp3C
+typedef enum BoneArkStep {
+    INIT = 0,
+    IDLE_WALK = 1,
+    CROUCHING = 2,
+    CHARGING = 3,
+    SHOT_FIRED = 4,
+    DEATH = 8
+};
 
-    Primitive* prim; // s0
-    s32 i;           // s1
-    Entity* entity;  // s2
-    s16 var_s3;      // s3
-    s16 angle;       // s4
-    u8 var_s5;       // s5
-    s32 primIndex;   // s6
-    s32 dx;          // s8
-    s32 dy;          // s7
+extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
+void EntityBoneArk(Entity* self) {
+    s16 xOffset;
+    s16 yOffset;
+
+    Primitive* prim;
+    s32 i;
+    Entity* entity;
+    s16 var_s3;
+    s16 angle;
+    u8 var_s5;
+    s32 primIndex;
+    s32 dx;
+    s32 dy;
     s32 pad[9];
 
     FntPrint("main_step %x\n", self->step);
     FntPrint("main_step_s %x\n", self->step_s);
-    FntPrint("hd_flag %x\n", self->ext.boneArk.unk93);
-    if (self->ext.boneArk.unk93 && self->step < 8) {
-        SetStep(8);
+    FntPrint("hd_flag %x\n", self->ext.boneArk.headDying);
+    if (self->ext.boneArk.headDying && self->step < DEATH) {
+        SetStep(DEATH);
     }
 
     switch (self->step) {
-    case 0:
-        InitializeEntity(D_us_80181188);
+    case INIT:
+        InitializeEntity(g_EInitBoneArk);
         self->drawFlags |= FLAG_DRAW_ROTATE;
         self->hitboxState = 0;
         self->rotate = 0;
         self->animCurFrame = 0xD;
 
+        // Spawn the two skeletons which hold the ark
         entity = self - 1;
-        CreateEntityFromEntity(0x38, self, entity);
+        CreateEntityFromEntity(E_BONE_ARK_SKELETON, self, entity);
         entity->posX.i.hi -= 0x18;
         entity->params = 1;
-        entity->ext.boneArk.posX = entity->posX.i.hi;
-        entity->ext.boneArk.posY = entity->posY.i.hi - 0x14;
+        entity->ext.boneArk.skeletonPosX = entity->posX.i.hi;
+        entity->ext.boneArk.skeletonPosY = entity->posY.i.hi - 0x14;
 
         entity = self - 2;
-        CreateEntityFromEntity(0x38, self, entity);
+        CreateEntityFromEntity(E_BONE_ARK_SKELETON, self, entity);
         entity->posX.i.hi += 0x16;
         entity->params = 2;
-        entity->ext.boneArk.posX = entity->posX.i.hi;
-        entity->ext.boneArk.posY = entity->posY.i.hi - 0x14;
+        entity->ext.boneArk.skeletonPosX = entity->posX.i.hi;
+        entity->ext.boneArk.skeletonPosY = entity->posY.i.hi - 0x14;
 
+        // Spawn 4 lower neck pieces that dangle below the ark
         for (i = 1; i < 5; i++) {
             entity = &self[i];
-            CreateEntityFromEntity(0x39, self, entity);
+            CreateEntityFromEntity(E_BONE_ARK_LOWER_NECK, self, entity);
             entity->params = i;
         }
 
+        // Spawn 4 upper neck pieces that support the skull
         for (i = 5; i < 9; i++) {
             entity = &self[i];
-            CreateEntityFromEntity(0x3A, self, entity);
+            CreateEntityFromEntity(E_BONE_ARK_UPPER_NECK, self, entity);
             entity->params = i;
         }
 
+        // Spawn the skull
         entity = self + 9;
-        CreateEntityFromEntity(0x3B, self, entity);
+        CreateEntityFromEntity(E_BONE_ARK_SKULL, self, entity);
         entity->params = 9;
+
         self->ext.boneArk.unk88.i.lo = 0x400;
         self->ext.boneArk.unk82 = -0x18;
         self->ext.boneArk.unk8C.i.lo = 0x100;
         self->step_s = 1;
         // fallthrough
-    case 1:
+    case IDLE_WALK:
         entity = &PLAYER;
         if (!self->step_s) {
             self->ext.boneArk.unk8C.i.lo = 0x80;
-            (self - 1)->step_s &= 0x10;
-            (self - 2)->step_s &= 0x10;
+            (self - 1)->step_s &= 16;
+            (self - 2)->step_s &= 16;
             if (entity->posX.i.hi > self->posX.i.hi) {
-                self->ext.boneArk.unkA0 = 1;
+                self->ext.boneArk.walkingRight = 1;
             } else {
-                self->ext.boneArk.unkA0 = 0;
+                self->ext.boneArk.walkingRight = 0;
             }
             self->step_s++;
         }
 
         angle = self->posX.i.hi - entity->posX.i.hi;
         if ((u16)angle < 0x40) {
-            (self - 1)->step_s &= 0x10;
-            (self - 2)->step_s &= 0x10;
-            self->ext.boneArk.unkA0 = 1;
+            (self - 1)->step_s &= 16;
+            (self - 2)->step_s &= 16;
+            self->ext.boneArk.walkingRight = 1;
         }
 
         self->ext.boneArk.unk88.i.lo += self->ext.boneArk.unk82;
-        if (self->ext.boneArk.unk88.i.lo > 0x800 - self->rotate) {
+        if (self->ext.boneArk.unk88.i.lo > ROT(180) - self->rotate) {
             self->ext.boneArk.unk82 = -0x18;
         }
 
@@ -1009,36 +1073,36 @@ void func_us_801C839C(Entity* self) {
             self->step_s = 0;
             if ((u16)angle < 0xC0) {
                 self->step++;
-                (self - 1)->ext.boneArk.unk91 = 1;
-                (self - 2)->ext.boneArk.unk91 = 1;
-                (self + 9)->ext.boneArk.unk91 = 1;
+                (self - 1)->ext.boneArk.crouching = 1;
+                (self - 2)->ext.boneArk.crouching = 1;
+                (self + 9)->ext.boneArk.crouching = 1;
             }
         }
 
         break;
-    case 2:
-        angle = self->ext.boneArk.unk88.i.lo - (0x800 - self->rotate);
+    case CROUCHING:
+        angle = self->ext.boneArk.unk88.i.lo - (ROT(180) - self->rotate);
         if (abs(angle) < 8) {
             self->ext.boneArk.unk90 |= 1;
             self->step++;
-        } else if (self->ext.boneArk.unk88.i.lo > (0x800 - self->rotate)) {
+        } else if (self->ext.boneArk.unk88.i.lo > (ROT(180) - self->rotate)) {
             self->ext.boneArk.unk88.i.lo -= 8;
         } else {
             self->ext.boneArk.unk88.i.lo += 8;
         }
 
         break;
-    case 3:
+    case CHARGING:
         if (self->ext.boneArk.unk90 == 0xF) {
-            (self - 1)->ext.boneArk.unk91 = 0;
-            (self - 2)->ext.boneArk.unk91 = 0;
-            (self + 9)->ext.boneArk.unk91 = 0;
+            (self - 1)->ext.boneArk.crouching = 0;
+            (self - 2)->ext.boneArk.crouching = 0;
+            (self + 9)->ext.boneArk.crouching = 0;
             (self + 9)->ext.boneArk.unk90 = 1;
             self->step_s = 0;
             self->step++;
         }
         break;
-    case 4:
+    case SHOT_FIRED:
         switch (self->step_s) {
         case 0:
             if (!self->ext.boneArk.unk90) {
@@ -1050,7 +1114,7 @@ void func_us_801C839C(Entity* self) {
             break;
         case 1:
             self->ext.boneArk.unk88.i.lo += 8;
-            if (self->ext.boneArk.unk88.i.lo > (0x400 - self->rotate)) {
+            if (self->ext.boneArk.unk88.i.lo > (ROT(90) - self->rotate)) {
                 self->step_s++;
             }
             break;
@@ -1060,11 +1124,11 @@ void func_us_801C839C(Entity* self) {
             break;
         }
         break;
-    case 8:
+    case DEATH:
         switch (self->step_s) {
         case 0:
             self->ext.boneArk.unk88.i.lo += self->ext.boneArk.unk82;
-            if (self->ext.boneArk.unk88.i.lo > 0xA00) {
+            if (self->ext.boneArk.unk88.i.lo > ROT(225)) {
                 self->ext.boneArk.unk82 = -0x40;
             }
 
@@ -1078,10 +1142,10 @@ void func_us_801C839C(Entity* self) {
             }
             break;
         case 1:
-            PlaySfxPositional(0x684);
+            PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(2, self, entity);
+                CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 1;
             }
 
@@ -1100,7 +1164,7 @@ void func_us_801C839C(Entity* self) {
                     if (prim != NULL) {
                         UnkPolyFunc2(prim);
                         prim->tpage = 0x12;
-                        prim->clut = 0x200;
+                        prim->clut = PAL_DRA(PAL_BONE_ARK_PROJECTILE_EXPLODE);
                         prim->u0 = (i % 2) * 0x28 + 0x30;
                         prim->u1 = prim->u0 + 0x28;
                         prim->u2 = prim->u0;
@@ -1141,7 +1205,7 @@ void func_us_801C839C(Entity* self) {
             while (prim != NULL) {
                 if (prim->p3 & 8) {
                     var_s5 |= 1;
-                    func_us_801C80E0(prim);
+                    RenderDeathParts(prim);
                 }
                 prim = prim->next;
             }
@@ -1159,13 +1223,19 @@ void func_us_801C839C(Entity* self) {
 #include "../pad2_anim_debug.h"
     }
 
-    xOffset =
-        (((self - 1)->ext.boneArk.posX + (self - 2)->ext.boneArk.posX) / 2) + 3;
-    yOffset = ((self - 1)->ext.boneArk.posY + (self - 2)->ext.boneArk.posY) / 2;
+    xOffset = (((self - 1)->ext.boneArk.skeletonPosX +
+                (self - 2)->ext.boneArk.skeletonPosX) /
+               2) +
+              3;
+    yOffset = ((self - 1)->ext.boneArk.skeletonPosY +
+               (self - 2)->ext.boneArk.skeletonPosY) /
+              2;
     self->posX.i.hi = xOffset;
     self->posY.i.hi = yOffset;
-    dx = (self - 2)->ext.boneArk.posX - (self - 1)->ext.boneArk.posX;
-    dy = (self - 2)->ext.boneArk.posY - (self - 1)->ext.boneArk.posY;
+    dx = (self - 2)->ext.boneArk.skeletonPosX -
+         (self - 1)->ext.boneArk.skeletonPosX;
+    dy = (self - 2)->ext.boneArk.skeletonPosY -
+         (self - 1)->ext.boneArk.skeletonPosY;
     angle = ratan2(dy, dx);
     self->rotate = angle;
 
@@ -1188,26 +1258,37 @@ void func_us_801C839C(Entity* self) {
 }
 
 // nb. This must be defined after pad2_anim_debug.h to align PSP data
-static s16 D_us_801822B4[] = {
+static s16 skeleton_yOffsets[] = {
     10, -20, -21, -22, -8, -20, -19, -8, -6, 0, 4, 8, 10, 0, 0, 0};
 
-void func_us_801C8CE0(Entity* self) {
-    Entity* entity;       // s0
-    Entity* paramsEntity; // s1
-    Entity* newEntity;    // s2
-    u8 collisionDetected; // s3
+void EntityBoneArkSkeleton(Entity* self) {
+    Entity* otherSkeletonEntity;
+    Entity* boneArkEntity;
+    Entity* newEntity;
+    u8 collisionDetected;
 
-    paramsEntity = &self[self->params];
+    typedef enum Step {
+        INIT = 0,
+        DROP_TO_GROUND = 1,
+        WALK = 2,
+        CROUCH = 3,
+        STAND = 4,
+        FLEE = 5,
+        DEATH = 6,
+        POST_DEATH = 7
+    };
+
+    boneArkEntity = &self[self->params];
     if (self->params == 1) {
-        entity = self - 1;
+        otherSkeletonEntity = self - 1;
     } else {
-        entity = self + 1;
+        otherSkeletonEntity = self + 1;
     }
 
     if (self->ext.boneArk.unk90 == 0xFF) {
         if (!(self->flags & FLAG_DEAD)) {
             self->facingLeft = GetSideToPlayer() & 1;
-            SetStep(5);
+            SetStep(FLEE);
             self->hitboxHeight = 0x12;
             self->hitboxOffY = 0;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
@@ -1215,69 +1296,70 @@ void func_us_801C8CE0(Entity* self) {
         }
     }
 
-    if (self->flags & 0x100 && self->step < 6) {
-        PlaySfxPositional(0x6CB);
+    if (self->flags & FLAG_DEAD && self->step < DEATH) {
+        PlaySfxPositional(SFX_RED_SKEL_COLLAPSE);
         self->hitboxState = 0;
         self->ext.boneArk.unk8C.i.hi = 0;
         self->velocityX = 0;
-        entity->velocityX = 0;
-        entity->step_s |= 0x10;
-        if (!self->ext.boneArk.unk92) {
-            entity->ext.boneArk.unk92 = 1;
+        otherSkeletonEntity->velocityX = 0;
+        otherSkeletonEntity->step_s |= 16;
+        if (!self->ext.boneArk.skeletonDied) {
+            otherSkeletonEntity->ext.boneArk.skeletonDied = 1;
         }
-        SetStep(6);
+        SetStep(DEATH);
     }
 
     switch (self->step) {
-    case 0:
-        InitializeEntity(D_us_80181194);
-        self->zPriority = paramsEntity->zPriority + 1 - self->params;
+    case INIT:
+        InitializeEntity(g_EInitBoneArkSkeleton);
+        self->zPriority = boneArkEntity->zPriority + 1 - self->params;
         // fallthrough
-    case 1:
-        if (UnkCollisionFunc3(D_us_8018223C) & 1) {
+    case DROP_TO_GROUND:
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
             self->pose = self->params;
             self->step++;
         }
         break;
-    case 2:
+    case WALK:
         if (!self->step_s) {
-            if (paramsEntity->ext.boneArk.unkA0) {
+            if (boneArkEntity->ext.boneArk.walkingRight) {
                 self->velocityX = FIX(0.375);
             } else {
                 self->velocityX = FIX(-0.375);
             }
 
-            if (self->ext.boneArk.unk92) {
+            // When one skeleton is dead the movement speed is halved
+            if (self->ext.boneArk.skeletonDied) {
                 self->velocityX /= 2;
             }
 
             if (self->params == 2) {
-                entity->step_s = 0;
+                otherSkeletonEntity->step_s = 0;
             }
             self->step_s++;
         }
 
-        AnimateEntity(D_us_8018224C, self);
-        collisionDetected = UnkCollisionFunc2(D_us_80182234);
+        AnimateEntity(anim_skeleton_walk, self);
+        collisionDetected = UnkCollisionFunc2(sensors_skeleton);
         if (collisionDetected & 0x80) {
             if (self->params == 1) {
-                entity->posX.val -= entity->velocityX;
+                otherSkeletonEntity->posX.val -= otherSkeletonEntity->velocityX;
             } else {
-                entity->step_s |= 0x10;
+                otherSkeletonEntity->step_s |= 16;
             }
-            entity->velocityX = 0;
-            self->step_s &= 0x10;
-            entity->step_s &= 0x10;
-            paramsEntity->ext.boneArk.unkA0 ^= 1;
+            otherSkeletonEntity->velocityX = 0;
+            self->step_s &= 16;
+            otherSkeletonEntity->step_s &= 16;
+            boneArkEntity->ext.boneArk.walkingRight ^= 1;
         }
 
-        if (self->ext.boneArk.unk91) {
+        if (self->ext.boneArk.crouching) {
             self->velocityX = 0;
-            SetStep(3);
+            SetStep(CROUCH);
         }
 
         break;
-    case 3:
+    case CROUCH:
         switch (self->step_s) {
         case 0:
             self->ext.boneArk.unk8C.i.lo = self->params * 0x10;
@@ -1294,28 +1376,28 @@ void func_us_801C8CE0(Entity* self) {
             break;
         case 2:
             if (!self->ext.boneArk.unk8C.i.hi) {
-                paramsEntity->ext.boneArk.unk90 |= 1 << self->params;
-                SetStep(4);
+                boneArkEntity->ext.boneArk.unk90 |= 1 << self->params;
+                SetStep(STAND);
             } else {
                 self->ext.boneArk.unk8C.i.hi--;
             }
             break;
         }
         break;
-    case 4:
-        if (paramsEntity->step == 1) {
+    case STAND:
+        if (boneArkEntity->step == IDLE_WALK) {
             self->hitboxHeight = 0x12;
             self->hitboxOffY = 0;
-            SetStep(1);
+            SetStep(DROP_TO_GROUND);
         }
         break;
-    case 5:
+    case FLEE:
         self->ext.boneArk.unk90 = 0;
         switch (self->step_s) {
         case 16:
         case 0:
-            collisionDetected = UnkCollisionFunc2(D_us_80182234);
-            if (!AnimateEntity(D_us_80182258, self)) {
+            collisionDetected = UnkCollisionFunc2(sensors_skeleton);
+            if (!AnimateEntity(anim_skeleton_flee, self)) {
                 self->facingLeft = GetSideToPlayer() & 1;
             }
 
@@ -1325,8 +1407,10 @@ void func_us_801C8CE0(Entity* self) {
                 self->poseTimer = 0;
             }
 
+            // If skeleton has escaped the edge of the room
+            // do a little hop and escape
             if (collisionDetected == 0x80) {
-                PlaySfxPositional(0x6BE);
+                PlaySfxPositional(SFX_BLIPS_A);
                 self->velocityY = FIX(-4.0);
                 self->step_s++;
             }
@@ -1339,35 +1423,35 @@ void func_us_801C8CE0(Entity* self) {
             break;
         case 17:
         case 1:
-            if (UnkCollisionFunc3(D_us_8018223C) & 1) {
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
                 self->step_s--;
             }
             break;
         }
         break;
-    case 6:
-        if (!AnimateEntity(D_us_8018226C, self)) {
-            PlaySfxPositional(0x694);
+    case DEATH:
+        if (!AnimateEntity(anim_skeleton_death, self)) {
+            PlaySfxPositional(SFX_FM_STUTTER_EXPLODE);
             self->animCurFrame = 0;
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(2, self, newEntity);
+                CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->posY.i.hi += 0xA;
                 newEntity->params = 2;
             }
-            entity->step_s = 0;
+            otherSkeletonEntity->step_s = 0;
             self->step++;
         }
         break;
-    case 7:
-        UnkCollisionFunc2(D_us_80182234);
-        self->velocityX = entity->velocityX;
-        if (self->ext.boneArk.unk91) {
-            paramsEntity->ext.boneArk.unk90 |= 1 << self->params;
-            self->ext.boneArk.unk91 = 0;
+    case POST_DEATH:
+        UnkCollisionFunc2(sensors_skeleton);
+        self->velocityX = otherSkeletonEntity->velocityX;
+        if (self->ext.boneArk.crouching) {
+            boneArkEntity->ext.boneArk.unk90 |= 1 << self->params;
+            self->ext.boneArk.crouching = 0;
         }
 
-        if (paramsEntity->entityId != 0x37) {
+        if (boneArkEntity->entityId != E_BONE_ARK) {
             DestroyEntity(self);
             return;
         }
@@ -1375,8 +1459,8 @@ void func_us_801C8CE0(Entity* self) {
         break;
     }
 
-    self->ext.boneArk.posX = self->posX.i.hi;
-    self->ext.boneArk.posY =
-        (self->posY.i.hi + D_us_801822B4[self->animCurFrame]) -
+    self->ext.boneArk.skeletonPosX = self->posX.i.hi;
+    self->ext.boneArk.skeletonPosY =
+        (self->posY.i.hi + skeleton_yOffsets[self->animCurFrame]) -
         self->ext.boneArk.unk8C.i.hi;
 }

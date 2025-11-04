@@ -3567,22 +3567,22 @@ typedef struct {
 } ET_HellfireBeastFlamePillar;
 
 typedef struct {
-    /* 0x7C */ s16 posX;
-    /* 0x7E */ s16 posY;
+    /* 0x7C */ s16 skeletonPosX;
+    /* 0x7E */ s16 skeletonPosY;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ struct Primitive* prim;
     /* 0x88 */ f32 unk88;
     /* 0x8C */ f32 unk8C;
     /* 0x90 */ u8 unk90;
-    /* 0x91 */ u8 unk91;
-    /* 0x92 */ u8 unk92;
-    /* 0x93 */ u8 unk93;
+    /* 0x91 */ u8 crouching;
+    /* 0x92 */ u8 skeletonDied;
+    /* 0x93 */ u8 headDying;
     /* 0x94 */ s16 unk94;
     /* 0x96 */ s16 : 16;
-    /* 0x98 */ s32 unk98;
+    /* 0x98 */ s32 projectileVelocity;
     /* 0x9C */ struct Entity* entity;
-    /* 0xA0 */ u8 unkA0;
+    /* 0xA0 */ u8 walkingRight;
 } ET_BoneArk;
 
 typedef union { // offset=0x7C
