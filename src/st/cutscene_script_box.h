@@ -10,7 +10,7 @@ static void CutsceneUnk3(s16 nextCharY) {
     rect.h = 12;
     ClearImage(&rect, 0, 0, 0);
 #if defined(VERSION_PSP)
-    func_890A3C0(cutsceneUnk3Unknown, 0, LEN(cutsceneUnk3Unknown));
+    memset(cutsceneUnk3Unknown, 0, LEN(cutsceneUnk3Unknown));
 #endif
 }
 

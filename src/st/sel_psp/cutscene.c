@@ -178,7 +178,7 @@ void CutsceneUnk3(s16 nextCharY) {
     rect.w = 0x40;
     rect.h = 0xC;
     ClearImage(&rect, 0, 0, 0);
-    func_890A3C0(cutsceneUnk3Unknown, 0, 0x380);
+    memset(cutsceneUnk3Unknown, 0, 0x380);
 }
 
 void CutsceneUnk4(void) {
