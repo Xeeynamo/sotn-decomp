@@ -29,8 +29,8 @@ typedef struct {
 } Unk08919D98;
 
 typedef struct {
-    s32 unk0;
-    s32 unk4;
+    s32 x;
+    s32 y;
 } Unk08C4218C;
 
 typedef struct {
@@ -120,6 +120,7 @@ extern s32 D_psp_08C62AB0;
 extern u16 D_psp_08C62AB4;
 extern u8* D_psp_08C62AB8;
 extern u16 D_psp_08C62ABC[];
+extern u16 D_psp_08C62CBC[];
 extern u8 g_BmpCastleMap[0x8000];
 
 s32 func_psp_08919F70();
@@ -135,6 +136,8 @@ void func_psp_08934D20(Unk08919D98* arg0);
 s32 func_psp_0893277C();
 void sceGuDebugPrint(int x, int y, unsigned int color, const char* msg);
 void func_psp_089117F4(s32, s32, s32, s32, s32, s32, u8*, s32, s32, s32, u8*);
+static void func_psp_0891CD28(u_long* p, s32 x, s32 y);
+static void func_psp_0891CEB8(s32 x, s32 y);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_089190A0);
 
@@ -780,11 +783,11 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", ResetGraph);
 
 static void func_psp_0891B6FC() { D_psp_08C629C0 = 0; }
 
-static s32 func_psp_0891B70C(s32 arg0, s32 arg1) {
+static s32 func_psp_0891B70C(s32 x, s32 y) {
     s32 i;
 
     for (i = 0; i < D_psp_08C629C0; i++) {
-        if (arg0 == D_psp_08C4218C[i].unk0 && arg1 == D_psp_08C4218C[i].unk4) {
+        if (x == D_psp_08C4218C[i].x && y == D_psp_08C4218C[i].y) {
             return i;
         }
     }
@@ -805,8 +808,8 @@ static s32 func_psp_0891B7A0(s32 x, s32 y, s32 w, void* ptr) {
         }
     }
     var_s0 = &D_psp_08C4218C[var_s1];
-    var_s0->unk0 = x;
-    var_s0->unk4 = y;
+    var_s0->x = x;
+    var_s0->y = y;
     memcpy(D_psp_08C429C0[var_s1], ptr, w * 2);
     return 1;
 }
@@ -827,21 +830,21 @@ u8* func_psp_0891B8F0(u16 arg0, s32 arg1, s32 arg2) {
         return D_psp_08C62AB8;
     }
     if (!(arg0 & 0x8000)) {
-        p.unk4 = (arg0 & 0x3F) * 0x10;
-        p.unk0 = arg0 >> 6;
+        p.y = (arg0 & 0x3F) * 0x10;
+        p.x = arg0 >> 6;
         if ((arg1 == 1) && (arg2 != 0)) {
-            temp_s0 = func_psp_0891B878(p.unk4, p.unk0);
+            temp_s0 = func_psp_0891B878(p.y, p.x);
             if (temp_s0 & 0x8000) {
                 D_psp_08C62AB8 = D_psp_08C429C0[temp_s0 & 0x7FFF];
             } else {
-                func_psp_0891CEB8(p.unk4, p.unk0);
+                func_psp_0891CEB8(p.y, p.x);
                 D_psp_08C62AB8 =
-                    D_psp_08C429C0[func_psp_0891B878(p.unk4, p.unk0) & 0x7FFF];
+                    D_psp_08C429C0[func_psp_0891B878(p.y, p.x) & 0x7FFF];
             }
         } else {
             D_psp_08C62AB8 =
-                &D_psp_08B42080[(p.unk4 / 0x40) + (p.unk0 / 0x100) * 0x10]
-                               [(p.unk4 % 0x40) * 2 + (p.unk0 % 0x100) * 0x80];
+                &D_psp_08B42080[(p.y / 0x40) + (p.x / 0x100) * 0x10]
+                               [(p.y % 0x40) * 2 + (p.x % 0x100) * 0x80];
         }
     } else {
         D_psp_08C62AB8 = D_psp_08C429C0[arg0 & 0x7FFF];
@@ -1121,17 +1124,81 @@ s32 MoveImage(RECT* rect, s32 x, s32 y) {
     return 0;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891CB80);
+static s32 func_psp_0891CB80(
+    s32 x, s32 y, s32 w, s32 h, s32 dstx, s32 dsty, s32 unused) {
+    RECT rect;
+    s32 var_s1;
+    s32 i;
+
+    for (i = 0; i < w; i += 0x100) {
+        rect.x = x + i;
+        rect.y = y;
+        if (i + 0x100 < w) {
+            var_s1 = 0x100;
+        } else {
+            var_s1 = w - i;
+        }
+        rect.w = var_s1;
+        rect.h = h;
+        MoveImage(&rect, dstx, dsty);
+    }
+    return 0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", LoadClut);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891CCBC);
+static void func_psp_0891CCBC(u_long* clut, s32 x, s32 y) {
+    RECT rect;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891CD28);
+    rect.x = x;
+    rect.y = y;
+    rect.w = 0x10;
+    rect.h = 1;
+    LoadImage(&rect, clut);
+    func_psp_0891B878(x, y);
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891CDE0);
+static void func_psp_0891CD28(u_long* p, s32 x, s32 y) {
+    RECT rect;
+    s32 index;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891CEB8);
+    if ((index = func_psp_0891B70C(x, y)) < 0) {
+        rect.x = x;
+        rect.y = y;
+        rect.w = 0x100;
+        rect.h = 1;
+        func_psp_0891C204(&rect, p, rect.w * 2, 0);
+        return;
+    }
+    memcpy(p, &D_psp_08C429C0[index], sizeof(*D_psp_08C429C0));
+}
+
+static void func_psp_0891CDE0(u16* clut, s32 x, s32 y) {
+    u16* var_s1;
+    s32 i;
+
+    for (i = 0; i < 0x100; i++) {
+        if (clut[i] == 0x8000) {
+            D_psp_08C62ABC[i] = 0x8001;
+        } else {
+            D_psp_08C62ABC[i] = clut[i];
+        }
+    }
+    var_s1 = D_psp_08C62ABC;
+    clut = var_s1;
+    func_psp_0891B7A0(x, y, 0x100, clut);
+}
+
+static void func_psp_0891CEB8(s32 x, s32 y) {
+    RECT rect;
+
+    rect.x = x;
+    rect.y = y;
+    rect.w = 0x100;
+    rect.h = 1;
+    func_psp_0891C204(&rect, (u_long*)D_psp_08C62CBC, rect.w * 2, 0);
+    func_psp_0891CDE0(D_psp_08C62CBC, x, y);
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", LoadTPage);
 
