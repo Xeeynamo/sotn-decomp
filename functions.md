@@ -1119,8 +1119,8 @@
 | dra   | func_psp_091143D0                        |       32 |          3 |        |       |     |
 | dra   | func_psp_09141608                        |       32 |          3 |        |       |     |
 | dra   | func_psp_090EB850                        |       32 |          3 |        |       |     |
-| main  | LoadClut                                 |       32 |          3 |        |       |     |
 | main  | func_psp_0891CCBC                        |       32 |          3 |        |       |     |
+| main  | LoadClut                                 |       32 |          3 |        |       |     |
 | main  | printf                                   |       32 |          3 |        |       |     |
 | no2   | func_pspeu_09257B10                      |       32 |          3 |        |       |     |
 | sel   | func_psp_09237ED8                        |       32 |          3 |        |       |     |
@@ -1786,8 +1786,8 @@
 | dra   | func_psp_091049E8                        |       53 |          5 |        |       |     |
 | dra   | func_psp_090FF3C0                        |       53 |          5 |        |       |     |
 | main  | strcpy                                   |       53 |          5 |        |       |     |
-| main  | func_psp_0891807C                        |       53 |          6 |        |       |     |
 | main  | func_psp_0891CD28                        |       53 |          6 |        |       |     |
+| main  | func_psp_0891807C                        |       53 |          6 |        |       |     |
 | dra   | func_psp_09111B00                        |       53 |          7 |        |       |     |
 | maria | func_pspeu_092A6958                      |       53 |          7 |        |       |     |
 | sel   | func_psp_09239530                        |       53 |          7 |        |       |     |
