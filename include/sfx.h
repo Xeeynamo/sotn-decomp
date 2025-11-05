@@ -750,7 +750,7 @@ enum Sfx {
     /* 0x75F */ SFX_PLATE_LORD_PAIN,
     /* 0x760 */ SFX_PLATE_LORD_DEATH,
     /* 0x761 */ SFX_PLATE_LORD_BALL_IMPACT,
-    /* 0x762 */ SFX_CAT_UNK_762,
+    /* 0x762 */ SFX_BONE_ARK_ATTACK_CHARGE,
     /* 0x763 */ SFX_DISCUS_LORD_ATTACK,
     /* 0x764 */ SFX_DISCUS_LORD_DEATH,
     /* 0x765 */ SFX_DISCUS_BUZZ,
@@ -759,7 +759,7 @@ enum Sfx {
     /* 0x768 */ SFX_HIPPOGRYPH_WING_FLAP,
     /* 0x769 */ SFX_HIPPOGRYPH_SQUAWK, // unused?
     /* 0x76A */ SFX_RDAI_UNK_76A,
-    /* 0x76B */ SFX_FROZEN_HALF_DEATH, // normally, enemy attack sfx is first!
+    /* 0x76B */ SFX_FROZEN_HALF_DEATH,
     /* 0x76C */ SFX_FROZEN_HALF_ATTACK,
     /* 0x76D */ SFX_FROZEN_HALF_MAXIMUM_POWER,
 
@@ -800,6 +800,11 @@ enum Sfx {
     /* 0x789 */ SFX_BO2_UNK_789,
     /* 0x78A */ SFX_HARPY_ATTACK, // unused?
     /* 0x78B */ SFX_HARPY_DEATH,
+    /* 0x78C */ SFX_MUDMAN_ATTACK,
+    /* 0x78D */ SFX_SPELLBOOK_DEATH, // also used by Magic Tome
+    /* 0x78E */ SFX_MAGIC_TOME_ATTACK,
+    /* 0x78F */ SFX_LESSER_DEMON_SWIPE_ATTACK,
+    /* 0x790 */ SFX_MALACHI_FLOATING_ORB,
     SFX_UNK_797 = 0x797,
     SFX_CLOCK_BELL = 0x7A6,
     SFX_CLOCK_ROOM_TICK = 0x7A9,

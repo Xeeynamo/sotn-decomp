@@ -1268,7 +1268,7 @@ void EntityLesserDemon(Entity* self) {
                 break;
             }
             if (!self->poseTimer && self->pose == 5) {
-                PlaySfxPositional(0x78F);
+                PlaySfxPositional(SFX_LESSER_DEMON_SWIPE_ATTACK);
             }
             if (self->pose > 4 && self->pose < 11) {
                 tempEntity->posX.i.hi = self->posX.i.hi;
