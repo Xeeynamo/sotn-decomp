@@ -115,21 +115,21 @@ int ResetGraph(int mode) {
     if (D_8002C268 >= 2) {
         GPU_printf("ResetGraph(%d)...\n", mode);
     }
-    if ((mode & 3) == 0) {
+    switch (mode & 3) {
+    case 0:
         ResetCallback();
         D_8002C26C = D_8002C260->reset(0);
         GPU_cw((int)D_8002C260 & 0xFFFFFF);
-    } else {
-        if ((mode & 3) >= 0) {
-            if ((mode & 3) < 4) {
-                D_8002C26C = D_8002C260->reset(1);
-            } else {
-                return -1;
-            }
-        } else {
-            return -1;
-        }
+        break;
+    case 1:
+    case 2:
+    case 3:
+        D_8002C26C = D_8002C260->reset(1);
+        break;
+    default:
+        return -1;
     }
+
     GPU_memset(&D_80037E60, -1, sizeof(DRAWENV));
     GPU_memset(&D_80037EBC, -1, sizeof(DISPENV));
     if (D_8002C26C != 0) {
