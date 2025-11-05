@@ -1557,7 +1557,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891FDC8);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_089201E8);
 
-s32 func_psp_08920488(SPRT* p) { }
+s32 func_psp_08920488(void* p) { }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08920498);
 
