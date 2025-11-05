@@ -41,6 +41,107 @@ typedef struct {
 } Unk0891B118;
 
 typedef struct {
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    float unkC;
+    float unk10;
+    s32 : 32;
+} Unk0891D9F4;
+
+#define O_TAG                                                                  \
+    u_long tag;                                                                \
+    u_long len
+
+typedef struct {
+    /* 0x00 */ O_TAG;
+    /* 0x04 */ u_char r0;
+    /* 0x05 */ u_char g0;
+    /* 0x06 */ u_char b0;
+    /* 0x07 */ u_char code;
+    /* 0x08 */ short x0;
+    /* 0x0A */ short y0;
+    /* 0x0C */ u_char r1;
+    /* 0x0D */ u_char g1;
+    /* 0x0E */ u_char b1;
+    /* 0x0F */ u_char pad1;
+    /* 0x10 */ short x1;
+    /* 0x12 */ short y1;
+    /* 0x14 */ u_char r2;
+    /* 0x15 */ u_char g2;
+    /* 0x16 */ u_char b2;
+    /* 0x17 */ u_char pad2;
+    /* 0x18 */ short x2;
+    /* 0x1A */ short y2;
+    /* 0x1C */ u_char r3;
+    /* 0x1D */ u_char g3;
+    /* 0x1E */ u_char b3;
+    /* 0x1F */ u_char pad3;
+    /* 0x20 */ short x3;
+    /* 0x22 */ short y3;
+} POLY_G4; /* Gouraud Quadrangle, size = 0x24 */
+
+typedef struct {
+    O_TAG;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    short x1, y1;
+} LINE_F2;
+
+typedef struct {
+    O_TAG;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    u_char r1, g1, b1, p1;
+    short x1, y1;
+} LINE_G2;
+
+typedef struct {
+    O_TAG;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    short x1, y1;
+    short x2, y2;
+    short x3, y3;
+    u_long pad;
+} LINE_F4;
+
+typedef struct {
+    O_TAG;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    u_char r1, g1, b1, p1;
+    short x1, y1;
+    u_char r2, g2, b2, p2;
+    short x2, y2;
+    u_char r3, g3, b3, p3;
+    short x3, y3;
+    u_long pad;
+} LINE_G4;
+
+typedef struct {
+    /* 0x00 */ O_TAG;
+    /* 0x04 */ u_char r0;
+    /* 0x05 */ u_char g0;
+    /* 0x06 */ u_char b0;
+    /* 0x07 */ u_char code;
+    /* 0x08 */ short x0;
+    /* 0x0A */ short y0;
+    /* 0x0C */ u_char u0;
+    /* 0x0D */ u_char v0;
+    /* 0x0E */ u_short clut;
+    /* 0x10 */ short w;
+    /* 0x12 */ short h;
+} SPRT; /* free size Sprite, size = 0x14 */
+
+typedef struct {
+    O_TAG;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    short w, h;
+} TILE;
+
+typedef struct {
     short x, y, w, h;
 } RECT;
 
@@ -61,10 +162,14 @@ extern s32 D_psp_089464D0;
 extern u32 D_psp_089464D4;
 extern s32 D_psp_089464D8; // screen_w
 extern s32 D_psp_089464DC; // screen_h
+extern float D_psp_089464E0;
+extern float D_psp_089464E4;
 extern s32 D_psp_089464E8;
 extern s32 D_psp_089464F0;
 extern const char D_psp_089464F4[];
 extern const char D_psp_089464F8[];
+extern s32 (*D_psp_08946508[])(s32);
+extern char D_psp_0894654C[];
 extern u8 D_psp_089466A0[];
 extern SceCtrlData D_psp_08B41F40;
 extern SceCtrlData D_psp_08B41F50;
@@ -89,31 +194,41 @@ extern s32 D_psp_08B4205C;
 extern s32 D_psp_08B42060;
 extern s32 D_psp_08B42064;
 extern s32 D_psp_08B42068;
+extern s32 D_psp_08B4206C;
 extern u8 D_psp_08B42080[0x20][0x8000];
 extern s32 D_psp_08C42080[0x20];
 extern u8* D_psp_08C42100[0x20];
-extern s32 D_psp_08C42180;
+extern u32 D_psp_08C42180;
 extern void (*D_psp_08C42184)();
-extern s32 D_psp_08C42188;
+extern u32 D_psp_08C42188;
 extern Unk08C4218C D_psp_08C4218C[];
 extern u8 D_psp_08C429C0[][0x200];
 extern s32 D_psp_08C629C0;
-extern s32 D_psp_08C629C4;
+extern u32 D_psp_08C629C4;
 extern s32 D_psp_08C629C8;
 extern s32 D_psp_08C629CC;
+extern s16 D_psp_08C629DC;
+extern s32 D_psp_08C62A08;
 extern s32 D_psp_08C62A30; // screen_mode
 extern s32 D_psp_08C62A34; // screen_center_x
 extern s32 D_psp_08C62A38; // screen_center_y
+extern s32 D_psp_08C62A3C;
 extern s32 D_psp_08C62A40;
 extern s32 D_psp_08C62A44;
+extern s32 D_psp_08C62A48;
+extern s32 D_psp_08C62A4C;
+extern s32 D_psp_08C62A50;
+extern s32 D_psp_08C62A54;
 extern s32 D_psp_08C62A58;
 extern s32 D_psp_08C62A5C;
 extern s32 D_psp_08C62A60;
 extern s32 D_psp_08C62A64;
+extern u32* D_psp_08C62A74;
 extern char D_psp_08C62A78[0x20];
 extern s8 D_psp_08C62A98;
 extern s32 D_psp_08C62A9C;
 extern s32 D_psp_08C62AA0;
+extern s32 D_psp_08C62AA4;
 extern s32 D_psp_08C62AA8;
 extern s32 D_psp_08C62AAC;
 extern s32 D_psp_08C62AB0;
@@ -121,6 +236,9 @@ extern u16 D_psp_08C62AB4;
 extern u8* D_psp_08C62AB8;
 extern u16 D_psp_08C62ABC[];
 extern u16 D_psp_08C62CBC[];
+extern s32 D_psp_08C62EBC;
+extern s32 D_psp_08C62EC0;
+extern char D_psp_08C62EC4[];
 extern u8 g_BmpCastleMap[0x8000];
 
 s32 func_psp_08919F70();
@@ -131,6 +249,7 @@ void func_psp_08919D98(Unk08919D98* arg0);
 void func_psp_0891A6A8(s32 screen_mode);
 extern void func_psp_0891B538(s32 arg0);
 extern void func_psp_0891B570(int arg0, int arg1);
+extern void func_psp_089113A8(s32 arg0, u8 arg1);
 static void func_psp_0891B6FC(void);
 void func_psp_08934D20(Unk08919D98* arg0);
 s32 func_psp_0893277C();
@@ -684,7 +803,7 @@ s32 func_psp_0891B118(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     a[0].unkC = a[1].unkC = 1.0f;
     a[0].unk0 = a[1].unk0 = arg4;
     func_psp_08912008();
-    func_psp_08910A80(&a, 2, 0x10, 1, 0x0080019C);
+    func_psp_08910A80(a, 2, 0x10, 1, 0x0080019C);
     return 0;
 }
 
@@ -713,7 +832,7 @@ s32 func_psp_0891B2CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     a[1].unk0 = a[0].unk0 = a[3].unk0 = a[2].unk0 = arg4;
     func_psp_08912008();
     func_psp_089113A8(-1, 0x80);
-    func_psp_08910A80(&a, 4, 0x10, 4, 0x0080019C);
+    func_psp_08910A80(a, 4, 0x10, 4, 0x0080019C);
     return 0;
 }
 
@@ -1220,11 +1339,43 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", PutDrawEnv);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", PutDispEnv);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891D9F4);
+void func_psp_0891D9F4(Unk0891D9F4* arg0, s32 arg1) {
+    s32 i;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891DB9C);
+    if (arg1 == 2) {
+        arg0->unkC = D_psp_08C62A34 + arg0->unkC * D_psp_089464E0;
+        arg0->unk10 = D_psp_08C62A38 + arg0->unk10 * D_psp_089464E4;
+        arg0++;
+        arg0->unkC = D_psp_08C62A34 + (1.0f + arg0->unkC) * D_psp_089464E0;
+        arg0->unk10 = D_psp_08C62A38 + (1.0f + arg0->unk10) * D_psp_089464E4;
+    } else {
+        for (i = 0; i < arg1; i++) {
+            arg0->unkC = D_psp_08C62A34 + arg0->unkC * D_psp_089464E0;
+            arg0->unk10 = D_psp_08C62A38 + arg0->unk10 * D_psp_089464E4;
+            arg0++;
+        }
+    }
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891DC48);
+void func_psp_0891DB9C(Unk0891B118* arg0, s32 arg1) {
+    s32 i;
+
+    for (i = 0; i < arg1; i++) {
+        arg0->unk4 = D_psp_08C62A34 + arg0->unk4 * D_psp_089464E0;
+        arg0->unk8 = D_psp_08C62A38 + arg0->unk8 * D_psp_089464E4;
+        arg0++;
+    }
+}
+
+void func_psp_0891DC48(Unk0891B118* arg0, s32 arg1) {
+    s32 i;
+
+    for (i = 0; i < arg1; i++) {
+        arg0->unk4 = D_psp_08C62A34 + arg0->unk4 * D_psp_089464E0;
+        arg0->unk8 = D_psp_08C62A38 + arg0->unk8 * D_psp_089464E4;
+        arg0++;
+    }
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", SetDefDrawEnv);
 
@@ -1240,7 +1391,153 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891E840);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891E944);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891E994);
+void func_psp_0891E994(u32* arg0) {
+    s32 sp5C;
+    s32 sp58;
+    s32 sp54;
+    s32 sp50;
+    u32 sp4C;
+    s32 sp48;
+    u32 sp44;
+    s32 temp_s2;
+    u8* temp_s5;
+    s32 temp_v0;
+    s32 var_fp;
+    s32 i;
+    s32 var_s4;
+    s32 var_s3;
+    u32* var_s1;
+    u32* var_s6;
+    u32 var_s7;
+
+    if (arg0 != (u32*)-1) {
+        D_psp_08C62A74 = arg0;
+        func_psp_0891E840();
+        if (D_psp_08C62AA8 != 0) {
+            D_psp_08C62AA8 = 0;
+            temp_s5 = func_psp_0891AC24();
+            if ((D_psp_08C62AAC == 0) && (D_psp_08C62AB0 == 0x100)) {
+                func_psp_089117F4(1, 0, 0, 0x100, 0x100, 0x200, temp_s5, 0, 0, 0x100, (u8*)sceGeEdramGetAddr() + 0xCC000);
+                for (i = 0; i < 0x20; i++) {
+                    func_psp_0891A99C(i);
+                }
+            } else {
+                var_s4 = 0;
+                while (var_s4 < 0x100) {
+                    func_psp_089117F4(1, var_s4, 0, 0x40, 0xF0, 0x200, temp_s5, 0, 0, 0x40, &D_psp_08B42080[(D_psp_08C62AAC + var_s4) / 0x40 + (D_psp_08C62AB0 / 0x100) * 0x10][((D_psp_08C62AAC + var_s4) % 0x40) * 2 + (D_psp_08C62AB0 % 0x100) * 0x80]);
+                    var_s4 += 0x40;
+                }
+                for (i = 0; i < 0x20; i++) {
+                    func_psp_0891A99C(i);
+                }
+            }
+        }
+        if (D_psp_08C62AA4 != 0) {
+            D_psp_08C62AA4 = 0;
+            var_s3 = 0;
+            while (var_s3 < 0x40) {
+                func_psp_089117F4(1, var_s3, 0, 0x40, 0x100, 0x100, (u8*)sceGeEdramGetAddr() + 0xCC000, 0, 0, 0x40, &D_psp_08B42080[(var_s3 / 0x40) + 0x10][(var_s3 % 0x40) * 2]);
+                var_s3 += 0x40;
+            }
+            for (i = 0; i < 0x20; i++) {
+                func_psp_0891A99C(i);
+            }
+        }
+        func_psp_0891AAF8();
+        func_psp_0891ABE4();
+        if (D_psp_08C62A3C > 0) {
+            func_psp_0891089C(0, 0, 0x1E0, 0x110);
+            func_psp_0891B2CC(0, 0, 0x1E0, 0x110, 0x80000000);
+            if (D_psp_08C62A3C > 0) {
+                D_psp_08C62A3C -= 1;
+            }
+        }
+        if ((D_psp_08C629DC > 0x100) || (D_psp_089464E8 > 0)) {
+            func_psp_0891E638();
+            if (D_psp_089464E8 > 0) {
+                D_psp_089464E8 -= 1;
+            }
+        } else {
+            sp50 = D_psp_08C62A40;
+            switch (D_psp_08C62A30) {
+            case 0:
+                sp54 = 0x1A2;
+                var_fp = 0x110;
+                break;
+            case 1:
+                sp54 = 0x171;
+                var_fp = 0xF0;
+                break;
+            }
+            sp5C = (0x1E0 - sp54) / 2;
+            sp58 = (0x110 - var_fp) / 2;
+            func_psp_0891AF48(0);
+            func_psp_0891089C(0, 0, 0x1E0, 0x110);
+            func_psp_0891B2CC(sp5C, sp58, sp54 - 1, var_fp - 1, 0x80000000);
+            func_psp_0891AF48(sp50);
+        }
+        func_psp_0891FDC8(&D_psp_08C62A08);
+        D_psp_08C62EC0 = 0;
+        D_psp_08C62A50 = 0;
+        D_psp_08C62A54 = 0;
+        var_s1 = arg0;
+        var_s6 = NULL;
+        while (var_s1 != NULL) {
+            temp_s2 = ((u8*)var_s1)[0xB] & 0x3F;
+            if ((temp_s2 >= 0) && (temp_s2 < 0x11) && (temp_s2 != 0)) {
+                D_psp_08946508[temp_s2]((u32)var_s1);
+                if (temp_s2 != 0) {
+                    D_psp_08C62EC0++;
+                }
+            }
+            if (((u32*)var_s1[0] == (u32*)-1) || (var_s1[0] == NULL)) {
+                break;
+            }
+            var_s6 = var_s1;
+            var_s1 = (u32*)var_s1[0];
+        }
+        if (D_psp_08C62A40 == 2) {
+            func_psp_0891E420();
+        }
+        if (D_psp_08B4206C != 0) {
+            func_psp_0891DE74();
+        }
+        if (D_psp_08C62EBC != 0) {
+            func_psp_0891AF48(0);
+            func_psp_0891089C(0, 0, 0x1E0, 0x110);
+            func_psp_0891B2CC(0x130, 0, 0xB0, 0x70, 0x80000000);
+        }
+        if ((D_psp_08C62A58 != 0) && (D_psp_08C62A64 != 0)) {
+            if (D_psp_08C42180 != D_psp_08C42188) {
+                sp48 = (D_psp_08C42180 - D_psp_08C42188) * 0xF0;
+            } else {
+                sp48 = 0xF0;
+            }
+            var_s7 = sp48;
+            func_psp_0891AF48(0);
+            func_psp_0891089C(0, 0, 0x1E0, 0x110);
+            func_psp_0891B118(0, 0, (D_psp_08C62A64 * var_s7) / D_psp_08C62A64, 0, 0x80FFFFFF);
+            func_psp_0891B118(0, 1, (D_psp_08C62A5C * var_s7) / D_psp_08C62A64, 1, 0x800000FF);
+            func_psp_0891B118(0, 2, (D_psp_08C62A60 * var_s7) / D_psp_08C62A64, 2, 0x8000FF00);
+        }
+        func_psp_0891AF48(0);
+        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_08932228();
+        func_psp_0891E944();
+        if (D_psp_08C62A44 != 0) {
+            if (D_psp_08C42180 != D_psp_08C42188) {
+                sp44 = 0x3C / (D_psp_08C42180 - D_psp_08C42188);
+            } else {
+                sp44 = 0;
+            }
+            sp4C = sp44;
+            sprintf(D_psp_08C62EC4, D_psp_0894654C, D_psp_08C62A4C, D_psp_08C62A48, D_psp_089464D8, D_psp_089464DC, sp4C);
+            sceGuDebugPrint(0, 0x108, -1, D_psp_08C62EC4);
+        }
+        D_psp_08C62A4C++;
+        ResetGraph(0);
+    }
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", DrawOTag);
 
@@ -1260,13 +1557,49 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891FDC8);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_089201E8);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08920488);
+s32 func_psp_08920488(SPRT* p) { }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08920498);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_089215A4);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08921A38);
+s32 func_psp_08921A38(POLY_G4* p) {
+    Unk0891B118 a[4];
+    POLY_G4* ptr;
+    u8 var_s1;
+
+    ptr = p;
+
+    if ((ptr->code & 0x40) >> 6) {
+        var_s1 = 0x80;
+        func_psp_089113A8((D_psp_08C629C4 >> 5) & 3, var_s1);
+    } else {
+        func_psp_089113A8(-1, 0x80);
+    }
+    a[0].unk4 = D_psp_08C629C8 + ptr->x0;
+    a[0].unk8 = D_psp_08C629CC + ptr->y0;
+    a[0].unkC = 1.0f;
+    a[1].unk4 = D_psp_08C629C8 + ptr->x1;
+    a[1].unk8 = D_psp_08C629CC + ptr->y1;
+    a[1].unkC = 1.0f;
+    a[2].unk4 = D_psp_08C629C8 + ptr->x2;
+    a[2].unk8 = D_psp_08C629CC + ptr->y2;
+    a[2].unkC = 1.0f;
+    a[3].unk4 = D_psp_08C629C8 + ptr->x3;
+    a[3].unk8 = D_psp_08C629CC + ptr->y3;
+    a[3].unkC = 1.0f;
+    a[0].unk0 = 0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
+    a[1].unk0 = 0x80000000 | (ptr->b1 << 0x10) | (ptr->g1 << 8) | ptr->r1;
+    a[2].unk0 = 0x80000000 | (ptr->b2 << 0x10) | (ptr->g2 << 8) | ptr->r2;
+    a[3].unk0 = 0x80000000 | (ptr->b3 << 0x10) | (ptr->g3 << 8) | ptr->r3;
+    if (D_psp_08C62A40 == 0) {
+        func_psp_0891DB9C(a, 4);
+    }
+    func_psp_08912008();
+    func_psp_08910A80(a, 4, 0x10, 4, 0x0080019C);
+    func_psp_0891B1F8(a[0].unk4, a[0].unk8, a[3].unk4, a[3].unk8, 0x80FF0000);
+    return 0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08921D44);
 
@@ -1278,15 +1611,193 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_089231F8);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08923FA4);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08925194);
+s32 func_psp_08925194(TILE* p) {
+    Unk0891B118 a[4];
+    TILE* ptr;
+    u8 var_s1;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_089254D8);
+    ptr = p;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08925600);
+    if ((ptr->w == 0) || (ptr->h == 0)) {
+        return 0;
+    }
+    if (D_psp_08C62A40 == 1) {
+        return 0;
+    }
+    if ((ptr->code & 0x40) >> 6) {
+        var_s1 = 0x80;
+        if (((D_psp_08C629C4 >> 5) & 3) == 2) {
+            var_s1 = (ptr->b0 + ptr->g0 + ptr->r0) / 3;
+        }
+        func_psp_089113A8((D_psp_08C629C4 >> 5) & 3, var_s1);
+    } else {
+        func_psp_089113A8(-1, 0x80);
+    }
+    a[0].unk4 = D_psp_08C629C8 + ptr->x0;
+    a[0].unk8 = D_psp_08C629CC + ptr->y0;
+    a[1].unk4 = D_psp_08C629C8 + ptr->x0 + ptr->w;
+    a[1].unk8 = D_psp_08C629CC + ptr->y0;
+    a[2].unk4 = D_psp_08C629C8 + ptr->x0;
+    a[2].unk8 = D_psp_08C629CC + ptr->y0 + ptr->h;
+    a[3].unk4 = D_psp_08C629C8 + ptr->x0 + ptr->w;
+    a[3].unk8 = D_psp_08C629CC + ptr->y0 + ptr->h;
+    a[0].unkC = a[1].unkC = a[2].unkC = a[3].unkC = 1.0f;
+    a[0].unk0 = a[1].unk0 = a[2].unk0 = a[3].unk0 = 0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
+    if (D_psp_08C62A40 == 0) {
+        func_psp_0891DB9C(a, 4);
+    }
+    func_psp_08912008();
+    func_psp_08910A80(a, 4, 0x10, 4, 0x0080019C);
+    func_psp_0891B1F8(a[0].unk4, a[0].unk8, a[1].unk4, a[1].unk8, 0x80FF00FF);
+    return 0;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08925860);
+s32 func_psp_089254D8(LINE_F2* p) {
+    Unk0891B118 a[2];
+    LINE_F2* ptr;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08925A04);
+    ptr = p;
+    
+    a[0].unk4 = ptr->x0;
+    a[0].unk8 = ptr->y0;
+    a[1].unk4 = ptr->x1;
+    a[1].unk8 = ptr->y1;
+    if (a[0].unk4 > a[1].unk4) {
+        a[0].unk4++;
+    }
+    a[0].unkC = a[1].unkC = 1.0f;
+    a[0].unk0 = a[1].unk0 = 0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
+    if (D_psp_08C62A40 == 0) {
+        func_psp_0891DC48(a, 2);
+    }
+    func_psp_08912008();
+    func_psp_08910A80(a, 2, 0x10, 1, 0x0080019C);
+    return 0;
+}
+
+s32 func_psp_08925600(LINE_F4* p) {
+    Unk0891B118 a[2];
+    LINE_F4* ptr;
+
+    ptr = p;
+
+    a[0].unkC = a[1].unkC = 1.0f;
+    a[0].unk0 = a[1].unk0 = 0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
+    func_psp_08912008();
+    a[0].unk4 = ptr->x0;
+    a[0].unk8 = ptr->y0;
+    a[1].unk4 = ptr->x1;
+    a[1].unk8 = ptr->y1;
+    if (a[0].unk4 > a[1].unk4) {
+        a[0].unk4++;
+    }
+    if (D_psp_08C62A40 == 0) {
+        func_psp_0891DC48(a, 2);
+    }
+    func_psp_08910A80(a, 2, 0x10, 1, 0x0080019C);
+    a[0].unk4 = a[1].unk4;
+    a[0].unk8 = a[1].unk8;
+    a[1].unk4 = ptr->x2;
+    a[1].unk8 = ptr->y2;
+    if (a[0].unk4 > a[1].unk4) {
+        a[0].unk4++;
+    }
+    if (D_psp_08C62A40 == 0) {
+        func_psp_0891DC48(a, 2);
+    }
+    func_psp_08910A80(a, 2, 0x10, 1, 0x0080019C);
+    a[0].unk4 = a[1].unk4;
+    a[0].unk8 = a[1].unk8;
+    a[1].unk4 = ptr->x3;
+    a[1].unk8 = ptr->y3;
+    if (a[0].unk4 > a[1].unk4) {
+        a[0].unk4++;
+    }
+    if (D_psp_08C62A40 == 0) {
+        func_psp_0891DC48(a, 2);
+    }
+    func_psp_08910A80(a, 2, 0x10, 1, 0x0080019C);
+    return 0;
+}
+
+s32 func_psp_08925860(LINE_G2* p) {
+    Unk0891B118 a[2];
+    LINE_G2* ptr;
+
+    ptr = p;
+    
+    a[0].unk4 = ptr->x0;
+    a[0].unk8 = ptr->y0;
+    a[1].unk4 = ptr->x1;
+    a[1].unk8 = ptr->y1;
+    if (a[0].unk4 > a[1].unk4) {
+        a[0].unk4++;
+    }
+    a[0].unkC = a[1].unkC = 1.0f;
+    a[0].unk0 = 0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
+    a[1].unk0 = 0x80000000 | (ptr->b1 << 0x10) | (ptr->g1 << 8) | ptr->r1;
+    if (D_psp_08C62A40 == 0) {
+        func_psp_0891DC48(a, 2);
+    }
+    if ((ptr->code & 0x40) >> 6) {
+        func_psp_089113A8((D_psp_08C629C4 >> 5) & 3, 0x80);
+    } else {
+        func_psp_089113A8(-1, 0x80);
+    }
+    func_psp_08912008();
+    func_psp_08910A80(a, 2, 0x10, 1, 0x0080019C);
+    return 0;
+}
+
+s32 func_psp_08925A04(LINE_G4* p) {
+    Unk0891B118 a[2];
+    LINE_G4* ptr;
+
+    ptr = p;
+    
+    a[0].unkC = a[1].unkC = 1.0f;
+    func_psp_08912008();
+    a[0].unk4 = ptr->x0;
+    a[0].unk8 = ptr->y0;
+    a[1].unk4 = ptr->x1;
+    a[1].unk8 = ptr->y1;
+    if (a[0].unk4 > a[1].unk4) {
+        a[0].unk4++;
+    }
+    a[0].unk0 = 0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
+    a[1].unk0 = 0x80000000 | (ptr->b1 << 0x10) | (ptr->g1 << 8) | ptr->r1;
+    if (D_psp_08C62A40 == 0) {
+        func_psp_0891DC48(a, 2);
+    }
+    func_psp_08910A80(a, 2, 0x10, 1, 0x0080019C);
+    a[0].unk4 = a[1].unk4;
+    a[0].unk8 = a[1].unk8;
+    a[1].unk4 = ptr->x2;
+    a[1].unk8 = ptr->y2;
+    if (a[0].unk4 > a[1].unk4) {
+        a[0].unk4++;
+    }
+    a[0].unk0 = 0x80000000 | (ptr->b1 << 0x10) | (ptr->g1 << 8) | ptr->r1;
+    a[1].unk0 = 0x80000000 | (ptr->b2 << 0x10) | (ptr->g2 << 8) | ptr->r2;
+    if (D_psp_08C62A40 == 0) {
+        func_psp_0891DC48(a, 2);
+    }
+    func_psp_08910A80(a, 2, 0x10, 1, 0x0080019C);
+    a[0].unk4 = a[1].unk4;
+    a[0].unk8 = a[1].unk8;
+    a[1].unk4 = ptr->x3;
+    a[1].unk8 = ptr->y3;
+    if (a[0].unk4 > a[1].unk4) {
+        a[0].unk4++;
+    }
+    a[0].unk0 = 0x80000000 | (ptr->b2 << 0x10) | (ptr->g2 << 8) | ptr->r2;
+    a[1].unk0 = 0x80000000 | (ptr->b3 << 0x10) | (ptr->g3 << 8) | ptr->r3;
+    if (D_psp_08C62A40 == 0) {
+        func_psp_0891DC48(a, 2);
+    }
+    func_psp_08910A80(a, 2, 0x10, 1, 0x0080019C);
+    return 0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", SetLineG2);
 
