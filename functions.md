@@ -85,6 +85,7 @@
 | main  | func_psp_08919CE4                        |        9 |          1 |        |       |     |
 | main  | func_psp_0891B528                        |        9 |          1 |        |       |     |
 | main  | func_psp_0891B6FC                        |        9 |          1 |        |       |     |
+| main  | func_psp_08920488                        |        9 |          1 |        |       |     |
 | main  | func_psp_08910088                        |        9 |          1 |        |       |     |
 | main  | func_psp_089125F8                        |        9 |          1 |        |       |     |
 | main  | func_psp_0891273C                        |        9 |          1 |        |       |     |
@@ -104,7 +105,6 @@
 | main  | SsUtSetReverbDepth                       |        9 |          1 |        |       |     |
 | main  | createPlayModeFlag                       |        9 |          1 |        |       |     |
 | main  | func_psp_08919560                        |        9 |          1 |        |       |     |
-| main  | func_psp_08920488                        |        9 |          1 |        |       |     |
 | main  | func_psp_0892CB30                        |        9 |          1 |        |       |     |
 | main  | gte_ldrgb                                |        9 |          1 |        |       |     |
 | main  | gte_ldtx                                 |        9 |          1 |        |       |     |
@@ -4105,6 +4105,7 @@
 | dra   | func_psp_090E0FF8                        |     1552 |         69 |        |       |     |
 | ric   | RicEntityCrashStopwatchDoneSparkle       |     1568 |         75 |        |       |     |
 | np3   | EntityOwl                                |     1582 |        218 | Yes    |       |     |
+| main  | 3D8B8.rodata                             |     1585 |          0 |        |       |     |
 | lib   | func_us_801B15C0                         |     1588 |        176 | Yes    |       |     |
 | no2   | EntityOwl                                |     1609 |        218 | Yes    |       |     |
 | nz1   | func_pspeu_092554E8                      |     1611 |        252 | Yes    |       |     |
@@ -4148,4 +4149,3 @@
 | dra   | func_psp_09106238                        |     2716 |        467 | Yes    |       |     |
 | dra   | EntityPlayerBlinkWhite                   |     2950 |        257 | Yes    |       |     |
 | sel   | func_psp_0923BE20                        |     3499 |        602 |        |       |     |
-| main  | 3D8B8.rodata                             |    41608 |          0 |        |       |     |
