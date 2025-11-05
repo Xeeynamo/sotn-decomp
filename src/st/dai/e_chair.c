@@ -17,6 +17,8 @@ enum ChairSteps {
 extern s32 E_ID(CONFESSIONAL_GHOST);
 #endif
 
+extern EInit g_EInitCommon;
+
 static AnimationFrame anim[] = {{8, 8}, {8, 9}, {8, 10}, {8, 11}, POSE_END};
 
 static bool ChairSitCheck(Entity* self) {
@@ -144,8 +146,8 @@ void func_us_801B81E8(Entity* self) {
         self->unk5A = 32;
         self->palette = PAL_OVL(0x19F);
         self->anim = anim;
-        self->pose = NULL;
-        self->poseTimer = NULL;
+        self->pose = 0;
+        self->poseTimer = 0;
         self->facingLeft = false;
         self->posY.i.hi -= 16;
         self->posX.val += self->velocityX << 5;

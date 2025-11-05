@@ -96,6 +96,8 @@ typedef struct {
     s16 offsetY;
 } HuntingGirlSpiritParams;
 
+extern EInit g_EInitHuntingGirl;
+
 static AnimateEntityFrame anim[] = {{1, 1}, {1, 2}};
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 46, 0, 4, 0, 0, 0};
 static s16 sensors[] = {0, 46, 0, 4, 4, -4, -8, 0};
@@ -299,7 +301,7 @@ static bool HuntingGirlDrawSpirit(s32 spiritStep, s32 spiritSubStep) {
 
 static void HuntingGirlTransitionToStep(s32 step) {
     g_CurrentEntity->ext.huntingGirl.attackStep = 0;
-    g_CurrentEntity->ext.huntingGirl.frames = NULL;
+    g_CurrentEntity->ext.huntingGirl.frames = 0;
     g_CurrentEntity->ext.huntingGirl.nextStep = step;
     SetStep(HUNTING_GIRL_TRANSITION);
 }
@@ -486,7 +488,7 @@ void EntityHuntingGirl(Entity* self) {
                 self->ext.huntingGirl.attackPrim =
                     self->ext.huntingGirl.spiritPrim;
                 self->ext.huntingGirl.attackStep = 0;
-                self->ext.huntingGirl.frames = NULL;
+                self->ext.huntingGirl.frames = 0;
                 PlaySfxPositional(SFX_HUNTING_GIRL_ATTACK);
                 self->step_s++;
             }

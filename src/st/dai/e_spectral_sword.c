@@ -58,6 +58,10 @@ enum SpectralWeaponSubsteps {
     SPECTRAL_WEAPON_DEATH_HIDE,
 };
 
+extern EInit g_EInitSpectralSword;
+extern EInit g_EInitSpectralSwordAura;
+extern EInit g_EInitSpectralSwordWeapon;
+
 static s8 hitbox[][2] = {{0, 0},  {0, 0},  {16, 6}, {8, 4},  {18, 6},
                          {16, 3}, {0, 10}, {0, 10}, {0, 10}, {0, 0}};
 

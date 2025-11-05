@@ -21,7 +21,10 @@ enum BreakableDebrisSteps {
 #if defined(VERSION_PSP)
 extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif
+
 extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitInteractable;
+extern EInit g_EInitParticle;
 
 void OVL_EXPORT(EntityBreakable)(Entity* self) {
     Entity* entity;

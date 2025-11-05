@@ -61,6 +61,8 @@ extern s32 E_ID(CONFESSIONAL_BLADES);
 extern s32 E_ID(CONFESSIONAL_BLADE_DEBRIS);
 #endif
 
+extern EInit g_EInitConfessionalGhost;
+extern EInit g_EInitConfessionalBlades;
 extern bool g_confessionalChimeActive;
 
 static AnimateEntityFrame anim_priest_move[] = {

@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+extern EInit g_EInitInteractable;
+
 #if defined(VERSION_PSP)
 static char alucard_mist_ENG[] = "\xBC\x10Mist could pass.";
 static char alucard_mist_ES[] =

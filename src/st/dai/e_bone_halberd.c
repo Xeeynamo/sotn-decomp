@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-#define EXPLOSION_INIT 0
-
 enum BoneHalberdSteps {
     BONE_HALBERD_INIT,
     BONE_HALBERD_READY,
@@ -26,6 +24,9 @@ enum BoneHalberdLungeSubsteps {
     BONE_HALBERD_LUNGE_STAB,
     BONE_HALBERD_LUNGE_CONCLUDE,
 };
+
+extern EInit g_EInitBoneHalberd;
+extern EInit g_EInitBoneHalberdAttack;
 
 static AnimateEntityFrame anim_idle[] = {
     {6, 1}, {4, 2}, {4, 3}, {6, 4}, {5, 5}, {5, 6}, POSE_LOOP(0)};
@@ -288,7 +289,7 @@ void EntityBoneHalberdParts(Entity* self) {
         self->entityId = E_EXPLOSION;
         self->pfnUpdate = EntityExplosion;
         self->params = EXPLOSION_SMALL;
-        self->step = EXPLOSION_INIT;
+        self->step = 0;
         return;
     }
     InitializeEntity(g_EInitBoneHalberd);

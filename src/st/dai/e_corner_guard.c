@@ -26,6 +26,9 @@ enum CornerGuardDeathSteps {
     CORNER_GUARD_DEATH_CONCLUDE,
 };
 
+extern EInit g_EInitCornerGuard;
+extern EInit g_EInitCornerGuardAttack;
+
 static s16 sensors_head[] = {0, 20, 0, 4, 4, -4, -8, 0};
 static s16 sensors_body[] = {0, 20, 4, 0};
 static Point16 pos_offsets[] = {{-16, 38}, {16, 6}};

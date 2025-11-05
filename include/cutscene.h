@@ -29,6 +29,21 @@ typedef enum {
     CSOP_WAIT_FOR_FLAG_RESET,
 } CutsceneOpcode;
 
+enum ActorNameIndices {
+    NAME_IDX_RICHTER,
+    NAME_IDX_DRACULA,
+    NAME_IDX_DEATH,
+    NAME_IDX_ALUCARD,
+    NAME_IDX_MARIA,
+    NAME_IDX_LIBRARIAN,
+    NAME_IDX_LISA,
+    NAME_IDX_SUCCUBUS,
+    NAME_IDX_FERRYMAN,
+    NAME_IDX_SHAFT,
+};
+
+#define NAME_IDX_PAD 0
+
 #define CUTSCENE_FLAG_NONE 0
 
 #define script_half(x) (((x) & 0xFF0) >> 4), ((x) & 0xFF)

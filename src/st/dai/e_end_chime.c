@@ -7,6 +7,8 @@ enum EndChimeSteps {
     END_CHIME_START_MUSIC,
 };
 
+extern EInit g_EInitInteractable;
+
 // Used by e_confessional/EntityConfessionalGhost
 bool g_confessionalChimeActive = {0}; // bss on pspeu
 

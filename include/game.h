@@ -94,12 +94,6 @@ typedef enum {
 
 #include "entity.h"
 
-#ifdef VERSION_PSP
-#define E_ID(name) D_psp_E_##name
-#else
-#define E_ID(name) E_##name
-#endif
-
 // These are used for RGB5551
 #define RED_MASK 0x1F
 #define GREEN_MASK 0x3E0

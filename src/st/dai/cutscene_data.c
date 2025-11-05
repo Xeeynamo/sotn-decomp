@@ -31,7 +31,4 @@ u8 OVL_EXPORT(cutscene_script_en)[] = {
 u8 OVL_EXPORT(cutscene_script)[] = {
 #include "gen/cutscene_script_psx.h"
 };
-u8 OVL_EXPORT(cutscene_data)[] = {
-#include "gen/cutscene_data_psx.h"
-};
 #endif

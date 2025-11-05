@@ -263,7 +263,7 @@ files:
           - [0x2358, rooms, rooms]
           - [0x2F44, skip]
           - [0x3A94, cutscene, cutscene_script_psx]
-          - [0x3C18, binary, cutscene_data_psx] # May be gfx data, unsure
+          - [0x3C18, binary, unk_data_psx] # May be gfx data, unsure
           - [0x3F20, cmpgfx, us/gfx_stage_name_jp_lg, 128, 128, 4]
           - [0x8498, cmpgfx, us/gfx_confessional, 128, 128, 4]
           - [0x96BC, cmpgfx, us/gfx_chair, 128, 128, 4, 0x1692C]
@@ -289,7 +289,7 @@ files:
           - [0x15894, cmpgfx, us/gfx_cutscene_2, 128, 128, 4, 0x1780C]
           - [0x16554, cmpgfx, gfx_stage_name_en, 128, 128, 4]
           - [0x1692C, palette, pal_skelerang_spittle_bone, 16] # 0x200
-          - [0x1698C, palette, pal_unused, 16] # does not exist for pspeu
+          - [0x1698C, palette, pal_unused_1698C, 16]
           - [0x16BAC, palette, pal_corner_guard, 16] # 0x215
           - [0x16BCC, palette, pal_bone_pillar, 16] # 0x216
           - [0x16C4C, palette, pal_bone_pillar_fire, 16] # 0x21A, includes 0x221

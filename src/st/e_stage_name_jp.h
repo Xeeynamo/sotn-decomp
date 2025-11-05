@@ -52,6 +52,8 @@ enum StageNameSubSteps {
     STAGE_NAME_HOLD_TEXT,
 };
 
+extern EInit g_EInitInteractable;
+
 // While all stages have EntityStageNamePopup, only stages that display the
 // banner use these functions
 #ifdef STAGE_NAME_LOAD_GFX

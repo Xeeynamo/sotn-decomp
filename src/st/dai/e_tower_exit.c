@@ -21,6 +21,8 @@ enum ExitLocation {
     TO_SAVE,
 };
 
+extern EInit g_EInitCommon;
+
 // Handles when the screen transition is not at the edge of the screen when
 // leaving dai towers, but does not seem to handle transition into the towers.
 void EntityTowerExit(Entity* self) {
@@ -47,7 +49,7 @@ void EntityTowerExit(Entity* self) {
 #else
         if (deltaY < 48) {
             if (g_Player.status & PLAYER_STATUS_DEAD) {
-                PLAYER.velocityX = NULL;
+                PLAYER.velocityX = 0;
                 return;
             }
 #endif

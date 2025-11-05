@@ -11,6 +11,9 @@ enum ShortcutSteps {
 #ifdef VERSION_PSP
 extern s32 E_ID(STATUE);
 #endif
+
+extern EInit g_EInitEnvironment;
+
 static s16 sensors[] = {0, -15, 0, 0};
 
 void EntityBlock(Entity* self) {
