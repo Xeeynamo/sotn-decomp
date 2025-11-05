@@ -224,7 +224,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08919C00);
 
 static void func_psp_08919C4C(void) {
     if (D_psp_08B41F64) {
-        func_psp_08909678(D_psp_08B41F64);
+        free(D_psp_08B41F64);
         D_psp_08B41F64 = 0;
     }
 }
@@ -1111,7 +1111,7 @@ s32 MoveImage(RECT* rect, s32 x, s32 y) {
     s32 w, h;
 
     size = rect->w * rect->h * 2;
-    ptr = (u_long*)func_psp_08909648(size);
+    ptr = (u_long*)malloc(size);
     if (ptr) {
         StoreImage(rect, ptr);
         load.x = x;
@@ -1119,7 +1119,7 @@ s32 MoveImage(RECT* rect, s32 x, s32 y) {
         load.w = rect->w;
         load.h = rect->h;
         LoadImage(&load, ptr);
-        func_psp_08909678(ptr);
+        free(ptr);
     }
     return 0;
 }

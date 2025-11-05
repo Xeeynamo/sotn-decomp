@@ -224,7 +224,7 @@ void DemoOpenFile(s32 arg0) {
     char fileName[0x100];
     s32 var_s0;
 
-    func_890A3C0(DEMO_KEY_PTR, 0, 0x2000);
+    memset(DEMO_KEY_PTR, 0, 0x2000);
     if ((D_8C630D4 == 2) && (arg0 == 0)) {
         sprintf(fileName, "BIN/DEMOKEY%c%c.BIN;1",
                 ((D_psp_08C630DC / 10) % 10) + '0',

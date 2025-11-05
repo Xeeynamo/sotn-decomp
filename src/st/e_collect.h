@@ -1208,8 +1208,7 @@ void EntityRelicOrb(Entity* self) {
         } else {
             sprintf(&sp34, "%s %s", msg, obtainedStr);
         }
-        // Presumably this is a strlen call?
-        msgLen = func_890CAE0(sp34);
+        msgLen = strlen(sp34);
         BlitChar(&sp34[0], 0, 12, 0x100);
         self->ext.relicOrb.unk7E = msgLen;
         self->ext.relicOrb.unk7C = 0;
