@@ -62,7 +62,7 @@ void EntityShuttingWindow(Entity* self) {
         self->ext.shuttingWindow.unk80 += self->ext.shuttingWindow.unk82;
         self->ext.shuttingWindow.unk82 -= 4;
         if (self->ext.shuttingWindow.unk80 < 0) {
-            PlaySfxPositional(NA_SE_EV_WINDOW_LATCH);
+            PlaySfxPositional(SFX_SHUTTING_WINDOW);
             self->ext.shuttingWindow.unk80 = 0;
             self->ext.shuttingWindow.timer = 32;
             self->step++;
