@@ -1,4 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+// st0 uses a union for g_Dialogue
+#ifdef STAGE_IS_ST0
+#define G_DIALOGUE g_Dialogue.std
+#else
+#define G_DIALOGUE g_Dialogue
+#endif
+
 #ifndef CUTSCENE_UNK1_NEXT_X
 #define CUTSCENE_UNK1_NEXT_X 2
 #endif
@@ -13,17 +21,17 @@ static
     void
     CutsceneUnk1(void) {
 #ifdef VERSION_HD
-    g_Dialogue.nextLineX = 0;
-    g_Dialogue.nextCharX = 0;
+    G_DIALOGUE.nextLineX = 0;
+    G_DIALOGUE.nextCharX = 0;
 #else
-    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
-    g_Dialogue.nextCharX = g_Dialogue.nextLineX = CUTSCENE_UNK1_NEXT_X;
+    G_DIALOGUE.nextLineY = G_DIALOGUE.startY + 0x14;
+    G_DIALOGUE.nextCharX = G_DIALOGUE.nextLineX = CUTSCENE_UNK1_NEXT_X;
 #endif
-    g_Dialogue.nextCharY = 0;
-    g_Dialogue.unk12 = 0;
-    g_Dialogue.nextCharTimer = 0;
-    g_Dialogue.unk17 = CUTSCENE_UNK1_UNK17;
+    G_DIALOGUE.nextCharY = 0;
+    G_DIALOGUE.unk12 = 0;
+    G_DIALOGUE.nextCharTimer = 0;
+    G_DIALOGUE.unk17 = CUTSCENE_UNK1_UNK17;
 #ifdef VERSION_HD
-    g_Dialogue.nextLineY = g_Dialogue.startY + 0x14;
+    G_DIALOGUE.nextLineY = G_DIALOGUE.startY + 0x14;
 #endif
 }

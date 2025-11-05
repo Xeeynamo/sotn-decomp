@@ -166,4 +166,9 @@ typedef struct {
     /* 0x1C */ s32 primIndex;         // primIndex: unk
 } Dialogue4;                          // size = 0x20
 
+typedef union DialogueST0 {
+    Dialogue std;
+    Dialogue2 alt;
+} DialogueST0;
+
 #endif // CUTSCENE_H

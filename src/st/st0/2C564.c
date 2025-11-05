@@ -2,12 +2,17 @@
 #include "st0.h"
 #include "sfx.h"
 
+// D_801C2578 is initialized in 2DAC8.c, but the bss layout for psx does not
+// allow for it to be defined in that file currently
 #ifdef VERSION_PSP
-extern bool g_isDraculaFirstFormDefeated; // bss
+extern u32 D_801C2578;                            // bss
+static bool g_isDraculaFirstFormDefeated = false; // bss for pspeu
 #else
-static bool g_isDraculaFirstFormDefeated = false;
+u32 D_801C2578;                                   // bss
+static bool g_isDraculaFirstFormDefeated = false; // bss for pspeu
 s32 D_80180910 = 0;
 #endif
+
 static u8 D_80180914[] = {0x03, 0x01, 0x04, 0x02, 0x05, 0x03, 0x06, 0x04,
                           0x07, 0x05, 0x08, 0x06, 0x13, 0x07, 0xFF, 0x00};
 static u8 D_80180924[] = {0x09, 0x07, 0x08, 0x06, 0x07, 0x05, 0x06, 0x04,

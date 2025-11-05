@@ -15,8 +15,17 @@ static void func_801AA218(s16 arg0) {
 }
 
 extern s32 g_SkipCutscene;
+#ifdef VERSION_PSP
 extern u32 g_CutsceneFlags;
-extern s32 g_IsCutsceneDone;
+extern bool g_IsCutsceneDone;
+#else
+// These two variables are initialized in cutscene.c, but defined here because
+// there is an unrelated variable stuck in between them and the rest of the
+// cutscene bss variables for the us version
+u32 g_CutsceneFlags;
+bool g_IsCutsceneDone;
+#endif
+
 static u8 D_80180830[] = {0x08, 0x05, 0x08, 0x06, 0x08, 0x07, 0xFF, 0x00};
 
 // This appears to be an unused animation and deadstripped on PSP
