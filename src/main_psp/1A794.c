@@ -1108,8 +1108,8 @@ static int func_psp_0891C204(RECT* rect, u_long* p, s32 width, s32 arg3) {
                 size = sp38;
             }
             toRead = size;
-            src = &D_psp_08B42080[x / 0x40 + y / 256 * 0x10]
-                                 [(x % 0x40) * 2 + (y % 0x100) * 128];
+            src = &D_psp_08B42080[x / 0x40 + y / 0x100 * 0x10]
+                                 [(x % 0x40) * 2 + (y % 0x100) * 0x80];
             dst = &ptr[width * (y - rect->y) + (x - rect->x) * 2];
             for (i = 0; i < toRead; i++) {
                 memcpy(dst, src, var_s3);
@@ -1587,10 +1587,10 @@ s32 func_psp_08921A38(POLY_G4* p) {
     a[3].unk4 = D_psp_08C629C8 + ptr->x3;
     a[3].unk8 = D_psp_08C629CC + ptr->y3;
     a[3].unkC = 1.0f;
-    a[0].unk0 = 0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
-    a[1].unk0 = 0x80000000 | (ptr->b1 << 0x10) | (ptr->g1 << 8) | ptr->r1;
-    a[2].unk0 = 0x80000000 | (ptr->b2 << 0x10) | (ptr->g2 << 8) | ptr->r2;
-    a[3].unk0 = 0x80000000 | (ptr->b3 << 0x10) | (ptr->g3 << 8) | ptr->r3;
+    a[0].unk0 = GU_ABGR(0x80, ptr->b0, ptr->g0, ptr->r0);
+    a[1].unk0 = GU_ABGR(0x80, ptr->b1, ptr->g1, ptr->r1);
+    a[2].unk0 = GU_ABGR(0x80, ptr->b2, ptr->g2, ptr->r2);
+    a[3].unk0 = GU_ABGR(0x80, ptr->b3, ptr->g3, ptr->r3);
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DB9C(a, 4);
     }
@@ -1642,7 +1642,7 @@ s32 func_psp_08925194(TILE* p) {
     a[3].unk8 = D_psp_08C629CC + ptr->y0 + ptr->h;
     a[0].unkC = a[1].unkC = a[2].unkC = a[3].unkC = 1.0f;
     a[0].unk0 = a[1].unk0 = a[2].unk0 = a[3].unk0 =
-        0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
+        GU_ABGR(0x80, ptr->b0, ptr->g0, ptr->r0);
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DB9C(a, 4);
     }
@@ -1666,8 +1666,7 @@ s32 func_psp_089254D8(LINE_F2* p) {
         a[0].unk4++;
     }
     a[0].unkC = a[1].unkC = 1.0f;
-    a[0].unk0 = a[1].unk0 =
-        0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
+    a[0].unk0 = a[1].unk0 = GU_ABGR(0x80, ptr->b0, ptr->g0, ptr->r0);
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DC48(a, 2);
     }
@@ -1683,8 +1682,7 @@ s32 func_psp_08925600(LINE_F4* p) {
     ptr = p;
 
     a[0].unkC = a[1].unkC = 1.0f;
-    a[0].unk0 = a[1].unk0 =
-        0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
+    a[0].unk0 = a[1].unk0 = GU_ABGR(0x80, ptr->b0, ptr->g0, ptr->r0);
     func_psp_08912008();
     a[0].unk4 = ptr->x0;
     a[0].unk8 = ptr->y0;
@@ -1736,8 +1734,8 @@ s32 func_psp_08925860(LINE_G2* p) {
         a[0].unk4++;
     }
     a[0].unkC = a[1].unkC = 1.0f;
-    a[0].unk0 = 0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
-    a[1].unk0 = 0x80000000 | (ptr->b1 << 0x10) | (ptr->g1 << 8) | ptr->r1;
+    a[0].unk0 = GU_ABGR(0x80, ptr->b0, ptr->g0, ptr->r0);
+    a[1].unk0 = GU_ABGR(0x80, ptr->b1, ptr->g1, ptr->r1);
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DC48(a, 2);
     }
@@ -1766,8 +1764,8 @@ s32 func_psp_08925A04(LINE_G4* p) {
     if (a[0].unk4 > a[1].unk4) {
         a[0].unk4++;
     }
-    a[0].unk0 = 0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
-    a[1].unk0 = 0x80000000 | (ptr->b1 << 0x10) | (ptr->g1 << 8) | ptr->r1;
+    a[0].unk0 = GU_ABGR(0x80, ptr->b0, ptr->g0, ptr->r0);
+    a[1].unk0 = GU_ABGR(0x80, ptr->b1, ptr->g1, ptr->r1);
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DC48(a, 2);
     }
@@ -1779,8 +1777,8 @@ s32 func_psp_08925A04(LINE_G4* p) {
     if (a[0].unk4 > a[1].unk4) {
         a[0].unk4++;
     }
-    a[0].unk0 = 0x80000000 | (ptr->b1 << 0x10) | (ptr->g1 << 8) | ptr->r1;
-    a[1].unk0 = 0x80000000 | (ptr->b2 << 0x10) | (ptr->g2 << 8) | ptr->r2;
+    a[0].unk0 = GU_ABGR(0x80, ptr->b1, ptr->g1, ptr->r1);
+    a[1].unk0 = GU_ABGR(0x80, ptr->b2, ptr->g2, ptr->r2);
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DC48(a, 2);
     }
@@ -1792,8 +1790,8 @@ s32 func_psp_08925A04(LINE_G4* p) {
     if (a[0].unk4 > a[1].unk4) {
         a[0].unk4++;
     }
-    a[0].unk0 = 0x80000000 | (ptr->b2 << 0x10) | (ptr->g2 << 8) | ptr->r2;
-    a[1].unk0 = 0x80000000 | (ptr->b3 << 0x10) | (ptr->g3 << 8) | ptr->r3;
+    a[0].unk0 = GU_ABGR(0x80, ptr->b2, ptr->g2, ptr->r2);
+    a[1].unk0 = GU_ABGR(0x80, ptr->b3, ptr->g3, ptr->r3);
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DC48(a, 2);
     }
