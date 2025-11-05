@@ -805,6 +805,12 @@ enum Sfx {
     /* 0x78E */ SFX_MAGIC_TOME_ATTACK,
     /* 0x78F */ SFX_LESSER_DEMON_SWIPE_ATTACK,
     /* 0x790 */ SFX_MALACHI_FLOATING_ORB,
+    /* 0x791 */ SFX_FIRE_DEMON_ATTACK_CHARGE,
+    /* 0x792 */ SFX_OWL_KNIGHT_TAUNT, // "Have at you!"
+    /* 0x793 */ SFX_OWL_KNIGHT_ATTACK,
+    /* 0x794 */ SFX_OWL_KNIGHT_REACT, // reaction to his pet dying (how sad!)
+    /* 0x795 */ SFX_OWL_KNIGHT_DEATH,
+    /* 0x796 */ SFX_OWL_DEATH,
     SFX_UNK_797 = 0x797,
     SFX_CLOCK_BELL = 0x7A6,
     SFX_CLOCK_ROOM_TICK = 0x7A9,
