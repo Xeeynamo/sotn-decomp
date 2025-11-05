@@ -739,7 +739,7 @@ void func_us_801B9BE4(Entity* self) {
             self->step = 1;
             if (g_CastleFlags[NO1_ELEVATOR_ACTIVATED]) {
                 g_api.func_800EA5E4(ANIMSET_OVL(3));
-                g_api.PlaySfxVolPan(0x7AA, 0, 0);
+                g_api.PlaySfxVolPan(SFX_ELEVATOR_GEARS_LOOP, 0, 0);
                 self->hitboxState = 0;
                 self->step = 2;
             }
@@ -781,7 +781,7 @@ void func_us_801B9BE4(Entity* self) {
                 g_api.func_80102CD8(1);
                 g_api.func_800EA5E4(ANIMSET_OVL(3));
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
-                g_api.PlaySfxVolPan(0x7AA, 0x7F, 0);
+                g_api.PlaySfxVolPan(SFX_ELEVATOR_GEARS_LOOP, 0x7F, 0);
                 g_CastleFlags[NO1_ELEVATOR_ACTIVATED] = 1;
                 self->step = 2;
             }

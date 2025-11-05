@@ -23,7 +23,7 @@ void EntityClockRoomController(Entity* self) {
     // Plays the clock bell
     if (self->ext.clockRoom.bellTimer != 0) {
         if (self->ext.clockRoom.bellDuration == 0) {
-            g_api.PlaySfx(SFX_CLOCK_BELL);
+            g_api.PlaySfx(SFX_CLOCK_ROOM_BELL);
             if (--self->ext.clockRoom.bellTimer) {
                 self->ext.clockRoom.bellDuration = 64;
             }

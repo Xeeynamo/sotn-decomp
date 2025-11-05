@@ -822,13 +822,23 @@ enum Sfx {
     /* 0x7A5 */ SFX_CASTLE_GATE_RISE,
 
     // vabid 3
-    SFX_CLOCK_BELL = 0x7A6,
-    SFX_CLOCK_ROOM_TICK = 0x7A9,
-    SFX_TELESCOPE_SHUTTER_CLICK = 0x7AC,
-    SFX_ALU_ZZZ_SNORE,
+    /* 0x7A6 */ SFX_CLOCK_ROOM_BELL,
+    /* 0x7A7 */ SFX_UNUSED_7A7,
+    /* 0x7A8 */ SFX_UNUSED_7A8,
+
+    // vabid 9
+    /* 0x7A9 */ SFX_CLOCK_ROOM_TICK,
+
+    // vabid 3
+    /* 0x7AA */ SFX_ELEVATOR_GEARS_LOOP,
+    /* 0x7AB */ SFX_TE2_UNK_7AB,
+    /* 0x7AC */ SFX_TELESCOPE_SHUTTER_CLICK,
+    /* 0x7AD */ SFX_ALU_ZZZ_SNORE,
     SFX_UNK_7AF = 0x7Af,
     SFX_ELEVATOR_DOOR = 0x7B1,
     SFX_ELEVATOR_SLAM = 0x7B3,
+
+    // vabid 9
     SFX_ELEVATOR_START = 0x7B5,
     SFX_BAD_LUCK_JINGLE,
     SFX_NO1_BIRD_CYCLE,
