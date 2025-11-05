@@ -530,10 +530,10 @@
 | sel   | func_psp_0923F460                        |       19 |          1 |        |       |     |
 | sel   | func_psp_0923F4D0                        |       19 |          1 |        |       |     |
 | sel   | func_psp_092459D8                        |       19 |          1 |        |       |     |
+| st0   | func_pspeu_092392D0                      |       19 |          1 |        |       |     |
 | st0   | func_pspeu_09237868                      |       19 |          1 |        |       |     |
 | st0   | func_pspeu_09237A40                      |       19 |          1 |        |       |     |
 | st0   | func_pspeu_09242A20                      |       19 |          1 |        |       |     |
-| st0   | SetCutsceneEnd                           |       19 |          1 |        |       |     |
 | dra   | func_psp_09137498                        |       19 |          2 |        |       |     |
 | main  | _gettimeofday                            |       19 |          2 |        |       |     |
 | main  | _rename                                  |       19 |          2 |        |       |     |
@@ -987,7 +987,7 @@
 | no3   | func_pspeu_09243108                      |       29 |          1 |        |       |     |
 | sel   | func_psp_09242B40                        |       29 |          1 |        |       |     |
 | sel   | func_psp_09245760                        |       29 |          1 |        |       |     |
-| st0   | CutsceneUnk1                             |       29 |          1 |        |       |     |
+| st0   | func_pspeu_09239060                      |       29 |          1 |        |       |     |
 | wrp   | func_psp_09244760                        |       29 |          1 |        |       |     |
 | dra   | func_psp_09104178                        |       29 |          2 |        |       |     |
 | main  | func_psp_0890837C                        |       29 |          2 |        |       |     |
@@ -1860,7 +1860,7 @@
 | lib   | func_psp_0925AC70                        |       57 |          2 |        |       |     |
 | no4   | func_pspeu_0925E1F8                      |       57 |          2 |        |       |     |
 | sel   | func_psp_09245690                        |       57 |          2 |        |       |     |
-| st0   | CutsceneUnk4                             |       57 |          2 |        |       |     |
+| st0   | func_pspeu_09238F90                      |       57 |          2 |        |       |     |
 | sel   | func_psp_09239228                        |       57 |          3 |        |       |     |
 | maria | func_pspeu_092B3750                      |       57 |          5 |        |       |     |
 | ric   | func_pspeu_092B1178                      |       57 |          5 |        |       |     |
@@ -2926,7 +2926,7 @@
 | lib   | func_psp_0925ADA0                        |      139 |          5 |        |       |     |
 | no3   | func_pspeu_09243168                      |      139 |          5 |        |       |     |
 | no4   | func_pspeu_0925E338                      |      139 |          5 |        |       |     |
-| st0   | SetCutsceneScript                        |      139 |          5 |        |       |     |
+| st0   | func_pspeu_092390C0                      |      139 |          5 |        |       |     |
 | main  | func_psp_0891E420                        |      139 |         12 |        |       |     |
 | ric   | func_pspeu_092C9988                      |      139 |         12 |        |       |     |
 | dra   | func_psp_090E7BC0                        |      139 |         15 |        |       |     |
@@ -3247,7 +3247,7 @@
 | no3   | func_pspeu_09242CA0                      |      212 |         14 |        |       |     |
 | no4   | func_pspeu_0925DE60                      |      212 |         14 |        |       |     |
 | sel   | func_psp_092452F8                        |      212 |         14 |        |       |     |
-| st0   | DrawCutsceneActorName                    |      212 |         14 |        |       |     |
+| st0   | func_pspeu_09238BF8                      |      212 |         14 |        |       |     |
 | lib   | func_psp_092670F8                        |      213 |         19 |        |       |     |
 | no4   | func_pspeu_09241B28                      |      213 |         25 |        |       |     |
 | sel   | func_psp_09244060                        |      214 |         26 | Yes    |       |     |
@@ -3335,7 +3335,7 @@
 | dra   | func_psp_090FF738                        |      242 |         31 |        |       |     |
 | lib   | func_psp_0925AFE8                        |      243 |         18 |        |       |     |
 | no3   | func_pspeu_092433B0                      |      243 |         18 |        |       |     |
-| st0   | CutsceneRun                              |      243 |         18 |        |       |     |
+| st0   | func_pspeu_09239308                      |      243 |         18 |        |       |     |
 | no4   | func_pspeu_09241098                      |      243 |         25 |        |       |     |
 | main  | func_psp_08938908                        |      243 |         31 |        |       |     |
 | no4   | EntityBoneArcherArrow                    |      244 |         31 |        |       |     |
