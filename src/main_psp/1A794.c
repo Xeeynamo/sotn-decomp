@@ -1417,14 +1417,20 @@ void func_psp_0891E994(u32* arg0) {
             D_psp_08C62AA8 = 0;
             temp_s5 = func_psp_0891AC24();
             if ((D_psp_08C62AAC == 0) && (D_psp_08C62AB0 == 0x100)) {
-                func_psp_089117F4(1, 0, 0, 0x100, 0x100, 0x200, temp_s5, 0, 0, 0x100, (u8*)sceGeEdramGetAddr() + 0xCC000);
+                func_psp_089117F4(1, 0, 0, 0x100, 0x100, 0x200, temp_s5, 0, 0,
+                                  0x100, (u8*)sceGeEdramGetAddr() + 0xCC000);
                 for (i = 0; i < 0x20; i++) {
                     func_psp_0891A99C(i);
                 }
             } else {
                 var_s4 = 0;
                 while (var_s4 < 0x100) {
-                    func_psp_089117F4(1, var_s4, 0, 0x40, 0xF0, 0x200, temp_s5, 0, 0, 0x40, &D_psp_08B42080[(D_psp_08C62AAC + var_s4) / 0x40 + (D_psp_08C62AB0 / 0x100) * 0x10][((D_psp_08C62AAC + var_s4) % 0x40) * 2 + (D_psp_08C62AB0 % 0x100) * 0x80]);
+                    func_psp_089117F4(
+                        1, var_s4, 0, 0x40, 0xF0, 0x200, temp_s5, 0, 0, 0x40,
+                        &D_psp_08B42080[(D_psp_08C62AAC + var_s4) / 0x40 +
+                                        (D_psp_08C62AB0 / 0x100) * 0x10]
+                                       [((D_psp_08C62AAC + var_s4) % 0x40) * 2 +
+                                        (D_psp_08C62AB0 % 0x100) * 0x80]);
                     var_s4 += 0x40;
                 }
                 for (i = 0; i < 0x20; i++) {
@@ -1436,7 +1442,11 @@ void func_psp_0891E994(u32* arg0) {
             D_psp_08C62AA4 = 0;
             var_s3 = 0;
             while (var_s3 < 0x40) {
-                func_psp_089117F4(1, var_s3, 0, 0x40, 0x100, 0x100, (u8*)sceGeEdramGetAddr() + 0xCC000, 0, 0, 0x40, &D_psp_08B42080[(var_s3 / 0x40) + 0x10][(var_s3 % 0x40) * 2]);
+                func_psp_089117F4(
+                    1, var_s3, 0, 0x40, 0x100, 0x100,
+                    (u8*)sceGeEdramGetAddr() + 0xCC000, 0, 0, 0x40,
+                    &D_psp_08B42080[(var_s3 / 0x40) + 0x10]
+                                   [(var_s3 % 0x40) * 2]);
                 var_s3 += 0x40;
             }
             for (i = 0; i < 0x20; i++) {
@@ -1449,13 +1459,13 @@ void func_psp_0891E994(u32* arg0) {
             func_psp_0891089C(0, 0, 0x1E0, 0x110);
             func_psp_0891B2CC(0, 0, 0x1E0, 0x110, 0x80000000);
             if (D_psp_08C62A3C > 0) {
-                D_psp_08C62A3C -= 1;
+                D_psp_08C62A3C--;
             }
         }
         if ((D_psp_08C629DC > 0x100) || (D_psp_089464E8 > 0)) {
             func_psp_0891E638();
             if (D_psp_089464E8 > 0) {
-                D_psp_089464E8 -= 1;
+                D_psp_089464E8--;
             }
         } else {
             sp50 = D_psp_08C62A40;
@@ -1516,9 +1526,12 @@ void func_psp_0891E994(u32* arg0) {
             var_s7 = sp48;
             func_psp_0891AF48(0);
             func_psp_0891089C(0, 0, 0x1E0, 0x110);
-            func_psp_0891B118(0, 0, (D_psp_08C62A64 * var_s7) / D_psp_08C62A64, 0, 0x80FFFFFF);
-            func_psp_0891B118(0, 1, (D_psp_08C62A5C * var_s7) / D_psp_08C62A64, 1, 0x800000FF);
-            func_psp_0891B118(0, 2, (D_psp_08C62A60 * var_s7) / D_psp_08C62A64, 2, 0x8000FF00);
+            func_psp_0891B118(0, 0, (D_psp_08C62A64 * var_s7) / D_psp_08C62A64,
+                              0, 0x80FFFFFF);
+            func_psp_0891B118(0, 1, (D_psp_08C62A5C * var_s7) / D_psp_08C62A64,
+                              1, 0x800000FF);
+            func_psp_0891B118(0, 2, (D_psp_08C62A60 * var_s7) / D_psp_08C62A64,
+                              2, 0x8000FF00);
         }
         func_psp_0891AF48(0);
         func_psp_0891089C(0, 0, 0x1E0, 0x110);
@@ -1531,7 +1544,8 @@ void func_psp_0891E994(u32* arg0) {
                 sp44 = 0;
             }
             sp4C = sp44;
-            sprintf(D_psp_08C62EC4, D_psp_0894654C, D_psp_08C62A4C, D_psp_08C62A48, D_psp_089464D8, D_psp_089464DC, sp4C);
+            sprintf(D_psp_08C62EC4, D_psp_0894654C, D_psp_08C62A4C,
+                    D_psp_08C62A48, D_psp_089464D8, D_psp_089464DC, sp4C);
             sceGuDebugPrint(0, 0x108, -1, D_psp_08C62EC4);
         }
         D_psp_08C62A4C++;
@@ -1557,7 +1571,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_0891FDC8);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_089201E8);
 
-s32 func_psp_08920488(void* p) { }
+s32 func_psp_08920488(void* p) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1A794", func_psp_08920498);
 
@@ -1642,7 +1656,8 @@ s32 func_psp_08925194(TILE* p) {
     a[3].unk4 = D_psp_08C629C8 + ptr->x0 + ptr->w;
     a[3].unk8 = D_psp_08C629CC + ptr->y0 + ptr->h;
     a[0].unkC = a[1].unkC = a[2].unkC = a[3].unkC = 1.0f;
-    a[0].unk0 = a[1].unk0 = a[2].unk0 = a[3].unk0 = 0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
+    a[0].unk0 = a[1].unk0 = a[2].unk0 = a[3].unk0 =
+        0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DB9C(a, 4);
     }
@@ -1657,7 +1672,7 @@ s32 func_psp_089254D8(LINE_F2* p) {
     LINE_F2* ptr;
 
     ptr = p;
-    
+
     a[0].unk4 = ptr->x0;
     a[0].unk8 = ptr->y0;
     a[1].unk4 = ptr->x1;
@@ -1666,7 +1681,8 @@ s32 func_psp_089254D8(LINE_F2* p) {
         a[0].unk4++;
     }
     a[0].unkC = a[1].unkC = 1.0f;
-    a[0].unk0 = a[1].unk0 = 0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
+    a[0].unk0 = a[1].unk0 =
+        0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DC48(a, 2);
     }
@@ -1682,7 +1698,8 @@ s32 func_psp_08925600(LINE_F4* p) {
     ptr = p;
 
     a[0].unkC = a[1].unkC = 1.0f;
-    a[0].unk0 = a[1].unk0 = 0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
+    a[0].unk0 = a[1].unk0 =
+        0x80000000 | (ptr->b0 << 0x10) | (ptr->g0 << 8) | ptr->r0;
     func_psp_08912008();
     a[0].unk4 = ptr->x0;
     a[0].unk8 = ptr->y0;
@@ -1725,7 +1742,7 @@ s32 func_psp_08925860(LINE_G2* p) {
     LINE_G2* ptr;
 
     ptr = p;
-    
+
     a[0].unk4 = ptr->x0;
     a[0].unk8 = ptr->y0;
     a[1].unk4 = ptr->x1;
@@ -1754,7 +1771,7 @@ s32 func_psp_08925A04(LINE_G4* p) {
     LINE_G4* ptr;
 
     ptr = p;
-    
+
     a[0].unkC = a[1].unkC = 1.0f;
     func_psp_08912008();
     a[0].unk4 = ptr->x0;
