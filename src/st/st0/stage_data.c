@@ -43,11 +43,11 @@ u8 e_dracula1_g9[] = {
 u8 e_dracula2_g9[] = {
 #include "gen/e_dracula2_g9.h"
 };
-u8 cutscene_richter[] = {
-#include "gen/cutscene_richter.h"
+u8 gfx_portrait_richter[] = {
+#include "gen/gfx_portrait_richter.h"
 };
-u8 cutscene_dracula[] = {
-#include "gen/cutscene_dracula.h"
+u8 gfx_portrait_dracula[] = {
+#include "gen/gfx_portrait_dracula.h"
 };
 u8 stage_title_st0_jp[] = {
 #include "gen/stage_title_st0_jp.h"

@@ -479,19 +479,22 @@ files:
           - [0x671D0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/st0.bin
     asset_path: assets/st/st0
-    src_path: src/st/st0_psp
+    src_path: src/st/st0
     splat_config_path: config/splat.pspeu.stst0.yaml
     segments:
       - start: 0x80
         vram: 0x09237700
         assets:
           - [0x80, skip]
-          - [0x1B700, cutscene, cutscene_data_it]
-          - [0x1BA10, cutscene, cutscene_data_sp]
-          - [0x1BCE8, cutscene, cutscene_data_fr]
-          - [0x1BFB0, cutscene, cutscene_data_ge]
-          - [0x1C298, cutscene, cutscene_data_en]
+          - [0x1B700, cutscene, cutscene_script_it]
+          - [0x1BA10, cutscene, cutscene_script_sp]
+          - [0x1BCE8, cutscene, cutscene_script_fr]
+          - [0x1BFB0, cutscene, cutscene_script_ge]
+          - [0x1C298, cutscene, cutscene_script_en]
           - [0x1C500, skip]
+          - [0x31FD8, rawgfx, gfx_portrait_richter, 48, 72, 8]
+          - [0x32D58, rawgfx, gfx_portrait_dracula, 48, 72, 8]
+          - [0x33AD8, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/wrp.bin
     asset_path: assets/st/wrp
     src_path: src/st/wrp
