@@ -6,7 +6,6 @@
 // It is based on struct Dialogue, which is used in cutscene.c
 // pspeu uses two independent memory addresses for 3101C.c and cutscene.c with
 // us sharing a single memory address via union
-#ifdef VERSION_PSP
 static DialogueST0 g_Dialogue;             // bss
 static UnkPrimStruct D_pspeu_0927B0C8[32]; // bss
 static u16 D_pspeu_0927B0C0;               // bss
@@ -33,30 +32,18 @@ static void SetPrim(s32 i, Primitive* prim) { D_pspeu_0927B0C8[i].prim = prim; }
 static void SetPrimYZero(s32 i, s16 prim_y0) {
     D_pspeu_0927B0C8[i].y0 = prim_y0;
 }
-#else
-extern DialogueST0 g_Dialogue;
-
-static u16 D_801BEE90[48][48]; // bss
-
-static u8 unused[] = {0x00, 0x81, 0x17, 0x08, 0x80, 0x08,
-                      0x80, 0xFF, 0xFF, 0x00, 0x00, 0x00};
-#endif
 
 u8 func_801B101C(u8* script) {
     Primitive* prim;
     s16 i;
     s16 shift;
 
-#ifdef VERSION_PSP
     D_pspeu_0927B0C0 = 0;
     D_pspeu_0927B0B8 = 0;
-#endif
-
     g_Dialogue.alt.primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
     if (g_Dialogue.alt.primIndex != -1) {
         g_Dialogue.alt.scriptCur = script;
 
-#ifdef VERSION_PSP
         g_Dialogue.alt.startY = g_Dialogue.alt.nextCharX = 0x200;
 
         switch (g_UserLanguage) {
@@ -92,10 +79,6 @@ u8 func_801B101C(u8* script) {
             g_Dialogue.alt.clutArrLength = 2;
             break;
         }
-#else
-        g_Dialogue.alt.nextCharX = 0x200;
-        g_Dialogue.alt.startY = 0x216;
-#endif
         g_Dialogue.alt.nextLineX = 0;
         g_Dialogue.alt.nextCharY = 0;
         g_Dialogue.alt.portraitAnimTimer = 0;
@@ -117,10 +100,8 @@ u8 func_801B101C(u8* script) {
             prim->u1 = 0xF0;
             prim->v1 = 0x10;
             prim->y0 = shift * 0x16 + 0xF0;
-#ifdef VERSION_PSP
             SetPrim(i, prim);
             SetPrimYZero(i, prim->y0);
-#endif
             prim->clut = 0x221;
             prim->priority = 3;
             prim->drawMode = DRAW_DEFAULT;
@@ -143,7 +124,6 @@ void func_801B1198(s16 yVal) {
     ClearImage(&rect, 0, 0, 0);
 }
 
-#ifdef VERSION_PSP
 u16* func_801B11E8(u8 ch) {
     u16 jCh;
     u8 sp1F;
@@ -171,61 +151,23 @@ static s32 func_pspeu_09242F68(u8* text) {
         }
     }
 }
-#else
-u16* func_801B11E8(u8 ch) {
-    u16 jCh;
-#ifndef VERSION_PC
-    if (ch >= 'a') {
-        jCh = ('ａ' - 'a') + ch;
-    } else if (ch >= 'A') {
-        jCh = ('Ａ' - 'A') + ch;
-    } else if (ch == ',') {
-        jCh = '，';
-    } else if (ch == '.') {
-        jCh = '．';
-    } else if (ch == '\'') {
-        jCh = '’';
-    } else if (ch == ' ') {
-        return NULL;
-    } else {
-        jCh = ('Ａ' - 'A') + ch;
-        if (ch >= 'a') {
-            ++jCh;
-        }
-    }
-#else
-    jCh = 'A';
-#endif
-
-    return g_api.func_80106A28(jCh, 0);
-}
-
-#include "prologue_cutscene_script.h"
-#endif
 
 void func_801B1298(Entity* self) {
     s16 y0;
-#ifdef VERSION_PSP
     u16 nextLineTwo;
     s32 arrLen;
-#endif
     Primitive* prim;
     s32 i;
     u16* glyph;
     u16 nextChar;
     u16* glyphPtr;
-#ifdef VERSION_PSP
     u16 primV0;
-#endif
     u16 glyphIndex;
     u16 y;
-#ifdef VERSION_PSP
     u16 nextLineOne;
-#endif
 
     switch (self->step) {
     case 0:
-#ifdef VERSION_PSP
         g_Dialogue.alt.script = GetLangAt(
             0, (u8*)prologue_script_en, (u8*)prologue_script_fr,
             (u8*)prologue_script_es, (u8*)prologue_script_de,
@@ -234,9 +176,6 @@ void func_801B1298(Entity* self) {
             func_8925F7C(0x100, 0xF1, 0x10, 1);
             func_8925F7C(0x110, 0xF2, 0x10, 1);
             func_8925F7C(0x100, 0xF0, 0x10, 1);
-#else
-        if (func_801B101C((u8*)prologue_script_en)) {
-#endif
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = g_Dialogue.alt.primIndex;
             ++self->step;
@@ -246,15 +185,10 @@ void func_801B1298(Entity* self) {
                 nextChar = *g_Dialogue.alt.scriptCur++;
                 if (nextChar == 1) {
                     // Gets weirdly relocated in the asm.
-#ifdef VERSION_PSP
                     *g_Dialogue.alt.scriptCur++;
                     g_Dialogue.alt.startY =
                         g_Dialogue.alt.nextCharX +
                         func_pspeu_09242F68(g_Dialogue.alt.scriptCur);
-#else
-                    g_Dialogue.alt.startY =
-                        g_Dialogue.alt.nextCharX + *g_Dialogue.alt.scriptCur++;
-#endif
                     ++g_Dialogue.alt.nextLineX;
                     break;
                 }
@@ -295,7 +229,6 @@ void func_801B1298(Entity* self) {
             switch (nextChar) {
             case 0:
                 self->step = 7;
-#ifdef VERSION_PSP
                 prim = g_Dialogue.alt.prim;
                 nextLineOne = (g_Dialogue.alt.nextLineX & 0xFFFF & 0xFFFF) * 16;
                 nextLineTwo = (g_Dialogue.alt.nextLineX & 0xFFFF & 0xFFFF) * 16;
@@ -311,37 +244,24 @@ void func_801B1298(Entity* self) {
                     }
                     prim = prim->next;
                 }
-#endif
                 return;
             case 1:
-#ifdef VERSION_PSP
                 *g_Dialogue.alt.scriptCur++;
                 g_Dialogue.alt.startY =
                     g_Dialogue.alt.nextCharX +
                     func_pspeu_09242F68(g_Dialogue.alt.scriptCur);
-#else
-                g_Dialogue.alt.startY =
-                    g_Dialogue.alt.nextCharX + *g_Dialogue.alt.scriptCur++;
-#endif
                 g_Dialogue.alt.nextLineX++;
                 if (g_Dialogue.alt.nextLineX > 15) {
                     g_Dialogue.alt.nextLineX = 0;
                 }
-#ifdef VERSION_PSP
                 func_801B1198(g_Dialogue.alt.nextLineX);
-#endif
                 g_Dialogue.alt.nextCharY = 0;
                 return;
             case 2:
-#ifdef VERSION_PSP
                 *g_Dialogue.alt.scriptCur++;
                 g_Dialogue.alt.startY =
                     g_Dialogue.alt.nextCharX +
                     func_pspeu_09242F68(g_Dialogue.alt.scriptCur);
-#else
-                g_Dialogue.alt.startY =
-                    g_Dialogue.alt.nextCharX + *g_Dialogue.alt.scriptCur++;
-#endif
                 g_Dialogue.alt.nextLineX++;
                 if (g_Dialogue.alt.nextLineX > 15) {
                     g_Dialogue.alt.nextLineX = 0;
@@ -361,12 +281,8 @@ void func_801B1298(Entity* self) {
                         prim->p1 += 0x16;
                     }
                 }
-#ifdef VERSION_PSP
                 g_Dialogue.alt.unk12 +=
                     g_Dialogue.alt.unk20[D_pspeu_0927B0B8++ % 3];
-#else
-                g_Dialogue.alt.unk12 += 0x58;
-#endif
                 g_Dialogue.alt.portraitAnimTimer += 0x16;
                 g_Dialogue.alt.nextCharY = 0;
                 return;
@@ -379,68 +295,51 @@ void func_801B1298(Entity* self) {
             LoadTPage(
                 (u_long*)glyph, 0, 0, g_Dialogue.alt.startY, y, 0xC, 0x10);
             g_Dialogue.alt.startY += 3;
-#ifdef VERSION_PSP
             nextChar = g_Dialogue.alt.startY - g_Dialogue.alt.nextCharX;
             if (0x38 <= nextChar && nextChar < 0x40) {
                 g_Dialogue.alt.startY += 8;
             }
-#endif
         } else {
             g_Dialogue.alt.startY += 2;
-#ifndef VERSION_PSP
-        }
-#endif
-        nextChar = g_Dialogue.alt.startY - g_Dialogue.alt.nextCharX;
-        if (0x38 <= nextChar && nextChar < 0x40) {
-            g_Dialogue.alt.startY += 8;
-#ifdef VERSION_PSP
-        }
-#endif
-    }
-    break;
-case 2:
-    break;
-case 7:
-    if (g_Dialogue.alt.nextCharY) {
-        g_Dialogue.alt.nextLineX++;
-        if (g_Dialogue.alt.nextLineX > 15) {
-            g_Dialogue.alt.nextLineX = 0;
-        }
-        g_Dialogue.alt.nextCharY = 0;
-    }
-}
-
-if (!g_Dialogue.alt.unk12) {
-    func_801B1198(g_Dialogue.alt.nextLineX);
-    g_Dialogue.alt.nextCharY = 1;
-#ifdef VERSION_PSP
-    g_Dialogue.alt.unk12 = g_Dialogue.alt.unk20[D_pspeu_0927B0B8++ % 3];
-#else
-            g_Dialogue.alt.unk12 = 88;
-#endif
-}
---g_Dialogue.alt.unk12;
-if (!g_Dialogue.alt.clutIndex) {
-    for (prim = g_Dialogue.alt.prim, i = 0; i < 32; ++i) {
-        prim->y0--;
-        if (prim->y0 == -22) {
-            prim->y0 = g_Dialogue.alt.portraitAnimTimer - prim->p1 + 330;
-            prim->p1 = g_Dialogue.alt.portraitAnimTimer;
-#ifdef VERSION_PSP
-            if (self->step == 7) {
-                prim->drawMode = DRAW_HIDE;
+            nextChar = g_Dialogue.alt.startY - g_Dialogue.alt.nextCharX;
+            if (0x38 <= nextChar && nextChar < 0x40) {
+                g_Dialogue.alt.startY += 8;
             }
-#endif
         }
-        prim = prim->next;
+        break;
+    case 2:
+        break;
+    case 7:
+        if (g_Dialogue.alt.nextCharY) {
+            g_Dialogue.alt.nextLineX++;
+            if (g_Dialogue.alt.nextLineX > 15) {
+                g_Dialogue.alt.nextLineX = 0;
+            }
+            g_Dialogue.alt.nextCharY = 0;
+        }
     }
-#ifdef VERSION_PSP
-    arrLen = g_Dialogue.alt.clutArrLength;
-    g_Dialogue.alt.clutIndex =
-        g_Dialogue.alt.clutIndexes[D_pspeu_0927B0C0++ % arrLen];
-#else
-            g_Dialogue.alt.clutIndex = 4;
-#endif
-}
---g_Dialogue.alt.clutIndex;
+
+    if (!g_Dialogue.alt.unk12) {
+        func_801B1198(g_Dialogue.alt.nextLineX);
+        g_Dialogue.alt.nextCharY = 1;
+        g_Dialogue.alt.unk12 = g_Dialogue.alt.unk20[D_pspeu_0927B0B8++ % 3];
+    }
+    --g_Dialogue.alt.unk12;
+    if (!g_Dialogue.alt.clutIndex) {
+        for (prim = g_Dialogue.alt.prim, i = 0; i < 32; ++i) {
+            prim->y0--;
+            if (prim->y0 == -22) {
+                prim->y0 = g_Dialogue.alt.portraitAnimTimer - prim->p1 + 330;
+                prim->p1 = g_Dialogue.alt.portraitAnimTimer;
+                if (self->step == 7) {
+                    prim->drawMode = DRAW_HIDE;
+                }
+            }
+            prim = prim->next;
+        }
+        arrLen = g_Dialogue.alt.clutArrLength;
+        g_Dialogue.alt.clutIndex =
+            g_Dialogue.alt.clutIndexes[D_pspeu_0927B0C0++ % arrLen];
+    }
+    --g_Dialogue.alt.clutIndex;
 }

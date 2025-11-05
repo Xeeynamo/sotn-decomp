@@ -10,7 +10,8 @@
 #ifdef VERSION_PC
 static
 #endif
-    void SetCutsceneEnd(u8* ptr) {
+    void
+    SetCutsceneEnd(u8* ptr) {
 #if !defined(VERSION_PSP)
     G_DIALOGUE.scriptEnd = ptr + 0x100000;
 #else

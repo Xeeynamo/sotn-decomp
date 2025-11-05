@@ -71,7 +71,7 @@ segments:
       - [0x2690, .data, 3D8F0]
       - [0x26B8, .data, gen/e_layout] # layout entries data
       - [0x29D8, .data, cutscene_data]
-      - [0x2C4C, .data, 3101C]
+      - [0x2C4C, .data, 3101C_psx]
       - [0x3124, .data, stage_data]
       - [0x226E0, .data, gen/sprites]
       - [0x27984, .rodata, 2805C]
@@ -107,7 +107,7 @@ segments:
       - [0x2BBBC, c, 2C564] # EntityDracula
       - [0x2DAC8, c]
       - [0x30030, c, prologue_scroll]
-      - [0x3101C, c]
+      - [0x3101C, c, 3101C_psx]
       - [0x3186C, c, st_update]
       - [0x31CA0, c, collision]
       - [0x330E0, c, create_entity]
@@ -127,7 +127,7 @@ segments:
       - [0x3EB64, .bss, 2DAC8]
       - [0x3EDFC, .bss, prologue_scroll]
       - [0x3EE10, bss, 3EE10]
-      - [0x3EE90, .bss, 3101C]
+      - [0x3EE90, .bss, 3101C_psx]
       - [0x40090, bss, 40090]
       - [0x400A0, .bss, create_entity]
       - [0x400B6, .bss, bss]
