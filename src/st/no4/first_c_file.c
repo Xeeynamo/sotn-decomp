@@ -2039,7 +2039,7 @@ void func_us_801C4BD8(Entity* self) {
         return;
     }
 
-    g_api.PlaySfxVolPan(SFX_UNK_797, volume, *dataPtr++);
+    g_api.PlaySfxVolPan(SFX_WATERFALL_LOOP, volume, *dataPtr++);
     D_us_80181108 = 1;
 }
 

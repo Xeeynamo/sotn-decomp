@@ -811,7 +811,7 @@ enum Sfx {
     /* 0x794 */ SFX_OWL_KNIGHT_REACT, // reaction to his pet dying (how sad!)
     /* 0x795 */ SFX_OWL_KNIGHT_DEATH,
     /* 0x796 */ SFX_OWL_DEATH,
-    SFX_UNK_797 = 0x797,
+    /* 0x797 */ SFX_WATERFALL_LOOP,
     SFX_CLOCK_BELL = 0x7A6,
     SFX_CLOCK_ROOM_TICK = 0x7A9,
     SFX_TELESCOPE_SHUTTER_CLICK = 0x7AC,
