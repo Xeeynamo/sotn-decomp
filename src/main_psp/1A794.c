@@ -120,21 +120,6 @@ typedef struct {
 } LINE_G4;
 
 typedef struct {
-    /* 0x00 */ O_TAG;
-    /* 0x04 */ u_char r0;
-    /* 0x05 */ u_char g0;
-    /* 0x06 */ u_char b0;
-    /* 0x07 */ u_char code;
-    /* 0x08 */ short x0;
-    /* 0x0A */ short y0;
-    /* 0x0C */ u_char u0;
-    /* 0x0D */ u_char v0;
-    /* 0x0E */ u_short clut;
-    /* 0x10 */ short w;
-    /* 0x12 */ short h;
-} SPRT; /* free size Sprite, size = 0x14 */
-
-typedef struct {
     O_TAG;
     u_char r0, g0, b0, code;
     short x0, y0;
