@@ -466,8 +466,8 @@ enum Sfx {
     /* 0x65B */ SFX_FM_EXPLODE_B,
     /* 0x65C */ SFX_FM_EXPLODE_C,
     /* 0x65D */ SFX_FM_EXPLODE_D,
-    /* 0x65E */ SFX_EXPLODE_SMALL, // Zombie death explosion
-    /* 0x65F */ SFX_UNUSED_FIRE_WHOOSH,
+    /* 0x65E */ SFX_EXPLODE_SMALL,            // Zombie death explosion
+    /* 0x65F */ SFX_PSP_MARIA_CARDINAL_CRASH, // unused in PSX
     /* 0x660 */ SFX_FIREBALL_SHOT_A,
     /* 0x661 */ SFX_FIREBALL_SHOT_B,
     /* 0x662 */ SFX_FIREBALL_SHOT_C,
