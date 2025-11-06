@@ -315,7 +315,7 @@ segments:
       - [0x3D760, rodata]
       - [0x3D788, .rodata, main_psp/36174]
       - [0x3D8B8, rodata]
-      - [0x649A4, data]
+      - [0x3E680, data]
       - {start: 0xAEF24, type: bss, vram: 0x089AD830, name: main_bss}
   - [0xAEF24, bin, elf_footer]
   - [0xB3E1C]
