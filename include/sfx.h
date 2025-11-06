@@ -273,7 +273,6 @@ enum {
 // STAGE DAI
 // Unknown SFX related to the priest
 #define SFX_UNK_4E5 0x4E5
-#define SFX_UNK_7BB 0x7BB
 
 // STAGE DRE
 #define NA_VO_SU_LAUGH 0x86E
@@ -850,8 +849,9 @@ enum Sfx {
     /* 0x7B8 */ SFX_UNK_TE2_7B8,
     /* 0x7B9 */ SFX_UNK_TE2_7B9,
     /* 0x7BA */ SFX_UNK_TE2_7BA,
-    SFX_CHAPEL_BELL = 0x7BC,
-    SFX_UNK_7BD = 0x7BD,
+    /* 0x7BB */ SFX_CONFESS_GHOST_CURTAIN_PULL,
+    /* 0x7BC */ SFX_CHAPEL_BELL,
+    /* 0x7BD */ SFX_WOODEN_BRIDGE_EXPLODE,
     SFX_UNK_7BE = 0x7BE,
     SFX_SCIFI_BLAST = 0x7D1,
     SFX_BOSS_DEFEATED,

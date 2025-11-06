@@ -1390,7 +1390,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
         self->ext.mariaCardinalCrash.timer = 0;
         self->ext.mariaCardinalCrash.velocityX = (rand() % 384) + 0x80;
         self->step = 1;
-        g_api.PlaySfx(SFX_UNK_FIRE_WHOOSH);
+        g_api.PlaySfx(SFX_UNUSED_FIRE_WHOOSH);
     } break;
     case 1: {
         self->ext.mariaCardinalCrash.timer++;
