@@ -662,11 +662,12 @@ void EntityBoneArkSkull(Entity* self) {
         break;
     case 1:
         self->ext.boneArk.unk80 += self->ext.boneArk.unk82;
-        if (self->ext.boneArk.unk80 > (0x900 - boneArkEntity->rotate)) {
+        if (self->ext.boneArk.unk80 > (ROT(202.5) - boneArkEntity->rotate)) {
             self->ext.boneArk.unk82 = -8;
         }
 
-        if (self->ext.boneArk.unk80 < (0x6D0 - boneArkEntity->rotate)) {
+        if (self->ext.boneArk.unk80 <
+            (ROT(153.28125) - boneArkEntity->rotate)) {
             self->ext.boneArk.unk82 = 8;
         }
 
@@ -691,8 +692,8 @@ void EntityBoneArkSkull(Entity* self) {
                 angle = ROT(225) - boneArkEntity->rotate;
             }
 
-            if (angle < (0x500 - boneArkEntity->rotate)) {
-                angle = 0x500 - boneArkEntity->rotate;
+            if (angle < (ROT(112.5) - boneArkEntity->rotate)) {
+                angle = ROT(112.5) - boneArkEntity->rotate;
             }
 
             angle &= 0xF00;
@@ -765,13 +766,13 @@ void EntityBoneArkSkull(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->ext.boneArk.unk80 -= 0x30;
-            if (self->ext.boneArk.unk80 < self->ext.boneArk.unk94 - 0x300) {
+            if (self->ext.boneArk.unk80 < self->ext.boneArk.unk94 - ROT(67.5)) {
                 self->step_s++;
             }
             break;
         case 1:
             self->ext.boneArk.unk80 += 0x18;
-            if (self->ext.boneArk.unk80 > self->ext.boneArk.unk94 + 0x100) {
+            if (self->ext.boneArk.unk80 > self->ext.boneArk.unk94 + ROT(22.5)) {
                 self->animCurFrame = 0xE;
                 self->step_s++;
             }
@@ -895,7 +896,7 @@ void EntityBoneArkLowerNeck(Entity* self) {
         dy = siblingEntity->posY.val - self->posY.val;
         xOffset = dx;
         yOffset = dy;
-        dy -= FIX(1.5);
+        dy -= FLT(24);
         dy -= (siblingEntity->ext.boneArk.unk8C.val << 8) >> 8;
         dx += (siblingEntity->ext.boneArk.unk88.val << 8) >> 8;
 
@@ -919,7 +920,7 @@ static void RenderDeathParts(Primitive* prim) {
 
     switch (prim->next->u2) {
     case 0:
-        LOW(prim->next->u0) = (prim->next->r3 % 2) * 0x18000 - 0x8000 - 0x4000;
+        LOW(prim->next->u0) = (prim->next->r3 % 2) * 0x18000 - 0xC000;
         LOW(prim->next->u0) += ((Random() & 3) << 0xD) - 0x4000;
         LOW(prim->next->r1) = -0x40000;
         LOW(prim->next->r1) -= (prim->next->r3 >> 1) << 0xD;
@@ -945,9 +946,9 @@ static void RenderDeathParts(Primitive* prim) {
                 CreateEntityFromCurrentEntity(E_EXPLOSION, newEntity);
 
                 if (prim->next->r3 >> 1) {
-                    newEntity->params = 2;
+                    newEntity->params = EXPLOSION_SMALL_MULTIPLE;
                 } else {
-                    newEntity->params = 3;
+                    newEntity->params = EXPLOSION_BIG;
                 }
 
                 newEntity->facingLeft = prim->next->r3 % 2;
@@ -1073,9 +1074,9 @@ void EntityBoneArk(Entity* self) {
             self->step_s = 0;
             if ((u16)angle < 0xC0) {
                 self->step++;
-                (self - 1)->ext.boneArk.crouching = 1;
-                (self - 2)->ext.boneArk.crouching = 1;
-                (self + 9)->ext.boneArk.crouching = 1;
+                (self - 1)->ext.boneArk.crouching = true;
+                (self - 2)->ext.boneArk.crouching = true;
+                (self + 9)->ext.boneArk.crouching = true;
             }
         }
 
@@ -1094,9 +1095,9 @@ void EntityBoneArk(Entity* self) {
         break;
     case CHARGING:
         if (self->ext.boneArk.unk90 == 0xF) {
-            (self - 1)->ext.boneArk.crouching = 0;
-            (self - 2)->ext.boneArk.crouching = 0;
-            (self + 9)->ext.boneArk.crouching = 0;
+            (self - 1)->ext.boneArk.crouching = false;
+            (self - 2)->ext.boneArk.crouching = false;
+            (self + 9)->ext.boneArk.crouching = false;
             (self + 9)->ext.boneArk.unk90 = 1;
             self->step_s = 0;
             self->step++;
@@ -1304,7 +1305,7 @@ void EntityBoneArkSkeleton(Entity* self) {
         otherSkeletonEntity->velocityX = 0;
         otherSkeletonEntity->step_s |= 16;
         if (!self->ext.boneArk.skeletonDied) {
-            otherSkeletonEntity->ext.boneArk.skeletonDied = 1;
+            otherSkeletonEntity->ext.boneArk.skeletonDied = true;
         }
         SetStep(DEATH);
     }
@@ -1448,7 +1449,7 @@ void EntityBoneArkSkeleton(Entity* self) {
         self->velocityX = otherSkeletonEntity->velocityX;
         if (self->ext.boneArk.crouching) {
             boneArkEntity->ext.boneArk.unk90 |= 1 << self->params;
-            self->ext.boneArk.crouching = 0;
+            self->ext.boneArk.crouching = false;
         }
 
         if (boneArkEntity->entityId != E_BONE_ARK) {
