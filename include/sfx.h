@@ -850,7 +850,11 @@ enum Sfx {
     /* 0x7B9 */ SFX_UNK_TE2_7B9,
     /* 0x7BA */ SFX_UNK_TE2_7BA,
     /* 0x7BB */ SFX_CONFESS_GHOST_CURTAIN_PULL,
+
+    // vabid 9
     /* 0x7BC */ SFX_CHAPEL_BELL,
+
+    // vabid 3
     /* 0x7BD */ SFX_WOODEN_BRIDGE_EXPLODE,
     SFX_UNK_7BE = 0x7BE,
     SFX_SCIFI_BLAST = 0x7D1,
