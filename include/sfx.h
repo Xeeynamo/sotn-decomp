@@ -294,9 +294,8 @@ enum {
 #define SFX_WATER_BUBBLE 0x7C4
 
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
-#define SFX_RBO5_UNK_7AE 0x7AE
-#define SFX_BO4_UNK_7CB 0x7CB
-#define SFX_BO4_UNK_7CC 0x7CC
+#define SFX_DOPPLEGANGER_DOOR_OPEN 0x7CB
+#define SFX_DOPPLEGANGER_APPEAR 0x7CC
 #define SFX_BO4_UNK_7D8 0x7D8
 #define SFX_BO4_UNK_7D7 0x7D7
 #define SFX_BO4_UNK_7D9 0x7D9
@@ -834,14 +833,23 @@ enum Sfx {
     /* 0x7AB */ SFX_TE2_UNK_7AB,
     /* 0x7AC */ SFX_TELESCOPE_SHUTTER_CLICK,
     /* 0x7AD */ SFX_ALU_ZZZ_SNORE,
-    SFX_UNK_7AF = 0x7Af,
-    SFX_ELEVATOR_DOOR = 0x7B1,
-    SFX_ELEVATOR_SLAM = 0x7B3,
+    /* 0x7AE */ SFX_DOP_DOOR_OPEN, // clone of 0x7CB & sounds different in NO1
+    /* 0x7AF */ SFX_RAIN_LOOP,
+    /* 0x7B0 */ SFX_TE5_UNK_7B0,
+    /* 0x7B1 */ SFX_ELEVATOR_DOOR,
+    /* 0x7B2 */ SFX_TE4_UNK_7B2,
+    /* 0x7B3 */ SFX_ELEVATOR_SLAM,
+    /* 0x7B4 */ SFX_TE4_UNK_7B4,
 
     // vabid 9
-    SFX_ELEVATOR_START = 0x7B5,
-    SFX_BAD_LUCK_JINGLE,
-    SFX_NO1_BIRD_CYCLE,
+    /* 0x7B5 */ SFX_ELEVATOR_START,
+    /* 0x7B6 */ SFX_BAD_LUCK_JINGLE,
+    /* 0x7B7 */ SFX_NO1_BIRD_CYCLE,
+
+    // vabid 3
+    /* 0x7B8 */ SFX_UNK_TE2_7B8,
+    /* 0x7B9 */ SFX_UNK_TE2_7B9,
+    /* 0x7BA */ SFX_UNK_TE2_7BA,
     SFX_CHAPEL_BELL = 0x7BC,
     SFX_UNK_7BD = 0x7BD,
     SFX_UNK_7BE = 0x7BE,

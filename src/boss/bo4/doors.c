@@ -501,7 +501,7 @@ void EntityUnkId19(Entity* self) {
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, TIMEATTACK_SET_VISITED);
         (self + 1)->ext.et_801BE2C8.unk84 = 1;
-        g_api.PlaySfx(SFX_BO4_UNK_7CC);
+        g_api.PlaySfx(SFX_DOPPLEGANGER_APPEAR);
         self->step++;
         break;
 
@@ -686,7 +686,7 @@ void EntityUnkId1A(Entity* self) {
             zPointer++;
         }
         self->ext.et_801BE2C8.unkA0 = 0;
-        g_api.PlaySfx(SFX_BO4_UNK_7CB);
+        g_api.PlaySfx(SFX_DOPPLEGANGER_DOOR_OPEN);
         self->step++;
         break;
 
