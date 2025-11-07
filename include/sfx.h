@@ -408,7 +408,7 @@ enum Sfx {
     /* 0x621 */ SFX_BAT_ECHO_D,
     /* 0x622 */ SFX_SKULL_BONK,
     /* 0x623 */ SFX_RIC_RSTONE_TINK, // Rebound Stone
-    /* 0x624 */ SFX_SMALL_BURST,
+    /* 0x624 */ SFX_SALEM_WITCH_CURSE_ATTACK,
     /* 0x625 */ SFX_ARROW_SHOT_A, // Magic Missile Shot
     /* 0x626 */ SFX_ARROW_SHOT_B,
     /* 0x627 */ SFX_ARROW_SHOT_C,

@@ -420,7 +420,7 @@ void EntitySalemWitch(Entity* self) {
         case ATTACK_CURSE_CAST:
             if (!(self->ext.salemWitch.timer & 0xF)) {
                 // This triggers 3x during the animation
-                PlaySfxPositional(SFX_SMALL_BURST);
+                PlaySfxPositional(SFX_SALEM_WITCH_CURSE_ATTACK);
             }
             if (!AnimateEntity(AnimFrames_CurseHandMovements, self)) {
                 SetSubStep(ATTACK_CURSE_CHARGE);
