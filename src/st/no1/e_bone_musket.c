@@ -203,7 +203,7 @@ void EntityBoneMusket(Entity* self) {
                 SetSubStep(2);
             }
             if (!self->poseTimer && self->pose == 0x1C) {
-                PlaySfxPositional(SFX_GRANDFATHER_CLOCK_TICK);
+                PlaySfxPositional(SFX_BONE_MUSKET_RELOAD);
             }
             break;
 

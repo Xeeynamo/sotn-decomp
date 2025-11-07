@@ -550,7 +550,7 @@ enum Sfx {
     /* 0x6AD */ SFX_UI_ALERT_TINK,
     /* 0x6AE */ SFX_TINK_JINGLE, // Frozen Shade Shards, NO1 Telescope jingle
     /* 0x6AF */ SFX_GUARD_TINK,
-    /* 0x6B0 */ SFX_GLASS_SHARDS, // (Succubus, Frozen Shade, Shamen Shield)
+    /* 0x6B0 */ SFX_GLASS_SHARDS, // Succubus, Frozen Shade, Shamen Shield
     /* 0x6B1 */ SFX_TRANSFORM_3X, // Karma Coin and shields
     /* 0x6B2 */ SFX_BIBLE_SCRAPE,
     /* 0x6B3 */ SFX_UNK_TE1_TICK,
@@ -561,8 +561,8 @@ enum Sfx {
     /* 0x6B8 */ SFX_UNK_TE3_LOW_CLOCK_TICK,
     /* 0x6B9 */ SFX_UNUSED_METAL_TING,
     /* 0x6BA */ SFX_FAST_SWORD_SWISHES, // Sword of Dawn
-    /* 0x6BB */ SFX_GRANDFATHER_CLOCK_TICK,
-    /* 0x6BC */ SFX_MULTI_CLOCK_TICK,
+    /* 0x6BB */ SFX_BONE_MUSKET_RELOAD,
+    /* 0x6BC */ SFX_SKELERANG_CATCH,
     /* 0x6BD */ SFX_QUIET_STEPS,
     /* 0x6BE */ SFX_BLIPS_A,
     /* 0x6BF */ SFX_UNUSED_BLIPS_B,
