@@ -15,8 +15,12 @@ enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
     PAL_SPIKES_DUST = 0x09B,
     PAL_HELLFIRE_BEAST_CAST_TWO = 0x15F,
+    PAL_BONE_ARK_PROJECTILE = 0x160,
+    PAL_BONE_ARK_LIGHTNING_BALL = 0x162,
     PAL_HELLFIRE_BEAST_THORSHAMMER = 0x16C,
     PAL_HELLFIRE_BEAST_FLAMEPILLAR = 0x16D,
+    PAL_BONE_ARK_LIGHTNING_PRIM = 0x19F,
+    PAL_BONE_ARK_PROJECTILE_EXPLODE = 0x200,
     PAL_HELLFIRE_BEAST_PRIMONE = 0x208,
     PAL_HELLFIRE_BEAST_PRIMTWO = 0x230,
     PAL_HELLFIRE_BEAST_LIGHTNING = 0x24A,
@@ -80,13 +84,13 @@ enum OVL_EXPORT(Entities) {
     E_HELLFIRE_BEAST_FLAME_PILLAR,      // EntityHellfireBeastFlamePillar
     E_HELLFIRE_BEAST_FLAME_PILLAR_ANIM, // EntityHellfireBeastFlamePillarAnimation
     E_HELLFIRE_BEAST_PUNCH_HITBOX,      // EntityHellfireBeastPunchHitbox
-    E_UNK_37,                           // func_us_801C839C
-    E_UNK_38,                           // func_us_801C8CE0
-    E_UNK_39,                           // func_us_801C7F84
-    E_UNK_3A,                           // func_us_801C7D98
-    E_UNK_3B,                           // func_us_801C774C
-    E_UNK_3C,                           // func_us_801C6360
-    E_UNK_3D,                           // func_us_801C7420
+    E_BONE_ARK,                         // EntityBoneArk
+    E_BONE_ARK_SKELETON,                // EntityBoneArkSkeleton
+    E_BONE_ARK_LOWER_NECK,              // EntityBoneArkLowerNeck
+    E_BONE_ARK_UPPER_NECK,              // EntityBoneArkUpperNeck
+    E_BONE_ARK_SKULL,                   // EntityBoneArkSkull
+    E_BONE_ARK_PROJECTILE,              // EntityBoneArkProjectile
+    E_BONE_ARK_ATTACK_EFFECTS,          // EntityBoneArkAttackEffects
     E_LOSSOTH,                          // EntityLossoth
     E_LOSSOTH_EFFECTS,                  // EntityLossothEffects
     E_LOSSOTH_FIREBALL,                 // EntityLossothFireball
