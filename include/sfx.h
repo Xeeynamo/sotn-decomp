@@ -422,7 +422,7 @@ enum Sfx {
     /* 0x62F */ SFX_WEAPON_APPEAR,  // Item Crash, Neutron Bomb
     /* 0x630 */ SFX_UNK_BETA_630,   // (MAD, TE1, TE2, TE3, TE4, TE5)
     /* 0x631 */ SFX_DEATH_AMBIENCE, // BGM ambience during first Death cutscene
-    /* 0x632 */ SFX_MAGIC_GLASS_BREAK, // Subweapon Container
+    /* 0x632 */ SFX_SUBWEAPON_CONTAINER_BREAK,
     /* 0x633 */ SFX_UI_CONFIRM,
     /* 0x634 */ SFX_CANDLE_HIT,
     /* 0x635 */ SFX_TELEPORT_BANG_A, // Used when teleport starts
@@ -434,7 +434,7 @@ enum Sfx {
     /* 0x63B */ SFX_UNUSED_UI_SELECT,
     /* 0x63C */ SFX_START_SLAM_A, // Dark Shield
     /* 0x63D */ SFX_START_SLAM_B, // Press Start, Door Open, Dracula Stomp, etc
-    /* 0x63E */ SFX_START_SLAM_C,
+    /* 0x63E */ SFX_UNUSED_START_SLAM_C,
     /* 0x63F */ SFX_ANIME_SWORD_A, // Sword Familiar
     /* 0x640 */ SFX_ANIME_SWORD_B, // Holy Rod ("Anime shing" element)
     /* 0x641 */ SFX_ANIME_SWORD_C,
@@ -458,14 +458,14 @@ enum Sfx {
     /* 0x653 */ SFX_EXPLODE_FAST_B,
     /* 0x654 */ SFX_EXPLODE_A,
     /* 0x655 */ SFX_EXPLODE_B,
-    /* 0x656 */ SFX_EXPLODE_C,
-    /* 0x657 */ SFX_EXPLODE_D,
-    /* 0x658 */ SFX_EXPLODE_E,
+    /* 0x656 */ SFX_UNUSED_EXPLODE_C,
+    /* 0x657 */ SFX_EXPLODE_D, // Blade, Gurkha, Hammer
+    /* 0x658 */ SFX_EXPLODE_E, // Tombstone, Yorick
     /* 0x659 */ SFX_EXPLODE_F,
-    /* 0x65A */ SFX_FM_EXPLODE_A, // FM synth explosion
+    /* 0x65A */ SFX_FM_EXPLODE_A, // FM synth explosion (Ape barrel and DRE)
     /* 0x65B */ SFX_FM_EXPLODE_B,
-    /* 0x65C */ SFX_FM_EXPLODE_C,
-    /* 0x65D */ SFX_FM_EXPLODE_D,
+    /* 0x65C */ SFX_UNUSED_FM_EXPLODE_C,
+    /* 0x65D */ SFX_FM_EXPLODE_D,             // Hammer, Lesser Demon
     /* 0x65E */ SFX_EXPLODE_SMALL,            // Zombie death explosion
     /* 0x65F */ SFX_PSP_MARIA_CARDINAL_CRASH, // unused in PSX
     /* 0x660 */ SFX_FIREBALL_SHOT_A,
