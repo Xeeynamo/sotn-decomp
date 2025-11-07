@@ -442,7 +442,7 @@ void EntitySalemWitch(Entity* self) {
                 SetStep(IDLE);
             }
             if (!self->poseTimer && self->pose == CurseProjectileSpawnpose) {
-                PlaySfxPositional(SFX_GUNSHOT);
+                PlaySfxPositional(SFX_SALEM_WITCH_CURSE_PROJ);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_SALEM_WITCH_CURSE, self, entity);

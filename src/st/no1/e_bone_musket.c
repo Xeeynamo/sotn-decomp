@@ -298,7 +298,7 @@ void func_us_801CF298(Entity* self) {
         prim->b0 = prim->b1 = 0x70;
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
-        PlaySfxPositional(SFX_GUNSHOT_HIGH);
+        PlaySfxPositional(SFX_BONE_MUSKET_SHOT);
 
     case 1:
         prim = self->ext.et_801CEB28.unk7C;

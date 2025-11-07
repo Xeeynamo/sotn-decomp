@@ -470,30 +470,30 @@ enum Sfx {
     /* 0x65F */ SFX_PSP_MARIA_CARDINAL_CRASH, // unused in PSX
     /* 0x660 */ SFX_FIREBALL_SHOT_A,
     /* 0x661 */ SFX_FIREBALL_SHOT_B,
-    /* 0x662 */ SFX_FIREBALL_SHOT_C,
-    /* 0x663 */ SFX_GUNSHOT,
-    /* 0x664 */ SFX_THUNDER_A,
+    /* 0x662 */ SFX_FIREBALL_SHOT_C, // Merman, Scylla
+    /* 0x663 */ SFX_SALEM_WITCH_CURSE_PROJ,
+    /* 0x664 */ SFX_THUNDER_A, // Iron Shield
     /* 0x665 */ SFX_THUNDER_B,
-    /* 0x666 */ SFX_THUNDER_C,
+    /* 0x666 */ SFX_UNUSED_THUNDER_C,
     /* 0x667 */ SFX_UNK_TE3_LOW_UI,
     /* 0x668 */ SFX_TRANSFORM,
     /* 0x669 */ SFX_MAGIC_WEAPON_APPEAR_A,
     /* 0x66A */ SFX_MAGIC_WEAPON_APPEAR_B,
-    /* 0x66B */ SFX_WEAPON_BREAK,
-    /* 0x66C */ SFX_BONE_SWORD_SWISH_A,
+    /* 0x66B */ SFX_AXE_KNIGHT_WEAPON_BREAK,
+    /* 0x66C */ SFX_BONE_SWORD_SWISH_A, // Runesword
     /* 0x66D */ SFX_BONE_SWORD_SWISH_B,
-    /* 0x66E */ SFX_BONE_SWORD_SWISH_C,
-    /* 0x66F */ SFX_TELEPORT_BANG_SHORT_A,
-    /* 0x670 */ SFX_TELEPORT_BANG_SHORT_B,
-    /* 0x671 */ SFX_TELEPORT_BANG_SHORT_C,
+    /* 0x66E */ SFX_BONE_SWORD_SWISH_C,        // Blade, Discus Lord
+    /* 0x66F */ SFX_UNK_TELEPORT_BANG_SHORT_A, // TE1, TE5
+    /* 0x670 */ SFX_TELEPORT_BANG_SHORT_B,     // RCEN and all beta overlays
+    /* 0x671 */ SFX_UNUSED_TELEPORT_BANG_SHORT_C,
     /* 0x672 */ SFX_NOISE_SWEEP_DOWN_A,
-    /* 0x673 */ SFX_NOISE_SWEEP_DOWN_B,
-    /* 0x674 */ SFX_BOING,
+    /* 0x673 */ SFX_NOISE_SWEEP_DOWN_B, // Slime
+    /* 0x674 */ SFX_FROG_TOAD_TONGUE,
     /* 0x675 */ SFX_LEVER_METAL_BANG,
     /* 0x676 */ SFX_SWITCH_CLICK,
-    /* 0x677 */ SFX_WEAPON_ENERGY,
+    /* 0x677 */ SFX_RUNESWORD_ATTACK,
     /* 0x678 */ SFX_WEAPON_HIT_A,
-    /* 0x679 */ SFX_WEAPON_HIT_B,
+    /* 0x679 */ SFX_UNK_TE3_WEAPON_HIT_B,
 
     // vabid 9
     /* 0x67A */ SFX_HEART_PICKUP,
@@ -507,7 +507,7 @@ enum Sfx {
     /* 0x682 */ SFX_KARMA_COIN_JINGLE,
     /* 0x683 */ SFX_QUICK_STUTTER_EXPLODE_B,
     /* 0x684 */ SFX_FM_THUNDER_EXPLODE,
-    /* 0x685 */ SFX_GUNSHOT_HIGH,
+    /* 0x685 */ SFX_BONE_MUSKET_SHOT,
     /* 0x686 */ SFX_UI_ERROR,
     /* 0x687 */ SFX_LEVEL_UP,
     /* 0x688 */ SFX_DEBUG_SELECT, // Low Heartbeat sfx used for Debug menu

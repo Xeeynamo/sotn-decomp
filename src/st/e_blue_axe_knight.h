@@ -721,7 +721,7 @@ void EntityAxeKnightThrowingAxe(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         EntityExplosionSpawn(0, 0);
-        PlaySfxPositional(SFX_WEAPON_BREAK);
+        PlaySfxPositional(SFX_AXE_KNIGHT_WEAPON_BREAK);
         return;
     }
 
