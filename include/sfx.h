@@ -289,7 +289,7 @@ enum {
 #define NA_VO_SU_DELICIOUS 0x8D1
 
 // STAGE NO4
-#define SFX_OAR_ROW 0x7BF
+
 #define SFX_WATER_BUBBLE 0x7C4
 
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
@@ -856,7 +856,8 @@ enum Sfx {
 
     // vabid 3
     /* 0x7BD */ SFX_WOODEN_BRIDGE_EXPLODE,
-    SFX_UNK_7BE = 0x7BE,
+    /* 0x7BE */ SFX_UNK_NO4_7BE, // unused exploding bridge debris?
+    /* 0x7BF */ SFX_OAR_ROW,
     SFX_SCIFI_BLAST = 0x7D1,
     SFX_BOSS_DEFEATED,
     SFX_TELEPORT_SYNTH_UP = 0x8BA,

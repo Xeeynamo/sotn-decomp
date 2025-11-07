@@ -2134,7 +2134,7 @@ void func_us_801C5020(Entity* self) {
         self->opacity = 128;
         self->rotate = 0;
         self->zPriority = 159;
-        PlaySfxPositional(SFX_UNK_7BE);
+        PlaySfxPositional(SFX_UNK_NO4_7BE);
     }
 
     if (self->params != 0) {
