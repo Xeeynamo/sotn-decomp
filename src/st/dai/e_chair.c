@@ -1,6 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
+// Values shared with e_confessional
+#define CONFESSIONAL_GHOST_READY 1
+enum ConfessionalGhostParams {
+    CONFESSIONAL_GHOST_PRIEST = 0,
+    CONFESSIONAL_GHOST_PARISHIONER = 1,
+    CONFESSIONAL_GHOST_BAD = 0x100,
+};
+//
+
 #define LEFT_CHAIR 0x100
 #define RIGHT_CHAIR 0x200
 

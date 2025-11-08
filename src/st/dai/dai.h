@@ -133,10 +133,4 @@ enum OVL_EXPORT(Entities) {
     NUM_ENTITIES,
 };
 
-// These are used by both e_chair and e_confessional
-#define CONFESSIONAL_GHOST_PRIEST 0
-#define CONFESSIONAL_GHOST_PARISHIONER 1
-#define CONFESSIONAL_GHOST_BAD 0x100
-#define CONFESSIONAL_GHOST_READY 1
-
 #endif // DAI_H
