@@ -217,7 +217,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         self->scaleX = self->scaleY = 0;
         // The primitive for the main shield appearing up behind Alucard
         prim = &g_PrimBuf[self->primIndex];
-        prim->clut = 0x19F;
+        prim->clut = PAL_UNK_19F;
         prim->tpage = 0x19;
         prim->u0 = prim->u2 = 0x80;
         prim->u1 = prim->u3 = 0x80 + 0x4F;
@@ -233,7 +233,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
         prim = prim->next;
         // The primitive for the little question mark above Alucard
-        prim->clut = 0x190;
+        prim->clut = PAL_UNK_190;
         prim->tpage = 0x1E;
         prim->u0 = prim->u2 = 0x78;
         prim->u1 = prim->u3 = 0x78 + 7;

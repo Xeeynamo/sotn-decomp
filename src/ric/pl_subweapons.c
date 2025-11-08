@@ -480,7 +480,7 @@ void RicEntitySubwpnKnife(Entity* self) {
         }
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1C;
-        prim->clut = 0x1AB;
+        prim->clut = PAL_UNK_1AB;
         prim->u0 = prim->u1 = 0x18;
         prim->v0 = prim->v2 = 0x18;
         prim->u2 = prim->u3 = 0x20;

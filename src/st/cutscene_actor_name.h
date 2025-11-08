@@ -52,7 +52,7 @@ static void DrawCutsceneActorName(u16 actorIndex, Entity* self) {
         } else {
             prim->type = PRIM_SPRT;
             prim->tpage = 0x1E;
-            prim->clut = 0x196;
+            prim->clut = PAL_UNK_196;
             prim->u0 = (ch & 0x0F) * FONT_W;
             prim->v0 = (ch & 0xF0) / (FONT_H / 4);
             prim->v1 = FONT_H;

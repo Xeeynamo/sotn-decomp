@@ -43,7 +43,7 @@ void EntityLifeUpSpawn(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         self->ext.lifeUpSpawn.prim2 = prim;
         prim->tpage = 0x1A;
-        prim->clut = 0x19F;
+        prim->clut = PAL_UNK_19F;
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 0x3F;
         prim->v0 = prim->v1 = 0xC0;
@@ -61,7 +61,7 @@ void EntityLifeUpSpawn(Entity* self) {
                 for (k = 0; k < 8; k++) {
                     UnkPolyFunc2(prim);
                     prim->tpage = 0x1A;
-                    prim->clut = 0x194;
+                    prim->clut = PAL_UNK_194;
                     prim->u0 = prim->u2 = 0;
                     prim->u1 = prim->u3 = 0x10;
                     prim->v0 = prim->v1 = 0x50;

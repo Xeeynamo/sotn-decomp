@@ -189,7 +189,7 @@ void EntityWeaponAttack(Entity* self) {
                         prim->b1 = 0;
                     prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                         prim->b3 = 0xFF;
-                    prim->clut = 0x159;
+                    prim->clut = PAL_FILL_ORANGE;
                     prim->tpage = 0x19;
                     prim->priority = PLAYER.zPriority + 8;
                     prim->type = PRIM_GT4;

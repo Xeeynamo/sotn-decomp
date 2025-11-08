@@ -26,7 +26,7 @@ void func_us_801C13A8(Entity* self) {
         self->unk5A = 0x79;
         self->animSet = ANIMSET_DRA(14);
         self->zPriority = RIC.zPriority + 6;
-        self->palette = PAL_OVL(0x25E);
+        self->palette = PAL_FLAG(0x25E);
         self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
         self->scaleX = self->scaleY = 0xC0;
@@ -64,7 +64,7 @@ void func_us_801C2688(Entity* entity) {
         entity->flags = FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED;
     }
     if (!(entity->params & 0xFF00)) {
-        g_Entities[D_us_80182870[entity->poseTimer]].palette = PAL_OVL(0x240);
+        g_Entities[D_us_80182870[entity->poseTimer]].palette = PAL_FLAG(0x240);
     }
     g_Entities[D_us_80182870[entity->poseTimer]].ext.player.unkA4 = 4;
     entity->poseTimer++;
@@ -162,7 +162,7 @@ void OVL_EXPORT(RicEntitySubwpnHolyWater)(Entity* self) {
         self->animCurFrame = 0x23;
         self->zPriority = RIC.zPriority + 2;
         self->unk5A = 0x24;
-        self->palette = PAL_OVL(0x22F);
+        self->palette = PAL_FLAG(0x22F);
         xMod = 0;
         if (self->facingLeft) {
             xMod = -xMod;
@@ -484,9 +484,9 @@ void OVL_EXPORT(RicEntitySubwpnCross)(Entity* self) {
     }
     // Applies a flickering effect
     if ((g_GameTimer >> 1) & 1) {
-        self->palette = PAL_OVL(0x1B0);
+        self->palette = PAL_FLAG(0x1B0);
     } else {
-        self->palette = PAL_OVL(0x1B1);
+        self->palette = PAL_FLAG(0x1B1);
     }
     psp_s1 = (s16*)self->ext.crossBoomerang.unk84;
     psp_s1 = &psp_s1[self->ext.crossBoomerang.unk80 * 2];
@@ -768,7 +768,7 @@ void BO6_RicEntityVibhutiCrashCloud(Entity* self) {
         self->flags |= FLAG_UNK_20000000;
         self->unk5A = 0x64;
         self->animSet = 0xE;
-        self->palette = PAL_OVL(0x19E);
+        self->palette = PAL_FLAG(0x19E);
         self->anim = D_us_801829D4;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_OPACITY;
