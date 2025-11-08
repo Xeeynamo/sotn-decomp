@@ -343,7 +343,7 @@ void RicEntitySubwpnHolyWater(Entity* self) {
             // @bug: should call RicCreateEntFactoryFromEntity instead in case
             // E_FACTORY goes out of order between RIC and DRA
             g_api.CreateEntFactoryFromEntity(self, BP_HOLYWATER_GLASS, 0);
-            g_api.PlaySfx(SFX_GLASS_BREAK_WHOOSH);
+            g_api.PlaySfx(SFX_RIC_HOLY_WATER_ATTACK);
             self->animSet = 0;
             self->hitboxState = 0;
             self->velocityX = self->velocityX >> 2;

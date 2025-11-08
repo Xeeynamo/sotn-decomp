@@ -46,7 +46,7 @@ void EntityOuijaTable(Entity* self) {
             CreateEntityFromEntity(E_EXPLOSION, self, otherEntity);
             otherEntity->params = 1;
         }
-        PlaySfxPositional(SFX_STUTTER_FIREBALL);
+        PlaySfxPositional(SFX_OUIJA_TABLE_DEATH);
         // Destroy the spinning objects on the table
         otherEntity = VASE;
         otherEntity->flags |= FLAG_UNK_2000;

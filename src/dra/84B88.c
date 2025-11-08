@@ -92,7 +92,7 @@ void EntitySubwpnKnife(Entity* self) {
                 self->posX.i.hi += xCol;
                 CreateEntFactoryFromEntity(self, FACTORY(BP_10, 0), 0);
                 self->posX.i.hi -= xCol;
-                PlaySfx(SFX_UI_TINK);
+                PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 self->step++;
                 return;
             }
@@ -540,7 +540,7 @@ void EntitySubwpnHolyWater(Entity* self) {
         }
 
         if (collisionFlags & 1) {
-            PlaySfx(SFX_FM_EXPLODE_GLASS_ECHO);
+            PlaySfx(SFX_ALU_HOLY_WATER_ATTACK);
             // Factory 59 has child 40, EntitySubwpnHolyWaterBreakGlass
             CreateEntFactoryFromEntity(self, FACTORY(BP_59, 0), 0);
             self->animSet = ANIMSET_DRA(0);
@@ -1686,7 +1686,7 @@ void EntitySubwpnReboundStone(Entity* self) {
     block_93:
         if (self->ext.reboundStone.unk82) {
             CreateEntFactoryFromEntity(self, 10, 0);
-            PlaySfx(SFX_UI_TINK);
+            PlaySfx(SFX_UI_SUBWEAPON_TINK);
         }
         if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
             self->posY.i.hi < -0x40 || self->posY.i.hi > 0x140 ||

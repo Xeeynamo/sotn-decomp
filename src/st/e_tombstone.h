@@ -40,7 +40,7 @@ void EntityTombstone(Entity* self) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->ext.tombstone.timer = 0x18;
             self->rotate = 0xFC0;
-            PlaySfxPositional(SFX_EXPLODE_ECHO);
+            PlaySfxPositional(SFX_TOMBSTONE_MOVE);
             SetStep(3);
         }
         break;

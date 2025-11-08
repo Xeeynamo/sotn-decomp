@@ -4304,7 +4304,7 @@ void EntitySubwpnReboundStone(Entity* self) {
     case 1:
         if (self->flags & FLAG_DEAD) {
             CreateEntFactoryFromEntity(self, BP_10, 0);
-            g_api.PlaySfx(SFX_UI_TINK);
+            g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
             self->step = 2;
             break;
         }
@@ -4468,7 +4468,7 @@ void EntitySubwpnReboundStone(Entity* self) {
     block_93:
         if (self->ext.reboundStone.unk82) {
             CreateEntFactoryFromEntity(self, 10, 0);
-            g_api.PlaySfx(SFX_UI_TINK);
+            g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
         }
         if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
             self->posY.i.hi < -0x40 || self->posY.i.hi > 0x140 ||
@@ -4673,7 +4673,7 @@ void EntitySubwpnKnife(Entity* self) {
                 CreateEntFactoryFromEntity(self, FACTORY(BP_10, 0), 0);
                 self->posX.i.hi -= xCol;
                 if (collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
-                    g_api.PlaySfx(SFX_UI_TINK);
+                    g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 } else {
                     g_api.PlaySfx(SFX_BO4_UNK_7E8);
                 }

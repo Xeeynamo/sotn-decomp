@@ -1104,7 +1104,7 @@ void EntityVenusWeedTendril(Entity* self) {
                 SetSubStep(VENUS_WEED_TENDRIL_ATTACK_LAUNCH);
             }
             if (!self->poseTimer && self->pose == SpikeSfxpose) {
-                PlaySfxPositional(SFX_DISSONANT_SCREECH);
+                PlaySfxPositional(SFX_VENUS_WEED_CHARGE_ATTACK);
             }
             break;
 

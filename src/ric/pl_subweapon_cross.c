@@ -235,7 +235,7 @@ void RicEntitySubwpnCross(Entity* self) {
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
         self->posY.i.hi -= 8;
-        g_api.PlaySfx(SFX_THROW_WEAPON_MAGIC);
+        g_api.PlaySfx(SFX_RIC_CRASH_CROSS);
         self->step++;
         break;
     case 1:

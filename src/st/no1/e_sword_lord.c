@@ -364,7 +364,7 @@ void EntitySwordLord(Entity* self) {
 
         case 3:
             if (!--self->ext.et_801CF850.unk7C) {
-                PlaySfxPositional(SFX_FM_MULTI_EXPLODE);
+                PlaySfxPositional(SFX_SWORD_LORD_EXPLODE);
                 DestroyEntity(self);
                 return;
             }

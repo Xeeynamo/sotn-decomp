@@ -234,7 +234,7 @@ void RicEntitySubwpnReboundStone(Entity* self) {
             // @bug: should call RicCreateEntFactoryFromEntity instead in case
             // E_FACTORY goes out of order between RIC and DRA
             g_api.CreateEntFactoryFromEntity(self, FACTORY(BP_42, 2), 0);
-            g_api.PlaySfx(SFX_UI_TINK);
+            g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
         }
         if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
             self->posY.i.hi < -0x40 || self->posY.i.hi > 0x140 ||

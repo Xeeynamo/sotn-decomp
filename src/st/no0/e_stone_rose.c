@@ -266,7 +266,7 @@ void func_us_801D8150(Entity* self) {
         self->ext.stoneRose.unk7E += 0x30;
         g_api.UpdateAnim(NULL, NULL);
         if (self->pose == 0x8 && self->poseTimer == 0x2F) {
-            PlaySfxPositional(SFX_SEED_BLIP);
+            PlaySfxPositional(SFX_STONE_ROSE_SEED);
             func_us_801D7D00(0U);
         }
         if (self->poseTimer < 0) {
@@ -299,7 +299,7 @@ void func_us_801D8150(Entity* self) {
         g_api.UpdateAnim(NULL, NULL);
         --self->ext.stoneRose.unk84;
         if ((self->ext.stoneRose.unk84 & 0x3F) == 0x1F) {
-            PlaySfxPositional(SFX_SEED_BLIP);
+            PlaySfxPositional(SFX_STONE_ROSE_SEED);
             func_us_801D7D00(1U);
         }
         break;

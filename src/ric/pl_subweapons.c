@@ -532,7 +532,7 @@ void RicEntitySubwpnKnife(Entity* self) {
                 self->posX.i.hi += xCol;
                 RicCreateEntFactoryFromEntity(self, FACTORY(BP_42, 2), 0);
                 self->posX.i.hi -= xCol;
-                g_api.PlaySfx(SFX_UI_TINK);
+                g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 self->step++;
                 return;
             }

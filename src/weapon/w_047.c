@@ -210,7 +210,7 @@ void EntityWeaponAttack(Entity* self) {
             yVar = self->posY.i.hi;
             if (self->flags & FLAG_HAS_PRIMS) {
                 if (!(g_GameTimer & 7)) {
-                    g_api.PlaySfx(SFX_WATER_DAMAGE_SWISHES);
+                    g_api.PlaySfx(SFX_RAPID_SCRAPE_3X);
                 }
 
                 prim = &g_PrimBuf[self->primIndex];

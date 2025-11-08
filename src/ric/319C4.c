@@ -1674,14 +1674,14 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         self->ext.ricStopWatch.unk84.val += 0xFFFF0000;
         if (self->ext.ricStopWatch.unk84.val <= 0x100000) {
             self->ext.ricStopWatch.t = 5;
-            g_api.PlaySfx(SFX_CLOCK_TICK);
+            g_api.PlaySfx(SFX_STOPWATCH_TICK);
             self->step++;
         }
         break;
     case 3:
         self->ext.ricStopWatch.unk7E++;
         if (self->ext.ricStopWatch.unk7E > 0x50) {
-            g_api.PlaySfx(SFX_CLOCK_TICK);
+            g_api.PlaySfx(SFX_STOPWATCH_TICK);
             self->ext.ricStopWatch.unk7E = 0;
             self->ext.ricStopWatch.unk90 = 1;
             self->ext.ricStopWatch.t--;
@@ -1744,7 +1744,7 @@ void RicEntitySubwpnStopwatch(Entity* self) {
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x40;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x40;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
-            g_api.PlaySfx(SFX_UI_TINK);
+            g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
             self->step++;
         }
         break;

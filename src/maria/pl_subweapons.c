@@ -793,7 +793,7 @@ void EntityMariaDragonCrash(Entity* self) {
             self->posX.val += self->velocityX;
             self->posY.val += self->velocityY;
             if ((self->ext.mariaDragon.timer % 120) == 0) {
-                g_api.PlaySfx(SFX_SWISHES_ECHO_REPEAT);
+                g_api.PlaySfx(SFX_HIPPOGRYPH_FIRE_ATTACK);
             }
             self->ext.mariaDragon.timer++;
             if (self->ext.mariaDragon.timer > 300) {
