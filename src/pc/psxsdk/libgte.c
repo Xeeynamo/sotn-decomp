@@ -13,7 +13,7 @@ long RotAverageNclip3(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, long* sxy0,
     return 0;
 }
 
-void func_80017008(VECTOR* v, long* l) { assert(false); }
+void VectorNormalS(VECTOR* v, long* l) { assert(false); }
 
 long RotAverage3(SVECTOR* v0, SVECTOR* v1, SVECTOR* v2, long* sxy0, long* sxy1,
                  long* sxy2, long* p, long* flag) {
