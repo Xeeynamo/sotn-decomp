@@ -165,3 +165,4 @@ D_psp_E_UNK_28 = 0x09297298;
 D_psp_E_UNK_27 = 0x092972A0;
 D_psp_E_UNK_26 = 0x092972A8;
 D_psp_E_UNK_23 = 0x092972C0;
+echo_flag = 0x09297F80;

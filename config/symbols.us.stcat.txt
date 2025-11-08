@@ -24,6 +24,7 @@ g_EInitCorpseweed = 0x801812FC;
 g_EInitCorpseweedProjectile = 0x80181308;
 CAT_RedDoorTiles = 0x80181320;
 CAT_BackgroundBlockInit = 0x80181344;
+echo_flag = 0x801814F8;
 CAT_PrizeDrops = 0x8018174C;
 UNK_Invincibility0 = 0x80181798;
 g_SineTable = 0x80181B9C;

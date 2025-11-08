@@ -3439,8 +3439,11 @@ typedef struct {
 } ET_StainedGlass;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 rotate;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s16 echoCooldown;
 } ET_Spikes;
 
 typedef struct {
