@@ -1997,35 +1997,35 @@ extern u8** g_PlOvlDopBatSpritesheet[1];
 // player turns white for some sort of status effect
 void EntityDopplegangerBlinkWhite(Entity* self) {
     Primitive* prim;
-    u8 var_s7;
-    u8 var_s6;
-    u8 sp7f;
-    u8 sp7e;
-    s16 sp7c;
-    s16 sp7a;
+    u8 xMargin;
+    u8 yMargin;
+    u8 wSprite;
+    u8 hSprite;
+    s16 xPivot;
+    s16 yPivot;
     s16 xOffset;
     s16 yOffset;
     s16 sp78;
     s16 sp76;
     s16 sp74;
-    s16 sp72;
-    s16 posX;
-    s16 posY;
+    s16 dopSpriteIndex;
+    s16 posX; // TODO: selfX
+    s16 posY; // TODO: selfY
     s16* sp5c;
-    u8* sp58;
+    u8* plSprite;
     s32 i;
     s32 sp54;
     s32 sp50;
 
-    s16 maskedParams;
+    s16 upperParams;
     s16 angle;
-    s16 sp6e;
-    s16* sp4c;
-    s16 sp6c;
-    s16 sp6a;
-    s16 sp68;
-    s16 sp66;
-    s16 sp64;
+    s16 angleRedIndex;
+    s16* dataPtr;
+    s16 angleGreenIndex;
+    s16 angleBlueIndex;
+    s16 redDivide;
+    s16 blueDivide;
+    s16 greenDivide;
     s16 sp62;
     s16 sp60;
 
@@ -2033,17 +2033,17 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
     Entity* sp3C;
     s32 sp38;
 
-    maskedParams = (self->params & 0x7F00) >> 8;
+    upperParams = (self->params & 0x7F00) >> 8;
 
-    if (((maskedParams & 0x3F) != 0x1D) &&
+    if (((upperParams & 0x3F) != 0x1D) &&
         (g_Dop.status & PLAYER_STATUS_MIST_FORM)) {
         D_us_80181BFC = 0;
         DestroyEntity(self);
         return;
     }
 
-    if ((D_us_80181BFC) && maskedParams != 0x20 && maskedParams != 0x21 &&
-        ((maskedParams & 0x3F) != 0x1D)) {
+    if ((D_us_80181BFC) && upperParams != 0x20 && upperParams != 0x21 &&
+        ((upperParams & 0x3F) != 0x1D)) {
         DestroyEntity(self);
         return;
     }
@@ -2062,27 +2062,27 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
         return;
     }
 
-    sp72 = *sp5c++;
-    sp72 &= 0x7FFF;
+    dopSpriteIndex = *sp5c++;
+    dopSpriteIndex &= 0x7FFF;
 
     posX = self->posX.i.hi;
     posY = self->posY.i.hi;
 
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(1)) {
-        sp58 = g_SpriteSheet[sp72];
+        plSprite = g_SpriteSheet[dopSpriteIndex];
     }
     if (DOPPLEGANGER.animSet == (s16)ANIMSET_OVL(2)) {
-        sp58 = (g_PlOvlDopBatSpritesheet)[sp72];
+        plSprite = (g_PlOvlDopBatSpritesheet)[dopSpriteIndex];
     }
 
-    var_s7 = 4;
-    var_s6 = 1;
-    sp7f = var_s7 + sp58[0];
-    sp7e = var_s6 + sp58[1];
-    xOffset = sp7f - var_s7;
-    yOffset = sp7e - var_s6;
-    sp7c = sp5c[0] + sp58[2];
-    sp7a = sp5c[1] + sp58[3];
+    xMargin = 4;
+    yMargin = 1;
+    wSprite = xMargin + plSprite[0];
+    hSprite = yMargin + plSprite[1];
+    xOffset = wSprite - xMargin; // TODO: or width
+    yOffset = hSprite - yMargin; // TODO: or height
+    xPivot = sp5c[0] + plSprite[2];
+    yPivot = sp5c[1] + plSprite[3];
 
     self->rotate = DOPPLEGANGER.rotate;
     self->drawFlags = DOPPLEGANGER.drawFlags;
@@ -2091,7 +2091,7 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
     self->rotPivotY = DOPPLEGANGER.rotPivotY;
     self->rotPivotX = DOPPLEGANGER.rotPivotX;
 
-    sp4c = D_us_8018192C[maskedParams & 0x3F];
+    dataPtr = D_us_8018192C[upperParams & 0x3F];
     switch (self->step) {
     case 0:
         if (func_8011BD48(self)) {
@@ -2108,45 +2108,45 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
         for (i = 0; i < 8; i++) {
             D_us_801818EC[i] = i << 9;
             prim->tpage = 0x10;
-            prim->clut = sp4c[3];
+            prim->clut = dataPtr[3];
             prim->r0 = prim->b0 = prim->g0 = prim->r1 = prim->b1 = prim->g1 =
                 prim->r2 = prim->b2 = prim->g2 = prim->r3 = prim->b3 =
                     prim->g3 = 0x80;
             prim->priority = DOPPLEGANGER.zPriority + 2;
 
-            prim->drawMode = sp4c[8] + DRAW_COLORS + DRAW_UNK02;
+            prim->drawMode = dataPtr[8] + DRAW_COLORS + DRAW_UNK02;
             prim = prim->next;
         }
-        self->ext.playerBlink.unk8A = sp4c[9];
-        self->ext.playerBlink.unk90 = 0;
+        self->ext.playerBlink.unk8A = dataPtr[9];
+        self->ext.playerBlink.colorIntensity = 0;
         self->ext.playerBlink.unk98 = 0;
         self->ext.playerBlink.unk9A = 0x100;
         self->step++;
-        if (maskedParams == 0x20) {
+        if (upperParams == 0x20) {
             self->step = 8;
         }
-        if (maskedParams == 0x21) {
+        if (upperParams == 0x21) {
             self->step = 0xA;
         }
         break;
     case 1:
-        if (sp4c[7] == 0x7008) {
-            self->ext.playerBlink.unk90 += 0x50;
+        if (dataPtr[7] == 0x7008) {
+            self->ext.playerBlink.colorIntensity += 0x50;
         } else {
-            self->ext.playerBlink.unk90 += 0xA;
+            self->ext.playerBlink.colorIntensity += 0xA;
         }
-        if (self->ext.playerBlink.unk90 > 0x100) {
-            self->ext.playerBlink.unk90 = 0x100;
-            self->ext.playerBlink.unk80 = sp4c[7];
+        if (self->ext.playerBlink.colorIntensity > 0x100) {
+            self->ext.playerBlink.colorIntensity = 0x100;
+            self->ext.playerBlink.unk80 = dataPtr[7];
             self->step++;
         }
         break;
     case 2:
-        if (sp4c[7] >= 0x7000) {
+        if (dataPtr[7] >= 0x7000) {
             self->ext.playerBlink.unk80 = 8;
-            switch ((u32)sp4c[7]) {
+            switch ((u32)dataPtr[7]) {
             case 0x7000:
-                if (g_Dop.timers[1] == 0) {
+                if (g_Dop.timers[ALU_T_CURSE] == 0) {
                     self->step++;
                 }
                 break;
@@ -2180,14 +2180,14 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
         }
         break;
     case 3:
-        self->ext.playerBlink.unk90 -= 10;
-        if (self->ext.playerBlink.unk90 < 0) {
+        self->ext.playerBlink.colorIntensity -= 10;
+        if (self->ext.playerBlink.colorIntensity < 0) {
             DestroyEntity(self);
             return;
         }
         break;
     case 8:
-        D_us_80181BFC = 1;
+        D_us_80181BFC = 1; // TODO: g_Dop.unk6C = 1;
         self->ext.playerBlink.unk98 += 8;
         self->ext.playerBlink.unk9C += 256;
         if (self->ext.playerBlink.unk98 > 128) {
@@ -2209,12 +2209,12 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
                 prim->clut = 0x15F;
                 prim = prim->next;
             }
-            D_us_80181BFC = 0;
+            D_us_80181BFC = 0; // TODO: g_Dop.unk6C = 0;
             return;
         }
         break;
     case 10:
-        D_us_80181BFC = 1;
+        D_us_80181BFC = 1; // TODO: g_Dop.unk6C = 1;
         self->ext.playerBlink.unk98 += 8;
         self->ext.playerBlink.unk9C += 0x100;
         if (self->ext.playerBlink.unk98 > 0x80) {
@@ -2230,20 +2230,20 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
     sp76 = self->ext.playerBlink.unk98;
     sp54 = 3;
     sp50 = 6;
-    if (sp4c[7] == 0x700A) {
+    if (dataPtr[7] == 0x700A) {
         sp50 = 0;
         sp54 = 0;
     }
     self->ext.playerBlink.unk82 += self->ext.playerBlink.unk8A;
     if (self->facingLeft) {
-        posX = posX - sp7c;
+        posX = posX - xPivot;
     } else {
-        posX = posX + sp7c;
+        posX = posX + xPivot;
     }
-    posY = posY + sp7a;
+    posY = posY + yPivot;
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 8; i++) {
-        if (maskedParams & 0x40) {
+        if (upperParams & 0x40) {
             switch (i) {
             case 0:
                 if (self->facingLeft) {
@@ -2252,12 +2252,12 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
                     prim->x1 = posX + xOffset / 2;
                 }
                 prim->x0 = posX;
-                prim->u0 = var_s7;
-                prim->u1 = var_s7 + xOffset / 2;
+                prim->u0 = xMargin;
+                prim->u1 = xMargin + xOffset / 2;
                 prim->y1 = posY;
                 prim->y0 = posY;
-                prim->v1 = var_s6;
-                prim->v0 = var_s6;
+                prim->v1 = yMargin;
+                prim->v0 = yMargin;
                 break;
             case 1:
                 if (self->facingLeft) {
@@ -2267,10 +2267,10 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
                     prim->x0 = posX + xOffset / 2;
                     prim->x1 = posX + xOffset;
                 }
-                prim->u0 = var_s7 + xOffset / 2;
-                prim->u1 = var_s7 + xOffset;
+                prim->u0 = xMargin + xOffset / 2;
+                prim->u1 = xMargin + xOffset;
                 prim->y0 = prim->y1 = posY;
-                prim->v0 = prim->v1 = var_s6;
+                prim->v0 = prim->v1 = yMargin;
                 break;
             case 2:
                 if (self->facingLeft) {
@@ -2278,11 +2278,11 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
                 } else {
                     prim->x0 = prim->x1 = posX + xOffset;
                 }
-                prim->u0 = prim->u1 = var_s7 + xOffset;
+                prim->u0 = prim->u1 = xMargin + xOffset;
                 prim->y0 = posY;
                 prim->y1 = posY + yOffset / 2;
-                prim->v0 = var_s6;
-                prim->v1 = var_s6 + yOffset / 2;
+                prim->v0 = yMargin;
+                prim->v1 = yMargin + yOffset / 2;
                 break;
             case 3:
                 if (self->facingLeft) {
@@ -2291,11 +2291,11 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
                     prim->x0 = prim->x1 = posX + xOffset;
                 }
 
-                prim->u0 = prim->u1 = var_s7 + xOffset;
+                prim->u0 = prim->u1 = xMargin + xOffset;
                 prim->y0 = posY + yOffset / 2;
                 prim->y1 = posY + yOffset;
-                prim->v0 = var_s6 + yOffset / 2;
-                prim->v1 = var_s6 + yOffset;
+                prim->v0 = yMargin + yOffset / 2;
+                prim->v1 = yMargin + yOffset;
                 break;
             case 4:
                 if (self->facingLeft) {
@@ -2305,10 +2305,10 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
                     prim->x0 = posX + xOffset;
                     prim->x1 = posX + xOffset / 2;
                 }
-                prim->u0 = var_s7 + xOffset;
-                prim->u1 = var_s7 + xOffset / 2;
+                prim->u0 = xMargin + xOffset;
+                prim->u1 = xMargin + xOffset / 2;
                 prim->y0 = prim->y1 = posY + yOffset;
-                prim->v0 = prim->v1 = var_s6 + yOffset;
+                prim->v0 = prim->v1 = yMargin + yOffset;
                 break;
             case 5:
                 if (self->facingLeft) {
@@ -2317,31 +2317,31 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
                     prim->x0 = posX + xOffset / 2;
                 }
                 prim->x1 = posX;
-                prim->u0 = var_s7 + xOffset / 2;
-                prim->u1 = var_s7;
+                prim->u0 = xMargin + xOffset / 2;
+                prim->u1 = xMargin;
                 prim->y0 = prim->y1 = posY + yOffset;
-                prim->v0 = prim->v1 = var_s6 + yOffset;
+                prim->v0 = prim->v1 = yMargin + yOffset;
 
                 break;
             case 6:
                 prim->x1 = posX;
                 prim->x0 = posX;
-                prim->u1 = var_s7;
-                prim->u0 = var_s7;
+                prim->u1 = xMargin;
+                prim->u0 = xMargin;
                 prim->y0 = posY + yOffset;
                 prim->y1 = posY + yOffset / 2;
-                prim->v0 = var_s6 + yOffset;
-                prim->v1 = var_s6 + yOffset / 2;
+                prim->v0 = yMargin + yOffset;
+                prim->v1 = yMargin + yOffset / 2;
                 break;
             case 7:
                 prim->x1 = posX;
                 prim->x0 = posX;
-                prim->u1 = var_s7;
-                prim->u0 = var_s7;
+                prim->u1 = xMargin;
+                prim->u0 = xMargin;
                 prim->y0 = posY + yOffset / 2;
                 prim->y1 = posY;
-                prim->v0 = var_s6 + yOffset / 2;
-                prim->v1 = var_s6;
+                prim->v0 = yMargin + yOffset / 2;
+                prim->v1 = yMargin;
                 break;
             }
             if (self->facingLeft) {
@@ -2356,8 +2356,8 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
             prim->y2 = prim->y3 =
                 (posY + yOffset / 2) -
                 ((rsin(self->ext.playerBlink.unk82) >> 4) * sp50 >> 8);
-            prim->u2 = prim->u3 = var_s7 + xOffset / 2;
-            prim->v2 = prim->v3 = var_s6 + yOffset / 2;
+            prim->u2 = prim->u3 = xMargin + xOffset / 2;
+            prim->v2 = prim->v3 = yMargin + yOffset / 2;
         } else {
             if (self->facingLeft) {
                 prim->x0 = prim->x2 = (posX - xOffset) + 1;
@@ -2366,7 +2366,7 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
                 prim->x0 = prim->x2 = posX;
                 prim->x1 = prim->x3 = posX + xOffset;
             }
-            if (maskedParams == 0x20 || maskedParams == 0x21) {
+            if (upperParams == 0x20 || upperParams == 0x21) {
                 sp74 = (rsin(sp78) >> 7) * sp76 / 256;
                 prim->x0 += sp74;
                 prim->x1 += sp74;
@@ -2378,55 +2378,55 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
             prim->y0 = prim->y1 = posY + yOffset * i / 8;
             prim->y2 = prim->y3 = posY + yOffset * (i + 1) / 8;
             if (self->facingLeft) {
-                prim->u0 = prim->u2 = sp7f - 1;
-                prim->u1 = prim->u3 = var_s7 - 1;
+                prim->u0 = prim->u2 = wSprite - 1;
+                prim->u1 = prim->u3 = xMargin - 1;
             } else {
-                prim->u0 = prim->u2 = var_s7;
-                prim->u1 = prim->u3 = sp7f;
+                prim->u0 = prim->u2 = xMargin;
+                prim->u1 = prim->u3 = wSprite;
             }
-            prim->v0 = prim->v1 = var_s6 + yOffset * i / 8;
-            prim->v2 = prim->v3 = var_s6 + yOffset * (i + 1) / 8;
+            prim->v0 = prim->v1 = yMargin + yOffset * i / 8;
+            prim->v2 = prim->v3 = yMargin + yOffset * (i + 1) / 8;
         }
 
         g_api.func_800EB758(self->posX.i.hi, self->posY.i.hi, self,
                             self->drawFlags, (POLY_GT4*)prim, self->facingLeft);
 
-        if (maskedParams != 0x20 && maskedParams != 0x21) {
-            sp6e = sp4c[0];
-            sp6c = sp4c[2];
-            sp6a = sp4c[1];
-            sp68 = sp4c[4];
-            sp64 = sp4c[6];
-            sp66 = sp4c[5];
+        if (upperParams != 0x20 && upperParams != 0x21) {
+            angleRedIndex = dataPtr[0];
+            angleGreenIndex = dataPtr[2];
+            angleBlueIndex = dataPtr[1];
+            redDivide = dataPtr[4];
+            greenDivide = dataPtr[6];
+            blueDivide = dataPtr[5];
             // clang-format off
-            if (maskedParams & 0x40) {
-                angle = D_us_801818EC[(i + sp6e) % 8];
-                prim->r0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
-                angle = D_us_801818EC[(i + sp6c) % 8];
-                prim->g0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
-                angle = D_us_801818EC[(i + sp6a) % 8];
-                prim->b0 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
-                angle = D_us_801818EC[(i + sp6e + 1) % 8];
-                prim->r1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
-                angle = D_us_801818EC[(i + sp6c + 1) % 8];
-                prim->g1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
-                angle = D_us_801818EC[(i + sp6a + 1) % 8];
-                prim->b1 = (((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+            if (upperParams & 0x40) {
+                angle = D_us_801818EC[(i + angleRedIndex) % 8];
+                prim->r0 = (((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / redDivide);
+                angle = D_us_801818EC[(i + angleGreenIndex) % 8];
+                prim->g0 = (((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / greenDivide);
+                angle = D_us_801818EC[(i + angleBlueIndex) % 8];
+                prim->b0 = (((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / blueDivide);
+                angle = D_us_801818EC[(i + angleRedIndex + 1) % 8];
+                prim->r1 = (((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / redDivide);
+                angle = D_us_801818EC[(i + angleGreenIndex + 1) % 8];
+                prim->g1 = (((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / greenDivide);
+                angle = D_us_801818EC[(i + angleBlueIndex + 1) % 8];
+                prim->b1 = (((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / blueDivide);
                 prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3 = 0;
                 D_us_801818EC[i] += self->ext.playerBlink.unk8A;
             } else {
-                angle = D_us_801818EC[(i + sp6e) % 8];
-                prim->r0 = prim->r1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
-                angle = D_us_801818EC[(i + sp6c) % 8];
-                prim->g0 = prim->g1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
-                angle = D_us_801818EC[(i + sp6a) % 8];
-                prim->b0 = prim->b1 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
-                angle = D_us_801818EC[(i + sp6e + 1) % 8];
-                prim->r2 = prim->r3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp68);
-                angle = D_us_801818EC[(i + sp6c + 1) % 8];
-                prim->g2 = prim->g3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp64);
-                angle = D_us_801818EC[(i + sp6a + 1) % 8];
-                prim->b2 = prim->b3 =(((rsin(angle) + 0x1000) >> 6) * self->ext.playerBlink.unk90 / sp66);
+                angle = D_us_801818EC[(i + angleRedIndex) % 8];
+                prim->r0 = prim->r1 =(((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / redDivide);
+                angle = D_us_801818EC[(i + angleGreenIndex) % 8];
+                prim->g0 = prim->g1 =(((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / greenDivide);
+                angle = D_us_801818EC[(i + angleBlueIndex) % 8];
+                prim->b0 = prim->b1 =(((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / blueDivide);
+                angle = D_us_801818EC[(i + angleRedIndex + 1) % 8];
+                prim->r2 = prim->r3 =(((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / redDivide);
+                angle = D_us_801818EC[(i + angleGreenIndex + 1) % 8];
+                prim->g2 = prim->g3 =(((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / greenDivide);
+                angle = D_us_801818EC[(i + angleBlueIndex + 1) % 8];
+                prim->b2 = prim->b3 =(((rsin(angle) + FLT(1.0)) >> 6) * self->ext.playerBlink.colorIntensity / blueDivide);
                 D_us_801818EC[i] += self->ext.playerBlink.unk8A;
             }
         }
@@ -2434,7 +2434,8 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
         prim = prim->next;
     }
     func_us_801C4954(1, 1);
-    if (((maskedParams & 0x3F) == 0) || ((maskedParams & 0x3F) == 7)) {
+    if (((upperParams & 0x3F) == 0) || ((upperParams & 0x3F) == 7)) {
+        // set invincibility frames
         func_us_801C4A30(1, 0xA);
     }
 }

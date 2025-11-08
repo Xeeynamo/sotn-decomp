@@ -1619,7 +1619,7 @@ typedef struct {
     s16 unk88;
     s16 unk8A;
     struct Entity* parent;
-    s16 unk90;
+    s16 colorIntensity;
     s16 unk92;
     s32 unk94;
     s16 unk98;
