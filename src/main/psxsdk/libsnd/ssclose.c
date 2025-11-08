@@ -27,4 +27,4 @@ void _SsClose(s16 seq_sep_num) {
 
 void SsSeqClose(short seq_access_num) { _SsClose(seq_access_num); }
 
-void SsSepClose(s16 sep_access_num) { _SsClose(sep_access_num); }
+void SsSepClose(short sep_access_num) { _SsClose(sep_access_num); }

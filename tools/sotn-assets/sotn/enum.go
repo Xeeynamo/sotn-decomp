@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"io"
+	"os/exec"
 	"regexp"
 	"strings"
 )
@@ -78,4 +79,31 @@ func ParseCEnum(r io.Reader, name string, min int) (map[int]string, error) {
 		return nil, err
 	}
 	return enumMap, nil
+}
+
+// Read an enum from a header file after prepreprocessing
+func FetchEnumWithMin(srcDir, ovlName, enumName string, min int) (map[int]string, error) {
+    header := fmt.Sprintf("%s/%s.h", srcDir, ovlName)
+    cpp, err := exec.LookPath("cpp")
+    cmd := exec.Command(cpp,
+                        fmt.Sprintf("-DVERSION=%s"),
+                        "-lang-c",
+                        "-Iinclude",
+                        "-Iinclude/psxsdk",
+                        "-fno-builtin",
+                        "-undef",
+                        "-P",
+                        header)
+    o, err := cmd.Output()
+
+	if err != nil {
+		return nil, fmt.Errorf("failed preprocess header: %s %s: %w", cmd.Path, cmd.Args, err)
+	}
+    r := strings.NewReader(string(o))
+	return ParseCEnum(r, enumName, min)
+}
+
+
+func FetchEnum(srcDir, ovlName, enumName string) (map[int]string, error) {
+    return FetchEnumWithMin(srcDir, ovlName, enumName, 0)
 }

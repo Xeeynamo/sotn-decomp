@@ -79,7 +79,7 @@ static s32 g_MenuUnk084V1[] = {0x10, 0x10, 0x08, 0x08, 0x08, 0x08, 0x08, 0x08};
 #include "../../get_lang.h"
 
 s32 func_psp_09237ED8(char* arg0, s32 arg1, s32 arg2) {
-    s32 ret = arg1 + ((arg2 - func_890CAE0(arg0)) * 16) / 2;
+    s32 ret = arg1 + ((arg2 - strlen(arg0)) * 16) / 2;
     return ret;
 }
 

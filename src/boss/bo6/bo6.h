@@ -25,6 +25,11 @@ typedef enum EntityIDs {
     /* 0x13 */ E_ID_13,
     /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
     /* 0x15 */ E_GREY_PUFF,
+    /* 0x17 */ E_ID_17 = 0x17,
+
+    /* 0x21 */ E_ID_21 = 0x21,
+    /* 0x23 */ E_ID_23 = 0x23,
+    /* 0x24 */ E_ID_24 = 0x24,
 
     /* 0x40 */ E_RICHTER = STAGE_ENTITY_START,
     /* 0x41 */ E_ID_41,
@@ -34,8 +39,13 @@ typedef enum EntityIDs {
     /* 0x90 */ E_ID_90 = 0x90,
 } EntityIDs;
 
+#ifdef VERSION_PSP
+extern s32 D_pspeu_0927BAF8;
+#define E_ID(ID_17) D_pspeu_0927BAF8
+#endif
+
 // same as `RicSteps`, but like Doppleganger, offset by 1
-typedef enum {
+typedef enum RicSteps {
     /* 0x01 */ PL_S_STAND = 1,
     /* 0x02 */ PL_S_WALK,
     /* 0x03 */ PL_S_CROUCH,
@@ -69,32 +79,15 @@ typedef enum {
     /* 0x1F */ PL_S_30, // unused
     /* 0x20 */ PL_S_31, // unused
     /* 0x21 */ PL_S_INIT,
-    /* 0x40 */ PL_S_64 = 0x40,
-    /* 0x50 */ PL_S_80 = 0x50,
-    /* 0x60 */ PL_S_96 = 0x60,
-    /* 0x70 */ PL_S_112 = 0x70,
+    // various endings
+    /* 0x40 */ PL_S_ENDING_1 = 0x40,
+    /* 0x50 */ PL_S_ENDING2 = 0x50,
+    /* 0x60 */ PL_S_ENDING_3 = 0x60,
+    /* 0x70 */ PL_S_ENDING_4 = 0x70,
     /* 0xF0 */ PL_S_DEBUG = 0xF0,
 } OVL_EXPORT(RicSteps);
 
-// TODO: share with richter
-enum RicTimers {
-    PL_T_POISON,
-    PL_T_CURSE,
-    PL_T_2,
-    PL_T_3,
-    PL_T_4,
-    PL_T_5,
-    PL_T_6,
-    PL_T_7,
-    PL_T_8,
-    PL_T_ATTACK,
-    PL_T_10,
-    PL_T_RUN,
-    PL_T_12,
-    PL_T_INVINCIBLE_SCENE, // "dying" in the prologue
-    PL_T_INVINCIBLE,
-    PL_T_AFTERIMAGE_DISABLE,
-};
+#include "../../ric/ric_shared.h"
 
 #define RIC g_Entities[STAGE_ENTITY_START]
 

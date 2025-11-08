@@ -34,12 +34,7 @@ type layouts struct {
 }
 
 func fetchEntityIDsFromHeaderFile(overlay string) (map[int]string, error) {
-	f, err := os.Open("src/st/" + overlay + "/" + overlay + ".h")
-	if err != nil {
-		return nil, err
-	}
-	defer f.Close()
-	return sotn.ParseCEnum(f, "EntityIDs", 0x100)
+	return sotn.FetchEnumWithMin("src/st/" + overlay, overlay, "EntityIDs", 0x100)
 }
 
 func readEntityLayoutEntry(file io.ReadSeeker, ovlName string) (layoutEntry, error) {

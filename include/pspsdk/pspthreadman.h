@@ -1026,7 +1026,7 @@ int sceKernelReferAlarmStatus(SceUID alarmid, SceKernelAlarmInfo *info);
 /* Callbacks. */
 
 /** Callback function prototype */
-typedef int (*SceKernelCallbackFunction)(int arg1, int arg2, void *arg);
+typedef int (*SceKernelCallbackFunction)(int count, int arg1, void *arg2);
 
 /** Structure to hold the status information for a callback */
 typedef struct SceKernelCallbackInfo {

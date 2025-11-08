@@ -94,7 +94,7 @@ void CutsceneUnk3(s16 yOffset) {
     rect.w = 64;
     rect.h = 12;
     ClearImage(&rect, 0, 0, 0);
-    func_890A3C0(&D_pspeu_09299478, 0, 0x380);
+    memset(D_pspeu_09299478, 0, 0x380);
 }
 void CutsceneUnk4(void) {
     Primitive* prim;
