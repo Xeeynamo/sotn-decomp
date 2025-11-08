@@ -1,5 +1,26 @@
 version: pspeu
 files:
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PS.ELF
+    asset_path: assets/main_psp
+    src_path: src/main_psp
+    splat_config_path: config/splat.pspeu.main.yaml
+    segments:
+      - start: 0
+        vram: 0x08900000
+        assets:
+          - [0x0, skip]
+          - [0x3E680, rawgfx, D_psp_0893CF8C, 48, 72, 8]
+          - [0x3F400, rawgfx, D_psp_0893DD0C, 48, 72, 8]
+          - [0x40180, rawgfx, D_psp_0893EA8C, 48, 72, 8]
+          - [0x40F00, rawgfx, D_psp_0893F80C, 48, 72, 8]
+          - [0x41C80, rawgfx, D_psp_0894058C, 48, 72, 8]
+          - [0x42A00, rawgfx, D_psp_0894130C, 48, 72, 8]
+          - [0x43780, rawgfx, D_psp_0894208C, 48, 72, 8]
+          - [0x44500, rawgfx, D_psp_08942E0C, 48, 72, 8]
+          - [0x45280, rawgfx, D_psp_08943B8C, 48, 72, 8]
+          - [0x46000, rawgfx, D_psp_0894490C, 48, 72, 8]
+          - [0x46D80, rawgfx, D_psp_0894568C, 48, 72, 8]
+          - [0x47B00, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dra.bin
     asset_path: assets/dra
     src_path: src/dra

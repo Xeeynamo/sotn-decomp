@@ -944,7 +944,7 @@ void func_801042C4(s32 arg0) {
         sp10.vz = (*(&D_800A33A0[i][0]))->vz + (*(&D_800A33A0[i][1]))->vz +
                   (*(&D_800A33A0[i][2]))->vz;
 
-        func_80017008(&sp10, &D_80137D40[i]);
+        VectorNormalS(&sp10, &D_80137D40[i]);
     }
 
     for (i = 0; i < LEN(D_801379E0); i++) {
@@ -955,7 +955,7 @@ void func_801042C4(s32 arg0) {
                   (*(&D_800A3210[i][2]))->vy;
         sp10.vz = (*(&D_800A3210[i][0]))->vz + (*(&D_800A3210[i][1]))->vz +
                   (*(&D_800A3210[i][2]))->vz;
-        func_80017008(&sp10, &D_80137CA0[i]);
+        VectorNormalS(&sp10, &D_80137CA0[i]);
     }
 
     SetGeomScreen(0x100);
@@ -1148,7 +1148,7 @@ static void func_80104790(s32 arg0, s32 arg1, s32 arg2) {
                                    (vecScaledShifted[i].vy >> 0xC);
             sp94.vz = sp7c[j].vz = ((vecTriplet[j]->vz * arg1) >> 8) +
                                    (vecScaledShifted[i].vz >> 0xC);
-            func_80017008(&sp94, &sp64[j]);
+            VectorNormalS(&sp94, &sp64[j]);
         }
         Nclip3_result = RotAverageNclip3(
             &sp7c[0], &sp7c[1], &sp7c[2], (s32*)&prim->x0, (s32*)&prim->x1,
@@ -1265,7 +1265,7 @@ static void func_80105078(s32 arg0, s32 arg1) {
             vec.vx = rotVecs[j].vx = (sp90[j]->vx * arg0) >> 8;
             vec.vy = rotVecs[j].vy = (sp90[j]->vy * arg0) >> 8;
             vec.vz = rotVecs[j].vz = (sp90[j]->vz * arg0) >> 8;
-            func_80017008(&vec, &unkSvectors[j]);
+            VectorNormalS(&vec, &unkSvectors[j]);
         }
         nclip_result = RotAverageNclip3(
             &rotVecs[0], &rotVecs[1], &rotVecs[2], (s32*)&prim->x0,

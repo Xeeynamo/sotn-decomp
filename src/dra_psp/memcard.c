@@ -91,14 +91,14 @@ s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data,
     return ret;
 }
 
-s32 MemcardEraseFile(s32 nPort, s32 nCard, s32 arg2, s32 arg3) {
+s32 MemcardEraseFile(s32 nPort, s32 nCard, const char* name, s32 arg3) {
     if (nPort != 0) {
         return -1;
     }
     if (nCard != 0) {
         return -1;
     }
-    return func_89192EC(arg2, arg3);
+    return func_89192EC(name, arg3);
 }
 
 s32 MemcardClose(s32 nPort) { return 1; }

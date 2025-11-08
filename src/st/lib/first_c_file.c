@@ -217,7 +217,7 @@ void func_us_801AE8E8(Entity* self) {
     prim2 = self->ext.et_801AE8E8.unk98;
     for (i = 0; i < 8; i++) {
         RotTransPers(*temp_a0_2, &((long*)SPAD(0))[i], &p, &flag);
-        func_80017008(*temp_a0_3, &sp70);
+        VectorNormalS(*temp_a0_3, &sp70);
         NormalColorDpq(&sp70, &sp68, p, &((long*)SPAD(8))[i]);
         temp_a0_2++;
         temp_a0_3++;
