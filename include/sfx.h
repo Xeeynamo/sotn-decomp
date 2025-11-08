@@ -575,7 +575,7 @@ enum Sfx {
     /* 0x6C6 */ SFX_BOSS_WING_FLAP,
     /* 0x6C7 */ SFX_WHIP_TWIRL_SWISH, // Many enemies
     /* 0x6C8 */ SFX_BONE_THROW, // Wereskeleton, Flea Armor, Slogra, and more
-    /* 0x6C9 */ SFX_CREAK,      // Bone Archer, Wereskeleton
+    /* 0x6C9 */ SFX_BONE_CREAK, // Bone Archer, Wereskeleton
     /* 0x6CA */ SFX_FLEA_ARMOR_EXPLODE,
     /* 0x6CB */ SFX_RED_SKEL_COLLAPSE,
     /* 0x6CC */ SFX_RED_SKEL_REBUILD,

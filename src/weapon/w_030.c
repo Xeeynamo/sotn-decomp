@@ -565,7 +565,7 @@ void func_ptr_80170008(Entity* self) {
         break;
     case 2:
         if (self->poseTimer == 1 && self->pose == 2) {
-            g_api.PlaySfx(SFX_CREAK);
+            g_api.PlaySfx(SFX_BONE_CREAK);
         }
         if (self->poseTimer == 1 && self->pose == 5) {
             g_api.PlaySfx(SFX_ARROW_SHOT_C);
