@@ -7,7 +7,7 @@ void InitGeom();
 typedef struct {
     short m[3][3]; // 3 x 3 matrix coefficient value
     long t[3];     // Parallel transfer volume
-} MATRIX;          // size = 0x20
+} MATRIX;          // size = 0x1E
 
 typedef struct {
     long vx, vy, vz; // Vector coordinates
