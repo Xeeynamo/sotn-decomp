@@ -55,13 +55,13 @@ void EntityHellfireBeastThorsHammer(Entity* self);
 void EntityHellfireBeastFlamePillar(Entity* self);
 void EntityHellfireBeastFlamePillarAnimation(Entity* self);
 void EntityHellfireBeastPunchHitbox(Entity* self);
-void func_us_801C839C(Entity* self);
-void func_us_801C8CE0(Entity* self);
-void func_us_801C7F84(Entity* self);
-void func_us_801C7D98(Entity* self);
-void func_us_801C774C(Entity* self);
-void func_us_801C6360(Entity* self);
-void func_us_801C7420(Entity* self);
+void EntityBoneArk(Entity* self);
+void EntityBoneArkSkeleton(Entity* self);
+void EntityBoneArkLowerNeck(Entity* self);
+void EntityBoneArkUpperNeck(Entity* self);
+void EntityBoneArkSkull(Entity* self);
+void EntityBoneArkProjectile(Entity* self);
+void EntityBoneArkAttackEffects(Entity* self);
 void EntityLossoth(Entity* self);
 void EntityLossothEffects(Entity* self);
 void EntityLossothFireball(Entity* self);
@@ -141,13 +141,13 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityHellfireBeastFlamePillar,
     EntityHellfireBeastFlamePillarAnimation,
     EntityHellfireBeastPunchHitbox,
-    func_us_801C839C,
-    func_us_801C8CE0,
-    func_us_801C7F84,
-    func_us_801C7D98,
-    func_us_801C774C,
-    func_us_801C6360,
-    func_us_801C7420,
+    EntityBoneArk,
+    EntityBoneArkSkeleton,
+    EntityBoneArkLowerNeck,
+    EntityBoneArkUpperNeck,
+    EntityBoneArkSkull,
+    EntityBoneArkProjectile,
+    EntityBoneArkAttackEffects,
     EntityLossoth,
     EntityLossothEffects,
     EntityLossothFireball,
@@ -186,11 +186,12 @@ EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x003};
 
 // Bone Ark
-EInit D_us_80181188 = {ANIMSET_OVL(0x05), 0x0D, 0x48, 0x0200, 0x02D};
-EInit D_us_80181194 = {ANIMSET_OVL(0x05), 0x01, 0x48, 0x0200, 0x02E};
-EInit D_us_801811A0 = {ANIMSET_OVL(0x05), 0x11, 0x48, 0x0200, 0x005};
-EInit D_us_801811AC = {ANIMSET_OVL(0x05), 0x0E, 0x48, 0x0200, 0x02D};
-EInit D_us_801811B8 = {ANIMSET_OVL(0x05), 0x15, 0x48, 0x0200, 0x02F};
+EInit g_EInitBoneArk = {ANIMSET_OVL(0x05), 0x0D, 0x48, 0x0200, 0x02D};
+EInit g_EInitBoneArkSkeleton = {ANIMSET_OVL(0x05), 0x01, 0x48, 0x0200, 0x02E};
+EInit g_EInitBoneArkNeck = {ANIMSET_OVL(0x05), 0x11, 0x48, 0x0200, 0x005};
+EInit g_EInitBoneArkAttackEffects = {
+    ANIMSET_OVL(0x05), 0x0E, 0x48, 0x0200, 0x02D};
+EInit g_EInitBoneArkProjectile = {ANIMSET_OVL(0x05), 0x15, 0x48, 0x0200, 0x02F};
 
 EInit D_us_801811C4 = {ANIMSET_OVL(0x02), 0x01, 0x00, 0x0000, 0x005};
 EInit D_us_801811D0 = {ANIMSET_OVL(0x02), 0x03, 0x00, 0x0000, 0x005};
