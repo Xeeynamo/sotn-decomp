@@ -2820,7 +2820,7 @@
 | dra   | PlaySfx                                  |      117 |         18 |        |       |     |
 |       | func_092EBFB8                            |      117 |         23 |        |       |     |
 | dra   | EntitySmallRisingHeart                   |      118 |         10 |        |       |     |
-| cat   | func_us_801CA13C                         |      118 |         14 |        |       |     |
+| cat   | EntityLavaGlow                           |      118 |         14 |        |       |     |
 | main  | func_psp_089094C0                        |      118 |         15 |        |       |     |
 | sel   | func_psp_09243028                        |      118 |         15 |        |       |     |
 | no3   | func_pspeu_09249590                      |      118 |         27 |        |       |     |
