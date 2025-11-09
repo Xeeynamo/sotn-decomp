@@ -2,11 +2,46 @@
 #include "st0.h"
 #include <cutscene.h>
 
-// This file uses g_Dialogue with a different struct than the usual.
-// It is based on struct Dialogue, which is used in cutscene.c
-// pspeu uses two independent memory addresses for 3101C.c and cutscene.c with
-// us sharing a single memory address via union
-extern DialogueST0 g_Dialogue;
+// This file uses g_Dialogue with a different struct than cutscene.c
+typedef struct {
+    /* 0x00 */ u8* scriptCur;
+    /* 0x04 */ s16 startX;
+    /* 0x06 */ s16 nextLineY;
+    /* 0x08 */ s16 startY;
+    /* 0x0A */ s16 nextCharX;
+    /* 0x0C */ s16 nextLineX;
+    /* 0x0E */ u16 nextCharY;
+    /* 0x10 */ u16 portraitAnimTimer;
+    /* 0x12 */ u8 unk12;
+    /* 0x13 */ u8 clutIndex;
+#ifdef VERSION_PSP
+    /* 0x14 */ u8 nextCharTimer;
+    /* 0x15 */ u8 unk17;
+#endif
+    /* 0x14 */ Primitive* prim;
+    /* 0x18 */ u32 primIndex;
+    /* 0x1C */ u16* unk20;
+    /* 0x20 */ s32 : 32;
+    /* 0x24 */ u16* clutIndexes;
+    /* 0x28 */ s32 : 32;
+    /* 0x2C */ s32 clutArrLength;
+    /* 0x30 */ s32 : 32;
+    /* 0x34 */ u8* script;
+#ifndef VERSION_PSP
+    /* 0x38 */ u16 unk3C; // maybe it is a begin flag?
+    /* 0x3A */ u16 timer;
+#endif
+    /* 0x3C */ u8* scriptEnd;
+} DialoguePrologue;
+
+// n.b. g_Dialogue is defined as the Dialogue struct, but is used in this file
+// as the different type.
+// It appears that either:
+// - The devs recognized this as a bad practice and fixed it for pspeu or
+// - The pspeu toolchain (probably optimization level) handled them differently
+// Either way, us shares a single memory address for 3101C.c and cutscene.c
+// while pspeu uses two independent memory addresses.
+extern DialoguePrologue g_Dialogue;
 
 static u16 D_801BEE90[48][48]; // bss
 
@@ -18,17 +53,17 @@ u8 func_801B101C(u8* script) {
     s16 i;
     s16 shift;
 
-    g_Dialogue.alt.primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
-    if (g_Dialogue.alt.primIndex != -1) {
-        g_Dialogue.alt.scriptCur = script;
-        g_Dialogue.alt.nextCharX = 0x200;
-        g_Dialogue.alt.startY = 0x216;
-        g_Dialogue.alt.nextLineX = 0;
-        g_Dialogue.alt.nextCharY = 0;
-        g_Dialogue.alt.portraitAnimTimer = 0;
-        g_Dialogue.alt.unk12 = 0;
-        g_Dialogue.alt.clutIndex = 0;
-        prim = g_Dialogue.alt.prim = &g_PrimBuf[g_Dialogue.alt.primIndex];
+    g_Dialogue.primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
+    if (g_Dialogue.primIndex != -1) {
+        g_Dialogue.scriptCur = script;
+        g_Dialogue.nextCharX = 0x200;
+        g_Dialogue.startY = 0x216;
+        g_Dialogue.nextLineX = 0;
+        g_Dialogue.nextCharY = 0;
+        g_Dialogue.portraitAnimTimer = 0;
+        g_Dialogue.unk12 = 0;
+        g_Dialogue.clutIndex = 0;
+        prim = g_Dialogue.prim = &g_PrimBuf[g_Dialogue.primIndex];
         for (i = 0; i < 0x20; i++) {
             shift = i & 1;
             if (shift) {
@@ -52,7 +87,7 @@ u8 func_801B101C(u8* script) {
 
         return true;
     }
-    g_Dialogue.alt.primIndex = 0;
+    g_Dialogue.primIndex = 0;
     return false;
 }
 
@@ -110,17 +145,17 @@ void func_801B1298(Entity* self) {
     case 0:
         if (func_801B101C((u8*)prologue_script_en)) {
             self->flags |= FLAG_HAS_PRIMS;
-            self->primIndex = g_Dialogue.alt.primIndex;
+            self->primIndex = g_Dialogue.primIndex;
             ++self->step;
             func_801B1198(0);
             glyphIndex = 0;
             while (1) {
-                nextChar = *g_Dialogue.alt.scriptCur++;
+                nextChar = *g_Dialogue.scriptCur++;
                 if (nextChar == 1) {
                     // Gets weirdly relocated in the asm.
-                    g_Dialogue.alt.startY =
-                        g_Dialogue.alt.nextCharX + *g_Dialogue.alt.scriptCur++;
-                    ++g_Dialogue.alt.nextLineX;
+                    g_Dialogue.startY =
+                        g_Dialogue.nextCharX + *g_Dialogue.scriptCur++;
+                    ++g_Dialogue.nextLineX;
                     break;
                 }
                 glyph = func_801B11E8(nextChar);
@@ -130,117 +165,115 @@ void func_801B1298(Entity* self) {
                         glyphPtr++[0] = glyph++[0];
                     }
                     glyph = D_801BEE90[glyphIndex];
-                    y = g_Dialogue.alt.nextLineX * 16;
+                    y = g_Dialogue.nextLineX * 16;
                     LoadTPage(
-                        (u_long*)glyph, 0, 0, g_Dialogue.alt.startY, y, 12, 16);
-                    g_Dialogue.alt.startY += 3;
-                    nextChar = g_Dialogue.alt.startY - g_Dialogue.alt.nextCharX;
+                        (u_long*)glyph, 0, 0, g_Dialogue.startY, y, 12, 16);
+                    g_Dialogue.startY += 3;
+                    nextChar = g_Dialogue.startY - g_Dialogue.nextCharX;
                     if (0x38 <= nextChar && nextChar < 0x40) {
-                        g_Dialogue.alt.startY += 8;
+                        g_Dialogue.startY += 8;
                     }
                     glyphIndex++;
                 } else {
-                    g_Dialogue.alt.startY += 2;
-                    nextChar = g_Dialogue.alt.startY - g_Dialogue.alt.nextCharX;
+                    g_Dialogue.startY += 2;
+                    nextChar = g_Dialogue.startY - g_Dialogue.nextCharX;
                     if (0x38 <= nextChar && nextChar < 0x40) {
-                        g_Dialogue.alt.startY += 8;
+                        g_Dialogue.startY += 8;
                     }
                 }
             }
         }
         break;
     case 1:
-        if (!g_Dialogue.alt.nextCharY) {
+        if (!g_Dialogue.nextCharY) {
             break;
         }
         nextChar = 0;
         glyphIndex = 0;
         do {
-            nextChar = *g_Dialogue.alt.scriptCur++;
+            nextChar = *g_Dialogue.scriptCur++;
             switch (nextChar) {
             case 0:
                 self->step = 7;
                 return;
             case 1:
-                g_Dialogue.alt.startY =
-                    g_Dialogue.alt.nextCharX + *g_Dialogue.alt.scriptCur++;
-                g_Dialogue.alt.nextLineX++;
-                if (g_Dialogue.alt.nextLineX > 15) {
-                    g_Dialogue.alt.nextLineX = 0;
+                g_Dialogue.startY =
+                    g_Dialogue.nextCharX + *g_Dialogue.scriptCur++;
+                g_Dialogue.nextLineX++;
+                if (g_Dialogue.nextLineX > 15) {
+                    g_Dialogue.nextLineX = 0;
                 }
-                g_Dialogue.alt.nextCharY = 0;
+                g_Dialogue.nextCharY = 0;
                 return;
             case 2:
-                g_Dialogue.alt.startY =
-                    g_Dialogue.alt.nextCharX + *g_Dialogue.alt.scriptCur++;
-                g_Dialogue.alt.nextLineX++;
-                if (g_Dialogue.alt.nextLineX > 15) {
-                    g_Dialogue.alt.nextLineX = 0;
+                g_Dialogue.startY =
+                    g_Dialogue.nextCharX + *g_Dialogue.scriptCur++;
+                g_Dialogue.nextLineX++;
+                if (g_Dialogue.nextLineX > 15) {
+                    g_Dialogue.nextLineX = 0;
                 }
 
-                prim = g_Dialogue.alt.prim;
-                for (i = 0; i < g_Dialogue.alt.nextLineX; ++i) {
+                prim = g_Dialogue.prim;
+                for (i = 0; i < g_Dialogue.nextLineX; ++i) {
                     prim = prim->next;
                     prim = prim->next;
                 }
 
                 y0 = prim->y0;
-                for (prim = g_Dialogue.alt.prim; prim != NULL;
-                     prim = prim->next) {
+                for (prim = g_Dialogue.prim; prim != NULL; prim = prim->next) {
                     if (y0 <= prim->y0) {
                         prim->y0 += 0x16;
                         prim->p1 += 0x16;
                     }
                 }
-                g_Dialogue.alt.unk12 += 0x58;
-                g_Dialogue.alt.portraitAnimTimer += 0x16;
-                g_Dialogue.alt.nextCharY = 0;
+                g_Dialogue.unk12 += 0x58;
+                g_Dialogue.portraitAnimTimer += 0x16;
+                g_Dialogue.nextCharY = 0;
                 return;
             }
         } while (0);
         glyph = func_801B11E8(nextChar);
 
         if (glyph) {
-            y = g_Dialogue.alt.nextLineX * 16;
-            LoadTPage(
-                (u_long*)glyph, 0, 0, g_Dialogue.alt.startY, y, 0xC, 0x10);
-            g_Dialogue.alt.startY += 3;
+            y = g_Dialogue.nextLineX * 16;
+            LoadTPage((u_long*)glyph, 0, 0, g_Dialogue.startY, y, 0xC, 0x10);
+            g_Dialogue.startY += 3;
         } else {
-            g_Dialogue.alt.startY += 2;
+            g_Dialogue.startY += 2;
         }
-        nextChar = g_Dialogue.alt.startY - g_Dialogue.alt.nextCharX;
+        nextChar = g_Dialogue.startY - g_Dialogue.nextCharX;
         if (0x38 <= nextChar && nextChar < 0x40) {
-            g_Dialogue.alt.startY += 8;
+            g_Dialogue.startY += 8;
         }
         break;
     case 2:
         break;
     case 7:
-        if (g_Dialogue.alt.nextCharY) {
-            g_Dialogue.alt.nextLineX++;
-            if (g_Dialogue.alt.nextLineX > 15) {
-                g_Dialogue.alt.nextLineX = 0;
+        if (g_Dialogue.nextCharY) {
+            g_Dialogue.nextLineX++;
+            if (g_Dialogue.nextLineX > 15) {
+                g_Dialogue.nextLineX = 0;
             }
-            g_Dialogue.alt.nextCharY = 0;
+            g_Dialogue.nextCharY = 0;
         }
     }
 
-    if (!g_Dialogue.alt.unk12) {
-        func_801B1198(g_Dialogue.alt.nextLineX);
-        g_Dialogue.alt.nextCharY = 1;
-        g_Dialogue.alt.unk12 = 88;
+    if (!g_Dialogue.unk12) {
+        func_801B1198(g_Dialogue.nextLineX);
+        g_Dialogue.nextCharY = 1;
+        g_Dialogue.unk12 = 88;
     }
-    --g_Dialogue.alt.unk12;
-    if (!g_Dialogue.alt.clutIndex) {
-        for (prim = g_Dialogue.alt.prim, i = 0; i < 32; ++i) {
+    --g_Dialogue.unk12;
+    if (!g_Dialogue.clutIndex) {
+        for (prim = g_Dialogue.prim, i = 0; i < 32; ++i) {
             prim->y0--;
             if (prim->y0 == -22) {
-                prim->y0 = g_Dialogue.alt.portraitAnimTimer - prim->p1 + 330;
-                prim->p1 = g_Dialogue.alt.portraitAnimTimer;
+                prim->y0 = g_Dialogue.portraitAnimTimer - prim->p1 + 330;
+                prim->p1 = g_Dialogue.portraitAnimTimer;
             }
             prim = prim->next;
         }
-        g_Dialogue.alt.clutIndex = 4;
+        g_Dialogue.clutIndex = 4;
     }
-    --g_Dialogue.alt.clutIndex;
+    --g_Dialogue.clutIndex;
 }

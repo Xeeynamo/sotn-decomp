@@ -92,38 +92,6 @@ typedef struct {
     /* 0x40 */ u8* scriptEnd;    // pointer to the end of the script
 } Dialogue;                      // size = 0x44
 
-// st0_psp/3101C, st0/bss.c, st0/prologue_scroll.c, st0/3101C
-typedef struct {
-    /* 0x00 */ u8* scriptCur;
-    /* 0x04 */ s16 startX;
-    /* 0x06 */ s16 nextLineY;
-    /* 0x08 */ s16 startY;
-    /* 0x0A */ s16 nextCharX;
-    /* 0x0C */ s16 nextLineX;
-    /* 0x0E */ u16 nextCharY;
-    /* 0x10 */ u16 portraitAnimTimer;
-    /* 0x12 */ u8 unk12;
-    /* 0x13 */ u8 clutIndex;
-#ifdef VERSION_PSP
-    /* 0x14 */ u8 nextCharTimer;
-    /* 0x15 */ u8 unk17;
-#endif
-    /* 0x14 */ Primitive* prim;
-    /* 0x18 */ u32 primIndex;
-    /* 0x1C */ u16* unk20;
-    /* 0x20 */ s32 : 32;
-    /* 0x24 */ u16* clutIndexes;
-    /* 0x28 */ s32 : 32;
-    /* 0x2C */ s32 clutArrLength;
-    /* 0x30 */ s32 : 32;
-    /* 0x34 */ u8* script;
-#ifndef VERSION_PSP
-    /* 0x38 */ u16 unk3C; // maybe it is a begin flag?
-    /* 0x3A */ u16 timer;
-#endif
-    /* 0x3C */ u8* scriptEnd;
-} Dialogue2;
-
 // no4/cutscene
 typedef struct {
     /* 0x00 */ u8* scriptCur;         // ptr to dialogue next character
@@ -165,10 +133,5 @@ typedef struct {
     /* 0x18 */ Primitive* prim;       // for dialogue graphics rendering
     /* 0x1C */ s32 primIndex;         // primIndex: unk
 } Dialogue4;                          // size = 0x20
-
-typedef union DialogueST0 {
-    Dialogue std;
-    Dialogue2 alt;
-} DialogueST0;
 
 #endif // CUTSCENE_H

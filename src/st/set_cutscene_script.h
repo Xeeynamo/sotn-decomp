@@ -1,12 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-// st0 uses a union for g_Dialogue
-#ifdef STAGE_IS_ST0
-#define G_DIALOGUE g_Dialogue.std
-#else
-#define G_DIALOGUE g_Dialogue
-#endif
-
 #if defined(VERSION_PC)
 #define NUM_CUTSCENE_PRIM 8
 #else
@@ -16,33 +9,33 @@
 static u8 SetCutsceneScript(u8* script) {
     Primitive* prim;
 
-    G_DIALOGUE.primIndex[2] =
+    g_Dialogue.primIndex[2] =
         g_api.AllocPrimitives(PRIM_SPRT, NUM_CUTSCENE_PRIM);
 
-    if (G_DIALOGUE.primIndex[2] != -1) {
-        G_DIALOGUE.scriptCur = script;
-        G_DIALOGUE.unk3C = 0;
-        G_DIALOGUE.primIndex[1] = -1;
-        G_DIALOGUE.primIndex[0] = -1;
+    if (g_Dialogue.primIndex[2] != -1) {
+        g_Dialogue.scriptCur = script;
+        g_Dialogue.unk3C = 0;
+        g_Dialogue.primIndex[1] = -1;
+        g_Dialogue.primIndex[0] = -1;
         CutsceneUnk1();
 
-        prim = G_DIALOGUE.prim[0] = &g_PrimBuf[G_DIALOGUE.primIndex[2]];
+        prim = g_Dialogue.prim[0] = &g_PrimBuf[g_Dialogue.primIndex[2]];
 
         prim->drawMode = DRAW_HIDE;
-        prim = G_DIALOGUE.prim[1] = prim->next;
+        prim = g_Dialogue.prim[1] = prim->next;
 
         prim->drawMode = DRAW_HIDE;
-        prim = G_DIALOGUE.prim[2] = prim->next;
+        prim = g_Dialogue.prim[2] = prim->next;
 
         prim->drawMode = DRAW_HIDE;
-        prim = G_DIALOGUE.prim[3] = prim->next;
+        prim = g_Dialogue.prim[3] = prim->next;
 
         prim->drawMode = DRAW_HIDE;
-        prim = G_DIALOGUE.prim[4] = prim->next;
+        prim = g_Dialogue.prim[4] = prim->next;
 
 #if !defined(VERSION_PSP) && !defined(VERSION_HD)
         prim->drawMode = DRAW_HIDE;
-        prim = G_DIALOGUE.prim[5] = prim->next;
+        prim = g_Dialogue.prim[5] = prim->next;
 #endif
 
         prim->type = PRIM_GT4;
@@ -69,6 +62,6 @@ static u8 SetCutsceneScript(u8* script) {
         return 1;
     }
 
-    G_DIALOGUE.primIndex[2] = 0;
+    g_Dialogue.primIndex[2] = 0;
     return 0;
 }
