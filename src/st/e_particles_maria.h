@@ -75,7 +75,7 @@ void func_psp_0923AD68(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         AnimateEntity(g_ESoulStealOrbAnim, self);
         prim->tpage = 0x18;
-        prim->clut = 0x194;
+        prim->clut = PAL_UNK_194;
         angle = self->animCurFrame;
         angle = (angle - 1) * 8;
         spr = &g_ESoulStealOrbSprt[angle];
@@ -146,7 +146,7 @@ void func_psp_0923B2F0(Entity* self) {
             prim = &g_PrimBuf[self->primIndex];
             AnimateEntity(g_ESoulStealOrbAnim, self);
             prim->tpage = 0x18;
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             angle = self->animCurFrame;
             angle = (angle - 1) * 8;
             spr = &g_ESoulStealOrbSprt[angle];

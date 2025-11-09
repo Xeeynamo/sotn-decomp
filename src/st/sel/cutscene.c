@@ -561,7 +561,7 @@ u8 func_801B76F0(u8* msg) {
             prim->u1 = 0xF0;
             prim->v1 = 0x10;
             prim->y0 = temp_v0 * 0x13 + 0xF0;
-            prim->clut = 0x1A1;
+            prim->clut = PAL_UNK_1A1;
             prim->x1 = 0;
             prim->priority = 3;
             prim->drawMode = DRAW_DEFAULT;

@@ -104,7 +104,7 @@ void func_us_801D1BCC(void) {
             } else {
                 gte_ldv3(vecPtr[0], vecPtr[1], vecPtr[2]);
                 gte_rtpt();
-                if (g_CurrentEntity->palette & PAL_OVL_FLAG) {
+                if (g_CurrentEntity->palette & PAL_UNK_FLAG) {
                     prim->clut = g_CurrentEntity->palette & 0xFFF;
                 } else {
                     prim->clut = g_CurrentEntity->palette;
@@ -244,7 +244,7 @@ void EntitySpellbook(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.spellbookMagicTome.unk7C = prim;
-        palette = PAL_DRA(0x25A);
+        palette = 0x25A;
         self->palette = palette;
         for (i = 0; i < 12; i++) {
             ptr = D_us_801830DC[i];
@@ -417,7 +417,7 @@ void EntitySpellbook(Entity* self) {
                 }
             }
             if ((self->ext.spellbookMagicTome.unk80 & 7) == 0) {
-                PlaySfxPositional(0x78D);
+                PlaySfxPositional(SFX_SPELLBOOK_DEATH);
             }
             if (!--self->ext.spellbookMagicTome.unk80) {
                 self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
@@ -537,7 +537,7 @@ void EntityMagicTome(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.spellbookMagicTome.unk7C = prim;
-        palette = PAL_DRA(0x25E);
+        palette = 0x25E;
         self->palette = palette;
         for (i = 0; i < 12; i++) {
             ptr = D_us_8018310C[i];
@@ -715,7 +715,7 @@ void EntityMagicTome(Entity* self) {
                 }
             }
             if ((self->ext.spellbookMagicTome.unk80 & 7) == 0) {
-                g_api.PlaySfx(0x78D);
+                g_api.PlaySfx(SFX_SPELLBOOK_DEATH);
             }
             if (!--self->ext.spellbookMagicTome.unk80) {
                 self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
@@ -753,7 +753,7 @@ void func_us_801D35B8(Entity* self) {
     case 1:
         self->hitboxState = 0;
         if (self->ext.spellbookMagicTome.unk94) {
-            PlaySfxPositional(0x78E);
+            PlaySfxPositional(SFX_MAGIC_TOME_ATTACK);
             SetStep(2);
         }
         tempEntity = self - 1;

@@ -96,7 +96,7 @@ void EntitySubWeaponContainer(Entity* self) {
 
         g_api.FreePrimitives(self->primIndex);
         self->flags &= ~FLAG_HAS_PRIMS;
-        g_api.PlaySfx(SFX_MAGIC_GLASS_BREAK);
+        g_api.PlaySfx(SFX_SUBWEAPON_CONTAINER_BREAK);
         for (glassPieceTBL = D_80182584, i = 0; i < LEN(D_80182584); i++,
             glassPieceTBL++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -204,7 +204,7 @@ void func_801C7654(Entity* entity) {
     case 0:
         InitializeEntity(g_EInitParticle);
         entity->animSet = ANIMSET_DRA(2);
-        entity->palette = PAL_OVL(0x16D);
+        entity->palette = PAL_FLAG(PAL_CC_RED_EFFECT_B);
         entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         entity->velocityX = rcos(entity->rotate) * 0x10;
         entity->velocityY = rsin(entity->rotate) * 0x10;

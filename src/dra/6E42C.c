@@ -27,7 +27,7 @@ void func_8010E470(s32 arg0, s32 arg1) {
 void func_8010E4D0(void) {
     func_80111CC0();
 
-    PLAYER.palette = PAL_OVL(0x100);
+    PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
 
     if (g_Player.unk72 == 1 || g_Player.unk72 == 2) {

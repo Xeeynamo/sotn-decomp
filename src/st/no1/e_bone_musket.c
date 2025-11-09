@@ -203,7 +203,7 @@ void EntityBoneMusket(Entity* self) {
                 SetSubStep(2);
             }
             if (!self->poseTimer && self->pose == 0x1C) {
-                PlaySfxPositional(SFX_GRANDFATHER_CLOCK_TICK);
+                PlaySfxPositional(SFX_BONE_MUSKET_RELOAD);
             }
             break;
 
@@ -298,7 +298,7 @@ void func_us_801CF298(Entity* self) {
         prim->b0 = prim->b1 = 0x70;
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
-        PlaySfxPositional(SFX_GUNSHOT_HIGH);
+        PlaySfxPositional(SFX_BONE_MUSKET_SHOT);
 
     case 1:
         prim = self->ext.et_801CEB28.unk7C;

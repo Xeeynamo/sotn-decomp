@@ -793,7 +793,7 @@ void EntityMariaDragonCrash(Entity* self) {
             self->posX.val += self->velocityX;
             self->posY.val += self->velocityY;
             if ((self->ext.mariaDragon.timer % 120) == 0) {
-                g_api.PlaySfx(SFX_SWISHES_ECHO_REPEAT);
+                g_api.PlaySfx(SFX_HIPPOGRYPH_FIRE_ATTACK);
             }
             self->ext.mariaDragon.timer++;
             if (self->ext.mariaDragon.timer > 300) {
@@ -1390,7 +1390,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
         self->ext.mariaCardinalCrash.timer = 0;
         self->ext.mariaCardinalCrash.velocityX = (rand() % 384) + 0x80;
         self->step = 1;
-        g_api.PlaySfx(SFX_UNK_FIRE_WHOOSH);
+        g_api.PlaySfx(SFX_PSP_MARIA_CARDINAL_CRASH);
     } break;
     case 1: {
         self->ext.mariaCardinalCrash.timer++;

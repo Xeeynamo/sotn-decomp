@@ -474,7 +474,7 @@ void EntitySplashWater(Entity* self) {
             }
             PGREY(prim, 0) = PGREY(prim, 1) = 0xFF;
             PGREY(prim, 2) = PGREY(prim, 3) = 0x80;
-            prim->clut = 0x162;
+            prim->clut = PAL_CC_MAGIC_HUD_EFFECT;
             prim->tpage = 0x1A;
             prim->priority = self->zPriority + 2;
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
@@ -482,7 +482,7 @@ void EntitySplashWater(Entity* self) {
             if (i & 1) {
                 PGREY(prim, 0) = PGREY(prim, 1) = 0x00;
                 PGREY(prim, 2) = PGREY(prim, 3) = 0x60;
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim->priority += 2;
                 prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                                  DRAW_UNK02 | DRAW_TRANSP;
@@ -609,13 +609,13 @@ void EntitySurfacingWater(Entity* self) {
             PGREY(prim, 0) = PGREY(prim, 1) = 255;
             PGREY(prim, 2) = PGREY(prim, 3) = 128;
 
-            prim->clut = 0x162;
+            prim->clut = PAL_CC_MAGIC_HUD_EFFECT;
             prim->tpage = 0x1A;
             prim->priority = self->zPriority + 2;
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             if (i != 0) {
-                prim->clut = 0x161;
+                prim->clut = PAL_CC_STONE_EFFECT;
                 prim->priority = self->zPriority + 4;
                 prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
                                  DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
@@ -710,7 +710,7 @@ void EntitySideWaterSplash(Entity* self) {
             prim->u1 = prim->u3 = 0xFF;
             prim->v0 = prim->v1 = 0;
             prim->v2 = prim->v3 = 0xF;
-            prim->clut = 0x161;
+            prim->clut = PAL_CC_STONE_EFFECT;
             prim->tpage = 0x1A;
             PGREY(prim, 0) = PGREY(prim, 1) = 128;
             PGREY(prim, 2) = PGREY(prim, 3) = 128;

@@ -312,7 +312,8 @@ void EntityCorpseweed(Entity* self) {
 
         // Leaves primitive
         prim->tpage = CORPSEWEED_TPAGE;
-        prim->clut = PAL_DRA(CORPSEWEED_PAL);
+        // Palettes are different in CHI
+        prim->clut = CORPSEWEED_PAL;
         prim->u0 = prim->u2 = SpriteLeavesLeft;
         prim->u1 = prim->u3 = SpriteLeavesRight;
         prim->v0 = prim->v1 = SpriteLeavesTop;
@@ -329,7 +330,7 @@ void EntityCorpseweed(Entity* self) {
         // Stalk primitive
         prim = prim->next;
         prim->tpage = CORPSEWEED_TPAGE;
-        prim->clut = PAL_DRA(CORPSEWEED_PAL);
+        prim->clut = CORPSEWEED_PAL;
         prim->u0 = prim->u2 = SpriteStalkLeft;
         prim->u1 = prim->u3 = SpriteStalkRight;
         prim->v0 = prim->v1 = SpriteStalkTop;
@@ -813,7 +814,7 @@ void EntityCorpseweedProjectile(Entity* self) {
         self->ext.prim = prim;
 
         prim->tpage = CORPSEWEED_TPAGE;
-        prim->clut = PAL_DRA(CORPSEWEED_PROJ_PAL);
+        prim->clut = CORPSEWEED_PROJ_PAL;
         prim->u0 = prim->u2 = SpriteLeft;
         prim->u1 = prim->u3 = SpriteRight;
         prim->v0 = prim->v1 = SpriteTop;

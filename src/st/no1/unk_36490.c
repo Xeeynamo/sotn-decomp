@@ -456,7 +456,7 @@ void func_us_801B7188(Entity* self) {
         if (self->step == 0) {
             InitializeEntity(D_us_8018095C);
             if (D_us_80180EEC == 0) {
-                g_api.PlaySfx(SFX_UNK_7AF);
+                g_api.PlaySfx(SFX_RAIN_LOOP);
                 self->primIndex = g_api.func_800EDB58(PRIM_LINE_G2_ALT, 0x80);
                 if (self->primIndex == -1) {
                     DestroyEntity(self);

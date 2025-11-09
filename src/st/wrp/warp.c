@@ -108,7 +108,7 @@ void EntityWarpRoom(Entity* self) {
             prim->u2 = prim->u3 = 0x20;
             prim->v2 = prim->v3 = 0xE0;
             prim->tpage = 0x1A;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->priority = 0x40;
             prim->drawMode = DRAW_UNK02 | DRAW_COLORS | DRAW_UNK_400;
             prim = prim->next;

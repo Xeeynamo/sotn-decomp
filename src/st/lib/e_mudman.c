@@ -266,7 +266,7 @@ void EntityMudman(Entity* self) {
             self->step = 6;
         }
         if (!self->poseTimer && self->pose == 3) {
-            PlaySfxPositional(0x78C);
+            PlaySfxPositional(SFX_MUDMAN_ATTACK);
         }
         break;
 

@@ -26,7 +26,7 @@ void EntityStopWatchExpandingCircle(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; prim = prim->next, i++) {
             prim->tpage = 0x1A;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->priority = self->zPriority = 0xC2;
             prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
@@ -154,14 +154,14 @@ void EntityStopWatch(Entity* self) {
         self->ext.stopwatch.unk84.val += FIX(-1);
         if (self->ext.stopwatch.unk84.val <= FIX(16)) {
             self->ext.stopwatch.t = 5;
-            PlaySfx(SFX_CLOCK_TICK);
+            PlaySfx(SFX_STOPWATCH_TICK);
             self->step++;
         }
         break;
     case 3:
         self->ext.stopwatch.unk7E += 1;
         if (self->ext.stopwatch.unk7E > 80) {
-            PlaySfx(SFX_CLOCK_TICK);
+            PlaySfx(SFX_STOPWATCH_TICK);
             self->ext.stopwatch.unk7E = 0;
             self->ext.stopwatch.unk8C = 1;
             self->ext.stopwatch.t -= 1;
@@ -215,13 +215,13 @@ void EntityStopWatch(Entity* self) {
         self->ext.stopwatch.t += 1;
         if (self->ext.stopwatch.t >= 4) {
             prim = &g_PrimBuf[self->primIndex];
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->drawMode |= DRAW_COLORS;
             PRED(prim) = 0x40;
             PGRN(prim) = 0x40;
             PBLU(prim) = 0x60;
 
-            PlaySfx(SFX_UI_TINK);
+            PlaySfx(SFX_UI_SUBWEAPON_TINK);
             self->step++;
         }
         break;
@@ -447,7 +447,7 @@ void EntitySubwpnBibleTrail(Entity* self) {
             FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1C;
-        prim->clut = 0x19D;
+        prim->clut = PAL_UNK_19D;
         prim->u0 = prim->u2 = 0x20;
         prim->v0 = prim->v1 = 0;
         prim->u1 = prim->u3 = 0x30;

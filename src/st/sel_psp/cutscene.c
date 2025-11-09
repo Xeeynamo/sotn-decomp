@@ -139,7 +139,7 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self, u16* actorNames,
     while (prim != NULL) {
         prim->type = PRIM_SPRT;
         prim->tpage = 0x1E;
-        prim->clut = 0x196;
+        prim->clut = PAL_UNK_196;
         ch = *actorName++;
         prim->u0 = (s8)((ch & 0x0F) << 3);
         prim->v0 = (s8)((ch & 0xF0) >> 1);
@@ -152,7 +152,7 @@ void DrawCutsceneActorName(u16 actorIndex, Entity* self, u16* actorNames,
             prim = prim->next;
             prim->type = PRIM_SPRT;
             prim->tpage = 0x1E;
-            prim->clut = 0x196;
+            prim->clut = PAL_UNK_196;
             if (ch & 0x4000) {
                 prim->u0 = 0x78;
             } else {
@@ -850,7 +850,7 @@ u8 func_801B76F0(u8* msg) {
             prim->u1 = 0xF0;
             prim->v1 = 0x10;
             prim->y0 = temp_v0 * 0x13 + 0xF0;
-            prim->clut = 0x1A1;
+            prim->clut = PAL_UNK_1A1;
             prim->x1 = 0;
             prim->priority = 3;
             prim->drawMode = DRAW_DEFAULT;

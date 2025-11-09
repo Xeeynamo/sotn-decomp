@@ -104,7 +104,7 @@ void EntityWeaponAttack(Entity* self) {
             prim = prim->next;
         }
 
-        g_api.PlaySfxVolPan(SFX_WEAPON_ENERGY, 0x50, 0);
+        g_api.PlaySfxVolPan(SFX_RUNESWORD_ATTACK, 0x50, 0);
         g_api.PlaySfx(SFX_BONE_SWORD_SWISH_A);
         g_Player.timers[10] = 4;
         g_api.CreateEntFactoryFromEntity(

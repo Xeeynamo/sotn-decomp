@@ -217,7 +217,7 @@ s32 func_us_801CA51C(Entity* axeKnight) {
             axeKnight->ext.axeknight.prim = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x1A;
-            prim->clut = 0x19D;
+            prim->clut = PAL_UNK_19D;
             prim->u0 = 0;
             prim->u1 = 0x3F;
             prim->u2 = prim->u0;
@@ -721,7 +721,7 @@ void EntityAxeKnightThrowingAxe(Entity* self) {
 
     if (self->flags & FLAG_DEAD) {
         EntityExplosionSpawn(0, 0);
-        PlaySfxPositional(SFX_WEAPON_BREAK);
+        PlaySfxPositional(SFX_AXE_KNIGHT_WEAPON_BREAK);
         return;
     }
 

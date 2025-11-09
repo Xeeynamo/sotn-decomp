@@ -24,7 +24,7 @@ void EntityWeaponAttack(Entity* self) {
     case 0:
         SetSpriteBank1(D_9E000_8017A040);
         self->animSet = ANIMSET_OVL(16);
-        self->palette = PAL_DRA(0x110);
+        self->palette = PAL_UNK_110;
         self->unk5A = 0x64;
 
         if (g_HandId != 0) {

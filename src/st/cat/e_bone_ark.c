@@ -74,13 +74,13 @@ void EntityBoneArkProjectile(Entity* self) {
             self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
             self->scaleX = self->scaleY = 0;
             self->animCurFrame = 0x1A;
-            self->palette = PAL_OVL(PAL_BONE_ARK_LIGHTNING_BALL);
+            self->palette = PAL_FLAG(PAL_BONE_ARK_LIGHTNING_BALL);
             lightningBallEntity = self->ext.boneArk.entity;
             self->zPriority = lightningBallEntity->zPriority - 2;
             self->ext.boneArk.unk8C.i.lo = 8;
             self->step = 16;
         } else {
-            self->palette = PAL_OVL(PAL_BONE_ARK_PROJECTILE);
+            self->palette = PAL_FLAG(PAL_BONE_ARK_PROJECTILE);
             self->ext.boneArk.projectileVelocity = FIX(8);
         }
         if (self->params) {
@@ -108,7 +108,7 @@ void EntityBoneArkProjectile(Entity* self) {
                 prim->next->x1 = self->posX.i.hi;
                 prim->next->y0 = self->posY.i.hi;
                 if (self->params) {
-                    prim->clut = PAL_DRA(PAL_BONE_ARK_LIGHTNING_PRIM);
+                    prim->clut = PAL_BONE_ARK_LIGHTNING_PRIM;
                     prim->priority = self->zPriority - 1;
                     prim->drawMode =
                         DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
@@ -119,7 +119,7 @@ void EntityBoneArkProjectile(Entity* self) {
                     prim->next->y2 = 0;
                     prim->p3 |= 0x10;
                 } else {
-                    prim->clut = PAL_DRA(PAL_HELLFIRE_BEAST_CAST_TWO);
+                    prim->clut = PAL_HELLFIRE_BEAST_CAST_TWO;
                     prim->priority = self->zPriority - 3;
                     prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                                      DRAW_UNK02 | DRAW_TRANSP;
@@ -154,7 +154,7 @@ void EntityBoneArkProjectile(Entity* self) {
         // it explodes and spawns the lightning ball
         if (!self->ext.boneArk.projectileVelocity) {
             g_api.PlaySfx(SFX_FM_EXPLODE_B);
-            self->palette = PAL_DRA(PAL_BONE_ARK_PROJECTILE_EXPLODE);
+            self->palette = PAL_BONE_ARK_PROJECTILE_EXPLODE;
             self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
             self->scaleX = self->scaleY = 0;
             self->pose = 0;
@@ -538,7 +538,7 @@ void EntityBoneArkAttackEffects(Entity* self) {
     case 0:
         InitializeEntity(g_EInitBoneArkAttackEffects);
         self->animCurFrame = 0x2A;
-        self->palette = PAL_OVL(PAL_BONE_ARK_PROJECTILE);
+        self->palette = PAL_FLAG(PAL_BONE_ARK_PROJECTILE);
         self->drawFlags =
             FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEX;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
@@ -1165,7 +1165,7 @@ void EntityBoneArk(Entity* self) {
                     if (prim != NULL) {
                         UnkPolyFunc2(prim);
                         prim->tpage = 0x12;
-                        prim->clut = PAL_DRA(PAL_BONE_ARK_PROJECTILE_EXPLODE);
+                        prim->clut = PAL_BONE_ARK_PROJECTILE_EXPLODE;
                         prim->u0 = (i % 2) * 0x28 + 0x30;
                         prim->u1 = prim->u0 + 0x28;
                         prim->u2 = prim->u0;
