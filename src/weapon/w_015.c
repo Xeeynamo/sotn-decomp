@@ -243,7 +243,7 @@ void func_ptr_8017000C(Entity* self) {
 
     case 1:
         if (!(g_GameTimer & 7)) {
-            g_api.PlaySfx(SFX_WATER_DAMAGE_SWISHES);
+            g_api.PlaySfx(SFX_RAPID_SCRAPE_3X);
         }
         self->animCurFrame = 13;
         self->posX.val += self->velocityX;

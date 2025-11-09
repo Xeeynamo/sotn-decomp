@@ -53,7 +53,7 @@ void EntityBlackCrow(Entity* self) {
         self->drawFlags |= FLAG_DRAW_ROTATE;
         self->velocityY = 0;
         self->hitboxState = 0;
-        PlaySfxPositional(SFX_CROW_CAW_PAIN);
+        PlaySfxPositional(SFX_CROW_DEATH);
         SetStep(CROW_DEATH);
     }
     switch (self->step) {
@@ -155,7 +155,7 @@ void EntityBlueRaven(Entity* self) {
     Entity* entity;
 
     if ((self->flags & FLAG_DEAD) && self->step != RAVEN_MATCH_HEIGHT) {
-        PlaySfxPositional(SFX_CROW_CAW_PAIN);
+        PlaySfxPositional(SFX_CROW_DEATH);
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, entity);

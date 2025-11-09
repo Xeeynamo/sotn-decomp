@@ -193,7 +193,7 @@ void EntityWereskeleton(Entity* self) {
             func_us_801CDDD8(10);
         }
         if (!self->poseTimer && self->pose == 7) {
-            PlaySfxPositional(SFX_CREAK);
+            PlaySfxPositional(SFX_BONE_CREAK);
         }
         if (!self->poseTimer && self->pose == 11) {
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);

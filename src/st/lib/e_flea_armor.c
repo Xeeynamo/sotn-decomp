@@ -166,7 +166,7 @@ void EntityFleaArmor(Entity* self) {
         }
         break;
     case 8:
-        PlaySfxPositional(SFX_LOW_SKEL_EXPLODE);
+        PlaySfxPositional(SFX_FLEA_ARMOR_EXPLODE);
 
         for (i = 0; i < 6; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);

@@ -5147,7 +5147,7 @@ void OVL_EXPORT(EntitySubwpnReboundStone)(Entity* self) {
     case 1:
         if (self->flags & FLAG_DEAD) {
             OVL_EXPORT(CreateEntFactoryFromEntity)(self, BP_10, 0);
-            g_api.PlaySfx(SFX_UI_TINK);
+            g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
             self->step = 2;
             break;
         }
@@ -5311,7 +5311,7 @@ void OVL_EXPORT(EntitySubwpnReboundStone)(Entity* self) {
     block_93:
         if (self->ext.reboundStone.unk82) {
             OVL_EXPORT(CreateEntFactoryFromEntity)(self, 10, 0);
-            g_api.PlaySfx(SFX_UI_TINK);
+            g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
         }
         if (self->posX.i.hi < -0x40 || self->posX.i.hi > 0x140 ||
             self->posY.i.hi < -0x40 || self->posY.i.hi > 0x140 ||
@@ -5519,11 +5519,11 @@ void OVL_EXPORT(EntitySubwpnKnife)(Entity* self) {
                 if (collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
                     // n.b.! this is the same sound effect as the other side
                     //       of the branch. this only effects PSP
-                    g_api.PlaySfx(SFX_UI_TINK);
+                    g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 } else {
                     // n.b.! this is the same sound effect as the other side
                     //       of the branch. this only effects PSP
-                    g_api.PlaySfx(SFX_UI_TINK);
+                    g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 }
                 self->step++;
                 return;

@@ -417,7 +417,7 @@ void EntitySpellbook(Entity* self) {
                 }
             }
             if ((self->ext.spellbookMagicTome.unk80 & 7) == 0) {
-                PlaySfxPositional(0x78D);
+                PlaySfxPositional(SFX_SPELLBOOK_DEATH);
             }
             if (!--self->ext.spellbookMagicTome.unk80) {
                 self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
@@ -715,7 +715,7 @@ void EntityMagicTome(Entity* self) {
                 }
             }
             if ((self->ext.spellbookMagicTome.unk80 & 7) == 0) {
-                g_api.PlaySfx(0x78D);
+                g_api.PlaySfx(SFX_SPELLBOOK_DEATH);
             }
             if (!--self->ext.spellbookMagicTome.unk80) {
                 self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
@@ -753,7 +753,7 @@ void func_us_801D35B8(Entity* self) {
     case 1:
         self->hitboxState = 0;
         if (self->ext.spellbookMagicTome.unk94) {
-            PlaySfxPositional(0x78E);
+            PlaySfxPositional(SFX_MAGIC_TOME_ATTACK);
             SetStep(2);
         }
         tempEntity = self - 1;

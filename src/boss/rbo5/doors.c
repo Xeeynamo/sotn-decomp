@@ -699,7 +699,7 @@ void EntityUnkId1A(Entity* self) {
             zPointer++;
         }
         self->ext.et_801BE2C8.unkA0 = 0;
-        g_api.PlaySfx(SFX_RBO5_UNK_7AE);
+        g_api.PlaySfx(SFX_DOP_DOOR_OPEN);
         self->step++;
         break;
 

@@ -192,14 +192,14 @@ void OVL_EXPORT(RicEntitySubwpnHolyWater)(Entity* self) {
 
         if ((colRes & EFFECT_SOLID) || (self->hitFlags != 0)) {
             BO6_RicCreateEntFactoryFromEntity(self, 0x28, 0);
-            g_api.PlaySfx(SFX_GLASS_BREAK_WHOOSH);
+            g_api.PlaySfx(SFX_RIC_HOLY_WATER_ATTACK);
             self->ext.holywater.timer = 80;
             self->animSet = 0;
             self->step = 3;
             self->velocityX >>= 2;
         } else if (self->flags & FLAG_DEAD) {
             BO6_RicCreateEntFactoryFromEntity(self, 0x28, 0);
-            g_api.PlaySfx(SFX_GLASS_BREAK_WHOOSH);
+            g_api.PlaySfx(SFX_RIC_HOLY_WATER_ATTACK);
             self->ext.holywater.timer = 80;
             self->animSet = 0;
             self->step = 3;
@@ -326,7 +326,7 @@ void OVL_EXPORT(RicEntitySubwpnCross)(Entity* self) {
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
         self->posY.i.hi -= 8;
-        g_api.PlaySfx(SFX_THROW_WEAPON_MAGIC);
+        g_api.PlaySfx(SFX_RIC_CRASH_CROSS);
         self->step = 1;
         break;
     case 1:

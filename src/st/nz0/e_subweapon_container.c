@@ -96,7 +96,7 @@ void EntitySubWeaponContainer(Entity* self) {
 
         g_api.FreePrimitives(self->primIndex);
         self->flags &= ~FLAG_HAS_PRIMS;
-        g_api.PlaySfx(SFX_MAGIC_GLASS_BREAK);
+        g_api.PlaySfx(SFX_SUBWEAPON_CONTAINER_BREAK);
         for (glassPieceTBL = D_80182584, i = 0; i < LEN(D_80182584); i++,
             glassPieceTBL++) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);

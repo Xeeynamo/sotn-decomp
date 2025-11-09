@@ -141,7 +141,7 @@ void EntityFrog(Entity* self) {
         }
 
         if (!self->poseTimer && self->pose == 9) {
-            PlaySfxPositional(SFX_BOING);
+            PlaySfxPositional(SFX_FROG_TOAD_TONGUE);
         }
 
         switch (self->animCurFrame) {
