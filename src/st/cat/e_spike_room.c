@@ -9,64 +9,77 @@ extern s32 E_ID(UNK_23);
 s32 echo_flag = false;
 
 // Used when echo_flag == 1
-static s32 UpdatePrimEcho(Primitive* prim, u8 arg1) {
-    s32 var_s0;
+// This drops the prim rgb values by the specified amount until they hit a
+// minimum of 0x38
+static s32 IncreaseBrightness(Primitive* prim, u8 brightnessOffset) {
+    s32 newColor;
     s32 i;
     s32 j;
-    u8* var_s2;
-    u8* var_s3;
+    u8* rgbVal;
+    u8* rPtr;
     s32 ret;
 
     ret = 0;
-    var_s3 = &prim->r0;
+
+    // Starting at prim->r0, update r0,g0,b0
+    // Then we skip 0xC bytes of the prim to take us to r1,g1,b1
+    // and so on for r2,g2,b2 and r3,g3,b3
+    rPtr = &prim->r0;
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 3; j++) {
-            var_s2 = &var_s3[j];
-            var_s0 = *var_s2;
-            var_s0 -= arg1;
-            if (var_s0 < 0x38) {
-                var_s0 = 0x38;
+            rgbVal = &rPtr[j];
+            newColor = *rgbVal;
+            newColor -= brightnessOffset;
+            if (newColor < 0x38) {
+                newColor = 0x38;
             } else {
                 ret |= 1;
             }
-            *var_s2 = var_s0;
+            *rgbVal = newColor;
         }
-        var_s3 += 0xC;
+        rPtr += 0xC;
     }
     return ret;
 }
 
-static s32 UpdatePrimNormal(Primitive* prim, u8 arg1) {
-    s32 var_s0;
+// Used when echo_flag == 0
+// This raises the prim rgb values by the specified amount until they hit a
+// maximum of 0x68 which is the max darkness of the spikes room
+static s32 DecreaseBrightness(Primitive* prim, u8 brightnessOffset) {
+    s32 newColor;
     s32 i;
     s32 j;
-    u8* var_s2;
-    u8* var_s3;
+    u8* rgbVal;
+    u8* rPtr;
     s32 ret;
 
     ret = 0;
-    var_s3 = &prim->r0;
+
+    // Starting at prim->r0, update r0,g0,b0
+    // Then we skip 0xC bytes of the prim to take us to r1,g1,b1
+    // and so on for r2,g2,b2 and r3,g3,b3
+    rPtr = &prim->r0;
     for (i = 0; i < 4; i++) {
         for (j = 0; j < 3; j++) {
-            var_s2 = &var_s3[j];
-            var_s0 = *var_s2;
-            var_s0 += arg1;
-            if (var_s0 > 0x68) {
-                var_s0 = 0x68;
+            rgbVal = &rPtr[j];
+            newColor = *rgbVal;
+            newColor += brightnessOffset;
+            if (newColor > 0x68) {
+                newColor = 0x68;
             } else {
                 ret |= 1;
             }
-            *var_s2 = var_s0;
+            *rgbVal = newColor;
         }
-        var_s3 += 0xC;
+        rPtr += 0xC;
     }
     return ret;
 }
 
-void func_us_801B7B64(Entity* self) {
+void EntitySpikeRoomDarkness(Entity* self) {
     Entity* newEntity;
     Primitive* prim;
-    Entity* player;
+    Entity* entity;
     s32 i;
     s32 primIndex;
 
@@ -74,8 +87,8 @@ void func_us_801B7B64(Entity* self) {
     case 0:
         InitializeEntity(g_EInitInteractable);
         if (!g_CastleFlags[CAT_SPIKE_ROOM_LIT]) {
-            player = &PLAYER;
-            player->zPriority = 0xD8;
+            entity = &PLAYER;
+            entity->zPriority = 0xD8;
             g_unkGraphicsStruct.g_zEntityCenter = 0xD8;
 
             for (i = 0; i < 0x300; i++) {
@@ -94,7 +107,7 @@ void func_us_801B7B64(Entity* self) {
             return;
         }
 
-        primIndex = g_api.func_800EDB58(3, 2);
+        primIndex = g_api.func_800EDB58(PRIM_G4, 2);
         if (primIndex == -1) {
             DestroyEntity(self);
             return;
@@ -133,19 +146,19 @@ void func_us_801B7B64(Entity* self) {
         prim = prim->next;
         // fallthrough
     case 1:
-        player = &PLAYER;
-
-        for (i = 0; i < 0x40; i++, player++) {
+        // Iterate over g_Entities[0] -> g_Entities[39] and
+        // test if player has bat echoed
+        for (entity = &g_Entities[0], i = 0; i < 0x40; i++, entity++) {
             // dra.h E_BAT_ECHO
-            if (player->entityId == 0x34 && !player->ext.spikes.echoCooldown) {
+            if (entity->entityId == 0x34 && !entity->ext.spikes.echoCooldown) {
                 // If user has initiated the echo and we're not on cooldown,
                 // spawn the bounce entity func_us_801BACF4
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(E_ID(UNK_23), newEntity);
-                    newEntity->posX.i.hi = player->posX.i.hi;
-                    newEntity->posY.i.hi = player->posY.i.hi;
-                    newEntity->facingLeft = player->facingLeft;
+                    newEntity->posX.i.hi = entity->posX.i.hi;
+                    newEntity->posY.i.hi = entity->posY.i.hi;
+                    newEntity->facingLeft = entity->facingLeft;
                     newEntity->zPriority = 0x5F;
                     newEntity->params = 0;
                 }
@@ -153,22 +166,22 @@ void func_us_801B7B64(Entity* self) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromCurrentEntity(E_ID(UNK_23), newEntity);
-                    newEntity->posX.i.hi = player->posX.i.hi;
-                    newEntity->posY.i.hi = player->posY.i.hi;
-                    newEntity->facingLeft = player->facingLeft;
+                    newEntity->posX.i.hi = entity->posX.i.hi;
+                    newEntity->posY.i.hi = entity->posY.i.hi;
+                    newEntity->facingLeft = entity->facingLeft;
                     newEntity->zPriority = 0x5F;
                     newEntity->params = 1;
                 }
                 // Prevent user spamming the echo bounce too quickly
-                player->ext.spikes.echoCooldown = 0x40;
+                entity->ext.spikes.echoCooldown = 0x40;
             }
         }
 
         prim = self->ext.spikes.prim;
         if (echo_flag) {
-            UpdatePrimEcho(prim, 12);
+            IncreaseBrightness(prim, 12);
         } else {
-            UpdatePrimNormal(prim, 6);
+            DecreaseBrightness(prim, 6);
         }
         FntPrint("echo_flag %x\n", echo_flag);
         break;
