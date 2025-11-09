@@ -11,7 +11,8 @@
 #ifdef VERSION_PC
 static
 #endif
-    void CutsceneUnk1(void) {
+    void
+    CutsceneUnk1(void) {
 #ifdef VERSION_HD
     g_Dialogue.nextLineX = 0;
     g_Dialogue.nextCharX = 0;

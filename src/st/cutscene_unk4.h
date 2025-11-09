@@ -13,7 +13,8 @@
 #ifndef VERSION_HD
 static
 #endif
-    void CutsceneUnk4(void) {
+    void
+    CutsceneUnk4(void) {
     Primitive* prim;
 
     CutsceneUnk3(g_Dialogue.nextCharY);

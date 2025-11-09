@@ -6,6 +6,7 @@
 //
 //         adds additional decrements based on `g_Tilemap`'s scroll position
 
+extern Dialogue g_Dialogue;
 extern u32 g_CutsceneFlags;
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
 
