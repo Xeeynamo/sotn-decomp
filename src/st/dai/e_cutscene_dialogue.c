@@ -143,8 +143,7 @@ static u16 cluts[] = {PAL_PORTRAIT_ALUCARD, PAL_PORTRAIT_MARIA,
                       PAL_PORTRAIT_SHAFT, PAL_PORTRAIT_SUCCUBUS};
 static u16 x_vals[] = {0, 32};
 static u16 cutscene_unk_4_cluts[] = {
-    PAL_CUTSCENE_UNK_4_CLUT, PAL_CUTSCENE_UNK_4_CLUT, PAL_CUTSCENE_UNK_4_CLUT,
-    PAL_CUTSCENE_UNK_4_CLUT};
+    PAL_UNK_1A1, PAL_UNK_1A1, PAL_UNK_1A1, PAL_UNK_1A1};
 // Defines the increment of each line (by pixel, not text) of the dialogue box
 // background. Results in the staggered red draw in.
 static s16 red_line_increment[] = {

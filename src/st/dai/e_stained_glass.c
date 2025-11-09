@@ -288,7 +288,7 @@ void EntityStainedGlass(Entity* self) {
                 *lightPrim = *glassPrim;
                 lightPrim->next = tempPrim;
 
-                lightPrim->clut = PAL_WHITE;
+                lightPrim->clut = PAL_FILL_WHITE;
                 lightPrim->priority = glassPrim->priority - 1;
                 lightPrim->drawMode = DRAW_COLORS;
                 lightPrim->r0 = lightPrim->g0 = lightPrim->b0 = colorPtr->cd;
@@ -346,7 +346,7 @@ void EntityStainedGlass(Entity* self) {
                 tempPrim = lightPrim->next;
                 *lightPrim = *glassPrim;
                 lightPrim->next = tempPrim;
-                lightPrim->clut = PAL_WHITE;
+                lightPrim->clut = PAL_FILL_WHITE;
                 lightPrim->priority = glassPrim->priority + 1;
                 lightPrim->drawMode =
                     DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
@@ -456,7 +456,7 @@ void EntityStainedGlassBackground(Entity* self) {
             PGREY(prim, 2) = 64;
             PGREY(prim, 3) = 48;
             prim = prim->next;
-            prim->clut = PAL_WHITE;
+            prim->clut = PAL_FILL_WHITE;
             PGREY(prim, 0) = 24;
             PGREY(prim, 1) = 24;
             PGREY(prim, 2) = 24;
@@ -469,7 +469,7 @@ void EntityStainedGlassBackground(Entity* self) {
             PGREY(prim, 2) = 160;
             PGREY(prim, 3) = 48;
             prim = prim->next;
-            prim->clut = PAL_WHITE;
+            prim->clut = PAL_FILL_WHITE;
             prim->r0 = 24;
             prim->g0 = 24;
             prim->b0 = 24;

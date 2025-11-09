@@ -446,7 +446,7 @@ void EntitySpectralSwordWeapon(Entity* self) {
     // point.  Perhaps this is something that came from the Spectral Sword in
     // RDAI, but isn't relevant for DAI.
     if (self->ext.spectralSword.unkB0) {
-        self->palette = PAL_SPECTRAL_SWORD_WEAPON_UNK_16B;
+        self->palette = PAL_CC_TURQUOISE_EFFECT;
     } else {
         self->palette = PAL_SPECTRAL_SWORD_WEAPON;
     }
