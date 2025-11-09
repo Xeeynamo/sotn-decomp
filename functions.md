@@ -527,10 +527,10 @@
 | sel   | func_psp_0923F460                        |       19 |          1 |        |       |     |
 | sel   | func_psp_0923F4D0                        |       19 |          1 |        |       |     |
 | sel   | func_psp_092459D8                        |       19 |          1 |        |       |     |
+| st0   | func_pspeu_09242A20                      |       19 |          1 |        |       |     |
 | st0   | func_pspeu_092392D0                      |       19 |          1 |        |       |     |
 | st0   | func_pspeu_09237868                      |       19 |          1 |        |       |     |
 | st0   | func_pspeu_09237A40                      |       19 |          1 |        |       |     |
-| st0   | func_pspeu_09242A20                      |       19 |          1 |        |       |     |
 | dra   | func_psp_09137498                        |       19 |          2 |        |       |     |
 | main  | _gettimeofday                            |       19 |          2 |        |       |     |
 | main  | _rename                                  |       19 |          2 |        |       |     |
@@ -660,9 +660,9 @@
 | nz1   | SetSubStep                               |       21 |          1 |        |       |     |
 | nz1   | Random                                   |       21 |          1 |        |       |     |
 | sel   | func_psp_09243268                        |       21 |          1 |        |       |     |
+| st0   | func_pspeu_09242A58                      |       21 |          1 |        |       |     |
 | st0   | func_pspeu_092506C0                      |       21 |          1 |        |       |     |
 | st0   | func_pspeu_0924A330                      |       21 |          1 |        |       |     |
-| st0   | func_pspeu_09242A58                      |       21 |          1 |        |       |     |
 | wrp   | func_psp_0923C390                        |       21 |          1 |        |       |     |
 | wrp   | func_psp_0923A830                        |       21 |          1 |        |       |     |
 | dra   | func_psp_090E8880                        |       21 |          2 |        |       |     |
@@ -1640,7 +1640,7 @@
 | np3   | func_pspeu_09259A58                      |       46 |          5 |        |       |     |
 | nz1   | DestroyEntity                            |       46 |          5 |        |       |     |
 | sel   | func_psp_092431D0                        |       46 |          5 |        |       |     |
-| st0   | DestroyEntity                            |       46 |          5 |        |       |     |
+| st0   | func_pspeu_0924FD90                      |       46 |          5 |        |       |     |
 | wrp   | func_psp_09243538                        |       46 |          5 |        |       |     |
 | dra   | func_psp_090E7DA8                        |       46 |          6 |        |       |     |
 | main  | func_psp_0891B70C                        |       46 |          6 |        |       |     |
@@ -1960,7 +1960,7 @@
 | no4   | func_pspeu_0923D4A0                      |       61 |         10 |        |       |     |
 | nz1   | EntitySpikesDust                         |       61 |         10 |        |       |     |
 | sel   | func_psp_09237700                        |       61 |         10 |        |       |     |
-| st0   | GetLangAt                                |       61 |         10 |        |       |     |
+| st0   | func_pspeu_09237700                      |       61 |         10 |        |       |     |
 | dra   | func_psp_09137038                        |       61 |         12 |        |       |     |
 | dra   | 71830.rodata                             |       62 |          0 | Yes    |       |     |
 | no2   | func_pspeu_0925C018                      |       62 |          4 |        |       |     |
