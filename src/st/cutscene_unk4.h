@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-
 #ifndef CUTSCENE_UNK4_TPAGE
 #define CUTSCENE_UNK4_TPAGE 0x10
 #endif
