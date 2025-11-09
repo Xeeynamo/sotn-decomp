@@ -2006,9 +2006,9 @@
 | st0   | func_pspeu_09247478                      |       63 |          6 |        |       |     |
 | dra   | func_psp_0911FBD0                        |       63 |          7 |        |       |     |
 | ric   | func_pspeu_092B4688                      |       63 |          7 |        |       |     |
-| cat   | PrimDecreaseBrightness                   |       63 |          7 |        |       |     |
 | cat   | func_pspeu_09261A18                      |       63 |          7 |        |       |     |
 | cat   | func_pspeu_09261AE8                      |       63 |          7 |        |       |     |
+| cat   | PrimDecreaseBrightness                   |       63 |          7 |        |       |     |
 | chi   | func_psp_09248B00                        |       63 |          7 |        |       |     |
 | dai   | func_pspeu_0924F200                      |       63 |          7 |        |       |     |
 | lib   | func_psp_09251098                        |       63 |          7 |        |       |     |
@@ -3547,7 +3547,7 @@
 | no3   | EntityMermanWaterSplash                  |      324 |         34 |        |       |     |
 | np3   | EntityMermanWaterSplash                  |      324 |         34 |        |       |     |
 | st0   | func_pspeu_09241708                      |      325 |          7 |        |       |     |
-| cat   | func_us_801B7B64                         |      327 |         36 |        |       |     |
+| cat   | EntitySpikeRoomDarkness                  |      327 |         36 |        |       |     |
 | dra   | func_psp_090E2A78                        |      329 |         32 | Yes    |       |     |
 | no2   | func_pspeu_0925B278                      |      330 |         40 |        |       |     |
 | cat   | EntityThornweed                          |      330 |         47 | Yes    |       |     |
