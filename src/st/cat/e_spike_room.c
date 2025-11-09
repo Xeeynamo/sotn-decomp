@@ -146,10 +146,11 @@ void EntitySpikeRoomDarkness(Entity* self) {
         prim = prim->next;
         // fallthrough
     case 1:
-        // Iterate over g_Entities[0] -> g_Entities[39] and
+        // Iterate over g_Entities[0] -> g_Entities[STAGE_ENTITY_START] and
         // test if player has bat echoed
-        for (entity = &g_Entities[0], i = 0; i < 0x40; i++, entity++) {
-            // dra.h E_BAT_ECHO
+        for (entity = &g_Entities[0], i = 0; i < STAGE_ENTITY_START; i++,
+            entity++) {
+            // dra.h AluEntities -> E_BAT_ECHO
             if (entity->entityId == 0x34 && !entity->ext.spikes.echoCooldown) {
                 // If user has initiated the echo and we're not on cooldown,
                 // spawn the bounce entity func_us_801BACF4
