@@ -24,9 +24,7 @@ static u8 hitbox_heights[] = {
 static u8 params_arr[] = {
     0x00, 0x00, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x02, 0x00, 0x00};
 static u16 palettes[] = {
-    PAL_DRA(0x0000), PAL_DRA(0x0000), PAL_DRA(0x0228), PAL_DRA(0x0228),
-    PAL_DRA(0x0228), PAL_DRA(0x0228), PAL_DRA(0x0228), PAL_DRA(0x0228),
-    PAL_DRA(0x0228), PAL_DRA(0x0228)};
+    PAL_NULL, PAL_NULL, 0x228, 0x228, 0x228, 0x228, 0x228, 0x228, 0x228, 0x228};
 static u16 anim_sets[] = {
     ANIMSET_DRA(0x3), ANIMSET_DRA(0x3), ANIMSET_OVL(0xB), ANIMSET_OVL(0xB),
     ANIMSET_OVL(0xB), ANIMSET_OVL(0xB), ANIMSET_OVL(0xB), ANIMSET_OVL(0xB),
@@ -125,7 +123,7 @@ void func_us_801C123C(Entity* self) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(0xB);
         self->unk5A = 0x5B;
-        self->palette = PAL_DRA(0x228);
+        self->palette = 0x228;
         self->animCurFrame = 0x15;
         self->zPriority = 0x6A;
         self->step = 0x100;

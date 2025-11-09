@@ -455,7 +455,7 @@ static void func_ptr_80170008(Entity* self) {
         prim->r1 = prim->r3 = D_169000_8017AEA4[color * 4 + 0] + (rand() & 0xF);
         prim->g1 = prim->g3 = D_169000_8017AEA4[color * 4 + 1] + (rand() & 0xF);
         prim->b1 = prim->b3 = D_169000_8017AEA4[color * 4 + 2] + (rand() & 0xF);
-        prim->clut = 0x15F;
+        prim->clut = PAL_FILL_WHITE;
         prim->r0 = prim->r2 = 0;
         prim->g0 = prim->g2 = 0;
         prim->b0 = prim->b2 = 0;

@@ -45,7 +45,7 @@ void func_us_801D1184(Primitive* prim) {
     switch (prim->next->u2) {
     case 0:
         prim->tpage = 0x1A;
-        prim->clut = 0x160;
+        prim->clut = PAL_CC_FIRE_EFFECT;
         prim->u0 = 0xF0;
         prim->u1 = 0xFF;
         prim->u2 = prim->u0;
@@ -305,7 +305,7 @@ void func_us_801D1A9C(void) {
             g_CurrentEntity->ext.armorLord.prim = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x1A;
-            prim->clut = 0x161;
+            prim->clut = PAL_CC_STONE_EFFECT;
             prim->u0 = 0x14;
             prim->u1 = 0x2C;
             prim->u2 = prim->u0;
@@ -435,7 +435,7 @@ s32 func_us_801D1DAC(void) {
             prim = g_CurrentEntity->ext.armorLord.prim;
             for (i = 0; i < 3; i++) {
                 prim->tpage = 0x15;
-                prim->clut = 0x160;
+                prim->clut = PAL_CC_FIRE_EFFECT;
                 prim->u2 = prim->u0;
                 prim->u3 = prim->u1;
                 prim->v0 = 0;

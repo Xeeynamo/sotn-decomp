@@ -80,7 +80,7 @@ void func_us_801AD320(Entity* self) {
         self->animSet = ANIMSET_OVL(2);
         self->animCurFrame = 0x11;
         self->unk5A = 0xF;
-        self->palette = PAL_OVL(0x230);
+        self->palette = PAL_FLAG(0x230);
         break;
     case 1:
         if (g_CutsceneFlags & 4) {

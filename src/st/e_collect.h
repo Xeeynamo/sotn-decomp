@@ -657,7 +657,7 @@ void EntityExplosion(Entity* entity) {
         entity->animSet = ANIMSET_DRA(2);
         entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         if (entity->params & 0xF0) {
-            entity->palette = PAL_OVL(0x195);
+            entity->palette = PAL_FLAG(PAL_UNK_195);
             entity->drawMode = DRAW_TPAGE;
         }
 
@@ -1149,7 +1149,7 @@ void EntityRelicOrb(Entity* self) {
 #if STAGE == STAGE_ST0
                 prim->clut = 0x1F8;
 #else
-                prim->clut = 0x1A1;
+                prim->clut = PAL_UNK_1A1;
 #endif
                 prim->priority = 0x1FE;
                 prim->drawMode = DRAW_HIDE;
@@ -1391,7 +1391,7 @@ void EntityRelicOrb(Entity* self) {
             for (i = 0; i < 4; i++) {
                 if (prim->drawMode == DRAW_HIDE) {
                     prim->tpage = 0x1A;
-                    prim->clut = 0x1B1;
+                    prim->clut = PAL_UNK_1B1;
                     prim->u0 = prim->u2 = 0;
                     prim->u1 = prim->u3 = 0x10;
                     prim->v0 = prim->v1 = 0x50;
@@ -1579,7 +1579,7 @@ void EntityMessageBox(Entity* self) {
                 prim->v0 = 0x80;
                 prim->u1 = self->ext.messageBox.width;
                 prim->v1 = self->ext.messageBox.height;
-                prim->clut = 0x1A1;
+                prim->clut = PAL_UNK_1A1;
                 prim->priority = 0x1FD;
                 prim->drawMode = DRAW_HIDE;
             } else {

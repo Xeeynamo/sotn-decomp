@@ -382,7 +382,7 @@ void func_us_801D8150(Entity* self) {
                 self->flags |= FLAG_HAS_PRIMS;
                 prim = &g_PrimBuf[self->primIndex];
                 prim->tpage = 0x1A;
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim->u0 = prim->u2 = 0;
                 prim->u1 = prim->u3 = 0x3F;
                 prim->v0 = prim->v1 = 0xC0;

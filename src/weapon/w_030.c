@@ -161,7 +161,7 @@ void func_ptr_80170004(Entity* self) {
                              DRAW_UNK02 | DRAW_TRANSP;
             prim->tpage = 0x19;
             prim->priority = PLAYER.zPriority + 4;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
         }
 
         self->facingLeft = PLAYER.facingLeft;

@@ -665,7 +665,7 @@ void EntityFireWarg(Entity* self) {
             }
             if (!self->opacity) {
                 self->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
-                self->palette = 0x15F;
+                self->palette = PAL_FILL_WHITE;
                 self->opacity = 0x80;
                 self->step_s += 1;
             }

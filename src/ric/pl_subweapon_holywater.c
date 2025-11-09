@@ -304,7 +304,7 @@ void RicEntitySubwpnHolyWater(Entity* self) {
         self->animCurFrame = 0x23;
         self->zPriority = PLAYER.zPriority + 2;
         self->unk5A = 0x46;
-        self->palette = PAL_OVL(0x12F);
+        self->palette = PAL_FLAG(PAL_UNK_12F);
         xMod = 0;
         if (self->facingLeft) {
             xMod = -xMod;
@@ -479,7 +479,7 @@ void RicEntitySubwpnHolyWaterFlame(Entity* self) {
                 prim->g0 = prim->g1 = 0;
                 prim->b0 = prim->b1 = 0;
             }
-            prim->clut = 0x1B0;
+            prim->clut = PAL_UNK_1B0;
             prim->tpage = 0x1A;
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |

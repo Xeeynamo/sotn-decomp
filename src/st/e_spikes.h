@@ -47,7 +47,7 @@ void EntitySpikesDust(Entity* self) {
         self->zPriority = 160;
         self->animSet = 8;
         self->animCurFrame = 1;
-        self->palette = PAL_OVL(PAL_SPIKES_DUST);
+        self->palette = PAL_FLAG(PAL_SPIKES_DUST);
         angle = GetAngleBetweenEntitiesShifted(self, &PLAYER);
         SetEntityVelocityFromAngle(angle, 40);
         return;

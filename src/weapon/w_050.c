@@ -221,7 +221,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->flags = FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 80; i++) {
-            prim->clut = 0x1B0;
+            prim->clut = PAL_UNK_1B0;
             prim->tpage = 0x1A;
             prim->b0 = 0;
             prim->b1 = 0;
@@ -334,7 +334,7 @@ void func_ptr_80170008(Entity* self) {
             }
             prim->u2 = prim->u3 = 0x20;
             prim->v2 = prim->v3 = 0xE0;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->tpage = 0x1A;
             prim->r1 = prim->b1 = prim->g1 = 0;
             prim->r0 = prim->b0 = prim->g0 = 0;
@@ -542,7 +542,7 @@ s32 func_ptr_80170010(Entity* self) {
 
             D_162000_8017CBFC[i].x = prim_x;
             D_162000_8017CBFC[i].y = prim_y;
-            prim->clut = 0x1B0;
+            prim->clut = PAL_UNK_1B0;
             prim->tpage = 0x1A;
             prim->b0 = 0;
             prim->b1 = 0;

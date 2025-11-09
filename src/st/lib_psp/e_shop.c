@@ -2911,7 +2911,7 @@ void func_us_801B15C0(Entity* self) {
                 } else if (i == 6) {
                     prim->type = PRIM_GT4;
                     prim->tpage = 0x10;
-                    prim->clut = 0x1A1;
+                    prim->clut = PAL_UNK_1A1;
                     prim->u0 = prim->u2 = 0;
 #ifdef VERSION_PSP
                     prim->u1 = prim->u3 = 0x58;
@@ -4467,7 +4467,7 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
                 prim->y3 = prim->y2 = prim->y0 + 8;
                 prim->v1 = prim->u1 = 8;
                 prim->type = PRIM_SPRT;
-                prim->clut = 0x196;
+                prim->clut = PAL_UNK_196;
                 prim->tpage = 0x1E;
                 prim->priority = 0x11;
                 prim = prim->next;
@@ -4580,7 +4580,7 @@ void func_us_801B4830(Entity* self) {
 #else
                     func_us_801B11A0(0x60, 0x100, 0x24, 0x20);
 #endif
-                    prim->clut = 0x1A1;
+                    prim->clut = PAL_UNK_1A1;
                     prim->tpage = 0x10;
 #ifdef VERSION_PSP
                     prim->u0 = 0x50;
@@ -4615,7 +4615,7 @@ void func_us_801B4830(Entity* self) {
                             prim->x0 -= 4;
                         }
                     }
-                    prim->clut = 0x196;
+                    prim->clut = PAL_UNK_196;
                     prim->tpage = 0x1E;
                     prim->u1 = 8;
                     prim->v1 = 8;
@@ -4625,7 +4625,7 @@ void func_us_801B4830(Entity* self) {
                     prim->x0 = *var_s4++ + 0xBA;
                     prim->y0 = *var_s4++ + 0xA0;
                     j++;
-                    prim->clut = 0x196;
+                    prim->clut = PAL_UNK_196;
                     prim->tpage = 0x1E;
                     prim->u1 = 8;
                     prim->v1 = 8;
@@ -4942,7 +4942,7 @@ void func_us_801B5068(Entity* self) {
                     prim->drawMode = DRAW_HIDE;
                 } else if (i == 4) {
                     func_us_801B11A0(0, 0x180, 0xF0, 0x16);
-                    prim->clut = 0x1A1;
+                    prim->clut = PAL_UNK_1A1;
                     prim->tpage = 0x10;
                     prim->u0 = prim->u2 = 0;
                     prim->u1 = prim->u3 = 0xF0;
@@ -5319,7 +5319,7 @@ void func_us_801B56E4(Entity* self) {
             }
             prim = prim->next;
             while (prim != NULL) {
-                prim->clut = 0x196;
+                prim->clut = PAL_UNK_196;
                 prim->tpage = 0x1E;
                 prim->u1 = prim->v1 = 8;
                 prim->priority = 0x11;
@@ -5379,7 +5379,7 @@ void func_us_801B56E4(Entity* self) {
             prim = func_us_801B1064(prim, 8, posY, name, 0x196);
             if (D_us_801D415C[index] != 0) {
                 posX = 0x7E;
-                prim->clut = 0x196;
+                prim->clut = PAL_UNK_196;
                 prim->u0 = 0x40;
                 prim->v0 = 0x28;
                 prim->drawMode = DRAW_DEFAULT;
@@ -5389,7 +5389,7 @@ void func_us_801B56E4(Entity* self) {
                 posX += 8;
                 prim2 = prim;
                 for (j = 0; j < 2; j++) {
-                    prim->clut = 0x196;
+                    prim->clut = PAL_UNK_196;
                     prim->x0 = posX;
                     prim->y0 = posY;
                     prim = prim->next;
@@ -5401,9 +5401,9 @@ void func_us_801B56E4(Entity* self) {
                 price = shopItem->price * D_us_801D415C[index];
                 for (j = 0; j < 8; j++) {
                     if (g_Status.gold < price) {
-                        prim->clut = 0x191;
+                        prim->clut = PAL_UNK_191;
                     } else {
-                        prim->clut = 0x196;
+                        prim->clut = PAL_UNK_196;
                     }
                     prim->x0 = posX;
                     prim->y0 = posY;
@@ -5422,7 +5422,7 @@ void func_us_801B56E4(Entity* self) {
                 prim2 = prim;
                 for (j = 0; j < 8; j++) {
 #endif
-                    prim->clut = 0x196;
+                    prim->clut = PAL_UNK_196;
                     prim->x0 = posX;
                     prim->y0 = posY;
                     prim = prim->next;
@@ -5807,7 +5807,7 @@ void func_us_801B6324(Entity* self) {
                         return;
                     }
                 } else {
-                    prim->clut = 0x196;
+                    prim->clut = PAL_UNK_196;
                     prim->tpage = 0x1E;
                     prim->u1 = prim->v1 = 8;
                     prim->priority = 0x11;
@@ -6161,7 +6161,7 @@ void func_us_801B6F30(Entity* self) {
                         return;
                     }
                 } else {
-                    prim->clut = 0x196;
+                    prim->clut = PAL_UNK_196;
                     prim->tpage = 0x1E;
                     prim->u1 = prim->v1 = 8;
                     prim->priority = 0x11;
@@ -6465,7 +6465,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     posY = 0x2C;
     func_us_801B3FB4(prim, D_us_801818C0[5], 3, 1); // "No."
     for (i = 0; i < 3; i++) {
-        prim->clut = 0x196;
+        prim->clut = PAL_UNK_196;
         prim->x0 = posX;
         prim->y0 = posY;
         prim = prim->next;
@@ -6473,7 +6473,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     }
     func_us_801B3EC8(prim, arg1->params + 1, 3);
     for (i = 0; i < 3; i++) {
-        prim->clut = 0x196;
+        prim->clut = PAL_UNK_196;
         prim->x0 = posX;
         prim->y0 = posY;
         prim = prim->next;
@@ -6483,7 +6483,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     posY = 0x38;
     func_us_801B3FB4(prim, D_us_801818C0[0], 2, 1); // "Strong VS."
     for (i = 0; i < 2; i++) {
-        prim->clut = 0x196;
+        prim->clut = PAL_UNK_196;
         prim->x0 = posX;
         prim->y0 = posY;
         prim = prim->next;
@@ -6496,7 +6496,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
         func_us_801B3FB4(prim, D_us_801818C0[6], 2, 1); // "??"
     }
     for (i = 0; i < 2; i++) {
-        prim->clut = 0x196;
+        prim->clut = PAL_UNK_196;
         prim->x0 = posX;
         prim->y0 = posY;
         if (prim->drawMode != DRAW_HIDE) {
@@ -6508,7 +6508,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     posY = 0x38;
     func_us_801B3FB4(prim, D_us_801818C0[1], 2, 1); // "HP"
     for (i = 0; i < 2; i++) {
-        prim->clut = 0x196;
+        prim->clut = PAL_UNK_196;
         prim->x0 = posX;
         prim->y0 = posY;
         prim = prim->next;
@@ -6521,7 +6521,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
         func_us_801B3EC8(prim, enemyDef->hitPoints, 4);
     }
     for (i = 0; i < 4; i++) {
-        prim->clut = 0x196;
+        prim->clut = PAL_UNK_196;
         prim->x0 = posX;
         prim->y0 = posY;
         if (prim->drawMode != DRAW_HIDE) {
@@ -6533,7 +6533,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     posY = 0xA4;
     func_us_801B3FB4(prim, D_us_801818C0[3], 3, 1); // "Exp"
     for (i = 0; i < 3; i++) {
-        prim->clut = 0x196;
+        prim->clut = PAL_UNK_196;
         prim->x0 = posX;
         prim->y0 = posY;
         prim = prim->next;
@@ -6541,7 +6541,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     }
     func_us_801B3EC8(prim, enemyDef->exp, 4);
     for (i = 0; i < 4; i++) {
-        prim->clut = 0x196;
+        prim->clut = PAL_UNK_196;
         prim->x0 = posX;
         prim->y0 = posY;
         prim = prim->next;
@@ -6552,7 +6552,7 @@ void func_us_801B7DF8(Primitive* prim, Entity* arg1, s16 enemyId) {
     strLen = 0x14;
     func_us_801B3FB4(prim, D_us_801818C0[4], strLen, 1); // "Drop Items"
     for (i = 0; i < strLen; i++) {
-        prim->clut = 0x196;
+        prim->clut = PAL_UNK_196;
         prim->x0 = posX - xOffset;
         prim->y0 = posY;
         prim = prim->next;
@@ -6700,7 +6700,7 @@ void func_us_801B8234(Entity* self) {
                     prim->drawMode = DRAW_HIDE;
                 } else if (i == 11) {
                     prim->tpage = 0x10;
-                    prim->clut = 0x1A1;
+                    prim->clut = PAL_UNK_1A1;
                     prim->u0 = 0;
                     prim->v0 = 0x80;
                     prim->u1 = 0x80;
@@ -6711,7 +6711,7 @@ void func_us_801B8234(Entity* self) {
                     prim->drawMode = DRAW_HIDE;
                 } else if (i == 12) {
                     prim->tpage = 0x10;
-                    prim->clut = 0x1A1;
+                    prim->clut = PAL_UNK_1A1;
                     prim->u0 = 0;
                     prim->v0 = 0xC0;
                     prim->v1 = 0x20;
@@ -6745,7 +6745,7 @@ void func_us_801B8234(Entity* self) {
                     prim->drawMode = DRAW_HIDE;
                 } else if (i == 11) {
                     prim->tpage = 0x10;
-                    prim->clut = 0x1A1;
+                    prim->clut = PAL_UNK_1A1;
                     prim->u0 = 0;
                     prim->v0 = 0xC0;
                     prim->v1 = 0x20;
@@ -6756,7 +6756,7 @@ void func_us_801B8234(Entity* self) {
                     prim->drawMode = DRAW_HIDE;
 #endif
                 } else {
-                    prim->clut = 0x196;
+                    prim->clut = PAL_UNK_196;
                     prim->tpage = 0x1E;
                     prim->u1 = prim->v1 = 8;
                     prim->priority = 0x12;
@@ -7102,7 +7102,7 @@ void func_psp_0926AED0(Entity* self) {
 #ifdef VERSION_PSP
                 } else if (i == 14) {
                     prim->tpage = 0x10;
-                    prim->clut = 0x1A1;
+                    prim->clut = PAL_UNK_1A1;
                     prim->u0 = 0;
                     prim->v0 = 0x80;
                     prim->u1 = 0xE0;
@@ -7113,7 +7113,7 @@ void func_psp_0926AED0(Entity* self) {
                     prim->drawMode = DRAW_HIDE;
 #endif
                 } else {
-                    prim->clut = 0x196;
+                    prim->clut = PAL_UNK_196;
                     prim->tpage = 0x1E;
                     prim->u1 = prim->v1 = 8;
                     prim->priority = 0x11;
@@ -7551,7 +7551,7 @@ void func_us_801B8A00(Entity* self) {
                         return;
                     }
                 } else {
-                    prim->clut = 0x196;
+                    prim->clut = PAL_UNK_196;
                     prim->tpage = 0x1E;
                     prim->u1 = prim->v1 = 8;
                     prim->priority = 0x11;

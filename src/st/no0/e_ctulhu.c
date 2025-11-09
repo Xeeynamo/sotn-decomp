@@ -877,7 +877,7 @@ void EntityCtulhuDeath(Entity* self) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = 14;
         self->unk5A = 121;
-        self->palette = PAL_OVL(0x2CE);
+        self->palette = PAL_FLAG(0x2CE);
         self->drawFlags = FLAG_DRAW_OPACITY;
         self->opacity = 16;
         if (self->params) {

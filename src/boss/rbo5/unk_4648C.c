@@ -116,7 +116,7 @@ void DopplegangerStepHighJump(void) {
         if ((var_s1 - 1) != temp) {
             SetDopplegangerAnim(0x1C);
         }
-        DOPPLEGANGER.palette = PAL_OVL(0x200);
+        DOPPLEGANGER.palette = PAL_FLAG(0x200);
         DOPPLEGANGER.step_s = 1;
         DOPPLEGANGER.step = Dop_Jump;
     }
@@ -214,45 +214,45 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
             break;
         }
 
-        g_Dop.unk40 = 0x8166;
+        g_Dop.unk40 = PAL_FLAG(PAL_CC_RED_EFFECT_A);
         g_Dop.timers[2] = 6;
         g_api.PlaySfx(D_us_801813C8[sfxIndex]);
 
         if (damage->effects & EFFECT_UNK_8000) {
             g_api.PlaySfx(SFX_FM_EXPLODE_SWISHES);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x45), 0);
-            g_Dop.unk40 = 0x8160;
+            g_Dop.unk40 = PAL_FLAG(PAL_CC_FIRE_EFFECT);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(17, 1), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(18, 0), 0);
             g_Dop.timers[2] = 0x10;
         } else if (damage->effects & EFFECT_UNK_0100) {
             g_Dop.timers[1] = 0x400;
-            g_Dop.unk40 = 0x8165;
+            g_Dop.unk40 = PAL_FLAG(PAL_CC_CURSE_EFFECT);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 23), 0);
         } else if (damage->effects & EFFECT_SOLID_FROM_BELOW) {
             g_Dop.timers[0] = 0x400;
-            g_Dop.unk40 = 0x8164;
+            g_Dop.unk40 = PAL_FLAG(PAL_CC_DARK_EFFECT);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 22), 0);
         } else if (damage->effects & EFFECT_UNK_4000) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2D, 0), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x46), 0);
             g_Dop.timers[2] = 0x18;
-            g_Dop.unk40 = 0x8202;
+            g_Dop.unk40 = PAL_FLAG(0x202);
         } else if (damage->effects & EFFECT_UNK_2000) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2E, 0), 0);
             g_Dop.timers[2] = 0xC;
-            g_Dop.unk40 = 0x8169;
+            g_Dop.unk40 = PAL_FLAG(PAL_CC_BLUE_EFFECT_A);
             DOPPLEGANGER.ext.player.anim = 0x2E;
         } else if (damage->effects & EFFECT_UNK_1000) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x72, 0), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x63), 0);
             g_Dop.timers[2] = 8;
-            g_Dop.unk40 = 0x8164;
+            g_Dop.unk40 = PAL_FLAG(PAL_CC_DARK_EFFECT);
         } else if (damage->effects & EFFECT_UNK_0800) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x71, 0), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x62), 0);
             g_Dop.timers[2] = 16;
-            g_Dop.unk40 = 0x8164;
+            g_Dop.unk40 = PAL_FLAG(PAL_CC_DARK_EFFECT);
         } else if (!(damage->effects &
                      (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
                       EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0200 |
@@ -268,7 +268,7 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
         }
         break;
     case 8:
-        DOPPLEGANGER.palette = PAL_OVL(0x200);
+        DOPPLEGANGER.palette = PAL_FLAG(0x200);
         // fallthrough
     case 6:
     case 7:
@@ -475,7 +475,7 @@ bool BatFormFinished(void) {
     SetDopplegangerStep(10);
     SetDopplegangerAnim(202);
     D_us_80183B98[0].pose = 6;
-    DOPPLEGANGER.palette = PAL_OVL(0x20D);
+    DOPPLEGANGER.palette = PAL_FLAG(0x20D);
     g_Dop.unk66 = 0;
     g_Dop.unk68 = 0;
     CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(44, 0x21), 0);
@@ -569,7 +569,7 @@ void ControlBatForm(void) {
             }
             SetDopplegangerAnim(0xCA);
             D_us_80183B98[0].pose = DOPPLEGANGER.animCurFrame;
-            DOPPLEGANGER.palette = PAL_OVL(0x20D);
+            DOPPLEGANGER.palette = PAL_FLAG(0x20D);
             if (g_Dop.unk66 == 1) {
                 return;
             }
@@ -582,7 +582,7 @@ void ControlBatForm(void) {
         SetDopplegangerAnim(0xC3);
         DOPPLEGANGER.poseTimer = 1;
         DOPPLEGANGER.pose = 2;
-        DOPPLEGANGER.palette = PAL_OVL(0x200);
+        DOPPLEGANGER.palette = PAL_FLAG(0x200);
         CheckMoveDirection();
         DOPPLEGANGER.step_s++;
         break;
@@ -875,7 +875,7 @@ void DopplegangerStepUnmorphBat(void) {
             if (!(g_Dop.vram_flag & TOUCHING_ANY_SLOPE)) {
                 DOPPLEGANGER.velocityY = FIX(-1);
             }
-            DOPPLEGANGER.palette = PAL_OVL(0x200);
+            DOPPLEGANGER.palette = PAL_FLAG(0x200);
             func_80111CC0();
         }
         break;
@@ -1085,7 +1085,7 @@ void DopplegangerStepUnmorphMist(void) {
             return;
         }
         if (g_Entities[E_ID_50].step == 5) {
-            DOPPLEGANGER.palette = PAL_OVL(0x200);
+            DOPPLEGANGER.palette = PAL_FLAG(0x200);
             func_8010FAF4();
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x5B), 0);
             func_us_801C4EE4();
@@ -1107,7 +1107,7 @@ void DopplegangerStepSwordWarp(void) {
             DOPPLEGANGER.step_s++;
         }
     } else if (--D_us_801D331C == 0) {
-        DOPPLEGANGER.palette = PAL_OVL(0x200);
+        DOPPLEGANGER.palette = PAL_FLAG(0x200);
         func_8010E570(0);
     }
 }
@@ -1127,7 +1127,7 @@ void DopplegangerStepStone(s32 arg0) {
         DOPPLEGANGER.velocityY = FIX(-4);
         func_8010E3B8(FIX(-0.625));
         func_80113E68();
-        DOPPLEGANGER.palette = PAL_OVL(0x161);
+        DOPPLEGANGER.palette = PAL_FLAG(PAL_CC_STONE_EFFECT);
         g_api.PlaySfx(SFX_BO4_UNK_7DC);
         g_Dop.unk5E = 8;
         g_Dop.timers[2] = 0;
@@ -1136,7 +1136,7 @@ void DopplegangerStepStone(s32 arg0) {
 
     case 1:
         func_us_801C4A30(1, 4);
-        DOPPLEGANGER.palette = PAL_OVL(0x161);
+        DOPPLEGANGER.palette = PAL_FLAG(PAL_CC_STONE_EFFECT);
         if (func_us_801C5650(0x20280) != 0) {
             DOPPLEGANGER.step = Dop_StatusStone;
             DOPPLEGANGER.velocityX = DOPPLEGANGER.velocityY = 0;
@@ -1146,7 +1146,7 @@ void DopplegangerStepStone(s32 arg0) {
             if (g_Dop.unk6A == 0) {
                 D_us_801D3320 = 0x20;
             }
-            DOPPLEGANGER.palette = PAL_OVL(0x19E);
+            DOPPLEGANGER.palette = PAL_FLAG(PAL_UNK_19E);
             SetDopplegangerAnim(0x38);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(16, 3), 0);
             DOPPLEGANGER.step_s = 2;
@@ -1177,16 +1177,16 @@ void DopplegangerStepStone(s32 arg0) {
                 g_api.PlaySfx(SFX_BO4_UNK_7DD);
                 DOPPLEGANGER.step = Dop_Hit;
                 DOPPLEGANGER.step_s = 8;
-                DOPPLEGANGER.palette = PAL_OVL(0x200);
+                DOPPLEGANGER.palette = PAL_FLAG(0x200);
             } else {
                 func_us_801C4A30(1, 4);
                 DOPPLEGANGER.step_s = 3;
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(13, 3), 0);
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(31, 3), 0);
-                DOPPLEGANGER.palette = PAL_OVL(0x19E);
+                DOPPLEGANGER.palette = PAL_FLAG(PAL_UNK_19E);
             }
         } else {
-            DOPPLEGANGER.palette = PAL_OVL(0x19E);
+            DOPPLEGANGER.palette = PAL_FLAG(PAL_UNK_19E);
         }
 
         break;
@@ -1208,7 +1208,7 @@ void DopplegangerStepStone(s32 arg0) {
                 DOPPLEGANGER.rotPivotY = 20;
             }
         }
-        DOPPLEGANGER.palette = PAL_OVL(0x19E);
+        DOPPLEGANGER.palette = PAL_FLAG(PAL_UNK_19E);
         break;
     }
 }
@@ -1410,7 +1410,7 @@ void DopEntityHitByHoly(Entity* self) {
             yRand = hitboxY + rand() % 48 - 24;
             D_us_801D3334[i].x = xRand;
             D_us_801D3334[i].y = yRand;
-            prim->clut = 0x1B2;
+            prim->clut = PAL_UNK_1B2;
             prim->tpage = 0x1A;
             prim->b0 = 0;
             prim->b1 = 0;
@@ -1807,7 +1807,7 @@ void EntitySmokePuff(Entity* self) {
         self->anim = D_800AD57C;
         self->zPriority = DOPPLEGANGER.zPriority + 2;
         self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
-        self->palette = PAL_OVL(0x195);
+        self->palette = PAL_FLAG(PAL_UNK_195);
         self->drawMode = DRAW_TPAGE;
         self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
 
@@ -1936,7 +1936,7 @@ void DopEntityHitByDark(Entity* self) {
         self->unk5A = 0x79;
         self->animSet = ANIMSET_DRA(14);
         self->zPriority = DOPPLEGANGER.zPriority + 2;
-        self->palette = PAL_OVL(0x19F);
+        self->palette = PAL_FLAG(PAL_UNK_19F);
 
         if (D_us_801D3374 & 1) {
             self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
@@ -2206,7 +2206,7 @@ void EntityDopplegangerBlinkWhite(Entity* self) {
             self->step = 1;
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; i < 8; i++) {
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim = prim->next;
             }
             D_us_80181BFC = 0;
@@ -2799,7 +2799,7 @@ void EntityWingSmashTrail(Entity* self) {
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->rotate = DOPPLEGANGER.rotate;
         self->facingLeft = DOPPLEGANGER.facingLeft;
-        self->palette = PAL_OVL(0x202);
+        self->palette = PAL_FLAG(0x202);
         self->scaleX = self->scaleY = 0x100;
         self->step++;
         return;
@@ -3066,7 +3066,7 @@ void func_8011EDA8(Entity* self) {
             } else {
                 self->animSet = ANIMSET_DRA(5);
                 self->anim = D_800AD57C;
-                self->palette = PAL_OVL(0x170);
+                self->palette = PAL_FLAG(PAL_UNK_170);
             }
         }
         self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
@@ -4625,7 +4625,7 @@ void EntitySubwpnKnife(Entity* self) {
         }
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1C;
-        prim->clut = 0x1AB;
+        prim->clut = PAL_UNK_1AB;
         prim->u0 = prim->u1 = 0x18;
         prim->v0 = prim->v2 = 0x18;
         prim->u2 = prim->u3 = 0x20;
@@ -4704,7 +4704,7 @@ void EntitySubwpnKnife(Entity* self) {
         prim->y2 = y + 4;
         prim->x3 = x + offsetX;
         prim->y3 = y + 4;
-        prim->clut = 0x1AB;
+        prim->clut = PAL_UNK_1AB;
         (g_GameTimer >> 1) & 1; // no-op
         prim->drawMode &= ~DRAW_HIDE;
         prim = prim->next;
@@ -4773,7 +4773,7 @@ void EntitySubwpnKnife(Entity* self) {
         modY = -(rsin(angle4) * 0xCA0) >> 0x14;
         prim->x3 = x + (s16)modX;
         prim->y3 = y - (s16)modY;
-        prim->clut = 0x1AB;
+        prim->clut = PAL_UNK_1AB;
 
         (g_GameTimer >> 1) & 1; // no-op
         if (self->ext.timer.t < 0x21) {

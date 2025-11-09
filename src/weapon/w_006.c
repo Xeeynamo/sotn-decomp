@@ -166,7 +166,7 @@ static void func_ptr_80170004(Entity* self) {
         self->hitboxWidth = hitboxSize;
         self->hitboxHeight = hitboxSize;
         if (self->hitFlags != 0) {
-            self->palette = PAL_OVL(0x15F);
+            self->palette = PAL_FLAG(PAL_FILL_WHITE);
             self->drawMode = DRAW_TPAGE;
             self->ext.weapon_006.lifetime = 8;
             self->step = 4;
@@ -249,7 +249,7 @@ static void func_ptr_80170008(Entity* self) {
         self->posY.i.hi += posY;
 
         prim = &g_PrimBuf[self->primIndex];
-        prim->clut = 0x1B0;
+        prim->clut = PAL_UNK_1B0;
         prim->tpage = 0x1A;
         prim->b0 = 0;
         prim->b1 = 0;
