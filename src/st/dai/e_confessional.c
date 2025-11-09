@@ -1,9 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
+enum ConfessionalGhostParams {
+    CONFESSIONAL_GHOST_PRIEST,
+    CONFESSIONAL_GHOST_PARISHIONER,
+    CONFESSIONAL_GHOST_BAD = 0x100,
+};
+
 enum ConfessionalSteps {
     CONFESSIONAL_INIT,
-    CONFESSIONAL_CHIME_ACTIVATE,
+    CONFESSIONAL_GHOST_READY,
     CONFESSIONAL_CHECK_SEATED,
     CONFESSIONAL_GHOST_MOVE,
     CONFESSIONAL_GHOST_GOOD_SIT,
@@ -61,6 +67,8 @@ extern s32 E_ID(CONFESSIONAL_BLADES);
 extern s32 E_ID(CONFESSIONAL_BLADE_DEBRIS);
 #endif
 
+extern EInit g_EInitConfessionalGhost;
+extern EInit g_EInitConfessionalBlades;
 extern bool g_confessionalChimeActive;
 
 static AnimateEntityFrame anim_priest_move[] = {
@@ -152,7 +160,8 @@ void EntityConfessionalGhost(Entity* self) {
             func_892A620(0, 1);
         }
         break;
-    case CONFESSIONAL_CHIME_ACTIVATE:
+    // psx starts the chime in INIT, but pspeu starts it in READY
+    case CONFESSIONAL_GHOST_READY:
         self->ext.confessionalGhost.activateChime++;
         if ((self->ext.confessionalGhost.activateChime == true) &&
             (self->params & CONFESSIONAL_GHOST_PARISHIONER)) {
@@ -169,7 +178,7 @@ void EntityConfessionalGhost(Entity* self) {
             g_confessionalChimeActive = true;
         }
         break;
-    case CONFESSIONAL_CHIME_ACTIVATE:
+    case CONFESSIONAL_GHOST_READY:
         break;
 #endif
     case CONFESSIONAL_CHECK_SEATED: // This step is set by EntityChair

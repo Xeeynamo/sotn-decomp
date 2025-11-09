@@ -104,8 +104,8 @@ u16 pal_skelerang_spittle_bone[] = {
 };
 
 #ifndef VERSION_PSP
-u16 pal_unused[] = {
-#include "gen/pal_unused.h"
+u16 pal_unused_1698C[] = {
+#include "gen/pal_unused_1698C.h"
 };
 #endif
 

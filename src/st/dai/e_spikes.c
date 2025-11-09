@@ -7,4 +7,8 @@
 #define DAMAGE_ENT_ON_SPAWN
 #define SPIKES_ELEMENT ELEMENT_CUT | ELEMENT_UNK_10 | ELEMENT_UNK_1
 
+// This should be removed when the e_spikes.h PAL has been reconciled across the
+// overlays.
+#define PAL_SPIKES_DUST PAL_CC_STONE_EFFECT
+
 #include "../e_spikes.h"

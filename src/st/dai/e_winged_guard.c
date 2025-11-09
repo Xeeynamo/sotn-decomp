@@ -12,6 +12,10 @@ enum WingedGuardPartsSteps {
     WINGED_GUARD_PARTS_MOVE,
 };
 
+extern EInit g_EInitWingedGuard;
+extern EInit g_EInitWingedGuardParts;
+extern EInit g_EInitSpawner;
+
 static AnimateEntityFrame anim_move[] = {
     {6, 1}, {4, 2}, {4, 3}, {6, 4}, {4, 3}, {4, 2}, POSE_LOOP(0),
 };

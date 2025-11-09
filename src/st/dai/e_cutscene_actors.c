@@ -26,6 +26,8 @@ enum OVL_EXPORT(CutsceneFlags) {
     DAI_CUTSCENE_CUTSCENE_CONCLUDED = 1 << 3,
 };
 
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
 extern u32 g_CutsceneFlags; // defined by e_cutscene_dialogue
 
 static AnimateEntityFrame unused_anims[] = {
@@ -198,7 +200,7 @@ void OVL_EXPORT(EntityCutsceneMaria)(Entity* self) {
         MoveEntity();
         if (self->velocityY > 0 && posScrollY > 151) {
             self->posY.i.hi = 151 - gTilemapPtr->scrollY.i.hi;
-            self->velocityY = NULL;
+            self->velocityY = 0;
             SetStep(MARIA_RUN_2);
         }
         break;

@@ -24,6 +24,10 @@ typedef enum {
     BOOMERANG_DESTROY
 } SkelerangBoomerangSteps;
 
+extern EInit g_EInitInteractable;
+extern EInit g_EInitSkelerang;
+extern EInit g_EInitSkelerangBoomerang;
+
 static s16 sensors_ground[][2] = {{0, 24}, {0, 4}, {8, -4}, {-16, 0}};
 static Point16 positions[] = {{8, -10}, {-4, -10}, {0, -30}, {0, -30}, {3, -8},
                               {4, 6},   {-2, 6},   {12, 16}, {-8, 16}};

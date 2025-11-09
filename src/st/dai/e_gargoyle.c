@@ -19,6 +19,8 @@ enum GargoyleParams {
     BLOCK_ONLY,
 };
 
+extern EInit g_EInitEnvironment;
+
 // This is the tongue and block in front of the statue and does not
 // include the statue itself.
 void EntityGargoyleTongue(Entity* self) {

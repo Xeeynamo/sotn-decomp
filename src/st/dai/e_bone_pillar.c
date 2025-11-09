@@ -39,6 +39,11 @@ enum DeathPartsSteps {
     BONE_PILLAR_DEATH_EXPLODE,
 };
 
+extern EInit g_EInitBonePillarSkull;
+extern EInit g_EInitBonePillarParts;
+extern EInit g_EInitBonePillarFireBreath;
+extern EInit g_EInitBonePillarSpikeBall;
+
 static s16 sensors_bone_pillar[] = {0, 32, 0, 4, 4, -4, -8, 0};
 static s16 unused[] = {0, 8, 0, 4, 2, -4, -4, 0, 0, 36, 0, 4, 2, -4, -4, 0};
 static s16 sensors_spike_ball[] = {0, 14, 0, 0};
@@ -99,7 +104,7 @@ void EntityBonePillarSkull(Entity* self) {
                 CreateEntityFromCurrentEntity(E_BONE_PILLAR_SPIKE_BALL, entity);
                 entity->posX.i.hi = self->posX.i.hi + 8;
                 entity->posY.i.hi = self->posY.i.hi - 8;
-                self->params = NULL;
+                self->params = 0;
             } else {
                 entity = self + 1;
                 CreateEntityFromCurrentEntity(E_BONE_PILLAR_SKULL, entity);
@@ -393,7 +398,7 @@ void EntityBonePillarFireBreath(Entity* self) {
     switch (self->step) {
     case BONE_PILLAR_FIRE_INIT:
         InitializeEntity(g_EInitBonePillarFireBreath);
-        self->animSet = NULL;
+        self->animSet = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 16);
         if (primIndex == -1) {
             DestroyEntity(self);

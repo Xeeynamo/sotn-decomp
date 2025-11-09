@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
-#ifdef VERSION_PSP
-extern s32 E_ID(BELL);
-#endif
-
 enum BellSteps {
     BELL_INIT = 0,
     BELL_NEUTRAL = 0,
@@ -17,6 +13,12 @@ typedef struct {
     s16 ropeLength;
     s16 priority;
 } BellParams;
+
+#ifdef VERSION_PSP
+extern s32 E_ID(BELL);
+#endif
+
+extern EInit g_EInitInteractable;
 
 static SVECTOR vector_one_0 = {-16, 0, 0};
 static SVECTOR vector_one_1 = {16, 0, 0};

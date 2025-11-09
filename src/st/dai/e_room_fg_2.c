@@ -10,6 +10,8 @@ EntityCastleWall2: The castle wall foreground tiles outside the confessional
 room
 */
 
+extern EInit g_EInitInteractable;
+
 void EntityCastleWall1(Entity* self) {
     Primitive* prim;
     s32 primIndex;

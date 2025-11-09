@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
+extern EInit g_EInitInteractable;
+
 static s16 indices[] = {0, 2, 3, 5, 3, 5, 6, 8};
 static SVECTOR glass_points_0 = {-208, -192, 0};
 static SVECTOR glass_points_1 = {208, -192, 0};
@@ -136,18 +138,17 @@ Primitive* StainedGlassRecurseDepth(
 
         gte_ldv0(&points[index3]);
         gte_rtps();
+
 #ifdef VERSION_PSP
         gte_stsxy((long*)tempPrim + sizeof(uvPair) * 6);
-#else
-        gte_stsxy((long*)&tempPrim->x3);
-#endif
-#ifdef VERSION_PSP
         gte_ldv0(&points[index0]);
         gte_ldv1(&points[index1]);
         gte_ldv2(&points[index2]);
 #else
+        gte_stsxy((long*)&tempPrim->x3);
         gte_ldv3(&points[index0], &points[index1], &points[index2]);
 #endif
+
         gte_rtpt();
         gte_stsxy3_gt3(tempPrim);
 
@@ -287,7 +288,7 @@ void EntityStainedGlass(Entity* self) {
                 *lightPrim = *glassPrim;
                 lightPrim->next = tempPrim;
 
-                lightPrim->clut = PAL_COLOR_GRADIENT;
+                lightPrim->clut = PAL_FILL_WHITE;
                 lightPrim->priority = glassPrim->priority - 1;
                 lightPrim->drawMode = DRAW_COLORS;
                 lightPrim->r0 = lightPrim->g0 = lightPrim->b0 = colorPtr->cd;
@@ -345,7 +346,7 @@ void EntityStainedGlass(Entity* self) {
                 tempPrim = lightPrim->next;
                 *lightPrim = *glassPrim;
                 lightPrim->next = tempPrim;
-                lightPrim->clut = PAL_COLOR_GRADIENT;
+                lightPrim->clut = PAL_FILL_WHITE;
                 lightPrim->priority = glassPrim->priority + 1;
                 lightPrim->drawMode =
                     DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
@@ -455,7 +456,7 @@ void EntityStainedGlassBackground(Entity* self) {
             PGREY(prim, 2) = 64;
             PGREY(prim, 3) = 48;
             prim = prim->next;
-            prim->clut = PAL_COLOR_GRADIENT;
+            prim->clut = PAL_FILL_WHITE;
             PGREY(prim, 0) = 24;
             PGREY(prim, 1) = 24;
             PGREY(prim, 2) = 24;
@@ -468,7 +469,7 @@ void EntityStainedGlassBackground(Entity* self) {
             PGREY(prim, 2) = 160;
             PGREY(prim, 3) = 48;
             prim = prim->next;
-            prim->clut = PAL_COLOR_GRADIENT;
+            prim->clut = PAL_FILL_WHITE;
             prim->r0 = 24;
             prim->g0 = 24;
             prim->b0 = 24;

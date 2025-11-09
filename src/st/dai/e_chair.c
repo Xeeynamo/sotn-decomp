@@ -1,6 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dai.h"
 
+// Values shared with e_confessional
+#define CONFESSIONAL_GHOST_READY 1
+enum ConfessionalGhostParams {
+    CONFESSIONAL_GHOST_PRIEST = 0,
+    CONFESSIONAL_GHOST_PARISHIONER = 1,
+    CONFESSIONAL_GHOST_BAD = 0x100,
+};
+//
+
 #define LEFT_CHAIR 0x100
 #define RIGHT_CHAIR 0x200
 
@@ -16,6 +25,8 @@ enum ChairSteps {
 #if defined(VERSION_PSP)
 extern s32 E_ID(CONFESSIONAL_GHOST);
 #endif
+
+extern EInit g_EInitCommon;
 
 static AnimationFrame anim[] = {{8, 8}, {8, 9}, {8, 10}, {8, 11}, POSE_END};
 
@@ -144,8 +155,8 @@ void func_us_801B81E8(Entity* self) {
         self->unk5A = 32;
         self->palette = PAL_FLAG(PAL_UNK_19F);
         self->anim = anim;
-        self->pose = NULL;
-        self->poseTimer = NULL;
+        self->pose = 0;
+        self->poseTimer = 0;
         self->facingLeft = false;
         self->posY.i.hi -= 16;
         self->posX.val += self->velocityX << 5;

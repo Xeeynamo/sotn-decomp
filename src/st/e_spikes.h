@@ -33,6 +33,11 @@ enum SpikesPointDirections {
 #define SPIKES_ELEMENT ELEMENT_CUT | ELEMENT_UNK_10
 #endif
 
+extern EInit g_EInitParticle;
+extern EInit g_EInitEnvironment;
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
+
 static AnimateEntityFrame anim_dust[] = {
     {2, 1}, {2, 2}, {2, 3}, {2, 4}, {2, 5}, {4, 6}, POSE_END};
 #ifdef HAS_ORIENTATIONS

@@ -24,6 +24,9 @@ enum RavenSteps {
     RAVEN_ATTACK,
 };
 
+extern EInit g_EInitBlueRaven;
+extern EInit g_EInitBlackCrow;
+
 static AnimateEntityFrame anim_crow_idle[] = {
     {38, 1}, {6, 2}, {6, 3}, {6, 2}, {6, 3}, {6, 2}, POSE_LOOP(0)};
 static AnimateEntityFrame anim_crow_hover[] = {

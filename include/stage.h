@@ -8,6 +8,14 @@
 #include "objects.h"
 #include "sfx.h"
 
+#ifdef VERSION_PSP
+#define E_ID(name) D_psp_E_##name
+#else
+#define E_ID(name) E_##name
+#endif
+
+#define SET_E_ID(name) E_ID(name) = E_##name
+
 typedef enum {
     EXPLOSION_SMALL,
     EXPLOSION_FIREBALL,

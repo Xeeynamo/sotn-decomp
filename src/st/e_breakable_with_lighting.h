@@ -21,6 +21,8 @@ extern s32 E_ID(BACKGROUND_BLOCK);
 extern s32 E_ID(BREAKABLE_DEBRIS);
 #endif
 
+extern EInit OVL_EXPORT(EInitBreakable);
+
 static AnimateEntityFrame anim_brazier_short[] = {
     {3, 14}, {4, 15}, {4, 16}, {4, 17},
     {4, 18}, {4, 19}, {3, 20}, POSE_LOOP(0)};

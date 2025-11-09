@@ -3,31 +3,10 @@
 #define DAI_H
 
 #include "stage.h"
-
 #define OVL_EXPORT(x) DAI_##x
+#define STAGE_IS_DAI
 
-#include "../pfn_entity_update.h"
-
-#define SEALED_DOOR_PALETTE 0x245 // e_sealed_door
-
-// e_collect
-#define HEART_DROP_CASTLE_FLAG 0x98
-// commented here because sotn_str doesn't do .h files
-/*
-#ifdef VERSION_PSP
-#define GOLD_COLLECT_TEXT                                                      \
-    _S("$1"), _S("$25"), _S("$50"), _S("$100"), _S("$250"), _S("$400"),        \
-        _S("$700"), _S("$1000"), _S("$2000"), _S("$5000"),
-#endif
-*/
-
-// These are used by both e_chair and e_confessional
-#define CONFESSIONAL_GHOST_PRIEST 0
-#define CONFESSIONAL_GHOST_PARISHIONER 1
-#define CONFESSIONAL_GHOST_BAD 0x100
-#define CONFESSIONAL_GHOST_READY 1
-
-// Used for cluts, palettes, and in g_EInits
+// Used for cluts and in g_EInits
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
     PAL_STAINED_GLASS = 0xE,
@@ -39,20 +18,16 @@ enum OVL_EXPORT(Palette) {
     PAL_BACKGROUND_SKY_LAND = 0xC5,
     PAL_CASTLE_WALL_2 = 0xC8,
     PAL_CONFESSIONAL_GHOST = 0xC9,
-    PAL_801809C8 = 0xCA,
+    PAL_UNUSED = 0xCA, // Only exists in g_EInitUnused801809C8 definition
     PAL_CONFESSIONAL_CLUT = 0xCC,
     PAL_CONFESSIONAL_GHOST_BAD = 0xCE,
-    PAL_COLOR_GRADIENT = 0x15F,
-    PAL_SPIKES_DUST = 0x161,
-    PAL_SPECTRAL_SWORD_WEAPON_UNK_16B = 0x16B,
-    PAL_STAGE_NAME_19D = 0x19D,
-    PAL_STAGE_NAME_19E = 0x19E,
-    PAL_STAGE_NAME_19F = 0x19F,
     PAL_SKELERANG = 0x200,
     PAL_STAINED_GLASS_LIGHT = 0x204,
     PAL_STAINED_GLASS_BG_LIGHT = 0x205,
+    PAL_PORTRAIT_SHAFT = 0x210,
     PAL_CORNER_GUARD = 0x215,
     PAL_BONE_PILLAR = 0x216,
+    PAL_PORTRAIT_SUCCUBUS = 0x218,
     PAL_BONE_PILLAR_FIRE = 0x221,
     PAL_BONE_HALBERD = 0x22A,
     PAL_WINGED_GUARD = 0x22B,
@@ -120,7 +95,7 @@ enum OVL_EXPORT(Entities) {
     E_BONE_PILLAR_FIRE,          // EntityBonePillarFireBreath,
     E_BONE_PILLAR_PARTS,         // EntityBonePillarDeathParts,
     E_BONE_PILLAR_SPIKE_BALL,    // EntityBonePillarSpikeBall,
-    E_UNK_2D,                    // EntityEndConfessionalChime,
+    E_END_CONFESSIONAL_CHIME,    // EntityEndConfessionalChime,
     E_SPIKES,                    // EntitySpikes,
     E_SPIKES_PARTS,              // EntitySpikesParts,
     E_SPIKES_DUST,               // EntitySpikesDust,
@@ -151,37 +126,4 @@ enum OVL_EXPORT(Entities) {
     NUM_ENTITIES,
 };
 
-extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[]; // e_room_bg
-extern EInit OVL_EXPORT(EInitBreakable);
-extern EInit g_EInitObtainable;
-extern EInit g_EInitParticle;
-extern EInit g_EInitSpawner;
-extern EInit g_EInitInteractable;
-extern EInit g_EInitUnkId13;
-extern EInit g_EInitLockCamera;
-extern EInit g_EInitCommon;
-// extern EInit g_EInitDamageNum;
-extern EInit g_EInitEnvironment;
-extern EInit g_EInitConfessionalGhost;
-extern EInit g_EInitConfessionalBlades;
-extern EInit g_EInitCornerGuard;
-extern EInit g_EInitCornerGuardAttack;
-extern EInit g_EInitBonePillarSkull;
-extern EInit g_EInitBonePillarParts;
-extern EInit g_EInitBonePillarFireBreath;
-extern EInit g_EInitBonePillarSpikeBall;
-extern EInit g_EInitBoneHalberd;
-extern EInit g_EInitBoneHalberdAttack;
-extern EInit g_EInitWingedGuard;
-extern EInit g_EInitWingedGuardParts;
-extern EInit g_EInitBat;
-extern EInit g_EInitBlueRaven;
-extern EInit g_EInitBlackCrow;
-extern EInit g_EInitSkelerang;
-extern EInit g_EInitSkelerangBoomerang;
-extern EInit g_EInitHuntingGirl;
-extern EInit g_EInitSpectralSword;
-extern EInit g_EInitSpectralSwordAura;
-extern EInit g_EInitSpectralSwordWeapon;
-
-#endif
+#endif // DAI_H
