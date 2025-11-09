@@ -274,6 +274,7 @@ SetFogNear = 0x80016E08;
 InitGeom = 0x80016E6C;
 SquareRoot0 = 0x80016EEC;
 InvSquareRoot = 0x80016F7C;
+VectorNormalS = 0x80017008;
 MatrixNormal = 0x80017134;
 SquareRoot12 = 0x8001721C;
 CompMatrix = 0x800172BC;

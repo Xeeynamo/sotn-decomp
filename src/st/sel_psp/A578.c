@@ -389,8 +389,8 @@ s32 func_801B3A94(s32 arg0) {
             var_s3 = 1;
         }
         MakeMemcardPath(saveFile, D_801BB008);
-        ret = func_913D890(D_801BB004, 0, saveFile, g_Pix, 1, var_s3,
-                           D_801BB008 == func_8919560() ? 1 : 0);
+        ret = MemcardWriteFile(D_801BB004, 0, saveFile, g_Pix, 1, var_s3,
+                               D_801BB008 == func_8919560() ? 1 : 0);
         if (ret != 0) {
             if (g_MemCardRetryCount-- == 0) {
                 return -3;
@@ -442,7 +442,8 @@ s32 func_801B3E2C(void) {
 
     case 1:
         MakeMemcardPath(saveFile, blockId);
-        ret = func_913D930(port, 0, saveFile, slot == func_8919560() ? 1 : 0);
+        ret =
+            MemcardEraseFile(port, 0, saveFile, slot == func_8919560() ? 1 : 0);
         if (ret != 0) {
             if (g_MemCardRetryCount-- == 0) {
                 return -1;
