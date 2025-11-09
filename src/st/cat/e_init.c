@@ -26,7 +26,7 @@ void func_us_801C4C7C(Entity* self);
 void func_us_801C589C(Entity* self);
 void func_us_801C5DF4(Entity* self);
 void func_us_801C56A0(Entity* self);
-void func_us_801CA13C(Entity* self);
+void EntityLavaGlow(Entity* self);
 void func_us_801B732C(Entity* self);
 void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
@@ -112,7 +112,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C589C,
     func_us_801C5DF4,
     func_us_801C56A0,
-    func_us_801CA13C,
+    EntityLavaGlow,
     func_us_801B732C,
     EntitySpikes,
     EntitySpikesParts,

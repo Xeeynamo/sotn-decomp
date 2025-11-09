@@ -102,7 +102,7 @@ segments:
       - [0x44C7C, c, unk_44C7C]
       - [0x46360, c, e_bone_ark]
       - [0x492E8, c, e_stage_name]
-      - [0x4A13C, c, unk_4A13C]
+      - [0x4A13C, c, e_lava_glow]
       - [0x4A2A4, c, e_discus_lord]
       - [0x4BE14, c, e_hellfire_beast]
       - [0x4E228, c, e_particles]
