@@ -40,7 +40,7 @@ void EntityWeaponAttack(Entity* self) {
 
         prim = &g_PrimBuf[self->primIndex];
         prim->tpage = 0x1A;
-        prim->clut = 0x1B0;
+        prim->clut = PAL_UNK_1B0;
         prim->u2 = prim->u0 = 0x40;
         prim->v0 = prim->v1 = 0xC0;
         prim->u3 = prim->u1 = 0x7F;

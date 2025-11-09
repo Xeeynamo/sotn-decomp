@@ -271,7 +271,7 @@ void EntityConfessionalGhost(Entity* self) {
         animPtr = ghost->animations->anim_sit_bad;
         if (!AnimateEntity(animPtr, self)) {
             // Curtain closing sound
-            g_api.PlaySfx(SFX_UNK_7BB);
+            g_api.PlaySfx(SFX_CONFESS_GHOST_CURTAIN_PULL);
             self->step++;
         }
         break;

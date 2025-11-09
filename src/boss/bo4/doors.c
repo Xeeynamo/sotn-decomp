@@ -227,7 +227,7 @@ void EntityUnkId17(Entity* self) {
         self->ext.et_801BDA0C.unk80 = 0;
         break;
     case 1:
-        self->palette = PAL_OVL(0x4F);
+        self->palette = PAL_FLAG(0x4F);
         if (self->ext.et_801BDA0C.unk84) {
             self->ext.et_801BDA0C.unk9C = 64;
             self->step++;
@@ -256,9 +256,9 @@ void EntityUnkId17(Entity* self) {
     case 3:
         if (g_Timer % 2 == 0) {
             self->palette++;
-            if (self->palette > PAL_OVL(0x58)) {
+            if (self->palette > PAL_FLAG(0x58)) {
                 g_api.PlaySfx(SFX_ELECTRICITY);
-                self->palette = PAL_OVL(0x4F);
+                self->palette = PAL_FLAG(0x4F);
                 self->step++;
                 if (self->params == 5) {
                     (self + 1)->ext.et_801BDA0C.unk84 = 1;
@@ -501,7 +501,7 @@ void EntityUnkId19(Entity* self) {
         g_api.TimeAttackController(
             TIMEATTACK_EVENT_DOPPLEGANGER_10_DEFEAT, TIMEATTACK_SET_VISITED);
         (self + 1)->ext.et_801BE2C8.unk84 = 1;
-        g_api.PlaySfx(SFX_BO4_UNK_7CC);
+        g_api.PlaySfx(SFX_DOPPLEGANGER_APPEAR);
         self->step++;
         break;
 
@@ -545,7 +545,7 @@ void EntityUnkId19(Entity* self) {
             prim->v2 = prim->v3 = 0xE0;
 
             prim->tpage = 0x1A;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->priority = 0x40;
             prim->drawMode = DRAW_UNK_400 | DRAW_COLORS | DRAW_UNK02;
             prim = prim->next;
@@ -649,7 +649,7 @@ void EntityUnkId1A(Entity* self) {
             self->ext.et_801BE2C8.unk7C = prim;
             while (prim != NULL) {
                 prim->tpage = 0x1A;
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim->u0 = prim->u2 = 0x20;
                 prim->u1 = prim->u3 = 0x28;
                 prim->v0 = prim->v1 = 0xA0;
@@ -686,7 +686,7 @@ void EntityUnkId1A(Entity* self) {
             zPointer++;
         }
         self->ext.et_801BE2C8.unkA0 = 0;
-        g_api.PlaySfx(SFX_BO4_UNK_7CB);
+        g_api.PlaySfx(SFX_DOPPLEGANGER_DOOR_OPEN);
         self->step++;
         break;
 

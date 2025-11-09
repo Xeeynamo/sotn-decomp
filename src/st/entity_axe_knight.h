@@ -482,7 +482,7 @@ void EntityAxeKnightThrowingAxe(Entity* self) {
     s32 velocityX;
 
     if (self->flags & FLAG_DEAD) {
-        PlaySfxPositional(SFX_WEAPON_BREAK);
+        PlaySfxPositional(SFX_AXE_KNIGHT_WEAPON_BREAK);
         EntityExplosionSpawn(0, 0);
         return;
     }

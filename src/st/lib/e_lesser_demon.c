@@ -90,7 +90,7 @@ void func_us_801BB8DC(s16* unkArg) {
         if (g_CurrentEntity->ext.lesserDemon.unkB0 % 2) {
             g_CurrentEntity->palette = g_CurrentEntity->ext.lesserDemon.unkB2;
         } else {
-            g_CurrentEntity->palette = PAL_OVL(0x19F);
+            g_CurrentEntity->palette = PAL_FLAG(PAL_UNK_19F);
         }
         if (!(--g_CurrentEntity->ext.lesserDemon.unkB0)) {
             g_CurrentEntity->palette = g_CurrentEntity->ext.lesserDemon.unkB2;
@@ -420,7 +420,7 @@ void func_us_801BC57C(void) {
             g_CurrentEntity->ext.lesserDemon.unk7C = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x1A;
-            prim->clut = 0x169;
+            prim->clut = PAL_CC_BLUE_EFFECT_A;
             prim->u0 = prim->u2 = 0xE0;
             prim->u1 = prim->u3 = 0xFF;
             prim->v0 = prim->v1 = 0x40;
@@ -623,7 +623,7 @@ void func_us_801BCC10(Entity* self) {
         prim->p3 = 4;
         prim->type = PRIM_GT4;
         prim->tpage = 0x1A;
-        prim->clut = 0x169;
+        prim->clut = PAL_CC_BLUE_EFFECT_A;
         prim->u0 = prim->u2 = 0xE0;
         prim->u1 = prim->u3 = 0xFF;
         prim->v0 = prim->v1 = 0x40;
@@ -1268,7 +1268,7 @@ void EntityLesserDemon(Entity* self) {
                 break;
             }
             if (!self->poseTimer && self->pose == 5) {
-                PlaySfxPositional(0x78F);
+                PlaySfxPositional(SFX_LESSER_DEMON_SWIPE_ATTACK);
             }
             if (self->pose > 4 && self->pose < 11) {
                 tempEntity->posX.i.hi = self->posX.i.hi;
@@ -1444,7 +1444,7 @@ void EntityLesserDemon(Entity* self) {
         break;
 
     case 15:
-        self->palette = PAL_OVL(0x160);
+        self->palette = PAL_FLAG(PAL_CC_FIRE_EFFECT);
         if (g_Timer % 7 == 0) {
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {

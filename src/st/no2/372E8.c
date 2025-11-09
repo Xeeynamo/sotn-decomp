@@ -34,7 +34,7 @@ void func_us_801B72E8(Entity* self) {
             self->zPriority = (self->params & 0xFF00) >> 8;
         }
         if (self->params & 0xF0) {
-            self->palette = PAL_OVL(0x19F);
+            self->palette = PAL_FLAG(PAL_UNK_19F);
             self->drawMode = DRAW_TPAGE;
             self->facingLeft = 1;
         }

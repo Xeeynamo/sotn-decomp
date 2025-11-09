@@ -35,7 +35,7 @@ u8 func_us_801CF57C(u8 step, Primitive* prim) {
     case 0:
         UnkPolyFunc2(prim);
         prim->tpage = 0x1A;
-        prim->clut = 0x19D;
+        prim->clut = PAL_UNK_19D;
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 0x3F;
         prim->v0 = prim->v1 = 0xC0;
@@ -59,7 +59,7 @@ u8 func_us_801CF57C(u8 step, Primitive* prim) {
         prim->next->x2 += 0x300;
         prim->next->y2 = prim->next->x2;
         if (prim->next->x2 > 0x1800) {
-            prim->clut = 0x19C;
+            prim->clut = PAL_UNK_19C;
             prim->next->b3 = 0x28;
             step++;
         }
@@ -69,7 +69,7 @@ u8 func_us_801CF57C(u8 step, Primitive* prim) {
         prim->next->x2 += 0x180;
         prim->next->y2 = prim->next->x2;
         if (prim->next->x2 > 0x2000) {
-            prim->clut = 0x19E;
+            prim->clut = PAL_UNK_19E;
             prim->u0 = prim->u2 = 0x40;
             prim->u1 = prim->u3 = 0x7F;
             prim->v0 = prim->v1 = 0xC0;
@@ -364,7 +364,7 @@ void EntitySwordLord(Entity* self) {
 
         case 3:
             if (!--self->ext.et_801CF850.unk7C) {
-                PlaySfxPositional(SFX_FM_MULTI_EXPLODE);
+                PlaySfxPositional(SFX_SWORD_LORD_EXPLODE);
                 DestroyEntity(self);
                 return;
             }

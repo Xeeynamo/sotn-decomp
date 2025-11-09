@@ -227,7 +227,7 @@ void EntitySkullLord(Entity* self) {
         break;
     }
 
-    if (!(self->palette & PAL_OVL_FLAG)) {
+    if (!(self->palette & PAL_UNK_FLAG)) {
         self->palette = g_EInitSkullLord[3] + self->ext.skullLord.unk84;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
     } else {
@@ -393,7 +393,7 @@ void EntitySkullLordFlames(Entity* self) {
         prim->type = PRIM_GT4;
         prim->tpage = 0x13;
         prim->clut = 0x220; // n.b.! double assignment
-        prim->clut = 0x16D;
+        prim->clut = PAL_CC_RED_EFFECT_B;
         prim->u0 = prim->u2 = 0x40;
         prim->u1 = prim->u3 = 0x47;
         prim->v0 = prim->v1 = 0x70;

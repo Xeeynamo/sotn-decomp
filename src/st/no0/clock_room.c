@@ -78,7 +78,7 @@ void EntityClockRoomController(Entity* self) {
     // Plays the clock bell
     if (self->ext.clockRoom.bellTimer) {
         if (!self->ext.clockRoom.bellDuration) {
-            g_api.PlaySfx(SFX_CLOCK_BELL);
+            g_api.PlaySfx(SFX_CLOCK_ROOM_BELL);
             if (--self->ext.clockRoom.bellTimer) {
                 self->ext.clockRoom.bellDuration = 64;
             }
@@ -171,7 +171,7 @@ void EntityClockRoomController(Entity* self) {
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = 23;
         entity->zPriority = 0x40;
-        entity->palette = PAL_OVL(0x4B);
+        entity->palette = PAL_FLAG(0x4B);
         entity->drawFlags = FLAG_DRAW_OPACITY;
         entity->drawMode = DRAW_TPAGE;
         entity->posY.i.hi += 4;

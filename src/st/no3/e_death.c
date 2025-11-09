@@ -199,7 +199,7 @@ void EntityDeathStolenItem(Entity* self) {
     case 4:
         if (!--self->ext.utimer.t) {
             self->ext.utimer.t = 8;
-            g_api.PlaySfx(SE_ITEM_YOINK);
+            g_api.PlaySfx(SFX_ITEM_YOINK);
             self->step++;
         }
         prim = &g_PrimBuf[self->primIndex];
@@ -332,7 +332,7 @@ void EntityDeath(Entity* self) {
                         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE |
                                          DRAW_COLORS | DRAW_TRANSP;
                     } else {
-                        prim->clut = 0x15F;
+                        prim->clut = PAL_FILL_WHITE;
                         prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE |
                                          DRAW_COLORS | DRAW_TRANSP;
                     }
@@ -387,7 +387,7 @@ void EntityDeath(Entity* self) {
     case 3:
         if (AnimateEntity(deathAnim15, self) == 0) {
             SetStep(4);
-            g_api.PlaySfx(SE_VO_DEATH_LAUGH);
+            g_api.PlaySfx(SFX_DEATH_LAUGH);
             self->ext.death.moveTimer = 64;
             self->ext.death.moveDirection = 0;
         }
@@ -504,7 +504,7 @@ void EntityDeath(Entity* self) {
 
     case 14:
         if (AnimateEntity(deathAnim7, self) == 0) {
-            g_api.PlaySfx(SE_VO_DEATH_STEALS);
+            g_api.PlaySfx(SFX_DEATH_TAKES_ITEMS);
             SetStep(15);
         }
         break;
@@ -529,7 +529,7 @@ void EntityDeath(Entity* self) {
     case 18:
         if (AnimateEntity(deathAnim10, self) == 0) {
             SetStep(19);
-            g_api.PlaySfx(SE_VO_DEATH_LAUGH);
+            g_api.PlaySfx(SFX_DEATH_LAUGH);
             self->velocityX = FIX(1.0);
             self->velocityY = FIX(5.0);
             self->ext.death.moveTimer = 0;

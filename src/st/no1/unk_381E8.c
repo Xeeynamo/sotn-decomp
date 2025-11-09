@@ -483,7 +483,7 @@ void func_us_801B9304(Entity* self) {
                 prim->drawMode &= ~DRAW_UNK02, prim = prim->next) {
                 UnkPolyFunc2(prim);
                 prim->tpage = 0x11;
-                prim->clut = 0x19C;
+                prim->clut = PAL_UNK_19C;
 #ifdef VERSION_PSP
                 prim->u0 = prim->u2 = i * 18;
                 prim->u1 = prim->u3 = prim->u0 + 0x12;
@@ -555,7 +555,7 @@ void func_us_801B9304(Entity* self) {
         }
         prim = self->ext.et_801B9304.unk7C;
         prim->tpage = 0x11;
-        prim->clut = 0x19C;
+        prim->clut = PAL_UNK_19C;
 #ifdef VERSION_PSP
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = prim->u0 + 0x7E;
@@ -576,7 +576,7 @@ void func_us_801B9304(Entity* self) {
         for (i = 0; i < 3; i++) {
             UnkPolyFunc2(prim);
             prim->tpage = 0x11;
-            prim->clut = 0x19C;
+            prim->clut = PAL_UNK_19C;
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = prim->u0 + 0x10;
             prim->v0 = prim->v1 = 0x6C;
@@ -632,7 +632,7 @@ void func_us_801B9304(Entity* self) {
         }
         prim = self->ext.et_801B9304.unk84;
         prim->tpage = 0x1A;
-        prim->clut = 0x19E;
+        prim->clut = PAL_UNK_19E;
         prim->u0 = prim->u2 = 0xA8;
         prim->u1 = prim->u3 = prim->u0 + 0x10;
         prim->v0 = prim->v1 = 0x60;
@@ -728,7 +728,7 @@ void func_us_801B9BE4(Entity* self) {
             (self + 1)->posY.i.hi += 0x10;
             self->step = 3;
         } else {
-            self->palette = PAL_OVL(0x41);
+            self->palette = PAL_FLAG(0x41);
             self->hitboxState = 3;
             self->hitboxWidth = 6;
             self->hitboxHeight = 0x12;
@@ -739,7 +739,7 @@ void func_us_801B9BE4(Entity* self) {
             self->step = 1;
             if (g_CastleFlags[NO1_ELEVATOR_ACTIVATED]) {
                 g_api.func_800EA5E4(ANIMSET_OVL(3));
-                g_api.PlaySfxVolPan(0x7AA, 0, 0);
+                g_api.PlaySfxVolPan(SFX_ELEVATOR_GEARS_LOOP, 0, 0);
                 self->hitboxState = 0;
                 self->step = 2;
             }
@@ -781,7 +781,7 @@ void func_us_801B9BE4(Entity* self) {
                 g_api.func_80102CD8(1);
                 g_api.func_800EA5E4(ANIMSET_OVL(3));
                 g_api.PlaySfx(SFX_WEAPON_APPEAR);
-                g_api.PlaySfxVolPan(0x7AA, 0x7F, 0);
+                g_api.PlaySfxVolPan(SFX_ELEVATOR_GEARS_LOOP, 0x7F, 0);
                 g_CastleFlags[NO1_ELEVATOR_ACTIVATED] = 1;
                 self->step = 2;
             }
@@ -1106,7 +1106,7 @@ void func_us_801BA290(Entity* self) {
         self->ext.et_801BA290.unk8C = prim;
         for (i = 0; i < 2; i++) {
             prim->tpage = 0x1A;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->u0 = 0;
             prim->u1 = 0x3F;
             prim->u2 = prim->u0;
@@ -1137,7 +1137,7 @@ void func_us_801BA290(Entity* self) {
         self->ext.et_801BA290.unk90 = prim;
         for (i = 0; i < 2; i++) {
             prim->tpage = 0x1A;
-            prim->clut = 0x19F;
+            prim->clut = PAL_UNK_19F;
             prim->u0 = 0;
             prim->u1 = 0x3F;
             prim->u2 = prim->u0;
@@ -1194,7 +1194,7 @@ void func_us_801BA290(Entity* self) {
 
         self->ext.et_801BA290.unk98 = prim;
         prim->tpage = 0xE;
-        prim->clut = 0x19F;
+        prim->clut = PAL_UNK_19F;
         prim->u0 = 0xD0;
         prim->u1 = 0xF8;
         prim->u2 = prim->u0;

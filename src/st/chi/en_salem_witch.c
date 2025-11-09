@@ -420,7 +420,7 @@ void EntitySalemWitch(Entity* self) {
         case ATTACK_CURSE_CAST:
             if (!(self->ext.salemWitch.timer & 0xF)) {
                 // This triggers 3x during the animation
-                PlaySfxPositional(SFX_SMALL_BURST);
+                PlaySfxPositional(SFX_SALEM_WITCH_CURSE_ATTACK);
             }
             if (!AnimateEntity(AnimFrames_CurseHandMovements, self)) {
                 SetSubStep(ATTACK_CURSE_CHARGE);
@@ -442,7 +442,7 @@ void EntitySalemWitch(Entity* self) {
                 SetStep(IDLE);
             }
             if (!self->poseTimer && self->pose == CurseProjectileSpawnpose) {
-                PlaySfxPositional(SFX_GUNSHOT);
+                PlaySfxPositional(SFX_SALEM_WITCH_CURSE_PROJ);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_SALEM_WITCH_CURSE, self, entity);
@@ -680,7 +680,7 @@ void EntitySalemWitchCurse(Entity* self) {
         self->ext.prim = prim;
         while (prim != NULL) {
             prim->tpage = 0x12;
-            prim->clut = PAL_DRA(0x2EB);
+            prim->clut = 0x2EB;
             prim->p3 = 0;
             prim->priority = self->zPriority + 1;
             prim->drawMode = DRAW_HIDE;
@@ -854,7 +854,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
     case INIT:
         InitializeEntity(g_EInitInteractable);
         self->animSet = 5;
-        self->palette = PAL_OVL(0x2EB);
+        self->palette = PAL_FLAG(0x2EB);
         self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
         self->drawFlags |= FLAG_DRAW_OPACITY;
         self->opacity = 0x60;

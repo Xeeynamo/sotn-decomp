@@ -189,7 +189,7 @@ void EntityWeaponAttack(Entity* self) {
                         prim->b1 = 0;
                     prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 =
                         prim->b3 = 0xFF;
-                    prim->clut = 0x159;
+                    prim->clut = PAL_FILL_ORANGE;
                     prim->tpage = 0x19;
                     prim->priority = PLAYER.zPriority + 8;
                     prim->type = PRIM_GT4;
@@ -210,7 +210,7 @@ void EntityWeaponAttack(Entity* self) {
             yVar = self->posY.i.hi;
             if (self->flags & FLAG_HAS_PRIMS) {
                 if (!(g_GameTimer & 7)) {
-                    g_api.PlaySfx(SFX_WATER_DAMAGE_SWISHES);
+                    g_api.PlaySfx(SFX_RAPID_SCRAPE_3X);
                 }
 
                 prim = &g_PrimBuf[self->primIndex];

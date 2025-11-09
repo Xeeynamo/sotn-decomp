@@ -18,7 +18,7 @@ void EntityFleaRider(Entity* self) {
     player = &PLAYER;
 
     if (self->flags & FLAG_DEAD && self->step < 3) {
-        PlaySfxPositional(SFX_IGNITE_SWISHES);
+        PlaySfxPositional(SFX_FLEA_RIDER_EXPLODE);
         PlaySfxPositional(SFX_FLEA_RIDER_DEATH);
         self->animCurFrame = 5;
         self->hitboxState = 0;

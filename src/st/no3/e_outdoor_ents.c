@@ -670,7 +670,7 @@ void EntityCastleBridge(Entity* self) {
     case 1:
         if (tilemap->scrollX.i.hi > 3904) {
             self->step++;
-            g_api.PlaySfx(SE_CASTLE_GATE_RISE);
+            g_api.PlaySfx(SFX_CASTLE_GATE_RISE);
         }
         break;
     case 2:
@@ -935,7 +935,7 @@ void EntityFlyingOwlAndLeaves(Entity* self) {
 
     case 2:
         if (!(self->ext.utimer.t++ & 7)) {
-            g_api.PlaySfx(SE_TREE_BRANCH);
+            g_api.PlaySfx(SFX_TREE_BRANCH_SNAP);
         }
         if (self->posX.i.hi < 192) {
             SetStep(3);

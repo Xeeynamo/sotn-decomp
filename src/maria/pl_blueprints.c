@@ -1024,7 +1024,7 @@ void func_maria_80161C2C(Entity* self) {
             } else {
                 self->animSet = ANIMSET_DRA(5);
                 self->anim = anim_smoke_puff;
-                self->palette = PAL_OVL(0x170);
+                self->palette = PAL_FLAG(PAL_UNK_170);
             }
         }
         self->flags = FLAG_UNK_20000 | FLAG_UNK_100000 | FLAG_POS_CAMERA_LOCKED;
@@ -1233,7 +1233,7 @@ void func_maria_80162604(Entity* self) {
         prim->v2 = prim->v3 = 255;
         prim->tpage = 0x1A;
 
-        prim->clut = 0x162;
+        prim->clut = PAL_CC_MAGIC_HUD_EFFECT;
         prim->priority = PLAYER.zPriority - 4;
         prim->drawMode = DRAW_DEFAULT;
         self->flags = FLAG_UNK_10000 | FLAG_POS_PLAYER_LOCKED |
@@ -1901,7 +1901,7 @@ void MarEntityShrinkingPowerUpRing(Entity* self) {
             prim2->u3 = prim1->u1 = (prim2->u1 + prim1->u3) / 2;
             prim2->v3 = prim1->v1 = (prim2->v1 + prim1->v3) / 2;
             prim1->tpage = prim2->tpage = 0x1A;
-            prim1->clut = prim2->clut = 0x15F;
+            prim1->clut = prim2->clut = PAL_FILL_WHITE;
             prim1->priority = prim2->priority = PLAYER.zPriority + 2;
             prim1->drawMode = prim2->drawMode =
                 DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
@@ -2418,12 +2418,12 @@ static void func_80165DD8(
 }
 
 static void func_80166024() {
-    PLAYER.palette = 0x815E;
+    PLAYER.palette = PAL_FLAG(PAL_FILL_BLACK);
     PLAYER.drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
 }
 
 static void func_80166044() {
-    PLAYER.palette = 0x8120;
+    PLAYER.palette = PAL_FLAG(PAL_RICHTER);
     PLAYER.drawMode = DRAW_DEFAULT;
 }
 
@@ -2477,9 +2477,9 @@ void MarEntityTeleport(Entity* self) {
             yVar = 0xE0 - (rand() & 0x3F);
             D_80175000[i].x = xVar;
             D_80175000[i].y = yVar;
-            prim->clut = 0x1B2;
-            prim->clut = 0x1B5;
-            prim->clut = 0x1BA;
+            prim->clut = PAL_UNK_1B2;
+            prim->clut = PAL_UNK_1B5;
+            prim->clut = PAL_UNK_1BA;
             prim->tpage = 0x1A;
             prim->b0 = 0;
             prim->b1 = 0;
@@ -2534,7 +2534,7 @@ void MarEntityTeleport(Entity* self) {
             self->ext.teleport.colorIntensity = 0x100;
         }
         if (--self->ext.teleport.timer == 0) {
-            PLAYER.palette = PAL_OVL(0x10D);
+            PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
             self->step++;
         }
         break;
@@ -2735,15 +2735,15 @@ void func_pspeu_092BEB40(Entity* self) {
         }
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 4; i++) {
-            prim->clut = 0x1B2;
+            prim->clut = PAL_UNK_1B2;
             if (self->ext.maria092BEB40.value == 0) {
-                prim->clut = 0x1B4;
+                prim->clut = PAL_UNK_1B4;
             }
             if (self->ext.maria092BEB40.kind == 1) {
-                prim->clut = 0x1B8;
+                prim->clut = PAL_UNK_1B8;
             }
             if (self->ext.maria092BEB40.kind == 2) {
-                prim->clut = 0x1B6;
+                prim->clut = PAL_UNK_1B6;
             }
             prim->tpage = 0x1A;
             prim->priority = 0x1B8;

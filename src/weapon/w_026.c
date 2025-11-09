@@ -244,7 +244,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
 
         self->scaleX = self->scaleY = 0;
         prim = &g_PrimBuf[self->primIndex];
-        prim->clut = 0x19F;
+        prim->clut = PAL_UNK_19F;
         prim->tpage = 0x19;
 
         prim->u0 = prim->u2 = 0x80;
@@ -279,7 +279,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
             prim->next = nextPrim;
             prim->u1 = prim->u0 = i * 96 / 12;
             prim->u2 = prim->u3 = (i + 1) * 96 / 12 - 1;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->priority = 0x1BA;
             prim->drawMode |=
                 (DRAW_TPAGE2 + DRAW_TPAGE + DRAW_COLORS + DRAW_TRANSP);

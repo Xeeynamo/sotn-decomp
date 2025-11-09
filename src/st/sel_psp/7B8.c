@@ -278,7 +278,7 @@ void InitMainMenuUI(void) {
     prim->v1 = 0x20;
     func_801B1D88(prim);
     prim->tpage = 6;
-    prim->clut = 0x1A1;
+    prim->clut = PAL_UNK_1A1;
     prim->priority = 0x10;
     prim->drawMode = DRAW_HIDE;
 
@@ -292,7 +292,7 @@ void InitMainMenuUI(void) {
     prim->v1 = 0x30;
     func_801B1D88(prim);
     prim->tpage = 6;
-    prim->clut = 0x1A1;
+    prim->clut = PAL_UNK_1A1;
     prim->priority = 0x20;
     prim->drawMode = DRAW_HIDE;
 
@@ -306,7 +306,7 @@ void InitMainMenuUI(void) {
     prim->v1 = 0x10;
     func_801B1D88(prim);
     prim->tpage = 6;
-    prim->clut = 0x1A1;
+    prim->clut = PAL_UNK_1A1;
     prim->priority = 0x20;
     prim->drawMode = DRAW_DEFAULT;
 
@@ -339,7 +339,7 @@ void InitMainMenuUI(void) {
     prim->v1 = 0x30;
     func_801B1D88(prim);
     prim->tpage = 6;
-    prim->clut = 0x1A1;
+    prim->clut = PAL_UNK_1A1;
     prim->priority = 0x20;
     prim->drawMode = DRAW_HIDE;
 }

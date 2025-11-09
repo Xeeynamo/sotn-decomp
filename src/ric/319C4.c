@@ -492,7 +492,7 @@ void RicEntityCrashBible(Entity* self) {
         prim = prim->next;
         for (i = 0; i < BIBLE_PAGE_COUNT; i++) {
             prim->tpage = 0x1C;
-            prim->clut = 0x1AE;
+            prim->clut = PAL_UNK_1AE;
             prim->u0 = prim->u2 = 0x20;
             prim->u1 = prim->u3 = 0x30;
             prim->v0 = prim->v1 = 0;
@@ -524,7 +524,7 @@ void RicEntityCrashBible(Entity* self) {
         self->ext.et_8016E9E4.unk82++;
         if (self->ext.et_8016E9E4.unk82 > 5) {
             prim = &g_PrimBuf[self->primIndex];
-            prim->clut = 0x19F;
+            prim->clut = PAL_UNK_19F;
             prim->drawMode |=
                 DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
             prim = prim->next;
@@ -797,7 +797,7 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim->tpage = 0x1A;
-        prim->clut = 0x19F;
+        prim->clut = PAL_UNK_19F;
         prim->u0 = prim->u2 = 0;
         prim->u1 = prim->u3 = 0x3F;
         prim->v0 = prim->v1 = 0xC0;
@@ -812,7 +812,7 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE | DRAW_COLORS |
                          DRAW_UNK02 | DRAW_TRANSP;
         prim->tpage = 0x1A;
-        prim->clut = 0x19F;
+        prim->clut = PAL_UNK_19F;
         prim->u0 = prim->u2 = 0x40;
         prim->u1 = prim->u3 = 0x7F;
         prim->v0 = prim->v1 = 0xC0;
@@ -826,7 +826,7 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
         prim->drawMode = DRAW_UNK_400 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
                          DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim->tpage = 0x1A;
-        prim->clut = 0x19F;
+        prim->clut = PAL_UNK_19F;
         prim->u0 = prim->u2 = 0xB;
         prim->u1 = prim->u3 = 0x35;
         prim->v0 = prim->v1 = 0xCB;
@@ -840,7 +840,7 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
         prim->drawMode = DRAW_UNK_400 | DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
                          DRAW_HIDE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
         prim->tpage = 0x1A;
-        prim->clut = 0x19F;
+        prim->clut = PAL_UNK_19F;
         prim->u0 = prim->u2 = 0xB;
         prim->u1 = prim->u3 = 0x35;
         prim->v0 = prim->v1 = 0xCB;
@@ -856,7 +856,7 @@ void RicEntityCrashStopwatchDoneSparkle(Entity* self) {
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_HIDE |
                              DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
             prim->tpage = 0x1A;
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim->u0 = prim->u2 = (rand() % 5 * 0x10) + 0x90;
             prim->u1 = prim->u3 = prim->u0 + 0x10;
             prim->v0 = prim->v1 = 0xC0;
@@ -1235,7 +1235,7 @@ void RicEntityAguneaLightning(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
             prim->tpage = 0x1A;
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             xCoord = (rand() % 5) * 0x10;
             prim->u0 = prim->u2 = xCoord + 0x90;
             prim->u1 = prim->u3 = xCoord + 0xB0;
@@ -1296,7 +1296,7 @@ void RicEntityAguneaLightning(Entity* self) {
             for (i = 0; i < 15; i++) {
                 prim->v0 = prim->v1 = prim->v0 - 0x10;
                 prim->v2 = prim->v3 = prim->v2 - 0x10;
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim->r0 = prim->g0 = prim->b0 = prim->r1 = prim->g1 =
                     prim->b1 = prim->r2 = prim->g2 = prim->b2 = prim->r3 =
                         prim->g3 = prim->b3 = 0xFF;
@@ -1310,7 +1310,7 @@ void RicEntityAguneaLightning(Entity* self) {
     case 5:
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim = prim->next;
         }
         self->step++;
@@ -1318,7 +1318,7 @@ void RicEntityAguneaLightning(Entity* self) {
     case 4:
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 15; i++) {
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim = prim->next;
         }
         self->step++;
@@ -1373,7 +1373,7 @@ void RicEntityAguneaCircle(Entity* self) {
         yCoord = 0;
         for (i = 0; i < 4; i++) {
             prim->tpage = 0x1A;
-            prim->clut = 0x194;
+            prim->clut = PAL_UNK_194;
             prim->x0 = xCoord - 8;
             prim->x2 = xCoord + 8;
             prim->y0 = prim->y2 = yCoord;
@@ -1429,7 +1429,7 @@ void RicEntityAguneaCircle(Entity* self) {
             prim->drawMode = DRAW_UNK_200 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
             prim->tpage = 0x1A;
-            prim->clut = 0x19F;
+            prim->clut = PAL_UNK_19F;
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = 0x3F;
             prim->v0 = prim->v1 = 0xC0;
@@ -1524,7 +1524,7 @@ void RicEntitySubwpnStopwatchCircle(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; i < 16; i++) {
             prim->tpage = 0x1A;
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->priority = self->zPriority = 0xC2;
             prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_COLORS | DRAW_TRANSP;
@@ -1674,14 +1674,14 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         self->ext.ricStopWatch.unk84.val += 0xFFFF0000;
         if (self->ext.ricStopWatch.unk84.val <= 0x100000) {
             self->ext.ricStopWatch.t = 5;
-            g_api.PlaySfx(SFX_CLOCK_TICK);
+            g_api.PlaySfx(SFX_STOPWATCH_TICK);
             self->step++;
         }
         break;
     case 3:
         self->ext.ricStopWatch.unk7E++;
         if (self->ext.ricStopWatch.unk7E > 0x50) {
-            g_api.PlaySfx(SFX_CLOCK_TICK);
+            g_api.PlaySfx(SFX_STOPWATCH_TICK);
             self->ext.ricStopWatch.unk7E = 0;
             self->ext.ricStopWatch.unk90 = 1;
             self->ext.ricStopWatch.t--;
@@ -1739,12 +1739,12 @@ void RicEntitySubwpnStopwatch(Entity* self) {
         self->ext.ricStopWatch.t++;
         if (self->ext.ricStopWatch.t >= 4) {
             prim = &g_PrimBuf[self->primIndex];
-            prim->clut = 0x15F;
+            prim->clut = PAL_FILL_WHITE;
             prim->drawMode |= DRAW_COLORS;
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = 0x40;
             prim->g0 = prim->g1 = prim->g2 = prim->g3 = 0x40;
             prim->b0 = prim->b1 = prim->b2 = prim->b3 = 0x60;
-            g_api.PlaySfx(SFX_UI_TINK);
+            g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
             self->step++;
         }
         break;
@@ -2004,7 +2004,7 @@ void RicEntitySubwpnBibleTrail(Entity* entity) {
             FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[entity->primIndex];
         prim->tpage = 0x1C;
-        prim->clut = 0x19D;
+        prim->clut = PAL_UNK_19D;
         prim->u0 = prim->u2 = 0x20;
         prim->v0 = prim->v1 = 0;
         prim->u1 = prim->u3 = 0x30;

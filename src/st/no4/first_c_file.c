@@ -1078,7 +1078,7 @@ void func_us_801C2E60(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         self->ext.et_801C12B0.prim = prim;
         while (prim != NULL) {
-            prim->clut = 0x161;
+            prim->clut = PAL_CC_STONE_EFFECT;
             prim->tpage = 0x1A;
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = 0x1E;
@@ -1520,7 +1520,7 @@ void func_us_801C3CC4(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         self->ext.et_801C12B0.prim = prim;
         while (prim != NULL) {
-            prim->clut = 0x161;
+            prim->clut = PAL_CC_STONE_EFFECT;
             prim->tpage = 0x1A;
             prim->u0 = prim->u2 = 0;
             prim->u1 = prim->u3 = 0x1E;
@@ -2039,7 +2039,7 @@ void func_us_801C4BD8(Entity* self) {
         return;
     }
 
-    g_api.PlaySfxVolPan(SFX_UNK_797, volume, *dataPtr++);
+    g_api.PlaySfxVolPan(SFX_WATERFALL_LOOP, volume, *dataPtr++);
     D_us_80181108 = 1;
 }
 
@@ -2062,7 +2062,7 @@ void func_us_801C4D2C(Entity* self) {
 
     // Another P2 controller triangle secret ?
     if (g_pads[1].tapped & PAD_TRIANGLE) {
-        g_api.PlaySfx(SFX_UNK_7BD);
+        g_api.PlaySfx(SFX_WOODEN_BRIDGE_EXPLODE);
     }
 
     playerInRange = 0;
@@ -2134,7 +2134,7 @@ void func_us_801C5020(Entity* self) {
         self->opacity = 128;
         self->rotate = 0;
         self->zPriority = 159;
-        PlaySfxPositional(SFX_UNK_7BE);
+        PlaySfxPositional(SFX_UNK_NO4_7BE);
     }
 
     if (self->params != 0) {
@@ -2170,7 +2170,7 @@ void func_us_801C5134(void) {
     s16 offsetX;
     s32 i;
 
-    PlaySfxPositional(SFX_UNK_7BD);
+    PlaySfxPositional(SFX_WOODEN_BRIDGE_EXPLODE);
 
     for (i = 1; i < 4; i++) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -2239,7 +2239,7 @@ void func_us_801C5268(Entity* self) {
     }
     if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] == 2 ||
         g_pads[1].tapped & PAD_TRIANGLE) {
-        PlaySfxPositional(SFX_UNK_7BD);
+        PlaySfxPositional(SFX_WOODEN_BRIDGE_EXPLODE);
         g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE]++;
         func_us_801C50FC();
         func_us_801C5134();
