@@ -222,7 +222,7 @@ void AluInit() {
     PLAYER.animSet = ANIMSET_DRA(1);
     PLAYER.zPriority = (u16)g_unkGraphicsStruct.g_zEntityCenter;
     PLAYER.facingLeft = 0;
-    PLAYER.palette = 0x8100;
+    PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
 
     PLAYER.scaleY = PLAYER.scaleX = 0x100;
 
@@ -244,7 +244,7 @@ void AluInit() {
         DestroyEntity(e);
         e->animSet = ANIMSET_DRA(1);
         e->unk5A = i + 1;
-        e->palette = PAL_OVL(0x100);
+        e->palette = PAL_FLAG(PAL_ALUCARD);
         e->flags = FLAG_UNK_20000 | FLAG_POS_CAMERA_LOCKED;
     }
 
@@ -533,7 +533,7 @@ void func_8010A234(s32 arg0) {
     // Detect opposite case: If we're not wearing it, but status is set
     // Means we need to run a routine to get back into normal mode.
     if (g_Player.status & PLAYER_STATUS_AXEARMOR) {
-        PLAYER.palette = 0x8100;
+        PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
         PLAYER.animSet = 1;
         PLAYER.unk5A = 0;
         PLAYER.rotate = 0;
@@ -774,10 +774,10 @@ void EntityAlucard() {
                             }
                             continue;
                         case 2:
-                            PLAYER.palette = 0x8100;
+                            PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
                             continue;
                         case 3:
-                            PLAYER.palette = 0x8100;
+                            PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
                             if (!(g_Player.status &
                                   (PLAYER_STATUS_STONE | PLAYER_STATUS_POISON |
                                    PLAYER_STATUS_CURSE))) {
@@ -996,7 +996,7 @@ void EntityAlucard() {
                                 }
                                 D_800ACDFC = 0x20;
                                 if (damage.damageTaken != 0) {
-                                    PlaySfx(SFX_WATER_DAMAGE_SWISHES);
+                                    PlaySfx(SFX_RAPID_SCRAPE_3X);
                                 }
                                 break;
                             }
@@ -1253,13 +1253,13 @@ block_160:
         func_8010E168(1, 4);
         newStatus = PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
                     PLAYER_STATUS_UNK100000 | PLAYER_STATUS_MIST_FORM;
-        PLAYER.palette = PAL_OVL(0x10D);
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         break;
     case Player_UnmorphMist:
         newStatus = PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
                     PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK800000 |
                     PLAYER_STATUS_MIST_FORM;
-        PLAYER.palette = PAL_OVL(0x10D);
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         func_8010E168(1, 4);
         break;
     case Player_AlucardStuck:
@@ -1352,7 +1352,7 @@ block_160:
         newStatus =
             PLAYER_STATUS_UNK10000000 | NO_AFTERIMAGE | PLAYER_STATUS_UNK100000;
         func_8010E168(4, 0xC);
-        PLAYER.palette = PAL_OVL(0x10D);
+        PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
         break;
     case Player_MorphWolf:
         g_unkGraphicsStruct.unk1C |= 2;
@@ -1418,7 +1418,7 @@ block_160:
         if (!(g_Player.status & (PLAYER_STATUS_POISON | PLAYER_STATUS_CURSE))) {
             g_Player.timers[4] = 0xC;
             g_Player.timers[15] = 4;
-            PLAYER.palette = PAL_OVL(0x100);
+            PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
         }
     }
     PlayAnimation(D_800B0130, D_800B01B8);

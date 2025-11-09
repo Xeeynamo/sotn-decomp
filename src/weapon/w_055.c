@@ -120,7 +120,7 @@ s32 func_ptr_80170004(Entity* self) {
         }
         SetSpriteBank2(D_185000_8017B160);
         self->animSet = ANIMSET_OVL(0x11);
-        self->palette = PAL_DRA(0x117);
+        self->palette = PAL_UNK_117;
         self->unk5A = 0x65;
         if (g_HandId != 0) {
             self->animSet += 2;

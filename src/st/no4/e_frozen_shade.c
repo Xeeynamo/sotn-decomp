@@ -342,7 +342,7 @@ void EntityFrozenShade(Entity* self) {
                         tempEntity->hitboxWidth = 0;
                     }
                     SetStep(3);
-                    PlaySfxPositional(SFX_UI_TINK);
+                    PlaySfxPositional(SFX_UI_SUBWEAPON_TINK);
                     self->ext.frozenShade.unk98 = 0;
                     self->ext.frozenShade.unk8A = 0;
                 } else {
@@ -1031,7 +1031,7 @@ void EntityFrozenShadeIcicle(Entity* self) {
         self->ext.frozenShadeIcicle.unk7E = i;
         if (self->ext.frozenShadeIcicle.angle == i) {
             self->step++;
-            PlaySfxPositional(SFX_UI_TINK);
+            PlaySfxPositional(SFX_UI_SUBWEAPON_TINK);
             self->ext.frozenShadeIcicle.unk84 = 8;
             self->ext.frozenShadeIcicle.angle += 0x400;
         }

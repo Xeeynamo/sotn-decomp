@@ -23,7 +23,7 @@ void EntityClockRoomController(Entity* self) {
     // Plays the clock bell
     if (self->ext.clockRoom.bellTimer != 0) {
         if (self->ext.clockRoom.bellDuration == 0) {
-            g_api.PlaySfx(SFX_CLOCK_BELL);
+            g_api.PlaySfx(SFX_CLOCK_ROOM_BELL);
             if (--self->ext.clockRoom.bellTimer) {
                 self->ext.clockRoom.bellDuration = 64;
             }
@@ -125,7 +125,7 @@ void EntityClockRoomController(Entity* self) {
         self[shadow].animSet = ANIMSET_OVL(1);
         self[shadow].animCurFrame = 23;
         self[shadow].zPriority = 0x40;
-        self[shadow].palette = 0x804B;
+        self[shadow].palette = PAL_FLAG(0x4B);
         self[shadow].drawFlags = FLAG_DRAW_OPACITY;
         self[shadow].drawMode = DRAW_TPAGE;
         self[shadow].flags = FLAG_DESTROY_IF_OUT_OF_CAMERA |

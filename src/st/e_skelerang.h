@@ -330,7 +330,7 @@ void EntitySkelerangBoomerang(Entity* self) {
         posX = abs(posX);
         posY = abs(posY);
         if (posX < 6 && posY < 6) {
-            PlaySfxPositional(SFX_MULTI_CLOCK_TICK);
+            PlaySfxPositional(SFX_SKELERANG_CATCH);
             self->step_s++;
         }
         if (self->step_s == 2) {

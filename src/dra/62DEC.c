@@ -79,7 +79,7 @@ static void func_80102EB8(void) {
         SetTexturedPrimRect(prim1, 98, 79, 96, 0, 0, 0);
         func_801072DC(prim1);
         prim1->tpage = 0x10;
-        prim1->clut = 0x1A1;
+        prim1->clut = PAL_UNK_1A1;
 #ifdef VERSION_PSP
         prim1->priority = 0x1FF;
 #else
@@ -437,13 +437,13 @@ static s32 HandleSaveMenu(s32 arg0) {
         } else {
             if (g_pads[0].tapped & PAD_LEFT) {
                 if (D_80097924 != 0) {
-                    PlaySfx(SFX_UI_TINK);
+                    PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 }
                 D_80097924 = 0;
             }
             if (g_pads[0].tapped & PAD_RIGHT) {
                 if (D_80097924 == 0) {
-                    PlaySfx(SFX_UI_TINK);
+                    PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 }
                 D_80097924 = 1;
             }
@@ -549,13 +549,13 @@ static s32 HandleSaveMenu(s32 arg0) {
     } else {
         if (g_pads[0].tapped & PAD_LEFT) {
             if (D_80137E6C != 0) {
-                PlaySfx(SFX_UI_TINK);
+                PlaySfx(SFX_UI_SUBWEAPON_TINK);
             }
             D_80137E6C = 0;
         }
         if (g_pads[0].tapped & PAD_RIGHT) {
             if (D_80137E6C == 0) {
-                PlaySfx(SFX_UI_TINK);
+                PlaySfx(SFX_UI_SUBWEAPON_TINK);
             }
             D_80137E6C = 1;
         }

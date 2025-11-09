@@ -127,7 +127,7 @@ void func_us_801BDA0C(Entity* self) {
         self->ext.et_801BDA0C.unk80 = 0;
         break;
     case 1:
-        self->palette = PAL_OVL(0x4F);
+        self->palette = PAL_FLAG(0x4F);
         if (self->ext.et_801BDA0C.unk84) {
             self->step++;
         }
@@ -157,7 +157,7 @@ void func_us_801BDA0C(Entity* self) {
             self->palette++;
             if (self->palette > 0x8058) {
                 g_api.PlaySfx(SFX_ELECTRICITY);
-                self->palette = PAL_OVL(0x4F);
+                self->palette = PAL_FLAG(0x4F);
                 self->step++;
                 if (self->params == 5) {
                     (self + 1)->ext.et_801BDA0C.unk84 = 1;
@@ -386,7 +386,7 @@ void func_us_801BE2C8(Entity* self) {
             self->ext.et_801BE2C8.unk7C = prim;
             while (prim != NULL) {
                 prim->tpage = 0x1A;
-                prim->clut = 0x15F;
+                prim->clut = PAL_FILL_WHITE;
                 prim->u0 = prim->u2 = 0x20;
                 prim->u1 = prim->u3 = 0x28;
                 prim->v0 = prim->v1 = 0xA0;
@@ -422,7 +422,7 @@ void func_us_801BE2C8(Entity* self) {
             zPointer++;
         }
         self->ext.et_801BE2C8.unkA0 = 0;
-        g_api.PlaySfx(SFX_RBO5_UNK_7AE);
+        g_api.PlaySfx(SFX_DOP_DOOR_OPEN);
         self->step++;
         break;
 

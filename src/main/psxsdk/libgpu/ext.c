@@ -29,7 +29,7 @@ u_short LoadClut(u_long* clut, int x, int y) {
 
     rect.x = x;
     rect.y = y;
-    rect.w = 256;
+    rect.w = 0x100;
     rect.h = 1;
     LoadImage(&rect, clut);
 
@@ -61,6 +61,7 @@ DISPENV* SetDefDispEnv(DISPENV* env, s32 x, s32 y, s32 w, s32 h) {
     env->disp.x = x;
     env->disp.y = y;
     env->disp.w = w;
+    env->disp.h = h;
     env->screen.x = 0;
     env->screen.y = 0;
     env->screen.w = 0;
@@ -69,6 +70,5 @@ DISPENV* SetDefDispEnv(DISPENV* env, s32 x, s32 y, s32 w, s32 h) {
     env->isinter = 0;
     env->pad1 = 0;
     env->pad0 = 0;
-    env->disp.h = h;
     return env;
 }

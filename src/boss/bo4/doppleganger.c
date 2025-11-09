@@ -25,7 +25,7 @@ static void func_us_801C1A38(void) {
         DOPPLEGANGER.facingLeft = true;
     }
 
-    DOPPLEGANGER.palette = PAL_OVL(0x200);
+    DOPPLEGANGER.palette = PAL_FLAG(0x200);
     DOPPLEGANGER.scaleX = 0x100;
     DOPPLEGANGER.scaleY = 0x100;
     DOPPLEGANGER.drawMode = DRAW_DEFAULT;
@@ -49,7 +49,7 @@ static void func_us_801C1A38(void) {
         DestroyEntity(entity);
         entity->animSet = ANIMSET_OVL(1);
         entity->unk5A = i + 9;
-        entity->palette = PAL_OVL(0x200);
+        entity->palette = PAL_FLAG(0x200);
         entity->flags = FLAG_POS_CAMERA_LOCKED;
     }
     primIndex = g_api.AllocPrimitives(PRIM_TILE, 6);
@@ -155,7 +155,7 @@ void EntityDoppleganger10(void) {
                         case 1:
                             break;
                         case 2:
-                            DOPPLEGANGER.palette = PAL_OVL(0x200);
+                            DOPPLEGANGER.palette = PAL_FLAG(0x200);
                             break;
                         case 3:
                         case 4:
@@ -364,13 +364,13 @@ void EntityDoppleganger10(void) {
         func_us_801C5354(1, 1);
         OVL_EXPORT(func_us_801C5430)(1, 4);
         status = PLAYER_STATUS_UNK100000 | PLAYER_STATUS_MIST_FORM;
-        DOPPLEGANGER.palette = PAL_OVL(0x20D);
+        DOPPLEGANGER.palette = PAL_FLAG(0x20D);
         break;
     case Dop_UnmorphMist:
         func_us_801C5354(1, 1);
         status = PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK100000 |
                  PLAYER_STATUS_MIST_FORM;
-        DOPPLEGANGER.palette = PAL_OVL(0x20D);
+        DOPPLEGANGER.palette = PAL_FLAG(0x20D);
         OVL_EXPORT(func_us_801C5430)(1, 4);
         break;
     case Dop_UnmorphBat:
@@ -408,7 +408,7 @@ void EntityDoppleganger10(void) {
         func_us_801C5354(1, 1);
         OVL_EXPORT(func_us_801C5430)(4, 0x30);
         DOPPLEGANGER.animSet = ANIMSET_OVL(1);
-        DOPPLEGANGER.palette = PAL_OVL(0x20D);
+        DOPPLEGANGER.palette = PAL_FLAG(0x20D);
         break;
     case Dop_StatusStone:
         status = PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK10000 |
@@ -428,7 +428,7 @@ void EntityDoppleganger10(void) {
     if ((g_Dop.unk08 & PLAYER_STATUS_UNK10000) &&
         !(g_Dop.status & (PLAYER_STATUS_DEAD | PLAYER_STATUS_UNK10000))) {
         g_Dop.timers[ALU_T_15] = 4;
-        DOPPLEGANGER.palette = PAL_OVL(0x200);
+        DOPPLEGANGER.palette = PAL_FLAG(0x200);
     }
     OVL_EXPORT(PlayAnimation)(D_us_80183C70, D_us_80183CB4);
     if (g_Dop.status & PLAYER_STATUS_DEAD) {

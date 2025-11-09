@@ -187,7 +187,7 @@ void EntityToad(Entity* self) {
             break;
         case 1:
             if (!AnimateEntity(anim_open_mouth, self)) {
-                PlaySfxPositional(SFX_BOING);
+                PlaySfxPositional(SFX_FROG_TOAD_TONGUE);
                 SetSubStep(2);
             }
             break;

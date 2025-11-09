@@ -38,7 +38,7 @@ void EntityOwl(Entity* self) {
             self->animCurFrame = 12;
             self->velocityX = 0;
             self->velocityY = 0;
-            PlaySfxPositional(0x796);
+            PlaySfxPositional(SFX_OWL_DEATH);
             SetStep(9);
             KNIGHT->ext.owl.unk80 |= 8;
         }
@@ -593,7 +593,7 @@ void EntityOwlKnight(Entity* self) {
             OWL->ext.owl.unk80 |= 0x20;
             self->hitboxState = 0;
             self->ext.owl.unk82 = 0x60;
-            PlaySfxPositional(0x795);
+            PlaySfxPositional(SFX_OWL_KNIGHT_DEATH);
             SetStep(17);
         }
     }
@@ -645,7 +645,7 @@ void EntityOwlKnight(Entity* self) {
             } else {
                 OWL->ext.owl.unk80 |= 4;
             }
-            PlaySfxPositional(0x792);
+            PlaySfxPositional(SFX_OWL_KNIGHT_TAUNT);
             self->step_s++;
         }
         break;
@@ -750,7 +750,7 @@ void EntityOwlKnight(Entity* self) {
         }
         if (!self->poseTimer && self->pose == 5) {
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
-            PlaySfxPositional(0x793);
+            PlaySfxPositional(SFX_OWL_KNIGHT_ATTACK);
             self->velocityX = FIX(-6.0);
             if (self->facingLeft) {
                 EntityGreyPuffSpawner(self, 5, 3, 16, 32, 0, -6);
@@ -880,7 +880,7 @@ void EntityOwlKnight(Entity* self) {
             self->velocityX = 0;
         }
         if (!self->poseTimer && self->pose == 11) {
-            PlaySfxPositional(0x793);
+            PlaySfxPositional(SFX_OWL_KNIGHT_ATTACK);
             self->velocityX = FIX(-3.0);
             if (self->facingLeft) {
                 EntityGreyPuffSpawner(self, 5, 3, 12, 32, 0, -4);
@@ -957,7 +957,7 @@ void EntityOwlKnight(Entity* self) {
         case 4:
             AnimateEntity(anim_knight_16, self);
             if (!self->poseTimer && self->pose == 2) {
-                PlaySfxPositional(0x794);
+                PlaySfxPositional(SFX_OWL_KNIGHT_REACT);
             }
             if (!--self->ext.owl.unk82) {
                 SetSubStep(5);
@@ -1006,7 +1006,7 @@ void EntityOwlKnight(Entity* self) {
             }
             if (!self->poseTimer && self->pose == 5) {
                 PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
-                PlaySfxPositional(0x793);
+                PlaySfxPositional(SFX_OWL_KNIGHT_ATTACK);
                 self->velocityX = FIX(-8.0);
                 if (self->facingLeft) {
                     EntityGreyPuffSpawner(self, 5, 3, 32, 32, 0, -6);

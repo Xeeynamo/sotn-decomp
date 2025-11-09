@@ -114,7 +114,7 @@ void EntitySoulStealOrb(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         AnimateEntity(g_ESoulStealOrbAnim, self);
         prim->tpage = 0x18;
-        prim->clut = 0x194;
+        prim->clut = PAL_UNK_194;
         angle = self->animCurFrame;
 #ifdef VERSION_PSP
         angle = (angle - 1) * 8;

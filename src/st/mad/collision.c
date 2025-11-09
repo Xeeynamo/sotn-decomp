@@ -86,8 +86,8 @@ static u16 g_jewelSwordDropTable[] = {
 };
 
 static u16 g_eDamageDisplayClut[] = {
-    PAL_DRA(0x1B2), PAL_DRA(0x1B3), PAL_DRA(0x1B6), PAL_DRA(0x1B7),
-    PAL_DRA(0x1B4), PAL_DRA(0x1B5), PAL_DRA(0x1B0), PAL_DRA(0x1B1),
+    PAL_UNK_1B2, PAL_UNK_1B3, PAL_UNK_1B6, PAL_UNK_1B7,
+    PAL_UNK_1B4, PAL_UNK_1B5, PAL_UNK_1B0, PAL_UNK_1B1,
 };
 
 // Slightly different to other overlays. May be possible to
@@ -328,7 +328,7 @@ void HitDetection(void) {
                         for (prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
                              prim != NULL; prim = prim->next) {
                             if (prim->drawMode == DRAW_HIDE) {
-                                prim->clut = 0x199;
+                                prim->clut = PAL_UNK_199;
                                 temp_rand = (Random() & 7) - 13;
                                 prim->x0 = prim->x2 = xCoord + temp_rand - 3;
                                 prim->x1 = prim->x3 = prim->x0 + 0x20;

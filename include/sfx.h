@@ -273,7 +273,6 @@ enum {
 // STAGE DAI
 // Unknown SFX related to the priest
 #define SFX_UNK_4E5 0x4E5
-#define SFX_UNK_7BB 0x7BB
 
 // STAGE DRE
 #define NA_VO_SU_LAUGH 0x86E
@@ -289,22 +288,13 @@ enum {
 #define NA_VO_SU_NO_SCREAM 0x87B
 #define NA_VO_SU_DELICIOUS 0x8D1
 
-// STAGE NO3 / NP3
-#define NA_SE_EV_WINDOW_LATCH 0x79D
-#define SE_DEATH_TAKES_ITEMS 0x7A0
-#define NA_VO_DEATH_LAUGH 0x7A1
-#define SE_ITEM_YOINK 0x7A2
-#define SE_TREE_BRANCH_SNAP 0x7A4
-#define SE_CASTLE_GATE_RISE 0x7A5
-
 // STAGE NO4
-#define SFX_OAR_ROW 0x7BF
+
 #define SFX_WATER_BUBBLE 0x7C4
 
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
-#define SFX_RBO5_UNK_7AE 0x7AE
-#define SFX_BO4_UNK_7CB 0x7CB
-#define SFX_BO4_UNK_7CC 0x7CC
+#define SFX_DOPPLEGANGER_DOOR_OPEN 0x7CB
+#define SFX_DOPPLEGANGER_APPEAR 0x7CC
 #define SFX_BO4_UNK_7D8 0x7D8
 #define SFX_BO4_UNK_7D7 0x7D7
 #define SFX_BO4_UNK_7D9 0x7D9
@@ -418,12 +408,12 @@ enum Sfx {
     /* 0x621 */ SFX_BAT_ECHO_D,
     /* 0x622 */ SFX_SKULL_BONK,
     /* 0x623 */ SFX_RIC_RSTONE_TINK, // Rebound Stone
-    /* 0x624 */ SFX_SMALL_BURST,
+    /* 0x624 */ SFX_SALEM_WITCH_CURSE_ATTACK,
     /* 0x625 */ SFX_ARROW_SHOT_A, // Magic Missile Shot
     /* 0x626 */ SFX_ARROW_SHOT_B,
     /* 0x627 */ SFX_ARROW_SHOT_C,
     /* 0x628 */ SFX_ARROW_SHOT_D,
-    /* 0x629 */ SFX_SKELETON_DEATH_A,
+    /* 0x629 */ SFX_SKELETON_DEATH_A, // Paranthropus
     /* 0x62A */ SFX_SKELETON_DEATH_B, // Slinger
     /* 0x62B */ SFX_SKELETON_DEATH_C,
     /* 0x62C */ SFX_FIRE_SHOT,
@@ -432,19 +422,19 @@ enum Sfx {
     /* 0x62F */ SFX_WEAPON_APPEAR,  // Item Crash, Neutron Bomb
     /* 0x630 */ SFX_UNK_BETA_630,   // (MAD, TE1, TE2, TE3, TE4, TE5)
     /* 0x631 */ SFX_DEATH_AMBIENCE, // BGM ambience during first Death cutscene
-    /* 0x632 */ SFX_MAGIC_GLASS_BREAK, // Subweapon Container
+    /* 0x632 */ SFX_SUBWEAPON_CONTAINER_BREAK,
     /* 0x633 */ SFX_UI_CONFIRM,
     /* 0x634 */ SFX_CANDLE_HIT,
     /* 0x635 */ SFX_TELEPORT_BANG_A, // Used when teleport starts
     /* 0x636 */ SFX_TELEPORT_BANG_B, // Teleport ends, also Warp Enter
     /* 0x637 */ SFX_SUC_APPEAR,      // Succubus reveal
-    /* 0x638 */ SFX_UNK_SCRAPE_A,
-    /* 0x639 */ SFX_UNK_SCRAPE_B,
-    /* 0x63A */ SFX_UNK_SCRAPE_C,
-    /* 0x63B */ SFX_UNK_UI_SELECT,
+    /* 0x638 */ SFX_UNUSED_SCRAPE_A,
+    /* 0x639 */ SFX_UNUSED_SCRAPE_B,
+    /* 0x63A */ SFX_UNUSED_SCRAPE_C,
+    /* 0x63B */ SFX_UNUSED_UI_SELECT,
     /* 0x63C */ SFX_START_SLAM_A, // Dark Shield
     /* 0x63D */ SFX_START_SLAM_B, // Press Start, Door Open, Dracula Stomp, etc
-    /* 0x63E */ SFX_START_SLAM_C,
+    /* 0x63E */ SFX_UNUSED_START_SLAM_C,
     /* 0x63F */ SFX_ANIME_SWORD_A, // Sword Familiar
     /* 0x640 */ SFX_ANIME_SWORD_B, // Holy Rod ("Anime shing" element)
     /* 0x641 */ SFX_ANIME_SWORD_C,
@@ -454,56 +444,56 @@ enum Sfx {
     /* 0x645 */ SFX_WALL_DEBRIS_C,
     /* 0x646 */ SFX_STOMP_HARD_A,
     /* 0x647 */ SFX_STOMP_HARD_B, // Alucard Landing (Hard)
-    /* 0x648 */ SFX_STOMP_HARD_C,
-    /* 0x649 */ SFX_STOMP_HARD_D,
-    /* 0x64A */ SFX_STOMP_HARD_E,
+    /* 0x648 */ SFX_STOMP_HARD_C, // Blade, Gurkha and more large enemies
+    /* 0x649 */ SFX_STOMP_HARD_D, // Flea Armor, Sword Lord
+    /* 0x64A */ SFX_STOMP_HARD_E, // Maria, Venus Weed, Flea Armor, Sword Lord
     /* 0x64B */ SFX_STOMP_SOFT_A, // Richter Landing (Hard)
     /* 0x64C */ SFX_STOMP_SOFT_B, // Alucard Landing (Normal)
     /* 0x64D */ SFX_SAVE_HEARTBEAT,
     /* 0x64E */ SFX_BAT_SCREECH,
     /* 0x64F */ SFX_DOOR_CLOSE_A,
-    /* 0x650 */ SFX_DOOR_CLOSE_B,
-    /* 0x651 */ SFX_UNK_UI_ERROR,
+    /* 0x650 */ SFX_DOOR_CLOSE_B,   // Lesser Demon, Doppleganger
+    /* 0x651 */ SFX_UNK_UI_ERROR,   // TE1, TE2, TE4, TE5
     /* 0x652 */ SFX_EXPLODE_FAST_A, // Explosion "stutter" effect
     /* 0x653 */ SFX_EXPLODE_FAST_B,
     /* 0x654 */ SFX_EXPLODE_A,
     /* 0x655 */ SFX_EXPLODE_B,
-    /* 0x656 */ SFX_EXPLODE_C,
-    /* 0x657 */ SFX_EXPLODE_D,
-    /* 0x658 */ SFX_EXPLODE_E,
+    /* 0x656 */ SFX_UNUSED_EXPLODE_C,
+    /* 0x657 */ SFX_EXPLODE_D, // Blade, Gurkha, Hammer
+    /* 0x658 */ SFX_EXPLODE_E, // Tombstone, Yorick
     /* 0x659 */ SFX_EXPLODE_F,
-    /* 0x65A */ SFX_FM_EXPLODE_A, // FM synth explosion
+    /* 0x65A */ SFX_FM_EXPLODE_A, // FM synth explosion (Ape barrel and DRE)
     /* 0x65B */ SFX_FM_EXPLODE_B,
-    /* 0x65C */ SFX_FM_EXPLODE_C,
-    /* 0x65D */ SFX_FM_EXPLODE_D,
-    /* 0x65E */ SFX_EXPLODE_SMALL, // Zombie death explosion
-    /* 0x65F */ SFX_UNK_FIRE_WHOOSH,
+    /* 0x65C */ SFX_UNUSED_FM_EXPLODE_C,
+    /* 0x65D */ SFX_FM_EXPLODE_D,             // Hammer, Lesser Demon
+    /* 0x65E */ SFX_EXPLODE_SMALL,            // Zombie death explosion
+    /* 0x65F */ SFX_PSP_MARIA_CARDINAL_CRASH, // unused in PSX
     /* 0x660 */ SFX_FIREBALL_SHOT_A,
     /* 0x661 */ SFX_FIREBALL_SHOT_B,
-    /* 0x662 */ SFX_FIREBALL_SHOT_C,
-    /* 0x663 */ SFX_GUNSHOT,
-    /* 0x664 */ SFX_THUNDER_A,
+    /* 0x662 */ SFX_FIREBALL_SHOT_C, // Merman, Scylla
+    /* 0x663 */ SFX_SALEM_WITCH_CURSE_PROJ,
+    /* 0x664 */ SFX_THUNDER_A, // Iron Shield
     /* 0x665 */ SFX_THUNDER_B,
-    /* 0x666 */ SFX_THUNDER_C,
-    /* 0x667 */ SFX_UNK_LOW_UI,
+    /* 0x666 */ SFX_UNUSED_THUNDER_C,
+    /* 0x667 */ SFX_UNK_TE3_LOW_UI,
     /* 0x668 */ SFX_TRANSFORM,
     /* 0x669 */ SFX_MAGIC_WEAPON_APPEAR_A,
     /* 0x66A */ SFX_MAGIC_WEAPON_APPEAR_B,
-    /* 0x66B */ SFX_WEAPON_BREAK,
-    /* 0x66C */ SFX_BONE_SWORD_SWISH_A,
+    /* 0x66B */ SFX_AXE_KNIGHT_WEAPON_BREAK,
+    /* 0x66C */ SFX_BONE_SWORD_SWISH_A, // Runesword
     /* 0x66D */ SFX_BONE_SWORD_SWISH_B,
-    /* 0x66E */ SFX_BONE_SWORD_SWISH_C,
-    /* 0x66F */ SFX_TELEPORT_BANG_SHORT_A,
-    /* 0x670 */ SFX_TELEPORT_BANG_SHORT_B,
-    /* 0x671 */ SFX_TELEPORT_BANG_SHORT_C,
+    /* 0x66E */ SFX_BONE_SWORD_SWISH_C,        // Blade, Discus Lord
+    /* 0x66F */ SFX_UNK_TELEPORT_BANG_SHORT_A, // TE1, TE5
+    /* 0x670 */ SFX_TELEPORT_BANG_SHORT_B,     // RCEN and all beta overlays
+    /* 0x671 */ SFX_UNUSED_TELEPORT_BANG_SHORT_C,
     /* 0x672 */ SFX_NOISE_SWEEP_DOWN_A,
-    /* 0x673 */ SFX_NOISE_SWEEP_DOWN_B,
-    /* 0x674 */ SFX_BOING,
+    /* 0x673 */ SFX_NOISE_SWEEP_DOWN_B, // Slime
+    /* 0x674 */ SFX_FROG_TOAD_TONGUE,
     /* 0x675 */ SFX_LEVER_METAL_BANG,
     /* 0x676 */ SFX_SWITCH_CLICK,
-    /* 0x677 */ SFX_WEAPON_ENERGY,
+    /* 0x677 */ SFX_RUNESWORD_ATTACK,
     /* 0x678 */ SFX_WEAPON_HIT_A,
-    /* 0x679 */ SFX_WEAPON_HIT_B,
+    /* 0x679 */ SFX_UNK_TE3_WEAPON_HIT_B,
 
     // vabid 9
     /* 0x67A */ SFX_HEART_PICKUP,
@@ -517,41 +507,41 @@ enum Sfx {
     /* 0x682 */ SFX_KARMA_COIN_JINGLE,
     /* 0x683 */ SFX_QUICK_STUTTER_EXPLODE_B,
     /* 0x684 */ SFX_FM_THUNDER_EXPLODE,
-    /* 0x685 */ SFX_GUNSHOT_HIGH,
+    /* 0x685 */ SFX_BONE_MUSKET_SHOT,
     /* 0x686 */ SFX_UI_ERROR,
     /* 0x687 */ SFX_LEVEL_UP,
     /* 0x688 */ SFX_DEBUG_SELECT, // Low Heartbeat sfx used for Debug menu
     /* 0x689 */ SFX_WEAPON_SCRAPE_ECHO,
-    /* 0x68A */ SFX_GLASS_BREAK_WHOOSH,
+    /* 0x68A */ SFX_RIC_HOLY_WATER_ATTACK,
     /* 0x68B */ SFX_DRA_GLASS_BREAK, // "What is a man?!" wine glass shatter
     /* 0x68C */ SFX_WING_FLAP_A,
     /* 0x68D */ SFX_WING_FLAP_B,
     /* 0x68E */ SFX_HEALTH_PICKUP,
-    /* 0x68F */ SFX_STUTTER_FIREBALL,
+    /* 0x68F */ SFX_OUIJA_TABLE_DEATH,
     /* 0x690 */ SFX_FM_EXPLODE_SWISHES,
     /* 0x691 */ SFX_SMALL_FLAME_IGNITE,
-    /* 0x692 */ SFX_UNK_TRANSFORM,
-    /* 0x693 */ SFX_STUTTER_EXPLODE_LOW,
-    /* 0x694 */ SFX_FM_STUTTER_EXPLODE,
-    /* 0x695 */ SFX_FAST_STUTTER_EXPLODE,
-    /* 0x696 */ SFX_FM_MULTI_EXPLODE,
-    /* 0x697 */ SFX_STUTTER_EXPLODE_A,
-    /* 0x698 */ SFX_STUTTER_EXPLODE_B,
-    /* 0x699 */ SFX_STUTTER_EXPLODE_C,
-    /* 0x69A */ SFX_FM_EXPLODE_GLASS_ECHO,
-    /* 0x69B */ SFX_BAT_WING_SWISHES,
+    /* 0x692 */ SFX_UNK_TE1_TRANSFORM,
+    /* 0x693 */ SFX_STUTTER_EXPLODE_LOW,  // Bloody Zombie, Venus Weed
+    /* 0x694 */ SFX_FM_STUTTER_EXPLODE,   // Flying Zombie, Plate Lord
+    /* 0x695 */ SFX_FAST_STUTTER_EXPLODE, // Axe Knight, Sword Lord
+    /* 0x696 */ SFX_SWORD_LORD_EXPLODE,
+    /* 0x697 */ SFX_STUTTER_EXPLODE_A, // Spectral Sword, Warg, Slogra
+    /* 0x698 */ SFX_STUTTER_EXPLODE_B, // Diplocephalus, Stone Rose
+    /* 0x699 */ SFX_STUTTER_EXPLODE_C, // Diplocephalus
+    /* 0x69A */ SFX_ALU_HOLY_WATER_ATTACK,
+    /* 0x69B */ SFX_BAT_WING_SWISHES,  // Monster vial 2
     /* 0x69C */ SFX_BAT_SCREECH_SWISH, // Bat Death
-    /* 0x69D */ SFX_MAGIC_SWITCH,
-    /* 0x69E */ SFX_THROW_WEAPON_SWISHES,
-    /* 0x69F */ SFX_THROW_WEAPON_MAGIC,
+    /* 0x69D */ SFX_MAGIC_SWITCH, // Lightning/Ice, Maria animals, NZ0 switch
+    /* 0x69E */ SFX_THROW_WEAPON_SWISHES, // Bwaka knife, Boomerang, and more
+    /* 0x69F */ SFX_RIC_CRASH_CROSS,
     /* 0x6A0 */ SFX_TRANSFORM_LOW, // (Alucard Bat/Mist Transform)
-    /* 0x6A1 */ SFX_CLOCK_TICK,
+    /* 0x6A1 */ SFX_STOPWATCH_TICK,
     /* 0x6A2 */ SFX_DEATH_SWISH,
-    /* 0x6A3 */ SFX_WATER_DAMAGE_SWISHES,
-    /* 0x6A4 */ SFX_UI_TINK, // Also Rebound Stone Bounce
-    /* 0x6A5 */ SFX_SKULL_KNOCK_A,
-    /* 0x6A6 */ SFX_SKULL_KNOCK_B,
-    /* 0x6A7 */ SFX_SKULL_KNOCK_C,
+    /* 0x6A3 */ SFX_RAPID_SCRAPE_3X,   // Damage taken, TNT fuse
+    /* 0x6A4 */ SFX_UI_SUBWEAPON_TINK, // Memory Card UI, 3 subweapons, F.Shade
+    /* 0x6A5 */ SFX_SKULL_KNOCK_A,     // Dhuron
+    /* 0x6A6 */ SFX_SKULL_KNOCK_B,     // Bone Pillar, Skull Lord
+    /* 0x6A7 */ SFX_UNUSED_SKULL_KNOCK_C,
     /* 0x6A8 */ SFX_ALUCARD_SWORD_SWISH,
     /* 0x6A9 */ SFX_GOLD_PICKUP,
     /* 0x6AA */ SFX_MARIONETTE_RATTLE,
@@ -560,60 +550,60 @@ enum Sfx {
     /* 0x6AD */ SFX_UI_ALERT_TINK,
     /* 0x6AE */ SFX_TINK_JINGLE, // Frozen Shade Shards, NO1 Telescope jingle
     /* 0x6AF */ SFX_GUARD_TINK,
-    /* 0x6B0 */ SFX_GLASS_SHARDS, // (Succubus, Frozen Shade, Shamen Shield)
+    /* 0x6B0 */ SFX_GLASS_SHARDS, // Succubus, Frozen Shade, Shamen Shield
     /* 0x6B1 */ SFX_TRANSFORM_3X, // Karma Coin and shields
     /* 0x6B2 */ SFX_BIBLE_SCRAPE,
-    /* 0x6B3 */ SFX_UNK_TICK,
-    /* 0x6B4 */ SFX_UNK_RATTLE,
+    /* 0x6B3 */ SFX_UNK_TE1_TICK,
+    /* 0x6B4 */ SFX_UNK_TE2_RATTLE,
     /* 0x6B5 */ SFX_RIC_FLAME_WHIP,
-    /* 0x6B6 */ SFX_UNK_FIRE_BURST,
+    /* 0x6B6 */ SFX_UNK_TE2_FIRE_BURST,
     /* 0x6B7 */ SFX_LOW_CLOCK_TICK,
-    /* 0x6B8 */ SFX_UNK_LOW_CLOCK_TICK,
-    /* 0x6B9 */ SFX_UNK_METAL_TING,
-    /* 0x6BA */ SFX_FAST_SWORD_SWISHES, // Sword of Dawn
-    /* 0x6BB */ SFX_GRANDFATHER_CLOCK_TICK,
-    /* 0x6BC */ SFX_MULTI_CLOCK_TICK,
-    /* 0x6BD */ SFX_QUIET_STEPS,
-    /* 0x6BE */ SFX_BLIPS_A,
-    /* 0x6BF */ SFX_UNK_BLIPS_B,
-    /* 0x6C0 */ SFX_BLIPS_C,
-    /* 0x6C1 */ SFX_BLIPS_D, // Fleaman movement
+    /* 0x6B8 */ SFX_UNK_TE3_LOW_CLOCK_TICK,
+    /* 0x6B9 */ SFX_UNUSED_METAL_TING,
+    /* 0x6BA */ SFX_FAST_SWORD_SWISHES, // Sword of Dawn, Bone Halberd
+    /* 0x6BB */ SFX_BONE_MUSKET_RELOAD,
+    /* 0x6BC */ SFX_SKELERANG_CATCH,
+    /* 0x6BD */ SFX_QUIET_STEPS, // Maria Cat, ARE, RCAT
+    /* 0x6BE */ SFX_BLIPS_A,     // Toad
+    /* 0x6BF */ SFX_UNUSED_BLIPS_B,
+    /* 0x6C0 */ SFX_BLIPS_C, // Fleaman, Frog
+    /* 0x6C1 */ SFX_BLIPS_D, // Fleaman
     /* 0x6C2 */ SFX_DISCUS_LORD_EXPLODE,
-    /* 0x6C3 */ SFX_SWISHES_ECHO_REPEAT,
+    /* 0x6C3 */ SFX_HIPPOGRYPH_FIRE_ATTACK, // Also Maria Dragon Crash
     /* 0x6C4 */ SFX_SALOME_MAGIC_ATTACK,
-    /* 0x6C5 */ SFX_MAGIC_NOISE_SWEEP,
+    /* 0x6C5 */ SFX_MAGIC_NOISE_SWEEP, // Armor Lord, Maria Turtle Crash
     /* 0x6C6 */ SFX_BOSS_WING_FLAP,
-    /* 0x6C7 */ SFX_WHIP_TWIRL_SWISH,
-    /* 0x6C8 */ SFX_BONE_THROW,
-    /* 0x6C9 */ SFX_CREAK,
-    /* 0x6CA */ SFX_LOW_SKEL_EXPLODE,
+    /* 0x6C7 */ SFX_WHIP_TWIRL_SWISH, // Many enemies
+    /* 0x6C8 */ SFX_BONE_THROW, // Wereskeleton, Flea Armor, Slogra, and more
+    /* 0x6C9 */ SFX_BONE_CREAK, // Bone Archer, Wereskeleton
+    /* 0x6CA */ SFX_FLEA_ARMOR_EXPLODE,
     /* 0x6CB */ SFX_RED_SKEL_COLLAPSE,
     /* 0x6CC */ SFX_RED_SKEL_REBUILD,
-    /* 0x6CD */ SFX_MULTI_NOISE_SWEEP_DOWN,
-    /* 0x6CE */ SFX_SKEL_EXPLODE,
-    /* 0x6CF */ SFX_EXPLODE_ECHO,
-    /* 0x6D0 */ SFX_IGNITE_SWISHES,
-    /* 0x6D1 */ SFX_SEED_BLIP,
-    /* 0x6D2 */ SFX_DISSONANT_SCREECH,
+    /* 0x6CD */ SFX_MULTI_NOISE_SWEEP_DOWN, // ARE only
+    /* 0x6CE */ SFX_CORNER_GUARD_DEATH,
+    /* 0x6CF */ SFX_TOMBSTONE_MOVE,
+    /* 0x6D0 */ SFX_FLEA_RIDER_EXPLODE,
+    /* 0x6D1 */ SFX_STONE_ROSE_SEED,
+    /* 0x6D2 */ SFX_VENUS_WEED_CHARGE_ATTACK,
     /* 0x6D3 */ SFX_RNO4_MAGIC_GLASS_BREAK,
     /* 0x6D4 */ SFX_PSWORD_TWIRL_ATTACK,
     /* 0x6D5 */ SFX_PSWORD_TWIRL, // Also Succubus Clone Spawn
-    /* 0x6D6 */ SFX_CROW_CAW_PAIN,
+    /* 0x6D6 */ SFX_CROW_DEATH,
     /* 0x6D7 */ SFX_CROW_CAW,
-    /* 0x6D8 */ SFX_UNK_CLONE_DISAPPEAR,
+    /* 0x6D8 */ SFX_UNUSED_CLONE_DISAPPEAR,
     /* 0x6D9 */ SFX_BOSS_CLONE_DISAPPEAR,
-    /* 0x6DA */ SFX_METAL_RATTLE_A,
-    /* 0x6DB */ SFX_METAL_RATTLE_B,
-    /* 0x6DC */ SFX_METAL_RATTLE_C,
-    /* 0x6DD */ SFX_RAPID_SYNTH_BUBBLE,
+    /* 0x6DA */ SFX_METAL_RATTLE_A,     // Ferryman
+    /* 0x6DB */ SFX_METAL_RATTLE_B,     // RNZ1 and beta overlays
+    /* 0x6DC */ SFX_METAL_RATTLE_C,     // RNZ1
+    /* 0x6DD */ SFX_RAPID_SYNTH_BUBBLE, // LIB Lesser Demon
     /* 0x6DE */ SFX_RAPID_SYNTH_BUBBLE_SHORT,
     /* 0x6DF */ SFX_CRASH_CROSS,
     /* 0x6E0 */ SFX_SAVE_COFFIN_SWISH,
     /* 0x6E1 */ SFX_RCEN_GLASS_BREAKS,
     /* 0x6E2 */ SFX_RIC_SUC_REVIVE, // RIC and SUC both use this
-    /* 0x6E3 */ SFX_BUBBLE_BURST,
+    /* 0x6E3 */ SFX_SCYLLA_BUBBLE_BURST,
     /* 0x6E4 */ SFX_PENTAGRAM_ATTACK,
-    /* 0x6E5 */ SFX_UNK_ANIME_EXPLODE,
+    /* 0x6E5 */ SFX_UNUSED_ANIME_EXPLODE,
     /* 0x6E6 */ SFX_LOW_SYNTH_BUBBLES,
 
     // Player sfx (0x6E7-0x708)
@@ -625,7 +615,7 @@ enum Sfx {
     /* 0x6EA */ SFX_VO_ALU_PAIN_D,
     /* 0x6EB */ SFX_VO_ALU_PAIN_E,
     /* 0x6EC */ SFX_VO_ALU_SILENCE,
-    /* 0x6ED */ SFX_VO_ALU_YELL, // Elevator yell
+    /* 0x6ED */ SFX_VO_ALU_YELL, // Elevator drop or thrown at high velocity
     /* 0x6EE */ SFX_VO_ALU_ATTACK_A,
     /* 0x6EF */ SFX_VO_ALU_ATTACK_B,
     /* 0x6F0 */ SFX_VO_ALU_ATTACK_C,
@@ -633,16 +623,16 @@ enum Sfx {
     /* 0x6F2 */ SFX_VO_ALU_WHAT,
     /* 0x6F3 */ SFX_VO_ALU_DARK_META,
     /* 0x6F4 */ SFX_VO_ALU_SOUL_STEAL,
-    /* 0x6F5 */ SFX_UNK_6F5,
+    /* 0x6F5 */ SFX_UNUSED_6F5,
     /* 0x6F6 */ SFX_VO_ALU_DEATH,
     /* 0x6F7 */ SFX_ALU_WOLF_BARK,
-    /* 0x6F8 */ SFX_UNK_VO_ALU_WHOA,
+    /* 0x6F8 */ SFX_UNUSED_VO_ALU_WHOA,
     /* 0x6F9 */ SFX_VO_RIC_ATTACK_A,
     /* 0x6FA */ SFX_VO_RIC_ATTACK_B,
     /* 0x6FB */ SFX_VO_RIC_ATTACK_C,
     /* 0x6FC */ SFX_VO_RIC_ATTACK_YELL,
-    /* 0x6FD */ SFX_UNK_6FD,
-    /* 0x6FE */ SFX_UNK_6FE,
+    /* 0x6FD */ SFX_UNUSED_6FD,
+    /* 0x6FE */ SFX_UNUSED_6FE,
     /* 0x6FF */ SFX_VO_RIC_DEATH,
     /* 0x700 */ SFX_VO_RIC_HYDRO_STORM, // 0x700
     /* 0x701 */ SFX_VO_RIC_PAIN_A,
@@ -665,13 +655,13 @@ enum Sfx {
     /* 0x70E */ SFX_LESSER_DEMON_POISON,
     /* 0x70F */ SFX_VENUS_WEED_HURT,
     /* 0x710 */ SFX_VENUS_WEED_DEATH,
-    /* 0x711 */ SFX_RNZ0_UNK_711,
+    /* 0x711 */ SFX_UNK_RNZ0_711,
     /* 0x712 */ SFX_UNUSED_712,
     /* 0x713 */ SFX_UNUSED_713,
     /* 0x714 */ SFX_FLYING_ZOMBIE_PAIN,
     /* 0x715 */ SFX_FLYING_ZOMBIE_DEATH,
     /* 0x716 */ SFX_FLYING_ZOMBIE_BODY_RIP,
-    /* 0x717 */ SFX_RDAI_UNK_717,
+    /* 0x717 */ SFX_UNK_RDAI_717,
     /* 0x718 */ SFX_VALHALLA_KNIGHT_NEIGH,
     /* 0x719 */ SFX_VALHALLA_KNIGHT_GALLOP,
     /* 0x71A */ SFX_TOAD_CROAK,
@@ -679,11 +669,11 @@ enum Sfx {
     /* 0x71C */ SFX_UNUSED_71C,
     /* 0x71D */ SFX_MERMAN_DEATH,
     /* 0x71E */ SFX_CLOAKED_KNIGHT_ATTACK,
-    /* 0x71F */ SFX_CLOAKED_KNIGHT_UNK_71F, // referenced but no sound
+    /* 0x71F */ SFX_UNK_CLOAKED_KNIGHT_71F, // referenced but no sound
     /* 0x720 */ SFX_CLOAKED_KNIGHT_DEATH,
-    /* 0x721 */ SFX_NZ1_UNK_721,
-    /* 0x722 */ SFX_NZ1_UNK_722,
-    /* 0x723 */ SFX_NZ1_UNK_723,
+    /* 0x721 */ SFX_UNK_NZ1_721,
+    /* 0x722 */ SFX_UNK_NZ1_722,
+    /* 0x723 */ SFX_UNK_NZ1_723,
     /* 0x724 */ SFX_RNO2_ANIME_SWORD,
     /* 0x725 */ SFX_MARIONETTE_LAUGH,
     /* 0x726 */ SFX_MARIONETTE_YELL,
@@ -698,7 +688,7 @@ enum Sfx {
     /* 0x72F */ SFX_VANDAL_SWORD_DEATH,
     /* 0x730 */ SFX_STONE_ROSE_PAIN,
     /* 0x731 */ SFX_STONE_ROSE_DEATH,
-    /* 0x732 */ SFX_RLIB_UNK_732,
+    /* 0x732 */ SFX_UNK_RLIB_732,
     /* 0x733 */ SFX_FROZEN_SHADE_SCREAM,
     /* 0x734 */ SFX_LOSSOTH_NAPALM_GRUNT,
     /* 0x735 */ SFX_LOSSOTH_DEATH,
@@ -709,7 +699,7 @@ enum Sfx {
     /* 0x73A */ SFX_ECTOPLASM_BOING,
     /* 0x73B */ SFX_ECTOPLASM_DEATH,
     /* 0x73C */ SFX_SPITTLEBONE_ACID_SPLAT,
-    /* 0x73D */ SFX_RLIB_UNK_73D,
+    /* 0x73D */ SFX_UNK_RLIB_73D,
 
     // vabid 9
     /* 0x73E */ SFX_UNUSED_73E,
@@ -744,13 +734,13 @@ enum Sfx {
     /* 0x759 */ SFX_CTULHU_ROAR,
     /* 0x75A */ SFX_ROCK_KNIGHT_ATTACK,
     /* 0x75B */ SFX_ROCK_KNIGHT_PAIN,
-    /* 0x75C */ SFX_RNO4_UNK_75C,
+    /* 0x75C */ SFX_UNK_RNO4_75C,
     /* 0x75D */ SFX_ROCK_KNIGHT_DEATH,
     /* 0x75E */ SFX_PLATE_LORD_ATTACK,
     /* 0x75F */ SFX_PLATE_LORD_PAIN,
     /* 0x760 */ SFX_PLATE_LORD_DEATH,
     /* 0x761 */ SFX_PLATE_LORD_BALL_IMPACT,
-    /* 0x762 */ SFX_CAT_UNK_762,
+    /* 0x762 */ SFX_BONE_ARK_CHARGE_ATTACK,
     /* 0x763 */ SFX_DISCUS_LORD_ATTACK,
     /* 0x764 */ SFX_DISCUS_LORD_DEATH,
     /* 0x765 */ SFX_DISCUS_BUZZ,
@@ -758,8 +748,8 @@ enum Sfx {
     /* 0x767 */ SFX_AXE_KNIGHT_DEATH,
     /* 0x768 */ SFX_HIPPOGRYPH_WING_FLAP,
     /* 0x769 */ SFX_HIPPOGRYPH_SQUAWK, // unused?
-    /* 0x76A */ SFX_RDAI_UNK_76A,
-    /* 0x76B */ SFX_FROZEN_HALF_DEATH, // normally, enemy attack sfx is first!
+    /* 0x76A */ SFX_UNK_RDAI_76A,
+    /* 0x76B */ SFX_FROZEN_HALF_DEATH,
     /* 0x76C */ SFX_FROZEN_HALF_ATTACK,
     /* 0x76D */ SFX_FROZEN_HALF_MAXIMUM_POWER,
 
@@ -792,28 +782,82 @@ enum Sfx {
     /* 0x781 */ SFX_WARG_PAIN,
     /* 0x782 */ SFX_WARG_ATTACK,
     /* 0x783 */ SFX_WARG_GROWL,
-    /* 0x784 */ SFX_RNO4_UNK_784,
+    /* 0x784 */ SFX_UNK_RNO4_784,
     /* 0x785 */ SFX_WEREWOLF_SPIN_ATTACK,
     /* 0x786 */ SFX_MINOTAUR_ATTACK,
     /* 0x787 */ SFX_MINOTAURUS_JUMP_ATTACK,
     /* 0x788 */ SFX_MINOTAUR_BREATH_ATTACK,
-    /* 0x789 */ SFX_BO2_UNK_789,
+    /* 0x789 */ SFX_UNK_BO2_789,
     /* 0x78A */ SFX_HARPY_ATTACK, // unused?
     /* 0x78B */ SFX_HARPY_DEATH,
-    SFX_UNK_797 = 0x797,
-    SFX_CLOCK_BELL = 0x7A6,
-    SFX_CLOCK_ROOM_TICK = 0x7A9,
-    SFX_TELESCOPE_SHUTTER_CLICK = 0x7AC,
-    SFX_ALU_ZZZ_SNORE,
-    SFX_UNK_7AF = 0x7Af,
-    SFX_ELEVATOR_DOOR = 0x7B1,
-    SFX_ELEVATOR_SLAM = 0x7B3,
-    SFX_ELEVATOR_START = 0x7B5,
-    SFX_BAD_LUCK_JINGLE,
-    SFX_NO1_BIRD_CYCLE,
-    SFX_CHAPEL_BELL = 0x7BC,
-    SFX_UNK_7BD = 0x7BD,
-    SFX_UNK_7BE = 0x7BE,
+    /* 0x78C */ SFX_MUDMAN_ATTACK,
+    /* 0x78D */ SFX_SPELLBOOK_DEATH, // also used by Magic Tome
+    /* 0x78E */ SFX_MAGIC_TOME_ATTACK,
+    /* 0x78F */ SFX_LESSER_DEMON_SWIPE_ATTACK,
+    /* 0x790 */ SFX_MALACHI_FLOATING_ORB,
+    /* 0x791 */ SFX_FIRE_DEMON_ATTACK_CHARGE,
+    /* 0x792 */ SFX_OWL_KNIGHT_TAUNT, // "Have at you!"
+    /* 0x793 */ SFX_OWL_KNIGHT_ATTACK,
+    /* 0x794 */ SFX_OWL_KNIGHT_REACT, // reaction to his pet dying (how sad!)
+    /* 0x795 */ SFX_OWL_KNIGHT_DEATH,
+    /* 0x796 */ SFX_OWL_DEATH,
+    /* 0x797 */ SFX_WATERFALL_LOOP,
+    /* 0x798 */ SFX_UNK_TE4_798,
+    /* 0x799 */ SFX_UNK_TE4_799,
+    /* 0x79A */ SFX_UNK_TE4_79A,
+    /* 0x79B */ SFX_UNK_TE4_79B,
+    /* 0x79C */ SFX_UNUSED_79C,
+    /* 0x79D */ SFX_SHUTTING_WINDOW,
+    /* 0x79E */ SFX_UNUSED_79E,
+    /* 0x79F */ SFX_UNK_TE3_79F,
+    /* 0x7A0 */ SFX_DEATH_TAKES_ITEMS,
+    /* 0x7A1 */ SFX_DEATH_LAUGH,
+    /* 0x7A2 */ SFX_ITEM_YOINK,
+    /* 0x7A3 */ SFX_UNUSED_7A3,
+
+    // vabid 9
+    /* 0x7A4 */ SFX_TREE_BRANCH_SNAP,
+    /* 0x7A5 */ SFX_CASTLE_GATE_RISE,
+
+    // vabid 3
+    /* 0x7A6 */ SFX_CLOCK_ROOM_BELL,
+    /* 0x7A7 */ SFX_UNUSED_7A7,
+    /* 0x7A8 */ SFX_UNUSED_7A8,
+
+    // vabid 9
+    /* 0x7A9 */ SFX_CLOCK_ROOM_TICK,
+
+    // vabid 3
+    /* 0x7AA */ SFX_ELEVATOR_GEARS_LOOP,
+    /* 0x7AB */ SFX_UNK_TE2_7AB,
+    /* 0x7AC */ SFX_TELESCOPE_SHUTTER_CLICK,
+    /* 0x7AD */ SFX_ALU_ZZZ_SNORE,
+    /* 0x7AE */ SFX_DOP_DOOR_OPEN, // clone of 0x7CB & sounds different in NO1
+    /* 0x7AF */ SFX_RAIN_LOOP,
+    /* 0x7B0 */ SFX_UNK_TE5_7B0,
+    /* 0x7B1 */ SFX_ELEVATOR_DOOR,
+    /* 0x7B2 */ SFX_UNK_TE4_7B2,
+    /* 0x7B3 */ SFX_ELEVATOR_SLAM,
+    /* 0x7B4 */ SFX_UNK_TE4_7B4,
+
+    // vabid 9
+    /* 0x7B5 */ SFX_ELEVATOR_START,
+    /* 0x7B6 */ SFX_BAD_LUCK_JINGLE,
+    /* 0x7B7 */ SFX_NO1_BIRD_CYCLE,
+
+    // vabid 3
+    /* 0x7B8 */ SFX_UNK_TE2_7B8,
+    /* 0x7B9 */ SFX_UNK_TE2_7B9,
+    /* 0x7BA */ SFX_UNK_TE2_7BA,
+    /* 0x7BB */ SFX_CONFESS_GHOST_CURTAIN_PULL,
+
+    // vabid 9
+    /* 0x7BC */ SFX_CHAPEL_BELL,
+
+    // vabid 3
+    /* 0x7BD */ SFX_WOODEN_BRIDGE_EXPLODE,
+    /* 0x7BE */ SFX_UNK_NO4_7BE, // unused exploding bridge debris?
+    /* 0x7BF */ SFX_OAR_ROW,
     SFX_SCIFI_BLAST = 0x7D1,
     SFX_BOSS_DEFEATED,
     SFX_TELEPORT_SYNTH_UP = 0x8BA,

@@ -304,7 +304,7 @@ void RicEntitySubwpnHolyWater(Entity* self) {
         self->animCurFrame = 0x23;
         self->zPriority = PLAYER.zPriority + 2;
         self->unk5A = 0x46;
-        self->palette = PAL_OVL(0x12F);
+        self->palette = PAL_FLAG(PAL_UNK_12F);
         xMod = 0;
         if (self->facingLeft) {
             xMod = -xMod;
@@ -343,7 +343,7 @@ void RicEntitySubwpnHolyWater(Entity* self) {
             // @bug: should call RicCreateEntFactoryFromEntity instead in case
             // E_FACTORY goes out of order between RIC and DRA
             g_api.CreateEntFactoryFromEntity(self, BP_HOLYWATER_GLASS, 0);
-            g_api.PlaySfx(SFX_GLASS_BREAK_WHOOSH);
+            g_api.PlaySfx(SFX_RIC_HOLY_WATER_ATTACK);
             self->animSet = 0;
             self->hitboxState = 0;
             self->velocityX = self->velocityX >> 2;
@@ -479,7 +479,7 @@ void RicEntitySubwpnHolyWaterFlame(Entity* self) {
                 prim->g0 = prim->g1 = 0;
                 prim->b0 = prim->b1 = 0;
             }
-            prim->clut = 0x1B0;
+            prim->clut = PAL_UNK_1B0;
             prim->tpage = 0x1A;
             prim->priority = PLAYER.zPriority + 2;
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
