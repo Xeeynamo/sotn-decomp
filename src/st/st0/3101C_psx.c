@@ -1,11 +1,53 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
-#include "disk.h"
 #include <cutscene.h>
 
-// This file uses g_Dialogue with a different struct than the usual.
-// It is based on struct Dialogue, which is used in cutscene.c
-extern Dialogue2 g_Dialogue;
+// This file uses g_Dialogue with a different struct than cutscene.c
+typedef struct {
+    /* 0x00 */ u8* scriptCur;
+    /* 0x04 */ s16 startX;
+    /* 0x06 */ s16 nextLineY;
+    /* 0x08 */ s16 startY;
+    /* 0x0A */ s16 nextCharX;
+    /* 0x0C */ s16 nextLineX;
+    /* 0x0E */ u16 nextCharY;
+    /* 0x10 */ u16 portraitAnimTimer;
+    /* 0x12 */ u8 unk12;
+    /* 0x13 */ u8 clutIndex;
+#ifdef VERSION_PSP
+    /* 0x14 */ u8 nextCharTimer;
+    /* 0x15 */ u8 unk17;
+#endif
+    /* 0x14 */ Primitive* prim;
+    /* 0x18 */ u32 primIndex;
+    /* 0x1C */ u16* unk20;
+    /* 0x20 */ s32 : 32;
+    /* 0x24 */ u16* clutIndexes;
+    /* 0x28 */ s32 : 32;
+    /* 0x2C */ s32 clutArrLength;
+    /* 0x30 */ s32 : 32;
+    /* 0x34 */ u8* script;
+#ifndef VERSION_PSP
+    /* 0x38 */ u16 unk3C; // maybe it is a begin flag?
+    /* 0x3A */ u16 timer;
+#endif
+    /* 0x3C */ u8* scriptEnd;
+} DialoguePrologue;
+
+// n.b. g_Dialogue is defined as the Dialogue struct, but is used in this file
+// as the different type.
+// It appears that either:
+// - The devs recognized this as a bad practice and fixed it for pspeu or
+// - The pspeu toolchain (probably optimization level) handled them differently
+// Either way, us shares a single memory address for 3101C.c and cutscene.c
+// while pspeu uses two independent memory addresses.
+extern DialoguePrologue g_Dialogue;
+
+static u16 D_801BEE90[48][48]; // bss
+
+static u8 unused[] = {0x00, 0x81, 0x17, 0x08, 0x80, 0x08,
+                      0x80, 0xFF, 0xFF, 0x00, 0x00, 0x00};
+
 u8 func_801B101C(u8* script) {
     Primitive* prim;
     s16 i;
@@ -13,8 +55,8 @@ u8 func_801B101C(u8* script) {
 
     g_Dialogue.primIndex = g_api.AllocPrimitives(PRIM_SPRT, 0x20);
     if (g_Dialogue.primIndex != -1) {
-        g_Dialogue.nextCharX = 0x200;
         g_Dialogue.scriptCur = script;
+        g_Dialogue.nextCharX = 0x200;
         g_Dialogue.startY = 0x216;
         g_Dialogue.nextLineX = 0;
         g_Dialogue.nextCharY = 0;
@@ -32,8 +74,8 @@ u8 func_801B101C(u8* script) {
                 prim->x0 = 0x20;
             }
             shift = i >> 1;
-            prim->v0 = shift * 0x10;
             prim->u0 = 0;
+            prim->v0 = shift * 0x10;
             prim->u1 = 0xF0;
             prim->v1 = 0x10;
             prim->y0 = shift * 0x16 + 0xF0;
@@ -49,20 +91,19 @@ u8 func_801B101C(u8* script) {
     return false;
 }
 
-void func_801B1198(s16 arg0) {
+void func_801B1198(s16 yVal) {
     RECT rect;
     rect.x = 0x200;
-    rect.y = arg0 * 16;
+    rect.y = yVal * 16;
     rect.w = 0x80;
     rect.h = 0x10;
 
     ClearImage(&rect, 0, 0, 0);
 }
 
-u16* func_801B11E8(unsigned char ch) {
+u16* func_801B11E8(u8 ch) {
     u16 jCh;
 #ifndef VERSION_PC
-
     if (ch >= 'a') {
         jCh = ('ａ' - 'a') + ch;
     } else if (ch >= 'A') {
@@ -88,22 +129,17 @@ u16* func_801B11E8(unsigned char ch) {
     return g_api.func_80106A28(jCh, 0);
 }
 
-static u8 unused[] = {0x00, 0x81, 0x17, 0x08, 0x80, 0x08,
-                      0x80, 0xFF, 0xFF, 0x00, 0x00, 0x00};
-
 #include "prologue_cutscene_script.h"
 
-extern u16 D_801BEE90[][0x30]; // bss
-// Resembles SEL func_801B79D4
 void func_801B1298(Entity* self) {
-    s32 i;
-    Primitive* prim;
-    u16 y;
-    u16 glyphIndex;
-    u16* glyphPtr;
-    u16 nextChar;
-    u16* glyph;
     s16 y0;
+    Primitive* prim;
+    s32 i;
+    u16* glyph;
+    u16 nextChar;
+    u16* glyphPtr;
+    u16 glyphIndex;
+    u16 y;
 
     switch (self->step) {
     case 0:

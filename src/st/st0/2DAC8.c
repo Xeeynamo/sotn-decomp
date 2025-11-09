@@ -1,6 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
 
+// D_801C2578 is initialized in this file, but the bss layout for psx does not
+// allow for it to be defined in this file currently
+#ifdef VERSION_PSP
+u32 D_801C2578;
+#else
+extern u32 D_801C2578;
+#endif
+
+s32 D_801BEB64[83][2];
+
 // Animations for EntityDraculaFinalForm
 static u8 anim_80180AA4[] = {
     0x18, 0x01, 0x0F, 0x02, 0x0F, 0x03, 0x0F, 0x02, 0x00, 0x00};

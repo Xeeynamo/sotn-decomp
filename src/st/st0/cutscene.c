@@ -134,6 +134,7 @@ static u8 actor_name_indexes[] = {0, 1, 0, 0, 0, 0, 0, 0};
 u32 g_CutsceneFlags;
 bool g_SkipCutscene;
 bool g_IsCutsceneDone;
+// Not truely a global, but is named for alignment with us, which is a global
 static Dialogue g_Dialogue;
 static u8* OVL_EXPORT(cutscene_script);
 static u8 buffer_2;
@@ -172,12 +173,11 @@ extern u32 D_894568C;
 static const char* actor_names[] = {_S("Richter"), _S("Dracula")};
 
 // bss
-extern s32 g_SkipCutscene;
-extern s32 D_801C2504;
-extern u32 g_CutsceneFlags;
-extern s32 g_IsCutsceneDone;
-extern Dialogue g_Dialogue;
-extern u8 OVL_EXPORT(cutscene_data)[];
+bool g_SkipCutscene;
+Dialogue g_Dialogue;
+u32 D_801C2510[26];
+extern u32 g_CutsceneFlags;   // defined in 2A218
+extern bool g_IsCutsceneDone; // defined in 2A218
 
 // extern data
 extern u8 OVL_EXPORT(cutscene_script)[];

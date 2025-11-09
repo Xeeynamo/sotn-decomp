@@ -4,6 +4,8 @@
 #undef STAGE
 #define STAGE STAGE_ST0
 
+#define STAGE_IS_ST0
+
 #define OVL_EXPORT(x) ST0_##x
 
 typedef enum EntityIDs {
@@ -60,7 +62,4 @@ extern EInit g_EInitDraculaFireball;
 extern EInit g_EInitDraculaFinalForm;
 extern EInit g_EInitDraculaMegaFireball;
 extern EInit g_EInitSecretStairs;
-
-extern s32 D_801BEB64[][2];
-extern s32 D_801C2578;
 extern u16 g_EInitObtainable[];

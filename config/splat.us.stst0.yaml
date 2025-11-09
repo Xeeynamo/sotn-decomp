@@ -48,7 +48,6 @@ segments:
       - [0x65C, .data, e_lock_camera]
       - [0x674, .data, 2805C] # func_801A805C
       - [0x784, .data, cutscene]
-      - [0x828, .data, cutscene] # "Richter, Dracula"
       - [0x830, .data, 2A218]
       - [0x89C, .data, 2A8DC]
       - [0x908, .data, title_card]
@@ -72,7 +71,7 @@ segments:
       - [0x2690, .data, 3D8F0]
       - [0x26B8, .data, gen/e_layout] # layout entries data
       - [0x29D8, .data, cutscene_data]
-      - [0x2C4C, .data, 3101C]
+      - [0x2C4C, .data, 3101C_psx]
       - [0x3124, .data, stage_data]
       - [0x226E0, .data, gen/sprites]
       - [0x27984, .rodata, 2805C]
@@ -108,7 +107,7 @@ segments:
       - [0x2BBBC, c, 2C564] # EntityDracula
       - [0x2DAC8, c]
       - [0x30030, c, prologue_scroll]
-      - [0x3101C, c]
+      - [0x3101C, c, 3101C_psx]
       - [0x3186C, c, st_update]
       - [0x31CA0, c, collision]
       - [0x330E0, c, create_entity]
@@ -124,7 +123,16 @@ segments:
       - [0x3D0C0, c, prim_helpers]
       - [0x3D8F0, c]
       - [0x3E1B4, c, e_bg_vortex]
-      - [0x3EB04, .bss, create_entity]
+      - [0x3EB04, bss, 3EB04]
+      - [0x3EB64, .bss, 2DAC8]
+      - [0x3EDFC, .bss, prologue_scroll]
+      - [0x3EE10, bss, 3EE10]
+      - [0x3EE90, .bss, 3101C_psx]
+      - [0x40090, bss, 40090]
+      - [0x400A0, .bss, create_entity]
       - [0x400B6, .bss, bss]
+      - [0x424CC, .bss, cutscene]
+      - [0x42578, .bss, 2C564]
+      - [0x4257C, .bss, 2A218]
       - [0x42584, .bss, e_collect]
   - [0x425C4]

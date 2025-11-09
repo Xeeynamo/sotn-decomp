@@ -2,18 +2,47 @@
 #include "st0.h"
 #include "disk.h"
 
+#ifdef VERSION_PSP
+#define GET_CLUT(x, y) getClut(x, y)
+#else
+#define GET_CLUT(x, y) GetClut(x, y)
+#endif
+
+static ProloguePrimitive D_80181568[] = {
+    {0x01, 0x80, 0xFF, 0x80, 1, 112, 0x9C},
+    {0x00, 0x80, 0xFF, 0x80, 256, 112, 0x9E},
+    {0x01, 0x00, 0xFF, 0x80, 1, -16, 0x9C},
+    {0x00, 0x00, 0xFF, 0x80, 256, -16, 0x9E},
+    {0x01, 0x80, 0xFF, 0x80, 1, -144, 0x98},
+    {0x00, 0x80, 0xFF, 0x80, 256, -144, 0x9A},
+    {0x01, 0x00, 0xFF, 0x80, 1, -272, 0x98},
+    {0x00, 0x00, 0xFF, 0x80, 256, -272, 0x9A},
+    {0x00, 0x00, 0x88, 0x70, 112, -384, 0x8C},
+#if defined(VERSION_PSP)
+    {0x00, 0x71, 0xA0, 0x8F, 248, -415, 0x8C},
+#else
+    {0x00, 0x70, 0xA0, 0x90, 248, -416, 0x8C},
+#endif
+};
+
+// bss
+u16 D_801BEDFC;
+STATIC_PAD_BSS(2);
+u16 D_801BEE00;
+STATIC_PAD_BSS(2);
+u16 D_801BEE04;
+STATIC_PAD_BSS(2);
+s16 D_801BEE08;
+STATIC_PAD_BSS(2);
+s16 D_801BEE0C;
+STATIC_PAD_BSS(2);
+
 static void SetGameState(GameState gameState) {
     g_GameState = gameState;
     g_GameStep = 0;
     g_backbufferX = 0;
     g_backbufferY = 0;
 }
-
-#ifdef VERSION_PSP
-#define GET_CLUT(x, y) getClut(x, y)
-#else
-#define GET_CLUT(x, y) GetClut(x, y)
-#endif
 
 static void InitClutIndices(void) {
     s32 clutId;
@@ -110,28 +139,6 @@ static s32 IsSkipRequested(void) {
     }
     return 0;
 }
-
-static ProloguePrimitive D_80181568[] = {
-    {0x01, 0x80, 0xFF, 0x80, 1, 112, 0x9C},
-    {0x00, 0x80, 0xFF, 0x80, 256, 112, 0x9E},
-    {0x01, 0x00, 0xFF, 0x80, 1, -16, 0x9C},
-    {0x00, 0x00, 0xFF, 0x80, 256, -16, 0x9E},
-    {0x01, 0x80, 0xFF, 0x80, 1, -144, 0x98},
-    {0x00, 0x80, 0xFF, 0x80, 256, -144, 0x9A},
-    {0x01, 0x00, 0xFF, 0x80, 1, -272, 0x98},
-    {0x00, 0x00, 0xFF, 0x80, 256, -272, 0x9A},
-    {0x00, 0x00, 0x88, 0x70, 112, -384, 0x8C},
-#if defined(VERSION_PSP)
-    {0x00, 0x71, 0xA0, 0x8F, 248, -415, 0x8C},
-#else
-    {0x00, 0x70, 0xA0, 0x90, 248, -416, 0x8C},
-#endif
-};
-extern u16 D_801BEDFC;
-extern u16 D_801BEE00;
-extern u16 D_801BEE04;
-extern s16 D_801BEE08;
-extern s16 D_801BEE0C;
 
 int func_891CEB8(u16, u16);
 // Post-Dracula fight prologue scroll. This is responsible for scrolling the
