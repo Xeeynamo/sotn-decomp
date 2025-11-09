@@ -63,7 +63,7 @@ segments:
       - [0x158F8, c, cat/e_slime]
       - [0x18618, c, cat/e_lossoth]
       - [0x1A9C0, c, cat/st_common]
-      - [0x1C308, c, cat_psp/func_pspeu_09253988]
+      - [0x1C308, c, cat/e_lava_glow]
       - [0x1C4B0, c, cat/prim_helpers]
       - [0x1CD50, c, cat/en_gremlin]
       - [0x1D8D0, c, cat/e_hellfire_beast]
