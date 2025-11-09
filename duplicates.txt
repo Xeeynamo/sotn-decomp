@@ -2992,6 +2992,15 @@
 | 0.97 | true     | NZ0_EntityCutscene                  | asm/us/st/nz0/matchings/cutscene/NZ0_EntityCutscene.s 
 | 0.93 | true     | TOP_EntityCutscene                  | asm/us/st/top/matchings/cutscene/TOP_EntityCutscene.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
+| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/sound/SetReverbDepth.s 
+| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
+| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
+| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
+| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
+| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | EntityHeartDrop                     | asm/us/boss/bo4/matchings/e_misc/EntityHeartDrop.s 
 | 1.00 | true     | EntityHeartDrop                     | asm/us/boss/bo6/matchings/e_collect/EntityHeartDrop.s 
 | 1.00 | true     | EntityHeartDrop                     | asm/us/boss/mar/matchings/e_misc/EntityHeartDrop.s 
@@ -2999,14 +3008,6 @@
 | 1.00 | true     | EntityHeartDrop                     | asm/us/boss/rbo5/matchings/e_misc/EntityHeartDrop.s 
 | 1.00 | true     | EntityHeartDrop                     | asm/us/st/mad/matchings/e_misc/EntityHeartDrop.s 
 | 1.00 | true     | EntityHeartDrop                     | asm/us/st/no0/matchings/e_misc/EntityHeartDrop.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_801073C0                       | asm/us/dra/matchings/cd/func_801073C0.s 
-| 0.90 | true     | SetReverbDepth                      | asm/us/dra/matchings/sound/SetReverbDepth.s 
-| 0.90 | true     | _addque                             | asm/us/main/matchings/psxsdk/libgpu/sys/_addque.s 
-| 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
-| 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
-| 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | DMACallback                         | asm/us/main/matchings/psxsdk/libetc/intr/DMACallback.s 
 | 0.92 | true     | InterruptCallback                   | asm/us/main/matchings/psxsdk/libetc/intr/InterruptCallback.s 
@@ -4212,9 +4213,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
-| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | RicEntityCrashReboundStoneParticles | asm/us/ric/matchings/2F8E8/RicEntityCrashReboundStoneParticles.s 
 | 1.00 | true     | RicEntityStopwatchCrashLightning    | asm/us/ric/matchings/319C4/RicEntityStopwatchCrashLightning.s 
