@@ -1,5 +1,6 @@
-use regex::Regex;
+use crate::c::CLang;
 use once_cell::sync::Lazy;
+use regex::Regex;
 
 /// The `Linter` trait is used for determining if a line matches a particular
 /// rule. Unlike a `Transformer`, a `Linter` does not fix the line, it only
@@ -8,18 +9,6 @@ pub trait Linter: Sync {
     /// `check_line` determines if the line is acceptable (`Ok<()>`) or
     /// not (`Err<String>`)
     fn check_line(&self, line: &str) -> Result<(), String>;
-}
-
-
-trait CLang {
-    fn strip_line_comment(&self) -> Self;
-}
-
-impl CLang for String {
-    fn strip_line_comment(&self) -> Self {
-        // to_owned() to go from &str to String, so you can chain String methods
-        self.split("//").next().unwrap().to_owned()
-    }
 }
 
 /// `EntityRangeLinter` is a linter which checks automatic

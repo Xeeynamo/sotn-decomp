@@ -6,6 +6,7 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+lang-c = "0.15.1"
 lazy_static = "1.4.0"
 rayon = "1.7.0"
 regex = "1.9.1"

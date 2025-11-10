@@ -855,7 +855,7 @@ void func_us_801BA034(Entity* self) {
         if (g_Timer % 10 == 0) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(6, self, entity);
+                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
                 entity->params = 0x10;
                 entity->posY.i.hi = 0xBC;
                 entity->rotate = -0x300;
@@ -864,7 +864,7 @@ void func_us_801BA034(Entity* self) {
             }
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(6, self, entity);
+                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
                 entity->params = 0x10;
                 entity->posY.i.hi = 0xBC;
                 entity->rotate = 0x300;
@@ -1350,7 +1350,7 @@ void func_us_801BA290(Entity* self) {
                         CreateEntityFromCurrentEntity(
                             D_psp_0929A6D0, tempEntity);
 #else
-                        CreateEntityFromCurrentEntity(0x34, tempEntity);
+                        CreateEntityFromCurrentEntity(E_ID_34, tempEntity);
 #endif
                         rnd = Random() & 7;
                         if (!(Random() & 1)) {

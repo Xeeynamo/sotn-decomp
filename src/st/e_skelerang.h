@@ -241,7 +241,7 @@ void EntitySkelerang(Entity* self) {
 
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromEntity(2, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 2;
         }
         DestroyEntity(self);

@@ -416,7 +416,8 @@ void HitDetection(void) {
                         AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (otherEntity != NULL) {
                         // EntitySoulStealOrb
-                        CreateEntityFromEntity(7, iterEnt1, otherEntity);
+                        CreateEntityFromEntity(
+                            E_SOUL_STEAL_ORB, iterEnt1, otherEntity);
                     }
                 }
                 miscVar1 = g_testCollEnemyLookup[entFrom5C->enemyId];

@@ -16,4 +16,5 @@
 // D_80180DFC: g_eDamageDisplayClut
 // func_8019E2A8: HitDetection
 // func_8019F3C0: [E_NUMERIC_DAMAGE] EntityDamageDisplay
+#include "chi.h"
 #include "../collision.h"

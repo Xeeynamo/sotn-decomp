@@ -13,6 +13,7 @@ typedef enum {
     /* 0x01 */ E_BREAKABLE,
     /* 0x02 */ E_EXPLOSION,
     /* 0x03 */ E_PRIZE_DROP,
+    /* 0x07 */ E_SOUL_STEAL_ORB = 0x7,
     /* 0x0A */ E_EQUIP_ITEM_DROP = 0xA,
     /* 0x0B */ E_RELIC_ORB,
     /* 0x11 */ E_MEDUSA,

@@ -15,7 +15,7 @@ void EntityGhostEnemy(Entity* self) {
         PlaySfxPositional(SFX_GHOST_ENEMY_HOWL);
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(2, self, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 1;
         }
         DestroyEntity(self);

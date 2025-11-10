@@ -1,6 +1,8 @@
 #ifndef SFX_H
 #define SFX_H
 
+#include "types.h"
+
 /**
  * File: sfx.h
  * Description: SOTN Sound Effects
