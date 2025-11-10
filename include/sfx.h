@@ -788,7 +788,7 @@ enum Sfx {
     /* 0x787 */ SFX_MINOTAURUS_JUMP_ATTACK,
     /* 0x788 */ SFX_MINOTAUR_BREATH_ATTACK,
     /* 0x789 */ SFX_UNK_BO2_789,
-    /* 0x78A */ SFX_HARPY_ATTACK, // unused?
+    /* 0x78A */ SFX_HARPY_ATTACK,
     /* 0x78B */ SFX_HARPY_DEATH,
     /* 0x78C */ SFX_MUDMAN_ATTACK,
     /* 0x78D */ SFX_SPELLBOOK_DEATH, // also used by Magic Tome

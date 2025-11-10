@@ -7,7 +7,10 @@ g_EInitUnkId13 = 0x80180B64;
 g_EInitLockCamera = 0x80180B70;
 g_EInitCommon = 0x80180B7C;
 g_EInitDamageNum = 0x80180B88;
+g_EInitHarpy = 0x80180BB8;
 g_EInitHarpyFlame = 0x80180BD0;
+g_EInitCloakedKnight = 0x80180BF4;
+g_EInitCloakedKnightSword = 0x80180C0C;
 g_EInitFleaArmor = 0x80180C78;
 NZ1_BackgroundBlockInit = 0x80180D08;
 entityLockCameraHitbox = 0x80180DA0;
@@ -16,6 +19,7 @@ entityLockCameraTilemapProps = 0x80180DA8;
 NZ1_PrizeDrops = 0x8018111C;
 g_bigRedFireballAnim = 0x80181B74;
 g_HarpyFlameAnim = 0x80181F74;
+g_cloak_anim = 0x80181FB0;
 NZ1_EntityBackgroundBlock = 0x801A5D38; // source=match
 NZ1_EntityLockCamera = 0x801A5E9C; // source=match
 Random = 0x801AC6E0; // source=match
@@ -86,7 +90,10 @@ EntityHarpyDagger = 0x801BB628;
 EntityHarpyFlame = 0x801BB7C0;
 EntityHarpyKick = 0x801BB9E8;
 EntityHarpyFeather = 0x801BBAC4;
-StepTowards = 0x801BBBA0;
+EntityCloakedKnight = 0x801BBC0C;
+EntityCloakedKnightCloak = 0x801BC4C8;
+EntityCloakedKnightAura = 0x801BC5F8;
+EntityCloakedKnightSword = 0x801BC71C;
 EntitySwordLord = 0x801BCC90;
 EntityFleaArmor = 0x801BF5BC;
 CheckFieldCollisionY = 0x801BFD64; // source=match

@@ -65,24 +65,7 @@ extern EInit g_EInitSpectralSwordWeapon;
 static s8 hitbox[][2] = {{0, 0},  {0, 0},  {16, 6}, {8, 4},  {18, 6},
                          {16, 3}, {0, 10}, {0, 10}, {0, 10}, {0, 0}};
 
-// EntitySpectralSword primarily uses this as a method to smoothly rotate, but
-// also to retract it's outer ring after an attack by decreasing the radius.
-static bool StepTowards(s16* val, s32 target, s32 step) {
-    if (abs(*val - target) < step) {
-        *val = target;
-        return true;
-    }
-
-    if (*val > target) {
-        *val -= step;
-    }
-
-    if (*val < target) {
-        *val += step;
-    }
-
-    return false;
-}
+#include "../step_towards.h"
 
 void EntitySpectralSword(Entity* self) {
     s32 primIndex;

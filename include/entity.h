@@ -3588,6 +3588,50 @@ typedef struct {
     /* 0xA0 */ u8 walkingRight;
 } ET_BoneArk;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 timer;
+    /* 0x8C */ s32 unk8C;
+    /* 0x90 */ s16 unk90;
+    /* 0x92 */ s16 unk92;
+} ET_Harpy;
+
+typedef struct {
+    /* 0x7C */ Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u16 unk84;
+    /* 0x86 */ u8 unk86;
+    /* 0x87 */ u8 : 8;
+    /* 0x88 */ Pos pos;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s16 unk94;
+    /* 0x96 */ s16 : 16;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ s16 targetDistance;
+    /* 0x9E */ s16 unk9E; // rotation increment
+    /* 0xA0 */ s16 : 16;
+    /* 0xA2 */ s16 unkA2;
+} ET_CloakedKnight;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ struct Entity* parent;
+} ET_CloakedKnightAura;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ Pos targetPos;
+} ET_CloakedKnightSword;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3897,6 +3941,10 @@ typedef union { // offset=0x7C
     ET_HellfireBeastThorsHammer hellfireBeastThorsHammer;
     ET_HellfireBeastFlamePillar hellfireBeastFlamePillar;
     ET_BoneArk boneArk;
+    ET_Harpy harpy;
+    ET_CloakedKnight cloakedKnight;
+    ET_CloakedKnightAura cloakedKnightAura;
+    ET_CloakedKnightSword cloakedKnightSword;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
