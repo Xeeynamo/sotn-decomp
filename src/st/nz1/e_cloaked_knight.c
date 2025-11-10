@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
-static AnimateEntityFrame g_cloak_anim[] = {
+static AnimateEntityFrame anim_cloak[] = {
     {.duration = 4, .pose = 3},
     {.duration = 4, .pose = 4},
     {.duration = 4, .pose = 5},
@@ -47,10 +47,10 @@ void EntityCloakedKnight(Entity* self) {
         prim->priority = 0xC0;
         prim->drawMode = DRAW_HIDE | DRAW_UNK02;
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_CLOAK_KNIGHT_CLOAK, entity);
+        CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_CLOAK, entity);
         entity->zPriority = self->zPriority - 1;
         entity = self + 2;
-        CreateEntityFromCurrentEntity(E_CLOAK_KNIGHT_SWORD, entity);
+        CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_SWORD, entity);
         entity->zPriority = self->zPriority + 1;
         SetStep(2);
         break;
@@ -266,7 +266,7 @@ void EntityCloakedKnight(Entity* self) {
             // aura
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_CLOAK_KNIGHT_AURA, self, entity);
+                CreateEntityFromEntity(E_CLOAKED_KNIGHT_AURA, self, entity);
                 entity->ext.cloakedKnightAura.parent = self;
                 entity->zPriority = self->zPriority + 1;
             }
@@ -290,7 +290,7 @@ void EntityCloakedKnightCloak(Entity* self) {
         // fallthrough
 
     case 1:
-        AnimateEntity(&g_cloak_anim, self);
+        AnimateEntity(anim_cloak, self);
         prev = self - 1;
         self->posX.i.hi = prev->posX.i.hi;
         self->posY.i.hi = prev->posY.i.hi;
@@ -304,7 +304,7 @@ void EntityCloakedKnightCloak(Entity* self) {
         temp_s0_3 = (temp_s0_3 * distance) >> 4;
         self->rotate += temp_s0_3;
         StepTowards(&self->rotate, 0, 0x20);
-        if (prev->entityId != E_CLOAK_KNIGHT) {
+        if (prev->entityId != E_CLOAKED_KNIGHT) {
             DestroyEntity(self);
         }
         break;
@@ -339,7 +339,7 @@ void EntityCloakedKnightAura(Entity* self) {
     self->opacity -= 4;
     if (self->opacity < 32
 #ifndef VERSION_PSP
-        || parent->entityId != E_CLOAK_KNIGHT
+        || parent->entityId != E_CLOAKED_KNIGHT
 #endif
     ) {
         DestroyEntity(self);
@@ -360,7 +360,7 @@ void EntityCloakedKnightSword(Entity* self) {
     if (!self->params) {
         entity = self - 2;
         if ((entity->flags & FLAG_DEAD) != 0 ||
-            entity->entityId != E_CLOAK_KNIGHT) {
+            entity->entityId != E_CLOAKED_KNIGHT) {
             if (self->step != 4) {
                 self->hitboxState = 0;
                 SetStep(4);
@@ -375,7 +375,7 @@ void EntityCloakedKnightSword(Entity* self) {
         self->drawFlags = FLAG_DRAW_ROTATE;
         if (!self->params) {
             entity = self + 1;
-            CreateEntityFromCurrentEntity(E_CLOAK_KNIGHT_SWORD, entity);
+            CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_SWORD, entity);
             entity->params = 1;
         } else {
             self->flags |= FLAG_UNK_2000;
@@ -389,7 +389,7 @@ void EntityCloakedKnightSword(Entity* self) {
             self->step++;
         }
         entity = self - 2;
-        if (entity->entityId != E_CLOAK_KNIGHT) {
+        if (entity->entityId != E_CLOAKED_KNIGHT) {
             DestroyEntity(self);
         }
         break;
@@ -435,7 +435,7 @@ void EntityCloakedKnightSword(Entity* self) {
         rotate = entity->rotate + ROT(90.0);
         self->hitboxOffX = (rcos(rotate) * 3 * 8) >> 12;
         self->hitboxOffY = (rsin(rotate) * 3 * 8) >> 12;
-        if (entity->entityId != E_CLOAK_KNIGHT_SWORD) {
+        if (entity->entityId != E_CLOAKED_KNIGHT_SWORD) {
             DestroyEntity(self);
         }
         break;
