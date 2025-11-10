@@ -16,7 +16,10 @@ g_EInitLockCamera = 0x80180B70;
 g_EInitCommon = 0x80180B7C;
 g_EInitDamageNum = 0x80180B88;
 g_EInitEnvironment = 0x80180B94;
+g_EInitHarpy = 0x80180BB8;
 g_EInitHarpyFlame = 0x80180BD0;
+g_EInitCloakedKnight = 0x80180BF4;
+g_EInitCloakedKnightSword = 0x80180C0C;
 g_EInitFleaArmor = 0x80180C78;
 NZ1_BackgroundBlockInit = 0x80180D08;
 entityLockCameraHitbox = 0x80180DA0;
@@ -132,7 +135,6 @@ EntityHarpyDagger = 0x801BB628;
 EntityHarpyFlame = 0x801BB7C0;
 EntityHarpyKick = 0x801BB9E8;
 EntityHarpyFeather = 0x801BBAC4;
-StepTowards = 0x801BBBA0;
 EntityCloakedKnight = 0x801BBC0C;
 EntityCloakedKnightCloak = 0x801BC4C8;
 EntityCloakedKnightAura = 0x801BC5F8;
@@ -150,6 +152,7 @@ EntityPhantomSkullTrail = 0x801BEBE8;
 EntityFlailGuard = 0x801BEC98;
 EntityFlailGuardFlail = 0x801BF104;
 EntityFleaArmor = 0x801BF5BC;
+EntityFleaArmorAttackHitbox = 0x801BFC60;
 CheckFieldCollisionY = 0x801BFD64; // source=match
 UpdateFacingDirection = 0x801BFE6C; // source=match
 EntityFleaMan = 0x801BFEA0; // source=match

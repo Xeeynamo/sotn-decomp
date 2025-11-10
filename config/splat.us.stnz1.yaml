@@ -57,6 +57,8 @@ segments:
       - [0x1D28, .data, e_particles]
       - [0x1DA8, .data, e_room_fg]
       - [0x1E34, data]
+      - [0x1FB0, .data, e_cloaked_knight]
+      - [0x1FBC, data]
       - [0x2268, data, e_flea_man]
       - [0x22B8, data]
       - [0x258D4, .rodata, e_breakable]

@@ -142,22 +142,7 @@ bool func_us_801D27C4(unk_PlatelordStruct* arg0, bool isNegative) {
     return ret;
 }
 
-bool StepTowards(s16* val, s32 target, s32 step) {
-    if (abs(*val - target) < step) {
-        *val = target;
-        return true;
-    }
-
-    if (target < *val) {
-        *val -= step;
-    }
-
-    if (*val < target) {
-        *val += step;
-    }
-
-    return false;
-}
+#include "../step_towards.h"
 
 void EntityPlateLord(Entity* self) {
     Point32 point32;

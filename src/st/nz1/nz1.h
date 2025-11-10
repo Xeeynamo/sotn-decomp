@@ -100,7 +100,7 @@ enum OVL_EXPORT(Entities) {
     E_FLAIL_GUARD_FLAIL,        // EntityFlailGuardFlail
     E_BRIDGE_BACKGROUND_PIECE,  // EntityBridgeBackgroundPiece
     E_FLEA_ARMOR,               // EntityFleaArmor
-    E_UNK_4A,                   // func_us_801BFC60
+    E_FLEA_ARMOR_ATTACK_HITBOX, // EntityFleaArmorAttackHitbox
     E_FLEA_MAN,                 // EntityFleaMan
     E_BREAKABLE_DEBRIS,         // OVL_EXPORT(EntityBreakableDebris)
     E_BOSS_DOOR_TRIGGER,        // EntityBossDoorTrigger

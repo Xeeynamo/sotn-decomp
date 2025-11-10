@@ -74,7 +74,7 @@ void EntityFlailGuard(Entity* self);
 void EntityFlailGuardFlail(Entity* self);
 void EntityBridgeBackgroundPiece(Entity* self);
 void EntityFleaArmor(Entity* self);
-void func_us_801BFC60(Entity* self);
+void EntityFleaArmorAttackHitbox(Entity* self);
 void EntityFleaMan(Entity* self);
 void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
 void EntityBossDoorTrigger(Entity* self);
@@ -164,7 +164,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFlailGuardFlail,
     EntityBridgeBackgroundPiece,
     EntityFleaArmor,
-    func_us_801BFC60,
+    EntityFleaArmorAttackHitbox,
     EntityFleaMan,
     OVL_EXPORT(EntityBreakableDebris),
     EntityBossDoorTrigger,
@@ -195,14 +195,14 @@ EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x003};
 EInit g_EInitEnvironment = {ANIMSET_OVL(1), 0, 0, PAL_NONE, 0x005};
 EInit D_us_80180BA0 = {ANIMSET_OVL(3), 1, 76, PAL_UNK_200, 0x105};
 EInit D_us_80180BAC = {ANIMSET_OVL(3), 1, 76, PAL_UNK_200, 0x005};
-EInit D_us_80180BB8 = {ANIMSET_OVL(4), 0, 76, PAL_UNK_206, 0x0EF};
+EInit g_EInitHarpy = {ANIMSET_OVL(4), 0, 76, PAL_UNK_206, 0x0EF};
 EInit D_us_80180BC4 = {ANIMSET_OVL(4), 18, 76, PAL_UNK_206, 0x0F1};
 EInit g_EInitHarpyFlame = {ANIMSET_OVL(4), 19, 76, PAL_UNK_206, 0x0F2};
 EInit D_us_80180BDC = {ANIMSET_OVL(4), 0, 76, PAL_UNK_206, 0x0F0};
 EInit D_us_80180BE8 = {ANIMSET_OVL(4), 24, 76, PAL_UNK_206, 0x002};
-EInit D_us_80180BF4 = {ANIMSET_OVL(5), 1, 72, PAL_UNK_20A, 0x10F};
+EInit g_EInitCloakedKnight = {ANIMSET_OVL(5), 1, 72, PAL_UNK_20A, 0x10F};
 EInit D_us_80180C00 = {ANIMSET_OVL(5), 1, 72, PAL_UNK_20A, 0x002};
-EInit D_us_80180C0C = {ANIMSET_OVL(5), 1, 72, PAL_UNK_20A, 0x110};
+EInit g_EInitCloakedKnightSword = {ANIMSET_OVL(5), 1, 72, PAL_UNK_20A, 0x110};
 EInit D_us_80180C18 = {ANIMSET_OVL(6), 1, 80, PAL_UNK_20F, 0x009};
 EInit D_us_80180C24 = {ANIMSET_DRA(0), 0, 0, PAL_NONE, 0x00A};
 EInit D_us_80180C30 = {ANIMSET_OVL(6), 40, 80, PAL_UNK_20F, 0x0E4};
