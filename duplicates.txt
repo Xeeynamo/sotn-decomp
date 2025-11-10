@@ -454,7 +454,7 @@
 | 1.00 | true     | MakeExplosions                      | asm/us/st/st0/matchings/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/top/matchings/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/wrp/matchings/e_misc/MakeExplosions.s 
-| 0.96 | false    | func_us_801A7424                    | asm/us/st/nz1/nonmatchings/26C54/func_us_801A7424.s 
+| 0.96 | false    | CreateExplosionPuff                 | asm/us/st/nz1/nonmatchings/e_explosion_puff_opaque/CreateExplosionPuff.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/boss/bo4/matchings/e_misc/EntityOlroxDrool.s 
 | 1.00 | true     | EntityOlroxDrool                    | asm/us/boss/bo6/matchings/e_misc/EntityOlroxDrool.s 
@@ -2722,11 +2722,11 @@
 | 1.00 | true     | EntityStageNamePopup                | asm/us/st/no4/matchings/e_stage_name/EntityStageNamePopup.s 
 | 1.00 | true     | EntityStageNamePopup                | asm/us/st/np3/matchings/e_stage_name/EntityStageNamePopup.s 
 | 1.00 | true     | EntityStageNamePopup                | asm/us/st/nz0/matchings/e_stage_name/EntityStageNamePopup.s 
+| 1.00 | true     | EntityStageNamePopup                | asm/us/st/nz1/matchings/e_stage_name/EntityStageNamePopup.s 
 | 1.00 | true     | EntityStageNamePopup                | asm/us/st/rtop/matchings/e_stage_name/EntityStageNamePopup.s 
 | 1.00 | true     | EntityStageNamePopup                | asm/us/st/rwrp/matchings/wrp/e_stage_name/EntityStageNamePopup.s 
 | 1.00 | true     | EntityStageNamePopup                | asm/us/st/top/matchings/e_stage_name/EntityStageNamePopup.s 
 | 1.00 | true     | EntityStageNamePopup                | asm/us/st/wrp/matchings/e_stage_name/EntityStageNamePopup.s 
-| 1.00 | false    | EntityStageNamePopup                | asm/us/st/nz1/nonmatchings/e_stage_name/EntityStageNamePopup.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | StageNamePopupDissolver             | asm/us/boss/bo4/matchings/e_stage_name/StageNamePopupDissolver.s 
 | 1.00 | true     | StageNamePopupDissolver             | asm/us/boss/bo6/matchings/e_stage_name/StageNamePopupDissolver.s 
@@ -2746,11 +2746,11 @@
 | 1.00 | true     | StageNamePopupDissolver             | asm/us/st/no4/matchings/e_stage_name/StageNamePopupDissolver.s 
 | 1.00 | true     | StageNamePopupDissolver             | asm/us/st/np3/matchings/e_stage_name/StageNamePopupDissolver.s 
 | 1.00 | true     | StageNamePopupDissolver             | asm/us/st/nz0/matchings/e_stage_name/StageNamePopupDissolver.s 
+| 1.00 | true     | StageNamePopupDissolver             | asm/us/st/nz1/matchings/e_stage_name/StageNamePopupDissolver.s 
 | 1.00 | true     | StageNamePopupDissolver             | asm/us/st/rtop/matchings/e_stage_name/StageNamePopupDissolver.s 
 | 1.00 | true     | StageNamePopupDissolver             | asm/us/st/rwrp/matchings/wrp/e_stage_name/StageNamePopupDissolver.s 
 | 1.00 | true     | StageNamePopupDissolver             | asm/us/st/top/matchings/e_stage_name/StageNamePopupDissolver.s 
 | 1.00 | true     | StageNamePopupDissolver             | asm/us/st/wrp/matchings/e_stage_name/StageNamePopupDissolver.s 
-| 1.00 | false    | StageNamePopupHelper                | asm/us/st/nz1/nonmatchings/e_stage_name/StageNamePopupHelper.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | HideMap                             | asm/us/dra/matchings/624DC/HideMap.s 
 | 1.00 | true     | func_801072BC                       | asm/us/dra/matchings/66590/func_801072BC.s 
@@ -3027,10 +3027,10 @@
 | 1.00 | true     | DAI_EntityBreakableDebris           | asm/us/st/dai/matchings/e_breakable/DAI_EntityBreakableDebris.s 
 | 1.00 | true     | NO1_EntityBreakableDebris           | asm/us/st/no1/matchings/e_breakable/NO1_EntityBreakableDebris.s 
 | 1.00 | true     | NO2_EntityBreakableDebris           | asm/us/st/no2/matchings/e_breakable/NO2_EntityBreakableDebris.s 
+| 1.00 | true     | NZ1_EntityBreakableDebris           | asm/us/st/nz1/matchings/e_breakable/NZ1_EntityBreakableDebris.s 
 | 1.00 | true     | RTOP_EntityBreakableDebris          | asm/us/st/rtop/matchings/e_breakable/RTOP_EntityBreakableDebris.s 
 | 1.00 | true     | func_801A8328                       | asm/us/st/st0/matchings/2805C/func_801A8328.s 
 | 1.00 | true     | TOP_EntityBreakableDebris           | asm/us/st/top/matchings/e_breakable/TOP_EntityBreakableDebris.s 
-| 1.00 | false    | func_us_801A67D4                    | asm/us/st/nz1/nonmatchings/262E4/func_us_801A67D4.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | PlayerIsWithinHitbox                | asm/us/st/lib/matchings/e_lock_camera/PlayerIsWithinHitbox.s 
 | 1.00 | true     | PlayerIsWithinHitbox                | asm/us/st/no0/matchings/e_room_bg/PlayerIsWithinHitbox.s 
@@ -3231,7 +3231,7 @@
 | 1.00 | true     | func_801CDC80                       | asm/us/st/lib/matchings/e_spellbook_magic_tome/func_801CDC80.s 
 | 1.00 | true     | func_801CDC80                       | asm/us/st/no2/matchings/giantbro_helpers/func_801CDC80.s 
 | 1.00 | true     | func_801CDC80                       | asm/us/st/np3/matchings/giantbro_helpers/func_801CDC80.s 
-| 1.00 | false    | func_us_801BDE3C                    | asm/us/st/nz1/nonmatchings/3DA50/func_us_801BDE3C.s 
+| 1.00 | false    | VandalSwordTrail                    | asm/us/st/nz1/nonmatchings/e_vandal_sword/VandalSwordTrail.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DAI_EntityBreakable                 | asm/us/st/dai/matchings/e_breakable/DAI_EntityBreakable.s 
 | 0.92 | true     | NO1_EntityBreakable                 | asm/us/st/no1/matchings/e_breakable/NO1_EntityBreakable.s 
@@ -3352,11 +3352,6 @@
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_003/matchings/demon/CheckEntityValid.s 
@@ -3365,12 +3360,12 @@
 | 1.00 | true     | EntitySpikesDamage                  | asm/us/st/cat/matchings/e_spikes/EntitySpikesDamage.s 
 | 0.90 | true     | EntitySpikesDamage                  | asm/us/st/dai/matchings/e_spikes/EntitySpikesDamage.s 
 | 1.00 | true     | EntitySpikesDamage                  | asm/us/st/no2/matchings/e_spikes/EntitySpikesDamage.s 
-| 0.90 | false    | func_us_801AA41C                    | asm/us/st/nz1/nonmatchings/274E4/func_us_801AA41C.s 
+| 0.90 | true     | EntitySpikesDamage                  | asm/us/st/nz1/matchings/e_spikes/EntitySpikesDamage.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySpikesDust                    | asm/us/st/cat/matchings/e_spikes/EntitySpikesDust.s 
 | 1.00 | true     | EntitySpikesDust                    | asm/us/st/dai/matchings/e_spikes/EntitySpikesDust.s 
 | 1.00 | true     | EntitySpikesDust                    | asm/us/st/no2/matchings/e_spikes/EntitySpikesDust.s 
-| 1.00 | false    | func_us_801A9D18                    | asm/us/st/nz1/nonmatchings/274E4/func_us_801A9D18.s 
+| 1.00 | true     | EntitySpikesDust                    | asm/us/st/nz1/matchings/e_spikes/EntitySpikesDust.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_801CD78C                       | asm/us/st/cat/matchings/giantbro_helpers/func_801CD78C.s 
 | 1.00 | true     | func_801CD78C                       | asm/us/st/no0/matchings/e_plate_lord/func_801CD78C.s 
@@ -3679,17 +3674,21 @@
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
 | 0.92 | true     | SsVabOpenHeadSticky                 | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHeadSticky.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySpikes                        | asm/us/st/cat/matchings/e_spikes/EntitySpikes.s 
 | 0.96 | true     | EntitySpikes                        | asm/us/st/dai/matchings/e_spikes/EntitySpikes.s 
-| 0.95 | false    | func_us_801AA288                    | asm/us/st/nz1/nonmatchings/274E4/func_us_801AA288.s 
+| 0.95 | true     | EntitySpikes                        | asm/us/st/nz1/matchings/e_spikes/EntitySpikes.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntitySpikesParts                   | asm/us/st/cat/matchings/e_spikes/EntitySpikesParts.s 
 | 1.00 | true     | EntitySpikesParts                   | asm/us/st/dai/matchings/e_spikes/EntitySpikesParts.s 
-| 1.00 | false    | func_us_801A9DCC                    | asm/us/st/nz1/nonmatchings/274E4/func_us_801A9DCC.s 
+| 1.00 | true     | EntitySpikesParts                   | asm/us/st/nz1/matchings/e_spikes/EntitySpikesParts.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityCorpseweed                    | asm/us/st/cat/matchings/en_thornweed_corpseweed/EntityCorpseweed.s 
 | 1.00 | true     | EntityCorpseweed                    | asm/us/st/chi/matchings/en_thornweed_corpseweed/EntityCorpseweed.s 
@@ -4181,6 +4180,9 @@
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
 -------------------------------------------------------------------------------
@@ -4452,7 +4454,7 @@
 | 0.98 | false    | EntityFleaArmor                     | asm/us/st/nz1/nonmatchings/e_flea_armor/EntityFleaArmor.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801D00C4                    | asm/us/st/lib/matchings/e_flea_armor/func_us_801D00C4.s 
-| 1.00 | false    | func_us_801BFC60                    | asm/us/st/nz1/nonmatchings/e_flea_armor/func_us_801BFC60.s 
+| 1.00 | false    | EntityFleaArmorAttackHitbox         | asm/us/st/nz1/nonmatchings/e_flea_armor/EntityFleaArmorAttackHitbox.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBackgroundBookcase            | asm/us/st/lib/matchings/e_library_bg/EntityBackgroundBookcase.s 
 | 0.91 | true     | EntityBackgroundFurniture           | asm/us/st/lib/matchings/e_library_bg/EntityBackgroundFurniture.s 
@@ -4554,7 +4556,7 @@
 | 1.00 | false    | func_us_801BC9BC                    | asm/us/st/nz1/nonmatchings/e_sword_lord/func_us_801BC9BC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801D04B8                    | asm/us/st/no1/matchings/e_sword_lord/func_us_801D04B8.s 
-| 1.00 | false    | func_us_801BD970                    | asm/us/st/nz1/nonmatchings/e_sword_lord/func_us_801BD970.s 
+| 1.00 | false    | EntitySwordLordAttackHitbox         | asm/us/st/nz1/nonmatchings/e_sword_lord/EntitySwordLordAttackHitbox.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801BEB54                    | asm/us/st/no1/matchings/e_wall_chicken_secret/func_us_801BEB54.s 
 | 0.91 | false    | func_us_801B9A74                    | asm/us/st/cat/nonmatchings/unk_3872C/func_us_801B9A74.s 
