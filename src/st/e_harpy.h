@@ -24,7 +24,7 @@ void EntityHarpy(Entity* self) {
         SetStep(0xC);
     }
 
-    if (self->flags & 0x100 && self->step != 14) {
+    if (self->flags & FLAG_DEAD && self->step != 14) {
         PlaySfxPositional(SFX_HARPY_DEATH);
         SetStep(14);
     }

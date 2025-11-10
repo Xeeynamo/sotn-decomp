@@ -439,9 +439,9 @@ static void CheckStageCollision(s32 isTransformed) {
     CheckFloor();
     if (PLAYER.step == Player_UnmorphBat || PLAYER.step == Player_UnmorphMist ||
         PLAYER.step == Player_UnmorphWolf) {
-        if (g_Player.colCeiling[1].effects & 1 &&
+        if (g_Player.colCeiling[1].effects & EFFECT_SOLID &&
             !(g_Player.colCeiling[1].effects & EFFECT_SOLID_FROM_ABOVE) &&
-            g_Player.colFloor[1].effects & 1 &&
+            g_Player.colFloor[1].effects & EFFECT_SOLID &&
             !(g_Player.colFloor[1].effects & EFFECT_SOLID_FROM_BELOW)) {
             g_Player.vram_flag = TOUCHING_CEILING | TOUCHING_GROUND;
             PLAYER.posX.val -= speed;
