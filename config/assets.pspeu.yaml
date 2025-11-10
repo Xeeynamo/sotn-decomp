@@ -498,6 +498,21 @@ files:
           - [0x66CB0, cmpgfx, stage_name_ge, 128, 64, 4]
           - [0x66F38, cmpgfx, stage_name_fr, 128, 64, 4]
           - [0x671D0, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/nz1.bin
+    asset_path: assets/st/nz1
+    src_path: src/st/nz1
+    splat_config_path: config/splat.pspeu.stnz1.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x24AA0, cmpgfx, stage_name_en, 128, 64, 4]
+          - [0x24C68, cmpgfx, stage_name_it, 128, 64, 4]
+          - [0x24DD8, cmpgfx, stage_name_sp, 128, 64, 4]
+          - [0x24FA8, cmpgfx, stage_name_ge, 128, 64, 4]
+          - [0x25130, cmpgfx, stage_name_fr, 128, 64, 4]
+          - [0x25350, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/st0.bin
     asset_path: assets/st/st0
     src_path: src/st/st0

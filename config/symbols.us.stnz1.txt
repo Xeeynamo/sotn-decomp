@@ -1,12 +1,21 @@
+NZ1_Overlay = 0x80180000;
+NZ1_spriteBanks = 0x80180040;
+NZ1_cluts = 0x80180358;
+NZ1_rooms_layers = 0x801804E0;
+NZ1_gfxBanks = 0x801807CC;
 NZ1_pStObjLayoutHorizontal = 0x80180820;
 NZ1_pStObjLayoutVertical = 0x801808F4;
 NZ1_EntityUpdates = 0x801809C8;
+NZ1_EInitBreakable = 0x80180B28;
 g_EInitObtainable = 0x80180B34;
 g_EInitParticle = 0x80180B40;
+g_EInitSpawner = 0x80180B4C;
+g_EInitInteractable = 0x80180B58;
 g_EInitUnkId13 = 0x80180B64;
 g_EInitLockCamera = 0x80180B70;
 g_EInitCommon = 0x80180B7C;
 g_EInitDamageNum = 0x80180B88;
+g_EInitEnvironment = 0x80180B94;
 g_EInitHarpyFlame = 0x80180BD0;
 g_EInitFleaArmor = 0x80180C78;
 NZ1_BackgroundBlockInit = 0x80180D08;
@@ -14,10 +23,51 @@ entityLockCameraHitbox = 0x80180DA0;
 entityLockCameraData = 0x80180DA4;
 entityLockCameraTilemapProps = 0x80180DA8;
 NZ1_PrizeDrops = 0x8018111C;
+g_SineTable = 0x8018171C;
+g_goldCollectTexts = 0x80181A90;
 g_bigRedFireballAnim = 0x80181B74;
 g_HarpyFlameAnim = 0x80181F74;
+NZ1_rooms = 0x8018233C;
 NZ1_EntityBackgroundBlock = 0x801A5D38; // source=match
+PlayerIsWithinHitbox = 0x801A5E18;
 NZ1_EntityLockCamera = 0x801A5E9C; // source=match
+NZ1_EntityBreakable = 0x801A62E4;
+NZ1_EntityBreakableDebris = 0x801A67D4;
+DropBridgePiece = 0x801A6ACC;
+BreakBridge = 0x801A6B6C;
+EntityBridgeBreakTrigger = 0x801A6C54;
+EntityBridgeBackgroundPiece = 0x801A7118;
+CreateExplosionPuff = 0x801A7424;
+EntityExplosionPuffOpaque = 0x801A74E4;
+EntityClouds = 0x801A7970;
+EntityBackgroundGears = 0x801A7DC4;
+EntityGearSidewaysLarge = 0x801A7FD4;
+EntityGearHorizontal = 0x801A824C;
+EntityGearVertical = 0x801A8354;
+EntityGearSidewaysSmall = 0x801A857C;
+EntityWallGear = 0x801A88E4;
+EntitySecretAreaDoor = 0x801A8A94;
+EntityPendulumAnchor = 0x801A8D6C;
+EntityPendulumBoneChain = 0x801A8EA0;
+EntityPendulumWeight = 0x801A8F80;
+EntityBreakableWall = 0x801A9154;
+EntityBreakableWallPartial = 0x801A94CC;
+EntitySecretWallDebris = 0x801A97C4;
+EntityRoomExit = 0x801A9A5C;
+EntityWaterForeground = 0x801A9BEC;
+EntitySpikesDust = 0x801A9D18;
+EntitySpikesParts = 0x801A9DCC;
+EntitySpikes = 0x801AA288;
+EntitySpikesDamage = 0x801AA41C;
+EntityBossDoorTrigger = 0x801AA48C;
+EntityBossDoors = 0x801AA814;
+BossDoorHelper = 0x801AAB0C;
+EntityKarasuman = 0x801AAB90;
+EntityKarasumanFeatherAttack = 0x801ABBF0;
+EntityKarasumanOrbAttack = 0x801ABD68;
+EntityKarasumanRavenAttack = 0x801ABFE8;
+EntityKarasumanFeather = 0x801AC354;
+EntityKarasumanRavenAbsorb = 0x801AC528;
 Random = 0x801AC6E0; // source=match
 Update = 0x801AC710; // source=match
 UpdateStageEntities = 0x801ACA0C; // source=match
@@ -30,7 +80,6 @@ CreateEntityFromEntity = 0x801AEDCC; // source=match
 EntityIsNearPlayer = 0x801AEE48;
 NZ1_EntityRedDoor = 0x801AEEC0;
 DestroyEntity = 0x801AFB1C; // source=match
-PreventEntityFromRespawning = 0x801AFC04; // source=match
 AnimateEntity = 0x801AFC4C; // source=match
 GetDistanceToPlayerX = 0x801AFE1C; // source=match
 GetDistanceToPlayerY = 0x801AFE58; // source=match
@@ -50,7 +99,6 @@ InitializeEntity = 0x801B082C; // source=match
 EntityDummy = 0x801B0928; // source=match
 CheckFieldCollision = 0x801B0A78; // source=match
 GetPlayerCollisionWith = 0x801B0BD0; // source=match
-ReplaceBreakableWithItemDrop = 0x801B0F14; // source=match
 EntityPrizeDrop = 0x801B153C; // source=match
 EntityExplosion = 0x801B1DB0; // source=match
 EntityEquipItemDrop = 0x801B1F50; // source=match
@@ -64,8 +112,6 @@ EntityGreyPuff = 0x801B3E44; // source=match
 EntityIntenseExplosion = 0x801B47E4; // source=match
 MakeEntityFromId = 0x801B49B0;
 PlaySfxPositional = 0x801B5BE0; // source=match
-StageNamePopupHelper = 0x801B5CD8; // source=match
-EntityStageNamePopup = 0x801B5EA8; // source=match
 EntitySoulStealOrb = 0x801B6B2C; // source=match
 EntityEnemyBlood = 0x801B6EC0; // source=match
 EntityRoomForeground = 0x801B7370; // source=match
@@ -87,7 +133,22 @@ EntityHarpyFlame = 0x801BB7C0;
 EntityHarpyKick = 0x801BB9E8;
 EntityHarpyFeather = 0x801BBAC4;
 StepTowards = 0x801BBBA0;
+EntityCloakedKnight = 0x801BBC0C;
+EntityCloakedKnightCloak = 0x801BC4C8;
+EntityCloakedKnightAura = 0x801BC5F8;
+EntityCloakedKnightSword = 0x801BC71C;
 EntitySwordLord = 0x801BCC90;
+EntitySwordLordAttackHitbox = 0x801BD970;
+VandalSwordDrawAlastor = 0x801BDA50;
+VandalSwordTargetPlayer = 0x801BDDBC;
+VandalSwordTrail = 0x801BDE3C;
+EntityVandalSword = 0x801BDEBC;
+EntityVandalSwordHitbox = 0x801BE73C;
+EntityVandalSwordDeath = 0x801BE82C;
+EntityPhantomSkull = 0x801BE8E0;
+EntityPhantomSkullTrail = 0x801BEBE8;
+EntityFlailGuard = 0x801BEC98;
+EntityFlailGuardFlail = 0x801BF104;
 EntityFleaArmor = 0x801BF5BC;
 CheckFieldCollisionY = 0x801BFD64; // source=match
 UpdateFacingDirection = 0x801BFE6C; // source=match
@@ -99,4 +160,8 @@ UnkPrimHelper = 0x801C059C; // source=match
 UnkPolyFunc2 = 0x801C0CE8; // source=match
 PrimDecreaseBrightness = 0x801C0D68; // source=match
 EntityLifeUpSpawn = 0x801C0DCC; // source=match
+g_LayoutObjHorizontal = 0x801C1688;
+g_LayoutObjVertical = 0x801C168C;
+g_LayoutObjPosHorizontal = 0x801C1690;
+g_LayoutObjPosVertical = 0x801C1694;
 g_ItemIconSlots = 0x801C2300;
