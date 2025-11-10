@@ -568,7 +568,7 @@
 | no2   | e_bloody_zombie.rodata                   |       20 |          0 | Yes    |       |     |
 | np3   | e_misc.rodata                            |       20 |          0 | Yes    |       |     |
 | np3   | e_stage_name.rodata                      |       20 |          0 | Yes    |       |     |
-| nz1   | 10F58.rodata                             |       20 |          0 | Yes    |       |     |
+| nz1   | e_cloaked_knight.rodata                  |       20 |          0 | Yes    |       |     |
 | main  | copysign                                 |       20 |          1 |        |       |     |
 | main  | func_psp_0891B0DC                        |       20 |          1 |        |       |     |
 | main  | func_psp_089106B8                        |       20 |          1 |        |       |     |
@@ -1930,7 +1930,7 @@
 | main  | func_psp_08931334                        |       60 |          8 |        |       |     |
 | ric   | RicEntityStopwatchCrashLightning         |       60 |          8 |        |       |     |
 | lib   | func_psp_09254C00                        |       60 |          8 |        |       |     |
-| nz1   | EntityHarpy                              |       60 |          8 |        |       |     |
+| nz1   | func_pspeu_0923E800                      |       60 |          8 |        |       |     |
 | sel   | func_psp_09240A88                        |       60 |          9 |        |       |     |
 | dra   | func_psp_09113E70                        |       60 |         11 |        |       |     |
 | main  | func_psp_0892D220                        |       60 |         11 |        |       |     |
@@ -2137,7 +2137,7 @@
 | cat   | func_pspeu_092627A8                      |       70 |          4 |        |       |     |
 | dai   | func_pspeu_09250E68                      |       70 |          6 |        |       |     |
 | sel   | func_psp_09240520                        |       70 |          6 |        |       |     |
-| nz1   | func_pspeu_09240190                      |       70 |          9 |        |       |     |
+| nz1   | EntityHarpyFeather                       |       70 |          9 |        |       |     |
 | sel   | func_psp_0923F858                        |       70 |          9 |        |       |     |
 | main  | _start                                   |       70 |         10 |        |       |     |
 | dra   | func_psp_0910EFE0                        |       70 |         11 |        |       |     |
@@ -2403,7 +2403,7 @@
 | np3   | EntityOwlKnightSword                     |       86 |          6 |        |       |     |
 | np3   | EntityTilemapShufflerUnused              |       86 |          6 |        |       |     |
 | nz1   | func_pspeu_09252CC8                      |       86 |          6 |        |       |     |
-| nz1   | EntityHarpyFeather                       |       86 |          6 |        |       |     |
+| nz1   | EntityHarpyKick                          |       86 |          6 |        |       |     |
 | main  | func_psp_0892F848                        |       86 |          7 |        |       |     |
 | main  | sceGupLightColor                         |       86 |          8 | Yes    |       |     |
 | no4   | func_pspeu_09239788                      |       86 |          8 |        |       |     |
@@ -2518,7 +2518,7 @@
 | sel   | func_psp_09243DA0                        |       93 |         14 |        |       |     |
 | ric   | func_pspeu_092AA9F8                      |       93 |         17 |        |       |     |
 | no3   | func_pspeu_09249738                      |       93 |         19 |        |       |     |
-| nz1   | EntitySpectralSwordAura                  |       94 |          6 |        |       |     |
+| nz1   | EntityCloakedKnightAura                  |       94 |          6 |        |       |     |
 | lib   | func_psp_0924C6C0                        |       94 |          8 |        |       |     |
 | main  | func_psp_08913A04                        |       94 |         20 |        |       |     |
 | chi   | func_psp_0924BB40                        |       95 |          1 |        |       |     |
@@ -2783,7 +2783,7 @@
 | np3   | func_pspeu_0925BEF0                      |      112 |         10 |        |       |     |
 | maria | func_pspeu_092AB940                      |      112 |         11 |        |       |     |
 | ric   | func_pspeu_092AD108                      |      112 |         11 |        |       |     |
-| nz1   | func_pspeu_09249348                      |      112 |         11 |        |       |     |
+| nz1   | EntityCloakedKnightCloak                 |      112 |         11 |        |       |     |
 | sel   | func_psp_0923BC20                        |      112 |         16 |        |       |     |
 | lib   | func_us_801B5F84                         |      112 |         18 |        |       |     |
 | no4   | func_pspeu_09255F98                      |      113 |          5 |        |       |     |
@@ -2963,7 +2963,7 @@
 | sel   | func_psp_09243968                        |      142 |         10 |        |       |     |
 | dra   | func_psp_090F1418                        |      142 |         13 |        |       |     |
 | ric   | func_pspeu_092BA338                      |      142 |         19 |        |       |     |
-| nz1   | EntityHarpyFlame                         |      142 |         19 |        |       |     |
+| nz1   | EntityHarpyDagger                        |      142 |         19 |        |       |     |
 | sel   | func_psp_0923A010                        |      143 |         16 |        |       |     |
 | no3   | EntityJewelSwordDoor                     |      143 |         21 |        |       |     |
 | np3   | EntityJewelSwordDoor                     |      143 |         21 |        |       |     |
@@ -3252,7 +3252,7 @@
 | dra   | func_psp_0910E758                        |      209 |         21 |        |       |     |
 | no4   | EntityThrownBarrel                       |      209 |         23 |        |       |     |
 | no3   | EntityUnkId2F                            |      209 |         25 |        |       |     |
-| nz1   | EntityHarpyKick                          |      210 |         26 |        |       |     |
+| nz1   | EntityHarpyFlame                         |      210 |         26 |        |       |     |
 | cat   | func_pspeu_0925E2C8                      |      211 |          1 |        |       |     |
 | main  | sceGupSetMatrix                          |      211 |          9 |        |       |     |
 | maria | func_pspeu_092A9288                      |      211 |         19 |        |       |     |
@@ -3463,7 +3463,7 @@
 | cat   | EntityLossothFlames                      |      282 |         34 |        |       |     |
 | dai   | func_pspeu_09239E50                      |      282 |         43 | Yes    |       |     |
 | no2   | func_pspeu_09259668                      |      283 |          8 |        |       |     |
-| nz1   | func_pspeu_09249640                      |      283 |         33 | Yes    |       |     |
+| nz1   | EntityCloakedKnightSword                 |      283 |         33 | Yes    |       |     |
 | dra   | EntityPlayerPinkEffect                   |      283 |         37 | Yes    |       |     |
 | no2   | Entity3DBackgroundHouse                  |      284 |         39 |        |       |     |
 | np3   | EntityCastleDoor                         |      285 |         32 |        |       |     |
@@ -3985,7 +3985,7 @@
 | cat   | EntityLossoth                            |      834 |        140 |        |       |     |
 | dai   | func_pspeu_09256EE8                      |      841 |        120 | Yes    |       |     |
 | sel   | func_psp_0923A7C8                        |      849 |         87 |        |       |     |
-| nz1   | func_pspeu_092486B8                      |      849 |        119 |        |       |     |
+| nz1   | EntityCloakedKnight                      |      849 |        119 |        |       |     |
 | lib   | EntityLifeUpSpawn                        |      858 |         61 | Yes    |       |     |
 | nz1   | EntityLifeUpSpawn                        |      858 |         61 | Yes    |       |     |
 | st0   | func_801BC5C0                            |      862 |         92 |        |       |     |
@@ -4095,7 +4095,7 @@
 | np3   | NP3_EntityRedDoor                        |     1247 |        112 | Yes    |       |     |
 | st0   | ST0_EntityRedDoor                        |     1247 |        112 | Yes    |       |     |
 | wrp   | WRP_EntityRedDoor                        |     1247 |        112 | Yes    |       |     |
-| nz1   | EntityHarpyDagger                        |     1250 |        188 |        |       |     |
+| nz1   | EntityHarpy                              |     1250 |        188 |        |       |     |
 | nz1   | NZ1_EntityRedDoor                        |     1258 |        114 | Yes    |       |     |
 | chi   | EntitySalemWitch                         |     1258 |        210 |        |       |     |
 | dai   | func_pspeu_09247AA8                      |     1264 |        196 | Yes    |       |     |
