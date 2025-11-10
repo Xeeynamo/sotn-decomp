@@ -39,7 +39,7 @@ impl EnumStatementMatcher {
                 0 |                       #   * a zero
                 (?:[1-9][0-9]*)           #   * a decimal integer
             )
-            ([;),?&|\s])?                 # <5> optional statement terminal or whitespace or logical op
+            (?:ll|LL|[uUzZlL])?         # optional integer suffix
         ", var_and_operator_pattern, regex::escape(field_name));
 
         Self { regex: Regex::new(&pattern).unwrap() }
