@@ -1,4 +1,3 @@
-NZ1_Overlay = 0x80180000;
 NZ1_spriteBanks = 0x80180040;
 NZ1_cluts = 0x80180358;
 NZ1_rooms_layers = 0x801804E0;
@@ -6,20 +5,12 @@ NZ1_gfxBanks = 0x801807CC;
 NZ1_pStObjLayoutHorizontal = 0x80180820;
 NZ1_pStObjLayoutVertical = 0x801808F4;
 NZ1_EntityUpdates = 0x801809C8;
-NZ1_EInitBreakable = 0x80180B28;
-g_EInitObtainable = 0x80180B34;
 g_EInitParticle = 0x80180B40;
 g_EInitSpawner = 0x80180B4C;
 g_EInitInteractable = 0x80180B58;
-g_EInitUnkId13 = 0x80180B64;
-g_EInitLockCamera = 0x80180B70;
 g_EInitCommon = 0x80180B7C;
-g_EInitDamageNum = 0x80180B88;
 g_EInitEnvironment = 0x80180B94;
-g_EInitHarpy = 0x80180BB8;
 g_EInitHarpyFlame = 0x80180BD0;
-g_EInitCloakedKnight = 0x80180BF4;
-g_EInitCloakedKnightSword = 0x80180C0C;
 g_EInitFleaArmor = 0x80180C78;
 NZ1_BackgroundBlockInit = 0x80180D08;
 entityLockCameraHitbox = 0x80180DA0;
@@ -130,15 +121,10 @@ EntitySkullLord = 0x801B9AA0; // source=match
 EntitySkullLordOutline = 0x801BA250; // source=match
 EntitySkullLordFlames = 0x801BA52C; // source=match
 EntitySkullLordPieces = 0x801BA7F8; // source=match
-EntityHarpy = 0x801BA92C;
 EntityHarpyDagger = 0x801BB628;
 EntityHarpyFlame = 0x801BB7C0;
 EntityHarpyKick = 0x801BB9E8;
 EntityHarpyFeather = 0x801BBAC4;
-EntityCloakedKnight = 0x801BBC0C;
-EntityCloakedKnightCloak = 0x801BC4C8;
-EntityCloakedKnightAura = 0x801BC5F8;
-EntityCloakedKnightSword = 0x801BC71C;
 EntitySwordLord = 0x801BCC90;
 EntitySwordLordAttackHitbox = 0x801BD970;
 VandalSwordDrawAlastor = 0x801BDA50;
