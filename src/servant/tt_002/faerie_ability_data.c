@@ -119,7 +119,8 @@ ItemPrimitiveParams g_ItemPrimitiveParams[] = {
      .priority = 1,
      .drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP,
      0,
-     .flags = 0x0C800000},
+     .flags =
+         FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS},
     {.count = 0x20,
      .unk2 = 0x20,
      .unk4 = 0,
@@ -132,7 +133,8 @@ ItemPrimitiveParams g_ItemPrimitiveParams[] = {
      .priority = 2,
      .drawMode = DRAW_UNK02,
      0,
-     .flags = 0x0C800000},
+     .flags =
+         FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS},
     {.count = 0x20,
      .unk2 = 0x20,
      .unk4 = 0,
@@ -145,7 +147,8 @@ ItemPrimitiveParams g_ItemPrimitiveParams[] = {
      .priority = 2,
      .drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP,
      0,
-     .flags = 0x0C800000},
+     .flags =
+         FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS},
     {.count = 0x20,
      .unk2 = 0x20,
      .unk4 = 0,
@@ -158,7 +161,8 @@ ItemPrimitiveParams g_ItemPrimitiveParams[] = {
      .priority = 2,
      .drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP,
      0,
-     .flags = 0x0C800000},
+     .flags =
+         FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS},
     {.count = 0x20,
      .unk2 = 0x20,
      .unk4 = 0,
@@ -171,7 +175,8 @@ ItemPrimitiveParams g_ItemPrimitiveParams[] = {
      .priority = 2,
      .drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP,
      0,
-     .flags = 0x0C800000},
+     .flags =
+         FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS},
     {.count = 0x20,
      .unk2 = 0x20,
      .unk4 = 0,
@@ -184,7 +189,8 @@ ItemPrimitiveParams g_ItemPrimitiveParams[] = {
      .priority = 2,
      .drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP,
      0,
-     .flags = 0x0C800000},
+     .flags =
+         FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS},
     {.count = 0x20,
      .unk2 = 0x20,
      .unk4 = 0,
@@ -197,7 +203,8 @@ ItemPrimitiveParams g_ItemPrimitiveParams[] = {
      .priority = 2,
      .drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP,
      0,
-     .flags = 0x0C800000},
+     .flags =
+         FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS},
     {.count = 0x20,
      .unk2 = 0x20,
      .unk4 = 0,
@@ -210,7 +217,8 @@ ItemPrimitiveParams g_ItemPrimitiveParams[] = {
      .priority = 2,
      .drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP,
      0,
-     .flags = 0x0C800000},
+     .flags =
+         FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS},
     {.count = 0x20,
      .unk2 = 0x20,
      .unk4 = 0,
@@ -223,7 +231,8 @@ ItemPrimitiveParams g_ItemPrimitiveParams[] = {
      .priority = 2,
      .drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP,
      0,
-     .flags = 0x0C800000},
+     .flags =
+         FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS},
     {.count = 0x20,
      .unk2 = 0x20,
      .unk4 = 0,
@@ -236,7 +245,8 @@ ItemPrimitiveParams g_ItemPrimitiveParams[] = {
      .priority = 2,
      .drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP,
      0,
-     .flags = 0x0C800000},
+     .flags =
+         FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS},
     {.count = 0x20,
      .unk2 = 0x20,
      .unk4 = 0,
@@ -249,5 +259,6 @@ ItemPrimitiveParams g_ItemPrimitiveParams[] = {
      .priority = 2,
      .drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP,
      0,
-     .flags = 0x0C800000},
+     .flags =
+         FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS},
 };

@@ -194,7 +194,7 @@ void EntityFleaArmor(Entity* self) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             DestroyEntity(entity);
-            CreateEntityFromEntity(2, self, entity);
+            CreateEntityFromEntity(E_EXPLOSION, self, entity);
             entity->params = 1;
         }
         self->velocityX = 0;

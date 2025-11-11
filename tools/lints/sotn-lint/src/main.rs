@@ -4,6 +4,7 @@ use std::process::ExitCode;
 
 mod attackelement;
 mod bit_flag_line_transformer;
+mod c;
 mod collider_effects;
 mod drawflags;
 mod drawmodes;
@@ -16,6 +17,7 @@ mod linter;
 mod player_status;
 mod primitive_type;
 mod relics;
+mod sfx;
 mod vram_flag;
 
 use attackelement::AttackElementTransformer;
@@ -33,6 +35,7 @@ use player_status::PlayerStatusTransformer;
 use primitive_type::PrimitiveTypeTransformer;
 use rayon::prelude::*;
 use relics::RelicsTransformer;
+use sfx::SfxLineTransformer;
 use vram_flag::PlayerVramFlagTransformer;
 
 fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>, linters: &Vec<Box<dyn Linter>>) ->
@@ -104,13 +107,18 @@ fn process_directory(dir_path: &str) -> bool {
         Box::new(primitive_type_transformer),
         Box::new(player_status_transformer),
         Box::new(attack_element_transformer),
-        Box::new(vram_flag_transformer)
-        ];
+        Box::new(vram_flag_transformer),
+        Box::new(SfxLineTransformer::new()),
+    ];
 
     let linters: Vec<Box<dyn Linter>> = vec![
         Box::new(EntityRangeLinter),
         Box::new(LocalExternLinter),
         Box::new(RegexLinter::new("Static String Reference", r"FntPrint\(D_")),
+        Box::new(RegexLinter::new(
+            "CreateEntity With Int",
+            r"Create[^(]*Entity[^(]*\((?:(?:0x[0-9A-F]+)|(?:[0-9]+)),",
+        )),
     ];
 
     let entries = std::fs::read_dir(dir_path).expect("Unable to read directory");

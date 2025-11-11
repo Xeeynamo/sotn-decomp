@@ -409,8 +409,8 @@ void func_8012E040(void) {
             return;
         }
         // This is a silly way to write this
-        if ((g_Player.vram_flag & 8 && PLAYER.velocityX > 0) ||
-            (g_Player.vram_flag & 8 && PLAYER.velocityX < 0)) {
+        if ((g_Player.vram_flag & TOUCHING_L_WALL && PLAYER.velocityX > 0) ||
+            (g_Player.vram_flag & TOUCHING_L_WALL && PLAYER.velocityX < 0)) {
             D_800B0914 = 1;
         }
         if (abs(PLAYER.velocityX) < FIX(1)) {
