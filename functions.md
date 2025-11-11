@@ -3540,7 +3540,7 @@
 | no4   | func_pspeu_09238860                      |      320 |         54 |        |       |     |
 | sel   | func_psp_09244E10                        |      321 |         49 | Yes    |       |     |
 | main  | func_psp_08933304                        |      321 |         62 | Yes    |       |     |
-| cat   | func_us_801B8D2C                         |      322 |         32 |        |       |     |
+| cat   | EntityElevator                           |      322 |         32 |        |       |     |
 | nz1   | EntityBreakableWall                      |      322 |         47 |        |       |     |
 | dra   | func_psp_090EE5D0                        |      323 |         37 |        |       |     |
 | cat   | func_us_801B972C                         |      323 |         41 |        |       |     |
