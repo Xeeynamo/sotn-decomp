@@ -1,18 +1,19 @@
 package splat
 
 import (
-	"gopkg.in/yaml.v3"
 	"os"
+
+	"github.com/goccy/go-yaml"
 )
 
 type Segment struct {
-	Name        string  `yaml:"name"`
-	Type        string  `yaml:"type"`
-	Start       int64   `yaml:"start"`
-	VRAM        int64   `yaml:"vram"`
-	Align       int64   `yaml:"align"`
-	Subalign    int64   `yaml:"subalign"`
-	Subsegments [][]any `yaml:"subsegments"`
+	Name        string `yaml:"name"`
+	Type        string `yaml:"type"`
+	Start       uint64 `yaml:"start"`
+	VRAM        uint64 `yaml:"vram"`
+	Align       uint64 `yaml:"align"`
+	Subalign    uint64 `yaml:"subalign"`
+	Subsegments []any  `yaml:"subsegments"`
 }
 
 type Config struct {
@@ -38,8 +39,8 @@ type Config struct {
 		DisassembleAll           bool     `yaml:"disassemble_all"`
 		SectionOrder             []string `yaml:"section_order"`
 	} `yaml:"options"`
-	Sha1     string    `yaml:"sha1"`
-	Segments []Segment `yaml:"segments"`
+	Sha1     string `yaml:"sha1"`
+	Segments []any  `yaml:"segments"`
 }
 
 func ReadConfig(path string) (*Config, error) {
@@ -53,17 +54,44 @@ func ReadConfig(path string) (*Config, error) {
 	return &config, nil
 }
 
+func (c *Config) ForEachCodeSubsegment(f func(segment Segment, subsegments []any)) {
+	for _, segmentRaw := range c.Segments {
+		segmentMap, ok := segmentRaw.(map[string]any)
+		if !ok {
+			continue
+		}
+		if kind, ok := segmentMap["type"]; !ok || kind != "code" {
+			continue
+		}
+		subsegments, ok := segmentMap["subsegments"].([]any)
+		if !ok {
+			continue
+		}
+		f(Segment{
+			VRAM: segmentMap["vram"].(uint64),
+		}, subsegments)
+	}
+}
+
 func (c *Config) GetSymbolName(offset int) string {
-	for _, segment := range c.Segments {
-		for _, subsegment := range segment.Subsegments {
+	ret := ""
+	c.ForEachCodeSubsegment(func(segment Segment, subsegments []any) {
+		for _, seg := range subsegments {
+			subsegment, ok := seg.([]any)
+			if !ok {
+				continue
+			}
 			if len(subsegment) < 3 {
 				continue
 			}
 			off := subsegment[0].(int)
 			if off == offset {
-				return subsegment[2].(string)
+				if val, ok := subsegment[2].(string); ok {
+					ret = val
+					return
+				}
 			}
 		}
-	}
-	return ""
+	})
+	return ret
 }

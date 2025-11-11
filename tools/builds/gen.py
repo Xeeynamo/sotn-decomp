@@ -831,16 +831,16 @@ with open(build_ninja, "w") as f:
     if not actual_version:
         actual_version = "us,hd,pspeu"
     for version in actual_version.split(","):
-        for entry in os.scandir("config/"):
-            if not entry.name.startswith(f"splat.{version}."):
-                continue
-            add_splat_config(nw, version, entry.path)
         nw.build(
             rule="assets-extract",
             outputs=f"assets/done_{version}",
             inputs=f"config/assets.{version}.yaml",
             implicit="bin/sotn-assets",
         )
+        for entry in os.scandir("config/"):
+            if not entry.name.startswith(f"splat.{version}."):
+                continue
+            add_splat_config(nw, version, entry.path)
         add_assets_config(nw, version)
         add_checksum(nw, version, f"config/check.{version}.sha")
 
