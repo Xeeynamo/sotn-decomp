@@ -3,4 +3,4 @@
 
 INCLUDE_ASM("st/nz1/nonmatchings/e_flea_armor", EntityFleaArmor);
 
-INCLUDE_ASM("st/nz1/nonmatchings/e_flea_armor", func_us_801BFC60);
+INCLUDE_ASM("st/nz1/nonmatchings/e_flea_armor", EntityFleaArmorAttackHitbox);

@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <common.h>
+#include "../nz1/nz1.h"
 
-// clang-format off
 INCLUDE_ASM("st/nz1_psp/nonmatchings/nz1_psp/water_effects", func_801C4144);
 
 INCLUDE_ASM("st/nz1_psp/nonmatchings/nz1_psp/water_effects", EntityAlucardWaterEffect);
@@ -15,4 +14,3 @@ INCLUDE_ASM("st/nz1_psp/nonmatchings/nz1_psp/water_effects", EntitySideWaterSpla
 INCLUDE_ASM("st/nz1_psp/nonmatchings/nz1_psp/water_effects", EntitySmallWaterDrop);
 
 INCLUDE_ASM("st/nz1_psp/nonmatchings/nz1_psp/water_effects", EntityWaterDrop);
-// clang-format on

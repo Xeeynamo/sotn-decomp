@@ -33,6 +33,12 @@ enum SpikesPointDirections {
 #define SPIKES_ELEMENT ELEMENT_CUT | ELEMENT_UNK_10
 #endif
 
+#ifdef STAGE_IS_NZ1
+#define START_COUNT 1
+#else
+#define START_COUNT 0
+#endif
+
 extern EInit g_EInitParticle;
 extern EInit g_EInitEnvironment;
 extern EInit g_EInitSpawner;
@@ -176,7 +182,7 @@ static void SpikesBreak(u32 tileIdx) {
 #endif
     tilePosX -= g_Tilemap.scrollX.i.hi;
     tilePosY -= g_Tilemap.scrollY.i.hi;
-    for (count = 0; count < 3; count++) {
+    for (count = START_COUNT; count < 3; count++) {
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
             CreateEntityFromCurrentEntity(E_ID(SPIKES_PARTS), entity);
@@ -287,7 +293,9 @@ void EntitySpikes(Entity* self) {
             if (collisionType > 243 && collisionType < 248) {
                 if (g_api.CheckEquipmentItemCount(
                         ITEM_SPIKE_BREAKER, EQUIP_ARMOR)) {
-#ifdef HAS_ORIENTATIONS
+#ifdef STAGE_IS_NZ1
+                    g_Tilemap.fg[tileIdx] = 0x58B;
+#elif defined(HAS_ORIENTATIONS)
                     g_Tilemap.fg[tileIdx] = 0;
 #else
                     switch (tileType) {
