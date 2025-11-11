@@ -131,7 +131,7 @@ void MarStepJump(void) {
         !(g_Player.padPressed & PAD_CROSS)) {
         PLAYER.velocityY = FIX(-1);
     }
-    if (g_Player.vram_flag & 2 && PLAYER.velocityY < FIX(-1)) {
+    if (g_Player.vram_flag & TOUCHING_CEILING && PLAYER.velocityY < FIX(-1)) {
         PLAYER.velocityY = FIX(-0.25);
         g_Player.unk44 |= 0x20;
     }

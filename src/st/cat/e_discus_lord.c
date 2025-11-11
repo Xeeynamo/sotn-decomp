@@ -55,7 +55,7 @@ void EntityDiscusLord(Entity* self) {
     s32 primIndex;
 
     discus = self + 1;
-    if (self->flags & 0x100 && self->step < 0x10) {
+    if (self->flags & FLAG_DEAD && self->step < 0x10) {
         self->hitboxState = 0;
         discus->flags |= FLAG_DEAD;
         self->flags &= ~(FLAG_UNK_20000000 | FLAG_UNK_200);

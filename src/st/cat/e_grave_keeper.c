@@ -140,7 +140,7 @@ void EntityGraveKeeper(Entity* self) {
     s32 var_s5;
     s32 pad[9];
 
-    if (self->flags & 0x100 && self->step != 0xC) {
+    if (self->flags & FLAG_DEAD && self->step != 0xC) {
         entity = self + 1;
         DestroyEntity(entity);
         self->hitboxState = 0;

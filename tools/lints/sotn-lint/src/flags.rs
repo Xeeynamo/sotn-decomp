@@ -201,4 +201,31 @@ mod tests {
         let result = FT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }
+
+    #[test]
+    fn test_multi_condition() {
+        let input_line = "if (self->flags & 0x100 && self->step != 6) {";
+        let expected_line = "if (self->flags & FLAG_DEAD && self->step != 6) {";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, expected_line)
+    }
+
+    #[test]
+    fn test_int_suffix() {
+        let input_line = "if (self->flags & 256u && test) {";
+        let expected_line = "if (self->flags & FLAG_DEAD && test) {";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, expected_line);
+
+        let input_line = "if (self->flags & 256 && test) {";
+        let expected_line = "if (self->flags & FLAG_DEAD && test) {";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, expected_line);
+
+        let input_line = "if (self->flags & 256LL && test) {";
+        let expected_line = "if (self->flags & FLAG_DEAD && test) {";
+        let result = FT.transform_line(input_line);
+        assert_eq!(result, expected_line);
+
+    }
 }

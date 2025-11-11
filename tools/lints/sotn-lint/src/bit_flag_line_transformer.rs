@@ -83,11 +83,10 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
     }
 
     fn replace_enum(&self, captures: &regex::Captures) -> String {
-        if let (Some(prefix), Some(operator), Some(field_value_string), Some(terminal_string)) = (
+        if let (Some(prefix), Some(operator), Some(field_value_string)) = (
                 captures.get(1).map(|m| m.as_str().to_string()),
                 captures.get(2).map(|m| m.as_str().to_string()),
-                captures.get(4).map(|m| m.as_str().to_string()),
-                captures.get(5).map(|m| m.as_str().to_string())) {
+                captures.get(4).map(|m| m.as_str().to_string())) {
 
             let inverted = captures.get(3).map(|m| m.as_str()) == Some("~");
 
@@ -151,7 +150,7 @@ impl<U: EnumValue> BitFlagLineTransformer<U> where <U as FromStr>::Err: Debug {
                     rvalue = format!("({})", rvalue);
                 }
             }
-            return format!("{}{}{}{}", prefix.to_string(), invert, rvalue, terminal_string);
+            return format!("{}{}{}", prefix.to_string(), invert, rvalue);
         }
         captures
             .get(0)

@@ -712,7 +712,7 @@ void func_us_801AABA4(Entity* self) {
                 offsetY = 1;
             }
 
-            if (g_Player.vram_flag == 1 &&
+            if (g_Player.vram_flag == TOUCHING_GROUND &&
                 ((offsetY) ^ self->ext.topElevator.unk7E)) {
                 self->ext.topElevator.unk8C--;
             } else {
