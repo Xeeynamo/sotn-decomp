@@ -9,9 +9,9 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1C74", func_psp_08900590);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1C74", func_psp_08900598);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1C74", func_psp_089005A0);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1C74", _kill);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1C74", func_psp_089005A8);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1C74", _getpid);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1C74", func_psp_089005B0);
 
