@@ -43,7 +43,7 @@ void func_us_801B951C(Entity* self);
 void func_us_801B907C(Entity* self);
 void func_us_801BA388(Entity* self);
 void func_us_801BA164(Entity* self);
-void func_us_801B8D2C(Entity* self);
+void EntityElevator(Entity* self);
 void func_us_801BA7FC(Entity* self);
 void EntityBigRedFireball(Entity* self);
 void EntityDiscusLord(Entity* self);
@@ -129,7 +129,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B907C,
     func_us_801BA388,
     func_us_801BA164,
-    func_us_801B8D2C,
+    EntityElevator,
     func_us_801BA7FC,
     EntityBigRedFireball,
     EntityDiscusLord,
@@ -194,7 +194,7 @@ EInit g_EInitBoneArkAttackEffects = {
 EInit g_EInitBoneArkProjectile = {ANIMSET_OVL(0x05), 0x15, 0x48, 0x0200, 0x02F};
 
 EInit D_us_801811C4 = {ANIMSET_OVL(0x02), 0x01, 0x00, 0x0000, 0x005};
-EInit D_us_801811D0 = {ANIMSET_OVL(0x02), 0x03, 0x00, 0x0000, 0x005};
+EInit g_EInitElevator = {ANIMSET_OVL(0x02), 0x03, 0x00, 0x0000, 0x005};
 EInit g_EInitEnvironment = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
 EInit D_us_801811E8 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x005};
 EInit D_us_801811F4 = {ANIMSET_OVL(0x01), 0x13, 0x00, 0x0000, 0x000};

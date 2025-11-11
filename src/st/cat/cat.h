@@ -72,7 +72,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_28,                           // func_us_801B907C
     E_UNK_29,                           // func_us_801BA388
     E_UNK_2A,                           // func_us_801BA164
-    E_UNK_2B,                           // func_us_801B8D2C
+    E_ELEVATOR,                         // EntityElevator
     E_UNK_2C,                           // func_us_801BA7FC
     E_BIG_RED_FIREBALL,                 // EntityBigRedFireball
     E_DISCUS_LORD,                      // EntityDiscusLord

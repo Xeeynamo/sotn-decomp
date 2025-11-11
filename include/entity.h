@@ -2073,10 +2073,12 @@ typedef struct {
     /* 0x80 */ u8 unk80;
 } ET_CEN_Elevator;
 
+// Small elevator used in TOP/RTOP
+// A variation of this exists in CAT
 typedef struct {
-    /* 0x7C */ u8 unk7C;
+    /* 0x7C */ u8 playerCollision;
     /* 0x7D */ u8 : 8;
-    /* 0x7E */ u8 unk7E;
+    /* 0x7E */ u8 movingUp;
     /* 0x7F */ u8 unk7F;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
