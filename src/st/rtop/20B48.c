@@ -306,8 +306,8 @@ void EntityTriangleElevator(Entity* self) {
         self->animCurFrame = 0xD;
         self->hitboxState = 1;
         self->ext.topElevator.unk88 = 0;
-        self->ext.topElevator.unk7E = self->params & 1;
-        self->ext.topElevator.unk7C = 0;
+        self->ext.topElevator.movingUp = self->params & 1;
+        self->ext.topElevator.playerCollision = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -381,12 +381,12 @@ void EntityTriangleElevator(Entity* self) {
         player = &PLAYER;
 
         if (self->ext.topElevator.mapPos.y < 0x69) {
-            self->ext.topElevator.unk7E = 1;
+            self->ext.topElevator.movingUp = true;
         }
         if (self->ext.topElevator.mapPos.y > 0x139) {
-            self->ext.topElevator.unk7E = 0;
+            self->ext.topElevator.movingUp = false;
         }
-        if (self->ext.topElevator.unk7E) {
+        if (self->ext.topElevator.movingUp) {
             self->velocityY = FIX(0.5);
         } else {
             self->velocityY = -FIX(0.5);
@@ -395,7 +395,7 @@ void EntityTriangleElevator(Entity* self) {
         MoveEntity();
         self->ext.topElevator.unk88++;
 
-        if (self->ext.topElevator.unk7C & 4) {
+        if (self->ext.topElevator.playerCollision & 4) {
             offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi -
                       self->ext.topElevator.mapPos.y;
             if ((offsetY > 0) ||
@@ -435,7 +435,7 @@ void EntityTriangleElevator(Entity* self) {
 
         if (collision & 4) {
             g_api.func_8010DFF0(0, 1);
-            if (self->ext.topElevator.unk7C ^ 4) {
+            if (self->ext.topElevator.playerCollision ^ 4) {
                 if (!(self->ext.topElevator.unk80 & 0xF)) {
                     if (HIH(player->velocityY) > 0) {
                         self->ext.topElevator.unk80 = 8;
@@ -443,14 +443,14 @@ void EntityTriangleElevator(Entity* self) {
                 }
             }
         } else {
-            if (self->ext.topElevator.unk7C & 4) {
+            if (self->ext.topElevator.playerCollision & 4) {
                 self->ext.topElevator.unk8A = 8;
             }
         }
         if ((collision & 2) && !(self->ext.topElevator.unk80 & 0xF)) {
             self->ext.topElevator.unk80 = 0x18;
         }
-        self->ext.topElevator.unk7C = collision;
+        self->ext.topElevator.playerCollision = collision;
         break;
     }
 
@@ -493,7 +493,7 @@ void func_us_801A1940(Entity* self) {
         self->animCurFrame = 0xC;
         self->hitboxState = 1;
         self->ext.topElevator.unk88 = 0;
-        self->ext.topElevator.unk7E = self->params & 1;
+        self->ext.topElevator.movingUp = self->params & 1;
         self->posY.i.hi = 0x1AF - g_Tilemap.scrollY.i.hi;
 
         if (g_CastleFlags[TOP_LION_LIGHTS] & 1) {
@@ -509,7 +509,7 @@ void func_us_801A1940(Entity* self) {
         } else {
             self->step = 1;
         }
-        self->ext.topElevator.unk7C = 0;
+        self->ext.topElevator.playerCollision = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -575,12 +575,12 @@ void func_us_801A1940(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (self->ext.topElevator.mapPos.y > 0x1AF) {
-                self->ext.topElevator.unk7E = 1;
+                self->ext.topElevator.movingUp = true;
                 self->velocityY = 0;
                 self->step_s++;
             }
             if (self->ext.topElevator.mapPos.y < 0xAF) {
-                self->ext.topElevator.unk7E = 0;
+                self->ext.topElevator.movingUp = false;
                 self->velocityY = 0;
                 D_us_801B10D8 = 0;
                 self->step_s = 1;
@@ -597,15 +597,15 @@ void func_us_801A1940(Entity* self) {
             }
 
             if (g_Player.vram_flag == TOUCHING_GROUND &&
-                ((offsetY) ^ self->ext.topElevator.unk7E)) {
+                ((offsetY) ^ self->ext.topElevator.movingUp)) {
                 self->ext.topElevator.unk8C--;
             } else {
                 self->ext.topElevator.unk8C = 0x40;
             }
 
             if (self->ext.topElevator.unk8C == 0 ||
-                (self->ext.topElevator.unk7C & 4)) {
-                if (self->ext.topElevator.unk7E) {
+                (self->ext.topElevator.playerCollision & 4)) {
+                if (self->ext.topElevator.movingUp) {
                     self->velocityY = FIX(-0.5);
                 } else {
                     self->velocityY = FIX(0.5);
@@ -618,7 +618,7 @@ void func_us_801A1940(Entity* self) {
         self->velocityX = 0;
         MoveEntity();
         self->ext.topElevator.unk88++;
-        if (self->ext.topElevator.unk7C & 4) {
+        if (self->ext.topElevator.playerCollision & 4) {
             offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi -
                       self->ext.topElevator.mapPos.y;
 
@@ -659,7 +659,7 @@ void func_us_801A1940(Entity* self) {
 
         if (collision & 4) {
             g_api.func_8010DFF0(0, 1);
-            if (self->ext.topElevator.unk7C ^ 4) {
+            if (self->ext.topElevator.playerCollision ^ 4) {
                 if (!(self->ext.topElevator.unk80 & 0xF)) {
                     if (HIH(player->velocityY) > 0) {
                         self->ext.topElevator.unk80 = 8;
@@ -667,14 +667,14 @@ void func_us_801A1940(Entity* self) {
                 }
             }
         } else {
-            if (self->ext.topElevator.unk7C & 4) {
+            if (self->ext.topElevator.playerCollision & 4) {
                 self->ext.topElevator.unk8A = 8;
             }
         }
         if (collision & 2 && !(self->ext.topElevator.unk80 & 0xF)) {
             self->ext.topElevator.unk80 = 0x18;
         }
-        self->ext.topElevator.unk7C = collision;
+        self->ext.topElevator.playerCollision = collision;
         break;
     }
 
