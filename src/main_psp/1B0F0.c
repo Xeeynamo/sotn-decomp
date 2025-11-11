@@ -178,6 +178,8 @@ extern u8 g_BmpCastleMap[0x8000];
 extern u16 g_Clut[3][0x1000];
 #define g_IsTimeAttackUnlocked (*((s32*)0x091FC418))
 
+void* memalign(size_t, size_t);
+void func_psp_08919C4C(void);
 u32 func_psp_08919BA8(void);
 void func_psp_0891AEC8(void);
 void func_psp_0891FC64(void);
@@ -240,12 +242,16 @@ u32 func_psp_08919BA8(void) {
 
 u32 PadRead_PSP(void) { return func_psp_08919BA8(); }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_08919C00);
+void func_psp_08919C00(s32 arg0) {
+    func_psp_08919C4C();
+    D_psp_08B41F68 = arg0;
+    D_psp_08B41F64 = memalign(0x40, D_psp_08B41F68);
+}
 
 static void func_psp_08919C4C(void) {
-    if (D_psp_08B41F64) {
+    if (D_psp_08B41F64 != NULL) {
         free(D_psp_08B41F64);
-        D_psp_08B41F64 = 0;
+        D_psp_08B41F64 = NULL;
     }
 }
 
@@ -269,7 +275,7 @@ static void* func_psp_08919CF4(Unk08919CF4* arg0) {
 }
 
 Unk08919D98* func_psp_08919D40(Unk08919D98* arg0, s16 arg1) {
-    if (arg0) {
+    if (arg0 != NULL) {
         func_psp_08919D98(arg0);
         if (arg1 > 0) {
             func_psp_08934D20(arg0);
@@ -2197,9 +2203,57 @@ void func_psp_089264CC(s32 arg0, u_long* arg1, s32 arg2) {
     memcpy(var_s0, arg1, 0x200);
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0892667C);
+void func_psp_0892667C(s32 arg0, u_long* arg1) {
+    RECT rect;
+    u16* var_s0;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_08926808);
+    var_s0 = (u16*)g_Clut;
+    arg0 &= 0x3FF;
+    if ((arg0 >= 0) && (arg0 < 0x100)) {
+        rect.x = 0x200;
+    } else if ((arg0 >= 0x100) && (arg0 < 0x200)) {
+        rect.x = 0;
+        var_s0 += 0x1000;
+    } else if ((arg0 >= 0x200) && (arg0 < 0x300)) {
+        rect.x = 0x100;
+        var_s0 += 0x2000;
+    } else {
+        return;
+    }
+    rect.x += (arg0 & 0xF) * 0x10;
+    rect.y = ((arg0 / 0x10) & 0xF) + 0xF0;
+    rect.w = 0x10;
+    rect.h = 1;
+    LoadImage(&rect, arg1);
+    var_s0 += (((arg0 / 0x10) & 0xF) << 8) + ((arg0 & 0xF) * 0x10);
+    memcpy(var_s0, arg1, 0x20);
+}
+
+void func_psp_08926808(s32 arg0, u_long* arg1) {
+    RECT rect;
+    u16* var_s0;
+
+    var_s0 = (u16*)g_Clut;
+    arg0 &= 0x3FF;
+    if ((arg0 >= 0) && (arg0 < 0x100)) {
+        rect.x = 0x200;
+    } else if ((arg0 >= 0x100) && (arg0 < 0x200)) {
+        rect.x = 0;
+        var_s0 += 0x1000;
+    } else if ((arg0 >= 0x200) && (arg0 < 0x300)) {
+        rect.x = 0x100;
+        var_s0 += 0x2000;
+    } else {
+        return;
+    }
+    rect.x += (arg0 & 0xF) * 0x10;
+    rect.y = ((arg0 / 0x10) & 0xF) + 0xF0;
+    rect.w = 0x10;
+    rect.h = 1;
+    func_psp_0891C1C0(&rect, arg1);
+    var_s0 += (((arg0 / 0x10) & 0xF) << 8) + ((arg0 & 0xF) * 0x10);
+    memcpy(var_s0, arg1, 0x20);
+}
 
 static void GameEntrypoint(void) {
     func_psp_08926348();
