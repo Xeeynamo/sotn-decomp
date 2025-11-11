@@ -480,7 +480,7 @@ void EntityFallingStep(Entity* self) {
             if (scrolledY > 0x3C0) {
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(6, self, entity);
+                    CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
                     entity->params = 0x10;
                 }
                 DestroyEntity(self);

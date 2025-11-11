@@ -96,7 +96,7 @@ void func_us_801BB200(Entity* self) {
         g_Tilemap.fg[tilePos] = D_us_80181AA8[3 - params][upperParams];
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(2, self, newEntity);
+            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 3;
         }
         self->animCurFrame = 0;

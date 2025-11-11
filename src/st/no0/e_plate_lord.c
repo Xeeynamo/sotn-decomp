@@ -960,7 +960,7 @@ void EntityPlateLord(Entity* self) {
                 posY += (Random() & 0x1F) - 0x10;
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromCurrentEntity(2, tempEntity);
+                    CreateEntityFromCurrentEntity(E_EXPLOSION, tempEntity);
                     tempEntity->params = 1;
                     tempEntity->zPriority = self->zPriority + 8;
                     tempEntity->posX.i.hi = posX;
