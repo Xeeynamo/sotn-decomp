@@ -42,12 +42,12 @@ typedef struct {
 } Unk0891B118;
 
 typedef struct {
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
+    float unk0;
+    float unk4;
+    s32 unk8;
     float unkC;
     float unk10;
-    s32 : 32;
+    float unk14;
 } Unk0891D9F4;
 
 extern s32 D_psp_0893CED0;
@@ -70,9 +70,13 @@ extern s32 D_psp_089464DC; // screen_h
 extern float D_psp_089464E0;
 extern float D_psp_089464E4;
 extern s32 D_psp_089464E8;
+extern s32 D_psp_089464EC;
 extern s32 D_psp_089464F0;
 extern const char D_psp_089464F4[];
 extern const char D_psp_089464F8[];
+extern float D_psp_089464FC;
+extern float D_psp_08946500;
+extern s32 D_psp_08946504;
 extern s32 (*D_psp_08946508[])(OT_TYPE*);
 extern char D_psp_0894654C[];
 extern char* D_psp_08946580[];
@@ -130,13 +134,9 @@ extern s32 D_psp_08C629C0;
 extern u32 D_psp_08C629C4;
 extern s32 D_psp_08C629C8;
 extern s32 D_psp_08C629CC;
-extern s16 D_psp_08C629D0;
-extern s16 D_psp_08C629D2;
-extern s16 D_psp_08C629D4;
-extern s16 D_psp_08C629D6;
+extern RECT D_psp_08C629D0;
 extern DISPENV D_psp_08C629D8;
 extern DRAWENV D_psp_08C629EC;
-extern s32 D_psp_08C62A08;
 extern s32 D_psp_08C62A30; // screen_mode
 extern s32 D_psp_08C62A34; // screen_center_x
 extern s32 D_psp_08C62A38; // screen_center_y
@@ -1311,25 +1311,25 @@ void SetDrawMode(DR_MODE* p, s32 dfe, s32 dtd, s32 tpage, RECT* tw) {
 
 void SetDrawEnv(DR_ENV* dr_env, DRAWENV* env) {
     dr_env->len = 8;
-    ((s8*)dr_env)[11] = 0x10;
+    dr_env->code = 0x10;
     if (env != NULL) {
-        ((s16*)dr_env)[6] = env->clip.x;
-        ((s16*)dr_env)[7] = env->clip.y;
-        ((s16*)dr_env)[8] = env->clip.w;
-        ((s16*)dr_env)[9] = env->clip.h;
-        ((s16*)dr_env)[10] = env->ofs[0];
-        ((s16*)dr_env)[11] = env->ofs[1];
-        ((s16*)dr_env)[12] = env->tw.x;
-        ((s16*)dr_env)[13] = env->tw.y;
-        ((s16*)dr_env)[14] = env->tw.w;
-        ((s16*)dr_env)[15] = env->tw.h;
-        ((s16*)dr_env)[16] = env->tpage;
-        ((s8*)dr_env)[34] = env->dtd;
-        ((s8*)dr_env)[35] = env->dfe;
-        ((s8*)dr_env)[36] = env->isbg;
-        ((s8*)dr_env)[8] = env->r0;
-        ((s8*)dr_env)[9] = env->g0;
-        ((s8*)dr_env)[10] = env->b0;
+        dr_env->clip.x = env->clip.x;
+        dr_env->clip.y = env->clip.y;
+        dr_env->clip.w = env->clip.w;
+        dr_env->clip.h = env->clip.h;
+        dr_env->ofs[0] = env->ofs[0];
+        dr_env->ofs[1] = env->ofs[1];
+        dr_env->tw.x = env->tw.x;
+        dr_env->tw.y = env->tw.y;
+        dr_env->tw.w = env->tw.w;
+        dr_env->tw.h = env->tw.h;
+        dr_env->tpage = env->tpage;
+        dr_env->dtd = env->dtd;
+        dr_env->dfe = env->dfe;
+        dr_env->isbg = env->isbg;
+        dr_env->r0 = env->r0;
+        dr_env->g0 = env->g0;
+        dr_env->b0 = env->b0;
     }
 }
 
@@ -1346,10 +1346,10 @@ DRAWENV* PutDrawEnv(DRAWENV* env) {
     D_psp_08C629EC.b0 = env->b0;
     D_psp_08C629EC.dr_env = env->dr_env;
     SetDrawEnv(&D_psp_08C629EC.dr_env, &D_psp_08C629EC);
-    D_psp_08C629D0 = env->clip.x;
-    D_psp_08C629D2 = env->clip.y;
-    D_psp_08C629D4 = env->clip.w;
-    D_psp_08C629D6 = env->clip.h;
+    D_psp_08C629D0.x = env->clip.x;
+    D_psp_08C629D0.y = env->clip.y;
+    D_psp_08C629D0.w = env->clip.w;
+    D_psp_08C629D0.h = env->clip.h;
     D_psp_08C629C4 = env->tpage;
     D_psp_08C629C8 = D_psp_08C629EC.ofs[0];
     D_psp_08C629CC = D_psp_08C629EC.ofs[1];
@@ -1474,9 +1474,127 @@ DISPENV* SetDefDispEnv(DISPENV* env, s32 x, s32 y, s32 w, s32 h) {
     return env;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891DE74);
+void func_psp_0891DE74(void) {
+    s32 var_s1;
+    s32 var_s2;
+    Unk0891D9F4* p;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891E420);
+    var_s2 = 0;
+    p = (Unk0891D9F4*)SP(0);
+    var_s1 = D_psp_08C62A40;
+
+    func_psp_0891AF48(0);
+    func_psp_08910660(0);
+    p[0].unk8 = p[1].unk8 = p[2].unk8 = p[3].unk8 = 0x80FFFFFF;
+    func_psp_08911F24(0, D_psp_089464F0);
+    func_psp_08911B7C();
+    switch (D_psp_08B4206C) {
+    case 0:
+        break;
+    case 1:
+        p[0].unkC = p[0].unk10 = p[1].unk10 = p[2].unkC = 0.0f;
+        p[1].unkC = p[2].unk10 = p[3].unkC = p[3].unk10 = 255.0f;
+        p[0].unk14 = p[1].unk14 = p[2].unk14 = p[3].unk14 = 1.0f;
+        p[0].unk0 = p[0].unk4 = p[1].unk4 = p[2].unk0 = 0.0f;
+        p[1].unk0 = p[2].unk4 = p[3].unk0 = p[3].unk4 = 255.0f;
+        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_08911990((s32)sceGeEdramGetAddr() + 0xCC000, 0x100);
+        func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
+        break;
+    case 2:
+        func_psp_08910660(1);
+        func_psp_08910810(0, 0xA, 0xA, -1, 0xFF808080);
+        p[0].unk8 = p[1].unk8 = p[2].unk8 = p[3].unk8 = 0xFFFFFFFF;
+        p[0].unkC = p[2].unkC = D_psp_08C62A34;
+        p[0].unk10 = p[1].unk10 = D_psp_08C62A38;
+        p[1].unkC = p[3].unkC = D_psp_08C62A34 + D_psp_089464D8;
+        p[2].unk10 = p[3].unk10 = D_psp_08C62A38 + D_psp_089464DC;
+        p[0].unk14 = p[1].unk14 = p[2].unk14 = p[3].unk14 = 1.0f;
+        p[0].unk0 = p[0].unk4 = p[1].unk4 = p[2].unk0 = 0.0f;
+        p[1].unk0 = D_psp_089464FC;
+        p[2].unk4 = D_psp_08946500;
+        p[3].unk0 = D_psp_089464FC;
+        p[3].unk4 = D_psp_08946500;
+        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_08911990(func_psp_0891AC24(), 0x200);
+        func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
+        break;
+    case 3:
+        p[0].unkC = p[0].unk10 = p[1].unk10 = p[2].unkC = 0.0f;
+        p[1].unkC = p[3].unkC = 63.0f;
+        p[2].unk10 = p[3].unk10 = 63.0f;
+        p[0].unk14 = p[1].unk14 = p[2].unk14 = p[3].unk14 = 1.0f;
+        p[0].unk0 = p[0].unk4 = p[1].unk4 = p[2].unk0 = 0.0f;
+        p[1].unk0 = p[3].unk0 = 63.0f;
+        p[2].unk4 = p[3].unk4 = 63.0f;
+        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_08911990((s32)sceGeEdramGetAddr() + 0x12C200, 0x40);
+        func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
+        break;
+    case 4:
+        p[0].unkC = 0.0f;
+        p[0].unk10 = 0.0f;
+        p[1].unkC = 128.0f;
+        p[1].unk10 = 0.0f;
+        p[2].unkC = 0.0f;
+        p[2].unk10 = 136.0f;
+        p[3].unkC = 128.0f;
+        p[3].unk10 = 136.0f;
+        p[0].unk14 = p[1].unk14 = p[2].unk14 = p[3].unk14 = 1.0f;
+        p[0].unk0 = 0.0f;
+        p[0].unk4 = 0.0f;
+        p[1].unk0 = 256.0f;
+        p[1].unk4 = 0.0f;
+        p[2].unk0 = 0.0f;
+        p[2].unk4 = 272.0f;
+        p[3].unk0 = 256.0f;
+        p[3].unk4 = 272.0f;
+        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_08911990((s32)sceGeEdramGetAddr() + 0xCC000, 0x100);
+        func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
+        p[0].unk10 += 136.0f;
+        p[1].unk10 += 136.0f;
+        p[2].unk10 += 136.0f;
+        p[3].unk10 += 136.0f;
+        p[1].unk0 = 512.0f;
+        p[3].unk0 = 512.0f;
+        func_psp_08911990(func_psp_0891AC24(), 0x200);
+        func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
+        break;
+    }
+    func_psp_0891AF48(var_s1);
+}
+
+void func_psp_0891E420(void) {
+    s32 var_s1;
+    Unk0891D9F4* p;
+
+    var_s1 = 0;
+    p = (Unk0891D9F4*)SP(0);
+
+    func_psp_08911990(func_psp_0891AC24(), 0x200);
+    func_psp_08910660(0);
+    p[0].unk8 = p[1].unk8 = p[2].unk8 = p[3].unk8 = D_psp_08946504;
+    p[0].unkC = p[2].unkC = D_psp_08C62A34;
+    p[0].unk10 = p[1].unk10 = D_psp_08C62A38;
+    p[1].unkC = p[3].unkC = D_psp_08C62A34 + D_psp_089464D8;
+    p[2].unk10 = p[3].unk10 = D_psp_08C62A38 + D_psp_089464DC;
+    p[0].unk14 = p[1].unk14 = p[2].unk14 = p[3].unk14 = 1.0f;
+    p[0].unk0 = p[2].unk0 = D_psp_08C629EC.clip.x;
+    p[0].unk4 = p[1].unk4 = D_psp_08C629EC.clip.y;
+    p[1].unk0 = p[3].unk0 =
+        D_psp_08C629EC.clip.x + (float)D_psp_08C629EC.clip.w;
+    p[2].unk4 = p[3].unk4 =
+        D_psp_08C629EC.clip.y + (float)D_psp_08C629EC.clip.h;
+    func_psp_0891AF48(0);
+    func_psp_08911F24(0, D_psp_089464F0);
+    func_psp_08911B7C();
+    func_psp_089109E4(0, 1, 1);
+    func_psp_0891089C(0, 0, 0x1E0, 0x110);
+    func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
+    func_psp_089109E4(0, 1, 0);
+    func_psp_0891AF48(2);
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891E638);
 
@@ -1578,7 +1696,7 @@ void func_psp_0891E994(OT_TYPE* p) {
             func_psp_0891B2CC(sp5C, sp58, sp54 - 1, var_fp - 1, 0x80000000);
             func_psp_0891AF48(sp50);
         }
-        func_psp_0891FDC8(&D_psp_08C62A08);
+        func_psp_0891FDC8(&D_psp_08C629EC.dr_env);
         D_psp_08C62EC0 = 0;
         D_psp_08C62A50 = 0;
         D_psp_08C62A54 = 0;
@@ -1812,7 +1930,64 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891FD20);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891FD74);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891FDC8);
+s32 func_psp_0891FDC8(DR_ENV* p) {
+    DR_ENV* ptr;
+    RECT rect;
+    s32 x, y;
+
+    ptr = p;
+
+    D_psp_08C629EC.dr_env.tag = ptr->tag;
+    D_psp_08C629EC.dr_env.len = ptr->len;
+    D_psp_08C629EC.dr_env.r0 = ptr->r0;
+    D_psp_08C629EC.dr_env.g0 = ptr->g0;
+    D_psp_08C629EC.dr_env.b0 = ptr->b0;
+    D_psp_08C629EC.dr_env.code = ptr->code;
+    D_psp_08C629EC.dr_env.clip = ptr->clip;
+    D_psp_08C629EC.dr_env.ofs = ptr->ofs;
+    D_psp_08C629EC.dr_env.tw = ptr->tw;
+    D_psp_08C629EC.dr_env.tpage = ptr->tpage;
+    D_psp_08C629EC.dr_env.dtd = ptr->dtd;
+    D_psp_08C629EC.dr_env.dfe = ptr->dfe;
+    D_psp_08C629EC.dr_env.isbg = ptr->isbg;
+    if ((ptr->ofs[0] == 0x40) && (ptr->clip.x == 0x40)) {
+        D_psp_08C629C8 = 0x40;
+    } else {
+        D_psp_08C629C8 = 0;
+    }
+    D_psp_08C629CC = 0;
+    func_psp_0891A608();
+    x = 0;
+    y = 0;
+    rect = ptr->clip;
+    if (D_psp_089464EC && ptr->ofs[1] == 0x100) {
+        func_psp_0891AF48(1);
+        rect.y -= ptr->ofs[1];
+    } else if (ptr->ofs[0] == 0x200 && ptr->ofs[1] == 0x1C0) {
+        func_psp_0891AF48(3);
+        rect.x = 0;
+        rect.y = 0;
+    } else if (
+        D_psp_08C629D8.disp.w <= 0x1E0 && D_psp_08C629D8.disp.h <= 0x100) {
+        func_psp_0891AF48(2);
+    } else {
+        func_psp_0891AF48(0);
+        x = D_psp_08C62A34;
+        y = D_psp_08C62A38;
+        rect.x *= D_psp_089464E0;
+        rect.y *= D_psp_089464E4;
+        rect.w *= D_psp_089464E0;
+        rect.h *= D_psp_089464E4;
+    }
+    func_psp_0891089C(
+        x + rect.x, y + rect.y, x + rect.x + rect.w, y + rect.y + rect.h);
+    if (ptr->isbg == 1) {
+        func_psp_0891B2CC(x + rect.x, y + rect.y, rect.w, rect.h,
+                          GU_ABGR(0x80, ptr->b0, ptr->g0, ptr->r0));
+    }
+    func_psp_08910634(D_psp_08C629EC.dtd ? 1 : 0);
+    return 0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_089201E8);
 

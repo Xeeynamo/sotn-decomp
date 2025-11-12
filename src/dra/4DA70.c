@@ -617,8 +617,8 @@ void RenderPrimitives(void) {
                         *(s16*)&env->code[7] = drawOfs;
 #endif
 #ifdef VERSION_PSP
-                        *(s16*)&env->code[3] = drawOfs;
-                        *(s16*)&env->code[1] = drawOfs;
+                        env->ofs[0] = drawOfs;
+                        env->clip.x = drawOfs;
 #endif
                     }
                     if (prim->drawMode & DRAW_UNK_800) {
