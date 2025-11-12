@@ -204,9 +204,9 @@ typedef struct {
 
 typedef struct {
     O_TAG;
-    #ifndef VERSION_PSP
+#ifndef VERSION_PSP
     /* 0x4 */ u_long code[15];
-    #else
+#else
     /* 0x8 */ u_char r0, g0, b0, code;
     /* 0xC */ RECT clip;
     /* 0x14 */ short ofs[2];
@@ -216,7 +216,7 @@ typedef struct {
     /* 0x23 */ u_char dfe;
     /* 0x24 */ u_char isbg;
     /* 0x25 */ u_char r1, g1, b1;
-    #endif
+#endif
 } DR_ENV; /* Packed Drawing Environment, size = 0x40 */
 
 typedef struct {

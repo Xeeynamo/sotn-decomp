@@ -1844,14 +1844,15 @@ s32 func_psp_0891FDC8(DR_ENV* p) {
     x = 0;
     y = 0;
     rect = ptr->clip;
-    if ((D_psp_089464EC != 0) && (ptr->ofs[1] == 0x100)) {
+    if (D_psp_089464EC && ptr->ofs[1] == 0x100) {
         func_psp_0891AF48(1);
         rect.y -= ptr->ofs[1];
-    } else if ((ptr->ofs[0] == 0x200) && (ptr->ofs[1] == 0x1C0)) {
+    } else if (ptr->ofs[0] == 0x200 && ptr->ofs[1] == 0x1C0) {
         func_psp_0891AF48(3);
         rect.x = 0;
         rect.y = 0;
-    } else if ((D_psp_08C629D8.disp.w <= 0x1E0) && (D_psp_08C629D8.disp.h <= 0x100)) {
+    } else if (
+        D_psp_08C629D8.disp.w <= 0x1E0 && D_psp_08C629D8.disp.h <= 0x100) {
         func_psp_0891AF48(2);
     } else {
         func_psp_0891AF48(0);
@@ -1862,9 +1863,11 @@ s32 func_psp_0891FDC8(DR_ENV* p) {
         rect.w *= D_psp_089464E0;
         rect.h *= D_psp_089464E4;
     }
-    func_psp_0891089C(x + rect.x, y + rect.y, x + rect.x + rect.w, y + rect.y + rect.h);
+    func_psp_0891089C(
+        x + rect.x, y + rect.y, x + rect.x + rect.w, y + rect.y + rect.h);
     if (ptr->isbg == 1) {
-        func_psp_0891B2CC(x + rect.x, y + rect.y, rect.w, rect.h, GU_ABGR(0x80, ptr->b0, ptr->g0, ptr->r0));
+        func_psp_0891B2CC(x + rect.x, y + rect.y, rect.w, rect.h,
+                          GU_ABGR(0x80, ptr->b0, ptr->g0, ptr->r0));
     }
     func_psp_08910634(D_psp_08C62A02 ? 1 : 0);
     return 0;
