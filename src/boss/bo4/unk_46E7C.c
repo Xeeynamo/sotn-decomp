@@ -253,7 +253,7 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
             OVL_EXPORT(CreateEntFactoryFromEntity)
             (g_CurrentEntity, FACTORY(0x2C, 0x46), 0);
             g_Dop.timers[ALU_T_HITEFFECT] = 0x18;
-            g_Dop.damagePalette = 0x8202;
+            g_Dop.damagePalette = PAL_FLAG(0x202);
         } else if (damage->effects & EFFECT_UNK_2000) {
             OVL_EXPORT(CreateEntFactoryFromEntity)
             (g_CurrentEntity, FACTORY(0x2E, 0), 0);
