@@ -74,6 +74,8 @@ extern s32 D_psp_089464EC;
 extern s32 D_psp_089464F0;
 extern const char D_psp_089464F4[];
 extern const char D_psp_089464F8[];
+extern float D_psp_089464FC;
+extern float D_psp_08946500;
 extern s32 D_psp_08946504;
 extern s32 (*D_psp_08946508[])(OT_TYPE*);
 extern char D_psp_0894654C[];
@@ -1472,10 +1474,99 @@ DISPENV* SetDefDispEnv(DISPENV* env, s32 x, s32 y, s32 w, s32 h) {
     return env;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891DE74);
+void func_psp_0891DE74(void) {
+    s32 var_s1;
+    s32 var_s2;
+    Unk0891D9F4* p;
+
+    var_s2 = 0;
+    p = (Unk0891D9F4*)0x10000;
+    var_s1 = D_psp_08C62A40;
+
+    func_psp_0891AF48(0);
+    func_psp_08910660(0);
+    p[0].unk8 = p[1].unk8 = p[2].unk8 = p[3].unk8 = 0x80FFFFFF;
+    func_psp_08911F24(0, D_psp_089464F0);
+    func_psp_08911B7C();
+    switch (D_psp_08B4206C) {
+    case 0:
+        break;
+    case 1:
+        p[0].unkC = p[0].unk10 = p[1].unk10 = p[2].unkC = 0.0f;
+        p[1].unkC = p[2].unk10 = p[3].unkC = p[3].unk10 = 255.0f;
+        p[0].unk14 = p[1].unk14 = p[2].unk14 = p[3].unk14 = 1.0f;
+        p[0].unk0 = p[0].unk4 = p[1].unk4 = p[2].unk0 = 0.0f;
+        p[1].unk0 = p[2].unk4 = p[3].unk0 = p[3].unk4 = 255.0f;
+        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_08911990((s32)sceGeEdramGetAddr() + 0xCC000, 0x100);
+        func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
+        break;
+    case 2:
+        func_psp_08910660(1);
+        func_psp_08910810(0, 0xA, 0xA, -1, 0xFF808080);
+        p[0].unk8 = p[1].unk8 = p[2].unk8 = p[3].unk8 = 0xFFFFFFFF;
+        p[0].unkC = p[2].unkC = D_psp_08C62A34;
+        p[0].unk10 = p[1].unk10 = D_psp_08C62A38;
+        p[1].unkC = p[3].unkC = D_psp_08C62A34 + D_psp_089464D8;
+        p[2].unk10 = p[3].unk10 = D_psp_08C62A38 + D_psp_089464DC;
+        p[0].unk14 = p[1].unk14 = p[2].unk14 = p[3].unk14 = 1.0f;
+        p[0].unk0 = p[0].unk4 = p[1].unk4 = p[2].unk0 = 0.0f;
+        p[1].unk0 = D_psp_089464FC;
+        p[2].unk4 = D_psp_08946500;
+        p[3].unk0 = D_psp_089464FC;
+        p[3].unk4 = D_psp_08946500;
+        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_08911990(func_psp_0891AC24(), 0x200);
+        func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
+        break;
+    case 3:
+        p[0].unkC = p[0].unk10 = p[1].unk10 = p[2].unkC = 0.0f;
+        p[1].unkC = p[3].unkC = 63.0f;
+        p[2].unk10 = p[3].unk10 = 63.0f;
+        p[0].unk14 = p[1].unk14 = p[2].unk14 = p[3].unk14 = 1.0f;
+        p[0].unk0 = p[0].unk4 = p[1].unk4 = p[2].unk0 = 0.0f;
+        p[1].unk0 = p[3].unk0 = 63.0f;
+        p[2].unk4 = p[3].unk4 = 63.0f;
+        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_08911990((s32)sceGeEdramGetAddr() + 0x12C200, 0x40);
+        func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
+        break;
+    case 4:
+        p[0].unkC = 0.0f;
+        p[0].unk10 = 0.0f;
+        p[1].unkC = 128.0f;
+        p[1].unk10 = 0.0f;
+        p[2].unkC = 0.0f;
+        p[2].unk10 = 136.0f;
+        p[3].unkC = 128.0f;
+        p[3].unk10 = 136.0f;
+        p[0].unk14 = p[1].unk14 = p[2].unk14 = p[3].unk14 = 1.0f;
+        p[0].unk0 = 0.0f;
+        p[0].unk4 = 0.0f;
+        p[1].unk0 = 256.0f;
+        p[1].unk4 = 0.0f;
+        p[2].unk0 = 0.0f;
+        p[2].unk4 = 272.0f;
+        p[3].unk0 = 256.0f;
+        p[3].unk4 = 272.0f;
+        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_08911990((s32)sceGeEdramGetAddr() + 0xCC000, 0x100);
+        func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
+        p[0].unk10 += 136.0f;
+        p[1].unk10 += 136.0f;
+        p[2].unk10 += 136.0f;
+        p[3].unk10 += 136.0f;
+        p[1].unk0 = 512.0f;
+        p[3].unk0 = 512.0f;
+        func_psp_08911990(func_psp_0891AC24(), 0x200);
+        func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
+        break;
+    }
+    func_psp_0891AF48(var_s1);
+}
 
 void func_psp_0891E420(void) {
-    s32* var_s1;
+    s32 var_s1;
     Unk0891D9F4* p;
 
     var_s1 = 0;
