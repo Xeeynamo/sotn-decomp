@@ -487,7 +487,7 @@
 | main  | sceVfpuVector4Clamp                      |       18 |          1 |        |       |     |
 | main  | sceVfpuVector4ClampXYZ                   |       18 |          1 |        |       |     |
 | main  | sceGuCheckList                           |       18 |          1 |        |       |     |
-| main  | func_psp_08906AD8                        |       18 |          2 |        |       |     |
+| main  | abort                                    |       18 |          2 |        |       |     |
 | main  | func_psp_089196A4                        |       18 |          2 |        |       |     |
 | main  | GsGetVcount                              |       18 |          2 |        |       |     |
 | main  | func_psp_08913C24                        |       18 |          2 |        |       |     |
@@ -1153,7 +1153,7 @@
 | main  | func_psp_0892DF70                        |       33 |          3 |        |       |     |
 | dra   | func_psp_091149C8                        |       33 |          4 |        |       |     |
 | main  | __malloc_unlock                          |       33 |          4 |        |       |     |
-| main  | func_psp_0890CB48                        |       33 |          4 |        |       |     |
+| main  | __sprint_r                               |       33 |          4 |        |       |     |
 | sel   | func_psp_0923FB88                        |       33 |          4 |        |       |     |
 | dra   | func_psp_09113D78                        |       33 |          5 |        |       |     |
 | dra   | func_psp_09116338                        |       33 |          5 |        |       |     |
@@ -1851,10 +1851,10 @@
 | main  | sceGupDepthOffset                        |       56 |          2 |        |       |     |
 | no2   | func_pspeu_0924F0B8                      |       56 |          4 |        |       |     |
 | np3   | func_pspeu_0925BA78                      |       56 |          4 |        |       |     |
-| main  | func_psp_0890CB94                        |       56 |          5 |        |       |     |
+| main  | __sbprintf                               |       56 |          5 |        |       |     |
 | no2   | func_pspeu_0924F178                      |       56 |          5 |        |       |     |
 | np3   | func_pspeu_0925BB38                      |       56 |          5 |        |       |     |
-| main  | func_psp_0890B7EC                        |       56 |          6 |        |       |     |
+| main  | _mprec_log10                             |       56 |          6 |        |       |     |
 | main  | RotTransPers3                            |       56 |          6 |        |       |     |
 | main  | VectorNormalS                            |       56 |          6 |        |       |     |
 | main  | func_psp_08934BD8                        |       56 |          6 |        |       |     |
@@ -4110,10 +4110,10 @@
 | dai   | func_pspeu_09245590                      |     1360 |        119 | Yes    |       |     |
 | no2   | func_pspeu_092515D0                      |     1369 |        212 | Yes    |       |     |
 | no2   | func_pspeu_09257ED8                      |     1372 |        125 | Yes    |       |     |
+| main  | 3C524.rodata                             |     1389 |          0 | Yes    |       |     |
 | np3   | EntityGurkha                             |     1391 |        212 | Yes    |       |     |
 | no3   | EntityWarg                               |     1392 |        193 | Yes    |       |     |
 | st0   | EntityDracula                            |     1396 |        179 | Yes    |       |     |
-| main  | 3C524.rodata                             |     1427 |          0 | Yes    |       |     |
 | main  | _dtoa_r                                  |     1441 |        250 | Yes    |       |     |
 | no2   | EntityBlade                              |     1457 |        237 | Yes    |       |     |
 | np3   | EntityBlade                              |     1457 |        237 | Yes    |       |     |
