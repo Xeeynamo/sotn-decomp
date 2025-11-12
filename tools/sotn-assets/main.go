@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"syscall"
 
@@ -67,13 +68,23 @@ func handlerObjdiffGUI(args []string) error {
 	if err := dependency.DownloadFromGithubIfNotExists("encounter/objdiff", "v3.3.1", filepath.Base(path), path); err != nil {
 		return err
 	}
-	return (&exec.Cmd{
-		Path: path,
-		Args: []string{path, "--project-dir", "."},
-		SysProcAttr: &syscall.SysProcAttr{
-			Setsid: true, // Start a new session (detach from parent)
-		},
-	}).Start()
+	if runtime.GOOS == "windows" {
+		return (&exec.Cmd{
+			Path: path,
+			Args: []string{path, "--project-dir", "."},
+			SysProcAttr: &syscall.SysProcAttr{
+				CreationFlags: syscall.CREATE_NEW_PROCESS_GROUP | syscall.DETACHED_PROCESS,
+			},
+		}).Start()
+	} else {
+		return (&exec.Cmd{
+			Path: path,
+			Args: []string{path, "--project-dir", "."},
+			SysProcAttr: &syscall.SysProcAttr{
+				Setsid: true, // Start a new session (detach from parent)
+			},
+		}).Start()
+	}
 }
 
 func handlerObjdiffCLI(args []string) error {
