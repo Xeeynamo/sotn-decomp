@@ -132,7 +132,7 @@ void EntityDoppleganger40(void) {
                     case 1:
                         break;
                     case 2:
-                        DOPPLEGANGER.palette = g_Dop.unk40;
+                        DOPPLEGANGER.palette = g_Dop.damagePalette;
                         break;
                     case 3:
                     case 4:

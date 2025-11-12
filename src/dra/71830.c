@@ -1145,7 +1145,7 @@ s32 func_80113D7C(s16 damageAmount) {
         return -1;
     }
     g_Player.timers[2] = 4;
-    g_Player.unk40 = PAL_FLAG(PAL_CC_RED_EFFECT_A);
+    g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
     PlaySfx(g_SfxPainGrunts[(rand() & 1) + 3]);
     return 0;
 }
@@ -1360,13 +1360,13 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             FntPrint("dam_kind:%04x\n", damage->damageKind);
             break;
         }
-        g_Player.unk40 = PAL_FLAG(PAL_CC_RED_EFFECT_A);
+        g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
         g_Player.timers[2] = 6;
         PlaySfx(g_SfxPainGrunts[sfxIndex]);
         if (damage->effects & ELEMENT_CURSE) {
             g_Player.timers[1] =
                 GetStatusAilmentTimer(STATUS_AILMENT_CURSE, 0x400);
-            g_Player.unk40 = PAL_FLAG(PAL_CC_CURSE_EFFECT);
+            g_Player.damagePalette = PAL_FLAG(PAL_CC_CURSE_EFFECT);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_47, 2), 0);
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x17), 0);
@@ -1374,7 +1374,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         } else if (damage->effects & ELEMENT_POISON) {
             g_Player.timers[0] =
                 GetStatusAilmentTimer(STATUS_AILMENT_POISON, 0xFFF);
-            g_Player.unk40 = PAL_FLAG(PAL_CC_DARK_EFFECT);
+            g_Player.damagePalette = PAL_FLAG(PAL_CC_DARK_EFFECT);
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x16), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_47, 1), 0);
@@ -1383,7 +1383,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             PlaySfx(SFX_FM_EXPLODE_SWISHES);
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x45), 0);
-            g_Player.unk40 = PAL_FLAG(PAL_CC_FIRE_EFFECT);
+            g_Player.damagePalette = PAL_FLAG(PAL_CC_FIRE_EFFECT);
             if (damage->effects & ELEMENT_UNK_10000) {
                 CreateEntFactoryFromEntity(g_CurrentEntity, BP_19, 0);
                 g_Player.timers[2] = 10;
@@ -1398,11 +1398,11 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x46), 0);
             g_Player.timers[2] = 24;
-            g_Player.unk40 = PAL_FLAG(PAL_ALUCARD_BLUE_OUTLINE_MASK);
+            g_Player.damagePalette = PAL_FLAG(PAL_ALUCARD_BLUE_OUTLINE_MASK);
         } else if (damage->effects & ELEMENT_ICE) {
             CreateEntFactoryFromEntity(g_CurrentEntity, BP_HIT_BY_ICE, 0);
             g_Player.timers[2] = 12;
-            g_Player.unk40 = PAL_FLAG(PAL_CC_BLUE_EFFECT_A);
+            g_Player.damagePalette = PAL_FLAG(PAL_CC_BLUE_EFFECT_A);
             PLAYER.ext.player.anim = 0x2E;
         } else {
             if (damage->effects & ELEMENT_HOLY) {
@@ -1411,7 +1411,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x68), 0);
                 g_Player.timers[2] = 8;
-                g_Player.unk40 = PAL_FLAG(PAL_CC_GREEN_EFFECT_A);
+                g_Player.damagePalette = PAL_FLAG(PAL_CC_GREEN_EFFECT_A);
             }
             if (damage->effects & ELEMENT_DARK) {
                 CreateEntFactoryFromEntity(
@@ -1419,11 +1419,11 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x62), 0);
                 g_Player.timers[2] = 16;
-                g_Player.unk40 = PAL_FLAG(PAL_CC_DARK_EFFECT);
+                g_Player.damagePalette = PAL_FLAG(PAL_CC_DARK_EFFECT);
             }
             if (damage->effects & ELEMENT_CUT) {
                 PlaySfx(SFX_WEAPON_STAB_B);
-                g_Player.unk40 = PAL_FLAG(PAL_CC_RED_EFFECT_A);
+                g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
                 CreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x42), 0);
                 if (damage->effects & ELEMENT_UNK_10000) {
@@ -2169,7 +2169,7 @@ void PlayerStepBossGrab(void) {
         if (g_Player.unk62 == 0) {
             PLAYER.ext.player.anim = 0x37;
             g_Player.timers[2] = 8;
-            g_Player.unk40 = PAL_FLAG(PAL_CC_RED_EFFECT_A);
+            g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
             PlaySfx(SFX_VO_ALU_PAIN_E);
         }
         PLAYER.velocityX = PLAYER.velocityY = 0;
@@ -2187,12 +2187,12 @@ void PlayerStepBossGrab(void) {
             }
             if (g_Player.unk62 == 0) {
                 g_Player.timers[2] = 4;
-                g_Player.unk40 = PAL_FLAG(PAL_CC_RED_EFFECT_A);
+                g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
                 PlaySfx(SFX_VO_ALU_PAIN_A);
             }
             if (g_Player.unk62 == 2) {
                 g_Player.timers[2] = 4;
-                g_Player.unk40 = PAL_FLAG(PAL_CC_STONE_EFFECT);
+                g_Player.damagePalette = PAL_FLAG(PAL_CC_STONE_EFFECT);
             }
             g_Player.unk60 = 2;
             return;
@@ -2289,7 +2289,7 @@ void PlayerStepUnk48(void) {
     switch (PLAYER.step_s) {
     case 0:
         func_80113EE0();
-        g_Player.unk40 = PAL_FLAG(PAL_CC_RED_EFFECT_A);
+        g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
         g_Player.timers[2] = 6;
         PLAYER.velocityX = 0;
         PLAYER.velocityY = 0;

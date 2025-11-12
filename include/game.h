@@ -1947,7 +1947,7 @@ typedef struct {
     /* 80072F54 */ s32 unk34;
     /* 80072F58 */ s32 unk38;
     /* 80072F5C */ s32 unk3C;
-    /* 80072F60 */ u16 unk40;
+    /* 80072F60 */ u16 damagePalette;
     /* 80072F62 */ u16 high_jump_timer;
     /* 80072F64 */ u16 unk44;
     /* 80072F66 */ u16 unk46;

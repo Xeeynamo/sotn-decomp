@@ -442,7 +442,7 @@ void RicMain(void) {
         case PL_T_INVINCIBLE:
             break;
         case PL_T_2:
-            PLAYER.palette = g_Player.unk40;
+            PLAYER.palette = g_Player.damagePalette;
             break;
         case PL_T_4: {
             angle = (g_GameTimer & 0xF) * 256;
