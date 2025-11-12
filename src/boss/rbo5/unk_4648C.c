@@ -214,45 +214,45 @@ void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
             break;
         }
 
-        g_Dop.unk40 = PAL_FLAG(PAL_CC_RED_EFFECT_A);
+        g_Dop.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
         g_Dop.timers[2] = 6;
         g_api.PlaySfx(D_us_801813C8[sfxIndex]);
 
         if (damage->effects & EFFECT_UNK_8000) {
             g_api.PlaySfx(SFX_FM_EXPLODE_SWISHES);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x45), 0);
-            g_Dop.unk40 = PAL_FLAG(PAL_CC_FIRE_EFFECT);
+            g_Dop.damagePalette = PAL_FLAG(PAL_CC_FIRE_EFFECT);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(17, 1), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(18, 0), 0);
             g_Dop.timers[2] = 0x10;
         } else if (damage->effects & EFFECT_UNK_0100) {
             g_Dop.timers[1] = 0x400;
-            g_Dop.unk40 = PAL_FLAG(PAL_CC_CURSE_EFFECT);
+            g_Dop.damagePalette = PAL_FLAG(PAL_CC_CURSE_EFFECT);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 23), 0);
         } else if (damage->effects & EFFECT_SOLID_FROM_BELOW) {
             g_Dop.timers[0] = 0x400;
-            g_Dop.unk40 = PAL_FLAG(PAL_CC_DARK_EFFECT);
+            g_Dop.damagePalette = PAL_FLAG(PAL_CC_DARK_EFFECT);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 22), 0);
         } else if (damage->effects & EFFECT_UNK_4000) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2D, 0), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x46), 0);
             g_Dop.timers[2] = 0x18;
-            g_Dop.unk40 = PAL_FLAG(0x202);
+            g_Dop.damagePalette = PAL_FLAG(0x202);
         } else if (damage->effects & EFFECT_UNK_2000) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2E, 0), 0);
             g_Dop.timers[2] = 0xC;
-            g_Dop.unk40 = PAL_FLAG(PAL_CC_BLUE_EFFECT_A);
+            g_Dop.damagePalette = PAL_FLAG(PAL_CC_BLUE_EFFECT_A);
             DOPPLEGANGER.ext.player.anim = 0x2E;
         } else if (damage->effects & EFFECT_UNK_1000) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x72, 0), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x63), 0);
             g_Dop.timers[2] = 8;
-            g_Dop.unk40 = PAL_FLAG(PAL_CC_DARK_EFFECT);
+            g_Dop.damagePalette = PAL_FLAG(PAL_CC_DARK_EFFECT);
         } else if (damage->effects & EFFECT_UNK_0800) {
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x71, 0), 0);
             CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(0x2C, 0x62), 0);
             g_Dop.timers[2] = 16;
-            g_Dop.unk40 = PAL_FLAG(PAL_CC_DARK_EFFECT);
+            g_Dop.damagePalette = PAL_FLAG(PAL_CC_DARK_EFFECT);
         } else if (!(damage->effects &
                      (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
                       EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0200 |

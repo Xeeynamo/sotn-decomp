@@ -456,7 +456,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
             func_maria_8015CAAC(FIX(-1.25));
             PLAYER.step_s = 1;
             PLAYER.anim = mar_801556C4;
-            g_Player.unk40 = PAL_MARIA;
+            g_Player.damagePalette = PAL_MARIA;
             MarCreateEntFactoryFromEntity(
                 g_CurrentEntity, BP_HIT_BY_THUNDER, 0);
             MarCreateEntFactoryFromEntity(
@@ -545,7 +545,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                 }
                 break;
             }
-            g_Player.unk40 = PAL_FLAG(PAL_CC_RED_EFFECT_A);
+            g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
             g_Player.timers[PL_T_2] = 6;
             if (damageEffect & ELEMENT_FIRE) {
                 MarCreateEntFactoryFromEntity(
@@ -554,7 +554,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     g_CurrentEntity, _BP_HOLYWATER_FLAMES, 0);
                 MarCreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(BP_MAR_BLINK, 0x43), 0);
-                g_Player.unk40 = PAL_FLAG(PAL_CC_FIRE_EFFECT);
+                g_Player.damagePalette = PAL_FLAG(PAL_CC_FIRE_EFFECT);
                 g_Player.timers[PL_T_2] = 0x10;
                 break;
             } else if (damageEffect & ELEMENT_CUT) {
@@ -562,14 +562,14 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     g_CurrentEntity, FACTORY(BP_HIT_BY_CUT, 5), 0);
                 MarCreateEntFactoryFromEntity(
                     g_CurrentEntity, FACTORY(BP_MAR_BLINK, 0x44), 0);
-                g_Player.unk40 = PAL_FLAG(PAL_CC_RED_EFFECT_A);
+                g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
                 g_Player.timers[PL_T_2] = 0x10;
                 break;
             } else if (damageEffect & ELEMENT_ICE) {
                 MarCreateEntFactoryFromEntity(
                     g_CurrentEntity, BP_HIT_BY_ICE, 0);
                 g_Player.timers[PL_T_2] = 0xC;
-                g_Player.unk40 = PAL_FLAG(PAL_CC_BLUE_EFFECT_A);
+                g_Player.damagePalette = PAL_FLAG(PAL_CC_BLUE_EFFECT_A);
                 break;
             } else {
                 if (damageEffect & ELEMENT_DARK) {
@@ -578,7 +578,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     MarCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(BP_MAR_BLINK, 0x56), 0);
                     g_Player.timers[PL_T_2] = 0x10;
-                    g_Player.unk40 = PAL_FLAG(PAL_CC_DARK_EFFECT);
+                    g_Player.damagePalette = PAL_FLAG(PAL_CC_DARK_EFFECT);
                 }
                 if (damageEffect & ELEMENT_HOLY) {
                     MarCreateEntFactoryFromEntity(
@@ -586,7 +586,7 @@ void MarStepHit(s32 damageEffect, u32 damageKind, s16 prevStep, s32 prevStepS) {
                     MarCreateEntFactoryFromEntity(
                         g_CurrentEntity, FACTORY(BP_MAR_BLINK, 0x57), 0);
                     g_Player.timers[PL_T_2] = 8;
-                    g_Player.unk40 = PAL_FLAG(PAL_CC_GREEN_EFFECT_A);
+                    g_Player.damagePalette = PAL_FLAG(PAL_CC_GREEN_EFFECT_A);
                 }
                 if (!(damageEffect & 0xF840)) {
                     MarCreateEntFactoryFromEntity(
@@ -762,7 +762,7 @@ void MarStepBossGrab(void) {
         if (g_Player.unk62 == 0) {
             PLAYER.anim = mar_anim_stun;
             g_Player.timers[PL_T_2] = 8;
-            g_Player.unk40 = PAL_FLAG(PAL_CC_RED_EFFECT_A);
+            g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
             g_api.PlaySfx(SFX_VO_MAR_PAIN_B);
         }
         PLAYER.velocityX = PLAYER.velocityY = 0;
@@ -783,7 +783,7 @@ void MarStepBossGrab(void) {
             }
             if (g_Player.unk62 == 0) {
                 g_Player.timers[PL_T_2] = 4;
-                g_Player.unk40 = PAL_FLAG(PAL_CC_RED_EFFECT_A);
+                g_Player.damagePalette = PAL_FLAG(PAL_CC_RED_EFFECT_A);
                 g_api.PlaySfx(SFX_VO_MAR_PAIN_C);
             }
             if (g_Player.unk62 == 2) {

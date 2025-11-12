@@ -715,7 +715,7 @@ void EntityAlucard() {
                     case 14:
                         break;
                     case 2:
-                        PLAYER.palette = g_Player.unk40;
+                        PLAYER.palette = g_Player.damagePalette;
                         break;
                     case 3:
                         PLAYER.palette = g_Player.high_jump_timer;
