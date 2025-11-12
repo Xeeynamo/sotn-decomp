@@ -137,8 +137,6 @@ extern s16 D_psp_08C629D4;
 extern s16 D_psp_08C629D6;
 extern DISPENV D_psp_08C629D8;
 extern DRAWENV D_psp_08C629EC;
-extern u8 D_psp_08C62A02;
-extern DR_ENV D_psp_08C62A08;
 extern s32 D_psp_08C62A30; // screen_mode
 extern s32 D_psp_08C62A34; // screen_center_x
 extern s32 D_psp_08C62A38; // screen_center_y
@@ -1580,7 +1578,7 @@ void func_psp_0891E994(OT_TYPE* p) {
             func_psp_0891B2CC(sp5C, sp58, sp54 - 1, var_fp - 1, 0x80000000);
             func_psp_0891AF48(sp50);
         }
-        func_psp_0891FDC8(&D_psp_08C62A08);
+        func_psp_0891FDC8(&D_psp_08C629EC.dr_env);
         D_psp_08C62EC0 = 0;
         D_psp_08C62A50 = 0;
         D_psp_08C62A54 = 0;
@@ -1821,19 +1819,19 @@ s32 func_psp_0891FDC8(DR_ENV* p) {
 
     ptr = p;
 
-    D_psp_08C62A08.tag = ptr->tag;
-    D_psp_08C62A08.len = ptr->len;
-    D_psp_08C62A08.r0 = ptr->r0;
-    D_psp_08C62A08.g0 = ptr->g0;
-    D_psp_08C62A08.b0 = ptr->b0;
-    D_psp_08C62A08.code = ptr->code;
-    D_psp_08C62A08.clip = ptr->clip;
-    D_psp_08C62A08.ofs = ptr->ofs;
-    D_psp_08C62A08.tw = ptr->tw;
-    D_psp_08C62A08.tpage = ptr->tpage;
-    D_psp_08C62A08.dtd = ptr->dtd;
-    D_psp_08C62A08.dfe = ptr->dfe;
-    D_psp_08C62A08.isbg = ptr->isbg;
+    D_psp_08C629EC.dr_env.tag = ptr->tag;
+    D_psp_08C629EC.dr_env.len = ptr->len;
+    D_psp_08C629EC.dr_env.r0 = ptr->r0;
+    D_psp_08C629EC.dr_env.g0 = ptr->g0;
+    D_psp_08C629EC.dr_env.b0 = ptr->b0;
+    D_psp_08C629EC.dr_env.code = ptr->code;
+    D_psp_08C629EC.dr_env.clip = ptr->clip;
+    D_psp_08C629EC.dr_env.ofs = ptr->ofs;
+    D_psp_08C629EC.dr_env.tw = ptr->tw;
+    D_psp_08C629EC.dr_env.tpage = ptr->tpage;
+    D_psp_08C629EC.dr_env.dtd = ptr->dtd;
+    D_psp_08C629EC.dr_env.dfe = ptr->dfe;
+    D_psp_08C629EC.dr_env.isbg = ptr->isbg;
     if ((ptr->ofs[0] == 0x40) && (ptr->clip.x == 0x40)) {
         D_psp_08C629C8 = 0x40;
     } else {
@@ -1869,7 +1867,7 @@ s32 func_psp_0891FDC8(DR_ENV* p) {
         func_psp_0891B2CC(x + rect.x, y + rect.y, rect.w, rect.h,
                           GU_ABGR(0x80, ptr->b0, ptr->g0, ptr->r0));
     }
-    func_psp_08910634(D_psp_08C62A02 ? 1 : 0);
+    func_psp_08910634(D_psp_08C629EC.dtd ? 1 : 0);
     return 0;
 }
 
