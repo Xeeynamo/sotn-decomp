@@ -7,7 +7,7 @@ void func_us_801B87E8(Entity* self) {
     Primitive* prim;
     u32 primIndex;
     s16 base_x;
-    s32 cntr;
+    s32 i;
     s16 _unused;
 
     for (base_x = -g_Tilemap.scrollX.i.hi; base_x < (-0x3E); base_x += 0x3E)
@@ -22,12 +22,12 @@ void func_us_801B87E8(Entity* self) {
             return;
         }
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-        prim = &g_PrimBuf[self->primIndex];
-        cntr = 0;
-        while (prim != NULL) {
-            prim->x0 = prim->x2 = base_x + ((cntr & 0x7) * 0x3E);
+
+        for (prim = &g_PrimBuf[self->primIndex], i = 0; prim != NULL; i++,
+            prim = prim->next) {
+            prim->x0 = prim->x2 = base_x + ((i & 0x7) * 0x3E);
             prim->x1 = prim->x3 = prim->x0 + 0x3E;
-            prim->y1 = prim->y0 = ((cntr >> 3) * 0x5F) + 0x1C;
+            prim->y1 = prim->y0 = ((i >> 3) * 0x5F) + 0x1C;
             prim->y3 = prim->y2 = prim->y0 + 0x5F;
             prim->u0 = 1;
             prim->v0 = 0x81;
@@ -44,8 +44,6 @@ void func_us_801B87E8(Entity* self) {
             if (!g_CastleFlags[CAT_SPIKE_ROOM_LIT]) {
                 prim->drawMode |= DRAW_HIDE | DRAW_COLORS;
             }
-            cntr++;
-            prim = prim->next;
         }
 
         self->ext.et_801B87E8.unk80 = g_CastleFlags[CAT_SPIKE_ROOM_LIT];
@@ -53,9 +51,9 @@ void func_us_801B87E8(Entity* self) {
         if (self->ext.et_801B87E8.unk80 ^ g_CastleFlags[CAT_SPIKE_ROOM_LIT]) {
             self->ext.et_801B87E8.unk81 = 1;
         }
-        prim = &g_PrimBuf[self->primIndex];
-        cntr = 0;
-        while (prim != NULL) {
+
+        for (prim = &g_PrimBuf[self->primIndex], i = 0; prim != NULL; i++,
+            prim = prim->next) {
             if (g_CastleFlags[CAT_SPIKE_ROOM_LIT]) {
                 prim->drawMode &= ~DRAW_HIDE;
             }
@@ -70,10 +68,8 @@ void func_us_801B87E8(Entity* self) {
                     LOWU(prim->r3) = LOWU(prim->r0);
                 }
             }
-            prim->x0 = prim->x2 = base_x + (2 * ((cntr & 7) * 31));
+            prim->x0 = prim->x2 = base_x + (2 * ((i & 7) * 31));
             prim->x1 = prim->x3 = prim->x0 + 0x3E;
-            cntr++;
-            prim = prim->next;
         }
 
         self->ext.et_801B87E8.unk80 = g_CastleFlags[CAT_SPIKE_ROOM_LIT];

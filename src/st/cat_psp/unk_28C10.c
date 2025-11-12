@@ -18,7 +18,7 @@ void func_us_801B8AD0(Entity* self) {
         InitializeEntity(g_EInitSpawner);
         if (self->params) {
             g_api.func_800EA5E4(0x800B);
-            g_Tilemap.flags &= 0xFF7F;
+            g_Tilemap.flags &= (u16)~LAYER_SEMI_TRANS;
             DestroyEntity(self);
             break;
         }
@@ -34,7 +34,7 @@ void func_us_801B8AD0(Entity* self) {
             break;
         }
 
-        g_Tilemap.flags &= 0xFF7F;
+        g_Tilemap.flags &= (u16)~LAYER_SEMI_TRANS;
         g_api.func_800EA5E4(0x800A);
         break;
     case 1:
