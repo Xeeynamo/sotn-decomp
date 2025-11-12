@@ -1480,7 +1480,7 @@ void func_psp_0891DE74(void) {
     Unk0891D9F4* p;
 
     var_s2 = 0;
-    p = (Unk0891D9F4*)0x10000;
+    p = (Unk0891D9F4*)SP(0);
     var_s1 = D_psp_08C62A40;
 
     func_psp_0891AF48(0);
