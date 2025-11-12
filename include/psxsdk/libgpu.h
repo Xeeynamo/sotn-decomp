@@ -2,12 +2,6 @@
 #define LIBGPU_H
 
 #ifdef VERSION_PSP
-#define DR_ENV_CODE_SIZE 8
-#else
-#define DR_ENV_CODE_SIZE 15
-#endif
-
-#ifdef VERSION_PSP
 #define SPRT_CODE 0x1
 #define SPRT16_CODE 0x2
 #define POLYGT3_CODE 0x4
@@ -210,7 +204,19 @@ typedef struct {
 
 typedef struct {
     O_TAG;
-    /* 0x4 */ u_long code[DR_ENV_CODE_SIZE];
+    #ifndef VERSION_PSP
+    /* 0x4 */ u_long code[15];
+    #else
+    /* 0x8 */ u_char r0, g0, b0, code;
+    /* 0xC */ RECT clip;
+    /* 0x14 */ short ofs[2];
+    /* 0x18 */ RECT tw;
+    /* 0x20 */ u_short tpage;
+    /* 0x22 */ u_char dtd;
+    /* 0x23 */ u_char dfe;
+    /* 0x24 */ u_char isbg;
+    /* 0x25 */ u_char r1, g1, b1;
+    #endif
 } DR_ENV; /* Packed Drawing Environment, size = 0x40 */
 
 typedef struct {
