@@ -56,7 +56,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_18,                           // func_us_801C5DF4
     E_UNK_19,                           // func_us_801C56A0
     E_UNK_1A,                           // func_us_801CA13C
-    E_UNK_1B,                           // func_us_801B732C
+    E_SPIKE_ROOM_LIGHT_SWITCH,          // EntitySpikeRoomLightSwitch
     E_SPIKES,                           // EntitySpikes
     E_SPIKES_PARTS,                     // EntitySpikesParts
     E_SPIKES_DUST,                      // EntitySpikesDust
