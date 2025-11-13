@@ -27,6 +27,34 @@ extern "C" {
 #define GU_DISPLAY_OFF		(0)
 #define GU_DISPLAY_ON		(1)
 
+/* screen size */
+#define GU_SCR_WIDTH       480
+#define GU_SCR_HEIGHT      272
+#define GU_SCR_ASPECT      ((float)GU_SCR_WIDTH / (float)GU_SCR_HEIGHT)
+#define GU_SCR_OFFSETX     ((4096 - GU_SCR_WIDTH) / 2)
+#define GU_SCR_OFFSETY     ((4096 - GU_SCR_HEIGHT) / 2)
+
+/* Frame buffer */
+#define GU_VRAM_TOP        0x00000000
+#define GU_VRAM_WIDTH      512
+/* 16bit mode */
+#define GU_VRAM_BUFSIZE    (GU_VRAM_WIDTH*GU_SCR_HEIGHT*2)
+#define GU_VRAM_BP_0       (void *)(GU_VRAM_TOP)
+#define GU_VRAM_BP_1       (void *)(GU_VRAM_TOP+GU_VRAM_BUFSIZE)
+#define GU_VRAM_BP_2       (void *)(GU_VRAM_TOP+(GU_VRAM_BUFSIZE*2))
+/* 32bit mode */
+#define GU_VRAM_BUFSIZE32  (GU_VRAM_WIDTH*GU_SCR_HEIGHT*4)
+#define GU_VRAM_BP32_0     (void *)(GU_VRAM_TOP)
+#define GU_VRAM_BP32_1     (void *)(GU_VRAM_TOP+GU_VRAM_BUFSIZE32)
+#define GU_VRAM_BP32_2     (void *)(GU_VRAM_TOP+(GU_VRAM_BUFSIZE32*2))
+
+/* display list mode */
+#define GU_IMMEDIATE		(0)
+#define GU_CALL		(1)
+#define GU_LIST		(2)
+#define GU_CALL_CACHED		(3)
+#define GU_LIST_CACHED		(4)
+
 /* Boolean values for convenience */
 #define GU_FALSE		(0)
 #define GU_TRUE			(1)
@@ -202,9 +230,10 @@ extern "C" {
 #define GU_GEQUAL		(7)
 
 /* Clear Buffer Mask */
-#define GU_COLOR_BUFFER_BIT	(1)
-#define GU_STENCIL_BUFFER_BIT	(2)
-#define GU_DEPTH_BUFFER_BIT	(4)
+#define GU_CLEAR_COLOR	(1)
+#define GU_CLEAR_STENCIL	(2)
+#define GU_CLEAR_DEPTH	(4)
+#define GU_CLEAR_ALL	(7)
 #define GU_FAST_CLEAR_BIT	(16)
 
 /* Texture Effect */
@@ -361,8 +390,8 @@ void sceGuDrawBufferList(int psm, void* fbp, int fbw);
   * Turn display on or off
   *
   * Available states are:
-  *   - GU_TRUE (1) - Turns display on
-  *   - GU_FALSE (0) - Turns display off
+  *   - GU_DISPLAY_ON (1) - Turns display on
+  *   - GU_DISPLAY_OFF (0) - Turns display off
   *
   * @param state - Turn display on or off
   * @return State of the display prior to this call
@@ -499,7 +528,7 @@ void* sceGuGetMemory(int size);
   * @param cid - Context Type
   * @param list - Pointer to display-list (16 byte aligned)
 **/
-void sceGuStart(int cid, void* list);
+void sceGuStart(int cid, void* list, int size);
 
 /**
   * Finish current display list and go back to the parent context
@@ -858,9 +887,9 @@ void sceGuLightSpot(int light, const ScePspFVector3* direction, float exponent, 
   * Clear current drawbuffer
   *
   * Available clear-flags are (OR them together to get final clear-mode):
-  *   - GU_COLOR_BUFFER_BIT - Clears the color-buffer
-  *   - GU_STENCIL_BUFFER_BIT - Clears the stencil-buffer
-  *   - GU_DEPTH_BUFFER_BIT - Clears the depth-buffer
+  *   - GU_CLEAR_COLOR - Clears the color-buffer
+  *   - GU_CLEAR_STENCIL - Clears the stencil-buffer
+  *   - GU_CLEAR_DEPTH - Clears the depth-buffer
   *
   * @param flags - Which part of the buffer to clear
 **/

@@ -29,6 +29,7 @@ psp_o4_files = [
     "66590.c",
     "collider.c",
     "game_handlers.c",
+    "11320.c",
 ]
 
 
@@ -76,7 +77,9 @@ def get_cc_flags_for_exceptional_files(version: str, file_name: str):
         return "-O1"
     if not is_psp(version):
         return ""  # PSX is almost always -O2
-    if file_name.startswith("src/dra") and os.path.basename(file_name) in psp_o4_files:
+    if (
+        file_name.startswith("src/dra") or file_name.startswith("src/main_psp")
+    ) and os.path.basename(file_name) in psp_o4_files:
         return "-O4,p"
     return "-Op"
 
