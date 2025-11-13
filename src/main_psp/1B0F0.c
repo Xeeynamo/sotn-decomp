@@ -1374,8 +1374,8 @@ DISPENV* PutDispEnv(DISPENV* env) {
         D_psp_089464DC = 0xF0;
         break;
     }
-    D_psp_08C62A34 = (0x1E0 - D_psp_089464D8) / 2;
-    D_psp_08C62A38 = (0x110 - D_psp_089464DC) / 2;
+    D_psp_08C62A34 = (GU_SCR_WIDTH - D_psp_089464D8) / 2;
+    D_psp_08C62A38 = (GU_SCR_HEIGHT - D_psp_089464DC) / 2;
     if ((D_psp_08C629D8.disp.w == 0x100) && (D_psp_08C629D8.disp.h == 0xF0)) {
         if (D_psp_08C62A30 == 1) {
             D_psp_08C62A34 += D_psp_08C629EC.clip.x;
@@ -1497,13 +1497,13 @@ void func_psp_0891DE74(void) {
         p[0].unk14 = p[1].unk14 = p[2].unk14 = p[3].unk14 = 1.0f;
         p[0].unk0 = p[0].unk4 = p[1].unk4 = p[2].unk0 = 0.0f;
         p[1].unk0 = p[2].unk4 = p[3].unk0 = p[3].unk4 = 255.0f;
-        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
         func_psp_08911990((s32)sceGeEdramGetAddr() + 0xCC000, 0x100);
         func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
         break;
     case 2:
         func_psp_08910660(1);
-        func_psp_08910810(0, 0xA, 0xA, -1, 0xFF808080);
+        func_psp_08910810(0, 0xA, 0xA, 0xFFFFFFFF, 0xFF808080);
         p[0].unk8 = p[1].unk8 = p[2].unk8 = p[3].unk8 = 0xFFFFFFFF;
         p[0].unkC = p[2].unkC = D_psp_08C62A34;
         p[0].unk10 = p[1].unk10 = D_psp_08C62A38;
@@ -1515,7 +1515,7 @@ void func_psp_0891DE74(void) {
         p[2].unk4 = D_psp_08946500;
         p[3].unk0 = D_psp_089464FC;
         p[3].unk4 = D_psp_08946500;
-        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
         func_psp_08911990(func_psp_0891AC24(), 0x200);
         func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
         break;
@@ -1527,7 +1527,7 @@ void func_psp_0891DE74(void) {
         p[0].unk0 = p[0].unk4 = p[1].unk4 = p[2].unk0 = 0.0f;
         p[1].unk0 = p[3].unk0 = 63.0f;
         p[2].unk4 = p[3].unk4 = 63.0f;
-        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
         func_psp_08911990((s32)sceGeEdramGetAddr() + 0x12C200, 0x40);
         func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
         break;
@@ -1549,7 +1549,7 @@ void func_psp_0891DE74(void) {
         p[2].unk4 = 272.0f;
         p[3].unk0 = 256.0f;
         p[3].unk4 = 272.0f;
-        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
         func_psp_08911990((s32)sceGeEdramGetAddr() + 0xCC000, 0x100);
         func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
         p[0].unk10 += 136.0f;
@@ -1590,7 +1590,7 @@ void func_psp_0891E420(void) {
     func_psp_08911F24(0, D_psp_089464F0);
     func_psp_08911B7C();
     func_psp_089109E4(0, 1, 1);
-    func_psp_0891089C(0, 0, 0x1E0, 0x110);
+    func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
     func_psp_08910A80(p, 4, 0x18, 4, 0x0080019F);
     func_psp_089109E4(0, 1, 0);
     func_psp_0891AF48(2);
@@ -1666,8 +1666,8 @@ void func_psp_0891E994(OT_TYPE* p) {
         func_psp_0891AAF8();
         func_psp_0891ABE4();
         if (D_psp_08C62A3C > 0) {
-            func_psp_0891089C(0, 0, 0x1E0, 0x110);
-            func_psp_0891B2CC(0, 0, 0x1E0, 0x110, 0x80000000);
+            func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+            func_psp_0891B2CC(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT, 0x80000000);
             if (D_psp_08C62A3C > 0) {
                 D_psp_08C62A3C--;
             }
@@ -1689,10 +1689,10 @@ void func_psp_0891E994(OT_TYPE* p) {
                 var_fp = 0xF0;
                 break;
             }
-            sp5C = (0x1E0 - sp54) / 2;
-            sp58 = (0x110 - var_fp) / 2;
+            sp5C = (GU_SCR_WIDTH - sp54) / 2;
+            sp58 = (GU_SCR_HEIGHT - var_fp) / 2;
             func_psp_0891AF48(0);
-            func_psp_0891089C(0, 0, 0x1E0, 0x110);
+            func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
             func_psp_0891B2CC(sp5C, sp58, sp54 - 1, var_fp - 1, 0x80000000);
             func_psp_0891AF48(sp50);
         }
@@ -1724,7 +1724,7 @@ void func_psp_0891E994(OT_TYPE* p) {
         }
         if (D_psp_08C62EBC != 0) {
             func_psp_0891AF48(0);
-            func_psp_0891089C(0, 0, 0x1E0, 0x110);
+            func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
             func_psp_0891B2CC(0x130, 0, 0xB0, 0x70, 0x80000000);
         }
         if ((D_psp_08C62A58 != 0) && (D_psp_08C62A64 != 0)) {
@@ -1732,7 +1732,7 @@ void func_psp_0891E994(OT_TYPE* p) {
                          ? (D_psp_08C42180 - D_psp_08C42188) * 0xF0
                          : 0xF0;
             func_psp_0891AF48(0);
-            func_psp_0891089C(0, 0, 0x1E0, 0x110);
+            func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
             func_psp_0891B118(0, 0, (D_psp_08C62A64 * var_s7) / D_psp_08C62A64,
                               0, 0x80FFFFFF);
             func_psp_0891B118(0, 1, (D_psp_08C62A5C * var_s7) / D_psp_08C62A64,
@@ -1741,7 +1741,7 @@ void func_psp_0891E994(OT_TYPE* p) {
                               2, 0x8000FF00);
         }
         func_psp_0891AF48(0);
-        func_psp_0891089C(0, 0, 0x1E0, 0x110);
+        func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
         func_psp_08932228();
         func_psp_0891E944();
         if (D_psp_08C62A44 != 0) {
