@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"os"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 )
 
 func handlerConfigExtract(args []string) error {
@@ -41,11 +42,22 @@ func handlerInfo(args []string) error {
 	return info(os.Stdout, args[0])
 }
 
+func handlerObjdiffGen(_ []string) error {
+	if os.Getenv("VERSION") == "" {
+		return fmt.Errorf("VERSION not set")
+	}
+	configPath := fmt.Sprintf("config/assets.%s.yaml", os.Getenv("VERSION"))
+	return objdiffgen(configPath)
+}
+
 func main() {
 	commands := map[string]func(args []string) error{
-		"extract": handlerConfigExtract,
-		"build":   handlerConfigBuild,
-		"info":    handlerInfo,
+		"extract":     handlerConfigExtract,
+		"build":       handlerConfigBuild,
+		"info":        handlerInfo,
+		"objdiff-gen": handlerObjdiffGen,
+		"objdiff-gui": handleObjdiffGUI,
+		"objdiff":     handlerObjdiffCLI,
 	}
 
 	args := os.Args[1:]

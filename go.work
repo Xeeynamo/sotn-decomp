@@ -1,7 +1,7 @@
 go 1.24
 
-use ./tools/gfxsotn
-
-use ./tools/sotn-disk
-
-use ./tools/sotn-assets
+use (
+	./tools/gfxsotn
+	./tools/sotn-disk
+	./tools/sotn-assets
+)

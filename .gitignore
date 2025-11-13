@@ -30,3 +30,6 @@ format-symbols.run
 .ninja_log
 .ninja_deps
 build.ninja
+
+# objdiff stuff
+objdiff*.json

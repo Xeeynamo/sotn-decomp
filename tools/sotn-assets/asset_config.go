@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"strconv"
 
+	"github.com/goccy/go-yaml"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/binary"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/blueprintsdef"
@@ -30,7 +31,6 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"golang.org/x/sync/errgroup"
-	"gopkg.in/yaml.v2"
 )
 
 type assetSegmentEntry struct {
@@ -299,19 +299,20 @@ func addAssetSymbols(m map[psx.Addr]string, a *assetFileEntry) {
 			if len(args) > 0 {
 				sym = args[0]
 			}
-			m[segment.Vram.Sum(int(offset) - segment.Start)] = sym
+			m[segment.Vram.Sum(int(offset)-segment.Start)] = sym
 		}
 	}
 }
 
 func addSplatSymbols(m map[psx.Addr]string, c *splat.Config) {
-	for _, segment := range c.Segments {
-		for _, subsegment := range segment.Subsegments {
-			if len(subsegment) < 3 {
+	c.ForEachCodeSubsegment(func(segment splat.Segment, subsegments []any) {
+		for _, seg := range subsegments {
+			subsegment, ok := seg.([]any)
+			if !ok {
 				continue
 			}
-			off := subsegment[0].(int)
-			addr := psx.Addr(segment.VRAM).Sum(off)
+			off := subsegment[0].(uint64)
+			addr := psx.Addr(segment.VRAM).Sum(int(off))
 			if len(subsegment) > 2 {
 				switch subsegment[1] {
 				case "c":
@@ -327,5 +328,5 @@ func addSplatSymbols(m map[psx.Addr]string, c *splat.Config) {
 				}
 			}
 		}
-	}
+	})
 }
