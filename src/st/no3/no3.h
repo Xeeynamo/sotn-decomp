@@ -5,9 +5,6 @@
 
 #define OVL_EXPORT(x) NO3_##x
 
-// NO3 Sound IDs
-#define SE_WATER_SPLASH 0x7C2
-
 #define E_PUFF_OPAQUE_PALETTE_OFFSET 0xD0
 
 void EntityExplosionVariants(Entity* entity);

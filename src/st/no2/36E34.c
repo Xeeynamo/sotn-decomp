@@ -78,7 +78,7 @@ void func_us_801B6E34(Entity* self) {
 
     case 3:
         if (!AnimateEntity(D_us_80180E58, self)) {
-            PlaySfxPositional(0x7C0);
+            PlaySfxPositional(SFX_DUNGEON_PRISONER_RATTLE);
         }
         tempEntity->animCurFrame = self->animCurFrame + 2;
         tempEntity->zPriority = 0x6A;

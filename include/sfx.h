@@ -253,9 +253,6 @@ enum {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-#define NA_SE_EV_WATER_SPLASH 0x7C2
-#define SFX_WATER_SURFACING 0x7C3
-
 #define NA_SE_VO_DR_TAUNT_1 0x84F
 #define NA_SE_VO_DR_TAUNT_2 0x850
 #ifdef VERSION_PSP
@@ -290,13 +287,7 @@ enum {
 #define NA_VO_SU_NO_SCREAM 0x87B
 #define NA_VO_SU_DELICIOUS 0x8D1
 
-// STAGE NO4
-
-#define SFX_WATER_BUBBLE 0x7C4
-
 // BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
-#define SFX_DOPPLEGANGER_DOOR_OPEN 0x7CB
-#define SFX_DOPPLEGANGER_APPEAR 0x7CC
 #define SFX_BO4_UNK_7D8 0x7D8
 #define SFX_BO4_UNK_7D7 0x7D7
 #define SFX_BO4_UNK_7D9 0x7D9
@@ -312,8 +303,6 @@ enum {
 #define SFX_BO4_UNK_7E8 0x7E8
 
 // BOSS RBO3 - Medusa
-#define SFX_RBO3_UNK_7C5 0x7C5
-#define SFX_RBO3_UNK_7C8 0x7C8
 #define SFX_RBO3_UNK_7FB 0x7FB
 #define SFX_RBO3_UNK_7FD 0x7FD
 #define SFX_RBO3_UNK_7FE 0x7FE
@@ -860,7 +849,24 @@ enum Sfx {
     /* 0x7BD */ SFX_WOODEN_BRIDGE_EXPLODE,
     /* 0x7BE */ SFX_UNK_NO4_7BE, // unused exploding bridge debris?
     /* 0x7BF */ SFX_OAR_ROW,
-    SFX_SCIFI_BLAST = 0x7D1,
+    /* 0x7C0 */ SFX_DUNGEON_PRISONER_RATTLE,
+    /* 0x7C1 */ SFX_CLOCK_TOWER_GEAR,
+    /* 0x7C2 */ SFX_WATER_SPLASH_JUMP,
+    /* 0x7C3 */ SFX_WATER_SPLASH_MOVE,
+    /* 0x7C4 */ SFX_WATER_BUBBLE,
+
+    // Boss sounds start here
+
+    /* 0x7C5 */ SFX_RBO3_UNK_7C5, // Cerberus Background Fire (BO1 different)
+    /* 0x7C6 */ SFX_B07_STOMP,    // BO0 different, no sound in BO1
+    /* 0x7C7 */ SFX_BO1_UNK_7C7,  // Granfaloon, Beelzebub, Galamoth
+    /* 0x7C8 */ SFX_RBO3_UNK_7C8,
+    /* 0x7C9 */ SFX_UNUSED_7C9,
+    /* 0x7CA */ SFX_BO0_UNK_7CA,
+    /* 0x7CB */ SFX_DOPPLEGANGER_DOOR_OPEN,
+    /* 0x7CC */ SFX_DOPPLEGANGER_APPEAR,
+    SFX_UNUSED_7D0 = 0x7D0,
+    SFX_SCIFI_BLAST,
     SFX_BOSS_DEFEATED,
     SFX_TELEPORT_SYNTH_UP = 0x8BA,
     SFX_TELEPORT_SYNTH_DOWN,
