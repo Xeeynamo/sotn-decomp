@@ -264,6 +264,7 @@ segments:
       - [0x10824, asm, __swsetup_r]
       - [0x10944, c, main_psp/10944]
       - [0x11320, c, main_psp/11320]
+      - [0x138B0, c, main_psp/138B0]
       - [0x180DC, asm, func_psp_089169E8]
       - [0x181DC, asm, func_psp_08916AE8]
       - [0x18218, asm, func_psp_08916B24]
