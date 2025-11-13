@@ -24,7 +24,7 @@ bool CheckMermanEnteringWater(s16 yOffset) {
                 newEntity->posY.i.hi += yOffset;
                 newEntity->zPriority = g_CurrentEntity->zPriority;
             }
-            g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
+            g_api.PlaySfx(SFX_WATER_SPLASH_JUMP);
             g_CurrentEntity->ext.merman.isUnderwater = true;
         }
     }
@@ -223,7 +223,7 @@ void EntityMerman2(Entity* self) {
             pos += (self->params & 0x100) >> 8;
 
             if (posY < pos[3]) {
-                g_api.PlaySfx(NA_SE_EV_WATER_SPLASH);
+                g_api.PlaySfx(SFX_WATER_SPLASH_JUMP);
                 newEntity = AllocEntity(&g_Entities[232], &g_Entities[256]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
