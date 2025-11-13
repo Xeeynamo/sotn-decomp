@@ -59,7 +59,6 @@ EntityBloodyZombie = 0x801C3C50;
 EntityBloodDrips = 0x801C4408;
 EntityOwl = 0x801C4614;
 EntityOwlKnight = 0x801C58DC;
-func_801CD620 = 0x801C6C1C;
 EntitySoulStealOrb = 0x801C7508;
 EntityEnemyBlood = 0x801C789C;
 EntityRoomForeground = 0x801C7D4C;

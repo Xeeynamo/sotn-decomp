@@ -88,7 +88,6 @@ D_psp_E_ID_54 = 0x092A0410;
 D_psp_E_ID_3B = 0x092A04D8;
 D_psp_E_ID_27 = 0x092A0578;
 D_psp_E_ID_26 = 0x092A0580;
-D_psp_E_ID_17 = 0x092A05F8;
 g_ItemIconSlots = 0x092A0670;
 obtainedStr = 0x092A06B0;
 dialogue_started = 0x092A06D0;

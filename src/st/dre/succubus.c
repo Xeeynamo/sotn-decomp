@@ -73,6 +73,11 @@ typedef enum {
     /* 4 */ SUCCUBUS_DYING_ANIM_2,
 } SuccubusDyingSubSteps;
 
+// DRE uses the address space of OVL_EXPORT(PrizeDrops), presumably because
+// there are collectibles, to track the clone count of Succubus.
+// A macro was used here as an interrim deconfliction mechanism so that the
+// symbol isn't defined with two different names.
+#define g_MultipleCount OVL_EXPORT(PrizeDrops)
 // Original name: multiple_count
 extern s32 g_MultipleCount; // clones counter
 
