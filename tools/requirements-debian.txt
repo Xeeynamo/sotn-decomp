@@ -2,7 +2,7 @@ bchunk
 binutils-mipsel-linux-gnu
 binutils-sh-elf
 bsdmainutils
-cargo
+rustup
 clang-format
 coreutils
 curl
