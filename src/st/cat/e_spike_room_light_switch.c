@@ -33,7 +33,7 @@ void EntitySpikeRoomLightSwitch(Entity* self) {
         self->hitboxOffY = 0xC;
         // nb. Switch starts out green but is almost immediately changed to
         // yellow.
-        self->palette = PAL_FLAG(0x99);
+        self->palette = PAL_FLAG(PAL_LIGHT_SWITCH_GREEN);
         self->ext.spikeRoomSwitch.timer.i.lo = 0;
         // nb. The switch starts with slightly raised collision, there is a
         // subtle drop as the player presses it (10 -> 8).
@@ -46,7 +46,7 @@ void EntitySpikeRoomLightSwitch(Entity* self) {
             self->animCurFrame = 2;
             self->ext.spikeRoomSwitch.collisionHeight = 8;
             // "pressed" palette
-            self->palette = PAL_FLAG(0x9B);
+            self->palette = PAL_FLAG(PAL_SPIKES_DUST);
             self->step = ROOM_LIT;
         }
 
@@ -92,26 +92,23 @@ void EntitySpikeRoomLightSwitch(Entity* self) {
 
         // BUG: This else clause is never hit and the button remains
         // yellow. This looks to be because timer.val is set in the else
-        // statement to 0x20 meaning the above XOR alternates between 0x20 and
-        // 0x21.
+        // statement further down to 0x20 meaning the above XOR alternates
+        // between 0x20 and 0x21.
         //
         // Possible this bug was introduced when this 0x20 value was added
         // because timer.val is first initialised to 0 which would make this
         // button flash yellow and green
         if (self->ext.spikeRoomSwitch.timer.i.lo) {
-            // Switch is yellow
-            self->palette = PAL_FLAG(0x9A);
+            self->palette = PAL_FLAG(PAL_LIGHT_SWITCH_YELLOW);
         } else {
-            // Switch is green
-            self->palette = PAL_FLAG(0x99);
+            self->palette = PAL_FLAG(PAL_LIGHT_SWITCH_GREEN);
         }
 
         if (var_s2) {
             // Player has stepped on the switch!
             if (!--self->ext.spikeRoomSwitch.timer.val) {
                 g_api.PlaySfx(SFX_LEVER_METAL_BANG);
-                // Switch is hidden palette
-                self->palette = PAL_FLAG(0x94);
+                self->palette = PAL_FLAG(PAL_LIGHT_SWITCH_HIDDEN);
                 self->animCurFrame = 2;
                 self->ext.spikeRoomSwitch.collisionHeight = 8;
                 self->ext.spikeRoomSwitch.timer.val = 0x20;
@@ -256,7 +253,7 @@ void EntitySpikeRoomLightSwitch(Entity* self) {
             g_BgLayers[0].flags |= 1;
             g_CastleFlags[CAT_SPIKE_ROOM_LIT] = true;
             // "pressed" palette
-            self->palette = PAL_FLAG(0x9B);
+            self->palette = PAL_FLAG(PAL_SPIKES_DUST);
             self->step++;
         }
         break;
@@ -278,7 +275,7 @@ void EntitySpikeRoomLightSwitch(Entity* self) {
     case ROOM_LIT:
         self->animCurFrame = 2;
         // "pressed" palette
-        self->palette = PAL_FLAG(0x9B);
+        self->palette = PAL_FLAG(PAL_SPIKES_DUST);
         break;
     }
 }
