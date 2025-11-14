@@ -985,7 +985,7 @@ s32 LoadImage(RECT* rect, u_long* p) {
     if (rect->h == 1 && rect->w == 0x100) {
         func_psp_0891B7A0(rect->x, rect->y, rect->w, p);
     }
-    return func_psp_0891BCA0(rect, pspDebugDumpException, rect->w * 2, var_a4);
+    return func_psp_0891BCA0(rect, p, rect->w * 2, var_a4);
 }
 
 void func_psp_0891C1C0(RECT* rect, u_long* p) {
