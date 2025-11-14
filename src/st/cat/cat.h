@@ -13,6 +13,9 @@
 
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
+    PAL_LIGHT_SWITCH_HIDDEN = 0x094,
+    PAL_LIGHT_SWITCH_GREEN = 0x099,
+    PAL_LIGHT_SWITCH_YELLOW = 0x09A,
     PAL_SPIKES_DUST = 0x09B,
     PAL_HELLFIRE_BEAST_CAST_TWO = 0x15F,
     PAL_BONE_ARK_PROJECTILE = 0x160,
@@ -56,7 +59,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_18,                           // func_us_801C5DF4
     E_UNK_19,                           // func_us_801C56A0
     E_UNK_1A,                           // func_us_801CA13C
-    E_UNK_1B,                           // func_us_801B732C
+    E_SPIKE_ROOM_LIGHT_SWITCH,          // EntitySpikeRoomLightSwitch
     E_SPIKES,                           // EntitySpikes
     E_SPIKES_PARTS,                     // EntitySpikesParts
     E_SPIKES_DUST,                      // EntitySpikesDust

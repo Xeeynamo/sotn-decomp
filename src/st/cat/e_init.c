@@ -27,7 +27,7 @@ void func_us_801C589C(Entity* self);
 void func_us_801C5DF4(Entity* self);
 void func_us_801C56A0(Entity* self);
 void EntityLavaGlow(Entity* self);
-void func_us_801B732C(Entity* self);
+void EntitySpikeRoomLightSwitch(Entity* self);
 void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
@@ -113,7 +113,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C5DF4,
     func_us_801C56A0,
     EntityLavaGlow,
-    func_us_801B732C,
+    EntitySpikeRoomLightSwitch,
     EntitySpikes,
     EntitySpikesParts,
     EntitySpikesDust,
@@ -193,7 +193,8 @@ EInit g_EInitBoneArkAttackEffects = {
     ANIMSET_OVL(0x05), 0x0E, 0x48, 0x0200, 0x02D};
 EInit g_EInitBoneArkProjectile = {ANIMSET_OVL(0x05), 0x15, 0x48, 0x0200, 0x02F};
 
-EInit D_us_801811C4 = {ANIMSET_OVL(0x02), 0x01, 0x00, 0x0000, 0x005};
+EInit g_EInitSpikeRoomLightSwitch = {
+    ANIMSET_OVL(0x02), 0x01, 0x00, 0x0000, 0x005};
 EInit g_EInitElevator = {ANIMSET_OVL(0x02), 0x03, 0x00, 0x0000, 0x005};
 EInit g_EInitEnvironment = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
 EInit D_us_801811E8 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x005};
