@@ -194,7 +194,7 @@ void func_psp_08934D20(Unk08919D98* arg0);
 s32 func_psp_0893277C(void);
 void sceGuDebugPrint(int x, int y, unsigned int color, const char* msg);
 void func_psp_089117F4(s32, s32, s32, s32, s32, s32, u8*, s32, s32, s32, u8*);
-static void func_psp_0891CD28(u_long* v, s32 x, s32 y);
+static void func_psp_0891CD28(u_long* p, s32 x, s32 y);
 static void func_psp_0891CEB8(s32 x, s32 y);
 
 void _init(void) {}
@@ -888,8 +888,8 @@ u8* func_psp_0891B8F0(u16 arg0, s32 arg1, s32 arg2) {
     return D_psp_08C62AB8;
 }
 
-void func_psp_0891BB18(RECT* rect, u_long* v, s32 width) {
-    u16* dst = (u16*)v;
+void func_psp_0891BB18(RECT* rect, u_long* p, s32 width) {
+    u16* dst = (u16*)p;
     s32 x1 = rect->x + rect->w;
     s32 x0 = rect->x;
 
@@ -906,7 +906,7 @@ void func_psp_0891BB18(RECT* rect, u_long* v, s32 width) {
     }
 }
 
-s32 func_psp_0891BCA0(RECT* rect, u_long* v, s32 width, s32 arg3) {
+s32 func_psp_0891BCA0(RECT* rect, u_long* p, s32 width, s32 arg3) {
     s32 sp3C;
     s32 x0, y0;
     s32 x1, y1;
@@ -916,9 +916,9 @@ s32 func_psp_0891BCA0(RECT* rect, u_long* v, s32 width, s32 arg3) {
     u8* dst;
     u8* src;
 
-    ptr = (u8*)v;
+    ptr = (u8*)p;
     if (rect->h == 1) {
-        func_psp_0891BB18(rect, v, width);
+        func_psp_0891BB18(rect, p, width);
         return 0;
     }
     x1 = rect->x + rect->w;
@@ -961,7 +961,7 @@ s32 func_psp_0891BCA0(RECT* rect, u_long* v, s32 width, s32 arg3) {
     return 0;
 }
 
-s32 LoadImage(RECT* rect, u_long* v) {
+s32 LoadImage(RECT* rect, u_long* p) {
     s32 var_a4;
     u16* var_a3;
     s32 w, h;
@@ -973,26 +973,26 @@ s32 LoadImage(RECT* rect, u_long* v) {
         h = rect->h;
         w = rect->w;
         for (i = 0; i < w * h; i++) {
-            if (((u16*)v)[i] == 0x8000) {
+            if (((u16*)p)[i] == 0x8000) {
                 D_psp_08C62ABC[i] = 0x8001;
             } else {
-                D_psp_08C62ABC[i] = ((u16*)v)[i];
+                D_psp_08C62ABC[i] = ((u16*)p)[i];
             }
         }
         var_a3 = D_psp_08C62ABC;
-        v = (u_long*)var_a3;
+        p = (u_long*)var_a3;
     }
     if (rect->h == 1 && rect->w == 0x100) {
-        func_psp_0891B7A0(rect->x, rect->y, rect->w, v);
+        func_psp_0891B7A0(rect->x, rect->y, rect->w, p);
     }
-    return func_psp_0891BCA0(rect, v, rect->w * 2, var_a4);
+    return func_psp_0891BCA0(rect, pspDebugDumpException, rect->w * 2, var_a4);
 }
 
-void func_psp_0891C1C0(RECT* rect, u_long* v) {
-    func_psp_0891BCA0(rect, v, rect->w * 2, 0);
+void func_psp_0891C1C0(RECT* rect, u_long* p) {
+    func_psp_0891BCA0(rect, p, rect->w * 2, 0);
 }
 
-static int func_psp_0891C204(RECT* rect, u_long* v, s32 width, s32 arg3) {
+static int func_psp_0891C204(RECT* rect, u_long* p, s32 width, s32 arg3) {
     u8* ptr;
     s32 sp38;
     s32 sp34;
@@ -1007,7 +1007,7 @@ static int func_psp_0891C204(RECT* rect, u_long* v, s32 width, s32 arg3) {
     u8* src;
     u8* dst;
 
-    ptr = (u8*)v;
+    ptr = (u8*)p;
     if (arg3) {
         sp34 = 0x100;
     } else {
@@ -1054,14 +1054,14 @@ static int func_psp_0891C204(RECT* rect, u_long* v, s32 width, s32 arg3) {
     return 0;
 }
 
-s32 StoreImage(RECT* rect, u_long* v) {
+s32 StoreImage(RECT* rect, u_long* p) {
     if (rect->y + rect->h > 0x200) {
     }
     if (rect->w == 0x100 && rect->h == 1) {
-        func_psp_0891CD28(v, rect->x, rect->y);
+        func_psp_0891CD28(p, rect->x, rect->y);
         return 0;
     }
-    return func_psp_0891C204(rect, v, rect->w * 2, 0);
+    return func_psp_0891C204(rect, p, rect->w * 2, 0);
 }
 
 static int func_psp_0891C668(RECT* rect, u8 r, u8 g, u8 b, s32 arg4) {
@@ -1202,7 +1202,7 @@ void func_psp_0891CCBC(u_long* clut, s32 x, s32 y) {
     GetClut(x, y);
 }
 
-static void func_psp_0891CD28(u_long* v, s32 x, s32 y) {
+static void func_psp_0891CD28(u_long* p, s32 x, s32 y) {
     RECT rect;
     s32 index;
 
@@ -1211,10 +1211,10 @@ static void func_psp_0891CD28(u_long* v, s32 x, s32 y) {
         rect.y = y;
         rect.w = 0x100;
         rect.h = 1;
-        func_psp_0891C204(&rect, v, rect.w * 2, 0);
+        func_psp_0891C204(&rect, p, rect.w * 2, 0);
         return;
     }
-    memcpy(v, &D_psp_08C429C0[index], sizeof(*D_psp_08C429C0));
+    memcpy(p, &D_psp_08C429C0[index], sizeof(*D_psp_08C429C0));
 }
 
 static void func_psp_0891CDE0(u16* clut, s32 x, s32 y) {
@@ -1256,7 +1256,7 @@ u_short LoadTPage(u_long* pix, s32 tp, s32 abr, s32 x, s32 y, s32 w, s32 h) {
            ((x & 0x3FF) >> 6) | ((y & 0x200) << 2);
 }
 
-void AddPrim(void* ot, void* v) { addPrim(ot, v); }
+void AddPrim(void* ot, void* p) { addPrim(ot, p); }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", VSyncCallback);
 
@@ -1278,8 +1278,8 @@ OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
     return ot;
 }
 
-void SetSemiTrans(void* v, int abe) {
-    P_TAG* pTag = v;
+void SetSemiTrans(void* p, int abe) {
+    P_TAG* pTag = p;
     if (abe) {
         pTag->code |= 0x40;
     } else {
@@ -1287,8 +1287,8 @@ void SetSemiTrans(void* v, int abe) {
     }
 }
 
-void SetShadeTex(void* v, int tge) {
-    P_TAG* pTag = v;
+void SetShadeTex(void* p, int tge) {
+    P_TAG* pTag = p;
     if (tge) {
         pTag->code |= 0x80;
     } else {
@@ -1296,11 +1296,11 @@ void SetShadeTex(void* v, int tge) {
     }
 }
 
-void SetDrawMode(DR_MODE* v, s32 dfe, s32 dtd, s32 tpage, RECT* tw) {
-    v->len = 2;
-    v->code[0] =
+void SetDrawMode(DR_MODE* p, s32 dfe, s32 dtd, s32 tpage, RECT* tw) {
+    p->len = 2;
+    p->code[0] =
         0x0C000000 | (dtd ? 0x200 : 0) | (dfe ? 0x400 : 0) | (tpage & 0x9FF);
-    v->code[1] = (tw != NULL) ? (0xE2000000 | (((tw->y & 0xFF) >> 3) << 0xF) |
+    p->code[1] = (tw != NULL) ? (0xE2000000 | (((tw->y & 0xFF) >> 3) << 0xF) |
                                  (((tw->x & 0xFF) >> 3) << 0xA) |
                                  (((~(tw->h - 1) & 0xFF) >> 3) << 5) |
                                  ((~(tw->w - 1) & 0xFF) >> 3))
@@ -1612,7 +1612,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891E840);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891E944);
 
-void func_psp_0891E994(OT_TYPE* v) {
+void func_psp_0891E994(OT_TYPE* p) {
     s32 sp5C;
     s32 sp58;
     s32 sp54;
@@ -1629,8 +1629,8 @@ void func_psp_0891E994(OT_TYPE* v) {
     OT_TYPE* var_s6;
     u32 var_s7;
 
-    if (v != (OT_TYPE*)-1) {
-        D_psp_08C62A74 = v;
+    if (p != (OT_TYPE*)-1) {
+        D_psp_08C62A74 = p;
         func_psp_0891E840();
         if (D_psp_08C62AA8) {
             D_psp_08C62AA8 = false;
@@ -1710,7 +1710,7 @@ void func_psp_0891E994(OT_TYPE* v) {
         D_psp_08C62EC0 = 0;
         D_psp_08C62A50 = 0;
         D_psp_08C62A54 = 0;
-        var_s1 = v;
+        var_s1 = p;
         var_s6 = NULL;
         while (var_s1 != NULL) {
             code = getcode(var_s1) & 0x3F;
@@ -1767,7 +1767,7 @@ void func_psp_0891E994(OT_TYPE* v) {
     }
 }
 
-void DrawOTag(OT_TYPE* v) {
+void DrawOTag(OT_TYPE* p) {
     s32 sp4C;
     s32 sp48;
     s32 i;
@@ -1776,7 +1776,7 @@ void DrawOTag(OT_TYPE* v) {
     s32 x;
     s32 y;
 
-    D_psp_08C62A74 = v;
+    D_psp_08C62A74 = p;
     if (func_psp_08919BA8() & 4) {
         sp4C = func_psp_08919BA8();
         var_s3 = 0;
@@ -1790,7 +1790,7 @@ void DrawOTag(OT_TYPE* v) {
                         VSync(0);
                     }
                     D_psp_08C62EBC = 0;
-                    func_psp_0891E994(v);
+                    func_psp_0891E994(p);
                     break;
                 }
                 if (temp_s2 & 0x10) {
@@ -1904,7 +1904,7 @@ void DrawOTag(OT_TYPE* v) {
                 sceGuDebugPrint(
                     x, y + (var_s3 + 1) * 8, 0xFFFFFFFF, D_psp_08946684);
             }
-            func_psp_0891E994(v);
+            func_psp_0891E994(p);
             GsClearVcount();
             DrawSync(0);
             VSync(0);
@@ -1918,7 +1918,7 @@ void DrawOTag(OT_TYPE* v) {
             GsClearVcount();
             VSync(0);
         }
-        func_psp_0891E994(v);
+        func_psp_0891E994(p);
     }
 }
 
@@ -2001,7 +2001,7 @@ s32 func_psp_0891FDC8(DR_ENV* p) {
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_089201E8);
 
-s32 func_psp_08920488(void* v) {}
+s32 func_psp_08920488(void* p) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_08920498);
 
@@ -2254,19 +2254,19 @@ s32 func_psp_08925A04(LINE_G4* p) {
     return 0;
 }
 
-void SetLineG2(LINE_G2* v) { setLineG2(v); }
+void SetLineG2(LINE_G2* p) { setLineG2(p); }
 
-void SetPolyG4(POLY_G4* v) { setPolyG4(v); }
+void SetPolyG4(POLY_G4* p) { setPolyG4(p); }
 
-void SetPolyGT3(POLY_GT3* v) { setPolyGT3(v); }
+void SetPolyGT3(POLY_GT3* p) { setPolyGT3(p); }
 
-void SetPolyGT4(POLY_GT4* v) { setPolyGT4(v); }
+void SetPolyGT4(POLY_GT4* p) { setPolyGT4(p); }
 
-void SetSprt(SPRT* v) { setSprt(v); }
+void SetSprt(SPRT* p) { setSprt(p); }
 
-void SetSprt16(SPRT_16* v) { setSprt16(v); }
+void SetSprt16(SPRT_16* p) { setSprt16(p); }
 
-void SetTile(TILE* v) { setTile(v); }
+void SetTile(TILE* p) { setTile(p); }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", FntPrint);
 
@@ -2385,9 +2385,9 @@ void func_psp_089264CC(s32 arg0, u_long* arg1, s32 arg2) {
         return;
     }
     if (arg2 != 0) {
-        u8* v = (u8*)arg1;
-        v[0] = 0;
-        v[1] = 0;
+        u8* p = (u8*)arg1;
+        p[0] = 0;
+        p[1] = 0;
     }
     rect.x += (arg0 & 0xF) * 0x10;
     rect.y = ((arg0 / 0x10) & 0xF) + 0xF0;
