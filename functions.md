@@ -17,6 +17,7 @@
 | dra   | func_psp_090ED058                        |        7 |          1 |        |       |     |
 | dra   | func_psp_090ED9D8                        |        7 |          1 |        |       |     |
 | dra   | func_psp_090F1CE0                        |        7 |          1 |        |       |     |
+| main  | func_psp_08911B7C                        |        7 |          1 |        |       |     |
 | main  | SetFarColor                              |        7 |          1 |        |       |     |
 | main  | SetFogNear                               |        7 |          1 |        |       |     |
 | main  | SsSetMono                                |        7 |          1 |        |       |     |
@@ -27,7 +28,6 @@
 | main  | gte_dpcs                                 |        7 |          1 |        |       |     |
 | main  | gte_stub                                 |        7 |          1 |        |       |     |
 | main  | func_psp_08937650                        |        7 |          1 |        |       |     |
-| main  | func_psp_08911B7C                        |        7 |          1 |        |       |     |
 | main  | RotAverage3                              |        7 |          1 |        |       |     |
 | main  | SquareRoot0                              |        7 |          1 |        |       |     |
 | main  | func_psp_0892BFD0                        |        7 |          1 |        |       |     |
@@ -2244,8 +2244,8 @@
 | np3   | EntityMediumWaterSplash                  |       73 |         13 |        |       |     |
 | no3   | func_pspeu_0925B520                      |       73 |         14 |        |       |     |
 | np3   | func_pspeu_09251AB8                      |       73 |         14 |        |       |     |
-| main  | VSync                                    |       73 |         16 |        |       |     |
 | main  | func_psp_089113A8                        |       73 |         16 |        |       |     |
+| main  | VSync                                    |       73 |         16 |        |       |     |
 | dra   | func_psp_090E8658                        |       74 |          6 |        |       |     |
 | dra   | func_8010DFF0                            |       74 |          7 |        |       |     |
 | dra   | func_psp_0910B660                        |       74 |          7 |        |       |     |
@@ -4139,7 +4139,7 @@
 | no4   | func_pspeu_09239B00                      |     1639 |        210 | Yes    |       |     |
 | np3   | EntityMerman2                            |     1649 |        195 | Yes    |       |     |
 | no3   | EntityMerman2                            |     1668 |        195 | Yes    |       |     |
-| main  | 3D8B8.rodata                             |     1678 |          0 |        |       |     |
+| main  | 3D8B8.rodata                             |     1687 |          0 |        |       |     |
 | no4   | NO4_EntityCutscene                       |     1731 |        172 | Yes    |       |     |
 | st0   | EntityDraculaFinalForm                   |     1733 |        251 | Yes    |       |     |
 | dra   | EntityStopWatch                          |     1738 |        127 | Yes    |       |     |
