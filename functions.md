@@ -467,6 +467,7 @@
 | dra   | 62DEC.rodata                             |       18 |          0 | Yes    |       |     |
 | dra   | 84B88.rodata                             |       18 |          0 | Yes    |       |     |
 | dra   | 8A0A4.rodata                             |       18 |          0 | Yes    |       |     |
+| cat   | unk_28C10.rodata                         |       18 |          0 | Yes    |       |     |
 | dai   | e_bone_halberd.rodata                    |       18 |          0 | Yes    |       |     |
 | dai   | e_cutscene_actors.rodata                 |       18 |          0 | Yes    |       |     |
 | lib   | e_life_up.rodata                         |       18 |          0 | Yes    |       |     |
@@ -684,6 +685,7 @@
 | main  | func_psp_08936E54                        |       21 |          3 |        |       |     |
 | sel   | func_psp_09237C38                        |       21 |          3 |        |       |     |
 | sel   | func_psp_09237C78                        |       21 |          3 |        |       |     |
+| cat   | e_spike_room_light_switch.rodata         |       22 |          0 | Yes    |       |     |
 | chi   | en_breakable_wall.rodata                 |       22 |          0 | Yes    |       |     |
 | main  | sceGuTexOffset                           |       22 |          1 |        |       |     |
 | main  | sceGuColorMaterial                       |       22 |          1 |        |       |     |
@@ -1164,7 +1166,6 @@
 | dra   | func_psp_091161D0                        |       33 |          6 |        |       |     |
 | dra   | func_psp_090F21F8                        |       33 |          6 |        |       |     |
 | dra   | func_psp_090E0870                        |       33 |          8 |        |       |     |
-| cat   | unk_28C10.rodata                         |       34 |          0 | Yes    |       |     |
 | lib   | unk_3B200.rodata                         |       34 |          0 | Yes    |       |     |
 | no3   | e_fire_warg.rodata                       |       34 |          0 | Yes    |       |     |
 | no3   | e_merman2.rodata                         |       34 |          0 | Yes    |       |     |
