@@ -643,7 +643,141 @@ void func_psp_08911B84(s32 arg0, s32 op, s32 arg2, s32 arg3,
     }
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/11320", func_psp_08911C3C);
+void func_psp_08911C3C(u8 r, u8 g, u8 b) {
+    s32* ptr;
+
+    ptr = D_psp_08B1F1D0[0];
+    *ptr++ = GE_SET_ATE(GU_FALSE);
+    *ptr++ = GE_SET_TME(GU_TRUE);
+    *ptr++ = GE_SET_CTE(GU_FALSE);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[1];
+    *ptr++ = GE_SET_ATE(GU_FALSE);
+    *ptr++ = GE_SET_TME(GU_TRUE);
+    *ptr++ = GE_SET_CTE(GU_TRUE);
+    *ptr++ = GE_SET_CREF(r, g, b);
+    *ptr++ = GE_SET_CMSK(0xFF, 0xFF, 0xFF);
+    *ptr++ = GE_SET_CTEST(GU_NOTEQUAL);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[2];
+    *ptr++ = GE_SET_ATE(GU_TRUE);
+    *ptr++ = GE_SET_ATEST(GU_GEQUAL, 1, 0xFF);
+    *ptr++ = GE_SET_TME(GU_TRUE);
+    *ptr++ = GE_SET_CTE(GU_FALSE);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[3];
+    *ptr++ = GE_SET_ATE(GU_TRUE);
+    *ptr++ = GE_SET_ATEST(GU_GEQUAL, 1, 0xFF);
+    *ptr++ = GE_SET_TME(GU_TRUE);
+    *ptr++ = GE_SET_CTE(GU_TRUE);
+    *ptr++ = GE_SET_CREF(r, g, b);
+    *ptr++ = GE_SET_CMSK(0xFF, 0xFF, 0xFF);
+    *ptr++ = GE_SET_CTEST(GU_NOTEQUAL);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[4];
+    *ptr++ = GE_SET_ATE(GU_TRUE);
+    *ptr++ = GE_SET_ATEST(GU_EQUAL, 0, 0xFF);
+    *ptr++ = GE_SET_ABE(GU_TRUE);
+    *ptr++ = GE_SET_BLEND(GU_ONE_MINUS_SRC_ALPHA, GU_FIX, GU_ADD);
+    *ptr++ = GE_SET_FIXA_RGB24(0x00000000);
+    *ptr++ = GE_SET_FIXB_RGB24(0x00000000);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[5];
+    *ptr++ = GE_SET_ATE(GU_FALSE);
+    *ptr++ = GE_SET_TME(GU_TRUE);
+    *ptr++ = GE_SET_CTE(GU_FALSE);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[6];
+    *ptr++ = GE_SET_ATE(GU_FALSE);
+    *ptr++ = GE_SET_TME(GU_TRUE);
+    *ptr++ = GE_SET_CTE(GU_TRUE);
+    *ptr++ = GE_SET_CREF(r, g, b);
+    *ptr++ = GE_SET_CMSK(0xFF, 0xFF, 0xFF);
+    *ptr++ = GE_SET_CTEST(GU_NOTEQUAL);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[7];
+    *ptr++ = GE_SET_ATE(GU_TRUE);
+    *ptr++ = GE_SET_ATEST(GU_GEQUAL, 1, 0xFF);
+    *ptr++ = GE_SET_TME(GU_TRUE);
+    *ptr++ = GE_SET_CTE(GU_FALSE);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[8];
+    *ptr++ = GE_SET_ATE(GU_TRUE);
+    *ptr++ = GE_SET_ATEST(GU_GEQUAL, 1, 0xFF);
+    *ptr++ = GE_SET_TME(GU_TRUE);
+    *ptr++ = GE_SET_CTE(GU_TRUE);
+    *ptr++ = GE_SET_CREF(r, g, b);
+    *ptr++ = GE_SET_CMSK(0xFF, 0xFF, 0xFF);
+    *ptr++ = GE_SET_CTEST(GU_NOTEQUAL);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[9];
+    *ptr++ = GE_SET_ATE(GU_TRUE);
+    *ptr++ = GE_SET_ATEST(GU_EQUAL, 0, 0xFF);
+    *ptr++ = GE_SET_ABE(GU_TRUE);
+    *ptr++ = GE_SET_BLEND(GU_ONE_MINUS_SRC_ALPHA, GU_FIX, GU_ADD);
+    *ptr++ = GE_SET_FIXA_RGB24(0x00000000);
+    *ptr++ = GE_SET_FIXB_RGB24(0x00000000);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[10];
+    *ptr++ = GE_SET_ATE(GU_FALSE);
+    *ptr++ = GE_SET_CTE(GU_FALSE);
+    *ptr++ = GE_SET_TME(GU_FALSE);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[15];
+    *ptr++ = GE_SET_ABE(GU_TRUE);
+    *ptr++ = GE_SET_BLEND(GU_FIX, GU_FIX, GU_ADD);
+    *ptr++ = GE_SET_FIXA_RGB24(0xFF808080);
+    *ptr++ = GE_SET_FIXB_RGB24(0xFF808080);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[16];
+    *ptr++ = GE_SET_ABE(GU_TRUE);
+    *ptr++ = GE_SET_BLEND(GU_FIX, GU_FIX, GU_ADD);
+    *ptr++ = GE_SET_FIXA_RGB24(0xFFFFFFFF);
+    *ptr++ = GE_SET_FIXB_RGB24(0xFFFFFFFF);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[17];
+    *ptr++ = GE_SET_ABE(GU_TRUE);
+    *ptr++ = GE_SET_BLEND(GU_FIX, GU_FIX, GU_REVERSE_SUBTRACT);
+    *ptr++ = GE_SET_FIXA_RGB24(0xFFFFFFFF);
+    *ptr++ = GE_SET_FIXB_RGB24(0xFFFFFFFF);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[18];
+    *ptr++ = GE_SET_ABE(GU_TRUE);
+    *ptr++ = GE_SET_BLEND(GU_FIX, GU_FIX, GU_ADD);
+    *ptr++ = GE_SET_FIXA_RGB24(0xFF404040);
+    *ptr++ = GE_SET_FIXB_RGB24(0xFFFFFFFF);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[11];
+    *ptr++ = GE_SET_ABE(GU_FALSE);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[12];
+    *ptr++ = GE_SET_ABE(GU_FALSE);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[13];
+    *ptr++ = GE_SET_ABE(GU_FALSE);
+    *ptr++ = GE_SET_RET();
+
+    ptr = D_psp_08B1F1D0[14];
+    *ptr++ = GE_SET_ABE(GU_FALSE);
+    *ptr++ = GE_SET_RET();
+}
 
 void func_psp_08911F24(s32 arg0, s32 arg1) {
     *D_psp_08B1F19C++ =
