@@ -4,6 +4,7 @@
 // https://pspdev.github.io/pspsdk/
 #define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
 #include <pspgu.h>
+#include <pspgecmd.h>
 
 typedef struct {
     s32* unk0;
@@ -61,7 +62,7 @@ void func_psp_0890FC2C(void) {
     D_psp_08B1F140[2].unk0 = NULL;
     D_psp_08B1F140[2].unk4 = NULL;
     D_psp_08B1F198 = -1;
-    D_psp_08A1F140[D_psp_08B41FC0][0] = 0x0B000000;
+    D_psp_08A1F140[D_psp_08B41FC0][0] = GE_SET_RET();
     D_psp_08B1F194 = D_psp_089B6940[D_psp_08B41FC0];
     func_psp_08910978(0xFF, 0x40, 0x40, 0x40);
 }
@@ -111,7 +112,7 @@ s32 func_psp_0890FF2C(void) {
     s32 ret;
 
     ret = sceGuFinish();
-    *D_psp_08B1F194++ = 0x0B000000;
+    *D_psp_08B1F194++ = GE_SET_RET();
     func_psp_08910098(1, 1);
     return ret;
 }
@@ -160,8 +161,8 @@ u32 func_psp_08910098(s32 arg0, s32 arg1) {
             }
             func_psp_0891036C(arg0);
             if (arg1 != 0) {
-                *D_psp_08B1F19C++ = 0x0B000000;
-                *D_psp_08B1F19C++ = 0;
+                *D_psp_08B1F19C++ = GE_SET_RET();
+                *D_psp_08B1F19C++ = GE_SET_NOP();
             }
             var_s0 = ((u32)D_psp_08B1F19C - (u32)D_psp_08B1F1A4) / 4;
             D_psp_08B1F1AC = var_s0;
@@ -173,8 +174,8 @@ u32 func_psp_08910098(s32 arg0, s32 arg1) {
     } else {
         D_psp_08B1F198 = -1;
         if (arg1 != 0) {
-            *D_psp_08B1F19C++ = 0x0B000000;
-            *D_psp_08B1F19C++ = 0;
+            *D_psp_08B1F19C++ = GE_SET_RET();
+            *D_psp_08B1F19C++ = GE_SET_NOP();
         }
         var_s0 = ((u32)D_psp_08B1F19C - (u32)D_psp_08B1F1A4) / 4;
         D_psp_08B1F1AC = var_s0;
@@ -268,115 +269,115 @@ s32* func_psp_089104B4(s32 arg0) {
     temp_v0 = func_psp_08910498(2);
     temp_a2 = D_psp_08B1F19C;
     D_psp_08B1F19C += arg0;
-    *temp_v0++ = 0x10000000 | ((u32)D_psp_08B1F19C & 0xFF000000) >> 8;
-    *temp_v0++ = 0x08000000 | (u32)D_psp_08B1F19C & 0x00FFFFFF;
+    *temp_v0++ = GE_SET_BASE_BASE8(D_psp_08B1F19C);
+    *temp_v0++ = GE_SET_JUMP_ADDR24(D_psp_08B1F19C);
     return temp_a2;
 }
 
-void func_psp_0891052C(s32 arg0) { *D_psp_08B1F19C++ = 0x50000000 | arg0; }
+void func_psp_0891052C(s32 arg0) { *D_psp_08B1F19C++ = GE_SET_SHADE(arg0); }
 
-void func_psp_08910558(s32 arg0) { *D_psp_08B1F19C++ = 0x17000000 | arg0; }
+void func_psp_08910558(s32 arg0) { *D_psp_08B1F19C++ = GE_SET_LTE(arg0); }
 
-void func_psp_08910584(s32 arg0) { *D_psp_08B1F19C++ = 0x1C000000 | arg0; }
+void func_psp_08910584(s32 arg0) { *D_psp_08B1F19C++ = GE_SET_CLE(arg0); }
 
-void func_psp_089105B0(s32 arg0) { *D_psp_08B1F19C++ = 0x1D000000 | arg0; }
+void func_psp_089105B0(s32 arg0) { *D_psp_08B1F19C++ = GE_SET_BCE(arg0); }
 
-void func_psp_089105DC(s32 arg0) { *D_psp_08B1F19C++ = 0x1E000000 | arg0; }
+void func_psp_089105DC(s32 arg0) { *D_psp_08B1F19C++ = GE_SET_TME(arg0); }
 
-void func_psp_08910608(s32 arg0) { *D_psp_08B1F19C++ = 0x1F000000 | arg0; }
+void func_psp_08910608(s32 arg0) { *D_psp_08B1F19C++ = GE_SET_FGE(arg0); }
 
-void func_psp_08910634(s32 arg0) { *D_psp_08B1F19C++ = 0x20000000 | arg0; }
+void func_psp_08910634(s32 arg0) { *D_psp_08B1F19C++ = GE_SET_DTE(arg0); }
 
-void func_psp_08910660(s32 arg0) { *D_psp_08B1F19C++ = 0x21000000 | arg0; }
+void func_psp_08910660(s32 arg0) { *D_psp_08B1F19C++ = GE_SET_ABE(arg0); }
 
-void func_psp_0891068C(s32 arg0) { *D_psp_08B1F19C++ = 0x22000000 | arg0; }
+void func_psp_0891068C(s32 arg0) { *D_psp_08B1F19C++ = GE_SET_ATE(arg0); }
 
 void func_psp_089106B8(s32 arg0, s32 arg1, s32 arg2) {
-    *D_psp_08B1F19C++ = 0xDB000000 | arg2 << 16 | arg1 << 8 | arg0;
+    *D_psp_08B1F19C++ = GE_SET_ATEST(arg0, arg1, arg2);
 }
 
-void func_psp_089106F4(s32 arg0) { *D_psp_08B1F19C++ = 0x23000000 | arg0; }
+void func_psp_089106F4(s32 arg0) { *D_psp_08B1F19C++ = GE_SET_ZTE(arg0); }
 
-void func_psp_08910720(s32 arg0) { *D_psp_08B1F19C++ = 0x24000000 | arg0; }
+void func_psp_08910720(s32 arg0) { *D_psp_08B1F19C++ = GE_SET_STE(arg0); }
 
-void func_psp_0891074C(s32 arg0) { *D_psp_08B1F19C++ = 0x25000000 | arg0; }
+void func_psp_0891074C(s32 arg0) { *D_psp_08B1F19C++ = GE_SET_AAE(arg0); }
 
-void func_psp_08910778(s32 arg0) { *D_psp_08B1F19C++ = 0x27000000 | arg0; }
+void func_psp_08910778(s32 arg0) { *D_psp_08B1F19C++ = GE_SET_CTE(arg0); }
 
 void func_psp_089107A4(s32 arg0) {
-    *D_psp_08B1F19C++ = 0xE7000000 | (1 - arg0) & 1;
+    *D_psp_08B1F19C++ = GE_SET_ZMSK((1 - arg0) & 1);
 }
 
 void func_psp_089107DC(s32 arg0, s32 arg1) {
-    *D_psp_08B1F19C++ = 0xC7000000 | arg1 << 8 | arg0;
+    *D_psp_08B1F19C++ = GE_SET_TWRAP(arg0, arg1);
 }
 
-void func_psp_08910810(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
-    *D_psp_08B1F19C++ = 0xDF000000 | arg0 << 8 | arg2 << 4 | arg1;
-    *D_psp_08B1F19C++ = 0xE0000000 | arg3 & 0x00FFFFFF;
-    *D_psp_08B1F19C++ = 0xE1000000 | arg4 & 0x00FFFFFF;
+void func_psp_08910810(s32 op, s32 arg1, s32 arg2, ScePspRGBA8888 arg3, ScePspRGBA8888 arg4) {
+    *D_psp_08B1F19C++ = GE_SET_BLEND(arg1, arg2, op);
+    *D_psp_08B1F19C++ = GE_SET_FIXA_RGB24(arg3);
+    *D_psp_08B1F19C++ = GE_SET_FIXB_RGB24(arg4);
 }
 
-void func_psp_0891089C(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
-    *D_psp_08B1F19C++ = 0xD4000000 | arg1 << 10 | arg0;
-    *D_psp_08B1F19C++ = 0xD5000000 | arg3 << 10 | arg2;
+void func_psp_0891089C(s32 x1, s32 y1, s32 x2, s32 y2) {
+    *D_psp_08B1F19C++ = GE_SET_SCISSOR1(x1, y1);
+    *D_psp_08B1F19C++ = GE_SET_SCISSOR2(x2, y2);
 }
 
-void func_psp_089108F8(s32 arg0, s32 arg1) {
-    *D_psp_08B1F19C++ = 0x4C000000 | arg0;
-    *D_psp_08B1F19C++ = 0x4D000000 | arg1;
+void func_psp_089108F8(s32 x, s32 y) {
+    *D_psp_08B1F19C++ = GE_SET_OFFSETX(x);
+    *D_psp_08B1F19C++ = GE_SET_OFFSETY(y);
 }
 
-void func_psp_08910944(s32 arg0, s32 arg1) {
-    *D_psp_08B1F19C++ = 0xC6000000 | arg1 << 8 | arg0;
+void func_psp_08910944(s32 min, s32 max) {
+    *D_psp_08B1F19C++ = GE_SET_TFILTER(min, max);
 }
 
-void func_psp_08910978(u8 arg0, u8 arg1, u8 arg2, u8 arg3) {
-    *D_psp_08B1F194++ = 0x5C000000 | arg2 << 16 | arg3 << 8 | arg1;
-    *D_psp_08B1F194++ = 0x5D000000 | arg0;
+void func_psp_08910978(u8 a, u8 r, u8 b, u8 g) {
+    *D_psp_08B1F194++ = GE_SET_AC(r, g, b);
+    *D_psp_08B1F194++ = GE_SET_AA(a);
 }
 
-void func_psp_089109E4(s32 arg0, s32 arg1, s32 arg2) {
-    *D_psp_08B1F19C++ = 0xC9000000 | arg2 << 16 | arg1 << 8 | arg0;
+void func_psp_089109E4(s32 tfx, s32 tcc, s32 arg2) {
+    *D_psp_08B1F19C++ = GE_SET_TFUNC(tfx, tcc, arg2);
 }
 
 void func_psp_08910A20(s32 arg0, s32 arg1) {
-    *D_psp_08B1F19C++ = 0x9C000000 | arg0 & 0x00FFFFFF;
-    *D_psp_08B1F19C++ = 0x9D000000 | ((arg0 >> 24) & 0xF) << 16 | arg1;
+    *D_psp_08B1F19C++ = GE_SET_FBP_ADDR24(arg0);
+    *D_psp_08B1F19C++ = GE_SET_FBW_BASE8(arg1, arg0);
 }
 
-s32 func_psp_08910A80(s32* arg0, u32 arg1, u32 arg2, s32 arg3, s32 arg4) {
+s32 func_psp_08910A80(s32* arg0, u32 nVerts, u32 arg2, s32 arg3, s32 arg4) {
     s32* temp_s1;
     s32* temp_s2;
     s32* temp_v0;
     s32* temp_a1;
     s32 i;
 
-    *D_psp_08B1F19C++ = 0x12000000 | arg4 & 0x00FFFFFF;
+    *D_psp_08B1F19C++ = GE_SET_VTYPE(arg4);
     temp_s2 = func_psp_08910498(2);
-    *D_psp_08B1F19C++ = 0x04000000 | (arg3 << 16 | arg1);
+    *D_psp_08B1F19C++ = GE_SET_PRIM(nVerts, arg3);
 
     temp_s1 = func_psp_08910498(2);
-    temp_v0 = func_psp_08910498((arg2 * arg1) / 4);
+    temp_v0 = func_psp_08910498((arg2 * nVerts) / 4);
 
-    *temp_s1++ = 0x10000000 | ((u32)D_psp_08B1F19C & 0xFF000000) >> 8;
-    *temp_s1++ = 0x08000000 | (u32)D_psp_08B1F19C & 0x00FFFFFF;
+    *temp_s1++ = GE_SET_BASE_BASE8(D_psp_08B1F19C);
+    *temp_s1++ = GE_SET_JUMP_ADDR24(D_psp_08B1F19C);
 
     temp_a1 = temp_v0;
-    for (i = (arg2 * arg1) / 4; i > 0; i--) {
+    for (i = (arg2 * nVerts) / 4; i > 0; i--) {
         *temp_a1++ = *arg0++;
     }
 
-    *temp_s2++ = 0x10000000 | ((u32)temp_v0 & 0xFF000000) >> 8;
-    *temp_s2++ = 0x01000000 | (u32)temp_v0 & 0x00FFFFFF;
+    *temp_s2++ = GE_SET_BASE_BASE8(temp_v0);
+    *temp_s2++ = GE_SET_VADR_ADDR24(temp_v0);
     return 2;
 }
 
 s32 func_psp_08910C74(s32 arg0, s32 arg1, s32 arg3, s32 arg4, s32 arg5) {
-    *D_psp_08B1F19C++ = 0x12000000 | arg5 & 0x00FFFFFF;
-    *D_psp_08B1F19C++ = 0x10000000 | (arg0 & 0xFF000000) >> 8;
-    *D_psp_08B1F19C++ = 0x01000000 | arg0 & 0x00FFFFFF;
-    *D_psp_08B1F19C++ = 0x04000000 | (arg4 << 16 | arg1);
+    *D_psp_08B1F19C++ = GE_SET_VTYPE(arg5);
+    *D_psp_08B1F19C++ = GE_SET_BASE_BASE8(arg0);
+    *D_psp_08B1F19C++ = GE_SET_VADR_ADDR24(arg0);
+    *D_psp_08B1F19C++ = GE_SET_PRIM(arg1, arg4);
     return 2;
 }
 
@@ -387,15 +388,15 @@ void func_psp_08910D28(void) {
 }
 
 s32 func_psp_08910D44(s32 arg0, s32 arg1, s32 arg2) {
-    float sp24[3];
-    float sp18[3];
+    ScePspVector3 sp24;
+    ScePspVector3 sp18;
 
-    sp24[0] = D_psp_0893CCFC;
-    sp24[1] = D_psp_0893CD00;
-    sp24[2] = D_psp_0893CD04;
-    sp18[0] = D_psp_0893CD08;
-    sp18[1] = D_psp_0893CD0C;
-    sp18[2] = D_psp_0893CD10;
+    sp24.f[0] = D_psp_0893CCFC;
+    sp24.f[1] = D_psp_0893CD00;
+    sp24.f[2] = D_psp_0893CD04;
+    sp18.f[0] = D_psp_0893CD08;
+    sp18.f[1] = D_psp_0893CD0C;
+    sp18.f[2] = D_psp_0893CD10;
     if ((D_psp_08B1F1B8 == arg0) && (D_psp_08B1F1BC == arg2)) {
         arg0 = 0;
     }
@@ -403,79 +404,78 @@ s32 func_psp_08910D44(s32 arg0, s32 arg1, s32 arg2) {
         arg1 = 0;
     }
     if (arg1 != 0) {
-        *D_psp_08B1F19C++ = 0xC500FF01;
-        *D_psp_08B1F19C++ = 0xB0000000 | arg1 & 0x00FFFFFF;
-        *D_psp_08B1F19C++ = 0xB1000000 | (arg1 & 0xFF000000) >> 8;
+        *D_psp_08B1F19C++ = GE_SET_CLUT(GU_PSM_5551, 0, 0xFF, 0);
+        *D_psp_08B1F19C++ = GE_SET_CBP_ADDR24(arg1);
+        *D_psp_08B1F19C++ = GE_SET_CBW_BASE8(arg1);
         if (arg2 == 1) {
-            *D_psp_08B1F19C = 0xC4000010;
+            *D_psp_08B1F19C = GE_SET_CLOAD(16);
         } else {
-            *D_psp_08B1F19C = 0xC4000001;
+            *D_psp_08B1F19C = GE_SET_CLOAD(1);
         }
         D_psp_08B1F19C++;
         D_psp_08B1F1C0 = arg1;
     }
     if (arg0 != 0) {
-        *D_psp_08B1F19C++ = 0xC2000000;
-        *D_psp_08B1F19C++ = 0xC3000000 | *((u32*)&sp24[arg2]);
-        *D_psp_08B1F19C++ = 0xA0000000 | arg0 & 0x00FFFFFF;
-        *D_psp_08B1F19C++ =
-            0xA8000000 | ((arg0 & 0xFF000000) >> 8 | *((u32*)&sp18[arg2]));
-        *D_psp_08B1F19C++ = 0xB8000900 | (8 - arg2);
+        *D_psp_08B1F19C++ = GE_SET_TMODE(GU_TEXBUF_NORMAL, GU_SINGLE_CLUT, 0);
+        *D_psp_08B1F19C++ = GE_SET_TPF(sp24.i[arg2], 0);
+        *D_psp_08B1F19C++ = GE_SET_TBP0_ADDR24(arg0);
+        *D_psp_08B1F19C++ = GE_SET_TBW0_BASE8(sp18.i[arg2], arg0);
+        *D_psp_08B1F19C++ = GE_SET_TSIZE0(8 - arg2, 9);
         D_psp_08B1F1B8 = arg0;
         D_psp_08B1F1BC = arg2;
     }
     if (arg0 != 0) {
-        *D_psp_08B1F19C++ = 0xCB000000;
+        *D_psp_08B1F19C++ = GE_SET_TFLUSH();
         ResetGraph(1);
     }
     return arg1 | arg0;
 }
 
 s32 func_psp_08910FD8(
-    s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 width, s32 height) {
     if (arg1 != 0) {
-        *D_psp_08B1F19C++ = 0xC500FF01;
-        *D_psp_08B1F19C++ = 0xB0000000 | arg1 & 0x00FFFFFF;
-        *D_psp_08B1F19C++ = 0xB1000000 | (arg1 & 0xFF000000) >> 8;
-        *D_psp_08B1F19C++ = 0xC4000010;
+        *D_psp_08B1F19C++ = GE_SET_CLUT(GU_PSM_5551, 0, 0xFF, 0);
+        *D_psp_08B1F19C++ = GE_SET_CBP_ADDR24(arg1);
+        *D_psp_08B1F19C++ = GE_SET_CBW_BASE8(arg1);
+        *D_psp_08B1F19C++ = GE_SET_CLOAD(16);
         D_psp_08B1F1C0 = arg1;
     }
     if (arg0 != 0) {
-        *D_psp_08B1F19C++ = 0xC2000000;
-        *D_psp_08B1F19C++ = 0xC3000000 | arg2;
-        *D_psp_08B1F19C++ = 0xA0000000 | arg0 & 0x00FFFFFF;
-        *D_psp_08B1F19C++ = 0xA8000000 | ((arg0 & 0xFF000000) >> 8 | arg3);
-        *D_psp_08B1F19C++ = 0xB8000000 | arg5 << 8 | arg4;
+        *D_psp_08B1F19C++ = GE_SET_TMODE(GU_TEXBUF_NORMAL, GU_SINGLE_CLUT, 0);
+        *D_psp_08B1F19C++ = GE_SET_TPF(arg2, 0);
+        *D_psp_08B1F19C++ = GE_SET_TBP0_ADDR24(arg0);
+        *D_psp_08B1F19C++ = GE_SET_TBW0_BASE8(arg3, arg0);
+        *D_psp_08B1F19C++ = GE_SET_TSIZE0(width, height);
         D_psp_08B1F1B8 = arg0;
         D_psp_08B1F1BC = arg2;
     }
     if (arg0 != 0) {
-        *D_psp_08B1F19C++ = 0xCB000000;
+        *D_psp_08B1F19C++ = GE_SET_TFLUSH();
         ResetGraph(1);
     }
     return arg1 | arg0;
 }
 
 s32 func_psp_089111C0(
-    s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
+    s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 width, s32 height) {
     if (arg1 != 0) {
-        *D_psp_08B1F19C++ = 0xC500FF03;
-        *D_psp_08B1F19C++ = 0xB0000000 | arg1 & 0x00FFFFFF;
-        *D_psp_08B1F19C++ = 0xB1000000 | (arg1 & 0xFF000000) >> 8;
-        *D_psp_08B1F19C++ = 0xC4000010;
+        *D_psp_08B1F19C++ = GE_SET_CLUT(GU_PSM_8888, 0, 0xFF, 0);
+        *D_psp_08B1F19C++ = GE_SET_CBP_ADDR24(arg1);
+        *D_psp_08B1F19C++ = GE_SET_CBW_BASE8(arg1);
+        *D_psp_08B1F19C++ = GE_SET_CLOAD(16);
         D_psp_08B1F1C0 = arg1;
     }
     if (arg0 != 0) {
-        *D_psp_08B1F19C++ = 0xC2000000;
-        *D_psp_08B1F19C++ = 0xC3000000 | arg2;
-        *D_psp_08B1F19C++ = 0xA0000000 | arg0 & 0x00FFFFFF;
-        *D_psp_08B1F19C++ = 0xA8000000 | ((arg0 & 0xFF000000) >> 8 | arg3);
-        *D_psp_08B1F19C++ = 0xB8000000 | arg5 << 8 | arg4;
+        *D_psp_08B1F19C++ = GE_SET_TMODE(GU_TEXBUF_NORMAL, GU_SINGLE_CLUT, 0);
+        *D_psp_08B1F19C++ = GE_SET_TPF(arg2, 0);
+        *D_psp_08B1F19C++ = GE_SET_TBP0_ADDR24(arg0);
+        *D_psp_08B1F19C++ = GE_SET_TBW0_BASE8(arg3, arg0);
+        *D_psp_08B1F19C++ = GE_SET_TSIZE0(width, height);
         D_psp_08B1F1B8 = arg0;
         D_psp_08B1F1BC = arg2;
     }
     if (arg0 != 0) {
-        *D_psp_08B1F19C++ = 0xCB000000;
+        *D_psp_08B1F19C++ = GE_SET_TFLUSH();
         ResetGraph(1);
     }
     return arg1 | arg0;
@@ -485,19 +485,19 @@ void func_psp_089113A8(s32 arg0) {
     switch (arg0) {
     case 0:
         func_psp_08910660(1);
-        func_psp_08910810(0, 0xA, 0xA, 0xFF808080, 0xFF808080);
+        func_psp_08910810(GU_ADD, GU_FIX, GU_FIX, 0xFF808080, 0xFF808080);
         break;
     case 1:
         func_psp_08910660(1);
-        func_psp_08910810(0, 0xA, 0xA, 0xFFFFFFFF, 0xFFFFFFFF);
+        func_psp_08910810(GU_ADD, GU_FIX, GU_FIX, 0xFFFFFFFF, 0xFFFFFFFF);
         break;
     case 2:
         func_psp_08910660(1);
-        func_psp_08910810(2, 0xA, 0xA, 0xFFFFFFFF, 0xFFFFFFFF);
+        func_psp_08910810(GU_REVERSE_SUBTRACT, GU_FIX, GU_FIX, 0xFFFFFFFF, 0xFFFFFFFF);
         break;
     case 3:
         func_psp_08910660(1);
-        func_psp_08910810(0, 0xA, 0xA, 0xFF404040, 0xFFFFFFFF);
+        func_psp_08910810(GU_ADD, GU_FIX, GU_FIX, 0xFF404040, 0xFFFFFFFF);
         break;
     default:
         func_psp_08910660(0);
@@ -506,24 +506,23 @@ void func_psp_089113A8(s32 arg0) {
 }
 
 s32 func_psp_0891149C(s32 arg0, u32 arg1, u32 arg2, s32 arg3, s32 arg4) {
-    float sp14[3];
-    s32 var_a1_2;
+    ScePspVector3 sp14;
     s32 var_v0;
     s32 var_v1_2;
-    s32 var_v0_2;
+    s32 tw, th;
 
-    sp14[0] = D_psp_0893CD14;
-    sp14[1] = D_psp_0893CD18;
-    sp14[2] = D_psp_0893CD1C;
+    sp14.f[0] = D_psp_0893CD14;
+    sp14.f[1] = D_psp_0893CD18;
+    sp14.f[2] = D_psp_0893CD1C;
     var_v0 = 0;
     if ((arg3 != 0) && (D_psp_08B1F1C0 != arg3)) {
-        *D_psp_08B1F19C++ = 0xC500FF01;
-        *D_psp_08B1F19C++ = 0xB0000000 | arg3 & 0x00FFFFFF;
-        *D_psp_08B1F19C++ = 0xB1000000 | (arg3 & 0xFF000000) >> 8;
+        *D_psp_08B1F19C++ = GE_SET_CLUT(GU_PSM_5551, 0, 0xFF, 0);
+        *D_psp_08B1F19C++ = GE_SET_CBP_ADDR24(arg3);
+        *D_psp_08B1F19C++ = GE_SET_CBW_BASE8(arg3);
         if (arg4 == 1) {
-            *D_psp_08B1F19C = 0xC4000010;
+            *D_psp_08B1F19C = GE_SET_CLOAD(16);
         } else {
-            *D_psp_08B1F19C = 0xC4000001;
+            *D_psp_08B1F19C = GE_SET_CLOAD(1);
         }
         D_psp_08B1F19C++;
         D_psp_08B1F1C0 = arg3;
@@ -546,47 +545,47 @@ s32 func_psp_0891149C(s32 arg0, u32 arg1, u32 arg2, s32 arg3, s32 arg4) {
         }
 
         if (arg1 > 0x100) {
-            var_v0_2 = 9;
+            tw = 9;
         } else if (arg1 > 0x80) {
-            var_v0_2 = 8;
+            tw = 8;
         } else if (arg1 > 0x40) {
-            var_v0_2 = 7;
+            tw = 7;
         } else if (arg1 > 0x20) {
-            var_v0_2 = 6;
+            tw = 6;
         } else if (arg1 > 0x10) {
-            var_v0_2 = 5;
+            tw = 5;
         } else if (arg1 > 8) {
-            var_v0_2 = 4;
+            tw = 4;
         } else {
-            var_v0_2 = 3;
+            tw = 3;
         }
 
         if (arg2 > 0x100) {
-            var_a1_2 = 9;
+            th = 9;
         } else if (arg2 > 0x80) {
-            var_a1_2 = 8;
+            th = 8;
         } else if (arg2 > 0x40) {
-            var_a1_2 = 7;
+            th = 7;
         } else if (arg2 > 0x20) {
-            var_a1_2 = 6;
+            th = 6;
         } else if (arg2 > 0x10) {
-            var_a1_2 = 5;
+            th = 5;
         } else if (arg2 > 8) {
-            var_a1_2 = 4;
+            th = 4;
         } else {
-            var_a1_2 = 3;
+            th = 3;
         }
-        *D_psp_08B1F19C++ = 0xC2000000;
-        *D_psp_08B1F19C++ = 0xC3000000 | *((u32*)&sp14[arg4]);
-        *D_psp_08B1F19C++ = 0xA0000000 | arg0 & 0x00FFFFFF;
-        *D_psp_08B1F19C++ = 0xA8000000 | ((arg0 & 0xFF000000) >> 8 | var_v1_2);
-        *D_psp_08B1F19C++ = 0xB8000000 | var_a1_2 << 8 | var_v0_2;
+        *D_psp_08B1F19C++ = GE_SET_TMODE(GU_TEXBUF_NORMAL, GU_SINGLE_CLUT, 0);
+        *D_psp_08B1F19C++ = GE_SET_TPF(sp14.i[arg4], 0);
+        *D_psp_08B1F19C++ = GE_SET_TBP0_ADDR24(arg0);
+        *D_psp_08B1F19C++ = GE_SET_TBW0_BASE8(var_v1_2, arg0);
+        *D_psp_08B1F19C++ = GE_SET_TSIZE0(tw, th);
         D_psp_08B1F1B8 = arg0;
         D_psp_08B1F1BC = arg4;
         var_v0 = 1;
     }
     if (var_v0 != 0) {
-        *D_psp_08B1F19C++ = 0xCB000000;
+        *D_psp_08B1F19C++ = GE_SET_TFLUSH();
         ResetGraph(1);
     }
     return 0;
@@ -594,28 +593,28 @@ s32 func_psp_0891149C(s32 arg0, u32 arg1, u32 arg2, s32 arg3, s32 arg4) {
 
 void func_psp_089117F4(s32 mode, s32 sx, s32 sy, s32 height, s32 width, s32 sbw,
                        s32 sbp, s32 dx, s32 dy, s32 dbw, s32 dbp) {
-    *D_psp_08B1F19C++ = 0xCC000000;
-    *D_psp_08B1F19C++ = 0xB2000000 | sbp & 0x00FFFFFF;
-    *D_psp_08B1F19C++ = 0xB3000000 | ((sbp >> 24) & 0xF) << 16 | sbw;
-    *D_psp_08B1F19C++ = 0xEB000000 | sy << 10 | sx;
-    *D_psp_08B1F19C++ = 0xB4000000 | dbp & 0x00FFFFFF;
-    *D_psp_08B1F19C++ = 0xB5000000 | ((dbp >> 24) & 0xF) << 16 | dbw;
-    *D_psp_08B1F19C++ = 0xEC000000 | dy << 10 | dx;
-    *D_psp_08B1F19C++ = 0xEE000000 | (width - 1) << 10 | (height - 1);
-    *D_psp_08B1F19C++ = 0xEA000000 | (mode == 3);
-    *D_psp_08B1F19C++ = 0xCC000000;
+    *D_psp_08B1F19C++ = GE_SET_TSYNC();
+    *D_psp_08B1F19C++ = GE_SET_XBP1_ADDR24(sbp);
+    *D_psp_08B1F19C++ = GE_SET_XBW1_BASE8(sbw, sbp);
+    *D_psp_08B1F19C++ = GE_SET_XPOS1(sx, sy);
+    *D_psp_08B1F19C++ = GE_SET_XBP2_ADDR24(dbp);
+    *D_psp_08B1F19C++ = GE_SET_XBW2_BASE8(dbw, dbp);
+    *D_psp_08B1F19C++ = GE_SET_XPOS2(dx, dy);
+    *D_psp_08B1F19C++ = GE_SET_XSIZE(height - 1, width - 1);
+    *D_psp_08B1F19C++ = GE_SET_XSTART(mode == 3);
+    *D_psp_08B1F19C++ = GE_SET_TSYNC();
 }
 
 s32 func_psp_08911990(s32 arg0, s32 arg1) {
 
-    s32 var_v0 = (arg1 == 0x100) ? 8 : 9;
+    s32 tw = (arg1 == 0x100) ? 8 : 9;
 
-    *D_psp_08B1F19C++ = 0xC2000000;
-    *D_psp_08B1F19C++ = 0xC3000001;
-    *D_psp_08B1F19C++ = 0xA0000000 | arg0 & 0x00FFFFFF;
-    *D_psp_08B1F19C++ = 0xA8000000 | ((arg0 & 0xFF000000) >> 8 | arg1);
-    *D_psp_08B1F19C++ = 0xB8000900 | var_v0;
-    *D_psp_08B1F19C++ = 0xCB000000;
+    *D_psp_08B1F19C++ = GE_SET_TMODE(GU_TEXBUF_NORMAL, GU_SINGLE_CLUT, 0);
+    *D_psp_08B1F19C++ = GE_SET_TPF(GU_PSM_5551, 0);
+    *D_psp_08B1F19C++ = GE_SET_TBP0_ADDR24(arg0);
+    *D_psp_08B1F19C++ = GE_SET_TBW0_BASE8(arg1, arg0);
+    *D_psp_08B1F19C++ = GE_SET_TSIZE0(tw, 9);
+    *D_psp_08B1F19C++ = GE_SET_TFLUSH();
     ResetGraph(1);
     D_psp_08B1F1B8 = 0;
     D_psp_08B1F1BC = 0;
@@ -623,22 +622,22 @@ s32 func_psp_08911990(s32 arg0, s32 arg1) {
     return 0;
 }
 
-void func_psp_08911AB8(u8 arg0, u8 arg1, u8 arg2) {
+void func_psp_08911AB8(u8 r, u8 g, u8 b) {
     func_psp_08910778(1);
-    *D_psp_08B1F19C++ = 0xD9000000 | arg2 << 16 | arg1 << 8 | arg0;
-    *D_psp_08B1F19C++ = 0xDAFFFFFF;
-    *D_psp_08B1F19C++ = 0xD8000003;
+    *D_psp_08B1F19C++ = GE_SET_CREF(r, g, b);
+    *D_psp_08B1F19C++ = GE_SET_CMSK(0xFF, 0xFF, 0xFF);
+    *D_psp_08B1F19C++ = GE_SET_CTEST(GU_NOTEQUAL);
 }
 
 void func_psp_08911B7C(void) { func_psp_08910778(0); }
 
 void func_psp_08911B84(
-    s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4, s32 arg5) {
-    *D_psp_08B1F19C++ = 0x21000000 | arg0;
+    s32 arg0, s32 op, s32 arg2, s32 arg3, ScePspRGBA8888 arg4, ScePspRGBA8888 arg5) {
+    *D_psp_08B1F19C++ = GE_SET_ABE(arg0);
     if (arg0 == 1) {
-        *D_psp_08B1F19C++ = 0xDF000000 | arg1 << 8 | arg3 << 4 | arg2;
-        *D_psp_08B1F19C++ = 0xE0000000 | arg4 & 0x00FFFFFF;
-        *D_psp_08B1F19C++ = 0xE1000000 | arg5 & 0x00FFFFFF;
+        *D_psp_08B1F19C++ = GE_SET_BLEND(arg2, arg3, op);
+        *D_psp_08B1F19C++ = GE_SET_FIXA_RGB24(arg4);
+        *D_psp_08B1F19C++ = GE_SET_FIXB_RGB24(arg5);
     }
 }
 
@@ -646,36 +645,32 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/11320", func_psp_08911C3C);
 
 void func_psp_08911F24(s32 arg0, s32 arg1) {
     *D_psp_08B1F19C++ =
-        0x10000000 |
-        ((u32)D_psp_08B1F1D0[arg1 + ((arg0 * 2) + 5)] & 0xFF000000) >> 8;
+        GE_SET_BASE_BASE8(D_psp_08B1F1D0[arg1 + ((arg0 * 2) + 5)]);
     *D_psp_08B1F19C++ =
-        0x0A000000 | (u32)D_psp_08B1F1D0[arg1 + ((arg0 * 2) + 5)] & 0x00FFFFFF;
+        GE_SET_CALL_ADDR24(D_psp_08B1F1D0[arg1 + ((arg0 * 2) + 5)]);
 }
 
 void func_psp_08911FA0(void) {
-    *D_psp_08B1F19C++ = 0x10000000 | ((u32)D_psp_08B1F1D0[9] & 0xFF000000) >> 8;
-    *D_psp_08B1F19C++ = 0x0A000000 | (u32)D_psp_08B1F1D0[9] & 0x00FFFFFF;
+    *D_psp_08B1F19C++ = GE_SET_BASE_BASE8(D_psp_08B1F1D0[9]);
+    *D_psp_08B1F19C++ = GE_SET_CALL_ADDR24(D_psp_08B1F1D0[9]);
 }
 
 void func_psp_08912008(void) {
-    *D_psp_08B1F19C++ =
-        0x10000000 | ((u32)D_psp_08B1F1D0[10] & 0xFF000000) >> 8;
-    *D_psp_08B1F19C++ = 0x0A000000 | (u32)D_psp_08B1F1D0[10] & 0x00FFFFFF;
+    *D_psp_08B1F19C++ = GE_SET_BASE_BASE8(D_psp_08B1F1D0[10]);
+    *D_psp_08B1F19C++ = GE_SET_CALL_ADDR24(D_psp_08B1F1D0[10]);
 }
 
 void func_psp_08912070(s32 arg0) {
-    *D_psp_08B1F19C++ =
-        0x10000000 | ((u32)D_psp_08B1F1D0[arg0 + 2] & 0xFF000000) >> 8;
-    *D_psp_08B1F19C++ = 0x0A000000 | (u32)D_psp_08B1F1D0[arg0 + 2] & 0x00FFFFFF;
+    *D_psp_08B1F19C++ = GE_SET_BASE_BASE8(D_psp_08B1F1D0[arg0 + 2]);
+    *D_psp_08B1F19C++ = GE_SET_CALL_ADDR24(D_psp_08B1F1D0[arg0 + 2]);
 }
 
 void func_psp_089120E4(void) {
-    *D_psp_08B1F19C++ = 0x10000000 | ((u32)D_psp_08B1F1D0[4] & 0xFF000000) >> 8;
-    *D_psp_08B1F19C++ = 0x0A000000 | (u32)D_psp_08B1F1D0[4] & 0x00FFFFFF;
+    *D_psp_08B1F19C++ = GE_SET_BASE_BASE8(D_psp_08B1F1D0[4]);
+    *D_psp_08B1F19C++ = GE_SET_CALL_ADDR24(D_psp_08B1F1D0[4]);
 }
 
 void func_psp_0891214C(s32 arg0) {
-    *D_psp_08B1F19C++ =
-        0x10000000 | ((u32)D_psp_08B1F1D0[arg0] & 0xFF000000) >> 8;
-    *D_psp_08B1F19C++ = 0x0A000000 | (u32)D_psp_08B1F1D0[arg0] & 0x00FFFFFF;
+    *D_psp_08B1F19C++ = GE_SET_BASE_BASE8(D_psp_08B1F1D0[arg0]);
+    *D_psp_08B1F19C++ = GE_SET_CALL_ADDR24(D_psp_08B1F1D0[arg0]);
 }

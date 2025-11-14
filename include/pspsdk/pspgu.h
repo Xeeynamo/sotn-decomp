@@ -205,6 +205,10 @@ extern "C" {
 #define GU_TEXTURE_CONST	(1)
 #define GU_TEXTURE_SLOPE	(2)
 
+/* Texture Buffer Mode */
+#define GU_TEXBUF_NORMAL		(0)
+#define GU_TEXBUF_FAST	(1)
+
 /* Texture Projection Map Mode */
 #define GU_POSITION		(0)
 #define GU_UV			(1)
@@ -234,7 +238,7 @@ extern "C" {
 #define GU_CLEAR_STENCIL	(2)
 #define GU_CLEAR_DEPTH	(4)
 #define GU_CLEAR_ALL	(7)
-#define GU_FAST_CLEAR_BIT	(16)
+#define GU_CLEAR_FAST	(16)
 
 /* Texture Effect */
 #define GU_TFX_MODULATE		(0)
@@ -290,6 +294,10 @@ extern "C" {
 #define GU_DIRECTIONAL		(0)
 #define GU_POINTLIGHT		(1)
 #define GU_SPOTLIGHT		(2)
+
+/* Texture Multi Clut */
+#define GU_SINGLE_CLUT		(0)
+#define GU_MULTI_CLUT		(1)
 
 /* Contexts */
 #define GU_DIRECT		(0)
