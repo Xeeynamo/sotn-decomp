@@ -392,8 +392,8 @@ update-dependencies: ##@ update tools and internal dependencies
 update-dependencies: $(DEPENDENCIES) dependencies_pspeu
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
-	cargo build --release --manifest-path ./tools/sotn_str/Cargo.toml
 	rustup update
+	cargo build --release --manifest-path ./tools/sotn_str/Cargo.toml
 	git clean -fd bin/
 
 dependencies_pspeu: $(ALLEGREX) $(MWCCGAP_APP) $(MWCCPSP)
