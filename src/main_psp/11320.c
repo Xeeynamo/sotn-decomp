@@ -312,7 +312,8 @@ void func_psp_089107DC(s32 arg0, s32 arg1) {
     *D_psp_08B1F19C++ = GE_SET_TWRAP(arg0, arg1);
 }
 
-void func_psp_08910810(s32 op, s32 arg1, s32 arg2, ScePspRGBA8888 arg3, ScePspRGBA8888 arg4) {
+void func_psp_08910810(
+    s32 op, s32 arg1, s32 arg2, ScePspRGBA8888 arg3, ScePspRGBA8888 arg4) {
     *D_psp_08B1F19C++ = GE_SET_BLEND(arg1, arg2, op);
     *D_psp_08B1F19C++ = GE_SET_FIXA_RGB24(arg3);
     *D_psp_08B1F19C++ = GE_SET_FIXB_RGB24(arg4);
@@ -493,7 +494,8 @@ void func_psp_089113A8(s32 arg0) {
         break;
     case 2:
         func_psp_08910660(1);
-        func_psp_08910810(GU_REVERSE_SUBTRACT, GU_FIX, GU_FIX, 0xFFFFFFFF, 0xFFFFFFFF);
+        func_psp_08910810(
+            GU_REVERSE_SUBTRACT, GU_FIX, GU_FIX, 0xFFFFFFFF, 0xFFFFFFFF);
         break;
     case 3:
         func_psp_08910660(1);
@@ -631,8 +633,8 @@ void func_psp_08911AB8(u8 r, u8 g, u8 b) {
 
 void func_psp_08911B7C(void) { func_psp_08910778(0); }
 
-void func_psp_08911B84(
-    s32 arg0, s32 op, s32 arg2, s32 arg3, ScePspRGBA8888 arg4, ScePspRGBA8888 arg5) {
+void func_psp_08911B84(s32 arg0, s32 op, s32 arg2, s32 arg3,
+                       ScePspRGBA8888 arg4, ScePspRGBA8888 arg5) {
     *D_psp_08B1F19C++ = GE_SET_ABE(arg0);
     if (arg0 == 1) {
         *D_psp_08B1F19C++ = GE_SET_BLEND(arg2, arg3, op);

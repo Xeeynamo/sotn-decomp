@@ -714,7 +714,8 @@ s32 func_psp_0891B118(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     a[0].unkC = a[1].unkC = 1.0f;
     a[0].unk0 = a[1].unk0 = arg4;
     func_psp_08912008();
-    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES,
+                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
     return 0;
 }
 
@@ -743,7 +744,8 @@ s32 func_psp_0891B2CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
     a[1].unk0 = a[0].unk0 = a[3].unk0 = a[2].unk0 = arg4;
     func_psp_08912008();
     func_psp_089113A8(-1, 0x80);
-    func_psp_08910A80(a, 4, sizeof(Unk0891B118), GU_TRIANGLE_STRIP, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+    func_psp_08910A80(a, 4, sizeof(Unk0891B118), GU_TRIANGLE_STRIP,
+                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
     return 0;
 }
 
@@ -1499,7 +1501,8 @@ void func_psp_0891DE74(void) {
         p[1].unk0 = p[2].unk4 = p[3].unk0 = p[3].unk4 = 255.0f;
         func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
         func_psp_08911990((s32)sceGeEdramGetAddr() + 0xCC000, 0x100);
-        func_psp_08910A80(p, 4, sizeof(Unk0891D9F4), GU_TRIANGLE_STRIP, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+        func_psp_08910A80(p, 4, sizeof(Unk0891D9F4), GU_TRIANGLE_STRIP,
+                          GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
         break;
     case 2:
         func_psp_08910660(1);
@@ -1517,7 +1520,8 @@ void func_psp_0891DE74(void) {
         p[3].unk4 = D_psp_08946500;
         func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
         func_psp_08911990(func_psp_0891AC24(), 0x200);
-        func_psp_08910A80(p, 4, sizeof(Unk0891D9F4), GU_TRIANGLE_STRIP, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+        func_psp_08910A80(p, 4, sizeof(Unk0891D9F4), GU_TRIANGLE_STRIP,
+                          GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
         break;
     case 3:
         p[0].unkC = p[0].unk10 = p[1].unk10 = p[2].unkC = 0.0f;
@@ -1529,7 +1533,8 @@ void func_psp_0891DE74(void) {
         p[2].unk4 = p[3].unk4 = 63.0f;
         func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
         func_psp_08911990((s32)sceGeEdramGetAddr() + 0x12C200, 0x40);
-        func_psp_08910A80(p, 4, sizeof(Unk0891D9F4), GU_TRIANGLE_STRIP, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+        func_psp_08910A80(p, 4, sizeof(Unk0891D9F4), GU_TRIANGLE_STRIP,
+                          GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
         break;
     case 4:
         p[0].unkC = 0.0f;
@@ -1551,7 +1556,8 @@ void func_psp_0891DE74(void) {
         p[3].unk4 = 272.0f;
         func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
         func_psp_08911990((s32)sceGeEdramGetAddr() + 0xCC000, 0x100);
-        func_psp_08910A80(p, 4, sizeof(Unk0891D9F4), GU_TRIANGLE_STRIP, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+        func_psp_08910A80(p, 4, sizeof(Unk0891D9F4), GU_TRIANGLE_STRIP,
+                          GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
         p[0].unk10 += 136.0f;
         p[1].unk10 += 136.0f;
         p[2].unk10 += 136.0f;
@@ -1559,7 +1565,8 @@ void func_psp_0891DE74(void) {
         p[1].unk0 = 512.0f;
         p[3].unk0 = 512.0f;
         func_psp_08911990(func_psp_0891AC24(), 0x200);
-        func_psp_08910A80(p, 4, sizeof(Unk0891D9F4), GU_TRIANGLE_STRIP, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+        func_psp_08910A80(p, 4, sizeof(Unk0891D9F4), GU_TRIANGLE_STRIP,
+                          GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
         break;
     }
     func_psp_0891AF48(var_s1);
@@ -1591,7 +1598,8 @@ void func_psp_0891E420(void) {
     func_psp_08911B7C();
     func_psp_089109E4(GU_TFX_MODULATE, GU_TCC_RGBA, 1);
     func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-    func_psp_08910A80(p, 4, sizeof(Unk0891D9F4), GU_TRIANGLE_STRIP, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+    func_psp_08910A80(p, 4, sizeof(Unk0891D9F4), GU_TRIANGLE_STRIP,
+                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
     func_psp_089109E4(GU_TFX_MODULATE, GU_TCC_RGBA, 0);
     func_psp_0891AF48(2);
 }
@@ -2030,7 +2038,8 @@ s32 func_psp_08921A38(POLY_G4* p) {
         func_psp_0891DB9C(a, 4);
     }
     func_psp_08912008();
-    func_psp_08910A80(a, 4, sizeof(Unk0891B118), GU_TRIANGLE_STRIP, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+    func_psp_08910A80(a, 4, sizeof(Unk0891B118), GU_TRIANGLE_STRIP,
+                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
     func_psp_0891B1F8(a[0].unk4, a[0].unk8, a[3].unk4, a[3].unk8, 0x80FF0000);
     return 0;
 }
@@ -2082,7 +2091,8 @@ s32 func_psp_08925194(TILE* p) {
         func_psp_0891DB9C(a, 4);
     }
     func_psp_08912008();
-    func_psp_08910A80(a, 4, sizeof(Unk0891B118), GU_TRIANGLE_STRIP, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+    func_psp_08910A80(a, 4, sizeof(Unk0891B118), GU_TRIANGLE_STRIP,
+                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
     func_psp_0891B1F8(a[0].unk4, a[0].unk8, a[1].unk4, a[1].unk8, 0x80FF00FF);
     return 0;
 }
@@ -2106,7 +2116,8 @@ s32 func_psp_089254D8(LINE_F2* p) {
         func_psp_0891DC48(a, 2);
     }
     func_psp_08912008();
-    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES,
+                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
     return 0;
 }
 
@@ -2129,7 +2140,8 @@ s32 func_psp_08925600(LINE_F4* p) {
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DC48(a, 2);
     }
-    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES,
+                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
     a[0].unk4 = a[1].unk4;
     a[0].unk8 = a[1].unk8;
     a[1].unk4 = ptr->x2;
@@ -2140,7 +2152,8 @@ s32 func_psp_08925600(LINE_F4* p) {
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DC48(a, 2);
     }
-    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES,
+                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
     a[0].unk4 = a[1].unk4;
     a[0].unk8 = a[1].unk8;
     a[1].unk4 = ptr->x3;
@@ -2151,7 +2164,8 @@ s32 func_psp_08925600(LINE_F4* p) {
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DC48(a, 2);
     }
-    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES,
+                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
     return 0;
 }
 
@@ -2180,7 +2194,8 @@ s32 func_psp_08925860(LINE_G2* p) {
         func_psp_089113A8(-1, 0x80);
     }
     func_psp_08912008();
-    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES,
+                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
     return 0;
 }
 
@@ -2204,7 +2219,8 @@ s32 func_psp_08925A04(LINE_G4* p) {
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DC48(a, 2);
     }
-    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES,
+                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
     a[0].unk4 = a[1].unk4;
     a[0].unk8 = a[1].unk8;
     a[1].unk4 = ptr->x2;
@@ -2217,7 +2233,8 @@ s32 func_psp_08925A04(LINE_G4* p) {
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DC48(a, 2);
     }
-    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES,
+                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
     a[0].unk4 = a[1].unk4;
     a[0].unk8 = a[1].unk8;
     a[1].unk4 = ptr->x3;
@@ -2230,7 +2247,8 @@ s32 func_psp_08925A04(LINE_G4* p) {
     if (D_psp_08C62A40 == 0) {
         func_psp_0891DC48(a, 2);
     }
-    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES, GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
+    func_psp_08910A80(a, 2, sizeof(Unk0891B118), GU_LINES,
+                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
     return 0;
 }
 
