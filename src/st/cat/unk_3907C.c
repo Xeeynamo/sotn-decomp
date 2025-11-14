@@ -12,13 +12,3 @@ INCLUDE_ASM("st/cat/nonmatchings/unk_3907C", func_us_801B972C);
 INCLUDE_ASM("st/cat/nonmatchings/unk_3907C", func_us_801B9A74);
 
 INCLUDE_ASM("st/cat/nonmatchings/unk_3907C", func_us_801B9D1C);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_3907C", func_us_801BA164);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_3907C", func_us_801BA388);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_3907C", func_us_801BA7FC);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_3907C", func_us_801BACF4);
-
-INCLUDE_ASM("st/cat/nonmatchings/unk_3907C", func_us_801BB4CC);
