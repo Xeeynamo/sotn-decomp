@@ -2,10 +2,10 @@
 #include "cat.h"
 
 static Point32 D_us_80181620[] = {
-    {.x = 0xFFFE0000, .y = 0xFFFF8000}, {.x = 0xFFFE2000, .y = 0xFFFE8000},
-    {.x = 0xFFFDC000, .y = 0xFFFEC000}, {.x = 0xFFFE4000, .y = 0xFFFEE000},
-    {.x = 0xFFFE2000, .y = 0xFFFEE000}, {.x = 0xFFFE0000, .y = 0xFFFF0000},
-    {.x = 0xFFFDE000, .y = 0xFFFEC000}, {.x = 0x00000000, .y = 0x00000000}};
+    {.x = -0x20000, .y = -0x8000},  {.x = -0x1E000, .y = -0x18000},
+    {.x = -0x24000, .y = -0x14000}, {.x = -0x1C000, .y = -0x12000},
+    {.x = -0x1E000, .y = -0x12000}, {.x = -0x20000, .y = -0x10000},
+    {.x = -0x22000, .y = -0x14000}, {.x = 0x00000, .y = 0x00000}};
 static u16 tile_positions[2][4] = {
     {0x00DF, 0x00FF, 0x011F, 0x013F}, {0x02C0, 0x02E0, 0x0300, 0x0320}};
 static u16 tiles[2][4] = {
@@ -14,6 +14,7 @@ static s32 D_us_80181680 = 0;
 extern EInit g_EInitEnvironment;
 extern EInit g_EInitParticle;
 
+// Appears to be unused in CAT despite appearing in the entity list
 void func_us_801BA164(Entity* self) {
     Primitive* prim;
     s32 var_s1;
@@ -84,6 +85,7 @@ void func_us_801BA164(Entity* self) {
     }
 }
 
+// Appears to be unused in CAT despite appearing in the entity list
 void func_us_801BA388(Entity* self) {
     Collider collider;
     s32 i;
@@ -139,6 +141,7 @@ void func_us_801BA388(Entity* self) {
 
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
+                // func_us_801BA164
                 CreateEntityFromEntity(E_UNK_2A, self, newEntity);
                 newEntity->posY.i.hi += 0x20;
                 if (self->params) {
@@ -158,6 +161,7 @@ void func_us_801BA388(Entity* self) {
             self->ext.et_801BA164.unk84 = true;
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
+                // func_us_801BA164
                 CreateEntityFromEntity(E_UNK_2A, self, newEntity);
                 newEntity->posY.i.hi += 0x10;
                 if (self->params) {
