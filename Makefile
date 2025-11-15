@@ -169,6 +169,7 @@ clean: clean_asm
 	# n.b.! temporary clean for old auto sym files. remove 12/2025
 	rm -f config/*auto.*.txt
 clean_all: clean
+	git clean -fdx asm/
 	git clean -fdx build/
 	git clean -fdx config/
 
