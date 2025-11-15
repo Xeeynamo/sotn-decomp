@@ -392,6 +392,7 @@ update-dependencies: ##@ update tools and internal dependencies
 update-dependencies: $(DEPENDENCIES) dependencies_pspeu
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rm $(SOTNASSETS) && make $(SOTNASSETS) || true
+	rustup update
 	cargo build --release --manifest-path ./tools/sotn_str/Cargo.toml
 	git clean -fd bin/
 
