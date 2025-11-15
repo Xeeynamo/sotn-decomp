@@ -3643,6 +3643,13 @@ typedef struct {
     /* 0x86 */ s16 unk88;
 } ET_SpikeRoomSwitch;
 
+typedef struct {
+    /* 0x7C */ Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 unk84;
+} ET_801BA164;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3957,6 +3964,7 @@ typedef union { // offset=0x7C
     ET_CloakedKnightAura cloakedKnightAura;
     ET_CloakedKnightSword cloakedKnightSword;
     ET_SpikeRoomSwitch spikeRoomSwitch;
+    ET_801BA164 et_801BA164;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
