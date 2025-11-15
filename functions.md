@@ -467,7 +467,7 @@
 | dra   | 62DEC.rodata                             |       18 |          0 | Yes    |       |     |
 | dra   | 84B88.rodata                             |       18 |          0 | Yes    |       |     |
 | dra   | 8A0A4.rodata                             |       18 |          0 | Yes    |       |     |
-| cat   | unk_28C10.rodata                         |       18 |          0 | Yes    |       |     |
+| cat   | unk_3A164.rodata                         |       18 |          0 | Yes    |       |     |
 | dai   | e_bone_halberd.rodata                    |       18 |          0 | Yes    |       |     |
 | dai   | e_cutscene_actors.rodata                 |       18 |          0 | Yes    |       |     |
 | lib   | e_life_up.rodata                         |       18 |          0 | Yes    |       |     |
