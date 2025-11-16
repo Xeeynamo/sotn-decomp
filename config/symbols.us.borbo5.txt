@@ -16,7 +16,6 @@ g_EInitDamageNum = 0x80180418;
 RBO5_BackgroundBlockInit = 0x80180488;
 RBO5_RedDoorTiles = 0x801804B0;
 g_stone_flag = 0x801805BC;
-RBO5_PrizeDrops = 0x8018071C;
 g_eDamageDisplayClut = 0x80180B18;
 g_bigRedFireballAnim = 0x80180F98;
 RBO5_rooms = 0x80181258;
