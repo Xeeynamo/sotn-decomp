@@ -1352,8 +1352,8 @@
 | main  | func_psp_0890F45C                        |       38 |          7 |        |       |     |
 | lib   | func_us_801B60C8                         |       38 |          7 |        |       |     |
 | main  | func_psp_0892FCC8                        |       39 |          1 |        |       |     |
-| cat   | CreateEntityFromCurrentEntity            |       39 |          2 |        |       |     |
 | cat   | CreateEntityFromEntity                   |       39 |          2 |        |       |     |
+| cat   | func_pspeu_09238598                      |       39 |          2 |        |       |     |
 | cat   | func_pspeu_09252BC0                      |       39 |          2 |        |       |     |
 | chi   | CreateEntityFromCurrentEntity            |       39 |          2 |        |       |     |
 | chi   | CreateEntityFromEntity                   |       39 |          2 |        |       |     |
@@ -1459,7 +1459,7 @@
 | main  | func_psp_0891783C                        |       41 |          3 |        |       |     |
 | main  | func_psp_08914F18                        |       41 |          3 |        |       |     |
 | main  | RotTransPers4                            |       41 |          3 |        |       |     |
-| cat   | GetSideToPlayer                          |       41 |          3 |        |       |     |
+| cat   | func_pspeu_09252398                      |       41 |          3 |        |       |     |
 | chi   | func_psp_09247610                        |       41 |          3 |        |       |     |
 | dai   | func_pspeu_0924D460                      |       41 |          3 |        |       |     |
 | lib   | func_psp_0924EEA0                        |       41 |          3 |        |       |     |
@@ -1993,7 +1993,7 @@
 | ric   | func_pspeu_092AF4D0                      |       62 |          6 |        |       |     |
 | nz1   | EntityVandalSwordDeath                   |       62 |          6 |        |       |     |
 | main  | func_psp_0891B7A0                        |       62 |          7 |        |       |     |
-| cat   | MakeExplosions                           |       62 |          8 |        |       |     |
+| cat   | func_pspeu_09249C80                      |       62 |          8 |        |       |     |
 | main  | _calloc_r                                |       62 |          9 |        |       |     |
 | main  | func_psp_089121BC                        |       62 |          9 |        |       |     |
 | main  | SetDefDrawEnv                            |       63 |          1 |        |       |     |
@@ -2010,7 +2010,7 @@
 | ric   | func_pspeu_092B4688                      |       63 |          7 |        |       |     |
 | cat   | func_pspeu_09261A18                      |       63 |          7 |        |       |     |
 | cat   | func_pspeu_09261AE8                      |       63 |          7 |        |       |     |
-| cat   | PrimDecreaseBrightness                   |       63 |          7 |        |       |     |
+| cat   | func_pspeu_09254300                      |       63 |          7 |        |       |     |
 | chi   | func_psp_09248B00                        |       63 |          7 |        |       |     |
 | dai   | func_pspeu_0924F200                      |       63 |          7 |        |       |     |
 | lib   | func_psp_09251098                        |       63 |          7 |        |       |     |
@@ -2614,7 +2614,7 @@
 | main  | func_psp_089144BC                        |      100 |         19 |        |       |     |
 | main  | _lseek                                   |      100 |         27 |        |       |     |
 | st0   | func_pspeu_09241BF0                      |      101 |          5 |        |       |     |
-| cat   | AnimateEntity                            |      101 |          7 |        |       |     |
+| cat   | func_pspeu_09252160                      |      101 |          7 |        |       |     |
 | chi   | func_psp_092473D8                        |      101 |          7 |        |       |     |
 | dai   | func_pspeu_0924D228                      |      101 |          7 |        |       |     |
 | lib   | func_psp_0924EC68                        |      101 |          7 |        |       |     |
@@ -3557,7 +3557,7 @@
 | lib   | EntityThornweed                          |      330 |         47 | Yes    |       |     |
 | dra   | DealDamage                               |      331 |         39 |        |       |     |
 | maria | func_pspeu_092A6280                      |      332 |         40 |        |       |     |
-| cat   | GetPlayerCollisionWith                   |      332 |         41 |        |       |     |
+| cat   | func_pspeu_092533B8                      |      332 |         41 |        |       |     |
 | dai   | func_pspeu_0924E568                      |      332 |         41 |        |       |     |
 | lib   | func_psp_0924FF90                        |      332 |         41 |        |       |     |
 | no2   | func_pspeu_0924D9D8                      |      332 |         41 |        |       |     |
@@ -3808,7 +3808,7 @@
 | ric   | func_8016D9C4                            |      512 |         68 |        |       |     |
 | cat   | EntityHellfireBeastFlamePillar           |      514 |         66 |        |       |     |
 | chi   | EntitySalemWitchCurse                    |      516 |         35 |        |       |     |
-| cat   | func_us_801BA7FC                         |      517 |         58 |        |       |     |
+| cat   | EntityCoffin                             |      517 |         58 |        |       |     |
 | dra   | func_psp_090EDE28                        |      517 |         73 |        |       |     |
 | dra   | func_psp_091020A0                        |      517 |         74 |        |       |     |
 | dra   | EntitySubwpnHolyWaterFlame               |      519 |         37 |        |       |     |
