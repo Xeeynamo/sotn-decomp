@@ -44,7 +44,7 @@ void func_us_801B907C(Entity* self);
 void func_us_801BA388(Entity* self);
 void func_us_801BA164(Entity* self);
 void EntityElevator(Entity* self);
-void func_us_801BA7FC(Entity* self);
+void EntityCoffin(Entity* self);
 void EntityBigRedFireball(Entity* self);
 void EntityDiscusLord(Entity* self);
 void EntityDiscus(Entity* self);
@@ -130,7 +130,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801BA388,
     func_us_801BA164,
     EntityElevator,
-    func_us_801BA7FC,
+    EntityCoffin,
     EntityBigRedFireball,
     EntityDiscusLord,
     EntityDiscus,
@@ -198,7 +198,7 @@ EInit g_EInitSpikeRoomLightSwitch = {
 EInit g_EInitElevator = {ANIMSET_OVL(0x02), 0x03, 0x00, 0x0000, 0x005};
 EInit g_EInitEnvironment = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
 EInit D_us_801811E8 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x005};
-EInit D_us_801811F4 = {ANIMSET_OVL(0x01), 0x13, 0x00, 0x0000, 0x000};
+EInit g_EInitCoffin = {ANIMSET_OVL(0x01), 0x13, 0x00, 0x0000, 0x000};
 
 // Discus Lord
 EInit g_EInitDiscusLord = {ANIMSET_OVL(0x04), 0x01, 0x49, 0x0224, 0x04D};

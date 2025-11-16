@@ -76,5 +76,3 @@ void func_us_801B87E8(Entity* self) {
     }
     FntPrint("base_x:%04x\n", base_x);
 }
-
-INCLUDE_ASM("st/cat_psp/nonmatchings/cat_psp/unk_273C0", func_us_801BA7FC);
