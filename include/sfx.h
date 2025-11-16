@@ -302,15 +302,6 @@ enum {
 #define SFX_BO4_UNK_7E6 0x7E6
 #define SFX_BO4_UNK_7E8 0x7E8
 
-// BOSS RBO3 - Medusa
-#define SFX_RBO3_UNK_7FB 0x7FB
-#define SFX_RBO3_UNK_7FD 0x7FD
-#define SFX_RBO3_UNK_7FE 0x7FE
-#define SFX_RBO3_UNK_7FF 0x7FF
-#define SFX_RBO3_UNK_801 0x801
-#define SFX_RBO3_UNK_802 0x802
-#define SFX_RBO3_UNK_804 0x804
-
 // UNUSED SOUNDS
 #define NA_VO_MAR_AIM_HEAD 0x87F
 
@@ -595,7 +586,7 @@ enum Sfx {
     /* 0x6E3 */ SFX_SCYLLA_BUBBLE_BURST,
     /* 0x6E4 */ SFX_PENTAGRAM_ATTACK,
     /* 0x6E5 */ SFX_UNUSED_ANIME_EXPLODE,
-    /* 0x6E6 */ SFX_LOW_SYNTH_BUBBLES,
+    /* 0x6E6 */ SFX_LOW_SYNTH_BUBBLES, // Shaft Orb
 
     // Player sfx (0x6E7-0x708)
 
@@ -860,14 +851,33 @@ enum Sfx {
     /* 0x7C5 */ SFX_RBO3_UNK_7C5, // Cerberus Background Fire (BO1 different)
     /* 0x7C6 */ SFX_B07_STOMP,    // BO0 different, no sound in BO1
     /* 0x7C7 */ SFX_BO1_UNK_7C7,  // Granfaloon, Beelzebub, Galamoth
-    /* 0x7C8 */ SFX_RBO3_UNK_7C8,
+    /* 0x7C8 */ SFX_MEDUSA_WEAPON_SWING,
     /* 0x7C9 */ SFX_UNUSED_7C9,
     /* 0x7CA */ SFX_BO0_UNK_7CA,
     /* 0x7CB */ SFX_DOPPLEGANGER_DOOR_OPEN,
     /* 0x7CC */ SFX_DOPPLEGANGER_APPEAR,
-    SFX_UNUSED_7D0 = 0x7D0,
-    SFX_SCIFI_BLAST,
-    SFX_BOSS_DEFEATED,
+    /* 0x7CD */ SFX_GRANFALOON_APPEAR,
+    /* 0x7CE */ SFX_SHAFT_DEATH,
+    /* 0x7CF */ SFX_SHAFT_FIRE_ATTACK, // also used by Cerberus
+    /* 0x7D0 */ SFX_UNUSED_7D0,
+    /* 0x7D1 */ SFX_SCIFI_BLAST, // Photon Torpedo sfx from "Star Trek"
+
+    // vabid 9
+    /* 0x7D2 */ SFX_BOSS_DEFEATED,
+    /* 0x7D3 */ SFX_DRACULA_FLY_IN,
+
+    // vabid 3
+    /* 0x7D4 */ SFX_UNK_TE1_7D4,
+    SFX_MEDUSA_STONE = 0x7FB,
+    SFX_UNUSED_MEDUSA_OOH_WHOA,
+    SFX_MEDUSA_VENOM,
+    SFX_MEDUSA_ATTACK_A,
+    SFX_MEDUSA_ATTACK_B,
+    SFX_UNUSED_MEDUSA_ATTACK_C,
+    SFX_MEDUSA_PAIN_A,
+    SFX_MEDUSA_PAIN_B,
+    SFX_UNUSED_MEDUSA_OH_NO,
+    SFX_MEDUSA_DEATH, // "I'm petrified!"
     SFX_TELEPORT_SYNTH_UP = 0x8BA,
     SFX_TELEPORT_SYNTH_DOWN,
     SFX_BURNING_PHOTOGRAPH = 0x8BE,

@@ -233,11 +233,11 @@ void EntityMedusa(Entity* self) {
     case 5:
         if (self->step_s == 0) {
             if (Random() & 1) {
-                PlaySfxPositional(SFX_RBO3_UNK_7FE);
+                PlaySfxPositional(SFX_MEDUSA_ATTACK_A);
             } else {
-                PlaySfxPositional(SFX_RBO3_UNK_7FF);
+                PlaySfxPositional(SFX_MEDUSA_ATTACK_B);
             }
-            PlaySfxPositional(SFX_RBO3_UNK_7C8);
+            PlaySfxPositional(SFX_MEDUSA_WEAPON_SWING);
             self->step_s++;
         }
         self->ext.GS_Props.flag = 1;
@@ -249,7 +249,7 @@ void EntityMedusa(Entity* self) {
     case 4:
         if (self->step_s == 0) {
             if (!(Random() & 3)) {
-                PlaySfxPositional(SFX_RBO3_UNK_7FB);
+                PlaySfxPositional(SFX_MEDUSA_STONE);
             }
             self->step_s++;
         }
@@ -277,13 +277,15 @@ void EntityMedusa(Entity* self) {
         break;
     case 8:
         if (self->step_s == 0) {
-            PlaySfxPositional(SFX_RBO3_UNK_7FD);
+            PlaySfxPositional(SFX_MEDUSA_VENOM);
             self->step_s++;
         }
         if (AnimateEntity(D_us_80180618, self) == 0) {
             SetStep(3);
         }
         if (self->pose == 3 && self->poseTimer == 0) {
+            // This sound is never heard because it is immediately interrupted
+            // by the SFX_ELECTRICITY sound call below
             PlaySfxPositional(SFX_SCIFI_BLAST);
             for (i = 0; i < 2; i++) {
                 entity = AllocEntity(&g_Entities[0xA0], &g_Entities[0xC0]);
@@ -302,9 +304,9 @@ void EntityMedusa(Entity* self) {
     case 6:
         if (self->step_s == 0) {
             if (Random() & 1) {
-                PlaySfxPositional(SFX_RBO3_UNK_801);
+                PlaySfxPositional(SFX_MEDUSA_PAIN_A);
             } else {
-                PlaySfxPositional(SFX_RBO3_UNK_802);
+                PlaySfxPositional(SFX_MEDUSA_PAIN_B);
             }
             self->step_s++;
         }
@@ -317,7 +319,7 @@ void EntityMedusa(Entity* self) {
     case 7:
         switch (self->step_s) {
         case 0:
-            PlaySfxPositional(SFX_RBO3_UNK_804);
+            PlaySfxPositional(SFX_MEDUSA_DEATH);
             self->hitboxState = 0;
             D_us_80180728 |= 2;
             self->step_s++;
