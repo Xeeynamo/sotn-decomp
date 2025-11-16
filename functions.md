@@ -1595,7 +1595,7 @@
 | main  | _sceGuCallbackSignal                     |       45 |          5 |        |       |     |
 | main  | func_psp_08935C28                        |       45 |          5 |        |       |     |
 | maria | func_pspeu_092BF8B8                      |       45 |          5 |        |       |     |
-| cat   | func_us_801B86B0                         |       45 |          5 |        |       |     |
+| cat   | func_pspeu_09262AC0                      |       45 |          5 |        |       |     |
 | sel   | func_psp_0923BB88                        |       45 |          5 |        |       |     |
 | dra   | func_psp_09117A90                        |       45 |          6 |        |       |     |
 | dra   | func_psp_090F5440                        |       45 |          6 |        |       |     |
@@ -1952,7 +1952,7 @@
 | no3   | EntityLightningThunder                   |       61 |          8 |        |       |     |
 | np3   | EntityLightningThunder                   |       61 |          8 |        |       |     |
 | dra   | func_psp_09106008                        |       61 |          9 |        |       |     |
-| cat   | func_us_801B7F2C                         |       61 |         10 |        |       |     |
+| cat   | func_pspeu_09262070                      |       61 |         10 |        |       |     |
 | dai   | func_pspeu_092580D8                      |       61 |         10 |        |       |     |
 | dai   | func_pspeu_092510C0                      |       61 |         10 |        |       |     |
 | lib   | func_psp_09253D58                        |       61 |         10 |        |       |     |
@@ -2095,7 +2095,7 @@
 | sel   | func_psp_0923F760                        |       67 |          6 |        |       |     |
 | sel   | func_psp_09243F78                        |       67 |          6 |        |       |     |
 | st0   | func_pspeu_09237BC0                      |       67 |          6 |        |       |     |
-| cat   | func_us_801CE170                         |       67 |          7 |        |       |     |
+| cat   | func_pspeu_09257FD0                      |       67 |          7 |        |       |     |
 | dra   | func_psp_09137358                        |       67 |          8 |        |       |     |
 | dra   | func_psp_091433C8                        |       67 |          8 |        |       |     |
 | dra   | func_psp_090E8008                        |       67 |         10 |        |       |     |
@@ -2978,7 +2978,7 @@
 | dra   | func_psp_09140FF0                        |      145 |         15 |        |       |     |
 | sel   | func_psp_09239E18                        |      145 |         19 |        |       |     |
 | main  | soundbuf_func                            |      145 |         29 |        |       |     |
-| cat   | func_us_801B852C                         |      146 |         16 |        |       |     |
+| cat   | func_pspeu_092628A8                      |      146 |         16 |        |       |     |
 | main  | func_psp_0892A414                        |      146 |         17 |        |       |     |
 | main  | func_psp_08918250                        |      146 |         18 |        |       |     |
 | lib   | func_us_801CD9EC                         |      146 |         18 |        |       |     |
@@ -3310,7 +3310,7 @@
 | dai   | func_pspeu_092386A8                      |      225 |         41 |        |       |     |
 | no3   | EntityBat                                |      225 |         41 |        |       |     |
 | np3   | EntityBat                                |      225 |         41 |        |       |     |
-| chi   | EntityBreakableWithDebris                |      226 |         27 |        |       |     |
+| chi   | func_psp_0924BD20                        |      226 |         27 |        |       |     |
 | lib   | EntityBackgroundBookcase                 |      227 |         29 |        |       |     |
 | main  | func_psp_08925A04                        |      228 |         11 |        |       |     |
 | main  | func_psp_08930484                        |      228 |         25 |        |       |     |
@@ -3419,7 +3419,7 @@
 | main  | func_psp_089140DC                        |      264 |         47 |        |       |     |
 | ric   | func_801641A0                            |      265 |         13 |        |       |     |
 | no4   | func_pspeu_0923FB88                      |      265 |         22 |        |       |     |
-| cat   | func_us_801B7FE0                         |      265 |         24 |        |       |     |
+| cat   | func_pspeu_09262148                      |      265 |         24 |        |       |     |
 | dai   | func_pspeu_092581B0                      |      265 |         24 |        |       |     |
 | nz1   | EntitySpikesParts                        |      265 |         24 |        |       |     |
 | st0   | func_801A805C                            |      266 |         33 |        |       |     |
@@ -3619,7 +3619,7 @@
 | cat   | func_us_801D3D08                         |      361 |         40 | Yes    |       |     |
 | lib   | func_us_801BB200                         |      363 |         31 | Yes    |       |     |
 | cat   | EntitySoulStealOrb                       |      364 |         33 |        |       |     |
-| chi   | EntityBreakableDebris                    |      364 |         33 |        |       |     |
+| chi   | func_psp_0924C060                        |      364 |         33 |        |       |     |
 | chi   | EntitySoulStealOrb                       |      364 |         33 |        |       |     |
 | dai   | func_pspeu_0923DAD8                      |      364 |         33 |        |       |     |
 | lib   | EntitySoulStealOrb                       |      364 |         33 |        |       |     |
