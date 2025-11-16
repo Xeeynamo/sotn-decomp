@@ -785,7 +785,7 @@ enum Sfx {
     /* 0x78D */ SFX_SPELLBOOK_DEATH, // also used by Magic Tome
     /* 0x78E */ SFX_MAGIC_TOME_ATTACK,
     /* 0x78F */ SFX_LESSER_DEMON_SWIPE_ATTACK,
-    /* 0x790 */ SFX_MALACHI_FLOATING_ORB,
+    /* 0x790 */ SFX_MALACHI_ROLLING_ORB,
     /* 0x791 */ SFX_FIRE_DEMON_ATTACK_CHARGE,
     /* 0x792 */ SFX_OWL_KNIGHT_TAUNT, // "Have at you!"
     /* 0x793 */ SFX_OWL_KNIGHT_ATTACK,
