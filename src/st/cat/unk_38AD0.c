@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../cat/cat.h"
+#include "cat.h"
 
 extern EInit g_EInitSpawner;
 

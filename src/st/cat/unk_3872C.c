@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cat.h"
 
-extern EInit g_EInitSpawner;
-
 // This entity does not appear in the entity list and looks to be unused
 // It is not present in the PSP version.
 void func_us_801B872C(Entity* self) {
@@ -97,56 +95,4 @@ void func_us_801B87E8(Entity* self) {
         self->ext.et_801B87E8.unk80 = g_CastleFlags[CAT_SPIKE_ROOM_LIT];
     }
     FntPrint("base_x:%04x\n", base_x);
-}
-
-void func_us_801B8AD0(Entity* self) {
-    FntPrint("col step %x\n", self->step);
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitSpawner);
-        if (self->params) {
-            g_api.func_800EA5E4(0x800B);
-            g_Tilemap.flags &= (u16)~LAYER_SEMI_TRANS;
-            DestroyEntity(self);
-            break;
-        }
-
-        if (g_CastleFlags[CAT_SPIKE_ROOM_LIT]) {
-            g_Tilemap.flags |= LAYER_SEMI_TRANS;
-            g_api.func_800EA5E4(0x8004);
-            g_api.func_800EA5E4(0x8006);
-            g_api.func_800EA5E4(0x8007);
-            g_api.func_800EA5E4(0x8008);
-            g_api.func_800EA5E4(0x800B);
-            self->step = 4;
-            break;
-        }
-
-        g_Tilemap.flags &= (u16)~LAYER_SEMI_TRANS;
-        g_api.func_800EA5E4(0x800A);
-        break;
-    case 1:
-        g_api.func_800EA5E4(0xA003);
-        g_api.func_800EA5E4(0xA005);
-        self->step++;
-        break;
-    case 2:
-        if (g_CastleFlags[CAT_SPIKE_ROOM_LIT]) {
-            g_api.func_800EA538(3);
-            self->step++;
-        }
-        break;
-    case 3:
-        g_Tilemap.flags |= LAYER_SEMI_TRANS;
-        g_api.func_800EA5E4(0x8004);
-        g_api.func_800EA5E4(0x8006);
-        g_api.func_800EA5E4(0x8007);
-        g_api.func_800EA5E4(0x8008);
-        g_api.func_800EA5E4(0x800B);
-        self->step++;
-        break;
-    case 4:
-        g_Tilemap.flags |= LAYER_SEMI_TRANS;
-        break;
-    }
 }
