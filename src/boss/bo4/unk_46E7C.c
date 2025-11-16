@@ -1160,6 +1160,7 @@ void DopplegangerStepStone(s32 arg0) {
         DopSetVelocity(FIX(-0.625));
         OVL_EXPORT(func_801133E68)();
         DOPPLEGANGER.palette = PAL_FLAG(PAL_CC_STONE_EFFECT);
+        // This unique pain grunt doesn't have an Alucard equivalent
         g_api.PlaySfx(SFX_VO_DOP_PAIN_F);
         g_Dop.unk5E = 8;
         g_Dop.timers[ALU_T_HITEFFECT] = 0;

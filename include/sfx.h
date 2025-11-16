@@ -581,8 +581,8 @@ enum Sfx {
     /* 0x6E9 */ SFX_VO_ALU_PAIN_C,
     /* 0x6EA */ SFX_VO_ALU_PAIN_D,
     /* 0x6EB */ SFX_VO_ALU_PAIN_E,
-    /* 0x6EC */ SFX_VO_ALU_SILENCE,
-    /* 0x6ED */ SFX_VO_ALU_YELL, // Elevator drop or thrown at high velocity
+    /* 0x6EC */ SFX_VO_ALU_SILENCE, // this was originally pain grunt #6
+    /* 0x6ED */ SFX_VO_ALU_YELL,    // Elevator drop or thrown by boss
     /* 0x6EE */ SFX_VO_ALU_ATTACK_A,
     /* 0x6EF */ SFX_VO_ALU_ATTACK_B,
     /* 0x6F0 */ SFX_VO_ALU_ATTACK_C,
