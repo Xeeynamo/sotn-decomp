@@ -131,6 +131,32 @@ func main() {
 			return handlerObjdiffCLI(version, srcPath, funcName)
 		},
 	})
+	rootCmd.AddCommand(&cobra.Command{
+		Use:   "bindiff [version] overlay",
+		Short: "Invoke gobindiff to visualize binary differences between the bult and the target overlay",
+		Args: func(cmd *cobra.Command, args []string) error {
+			version, firstArgIsVersion, err := getVersionFromArgs(args)
+			if err != nil {
+				return err
+			}
+			cmd.SetContext(context.WithValue(cmd.Context(), "version", version))
+			exactArgs := 1
+			if firstArgIsVersion {
+				exactArgs = 2
+			}
+			if err := cobra.ExactArgs(exactArgs)(cmd, args); err != nil {
+				return err
+			}
+			cmd.SetContext(context.WithValue(cmd.Context(), "overlay", args[exactArgs-1]))
+			return nil
+		},
+		Example: "   bindiff pspeu dai",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			version := cmd.Context().Value("version").(string)
+			ovl := cmd.Context().Value("overlay").(string)
+			return handleBindiff(version, ovl, 24)
+		},
+	})
 	rootCmd.SilenceErrors = true
 	if err := rootCmd.Execute(); err != nil {
 		_, _ = fmt.Fprintln(os.Stderr, err)
