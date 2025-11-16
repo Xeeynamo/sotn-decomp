@@ -868,6 +868,8 @@ enum Sfx {
 
     // vabid 3
     /* 0x7D4 */ SFX_UNK_TE1_7D4,
+    /* 0x7D5 */ SFX_BEELZEBUB_FLY_BUZZ,
+    /* 0x7D6 */ SFX_UNUSED_7D6,
     SFX_UNK_TE5_7DE = 0x7DE,
     SFX_UNK_TE3_7DF,
     SFX_UNUSED_7E0,
