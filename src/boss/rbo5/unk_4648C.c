@@ -315,13 +315,13 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
             for (j = 16; j < 64; j++, ent++) {
                 // Entity 32 appears to be EntityDopplegangerDissolves
                 if (ent->entityId == 32) {
-                    g_api.PlaySfx(SFX_BO4_UNK_7E6);
+                    g_api.PlaySfx(SFX_VO_DOP_DEATH);
                     DOPPLEGANGER.step_s = 16;
                     return;
                 }
             }
         }
-        g_api.PlaySfx(SFX_BO4_UNK_7E6);
+        g_api.PlaySfx(SFX_VO_DOP_DEATH);
         func_us_801C68CC();
         func_us_801C6950();
         DOPPLEGANGER.velocityY = FIX(-3.25);
@@ -1157,7 +1157,7 @@ void DopplegangerStepStone(s32 arg0) {
         if (g_Dop.unk6A == 0) {
             if (--D_us_801D3320 == 0) {
                 DOPPLEGANGER.step = Dop_Kill;
-                g_api.PlaySfx(SFX_BO4_UNK_7E6);
+                g_api.PlaySfx(SFX_VO_DOP_DEATH);
                 CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(16, 3), 0);
                 DOPPLEGANGER.step_s = 16;
             }
