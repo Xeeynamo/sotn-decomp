@@ -12,8 +12,9 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 )
 
-func objdiffgen(path string) error {
-	c, err := readConfig(path)
+func objdiffgen(version string) error {
+	configPath := fmt.Sprintf("config/assets.%s.yaml", version)
+	c, err := readConfig(configPath)
 	if err != nil {
 		return err
 	}
