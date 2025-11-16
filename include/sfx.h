@@ -287,21 +287,6 @@ enum {
 #define NA_VO_SU_NO_SCREAM 0x87B
 #define NA_VO_SU_DELICIOUS 0x8D1
 
-// BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
-#define SFX_BO4_UNK_7D8 0x7D8
-#define SFX_BO4_UNK_7D7 0x7D7
-#define SFX_BO4_UNK_7D9 0x7D9
-#define SFX_BO4_UNK_7DA 0x7DA
-#define SFX_BO4_UNK_7DB 0x7DB
-#define SFX_BO4_UNK_7DC 0x7DC
-#define SFX_BO4_UNK_7DD 0x7DD
-#define SFX_BO4_UNK_7DE 0x7DE
-#define SFX_BO4_UNK_7DF 0x7DF
-#define SFX_BO4_UNK_7E0 0x7E0
-#define SFX_BO4_UNK_7E1 0x7E1
-#define SFX_BO4_UNK_7E6 0x7E6
-#define SFX_BO4_UNK_7E8 0x7E8
-
 // UNUSED SOUNDS
 #define NA_VO_MAR_AIM_HEAD 0x87F
 
@@ -870,14 +855,25 @@ enum Sfx {
     /* 0x7D4 */ SFX_UNK_TE1_7D4,
     /* 0x7D5 */ SFX_BEELZEBUB_FLY_BUZZ,
     /* 0x7D6 */ SFX_UNUSED_7D6,
-    SFX_UNK_TE5_7DE = 0x7DE,
-    SFX_UNK_TE3_7DF,
-    SFX_UNUSED_7E0,
-    SFX_UNUSED_7E1,
-    SFX_UNUSED_7E2,
-    SFX_UNUSED_7E3,
-    SFX_UNUSED_7E4,
-    SFX_UNUSED_7E5,
+    /* 0x7D7 */ SFX_VO_DOP_PAIN_A,
+    /* 0x7D8 */ SFX_VO_DOP_PAIN_B,
+    /* 0x7D9 */ SFX_VO_DOP_PAIN_C,
+    /* 0x7DA */ SFX_VO_DOP_PAIN_D,
+    /* 0x7DB */ SFX_VO_DOP_PAIN_E,
+    /* 0x7DC */ SFX_VO_DOP_PAIN_F, // unique to Doppleganger
+    /* 0x7DD */ SFX_VO_DOP_YELL,
+    /* 0x7DE */ SFX_VO_DOP_ATTACK_A,
+    /* 0x7DF */ SFX_VO_DOP_ATTACK_B,
+    /* 0x7E0 */ SFX_VO_DOP_ATTACK_C,
+    /* 0x7E1 */ SFX_VO_DOP_ATTACK_D,
+    /* 0x7E2 */ SFX_UNUSED_VO_DOP_WHAT,
+    /* 0x7E3 */ SFX_UNUSED_7E3,
+    /* 0x7E4 */ SFX_UNUSED_7E4,
+    /* 0x7E5 */ SFX_UNUSED_7E5,
+    /* 0x7E6 */ SFX_VO_DOP_DEATH,
+    /* 0x7E7 */ SFX_UNUSED_7E7,
+    /* 0x7E8 */ SFX_DOP_SUBWEAPON_TINK,
+    /* 0x7E9 */ SFX_UNUSED_7E9,
     SFX_MEDUSA_STONE = 0x7FB,
     SFX_UNUSED_MEDUSA_OOH_WHOA,
     SFX_MEDUSA_VENOM,

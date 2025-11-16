@@ -160,8 +160,8 @@ static void func_us_801C7340(void) {
 }
 
 static s16 D_us_8018133C[] = {
-    SFX_BO4_UNK_7DD, SFX_BO4_UNK_7DC, SFX_BO4_UNK_7DB, SFX_BO4_UNK_7DA,
-    SFX_BO4_UNK_7D9, SFX_BO4_UNK_7D8, SFX_BO4_UNK_7D7,
+    SFX_VO_DOP_YELL,   SFX_VO_DOP_PAIN_F, SFX_VO_DOP_PAIN_E, SFX_VO_DOP_PAIN_D,
+    SFX_VO_DOP_PAIN_C, SFX_VO_DOP_PAIN_B, SFX_VO_DOP_PAIN_A,
 };
 
 void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
@@ -1160,7 +1160,7 @@ void DopplegangerStepStone(s32 arg0) {
         DopSetVelocity(FIX(-0.625));
         OVL_EXPORT(func_801133E68)();
         DOPPLEGANGER.palette = PAL_FLAG(PAL_CC_STONE_EFFECT);
-        g_api.PlaySfx(SFX_BO4_UNK_7DC);
+        g_api.PlaySfx(SFX_VO_DOP_PAIN_F);
         g_Dop.unk5E = 8;
         g_Dop.timers[ALU_T_HITEFFECT] = 0;
         DOPPLEGANGER.step_s = 1;
@@ -1210,7 +1210,7 @@ void DopplegangerStepStone(s32 arg0) {
                 SetDopplegangerAnim(0x3B);
                 OVL_EXPORT(CreateEntFactoryFromEntity)
                 (g_CurrentEntity, FACTORY(16, 3), 0);
-                g_api.PlaySfx(SFX_BO4_UNK_7DD);
+                g_api.PlaySfx(SFX_VO_DOP_YELL);
                 DOPPLEGANGER.step = Dop_Hit;
                 DOPPLEGANGER.step_s = 8;
                 DOPPLEGANGER.palette = PAL_FLAG(0x200);
