@@ -848,9 +848,9 @@ enum Sfx {
 
     // Boss sounds start here
 
-    /* 0x7C5 */ SFX_RBO3_UNK_7C5, // Cerberus Background Fire (BO1 different)
-    /* 0x7C6 */ SFX_B07_STOMP,    // BO0 different, no sound in BO1
-    /* 0x7C7 */ SFX_BO1_UNK_7C7,  // Granfaloon, Beelzebub, Galamoth
+    /* 0x7C5 */ SFX_BOSS_LARGE_FLAMES, // Cerberus BG Fire (BO1 different)
+    /* 0x7C6 */ SFX_B07_STOMP,         // BO0 different, no sound in BO1
+    /* 0x7C7 */ SFX_BO1_UNK_7C7,       // Granfaloon, Beelzebub, Galamoth
     /* 0x7C8 */ SFX_MEDUSA_WEAPON_SWING,
     /* 0x7C9 */ SFX_UNUSED_7C9,
     /* 0x7CA */ SFX_BO0_UNK_7CA,
