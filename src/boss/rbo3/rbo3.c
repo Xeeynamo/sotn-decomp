@@ -327,6 +327,7 @@ void EntityMedusa(Entity* self) {
         case 1:
             if (!AnimateEntity(D_us_8018063C, self)) {
                 self->ext.GS_Props.timer = 80;
+                // This sound call is never heard
                 PlaySfxPositional(SFX_RBO3_UNK_7C5);
                 self->step_s++;
             }
