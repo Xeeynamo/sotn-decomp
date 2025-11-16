@@ -7,24 +7,28 @@ extern s32 E_ID(COFFIN);
 extern s32 E_ID(BLOOD_SKELETON);
 #endif
 
-static AnimateEntityFrame D_us_80181684[] = {
+static AnimateEntityFrame anim_coffin_explode[] = {
     {.duration = 2, .pose = 0x13},
     {.duration = 2, .pose = 0x14},
     {.duration = 1, .pose = 0x1B},
     {.duration = 1, .pose = 0x1C},
     POSE_END};
-static Point16 D_us_80181690[] = {
+
+static Point16 broken_coffin_parts_pos[] = {
     {-16, -26}, {1, -16}, {-12, 1}, {14, -13}, {-2, 0}, {1, -17}};
-static Point32 D_us_801816A8[] = {
-    {-0xC000, -0x28000},  {-0xA000, -0x28000},  {-0x6000, -0x18000},
-    {-0x18000, -0x20000}, {-0x12000, -0x20000}, {-0x10000, -0x20000},
+static Point32 broken_coffin_parts_velocity[] = {
+    {FIX(-0.75), FIX(-2.5)}, {FIX(-0.625), FIX(-2.5)}, {FIX(-0.375), FIX(-1.5)},
+    {FIX(-1.5), FIX(-2.0)},  {FIX(-1.125), FIX(-2.0)}, {FIX(-1.0), FIX(-2.0)},
 };
-static s16 D_us_801816D8[] = {10, 10, 8, 4, 0, 4};
-static s16 D_us_801816E4[] = {
+static s16 coffin_parts_bounce_posY[] = {10, 10, 8, 4, 0, 4};
+static s16 coffin_parts_bounce_velocity[] = {
     FIX(7.0 / 32.0), FIX(17.0 / 128.0), FIX(5.0 / 32.0),
     FIX(3.0 / 32.0), FIX(3.0 / 32.0),   FIX(1.0 / 8.0)};
-static s16 D_us_801816F0[] = {16, -64, -32, -64, -128, -48};
+static s16 coffin_parts_rotation[] = {ROT(1.40625), ROT(-5.625), ROT(-2.8125),
+                                      ROT(-5.625),  ROT(-11.25), ROT(-4.21875)};
 
+// Params = 0 - spawns a blood skeleton
+// Params != 0 - spawns an item drop
 void EntityCoffin(Entity* self) {
     Collider collider;
     Entity* newEntity;
@@ -34,8 +38,17 @@ void EntityCoffin(Entity* self) {
     s16 posX;
     s16 posY;
 
+    enum Step {
+        INIT = 0,
+        DESTROYED = 1,
+        SPAWN_SUB_ENTITIES = 2,
+        BROKEN_COFFIN_PARTS = 3,
+        COFFIN_PARTS_BOUNCE = 4,
+        DONE = 32
+    };
+
     switch (self->step) {
-    case 0:
+    case INIT:
         InitializeEntity(g_EInitCoffin);
         self->hitboxWidth = 8;
         self->hitboxHeight = 0x14;
@@ -45,30 +58,33 @@ void EntityCoffin(Entity* self) {
         self->params &= 0xFF;
         self->zPriority = 0x70;
         break;
-    case 1:
+    case DESTROYED:
         if (self->flags & FLAG_DEAD) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             self->hitboxState = 0;
             self->step++;
         }
         break;
-    case 2:
-        if (!AnimateEntity(D_us_80181684, self)) {
+    case SPAWN_SUB_ENTITIES:
+        if (!AnimateEntity(anim_coffin_explode, self)) {
             g_api.PlaySfx(SFX_FM_EXPLODE_B);
 
+            // Spawn the broken coffin parts
             for (i = 0; i < 6; i++) {
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                newEntity = AllocEntity(
+                    &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(E_ID(COFFIN), self, newEntity);
-                    newEntity->step = 3;
+                    newEntity->step = BROKEN_COFFIN_PARTS;
                     newEntity->params = i;
                     newEntity->facingLeft = self->facingLeft;
-                    newEntity->ext.coffin.unk80 = GetSideToPlayer() & 1;
+                    newEntity->ext.coffin.playerOnLeft = GetSideToPlayer() & 1;
                     newEntity->flags |= FLAG_UNK_2000;
                 }
             }
 
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
                 newEntity->params = ((self->zPriority + 2) << 8) + 0x11;
@@ -88,10 +104,10 @@ void EntityCoffin(Entity* self) {
 
             self->animCurFrame = 0;
             MakeExplosions();
-            self->step = 0x20;
+            self->step = DONE;
         }
         break;
-    case 3:
+    case BROKEN_COFFIN_PARTS:
         InitializeEntity(g_EInitCoffin);
         self->flags |= FLAG_UNK_2000;
         self->drawFlags |= FLAG_DRAW_ROTATE;
@@ -99,47 +115,56 @@ void EntityCoffin(Entity* self) {
 
         params = self->params;
         self->animCurFrame = params + 0x15;
-        self->posY.i.hi += D_us_80181690[params].y;
+        self->posY.i.hi += broken_coffin_parts_pos[params].y;
         self->posY.i.hi += 0xE;
         if (self->facingLeft) {
-            self->posX.i.hi -= D_us_80181690[params].x;
+            self->posX.i.hi -= broken_coffin_parts_pos[params].x;
             self->posX.i.hi -= 8;
         } else {
-            self->posX.i.hi += D_us_80181690[params].x;
+            self->posX.i.hi += broken_coffin_parts_pos[params].x;
             self->posX.i.hi += 8;
         }
 
-        if (self->ext.coffin.unk80) {
-            self->velocityX = -D_us_801816A8[params].x;
+        if (self->ext.coffin.playerOnLeft) {
+            self->velocityX = -broken_coffin_parts_velocity[params].x;
         } else {
-            self->velocityX = D_us_801816A8[params].x;
+            self->velocityX = broken_coffin_parts_velocity[params].x;
         }
 
-        self->velocityY = D_us_801816A8[params].y;
+        self->velocityY = broken_coffin_parts_velocity[params].y;
         break;
-    case 4:
+    case COFFIN_PARTS_BOUNCE:
         params = self->params;
         MoveEntity();
-        self->velocityY += D_us_801816E4[params];
-        if (self->ext.coffin.unk80 ^ self->facingLeft) {
-            self->rotate -= D_us_801816F0[params];
+        self->velocityY += coffin_parts_bounce_velocity[params];
+        if (self->ext.coffin.playerOnLeft ^ self->facingLeft) {
+            self->rotate -= coffin_parts_rotation[params];
         } else {
-            self->rotate += D_us_801816F0[params];
+            self->rotate += coffin_parts_rotation[params];
         }
 
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
-        posY += D_us_801816D8[params];
+        posY += coffin_parts_bounce_posY[params];
+
+        // When parts hit the ground they bounce and roll
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects != EFFECT_NONE) {
             self->posY.i.hi += collider.unk18;
             self->velocityY = -self->velocityY / 2;
-            if (-self->velocityY < D_us_801816E4[self->params] * 2) {
-                newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+
+            // When they hit a minimum valocity despawn the parts
+            // in a cloud of dust
+            if (-self->velocityY <
+                coffin_parts_bounce_velocity[self->params] * 2) {
+                newEntity = AllocEntity(
+                    &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (newEntity != NULL) {
                     CreateEntityFromEntity(
                         E_INTENSE_EXPLOSION, self, newEntity);
-                    newEntity->params = 0x10;
+                    // params & 0xF0 to EntityIntenseExplosion uses the dust
+                    // cloud palette
+                    newEntity->params = 16;
                 }
                 DestroyEntity(self);
             }
