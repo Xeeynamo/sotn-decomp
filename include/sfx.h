@@ -287,30 +287,6 @@ enum {
 #define NA_VO_SU_NO_SCREAM 0x87B
 #define NA_VO_SU_DELICIOUS 0x8D1
 
-// BOSS BO4 - Doppleganger10 / RBO5 - Doppleganger40
-#define SFX_BO4_UNK_7D8 0x7D8
-#define SFX_BO4_UNK_7D7 0x7D7
-#define SFX_BO4_UNK_7D9 0x7D9
-#define SFX_BO4_UNK_7DA 0x7DA
-#define SFX_BO4_UNK_7DB 0x7DB
-#define SFX_BO4_UNK_7DC 0x7DC
-#define SFX_BO4_UNK_7DD 0x7DD
-#define SFX_BO4_UNK_7DE 0x7DE
-#define SFX_BO4_UNK_7DF 0x7DF
-#define SFX_BO4_UNK_7E0 0x7E0
-#define SFX_BO4_UNK_7E1 0x7E1
-#define SFX_BO4_UNK_7E6 0x7E6
-#define SFX_BO4_UNK_7E8 0x7E8
-
-// BOSS RBO3 - Medusa
-#define SFX_RBO3_UNK_7FB 0x7FB
-#define SFX_RBO3_UNK_7FD 0x7FD
-#define SFX_RBO3_UNK_7FE 0x7FE
-#define SFX_RBO3_UNK_7FF 0x7FF
-#define SFX_RBO3_UNK_801 0x801
-#define SFX_RBO3_UNK_802 0x802
-#define SFX_RBO3_UNK_804 0x804
-
 // UNUSED SOUNDS
 #define NA_VO_MAR_AIM_HEAD 0x87F
 
@@ -595,7 +571,7 @@ enum Sfx {
     /* 0x6E3 */ SFX_SCYLLA_BUBBLE_BURST,
     /* 0x6E4 */ SFX_PENTAGRAM_ATTACK,
     /* 0x6E5 */ SFX_UNUSED_ANIME_EXPLODE,
-    /* 0x6E6 */ SFX_LOW_SYNTH_BUBBLES,
+    /* 0x6E6 */ SFX_LOW_SYNTH_BUBBLES, // Shaft Orb
 
     // Player sfx (0x6E7-0x708)
 
@@ -605,8 +581,8 @@ enum Sfx {
     /* 0x6E9 */ SFX_VO_ALU_PAIN_C,
     /* 0x6EA */ SFX_VO_ALU_PAIN_D,
     /* 0x6EB */ SFX_VO_ALU_PAIN_E,
-    /* 0x6EC */ SFX_VO_ALU_SILENCE,
-    /* 0x6ED */ SFX_VO_ALU_YELL, // Elevator drop or thrown at high velocity
+    /* 0x6EC */ SFX_VO_ALU_SILENCE, // this was originally pain grunt #6
+    /* 0x6ED */ SFX_VO_ALU_YELL,    // Elevator drop or thrown by boss
     /* 0x6EE */ SFX_VO_ALU_ATTACK_A,
     /* 0x6EF */ SFX_VO_ALU_ATTACK_B,
     /* 0x6F0 */ SFX_VO_ALU_ATTACK_C,
@@ -785,7 +761,7 @@ enum Sfx {
     /* 0x78D */ SFX_SPELLBOOK_DEATH, // also used by Magic Tome
     /* 0x78E */ SFX_MAGIC_TOME_ATTACK,
     /* 0x78F */ SFX_LESSER_DEMON_SWIPE_ATTACK,
-    /* 0x790 */ SFX_MALACHI_FLOATING_ORB,
+    /* 0x790 */ SFX_MALACHI_ROLLING_ORB,
     /* 0x791 */ SFX_FIRE_DEMON_ATTACK_CHARGE,
     /* 0x792 */ SFX_OWL_KNIGHT_TAUNT, // "Have at you!"
     /* 0x793 */ SFX_OWL_KNIGHT_ATTACK,
@@ -857,17 +833,57 @@ enum Sfx {
 
     // Boss sounds start here
 
-    /* 0x7C5 */ SFX_RBO3_UNK_7C5, // Cerberus Background Fire (BO1 different)
-    /* 0x7C6 */ SFX_B07_STOMP,    // BO0 different, no sound in BO1
-    /* 0x7C7 */ SFX_BO1_UNK_7C7,  // Granfaloon, Beelzebub, Galamoth
-    /* 0x7C8 */ SFX_RBO3_UNK_7C8,
+    /* 0x7C5 */ SFX_BOSS_LARGE_FLAMES, // Cerberus BG Fire (BO1 different)
+    /* 0x7C6 */ SFX_B07_STOMP,         // BO0 different, no sound in BO1
+    /* 0x7C7 */ SFX_BO1_UNK_7C7,       // Granfaloon, Beelzebub, Galamoth
+    /* 0x7C8 */ SFX_MEDUSA_WEAPON_SWING,
     /* 0x7C9 */ SFX_UNUSED_7C9,
     /* 0x7CA */ SFX_BO0_UNK_7CA,
     /* 0x7CB */ SFX_DOPPLEGANGER_DOOR_OPEN,
     /* 0x7CC */ SFX_DOPPLEGANGER_APPEAR,
-    SFX_UNUSED_7D0 = 0x7D0,
-    SFX_SCIFI_BLAST,
-    SFX_BOSS_DEFEATED,
+    /* 0x7CD */ SFX_GRANFALOON_APPEAR,
+    /* 0x7CE */ SFX_SHAFT_DEATH,
+    /* 0x7CF */ SFX_SHAFT_FIRE_ATTACK, // also used by Cerberus
+    /* 0x7D0 */ SFX_UNUSED_7D0,
+    /* 0x7D1 */ SFX_SCIFI_BLAST, // Photon Torpedo sfx from "Star Trek"
+
+    // vabid 9
+    /* 0x7D2 */ SFX_BOSS_DEFEATED,
+    /* 0x7D3 */ SFX_DRACULA_FLY_IN,
+
+    // vabid 3
+    /* 0x7D4 */ SFX_UNK_TE1_7D4,
+    /* 0x7D5 */ SFX_BEELZEBUB_FLY_BUZZ,
+    /* 0x7D6 */ SFX_UNUSED_7D6,
+    /* 0x7D7 */ SFX_VO_DOP_PAIN_A,
+    /* 0x7D8 */ SFX_VO_DOP_PAIN_B,
+    /* 0x7D9 */ SFX_VO_DOP_PAIN_C,
+    /* 0x7DA */ SFX_VO_DOP_PAIN_D,
+    /* 0x7DB */ SFX_VO_DOP_PAIN_E,
+    /* 0x7DC */ SFX_VO_DOP_PAIN_F, // unique to Doppleganger
+    /* 0x7DD */ SFX_VO_DOP_YELL,
+    /* 0x7DE */ SFX_VO_DOP_ATTACK_A,
+    /* 0x7DF */ SFX_VO_DOP_ATTACK_B,
+    /* 0x7E0 */ SFX_VO_DOP_ATTACK_C,
+    /* 0x7E1 */ SFX_VO_DOP_ATTACK_D,
+    /* 0x7E2 */ SFX_UNUSED_VO_DOP_WHAT,
+    /* 0x7E3 */ SFX_UNUSED_7E3,
+    /* 0x7E4 */ SFX_UNUSED_7E4,
+    /* 0x7E5 */ SFX_UNUSED_7E5,
+    /* 0x7E6 */ SFX_VO_DOP_DEATH,
+    /* 0x7E7 */ SFX_UNUSED_7E7,
+    /* 0x7E8 */ SFX_DOP_SUBWEAPON_TINK,
+    /* 0x7E9 */ SFX_UNUSED_7E9,
+    SFX_MEDUSA_STONE = 0x7FB,
+    SFX_UNUSED_MEDUSA_OOH_WHOA,
+    SFX_MEDUSA_VENOM,
+    SFX_MEDUSA_ATTACK_A,
+    SFX_MEDUSA_ATTACK_B,
+    SFX_UNUSED_MEDUSA_ATTACK_C,
+    SFX_MEDUSA_PAIN_A,
+    SFX_MEDUSA_PAIN_B,
+    SFX_UNUSED_MEDUSA_OH_NO,
+    SFX_MEDUSA_DEATH, // "I'm petrified!"
     SFX_TELEPORT_SYNTH_UP = 0x8BA,
     SFX_TELEPORT_SYNTH_DOWN,
     SFX_BURNING_PHOTOGRAPH = 0x8BE,

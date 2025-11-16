@@ -80,8 +80,8 @@ mod test {
             "PlaySfx(SFX_SCIFI_BLAST);"
         );
         assert_eq!(
-            t.transform_line("PlaySfx(SFX_RBO3_UNK_801);"),
-            "PlaySfx(SFX_RBO3_UNK_801);"
+            t.transform_line("PlaySfx(SFX_MEDUSA_PAIN_A);"),
+            "PlaySfx(SFX_MEDUSA_PAIN_A);"
         );
 
         // PlaySfx variations/decimal and hex
