@@ -917,8 +917,25 @@ enum Sfx {
     /* 0x812 */ SFX_FAKE_SYPHA_ATTACK, // (laughs)
     /* 0x813 */ SFX_FAKE_SYPHA_PAIN,   // "Don't..."
     /* 0x814 */ SFX_FAKE_SYPHA_DEATH,
+
+    // vabid 9
     /* 0x815 */ SFX_FAKE_TREVOR_BLOOD_CROSS,
+
+    // vabid 3
     /* 0x816 */ SFX_OLROX_BAT_ATTACK,
+    /* 0x817 */ SFX_OLROX_TRANSFORM, // also used during death animation
+    /* 0x818 */ SFX_OLROX_ATTACK,    // "Take that!"
+    /* 0x819 */ SFX_OLROX_MONSTER_PAIN,
+
+    // vabid 9
+    /* 0x81A */ SFX_OLROX_LASER_ATTACK,
+
+    // vabid 3
+    /* 0x81B */ SFX_AKMODAN_II_PAIN,
+    /* 0x81C */ SFX_AKMODAN_II_DEATH,
+    /* 0x81D */ SFX_AKMODAN_II_ARM_STRETCH,
+    /* 0x81E */ SFX_AKMODAN_II_MOVE,
+    /* 0x81F */ SFX_AKMODAN_II_DISSOLVE,
     SFX_TELEPORT_SYNTH_UP = 0x8BA,
     SFX_TELEPORT_SYNTH_DOWN,
     SFX_BURNING_PHOTOGRAPH = 0x8BE,
