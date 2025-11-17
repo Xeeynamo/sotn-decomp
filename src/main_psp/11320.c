@@ -594,7 +594,7 @@ s32 func_psp_0891149C(s32 arg0, u32 arg1, u32 arg2, s32 arg3, s32 arg4) {
 }
 
 void func_psp_089117F4(s32 mode, s32 sx, s32 sy, s32 height, s32 width, s32 sbw,
-                       s32 sbp, s32 dx, s32 dy, s32 dbw, s32 dbp) {
+                       u8* sbp, s32 dx, s32 dy, s32 dbw, u8* dbp) {
     *D_psp_08B1F19C++ = GE_SET_TSYNC();
     *D_psp_08B1F19C++ = GE_SET_XBP1_ADDR24(sbp);
     *D_psp_08B1F19C++ = GE_SET_XBW1_BASE8(sbw, sbp);
