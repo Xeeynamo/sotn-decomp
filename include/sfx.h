@@ -874,16 +874,68 @@ enum Sfx {
     /* 0x7E7 */ SFX_UNUSED_7E7,
     /* 0x7E8 */ SFX_DOP_SUBWEAPON_TINK,
     /* 0x7E9 */ SFX_UNUSED_7E9,
-    SFX_MEDUSA_STONE = 0x7FB,
-    SFX_UNUSED_MEDUSA_OOH_WHOA,
-    SFX_MEDUSA_VENOM,
-    SFX_MEDUSA_ATTACK_A,
-    SFX_MEDUSA_ATTACK_B,
-    SFX_UNUSED_MEDUSA_ATTACK_C,
-    SFX_MEDUSA_PAIN_A,
-    SFX_MEDUSA_PAIN_B,
-    SFX_UNUSED_MEDUSA_OH_NO,
-    SFX_MEDUSA_DEATH, // "I'm petrified!"
+    /* 0x7EA */ SFX_CREATURE_HAMMER,
+    /* 0x7EB */ SFX_CREATURE_ATTACK,
+    /* 0x7EC */ SFX_CREATURE_DEATH,
+    /* 0x7ED */ SFX_UNUSED_7ED,
+    /* 0x7EE */ SFX_UNUSED_7EE,
+    /* 0x7EF */ SFX_DEATH_PAIN_A,
+    /* 0x7F0 */ SFX_DEATH_ATTACK, // "Take that!"
+    /* 0x7F1 */ SFX_DEATH_SCYTHE_ATTACK,
+    /* 0x7F2 */ SFX_DEATH_BALL_ATTACK, // "Death Ball!"
+    /* 0x7F3 */ SFX_DEATH_YOURE_STRONG_INDEED,
+    /* 0x7F4 */ SFX_DEATH_BUT_NOW_YOU_WILL_DIE,
+    /* 0x7F5 */ SFX_UNUSED_7F5,
+    /* 0x7F6 */ SFX_UNUSED_7F6,
+    /* 0x7F7 */ SFX_DEATH_PAIN_B,
+    /* 0x7F8 */ SFX_DEATH_PAIN_C,
+    /* 0x7F9 */ SFX_UNK_TE2_7F9,
+    /* 0x7FA */ SFX_DEATH_SCYTHE_SWISH,
+    /* 0x7FB */ SFX_MEDUSA_STONE,
+    /* 0x7FC */ SFX_UNUSED_MEDUSA_OOH_WHOA,
+    /* 0x7FD */ SFX_MEDUSA_VENOM,
+    /* 0x7FE */ SFX_MEDUSA_ATTACK_A,
+    /* 0x7FF */ SFX_MEDUSA_ATTACK_B,
+    /* 0x800 */ SFX_UNUSED_MEDUSA_ATTACK_C,
+    /* 0x801 */ SFX_MEDUSA_PAIN_A,
+    /* 0x802 */ SFX_MEDUSA_PAIN_B,
+    /* 0x803 */ SFX_UNUSED_MEDUSA_OH_NO,
+    /* 0x804 */ SFX_MEDUSA_DEATH, // "I'm petrified!"
+    /* 0x805 */ SFX_SCYLLA_ATTACK_YELL,
+    /* 0x806 */ SFX_SCYLLA_ATTACK_DIE,
+    /* 0x807 */ SFX_SCYLLA_PAIN,
+    /* 0x808 */ SFX_SCYLLA_DEATH,
+    /* 0x809 */ SFX_SCYLLA_WYRM_ATTACK,
+    /* 0x80A */ SFX_SCYLLA_WYRM_WALL_DEBRIS,
+    /* 0x80B */ SFX_GRANFALOON_LASER_ATTACK,
+    /* 0x80C */ SFX_UNUSED_GRANFALOON_SCREAM_A, // "Insane Tantrum" stock sfx
+    /* 0x80D */ SFX_UNUSED_GRANFALOON_SCREAM_B, // Screams replaced with 0x8C0
+    /* 0x80E */ SFX_GRANFALOON_BODIES_FALL,
+    /* 0x80F */ SFX_GALAMOTH_ELECTRICITY,
+    /* 0x810 */ SFX_UNUSED_GALAMOTH_810, // possibly unused Galamoth sounds
+    /* 0x811 */ SFX_UNUSED_GALAMOTH_811,
+    /* 0x812 */ SFX_FAKE_SYPHA_ATTACK, // (laughs)
+    /* 0x813 */ SFX_FAKE_SYPHA_PAIN,   // "Don't..."
+    /* 0x814 */ SFX_FAKE_SYPHA_DEATH,
+
+    // vabid 9
+    /* 0x815 */ SFX_FAKE_TREVOR_BLOOD_CROSS,
+
+    // vabid 3
+    /* 0x816 */ SFX_OLROX_BAT_ATTACK,
+    /* 0x817 */ SFX_OLROX_TRANSFORM, // also used during death animation
+    /* 0x818 */ SFX_OLROX_ATTACK,    // "Take that!"
+    /* 0x819 */ SFX_OLROX_MONSTER_PAIN,
+
+    // vabid 9
+    /* 0x81A */ SFX_OLROX_LASER_ATTACK,
+
+    // vabid 3
+    /* 0x81B */ SFX_AKMODAN_II_PAIN,
+    /* 0x81C */ SFX_AKMODAN_II_DEATH,
+    /* 0x81D */ SFX_AKMODAN_II_ARM_STRETCH,
+    /* 0x81E */ SFX_AKMODAN_II_MOVE,
+    /* 0x81F */ SFX_AKMODAN_II_DISSOLVE,
     SFX_TELEPORT_SYNTH_UP = 0x8BA,
     SFX_TELEPORT_SYNTH_DOWN,
     SFX_BURNING_PHOTOGRAPH = 0x8BE,
