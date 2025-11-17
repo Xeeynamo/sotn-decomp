@@ -3664,7 +3664,7 @@ typedef struct {
     /* 0x88 */ u8 : 8;
     /* 0x89 */ u8 unk89;
     /* 0x8A */ s16 : 16;
-    /* 0x8C */ s16 unk8C;
+    /* 0x8C */ s16 clut;
     /* 0x8E */ s16 : 16;
     /* 0x90 */ Primitive* emberPrim;
 } ET_Lava;

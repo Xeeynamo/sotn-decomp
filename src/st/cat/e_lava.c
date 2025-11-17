@@ -1,26 +1,28 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cat.h"
 
-static u8 D_us_801821A4[] = {0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0};
-static s16 D_us_801821B4[] = {2, 8, -4, 0, -3, -10, 4, 12, 0, 7, 1, -8};
-static SVECTOR D_us_801821CC = {.vx = 0, .vy = 0, .vz = -512, .pad = 0};
+static u8 lava_priorities[] = {0, 1, 0, 0, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0};
+static s16 lava_tpages[] = {2, 8, -4, 0, -3, -10, 4, 12, 0, 7, 1, -8};
+static SVECTOR lava_vec = {.vx = 0, .vy = 0, .vz = -512, .pad = 0};
 static SVECTOR unused = {.vx = 0, .vy = 0, .vz = -512, .pad = 0};
 
 // BSS
 static SVECTOR empty = {0};
 #ifdef VERSION_US
-static Primitive* D_us_801D8494[14];
-static Primitive* D_us_801D84CC[14];
+static Primitive* main_lava_prims[14];
+static Primitive* top_layer_prims[14];
 #else
-static Primitive* D_us_801D8494[14] = {0};
-static Primitive* D_us_801D84CC[14] = {0};
+static Primitive* main_lava_prims[14] = {0};
+static Primitive* top_layer_prims[14] = {0};
 #endif
 
-void func_us_801C4C7C(Entity* self) {
+// Params 0 = Lossoth rooms, non-transparent, spawns embers
+// Params non-0 = Discus Lord room, transparent, no embers
+void EntityLava(Entity* self) {
     long p;
     long flag;
-    SVECTOR sp60;
-    VECTOR sp50;
+    SVECTOR sVec;
+    VECTOR vec;
     MATRIX matrix;
     Primitive* prim;
     Primitive** primArr;
@@ -32,9 +34,9 @@ void func_us_801C4C7C(Entity* self) {
     Entity* newEntity;
 
     if (self->params & 2) {
-        primArr = D_us_801D84CC;
+        primArr = top_layer_prims;
     } else {
-        primArr = D_us_801D8494;
+        primArr = main_lava_prims;
     }
 
     switch (self->step) {
@@ -45,24 +47,26 @@ void func_us_801C4C7C(Entity* self) {
         self->ext.lava.unk84 = 0;
         self->zPriority = 0xA8;
         if (!self->params) {
-            newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            newEntity =
+                AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                // func_us_801C56A0
-                CreateEntityFromEntity(E_UNK_19, self, newEntity);
+                CreateEntityFromEntity(E_LAVA_EMBERS, self, newEntity);
             }
         }
 
+        // Top layer of the lava sits behind the Discus Lord platform
+        // The rest sits in front of it as a transparent layer
         if (self->params & 2) {
             self->zPriority -= 8;
         }
 
-        self->ext.lava.unk8C = 0x20A;
+        self->ext.lava.clut = PAL_LAVA_OPAQUE;
         if (self->params) {
-            self->ext.lava.unk8C = 0x209;
+            self->ext.lava.clut = PAL_LAVA_TRANSPARENT;
         }
         // fallthrough
     case 1:
-        primIndex = g_api.func_800EDB58(4, 0x1A);
+        primIndex = g_api.func_800EDB58(PRIM_GT4, 0x1A);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
@@ -82,7 +86,7 @@ void func_us_801C4C7C(Entity* self) {
             prim->next->x1 = (i << 5) - 0x10;
             prim->next->y0 = self->posY.i.hi;
             prim->tpage = 0x15;
-            prim->clut = self->ext.lava.unk8C;
+            prim->clut = self->ext.lava.clut;
             prim->u0 = 8;
             prim->u1 = 0x27;
             prim->u2 = 8;
@@ -92,7 +96,7 @@ void func_us_801C4C7C(Entity* self) {
             prim->v2 = 0x40;
             prim->v3 = 0x40;
             if (self->params) {
-                prim->clut = 0x209;
+                prim->clut = PAL_LAVA_TRANSPARENT;
                 prim->v0 = 0x28;
                 prim->v1 = 0x28;
                 prim->v2 = 0x48;
@@ -109,8 +113,8 @@ void func_us_801C4C7C(Entity* self) {
             if (self->params & 1) {
                 prim->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
             }
-            LOBU(prim->next->priority) = D_us_801821A4[i]; // TODO
-            prim->next->tpage = D_us_801821B4[i];
+            LOBU(prim->next->priority) = lava_priorities[i];
+            prim->next->tpage = lava_tpages[i];
             prim = prim->next;
         }
 
@@ -140,7 +144,7 @@ void func_us_801C4C7C(Entity* self) {
             primArr[13] = primArr[0];
             primArr[13]->drawMode &= ~DRAW_HIDE;
 
-            for (j = 0; j < 0xD; j++) {
+            for (j = 0; j < 13; j++) {
                 primArr[j] = primArr[j + 1];
             }
 
@@ -149,7 +153,7 @@ void func_us_801C4C7C(Entity* self) {
 
         if (primArr[12]->next->x1 > 0x150) {
             primArr[12]->next->x1 = primArr[0]->next->x1 - 0x20;
-            for (j = 0xD; j > 0; j--) {
+            for (j = 13; j > 0; j--) {
                 primArr[j] = primArr[j - 1];
             }
 
@@ -180,19 +184,19 @@ void func_us_801C4C7C(Entity* self) {
 
         SetGeomScreen(0x400);
         SetGeomOffset(0x80, self->posY.i.hi - 0x40);
-        sp60.vx = 0;
-        sp60.vy = LOH(prim->next->tpage);
+        sVec.vx = 0;
+        sVec.vy = LOH(prim->next->tpage);
         if (self->params & 2) {
-            sp60.vy += 0x800;
+            sVec.vy += 0x800;
         }
-        sp60.vz = 0;
+        sVec.vz = 0;
         RotMatrix(&empty, &matrix);
-        RotMatrixY(sp60.vy, &matrix);
+        RotMatrixY(sVec.vy, &matrix);
         SetRotMatrix(&matrix);
-        sp50.vx = prim->next->x1 - 0x80;
-        sp50.vy = 0x40;
-        sp50.vz = 0x400;
-        TransMatrix(&matrix, &sp50);
+        vec.vx = prim->next->x1 - 0x80;
+        vec.vy = 0x40;
+        vec.vz = 0x400;
+        TransMatrix(&matrix, &vec);
         SetTransMatrix(&matrix);
 
         if (prim->next->r3) {
@@ -210,9 +214,9 @@ void func_us_801C4C7C(Entity* self) {
 
         prim->x1 = prim->next->x1;
         prim->y1 = prim->next->y0;
-        RotTransPers(&D_us_801821CC, (long*)&prim->x3, &p, &flag);
+        RotTransPers(&lava_vec, (long*)&prim->x3, &p, &flag);
 
-        for (prevPrim = prim, i = 1; i < 0xD; prevPrim = prim, i++) {
+        for (prevPrim = prim, i = 1; i < 13; prevPrim = prim, i++) {
             prim = primArr[i];
             if (!(g_Timer % 3)) {
                 if (LOBU(prim->next->priority)) {
@@ -229,19 +233,19 @@ void func_us_801C4C7C(Entity* self) {
                 }
             }
 
-            sp60.vx = 0;
-            sp60.vy = LOH(prim->next->tpage);
+            sVec.vx = 0;
+            sVec.vy = LOH(prim->next->tpage);
             if (self->params & 2) {
-                sp60.vy += 0x800;
+                sVec.vy += 0x800;
             }
-            sp60.vz = 0;
+            sVec.vz = 0;
             RotMatrix(&empty, &matrix);
-            RotMatrixY(sp60.vy, &matrix);
+            RotMatrixY(sVec.vy, &matrix);
             SetRotMatrix(&matrix);
-            sp50.vx = prim->next->x1 - 0x80;
-            sp50.vy = 0x40;
-            sp50.vz = 0x400;
-            TransMatrix(&matrix, &sp50);
+            vec.vx = prim->next->x1 - 0x80;
+            vec.vy = 0x40;
+            vec.vz = 0x400;
+            TransMatrix(&matrix, &vec);
             SetTransMatrix(&matrix);
 
             if (prim->next->r3) {
@@ -264,7 +268,7 @@ void func_us_801C4C7C(Entity* self) {
             prim->y2 = prevPrim->y3;
             prim->x1 = prim->next->x1;
             prim->y1 = prim->next->y0;
-            RotTransPers(&D_us_801821CC, (long*)&prim->x3, &p, &flag);
+            RotTransPers(&lava_vec, (long*)&prim->x3, &p, &flag);
         }
 
         break;
@@ -282,6 +286,9 @@ static void FadeOutEmber(Primitive* prim) {
         prim->g0 -= 4;
         prim->b0 -= 4;
     }
+
+    // Once we hit a color threshold, the ember has "burnt out"
+    // and is hidden
     if (prim->r0 < 8) {
         prim->p3 = 0;
         prim->drawMode = DRAW_HIDE;
@@ -289,7 +296,7 @@ static void FadeOutEmber(Primitive* prim) {
 }
 
 extern Primitive* FindFirstUnkPrim(Primitive* prim);
-void func_us_801C56A0(Entity* self) {
+void EntityLavaEmbers(Entity* self) {
     Primitive* prim;
     s32 primIndex;
 
@@ -312,6 +319,7 @@ void func_us_801C56A0(Entity* self) {
         }
         // fallthrough
     case 1:
+        // Spawn the embers at various random positions
         if (!(g_Timer % 7)) {
             prim = self->ext.prim;
             prim = FindFirstUnkPrim(prim);
@@ -334,6 +342,7 @@ void func_us_801C56A0(Entity* self) {
             }
         }
 
+        // Embers rise up and change colour and eventually burn out to nothing
         prim = self->ext.prim;
         while (prim != NULL) {
             if (prim->p3) {
