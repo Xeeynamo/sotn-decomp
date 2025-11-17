@@ -497,9 +497,39 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891A608);
+void func_psp_0891A608(void) {
+    float x = D_psp_08C629C8;
+    float y = D_psp_08C629CC;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891A650);
+    __asm__(".set		push\n"      // save assembler option
+            ".set		noreorder\n" // suppress reordering
+            "lv.s		s410, 0(%0)\n"
+            "lv.s		s411, 0(%1)\n"
+            ".set		pop\n" // suppress reordering
+            :
+            : "m"(x), "m"(y));
+}
+
+void func_psp_0891A650(void) {
+    float x = 16.0f;
+    float y = 256.0f;
+
+    __asm__(".set		push\n"      // save assembler option
+            ".set		noreorder\n" // suppress reordering
+            "lv.s		s403, 0(%1)\n"
+            "lv.s		s420, 0(%0)\n"
+            "vmov.s     s421, s420\n"
+            "vone.s     s402\n"
+            "vone.s     s422\n"
+            "vone.s     s302\n"
+            "vone.s     s312\n"
+            "vone.s     s322\n"
+            "vone.s     s332\n"
+            "vzero.s    S400\n"
+            ".set		pop\n" // suppress reordering
+            :
+            : "m"(x), "m"(y));
+}
 
 static void func_psp_0891A6A8(s32 screen_mode) {
     D_psp_08C62A30 = screen_mode;
