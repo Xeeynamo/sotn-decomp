@@ -73,7 +73,6 @@ EntityCorpseweed = 0x801D5AB8;
 EntityCorpseweedProjectile = 0x801D67E8;
 EntityBloodSkeleton = 0x801D6C70;
 UnkPrimHelper = 0x801D7054;
-FindFirstUnkPrim = 0x801D758C;
 UnkPolyFunc2 = 0x801D77A0;
 g_LayoutObjHorizontal = 0x801D7884;
 g_LayoutObjVertical = 0x801D7888;
