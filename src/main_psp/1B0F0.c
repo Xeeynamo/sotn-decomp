@@ -11,6 +11,7 @@
 #include <psxsdk/libgpu.h>
 
 #define isSemiTrans(ptr) (((ptr)->code & 0x40) >> 6)
+#define isFlatShaded(ptr) (((ptr)->code & 0x80) ? 0 : 1)
 
 #define white GU_RGBA(0xFF, 0xFF, 0xFF, 0x80)
 #define black GU_RGBA(0, 0, 0, 0x80)
@@ -42,6 +43,15 @@ typedef struct {
     s32 x;
     s32 y;
 } Unk08C4218C;
+
+typedef struct {
+    O_TAG;
+    u_char r0, g0, b0, code;
+    short x0, y0;
+    u_char u0, v0;
+    u_short clut;
+    short x1, y1;
+} Unk08920498;
 
 typedef struct {
     s32 c;
@@ -543,8 +553,8 @@ static void func_psp_0891A6A8(s32 screen_mode) {
         D_psp_089464DC = 240;
         break;
     }
-    D_psp_08C62A34 = (480 - D_psp_089464D8) / 2;
-    D_psp_08C62A38 = (272 - D_psp_089464DC) / 2;
+    D_psp_08C62A34 = (GU_SCR_WIDTH - D_psp_089464D8) / 2;
+    D_psp_08C62A38 = (GU_SCR_HEIGHT - D_psp_089464DC) / 2;
     D_psp_089464E8 = 2;
 }
 
@@ -735,13 +745,13 @@ void func_psp_0891B0DC(s32 x, s32 y) {
     D_psp_08C62AAC.y = y;
 }
 
-s32 func_psp_0891B118(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 color) {
+s32 func_psp_0891B118(s32 x0, s32 y0, s32 x1, s32 y1, s32 color) {
     Vertex v[2];
 
-    v[0].x = arg0;
-    v[0].y = arg1;
-    v[1].x = arg2;
-    v[1].y = arg3;
+    v[0].x = x0;
+    v[0].y = y0;
+    v[1].x = x1;
+    v[1].y = y1;
     if (v[0].x > v[1].x) {
         v[0].x++;
     }
@@ -753,12 +763,12 @@ s32 func_psp_0891B118(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 color) {
     return 0;
 }
 
-s32 func_psp_0891B1F8(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4) {
+s32 func_psp_0891B1F8(s32 x0, s32 y0, s32 x1, s32 y1, s32 color) {
     if (D_psp_08B42068 == 1) {
-        func_psp_0891B118(arg0, arg1, arg2 - 1, arg1, arg4);
-        func_psp_0891B118(arg2 - 1, arg1, arg2 - 1, arg3 - 1, arg4);
-        func_psp_0891B118(arg2 - 1, arg3 - 1, arg0, arg3 - 1, arg4);
-        func_psp_0891B118(arg0, arg3 - 1, arg0, arg1, arg4);
+        func_psp_0891B118(x0, y0, x1 - 1, y0, color);
+        func_psp_0891B118(x1 - 1, y0, x1 - 1, y1 - 1, color);
+        func_psp_0891B118(x1 - 1, y1 - 1, x0, y1 - 1, color);
+        func_psp_0891B118(x0, y1 - 1, x0, y0, color);
     }
     return 0;
 }
@@ -1444,8 +1454,8 @@ void func_psp_0891D9F4(TVertex* ptr, s32 len) {
         ptr->x = D_psp_08C62A34 + ptr->x * D_psp_089464E0;
         ptr->y = D_psp_08C62A38 + ptr->y * D_psp_089464E4;
         ptr++;
-        ptr->x = D_psp_08C62A34 + (1.0f + ptr->x) * D_psp_089464E0;
-        ptr->y = D_psp_08C62A38 + (1.0f + ptr->y) * D_psp_089464E4;
+        ptr->x = D_psp_08C62A34 + (ptr->x + 1) * D_psp_089464E0;
+        ptr->y = D_psp_08C62A38 + (ptr->y + 1) * D_psp_089464E4;
     } else {
         for (i = 0; i < len; i++) {
             ptr->x = D_psp_08C62A34 + ptr->x * D_psp_089464E0;
@@ -1972,9 +1982,26 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891FCC0);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891FCF0);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891FD20);
+s32 func_psp_0891FD20(DR_OFFSET* p) {
+    DR_OFFSET* ptr;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891FD74);
+    ptr = p;
+    D_psp_08C629C8 = ptr->ofs[0];
+    D_psp_08C629CC = ptr->ofs[1];
+    func_psp_0891A608();
+    return 0;
+}
+
+s32 func_psp_0891FD74(DR_AREA* p) {
+    DR_AREA* ptr;
+
+    ptr = p;
+    D_psp_08C629D0.x = ptr->clip.x;
+    D_psp_08C629D0.y = ptr->clip.y;
+    D_psp_08C629D0.w = ptr->clip.w;
+    D_psp_08C629D0.h = ptr->clip.h;
+    return 0;
+}
 
 s32 func_psp_0891FDC8(DR_ENV* p) {
     DR_ENV* ptr;
@@ -2043,6 +2070,47 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_08920498);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_089215A4);
 
+static inline u8* unkInlineFunc(s32 tpage) {
+    if (D_psp_089464EC != 0) {
+        if ((tpage & 0x1F) == 0x10 && ((tpage >> 7) & 3) == 2) {
+            return (u8*)sceGeEdramGetAddr() + 0xCC000;
+        }
+        if ((tpage & 0xF000) == 0x8000) {
+            return (u8*)sceGeEdramGetAddr() + 0xCC000;
+        }
+        if ((tpage & 0xF000) == 0x4000) {
+            return (u8*)sceGeEdramGetAddr() + 0x12C200;
+        }
+    }
+    if ((tpage & 0x1F) == 0 && ((tpage >> 7) & 3) == 2) {
+        return func_psp_0891AC60();
+    }
+    if (D_psp_08C62AA0 == 0) {
+        if ((tpage & 0x1F) == 4 && ((tpage >> 7) & 3) == 2) {
+            return func_psp_0891AC24();
+        }
+    }
+    return func_psp_0891AAC8(tpage);
+}
+
+static inline void unkInlineFunc2(u8* arg0, u8* arg1, s32 arg2) {
+    if (arg0 == (u8*)((s32)sceGeEdramGetAddr() + 0xCC000)) {
+        if (arg2 == 2) {
+            func_psp_08911990(arg0, 0x100);
+        } else {
+            func_psp_0891149C(arg0, 0x400, 0x100, arg1, arg2);
+        }
+    } else if (arg0 == func_psp_0891AC24()) {
+        func_psp_08911990(arg0, 0x200);
+    } else if (arg0 == func_psp_0891AC60()) {
+        func_psp_08911990(arg0, 0x200);
+    } else if (arg0 == (u8*)((s32)sceGeEdramGetAddr() + 0x12C200)) {
+        func_psp_0891149C(arg0, 0x40, 0x40, 0, 2);
+    } else {
+        func_psp_08910D44(arg0, arg1, arg2);
+    }
+}
+
 s32 func_psp_08921A38(POLY_G4* p) {
     Vertex v[4];
     POLY_G4* ptr;
@@ -2085,67 +2153,28 @@ s32 func_psp_08921A38(POLY_G4* p) {
 s32 func_psp_08921D44(POLY_FT4* p) {
     POLY_FT4* ptr;
     s32 isSemiTrans;
-    s32 tpage;
     u8 temp_s5;
-    u8* var_s4;
     u8* var_s7;
     u8* var_s2;
     TVertex* v;
-    s32 color;
 
     ptr = p;
     var_s7 = NULL;
     isSemiTrans = isSemiTrans(ptr);
     D_psp_08C629C4 = ptr->tpage;
     v = (TVertex*)SP(0);
-    temp_s5 = ((ptr->tpage) >> 7) & 3;
-    tpage = ptr->tpage;
-    if (D_psp_089464EC != 0) {
-        if ((tpage & 0x1F) == 0x10 && ((tpage >> 7) & 3) == 2) {
-            var_s4 = (u8*)sceGeEdramGetAddr() + 0xCC000;
-        } else if ((tpage & 0xF000) == 0x8000) {
-            var_s4 = (u8*)sceGeEdramGetAddr() + 0xCC000;
-        } else if ((tpage & 0xF000) == 0x4000) {
-            var_s4 = (u8*)sceGeEdramGetAddr() + 0x12C200;
-        } else {
-            goto block_8;
-        }
-    } else {
-    block_8:
-        if ((tpage & 0x1F) == 0 && ((tpage >> 7) & 3) == 2) {
-            var_s4 = func_psp_0891AC60();
-        } else if (D_psp_08C62AA0 == 0 && (tpage & 0x1F) == 4 &&
-                   ((tpage >> 7) & 3) == 2) {
-            var_s4 = func_psp_0891AC24();
-        } else {
-            var_s4 = func_psp_0891AAC8(tpage);
-        }
-    }
-    var_s2 = var_s4;
+    temp_s5 = (ptr->tpage >> 7) & 3;
+    var_s2 = unkInlineFunc(ptr->tpage);
     if (temp_s5 != 2) {
         var_s7 = func_psp_0891B8F0(ptr->clut, temp_s5, 1);
     }
-    if (var_s2 == (u8*)((s32)sceGeEdramGetAddr() + 0xCC000)) {
-        if (temp_s5 == 2) {
-            func_psp_08911990(var_s2, 0x100);
-        } else {
-            func_psp_0891149C(var_s2, 0x400, 0x100, var_s7, temp_s5);
-        }
-    } else if (var_s2 == func_psp_0891AC24()) {
-        func_psp_08911990(var_s2, 0x200);
-    } else if (var_s2 == func_psp_0891AC60()) {
-        func_psp_08911990(var_s2, 0x200);
-    } else if (var_s2 == (u8*)((s32)sceGeEdramGetAddr() + 0x12C200)) {
-        func_psp_0891149C(var_s2, 0x40, 0x40, 0, 2);
-    } else {
-        func_psp_08910D44(var_s2, var_s7, temp_s5);
-    }
+    unkInlineFunc2(var_s2, var_s7, temp_s5);
     if (isSemiTrans(ptr)) {
         func_psp_089113A8((ptr->tpage >> 5) & 3, 0x80);
     } else {
         func_psp_08910660(0);
     }
-    if ((ptr->code & 0x80) ? 0 : 1) {
+    if (isFlatShaded(ptr)) {
         v[0].c = GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80);
         v[1].c = v[2].c = v[3].c = v[0].c;
     } else {
@@ -2187,7 +2216,7 @@ s32 func_psp_08921D44(POLY_FT4* p) {
                               GU_TEXTURE_32BITF);
     }
     if (D_psp_08B42068 == 1) {
-        color = red;
+        s32 color = red;
         func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
         func_psp_0891B118(v[1].x, v[1].y, v[3].x, v[3].y, color);
         func_psp_0891B118(v[3].x, v[3].y, v[2].x, v[2].y, color);
@@ -2197,13 +2226,646 @@ s32 func_psp_08921D44(POLY_FT4* p) {
     return 0;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_089225D8);
+s32 func_psp_089225D8(POLY_GT3* p) {
+    POLY_GT3* ptr;
+    TVertex* v;
+    u8 temp_s3;
+    u8* var_v0;
+    u8* var_s1;
+    s32 isSemiTrans;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_08922C14);
+    ptr = p;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_089231F8);
+    var_s1 = NULL;
+    isSemiTrans = isSemiTrans(ptr);
+    D_psp_08C629C4 = ptr->tpage;
+    v = (TVertex*)func_psp_089104B4(0x12);
+    temp_s3 = (ptr->tpage >> 7) & 3;
+    var_v0 = unkInlineFunc(ptr->tpage);
+    if (temp_s3 != 2) {
+        var_s1 = (u8*)func_psp_0891B8F0(ptr->clut, temp_s3, 1);
+    }
+    unkInlineFunc2(var_v0, var_s1, temp_s3);
+    if (isSemiTrans(ptr)) {
+        func_psp_089113A8((ptr->tpage >> 5) & 3, 0x80);
+    } else {
+        func_psp_08910660(0);
+    }
+    if (isFlatShaded(ptr)) {
+        v[0].c = GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80);
+        v[1].c = GU_RGBA(ptr->r1, ptr->g1, ptr->b1, 0x80);
+        v[2].c = GU_RGBA(ptr->r2, ptr->g2, ptr->b2, 0x80);
+    } else {
+        v[0].c = v[1].c = v[2].c = white;
+    }
+    __asm__(
+        ".set		push\n"      // save assembler option
+        ".set		noreorder\n" // suppress reordering
+        "lv.s		s700, 0xC(%1)\n"
+        "vs2i.p		c710, c700\n"
+        "vi2f.p		c300, c710, 16\n"
+        "vadd.p		c300, c300, c410\n"
+        "sv.s		s300, 0xC(%0)\n"
+        "sv.s		s301, 0x10(%0)\n"
+        "sv.s		s302, 0x14(%0)\n"
+        "lv.s		s700, 0x18(%1)\n"
+        "vs2i.p		c710, c700\n"
+        "vi2f.p		c300, c710, 16\n"
+        "vadd.p		c300, c300, c410\n"
+        "sv.s		s300, 0x24(%0)\n"
+        "sv.s		s301, 0x28(%0)\n"
+        "sv.s		s302, 0x2C(%0)\n"
+        "lv.s		s700, 0x24(%1)\n"
+        "vs2i.p		c710, c700\n"
+        "vi2f.p		c300, c710, 16\n"
+        "vadd.p		c300, c300, c410\n"
+        "sv.s		s300, 0x3C(%0)\n"
+        "sv.s		s301, 0x40(%0)\n"
+        "sv.s		s302, 0x44(%0)\n"
+        "lbu		$4, 0x10(%1)\n"
+        "lbu		$5, 0x11(%1)\n"
+        "mtv		$4, s610\n"
+        "mtv		$5, s611\n"
+        "vi2f.p		c620, c610, 0\n"
+        "sv.s		s620, 0(%0)\n"
+        "sv.s		s621, 4(%0)\n"
+        "lbu		$4, 0x1C(%1)\n"
+        "lbu		$5, 0x1D(%1)\n"
+        "mtv		$4, s610\n"
+        "mtv		$5, s611\n"
+        "vi2f.p		c620, c610, 0\n"
+        "sv.s		s620, 0x18(%0)\n"
+        "sv.s		s621, 0x1C(%0)\n"
+        "lbu		$4, 0x28(%1)\n"
+        "lbu		$5, 0x29(%1)\n"
+        "mtv		$4, s610\n"
+        "mtv		$5, s611\n"
+        "vi2f.p		c620, c610, 0\n"
+        "sv.s		s620, 0x30(%0)\n"
+        "sv.s		s621, 0x34(%0)\n"
+        ".set		pop\n" // suppress reordering
+        : "+r"(v)
+        : "r"(ptr));
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_08923FA4);
+    if (D_psp_08C62A40 == 0) {
+        func_psp_0891D9F4(v, 3);
+    }
+    func_psp_08911F24(isSemiTrans, D_psp_089464F0);
+    func_psp_08910C74(
+        v, 3, sizeof(TVertex), GU_TRIANGLE_STRIP,
+        GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 | GU_TEXTURE_32BITF);
+    if (isSemiTrans) {
+        func_psp_08911FA0();
+        func_psp_08910C74(v, 3, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                          GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
+                              GU_TEXTURE_32BITF);
+    }
+    if (D_psp_08B42068 == 1) {
+        s32 color = green;
+        func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
+        func_psp_0891B118(v[1].x, v[1].y, v[2].x, v[2].y, color);
+        func_psp_0891B118(v[2].x, v[2].y, v[0].x, v[0].y, color);
+    }
+    D_psp_08C62A54++;
+    return 0;
+}
+
+s32 func_psp_08922C14(POLY_GT4* p) {
+    POLY_GT4* ptr;
+    s32 r, g, b;
+    s32 fix;
+    TVertex* v;
+
+    ptr = p;
+    D_psp_08C629C4 = ptr->tpage;
+    v = (TVertex*)SP(0);
+
+    func_psp_0891149C((s32)sceGeEdramGetAddr() + 0x12C200, 0x40, 0x40, 0, 2);
+    r = (ptr->r0 >= 0x80) ? 0xFF : ptr->r0 * 2;
+    g = (ptr->g0 >= 0x80) ? 0xFF : ptr->g0 * 2;
+    b = (ptr->b0 >= 0x80) ? 0xFF : ptr->b0 * 2;
+    r = g = b;
+    fix = GU_RGBA(r, g, b, 0);
+    func_psp_08910660(1);
+    func_psp_08910810(GU_ADD, GU_FIX, GU_FIX, fix, 0x00FFFFFF - fix);
+    v[0].c = v[1].c = v[2].c = v[3].c = white;
+    v[0].x = D_psp_08C629C8 + ptr->x0;
+    v[0].y = D_psp_08C629CC + ptr->y0;
+    v[1].x = D_psp_08C629C8 + ptr->x1;
+    v[1].y = D_psp_08C629CC + ptr->y1;
+    v[2].x = D_psp_08C629C8 + ptr->x2;
+    v[2].y = D_psp_08C629CC + ptr->y2;
+    v[3].x = D_psp_08C629C8 + ptr->x3;
+    v[3].y = D_psp_08C629CC + ptr->y3;
+    v[0].z = v[1].z = v[2].z = v[3].z = 1.0f;
+    v[0].u = ptr->u0;
+    v[0].v = ptr->v0;
+    v[1].u = ptr->u1;
+    v[1].v = ptr->v1;
+    v[2].u = ptr->u2;
+    v[2].v = ptr->v2;
+    v[3].u = ptr->u3;
+    v[3].v = ptr->v3;
+    func_psp_0891068C(0);
+    func_psp_089105DC(1);
+    func_psp_08911AB8(0, 0, 0);
+    func_psp_08910A80(
+        v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+        GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 | GU_TEXTURE_32BITF);
+    if (D_psp_08B42068 == 1) {
+        s32 color = magenta;
+        func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
+        func_psp_0891B118(v[1].x, v[1].y, v[3].x, v[3].y, color);
+        func_psp_0891B118(v[3].x, v[3].y, v[2].x, v[2].y, color);
+        func_psp_0891B118(v[2].x, v[2].y, v[0].x, v[0].y, color);
+    }
+    D_psp_08C62A54++;
+    return 0;
+}
+
+s32 func_psp_089231F8(POLY_GT4* p) {
+    POLY_GT4* ptr;
+    u8 temp_s5;
+    u8* var_fp;
+    s32 isSemiTrans;
+    u8* var_s2;
+    TVertex* v;
+
+    ptr = p;
+    var_fp = NULL;
+    isSemiTrans = isSemiTrans(ptr);
+    D_psp_08C629C4 = ptr->tpage;
+    temp_s5 = (ptr->tpage >> 7) & 3;
+    var_s2 = unkInlineFunc(ptr->tpage);
+    if (temp_s5 != 2) {
+        var_fp = func_psp_0891B8F0(ptr->clut, temp_s5, 1);
+    }
+    unkInlineFunc2(var_s2, var_fp, temp_s5);
+    if (isSemiTrans(ptr)) {
+        switch ((ptr->tpage >> 5) & 3) {
+        case 0:
+            func_psp_08911B84(
+                1, GU_ADD, GU_FIX, GU_FIX, 0xFF808080, 0xFF808080);
+            break;
+        case 1:
+            func_psp_08911B84(
+                1, GU_ADD, GU_FIX, GU_FIX, 0xFFFFFFFF, 0xFFFFFFFF);
+            break;
+        case 2:
+            func_psp_08911B84(
+                1, GU_REVERSE_SUBTRACT, GU_FIX, GU_FIX, 0xFFFFFFFF, 0xFFFFFFFF);
+            break;
+        case 3:
+            func_psp_08911B84(
+                1, GU_ADD, GU_FIX, GU_FIX, 0xFF404040, 0xFFFFFFFF);
+            break;
+        default:
+            func_psp_08911B84(
+                0, GU_ADD, GU_FIX, GU_FIX, 0xFF808080, 0xFF808080);
+            break;
+        }
+    } else {
+        func_psp_08911B84(0, GU_ADD, GU_FIX, GU_FIX, 0xFF808080, 0xFF808080);
+    }
+    v = (TVertex*)func_psp_089104B4(0x18);
+    if (isFlatShaded(ptr)) {
+        v[0].c = GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80);
+        v[1].c = GU_RGBA(ptr->r1, ptr->g1, ptr->b1, 0x80);
+        v[2].c = GU_RGBA(ptr->r2, ptr->g2, ptr->b2, 0x80);
+        v[3].c = GU_RGBA(ptr->r3, ptr->g3, ptr->b3, 0x80);
+    } else {
+        v[0].c = v[1].c = v[2].c = v[3].c = 0xFFFFFFFF;
+    }
+    v[0].x = D_psp_08C629C8 + ptr->x0;
+    v[0].y = D_psp_08C629CC + ptr->y0;
+    v[1].x = D_psp_08C629C8 + ptr->x1;
+    v[1].y = D_psp_08C629CC + ptr->y1;
+    v[2].x = D_psp_08C629C8 + ptr->x2;
+    v[2].y = D_psp_08C629CC + ptr->y2;
+    v[3].x = D_psp_08C629C8 + ptr->x3;
+    v[3].y = D_psp_08C629CC + ptr->y3;
+    v[0].z = v[1].z = v[2].z = v[3].z = 1.0f;
+    v[0].u = ptr->u0;
+    v[0].v = ptr->v0;
+    v[1].u = ptr->u1;
+    v[1].v = ptr->v1;
+    v[2].u = ptr->u2;
+    v[2].v = ptr->v2;
+    v[3].u = ptr->u3;
+    v[3].v = ptr->v3;
+    if (D_psp_08C62A40 == 0) {
+        func_psp_0891D9F4(v, 4);
+    }
+    if (D_psp_08C62A40 == 1) {
+        func_psp_08910634(0);
+        if (isSemiTrans) {
+            func_psp_0891068C(1);
+            func_psp_089106B8(1, 0, 0);
+            func_psp_089105DC(1);
+            func_psp_08911AB8(0, 0, 0);
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+        } else {
+            func_psp_0891214C(D_psp_089464F0, 0, 0, 0);
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+        }
+    } else if ((temp_s5 == 2) && !isSemiTrans) {
+        if ((ptr->x1 - ptr->x0) != 1) {
+            func_psp_08911F24(0, D_psp_089464F0);
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+        } else {
+            func_psp_08911F24(0, D_psp_089464F0);
+            func_psp_08911B7C();
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+        }
+    } else {
+        if (ptr->u0 > ptr->u1) {
+            v[0].u++;
+            v[1].u++;
+            v[2].u++;
+            v[3].u++;
+        }
+        if (ptr->v0 > ptr->v2) {
+            v[0].v++;
+            v[1].v++;
+            v[2].v++;
+            v[3].v++;
+        }
+        if (isSemiTrans) {
+            func_psp_0891068C(1);
+            func_psp_089106B8(1, 0, 0);
+            func_psp_089105DC(1);
+            func_psp_08911AB8(0, 0, 0);
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+        } else {
+            func_psp_0891214C(D_psp_089464F0, 0, 0, 0);
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+        }
+    }
+    if (D_psp_08B42068 == 1) {
+        s32 color = green;
+        func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
+        func_psp_0891B118(v[1].x, v[1].y, v[3].x, v[3].y, color);
+        func_psp_0891B118(v[3].x, v[3].y, v[2].x, v[2].y, color);
+        func_psp_0891B118(v[2].x, v[2].y, v[0].x, v[0].y, color);
+    }
+    D_psp_08C62A54++;
+    return 0;
+}
+
+s32 func_psp_08923FA4(POLY_GT4* p) {
+    POLY_GT4 sp78;
+    POLY_GT4 sp40;
+    Unk08920498 sp28;
+
+    u8 temp_s4;
+    s32 var_a0;
+    s32 dx0, dy0;
+    s32 dx1, dy1;
+    s32 i;
+    s32 var_s2_3;
+    s32 var_s1_2;
+    u8* var_v0;
+    u8* var_s2;
+    TVertex* v;
+    s32 isSemiTrans;
+    POLY_GT4* ptr;
+
+    ptr = p;
+    var_s2 = NULL;
+    isSemiTrans = isSemiTrans(ptr);
+    if (LOW(p->x0) == 0 && LOW(p->x1) == 0 && LOW(p->x2) == 0 &&
+        LOW(p->x3) == 0) {
+        return 0;
+    }
+    D_psp_08C629C4 = ptr->tpage;
+    if (((ptr->tpage >> 7) & 3) == 2 && (ptr->tpage & 0x1F) != 0x10) {
+        if (ptr->u1 == 0xFF && ptr->u0 == 0) {
+            sp78.tag = ptr->tag;
+            sp78.len = ptr->len;
+            sp78.r0 = ptr->r0;
+            sp78.g0 = ptr->g0;
+            sp78.b0 = ptr->b0;
+            sp78.code = ptr->code;
+            sp78.x0 = ptr->x0;
+            sp78.y0 = ptr->y0;
+            sp78.u0 = ptr->u0;
+            sp78.v0 = ptr->v0;
+            sp78.clut = ptr->clut;
+            sp78.r1 = ptr->r1;
+            sp78.g1 = ptr->g1;
+            sp78.b1 = ptr->b1;
+            sp78.p1 = ptr->p1;
+            sp78.x1 = ptr->x1;
+            sp78.y1 = ptr->y1;
+            sp78.u1 = ptr->u1;
+            sp78.v1 = ptr->v1;
+            sp78.tpage = ptr->tpage;
+            sp78.r2 = ptr->r2;
+            sp78.g2 = ptr->g2;
+            sp78.b2 = ptr->b2;
+            sp78.p2 = ptr->p2;
+            sp78.x2 = ptr->x2;
+            sp78.y2 = ptr->y2;
+            sp78.u2 = ptr->u2;
+            sp78.v2 = ptr->v2;
+            sp78.pad2 = ptr->pad2;
+            sp78.r3 = ptr->r3;
+            sp78.g3 = ptr->g3;
+            sp78.b3 = ptr->b3;
+            sp78.p3 = ptr->p3;
+            sp78.x3 = ptr->x3;
+            sp78.y3 = ptr->y3;
+            sp78.u3 = ptr->u3;
+            sp78.v3 = ptr->v3;
+            sp78.pad3 = ptr->pad3;
+            dx0 = ((ptr->x1 - ptr->x0) + 1) / 4;
+            dy0 = ((ptr->y1 - ptr->y0) + 1) / 4;
+            dx1 = ((ptr->x3 - ptr->x2) + 1) / 4;
+            dy1 = ((ptr->y3 - ptr->y2) + 1) / 4;
+            for (i = 0; i < 4; i++) {
+                sp78.x0 = ptr->x0 + dx0 * i;
+                sp78.y0 = ptr->y0 + dy0 * i;
+                sp78.x1 = sp78.x0 + dx0;
+                sp78.y1 = sp78.y0 + dy0;
+                sp78.x2 = ptr->x2 + dx1 * i;
+                sp78.y2 = ptr->y2 + dy1 * i;
+                sp78.x3 = sp78.x2 + dx1;
+                sp78.y3 = sp78.y2 + dy1;
+                sp78.u0 = sp78.u2 = 0;
+                sp78.u1 = sp78.u3 = 0x3F;
+                func_psp_08923FA4(&sp78);
+                sp78.tpage++;
+            }
+            return 0;
+        }
+        if (ptr->u1 == 0xF9 && ptr->u0 == 6) {
+            sp40.tag = ptr->tag;
+            sp40.len = ptr->len;
+            sp40.r0 = ptr->r0;
+            sp40.g0 = ptr->g0;
+            sp40.b0 = ptr->b0;
+            sp40.code = ptr->code;
+            sp40.x0 = ptr->x0;
+            sp40.y0 = ptr->y0;
+            sp40.u0 = ptr->u0;
+            sp40.v0 = ptr->v0;
+            sp40.clut = ptr->clut;
+            sp40.r1 = ptr->r1;
+            sp40.g1 = ptr->g1;
+            sp40.b1 = ptr->b1;
+            sp40.p1 = ptr->p1;
+            sp40.x1 = ptr->x1;
+            sp40.y1 = ptr->y1;
+            sp40.u1 = ptr->u1;
+            sp40.v1 = ptr->v1;
+            sp40.tpage = ptr->tpage;
+            sp40.r2 = ptr->r2;
+            sp40.g2 = ptr->g2;
+            sp40.b2 = ptr->b2;
+            sp40.p2 = ptr->p2;
+            sp40.x2 = ptr->x2;
+            sp40.y2 = ptr->y2;
+            sp40.u2 = ptr->u2;
+            sp40.v2 = ptr->v2;
+            sp40.pad2 = ptr->pad2;
+            sp40.r3 = ptr->r3;
+            sp40.g3 = ptr->g3;
+            sp40.b3 = ptr->b3;
+            sp40.p3 = ptr->p3;
+            sp40.x3 = ptr->x3;
+            sp40.y3 = ptr->y3;
+            sp40.u3 = ptr->u3;
+            sp40.v3 = ptr->v3;
+            sp40.pad3 = ptr->pad3;
+            var_s2_3 = ptr->x0;
+            while (var_s2_3 < ptr->x1) {
+                var_a0 = var_s2_3 % 0x40;
+                var_s1_2 = 0x40 - var_a0;
+                if ((var_s2_3 + var_s1_2) > ptr->x1) {
+                    var_s1_2 = ptr->x1 - var_s2_3;
+                }
+                sp40.x0 = sp40.x2 = var_s2_3;
+                sp40.x1 = sp40.x3 = var_s2_3 + var_s1_2;
+                sp40.u0 = sp40.u2 = var_a0;
+                sp40.u1 = sp40.u3 = (var_a0 + var_s1_2) - 1;
+                func_psp_08923FA4(&sp40);
+                sp40.tpage++;
+                var_s2_3 += var_s1_2;
+            }
+            return 0;
+        }
+    }
+    if (ptr->tpage & 0xF000) {
+        if ((ptr->tpage & 0xF000) == 0x4000) {
+            return func_psp_08922C14(p);
+        }
+        if ((ptr->tpage & 0xF000) == 0x2000) {
+            func_psp_0891B2CC(ptr->x0, ptr->y0, ptr->x3 - ptr->x0,
+                              ptr->y3 - ptr->y0, GU_RGBA(0, 0, 8, 0x80));
+            sp28.u0 = ptr->u0;
+            sp28.v0 = ptr->v0;
+            sp28.x1 = ptr->x3 - ptr->x0;
+            sp28.y1 = ptr->y3 - ptr->y0;
+            sp28.x0 = ptr->x0;
+            sp28.y0 = ptr->y0;
+            sp28.r0 = sp28.g0 = sp28.b0 = 0x80;
+            sp28.clut = ptr->clut;
+            sp28.code = ptr->code;
+            D_psp_08C629C4 &= 0x9FF;
+            return func_psp_08920498(&sp28);
+        }
+        if ((ptr->tpage & 0xF000) == 0x1000) {
+            return func_psp_089231F8(p);
+        }
+    }
+    temp_s4 = (ptr->tpage >> 7) & 3;
+    var_v0 = unkInlineFunc(ptr->tpage);
+    if (temp_s4 != 2) {
+        var_s2 = (u8*)func_psp_0891B8F0(ptr->clut, temp_s4, 1);
+    }
+    unkInlineFunc2(var_v0, var_s2, temp_s4);
+    if (isSemiTrans(ptr)) {
+        switch ((ptr->tpage >> 5) & 3) {
+        case 0:
+            func_psp_08911B84(
+                1, GU_ADD, GU_FIX, GU_FIX, 0xFF808080, 0xFF808080);
+            break;
+        case 1:
+            func_psp_08911B84(
+                1, GU_ADD, GU_FIX, GU_FIX, 0xFFFFFFFF, 0xFFFFFFFF);
+            break;
+        case 2:
+            func_psp_08911B84(
+                1, GU_REVERSE_SUBTRACT, GU_FIX, GU_FIX, 0xFFFFFFFF, 0xFFFFFFFF);
+            break;
+        case 3:
+            func_psp_08911B84(
+                1, GU_ADD, GU_FIX, GU_FIX, 0xFF404040, 0xFFFFFFFF);
+            break;
+        default:
+            func_psp_08911B84(
+                0, GU_ADD, GU_FIX, GU_FIX, 0xFF808080, 0xFF808080);
+            break;
+        }
+    } else {
+        func_psp_08911B84(0, GU_ADD, GU_FIX, GU_FIX, 0xFF808080, 0xFF808080);
+    }
+    v = (TVertex*)func_psp_089104B4(0x18);
+    if (isFlatShaded(ptr)) {
+        v[0].c = GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80);
+        v[1].c = GU_RGBA(ptr->r1, ptr->g1, ptr->b1, 0x80);
+        v[2].c = GU_RGBA(ptr->r2, ptr->g2, ptr->b2, 0x80);
+        v[3].c = GU_RGBA(ptr->r3, ptr->g3, ptr->b3, 0x80);
+    } else {
+        v[0].c = v[1].c = v[2].c = v[3].c = 0xFFFFFFFF;
+    }
+    __asm__(
+        ".set		push\n"      // save assembler option
+        ".set		noreorder\n" // suppress reordering
+        "lv.s		s700, 0xC(%1)\n"
+        "vs2i.p		c710, c700\n"
+        "vi2f.p		c300, c710, 16\n"
+        "vadd.p		c300, c300, c410\n"
+        "sv.s		s300, 0xC(%0)\n"
+        "sv.s		s301, 0x10(%0)\n"
+        "sv.s		s302, 0x14(%0)\n"
+        "lv.s		s700, 0x18(%1)\n"
+        "vs2i.p		c710, c700\n"
+        "vi2f.p		c300, c710, 16\n"
+        "vadd.p		c300, c300, c410\n"
+        "sv.s		s300, 0x24(%0)\n"
+        "sv.s		s301, 0x28(%0)\n"
+        "sv.s		s302, 0x2C(%0)\n"
+        "lv.s		s700, 0x24(%1)\n"
+        "vs2i.p		c710, c700\n"
+        "vi2f.p		c300, c710, 16\n"
+        "vadd.p		c300, c300, c410\n"
+        "sv.s		s300, 0x3C(%0)\n"
+        "sv.s		s301, 0x40(%0)\n"
+        "sv.s		s302, 0x44(%0)\n"
+        "lv.s		s700, 0x30(%1)\n"
+        "vs2i.p		c710, c700\n"
+        "vi2f.p		c300, c710, 16\n"
+        "vadd.p		c300, c300, c410\n"
+        "sv.s		s300, 0x54(%0)\n"
+        "sv.s		s301, 0x59(%0)\n"
+        "sv.s		s302, 0x5E(%0)\n"
+        "lbu		$4, 0x10(%1)\n"
+        "lbu		$5, 0x11(%1)\n"
+        "mtv		$4, s610\n"
+        "mtv		$5, s611\n"
+        "vi2f.p		c620, c610, 0\n"
+        "sv.s		s620, 0(%0)\n"
+        "sv.s		s621, 4(%0)\n"
+        "lbu		$4, 0x1C(%1)\n"
+        "lbu		$5, 0x1D(%1)\n"
+        "mtv		$4, s610\n"
+        "mtv		$5, s611\n"
+        "vi2f.p		c620, c610, 0\n"
+        "sv.s		s620, 0x18(%0)\n"
+        "sv.s		s621, 0x1C(%0)\n"
+        "lbu		$4, 0x28(%1)\n"
+        "lbu		$5, 0x29(%1)\n"
+        "mtv		$4, s610\n"
+        "mtv		$5, s611\n"
+        "vi2f.p		c620, c610, 0\n"
+        "sv.s		s620, 0x30(%0)\n"
+        "sv.s		s621, 0x34(%0)\n"
+        "lbu		$4, 0x34(%1)\n"
+        "lbu		$5, 0x35(%1)\n"
+        "mtv		$4, s610\n"
+        "mtv		$5, s611\n"
+        "vi2f.p		c620, c610, 0\n"
+        "sv.s		s620, 0x48(%0)\n"
+        "sv.s		s621, 0x4D(%0)\n"
+        ".set		pop\n" // suppress reordering
+        : "+r"(v)
+        : "r"(ptr));
+
+    if (D_psp_08C62A40 == 0) {
+        func_psp_0891D9F4(v, 4);
+    }
+    if (D_psp_08C62A40 == 1) {
+        func_psp_08910634(0);
+        if (isSemiTrans) {
+            func_psp_08912070(D_psp_089464F0, 0, 0, 0);
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+            func_psp_089120E4();
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+        } else {
+            func_psp_0891214C(D_psp_089464F0, 0, 0, 0);
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+        }
+    } else if ((temp_s4 == 2) && !isSemiTrans) {
+        if ((ptr->x1 - ptr->x0) != 1) {
+            func_psp_08911F24(0, D_psp_089464F0);
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+        } else {
+            func_psp_08911F24(0, D_psp_089464F0);
+            func_psp_08911B7C();
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+        }
+    } else {
+        if (ptr->u0 > ptr->u1) {
+            v[0].u++;
+            v[1].u++;
+            v[2].u++;
+            v[3].u++;
+        }
+        if (ptr->v0 > ptr->v2) {
+            v[0].v++;
+            v[1].v++;
+            v[2].v++;
+            v[3].v++;
+        }
+        if (isSemiTrans) {
+            func_psp_08912070(D_psp_089464F0, 0, 0, 0);
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+            func_psp_089120E4();
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+        } else {
+            func_psp_0891214C(D_psp_089464F0, 0, 0, 0);
+            func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+                              GU_TRANSFORM_2D | GU_VERTEX_32BITF |
+                                  GU_COLOR_8888 | GU_TEXTURE_32BITF);
+        }
+    }
+    if (D_psp_08B42068 == 1) {
+        s32 color = green;
+        func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
+        func_psp_0891B118(v[1].x, v[1].y, v[3].x, v[3].y, color);
+        func_psp_0891B118(v[3].x, v[3].y, v[2].x, v[2].y, color);
+        func_psp_0891B118(v[2].x, v[2].y, v[0].x, v[0].y, color);
+    }
+    D_psp_08C62A54++;
+    return 0;
+}
 
 s32 func_psp_08925194(TILE* p) {
     Vertex v[4];
