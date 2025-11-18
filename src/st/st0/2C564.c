@@ -616,11 +616,11 @@ void EntityDracula(Entity* self) {
                 entity->poseTimer = 0;
                 entity->pose = 0;
                 SetSubStep(1);
-                #ifdef VERSION_PSP
+#ifdef VERSION_PSP
                 g_api.PlaySfx(SFX_PSP_DRACULA_PAIN_A);
-                #else
+#else
                 g_api.PlaySfx(SFX_DRACULA_PAIN_A);
-                #endif
+#endif
             }
             break;
 

@@ -253,9 +253,6 @@ enum {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-
-
-
 // plays every 10 frames while using bible subweapon
 #define BIBLE_SUBWPN_SWOOSH 0x8C3
 
@@ -946,7 +943,7 @@ enum Sfx {
     /* 0x831 */ SFX_UNUSED_831,
     /* 0x832 */ SFX_UNUSED_832,
     /* 0x833 */ SFX_UNUSED_833,
-    /* 0x834 */ SFX_BOSS_RIC_DASH_ATTACK,         // "You fool!"
+    /* 0x834 */ SFX_BOSS_RIC_DASH_ATTACK, // "You fool!"
     /* 0x835 */ SFX_UNUSED_835,
     /* 0x836 */ SFX_BOSS_RIC_PAIN_A,
     /* 0x837 */ SFX_BOSS_RIC_PAIN_B,
@@ -974,7 +971,7 @@ enum Sfx {
     /* 0x84D */ SFX_SHAFT_ORB_BREAK,
     /* 0x84E */ SFX_UNUSED_SHAFT_LAUGH_B,
     /* 0x84F */ SFX_DRACULA_LAUGH_A, // different in RBO6
-    /* 0x850 */ SFX_DRACULA_LAUGH_B, 
+    /* 0x850 */ SFX_DRACULA_LAUGH_B,
     /* 0x851 */ SFX_UNUSED_DRACULA_ATTACK_A,
     /* 0x852 */ SFX_UNUSED_DRACULA_ATTACK_B,
     /* 0x853 */ SFX_DRACULA_PAIN_A,

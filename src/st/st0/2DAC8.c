@@ -501,7 +501,8 @@ void EntityDraculaFinalForm(Entity* self) {
             break;
         case 1:
             if (AnimateEntity(anim_80180AFC, self) == 0) {
-                g_api.PlaySfx(0x856);
+                // The audio is muted for this sfxID
+                g_api.PlaySfx(SFX_UNK_ST0_856);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_ID(DRACULA_UNK2E), self, entity);
