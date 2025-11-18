@@ -3655,6 +3655,20 @@ typedef struct {
     /* 0x80 */ u8 playerOnLeft;
 } ET_Coffin;
 
+typedef struct {
+    /* 0x7C */ Primitive* prim;
+    /* 0x80 */ s16 : 16;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u16 unk84;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ u8 : 8;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ s16 : 16;
+    /* 0x8C */ s16 clut;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ Primitive* emberPrim;
+} ET_Lava;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3971,6 +3985,7 @@ typedef union { // offset=0x7C
     ET_SpikeRoomSwitch spikeRoomSwitch;
     ET_801BA164 et_801BA164;
     ET_Coffin coffin;
+    ET_Lava lava;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
