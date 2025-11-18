@@ -65,6 +65,7 @@
 #define UNUSED
 #endif
 
+#define LOBU(x) (*(u8*)&(x))
 #define LOH(x) (*(s16*)&(x))
 #define HIH(x) (((s16*)&(x))[1])
 #define LOHU(x) (*(u16*)&(x))
