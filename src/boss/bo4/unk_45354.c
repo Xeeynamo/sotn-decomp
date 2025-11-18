@@ -257,10 +257,10 @@ void func_us_801C5A4C(void) {
 }
 
 static s16 D_us_8018132C[] = {
-    SFX_BO4_UNK_7DE,
-    SFX_BO4_UNK_7DF,
-    SFX_BO4_UNK_7E0,
-    SFX_BO4_UNK_7E1,
+    SFX_VO_DOP_ATTACK_A,
+    SFX_VO_DOP_ATTACK_B,
+    SFX_VO_DOP_ATTACK_C,
+    SFX_VO_DOP_ATTACK_D,
 };
 
 void OVL_EXPORT(func_8010EA54)(s32 arg0) {
@@ -387,7 +387,7 @@ s32 func_us_801C5CF8(void) {
         g_Dop.unk46 = 0x8012;
         g_Dop.unk54 = 0xFF;
         DOPPLEGANGER.step_s = 0x51;
-        g_api.PlaySfx(SFX_BO4_UNK_7D7);
+        g_api.PlaySfx(SFX_VO_DOP_PAIN_A);
         return 1;
     }
 

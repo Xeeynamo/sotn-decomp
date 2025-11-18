@@ -1,78 +1,165 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
+	"slices"
 
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
+	"github.com/spf13/cobra"
 )
 
-func handlerConfigExtract(args []string) error {
-	if len(args) != 1 {
-		return fmt.Errorf("usage: sotn-assets extract <asset_config_path>")
-	}
-	c, err := readConfig(args[0])
-	if err != nil {
-		return err
-	}
-	if c.Version != "" {
-		_ = os.Setenv("VERSION", c.Version)
-	}
-	return extractFromConfig(c)
-}
+var acceptedVersions = []string{"us", "hd", "pspeu"}
 
-func handlerConfigBuild(args []string) error {
-	if len(args) != 1 {
-		return fmt.Errorf("usage: sotn-assets build <asset_config_path>")
+func getVersionFromArgs(args []string) (string, bool, error) {
+	firstArgIsVersion := false
+	version := os.Getenv("VERSION")
+	if len(args) > 0 && slices.Contains(acceptedVersions, args[0]) {
+		version = args[0]
+		firstArgIsVersion = true
 	}
-	c, err := readConfig(args[0])
-	if err != nil {
-		return err
+	if version == "" {
+		_, _ = fmt.Fprintln(os.Stderr, "WARNING: no version specified, assume 'us'")
+		version = "us"
 	}
-	if c.Version != "" {
-		_ = os.Setenv("VERSION", c.Version)
+	if !slices.Contains(acceptedVersions, version) {
+		return "", firstArgIsVersion, fmt.Errorf("version %s invalid; valid values are: %v\n", version, acceptedVersions)
 	}
-	return buildFromConfig(c)
-}
-
-func handlerInfo(args []string) error {
-	if len(args) != 1 {
-		return fmt.Errorf("usage: sotn-assets info <stage_file_path>")
-	}
-	return info(os.Stdout, args[0])
-}
-
-func handlerObjdiffGen(_ []string) error {
-	if os.Getenv("VERSION") == "" {
-		return fmt.Errorf("VERSION not set")
-	}
-	configPath := fmt.Sprintf("config/assets.%s.yaml", os.Getenv("VERSION"))
-	return objdiffgen(configPath)
+	return version, firstArgIsVersion, nil
 }
 
 func main() {
-	commands := map[string]func(args []string) error{
-		"extract":     handlerConfigExtract,
-		"build":       handlerConfigBuild,
-		"info":        handlerInfo,
-		"objdiff-gen": handlerObjdiffGen,
-		"objdiff-gui": handleObjdiffGUI,
-		"objdiff":     handlerObjdiffCLI,
+	rootCmd := &cobra.Command{
+		Short: "SOTN assets, build, and tooling orchestrator",
+		Long:  "Wraps all the build-chain and tooling with a clear and simple interface",
 	}
-
-	args := os.Args[1:]
-	if len(args) > 0 {
-		command := args[0]
-		if f, found := commands[command]; found {
-			if err := f(args[1:]); err != nil {
-				_, _ = fmt.Fprintln(os.Stderr, err)
-				os.Exit(1)
+	rootCmd.AddCommand(&cobra.Command{
+		Use:   "extract <asset.yaml>",
+		Short: "Extract asset files from the disk files",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			c, err := readConfig(args[0])
+			if err != nil {
+				return err
 			}
-			return
-		}
-		fmt.Fprintf(os.Stderr, "unknown command %q. Valid commands are %s\n", command, util.JoinMapKeys(commands, ", "))
-	} else {
-		fmt.Fprintf(os.Stderr, "Need a command. Valid commands are %s\n", util.JoinMapKeys(commands, ", "))
+			if c.Version != "" {
+				_ = os.Setenv("VERSION", c.Version)
+			}
+			return extractFromConfig(c)
+		},
+	})
+	rootCmd.AddCommand(&cobra.Command{
+		Use:   "build <asset.yaml>",
+		Short: "Build asset files from the extracted assets",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			c, err := readConfig(args[0])
+			if err != nil {
+				return err
+			}
+			if c.Version != "" {
+				_ = os.Setenv("VERSION", c.Version)
+			}
+			return buildFromConfig(c)
+		},
+	})
+	rootCmd.AddCommand(&cobra.Command{
+		Use:   "info <stage_ovl.bin>",
+		Short: "Attempt to parse and print the asset configuration for a given stage overlay",
+		Args:  cobra.ExactArgs(1),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return info(os.Stdout, args[0])
+		},
+	})
+	rootCmd.AddCommand(&cobra.Command{
+		Use:   "objdiff-gen [version]",
+		Short: "Generate an updated objdiff.json for the specified game version",
+		Args: func(cmd *cobra.Command, args []string) error {
+			version, _, err := getVersionFromArgs(args)
+			if err != nil {
+				return err
+			}
+			cmd.SetContext(context.WithValue(cmd.Context(), "version", version))
+			return nil
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			version := cmd.Context().Value("version").(string)
+			return objdiffgen(version)
+		},
+	})
+	rootCmd.AddCommand(&cobra.Command{
+		Use:   "objdiff-gui [version]",
+		Short: "Invoke objdiff-gui to diff decompiled code locally",
+		Args: func(cmd *cobra.Command, args []string) error {
+			version, _, err := getVersionFromArgs(args)
+			if err != nil {
+				return err
+			}
+			cmd.SetContext(context.WithValue(cmd.Context(), "version", version))
+			return nil
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			version := cmd.Context().Value("version").(string)
+			return handleObjdiffGUI(version)
+		},
+	})
+	rootCmd.AddCommand(&cobra.Command{
+		Use:   "objdiff [version] c_path func_name",
+		Short: "Invoke objdiff to diff decompiled code locally from your terminal",
+		Args: func(cmd *cobra.Command, args []string) error {
+			version, firstArgIsVersion, err := getVersionFromArgs(args)
+			if err != nil {
+				return err
+			}
+			cmd.SetContext(context.WithValue(cmd.Context(), "version", version))
+			exactArgs := 2
+			if firstArgIsVersion {
+				exactArgs = 3
+			}
+			if err := cobra.ExactArgs(exactArgs)(cmd, args); err != nil {
+				return err
+			}
+			cmd.SetContext(context.WithValue(cmd.Context(), "src_path", args[exactArgs-2]))
+			cmd.SetContext(context.WithValue(cmd.Context(), "func_name", args[exactArgs-1]))
+			return nil
+		},
+		Example: "   objdiff us dra/4A538 func_800EAD0C",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			version := cmd.Context().Value("version").(string)
+			srcPath := cmd.Context().Value("src_path").(string)
+			funcName := cmd.Context().Value("func_name").(string)
+			return handlerObjdiffCLI(version, srcPath, funcName)
+		},
+	})
+	rootCmd.AddCommand(&cobra.Command{
+		Use:   "bindiff [version] overlay",
+		Short: "Invoke gobindiff to visualize binary differences between the bult and the target overlay",
+		Args: func(cmd *cobra.Command, args []string) error {
+			version, firstArgIsVersion, err := getVersionFromArgs(args)
+			if err != nil {
+				return err
+			}
+			cmd.SetContext(context.WithValue(cmd.Context(), "version", version))
+			exactArgs := 1
+			if firstArgIsVersion {
+				exactArgs = 2
+			}
+			if err := cobra.ExactArgs(exactArgs)(cmd, args); err != nil {
+				return err
+			}
+			cmd.SetContext(context.WithValue(cmd.Context(), "overlay", args[exactArgs-1]))
+			return nil
+		},
+		Example: "   bindiff pspeu dai",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			version := cmd.Context().Value("version").(string)
+			ovl := cmd.Context().Value("overlay").(string)
+			return handleBindiff(version, ovl, 24)
+		},
+	})
+	rootCmd.SilenceErrors = true
+	if err := rootCmd.Execute(); err != nil {
+		_, _ = fmt.Fprintln(os.Stderr, err)
+		os.Exit(1)
 	}
-	os.Exit(1)
 }

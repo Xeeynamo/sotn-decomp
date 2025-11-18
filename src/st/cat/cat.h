@@ -25,6 +25,8 @@ enum OVL_EXPORT(Palette) {
     PAL_BONE_ARK_LIGHTNING_PRIM = 0x19F,
     PAL_BONE_ARK_PROJECTILE_EXPLODE = 0x200,
     PAL_HELLFIRE_BEAST_PRIMONE = 0x208,
+    PAL_LAVA_TRANSPARENT = 0x209,
+    PAL_LAVA_OPAQUE = 0x20A,
     PAL_HELLFIRE_BEAST_PRIMTWO = 0x230,
     PAL_HELLFIRE_BEAST_LIGHTNING = 0x24A,
     PAL_BREAKABLE = 0x256,
@@ -54,10 +56,10 @@ enum OVL_EXPORT(Entities) {
     E_UNK_ID13,                         // EntityUnkId13
     E_EXPLOSION_VARIANTS,               // EntityExplosionVariants
     E_GREY_PUFF,                        // EntityGreyPuff
-    E_UNK_16,                           // func_us_801C4C7C
+    E_LAVA,                             // EntityLava
     E_UNK_17,                           // func_us_801C589C
     E_UNK_18,                           // func_us_801C5DF4
-    E_UNK_19,                           // func_us_801C56A0
+    E_LAVA_EMBERS,                      // func_us_801C56A0
     E_UNK_1A,                           // func_us_801CA13C
     E_SPIKE_ROOM_LIGHT_SWITCH,          // EntitySpikeRoomLightSwitch
     E_SPIKES,                           // EntitySpikes
@@ -76,7 +78,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_29,                           // func_us_801BA388
     E_UNK_2A,                           // func_us_801BA164
     E_ELEVATOR,                         // EntityElevator
-    E_UNK_2C,                           // func_us_801BA7FC
+    E_COFFIN,                           // EntityCoffin
     E_BIG_RED_FIREBALL,                 // EntityBigRedFireball
     E_DISCUS_LORD,                      // EntityDiscusLord
     E_DISCUS,                           // EntityDiscus

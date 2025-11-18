@@ -160,8 +160,8 @@ static void func_us_801C7340(void) {
 }
 
 static s16 D_us_8018133C[] = {
-    SFX_BO4_UNK_7DD, SFX_BO4_UNK_7DC, SFX_BO4_UNK_7DB, SFX_BO4_UNK_7DA,
-    SFX_BO4_UNK_7D9, SFX_BO4_UNK_7D8, SFX_BO4_UNK_7D7,
+    SFX_VO_DOP_YELL,   SFX_VO_DOP_PAIN_F, SFX_VO_DOP_PAIN_E, SFX_VO_DOP_PAIN_D,
+    SFX_VO_DOP_PAIN_C, SFX_VO_DOP_PAIN_B, SFX_VO_DOP_PAIN_A,
 };
 
 void DopplegangerHandleDamage(DamageParam* damage, s16 step, s16 step_s) {
@@ -339,13 +339,13 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
             for (j = 16; j < 64; j++, ent++) {
                 // Entity 32 appears to be EntityPlayerDissolves
                 if (ent->entityId == 32) {
-                    g_api.PlaySfx(SFX_BO4_UNK_7E6);
+                    g_api.PlaySfx(SFX_VO_DOP_DEATH);
                     DOPPLEGANGER.step_s = 16;
                     return;
                 }
             }
         }
-        g_api.PlaySfx(SFX_BO4_UNK_7E6);
+        g_api.PlaySfx(SFX_VO_DOP_DEATH);
         func_us_801C72BC();
         func_us_801C7340();
         DOPPLEGANGER.velocityY = FIX(-3.25);
@@ -1160,7 +1160,8 @@ void DopplegangerStepStone(s32 arg0) {
         DopSetVelocity(FIX(-0.625));
         OVL_EXPORT(func_801133E68)();
         DOPPLEGANGER.palette = PAL_FLAG(PAL_CC_STONE_EFFECT);
-        g_api.PlaySfx(SFX_BO4_UNK_7DC);
+        // This unique pain grunt doesn't have an Alucard equivalent
+        g_api.PlaySfx(SFX_VO_DOP_PAIN_F);
         g_Dop.unk5E = 8;
         g_Dop.timers[ALU_T_HITEFFECT] = 0;
         DOPPLEGANGER.step_s = 1;
@@ -1191,7 +1192,7 @@ void DopplegangerStepStone(s32 arg0) {
         if (g_Dop.unk6A == 0) {
             if (--D_us_801D3D48 == 0) {
                 DOPPLEGANGER.step = Dop_Kill;
-                g_api.PlaySfx(SFX_BO4_UNK_7E6);
+                g_api.PlaySfx(SFX_VO_DOP_DEATH);
                 OVL_EXPORT(CreateEntFactoryFromEntity)
                 (g_CurrentEntity, FACTORY(16, 3), 0);
                 DOPPLEGANGER.step_s = 16;
@@ -1210,7 +1211,7 @@ void DopplegangerStepStone(s32 arg0) {
                 SetDopplegangerAnim(0x3B);
                 OVL_EXPORT(CreateEntFactoryFromEntity)
                 (g_CurrentEntity, FACTORY(16, 3), 0);
-                g_api.PlaySfx(SFX_BO4_UNK_7DD);
+                g_api.PlaySfx(SFX_VO_DOP_YELL);
                 DOPPLEGANGER.step = Dop_Hit;
                 DOPPLEGANGER.step_s = 8;
                 DOPPLEGANGER.palette = PAL_FLAG(0x200);

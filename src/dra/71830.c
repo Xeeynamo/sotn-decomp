@@ -567,6 +567,10 @@ s16 D_800ACF7C[] = {
     27,
 };
 
+// As seen in the Doppleganger sfxIDs and DopplegangerStepStone, Alucard was
+// supposed to have 6 pain grunts, however the last one was purposely muted.
+// It's plausible that this was done to make Alucard's randomized pain sfx less
+// repetitious.
 s16 g_SfxPainGrunts[] = {
     SFX_VO_ALU_YELL,   SFX_VO_ALU_SILENCE, SFX_VO_ALU_PAIN_E, SFX_VO_ALU_PAIN_D,
     SFX_VO_ALU_PAIN_C, SFX_VO_ALU_PAIN_B,  SFX_VO_ALU_PAIN_A,
@@ -1646,6 +1650,10 @@ void PlayerStepStoned(s32 arg0) {
         func_8010E3B8(FIX(-1.25));
         func_80113E68();
         PLAYER.palette = PAL_FLAG(PAL_CC_STONE_EFFECT);
+        // DopplegangerStepStone plays a unique pain grunt that was
+        // later disabled for Alucard's randomized pain sound table.  While the
+        // sfx itself was silenced, this sound call in PlayerStepStoned was
+        // never removed.
         PlaySfx(SFX_VO_ALU_SILENCE);
         g_Player.timers[2] = 0;
         g_Player.timers[0] = 0;
