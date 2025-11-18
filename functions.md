@@ -1015,7 +1015,7 @@
 | main  | func_psp_0891A064                        |       29 |          5 |        |       |     |
 | main  | func_psp_0891AE68                        |       29 |          5 |        |       |     |
 | main  | func_psp_08934D20                        |       29 |          5 |        |       |     |
-| cat   | FindFirstUnkPrim                         |       29 |          5 |        |       |     |
+| cat   | func_pspeu_09254030                      |       29 |          5 |        |       |     |
 | chi   | func_psp_09248940                        |       29 |          5 |        |       |     |
 | lib   | func_psp_09250CE0                        |       29 |          5 |        |       |     |
 | no2   | func_pspeu_0924E728                      |       29 |          5 |        |       |     |
@@ -1969,8 +1969,8 @@
 | dra   | GetPlayerSensor                          |       62 |          5 |        |       |     |
 | main  | func_psp_08916550                        |       62 |          5 |        |       |     |
 | cat   | func_pspeu_09244DE0                      |       62 |          5 |        |       |     |
-| cat   | CAT_EntityBackgroundBlock                |       62 |          5 |        |       |     |
 | cat   | func_pspeu_0925C960                      |       62 |          5 |        |       |     |
+| cat   | CAT_EntityBackgroundBlock                |       62 |          5 |        |       |     |
 | chi   | func_psp_09240708                        |       62 |          5 |        |       |     |
 | dai   | func_pspeu_0923ECE0                      |       62 |          5 |        |       |     |
 | dai   | func_pspeu_092565B0                      |       62 |          5 |        |       |     |
@@ -3027,7 +3027,7 @@
 | no3   | EntityDistantBackgroundTrees             |      153 |         14 |        |       |     |
 | maria | func_pspeu_092A7950                      |      153 |         16 |        |       |     |
 | main  | func_psp_0891B8F0                        |      153 |         19 |        |       |     |
-| cat   | func_us_801C56A0                         |      153 |         22 |        |       |     |
+| cat   | EntityLavaEmbers                         |      153 |         22 |        |       |     |
 | nz1   | EntityKarasumanRavenAbsorb               |      153 |         22 |        |       |     |
 | no4   | func_pspeu_09242AD0                      |      153 |         23 |        |       |     |
 | dra   | func_80118970                            |      153 |         25 |        |       |     |
@@ -3946,7 +3946,7 @@
 | cat   | EntitySlime                              |      733 |         69 | Yes    |       |     |
 | lib   | EntityLibrarianChair                     |      733 |        124 |        |       |     |
 | lib   | func_us_801B56E4                         |      739 |         81 | Yes    |       |     |
-| cat   | func_us_801C4C7C                         |      741 |         71 |        |       |     |
+| cat   | EntityLava                               |      741 |         71 |        |       |     |
 | ric   | RicEntityCrashBible                      |      742 |         48 | Yes    |       |     |
 | ric   | RicEntityCrashCrossBeam                  |      743 |         63 |        |       |     |
 | dra   | func_psp_091052B8                        |      746 |         77 |        |       |     |
