@@ -376,7 +376,7 @@ void EntityDraculaFinalForm(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (!AnimateEntity(anim_80180B48, self)) {
-                g_api.PlaySfx(0x866);
+                g_api.PlaySfx(SFX_DRACULA_MONSTER_ROAR);
                 self->step_s++;
             }
             break;
@@ -448,7 +448,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 SetSubStep(2);
             }
             if (!self->poseTimer && self->pose == 3) {
-                g_api.PlaySfx(0x866);
+                g_api.PlaySfx(SFX_DRACULA_MONSTER_ROAR);
                 self->velocityY = FIX(-7.0);
             }
             MoveEntity();
@@ -501,7 +501,8 @@ void EntityDraculaFinalForm(Entity* self) {
             break;
         case 1:
             if (AnimateEntity(anim_80180AFC, self) == 0) {
-                g_api.PlaySfx(0x856);
+                // The audio is muted for this sfxID
+                g_api.PlaySfx(SFX_UNK_ST0_856);
                 entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_ID(DRACULA_UNK2E), self, entity);
@@ -610,7 +611,7 @@ void EntityDraculaFinalForm(Entity* self) {
     case 6: // Time attack call indicates this state is Dracula's defeat
         switch (self->step_s) {
         case 0:
-            g_api.PlaySfx(0x866);
+            g_api.PlaySfx(SFX_DRACULA_MONSTER_ROAR);
             self->hitboxState = 0;
             entity = self + 1;
             for (i = 0; i < 3; i++, entity++) {
