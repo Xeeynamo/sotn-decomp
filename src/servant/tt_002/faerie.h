@@ -34,24 +34,6 @@ typedef enum {
 #define ROOM_SPECIAL_STATE_SUS_HINT2 9
 #define ROOM_SPECIAL_STATE_SUS_HINT3 11
 
-// These are all SFX keys that are loaded from TT_002.VB/VH
-typedef enum {
-    FAERIE_HEALING = 0x885, // "Healing!"
-    FAERIE_POTION,          // "Potion"
-    FAERIE_REGENERATION,    // "Regeneration"
-    FAERIE_NO_MEDICINE,     // "No medicine left"
-    FAERIE_HAI,
-    FAERIE_YEAH,
-    FAERIE_HA1,
-    FAERIE_HA2,
-    FAERIE_AH,
-    FAERIE_UHH,
-    FAERIE_UHH2,
-    FAERIE_OHH,
-    FAERIE_OH_NO,     // "OH NOOO!"
-    FAERIE_ARE_YOU_OK // "Are you ok?" possibly unreachable code
-} FaerieSfxId;
-
 typedef struct {
     s16 animIndex;
     s16 wingsInBackZ;

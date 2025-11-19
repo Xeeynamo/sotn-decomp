@@ -35,7 +35,6 @@ static s16 s_TargetLocOffset_calc;
 extern u16 g_FaerieClut[64];
 
 extern FaerieAbilityStats g_FaerieAbilityStats[];
-extern FaerieSfx g_FaerieSfx;
 extern s16 g_ResistItemsParamMap[];
 extern s16 g_PotionItemsParamMap[];
 extern unkGraphicsStruct g_unkGraphicsStruct;
@@ -737,14 +736,14 @@ void UpdateServantUseLifeApple(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         SetAnimationFrame(self, 0x13);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(g_FaerieSfx.regeneration);
+            g_api.PlaySfx(SFX_FAERIE_REGENERATION);
         }
         self->step++;
         break;
     case 0x6:
         if (self->pose == 0xA) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(g_FaerieSfx.regeneration);
+                g_api.PlaySfx(SFX_FAERIE_REGENERATION);
             }
             self->step++;
         }
@@ -800,7 +799,7 @@ void UpdateServantUseLifeApple(Entity* self) {
 
     case 0x5A: // Only get here when you are dead and have no life apple
         SetAnimationFrame(self, 0x20);
-        g_api.PlaySfx(g_FaerieSfx.ohNo);
+        g_api.PlaySfx(SFX_FAERIE_OH_NO);
         self->step++;
         break;
     case 0x5B:
@@ -859,7 +858,7 @@ void UpdateServantUseHammer(Entity* self) {
             self->step++;
         } else {
             SetAnimationFrame(self, 0x10);
-            g_api.PlaySfx(g_FaerieSfx.noMedicine);
+            g_api.PlaySfx(SFX_FAERIE_NO_MEDICINE);
             self->ext.faerie.frameCounter = 0;
             self->step += 2;
         }
@@ -935,7 +934,7 @@ void UpdateServantUseUncurse(Entity* self) {
         }
         SetAnimationFrame(self, 0x12);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(g_FaerieSfx.healing);
+            g_api.PlaySfx(SFX_FAERIE_HEALING);
         }
         self->step++;
         break;
@@ -944,7 +943,7 @@ void UpdateServantUseUncurse(Entity* self) {
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->pose == 0xB) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(g_FaerieSfx.healing);
+                g_api.PlaySfx(SFX_FAERIE_HEALING);
             }
 
             g_Status.equipHandCount[ITEM_UNCURSE]--;
@@ -970,7 +969,7 @@ void UpdateServantUseUncurse(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->pose == 0x20) {
-            g_api.PlaySfx(g_FaerieSfx.noMedicine);
+            g_api.PlaySfx(SFX_FAERIE_NO_MEDICINE);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1026,7 +1025,7 @@ void UpdateServantUseAntivenom(Entity* self) {
         }
         SetAnimationFrame(self, 0x12);
         if (s_ServantId == FAM_ACTIVE_YOUSEI) {
-            g_api.PlaySfx(g_FaerieSfx.healing);
+            g_api.PlaySfx(SFX_FAERIE_HEALING);
         }
         self->step++;
         break;
@@ -1035,7 +1034,7 @@ void UpdateServantUseAntivenom(Entity* self) {
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->pose == 0xB) {
             if (s_ServantId == FAM_ACTIVE_FAERIE) {
-                g_api.PlaySfx(g_FaerieSfx.healing);
+                g_api.PlaySfx(SFX_FAERIE_HEALING);
             }
 
             g_Status.equipHandCount[ITEM_ANTIVENOM]--;
@@ -1061,7 +1060,7 @@ void UpdateServantUseAntivenom(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->pose == 0x20) {
-            g_api.PlaySfx(g_FaerieSfx.noMedicine);
+            g_api.PlaySfx(SFX_FAERIE_NO_MEDICINE);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1162,7 +1161,7 @@ void UpdateServantUseElementalResist(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->pose == 0x20) {
-            g_api.PlaySfx(g_FaerieSfx.noMedicine);
+            g_api.PlaySfx(SFX_FAERIE_NO_MEDICINE);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }
@@ -1232,7 +1231,7 @@ void UpdateServantUsePotion(Entity* self) {
     case 3:
         self->facingLeft = PLAYER.facingLeft ? 0 : 1;
         if (self->pose == 0xB) {
-            g_api.PlaySfx(g_FaerieSfx.potion);
+            g_api.PlaySfx(SFX_FAERIE_POTION);
             g_Status.equipHandCount[g_PotionItemsParamMap[self->params * 2]]--;
             g_api.CreateEntFactoryFromEntity(
                 self,
@@ -1254,7 +1253,7 @@ void UpdateServantUsePotion(Entity* self) {
     case 5:
         self->facingLeft = PLAYER.facingLeft;
         if (self->pose == 0x20) {
-            g_api.PlaySfx(g_FaerieSfx.noMedicine);
+            g_api.PlaySfx(SFX_FAERIE_NO_MEDICINE);
             self->ext.faerie.frameCounter = 0;
             self->step++;
         }

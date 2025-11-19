@@ -1009,6 +1009,20 @@ enum Sfx {
     /* 0x882 */ SFX_MARIA_FOOTSTEPS_A,
     /* 0x883 */ SFX_MARIA_FOOTSTEPS_B,
     /* 0x884 */ SFX_UNUSED_884,
+    /* 0x885 */ SFX_FAERIE_HEALING,      // "Healing!"
+    /* 0x886 */ SFX_FAERIE_POTION,       // "Potion"
+    /* 0x887 */ SFX_FAERIE_REGENERATION, // "Regeneration"
+    /* 0x888 */ SFX_FAERIE_NO_MEDICINE,  // "No medicine left"
+    /* 0x889 */ SFX_FAERIE_HAMMER_A,     // when using hammer on stoned Alucard
+    /* 0x88A */ SFX_FAERIE_HAMMER_B,
+    /* 0x88B */ SFX_FAERIE_HAMMER_C,
+    /* 0x88C */ SFX_FAERIE_HAMMER_D,
+    /* 0x88D */ SFX_FAERIE_FALL_OFF_A, // falling off Alucard's shoulder
+    /* 0x88E */ SFX_FAERIE_FALL_OFF_B,
+    /* 0x88F */ SFX_FAERIE_FALL_OFF_C,
+    /* 0x890 */ SFX_FAERIE_FALL_OFF_D,
+    /* 0x891 */ SFX_FAERIE_OH_NO,      // "OH NOOO!" (death reaction)
+    /* 0x892 */ SFX_FAERIE_ARE_YOU_OK, // "Are you ok?" (possibly unused?)
     SFX_TELEPORT_SYNTH_UP = 0x8BA,
     SFX_TELEPORT_SYNTH_DOWN,
     SFX_BURNING_PHOTOGRAPH = 0x8BE,
