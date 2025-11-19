@@ -3027,7 +3027,7 @@
 | no3   | EntityDistantBackgroundTrees             |      153 |         14 |        |       |     |
 | maria | func_pspeu_092A7950                      |      153 |         16 |        |       |     |
 | main  | func_psp_0891B8F0                        |      153 |         19 |        |       |     |
-| cat   | EntityLavaEmbers                         |      153 |         22 |        |       |     |
+| cat   | func_pspeu_0925CA38                      |      153 |         22 |        |       |     |
 | nz1   | EntityKarasumanRavenAbsorb               |      153 |         22 |        |       |     |
 | no4   | func_pspeu_09242AD0                      |      153 |         23 |        |       |     |
 | dra   | func_80118970                            |      153 |         25 |        |       |     |
@@ -3740,7 +3740,7 @@
 | ric   | RicEntitySubwpnAgunea                    |      445 |         51 |        |       |     |
 | ric   | func_pspeu_092A9840                      |      445 |         51 | Yes    |       |     |
 | no3   | EntityFireWargDeathBeams                 |      448 |         35 |        |       |     |
-| cat   | func_us_801C589C                         |      449 |         40 |        |       |     |
+| cat   | func_pspeu_0925B118                      |      449 |         40 |        |       |     |
 | dra   | func_80130E94                            |      450 |         49 | Yes    |       |     |
 | cat   | func_us_801B9D1C                         |      450 |         50 |        |       |     |
 | maria | func_pspeu_092AE558                      |      451 |         78 |        |       |     |
@@ -3751,7 +3751,7 @@
 | dra   | EntitySubwpnHolyWaterBreakGlass          |      457 |         29 |        |       |     |
 | dra   | EntitySubwpnCrashCross                   |      457 |         38 |        |       |     |
 | ric   | RicEntitySubwpnHolyWaterBreakGlass       |      461 |         29 |        |       |     |
-| cat   | func_us_801C5DF4                         |      461 |         40 |        |       |     |
+| cat   | func_pspeu_0925B7B8                      |      461 |         40 |        |       |     |
 | main  | __ieee754_rem_pio2                       |      463 |         71 |        |       |     |
 | dra   | func_801309B4                            |      464 |         52 | Yes    |       |     |
 | dra   | func_psp_09110FC8                        |      466 |         93 |        |       |     |
@@ -3946,7 +3946,7 @@
 | cat   | EntitySlime                              |      733 |         69 | Yes    |       |     |
 | lib   | EntityLibrarianChair                     |      733 |        124 |        |       |     |
 | lib   | func_us_801B56E4                         |      739 |         81 | Yes    |       |     |
-| cat   | EntityLava                               |      741 |         71 |        |       |     |
+| cat   | func_pspeu_0925BE88                      |      741 |         71 |        |       |     |
 | ric   | RicEntityCrashBible                      |      742 |         48 | Yes    |       |     |
 | ric   | RicEntityCrashCrossBeam                  |      743 |         63 |        |       |     |
 | dra   | func_psp_091052B8                        |      746 |         77 |        |       |     |
