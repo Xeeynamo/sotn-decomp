@@ -1663,13 +1663,14 @@ void func_psp_0891E638(void) {
     func_psp_08911B7C();
     func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
     if (func_psp_08919E44()) {
-        func_psp_08910FD8((s32)sceGeEdramGetAddr() + 0x1BC000, (s32)sceGeEdramGetAddr() + 0x1DE000, 5, 0x200, 9, 9);
+        func_psp_08910FD8((s32)sceGeEdramGetAddr() + 0x1BC000,
+                          (s32)sceGeEdramGetAddr() + 0x1DE000, 5, 0x200, 9, 9);
     } else {
         func_psp_0891B2CC(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT, black);
     }
-    func_psp_08910A80(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
-                      GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
-                              GU_TEXTURE_32BITF);
+    func_psp_08910A80(
+        v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+        GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 | GU_TEXTURE_32BITF);
     func_psp_0891AF48(temp_s1);
 }
 
