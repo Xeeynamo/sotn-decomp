@@ -454,15 +454,15 @@ void EntityDracula(Entity* self) {
     }
 
     if (self->hitFlags == 1) {
-        g_api.PlaySfx(NA_SE_VO_DR_HURT_2);
+        g_api.PlaySfx(SFX_DRACULA_PAIN_D);
     }
 
     if (self->hitFlags == 2) {
-        g_api.PlaySfx(NA_SE_VO_DR_HURT_3);
+        g_api.PlaySfx(SFX_DRACULA_PAIN_E);
     }
 
     if (self->hitFlags == 3) {
-        g_api.PlaySfx(NA_SE_VO_DR_HURT_4);
+        g_api.PlaySfx(SFX_DRACULA_PAIN_F);
     }
 
     switch (self->step) {
@@ -550,7 +550,7 @@ void EntityDracula(Entity* self) {
             self->ext.dracula.unk9C =
                 func_801ABBBC(self->ext.dracula.unk9C, self);
             if (self->ext.dracula.unkA0) {
-                g_api.PlaySfx(NA_SE_VO_DR_TAUNT_2);
+                g_api.PlaySfx(SFX_DRACULA_LAUGH_B);
                 self->animCurFrame = 0;
                 self->ext.dracula.unkA0 = 0;
             }
@@ -585,7 +585,7 @@ void EntityDracula(Entity* self) {
             self->ext.dracula.unk9C =
                 func_801ABBBC(self->ext.dracula.unk9C, self);
             if (self->ext.dracula.unkA0) {
-                g_api.PlaySfx(NA_SE_VO_DR_TAUNT_1);
+                g_api.PlaySfx(SFX_DRACULA_LAUGH_A);
                 self->animCurFrame = 1;
                 self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
                 self->ext.dracula.unkA0 = 0;
@@ -616,7 +616,11 @@ void EntityDracula(Entity* self) {
                 entity->poseTimer = 0;
                 entity->pose = 0;
                 SetSubStep(1);
-                g_api.PlaySfx(NA_SE_VO_DR_HURT_1);
+#ifdef VERSION_PSP
+                g_api.PlaySfx(SFX_PSP_DRACULA_PAIN_A);
+#else
+                g_api.PlaySfx(SFX_DRACULA_PAIN_A);
+#endif
             }
             break;
 
@@ -660,7 +664,7 @@ void EntityDracula(Entity* self) {
                 SetSubStep(1);
                 self->ext.dracula.unk8C = 2;
                 g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
-                g_api.PlaySfx(NA_SE_VO_DR_HERE_IS_TRUE_POWER);
+                g_api.PlaySfx(SFX_DRACULA_HERE_IS_TRUE_POWER);
             }
             break;
 
@@ -709,7 +713,7 @@ void EntityDracula(Entity* self) {
                 prim->drawMode = DRAW_HIDE;
                 prim = prim->next;
             }
-            g_api.PlaySfx(NA_SE_VO_DR_PLAYTIME_IS_OVER);
+            g_api.PlaySfx(SFX_DRACULA_PLAYTIME_IS_OVER);
             self->step_s++;
 
         case 1:
@@ -725,7 +729,7 @@ void EntityDracula(Entity* self) {
 
         case 2:
             if (!--self->ext.dracula.unk8C) {
-                g_api.PlaySfx(NA_SE_VO_DR_GRANT_ME_POWER);
+                g_api.PlaySfx(SFX_DRACULA_GRANT_ME_POWER);
                 self->step_s++;
             }
             break;
