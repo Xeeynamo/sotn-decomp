@@ -244,7 +244,7 @@ void EntitySuccubus(Entity* self) {
     case SUCCUBUS_DYING:
         switch (self->step_s) {
         case SUCCUBUS_DYING_SETUP:
-            PlaySfxPositional(NA_VO_SU_NO_SCREAM);
+            PlaySfxPositional(SFX_SUCCUBUS_DEFEAT);
             CreateEntityFromCurrentEntity(
                 E_SUCCUBUS_CUTSCENE, &g_Entities[200]);
             g_Entities[200].params = 1;
@@ -496,7 +496,7 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_PETAL_ATTACK_ANIM:
             if (AnimateEntity(D_8018070C, self) == 0) {
                 self->ext.succubus.timer = 128;
-                PlaySfxPositional(NA_VO_SU_LAUGH);
+                PlaySfxPositional(SFX_SUCCUBUS_LAUGH);
                 self->step_s++;
             }
             break;
@@ -535,7 +535,7 @@ void EntitySuccubus(Entity* self) {
         case SUCCUBUS_CHARGE_SETUP:
             self->ext.succubus.timer = 112;
             self->animCurFrame = 36;
-            PlaySfxPositional(NA_VO_SU_BLANK);
+            PlaySfxPositional(SFX_UNK_SUCCUBUS_86F);
             self->step_s++;
 
         case SUCCUBUS_CHARGE_FLY_TOWARDS_PLAYER:
@@ -613,7 +613,7 @@ void EntitySuccubus(Entity* self) {
             }
             self->posY.i.hi = posY = entity->posY.i.hi;
             self->posX.i.hi = posX;
-            PlaySfxPositional(NA_VO_SU_SUCK_YOU_DRY);
+            PlaySfxPositional(SFX_SUCCUBUS_ILL_SUCK_YOU_DRY);
             self->step_s++;
 
         case SUCCUBUS_CHARGE_DEAL_DAMAGE:
@@ -660,7 +660,7 @@ void EntitySuccubus(Entity* self) {
             if (self->ext.succubus.unk87) {
                 PlaySfxPositional(NA_VO_SU_DELICIOUS);
             } else {
-                PlaySfxPositional(NA_VO_SU_LAUGH);
+                PlaySfxPositional(SFX_SUCCUBUS_LAUGH);
             }
             self->ext.succubus.unk87 = false;
         }
@@ -709,7 +709,7 @@ void EntitySuccubus(Entity* self) {
             self->ext.succubus.timer = 64;
             self->hitboxState = 0;
             multiple_count = 6;
-            PlaySfxPositional(NA_VO_SU_GRUNT_1);
+            PlaySfxPositional(SFX_SUCCUBUS_DUPLICATES);
             PlaySfxPositional(SFX_PSWORD_TWIRL);
             self->step_s++;
 
@@ -803,8 +803,8 @@ void EntitySuccubus(Entity* self) {
                 }
             }
             if ((self->pose == 5) && (self->poseTimer == 0)) {
-                PlaySfxPositional(NA_VO_SU_GRUNT_2);
-                PlaySfxPositional(NA_VO_SU_CRYSTAL_1);
+                PlaySfxPositional(SFX_SUCCUBUS_HOMING_ORB_ATTACK);
+                PlaySfxPositional(SFX_SUCCUBUS_HOMING_ORB);
                 PlaySfxPositional(SFX_FIRE_SHOT);
                 self->ext.succubus.unk85 = true;
             }
@@ -840,7 +840,7 @@ void EntitySuccubus(Entity* self) {
             if (AnimateEntity(D_80180748, self) == 0) {
                 self->ext.succubus.unk85 = true;
                 PlaySfxPositional(SFX_GUARD_TINK);
-                PlaySfxPositional(NA_VO_SU_GRUNT_3);
+                PlaySfxPositional(SFX_SUCCUBUS_WING_ATTACK);
                 self->ext.succubus.timer = 64;
                 SetSubStep(2);
             }
@@ -877,9 +877,9 @@ void EntitySuccubus(Entity* self) {
     case SUCCUBUS_GET_HIT:
         if (self->step_s == 0) {
             if (Random() % 2) {
-                PlaySfxPositional(NA_VO_SU_HURT_1);
+                PlaySfxPositional(SFX_SUCCUBUS_PAIN_A);
             } else {
-                PlaySfxPositional(NA_VO_SU_HURT_2);
+                PlaySfxPositional(SFX_SUCCUBUS_PAIN_B);
             }
 
             self->ext.succubus.timer = 32;
@@ -1110,8 +1110,8 @@ void EntitySuccubusClone(Entity* self) {
             }
         }
         if (self->pose == 5 && self->poseTimer == 0) {
-            PlaySfxPositional(NA_VO_SU_GRUNT_2);
-            PlaySfxPositional(NA_VO_SU_CRYSTAL_1);
+            PlaySfxPositional(SFX_SUCCUBUS_HOMING_ORB_ATTACK);
+            PlaySfxPositional(SFX_SUCCUBUS_HOMING_ORB);
             PlaySfxPositional(SFX_FIRE_SHOT);
             self->ext.succubus.unk85 = 1;
         }

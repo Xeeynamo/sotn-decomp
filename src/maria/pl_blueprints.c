@@ -1099,7 +1099,7 @@ void MarEntityApplyMariaPowerAnim(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        g_api.PlaySfx(0x881);
+        g_api.PlaySfx(SFX_MARIA_ANIMALS_APPEAR);
         self->ext.ricMariaPower.size = 0x100;
         prim = &g_PrimBuf[self->primIndex];
         prim->u0 = props->uBase;

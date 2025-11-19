@@ -80,7 +80,7 @@ mod test {
             "PlaySfx(SFX_SCIFI_BLAST);"
         );
         assert_eq!(
-            t.transform_line("PlaySfx(SFX_MEDUSA_PAIN_A);"),
+            t.transform_line("PlaySfx(0x801);"),
             "PlaySfx(SFX_MEDUSA_PAIN_A);"
         );
 

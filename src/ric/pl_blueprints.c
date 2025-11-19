@@ -1365,7 +1365,7 @@ void RicEntityApplyMariaPowerAnim(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        g_api.PlaySfx(0x881);
+        g_api.PlaySfx(SFX_MARIA_ANIMALS_APPEAR);
         self->ext.ricMariaPower.size = 0x100;
         prim = &g_PrimBuf[self->primIndex];
         prim->u0 = props->uBase;
@@ -1574,7 +1574,7 @@ void RicEntityMariaPowers(Entity* self) {
         if (params == 3) {
             self->flags |= FLAG_KEEP_ALIVE_OFFCAMERA;
         }
-        g_api.PlaySfx(0x881);
+        g_api.PlaySfx(SFX_MARIA_ANIMALS_APPEAR);
         self->ext.et_80162870.unk82 = 12;
         self->step++;
         break;
@@ -1662,16 +1662,16 @@ void RicEntityMaria(Entity* self) {
         break;
     case 1:
         if (self->pose == 0 && self->poseTimer == 1) {
-            g_api.PlaySfx(0x882);
+            g_api.PlaySfx(SFX_MARIA_FOOTSTEPS_A);
         }
         if (self->pose == 4 && self->poseTimer == 1) {
-            g_api.PlaySfx(0x883);
+            g_api.PlaySfx(SFX_MARIA_FOOTSTEPS_B);
         }
 
         self->posX.val += self->velocityX;
         if ((self->ext.ricMaria.boolDidSound == false) &&
             (self->posX.i.hi < 256)) {
-            g_api.PlaySfx(0x87D);
+            g_api.PlaySfx(SFX_MARIA_RICHTER);
             self->ext.ricMaria.boolDidSound++;
         }
         if (self->posX.i.hi < 0xE0) {
@@ -1683,7 +1683,7 @@ void RicEntityMaria(Entity* self) {
         break;
     case 2:
         if (self->pose == 16) {
-            g_api.PlaySfx(0x87E);
+            g_api.PlaySfx(SFX_MARIA_GRANT_HIM_YOUR_STRENGTH);
             self->ext.ricMaria.timer = 0x80;
             self->step++;
         }
