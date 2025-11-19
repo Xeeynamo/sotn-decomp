@@ -529,23 +529,33 @@ typedef struct {
 } DISPENV;                     /* size = 0x14 */
 
 typedef struct {
-    /* 0x00 */ O_TAG;
-    /* 0x04 */ u_long code[2];
-} DR_MODE; /* Drawing Mode, size = 0x0C */
+    O_TAG;
+    u_long code[2];
+} DR_MODE; // Drawing Mode
 
 typedef struct {
     O_TAG;
     u_long code[2];
-} DR_TWIN;
+} DR_TWIN; // Texture window
 
 typedef struct {
     O_TAG;
+#ifndef VERSION_PSP
     u_long code[2];
+#else
+    u_char r0, g0, b0, code;
+    RECT clip;
+#endif
 } DR_AREA; // Drawing Area
 
 typedef struct {
     O_TAG;
+#ifndef VERSION_PSP
     u_long code[2];
+#else
+    u_char r0, g0, b0, code;
+    short ofs[2];
+#endif
 } DR_OFFSET; // Drawing Offset
 
 typedef struct {
