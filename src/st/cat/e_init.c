@@ -23,8 +23,8 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void EntityLava(Entity* self);
-void func_us_801C589C(Entity* self);
-void func_us_801C5DF4(Entity* self);
+void EntityCavernBackgroundLossoth(Entity* self);
+void EntityCavernBackgroundDiscusLord(Entity* self);
 void EntityLavaEmbers(Entity* self);
 void EntityLavaGlow(Entity* self);
 void EntitySpikeRoomLightSwitch(Entity* self);
@@ -109,8 +109,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     EntityLava,
-    func_us_801C589C,
-    func_us_801C5DF4,
+    EntityCavernBackgroundLossoth,
+    EntityCavernBackgroundDiscusLord,
     EntityLavaEmbers,
     EntityLavaGlow,
     EntitySpikeRoomLightSwitch,

@@ -27,6 +27,8 @@ enum OVL_EXPORT(Palette) {
     PAL_HELLFIRE_BEAST_PRIMONE = 0x208,
     PAL_LAVA_TRANSPARENT = 0x209,
     PAL_LAVA_OPAQUE = 0x20A,
+    PAL_CAVERN_A = 0x214,
+    PAL_CAVERN_B = 0x215,
     PAL_HELLFIRE_BEAST_PRIMTWO = 0x230,
     PAL_HELLFIRE_BEAST_LIGHTNING = 0x24A,
     PAL_BREAKABLE = 0x256,
@@ -57,8 +59,8 @@ enum OVL_EXPORT(Entities) {
     E_EXPLOSION_VARIANTS,               // EntityExplosionVariants
     E_GREY_PUFF,                        // EntityGreyPuff
     E_LAVA,                             // EntityLava
-    E_UNK_17,                           // func_us_801C589C
-    E_UNK_18,                           // func_us_801C5DF4
+    E_CAVERN_BACKGROUND_LOSSOTH,        // EntityCavernBackgroundLossoth
+    E_CAVERN_BACKGROUND_DISCUS_LORD,    // EntityCavernBackgroundDiscusLord
     E_LAVA_EMBERS,                      // func_us_801C56A0
     E_UNK_1A,                           // func_us_801CA13C
     E_SPIKE_ROOM_LIGHT_SWITCH,          // EntitySpikeRoomLightSwitch
