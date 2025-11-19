@@ -3150,17 +3150,17 @@
 | 1.00 | true     | CutsceneSkip                        | asm/us/st/no3/matchings/cutscene/CutsceneSkip.s 
 | 1.00 | true     | CutsceneSkip                        | asm/us/st/top/matchings/cutscene/CutsceneSkip.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
-| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | CdReadCallback                      | asm/us/main/matchings/psxsdk/libcd/cdread/CdReadCallback.s 
 | 1.00 | true     | CdReadyCallback                     | asm/us/main/matchings/psxsdk/libcd/sys/CdReadyCallback.s 
 | 1.00 | true     | CdSetDebug                          | asm/us/main/matchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | asm/us/main/matchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | asm/us/main/matchings/psxsdk/libetc/vmode/SetVideoMode.s 
+-------------------------------------------------------------------------------
+| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
+| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_000/matchings/bat/AccumulateTowardZero.s 
 | 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_001/matchings/ghost/AccumulateTowardZero.s 
@@ -4077,6 +4077,9 @@
 | 1.00 | true     | func_800F548C                       | asm/us/dra/matchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | asm/us/st/sel/matchings/318CC/func_801B1EF4.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | asm/us/dra/matchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | asm/us/st/sel/matchings/318CC/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -4175,9 +4178,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | get_ce                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_cs.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
@@ -4377,6 +4377,9 @@
 | 1.00 | true     | Max3                                | asm/us/servant/tt_004/matchings/sword/Max3.s 
 | 1.00 | true     | Min3                                | asm/us/servant/tt_004/matchings/sword/Min3.s 
 -------------------------------------------------------------------------------
+| 0.98 | true     | EntityCavernBackgroundDiscusLord    | asm/us/st/cat/matchings/e_cavern_background/EntityCavernBackgroundDiscusLord.s 
+| 1.00 | true     | EntityCavernBackgroundLossoth       | asm/us/st/cat/matchings/e_cavern_background/EntityCavernBackgroundLossoth.s 
+-------------------------------------------------------------------------------
 | 0.96 | true     | DecreaseBrightness                  | asm/us/st/cat/matchings/e_spike_room/DecreaseBrightness.s 
 | 1.00 | true     | IncreaseBrightness                  | asm/us/st/cat/matchings/e_spike_room/IncreaseBrightness.s 
 -------------------------------------------------------------------------------
@@ -4406,9 +4409,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityGremlinFire                   | asm/us/st/cat/matchings/en_gremlin/EntityGremlinFire.s 
 | 1.00 | true     | EntityGremlinFire                   | asm/us/st/chi/matchings/en_gremlin/EntityGremlinFire.s 
--------------------------------------------------------------------------------
-| 1.00 | false    | func_us_801C589C                    | asm/us/st/cat/nonmatchings/unk_4589C/func_us_801C589C.s 
-| 0.98 | false    | func_us_801C5DF4                    | asm/us/st/cat/nonmatchings/unk_4589C/func_us_801C5DF4.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityUnkId1B                       | asm/us/st/cen/matchings/F890/EntityUnkId1B.s 
 | 1.00 | true     | func_us_801C26B8                    | asm/us/st/no0/matchings/e_elevator/func_us_801C26B8.s 
