@@ -18,23 +18,16 @@
 | dra   | func_psp_090ED9D8                        |        7 |          1 |        |       |     |
 | dra   | func_psp_090F1CE0                        |        7 |          1 |        |       |     |
 | main  | func_psp_08911B7C                        |        7 |          1 |        |       |     |
+| main  | _fini                                    |        7 |          1 |        |       |     |
+| main  | _init                                    |        7 |          1 |        |       |     |
 | main  | SetFarColor                              |        7 |          1 |        |       |     |
 | main  | SetFogNear                               |        7 |          1 |        |       |     |
 | main  | SsSetMono                                |        7 |          1 |        |       |     |
 | main  | SsSetStereo                              |        7 |          1 |        |       |     |
 | main  | _bu_init                                 |        7 |          1 |        |       |     |
-| main  | _fini                                    |        7 |          1 |        |       |     |
-| main  | _init                                    |        7 |          1 |        |       |     |
 | main  | gte_dpcs                                 |        7 |          1 |        |       |     |
 | main  | gte_stub                                 |        7 |          1 |        |       |     |
 | main  | func_psp_08937650                        |        7 |          1 |        |       |     |
-| main  | RotAverage3                              |        7 |          1 |        |       |     |
-| main  | SquareRoot0                              |        7 |          1 |        |       |     |
-| main  | func_psp_0892BFD0                        |        7 |          1 |        |       |     |
-| main  | func_psp_0892CF88                        |        7 |          1 |        |       |     |
-| main  | func_psp_0892D518                        |        7 |          1 |        |       |     |
-| main  | func_psp_0892EAFC                        |        7 |          1 |        |       |     |
-| main  | strFileLseek                             |        7 |          1 |        |       |     |
 | main  | _getpid                                  |        7 |          1 |        |       |     |
 | main  | _kill                                    |        7 |          1 |        |       |     |
 | main  | func_psp_08900580                        |        7 |          1 |        |       |     |
@@ -44,6 +37,13 @@
 | main  | func_psp_089005B0                        |        7 |          1 |        |       |     |
 | main  | func_psp_089005B8                        |        7 |          1 |        |       |     |
 | main  | func_psp_089005C0                        |        7 |          1 |        |       |     |
+| main  | RotAverage3                              |        7 |          1 |        |       |     |
+| main  | SquareRoot0                              |        7 |          1 |        |       |     |
+| main  | func_psp_0892BFD0                        |        7 |          1 |        |       |     |
+| main  | func_psp_0892CF88                        |        7 |          1 |        |       |     |
+| main  | func_psp_0892D518                        |        7 |          1 |        |       |     |
+| main  | func_psp_0892EAFC                        |        7 |          1 |        |       |     |
+| main  | strFileLseek                             |        7 |          1 |        |       |     |
 |       | unused_339C                              |        7 |          1 |        |       |     |
 |       | unused_33A4                              |        7 |          1 |        |       |     |
 |       | unused_33AC                              |        7 |          1 |        |       |     |
@@ -84,10 +84,14 @@
 | dra   | MemcardInit                              |        9 |          1 |        |       |     |
 | main  | func_psp_08910088                        |        9 |          1 |        |       |     |
 | main  | func_psp_08919560                        |        9 |          1 |        |       |     |
+| main  | SetDispMask                              |        9 |          1 |        |       |     |
+| main  | func_psp_08919CE4                        |        9 |          1 |        |       |     |
+| main  | func_psp_0891B528                        |        9 |          1 |        |       |     |
+| main  | func_psp_0891B6FC                        |        9 |          1 |        |       |     |
+| main  | func_psp_08920488                        |        9 |          1 |        |       |     |
 | main  | ChangeClearPAD                           |        9 |          1 |        |       |     |
 | main  | FntLoad                                  |        9 |          1 |        |       |     |
 | main  | PadInit                                  |        9 |          1 |        |       |     |
-| main  | SetDispMask                              |        9 |          1 |        |       |     |
 | main  | SetDumpFnt                               |        9 |          1 |        |       |     |
 | main  | SsSeqClose                               |        9 |          1 |        |       |     |
 | main  | SsSeqPlay                                |        9 |          1 |        |       |     |
@@ -96,10 +100,6 @@
 | main  | SsSetMVol                                |        9 |          1 |        |       |     |
 | main  | SsSetSerialAttr                          |        9 |          1 |        |       |     |
 | main  | SsUtSetReverbDepth                       |        9 |          1 |        |       |     |
-| main  | func_psp_08919CE4                        |        9 |          1 |        |       |     |
-| main  | func_psp_0891B528                        |        9 |          1 |        |       |     |
-| main  | func_psp_0891B6FC                        |        9 |          1 |        |       |     |
-| main  | func_psp_08920488                        |        9 |          1 |        |       |     |
 | main  | func_psp_089125F8                        |        9 |          1 |        |       |     |
 | main  | func_psp_0891273C                        |        9 |          1 |        |       |     |
 | main  | func_psp_0891274C                        |        9 |          1 |        |       |     |
@@ -229,9 +229,9 @@
 | main  | sceVfpuVector4ScaleXYZ                   |       13 |          1 |        |       |     |
 | maria | func_pspeu_092BDFC8                      |       13 |          1 |        |       |     |
 | ric   | func_pspeu_092C77B8                      |       13 |          1 |        |       |     |
+| main  | PadRead_PSP                              |       13 |          2 |        |       |     |
 | main  | GsInitVcount                             |       13 |          2 |        |       |     |
 | main  | InitCARD                                 |       13 |          2 |        |       |     |
-| main  | PadRead_PSP                              |       13 |          2 |        |       |     |
 | main  | func_psp_08934F04                        |       13 |          2 |        |       |     |
 | main  | func_psp_08934F24                        |       13 |          2 |        |       |     |
 | main  | func_psp_089375A0                        |       13 |          2 |        |       |     |
@@ -434,6 +434,7 @@
 | main  | sceGuMaterial                            |       16 |          2 |        |       |     |
 | main  | sceGuSetMatrix                           |       16 |          2 |        |       |     |
 | main  | gte_ldv01c                               |       16 |          3 |        |       |     |
+| main  | 2758C.rodata                             |       17 |          0 | Yes    |       |     |
 | dra   | GetStatBuffTimer                         |       17 |          1 |        |       |     |
 | dra   | func_psp_09102B48                        |       17 |          1 |        |       |     |
 | dra   | func_psp_09102BC0                        |       17 |          1 |        |       |     |
@@ -616,8 +617,8 @@
 | wrp   | EntityDummy                              |       20 |          2 |        |       |     |
 | wrp   | func_psp_092438A0                        |       20 |          2 |        |       |     |
 | dra   | func_psp_091119E0                        |       20 |          3 |        |       |     |
-| main  | CdDataCallback                           |       20 |          3 |        |       |     |
 | main  | func_psp_0891B538                        |       20 |          3 |        |       |     |
+| main  | CdDataCallback                           |       20 |          3 |        |       |     |
 | main  | func_psp_08917FCC                        |       20 |          3 |        |       |     |
 | main  | func_psp_0892A998                        |       20 |          3 |        |       |     |
 | no4   | func_pspeu_0925CB30                      |       20 |          4 |        |       |     |
@@ -685,6 +686,7 @@
 | main  | func_psp_08936E54                        |       21 |          3 |        |       |     |
 | sel   | func_psp_09237C38                        |       21 |          3 |        |       |     |
 | sel   | func_psp_09237C78                        |       21 |          3 |        |       |     |
+| main  | 1B0F0.rodata                             |       22 |          0 | Yes    |       |     |
 | cat   | e_spike_room_light_switch.rodata         |       22 |          0 | Yes    |       |     |
 | chi   | en_breakable_wall.rodata                 |       22 |          0 | Yes    |       |     |
 | main  | sceGuTexOffset                           |       22 |          1 |        |       |     |
@@ -859,15 +861,15 @@
 | dra   | 4AEA4.rodata                             |       26 |          0 | Yes    |       |     |
 | dai   | e_tower_exit.rodata                      |       26 |          0 | Yes    |       |     |
 | st0   | 2A218.rodata                             |       26 |          0 | Yes    |       |     |
-| main  | func_psp_08914FA8                        |       26 |          1 |        |       |     |
 | main  | func_psp_0891FD74                        |       26 |          1 |        |       |     |
+| main  | func_psp_08914FA8                        |       26 |          1 |        |       |     |
 | main  | func_psp_089356E8                        |       26 |          1 |        |       |     |
 | dra   | func_psp_091032C8                        |       26 |          2 |        |       |     |
 | dra   | SetSpeedX                                |       26 |          2 |        |       |     |
 | dra   | func_psp_090FA740                        |       26 |          2 |        |       |     |
 | main  | func_psp_089178A8                        |       26 |          2 |        |       |     |
-| main  | SpuGetAllKeysStatus                      |       26 |          2 |        |       |     |
 | main  | func_psp_0891FD20                        |       26 |          2 |        |       |     |
+| main  | SpuGetAllKeysStatus                      |       26 |          2 |        |       |     |
 | main  | srand                                    |       26 |          2 |        |       |     |
 | maria | func_pspeu_092B3630                      |       26 |          2 |        |       |     |
 | ric   | func_pspeu_092B1038                      |       26 |          2 |        |       |     |
@@ -1139,7 +1141,6 @@
 | main  | sceWaveAudioWriteBlocking                |       32 |          5 |        |       |     |
 | main  | func_psp_0892DF08                        |       32 |          5 |        |       |     |
 | main  | func_psp_0890F374                        |       32 |          7 |        |       |     |
-| main  | 1B0F0.rodata                             |       33 |          0 | Yes    |       |     |
 | main  | func_psp_0891214C                        |       33 |          1 |        |       |     |
 | main  | SetColorMatrix                           |       33 |          1 |        |       |     |
 | main  | SetLightMatrix                           |       33 |          1 |        |       |     |
