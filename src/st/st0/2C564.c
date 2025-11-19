@@ -454,15 +454,15 @@ void EntityDracula(Entity* self) {
     }
 
     if (self->hitFlags == 1) {
-        g_api.PlaySfx(SFX_DRACULA_PAIN_D);
+        g_api.PlaySfx(SFX_DRACULA_PAIN_A);
     }
 
     if (self->hitFlags == 2) {
-        g_api.PlaySfx(SFX_DRACULA_PAIN_E);
+        g_api.PlaySfx(SFX_DRACULA_PAIN_B);
     }
 
     if (self->hitFlags == 3) {
-        g_api.PlaySfx(SFX_DRACULA_PAIN_F);
+        g_api.PlaySfx(SFX_DRACULA_PAIN_C);
     }
 
     switch (self->step) {
@@ -617,9 +617,9 @@ void EntityDracula(Entity* self) {
                 entity->pose = 0;
                 SetSubStep(1);
 #ifdef VERSION_PSP
-                g_api.PlaySfx(SFX_PSP_DRACULA_PAIN_A);
+                g_api.PlaySfx(SFX_PSP_DRACULA_FIREBALL_ATTACK);
 #else
-                g_api.PlaySfx(SFX_DRACULA_PAIN_A);
+                g_api.PlaySfx(SFX_DRACULA_FIREBALL_ATTACK);
 #endif
             }
             break;
