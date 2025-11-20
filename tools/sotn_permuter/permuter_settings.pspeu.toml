@@ -1,6 +1,6 @@
 compiler_type = "gcc"
 compiler_command_old = "bin/wibo bin/mwccpsp.exe -gccinc -Iinclude -D_internal_version_pspeu -Op -c -lang c -sdatathreshold 0 -char unsigned"
-compiler_command = "python3 tools/mwccgap/mwccgap.py $INPUT $OUTPUT --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path bin/allegrex-as --asm-dir-prefix asm/pspeu --macro-inc-path include/macro.inc -gccinc -Iinclude -D_internal_version_pspeu -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck -Op -opt nointrinsics"
+compiler_command = "python3 tools/mwccgap/mwccgap.py $INPUT $OUTPUT --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path bin/allegrex-as --asm-dir-prefix asm/pspeu --macro-inc-path include/macro.inc -gccinc -Iinclude -Iinclude/pspsdk -D_internal_version_pspeu -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck -Op -opt nointrinsics"
 assembler_command = "bin/allegrex-as -EL -I include/ -G0 -march=allegrex -mabi=eabi"
 asm_prelude_file = "include/main.inc"
 
