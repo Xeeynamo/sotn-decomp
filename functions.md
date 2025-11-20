@@ -636,7 +636,7 @@
 | ric   | func_pspeu_092B0E60                      |       21 |          1 |        |       |     |
 | cat   | func_pspeu_092447E8                      |       21 |          1 |        |       |     |
 | cat   | func_pspeu_09252EB8                      |       21 |          1 |        |       |     |
-| cat   | Random                                   |       21 |          1 |        |       |     |
+| cat   | func_pspeu_0923D1A8                      |       21 |          1 |        |       |     |
 | chi   | func_psp_09240110                        |       21 |          1 |        |       |     |
 | chi   | Random                                   |       21 |          1 |        |       |     |
 | chi   | func_psp_09247F98                        |       21 |          1 |        |       |     |
@@ -797,7 +797,7 @@
 | main  | sceGuTexMapMode                          |       25 |          1 |        |       |     |
 | maria | func_pspeu_092ADD70                      |       25 |          1 |        |       |     |
 | ric   | func_pspeu_092A62D8                      |       25 |          1 |        |       |     |
-| cat   | MoveEntity                               |       25 |          1 |        |       |     |
+| cat   | func_pspeu_09252420                      |       25 |          1 |        |       |     |
 | cat   | func_pspeu_09252AB0                      |       25 |          1 |        |       |     |
 | cat   | func_pspeu_09252E68                      |       25 |          1 |        |       |     |
 | chi   | MoveEntity                               |       25 |          1 |        |       |     |
@@ -1067,7 +1067,7 @@
 | main  | func_psp_0891A99C                        |       31 |          2 |        |       |     |
 | main  | func_psp_0892E914                        |       31 |          2 |        |       |     |
 | main  | func_psp_08936D30                        |       31 |          2 |        |       |     |
-| cat   | UnkPolyFunc2                             |       31 |          2 |        |       |     |
+| cat   | func_pspeu_09254240                      |       31 |          2 |        |       |     |
 | chi   | func_psp_09248A98                        |       31 |          2 |        |       |     |
 | dai   | func_pspeu_0924F140                      |       31 |          2 |        |       |     |
 | lib   | func_psp_09250FD8                        |       31 |          2 |        |       |     |
@@ -1304,7 +1304,7 @@
 | ric   | func_pspeu_092AF600                      |       37 |          5 |        |       |     |
 | dra   | func_psp_091162B8                        |       37 |          6 |        |       |     |
 | main  | func_psp_089195C0                        |       37 |          6 |        |       |     |
-| cat   | AllocEntity                              |       37 |          6 |        |       |     |
+| cat   | func_pspeu_09252A40                      |       37 |          6 |        |       |     |
 | chi   | AllocEntity                              |       37 |          6 |        |       |     |
 | dai   | func_pspeu_0924DB08                      |       37 |          6 |        |       |     |
 | lib   | func_psp_0924F548                        |       37 |          6 |        |       |     |
@@ -1353,8 +1353,8 @@
 | main  | func_psp_0890F45C                        |       38 |          7 |        |       |     |
 | lib   | func_us_801B60C8                         |       38 |          7 |        |       |     |
 | main  | func_psp_0892FCC8                        |       39 |          1 |        |       |     |
-| cat   | CreateEntityFromEntity                   |       39 |          2 |        |       |     |
 | cat   | func_pspeu_09238598                      |       39 |          2 |        |       |     |
+| cat   | func_pspeu_09238620                      |       39 |          2 |        |       |     |
 | cat   | func_pspeu_09252BC0                      |       39 |          2 |        |       |     |
 | chi   | CreateEntityFromCurrentEntity            |       39 |          2 |        |       |     |
 | chi   | CreateEntityFromEntity                   |       39 |          2 |        |       |     |
@@ -3166,7 +3166,7 @@
 | np3   | func_pspeu_0924B608                      |      184 |         20 |        |       |     |
 | nz1   | func_pspeu_092422A8                      |      184 |         20 |        |       |     |
 | wrp   | func_psp_0923CD80                        |      184 |         20 |        |       |     |
-| cat   | func_us_801B951C                         |      185 |         15 |        |       |     |
+| cat   | func_pspeu_0925D168                      |      185 |         15 |        |       |     |
 | dra   | func_psp_09139428                        |      185 |         25 |        |       |     |
 | no4   | func_pspeu_0923D180                      |      185 |         27 |        |       |     |
 | no4   | func_pspeu_09248D90                      |      185 |         27 |        |       |     |
@@ -3346,7 +3346,7 @@
 | ric   | func_80162604                            |      238 |         17 |        |       |     |
 | no4   | func_pspeu_0923D9E0                      |      238 |         26 |        |       |     |
 | no4   | EntityBreakable                          |      238 |         35 |        |       |     |
-| cat   | func_us_801B9A74                         |      239 |         28 |        |       |     |
+| cat   | func_pspeu_0925D8C8                      |      239 |         28 |        |       |     |
 | dra   | func_psp_0913E8B0                        |      240 |         15 |        |       |     |
 | st0   | EntitySecretButton                       |      240 |         36 |        |       |     |
 | nz1   | EntityKarasumanOrbAttack                 |      241 |         21 | Yes    |       |     |
@@ -3574,7 +3574,7 @@
 | no4   | func_pspeu_0923EED0                      |      334 |         32 |        |       |     |
 | dra   | func_psp_09113268                        |      335 |         45 | Yes    |       |     |
 | cat   | func_us_801B907C                         |      337 |         29 |        |       |     |
-| cat   | UnkPrimHelper                            |      338 |         36 |        |       |     |
+| cat   | func_pspeu_09253B30                      |      338 |         36 |        |       |     |
 | chi   | func_psp_09248440                        |      338 |         36 |        |       |     |
 | dai   | func_pspeu_0924EB38                      |      338 |         36 |        |       |     |
 | lib   | func_psp_09250560                        |      338 |         36 |        |       |     |
