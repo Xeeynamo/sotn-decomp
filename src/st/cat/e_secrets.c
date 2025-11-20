@@ -1,22 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "cat.h"
 
+// prim { u0/2, v2/3 }
 static u8 D_us_80181518[][2] = {{0, 96}, {32, 96}, {64, 96}, {0, 16}};
-static Point32 D_us_80181520[] = {
-    {.x = 0x2000, .y = 0},
-    {.x = 0xA000, .y = -0x12000},
-    {.x = 0x6000, .y = -0x20000},
-    {.x = 0xE000, .y = -0x8000},
+static Point32 breakable_wall_particle_velocity[] = {
+    {.x = FIX(0.125), .y = FIX(0.0)},
+    {.x = FIX(0.625), .y = FIX(-1.125)},
+    {.x = FIX(0.375), .y = FIX(-2.0)},
+    {.x = FIX(0.875), .y = FIX(-0.5)},
 };
 static Point32 D_us_80181540[] = {
-    {.x = 0x2000, .y = -0x2000},  {.x = 0x4000, .y = -0x8000},
-    {.x = 0x6000, .y = -0x10000}, {.x = 0x8000, .y = -0x2000},
-    {.x = -0x2000, .y = 0x2000},  {.x = -0x4000, .y = -0x10000},
-    {.x = 0xC000, .y = -0x18000}, {.x = 0, .y = 0},
+    {.x = FIX(0.125), .y = FIX(-0.125)}, {.x = FIX(0.25), .y = FIX(-0.5)},
+    {.x = FIX(0.375), .y = FIX(-1.0)},   {.x = FIX(0.5), .y = FIX(-0.125)},
+    {.x = FIX(-0.125), .y = FIX(0.125)}, {.x = FIX(-0.25), .y = FIX(-1.0)},
+    {.x = FIX(0.75), .y = FIX(-1.5)},    {.x = FIX(0.0), .y = FIX(0.0)},
 };
-static u16 D_us_80181580[] = {
+static u16 tile_positions_left_wall[] = {
     0x00E2, 0x00E3, 0x0102, 0x0103, 0x0122, 0x0123, 0x00C2, 0x00C3};
-static u16 D_us_80181590[][6] = {
+static u16 left_secret_tiles[][6] = {
     {0x0023, 0x0024, 0x0000, 0x0000, 0x0322, 0x038F},
     {0x0010, 0x0011, 0x001D, 0x001D, 0x0021, 0x0022},
     {0x0010, 0x0011, 0x001D, 0x001D, 0x0021, 0x0022},
@@ -26,16 +27,17 @@ static u16 D_us_80181590[][6] = {
     {0x0010, 0x0011, 0x0000, 0x0000, 0x0322, 0x038F}};
 
 #ifdef VERSION_PSP
-extern s32 E_ID(UNK_26);
-extern s32 E_ID(UNK_27);
-extern s32 E_ID(UNK_28);
+extern s32 E_ID(BREAKABLE_WALL_SEGMENT);
+extern s32 E_ID(BREAKABLE_WALL_PARTICLES);
+extern s32 E_ID(BREAKABLE_WALL_DEBRIS);
 #endif
 
 extern EInit g_EInitEnvironment;
 extern EInit g_EInitParticle;
 extern EInit D_us_801811E8;
 
-void func_us_801B907C(Entity* self) {
+// Larger bricks that drop after breaking wall
+void EntityBreakableWallDebris(Entity* self) {
     Collider collider;
 
     Primitive* prim;
@@ -54,10 +56,10 @@ void func_us_801B907C(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.breakableCat.prim = prim;
+            self->ext.segmentedBreakableWall.prim = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0xB;
-            prim->clut = 0x5C;
+            prim->clut = PAL_BREAKABLE_WALL_DEBRIS_MAIN;
             prim->u0 = prim->u2 = D_us_80181518[self->params][0];
             prim->u1 = prim->u3 = prim->u0 + 0xF;
             prim->v2 = prim->v3 = D_us_80181518[self->params][1];
@@ -71,7 +73,8 @@ void func_us_801B907C(Entity* self) {
             prim->drawMode = DRAW_DEFAULT;
             prim = prim->next;
             prim = prim->next;
-            prim->clut = 0x15E;
+
+            prim->clut = PAL_BREAKABLE_WALL_DEBRIS_HIGHLIGHT;
             prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
         } else {
             DestroyEntity(self);
@@ -82,7 +85,7 @@ void func_us_801B907C(Entity* self) {
     case 1:
         MoveEntity();
         self->velocityY += FIX(0.125);
-        prim = self->ext.breakableCat.prim;
+        prim = self->ext.segmentedBreakableWall.prim;
         posX = prim->next->x1 = self->posX.i.hi;
         posY = prim->next->y0 = self->posY.i.hi;
         UnkPrimHelper(prim);
@@ -94,7 +97,7 @@ void func_us_801B907C(Entity* self) {
         *prim = *prevPrim;
         prim->next = nextPrim;
 
-        prim->clut = 0x15E;
+        prim->clut = PAL_BREAKABLE_WALL_DEBRIS_HIGHLIGHT;
         prim->y0 -= 2;
         prim->y1 -= 2;
         prim->y2 -= 2;
@@ -102,6 +105,7 @@ void func_us_801B907C(Entity* self) {
         prim->priority -= 1;
         prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
 
+        // After hitting the ground, the bricks do a slight bounce
         posY += 2;
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects) {
@@ -112,7 +116,7 @@ void func_us_801B907C(Entity* self) {
     case 2:
         MoveEntity();
         self->velocityY += FIX(0.125);
-        prim = self->ext.breakableCat.prim;
+        prim = self->ext.segmentedBreakableWall.prim;
         posX = prim->next->x1 = self->posX.i.hi;
         posY = prim->next->y0 = self->posY.i.hi;
         UnkPrimHelper(prim);
@@ -131,7 +135,7 @@ void func_us_801B907C(Entity* self) {
         *prim = *prevPrim;
         prim->next = nextPrim;
 
-        prim->clut = 0x15E;
+        prim->clut = PAL_BREAKABLE_WALL_DEBRIS_HIGHLIGHT;
         prim->y0 -= 2;
         prim->y1 -= 2;
         prim->y2 -= 2;
@@ -139,6 +143,7 @@ void func_us_801B907C(Entity* self) {
         prim->priority -= 1;
         prim->drawMode = DRAW_TPAGE | DRAW_TRANSP;
 
+        // After hitting the ground once more crumble into dust
         g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects) {
             newEntity =
@@ -153,7 +158,8 @@ void func_us_801B907C(Entity* self) {
     }
 }
 
-void func_us_801B951C(Entity* self) {
+// Particles that fly when wall destroyed
+void EntityBreakableWallParticles(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     s32 i;
@@ -165,14 +171,14 @@ void func_us_801B951C(Entity* self) {
         InitializeEntity(g_EInitParticle);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-        self->velocityX = D_us_80181520[self->params].x;
-        self->velocityY = D_us_80181520[self->params].y;
-        primIndex = g_api.func_800EDB58(0x11, 8);
+        self->velocityX = breakable_wall_particle_velocity[self->params].x;
+        self->velocityY = breakable_wall_particle_velocity[self->params].y;
+        primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 8);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.breakableCat.prim = prim;
+            self->ext.segmentedBreakableWall.prim = prim;
 
             for (i = 0; prim != NULL; i++, prim = prim->next) {
                 prim->u0 = 1;
@@ -182,6 +188,7 @@ void func_us_801B951C(Entity* self) {
                 prim->r0 = 0x40;
                 prim->g0 = 0x90;
                 prim->b0 = 0x70;
+                // Seems likely these are velocity values?
                 LOW(prim->r2) = D_us_80181540[i].x;
                 LOW(prim->x2) = D_us_80181540[i].y;
                 LOW(prim->r1) = 0;
@@ -200,20 +207,21 @@ void func_us_801B951C(Entity* self) {
         self->velocityY += FIX(0.0625);
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
-        prim = self->ext.breakableCat.prim;
+        prim = self->ext.segmentedBreakableWall.prim;
         while (prim != NULL) {
             LOW(prim->r1) += LOW(prim->r2);
             LOW(prim->x1) += LOW(prim->x2);
             prim->x0 = posX + LOH(prim->b1);
             prim->y0 = posY + prim->y1;
-            LOW(prim->x2) += 0x1000;
+            LOW(prim->x2) += FIX(0.0625);
             prim = prim->next;
         }
         break;
     }
 }
 
-void func_us_801B972C(Entity* self) {
+// Secret wall with the left arrow sign that leads to Icebrand
+void EntitySecretWallLeft(Entity* self) {
     Entity* entity;
     s32 i;
     s32 tilePos;
@@ -231,27 +239,28 @@ void func_us_801B972C(Entity* self) {
         }
 
         entity = self + 1;
-        CreateEntityFromEntity(E_ID(UNK_26), self, entity);
+        CreateEntityFromEntity(E_ID(BREAKABLE_WALL_SEGMENT), self, entity);
         entity->posX.i.hi += 0x10;
         entity->posY.i.hi += 0x20;
         entity->params = 1;
 
         entity = self + 2;
-        CreateEntityFromEntity(E_ID(UNK_26), self, entity);
+        CreateEntityFromEntity(E_ID(BREAKABLE_WALL_SEGMENT), self, entity);
         entity->posX.i.hi += 0x10;
         entity->posY.i.hi += 0x40;
         entity->params = 2;
         // fallthrough
     case 1:
-        if (self->ext.breakableCat.unk82 > 2) {
+        if (self->ext.segmentedBreakableWall.damageTaken > 2) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-            self->ext.breakableCat.unk82 = 0;
+            self->ext.segmentedBreakableWall.damageTaken = 0;
 
             for (i = 0; i < 4; i++) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_27), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(BREAKABLE_WALL_PARTICLES), self, entity);
                     entity->posX.i.hi += 0x20;
                     entity->posY.i.hi += 0x20;
                     entity->params = i;
@@ -263,24 +272,27 @@ void func_us_801B972C(Entity* self) {
             }
         }
 
-        if (self->ext.breakableCat.unk84) {
+        if (self->ext.segmentedBreakableWall.pieceBroken) {
             self->step_s = 0;
-            self->step = self->ext.breakableCat.unk84 + 1;
-            if (self->ext.breakableCat.unk84 == 3) {
+            self->step = self->ext.segmentedBreakableWall.pieceBroken + 1;
+            // If both pieces are broken
+            if (self->ext.segmentedBreakableWall.pieceBroken == 3) {
                 self->step = 2;
             }
         }
         break;
     case 2:
+        // Top part broken (or both)
         self->animCurFrame = 8;
-        if (self->ext.breakableCat.unk84 & 2) {
+        if (self->ext.segmentedBreakableWall.pieceBroken & 2) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             self->step = 4;
         }
         break;
     case 3:
+        // Bottom part broken
         self->animCurFrame = 9;
-        if (self->ext.breakableCat.unk84 & 1) {
+        if (self->ext.segmentedBreakableWall.pieceBroken & 1) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
             self->step = 4;
         }
@@ -299,12 +311,12 @@ void func_us_801B972C(Entity* self) {
     }
 
     for (i = 0; i < 6; i++) {
-        tilePos = D_us_80181580[i];
-        g_Tilemap.fg[tilePos] = D_us_80181590[animCurFrame][i];
+        tilePos = tile_positions_left_wall[i];
+        g_Tilemap.fg[tilePos] = left_secret_tiles[animCurFrame][i];
     }
 }
 
-void func_us_801B9A74(Entity* self) {
+void EntityBreakableWallSegment(Entity* self) {
     Entity* entity;
     s32 i;
 
@@ -315,18 +327,19 @@ void func_us_801B9A74(Entity* self) {
         self->hitPoints = 8;
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0xC;
-        self->ext.breakableCat.unk80 = self->hitPoints;
+        self->ext.segmentedBreakableWall.hitPoints = self->hitPoints;
         self->hitboxOffY = -0xC;
         break;
     case 1:
-        if (self->hitPoints ^ self->ext.breakableCat.unk80) {
-            (self - self->params)->ext.breakableCat.unk82 +=
-                (self->ext.breakableCat.unk80 - self->hitPoints);
-            self->ext.breakableCat.unk80 = self->hitPoints;
+        if (self->hitPoints ^ self->ext.segmentedBreakableWall.hitPoints) {
+            (self - self->params)->ext.segmentedBreakableWall.damageTaken +=
+                (self->ext.segmentedBreakableWall.hitPoints - self->hitPoints);
+            self->ext.segmentedBreakableWall.hitPoints = self->hitPoints;
         }
 
         if (self->flags & FLAG_DEAD) {
-            (self - self->params)->ext.breakableCat.unk84 |= self->params;
+            (self - self->params)->ext.segmentedBreakableWall.pieceBroken |=
+                self->params;
             self->step++;
         }
         break;
@@ -338,7 +351,7 @@ void func_us_801B9A74(Entity* self) {
             if (entity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->posY.i.hi -= 8;
-                entity->params = 0x13;
+                entity->params = EXPLOSION_UNK_19;
             }
 
             for (i = 0; i < 3; i++) {
@@ -355,7 +368,8 @@ void func_us_801B9A74(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_28), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(BREAKABLE_WALL_DEBRIS), self, entity);
                     entity->posX.i.hi += (i * 8) - 0x10 + (Random() & 3);
                     entity->posY.i.hi -= (Random() & 7);
                     if (self->params == 2) {
@@ -366,8 +380,6 @@ void func_us_801B9A74(Entity* self) {
             }
             self->step_s++;
             break;
-        default:
-            break;
         }
         break;
     }
@@ -375,17 +387,17 @@ void func_us_801B9A74(Entity* self) {
 
 // nb. these must be defined below the first usage of pad2_anim_debug.h,
 // which contains a string that PSP places in the data segment.
-static u16 D_us_801815E4[] = {0x0071, 0x0081, 0x0091, 0x0000};
-static u16 D_us_801815EC[] = {0x0151, 0x0181, 0x01B1, 0x0000};
-static u16 D_us_801815F4[][3] = {
+static u16 tile_positions_circlet_wall[] = {0x0071, 0x0081, 0x0091, 0x0000};
+static u16 tile_positions_spike_breaker[] = {0x0151, 0x0181, 0x01B1, 0x0000};
+static u16 secret_wall_tiles[][3] = {
     {0x0026, 0x0027, 0x0028}, {0x0012, 0x0013, 0x0014},
     {0x0012, 0x0013, 0x0014}, {0x0012, 0x0013, 0x0014},
     {0x0012, 0x0013, 0x0014}, {0x0026, 0x0027, 0x0014},
     {0x0012, 0x0027, 0x0028}};
 
-// params = 0: right secret wall
+// params = 0: secret wall containing the Cat's Eye Circlet
 // params != 0: breakable wall behind Spike Breaker armor
-void func_us_801B9D1C(Entity* self) {
+void EntitySecretWall(Entity* self) {
     Entity* entity;
     s32 i;
     s32 tilePos;
@@ -414,27 +426,28 @@ void func_us_801B9D1C(Entity* self) {
         }
 
         entity = self + 1;
-        CreateEntityFromEntity(E_ID(UNK_26), self, entity);
+        CreateEntityFromEntity(E_ID(BREAKABLE_WALL_SEGMENT), self, entity);
         entity->posX.i.hi += 4;
         entity->posY.i.hi += 0x10;
         entity->params = 1;
 
         entity = self + 2;
-        CreateEntityFromEntity(E_ID(UNK_26), self, entity);
+        CreateEntityFromEntity(E_ID(BREAKABLE_WALL_SEGMENT), self, entity);
         entity->posX.i.hi += 4;
         entity->posY.i.hi += 0x30;
         entity->params = 2;
         // fallthrough
     case 1:
-        if (self->ext.breakableCat.unk82 > 2) {
+        if (self->ext.segmentedBreakableWall.damageTaken > 2) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-            self->ext.breakableCat.unk82 = 0;
+            self->ext.segmentedBreakableWall.damageTaken = 0;
 
             for (i = 0; i < 4; i++) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(UNK_27), self, entity);
+                    CreateEntityFromEntity(
+                        E_ID(BREAKABLE_WALL_PARTICLES), self, entity);
                     entity->posX.i.hi += 8;
                     entity->posY.i.hi += 0x20;
                     entity->params = i;
@@ -446,23 +459,26 @@ void func_us_801B9D1C(Entity* self) {
             }
         }
 
-        if (self->ext.breakableCat.unk84) {
+        if (self->ext.segmentedBreakableWall.pieceBroken) {
             self->step_s = 0;
-            self->step = self->ext.breakableCat.unk84 + 1;
-            if (self->ext.breakableCat.unk84 == 3) {
+            self->step = self->ext.segmentedBreakableWall.pieceBroken + 1;
+            // If both pieces are broken
+            if (self->ext.segmentedBreakableWall.pieceBroken == 3) {
                 self->step = 2;
             }
         }
         break;
     case 2:
+        // Top part broken (or both)
         self->animCurFrame = 0xE;
-        if (self->ext.breakableCat.unk84 & 2) {
+        if (self->ext.segmentedBreakableWall.pieceBroken & 2) {
             self->step = 4;
         }
         break;
     case 3:
+        // Bottom part broken
         self->animCurFrame = 0xF;
-        if (self->ext.breakableCat.unk84 & 1) {
+        if (self->ext.segmentedBreakableWall.pieceBroken & 1) {
             self->step = 4;
         }
         break;
@@ -504,10 +520,10 @@ void func_us_801B9D1C(Entity* self) {
     }
 
     for (i = 0; i < 3; i++) {
-        tilePos = D_us_801815E4[i];
+        tilePos = tile_positions_circlet_wall[i];
         if (self->params) {
-            tilePos = D_us_801815EC[i];
+            tilePos = tile_positions_spike_breaker[i];
         }
-        g_Tilemap.fg[tilePos] = D_us_801815F4[animCurFrame][i];
+        g_Tilemap.fg[tilePos] = secret_wall_tiles[animCurFrame][i];
     }
 }
