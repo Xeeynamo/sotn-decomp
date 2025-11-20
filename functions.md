@@ -2925,6 +2925,7 @@
 | no3   | EntityMermanFireball                     |      133 |         17 |        |       |     |
 | np3   | EntityMermanFireball                     |      133 |         17 |        |       |     |
 | st0   | EntityDraculaMegaFireball                |      133 |         18 |        |       |     |
+| main  | 3DA1C.rodata                             |      134 |          0 |        |       |     |
 | main  | _reent_init_ptr                          |      134 |          4 |        |       |     |
 | no4   | func_pspeu_09256138                      |      134 |          9 |        |       |     |
 | dai   | func_pspeu_09252F48                      |      134 |         10 |        |       |     |
@@ -3495,6 +3496,7 @@
 | nz1   | EntityPhantomSkull                       |      297 |         46 |        |       |     |
 | dra   | func_psp_090FA228                        |      298 |         60 |        |       |     |
 | no4   | func_pspeu_0923EA80                      |      300 |         26 |        |       |     |
+| main  | 3D8B8.rodata                             |      302 |          0 |        |       |     |
 | no3   | EntityMermanRockLeftSide                 |      303 |         33 |        |       |     |
 | np3   | EntityMermanRockLeftSide                 |      303 |         33 |        |       |     |
 | dra   | func_psp_09144280                        |      303 |         47 |        |       |     |
@@ -3675,6 +3677,7 @@
 | no4   | EntitySkeletonApeBarrel                  |      395 |         63 |        |       |     |
 | main  | func_psp_089377FC                        |      396 |         33 |        |       |     |
 | lib   | func_psp_09257100                        |      396 |         35 |        |       |     |
+| main  | 3DA9C.rodata                             |      398 |          0 |        |       |     |
 | no4   | func_pspeu_09243478                      |      399 |         56 | Yes    |       |     |
 | main  | func_psp_08922C14                        |      405 |         36 |        |       |     |
 | main  | func_psp_0891881C                        |      405 |         51 |        |       |     |
@@ -4140,7 +4143,6 @@
 | no4   | func_pspeu_09239B00                      |     1639 |        210 | Yes    |       |     |
 | np3   | EntityMerman2                            |     1649 |        195 | Yes    |       |     |
 | no3   | EntityMerman2                            |     1668 |        195 | Yes    |       |     |
-| main  | 3D8B8.rodata                             |     1687 |          0 |        |       |     |
 | no4   | NO4_EntityCutscene                       |     1731 |        172 | Yes    |       |     |
 | st0   | EntityDraculaFinalForm                   |     1733 |        251 | Yes    |       |     |
 | dra   | EntityStopWatch                          |     1738 |        127 | Yes    |       |     |
