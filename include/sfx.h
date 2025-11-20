@@ -260,23 +260,6 @@ enum {
 // Unknown SFX related to the priest
 #define SFX_UNK_4E5 0x4E5
 
-// STAGE DRE
-#define NA_VO_SU_LAUGH 0x86E
-// Blank, may be a leftover from the Jap version.
-#define NA_VO_SU_BLANK 0x86F
-#define NA_VO_SU_GRUNT_1 0x870
-#define NA_VO_SU_GRUNT_2 0x872
-#define NA_VO_SU_GRUNT_3 0x874
-#define NA_VO_SU_HURT_1 0x879
-#define NA_VO_SU_HURT_2 0x87A
-#define NA_VO_SU_CRYSTAL_1 0x87C
-#define NA_VO_SU_SUCK_YOU_DRY 0x876
-#define NA_VO_SU_NO_SCREAM 0x87B
-#define NA_VO_SU_DELICIOUS 0x8D1
-
-// UNUSED SOUNDS
-#define NA_VO_MAR_AIM_HEAD 0x87F
-
 // The VAB IDs appear in large chunks so all sounds proceeding
 // a vabid label comment will belong in that VAB group unless noted.
 //
@@ -974,31 +957,79 @@ enum Sfx {
     /* 0x850 */ SFX_DRACULA_LAUGH_B,
     /* 0x851 */ SFX_UNUSED_DRACULA_ATTACK_A,
     /* 0x852 */ SFX_UNUSED_DRACULA_ATTACK_B,
-    /* 0x853 */ SFX_DRACULA_PAIN_A,
-    /* 0x854 */ SFX_DRACULA_PAIN_B,
+    /* 0x853 */ SFX_DRACULA_FIREBALL_ATTACK,
+    /* 0x854 */ SFX_DRACULA_SQUISH_GRUNT, // RBO6 only
     /* 0x855 */ SFX_DRACULA_HERE_IS_TRUE_POWER,
     /* 0x856 */ SFX_UNK_ST0_856,
     /* 0x857 */ SFX_DRACULA_GRANT_ME_POWER,
     /* 0x858 */ SFX_DRACULA_PLAYTIME_IS_OVER,
-    /* 0x859 */ SFX_DRACULA_PAIN_C,
-    /* 0x85A */ SFX_PSP_DRACULA_PAIN_A, // unused in PSX
-    /* 0x85B */ SFX_DRACULA_PAIN_D,
-    /* 0x85C */ SFX_DRACULA_PAIN_E,
-    /* 0x85D */ SFX_DRACULA_PAIN_F,
-    /* 0x85E */ SFX_UNUSED_DRACULA_PAIN_G,
-    /* 0x85F */ SFX_UNUSED_DRACULA_PAIN_H,
-    /* 0x860 */ SFX_UNUSED_DRACULA_PAIN_I,
-    /* 0x861 */ SFX_UNUSED_DRACULA_PAIN_J,
+    /* 0x859 */ SFX_DRACULA_MONSTER_MAGIC_ATTACK, // RBO6 only
+    /* 0x85A */ SFX_PSP_DRACULA_FIREBALL_ATTACK,  // unused in PSX
+    /* 0x85B */ SFX_DRACULA_PAIN_A,
+    /* 0x85C */ SFX_DRACULA_PAIN_B,
+    /* 0x85D */ SFX_DRACULA_PAIN_C,
+    /* 0x85E */ SFX_UNUSED_DRACULA_PAIN_A,
+    /* 0x85F */ SFX_UNUSED_DRACULA_PAIN_B,
+    /* 0x860 */ SFX_UNUSED_DRACULA_PAIN_C,
+    /* 0x861 */ SFX_UNUSED_DRACULA_PAIN_D,
     /* 0x862 */ SFX_UNUSED_862,
     /* 0x863 */ SFX_UNUSED_863,
     /* 0x864 */ SFX_UNUSED_864,
     /* 0x865 */ SFX_UNUSED_865,
     /* 0x866 */ SFX_DRACULA_MONSTER_ROAR,
     /* 0x867 */ SFX_UNUSED_867,
+    /* 0x868 */ SFX_DRACULA_KARASUMAN_SQUISH,
+    /* 0x869 */ SFX_DRACULA_ELECTRICITY,
+    /* 0x86A */ SFX_UNUSED_86A,
+    /* 0x86B */ SFX_DRACULA_BEHOLD_MY_TRUE_FORM, // "...and despair!"
+    /* 0x86C */ SFX_UNUSED_86C,
+    /* 0x86D */ SFX_UNUSED_86D,
+    /* 0x86E */ SFX_SUCCUBUS_LAUGH,   // used for taunt and petal attack
+    /* 0x86F */ SFX_UNK_SUCCUBUS_86F, // muted, related to charge attack
+    /* 0x870 */ SFX_SUCCUBUS_DUPLICATES,
+    /* 0x871 */ SFX_UNUSED_SUCCUBUS_ATTACK_A,
+    /* 0x872 */ SFX_SUCCUBUS_HOMING_ORB_ATTACK,
+    /* 0x873 */ SFX_UNUSED_SUCCUBUS_ATTACK_B,
+    /* 0x874 */ SFX_SUCCUBUS_WING_ATTACK,
+    /* 0x875 */ SFX_UNUSED_SUCCUBUS_AH,
+    /* 0x876 */ SFX_SUCCUBUS_ILL_SUCK_YOU_DRY,
+    /* 0x877 */ SFX_UNUSED_SUCCUBUS_OH_A,
+    /* 0x878 */ SFX_UNUSED_SUCCUBUS_OH_B, // duplicate of 0x877
+    /* 0x879 */ SFX_SUCCUBUS_PAIN_A,
+    /* 0x87A */ SFX_SUCCUBUS_PAIN_B,
+    /* 0x87B */ SFX_SUCCUBUS_DEFEAT, // "Nooooo!"
+    /* 0x87C */ SFX_SUCCUBUS_HOMING_ORB,
+
+    // vabid 2
+    /* 0x87D */ SFX_MARIA_RICHTER, // "Richter!"
+    /* 0x87E */ SFX_MARIA_GRANT_HIM_YOUR_STRENGTH,
+    /* 0x87F */ SFX_UNUSED_MARIA_AIM_FOR_HIS_HEAD,
+    /* 0x880 */ SFX_DRACULA_MONSTER_SILHOUETTE_APPEAR,
+    /* 0x881 */ SFX_MARIA_ANIMALS_APPEAR,
+    /* 0x882 */ SFX_MARIA_FOOTSTEPS_A,
+    /* 0x883 */ SFX_MARIA_FOOTSTEPS_B,
+    /* 0x884 */ SFX_UNUSED_884,
+
+    // Faerie and Demon familiars use a lookup table for sfxIDs instead of enum
+    // /* 0x885 */ SFX_FAERIE_HEALING,      // "Healing!"
+    // /* 0x886 */ SFX_FAERIE_POTION,       // "Potion"
+    // /* 0x887 */ SFX_FAERIE_REGENERATION, // "Regeneration"
+    // /* 0x888 */ SFX_FAERIE_NO_MEDICINE,  // "No medicine left"
+    // /* 0x889 */ SFX_FAERIE_HAMMER_A,     // using hammer on stoned Alucard
+    // /* 0x88A */ SFX_FAERIE_HAMMER_B,
+    // /* 0x88B */ SFX_FAERIE_HAMMER_C,
+    // /* 0x88C */ SFX_FAERIE_HAMMER_D,
+    // /* 0x88D */ SFX_FAERIE_FALL_OFF_A, // falling off Alucard's shoulder
+    // /* 0x88E */ SFX_FAERIE_FALL_OFF_B,
+    // /* 0x88F */ SFX_FAERIE_FALL_OFF_C,
+    // /* 0x890 */ SFX_FAERIE_FALL_OFF_D,
+    // /* 0x891 */ SFX_FAERIE_OH_NO,      // "OH NOOO!" (death reaction)
+    // /* 0x892 */ SFX_FAERIE_ARE_YOU_OK, // "Are you ok?" (possibly unused?)
     SFX_TELEPORT_SYNTH_UP = 0x8BA,
     SFX_TELEPORT_SYNTH_DOWN,
     SFX_BURNING_PHOTOGRAPH = 0x8BE,
     SFX_UI_NAME_ENTRY = 0x8CD,
+    NA_VO_SU_DELICIOUS = 0x8D1,
 
     // Exclusive to Maria PSP
     /* 0x8E6 */ SFX_VO_MAR_8E6 = 0x8E6,

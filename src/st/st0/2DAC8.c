@@ -563,7 +563,7 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
                     self->opacity = 0x10;
                     self->scaleX = self->scaleY = 0x400;
-                    g_api.PlaySfx(0x880);
+                    g_api.PlaySfx(SFX_DRACULA_MONSTER_SILHOUETTE_APPEAR);
                     self->step_s++;
                 }
                 break;
