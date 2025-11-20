@@ -13,10 +13,12 @@
 
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
+    PAL_BREAKABLE_WALL_DEBRIS_MAIN = 0x05C,
     PAL_LIGHT_SWITCH_HIDDEN = 0x094,
     PAL_LIGHT_SWITCH_GREEN = 0x099,
     PAL_LIGHT_SWITCH_YELLOW = 0x09A,
     PAL_SPIKES_DUST = 0x09B,
+    PAL_BREAKABLE_WALL_DEBRIS_HIGHLIGHT = 0x15E,
     PAL_HELLFIRE_BEAST_CAST_TWO = 0x15F,
     PAL_BONE_ARK_PROJECTILE = 0x160,
     PAL_BONE_ARK_LIGHTNING_BALL = 0x162,
@@ -72,11 +74,11 @@ enum OVL_EXPORT(Entities) {
     E_UNK_21,                           // func_us_801B8AD0
     E_UNK_22,                           // func_us_801B87E8
     E_UNK_23,                           // func_us_801BACF4
-    E_UNK_24,                           // func_us_801B972C
-    E_UNK_25,                           // func_us_801B9D1C
-    E_UNK_26,                           // func_us_801B9A74
-    E_UNK_27,                           // func_us_801B951C
-    E_UNK_28,                           // func_us_801B907C
+    E_SECRET_WALL_LEFT,                 // EntitySecretWallLeft
+    E_SECRET_WALL,                      // EntitySecretWall
+    E_BREAKABLE_WALL_SEGMENT,           // EntityBreakableWallSegment
+    E_BREAKABLE_WALL_PARTICLES,         // EntityBreakableWallParticles
+    E_BREAKABLE_WALL_DEBRIS,            // EntityBreakableWallDebris
     E_UNK_29,                           // func_us_801BA388
     E_UNK_2A,                           // func_us_801BA164
     E_ELEVATOR,                         // EntityElevator

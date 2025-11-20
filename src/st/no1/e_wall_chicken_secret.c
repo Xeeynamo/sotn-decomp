@@ -22,7 +22,7 @@ void func_us_801BE880(Entity* self) {
         self->zPriority = 0x70;
         self->hitPoints = 0x7FFF;
         self->hitboxState = 0;
-        self->ext.et_801BE880.unk82 = 0;
+        self->ext.segmentedBreakableWall.damageTaken = 0;
         if (g_CastleFlags[NO1_SECRET_WALL_BROKEN]) {
             self->step = 5;
         } else {
@@ -46,8 +46,8 @@ void func_us_801BE880(Entity* self) {
         break;
 
     case 1:
-        if (self->ext.et_801BE880.unk82 > 8) {
-            self->ext.et_801BE880.unk82 = 0;
+        if (self->ext.segmentedBreakableWall.damageTaken > 8) {
+            self->ext.segmentedBreakableWall.damageTaken = 0;
             for (i = 0; i < 5; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
@@ -65,11 +65,11 @@ void func_us_801BE880(Entity* self) {
                 self->animCurFrame++;
             }
         }
-        if (self->ext.et_801BE880.unk84) {
+        if (self->ext.segmentedBreakableWall.pieceBroken) {
             PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step_s = 0;
-            self->step = self->ext.et_801BE880.unk84 + 1;
-            if (self->ext.et_801BE880.unk84 == 3) {
+            self->step = self->ext.segmentedBreakableWall.pieceBroken + 1;
+            if (self->ext.segmentedBreakableWall.pieceBroken == 3) {
                 self->step = 2;
             }
         }
@@ -77,7 +77,7 @@ void func_us_801BE880(Entity* self) {
 
     case 2:
         self->animCurFrame = 0x4F;
-        if (self->ext.et_801BE880.unk84 & 2) {
+        if (self->ext.segmentedBreakableWall.pieceBroken & 2) {
             PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step = 4;
         }
@@ -93,7 +93,7 @@ void func_us_801BE880(Entity* self) {
         PlaySfxPositional(SFX_WALL_DEBRIS_B);
         self->step = 4;
 #else
-        if (self->ext.et_801BE880.unk84 & 1) {
+        if (self->ext.segmentedBreakableWall.pieceBroken & 1) {
             PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step = 4;
         }
@@ -137,18 +137,19 @@ void func_us_801BEB54(Entity* self) {
         self->hitboxWidth = 0x10;
         self->hitboxHeight = 0xC;
         self->hitboxState = 2;
-        self->ext.et_801BE880.unk80 = self->hitPoints;
+        self->ext.segmentedBreakableWall.hitPoints = self->hitPoints;
         self->hitboxOffY = -0xC;
         break;
 
     case 1:
-        if (self->hitPoints ^ self->ext.et_801BE880.unk80) {
-            (self - self->params)->ext.et_801BE880.unk82 +=
-                self->ext.et_801BE880.unk80 - self->hitPoints;
-            self->ext.et_801BE880.unk80 = self->hitPoints;
+        if (self->hitPoints ^ self->ext.segmentedBreakableWall.hitPoints) {
+            (self - self->params)->ext.segmentedBreakableWall.damageTaken +=
+                self->ext.segmentedBreakableWall.hitPoints - self->hitPoints;
+            self->ext.segmentedBreakableWall.hitPoints = self->hitPoints;
         }
         if (self->flags & FLAG_DEAD) {
-            (self - self->params)->ext.et_801BE880.unk84 |= self->params;
+            (self - self->params)->ext.segmentedBreakableWall.pieceBroken |=
+                self->params;
             self->step++;
         }
         break;
@@ -212,7 +213,7 @@ void func_us_801BEE00(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.et_801BE880.unk7C = prim;
+            self->ext.segmentedBreakableWall.prim = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0xE;
             prim->clut = 2;
@@ -241,7 +242,7 @@ void func_us_801BEE00(Entity* self) {
         break;
 
     case 2:
-        prim = self->ext.et_801BE880.unk7C;
+        prim = self->ext.segmentedBreakableWall.prim;
         LOH(prim->next->tpage) += 0x180;
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;
@@ -285,7 +286,7 @@ void func_us_801BF074(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.prim = prim;
+            self->ext.segmentedBreakableWall.prim = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0xE;
             prim->clut = 2;
@@ -315,7 +316,7 @@ void func_us_801BF074(Entity* self) {
         break;
 
     case 2:
-        prim = self->ext.prim;
+        prim = self->ext.segmentedBreakableWall.prim;
         LOH(prim->next->tpage) += D_us_801816DC[self->params];
         prim->next->x1 = self->posX.i.hi;
         prim->next->y0 = self->posY.i.hi;

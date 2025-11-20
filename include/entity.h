@@ -1840,16 +1840,15 @@ typedef struct {
     /* 0x88 */ u8 unk88;
 } ET_BreakableNO2;
 
-// This is for the no1 wall chicken secret breakable wall and while it seems to
-// align with ET_BreakableDebris, the type of offset 0x84 is different and there
-// seems to be additional uses by func_us_801BEB54 that don't seem to be shared
-// with ET_BreakableDebris.
+// This is a type of breakable wall seen in NO1 and CAT
+// which has segmented top and bottom pieces which can be
+// destroyed independently
 typedef struct {
-    /* 0x7C */ struct Primitive* unk7C;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u8 unk84;
-} ET_801BE880;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 hitPoints;
+    /* 0x82 */ s16 damageTaken;
+    /* 0x84 */ u8 pieceBroken;
+} ET_SegmentedBreakableWall;
 
 // ====== CHI ENTITIES ======
 // CHI Room3, Top, Demon Switch Wall
@@ -3835,7 +3834,7 @@ typedef union { // offset=0x7C
     ET_Breakable breakable;
     ET_BreakableDebris breakableDebris;
     ET_BreakableNO2 breakableNo2;
-    ET_801BE880 et_801BE880;
+    ET_SegmentedBreakableWall segmentedBreakableWall;
 
     ET_DemonSwitchWall demonSwitchWall;
     ET_DebugCerberusGate debugCerberusGate;
