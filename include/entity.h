@@ -1840,6 +1840,13 @@ typedef struct {
     /* 0x88 */ u8 unk88;
 } ET_BreakableNO2;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u8 unk84;
+} ET_BreakableCAT;
+
 // This is for the no1 wall chicken secret breakable wall and while it seems to
 // align with ET_BreakableDebris, the type of offset 0x84 is different and there
 // seems to be additional uses by func_us_801BEB54 that don't seem to be shared
@@ -3986,6 +3993,7 @@ typedef union { // offset=0x7C
     ET_801BA164 et_801BA164;
     ET_Coffin coffin;
     ET_Lava lava;
+    ET_BreakableCAT breakableCat;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

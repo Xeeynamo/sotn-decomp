@@ -47,7 +47,7 @@ segments:
       - [0x13D8, .data, e_breakable]
       - [0x14F8, .data, e_spike_room]
       - [0x14FC, .data, e_spikes]
-      - [0x1518, data]
+      - [0x1518, .data, unk_3907C]
       - [0x1620, .data, unk_3A164]
       - [0x1684, .data, e_coffin]
       - [0x16FC, data]
