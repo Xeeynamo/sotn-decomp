@@ -21,7 +21,8 @@ typedef enum {
     EXPLOSION_FIREBALL,
     EXPLOSION_SMALL_MULTIPLE,
     EXPLOSION_BIG,
-    EXPLOSION_UNK_4
+    EXPLOSION_UNK_4,
+    EXPLOSION_UNK_19 = 0x13
 } ExplosionTypes;
 
 // used by InitializeEntity to pre-fill certain entity fields

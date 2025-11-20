@@ -36,11 +36,11 @@ void EntitySpikesDamage(Entity* self);
 void func_us_801B8AD0(Entity* self);
 void func_us_801B87E8(Entity* self);
 void func_us_801BACF4(Entity* self);
-void func_us_801B972C(Entity* self);
-void func_us_801B9D1C(Entity* self);
-void func_us_801B9A74(Entity* self);
-void func_us_801B951C(Entity* self);
-void func_us_801B907C(Entity* self);
+void EntitySecretWallLeft(Entity* self);
+void EntitySecretWall(Entity* self);
+void EntityBreakableWallSegment(Entity* self);
+void EntityBreakableWallParticles(Entity* self);
+void EntityBreakableWallDebris(Entity* self);
 void func_us_801BA388(Entity* self);
 void func_us_801BA164(Entity* self);
 void EntityElevator(Entity* self);
@@ -122,11 +122,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B8AD0,
     func_us_801B87E8,
     func_us_801BACF4,
-    func_us_801B972C,
-    func_us_801B9D1C,
-    func_us_801B9A74,
-    func_us_801B951C,
-    func_us_801B907C,
+    EntitySecretWallLeft,
+    EntitySecretWall,
+    EntityBreakableWallSegment,
+    EntityBreakableWallParticles,
+    EntityBreakableWallDebris,
     func_us_801BA388,
     func_us_801BA164,
     EntityElevator,
