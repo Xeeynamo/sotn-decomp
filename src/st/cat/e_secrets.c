@@ -502,6 +502,8 @@ void EntitySecretWall(Entity* self) {
         }
         break;
     case 16:
+        // NOTE: This has some unique debug functionality not present in other
+        // entities that use pad2_anim_debug
         for (i = 0; i < 4; i++) {
             posX = self->posX.i.hi + 8;
             posY = self->posY.i.hi + (i * 0x10) + 2;
