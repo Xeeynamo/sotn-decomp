@@ -132,7 +132,7 @@ extern u32 D_psp_08C42180;
 extern void (*D_psp_08C42184)();
 extern u32 D_psp_08C42188;
 extern Unk08C4218C D_psp_08C4218C[];
-extern u8 D_psp_08C429C0[][0x200];
+extern u8 D_psp_08C429C0[0x100][0x200];
 extern s32 D_psp_08C629C0;
 extern u32 D_psp_08C629C4;
 extern s32 D_psp_08C629C8;
@@ -154,6 +154,8 @@ extern s32 D_psp_08C62A58;
 extern s32 D_psp_08C62A5C;
 extern s32 D_psp_08C62A60;
 extern s32 D_psp_08C62A64;
+extern s32 D_psp_08C62A68;
+extern s32 D_psp_08C62A6C;
 extern s32 D_psp_08C62A70;
 extern OT_TYPE* D_psp_08C62A74;
 extern char D_psp_08C62A78[0x20];
@@ -292,7 +294,7 @@ u8* func_psp_08919E1C(u8* arg0) {
     return (u8*)func_psp_08932994(&D_psp_08B41F9C);
 }
 
-static void func_psp_08919E44() { func_psp_08932994(&D_psp_08B41F9C); }
+static s32 func_psp_08919E44() { return func_psp_08932994(&D_psp_08B41F9C); }
 
 s32 func_psp_08919E6C(s32 arg0, u8* src) {
     s32 temp_v0;
@@ -1628,11 +1630,81 @@ void func_psp_0891E420(void) {
     func_psp_0891AF48(2);
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891E638);
+void func_psp_0891E638(void) {
+    s32 temp_s2;
+    s32 temp_s1;
+    TVertex* v;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891E840);
+    temp_s2 = 0;
+    v = (TVertex*)SP(0);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891E944);
+    func_psp_08910660(0);
+    v[0].c = v[1].c = v[2].c = v[3].c = white;
+    v[0].x = 0.0f;
+    v[0].y = 0.0f;
+    v[1].x = GU_SCR_WIDTH;
+    v[1].y = 0.0f;
+    v[2].x = 0.0f;
+    v[2].y = GU_SCR_HEIGHT;
+    v[3].x = GU_SCR_WIDTH;
+    v[3].y = GU_SCR_HEIGHT;
+    v[0].z = v[1].z = v[2].z = v[3].z = 1.0f;
+    v[0].u = 0.0f;
+    v[0].v = 0.0f;
+    v[1].u = GU_SCR_WIDTH;
+    v[1].v = 0.0f;
+    v[2].u = 0.0f;
+    v[2].v = GU_SCR_HEIGHT;
+    v[3].u = GU_SCR_WIDTH;
+    v[3].v = GU_SCR_HEIGHT;
+    temp_s1 = D_psp_08C62A40;
+    func_psp_0891AF48(0);
+    func_psp_08911F24(0, D_psp_089464F0);
+    func_psp_08911B7C();
+    func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+    if (func_psp_08919E44()) {
+        func_psp_08910FD8((s32)sceGeEdramGetAddr() + 0x1BC000,
+                          (s32)sceGeEdramGetAddr() + 0x1DE000, 5, 0x200, 9, 9);
+    } else {
+        func_psp_0891B2CC(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT, black);
+    }
+    func_psp_08910A80(
+        v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
+        GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 | GU_TEXTURE_32BITF);
+    func_psp_0891AF48(temp_s1);
+}
+
+void func_psp_0891E840(void) {
+    func_psp_08910D28();
+    func_psp_0890FC2C();
+    func_psp_0890FF84();
+    func_psp_08910298(1);
+    func_psp_08910558(0);
+    func_psp_08910608(0);
+    func_psp_089105DC(1);
+    func_psp_08910660(1);
+    func_psp_0891068C(1);
+    func_psp_089107A4(0);
+    func_psp_089106F4(0);
+    func_psp_089105B0(0);
+    func_psp_08910584(0);
+    func_psp_08910634(1);
+    func_psp_0891074C(0);
+    func_psp_08910778(0);
+    func_psp_0891052C(1);
+    func_psp_08910720(0);
+    func_psp_089107DC(1, 1);
+    func_psp_089108F8(0, 0);
+}
+
+void func_psp_0891E944(void) {
+    func_psp_0890FF2C();
+    sceKernelDcacheWritebackAll();
+    func_psp_0890FE98();
+    D_psp_08C62A6C = 0;
+    D_psp_08C62A68 = 0;
+    D_psp_08C42188 = D_psp_08C42180;
+}
 
 void func_psp_0891E994(OT_TYPE* p) {
     s32 sp5C;
@@ -2038,13 +2110,36 @@ s32 func_psp_0891FDC8(DR_ENV* p) {
     return 0;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_089201E8);
+void func_psp_089201E8(SPRT* ptr, TVertex* v, float arg2, float arg3,
+                       float arg4, float arg5, u8 arg6) {
+    float u0, v0;
+    float u1, v1;
+    u32 temp_s2;
+    u32 temp_s1;
+    u32 var_s0;
+
+    if (arg6 == 0) {
+        var_s0 = 0x100;
+    } else if (arg6 == 1) {
+        var_s0 = 0x80;
+    } else if (arg6 == 2) {
+        var_s0 = 0x40;
+    }
+    temp_s2 = (u16)((u16)ptr->u0 + arg2);
+    temp_s2 = (temp_s2 % (var_s0 & 0xFFFF)) & 0xFFFF;
+    temp_s1 = (u16)((u16)ptr->v0 + arg4);
+    temp_s1 = (temp_s1 % 0x100) & 0xFFFF;
+    u0 = temp_s2;
+    v0 = temp_s1;
+    u1 = u0 + (arg3 - 0.4f);
+    v1 = v0 + (arg5 - 0.4f);
+    v[0].u = u0;
+    v[1].u = u1;
+    v[0].v = v0;
+    v[1].v = v1;
+}
 
 s32 func_psp_08920488(void* p) {}
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_08920498);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_089215A4);
 
 static inline u8* unkInlineFunc(s32 tpage) {
     if (D_psp_089464EC != 0) {
@@ -2085,6 +2180,102 @@ static inline void unkInlineFunc2(u8* arg0, u8* arg1, s32 arg2) {
     } else {
         func_psp_08910D44(arg0, arg1, arg2);
     }
+}
+
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_08920498);
+
+s32 func_psp_089215A4(SPRT_16* p) {
+    SPRT_16* ptr;
+    TVertex* v;
+
+    ptr = p;
+
+    v = (TVertex*)func_psp_089104B4(0xC);
+    if (((D_psp_08C629C4 >> 7) & 3) == 2) {
+    }
+    func_psp_08910D44(
+        D_psp_08B42080[D_psp_08C629C4 & 0x1F],
+        &D_psp_08B42080[((ptr->clut & 0x3F) << 4) / 0x40 +
+                        ((ptr->clut >> 6) / 0x100) * 0x10]
+                       [(((ptr->clut & 0x3F) << 4) % 0x40) * 2 +
+                        ((ptr->clut >> 6) % 0x100) * 0x80],
+        (D_psp_08C629C4 >> 7) & 3);
+    if (isSemiTrans(ptr)) {
+        switch ((D_psp_08C629C4 >> 5) & 3) {
+        case 0:
+            func_psp_08911B84(
+                1, GU_ADD, GU_FIX, GU_FIX, 0xFF808080, 0xFF808080);
+            break;
+        case 1:
+            func_psp_08911B84(
+                1, GU_ADD, GU_FIX, GU_FIX, 0xFFFFFFFF, 0xFFFFFFFF);
+            break;
+        case 2:
+            func_psp_08911B84(
+                1, GU_REVERSE_SUBTRACT, GU_FIX, GU_FIX, 0xFFFFFFFF, 0xFFFFFFFF);
+            break;
+        case 3:
+            func_psp_08911B84(
+                1, GU_ADD, GU_FIX, GU_FIX, 0xFF404040, 0xFFFFFFFF);
+            break;
+        default:
+            func_psp_08911B84(
+                0, GU_ADD, GU_FIX, GU_FIX, 0xFF808080, 0xFF808080);
+            break;
+        }
+    } else {
+        func_psp_08911B84(0, GU_ADD, GU_FIX, GU_FIX, 0xFF808080, 0xFF808080);
+    }
+    if (isFlatShaded(ptr)) {
+        v[0].c = v[1].c = GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80);
+    } else {
+        v[0].c = v[1].c = white;
+    }
+    __asm__(
+        ".set		push\n"      // save assembler option
+        ".set		noreorder\n" // suppress reordering
+        "lv.s		s700, 0xC(%1)\n"
+        "vs2i.p		c710, c700\n"
+        "vi2f.p		c300, c710, 16\n"
+        "vadd.p		c300, c300, c410\n"
+        "sv.s		s300, 0xC(%0)\n"
+        "sv.s		s301, 0x10(%0)\n"
+        "sv.s		s302, 0x14(%0)\n"
+        "vadd.p		c310, c300, c420\n"
+        "sv.s		s310, 0x24(%0)\n"
+        "sv.s		s311, 0x28(%0)\n"
+        "sv.s		s312, 0x2C(%0)\n"
+        "lbu		$4, 0x10(%1)\n"
+        "lbu		$5, 0x11(%1)\n"
+        "mtv		$4, s610\n"
+        "mtv		$5, s611\n"
+        "vi2f.p		c620, c610, 0\n"
+        "sv.s		s620, 0(%0)\n"
+        "sv.s		s621, 4(%0)\n"
+        "vadd.p		c630, c620, c420\n"
+        "sv.s		s630, 0x18(%0)\n"
+        "sv.s		s631, 0x1C(%0)\n"
+        ".set		pop\n" // suppress reordering
+        : "+r"(v)
+        : "r"(ptr));
+    if (ptr->code & 0x40) {
+        func_psp_08912070(D_psp_089464F0, 0, 0, 0);
+        func_psp_08910C74(v, 2, sizeof(TVertex), GU_SPRITES,
+                          GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
+                              GU_TEXTURE_32BITF);
+        func_psp_089120E4();
+        func_psp_08910C74(v, 2, sizeof(TVertex), GU_SPRITES,
+                          GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
+                              GU_TEXTURE_32BITF);
+    } else {
+        func_psp_0891214C(D_psp_089464F0, 0, 0, 0);
+        func_psp_08910C74(v, 2, sizeof(TVertex), GU_SPRITES,
+                          GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
+                              GU_TEXTURE_32BITF);
+    }
+    func_psp_0891B1F8(v[0].x, v[0].y, v[1].x, v[1].y, red);
+    D_psp_08C62A50++;
+    return 0;
 }
 
 s32 func_psp_08921A38(POLY_G4* p) {
@@ -2850,7 +3041,7 @@ s32 func_psp_08925194(TILE* p) {
 
     ptr = p;
 
-    if ((ptr->w == 0) || (ptr->h == 0)) {
+    if (ptr->w == 0 || ptr->h == 0) {
         return 0;
     }
     if (D_psp_08C62A40 == 1) {

@@ -16,15 +16,9 @@ typedef struct {
     s32 unk18;
 } Unk08B1F140;
 
-extern float D_psp_0893CCFC;
-extern float D_psp_0893CD00;
-extern float D_psp_0893CD04;
-extern float D_psp_0893CD08;
-extern float D_psp_0893CD0C;
-extern float D_psp_0893CD10;
-extern float D_psp_0893CD14;
-extern float D_psp_0893CD18;
-extern float D_psp_0893CD1C;
+extern ScePspVector3 D_psp_0893CCFC;
+extern ScePspVector3 D_psp_0893CD08;
+extern ScePspVector3 D_psp_0893CD14;
 extern u8 D_psp_089B6540[0x400];
 extern s32 D_psp_089B6940[2][0x100];
 extern u8 D_psp_089B7140[2][0x34000];
@@ -390,15 +384,8 @@ void func_psp_08910D28(void) {
 }
 
 s32 func_psp_08910D44(s32 arg0, s32 arg1, s32 arg2) {
-    ScePspVector3 sp24;
-    ScePspVector3 sp18;
-
-    sp24.f[0] = D_psp_0893CCFC;
-    sp24.f[1] = D_psp_0893CD00;
-    sp24.f[2] = D_psp_0893CD04;
-    sp18.f[0] = D_psp_0893CD08;
-    sp18.f[1] = D_psp_0893CD0C;
-    sp18.f[2] = D_psp_0893CD10;
+    ScePspVector3 sp24 = D_psp_0893CCFC;
+    ScePspVector3 sp18 = D_psp_0893CD08;
     if ((D_psp_08B1F1B8 == arg0) && (D_psp_08B1F1BC == arg2)) {
         arg0 = 0;
     }
@@ -514,9 +501,7 @@ s32 func_psp_0891149C(s32 arg0, u32 arg1, u32 arg2, s32 arg3, s32 arg4) {
     s32 var_v1_2;
     s32 tw, th;
 
-    sp14.f[0] = D_psp_0893CD14;
-    sp14.f[1] = D_psp_0893CD18;
-    sp14.f[2] = D_psp_0893CD1C;
+    sp14 = D_psp_0893CD14;
     var_v0 = 0;
     if ((arg3 != 0) && (D_psp_08B1F1C0 != arg3)) {
         *D_psp_08B1F19C++ = GE_SET_CLUT(GU_PSM_5551, 0, 0xFF, 0);
@@ -797,7 +782,7 @@ void func_psp_08912008(void) {
     *D_psp_08B1F19C++ = GE_SET_CALL_ADDR24(D_psp_08B1F1D0[10]);
 }
 
-void func_psp_08912070(s32 arg0) {
+void func_psp_08912070(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     *D_psp_08B1F19C++ = GE_SET_BASE_BASE8(D_psp_08B1F1D0[arg0 + 2]);
     *D_psp_08B1F19C++ = GE_SET_CALL_ADDR24(D_psp_08B1F1D0[arg0 + 2]);
 }
