@@ -169,7 +169,7 @@ int sceUtilityOskUpdate(int n);
 /**
  * Get the status of a on-screen keyboard currently active.
  *
- * @return the current status of the keyboard. See ::pspUtilityDialogState for details.
+ * @return the current status of the keyboard. See ::pspUtilityCommonStatus for details.
  */
 int sceUtilityOskGetStatus(void);
 

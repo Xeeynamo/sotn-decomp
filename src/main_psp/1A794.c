@@ -16,7 +16,7 @@ extern Unk08B21DEC* D_psp_08B21DE8;
 extern Unk08B21DEC D_psp_08B21DEC;
 extern Unk08B21DEC* D_psp_08B41F2C;
 extern s32 D_psp_08C62A3C;
-extern Unk08B21DEC D_psp_08DED9CC;
+extern u8 D_psp_08DED03C[0x20AD0];
 
 void func_psp_089190A0(Unk08B21DEC* arg0, s32 len) {
     memmove(arg0, D_psp_08B21DE8, len);
@@ -161,7 +161,7 @@ s32 func_psp_089196D8(s32 arg0, s32 arg1) {
 
     s32 ret = 0;
 
-    D_psp_08B41F2C = &D_psp_08DED9CC;
+    D_psp_08B41F2C = (Unk08B21DEC*)&D_psp_08DED03C[0x990];
 
     switch (arg0) {
     case 3:
