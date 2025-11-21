@@ -34,21 +34,21 @@ typedef enum
 	PSP_UTILITY_SAVEDATA_LISTSAVE,
 	PSP_UTILITY_SAVEDATA_LISTDELETE,
 	PSP_UTILITY_SAVEDATA_LISTALLDELETE,
-	SCE_UTILITY_SAVEDATA_SIZES,
-	SCE_UTILITY_SAVEDATA_AUTODELETE,
-	SCE_UTILITY_SAVEDATA_DELETE,
-	SCE_UTILITY_SAVEDATA_LIST,
-	SCE_UTILITY_SAVEDATA_FILES,
-	SCE_UTILITY_SAVEDATA_MAKEDATASECURE,
-	SCE_UTILITY_SAVEDATA_MAKEDATA,
-	SCE_UTILITY_SAVEDATA_READDATASECURE,
-	SCE_UTILITY_SAVEDATA_READDATA,
-	SCE_UTILITY_SAVEDATA_WRITEDATASECURE,
-	SCE_UTILITY_SAVEDATA_WRITEDATA,
-	SCE_UTILITY_SAVEDATA_ERASESECURE,
-	SCE_UTILITY_SAVEDATA_ERASE,
-	SCE_UTILITY_SAVEDATA_DELETEDATA,
-	SCE_UTILITY_SAVEDATA_GETSIZE,
+	PSP_UTILITY_SAVEDATA_SIZES,
+	PSP_UTILITY_SAVEDATA_AUTODELETE,
+	PSP_UTILITY_SAVEDATA_DELETE,
+	PSP_UTILITY_SAVEDATA_LIST,
+	PSP_UTILITY_SAVEDATA_FILES,
+	PSP_UTILITY_SAVEDATA_MAKEDATASECURE,
+	PSP_UTILITY_SAVEDATA_MAKEDATA,
+	PSP_UTILITY_SAVEDATA_READDATASECURE,
+	PSP_UTILITY_SAVEDATA_READDATA,
+	PSP_UTILITY_SAVEDATA_WRITEDATASECURE,
+	PSP_UTILITY_SAVEDATA_WRITEDATA,
+	PSP_UTILITY_SAVEDATA_ERASESECURE,
+	PSP_UTILITY_SAVEDATA_ERASE,
+	PSP_UTILITY_SAVEDATA_DELETEDATA,
+	PSP_UTILITY_SAVEDATA_GETSIZE,
 } PspUtilitySavedataMode;
 
 /** Initial focus position for list selection types */
@@ -65,6 +65,63 @@ typedef enum
 	PSP_UTILITY_SAVEDATA_FOCUS_LASTEMPTY,	/*Last empty slot */
 	
 } PspUtilitySavedataFocus;
+
+/*Save data utility return values  */
+#define PSP_UTILITY_SAVEDATA_ERROR_TYPE					(0x80110300)	/*Type error */
+
+/*Single call type error  */
+/*Error when loading */
+#define PSP_UTILITY_SAVEDATA_ERROR_LOAD_NO_MS			(0x80110301)	/*No Memory Stick(TM) was inserted */
+#define PSP_UTILITY_SAVEDATA_ERROR_LOAD_EJECT_MS		(0x80110302)	/*Memory Stick(TM) was removed while save data was being accessed */
+#define PSP_UTILITY_SAVEDATA_ERROR_LOAD_ACCESS_ERROR	(0x80110305)	/*Memory Stick(TM) access error occurred */
+#define PSP_UTILITY_SAVEDATA_ERROR_LOAD_DATA_BROKEN		(0x80110306)	/*Specified save data was corrupted */
+#define PSP_UTILITY_SAVEDATA_ERROR_LOAD_NO_DATA			(0x80110307)	/*Specified save data was not found */
+#define PSP_UTILITY_SAVEDATA_ERROR_LOAD_PARAM			(0x80110308)	/*Utility could not run because parameter that was passed was illegal */
+#define PSP_UTILITY_SAVEDATA_ERROR_LOAD_NO_FILE			(0x80110309)	/*Specified file could not be found */
+#define PSP_UTILITY_SAVEDATA_ERROR_LOAD_INTERNAL		(0x8011030B)	/*Internal error */
+
+/*Error code when saving */
+#define PSP_UTILITY_SAVEDATA_ERROR_SAVE_NO_MS			(0x80110381)	/*No Memory Stick(TM) was inserted */
+#define PSP_UTILITY_SAVEDATA_ERROR_SAVE_EJECT_MS		(0x80110382)	/*Memory Stick(TM) was removed while save data was being accessed */
+#define PSP_UTILITY_SAVEDATA_ERROR_SAVE_MS_NOSPACE		(0x80110383)	/*Memory Stick(TM) did not contain the amount of free space required for saving */
+#define PSP_UTILITY_SAVEDATA_ERROR_SAVE_MS_PROTECTED	(0x80110384)	/*Save data could not be accessed because Memory Stick(TM) was write-protected */
+#define PSP_UTILITY_SAVEDATA_ERROR_SAVE_ACCESS_ERROR	(0x80110385)	/*Memory Stick(TM) access error occurred */
+#define PSP_UTILITY_SAVEDATA_ERROR_SAVE_DATA_BROKEN		(0x80110386)	/*Specified save data was corrupted */
+#define PSP_UTILITY_SAVEDATA_ERROR_SAVE_PARAM			(0x80110388)	/*Utility could not run because parameter that was passed was illegal */
+#define PSP_UTILITY_SAVEDATA_ERROR_SAVE_INTERNAL		(0x8011038B)	/*Internal error */
+
+/*Error code when deleting */
+#define PSP_UTILITY_SAVEDATA_ERROR_DELETE_NO_MS			(0x80110341)	/*No Memory Stick(TM) was inserted */
+#define PSP_UTILITY_SAVEDATA_ERROR_DELETE_EJECT_MS		(0x80110342)	/*Memory Stick(TM) was removed while save data was being accessed */
+#define PSP_UTILITY_SAVEDATA_ERROR_DELETE_MS_PROTECTED	(0x80110344)	/*Save data could not be accessed because Memory Stick(TM) was write-protected */
+#define PSP_UTILITY_SAVEDATA_ERROR_DELETE_ACCESS_ERROR	(0x80110345)	/*Memory Stick(TM) access error occurred */
+#define PSP_UTILITY_SAVEDATA_ERROR_DELETE_NO_DATA		(0x80110347)	/*Specified save data was not found */
+#define PSP_UTILITY_SAVEDATA_ERROR_DELETE_PARAM			(0x80110348)	/*Utility could not run because parameter that was passed was illegal */
+#define PSP_UTILITY_SAVEDATA_ERROR_DELETE_INTERNAL		(0x8011034B)	/*Internal error */
+
+/*Error code when getting size */
+#define PSP_UTILITY_SAVEDATA_ERROR_SIZES_NO_MS			(0x801103C1)	/*No Memory Stick(TM) was inserted */
+#define PSP_UTILITY_SAVEDATA_ERROR_SIZES_EJECT_MS		(0x801103C2)	/*Memory Stick(TM) was removed while save data was being accessed */
+#define PSP_UTILITY_SAVEDATA_ERROR_SIZES_ACCESS_ERROR	(0x801103C5)	/*Memory Stick(TM) access error occurred */
+#define PSP_UTILITY_SAVEDATA_ERROR_SIZES_DATA_BROKEN	(0x801103C6)	/*Specified save data was corrupted */
+#define PSP_UTILITY_SAVEDATA_ERROR_SIZES_NO_DATA		(0x801103C7)	/*Specified save data was not found */
+#define PSP_UTILITY_SAVEDATA_ERROR_SIZES_PARAM			(0x801103C8)	/*Utility could not run because parameter that was passed was illegal */
+#define PSP_UTILITY_SAVEDATA_ERROR_SIZES_INTERNAL		(0x801103CB)	/*Internal error */
+
+/*Error code for types supporting multiple calls */
+#define PSP_UTILITY_SAVEDATA_ERROR_MC_NO_MS				(0x80110321)	/*No Memory Stick(TM) was inserted */
+#define PSP_UTILITY_SAVEDATA_ERROR_MC_EJECT_MS			(0x80110322)	/*Memory Stick(TM) was removed while save data was being accessed */
+#define PSP_UTILITY_SAVEDATA_ERROR_MC_MS_NOSPACE		(0x80110323)	/*Memory Stick(TM) did not contain the amount of free space required for saving */
+#define PSP_UTILITY_SAVEDATA_ERROR_MC_MS_PROTECTED		(0x80110324)	/*Save data could not be accessed because Memory Stick(TM) was write-protected */
+#define PSP_UTILITY_SAVEDATA_ERROR_MC_ACCESS_ERROR		(0x80110325)	/*Memory Stick(TM) access error occurred */
+#define PSP_UTILITY_SAVEDATA_ERROR_MC_DATA_BROKEN		(0x80110326)	/*Specified save data was corrupted */
+#define PSP_UTILITY_SAVEDATA_ERROR_MC_NO_DATA			(0x80110327)	/*Specified save data was not found */
+#define PSP_UTILITY_SAVEDATA_ERROR_MC_PARAM				(0x80110328)	/*Utility could not run because parameter that was passed was illegal */
+#define PSP_UTILITY_SAVEDATA_ERROR_MC_NO_FILE			(0x80110329)	/*Specified file could not be found  */
+#define PSP_UTILITY_SAVEDATA_ERROR_MC_SUSPEND_ERROR		(0x8011032A)	/*Processing stopped because the utility was suspended during multiple calls */
+#define PSP_UTILITY_SAVEDATA_ERROR_MC_INTERNAL			(0x8011032B)	/*Internal error */
+#define PSP_UTILITY_SAVEDATA_ERROR_MC_STATUS_ERROR		(0x8011032C)	/*Multiple call status error */
+#define PSP_UTILITY_SAVEDATA_ERROR_MC_SECUREFILE_FULL	(0x8011032D)	/*No more protected files can be added */
 
 
 /** title, savedataTitle, detail: parts of the unencrypted SFO
@@ -233,7 +290,7 @@ typedef struct SceUtilitySavedataParam
 
 	int abortStatus;
 
-	/* Function SCE_UTILITY_SAVEDATA_TYPE_SIZES */
+	/* Function PSP_UTILITY_SAVEDATA_TYPE_SIZES */
 	SceUtilitySavedataMsFreeInfo *msFree;
 	SceUtilitySavedataMsDataInfo *msData;
 	SceUtilitySavedataUsedDataInfo *utilityData;
@@ -295,7 +352,7 @@ int sceUtilitySavedataShutdownStart(void);
  *
  * @param unknown - unknown, pass 1
  */
-void sceUtilitySavedataUpdate(int unknown);
+int sceUtilitySavedataUpdate(int unknown);
 
 #ifdef __cplusplus
 }

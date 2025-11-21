@@ -50,17 +50,22 @@ typedef struct
 #define PSP_UTILITY_ACCEPT_CIRCLE 0
 #define PSP_UTILITY_ACCEPT_CROSS  1
 
+/* Utility execution result macro */
+#define PSP_UTILITY_COMMON_RESULT_OK			(0)	/* Utility processing was successful */
+#define PSP_UTILITY_COMMON_RESULT_CANCELED		(1)	/* Utility processing was canceled by the user */
+#define PSP_UTILITY_COMMON_RESULT_ABORTED		(2)	/* Utility processing was forcibly terminated */
+
 /**
  * Return-values for the various sceUtility***GetStatus() functions
 **/
 typedef enum
 {
-	PSP_UTILITY_DIALOG_NONE = 0,	/**< No dialog is currently active */
-	PSP_UTILITY_DIALOG_INIT,		/**< The dialog is currently being initialized */
-	PSP_UTILITY_DIALOG_VISIBLE,		/**< The dialog is visible and ready for use */
-	PSP_UTILITY_DIALOG_QUIT,		/**< The dialog has been canceled and should be shut down */
-	PSP_UTILITY_DIALOG_FINISHED		/**< The dialog has successfully shut down */
-	
-} pspUtilityDialogState;
+	PSP_UTILITY_COMMON_STATUS_NONE = 0,	/* Utility is uninitialized */
+	PSP_UTILITY_COMMON_STATUS_INIT,		/* Utility is currently being initialized */
+	PSP_UTILITY_COMMON_STATUS_RUNNING,	/* Utility is running */
+	PSP_UTILITY_COMMON_STATUS_FINISHED,	/* Utility operation finished */
+	PSP_UTILITY_COMMON_STATUS_SHUTDOWN,	/* Utility is shutting down */
+	PSP_UTILITY_COMMON_STATUS_WAITING,	/* Utility is waiting for next call */
+} pspUtilityCommonStatus;
 
 #endif

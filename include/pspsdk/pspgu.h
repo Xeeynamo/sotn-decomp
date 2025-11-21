@@ -165,6 +165,16 @@ extern "C" {
 #define GU_FILL_OPEN	(2)
 #define GU_OPEN_OPEN	(3)
 
+/* Sprite Flip Type */
+#define GU_NOFLIP	(0)
+#define GU_FLIP_U	(1)
+#define GU_FLIP_V	(2)
+#define GU_FLIP_UV	(3)
+#define GU_NOROTATE	(0)
+#define GU_ROTATE_90	(1)
+#define GU_ROTATE_180	(2)
+#define GU_ROTATE_270	(3)
+
 /* Shading Model */
 #define GU_FLAT			(0)
 #define GU_SMOOTH		(1)

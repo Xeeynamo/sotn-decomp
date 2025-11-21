@@ -45,13 +45,13 @@ typedef struct {
 } Unk08C4218C;
 
 typedef struct {
-    s32 c;
+    u32 c;
     float x, y, z;
 } Vertex;
 
 typedef struct {
     float u, v;
-    s32 c;
+    u32 c;
     float x, y, z;
 } TVertex;
 
@@ -884,20 +884,20 @@ static u16 GetClut(s32 x, s32 y) {
     }
 }
 
-u8* func_psp_0891B8F0(u16 arg0, s32 arg1, s32 arg2) {
+u8* func_psp_0891B8F0(u16 clut, s32 arg1, s32 arg2) {
     Unk08C4218C v;
-    u16 clut;
+    u16 var_s0;
 
-    if (D_psp_08C62AB4 == arg0) {
+    if (D_psp_08C62AB4 == clut) {
         return D_psp_08C62AB8;
     }
-    if (!(arg0 & 0x8000)) {
-        v.y = (arg0 & 0x3F) * 0x10;
-        v.x = arg0 >> 6;
-        if ((arg1 == 1) && (arg2 != 0)) {
-            clut = GetClut(v.y, v.x);
-            if (clut & 0x8000) {
-                D_psp_08C62AB8 = D_psp_08C429C0[clut & 0x7FFF];
+    if (!(clut & 0x8000)) {
+        v.y = (clut & 0x3F) * 0x10;
+        v.x = clut >> 6;
+        if (arg1 == 1 && arg2) {
+            var_s0 = GetClut(v.y, v.x);
+            if (var_s0 & 0x8000) {
+                D_psp_08C62AB8 = D_psp_08C429C0[var_s0 & 0x7FFF];
             } else {
                 func_psp_0891CEB8(v.y, v.x);
                 D_psp_08C62AB8 = D_psp_08C429C0[GetClut(v.y, v.x) & 0x7FFF];
@@ -908,9 +908,9 @@ u8* func_psp_0891B8F0(u16 arg0, s32 arg1, s32 arg2) {
                                [(v.y % 0x40) * 2 + (v.x % 0x100) * 0x80];
         }
     } else {
-        D_psp_08C62AB8 = D_psp_08C429C0[arg0 & 0x7FFF];
+        D_psp_08C62AB8 = D_psp_08C429C0[clut & 0x7FFF];
     }
-    D_psp_08C62AB4 = arg0;
+    D_psp_08C62AB4 = clut;
     return D_psp_08C62AB8;
 }
 
@@ -2114,8 +2114,8 @@ void func_psp_089201E8(SPRT* ptr, TVertex* v, float arg2, float arg3,
                        float arg4, float arg5, u8 arg6) {
     float u0, v0;
     float u1, v1;
-    u32 temp_s2;
-    u32 temp_s1;
+    u16 temp_s2;
+    u16 temp_s1;
     u32 var_s0;
 
     if (arg6 == 0) {
@@ -2125,10 +2125,10 @@ void func_psp_089201E8(SPRT* ptr, TVertex* v, float arg2, float arg3,
     } else if (arg6 == 2) {
         var_s0 = 0x40;
     }
-    temp_s2 = (u16)((u16)ptr->u0 + arg2);
-    temp_s2 = (temp_s2 % (var_s0 & 0xFFFF)) & 0xFFFF;
-    temp_s1 = (u16)((u16)ptr->v0 + arg4);
-    temp_s1 = (temp_s1 % 0x100) & 0xFFFF;
+    temp_s2 = (u16)ptr->u0 + arg2;
+    temp_s2 %= var_s0;
+    temp_s1 = (u16)ptr->v0 + arg4;
+    temp_s1 %= 0x100;
     u0 = temp_s2;
     v0 = temp_s1;
     u1 = u0 + (arg3 - 0.4f);
@@ -2410,7 +2410,7 @@ s32 func_psp_089225D8(POLY_GT3* p) {
     temp_s3 = (ptr->tpage >> 7) & 3;
     var_v0 = unkInlineFunc(ptr->tpage);
     if (temp_s3 != 2) {
-        var_s1 = (u8*)func_psp_0891B8F0(ptr->clut, temp_s3, 1);
+        var_s1 = func_psp_0891B8F0(ptr->clut, temp_s3, 1);
     }
     unkInlineFunc2(var_v0, var_s1, temp_s3);
     if (isSemiTrans(ptr)) {
@@ -2627,7 +2627,7 @@ s32 func_psp_089231F8(POLY_GT4* p) {
         func_psp_08910634(0);
         if (isSemiTrans) {
             func_psp_0891068C(1);
-            func_psp_089106B8(1, 0, 0);
+            func_psp_089106B8(GU_ALWAYS, 0, 0);
             func_psp_089105DC(1);
             func_psp_08911AB8(0, 0, 0);
             func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
@@ -2667,7 +2667,7 @@ s32 func_psp_089231F8(POLY_GT4* p) {
         }
         if (isSemiTrans) {
             func_psp_0891068C(1);
-            func_psp_089106B8(1, 0, 0);
+            func_psp_089106B8(GU_ALWAYS, 0, 0);
             func_psp_089105DC(1);
             func_psp_08911AB8(0, 0, 0);
             func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
@@ -2860,7 +2860,7 @@ s32 func_psp_08923FA4(POLY_GT4* p) {
     temp_s4 = (ptr->tpage >> 7) & 3;
     var_v0 = unkInlineFunc(ptr->tpage);
     if (temp_s4 != 2) {
-        var_s2 = (u8*)func_psp_0891B8F0(ptr->clut, temp_s4, 1);
+        var_s2 = func_psp_0891B8F0(ptr->clut, temp_s4, 1);
     }
     unkInlineFunc2(var_v0, var_s2, temp_s4);
     if (isSemiTrans(ptr)) {

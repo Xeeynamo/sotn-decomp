@@ -48,7 +48,7 @@ typedef enum
 typedef struct _pspUtilityMsgDialogParams
 {
     pspUtilityDialogCommon base;
-    int unknown;
+    int result;
 	pspUtilityMsgDialogMode mode;
 	unsigned int errorValue;
     /** The message to display (may contain embedded linefeeds) */
@@ -71,7 +71,7 @@ int sceUtilityMsgDialogInitStart(pspUtilityMsgDialogParams *params);
  * function you need to keep calling GetStatus and Update until
  * you get a status of 4.
  */
-void sceUtilityMsgDialogShutdownStart(void);
+int sceUtilityMsgDialogShutdownStart(void);
 
 /**
  * Get the current status of a message dialog currently active.
@@ -87,7 +87,7 @@ int sceUtilityMsgDialogGetStatus(void);
  *
  * @param n - unknown, pass 1
  */
-void sceUtilityMsgDialogUpdate(int n);
+int sceUtilityMsgDialogUpdate(int n);
 
 /**
  * Abort a message dialog currently active

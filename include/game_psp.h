@@ -1,5 +1,9 @@
 #include <common.h>
 
+// This is just a guess, but it is required to have the correct struct size for
+// SceUtilitySavedataParam
+#define _PSP_FW_VERSION 200
+
 // On PSP side this is compared against g_UserLanguage / 0x08B42058
 // which is the system language of the console. Used to determine the
 // language of various strings to display in-game

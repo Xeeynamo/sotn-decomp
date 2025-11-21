@@ -35,6 +35,11 @@ extern "C" {
 
 /**@{*/
 
+/* thread priority */
+#define KERNEL_USER_HIGHEST_PRIORITY        16
+#define KERNEL_MODULE_INIT_PRIORITY         32
+#define KERNEL_USER_LOWEST_PRIORITY         111
+
 /** 64-bit system clock type. */
 typedef struct SceKernelSysClock {
 	SceUInt32   low;

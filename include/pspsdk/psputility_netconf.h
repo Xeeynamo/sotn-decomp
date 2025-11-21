@@ -68,7 +68,7 @@ int sceUtilityNetconfUpdate (int unknown);
 /**
  * Get the status of a running Network Configuration Dialog
  *
- * @return one of pspUtilityDialogState on success, < 0 on error
+ * @return one of pspUtilityCommonStatus on success, < 0 on error
  */
 int sceUtilityNetconfGetStatus (void);
 
