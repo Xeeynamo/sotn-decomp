@@ -174,6 +174,71 @@ files:
           - [0x14018, cmpgfx, us/D_80194018, 128, 128, 4]
           - [0x15274, cmpgfx, D_80195274, 128, 128, 4]
           - [0x162F4, skip]
+  - target: disks/us/ST/CAT/CAT.BIN
+    asset_path: assets/st/cat
+    src_path: src/st/cat
+    splat_config_path: config/splat.us.stcat.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+            - [0x2C, sprite_banks, us/sprite_banks]
+            - [0x8C, palette, pal_02F, 16] # 0x02F
+            - [0xCC, palette, pal_07C, 16] # 0x07C
+            - [0x24C, palette, pal_091, 16] # 0x091
+            - [0x2EC, palette, pal_096, 16] # 0x096
+            - [0x34C, palette, pal_094, 16] # 0x094
+            - [0x38C, palette, pal_09C, 16] # 0x09C
+            - [0x3CC, palette, pal_3CC, 16]
+            - [0x40C, palette, pal_0A0, 16] # 0x0A0
+            - [0x58C, paldef, palette_def]
+            - [0x744, skip] # multiple cluts here are not importing correctly, see issue #2401
+            - [0x770, layers, layers]
+            - [0xBC8, gfx_banks, us/graphics_banks]
+            - [0xE24, layout, entity_layouts]
+            - [0xFCC, skip]
+            - [0x2AF0, rooms, rooms]
+            - [0x2BE4, skip]
+            - [0x3DA4, cmpgfx, gfx_unk_3DA4, 128, 128, 4,]
+            - [0x56D0, cmpgfx, gfx_wereskeleton, 128, 128, 4, 0x16C38]
+            - [0x5E00, cmpgfx, gfx_thornweed_corpseweed, 128, 128, 4, 0x16C78]
+            - [0x6B8C, cmpgfx, gfx_breakable, 128, 128, 4, 0x16CF8]
+            - [0x7540, cmpgfx, gfx_blood_skeleton, 128, 128, 4, 0x16DF8]
+            - [0x80D0, cmpgfx, gfx_stage_name_en, 128, 128, 4]
+            - [0x839C, cmpgfx, gfx_unk_839C, 128, 128, 4]
+            - [0xA320, cmpgfx, gfx_unk_A320, 128, 128, 4, 0x17038]
+            - [0xAC48, cmpgfx, gfx_bone_ark, 128, 128, 4, 0x17078]
+            - [0xBD70, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4]
+            - [0xD490, cmpgfx, gfx_discus_lord_1, 128, 128, 4, 0x170F8]
+            - [0xE00C, cmpgfx, gfx_discus_lord_2, 128, 128, 4, 0x170F8]
+            - [0xEB58, cmpgfx, gfx_hellfire_beast, 128, 128, 4]
+            - [0xF32C, cmpgfx, gfx_hellfire_beast_lightning, 128, 128, 4]
+            - [0xF99C, cmpgfx, gfx_unk_F99C, 128, 128, 4]
+            - [0x10348, cmpgfx, gfx_unk_10348, 128, 128, 4]
+            - [0x11240, cmpgfx, gfx_unk_11240, 128, 128, 4]
+            - [0x11930, cmpgfx, gfx_unk_11930, 128, 128, 4]
+            - [0x128AC, cmpgfx, gfx_lossoth, 128, 128, 4, 0x169D8]
+            - [0x135B0, cmpgfx, gfx_lossoth_fireball, 128, 128, 4]
+            - [0x13E68, cmpgfx, gfx_grave_keeper, 128, 128, 4, 0x16B78]
+            - [0x14ACC, cmpgfx, gfx_grave_keeper_tombstone, 128, 128, 4, 0x16B78]
+            - [0x153C0, cmpgfx, gfx_gremlin, 128, 128, 4, 0x16BB8]
+            - [0x15DE0, cmpgfx, gfx_slime, 128, 128, 4, 0x17478]
+            - [0x16718, palette, pal_2E0, 16] # 0x2E0
+            - [0x169D8, palette, pal_lossoth, 16] # 0x216
+            - [0x16B78, palette, pal_grave_keeper_tombstone, 16] # 0x236
+            - [0x16BB8, palette, pal_gremlin, 16] # 0x238
+            - [0x16C38, palette, pal_wereskeleton, 16] # 0x250
+            - [0x16C78, palette, pal_thornweed_corpseweed, 16] # 0x252
+            - [0x16CF8, palette, pal_breakable, 16] # 0x256
+            - [0x16DF8, palette, pal_blood_skeleton, 16] # 0x262
+            - [0x16E98, palette, pal_208, 16] # 0x208
+            - [0x17038, palette, pal_214, 16] # 0x214
+            - [0x17078, palette, pal_bone_ark, 16] # 0x200
+            - [0x170F8, palette, pal_discus_lord, 16] # 0x224
+            - [0x17298, palette, pal_231, 16] # 0x231
+            - [0x17338, palette, pal_246, 16] # 0x246
+            - [0x17478, palette, pal_slime, 16] # 0x204
+            - [0x174F8, skip]
   - target: disks/us/ST/CEN/CEN.BIN
     asset_path: assets/st/cen
     src_path: src/st/cen
