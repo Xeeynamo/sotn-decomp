@@ -100,6 +100,7 @@
 | main  | SsSetMVol                                |        9 |          1 |        |       |     |
 | main  | SsSetSerialAttr                          |        9 |          1 |        |       |     |
 | main  | SsUtSetReverbDepth                       |        9 |          1 |        |       |     |
+| main  | func_psp_08930A0C                        |        9 |          1 |        |       |     |
 | main  | func_psp_089125F8                        |        9 |          1 |        |       |     |
 | main  | func_psp_0891273C                        |        9 |          1 |        |       |     |
 | main  | func_psp_0891274C                        |        9 |          1 |        |       |     |
@@ -114,7 +115,6 @@
 | main  | gte_strgb                                |        9 |          1 |        |       |     |
 | main  | gte_stsxy                                |        9 |          1 |        |       |     |
 | main  | waitPlayMode                             |        9 |          1 |        |       |     |
-| main  | func_psp_08930A0C                        |        9 |          1 |        |       |     |
 | main  | func_psp_08933F5C                        |        9 |          1 |        |       |     |
 | main  | func_psp_08933F6C                        |        9 |          1 |        |       |     |
 | main  | sceGuClearDepth                          |        9 |          1 |        |       |     |
@@ -212,12 +212,12 @@
 | main  | func_psp_089195A0                        |       13 |          1 |        |       |     |
 | main  | func_psp_08919F28                        |       13 |          1 |        |       |     |
 | main  | func_psp_0891B0BC                        |       13 |          1 |        |       |     |
+| main  | func_psp_0892FCA8                        |       13 |          1 |        |       |     |
 | main  | func_psp_08914AE8                        |       13 |          1 |        |       |     |
 | main  | func_psp_08914C20                        |       13 |          1 |        |       |     |
 | main  | func_psp_089162A8                        |       13 |          1 |        |       |     |
 | main  | func_psp_089162F0                        |       13 |          1 |        |       |     |
 | main  | TransMatrix                              |       13 |          1 |        |       |     |
-| main  | func_psp_0892FCA8                        |       13 |          1 |        |       |     |
 | main  | sceGuTexFlush                            |       13 |          1 |        |       |     |
 | main  | sceGuTexSync                             |       13 |          1 |        |       |     |
 | main  | func_psp_08935934                        |       13 |          1 |        |       |     |
@@ -241,12 +241,12 @@
 | main  | _times                                   |       14 |          1 |        |       |     |
 | main  | func_psp_0890641C                        |       14 |          1 |        |       |     |
 | main  | isatty                                   |       14 |          1 |        |       |     |
+| main  | func_psp_0892FA84                        |       14 |          1 |        |       |     |
 | main  | DpqColor                                 |       14 |          1 |        |       |     |
 | main  | NormalColorDpq                           |       14 |          1 |        |       |     |
 | main  | func_psp_089260AC                        |       14 |          1 |        |       |     |
 | main  | func_psp_089260D0                        |       14 |          1 |        |       |     |
 | main  | func_psp_0892D130                        |       14 |          1 |        |       |     |
-| main  | func_psp_0892FA84                        |       14 |          1 |        |       |     |
 | main  | sceGuDepthFunc                           |       14 |          1 |        |       |     |
 | main  | sceGuDepthMask                           |       14 |          1 |        |       |     |
 | main  | sceVfpuVector4IsEqual                    |       14 |          1 |        |       |     |
@@ -325,8 +325,8 @@
 | main  | func_psp_08919E44                        |       15 |          2 |        |       |     |
 | main  | func_psp_08919F48                        |       15 |          2 |        |       |     |
 | main  | func_psp_089262C4                        |       15 |          2 |        |       |     |
-| main  | RotAverage4                              |       15 |          2 |        |       |     |
 | main  | func_psp_0892FC80                        |       15 |          2 |        |       |     |
+| main  | RotAverage4                              |       15 |          2 |        |       |     |
 | main  | sceGuClear                               |       15 |          2 |        |       |     |
 | main  | sceGuDepthOffset                         |       15 |          2 |        |       |     |
 | main  | sceGuFrontFace                           |       15 |          2 |        |       |     |
@@ -1298,9 +1298,9 @@
 | dra   | func_psp_0913E658                        |       37 |          5 |        |       |     |
 | dra   | func_psp_09141570                        |       37 |          5 |        |       |     |
 | main  | func_psp_08919208                        |       37 |          5 |        |       |     |
+| main  | func_psp_08931410                        |       37 |          5 |        |       |     |
 | main  | func_psp_08927C5C                        |       37 |          5 |        |       |     |
 | main  | func_psp_0892A76C                        |       37 |          5 |        |       |     |
-| main  | func_psp_08931410                        |       37 |          5 |        |       |     |
 | ric   | func_pspeu_092AF600                      |       37 |          5 |        |       |     |
 | dra   | func_psp_091162B8                        |       37 |          6 |        |       |     |
 | main  | func_psp_089195C0                        |       37 |          6 |        |       |     |
@@ -1544,8 +1544,8 @@
 | nz1   | func_pspeu_09259D98                      |       43 |          1 |        |       |     |
 | dra   | func_psp_090ECCC0                        |       43 |          3 |        |       |     |
 | dra   | func_psp_090ECE88                        |       43 |          3 |        |       |     |
-| main  | func_psp_0892BF48                        |       43 |          3 |        |       |     |
 | main  | func_psp_0892FB58                        |       43 |          3 |        |       |     |
+| main  | func_psp_0892BF48                        |       43 |          3 |        |       |     |
 | sel   | func_psp_09239640                        |       43 |          3 |        |       |     |
 | sel   | func_psp_09239898                        |       43 |          3 |        |       |     |
 | dra   | func_psp_090ED9E0                        |       43 |          4 |        |       |     |
@@ -1814,8 +1814,8 @@
 | main  | func_psp_08937228                        |       54 |          5 |        |       |     |
 | ric   | func_pspeu_092BA540                      |       54 |          5 |        |       |     |
 | main  | __ratio                                  |       54 |          6 |        |       |     |
-| main  | func_psp_0892DADC                        |       54 |          6 |        |       |     |
 | main  | func_psp_0892FAA8                        |       54 |          6 |        |       |     |
+| main  | func_psp_0892DADC                        |       54 |          6 |        |       |     |
 | ric   | func_pspeu_092AF9D0                      |       54 |          8 |        |       |     |
 | ric   | func_pspeu_092AF680                      |       54 |          9 |        |       |     |
 | main  | __sigtramp_r                             |       54 |         10 |        |       |     |
