@@ -665,7 +665,7 @@ void PlayerStepUnmorphWolf(void) {
             PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
 #endif
 
-            func_8010E4D0();
+            CheckPlayerStuck();
         }
     }
 }
