@@ -12,23 +12,6 @@ from collections import defaultdict, namedtuple
 Symbol = namedtuple("Symbol", ["name", "address", "comment"])
 
 
-def shell(cmd, env_vars={}, version=""):
-    """Executes a string as a shell command and returns its output"""
-    env = os.environ.copy()
-    # Allow for passing VERSION to the command, but do not set VERSION if an empty string is passed to this function for version
-    if version:
-        env["VERSION"] = version
-    env.update(env_vars)
-    if isinstance(cmd, str):
-        cmd = cmd.split()
-    cmd_output = run(cmd, env=env, capture_output=True)
-    if cmd_output.returncode != 0:
-        print(cmd_output.stdout, file=sys.stdout)
-        print(cmd_output.stderr, file=sys.stderr)
-        raise CalledProcessError(cmd_output.returncode, cmd, cmd_output.stderr)
-    return cmd_output.stdout
-
-
 def get_symbol_files(symbols_paths):
     symbol_files = []
     for symbols_path in symbols_paths:
@@ -466,10 +449,17 @@ def get_symbols(file_path, excluded_starts=[], excluded_ends=[], excluded_commen
                 r"\s+0x(?P<address>[A-Fa-f0-9]{8})\s+(?P<name>[A-Z_a-z]\w+)\n", text
             )
         case ".elf":
-            text = shell(f"nm -U {file_path}").decode()
+            cmd_output = run(["nm", "-U", file_path], capture_output=True)
+            if cmd_output.returncode != 0:
+                print(cmd_output.stdout, file=sys.stdout)
+                print(cmd_output.stderr, file=sys.stderr)
+                raise CalledProcessError(
+                    cmd_output.returncode, f"nm -U {file_path}", cmd_output.stderr
+                )
             # matches format '8018098c T g_EInitCommon', excluding A types
             matches = re.finditer(
-                r"(?P<address>[A-Fa-f0-9]{8})\s+[^A]\s+(?P<name>[A-Z_a-z][\w\.]+)", text
+                r"(?P<address>[A-Fa-f0-9]{8})\s+[^A]\s+(?P<name>[A-Z_a-z][\w\.]+)",
+                cmd_output.stdout.decode(),
             )
         case ".txt" | _ if ".txt" in file_path.suffixes:
             text = file_path.read_text()
