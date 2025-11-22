@@ -44,6 +44,7 @@ parser.add_argument(
 class Options:
     show_symbol_source: bool = False
 
+
 def print_elf_symbols(file, elf_file_name, no_default):
     with subprocess.Popen(
         args=["nm", "-U", elf_file_name],
@@ -86,6 +87,7 @@ def print_elf_symbols(file, elf_file_name, no_default):
             continue
         print(f"{name} = 0x{offset:08X}; // allow_duplicated:True", file=file)
 
+
 def sort_symbols_from_file(symbol_file_name):
     with open(symbol_file_name, "r") as symbol_file:
         offsets = []
@@ -105,6 +107,7 @@ def sort_symbols_from_file(symbol_file_name):
             list[-1] += "\n"
         with open(symbol_file_name, "w") as symbol_file:
             symbol_file.writelines(sorted_lines)
+
 
 ##### GENERIC UTILITIES
 
@@ -601,7 +604,7 @@ def append_segments(
         segment = known_segments[offset]
         if offset == section_start:
             segments.append(
-                f"      - [0x{offset:X}, c, {prefix}{default_segment}] # {segment["name"]}\n"
+                f"      - [0x{offset:X}, c, {prefix}{default_segment}] # {segment['name']}\n"
             )
             last_offset = align(offset + segment["size"], alignment)
             continue
@@ -612,7 +615,7 @@ def append_segments(
             )
 
         segments.append(
-            f"      # - [0x{offset:X}, c, {prefix}{default_segment}] # {segment["name"]}\n"
+            f"      # - [0x{offset:X}, c, {prefix}{default_segment}] # {segment['name']}\n"
         )
         last_offset = align(offset + segment["size"], alignment)
 
