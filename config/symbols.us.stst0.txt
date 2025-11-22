@@ -1,14 +1,1 @@
-g_EInit3DObject = 0x801805D4;
-g_collectVelocity = 0x80181E3C;
-EntityCutscene = 0x801AA290;
-EntitySecretButton = 0x801AA8DC;
-EntitySecretStairs = 0x801AACB4;
-EntityStageTitleFadeout = 0x801AB0C8;
-EntityStageTitleCard = 0x801AB5E4;
-EntityDracula = 0x801AC564;
-EntityDraculaFinalForm = 0x801ADD60;
-PrologueScroll = 0x801B0464;
-EntityEquipItemDrop = 0x801B6D34;
-EntityClouds = 0x801BAB08;
-EntityClockTower3D = 0x801BB2AC;
-EntityCutscenePhotograph = 0x801BB764;
+

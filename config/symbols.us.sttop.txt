@@ -5,54 +5,13 @@ TOP_rooms_layers = 0x801805C8;
 TOP_gfxBanks = 0x801806F0;
 TOP_pStObjLayoutHorizontal = 0x80180740;
 TOP_pStObjLayoutVertical = 0x80180814;
-TOP_EntityUpdates = 0x801808E8;
-g_EInitObtainable = 0x801809A0;
-g_EInitParticle = 0x801809AC;
-g_EInitSpawner = 0x801809B8;
-g_EInitInteractable = 0x801809C4;
-g_EInitUnkId13 = 0x801809D0;
-g_EInitLockCamera = 0x801809DC;
-g_EInitCommon = 0x801809E8;
-g_EInitDamageNum = 0x801809F4;
-g_EInitTOPCommon = 0x80180A00;
-g_EInitFleaRider = 0x80180A0C;
-g_EInitAxeKnight = 0x80180A18;
-g_EInitAxeKnightAxe = 0x80180A24;
-TOP_BackgroundBlockInit = 0x80180A40;
-TOP_RedDoorTiles = 0x80180A68;
-entityLockCameraHitbox = 0x80180A98;
-entityLockCameraData = 0x80180AA0;
-entityLockCameraTilemapProps = 0x80180AA8;
 D_us_80180CC8 = 0x80180CC8;
 LionLampAnim = 0x80180CF0;
 TOP_PrizeDrops = 0x80180D10;
 actor_names = 0x80180DE4;
-g_eRedDoorUV = 0x80181234;
-g_goldCollectTexts = 0x801815C0;
-g_bigRedFireballAnim = 0x801816A4;
-sensors_move = 0x801819BC;
-sensors_ground = 0x801819C4;
-dead_particle_pos = 0x801819D4;
-anim_walk_alt = 0x801819F4;
-anim_throw_stand_alt = 0x80181A04;
-anim_throw_duck_alt = 0x80181A1C;
-anim_charge_swing_alt = 0x80181A30;
-anim_charge_final_slice_alt = 0x80181A3C;
-anim_walk = 0x80181A4C;
-anim_throw_duck = 0x80181A5C;
-anim_charge_final_slice = 0x80181A70;
-anim_throw_stand = 0x80181A80;
-anim_charge_swing = 0x80181A98;
-anim_die = 0x80181AA4;
-hitboxes = 0x80181AB0;
-hitbox_lookup = 0x80181AC0;
-hitboxes_2 = 0x80181AF0;
-hitbox_2_lookup = 0x80181B28;
-init_velocity_x = 0x80181B60;
-init_velocity_y = 0x80181B6C;
 TOP_rooms = 0x80181B78;
 cloudVectorOne = 0x80181C44;
-cloudVectorTwo =  0x80181C4C;
+cloudVectorTwo = 0x80181C4C;
 cloudVectorThree = 0x80181C54;
 cloudVectorFour = 0x80181C5C;
 data = 0x80181CE4;
@@ -64,40 +23,7 @@ s_ClockTowerScript = 0x80182008;
 s_ClockVertexSets = 0x8018207C;
 TOP_cutscene_data = 0x80182C08;
 sprites_3 = 0x801A6490;
-TOP_EntityBackgroundBlock = 0x801A8C38; // source=match
-TOP_EntityLockCamera = 0x801A8D84;
-TOP_EntityCutscene = 0x801AC104; // source=duplicate
-Update = 0x801AD660; // source=match
-UpdateStageEntities = 0x801AD95C; // source=match
-HitDetection = 0x801ADA64; // source=match
-EntityDamageDisplay = 0x801AEB7C; // source=match
-InitRoomEntities = 0x801AFA7C; // source=match
-UpdateRoomPosition = 0x801AFBF4; // source=match
-TOP_EntityRedDoor = 0x801AFE10; // source=match
-EntityDummy = 0x801B1854; // source=match
-EntityPrizeDrop = 0x801B2468; // source=match
-EntityExplosion = 0x801B2CDC; // source=match
-EntityEquipItemDrop = 0x801B2E7C; // source=match
-EntityRelicOrb = 0x801B3714; // source=match
-EntityHeartDrop = 0x801B41E4; // source=match
-EntityMessageBox = 0x801B430C; // source=match
-EntityUnkId13 = 0x801B4958; // source=match
-EntityExplosionVariants = 0x801B4C80; // source=match
-EntityGreyPuff = 0x801B4D70; // source=match
-EntityIntenseExplosion = 0x801B5710; // source=match
-InitializeUnkEntity = 0x801B5810; // source=match
-EntityStageNamePopup = 0x801B6DD4; // source=match
-EntitySoulStealOrb = 0x801B7A58; // source=match
-EntityEnemyBlood = 0x801B7DEC; // source=match
-EntityRoomForeground = 0x801B829C; // source=match
-EntityFleaRider = 0x801B86B8;
-EntityAxeKnightBlue = 0x801B96A8; // source=match
-EntityAxeKnightThrowingAxe = 0x801BA144; // source=match
-func_us_801CBA30 = 0x801BA2D4; // source=match
-EntityClouds = 0x801BABF8;
-EntityClockTower3D = 0x801BB354; // source=duplicate
 g_SkipCutscene = 0x801BC460;
 g_Dialogue = 0x801BC464; // size=0x44
 g_CutsceneFlags = 0x801BC510;
 g_IsCutsceneDone = 0x801BC518;
-g_ItemIconSlots = 0x801BC51C;

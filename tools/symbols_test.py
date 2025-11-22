@@ -3,26 +3,54 @@
 import os
 import sys
 import unittest
+import tempfile
+from pathlib import Path
 
 sys.path.append(os.getcwd())
-from tools.symbols import asm_tokenize_line, get_non_matching_symbols, sort_symbols
+from tools.symbols import asm_tokenize_line, get_non_matching_symbols, sort
 
 
 class TestSortSymbols(unittest.TestCase):
     def test_sort_symbol_list_based_on_their_offset(self):
-        sorted = sort_symbols(
-            ["sym2 = 0x5678; // some comment", "sym3 = 0x9ABC;", "sym1 = 0x1234;"]
-        )
+        symbols = [
+            "sym2 = 0x80185678; // some comment",
+            "sym3 = 0x80189ABC;",
+            "sym1 = 0x80181234;",
+        ]
+        with tempfile.NamedTemporaryFile(
+            mode="w+", suffix=".txt", delete_on_close=False
+        ) as tmp:
+            tmp.write("\n".join(symbols) + "\n")
+            tmp.seek(0)
+            sort(tmp.name)
+            sorted = tmp.read().rstrip("\n").splitlines()
+
         self.assertEqual(
             sorted,
-            ["sym1 = 0x1234;", "sym2 = 0x5678; // some comment", "sym3 = 0x9ABC;"],
+            [
+                "sym1 = 0x80181234;",
+                "sym2 = 0x80185678; // some comment",
+                "sym3 = 0x80189ABC;",
+            ],
         )
 
     def test_remove_duplicates_with_same_name_and_offset(self):
-        sorted = sort_symbols(
-            ["func_stuff = 0x1234;", "func_stuff = 0x1234;", "out_of_order = 0x0;"]
+        symbols = [
+            "func_stuff = 0x80181234;",
+            "func_stuff = 0x80181234;",
+            "out_of_order = 0x0;",
+        ]
+        with tempfile.NamedTemporaryFile(
+            mode="w+", suffix=".txt", delete_on_close=False
+        ) as tmp:
+            tmp.write("\n".join(symbols) + "\n")
+            tmp.seek(0)
+            sort(tmp.name)
+            sorted = tmp.read().rstrip("\n").splitlines()
+
+        self.assertEqual(
+            sorted, ["out_of_order = 0x00000000;", "func_stuff = 0x80181234;"]
         )
-        self.assertEqual(sorted, ["out_of_order = 0x0;", "func_stuff = 0x1234;"])
 
 
 class TestTokenizeAssembly(unittest.TestCase):

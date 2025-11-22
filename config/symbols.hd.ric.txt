@@ -1,5 +1,5 @@
-g_RicComboButtons = 0x80175834; // size:0x08
+g_RicComboButtons = 0x80175834; // size:0x8
 D_801758E6 = 0x8017583A;
-g_RicDebug = 0x801758A4; // size:0x08
+g_RicDebug = 0x801758A4; // size:0x8
 D_80175958 = 0x801758AC;
 D_801759D8 = 0x8017592C;

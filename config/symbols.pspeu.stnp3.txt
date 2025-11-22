@@ -225,5 +225,3 @@ D_psp_E_EXPLOSION_VARIANTS = 0x09291E50;
 D_psp_E_ID_13 = 0x09291E58;
 D_psp_E_ID_12 = 0x09291E60;
 D_psp_E_ID_11 = 0x09291E68;
-slograGaibonRetreat = 0x09291E80;
-g_ItemIconSlots = 0x09291ED0;
