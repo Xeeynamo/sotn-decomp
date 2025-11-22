@@ -1,6 +1,8 @@
+a3bc73aaa3dc4b873c84a3c0b90e46366f5bbaa9  build/pspeu/main.exe
 2ba697c152e240ee0d69619f4a460d145fae04c0  build/pspeu/dra.bin
 d50f2c928f7a01fb489628658f4c72a029befbd4  build/pspeu/maria.bin
 9fd233b8334468c1c750547d0b772a8d58357f8c  build/pspeu/ric.bin
+655183190ea16eb3f0404d68fbbae93e0245aa45  build/pspeu/are.bin
 cf9e412d9f72698fefa72e53a19c54f0a1fb4815  build/pspeu/cat.bin
 6d2113b98203cfd239b58a7822910f9febb4c1ef  build/pspeu/chi.bin
 91f0ea1eaff4cf7a3773ee63cf516ef167bf73e3  build/pspeu/dai.bin
@@ -10,8 +12,7 @@ d686a707122484c54e8b9c7602b96c1a55a0fbe1  build/pspeu/no2.bin
 769a78f5c964dd8ff29754c346bbf5857ae67558  build/pspeu/no4.bin
 78660301541f3b90d2b6d39d9b7dde4343481b65  build/pspeu/np3.bin
 dcb6e7584126ea9711f5832d486bd163e3b266b0  build/pspeu/nz1.bin
+38fdfe8c3e0e3260e8462aaaf2261d7d6a4b8961  build/pspeu/sel.bin
 f40689641eda2ab9de69b6aed15a200717827628  build/pspeu/st0.bin
 0584ddb3ba1afce61592d43497212fcb8ebf797b  build/pspeu/wrp.bin
 c8c34ac1d46b31e2e5336df271aa2409f44c9d01  build/pspeu/tt_000.bin
-38fdfe8c3e0e3260e8462aaaf2261d7d6a4b8961  build/pspeu/sel.bin
-a3bc73aaa3dc4b873c84a3c0b90e46366f5bbaa9  build/pspeu/main.exe
