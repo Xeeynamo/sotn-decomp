@@ -39,7 +39,10 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, header]
+      - [0x2C, data]
+      - [0x958, .data, e_init]
+      - [0xC84, data]
       - [0x352B0, .rodata, e_breakable]
       - [0x352D4, .rodata, unk_3628C]
       - [0x352EC, .rodata, e_cavern_door]

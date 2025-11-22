@@ -9,8 +9,7 @@ INCLUDE_ASM("st/are/nonmatchings/unk_4A2AC", func_us_801CA5A4);
 
 INCLUDE_ASM("st/are/nonmatchings/unk_4A2AC", EntityArmorLordFireWave);
 
-void ARE_Unused_801CACB0(void) {
-}
+void ARE_Unused_801CACB0(void) {}
 
 INCLUDE_ASM("st/are/nonmatchings/unk_4A2AC", func_us_801CACB8);
 

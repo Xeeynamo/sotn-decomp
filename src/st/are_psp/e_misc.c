@@ -13,7 +13,7 @@ INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/e_misc", EntityGreyPuff);
 
 INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/e_misc", EntityIntenseExplosion);
 
-INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/e_misc", func_pspeu_09253D80);
+INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/e_misc", InitializeUnkEntity);
 
 INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/e_misc", MakeEntityFromId);
 

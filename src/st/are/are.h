@@ -7,12 +7,11 @@
 #define OVL_EXPORT(x) ARE_##x
 #define STAGE_IS_ARE
 
-
-enum OVL_EXPORT(Palettes) {
+enum Palettes {
     PAL_NONE,
 };
 
-enum OVL_EXPORT(Entities) {
+enum Entities {
     E_NONE,
     E_BREAKABLE,                // OVL_EXPORT(EntityBreakable)
     E_EXPLOSION,                // EntityExplosion
@@ -61,8 +60,8 @@ enum OVL_EXPORT(Entities) {
     E_OWL_KNIGHT_SWORD,         // EntityOwlKnightSword
     E_OWL_TARGET,               // EntityOwlTarget
     E_VALHALLA_KNIGHT,          // EntityValhallaKnight
-    E_UNK_30,                   // func_us_801C886C
-    E_UNK_31,                   // func_us_801C89C4
+    E_UNK_30,                   // func_us_801C8954
+    E_UNK_31,                   // func_us_801C8AAC
     E_AXE_KNIGHT_BLUE,          // EntityAxeKnightBlue
     E_AXE_KNIGHT_THROWING_AXE,  // EntityAxeKnightThrowingAxe
     E_UNK_34,                   // func_us_801CA2AC

@@ -11,15 +11,15 @@ INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_pspeu_09247638);
 
 INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", StepTowards);
 
-INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_pspeu_092479D0);
+INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", EntityPlateLord);
 
-INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_pspeu_0924A2C0);
+INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_us_801D2238);
 
-INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_pspeu_0924A4D0);
+INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_us_801D23B4);
 
-INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_pspeu_0924ADC0);
+INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_us_801D29B8);
 
-INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_pspeu_0924B178);
+INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_us_801D2BC0);
 
 INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_pspeu_0924B3A8);
 
@@ -37,6 +37,6 @@ INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_pspeu_0924BB18);
 
 INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_pspeu_0924BC30);
 
-INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_pspeu_0924BD30);
+INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_FAB0", func_us_801D3340);
 
 INCLUDE_RODATA("st/are_psp/nonmatchings/are_psp/unk_FAB0", D_pspeu_09297D90);
