@@ -2932,7 +2932,7 @@ void PlayerStepUnmorphBat(void) {
         break;
     case 2:
         if (g_Player.unk66 == 3) {
-            func_8010E4D0();
+            CheckPlayerStuck();
         }
         break;
     }
@@ -3285,7 +3285,7 @@ void PlayerStepUnmorphMist(void) {
             CreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x5b), 0);
             if (PLAYER.step_s) {
-                func_8010E4D0();
+                CheckPlayerStuck();
                 return;
             }
             func_8010E83C(0);

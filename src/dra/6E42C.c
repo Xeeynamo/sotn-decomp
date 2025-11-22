@@ -23,8 +23,10 @@ void func_8010E470(s32 arg0, s32 arg1) {
     SetPlayerAnim(D_800ACF4C[arg0 * 2 + 1]);
 }
 
-// This may be the function that turns Alucard into stone
-void func_8010E4D0(void) {
+// If the player unmorphs from bat, wolf, mist in an area
+// that is too small to fit Alucard standing, he will get stuck
+// and exclaim "WHAT?".
+void CheckPlayerStuck(void) {
     func_80111CC0();
 
     PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
