@@ -1,148 +1,77 @@
 #!/usr/bin/env python3
 
 import argparse
-import subprocess
-import mapfile_parser
 import os
-from pathlib import Path
 import re
 import sys
-import yaml
-from collections import OrderedDict
+from pathlib import Path
+from yaml import safe_load
+from subprocess import CalledProcessError, run
+from collections import defaultdict, namedtuple
 
-parser = argparse.ArgumentParser(description="Perform operations on game symbols")
-parser.add_argument("--version", required=False, type=str, help="Game version")
-subparsers = parser.add_subparsers(dest="command")
-
-sort_parser = subparsers.add_parser(
-    "sort", description="Sort all the symbols of a given GNU LD script by their offset"
-)
-
-cross_parser = subparsers.add_parser(
-    "cross",
-    description="Cross-reference the symbols between two assembly files and print the result to stdout for GNU LD. Useful to cross-reference symbols between different overlays or game revisions. The assemblies must be identical.",
-)
-cross_parser.add_argument(
-    "ref",
-    help="Assembly source file to use as a base reference",
-)
-cross_parser.add_argument(
-    "to_cross",
-    help="Assembly source file to be cross-referenced to",
-)
-
-orphan_parser = subparsers.add_parser(
-    "remove-orphans",
-    description="Remove all symbols that are not referenced from a specific group of assembly code",
-)
-orphan_parser.add_argument(
-    "config_yaml",
-    help="The Splat YAML config of the overlay to remove the orphan symbols from",
-)
-
-map_parser = subparsers.add_parser(
-    "map",
-    description="Print the list of symbols from a map file",
-)
-map_parser.add_argument(
-    "map_file_name",
-    help="The map file to extract the symbols from",
-)
-map_parser.add_argument(
-    "--no-default",
-    required=False,
-    action="store_true",
-    help="Do not include Splat default symbols that starts with D_ or func_",
-)
-
-elf_parser = subparsers.add_parser(
-    "elf",
-    description="Print the list of symbols from an elf file",
-)
-elf_parser.add_argument(
-    "elf_file_name",
-    help="The elf file to extract the symbols from",
-)
-elf_parser.add_argument(
-    "--no-default",
-    required=False,
-    action="store_true",
-    help="Do not include Splat default symbols that starts with D_ or func_",
-)
-
-dynamic_parser = subparsers.add_parser(
-    "dynamic",
-    description="Print the list of dynamic symbols from an elf file that are not included in static symbol tables.",
-)
-dynamic_parser.add_argument(
-    "config_yaml",
-    help="The Splat YAML config of the overlay to generate the dynamic symbol list from",
-)
+Symbol = namedtuple("Symbol", ["name", "address", "comment"])
 
 
-def is_splat_symbol_name(name):
-    return (
-        name.startswith("D_")
-        or name.startswith("func_")
-        or name.startswith("jpt_")
-        or name.startswith("jtbl_")
-    )
+def shell(cmd, env_vars={}, version=""):
+    """Executes a string as a shell command and returns its output"""
+    env = os.environ.copy()
+    # Allow for passing VERSION to the command, but do not set VERSION if an empty string is passed to this function for version
+    if version:
+        env["VERSION"] = version
+    env.update(env_vars)
+    if isinstance(cmd, str):
+        cmd = cmd.split()
+    cmd_output = run(cmd, env=env, capture_output=True)
+    if cmd_output.returncode != 0:
+        print(cmd_output.stdout, file=sys.stdout)
+        print(cmd_output.stderr, file=sys.stderr)
+        raise CalledProcessError(cmd_output.returncode, cmd, cmd_output.stderr)
+    return cmd_output.stdout
 
 
-def add_newline_if_missing(list):
-    if len(list) > 0:
-        if not list[-1].endswith("\n"):
-            list[-1] += "\n"
-    return list
-
-
-def sort_symbols(syms):
-    offsets = []
-    for line in syms:
-        if line.startswith("//"):
-            # ignore comments
+def get_symbol_files(symbols_paths):
+    symbol_files = []
+    for symbols_path in symbols_paths:
+        if symbols_path.is_dir():
+            symbol_files.extend(
+                file
+                for file in symbols_path.iterdir()
+                if args.version in file.name
+                and (
+                    file.name.startswith("symbols.")
+                    or file.name.startswith("undefined_syms.")
+                )
+                and file.suffix == ".txt"
+            )
+        elif symbols_path.is_file():
+            symbol_files.append(symbols_path)
+        else:
+            print(f"{args.symbols_path} does not exist")
             continue
 
-        parts = line.strip().split()
-        if len(parts) >= 3:
-            offset = int(parts[2].rstrip(";"), 16)
-            offsets.append((line, offset))
-    original_offsets = offsets.copy()
-    offsets.sort(key=lambda x: x[1])
-    if original_offsets == offsets:
-        return None
-    return list(OrderedDict.fromkeys([line[0] for line in offsets]))
+    if symbol_files:
+        return symbol_files
+    else:
+        raise FileNotFoundError
 
 
-# rewrite the same file with an ordered symbol list
-def sort_symbols_from_file(symbol_file_name):
-    with open(symbol_file_name, "r") as symbol_file:
-        sorted_lines = sort_symbols(symbol_file)
+def sort(symbols_paths):
+    if isinstance(symbols_paths, (str, Path)):
+        symbols_paths = (symbols_paths,)
 
-    # avoid writing the file if no symbols were reordered. touching the file
-    # will cause a rebuild of all dependent sources of that overlay
-    if sorted_lines:
-        add_newline_if_missing(sorted_lines)
-        with open(symbol_file_name, "w") as symbol_file:
-            symbol_file.writelines(sorted_lines)
+    symbol_files = get_symbol_files(Path(path) for path in symbols_paths)
 
-
-def sort(base_path):
-    files = os.listdir(base_path)
-
-    # Filter the list to include only files that start with 'symbols.us.' and end with '.txt'
-    filtered_files = [
-        f
-        for f in files
-        if (
-            f.startswith(f"symbols.{args.version}.")
-            or f.startswith(f"undefined_syms.{args.version}.")
+    for symbol_file in symbol_files:
+        sorted_symbols = get_symbols(symbol_file)
+        new_lines = (
+            "\n".join(
+                f"{symbol.name} = 0x{symbol.address:08X};{f' // {symbol.comment}' if symbol.comment else ''}"
+                for symbol in sorted_symbols
+            )
+            + "\n"
         )
-        and f.endswith(".txt")
-    ]
-
-    for symbol_file_name in [os.path.join(base_path, f) for f in filtered_files]:
-        sort_symbols_from_file(symbol_file_name)
+        if new_lines != Path(symbol_file).read_text():
+            symbol_file.write_text(new_lines.lstrip("\n"))
 
 
 # regex helper to match a hexadecimal string without the '0x'
@@ -317,227 +246,452 @@ def cross(asm_reference_file_name, asm_to_cross_file_name):
         print(f"{sym} = 0x{syms[sym]:08X};")
 
 
-def get_all_file_paths_recursively(path):
-    file_list = []
-    for root, directories, files in os.walk(path):
-        for file in files:
-            file_list.append(os.path.join(root, file))
-    return file_list
-
-
-def tokenize_symbols(file_path):
-    with open(file_path, "r") as f:
-        content = f.read()
-    content_without_comments = re.sub(r"/\*.*?\*/", "", content, flags=re.DOTALL)
-    content_without_labels = re.sub(r"\bL8\w*", "", content_without_comments)
-    content_without_strings = re.sub(r'"[^"]*"', "", content_without_labels)
-    return re.findall(r"\b[a-zA-Z_]\w*\b", content_without_strings)
-
-
-def get_txt_symbols(symbol_file_name) -> dict[int, str]:
-    with open(symbol_file_name, "r") as symbol_file_ref:
-        symbols_defined = symbol_file_ref.readlines()
-
-    symbols = dict()
-    for sym_def in symbols_defined:
-        if sym_def.startswith("//"):
-            # ignore comments
-            continue
-
+def get_nonmatchings_asm(config):
+    asm_path = Path(config["options"]["asm_path"])
+    data_parts = []
+    for segment in config["segments"]:
         if (
-            len(sym_def) > 4
-            and sym_def.find("ignore:true") == -1
-            and sym_def.lower().find("allow_duplicated:true") == -1
-            and sym_def.find("used:true") == -1
-        ):
-            sym_tokenized = sym_def.split("=")
-            if len(sym_tokenized) >= 2:
-                sym = sym_tokenized[0].strip()
-                addr = int(sym_tokenized[1].split(";")[0].strip(), 16)
-                symbols[addr] = sym
-    return symbols
+            not "type" in segment or segment["type"] == "code"
+        ) and "subsegments" in segment:
+            for subsegment in segment["subsegments"]:
+                if isinstance(subsegment, list) and len(subsegment) > 2:
+                    data_parts.append([subsegment[2], subsegment[1]])
+                elif isinstance(subsegment, list) and len(subsegment) == 2:
+                    data_parts.append([f"{subsegment[0]:X}", subsegment[1]])
+                elif (
+                    isinstance(subsegment, dict)
+                    and "name" in subsegment
+                    and "type" in subsegment
+                ):
+                    data_parts.append([subsegment["name"], subsegment["type"]])
+                elif (
+                    isinstance(subsegment, dict)
+                    and "start" in subsegment
+                    and "type" in subsegment
+                ):
+                    data_parts.append([f"{subsegment["start"]:X}", subsegment["type"]])
+        elif "name" in segment and "type" in segment:
+            data_parts.append([segment["name"], segment["type"]])
+
+    data_files = [
+        Path(f"{parts[0]}.{parts[1]}.s").name
+        for parts in data_parts
+        if not parts[1].startswith(".")
+        and (parts[1].endswith("data") or parts[1].endswith("bss"))
+    ]
+    asm_files = [
+        dirpath / f
+        for dirpath, _, filenames in asm_path.walk()
+        for f in filenames
+        if "matchings" not in dirpath.parts
+        and ("data" not in dirpath.parts or f in data_files)
+    ]
+    return asm_files
 
 
-def remove_orphans(symbol_file_name, symbols_set):
-    with open(symbol_file_name, "r") as symbol_file_ref:
-        symbols_defined = symbol_file_ref.readlines()
+def clean_conflicts(
+    elf_path, symbols_by_file, remove_conflicts=False, print_conflicts=False
+):
+    # skip finding conflicts for weapons since the .elf file structure is different
+    if "weapon" in f"{elf_path}":
+        return []
 
-    symbols_unorphaned = []
-    for sym_def in symbols_defined:
-        if sym_def.startswith("//"):
-            # ignore comments
-            continue
+    defined_syms_by_address = {
+        symbol.address: symbol.name
+        for file in symbols_by_file
+        for symbol in symbols_by_file[file]
+        if "ignore:true" not in symbol.comment
+    }
 
-        if (
-            len(sym_def) > 4
-            and sym_def.find("ignore:true") == -1
-            and sym_def.lower().find("allow_duplicated:true") == -1
-            and sym_def.find("used:true") == -1
-        ):
-            sym_tokenized = sym_def.split("=")
-            if len(sym_tokenized) >= 2:
-                sym = sym_tokenized[0].strip()
-                if sym not in symbols_set:
-                    continue
-        symbols_unorphaned.append(sym_def)
-    add_newline_if_missing(symbols_unorphaned)
-
-    # lines are only ever removed so if len is different, it must be smaller
-    # if it's the same, avoid touching the file which would cause a rebuild
-    # of all dependent sources of that overlay
-    if len(symbols_unorphaned) != len(symbols_defined):
-        with open(symbol_file_name, "w") as symbol_file_ref:
-            symbol_file_ref.writelines(symbols_unorphaned)
-
-
-def remove_orphans_from_config(config_yaml):
-    with open(config_yaml, "r") as config_yaml_ref:
-        config = yaml.safe_load(config_yaml_ref)
-    symbol_addrs_path = config["options"]["symbol_addrs_path"]
-    if isinstance(symbol_addrs_path, str):
-        symbol_file_name = symbol_addrs_path
-    else:
-        symbol_file_name = symbol_addrs_path[-1]  # take last
-
-    asm_path = config["options"]["asm_path"]
-
-    file_list = get_all_file_paths_recursively(asm_path)
-    asm_file_list = [
-        file for file in file_list if file.endswith(".s") and "/matchings/" not in file
+    # if old asm files still exist it can cause a large number of erroneus conflicts to be detected
+    conflicts = [
+        symbol
+        for symbol in get_symbols(elf_path, excluded_ends=[".NON_MATCHING"])
+        if symbol.address in defined_syms_by_address
+        and defined_syms_by_address[symbol.address] != symbol.name
     ]
 
-    if len(file_list) == 0:
+    if len(conflicts) > 5:
         print(
-            f"WARN: No symbols found for '{symbol_file_name}' in '{asm_path}'. Terminating before making destructive changes.",
-            file=sys.stderr,
+            "Found more than 5 conflicts (no changes made), did you start with a clean build?"
         )
-        exit(0)
+        return
 
-    symbols_found = set()
-    for asm_file in asm_file_list:
-        symbols_found.update(tokenize_symbols(asm_file))
+    for symbol in conflicts:
+        if print_conflicts:
+            conflict = defined_syms_by_address[symbol.address]
+            print(
+                f"{elf_path.name}: 0x{symbol.address:08X}: {symbol.name} in elf conflicts with {conflict} in symbol file"
+            )
 
-    # The following hack forces to also process symbols from the YAML config itself.
-    # This is because tiledef in ST/WRP uses the symbol list to extract the tile definition.
-    symbols_found.update(tokenize_symbols(config_yaml))
-    remove_orphans(symbol_file_name, symbols_found)
+        if remove_conflicts:
+            for symbol_file in symbols_by_file:
+                new_lines = (
+                    f"{symbol.name} = 0x{symbol.address:08X};{f' // {symbol.comment}' if symbol.comment else ''}"
+                    for symbol in symbols_by_file[symbol_file]
+                    if symbol.name not in conflicts
+                )
+                symbol_file.write_text("\n".join(new_lines) + "\n")
 
 
-def print_map_symbols(map_file_name, no_default):
-    map_file = mapfile_parser.MapFile()
-    map_file.readMapFile(Path(map_file_name))
+def clean_orphans(
+    asm_files,
+    symbols_by_file,
+    remove_orphans=False,
+    print_summary=False,
+    print_orphans=False,
+):
+    symbols_by_name = {}
+    for file, symbols in symbols_by_file.items():
+        symbols_by_name[file] = {symbol.name: symbol for symbol in symbols}
 
-    filter = (
-        (lambda name: not is_splat_symbol_name(name))
-        if no_default
-        else (lambda _: True)
+    # filter and flatten so that it is just a set of symbols without the file association
+    orphans = {
+        symbol.name
+        for file in symbols_by_file
+        for symbol in symbols_by_file[file]
+        if not (comment := symbols_by_name[file][symbol.name].comment)
+        or (
+            "used:true" not in comment
+            and "ignore:true" not in comment
+            and "allow_duplicated:true" not in comment
+        )
+    }
+
+    # matches on patterns that start with 'glabel ', '.word ', 'jal ', 'j ', '%hi(', or '%lo('
+    # and followed by 2 or more word characters, limiting the first character to A-Z, a-z, or _
+    symbol_pattern = re.compile(
+        r"(?:glabel\s+|\.word\s+|jal\s+|j\s+|%(?:hi|lo)\()(?P<name>[A-Z_a-z]\w+)"
+    )
+    for asm_file in asm_files:
+        asm_text = asm_file.read_text()
+        orphans -= {match.group("name") for match in symbol_pattern.finditer(asm_text)}
+        # stop processing files if we've found all defined symbols
+        if not orphans:
+            break
+
+    for symbol_file, symbols in symbols_by_file.items():
+        if symbols and (asm_files or orphans):
+            new_lines = [
+                f"{symbol.name} = 0x{symbol.address:08X};{f' // {symbol.comment}' if symbol.comment else ''}"
+                for symbol in symbols
+                if symbol.name not in orphans
+            ]
+            # only write to the file if lines were removed
+            if (removed := len(symbols) - len(new_lines)) and remove_orphans:
+                symbol_file.write_text("\n".join(new_lines) + "\n")
+
+        if (print_summary or print_orphans) and not symbols:
+            print(f"{symbol_file.name + ':':<25} empty symbol file")
+        elif print_summary or print_orphans:
+            print(
+                f"{symbol_file.name + ':':<25} {'removed' if remove_orphans else 'found'}: {removed:<4} remaining: {len(symbols)-removed:<4} (searched {len(asm_files):<3} files)"
+            )
+        if print_orphans:
+            for orphan in orphans:
+                print(f"orphan: {orphan}")
+
+    # update the symbols to account for any removed orphans
+    symbols_by_file = {
+        Path(file): [
+            symbol
+            for symbol in symbols_by_file[file]
+            if symbol.name not in orphans or not remove_orphans
+        ]
+        for file in symbols_by_file
+    }
+    return symbols_by_file
+
+
+def clean(config_files):
+    for config_file in config_files:
+        # no need to load the config, the necessary fields are in the file name
+        splat, version, basename, ext = config_file.split(".")
+        config = safe_load(Path(config_file).read_text())
+        basename = config["options"]["basename"]
+        ld_script_path = Path(config["options"]["ld_script_path"])
+        elf_path = Path(
+            config["options"].get("elf_path", ld_script_path.with_suffix(".elf"))
+        )
+        symbol_addrs_path = config["options"]["symbol_addrs_path"]
+        if isinstance(symbol_addrs_path, str):
+            symbol_files = [
+                (Path(symbol_addrs_path),) if basename in symbol_addrs_path else ()
+            ]
+        else:
+            symbol_files = [
+                Path(path) for path in symbol_addrs_path if basename in path
+            ]
+        symbols_by_file = {file: get_symbols(file) for file in symbol_files}
+
+        if not ld_script_path.exists():
+            print(
+                f"{version} version may be missing asm for {basename}, skipping orphans"
+            )
+        else:
+            # if we didn't get --warn-orphans, then assume we want to remove them
+            remove_orphans = not args.warn_orphans
+            asm_files = get_nonmatchings_asm(config)
+            symbols_by_file = clean_orphans(
+                asm_files,
+                symbols_by_file,
+                remove_orphans,
+                args.print_summary,
+                args.print_orphans,
+            )
+
+        # weapons use a different path for their .elf files
+        if "weapon" in config_file:
+            continue
+        if not elf_path.exists():
+            print(f"{elf_path} missing for {basename}, skipping conflicts")
+        else:
+            clean_conflicts(
+                elf_path,
+                symbols_by_file,
+                args.remove_conflicts,
+                args.print_conflicts,
+            )
+
+
+def get_symbols(file_path, excluded_starts=[], excluded_ends=[], excluded_comments=[]):
+    excluded_starts = {"LM", "__pad"} | set(excluded_starts)
+    excluded_ends = {"_START", "_END", "_VRAM", "_s", "_c"} | set(excluded_ends)
+    file_path = Path(file_path)
+    match file_path.suffix:
+        case ".map":
+            text = file_path.read_text()
+            # matches format '                0x8018098c                g_EInitCommon'
+            matches = re.finditer(
+                r"\s+0x(?P<address>[A-Fa-f0-9]{8})\s+(?P<name>[A-Z_a-z]\w+)\n", text
+            )
+        case ".elf":
+            text = shell(f"nm -U {file_path}").decode()
+            # matches format '8018098c T g_EInitCommon', excluding A types
+            matches = re.finditer(
+                r"(?P<address>[A-Fa-f0-9]{8})\s+[^A]\s+(?P<name>[A-Z_a-z][\w\.]+)", text
+            )
+        case ".txt" | _ if ".txt" in file_path.suffixes:
+            text = file_path.read_text()
+            # matches format 'D_801B0934 = 0x801C0D3C; // comment'
+            matches = re.finditer(
+                r"(?P<name>[A-Z_a-z]\w+)\s+=\s+0x(?P<address>[A-Fa-f0-9]{1,});(?:\s+//(?P<comment>.+))?",
+                text,
+            )
+        case _:
+            raise SystemError(
+                f"File to extract symbols from must be .elf, .map, or a symbols file, got {file_path.suffix}"
+            )
+
+    parsed = set()
+    comments = defaultdict(list)
+    for match in matches:
+        symbol_name = match.groupdict().get("name", "")
+        symbol_address = int(match.group("address"), 16)
+        symbol_comment = f"{match.groupdict().get('comment') or ''}".lower()
+        if (
+            "_compiled" not in symbol_name
+            and not any(symbol_name.startswith(x) for x in excluded_starts)
+            and not any(symbol_name.endswith(x) for x in excluded_ends)
+            and not any(x in symbol_comment for x in excluded_comments)
+        ):
+            # normalize comments
+            if symbol_comment:
+                new_comments = []
+                for item in symbol_comment.split():
+                    if ":0x" in item:
+                        key, val = item.split(":")
+                        item = f"{key}:0x{int(val.strip(), 16):X}"
+                    new_comments.append(item)
+
+                comments[symbol_address].extend(
+                    x for x in new_comments if x not in comments[symbol_address]
+                )
+
+            parsed.add((symbol_name, symbol_address))
+
+    symbols = (Symbol(x[0], x[1], " ".join(comments[x[1]])) for x in parsed)
+    return sorted(symbols, key=lambda symbol: (symbol.address, symbol.name))
+
+
+def parse(file_name, no_default=False, output_file=False):
+    excluded_starts = ["D_", "func_", "jpt_", "jtbl_"] if no_default else []
+    symbols = get_symbols(Path(file_name), excluded_starts)
+
+    lines = (
+        f"{symbol.name} = 0x{symbol.address:08X}; // allow_duplicated:true"
+        for symbol in symbols
+    )
+    if output_file:
+        Path(output_file).write_text("\n".join(lines) + "\n")
+    else:
+        [print(line) for line in lines]
+
+
+def extract_dynamic_symbols(config_path, output):
+    config = safe_load(Path(config_path).read_text())
+
+    symbol_addrs_path = config["options"]["symbol_addrs_path"]
+    if isinstance(symbol_addrs_path, str):
+        symbol_addrs_path = (symbol_addrs_path,)
+
+    ld_script_path = config["options"]["ld_script_path"]
+    elf_path = config["options"].get(
+        "elf_path", Path(ld_script_path).with_suffix(".elf")
     )
 
-    syms = dict()
-    for segment in map_file:
-        for file in segment:
-            for sym in file:
-                if sym.vram not in syms and filter(sym.name):
-                    syms[sym.vram] = sym.name
-    for vram in syms:
-        print(f"{syms[vram]} = 0x{vram:08X}; // allow_duplicated:True")
+    defined_symbols = []
+    for symbol_file in symbol_addrs_path:
+        defined_symbols.extend(
+            get_symbols(
+                symbol_file,
+                excluded_comments=["ignore:true", "allow_duplicated:true", "used:true"],
+            )
+        )
+    defined_names = {symbol.name for symbol in defined_symbols}
+    defined_addrs = {symbol.address for symbol in defined_symbols}
 
-
-def get_elf_symbols(elf_file_name) -> dict[int, str]:
-    with subprocess.Popen(
-        args=["nm", "-U", elf_file_name],
-        stdout=subprocess.PIPE,
-        stdin=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        env=dict(os.environ),
-    ) as p:
-        stdout_raw, stderr_raw = p.communicate()
-        output = stdout_raw.decode("utf-8").splitlines()
-    symbols = dict()
-    for line in output:
-        off, kind, name = line.split(" ")
-        if name.startswith("LM"):
-            continue
-        if name.startswith("_") and name.endswith("_c"):
-            continue
-        if "_compiled" in name:
-            continue
-        if name.startswith("__pad"):
-            continue
-        if name.endswith("_END"):
-            continue
-        if name.endswith("_START"):
-            continue
-        if name.endswith("_VRAM"):
-            continue
-        if kind == "A":
-            continue
-        if name.endswith("_data__s"):
-            continue
-        if name.endswith("_c"):
-            continue
-        offset = int(off, base=16)
-        symbols[offset] = name
-    return symbols
-
-
-def print_elf_symbols(file, elf_file_name, no_default):
-    symbols = get_elf_symbols(elf_file_name)
-    sorted_symbols = sorted(symbols.items(), key=lambda item: item[0])
-    for offset, name in sorted_symbols:
-        if no_default and (name.startswith("func_") or name.startswith("D_")):
-            continue
-        print(f"{name} = 0x{offset:08X}; // allow_duplicated:True", file=file)
-
-
-def print_dynamic_symbols(file, config_yaml):
-    with open(config_yaml, "r") as config_yaml_ref:
-        config = yaml.safe_load(config_yaml_ref)
-    options = config["options"]
-    symbol_addrs_path = options["symbol_addrs_path"]
-    if isinstance(symbol_addrs_path, str):
-        symbol_file_names = [symbol_addrs_path]
+    elf_symbols = get_symbols(elf_path)
+    dynamic_symbols = {
+        symbol
+        for symbol in elf_symbols
+        if symbol.name not in defined_names
+        and symbol.address not in defined_addrs
+        and not symbol.name.endswith("NON_MATCHING")
+        and Symbol(f"{symbol.name}.NON_MATCHING", symbol.address, "") not in elf_symbols
+    }
+    lines = (
+        f"{symbol.name} = 0x{symbol.address:08X}; // allow_duplicated:true"
+        for symbol in sorted(
+            dynamic_symbols, key=lambda symbol: (symbol.address, symbol.name)
+        )
+    )
+    if isinstance(output, (str, Path)):
+        output = Path(output)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text("\n".join(lines) + "\n")
     else:
-        symbol_file_names = symbol_addrs_path
-
-    symbols = dict()
-    for symbol_file in symbol_file_names:
-        symbols |= get_txt_symbols(symbol_file)
-
-    elf_path = options.get("elf_path")
-    if elf_path is None:
-        build_path = options["build_path"]
-        basename = options["basename"]
-        elf_path = f"{build_path}/{basename}.elf"
-
-    elf_symbols_by_vram = get_elf_symbols(elf_path)
-    elf_symbols_by_name = {v: k for k, v in elf_symbols_by_vram.items()}
-
-    for offset, name in symbols.items():
-        elf_symbols_by_vram.pop(offset, None)
-        elf_symbols_by_name.pop(name, None)
-
-    sorted_symbols = sorted(elf_symbols_by_vram.items(), key=lambda item: item[0])
-    for offset, name in sorted_symbols:
-        if name in elf_symbols_by_name and not name.endswith(".NON_MATCHING"):
-            print(f"{name} = 0x{offset:08X}; // allow_duplicated:True", file=file)
+        print("\n".join(lines))
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Perform operations on game symbols")
+    parser.add_argument(
+        "-v",
+        "--version",
+        required=False,
+        type=str,
+        default=os.getenv("VERSION") or "us",
+        help="Sets game version and overrides VERSION environment variable",
+    )
+    subparsers = parser.add_subparsers(dest="command")
+
+    sort_parser = subparsers.add_parser(
+        "sort",
+        description="Sort all the symbols of a given GNU LD script by their offsets",
+    )
+    sort_parser.add_argument(
+        "symbols_path",
+        nargs="*",
+        default=["config/"],
+        help="Any number of directories containing symbol files or specific symbol files to sort",
+    )
+
+    cross_parser = subparsers.add_parser(
+        "cross",
+        description="Cross-reference the symbols between two assembly files and print the result to stdout for GNU LD. Useful to cross-reference symbols between different overlays or game revisions. The assemblies must be identical.",
+    )
+    cross_parser.add_argument(
+        "ref",
+        help="Assembly source file to use as a base reference",
+    )
+    cross_parser.add_argument(
+        "to_cross",
+        help="Assembly source file to be cross-referenced to",
+    )
+
+    clean_syms_parser = subparsers.add_parser("clean", description="Clean symbol files")
+    clean_syms_parser.add_argument(
+        "config_file",
+        nargs="+",
+        help="The config file for the overlay to clean the symbols file(s) for",
+    )
+    clean_syms_parser.add_argument(
+        "--warn-orphans",
+        action="store_true",
+        help="Remove all symbols that are not referenced (default)",
+    )
+    clean_syms_parser.add_argument(
+        "--remove-conflicts",
+        action="store_true",
+        help="Remove all symbols that are built with one name, but defined as a different name",
+    )
+    clean_syms_parser.add_argument(
+        "-s",
+        "--print-summary",
+        action="store_true",
+        help="Print summary of orphans to stdout",
+    )
+    clean_syms_parser.add_argument(
+        "-o",
+        "--print-orphans",
+        action="store_true",
+        help="Show warnings for all symbols that are not referenced",
+    )
+    clean_syms_parser.add_argument(
+        "-c",
+        "--print-conflicts",
+        action="store_true",
+        help="Show warnings for all symbols that are built with one name, but defined as a different name (default)",
+    )
+
+    parse_parser = subparsers.add_parser(
+        "parse",
+        description="Parse the symbols from an elf or map file",
+    )
+    parse_parser.add_argument(
+        "file_name",
+        help="The file to parse symbols from",
+    )
+    parse_parser.add_argument(
+        "-o",
+        "--output",
+        type=str,
+        help="Output parsed symbols to specified file, rather than stdout",
+        required=False,
+    )
+    parse_parser.add_argument(
+        "--no-default",
+        required=False,
+        action="store_true",
+        help="Do not include symbols that start with D_, func_, jpt_, or jtbl_",
+    )
+
+    dynamic_parser = subparsers.add_parser(
+        "dynamic",
+        description="Print the list of dynamic symbols from an elf file that are not included in static symbol tables.",
+    )
+    dynamic_parser.add_argument(
+        "config_file",
+        help="The Splat YAML config of the overlay to generate the dynamic symbol list from",
+    )
+    dynamic_parser.add_argument(
+        "-o",
+        "--output",
+        default=sys.stdout,
+        required=False,
+        help="The output for the dynamic symbols",
+    )
+
     args = parser.parse_args()
-    if args.version == None:
-        args.version = os.getenv("VERSION")
-        if args.version == None:
-            args.version = "us"
-    if args.command == "sort":
-        sort("config/")
-    elif args.command == "cross":
-        cross(args.ref, args.to_cross)
-    elif args.command == "remove-orphans":
-        remove_orphans_from_config(args.config_yaml)
-    elif args.command == "map":
-        print_map_symbols(args.map_file_name, args.no_default)
-    elif args.command == "elf":
-        print_elf_symbols(sys.stdout, args.elf_file_name, args.no_default)
-    elif args.command == "dynamic":
-        print_dynamic_symbols(sys.stdout, args.config_yaml)
+    match args.command:
+        case "sort":
+            sort(args.symbols_path)
+        case "cross":
+            cross(args.ref, args.to_cross)
+        case "clean":
+            clean(args.config_file)
+        case "parse":
+            parse(args.file_name, args.no_default, args.output)
+        case "dynamic":
+            extract_dynamic_symbols(args.config_file, args.output)
