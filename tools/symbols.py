@@ -252,7 +252,7 @@ def get_nonmatchings_asm(config):
                     and "start" in subsegment
                     and "type" in subsegment
                 ):
-                    data_parts.append([f"{subsegment['start']:X}", subsegment['type']])
+                    data_parts.append([f"{subsegment['start']:X}", subsegment["type"]])
         elif "name" in segment and "type" in segment:
             data_parts.append([segment["name"], segment["type"]])
 
