@@ -1,4 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+extern EInit g_EInitOwl;
+extern EInit g_EInitOwlKnight;
+extern EInit g_EInitOwlKnightSword;
+extern EInit g_EInitInteractable;
+
 static u16 D_us_80181C1C[] = {0, 8, 0, 6, 8, -6, -16, 0};
 static u16 D_us_80181C2C[] = {0, 31, 8, 0, 0, 16, 255, 0}; // unused
 static u8 anim_owl_1[] = {64, 1, 12, 2, 12, 3, 12, 2, 0, 0};

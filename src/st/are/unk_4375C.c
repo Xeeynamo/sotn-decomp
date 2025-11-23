@@ -24,5 +24,3 @@ INCLUDE_ASM("st/are/nonmatchings/unk_4375C", func_us_801C4EDC);
 INCLUDE_ASM("st/are/nonmatchings/unk_4375C", EntityBoneMusket);
 
 INCLUDE_ASM("st/are/nonmatchings/unk_4375C", func_us_801C5744);
-
-INCLUDE_RODATA("st/are/nonmatchings/unk_4375C", D_us_801B54BC);
