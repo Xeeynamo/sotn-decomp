@@ -43,6 +43,8 @@ segments:
       - [0x2C, data]
       - [0x958, .data, e_init]
       - [0xC84, data]
+      - [0x1A28, .data, e_particles]
+      - [0x1AA8, data]
       - [0x352B0, .rodata, e_breakable]
       - [0x352D4, .rodata, unk_3628C]
       - [0x352EC, .rodata, e_cavern_door]
