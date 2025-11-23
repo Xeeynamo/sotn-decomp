@@ -2,10 +2,6 @@ package palette
 
 import (
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
-	"golang.org/x/sync/errgroup"
-	"gopkg.in/yaml.v2"
 	"image/color"
 	"io"
 	"os"
@@ -13,6 +9,11 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/goccy/go-yaml"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
+	"golang.org/x/sync/errgroup"
 )
 
 type handler struct{}
