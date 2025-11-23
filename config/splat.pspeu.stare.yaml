@@ -77,7 +77,7 @@ segments:
       - [0x26028, c, are_psp/e_flea_armor]
       - [0x26978, c, are_psp/unk_26978]
       - [0x29B30, c, are_psp/st_common]
-      - [0x2B630, c, are_psp/prim_helpers]
+      - [0x2B630, c, are/prim_helpers]
       - [0x2BF00, data]
       - [0x4FAF8, .data, are/header]
       - [0x4FB28, data]
