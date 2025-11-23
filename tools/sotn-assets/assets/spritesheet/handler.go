@@ -5,12 +5,6 @@ import (
 	"crypto/sha1"
 	"encoding/binary"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
-	"golang.org/x/sync/errgroup"
-	"gopkg.in/yaml.v3"
 	"image"
 	"image/color"
 	"image/png"
@@ -18,6 +12,13 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/goccy/go-yaml"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
+	"golang.org/x/sync/errgroup"
 )
 
 const BPP = 4
@@ -122,7 +123,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 			if err != nil {
 				return err
 			}
-            defer f.Close()
+			defer f.Close()
 			if err := util.PngEncode(f, bitmap, w, h, palette); err != nil {
 				return fmt.Errorf("failed to encode %s: %w", entry.Name, err)
 			}
