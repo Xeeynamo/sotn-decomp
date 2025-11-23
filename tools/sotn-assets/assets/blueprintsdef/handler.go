@@ -4,14 +4,15 @@ import (
 	"bytes"
 	"encoding/binary"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
-	"gopkg.in/yaml.v2"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/goccy/go-yaml"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 )
 
 // copy of SubweaponDef

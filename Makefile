@@ -67,8 +67,6 @@ SHASUM          := shasum
 GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
 PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
 CLANG			:= $(BIN_DIR)/clang-format
-GOPATH          := $(HOME)/go
-GO              := $(GOPATH)/bin/go
 SOTNLINT		:= cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)/
 DUPS_THRESHOLD  ?= .90
 DUPS			:= cd $(TOOLS_DIR)/dups; cargo run --release -- --threshold $(DUPS_THRESHOLD) --output-file ../../$(REPORTS_DIR)/duplicates.txt
@@ -104,7 +102,7 @@ M2C_ARGS        := -P 4
 MASPSX_DIR      := $(TOOLS_DIR)/maspsx
 MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
 
-DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(GO) $(MIPSMATCH_APP) python-dependencies
+DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(MIPSMATCH_APP) python-dependencies
 
 SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
 SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
@@ -434,14 +432,10 @@ $(MIPSMATCH_DIR)/target/release/mipsmatch: $(MIPSMATCH_DIR) $(shell find $(MIPSM
 	    cargo build --release
 $(MIPSMATCH_APP): $(MIPSMATCH_DIR)/target/release/mipsmatch
 	cp $< $@
-$(GO):
-	curl -L -o go1.22.4.linux-amd64.tar.gz https://go.dev/dl/go1.24.4.linux-amd64.tar.gz
-	tar -C $(HOME) -xzf go1.22.4.linux-amd64.tar.gz
-	rm go1.22.4.linux-amd64.tar.gz
-$(SOTNDISK): $(GO) $(SOTNDISK_SOURCES)
-	$(GO) build -C tools/sotn-disk -o ../../$@ .
-$(SOTNASSETS): $(GO) $(SOTNASSETS_SOURCES)
-	$(GO) build -C tools/sotn-assets -o ../../$@ .
+$(SOTNDISK): $(SOTNDISK_SOURCES)
+	go build -C tools/sotn-disk -o ../../$@ .
+$(SOTNASSETS): $(SOTNASSETS_SOURCES)
+	go build -C tools/sotn-assets -o ../../$@ .
 
 build/$(VERSION)/src/%.o: src/%
 	ninja $@

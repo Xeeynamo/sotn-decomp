@@ -39,8 +39,6 @@ jobs:
       FROGRESS_API_SECRET: ${{ secrets.FROGRESS_API_SECRET }}
       DISCORD_PROGRESS_WEBHOOK: ${{ secrets.DISCORD_PROGRESS_WEBHOOK }}
     steps:
-      - name: Install requirements
-        run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repo (PR)
         if: github.event_name == 'pull_request_target'
         uses: actions/checkout@v4
@@ -53,6 +51,13 @@ jobs:
         with:
           ref: ${{ github.ref }}
           submodules: false
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: 'go.work'
+          cache: true
+          cache-dependency-path: "**/*.sum"
+      - name: Install requirements
+        run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Install tools requirements
         run: make update-dependencies
       - name: Get dependencies

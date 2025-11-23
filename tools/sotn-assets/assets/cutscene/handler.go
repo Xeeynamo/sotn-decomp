@@ -3,16 +3,17 @@ package cutscene
 import (
 	"bytes"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
-	"gopkg.in/yaml.v2"
 	"io"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/goccy/go-yaml"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 )
 
 type handler struct{}

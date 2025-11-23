@@ -12,6 +12,12 @@ import yaml
 entries = dict()
 linker_scripts = set()
 
+extra_cpp_defs = ""
+sotn_progress_report = os.environ.get("SOTN_PROGRESS_REPORT") == "1"
+if sotn_progress_report:
+    # https://decomp.wiki/en/tools/decomp-dev
+    extra_cpp_defs += " -DSKIP_ASM=1"
+
 psp_o4_files = [
     "3250.c",
     "menu.c",
@@ -33,12 +39,12 @@ psp_o4_files = [
 ]
 
 
-def is_psp(version: str) -> bool:
-    return version.startswith("psp")
+def is_psp(ver: str) -> bool:
+    return ver.startswith("psp")
 
 
-def is_hd(version: str) -> bool:
-    return version == "hd"
+def is_hd(ver: str) -> bool:
+    return ver == "hd"
 
 
 def is_weapon(ovl_name: str) -> bool:
@@ -58,6 +64,13 @@ def is_base_ovl(ovl_name: str) -> bool:
     )
 
 
+def build_path(ver: str, base_path: str) -> str:
+    complete_path = os.path.join("build", ver, base_path)
+    if sotn_progress_report:
+        return os.path.join("expected", "report", complete_path)
+    return complete_path
+
+
 def is_boss(ovl_name: str) -> bool:
     ovl_name = ovl_name.lower()
     return ovl_name.startswith("bo") or ovl_name.startswith("rbo") or ovl_name == "mar"
@@ -72,10 +85,10 @@ def is_stage(ovl_name: str) -> bool:
     )
 
 
-def get_cc_flags_for_exceptional_files(version: str, file_name: str):
-    if version == "us" and file_name == "src/weapon/w_029.c":
+def get_cc_flags_for_exceptional_files(ver: str, file_name: str):
+    if ver == "us" and file_name == "src/weapon/w_029.c":
         return "-O1"
-    if not is_psp(version):
+    if not is_psp(ver):
         return ""  # PSX is almost always -O2
     if (
         file_name.startswith("src/dra") or file_name.startswith("src/main_psp")
@@ -87,9 +100,9 @@ def get_cc_flags_for_exceptional_files(version: str, file_name: str):
 def add_c_psx(
     nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, cpp_flags: str
 ):
-    output = f"build/{ver}/{file_name}.o"
+    output = build_path(ver, f"{file_name}.o")
     if output in entries:
-        return
+        return output
     entries[output] = {}
     rule = "psx-cc"
     if (
@@ -106,9 +119,9 @@ def add_c_psx(
             ld_path,
         ],
         variables={
-            "version": version,
+            "version": ver,
             "cpp_flags": cpp_flags,
-            "cc_flags": get_cc_flags_for_exceptional_files(version, file_name),
+            "cc_flags": get_cc_flags_for_exceptional_files(ver, file_name),
         },
     )
 
@@ -128,9 +141,9 @@ def add_c_psx(
 
 
 def add_s_psx(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
-    output = f"build/{ver}/{file_name}.o"
+    output = build_path(ver, f"{file_name}.o")
     if output in entries:
-        return
+        return output
     entries[output] = {}
     nw.build(
         rule="psx-as",
@@ -147,14 +160,14 @@ def add_s_psx(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
 
 def add_copy_psx(
     nw: ninja_syntax.Writer,
-    version: str,
+    ver: str,
     in_file_name: str,
     out_file_name: str,
     ld_script_path: str,
 ):
-    output = f"build/{version}/{out_file_name}.o"
+    output = build_path(ver, f"{out_file_name}.o")
     if output in entries:
-        return
+        return output
     entries[output] = {}
     nw.build(
         rule="psx-copy",
@@ -174,17 +187,15 @@ def add_copy_psx(
 
 def add_memcard_img_psx(
     nw: ninja_syntax.Writer,
-    version: str,
+    ver: str,
     in_file_name: str,
     out_file_name: str,
     ld_script_path: str,
 ):
-    output_gfx = f"build/{version}/{out_file_name}.png"
-    output_pal = f"build/{version}/{out_file_name}.pal"
-    if output_gfx in entries:
-        return
-    if output_pal in entries:
-        return
+    output_gfx = build_path(ver, f"{out_file_name}.png")
+    output_pal = build_path(ver, f"{out_file_name}.pal")
+    if output_gfx in entries or output_pal in entries:
+        return [f"{output_gfx}.o", f"{output_pal}.o"]
     entries[output_gfx] = {}
     entries[output_pal] = {}
     slot_id = out_file_name.split("memcard_")[1]
@@ -220,9 +231,9 @@ def add_memcard_img_psx(
 def add_c_psp(
     nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str, cpp_flags: str
 ):
-    output = f"build/{ver}/{file_name}.o"
+    output = build_path(ver, f"{file_name}.o")
     if output in entries:
-        return
+        return output
     entries[output] = {}
     nw.build(
         rule="psp-cc",
@@ -238,9 +249,9 @@ def add_c_psp(
             "include/sfx.h",
         ],
         variables={
-            "version": version,
+            "version": ver,
             "cpp_flags": cpp_flags,
-            "opt_level": get_cc_flags_for_exceptional_files(version, file_name),
+            "opt_level": get_cc_flags_for_exceptional_files(ver, file_name),
             "src_dir": os.path.dirname(file_name),
         },
     )
@@ -260,9 +271,9 @@ def add_c_psp(
 
 
 def add_s_psp(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
-    output = f"build/{ver}/{file_name}.o"
+    output = build_path(ver, f"{file_name}.o")
     if output in entries:
-        return
+        return output
     entries[output] = {}
     nw.build(
         rule="psp-as",
@@ -277,12 +288,12 @@ def add_s_psp(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
     return output
 
 
-def add_assets_config(nw: ninja_syntax.Writer, version: str):
+def add_assets_config(nw: ninja_syntax.Writer, ver: str):
     nw.build(
         rule="assets-build",
-        inputs=f"config/assets.{version}.yaml",
-        outputs=f"src/.assets_build_done_{version}",
-        implicit=f"assets/done_{version}",
+        inputs=f"config/assets.{ver}.yaml",
+        outputs=f"src/.assets_build_done_{ver}",
+        implicit=f"assets/done_{ver}",
     )
 
 
@@ -310,12 +321,12 @@ def add_gfx_stage(
     )
 
 
-def add_gfx_weapon(nw: ninja_syntax, version: str, base_file: str, linker_path: str):
+def add_gfx_weapon(nw: ninja_syntax, ver: str, base_file: str, linker_path: str):
     ovl_id = os.path.basename(base_file).strip("f_")
     in_file = f"{base_file}.png"
-    step_raw = os.path.join("build", version, f"{base_file}.bin")
-    step_elf = f"build/{version}/weapon/f0_{ovl_id}.elf"
-    step_bin = f"build/{version}/weapon/f0_{ovl_id}.bin"
+    step_raw = build_path(ver, f"{base_file}.bin")
+    step_elf = build_path(ver, f"weapon/f0_{ovl_id}.elf")
+    step_bin = build_path(ver, f"weapon/f0_{ovl_id}.bin")
     nw.build(
         rule="psx-strip",
         outputs=step_bin,
@@ -352,7 +363,6 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
     asm_path = str(splat_config["options"]["asm_path"])
     src_path = str(splat_config["options"]["src_path"])
     ovl_name = str(splat_config["options"]["basename"])
-    build_path = str(splat_config["options"]["build_path"])
 
     nw.build(
         rule="splat",
@@ -410,7 +420,7 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
                 continue
             else:
                 raise Exception(f"unknown subsegment type {kind}")
-        step_elf = f"build/{ver}/weapon/w{hand_id}_{weapon_id}.elf"
+        step_elf = build_path(ver, f"weapon/w{hand_id}_{weapon_id}.elf")
         symbols_lists = [
             f"-T config/undefined_syms.{ver}.txt",
             f"-T {undefined_funcs_auto_path}",
@@ -425,11 +435,11 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
                 "version": ver,
                 "obj_files": objs,
                 "ld_flags": "--gc-sections" if platform == "psp" else "",
-                "map_out": f"build/{ver}/weapon/w{hand_id}_{weapon_id}.map",
+                "map_out": build_path(ver, f"weapon/w{hand_id}_{weapon_id}.map"),
                 "symbols_arg": str.join(" ", symbols_lists),
             },
         )
-        step_bin = f"build/{ver}/weapon/w{hand_id}_{weapon_id}.bin"
+        step_bin = build_path(ver, f"weapon/w{hand_id}_{weapon_id}.bin")
         nw.build(
             rule="psx-strip-weapon",
             outputs=step_bin,
@@ -438,11 +448,11 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
         weapons.append(step_bin)
     nw.build(
         rule="concat",
-        outputs=f"build/{ver}/WEAPON0.BIN",
+        outputs=build_path(ver, f"WEAPON0.BIN"),
         inputs=weapons,
     )
 
-    dyn_symbols_file = f"{build_path}/config/dyn_syms.{ovl_name}.txt"
+    dyn_symbols_file = build_path(ver, f"config/dyn_syms.{ovl_name}.txt")
     nw.build(
         rule="export-dynamic-symbols-dummy",
         outputs=[dyn_symbols_file],
@@ -450,17 +460,16 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
     )
 
 
-def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
+def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
     with open(file_name) as f:
         splat_config = yaml.load(f, Loader=yaml.SafeLoader)
     platform = str(splat_config["options"]["platform"])
     ovl_name = str(splat_config["options"]["basename"])
-    build_path = str(splat_config["options"]["build_path"])
     ld_path = str(splat_config["options"]["ld_script_path"])
 
-    dyn_symbols_file = f"{build_path}/config/dyn_syms.{ovl_name}.txt"
-    dyn_syms_splat_config = (
-        f"{build_path}/config/splat.{version}.{ovl_name}.yaml.dyn_syms"
+    dyn_symbols_file = build_path(ver, f"config/dyn_syms.{ovl_name}.txt")
+    dyn_syms_splat_config = build_path(
+        ver, f"config/splat.{ver}.{ovl_name}.yaml.dyn_syms"
     )
     linker_scripts.add(ld_path)
     nw.build(
@@ -470,7 +479,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     )
 
     if is_weapon(ovl_name):
-        add_weapon_splat_config(nw, version, splat_config)
+        add_weapon_splat_config(nw, ver, splat_config)
         return
     target_path = str(splat_config["options"]["target_path"])
     asset_path = str(splat_config["options"]["asset_path"])
@@ -491,7 +500,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
         outputs=[ld_path],
         inputs=[entry.path],
         implicit=symbol_paths,
-        variables={"version": version, "dynamic_symbols": dynamic_symbols},
+        variables={"version": ver, "dynamic_symbols": dynamic_symbols},
     )
     if platform == "psx":
         add_c = add_c_psx
@@ -503,11 +512,11 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
         raise Exception(f"platform {platform} not recognized")
     objs = []
     if ovl_name == "main" and platform != "psp":
-        objs.append(add_s(nw, version, f"{asm_path}/header.s", ld_path))
+        objs.append(add_s(nw, ver, f"{asm_path}/header.s", ld_path))
     if ovl_name == "main" and platform == "psp":
         obj = add_copy_psx(
             nw,
-            version,
+            ver,
             f"{asset_path}/elf_header.bin",
             f"{asset_path}/elf_header.bin",
             ld_path,
@@ -515,7 +524,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
         objs.append(obj)
         obj = add_copy_psx(
             nw,
-            version,
+            ver,
             f"{asset_path}/elf_footer.bin",
             f"{asset_path}/elf_footer.bin",
             ld_path,
@@ -526,7 +535,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
             continue
         if segment["type"] == "data":
             asm_name = f"{asm_path}/data/{segment["name"]}.data.s"
-            objs.append(add_s(nw, version, asm_name, ld_path))
+            objs.append(add_s(nw, ver, asm_name, ld_path))
             continue
         for subsegment in segment["subsegments"]:
             if isinstance(subsegment, dict):  # handle PSP BSS
@@ -550,19 +559,19 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 else:
                     name = str.format("{0:X}", offset)
             if kind == "c" or kind == ".data" or kind == ".rodata" or kind == ".bss":
-                objs.append(add_c(nw, version, f"{src_path}/{name}.c", ld_path, ""))
+                objs.append(add_c(nw, ver, f"{src_path}/{name}.c", ld_path, ""))
             elif kind == "data" or kind == "rodata" or kind == "bss" or kind == "sbss":
-                obj = add_s(nw, version, f"{asm_path}/data/{name}.{kind}.s", ld_path)
+                obj = add_s(nw, ver, f"{asm_path}/data/{name}.{kind}.s", ld_path)
                 objs.append(obj)
             elif kind == "textbin":
-                objs.append(add_s(nw, version, f"{asm_path}/data/{name}.s", ld_path))
+                objs.append(add_s(nw, ver, f"{asm_path}/data/{name}.s", ld_path))
             elif kind == "asm":
-                objs.append(add_s(nw, version, f"{asm_path}/{name}.s", ld_path))
+                objs.append(add_s(nw, ver, f"{asm_path}/{name}.s", ld_path))
             elif kind == "raw" or kind == "cmp":
                 objs.append(
                     add_copy_psx(
                         nw,
-                        version,
+                        ver,
                         f"{asset_path}/{name}.bin",
                         f"{asset_path}/{name}",
                         ld_path,
@@ -572,7 +581,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 objs.append(
                     add_copy_psx(
                         nw,
-                        version,
+                        ver,
                         f"{asset_path}/{name}.gfxbin",
                         f"{asset_path}/{name}",
                         ld_path,
@@ -582,7 +591,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 objs.append(
                     add_copy_psx(
                         nw,
-                        version,
+                        ver,
                         f"{asset_path}/{name}.palbin",
                         f"{asset_path}/{name}",
                         ld_path,
@@ -591,7 +600,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
             elif kind == "palette":
                 objs_memcard = add_memcard_img_psx(
                     nw,
-                    version,
+                    ver,
                     f"{asset_path}/{name}.png",
                     f"{asset_path}/{name}",
                     ld_path,
@@ -601,9 +610,9 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 continue
     if platform == "psp" and ovl_name != "main":
         mwo = os.path.join(asset_path, "mwo_header.bin")
-        objs.append(add_copy_psx(nw, version, mwo, mwo, ld_path))
-    output_elf = f"build/{version}/{ovl_name}.elf"
-    sym_version = version
+        objs.append(add_copy_psx(nw, ver, mwo, mwo, ld_path))
+    output_elf = build_path(ver, f"{ovl_name}.elf")
+    sym_version = ver
     if ovl_name == "stmad":
         sym_version = "beta"
     symbols_lists = [
@@ -615,7 +624,7 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
     if ovl_name == "main" and platform == "psp":
         symbols_lists.append(f"-T {undefined_funcs_auto_path}")
     if platform == "psp":
-        symbols_lists.append(f"-T config/symexport.{version}.{ovl_name}.txt")
+        symbols_lists.append(f"-T config/symexport.{ver}.{ovl_name}.txt")
     nw.build(
         rule="psx-ld",
         outputs=[output_elf],
@@ -627,27 +636,27 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
                 if platform == "psp" and not ld_path.endswith("main.ld")
                 else ""
             ),
-            "map_out": f"build/{version}/{ovl_name}.map",
+            "map_out": build_path(ver, f"{ovl_name}.map"),
             "symbols_arg": str.join(" ", symbols_lists),
         },
     )
     strip_rule = "psx-strip"
-    if platform != "psp" and not is_hd(version) and is_servant(ovl_name):
+    if platform != "psp" and not is_hd(ver) and is_servant(ovl_name):
         strip_rule = "psx-strip-servant"
     output_name = os.path.basename(target_path)
     if ovl_name == "main":
         output_name = "main.exe"
     nw.build(
         rule=strip_rule,
-        outputs=[f"build/{version}/{output_name}"],
+        outputs=build_path(ver, output_name),
         inputs=[output_elf],
     )
     if platform == "psx":
         if (is_stage(ovl_name) or is_boss(ovl_name)) and ovl_name != "stsel":
             gfx_name = f"F_{os.path.basename(target_path)}"
-            if is_hd(version):
+            if is_hd(ver):
                 gfx_name = f"f_{os.path.basename(target_path)}"
-            stage_gfx_path = f"build/{version}/{gfx_name}"
+            stage_gfx_path = build_path(ver, gfx_name)
             target_f_path = os.path.join(os.path.dirname(target_path), gfx_name)
             add_gfx_stage(nw, target_f_path, asset_path, stage_gfx_path)
 
@@ -658,25 +667,23 @@ def add_splat_config(nw: ninja_syntax.Writer, version: str, file_name: str):
         implicit=[output_elf],
     )
 
-    return
 
-
-def add_checksum(nw: ninja_syntax.Writer, version: str, file_name: str):
+def add_checksum(nw: ninja_syntax.Writer, ver: str, file_name: str):
     with open(file_name) as f:
         lines = f.readlines()
     binaries = [line.split(" ")[2].strip() for line in lines]
-    if version == "us":
-        dirt = "build/us/dra.dirt.done"
+    if ver == "us":
+        dirt = build_path(ver, "dra.dirt.done")
         binaries.append(dirt)
         nw.build(
             rule="dirt",
             outputs=dirt,
-            inputs="config/dirt.us.json",
-            implicit="build/us/DRA.BIN",
+            inputs=f"config/dirt.{ver}.json",
+            implicit=build_path(ver, "DRA.BIN"),
         )
     nw.build(
         rule="check",
-        outputs=[f"{version} 🆗"],
+        outputs=[f"{ver} 🆗"],
         inputs=file_name,
         implicit=binaries,
     )
@@ -702,10 +709,10 @@ with open(build_ninja, "w") as f:
         command="cat $in > $out",
         description="concat to $out",
     )
-    cpp_defs = "-Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM -D_internal_version_$version -DSOTN_STR"
+    cpp_defs = f"-Dmips -D__GNUC__=2 -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -D_LANGUAGE_C -DLANGUAGE_C -DNO_LOGS -DHACKS -DUSE_INCLUDE_ASM -D_internal_version_$version -DSOTN_STR"
     cc_command = (
         "VERSION=$version"
-        f" mipsel-linux-gnu-cpp $cpp_flags -MMD -MF $out.d -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin {cpp_defs} $in"
+        f" mipsel-linux-gnu-cpp $cpp_flags -MMD -MF $out.d -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin {cpp_defs} {extra_cpp_defs} $in"
         " | tools/sotn_str/target/release/sotn_str process"
         " | iconv --from-code=UTF-8 --to-code=Shift-JIS"
         " | bin/cc1-psx-26 -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags"
@@ -764,7 +771,7 @@ with open(build_ninja, "w") as f:
             " | .venv/bin/python3 tools/mwccgap/mwccgap.py $out --src-dir $src_dir"
             " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path tools/pspas/target/release/pspas"
             " --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc"
-            " -gccinc -Iinclude -Iinclude/pspsdk -D_internal_version_$version -DSOTN_STR -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
+            f" -gccinc -Iinclude -Iinclude/pspsdk -D_internal_version_$version -DSOTN_STR {extra_cpp_defs} -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
             " $opt_level -opt nointrinsics"
         ),
         description="psp cc $in",
@@ -845,7 +852,8 @@ with open(build_ninja, "w") as f:
                 continue
             add_splat_config(nw, version, entry.path)
         add_assets_config(nw, version)
-        add_checksum(nw, version, f"config/check.{version}.sha")
+        if not sotn_progress_report:
+            add_checksum(nw, version, f"config/check.{version}.sha")
 
     nw.build(
         rule="phony",
