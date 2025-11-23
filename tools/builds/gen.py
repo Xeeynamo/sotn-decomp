@@ -1,6 +1,7 @@
 # usage
 # python3 ./tools/build/gen.py && ninja
 
+from dataclasses import dataclass
 import ninja_syntax
 import os
 from pathlib import Path
@@ -17,26 +18,6 @@ sotn_progress_report = os.environ.get("SOTN_PROGRESS_REPORT") == "1"
 if sotn_progress_report:
     # https://decomp.wiki/en/tools/decomp-dev
     extra_cpp_defs += " -DSKIP_ASM=1"
-
-psp_o4_files = [
-    "3250.c",
-    "menu.c",
-    "186E8.c",
-    "1DDC0.c",
-    "23138.c",
-    "4AEA4.c",
-    "4CE2C.c",
-    "4DA70.c",
-    "5087C.c",
-    "624DC.c",
-    "62DEC.c",
-    "62FE0.c",
-    "63C08.c",
-    "66590.c",
-    "collider.c",
-    "game_handlers.c",
-    "11320.c",
-]
 
 
 def is_psp(ver: str) -> bool:
@@ -85,16 +66,63 @@ def is_stage(ovl_name: str) -> bool:
     )
 
 
-def get_cc_flags_for_exceptional_files(ver: str, file_name: str):
-    if ver == "us" and file_name == "src/weapon/w_029.c":
-        return "-O1"
-    if not is_psp(ver):
-        return ""  # PSX is almost always -O2
-    if (
-        file_name.startswith("src/dra") or file_name.startswith("src/main_psp")
-    ) and os.path.basename(file_name) in psp_o4_files:
-        return "-O4,p"
-    return "-Op"
+@dataclass
+class CompilerParams:
+    cc_opt: str = "-O2"
+    mwcc_opt: str = "-Op"
+    aspsx_ver: str = "2.34"
+
+
+def get_compiler_params(source_file_path: str) -> CompilerParams:
+    """
+    Parses optional compiler overrides from the source file header.
+
+    The function scans the first two lines of the file. If a line starts
+    with `//!`, it parses space-separated `KEY=VALUE` pairs to override
+    default build settings.
+
+    Supported Flags:
+        PSYQ: Overrides the ASPSX assembler version.
+        O:    Overrides the PS1 C Compiler optimization level.
+        PSPO: Overrides the PSP C Compiler optimization flags.
+
+    Example Header:
+        //! PSYQ=3.3 O=1 PSPO=4,p
+    """
+    c = CompilerParams()
+    if not os.path.exists(source_file_path):
+        return c
+    compiler_params = None
+    with open(source_file_path, "r") as file:
+        for _ in range(2):
+            line = file.readline()
+            if line.startswith("//!"):
+                compiler_params = line
+                break
+    if not compiler_params:
+        return c
+    for param in compiler_params[3:].strip().split():
+        pair = param.split("=")
+        if len(pair) == 2:
+            key, value = pair[0].strip(), pair[1].strip()
+        elif len(pair) == 1:
+            key, value = pair[0].strip(), ""
+        else:
+            raise ValueError(f"Compiler override parameter '{param}' is not recognized")
+        if key == "PSYQ":
+            if value == "3.3":
+                c.aspsx_ver = "2.21"
+            elif value == "3.5":
+                c.aspsx_ver = "2.34"
+            else:
+                raise ValueError(f"PSYQ version '{value}' is not recognized")
+        elif key == "O":
+            c.cc_opt = f"-O{value}"
+        elif key == "PSPO":
+            c.mwcc_opt = f"-O{value}"
+        else:
+            raise ValueError(f"Compiler override flag '{key}' is not recognized")
+    return c
 
 
 def add_c_psx(
@@ -104,14 +132,9 @@ def add_c_psx(
     if output in entries:
         return output
     entries[output] = {}
-    rule = "psx-cc"
-    if (
-        file_name == "src/main/psxsdk/libgpu/sys.c"
-        or file_name == "src/main/psxsdk/libgpu/font.c"
-    ):
-        rule = "psx-cc-2_21"
+    c_params = get_compiler_params(file_name)
     nw.build(
-        rule=rule,
+        rule="psx-cc",
         outputs=output,
         inputs=file_name,
         implicit=[
@@ -121,7 +144,8 @@ def add_c_psx(
         variables={
             "version": ver,
             "cpp_flags": cpp_flags,
-            "cc_flags": get_cc_flags_for_exceptional_files(ver, file_name),
+            "cc_flags": c_params.cc_opt,
+            "aspsx_ver": c_params.aspsx_ver,
         },
     )
 
@@ -235,6 +259,7 @@ def add_c_psp(
     if output in entries:
         return output
     entries[output] = {}
+    c_params = get_compiler_params(file_name)
     nw.build(
         rule="psp-cc",
         outputs=output,
@@ -251,7 +276,7 @@ def add_c_psp(
         variables={
             "version": ver,
             "cpp_flags": cpp_flags,
-            "opt_level": get_cc_flags_for_exceptional_files(ver, file_name),
+            "opt_level": c_params.mwcc_opt,
             "src_dir": os.path.dirname(file_name),
         },
     )
@@ -715,8 +740,8 @@ with open(build_ninja, "w") as f:
         f" mipsel-linux-gnu-cpp $cpp_flags -MMD -MF $out.d -lang-c -Iinclude -Iinclude/psxsdk -undef -Wall -fno-builtin {cpp_defs} {extra_cpp_defs} $in"
         " | tools/sotn_str/target/release/sotn_str process"
         " | iconv --from-code=UTF-8 --to-code=Shift-JIS"
-        " | bin/cc1-psx-26 -G0 -w -O2 -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags"
-        " | python3 tools/maspsx/maspsx.py  --expand-div --aspsx-version=2.34"
+        " | bin/cc1-psx-26 -G0 -w -funsigned-char -fpeephole -ffunction-cse -fpcc-struct-return -fcommon -fverbose-asm -msoft-float -g -quiet -mcpu=3000 -fgnu-linker -mgas -gcoff $cc_flags"
+        " | python3 tools/maspsx/maspsx.py --expand-div --aspsx-version=$aspsx_ver"
         " | mipsel-linux-gnu-as -Iinclude -march=r3000 -mtune=r3000 -no-pad-sections -O1 -G0 -o $out"
     )
     nw.rule(
@@ -724,13 +749,6 @@ with open(build_ninja, "w") as f:
         depfile="$out.d",
         deps="gcc",
         command=cc_command,
-        description="psx cc $in",
-    )
-    nw.rule(
-        "psx-cc-2_21",
-        depfile="$out.d",
-        deps="gcc",
-        command=cc_command.replace("--aspsx-version=2.34", "--aspsx-version=2.21"),
         description="psx cc $in",
     )
     nw.rule(

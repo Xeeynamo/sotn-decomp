@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//! O=1
 // Weapon ID #29. Used by weapons:
 // Fire shield, Unknown#213
 #include "weapon_private.h"

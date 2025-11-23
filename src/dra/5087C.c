@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//! PSPO=4,p
 #include "dra.h"
 #include "dra_bss.h"
 #include "menu.h"
