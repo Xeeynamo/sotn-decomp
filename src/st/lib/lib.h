@@ -137,7 +137,6 @@ extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
 extern EInit g_EInitFleaArmor;
 extern EInit D_us_801809C8;
-extern EInit g_EInitFleaMan;
 extern EInit g_EInitMudman;
 extern EInit D_us_801809EC;
 

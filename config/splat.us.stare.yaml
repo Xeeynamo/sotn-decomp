@@ -59,6 +59,7 @@ segments:
       - [0x221C, data]
       - [0x2700, .data, e_hunting_girl]
       - [0x2878, data]
+      - [0x2BD4, .data, e_flea_man]
       - [0x2C2C, .data, e_bone_scimitar]
       - [0x2D20, data]
       - [0x2E1C, .data, e_mist_door]
