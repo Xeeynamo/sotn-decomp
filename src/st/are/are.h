@@ -9,6 +9,7 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_HUNTING_GIRL = 0x21C,
 };
 
 enum Entities {

@@ -57,6 +57,8 @@ segments:
       - [0x1B34, data]
       - [0x1F70, .data, e_owl_knight]
       - [0x221C, data]
+      - [0x2700, .data, e_hunting_girl]
+      - [0x2878, data]
       - [0x2C2C, .data, e_bone_scimitar]
       - [0x2D20, data]
       - [0x2E1C, .data, e_mist_door]
