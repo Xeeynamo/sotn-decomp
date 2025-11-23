@@ -61,8 +61,8 @@ enum Entities {
     E_OWL_KNIGHT_SWORD,         // EntityOwlKnightSword
     E_OWL_TARGET,               // EntityOwlTarget
     E_VALHALLA_KNIGHT,          // EntityValhallaKnight
-    E_UNK_30,                   // func_us_801C8954
-    E_UNK_31,                   // func_us_801C8AAC
+    E_VALHALLA_KNIGHT_UNK1,     // func_us_801C8954
+    E_VALHALLA_KNIGHT_UNK2,     // func_us_801C8AAC
     E_AXE_KNIGHT_BLUE,          // EntityAxeKnightBlue
     E_AXE_KNIGHT_THROWING_AXE,  // EntityAxeKnightThrowingAxe
     E_UNK_34,                   // func_us_801CA2AC
