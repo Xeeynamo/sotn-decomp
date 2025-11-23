@@ -50,7 +50,6 @@ InitRoomEntities = 0x801BAB20;
 UpdateRoomPosition = 0x801BAC98;
 CreateEntityFromCurrentEntity = 0x801BAD4C;
 CreateEntityFromEntity = 0x801BADC0;
-EntityIsNearPlayer = 0x801BAE3C;
 ARE_EntityRedDoor = 0x801BAEB4;
 DestroyEntity = 0x801BBAEC;
 DestroyEntitiesFromIndex = 0x801BBB58;
