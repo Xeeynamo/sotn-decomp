@@ -107,6 +107,7 @@ segments:
       - [0x50338, c, unk_50338]
       - [0x54BAC, c, e_mist_door]
       - [0x54C94, c, prim_helpers]
-      - [0x554C4, bss, 554C4]
+      - [0x554C4, .bss, create_entity]
+      - [0x554D4, bss, 554D4]
       - [0x5613C, bss, e_collect]
   - [0x5617C]
