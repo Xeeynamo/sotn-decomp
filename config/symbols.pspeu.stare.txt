@@ -211,3 +211,4 @@ g_LayoutObjPosVertical = 0x09298188;
 g_LayoutObjPosHorizontal = 0x09298190;
 g_LayoutObjVertical = 0x09298198;
 g_LayoutObjHorizontal = 0x092981A0;
+g_ItemIconSlots = 0x092981A8;
