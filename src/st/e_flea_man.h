@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+extern EInit g_EInitFleaMan;
+
 static s32 fidgetVelocityX[] = {FIX(-2), FIX(-0.875), FIX(1.5), 0, FIX(-2.5)};
 static s32 fidgetVelocityY[] = {
     FIX(-0.5), FIX(-6), FIX(-3), FIX(-3.5), FIX(-4)};

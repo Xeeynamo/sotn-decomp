@@ -1,0 +1,122 @@
+options:
+  platform: psx
+  basename: stare
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/ARE/ARE.BIN
+  asm_path: asm/us/st/are
+  asset_path: assets/st/are
+  src_path: src/st/are
+  ld_script_path: build/us/stare.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.stare.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.stare.txt
+  undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.stare.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: d1b52f3ee4c96055e22a327ca7c6992471e3e551
+segments:
+  - name: stare
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x2C, data]
+      - [0x958, .data, e_init]
+      - [0xC84, data]
+      - [0xD04, .data, e_red_door_tiles]
+      - [0xD24, .data, e_lock_camera]
+      - [0xDA4, data]
+      - [0x1018, .data, st_update]
+      - [0x1044, .data, st_collision]
+      - [0x1404, .data, e_red_door]
+      - [0x141C, .data, st_common]
+      - [0x161C, data]
+      - [0x1970, .data, e_misc]
+      - [0x1A28, .data, e_particles]
+      - [0x1AA8, .data, e_room_fg]
+      - [0x1B34, data]
+      - [0x1F70, .data, e_owl_knight]
+      - [0x221C, .data, e_valhalla_knight]
+      - [0x2390, data]
+      - [0x2700, .data, e_hunting_girl]
+      - [0x2878, data]
+      - [0x2BD4, .data, e_flea_man]
+      - [0x2C2C, .data, e_bone_scimitar]
+      - [0x2D20, data]
+      - [0x2E1C, .data, e_mist_door]
+      - [0x2E5C, data]
+      - [0x352B0, .rodata, e_breakable]
+      - [0x352D4, .rodata, unk_3628C]
+      - [0x352EC, .rodata, e_cavern_door]
+      - [0x35304, .rodata, e_heartroom]
+      - [0x35318, .rodata, e_red_door]
+      - [0x35330, .rodata, e_collect]
+      - [0x35404, .rodata, e_stage_name]
+      - [0x35438, .rodata, unk_4375C]
+      - [0x354BC, .rodata, e_owl_knight]
+      - [0x355CC, .rodata, e_valhalla_knight]
+      - [0x355F4, .rodata, e_axe_knight]
+      - [0x35678, .rodata, unk_4A2AC]
+      - [0x35734, .rodata, e_hunting_girl]
+      - [0x3575C, .rodata, unk_4DCC0]
+      - [0x3578C, .rodata, e_flea_armor]
+      - [0x357D0, .rodata, e_flea_man]
+      - [0x357E4, .rodata, e_bone_scimitar]
+      - [0x35804, .rodata, unk_50338]
+      - [0x35908, .rodata, prim_helpers]
+      - [0x35910, c, e_room_bg]
+      - [0x359D8, c, e_lock_camera]
+      - [0x35B94, c, e_breakable]
+      - [0x3628C, c, unk_3628C]
+      - [0x368B4, c, e_cavern_door]
+      - [0x37B40, c, e_heartroom]
+      - [0x386D4, c, st_update]
+      - [0x38B08, c, st_collision]
+      - [0x3A2C4, c, create_entity]
+      - [0x3AE3C, c, e_red_door]
+      - [0x3BAEC, c, st_common]
+      - [0x3CF9C, c, e_collect]
+      - [0x3F90C, c, e_misc]
+      - [0x41CA8, c, e_stage_name]
+      - [0x42AFC, c, e_particles]
+      - [0x43340, c, e_room_fg]
+      - [0x4342C, c, popup]
+      - [0x4375C, c, unk_4375C]
+      - [0x45A28, c, e_owl_knight]
+      - [0x48068, c, e_valhalla_knight]
+      - [0x48B90, c, e_axe_knight]
+      - [0x4A2AC, c, unk_4A2AC]
+      - [0x4C978, c, e_hunting_girl]
+      - [0x4DCC0, c, unk_4DCC0]
+      - [0x4EDE8, c, e_flea_armor]
+      - [0x4F48C, c, e_flea_armor_attack_hitbox]
+      - [0x4F590, c, e_flea_man]
+      - [0x4F9F4, c, e_bone_scimitar]
+      - [0x50288, c, e_plate_lord]
+      - [0x50338, c, unk_50338]
+      - [0x54BAC, c, e_mist_door]
+      - [0x54C94, c, prim_helpers]
+      - [0x554C4, .bss, create_entity]
+      - [0x554D4, bss, 554D4]
+      - [0x5613C, bss, e_collect]
+  - [0x5617C]

@@ -537,12 +537,12 @@ static u8 g_UnkEntityAnimData[] = {
 void InitializeUnkEntity(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
+        self->zPriority += 16;
         self->opacity = 0xF0;
         self->scaleX = 0x01A0;
         self->scaleY = 0x01A0;
         self->animSet = ANIMSET_DRA(8);
         self->animCurFrame = 1;
-        self->zPriority += 16;
 
         if (self->params) {
             self->palette = self->params;
