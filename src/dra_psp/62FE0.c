@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//! PSPO=4,p
 #include "../dra/dra.h"
 
 extern u16 D_800AC910[];
