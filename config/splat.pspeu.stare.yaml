@@ -69,7 +69,7 @@ segments:
       - [0x1CA68, c, are_psp/st_collision]
       - [0x1EC40, c, are_psp/e_mist_door]
       - [0x1EEC8, c, are_psp/e_bone_scimitar]
-      - [0x1FB00, c, are_psp/popup]
+      - [0x1FB00, c, are/popup]
       - [0x200F8, c, are_psp/e_hunting_girl]
       - [0x21CD0, c, are_psp/e_flea_man]
       - [0x22328, c, are/e_room_fg]
