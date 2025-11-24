@@ -81,5 +81,4 @@ FindFirstUnkPrim = 0x801D51CC;
 FindFirstUnkPrim2 = 0x801D51FC;
 UnkPolyFunc2 = 0x801D53E0;
 UnkPolyFunc0 = 0x801D5434;
-PrimDecreaseBrightness = 0x801D5460;
 g_ItemIconSlots = 0x801D613C;
