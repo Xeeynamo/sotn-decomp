@@ -30,6 +30,7 @@ extern s32 D_psp_08966BE4;
 extern s32 D_psp_08966BF8;
 extern s32 D_psp_08966C0C;
 extern s32 D_psp_08966C20;
+extern char D_psp_089AD48C[];
 extern s32 D_psp_08B42048;
 extern s32 D_psp_08B4204C;
 extern s8 D_psp_08DAF2C8;
@@ -42,8 +43,11 @@ extern s32 D_psp_08DB0314;
 extern s32 D_psp_08DB0340;
 extern pspUtilityMsgDialogParams D_psp_08DEC780;
 extern s32 D_psp_08DEC9C4;
-extern SceUtilitySavedataParam D_psp_08DEC9C8;
+extern PspUtilitySavedataParam D_psp_08DEC9C8;
+extern PspUtilitySavedataMsFreeSize D_psp_08DECFC8;
 extern u32 D_psp_08DECFD0;
+extern PspUtilitySavedataMsDataSize D_psp_08DECFDC;
+extern PspUtilitySavedataUtilityDataSize D_psp_08DED01C;
 extern s32 D_psp_08DED038;
 extern u8 D_psp_08DED03C[0x20AD0];
 extern u8 D_psp_08E0DB0C[0x20AD0];
@@ -319,7 +323,7 @@ void func_psp_089307D4(s16 x, s16 y, s16 w, s16 h, s32 color) {
 }
 
 void func_psp_08930934(s32 errorVal) {
-    s32 ret[1];
+    volatile s32 ret;
 
     memset(&D_psp_08DEC780, 0, sizeof(pspUtilityMsgDialogParams));
     D_psp_08DEC780.base.size = sizeof(pspUtilityMsgDialogParams);
@@ -331,8 +335,8 @@ void func_psp_08930934(s32 errorVal) {
     D_psp_08DEC780.base.soundThread = KERNEL_USER_HIGHEST_PRIORITY;
     D_psp_08DEC780.errorValue = errorVal;
     D_psp_08DEC780.mode = PSP_UTILITY_MSGDIALOG_MODE_ERROR;
-    ret[0] = sceUtilityMsgDialogInitStart(&D_psp_08DEC780);
-    switch (ret[0]) {
+    ret = sceUtilityMsgDialogInitStart(&D_psp_08DEC780);
+    switch (ret) {
     case 0:
         D_psp_08DEC9C4 = 1;
         break;
@@ -344,7 +348,7 @@ void func_psp_08930934(s32 errorVal) {
 s32 func_psp_08930A0C(void) { return D_psp_08DEC9C4; }
 
 void func_psp_08930A1C(void) {
-    s32 ret[1];
+    volatile s32 ret;
     s32 status;
 
     if (D_psp_08DEC9C4 != 0) {
@@ -354,15 +358,15 @@ void func_psp_08930A1C(void) {
             break;
 
         case PSP_UTILITY_COMMON_STATUS_RUNNING:
-            ret[0] = sceUtilityMsgDialogUpdate(1);
-            if (ret[0] == 0) {
+            ret = sceUtilityMsgDialogUpdate(1);
+            if (ret == 0) {
                 return;
             }
             break;
 
         case PSP_UTILITY_COMMON_STATUS_FINISHED:
-            ret[0] = sceUtilityMsgDialogShutdownStart();
-            if (ret[0] == 0) {
+            ret = sceUtilityMsgDialogShutdownStart();
+            if (ret == 0) {
                 return;
             }
             break;
@@ -378,7 +382,7 @@ void func_psp_08930A1C(void) {
 }
 
 void func_psp_08930AE4(s32 arg0) {
-    memset(&D_psp_08DEC9C8, 0, sizeof(SceUtilitySavedataParam));
+    memset(&D_psp_08DEC9C8, 0, sizeof(PspUtilitySavedataParam));
     D_psp_08E2E5DC = arg0;
     D_psp_08E2E5E0 = 0;
     D_psp_08E2E5E4 = 0;
@@ -577,25 +581,25 @@ s32 func_psp_08930B34(void) {
 }
 
 void func_psp_0893116C(void) {
-    s32 ret[1];
+    volatile s32 ret;
     s32 status;
 
-    ret[0] = 0;
+    ret = 0;
     status = sceUtilitySavedataGetStatus();
     switch (status) {
     case PSP_UTILITY_COMMON_STATUS_INIT:
         break;
 
     case PSP_UTILITY_COMMON_STATUS_RUNNING:
-        ret[0] = sceUtilitySavedataUpdate(2);
-        if (ret[0] == 0) {
+        ret = sceUtilitySavedataUpdate(2);
+        if (ret == 0) {
             return;
         }
         break;
 
     case PSP_UTILITY_COMMON_STATUS_FINISHED:
-        ret[0] = sceUtilitySavedataShutdownStart();
-        if (ret[0] == 0) {
+        ret = sceUtilitySavedataShutdownStart();
+        if (ret == 0) {
             return;
         }
         break;
@@ -611,10 +615,23 @@ void func_psp_0893116C(void) {
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08931228);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08931334);
+s32 func_psp_08931334(void) {
+    PspUtilitySavedataParam* param = &D_psp_08DEC9C8;
+
+    func_psp_08931228();
+    memset(&D_psp_08DECFC8, 0, sizeof(PspUtilitySavedataMsFreeSize));
+    memset(&D_psp_08DECFDC, 0, sizeof(PspUtilitySavedataMsDataSize));
+    memset(&D_psp_08DED01C, 0, sizeof(PspUtilitySavedataUtilityDataSize));
+    memcpy(D_psp_08DECFDC.gameName, D_psp_089AD48C, strlen(D_psp_089AD48C));
+    param->msFree = &D_psp_08DECFC8;
+    param->msData = &D_psp_08DECFDC;
+    param->utilityData = &D_psp_08DED01C;
+    param->mode = PSP_UTILITY_SAVEDATA_SIZES;
+    return sceUtilitySavedataInitStart(param);
+}
 
 s32 func_psp_08931410(void) {
-    SceUtilitySavedataParam* param = &D_psp_08DEC9C8;
+    PspUtilitySavedataParam* param = &D_psp_08DEC9C8;
 
     func_psp_08931228();
     if (D_psp_08E2E5DC == 0) {
@@ -629,7 +646,13 @@ s32 func_psp_08931410(void) {
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08931488);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08931CF8);
+s32 func_psp_08931CF8(void) {
+    PspUtilitySavedataParam* param = &D_psp_08DEC9C8;
+
+    func_psp_08931228();
+    param->mode = PSP_UTILITY_SAVEDATA_LISTALLDELETE;
+    return sceUtilitySavedataInitStart(param);
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08931D3C);
 

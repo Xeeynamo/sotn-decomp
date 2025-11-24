@@ -1,7 +1,7 @@
 #include <common.h>
 
 // This is just a guess, but it is required to have the correct struct size for
-// SceUtilitySavedataParam
+// PspUtilitySavedataParam
 #define _PSP_FW_VERSION 200
 
 // On PSP side this is compared against g_UserLanguage / 0x08B42058
