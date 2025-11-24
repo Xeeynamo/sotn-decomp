@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+//! PSYQ=3.3
 #include "common.h"
 #include <psxsdk/libgpu.h>
 

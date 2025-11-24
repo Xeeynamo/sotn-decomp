@@ -417,6 +417,7 @@ if __name__ == "__main__":
     progress["weapon"] = DecompProgressWeaponStats()
     progress["ric"] = DecompProgressStats("ric", "ric")
     progress["maria"] = DecompProgressStats("maria", "maria")
+    progress["stare"] = DecompProgressStats("stare", "st/are")
     progress["stcat"] = DecompProgressStats("stcat", "st/cat")
     progress["stcen"] = DecompProgressStats("stcen", "st/cen")
     progress["stchi"] = DecompProgressStats("stchi", "st/chi")

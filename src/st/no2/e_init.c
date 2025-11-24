@@ -158,10 +158,12 @@ EInit g_EInitBloodyZombie = {
 EInit D_us_801808EC = {ANIMSET_OVL(0x02), 0x0E, 0x00, PAL_NULL, 0x005};
 EInit g_EInitValhallaKnight = {
     ANIMSET_OVL(0x05), 0x01, 0x4C, PAL_VALHALLA_KNIGHT, 0x085};
-EInit D_us_80180904 = {
+EInit g_EInitValhallaKnightUnk1 = {
     ANIMSET_OVL(0x05), 0x01, 0x4C, PAL_VALHALLA_KNIGHT, 0x003};
-EInit D_us_80180910 = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NULL, 0x086};
-EInit D_us_8018091C = {ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NULL, 0x087};
+EInit g_EInitValhallaKnightUnk2 = {
+    ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NULL, 0x086};
+EInit g_EInitValhallaKnightUnk3 = {
+    ANIMSET_OVL(0x00), 0x00, 0x00, PAL_NULL, 0x087};
 EInit g_EInitHammer = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_UNK_23E, 0x0BA};
 EInit g_EInitHammerWeapon = {ANIMSET_OVL(0x06), 0x12, 0x4C, PAL_UNK_23E, 0x0BB};
 EInit g_EInitGurkha = {ANIMSET_OVL(0x06), 0x02, 0x4C, PAL_GURKHA, 0x0BC};
