@@ -55,52 +55,11 @@ typedef struct {
     float x, y, z;
 } TVertex;
 
+// DATA
 extern s32 D_psp_0893CED0;
 extern s32 D_psp_0893CF74[];
-extern char D_psp_08946410[];
-extern s32 D_psp_08946424;
-extern s32 D_psp_08946430;
-extern s32 D_psp_0894643C;
-extern s32 D_psp_08946448;
-extern char D_psp_0894644C[];
-extern char D_psp_08946458[];
-extern char D_psp_08946468[];
-extern char D_psp_08946478[];
-extern char D_psp_08946494[];
-extern s32 /*?*/ D_psp_089464B0;
-extern s32 D_psp_089464D0;
-extern u32 D_psp_089464D4;
-extern s32 D_psp_089464D8; // screen_w
-extern s32 D_psp_089464DC; // screen_h
-extern float D_psp_089464E0;
-extern float D_psp_089464E4;
-extern s32 D_psp_089464E8;
-extern s32 D_psp_089464EC;
-extern s32 D_psp_089464F0;
-extern const char D_psp_089464F4[];
-extern const char D_psp_089464F8[];
-extern float D_psp_089464FC;
-extern float D_psp_08946500;
-extern s32 D_psp_08946504;
-extern s32 (*D_psp_08946508[])(OT_TYPE*);
-extern char D_psp_0894654C[];
-extern char* D_psp_08946580[];
-extern char* D_psp_089465A0[];
-extern char D_psp_089465B4[];
-extern char D_psp_089465C8[];
-extern char D_psp_089465DC[];
-extern char D_psp_089465EC[];
-extern char D_psp_089465F8[];
-extern char D_psp_08946608[];
-extern char D_psp_08946614[];
-extern char D_psp_08946620[];
-extern char D_psp_08946630[];
-extern char D_psp_08946644[];
-extern char D_psp_08946654[];
-extern char D_psp_08946664[];
-extern char D_psp_08946670[];
-extern char D_psp_0894667C[];
-extern char D_psp_08946684[];
+
+// BSS
 extern SceCtrlData D_psp_08B41F40;
 extern SceCtrlData D_psp_08B41F50;
 extern u16 D_psp_08B41F60;
@@ -110,7 +69,7 @@ extern s32 D_psp_08B41F9C;
 extern s32 D_psp_08B41FB4;
 extern s32 D_psp_08B41FB8;
 extern s32 D_psp_08B41FBC;
-extern s32 D_psp_08B41FC0;
+extern bool D_psp_08B41FC0;
 extern s32 D_psp_08B41FD0; // exit callback ID
 extern s32 D_psp_08B41FE0;
 extern s32 D_psp_08B42000; // kernel thread ID
@@ -120,10 +79,10 @@ extern int D_psp_08B4204C; // button swap
 extern s32 D_psp_08B42050;
 extern s32 D_psp_08B42054;
 extern s32 g_UserLanguage;
-extern s32 D_psp_08B4205C;
-extern s32 D_psp_08B42060;
+extern char* D_psp_08B4205C;
+extern char* D_psp_08B42060;
 extern s32 D_psp_08B42064;
-extern s32 D_psp_08B42068;
+extern bool D_psp_08B42068;
 extern s32 D_psp_08B4206C;
 extern u8 D_psp_08B42080[0x20][0x8000];
 extern s32 D_psp_08C42080[0x20];
@@ -145,18 +104,18 @@ extern s32 D_psp_08C62A34; // screen_center_x
 extern s32 D_psp_08C62A38; // screen_center_y
 extern s32 D_psp_08C62A3C;
 extern s32 D_psp_08C62A40;
-extern s32 D_psp_08C62A44;
+extern bool D_psp_08C62A44;
 extern u32 D_psp_08C62A48;
 extern s32 D_psp_08C62A4C;
 extern s32 D_psp_08C62A50;
 extern s32 D_psp_08C62A54;
-extern s32 D_psp_08C62A58;
+extern bool D_psp_08C62A58;
 extern s32 D_psp_08C62A5C;
 extern s32 D_psp_08C62A60;
 extern s32 D_psp_08C62A64;
 extern s32 D_psp_08C62A68;
 extern s32 D_psp_08C62A6C;
-extern s32 D_psp_08C62A70;
+extern bool D_psp_08C62A70;
 extern OT_TYPE* D_psp_08C62A74;
 extern char D_psp_08C62A78[0x20];
 extern s8 D_psp_08C62A98;
@@ -172,8 +131,8 @@ extern u16 D_psp_08C62CBC[];
 extern s32 D_psp_08C62EBC;
 extern s32 D_psp_08C62EC0;
 extern char D_psp_08C62EC4[];
-extern s32 D_psp_08C630C4;
-extern s32 D_psp_08C630C8;
+extern bool D_psp_08C630C4;
+extern bool D_psp_08C630C8;
 extern u32 D_psp_08C630CC;
 extern s32 D_psp_08C630D0;
 extern s32 D_psp_08C630E0;
@@ -198,7 +157,7 @@ void _init(void) {}
 void _fini(void) {}
 
 void func_psp_08919A0C(void) {
-    sceCtrlSetSamplingMode(1);
+    sceCtrlSetSamplingMode(PSP_CTRL_MODE_ANALOG);
     sceCtrlReadBufferPositive(&D_psp_08B41F40, 1);
     sceCtrlReadBufferPositive(&D_psp_08B41F50, 1);
 }
@@ -212,7 +171,7 @@ static void func_psp_08919A58(void) {
         if (!(D_psp_08B41F40.Buttons & PSP_CTRL_HOLD)) {
             buttons = func_psp_08933F7C(D_psp_08B41F40.Lx, D_psp_08B41F40.Ly);
         }
-        if (buttons) {
+        if (buttons != 0) {
             sceKernelPowerTick(6);
         }
         D_psp_08B41F40.Buttons |= buttons;
@@ -339,7 +298,7 @@ static s32 exit_func(int count, int arg1, void* arg2) {
 }
 
 static s32 func_psp_08919FF8(void) {
-    D_psp_08B41FD0 = sceKernelCreateCallback(D_psp_08946410, exit_func, NULL);
+    D_psp_08B41FD0 = sceKernelCreateCallback("ExitGame", exit_func, NULL);
     if (D_psp_08B41FD0 <= 0) {
         return 0;
     }
@@ -372,6 +331,11 @@ static void func_psp_0891A104(void) {
     sceUtilityUnloadModule(PSP_MODULE_AV_SASCORE);
 }
 
+char* D_psp_08946424 = "PACK/";
+char* D_psp_08946430 = "sound/";
+char* D_psp_0894643C = "PACK_E/";
+char* D_psp_08946448 = "snd_e/";
+
 static void func_psp_0891A14C(void) {
     D_psp_08B42064 = func_psp_0893277C();
     if (D_psp_08B42064 == 0) {
@@ -386,7 +350,7 @@ static void func_psp_0891A14C(void) {
 int main(int argc, char* argv[]) {
     int language;
 
-    printf(D_psp_0894644C);
+    printf("月下開始00\n"); // Moonlight Start
     func_psp_08919FF8();
     D_psp_08B42044 = 0;
     sceGuInit();
@@ -444,7 +408,7 @@ int main(int argc, char* argv[]) {
     func_psp_0891269C();
     func_psp_0891249C();
     D_psp_08B41FE0 =
-        sceKernelCreateEventFlag(D_psp_08946458, PSP_EVENT_WAITMULTIPLE, 0, 0);
+        sceKernelCreateEventFlag("FileIOWakeUP", PSP_EVENT_WAITMULTIPLE, 0, 0);
     sceKernelChangeCurrentThreadAttr(0, PSP_THREAD_ATTR_VFPU);
     func_psp_0891B400();
     func_psp_08937560();
@@ -457,13 +421,13 @@ int main(int argc, char* argv[]) {
     func_psp_0891ACBC();
     func_psp_08930324();
     func_psp_0891A6A8(SCREEN_MODE_ZERO);
-    printf(D_psp_08946468);
+    printf("月下描画開始00\n"); // Moonlight Drawing begins
     sceGuDisplay(GU_DISPLAY_ON);
     func_psp_08910044();
-    sceGuSync(0, 0);
-    printf(D_psp_08946478);
+    sceGuSync(GU_SYNC_FINISH, GU_SYNC_WAIT);
+    printf("月下ユーティリティ開始00\n"); // Moonlight Started utility
     func_psp_0891979C(4);
-    printf(D_psp_08946494);
+    printf("月下ユーティリティ終了00\n"); // Moonlight End utility
     func_psp_0891A14C();
     func_psp_0891A6A8(
         func_psp_08932754() == 0 ? SCREEN_MODE_ONE : SCREEN_MODE_ZERO);
@@ -478,12 +442,22 @@ int main(int argc, char* argv[]) {
     func_psp_08919C4C();
     func_psp_0891A104();
     func_psp_089375A0();
-    func_psp_0892FAA8(0, &D_psp_089464B0);
+    func_psp_0892FAA8(0, "disc0:/PSP_GAME/SYSDIR/BOOT.BIN");
     func_psp_0892FA84(g_UserLanguage);
     func_psp_0892FCA8(1);
     func_psp_0892FC80();
     return 0;
 }
+
+s32 D_psp_089464D0 = -1;
+s32 D_psp_089464D4 = -1;
+s32 D_psp_089464D8 = 320; // screen_w
+s32 D_psp_089464DC = 240; // screen_h
+float D_psp_089464E0 = 1.0f;
+float D_psp_089464E4 = 1.0f;
+s32 D_psp_089464E8 = 2;
+s32 D_psp_089464EC = 1;
+s32 D_psp_089464F0 = 1;
 
 void func_psp_0891A608(void) {
     float x = D_psp_08C629C8;
@@ -673,7 +647,7 @@ void func_psp_0891AE68(void) {
 }
 
 void func_psp_0891AEC8(void) {
-    D_psp_08B41FC0 = D_psp_08B41FC0 ? 0 : 1;
+    D_psp_08B41FC0 = D_psp_08B41FC0 ? false : true;
     sceGuSwapBuffers();
     if (D_psp_08C62A58) {
         D_psp_08C62A64 = func_psp_08919F70();
@@ -704,7 +678,7 @@ void func_psp_0891AF48(s32 arg0) {
     default:
     case 0:
         D_psp_08C62A40 = 0;
-        if (D_psp_08B41FC0 != 0) {
+        if (D_psp_08B41FC0) {
             base_addr = 0x44000;
         } else {
             base_addr = 0;
@@ -742,7 +716,7 @@ s32 func_psp_0891B118(s32 x0, s32 y0, s32 x1, s32 y1, s32 color) {
 }
 
 s32 func_psp_0891B1F8(s32 x0, s32 y0, s32 x1, s32 y1, s32 color) {
-    if (D_psp_08B42068 == 1) {
+    if (D_psp_08B42068 == true) {
         func_psp_0891B118(x0, y0, x1 - 1, y0, color);
         func_psp_0891B118(x1 - 1, y0, x1 - 1, y1 - 1, color);
         func_psp_0891B118(x1 - 1, y1 - 1, x0, y1 - 1, color);
@@ -772,7 +746,7 @@ s32 func_psp_0891B2CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 color) {
 }
 
 s32 func_psp_0891B400(void) {
-    if (~D_psp_089464D4 > 0) {
+    if (~D_psp_089464D4 > 0U) {
     }
     D_psp_08C42180 = 0;
     D_psp_089464D4 = sceDisplayGetVcount();
@@ -782,9 +756,9 @@ s32 func_psp_0891B400(void) {
 s32 DrawSync(s32 arg0) {
     if (D_psp_08C62A44) {
         if (sceGuSync(GU_SYNC_FINISH, GU_SYNC_NOWAIT) == 1) {
-            sceGuDebugPrint(472, 0, 0xFFFFFFFF, D_psp_089464F4);
+            sceGuDebugPrint(472, 0, 0xFFFFFFFF, "G");
         } else {
-            sceGuDebugPrint(472, 0, 0xFFFFFFFF, D_psp_089464F8);
+            sceGuDebugPrint(472, 0, 0xFFFFFFFF, "C");
         }
     }
     if (arg0 == 0) {
@@ -800,7 +774,7 @@ s32 DrawSync(s32 arg0) {
 s32 func_psp_0891B528() { return D_psp_08C42180; }
 
 void func_psp_0891B538(s32 arg0) {
-    if (D_psp_08C62A58 != 0) {
+    if (D_psp_08C62A58) {
         D_psp_08C62A60 = func_psp_08919F70();
     }
 }
@@ -1395,31 +1369,30 @@ DISPENV* PutDispEnv(DISPENV* env) {
     D_psp_08C629D8.pad0 = env->pad0;
     D_psp_08C629D8.pad1 = env->pad1;
     switch (D_psp_08C62A30) {
-    case 0:
-        D_psp_089464D8 = 0x16A;
-        D_psp_089464DC = 0x110;
+    case SCREEN_MODE_ZERO:
+        D_psp_089464D8 = 362;
+        D_psp_089464DC = 272;
         break;
-    case 1:
-        D_psp_089464D8 = 0x140;
-        D_psp_089464DC = 0xF0;
+    case SCREEN_MODE_ONE:
+        D_psp_089464D8 = 320;
+        D_psp_089464DC = 240;
         break;
     }
     D_psp_08C62A34 = (GU_SCR_WIDTH - D_psp_089464D8) / 2;
     D_psp_08C62A38 = (GU_SCR_HEIGHT - D_psp_089464DC) / 2;
-    if ((D_psp_08C629D8.disp.w == 0x100) && (D_psp_08C629D8.disp.h == 0xF0)) {
-        if (D_psp_08C62A30 == 1) {
+    if (D_psp_08C629D8.disp.w == 256 && D_psp_08C629D8.disp.h == 240) {
+        if (D_psp_08C62A30 == SCREEN_MODE_ONE) {
             D_psp_08C62A34 += D_psp_08C629EC.clip.x;
             D_psp_08C62A38 += D_psp_08C629EC.clip.y;
             D_psp_089464DC = D_psp_08C629EC.clip.h;
-            D_psp_089464D8 = (D_psp_08C62A30 == 0) ? 0x1A2 : 0x140;
+            D_psp_089464D8 = (D_psp_08C62A30 == SCREEN_MODE_ZERO) ? 418 : 320;
         } else {
-            D_psp_089464D8 = (D_psp_08C62A30 == 0) ? 0x1A2 : 0x140;
-            D_psp_08C62A34 = (0x1E0 - D_psp_089464D8) / 2;
+            D_psp_089464D8 = (D_psp_08C62A30 == SCREEN_MODE_ZERO) ? 418 : 320;
+            D_psp_08C62A34 = (GU_SCR_WIDTH - D_psp_089464D8) / 2;
             D_psp_089464E0 = D_psp_089464E4 = 1.0f;
         }
     } else {
-        if (!(D_psp_08C629D8.disp.w > 0x1E0) &&
-            !(D_psp_08C629D8.disp.h > 0x100)) {
+        if (D_psp_08C629D8.disp.w <= 480 && D_psp_08C629D8.disp.h <= 256) {
             D_psp_089464E0 = D_psp_089464E4 = 1.0f;
         } else {
             D_psp_089464E0 =
@@ -1503,6 +1476,48 @@ DISPENV* SetDefDispEnv(DISPENV* env, s32 x, s32 y, s32 w, s32 h) {
     env->isrgb24 = 0;
     return env;
 }
+
+float D_psp_089464FC = 382.0f;
+float D_psp_08946500 = 240.0f;
+s32 D_psp_08946504 = GU_RGBA(0xA0, 0xA0, 0xA0, 0x80);
+
+s32 func_psp_08920488(void*);
+s32 func_psp_08920498(void*);
+s32 func_psp_089215A4(void*);
+s32 func_psp_08921D44(void*);
+s32 func_psp_089225D8(void*);
+s32 func_psp_08923FA4(void*);
+s32 func_psp_08921A38(void*);
+s32 func_psp_089254D8(void*);
+s32 func_psp_08925600(void*);
+s32 func_psp_08925860(void*);
+s32 func_psp_08925A04(void*);
+s32 func_psp_08925194(void*);
+s32 func_psp_0891FCC0(void*);
+s32 func_psp_0891FCF0(void*);
+s32 func_psp_0891FD20(void*);
+s32 func_psp_0891FD74(void*);
+s32 func_psp_0891FDC8(void*);
+
+s32 (*D_psp_08946508[])(void*) = {
+    func_psp_08920488, // NONE
+    func_psp_08920498, // SPRT
+    func_psp_089215A4, // SPRT_16
+    func_psp_08921D44, // POLY_FT4
+    func_psp_089225D8, // POLY_GT3
+    func_psp_08923FA4, // POLY_GT4
+    func_psp_08921A38, // POLY_G4
+    func_psp_089254D8, // LINE_F2
+    func_psp_08925600, // LINE_F4
+    func_psp_08925860, // LINE_G2
+    func_psp_08925A04, // LINE_G4
+    func_psp_08925194, // TILE
+    func_psp_0891FCC0, // DR_MODE OR DR_TWIN ?
+    func_psp_0891FCF0, // DR_MODE OR DR_TWIN ?
+    func_psp_0891FD20, // DR_OFFSET
+    func_psp_0891FD74, // DR_AREA
+    func_psp_0891FDC8, // DR_ENV
+};
 
 void func_psp_0891DE74(void) {
     s32 var_s1;
@@ -1712,7 +1727,7 @@ void func_psp_0891E944(void) {
     D_psp_08C42188 = D_psp_08C42180;
 }
 
-void func_psp_0891E994(OT_TYPE* p) {
+void func_psp_0891E994(void* p) {
     s32 sp5C;
     s32 sp58;
     s32 sp54;
@@ -1790,13 +1805,13 @@ void func_psp_0891E994(OT_TYPE* p) {
         } else {
             sp50 = D_psp_08C62A40;
             switch (D_psp_08C62A30) {
-            case 0:
-                sp54 = 0x1A2;
-                var_fp = 0x110;
+            case SCREEN_MODE_ZERO:
+                sp54 = 418;
+                var_fp = 272;
                 break;
             case 1:
-                sp54 = 0x171;
-                var_fp = 0xF0;
+                sp54 = 369;
+                var_fp = 240;
                 break;
             }
             sp5C = (GU_SCR_WIDTH - sp54) / 2;
@@ -1837,7 +1852,7 @@ void func_psp_0891E994(OT_TYPE* p) {
             func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
             func_psp_0891B2CC(0x130, 0, 0xB0, 0x70, black);
         }
-        if ((D_psp_08C62A58 != 0) && (D_psp_08C62A64 != 0)) {
+        if (D_psp_08C62A58 && (D_psp_08C62A64 != 0)) {
             var_s7 = (D_psp_08C42180 != D_psp_08C42188)
                          ? (D_psp_08C42180 - D_psp_08C42188) * 0xF0
                          : 0xF0;
@@ -1854,18 +1869,22 @@ void func_psp_0891E994(OT_TYPE* p) {
         func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
         func_psp_08932228();
         func_psp_0891E944();
-        if (D_psp_08C62A44 != 0) {
+        if (D_psp_08C62A44) {
             sp4C = (D_psp_08C42180 != D_psp_08C42188)
                        ? 0x3C / (D_psp_08C42180 - D_psp_08C42188)
                        : 0;
-            sprintf(D_psp_08C62EC4, D_psp_0894654C, D_psp_08C62A4C,
-                    D_psp_08C62A48, D_psp_089464D8, D_psp_089464DC, sp4C);
+            sprintf(D_psp_08C62EC4, "Frame=%d/ResetGraph=%2d/W:%d,H:%d/%2dfps",
+                    D_psp_08C62A4C, D_psp_08C62A48, D_psp_089464D8,
+                    D_psp_089464DC, sp4C);
             sceGuDebugPrint(0, 0x108, 0xFFFFFFFF, D_psp_08C62EC4);
         }
         D_psp_08C62A4C++;
         ResetGraph(0);
     }
 }
+
+char* off_on[] = {"OFF", "ON"};
+char* subBufType[] = {"OFF", "TEMP", "PS", "WOLF", "ALL"};
 
 void DrawOTag(OT_TYPE* p) {
     s32 sp4C;
@@ -1885,7 +1904,7 @@ void DrawOTag(OT_TYPE* p) {
         while (var_s3 >= 0) {
             temp_s2 = func_psp_08919BA8();
             if ((sp4C == 0) && (temp_s2 != 0)) {
-                if (temp_s2 & 0x4000) {
+                if (temp_s2 & PSP_CTRL_CROSS) {
                     while (func_psp_08919BA8()) {
                         VSync(0);
                     }
@@ -1893,37 +1912,38 @@ void DrawOTag(OT_TYPE* p) {
                     func_psp_0891E994(p);
                     break;
                 }
-                if (temp_s2 & 0x10) {
+                if (temp_s2 & PSP_CTRL_UP) {
                     var_s3 = (var_s3 + 11) % 12;
                 }
-                if (temp_s2 & 0x40) {
+                if (temp_s2 & PSP_CTRL_DOWN) {
                     var_s3 = (var_s3 + 1) % 12;
                 }
                 if (var_s3 == 0xB) {
-                    if (temp_s2 & 0x20) {
+                    if (temp_s2 & PSP_CTRL_RIGHT) {
                         D_psp_08C630CC += 1;
                     }
-                    if (temp_s2 & 0x80) {
+                    if (temp_s2 & PSP_CTRL_LEFT) {
                         D_psp_08C630CC += 0x230;
                     }
-                    if (temp_s2 & 0x200) {
+                    if (temp_s2 & PSP_CTRL_RTRIGGER) {
                         D_psp_08C630CC += 0x14;
                     }
-                    if (temp_s2 & 0x100) {
+                    if (temp_s2 & PSP_CTRL_LTRIGGER) {
                         D_psp_08C630CC += 0x21D;
                     }
                     D_psp_08C630CC = D_psp_08C630CC % 561;
                 }
-                if (temp_s2 & 0x2000) {
+                if (temp_s2 & PSP_CTRL_CIRCLE) {
                     switch (var_s3) {
                     case 0:
-                        g_IsTimeAttackUnlocked = g_IsTimeAttackUnlocked ? 0 : 1;
+                        g_IsTimeAttackUnlocked =
+                            g_IsTimeAttackUnlocked ? false : true;
                         break;
                     case 1:
-                        D_psp_08C630C4 = D_psp_08C630C4 ? 0 : 1;
+                        D_psp_08C630C4 = D_psp_08C630C4 ? false : true;
                         break;
                     case 2:
-                        D_psp_08C630C8 = D_psp_08C630C8 ? 0 : 1;
+                        D_psp_08C630C8 = D_psp_08C630C8 ? false : true;
                         break;
                     case 3:
                         D_psp_08C62A30 = (D_psp_08C62A30 + 1) % 2;
@@ -1936,20 +1956,20 @@ void DrawOTag(OT_TYPE* p) {
                         }
                         break;
                     case 5:
-                        D_psp_08C62A70 = D_psp_08C62A70 ? 0 : 1;
+                        D_psp_08C62A70 = D_psp_08C62A70 ? false : true;
                         break;
                     case 6:
-                        D_psp_08B42068 = D_psp_08B42068 ? 0 : 1;
+                        D_psp_08B42068 = D_psp_08B42068 ? false : true;
                         break;
                     case 7:
                         D_psp_08B4206C =
                             (D_psp_08B4206C < 4) ? D_psp_08B4206C + 1 : 0;
                         break;
                     case 8:
-                        D_psp_08C62A44 = D_psp_08C62A44 ? 0 : 1;
+                        D_psp_08C62A44 = D_psp_08C62A44 ? false : true;
                         break;
                     case 9:
-                        D_psp_08C62A58 = D_psp_08C62A58 ? 0 : 1;
+                        D_psp_08C62A58 = D_psp_08C62A58 ? false : true;
                         break;
                     case 11:
                         func_9141878(D_psp_08C630CC);
@@ -1962,47 +1982,39 @@ void DrawOTag(OT_TYPE* p) {
             }
             x = 0x130;
             y = 0;
-            sprintf(D_psp_08C630E4, D_psp_089465B4);
+            sprintf(D_psp_08C630E4, "=== DEGUG MENU ===");
             sceGuDebugPrint(x, y, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, D_psp_089465C8,
-                    D_psp_08946580[g_IsTimeAttackUnlocked ? 1 : 0]);
+            sprintf(D_psp_08C630E4, "GameClearFlag:%s",
+                    off_on[g_IsTimeAttackUnlocked ? true : false]);
             sceGuDebugPrint(x + 0x10, y + 0x8, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(
-                D_psp_08C630E4, D_psp_089465DC, D_psp_08946580[D_psp_08C630C4]);
+            sprintf(D_psp_08C630E4, "MutekiFlag:%s", off_on[D_psp_08C630C4]);
             sceGuDebugPrint(x + 0x10, y + 0x10, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(
-                D_psp_08C630E4, D_psp_089465EC, D_psp_08946580[D_psp_08C630C8]);
+            sprintf(D_psp_08C630E4, "Heart99:%s", off_on[D_psp_08C630C8]);
             sceGuDebugPrint(x + 0x10, y + 0x18, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, D_psp_089465F8, D_psp_08C62A30);
+            sprintf(D_psp_08C630E4, "ScreenMode:%d", D_psp_08C62A30);
             sceGuDebugPrint(x + 0x10, y + 0x20, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, D_psp_08946608, D_psp_08C630E0);
+            sprintf(D_psp_08C630E4, "PlayWait:%d", D_psp_08C630E0);
             sceGuDebugPrint(x + 0x10, y + 0x28, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(
-                D_psp_08C630E4, D_psp_08946614, D_psp_08946580[D_psp_08C62A70]);
+            sprintf(D_psp_08C630E4, "FntPrint:%s", off_on[D_psp_08C62A70]);
             sceGuDebugPrint(x + 0x10, y + 0x30, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(
-                D_psp_08C630E4, D_psp_08946620, D_psp_08946580[D_psp_08B42068]);
+            sprintf(D_psp_08C630E4, "DrawPolyline:%s", off_on[D_psp_08B42068]);
             sceGuDebugPrint(x + 0x10, y + 0x38, 0xFFFFFFFF, D_psp_08C630E4);
             sprintf(
-                D_psp_08C630E4, D_psp_08946630, D_psp_089465A0[D_psp_08B4206C]);
+                D_psp_08C630E4, "DispSubBuffer:%s", subBufType[D_psp_08B4206C]);
             sceGuDebugPrint(x + 0x10, y + 0x40, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(
-                D_psp_08C630E4, D_psp_08946644, D_psp_08946580[D_psp_08C62A44]);
+            sprintf(D_psp_08C630E4, "GpuEmuInfo:%s", off_on[D_psp_08C62A44]);
             sceGuDebugPrint(x + 0x10, y + 0x48, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(
-                D_psp_08C630E4, D_psp_08946654, D_psp_08946580[D_psp_08C62A58]);
+            sprintf(D_psp_08C630E4, "CpuGpuTime:%s", off_on[D_psp_08C62A58]);
             sceGuDebugPrint(x + 0x10, y + 0x50, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, D_psp_08946664, D_psp_08C630D0);
+            sprintf(D_psp_08C630E4, "OYAJI:%03d", D_psp_08C630D0);
             sceGuDebugPrint(x + 0x10, y + 0x58, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, D_psp_08946670, D_psp_08C630CC);
+            sprintf(D_psp_08C630E4, "AT3:%03d", D_psp_08C630CC);
             sceGuDebugPrint(x + 0x10, y + 0x60, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(
-                D_psp_08C630E4, D_psp_0894667C, func_9141860(D_psp_08C630CC));
+            sprintf(D_psp_08C630E4, "[%s]", func_9141860(D_psp_08C630CC));
             sceGuDebugPrint(x + 0x10, y + 0x68, 0xFFFFFFFF, D_psp_08C630E4);
             func_psp_0892A8FC();
             if (func_psp_0891B528() & 0x20) {
-                sceGuDebugPrint(
-                    x, y + (var_s3 + 1) * 8, 0xFFFFFFFF, D_psp_08946684);
+                sceGuDebugPrint(x, y + (var_s3 + 1) * 8, 0xFFFFFFFF, "=>");
             }
             func_psp_0891E994(p);
             GsClearVcount();
@@ -2036,7 +2048,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891FCC0);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_0891FCF0);
 
-s32 func_psp_0891FD20(DR_OFFSET* p) {
+s32 func_psp_0891FD20(void* p) {
     DR_OFFSET* ptr;
 
     ptr = p;
@@ -2046,7 +2058,7 @@ s32 func_psp_0891FD20(DR_OFFSET* p) {
     return 0;
 }
 
-s32 func_psp_0891FD74(DR_AREA* p) {
+s32 func_psp_0891FD74(void* p) {
     DR_AREA* ptr;
 
     ptr = p;
@@ -2057,7 +2069,7 @@ s32 func_psp_0891FD74(DR_AREA* p) {
     return 0;
 }
 
-s32 func_psp_0891FDC8(DR_ENV* p) {
+s32 func_psp_0891FDC8(void* p) {
     DR_ENV* ptr;
     RECT rect;
     s32 x, y;
@@ -2190,7 +2202,7 @@ static inline void unkInlineFunc2(u8* arg0, u8* arg1, s32 arg2) {
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", func_psp_08920498);
 
-s32 func_psp_089215A4(SPRT_16* p) {
+s32 func_psp_089215A4(void* p) {
     SPRT_16* ptr;
     TVertex* v;
 
@@ -2284,7 +2296,7 @@ s32 func_psp_089215A4(SPRT_16* p) {
     return 0;
 }
 
-s32 func_psp_08921A38(POLY_G4* p) {
+s32 func_psp_08921A38(void* p) {
     Vertex v[4];
     POLY_G4* ptr;
     u8 var_s1;
@@ -2323,7 +2335,7 @@ s32 func_psp_08921A38(POLY_G4* p) {
     return 0;
 }
 
-s32 func_psp_08921D44(POLY_FT4* p) {
+s32 func_psp_08921D44(void* p) {
     POLY_FT4* ptr;
     s32 isSemiTrans;
     u8 temp_s5;
@@ -2388,7 +2400,7 @@ s32 func_psp_08921D44(POLY_FT4* p) {
                           GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
                               GU_TEXTURE_32BITF);
     }
-    if (D_psp_08B42068 == 1) {
+    if (D_psp_08B42068 == true) {
         s32 color = red;
         func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
         func_psp_0891B118(v[1].x, v[1].y, v[3].x, v[3].y, color);
@@ -2399,7 +2411,7 @@ s32 func_psp_08921D44(POLY_FT4* p) {
     return 0;
 }
 
-s32 func_psp_089225D8(POLY_GT3* p) {
+s32 func_psp_089225D8(void* p) {
     POLY_GT3* ptr;
     TVertex* v;
     u8 temp_s3;
@@ -2493,7 +2505,7 @@ s32 func_psp_089225D8(POLY_GT3* p) {
                           GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
                               GU_TEXTURE_32BITF);
     }
-    if (D_psp_08B42068 == 1) {
+    if (D_psp_08B42068 == true) {
         s32 color = green;
         func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
         func_psp_0891B118(v[1].x, v[1].y, v[2].x, v[2].y, color);
@@ -2503,7 +2515,7 @@ s32 func_psp_089225D8(POLY_GT3* p) {
     return 0;
 }
 
-s32 func_psp_08922C14(POLY_GT4* p) {
+s32 func_psp_08922C14(void* p) {
     POLY_GT4* ptr;
     s32 r, g, b;
     s32 fix;
@@ -2545,7 +2557,7 @@ s32 func_psp_08922C14(POLY_GT4* p) {
     func_psp_08910A80(
         v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
         GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 | GU_TEXTURE_32BITF);
-    if (D_psp_08B42068 == 1) {
+    if (D_psp_08B42068 == true) {
         s32 color = magenta;
         func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
         func_psp_0891B118(v[1].x, v[1].y, v[3].x, v[3].y, color);
@@ -2556,7 +2568,7 @@ s32 func_psp_08922C14(POLY_GT4* p) {
     return 0;
 }
 
-s32 func_psp_089231F8(POLY_GT4* p) {
+s32 func_psp_089231F8(void* p) {
     POLY_GT4* ptr;
     u8 temp_s5;
     u8* var_fp;
@@ -2686,7 +2698,7 @@ s32 func_psp_089231F8(POLY_GT4* p) {
                                   GU_COLOR_8888 | GU_TEXTURE_32BITF);
         }
     }
-    if (D_psp_08B42068 == 1) {
+    if (D_psp_08B42068 == true) {
         s32 color = green;
         func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
         func_psp_0891B118(v[1].x, v[1].y, v[3].x, v[3].y, color);
@@ -2697,7 +2709,7 @@ s32 func_psp_089231F8(POLY_GT4* p) {
     return 0;
 }
 
-s32 func_psp_08923FA4(POLY_GT4* p) {
+s32 func_psp_08923FA4(void* p) {
     POLY_GT4 sp78;
     POLY_GT4 sp40;
     SPRT sp28;
@@ -2718,8 +2730,8 @@ s32 func_psp_08923FA4(POLY_GT4* p) {
     ptr = p;
     var_s2 = NULL;
     isSemiTrans = isSemiTrans(ptr);
-    if (LOW(p->x0) == 0 && LOW(p->x1) == 0 && LOW(p->x2) == 0 &&
-        LOW(p->x3) == 0) {
+    if (LOW(((POLY_GT4*)p)->x0) == 0 && LOW(((POLY_GT4*)p)->x1) == 0 &&
+        LOW(((POLY_GT4*)p)->x2) == 0 && LOW(((POLY_GT4*)p)->x3) == 0) {
         return 0;
     }
     D_psp_08C629C4 = ptr->tpage;
@@ -3029,7 +3041,7 @@ s32 func_psp_08923FA4(POLY_GT4* p) {
                                   GU_COLOR_8888 | GU_TEXTURE_32BITF);
         }
     }
-    if (D_psp_08B42068 == 1) {
+    if (D_psp_08B42068 == true) {
         s32 color = green;
         func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
         func_psp_0891B118(v[1].x, v[1].y, v[3].x, v[3].y, color);
@@ -3040,7 +3052,7 @@ s32 func_psp_08923FA4(POLY_GT4* p) {
     return 0;
 }
 
-s32 func_psp_08925194(TILE* p) {
+s32 func_psp_08925194(void* p) {
     Vertex v[4];
     TILE* ptr;
     u8 var_s1;
@@ -3083,7 +3095,7 @@ s32 func_psp_08925194(TILE* p) {
     return 0;
 }
 
-s32 func_psp_089254D8(LINE_F2* p) {
+s32 func_psp_089254D8(void* p) {
     Vertex v[2];
     LINE_F2* ptr;
 
@@ -3107,7 +3119,7 @@ s32 func_psp_089254D8(LINE_F2* p) {
     return 0;
 }
 
-s32 func_psp_08925600(LINE_F4* p) {
+s32 func_psp_08925600(void* p) {
     Vertex v[2];
     LINE_F4* ptr;
 
@@ -3155,7 +3167,7 @@ s32 func_psp_08925600(LINE_F4* p) {
     return 0;
 }
 
-s32 func_psp_08925860(LINE_G2* p) {
+s32 func_psp_08925860(void* p) {
     Vertex v[2];
     LINE_G2* ptr;
 
@@ -3185,7 +3197,7 @@ s32 func_psp_08925860(LINE_G2* p) {
     return 0;
 }
 
-s32 func_psp_08925A04(LINE_G4* p) {
+s32 func_psp_08925A04(void* p) {
     Vertex v[2];
     LINE_G4* ptr;
 

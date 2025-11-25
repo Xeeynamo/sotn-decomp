@@ -90,6 +90,8 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	}
 	data := palettedImg.Pix
 	switch bpp {
+	case 1:
+		data = util.Make1bppFromBitmap(data)
 	case 4:
 		data = util.Make4bppFromBitmap(data)
 	case 8:

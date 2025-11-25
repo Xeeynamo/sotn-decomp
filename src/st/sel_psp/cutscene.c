@@ -275,7 +275,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     u8* var_s5;
     u8* var_s1;
 
-    func_8926498();
+    DisableAutoPowerOff();
     switch (self->step) {
     case 0:
         D_psp_09286860 = D_psp_09285BA0;
@@ -920,7 +920,7 @@ s32 func_801B79D4(Entity* entity) {
     s32 i;
     u16* var_s4;
 
-    func_8926498();
+    DisableAutoPowerOff();
     switch (entity->step) {
     case 0:
         if (func_801B76F0(D_psp_09285B98)) {

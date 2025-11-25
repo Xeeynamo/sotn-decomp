@@ -69,6 +69,7 @@ GsInitVcount = 0x89262A4;
 GsGetVcount = 0x89262EC;
 CdControl = 0x8926320;
 CdSync = 0x8926334;
+DisableAutoPowerOff = 0x08926498;
 main_ = 0x08926994;
 Krom2RawAdd = 0x892728C;
 ApplyRotMatrix = 0x892739C;
