@@ -1284,7 +1284,13 @@ u_short LoadTPage(u_long* pix, s32 tp, s32 abr, s32 x, s32 y, s32 w, s32 h) {
 
 void AddPrim(void* ot, void* p) { addPrim(ot, p); }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1B0F0", VSyncCallback);
+s32 VSyncCallback(void (*f)()) {
+    void (*temp_s0)();
+
+    temp_s0 = D_psp_08C42184;
+    D_psp_08C42184 = f;
+    return (s32)temp_s0;
+}
 
 OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
     P_TAG* pTag;

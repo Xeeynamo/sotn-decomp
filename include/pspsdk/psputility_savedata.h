@@ -166,7 +166,7 @@ typedef struct PspUtilitySavedataSizeInfo {
 
 } PspUtilitySavedataSizeInfo;
 
-typedef struct SceUtilitySavedataIdListEntry
+typedef struct PspUtilitySavedataIdListEntry
 {
 	int st_mode;
 	ScePspDateTime sce_st_ctime;
@@ -174,17 +174,17 @@ typedef struct SceUtilitySavedataIdListEntry
 	ScePspDateTime sce_st_mtime;
 	char name[20];
 
-} SceUtilitySavedataIdListEntry;
+} PspUtilitySavedataIdListEntry;
 
-typedef struct SceUtilitySavedataIdListInfo
+typedef struct PspUtilitySavedataIdListInfo
 {
 	int maxCount;
 	int resultCount;
-	SceUtilitySavedataIdListEntry *entries;
+	PspUtilitySavedataIdListEntry *entries;
 
-} SceUtilitySavedataIdListInfo;
+} PspUtilitySavedataIdListInfo;
 
-typedef struct SceUtilitySavedataFileListEntry
+typedef struct PspUtilitySavedataFileListEntry
 {
 	int st_mode;
 	uint32_t st_unk0;
@@ -194,9 +194,9 @@ typedef struct SceUtilitySavedataFileListEntry
 	ScePspDateTime sce_st_mtime;
 	char name[16];
 
-} SceUtilitySavedataFileListEntry;
+} PspUtilitySavedataFileListEntry;
 
-typedef struct SceUtilitySavedataFileListInfo
+typedef struct PspUtilitySavedataFileListInfo
 {
 	uint32_t maxSecureEntries;
 	uint32_t maxNormalEntries;
@@ -204,22 +204,22 @@ typedef struct SceUtilitySavedataFileListInfo
 	uint32_t resultNumSecureEntries;
 	uint32_t resultNumNormalEntries;
 	uint32_t resultNumSystemEntries;
-	SceUtilitySavedataFileListEntry *secureEntries;
-	SceUtilitySavedataFileListEntry *normalEntries;
-	SceUtilitySavedataFileListEntry *systemEntries;
+	PspUtilitySavedataFileListEntry *secureEntries;
+	PspUtilitySavedataFileListEntry *normalEntries;
+	PspUtilitySavedataFileListEntry *systemEntries;
 
-} SceUtilitySavedataFileListInfo;
+} PspUtilitySavedataFileListInfo;
 
-typedef struct SceUtilitySavedataMsFreeInfo
+typedef struct PspUtilitySavedataMsFreeSize
 {
 	int clusterSize;
 	int freeClusters;
 	int freeSpaceKB;
 	char freeSpaceStr[8];
 
-} SceUtilitySavedataMsFreeInfo;
+} PspUtilitySavedataMsFreeSize;
 
-typedef struct SceUtilitySavedataUsedDataInfo
+typedef struct PspUtilitySavedataUtilityDataSize
 {
 	int usedClusters;
 	int usedSpaceKB;
@@ -227,16 +227,16 @@ typedef struct SceUtilitySavedataUsedDataInfo
 	int usedSpace32KB;
 	char usedSpace32Str[8];
 
-} SceUtilitySavedataUsedDataInfo;
+} PspUtilitySavedataUtilityDataSize;
 
-typedef struct SceUtilitySavedataMsDataInfo
+typedef struct PspUtilitySavedataMsDataSize
 {
 	char gameName[13];
 	char pad[3];
 	char saveName[20];
-	SceUtilitySavedataUsedDataInfo info;
+	PspUtilitySavedataUtilityDataSize info;
 
-} SceUtilitySavedataMsDataInfo;
+} PspUtilitySavedataMsDataSize;
 
 typedef struct PspUtilitySavedataListSaveNewData
 {
@@ -246,7 +246,7 @@ typedef struct PspUtilitySavedataListSaveNewData
 } PspUtilitySavedataListSaveNewData;
 
 /** Structure to hold the parameters for the ::sceUtilitySavedataInitStart function. */
-typedef struct SceUtilitySavedataParam
+typedef struct PspUtilitySavedataParam
 {
 	pspUtilityDialogCommon base;
 
@@ -291,9 +291,9 @@ typedef struct SceUtilitySavedataParam
 	int abortStatus;
 
 	/* Function PSP_UTILITY_SAVEDATA_TYPE_SIZES */
-	SceUtilitySavedataMsFreeInfo *msFree;
-	SceUtilitySavedataMsDataInfo *msData;
-	SceUtilitySavedataUsedDataInfo *utilityData;
+	PspUtilitySavedataMsFreeSize *msFree;
+	PspUtilitySavedataMsDataSize *msData;
+	PspUtilitySavedataUtilityDataSize *utilityData;
 
 #if defined(_PSP_FW_VERSION) && _PSP_FW_VERSION >= 200
 
@@ -304,17 +304,17 @@ typedef struct SceUtilitySavedataParam
 	int multiStatus;
 
 	/* Function 11 LIST */
-	SceUtilitySavedataIdListInfo *idList;
+	PspUtilitySavedataIdListInfo *idList;
 
 	/* Function 12 FILES */
-	SceUtilitySavedataFileListInfo *fileList;
+	PspUtilitySavedataFileListInfo *fileList;
 
 	/* Function 22 GETSIZES */
 	PspUtilitySavedataSizeInfo *sizeInfo;
 
 #endif
 
-} SceUtilitySavedataParam;
+} PspUtilitySavedataParam;
 
 
 /**
@@ -325,7 +325,7 @@ typedef struct SceUtilitySavedataParam
  * @param params - savedata parameters
  * @return 0 on success
  */
-int sceUtilitySavedataInitStart(SceUtilitySavedataParam * params);
+int sceUtilitySavedataInitStart(PspUtilitySavedataParam * params);
 
 /**
  * Check the current status of the saving/loading/shutdown process
