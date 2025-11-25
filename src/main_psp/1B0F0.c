@@ -1809,7 +1809,7 @@ void func_psp_0891E994(void* p) {
                 sp54 = 418;
                 var_fp = 272;
                 break;
-            case 1:
+            case SCREEN_MODE_ONE:
                 sp54 = 369;
                 var_fp = 240;
                 break;
@@ -1985,7 +1985,7 @@ void DrawOTag(OT_TYPE* p) {
             sprintf(D_psp_08C630E4, "=== DEGUG MENU ===");
             sceGuDebugPrint(x, y, 0xFFFFFFFF, D_psp_08C630E4);
             sprintf(D_psp_08C630E4, "GameClearFlag:%s",
-                    off_on[g_IsTimeAttackUnlocked ? true : false]);
+                    off_on[g_IsTimeAttackUnlocked ? 1 : 0]);
             sceGuDebugPrint(x + 0x10, y + 0x8, 0xFFFFFFFF, D_psp_08C630E4);
             sprintf(D_psp_08C630E4, "MutekiFlag:%s", off_on[D_psp_08C630C4]);
             sceGuDebugPrint(x + 0x10, y + 0x10, 0xFFFFFFFF, D_psp_08C630E4);
