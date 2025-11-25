@@ -4,7 +4,6 @@ NZ1_rooms_layers = 0x801804E0;
 NZ1_gfxBanks = 0x801807CC;
 NZ1_pStObjLayoutHorizontal = 0x80180820;
 NZ1_pStObjLayoutVertical = 0x801808F4;
-NZ1_EntityUpdates = 0x801809C8;
 g_EInitParticle = 0x80180B40;
 g_EInitSpawner = 0x80180B4C;
 g_EInitInteractable = 0x80180B58;
@@ -17,16 +16,10 @@ entityLockCameraHitbox = 0x80180DA0;
 entityLockCameraData = 0x80180DA4;
 entityLockCameraTilemapProps = 0x80180DA8;
 NZ1_PrizeDrops = 0x8018111C;
-g_SineTable = 0x8018171C;
-g_goldCollectTexts = 0x80181A90;
-g_bigRedFireballAnim = 0x80181B74;
 g_HarpyFlameAnim = 0x80181F74;
 NZ1_rooms = 0x8018233C;
-NZ1_EntityBackgroundBlock = 0x801A5D38; // source=match
 PlayerIsWithinHitbox = 0x801A5E18;
 NZ1_EntityLockCamera = 0x801A5E9C; // source=match
-NZ1_EntityBreakable = 0x801A62E4;
-NZ1_EntityBreakableDebris = 0x801A67D4;
 DropBridgePiece = 0x801A6ACC;
 BreakBridge = 0x801A6B6C;
 EntityBridgeBreakTrigger = 0x801A6C54;
@@ -49,10 +42,6 @@ EntityBreakableWallPartial = 0x801A94CC;
 EntitySecretWallDebris = 0x801A97C4;
 EntityRoomExit = 0x801A9A5C;
 EntityWaterForeground = 0x801A9BEC;
-EntitySpikesDust = 0x801A9D18;
-EntitySpikesParts = 0x801A9DCC;
-EntitySpikes = 0x801AA288;
-EntitySpikesDamage = 0x801AA41C;
 EntityBossDoorTrigger = 0x801AA48C;
 EntityBossDoors = 0x801AA814;
 BossDoorHelper = 0x801AAB0C;
@@ -63,12 +52,6 @@ EntityKarasumanRavenAttack = 0x801ABFE8;
 EntityKarasumanFeather = 0x801AC354;
 EntityKarasumanRavenAbsorb = 0x801AC528;
 Random = 0x801AC6E0; // source=match
-Update = 0x801AC710; // source=match
-UpdateStageEntities = 0x801ACA0C; // source=match
-HitDetection = 0x801ACB14; // source=match
-EntityDamageDisplay = 0x801ADC2C; // source=match
-InitRoomEntities = 0x801AEB2C; // source=match
-UpdateRoomPosition = 0x801AECA4; // source=match
 CreateEntityFromCurrentEntity = 0x801AED58; // source=match
 CreateEntityFromEntity = 0x801AEDCC; // source=match
 EntityIsNearPlayer = 0x801AEE48;
@@ -90,25 +73,14 @@ SetStep = 0x801B075C; // source=match
 SetSubStep = 0x801B077C; // source=match
 EntityExplosionSpawn = 0x801B0798; // source=match
 InitializeEntity = 0x801B082C; // source=match
-EntityDummy = 0x801B0928; // source=match
 CheckFieldCollision = 0x801B0A78; // source=match
 GetPlayerCollisionWith = 0x801B0BD0; // source=match
 EntityPrizeDrop = 0x801B153C; // source=match
-EntityExplosion = 0x801B1DB0; // source=match
 EntityEquipItemDrop = 0x801B1F50; // source=match
 EntityRelicOrb = 0x801B27E8; // source=match
-EntityHeartDrop = 0x801B32B8; // source=match
-EntityMessageBox = 0x801B33E0; // source=match
-EntityUnkId13 = 0x801B3A2C; // source=match
 EntityExplosionVariantsSpawner = 0x801B3B3C; // source=match
-EntityExplosionVariants = 0x801B3D54; // source=match
-EntityGreyPuff = 0x801B3E44; // source=match
-EntityIntenseExplosion = 0x801B47E4; // source=match
 MakeEntityFromId = 0x801B49B0;
 PlaySfxPositional = 0x801B5BE0; // source=match
-EntitySoulStealOrb = 0x801B6B2C; // source=match
-EntityEnemyBlood = 0x801B6EC0; // source=match
-EntityRoomForeground = 0x801B7370; // source=match
 BottomCornerText = 0x801B745C; // source=match
 func_801C4144 = 0x801B778C; // source=match
 EntityAlucardWaterEffect = 0x801B7894; // source=match
@@ -149,8 +121,3 @@ UnkPrimHelper = 0x801C059C; // source=match
 UnkPolyFunc2 = 0x801C0CE8; // source=match
 PrimDecreaseBrightness = 0x801C0D68; // source=match
 EntityLifeUpSpawn = 0x801C0DCC; // source=match
-g_LayoutObjHorizontal = 0x801C1688;
-g_LayoutObjVertical = 0x801C168C;
-g_LayoutObjPosHorizontal = 0x801C1690;
-g_LayoutObjPosVertical = 0x801C1694;
-g_ItemIconSlots = 0x801C2300;

@@ -1,5 +1,1 @@
-EntityBossFightManager = 0x801B3FCC;
-EntityBossRoomBlock = 0x801B4518;
-EntitySlogra = 0x801B4778;
-EntityGaibon = 0x801B5778;
-EntityEquipItemDrop = 0x801BED20;
+
