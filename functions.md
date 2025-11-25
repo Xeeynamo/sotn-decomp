@@ -852,7 +852,7 @@
 | main  | func_psp_089190F0                 |       25 |          2 |        |       |     |
 | main  | ClearImage                        |       25 |          2 |        |       |     |
 | main  | func_psp_08930AE4                 |       25 |          2 |        |       |     |
-| are   | LoadStageNameGraphics             |       25 |          2 |        |       |     |
+| are   | func_pspeu_09240230               |       25 |          2 |        |       |     |
 | cat   | func_pspeu_092386A8               |       25 |          2 |        |       |     |
 | chi   | func_psp_0924C5D0                 |       25 |          2 |        |       |     |
 | dai   | func_pspeu_0923A228               |       25 |          2 |        |       |     |
@@ -2337,7 +2337,7 @@
 | chi   | func_psp_0924D488                 |       75 |          6 |        |       |     |
 | nz1   | func_pspeu_09258170               |       75 |          6 |        |       |     |
 | wrp   | func_psp_092449B8                 |       75 |          6 |        |       |     |
-| are   | PrimDecreaseBrightness            |       75 |          7 |        |       |     |
+| are   | func_pspeu_09263480               |       75 |          7 |        |       |     |
 | dra   | func_psp_09108D40                 |       75 |         10 |        |       |     |
 | ric   | func_pspeu_092A9738               |       75 |         10 |        |       |     |
 | are   | func_pspeu_09253D80               |       75 |         10 |        |       |     |
@@ -4221,7 +4221,7 @@
 | cat   | func_pspeu_09243078               |      997 |        101 |        |       |     |
 | chi   | func_psp_0924C620                 |     1000 |         92 | Yes    |       |     |
 | cat   | func_pspeu_0924CF78               |     1001 |        100 | Yes    |       |     |
-| are   | EntityStageNamePopup              |     1002 |         86 |        |       |     |
+| are   | func_pspeu_09240280               |     1002 |         86 |        |       |     |
 | cat   | func_pspeu_092386F8               |     1002 |         86 |        |       |     |
 | dai   | func_pspeu_0923A278               |     1002 |         86 |        |       |     |
 | lib   | func_psp_0923C110                 |     1002 |         86 |        |       |     |
