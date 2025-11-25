@@ -1,6 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 void EntityFleaMan(Entity* self);
+
+#ifdef STAGE_IS_LIB
 extern s32 D_us_80181ACC;
+#endif
+
 static AnimateEntityFrame D_us_80182D78[] = {
     {.duration = 10, .pose = 0x01},
     {.duration = 10, .pose = 0x02},
@@ -39,9 +43,11 @@ void EntityFleaArmor(Entity* self) {
 
     u8 collision;
 
+#ifdef STAGE_IS_LIB
     if (D_us_80181ACC & 1) {
         self->flags |= FLAG_DEAD;
     }
+#endif
 
     if (self->step < 8 && self->flags & FLAG_DEAD) {
         self->step = 8;
@@ -50,7 +56,7 @@ void EntityFleaArmor(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitFleaArmor);
-        CreateEntityFromEntity(E_ID_4B, self, self + 1);
+        CreateEntityFromEntity(E_FLEA_ARMOR_ATTACK_HITBOX, self, self + 1);
         self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
         break;
 
@@ -192,7 +198,7 @@ void EntityFleaArmor(Entity* self) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 DestroyEntity(entity);
-                MakeEntityFromId(E_ID_4A, self, entity);
+                MakeEntityFromId(E_FLEA_ARMOR, self, entity);
                 entity->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                                  FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
                 entity->facingLeft = self->facingLeft;
@@ -223,7 +229,7 @@ void EntityFleaArmor(Entity* self) {
         LOHU(self->ext.fleaArmor.counter) = 16;
         self->hitPoints = S16_MAX;
         self->step = 0;
-        self->entityId = E_ID_4C;
+        self->entityId = E_FLEA_MAN;
         self->pfnUpdate = EntityFleaMan;
         break;
 
@@ -281,7 +287,7 @@ void EntityFleaArmorAttackHitbox(Entity* self) {
     self->hitboxState = prevEntity->hitboxState;
     self->posX.i.hi = prevEntity->posX.i.hi;
     self->posY.i.hi = prevEntity->posY.i.hi;
-    if (prevEntity->entityId != E_ID_4A) {
+    if (prevEntity->entityId != E_FLEA_ARMOR) {
         DestroyEntity(self);
     }
 }

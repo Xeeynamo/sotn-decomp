@@ -10,7 +10,6 @@ g_EInitInteractable = 0x80180B58;
 g_EInitCommon = 0x80180B7C;
 g_EInitEnvironment = 0x80180B94;
 g_EInitHarpyFlame = 0x80180BD0;
-g_EInitFleaArmor = 0x80180C78;
 NZ1_BackgroundBlockInit = 0x80180D08;
 entityLockCameraHitbox = 0x80180DA0;
 entityLockCameraData = 0x80180DA4;
@@ -79,7 +78,6 @@ EntityPrizeDrop = 0x801B153C; // source=match
 EntityEquipItemDrop = 0x801B1F50; // source=match
 EntityRelicOrb = 0x801B27E8; // source=match
 EntityExplosionVariantsSpawner = 0x801B3B3C; // source=match
-MakeEntityFromId = 0x801B49B0;
 PlaySfxPositional = 0x801B5BE0; // source=match
 BottomCornerText = 0x801B745C; // source=match
 func_801C4144 = 0x801B778C; // source=match
@@ -109,8 +107,6 @@ EntityPhantomSkull = 0x801BE8E0;
 EntityPhantomSkullTrail = 0x801BEBE8;
 EntityFlailGuard = 0x801BEC98;
 EntityFlailGuardFlail = 0x801BF104;
-EntityFleaArmor = 0x801BF5BC;
-EntityFleaArmorAttackHitbox = 0x801BFC60;
 CheckFieldCollisionY = 0x801BFD64; // source=match
 UpdateFacingDirection = 0x801BFE6C; // source=match
 EntityFleaMan = 0x801BFEA0; // source=match
