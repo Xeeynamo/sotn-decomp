@@ -23,7 +23,6 @@ func_us_801CDCF4 = 0x0923E970;
 func_us_801CEB00 = 0x0923FDF8;
 func_us_801CEBC8 = 0x0923FEF0;
 func_us_801CECAC = 0x09240078;
-EntityStageNamePopup = 0x09240280;
 Random = 0x09242438;
 SpawnDustParticles_09242970 = 0x09242970;
 func_us_801D12E0 = 0x09242A50;
