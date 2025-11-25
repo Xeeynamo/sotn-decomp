@@ -4,22 +4,9 @@ RTOP_rooms_layers = 0x801801C8;
 RTOP_gfxBanks = 0x801802B4;
 RTOP_pStObjLayoutHorizontal = 0x801802FC;
 RTOP_pStObjLayoutVertical = 0x801803D0;
-RTOP_EntityUpdates = 0x801804A4;
-RTOP_EInitBreakable = 0x80180548;
-g_EInitObtainable = 0x80180554;
-g_EInitParticle = 0x80180560;
-g_EInitSpawner = 0x8018056C;
-g_EInitInteractable = 0x80180578;
-g_EInitUnkId13 = 0x80180584;
-g_EInitLockCamera = 0x80180590;
-g_EInitCommon = 0x8018059C;
-g_EInitDamageNum = 0x801805A8;
-g_EInitSkeletonPieces = 0x801805D8;
-RTOP_RedDoorTiles = 0x80180640;
 RTOP_PrizeDrops = 0x801807C8;
 D_us_801808C8 = 0x801808C8;
 LionLampAnim = 0x801808F0;
-g_bigRedFireballAnim = 0x8018118C;
 anim_bone_rot = 0x801814AC;
 D_us_801814FC = 0x801814FC;
 RTOP_rooms = 0x80181530;
@@ -35,32 +22,3 @@ s_TowerTextureData = 0x801816CC;
 s_ClockRoofScript = 0x80181988;
 s_ClockTowerScript = 0x801819C0;
 s_ClockVertexSets = 0x80181A34;
-RTOP_EntityBackgroundBlock = 0x8019FDFC; // source=match
-RTOP_EntityLockCamera = 0x8019FF60; // source=match
-EntitySecretStairs = 0x801A0D4C;
-EntityBreakableWall = 0x801A1108;
-EntityTriangleElevator = 0x801A13C0;
-EntityDamageDisplay = 0x801A3A40; // source=match
-RTOP_EntityRedDoor = 0x801A4CD4; // source=match
-EntityDummy = 0x801A6718; // source=match
-EntityPrizeDrop = 0x801A732C; // source=match
-EntityExplosion = 0x801A7BA0; // source=match
-EntityEquipItemDrop = 0x801A7D40; // source=match
-EntityRelicOrb = 0x801A85D8; // source=match
-EntityHeartDrop = 0x801A90A8; // source=match
-EntityMessageBox = 0x801A91D0; // source=match
-EntityUnkId13 = 0x801A981C; // source=match
-EntityExplosionVariants = 0x801A9B44; // source=match
-EntityGreyPuff = 0x801A9C34; // source=match
-EntityIntenseExplosion = 0x801AA5D4; // source=match
-EntityStageNamePopup = 0x801ABC98; // source=match
-EntitySoulStealOrb = 0x801AC91C; // source=match
-EntityEnemyBlood = 0x801ACCB0; // source=match
-EntityRoomForeground = 0x801AD160; // source=match
-EntityTombstone = 0x801AD57C;
-EntityYorick = 0x801AD800;
-EntityYorickSkull = 0x801ADD30;
-EntitySkeletonPieces = 0x801AE0A8; // source=dups
-EntityClouds = 0x801AF858;
-EntityClockTower3D = 0x801AFFBC; // source=dups
-g_ItemIconSlots = 0x801B10DC;
