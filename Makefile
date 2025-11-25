@@ -235,17 +235,17 @@ format-tools:
 format-symbols-us-sort:
 	VERSION=us $(PYTHON) ./tools/symbols.py sort
 format-symbols-us-%: format-symbols-us-sort
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.us.$*.yaml
+	$(PYTHON) ./tools/symbols.py clean config/splat.us.$*.yaml
 format-symbols-us: $(patsubst config/splat.us.%.yaml,format-symbols-us-%,$(wildcard config/splat.us.*.yaml))
 format-symbols-hd-sort:
 	VERSION=hd $(PYTHON) ./tools/symbols.py sort
 format-symbols-hd-%: format-symbols-hd-sort
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.hd.$*.yaml
+	$(PYTHON) ./tools/symbols.py clean config/splat.hd.$*.yaml
 format-symbols-hd: $(patsubst config/splat.hd.%.yaml,format-symbols-hd-%,$(wildcard config/splat.hd.*.yaml))
 format-symbols-pspeu-sort:
 	VERSION=pspeu $(PYTHON) ./tools/symbols.py sort
 format-symbols-pspeu-%: format-symbols-pspeu-sort
-	$(PYTHON) ./tools/symbols.py remove-orphans config/splat.pspeu.$*.yaml
+	$(PYTHON) ./tools/symbols.py clean config/splat.pspeu.$*.yaml
 format-symbols-pspeu: $(patsubst config/splat.pspeu.%.yaml,format-symbols-pspeu-%,$(wildcard config/splat.pspeu.*.yaml))
 format-symbols: format-symbols-us format-symbols-hd format-symbols-pspeu
 

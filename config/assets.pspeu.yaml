@@ -309,6 +309,21 @@ files:
           - [0x4C328, palette, D_8018D5B4, 16]
           - [0x4C348, palette, psp/D_8018D5D4, 16]
           - [0x4C388, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/are.bin
+    asset_path: assets/st/are
+    src_path: src/st/are
+    splat_config_path: config/splat.pspeu.stare.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x5E130, cmpgfx, stage_name_en, 128, 64, 4]
+          - [0x5E2B8, cmpgfx, stage_name_it, 128, 64, 4]
+          - [0x5E410, cmpgfx, stage_name_sp, 128, 64, 4]
+          - [0x5E540, cmpgfx, stage_name_fr, 128, 64, 4]
+          - [0x5E678, cmpgfx, stage_name_ge, 128, 64, 4]
+          - [0x5E810, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/cat.bin
     asset_path: assets/st/cat
     src_path: src/st/cat

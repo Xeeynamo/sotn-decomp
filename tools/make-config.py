@@ -16,8 +16,8 @@ import struct
 import sys
 import threading
 import time
-
-from symbols import get_non_matching_symbols, print_elf_symbols, sort_symbols_from_file
+from collections import OrderedDict
+from symbols import get_non_matching_symbols
 
 parser = argparse.ArgumentParser(
     description="Make files inside config/ for a PSP overlay"
@@ -43,6 +43,70 @@ parser.add_argument(
 @dataclass
 class Options:
     show_symbol_source: bool = False
+
+
+def print_elf_symbols(file, elf_file_name, no_default):
+    with subprocess.Popen(
+        args=["nm", "-U", elf_file_name],
+        stdout=subprocess.PIPE,
+        stdin=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        env=dict(os.environ),
+    ) as p:
+        stdout_raw, stderr_raw = p.communicate()
+        output = stdout_raw.decode("utf-8").splitlines()
+    symbols = dict()
+    for line in output:
+        off, kind, name = line.split(" ")
+        if name.startswith("LM"):
+            continue
+        if name.startswith("_") and name.endswith("_c"):
+            continue
+        if "_compiled" in name:
+            continue
+        if name.startswith("__pad"):
+            continue
+        if name.endswith("_END"):
+            continue
+        if name.endswith("_START"):
+            continue
+        if name.endswith("_VRAM"):
+            continue
+        if kind == "A":
+            continue
+        if name.endswith("_data__s"):
+            continue
+        if name.endswith("_c"):
+            continue
+        offset = int(off, base=16)
+        symbols[offset] = name
+
+    sorted_symbols = sorted(symbols.items(), key=lambda item: item[0])
+    for offset, name in sorted_symbols:
+        if no_default and (name.startswith("func_") or name.startswith("D_")):
+            continue
+        print(f"{name} = 0x{offset:08X}; // allow_duplicated:True", file=file)
+
+
+def sort_symbols_from_file(symbol_file_name):
+    with open(symbol_file_name, "r") as symbol_file:
+        offsets = []
+        for line in symbol_file:
+            if line.startswith("//"):
+                # ignore comments
+                continue
+
+            parts = line.strip().split()
+            if len(parts) >= 3:
+                offset = int(parts[2].rstrip(";"), 16)
+                offsets.append((line, offset))
+        offsets.sort(key=lambda x: x[1])
+        sorted_lines = list(OrderedDict.fromkeys([line[0] for line in offsets]))
+
+        if not list[-1].endswith("\n"):
+            list[-1] += "\n"
+        with open(symbol_file_name, "w") as symbol_file:
+            symbol_file.writelines(sorted_lines)
 
 
 ##### GENERIC UTILITIES
@@ -540,7 +604,7 @@ def append_segments(
         segment = known_segments[offset]
         if offset == section_start:
             segments.append(
-                f"      - [0x{offset:X}, c, {prefix}{default_segment}] # {segment["name"]}\n"
+                f"      - [0x{offset:X}, c, {prefix}{default_segment}] # {segment['name']}\n"
             )
             last_offset = align(offset + segment["size"], alignment)
             continue
@@ -551,7 +615,7 @@ def append_segments(
             )
 
         segments.append(
-            f"      # - [0x{offset:X}, c, {prefix}{default_segment}] # {segment["name"]}\n"
+            f"      # - [0x{offset:X}, c, {prefix}{default_segment}] # {segment['name']}\n"
         )
         last_offset = align(offset + segment["size"], alignment)
 
