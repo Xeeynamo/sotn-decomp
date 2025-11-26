@@ -207,7 +207,7 @@ s32 func_psp_0891985C(s32 arg0) {
     func_psp_08930A1C();
     var_s0 = 0;
     while (var_s0 == 0) {
-        func_psp_08919BA8();
+        PadReadPSP();
         var_s0 = func_psp_08931D64();
         func_psp_089197C8(arg0);
     }
@@ -222,7 +222,7 @@ s32 func_psp_08919928(s32 arg0) {
     func_psp_08930A1C();
     var_s0 = 0;
     while (var_s0 == 0) {
-        func_psp_08919BA8();
+        PadReadPSP();
         var_s0 = func_psp_08930B34();
         func_psp_089197C8(arg0);
     }

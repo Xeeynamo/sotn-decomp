@@ -360,6 +360,8 @@ segments:
       - [0x47D7C, .data, main_psp/2758C]
       - [0x47DA0, .data, main_psp/280FC]
       - [0x6348C, data]
+      - [0x65808, .data, main_psp/31178]
+      - [0xAEB70, data]
       - {start: 0xAEF24, type: bss, vram: 0x089AD830, name: main_bss}
   - [0xAEF24, bin, elf_footer]
   - [0xB3E1C]

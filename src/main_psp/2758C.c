@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game_psp.h>
+
+// https://pspdev.github.io/pspsdk/
+#define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
+#include <psppower.h>
 #include <psxsdk/libgpu.h>
 
 extern s32 D_psp_08C63B24;
@@ -104,7 +108,7 @@ void func_psp_08926348(void) {
 }
 
 void DisableAutoPowerOff(void) {
-    sceKernelPowerTick(0);
+    sceKernelPowerTick(PSP_POWER_TICK_ALL);
     FntPrint("Disable Auto Power Off\n");
 }
 
@@ -141,18 +145,18 @@ void func_psp_089264CC(s32 arg0, u_long* arg1, s32 arg2) {
 
 void func_psp_0892667C(s32 arg0, u_long* arg1) {
     RECT rect;
-    u16* var_s0;
+    u16* clutPtr;
 
-    var_s0 = (u16*)g_Clut;
+    clutPtr = (u16*)g_Clut;
     arg0 &= 0x3FF;
     if ((arg0 >= 0) && (arg0 < 0x100)) {
         rect.x = 0x200;
     } else if ((arg0 >= 0x100) && (arg0 < 0x200)) {
         rect.x = 0;
-        var_s0 += 0x1000;
+        clutPtr += 0x1000;
     } else if ((arg0 >= 0x200) && (arg0 < 0x300)) {
         rect.x = 0x100;
-        var_s0 += 0x2000;
+        clutPtr += 0x2000;
     } else {
         return;
     }
@@ -161,24 +165,24 @@ void func_psp_0892667C(s32 arg0, u_long* arg1) {
     rect.w = 0x10;
     rect.h = 1;
     LoadImage(&rect, arg1);
-    var_s0 += (((arg0 / 0x10) & 0xF) << 8) + ((arg0 & 0xF) * 0x10);
-    memcpy(var_s0, arg1, 0x20);
+    clutPtr += (((arg0 / 0x10) & 0xF) << 8) + ((arg0 & 0xF) * 0x10);
+    memcpy(clutPtr, arg1, 0x20);
 }
 
 void func_psp_08926808(s32 arg0, u_long* arg1) {
     RECT rect;
-    u16* var_s0;
+    u16* clutPtr;
 
-    var_s0 = (u16*)g_Clut;
+    clutPtr = (u16*)g_Clut;
     arg0 &= 0x3FF;
     if ((arg0 >= 0) && (arg0 < 0x100)) {
         rect.x = 0x200;
     } else if ((arg0 >= 0x100) && (arg0 < 0x200)) {
         rect.x = 0;
-        var_s0 += 0x1000;
+        clutPtr += 0x1000;
     } else if ((arg0 >= 0x200) && (arg0 < 0x300)) {
         rect.x = 0x100;
-        var_s0 += 0x2000;
+        clutPtr += 0x2000;
     } else {
         return;
     }
@@ -187,8 +191,8 @@ void func_psp_08926808(s32 arg0, u_long* arg1) {
     rect.w = 0x10;
     rect.h = 1;
     func_psp_0891C1C0(&rect, arg1);
-    var_s0 += (((arg0 / 0x10) & 0xF) << 8) + ((arg0 & 0xF) * 0x10);
-    memcpy(var_s0, arg1, 0x20);
+    clutPtr += (((arg0 / 0x10) & 0xF) << 8) + ((arg0 & 0xF) * 0x10);
+    memcpy(clutPtr, arg1, 0x20);
 }
 
 void GameEntrypoint(void) {

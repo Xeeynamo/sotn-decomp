@@ -25,6 +25,15 @@ files:
           - [0x4BC20, rawgfx, D_psp_0894A52C, 16, 44476, 1]
           - [0x61798, rawgfx, D_psp_089600A4, 16, 3706, 1]
           - [0x6348C, skip]
+          - [0x65814, binary, D_psp_08964120, tm2]
+          - [0x66094, binary, D_psp_089649A0, tm2]
+          - [0x66914, binary, D_psp_08965220, tm2]
+          - [0x67194, binary, D_psp_08965AA0, tm2]
+          - [0x67A14, binary, D_psp_08966320, tm2]
+          - [0x68294, skip]
+          - [0x68328, binary, D_psp_08966C34, png]
+          - [0x6B16C, binary, D_psp_08969A78, png]
+          - [0xAE5BC, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dra.bin
     asset_path: assets/dra
     src_path: src/dra

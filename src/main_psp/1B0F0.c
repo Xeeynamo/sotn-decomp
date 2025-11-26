@@ -5,6 +5,7 @@
 #define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
 #include <pspctrl.h>
 #include <pspgu.h>
+#include <psppower.h>
 #include <pspthreadman.h>
 #include <psputility_modules.h>
 #include <psputility_sysparam.h>
@@ -19,6 +20,8 @@
 #define green GU_RGBA(0, 0xFF, 0, 0x80)
 #define blue GU_RGBA(0, 0, 0xFF, 0x80)
 #define magenta GU_RGBA(0xFF, 0, 0xFF, 0x80)
+
+#define MIN(a, b) (a) < (b) ? (a) : (b)
 
 typedef enum {
     SCREEN_MODE_ZERO,
@@ -162,7 +165,7 @@ void func_psp_08919A0C(void) {
     sceCtrlReadBufferPositive(&D_psp_08B41F50, 1);
 }
 
-static void func_psp_08919A58(void) {
+static void UpdatePad(void) {
     u32 buttons = 0;
     sceCtrlPeekBufferPositive(&D_psp_08B41F40, 1);
     if (func_psp_08932790()) {
@@ -172,7 +175,7 @@ static void func_psp_08919A58(void) {
             buttons = func_psp_08933F7C(D_psp_08B41F40.Lx, D_psp_08B41F40.Ly);
         }
         if (buttons != 0) {
-            sceKernelPowerTick(6);
+            sceKernelPowerTick(PSP_POWER_TICK_DISPLAY);
         }
         D_psp_08B41F40.Buttons |= buttons;
     }
@@ -184,14 +187,14 @@ static void func_psp_08919A58(void) {
     }
 }
 
-u32 func_psp_08919BA8(void) {
+u32 PadReadPSP(void) {
     u32 buttons;
-    func_psp_08919A58();
+    UpdatePad();
     buttons = D_psp_08B41F40.Buttons & 0xFFFF;
     return buttons;
 }
 
-u32 PadRead_PSP(void) { return func_psp_08919BA8(); }
+u32 PadRead_PSP(void) { return PadReadPSP(); }
 
 void func_psp_08919C00(s32 arg0) {
     func_psp_08919C4C();
@@ -444,7 +447,7 @@ int main(int argc, char* argv[]) {
     func_psp_089375A0();
     func_psp_0892FAA8(0, "disc0:/PSP_GAME/SYSDIR/BOOT.BIN");
     func_psp_0892FA84(g_UserLanguage);
-    func_psp_0892FCA8(1);
+    func_psp_0892FCA8(GU_PSM_5551);
     func_psp_0892FC80();
     return 0;
 }
@@ -910,7 +913,6 @@ s32 func_psp_0891BCA0(RECT* rect, u_long* p, s32 width, s32 arg3) {
     s32 sp3C;
     s32 x0, y0;
     s32 x1, y1;
-    s32 sp34;
     u8* ptr;
     s32 i;
     u8* dst;
@@ -923,12 +925,7 @@ s32 func_psp_0891BCA0(RECT* rect, u_long* p, s32 width, s32 arg3) {
     }
     x1 = rect->x + rect->w;
     y1 = rect->y + rect->h;
-    if (arg3) {
-        sp34 = 0x100;
-    } else {
-        sp34 = 0x100;
-    }
-    sp3C = sp34;
+    sp3C = arg3 ? 0x100 : 0x100;
     y0 = rect->y;
     while (y0 < y1) {
         s32 dy = sp3C - (y0 % sp3C);
@@ -994,62 +991,32 @@ void func_psp_0891C1C0(RECT* rect, u_long* p) {
 
 static int func_psp_0891C204(RECT* rect, u_long* p, s32 width, s32 arg3) {
     u8* ptr;
-    s32 sp38;
-    s32 sp34;
-    s32 sp30;
-    s32 var_fp;
-    s32 size;
     s32 toRead;
-    s32 y;
-    s32 x;
-    s32 var_s3;
+    s32 x, y;
+    s32 dx, dy;
     s32 i;
     u8* src;
     u8* dst;
 
     ptr = (u8*)p;
-    if (arg3) {
-        sp34 = 0x100;
-    } else {
-        sp34 = 0x100;
-    }
-    sp38 = sp34;
-    y = rect->y;
-    while (y < rect->y + rect->h) {
-        x = rect->x;
-        while (x < rect->x + rect->w) {
-            if (rect->x + rect->w - x < 0x40) {
-                sp30 = rect->x + rect->w - x;
-            } else {
-                sp30 = 0x40;
+    dy = arg3 ? 0x100 : 0x100;
+    for (y = rect->y; y < rect->y + rect->h; y += dy) {
+        for (x = rect->x; x < rect->x + rect->w; x += dx / 2) {
+            dx = MIN(rect->x + rect->w - x, 0x40);
+            if ((x % 0x40) != 0) {
+                dx = MIN(dx, 0x40 - (x % 0x40));
             }
-            var_s3 = sp30;
-            if (x % 0x40) {
-                if (var_s3 < 0x40 - (x % 0x40)) {
-                    var_fp = var_s3;
-                } else {
-                    var_fp = 0x40 - (x % 0x40);
-                }
-                var_s3 = var_fp;
-            }
-            var_s3 = var_s3 * 2;
-            if (rect->y + rect->h - y < sp38) {
-                size = rect->y + rect->h - y;
-            } else {
-                size = sp38;
-            }
-            toRead = size;
+            dx = dx * 2;
+            toRead = MIN(rect->y + rect->h - y, dy);
             src = &D_psp_08B42080[x / 0x40 + y / 0x100 * 0x10]
                                  [(x % 0x40) * 2 + (y % 0x100) * 0x80];
             dst = &ptr[width * (y - rect->y) + (x - rect->x) * 2];
             for (i = 0; i < toRead; i++) {
-                memcpy(dst, src, var_s3);
+                memcpy(dst, src, dx);
                 dst += width;
                 src += 0x80;
             }
-            x += var_s3 / 2;
         }
-        y += sp38;
     }
     return 0;
 }
@@ -1065,15 +1032,9 @@ s32 StoreImage(RECT* rect, u_long* p) {
 }
 
 static int func_psp_0891C668(RECT* rect, u8 r, u8 g, u8 b, s32 arg4) {
-    s32 sp4C;
-    s32 sp48;
-    s32 sp44;
-    s32 sp40;
-    s32 size;
-    s32 y;
     s32 toWrite;
-    s32 x;
-    s32 var_s5;
+    s32 x, y;
+    s32 dx, dy;
     s32 i;
     u8* data;
     u16 color;
@@ -1084,52 +1045,28 @@ static int func_psp_0891C668(RECT* rect, u8 r, u8 g, u8 b, s32 arg4) {
     if (color) {
         color |= 0x8000;
     }
-    if (arg4) {
-        sp48 = 0x100;
-    } else {
-        sp48 = 0x100;
-    }
-    sp4C = sp48;
-    y = rect->y;
-    while (y < rect->y + rect->h) {
-        x = rect->x;
-        while (x < rect->x + rect->w) {
-            if (rect->x + rect->w - x < 0x40) {
-                sp44 = (rect->x + rect->w) - x;
-            } else {
-                sp44 = 0x40;
+    dy = arg4 ? 0x100 : 0x100;
+    for (y = rect->y; y < rect->y + rect->h; y += dy) {
+        for (x = rect->x; x < rect->x + rect->w; x += dx / 2) {
+            dx = MIN(rect->x + rect->w - x, 0x40);
+            if ((x % 0x40) != 0) {
+                dx = MIN(dx, 0x40 - (x % 0x40));
             }
-            var_s5 = sp44;
-            if (x % 0x40) {
-                if (var_s5 < 0x40 - (x % 0x40)) {
-                    sp40 = var_s5;
-                } else {
-                    sp40 = 0x40 - (x % 0x40);
-                }
-                var_s5 = sp40;
-            }
-            var_s5 = var_s5 * 2;
-            if (rect->y + rect->h - y < sp4C) {
-                size = rect->y + rect->h - y;
-            } else {
-                size = sp4C;
-            }
-            toWrite = size;
+            dx = dx * 2;
+            toWrite = MIN(rect->y + rect->h - y, dy);
             func_psp_0891A99C(x / 0x40 + y / 0x100 * 0x10);
             data = &D_psp_08B42080[x / 0x40 + y / 0x100 * 0x10]
                                   [(x % 0x40) * 2 + (y % 0x100) * 0x80];
             for (i = 0; i < toWrite; i++) {
                 var_s0 = (u16*)data;
-                var_s1 = (u16*)(data + var_s5);
+                var_s1 = (u16*)(data + dx);
                 while (var_s0 != var_s1) {
                     *var_s0 = color;
                     var_s0++;
                 }
                 data += 0x80;
             }
-            x += var_s5 / 2;
         }
-        y += sp4C;
     }
     return 0;
 }
@@ -1732,7 +1669,7 @@ void func_psp_0891E994(void* p) {
     s32 sp58;
     s32 sp54;
     s32 sp50;
-    u32 sp4C;
+    u32 fps;
     s32 code;
     u8* temp_s5;
     s32 temp_v0;
@@ -1750,7 +1687,7 @@ void func_psp_0891E994(void* p) {
         if (D_psp_08C62AA8) {
             D_psp_08C62AA8 = false;
             temp_s5 = func_psp_0891AC24();
-            if ((D_psp_08C62AAC.x == 0) && (D_psp_08C62AAC.y == 0x100)) {
+            if (D_psp_08C62AAC.x == 0 && D_psp_08C62AAC.y == 0x100) {
                 func_psp_089117F4(1, 0, 0, 0x100, 0x100, 0x200, temp_s5, 0, 0,
                                   0x100, (u8*)sceGeEdramGetAddr() + 0xCC000);
                 for (i = 0; i < 0x20; i++) {
@@ -1870,12 +1807,12 @@ void func_psp_0891E994(void* p) {
         func_psp_08932228();
         func_psp_0891E944();
         if (D_psp_08C62A44) {
-            sp4C = (D_psp_08C42180 != D_psp_08C42188)
-                       ? 0x3C / (D_psp_08C42180 - D_psp_08C42188)
-                       : 0;
+            fps = (D_psp_08C42180 != D_psp_08C42188)
+                      ? 0x3C / (D_psp_08C42180 - D_psp_08C42188)
+                      : 0;
             sprintf(D_psp_08C62EC4, "Frame=%d/ResetGraph=%2d/W:%d,H:%d/%2dfps",
                     D_psp_08C62A4C, D_psp_08C62A48, D_psp_089464D8,
-                    D_psp_089464DC, sp4C);
+                    D_psp_089464DC, fps);
             sceGuDebugPrint(0, 0x108, 0xFFFFFFFF, D_psp_08C62EC4);
         }
         D_psp_08C62A4C++;
@@ -1887,54 +1824,52 @@ char* off_on[] = {"OFF", "ON"};
 char* subBufType[] = {"OFF", "TEMP", "PS", "WOLF", "ALL"};
 
 void DrawOTag(OT_TYPE* p) {
-    s32 sp4C;
+    s32 prevPad, thisPad;
     s32 sp48;
     s32 i;
-    s32 temp_s2;
-    s32 var_s3;
-    s32 x;
-    s32 y;
+    s32 cursor;
+    s32 x, y;
 
     D_psp_08C62A74 = p;
-    if (func_psp_08919BA8() & 4) {
-        sp4C = func_psp_08919BA8();
-        var_s3 = 0;
+    if (PadReadPSP() & PSP_CTRL_R3) {
+        prevPad = PadReadPSP();
+        cursor = 0;
         sp48 = -1;
         D_psp_08C62EBC = 1;
-        while (var_s3 >= 0) {
-            temp_s2 = func_psp_08919BA8();
-            if ((sp4C == 0) && (temp_s2 != 0)) {
-                if (temp_s2 & PSP_CTRL_CROSS) {
-                    while (func_psp_08919BA8()) {
+        while (cursor >= 0) {
+            thisPad = PadReadPSP();
+            if (prevPad == 0 && thisPad != 0) {
+                if (thisPad & PSP_CTRL_CROSS) {
+                    while (PadReadPSP() != 0) {
                         VSync(0);
                     }
                     D_psp_08C62EBC = 0;
                     func_psp_0891E994(p);
                     break;
                 }
-                if (temp_s2 & PSP_CTRL_UP) {
-                    var_s3 = (var_s3 + 11) % 12;
+                if (thisPad & PSP_CTRL_UP) {
+                    cursor = (cursor + 11) % 12;
                 }
-                if (temp_s2 & PSP_CTRL_DOWN) {
-                    var_s3 = (var_s3 + 1) % 12;
+                if (thisPad & PSP_CTRL_DOWN) {
+                    cursor = (cursor + 1) % 12;
                 }
-                if (var_s3 == 0xB) {
-                    if (temp_s2 & PSP_CTRL_RIGHT) {
+                if (cursor == 11) {
+                    if (thisPad & PSP_CTRL_RIGHT) {
                         D_psp_08C630CC += 1;
                     }
-                    if (temp_s2 & PSP_CTRL_LEFT) {
+                    if (thisPad & PSP_CTRL_LEFT) {
                         D_psp_08C630CC += 0x230;
                     }
-                    if (temp_s2 & PSP_CTRL_RTRIGGER) {
+                    if (thisPad & PSP_CTRL_RTRIGGER) {
                         D_psp_08C630CC += 0x14;
                     }
-                    if (temp_s2 & PSP_CTRL_LTRIGGER) {
+                    if (thisPad & PSP_CTRL_LTRIGGER) {
                         D_psp_08C630CC += 0x21D;
                     }
-                    D_psp_08C630CC = D_psp_08C630CC % 561;
+                    D_psp_08C630CC = D_psp_08C630CC % 0x231;
                 }
-                if (temp_s2 & PSP_CTRL_CIRCLE) {
-                    switch (var_s3) {
+                if (thisPad & PSP_CTRL_CIRCLE) {
+                    switch (cursor) {
                     case 0:
                         g_IsTimeAttackUnlocked =
                             g_IsTimeAttackUnlocked ? false : true;
@@ -2014,14 +1949,14 @@ void DrawOTag(OT_TYPE* p) {
             sceGuDebugPrint(x + 0x10, y + 0x68, 0xFFFFFFFF, D_psp_08C630E4);
             func_psp_0892A8FC();
             if (func_psp_0891B528() & 0x20) {
-                sceGuDebugPrint(x, y + (var_s3 + 1) * 8, 0xFFFFFFFF, "=>");
+                sceGuDebugPrint(x, y + (cursor + 1) * 8, 0xFFFFFFFF, "=>");
             }
             func_psp_0891E994(p);
             GsClearVcount();
             DrawSync(0);
             VSync(0);
             func_psp_0891AEC8();
-            sp4C = temp_s2;
+            prevPad = thisPad;
         }
         D_psp_08C62EBC = 0;
         D_psp_089464E8 = 2;

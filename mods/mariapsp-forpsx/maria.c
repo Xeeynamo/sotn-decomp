@@ -115,7 +115,7 @@ static inline void ConvertSubweaponMariaToRic() {
     }
 }
 
-int func_8919BA8() { return 0; }
+int PadReadPSP() { return 0; }
 int func_90E4C58() { return 0; }
 void func_90E4C18() {}
 void func_90E4C68() {}

@@ -56,7 +56,7 @@ int sceKernelRegisterExitCallback(int cbid);
 void sceKernelExitGame(void);
 
 /** Structure to pass to loadexec */
-struct SceKernelLoadExecParam {
+typedef struct {
 	/** Size of the structure */
 	SceSize     size;
 	/** Size of the arg string */
@@ -65,7 +65,7 @@ struct SceKernelLoadExecParam {
 	void *  argp;
 	/** Encryption key ? */
 	const char *    key;
-};
+} SceKernelLoadExecParam;
 
 /** 
   * Execute a new game executable, limited when not running in kernel mode.
@@ -76,7 +76,7 @@ struct SceKernelLoadExecParam {
   * @return < 0 on error, probably.
   *
   */
-int sceKernelLoadExec(const char *file, struct SceKernelLoadExecParam *param);
+int sceKernelLoadExec(const char *file, SceKernelLoadExecParam *param);
 
 #ifdef __cplusplus
 }

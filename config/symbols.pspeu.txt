@@ -10,6 +10,7 @@ strcmp = 0x0890C9D4;
 strcpy = 0x0890CA48;
 strlen = 0x0890CAE0;
 func_psp_089195C0 = 0x089195C0;
+PadReadPSP = 0x08919BA8;
 PadRead_PSP = 0x08919BE0;
 DrawSync = 0x0891B448;
 VSync = 0x0891B5BC;
