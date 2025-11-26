@@ -40,11 +40,3 @@ INCLUDE_ASM("st/are/nonmatchings/unk_50338", func_us_801D31F4);
 INCLUDE_ASM("st/are/nonmatchings/unk_50338", func_us_801D3298);
 
 INCLUDE_ASM("st/are/nonmatchings/unk_50338", func_us_801D3340);
-
-INCLUDE_ASM("st/are/nonmatchings/unk_50338", SpawnDustParticles_801D3D60);
-
-INCLUDE_ASM("st/are/nonmatchings/unk_50338", func_us_801D3E24);
-
-INCLUDE_ASM("st/are/nonmatchings/unk_50338", EntityGraveKeeper);
-
-INCLUDE_ASM("st/are/nonmatchings/unk_50338", EntityGraveKeeperHitbox);
