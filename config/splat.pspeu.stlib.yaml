@@ -98,7 +98,7 @@ segments:
       - [0x38698, .data, lib/e_mudman]
       - [0x38728, .data, lib/e_flea_man]
       - [0x38790, .data, lib/e_room_fg]
-      - [0x38830, data]
+      - [0x38830, .data, lib/e_flea_armor]
       - [0x388A0, .data, lib/e_skeleton]
       - [0x389A8, .data, lib/st_common]
       - [0x38BA8, .data, lib/en_thornweed_corpseweed]

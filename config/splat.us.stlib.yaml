@@ -70,7 +70,7 @@ segments:
       - [0x2B80, .data, en_thornweed_corpseweed]
       - [0x2C38, .data, e_skeleton]
       - [0x2D38, .data, e_mist_door]
-      - [0x2D78, data]
+      - [0x2D78, .data, e_flea_armor]
       - [0x2DE4, .data, e_flea_man]
       - [0x2E3C, .data, e_mudman]
       - [0x2EC0, .data, gen/rooms]

@@ -84,9 +84,9 @@ typedef enum EntityIDs {
     /* 0x47 */ E_BREAKABLE_DEBRIS,
     /* 0x48 */ E_ID_48,
     /* 0x49 */ E_ID_49,
-    /* 0x4A */ E_ID_4A,
-    /* 0x4B */ E_ID_4B,
-    /* 0x4C */ E_ID_4C,
+    /* 0x4A */ E_FLEA_ARMOR,
+    /* 0x4B */ E_FLEA_ARMOR_ATTACK_HITBOX,
+    /* 0x4C */ E_FLEA_MAN,
     /* 0x4D */ E_MUDMAN,
     /* 0x4E */ E_ID_4E,
     /* 0x4F */ E_ID_4F,
@@ -135,8 +135,6 @@ extern EInit D_us_8018098C;
 extern EInit g_EInitSkeleton;
 extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
-extern EInit g_EInitFleaArmor;
-extern EInit D_us_801809C8;
 extern EInit g_EInitMudman;
 extern EInit D_us_801809EC;
 

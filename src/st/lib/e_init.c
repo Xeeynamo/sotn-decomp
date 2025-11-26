@@ -75,7 +75,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
 void func_us_801B8A00(Entity* self);
 void EntityMistDoor(Entity* self);
 void EntityFleaArmor(Entity* self);
-void func_us_801D00C4(Entity* self);
+void EntityFleaArmorAttackHitbox(Entity* self);
 void EntityFleaMan(Entity* self);
 void EntityMudman(Entity* self);
 void func_us_801D1298(Entity* self);
@@ -162,7 +162,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 #endif
     /* 0x48 */ EntityMistDoor,
     /* 0x49 */ EntityFleaArmor,
-    /* 0x4A */ func_us_801D00C4,
+    /* 0x4A */ EntityFleaArmorAttackHitbox,
     /* 0x4B */ EntityFleaMan,
     /* 0x4C */ EntityMudman,
     /* 0x4D */ func_us_801D1298,
@@ -210,7 +210,8 @@ EInit g_EInitSkeleton = {ANIMSET_OVL(0x09), 0x01, 0x4B, 0x026B, 0x04B};
 EInit g_EInitSkeletonPieces = {ANIMSET_OVL(0x09), 0x00, 0x4B, 0x026B, 0x002};
 EInit g_EInitSkeletonBone = {ANIMSET_OVL(0x09), 0x15, 0x4B, 0x026B, 0x04C};
 EInit g_EInitFleaArmor = {ANIMSET_OVL(0x0D), 0x01, 0x49, 0x0274, 0x029};
-EInit D_us_801809C8 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x02A};
+EInit g_EInitFleaArmorAttackHitbox = {
+    ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x02A};
 EInit g_EInitFleaMan = {ANIMSET_OVL(0x0D), 0x00, 0x49, 0x0274, 0x028};
 EInit g_EInitMudman = {ANIMSET_OVL(0x0E), 0x00, 0x53, 0x0277, 0x0D6};
 EInit D_us_801809EC = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x0D7};
