@@ -139,12 +139,12 @@
 | main  | PadRead                           |       10 |          1 |        |       |     |
 | main  | SetGraphDebug                     |       10 |          1 |        |       |     |
 | main  | SsSeqOpen                         |       10 |          1 |        |       |     |
-| main  | func_psp_0892C174                 |       10 |          1 |        |       |     |
-| main  | func_psp_0892CB1C                 |       10 |          1 |        |       |     |
 | main  | func_psp_08932754                 |       10 |          1 |        |       |     |
 | main  | func_psp_08932768                 |       10 |          1 |        |       |     |
 | main  | func_psp_0893277C                 |       10 |          1 |        |       |     |
 | main  | func_psp_08932790                 |       10 |          1 |        |       |     |
+| main  | func_psp_0892C174                 |       10 |          1 |        |       |     |
+| main  | func_psp_0892CB1C                 |       10 |          1 |        |       |     |
 | main  | sceGuClearColor                   |       10 |          1 |        |       |     |
 | main  | sceVfpuVector4SetXYZ              |       10 |          1 |        |       |     |
 | dra   | func_psp_091176D8                 |       11 |          1 |        |       |     |
@@ -402,10 +402,10 @@
 | main  | SetSprt                           |       16 |          1 |        |       |     |
 | main  | SetSprt16                         |       16 |          1 |        |       |     |
 | main  | SetTile                           |       16 |          1 |        |       |     |
+| main  | func_psp_08932728                 |       16 |          1 |        |       |     |
 | main  | func_psp_089127E8                 |       16 |          1 |        |       |     |
 | main  | func_psp_08914BF4                 |       16 |          1 |        |       |     |
 | main  | func_psp_0892A0C4                 |       16 |          1 |        |       |     |
-| main  | func_psp_08932728                 |       16 |          1 |        |       |     |
 | main  | sceGuTexFilter                    |       16 |          1 |        |       |     |
 | main  | sceGuTexSlope                     |       16 |          1 |        |       |     |
 | main  | sceGuTexWrap                      |       16 |          1 |        |       |     |
@@ -544,7 +544,7 @@
 | main  | _rename                           |       19 |          2 |        |       |     |
 | main  | clock                             |       19 |          2 |        |       |     |
 | main  | func_psp_089172E4                 |       19 |          2 |        |       |     |
-| main  | func_psp_08919BA8                 |       19 |          2 |        |       |     |
+| main  | PadReadPSP                        |       19 |          2 |        |       |     |
 | main  | func_psp_08912608                 |       19 |          2 |        |       |     |
 | main  | func_psp_0892CAD8                 |       19 |          2 |        |       |     |
 | main  | sceGuContinue                     |       19 |          2 |        |       |     |
