@@ -257,7 +257,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
     s32 ptr;
 
 #ifdef VERSION_PSP
-    func_8926498();
+    DisableAutoPowerOff();
 #endif
 
     if (self->step) {

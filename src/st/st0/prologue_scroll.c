@@ -154,7 +154,7 @@ void PrologueScroll(void) {
 #if defined(VERSION_PSP)
     const int EndTimer = 0x14C0; // approximately 110 seconds
     entity = &g_Entities[STAGE_ENTITY_START];
-    func_8926498();
+    DisableAutoPowerOff();
 #else
     const int EndTimer = 0x14B0; // approximately 110 seconds
     entity = &g_Entities[STAGE_ENTITY_START];

@@ -305,6 +305,7 @@ segments:
       - [0x1A794, c, main_psp/1A794]
       - [0x1B0F0, c, main_psp/1B0F0]
       - [0x2758C, c, main_psp/2758C]
+      - [0x280FC, c, main_psp/280FC]
       - [0x30F3C, asm, func_psp_0892F848]
       - [0x3104C, asm, func_psp_0892F958]
       - [0x31178, c, main_psp/31178]
@@ -342,7 +343,7 @@ segments:
       - [0x3C524, rodata]
       - [0x3D528, .rodata, main_psp/192C0]
       - [0x3D534, .rodata, main_psp/1B0F0]
-      - [0x3D564, .rodata, main_psp/2758C]
+      - [0x3D564, .rodata, main_psp/280FC]
       - [0x3D580, rodata]
       - [0x3D6B4, .rodata, main_psp/31178]
       - [0x3D760, rodata]
@@ -351,8 +352,14 @@ segments:
       - [0x3DA1C, rodata] # literal floats
       - [0x3DA9C, rodata] # literal doubles
       - [0x3DC24, data]
+      - [0x3E414, .data, main_psp/138B0]
+      - [0x3E438, data]
       - [0x3E680, .data, main_psp/portrait_data]
       - [0x47B00, data]
+      - [0x47B04, .data, main_psp/1B0F0]
+      - [0x47D7C, .data, main_psp/2758C]
+      - [0x47DA0, .data, main_psp/280FC]
+      - [0x6348C, data]
       - {start: 0xAEF24, type: bss, vram: 0x089AD830, name: main_bss}
   - [0xAEF24, bin, elf_footer]
   - [0xB3E1C]

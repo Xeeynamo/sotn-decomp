@@ -50,6 +50,11 @@ enum pspUmdState
 	PSP_UMD_READABLE =    0x20
 };
 
+#define PSP_UMD_MODE_POWERON		(0x01)
+#define PSP_UMD_MODE_POWERCUR		(0x02)
+
+#define PSP_UMD_ALIAS_NAME			"disc0:"		// via ISO9660 file system
+
 /** Enumeration for UMD stats (legacy) */
 enum UmdDriveStat
 {
