@@ -20,11 +20,11 @@
 | main  | func_psp_08911B7C                 |        7 |          1 |        |       |     |
 | main  | _fini                             |        7 |          1 |        |       |     |
 | main  | _init                             |        7 |          1 |        |       |     |
-| main  | SetFarColor                       |        7 |          1 |        |       |     |
-| main  | SetFogNear                        |        7 |          1 |        |       |     |
 | main  | SsSetMono                         |        7 |          1 |        |       |     |
 | main  | SsSetStereo                       |        7 |          1 |        |       |     |
 | main  | _bu_init                          |        7 |          1 |        |       |     |
+| main  | SetFarColor                       |        7 |          1 |        |       |     |
+| main  | SetFogNear                        |        7 |          1 |        |       |     |
 | main  | gte_dpcs                          |        7 |          1 |        |       |     |
 | main  | gte_stub                          |        7 |          1 |        |       |     |
 | main  | func_psp_08937650                 |        7 |          1 |        |       |     |
@@ -242,10 +242,10 @@
 | main  | func_psp_0890641C                 |       14 |          1 |        |       |     |
 | main  | isatty                            |       14 |          1 |        |       |     |
 | main  | func_psp_0892FA84                 |       14 |          1 |        |       |     |
-| main  | DpqColor                          |       14 |          1 |        |       |     |
-| main  | NormalColorDpq                    |       14 |          1 |        |       |     |
 | main  | func_psp_089260AC                 |       14 |          1 |        |       |     |
 | main  | func_psp_089260D0                 |       14 |          1 |        |       |     |
+| main  | DpqColor                          |       14 |          1 |        |       |     |
+| main  | NormalColorDpq                    |       14 |          1 |        |       |     |
 | main  | func_psp_0892D130                 |       14 |          1 |        |       |     |
 | main  | sceGuDepthFunc                    |       14 |          1 |        |       |     |
 | main  | sceGuDepthMask                    |       14 |          1 |        |       |     |
@@ -437,7 +437,7 @@
 | main  | sceGuMaterial                     |       16 |          2 |        |       |     |
 | main  | sceGuSetMatrix                    |       16 |          2 |        |       |     |
 | main  | gte_ldv01c                        |       16 |          3 |        |       |     |
-| main  | 2758C.rodata                      |       17 |          0 | Yes    |       |     |
+| main  | 280FC.rodata                      |       17 |          0 | Yes    |       |     |
 | dra   | func_psp_09102B48                 |       17 |          1 |        |       |     |
 | dra   | func_psp_09102BC0                 |       17 |          1 |        |       |     |
 | dra   | func_psp_09102BF0                 |       17 |          1 |        |       |     |
@@ -501,7 +501,7 @@
 | main  | func_psp_08932D94                 |       18 |          2 |        |       |     |
 | main  | sceGuLightColor                   |       18 |          2 |        |       |     |
 | main  | func_psp_08936AC8                 |       18 |          2 |        |       |     |
-| main  | func_psp_08926498                 |       18 |          3 |        |       |     |
+| main  | DisableAutoPowerOff               |       18 |          3 |        |       |     |
 | main  | SpuSetKey                         |       18 |          3 |        |       |     |
 | main  | SquareRoot12                      |       18 |          3 |        |       |     |
 | main  | func_psp_0892C4F8                 |       18 |          3 |        |       |     |
@@ -2352,7 +2352,7 @@
 | ric   | func_pspeu_092A9560               |       76 |         11 |        |       |     |
 | dra   | func_psp_09136F30                 |       76 |         13 |        |       |     |
 | main  | func_psp_0892CB40                 |       76 |         14 |        |       |     |
-| main  | DVDUMDSampleStart                 |       76 |         15 |        |       |     |
+| main  | func_psp_0891228C                 |       76 |         15 |        |       |     |
 | main  | func_psp_08916724                 |       76 |         15 |        |       |     |
 | are   | func_pspeu_0923B5C0               |       77 |          2 |        |       |     |
 | cat   | func_pspeu_09237700               |       77 |          2 |        |       |     |
