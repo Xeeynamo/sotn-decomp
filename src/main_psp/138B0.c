@@ -1,17 +1,134 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include <game_psp.h>
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_089121BC);
+// https://pspdev.github.io/pspsdk/
+#define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
+#include <pspumd.h>
+#include <psppower.h>
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", DVDUMDSampleStart);
+char D_psp_0893CD20[] = "DVDUMD_SAMPLE";
+char D_psp_0893CD30[] = PSP_UMD_ALIAS_NAME;
+char D_psp_0893CD38[] = "DVDUMD_CTRL";
+extern s32 D_psp_08B1FB54;
+extern s32 D_psp_08B1FB58;
+extern s32 D_psp_08B1FB5C;
+extern s32 D_psp_08B1FB60;
+extern s32 D_psp_08B1FB64;
+extern s32 D_psp_08B1FB68;
+extern s32 D_psp_08B1FB70;
+extern s32 D_psp_08B41FF0;
+extern volatile s32 D_psp_08B1FB50;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08912398);
+s32 func_psp_089121BC(s32 count, s32 arg, void* param) {
+    D_psp_08B1FB58 = arg;
+    if (arg & PSP_UMD_MEDIA_IN) {
+        D_psp_08B1FB54 |= 1;
+    } else if (arg & PSP_UMD_MEDIA_OUT) {
+        D_psp_08B1FB54 = 0;
+        D_psp_08B1FB58 = 0;
+    }
+    if (arg & PSP_UMD_READABLE) {
+        D_psp_08B1FB58 = 2;
+    } else if (arg & PSP_UMD_READY) {
+        D_psp_08B1FB58 = 1;
+    } else if (arg & PSP_UMD_NOT_READY) {
+        D_psp_08B1FB58 = 0;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_089123B8);
+void func_psp_0891228C(void) {
+    volatile s32 ret;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_0891249C);
+    D_psp_08B1FB50 =
+        sceKernelCreateCallback(D_psp_0893CD20, func_psp_089121BC, NULL);
+    D_psp_08B1FB50;
+    ret = sceUmdRegisterUMDCallBack(D_psp_08B1FB50);
+    ret;
+    if (sceUmdCheckMedium() == 0) {
+        sceUmdWaitDriveStatCB(PSP_UMD_MEDIA_IN, 0);
+    }
+    ret = sceUmdActivate(PSP_UMD_MODE_POWERON, D_psp_0893CD30);
+    if (ret < 0) {
+        sceUmdUnRegisterUMDCallBack(D_psp_08B1FB50);
+        sceKernelDeleteCallback(D_psp_08B1FB50);
+    }
+    D_psp_08B1FB5C = 1;
+    sceUmdWaitDriveStatCB(PSP_UMD_READABLE, 0);
+    while (func_psp_089123B8() == 0) {
+        sceKernelDelayThreadCB(100);
+    }
+    D_psp_08B1FB54 = 1;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08912530);
+s32 func_psp_08912398(s32 argc, void* argv) {
+    s32 var_s0;
+
+    while (true) {
+        sceKernelDelayThreadCB(100);
+    }
+    return var_s0;
+}
+
+s32 func_psp_089123B8(void) {
+    u8 var_s2;
+    u8 var_s1;
+    u8 var_s0;
+
+    sceKernelWaitSemaCB(D_psp_08B1FB68, 1, 0);
+    sceKernelSignalSema(D_psp_08B1FB68, 1);
+    var_s2 = 0;
+    var_s1 = 0;
+    var_s0 = 0;
+    if (D_psp_08B1FB58 == 2 && D_psp_08B1FB54 == 1) {
+        var_s0 = 1;
+    }
+    if (var_s0 && D_psp_08B1FB5C) {
+        var_s1 = 1;
+    }
+    if (var_s1 && !D_psp_08B1FB60 != 0) {
+        var_s2 = 1;
+    }
+    return var_s2;
+}
+
+void func_psp_0891249C(void) {
+    volatile s32 sp1C;
+    volatile s32 sp18;
+
+    D_psp_08B1FB54 = 0;
+    D_psp_08B1FB58 = 0;
+    D_psp_08B1FB5C = 0;
+    func_psp_0891228C();
+    sp18 = sceKernelCreateThread(
+        D_psp_0893CD38, func_psp_08912398, 0x32, 0x1000, 0, NULL);
+    sp18;
+    D_psp_08B41FF0 = sp18;
+    sp1C = sceKernelStartThread(D_psp_08B41FF0, 0, 0);
+    sp1C;
+}
+
+s32 func_psp_08912530(s32 count, s32 arg, void* param) {
+    if (arg & PSP_POWER_CB_POWER_SWITCH) {
+        D_psp_08B1FB70 = 1;
+    }
+    if (arg & PSP_POWER_CB_HOLD_SWITCH) {
+    }
+    if (arg & PSP_POWER_CB_STANDBY) {
+    }
+    if (arg & PSP_POWER_CB_RESUME_COMPLETE) {
+        D_psp_08B1FB70 = 0;
+        D_psp_08B1FB60 = 0;
+        D_psp_08B1FB64++;
+    }
+    if (arg & PSP_POWER_CB_RESUMING) {
+        D_psp_08B1FB60 = 1;
+    }
+    if (arg & PSP_POWER_CB_SUSPENDING) {
+        D_psp_08B1FB60 = 1;
+    }
+    return 0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_089125F8);
 

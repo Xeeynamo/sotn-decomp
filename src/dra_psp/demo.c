@@ -369,7 +369,7 @@ void DemoUpdate(void) {
 
     case Demo_PlaybackInit:
     case Demo_Playback:
-        func_8926498();
+        DisableAutoPowerOff();
         FntPrint("demonstration\n");
         if (!frameCount) {
             g_DemoPtr += DEMO_KEY_LEN;

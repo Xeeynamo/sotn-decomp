@@ -182,7 +182,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     s32 ptr;
 
 #ifdef VERSION_PSP
-    func_8926498();
+    DisableAutoPowerOff();
 #endif
 
     // This is a big if condition, spans 4 lines

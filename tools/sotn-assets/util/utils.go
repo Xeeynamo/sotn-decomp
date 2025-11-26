@@ -228,6 +228,11 @@ func MakePaletteFromR5G5B5A1(data []byte, invertAlpha bool) []color.RGBA {
 
 func MakeGreyPalette(bpp int) []color.RGBA {
 	switch bpp {
+	case 1:
+		colors := make([]color.RGBA, 2)
+		colors[0] = color.RGBA{R: 0, G: 0, B: 0, A: 255}
+		colors[1] = color.RGBA{R: 255, G: 255, B: 255, A: 255}
+		return colors
 	case 4:
 		colors := make([]color.RGBA, 16)
 		for i := range colors {
@@ -250,6 +255,19 @@ func MakeGreyPalette(bpp int) []color.RGBA {
 // ensure the returned bitmap is a 8bpp
 func MakeBitmap(data []byte, bpp int) ([]byte, error) {
 	switch bpp {
+	case 1:
+		out := make([]byte, len(data)*8)
+		for i := 0; i < len(data); i++ {
+			out[i*8+0] = data[i] & 0x80 >> 7
+			out[i*8+1] = data[i] & 0x40 >> 6
+			out[i*8+2] = data[i] & 0x20 >> 5
+			out[i*8+3] = data[i] & 0x10 >> 4
+			out[i*8+4] = data[i] & 0x8 >> 3
+			out[i*8+5] = data[i] & 0x4 >> 2
+			out[i*8+6] = data[i] & 0x2 >> 1
+			out[i*8+7] = data[i] & 0x1 >> 0
+		}
+		return out, nil
 	case 4:
 		out := make([]byte, len(data)*2)
 		for i := 0; i < len(data); i++ {
@@ -262,6 +280,14 @@ func MakeBitmap(data []byte, bpp int) ([]byte, error) {
 	default:
 		return nil, fmt.Errorf("bpp %d invalid or not supported", bpp)
 	}
+}
+
+func Make1bppFromBitmap(data []byte) []byte {
+	out := make([]byte, len(data)/8)
+	for i := 0; i < len(data); i += 8 {
+		out[i>>3] = ((data[i] & 1) << 7) | ((data[i+1] & 1) << 6) | ((data[i+2] & 1) << 5) | ((data[i+3] & 1) << 4) | ((data[i+4] & 1) << 3) | ((data[i+5] & 1) << 2) | ((data[i+6] & 1) << 1) | ((data[i+7] & 1) << 0)
+	}
+	return out
 }
 
 func Make4bppFromBitmap(data []byte) []byte {
