@@ -2288,12 +2288,12 @@
 | are   | func_pspeu_09260520               |       72 |         14 |        |       |     |
 | main  | func_psp_08916630                 |       72 |         16 |        |       |     |
 | dra   | func_psp_090DFED8                 |       73 |          1 |        |       |     |
-| are   | MakeEntityFromId                  |       73 |          4 |        |       |     |
+| are   | func_pspeu_09253E88               |       73 |          4 |        |       |     |
 | cat   | func_pspeu_09249B78               |       73 |          4 |        |       |     |
 | dai   | func_pspeu_09242FD0               |       73 |          4 |        |       |     |
 | lib   | func_psp_09248480                 |       73 |          4 |        |       |     |
 | no2   | func_pspeu_092440F0               |       73 |          4 |        |       |     |
-| nz1   | MakeEntityFromId                  |       73 |          4 |        |       |     |
+| nz1   | func_pspeu_092461A0               |       73 |          4 |        |       |     |
 | dra   | func_psp_0913E558                 |       73 |          7 |        |       |     |
 | dra   | func_psp_090ECD78                 |       73 |          7 |        |       |     |
 | main  | func_psp_08931228                 |       73 |          7 |        |       |     |
@@ -2664,9 +2664,9 @@
 | sel   | func_psp_09240110                 |       97 |          1 |        |       |     |
 | st0   | func_pspeu_092469A0               |       97 |          1 |        |       |     |
 | dra   | func_psp_09116CE0                 |       97 |          6 |        |       |     |
-| are   | EntityFleaArmorAttackHitbox       |       97 |          7 |        |       |     |
+| are   | func_pspeu_0925DFF8               |       97 |          7 |        |       |     |
 | lib   | func_psp_0924DF08                 |       97 |          7 |        |       |     |
-| nz1   | EntityFleaArmorAttackHitbox       |       97 |          7 |        |       |     |
+| nz1   | func_pspeu_0924F3D8               |       97 |          7 |        |       |     |
 | main  | ScaleMatrix                       |       97 |         10 |        |       |     |
 | are   | PlaySfxPositional                 |       97 |         12 |        |       |     |
 | cat   | func_pspeu_09249FF0               |       97 |         12 |        |       |     |
@@ -3775,7 +3775,7 @@
 | dra   | func_psp_0913B0F8                 |      352 |         34 | Yes    |       |     |
 | are   | func_pspeu_09257778               |      354 |         31 |        |       |     |
 | dai   | func_pspeu_092471E8               |      354 |         31 |        |       |     |
-| are   | EntityFleaMan                     |      355 |         71 |        |       |     |
+| are   | func_pspeu_092594B0               |      355 |         71 |        |       |     |
 | nz1   | EntityFleaMan                     |      355 |         71 |        |       |     |
 | no4   | func_pspeu_09249030               |      356 |         34 |        |       |     |
 | chi   | func_psp_0923CAC8                 |      356 |         37 |        |       |     |
@@ -4067,8 +4067,8 @@
 | no4   | func_pspeu_092483A0               |      644 |         88 | Yes    |       |     |
 | dai   | func_pspeu_0924F408               |      644 |        102 | Yes    |       |     |
 | sel   | func_psp_09244598                 |      645 |         86 | Yes    |       |     |
-| are   | EntityFleaArmor                   |      646 |         97 |        |       |     |
-| nz1   | EntityFleaArmor                   |      646 |         97 |        |       |     |
+| are   | func_pspeu_0925D6A8               |      646 |         97 |        |       |     |
+| nz1   | func_pspeu_0924EA88               |      646 |         97 |        |       |     |
 | dra   | func_psp_09137900                 |      646 |        129 |        |       |     |
 | maria | func_pspeu_092B3848               |      648 |        123 |        |       |     |
 | lib   | func_psp_09258100                 |      650 |         63 | Yes    |       |     |
