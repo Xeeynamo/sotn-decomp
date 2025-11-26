@@ -40,6 +40,10 @@ enum PspCtrlButtons
 {
 	/** Select button. */
 	PSP_CTRL_SELECT     = 0x000001,
+	/** DS3 L3 button. */
+    PSP_CTRL_L3         = 0x000002,
+    /** DS3 R3 button. */
+    PSP_CTRL_R3         = 0x000004,
 	/** Start button. */
 	PSP_CTRL_START      = 0x000008,
 	/** Up D-Pad button. */

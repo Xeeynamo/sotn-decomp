@@ -246,7 +246,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 #ifdef VERSION_PSP
             nextByte = *g_Dialogue.scriptCur++;
             endLoopFlag = false;
-            if (func_8919BA8() & 8) {
+            if (PadReadPSP() & PAD_START) {
                 g_Dialogue.nextCharTimer = 0;
             }
             if (g_Dialogue.nextCharTimer && !skip_cutscene) {

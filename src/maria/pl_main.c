@@ -828,12 +828,12 @@ void MarMain(void) {
 
     // this block is new to maria and it is related to the support for
     // the two subweapons
-    if (!(D_pspeu_092E5F28 & 0x2000) && (func_8919BA8() & 0x2000) &&
+    if (!(D_pspeu_092E5F28 & PAD_CIRCLE) && (PadReadPSP() & PAD_CIRCLE) &&
         func_90E4C58() < 0) {
         func_90E4C18();
         temp = g_Status.subWeapon;
         g_Status.subWeapon = g_Status.D_80097C40;
         g_Status.D_80097C40 = temp;
     }
-    D_pspeu_092E5F28 = func_8919BA8();
+    D_pspeu_092E5F28 = PadReadPSP();
 }

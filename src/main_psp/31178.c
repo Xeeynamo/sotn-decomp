@@ -22,25 +22,17 @@ typedef struct {
     float x, y, z;
 } TVertex;
 
-extern s8* D_psp_0896411C;
-extern s32 D_psp_08966BB8;
-extern s32 D_psp_08966BBC;
-extern s32 D_psp_08966BD0;
-extern s32 D_psp_08966BE4;
-extern s32 D_psp_08966BF8;
-extern s32 D_psp_08966C0C;
-extern s32 D_psp_08966C20;
-extern char D_psp_089AD48C[];
+// BSS
 extern s32 D_psp_08B42048;
 extern s32 D_psp_08B4204C;
 extern s8 D_psp_08DAF2C8;
 extern s32* D_psp_08DAF2CC;
 extern u8 D_psp_08DAF300[];
-extern s32* D_psp_08DAFB00;
-extern s32* D_psp_08DAFB04;
+extern u8* D_psp_08DAFB00;
+extern u8* D_psp_08DAFB04;
 extern char D_psp_08DAFB08[][0x200];
 extern s32 D_psp_08DB0314;
-extern s32 D_psp_08DB0340;
+extern u8 D_psp_08DB0340[0x3C440];
 extern pspUtilityMsgDialogParams D_psp_08DEC780;
 extern s32 D_psp_08DEC9C4;
 extern PspUtilitySavedataParam D_psp_08DEC9C8;
@@ -61,6 +53,7 @@ extern s32 g_UserLanguage;
 
 u16 func_psp_089329B0(s32*);
 void func_psp_08930290(void);
+s32 func_psp_08931488(void);
 
 void func_psp_0892FA84(s32 arg0) { D_psp_08DAF2C8 = arg0; }
 
@@ -90,12 +83,14 @@ void func_psp_0892FAA8(s32 arg0, char* arg1) {
 
 void func_psp_0892FB58(char* arg0, u8 arg1) {
     s32 i;
-    s8* c;
+    s8* str;
 
-    c = D_psp_0896411C;
+    static char* pspDraq = "PSPDRAQ";
+
+    str = (s8*)pspDraq;
 
     for (i = 0; i < 7; i++) {
-        arg0[i] = c[i];
+        arg0[i] = str[i];
     }
     arg0[i + 0] = 0;
     arg0[i + 1] = arg1;
@@ -104,12 +99,12 @@ void func_psp_0892FB58(char* arg0, u8 arg1) {
 
 void func_psp_0892FBE8(u8 arg0, u8 arg1) {
     char args[10];
-    struct SceKernelLoadExecParam params;
+    SceKernelLoadExecParam params;
 
     sceDisplaySetHoldMode(1);
     func_psp_08930290();
     func_psp_0892FB58(args, arg1);
-    params.size = 0x10;
+    params.size = sizeof(SceKernelLoadExecParam);
     params.args = 10;
     params.argp = args;
     params.key = NULL;
@@ -120,9 +115,75 @@ void func_psp_0892FBE8(u8 arg0, u8 arg1) {
 
 void func_psp_0892FC80(void) { func_psp_0892FBE8(0, 2); }
 
+// These are TM2 textures https://openkh.dev/common/tm2.html
+
+static u8 D_psp_08964120[] = {
+#include "gen/D_psp_08964120.h"
+};
+
+static u8 D_psp_089649A0[] = {
+#include "gen/D_psp_089649A0.h"
+};
+
+static u8 D_psp_08965220[] = {
+#include "gen/D_psp_08965220.h"
+};
+
+static u8 D_psp_08965AA0[] = {
+#include "gen/D_psp_08965AA0.h"
+};
+
+static u8 D_psp_08966320[] = {
+#include "gen/D_psp_08966320.h"
+};
+
+static u8* D_psp_08966BA0[] = {
+    D_psp_08964120, D_psp_08964120, D_psp_089649A0,
+    D_psp_08965220, D_psp_08965AA0, D_psp_08966320,
+};
+
+static s32 D_psp_08966BB8 = GU_PSM_8888;
+
 void func_psp_0892FCA8(s32 arg0) { D_psp_08966BB8 = arg0; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_0892FCC8);
+typedef struct {
+    int fileid;
+    char version;
+    char format;
+    short n_pictures;
+    char zero[8];
+} Tm2Header;
+
+typedef struct {
+    int total_size;
+    int clut_size;
+    int image_size;
+    ushort header_size;
+    short clut_colors;
+    char pict_format;
+    char n_mipmaps;
+    char clut_type;
+    char image_type;
+    short image_width;
+    short image_height;
+    int gs_tex0[2];
+    int gs_tex1[2];
+    int gs_regs;
+    int gs_texclut;
+} Tm2Pict;
+
+void func_psp_0892FCC8(void) {
+    Tm2Header* header;
+    u8* ptr;
+    Tm2Pict* pict;
+
+    ptr = D_psp_08966BA0[D_psp_08DAF2C8];
+    header = (Tm2Header*)ptr;
+    pict = (Tm2Pict*)(ptr + sizeof(Tm2Header));
+    D_psp_08DAFB04 = ptr + sizeof(Tm2Header) + pict->header_size;
+    D_psp_08DAFB00 =
+        ptr + sizeof(Tm2Header) + pict->header_size + pict->image_size;
+}
 
 void func_psp_0892FD50(void) {
     s32 i;
@@ -237,26 +298,32 @@ void func_psp_08930290(void) {
 
 void func_psp_08930324(void) {
     switch (g_UserLanguage) {
-    case 0:
-        func_psp_0890FBEC(&D_psp_08966BBC, &D_psp_08DB0340, 0, 0x3C440);
+    case LANG_JP:
+        func_psp_0890FBEC(
+            "ms/jp/save00.tm2;1", D_psp_08DB0340, 0, sizeof(D_psp_08DB0340));
         break;
-    case 1:
-        func_psp_0890FBEC(&D_psp_08966BD0, &D_psp_08DB0340, 0, 0x3C440);
+    case LANG_EN:
+        func_psp_0890FBEC(
+            "ms/en/save00.tm2;1", D_psp_08DB0340, 0, sizeof(D_psp_08DB0340));
         break;
-    case 2:
-        func_psp_0890FBEC(&D_psp_08966BE4, &D_psp_08DB0340, 0, 0x3C440);
+    case LANG_FR:
+        func_psp_0890FBEC(
+            "ms/fr/save00.tm2;1", D_psp_08DB0340, 0, sizeof(D_psp_08DB0340));
         break;
-    case 3:
-        func_psp_0890FBEC(&D_psp_08966BF8, &D_psp_08DB0340, 0, 0x3C440);
+    case LANG_SP:
+        func_psp_0890FBEC(
+            "ms/sp/save00.tm2;1", D_psp_08DB0340, 0, sizeof(D_psp_08DB0340));
         break;
-    case 4:
-        func_psp_0890FBEC(&D_psp_08966C0C, &D_psp_08DB0340, 0, 0x3C440);
+    case LANG_GE:
+        func_psp_0890FBEC(
+            "ms/ge/save00.tm2;1", D_psp_08DB0340, 0, sizeof(D_psp_08DB0340));
         break;
-    case 5:
-        func_psp_0890FBEC(&D_psp_08966C20, &D_psp_08DB0340, 0, 0x3C440);
+    case LANG_IT:
+        func_psp_0890FBEC(
+            "ms/it/save00.tm2;1", D_psp_08DB0340, 0, sizeof(D_psp_08DB0340));
         break;
     }
-    func_psp_08932830(&D_psp_08DB0314, &D_psp_08DB0340);
+    func_psp_08932830(&D_psp_08DB0314, D_psp_08DB0340);
 }
 
 void func_psp_08930484(s16 x, s16 y, s16 w, s16 h, u16 u, u16 v, u16 du, u16 dv,
@@ -613,6 +680,108 @@ void func_psp_0893116C(void) {
     }
 }
 
+static u8 D_psp_08966C34[] = {
+#include "gen/D_psp_08966C34.h"
+};
+
+static u8 D_psp_08969A78[] = {
+#include "gen/D_psp_08969A78.h"
+};
+
+char D_psp_089ACEC8[] = {
+    0xE6, 0x82, 0xAA, 0xE9, 0xAD, 0x94, 0xE5, 0x9F, 0x8E, 0xE3, 0x83,
+    0x89, 0xE3, 0x83, 0xA9, 0xE3, 0x82, 0xAD, 0xE3, 0x83, 0xA5, 0xE3,
+    0x83, 0xA9, 0xEF, 0xBC, 0xB8, 0xE3, 0x82, 0xAF, 0xE3, 0x83, 0xAD,
+    0xE3, 0x83, 0x8B, 0xE3, 0x82, 0xAF, 0xE3, 0x83, 0xAB, 0x00, 0x00,
+};
+
+char D_psp_089ACEF4[] = {
+    0xE3, 0x82, 0xBB, 0xE3, 0x83, 0xBC, 0xE3, 0x83, 0x96, 0xE3,
+    0x83, 0x87, 0xE3, 0x83, 0xBC, 0xE3, 0x82, 0xBF, 0x00, 0x00,
+};
+
+char D_psp_089ACF08[] = {
+    0xE9, 0x96, 0x8B, 0xE6, 0x94, 0xBE, 0xE3, 0x81, 0x95, 0xE3, 0x82, 0x8C,
+    0xE3, 0x81, 0xA6, 0xE3, 0x81, 0x84, 0xE3, 0x82, 0x8B, 0xE3, 0x82, 0xAA,
+    0xE3, 0x83, 0xAA, 0xE3, 0x82, 0xB8, 0xE3, 0x83, 0x8A, 0xE3, 0x83, 0xAB,
+    0xE3, 0x82, 0xB2, 0xE3, 0x83, 0xBC, 0xE3, 0x83, 0xA0, 0x00, 0x00, 0x00,
+};
+
+char D_psp_089ACF38[] = {
+    0xE3, 0x80, 0x8E, 0xE6, 0x82, 0xAA, 0xE9, 0xAD, 0x94, 0xE5, 0x9F,
+    0x8E, 0xE3, 0x83, 0x89, 0xE3, 0x83, 0xA9, 0xE3, 0x82, 0xAD, 0xE3,
+    0x83, 0xA5, 0xE3, 0x83, 0xA9, 0xEF, 0xBC, 0xB8, 0xE3, 0x80, 0x80,
+    0xE8, 0xA1, 0x80, 0xE3, 0x81, 0xAE, 0xE8, 0xBC, 0xAA, 0xE5, 0xBB,
+    0xBB, 0xE3, 0x80, 0x8F, 0x00, 0x00, 0x00, 0x00,
+};
+
+char D_psp_089ACF6C[] = {
+    0xE3, 0x80, 0x8E, 0xE6, 0x82, 0xAA, 0xE9, 0xAD, 0x94, 0xE5, 0x9F, 0x8E,
+    0xE3, 0x83, 0x89, 0xE3, 0x83, 0xA9, 0xE3, 0x82, 0xAD, 0xE3, 0x83, 0xA5,
+    0xE3, 0x83, 0xA9, 0xEF, 0xBC, 0xB8, 0xE3, 0x80, 0x80, 0xE6, 0x9C, 0x88,
+    0xE4, 0xB8, 0x8B, 0xE3, 0x81, 0xAE, 0xE5, 0xA4, 0x9C, 0xE6, 0x83, 0xB3,
+    0xE6, 0x9B, 0xB2, 0xE3, 0x80, 0x8F, 0x00, 0x00,
+};
+
+char D_psp_089ACFA4[] = {
+    0xE3, 0x80, 0x8E, 0xE3, 0x81, 0x82, 0xE3, 0x81, 0x8F, 0xE3, 0x81, 0xBE,
+    0xE3, 0x81, 0xA2, 0xE3, 0x82, 0x87, 0xE3, 0x81, 0x8A, 0xE3, 0x81, 0xA9,
+    0xE3, 0x82, 0x89, 0xE3, 0x81, 0x8D, 0xE3, 0x82, 0x85, 0xE3, 0x82, 0x89,
+    0xE3, 0x83, 0x9A, 0xE3, 0x82, 0xB1, 0xE3, 0x80, 0x8F, 0x00, 0x00, 0x00,
+};
+
+char D_psp_089ACFD4[] = {
+    0xE6, 0x82, 0xAA, 0xE9, 0xAD, 0x94, 0xE5, 0x9F, 0x8E, 0xE3, 0x83,
+    0x89, 0xE3, 0x83, 0xA9, 0xE3, 0x82, 0xAD, 0xE3, 0x83, 0xA5, 0xE3,
+    0x83, 0xA9, 0xEF, 0xBC, 0xB8, 0xE3, 0x82, 0xAF, 0xE3, 0x83, 0xAD,
+    0xE3, 0x83, 0x8B, 0xE3, 0x82, 0xAF, 0xE3, 0x83, 0xAB, 0xE3, 0x81,
+    0xAE, 0xE3, 0x82, 0xBB, 0xE3, 0x83, 0xBC, 0xE3, 0x83, 0x96, 0xE3,
+    0x83, 0x87, 0xE3, 0x83, 0xBC, 0xE3, 0x82, 0xBF, 0xE3, 0x81, 0xA7,
+    0xE3, 0x81, 0x99, 0xE3, 0x80, 0x82, 0x00, 0x00, 0x00, 0x00,
+};
+
+char D_psp_089AD020[] = "Castlevania The Dracula X Chronicles";
+char D_psp_089AD048[] = "Save data";
+char D_psp_089AD054[] = "Unlocked Original Game";
+char D_psp_089AD06C[] = "Castlevania Rondo of Blood";
+char D_psp_089AD088[] = "Castlevania Symphony of the Night";
+char D_psp_089AD0AC[] = "Akumajyo Dracula Peke";
+char D_psp_089AD0C4[] = "Castlevania The Dracula X Chronicles save data.";
+char D_psp_089AD0F4[] = "Castlevania The Dracula X Chronicles";
+char D_psp_089AD11C[] = "Sauvegarde";
+char D_psp_089AD128[] = "Jeu original d\303\251bloqu\303\251";
+char D_psp_089AD140[] = "Castlevania Rondo of Blood";
+char D_psp_089AD15C[] = "Castlevania Symphony of the Night";
+char D_psp_089AD180[] = "Akumajyo Dracula Peke";
+char D_psp_089AD198[] = "Sauvegarde Castlevania The Dracula X Chronicles";
+char D_psp_089AD1C8[] = "Castlevania The Dracula X Chronicles";
+char D_psp_089AD1F0[] = "Guardar datos";
+char D_psp_089AD200[] = "Juego original desbloqueado";
+char D_psp_089AD21C[] = "Castlevania Rondo of Blood";
+char D_psp_089AD238[] = "Castlevania Symphony of the Night";
+char D_psp_089AD25C[] = "Akumajyo Dracula Peke\t";
+char D_psp_089AD274[] =
+    "Datos guardados de Castlevania The Dracula X Chronicles.";
+char D_psp_089AD2B0[] = "Castlevania The Dracula X Chronicles";
+char D_psp_089AD2D8[] = "Daten speichern\t";
+char D_psp_089AD2EC[] = "Verf\303\274gbares Originalspiel\t";
+char D_psp_089AD308[] = "Castlevania Rondo of Blood";
+char D_psp_089AD324[] = "Castlevania Symphony of the Night";
+char D_psp_089AD348[] = "Akumajyo Dracula Peke";
+char D_psp_089AD360[] = "Castlevania The Dracula X Chronicles-Speicherdaten.";
+char D_psp_089AD394[] = "Castlevania The Dracula X Chronicles";
+char D_psp_089AD3BC[] = "Salva dati\t";
+char D_psp_089AD3C8[] = "Gioco originale sbloccato";
+char D_psp_089AD3E4[] = "Castlevania Rondo of Blood";
+char D_psp_089AD400[] = "Castlevania Symphony of the Night";
+char D_psp_089AD424[] = "Akumajyo Dracula Peke";
+char D_psp_089AD43C[] =
+    "Dati di salvataggio di Castlevania The Dracula X Chronicles.";
+
+extern char D_psp_089AD48C[];
+extern char D_psp_089AD4A8[];
+extern char D_psp_089AD4B0[];
+
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08931228);
 
 s32 func_psp_08931334(void) {
@@ -644,7 +813,157 @@ s32 func_psp_08931410(void) {
     return sceUtilitySavedataInitStart(param);
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08931488);
+s32 func_psp_08931488(void) {
+    char buf[0x400];
+    s32 temp_s3;
+    s32 temp_s2;
+    s32 temp_s1;
+    PspUtilitySavedataParam* param;
+
+    param = &D_psp_08DEC9C8;
+    func_psp_08931228();
+    if (D_psp_08E2E5DC == 2) {
+        param->mode = PSP_UTILITY_SAVEDATA_SAVE;
+    } else {
+        param->mode = PSP_UTILITY_SAVEDATA_AUTOSAVE;
+    }
+    param->dataBuf = &D_psp_08DED03C;
+    param->dataBufSize = sizeof(D_psp_08DED03C);
+    param->dataSize = sizeof(D_psp_08DED03C);
+    temp_s3 = func_psp_08932728(0);
+    temp_s2 = func_psp_08932728(1);
+    temp_s1 = func_psp_08932728(2);
+    buf[0] = 0;
+    switch (g_UserLanguage) {
+    case LANG_JP:
+        if ((temp_s3 + temp_s2 + temp_s1) != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089ACF08);
+        } else {
+            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089ACFD4);
+        }
+        if (temp_s3 != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089ACF38);
+        }
+        if (temp_s2 != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089ACF6C);
+        }
+        if (temp_s1 != 0) {
+            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089ACFA4);
+        }
+        memcpy(param->sfoParam.title, D_psp_089ACEC8, 43);
+        memcpy(param->sfoParam.savedataTitle, D_psp_089ACEF4, 19);
+        memcpy(param->sfoParam.detail, buf, strlen(buf));
+        break;
+
+    case LANG_EN:
+        if ((temp_s3 + temp_s2 + temp_s1) != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD054);
+        } else {
+            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD0C4);
+        }
+        if (temp_s3 != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD06C);
+        }
+        if (temp_s2 != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD088);
+        }
+        if (temp_s1 != 0) {
+            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD0AC);
+        }
+        memcpy(param->sfoParam.title, D_psp_089AD020, 37);
+        memcpy(param->sfoParam.savedataTitle, D_psp_089AD048, 10);
+        memcpy(param->sfoParam.detail, buf, strlen(buf));
+        break;
+
+    case LANG_FR:
+        if ((temp_s3 + temp_s2 + temp_s1) != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD128);
+        } else {
+            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD198);
+        }
+        if (temp_s3 != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD140);
+        }
+        if (temp_s2 != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD15C);
+        }
+        if (temp_s1 != 0) {
+            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD180);
+        }
+        memcpy(param->sfoParam.title, D_psp_089AD0F4, 37);
+        memcpy(param->sfoParam.savedataTitle, D_psp_089AD11C, 11);
+        memcpy(param->sfoParam.detail, buf, strlen(buf));
+        break;
+
+    case LANG_SP:
+        if ((temp_s3 + temp_s2 + temp_s1) != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD200);
+        } else {
+            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD274);
+        }
+        if (temp_s3 != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD21C);
+        }
+        if (temp_s2 != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD238);
+        }
+        if (temp_s1 != 0) {
+            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD25C);
+        }
+        memcpy(param->sfoParam.title, D_psp_089AD1C8, 37);
+        memcpy(param->sfoParam.savedataTitle, D_psp_089AD1F0, 14);
+        memcpy(param->sfoParam.detail, buf, strlen(buf));
+        break;
+
+    case LANG_GE:
+        if ((temp_s3 + temp_s2 + temp_s1) != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD2EC);
+        } else {
+            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD360);
+        }
+        if (temp_s3 != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD308);
+        }
+        if (temp_s2 != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD324);
+        }
+        if (temp_s1 != 0) {
+            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD348);
+        }
+        memcpy(param->sfoParam.title, D_psp_089AD2B0, 37);
+        memcpy(param->sfoParam.savedataTitle, D_psp_089AD2D8, 17);
+        memcpy(param->sfoParam.detail, buf, strlen(buf));
+        break;
+
+    case LANG_IT:
+        if ((temp_s3 + temp_s2 + temp_s1) != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD3C8);
+        } else {
+            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD43C);
+        }
+        if (temp_s3 != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD3E4);
+        }
+        if (temp_s2 != 0) {
+            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD400);
+        }
+        if (temp_s1 != 0) {
+            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD424);
+        }
+        memcpy(param->sfoParam.title, D_psp_089AD394, 37);
+        memcpy(param->sfoParam.savedataTitle, D_psp_089AD3BC, 12);
+        memcpy(param->sfoParam.detail, buf, strlen(buf));
+        break;
+    }
+    param->sfoParam.parentalLevel = 5;
+    param->icon0FileData.buf = D_psp_08966C34;
+    param->icon0FileData.bufSize = 0x2E41;
+    param->icon0FileData.size = 0x2E41;
+    param->pic1FileData.buf = D_psp_08969A78;
+    param->pic1FileData.bufSize = 0x43450;
+    param->pic1FileData.size = 0x43450;
+    return sceUtilitySavedataInitStart(param);
+}
 
 s32 func_psp_08931CF8(void) {
     PspUtilitySavedataParam* param = &D_psp_08DEC9C8;
@@ -719,15 +1038,15 @@ void func_psp_08932228(void) {
     }
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08932728);
+s32 func_psp_08932728(s32 arg0) { return (D_psp_08DED03C + 0x10)[arg0]; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08932754);
+s32 func_psp_08932754(void) { return D_psp_08DED03C[0x13]; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08932768);
+s32 func_psp_08932768(void) { return D_psp_08DED03C[0x14]; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_0893277C);
+s32 func_psp_0893277C(void) { return D_psp_08DED03C[0x25]; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08932790);
+s32 func_psp_08932790(void) { return D_psp_08DED03C[0x26]; }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089327A4);
 
