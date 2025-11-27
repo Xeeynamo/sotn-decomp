@@ -27,9 +27,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892BF14);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892BF48);
 
-void func_psp_0892BFD0(s32* arg0) {
-    func_psp_0892C168(arg0);
-}
+void func_psp_0892BFD0(s32* arg0) { func_psp_0892C168(arg0); }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892BFD8);
 
@@ -64,9 +62,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892CA90);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892CAD8);
 
-void func_psp_0892CB10(s32* arg0) {
-    sceKernelDeleteSema(D_psp_08DAE780);
-}
+void func_psp_0892CB10(s32* arg0) { sceKernelDeleteSema(D_psp_08DAE780); }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892CB1C);
 
@@ -292,9 +288,7 @@ void func_psp_0892E9E4(void) {
     func_psp_0892D4A8(&D_psp_08DAE7A0);
 }
 
-void GsClearVcount(void) {
-    func_psp_0892BF48(&D_psp_08DADCC4);
-}
+void GsClearVcount(void) { func_psp_0892BF48(&D_psp_08DADCC4); }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892EA24);
 
