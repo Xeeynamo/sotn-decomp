@@ -7,7 +7,7 @@ static RECT D_us_80181F80[] = {
 static s16 D_us_80181F90[][2] = {{0x240, 0x3F0}, {0x110, 0x330}};
 static SVECTOR D_us_80181F98 = {0};
 
-void func_801CD78C(Point32* src, s32 offset, s16 angle, Point32* dst) {
+static void func_801CD78C(Point32* src, s32 offset, s16 angle, Point32* dst) {
     if (g_CurrentEntity->facingLeft) {
         angle = -angle;
     }
@@ -17,8 +17,8 @@ void func_801CD78C(Point32* src, s32 offset, s16 angle, Point32* dst) {
     dst->y += offset * rcos(angle) * 16;
 }
 
-void func_us_801D2424(Point32* arg0, s16 arg1, s16 arg2, Point32* arg3,
-                      s16 arg4, s16 arg5, Primitive* prim) {
+static void func_us_801D2424(Point32* arg0, s16 arg1, s16 arg2, Point32* arg3,
+                             s16 arg4, s16 arg5, Primitive* prim) {
     prim->x0 = prim->x1 = F(arg0->x).i.hi;
     prim->y0 = prim->y1 = F(arg0->y).i.hi;
     prim->x2 = prim->x3 = F(arg3->x).i.hi;
@@ -40,12 +40,12 @@ void func_us_801D2424(Point32* arg0, s16 arg1, s16 arg2, Point32* arg3,
     prim->y3 += (arg5 * rsin(arg4)) >> 0xC;
 }
 
-void func_us_801D26CC(unk_PlatelordStruct* arg0) {
+static void func_us_801D26CC(unk_PlatelordStruct* arg0) {
     Entity* entity;
-    Entity* currentEntity;
     Point32* position;
+    Entity* currentEntity;
     Point32* tempPos;
-    s16 angle;
+    s32 angle;
     s32 offset;
     RECT* tempRect;
 
@@ -62,14 +62,14 @@ void func_us_801D26CC(unk_PlatelordStruct* arg0) {
     func_801CD78C(tempPos, offset, angle, (Point32*)&currentEntity->posX);
 }
 
-void func_us_801D274C(unk_PlatelordStruct* arg0) {
+static void func_us_801D274C(unk_PlatelordStruct* arg0) {
     Entity* entity;
     Entity* currentEntity;
     Point32* position;
     Point32* tempPos;
-    RECT* tempRect;
     s32 angle;
     s32 offset;
+    RECT* tempRect;
 
     tempRect = arg0->unk10;
     currentEntity = g_CurrentEntity;
@@ -84,7 +84,7 @@ void func_us_801D274C(unk_PlatelordStruct* arg0) {
     func_801CD78C(tempPos, offset, angle, position);
 }
 
-bool func_us_801D27C4(unk_PlatelordStruct* arg0, bool isNegative) {
+static bool func_us_801D27C4(unk_PlatelordStruct* arg0, bool isNegative) {
     RECT* rect;
     bool ret;
     s32 dx;
@@ -776,7 +776,7 @@ void EntityPlateLord(Entity* self) {
             posX = self->posX.val - posX;
             tempEntity = unkStructB->unk0;
             if (tempEntity->ext.plateLord.unk85) {
-                if (self->ext.plateLord.unk80 == 0) {
+                if (!self->ext.plateLord.unk80) {
                     self->ext.plateLord.unk80++;
                     if (self->facingLeft) {
                         EntityGreyPuffSpawner(tempEntity, 3, 3, 12, 4, 3, -4);
@@ -830,7 +830,7 @@ void EntityPlateLord(Entity* self) {
             break;
         case 1:
             towards = 0;
-            towards = StepTowards(
+            towards += StepTowards(
                 &tempEntity->ext.plateLordUnknown.unk80, 0x180, 0x20);
             towards +=
                 StepTowards(&tempEntity->ext.plateLordUnknown.unk94, 0x100, 8);
@@ -868,8 +868,7 @@ void EntityPlateLord(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            self->ext.plateLord.unk80--;
-            if (self->ext.plateLord.unk80 == 0) {
+            if (!--self->ext.plateLord.unk80) {
                 self->step_s = 0;
                 self->step = 3;
             }
@@ -957,7 +956,7 @@ void EntityPlateLord(Entity* self) {
             self->step_s++;
             break;
         case 5:
-            if (--self->ext.plateLord.unk80 == 0) {
+            if (!--self->ext.plateLord.unk80) {
                 tempEntity = self;
                 for (i = 0; i < 9; i++, tempEntity++) {
                     DestroyEntity(tempEntity);
