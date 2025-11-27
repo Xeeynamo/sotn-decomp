@@ -27,6 +27,8 @@
 | main  | SetFogNear                        |        7 |          1 |        |       |     |
 | main  | gte_dpcs                          |        7 |          1 |        |       |     |
 | main  | gte_stub                          |        7 |          1 |        |       |     |
+| main  | func_psp_0892BFD0                 |        7 |          1 |        |       |     |
+| main  | func_psp_0892EAFC                 |        7 |          1 |        |       |     |
 | main  | func_psp_08937650                 |        7 |          1 |        |       |     |
 | main  | _getpid                           |        7 |          1 |        |       |     |
 | main  | _kill                             |        7 |          1 |        |       |     |
@@ -39,11 +41,9 @@
 | main  | func_psp_089005C0                 |        7 |          1 |        |       |     |
 | main  | RotAverage3                       |        7 |          1 |        |       |     |
 | main  | SquareRoot0                       |        7 |          1 |        |       |     |
-| main  | func_psp_0892BFD0                 |        7 |          1 |        |       |     |
+| main  | strFileLseek                      |        7 |          1 |        |       |     |
 | main  | func_psp_0892CF88                 |        7 |          1 |        |       |     |
 | main  | func_psp_0892D518                 |        7 |          1 |        |       |     |
-| main  | func_psp_0892EAFC                 |        7 |          1 |        |       |     |
-| main  | strFileLseek                      |        7 |          1 |        |       |     |
 |       | unused_339C                       |        7 |          1 |        |       |     |
 |       | unused_33A4                       |        7 |          1 |        |       |     |
 |       | unused_33AC                       |        7 |          1 |        |       |     |
@@ -61,13 +61,13 @@
 | main  | func_psp_08910360                 |        8 |          1 |        |       |     |
 | main  | CdInit                            |        8 |          1 |        |       |     |
 | main  | StartCARD                         |        8 |          1 |        |       |     |
-| main  | func_psp_08912814                 |        8 |          1 |        |       |     |
 | main  | GsClearVcount                     |        8 |          1 |        |       |     |
+| main  | func_psp_0892C168                 |        8 |          1 |        |       |     |
+| main  | func_psp_0892CB10                 |        8 |          1 |        |       |     |
+| main  | func_psp_08912814                 |        8 |          1 |        |       |     |
 | main  | SetGeomScreen                     |        8 |          1 |        |       |     |
 | main  | SsSetSerialVol                    |        8 |          1 |        |       |     |
 | main  | func_psp_0892A9E0                 |        8 |          1 |        |       |     |
-| main  | func_psp_0892C168                 |        8 |          1 |        |       |     |
-| main  | func_psp_0892CB10                 |        8 |          1 |        |       |     |
 | main  | func_psp_0892CF7C                 |        8 |          1 |        |       |     |
 | main  | func_psp_0892F83C                 |        8 |          1 |        |       |     |
 | main  | sceGuGetAllStatus                 |        8 |          1 |        |       |     |
@@ -106,7 +106,6 @@
 | main  | func_psp_0891274C                 |        9 |          1 |        |       |     |
 | main  | func_psp_089127D8                 |        9 |          1 |        |       |     |
 | main  | createPlayModeFlag                |        9 |          1 |        |       |     |
-| main  | func_psp_0892CB30                 |        9 |          1 |        |       |     |
 | main  | gte_ldrgb                         |        9 |          1 |        |       |     |
 | main  | gte_ldtx                          |        9 |          1 |        |       |     |
 | main  | gte_ldty                          |        9 |          1 |        |       |     |
@@ -115,6 +114,7 @@
 | main  | gte_strgb                         |        9 |          1 |        |       |     |
 | main  | gte_stsxy                         |        9 |          1 |        |       |     |
 | main  | waitPlayMode                      |        9 |          1 |        |       |     |
+| main  | func_psp_0892CB30                 |        9 |          1 |        |       |     |
 | main  | func_psp_08933F5C                 |        9 |          1 |        |       |     |
 | main  | func_psp_08933F6C                 |        9 |          1 |        |       |     |
 | main  | sceGuClearDepth                   |        9 |          1 |        |       |     |
@@ -290,19 +290,19 @@
 | main  | abs                               |       15 |          1 |        |       |     |
 | main  | fabs                              |       15 |          1 |        |       |     |
 | main  | labs                              |       15 |          1 |        |       |     |
+| main  | func_psp_0892CF0C                 |       15 |          1 |        |       |     |
+| main  | func_psp_08931D3C                 |       15 |          1 |        |       |     |
 | main  | func_psp_08915228                 |       15 |          1 |        |       |     |
 | main  | func_psp_089162C8                 |       15 |          1 |        |       |     |
 | main  | SetTransMatrix                    |       15 |          1 |        |       |     |
 | main  | func_psp_08929838                 |       15 |          1 |        |       |     |
-| main  | func_psp_0892CF0C                 |       15 |          1 |        |       |     |
-| main  | func_psp_0892D1B0                 |       15 |          1 |        |       |     |
 | main  | gte_SetTransVector                |       15 |          1 |        |       |     |
 | main  | gte_ldtr                          |       15 |          1 |        |       |     |
 | main  | gte_ldv0                          |       15 |          1 |        |       |     |
 | main  | gte_ldv1                          |       15 |          1 |        |       |     |
 | main  | gte_ldv2                          |       15 |          1 |        |       |     |
 | main  | gte_stsxy3                        |       15 |          1 |        |       |     |
-| main  | func_psp_08931D3C                 |       15 |          1 |        |       |     |
+| main  | func_psp_0892D1B0                 |       15 |          1 |        |       |     |
 | main  | sceGuLightMode                    |       15 |          1 |        |       |     |
 | main  | sceGuLogicalOp                    |       15 |          1 |        |       |     |
 | main  | sceGuTexEnvColor                  |       15 |          1 |        |       |     |
@@ -502,15 +502,15 @@
 | main  | sceGuLightColor                   |       18 |          2 |        |       |     |
 | main  | func_psp_08936AC8                 |       18 |          2 |        |       |     |
 | main  | DisableAutoPowerOff               |       18 |          3 |        |       |     |
-| main  | SpuSetKey                         |       18 |          3 |        |       |     |
 | main  | SquareRoot12                      |       18 |          3 |        |       |     |
+| main  | SpuSetKey                         |       18 |          3 |        |       |     |
 | main  | func_psp_0892C4F8                 |       18 |          3 |        |       |     |
 | main  | func_psp_0892D818                 |       18 |          3 |        |       |     |
-| main  | func_psp_0892BF14                 |       18 |          4 |        |       |     |
-| main  | func_psp_0892C62C                 |       18 |          4 |        |       |     |
 | main  | func_psp_0892E9B0                 |       18 |          4 |        |       |     |
 | main  | func_psp_0892E9E4                 |       18 |          4 |        |       |     |
 | main  | gte_ldv3c                         |       18 |          4 |        |       |     |
+| main  | func_psp_0892BF14                 |       18 |          4 |        |       |     |
+| main  | func_psp_0892C62C                 |       18 |          4 |        |       |     |
 | dra   | func_psp_090E8620                 |       19 |          1 |        |       |     |
 | dra   | func_psp_090F5230                 |       19 |          1 |        |       |     |
 | dra   | func_psp_090F5268                 |       19 |          1 |        |       |     |
@@ -722,8 +722,8 @@
 | no2   | func_pspeu_0924AA78               |       22 |          3 |        |       |     |
 | np3   | EntityOwlTarget                   |       22 |          3 |        |       |     |
 | dra   | func_psp_090F54E0                 |       22 |          4 |        |       |     |
-| main  | SpuSetVoiceAttr                   |       22 |          4 |        |       |     |
 | main  | func_psp_0892A3D4                 |       22 |          4 |        |       |     |
+| main  | SpuSetVoiceAttr                   |       22 |          4 |        |       |     |
 | main  | func_psp_08936AFC                 |       22 |          4 |        |       |     |
 | maria | func_pspeu_092A9250               |       22 |          4 |        |       |     |
 | are   | D_pspeu_09297D90                  |       23 |          0 |        |       |     |
@@ -863,9 +863,9 @@
 | dra   | func_psp_09101AA8                 |       25 |          3 |        |       |     |
 | main  | _stop                             |       25 |          3 |        |       |     |
 | main  | func_psp_0891B570                 |       25 |          3 |        |       |     |
+| main  | func_psp_0892CF34                 |       25 |          3 |        |       |     |
 | main  | func_psp_08916D50                 |       25 |          3 |        |       |     |
 | main  | func_psp_08916E74                 |       25 |          3 |        |       |     |
-| main  | func_psp_0892CF34                 |       25 |          3 |        |       |     |
 | main  | func_psp_0892D1D8                 |       25 |          3 |        |       |     |
 | main  | sceGupFrontFace                   |       25 |          3 |        |       |     |
 | main  | sceGupShadeModel                  |       25 |          3 |        |       |     |
@@ -1287,8 +1287,8 @@
 | wrp   | func_psp_09237B50                 |       36 |          4 |        |       |     |
 | dra   | func_psp_091040A0                 |       36 |          5 |        |       |     |
 | dra   | func_psp_0913F7F8                 |       36 |          5 |        |       |     |
-| main  | func_psp_0892D4A8                 |       36 |          5 |        |       |     |
 | main  | strFileRead                       |       36 |          5 |        |       |     |
+| main  | func_psp_0892D4A8                 |       36 |          5 |        |       |     |
 | main  | func_psp_08937740                 |       36 |          5 |        |       |     |
 | main  | func_psp_0890F3E0                 |       36 |          7 |        |       |     |
 | main  | func_psp_0890F4E0                 |       36 |          7 |        |       |     |
@@ -1439,8 +1439,8 @@
 | sel   | func_psp_092404A8                 |       39 |          5 |        |       |     |
 | main  | _init_signal_r                    |       39 |          6 |        |       |     |
 | main  | func_psp_08917E4C                 |       39 |          6 |        |       |     |
-| main  | func_psp_0892D520                 |       39 |          7 |        |       |     |
 | main  | release_arg                       |       39 |          7 |        |       |     |
+| main  | func_psp_0892D520                 |       39 |          7 |        |       |     |
 | maria | func_pspeu_092B1D98               |       39 |          7 |        |       |     |
 | main  | func_psp_0890F754                 |       39 |          9 |        |       |     |
 | dra   | 704D0.rodata                      |       40 |          0 | Yes    |       |     |
