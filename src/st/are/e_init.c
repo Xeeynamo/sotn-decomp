@@ -70,11 +70,11 @@ void EntityFleaMan(Entity* self);
 void EntityBoneScimitar(Entity* self);
 void EntityBoneScimitarParts(Entity* self);
 void EntityPlateLord(Entity* self);
-void func_us_801D2238(Entity* self);
-void func_us_801D23B4(Entity* self);
-void func_us_801D29B8(Entity* self);
+void func_us_801D4324(Entity* self);
+void func_us_801D44A0(Entity* self);
+void func_us_801D4AA4(Entity* self);
 void func_us_801D3340(Entity* self);
-void func_us_801D2BC0(Entity* self);
+void func_us_801D4CAC(Entity* self);
 void EntityGraveKeeper(Entity* self);
 void EntityGraveKeeperHitbox(Entity* self);
 void EntityMistDoor(Entity* self);
@@ -149,11 +149,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBoneScimitar,
     EntityBoneScimitarParts,
     EntityPlateLord,
-    func_us_801D2238,
-    func_us_801D23B4,
-    func_us_801D29B8,
+    func_us_801D4324,
+    func_us_801D44A0,
+    func_us_801D4AA4,
     func_us_801D3340,
-    func_us_801D2BC0,
+    func_us_801D4CAC,
     EntityGraveKeeper,
     EntityGraveKeeperHitbox,
     EntityMistDoor,
@@ -232,8 +232,8 @@ EInit g_EInitBoneScimitar = {ANIMSET_OVL(0x0D), 0x01, 0x4D, 0x0225, 0x069};
 EInit g_EInitScimitarParts = {ANIMSET_OVL(0x0D), 0x00, 0x4D, 0x0225, 0x002};
 
 // Plate Lord
-EInit D_us_80180C54 = {ANIMSET_OVL(0x0E), 0x01, 0x4C, 0x0226, 0x061};
-EInit D_us_80180C60 = {ANIMSET_OVL(0x0E), 0x16, 0x4C, 0x0226, 0x062};
+EInit g_EInitPlateLord = {ANIMSET_OVL(0x0E), 0x01, 0x4C, 0x0226, 0x061};
+EInit D_us_80180B90 = {ANIMSET_OVL(0x0E), 0x16, 0x4C, 0x0226, 0x062};
 
 // Grave Keeper
 EInit g_EInitGraveKeeper = {ANIMSET_OVL(0x18), 0x01, 0x4D, 0x0229, 0x06F};
