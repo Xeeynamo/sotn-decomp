@@ -4,12 +4,23 @@
 // https://pspdev.github.io/pspsdk/
 #define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
 #include <pspgu.h>
+#include <pspctrl.h>
 #include <pspumd.h>
 #include <pspthreadman.h>
 #include <psploadexec.h>
 #include <psputility.h>
 
 #define gray GU_RGBA(0x80, 0x80, 0x80, 0x80)
+
+typedef struct Unk08919D98 Unk08919D98;
+
+typedef struct Unk08919D98 {
+    s32* unk0;
+    Unk08919D98* prev;
+    Unk08919D98* next;
+    s32 (*unkC)(Unk08919D98*);
+    s32 count;
+} Unk08919D98;
 
 typedef struct {
     u32 c;
@@ -25,6 +36,7 @@ typedef struct {
 // BSS
 extern s32 D_psp_08B42048;
 extern s32 D_psp_08B4204C;
+extern s32 D_psp_08B42050;
 extern s8 D_psp_08DAF2C8;
 extern s32* D_psp_08DAF2CC;
 extern u8 D_psp_08DAF300[];
@@ -49,6 +61,7 @@ extern s32 D_psp_08E2E5E4;
 extern s32 D_psp_08E2E5E8;
 extern s32 D_psp_08E2E5EC;
 extern s32 D_psp_08E2E5F0;
+extern s32 D_psp_08E2E5F4;
 extern s32 g_UserLanguage;
 
 u16 func_psp_089329B0(s32*);
@@ -973,9 +986,134 @@ s32 func_psp_08931CF8(void) {
     return sceUtilitySavedataInitStart(param);
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08931D3C);
+void func_psp_08931D3C(void) {
+    D_psp_08E2E5E8 = 0;
+    D_psp_08E2E5EC = 0;
+    D_psp_08E2E5F0 = 0;
+    D_psp_08E2E5F4 = 0;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08931D64);
+s32 func_psp_08931D64(void) {
+    s32 var_s0;
+
+    var_s0 = 0;
+    if (PadReadPSP() & PSP_CTRL_LEFT) {
+        var_s0 = -1;
+    }
+    if (PadReadPSP() & PSP_CTRL_RIGHT) {
+        var_s0 = 1;
+    }
+    switch (D_psp_08E2E5E8) {
+    case 0:
+        func_psp_08930AE4(3);
+        D_psp_08E2E5E8++;
+        break;
+
+    case 1:
+        switch (func_psp_08930B34()) {
+        case 0:
+            break;
+
+        case 1:
+            D_psp_08E2E5E8 = 40;
+            D_psp_08E2E5F4 = 1;
+            break;
+
+        case 2:
+            D_psp_08E2E5E8 = 10;
+            break;
+
+        case 3:
+            D_psp_08E2E5E8 = 10;
+            break;
+
+        case 4:
+            D_psp_08E2E5E8 = 20;
+            break;
+        }
+        break;
+
+    case 10:
+        D_psp_08E2E5EC = 0;
+        D_psp_08E2E5F0 = 0;
+        D_psp_08E2E5E8++;
+        break;
+
+    case 11:
+        if (++D_psp_08E2E5EC == 10) {
+            D_psp_08E2E5E8++;
+        }
+        break;
+
+    case 12:
+        if (PadReadPSP() & D_psp_08B42050) {
+            D_psp_08E2E5E8++;
+        } else if (var_s0 != 0) {
+            D_psp_08E2E5F0 = (var_s0 < 0) ? 0 : 1;
+        }
+        break;
+
+    case 13:
+        if (--D_psp_08E2E5EC == 0) {
+            if (D_psp_08E2E5F0 == 0) {
+                D_psp_08E2E5E8 = 0;
+            } else {
+                D_psp_08E2E5E8 = 40;
+                D_psp_08E2E5F4 = 2;
+            }
+        }
+        break;
+
+    case 20:
+        D_psp_08E2E5EC = 0;
+        D_psp_08E2E5F0 = 0;
+        D_psp_08E2E5E8++;
+        break;
+
+    case 21:
+        if (++D_psp_08E2E5EC == 10) {
+            D_psp_08E2E5E8++;
+        }
+        break;
+
+    case 22:
+        if (PadReadPSP() & D_psp_08B42050) {
+            D_psp_08E2E5E8++;
+        } else if (var_s0 != 0) {
+            D_psp_08E2E5F0 = (var_s0 < 0) ? 0 : 1;
+        }
+        break;
+
+    case 23:
+        if (--D_psp_08E2E5EC == 0) {
+            if (D_psp_08E2E5F0 == 0) {
+                D_psp_08E2E5E8 = 30;
+            } else {
+                D_psp_08E2E5E8 = 10;
+            }
+        }
+        break;
+
+    case 30:
+        if (++D_psp_08E2E5EC == 10) {
+            func_psp_08930AE4(4);
+            D_psp_08E2E5E8++;
+        }
+        break;
+
+    case 31:
+        if (func_psp_08930B34() != 0) {
+            if (--D_psp_08E2E5EC == 0) {
+                D_psp_08E2E5E8 = 10;
+            }
+        }
+        break;
+
+    case 40:
+        return D_psp_08E2E5F4;
+    }
+    return 0;
+}
 
 void func_psp_08932228(void) {
     s32 alpha;
@@ -1050,7 +1188,12 @@ s32 func_psp_08932790(void) { return D_psp_08DED03C[0x26]; }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089327A4);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089327E4);
+Unk08919D98* func_psp_089327E4(Unk08919D98* arg0, s16 arg1) {
+    if (arg0 != NULL && arg1 > 0) {
+        func_psp_08934D20(arg0);
+    }
+    return arg0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08932830);
 
