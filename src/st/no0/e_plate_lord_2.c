@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
+extern EInit g_EInitPlateLord;
+
 static s16 D_us_80181FA0[] = {
     -3, -3, 0, 0, 3, -3, 0, 0, -3, 3, 0, 0, 3, 3, 0, 0};
 static SVECTOR D_us_80181FC0 = {.vx = 0, .vy = 0, .vz = 0};

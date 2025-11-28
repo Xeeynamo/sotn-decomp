@@ -83,11 +83,11 @@ enum Entities {
     E_BONE_SCIMITAR,            // EntityBoneScimitar
     E_BONE_SCIMITAR_PARTS,      // EntityBoneScimitarParts
     E_PLATE_LORD,               // EntityPlateLord
-    E_UNK_46,                   // func_us_801D2238
-    E_UNK_47,                   // func_us_801D23B4
-    E_UNK_48,                   // func_us_801D29B8
-    E_UNK_49,                   // func_us_801D3340
-    E_UNK_4A,                   // func_us_801D2BC0
+    E_PLATE_LORD_UNK1,          // func_us_801D2238
+    E_PLATE_LORD_UNK2,          // func_us_801D23B4
+    E_PLATE_LORD_UNK3,          // func_us_801D29B8
+    E_PLATE_LORD_UNK4,          // func_us_801D3340
+    E_PLATE_LORD_UNK5,          // func_us_801D2BC0
     E_GRAVE_KEEPER,             // EntityGraveKeeper
     E_GRAVE_KEEPER_HITBOX,      // EntityGraveKeeperHitbox
     E_MIST_DOOR,                // EntityMistDoor
