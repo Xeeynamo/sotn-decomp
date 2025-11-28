@@ -7,22 +7,22 @@ static RECT D_us_80181F80[] = {
 static s16 D_us_80181F90[][2] = {{0x240, 0x3F0}, {0x110, 0x330}};
 static SVECTOR D_us_80181F98 = {0};
 
-static void func_801CD78C(Point32* src, s32 offset, s16 angle, Point32* dst) {
+static void func_801CD78C(Pos* src, s32 offset, s16 angle, Pos* dst) {
     if (g_CurrentEntity->facingLeft) {
         angle = -angle;
     }
     *dst = *src;
 
-    dst->x += -(offset * rsin(angle) * 16);
-    dst->y += offset * rcos(angle) * 16;
+    dst->x.val += -(offset * rsin(angle) * 16);
+    dst->y.val += offset * rcos(angle) * 16;
 }
 
-static void func_us_801D2424(Point32* arg0, s16 arg1, s16 arg2, Point32* arg3,
-                             s16 arg4, s16 arg5, Primitive* prim) {
-    prim->x0 = prim->x1 = F(arg0->x).i.hi;
-    prim->y0 = prim->y1 = F(arg0->y).i.hi;
-    prim->x2 = prim->x3 = F(arg3->x).i.hi;
-    prim->y2 = prim->y3 = F(arg3->y).i.hi;
+static void func_us_801D2424(Pos* arg0, s16 arg1, s16 arg2, Pos* arg3, s16 arg4,
+                             s16 arg5, Primitive* prim) {
+    prim->x0 = prim->x1 = arg0->x.i.hi;
+    prim->y0 = prim->y1 = arg0->y.i.hi;
+    prim->x2 = prim->x3 = arg3->x.i.hi;
+    prim->y2 = prim->y3 = arg3->y.i.hi;
     if (g_CurrentEntity->facingLeft) {
         prim->x0 += (arg2 * rcos(arg1)) >> 0xC;
         prim->x1 -= (arg2 * rcos(arg1)) >> 0xC;
@@ -42,16 +42,16 @@ static void func_us_801D2424(Point32* arg0, s16 arg1, s16 arg2, Point32* arg3,
 
 static void func_us_801D26CC(unk_PlatelordStruct* arg0) {
     Entity* entity;
-    Point32* position;
+    Pos* position;
     Entity* currentEntity;
-    Point32* tempPos;
+    Pos* tempPos;
     s32 angle;
     s32 offset;
     RECT* tempRect;
 
     tempRect = arg0->unk10;
     entity = arg0->unk0;
-    position = (Point32*)&entity->posX;
+    position = (Pos*)&entity->posX;
     tempPos = &arg0->unk8;
     currentEntity = g_CurrentEntity;
     angle = arg0->unk6;
@@ -59,14 +59,14 @@ static void func_us_801D26CC(unk_PlatelordStruct* arg0) {
     func_801CD78C(position, offset, angle, tempPos);
     angle = arg0->unk4;
     offset = -tempRect->x;
-    func_801CD78C(tempPos, offset, angle, (Point32*)&currentEntity->posX);
+    func_801CD78C(tempPos, offset, angle, (Pos*)&currentEntity->posX);
 }
 
 static void func_us_801D274C(unk_PlatelordStruct* arg0) {
     Entity* entity;
     Entity* currentEntity;
-    Point32* position;
-    Point32* tempPos;
+    Pos* position;
+    Pos* tempPos;
     s32 angle;
     s32 offset;
     RECT* tempRect;
@@ -75,10 +75,10 @@ static void func_us_801D274C(unk_PlatelordStruct* arg0) {
     currentEntity = g_CurrentEntity;
     tempPos = &arg0->unk8;
     entity = arg0->unk0;
-    position = (Point32*)&entity->posX;
+    position = (Pos*)&entity->posX;
     angle = arg0->unk4;
     offset = tempRect->x;
-    func_801CD78C((Point32*)&currentEntity->posX, offset, angle, tempPos);
+    func_801CD78C((Pos*)&currentEntity->posX, offset, angle, tempPos);
     angle = arg0->unk6;
     offset = tempRect->w - 4;
     func_801CD78C(tempPos, offset, angle, position);
@@ -94,21 +94,21 @@ static bool func_us_801D27C4(unk_PlatelordStruct* arg0, bool isNegative) {
     s32 distance;
 
     Entity* tempEntity;
-    Point32* posA;
-    Point32* posB;
-    Point32* posC;
+    Pos* posA;
+    Pos* posB;
+    Pos* posC;
 
-    posA = (Point32*)&g_CurrentEntity->posX;
+    posA = (Pos*)&g_CurrentEntity->posX;
     tempEntity = arg0->unk0;
-    posB = (Point32*)&tempEntity->posX;
+    posB = (Pos*)&tempEntity->posX;
     rect = arg0->unk10;
     posC = &arg0->unk8;
 
-    dx = posB->x - posA->x;
+    dx = posB->x.val - posA->x.val;
     if (g_CurrentEntity->facingLeft) {
         dx = -dx;
     }
-    dy = posB->y - posA->y;
+    dy = posB->y.val - posA->y.val;
     arg0->unk4 = ratan2(-dx, dy);
 
     x = rect->x * 256;
@@ -132,11 +132,11 @@ static bool func_us_801D27C4(unk_PlatelordStruct* arg0, bool isNegative) {
     }
     func_801CD78C(posA, rect->x, arg0->unk4, posC);
 
-    dx = posB->x - posC->x;
+    dx = posB->x.val - posC->x.val;
     if (g_CurrentEntity->facingLeft) {
         dx = -dx;
     }
-    dy = posB->y - posC->y;
+    dy = posB->y.val - posC->y.val;
     arg0->unk6 = ratan2(-dx, dy);
 
     return ret;
@@ -149,8 +149,8 @@ void EntityPlateLord(Entity* self) {
     s32 posY;
     s16* tempPoint16A;
     RECT* tempRect;
-    Point32* tempPoint32;
-    Point32 point32;
+    Pos* tempPos;
+    Pos pos;
     Collider collider;
 
     Entity* tempEntity;
@@ -464,9 +464,9 @@ void EntityPlateLord(Entity* self) {
             }
             if (posX < 0x16) {
                 if (self->facingLeft) {
-                    tempEntity->posX.val += FIX(1) + FIX(0.5);
+                    tempEntity->posX.val += FIX(1.5);
                 } else {
-                    tempEntity->posX.val += FIX(-2) + FIX(0.5);
+                    tempEntity->posX.val += FIX(-1.5);
                 }
             } else {
                 towards++;
@@ -985,11 +985,11 @@ void EntityPlateLord(Entity* self) {
     unkStructC = &self->ext.plateLord.unk88;
     for (i = 0; i < 2; i++, unkStructC++) {
         tempEntity = unkStructC->unk0;
-        tempPoint32 = &unkStructC->unk8;
+        tempPos = &unkStructC->unk8;
         tempS16 = unkStructC->unk4;
         tempRect = unkStructC->unk10;
-        func_us_801D2424((Point32*)&self->posX, tempS16, tempRect->y,
-                         tempPoint32, tempS16, tempRect->y, prim);
+        func_us_801D2424((Pos*)&self->posX, tempS16, tempRect->y, tempPos,
+                         tempS16, tempRect->y, prim);
         if (self->palette & PAL_UNK_FLAG) {
             prim->clut = self->palette & 0xFFF;
         } else {
@@ -997,10 +997,9 @@ void EntityPlateLord(Entity* self) {
         }
         prim = prim->next;
         tempS16 = unkStructC->unk6;
-        func_801CD78C(tempPoint32, -4, tempS16, &point32);
-        func_us_801D2424(
-            &point32, tempS16, tempRect->h, (Point32*)&tempEntity->posX,
-            tempS16, tempRect->h, prim);
+        func_801CD78C(tempPos, -4, tempS16, &pos);
+        func_us_801D2424(&pos, tempS16, tempRect->h, (Pos*)&tempEntity->posX,
+                         tempS16, tempRect->h, prim);
         if (self->palette & PAL_UNK_FLAG) {
             prim->clut = self->palette & 0xFFF;
         } else {
@@ -1064,8 +1063,8 @@ void func_us_801D44A0(Entity* self) {
     long sp70;
     long unusedA;
     long unusedB;
-    Point32 sp20;
-    Point32 sp28;
+    Pos sp20;
+    Pos sp28;
     SVECTOR rot;
     VECTOR trans;
     MATRIX m;
@@ -1131,8 +1130,8 @@ void func_us_801D44A0(Entity* self) {
         break;
     }
     tempEntity = self - 3;
-    func_801CD78C((Point32*)&tempEntity->posX, 0x10,
-                  self->ext.plateLordUnknown.unkB0, (Point32*)&self->posX);
+    func_801CD78C((Pos*)&tempEntity->posX, 0x10,
+                  self->ext.plateLordUnknown.unkB0, (Pos*)&self->posX);
     if (self->step == 9) {
         posX = rcos(self->ext.plateLordUnknown.unk82) * 0x10;
         if (self->facingLeft) {
@@ -1142,12 +1141,12 @@ void func_us_801D44A0(Entity* self) {
         }
     }
     tempEntity = self + 4;
-    func_801CD78C((Point32*)&self->posX, 8, self->ext.plateLordUnknown.unk98,
-                  (Point32*)&tempEntity->posX);
+    func_801CD78C((Pos*)&self->posX, 8, self->ext.plateLordUnknown.unk98,
+                  (Pos*)&tempEntity->posX);
     tempEntity->rotate = self->ext.plateLordUnknown.unk98 - 0x200;
     tempEntity = self + 5;
-    func_801CD78C((Point32*)&self->posX, 0x12, self->ext.plateLordUnknown.unk98,
-                  (Point32*)&tempEntity->posX);
+    func_801CD78C((Pos*)&self->posX, 0x12, self->ext.plateLordUnknown.unk98,
+                  (Pos*)&tempEntity->posX);
     tempEntity->rotate = self->ext.plateLordUnknown.unk98 - 0x200;
     posX = self->posX.i.hi;
     posY = self->posY.i.hi;
@@ -1167,19 +1166,19 @@ void func_us_801D44A0(Entity* self) {
             posX -= 0xA;
         }
     }
-    F(sp20.x).i.hi = posX;
-    F(sp20.y).i.hi = posY;
+    sp20.x.i.hi = posX;
+    sp20.y.i.hi = posY;
     if (self->step == 9) {
         posX = (rcos(self->ext.plateLordUnknown.unk82) << 1) << 4;
         if (self->facingLeft) {
-            sp20.x -= posX;
+            sp20.x.val -= posX;
         } else {
-            sp20.x += posX;
+            sp20.x.val += posX;
         }
     }
     tempEntity = self + 3;
-    tempEntity->posX.val = sp20.x;
-    tempEntity->posY.val = sp20.y;
+    tempEntity->posX.val = sp20.x.val;
+    tempEntity->posY.val = sp20.y.val;
     func_801CD78C(&sp20, -3, self->ext.plateLordUnknown.unk96, &sp20);
     rot.vx = self->ext.plateLordUnknown.unk94;
     rot.vy = 0;
@@ -1200,10 +1199,10 @@ void func_us_801D44A0(Entity* self) {
     SetRotMatrix(&m);
     SetTransMatrix(&m);
     SetGeomScreen(0x400);
-    SetGeomOffset(F(sp20.x).i.hi, F(sp20.y).i.hi);
+    SetGeomOffset(sp20.x.i.hi, sp20.y.i.hi);
     RotTransPers(&sp6B, &sp70, &unusedA, &unusedB);
-    F(sp28.x).i.hi = sp70 & 0xFFFF;
-    F(sp28.y).i.hi = sp70 >> 0x10;
+    sp28.x.i.hi = sp70 & 0xFFFF;
+    sp28.y.i.hi = sp70 >> 0x10;
     prim = self->ext.prim;
     func_us_801D2424(&sp20, rot.vz, 4, &sp28, rot.vz, 4, prim);
     if (self->palette & PAL_UNK_FLAG) {
@@ -1212,12 +1211,12 @@ void func_us_801D44A0(Entity* self) {
         prim->clut = PLATE_LORD_CLUT_OFFSET + 1;
     }
     prim = prim->next;
-    F(sp20.x).i.hi = sp70 & 0xFFFF;
-    F(sp20.y).i.hi = sp70 >> 0x10;
+    sp20.x.i.hi = sp70 & 0xFFFF;
+    sp20.y.i.hi = sp70 >> 0x10;
     func_801CD78C(&sp20, -5, self->ext.plateLordUnknown.unk80, &sp20);
     tempEntity = self + 2;
-    func_801CD78C(&sp20, 0x1A, self->ext.plateLordUnknown.unk80,
-                  (Point32*)&tempEntity->posX);
+    func_801CD78C(
+        &sp20, 0x1A, self->ext.plateLordUnknown.unk80, (Pos*)&tempEntity->posX);
     tempEntity->rotate = self->ext.plateLordUnknown.unk80 - 0x600;
     var_s3 = self->ext.plateLordUnknown.unk80;
     if (self->step == 9) {
@@ -1234,7 +1233,7 @@ void func_us_801D44A0(Entity* self) {
         var_s3 += ratan2(posX >> 0x10, 0x1A);
     }
     func_us_801D2424(
-        &sp20, var_s3, 8, (Point32*)&tempEntity->posX, var_s3, 8, prim);
+        &sp20, var_s3, 8, (Pos*)&tempEntity->posX, var_s3, 8, prim);
 
     if (self->palette & PAL_UNK_FLAG) {
         prim->clut = self->palette & 0xFFF;
@@ -1291,8 +1290,8 @@ void func_us_801D4AA4(Entity* self) {
             self->animCurFrame = 1;
             self->ext.plateLordUnknown.unkB0 = 0x800;
         }
-        func_801CD78C((Point32*)&tempEntity->posX, 0xE,
-                      self->ext.plateLordUnknown.unkB0, (Point32*)&self->posX);
+        func_801CD78C((Pos*)&tempEntity->posX, 0xE,
+                      self->ext.plateLordUnknown.unkB0, (Pos*)&self->posX);
         break;
     case 2:
         tempEntity = self - 6;
