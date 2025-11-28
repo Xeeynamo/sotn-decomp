@@ -53,7 +53,7 @@ if __name__ == "__main__":
         "--log",
         required=False,
         default=f"{Path(__file__).parent / 'sotn_utils' / 'logs' / 'sotn_log.json'}",
-        help="Use an alternate path for the log file"
+        help="Use an alternate path for the log file",
     )
     parser.add_argument(
         "--clean",
@@ -76,15 +76,25 @@ if __name__ == "__main__":
         args.version.append(os.getenv("VERSION"))
     else:
         # split, flatten, and dedup version args
-        split_versions = [val.split(",") if "," in val else [val] for val in args.version]
-        args.version = {version.strip() for versions in split_versions for version in versions}
+        split_versions = [
+            val.split(",") if "," in val else [val] for val in args.version
+        ]
+        args.version = {
+            version.strip() for versions in split_versions for version in versions
+        }
 
     if args.version and None not in args.version:
-        unsupported_versions = [ver for ver in args.version if ver not in ["us", "pspeu", "hd", "all"]]
+        unsupported_versions = [
+            ver for ver in args.version if ver not in ["us", "pspeu", "hd", "all"]
+        ]
         if unsupported_versions:
-            parser.error(f"argument -v/--version: invalid choice(s): {unsupported_versions} (choose from 'us', 'pspeu', 'hd', 'all')")
+            parser.error(
+                f"argument -v/--version: invalid choice(s): {unsupported_versions} (choose from 'us', 'pspeu', 'hd', 'all')"
+            )
     else:
-        parser.error(f"the following arguments are required: -v/--version (can be via VERSION env or cli)")
+        parser.error(
+            f"the following arguments are required: -v/--version (can be via VERSION env or cli)"
+        )
 
     if "all" in args.version:
         args.version = ["us", "pspeu", "hd"]
