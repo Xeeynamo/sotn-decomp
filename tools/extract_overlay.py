@@ -61,6 +61,13 @@ if __name__ == "__main__":
         action="store_true",
         help="DESTRUCTIVE: Remove any existing overlay artifacts before re-extracting the overlay from the source binary",
     )
+    parser.add_argument(
+        "-e",
+        "--make-expected",
+        required=False,
+        action="store_true",
+        help="Run 'make expected' after successful extraction",
+    )
 
     args = parser.parse_args()
     init_logger(filename=args.log)
