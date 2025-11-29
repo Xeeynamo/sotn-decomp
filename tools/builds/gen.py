@@ -1,6 +1,7 @@
 # usage
 # python3 ./tools/build/gen.py && ninja
-
+import base64
+import pathlib
 from dataclasses import dataclass
 import ninja_syntax
 import os
@@ -15,9 +16,18 @@ linker_scripts = set()
 
 extra_cpp_defs = ""
 sotn_progress_report = os.environ.get("SOTN_PROGRESS_REPORT") == "1"
+dummy_object = bytes()
 if sotn_progress_report:
     # https://decomp.wiki/en/tools/decomp-dev
     extra_cpp_defs += " -DSKIP_ASM=1"
+    dummy_object = base64.b64decode(
+        "f0VMRgEBAQAAAAAAAAAAAAEACAABAAAAAAAAAAAAAABYAAAAABAAADQAAAAAACgABgAFAAAuc2hz"
+        "dHJ0YWIALnRleHQALmRhdGEALmJzcwAucGRyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        "AAAAAAAAAAAAAAAAAAALAAAAAQAAAAYAAAAAAAAANAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAEQAA"
+        "AAEAAAADAAAAAAAAADQAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABcAAAAIAAAAAwAAAAAAAAA0AAAA"
+        "AAAAAAAAAAAAAAAAEAAAAAAAAAAcAAAAAQAAAAAAAAAAAAAANAAAAAAAAAAAAAAAAAAAAAQAAAAA"
+        "AAAAAQAAAAMAAAAAAAAAAAAAADQAAAAhAAAAAAAAAAAAAAABAAAAAAAAAA=="
+    )  # minimal stripped object file generated from an empty assembly file
 
 
 def is_psp(ver: str) -> bool:
@@ -67,8 +77,14 @@ def is_stage(ovl_name: str) -> bool:
 
 
 def add_s_dummy(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
-    # progress report will not build any assembly file
-    return None
+    output = build_path(ver, f"{file_name}.o")
+    if output in entries:
+        return output
+    entries[output] = {}
+    output_path = pathlib.Path(output)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_bytes(dummy_object)
+    return output
 
 
 @dataclass
