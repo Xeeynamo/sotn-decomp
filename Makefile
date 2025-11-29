@@ -465,6 +465,10 @@ duplicates-report: $(REPORTS_DIR)/duplicates.txt
 $(REPORTS_DIR)/duplicates.txt: prepare-reports
 	$(DUPS)
 
+.PHONY: progress-report
+progress-report: $(SOTNASSETS)
+	$(SOTNASSETS) progress
+
 
 ##@
 ##@ Disc Dumping Targets
