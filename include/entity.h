@@ -2501,7 +2501,7 @@ typedef struct {
     /* 0x00 */ struct Entity* unk0;
     /* 0x04 */ s16 unk4;
     /* 0x06 */ s16 unk6;
-    /* 0x08 */ Point32 unk8;
+    /* 0x08 */ Pos unk8;
     /* 0x10 */ RECT* unk10;
 } unk_PlatelordStruct; /* size = 0x14 */
 
