@@ -60,9 +60,13 @@ func venvPython() (string, error) {
 		if !os.IsNotExist(err) {
 			return "", fmt.Errorf("fetch python venv: %w", err)
 		}
+		binPath, err := exec.LookPath("python3")
+		if err != nil {
+			return "", err
+		}
 		if err := (&exec.Cmd{
-			Path:   "/usr/bin/python3",
-			Args:   []string{"/usr/bin/python3", "-m", "venv", ".venv"},
+			Path:   binPath,
+			Args:   []string{binPath, "-m", "venv", ".venv"},
 			Stdin:  os.Stdin,
 			Stdout: os.Stdout,
 			Stderr: os.Stderr,
