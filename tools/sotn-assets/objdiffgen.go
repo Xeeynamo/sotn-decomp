@@ -12,17 +12,15 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 )
 
-func objdiffgen(version string) error {
-	configPath := fmt.Sprintf("config/assets.%s.yaml", version)
-	c, err := readConfig(configPath)
-	if err != nil {
-		return err
-	}
+func objdiffgen(c *assetConfig, isProgressReport bool) error {
 	if c.Version != "" {
 		_ = os.Setenv("VERSION", c.Version)
 	}
 	buildDir := fmt.Sprintf("build/%s", c.Version)
 	targetDir := filepath.Join("expected", buildDir)
+	if isProgressReport {
+		buildDir = filepath.Join("expected", "report", buildDir)
+	}
 	var units []objdiff.Unit
 	var categories []objdiff.ProgressCategory
 	for _, o := range c.Files {
@@ -61,6 +59,8 @@ func objdiffgen(version string) error {
 						name = n
 					} else if n, ok := segment[2].(int); ok {
 						name = strconv.FormatInt(int64(n), 10)
+					} else if n, ok := segment[2].(uint64); ok {
+						name = strconv.FormatInt(int64(n), 10)
 					}
 				}
 				if name == "" {
@@ -76,7 +76,7 @@ func objdiffgen(version string) error {
 			}
 		})
 		for name, _ := range srcs {
-			srcFile := filepath.Join(o.SourceDir, name+".c")
+			srcFile := filepath.Join(splatConfig.Options.SrcPath, name+".c")
 			objFile := srcFile + ".o"
 			units = append(units, objdiff.Unit{
 				Name:       fmt.Sprintf("%s/%s", splatConfig.Options.Basename, name),

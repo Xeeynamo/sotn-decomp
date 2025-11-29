@@ -174,6 +174,10 @@ files:
           - [0x14018, cmpgfx, us/D_80194018, 128, 128, 4]
           - [0x15274, cmpgfx, D_80195274, 128, 128, 4]
           - [0x162F4, skip]
+  - target: disks/us/ST/ARE/ARE.BIN
+    asset_path: assets/st/are
+    src_path: src/st/are
+    splat_config_path: config/splat.us.stare.yaml
   - target: disks/us/ST/CAT/CAT.BIN
     asset_path: assets/st/cat
     src_path: src/st/cat
@@ -784,6 +788,10 @@ files:
           - [0x16A5C, skip] # tile data
           - [0x20A5C, skip] # tile definitions
           - [0x26E8C, skip] # sprites
+  - target: disks/us/ST/NZ1/NZ1.BIN
+    asset_path: assets/st/nz1
+    src_path: src/st/nz1
+    splat_config_path: config/splat.us.stnz1.yaml
   - target: disks/us/ST/ST0/ST0.BIN
     asset_path: assets/st/st0
     src_path: src/st/st0
@@ -844,6 +852,10 @@ files:
           - [0x1B010, palette, bg_moon_p, 16]
           - [0x1B210, palette, D_8019B210, 16] # unused
           - [0x1B2D0, skip]
+  - target: disks/us/ST/TOP/TOP.BIN
+    asset_path: assets/st/top
+    src_path: src/st/top
+    splat_config_path: config/splat.us.sttop.yaml
   - target: disks/us/ST/WRP/WRP.BIN
     asset_path: assets/st/wrp
     src_path: src/st/wrp
@@ -867,6 +879,10 @@ files:
           - [0x1D68, skip] # tile data
           - [0x2968, skip] # tile definitions
           - [0x6D88, skip] # sprites
+  - target: disks/us/ST/RTOP/RTOP.BIN
+    asset_path: assets/st/rtop
+    src_path: src/st/rtop
+    splat_config_path: config/splat.us.strtop.yaml
   - target: disks/us/ST/RWRP/RWRP.BIN
     asset_path: assets/st/rwrp
     src_path: src/st/rwrp

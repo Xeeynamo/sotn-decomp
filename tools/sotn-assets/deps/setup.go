@@ -5,6 +5,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"os/exec"
 	"path/filepath"
 )
 
@@ -51,4 +52,23 @@ func download(url string, filename string) error {
 		return nil
 	}
 	return os.Chmod(filename, 0755)
+}
+
+func venvPython() (string, error) {
+	const bin = ".venv/bin/python3"
+	if _, err := os.Stat(bin); err != nil {
+		if !os.IsNotExist(err) {
+			return "", fmt.Errorf("fetch python venv: %w", err)
+		}
+		if err := (&exec.Cmd{
+			Path:   "/usr/bin/python3",
+			Args:   []string{"/usr/bin/python3", "-m", "venv", ".venv"},
+			Stdin:  os.Stdin,
+			Stdout: os.Stdout,
+			Stderr: os.Stderr,
+		}).Run(); err != nil {
+			return "", fmt.Errorf("init python venv: %w", err)
+		}
+	}
+	return bin, nil
 }

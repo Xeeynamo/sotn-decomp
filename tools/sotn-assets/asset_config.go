@@ -101,6 +101,10 @@ func parseArgs(entry []string) (offset int64, kind string, args []string, err er
 	return
 }
 
+func readConfigVersion(version string) (*assetConfig, error) {
+	return readConfig(fmt.Sprintf("config/assets.%s.yaml", version))
+}
+
 func readConfig(path string) (*assetConfig, error) {
 	yamlFile, err := os.ReadFile(path)
 	if err != nil {
