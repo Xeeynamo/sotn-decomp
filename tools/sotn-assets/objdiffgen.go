@@ -31,7 +31,7 @@ func objdiffgen(c *assetConfig, isProgressReport bool) error {
 		categories = append(categories, objdiff.ProgressCategory{
 			ID: splatConfig.Options.Basename,
 		})
-		srcs := map[string]struct{}{}
+		srcs := map[string]string{}
 		splatConfig.ForEachCodeSubsegment(func(_ splat.Segment, subsegments []any) {
 			for _, seg := range subsegments {
 				segment, ok := seg.([]any)
@@ -39,18 +39,6 @@ func objdiffgen(c *assetConfig, isProgressReport bool) error {
 					continue
 				}
 				if len(segment) < 2 {
-					continue
-				}
-				cat, ok := segment[1].(string)
-				if !ok {
-					continue
-				}
-				switch cat {
-				case "c":
-				case ".data":
-				case ".rodata":
-				case ".bss":
-				default:
 					continue
 				}
 				name := ""
@@ -72,11 +60,30 @@ func objdiffgen(c *assetConfig, isProgressReport bool) error {
 				if name == "" {
 					panic("bug")
 				}
-				srcs[name] = struct{}{}
+				cat, ok := segment[1].(string)
+				if !ok {
+					continue
+				}
+				switch cat {
+				case "c":
+				case ".data":
+				case ".rodata":
+				case ".bss":
+				case "data":
+				case "rodata":
+				case "bss":
+				default:
+					continue
+				}
+				srcs[name] = cat
 			}
 		})
-		for name, _ := range srcs {
+		asmDataSections := map[string]struct{}{"data": {}, "rodata": {}, "bss": {}}
+		for name, cat := range srcs {
 			srcFile := filepath.Join(splatConfig.Options.SrcPath, name+".c")
+			if _, isAsm := asmDataSections[cat]; isAsm {
+				srcFile = filepath.Join(splatConfig.Options.AsmPath, "data", fmt.Sprintf("%s.%s.s", name, cat))
+			}
 			objFile := srcFile + ".o"
 			units = append(units, objdiff.Unit{
 				Name:       fmt.Sprintf("%s/%s", splatConfig.Options.Basename, name),
