@@ -70,12 +70,13 @@ void SetLightMatrix(MATRIX* m);
 void SetTransMatrix(MATRIX* m);
 void SetFarColor(long rfc, long gfc, long bfc); // Color values (input)
 void SetFogNear(long a, long h); // Distance between visual point and screen
+MATRIX* MulMatrix(MATRIX* m0, MATRIX* m1);
 
-extern long SquareRoot0(long a);
-extern long SquareRoot12(long a);
-extern int rcos(int a);
-extern int rsin(int a);
-extern long ratan2(long y, long x);
+long SquareRoot0(long a);
+long SquareRoot12(long a);
+int rcos(int a);
+int rsin(int a);
+long ratan2(long y, long x);
 
 #if !defined(VERSION_PC) && !defined(M2CTX) && !defined(PERMUTER) &&           \
     !defined(VERSION_PSP)
