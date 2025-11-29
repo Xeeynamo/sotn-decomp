@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -76,6 +75,6 @@ func handleObjdiffReport(version string) error {
 		return err
 	}
 
-	reportPath := filepath.Join("build", fmt.Sprintf("report.%s.json", version))
+	reportPath := filepath.Join("build", version, "report.json")
 	return deps.ObjdiffCLI("report", "generate", "-o", reportPath)
 }
