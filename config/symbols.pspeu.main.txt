@@ -307,7 +307,6 @@ DvdUmdRetryRead = 0x0892BD3C;
 func_psp_0892C860 = 0x0892C860; // ignore:false
 func_psp_0892CA28 = 0x0892CA28; // ignore:false
 func_psp_0892CA90 = 0x0892CA90; // ignore:false
-func_psp_0892CB40 = 0x0892CB40; // ignore:false
 func_psp_0892CC48 = 0x0892CC48; // ignore:false
 func_psp_0892CD48 = 0x0892CD48; // ignore:false
 func_psp_0892CEB0 = 0x0892CEB0; // ignore:false

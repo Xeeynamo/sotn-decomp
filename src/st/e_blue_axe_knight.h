@@ -107,7 +107,7 @@ extern EInit g_EInitAxeKnight;
 
 // Called by EntityAxeKnightBlue
 extern s16* sprites_3[];
-s32 func_us_801CA51C(Entity* axeKnight) {
+static s32 func_us_801CA51C(Entity* axeKnight) {
     Entity* entity;
     Primitive* prim;
     s32 primIndex;
@@ -310,7 +310,7 @@ s32 func_us_801CA51C(Entity* axeKnight) {
     return 0;
 }
 
-void func_us_801CAD20(void) {
+static void func_us_801CAD20(void) {
     u8 random;
     u8 steps[] = {AXE_KNIGHT_STANDING_THROW, AXE_KNIGHT_STANDING_THROW,
                   AXE_KNIGHT_STANDING_THROW, AXE_KNIGHT_STANDING_THROW,
@@ -706,7 +706,7 @@ void EntityAxeKnightBlue(Entity* self) {
     self->hitboxHeight = *hitbox++;
 }
 
-void EntityAxeKnightRotateAxe(void) {
+static void EntityAxeKnightRotateAxe(void) {
     if (g_CurrentEntity->params) {
         g_CurrentEntity->rotate += 0x80;
     } else {
@@ -716,8 +716,8 @@ void EntityAxeKnightRotateAxe(void) {
     g_CurrentEntity->rotate &= 0xFFF;
 }
 
-static u32 init_velocity_x[] = {FIX(2), FIX(2), FIX(1)};
-static u32 init_velocity_y[] = {FIX(0), FIX(0), FIX(-4)};
+static s32 init_velocity_x[] = {FIX(2), FIX(2), FIX(1)};
+static s32 init_velocity_y[] = {FIX(0), FIX(0), FIX(-4)};
 
 extern EInit g_EInitAxeKnightAxe;
 void EntityAxeKnightThrowingAxe(Entity* self) {
