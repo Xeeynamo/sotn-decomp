@@ -995,6 +995,26 @@ files:
           - [0x340, skip]
           - [0x1258, rooms, rooms]
           - [0x1274, skip]
+  - target: disks/us/SERVANT/TT_000.BIN
+    asset_path: assets/servant/tt_000
+    src_path: src/servant/tt_000
+    splat_config_path: config/splat.us.tt_000.yaml
+  - target: disks/us/SERVANT/TT_001.BIN
+    asset_path: assets/servant/tt_001
+    src_path: src/servant/tt_001
+    splat_config_path: config/splat.us.tt_001.yaml
+  - target: disks/us/SERVANT/TT_002.BIN
+    asset_path: assets/servant/tt_002
+    src_path: src/servant/tt_002
+    splat_config_path: config/splat.us.tt_002.yaml
+  - target: disks/us/SERVANT/TT_003.BIN
+    asset_path: assets/servant/tt_003
+    src_path: src/servant/tt_003
+    splat_config_path: config/splat.us.tt_003.yaml
+  - target: disks/us/SERVANT/TT_004.BIN
+    asset_path: assets/servant/tt_004
+    src_path: src/servant/tt_004
+    splat_config_path: config/splat.us.tt_004.yaml
   - target: disks/us/BIN/WEAPON0.BIN
     asset_path: assets/weapon
     src_path: src/weapon
