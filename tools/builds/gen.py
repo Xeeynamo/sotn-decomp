@@ -52,6 +52,9 @@ def is_base_ovl(ovl_name: str) -> bool:
         or ovl_name == "dra"
         or ovl_name == "ric"
         or ovl_name == "maria"
+        or ovl_name == "sd"
+        or ovl_name == "fname"
+        or ovl_name == "tek"
     )
 
 

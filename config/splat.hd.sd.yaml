@@ -1,0 +1,43 @@
+options:
+  platform:     psx
+  basename:     sd
+  base_path:    ..
+  build_path:   build/hd
+  target_path:  disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/sd.bin
+  asm_path:     asm/hd/sd
+  asset_path:   assets/sd
+  src_path:     src/sd
+  ld_script_path: build/hd/sd.ld
+  compiler:     GCC
+  symbol_addrs_path:
+    - config/symbols.hd.txt
+    - config/symbols.hd.sd.txt
+  undefined_funcs_auto_path: build/hd/config/undefined_funcs_auto.hd.sd.txt
+  undefined_syms_auto_path:  build/hd/config/undefined_syms_auto.hd.sd.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: no
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  disassemble_all: true
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+    - ".sbss"
+  ld_generate_symbol_per_data_segment: true
+sha1: 81ae622f53dabeb581003b61d25e7a836c197eac
+segments:
+  - name: sd
+    type: code
+    start: 0x00000000
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x2DC, rodata]
+      - [0x954, c, sd]
+      - [0x1210, bss]
+  - [0x1230]
