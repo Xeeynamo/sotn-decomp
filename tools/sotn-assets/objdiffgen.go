@@ -114,6 +114,12 @@ func objdiffgen(c *assetConfig, isProgressReport bool) error {
 			Name: name,
 		})
 	}
+	if err := os.MkdirAll(buildDir, 0755); err != nil {
+		return err
+	}
+	if err := os.MkdirAll(targetDir, 0755); err != nil {
+		return err
+	}
 	for _, o := range c.Files {
 		if o.SplatConfigPath == "" {
 			if !isProgressReport {
