@@ -568,6 +568,7 @@
 | maria | func_pspeu_092C0248               |       19 |          3 |        |       |     |
 | dra   | func_psp_090DDAA8                 |       19 |          4 |        |       |     |
 | ric   | pl_setstep.rodata                 |       20 |          0 | Yes    |       |     |
+| are   | e_blue_axe_knight.rodata          |       20 |          0 | Yes    |       |     |
 | are   | e_hunting_girl.rodata             |       20 |          0 | Yes    |       |     |
 | cat   | e_lossoth.rodata                  |       20 |          0 | Yes    |       |     |
 | dai   | e_corner_guard.rodata             |       20 |          0 | Yes    |       |     |
@@ -699,6 +700,7 @@
 | sel   | func_psp_09237C38                 |       21 |          3 |        |       |     |
 | sel   | func_psp_09237C78                 |       21 |          3 |        |       |     |
 | main  | 1B0F0.rodata                      |       22 |          0 | Yes    |       |     |
+| are   | unk_7298.rodata                   |       22 |          0 | Yes    |       |     |
 | are   | D_pspeu_09297D90                  |       22 |          0 |        |       |     |
 | cat   | e_spike_room_light_switch.rodata  |       22 |          0 | Yes    |       |     |
 | chi   | en_breakable_wall.rodata          |       22 |          0 | Yes    |       |     |
@@ -981,7 +983,7 @@
 | dra   | func_psp_090E0FA8                 |       28 |          2 |        |       |     |
 | main  | func_psp_0890B88C                 |       28 |          2 |        |       |     |
 | main  | sceGuBeginPacket                  |       28 |          2 |        |       |     |
-| are   | GetDistanceToPlayerY              |       28 |          2 |        |       |     |
+| are   | func_pspeu_092614B0               |       28 |          2 |        |       |     |
 | cat   | func_pspeu_09252340               |       28 |          2 |        |       |     |
 | chi   | func_psp_092475B8                 |       28 |          2 |        |       |     |
 | dai   | func_pspeu_0924D408               |       28 |          2 |        |       |     |
@@ -1112,8 +1114,8 @@
 | main  | func_psp_08916F8C                 |       31 |          3 |        |       |     |
 | main  | func_psp_08917018                 |       31 |          3 |        |       |     |
 | main  | func_psp_08916C40                 |       31 |          3 |        |       |     |
-| are   | func_pspeu_09261C70               |       31 |          3 |        |       |     |
 | are   | func_pspeu_0923E550               |       31 |          3 |        |       |     |
+| are   | func_pspeu_09261C70               |       31 |          3 |        |       |     |
 | cat   | func_pspeu_09252B00               |       31 |          3 |        |       |     |
 | dai   | func_pspeu_0924DBC8               |       31 |          3 |        |       |     |
 | lib   | func_psp_0924F608                 |       31 |          3 |        |       |     |
@@ -1265,7 +1267,6 @@
 | dra   | func_psp_09116240                 |       35 |          6 |        |       |     |
 | dra   | func_psp_09140CF0                 |       35 |          7 |        |       |     |
 | are   | e_plate_lord.rodata               |       36 |          0 | Yes    |       |     |
-| are   | unk_4EE8.rodata                   |       36 |          0 | Yes    |       |     |
 | main  | func_psp_08911F24                 |       36 |          1 |        |       |     |
 | dra   | func_psp_0910F128                 |       36 |          2 |        |       |     |
 | main  | func_psp_08916110                 |       36 |          2 |        |       |     |
@@ -1985,7 +1986,7 @@
 | dra   | func_psp_0913F960                 |       60 |          5 |        |       |     |
 | main  | sceGuDrawArray                    |       60 |          5 |        |       |     |
 | dai   | func_pspeu_0924A618               |       60 |          5 |        |       |     |
-| are   | EntityExplosionSpawn              |       60 |          6 |        |       |     |
+| are   | func_pspeu_09262150               |       60 |          6 |        |       |     |
 | lib   | func_psp_0924FA00                 |       60 |          6 |        |       |     |
 | no4   | func_pspeu_0925B740               |       60 |          6 |        |       |     |
 | nz1   | EntityExplosionSpawn              |       60 |          6 |        |       |     |
@@ -2623,7 +2624,7 @@
 | lib   | func_psp_0924C6C0                 |       94 |          8 |        |       |     |
 | main  | func_psp_08913A04                 |       94 |         20 |        |       |     |
 | chi   | func_psp_0924BB40                 |       95 |          1 |        |       |     |
-| are   | func_us_801CA2AC                  |       95 |          5 |        |       |     |
+| are   | func_pspeu_0923E7B8               |       95 |          5 |        |       |     |
 | main  | func_psp_0892F958                 |       95 |          6 |        |       |     |
 | np3   | EntityCavernDoorPlatform          |       95 |          7 |        |       |     |
 | lib   | func_psp_09254120                 |       95 |          8 |        |       |     |
@@ -3103,7 +3104,7 @@
 | maria | func_pspeu_092A6740               |      144 |         13 |        |       |     |
 | dra   | func_psp_09100B68                 |      144 |         15 |        |       |     |
 | main  | func_psp_0892C660                 |      144 |         21 |        |       |     |
-| are   | EntityAxeKnightThrowingAxe        |      144 |         23 |        |       |     |
+| are   | func_pspeu_0923E5B0               |      144 |         23 |        |       |     |
 | maria | func_pspeu_092ACA78               |      144 |         24 |        |       |     |
 | dra   | func_psp_09100E90                 |      145 |         15 | Yes    |       |     |
 | dra   | func_psp_09140FF0                 |      145 |         15 |        |       |     |
@@ -4277,7 +4278,7 @@
 | dra   | func_psp_09130B00                 |     1188 |         81 |        |       |     |
 | maria | func_pspeu_092ACC80               |     1197 |        200 | Yes    |       |     |
 |       | UpdateServantDefault              |     1198 |        126 | Yes    |       |     |
-| are   | EntityAxeKnightBlue               |     1198 |        195 | Yes    |       |     |
+| are   | func_pspeu_0923D440               |     1198 |        195 | Yes    |       |     |
 | lib   | func_psp_0924B568                 |     1202 |        112 | Yes    |       |     |
 | dra   | func_psp_090E31F8                 |     1203 |        134 |        |       |     |
 | dra   | func_psp_090F8A08                 |     1203 |        196 |        |       |     |
