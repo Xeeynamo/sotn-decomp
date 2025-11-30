@@ -89,12 +89,25 @@ var metaOverlays = map[string]metaOverlay{
 	"tt_004": {"tt_004", "servant", "Sword familiar"},
 	"tt_005": {"tt_005", "servant", "Half fairy familiar"},
 	"tt_006": {"tt_006", "servant", "Nose demon familiar"},
+	"fname":  {"fname", "engine", "fname (HD exclusive)"},
+	"sd":     {"sd", "engine", "sd (HD exclusive)"},
+	"tek":    {"tek", "engine", "tek (HD exclusive)"},
 }
 var metaCategories = map[string]string{
 	"engine":  "Game engine/misc",
 	"st":      "Stage",
 	"bo":      "Boss",
 	"servant": "Familiar",
+	"weapon":  "Weapon",
+}
+
+func init() {
+	for hand := 0; hand <= 1; hand++ {
+		for i := 0; i <= 58; i++ {
+			id := fmt.Sprintf("w%d_%03d", hand, i)
+			metaOverlays[id] = metaOverlay{id, "weapon", id}
+		}
+	}
 }
 
 func objdiffgen(c *assetConfig, isProgressReport bool) error {
