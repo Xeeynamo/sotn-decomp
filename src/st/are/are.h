@@ -64,9 +64,9 @@ enum Entities {
     E_VALHALLA_KNIGHT_UNK1,     // func_us_801C8954
     E_VALHALLA_KNIGHT_UNK2,     // func_us_801C8AAC
     E_AXE_KNIGHT_BLUE,          // EntityAxeKnightBlue
-    E_AXE_KNIGHT_THROWING_AXE,  // EntityAxeKnightThrowingAxe
-    E_UNK_34,                   // func_us_801CA2AC
-    E_UNK_35,                   // InitializeUnkEntity
+    E_AXE_KNIGHT_AXE,           // EntityAxeKnightThrowingAxe
+    E_AXE_KNIGHT_AXE_2,         // func_us_801CBA30
+    E_UNK_ENTITY,               // InitializeUnkEntity
     E_ARMOR_LORD,               // EntityArmorLord
     E_UNK_37,                   // func_us_801CC660
     E_ARMOR_LORD_FIRE_WAVE,     // EntityArmorLordFireWave

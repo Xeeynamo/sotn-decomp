@@ -52,7 +52,7 @@ void func_us_801C8954(Entity* self);
 void func_us_801C8AAC(Entity* self);
 void EntityAxeKnightBlue(Entity* self);
 void EntityAxeKnightThrowingAxe(Entity* self);
-void func_us_801CA2AC(Entity* self);
+void func_us_801CBA30(Entity* self);
 void InitializeUnkEntity(Entity* self);
 void EntityArmorLord(Entity* self);
 void func_us_801CC660(Entity* self);
@@ -131,7 +131,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C8AAC,
     EntityAxeKnightBlue,
     EntityAxeKnightThrowingAxe,
-    func_us_801CA2AC,
+    func_us_801CBA30,
     InitializeUnkEntity,
     EntityArmorLord,
     func_us_801CC660,
@@ -202,9 +202,9 @@ EInit g_EInitValhallaKnightUnk2 = {
 EInit g_EInitValhallaKnightUnk3 = {
     ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x087};
 
-// Axe Knight
-EInit D_us_80180BAC = {ANIMSET_OVL(0x08), 0x01, 0x50, 0x0213, 0x006};
-EInit D_us_80180BB8 = {ANIMSET_OVL(0x08), 0x2F, 0x50, 0x0213, 0x007};
+// (Blue) Axe Knight
+EInit g_EInitAxeKnight = {ANIMSET_OVL(0x08), 0x01, 0x50, 0x0213, 0x006};
+EInit g_EInitAxeKnightAxe = {ANIMSET_OVL(0x08), 0x2F, 0x50, 0x0213, 0x007};
 
 // Armor Lord
 EInit D_us_80180BC4 = {ANIMSET_OVL(0x09), 0x01, 0x52, 0x0216, 0x022};
