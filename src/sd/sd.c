@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
 INCLUDE_ASM("sd/nonmatchings/sd", func_80180954);
