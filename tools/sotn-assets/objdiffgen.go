@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -23,64 +24,64 @@ var metaOverlays = map[string]metaOverlay{
 	"dra":    {"dra", "engine", "Game engine"},
 	"ric":    {"ric", "engine", "Richter (playable)"},
 	"weapon": {"weapon", "engine", "Alucard weapons"},
-	"stsel":  {"sel", "engine", "Title Screen / Main Menu"},
-	"stno0":  {"no0", "st", "Marble Gallery"},
-	"stno1":  {"no1", "st", "Outer Wall"},
-	"stlib":  {"lib", "st", "Long Library"},
-	"stcat":  {"cat", "st", "Catacombs"},
-	"stno2":  {"no2", "st", "Olrox's Quarters"},
-	"stchi":  {"chi", "st", "Abandoned Mine"},
-	"stdai":  {"dai", "st", "Royal Chapel"},
-	"stnp3":  {"np3", "st", "Castle Entrance"},
-	"stcen":  {"cen", "st", "Castle Center"},
-	"stno4":  {"no4", "st", "Underground Caverns"},
-	"stare":  {"are", "st", "Colosseum"},
-	"sttop":  {"top", "st", "Castle Keep (Hallway Entrance)"},
-	"stnz0":  {"nz0", "st", "Alchemy Laboratory"},
-	"stnz1":  {"nz1", "st", "Clock Tower"},
-	"stwrp":  {"wrp", "st", "Warp Room"},
-	"stdre":  {"dre", "st", "Nightmare"},
-	"bobo7":  {"bo7", "bo", "Cerberos (Boss)"},
-	"bomar":  {"mar", "bo", "Maria cutscene (clock room)"},
-	"bobo6":  {"bo6", "bo", "Richter (Boss)"},
-	"bobo5":  {"bo5", "bo", "Hippogryph (Boss)"},
-	"bobo4":  {"bo4", "bo", "Doppleganger10 (Boss)"},
-	"bobo3":  {"bo3", "bo", "Scylla (Boss)"},
-	"bobo2":  {"bo2", "bo", "Minotaurus / Werewolf (Boss)"},
-	"bobo1":  {"bo1", "bo", "Granfaloon (Boss)"},
-	"bobo0":  {"bo0", "bo", "Olrox (Boss)"},
-	"stst0":  {"st0", "st", "Final Stage: Bloodlines"},
-	"strno0": {"rno0", "str", "Black Marble Gallery"},
-	"strno1": {"rno1", "str", "Reverse Outer Wall"},
-	"strlib": {"rlib", "str", "Forbidden Library"},
-	"strcat": {"rcat", "str", "Floating Catacombs"},
-	"strno2": {"rno2", "str", "Death Wing's Lair"},
-	"strchi": {"rchi", "str", "Cave (Reverse Abandoned Mine)"},
-	"strdai": {"rdai", "str", "Anti-Chapel"},
-	"strno3": {"rno3", "str", "Reverse Castle Entrance"},
-	"strcen": {"rcen", "str", "Reverse Castle Center (Shaft Boss Fight)"},
-	"strno4": {"rno4", "str", "Reverse Caverns"},
-	"strare": {"rare", "str", "Reverse Colosseum"},
-	"strtop": {"rtop", "str", "Reverse Castle Keep (Hallway Entrance)"},
-	"strnz0": {"rnz0", "str", "Necromancy Laboratory"},
-	"strnz1": {"rnz1", "str", "Reverse Clock Tower"},
-	"strwrp": {"rwrp", "str", "Reverse Warp Room"},
-	"borbo8": {"rbo8", "bor", "Galamoth (Boss)"},
-	"borbo7": {"rbo7", "bor", "Akmodan II (Boss)"},
-	"borbo6": {"rbo6", "bor", "Dracula (Boss)"},
-	"borbo5": {"rbo5", "bor", "Doppleganger40 (Boss)"},
-	"borbo4": {"rbo4", "bor", "The Creature (Boss)"},
-	"borbo3": {"rbo3", "bor", "Medusa (Boss)"},
-	"borbo2": {"rbo2", "bor", "Death (Boss)"},
-	"borbo1": {"rbo1", "bor", "Beezelbub (Boss)"},
-	"borbo0": {"rbo0", "bor", "Fake Trevor / Fake Grant / Fake Sypha (Boss)"},
-	"stmad":  {"mad", "std", "Debug Room"},
-	"stno3":  {"no3", "st", "Castle Entrance (Intro / Death Cutscene)"},
-	"stte1":  {"te1", "std", "Test Room 1"},
-	"stte2":  {"te2", "std", "Test Room 2"},
-	"stte3":  {"te3", "std", "Test Room 3"},
-	"stte4":  {"te4", "std", "Test Room 4"},
-	"stte5":  {"te5", "std", "Test Room 5"},
+	"stsel":  {"sel", "engine", "SEL: Title Screen / Main Menu"},
+	"stno0":  {"no0", "st", "NO0: Marble Gallery"},
+	"stno1":  {"no1", "st", "NO1: Outer Wall"},
+	"stlib":  {"lib", "st", "LIB: Long Library"},
+	"stcat":  {"cat", "st", "CAT: Catacombs"},
+	"stno2":  {"no2", "st", "NO2: Olrox's Quarters"},
+	"stchi":  {"chi", "st", "CHI: Abandoned Mine"},
+	"stdai":  {"dai", "st", "DAI: Royal Chapel"},
+	"stnp3":  {"np3", "st", "NP3: Castle Entrance"},
+	"stcen":  {"cen", "st", "CEN: Castle Center"},
+	"stno4":  {"no4", "st", "NO4: Underground Caverns"},
+	"stare":  {"are", "st", "ARE: Colosseum"},
+	"sttop":  {"top", "st", "TOP: Castle Keep (Hallway Entrance)"},
+	"stnz0":  {"nz0", "st", "NZ0: Alchemy Laboratory"},
+	"stnz1":  {"nz1", "st", "NZ1: Clock Tower"},
+	"stwrp":  {"wrp", "st", "WRP: Warp Room"},
+	"stdre":  {"dre", "st", "DRE: Nightmare"},
+	"bobo7":  {"bo7", "bo", "BO7: Cerberos (Boss)"},
+	"bomar":  {"mar", "bo", "MAR: Maria cutscene (clock room)"},
+	"bobo6":  {"bo6", "bo", "BO6: Richter (Boss)"},
+	"bobo5":  {"bo5", "bo", "BO5: Hippogryph (Boss)"},
+	"bobo4":  {"bo4", "bo", "BO4: Doppleganger10 (Boss)"},
+	"bobo3":  {"bo3", "bo", "BO3: Scylla (Boss)"},
+	"bobo2":  {"bo2", "bo", "BO2: Minotaurus / Werewolf (Boss)"},
+	"bobo1":  {"bo1", "bo", "BO1: Granfaloon (Boss)"},
+	"bobo0":  {"bo0", "bo", "BO0: Olrox (Boss)"},
+	"stst0":  {"st0", "st", "ST0: Final Stage: Bloodlines"},
+	"strno0": {"rno0", "st", "RNO0: Black Marble Gallery"},
+	"strno1": {"rno1", "st", "RNO1: Reverse Outer Wall"},
+	"strlib": {"rlib", "st", "RLIB: Forbidden Library"},
+	"strcat": {"rcat", "st", "RCAT: Floating Catacombs"},
+	"strno2": {"rno2", "st", "RNO2: Death Wing's Lair"},
+	"strchi": {"rchi", "st", "RCHI: Cave (Reverse Abandoned Mine)"},
+	"strdai": {"rdai", "st", "RDAI: Anti-Chapel"},
+	"strno3": {"rno3", "st", "RNO3: Reverse Castle Entrance"},
+	"strcen": {"rcen", "st", "RCEN: Reverse Castle Center (Shaft Boss Fight)"},
+	"strno4": {"rno4", "st", "RNO4: Reverse Caverns"},
+	"strare": {"rare", "st", "RARE: Reverse Colosseum"},
+	"strtop": {"rtop", "st", "RTOP: Reverse Castle Keep (Hallway Entrance)"},
+	"strnz0": {"rnz0", "st", "RNZ0: Necromancy Laboratory"},
+	"strnz1": {"rnz1", "st", "RNZ1: Reverse Clock Tower"},
+	"strwrp": {"rwrp", "st", "RWRP: Reverse Warp Room"},
+	"borbo8": {"rbo8", "bo", "RBO8: Galamoth (Boss)"},
+	"borbo7": {"rbo7", "bo", "RBO7: Akmodan II (Boss)"},
+	"borbo6": {"rbo6", "bo", "RBO6: Dracula (Boss)"},
+	"borbo5": {"rbo5", "bo", "RBO5: Doppleganger40 (Boss)"},
+	"borbo4": {"rbo4", "bo", "RBO4: The Creature (Boss)"},
+	"borbo3": {"rbo3", "bo", "RBO3: Medusa (Boss)"},
+	"borbo2": {"rbo2", "bo", "RBO2: Death (Boss)"},
+	"borbo1": {"rbo1", "bo", "RBO1: Beezelbub (Boss)"},
+	"borbo0": {"rbo0", "bo", "RBO0: Fake Trevor / Fake Grant / Fake Sypha (Boss)"},
+	"stmad":  {"mad", "st", "MAD: Debug Room"},
+	"stno3":  {"no3", "st", "NO3: Castle Entrance (Intro / Death Cutscene)"},
+	"stte1":  {"te1", "st", "TE1: Test Room 1"},
+	"stte2":  {"te2", "st", "TE2: Test Room 2"},
+	"stte3":  {"te3", "st", "TE3: Test Room 3"},
+	"stte4":  {"te4", "st", "TE4: Test Room 4"},
+	"stte5":  {"te5", "st", "TE5: Test Room 5"},
 	"tt_000": {"tt_000", "servant", "Bat familiar"},
 	"tt_001": {"tt_001", "servant", "Ghost familiar"},
 	"tt_002": {"tt_002", "servant", "Faerie familiar"},
@@ -92,10 +93,7 @@ var metaOverlays = map[string]metaOverlay{
 var metaCategories = map[string]string{
 	"engine":  "Game engine/misc",
 	"st":      "Stage",
-	"str":     "Stage (reverse)",
 	"bo":      "Boss",
-	"bor":     "Boss (reverse)",
-	"std":     "Stage (debug/unused)",
 	"servant": "Familiar",
 }
 
@@ -117,6 +115,73 @@ func objdiffgen(c *assetConfig, isProgressReport bool) error {
 		})
 	}
 	for _, o := range c.Files {
+		if o.SplatConfigPath == "" {
+			if !isProgressReport {
+				continue
+			}
+			if o.Target == "" {
+				continue
+			}
+			ovlID := strings.ToLower(strings.Split(filepath.Base(o.Target), ".")[0])
+			var overlayMeta metaOverlay
+			for _, val := range metaOverlays {
+				if val.id == ovlID {
+					overlayMeta = val
+					break
+				}
+			}
+			if overlayMeta.id == "" {
+				panic(fmt.Sprintf("OVL ID %s not found", ovlID))
+			}
+			categoryID := fmt.Sprintf("%s.%s", overlayMeta.kind, overlayMeta.id)
+			categories = append(categories, objdiff.ProgressCategory{
+				ID:   categoryID,
+				Name: overlayMeta.name,
+			})
+			elfName := ovlID + ".elf"
+			elfTargetPath := filepath.Join(targetDir, elfName)
+			elfBasePath := filepath.Join(buildDir, elfName)
+			mipselAsPath, err := exec.LookPath("mipsel-linux-gnu-as")
+			if err != nil {
+				return err
+			}
+			if err := (&exec.Cmd{
+				Path: mipselAsPath,
+				Args: []string{mipselAsPath, "-o", elfTargetPath},
+				Stdin: strings.NewReader(
+					".section .text\n" +
+						".global func_fake, func_fake_end\n" +
+						"func_fake:\n" +
+						".incbin \"" + o.Target + "\"\n" +
+						"func_fake_end:\n"),
+				Stdout: os.Stdout,
+				Stderr: os.Stderr,
+			}).Run(); err != nil {
+				return err
+			}
+			if err := (&exec.Cmd{
+				Path: mipselAsPath,
+				Args: []string{mipselAsPath, "-o", elfBasePath},
+				Stdin: strings.NewReader(
+					".section .text\n" +
+						".global func_fake, func_fake_end\n" +
+						"func_fake:\n" +
+						"func_fake_end:\n"),
+				Stdout: os.Stdout,
+				Stderr: os.Stderr,
+			}).Run(); err != nil {
+				return err
+			}
+			units = append(units, objdiff.Unit{
+				Name:       categoryID,
+				BasePath:   elfBasePath,
+				TargetPath: elfTargetPath,
+				Metadata: objdiff.Metadata{
+					ProgressCategories: []string{overlayMeta.kind, categoryID},
+				},
+			})
+			continue
+		}
 		splatConfig, err := splat.ReadConfig(o.SplatConfigPath)
 		if err != nil {
 			return fmt.Errorf("unable to read splat config at %q: %v", o.SplatConfigPath, err)

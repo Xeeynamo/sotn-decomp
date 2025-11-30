@@ -879,6 +879,19 @@ files:
           - [0x1D68, skip] # tile data
           - [0x2968, skip] # tile definitions
           - [0x6D88, skip] # sprites
+  - target: disks/us/ST/RARE/RARE.BIN
+  - target: disks/us/ST/RCAT/RCAT.BIN
+  - target: disks/us/ST/RCEN/RCEN.BIN
+  - target: disks/us/ST/RCHI/RCHI.BIN
+  - target: disks/us/ST/RDAI/RDAI.BIN
+  - target: disks/us/ST/RLIB/RLIB.BIN
+  - target: disks/us/ST/RNO0/RNO0.BIN
+  - target: disks/us/ST/RNO1/RNO1.BIN
+  - target: disks/us/ST/RNO2/RNO2.BIN
+  - target: disks/us/ST/RNO3/RNO3.BIN
+  - target: disks/us/ST/RNO4/RNO4.BIN
+  - target: disks/us/ST/RNZ0/RNZ0.BIN
+  - target: disks/us/ST/RNZ1/RNZ1.BIN
   - target: disks/us/ST/RTOP/RTOP.BIN
     asset_path: assets/st/rtop
     src_path: src/st/rtop
@@ -906,6 +919,11 @@ files:
           - [0x1FC8, skip] # tile data
           - [0x2BC8, skip] # tile definitions
           - [0x6FE8, skip] # sprites
+  - target: disks/us/ST/TE1/TE1.BIN
+  - target: disks/us/ST/TE2/TE2.BIN
+  - target: disks/us/ST/TE3/TE3.BIN
+  - target: disks/us/ST/TE4/TE4.BIN
+  - target: disks/us/ST/TE5/TE5.BIN
   - target: disks/us/BOSS/MAR/MAR.BIN
     asset_path: assets/boss/mar
     src_path: src/boss/mar
@@ -925,6 +943,10 @@ files:
           - [0x1308, skip]
           - [0x1424, cutscene, cutscene_data]
           - [0x15DC, skip]
+  - target: disks/us/BOSS/BO0/BO0.BIN
+  - target: disks/us/BOSS/BO1/BO1.BIN
+  - target: disks/us/BOSS/BO2/BO2.BIN
+  - target: disks/us/BOSS/BO3/BO3.BIN
   - target: disks/us/BOSS/BO4/BO4.BIN
     asset_path: assets/boss/bo4
     src_path: src/boss/bo4
@@ -947,6 +969,7 @@ files:
           - [0x435C, spritesheet, doppleganger]
           - [0x2AD74, spritesheet, bat_form]
           - [0x2BEA0, skip]
+  - target: disks/us/BOSS/BO5/BO5.BIN
   - target: disks/us/BOSS/BO6/BO6.BIN
     asset_path: assets/boss/bo6
     src_path: src/boss/bo6
@@ -961,6 +984,10 @@ files:
             - [0x328, skip]
             - [0x1204, rooms, rooms]
             - [0x1210, skip]
+  - target: disks/us/BOSS/BO7/BO7.BIN
+  - target: disks/us/BOSS/RBO0/RBO0.BIN
+  - target: disks/us/BOSS/RBO1/RBO1.BIN
+  - target: disks/us/BOSS/RBO2/RBO2.BIN
   - target: disks/us/BOSS/RBO3/RBO3.BIN
     asset_path: assets/boss/rbo3
     src_path: src/boss/rbo3
@@ -979,6 +1006,7 @@ files:
           - [0x394, skip]
           - [0x126C, rooms, rooms]
           - [0x1288, skip]
+  - target: disks/us/BOSS/RBO4/RBO4.BIN
   - target: disks/us/BOSS/RBO5/RBO5.BIN
     asset_path: assets/boss/rbo5
     src_path: src/boss/rbo5
@@ -995,6 +1023,8 @@ files:
           - [0x340, skip]
           - [0x1258, rooms, rooms]
           - [0x1274, skip]
+  - target: disks/us/BOSS/RBO6/RBO6.BIN
+  - target: disks/us/BOSS/RBO7/RBO7.BIN
   - target: disks/us/SERVANT/TT_000.BIN
     asset_path: assets/servant/tt_000
     src_path: src/servant/tt_000
@@ -1015,6 +1045,8 @@ files:
     asset_path: assets/servant/tt_004
     src_path: src/servant/tt_004
     splat_config_path: config/splat.us.tt_004.yaml
+  - target: disks/us/SERVANT/TT_005.BIN
+  - target: disks/us/SERVANT/TT_006.BIN
   - target: disks/us/BIN/WEAPON0.BIN
     asset_path: assets/weapon
     src_path: src/weapon
