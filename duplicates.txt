@@ -3337,6 +3337,24 @@
 | 1.00 | true     | ServantUpdateAnim                   | asm/us/servant/tt_003/matchings/demon/ServantUpdateAnim.s 
 | 1.00 | true     | ServantUpdateAnim                   | asm/us/servant/tt_004/matchings/servant_common/ServantUpdateAnim.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | AxeKnightUnkFunc1                   | asm/us/st/are/matchings/e_blue_axe_knight/AxeKnightUnkFunc1.s 
+| 0.97 | true     | AxeKnightUnkFunc1                   | asm/us/st/no0/matchings/e_axe_knight/AxeKnightUnkFunc1.s 
+| 1.00 | true     | AxeKnightUnkFunc1                   | asm/us/st/no1/matchings/e_blue_axe_knight/AxeKnightUnkFunc1.s 
+| 0.97 | true     | AxeKnightUnkFunc1                   | asm/us/st/nz0/matchings/e_axe_knight/AxeKnightUnkFunc1.s 
+| 1.00 | true     | AxeKnightUnkFunc1                   | asm/us/st/top/matchings/e_blue_axe_knight/AxeKnightUnkFunc1.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntityAxeKnightRotateAxe            | asm/us/st/are/matchings/e_blue_axe_knight/EntityAxeKnightRotateAxe.s 
+| 1.00 | true     | EntityAxeKnightRotateAxe            | asm/us/st/no0/matchings/e_axe_knight/EntityAxeKnightRotateAxe.s 
+| 1.00 | true     | EntityAxeKnightRotateAxe            | asm/us/st/no1/matchings/e_blue_axe_knight/EntityAxeKnightRotateAxe.s 
+| 1.00 | true     | EntityAxeKnightRotateAxe            | asm/us/st/nz0/matchings/e_axe_knight/EntityAxeKnightRotateAxe.s 
+| 1.00 | true     | EntityAxeKnightRotateAxe            | asm/us/st/top/matchings/e_blue_axe_knight/EntityAxeKnightRotateAxe.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/are/matchings/e_blue_axe_knight/EntityAxeKnightThrowingAxe.s 
+| 0.96 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/no0/matchings/e_axe_knight/EntityAxeKnightThrowingAxe.s 
+| 1.00 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/no1/matchings/e_blue_axe_knight/EntityAxeKnightThrowingAxe.s 
+| 0.96 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/nz0/matchings/e_axe_knight/EntityAxeKnightThrowingAxe.s 
+| 1.00 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/top/matchings/e_blue_axe_knight/EntityAxeKnightThrowingAxe.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | StepTowards                         | asm/us/st/are/matchings/e_plate_lord/StepTowards.s 
 | 1.00 | true     | StepTowards                         | asm/us/st/dai/matchings/e_spectral_sword/StepTowards.s 
 | 1.00 | true     | StepTowards                         | asm/us/st/no0/matchings/e_plate_lord/StepTowards.s 
@@ -3378,24 +3396,6 @@
 | 0.90 | true     | EntitySlinger                       | asm/us/st/no0/matchings/e_slinger/EntitySlinger.s 
 | 0.90 | true     | EntitySkeleton                      | asm/us/st/no1/matchings/e_skeleton/EntitySkeleton.s 
 | 0.90 | true     | EntitySkeleton                      | asm/us/st/nz0/matchings/e_skeleton/EntitySkeleton.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | AxeKnightUnkFunc1                   | asm/us/st/no0/matchings/e_axe_knight/AxeKnightUnkFunc1.s 
-| 0.97 | true     | AxeKnightUnkFunc1                   | asm/us/st/no1/matchings/e_blue_axe_knight/AxeKnightUnkFunc1.s 
-| 1.00 | true     | AxeKnightUnkFunc1                   | asm/us/st/nz0/matchings/e_axe_knight/AxeKnightUnkFunc1.s 
-| 0.97 | true     | AxeKnightUnkFunc1                   | asm/us/st/top/matchings/e_blue_axe_knight/AxeKnightUnkFunc1.s 
-| 0.97 | false    | AxeKnightUnkFunc1                   | asm/us/st/are/nonmatchings/e_axe_knight/AxeKnightUnkFunc1.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | EntityAxeKnightRotateAxe            | asm/us/st/no0/matchings/e_axe_knight/EntityAxeKnightRotateAxe.s 
-| 1.00 | true     | EntityAxeKnightRotateAxe            | asm/us/st/no1/matchings/e_blue_axe_knight/EntityAxeKnightRotateAxe.s 
-| 1.00 | true     | EntityAxeKnightRotateAxe            | asm/us/st/nz0/matchings/e_axe_knight/EntityAxeKnightRotateAxe.s 
-| 1.00 | true     | EntityAxeKnightRotateAxe            | asm/us/st/top/matchings/e_blue_axe_knight/EntityAxeKnightRotateAxe.s 
-| 1.00 | false    | EntityAxeKnightRotateAxe            | asm/us/st/are/nonmatchings/e_axe_knight/EntityAxeKnightRotateAxe.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/no0/matchings/e_axe_knight/EntityAxeKnightThrowingAxe.s 
-| 0.96 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/no1/matchings/e_blue_axe_knight/EntityAxeKnightThrowingAxe.s 
-| 1.00 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/nz0/matchings/e_axe_knight/EntityAxeKnightThrowingAxe.s 
-| 0.96 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/top/matchings/e_blue_axe_knight/EntityAxeKnightThrowingAxe.s 
-| 0.96 | false    | EntityAxeKnightThrowingAxe          | asm/us/st/are/nonmatchings/e_axe_knight/EntityAxeKnightThrowingAxe.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityExplosionPuffOpaque           | asm/us/st/no0/matchings/e_explosion_puff_opaque/EntityExplosionPuffOpaque.s 
 | 1.00 | true     | EntityExplosionPuffOpaque           | asm/us/st/no3/matchings/e_explosion_puff_opaque/EntityExplosionPuffOpaque.s 
@@ -3497,11 +3497,6 @@
 | 0.91 | true     | DMA_memclr                          | asm/us/main/matchings/psxsdk/libetc/intr_dma/DMA_memclr.s 
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | GPU_memset                          | asm/us/main/matchings/psxsdk/libgpu/sys/GPU_memset.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
@@ -3830,9 +3825,29 @@
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
+-------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
 | 0.92 | true     | SsVabOpenHeadSticky                 | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHeadSticky.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | EntityAxeKnightBlue                 | asm/us/st/are/matchings/e_blue_axe_knight/EntityAxeKnightBlue.s 
+| 1.00 | true     | EntityAxeKnightBlue                 | asm/us/st/no1/matchings/e_blue_axe_knight/EntityAxeKnightBlue.s 
+| 1.00 | true     | EntityAxeKnightBlue                 | asm/us/st/top/matchings/e_blue_axe_knight/EntityAxeKnightBlue.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801CA51C                    | asm/us/st/are/matchings/e_blue_axe_knight/func_us_801CA51C.s 
+| 1.00 | true     | func_us_801CA51C                    | asm/us/st/no1/matchings/e_blue_axe_knight/func_us_801CA51C.s 
+| 1.00 | true     | func_us_801CA51C                    | asm/us/st/top/matchings/e_blue_axe_knight/func_us_801CA51C.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801CAD20                    | asm/us/st/are/matchings/e_blue_axe_knight/func_us_801CAD20.s 
+| 1.00 | true     | func_us_801CAD20                    | asm/us/st/no1/matchings/e_blue_axe_knight/func_us_801CAD20.s 
+| 1.00 | true     | func_us_801CAD20                    | asm/us/st/top/matchings/e_blue_axe_knight/func_us_801CAD20.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801CBA30                    | asm/us/st/are/matchings/e_blue_axe_knight/func_us_801CBA30.s 
+| 1.00 | true     | func_us_801CBA30                    | asm/us/st/no1/matchings/e_blue_axe_knight/func_us_801CBA30.s 
+| 1.00 | true     | func_us_801CBA30                    | asm/us/st/top/matchings/e_blue_axe_knight/func_us_801CBA30.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityFleaArmor                     | asm/us/st/are/matchings/e_flea_armor/EntityFleaArmor.s 
 | 0.98 | true     | EntityFleaArmor                     | asm/us/st/lib/matchings/e_flea_armor/EntityFleaArmor.s 
@@ -3965,22 +3980,6 @@
 | 1.00 | true     | EntitySkelerangUnknown              | asm/us/st/dai/matchings/e_skelerang/EntitySkelerangUnknown.s 
 | 1.00 | true     | EntitySkelerangUnknown              | asm/us/st/no0/matchings/e_skelerang/EntitySkelerangUnknown.s 
 | 1.00 | true     | EntitySkelerangUnknown              | asm/us/st/no2/matchings/e_skelerang/EntitySkelerangUnknown.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | EntityAxeKnightBlue                 | asm/us/st/no1/matchings/e_blue_axe_knight/EntityAxeKnightBlue.s 
-| 1.00 | true     | EntityAxeKnightBlue                 | asm/us/st/top/matchings/e_blue_axe_knight/EntityAxeKnightBlue.s 
-| 1.00 | false    | EntityAxeKnightBlue                 | asm/us/st/are/nonmatchings/e_axe_knight/EntityAxeKnightBlue.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801CA51C                    | asm/us/st/no1/matchings/e_blue_axe_knight/func_us_801CA51C.s 
-| 1.00 | true     | func_us_801CA51C                    | asm/us/st/top/matchings/e_blue_axe_knight/func_us_801CA51C.s 
-| 1.00 | false    | func_us_801C8D98                    | asm/us/st/are/nonmatchings/e_axe_knight/func_us_801C8D98.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801CAD20                    | asm/us/st/no1/matchings/e_blue_axe_knight/func_us_801CAD20.s 
-| 1.00 | true     | func_us_801CAD20                    | asm/us/st/top/matchings/e_blue_axe_knight/func_us_801CAD20.s 
-| 1.00 | false    | func_us_801C959C                    | asm/us/st/are/nonmatchings/e_axe_knight/func_us_801C959C.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801CBA30                    | asm/us/st/no1/matchings/e_blue_axe_knight/func_us_801CBA30.s 
-| 1.00 | true     | func_us_801CBA30                    | asm/us/st/top/matchings/e_blue_axe_knight/func_us_801CBA30.s 
-| 1.00 | false    | func_us_801CA2AC                    | asm/us/st/are/nonmatchings/unk_4A2AC/func_us_801CA2AC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DoorCascadePhysics                  | asm/us/st/no3/matchings/e_cavern_door/DoorCascadePhysics.s 
 | 1.00 | true     | DoorCascadePhysics                  | asm/us/st/np3/matchings/e_cavern_door/DoorCascadePhysics.s 
@@ -4355,6 +4354,9 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
