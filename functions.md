@@ -102,19 +102,19 @@
 | main  | SsSetMVol                         |        9 |          1 |        |       |     |
 | main  | SsSetSerialAttr                   |        9 |          1 |        |       |     |
 | main  | SsUtSetReverbDepth                |        9 |          1 |        |       |     |
+| main  | gte_ldrgb                         |        9 |          1 |        |       |     |
 | main  | gte_ldtx                          |        9 |          1 |        |       |     |
 | main  | gte_ldty                          |        9 |          1 |        |       |     |
 | main  | gte_ldtz                          |        9 |          1 |        |       |     |
+| main  | gte_stopz                         |        9 |          1 |        |       |     |
+| main  | gte_strgb                         |        9 |          1 |        |       |     |
+| main  | gte_stsxy                         |        9 |          1 |        |       |     |
 | main  | func_psp_08930A0C                 |        9 |          1 |        |       |     |
 | main  | func_psp_089125F8                 |        9 |          1 |        |       |     |
 | main  | func_psp_0891273C                 |        9 |          1 |        |       |     |
 | main  | func_psp_0891274C                 |        9 |          1 |        |       |     |
 | main  | func_psp_089127D8                 |        9 |          1 |        |       |     |
 | main  | createPlayModeFlag                |        9 |          1 |        |       |     |
-| main  | gte_ldrgb                         |        9 |          1 |        |       |     |
-| main  | gte_stopz                         |        9 |          1 |        |       |     |
-| main  | gte_strgb                         |        9 |          1 |        |       |     |
-| main  | gte_stsxy                         |        9 |          1 |        |       |     |
 | main  | waitPlayMode                      |        9 |          1 |        |       |     |
 | main  | func_psp_0892CB30                 |        9 |          1 |        |       |     |
 | main  | func_psp_08933F5C                 |        9 |          1 |        |       |     |
@@ -255,9 +255,9 @@
 | main  | sigprocmask                       |       14 |          1 |        |       |     |
 | dra   | func_psp_090ECD58                 |       14 |          2 |        |       |     |
 | main  | func_psp_08912398                 |       14 |          2 |        |       |     |
-| main  | func_psp_0891504C                 |       14 |          2 |        |       |     |
 | main  | gte_stotz                         |       14 |          2 |        |       |     |
 | main  | gte_stszotz                       |       14 |          2 |        |       |     |
+| main  | func_psp_0891504C                 |       14 |          2 |        |       |     |
 | main  | func_psp_08932B50                 |       14 |          2 |        |       |     |
 | main  | func_psp_08932B74                 |       14 |          2 |        |       |     |
 | main  | func_psp_08932BF0                 |       14 |          2 |        |       |     |
@@ -299,11 +299,11 @@
 | main  | gte_ldv0                          |       15 |          1 |        |       |     |
 | main  | gte_ldv1                          |       15 |          1 |        |       |     |
 | main  | gte_ldv2                          |       15 |          1 |        |       |     |
+| main  | gte_stsxy3                        |       15 |          1 |        |       |     |
 | main  | func_psp_0892CF0C                 |       15 |          1 |        |       |     |
 | main  | func_psp_08931D3C                 |       15 |          1 |        |       |     |
 | main  | func_psp_08915228                 |       15 |          1 |        |       |     |
 | main  | func_psp_089162C8                 |       15 |          1 |        |       |     |
-| main  | gte_stsxy3                        |       15 |          1 |        |       |     |
 | main  | func_psp_0892D1B0                 |       15 |          1 |        |       |     |
 | main  | sceGuLightMode                    |       15 |          1 |        |       |     |
 | main  | sceGuLogicalOp                    |       15 |          1 |        |       |     |
@@ -775,8 +775,8 @@
 | st0   | 3AB08.rodata                      |       24 |          0 | Yes    |       |     |
 | main  | func_psp_089108F8                 |       24 |          1 |        |       |     |
 | main  | func_psp_08919CF4                 |       24 |          1 |        |       |     |
-| main  | func_psp_08914B58                 |       24 |          1 |        |       |     |
 | main  | gte_stsxy3_gt3                    |       24 |          1 |        |       |     |
+| main  | func_psp_08914B58                 |       24 |          1 |        |       |     |
 | main  | func_psp_08933870                 |       24 |          1 |        |       |     |
 | main  | sceGuClutLoad                     |       24 |          1 |        |       |     |
 | dra   | func_psp_09103F90                 |       24 |          2 |        |       |     |
