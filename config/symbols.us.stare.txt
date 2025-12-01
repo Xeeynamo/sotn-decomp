@@ -7,7 +7,6 @@ ARE_pStObjLayoutVertical = 0x80180884;
 ARE_EInitBreakable = 0x80180A8C;
 g_EInitParticle = 0x80180AA4;
 g_EInitInteractable = 0x80180ABC;
-g_EInitPlateLord = 0x80180C54;
 ARE_BackgroundBlockInit = 0x80180CA0;
 ARE_PrizeDrops = 0x80180FE8;
 g_explosionBigAnim = 0x801818C0;

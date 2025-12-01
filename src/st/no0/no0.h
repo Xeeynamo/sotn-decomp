@@ -8,6 +8,13 @@
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
+enum Palettes {
+    PAL_NONE = 0,
+    PAL_PLATE_LORD_UNK1 = 0x22B,
+    PAL_PLATE_LORD_UNK2 = 0x22C,
+    PAL_PLATE_LORD_UNK3 = 0x22D,
+};
+
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,

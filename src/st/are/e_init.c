@@ -73,7 +73,7 @@ void EntityPlateLord(Entity* self);
 void func_us_801D4324(Entity* self);
 void func_us_801D44A0(Entity* self);
 void func_us_801D4AA4(Entity* self);
-void func_us_801D3340(Entity* self);
+void func_us_801D542C(Entity* self);
 void func_us_801D4CAC(Entity* self);
 void EntityGraveKeeper(Entity* self);
 void EntityGraveKeeperHitbox(Entity* self);
@@ -152,7 +152,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D4324,
     func_us_801D44A0,
     func_us_801D4AA4,
-    func_us_801D3340,
+    func_us_801D542C,
     func_us_801D4CAC,
     EntityGraveKeeper,
     EntityGraveKeeperHitbox,
