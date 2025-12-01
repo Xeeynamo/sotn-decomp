@@ -20,7 +20,3 @@ INCLUDE_ASM("st/are/nonmatchings/unk_4375C", func_us_801C47E4);
 INCLUDE_ASM("st/are/nonmatchings/unk_4375C", EntityBoneHalberdParts);
 
 INCLUDE_ASM("st/are/nonmatchings/unk_4375C", func_us_801C4EDC);
-
-INCLUDE_ASM("st/are/nonmatchings/unk_4375C", EntityBoneMusket);
-
-INCLUDE_ASM("st/are/nonmatchings/unk_4375C", func_us_801C5744);

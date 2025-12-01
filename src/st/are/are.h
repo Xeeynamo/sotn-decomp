@@ -9,7 +9,11 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_ARMOR_LORD_UNK = 0x21A,
     PAL_HUNTING_GIRL = 0x21C,
+    PAL_PLATE_LORD_UNK1 = 0x226,
+    PAL_PLATE_LORD_UNK2 = 0x227,
+    PAL_PLATE_LORD_UNK3 = 0x228,
 };
 
 enum Entities {
@@ -55,7 +59,7 @@ enum Entities {
     E_UNK_27,                   // func_us_801C4EDC
     E_BONE_HALBERD_PARTS,       // EntityBoneHalberdParts
     E_BONE_MUSKET,              // EntityBoneMusket
-    E_UNK_2A,                   // func_us_801C5744
+    E_BONE_MUSKET_UNK,          // func_us_801CF298
     E_OWL_KNIGHT,               // EntityOwlKnight
     E_OWL,                      // EntityOwl
     E_OWL_KNIGHT_SWORD,         // EntityOwlKnightSword
@@ -68,9 +72,9 @@ enum Entities {
     E_AXE_KNIGHT_AXE_2,         // func_us_801CBA30
     E_UNK_ENTITY,               // InitializeUnkEntity
     E_ARMOR_LORD,               // EntityArmorLord
-    E_UNK_37,                   // func_us_801CC660
+    E_ARMOR_LORD_UNK1,          // func_us_801D348C
     E_ARMOR_LORD_FIRE_WAVE,     // EntityArmorLordFireWave
-    E_UNK_39,                   // func_us_801CC8D4
+    E_ARMOR_LORD_UNK2,          // func_us_801D3700
     E_HUNTING_GIRL,             // EntityHuntingGirl
     E_HUNTING_GIRL_ATTACK,      // EntityHuntingGirlAttack
     E_UNK_3C,                   // func_us_801CDCF4

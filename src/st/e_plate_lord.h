@@ -200,12 +200,12 @@ void EntityPlateLord(Entity* self) {
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
 
-        prim->clut = PLATE_LORD_CLUT_OFFSET + 1;
+        prim->clut = PAL_PLATE_LORD_UNK2;
         prim->priority = 0xAF;
         setUV4(prim, 0x7A, 0x19, 0x82, 0x22, 0x6D, 0x25, 0x77, 0x2E);
         prim = prim->next;
 
-        prim->clut = PLATE_LORD_CLUT_OFFSET + 2;
+        prim->clut = PAL_PLATE_LORD_UNK3;
         prim->priority = 0xAF;
         prim->u0 = prim->u2 = 0x24;
         prim->u1 = prim->u3 = 0x34;
@@ -213,7 +213,7 @@ void EntityPlateLord(Entity* self) {
         prim->v2 = prim->v3 = 0x57;
         prim = prim->next;
 
-        prim->clut = PLATE_LORD_CLUT_OFFSET + 1;
+        prim->clut = PAL_PLATE_LORD_UNK2;
         prim->priority = 0xB1;
         prim->u0 = 0x6B;
         prim->u1 = 0x7A;
@@ -223,7 +223,7 @@ void EntityPlateLord(Entity* self) {
         prim->v2 = prim->v3 = 0xF;
         prim = prim->next;
 
-        prim->clut = PLATE_LORD_CLUT_OFFSET;
+        prim->clut = PAL_PLATE_LORD_UNK1;
         prim->priority = 0xB2;
         prim->u0 = 0x36;
         prim->u1 = 0x47;
@@ -993,7 +993,7 @@ void EntityPlateLord(Entity* self) {
         if (self->palette & PAL_UNK_FLAG) {
             prim->clut = self->palette & 0xFFF;
         } else {
-            prim->clut = PLATE_LORD_CLUT_OFFSET + 1;
+            prim->clut = PAL_PLATE_LORD_UNK2;
         }
         prim = prim->next;
         tempS16 = unkStructC->unk6;
@@ -1003,7 +1003,7 @@ void EntityPlateLord(Entity* self) {
         if (self->palette & PAL_UNK_FLAG) {
             prim->clut = self->palette & 0xFFF;
         } else {
-            prim->clut = PLATE_LORD_CLUT_OFFSET;
+            prim->clut = PAL_PLATE_LORD_UNK1;
         }
         prim = prim->next;
     }
@@ -1101,7 +1101,7 @@ void func_us_801D44A0(Entity* self) {
         self->ext.prim = prim;
         prim->type = PRIM_GT4;
         prim->tpage = 0x13;
-        prim->clut = PLATE_LORD_CLUT_OFFSET + 1;
+        prim->clut = PAL_PLATE_LORD_UNK2;
         setUV4(prim, 0x37, 0x0, 0x3F, 0x5, 0x30, 0xC, 0x38, 0x10);
         setRGB0(prim, 0x40, 0xC0, 0x80);
         setRGB1(prim, 0x80, 0x0, 0xC0);
@@ -1111,7 +1111,7 @@ void func_us_801D44A0(Entity* self) {
         prim = prim->next;
         prim->type = PRIM_GT4;
         prim->tpage = 0x13;
-        prim->clut = PLATE_LORD_CLUT_OFFSET;
+        prim->clut = PAL_PLATE_LORD_UNK1;
         setUV4(prim, 0x50, 0x10, 0x50, 0x20, 0x38, 0x10, 0x38, 0x20);
         prim->priority = 0xB5;
         prim->drawMode = DRAW_UNK02;
@@ -1208,7 +1208,7 @@ void func_us_801D44A0(Entity* self) {
     if (self->palette & PAL_UNK_FLAG) {
         prim->clut = self->palette & 0xFFF;
     } else {
-        prim->clut = PLATE_LORD_CLUT_OFFSET + 1;
+        prim->clut = PAL_PLATE_LORD_UNK2;
     }
     prim = prim->next;
     sp20.x.i.hi = sp70 & 0xFFFF;
@@ -1238,7 +1238,7 @@ void func_us_801D44A0(Entity* self) {
     if (self->palette & PAL_UNK_FLAG) {
         prim->clut = self->palette & 0xFFF;
     } else {
-        prim->clut = PLATE_LORD_CLUT_OFFSET;
+        prim->clut = PAL_PLATE_LORD_UNK1;
     }
 }
 
