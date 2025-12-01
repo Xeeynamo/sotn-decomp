@@ -926,7 +926,7 @@ int get_alarm(void) {
     return 0;
 }
 
-void memset2(s8* ptr, int value, int num) {
+static void memset2(s8* ptr, int value, int num) {
     while (num--) {
         *ptr++ = value;
     }

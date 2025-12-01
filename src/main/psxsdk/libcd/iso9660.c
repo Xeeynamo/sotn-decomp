@@ -263,7 +263,7 @@ int cd_read(int sectors, int arg1, u_long* buf) {
     return CdReadSync(CdlSync, NULL) == 0;
 }
 
-void memcpy2(char* dst, char* src, size_t size) {
+static void memcpy2(char* dst, char* src, size_t size) {
     while (size--) {
         *dst++ = *src++;
     }
