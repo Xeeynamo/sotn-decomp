@@ -99,6 +99,9 @@ files:
           - [0x3B458, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/fname.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/sd.bin
+    asset_path: assets/sd
+    src_path: src/sd
+    splat_config_path: config/splat.hd.sd.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/ric.bin
     asset_path: assets/ric
     src_path: src/ric

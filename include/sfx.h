@@ -83,6 +83,8 @@ enum SfxModes {
 // XA music tracks
 // LOOP_POINT means it starts playing from part way into the song
 enum {
+    /* jp:0x203 */ SD_SEQ_LIBRARY = 0x203,
+
     // us: includes US build
     // jp: includes HD and PSP builds
     /* us:0x301, jp:0x301 */ MU_LOST_PAINTING = 0x301,
