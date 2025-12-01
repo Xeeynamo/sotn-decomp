@@ -307,6 +307,7 @@ segments:
       - [0x2758C, c, main_psp/2758C]
       - [0x280FC, c, main_psp/280FC]
       - [0x28A90, c, main_psp/28A90]
+      - [0x2B69C, c, main_psp/2B69C]
       - [0x2D608, c, main_psp/2D608]
       - [0x30F3C, asm, func_psp_0892F848]
       - [0x3104C, asm, func_psp_0892F958]
