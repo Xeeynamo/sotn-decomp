@@ -78,7 +78,7 @@ void EntityArmorLord(Entity* self);
 void func_us_801D348C(Entity* self);
 void EntityArmorLordFireWave(Entity* self);
 void func_us_801D3700(Entity* self);
-void func_us_801D1A94(Entity* self);
+void EntityArmorLordUnused(Entity* self);
 void EntitySpearGuard(Entity* self);
 void EntitySpearGuardBlock(Entity* self);
 void func_us_801D4558(Entity* self);
@@ -174,7 +174,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x4A */ func_us_801D348C,
     /* 0x4B */ EntityArmorLordFireWave,
     /* 0x4C */ func_us_801D3700,
-    /* 0x4D */ func_us_801D1A94,
+    /* 0x4D */ EntityArmorLordUnused,
     /* 0x4E */ EntitySpearGuard,
     /* 0x4F */ EntitySpearGuardBlock,
     /* 0x50 */ func_us_801D4558,
