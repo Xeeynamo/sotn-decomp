@@ -348,6 +348,7 @@ files:
           - [0x2BE78, cmpgfx, stage_name_ge, 128, 64, 4]
           - [0x2C050, cmpgfx, stage_name_fr, 128, 64, 4]
           - [0x2C208, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/cen.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/chi.bin
     asset_path: assets/st/chi
     src_path: src/st/chi
@@ -438,6 +439,7 @@ files:
           - [0x3B8B0, palette, pal_portrait_maria, 16] # 0x260
           - [0x3BAB0, palette, pal_cutscene, 16] # 0x251
           - [0x3BAD0, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dre.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
     asset_path: assets/st/lib
     src_path: src/st/lib
@@ -459,6 +461,8 @@ files:
           - [0x3F260, cutscene, cutscene_data_ge]
           - [0x3F448, cutscene, cutscene_data_en]
           - [0x3F608, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no0.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no1.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no2.bin
     asset_path: assets/st/no2
     src_path: src/st/no2
@@ -526,6 +530,8 @@ files:
           - [0x66CB0, cmpgfx, stage_name_ge, 128, 64, 4]
           - [0x66F38, cmpgfx, stage_name_fr, 128, 64, 4]
           - [0x671D0, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/np3.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/nz0.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/nz1.bin
     asset_path: assets/st/nz1
     src_path: src/st/nz1
@@ -559,6 +565,7 @@ files:
           - [0x31FD8, rawgfx, gfx_portrait_richter, 48, 72, 8]
           - [0x32D58, rawgfx, gfx_portrait_dracula, 48, 72, 8]
           - [0x33AD8, skip]
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/top.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/wrp.bin
     asset_path: assets/st/wrp
     src_path: src/st/wrp
@@ -570,3 +577,163 @@ files:
           - [0x80, skip]
           - [0xF5F8, layers, layers]
           - [0xF6E8, skip]
+
+ 
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rare.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rcat.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rcen.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rchi.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rdai.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rlib.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno0.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno1.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno2.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno3.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rno4.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz0.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz1.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rtop.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rwrp.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/mar.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo0.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo1.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo2.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo3.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo4.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo5.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo6.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo7.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo0.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo1.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo2.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo3.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo4.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo5.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo6.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo7.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo8.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_000.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_001.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_002.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_003.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_004.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_005.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_006.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_000.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_001.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_002.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_003.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_004.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_005.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_006.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_007.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_008.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_009.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_010.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_011.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_012.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_013.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_014.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_015.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_016.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_017.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_018.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_019.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_020.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_021.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_022.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_023.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_024.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_025.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_026.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_027.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_028.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_029.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_030.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_031.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_032.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_033.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_034.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_035.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_036.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_037.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_038.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_039.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_040.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_041.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_042.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_043.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_044.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_045.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_046.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_047.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_048.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_049.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_050.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_051.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_052.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_053.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_054.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_055.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_056.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_057.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_058.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_000.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_001.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_002.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_003.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_004.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_005.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_006.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_007.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_008.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_009.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_010.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_011.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_012.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_013.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_014.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_015.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_016.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_017.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_018.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_019.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_020.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_021.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_022.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_023.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_024.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_025.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_026.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_027.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_028.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_029.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_030.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_031.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_032.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_033.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_034.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_035.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_036.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_037.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_038.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_039.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_040.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_041.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_042.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_043.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_044.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_045.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_046.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_047.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_048.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_049.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_050.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_051.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_052.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_053.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_054.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_055.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_056.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_057.bin
+  - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w1_058.bin

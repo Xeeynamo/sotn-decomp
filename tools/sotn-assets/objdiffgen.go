@@ -23,6 +23,7 @@ var metaOverlays = map[string]metaOverlay{
 	"main":   {"main", "engine", "PSX SDK"},
 	"dra":    {"dra", "engine", "Game engine"},
 	"ric":    {"ric", "engine", "Richter (playable)"},
+	"maria":  {"maria", "engine", "Maria (playable)"},
 	"weapon": {"weapon", "engine", "Alucard weapons"},
 	"stsel":  {"sel", "engine", "SEL: Title Screen / Main Menu"},
 	"stno0":  {"no0", "st", "NO0: Marble Gallery"},
