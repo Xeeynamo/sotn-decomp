@@ -56,7 +56,7 @@ enum Entities {
     E_UNK_27,                   // func_us_801C4EDC
     E_BONE_HALBERD_PARTS,       // EntityBoneHalberdParts
     E_BONE_MUSKET,              // EntityBoneMusket
-    E_UNK_2A,                   // func_us_801C5744
+    E_BONE_MUSKET_UNK,          // func_us_801CF298
     E_OWL_KNIGHT,               // EntityOwlKnight
     E_OWL,                      // EntityOwl
     E_OWL_KNIGHT_SWORD,         // EntityOwlKnightSword

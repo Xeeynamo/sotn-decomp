@@ -46,7 +46,6 @@ EntityExplosionVariantsSpawner = 0x801BFB0C;
 PlaySfxPositional = 0x801C1BB0;
 SpawnDustParticles_801C4720 = 0x801C4720;
 EntityBoneHalberdParts = 0x801C4DE4;
-EntityBoneMusket = 0x801C4FD4;
 UnkPrimHelper = 0x801D4C94;
 FindFirstUnkPrim = 0x801D51CC;
 UnkPolyFunc2 = 0x801D53E0;

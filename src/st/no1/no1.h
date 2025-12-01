@@ -63,7 +63,7 @@ typedef enum EntityIDs {
     /* 0x44 */ E_BONE_ARCHER,
     /* 0x45 */ E_BONE_ARCHER_ARROW,
     /* 0x46 */ E_BONE_MUSKET,
-    /* 0x47 */ E_ID_47,
+    /* 0x47 */ E_BONE_MUSKET_UNK,
     /* 0x48 */ E_SWORD_LORD,
     /* 0x49 */ E_ID_49,
     /* 0x4A */ E_ARMOR_LORD = 0x4A,
@@ -116,8 +116,6 @@ extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
 extern EInit g_EInitWereskeleton;
 extern EInit D_us_80180A88;
-extern EInit g_EInitBoneMusket;
-extern EInit D_us_80180AA0;
 extern EInit g_EInitSwordLord;
 extern EInit D_us_80180AB8;
 extern EInit g_EInitBoneArcher;

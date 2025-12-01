@@ -42,7 +42,7 @@ void func_us_801C47E4(Entity* self);
 void func_us_801C4EDC(Entity* self);
 void EntityBoneHalberdParts(Entity* self);
 void EntityBoneMusket(Entity* self);
-void func_us_801C5744(Entity* self);
+void func_us_801CF298(Entity* self);
 void EntityOwlKnight(Entity* self);
 void EntityOwl(Entity* self);
 void EntityOwlKnightSword(Entity* self);
@@ -121,7 +121,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C4EDC,
     EntityBoneHalberdParts,
     EntityBoneMusket,
-    func_us_801C5744,
+    func_us_801CF298,
     EntityOwlKnight,
     EntityOwl,
     EntityOwlKnightSword,
@@ -183,8 +183,8 @@ EInit D_us_80180B28 = {ANIMSET_OVL(0x04), 0x01, 0x4B, 0x0203, 0x07C};
 EInit D_us_80180B34 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x07D};
 
 // Bone Musket
-EInit D_us_80180B40 = {ANIMSET_OVL(0x05), 0x00, 0x4C, 0x0205, 0x066};
-EInit D_us_80180B4C = {ANIMSET_OVL(0x05), 0x00, 0x4C, 0x0205, 0x067};
+EInit g_EInitBoneMusket = {ANIMSET_OVL(0x05), 0x00, 0x4C, 0x0205, 0x066};
+EInit D_us_80180AA0 = {ANIMSET_OVL(0x05), 0x00, 0x4C, 0x0205, 0x067};
 
 // Owl Knight
 EInit g_EInitOwlKnight = {ANIMSET_OVL(0x06), 0x10, 0x49, 0x0209, 0x014};
