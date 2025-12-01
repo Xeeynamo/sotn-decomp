@@ -2,16 +2,11 @@
 //! PSPO=4,p
 #include <game_psp.h>
 #include <psxsdk/libgte.h>
+#include <psxsdk/libgpu.h>
 
-extern s16 D_psp_08C63B28;
-extern s16 D_psp_08C63B2A;
-extern s16 D_psp_08C63B2C;
-extern s16 D_psp_08C63B30;
-extern s16 D_psp_08C63B32;
-extern s16 D_psp_08C63B34;
-extern s16 D_psp_08C63B38;
-extern s16 D_psp_08C63B3A;
-extern s16 D_psp_08C63B3C;
+extern SVECTOR D_psp_08C63B28;
+extern SVECTOR D_psp_08C63B30;
+extern SVECTOR D_psp_08C63B38;
 extern s16 D_psp_08C63B44;
 extern s32 D_psp_08C63B4C;
 extern s32 D_psp_08C63B50;
@@ -21,6 +16,8 @@ extern s16 D_psp_08C63B5A;
 extern s16 D_psp_08C63B5C;
 extern s16 D_psp_08C63B5E;
 extern s16 D_psp_08C63B60;
+extern s16 D_psp_08C63B62;
+extern s32 D_psp_08C63B78;
 extern s32 D_psp_08C63B88;
 extern MATRIX D_psp_08C63BA8;
 extern MATRIX D_psp_08C63BC8;
@@ -236,11 +233,53 @@ MATRIX* func_psp_08928428(MATRIX* m0, MATRIX* m1) {
     return m0;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_08928498);
+MATRIX* func_psp_08928498(long r, MATRIX* m) {
+    m->m[0][0] = 0x1000;
+    m->m[0][1] = 0;
+    m->m[0][2] = 0;
+    m->m[1][0] = 0;
+    m->m[1][1] = rcos(r);
+    m->m[1][2] = -rsin(r);
+    m->m[2][0] = 0;
+    m->m[2][1] = rsin(r);
+    m->m[2][2] = rcos(r);
+    m->t[2] = 0;
+    m->t[1] = 0;
+    m->t[0] = 0;
+    return m;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892851C);
+MATRIX* func_psp_0892851C(long r, MATRIX* m) {
+    m->m[0][0] = rcos(r);
+    m->m[0][1] = 0;
+    m->m[0][2] = rsin(r);
+    m->m[1][0] = 0;
+    m->m[1][1] = 0x1000;
+    m->m[1][2] = 0;
+    m->m[2][0] = -rsin(r);
+    m->m[2][1] = 0;
+    m->m[2][2] = rcos(r);
+    m->t[2] = 0;
+    m->t[1] = 0;
+    m->t[0] = 0;
+    return m;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_089285A0);
+MATRIX* func_psp_089285A0(long r, MATRIX* m) {
+    m->m[0][0] = rcos(r);
+    m->m[0][1] = -rsin(r);
+    m->m[0][2] = 0;
+    m->m[1][0] = rsin(r);
+    m->m[1][1] = rcos(r);
+    m->m[1][2] = 0;
+    m->m[2][0] = 0;
+    m->m[2][1] = 0;
+    m->m[2][2] = 0x1000;
+    m->t[2] = 0;
+    m->t[1] = 0;
+    m->t[0] = 0;
+    return m;
+}
 
 MATRIX* RotMatrixX(long r, MATRIX* m) {
     MATRIX rot;
@@ -322,21 +361,21 @@ void gte_SetTransVector(VECTOR* v) {
 }
 
 void gte_ldv0(SVECTOR* v) {
-    D_psp_08C63B28 = v->vx;
-    D_psp_08C63B2A = v->vy;
-    D_psp_08C63B2C = v->vz;
+    D_psp_08C63B28.vx = v->vx;
+    D_psp_08C63B28.vy = v->vy;
+    D_psp_08C63B28.vz = v->vz;
 }
 
 void gte_ldv1(SVECTOR* v) {
-    D_psp_08C63B30 = v->vx;
-    D_psp_08C63B32 = v->vy;
-    D_psp_08C63B34 = v->vz;
+    D_psp_08C63B30.vx = v->vx;
+    D_psp_08C63B30.vy = v->vy;
+    D_psp_08C63B30.vz = v->vz;
 }
 
 void gte_ldv2(SVECTOR* v) {
-    D_psp_08C63B38 = v->vx;
-    D_psp_08C63B3A = v->vy;
-    D_psp_08C63B3C = v->vz;
+    D_psp_08C63B38.vx = v->vx;
+    D_psp_08C63B38.vy = v->vy;
+    D_psp_08C63B38.vz = v->vz;
 }
 
 void gte_ldv3c(SVECTOR* v) {
@@ -363,23 +402,34 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_rtps);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_rtpt);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_stsxy);
+void gte_stsxy(long* sxy) { *sxy = LOW(D_psp_08C63B58); }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_stsxy3_gt3);
+void gte_stsxy3_gt3(POLY_GT3* poly) {
+    poly->x0 = D_psp_08C63B58;
+    poly->y0 = D_psp_08C63B5A;
+    poly->x1 = D_psp_08C63B5C;
+    poly->y1 = D_psp_08C63B5E;
+    poly->x2 = D_psp_08C63B60;
+    poly->y2 = D_psp_08C63B62;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_stsxy3);
+void gte_stsxy3(long* sxy0, long* sxy1, long* sxy2) {
+    *sxy0 = LOW(D_psp_08C63B58);
+    *sxy1 = LOW(D_psp_08C63B5C);
+    *sxy2 = LOW(D_psp_08C63B60);
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_stszotz);
+void gte_stszotz(long* otz) { *otz = D_psp_08C63B44 / 4; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_stotz);
+void gte_stotz(long* otz) { *otz = D_psp_08C63B44 / 4; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_stopz);
+void gte_stopz(long* opz) { *opz = D_psp_08C63B88; }
 
 void gte_dpcs(void) {}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_strgb);
+void gte_strgb(long* rgb) { *rgb = D_psp_08C63B78; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_ldrgb);
+void gte_ldrgb(long* rgb) { D_psp_08C63B78 = *rgb; }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_nclip);
 
@@ -441,87 +491,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_08929860);
 
 void NormalColorCol(SVECTOR* v0, CVECTOR* v1, CVECTOR* v2) {
     func_psp_08929838(v0);
-    gte_ldrgb(v1);
+    gte_ldrgb((long*)v1);
     func_psp_08929860();
-    gte_strgb(v2);
+    gte_strgb((long*)v2);
 }
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_08929FA8);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A018);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A0C4);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A0F0);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A1EC);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A21C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A28C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A2D8);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A3D4);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A414);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A620);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A70C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A76C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A7E0);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A8C0);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A8FC);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A97C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A998);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", SsSetSerialVol);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_0892A9E0);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", strFileOpen);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", strFileClose);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", strFileRead);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", strFileLseek);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", play_bgm);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", init_atrac3plus);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", play_atrac3plus);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", createPlayModeFlag);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", setPlayMode);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", checkPlayMode);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", waitPlayMode);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", clearPlayMode);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", release_arg);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", at3plus_addData);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", reset_position);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", fadeoutOperation);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", DvdUmdIoInit);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", DvdUmdIoTerm);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", DvdUmdRetryOpenCB);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", DvdUmdRetryRead);

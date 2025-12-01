@@ -9,7 +9,7 @@ files:
         vram: 0x80010000
         assets:
           - [0x0, skip]
-          - [0x1C018, palette, D_8002B818, 256]
+          - [0x1C018, palette, kanjiclut, 256]
           - [0x1C218, rawgfx, D_8002BA18, 128, 32, 4]
           - [0x1CA18, skip]
   - target: disks/us/DRA.BIN

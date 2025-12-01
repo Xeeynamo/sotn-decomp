@@ -960,7 +960,7 @@ void func_801042C4(s32 arg0) {
     }
 
     SetGeomScreen(0x100);
-    D_80137E40 = AllocPrimitives(5U, 0x18);
+    D_80137E40 = AllocPrimitives(PRIM_GT3, 0x18);
     prim = &g_PrimBuf[D_80137E40];
     while (prim != NULL) {
         prim->u0 = 0xDB;
@@ -974,7 +974,7 @@ void func_801042C4(s32 arg0) {
         prim->drawMode = DRAW_HIDE;
         prim = prim->next;
     }
-    D_80137E44 = AllocPrimitives(2U, 0x12);
+    D_80137E44 = AllocPrimitives(PRIM_LINE_G2, 0x12);
     prim = &g_PrimBuf[D_80137E44];
     while (prim != NULL) {
         prim->r0 = 0xFF;
