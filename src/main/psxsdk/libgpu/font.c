@@ -25,8 +25,8 @@ STATIC_PAD_BSS(2);
 static FntStream Font[4] = {0};
 static s32 D_8002B810 = 0;
 static s32 D_8002B814 = 0;
-static u16 D_8002B818[] = {
-#include "../../gen/D_8002B818.h"
+static u16 kanjiclut[] = {
+#include "../../gen/kanjiclut.h"
 };
 static u8 D_8002BA18[] = {
 #include "../../gen/D_8002BA18.h"
@@ -42,8 +42,8 @@ void SetDumpFnt(int id) {
 }
 
 void FntLoad(s32 tx, s32 ty) {
-    clut = LoadClut(D_8002B818, tx, ty + 0x80);
-    tpage = LoadTPage(D_8002B818 + 0x100, 0, 0, tx, ty, 0x80, 0x20);
+    clut = LoadClut(kanjiclut, tx, ty + 0x80);
+    tpage = LoadTPage(kanjiclut + 0x100, 0, 0, tx, ty, 0x80, 0x20);
     D_8002B810 = 0;
     memset(Font, 0, sizeof(Font));
 }

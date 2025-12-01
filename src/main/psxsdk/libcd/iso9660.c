@@ -151,7 +151,7 @@ s32 CD_newmedia(void) {
             D_80039884[i].unk4 = pathTablePtr[6];
             D_80039884[i].unk0 = i + 1;
 
-            cd_memcpy(D_80039884[i].unkC, &pathTablePtr[8], pathTablePtr[0]);
+            memcpy2(D_80039884[i].unkC, &pathTablePtr[8], pathTablePtr[0]);
             D_80039884[i].unkC[pathTablePtr[0]] = '\0';
             pathTablePtr += 8 + pathTablePtr[0] + pathTablePtr[0] % 2;
             if (D_80032AB0 > 1) {
@@ -230,7 +230,7 @@ s32 CD_cachefile(s32 arg0) {
             strcpy(namePtr, "..");
             break;
         default:
-            cd_memcpy(file[i].name, &ptr[0x21], ptr[0x20]);
+            memcpy2(file[i].name, &ptr[0x21], ptr[0x20]);
             file[i].name[ptr[0x20]] = '\0';
             break;
         }
@@ -263,7 +263,7 @@ int cd_read(int sectors, int arg1, u_long* buf) {
     return CdReadSync(CdlSync, NULL) == 0;
 }
 
-void cd_memcpy(char* dst, char* src, size_t size) {
+void memcpy2(char* dst, char* src, size_t size) {
     while (size--) {
         *dst++ = *src++;
     }
