@@ -157,7 +157,7 @@ long RotAverageNclip4(
     return temp_s0;
 }
 
-long func_psp_08927C5C(long a) {
+static long SquareRoot(long a) {
     s32 temp_v0;
     s32 var_a1;
 
@@ -172,15 +172,31 @@ long func_psp_08927C5C(long a) {
     return temp_v0;
 }
 
-long SquareRoot0(long a) { return func_psp_08927C5C(a); }
+long SquareRoot0(long a) { return SquareRoot(a); }
 
-long SquareRoot12(long a) { return func_psp_08927C5C(a / 0x1000) * 0x1000; }
+long SquareRoot12(long a) { return SquareRoot(a / 0x1000) * 0x1000; }
 
 long ratan2(long y, long x) {
     return (func_psp_08906994(y, x) * 0x1000 / 2) / 3.1415927f;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", VectorNormalS);
+long VectorNormalS(VECTOR* v0, SVECTOR* v1) {
+    s32 len;
+    s32 lenSq;
+
+    lenSq = v0->vx * v0->vx + v0->vy * v0->vy + v0->vz * v0->vz;
+    len = SquareRoot(lenSq);
+    if (len == 0) {
+        v1->vx = 0;
+        v1->vy = 0;
+        v1->vz = 0;
+    } else {
+        v1->vx = (v0->vx * 0x1000) / len;
+        v1->vy = (v0->vy * 0x1000) / len;
+        v1->vz = (v0->vz * 0x1000) / len;
+    }
+    return lenSq;
+}
 
 int rcos(int a) {
     static s32 rcos_tbl[0x1000];
