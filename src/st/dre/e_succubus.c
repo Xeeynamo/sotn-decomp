@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dre/dre.h"
-// I believe this was a part of e_cutscene_actors originally because e_succubus
-// and e_cutscene_actors are together in both us and pspeu, but also because
 
 typedef enum {
     /* 0 */ SUCCUBUS_INIT,
