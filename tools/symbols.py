@@ -438,8 +438,9 @@ def clean(config_files):
 
 
 def get_symbols(file_path, excluded_starts=[], excluded_ends=[], excluded_comments=[]):
-    excluded_starts = {"LM", "__pad", "_binary_assets"} | set(excluded_starts)
-    excluded_ends = {"_START", "_END", "_VRAM", "_s", "_c"} | set(excluded_ends)
+    if file_path.suffix in [".map", ".elf"]:
+        excluded_starts = {"LM", "__pad", "_binary_assets"} | set(excluded_starts)
+        excluded_ends = {"_START", "_END", "_VRAM", "_s", "_c"} | set(excluded_ends)
     file_path = Path(file_path)
     match file_path.suffix:
         case ".map":
