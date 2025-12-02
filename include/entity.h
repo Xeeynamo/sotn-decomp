@@ -3670,10 +3670,10 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s32 : 32;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 unk85;
+    /* 0x80 */ s16 deathTimer;
+    /* 0x82 */ s16 playerStepTowards;
+    /* 0x84 */ u8 walkCounter;
+    /* 0x85 */ u8 slashInProgress;
 } ET_BladeMaster;
 
 typedef union { // offset=0x7C

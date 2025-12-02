@@ -2,13 +2,14 @@
 #include "are.h"
 
 extern EInit g_EInitBladeMaster;
-extern EInit D_us_80180B1C;
+extern EInit g_EInitBladeMasterAttackHitbox;
 extern EInit g_EInitParticle;
+// This comes from e_collect
 extern u8 g_explosionBigAnim[];
 
-static s16 D_us_80181B34[] = {0, 24, 0, 4, 8, -4, -16, 0};
-static s16 D_us_80181B44[] = {0, 24, 12, 0};
-static AnimateEntityFrame D_us_80181B4C[] = {
+static s16 sensors_ground[] = {0, 24, 0, 4, 8, -4, -16, 0};
+static s16 sensors_wall[] = {0, 24, 12, 0};
+static AnimateEntityFrame anim_walk_toward[] = {
     {.duration = 10, .pose = 0x01},
     {.duration = 7, .pose = 0x02},
     {.duration = 10, .pose = 0x03},
@@ -16,7 +17,7 @@ static AnimateEntityFrame D_us_80181B4C[] = {
     {.duration = 7, .pose = 0x05},
     {.duration = 8, .pose = 0x04},
     POSE_LOOP(0)};
-static AnimateEntityFrame D_us_80181B5C[] = {
+static AnimateEntityFrame anim_walk_away[] = {
     {.duration = 10, .pose = 0x03},
     {.duration = 5, .pose = 0x02},
     {.duration = 7, .pose = 0x01},
@@ -24,7 +25,7 @@ static AnimateEntityFrame D_us_80181B5C[] = {
     {.duration = 5, .pose = 0x05},
     {.duration = 6, .pose = 0x04},
     POSE_LOOP(0)};
-static AnimateEntityFrame D_us_80181B6C[] = {
+static AnimateEntityFrame anim_short_slash[] = {
     {.duration = 2, .pose = 0x09},  {.duration = 2, .pose = 0x0A},
     {.duration = 2, .pose = 0x0B},  {.duration = 2, .pose = 0x0C},
     {.duration = 2, .pose = 0x0D},  {.duration = 8, .pose = 0x0E},
@@ -34,7 +35,7 @@ static AnimateEntityFrame D_us_80181B6C[] = {
     {.duration = 2, .pose = 0x15},  {.duration = 8, .pose = 0x14},
     {.duration = 48, .pose = 0x15}, {.duration = 8, .pose = 0x13},
     {.duration = 8, .pose = 0x12},  POSE_END};
-static AnimateEntityFrame D_us_80181B90[] = {
+static AnimateEntityFrame anim_charge_slash[] = {
     {.duration = 3, .pose = 0x09},
     {.duration = 3, .pose = 0x0A},
     {.duration = 2, .pose = 0x0B},
@@ -60,7 +61,7 @@ static AnimateEntityFrame D_us_80181B90[] = {
     {.duration = 8, .pose = 0x13},
     {.duration = 8, .pose = 0x12},
     POSE_END};
-static AnimateEntityFrame D_us_80181BC4[] = {
+static AnimateEntityFrame anim_slide_kick[] = {
     {.duration = 1, .pose = 0x0A},  {.duration = 1, .pose = 0x24},
     {.duration = 1, .pose = 0x25},  {.duration = 1, .pose = 0x26},
     {.duration = 1, .pose = 0x27},  {.duration = 1, .pose = 0x28},
@@ -71,7 +72,7 @@ static AnimateEntityFrame D_us_80181BC4[] = {
     {.duration = 1, .pose = 0x28},  {.duration = 1, .pose = 0x27},
     {.duration = 12, .pose = 0x26}, {.duration = 1, .pose = 0x25},
     {.duration = 1, .pose = 0x24},  POSE_END};
-static AnimateEntityFrame D_us_80181BEC[] = {
+static AnimateEntityFrame anim_flip[] = {
     {.duration = 1, .pose = 0x2D},
     {.duration = 2, .pose = 0x2E},
     {.duration = 8, .pose = 0x2F},
@@ -89,7 +90,7 @@ static u8 unused_5[] = {0x30, 0x00, 0x00, 0x00};
 static u8 unused_6[] = {0x2D, 0x00, 0x00, 0x00};
 static u8 unused_7[] = {0xFF, 0x00, 0x00, 0x00};
 
-static AnimateEntityFrame D_us_80181C18[] = {
+static AnimateEntityFrame anim_land[] = {
     {.duration = 1, .pose = 0x0A},
     {.duration = 2, .pose = 0x25},
     {.duration = 8, .pose = 0x26},
@@ -97,17 +98,17 @@ static AnimateEntityFrame D_us_80181C18[] = {
     {.duration = 6, .pose = 0x24},
     {.duration = 6, .pose = 0x0A},
     POSE_END};
-static AnimateEntityFrame D_us_80181C28[] = {
+static AnimateEntityFrame anim_short_hop[] = {
     {.duration = 6, .pose = 0x2D},  {.duration = 2, .pose = 0x2E},
     {.duration = 3, .pose = 0x35},  {.duration = 8, .pose = 0x36},
     {.duration = 3, .pose = 0x35},  {.duration = 2, .pose = 0x2E},
     {.duration = 64, .pose = 0x2D}, POSE_END};
-static AnimateEntityFrame D_us_80181C38[] = {
+static AnimateEntityFrame anim_dash[] = {
     {.duration = 5, .pose = 0x06},
     {.duration = 5, .pose = 0x07},
     {.duration = 5, .pose = 0x08},
     POSE_LOOP(0)};
-static AnimateEntityFrame D_us_80181C40[] = {
+static AnimateEntityFrame anim_skid_stop[] = {
     {.duration = 1, .pose = 0x09},
     {.duration = 2, .pose = 0x0A},
     {.duration = 3, .pose = 0x0B},
@@ -117,7 +118,7 @@ static AnimateEntityFrame D_us_80181C40[] = {
     {.duration = 8, .pose = 0x05},
     {.duration = 8, .pose = 0x04},
     POSE_END};
-static AnimateEntityFrame D_us_80181C54[] = {
+static AnimateEntityFrame anim_idle[] = {
     {.duration = 6, .pose = 0x04}, {.duration = 6, .pose = 0x05}, POSE_LOOP(0)};
 
 // { hitboxOffX, hitboxOffY, hitboxWidth, hitboxHeight }
@@ -134,22 +135,46 @@ static u8 hitbox_indices[] = {
     6, 6, 7, 7, 8, 9, 9, 10, 11, 12, 13, 13, 14, 2, 15, 7, 7, 7};
 
 // { hitboxOffX, hitboxOffY, hitboxWidth, hitboxHeight }
-static s16 D_us_80181CD8[][4] = {
-    {0x0000, 0x0000, 0x0000, 0x0000},
-    {0xFFFC, 0x0010, 0x0016, 0x0006},
-    {0xFFEC, 0xFFFF, 0x0011, 0x0012},
-    {0xFFEC, 0xFFFF, 0x0011, 0x0012}};
+// This is indexed off the current animation frame
+static s16 attack_hitbox_dimensions[][4] = {
+    {0, 0, 0, 0},
+    {-4, 16, 22, 6},
+    {-20, -1, 17, 18},
+    {-20, -1, 17, 18},
+};
 
 // { hitboxOffX, hitboxOffY, hitboxWidth, hitboxHeight }
-static s16 D_us_80181CF8[][4] = {
-    {0x0000, 0x0000, 0x0000, 0x0000},
-    {0xFFFB, 0xFFFC, 0x0008, 0x000B},
-    {0xFFFB, 0xFFFC, 0x0008, 0x000B},
-    {0xFFF9, 0xFFF7, 0x000C, 0x0012}};
-static Point32 D_us_80181D18[] = {
+// This is indexed off the current animation frame
+static s16 slash_hitbox_dimensions[][4] = {
+    {0, 0, 0, 0},
+    {-5, -4, 8, 11},
+    {-5, -4, 8, 11},
+    {-7, -9, 12, 18},
+};
+
+static Point32 death_parts_velocities[] = {
     {.x = FIX(2.0), .y = FIX(-4.5)}, {.x = FIX(1.0), .y = FIX(-4)}};
 
-static void func_us_801C375C(void) {
+enum BladeMasterSteps {
+    INIT = 0,
+    FALL_TO_GROUND = 1,
+    WAKE = 2,
+    WALK_TOWARDS = 3,
+    WALK_AWAY = 4,
+    JUMP_OVER = 5,
+    SHORT_HOP = 6,
+    SLIDE_KICK = 7,
+    DASH = 8,
+    CHARGE_SLASH = 9,
+    SHORT_SLASH = 10,
+    LAND = 11,
+    SKID_STOP = 12,
+    GUARD = 13,
+    DEATH = 15,
+    DEBUG = 255
+};
+
+static void CheckPlayerApproaching(void) {
     Entity* player;
     s32 posX;
 
@@ -162,23 +187,30 @@ static void func_us_801C375C(void) {
 
     if (posX < 0x71) {
         if (player->facingLeft == g_CurrentEntity->facingLeft) {
-            if (player->step == 1) {
-                g_CurrentEntity->ext.bladeMaster.unk82 += 1;
+            // Keep track of the number of steps the player has taken towards us
+            //
+            // There is a minor BUG! here in that if the player moves into
+            // alternate form like bat, they can fly or jump right over and the
+            // step counter never increments leaving Blade Master stuck in the
+            // guard state.
+            if (player->step == Player_Walk) {
+                g_CurrentEntity->ext.bladeMaster.playerStepTowards++;
             } else {
-                g_CurrentEntity->ext.bladeMaster.unk82 = 0;
+                g_CurrentEntity->ext.bladeMaster.playerStepTowards = 0;
             }
         } else {
-            g_CurrentEntity->ext.bladeMaster.unk82 = 0;
+            g_CurrentEntity->ext.bladeMaster.playerStepTowards = 0;
         }
 
-        if (g_CurrentEntity->ext.bladeMaster.unk82 > 2) {
-            SetStep(13);
-            g_CurrentEntity->ext.bladeMaster.unk82 = 0;
+        // If player is starting to walk towards us, put us into a guard state.
+        if (g_CurrentEntity->ext.bladeMaster.playerStepTowards > 2) {
+            SetStep(GUARD);
+            g_CurrentEntity->ext.bladeMaster.playerStepTowards = 0;
             return;
         }
 
         if (posX < 0x2C) {
-            SetStep(9);
+            SetStep(CHARGE_SLASH);
         }
     }
 }
@@ -192,37 +224,37 @@ void EntityBladeMaster(Entity* self) {
     s32 animResult;
 
     FntPrint("BLADES_STEP %x\n", self->step);
-    FntPrint("check %x\n", self->ext.bladeMaster.unk82);
+    FntPrint("check %x\n", self->ext.bladeMaster.playerStepTowards);
 
     if (self->flags & FLAG_DEAD) {
         self->hitboxState = 0;
         entity = self + 1;
         DestroyEntity(entity);
-        SetStep(15);
+        SetStep(DEATH);
     }
 
     switch (self->step) {
-    case 0:
+    case INIT:
         InitializeEntity(g_EInitBladeMaster);
         entity = self + 1;
-        CreateEntityFromCurrentEntity(E_UNK_23, entity);
+        CreateEntityFromCurrentEntity(E_BLADE_MASTER_ATTACK_HITBOX, entity);
         break;
-    case 1:
-        if (UnkCollisionFunc3(D_us_80181B34) & 1) {
-            SetStep(2);
+    case FALL_TO_GROUND:
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
+            SetStep(WAKE);
         }
         break;
-    case 2:
+    case WAKE:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        AnimateEntity(D_us_80181C54, self);
+        AnimateEntity(anim_idle, self);
         if (GetDistanceToPlayerX() < 0x80) {
-            SetStep(3);
+            SetStep(WALK_TOWARDS);
         }
         break;
-    case 3:
+    case WALK_TOWARDS:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.bladeMaster.unk84 = 2;
+            self->ext.bladeMaster.walkCounter = 2;
             self->step_s++;
 
             if (self->facingLeft) {
@@ -231,24 +263,25 @@ void EntityBladeMaster(Entity* self) {
                 self->velocityX = FIX(-1.5);
             }
         }
-        animResult = AnimateEntity(D_us_80181B4C, self);
+        animResult = AnimateEntity(anim_walk_toward, self);
         if (self->pose < 4) {
-            UnkCollisionFunc2(D_us_80181B44);
+            UnkCollisionFunc2(sensors_wall);
         }
+
         if (!animResult) {
-            self->ext.bladeMaster.unk84--;
+            self->ext.bladeMaster.walkCounter--;
         }
 
-        if (!self->ext.bladeMaster.unk84) {
-            SetStep(4);
+        if (!self->ext.bladeMaster.walkCounter) {
+            SetStep(WALK_AWAY);
         }
 
-        func_us_801C375C();
+        CheckPlayerApproaching();
         break;
-    case 4:
+    case WALK_AWAY:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.bladeMaster.unk84 = 1;
+            self->ext.bladeMaster.walkCounter = 1;
             self->step_s++;
 
             if (self->facingLeft) {
@@ -257,57 +290,62 @@ void EntityBladeMaster(Entity* self) {
                 self->velocityX = FIX(1.5);
             }
         }
-        if (!AnimateEntity(D_us_80181B5C, self)) {
-            self->ext.bladeMaster.unk84--;
+        if (!AnimateEntity(anim_walk_away, self)) {
+            self->ext.bladeMaster.walkCounter--;
         }
 
         if (self->pose < 4) {
-            UnkCollisionFunc2(D_us_80181B44);
+            UnkCollisionFunc2(sensors_wall);
         }
 
-        if (!self->ext.bladeMaster.unk84) {
-            SetStep(3);
+        if (!self->ext.bladeMaster.walkCounter) {
+            SetStep(WALK_TOWARDS);
         }
 
-        func_us_801C375C();
+        CheckPlayerApproaching();
         break;
-    case 9:
-        if (!AnimateEntity(D_us_80181B90, self)) {
-            SetStep(4);
+    case CHARGE_SLASH:
+        if (!AnimateEntity(anim_charge_slash, self)) {
+            SetStep(WALK_AWAY);
         }
 
-        if (!self->poseTimer && self->pose == 0xB) {
+        // On the third frame of anim_charge_slash
+        if (!self->poseTimer && self->pose == 0x0B) {
             PlaySfxPositional(SFX_WHIP_TWIRL_SWISH);
         }
 
         break;
-    case 13:
-        self->animCurFrame = 0xA;
+    case GUARD:
+        self->animCurFrame = 0x0A;
         player = &PLAYER;
+        // If player is walking towards us, keep track of how many steps
         if (player->facingLeft == self->facingLeft) {
-            if (player->step == 1) {
-                self->ext.bladeMaster.unk82++;
+            if (player->step == Player_Walk) {
+                self->ext.bladeMaster.playerStepTowards++;
             }
         } else {
-            self->ext.bladeMaster.unk82 = 0;
-            SetStep(8);
+            // If player looks away, we're back to attacking
+            self->ext.bladeMaster.playerStepTowards = 0;
+            SetStep(DASH);
             break;
         }
 
-        if (self->ext.bladeMaster.unk82 > 0x18) {
-            self->ext.bladeMaster.unk82 = 0;
-            SetStep(5);
+        // Once player has walked 24 steps towards, flip jump over them
+        if (self->ext.bladeMaster.playerStepTowards > 0x18) {
+            self->ext.bladeMaster.playerStepTowards = 0;
+            SetStep(JUMP_OVER);
         }
 
+        // Player is attacking
         if (PLAYER.step_s & 0x40) {
-            if (PLAYER.step == 2) {
-                SetStep(6);
+            if (PLAYER.step == Player_Crouch) {
+                SetStep(SHORT_HOP);
             } else {
-                SetStep(7);
+                SetStep(SLIDE_KICK);
             }
         }
         break;
-    case 5:
+    case JUMP_OVER:
         switch (self->step_s) {
         case 0:
             if (self->facingLeft) {
@@ -321,22 +359,22 @@ void EntityBladeMaster(Entity* self) {
             break;
         case 1:
             if (self->velocityY > FIX(-1.0)) {
-                AnimateEntity(D_us_80181BEC, self);
+                AnimateEntity(anim_flip, self);
             }
 
-            if (UnkCollisionFunc3(D_us_80181B34) & 1) {
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
-                SetStep(0xB);
+                SetStep(LAND);
             }
             break;
         }
         break;
-    case 11:
-        if (!AnimateEntity(D_us_80181C18, self)) {
-            SetStep(4);
+    case LAND:
+        if (!AnimateEntity(anim_land, self)) {
+            SetStep(WALK_AWAY);
         }
         break;
-    case 7:
+    case SLIDE_KICK:
         switch (self->step_s) {
         case 0:
             if (self->facingLeft) {
@@ -349,16 +387,16 @@ void EntityBladeMaster(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            AnimateEntity(D_us_80181BC4, self);
-            UnkCollisionFunc2(D_us_80181B44);
+            AnimateEntity(anim_slide_kick, self);
+            UnkCollisionFunc2(sensors_wall);
             self->velocityX -= self->velocityX / 32;
             if (abs(self->velocityX) < 0x6000) {
-                SetStep(4);
+                SetStep(WALK_AWAY);
             }
             break;
         }
         break;
-    case 6:
+    case SHORT_HOP:
         switch (self->step_s) {
         case 0:
             if (self->facingLeft) {
@@ -370,15 +408,15 @@ void EntityBladeMaster(Entity* self) {
             self->step_s++;
             break;
         case 1:
-            AnimateEntity(D_us_80181C28, self);
-            if (UnkCollisionFunc3(D_us_80181B34) & 1) {
+            AnimateEntity(anim_short_hop, self);
+            if (UnkCollisionFunc3(sensors_ground) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_C);
-                SetStep(0xB);
+                SetStep(LAND);
             }
             break;
         }
         break;
-    case 8:
+    case DASH:
         switch (self->step_s) {
         case 0:
             if (self->facingLeft) {
@@ -391,11 +429,12 @@ void EntityBladeMaster(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            UnkCollisionFunc2(D_us_80181B44);
-            AnimateEntity(D_us_80181C38, self);
+            UnkCollisionFunc2(sensors_wall);
+            AnimateEntity(anim_dash, self);
             player = &PLAYER;
+            // If player turns back to face us while dashing, flip over them
             if (self->facingLeft == player->facingLeft) {
-                SetStep(5);
+                SetStep(JUMP_OVER);
             } else {
                 posX = self->posX.i.hi - player->posX.i.hi;
                 if (self->facingLeft) {
@@ -403,30 +442,31 @@ void EntityBladeMaster(Entity* self) {
                 }
 
                 if (posX < 0) {
-                    SetStep(12);
+                    SetStep(SKID_STOP);
                 } else if (posX < 0x30) {
-                    SetStep(10);
+                    SetStep(SHORT_SLASH);
                 }
             }
             break;
         }
         break;
-    case 12:
-        if (!AnimateEntity(D_us_80181C40, self)) {
-            SetStep(4);
+    case SKID_STOP:
+        if (!AnimateEntity(anim_skid_stop, self)) {
+            SetStep(WALK_AWAY);
         }
 
-        UnkCollisionFunc2(D_us_80181B44);
+        UnkCollisionFunc2(sensors_wall);
         self->velocityX -= self->velocityX / 8;
         break;
-    case 10:
+    case SHORT_SLASH:
         if (!self->step_s) {
             entity = self + 1;
-            entity->ext.bladeMaster.unk85 = 1;
+            entity->ext.bladeMaster.slashInProgress = true;
             self->step_s++;
         }
-        if (!AnimateEntity(D_us_80181B6C, self)) {
-            SetStep(4);
+
+        if (!AnimateEntity(anim_short_slash, self)) {
+            SetStep(WALK_AWAY);
         }
 
         if (!self->poseTimer && self->pose == 7) {
@@ -435,18 +475,19 @@ void EntityBladeMaster(Entity* self) {
 
         if (self->animCurFrame == 0x15) {
             entity = self + 1;
-            entity->ext.bladeMaster.unk85 = 0;
+            entity->ext.bladeMaster.slashInProgress = false;
         }
 
-        UnkCollisionFunc2(D_us_80181B44);
+        UnkCollisionFunc2(sensors_wall);
         self->velocityX -= self->velocityX / 16;
         break;
-    case 15:
+    case DEATH:
         for (i = 0; i < 2; i++) {
             entity =
                 AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_UNK_24, self, entity);
+                CreateEntityFromEntity(
+                    E_BLADE_MASTER_DEATH_PARTS, self, entity);
                 entity->facingLeft = self->facingLeft;
                 entity->params = i;
             }
@@ -455,31 +496,8 @@ void EntityBladeMaster(Entity* self) {
         DestroyEntity(self);
         // NOTE: This skips the final hitbox code outside the switch!
         return;
-    case 255: // TODO: pad2_anim_debug
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-#ifdef BUTTON_SYMBOL
-        if (g_pads[1].pressed & BUTTON_SYMBOL) {
-#else
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-#endif
-            if (self->step_s) {
-                break;
-            }
-            self->animCurFrame--;
-            self->step_s |= 1;
-        } else {
-            self->step_s = 0;
-        }
-        break;
+    case DEBUG:
+#include "../pad2_anim_debug.h"
     }
 
     i = hitbox_indices[self->animCurFrame];
@@ -490,52 +508,55 @@ void EntityBladeMaster(Entity* self) {
     self->hitboxHeight = *ptr++;
 }
 
-void func_us_801C41EC(Entity* self) {
-    s32 parentAnimFrame;
+void EntityBladeMasterAttackHitbox(Entity* self) {
+    s32 bladeMasterAnimFrame;
     s16* ptr;
-    Entity* parent;
+    Entity* bladeMaster;
 
     if (!self->step) {
-        InitializeEntity(D_us_80180B1C);
+        InitializeEntity(g_EInitBladeMasterAttackHitbox);
     }
 
-    parent = self - 1;
-    self->posX.val = parent->posX.val;
-    self->posY.val = parent->posY.val;
-    self->facingLeft = parent->facingLeft;
-    parentAnimFrame = parent->animCurFrame;
-    if (self->ext.bladeMaster.unk85) {
-        parentAnimFrame -= 0x10;
-        if (parentAnimFrame < 0) {
-            parentAnimFrame = 0;
+    bladeMaster = self - 1;
+    self->posX.val = bladeMaster->posX.val;
+    self->posY.val = bladeMaster->posY.val;
+    self->facingLeft = bladeMaster->facingLeft;
+    bladeMasterAnimFrame = bladeMaster->animCurFrame;
+    if (self->ext.bladeMaster.slashInProgress) {
+        bladeMasterAnimFrame -= 0x10;
+        if (bladeMasterAnimFrame < 0) {
+            bladeMasterAnimFrame = 0;
         }
-        if (parentAnimFrame > 3) {
-            parentAnimFrame = 0;
+        if (bladeMasterAnimFrame > 3) {
+            bladeMasterAnimFrame = 0;
         }
-        ptr = *D_us_80181CF8;
+        ptr = *slash_hitbox_dimensions;
     } else {
-        parentAnimFrame -= 0x1D;
-        if (parentAnimFrame < 0) {
-            parentAnimFrame = 0;
+        bladeMasterAnimFrame -= 0x1D;
+        if (bladeMasterAnimFrame < 0) {
+            bladeMasterAnimFrame = 0;
         }
 
-        if (parentAnimFrame > 3) {
-            parentAnimFrame = 0;
+        if (bladeMasterAnimFrame > 3) {
+            bladeMasterAnimFrame = 0;
         }
-        ptr = *D_us_80181CD8;
+        ptr = *attack_hitbox_dimensions;
     }
 
-    ptr = &ptr[parentAnimFrame * 4];
+    ptr = &ptr[bladeMasterAnimFrame * 4];
     self->hitboxOffX = *ptr++;
     self->hitboxOffY = *ptr++;
     self->hitboxWidth = *ptr++;
     self->hitboxHeight = *ptr++;
-    if (parent->entityId != 0x22) {
+
+    if (bladeMaster->entityId != E_BLADE_MASTER) {
         DestroyEntity(self);
     }
 }
 
-void func_us_801C4300(Entity* self) {
+// Params 1 = skull
+// Params 2 = body parts
+void EntityBladeMasterDeathParts(Entity* self) {
     Collider collider;
     Entity* newEntity;
     s32 posX;
@@ -552,31 +573,34 @@ void func_us_801C4300(Entity* self) {
         } else {
             self->animCurFrame = 0x34;
         }
-        self->velocityX = D_us_80181D18[self->params].x;
-        self->velocityY = D_us_80181D18[self->params].y;
+        self->velocityX = death_parts_velocities[self->params].x;
+        self->velocityY = death_parts_velocities[self->params].y;
         if ((GetSideToPlayer() & 1) ^ 1) {
             self->velocityX = -self->velocityX;
         }
         self->step += self->params;
         break;
     case 1:
+        // Skull goes flying slightly upwards and then explodes in a small
+        // fireball
         if (!self->step_s) {
-            self->ext.bladeMaster.unk80 = 0x18;
+            self->ext.bladeMaster.deathTimer = 0x18;
             self->step_s++;
         }
         MoveEntity();
         self->velocityY += FIX(0.1875);
-        if (!--self->ext.bladeMaster.unk80) {
+        if (!--self->ext.bladeMaster.deathTimer) {
             newEntity =
                 AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->params = 1;
+                newEntity->params = EXPLOSION_FIREBALL;
             }
             DestroyEntity(self);
         }
         break;
     case 2:
+        // Body parts fly and fall until they hit the ground
         MoveEntity();
         self->velocityY += FIX(0.21875);
         posX = self->posX.i.hi;
@@ -585,21 +609,23 @@ void func_us_801C4300(Entity* self) {
         if (collider.effects & EFFECT_SOLID) {
             self->animCurFrame = 0;
             self->posY.i.hi += 0x10;
-            self->ext.bladeMaster.unk80 = 0x60;
+            self->ext.bladeMaster.deathTimer = 0x60;
             self->step++;
         }
         break;
     case 3:
-        if (!(self->ext.bladeMaster.unk80 & 0xF)) {
+        // Once body parts have hit the ground spawn the death fireworks
+        if (!(self->ext.bladeMaster.deathTimer & 0xF)) {
             newEntity =
                 AllocEntity(&g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
             if (newEntity != NULL) {
-                CreateEntityFromEntity(E_UNK_25, self, newEntity);
+                CreateEntityFromEntity(
+                    E_BLADE_MASTER_DEATH_EXPLOSION, self, newEntity);
                 newEntity->zPriority = self->zPriority + 1;
             }
         }
 
-        if (!(self->ext.bladeMaster.unk80 & 7)) {
+        if (!(self->ext.bladeMaster.deathTimer & 7)) {
             if (Random() & 1) {
                 PlaySfxPositional(SFX_EXPLODE_E);
             } else {
@@ -607,14 +633,14 @@ void func_us_801C4300(Entity* self) {
             }
         }
 
-        if (!--self->ext.bladeMaster.unk80) {
+        if (!--self->ext.bladeMaster.deathTimer) {
             DestroyEntity(self);
         }
         break;
     }
 }
 
-void func_us_801C45B0(Entity* self) {
+void EntityBladeMasterDeathExplosion(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
         self->pose = 0;
