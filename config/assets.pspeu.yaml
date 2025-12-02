@@ -440,6 +440,70 @@ files:
           - [0x3BAB0, palette, pal_cutscene, 16] # 0x251
           - [0x3BAD0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dre.bin
+    asset_path: assets/st/dre
+    src_path: src/st/dre
+    splat_config_path: config/splat.pspeu.stdre.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x16480, cmpgfx, psp/gfx_stage_name_en, 128, 64, 4]
+          - [0x16638, cmpgfx, psp/gfx_stage_name_it, 128, 64, 4]
+          - [0x16750, cmpgfx, psp/gfx_stage_name_sp, 128, 64, 4]
+          - [0x168D0, cmpgfx, psp/gfx_stage_name_ge, 128, 64, 4]
+          - [0x16A50, cmpgfx, psp/gfx_stage_name_fr, 128, 64, 4]
+          - [0x16BF0, skip]
+          - [0x18D10, sprite_banks, psp/sprite_banks]
+          - [0x18D70, layers, layers]
+          - [0x18DA0, paldef, palette_def]
+          - [0x18DF0, gfx_banks, psp/gfx_banks]
+          - [0x18EF0, skip]
+          - [0x190A0, rooms, rooms]
+          - [0x190B8, cutscene, cutscene_script_pre_fight_it]
+          - [0x19582, binary, cutscene_data_pre_fight_it]
+          - [0x195A8, cutscene, cutscene_script_pre_fight_sp]
+          - [0x19A12, binary, cutscene_data_pre_fight_sp]
+          - [0x19A38, cutscene, cutscene_script_pre_fight_fr]
+          - [0x19F0A, binary, cutscene_data_pre_fight_fr]
+          - [0x19F30, cutscene, cutscene_script_pre_fight_ge]
+          - [0x1A442, binary, cutscene_data_pre_fight_ge]
+          - [0x1A468, cutscene, cutscene_script_pre_fight_en]
+          - [0x1A8F8, binary, cutscene_data_pre_fight_en]
+          - [0x1A920, cutscene, cutscene_script_post_fight_it]
+          - [0x1AAB8, binary, cutscene_data_post_fight_it]
+          - [0x1AAE0, cutscene, cutscene_script_post_fight_sp]
+          - [0x1AC5E, binary, cutscene_data_post_fight_sp]
+          - [0x1AC88, cutscene, cutscene_script_post_fight_fr]
+          - [0x1AE00, binary, cutscene_data_post_fight_fr]
+          - [0x1AE28, cutscene, cutscene_script_post_fight_ge]
+          - [0x1AFD6, binary, cutscene_data_post_fight_ge]
+          - [0x1B000, cutscene, cutscene_script_post_fight_en]
+          - [0x1B17A, binary, cutscene_data_post_fight_en]
+          - [0x1B1A0, skip]
+          - [0x1B200, cmpgfx, psp/gfx_stage_name_jp_sm, 128, 128, 4]
+          - [0x1B450, cmpgfx, psp/gfx_stage_name_jp_lg, 128, 128, 4]
+          - [0x1B9F8, cmpgfx, psp/gfx_succubus_1, 128, 128, 4, 0x24030]
+          - [0x1C438, cmpgfx, psp/gfx_succubus_2, 128, 128, 4, 0x24050]
+          - [0x1CF08, cmpgfx, psp/gfx_succubus_3, 128, 128, 4, 0x24050]
+          - [0x1DBA8, cmpgfx, psp/gfx_succubus_4, 128, 128, 4, 0x24050]
+          - [0x1E800, cmpgfx, psp/gfx_succubus_5, 128, 128, 4, 0x24030]
+          - [0x1F380, cmpgfx, psp/gfx_succubus_6, 128, 128, 4, 0x24030]
+          - [0x1FF30, cmpgfx, psp/gfx_succubus_7, 128, 128, 4, 0x24030]
+          - [0x209F0, cmpgfx, psp/gfx_succubus_lisa, 128, 128, 4, 0x240B0]
+          - [0x214F0, rawgfx, psp/gfx_portrait_alucard, 48, 72, 8, 0x240D0]
+          - [0x22270, rawgfx, psp/gfx_portrait_lisa, 48, 72, 8, 0x242D0]
+          - [0x22FF0, rawgfx, psp/gfx_portrait_succubus, 48, 72, 8, 0x244D0]
+          - [0x23D70, palette, pal_2E0, 16]
+          #- [0x23F70, palette, pal_unused_ADE8, 16]
+          - [0x24030, palette, pal_succubus, 16] # 0x200
+          - [0x240D0, palette, pal_portrait_alucard, 16] # 0x208
+          #- [0x241D0, palette, pal_unused_B048, 16]
+          - [0x242D0, palette, pal_portrait_lisa, 16] # 0x210
+          #- [0x243D0, palette, pal_unused_B248, 16]
+          - [0x244D0, palette, pal_portrait_succubus, 16] # 0x218
+          #- [0x245D0, palette, pal_unused_B448, 16]
+          - [0x246D0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/lib.bin
     asset_path: assets/st/lib
     src_path: src/st/lib

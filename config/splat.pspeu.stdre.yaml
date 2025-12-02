@@ -1,0 +1,113 @@
+options:
+  platform: psp
+  basename: stdre
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/dre.bin
+  asm_path: asm/pspeu/st/dre_psp
+  asset_path: assets/st/dre
+  src_path: src/st/dre
+  ld_script_path: build/pspeu/stdre.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.stdre.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.stdre.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.stdre.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 928b2dfab971c39803911237fa10998f5b3d5bfd
+segments:
+  - [0x0, bin, mwo_header]
+  - name: stdre
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09260000
+    bss_size: 0x1800
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, create_entity]
+      - [0x1028, c, e_stage_name]
+      - [0x1F28, c, e_red_door]
+      - [0x3230, c, st_update]
+      - [0x3768, c, e_particles]
+      - [0x4CF8, c, e_collect]
+      - [0x8F48, c, e_misc]
+      - [0x9650, c, collision]
+      - [0xB828, c, popup]
+      - [0xBE20, c, e_room_fg]
+      - [0xBF38, c, st_common]
+      - [0xCAD0, c, prim_helpers]
+      - [0xD210, c, st_init_psp]
+      - [0xD5B0, c, e_breakable]
+      - [0xD730, c, e_background_clouds]
+      - [0xDAB0, c, e_cutscene_dialogue]
+      - [0x10720, c, e_room_bg]
+      - [0x10830, c, e_lock_camera]
+      - [0x10A90, c, e_succubus]
+      - [0x14270, c, e_cutscene_actors]
+      - [0x15478, c, e_background_house]
+      - [0x16480, .data, e_stage_name]
+      - [0x16C20, .data, e_red_door]
+      - [0x16C38, .data, st_update]
+      - [0x16C68, .data, e_particles]
+      - [0x16CE8, data, unused_16CE8]
+      - [0x17230, .data, e_misc]
+      - [0x17280, .data, collision]
+      - [0x176F8, .data, gen/psp/sprites]
+      - [0x18D10, .data, sprite_banks]
+      - [0x18D70, .data, layers]
+      - [0x18DA0, .data, palette_def]
+      - [0x18DF0, .data, gfx_banks]
+      - [0x18EF0, .data, e_red_door_tiles]
+      - [0x18F20, .data, e_init]
+      - [0x190A0, .data, gen/rooms]
+      - [0x190B8, .data, cutscene_data]
+      - [0x1B1A0, .data, e_breakable]
+      - [0x1B1F0, .data, e_background_clouds]
+      - [0x1B200, .data, gfx_data]
+      - [0x246D0, .data, tilemaps]
+      - [0x27EE0, .data, header]
+      - [0x27F20, .data, e_cutscene_dialogue]
+      - [0x282E8, .data, background_block_init]
+      - [0x28328, .data, e_lock_camera]
+      - [0x283A0, .data, e_succubus]
+      - [0x28600, .data, e_cutscene_actors]
+      - [0x28618, data, unused_28618]
+      - [0x286B0, .data, e_background_house]
+      - [0x28780, .rodata, e_red_door]
+      - [0x28798, .rodata, e_collect]
+      - [0x287F8, .rodata, e_cutscene_dialogue]
+      - [0x288B0, .rodata, e_succubus]
+      - [0x28900, .rodata, e_cutscene_actors]
+      - [0x28980, .bss, create_entity]
+      - [0x289A0, .bss, e_collect]
+      - [0x28A00, .bss, gen/psp/sprites]
+      - [0x28A08, .bss, layers]
+      - [0x28A10, bss, unused_28A10]
+      - [0x28A18, .bss, st_init_psp]
+      - [0x28AF0, .bss, tilemaps]
+      - [0x28AF8, bss, unused_28AF0]
+      - [0x29AF0, .bss, d_prize_drops]
+      - [0x29AF8, .bss, e_cutscene_dialogue]
+      - [0x2A108, .bss, e_lock_camera]
+      - [0x2A110, bss, unused_2A110]
+  - [0x2A180]

@@ -382,39 +382,39 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x40, sprite_banks, sprite_banks]
+          - [0x40, sprite_banks, us/sprite_banks]
           - [0xA0, paldef, palette_def]
           - [0xE8, layers, layers]
-          - [0x128, gfx_banks, graphics_banks]
+          - [0x128, gfx_banks, us/gfx_banks]
           - [0x220, layout, entity_layouts]
           - [0x3C8, skip]
           - [0x1498, rooms, rooms]
           - [0x14AC, skip]
-          - [0x16C8, cutscene, cutscene_data]
+          - [0x16C8, cutscene, cutscene_script_psx]
           - [0x1D05, skip]
-          - [0x1D30, cmpgfx, stage_title_dre_jp, 128, 128, 4] # unused
-          - [0x1F80, cmpgfx, stage_placeholder_dre, 128, 128, 4]
-          - [0x2524, cmpgfx, e_succubus_g0, 128, 128, 4, 0xAEA8]
-          - [0x2F60, cmpgfx, e_succubus_g1, 128, 128, 4, 0xAEC8]
-          - [0x3A2C, cmpgfx, e_succubus_g2, 128, 128, 4, 0xAEC8]
-          - [0x46CC, cmpgfx, e_succubus_g3, 128, 128, 4, 0xAEC8]
-          - [0x5320, cmpgfx, e_succubus_g4, 128, 128, 4, 0xAEA8]
-          - [0x5EA0, cmpgfx, e_succubus_g5, 128, 128, 4, 0xAEA8]
-          - [0x6A50, cmpgfx, e_succubus_g6, 128, 128, 4, 0xAEA8]
-          - [0x7510, cmpgfx, e_succubus_g7, 128, 128, 4, 0xAF28]
-          - [0x800C, binary, cutscene_alucard]
-          - [0x8D8C, binary, cutscene_mother]
-          - [0x9B0C, binary, cutscene_succubus]
-          - [0xA88C, cmpgfx, stage_title_us, 128, 128, 4]
-          - [0xABE8, palette, D_8018ABE8, 16]
-          - [0xADE8, palette, D_8018ADE8, 16] # unused
-          - [0xAEA8, palette, e_succubus_p, 16]
-          - [0xAF48, palette, D_8018AF48, 16]
-          - [0xB048, palette, D_8018B048, 16] # unused
-          - [0xB148, palette, D_8018B148, 16]
-          - [0xB248, palette, D_8018B248, 16] # unused
-          - [0xB348, palette, D_8018B348, 16]
-          - [0xB448, palette, D_8018B448, 16] # unused
+          - [0x1D30, cmpgfx, us/gfx_stage_name_jp_sm, 128, 128, 4] # unused
+          - [0x1F80, cmpgfx, us/gfx_stage_name_jp_lg, 128, 128, 4]
+          - [0x2524, cmpgfx, us/gfx_succubus_1, 128, 128, 4, 0xAEA8]
+          - [0x2F60, cmpgfx, us/gfx_succubus_2, 128, 128, 4, 0xAEC8]
+          - [0x3A2C, cmpgfx, us/gfx_succubus_3, 128, 128, 4, 0xAEC8]
+          - [0x46CC, cmpgfx, us/gfx_succubus_4, 128, 128, 4, 0xAEC8]
+          - [0x5320, cmpgfx, us/gfx_succubus_5, 128, 128, 4, 0xAEA8]
+          - [0x5EA0, cmpgfx, us/gfx_succubus_6, 128, 128, 4, 0xAEA8]
+          - [0x6A50, cmpgfx, us/gfx_succubus_7, 128, 128, 4, 0xAEA8]
+          - [0x7510, cmpgfx, us/gfx_succubus_lisa, 128, 128, 4, 0xAF28]
+          - [0x800C, rawgfx, us/gfx_portrait_alucard, 48, 72, 8, 0xAF48]
+          - [0x8D8C, rawgfx, us/gfx_portrait_lisa, 48, 72, 8, 0xB148]
+          - [0x9B0C, rawgfx, us/gfx_portrait_succubus, 48, 72, 8, 0xB348]
+          - [0xA88C, cmpgfx, us/gfx_stage_name_en, 128, 128, 4]
+          - [0xABE8, palette, pal_2E0, 16]
+          #- [0xADE8, palette, pal_unused_ADE8, 16]
+          - [0xAEA8, palette, pal_succubus, 16] # 0x200
+          - [0xAF48, palette, pal_portrait_alucard, 16] # 0x208
+          #- [0xB048, palette, pal_unused_B048, 16]
+          - [0xB148, palette, pal_portrait_lisa, 16] # 0x210
+          #- [0xB248, palette, pal_unused_B248, 16]
+          - [0xB348, palette, pal_portrait_succubus, 16] # 0x218
+          #- [0xB448, palette, pal_unused_B448, 16]
           - [0xB548, skip] # tile data
           - [0xBD48, tiledef, unused]
           - [0xC158, skip] # the other used tile definition
