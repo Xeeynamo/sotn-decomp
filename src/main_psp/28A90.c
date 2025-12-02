@@ -82,7 +82,12 @@ void NormalColorDpq(SVECTOR* v0, CVECTOR* v1, long p, CVECTOR* v2) {
     v2->cd = v1->cd;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", NormalClip);
+long NormalClip(long sxy0, long sxy1, long sxy2) {
+#define x(sxy) (s16) sxy
+#define y(sxy) (s16)(sxy / 0x10000)
+    return x(sxy0) * y(sxy1) + x(sxy1) * y(sxy2) + x(sxy2) * y(sxy0) -
+           x(sxy0) * y(sxy2) - x(sxy1) * y(sxy0) - x(sxy2) * y(sxy1);
+}
 
 void RotTrans(SVECTOR* v0, VECTOR* v1, long* flag) {
     gte_ldv0(v0);
