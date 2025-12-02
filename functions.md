@@ -3,7 +3,7 @@
 | are   | D_pspeu_09297DD4                  |        6 |          0 |        |       |     |
 | main  | sce_stub                          |        7 |          0 |        |       |     |
 | main  | D_psp_0893C1AC                    |        7 |          0 |        |       |     |
-| are   | unk_26978.rodata                  |        7 |          0 |        |       |     |
+| are   | e_blade_master.rodata             |        7 |          0 |        |       |     |
 | lib   | e_mist_door.rodata                |        7 |          0 |        |       |     |
 | nz1   | e_sword_lord.rodata               |        7 |          0 |        |       |     |
 | dra   | func_psp_090E29A8                 |        7 |          1 |        |       |     |
@@ -1201,7 +1201,7 @@
 | dra   | func_psp_090F21F8                 |       33 |          6 |        |       |     |
 | dra   | func_psp_090E0870                 |       33 |          8 |        |       |     |
 | are   | e_armor_lord.rodata               |       34 |          0 | Yes    |       |     |
-| are   | unk_28EA0.rodata                  |       34 |          0 | Yes    |       |     |
+| are   | e_blade_soldier.rodata            |       34 |          0 | Yes    |       |     |
 | lib   | unk_3B200.rodata                  |       34 |          0 | Yes    |       |     |
 | no3   | e_fire_warg.rodata                |       34 |          0 | Yes    |       |     |
 | no3   | e_merman2.rodata                  |       34 |          0 | Yes    |       |     |
@@ -1860,7 +1860,7 @@
 | dra   | func_psp_09111B00                 |       53 |          7 |        |       |     |
 | main  | _setlocale_r                      |       53 |          7 |        |       |     |
 | maria | func_pspeu_092A6958               |       53 |          7 |        |       |     |
-| are   | func_us_801C45B0                  |       53 |          7 |        |       |     |
+| are   | func_pspeu_0925F568               |       53 |          7 |        |       |     |
 | sel   | func_psp_09239530                 |       53 |          7 |        |       |     |
 | dra   | func_psp_09105200                 |       53 |          8 |        |       |     |
 | maria | func_pspeu_092B1CE8               |       53 |         10 |        |       |     |
@@ -2852,7 +2852,7 @@
 | main  | func_psp_089178DC                 |      107 |          8 |        |       |     |
 | no4   | func_pspeu_09242E30               |      107 |          9 |        |       |     |
 | dra   | func_psp_090E88C0                 |      107 |         10 |        |       |     |
-| are   | func_us_801C41EC                  |      107 |         11 |        |       |     |
+| are   | func_pspeu_0925F050               |      107 |         11 |        |       |     |
 | dra   | func_psp_09138600                 |      107 |         17 |        |       |     |
 | main  | func_psp_089117F4                 |      108 |          1 |        |       |     |
 | dra   | func_psp_090EC0C0                 |      108 |          3 |        |       |     |
@@ -3529,7 +3529,7 @@
 | no2   | func_pspeu_0925B730               |      249 |         37 |        |       |     |
 | are   | func_pspeu_09246BF8               |      250 |         26 |        |       |     |
 | dra   | func_psp_091107E8                 |      250 |         34 |        |       |     |
-| are   | func_us_801C4300                  |      250 |         36 |        |       |     |
+| are   | func_pspeu_0925F1C8               |      250 |         36 |        |       |     |
 | no2   | func_pspeu_092592A0               |      251 |          6 |        |       |     |
 | maria | func_pspeu_092A7B80               |      251 |         26 |        |       |     |
 | cat   | func_pspeu_0925F410               |      252 |         20 |        |       |     |
@@ -4202,7 +4202,7 @@
 | ric   | func_pspeu_092C4FF8               |      931 |         62 |        |       |     |
 | dra   | func_psp_090E62B8                 |      934 |         73 |        |       |     |
 | maria | func_pspeu_092BEB40               |      944 |         70 | Yes    |       |     |
-| are   | func_us_801C3844                  |      945 |        172 |        |       |     |
+| are   | func_pspeu_0925E2B0               |      945 |        172 |        |       |     |
 |       | UpdateBatBlueTrailEntities        |      963 |         44 |        |       |     |
 | main  | sce_stub                          |      964 |        191 |        |       |     |
 | lib   | func_psp_09239650                 |      965 |        124 | Yes    |       |     |
