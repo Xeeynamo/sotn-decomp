@@ -51,7 +51,7 @@ enum Entities {
     E_UNK_1F,                   // func_us_801B80C0
     E_EXPLOSION_PUFF_OPAQUE,    // EntityExplosionPuffOpaque
     E_BREAKABLE_DEBRIS,         // OVL_EXPORT(EntityBreakableDebris)
-    E_UNK_22,                   // func_us_801C3844
+    E_BLADE_MASTER,             // EntityBladeMaster
     E_UNK_23,                   // func_us_801C41EC
     E_UNK_24,                   // func_us_801C4300
     E_UNK_25,                   // func_us_801C45B0

@@ -3668,6 +3668,14 @@ typedef struct {
     /* 0x90 */ Primitive* emberPrim;
 } ET_Lava;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 unk85;
+} ET_BladeMaster;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3985,6 +3993,7 @@ typedef union { // offset=0x7C
     ET_801BA164 et_801BA164;
     ET_Coffin coffin;
     ET_Lava lava;
+    ET_BladeMaster bladeMaster;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
