@@ -385,6 +385,7 @@ void gte_ldv2(SVECTOR* v);
     gte_ldv0(x);                                                               \
     gte_ldv1(y);                                                               \
     gte_ldv2(z);
+void gte_nclip(void);
 void gte_rtps(void);
 void gte_stsxy(long* sxy);
 void gte_stszotz(long* otz);

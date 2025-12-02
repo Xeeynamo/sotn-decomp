@@ -483,7 +483,12 @@ void gte_strgb(long* rgb) { *rgb = D_psp_08C63B78; }
 
 void gte_ldrgb(long* rgb) { D_psp_08C63B78 = *rgb; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_nclip);
+void gte_nclip(void) {
+    D_psp_08C63B88 =
+        D_psp_08C63B58 * D_psp_08C63B5E + D_psp_08C63B5C * D_psp_08C63B62 +
+        D_psp_08C63B60 * D_psp_08C63B5A - D_psp_08C63B60 * D_psp_08C63B5E -
+        D_psp_08C63B58 * D_psp_08C63B62 - D_psp_08C63B5C * D_psp_08C63B5A;
+}
 
 void gte_avsz3(void) {
     D_psp_08C63B88 = D_psp_08C63B44 =
