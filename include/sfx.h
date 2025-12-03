@@ -1028,10 +1028,10 @@ enum Sfx {
     // Yousei and Nose Demon are disabled in PSX
     /* 0x893 */ SFX_YOUSEI_POTION,
     /* 0x894 */ SFX_YOUSEI_UNK_A,
-    /* 0x895 */ SFX_YOUSEI_UNK_B,
+    /* 0x895 */ SFX_YOUSEI_REGENERATION,
     /* 0x896 */ SFX_YOUSEI_UNK_C,
-    /* 0x897 */ SFX_YOUSEI_EH,
-    /* 0x898 */ SFX_YOUSEI_UNK_D,
+    /* 0x897 */ SFX_YOUSEI_HAMMER_A,
+    /* 0x898 */ SFX_YOUSEI_HAMMER_B,
     /* 0x899 */ SFX_YOUSEI_FALL_OFF_A,
     /* 0x89A */ SFX_YOUSEI_FALL_OFF_B,
     /* 0x89B */ SFX_YOUSEI_FALL_OFF_C,
