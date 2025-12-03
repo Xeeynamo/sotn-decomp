@@ -810,9 +810,9 @@
 | dra   | func_psp_09108938                 |       25 |          1 |        |       |     |
 | dra   | func_psp_09136EE0                 |       25 |          1 |        |       |     |
 | main  | isinf                             |       25 |          1 |        |       |     |
+| main  | gte_avsz3                         |       25 |          1 |        |       |     |
 | main  | func_psp_08914BA4                 |       25 |          1 |        |       |     |
 | main  | func_psp_08916188                 |       25 |          1 |        |       |     |
-| main  | gte_avsz3                         |       25 |          1 |        |       |     |
 | main  | sceGuTexMapMode                   |       25 |          1 |        |       |     |
 | maria | func_pspeu_092ADD70               |       25 |          1 |        |       |     |
 | ric   | func_pspeu_092A62D8               |       25 |          1 |        |       |     |
