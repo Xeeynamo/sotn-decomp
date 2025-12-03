@@ -34,10 +34,10 @@ void func_us_801B7E7C(Entity* self);
 void func_us_801B80C0(Entity* self);
 void EntityExplosionPuffOpaque(Entity* self);
 void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
-void func_us_801C3844(Entity* self);
-void func_us_801C41EC(Entity* self);
-void func_us_801C4300(Entity* self);
-void func_us_801C45B0(Entity* self);
+void EntityBladeMaster(Entity* self);
+void EntityBladeMasterAttackHitbox(Entity* self);
+void EntityBladeMasterDeathParts(Entity* self);
+void EntityBladeMasterDeathExplosion(Entity* self);
 void func_us_801C47E4(Entity* self);
 void func_us_801C4EDC(Entity* self);
 void EntityBoneHalberdParts(Entity* self);
@@ -113,10 +113,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B80C0,
     EntityExplosionPuffOpaque,
     OVL_EXPORT(EntityBreakableDebris),
-    func_us_801C3844,
-    func_us_801C41EC,
-    func_us_801C4300,
-    func_us_801C45B0,
+    EntityBladeMaster,
+    EntityBladeMasterAttackHitbox,
+    EntityBladeMasterDeathParts,
+    EntityBladeMasterDeathExplosion,
     func_us_801C47E4,
     func_us_801C4EDC,
     EntityBoneHalberdParts,
@@ -175,8 +175,9 @@ EInit D_us_80180AF8 = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
 EInit D_us_80180B04 = {ANIMSET_OVL(0x02), 0x00, 0x53, 0x0200, 0x005};
 
 // Blade Master
-EInit D_us_80180B10 = {ANIMSET_OVL(0x03), 0x01, 0x48, 0x0201, 0x07A};
-EInit D_us_80180B1C = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x07B};
+EInit g_EInitBladeMaster = {ANIMSET_OVL(0x03), 0x01, 0x48, 0x0201, 0x07A};
+EInit g_EInitBladeMasterAttackHitbox = {
+    ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x07B};
 
 // Blade Soldier
 EInit D_us_80180B28 = {ANIMSET_OVL(0x04), 0x01, 0x4B, 0x0203, 0x07C};

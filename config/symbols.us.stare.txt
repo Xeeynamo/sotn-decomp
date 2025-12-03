@@ -9,7 +9,6 @@ g_EInitParticle = 0x80180AA4;
 g_EInitInteractable = 0x80180ABC;
 ARE_BackgroundBlockInit = 0x80180CA0;
 ARE_PrizeDrops = 0x80180FE8;
-g_explosionBigAnim = 0x801818C0;
 ARE_rooms = 0x80182E5C;
 sprites_3 = 0x801AE674;
 g_UnkPrimHelperRot = 0x801B5908;
