@@ -1078,8 +1078,15 @@ enum Sfx {
     /* 0x8C2 */ SFX_BEELZEBUB_PAIN,
     /* 0x8C3 */ SFX_BIBLE_SUBWPN_SWISH, // plays every 10 frames during attack
 
-    SFX_UI_NAME_ENTRY = 0x8CD,
-    NA_VO_SU_DELICIOUS = 0x8D1,
+    // 0x8C4 - 0x8CB appear to be unused
+
+    /* 0x8CD */ SFX_UI_NAME_ENTRY = 0x8CD,
+    /* 0x8CE */ SFX_UNUSED_UI_NAME_ENTRY,
+    /* 0x8CF */ SFX_UNUSED_ANIME_SWORD,
+    /* 0x8D0 */ SFX_UNUSED_8D0,
+    /* 0x8D1 */ SFX_SUCCUBUS_DELICIOUS, // "Mmm, delicious!"
+
+    // 0x8D2 - 0x8E5 appear to be unused
 
     // Exclusive to Maria PSP
     /* 0x8E6 */ SFX_VO_MAR_8E6 = 0x8E6,
