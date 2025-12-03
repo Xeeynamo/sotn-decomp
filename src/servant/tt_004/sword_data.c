@@ -31,9 +31,9 @@ s16 D_us_80170090[] = {
 
 // more sound effect IDs
 s16 D_us_80170098[] = {
-    0x8B6,
-    0x8B7,
-    0x8B8,
+    SFX_SWORD_SERVANT_BROTHERS_SPELL,
+    SFX_SWORD_SERVANT_GRUNT_A,
+    SFX_SWORD_SERVANT_GRUNT_B,
     0,
 };
 
