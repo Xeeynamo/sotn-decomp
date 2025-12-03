@@ -55,7 +55,7 @@ segments:
       - [0x1A28, .data, e_particles]
       - [0x1AA8, .data, e_room_fg]
       - [0x1B34, .data, e_blade_master]
-      - [0x1D28, data, e_blade_soldier]
+      - [0x1D28, .data, e_blade_soldier]
       - [0x1E88, .data, e_bone_musket]
       - [0x1F70, .data, e_owl_knight]
       - [0x221C, .data, e_valhalla_knight]
