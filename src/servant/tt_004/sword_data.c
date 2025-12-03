@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sword.h"
 #include <psxsdk/libgte.h>
+#include "sfx.h"
 
 VECTOR g_TransferVector = {
     0,
