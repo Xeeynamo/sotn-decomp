@@ -651,7 +651,7 @@
 | main  | sceGuTexFunc                      |       21 |          1 |        |       |     |
 | maria | func_pspeu_092B3458               |       21 |          1 |        |       |     |
 | ric   | func_pspeu_092B0E60               |       21 |          1 |        |       |     |
-| are   | SetSubStep                        |       21 |          1 |        |       |     |
+| are   | func_pspeu_09262110               |       21 |          1 |        |       |     |
 | are   | Random                            |       21 |          1 |        |       |     |
 | are   | func_psp_0923C390                 |       21 |          1 |        |       |     |
 | cat   | func_pspeu_092447E8               |       21 |          1 |        |       |     |
@@ -2144,8 +2144,8 @@
 | no3   | cutscene.rodata                   |       64 |          0 | Yes    |       |     |
 | main  | sceGuCopyImage                    |       64 |          2 |        |       |     |
 | dra   | func_psp_090F17D8                 |       64 |          5 |        |       |     |
+| are   | func_pspeu_09260620               |       64 |          6 |        |       |     |
 | are   | func_pspeu_09242970               |       64 |          6 |        |       |     |
-| are   | SpawnDustParticles_09260620       |       64 |          6 |        |       |     |
 | cat   | func_pspeu_0923D6E0               |       64 |          6 |        |       |     |
 | dra   | func_psp_090E28D0                 |       64 |          7 |        |       |     |
 | no3   | func_pspeu_0923D348               |       64 |          8 |        |       |     |
@@ -2614,7 +2614,7 @@
 | wrp   | func_psp_09237C48                 |       89 |         11 |        |       |     |
 | main  | func_psp_0892FFD0                 |       89 |         18 |        |       |     |
 | main  | LoadTPage                         |       90 |          8 |        |       |     |
-| are   | EntityBoneHalberdParts            |       90 |          9 |        |       |     |
+| are   | func_pspeu_09260F18               |       90 |          9 |        |       |     |
 | dai   | func_pspeu_0924FD18               |       90 |          9 |        |       |     |
 | dai   | func_pspeu_09256DA0               |       90 |         10 |        |       |     |
 | main  | _getmodreent                      |       90 |         13 |        |       |     |
@@ -2672,7 +2672,7 @@
 | no4   | func_pspeu_0925C9E0               |       92 |         17 |        |       |     |
 | dra   | func_psp_090FA660                 |       92 |         21 | Yes    |       |     |
 | lib   | func_psp_0925EBA0                 |       93 |          1 |        |       |     |
-| are   | func_us_801C4EDC                  |       93 |          7 |        |       |     |
+| are   | func_pspeu_09261060               |       93 |          7 |        |       |     |
 |       | func_092E7C68                     |       93 |          8 |        |       |     |
 | chi   | func_psp_0924EAC0                 |       93 |          8 |        |       |     |
 | main  | func_psp_08919A58                 |       93 |         10 |        |       |     |
@@ -2699,7 +2699,7 @@
 | dra   | 7E4BC.rodata                      |       96 |          0 | Yes    |       |     |
 | no4   | func_pspeu_09259F90               |       96 |          6 |        |       |     |
 | dra   | func_psp_09134F40                 |       96 |         11 |        |       |     |
-| are   | UnkCollisionFunc                  |       96 |         11 |        |       |     |
+| are   | func_pspeu_09262400               |       96 |         11 |        |       |     |
 | cat   | func_pspeu_092530D8               |       96 |         11 |        |       |     |
 | dai   | func_pspeu_0924E288               |       96 |         11 |        |       |     |
 | lib   | func_psp_0924FCB0                 |       96 |         11 |        |       |     |
@@ -3455,7 +3455,7 @@
 | main  | func_psp_0890F7CC                 |      199 |         51 |        |       |     |
 | dra   | func_psp_090DE7D0                 |      200 |         16 |        |       |     |
 | lib   | func_psp_09266120                 |      200 |         18 |        |       |     |
-| are   | UnkCollisionFunc2                 |      200 |         20 |        |       |     |
+| are   | func_pspeu_092618D0               |      200 |         20 |        |       |     |
 | cat   | func_pspeu_09252760               |      200 |         20 |        |       |     |
 | chi   | func_psp_092479D8                 |      200 |         20 |        |       |     |
 | dai   | func_pspeu_0924D828               |      200 |         20 |        |       |     |
@@ -4154,7 +4154,7 @@
 | are   | func_pspeu_0924A4D0               |      598 |         55 |        |       |     |
 | maria | func_pspeu_092B4218               |      599 |         58 |        |       |     |
 | main  | func_psp_08931488                 |      599 |         99 | Yes    |       |     |
-| are   | func_us_801C47E4                  |      599 |        101 | Yes    |       |     |
+| are   | func_pspeu_09260700               |      599 |        101 | Yes    |       |     |
 | chi   | EntityBreakableWall               |      607 |         46 | Yes    |       |     |
 | main  | func_psp_08926A08                 |      607 |         92 | Yes    |       |     |
 | dra   | func_psp_090DDEE8                 |      609 |         40 |        |       |     |
