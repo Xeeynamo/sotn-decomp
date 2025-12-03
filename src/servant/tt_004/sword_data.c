@@ -22,10 +22,10 @@ STATIC_PAD_DATA(4);
 
 // sound effects ID
 s16 D_us_80170090[] = {
-    0x8B2,
-    0x8B3,
-    0x8B4,
-    0x8B5,
+    Sfx[SFX_SWORD_SERVANT_SLASH],
+    Sfx[SFX_SWORD_SERVANT_SLICE],
+    Sfx[SFX_SWORD_SERVANT_TEAR],
+    Sfx[SFX_SWORD_SERVANT_DARK_EDGE],
 };
 
 // more sound effect IDs
