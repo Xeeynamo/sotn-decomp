@@ -3669,11 +3669,18 @@ typedef struct {
 } ET_Lava;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 : 8;
+    /* 0x7E */ u16 : 16;
     /* 0x80 */ s16 deathTimer;
     /* 0x82 */ s16 playerStepTowards;
     /* 0x84 */ u8 walkCounter;
     /* 0x85 */ u8 slashInProgress;
+    /* 0x86 */ u16 : 16;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 : 8;
+    /* 0x90 */ u16 : 16;
+    /* 0x8C */ s16 unk8C;
 } ET_BladeMaster;
 
 typedef union { // offset=0x7C
