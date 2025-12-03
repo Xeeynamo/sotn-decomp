@@ -255,9 +255,6 @@ enum {
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
 
-// plays every 10 frames while using bible subweapon
-#define BIBLE_SUBWPN_SWOOSH 0x8C3
-
 // STAGE DAI
 // Unknown SFX related to the priest
 #define SFX_UNK_4E5 0x4E5
@@ -1075,6 +1072,12 @@ enum Sfx {
     /* 0x8BC */ SFX_UNUSED_TELEPORT_SYNTH_UP,
     /* 0x8BD */ SFX_UNUSED_TELEPORT_SYNTH_DOWN,
     /* 0x8BE */ SFX_BURNING_PHOTOGRAPH,
+    /* 0x8BF */ SFX_DRACULA_TRIANGLE_ATTACK,
+    /* 0x8C0 */ SFX_GRANFALOON_SCREAMS_A,
+    /* 0x8C1 */ SFX_GRANFALOON_SCREAMS_B,
+    /* 0x8C2 */ SFX_BEELZEBUB_PAIN,
+    /* 0x8C3 */ SFX_BIBLE_SUBWPN_SWISH, // plays every 10 frames during attack
+
     SFX_UI_NAME_ENTRY = 0x8CD,
     NA_VO_SU_DELICIOUS = 0x8D1,
 
