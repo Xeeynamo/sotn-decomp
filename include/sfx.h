@@ -1080,9 +1080,12 @@ enum Sfx {
 
     // 0x8C4 - 0x8CB appear to be unused
 
+    // vabid 0
     /* 0x8CD */ SFX_UI_NAME_ENTRY = 0x8CD,
     /* 0x8CE */ SFX_UNUSED_UI_NAME_ENTRY,
     /* 0x8CF */ SFX_UNUSED_ANIME_SWORD,
+
+    // vabid 3
     /* 0x8D0 */ SFX_UNUSED_8D0,
     /* 0x8D1 */ SFX_SUCCUBUS_DELICIOUS, // "Mmm, delicious!"
 
