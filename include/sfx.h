@@ -1028,6 +1028,29 @@ enum Sfx {
     /* 0x891 */ SFX_FAERIE_OH_NO,      // "OH NOOO!" (death reaction)
     /* 0x892 */ SFX_FAERIE_ARE_YOU_OK, // "Are you ok?" (possibly unused?)
 
+    // Yousei and Nose Demon are disabled in PSX
+    /* 0x893 */ SFX_YOUSEI_POTION,
+    /* 0x894 */ SFX_YOUSEI_UNK_A,
+    /* 0x895 */ SFX_YOUSEI_UNK_B,
+    /* 0x896 */ SFX_YOUSEI_UNK_C,
+    /* 0x897 */ SFX_YOUSEI_EH,
+    /* 0x898 */ SFX_YOUSEI_UNK_D,
+    /* 0x899 */ SFX_YOUSEI_FALL_OFF_A,
+    /* 0x89A */ SFX_YOUSEI_FALL_OFF_B,
+    /* 0x89B */ SFX_YOUSEI_FALL_OFF_C,
+    /* 0x89C */ SFX_YOUSEI_FALL_OFF_D,
+    /* 0x89D */ SFX_YOUSEI_YELL,
+    /* 0x89E */ SFX_DEMON_GRUNT_1,         // he-ya
+    /* 0x89F */ SFX_DEMON_GRUNT_2,         // huh
+    /* 0x8A0 */ SFX_DEMON_GRUNT_3,         // hrr
+    /* 0x8A1 */ SFX_DEMON_TAKE_THAT,       // "Take that" - possibly unused
+    /* 0x8A2 */ SFX_DEMON_DIE,             // "DIE!" - Used for cleave attack
+    /* 0x8A3 */ SFX_DEMON_FIRE_SPEAR,      // "Fire Spear"
+    /* 0x8A4 */ SFX_DEMON_ICE_SPEAR,       // "Ice Spear"
+    /* 0x8A5 */ SFX_DEMON_THUNDER_SPEAR,   // "Thunder Spear"
+    /* 0x8A6 */ SFX_DEMON_LIGHTNING_SPEAR, // "Lightning spear"
+    /* 0x8A7 */ SFX_UNUSED_DEMON_EAT,      // "Eat!"
+
     SFX_SWORD_SERVANT_SLASH = 0x8B2,  // "Ssslash!"
     SFX_SWORD_SERVANT_SLICE,          // "Slice!"
     SFX_SWORD_SERVANT_TEAR,           // "Tear open the heavens!"
