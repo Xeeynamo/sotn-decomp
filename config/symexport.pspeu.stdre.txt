@@ -1,0 +1,2 @@
+EXTERN(_binary_assets_st_dre_mwo_header_bin_start);
+EXTERN(DRE_Load);

@@ -53,8 +53,8 @@ static void CutsceneRun(void) {
         case 2:
             if (!((g_CutsceneFlags >> *g_Dialogue.scriptEnd) & 1)) {
 #ifdef STAGE_IS_DRE
-                g_Dialogue.scriptEnd -= 3;
                 g_Dialogue.timer--;
+                g_Dialogue.scriptEnd -= 3;
 #else
                 g_Dialogue.scriptEnd--;
 #endif
