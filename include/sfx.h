@@ -1026,7 +1026,8 @@ enum Sfx {
     // /* 0x88F */ SFX_FAERIE_FALL_OFF_C,
     // /* 0x890 */ SFX_FAERIE_FALL_OFF_D,
     // /* 0x891 */ SFX_FAERIE_OH_NO,      // "OH NOOO!" (death reaction)
-    // /* 0x892 */ SFX_FAERIE_ARE_YOU_OK, // "Are you ok?" (possibly unused?)
+    /* 0x892 */ SFX_FAERIE_ARE_YOU_OK =
+        0x892,                        // "Are you ok?" (possibly unused?)
     SFX_SWORD_SERVANT_SLASH = 0x8B2,  // "Ssslash!"
     SFX_SWORD_SERVANT_SLICE,          // "Slice!"
     SFX_SWORD_SERVANT_TEAR,           // "Tear open the heavens!"
