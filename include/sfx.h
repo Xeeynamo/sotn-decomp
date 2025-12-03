@@ -846,9 +846,9 @@ enum Sfx {
     /* 0x7E7 */ SFX_UNUSED_7E7,
     /* 0x7E8 */ SFX_DOP_SUBWEAPON_TINK,
     /* 0x7E9 */ SFX_UNUSED_7E9,
-    /* 0x7EA */ SFX_CREATURE_HAMMER,
-    /* 0x7EB */ SFX_CREATURE_ATTACK,
-    /* 0x7EC */ SFX_CREATURE_DEATH,
+    /* 0x7EA */ SFX_THE_CREATURE_HAMMER,
+    /* 0x7EB */ SFX_THE_CREATURE_ATTACK,
+    /* 0x7EC */ SFX_THE_CREATURE_DEATH,
     /* 0x7ED */ SFX_UNUSED_7ED,
     /* 0x7EE */ SFX_UNUSED_7EE,
     /* 0x7EF */ SFX_DEATH_PAIN_A,
@@ -1027,9 +1027,21 @@ enum Sfx {
     // /* 0x890 */ SFX_FAERIE_FALL_OFF_D,
     // /* 0x891 */ SFX_FAERIE_OH_NO,      // "OH NOOO!" (death reaction)
     // /* 0x892 */ SFX_FAERIE_ARE_YOU_OK, // "Are you ok?" (possibly unused?)
-    SFX_TELEPORT_SYNTH_UP = 0x8BA,
+    SFX_SWORD_SERVANT_SLASH = 0x8B2,  // "Ssslash!"
+    SFX_SWORD_SERVANT_SLICE,          // "Slice!"
+    SFX_SWORD_SERVANT_TEAR,           // "Tear open the heavens!"
+    SFX_SWORD_SERVANT_DARK_EDGE,      // "Dark Edge!"
+    SFX_SWORD_SERVANT_BROTHERS_SPELL, // "Gather, brother soul blades!"
+    SFX_SWORD_SERVANT_GRUNT_A,
+    SFX_SWORD_SERVANT_GRUNT_B,
+
+    // vabid 9
+    SFX_THE_CREATURE_HEAD_FALL,
+    SFX_TELEPORT_SYNTH_UP,
     SFX_TELEPORT_SYNTH_DOWN,
-    SFX_BURNING_PHOTOGRAPH = 0x8BE,
+    SFX_UNUSED_TELEPORT_SYNTH_UP,
+    SFX_UNUSED_TELEPORT_SYNTH_DOWN,
+    SFX_BURNING_PHOTOGRAPH,
     SFX_UI_NAME_ENTRY = 0x8CD,
     NA_VO_SU_DELICIOUS = 0x8D1,
 
