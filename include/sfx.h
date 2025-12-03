@@ -1012,7 +1012,7 @@ enum Sfx {
     /* 0x883 */ SFX_MARIA_FOOTSTEPS_B,
     /* 0x884 */ SFX_UNUSED_884,
 
-    // Faerie and Demon familiars use a lookup table for playing sfxIDs
+    // Familiars/Servants use lookup tables for playing sfxIDs
     /* 0x885 */ SFX_FAERIE_HEALING,      // "Healing!"
     /* 0x886 */ SFX_FAERIE_POTION,       // "Potion"
     /* 0x887 */ SFX_FAERIE_REGENERATION, // "Regeneration"
@@ -1050,22 +1050,31 @@ enum Sfx {
     /* 0x8A5 */ SFX_DEMON_THUNDER_SPEAR,   // "Thunder Spear"
     /* 0x8A6 */ SFX_DEMON_LIGHTNING_SPEAR, // "Lightning spear"
     /* 0x8A7 */ SFX_UNUSED_DEMON_EAT,      // "Eat!"
-
-    SFX_SWORD_SERVANT_SLASH = 0x8B2,  // "Ssslash!"
-    SFX_SWORD_SERVANT_SLICE,          // "Slice!"
-    SFX_SWORD_SERVANT_TEAR,           // "Tear open the heavens!"
-    SFX_SWORD_SERVANT_DARK_EDGE,      // "Dark Edge!"
-    SFX_SWORD_SERVANT_BROTHERS_SPELL, // "Gather, brother soul blades!"
-    SFX_SWORD_SERVANT_GRUNT_A,
-    SFX_SWORD_SERVANT_GRUNT_B,
+    /* 0x8A8 */ SFX_NOSE_DEMON_UNK_A,
+    /* 0x8A9 */ SFX_NOSE_DEMON_UNK_B,
+    /* 0x8AA */ SFX_NOSE_DEMON_UNK_C,
+    /* 0x8AB */ SFX_NOSE_DEMON_UNK_D,
+    /* 0x8AC */ SFX_NOSE_DEMON_UNK_E,
+    /* 0x8AD */ SFX_NOSE_DEMON_UNK_F,
+    /* 0x8AE */ SFX_NOSE_DEMON_UNK_G,
+    /* 0x8AF */ SFX_NOSE_DEMON_UNK_H,
+    /* 0x8B0 */ SFX_NOSE_DEMON_UNK_I,
+    /* 0x8B1 */ SFX_NOSE_DEMON_UNK_J,
+    /* 0x8B2 */ SFX_SWORD_SERVANT_SLASH,      // "Ssslash!"
+    /* 0x8B3 */ SFX_SWORD_SERVANT_SLICE,      // "Slice!"
+    /* 0x8B4 */ SFX_SWORD_SERVANT_TEAR,       // "Tear open the heavens!"
+    /* 0x8B5 */ SFX_SWORD_SERVANT_DARK_EDGE,  // "Dark Edge!"
+    /* 0x8B6 */ SFX_SWORD_SERVANT_BROS_SPELL, // "Gather, brother soul blades!"
+    /* 0x8B7 */ SFX_SWORD_SERVANT_GRUNT_A,
+    /* 0x8B8 */ SFX_SWORD_SERVANT_GRUNT_B,
 
     // vabid 9
-    SFX_THE_CREATURE_HEAD_FALL,
-    SFX_TELEPORT_SYNTH_UP,
-    SFX_TELEPORT_SYNTH_DOWN,
-    SFX_UNUSED_TELEPORT_SYNTH_UP,
-    SFX_UNUSED_TELEPORT_SYNTH_DOWN,
-    SFX_BURNING_PHOTOGRAPH,
+    /* 0x8B9 */ SFX_THE_CREATURE_HEAD_FALL,
+    /* 0x8BA */ SFX_TELEPORT_SYNTH_UP,
+    /* 0x8BB */ SFX_TELEPORT_SYNTH_DOWN,
+    /* 0x8BC */ SFX_UNUSED_TELEPORT_SYNTH_UP,
+    /* 0x8BD */ SFX_UNUSED_TELEPORT_SYNTH_DOWN,
+    /* 0x8BE */ SFX_BURNING_PHOTOGRAPH,
     SFX_UI_NAME_ENTRY = 0x8CD,
     NA_VO_SU_DELICIOUS = 0x8D1,
 
