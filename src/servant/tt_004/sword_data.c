@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sword.h"
 #include <psxsdk/libgte.h>
+#include "sfx.h"
 
 VECTOR g_TransferVector = {
     0,
@@ -22,17 +23,17 @@ STATIC_PAD_DATA(4);
 
 // sound effects ID
 s16 D_us_80170090[] = {
-    0x8B2,
-    0x8B3,
-    0x8B4,
-    0x8B5,
+    SFX_SWORD_SERVANT_SLASH,
+    SFX_SWORD_SERVANT_SLICE,
+    SFX_SWORD_SERVANT_TEAR,
+    SFX_SWORD_SERVANT_DARK_EDGE,
 };
 
 // more sound effect IDs
 s16 D_us_80170098[] = {
-    0x8B6,
-    0x8B7,
-    0x8B8,
+    SFX_SWORD_SERVANT_BROS_SPELL,
+    SFX_SWORD_SERVANT_GRUNT_A,
+    SFX_SWORD_SERVANT_GRUNT_B,
     0,
 };
 
