@@ -55,9 +55,9 @@ enum Entities {
     E_BLADE_MASTER_ATTACK_HITBOX,   // EntityBladeMasterAttackHitbox
     E_BLADE_MASTER_DEATH_PARTS,     // EntityBladeMasterDeathParts
     E_BLADE_MASTER_DEATH_EXPLOSION, // EntityBladeMasterDeathExplosion
-    E_UNK_26,                       // func_us_801C47E4
-    E_UNK_27,                       // func_us_801C4EDC
-    E_BONE_HALBERD_PARTS,           // EntityBoneHalberdParts
+    E_BLADE_SOLDIER,                // EntityBladeSoldier
+    E_BLADE_SOLDIER_ATTACK_HITBOX,  // EntityBladeSoldierAttackHitbox
+    E_BLADE_SOLDIER_DEATH_PARTS,    // EntityBladeSoldierDeathParts
     E_BONE_MUSKET,                  // EntityBoneMusket
     E_BONE_MUSKET_UNK,              // func_us_801CF298
     E_OWL_KNIGHT,                   // EntityOwlKnight
