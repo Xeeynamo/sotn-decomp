@@ -3669,19 +3669,30 @@ typedef struct {
 } ET_Lava;
 
 typedef struct {
-    /* 0x7C */ u8 unk7C;
-    /* 0x7D */ u8 : 8;
-    /* 0x7E */ u16 : 16;
+    /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 deathTimer;
     /* 0x82 */ s16 playerStepTowards;
     /* 0x84 */ u8 walkCounter;
     /* 0x85 */ u8 slashInProgress;
-    /* 0x86 */ u16 : 16;
-    /* 0x88 */ u8 unk88;
-    /* 0x89 */ u8 : 8;
-    /* 0x90 */ u16 : 16;
-    /* 0x8C */ s16 unk8C;
 } ET_BladeMaster;
+
+typedef struct {
+    /* 0x7C */ u8 attackTimer;
+    /* 0x7D */ u8 : 8;
+    /* 0x7E */ u16 : 16;
+    /* 0x80 */ u8 walkDirection;
+    /* 0x81 */ u8 : 8;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ u8 attackCount;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u16 : 16;
+    /* 0x88 */ u8 deathPartFallDuration;
+    /* 0x89 */ u8 : 8;
+    /* 0x8A */ u16 : 16;
+    /* 0x8C */ s16 chargeDuration;
+    /* 0x8E */ u16 : 16;
+    /* 0x90 */ u8* animPtr;
+} ET_BladeSoldier;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4001,6 +4012,7 @@ typedef union { // offset=0x7C
     ET_Coffin coffin;
     ET_Lava lava;
     ET_BladeMaster bladeMaster;
+    ET_BladeSoldier bladeSoldier;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
