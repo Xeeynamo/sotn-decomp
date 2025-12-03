@@ -100,7 +100,7 @@ s32 func_psp_089193D4(u8* data, char* name, u32 len, s32 arg3) {
     }
     strcpy(D_psp_08B21DEC.unk0[var_s0], name);
     memcpy(D_psp_08B21DEC.unk1[var_s0], data, (s32)len);
-    if ((arg3 != 0) && (func_psp_08919560() >= 0)) {
+    if (arg3 && func_psp_08919560() >= 0) {
         func_psp_08919570();
     }
     if (func_psp_08919770(3) == 0) {

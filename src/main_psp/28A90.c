@@ -4,6 +4,10 @@
 #include <psxsdk/libgte.h>
 #include <psxsdk/libgpu.h>
 
+double sin(double x);
+double cos(double x);
+float func_psp_08906994(float, float);
+
 extern SVECTOR D_psp_08C63B28;
 extern SVECTOR D_psp_08C63B30;
 extern SVECTOR D_psp_08C63B38;
@@ -17,6 +21,10 @@ extern s16 D_psp_08C63B5C;
 extern s16 D_psp_08C63B5E;
 extern s16 D_psp_08C63B60;
 extern s16 D_psp_08C63B62;
+extern u16 D_psp_08C63B68;
+extern u16 D_psp_08C63B6C;
+extern u16 D_psp_08C63B70;
+extern u16 D_psp_08C63B74;
 extern s32 D_psp_08C63B78;
 extern s32 D_psp_08C63B88;
 extern MATRIX D_psp_08C63BA8;
@@ -74,7 +82,12 @@ void NormalColorDpq(SVECTOR* v0, CVECTOR* v1, long p, CVECTOR* v2) {
     v2->cd = v1->cd;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", NormalClip);
+long NormalClip(long sxy0, long sxy1, long sxy2) {
+#define x(sxy) (s16) sxy
+#define y(sxy) (s16)(sxy / 0x10000)
+    return x(sxy0) * y(sxy1) + x(sxy1) * y(sxy2) + x(sxy2) * y(sxy0) -
+           x(sxy0) * y(sxy2) - x(sxy1) * y(sxy0) - x(sxy2) * y(sxy1);
+}
 
 void RotTrans(SVECTOR* v0, VECTOR* v1, long* flag) {
     gte_ldv0(v0);
@@ -144,7 +157,7 @@ long RotAverageNclip4(
     return temp_s0;
 }
 
-long func_psp_08927C5C(long a) {
+static long SquareRoot(long a) {
     s32 temp_v0;
     s32 var_a1;
 
@@ -159,17 +172,77 @@ long func_psp_08927C5C(long a) {
     return temp_v0;
 }
 
-long SquareRoot0(long a) { return func_psp_08927C5C(a); }
+long SquareRoot0(long a) { return SquareRoot(a); }
 
-long SquareRoot12(long a) { return func_psp_08927C5C(a / 0x1000) * 0x1000; }
+long SquareRoot12(long a) { return SquareRoot(a / 0x1000) * 0x1000; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", ratan2);
+long ratan2(long y, long x) {
+    return (func_psp_08906994(y, x) * 0x1000 / 2) / 3.1415927f;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", VectorNormalS);
+long VectorNormalS(VECTOR* v0, SVECTOR* v1) {
+    s32 len;
+    s32 lenSq;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", rcos);
+    lenSq = v0->vx * v0->vx + v0->vy * v0->vy + v0->vz * v0->vz;
+    len = SquareRoot(lenSq);
+    if (len == 0) {
+        v1->vx = 0;
+        v1->vy = 0;
+        v1->vz = 0;
+    } else {
+        v1->vx = (v0->vx * 0x1000) / len;
+        v1->vy = (v0->vy * 0x1000) / len;
+        v1->vz = (v0->vz * 0x1000) / len;
+    }
+    return lenSq;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", rsin);
+int rcos(int a) {
+    static s32 rcos_tbl[0x1000];
+    static bool rcos_init;
+    s32 i;
+
+    if (!rcos_init) {
+        for (i = 0; i < LEN(rcos_tbl); i++) {
+            rcos_tbl[i] = 0x1000 * cos((3.1415927f * i) / 0x800);
+        }
+        rcos_init = true;
+    }
+    if (a <= -0x1000 || a >= 0x1000) {
+        a %= 0x1000;
+    }
+    if (a < 0) {
+        a += 0x1000;
+    }
+    if (a == 0x1000) {
+        a = 0;
+    }
+    return rcos_tbl[a];
+}
+
+int rsin(int a) {
+    static s32 rsin_tbl[0x1000];
+    static bool rsin_init;
+    s32 i;
+
+    if (!rsin_init) {
+        for (i = 0; i < LEN(rsin_tbl); i++) {
+            rsin_tbl[i] = 0x1000 * sin((3.1415927f * i) / 0x800);
+        }
+        rsin_init = true;
+    }
+    if (a <= -0x1000 || a >= 0x1000) {
+        a %= 0x1000;
+    }
+    if (a < 0) {
+        a += 0x1000;
+    }
+    if (a == 0x1000) {
+        a = 0;
+    }
+    return rsin_tbl[a];
+}
 
 void gte_stub(void) {}
 
@@ -431,13 +504,38 @@ void gte_strgb(long* rgb) { *rgb = D_psp_08C63B78; }
 
 void gte_ldrgb(long* rgb) { D_psp_08C63B78 = *rgb; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_nclip);
+void gte_nclip(void) {
+    D_psp_08C63B88 =
+        D_psp_08C63B58 * D_psp_08C63B5E + D_psp_08C63B5C * D_psp_08C63B62 +
+        D_psp_08C63B60 * D_psp_08C63B5A - D_psp_08C63B60 * D_psp_08C63B5E -
+        D_psp_08C63B58 * D_psp_08C63B62 - D_psp_08C63B5C * D_psp_08C63B5A;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_avsz3);
+void gte_avsz3(void) {
+    D_psp_08C63B88 = D_psp_08C63B44 =
+        (D_psp_08C63B6C + D_psp_08C63B70 + D_psp_08C63B74) / 3;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_089295E4);
+void func_psp_089295E4(void) {
+    D_psp_08C63B88 = D_psp_08C63B44 =
+        (D_psp_08C63B68 + D_psp_08C63B6C + D_psp_08C63B70 + D_psp_08C63B74) / 4;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_avsz4);
+void gte_avsz4(void) {
+    s32 min;
+
+    min = D_psp_08C63B68;
+    if (D_psp_08C63B6C < min) {
+        min = D_psp_08C63B6C;
+    }
+    if (D_psp_08C63B70 < min) {
+        min = D_psp_08C63B70;
+    }
+    if (D_psp_08C63B74 < min) {
+        min = D_psp_08C63B74;
+    }
+    D_psp_08C63B88 = D_psp_08C63B44 = min;
+}
 
 void gte_ldv01c(SVECTOR* v) {
     gte_ldv0(&v[0]);
