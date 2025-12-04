@@ -3,5 +3,5 @@
 
 void OVL_EXPORT(Load)(void) {
     memcpy(&g_PlOvl, &RIC_player, sizeof(PlayerOvl));
-    func_8929FA8(g_PlOvlSpritesheet, RIC_SPRITE_COUNT);
+    func_psp_08929FA8(g_PlOvlSpritesheet, RIC_SPRITE_COUNT);
 }

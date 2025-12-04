@@ -18,5 +18,8 @@ typedef enum {
 u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it);
 
 // PSP exclusive functions in PS.ELF
-void func_892667C(s32 paletteID, u16* palette);
+void func_psp_0891CEB8(s32, s32);
+void func_psp_0892667C(s32 paletteID, u16* palette);
 void func_91040A0(u_long** gfxBank);
+float func_psp_089260AC(float);
+float func_psp_089260D0(float);

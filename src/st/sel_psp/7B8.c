@@ -870,7 +870,7 @@ void UpdateFileSelect(s32 arg0) {
                      (g_MemCardSelectorX / 3) * 0xF;
         if (temp_s0 != D_801D6B04 && arg0) {
             if (g_SaveSummary[temp_s0 / 15].slot[temp_s0 % 15] ==
-                func_8919560()) {
+                func_psp_08919560()) {
                 D_801BAF0C = 0xFF;
             }
         }
@@ -908,10 +908,10 @@ void func_801ADF94(s32 flags, s32 yOffset) {
             func_801ACBE4(GFX_UNK_16, 8);
             sp4c = func_psp_09237ED8(D_psp_091CE1F8, 0x80, 8);
             DrawString16x16(D_psp_091CE1F8, sp4c, y + 0x78, 1);
-        } else if (
-            (saveDescriptorString == 4) ||
-            ((port == 0) && g_SaveSummary[port].slot[slot] == func_8919560())) {
-            func_8919638(g_Pix, 0x2000);
+        } else if ((saveDescriptorString == 4) ||
+                   ((port == 0) &&
+                    g_SaveSummary[port].slot[slot] == func_psp_08919560())) {
+            func_psp_08919638(g_Pix, 0x2000);
             save = (SaveData*)g_Pix;
             func_801AC084(GFX_UNK_12, y);
             func_801ACBE4(GFX_UNK_12, 0);
@@ -1019,7 +1019,8 @@ void func_801ADF94(s32 flags, s32 yOffset) {
                         x, y, 0x10, 0x10, 0x80, 0x80, 0x200, 0xC, tge, color);
                 }
                 if (icon >= 0) {
-                    if (g_SaveSummary[i / 15].slot[i % 15] == func_8919560()) {
+                    if (g_SaveSummary[i / 15].slot[i % 15] ==
+                        func_psp_08919560()) {
                         func_801B27A8(x, y, 0x10, 0x10, 0x90, 0x80, 0x200, 0x17,
                                       tge, color);
                     }
@@ -1368,7 +1369,7 @@ void OVL_EXPORT(Update)(void) {
             func_801ADF94(0x83, 0);
             DrawNavigationTips(Tips_YesNo);
             g_GameEngineStep = Upd_Eng_64;
-        } else if (func_8919560() == -1) {
+        } else if (func_psp_08919560() == -1) {
             func_801B2608("中断データが見つかりました", 4);
             func_801B2608("中断データから再開しますか？", 5);
             func_801ADF94(0x83, 0);
@@ -1392,7 +1393,7 @@ void OVL_EXPORT(Update)(void) {
             func_801B25D4("　", 5);
             g_GameEngineStep = Upd_Eng_51;
         } else if (g_pads[0].tapped & D_psp_08B42050) {
-            func_8919638(g_Pix, 0x2000);
+            func_psp_08919638(g_Pix, 0x2000);
             LoadSaveData(g_Pix);
             if (g_Pix[0][0x1FFF] == 0xFF) {
                 (void)0; // fake
@@ -1595,8 +1596,8 @@ void OVL_EXPORT(Update)(void) {
                     g_api.PlaySfx(SFX_UI_CONFIRM);
                     g_GameEngineStep++;
                     if (g_SaveSummary[D_801D6B04 / 15].slot[D_801D6B04 % 15] ==
-                        func_8919560()) {
-                        var_s5 = func_8919570();
+                        func_psp_08919560()) {
+                        var_s5 = func_psp_08919570();
                     }
                 }
             }
@@ -1979,8 +1980,8 @@ void OVL_EXPORT(Update)(void) {
         }
         if (temp_s1 == 1) {
             if (g_SaveSummary[D_801D6B04 / 15].slot[D_801D6B04 % 15] ==
-                func_8919560()) {
-                func_8919638(g_Pix, 0x2000);
+                func_psp_08919560()) {
+                func_psp_08919638(g_Pix, 0x2000);
                 LoadSaveData(g_Pix);
                 if (g_Pix[0][0x1FFF] == 0xFF) {
                     D_8003C730 = 4;
@@ -1989,9 +1990,9 @@ void OVL_EXPORT(Update)(void) {
                     D_8003C730 = 1;
                     D_8B42044 = 2;
                 }
-                var_s5 = func_8919570();
-                func_8919770(3);
-                func_89195A0(var_s5);
+                var_s5 = func_psp_08919570();
+                func_psp_08919770(3);
+                func_psp_089195A0(var_s5);
             } else {
                 D_8B42044 = 1;
                 D_8003C730 = 1;

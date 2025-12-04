@@ -1525,7 +1525,7 @@ void RunMainEngine(void) {
                 return;
             }
 #if defined(VERSION_PSP)
-            func_8932B50();
+            func_psp_08932B50();
 #endif
             g_GameEngineStep = Engine_3;
             g_MenuStep = MENU_STEP_INIT;

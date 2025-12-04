@@ -5508,7 +5508,7 @@ void func_us_801B8A00(Entity* self) {
 #ifdef VERSION_PSP
         switch (self->step_s) {
         case 0:
-            func_892A620(1, 1);
+            func_psp_0892A620(1, 1);
             g_api.PlaySfx(SET_STOP_MUSIC);
             self->ext.et_801B6F30.unk86 = 1;
             self->step_s++;

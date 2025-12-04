@@ -222,7 +222,7 @@ void EntityStageTitleCard(Entity* self) {
             GetLang(D_pspeu_09253FF0, D_pspeu_09254BD8, D_pspeu_092545D8,
                     D_pspeu_092548E8, D_pspeu_09254300);
         func_91040A0(D_pspeu_09254E98);
-        func_892667C(0x8210, D_pspeu_09253FB0);
+        func_psp_0892667C(0x8210, D_pspeu_09253FB0);
 #endif
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         if (primIndex == -1) {

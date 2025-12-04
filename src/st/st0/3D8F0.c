@@ -61,7 +61,7 @@ void func_801BD8F0(Entity* self) {
         // fallthrough
     case 3:
 #ifdef VERSION_PSP
-        func_891B0DC(0x300, 0);
+        func_psp_0891B0DC(0x300, 0);
 #else
         prim = self->ext.prim;
         drawEnv = g_CurrentBuffer->draw;

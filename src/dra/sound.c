@@ -1419,8 +1419,8 @@ void ExecSoundCommands(void) {
         case SET_UNK_0B:
             AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
 #ifdef VERSION_PSP
-            func_892A620(0, 0);
-            func_892A620(1, 0);
+            func_psp_0892A620(0, 0);
+            func_psp_0892A620(1, 0);
 #endif
             StopSeq();
             SetReleaseRate2();
@@ -1429,8 +1429,8 @@ void ExecSoundCommands(void) {
         case SET_UNK_0C:
             AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
 #ifdef VERSION_PSP
-            func_892A620(0, 0);
-            func_892A620(1, 0);
+            func_psp_0892A620(0, 0);
+            func_psp_0892A620(1, 0);
 #endif
             StopSeq();
             SoundWait();

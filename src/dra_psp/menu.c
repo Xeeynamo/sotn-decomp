@@ -2900,7 +2900,7 @@ bool func_psp_090F18B0(s32 equipIndex) {
 
     weaponId = g_EquipDefs[equipId].weaponId;
     if (weaponId != 0xFF) {
-        func_8932CEC(equipIndex, weaponId);
+        func_psp_08932CEC(equipIndex, weaponId);
         D_psp_091CDD70[equipIndex] = 1;
         g_EquippedWeaponIds[equipIndex] = weaponId;
     }
@@ -2911,7 +2911,7 @@ s32 func_psp_090F1968(s32 equipIndex) {
     if (D_psp_091CDD70[equipIndex] == 0) {
         return 1;
     }
-    if (!func_8932D34()) {
+    if (!func_psp_08932D34()) {
         return 0;
     }
     if (func_psp_090FAB30(g_EquippedWeaponIds[equipIndex],
@@ -3676,7 +3676,7 @@ block_4:
         break;
     case MENU_STEP_EXIT_11:
 #if defined(VERSION_PSP)
-        if (!func_8932EA4()) {
+        if (!func_psp_08932EA4()) {
             break;
         }
 #endif
@@ -4069,7 +4069,7 @@ block_4:
                 if (g_Status.relics[id] & RELIC_FLAG_ACTIVE) {
                     g_Servant = g_RelicDefs[id].unk0C;
 #if defined(VERSION_PSP)
-                    func_8932E78(g_Servant - 1);
+                    func_psp_08932E78(g_Servant - 1);
 #endif
                     if (g_Servant == FAM_ACTIVE_SWORD) {
                         if (g_Status.equipment[LEFT_HAND_SLOT] ==

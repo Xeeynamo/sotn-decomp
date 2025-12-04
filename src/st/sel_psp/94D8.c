@@ -216,11 +216,11 @@ void HandleTitleScreen(void) {
         func_801B18F4();
         D_801BB014 = 0;
         g_GameEngineStep++;
-        func_891CEB8(0x200, 0xF0);
-        func_891CEB8(0x200, 0xF1);
-        func_8925F7C(0x200, 0xF2, 0x10, 1);
-        func_8925F7C(0x210, 0xF2, 0x10, 1);
-        func_8925F7C(0x220, 0xF2, 0x10, 1);
+        func_psp_0891CEB8(0x200, 0xF0);
+        func_psp_0891CEB8(0x200, 0xF1);
+        func_psp_08925F7C(0x200, 0xF2, 0x10, 1);
+        func_psp_08925F7C(0x210, 0xF2, 0x10, 1);
+        func_psp_08925F7C(0x220, 0xF2, 0x10, 1);
         break;
 
     case 1:

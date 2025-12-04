@@ -2507,8 +2507,8 @@ void EntityTeleport(Entity* self) {
     case 6:
         PLAYER.palette = PAL_FLAG(PAL_PLAYER_HIDDEN);
 #ifdef VERSION_PSP
-        func_892A620(0, 1);
-        func_892A620(1, 1);
+        func_psp_0892A620(0, 1);
+        func_psp_0892A620(1, 1);
 #endif
         var_s5 = true;
         if (--self->ext.teleport.timer == 0) {

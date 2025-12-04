@@ -682,8 +682,6 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
         f"-T config/undefined_syms.{sym_version}.txt",
         f"-T {undefined_syms_auto_path}",
     ]
-    if ovl_name != "main":
-        symbols_lists.append(f"-T {undefined_funcs_auto_path}")
     ld_flags_extra = ""
     if platform == "psp":
         # used to force the linker to not garbage-collect specific user-defined symbols
@@ -698,6 +696,13 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
                 inputs=[output_elf],
             )
         else:
+            # force DRA to be linked with the exported `main` symbols, allowing
+            # for the linker to fail if symbols are not correctly synchronized.
+            if ovl_name != "dra":
+                # TODO this should also be removed for all other overlays. But
+                # this would require DRA to also export its own symbols.
+                symbols_lists.append(f"-T {undefined_funcs_auto_path}")
+
             # allow unused symbols in overlays to be garbage-collected
             ld_flags_extra = "--gc-sections"
 
@@ -707,6 +712,9 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
             # tell Ninja to wait `main.elf` for generate the linker script
             # before linking any overlay
             objs.append(main_export_script)
+    elif platform == "psx":
+        if ovl_name != "main":
+            symbols_lists.append(f"-T {undefined_funcs_auto_path}")
     nw.build(
         rule="psx-ld",
         outputs=[output_elf],

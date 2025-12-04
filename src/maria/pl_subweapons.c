@@ -779,7 +779,7 @@ void EntityMariaDragonCrash(Entity* self) {
                 self->rotate += 0x40;
             }
             SetGeomOffset(0, 0);
-            func_89285A0(self->rotate, &m);
+            func_psp_089285A0(self->rotate, &m);
             TransMatrix(&m, &vTranslate);
             SetRotMatrix(&m);
             SetTransMatrix(&m);
@@ -923,7 +923,7 @@ void EntityMariaDragonCrashBodyPart(Entity* self) {
                     s32 angle;
                     angle =
                         NormalizeAngle(ratan2(spD0 - var_s5, spD4 - var_s6));
-                    func_89285A0(angle, &m);
+                    func_psp_089285A0(angle, &m);
                     SetGeomOffset(var_s6, var_s5);
 #ifndef VERSION_PSP
                     // I do not know why this works. The stack might be messed
@@ -1440,7 +1440,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
                 self->ext.mariaCardinalCrash.velocityX += initialAcceleration;
             }
             SetGeomOffset(0, 0);
-            func_89285A0(self->ext.mariaCardinalCrash.angle, &m);
+            func_psp_089285A0(self->ext.mariaCardinalCrash.angle, &m);
             TransMatrix(&m, &vTransform);
             SetRotMatrix(&m);
             SetTransMatrix(&m);
