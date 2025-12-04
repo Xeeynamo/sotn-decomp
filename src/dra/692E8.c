@@ -913,7 +913,7 @@ void EntityAlucard() {
                             i = HandleDamage(
                                 &damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
 #if defined(VERSION_PSP)
-                            if (D_8C630C4) {
+                            if (D_psp_08C630C4) {
                                 PLAYER.hitPoints = 0;
                                 i = 0;
                             }

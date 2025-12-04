@@ -306,20 +306,20 @@ typedef enum {
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR &D_8017D000
-#define STAGE_PRG_PTR D_8D2DC40
+#define STAGE_PRG_PTR D_psp_08D2DC40
 #define CASTLE_MAP_PTR g_BmpCastleMap
 #ifndef DEMO_KEY_PTR
-#define DEMO_KEY_PTR D_8D95C40
+#define DEMO_KEY_PTR D_psp_08D95C40
 #endif
-#define SIM_CHR0 D_8C6BC40
-#define SIM_CHR1 D_8C6FC40
-#define SIM_PTR D_8C6BC40
+#define SIM_CHR0 D_psp_08C6BC40
+#define SIM_CHR1 D_psp_08C6FC40
+#define SIM_PTR D_psp_08C6BC40
 
 extern u8 g_BmpCastleMap[0x20000];
-extern u8 D_8C6BC40[];
-extern u8 D_8C6FC40[];
-extern u8 D_8D2DC40[];
-extern u8 D_8D95C40[];
+extern u8 D_psp_08C6BC40[];
+extern u8 D_psp_08C6FC40[];
+extern u8 D_psp_08D2DC40[];
+extern u8 D_psp_08D95C40[];
 
 #endif
 
@@ -2228,7 +2228,7 @@ extern u32 D_80097C98;
 extern s32 subWeapon; // g_SubweaponId
 extern u32 D_80097C40[];
 extern PlayerDraw g_PlayerDraw[0x10];
-extern s32 D_8C630C4;
+extern s32 D_psp_08C630C4;
 extern s32 D_800987B4;
 extern StHEADER* D_800987C8;
 extern s32 g_DebugPlayer;

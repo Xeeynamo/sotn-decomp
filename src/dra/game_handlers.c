@@ -405,8 +405,8 @@ static u_long* D_psp_09156F28[] = {
 
 // I think these are external to the game.
 // could be PSP system or from Dracula X Chronicles
-extern s32 D_8C630D4;
-extern s32 D_8C630D8;
+extern s32 D_psp_08C630D4;
+extern s32 D_psp_08C630D8;
 s16 AllocPrimitives(u8 type, s32 count);
 #endif
 
@@ -507,14 +507,14 @@ void HandlePlay(void) {
 #ifndef VERSION_PSP
             return;
 #else
-            if (D_8C630D4 != 0) {
-                strcpy(g_Status.saveName, D_psp_0914C3D8[D_8C630D8]);
+            if (D_psp_08C630D4 != 0) {
+                strcpy(g_Status.saveName, D_psp_0914C3D8[D_psp_08C630D8]);
                 g_IsTimeAttackUnlocked = true;
-                if (D_8C630D8 == 1) {
+                if (D_psp_08C630D8 == 1) {
                     strcpy(g_Status.saveName, "richter ");
                     g_PlayableCharacter = PLAYER_RICHTER;
                     g_IsTimeAttackUnlocked = true;
-                } else if (D_8C630D8 == 2) {
+                } else if (D_psp_08C630D8 == 2) {
                     strcpy(g_Status.saveName, "maria   ");
                     g_PlayableCharacter = PLAYER_MARIA;
                     g_IsTimeAttackUnlocked = true;
@@ -523,9 +523,9 @@ void HandlePlay(void) {
                     g_IsTimeAttackUnlocked = false;
                 }
             }
-            if (D_8C630D4 == 1) {
+            if (D_psp_08C630D4 == 1) {
                 DemoInit(1);
-            } else if (D_8C630D4 == 2) {
+            } else if (D_psp_08C630D4 == 2) {
                 DemoInit(0);
             } else {
                 break;
@@ -541,7 +541,7 @@ void HandlePlay(void) {
             return;
         }
 #ifdef VERSION_PSP
-        if (D_8C630D4 == 0) {
+        if (D_psp_08C630D4 == 0) {
             g_StageId = func_800F16D0();
         }
 #else
@@ -1089,7 +1089,7 @@ static RECT D_800A0240 = {0x340, 0x180, 0x40, 0x40};
 
 #ifdef VERSION_PSP
 void func_psp_08932CEC(bool, s8);
-extern s32 D_8C630D4;
+extern s32 D_psp_08C630D4;
 extern u8 D_psp_091463F8;
 extern u8 D_psp_09146400;
 extern u8 D_psp_09146401;
@@ -1415,9 +1415,9 @@ void HandleNowLoading(void) {
                         g_IsTimeAttackUnlocked = false;
                     }
 #ifdef VERSION_PSP
-                    if (D_8C630D4 == 1) {
+                    if (D_psp_08C630D4 == 1) {
                         DemoInit(1);
-                    } else if (D_8C630D4 == 2) {
+                    } else if (D_psp_08C630D4 == 2) {
                         DemoInit(0);
                     }
 #else

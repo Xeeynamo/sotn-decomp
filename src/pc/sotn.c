@@ -51,7 +51,7 @@ extern u_long* D_800A3BB8[];
 
 FactoryBlueprint g_FactoryBlueprints[0xC0] = {0};
 u8 g_BmpCastleMap[0x20000];
-u8 D_8D95C40[0x2000];
+u8 D_psp_08D95C40[0x2000];
 
 extern u16 g_PalEquipIcon[320 * 16];
 

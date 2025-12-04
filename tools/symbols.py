@@ -508,15 +508,16 @@ def get_symbols(file_path, excluded_starts=[], excluded_ends=[], excluded_commen
 
 
 def parse(writer: TextIO, file_name: str, no_default=False, allow_duplicated=False):
-    excluded_starts = ["D_", "func_", "jpt_", "jtbl_"] if no_default else ["jpt_", "jtbl_"]
+    excluded_starts = (
+        ["D_", "func_", "jpt_", "jtbl_"] if no_default else ["jpt_", "jtbl_"]
+    )
     symbols = get_symbols(file_name, excluded_starts)
 
     symbol_suffix = " // allow_duplicated:true" if allow_duplicated else ""
     lines = (
-        f"{symbol.name} = 0x{symbol.address:08X};{symbol_suffix}"
-        for symbol in symbols
+        f"{symbol.name} = 0x{symbol.address:08X};{symbol_suffix}" for symbol in symbols
     )
-    writer.write("\n".join(lines)+"\n")
+    writer.write("\n".join(lines) + "\n")
 
 
 def extract_dynamic_symbols(config_path, output):

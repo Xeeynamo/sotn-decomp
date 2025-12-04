@@ -12,7 +12,7 @@ extern s32 D_psp_08B42050;
 extern s32 D_psp_08B42054;
 extern char* D_psp_091CE1F0;
 extern char* D_psp_091CE1F8;
-extern s32 D_8B42044;
+extern s32 D_psp_08B42044;
 extern s32 D_91ED288;
 
 // BSS
@@ -1234,7 +1234,7 @@ void OVL_EXPORT(Update)(void) {
         func_801AECA0();
         func_801B1F4C(9);
         func_801AD490();
-        D_8B42044 = 0;
+        D_psp_08B42044 = 0;
         g_GameEngineStep++;
         break;
     case Upd_Eng_MenuFadeIn:
@@ -1988,13 +1988,13 @@ void OVL_EXPORT(Update)(void) {
                     D_91ED288 = g_Pix[0][0x1FFE];
                 } else {
                     D_8003C730 = 1;
-                    D_8B42044 = 2;
+                    D_psp_08B42044 = 2;
                 }
                 var_s5 = func_psp_08919570();
                 func_psp_08919770(3);
                 func_psp_089195A0(var_s5);
             } else {
-                D_8B42044 = 1;
+                D_psp_08B42044 = 1;
                 D_8003C730 = 1;
             }
             D_80097924 = D_801D6B04 / 15;

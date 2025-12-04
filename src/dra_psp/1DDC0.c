@@ -4,8 +4,8 @@
 #include "../dra/dra_bss.h"
 #include "lba.h"
 
-extern u_long D_8D6DC40;
-extern s32 D_8B42064;
+extern u_long D_psp_08D6DC40;
+extern s32 D_psp_08B42064;
 extern char* D_psp_08B42060;
 extern u8 g_ServantDesc;
 extern s32 g_UserLanguage;
@@ -484,7 +484,7 @@ s32 LoadFileSimToMem(SimKind kind) {
     case SIM_1:
         LoadStageTileset(STAGE_PRG_PTR, 0x100);
         LoadImage(&g_Vram.D_800ACD98, (u_long*)D_800A04CC);
-        D_psp_091CE378 = &D_8D6DC40;
+        D_psp_091CE378 = &D_psp_08D6DC40;
         LoadImage(&g_Vram.D_800ACDA8, D_psp_091CE378);
         clutAddr = (u_long*)g_Clut[1];
         StoreImage(&g_Vram.D_800ACDA8, clutAddr);
@@ -723,7 +723,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     }
     if (type == SimFileType_Vh) {
         if (fileId & 0x8000) {
-            if (!D_8B42064) {
+            if (!D_psp_08B42064) {
                 var_a0 = fileId & 0x7FFF;
                 g_SimFile = &D_800A036C[var_a0];
             } else {
@@ -770,7 +770,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     }
     if (type == SimFileType_Vb) {
         if (fileId & 0x8000) {
-            if (!D_8B42064) {
+            if (!D_psp_08B42064) {
                 g_SimFile = &D_800A036C[fileId & 0x7FFF];
             } else {
                 g_SimFile = &D_psp_09160430[fileId & 0x7FFF];
@@ -789,7 +789,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         return 0;
     }
     if (type == SimFileType_Seq) {
-        if (!D_8B42064) {
+        if (!D_psp_08B42064) {
             g_SimFile = &D_800A04AC[fileId];
         } else {
             g_SimFile = &D_psp_091605D0[fileId];

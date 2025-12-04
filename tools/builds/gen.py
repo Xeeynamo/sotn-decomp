@@ -680,7 +680,6 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
         sym_version = "beta"
     symbols_lists = [
         f"-T config/undefined_syms.{sym_version}.txt",
-        f"-T {undefined_syms_auto_path}",
     ]
     ld_flags_extra = ""
     if platform == "psp":
@@ -689,6 +688,7 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
         main_export_script = build_path(ver, "main.symexport.ld")
         if ovl_name == "main":
             symbols_lists.append(f"-T {undefined_funcs_auto_path}")
+            symbols_lists.append(f"-T {undefined_syms_auto_path}")
             # Make `main` symbols available to other overlays
             nw.build(
                 rule="export-symbols",
@@ -702,6 +702,7 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
                 # TODO this should also be removed for all other overlays. But
                 # this would require DRA to also export its own symbols.
                 symbols_lists.append(f"-T {undefined_funcs_auto_path}")
+                symbols_lists.append(f"-T {undefined_syms_auto_path}")
 
             # allow unused symbols in overlays to be garbage-collected
             ld_flags_extra = "--gc-sections"
@@ -715,6 +716,7 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
     elif platform == "psx":
         if ovl_name != "main":
             symbols_lists.append(f"-T {undefined_funcs_auto_path}")
+        symbols_lists.append(f"-T {undefined_syms_auto_path}")
     nw.build(
         rule="psx-ld",
         outputs=[output_elf],
