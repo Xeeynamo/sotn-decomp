@@ -60,8 +60,6 @@ static char opening_line_es[] = "El Conde Dr\323cula hab\334a";
 static char opening_line_de[] = "Graf Dracula war mithilfe";
 static char opening_line_it[] = "Il Conte Dracula \xD7 risorto";
 
-extern s32 g_UserLanguage;
-
 static void SetPrim(s32 i, Primitive* prim) { D_pspeu_0927B0C8[i].prim = prim; }
 
 static void SetPrimYZero(s32 i, s16 prim_y0) {

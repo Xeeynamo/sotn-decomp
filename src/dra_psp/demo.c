@@ -2,9 +2,6 @@
 #include "../dra/dra.h"
 #include <pspiofilemgr_fcntl.h>
 
-extern s32 D_psp_08C630D4;
-extern s32 D_psp_08C630DC;
-
 // BSS
 static u8* g_DemoPtr = DEMO_KEY_PTR;
 s32 g_DemoKeyIdx;

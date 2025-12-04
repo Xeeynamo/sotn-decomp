@@ -36,7 +36,7 @@ typedef struct {
 // BSS
 extern s32 D_psp_08B42048;
 extern s32 D_psp_08B4204C;
-extern s32 D_psp_08B42050;
+extern u32 D_psp_08B42050;
 extern s8 D_psp_08DAF2C8;
 extern s32* D_psp_08DAF2CC;
 extern u8 D_psp_08DAF300[];

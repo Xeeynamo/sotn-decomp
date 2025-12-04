@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../sel/sel.h"
 
-extern s32 g_UserLanguage;
 extern s32 D_psp_0924F800;
 extern s32 D_psp_0924F808;
-extern s32 D_psp_08B42050;
 
 // BSS
 static s32 D_801BB010;

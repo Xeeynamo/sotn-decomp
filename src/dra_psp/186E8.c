@@ -7,9 +7,7 @@
 
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 
-extern s32 D_psp_08B42060;
 extern s32 D_psp_091CE1E8;
-extern s32 g_UserLanguage;
 
 extern u8 D_psp_09192EB0;
 extern u8 D_psp_091A4CE8;

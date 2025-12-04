@@ -8,11 +8,8 @@ extern char** g_SaveAreaNames;
 extern char* D_psp_091CE200;
 extern char* D_psp_091CE208;
 extern char* D_psp_091CE210;
-extern s32 D_psp_08B42050;
-extern s32 D_psp_08B42054;
 extern char* D_psp_091CE1F0;
 extern char* D_psp_091CE1F8;
-extern s32 D_psp_08B42044;
 extern s32 D_91ED288;
 
 // BSS

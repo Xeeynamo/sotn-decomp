@@ -11,13 +11,11 @@ typedef struct {
     Point32 pos;
 } RoomLoadDefHolder;
 
-extern bool D_psp_08C630C8;
 extern s32 D_psp_091CE578;
 extern void (*D_psp_08CE9C48)();
 extern s32 D_psp_091CE570;
 
 #if defined(VERSION_PSP)
-extern s32* D_psp_08D97C40;
 #define SAVE_DATA_PTR &D_psp_08D97C40
 #define CAN_PAUSE g_PauseAllowed&& D_psp_091CE578
 #else

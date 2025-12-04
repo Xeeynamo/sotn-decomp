@@ -4,9 +4,6 @@
 
 s16 SsSeqOpen(u32 addr, s16 vab_id);
 
-extern s32 D_psp_08B42064;
-extern s32 D_psp_08B42060;
-
 s32 D_8013B61C;
 s32 g_KeyOffChannels;
 s32 g_CdCommandStatus;

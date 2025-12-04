@@ -2,7 +2,6 @@
 #include "../sel/sel.h"
 #include <cutscene.h>
 
-extern u8 D_psp_08D39D3C[];
 extern Overlay OVL_EXPORT(Overlay);
 
 // BSS

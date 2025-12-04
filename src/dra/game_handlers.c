@@ -405,8 +405,6 @@ static u_long* D_psp_09156F28[] = {
 
 // I think these are external to the game.
 // could be PSP system or from Dracula X Chronicles
-extern s32 D_psp_08C630D4;
-extern s32 D_psp_08C630D8;
 s16 AllocPrimitives(u8 type, s32 count);
 #endif
 
@@ -1089,7 +1087,6 @@ static RECT D_800A0240 = {0x340, 0x180, 0x40, 0x40};
 
 #ifdef VERSION_PSP
 void func_psp_08932CEC(bool, s8);
-extern s32 D_psp_08C630D4;
 extern u8 D_psp_091463F8;
 extern u8 D_psp_09146400;
 extern u8 D_psp_09146401;

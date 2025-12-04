@@ -87,8 +87,8 @@ extern s32 D_psp_08B42000; // kernel thread ID
 extern s32 D_psp_08B42044;
 extern s32 D_psp_08B42048;
 extern int D_psp_08B4204C; // button swap
-extern s32 D_psp_08B42050;
-extern s32 D_psp_08B42054;
+extern u32 D_psp_08B42050;
+extern u32 D_psp_08B42054;
 extern s32 g_UserLanguage;
 extern char* D_psp_08B4205C;
 extern char* D_psp_08B42060;

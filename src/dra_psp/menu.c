@@ -11,10 +11,7 @@ void MenuDrawStr(const char* str, s32 x, s32 y, MenuContext* ctx);
 
 extern s32 D_8013AEE4;
 extern s32 g_StatBuffTimers[16];
-extern s32 g_UserLanguage;
 extern s32 D_psp_091F35F8; // g_Pix[3];
-extern u32 D_psp_08B42050; // psp cross button
-extern u32 D_psp_08B42054; // psp triangle button
 
 // BSS
 s32 D_8013784C;

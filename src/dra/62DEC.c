@@ -28,9 +28,6 @@ extern s32* D_psp_091CE230;
 extern s32* D_psp_091CE228;
 extern s32* D_psp_091CE220;
 extern s32* D_psp_091CE218;
-
-extern u32 D_psp_08B42050; // psp cross button
-extern u32 D_psp_08B42054; // psp triangle button
 #endif
 
 static void MemCardSetPort(s32 nPort) {

@@ -3,7 +3,6 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-extern s32 D_psp_08B42044;
 extern u32 g_DebugCurPal;
 extern s32 g_DebugEnabled2;
 

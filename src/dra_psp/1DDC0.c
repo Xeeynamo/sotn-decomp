@@ -4,11 +4,7 @@
 #include "../dra/dra_bss.h"
 #include "lba.h"
 
-extern u_long D_psp_08D6DC40;
-extern s32 D_psp_08B42064;
-extern char* D_psp_08B42060;
 extern u8 g_ServantDesc;
-extern s32 g_UserLanguage;
 
 s32 g_SimVabId = 0;
 
