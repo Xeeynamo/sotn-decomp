@@ -1311,9 +1311,9 @@
 | wrp   | func_psp_09237B50                 |       36 |          4 |        |       |     |
 | dra   | func_psp_091040A0                 |       36 |          5 |        |       |     |
 | dra   | func_psp_0913F7F8                 |       36 |          5 |        |       |     |
+| main  | func_psp_08937740                 |       36 |          5 |        |       |     |
 | main  | strFileRead                       |       36 |          5 |        |       |     |
 | main  | func_psp_0892D4A8                 |       36 |          5 |        |       |     |
-| main  | func_psp_08937740                 |       36 |          5 |        |       |     |
 | main  | func_psp_0890F3E0                 |       36 |          7 |        |       |     |
 | main  | func_psp_0890F4E0                 |       36 |          7 |        |       |     |
 | main  | func_psp_0892A21C                 |       36 |          7 |        |       |     |
