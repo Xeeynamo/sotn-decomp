@@ -140,7 +140,6 @@ static s32 IsSkipRequested(void) {
     return 0;
 }
 
-int func_891CEB8(u16, u16);
 // Post-Dracula fight prologue scroll. This is responsible for scrolling the
 // prologue text and displaying the Castlevania logo.
 void PrologueScroll(void) {
@@ -264,8 +263,8 @@ void PrologueScroll(void) {
         g_GpuBuffers[1].draw.g0 = 0;
         g_GpuBuffers[1].draw.b0 = 0x18;
 #if defined(VERSION_PSP)
-        func_891CEB8(0x100, 0xF0);
-        func_891CEB8(0x100, 0xF1);
+        func_psp_0891CEB8(0x100, 0xF0);
+        func_psp_0891CEB8(0x100, 0xF1);
 #endif
         g_GameStep++;
         break;

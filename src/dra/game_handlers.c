@@ -69,7 +69,7 @@ void func_800E414C(void) {
             }
             g_LoadOvlIdx = D_8003C710;
 #ifdef VERSION_PSP
-            func_8932AD4(g_LoadOvlIdx);
+            func_psp_08932AD4(g_LoadOvlIdx);
 #endif
             D_8003C708.unk2++;
             return;
@@ -405,8 +405,6 @@ static u_long* D_psp_09156F28[] = {
 
 // I think these are external to the game.
 // could be PSP system or from Dracula X Chronicles
-extern s32 D_8C630D4;
-extern s32 D_8C630D8;
 s16 AllocPrimitives(u8 type, s32 count);
 #endif
 
@@ -491,15 +489,15 @@ void HandlePlay(void) {
         break;
     case Play_PrepareNextStage:
 #ifdef VERSION_PSP
-        func_891B0DC(0, 0x100);
-        func_891B6FC();
+        func_psp_0891B0DC(0, 0x100);
+        func_psp_0891B6FC();
 #endif
         PlaySfx(SET_UNK_12);
         PlaySfx(SET_UNK_0B);
         MuteSound();
 #ifdef VERSION_PSP
-        func_892A620(0, 1);
-        func_892A620(1, 1);
+        func_psp_0892A620(0, 1);
+        func_psp_0892A620(1, 1);
 #endif
         if (D_80097C98 & 0x80000000) {
             func_800E4970();
@@ -507,14 +505,14 @@ void HandlePlay(void) {
 #ifndef VERSION_PSP
             return;
 #else
-            if (D_8C630D4 != 0) {
-                strcpy(g_Status.saveName, D_psp_0914C3D8[D_8C630D8]);
+            if (D_psp_08C630D4 != 0) {
+                strcpy(g_Status.saveName, D_psp_0914C3D8[D_psp_08C630D8]);
                 g_IsTimeAttackUnlocked = true;
-                if (D_8C630D8 == 1) {
+                if (D_psp_08C630D8 == 1) {
                     strcpy(g_Status.saveName, "richter ");
                     g_PlayableCharacter = PLAYER_RICHTER;
                     g_IsTimeAttackUnlocked = true;
-                } else if (D_8C630D8 == 2) {
+                } else if (D_psp_08C630D8 == 2) {
                     strcpy(g_Status.saveName, "maria   ");
                     g_PlayableCharacter = PLAYER_MARIA;
                     g_IsTimeAttackUnlocked = true;
@@ -523,9 +521,9 @@ void HandlePlay(void) {
                     g_IsTimeAttackUnlocked = false;
                 }
             }
-            if (D_8C630D4 == 1) {
+            if (D_psp_08C630D4 == 1) {
                 DemoInit(1);
-            } else if (D_8C630D4 == 2) {
+            } else if (D_psp_08C630D4 == 2) {
                 DemoInit(0);
             } else {
                 break;
@@ -534,14 +532,14 @@ void HandlePlay(void) {
         }
         if (D_80097C98 & 0x08000000) {
 #ifdef VERSION_PSP
-            func_892A620(0, 1);
-            func_892A620(1, 1);
+            func_psp_0892A620(0, 1);
+            func_psp_0892A620(1, 1);
 #endif
             func_800E4970();
             return;
         }
 #ifdef VERSION_PSP
-        if (D_8C630D4 == 0) {
+        if (D_psp_08C630D4 == 0) {
             g_StageId = func_800F16D0();
         }
 #else
@@ -663,7 +661,7 @@ void HandlePlay(void) {
         }
         g_GameStep++;
 #ifdef VERSION_PSP
-        func_8932AD4(g_StageId);
+        func_psp_08932AD4(g_StageId);
 #endif
         break;
     case Play_LoadStageSfx:
@@ -674,7 +672,7 @@ void HandlePlay(void) {
             g_LoadOvlIdx = g_StageId;
         } else {
 #ifdef VERSION_PSP
-            if (!func_8932B74()) {
+            if (!func_psp_08932B74()) {
                 break;
             }
 #endif
@@ -779,6 +777,7 @@ void func_800E5498(void) {
     g_GpuUsage.gt4++;
 }
 
+void func_psp_091040A0(u_long** gfxBank);
 void HandleGameOver(void) {
     Primitive* prim;
     s32 i;
@@ -809,8 +808,8 @@ void HandleGameOver(void) {
         HideAllBackgroundLayers();
         func_800EAD7C();
 #ifdef VERSION_PSP
-        func_891B6FC();
-        func_892F83C();
+        func_psp_0891B6FC();
+        func_psp_0892F83C();
 #endif
         g_GameStep++;
         break;
@@ -819,8 +818,8 @@ void HandleGameOver(void) {
 #ifndef VERSION_PSP
             MoveImage(&g_CurrentBuffer->next->disp.disp, 0x300, 0);
 #else
-            func_891B0DC(0x40, 0);
-            func_891AE04();
+            func_psp_0891B0DC(0x40, 0);
+            func_psp_0891AE04();
 #endif
             SetGPUBuffRGBZero();
             g_GpuBuffers[1].draw.isbg = 1;
@@ -922,7 +921,7 @@ void HandleGameOver(void) {
 #ifndef VERSION_PSP
         }
 #else
-            func_891CEB8(0, 0xF0);
+            func_psp_0891CEB8(0, 0xF0);
         }
         D_psp_09156F10[3] =
             (u_long*)GetLang(NULL, game_over_left_fr, game_over_left_sp,
@@ -1061,7 +1060,7 @@ void HandleGameOver(void) {
             break;
         }
 #ifdef VERSION_PSP
-        func_891AE68();
+        func_psp_0891AE68();
 #endif
         FreePrimitives(D_8013640C);
         g_GameStep++;
@@ -1073,7 +1072,7 @@ void HandleGameOver(void) {
     case Gameover_11_Alt:
         if (g_GameStep == Gameover_11_Alt) {
 #ifdef VERSION_PSP
-            func_892A998();
+            func_psp_0892A998();
 #endif
             SetGameState(Game_Title);
         } else if (g_StageId == STAGE_ST0) {
@@ -1088,8 +1087,7 @@ void HandleGameOver(void) {
 static RECT D_800A0240 = {0x340, 0x180, 0x40, 0x40};
 
 #ifdef VERSION_PSP
-void func_8932CEC(bool, s8);
-extern s32 D_8C630D4;
+void func_psp_08932CEC(bool, s8);
 extern u8 D_psp_091463F8;
 extern u8 D_psp_09146400;
 extern u8 D_psp_09146401;
@@ -1149,7 +1147,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     // These two lines load up the SOTN logo in the lower right.
     // First line loads palettized image, second loads the palette
     LoadImage(&sp48, (u_long*)&D_psp_09156F48);
-    func_89264CC(0x81D0, &D_psp_0915AF48, 1);
+    func_psp_089264CC(0x81D0, &D_psp_0915AF48, 1);
     D_psp_0915E4E8[3] =
         (u_long*)GetLang(NULL, loading_fr, loading_sp, loading_ge, loading_it);
     if (D_psp_0915E4E8[3] != NULL) {
@@ -1415,9 +1413,9 @@ void HandleNowLoading(void) {
                         g_IsTimeAttackUnlocked = false;
                     }
 #ifdef VERSION_PSP
-                    if (D_8C630D4 == 1) {
+                    if (D_psp_08C630D4 == 1) {
                         DemoInit(1);
-                    } else if (D_8C630D4 == 2) {
+                    } else if (D_psp_08C630D4 == 2) {
                         DemoInit(0);
                     }
 #else
@@ -1436,20 +1434,20 @@ void HandleNowLoading(void) {
 #ifdef VERSION_PSP
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             if (g_PlayableCharacter == PLAYER_MARIA) {
-                func_8932FD4(2);
+                func_psp_08932FD4(2);
             } else if (g_StageId == STAGE_ST0) {
-                func_8932FD4(3);
+                func_psp_08932FD4(3);
             } else {
-                func_8932FD4(1);
+                func_psp_08932FD4(1);
             }
         } else {
-            func_8932FD4(0);
+            func_psp_08932FD4(0);
         }
         g_GameStep = Gameover_Init_Alt;
         break;
 
     case Gameover_Init_Alt:
-        if (!func_8933000()) {
+        if (!func_psp_08933000()) {
             break;
         }
 #endif
@@ -1529,15 +1527,15 @@ void HandleNowLoading(void) {
     case Play_Default:
 #ifdef VERSION_PSP
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
-            func_8933130(1);
+            func_psp_08933130(1);
         } else {
-            func_8933130(0);
+            func_psp_08933130(0);
         }
         g_GameStep = Gameover_AllocResources_Alt;
         break;
 
     case Gameover_AllocResources_Alt:
-        if (!func_893315C()) {
+        if (!func_psp_0893315C()) {
             break;
         }
 #endif
@@ -1557,9 +1555,9 @@ void HandleNowLoading(void) {
                 }
             }
 #ifdef VERSION_PSP
-            func_891CEB8(0, 0xFD);
+            func_psp_0891CEB8(0, 0xFD);
         }
-        func_8932AD4(g_StageId);
+        func_psp_08932AD4(g_StageId);
         g_GameStep = Play_PrepareNextStage;
 #else
         }
@@ -1568,7 +1566,7 @@ void HandleNowLoading(void) {
         break;
     case Play_PrepareNextStage:
 #ifdef VERSION_PSP
-        if (!func_8932B74(g_GameStep, 5)) {
+        if (!func_psp_08932B74(g_GameStep, 5)) {
             break;
         }
 #endif
@@ -1677,8 +1675,8 @@ void HandleNowLoading(void) {
                 }
                 g_EquippedWeaponIds[0] = weaponId;
 #ifdef VERSION_PSP
-                func_8932CEC(0, weaponId1);
-                func_8932CEC(1, weaponId2);
+                func_psp_08932CEC(0, weaponId1);
+                func_psp_08932CEC(1, weaponId2);
 #endif
             }
             g_GameStep++;
@@ -1686,10 +1684,10 @@ void HandleNowLoading(void) {
         break;
     case Play_Unk11:
 #ifdef VERSION_PSP
-        if (!func_8932D34(0)) {
+        if (!func_psp_08932D34(0)) {
             break;
         }
-        if (!func_8932D34(1)) {
+        if (!func_psp_08932D34(1)) {
             break;
         }
 #endif
@@ -1778,13 +1776,13 @@ void HandleNowLoading(void) {
             g_LoadOvlIdx = g_Servant - 1;
         }
 #ifdef VERSION_PSP
-        func_8932E78(g_Servant - 1);
+        func_psp_08932E78(g_Servant - 1);
 #endif
         g_GameStep++;
         break;
     case Play_Unk15:
 #ifdef VERSION_PSP
-        if (!func_8932EA4()) {
+        if (!func_psp_08932EA4()) {
             break;
         }
 #endif

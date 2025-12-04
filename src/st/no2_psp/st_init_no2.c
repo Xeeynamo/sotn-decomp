@@ -115,6 +115,6 @@ void OVL_EXPORT(Load)(void) {
     PfnEntityUpdates = OVL_EXPORT(EntityUpdates);
     g_pStObjLayoutHorizontal = &D_8D2E1B4;
     g_pStObjLayoutVertical = &D_8D2E288;
-    func_892A018();
+    func_psp_0892A018();
     memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
 }

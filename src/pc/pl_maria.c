@@ -34,7 +34,7 @@ void func_91040A0(u_long** bank) {
     ResetPendingGfxLoad();
 }
 
-void func_892667C(s32 paletteID, u16* paletteData) {
+void func_psp_0892667C(s32 paletteID, u16* paletteData) {
     int x = (paletteID & 15) * 16;
     int y = (paletteID >> 4) & 15;
     RECT rect = {x, 240 + y, 16, 1};
@@ -43,7 +43,7 @@ void func_892667C(s32 paletteID, u16* paletteData) {
 
 void func_9142FC8(int sfx) {}
 
-void func_89285A0(s32 angle, MATRIX* out) {
+void func_psp_089285A0(s32 angle, MATRIX* out) {
     short c = (short)rcos(angle);
     short s = (short)rsin(angle);
     out->m[0][0] = c;

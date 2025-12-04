@@ -60,8 +60,6 @@ static char opening_line_es[] = "El Conde Dr\323cula hab\334a";
 static char opening_line_de[] = "Graf Dracula war mithilfe";
 static char opening_line_it[] = "Il Conte Dracula \xD7 risorto";
 
-extern s32 g_UserLanguage;
-
 static void SetPrim(s32 i, Primitive* prim) { D_pspeu_0927B0C8[i].prim = prim; }
 
 static void SetPrimYZero(s32 i, s16 prim_y0) {
@@ -208,9 +206,9 @@ void func_801B1298(Entity* self) {
             (u8*)prologue_script_es, (u8*)prologue_script_de,
             (u8*)prologue_script_it);
         if (func_801B101C(g_Dialogue.script)) {
-            func_8925F7C(0x100, 0xF1, 0x10, 1);
-            func_8925F7C(0x110, 0xF2, 0x10, 1);
-            func_8925F7C(0x100, 0xF0, 0x10, 1);
+            func_psp_08925F7C(0x100, 0xF1, 0x10, 1);
+            func_psp_08925F7C(0x110, 0xF2, 0x10, 1);
+            func_psp_08925F7C(0x100, 0xF0, 0x10, 1);
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = g_Dialogue.primIndex;
             ++self->step;

@@ -2441,6 +2441,7 @@ void func_800F9DD0(const char* src, char* dst) {
 }
 
 #if defined(VERSION_US) || defined(VERSION_PSP)
+void func_psp_091040A0(u_long** gfxBank);
 void func_800F9E18(s32 arg0) {
     const int ItemsPerRow = 2;
     char buffer[38];
@@ -3539,7 +3540,7 @@ block_4:
         break;
     case MENU_STEP_EXIT_11:
 #if defined(VERSION_PSP)
-        if (!func_8932EA4()) {
+        if (!func_psp_08932EA4()) {
             break;
         }
 #endif
@@ -3931,7 +3932,7 @@ block_4:
                 if (g_Status.relics[id] & RELIC_FLAG_ACTIVE) {
                     g_Servant = g_RelicDefs[id].unk0C;
 #if defined(VERSION_PSP)
-                    func_8932E78(g_Servant - 1);
+                    func_psp_08932E78(g_Servant - 1);
 #endif
                     if (g_Servant == FAM_ACTIVE_SWORD) {
                         if (g_Status.equipment[LEFT_HAND_SLOT] ==

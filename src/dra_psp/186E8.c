@@ -7,9 +7,7 @@
 
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 
-extern s32 D_psp_08B42060;
 extern s32 D_psp_091CE1E8;
-extern s32 g_UserLanguage;
 
 extern u8 D_psp_09192EB0;
 extern u8 D_psp_091A4CE8;
@@ -425,13 +423,13 @@ s32 LoadVabData(void) {
     char buf[0x100];
 
     sprintf(buf, "%sSE/sd_j010.spk;1", D_psp_08B42060);
-    func_892EAFC(buf, 0);
+    func_psp_0892EAFC(buf, 0);
     sprintf(buf, "%sSE/sd_alk.spk;1", D_psp_08B42060);
-    func_892EAFC(buf, 1);
+    func_psp_0892EAFC(buf, 1);
     sprintf(buf, "%sSE/sd_mak.spk;1", D_psp_08B42060);
-    func_892EAFC(buf, 2);
+    func_psp_0892EAFC(buf, 2);
     sprintf(buf, "%sSE/sd_rou.spk;1", D_psp_08B42060);
-    func_892EAFC(buf, 3);
+    func_psp_0892EAFC(buf, 3);
     return 0;
 }
 
@@ -491,7 +489,7 @@ void SetMenuDisplayBuffer(void) {
 
 void VSyncHandler(void) {
     if (D_psp_091CE1E8 != 0) {
-        func_891AEC8();
+        func_psp_0891AEC8();
         D_psp_091CE1E8 = 0;
     }
     func_psp_090FA740();
@@ -499,7 +497,7 @@ void VSyncHandler(void) {
 
 void func_psp_090F5520(void) {
     while (D_psp_091CE1E8 != 0) {
-        func_8939EB8(1);
+        sceKernelDelayThreadCB(1);
     }
 }
 
@@ -1567,7 +1565,7 @@ loop_5:
         D_psp_091CE2A0 = GsGetVcount();
         GsClearVcount();
         func_psp_090F5520();
-        func_89262C4();
+        func_psp_089262C4();
         LoadPendingGfx();
         ReadPads();
 

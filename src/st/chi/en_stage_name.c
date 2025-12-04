@@ -55,8 +55,6 @@ enum StageNameSubSteps {
     STAGE_NAME_SHRINK_BOX,
 };
 
-extern s32 g_UserLanguage; // Defined in global address space
-
 static u_long* gfxBank[] = {
     (u_long*)GFX_BANK_COMPRESSED,
     GFX_ENTRY(256, 64, 128, 128, stage_name_en),

@@ -60,7 +60,7 @@ extern char D_psp_08963300[];
 extern s32 D_psp_089AD784[];
 extern s32 D_psp_089AD790[];
 extern s32 D_psp_089AD79C[];
-extern s32 D_psp_08B42060;
+extern char* D_psp_08B42060;
 extern unkStruct2 D_psp_08DADCC4;
 extern u8 D_psp_08DADF80[][0x400];
 extern s32 D_psp_08DAE780;

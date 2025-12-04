@@ -337,7 +337,7 @@ void LoadEquipIcon(s32 equipIcon, s32 palette, s32 index) {
         } else {
             ptr = &D_psp_091654C0[(palette - 0x100) * 0x10];
         }
-        func_891CCBC(ptr, x * 0x10, y + 0xFD);
+        func_psp_0891CCBC(ptr, x * 0x10, y + 0xFD);
 #else
         LoadClut(&g_Clut[1][0xD00], 0, 0xFD);
         LoadClut(&g_Clut[1][0xE00], 0, 0xFE);

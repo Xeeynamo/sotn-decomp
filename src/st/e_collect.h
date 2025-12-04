@@ -938,7 +938,6 @@ void EntityEquipItemDrop(Entity* self) {
 #endif
 
 #if defined(VERSION_PSP) && STAGE != STAGE_ST0
-extern s32 g_UserLanguage;
 extern char* obtainedStr; // BSS
 #else
 const char* g_RelicOrbTexts[] = {

@@ -3,7 +3,6 @@
 #include "../dra/dra.h"
 #include "../dra/dra_bss.h"
 
-extern s32 D_8B42044;
 extern u32 g_DebugCurPal;
 extern s32 g_DebugEnabled2;
 
@@ -13,8 +12,8 @@ u8 D_psp_091CB700[0x2000];
 void func_psp_090DFBD0(void) {
     if ((s8)g_SaveAreaNames[g_StageId][0] != 0) {
         StoreSaveData((SaveData*)D_psp_091CB700, 0, rand() & 0xF);
-        if (D_8B42044 != 0) {
-            D_8B42044 = 0;
+        if (D_psp_08B42044 != 0) {
+            D_psp_08B42044 = 0;
             D_psp_091CB700[0x1FFF] = 0;
         } else {
             D_psp_091CB700[0x1FFF] = 0xFF;

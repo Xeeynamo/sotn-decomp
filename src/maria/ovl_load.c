@@ -183,7 +183,7 @@ static void LoadPatchedPalette(s32 paletteID, u16* palette) {
             palette[i] |= 0x8000;
         }
     }
-    func_892667C(paletteID, palette);
+    func_psp_0892667C(paletteID, palette);
 }
 
 void MarLoadPalettes(void) {

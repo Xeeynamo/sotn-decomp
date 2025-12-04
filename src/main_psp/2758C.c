@@ -143,30 +143,30 @@ void func_psp_089264CC(s32 arg0, u_long* arg1, s32 arg2) {
     memcpy(var_s0, arg1, 0x200);
 }
 
-void func_psp_0892667C(s32 arg0, u_long* arg1) {
+void func_psp_0892667C(s32 paletteID, u16* data) {
     RECT rect;
     u16* clutPtr;
 
     clutPtr = (u16*)g_Clut;
-    arg0 &= 0x3FF;
-    if ((arg0 >= 0) && (arg0 < 0x100)) {
+    paletteID &= 0x3FF;
+    if (paletteID >= 0 && paletteID < 0x100) {
         rect.x = 0x200;
-    } else if ((arg0 >= 0x100) && (arg0 < 0x200)) {
+    } else if (paletteID >= 0x100 && paletteID < 0x200) {
         rect.x = 0;
         clutPtr += 0x1000;
-    } else if ((arg0 >= 0x200) && (arg0 < 0x300)) {
+    } else if (paletteID >= 0x200 && paletteID < 0x300) {
         rect.x = 0x100;
         clutPtr += 0x2000;
     } else {
         return;
     }
-    rect.x += (arg0 & 0xF) * 0x10;
-    rect.y = ((arg0 / 0x10) & 0xF) + 0xF0;
+    rect.x += (paletteID & 0xF) * 0x10;
+    rect.y = ((paletteID / 0x10) & 0xF) + 0xF0;
     rect.w = 0x10;
     rect.h = 1;
-    LoadImage(&rect, arg1);
-    clutPtr += (((arg0 / 0x10) & 0xF) << 8) + ((arg0 & 0xF) * 0x10);
-    memcpy(clutPtr, arg1, 0x20);
+    LoadImage(&rect, (u_long*)data);
+    clutPtr += (((paletteID / 0x10) & 0xF) << 8) + ((paletteID & 0xF) * 0x10);
+    memcpy(clutPtr, data, 0x20);
 }
 
 void func_psp_08926808(s32 arg0, u_long* arg1) {

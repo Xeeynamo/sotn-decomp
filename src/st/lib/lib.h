@@ -137,6 +137,3 @@ extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
 extern EInit g_EInitMudman;
 extern EInit D_us_801809EC;
-
-extern s32 D_psp_08B42050; // psp cross button
-extern s32 D_psp_08B42054; // psp triangle button

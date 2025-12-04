@@ -680,25 +680,50 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
         sym_version = "beta"
     symbols_lists = [
         f"-T config/undefined_syms.{sym_version}.txt",
-        f"-T {undefined_syms_auto_path}",
     ]
-    if ovl_name != "main":
-        symbols_lists.append(f"-T {undefined_funcs_auto_path}")
-    if ovl_name == "main" and platform == "psp":
-        symbols_lists.append(f"-T {undefined_funcs_auto_path}")
+    ld_flags_extra = ""
     if platform == "psp":
+        # used to force the linker to not garbage-collect specific user-defined symbols
         symbols_lists.append(f"-T config/symexport.{ver}.{ovl_name}.txt")
+        main_export_script = build_path(ver, "main.symexport.ld")
+        if ovl_name == "main":
+            symbols_lists.append(f"-T {undefined_funcs_auto_path}")
+            symbols_lists.append(f"-T {undefined_syms_auto_path}")
+            # Make `main` symbols available to other overlays
+            nw.build(
+                rule="export-symbols",
+                outputs=[main_export_script],
+                inputs=[output_elf],
+            )
+        else:
+            # force DRA to be linked with the exported `main` symbols, allowing
+            # for the linker to fail if symbols are not correctly synchronized.
+            if ovl_name != "dra":
+                # TODO this should also be removed for all other overlays. But
+                # this would require DRA to also export its own symbols.
+                symbols_lists.append(f"-T {undefined_funcs_auto_path}")
+                symbols_lists.append(f"-T {undefined_syms_auto_path}")
+
+            # allow unused symbols in overlays to be garbage-collected
+            ld_flags_extra = "--gc-sections"
+
+            # allow overlays to use symbols exported from `main`
+            symbols_lists.append(f"-T {main_export_script}")
+
+            # tell Ninja to wait `main.elf` for generate the linker script
+            # before linking any overlay
+            objs.append(main_export_script)
+    elif platform == "psx":
+        if ovl_name != "main":
+            symbols_lists.append(f"-T {undefined_funcs_auto_path}")
+        symbols_lists.append(f"-T {undefined_syms_auto_path}")
     nw.build(
         rule="psx-ld",
         outputs=[output_elf],
         inputs=[ld_path],
         implicit=[x for x in objs if x],
         variables={
-            "ld_flags": (
-                "--gc-sections"
-                if platform == "psp" and not ld_path.endswith("main.ld")
-                else ""
-            ),
+            "ld_flags": ld_flags_extra,
             "map_out": build_path(ver, f"{ovl_name}.map"),
             "symbols_arg": str.join(" ", symbols_lists),
         },
@@ -871,6 +896,11 @@ with open(build_ninja, "w") as f:
         "memcard-encode",
         command=".venv/bin/python3 tools/png2s.py encode $in $out_gfx $sym_gfx $out_pal $sym_pal",
         description="memcard icon encode $in",
+    )
+    nw.rule(
+        "export-symbols",
+        command=".venv/bin/python3 tools/symbols.py parse $in > $out",
+        description="export symbols $in",
     )
     nw.rule(
         "export-dynamic-symbols",
