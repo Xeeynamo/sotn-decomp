@@ -10,6 +10,7 @@ void EntityGreyPuff(Entity* entity);
 
 enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
+    PAL_ARMOR_LORD_UNK = 0x220,
     PAL_BREAKABLE = 0x22D,
     PAL_BREAKABLE_DEBRIS = 0x231,
 };
@@ -62,13 +63,13 @@ typedef enum EntityIDs {
     /* 0x44 */ E_BONE_ARCHER,
     /* 0x45 */ E_BONE_ARCHER_ARROW,
     /* 0x46 */ E_BONE_MUSKET,
-    /* 0x47 */ E_ID_47,
+    /* 0x47 */ E_BONE_MUSKET_UNK,
     /* 0x48 */ E_SWORD_LORD,
     /* 0x49 */ E_ID_49,
     /* 0x4A */ E_ARMOR_LORD = 0x4A,
-    /* 0x4B */ E_ID_4B = 0x4B,
+    /* 0x4B */ E_ARMOR_LORD_UNK1 = 0x4B,
     /* 0x4C */ E_ARMOR_LORD_FIRE_WAVE,
-    /* 0x4D */ E_ID_4D,
+    /* 0x4D */ E_ARMOR_LORD_UNK2,
     /* 0x4F */ E_SPEAR_GUARD = 0x4F,
     /* 0x50 */ E_SPEAR_GUARD_BLOCK,
     /* 0x52 */ E_ID_52 = 0x52,
@@ -115,15 +116,10 @@ extern EInit g_EInitSkeletonPieces;
 extern EInit g_EInitSkeletonBone;
 extern EInit g_EInitWereskeleton;
 extern EInit D_us_80180A88;
-extern EInit g_EInitBoneMusket;
-extern EInit D_us_80180AA0;
 extern EInit g_EInitSwordLord;
 extern EInit D_us_80180AB8;
 extern EInit g_EInitBoneArcher;
 extern EInit g_EInitBoneArcherArrow;
-extern EInit g_EInitArmorLord;
-extern EInit D_us_80180AE8;
-extern EInit D_us_80180AF4;
 extern EInit g_EInitSpearGuard;
 extern EInit g_EInitThrownSpear;
 extern EInit D_us_80180B18;

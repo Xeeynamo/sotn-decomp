@@ -1,6 +1,7 @@
 # usage
 # python3 ./tools/build/gen.py && ninja
-
+import base64
+import pathlib
 from dataclasses import dataclass
 import ninja_syntax
 import os
@@ -15,9 +16,18 @@ linker_scripts = set()
 
 extra_cpp_defs = ""
 sotn_progress_report = os.environ.get("SOTN_PROGRESS_REPORT") == "1"
+dummy_object = bytes()
 if sotn_progress_report:
     # https://decomp.wiki/en/tools/decomp-dev
     extra_cpp_defs += " -DSKIP_ASM=1"
+    dummy_object = base64.b64decode(
+        "f0VMRgEBAQAAAAAAAAAAAAEACAABAAAAAAAAAAAAAABYAAAAABAAADQAAAAAACgABgAFAAAuc2hz"
+        "dHJ0YWIALnRleHQALmRhdGEALmJzcwAucGRyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+        "AAAAAAAAAAAAAAAAAAALAAAAAQAAAAYAAAAAAAAANAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAEQAA"
+        "AAEAAAADAAAAAAAAADQAAAAAAAAAAAAAAAAAAAAQAAAAAAAAABcAAAAIAAAAAwAAAAAAAAA0AAAA"
+        "AAAAAAAAAAAAAAAAEAAAAAAAAAAcAAAAAQAAAAAAAAAAAAAANAAAAAAAAAAAAAAAAAAAAAQAAAAA"
+        "AAAAAQAAAAMAAAAAAAAAAAAAADQAAAAhAAAAAAAAAAAAAAABAAAAAAAAAA=="
+    )  # minimal stripped object file generated from an empty assembly file
 
 
 def is_psp(ver: str) -> bool:
@@ -42,6 +52,9 @@ def is_base_ovl(ovl_name: str) -> bool:
         or ovl_name == "dra"
         or ovl_name == "ric"
         or ovl_name == "maria"
+        or ovl_name == "sd"
+        or ovl_name == "fname"
+        or ovl_name == "tek"
     )
 
 
@@ -64,6 +77,17 @@ def is_stage(ovl_name: str) -> bool:
         and is_base_ovl(ovl_name) == False
         and is_boss(ovl_name) == False
     )
+
+
+def add_s_dummy(nw: ninja_syntax.Writer, ver: str, file_name: str, ld_path: str):
+    output = build_path(ver, f"{file_name}.o")
+    if output in entries:
+        return output
+    entries[output] = {}
+    output_path = pathlib.Path(output)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_bytes(dummy_object)
+    return output
 
 
 @dataclass
@@ -407,6 +431,8 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
         add_s = add_s_psp
     else:
         raise Exception(f"platform {platform} not recognized")
+    if sotn_progress_report:
+        add_s = add_s_dummy
 
     weapons = []
     weapon_gfx = ""  # horrible hack as code segments for weapon do not have a name
@@ -415,9 +441,12 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
             continue
         if segment["type"] == "grey4":
             weapon_gfx = segment["name"]
-            weapons.append(
-                add_gfx_weapon(nw, ver, os.path.join(asset_path, weapon_gfx), ld_path)
-            )
+            if not sotn_progress_report:
+                weapons.append(
+                    add_gfx_weapon(
+                        nw, ver, os.path.join(asset_path, weapon_gfx), ld_path
+                    )
+                )
             continue
         if segment["type"] != "code":
             continue
@@ -445,6 +474,8 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
                 continue
             else:
                 raise Exception(f"unknown subsegment type {kind}")
+        if sotn_progress_report:
+            continue
         step_elf = build_path(ver, f"weapon/w{hand_id}_{weapon_id}.elf")
         symbols_lists = [
             f"-T config/undefined_syms.{ver}.txt",
@@ -471,6 +502,8 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
             inputs=step_elf,
         )
         weapons.append(step_bin)
+    if sotn_progress_report:
+        return
     nw.build(
         rule="concat",
         outputs=build_path(ver, f"WEAPON0.BIN"),
@@ -492,16 +525,17 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
     ovl_name = str(splat_config["options"]["basename"])
     ld_path = str(splat_config["options"]["ld_script_path"])
 
-    dyn_symbols_file = build_path(ver, f"config/dyn_syms.{ovl_name}.txt")
-    dyn_syms_splat_config = build_path(
-        ver, f"config/splat.{ver}.{ovl_name}.yaml.dyn_syms"
-    )
-    linker_scripts.add(ld_path)
-    nw.build(
-        rule="dynamic-splat-config",
-        inputs=dyn_symbols_file,
-        outputs=dyn_syms_splat_config,
-    )
+    if not sotn_progress_report:
+        dyn_symbols_file = build_path(ver, f"config/dyn_syms.{ovl_name}.txt")
+        dyn_syms_splat_config = build_path(
+            ver, f"config/splat.{ver}.{ovl_name}.yaml.dyn_syms"
+        )
+        linker_scripts.add(ld_path)
+        nw.build(
+            rule="dynamic-splat-config",
+            inputs=dyn_symbols_file,
+            outputs=dyn_syms_splat_config,
+        )
 
     if is_weapon(ovl_name):
         add_weapon_splat_config(nw, ver, splat_config)
@@ -535,6 +569,8 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
         add_s = add_s_psp
     else:
         raise Exception(f"platform {platform} not recognized")
+    if sotn_progress_report:
+        add_s = add_s_dummy
     objs = []
     if ovl_name == "main" and platform != "psp":
         objs.append(add_s(nw, ver, f"{asm_path}/header.s", ld_path))
@@ -633,6 +669,8 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
                 objs += objs_memcard
             else:
                 continue
+    if sotn_progress_report:
+        return
     if platform == "psp" and ovl_name != "main":
         mwo = os.path.join(asset_path, "mwo_header.bin")
         objs.append(add_copy_psx(nw, ver, mwo, mwo, ld_path))

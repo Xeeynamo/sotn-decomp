@@ -87,6 +87,15 @@ jobs:
         run: make extract_disk
       - name: Build binaries and check if they match
         run: make build
+      - name: Generate progress report
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        run: make progress-report
+      - name: Upload progress report
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.version }}_report
+          path: build/${{ matrix.version }}/report.json
       - name: Remove clutter from build folder
         run: rm -rf build/${{ matrix.version }}/asm build/${{ matrix.version }}/src build/${{ matrix.version }}/assets
       - name: Export build folder

@@ -8,6 +8,13 @@
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
 
+enum Palettes {
+    PAL_NONE = 0,
+    PAL_PLATE_LORD_UNK1 = 0x22B,
+    PAL_PLATE_LORD_UNK2 = 0x22C,
+    PAL_PLATE_LORD_UNK3 = 0x22D,
+};
+
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
@@ -49,11 +56,11 @@ typedef enum EntityIDs {
     /* 0x2F */ E_SKELERANG_BOOMERANG,
     /* 0x30 */ E_SKELERANG_UNKNOWN,
     /* 0x31 */ E_PLATE_LORD,
-    /* 0x32 */ E_ID_32,
-    /* 0x33 */ E_ID_33,
-    /* 0x34 */ E_ID_34,
-    /* 0x35 */ E_ID_35,
-    /* 0x36 */ E_ID_36,
+    /* 0x32 */ E_PLATE_LORD_UNK1,
+    /* 0x33 */ E_PLATE_LORD_UNK2,
+    /* 0x34 */ E_PLATE_LORD_UNK3,
+    /* 0x35 */ E_PLATE_LORD_UNK4,
+    /* 0x36 */ E_PLATE_LORD_UNK5,
     /* 0x37 */ E_GHOST_ENEMY,
     /* 0x3B */ E_SLINGER_THROWN_BONE = 0x3B,
     /* 0x3C */ E_SLINGER_PIECES,
@@ -101,8 +108,6 @@ extern EInit g_EInitDiplocephalusFireball;
 extern EInit g_EInitElevator;
 extern EInit g_EInitSkelerang;
 extern EInit g_EInitSkelerangBoomerang;
-extern EInit g_EInitPlateLord;
-extern EInit D_us_80180B90;
 extern EInit g_EInitGhostEnemy;
 extern EInit g_EInitMarionette;
 extern EInit g_EInitSlinger;

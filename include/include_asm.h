@@ -8,6 +8,11 @@
 
 #if !defined(PERMUTER) && !defined(VERSION_PSP)
 
+#ifdef SKIP_ASM
+#define INCLUDE_ASM(FOLDER, NAME)
+#define INCLUDE_RODATA(FOLDER, NAME)
+#endif
+
 #ifndef INCLUDE_ASM
 
 #ifndef INCLUDE_ASM_OLD

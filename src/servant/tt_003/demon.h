@@ -22,19 +22,6 @@ typedef enum {
     DEMON_MODE_UNK_DE
 } EntityIds;
 
-// These are all SFX keys that are loaded from TT_003.VB/VH
-typedef enum {
-    DEMON_GRUNT_1 = 0x89E, // he-ya
-    DEMON_GRUNT_2,         // huh
-    DEMON_GRUNT_3,         // hrr
-    DEMON_TAKE_THAT,       // "Take that" - possibly unused
-    DEMON_DIE,             // "DIE!" - Used for cleave attack
-    DEMON_FIRE_SPEAR,      // "Fire Spear"
-    DEMON_ICE_SPEAR,       // "Ice Spear"
-    DEMON_THUNDER_SPEAR,   // "Thunder Spear"
-    DEMON_LIGHTNING_SPEAR  // "Lightning spear"
-} DemonSfxId;
-
 typedef struct {
     s32 timer;
     s32 minimumEnemyHp;

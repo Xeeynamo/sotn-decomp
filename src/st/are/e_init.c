@@ -34,15 +34,15 @@ void func_us_801B7E7C(Entity* self);
 void func_us_801B80C0(Entity* self);
 void EntityExplosionPuffOpaque(Entity* self);
 void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
-void func_us_801C3844(Entity* self);
-void func_us_801C41EC(Entity* self);
-void func_us_801C4300(Entity* self);
-void func_us_801C45B0(Entity* self);
-void func_us_801C47E4(Entity* self);
-void func_us_801C4EDC(Entity* self);
-void EntityBoneHalberdParts(Entity* self);
+void EntityBladeMaster(Entity* self);
+void EntityBladeMasterAttackHitbox(Entity* self);
+void EntityBladeMasterDeathParts(Entity* self);
+void EntityBladeMasterDeathExplosion(Entity* self);
+void EntityBladeSoldier(Entity* self);
+void EntityBladeSoldierAttackHitbox(Entity* self);
+void EntityBladeSoldierDeathParts(Entity* self);
 void EntityBoneMusket(Entity* self);
-void func_us_801C5744(Entity* self);
+void func_us_801CF298(Entity* self);
 void EntityOwlKnight(Entity* self);
 void EntityOwl(Entity* self);
 void EntityOwlKnightSword(Entity* self);
@@ -52,12 +52,12 @@ void func_us_801C8954(Entity* self);
 void func_us_801C8AAC(Entity* self);
 void EntityAxeKnightBlue(Entity* self);
 void EntityAxeKnightThrowingAxe(Entity* self);
-void func_us_801CA2AC(Entity* self);
+void func_us_801CBA30(Entity* self);
 void InitializeUnkEntity(Entity* self);
 void EntityArmorLord(Entity* self);
-void func_us_801CC660(Entity* self);
+void func_us_801D348C(Entity* self);
 void EntityArmorLordFireWave(Entity* self);
-void func_us_801CC8D4(Entity* self);
+void func_us_801D3700(Entity* self);
 void EntityHuntingGirl(Entity* self);
 void EntityHuntingGirlAttack(Entity* self);
 void func_us_801CDCF4(Entity* self);
@@ -70,11 +70,11 @@ void EntityFleaMan(Entity* self);
 void EntityBoneScimitar(Entity* self);
 void EntityBoneScimitarParts(Entity* self);
 void EntityPlateLord(Entity* self);
-void func_us_801D2238(Entity* self);
-void func_us_801D23B4(Entity* self);
-void func_us_801D29B8(Entity* self);
-void func_us_801D3340(Entity* self);
-void func_us_801D2BC0(Entity* self);
+void func_us_801D4324(Entity* self);
+void func_us_801D44A0(Entity* self);
+void func_us_801D4AA4(Entity* self);
+void func_us_801D542C(Entity* self);
+void func_us_801D4CAC(Entity* self);
 void EntityGraveKeeper(Entity* self);
 void EntityGraveKeeperHitbox(Entity* self);
 void EntityMistDoor(Entity* self);
@@ -113,15 +113,15 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B80C0,
     EntityExplosionPuffOpaque,
     OVL_EXPORT(EntityBreakableDebris),
-    func_us_801C3844,
-    func_us_801C41EC,
-    func_us_801C4300,
-    func_us_801C45B0,
-    func_us_801C47E4,
-    func_us_801C4EDC,
-    EntityBoneHalberdParts,
+    EntityBladeMaster,
+    EntityBladeMasterAttackHitbox,
+    EntityBladeMasterDeathParts,
+    EntityBladeMasterDeathExplosion,
+    EntityBladeSoldier,
+    EntityBladeSoldierAttackHitbox,
+    EntityBladeSoldierDeathParts,
     EntityBoneMusket,
-    func_us_801C5744,
+    func_us_801CF298,
     EntityOwlKnight,
     EntityOwl,
     EntityOwlKnightSword,
@@ -131,12 +131,12 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C8AAC,
     EntityAxeKnightBlue,
     EntityAxeKnightThrowingAxe,
-    func_us_801CA2AC,
+    func_us_801CBA30,
     InitializeUnkEntity,
     EntityArmorLord,
-    func_us_801CC660,
+    func_us_801D348C,
     EntityArmorLordFireWave,
-    func_us_801CC8D4,
+    func_us_801D3700,
     EntityHuntingGirl,
     EntityHuntingGirlAttack,
     func_us_801CDCF4,
@@ -149,11 +149,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBoneScimitar,
     EntityBoneScimitarParts,
     EntityPlateLord,
-    func_us_801D2238,
-    func_us_801D23B4,
-    func_us_801D29B8,
-    func_us_801D3340,
-    func_us_801D2BC0,
+    func_us_801D4324,
+    func_us_801D44A0,
+    func_us_801D4AA4,
+    func_us_801D542C,
+    func_us_801D4CAC,
     EntityGraveKeeper,
     EntityGraveKeeperHitbox,
     EntityMistDoor,
@@ -175,16 +175,18 @@ EInit D_us_80180AF8 = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
 EInit D_us_80180B04 = {ANIMSET_OVL(0x02), 0x00, 0x53, 0x0200, 0x005};
 
 // Blade Master
-EInit D_us_80180B10 = {ANIMSET_OVL(0x03), 0x01, 0x48, 0x0201, 0x07A};
-EInit D_us_80180B1C = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x07B};
+EInit g_EInitBladeMaster = {ANIMSET_OVL(0x03), 0x01, 0x48, 0x0201, 0x07A};
+EInit g_EInitBladeMasterAttackHitbox = {
+    ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x07B};
 
 // Blade Soldier
-EInit D_us_80180B28 = {ANIMSET_OVL(0x04), 0x01, 0x4B, 0x0203, 0x07C};
-EInit D_us_80180B34 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x07D};
+EInit g_EInitBladeSoldier = {ANIMSET_OVL(0x04), 0x01, 0x4B, 0x0203, 0x07C};
+EInit g_EInitBladeSoldierAttackHitbox = {
+    ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x07D};
 
 // Bone Musket
-EInit D_us_80180B40 = {ANIMSET_OVL(0x05), 0x00, 0x4C, 0x0205, 0x066};
-EInit D_us_80180B4C = {ANIMSET_OVL(0x05), 0x00, 0x4C, 0x0205, 0x067};
+EInit g_EInitBoneMusket = {ANIMSET_OVL(0x05), 0x00, 0x4C, 0x0205, 0x066};
+EInit D_us_80180AA0 = {ANIMSET_OVL(0x05), 0x00, 0x4C, 0x0205, 0x067};
 
 // Owl Knight
 EInit g_EInitOwlKnight = {ANIMSET_OVL(0x06), 0x10, 0x49, 0x0209, 0x014};
@@ -202,14 +204,14 @@ EInit g_EInitValhallaKnightUnk2 = {
 EInit g_EInitValhallaKnightUnk3 = {
     ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x087};
 
-// Axe Knight
-EInit D_us_80180BAC = {ANIMSET_OVL(0x08), 0x01, 0x50, 0x0213, 0x006};
-EInit D_us_80180BB8 = {ANIMSET_OVL(0x08), 0x2F, 0x50, 0x0213, 0x007};
+// (Blue) Axe Knight
+EInit g_EInitAxeKnight = {ANIMSET_OVL(0x08), 0x01, 0x50, 0x0213, 0x006};
+EInit g_EInitAxeKnightAxe = {ANIMSET_OVL(0x08), 0x2F, 0x50, 0x0213, 0x007};
 
 // Armor Lord
-EInit D_us_80180BC4 = {ANIMSET_OVL(0x09), 0x01, 0x52, 0x0216, 0x022};
-EInit D_us_80180BD0 = {ANIMSET_OVL(0x09), 0x00, 0x52, 0x0216, 0x023};
-EInit D_us_80180BDC = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x024};
+EInit g_EInitArmorLord = {ANIMSET_OVL(0x09), 0x01, 0x52, 0x0216, 0x022};
+EInit D_us_80180AE8 = {ANIMSET_OVL(0x09), 0x00, 0x52, 0x0216, 0x023};
+EInit D_us_80180AF4 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x024};
 
 // Hunting Girl
 EInit g_EInitHuntingGirl = {ANIMSET_OVL(0x0A), 0x00, 0x54, 0x021D, 0x0E3};
@@ -232,9 +234,9 @@ EInit g_EInitBoneScimitar = {ANIMSET_OVL(0x0D), 0x01, 0x4D, 0x0225, 0x069};
 EInit g_EInitScimitarParts = {ANIMSET_OVL(0x0D), 0x00, 0x4D, 0x0225, 0x002};
 
 // Plate Lord
-EInit D_us_80180C54 = {ANIMSET_OVL(0x0E), 0x01, 0x4C, 0x0226, 0x061};
-EInit D_us_80180C60 = {ANIMSET_OVL(0x0E), 0x16, 0x4C, 0x0226, 0x062};
+EInit g_EInitPlateLord = {ANIMSET_OVL(0x0E), 0x01, 0x4C, 0x0226, 0x061};
+EInit D_us_80180B90 = {ANIMSET_OVL(0x0E), 0x16, 0x4C, 0x0226, 0x062};
 
 // Grave Keeper
-EInit D_us_80180C6C = {ANIMSET_OVL(0x18), 0x01, 0x4D, 0x0229, 0x06F};
-EInit D_us_80180C78 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x070};
+EInit g_EInitGraveKeeper = {ANIMSET_OVL(0x18), 0x01, 0x4D, 0x0229, 0x06F};
+EInit g_EInitGraveKeeperHitbox = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x070};

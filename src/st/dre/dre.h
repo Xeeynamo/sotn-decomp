@@ -1,142 +1,59 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "stage.h"
-#define STAGE_IS_DRE
+#ifndef DRE_H
+#define DRE_H
+
+#include <stage.h>
 
 #define OVL_EXPORT(x) DRE_##x
+#define STAGE_IS_DRE
 
-typedef enum EntityIDs {
-    /* 0x00 */ E_NONE,
-    /* 0x01 */ E_BREAKABLE,
-    /* 0x02 */ E_EXPLOSION,
-    /* 0x03 */ E_PRIZE_DROP,
-    /* 0x04 */ E_NUMERIC_DAMAGE,
-    /* 0x05 */ E_RED_DOOR,
-    /* 0x06 */ E_INTENSE_EXPLOSION,
-    /* 0x07 */ E_SOUL_STEAL_ORB,
-    /* 0x08 */ E_ROOM_FOREGROUND,
-    /* 0x09 */ E_STAGE_NAME_POPUP,
-    /* 0x0A */ E_EQUIP_ITEM_DROP,
-    /* 0x0B */ E_RELIC_ORB,
-    /* 0x0C */ E_HEART_DROP,
-    /* 0x0D */ E_ENEMY_BLOOD,
-    /* 0x0E */ E_MESSAGE_BOX,
-    /* 0x0F */ E_DUMMY_0F,
-    /* 0x10 */ E_DUMMY_10,
-    /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
-    /* 0x15 */ E_GREY_PUFF,
-    /* 0x16 */ E_3D_BACKGROUND_HOUSE,
-    /* 0x17 */ E_3D_HOUSE_SPAWNER,
-    /* 0x1A */ E_SUCCUBUS_PETAL = 0x1A,
-    /* 0x1B */ E_SUCCUBUS_WING_OVERLAY,
-    /* 0x1C */ E_SUCCUBUS_CLONE,
-    /* 0x1D */ E_SUCCUBUS_PINK_BALL_PROJECTILE,
-    /* 0x1E */ E_SUCCUBUS_WING_SPIKE,
-    /* 0x1F */ E_SUCCUBUS_WING_SPIKE_TIP,
-    /* 0x20 */ E_SUCCUBUS_CUTSCENE,
-} DRE_EntityIDs;
+enum Palettes {
+    PAL_NONE,
+    PAL_SUCCUBUS = 0x200,
+    PAL_PORTRAIT_ALUCARD = 0x208,
+    PAL_PORTRAIT_LISA = 0x210,
+    PAL_PORTRAIT_SUCCUBUS = 0x218,
+    PAL_UNK_2E0 = 0x2E0,
+};
 
-void ReplaceBreakableWithItemDrop(Entity* arg0);
-void DestroyEntity(Entity* entity);
-void CreateEntitiesToTheRight(s16);
-void CreateEntitiesToTheLeft(s16);
-void CreateEntitiesAbove(s16);
-void CreateEntitiesBelow(s16);
-s32 func_8019AC78(u8, s16);
-void PreventEntityFromRespawning(Entity* entity);
-void FallEntity(void);
-void func_8019B858(void);
-void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity);
-Entity* AllocEntity(Entity*, Entity*);
-void func_8019A78C(void);
-Entity* func_8019AC18(Entity*, Entity*);
-void EntityExplosionVariants(Entity* entity);
-void EntityGreyPuff(Entity* entity);
+enum Entities {
+    E_NONE,
+    E_BREAKABLE,                     // EntityBreakable
+    E_EXPLOSION,                     // EntityExplosion
+    E_PRIZE_DROP,                    // EntityPrizeDrop
+    E_NUMERIC_DAMAGE,                // EntityDamageDisplay
+    E_RED_DOOR,                      // OVL_EXPORT(EntityRedDoor)
+    E_INTENSE_EXPLOSION,             // EntityIntenseExplosion
+    E_SOUL_STEAL_ORB,                // EntitySoulStealOrb
+    E_ROOM_FOREGROUND,               // EntityRoomForeground
+    E_STAGE_NAME_POPUP,              // EntityStageNamePopup
+    E_EQUIP_ITEM_DROP,               // EntityEquipItemDrop
+    E_RELIC_ORB,                     // EntityRelicOrb
+    E_HEART_DROP,                    // EntityHeartDrop
+    E_ENEMY_BLOOD,                   // EntityEnemyBlood
+    E_MESSAGE_BOX,                   // EntityMessageBox
+    E_DUMMY_0F,                      // EntityDummy
+    E_DUMMY_10,                      // EntityDummy
+    E_BACKGROUND_BLOCK,              // OVL_EXPORT(EntityBackgroundBlock)
+    E_LOCK_CAMERA,                   // OVL_EXPORT(EntityLockCamera)
+    E_UNK_ID13,                      // EntityUnkId13
+    E_EXPLOSION_VARIANTS,            // EntityExplosionVariants
+    E_GREY_PUFF,                     // EntityGreyPuff
+    E_3D_BACKGROUND_HOUSE,           // Entity3DBackgroundHouse
+    E_3D_HOUSE_SPAWNER,              // Entity3DHouseSpawner
+    E_BACKGROUND_CLOUDS,             // EntityBackgroundClouds
+    E_SUCCUBUS,                      // EntitySuccubus
+    E_SUCCUBUS_PETAL,                // EntitySuccubusPetal
+    E_SUCCUBUS_WING_OVERLAY,         // EntitySuccubusWingOverlay
+    E_SUCCUBUS_CLONE,                // EntitySuccubusClone
+    E_SUCCUBUS_PINK_BALL_PROJECTILE, // EntityPinkBallProjectile
+    E_SUCCUBUS_WING_SPIKE,           // EntitySuccubusWingSpike
+    E_SUCCUBUS_WING_SPIKE_TIP,       // EntitySuccubusWingSpikeTip
+    E_SUCCUBUS_CUTSCENE,             // OVL_EXPORT(EntityCutsceneDialogue)
+    E_CS_MOVE_ALUCARD,               // EntityCSMoveAlucard
+    E_FADE_TO_WHITE1,                // EntityFadeToWhite1
+    E_UNK_ID23,                      // EntityUnkId23
+    E_FADE_TO_WHITE2,                // EntityFadeToWhite2
+};
 
-/* *** Initializers *** */
-extern EInit g_EInitLockCamera;
-extern EInit g_EInitObtainable;
-extern u16 D_8018047C[];
-extern EInit g_EInitInteractable;
-extern u16 D_801804D0[]; // EntitySuccubus
-extern u16 D_801804DC[];
-extern u16 D_80180500[];
-extern u8 D_80180580[];
-extern u8 D_80180588[];
-extern u16 D_80180590[];
-
-extern s32 D_80180664;
-
-/* *** EntitySuccubus animations START *** */
-extern u8 D_8018066C[];
-extern u8 D_80180674[];
-extern u8 D_80180680[];
-extern u8 D_80180694[];
-extern u8 D_801806A0[];
-extern u8 D_801806C4[];
-extern u8 D_801806D4[];
-extern u8 D_801806E8[];
-extern u8 D_801806F8[];
-extern u8 D_8018070C[];
-extern u8 D_8018071C[];
-extern u8 D_8018072C[];
-extern u8 D_80180734[];
-extern u8 D_80180748[];
-extern u8 D_80180760[];
-extern u8 D_80180768[];
-extern u8 D_80180770[];
-extern u8 D_80180778[];
-extern u8 D_80180780[];
-extern u8 D_8018079C[];
-extern u8 D_801807AC[];
-/* *** EntitySuccubus animations END *** */
-
-extern s8 g_CloneShootOrder[4][7]; // 0x801807D4
-
-extern u8 D_80180780[]; // Animation
-extern const u8 D_80180794[];
-extern u8 D_801807F8[][4];
-extern u8 D_80180830[];
-extern EInit g_EInitParticle;
-extern EInit g_EInitCommon;
-extern u16 D_801804F4[];
-extern s8 c_HeartPrizes[];
-extern u16 D_801804E8[];
-extern u16 D_8018050C[];
-extern u16 D_80180528[];
-extern s32 D_80180664;
-extern s32 D_80180668;
-extern s16 D_801807F0[];
-extern const char* D_80180938[];
-extern s32 D_801811B0[];
-extern u32 D_8018125C[];
-extern s16 D_801812E4[];
-extern u32 D_801812F4[];
-extern s8 D_801816C0;
-extern s8 D_801816C4; // Succubus facing assigned to it
-extern u8 D_80181338[];
-extern u16 D_801811A4[];
-extern u16 D_801810B0[];
-extern u16 D_801810E0[];
-
-// *** EntitySoulStealOrb properties START ***
-
-extern u16 g_ESoulStealOrbAngles[];
-extern s16 g_ESoulStealOrbSprt[];
-extern u8 g_ESoulStealOrbAnim[];
-
-// *** EntitySoulStealOrb properties END ***
-
-extern Primitive* D_801A3EF0[];
-extern s32 D_801A3F08;
-extern s32 D_801A3F0C;
-extern s32 D_801A3F10[];
-
-// For succubus cutscene
-extern u8 D_8018088C[];
-extern u8 D_80180890[];
-extern u16 D_80180894[];
-extern u16 D_8018089C[];
-extern u16 D_801808A0[];
-extern s16 D_801808A8[];
-
-extern u8 D_80180944[]; // Animation, EntityCSMoveAlucard
+#endif // DRE_H

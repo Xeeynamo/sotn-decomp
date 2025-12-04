@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 #include "common.h"
 
-static short g_AtanTable[] = {
+static short ratan_tbl[] = {
     0x000, 0x001, 0x002, 0x002, 0x003, 0x003, 0x004, 0x005, 0x005, 0x006, 0x007,
     0x007, 0x008, 0x009, 0x009, 0x00A, 0x00A, 0x00B, 0x00C, 0x00C, 0x00D, 0x00E,
     0x00E, 0x00F, 0x010, 0x010, 0x011, 0x011, 0x012, 0x013, 0x013, 0x014, 0x015,
@@ -122,14 +122,14 @@ long ratan2(long dx, long dy) {
         } else {
             lookup = ((dx << 10) / dy);
         }
-        ret = g_AtanTable[lookup];
+        ret = ratan_tbl[lookup];
     } else {
         if (dy & 0x7FE00000) {
             lookup = (dy / (dx >> 10));
         } else {
             lookup = ((dy << 10) / dx);
         }
-        ret = 0x400 - g_AtanTable[lookup];
+        ret = 0x400 - ratan_tbl[lookup];
     }
     if (flag0)
         ret = 0x800 - ret;

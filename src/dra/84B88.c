@@ -2539,7 +2539,7 @@ void EntitySummonSpirit(Entity* self) {
         if (--self->ext.summonspirit.spawnTimer) {
             return;
         }
-        self->primIndex = AllocPrimitives(4, 9);
+        self->primIndex = AllocPrimitives(PRIM_GT4, 9);
         if (self->primIndex == -1) {
             DestroyEntity(self);
             return;

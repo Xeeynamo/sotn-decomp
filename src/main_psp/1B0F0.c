@@ -36,10 +36,14 @@ typedef struct {
     s32* unk10;
 } Unk08919CF4;
 
-typedef struct {
-    s32 unk0;
-    s32 unk4;
-    s32 unk8;
+typedef struct Unk08919D98 Unk08919D98;
+
+typedef struct Unk08919D98 {
+    s32* unk0;
+    Unk08919D98* prev;
+    Unk08919D98* next;
+    s32 (*unkC)(Unk08919D98*);
+    s32 count;
 } Unk08919D98;
 
 typedef struct {
@@ -239,12 +243,12 @@ Unk08919D98* func_psp_08919D40(Unk08919D98* arg0, s16 arg1) {
 }
 
 static void func_psp_08919D98(Unk08919D98* arg0) {
-    if (arg0->unk0) {
+    if (arg0->unk0 != NULL) {
         sceKernelVolatileMemUnlock(0);
         sceKernelDelayThreadCB(1);
-        arg0->unk0 = 0;
-        arg0->unk4 = 0;
-        arg0->unk8 = 0;
+        arg0->unk0 = NULL;
+        arg0->prev = NULL;
+        arg0->next = NULL;
     }
 }
 

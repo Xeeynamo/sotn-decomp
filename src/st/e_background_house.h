@@ -4,6 +4,8 @@
 extern s32 E_ID(3D_BACKGROUND_HOUSE);
 #endif
 
+extern EInit g_EInitInteractable;
+
 static SVECTOR v0 = {-0x3C, -0x9B, -0x78};
 static SVECTOR v1 = {0x3C, -0x9B, -0x78};
 static SVECTOR v2 = {-0x3C, 0x00, -0x78};

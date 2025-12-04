@@ -606,7 +606,7 @@ void EntitySubwpnBible(Entity* self) {
         prim->priority = self->zPriority;
         CreateEntFactoryFromEntity(self, FACTORY(BP_79, 0), 0);
         if (g_GameTimer % 10 == 0) {
-            PlaySfx(BIBLE_SUBWPN_SWOOSH);
+            PlaySfx(SFX_BIBLE_SUBWPN_SWISH);
         }
     }
 }

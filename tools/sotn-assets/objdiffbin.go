@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"os"
 	"path/filepath"
 	"strings"
 
@@ -9,15 +9,22 @@ import (
 )
 
 func handleObjdiffGUI(version string) error {
-	configPath := fmt.Sprintf("config/assets.%s.yaml", version)
-	if err := objdiffgen(configPath); err != nil {
+	c, err := readConfigVersion(version)
+	if err != nil {
 		return err
 	}
-	return deps.ExecObjdiffGUI("--project-dir", ".")
+	if err := objdiffgen(c, false); err != nil {
+		return err
+	}
+	return deps.ObjdiffGUI("--project-dir", ".")
 }
 
 func handlerObjdiffCLI(version, srcPath, symbol string) error {
-	if err := objdiffgen(version); err != nil {
+	c, err := readConfigVersion(version)
+	if err != nil {
+		return err
+	}
+	if err := objdiffgen(c, false); err != nil {
 		return err
 	}
 	if !strings.HasSuffix(srcPath, ".c") {
@@ -28,5 +35,46 @@ func handlerObjdiffCLI(version, srcPath, symbol string) error {
 	}
 	basePath := filepath.Join("build", version, srcPath+".o")
 	targetPath := filepath.Join("expected", basePath)
-	return deps.ExecObjdiffCLI("diff", "-1", basePath, "-2", targetPath, symbol)
+	return deps.ObjdiffCLI("diff", "-1", basePath, "-2", targetPath, symbol)
+}
+
+func handleObjdiffReport(version string) error {
+	c, err := readConfigVersion(version)
+	if err != nil {
+		return err
+	}
+	if err := os.Setenv("VERSION", version); err != nil {
+		return err
+	}
+
+	// generate a valid fully-complete expected/build/{VERSION}
+	if err := objdiffgen(c, false); err != nil {
+		return err
+	}
+	if err := os.Setenv("SOTN_PROGRESS_REPORT", "0"); err != nil {
+		return err
+	}
+	if err := deps.GenAndRunNinja(); err != nil {
+		return err
+	}
+	buildPath := filepath.Join("build", version)
+	expectedPath := filepath.Join("expected", "build", version)
+	_ = os.RemoveAll(expectedPath)
+	if err := os.CopyFS(expectedPath, os.DirFS(buildPath)); err != nil {
+		return err
+	}
+
+	// now re-build but with SKIP_ASM=1 with SOTN_PROGRESS_REPORT=1
+	if err := objdiffgen(c, true); err != nil {
+		return err
+	}
+	if err := os.Setenv("SOTN_PROGRESS_REPORT", "1"); err != nil {
+		return err
+	}
+	if err := deps.GenAndRunNinja(); err != nil {
+		return err
+	}
+
+	reportPath := filepath.Join("build", version, "report.json")
+	return deps.ObjdiffCLI("report", "generate", "-o", reportPath)
 }

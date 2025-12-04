@@ -70,12 +70,13 @@ void SetLightMatrix(MATRIX* m);
 void SetTransMatrix(MATRIX* m);
 void SetFarColor(long rfc, long gfc, long bfc); // Color values (input)
 void SetFogNear(long a, long h); // Distance between visual point and screen
+MATRIX* MulMatrix(MATRIX* m0, MATRIX* m1);
 
-extern long SquareRoot0(long a);
-extern long SquareRoot12(long a);
-extern int rcos(int a);
-extern int rsin(int a);
-extern long ratan2(long y, long x);
+long SquareRoot0(long a);
+long SquareRoot12(long a);
+int rcos(int a);
+int rsin(int a);
+long ratan2(long y, long x);
 
 #if !defined(VERSION_PC) && !defined(M2CTX) && !defined(PERMUTER) &&           \
     !defined(VERSION_PSP)
@@ -384,8 +385,9 @@ void gte_ldv2(SVECTOR* v);
     gte_ldv0(x);                                                               \
     gte_ldv1(y);                                                               \
     gte_ldv2(z);
+void gte_nclip(void);
 void gte_rtps(void);
-void gte_stsxy(long* sxsy);
+void gte_stsxy(long* sxy);
 void gte_stszotz(long* otz);
 void gte_ldtr(s16, s16, s16);
 void gte_ldtx(s16);

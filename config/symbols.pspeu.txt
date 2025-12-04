@@ -235,6 +235,7 @@ PLAYER_velocityY = 0x091E168C;
 PLAYER_facingLeft = 0x091E1694;
 PLAYER_zPriority = 0x091E16A4;
 PLAYER_step = 0x091E16AC;
+PLAYER_step_s = 0x091E16AE;
 D_80073510 = 0x091E17B8;
 g_Entities_32 = 0x091E2E00;
 g_Entities_64 = 0x091E4580;

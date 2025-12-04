@@ -131,8 +131,8 @@ int ResetGraph(int mode) {
         return -1;
     }
 
-    GPU_memset(&D_80037E60, -1, sizeof(DRAWENV));
-    GPU_memset(&D_80037EBC, -1, sizeof(DISPENV));
+    memset2(&D_80037E60, -1, sizeof(DRAWENV));
+    memset2(&D_80037EBC, -1, sizeof(DISPENV));
     if (D_8002C26C != 0) {
         D_8002C260->ctl(
             D_8002C260->getctl(8) | (D_8002C270 ? 0x08000080 : 0x08000000));
@@ -926,7 +926,7 @@ int get_alarm(void) {
     return 0;
 }
 
-void GPU_memset(s8* ptr, int value, int num) {
+static void memset2(s8* ptr, int value, int num) {
     while (num--) {
         *ptr++ = value;
     }

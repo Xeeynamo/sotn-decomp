@@ -422,16 +422,16 @@ void DebugEditColorChannel(s32 colorAdd) {
 s32 DebugUpdate() { return 1; }
 
 s32 LoadVabData(void) {
-    char sp10[0x100];
+    char buf[0x100];
 
-    sprintf(&sp10, "%sSE/sd_j010.spk;1", D_psp_08B42060);
-    func_892EAFC(&sp10, 0);
-    sprintf(&sp10, "%sSE/sd_alk.spk;1", D_psp_08B42060);
-    func_892EAFC(&sp10, 1);
-    sprintf(&sp10, "%sSE/sd_mak.spk;1", D_psp_08B42060);
-    func_892EAFC(&sp10, 2);
-    sprintf(&sp10, "%sSE/sd_rou.spk;1", D_psp_08B42060);
-    func_892EAFC(&sp10, 3);
+    sprintf(buf, "%sSE/sd_j010.spk;1", D_psp_08B42060);
+    func_892EAFC(buf, 0);
+    sprintf(buf, "%sSE/sd_alk.spk;1", D_psp_08B42060);
+    func_892EAFC(buf, 1);
+    sprintf(buf, "%sSE/sd_mak.spk;1", D_psp_08B42060);
+    func_892EAFC(buf, 2);
+    sprintf(buf, "%sSE/sd_rou.spk;1", D_psp_08B42060);
+    func_892EAFC(buf, 3);
     return 0;
 }
 

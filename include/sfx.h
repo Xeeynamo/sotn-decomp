@@ -83,6 +83,8 @@ enum SfxModes {
 // XA music tracks
 // LOOP_POINT means it starts playing from part way into the song
 enum {
+    /* jp:0x203 */ SD_SEQ_LIBRARY = 0x203,
+
     // us: includes US build
     // jp: includes HD and PSP builds
     /* us:0x301, jp:0x301 */ MU_LOST_PAINTING = 0x301,
@@ -252,9 +254,6 @@ enum {
 #define JP_VO_SH_SCREAM 0x52F     // Shaft screams
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
-
-// plays every 10 frames while using bible subweapon
-#define BIBLE_SUBWPN_SWOOSH 0x8C3
 
 // STAGE DAI
 // Unknown SFX related to the priest
@@ -844,9 +843,9 @@ enum Sfx {
     /* 0x7E7 */ SFX_UNUSED_7E7,
     /* 0x7E8 */ SFX_DOP_SUBWEAPON_TINK,
     /* 0x7E9 */ SFX_UNUSED_7E9,
-    /* 0x7EA */ SFX_CREATURE_HAMMER,
-    /* 0x7EB */ SFX_CREATURE_ATTACK,
-    /* 0x7EC */ SFX_CREATURE_DEATH,
+    /* 0x7EA */ SFX_THE_CREATURE_HAMMER,
+    /* 0x7EB */ SFX_THE_CREATURE_ATTACK,
+    /* 0x7EC */ SFX_THE_CREATURE_DEATH,
     /* 0x7ED */ SFX_UNUSED_7ED,
     /* 0x7EE */ SFX_UNUSED_7EE,
     /* 0x7EF */ SFX_DEATH_PAIN_A,
@@ -1010,26 +1009,87 @@ enum Sfx {
     /* 0x883 */ SFX_MARIA_FOOTSTEPS_B,
     /* 0x884 */ SFX_UNUSED_884,
 
-    // Faerie and Demon familiars use a lookup table for sfxIDs instead of enum
-    // /* 0x885 */ SFX_FAERIE_HEALING,      // "Healing!"
-    // /* 0x886 */ SFX_FAERIE_POTION,       // "Potion"
-    // /* 0x887 */ SFX_FAERIE_REGENERATION, // "Regeneration"
-    // /* 0x888 */ SFX_FAERIE_NO_MEDICINE,  // "No medicine left"
-    // /* 0x889 */ SFX_FAERIE_HAMMER_A,     // using hammer on stoned Alucard
-    // /* 0x88A */ SFX_FAERIE_HAMMER_B,
-    // /* 0x88B */ SFX_FAERIE_HAMMER_C,
-    // /* 0x88C */ SFX_FAERIE_HAMMER_D,
-    // /* 0x88D */ SFX_FAERIE_FALL_OFF_A, // falling off Alucard's shoulder
-    // /* 0x88E */ SFX_FAERIE_FALL_OFF_B,
-    // /* 0x88F */ SFX_FAERIE_FALL_OFF_C,
-    // /* 0x890 */ SFX_FAERIE_FALL_OFF_D,
-    // /* 0x891 */ SFX_FAERIE_OH_NO,      // "OH NOOO!" (death reaction)
-    // /* 0x892 */ SFX_FAERIE_ARE_YOU_OK, // "Are you ok?" (possibly unused?)
-    SFX_TELEPORT_SYNTH_UP = 0x8BA,
-    SFX_TELEPORT_SYNTH_DOWN,
-    SFX_BURNING_PHOTOGRAPH = 0x8BE,
-    SFX_UI_NAME_ENTRY = 0x8CD,
-    NA_VO_SU_DELICIOUS = 0x8D1,
+    // Familiars/Servants use lookup tables for playing sfxIDs
+    /* 0x885 */ SFX_FAERIE_HEALING,      // "Healing!"
+    /* 0x886 */ SFX_FAERIE_POTION,       // "Potion"
+    /* 0x887 */ SFX_FAERIE_REGENERATION, // "Regeneration"
+    /* 0x888 */ SFX_FAERIE_NO_MEDICINE,  // "No medicine left"
+    /* 0x889 */ SFX_FAERIE_HAMMER_A,     // using hammer on stoned Alucard
+    /* 0x88A */ SFX_FAERIE_HAMMER_B,
+    /* 0x88B */ SFX_FAERIE_HAMMER_C,
+    /* 0x88C */ SFX_FAERIE_HAMMER_D,
+    /* 0x88D */ SFX_FAERIE_FALL_OFF_A, // falling off Alucard's shoulder
+    /* 0x88E */ SFX_FAERIE_FALL_OFF_B,
+    /* 0x88F */ SFX_FAERIE_FALL_OFF_C,
+    /* 0x890 */ SFX_FAERIE_FALL_OFF_D,
+    /* 0x891 */ SFX_FAERIE_OH_NO,      // "OH NOOO!" (death reaction)
+    /* 0x892 */ SFX_FAERIE_ARE_YOU_OK, // "Are you ok?" (possibly unused?)
+
+    // Yousei and Nose Demon are disabled in PSX
+    /* 0x893 */ SFX_YOUSEI_POTION,
+    /* 0x894 */ SFX_YOUSEI_UNK_A,
+    /* 0x895 */ SFX_YOUSEI_REGENERATION,
+    /* 0x896 */ SFX_YOUSEI_UNK_C,
+    /* 0x897 */ SFX_YOUSEI_HAMMER_A,
+    /* 0x898 */ SFX_YOUSEI_HAMMER_B,
+    /* 0x899 */ SFX_YOUSEI_FALL_OFF_A,
+    /* 0x89A */ SFX_YOUSEI_FALL_OFF_B,
+    /* 0x89B */ SFX_YOUSEI_FALL_OFF_C,
+    /* 0x89C */ SFX_YOUSEI_FALL_OFF_D,
+    /* 0x89D */ SFX_YOUSEI_YELL,
+    /* 0x89E */ SFX_DEMON_GRUNT_1,         // he-ya
+    /* 0x89F */ SFX_DEMON_GRUNT_2,         // huh
+    /* 0x8A0 */ SFX_DEMON_GRUNT_3,         // hrr
+    /* 0x8A1 */ SFX_DEMON_TAKE_THAT,       // "Take that" - possibly unused
+    /* 0x8A2 */ SFX_DEMON_DIE,             // "DIE!" - Used for cleave attack
+    /* 0x8A3 */ SFX_DEMON_FIRE_SPEAR,      // "Fire Spear"
+    /* 0x8A4 */ SFX_DEMON_ICE_SPEAR,       // "Ice Spear"
+    /* 0x8A5 */ SFX_DEMON_THUNDER_SPEAR,   // "Thunder Spear"
+    /* 0x8A6 */ SFX_DEMON_LIGHTNING_SPEAR, // "Lightning spear"
+    /* 0x8A7 */ SFX_UNUSED_DEMON_EAT,      // "Eat!"
+    /* 0x8A8 */ SFX_NOSE_DEMON_UNK_A,
+    /* 0x8A9 */ SFX_NOSE_DEMON_UNK_B,
+    /* 0x8AA */ SFX_NOSE_DEMON_UNK_C,
+    /* 0x8AB */ SFX_NOSE_DEMON_UNK_D,
+    /* 0x8AC */ SFX_NOSE_DEMON_UNK_E,
+    /* 0x8AD */ SFX_NOSE_DEMON_UNK_F,
+    /* 0x8AE */ SFX_NOSE_DEMON_UNK_G,
+    /* 0x8AF */ SFX_NOSE_DEMON_UNK_H,
+    /* 0x8B0 */ SFX_NOSE_DEMON_UNK_I,
+    /* 0x8B1 */ SFX_NOSE_DEMON_UNK_J,
+    /* 0x8B2 */ SFX_SWORD_SERVANT_SLASH,      // "Ssslash!"
+    /* 0x8B3 */ SFX_SWORD_SERVANT_SLICE,      // "Slice!"
+    /* 0x8B4 */ SFX_SWORD_SERVANT_TEAR,       // "Tear open the heavens!"
+    /* 0x8B5 */ SFX_SWORD_SERVANT_DARK_EDGE,  // "Dark Edge!"
+    /* 0x8B6 */ SFX_SWORD_SERVANT_BROS_SPELL, // "Gather, brother soul blades!"
+    /* 0x8B7 */ SFX_SWORD_SERVANT_GRUNT_A,
+    /* 0x8B8 */ SFX_SWORD_SERVANT_GRUNT_B,
+
+    // vabid 9
+    /* 0x8B9 */ SFX_THE_CREATURE_HEAD_FALL,
+    /* 0x8BA */ SFX_TELEPORT_SYNTH_UP,
+    /* 0x8BB */ SFX_TELEPORT_SYNTH_DOWN,
+    /* 0x8BC */ SFX_UNUSED_TELEPORT_SYNTH_UP,
+    /* 0x8BD */ SFX_UNUSED_TELEPORT_SYNTH_DOWN,
+    /* 0x8BE */ SFX_BURNING_PHOTOGRAPH,
+    /* 0x8BF */ SFX_DRACULA_TRIANGLE_ATTACK,
+    /* 0x8C0 */ SFX_GRANFALOON_SCREAMS_A,
+    /* 0x8C1 */ SFX_GRANFALOON_SCREAMS_B,
+    /* 0x8C2 */ SFX_BEELZEBUB_PAIN,
+    /* 0x8C3 */ SFX_BIBLE_SUBWPN_SWISH, // plays every 10 frames during attack
+
+    // 0x8C4 - 0x8CB appear to be unused
+
+    // vabid 0
+    /* 0x8CD */ SFX_UI_NAME_ENTRY = 0x8CD,
+    /* 0x8CE */ SFX_UNUSED_UI_NAME_ENTRY,
+    /* 0x8CF */ SFX_UNUSED_ANIME_SWORD,
+
+    // vabid 3
+    /* 0x8D0 */ SFX_UNUSED_8D0,
+    /* 0x8D1 */ SFX_SUCCUBUS_DELICIOUS, // "Mmm, delicious!"
+
+    // 0x8D2 - 0x8E5 appear to be unused
 
     // Exclusive to Maria PSP
     /* 0x8E6 */ SFX_VO_MAR_8E6 = 0x8E6,
