@@ -5,6 +5,8 @@ import os
 import re
 import sys
 from pathlib import Path
+from typing import TextIO
+
 from yaml import safe_load
 from subprocess import CalledProcessError, run
 from collections import defaultdict, namedtuple
@@ -505,18 +507,16 @@ def get_symbols(file_path, excluded_starts=[], excluded_ends=[], excluded_commen
     return sorted(symbols, key=lambda symbol: (symbol.address, symbol.name))
 
 
-def parse(file_name, no_default=False, output_file=False):
-    excluded_starts = ["D_", "func_", "jpt_", "jtbl_"] if no_default else []
-    symbols = get_symbols(Path(file_name), excluded_starts)
+def parse(writer: TextIO, file_name: str, no_default=False, allow_duplicated=False):
+    excluded_starts = ["D_", "func_", "jpt_", "jtbl_"] if no_default else ["jpt_", "jtbl_"]
+    symbols = get_symbols(file_name, excluded_starts)
 
+    symbol_suffix = " // allow_duplicated:true" if allow_duplicated else ""
     lines = (
-        f"{symbol.name} = 0x{symbol.address:08X}; // allow_duplicated:true"
+        f"{symbol.name} = 0x{symbol.address:08X};{symbol_suffix}"
         for symbol in symbols
     )
-    if output_file:
-        Path(output_file).write_text("\n".join(lines) + "\n")
-    else:
-        [print(line) for line in lines]
+    writer.write("\n".join(lines)+"\n")
 
 
 def extract_dynamic_symbols(config_path, output):
@@ -563,6 +563,12 @@ def extract_dynamic_symbols(config_path, output):
         output.write_text("\n".join(lines) + "\n")
     else:
         print("\n".join(lines))
+
+
+def export_symbols(writer: TextIO, file_name: str):
+    symbols = get_symbols(file_name, excluded_starts=["func_", "jpt_", "jtbl_"])
+    for symbol in symbols:
+        writer.write(f"{symbol.name} = 0x{symbol.address:08X}")
 
 
 if __name__ == "__main__":
@@ -655,7 +661,14 @@ if __name__ == "__main__":
         "--no-default",
         required=False,
         action="store_true",
-        help="Do not include symbols that start with D_, func_, jpt_, or jtbl_",
+        help="Do not include the default generated symbols from Splat D_ or func_",
+    )
+    parse_parser.add_argument(
+        "-d",
+        "--allow-duplicated",
+        required=False,
+        action="store_true",
+        help="Add 'allow_duplicated' flag for each symbol name to force Splat to parse the produced output",
     )
 
     dynamic_parser = subparsers.add_parser(
@@ -683,6 +696,8 @@ if __name__ == "__main__":
         case "clean":
             clean(args.config_file)
         case "parse":
-            parse(args.file_name, args.no_default, args.output)
+            if not args.output:
+                args.output = sys.stdout
+            parse(args.output, args.file_name, args.no_default, args.allow_duplicated)
         case "dynamic":
             extract_dynamic_symbols(args.config_file, args.output)

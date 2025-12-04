@@ -11,7 +11,7 @@ typedef struct {
     Point32 pos;
 } RoomLoadDefHolder;
 
-extern bool D_8C630C8;
+extern bool D_psp_08C630C8;
 extern s32 D_psp_091CE578;
 extern void (*D_8CE9C48)();
 extern s32 D_psp_091CE570;
@@ -1251,7 +1251,7 @@ void RunMainEngine(void) {
     u32 tempY;
 
 #if defined(VERSION_PSP)
-    if (D_8C630C8) {
+    if (D_psp_08C630C8) {
         g_Status.hearts = 99;
     }
 #endif
