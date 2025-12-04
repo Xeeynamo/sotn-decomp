@@ -777,6 +777,7 @@ void func_800E5498(void) {
     g_GpuUsage.gt4++;
 }
 
+void func_psp_091040A0(u_long** gfxBank);
 void HandleGameOver(void) {
     Primitive* prim;
     s32 i;

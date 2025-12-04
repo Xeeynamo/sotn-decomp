@@ -41,5 +41,4 @@ float func_psp_089260D0(float);
 u8* GetLangAt(s32 idx, u8* en, u8* fr, u8* sp, u8* ge, u8* it);
 
 // PSP exclusive functions in DRA
-void func_psp_091040A0(u_long** gfxBank);
 void func_91040A0(u_long** gfxBank); // TODO replace with func_psp_091040A0

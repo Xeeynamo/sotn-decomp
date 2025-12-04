@@ -204,6 +204,7 @@ void func_801093C4(void) {
 }
 
 // Corresponding RIC function is RicInit
+void func_psp_091040A0(u_long** gfxBank);
 void AluInit() {
     Entity* e;
     Primitive* prim;

@@ -2441,6 +2441,7 @@ void func_800F9DD0(const char* src, char* dst) {
 }
 
 #if defined(VERSION_US) || defined(VERSION_PSP)
+void func_psp_091040A0(u_long** gfxBank);
 void func_800F9E18(s32 arg0) {
     const int ItemsPerRow = 2;
     char buffer[38];
