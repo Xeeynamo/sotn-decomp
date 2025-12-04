@@ -8,33 +8,33 @@ double sin(double x);
 double cos(double x);
 float func_psp_08906994(float, float);
 
-extern SVECTOR D_psp_08C63B28;
-extern SVECTOR D_psp_08C63B30;
-extern SVECTOR D_psp_08C63B38;
-extern s16 D_psp_08C63B44;
+extern SVECTOR D_psp_08C63B28; // Vector 0
+extern SVECTOR D_psp_08C63B30; // Vector 1
+extern SVECTOR D_psp_08C63B38; // Vector 2
+extern s16 D_psp_08C63B44;     // otz
 extern s32 D_psp_08C63B4C;
 extern s32 D_psp_08C63B50;
 extern s32 D_psp_08C63B54;
-extern s16 D_psp_08C63B58;
-extern s16 D_psp_08C63B5A;
-extern s16 D_psp_08C63B5C;
-extern s16 D_psp_08C63B5E;
-extern s16 D_psp_08C63B60;
-extern s16 D_psp_08C63B62;
-extern u16 D_psp_08C63B68;
-extern u16 D_psp_08C63B6C;
-extern u16 D_psp_08C63B70;
-extern u16 D_psp_08C63B74;
-extern s32 D_psp_08C63B78;
-extern s32 D_psp_08C63B88;
-extern MATRIX D_psp_08C63BA8;
-extern MATRIX D_psp_08C63BC8;
-extern MATRIX D_psp_08C63BE8;
-extern s32 D_psp_08C63C08;
-extern s32 D_psp_08C63C0C;
-extern s16 D_psp_08C63C10;
-extern s16 D_psp_08C63C1C;
-extern s16 D_psp_08C63C20;
+extern s16 D_psp_08C63B58;    // sx0
+extern s16 D_psp_08C63B5A;    // sy0
+extern s16 D_psp_08C63B5C;    // sx1
+extern s16 D_psp_08C63B5E;    // sy1
+extern s16 D_psp_08C63B60;    // sx2
+extern s16 D_psp_08C63B62;    // sy2
+extern u16 D_psp_08C63B68;    // sz0
+extern u16 D_psp_08C63B6C;    // sz1
+extern u16 D_psp_08C63B70;    // sz2
+extern u16 D_psp_08C63B74;    // sz3
+extern s32 D_psp_08C63B78;    // rgb0
+extern s32 D_psp_08C63B88;    // MAC0
+extern MATRIX D_psp_08C63BA8; // Rotation Matrix
+extern MATRIX D_psp_08C63BC8; // Light Matrix
+extern MATRIX D_psp_08C63BE8; // Light Color Matrix
+extern s32 D_psp_08C63C08;    // ofx
+extern s32 D_psp_08C63C0C;    // ofy
+extern s16 D_psp_08C63C10;    // h
+extern s16 D_psp_08C63C1C;    // DQA
+extern s16 D_psp_08C63C20;    // DQB
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", ApplyRotMatrix);
 
@@ -56,15 +56,15 @@ MATRIX* CompMatrix(MATRIX* m0, MATRIX* m1, MATRIX* m2) {
     m2->t = m0->t;
     MulMatrix(m2, m1);
     SetRotMatrix(m0);
-    m2->t[0] = m0->t[0] + (D_psp_08C63BA8.m[0][0] / 4096.0f * m1->t[0]) +
-               (D_psp_08C63BA8.m[0][1] / 4096.0f * m1->t[1]) +
-               (D_psp_08C63BA8.m[0][2] / 4096.0f * m1->t[2]);
-    m2->t[1] = m0->t[1] + (D_psp_08C63BA8.m[1][0] / 4096.0f * m1->t[0]) +
-               (D_psp_08C63BA8.m[1][1] / 4096.0f * m1->t[1]) +
-               (D_psp_08C63BA8.m[1][2] / 4096.0f * m1->t[2]);
-    m2->t[2] = m0->t[2] + (D_psp_08C63BA8.m[2][0] / 4096.0f * m1->t[0]) +
-               (D_psp_08C63BA8.m[2][1] / 4096.0f * m1->t[1]) +
-               (D_psp_08C63BA8.m[2][2] / 4096.0f * m1->t[2]);
+    m2->t[0] = m0->t[0] + (float)D_psp_08C63BA8.m[0][0] / 0x1000 * m1->t[0] +
+               (float)D_psp_08C63BA8.m[0][1] / 0x1000 * m1->t[1] +
+               (float)D_psp_08C63BA8.m[0][2] / 0x1000 * m1->t[2];
+    m2->t[1] = m0->t[1] + (float)D_psp_08C63BA8.m[1][0] / 0x1000 * m1->t[0] +
+               (float)D_psp_08C63BA8.m[1][1] / 0x1000 * m1->t[1] +
+               (float)D_psp_08C63BA8.m[1][2] / 0x1000 * m1->t[2];
+    m2->t[2] = m0->t[2] + (float)D_psp_08C63BA8.m[2][0] / 0x1000 * m1->t[0] +
+               (float)D_psp_08C63BA8.m[2][1] / 0x1000 * m1->t[1] +
+               (float)D_psp_08C63BA8.m[2][2] / 0x1000 * m1->t[2];
     return NULL;
 }
 

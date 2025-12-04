@@ -147,7 +147,81 @@ s32 func_psp_0890F670(s8* arg0) {
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_0890F754);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_0890F7CC);
+void func_psp_0890F7CC(void* buf, s32* arg1, s32 offset, s32 nbyte, s8* arg4) {
+    bool var_s0;
+    s32 var_s1;
+
+    var_s0 = false;
+    sceKernelDelayThreadCB(166);
+    while (func_psp_089123B8() == 0) {
+        var_s0 = true;
+        sceKernelDelayThreadCB(166);
+    }
+    while (true) {
+        if (var_s0 || *arg1 == -1) {
+            var_s0 = false;
+            if (*arg1 != -1) {
+                func_psp_0890F754(*arg1);
+                *arg1 = -1;
+            }
+            func_psp_0890F250(arg4, D_psp_089B6330);
+            while (true) {
+                *arg1 = func_psp_0890F3E0(D_psp_089B6330, PSP_O_RDONLY, 0x1FF);
+                if (*arg1 < 0) {
+                    sceKernelDelayThreadCB(166);
+                    continue;
+                }
+                if (func_psp_0890F5D0(arg1, 0)) {
+
+                } else {
+                    break;
+                }
+                while (func_psp_089123B8() == 0) {
+                    sceKernelDelayThreadCB(166);
+                }
+            }
+        }
+        var_s1 = nbyte;
+        var_s0 = false;
+        while (true) {
+            if (func_psp_0890F45C(*arg1, offset, 0) == 0) {
+                break;
+            }
+            sceKernelDelayThreadCB(166);
+        }
+        if (func_psp_0890F5D0(arg1, 0)) {
+            while (func_psp_089123B8() == 0) {
+                sceKernelDelayThreadCB(166);
+            }
+            var_s0 = true;
+        }
+        if (var_s0) {
+            sceKernelDelayThreadCB(166);
+            continue;
+        }
+        sceKernelDelayThreadCB(166);
+        var_s0 = false;
+        while (true) {
+            if (func_psp_0890F4E0(*arg1, buf, nbyte) == 0) {
+                break;
+            }
+            sceKernelDelayThreadCB(166);
+        }
+        if (func_psp_0890F5D0(arg1, var_s1)) {
+            while (func_psp_089123B8() == 0) {
+                sceKernelDelayThreadCB(166);
+            }
+            var_s0 = true;
+        }
+        if (!var_s0) {
+            break;
+        }
+        sceKernelDelayThreadCB(166);
+    }
+
+    sceKernelDelayThreadCB(166);
+    sceKernelDcacheWritebackAll();
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_0890FA7C);
 
