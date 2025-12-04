@@ -56,9 +56,11 @@ typedef struct {
 
 extern s32 D_psp_089632C8;
 extern char D_psp_089632CC[];
+extern char D_psp_08963300[];
 extern s32 D_psp_089AD784[];
 extern s32 D_psp_089AD790[];
 extern s32 D_psp_089AD79C[];
+extern s32 D_psp_08B42060;
 extern unkStruct2 D_psp_08DADCC4;
 extern u8 D_psp_08DADF80[][0x400];
 extern s32 D_psp_08DAE780;
@@ -606,7 +608,31 @@ void func_psp_0892EAFC(char* arg0, s32 arg1) {
     func_psp_0892EA24(arg0, arg1, NULL);
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892EB04);
+void func_psp_0892EB04(s8* path, s32 arg1, s32 arg2) {
+    s8 fileName[0x10];
+    s8 buf[0x100];
+    s8* ptr;
+    s32 i;
+
+    i = strlen(path);
+    while (--i) {
+        if (path[i] == '/' || path[i] == '\\') {
+            i++;
+            break;
+        }
+    }
+    ptr = &path[i];
+    for (i = 0; i < 0x10; i++) {
+        fileName[i] = *ptr;
+        if (fileName[i] == '.') {
+            fileName[i] = '\0';
+            break;
+        }
+        ptr++;
+    }
+    sprintf(buf, D_psp_08963300, D_psp_08B42060, fileName);
+    func_psp_0892EA24(buf, arg1, arg2);
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892EBE8);
 
