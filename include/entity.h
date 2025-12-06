@@ -3696,12 +3696,12 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u8 unk7C;
-    /* 0x7D */ u8 unk7D;
+    /* 0x7D */ u8 lastFacingDirection;
     /* 0x7E */ u8 unk7E;
-    /* 0x7F */ u8 unk7F;
-    /* 0x80 */ Primitive* prim;
+    /* 0x7F */ u8 deathVortexColor;
+    /* 0x80 */ Primitive* deathVortexPrim;
     /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 unk85;
+    /* 0x85 */ u8 nextAttack;
 } ET_Paranthropus;
 
 typedef union { // offset=0x7C

@@ -60,10 +60,10 @@ void EntityArmorLordFireWave(Entity* self);
 void func_us_801D3700(Entity* self);
 void EntityHuntingGirl(Entity* self);
 void EntityHuntingGirlAttack(Entity* self);
-void func_us_801CDCF4(Entity* self);
-void func_us_801CEBC8(Entity* self);
-void func_us_801CECAC(Entity* self);
-void func_us_801CEB00(Entity* self);
+void EntityParanthropus(Entity* self);
+void EntityParanthropusBoneHitbox(Entity* self);
+void EntityParanthropusSkull(Entity* self);
+void EntityParanthropusThrownBone(Entity* self);
 void EntityFleaArmor(Entity* self);
 void EntityFleaArmorAttackHitbox(Entity* self);
 void EntityFleaMan(Entity* self);
@@ -139,10 +139,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D3700,
     EntityHuntingGirl,
     EntityHuntingGirlAttack,
-    func_us_801CDCF4,
-    func_us_801CEBC8,
-    func_us_801CECAC,
-    func_us_801CEB00,
+    EntityParanthropus,
+    EntityParanthropusBoneHitbox,
+    EntityParanthropusSkull,
+    EntityParanthropusThrownBone,
     EntityFleaArmor,
     EntityFleaArmorAttackHitbox,
     EntityFleaMan,
@@ -217,9 +217,11 @@ EInit D_us_80180AF4 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x024};
 EInit g_EInitHuntingGirl = {ANIMSET_OVL(0x0A), 0x00, 0x54, 0x021D, 0x0E3};
 
 // Paranthropus
-EInit D_us_80180BF4 = {ANIMSET_OVL(0x0B), 0x01, 0x48, 0x021F, 0x0D3};
-EInit D_us_80180C00 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x0D4};
-EInit D_us_80180C0C = {ANIMSET_OVL(0x0B), 0x36, 0x48, 0x021F, 0x0D5};
+EInit g_EInitParanthropus = {ANIMSET_OVL(0x0B), 0x01, 0x48, 0x021F, 0x0D3};
+EInit g_EInitParanthropusBoneHitbox = {
+    ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x0D4};
+EInit g_EInitParanthropusThrownBone = {
+    ANIMSET_OVL(0x0B), 0x36, 0x48, 0x021F, 0x0D5};
 
 // Flea Armor
 EInit g_EInitFleaArmor = {ANIMSET_OVL(0x0C), 0x01, 0x48, 0x0222, 0x029};

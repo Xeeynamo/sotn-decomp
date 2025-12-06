@@ -77,10 +77,10 @@ enum Entities {
     E_ARMOR_LORD_UNK2,              // func_us_801D3700
     E_HUNTING_GIRL,                 // EntityHuntingGirl
     E_HUNTING_GIRL_ATTACK,          // EntityHuntingGirlAttack
-    E_UNK_3C,                       // func_us_801CDCF4
-    E_UNK_3D,                       // func_us_801CEBC8
-    E_UNK_3E,                       // func_us_801CECAC
-    E_UNK_3F,                       // func_us_801CEB00
+    E_PARANTHROPUS,                 // EntityParanthropus
+    E_PARANTHROPUS_BONE_HITBOX,     // EntityParanthropusBoneHitbox
+    E_PARANTHROPUS_SKULL,           // EntityParanthropusSkull
+    E_PARANTHROPUS_THROWN_BONE,     // EntityParanthropusThrownBone
     E_FLEA_ARMOR,                   // EntityFleaArmor
     E_FLEA_ARMOR_ATTACK_HITBOX,     // EntityFleaArmorAttackHitbox
     E_FLEA_MAN,                     // EntityFleaMan
