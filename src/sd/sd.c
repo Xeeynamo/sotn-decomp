@@ -7,6 +7,7 @@
 extern s32 D_8005150C;
 extern u16 D_800828B8;
 extern u32 D_80088FE8;
+extern s16 D_800AD306;
 
 void entrypoint();
 void func_80180FA0();
@@ -18,6 +19,7 @@ extern s16 D_80181210;
 extern s16 D_80181214;
 extern s16 D_80181218;
 extern s16 D_8018121C;
+extern s8 D_80181220[0x10];
 
 static s16 D_80180008[];
 static const char* D_801800D8[];
@@ -139,13 +141,67 @@ void entrypoint(void) {
     }
 }
 
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180ECC);
+void func_80180ECC(void) {
+    s32 i;
+    Pad* pad;
+
+    PadInit(0);
+    pad = g_pads;
+    for (i = 0; i < LEN(g_pads); i++) {
+        pad->tapped = 0;
+        pad->previous = 0;
+        pad->pressed = 0;
+        pad++;
+    }
+}
 
 INCLUDE_ASM("sd/nonmatchings/sd", func_80180F14);
 
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180FA0);
+#define PAD_REPEAT_TIMER 24
+void func_80180FA0(void) {
+    s32 i;
+    s8* ptr;
 
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180FD4);
+    g_pads[0].repeat = 0;
+    ptr = D_80181220;
+    for (i = 0; i < LEN(D_80181220); i++) {
+        *ptr++ = PAD_REPEAT_TIMER;
+    }
+}
+
+void func_80180FD4(void) {
+    s8* timer;
+    u16 mask;
+    u16 bits;
+    s32 i;
+    u16 pressed;
+    u16 tapped;
+
+    mask = 1;
+    tapped = g_pads[0].tapped;
+    pressed = g_pads[0].pressed;
+    bits = 0;
+    timer = D_80181220;
+    i = 0;
+    while (i < LEN(D_80181220)) {
+        if (pressed & mask) {
+            if (tapped & mask) {
+                bits |= mask;
+                *timer = 24;
+            } else {
+                *timer = *timer - 1;
+                if ((*timer & 0xFF) == 0xFF) {
+                    bits |= mask;
+                    *timer = 5;
+                }
+            }
+        }
+        i++;
+        timer++;
+        mask <<= 1;
+    }
+    g_pads[0].repeat = bits;
+}
 
 s32 func_8018106C(void) { return D_800828B8 != 0; }
 
