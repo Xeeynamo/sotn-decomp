@@ -710,7 +710,7 @@
 | sel   | func_psp_09237C38                 |       21 |          3 |        |       |     |
 | sel   | func_psp_09237C78                 |       21 |          3 |        |       |     |
 | main  | 1B0F0.rodata                      |       22 |          0 | Yes    |       |     |
-| are   | unk_7298.rodata                   |       22 |          0 | Yes    |       |     |
+| are   | e_paranthropus.rodata             |       22 |          0 | Yes    |       |     |
 | are   | D_pspeu_09297D90                  |       22 |          0 |        |       |     |
 | cat   | e_spike_room_light_switch.rodata  |       22 |          0 | Yes    |       |     |
 | chi   | en_breakable_wall.rodata          |       22 |          0 | Yes    |       |     |
@@ -933,8 +933,8 @@
 | main  | func_psp_08932A7C                 |       27 |          1 |        |       |     |
 | main  | sceGuBlendFunc                    |       27 |          1 |        |       |     |
 | main  | sceGuTexLevelMode                 |       27 |          1 |        |       |     |
-| are   | func_pspeu_09263428               |       27 |          1 |        |       |     |
 | are   | func_pspeu_0923E918               |       27 |          1 |        |       |     |
+| are   | func_pspeu_09263428               |       27 |          1 |        |       |     |
 | cat   | func_pspeu_092542A8               |       27 |          1 |        |       |     |
 | dai   | func_pspeu_0924F1A8               |       27 |          1 |        |       |     |
 | lib   | func_psp_09251040                 |       27 |          1 |        |       |     |
@@ -2376,7 +2376,7 @@
 | dra   | func_psp_09117998                 |       73 |         12 |        |       |     |
 | maria | func_pspeu_092B3538               |       73 |         12 |        |       |     |
 | ric   | func_pspeu_092B0F40               |       73 |         12 |        |       |     |
-| are   | func_us_801CEB00                  |       73 |         12 |        |       |     |
+| are   | func_pspeu_0923FDF8               |       73 |         12 |        |       |     |
 | no3   | func_pspeu_0924F600               |       73 |         13 |        |       |     |
 | np3   | EntityMediumWaterSplash           |       73 |         13 |        |       |     |
 | are   | func_pspeu_09256548               |       73 |         14 |        |       |     |
@@ -2856,7 +2856,7 @@
 | dra   | 8D3E8.rodata                      |      104 |          0 | Yes    |       |     |
 | dra   | func_psp_09143248                 |      104 |          3 |        |       |     |
 | nz1   | BreakBridge                       |      104 |          4 |        |       |     |
-| are   | EntityExplosionVariantsSpawner    |      104 |          5 |        |       |     |
+| are   | func_pspeu_09253668               |      104 |          5 |        |       |     |
 | dai   | func_pspeu_092429E8               |      104 |          5 |        |       |     |
 | lib   | func_psp_09247D68                 |      104 |          5 |        |       |     |
 | no3   | func_pspeu_09258A78               |      104 |          5 |        |       |     |
@@ -2925,7 +2925,7 @@
 | dra   | func_psp_09138600                 |      107 |         17 |        |       |     |
 | main  | func_psp_089117F4                 |      108 |          1 |        |       |     |
 | dra   | func_psp_090EC0C0                 |      108 |          3 |        |       |     |
-| are   | func_us_801CEBC8                  |      108 |          8 |        |       |     |
+| are   | func_pspeu_0923FEF0               |      108 |          8 |        |       |     |
 | no3   | func_pspeu_09258EF0               |      108 |          8 |        |       |     |
 | np3   | func_pspeu_0924F488               |      108 |          8 |        |       |     |
 | dra   | func_psp_090DFD70                 |      108 |          9 |        |       |     |
@@ -3071,7 +3071,7 @@
 | main  | func_psp_089264CC                 |      121 |         16 |        |       |     |
 | main  | func_psp_0892D674                 |      121 |         16 |        |       |     |
 | main  | _reclaim_reent                    |      121 |         21 |        |       |     |
-| are   | func_us_801CECAC                  |      122 |         11 |        |       |     |
+| are   | func_pspeu_09240078               |      122 |         11 |        |       |     |
 | main  | sceGupDrawSprite                  |      123 |          9 |        |       |     |
 | main  | func_psp_0892827C                 |      123 |         12 |        |       |     |
 | dra   | func_psp_09104478                 |      123 |         14 |        |       |     |
@@ -3398,7 +3398,7 @@
 | no4   | func_pspeu_09248D90               |      185 |         27 |        |       |     |
 | sel   | func_psp_09244338                 |      185 |         28 | Yes    |       |     |
 | dra   | func_psp_09123E50                 |      186 |         14 |        |       |     |
-| are   | UnkCollisionFunc3                 |      186 |         20 |        |       |     |
+| are   | func_pspeu_09261618               |      186 |         20 |        |       |     |
 | cat   | func_pspeu_092524A8               |      186 |         20 |        |       |     |
 | chi   | func_psp_09247720                 |      186 |         20 |        |       |     |
 | dai   | func_pspeu_0924D570               |      186 |         20 |        |       |     |
@@ -4429,7 +4429,7 @@
 | np3   | EntityGurkha                      |     1391 |        212 | Yes    |       |     |
 | no3   | func_pspeu_09252EF8               |     1392 |        193 | Yes    |       |     |
 | st0   | EntityDracula                     |     1396 |        179 | Yes    |       |     |
-| are   | func_us_801CDCF4                  |     1406 |        163 | Yes    |       |     |
+| are   | func_pspeu_0923E970               |     1406 |        163 | Yes    |       |     |
 | main  | _dtoa_r                           |     1441 |        250 | Yes    |       |     |
 | no2   | func_pspeu_0924F990               |     1457 |        237 | Yes    |       |     |
 | np3   | EntityBlade                       |     1457 |        237 | Yes    |       |     |
