@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //! PSYQ=3.3 O=1
+// Sound Data testing overlay
 #define VERSION_SD
 #include <game.h>
 #include <sfx.h>
@@ -10,20 +11,25 @@ void Entrypoint();
 static void InputRepeatInit();
 static void InputRepeatUpdate();
 static void SetDisplayBuffer(s16 width);
-void* D_80180000[] = {(void*)Entrypoint};
+
+void* header[] = {(void*)Entrypoint};
 static s16 D_80180004 = 0;
 static s16 D_80180006 = 0;
-extern s16 D_80181210;
-extern s16 D_80181214;
-extern s16 D_80181218;
-extern s16 D_8018121C;
-extern s8 D_80181220[0x10];
+static s16 prim_index;
+STATIC_PAD_BSS(2);
+static s16 gion_idx; // gion = 擬音 = imitated sound = sound effect
+STATIC_PAD_BSS(2);
+static s16 xa_idx;
+STATIC_PAD_BSS(2);
+static s16 seq_idx;
+STATIC_PAD_BSS(2);
+s8 D_80181220[0x10];
 
-static s16 D_80180008[];
+static s16 sd_id[];
 static const char* sd_codes[];
-static s16 D_80180278[];
+static s16 xa_ids[];
 static const char* xa_codes[];
-static s16 D_801802D4[];
+static s16 seq_ids[];
 static const char* seq_codes[];
 
 void Entrypoint(void) {
@@ -41,8 +47,8 @@ void Entrypoint(void) {
         }
         break;
     case 1:
-        D_80181210 = g_api.AllocPrimitives(PRIM_GT4, 1);
-        prim = &g_PrimBuf[D_80181210];
+        prim_index = g_api.AllocPrimitives(PRIM_GT4, 1);
+        prim = &g_PrimBuf[prim_index];
         prim->x0 = 0;
         prim->y0 = 0;
         prim->x1 = 255;
@@ -84,42 +90,42 @@ void Entrypoint(void) {
         FntPrint("sankaku button : off\n");
         FntPrint("start      key : exit\n");
         FntPrint("\n");
-        FntPrint("sd  code :%s\n", sd_codes[D_80181214]);
-        FntPrint("xa  code :%s\n", xa_codes[D_80181218]);
-        FntPrint("seq code :%s\n", seq_codes[D_8018121C]);
+        FntPrint("sd  code :%s\n", sd_codes[gion_idx]);
+        FntPrint("xa  code :%s\n", xa_codes[xa_idx]);
+        FntPrint("seq code :%s\n", seq_codes[seq_idx]);
         if (g_pads[0].repeat & PAD_UP) {
-            D_80181214++;
-            if (D_80181214 > 102) {
-                D_80181214 = 102;
+            gion_idx++;
+            if (gion_idx > 102) {
+                gion_idx = 102;
             }
         }
         if (g_pads[0].repeat & PAD_DOWN) {
-            D_80181214--;
-            if (D_80181214 < 0) {
-                D_80181214 = 0;
+            gion_idx--;
+            if (gion_idx < 0) {
+                gion_idx = 0;
             }
         }
         if (g_pads[0].tapped & PAD_CIRCLE) {
-            g_api.PlaySfx(D_80180008[D_80181214]);
+            g_api.PlaySfx(sd_id[gion_idx]);
         }
         if (g_pads[0].repeat & PAD_RIGHT) {
-            D_80181218++;
-            if (D_80181218 > 15) {
-                D_80181218 = 15;
+            xa_idx++;
+            if (xa_idx > 15) {
+                xa_idx = 15;
             }
         }
         if (g_pads[0].repeat & PAD_LEFT) {
-            D_80181218--;
-            if (D_80181218 < 0) {
-                D_80181218 = 0;
+            xa_idx--;
+            if (xa_idx < 0) {
+                xa_idx = 0;
             }
         }
         if (g_pads[0].tapped & PAD_CROSS) {
-            D_80180006 = D_80180278[D_80181218];
+            D_80180006 = xa_ids[xa_idx];
             g_api.PlaySfx(D_80180006);
         }
         if (g_pads[0].tapped & PAD_SQUARE) {
-            g_api.PlaySfx(D_801802D4[D_8018121C]);
+            g_api.PlaySfx(seq_ids[seq_idx]);
         }
         if (g_pads[0].tapped & PAD_TRIANGLE) {
             g_api.PlaySfx(SET_UNK_13);
@@ -130,7 +136,7 @@ void Entrypoint(void) {
         break;
     case 3:
         if (g_api.func_80131F68() != 1) {
-            g_api.FreePrimitives(D_80181210);
+            g_api.FreePrimitives(prim_index);
             ClearScreen();
             SetGameState(Game_Title);
         }
@@ -263,7 +269,7 @@ static void SetGameState(GameState gameState) {
     g_GameStep = 0;
 }
 
-static s16 D_80180008[] = {
+static s16 sd_id[] = {
     0x501, // SD_IDO
     0x502, // SD_KETT
     0x529, // SD_ATARI_1
@@ -393,7 +399,7 @@ static const char* sd_codes[] = {
     "SD_MAK2G",    "SD_MAK2H2",    "SD_MAK2I",   "SD_MAK2J",
 };
 
-static s16 D_80180278[] = {
+static s16 xa_ids[] = {
     MU_LOST_PAINTING,
     MU_CURSE_ZONE,
     MU_RAINBOW_CEMETERY,
@@ -428,5 +434,5 @@ static const char* xa_codes[] = {
     "SD_XA_TOUBGM1 ", // MU_TOWER_OF_MIST
 };
 
-static s16 D_801802D4[] = {SD_SEQ_LIBRARY};
+static s16 seq_ids[] = {SD_SEQ_LIBRARY};
 static const char* seq_codes[] = {"SD_SEQ_LIBRARY"};

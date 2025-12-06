@@ -38,5 +38,5 @@ segments:
       - [0x0, .data, sd]
       - [0x2DC, .rodata, sd]
       - [0x954, c, sd]
-      - [0x1210, bss]
+      - [0x1210, .bss, sd]
   - [0x1230]
