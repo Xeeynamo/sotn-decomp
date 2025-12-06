@@ -8,10 +8,16 @@ extern s32 D_8005150C;
 extern u16 D_800828B8;
 extern u32 D_80088FE8;
 
-void func_80180954();
-void* D_80180000[] = {(void*)func_80180954};
+void entrypoint();
+void func_80180FA0();
+void func_80180FD4();
+void* D_80180000[] = {(void*)entrypoint};
 static s16 D_80180004 = 0;
 static s16 D_80180006 = 0;
+extern s16 D_80181210;
+extern s16 D_80181214;
+extern s16 D_80181218;
+extern s16 D_8018121C;
 
 static s16 D_80180008[];
 static const char* D_801800D8[];
@@ -20,17 +26,8 @@ static const char* D_80180298[];
 static s16 D_801802D4[];
 static const char* D_801802D8[];
 
-extern Primitive D_8009CE78[];
-void func_800149C0(const char* fmt, ...);
-void func_80180FA0();
-void func_80180FD4();
-extern s16 D_80181210;
-extern s16 D_80181214;
-extern s16 D_80181218;
-extern s16 D_8018121C;
-
 static void SetDisplayBuffer(s16 width);
-void func_80180954(void) {
+void entrypoint(void) {
     Primitive* prim;
 
     if (D_80088FE8) {
@@ -46,26 +43,26 @@ void func_80180954(void) {
         break;
     case 1:
         D_80181210 = g_api.AllocPrimitives(PRIM_GT4, 1);
-        prim = &D_8009CE78[D_80181210];
+        prim = &g_PrimBuf[D_80181210];
         prim->x0 = 0;
         prim->y0 = 0;
-        prim->x1 = 0xFF;
+        prim->x1 = 255;
         prim->y1 = 0;
         prim->x2 = 0;
-        prim->y2 = 0xDF;
-        prim->x3 = 0xFF;
-        prim->y3 = 0xDF;
+        prim->y2 = 223;
+        prim->x3 = 255;
+        prim->y3 = 223;
         prim->u0 = 0;
         prim->v0 = 0;
-        prim->u1 = 0xFF;
+        prim->u1 = 255;
         prim->v1 = 0;
         prim->u2 = 0;
-        prim->v2 = 0xDF;
-        prim->u3 = 0xFF;
-        prim->v3 = 0xDF;
-        prim->tpage = 0x108;
+        prim->v2 = 223;
+        prim->u3 = 255;
+        prim->v3 = 223;
+        prim->tpage = 0x100 | 8;
         prim->priority = 0;
-        prim->drawMode = 0x11;
+        prim->drawMode = DRAW_TRANSP | DRAW_TPAGE;
         D_80088FE8++;
         break;
     case 2:
@@ -75,23 +72,22 @@ void func_80180954(void) {
                 D_80180006 = 0;
                 D_80180004 = 0;
                 D_80088FE8++;
-                return;
             }
             break;
         }
-        func_800149C0("sound test mode vx010\n");
-        func_800149C0("\n");
-        func_800149C0("up   down  key : gion select\n");
-        func_800149C0("left right key : xa   select\n");
-        func_800149C0("maru    button : sd   call\n");
-        func_800149C0("batsu   button : xa   call\n");
-        func_800149C0("shikaku button : seq  call\n");
-        func_800149C0("sankaku button : off\n");
-        func_800149C0("start      key : exit\n");
-        func_800149C0("\n");
-        func_800149C0("sd  code :%s\n", D_801800D8[D_80181214]);
-        func_800149C0("xa  code :%s\n", D_80180298[D_80181218]);
-        func_800149C0("seq code :%s\n", D_801802D8[D_8018121C]);
+        FntPrint("sound test mode vx010\n");
+        FntPrint("\n");
+        FntPrint("up   down  key : gion select\n");
+        FntPrint("left right key : xa   select\n");
+        FntPrint("maru    button : sd   call\n");
+        FntPrint("batsu   button : xa   call\n");
+        FntPrint("shikaku button : seq  call\n");
+        FntPrint("sankaku button : off\n");
+        FntPrint("start      key : exit\n");
+        FntPrint("\n");
+        FntPrint("sd  code :%s\n", D_801800D8[D_80181214]);
+        FntPrint("xa  code :%s\n", D_80180298[D_80181218]);
+        FntPrint("seq code :%s\n", D_801802D8[D_8018121C]);
         if (g_pads[0].repeat & PAD_UP) {
             D_80181214++;
             if (D_80181214 > 102) {
