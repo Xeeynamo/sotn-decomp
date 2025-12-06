@@ -3694,6 +3694,16 @@ typedef struct {
     /* 0x90 */ u8* animPtr;
 } ET_BladeSoldier;
 
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 lastFacingDirection;
+    /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 deathVortexColor;
+    /* 0x80 */ Primitive* deathVortexPrim;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 nextAttack;
+} ET_Paranthropus;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4013,6 +4023,7 @@ typedef union { // offset=0x7C
     ET_Lava lava;
     ET_BladeMaster bladeMaster;
     ET_BladeSoldier bladeSoldier;
+    ET_Paranthropus paranthropus;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
