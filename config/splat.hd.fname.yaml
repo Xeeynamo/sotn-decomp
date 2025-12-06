@@ -1,0 +1,42 @@
+options:
+  platform:     psx
+  basename:     fname
+  base_path:    ..
+  build_path:   build/hd
+  target_path:  disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/fname.bin
+  asm_path:     asm/hd/servant/fname
+  asset_path:   assets/servant/fname
+  src_path:     src/servant/fname
+  ld_script_path: build/hd/fname.ld
+  compiler:     GCC
+  symbol_addrs_path:
+    - config/undefined_syms.sd.txt
+  undefined_funcs_auto_path: build/hd/config/undefined_funcs_auto.hd.fname.txt
+  undefined_syms_auto_path:  build/hd/config/undefined_syms_auto.hd.fname.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: yes
+  asm_jtbl_label_macro: jlabel
+  extensions_path: tools/splat_ext
+  disassemble_all: false
+  section_order:
+    - ".data"
+    - ".rodata"
+    - ".text"
+    - ".bss"
+    - ".sbss"
+  ld_generate_symbol_per_data_segment: true
+sha1: b62d45e13f7f6a42e7494ffec37371c0a5744be2
+segments:
+  - name: fname
+    type: code
+    start: 0x00000000
+    vram:  0x80170000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data, fname]
+      - [0x6FC, .rodata, fname]
+      - [0x714, c, fname]
+      - [0x319C, bss, fname]
+  - [0xA000]
