@@ -4,15 +4,13 @@
 #include <game.h>
 #include <sfx.h>
 
-extern s32 D_8005150C;
 extern u16 D_800828B8;
-extern u32 D_80088FE8;
-extern s16 D_800AD306;
 
-void entrypoint();
-static void func_80180FA0();
-static void func_80180FD4();
-void* D_80180000[] = {(void*)entrypoint};
+void Entrypoint();
+static void InputRepeatInit();
+static void InputRepeatUpdate();
+static void SetDisplayBuffer(s16 width);
+void* D_80180000[] = {(void*)Entrypoint};
 static s16 D_80180004 = 0;
 static s16 D_80180006 = 0;
 extern s16 D_80181210;
@@ -22,25 +20,24 @@ extern s16 D_8018121C;
 extern s8 D_80181220[0x10];
 
 static s16 D_80180008[];
-static const char* D_801800D8[];
+static const char* sd_codes[];
 static s16 D_80180278[];
-static const char* D_80180298[];
+static const char* xa_codes[];
 static s16 D_801802D4[];
-static const char* D_801802D8[];
+static const char* seq_codes[];
 
-static void SetDisplayBuffer(s16 width);
-void entrypoint(void) {
+void Entrypoint(void) {
     Primitive* prim;
 
-    if (D_80088FE8) {
-        func_80180FD4();
+    if (g_GameStep) {
+        InputRepeatUpdate();
     }
-    switch (D_80088FE8) {
+    switch (g_GameStep) {
     case 0:
-        if (func_8018106C() == 0) {
-            func_80180FA0();
+        if (IsInit() == 0) {
+            InputRepeatInit();
             SetDisplayBuffer(256);
-            D_80088FE8++;
+            g_GameStep++;
         }
         break;
     case 1:
@@ -65,15 +62,15 @@ void entrypoint(void) {
         prim->tpage = 0x100 | 8;
         prim->priority = 0;
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE;
-        D_80088FE8++;
+        g_GameStep++;
         break;
     case 2:
         if (g_pads[0].tapped & PAD_START) {
-            if (func_8018106C() == 0) {
+            if (IsInit() == 0) {
                 g_api.PlaySfx(SET_UNK_13);
                 D_80180006 = 0;
                 D_80180004 = 0;
-                D_80088FE8++;
+                g_GameStep++;
             }
             break;
         }
@@ -87,9 +84,9 @@ void entrypoint(void) {
         FntPrint("sankaku button : off\n");
         FntPrint("start      key : exit\n");
         FntPrint("\n");
-        FntPrint("sd  code :%s\n", D_801800D8[D_80181214]);
-        FntPrint("xa  code :%s\n", D_80180298[D_80181218]);
-        FntPrint("seq code :%s\n", D_801802D8[D_8018121C]);
+        FntPrint("sd  code :%s\n", sd_codes[D_80181214]);
+        FntPrint("xa  code :%s\n", xa_codes[D_80181218]);
+        FntPrint("seq code :%s\n", seq_codes[D_8018121C]);
         if (g_pads[0].repeat & PAD_UP) {
             D_80181214++;
             if (D_80181214 > 102) {
@@ -134,14 +131,14 @@ void entrypoint(void) {
     case 3:
         if (g_api.func_80131F68() != 1) {
             g_api.FreePrimitives(D_80181210);
-            func_801811B8();
-            func_801811F8(1);
+            ClearScreen();
+            SetGameState(Game_Title);
         }
         break;
     }
 }
 
-static void func_80180ECC(void) {
+static void InputInit(void) {
     s32 i;
     Pad* pad;
 
@@ -155,7 +152,7 @@ static void func_80180ECC(void) {
     }
 }
 
-static void func_80180F14(void) {
+static void InputUpdate(void) {
     s32 i;
     Pad* pad;
     u32 buttons;
@@ -177,7 +174,7 @@ static void func_80180F14(void) {
 }
 
 #define PAD_REPEAT_TIMER 24
-static void func_80180FA0(void) {
+static void InputRepeatInit(void) {
     s32 i;
     s8* ptr;
 
@@ -188,7 +185,7 @@ static void func_80180FA0(void) {
     }
 }
 
-static void func_80180FD4(void) {
+static void InputRepeatUpdate(void) {
     s8* timer;
     u16 mask;
     u16 bits;
@@ -222,9 +219,9 @@ static void func_80180FD4(void) {
     g_pads[0].repeat = bits;
 }
 
-static s32 func_8018106C(void) { return D_800828B8 != 0; }
+static s32 IsInit(void) { return D_800828B8 != 0; }
 
-static void func_8018107C(s32 arg0) {
+static void SetDrawBuffer(s32 arg0) {
     g_GpuBuffers[0].draw.clip.y = 0x0014;
     g_GpuBuffers[0].draw.clip.h = 0x00CF;
     if (!arg0) {
@@ -248,22 +245,22 @@ static void SetDisplayBuffer(s16 width) {
     SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, width, 240);
     SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, width, 240);
     SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, width, 240);
-    func_8018107C(1);
+    SetDrawBuffer(1);
 }
 
-static void func_801811B8(void) {
+static void ClearScreen(void) {
     RECT rect;
 
     rect.x = 0;
     rect.y = 0;
-    rect.w = 0x200;
-    rect.h = 0x200;
-    func_80011628(&rect, 0, 0, 0);
+    rect.w = 512;
+    rect.h = 512;
+    ClearImage(&rect, 0, 0, 0);
 }
 
-static void func_801811F8(s32 arg0) {
-    D_8005150C = arg0;
-    D_80088FE8 = 0;
+static void SetGameState(GameState gameState) {
+    g_GameState = gameState;
+    g_GameStep = 0;
 }
 
 static s16 D_80180008[] = {
@@ -372,7 +369,7 @@ static s16 D_80180008[] = {
     0x5C8, // SD_MAK2I
     0x5C9, // SD_MAK2J
 };
-static const char* D_801800D8[] = {
+static const char* sd_codes[] = {
     "SD_IDO",      "SD_KETT",      "SD_ATARI_1", "SD_ATARI_2",  "SD_ATARI_3",
     "SD_ATARI_4",  "SD_CRY_F",     "SD_CRY_FL",  "SD_CRY_M",    "SD_CRY_ML",
     "SD_HONE_OUT", "SD_ZOUT_FIRE", "SD_Z_OUT1",  "SD_Z_OUT2",   "SD_Z_OUT3",
@@ -413,7 +410,7 @@ static s16 D_80180278[] = {
     0,
     MU_TOWER_OF_MIST,
 };
-static const char* D_80180298[] = {
+static const char* xa_codes[] = {
     "SD_XA_ARTBGM1 ", // MU_LOST_PAINTING
     "SD_XA_BFSHITE1", // MU_CURSE_ZONE
     "SD_XA_KATABGM1", // MU_RAINBOW_CEMETERY
@@ -432,4 +429,4 @@ static const char* D_80180298[] = {
 };
 
 static s16 D_801802D4[] = {SD_SEQ_LIBRARY};
-static const char* D_801802D8[] = {"SD_SEQ_LIBRARY"};
+static const char* seq_codes[] = {"SD_SEQ_LIBRARY"};
