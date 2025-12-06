@@ -1,0 +1,5 @@
+SetDefDrawEnv = 0x80014F0C;
+SetDefDispEnv = 0x80014F9C;
+g_api = 0x80051D3C;
+g_GpuBuffers = 0x80052430;
+g_pads = 0x800AD300;

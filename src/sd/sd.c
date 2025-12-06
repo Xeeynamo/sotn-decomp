@@ -1,43 +1,199 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//! O=1
+//! PSYQ=3.3 O=1
+#define VERSION_SD
 #include <game.h>
 #include <sfx.h>
 
-// SetDefDrawEnv
-DRAWENV* func_80014F0C(DRAWENV* env, int x, int y, int w, int h);
-
-// SetDefDispEnv
-DISPENV* func_80014F9C(DISPENV* env, int x, int y, int w, int h);
-
-typedef struct {
-    /* 0x00000 */ struct GpuBuffer* next; // next chained buffer
-    /* 0x00004 */ DRAWENV draw;           // drawing environment
-    /* 0x0005C */ DISPENV disp;           // display environment
-    /* 0x00074 */ u8 unk74[0x17F80];
-} GpuBuffer2; // similar to GpuBuffer, but with extra 0x800 bytes
-
 extern s32 D_8005150C;
-extern GpuBuffer2 D_80052430[2];
 extern u16 D_800828B8;
-extern s32 D_80088FE8;
+extern u32 D_80088FE8;
 
 void func_80180954();
 void* D_80180000[] = {(void*)func_80180954};
 static s16 D_80180004 = 0;
 static s16 D_80180006 = 0;
 
-static const char D_801802DC[] = "sound test mode vx010\n";
-static const char D_801802F4[] = "\n";
-static const char D_801802F8[] = "up   down  key : gion select\n";
-static const char D_80180318[] = "left right key : xa   select\n";
-static const char D_80180338[] = "maru    button : sd   call\n";
-static const char D_80180354[] = "batsu   button : xa   call\n";
-static const char D_80180370[] = "shikaku button : seq  call\n";
-static const char D_8018038C[] = "sankaku button : off\n";
-static const char D_801803A4[] = "start      key : exit\n";
-static const char D_801803BC[] = "sd  code :%s\n";
-static const char D_801803CC[] = "xa  code :%s\n";
-static const char D_801803DC[] = "seq code :%s\n";
+static s16 D_80180008[];
+static const char* D_801800D8[];
+static s16 D_80180278[];
+static const char* D_80180298[];
+static s16 D_801802D4[];
+static const char* D_801802D8[];
+
+extern Primitive D_8009CE78[];
+void func_800149C0(const char* fmt, ...);
+void func_80180FA0();
+void func_80180FD4();
+extern s16 D_80181210;
+extern s16 D_80181214;
+extern s16 D_80181218;
+extern s16 D_8018121C;
+
+static void SetDisplayBuffer(s16 width);
+void func_80180954(void) {
+    Primitive* prim;
+
+    if (D_80088FE8) {
+        func_80180FD4();
+    }
+    switch (D_80088FE8) {
+    case 0:
+        if (func_8018106C() == 0) {
+            func_80180FA0();
+            SetDisplayBuffer(256);
+            D_80088FE8++;
+        }
+        break;
+    case 1:
+        D_80181210 = g_api.AllocPrimitives(PRIM_GT4, 1);
+        prim = &D_8009CE78[D_80181210];
+        prim->x0 = 0;
+        prim->y0 = 0;
+        prim->x1 = 0xFF;
+        prim->y1 = 0;
+        prim->x2 = 0;
+        prim->y2 = 0xDF;
+        prim->x3 = 0xFF;
+        prim->y3 = 0xDF;
+        prim->u0 = 0;
+        prim->v0 = 0;
+        prim->u1 = 0xFF;
+        prim->v1 = 0;
+        prim->u2 = 0;
+        prim->v2 = 0xDF;
+        prim->u3 = 0xFF;
+        prim->v3 = 0xDF;
+        prim->tpage = 0x108;
+        prim->priority = 0;
+        prim->drawMode = 0x11;
+        D_80088FE8++;
+        break;
+    case 2:
+        if (g_pads[0].tapped & PAD_START) {
+            if (func_8018106C() == 0) {
+                g_api.PlaySfx(SET_UNK_13);
+                D_80180006 = 0;
+                D_80180004 = 0;
+                D_80088FE8++;
+                return;
+            }
+            break;
+        }
+        func_800149C0("sound test mode vx010\n");
+        func_800149C0("\n");
+        func_800149C0("up   down  key : gion select\n");
+        func_800149C0("left right key : xa   select\n");
+        func_800149C0("maru    button : sd   call\n");
+        func_800149C0("batsu   button : xa   call\n");
+        func_800149C0("shikaku button : seq  call\n");
+        func_800149C0("sankaku button : off\n");
+        func_800149C0("start      key : exit\n");
+        func_800149C0("\n");
+        func_800149C0("sd  code :%s\n", D_801800D8[D_80181214]);
+        func_800149C0("xa  code :%s\n", D_80180298[D_80181218]);
+        func_800149C0("seq code :%s\n", D_801802D8[D_8018121C]);
+        if (g_pads[0].repeat & PAD_UP) {
+            D_80181214++;
+            if (D_80181214 > 102) {
+                D_80181214 = 102;
+            }
+        }
+        if (g_pads[0].repeat & PAD_DOWN) {
+            D_80181214--;
+            if (D_80181214 < 0) {
+                D_80181214 = 0;
+            }
+        }
+        if (g_pads[0].tapped & PAD_CIRCLE) {
+            g_api.PlaySfx(D_80180008[D_80181214]);
+        }
+        if (g_pads[0].repeat & PAD_RIGHT) {
+            D_80181218++;
+            if (D_80181218 > 15) {
+                D_80181218 = 15;
+            }
+        }
+        if (g_pads[0].repeat & PAD_LEFT) {
+            D_80181218--;
+            if (D_80181218 < 0) {
+                D_80181218 = 0;
+            }
+        }
+        if (g_pads[0].tapped & PAD_CROSS) {
+            D_80180006 = D_80180278[D_80181218];
+            g_api.PlaySfx(D_80180006);
+        }
+        if (g_pads[0].tapped & PAD_SQUARE) {
+            g_api.PlaySfx(D_801802D4[D_8018121C]);
+        }
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            g_api.PlaySfx(SET_UNK_13);
+            D_80180006 = 0;
+            D_80180004 = 0;
+            return;
+        }
+        break;
+    case 3:
+        if (g_api.func_80131F68() != 1) {
+            g_api.FreePrimitives(D_80181210);
+            func_801811B8();
+            func_801811F8(1);
+        }
+        break;
+    }
+}
+
+INCLUDE_ASM("sd/nonmatchings/sd", func_80180ECC);
+
+INCLUDE_ASM("sd/nonmatchings/sd", func_80180F14);
+
+INCLUDE_ASM("sd/nonmatchings/sd", func_80180FA0);
+
+INCLUDE_ASM("sd/nonmatchings/sd", func_80180FD4);
+
+s32 func_8018106C(void) { return D_800828B8 != 0; }
+
+void func_8018107C(s32 arg0) {
+    g_GpuBuffers[0].draw.clip.y = 0x0014;
+    g_GpuBuffers[0].draw.clip.h = 0x00CF;
+    if (!arg0) {
+        g_GpuBuffers[1].draw.clip.y = 0x0014;
+    } else {
+        g_GpuBuffers[1].draw.clip.y = 0x0114;
+    }
+    g_GpuBuffers[1].draw.clip.h = 0x00CF;
+    g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
+    g_GpuBuffers[0].draw.r0 = 0;
+    g_GpuBuffers[0].draw.g0 = 0;
+    g_GpuBuffers[0].draw.b0 = 0;
+    g_GpuBuffers[1].draw.r0 = 0;
+    g_GpuBuffers[1].draw.g0 = 0;
+    g_GpuBuffers[1].draw.b0 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
+}
+
+static void SetDisplayBuffer(s16 width) {
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, width, 240);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, width, 240);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, width, 240);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, width, 240);
+    func_8018107C(1);
+}
+
+static void func_801811B8(void) {
+    RECT rect;
+
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 0x200;
+    rect.h = 0x200;
+    func_80011628(&rect, 0, 0, 0);
+}
+
+static void func_801811F8(s32 arg0) {
+    D_8005150C = arg0;
+    D_80088FE8 = 0;
+}
 
 static s16 D_80180008[] = {
     0x501, // SD_IDO
@@ -206,59 +362,3 @@ static const char* D_80180298[] = {
 
 static s16 D_801802D4[] = {SD_SEQ_LIBRARY};
 static const char* D_801802D8[] = {"SD_SEQ_LIBRARY"};
-
-void func_80180954(void); // entrypoint
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180954);
-
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180ECC);
-
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180F14);
-
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180FA0);
-
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180FD4);
-
-s32 func_8018106C(void) { return D_800828B8 != 0; }
-
-void func_8018107C(s32 arg0) {
-    D_80052430[0].draw.clip.y = 0x0014;
-    D_80052430[0].draw.clip.h = 0x00CF;
-    if (!arg0) {
-        D_80052430[1].draw.clip.y = 0x0014;
-    } else {
-        D_80052430[1].draw.clip.y = 0x0114;
-    }
-    D_80052430[1].draw.clip.h = 0x00CF;
-    D_80052430[0].draw.isbg = D_80052430[1].draw.isbg = 1;
-    D_80052430[0].draw.r0 = 0;
-    D_80052430[0].draw.g0 = 0;
-    D_80052430[0].draw.b0 = 0;
-    D_80052430[1].draw.r0 = 0;
-    D_80052430[1].draw.g0 = 0;
-    D_80052430[1].draw.b0 = 0;
-    D_80052430[0].disp.isrgb24 = D_80052430[1].disp.isrgb24 = 0;
-}
-
-// SetDisplayBuffer
-static void func_8018110C(s16 width) {
-    func_80014F0C(&D_80052430[0].draw, 0, 0, width, 240);
-    func_80014F0C(&D_80052430[1].draw, 0, 256, width, 240);
-    func_80014F9C(&D_80052430[0].disp, 0, 256, width, 240);
-    func_80014F9C(&D_80052430[1].disp, 0, 0, width, 240);
-    func_8018107C(1);
-}
-
-static void func_801811B8(void) {
-    RECT rect;
-
-    rect.x = 0;
-    rect.y = 0;
-    rect.w = 0x200;
-    rect.h = 0x200;
-    func_80011628(&rect, 0, 0, 0);
-}
-
-static void func_801811F8(s32 arg0) {
-    D_8005150C = arg0;
-    D_80088FE8 = 0;
-}
