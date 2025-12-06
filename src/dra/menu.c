@@ -1516,7 +1516,7 @@ void MenuSpellsDraw(MenuContext* ctx) {
                  17, colorIntensity, colorIntensity, 0);
 #elif defined(VERSION_HD)
     func_800F5E68(
-        ctx, (g_MenuNavigation.cursorSpells), 0x1A, 0x3B, 0x12C, 0x11, -1, 1);
+        ctx, g_MenuNavigation.cursorSpells, 0x1A, 0x3B, 0x12C, 0x11, -1, 1);
 #endif
 }
 
@@ -1633,7 +1633,7 @@ void MenuSystemDraw(MenuContext* ctx) {
     y += 0x10;
 #endif
 
-    strIdx = g_IsTimeAttackUnlocked ? 36 : 19;
+    strIdx = g_GameClearFlag ? 36 : 19;
     MenuDrawStr(g_MenuStr[strIdx], 0x20, y, ctx);
 }
 
@@ -3733,7 +3733,7 @@ block_4:
         if (i == 3 && !g_IsCloakColorUnlocked) {
             i = 0;
         }
-        if (i == 6 && !g_IsTimeAttackUnlocked) {
+        if (i == 6 && !g_GameClearFlag) {
             i = 0;
         }
         ShowText(D_800A2D48[i], 2);
@@ -3770,7 +3770,7 @@ block_4:
                 g_MenuStep = MENU_STEP_SYSTEM_SOUND;
                 break;
             case 5:
-                if (g_IsTimeAttackUnlocked) {
+                if (g_GameClearFlag) {
                     SortTimeAttackEntries();
                     MenuShow(MENU_DG_TIME_ATTACK);
                     g_MenuStep = MENU_STEP_SYSTEM_TIME_ATTACK;

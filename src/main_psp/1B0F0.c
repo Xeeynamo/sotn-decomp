@@ -148,7 +148,7 @@ extern u32 D_psp_08C630CC;
 extern s32 D_psp_08C630D0;
 extern s32 D_psp_08C630E0; // play_wait - slow-downs the game
 extern char D_psp_08C630E4[];
-#define g_IsTimeAttackUnlocked (*((s32*)0x091FC418))
+#define g_GameClearFlag (*((s32*)0x091FC418))
 
 void* memalign(size_t, size_t);
 void func_psp_08919C4C(void);
@@ -1876,8 +1876,7 @@ void DrawOTag(OT_TYPE* p) {
                 if (thisPad & PSP_CTRL_CIRCLE) {
                     switch (cursor) {
                     case 0:
-                        g_IsTimeAttackUnlocked =
-                            g_IsTimeAttackUnlocked ? false : true;
+                        g_GameClearFlag = g_GameClearFlag ? false : true;
                         break;
                     case 1:
                         D_psp_08C630C4 = D_psp_08C630C4 ? false : true;
@@ -1925,7 +1924,7 @@ void DrawOTag(OT_TYPE* p) {
             sprintf(D_psp_08C630E4, "=== DEGUG MENU ===");
             sceGuDebugPrint(x, y, 0xFFFFFFFF, D_psp_08C630E4);
             sprintf(D_psp_08C630E4, "GameClearFlag:%s",
-                    off_on[g_IsTimeAttackUnlocked ? 1 : 0]);
+                    off_on[g_GameClearFlag ? 1 : 0]);
             sceGuDebugPrint(x + 0x10, y + 0x8, 0xFFFFFFFF, D_psp_08C630E4);
             sprintf(D_psp_08C630E4, "MutekiFlag:%s", off_on[D_psp_08C630C4]);
             sceGuDebugPrint(x + 0x10, y + 0x10, 0xFFFFFFFF, D_psp_08C630E4);

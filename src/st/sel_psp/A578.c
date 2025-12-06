@@ -69,7 +69,7 @@ void HydrateSaveSummaryEntry(s32 port, s32 slot, s32 slotValue) {
     g_SaveSummary[port].kind[slot] = save->info.endGameFlags;
     g_SaveSummary[port].character[slot] = save->info.character;
     strcpy(g_SaveSummary[port].name[slot], save->info.name);
-    g_IsTimeAttackUnlocked |= save->info.endGameFlags;
+    g_GameClearFlag |= save->info.endGameFlags;
 }
 
 void func_801B3120(void) {
@@ -99,7 +99,7 @@ s32 func_801B3164(void) {
 
     switch (g_MemCardRStep) {
     case 0:
-        g_IsTimeAttackUnlocked = 0;
+        g_GameClearFlag = SAVE_FLAG_NORMAL;
         MemcardInit();
         g_MemCardRetryCount = 0;
         g_MemCardRStep++;

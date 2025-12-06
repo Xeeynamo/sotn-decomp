@@ -134,7 +134,7 @@ static void SetTitleDisplayBuffer(void) {
 
 static s32 IsSkipRequested(void) {
     if (g_pads[0].tapped & PAD_START &&
-        ((g_Settings.D_8003CB04 & 2) || g_IsTimeAttackUnlocked)) {
+        ((g_Settings.D_8003CB04 & 2) || g_GameClearFlag)) {
         return 1;
     }
     return 0;

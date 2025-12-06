@@ -2077,7 +2077,7 @@ typedef struct {
 } Unkstruct_8006C3C4;             // size = 0x40
 
 extern s32 D_8003925C;
-extern s32 g_IsTimeAttackUnlocked;
+extern s32 g_GameClearFlag;
 
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C100;
