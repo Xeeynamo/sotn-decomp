@@ -10,7 +10,7 @@ options:
   ld_script_path: build/hd/sd.ld
   compiler:     GCC
   symbol_addrs_path:
-    - config/symbols.sd.txt
+    - config/symbols.hd.sd.txt
   undefined_funcs_auto_path: build/hd/config/undefined_funcs_auto.hd.sd.txt
   undefined_syms_auto_path:  build/hd/config/undefined_syms_auto.hd.sd.txt
   find_file_boundaries: yes
