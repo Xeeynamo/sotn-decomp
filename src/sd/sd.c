@@ -10,8 +10,8 @@ extern u32 D_80088FE8;
 extern s16 D_800AD306;
 
 void entrypoint();
-void func_80180FA0();
-void func_80180FD4();
+static void func_80180FA0();
+static void func_80180FD4();
 void* D_80180000[] = {(void*)entrypoint};
 static s16 D_80180004 = 0;
 static s16 D_80180006 = 0;
@@ -141,7 +141,7 @@ void entrypoint(void) {
     }
 }
 
-void func_80180ECC(void) {
+static void func_80180ECC(void) {
     s32 i;
     Pad* pad;
 
@@ -155,10 +155,29 @@ void func_80180ECC(void) {
     }
 }
 
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180F14);
+static void func_80180F14(void) {
+    s32 i;
+    Pad* pad;
+    u32 buttons;
+
+    pad = g_pads;
+    i = 0;
+    while (i < LEN(g_pads)) {
+        pad->previous = pad->pressed;
+        buttons = PadRead(i >> 1);
+        if (!(i & 1)) {
+            pad->pressed = buttons;
+        } else {
+            pad->pressed = buttons >> 0x10;
+        }
+        pad->tapped = (pad->pressed ^ pad->previous) & pad->pressed;
+        i++;
+        pad++;
+    }
+}
 
 #define PAD_REPEAT_TIMER 24
-void func_80180FA0(void) {
+static void func_80180FA0(void) {
     s32 i;
     s8* ptr;
 
@@ -169,7 +188,7 @@ void func_80180FA0(void) {
     }
 }
 
-void func_80180FD4(void) {
+static void func_80180FD4(void) {
     s8* timer;
     u16 mask;
     u16 bits;
@@ -203,9 +222,9 @@ void func_80180FD4(void) {
     g_pads[0].repeat = bits;
 }
 
-s32 func_8018106C(void) { return D_800828B8 != 0; }
+static s32 func_8018106C(void) { return D_800828B8 != 0; }
 
-void func_8018107C(s32 arg0) {
+static void func_8018107C(s32 arg0) {
     g_GpuBuffers[0].draw.clip.y = 0x0014;
     g_GpuBuffers[0].draw.clip.h = 0x00CF;
     if (!arg0) {
