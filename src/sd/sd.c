@@ -1,45 +1,275 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//! O=1
+//! PSYQ=3.3 O=1
+// Sound Data testing overlay
+#define VERSION_SD
 #include <game.h>
 #include <sfx.h>
 
-// SetDefDrawEnv
-DRAWENV* func_80014F0C(DRAWENV* env, int x, int y, int w, int h);
-
-// SetDefDispEnv
-DISPENV* func_80014F9C(DISPENV* env, int x, int y, int w, int h);
-
-typedef struct {
-    /* 0x00000 */ struct GpuBuffer* next; // next chained buffer
-    /* 0x00004 */ DRAWENV draw;           // drawing environment
-    /* 0x0005C */ DISPENV disp;           // display environment
-    /* 0x00074 */ u8 unk74[0x17F80];
-} GpuBuffer2; // similar to GpuBuffer, but with extra 0x800 bytes
-
-extern s32 D_8005150C;
-extern GpuBuffer2 D_80052430[2];
 extern u16 D_800828B8;
-extern s32 D_80088FE8;
 
-void func_80180954();
-void* D_80180000[] = {(void*)func_80180954};
+void Entrypoint();
+static void InputRepeatInit();
+static void InputRepeatUpdate();
+static void SetDisplayBuffer(s16 width);
+
+void* header[] = {(void*)Entrypoint};
 static s16 D_80180004 = 0;
 static s16 D_80180006 = 0;
+static s16 prim_index;
+STATIC_PAD_BSS(2);
+static s16 gion_idx; // gion = 擬音 = imitated sound = sound effect
+STATIC_PAD_BSS(2);
+static s16 xa_idx;
+STATIC_PAD_BSS(2);
+static s16 seq_idx;
+STATIC_PAD_BSS(2);
+s8 D_80181220[0x10];
 
-static const char D_801802DC[] = "sound test mode vx010\n";
-static const char D_801802F4[] = "\n";
-static const char D_801802F8[] = "up   down  key : gion select\n";
-static const char D_80180318[] = "left right key : xa   select\n";
-static const char D_80180338[] = "maru    button : sd   call\n";
-static const char D_80180354[] = "batsu   button : xa   call\n";
-static const char D_80180370[] = "shikaku button : seq  call\n";
-static const char D_8018038C[] = "sankaku button : off\n";
-static const char D_801803A4[] = "start      key : exit\n";
-static const char D_801803BC[] = "sd  code :%s\n";
-static const char D_801803CC[] = "xa  code :%s\n";
-static const char D_801803DC[] = "seq code :%s\n";
+static s16 sd_id[];
+static const char* sd_codes[];
+static s16 xa_ids[];
+static const char* xa_codes[];
+static s16 seq_ids[];
+static const char* seq_codes[];
 
-static s16 D_80180008[] = {
+void Entrypoint(void) {
+    Primitive* prim;
+
+    if (g_GameStep) {
+        InputRepeatUpdate();
+    }
+    switch (g_GameStep) {
+    case 0:
+        if (IsInit() == 0) {
+            InputRepeatInit();
+            SetDisplayBuffer(256);
+            g_GameStep++;
+        }
+        break;
+    case 1:
+        prim_index = g_api.AllocPrimitives(PRIM_GT4, 1);
+        prim = &g_PrimBuf[prim_index];
+        prim->x0 = 0;
+        prim->y0 = 0;
+        prim->x1 = 255;
+        prim->y1 = 0;
+        prim->x2 = 0;
+        prim->y2 = 223;
+        prim->x3 = 255;
+        prim->y3 = 223;
+        prim->u0 = 0;
+        prim->v0 = 0;
+        prim->u1 = 255;
+        prim->v1 = 0;
+        prim->u2 = 0;
+        prim->v2 = 223;
+        prim->u3 = 255;
+        prim->v3 = 223;
+        prim->tpage = 0x100 | 8;
+        prim->priority = 0;
+        prim->drawMode = DRAW_TRANSP | DRAW_TPAGE;
+        g_GameStep++;
+        break;
+    case 2:
+        if (g_pads[0].tapped & PAD_START) {
+            if (IsInit() == 0) {
+                g_api.PlaySfx(SET_UNK_13);
+                D_80180006 = 0;
+                D_80180004 = 0;
+                g_GameStep++;
+            }
+            break;
+        }
+        FntPrint("sound test mode vx010\n");
+        FntPrint("\n");
+        FntPrint("up   down  key : gion select\n");
+        FntPrint("left right key : xa   select\n");
+        FntPrint("maru    button : sd   call\n");
+        FntPrint("batsu   button : xa   call\n");
+        FntPrint("shikaku button : seq  call\n");
+        FntPrint("sankaku button : off\n");
+        FntPrint("start      key : exit\n");
+        FntPrint("\n");
+        FntPrint("sd  code :%s\n", sd_codes[gion_idx]);
+        FntPrint("xa  code :%s\n", xa_codes[xa_idx]);
+        FntPrint("seq code :%s\n", seq_codes[seq_idx]);
+        if (g_pads[0].repeat & PAD_UP) {
+            gion_idx++;
+            if (gion_idx > 102) {
+                gion_idx = 102;
+            }
+        }
+        if (g_pads[0].repeat & PAD_DOWN) {
+            gion_idx--;
+            if (gion_idx < 0) {
+                gion_idx = 0;
+            }
+        }
+        if (g_pads[0].tapped & PAD_CIRCLE) {
+            g_api.PlaySfx(sd_id[gion_idx]);
+        }
+        if (g_pads[0].repeat & PAD_RIGHT) {
+            xa_idx++;
+            if (xa_idx > 15) {
+                xa_idx = 15;
+            }
+        }
+        if (g_pads[0].repeat & PAD_LEFT) {
+            xa_idx--;
+            if (xa_idx < 0) {
+                xa_idx = 0;
+            }
+        }
+        if (g_pads[0].tapped & PAD_CROSS) {
+            D_80180006 = xa_ids[xa_idx];
+            g_api.PlaySfx(D_80180006);
+        }
+        if (g_pads[0].tapped & PAD_SQUARE) {
+            g_api.PlaySfx(seq_ids[seq_idx]);
+        }
+        if (g_pads[0].tapped & PAD_TRIANGLE) {
+            g_api.PlaySfx(SET_UNK_13);
+            D_80180006 = 0;
+            D_80180004 = 0;
+            return;
+        }
+        break;
+    case 3:
+        if (g_api.func_80131F68() != 1) {
+            g_api.FreePrimitives(prim_index);
+            ClearScreen();
+            SetGameState(Game_Title);
+        }
+        break;
+    }
+}
+
+static void InputInit(void) {
+    s32 i;
+    Pad* pad;
+
+    PadInit(0);
+    pad = g_pads;
+    for (i = 0; i < LEN(g_pads); i++) {
+        pad->tapped = 0;
+        pad->previous = 0;
+        pad->pressed = 0;
+        pad++;
+    }
+}
+
+static void InputUpdate(void) {
+    s32 i;
+    Pad* pad;
+    u32 buttons;
+
+    pad = g_pads;
+    i = 0;
+    while (i < LEN(g_pads)) {
+        pad->previous = pad->pressed;
+        buttons = PadRead(i >> 1);
+        if (!(i & 1)) {
+            pad->pressed = buttons;
+        } else {
+            pad->pressed = buttons >> 0x10;
+        }
+        pad->tapped = (pad->pressed ^ pad->previous) & pad->pressed;
+        i++;
+        pad++;
+    }
+}
+
+#define PAD_REPEAT_TIMER 24
+static void InputRepeatInit(void) {
+    s32 i;
+    s8* ptr;
+
+    g_pads[0].repeat = 0;
+    ptr = D_80181220;
+    for (i = 0; i < LEN(D_80181220); i++) {
+        *ptr++ = PAD_REPEAT_TIMER;
+    }
+}
+
+static void InputRepeatUpdate(void) {
+    s8* timer;
+    u16 mask;
+    u16 bits;
+    s32 i;
+    u16 pressed;
+    u16 tapped;
+
+    mask = 1;
+    tapped = g_pads[0].tapped;
+    pressed = g_pads[0].pressed;
+    bits = 0;
+    timer = D_80181220;
+    i = 0;
+    while (i < LEN(D_80181220)) {
+        if (pressed & mask) {
+            if (tapped & mask) {
+                bits |= mask;
+                *timer = 24;
+            } else {
+                *timer = *timer - 1;
+                if ((*timer & 0xFF) == 0xFF) {
+                    bits |= mask;
+                    *timer = 5;
+                }
+            }
+        }
+        i++;
+        timer++;
+        mask <<= 1;
+    }
+    g_pads[0].repeat = bits;
+}
+
+static s32 IsInit(void) { return D_800828B8 != 0; }
+
+static void SetDrawBuffer(s32 arg0) {
+    g_GpuBuffers[0].draw.clip.y = 0x0014;
+    g_GpuBuffers[0].draw.clip.h = 0x00CF;
+    if (!arg0) {
+        g_GpuBuffers[1].draw.clip.y = 0x0014;
+    } else {
+        g_GpuBuffers[1].draw.clip.y = 0x0114;
+    }
+    g_GpuBuffers[1].draw.clip.h = 0x00CF;
+    g_GpuBuffers[0].draw.isbg = g_GpuBuffers[1].draw.isbg = 1;
+    g_GpuBuffers[0].draw.r0 = 0;
+    g_GpuBuffers[0].draw.g0 = 0;
+    g_GpuBuffers[0].draw.b0 = 0;
+    g_GpuBuffers[1].draw.r0 = 0;
+    g_GpuBuffers[1].draw.g0 = 0;
+    g_GpuBuffers[1].draw.b0 = 0;
+    g_GpuBuffers[0].disp.isrgb24 = g_GpuBuffers[1].disp.isrgb24 = 0;
+}
+
+static void SetDisplayBuffer(s16 width) {
+    SetDefDrawEnv(&g_GpuBuffers[0].draw, 0, 0, width, 240);
+    SetDefDrawEnv(&g_GpuBuffers[1].draw, 0, 256, width, 240);
+    SetDefDispEnv(&g_GpuBuffers[0].disp, 0, 256, width, 240);
+    SetDefDispEnv(&g_GpuBuffers[1].disp, 0, 0, width, 240);
+    SetDrawBuffer(1);
+}
+
+static void ClearScreen(void) {
+    RECT rect;
+
+    rect.x = 0;
+    rect.y = 0;
+    rect.w = 512;
+    rect.h = 512;
+    ClearImage(&rect, 0, 0, 0);
+}
+
+static void SetGameState(GameState gameState) {
+    g_GameState = gameState;
+    g_GameStep = 0;
+}
+
+static s16 sd_id[] = {
     0x501, // SD_IDO
     0x502, // SD_KETT
     0x529, // SD_ATARI_1
@@ -145,7 +375,7 @@ static s16 D_80180008[] = {
     0x5C8, // SD_MAK2I
     0x5C9, // SD_MAK2J
 };
-static const char* D_801800D8[] = {
+static const char* sd_codes[] = {
     "SD_IDO",      "SD_KETT",      "SD_ATARI_1", "SD_ATARI_2",  "SD_ATARI_3",
     "SD_ATARI_4",  "SD_CRY_F",     "SD_CRY_FL",  "SD_CRY_M",    "SD_CRY_ML",
     "SD_HONE_OUT", "SD_ZOUT_FIRE", "SD_Z_OUT1",  "SD_Z_OUT2",   "SD_Z_OUT3",
@@ -169,7 +399,7 @@ static const char* D_801800D8[] = {
     "SD_MAK2G",    "SD_MAK2H2",    "SD_MAK2I",   "SD_MAK2J",
 };
 
-static s16 D_80180278[] = {
+static s16 xa_ids[] = {
     MU_LOST_PAINTING,
     MU_CURSE_ZONE,
     MU_RAINBOW_CEMETERY,
@@ -186,7 +416,7 @@ static s16 D_80180278[] = {
     0,
     MU_TOWER_OF_MIST,
 };
-static const char* D_80180298[] = {
+static const char* xa_codes[] = {
     "SD_XA_ARTBGM1 ", // MU_LOST_PAINTING
     "SD_XA_BFSHITE1", // MU_CURSE_ZONE
     "SD_XA_KATABGM1", // MU_RAINBOW_CEMETERY
@@ -204,61 +434,5 @@ static const char* D_80180298[] = {
     "SD_XA_TOUBGM1 ", // MU_TOWER_OF_MIST
 };
 
-static s16 D_801802D4[] = {SD_SEQ_LIBRARY};
-static const char* D_801802D8[] = {"SD_SEQ_LIBRARY"};
-
-void func_80180954(void); // entrypoint
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180954);
-
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180ECC);
-
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180F14);
-
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180FA0);
-
-INCLUDE_ASM("sd/nonmatchings/sd", func_80180FD4);
-
-s32 func_8018106C(void) { return D_800828B8 != 0; }
-
-void func_8018107C(s32 arg0) {
-    D_80052430[0].draw.clip.y = 0x0014;
-    D_80052430[0].draw.clip.h = 0x00CF;
-    if (!arg0) {
-        D_80052430[1].draw.clip.y = 0x0014;
-    } else {
-        D_80052430[1].draw.clip.y = 0x0114;
-    }
-    D_80052430[1].draw.clip.h = 0x00CF;
-    D_80052430[0].draw.isbg = D_80052430[1].draw.isbg = 1;
-    D_80052430[0].draw.r0 = 0;
-    D_80052430[0].draw.g0 = 0;
-    D_80052430[0].draw.b0 = 0;
-    D_80052430[1].draw.r0 = 0;
-    D_80052430[1].draw.g0 = 0;
-    D_80052430[1].draw.b0 = 0;
-    D_80052430[0].disp.isrgb24 = D_80052430[1].disp.isrgb24 = 0;
-}
-
-// SetDisplayBuffer
-static void func_8018110C(s16 width) {
-    func_80014F0C(&D_80052430[0].draw, 0, 0, width, 240);
-    func_80014F0C(&D_80052430[1].draw, 0, 256, width, 240);
-    func_80014F9C(&D_80052430[0].disp, 0, 256, width, 240);
-    func_80014F9C(&D_80052430[1].disp, 0, 0, width, 240);
-    func_8018107C(1);
-}
-
-static void func_801811B8(void) {
-    RECT rect;
-
-    rect.x = 0;
-    rect.y = 0;
-    rect.w = 0x200;
-    rect.h = 0x200;
-    func_80011628(&rect, 0, 0, 0);
-}
-
-static void func_801811F8(s32 arg0) {
-    D_8005150C = arg0;
-    D_80088FE8 = 0;
-}
+static s16 seq_ids[] = {SD_SEQ_LIBRARY};
+static const char* seq_codes[] = {"SD_SEQ_LIBRARY"};

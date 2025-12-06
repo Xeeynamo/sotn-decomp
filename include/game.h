@@ -976,7 +976,10 @@ typedef struct GpuBuffer { // also called 'DB' in the PSY-Q samples
     /* 0x117F4 */ SPRT_16 sprite16[MAXSPRT16];          // tile map sprites
     /* 0x13FF4 */ TILE tiles[MAX_TILE_COUNT];           // squared sprites
     /* 0x14FF4 */ SPRT sprite[MAX_SPRT_COUNT];          // dynamic-size sprites
-} GpuBuffer;                                            // size=0x177F4
+#ifdef VERSION_SD
+    /* 0x177F4*/ s8 unk177F4[0x800];
+#endif
+} GpuBuffer; // size=0x177F4
 
 typedef struct {
     /* 0x00 */ u32 drawModes;

@@ -10,8 +10,7 @@ options:
   ld_script_path: build/hd/sd.ld
   compiler:     GCC
   symbol_addrs_path:
-    - config/symbols.hd.txt
-    - config/symbols.hd.sd.txt
+    - config/undefined_syms.sd.txt
   undefined_funcs_auto_path: build/hd/config/undefined_funcs_auto.hd.sd.txt
   undefined_syms_auto_path:  build/hd/config/undefined_syms_auto.hd.sd.txt
   find_file_boundaries: yes
@@ -19,7 +18,7 @@ options:
   migrate_rodata_to_functions: no
   asm_jtbl_label_macro: jlabel
   extensions_path: tools/splat_ext
-  disassemble_all: true
+  disassemble_all: false
   section_order:
     - ".data"
     - ".rodata"
@@ -39,5 +38,5 @@ segments:
       - [0x0, .data, sd]
       - [0x2DC, .rodata, sd]
       - [0x954, c, sd]
-      - [0x1210, bss]
+      - [0x1210, .bss, sd]
   - [0x1230]

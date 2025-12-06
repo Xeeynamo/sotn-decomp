@@ -1,0 +1,13 @@
+ClearImage = 0x80011628;
+FntPrint = 0x800149C0;
+SetDefDrawEnv = 0x80014F0C;
+SetDefDispEnv = 0x80014F9C;
+PadInit = 0x80015A04;
+PadRead = 0x80015A64;
+g_GameState = 0x8005150C;
+g_api = 0x80051D3C;
+g_GpuBuffers = 0x80052430;
+D_800828B8 = 0x800828B8;
+g_GameStep = 0x80088FE8;
+g_pads = 0x800AD300;
+g_PrimBuf = 0x8009CE78;
