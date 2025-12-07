@@ -10,7 +10,7 @@ options:
   ld_script_path: build/hd/fname.ld
   compiler:     GCC
   symbol_addrs_path:
-    - config/undefined_syms.sd.txt
+    - config/symbols.beta_fname.txt
   undefined_funcs_auto_path: build/hd/config/undefined_funcs_auto.hd.fname.txt
   undefined_syms_auto_path:  build/hd/config/undefined_syms_auto.hd.fname.txt
   find_file_boundaries: yes
