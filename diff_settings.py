@@ -112,4 +112,3 @@ def apply(config, args):
         "pspeu": "mipsel:4000",
         "saturn": "sh2",
     }[version]
-    print(config)
