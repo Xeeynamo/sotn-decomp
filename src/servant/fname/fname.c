@@ -8,6 +8,9 @@
 #define ENTITY_ID_ATTACK_MODE SERVANT_ID(2)
 #define ENTITY_ID_BLUE_TRAIL SERVANT_ID(10)
 
+extern SpriteParts* g_ServantSpriteParts[];
+extern u16 g_ServantClut;
+extern u16 g_BatClut;
 extern Collider s_UnusedCollider;
 extern Primitive* s_CurrentPrim;
 extern s32 s_TrailEntityIsAlive[16];
@@ -195,7 +198,52 @@ INCLUDE_ASM("servant/fname/nonmatchings/fname", SwitchModeInitialize);
 
 #include "../is_movement_allowed.h"
 
-INCLUDE_ASM("servant/fname/nonmatchings/fname", ServantInit);
+void ServantInit(void) {
+    Entity* e;
+    RECT rect;
+    u16* dst;
+    u16* src;
+    s32 i;
+    SpriteParts** spriteBanks;
+
+    dst = &g_Clut[1][CLUT_INDEX_SERVANT];
+    src = &g_ServantClut;
+    for (i = 0; i < 0x100; i++) {
+        *dst++ = *src++;
+    }
+
+    dst = &g_Clut[1][CLUT_INDEX_SERVANT_OVERWRITE];
+    src = &g_BatClut;
+    for (i = 0; i < 32; i++) {
+        *dst++ = *src++;
+    }
+
+    rect.x = 0;
+    rect.w = 0x100;
+    rect.h = 1;
+    rect.y = 0xF4;
+    dst = &g_Clut[1][CLUT_INDEX_SERVANT];
+    LoadImage(&rect, (u_long*)dst);
+
+    spriteBanks = g_api.o.spriteBanks;
+    spriteBanks += 20;
+    *spriteBanks = (SpriteParts*)g_ServantSpriteParts;
+
+    e = &g_Entities[SERVANT_ENTITY_INDEX];
+    DestroyEntity(e);
+
+    e->entityId = ENTITY_ID_SERVANT;
+    e->unk5A = 0x6C;
+    e->palette = 0x140;
+    e->animSet = ANIMSET_OVL(20);
+    e->zPriority = PLAYER.zPriority - 2;
+    e->facingLeft = (PLAYER.facingLeft + 1) & 1;
+    e->posX.val = PLAYER.posX.val;
+    e->posY.val = PLAYER.posY.val;
+    e->params = 0;
+    e->ext.bat.cameraX = g_Tilemap.scrollX.i.hi;
+    e->ext.bat.cameraY = g_Tilemap.scrollY.i.hi;
+}
 
 INCLUDE_ASM("servant/fname/nonmatchings/fname", UpdateServantDefault);
 
