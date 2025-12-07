@@ -290,7 +290,7 @@ void CreateAdditionalBats(s32 amount, s32 entityId) {
             DestroyEntity(entity);
             entity->entityId = entityId;
             entity->unk5A = 0x6C;
-            entity->palette = 0x140;
+            entity->palette = PAL_SERVANT;
             entity->animSet = ANIMSET_OVL(20);
             entity->zPriority = PLAYER.zPriority - 2;
             entity->facingLeft = (PLAYER.facingLeft + 1) & 1;
@@ -533,7 +533,7 @@ void ServantInit(InitializeMode mode) {
     DestroyEntity(e);
 
     e->unk5A = 0x6C;
-    e->palette = 0x140;
+    e->palette = PAL_SERVANT;
     e->animSet = ANIMSET_OVL(20);
     e->zPriority = PLAYER.zPriority - 2;
     e->facingLeft = (PLAYER.facingLeft + 1) & 1;
