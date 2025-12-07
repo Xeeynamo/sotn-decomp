@@ -680,6 +680,8 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
         sym_version = "beta"
     if ovl_name == "sd":
         sym_version = "sd"
+    if ovl_name == "fname":
+        sym_version = "beta_fname"
     symbols_lists = [
         f"-T config/undefined_syms.{sym_version}.txt",
     ]
