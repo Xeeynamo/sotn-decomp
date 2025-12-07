@@ -2266,7 +2266,8 @@ typedef enum {
     PAL_UNK_138 = 0x138,
     PAL_UNK_13C = 0x13C,
     PAL_UNK_13D = 0x13D, // richter
-    PAL_UNK_140 = 0x140,
+    PAL_SERVANT = 0x140,
+    PAL_RIC_WHIP = 0x140,
     PAL_UNK_143 = 0x143,
     PAL_UNK_148 = 0x148,
     PAL_UNK_149 = 0x149,

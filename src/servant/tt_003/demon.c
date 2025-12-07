@@ -744,7 +744,7 @@ void ServantInit(InitializeMode mode) {
 
     DestroyEntity(entity);
     entity->unk5A = 0x6C;
-    entity->palette = 0x140;
+    entity->palette = PAL_SERVANT;
     entity->animSet = ANIMSET_OVL(20);
     entity->zPriority = PLAYER.zPriority - 2;
     entity->facingLeft = PLAYER.facingLeft;

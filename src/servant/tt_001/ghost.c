@@ -333,7 +333,7 @@ void ServantInit(InitializeMode mode) {
         e = &g_Entities[SERVANT_ENTITY_INDEX];
         DestroyEntity(e);
         e->unk5A = 0x6C;
-        e->palette = 0x140;
+        e->palette = PAL_SERVANT;
         e->animSet = ANIMSET_OVL(20);
         e->entityId = ENTITY_ID_SERVANT;
         e->params = 0;
