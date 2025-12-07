@@ -179,7 +179,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     DisableAutoPowerOff();
     if (self->step) {
         if (g_IsCutsceneDone && !g_SkipCutscene &&
-            ((g_IsTimeAttackUnlocked) || (g_Settings.D_8003CB04 & 4))) {
+            ((g_GameClearFlag) || (g_Settings.D_8003CB04 & 4))) {
             CutsceneSkip(self);
         }
     }

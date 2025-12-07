@@ -615,7 +615,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     dst->info.playSeconds = g_Status.timerSeconds;
     dst->info.cardIcon = cardIcon;
     dst->info.stage = g_StageId;
-    dst->info.endGameFlags = g_IsTimeAttackUnlocked;
+    dst->info.endGameFlags = g_GameClearFlag;
     dst->info.character = g_PlayableCharacter;
     dst->info.nRoomsExplored = g_RoomCount;
     dst->info.roomX = g_Tilemap.left;
@@ -653,7 +653,7 @@ s32 LoadSaveData(SaveData* save) {
     settings = &savePtr->settings;
 
     g_StageId = savePtr->info.stage;
-    g_IsTimeAttackUnlocked = savePtr->info.endGameFlags;
+    g_GameClearFlag = savePtr->info.endGameFlags;
     g_PlayableCharacter = savePtr->info.character;
     g_RoomCount = savePtr->info.nRoomsExplored;
     g_Tilemap.left = savePtr->info.roomX;

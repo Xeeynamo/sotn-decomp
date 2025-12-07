@@ -1529,7 +1529,7 @@ loop_5:
 #if defined(VERSION_US)
     g_softResetTimer = 0;
 #endif
-    g_IsTimeAttackUnlocked = 1;
+    g_GameClearFlag = SAVE_FLAG_CLEAR;
     D_800978C4 = 1;
 
     while (!IS_QUIT_REQUESTED) {

@@ -734,12 +734,12 @@ void func_801AD66C(void) {
         }
     }
 
-    if (g_IsTimeAttackUnlocked != SAVE_FLAG_NORMAL) {
-        g_IsTimeAttackUnlocked = SAVE_FLAG_REPLAY;
+    if (g_GameClearFlag != SAVE_FLAG_NORMAL) {
+        g_GameClearFlag = SAVE_FLAG_REPLAY;
     }
 
     // play as Richter only if the game was previously cleared
-    if (i == 8 && g_IsTimeAttackUnlocked != SAVE_FLAG_NORMAL) {
+    if (i == 8 && g_GameClearFlag != SAVE_FLAG_NORMAL) {
         g_PlayableCharacter = PLAYER_RICHTER;
     } else {
         g_PlayableCharacter = PLAYER_ALUCARD;
@@ -752,7 +752,7 @@ void func_801AD66C(void) {
                 break;
             }
         }
-        if (i == 8 && g_IsTimeAttackUnlocked != SAVE_FLAG_NORMAL) {
+        if (i == 8 && g_GameClearFlag != SAVE_FLAG_NORMAL) {
             g_PlayableCharacter = PLAYER_MARIA;
         }
     }
@@ -1349,7 +1349,7 @@ void OVL_EXPORT(Update)(void) {
         }
         break;
     case Upd_Eng_50:
-        if (g_IsTimeAttackUnlocked == 0) {
+        if (g_GameClearFlag == SAVE_FLAG_NORMAL) {
             D_801BAF0C = 0xFF;
         } else {
             D_801BAF0C = 0x2FF;
@@ -1452,7 +1452,7 @@ void OVL_EXPORT(Update)(void) {
                     func_801B2608(0xD, 4);
                     func_801B2608(0xE, 5);
                 }
-                if (g_IsTimeAttackUnlocked == 0) {
+                if (g_GameClearFlag == SAVE_FLAG_NORMAL) {
                     D_801BAF0C = 0;
                 }
             }

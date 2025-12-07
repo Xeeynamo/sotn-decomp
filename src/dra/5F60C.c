@@ -433,7 +433,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_LAPIS_LAZULI;
         }
 
-        if (g_IsTimeAttackUnlocked) {
+        if (g_GameClearFlag) {
             fileName = (s8*)g_AxeArmorCode;
             for (i = 0; i < 8; i++) {
                 if (g_Status.saveName[i] != *fileName++) {

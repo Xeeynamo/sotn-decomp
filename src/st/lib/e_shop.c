@@ -1246,7 +1246,7 @@ void func_us_801B15C0(Entity* self) {
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
-            if (g_IsTimeAttackUnlocked) {
+            if (g_GameClearFlag) {
 #ifdef VERSION_PSP
                 self->params = 3;
 #else
@@ -1888,7 +1888,7 @@ u16 func_us_801B29C4(void) {
             TIMEATTACK_EVENT_GALAMOTH_DEFEAT, TIMEATTACK_GET_RECORD)) {
         unlockLevel++;
     }
-    if (g_IsTimeAttackUnlocked) {
+    if (g_GameClearFlag) {
         unlockLevel = 8;
     }
     itemCount = 0;

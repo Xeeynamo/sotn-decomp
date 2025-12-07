@@ -507,18 +507,18 @@ void HandlePlay(void) {
 #else
             if (D_psp_08C630D4 != 0) {
                 strcpy(g_Status.saveName, D_psp_0914C3D8[D_psp_08C630D8]);
-                g_IsTimeAttackUnlocked = true;
+                g_GameClearFlag = SAVE_FLAG_CLEAR;
                 if (D_psp_08C630D8 == 1) {
                     strcpy(g_Status.saveName, "richter ");
                     g_PlayableCharacter = PLAYER_RICHTER;
-                    g_IsTimeAttackUnlocked = true;
+                    g_GameClearFlag = SAVE_FLAG_CLEAR;
                 } else if (D_psp_08C630D8 == 2) {
                     strcpy(g_Status.saveName, "maria   ");
                     g_PlayableCharacter = PLAYER_MARIA;
-                    g_IsTimeAttackUnlocked = true;
+                    g_GameClearFlag = SAVE_FLAG_CLEAR;
                 } else {
                     g_PlayableCharacter = PLAYER_ALUCARD;
-                    g_IsTimeAttackUnlocked = false;
+                    g_GameClearFlag = SAVE_FLAG_NORMAL;
                 }
             }
             if (D_psp_08C630D4 == 1) {
@@ -1394,23 +1394,23 @@ void HandleNowLoading(void) {
 #ifdef VERSION_PSP
                     strcpy(
                         g_Status.saveName, D_psp_0915E500[g_PlayableCharacter]);
-                    g_IsTimeAttackUnlocked = true;
+                    g_GameClearFlag = SAVE_FLAG_CLEAR;
                     if (g_PlayableCharacter == PLAYER_RICHTER) {
 #else
                     if (g_pads[1].pressed & PAD_UP) {
 #endif
                         strcpy(g_Status.saveName, "richter ");
                         g_PlayableCharacter = PLAYER_RICHTER;
-                        g_IsTimeAttackUnlocked = true;
+                        g_GameClearFlag = SAVE_FLAG_CLEAR;
 #ifdef VERSION_PSP
                     } else if (g_PlayableCharacter == PLAYER_MARIA) {
                         strcpy(g_Status.saveName, "maria   ");
                         g_PlayableCharacter = PLAYER_MARIA;
-                        g_IsTimeAttackUnlocked = true;
+                        g_GameClearFlag = SAVE_FLAG_CLEAR;
 #endif
                     } else {
                         g_PlayableCharacter = PLAYER_ALUCARD;
-                        g_IsTimeAttackUnlocked = false;
+                        g_GameClearFlag = SAVE_FLAG_NORMAL;
                     }
 #ifdef VERSION_PSP
                     if (D_psp_08C630D4 == 1) {
@@ -1869,7 +1869,7 @@ void HandleVideoPlayback(void) {
     Primitive* prim2;
     u8 temp;
 
-    if (!(g_pads[0].tapped & PAD_START) || !g_IsTimeAttackUnlocked) {
+    if (!(g_pads[0].tapped & PAD_START) || !g_GameClearFlag) {
         switch (g_GameStep) {
         case 0:
             if (!g_IsUsingCd) {

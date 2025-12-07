@@ -84,7 +84,7 @@ Event g_EvSwCardNew;
 s32 g_PrevScrollX;
 s32 g_PrevScrollY;
 s32 D_80073080;
-s32 g_IsTimeAttackUnlocked;
+s32 g_GameClearFlag;
 bool D_8003C908;
 s32 D_8003C100;
 s32 D_800978B4;
