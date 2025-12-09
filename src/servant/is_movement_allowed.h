@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+#ifdef VERSION_BETA
+s32 IsMovementAllowed() {
+#else
 s32 IsMovementAllowed(s32 arg0) {
+#endif
     if (PLAYER.velocityY < 0 && !(g_Player.vram_flag & TOUCHING_GROUND)) {
         return 1;
     }
