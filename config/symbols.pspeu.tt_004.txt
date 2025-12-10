@@ -1,0 +1,5 @@
+g_PauseAllowed = 0x091CE578;
+g_Events = 0x092F1190;
+g_PlaySfxStep = 0x092F1AC0;
+g_EntityRanges = 0x092F1AC8;
+g_EventQueue = 0x092F1AD0;

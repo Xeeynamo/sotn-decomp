@@ -5,7 +5,7 @@ s32 CheckAllEntitiesValid(void) {
 
     entity = &g_Entities[STAGE_ENTITY_START];
     for (i = 0; i < 0x80; i++, entity++) {
-        if (entity->entityId == 0)
+        if (!entity->entityId)
             continue;
         if (entity->hitboxState == 0)
             continue;

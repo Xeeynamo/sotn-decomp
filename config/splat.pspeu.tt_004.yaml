@@ -1,0 +1,55 @@
+options:
+  platform: psp
+  basename: tt_004
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_004.bin
+  asm_path: asm/pspeu/servant/tt_004
+  asset_path: assets/servant/tt_004
+  src_path: src/servant/tt_004
+  ld_script_path: build/pspeu/tt_004.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.tt_004.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.tt_004.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.tt_004.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: yes
+  asm_jtbl_label_macro: jlabel
+  disassemble_all: true
+  section_order:
+    - ".text"
+    - ".data"
+    - ".rodata"
+    - ".bss"
+  ld_bss_is_noload: True
+  disasm_unknown: True
+  global_vram_start: 0x08000000
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+  ld_generate_symbol_per_data_segment: true
+sha1: af1153efd050ac5008457ad354a29fa013e8bf35
+segments:
+  - [0x0, bin, mwo_header]
+  - name: tt_004
+    type: code
+    start: 0x00000080
+    vram: 0x092E7680
+    bss_size: 0xA30
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, sword_psp]
+      - [0x7338, c, servant_common]
+      - [0x8180, c, init]
+      - [0x8200, .data, sword_sprite_data]
+      - [0x8220, .data, sword_data]
+      - [0x99E0, .data, sword_psp]
+      - [0x9B90, data]
+      - [0xA4D8, .data, init]
+      - [0xA580, .rodata, sword_psp]
+      - [0xA680, .bss, sword_psp]
+  - [0xB0B0]

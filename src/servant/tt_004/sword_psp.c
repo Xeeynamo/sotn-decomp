@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sword.h"
+#include "../servant_private.h"
 #include <items.h>
 #include <sfx.h>
 
@@ -18,10 +19,6 @@ typedef struct {
 #define sp2 ((SwordUnkStruct*)SP(0x20))
 #endif
 
-static Primitive* D_us_8017863C;
-STATIC_PAD_BSS(4);
-static s32 D_us_80178644;
-static s32 D_us_80178648;
 static FamiliarStats s_SwordStats;
 static s32 s_SwordCurrentLevel;
 static s32 D_us_8017865C[5];
@@ -37,6 +34,12 @@ static bool D_us_80178B7C;
 static bool D_us_80178B80;
 static bool D_us_80178B84;
 static s32 D_us_80178B88;
+s32 g_CurrentRoomY;
+s32 g_CurrentRoomX;
+s32 g_CurrentServant;
+static s32 D_us_80178648;
+static s32 D_us_80178644;
+static Primitive* D_us_8017863C;
 
 extern SVECTOR D_us_80170224[];
 extern SVECTOR D_us_80170354[];
