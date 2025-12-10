@@ -273,12 +273,10 @@ SET(SOURCE_FILES_MARIA
 )
 
 set(SOURCE_FILES_TT_000
+    src/servant/tt_000/init.c
     src/servant/tt_000/bat.c
     src/servant/tt_000/servant_clutdata.c
-    src/servant/tt_000/bat_animation_data.c
-    src/servant/tt_000/bat_data.c
     src/servant/tt_000/servant_spriteparts.c
-    src/servant/tt_000/servant_events.c
 )
 
 set(SOURCE_FILES_TT_001
