@@ -26,4 +26,4 @@ typedef struct {
     s32 unk8; // flag checked by `CheckSwordLevel`, changes at level 90
 } SwordUnk_A0;
 
-extern ServantDesc sword_ServantDesc;
+extern u16 g_ServantClut[16];

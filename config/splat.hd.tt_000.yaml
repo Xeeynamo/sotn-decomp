@@ -35,14 +35,11 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, .data, bat]
+      - [0x0, .data, init]
       - [0x40, .data, servant_spriteparts]
       - [0x448, .data, servant_clutdata]
-      - [0x4A8, .data, bat_animation_data]
-      - [0x608, .data, bat_data]
-      - [0x760, .data, servant_events]
-      - [0x10AC, .rodata, bat] # UpdateServantDefault
-      - [0x10C4, .rodata, bat] # func_80174038
+      - [0x4A8, .data, bat]
+      - [0x10AC, .rodata, bat]
       - [0x10E8, c, bat]
       - [0x48B8, .bss, bat]
-  - [19852]
+  - [0x4D8C]
