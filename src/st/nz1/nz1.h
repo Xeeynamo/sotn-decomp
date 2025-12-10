@@ -7,8 +7,9 @@
 #define OVL_EXPORT(x) NZ1_##x
 #define STAGE_IS_NZ1
 
-enum OVL_EXPORT(Palettes) {
+enum Palettes {
     PAL_NONE,
+    PAL_SPIKES_DUST = 0x161,
     PAL_UNK_200 = 0x200,
     PAL_UNK_206 = 0x206,
     PAL_UNK_20A = 0x20A,
@@ -22,7 +23,12 @@ enum OVL_EXPORT(Palettes) {
     PAL_UNK_232 = 0x232,
     PAL_UNK_238 = 0x238,
     PAL_UNK_239 = 0x239,
-    PAL_SPIKES_DUST = 0x161,
+    // puff params 0,1
+    PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
+    // puff params 2 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 3)
+    PAL_PUFF_OPAQUE_2 = 0x2E3,
+    // puff params 3 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 4)
+    PAL_PUFF_OPAQUE_3 = 0x2E4
 };
 
 enum OVL_EXPORT(Entities) {
@@ -49,7 +55,7 @@ enum OVL_EXPORT(Entities) {
     E_EXPLOSION_VARIANTS,       // EntityExplosionVariants
     E_GREY_PUFF,                // EntityGreyPuff
     E_BRIDGE_TRIGGER,           // EntityBridgeBreakTrigger
-    E_EXPLOSION_PUFF_OPAGE,     // EntityExplosionPuffOpaque
+    E_EXPLODE_PUFF_OPAQUE,      // EntityExplosionPuffOpaque
     E_CLOUDS,                   // EntityClouds
     E_BACKGROUND_GEARS,         // EntityBackgroundGears
     E_GEAR_SIDEWAYS_LARGE,      // EntityGearSidewaysLarge

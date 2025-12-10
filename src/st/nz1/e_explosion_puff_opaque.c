@@ -1,7 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
-// Unused in us and deadstripped in pspeu
-INCLUDE_ASM("st/nz1/nonmatchings/e_explosion_puff_opaque", CreateExplosionPuff);
-// Used for the explosion when the e_breakable_bridge piece lands
-INCLUDE_ASM("st/nz1/nonmatchings/e_explosion_puff_opaque", EntityExplosionPuffOpaque);
+#define PUFF_PARAMS_0                                                          \
+    {ANIMSET_DRA(0xE), 0x0079, 0x0000, DRAW_TPAGE | DRAW_TPAGE2, puff_anim_one}
+#define PUFF_PARAMS_1                                                          \
+    {ANIMSET_OVL(0xB), 0x0057, 0x0000, DRAW_DEFAULT, puff_anim_two}
+#define PUFF_PARAMS_2                                                          \
+    {ANIMSET_OVL(0xB), 0x0057, 0x0003, DRAW_TPAGE | DRAW_TPAGE2, puff_anim_two}
+#define PUFF_PARAMS_3                                                          \
+    {ANIMSET_DRA(0xE), 0x0079, 0x0004, DRAW_TPAGE | DRAW_TPAGE2, puff_anim_one}
+
+#include "../e_explosion_puff_opaque.h"
