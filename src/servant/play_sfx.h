@@ -37,7 +37,11 @@ void ProcessSfxState(Entity* entity) {
         break;
 
     case 5:
-        if ((*(s32*)&D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20)) != 0) {
+#ifdef VERSION_PSP
+        if (D_8003C708.flags & FLAG_UNK_20 || D_8003C708.flags & FLAG_UNK_40) {
+#else
+        if (LOW(D_8003C708.flags) & (FLAG_UNK_20 | FLAG_UNK_40)) {
+#endif
             g_PlaySfxStep = 99;
             DestroyEntity(entity);
             return;

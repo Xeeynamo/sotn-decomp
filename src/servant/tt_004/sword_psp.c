@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sword.h"
+#include "../servant_private.h"
 #include <items.h>
 #include <sfx.h>
 
@@ -18,10 +19,6 @@ typedef struct {
 #define sp2 ((SwordUnkStruct*)SP(0x20))
 #endif
 
-static Primitive* D_us_8017863C;
-STATIC_PAD_BSS(4);
-static s32 D_us_80178644;
-static s32 D_us_80178648;
 static FamiliarStats s_SwordStats;
 static s32 s_SwordCurrentLevel;
 static s32 D_us_8017865C[5];
@@ -37,48 +34,18 @@ static bool D_us_80178B7C;
 static bool D_us_80178B80;
 static bool D_us_80178B84;
 static s32 D_us_80178B88;
+s32 g_CurrentRoomY;
+s32 g_CurrentRoomX;
+s32 g_CurrentServant;
+static s32 D_us_80178648;
+static s32 D_us_80178644;
+static Primitive* D_us_8017863C;
 
 // DATA
 static u16 g_ServantClut[] = {
     0x0000, 0x0841, 0x0C80, 0x2D60, 0x56A0, 0x5FE0, 0x5607, 0x6ED2,
     0x7FFC, 0x00EE, 0x01F4, 0x0F5F, 0x3FFF, 0x000A, 0x0010, 0x0016,
 };
-static VECTOR g_TransferVector = {0, 0, 6500};
-static SVECTOR g_RotationAngle = {0};
-static SVECTOR D_us_80170078 = {0};
-static VECTOR D_us_80170080 = {0};
-// sound effect IDs
-static s16 D_us_80170090[] = {
-    SFX_SWORD_SERVANT_SLASH,      SFX_SWORD_SERVANT_SLICE,
-    SFX_SWORD_SERVANT_TEAR,       SFX_SWORD_SERVANT_DARK_EDGE,
-    SFX_SWORD_SERVANT_BROS_SPELL, SFX_SWORD_SERVANT_GRUNT_A,
-    SFX_SWORD_SERVANT_GRUNT_B,
-};
-static SwordUnk_A0 D_us_801700A0[10] = {
-    {0, 0, 1}, {0, 0, 1}, {0, 0, 1}, {0, 0, 1}, {0, 0, 1},
-    {0, 1, 1}, {0, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 3},
-};
-static SVECTOR D_us_80170118 = {-60, -85, 0};
-static SVECTOR D_us_80170120 = {61, -85, 0};
-static SVECTOR D_us_80170128 = {-60, 274, 0};
-static SVECTOR D_us_80170130 = {61, 274, 0};
-static SVECTOR D_us_80170138[] = {{0, 90, 0}, {0, 274, 0}};
-static SVECTOR D_us_80170148[] = {
-    {-22, 80, 0},  {-22, 240, 0}, {0, 90, 0},  {0, 240, 0},
-    {22, 80, 0},   {22, 240, 0},  {0, 90, 0},  {0, 240, 0},
-    {-22, 240, 0}, {0, 290, 0},   {0, 240, 0}, {0, 240, 0},
-    {22, 240, 0},  {0, 290, 0},   {0, 240, 0}, {0, 240, 0},
-};
-static SVECTOR D_us_801701C8[] = {{0, 125, 0}, {0, 195, 0}};
-static u16 g_SwordClut[] = {
-    0x0000, 0xD252, 0xD252, 0xD252, 0xD252, 0xD252, 0xD252, 0xD252,
-    0xD252, 0xD252, 0xD252, 0xD252, 0xD252, 0xD252, 0xD252, 0xD252,
-    0x0000, 0x8841, 0x8C80, 0xAD60, 0xD6A0, 0xDFE0, 0xD607, 0xEED2,
-    0xFFFC, 0x80EE, 0x81F4, 0x8F5F, 0xBFFF, 0x800A, 0x8010, 0x8016,
-};
-static s32 D_us_80170218 = 30;
-static s32 D_us_8017021C = 60;
-static s32 D_us_80170220 = 15;
 static SVECTOR D_us_80170224[] = {
     {-15, 45, 0},  {-20, -6, 11}, {-20, -6, -11}, {0, 45, -6},   {20, -6, -11},
     {15, 45, 0},   {20, -6, 11},  {0, 45, 6},     {-60, -16, 0}, {-72, 7, 0},
@@ -365,9 +332,47 @@ static s16 D_us_80171564[] = {
     0x97, 0x45, 0x90, 0x48, 0x90, 0x48, 0x97, 0x45, 0x90, 0x48, 0x97, 0x45,
     0x97, 0x48, 0x97, 0x5E, 0x90, 0x48, 0x97, 0x48, 0x90, 0x48, 0x97, 0x5E,
 };
+static VECTOR g_TransferVector = {0, 0, 6500};
+static SVECTOR g_RotationAngle = {0};
+static SVECTOR D_us_80170078 = {0};
+static VECTOR D_us_80170080 = {0};
+// sound effect IDs
+static s16 D_us_80170090[] = {
+    SFX_SWORD_SERVANT_SLASH,      SFX_SWORD_SERVANT_SLICE,
+    SFX_SWORD_SERVANT_TEAR,       SFX_SWORD_SERVANT_DARK_EDGE,
+    SFX_SWORD_SERVANT_BROS_SPELL, SFX_SWORD_SERVANT_GRUNT_A,
+    SFX_SWORD_SERVANT_GRUNT_B,
+};
+static SwordUnk_A0 D_us_801700A0[10] = {
+    {0, 0, 1}, {0, 0, 1}, {0, 0, 1}, {0, 0, 1}, {0, 0, 1},
+    {0, 1, 1}, {0, 1, 1}, {1, 1, 1}, {1, 1, 1}, {1, 1, 3},
+};
+static SVECTOR D_us_80170118 = {-60, -85, 0};
+static SVECTOR D_us_80170120 = {61, -85, 0};
+static SVECTOR D_us_80170128 = {-60, 274, 0};
+static SVECTOR D_us_80170130 = {61, 274, 0};
+static SVECTOR D_us_80170138[] = {{0, 90, 0}, {0, 274, 0}};
+static SVECTOR D_us_80170148[] = {
+    {-22, 80, 0},  {-22, 240, 0}, {0, 90, 0},  {0, 240, 0},
+    {22, 80, 0},   {22, 240, 0},  {0, 90, 0},  {0, 240, 0},
+    {-22, 240, 0}, {0, 290, 0},   {0, 240, 0}, {0, 240, 0},
+    {22, 240, 0},  {0, 290, 0},   {0, 240, 0}, {0, 240, 0},
+};
+static SVECTOR D_us_801701C8[] = {{0, 125, 0}, {0, 195, 0}};
+static u16 g_SwordClut[] = {
+    0x0000, 0xD252, 0xD252, 0xD252, 0xD252, 0xD252, 0xD252, 0xD252,
+    0xD252, 0xD252, 0xD252, 0xD252, 0xD252, 0xD252, 0xD252, 0xD252,
+    0x0000, 0x8841, 0x8C80, 0xAD60, 0xD6A0, 0xDFE0, 0xD607, 0xEED2,
+    0xFFFC, 0x80EE, 0x81F4, 0x8F5F, 0xBFFF, 0x800A, 0x8010, 0x8016,
+};
+static s32 D_us_80170218 = 30;
+static s32 D_us_8017021C = 60;
+static s32 D_us_80170220 = 15;
 
 #include "../shared_events.h"
-#include "../shared_globals.h"
+s32 g_PlaySfxStep = 99;
+s16 g_EntityRanges[] = {5, 7, 32, 63};
+ServantEvent* g_EventQueue = g_Events;
 
 // sets up familiar entity id "state" during initialization
 // and level change
