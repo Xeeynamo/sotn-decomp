@@ -20,7 +20,7 @@ void func_psp_090FFAB8(void) {
         var_a1 = 0x6008;
         break;
     }
-    func_8912820(g_CurrentStream, var_a1);
+    func_psp_08912820(g_CurrentStream, var_a1);
     D_8003C728 = 0;
     g_IsUsingCd = 0;
 }

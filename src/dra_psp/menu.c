@@ -11,10 +11,7 @@ void MenuDrawStr(const char* str, s32 x, s32 y, MenuContext* ctx);
 
 extern s32 D_8013AEE4;
 extern s32 g_StatBuffTimers[16];
-extern s32 g_UserLanguage;
 extern s32 D_psp_091F35F8; // g_Pix[3];
-extern u32 D_psp_08B42050; // psp cross button
-extern u32 D_psp_08B42054; // psp triangle button
 
 // BSS
 s32 D_8013784C;
@@ -1655,7 +1652,7 @@ void MenuSpellsDraw(MenuContext* ctx) {
                  17, colorIntensity, colorIntensity, 0);
 #elif defined(VERSION_HD)
     func_800F5E68(
-        ctx, (g_MenuNavigation.cursorSpells), 0x1A, 0x3B, 0x12C, 0x11, -1, 1);
+        ctx, g_MenuNavigation.cursorSpells, 0x1A, 0x3B, 0x12C, 0x11, -1, 1);
 #endif
 }
 
@@ -1772,7 +1769,7 @@ void MenuSystemDraw(MenuContext* ctx) {
     y += 0x10;
 #endif
 
-    strIdx = g_IsTimeAttackUnlocked ? 36 : 19;
+    strIdx = g_GameClearFlag ? 36 : 19;
     MenuDrawStr(g_MenuStr[strIdx], 0x20, y, ctx);
 }
 
@@ -2568,6 +2565,7 @@ void func_800F9DD0(const char* src, char* dst) {
 }
 
 #if defined(VERSION_US) || defined(VERSION_PSP)
+void func_psp_091040A0(u_long** gfxBank);
 void func_800F9E18(s32 arg0) {
     const int ItemsPerRow = 2;
     char buffer[38];
@@ -2900,7 +2898,7 @@ bool func_psp_090F18B0(s32 equipIndex) {
 
     weaponId = g_EquipDefs[equipId].weaponId;
     if (weaponId != 0xFF) {
-        func_8932CEC(equipIndex, weaponId);
+        func_psp_08932CEC(equipIndex, weaponId);
         D_psp_091CDD70[equipIndex] = 1;
         g_EquippedWeaponIds[equipIndex] = weaponId;
     }
@@ -2911,7 +2909,7 @@ s32 func_psp_090F1968(s32 equipIndex) {
     if (D_psp_091CDD70[equipIndex] == 0) {
         return 1;
     }
-    if (!func_8932D34()) {
+    if (!func_psp_08932D34()) {
         return 0;
     }
     if (func_psp_090FAB30(g_EquippedWeaponIds[equipIndex],
@@ -3676,7 +3674,7 @@ block_4:
         break;
     case MENU_STEP_EXIT_11:
 #if defined(VERSION_PSP)
-        if (!func_8932EA4()) {
+        if (!func_psp_08932EA4()) {
             break;
         }
 #endif
@@ -3875,7 +3873,7 @@ block_4:
         if (i == 3 && !g_IsCloakColorUnlocked) {
             i = 0;
         }
-        if (i == 5 && !g_IsTimeAttackUnlocked) {
+        if (i == 5 && !g_GameClearFlag) {
             i = 0;
         }
         ShowText(D_800A2D48[i], 2);
@@ -3908,7 +3906,7 @@ block_4:
                 g_MenuStep = MENU_STEP_SYSTEM_WINDOW_COLOR;
                 break;
             case 4:
-                if (g_IsTimeAttackUnlocked) {
+                if (g_GameClearFlag) {
                     SortTimeAttackEntries();
                     MenuShow(MENU_DG_TIME_ATTACK);
                     g_MenuStep = MENU_STEP_SYSTEM_TIME_ATTACK;
@@ -4069,7 +4067,7 @@ block_4:
                 if (g_Status.relics[id] & RELIC_FLAG_ACTIVE) {
                     g_Servant = g_RelicDefs[id].unk0C;
 #if defined(VERSION_PSP)
-                    func_8932E78(g_Servant - 1);
+                    func_psp_08932E78(g_Servant - 1);
 #endif
                     if (g_Servant == FAM_ACTIVE_SWORD) {
                         if (g_Status.equipment[LEFT_HAND_SLOT] ==

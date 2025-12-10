@@ -11,14 +11,12 @@ typedef struct {
     Point32 pos;
 } RoomLoadDefHolder;
 
-extern bool D_8C630C8;
 extern s32 D_psp_091CE578;
-extern void (*D_8CE9C48)();
+extern void (*D_psp_08CE9C48)();
 extern s32 D_psp_091CE570;
 
 #if defined(VERSION_PSP)
-extern s32* D_8D97C40;
-#define SAVE_DATA_PTR &D_8D97C40
+#define SAVE_DATA_PTR &D_psp_08D97C40
 #define CAN_PAUSE g_PauseAllowed&& D_psp_091CE578
 #else
 #define SAVE_DATA_PTR 0x801EA000
@@ -1251,7 +1249,7 @@ void RunMainEngine(void) {
     u32 tempY;
 
 #if defined(VERSION_PSP)
-    if (D_8C630C8) {
+    if (D_psp_08C630C8) {
         g_Status.hearts = 99;
     }
 #endif
@@ -1525,7 +1523,7 @@ void RunMainEngine(void) {
                 return;
             }
 #if defined(VERSION_PSP)
-            func_8932B50();
+            func_psp_08932B50();
 #endif
             g_GameEngineStep = Engine_3;
             g_MenuStep = MENU_STEP_INIT;
@@ -1948,7 +1946,7 @@ void RunMainEngine(void) {
                 } else if (g_unkGraphicsStruct.unk20 == 0x100) {
                     RichterUpdater = g_PlOvl.D_8013C000;
                     RichterUpdater();
-                    RichterUpdater = D_8CE9C48;
+                    RichterUpdater = D_psp_08CE9C48;
                     RichterUpdater();
                     g_api.o.UpdateStageEntities();
                     func_80102D70();

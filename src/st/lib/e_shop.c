@@ -265,8 +265,6 @@ static u8* D_us_801812D8[] = {
     D_us_801812B4, D_us_801812C0, D_us_801812C8, D_us_801812D0};
 
 #ifdef VERSION_PSP
-extern s32 D_8C630D0;
-extern s32 D_psp_08C630DC;
 extern s32 E_ID(ID_25);
 extern s32 E_ID(ID_27);
 extern s32 E_ID(ID_28);
@@ -1248,7 +1246,7 @@ void func_us_801B15C0(Entity* self) {
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
-            if (g_IsTimeAttackUnlocked) {
+            if (g_GameClearFlag) {
 #ifdef VERSION_PSP
                 self->params = 3;
 #else
@@ -1890,7 +1888,7 @@ u16 func_us_801B29C4(void) {
             TIMEATTACK_EVENT_GALAMOTH_DEFEAT, TIMEATTACK_GET_RECORD)) {
         unlockLevel++;
     }
-    if (g_IsTimeAttackUnlocked) {
+    if (g_GameClearFlag) {
         unlockLevel = 8;
     }
     itemCount = 0;
@@ -3836,7 +3834,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
         itemId = enemyTactics->itemId;
         itemMask = g_CastleFlags[(itemId >> 3) + ENEMY_TACTICS_180];
 #ifdef VERSION_PSP
-        if (D_8C630D0) {
+        if (D_psp_08C630D0) {
             itemMask |= (1 << (itemId & 7));
         }
 #endif
@@ -4018,7 +4016,7 @@ void func_us_801B6324(Entity* self) {
             for (i = 0; i < LEN(D_us_8018173C); i++) {
                 itemID = D_us_8018173C[i].itemId;
 #ifdef VERSION_PSP
-                if (D_8C630D0) {
+                if (D_psp_08C630D0) {
                     g_Settings.D_8003CB00 |= (1 << itemID);
                 }
 #endif
@@ -5508,7 +5506,7 @@ void func_us_801B8A00(Entity* self) {
 #ifdef VERSION_PSP
         switch (self->step_s) {
         case 0:
-            func_892A620(1, 1);
+            func_psp_0892A620(1, 1);
             g_api.PlaySfx(SET_STOP_MUSIC);
             self->ext.et_801B6F30.unk86 = 1;
             self->step_s++;

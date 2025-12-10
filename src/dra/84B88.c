@@ -2531,7 +2531,7 @@ void EntitySummonSpirit(Entity* self) {
         func_80118C28(13);
         self->step++;
 #ifdef VERSION_PSP
-        func_891B0DC(0, 0);
+        func_psp_0891B0DC(0, 0);
 #endif
         return;
 

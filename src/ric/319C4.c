@@ -2164,7 +2164,7 @@ void RicEntitySubwpnBible(Entity* self) {
         prim->priority = self->zPriority;
         RicCreateEntFactoryFromEntity(self, BP_BIBLE_TRAIL, 0);
         if (g_GameTimer % 10 == 0) {
-            g_api.PlaySfx(BIBLE_SUBWPN_SWOOSH);
+            g_api.PlaySfx(SFX_BIBLE_SUBWPN_SWISH);
         }
     }
 }

@@ -3676,6 +3676,34 @@ typedef struct {
     /* 0x85 */ u8 slashInProgress;
 } ET_BladeMaster;
 
+typedef struct {
+    /* 0x7C */ u8 attackTimer;
+    /* 0x7D */ u8 : 8;
+    /* 0x7E */ u16 : 16;
+    /* 0x80 */ u8 walkDirection;
+    /* 0x81 */ u8 : 8;
+    /* 0x82 */ u16 : 16;
+    /* 0x84 */ u8 attackCount;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u16 : 16;
+    /* 0x88 */ u8 deathPartFallDuration;
+    /* 0x89 */ u8 : 8;
+    /* 0x8A */ u16 : 16;
+    /* 0x8C */ s16 chargeDuration;
+    /* 0x8E */ u16 : 16;
+    /* 0x90 */ u8* animPtr;
+} ET_BladeSoldier;
+
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 lastFacingDirection;
+    /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 deathVortexColor;
+    /* 0x80 */ Primitive* deathVortexPrim;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 nextAttack;
+} ET_Paranthropus;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3994,6 +4022,8 @@ typedef union { // offset=0x7C
     ET_Coffin coffin;
     ET_Lava lava;
     ET_BladeMaster bladeMaster;
+    ET_BladeSoldier bladeSoldier;
+    ET_Paranthropus paranthropus;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

@@ -338,7 +338,10 @@ static SVECTOR D_us_80170078 = {0};
 static VECTOR D_us_80170080 = {0};
 // sound effect IDs
 static s16 D_us_80170090[] = {
-    0x8B2, 0x8B3, 0x8B4, 0x8B5, 0x8B6, 0x8B7, 0x8B8,
+    SFX_SWORD_SERVANT_SLASH,      SFX_SWORD_SERVANT_SLICE,
+    SFX_SWORD_SERVANT_TEAR,       SFX_SWORD_SERVANT_DARK_EDGE,
+    SFX_SWORD_SERVANT_BROS_SPELL, SFX_SWORD_SERVANT_GRUNT_A,
+    SFX_SWORD_SERVANT_GRUNT_B,
 };
 static SwordUnk_A0 D_us_801700A0[10] = {
     {0, 0, 1}, {0, 0, 1}, {0, 0, 1}, {0, 0, 1}, {0, 0, 1},

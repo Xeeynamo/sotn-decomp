@@ -637,7 +637,7 @@ void HitDetection(void) {
                                     // Paranthropus check: Drops turquoise if
                                     // game not beaten. Otherwise ring of Varda
                                     if ((miscVar3 == 0x173) &&
-                                        (!g_IsTimeAttackUnlocked)) {
+                                        (!g_GameClearFlag)) {
                                         miscVar3 = 0x16A;
                                     } else {
                                         miscVar1 = g_testCollEnemyLookup

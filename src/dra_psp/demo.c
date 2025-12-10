@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../dra/dra.h"
-
-extern s32 D_8C630D4;
-extern s32 D_psp_08C630DC;
+#include <pspiofilemgr_fcntl.h>
 
 // BSS
 static u8* g_DemoPtr = DEMO_KEY_PTR;
@@ -225,7 +223,7 @@ void DemoOpenFile(s32 arg0) {
     s32 var_s0;
 
     memset(DEMO_KEY_PTR, 0, 0x2000);
-    if ((D_8C630D4 == 2) && (arg0 == 0)) {
+    if ((D_psp_08C630D4 == 2) && (arg0 == 0)) {
         sprintf(fileName, "BIN/DEMOKEY%c%c.BIN;1",
                 ((D_psp_08C630DC / 10) % 10) + '0',
                 (D_psp_08C630DC % 10) + '0');
@@ -234,7 +232,7 @@ void DemoOpenFile(s32 arg0) {
         sprintf(fileName, "BIN/DEMOKEY.BIN;1");
         var_s0 = g_DemoKeyIdx << 0xD;
     }
-    while (func_890FBEC(fileName, DEMO_KEY_PTR, var_s0, 0x2000) == 0) {
+    while (func_psp_0890FBEC(fileName, DEMO_KEY_PTR, var_s0, 0x2000) == 0) {
         VSync(30);
     }
 }
@@ -246,9 +244,9 @@ void DemoSaveFile(void) {
     sprintf(buf,
             "host0:c:/psp/悪魔城ドラキュラＸ/PRODUCTS/DISK/BIN/DEMOKEY%c%c.BIN",
             ((D_psp_08C630DC / 10) % 10) + '0', (D_psp_08C630DC % 10) + '0');
-    fd = func_8939D68(buf, 0x602, 0x1FF);
-    func_8939D20(fd, DEMO_KEY_PTR, 0x2000);
-    func_8939D40(fd);
+    fd = sceIoOpen(buf, PSP_O_WRONLY | PSP_O_CREAT | PSP_O_TRUNC, 0x1FF);
+    sceIoWrite(fd, DEMO_KEY_PTR, 0x2000);
+    sceIoClose(fd);
 }
 
 void DemoInit(s32 arg0) {

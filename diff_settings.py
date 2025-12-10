@@ -24,13 +24,13 @@ def apply(config, args):
     name = re.sub(
         r"^(?:st|bos?s?)/?(?=[a-z])",
         "",
-        f"{args.overlay.lower() if version == 'pspeu' else args.overlay.upper()}",
+        f"{args.overlay.lower() if version != 'us' else args.overlay.upper()}",
         flags=re.IGNORECASE,
     )
 
     baseimgRoot = {
         "us": "disks/us",
-        "hd": "disks/hd/PSP_GAME/USRDIR/res/ps/hdbin",
+        "hd": "disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin",
         "pspeu": "disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN",
         "saturn": "disks/saturn",
     }

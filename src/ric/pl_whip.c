@@ -541,7 +541,7 @@ void func_80167964(Entity* entity) {
     }
     if (!(entity->params & 0xFF00)) {
         g_Entities[D_80155D30[entity->poseTimer]].palette =
-            PAL_FLAG(PAL_UNK_140);
+            PAL_FLAG(PAL_RIC_WHIP);
     }
     g_Entities[D_80155D30[entity->poseTimer]].ext.player.unkA4 = 4;
     entity->poseTimer++;

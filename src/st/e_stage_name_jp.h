@@ -57,7 +57,6 @@ extern EInit g_EInitInteractable;
 // While all stages have EntityStageNamePopup, only stages that display the
 // banner use these functions
 #ifdef STAGE_NAME_LOAD_GFX
-extern s32 g_UserLanguage;
 extern u32 D_91CE570; // dra bss
 
 static u_long* gfxBank[] = {

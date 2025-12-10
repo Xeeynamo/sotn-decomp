@@ -5,8 +5,6 @@
 
 #pragma optimization_level 0
 
-extern s32 g_UserLanguage;
-
 static void* GetLang(void* en, void* fr, void* sp, void* ge, void* it) {
     switch (g_UserLanguage) {
     default:

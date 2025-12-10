@@ -69,7 +69,7 @@ void HydrateSaveSummaryEntry(s32 port, s32 slot, s32 slotValue) {
     g_SaveSummary[port].kind[slot] = save->info.endGameFlags;
     g_SaveSummary[port].character[slot] = save->info.character;
     strcpy(g_SaveSummary[port].name[slot], save->info.name);
-    g_IsTimeAttackUnlocked |= save->info.endGameFlags;
+    g_GameClearFlag |= save->info.endGameFlags;
 }
 
 void func_801B3120(void) {
@@ -99,7 +99,7 @@ s32 func_801B3164(void) {
 
     switch (g_MemCardRStep) {
     case 0:
-        g_IsTimeAttackUnlocked = 0;
+        g_GameClearFlag = SAVE_FLAG_NORMAL;
         MemcardInit();
         g_MemCardRetryCount = 0;
         g_MemCardRStep++;
@@ -390,7 +390,7 @@ s32 func_801B3A94(s32 arg0) {
         }
         MakeMemcardPath(saveFile, D_801BB008);
         ret = MemcardWriteFile(D_801BB004, 0, saveFile, g_Pix, 1, var_s3,
-                               D_801BB008 == func_8919560() ? 1 : 0);
+                               D_801BB008 == func_psp_08919560() ? 1 : 0);
         if (ret != 0) {
             if (g_MemCardRetryCount-- == 0) {
                 return -3;
@@ -442,8 +442,8 @@ s32 func_801B3E2C(void) {
 
     case 1:
         MakeMemcardPath(saveFile, blockId);
-        ret =
-            MemcardEraseFile(port, 0, saveFile, slot == func_8919560() ? 1 : 0);
+        ret = MemcardEraseFile(
+            port, 0, saveFile, slot == func_psp_08919560() ? 1 : 0);
         if (ret != 0) {
             if (g_MemCardRetryCount-- == 0) {
                 return -1;

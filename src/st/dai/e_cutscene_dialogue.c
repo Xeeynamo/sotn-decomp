@@ -262,7 +262,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
 
     if (self->step) {
         if (dialogue_started && !skip_cutscene &&
-            ((g_Settings.D_8003CB04 & 0x400) || g_IsTimeAttackUnlocked)) {
+            ((g_Settings.D_8003CB04 & 0x400) || g_GameClearFlag)) {
             if (g_pads[0].tapped & PAD_START) {
                 skip_cutscene = true;
                 g_api.FreePrimitives(self->primIndex);

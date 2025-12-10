@@ -779,7 +779,7 @@ void EntitySuccubus(Entity* self) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step_s++;
             if (self->ext.succubus.unk87) {
-                PlaySfxPositional(NA_VO_SU_DELICIOUS);
+                PlaySfxPositional(SFX_SUCCUBUS_DELICIOUS);
             } else {
                 PlaySfxPositional(SFX_SUCCUBUS_LAUGH);
             }
