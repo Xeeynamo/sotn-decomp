@@ -9,8 +9,8 @@
 #define ENTITY_ID_BLUE_TRAIL SERVANT_ID(10)
 
 extern SpriteParts* g_ServantSpriteParts[];
-extern u16 g_ServantClut;
-extern u16 g_BatClut;
+extern u16 g_ServantClut[];
+extern u16 g_BatClut[];
 extern Collider s_UnusedCollider;
 extern Primitive* s_CurrentPrim;
 extern s32 s_TrailEntityIsAlive[16];
