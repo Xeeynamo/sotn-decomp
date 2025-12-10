@@ -701,8 +701,8 @@ typedef struct {
     /* 0x8A */ s16 currentX;
     /* 0x8c */ s16 unk8c;
     /* 0x8e */ s16 targetX;
-    /* 0x90 */ s32 posX;
-    /* 0x94 */ s32 posY;
+    /* 0x90 */ u32 posX;
+    /* 0x94 */ u32 posY;
     /* 0x98 */ s16 unk98;
     /* 0x9A */ s16 : 16;
     /* 0x9C */ s32 : 32;
