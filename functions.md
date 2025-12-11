@@ -3967,7 +3967,7 @@
 | lib    | func_psp_092386A8                 |      382 |         41 |        |       |     |
 | no2    | func_pspeu_092386A8               |      382 |         41 |        |       |     |
 | np3    | EntityBloodSplatter               |      382 |         41 |        |       |     |
-| are    | EntityExplosionPuffOpaque         |      383 |         51 |        |       |     |
+| are    | func_pspeu_0923A268               |      383 |         51 |        |       |     |
 | maria  | func_pspeu_092AEC80               |      384 |         75 |        |       |     |
 | main   | _malloc_r                         |      385 |         46 |        |       |     |
 | dre    | func_pspeu_0924ACA0               |      385 |         47 | Yes    |       |     |
@@ -4079,7 +4079,7 @@
 | dra    | func_psp_090E74E8                 |      473 |         40 |        |       |     |
 | sword  | func_092EA3A8                     |      473 |         50 | Yes    |       |     |
 | lib    | func_psp_0926CF18                 |      473 |         53 |        |       |     |
-| nz1    | EntityExplosionPuffOpaque         |      473 |         59 |        |       |     |
+| nz1    | func_pspeu_09258F78               |      473 |         59 |        |       |     |
 | sel    | func_psp_09242010                 |      473 |         70 | Yes    |       |     |
 | no3    | func_pspeu_0924C078               |      480 |         31 |        |       |     |
 | dra    | StoreSaveData                     |      481 |         49 |        |       |     |
