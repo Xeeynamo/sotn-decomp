@@ -30,6 +30,9 @@ typedef enum {
 // animSet, animCurFrame, unk5A, palette, enemyID
 typedef u16 EInit[5];
 
+// common stage initialization data
+extern EInit g_EInitSpawner;
+
 typedef struct {
     u8 duration;
     u8 pose;
@@ -146,22 +149,6 @@ typedef struct {
 /*******/
 /* NO1 */
 /*******/
-// Used in no1/e_medusa_head
-typedef struct {
-    s16 yMax;
-    s16 yMin;
-    s16 spawnDelay;
-    s16 spawnCount;
-    s16 yellowChance; // chance out of 16 that medusa head will be yellow
-    s16 zPriority;
-} MedusaHeadSpawnerParams;
-
-// Used in no1/e_medusa_head
-typedef struct {
-    s32 velocityX;
-    s16 posX;
-    s16 facingLeft;
-} MedusaHeadInitParams;
 
 // Used in no1/unk_35E20
 typedef struct {
