@@ -1986,17 +1986,6 @@ typedef struct {
 } ET_EntityExplosion3;
 
 typedef struct {
-#ifdef PLATFORM_64BIT
-    s32 _align_parent[2];
-#endif
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ s32 : 32;
-    /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ struct Entity* parent;
-} ET_GhostEvent;
-
-typedef struct {
     s32 : 32;
     s16 timer;
     s16 : 16;
@@ -3852,7 +3841,6 @@ typedef union { // offset=0x7C
     ET_DisableAfterImage disableAfterImage;
     ET_EntityMermanFireSpit EntityMermanFireSpit;
     ET_EntityExplosion3 entityExplosion3;
-    ET_GhostEvent ghostEvent;
     ET_BackgroundLightning backgroundLightning;
     ET_DestructAnimation destructAnim;
     ET_SecretStairs secretStairs;
@@ -4073,7 +4061,6 @@ SYNC_FIELD(ET_EntFactory, ET_stopwatchCircle, parent);
 SYNC_FIELD(ET_EntFactory, ET_AguneaCrash, parent);
 SYNC_FIELD(ET_EntFactory, ET_8017091C, parent);
 SYNC_FIELD(ET_EntFactory, ET_Teleport, parent);
-SYNC_FIELD(ET_EntFactory, ET_GhostEvent, parent);
 SYNC_FIELD(ET_EntFactory, ET_MariaDoll, parent);
 
 SYNC_FIELD(ET_Subweapon, ET_HolyWater, subweaponId);
