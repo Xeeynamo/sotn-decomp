@@ -12,16 +12,16 @@ static s32 s_LastTargetedEntityIndex;
 
 extern ServantDesc ghost_ServantDesc;
 
-AnimationFrame g_DefaultGhostAnimationFrame[] = {
+static AnimationFrame g_DefaultGhostAnimationFrame[] = {
     {2, 0x201}, {2, 0x202}, {2, 0x203}, {2, 0x204}, {2, 0x205},
     {2, 0x206}, {2, 0x207}, {2, 0x208}, {0, 0x000}};
 
-AnimationFrame D_us_801704CC[] = {
+static AnimationFrame D_us_801704CC[] = {
     {2, 0x209}, {2, 0x20A}, {2, 0x20B}, {2, 0x20C}, {2, 0x20D},
     {2, 0x20E}, {2, 0x20F}, {2, 0x210}, {2, 0x211}, {2, 0x212},
     {2, 0x213}, {2, 0x214}, {0, 0x000}};
 
-AnimationFrame* g_GhostAnimationFrames[] = {
+static AnimationFrame* g_GhostAnimationFrames[] = {
     g_DefaultGhostAnimationFrame, D_us_801704CC};
 
 static GhostAbilityValues g_GhostAbilityStats[] = {
