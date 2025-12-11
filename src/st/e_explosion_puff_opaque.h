@@ -5,6 +5,25 @@
 extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
 #endif
 
+extern EInit g_EInitParticle;
+
+static u8 puff_anim_one[] = {
+    0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05,
+    0x03, 0x06, 0x03, 0x07, 0x03, 0x08, 0x03, 0x09, 0x03, 0x0A,
+    0x03, 0x0B, 0x03, 0x0C, 0x03, 0x0D, 0xFF, 0x00,
+};
+static u8 puff_anim_two[] = {
+    0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05,
+    0x02, 0x06, 0x02, 0x07, 0x02, 0x08, 0x02, 0x09, 0x02, 0x0A,
+    0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0xFF, 0x00,
+};
+static EntityConfig puff_config[] = {
+    PUFF_PARAMS_0,
+    PUFF_PARAMS_1,
+    PUFF_PARAMS_2,
+    PUFF_PARAMS_3,
+};
+
 void CreateExplosionPuff() {
     Entity* puff;
     s32 rand3 = Random() & 3; // Random puff style 0, 1, 2
@@ -24,10 +43,11 @@ void CreateExplosionPuff() {
     }
 }
 
-extern EntityConfig D_80180FE0[];
-
 void EntityExplosionPuffOpaque(Entity* self) {
     EntityConfig* obj;
+#ifdef STAGE_IS_NZ1
+    s16 rotate;
+#endif
     s32 params;
     s32 speed;
 
@@ -35,8 +55,8 @@ void EntityExplosionPuffOpaque(Entity* self) {
     case 0:
         InitializeEntity(g_EInitParticle);
         params = self->params & 0xF;
-        obj = &D_80180FE0[params];
-        self->palette = obj->palette + E_PUFF_OPAQUE_PALETTE_OFFSET;
+        obj = &puff_config[params];
+        self->palette = obj->palette + PAL_PUFF_OPAQUE_OFFSET;
         self->drawMode = obj->drawMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk5A;
@@ -55,8 +75,15 @@ void EntityExplosionPuffOpaque(Entity* self) {
         break;
 
     case 1:
+#if defined(STAGE_IS_ARE) || defined(STAGE_IS_NZ1)
+        if (!self->step_s) {
+            self->velocityY = FIX(-0.875);
+            self->step_s++;
+        }
+#endif
         MoveEntity();
-#if defined(STAGE_IS_NZ0)
+#if defined(STAGE_IS_ARE) || defined(STAGE_IS_NZ1)
+#elif defined(STAGE_IS_NZ0)
         self->velocityY = FIX(-1);
 #else
         self->velocityY = FIX(1);
@@ -127,6 +154,32 @@ void EntityExplosionPuffOpaque(Entity* self) {
         break;
 
     case 4:
+#ifdef STAGE_IS_NZ1
+        if (!self->step_s) {
+            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->opacity = 0x80;
+            self->facingLeft = Random() & 1;
+            self->rotate = (Random() & 0x1F) * 0x10;
+            rotate = self->rotate;
+            if (self->facingLeft) {
+                rotate = -rotate;
+            }
+            self->velocityX = rsin(rotate) * 0x18;
+            self->velocityY = rcos(rotate) * -0x18;
+            self->ext.opaquePuff.unk8C = Random() * 0x10 + 0x4000;
+            self->step_s++;
+        }
+        MoveEntity();
+        self->opacity -= 1;
+        rotate = self->rotate;
+        if (self->facingLeft) {
+            rotate = -rotate;
+        }
+        self->velocityX += self->ext.opaquePuff.unk8C * rsin(rotate) >> 0xC;
+        self->velocityY += -self->ext.opaquePuff.unk8C * rcos(rotate) >> 0xC;
+
+#else
         if (!self->step_s) {
             self->facingLeft = Random() & 1;
             self->drawFlags |= FLAG_DRAW_SCALEX;
@@ -135,6 +188,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
             self->velocityY = FIX(-0.75);
         }
         MoveEntity();
+#endif
         if (AnimateEntity(self->ext.opaquePuff.anim, self) == 0) {
             DestroyEntity(self);
         }

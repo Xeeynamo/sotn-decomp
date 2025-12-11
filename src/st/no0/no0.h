@@ -13,6 +13,12 @@ enum Palettes {
     PAL_PLATE_LORD_UNK1 = 0x22B,
     PAL_PLATE_LORD_UNK2 = 0x22C,
     PAL_PLATE_LORD_UNK3 = 0x22D,
+    // puff params 0,1
+    PAL_PUFF_OPAQUE_OFFSET = 0x2C0,
+    // puff params 2 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 3)
+    PAL_PUFF_OPAQUE_2 = 0x2C3,
+    // puff params 3 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 4)
+    PAL_PUFF_OPAQUE_3 = 0x2C4
 };
 
 typedef enum EntityIDs {
@@ -79,8 +85,6 @@ typedef enum EntityIDs {
 } EntityIDs;
 
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
-
-#define E_PUFF_OPAQUE_PALETTE_OFFSET 0x2C0
 
 extern s16 g_SineTable[];
 

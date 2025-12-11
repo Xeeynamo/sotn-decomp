@@ -4,7 +4,13 @@
 #define OVL_EXPORT(x) NP3_##x
 #define STAGE_IS_NP3
 
-#define E_PUFF_OPAQUE_PALETTE_OFFSET 0xD0
+enum Palettes {
+    PAL_NONE = 0,
+    // puff params 0,1,3
+    PAL_PUFF_OPAQUE_OFFSET = 0xD0,
+    // puff params 2 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 3)
+    PAL_PUFF_OPAQUE_2 = 0xD3
+};
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
