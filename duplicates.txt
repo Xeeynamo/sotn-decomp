@@ -411,6 +411,7 @@
 | 1.00 | true     | MakeExplosions                      | asm/us/boss/mar/matchings/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/boss/rbo3/matchings/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/boss/rbo5/matchings/e_misc/MakeExplosions.s 
+| 0.96 | true     | CreateExplosionPuff                 | asm/us/st/are/matchings/e_explosion_puff_opaque/CreateExplosionPuff.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/are/matchings/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/cat/matchings/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/cen/matchings/e_misc/MakeExplosions.s 
@@ -430,14 +431,13 @@
 | 1.00 | true     | MakeExplosions                      | asm/us/st/np3/matchings/e_misc/MakeExplosions.s 
 | 0.96 | true     | CreateExplosionPuff                 | asm/us/st/nz0/matchings/e_explosion_puff_opaque/CreateExplosionPuff.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/nz0/matchings/e_misc/MakeExplosions.s 
+| 0.96 | true     | CreateExplosionPuff                 | asm/us/st/nz1/matchings/e_explosion_puff_opaque/CreateExplosionPuff.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/nz1/matchings/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/rtop/matchings/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/rwrp/matchings/rwrp/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/st0/matchings/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/top/matchings/e_misc/MakeExplosions.s 
 | 1.00 | true     | MakeExplosions                      | asm/us/st/wrp/matchings/e_misc/MakeExplosions.s 
-| 0.96 | false    | CreateExplosionPuff                 | asm/us/st/are/nonmatchings/e_heartroom/CreateExplosionPuff.s 
-| 0.96 | false    | CreateExplosionPuff                 | asm/us/st/nz1/nonmatchings/e_explosion_puff_opaque/CreateExplosionPuff.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityRoomForeground                | asm/us/boss/bo4/matchings/e_room_fg/EntityRoomForeground.s 
 | 1.00 | true     | EntityRoomForeground                | asm/us/boss/bo6/matchings/e_room_fg/EntityRoomForeground.s 
@@ -3259,17 +3259,17 @@
 | 1.00 | true     | CutsceneSkip                        | asm/us/st/no3/matchings/cutscene/CutsceneSkip.s 
 | 1.00 | true     | CutsceneSkip                        | asm/us/st/top/matchings/cutscene/CutsceneSkip.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
+| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
+| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
+| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
+| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | CdReadCallback                      | asm/us/main/matchings/psxsdk/libcd/cdread/CdReadCallback.s 
 | 1.00 | true     | CdReadyCallback                     | asm/us/main/matchings/psxsdk/libcd/sys/CdReadyCallback.s 
 | 1.00 | true     | CdSetDebug                          | asm/us/main/matchings/psxsdk/libcd/sys/CdSetDebug.s 
 | 1.00 | true     | CdSyncCallback                      | asm/us/main/matchings/psxsdk/libcd/sys/CdSyncCallback.s 
 | 1.00 | true     | SetVideoMode                        | asm/us/main/matchings/psxsdk/libetc/vmode/SetVideoMode.s 
--------------------------------------------------------------------------------
-| 0.90 | true     | def_cbread                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbread.s 
-| 0.90 | true     | def_cbready                         | asm/us/main/matchings/psxsdk/libcd/event/def_cbready.s 
-| 0.90 | true     | def_cbsync                          | asm/us/main/matchings/psxsdk/libcd/event/def_cbsync.s 
-| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
-| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_000/matchings/bat/AccumulateTowardZero.s 
 | 1.00 | true     | AccumulateTowardZero                | asm/us/servant/tt_001/matchings/ghost/AccumulateTowardZero.s 
@@ -3355,6 +3355,12 @@
 | 0.96 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/nz0/matchings/e_axe_knight/EntityAxeKnightThrowingAxe.s 
 | 1.00 | true     | EntityAxeKnightThrowingAxe          | asm/us/st/top/matchings/e_blue_axe_knight/EntityAxeKnightThrowingAxe.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | EntityExplosionPuffOpaque           | asm/us/st/are/matchings/e_explosion_puff_opaque/EntityExplosionPuffOpaque.s 
+| 0.96 | true     | EntityExplosionPuffOpaque           | asm/us/st/no0/matchings/e_explosion_puff_opaque/EntityExplosionPuffOpaque.s 
+| 0.96 | true     | EntityExplosionPuffOpaque           | asm/us/st/no3/matchings/e_explosion_puff_opaque/EntityExplosionPuffOpaque.s 
+| 0.96 | true     | EntityExplosionPuffOpaque           | asm/us/st/np3/matchings/e_explosion_puff_opaque/EntityExplosionPuffOpaque.s 
+| 0.96 | true     | EntityExplosionPuffOpaque           | asm/us/st/nz0/matchings/e_explosion_puff_opaque/EntityExplosionPuffOpaque.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | StepTowards                         | asm/us/st/are/matchings/e_plate_lord/StepTowards.s 
 | 1.00 | true     | StepTowards                         | asm/us/st/dai/matchings/e_spectral_sword/StepTowards.s 
 | 1.00 | true     | StepTowards                         | asm/us/st/no0/matchings/e_plate_lord/StepTowards.s 
@@ -3396,12 +3402,6 @@
 | 0.90 | true     | EntitySlinger                       | asm/us/st/no0/matchings/e_slinger/EntitySlinger.s 
 | 0.90 | true     | EntitySkeleton                      | asm/us/st/no1/matchings/e_skeleton/EntitySkeleton.s 
 | 0.90 | true     | EntitySkeleton                      | asm/us/st/nz0/matchings/e_skeleton/EntitySkeleton.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | EntityExplosionPuffOpaque           | asm/us/st/no0/matchings/e_explosion_puff_opaque/EntityExplosionPuffOpaque.s 
-| 1.00 | true     | EntityExplosionPuffOpaque           | asm/us/st/no3/matchings/e_explosion_puff_opaque/EntityExplosionPuffOpaque.s 
-| 1.00 | true     | EntityExplosionPuffOpaque           | asm/us/st/np3/matchings/e_explosion_puff_opaque/EntityExplosionPuffOpaque.s 
-| 1.00 | true     | EntityExplosionPuffOpaque           | asm/us/st/nz0/matchings/e_explosion_puff_opaque/EntityExplosionPuffOpaque.s 
-| 0.96 | false    | EntityExplosionPuffOpaque           | asm/us/st/are/nonmatchings/e_heartroom/EntityExplosionPuffOpaque.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | BO4_DrawPlayerAfterImage            | asm/us/boss/bo4/matchings/dop_anim/BO4_DrawPlayerAfterImage.s 
 | 1.00 | true     | RBO5_DrawPlayerAfterImage           | asm/us/boss/rbo5/matchings/dop_anim/RBO5_DrawPlayerAfterImage.s 
@@ -3497,11 +3497,6 @@
 | 0.91 | true     | DMA_memclr                          | asm/us/main/matchings/psxsdk/libetc/intr_dma/DMA_memclr.s 
 | 0.91 | true     | VSync_memclr                        | asm/us/main/matchings/psxsdk/libetc/intr_vb/VSync_memclr.s 
 | 1.00 | true     | memset2                             | asm/us/main/matchings/psxsdk/libgpu/sys/memset2.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
-| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
-| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
-| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_000/matchings/bat/CheckEntityValid.s 
 | 1.00 | true     | CheckEntityValid                    | asm/us/servant/tt_001/matchings/ghost/CheckEntityValid.s 
@@ -3829,6 +3824,10 @@
 | 0.93 | true     | _SsContRpn1                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn1.s 
 | 0.93 | true     | _SsContRpn2                         | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContRpn2.s 
 | 1.00 | true     | _SsSetProgramChange                 | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsSetProgramChange.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSepPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSepPlay.s 
+| 0.93 | true     | SsSepSetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSepSetVol.s 
+| 0.93 | true     | _SsSndSetVol                        | asm/us/main/matchings/psxsdk/libsnd/ssvol/_SsSndSetVol.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | SsVabFakeHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabFakeHead.s 
 | 1.00 | true     | SsVabOpenHead                       | asm/us/main/matchings/psxsdk/libsnd/vs_vh/SsVabOpenHead.s 
@@ -4251,9 +4250,6 @@
 | 1.00 | true     | func_800F548C                       | asm/us/dra/matchings/menu/func_800F548C.s 
 | 0.94 | true     | func_801B1EF4                       | asm/us/st/sel/matchings/318CC/func_801B1EF4.s 
 -------------------------------------------------------------------------------
-| 1.00 | true     | func_800F6A48                       | asm/us/dra/matchings/menu/func_800F6A48.s 
-| 0.90 | true     | SpuSetNoiseVoice                    | asm/us/main/matchings/psxsdk/libspu/s_snv/SpuSetNoiseVoice.s 
--------------------------------------------------------------------------------
 | 1.00 | true     | func_800F99B8                       | asm/us/dra/matchings/menu/func_800F99B8.s 
 | 0.95 | true     | func_801B2108                       | asm/us/st/sel/matchings/318CC/func_801B2108.s 
 -------------------------------------------------------------------------------
@@ -4353,8 +4349,14 @@
 | 1.00 | true     | get_ce                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_ce.s 
 | 1.00 | true     | get_cs                              | asm/us/main/matchings/psxsdk/libgpu/sys/get_cs.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | GsGetVcount                         | asm/us/main/matchings/psxsdk/libgs/gs_008/GsGetVcount.s 
+| 1.00 | true     | GsClearVcount                       | asm/us/main/matchings/psxsdk/libgs/gs_009/GsClearVcount.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | _SsContModulation                   | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContModulation.s 
 | 1.00 | true     | _SsContPortaTime                    | asm/us/main/matchings/psxsdk/libsnd/seqread/_SsContPortaTime.s 
+-------------------------------------------------------------------------------
+| 1.00 | true     | SsSeqPlay                           | asm/us/main/matchings/psxsdk/libsnd/ssplay/SsSeqPlay.s 
+| 0.93 | true     | SsSeqGetVol                         | asm/us/main/matchings/psxsdk/libsnd/ssvol/SsSeqGetVol.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SsUtSetReverbDelay                  | asm/us/main/matchings/psxsdk/libsnd/ut_rdel/SsUtSetReverbDelay.s 
 | 1.00 | true     | SsUtSetReverbFeedback               | asm/us/main/matchings/psxsdk/libsnd/ut_rfb/SsUtSetReverbFeedback.s 
