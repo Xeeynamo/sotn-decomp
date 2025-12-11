@@ -280,12 +280,10 @@ set(SOURCE_FILES_TT_000
 )
 
 set(SOURCE_FILES_TT_001
+    src/servant/tt_001/init.c
     src/servant/tt_001/ghost.c
     src/servant/tt_001/servant_clutdata.c
-    src/servant/tt_001/ghost_animation_data.c
-    src/servant/tt_001/ghost_data.c
     src/servant/tt_001/servant_spriteparts.c
-    src/servant/tt_001/servant_events.c
 )
 
 set(SOURCE_FILES_TT_002

@@ -2,7 +2,7 @@
 void DestroyServantEntity(Entity* self) {
     switch (self->params) {
     case 15:
-        s_IsServantDestroyed = 1;
+        s_IsServantDestroyed = true;
         break;
     }
     DestroyEntity(self);
