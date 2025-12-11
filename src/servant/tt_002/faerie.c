@@ -72,22 +72,14 @@ static void UpdateServantSfxPassthrough(Entity* self);
 static void UpdateSubEntityUseItem(Entity* self);
 
 ServantDesc faerie_ServantDesc = {
-    OVL_EXPORT(ServantInit),
-    OVL_EXPORT(UpdateServantDefault),
-    UpdateServantUseLifeApple,
-    UpdateServantUseHammer,
-    UpdateServantUseUncurse,
-    UpdateServantUseAntivenom,
-    UpdateServantUseElementalResist,
-    UpdateServantUsePotion,
-    UpdateServantAdditionalInit,
-    UpdateSubEntityWings,
-    UpdateServantSitOnShoulder,
-    UpdateServantOfferHint,
-    UpdateEntitySetRoomSpecialState,
-    UpdateSubEntityUseLifeApple,
-    UpdateServantSfxPassthrough,
-    UpdateSubEntityUseItem};
+    OVL_EXPORT(ServantInit),         OVL_EXPORT(UpdateServantDefault),
+    UpdateServantUseLifeApple,       UpdateServantUseHammer,
+    UpdateServantUseUncurse,         UpdateServantUseAntivenom,
+    UpdateServantUseElementalResist, UpdateServantUsePotion,
+    UpdateServantAdditionalInit,     UpdateSubEntityWings,
+    UpdateServantSitOnShoulder,      UpdateServantOfferHint,
+    UpdateEntitySetRoomSpecialState, UpdateSubEntityUseLifeApple,
+    UpdateServantSfxPassthrough,     UpdateSubEntityUseItem};
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_FaerieAnimationFrames[animationIndex]) {
