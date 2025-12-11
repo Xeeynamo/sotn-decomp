@@ -69,3 +69,4 @@ typedef struct {
 extern SpriteParts* g_FaerieSpriteParts[];
 extern s32* g_FaerieIntroRandomizer[];
 extern s32* g_SfxEventRandomizer[];
+extern s32 g_PlaySfxStep;

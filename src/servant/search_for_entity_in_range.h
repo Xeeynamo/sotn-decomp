@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+extern s16 g_EntityRanges[];
+
 Entity* SearchForEntityInRange(s32 rangeIndex, s32 entityId) {
     s32 start = g_EntityRanges[rangeIndex * 2 + 0];
     s32 end = g_EntityRanges[rangeIndex * 2 + 1];

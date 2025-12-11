@@ -29,3 +29,4 @@ typedef struct {
 } SwordUnk_A0;
 
 extern u16 g_ServantClut[16];
+extern s32 g_PlaySfxStep;
