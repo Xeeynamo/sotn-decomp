@@ -54,6 +54,8 @@ extern AnimationFrame* g_FaerieAnimationFrames[];
 void unused_39C8(Entity*);
 void CheckForValidAbility(Entity*);
 
+static void ServantInit(InitializeMode mode);
+static void UpdateServantDefault(Entity* self);
 static void UpdateServantUseLifeApple(Entity* self);
 static void UpdateServantUseHammer(Entity* self);
 static void UpdateServantUseUncurse(Entity* self);

@@ -70,6 +70,8 @@ extern s16
 extern s16
     g_ConfusedOffsetsY[]; // Array of Y-axis offsets for positioning primitives
 
+static void ServantInit(InitializeMode mode);
+static void UpdateServantDefault(Entity* self);
 static void unused_20A4(Entity* self);
 static void unused_20AC(void);
 static void unused_20B4(void);
@@ -83,6 +85,7 @@ static void UpdateConfusedEntites(Entity* self);
 static void unused_28EC(void);
 static void unused_28F4(void);
 static void unused_28FC(void);
+static void DestroyServantEntity(Entity* self);
 
 ServantDesc ghost_ServantDesc = {
     ServantInit,         UpdateServantDefault, unused_20A4,

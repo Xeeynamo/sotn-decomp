@@ -40,7 +40,8 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, init]
-      - [0x40, .data, sword]
+      - [0x40, .data, servant_clutdata]
+      - [0x60, .data, sword]
       - [0x2330, .rodata, sword]
       - [0x23FC, .rodata, servant_common]
       - [0x2420, c, sword]

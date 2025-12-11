@@ -3,35 +3,36 @@ void ProcessSfxState(Entity* entity) {
     switch (entity->step) {
     case 0:
         entity->flags = FLAG_UNK_20000 | FLAG_KEEP_ALIVE_OFFCAMERA;
-        if (g_CutsceneHasControl != 0) {
+        if (g_CutsceneHasControl) {
             g_PlaySfxStep = 99;
             DestroyEntity(entity);
             return;
         }
-        if (g_api.CdSoundCommandQueueEmpty() != 0) {
+        if (g_api.CdSoundCommandQueueEmpty()) {
             g_api.PlaySfx(SET_UNK_10);
             entity->step++;
         }
         break;
 
     case 1:
-        if (g_api.func_80133950() != 0) {
+        if (g_api.func_80133950()) {
             entity->step++;
         }
         break;
+
     case 2:
         g_api.PlaySfx(entity->params);
         entity->step++;
         break;
 
     case 3:
-        if (g_api.func_80131F68() != 0) {
+        if (g_api.func_80131F68()) {
             entity->step++;
         }
         break;
 
     case 4:
-        if (g_api.func_80131F68() == 0) {
+        if (!g_api.func_80131F68()) {
             entity->step++;
         }
         break;
@@ -46,14 +47,14 @@ void ProcessSfxState(Entity* entity) {
             DestroyEntity(entity);
             return;
         }
-        if (g_api.CdSoundCommandQueueEmpty() != 0) {
+        if (g_api.CdSoundCommandQueueEmpty()) {
             g_api.PlaySfx(SET_UNK_11);
             entity->step++;
         }
         break;
 
     case 6:
-        if (g_api.func_80133950() != 0) {
+        if (g_api.func_80133950()) {
             g_PlaySfxStep = 99;
             DestroyEntity(entity);
             return;

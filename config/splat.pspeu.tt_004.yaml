@@ -42,11 +42,12 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, sword_psp]
+      - [0x80, c, sword]
       - [0x7338, c, servant_common]
       - [0x8180, c, init]
-      - [0x8200, .data, sword_psp]
+      - [0x8200, .data, servant_clutdata]
+      - [0x8220, .data, sword]
       - [0xA4D8, .data, init]
-      - [0xA580, .rodata, sword_psp]
-      - [0xA680, .bss, sword_psp]
+      - [0xA580, .rodata, sword]
+      - [0xA680, .bss, sword]
   - [0xB0B0]
