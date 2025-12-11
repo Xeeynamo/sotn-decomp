@@ -48,6 +48,8 @@ segments:
       - [0x3E0, c, are_psp/unk_3E0]
       - [0x5C8, c, are_psp/e_breakable]
       - [0xF48, c, are_psp/unk_F48]
+      - [0x11A0, c, are/e_fountain_water]
+      - [0x1420, c, are_psp/unk_1420]
       - [0x20F8, c, are_psp/e_heartroom]
       - [0x2280, c, are/e_room_bg]
       - [0x2360, c, are/e_lock_camera]

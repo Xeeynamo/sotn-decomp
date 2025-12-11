@@ -9,6 +9,9 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_FOUNTAIN_WATER = 0xC0,
+    // 0xC0 - 0xCA are cycled in EntityFountainWater based on g_Timer
+    PAL_FOUNTAIN_WATER_MAX = 0xCA,
     PAL_ARMOR_LORD_UNK = 0x21A,
     PAL_HUNTING_GIRL = 0x21C,
     PAL_PLATE_LORD_UNK1 = 0x226,

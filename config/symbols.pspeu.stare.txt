@@ -4,7 +4,6 @@ func_us_801B628C = 0x09237A60;
 ARE_EntityBreakable = 0x09237C48;
 ARE_EntityBreakableDebris = 0x092381A0;
 func_us_801B80C0 = 0x092385C8;
-func_us_801B7C7C = 0x09238820;
 func_us_801B7184 = 0x09238AA0;
 func_us_801B7998 = 0x09239558;
 EntityHeartRoomSwitch = 0x09239778;

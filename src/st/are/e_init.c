@@ -29,7 +29,7 @@ void func_us_801B6DF0(Entity* self);
 void func_us_801B7184(Entity* self);
 void EntityHeartRoomSwitch(Entity* self);
 void func_us_801B7998(Entity* self);
-void func_us_801B7C7C(Entity* self);
+void EntityFountainWater(Entity* self);
 void func_us_801B7E7C(Entity* self);
 void func_us_801B80C0(Entity* self);
 void EntityExplosionPuffOpaque(Entity* self);
@@ -108,7 +108,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B7184,
     EntityHeartRoomSwitch,
     func_us_801B7998,
-    func_us_801B7C7C,
+    EntityFountainWater,
     func_us_801B7E7C,
     func_us_801B80C0,
     EntityExplosionPuffOpaque,

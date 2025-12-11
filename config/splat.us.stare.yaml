@@ -102,6 +102,8 @@ segments:
       - [0x3628C, c, unk_3628C]
       - [0x368B4, c, e_cavern_door]
       - [0x37B40, c, e_heartroom]
+      - [0x37C7C, c, e_fountain_water]
+      - [0x37E7C, c, unk_37E7C]
       - [0x38278, c, e_explosion_puff_opaque]
       - [0x386D4, c, st_update]
       - [0x38B08, c, st_collision]
