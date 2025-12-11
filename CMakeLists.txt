@@ -279,12 +279,12 @@ set(SOURCE_FILES_TT_000
     src/servant/tt_000/servant_spriteparts.c
 )
 
-set(SOURCE_FILES_TT_001
-    src/servant/tt_001/init.c
-    src/servant/tt_001/ghost.c
-    src/servant/tt_001/servant_clutdata.c
-    src/servant/tt_001/servant_spriteparts.c
-)
+#set(SOURCE_FILES_TT_001
+#    src/servant/tt_001/init.c
+#    src/servant/tt_001/ghost.c
+#    src/servant/tt_001/servant_clutdata.c
+#    src/servant/tt_001/servant_spriteparts.c
+#)
 
 set(SOURCE_FILES_TT_002
     src/servant/tt_002/faerie.c
