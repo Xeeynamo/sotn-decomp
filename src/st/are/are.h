@@ -9,6 +9,7 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_BACKGROUND_DOOR_RUBBLE = 0x9E,
     PAL_FOUNTAIN_WATER = 0xC0,
     // 0xC0 - 0xCA are cycled in EntityFountainWater based on g_Timer
     PAL_FOUNTAIN_WATER_MAX = 0xCA,
@@ -55,9 +56,9 @@ enum Entities {
     E_UNK_1A,                       // func_us_801B7184
     E_HEART_ROOM_SWITCH,            // EntityHeartRoomSwitch
     E_UNK_1C,                       // func_us_801B7998
-    E_UNK_1D,                       // func_us_801B7C7C
+    E_UNK_1D,                       // EntityFountainWater
     E_UNK_1E,                       // func_us_801B7E7C
-    E_UNK_1F,                       // func_us_801B80C0
+    E_BACKGROUND_DOOR_RUBBLE,       // EntityBackgroundDoorRubble
     E_EXPLODE_PUFF_OPAQUE,          // EntityExplosionPuffOpaque
     E_BREAKABLE_DEBRIS,             // OVL_EXPORT(EntityBreakableDebris)
     E_BLADE_MASTER,                 // EntityBladeMaster
