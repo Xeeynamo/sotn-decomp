@@ -53,9 +53,9 @@ static s16 g_ConfusedOffsetsY[] = {-20, -18, -15};
 // Unsure where the target angle gets set initially
 s32 UpdateEntityVelocityTowardsTarget(
     Entity* unused, s32 targetX, s32 targetY) {
-    static s16 x;
+    static s16 dx;
     STATIC_PAD_BSS(2);
-    static s16 y;
+    static s16 dy;
     STATIC_PAD_BSS(2);
     static s16 angle;
     STATIC_PAD_BSS(2);
@@ -70,9 +70,9 @@ s32 UpdateEntityVelocityTowardsTarget(
         g_CurrentEntity->ext.ghost.maxAngle);
     g_CurrentEntity->ext.ghost.targetAngle = dAngle;
 
-    x = targetX - g_CurrentEntity->posX.i.hi;
-    y = targetY - g_CurrentEntity->posY.i.hi;
-    distance = SquareRoot12((x * x + y * y) << 12) >> 12;
+    dx = targetX - g_CurrentEntity->posX.i.hi;
+    dy = targetY - g_CurrentEntity->posY.i.hi;
+    distance = SquareRoot12((dx * dx + dy * dy) << 12) >> 12;
 
     switch (g_CurrentEntity->step) {
     case 2:
@@ -681,9 +681,9 @@ void UpdateConfusedEntites(Entity* self) {
     static Primitive* prim;
     static s32 i;
     static s32 frameCounter;
-    static s16 x;
+    static s16 dx;
     STATIC_PAD_BSS(2);
-    static s16 y;
+    static s16 dy;
     STATIC_PAD_BSS(2);
 
     if (self->params) {
@@ -751,22 +751,21 @@ void UpdateConfusedEntites(Entity* self) {
             return;
         }
     }
-    x = self->posX.i.hi = self->ext.factory.parent->posX.i.hi;
-    y = self->posY.i.hi = self->ext.factory.parent->posY.i.hi;
+    dx = self->posX.i.hi = self->ext.factory.parent->posX.i.hi;
+    dy = self->posY.i.hi = self->ext.factory.parent->posY.i.hi;
 
     prim = &g_PrimBuf[self->primIndex];
 
     for (i = 0; i < 3; i++) {
         if (!self->facingLeft) {
-
-            prim->x0 = prim->x2 = x + g_ConfusedOffsetsX[i];
-            prim->x1 = prim->x3 = x + (g_ConfusedOffsetsX[i] + 8);
+            prim->x0 = prim->x2 = dx + g_ConfusedOffsetsX[i];
+            prim->x1 = prim->x3 = dx + (g_ConfusedOffsetsX[i] + 8);
         } else {
-            prim->x0 = prim->x2 = x - (g_ConfusedOffsetsX[i] + 8);
-            prim->x1 = prim->x3 = x - g_ConfusedOffsetsX[i];
+            prim->x0 = prim->x2 = dx - (g_ConfusedOffsetsX[i] + 8);
+            prim->x1 = prim->x3 = dx - g_ConfusedOffsetsX[i];
         }
-        prim->y0 = prim->y1 = y + g_ConfusedOffsetsY[i];
-        prim->y2 = prim->y3 = y + (g_ConfusedOffsetsY[i] + 8);
+        prim->y0 = prim->y1 = dy + g_ConfusedOffsetsY[i];
+        prim->y2 = prim->y3 = dy + (g_ConfusedOffsetsY[i] + 8);
         prim = prim->next;
     }
     return;
