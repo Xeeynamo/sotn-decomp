@@ -4,13 +4,18 @@
 #include <string.h>
 
 extern ServantDesc bat_ServantDesc;
-extern ServantDesc ghost_ServantDesc;
+// extern ServantDesc ghost_ServantDesc;
 extern ServantDesc faerie_ServantDesc;
 extern ServantDesc g_ServantDesc;
 
 // To add a new servant, replace proper null with it's servant desc
 ServantDesc* servantDescs[] = {
-    NULL, &bat_ServantDesc, &ghost_ServantDesc, &faerie_ServantDesc, NULL, NULL,
+    NULL,
+    &bat_ServantDesc,
+    NULL /*&ghost_ServantDesc*/,
+    &faerie_ServantDesc,
+    NULL,
+    NULL,
     NULL};
 
 void HandleServantPrg() { g_ServantDesc = *servantDescs[g_Servant]; }
