@@ -46,20 +46,20 @@
 | main   | strFileLseek                      |        7 |          1 |        |       |     |
 | main   | func_psp_0892CF88                 |        7 |          1 |        |       |     |
 | main   | func_psp_0892D518                 |        7 |          1 |        |       |     |
-|        | unused_339C                       |        7 |          1 |        |       |     |
-|        | unused_33A4                       |        7 |          1 |        |       |     |
-|        | unused_33AC                       |        7 |          1 |        |       |     |
-|        | unused_33B4                       |        7 |          1 |        |       |     |
-|        | unused_33BC                       |        7 |          1 |        |       |     |
-|        | unused_33C4                       |        7 |          1 |        |       |     |
-|        | unused_33CC                       |        7 |          1 |        |       |     |
-|        | unused_3C0C                       |        7 |          1 |        |       |     |
-|        | unused_3C14                       |        7 |          1 |        |       |     |
-|        | unused_3C1C                       |        7 |          1 |        |       |     |
-|        | unused_3C24                       |        7 |          1 |        |       |     |
-| sword  | func_092ED290                     |        7 |          1 |        |       |     |
-| sword  | func_092ED298                     |        7 |          1 |        |       |     |
-| sword  | func_092EDA98                     |        7 |          1 |        |       |     |
+|        | func_092EA930                     |        7 |          1 |        |       |     |
+|        | func_092EA938                     |        7 |          1 |        |       |     |
+|        | func_092EA940                     |        7 |          1 |        |       |     |
+|        | func_092EA948                     |        7 |          1 |        |       |     |
+|        | func_092EA950                     |        7 |          1 |        |       |     |
+|        | func_092EA958                     |        7 |          1 |        |       |     |
+|        | func_092EA960                     |        7 |          1 |        |       |     |
+|        | func_092EB7D8                     |        7 |          1 |        |       |     |
+|        | func_092EB7E0                     |        7 |          1 |        |       |     |
+|        | func_092EB7E8                     |        7 |          1 |        |       |     |
+|        | func_092EB7F0                     |        7 |          1 |        |       |     |
+|        | func_092ED290                     |        7 |          1 |        |       |     |
+|        | func_092ED298                     |        7 |          1 |        |       |     |
+|        | func_092EDA98                     |        7 |          1 |        |       |     |
 | main   | D_psp_0893BE34                    |        8 |          0 |        |       |     |
 | main   | D_psp_0893C094                    |        8 |          0 |        |       |     |
 | main   | D_psp_0893C1A0                    |        8 |          0 |        |       |     |
@@ -340,7 +340,7 @@
 | main   | func_psp_08934F44                 |       15 |          2 |        |       |     |
 | main   | func_psp_08934F6C                 |       15 |          2 |        |       |     |
 | ric    | func_pspeu_092B0580               |       15 |          2 |        |       |     |
-| sword  | func_092EE6B0                     |       15 |          2 |        |       |     |
+|        | func_092EE6B0                     |       15 |          2 |        |       |     |
 | are    | CollectDummy                      |       15 |          2 |        |       |     |
 | cat    | func_pspeu_09245588               |       15 |          2 |        |       |     |
 | chi    | func_psp_09240EB0                 |       15 |          2 |        |       |     |
@@ -1058,7 +1058,7 @@
 | maria  | func_pspeu_092B9298               |       29 |          4 |        |       |     |
 | maria  | func_pspeu_092A7F20               |       29 |          4 |        |       |     |
 | maria  | func_pspeu_092A9920               |       29 |          4 |        |       |     |
-|        | DestroyServantEntity              |       29 |          4 |        |       |     |
+|        | func_092EB7F8                     |       29 |          4 |        |       |     |
 | dra    | func_psp_09141878                 |       29 |          5 |        |       |     |
 | main   | func_psp_0891A064                 |       29 |          5 |        |       |     |
 | main   | func_psp_0891AE68                 |       29 |          5 |        |       |     |
@@ -1889,7 +1889,7 @@
 | main   | func_psp_089170A4                 |       52 |          7 |        |       |     |
 | main   | func_psp_08917138                 |       52 |          7 |        |       |     |
 | main   | func_psp_08917250                 |       52 |          7 |        |       |     |
-| sword  | func_092EE600                     |       52 |          9 |        |       |     |
+|        | func_092EE600                     |       52 |          9 |        |       |     |
 | st0    | func_801AD838                     |       52 |         10 |        |       |     |
 | maria  | func_pspeu_092AE4A8               |       52 |         13 |        |       |     |
 | dra    | func_psp_090F18B0                 |       53 |          3 |        |       |     |
@@ -1972,7 +1972,7 @@
 | main   | func_psp_089361B4                 |       56 |          7 |        |       |     |
 | main   | func_psp_08910298                 |       56 |          8 |        |       |     |
 | ric    | func_pspeu_092A94A0               |       56 |          8 |        |       |     |
-| sword  | func_092EE878                     |       56 |          8 |        |       |     |
+|        | func_092EE878                     |       56 |          8 |        |       |     |
 | no3    | func_pspeu_0923FFE0               |       56 |          8 |        |       |     |
 | main   | func_psp_08936D90                 |       56 |         10 |        |       |     |
 | main   | func_psp_08936984                 |       56 |         12 |        |       |     |
@@ -2111,7 +2111,7 @@
 | wrp    | func_psp_0923C988                 |       62 |          5 |        |       |     |
 | maria  | func_pspeu_092B1C10               |       62 |          6 |        |       |     |
 | ric    | func_pspeu_092AF4D0               |       62 |          6 |        |       |     |
-| sword  | func_092E7798                     |       62 |          6 |        |       |     |
+|        | func_092E7798                     |       62 |          6 |        |       |     |
 | nz1    | EntityVandalSwordDeath            |       62 |          6 |        |       |     |
 | main   | func_psp_0891B7A0                 |       62 |          7 |        |       |     |
 | cat    | func_pspeu_09249C80               |       62 |          8 |        |       |     |
@@ -2190,7 +2190,7 @@
 | nz1    | func_pspeu_092384B8               |       65 |         11 |        |       |     |
 | st0    | UpdateRoomPosition                |       65 |         11 |        |       |     |
 | wrp    | func_psp_092384B8                 |       65 |         11 |        |       |     |
-| sword  | func_092E80D8                     |       65 |         13 |        |       |     |
+|        | func_092E80D8                     |       65 |         13 |        |       |     |
 | dra    | func_psp_090ED480                 |       66 |          6 |        |       |     |
 | are    | func_pspeu_09241130               |       66 |          7 |        |       |     |
 | cat    | func_pspeu_0923BEA0               |       66 |          7 |        |       |     |
@@ -2510,10 +2510,10 @@
 | main   | func_psp_08917690                 |       79 |         11 |        |       |     |
 | maria  | func_pspeu_092B1F30               |       79 |         14 |        |       |     |
 |        | func_092E7A78                     |       79 |         15 |        |       |     |
-| sword  | func_092E94F8                     |       79 |         15 |        |       |     |
+|        | func_092E94F8                     |       79 |         15 |        |       |     |
 | main   | _sceGuResetGlobalVariables        |       80 |          2 |        |       |     |
 | dra    | func_psp_090EBFA8                 |       80 |          3 |        |       |     |
-| sword  | func_092E7680                     |       80 |          8 |        |       |     |
+|        | func_092E7680                     |       80 |          8 |        |       |     |
 | no4    | func_pspeu_09259648               |       80 |         10 |        |       |     |
 | main   | func_psp_08911990                 |       81 |          4 |        |       |     |
 | no4    | func_pspeu_09242D08               |       81 |          5 |        |       |     |
@@ -2569,7 +2569,7 @@
 | sel    | func_psp_0923B908                 |       85 |         13 |        |       |     |
 | main   | _setmodreent                      |       85 |         15 |        |       |     |
 | ric    | pl_blueprints.rodata              |       86 |          0 | Yes    |       |     |
-|        | sword_psp.rodata                  |       86 |          0 | Yes    |       |     |
+|        | sword.rodata                      |       86 |          0 | Yes    |       |     |
 | sel    | BB50.rodata                       |       86 |          0 | Yes    |       |     |
 | are    | func_pspeu_0925D530               |       86 |          6 |        |       |     |
 | no2    | func_pspeu_0924A940               |       86 |          6 |        |       |     |
@@ -2917,7 +2917,7 @@
 | main   | 36174.rodata                      |      106 |          0 | Yes    |       |     |
 | main   | func_psp_0892D96C                 |      106 |          6 |        |       |     |
 | are    | func_pspeu_0924B460               |      106 |          7 |        |       |     |
-| sword  | func_092E7C38                     |      106 |          9 |        |       |     |
+|        | func_092E7C38                     |      106 |          9 |        |       |     |
 | no2    | func_pspeu_09254AE8               |      106 |          9 |        |       |     |
 | np3    | func_801CE2CC                     |      106 |          9 |        |       |     |
 | dra    | func_psp_09111BB8                 |      106 |         11 |        |       |     |
@@ -3059,7 +3059,7 @@
 | main   | func_psp_08930324                 |      115 |         15 | Yes    |       |     |
 | main   | at3plus_addData                   |      115 |         20 |        |       |     |
 | dra    | func_psp_091374D0                 |      115 |         27 |        |       |     |
-| sword  | func_092EE6D8                     |      116 |         11 |        |       |     |
+|        | func_092EE6D8                     |      116 |         11 |        |       |     |
 | dra    | func_psp_09103128                 |      116 |         14 |        |       |     |
 | main   | func_psp_089392C8                 |      116 |         14 |        |       |     |
 | dra    | func_psp_09113F40                 |      116 |         18 |        |       |     |
@@ -3071,7 +3071,7 @@
 | dra    | func_psp_09126A60                 |      118 |         10 |        |       |     |
 | cat    | func_pspeu_09253988               |      118 |         14 |        |       |     |
 | main   | _memalign_r                       |      118 |         15 |        |       |     |
-| sword  | func_092E9600                     |      118 |         15 |        |       |     |
+|        | func_092E9600                     |      118 |         15 |        |       |     |
 | sel    | func_psp_09243028                 |      118 |         15 |        |       |     |
 | no3    | func_pspeu_09249590               |      118 |         27 |        |       |     |
 | no3    | func_pspeu_0923D198               |      119 |         14 |        |       |     |
@@ -3302,7 +3302,7 @@
 | no4    | func_pspeu_092398B8               |      159 |         18 |        |       |     |
 | nz1    | EntityKarasumanFeather            |      159 |         18 |        |       |     |
 | dra    | func_psp_09137110                 |      159 |         21 |        |       |     |
-| sword  | func_092E92C0                     |      159 |         25 |        |       |     |
+|        | func_092E92C0                     |      159 |         25 |        |       |     |
 | dra    | LoadSaveData                      |      160 |         10 |        |       |     |
 | ric    | func_pspeu_092CDF18               |      160 |         11 |        |       |     |
 | are    | func_us_801B80C0                  |      160 |         12 |        |       |     |
@@ -3472,13 +3472,13 @@
 | dra    | func_psp_09116450                 |      196 |         22 |        |       |     |
 | dra    | func_psp_091398F0                 |      196 |         35 | Yes    |       |     |
 | lib    | func_psp_09253E20                 |      197 |          1 |        |       |     |
-| sword  | func_092E81B8                     |      197 |          7 |        |       |     |
+|        | func_092E81B8                     |      197 |          7 |        |       |     |
 | no2    | func_pspeu_0925BBA8               |      197 |         20 |        |       |     |
 | dre    | func_pspeu_0924A8F0               |      197 |         28 |        |       |     |
 | dra    | func_psp_09138DA0                 |      197 |         41 |        |       |     |
 | main   | func_psp_08918570                 |      198 |         23 |        |       |     |
 | dra    | func_psp_0910E4B8                 |      198 |         34 | Yes    |       |     |
-|        | ServantInit                       |      199 |         20 |        |       |     |
+|        | func_092E8A48                     |      199 |         20 |        |       |     |
 | main   | func_psp_0890F7CC                 |      199 |         51 |        |       |     |
 | dra    | func_psp_090DE7D0                 |      200 |         16 |        |       |     |
 | lib    | func_psp_09266120                 |      200 |         18 |        |       |     |
@@ -3540,7 +3540,7 @@
 | no4    | func_pspeu_09240680               |      216 |         18 |        |       |     |
 | sel    | func_psp_0923A230                 |      216 |         20 |        |       |     |
 | nz1    | EntityBridgeBackgroundPiece       |      216 |         24 |        |       |     |
-| sword  | func_092E7DB0                     |      217 |         22 |        |       |     |
+|        | func_092E7DB0                     |      217 |         22 |        |       |     |
 | dre    | func_pspeu_0924B1F8               |      217 |         30 |        |       |     |
 | lib    | func_psp_09265320                 |      218 |         16 | Yes    |       |     |
 | no3    | func_pspeu_09261818               |      218 |         39 |        |       |     |
@@ -3672,12 +3672,12 @@
 | ric    | func_pspeu_092BEC98               |      257 |         29 |        |       |     |
 |        | func_092E76C8                     |      257 |         36 |        |       |     |
 | no4    | func_pspeu_09241E38               |      258 |         19 |        |       |     |
-| sword  | func_092EDAA0                     |      258 |         21 |        |       |     |
+|        | func_092EDAA0                     |      258 |         21 |        |       |     |
 | main   | __muldf3                          |      258 |         29 |        |       |     |
 | no4    | func_pspeu_09238E18               |      258 |         30 |        |       |     |
 | dra    | func_psp_090F6430                 |      258 |         36 |        |       |     |
 | cat    | func_pspeu_0925E678               |      258 |         36 |        |       |     |
-| sword  | func_092E7870                     |      259 |         13 |        |       |     |
+|        | func_092E7870                     |      259 |         13 |        |       |     |
 | main   | func_psp_0891C204                 |      259 |         30 |        |       |     |
 | dai    | func_pspeu_092526B8               |      260 |         36 |        |       |     |
 | nz1    | EntitySecretAreaDoor              |      260 |         39 |        |       |     |
@@ -3819,7 +3819,7 @@
 | no3    | func_pspeu_09239E68               |      313 |         39 |        |       |     |
 | ric    | func_pspeu_092BB860               |      314 |         24 |        |       |     |
 | lib    | func_psp_09256018                 |      315 |         26 |        |       |     |
-| sword  | func_092E97B8                     |      315 |         34 |        |       |     |
+|        | func_092E97B8                     |      315 |         34 |        |       |     |
 | no2    | func_pspeu_09254098               |      315 |         48 |        |       |     |
 | np3    | func_pspeu_09260A58               |      315 |         48 |        |       |     |
 | main   | func_psp_089215A4                 |      316 |         39 |        |       |     |
@@ -3984,7 +3984,7 @@
 | lib    | func_psp_09257100                 |      396 |         35 |        |       |     |
 | main   | 3DA9C.rodata                      |      398 |          0 |        |       |     |
 | no4    | func_pspeu_09243478               |      399 |         56 | Yes    |       |     |
-| sword  | func_092ECC98                     |      401 |         36 |        |       |     |
+|        | func_092ECC98                     |      401 |         36 |        |       |     |
 | main   | func_psp_08922C14                 |      405 |         36 |        |       |     |
 | main   | func_psp_0891881C                 |      405 |         51 |        |       |     |
 | are    | BottomCornerText                  |      406 |         25 |        |       |     |
@@ -4077,7 +4077,7 @@
 | nz1    | func_pspeu_09254A20               |      470 |         60 |        |       |     |
 | main   | gte_rtpt                          |      471 |         13 |        |       |     |
 | dra    | func_psp_090E74E8                 |      473 |         40 |        |       |     |
-| sword  | func_092EA3A8                     |      473 |         50 | Yes    |       |     |
+|        | func_092EA3A8                     |      473 |         50 | Yes    |       |     |
 | lib    | func_psp_0926CF18                 |      473 |         53 |        |       |     |
 | nz1    | func_pspeu_09258F78               |      473 |         59 |        |       |     |
 | sel    | func_psp_09242010                 |      473 |         70 | Yes    |       |     |
@@ -4108,12 +4108,12 @@
 | no3    | func_pspeu_09240B70               |      502 |         28 | Yes    |       |     |
 | main   | func_psp_08929860                 |      502 |         34 |        |       |     |
 | ric    | func_pspeu_092BF718               |      504 |         41 | Yes    |       |     |
-| sword  | func_092E9C38                     |      507 |         52 |        |       |     |
+|        | func_092E9C38                     |      507 |         52 |        |       |     |
 | no4    | EntitySkeletonApe                 |      507 |         90 | Yes    |       |     |
 | maria  | func_pspeu_092B04F8               |      508 |         59 |        |       |     |
 | ric    | func_pspeu_092A8D28               |      508 |         59 |        |       |     |
 | ric    | func_pspeu_092AD730               |      509 |         51 |        |       |     |
-| sword  | func_092EDE58                     |      510 |         35 |        |       |     |
+|        | func_092EDE58                     |      510 |         35 |        |       |     |
 | are    | EntityMessageBox                  |      511 |         41 |        |       |     |
 | cat    | func_pspeu_09248228               |      511 |         41 |        |       |     |
 | chi    | func_psp_09243B50                 |      511 |         41 |        |       |     |
@@ -4144,7 +4144,7 @@
 | lib    | func_psp_0923DCC8                 |      532 |         57 |        |       |     |
 | lib    | func_psp_0925D8D8                 |      534 |         67 | Yes    |       |     |
 | dai    | func_pspeu_0925A688               |      538 |         49 |        |       |     |
-| sword  | func_092ED2A0                     |      539 |         59 |        |       |     |
+|        | func_092ED2A0                     |      539 |         59 |        |       |     |
 | dra    | MainGame                          |      539 |         84 |        |       |     |
 | nz1    | EntityFlailGuardFlail             |      542 |         38 | Yes    |       |     |
 |        | func_092E8260                     |      542 |         56 |        |       |     |
@@ -4274,7 +4274,7 @@
 | dra    | func_psp_090F78C8                 |      723 |        139 |        |       |     |
 | dra    | func_psp_0911EB88                 |      728 |        126 |        |       |     |
 | dra    | func_psp_0913CAC0                 |      729 |         63 |        |       |     |
-|        | UpdateBatAttackMode               |      730 |         65 |        |       |     |
+|        | func_092E9E50                     |      730 |         65 |        |       |     |
 | ric    | func_pspeu_092AB7A8               |      733 |         50 |        |       |     |
 | cat    | func_pspeu_0924EE40               |      733 |         69 | Yes    |       |     |
 | lib    | func_psp_0925E018                 |      733 |        124 |        |       |     |
@@ -4330,7 +4330,7 @@
 | st0    | func_801BC5C0                     |      862 |         92 |        |       |     |
 | st0    | func_801AF774                     |      868 |         52 | Yes    |       |     |
 | no4    | func_pspeu_0923C460               |      870 |        106 | Yes    |       |     |
-| sword  | func_092EBFB0                     |      874 |         53 | Yes    |       |     |
+|        | func_092EBFB0                     |      874 |         53 | Yes    |       |     |
 | lib    | func_us_801AE8E8                  |      883 |         80 |        |       |     |
 | lib    | func_psp_09263810                 |      884 |         74 | Yes    |       |     |
 | st0    | EntityBackgroundVortex            |      890 |        109 |        |       |     |
@@ -4345,10 +4345,10 @@
 | maria  | func_pspeu_092BB808               |      931 |         62 |        |       |     |
 | ric    | func_pspeu_092C4FF8               |      931 |         62 |        |       |     |
 | dra    | func_psp_090E62B8                 |      934 |         73 |        |       |     |
-| sword  | func_092E84B8                     |      936 |        125 |        |       |     |
+|        | func_092E84B8                     |      936 |        125 |        |       |     |
 | maria  | func_pspeu_092BEB40               |      944 |         70 | Yes    |       |     |
 | are    | func_pspeu_0925E2B0               |      945 |        172 |        |       |     |
-|        | UpdateBatBlueTrailEntities        |      963 |         44 |        |       |     |
+|        | func_092EA968                     |      963 |         44 |        |       |     |
 | main   | sce_stub                          |      964 |        191 |        |       |     |
 | lib    | func_psp_09239650                 |      965 |        124 | Yes    |       |     |
 | are    | EntityPrizeDrop                   |      972 |        120 | Yes    |       |     |
@@ -4427,7 +4427,7 @@
 | wrp    | func_psp_0923EAC8                 |     1185 |         87 | Yes    |       |     |
 | dra    | func_psp_09130B00                 |     1188 |         81 |        |       |     |
 | maria  | func_pspeu_092ACC80               |     1197 |        200 | Yes    |       |     |
-|        | UpdateServantDefault              |     1198 |        126 | Yes    |       |     |
+|        | func_092E8D18                     |     1198 |        126 | Yes    |       |     |
 | are    | func_pspeu_0923D440               |     1198 |        195 | Yes    |       |     |
 | lib    | func_psp_0924B568                 |     1202 |        112 | Yes    |       |     |
 | dra    | func_psp_090E31F8                 |     1203 |        134 |        |       |     |
@@ -4469,7 +4469,7 @@
 | no3    | func_pspeu_09252EF8               |     1392 |        193 | Yes    |       |     |
 | st0    | EntityDracula                     |     1396 |        179 | Yes    |       |     |
 | are    | func_pspeu_0923E970               |     1406 |        163 | Yes    |       |     |
-| sword  | func_092EAA58                     |     1431 |        108 | Yes    |       |     |
+|        | func_092EAA58                     |     1431 |        108 | Yes    |       |     |
 | main   | _dtoa_r                           |     1441 |        250 | Yes    |       |     |
 | no2    | func_pspeu_0924F990               |     1457 |        237 | Yes    |       |     |
 | np3    | EntityBlade                       |     1457 |        237 | Yes    |       |     |
