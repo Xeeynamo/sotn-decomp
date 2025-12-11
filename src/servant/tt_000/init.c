@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bat.h"
 
-void ServantInit(InitializeMode mode);
-void UpdateServantDefault(Entity* self);
+void OVL_EXPORT(ServantInit)(InitializeMode mode);
+void OVL_EXPORT(UpdateServantDefault)(Entity* self);
 void UpdateBatAttackMode(Entity* self);
 void unused_339C(Entity* self);
 void unused_33A4(Entity* self);
@@ -16,11 +16,11 @@ void unused_3C0C(Entity* self);
 void unused_3C14(Entity* self);
 void unused_3C1C(Entity* self);
 void unused_3C24(Entity* self);
-void DestroyServantEntity(Entity* self);
+void OVL_EXPORT(DestroyServantEntity)(Entity* self);
 
 ServantDesc bat_ServantDesc = {
-    ServantInit,
-    UpdateServantDefault,
+    OVL_EXPORT(ServantInit),
+    OVL_EXPORT(UpdateServantDefault),
     UpdateBatAttackMode,
     unused_339C,
     unused_33A4,
@@ -34,7 +34,7 @@ ServantDesc bat_ServantDesc = {
     unused_3C14,
     unused_3C1C,
     unused_3C24,
-    DestroyServantEntity,
+    OVL_EXPORT(DestroyServantEntity),
 };
 
 #ifdef VERSION_PSP

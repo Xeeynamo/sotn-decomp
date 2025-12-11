@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sword.h"
 
-void ServantInit(InitializeMode mode);
-void UpdateServantDefault(Entity* self);
+void OVL_EXPORT(ServantInit)(InitializeMode mode);
+void OVL_EXPORT(UpdateServantDefault)(Entity* self);
 void func_us_801746BC(Entity* self);
 void func_us_80174B6C(Entity* self);
 void func_us_801758C8(Entity* self);
@@ -19,8 +19,8 @@ void func_us_80177480(Entity* self);
 void func_us_80177590(Entity* self);
 
 ServantDesc sword_ServantDesc = {
-    .Init = ServantInit,
-    .Update = UpdateServantDefault,
+    OVL_EXPORT(ServantInit),
+    OVL_EXPORT(UpdateServantDefault),
     func_us_801746BC, // active target below level 70
     func_us_80174B6C, // active target above level 70
     func_us_801758C8,

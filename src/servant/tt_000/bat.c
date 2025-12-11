@@ -422,7 +422,7 @@ void SwitchModeInitialize(Entity* self) {
     g_api.GetServantStats(self, 0, 0, &s_BatStats);
 }
 
-void ServantInit(InitializeMode mode) {
+void OVL_EXPORT(ServantInit)(InitializeMode mode) {
     u16* dst;
     u16* src;
     RECT rect;
@@ -504,7 +504,7 @@ void ServantInit(InitializeMode mode) {
     s_IsServantDestroyed = 0;
 }
 
-void UpdateServantDefault(Entity* self) {
+void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
     static s16 s_TargetLocationX;
     STATIC_PAD_BSS(2);
     static s16 s_TargetLocationY;

@@ -224,7 +224,7 @@ Entity* CreateChildEntity(Entity* parent, s32 entityType) {
     return entity;
 }
 
-void ServantInit(InitializeMode mode) {
+void OVL_EXPORT(ServantInit)(InitializeMode mode) {
     RECT rect;
     u16* dst;
     u16* src;
@@ -307,7 +307,7 @@ void ServantInit(InitializeMode mode) {
     }
 }
 
-void UpdateServantDefault(Entity* self) {
+void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
     static s16 targetX;
     STATIC_PAD_BSS(2);
     static s16 targetY;
@@ -464,7 +464,7 @@ void UpdateServantDefault(Entity* self) {
                 self->ext.ghost.attackEntity->entityId ==
                     ENTITY_ID_ATTACK_CLOUD) {
                 self->ext.ghost.attackEntity->params = 1;
-                // this is calling UpdateAttackEntites
+                // this is calling UpdateAttackEntities
                 ghost_ServantDesc.Unk28(self->ext.ghost.attackEntity);
             }
         }
@@ -482,7 +482,7 @@ void UpdateServantDefault(Entity* self) {
                 self->ext.ghost.confusedEntity->entityId ==
                     ENTITY_ID_CONFUSION) {
                 self->ext.ghost.confusedEntity->params = 1;
-                // this is calling UpdateConfusedEntites
+                // this is calling UpdateConfusedEntities
                 ghost_ServantDesc.Unk2C(self->ext.ghost.confusedEntity);
             }
             self->step = 1;
@@ -598,7 +598,7 @@ void unused_20D4(void) {}
 void unused_20DC(void) {}
 
 // This creates and handles the updates for the attack cloud
-void UpdateAttackEntites(Entity* self) {
+void UpdateAttackEntities(Entity* self) {
     static s32 i;
     static s32 angle;
     static s32 x;
@@ -677,7 +677,7 @@ void UpdateAttackEntites(Entity* self) {
 // This creates and handles the updates for the question marks
 // that appear above Ghost when you turn into a bat while
 // Ghost is summoned.
-void UpdateConfusedEntites(Entity* self) {
+void UpdateConfusedEntities(Entity* self) {
     static Primitive* prim;
     static s32 i;
     static s32 frameCounter;
@@ -778,7 +778,15 @@ void unused_28F4(void) {}
 void unused_28FC(void) {}
 
 #include "../shared_events.h"
-#include "../shared_globals.h"
+
+// #include "../shared_globals.h"
+static s32 g_PlaySfxStep = 99;
+static s16 g_EntityRanges[] = {5, 7, 32, 63};
+static ServantEvent* g_EventQueue = g_Events;
+static u32 g_CurrentServant = 0;
+static s32 g_CurrentRoomX = 0;
+static s32 g_CurrentRoomY = 0;
+
 #include "../destroy_servant_entity.h"
 #include "../servant_update_anim.h"
 #include "../../destroy_entity.h"

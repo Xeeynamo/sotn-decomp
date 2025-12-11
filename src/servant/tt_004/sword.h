@@ -2,6 +2,8 @@
 #define NO_SERVANT_CLUT
 #include <servant.h>
 
+#define OVL_EXPORT(x) TT_004_##x
+
 typedef enum {
     SWORD_DEFAULT = ENTITY_ID_SERVANT,
     SWORD_CIRCLE_ATTACK,
