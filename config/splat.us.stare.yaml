@@ -46,6 +46,7 @@ segments:
       - [0xD04, .data, e_red_door_tiles]
       - [0xD24, .data, e_lock_camera]
       - [0xDA4, data]
+      - [0xF2C, .data, e_secrets]
       - [0xF3C, .data, e_background_door_rubble]
       - [0xF7C, .data, e_explosion_puff_opaque]
       - [0xFE8, data] # prize_drops
@@ -104,7 +105,7 @@ segments:
       - [0x368B4, c, e_cavern_door]
       - [0x37B40, c, e_heartroom]
       - [0x37C7C, c, e_fountain_water]
-      - [0x37E7C, c, unk_37E7C]
+      - [0x37E7C, c, e_secrets]
       - [0x380C0, c, e_background_door_rubble]
       - [0x38278, c, e_explosion_puff_opaque]
       - [0x386D4, c, st_update]

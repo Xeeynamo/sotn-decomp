@@ -57,7 +57,7 @@ enum Entities {
     E_HEART_ROOM_SWITCH,            // EntityHeartRoomSwitch
     E_UNK_1C,                       // func_us_801B7998
     E_UNK_1D,                       // EntityFountainWater
-    E_UNK_1E,                       // func_us_801B7E7C
+    E_BREAKABLE_CEILING_SECRET,     // EntityBreakableCeilingSecret
     E_BACKGROUND_DOOR_RUBBLE,       // EntityBackgroundDoorRubble
     E_EXPLODE_PUFF_OPAQUE,          // EntityExplosionPuffOpaque
     E_BREAKABLE_DEBRIS,             // OVL_EXPORT(EntityBreakableDebris)

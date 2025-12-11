@@ -10,7 +10,6 @@ func_us_801B6420 = 0x09239C40;
 DoorCascadePhysics = 0x0923A800;
 EntityBridgeBackgroundPiece = 0x0923AA20;
 func_us_801B6DF0 = 0x0923AE60;
-func_us_801B7E7C = 0x0923B2C0;
 CreateEntityFromCurrentEntity = 0x0923C458;
 CreateEntityFromEntity = 0x0923C4E0;
 Random = 0x09242438;
