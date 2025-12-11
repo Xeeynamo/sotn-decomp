@@ -785,6 +785,8 @@ typedef struct {
     /* 0x86 */ s16 : 16;
     /* 0x88 */ u8 puffStyle;
     /* 0x89 */ u8 speed;
+    /* 0x8A */ u16 : 16;
+    /* 0x8C */ s32 unk8C;
 } ET_ExplosionPuffOpaque;
 
 typedef struct ET_CastleDoor {

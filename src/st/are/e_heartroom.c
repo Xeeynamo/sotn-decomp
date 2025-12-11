@@ -8,7 +8,3 @@ INCLUDE_ASM("st/are/nonmatchings/e_heartroom", func_us_801B7C7C);
 INCLUDE_ASM("st/are/nonmatchings/e_heartroom", func_us_801B7E7C);
 
 INCLUDE_ASM("st/are/nonmatchings/e_heartroom", func_us_801B80C0);
-
-INCLUDE_ASM("st/are/nonmatchings/e_heartroom", CreateExplosionPuff);
-
-INCLUDE_ASM("st/are/nonmatchings/e_heartroom", EntityExplosionPuffOpaque);

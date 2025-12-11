@@ -84,7 +84,7 @@ typedef enum EntityIDs {
 #define BOSS_FLAG_GAIBON_DEAD (1 << 3)
 #define BOSS_FLAG_SLOGRA_DEAD (1 << 4)
 
-#define E_PUFF_OPAQUE_PALETTE_OFFSET 0x2E0
+#define PAL_PUFF_OPAQUE_OFFSET 0x2E0
 
 void DestroyEntity(Entity* item);
 void func_8019B858(void);

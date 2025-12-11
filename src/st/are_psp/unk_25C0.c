@@ -2,5 +2,3 @@
 #include "../are/are.h"
 
 INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_25C0", func_us_801B6420);
-
-INCLUDE_ASM("st/are_psp/nonmatchings/are_psp/unk_25C0", EntityExplosionPuffOpaque);

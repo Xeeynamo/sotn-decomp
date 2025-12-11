@@ -46,6 +46,8 @@ segments:
       - [0xDA0, .data, e_lock_camera]
       - [0xDC8, .data, e_breakable]
       - [0xEDC, data]
+      - [0xF44, .data, e_explosion_puff_opaque]
+      - [0xFB0, data]
       - [0x1100, .data, e_spikes]
       - [0x111C, data]
       - [0x1318, .data, st_update]

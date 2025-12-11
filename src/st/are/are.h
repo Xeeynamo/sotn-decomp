@@ -14,6 +14,12 @@ enum Palettes {
     PAL_PLATE_LORD_UNK1 = 0x226,
     PAL_PLATE_LORD_UNK2 = 0x227,
     PAL_PLATE_LORD_UNK3 = 0x228,
+    // puff params 0,1
+    PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
+    // puff params 2 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 3)
+    PAL_PUFF_OPAQUE_2 = 0x2E3,
+    // puff params 3 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 4)
+    PAL_PUFF_OPAQUE_3 = 0x2E4
 };
 
 enum Entities {
@@ -49,7 +55,7 @@ enum Entities {
     E_UNK_1D,                       // func_us_801B7C7C
     E_UNK_1E,                       // func_us_801B7E7C
     E_UNK_1F,                       // func_us_801B80C0
-    E_EXPLOSION_PUFF_OPAQUE,        // EntityExplosionPuffOpaque
+    E_EXPLODE_PUFF_OPAQUE,          // EntityExplosionPuffOpaque
     E_BREAKABLE_DEBRIS,             // OVL_EXPORT(EntityBreakableDebris)
     E_BLADE_MASTER,                 // EntityBladeMaster
     E_BLADE_MASTER_ATTACK_HITBOX,   // EntityBladeMasterAttackHitbox
