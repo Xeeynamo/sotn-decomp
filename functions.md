@@ -3305,7 +3305,7 @@
 |        | func_092E92C0                     |      159 |         25 |        |       |     |
 | dra    | LoadSaveData                      |      160 |         10 |        |       |     |
 | ric    | func_pspeu_092CDF18               |      160 |         11 |        |       |     |
-| are    | func_us_801B80C0                  |      160 |         12 |        |       |     |
+| are    | func_pspeu_092385C8               |      160 |         12 |        |       |     |
 | sel    | func_psp_092426D8                 |      160 |         25 |        |       |     |
 | ric    | func_pspeu_092AFB68               |      160 |         30 |        |       |     |
 | maria  | func_pspeu_092B5F18               |      161 |          5 |        |       |     |
@@ -3354,7 +3354,7 @@
 | no2    | func_pspeu_0924E4A8               |      169 |          7 |        |       |     |
 | np3    | func_pspeu_09262108               |      169 |          7 |        |       |     |
 | main   | quorem                            |      169 |         10 |        |       |     |
-| are    | func_us_801B7C7C                  |      169 |         11 |        |       |     |
+| are    | func_pspeu_09238820               |      169 |         11 |        |       |     |
 | dra    | func_psp_090F2B20                 |      169 |         15 |        |       |     |
 | maria  | func_pspeu_092B1930               |      169 |         26 |        |       |     |
 | dra    | func_psp_0911E800                 |      170 |         17 |        |       |     |
@@ -3533,7 +3533,7 @@
 | st0    | func_pspeu_09238BF8               |      212 |         14 |        |       |     |
 | lib    | func_psp_092670F8                 |      213 |         19 |        |       |     |
 | no4    | func_pspeu_09241B28               |      213 |         25 |        |       |     |
-| are    | func_us_801B7E7C                  |      213 |         30 |        |       |     |
+| are    | func_pspeu_0923B2C0               |      213 |         30 |        |       |     |
 | sel    | func_psp_09244060                 |      214 |         26 | Yes    |       |     |
 | dra    | func_psp_0911D180                 |      215 |         28 |        |       |     |
 | dra    | func_psp_09110B78                 |      215 |         32 |        |       |     |
