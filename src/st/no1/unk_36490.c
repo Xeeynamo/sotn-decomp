@@ -77,7 +77,7 @@ void func_us_801B6490(Entity* self) {
     }
     animParams = &D_us_80180EF8[D_us_80180EEC];
     if (self->step == 0) {
-        InitializeEntity(D_us_8018095C);
+        InitializeEntity(g_EInitSpawner);
         D_us_80180EEC = g_CastleFlags[NO1_WEATHER] & 0x7F;
         g_CastleFlags[NO1_WEATHER] |= 0x80;
         animParams = &D_us_80180EF8[D_us_80180EEC];
@@ -454,7 +454,7 @@ void func_us_801B7188(Entity* self) {
         lenScale = D_us_80180E9C[t];
         speed = 0x30;
         if (self->step == 0) {
-            InitializeEntity(D_us_8018095C);
+            InitializeEntity(g_EInitSpawner);
             if (D_us_80180EEC == 0) {
                 g_api.PlaySfx(SFX_RAIN_LOOP);
                 self->primIndex = g_api.func_800EDB58(PRIM_LINE_G2_ALT, 0x80);
