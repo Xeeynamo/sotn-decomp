@@ -563,8 +563,8 @@
 | main   | time                              |       19 |          2 |        |       |     |
 | are    | func_pspeu_09259478               |       19 |          2 |        |       |     |
 | lib    | func_psp_0924CF30                 |       19 |          2 |        |       |     |
+| nz1    | func_pspeu_09249C58               |       19 |          2 |        |       |     |
 | nz1    | UpdateFacingDirection             |       19 |          2 |        |       |     |
-| nz1    | EntityMedusaHeadYellow            |       19 |          2 |        |       |     |
 | sel    | func_psp_0923F498                 |       19 |          2 |        |       |     |
 | dra    | func_psp_090EDB70                 |       19 |          3 |        |       |     |
 | main   | RotAverageNclip3                  |       19 |          3 |        |       |     |
@@ -3283,7 +3283,7 @@
 | dra    | func_psp_091355A0                 |      155 |         14 |        |       |     |
 | no3    | func_pspeu_0923F0F0               |      155 |         16 |        |       |     |
 | dai    | func_pspeu_0924A3D8               |      155 |         17 |        |       |     |
-| nz1    | EntityMedusaHeadSpawner           |      156 |         20 |        |       |     |
+| nz1    | func_pspeu_09249A18               |      156 |         20 |        |       |     |
 | main   | func_psp_08933C30                 |      156 |         22 | Yes    |       |     |
 | dra    | func_psp_091396C8                 |      156 |         26 |        |       |     |
 | dra    | func_psp_0911DCF0                 |      157 |         18 |        |       |     |
@@ -3390,7 +3390,7 @@
 | lib    | func_psp_09238C38                 |      177 |         20 |        |       |     |
 | no2    | func_pspeu_09239898               |      177 |         20 |        |       |     |
 | np3    | EntityBloodDrips                  |      177 |         20 |        |       |     |
-| nz1    | EntityMedusaHeadBlue              |      177 |         24 |        |       |     |
+| nz1    | func_pspeu_09249C90               |      177 |         24 |        |       |     |
 | dra    | func_psp_090E4968                 |      178 |          3 |        |       |     |
 | lib    | func_psp_0923DA30                 |      178 |         16 |        |       |     |
 | no2    | func_pspeu_0925C0F8               |      178 |         21 |        |       |     |
