@@ -90,7 +90,7 @@ typedef enum EntityIDs {
 extern EInit OVL_EXPORT(EInitBreakable);
 // extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
-extern EInit D_us_8018095C;
+extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 // extern EInit D_us_80180974;
 // extern EInit D_us_80180980;
@@ -126,5 +126,3 @@ extern EInit D_us_80180B18;
 extern EInit g_EInitSkeletonApe;
 extern EInit g_EInitSkeletonApeBarrel;
 extern EInit g_EInitSkeletonApePunch;
-extern EInit g_EInitMedusaHeadBlue;
-extern EInit g_EInitMedusaHeadYellow;

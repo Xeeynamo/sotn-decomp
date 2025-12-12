@@ -6,6 +6,10 @@
 // to reach when playing the game, but can be triggered by poking the proper
 // location in RAM to trigger the entity's state machine.
 
+#ifndef BUTTON_SYMBOL
+#define BUTTON_SYMBOL PAD_CIRCLE
+#endif
+
 /**
  * Debug: Press SQUARE / CIRCLE on the second controller
  * to advance/rewind current animation frame
@@ -20,11 +24,7 @@ if (g_pads[1].pressed & PAD_SQUARE) {
 } else {
     self->params = 0;
 }
-#ifdef BUTTON_SYMBOL
 if (g_pads[1].pressed & BUTTON_SYMBOL) {
-#else
-if (g_pads[1].pressed & PAD_CIRCLE) {
-#endif
     if (self->step_s) {
         break;
     }

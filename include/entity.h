@@ -3695,6 +3695,30 @@ typedef struct {
     /* 0x85 */ u8 nextAttack;
 } ET_Paranthropus;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 cooldownTimer;
+    /* 0x82 */ s16 timer2;
+    /* 0x84 */ u8 collision;
+    /* 0x85 */ u32 : 24;
+    /* 8x88 */ u32 : 32;
+    /* 0x8C */ s16 offsetX;
+    /* 0x8E */ s16 offsetY;
+} ET_GearPuzzle;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u8 collision;
+    /* 0x85 */ u32 : 24;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ s16 offsetX;
+    /* 0x8E */ s16 offsetY;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ s16 chainAngle;
+    /* 0x98 */ s16 weightAngle;
+} ET_Pendulum;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4014,6 +4038,8 @@ typedef union { // offset=0x7C
     ET_BladeMaster bladeMaster;
     ET_BladeSoldier bladeSoldier;
     ET_Paranthropus paranthropus;
+    ET_GearPuzzle gearPuzzle;
+    ET_Pendulum pendulum;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
