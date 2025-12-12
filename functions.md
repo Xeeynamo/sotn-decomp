@@ -2543,7 +2543,7 @@
 | lib    | func_psp_0924CE08                 |       83 |          7 |        |       |     |
 | no3    | func_pspeu_09239D40               |       83 |          7 |        |       |     |
 | nz1    | CheckFieldCollisionY              |       83 |          7 |        |       |     |
-| nz1    | EntityPendulumBoneChain           |       83 |          8 |        |       |     |
+| nz1    | func_pspeu_09258BB8               |       83 |          8 |        |       |     |
 | dra    | func_psp_090E8760                 |       83 |         11 |        |       |     |
 | dra    | func_psp_091142B0                 |       83 |         14 |        |       |     |
 | dra    | func_psp_09136BF8                 |       83 |         14 |        |       |     |
@@ -2565,7 +2565,7 @@
 | np3    | func_pspeu_09262658               |       85 |          7 |        |       |     |
 | dra    | func_psp_090E83E8                 |       85 |         12 |        |       |     |
 | main   | func_psp_08935808                 |       85 |         12 |        |       |     |
-| nz1    | EntityGearHorizontal              |       85 |         12 |        |       |     |
+| nz1    | func_pspeu_0925AEA8               |       85 |         12 |        |       |     |
 | sel    | func_psp_0923B908                 |       85 |         13 |        |       |     |
 | main   | _setmodreent                      |       85 |         15 |        |       |     |
 | ric    | pl_blueprints.rodata              |       86 |          0 | Yes    |       |     |
@@ -2875,7 +2875,7 @@
 | st0    | func_pspeu_092378A0               |      103 |         13 |        |       |     |
 | dra    | 8D3E8.rodata                      |      104 |          0 | Yes    |       |     |
 | dra    | func_psp_09143248                 |      104 |          3 |        |       |     |
-| nz1    | BreakBridge                       |      104 |          4 |        |       |     |
+| nz1    | func_pspeu_09253E68               |      104 |          4 |        |       |     |
 | are    | func_pspeu_09253668               |      104 |          5 |        |       |     |
 | dai    | func_pspeu_092429E8               |      104 |          5 |        |       |     |
 | lib    | func_psp_09247D68                 |      104 |          5 |        |       |     |
@@ -3090,7 +3090,7 @@
 | maria  | func_pspeu_092B5D68               |      121 |         11 |        |       |     |
 | ric    | func_pspeu_092BE888               |      121 |         11 |        |       |     |
 | dra    | func_psp_090DCA00                 |      121 |         13 |        |       |     |
-| nz1    | EntityPendulumAnchor              |      121 |         13 |        |       |     |
+| nz1    | func_pspeu_09258A00               |      121 |         13 |        |       |     |
 | dai    | func_pspeu_0924A6E8               |      121 |         15 |        |       |     |
 | main   | func_psp_089264CC                 |      121 |         16 |        |       |     |
 | main   | func_psp_0892D674                 |      121 |         16 |        |       |     |
@@ -3378,13 +3378,13 @@
 | dra    | func_psp_09140960                 |      175 |          6 |        |       |     |
 | dre    | func_pspeu_0924D300               |      175 |          6 |        |       |     |
 | no2    | func_pspeu_09259AA8               |      175 |          6 |        |       |     |
-| nz1    | EntityPendulumWeight              |      175 |         10 |        |       |     |
+| nz1    | func_pspeu_09258CE0               |      175 |         10 |        |       |     |
 | cat    | func_pspeu_09262528               |      175 |         17 |        |       |     |
 | dai    | func_pspeu_09258590               |      175 |         17 |        |       |     |
 | dra    | func_psp_090EB5E0                 |      176 |         11 |        |       |     |
 | no3    | func_pspeu_09254348               |      176 |         24 |        |       |     |
 | main   | func_psp_08910D44                 |      177 |          9 |        |       |     |
-| nz1    | EntityWallGear                    |      177 |         15 |        |       |     |
+| nz1    | func_pspeu_0925AFD8               |      177 |         15 |        |       |     |
 | no3    | func_pspeu_0924F368               |      177 |         19 |        |       |     |
 | np3    | EntityMermanFireSpit              |      177 |         19 |        |       |     |
 | lib    | func_psp_09238C38                 |      177 |         20 |        |       |     |
@@ -3498,14 +3498,14 @@
 | lib    | func_psp_09256E08                 |      203 |         16 |        |       |     |
 | ric    | func_pspeu_092C2BA0               |      203 |         27 |        |       |     |
 | maria  | func_pspeu_092AE1C0               |      203 |         44 |        |       |     |
-| nz1    | EntityGearVertical                |      204 |         20 |        |       |     |
+| nz1    | func_pspeu_0925BD80               |      204 |         20 |        |       |     |
 | dra    | func_psp_09108E48                 |      204 |         31 |        |       |     |
 | dra    | func_psp_090EF490                 |      205 |         22 |        |       |     |
 | main   | func_psp_08915C70                 |      205 |         26 |        |       |     |
 | sel    | func_psp_09241C50                 |      206 |          3 |        |       |     |
 | cat    | func_pspeu_092427C8               |      206 |         20 |        |       |     |
 | dra    | func_psp_0911B928                 |      206 |         24 |        |       |     |
-| nz1    | EntityGearSidewaysLarge           |      207 |         18 |        |       |     |
+| nz1    | func_pspeu_0925B628               |      207 |         18 |        |       |     |
 | no2    | func_pspeu_09257810               |      208 |         20 |        |       |     |
 | dra    | func_psp_09142110                 |      208 |         24 |        |       |     |
 | maria  | func_pspeu_092ADDC0               |      208 |         28 |        |       |     |
@@ -3680,7 +3680,7 @@
 |        | func_092E7870                     |      259 |         13 |        |       |     |
 | main   | func_psp_0891C204                 |      259 |         30 |        |       |     |
 | dai    | func_pspeu_092526B8               |      260 |         36 |        |       |     |
-| nz1    | EntitySecretAreaDoor              |      260 |         39 |        |       |     |
+| nz1    | func_pspeu_0925B268               |      260 |         39 |        |       |     |
 | no4    | func_pspeu_09240CD0               |      261 |         21 |        |       |     |
 | maria  | func_pspeu_092B28B0               |      261 |         51 |        |       |     |
 | cat    | func_pspeu_0924FC98               |      262 |         20 |        |       |     |
@@ -3767,7 +3767,7 @@
 | no3    | func_pspeu_0923BCE0               |      288 |         30 |        |       |     |
 | np3    | EntityMermanRockRightSide         |      288 |         30 |        |       |     |
 | lib    | func_psp_09238EC8                 |      290 |         42 |        |       |     |
-| nz1    | EntityGearSidewaysSmall           |      291 |         26 |        |       |     |
+| nz1    | func_pspeu_0925B930               |      291 |         26 |        |       |     |
 | dra    | func_psp_090F4B90                 |      292 |         59 |        |       |     |
 | main   | main                              |      292 |         75 |        |       |     |
 |        | func_092EBA98                     |      293 |         42 |        |       |     |
@@ -4104,7 +4104,7 @@
 | dra    | func_psp_09117C00                 |      499 |        105 |        |       |     |
 | maria  | func_pspeu_092A8AE8               |      500 |         44 |        |       |     |
 | maria  | func_pspeu_092A6E50               |      501 |         49 | Yes    |       |     |
-| nz1    | EntityBridgeBreakTrigger          |      501 |         53 | Yes    |       |     |
+| nz1    | func_pspeu_09253FE8               |      501 |         53 | Yes    |       |     |
 | no3    | func_pspeu_09240B70               |      502 |         28 | Yes    |       |     |
 | main   | func_psp_08929860                 |      502 |         34 |        |       |     |
 | ric    | func_pspeu_092BF718               |      504 |         41 | Yes    |       |     |
