@@ -3,6 +3,8 @@
 #include <servant.h>
 #include <sfx.h>
 
+#define OVL_EXPORT(x) TT_002_##x
+
 typedef enum {
     FAERIE_MODE_DEFAULT_UPDATE = ENTITY_ID_SERVANT,
     FAERIE_MODE_USE_LIFE_APPLE,
@@ -67,3 +69,4 @@ typedef struct {
 extern SpriteParts* g_FaerieSpriteParts[];
 extern s32* g_FaerieIntroRandomizer[];
 extern s32* g_SfxEventRandomizer[];
+extern s32 g_PlaySfxStep;

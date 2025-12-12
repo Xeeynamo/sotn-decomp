@@ -2,6 +2,8 @@
 #define NO_SERVANT_CLUT
 #include <servant.h>
 
+#define OVL_EXPORT(x) TT_004_##x
+
 typedef enum {
     SWORD_DEFAULT = ENTITY_ID_SERVANT,
     SWORD_CIRCLE_ATTACK,
@@ -27,3 +29,4 @@ typedef struct {
 } SwordUnk_A0;
 
 extern u16 g_ServantClut[16];
+extern s32 g_PlaySfxStep;

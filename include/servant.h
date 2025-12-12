@@ -73,9 +73,6 @@ extern SpriteParts* g_ServantSpriteParts[];
 extern u16 g_ServantClut[48];
 #endif
 
-extern s32 g_PlaySfxStep;
-extern s16 g_EntityRanges[];
-
 void DestroyEntity(Entity* entity);
 extern ServantDesc g_ServantDesc;
 

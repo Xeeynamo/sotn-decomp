@@ -100,8 +100,8 @@ extern u16 D_us_80171D10[];
 
 extern void (*g_AttackFunctions[])(Entity*);
 
-static void ServantInit(InitializeMode);
-static void UpdateServantDefault(Entity*);
+static void OVL_EXPORT(ServantInit)(InitializeMode);
+static void OVL_EXPORT(UpdateServantDefault)(Entity*);
 static void UpdateServantBasicAttack(Entity*);
 static void UpdateServantSpecialAttack(Entity*);
 static void unused_5800(Entity*);
@@ -118,8 +118,8 @@ static void func_us_801771B0(Entity*);
 static void func_us_80177690(Entity*);
 
 ServantDesc demon_ServantDesc = {
-    ServantInit,
-    UpdateServantDefault,
+    OVL_EXPORT(ServantInit),
+    OVL_EXPORT(UpdateServantDefault),
     UpdateServantBasicAttack,
     UpdateServantSpecialAttack,
     unused_5800,
@@ -690,7 +690,7 @@ void func_us_80173D14(Entity* self) {
         posY + (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
 }
 
-void ServantInit(InitializeMode mode) {
+void OVL_EXPORT(ServantInit)(InitializeMode mode) {
     u16* src;
     u16* dst;
     RECT rect;
@@ -780,7 +780,7 @@ void ServantInit(InitializeMode mode) {
     g_api.GetServantStats(entity, 0, 0, &s_DemonStats);
 }
 
-void UpdateServantDefault(Entity* self) {
+void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
     s32 temp;
     s32 i;
     s32 rnd;

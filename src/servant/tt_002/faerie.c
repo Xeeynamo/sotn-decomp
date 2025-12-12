@@ -54,8 +54,8 @@ extern AnimationFrame* g_FaerieAnimationFrames[];
 void unused_39C8(Entity*);
 void CheckForValidAbility(Entity*);
 
-static void ServantInit(InitializeMode mode);
-static void UpdateServantDefault(Entity* self);
+static void OVL_EXPORT(ServantInit)(InitializeMode mode);
+static void OVL_EXPORT(UpdateServantDefault)(Entity* self);
 static void UpdateServantUseLifeApple(Entity* self);
 static void UpdateServantUseHammer(Entity* self);
 static void UpdateServantUseUncurse(Entity* self);
@@ -72,22 +72,14 @@ static void UpdateServantSfxPassthrough(Entity* self);
 static void UpdateSubEntityUseItem(Entity* self);
 
 ServantDesc faerie_ServantDesc = {
-    ServantInit,
-    UpdateServantDefault,
-    UpdateServantUseLifeApple,
-    UpdateServantUseHammer,
-    UpdateServantUseUncurse,
-    UpdateServantUseAntivenom,
-    UpdateServantUseElementalResist,
-    UpdateServantUsePotion,
-    UpdateServantAdditionalInit,
-    UpdateSubEntityWings,
-    UpdateServantSitOnShoulder,
-    UpdateServantOfferHint,
-    UpdateEntitySetRoomSpecialState,
-    UpdateSubEntityUseLifeApple,
-    UpdateServantSfxPassthrough,
-    UpdateSubEntityUseItem};
+    OVL_EXPORT(ServantInit),         OVL_EXPORT(UpdateServantDefault),
+    UpdateServantUseLifeApple,       UpdateServantUseHammer,
+    UpdateServantUseUncurse,         UpdateServantUseAntivenom,
+    UpdateServantUseElementalResist, UpdateServantUsePotion,
+    UpdateServantAdditionalInit,     UpdateSubEntityWings,
+    UpdateServantSitOnShoulder,      UpdateServantOfferHint,
+    UpdateEntitySetRoomSpecialState, UpdateSubEntityUseLifeApple,
+    UpdateServantSfxPassthrough,     UpdateSubEntityUseItem};
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_FaerieAnimationFrames[animationIndex]) {
@@ -457,7 +449,7 @@ void CheckForValidAbility(Entity* self) {
     }
 }
 
-void ServantInit(InitializeMode mode) {
+void OVL_EXPORT(ServantInit)(InitializeMode mode) {
     u16* src;
     u16* dst;
     RECT rect;
@@ -559,7 +551,7 @@ void ServantInit(InitializeMode mode) {
     g_api.GetServantStats(entity, 0, 0, &s_FaerieStats);
 }
 
-void UpdateServantDefault(Entity* self) {
+void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
     g_api.GetServantStats(self, 0, 0, &s_FaerieStats);
 
     if (D_us_80179320) {

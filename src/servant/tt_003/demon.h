@@ -5,6 +5,8 @@
 #include <servant.h>
 #include <sfx.h>
 
+#define OVL_EXPORT(x) TT_003_##x
+
 typedef enum {
     DEMON_MODE_DEFAULT_UPDATE = ENTITY_ID_SERVANT,
     DEMON_MODE_BASIC_ATTACK,
@@ -34,5 +36,7 @@ typedef struct {
     s32 sfxIndex;
     s32 abilityId;
 } DemonAttackInfo;
+
+extern s32 g_PlaySfxStep;
 
 #endif
