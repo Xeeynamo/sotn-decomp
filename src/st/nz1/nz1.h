@@ -124,4 +124,12 @@ enum OVL_EXPORT(Entities) {
     NUM_ENTITIES,
 };
 
+#ifdef VERSION_PSP
+extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
+extern s32 E_ID(PENDULUM_BONE_CHAIN);
+extern s32 E_ID(PENDULUM_WEIGHT);
+#endif
+
+extern EInit g_EInitEnvironment;
+
 #endif // NZ1_H
