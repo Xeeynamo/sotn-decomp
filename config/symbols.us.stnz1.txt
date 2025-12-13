@@ -15,7 +15,6 @@ entityLockCameraData = 0x80180DA4;
 entityLockCameraTilemapProps = 0x80180DA8;
 NZ1_PrizeDrops = 0x8018111C;
 g_HarpyFlameAnim = 0x80181F74;
-medusaHeadSpawnerParams = 0x801822C4;
 NZ1_rooms = 0x8018233C;
 PlayerIsWithinHitbox = 0x801A5E18;
 NZ1_EntityLockCamera = 0x801A5E9C; // source=match
@@ -96,9 +95,6 @@ EntityFlailGuardFlail = 0x801BF104;
 CheckFieldCollisionY = 0x801BFD64; // source=match
 UpdateFacingDirection = 0x801BFE6C; // source=match
 EntityFleaMan = 0x801BFEA0; // source=match
-EntityMedusaHeadSpawner = 0x801C01C8; // source=match
-EntityMedusaHeadYellow = 0x801C0394; // source=match
-EntityMedusaHeadBlue = 0x801C03B8; // source=match
 UnkPrimHelper = 0x801C059C; // source=match
 UnkPolyFunc2 = 0x801C0CE8; // source=match
 PrimDecreaseBrightness = 0x801C0D68; // source=match

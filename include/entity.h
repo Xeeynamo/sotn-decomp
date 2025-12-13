@@ -2083,6 +2083,13 @@ typedef struct {
 } ET_TOP_Elevator;
 
 typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 elevatorPosition;
+} ET_ARE_Elevator;
+
+typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s16 timer;
 } ET_BloodSkeleton;
@@ -3876,6 +3883,7 @@ typedef union { // offset=0x7C
     ET_Unused_MAD_ST0 unusedMadST0;
     ET_CEN_Elevator cenElevator;
     ET_TOP_Elevator topElevator;
+    ET_ARE_Elevator areElevator;
     ET_BloodSkeleton bloodSkeleton;
     ET_SmallRisingHeart smallRisingHeart;
     ET_EntranceUnk16 entrance16;
