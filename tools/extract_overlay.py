@@ -35,6 +35,7 @@ Additional notes:
     For example: A segment with the only function being EntityShuttingWindow would be named as e_shutting_window
 """
 
+
 def build(targets=[], plan=True, dynamic_syms=False, build=True, version="us"):
     logger = sotn_utils.get_logger()
     cmds = {}
@@ -49,13 +50,17 @@ def build(targets=[], plan=True, dynamic_syms=False, build=True, version="us"):
         Path(f"build/{version}/").mkdir(parents=True, exist_ok=True)
         cmds[f"python3 tools/builds/gen.py build/{version}/build.ninja"] = ""
     if build:
-        ret_key = f"ninja -f build/{version}/build.ninja {' '.join(f"{x}" for x in targets)}"
+        ret_key = (
+            f"ninja -f build/{version}/build.ninja {' '.join(f"{x}" for x in targets)}"
+        )
         cmds[ret_key] = ""
-    
+
     for cmd in cmds:
         cmds[cmd] = run(cmd.split(), env=env, capture_output=True, text=True)
         if cmds[cmd].returncode != 0:
-            logger.error(f"Command '{cmd}' returned non-zero exit status {cmds[cmd].returncode}")
+            logger.error(
+                f"Command '{cmd}' returned non-zero exit status {cmds[cmd].returncode}"
+            )
             if cmds[cmd].stdout:
                 logger.warning(cmds[cmd].stdout.rstrip("\n"))
             if cmds[cmd].stderr:
@@ -64,6 +69,7 @@ def build(targets=[], plan=True, dynamic_syms=False, build=True, version="us"):
 
     if ret_key:
         return cmds[ret_key]
+
 
 def add_undefined_symbol(version, symbol, address):
     symbol_line = f"{symbol} = 0x{address:08X};"
@@ -74,10 +80,13 @@ def add_undefined_symbol(version, symbol, address):
         undefined_syms.write_text("\n".join(undefined_syms_lines) + "\n")
         sort(undefined_syms)
 
+
 def ovl_sort(name):
     game = "dra ric maria "
     stage = "are cat cen chi dai dre lib mad no0 no1 no2 no3 no4 np3 nz0 nz1 sel st0 top wrp "
-    rstage ="rare rcat rcen rchi rdai rlib rno0 rno1 rno2 rno3 rno4 rnz0 rnz1 rtop rwrp "
+    rstage = (
+        "rare rcat rcen rchi rdai rlib rno0 rno1 rno2 rno3 rno4 rnz0 rnz1 rtop rwrp "
+    )
     boss = "bo0 bo1 bo2 bo3 bo4 bo5 bo6 bo7 mar rbo0 rbo1 rbo2 rbo3 rbo4 rbo5 rbo6 rbo7 rbo8 "
     servant = "tt_000 tt_001 tt_002 tt_003 tt_004 tt_005 tt_006 "
 
@@ -104,11 +113,14 @@ def ovl_sort(name):
 
     return (group, basename, name.startswith("f_"))
 
+
 def add_sha1_hashes(ovl_config):
     check_file_path = Path(f"config/check.{ovl_config.version}.sha")
     check_file_lines = check_file_path.read_text().splitlines()
     new_lines = check_file_lines.copy()
-    bin_line = f"{ovl_config.sha1}  build/{ovl_config.version}/{ovl_config.target_path.name}"
+    bin_line = (
+        f"{ovl_config.sha1}  build/{ovl_config.version}/{ovl_config.target_path.name}"
+    )
     if bin_line not in new_lines:
         new_lines.append(bin_line)
     fbin_path = ovl_config.target_path.with_name(
@@ -123,14 +135,19 @@ def add_sha1_hashes(ovl_config):
         sorted_lines = sorted(new_lines, key=lambda x: ovl_sort(x.split()[-1]))
         check_file_path.write_text(f"{"\n".join(sorted_lines)}\n")
 
+
 def create_initial_files(ovl_config, spinner=SimpleNamespace(message="")):
-    spinner.message=f"creating initial files for overlay {ovl_config.name.upper()}"
+    spinner.message = f"creating initial files for overlay {ovl_config.name.upper()}"
     ovl_config.write_config()
     for symbol_path in ovl_config.symbol_addrs_path:
         symbol_path.touch(exist_ok=True)
 
-    ovl_include_path = ovl_config.src_path_full.parent / ovl_config.name / f"{ovl_config.name}.h"
-    sotn_utils.create_ovl_include(None, ovl_config.name, ovl_config.ovl_type, ovl_include_path)
+    ovl_include_path = (
+        ovl_config.src_path_full.parent / ovl_config.name / f"{ovl_config.name}.h"
+    )
+    sotn_utils.create_ovl_include(
+        None, ovl_config.name, ovl_config.ovl_type, ovl_include_path
+    )
     spinner.message = f"adding sha1 hashes to check file"
     add_sha1_hashes(ovl_config)
     spinner.message = f"performing initial split using config {ovl_config.config_path}"
@@ -142,7 +159,11 @@ def create_initial_files(ovl_config, spinner=SimpleNamespace(message="")):
     asm_path = ovl_config.asm_path.joinpath(ovl_config.nonmatchings_path)
     if ovl_config.platform == "psp":
         spinner.message = f"finding and parsing the psp {ovl_config.name.upper()} load function for symbols"
-        ovl_load_symbol, ovl_header_name, entity_updates, symexport_text = sotn_utils.parse_psp_ovl_load(ovl_config.name, ovl_config.path_prefix, asm_path)
+        ovl_load_symbol, ovl_header_name, entity_updates, symexport_text = (
+            sotn_utils.parse_psp_ovl_load(
+                ovl_config.name, ovl_config.path_prefix, asm_path
+            )
+        )
 
         if not ovl_config.symexport_path.exists():
             spinner.message = "creating symexport file"
@@ -152,23 +173,29 @@ def create_initial_files(ovl_config, spinner=SimpleNamespace(message="")):
 
     spinner.message = f"generating new {ovl_config.version} build plan including {ovl_config.name.upper()}"
     build(build=False, version=ovl_config.version)
-    spinner.message = f"building initial {ovl_config.ld_script_path.with_suffix('.elf')}"
-    build([f"{ovl_config.ld_script_path.with_suffix('.elf')}"], version=ovl_config.version)
+    spinner.message = (
+        f"building initial {ovl_config.ld_script_path.with_suffix('.elf')}"
+    )
+    build(
+        [f"{ovl_config.ld_script_path.with_suffix('.elf')}"], version=ovl_config.version
+    )
 
     return ovl_load_symbol, ovl_header_name, entity_updates
 
-def build_reference_asm(ovl_name, version, build_path, spinner=SimpleNamespace(message="")):
-    ref_pattern=re.compile(r"splat\.\w+\.(?P<prefix>st|bo)(?P<ref_ovl>\w+)\.yaml")
+
+def build_reference_asm(
+    ovl_name, version, build_path, spinner=SimpleNamespace(message="")
+):
+    ref_pattern = re.compile(r"splat\.\w+\.(?P<prefix>st|bo)(?P<ref_ovl>\w+)\.yaml")
     ref_ovls = []
     for file in Path("config").glob(f"splat.{version}.*.yaml"):
-        if (
-            ovl_name not in file.name
-            and (match := ref_pattern.match(file.name))
-        ):
+        if ovl_name not in file.name and (match := ref_pattern.match(file.name)):
             prefix = match.group("prefix") or ""
             ref_name = match.group("ref_ovl")
             ld_path = build_path.joinpath(prefix + ref_name).with_suffix(".ld")
-            ref_ovls.append(SimpleNamespace(prefix=prefix, name=ref_name, ld_path=ld_path))
+            ref_ovls.append(
+                SimpleNamespace(prefix=prefix, name=ref_name, ld_path=ld_path)
+            )
 
     if ref_ovls:
         ref_lds = tuple(ovl.ld_path for ovl in ref_ovls)
@@ -179,7 +206,9 @@ def build_reference_asm(ovl_name, version, build_path, spinner=SimpleNamespace(m
             if ld.with_suffix(".elf") not in found_elfs
         )
         if missing_elfs:
-            spinner.message = f"creating {len(missing_elfs)} missing reference .elf files"
+            spinner.message = (
+                f"creating {len(missing_elfs)} missing reference .elf files"
+            )
             build(missing_elfs, plan=True, version=version)
 
         spinner.message = "extracting dynamic symbols"
@@ -194,28 +223,34 @@ def build_reference_asm(ovl_name, version, build_path, spinner=SimpleNamespace(m
 
     return ref_ovls
 
+
 def find_files_to_compare(ref_ovls, ovl_name, version):
     ref_files, check_files = [], []
     for dirpath, _, filenames in Path("asm").joinpath(version).walk():
-        if any(ovl.name in dirpath.parts or f"{ovl.name}_psp" in dirpath.parts for ovl in ref_ovls):
-            ref_files.extend(
-                dirpath / f
-                for f in filenames
-            )
-        if (
-            ovl_name in dirpath.parts
-            or f"{ovl_name}_psp" in dirpath.parts
+        if any(
+            ovl.name in dirpath.parts or f"{ovl.name}_psp" in dirpath.parts
+            for ovl in ref_ovls
         ):
+            ref_files.extend(dirpath / f for f in filenames)
+        if ovl_name in dirpath.parts or f"{ovl_name}_psp" in dirpath.parts:
             check_files.extend(
                 dirpath / f
                 for f in filenames
-                if f.startswith(f"func_{version}_")
-                or f.startswith(f"D_{version}_")
+                if f.startswith(f"func_{version}_") or f.startswith(f"D_{version}_")
             )
     return check_files, ref_files
 
 
-def validate_binary(basename, asm_path, ld_script_path, build_path, target_path, version, sha1, built_bin_path):
+def validate_binary(
+    basename,
+    asm_path,
+    ld_script_path,
+    build_path,
+    target_path,
+    version,
+    sha1,
+    built_bin_path,
+):
     logger = sotn_utils.get_logger()
     # TODO: Compare generated offsets to .elf segment offsets
     run(["git", "clean", "-fdx", asm_path], capture_output=True)
@@ -239,75 +274,99 @@ def validate_binary(basename, asm_path, ld_script_path, build_path, target_path,
         logger.error(f"{built_bin_path} did not match {target_path}")
         raise SystemExit
 
+
 def can_extract(overlay):
     stage = "are cat cen chi dai dre lib no0 no1 no2 no3 no4 np3 nz0 nz1 st0 top wrp "
-    rstage = "rare rcat rcen rchi rdai rlib rno0 rno1 rno2 rno3 rno4 rnz0 rnz1 rtop rwrp "
+    rstage = (
+        "rare rcat rcen rchi rdai rlib rno0 rno1 rno2 rno3 rno4 rnz0 rnz1 rtop rwrp "
+    )
     boss = "bo0 bo1 bo2 bo3 bo4 bo5 bo6 bo7 mar rbo0 rbo1 rbo2 rbo3 rbo4 rbo5 rbo6 rbo7 rbo8 "
     return overlay in (stage + rstage + boss).split(" ")
 
-def clean_artifacts(ovl_config, full_clean = False, spinner=SimpleNamespace(message="")):
-    if (asm_path := Path(f"asm/{ovl_config.version}")).exists():
-        spinner.message=run(["git", "clean", "-fdx", asm_path], capture_output=True)
 
-    spinner.message=f"Removing {ovl_config.ld_script_path}"
+def clean_artifacts(ovl_config, full_clean=False, spinner=SimpleNamespace(message="")):
+    if (asm_path := Path(f"asm/{ovl_config.version}")).exists():
+        spinner.message = run(["git", "clean", "-fdx", asm_path], capture_output=True)
+
+    spinner.message = f"Removing {ovl_config.ld_script_path}"
     ovl_config.ld_script_path.unlink(missing_ok=True)
 
-    spinner.message=f"Removing {ovl_config.ld_script_path.with_suffix(".elf")}"
+    spinner.message = f"Removing {ovl_config.ld_script_path.with_suffix(".elf")}"
     ovl_config.ld_script_path.with_suffix(".elf").unlink(missing_ok=True)
 
-    spinner.message=f"Removing {ovl_config.ld_script_path.with_suffix(".map")}"
+    spinner.message = f"Removing {ovl_config.ld_script_path.with_suffix(".map")}"
     ovl_config.ld_script_path.with_suffix(".map").unlink(missing_ok=True)
 
-    spinner.message=f"Removing {ovl_config.build_path.joinpath(f"{ovl_config.target_path.name}")}"
+    spinner.message = (
+        f"Removing {ovl_config.build_path.joinpath(f"{ovl_config.target_path.name}")}"
+    )
     ovl_config.build_path.joinpath(f"{ovl_config.target_path.name}").unlink(
         missing_ok=True
     )
 
     if full_clean:
-        if (build_src_path := ovl_config.build_path / ovl_config.src_path_full).exists():
-            spinner.message=run(["git", "clean", "-fdx", build_src_path], capture_output=True)
-
-        spinner.message=f"Removing config/check.{ovl_config.version}.sha"
-        sha_check_path = Path(f"config/check.{ovl_config.version}.sha")
-        sha_check_lines = (line for line in sha_check_path.read_text().splitlines() if ovl_config.sha1 not in line)
-        fbin_path = ovl_config.target_path.with_name(
-                f"{"f" if ovl_config.platform == "psp" else "F"}_{ovl_config.target_path.name}"
+        if (
+            build_src_path := ovl_config.build_path / ovl_config.src_path_full
+        ).exists():
+            spinner.message = run(
+                ["git", "clean", "-fdx", build_src_path], capture_output=True
             )
+
+        spinner.message = f"Removing config/check.{ovl_config.version}.sha"
+        sha_check_path = Path(f"config/check.{ovl_config.version}.sha")
+        sha_check_lines = (
+            line
+            for line in sha_check_path.read_text().splitlines()
+            if ovl_config.sha1 not in line
+        )
+        fbin_path = ovl_config.target_path.with_name(
+            f"{"f" if ovl_config.platform == "psp" else "F"}_{ovl_config.target_path.name}"
+        )
         if fbin_path.exists():
             fbin_sha1 = hashlib.sha1(fbin_path.read_bytes()).hexdigest()
-            sha_check_lines = (line for line in sha_check_lines if fbin_sha1 not in line)
+            sha_check_lines = (
+                line for line in sha_check_lines if fbin_sha1 not in line
+            )
         sha_check_path.write_text("\n".join(sha_check_lines) + "\n")
-        
-        spinner.message=f"Removing {ovl_config.ovl_symbol_addrs_path}"
+
+        spinner.message = f"Removing {ovl_config.ovl_symbol_addrs_path}"
         ovl_config.ovl_symbol_addrs_path.unlink(missing_ok=True)
-        
+
         if ovl_config.symexport_path:
-            spinner.message=f"Removing {ovl_config.symexport_path}"
+            spinner.message = f"Removing {ovl_config.symexport_path}"
             ovl_config.symexport_path.unlink(missing_ok=True)
 
         if ovl_config.version != "hd" and ovl_config.src_path_full.exists():
-            spinner.message=f"Removing {ovl_config.src_path_full}"
+            spinner.message = f"Removing {ovl_config.src_path_full}"
             shutil.rmtree(ovl_config.src_path_full)
 
-        spinner.message=f"Removing {ovl_config.config_path}"
+        spinner.message = f"Removing {ovl_config.config_path}"
         ovl_config.config_path.unlink(missing_ok=True)
 
-    spinner.message=f"cleaned {ovl_config.version} overlay {ovl_config.name.upper()} artifacts and configuration"
+    spinner.message = f"cleaned {ovl_config.version} overlay {ovl_config.name.upper()} artifacts and configuration"
+
 
 def remove_overlay(overlay, versions):
     logger = sotn_utils.get_logger()
     with sotn_utils.Spinner(message=f"starting overlay removal") as spinner:
         for version in versions:
-            logger.info(f"Removing {version} overlay {overlay.upper()} artifacts and configuration")
+            logger.info(
+                f"Removing {version} overlay {overlay.upper()} artifacts and configuration"
+            )
             spinner.message = f"removing {version} overlay {overlay.upper()} artifacts and configuration"
             ovl_config = sotn_utils.SotnOverlayConfig(overlay, version)
             clean_artifacts(ovl_config, True, spinner)
 
+
 def extract(args, version):
     logger = sotn_utils.get_logger()
     start_time = time.perf_counter()
-    logger.info(f"Starting config generation for {version} overlay {args.overlay.upper()}")
-    with sotn_utils.Spinner(message=f"generating config for {version} overlay {args.overlay.upper()}") as spinner:
+    logger.info(
+        f"Starting config generation for {version} overlay {args.overlay.upper()}"
+    )
+    with sotn_utils.Spinner(
+        message=f"generating config for {version} overlay {args.overlay.upper()}"
+    ) as spinner:
         ovl_config = sotn_utils.SotnOverlayConfig(args.overlay, version)
         if ovl_config.config_path.exists() and not args.clean:
             logger.error(
@@ -316,17 +375,29 @@ def extract(args, version):
             raise SystemExit
 
         clean_artifacts(ovl_config, args.clean, spinner)
-        ovl_load_symbol, ovl_header_name, entity_updates = create_initial_files(ovl_config, spinner)
+        ovl_load_symbol, ovl_header_name, entity_updates = create_initial_files(
+            ovl_config, spinner
+        )
 
     with sotn_utils.Spinner(message="gathering initial symbols") as spinner:
-        ovl_config.subsegments = sotn_utils.add_initial_symbols(ovl_config, ovl_header_name, [ovl_load_symbol] if ovl_load_symbol else [], entity_updates, spinner)
+        ovl_config.subsegments = sotn_utils.add_initial_symbols(
+            ovl_config,
+            ovl_header_name,
+            [ovl_load_symbol] if ovl_load_symbol else [],
+            entity_updates,
+            spinner,
+        )
 
     with sotn_utils.Spinner(message="gathering reference overlays") as spinner:
-        ref_ovls = build_reference_asm(ovl_config.name, ovl_config.version, ovl_config.build_path, spinner)
+        ref_ovls = build_reference_asm(
+            ovl_config.name, ovl_config.version, ovl_config.build_path, spinner
+        )
         if ref_ovls:
-            spinner.message=f"finding files to compare"
-            check_files, ref_files = find_files_to_compare(ref_ovls, ovl_config.name, ovl_config.version)
-            spinner.message=f"parsing instructions from {len(check_files)} new files and {len(ref_files)} reference files"
+            spinner.message = f"finding files to compare"
+            check_files, ref_files = find_files_to_compare(
+                ref_ovls, ovl_config.name, ovl_config.version
+            )
+            spinner.message = f"parsing instructions from {len(check_files)} new files and {len(ref_files)} reference files"
             parsed_check_files = sotn_utils.parse_asm_files(check_files)
             parsed_ref_files = sotn_utils.parse_asm_files(ref_files)
         else:
@@ -335,8 +406,12 @@ def extract(args, version):
 
         if parsed_check_files and parsed_ref_files:
             spinner.message = "searching for similar functions"
-            ambiguous_renames, unhandled_renames = sotn_utils.rename_similar_functions(ovl_config, parsed_check_files, parsed_ref_files, spinner)
-            spinner.message += f" (compared {len(check_files)} new to {len(ref_files)} reference)"
+            ambiguous_renames, unhandled_renames = sotn_utils.rename_similar_functions(
+                ovl_config, parsed_check_files, parsed_ref_files, spinner
+            )
+            spinner.message += (
+                f" (compared {len(check_files)} new to {len(ref_files)} reference)"
+            )
         else:
             ambiguous_renames, unhandled_renames = [], []
 
@@ -357,8 +432,15 @@ def extract(args, version):
         )
 
         if init_room_entities_path.exists():
-            init_room_entities_symbols, create_entity_bss_start = sotn_utils.parse_init_room_entities(ovl_config.name, ovl_config.platform, init_room_entities_path, ovl_config.vram + ovl_config.start)
-            
+            init_room_entities_symbols, create_entity_bss_start = (
+                sotn_utils.parse_init_room_entities(
+                    ovl_config.name,
+                    ovl_config.platform,
+                    init_room_entities_path,
+                    ovl_config.vram + ovl_config.start,
+                )
+            )
+
             create_entity_bss_end = create_entity_bss_start + (
                 0x18 if ovl_config.platform == "psp" else 0x10
             )
@@ -368,14 +450,22 @@ def extract(args, version):
             dirpath / f
             for dirpath, _, filenames in ovl_config.asm_path.walk()
             for f in filenames
-            if (f.startswith(f"func_{ovl_config.version}_") and f.split("_")[-2] == "from")
-            or (not f.startswith(f"func_{ovl_config.version}_") and not f.startswith("D_"))
+            if (
+                f.startswith(f"func_{ovl_config.version}_")
+                and f.split("_")[-2] == "from"
+            )
+            or (
+                not f.startswith(f"func_{ovl_config.version}_")
+                and not f.startswith("D_")
+            )
         )
 
         spinner.message = f"cross referencing {len(parsed_check_files)} renamed functions against {len({x.path.name for x in parsed_ref_files})} existing functions"
-        cross_ref_symbols = sotn_utils.cross_reference_asm(parsed_check_files, parsed_ref_files, ovl_config.name, ovl_config.version)
+        cross_ref_symbols = sotn_utils.cross_reference_asm(
+            parsed_check_files, parsed_ref_files, ovl_config.name, ovl_config.version
+        )
         if init_room_entities_symbols or cross_ref_symbols:
-            spinner.message=f"adding {len(init_room_entities_symbols)} parsed symbols and {len(cross_ref_symbols)} cross referenced symbols and splitting again"
+            spinner.message = f"adding {len(init_room_entities_symbols)} parsed symbols and {len(cross_ref_symbols)} cross referenced symbols and splitting again"
             sotn_utils.add_symbols(
                 ovl_config.ovl_symbol_addrs_path,
                 init_room_entities_symbols | cross_ref_symbols,
@@ -383,7 +473,7 @@ def extract(args, version):
                 ovl_config.vram,
                 ovl_config.symbol_name_format.replace("$VRAM", ""),
                 ovl_config.src_path_full,
-                ovl_config.symexport_path
+                ovl_config.symexport_path,
             )
             run(["git", "clean", "-fdx", ovl_config.asm_path], capture_output=True)
             sotn_utils.splat_split(ovl_config.config_path, ovl_config.disassemble_all)
@@ -395,62 +485,124 @@ def extract(args, version):
             [f'{ovl_config.ld_script_path.with_suffix(".elf")}'],
             version=ovl_config.version,
         )
-        spinner.message=f"finding segments and splitting source files"
+        spinner.message = f"finding segments and splitting source files"
         include_path = f"../{ovl_config.name}/" if ovl_config.platform == "psp" else ""
         file_header = f'// SPDX-License-Identifier: AGPL-3.0-or-later\n#include "{include_path}{ovl_config.name}.h"\n\n'
         ovl_config.subsegments = sotn_utils.find_segments(ovl_config, file_header)
         ovl_config.write_config()
 
         built_bin_path = ovl_config.build_path / ovl_config.target_path.name
-        spinner.message=f"building and validating {built_bin_path}"
-        validate_binary(ovl_config.basename, ovl_config.asm_path, ovl_config.ld_script_path, ovl_config.build_path, ovl_config.target_path, version, ovl_config.sha1, built_bin_path)
+        spinner.message = f"building and validating {built_bin_path}"
+        validate_binary(
+            ovl_config.basename,
+            ovl_config.asm_path,
+            ovl_config.ld_script_path,
+            ovl_config.build_path,
+            ovl_config.target_path,
+            version,
+            ovl_config.sha1,
+            built_bin_path,
+        )
 
     with sotn_utils.Spinner(message=f"cleaning up {ovl_config.name}.h") as spinner:
         # just in case any function got renamed after the files were created
-        ovl_include_path = ovl_config.src_path_full.parent / ovl_config.name / f"{ovl_config.name}.h"  
+        ovl_include_path = (
+            ovl_config.src_path_full.parent / ovl_config.name / f"{ovl_config.name}.h"
+        )
         ovl_header_text = ovl_include_path.read_text()
-        ovl_header_text = re.sub(rf"{ovl_config.name.upper()}_(\w\w+)\b", r"OVL_EXPORT(\1)", ovl_header_text)
-        entity_enum_pattern = re.compile(r"\s+(?P<e_id>E_[A-Z0-9_]+),\s+//\s+(?:OVL_EXPORT\()?(?P<func>Entity\w+)\)?\b")
-        camel_case_pattern=re.compile(r"([A-Za-z])([A-Z][a-z])")
-        ovl_header_lines = [line.replace(m.group("e_id"), f"{camel_case_pattern.sub(r"\1_\2", m.group("func"))}".upper().replace("ENTITY", "E")) if (m := entity_enum_pattern.match(line)) and "DUMMY" not in line else line for line in ovl_header_text.splitlines()]
-        e_id_max_length = max([len(line.split()[0]) for line in ovl_header_lines if "    E_" in line and "//" in line] or [''])
-        ovl_header_lines = [f"    {line.split()[0]:<{e_id_max_length}} {' '.join(line.split()[1:])}" if "    E_" in line and "//" in line else line for line in ovl_header_lines]
+        ovl_header_text = re.sub(
+            rf"{ovl_config.name.upper()}_(\w\w+)\b", r"OVL_EXPORT(\1)", ovl_header_text
+        )
+        entity_enum_pattern = re.compile(
+            r"\s+(?P<e_id>E_[A-Z0-9_]+),\s+//\s+(?:OVL_EXPORT\()?(?P<func>Entity\w+)\)?\b"
+        )
+        camel_case_pattern = re.compile(r"([A-Za-z])([A-Z][a-z])")
+        ovl_header_lines = [
+            (
+                line.replace(
+                    m.group("e_id"),
+                    f"{camel_case_pattern.sub(r"\1_\2", m.group("func"))}".upper().replace(
+                        "ENTITY", "E"
+                    ),
+                )
+                if (m := entity_enum_pattern.match(line)) and "DUMMY" not in line
+                else line
+            )
+            for line in ovl_header_text.splitlines()
+        ]
+        e_id_max_length = max(
+            [
+                len(line.split()[0])
+                for line in ovl_header_lines
+                if "    E_" in line and "//" in line
+            ]
+            or [""]
+        )
+        ovl_header_lines = [
+            (
+                f"    {line.split()[0]:<{e_id_max_length}} {' '.join(line.split()[1:])}"
+                if "    E_" in line and "//" in line
+                else line
+            )
+            for line in ovl_header_lines
+        ]
         ovl_include_path.write_text("\n".join(ovl_header_lines) + "\n")
 
         spinner.message = "cleaning up e_init.c"
         e_init_c_path = ovl_config.src_path_full.with_name(ovl_config.name) / "e_init.c"
-        e_init_c_path.write_text(re.sub(rf"{ovl_config.name.upper()}_(\w+)\b", r"OVL_EXPORT(\1)", e_init_c_path.read_text()))
+        e_init_c_path.write_text(
+            re.sub(
+                rf"{ovl_config.name.upper()}_(\w+)\b",
+                r"OVL_EXPORT(\1)",
+                e_init_c_path.read_text(),
+            )
+        )
 
         spinner.message = "getting suggested segments"
         suggested_segments = sotn_utils.get_suggested_segments(ovl_config.config_path)
 
-
     time_text = sotn_utils.get_run_time(start_time)
     print(f"{sotn_utils.TTY.OK} Extracted {version} {args.overlay} ({time_text})")
     if suggested_segments:
-        print(f"{sotn_utils.TTY.INFO_CIRCLE} {len(suggested_segments)} additional segments were suggested by Splat:")
+        print(
+            f"{sotn_utils.TTY.INFO_CIRCLE} {len(suggested_segments)} additional segments were suggested by Splat:"
+        )
         for segment in suggested_segments:
             print(f"    - [{segment[0]}, {segment[1]}, {segment[2]}]")
-        logger.info(
-            f"Additional segments suggested by splat: {suggested_segments}"
-        )
+        logger.info(f"Additional segments suggested by splat: {suggested_segments}")
     if ambiguous_renames:
-        print(f"{sotn_utils.TTY.WARNING} Found {len(ambiguous_renames)} functions renamed with ambiguous matches:")
+        print(
+            f"{sotn_utils.TTY.WARNING} Found {len(ambiguous_renames)} functions renamed with ambiguous matches:"
+        )
         from_width = max(len(x.old_names[0]) for x in ambiguous_renames) + 1
         to_width = max(len(x.new_names[0]) for x in ambiguous_renames) + 1
-        print(f"  {'from':<{from_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {'to':<{to_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} score {sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} other matches")
+        print(
+            f"  {'from':<{from_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {'to':<{to_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} score {sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} other matches"
+        )
         for rename in ambiguous_renames:
-            print(f"  {rename.old_names[0]:<{from_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {rename.new_names[0]:<{to_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {round(rename.score, 2):<6}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {', '.join(rename.all_matches[1:])}")
+            print(
+                f"  {rename.old_names[0]:<{from_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {rename.new_names[0]:<{to_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {round(rename.score, 2):<6}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {', '.join(rename.all_matches[1:])}"
+            )
     if unhandled_renames:
-        print(f"{sotn_utils.TTY.WARNING} Encountered {len(unhandled_renames)} unhandled matches:")
-        from_width = max(len(', '.join(x.old_names)) for x in unhandled_renames) + 1
-        to_width = max(len(', '.join(x.new_names)) for x in unhandled_renames) + 1
-        print(f"  {'functions':<{from_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {'matches':<{to_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} score")
+        print(
+            f"{sotn_utils.TTY.WARNING} Encountered {len(unhandled_renames)} unhandled matches:"
+        )
+        from_width = max(len(", ".join(x.old_names)) for x in unhandled_renames) + 1
+        to_width = max(len(", ".join(x.new_names)) for x in unhandled_renames) + 1
+        print(
+            f"  {'functions':<{from_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {'matches':<{to_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} score"
+        )
         for rename in unhandled_renames:
-            print(f"  {', '.join(rename.old_names):<{from_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {', '.join(rename.new_names):{to_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {rename.score}")
+            print(
+                f"  {', '.join(rename.old_names):<{from_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {', '.join(rename.new_names):{to_width}}{sotn_utils.TTY.BOLD}|{sotn_utils.TTY.RESET} {rename.score}"
+            )
 
     # make clean removes new files in the config/ directory, so these need to be staged
-    precious_files = [f"{ovl_config.config_path}", f"config/undefined_syms.{version}.txt", f"config/check.{version}.sha"]
+    precious_files = [
+        f"{ovl_config.config_path}",
+        f"config/undefined_syms.{version}.txt",
+        f"config/check.{version}.sha",
+    ]
     if isinstance(ovl_config.symbol_addrs_path, (list, tuple)):
         precious_files.extend(f"{x}" for x in ovl_config.symbol_addrs_path)
     else:
@@ -469,6 +621,7 @@ def extract(args, version):
         env = os.environ.copy()
         env["VERSION"] = ovl_config.version
         run(["make", "expected"], env=env, text=True)
+
 
 if __name__ == "__main__":
     # set global multiprocessing options
