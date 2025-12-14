@@ -45,7 +45,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, are_psp/st_init]
-      - [0x3E0, c, are_psp/unk_3E0]
+      - [0x3E0, c, are/e_boss_torch]
       - [0x5C8, c, are_psp/e_breakable]
       - [0xF48, c, are/e_background_door_rubble]
       - [0x11A0, c, are/e_fountain_water]
@@ -90,6 +90,8 @@ segments:
       - [0x5D3E0, .data, are/e_init]
       - [0x5D7A8, .data, are/e_red_door_tiles]
       - [0x5D7C8, data]
+      - [0x5D870, .data, are/e_boss_torch]
+      - [0x5D898, data]
       - [0x5D9E8, .data, are/e_background_door_rubble]
       - [0x5DA28, .data, are/e_elevator]
       - [0x5DAA0, data]

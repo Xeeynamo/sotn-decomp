@@ -9,6 +9,8 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_TORCH_A = 0x5A,
+    PAL_TORCH_B = 0x5B,
     PAL_BACKGROUND_DOOR_RUBBLE = 0x9E,
     PAL_FOUNTAIN_WATER = 0xC0,
     // 0xC0 - 0xCA are cycled in EntityFountainWater based on g_Timer
@@ -49,7 +51,7 @@ enum Entities {
     E_UNK_ID13,                     // EntityUnkId13
     E_EXPLOSION_VARIANTS,           // EntityExplosionVariants
     E_GREY_PUFF,                    // EntityGreyPuff
-    E_UNK_16,                       // func_us_801B628C
+    E_BOSS_TORCH,                   // EntityBossTorch
     E_UNK_17,                       // func_us_801B6420
     E_BRIDGE_BACKGROUND_PIECE,      // EntityBridgeBackgroundPiece
     E_UNK_19,                       // func_us_801B6DF0
