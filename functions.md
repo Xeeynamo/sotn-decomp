@@ -1246,7 +1246,7 @@
 | main   | std                               |       34 |          1 |        |       |     |
 | main   | func_psp_08915F5C                 |       34 |          2 |        |       |     |
 | main   | sceGuEnable                       |       34 |          2 |        |       |     |
-| are    | GetDistanceToPlayerX              |       34 |          2 |        |       |     |
+| are    | func_pspeu_09261440               |       34 |          2 |        |       |     |
 | cat    | func_pspeu_092522D0               |       34 |          2 |        |       |     |
 | chi    | func_psp_09247548                 |       34 |          2 |        |       |     |
 | dai    | func_pspeu_0924D398               |       34 |          2 |        |       |     |
@@ -2776,7 +2776,7 @@
 | lib    | func_psp_0924DF08                 |       97 |          7 |        |       |     |
 | nz1    | func_pspeu_0924F3D8               |       97 |          7 |        |       |     |
 | main   | ScaleMatrix                       |       97 |         10 |        |       |     |
-| are    | PlaySfxPositional                 |       97 |         12 |        |       |     |
+| are    | func_pspeu_09253F90               |       97 |         12 |        |       |     |
 | cat    | func_pspeu_09249FF0               |       97 |         12 |        |       |     |
 | chi    | func_psp_09244878                 |       97 |         12 |        |       |     |
 | dai    | func_pspeu_092430D8               |       97 |         12 |        |       |     |
@@ -2944,7 +2944,7 @@
 | no2    | func_pspeu_09254AE8               |      106 |          9 |        |       |     |
 | np3    | func_801CE2CC                     |      106 |          9 |        |       |     |
 | dra    | func_psp_09111BB8                 |      106 |         11 |        |       |     |
-| are    | EntityHeartRoomSwitch             |      106 |         11 |        |       |     |
+| are    | func_pspeu_09239778               |      106 |         11 |        |       |     |
 | dra    | func_psp_09136620                 |      106 |         12 |        |       |     |
 | nz1    | EntitySkullLordPieces             |      106 |         15 |        |       |     |
 | are    | PrizeDropFall2                    |      106 |         16 |        |       |     |
@@ -3282,7 +3282,7 @@
 | dra    | func_psp_090F0330                 |      151 |         12 |        |       |     |
 | are    | func_pspeu_0924B178               |      151 |         14 |        |       |     |
 | dai    | func_pspeu_092588C0               |      152 |         17 |        |       |     |
-| are    | func_us_801B7998                  |      152 |         21 |        |       |     |
+| are    | func_pspeu_09239558               |      152 |         21 |        |       |     |
 | no2    | func_pspeu_092513B8               |      152 |         22 |        |       |     |
 | np3    | func_pspeu_0925DD78               |      152 |         22 |        |       |     |
 | dra    | func_psp_091121C0                 |      152 |         23 |        |       |     |
@@ -4307,7 +4307,7 @@
 | ric    | func_pspeu_092AB7A8               |      733 |         50 |        |       |     |
 | cat    | func_pspeu_0924EE40               |      733 |         69 | Yes    |       |     |
 | lib    | func_psp_0925E018                 |      733 |        124 |        |       |     |
-| are    | func_us_801B7184                  |      735 |         92 |        |       |     |
+| are    | func_pspeu_09238AA0               |      735 |         92 |        |       |     |
 | lib    | func_psp_092663F8                 |      739 |         81 | Yes    |       |     |
 | cat    | func_pspeu_0925BE88               |      741 |         71 |        |       |     |
 | ric    | func_pspeu_092B7530               |      742 |         48 | Yes    |       |     |
