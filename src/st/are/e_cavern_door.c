@@ -6,7 +6,3 @@ INCLUDE_ASM("st/are/nonmatchings/e_cavern_door", DoorCascadePhysics);
 INCLUDE_ASM("st/are/nonmatchings/e_cavern_door", EntityBridgeBackgroundPiece);
 
 INCLUDE_ASM("st/are/nonmatchings/e_cavern_door", func_us_801B6DF0);
-
-INCLUDE_ASM("st/are/nonmatchings/e_cavern_door", func_us_801B7184);
-
-INCLUDE_ASM("st/are/nonmatchings/e_cavern_door", func_us_801B7998);

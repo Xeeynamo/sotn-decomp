@@ -53,9 +53,9 @@ enum Entities {
     E_UNK_17,                       // func_us_801B6420
     E_BRIDGE_BACKGROUND_PIECE,      // EntityBridgeBackgroundPiece
     E_UNK_19,                       // func_us_801B6DF0
-    E_UNK_1A,                       // func_us_801B7184
-    E_HEART_ROOM_SWITCH,            // EntityHeartRoomSwitch
-    E_UNK_1C,                       // func_us_801B7998
+    E_ELEVATOR,                     // EntityElevator
+    E_ELEVATOR_SWITCH,              // EntityElevatorSwitch
+    E_ELEVATOR_GATES,               // EntityElevatorGates
     E_UNK_1D,                       // EntityFountainWater
     E_BREAKABLE_CEILING_SECRET,     // EntityBreakableCeilingSecret
     E_BACKGROUND_DOOR_RUBBLE,       // EntityBackgroundDoorRubble
