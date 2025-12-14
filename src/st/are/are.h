@@ -52,7 +52,7 @@ enum Entities {
     E_EXPLOSION_VARIANTS,           // EntityExplosionVariants
     E_GREY_PUFF,                    // EntityGreyPuff
     E_BOSS_TORCH,                   // EntityBossTorch
-    E_UNK_17,                       // func_us_801B6420
+    E_BOSS_DOORS,                   // EntityBossDoors
     E_BRIDGE_BACKGROUND_PIECE,      // EntityBridgeBackgroundPiece
     E_UNK_19,                       // func_us_801B6DF0
     E_ELEVATOR,                     // EntityElevator

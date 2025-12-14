@@ -23,7 +23,7 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void EntityBossTorch(Entity* self);
-void func_us_801B6420(Entity* self);
+void EntityBossDoors(Entity* self);
 void EntityBridgeBackgroundPiece(Entity* self);
 void func_us_801B6DF0(Entity* self);
 void EntityElevator(Entity* self);
@@ -102,7 +102,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     EntityBossTorch,
-    func_us_801B6420,
+    EntityBossDoors,
     EntityBridgeBackgroundPiece,
     func_us_801B6DF0,
     EntityElevator,

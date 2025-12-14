@@ -3726,6 +3726,11 @@ typedef struct {
     /* 0x98 */ s16 weightAngle;
 } ET_Pendulum;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 timer;
+} ET_ARE_BossDoor;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4048,6 +4053,7 @@ typedef union { // offset=0x7C
     ET_Paranthropus paranthropus;
     ET_GearPuzzle gearPuzzle;
     ET_Pendulum pendulum;
+    ET_ARE_BossDoor areBossDoor;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
