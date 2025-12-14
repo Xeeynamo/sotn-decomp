@@ -1287,7 +1287,7 @@
 | dra    | func_psp_090FFAB8                 |       35 |          4 |        |       |     |
 | main   | func_psp_0890CAF8                 |       35 |          4 |        |       |     |
 | main   | func_psp_08916B60                 |       35 |          4 |        |       |     |
-| are    | ARE_Load                          |       35 |          4 |        |       |     |
+| are    | func_pspeu_092379E8               |       35 |          4 |        |       |     |
 | cat    | func_pspeu_0925E600               |       35 |          4 |        |       |     |
 | chi    | func_psp_0924BCA8                 |       35 |          4 |        |       |     |
 | no2    | func_pspeu_09256C90               |       35 |          4 |        |       |     |
@@ -3188,7 +3188,7 @@
 | no2    | func_pspeu_09256148               |      135 |          5 |        |       |     |
 | dra    | func_psp_0911B630                 |      135 |         12 |        |       |     |
 | dra    | func_psp_09134B20                 |      135 |         13 |        |       |     |
-| are    | func_us_801B628C                  |      135 |         17 |        |       |     |
+| are    | func_pspeu_09237A60               |      135 |         17 |        |       |     |
 | nz1    | EntityKarasumanFeatherAttack      |      135 |         19 |        |       |     |
 | dra    | func_psp_090EEFA8                 |      136 |         11 |        |       |     |
 | main   | func_psp_08910A80                 |      136 |         11 |        |       |     |
@@ -3472,7 +3472,7 @@
 | main   | func_psp_089201E8                 |      190 |         17 |        |       |     |
 | main   | func_psp_0893858C                 |      190 |         21 |        |       |     |
 | main   | func_psp_08911C3C                 |      191 |          1 |        |       |     |
-| are    | InitEntityIds                     |      191 |          1 |        |       |     |
+| are    | func_pspeu_09237700               |      191 |          1 |        |       |     |
 | are    | func_pspeu_0924B6D8               |      191 |         11 |        |       |     |
 | sel    | func_psp_09243690                 |      191 |         14 |        |       |     |
 | main   | atanf                             |      191 |         21 |        |       |     |
@@ -4051,7 +4051,7 @@
 | chi    | func_psp_0924ED28                 |      413 |         60 |        |       |     |
 | main   | func_psp_08937D70                 |      415 |         32 |        |       |     |
 | ric    | func_pspeu_092A73E8               |      415 |         79 |        |       |     |
-| are    | func_us_801B6420                  |      417 |         42 |        |       |     |
+| are    | func_pspeu_09239C40               |      417 |         42 |        |       |     |
 | are    | func_pspeu_0924ECB8               |      418 |         45 |        |       |     |
 | cat    | func_pspeu_0923FE68               |      418 |         45 |        |       |     |
 | chi    | func_psp_0923FA60                 |      418 |         45 |        |       |     |
