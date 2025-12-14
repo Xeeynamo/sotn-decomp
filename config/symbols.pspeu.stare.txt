@@ -65,3 +65,5 @@ g_ItemIconSlots = 0x092981A8;
 frameBufferY = 0x09298208;
 frameBufferX = 0x09298210;
 pixPtr = 0x09298218;
+D_psp_E_BREAKABLE_DEBRIS = 0x092980F0;
+D_psp_E_UNK_17 = 0x09298140;
