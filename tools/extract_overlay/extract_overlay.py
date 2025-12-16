@@ -1,17 +1,21 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 import shutil
 import argparse
 import hashlib
 import time
 import re
 import multiprocessing
-import sotn_utils
 from pathlib import Path
 from subprocess import run
 from types import SimpleNamespace
-from symbols import sort, extract_dynamic_symbols
+from mako.template import Template
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+import sotn_utils
+from symbols import sort, extract_dynamic_symbols, Symbol
 
 """
 Handles many tasks for adding an overlay:
@@ -145,9 +149,7 @@ def create_initial_files(ovl_config, spinner=SimpleNamespace(message="")):
     ovl_include_path = (
         ovl_config.src_path_full.parent / ovl_config.name / f"{ovl_config.name}.h"
     )
-    sotn_utils.create_ovl_include(
-        None, ovl_config.name, ovl_config.ovl_type, ovl_include_path
-    )
+    create_ovl_include(None, ovl_config.name, ovl_config.ovl_type, ovl_include_path)
     spinner.message = f"adding sha1 hashes to check file"
     add_sha1_hashes(ovl_config)
     spinner.message = f"performing initial split using config {ovl_config.config_path}"
@@ -159,17 +161,15 @@ def create_initial_files(ovl_config, spinner=SimpleNamespace(message="")):
     asm_path = ovl_config.asm_path.joinpath(ovl_config.nonmatchings_path)
     if ovl_config.platform == "psp":
         spinner.message = f"finding and parsing the psp {ovl_config.name.upper()} load function for symbols"
-        ovl_load_symbol, ovl_header_name, entity_updates, symexport_text = (
-            sotn_utils.parse_psp_ovl_load(
-                ovl_config.name, ovl_config.path_prefix, asm_path
-            )
+        ovl_load_symbol, ovl_header_symbol, entity_updates, symexport_text = (
+            parse_psp_ovl_load(ovl_config.name, ovl_config.path_prefix, asm_path)
         )
 
         if not ovl_config.symexport_path.exists():
             spinner.message = "creating symexport file"
             ovl_config.symexport_path.write_text(symexport_text)
     else:
-        ovl_load_symbol, ovl_header_name, entity_updates = None, None, {}
+        ovl_load_symbol, ovl_header_symbol, entity_updates = None, None, {}
 
     spinner.message = f"generating new {ovl_config.version} build plan including {ovl_config.name.upper()}"
     build(build=False, version=ovl_config.version)
@@ -180,7 +180,43 @@ def create_initial_files(ovl_config, spinner=SimpleNamespace(message="")):
         [f"{ovl_config.ld_script_path.with_suffix('.elf')}"], version=ovl_config.version
     )
 
-    return ovl_load_symbol, ovl_header_name, entity_updates
+    return ovl_load_symbol, ovl_header_symbol, entity_updates
+
+
+def create_ovl_include(entity_updates, ovl_name, ovl_type, ovl_include_path):
+    entity_funcs = []
+    if entity_updates:
+        for i, func in enumerate([symbol.name for symbol in entity_updates]):
+            if func == "EntityDummy":
+                entity_funcs.append((func, f"E_DUMMY_{i+1:X}"))
+            elif func.startswith("Entity") or func.startswith("OVL_EXPORT(Entity"):
+                entity_funcs.append(
+                    (
+                        func,
+                        sotn_utils.RE_PATTERNS.camel_case.sub(
+                            r"\1_\2", func.replace("OVL_EXPORT(", "").replace(")", "")
+                        )
+                        .upper()
+                        .replace("ENTITY", "E"),
+                    )
+                )
+            elif func == "0x00000000":
+                entity_funcs.append((func, f"NULL"))
+            else:
+                entity_funcs.append((func, f"E_UNK_{i+1:X}"))
+
+    template = Template((Path(__file__).parent / "ovl.h.mako").read_text())
+    ovl_header_text = template.render(
+        ovl_name=ovl_name,
+        ovl_type=ovl_type,
+        entity_updates=entity_funcs,
+    )
+
+    if not ovl_include_path.exists():
+        ovl_include_path.parent.mkdir(parents=True, exist_ok=True)
+        ovl_include_path.write_text(ovl_header_text)
+    elif entity_funcs and "Entities" not in ovl_include_path.read_text():
+        ovl_include_path.write_text(ovl_header_text)
 
 
 def build_reference_asm(
@@ -239,6 +275,169 @@ def find_files_to_compare(ref_ovls, ovl_name, version):
                 if f.startswith(f"func_{version}_") or f.startswith(f"D_{version}_")
             )
     return check_files, ref_files
+
+
+# Validate logic and move to sotn-decomp
+def parse_psp_ovl_load(ovl_name, path_prefix, asm_path):
+    first_address_pattern = re.compile(r"\s+/\*\s+[A-F0-9]{1,5}\s+([A-F0-9]{8})\s")
+    ovl_load_name, ovl_load_symbol, ovl_header_symbol, entity_updates_name = (
+        None,
+        None,
+        None,
+        None,
+    )
+    for file in (
+        dirpath / f
+        for dirpath, _, filenames in asm_path.walk()
+        for f in filenames
+        if ".data.s" not in f
+    ):
+        file_text = file.read_text()
+        # Todo: Clean up the condition checks
+        if (
+            " 1D09043C " in file_text
+            and " 38F78424 " in file_text
+            and " E127240E " in file_text
+            and " C708023C " in file_text
+            and " 30BC43AC " in file_text
+        ):
+            if match := sotn_utils.RE_PATTERNS.psp_ovl_header_entity_table_pattern.search(
+                file_text
+            ):
+                if ovl_load_address := first_address_pattern.search(file_text):
+                    ovl_load_symbol = Symbol(
+                        f"{ovl_name.upper()}_Load",
+                        int(ovl_load_address.group(1), 16),
+                        None,
+                    )
+                ovl_load_name = file.stem
+                ovl_header_symbol = match.group("header")
+                entity_updates_name = match.group("entity")
+
+    # build symexport lines, but only write if needed
+    template = Template((Path(__file__).parent / "symexport.txt.mako").read_text())
+    symexport_text = template.render(
+        ovl_name=ovl_name,
+        path_prefix=f"{path_prefix}_" if path_prefix else "",
+        ovl_load_name=ovl_load_name,
+    )
+
+    return (
+        ovl_load_symbol,
+        ovl_header_symbol,
+        {"name": entity_updates_name},
+        symexport_text,
+    )
+
+
+def create_header_c(header_items, ovl_name, ovl_type, version, header_path):
+    header_syms = [
+        (
+            f"{symbol.name.replace(f'{ovl_name.upper()}_', 'OVL_EXPORT(')})"
+            if f"{ovl_name.upper()}_" in symbol.name
+            else "NULL" if not symbol.address else symbol.name
+        )
+        for symbol in header_items
+    ]
+    common_syms = [
+        "NULL",
+        "Update",
+        "HitDetection",
+        "UpdateRoomPosition",
+        "InitRoomEntities",
+        "OVL_EXPORT(rooms)",
+        "OVL_EXPORT(spriteBanks)",
+        "OVL_EXPORT(cluts)",
+        "OVL_EXPORT(pStObjLayoutHorizontal)",
+        "g_pStObjLayoutHorizontal",
+        "OVL_EXPORT(rooms_layers)",
+        "OVL_EXPORT(gfxBanks)",
+        "UpdateStageEntities",
+    ]
+    template = Template((Path(__file__).parent / "header.c.mako").read_text())
+    new_header = template.render(
+        ovl_include_path=f"{ovl_name}.h",
+        ovl_type=ovl_type,
+        header_syms=header_syms,
+        common_syms=common_syms,
+    )
+    if header_path.is_file():
+        existing_header = header_path.read_text()
+        if new_header != existing_header:
+            new_lines = new_header.rstrip("\n").splitlines()
+            license = new_lines[0]
+            include = new_lines[1]
+            existing_lines = existing_header.rstrip("\n").splitlines()
+            existing_lines = existing_lines[2:]
+            ifdef = f"#ifdef VERSION_{'PSP' if version=='pspeu' else version.upper()}"
+            new_header = f"{license}\n{include}\n{ifdef}\n{"\n".join(new_lines[2:])}\n#else\n{'\n'.join(existing_lines)}\n#endif\n"
+
+    header_path.write_text(new_header)
+
+
+def create_e_init_c(entity_updates, e_inits, ovl_name, e_init_c_path):
+    if entity_updates:
+        entity_funcs = [
+            (
+                f"{symbol.name.replace(f'{ovl_name.upper()}_','OVL_EXPORT(')})"
+                if f"{ovl_name.upper()}_" in symbol.name
+                else symbol.name
+            )
+            for symbol in entity_updates
+        ]
+
+        template = Template((Path(__file__).parent / "e_init.c.mako").read_text())
+        output = template.render(
+            ovl_name=ovl_name,
+            entity_funcs=entity_funcs,
+            e_inits=e_inits,
+        )
+        e_init_c_path.write_text(output)
+        return True
+    else:
+        return False
+
+
+def get_known_starts(ovl_name, segments_path):
+    segments_config = sotn_utils.yaml.safe_load(segments_path.read_text())
+    known_segments = []
+    # TODO: Simplify this logic
+    for label, values in segments_config.items():
+        if not values or "functions" not in values:
+            continue
+
+        if "ovl" not in values or ovl_name in values["ovl"]:
+            if "start" not in values:
+                starts = [values["functions"][0]]
+            elif isinstance(values["start"], str):
+                starts = [values["start"]]
+            elif isinstance(values["start"], list):
+                starts = values["start"]
+            else:
+                continue
+
+            if "end" in values and isinstance(values["end"], str):
+                end = values["end"]
+            else:
+                end = ""
+
+            functions = {
+                v.replace("${prefix}", ovl_name.upper())
+                for v in values.get("functions", [])
+            }
+            known_segments.extend(
+                SimpleNamespace(
+                    name=values.get("name", label).replace(
+                        "${prefix}", ovl_name.upper()
+                    ),
+                    start=start.replace("${prefix}", ovl_name.upper()),
+                    end=end.replace("${prefix}", ovl_name.upper()),
+                    allow=set(starts) | functions,
+                )
+                for start in starts
+            )
+    # TODO: Check if this is an issue for multiple segments with the same start
+    return {x.start: x for x in known_segments}
 
 
 def validate_binary(
@@ -375,17 +574,76 @@ def extract(args, version):
             raise SystemExit
 
         clean_artifacts(ovl_config, args.clean, spinner)
-        ovl_load_symbol, ovl_header_name, entity_updates = create_initial_files(
+        ovl_load_symbol, ovl_header_symbol, entity_updates = create_initial_files(
             ovl_config, spinner
         )
 
     with sotn_utils.Spinner(message="gathering initial symbols") as spinner:
-        ovl_config.subsegments = sotn_utils.add_initial_symbols(
-            ovl_config,
-            ovl_header_name,
-            [ovl_load_symbol] if ovl_load_symbol else [],
-            entity_updates,
-            spinner,
+        e_init_c_path = ovl_config.src_path_full.with_name(ovl_config.name) / "e_init.c"
+        ovl_config.subsegments, parsed_symbols, ovl_header, entity_updates, e_inits = (
+            sotn_utils.add_initial_symbols(
+                ovl_config,
+                e_init_c_path,
+                ovl_header_symbol,
+                [ovl_load_symbol] if ovl_load_symbol else [],
+                entity_updates,
+                spinner,
+            )
+        )
+        if ovl_header.get("items"):
+            spinner.message = f"creating {ovl_config.name}/header.c"
+            create_header_c(
+                ovl_header.get("items"),
+                ovl_config.name,
+                ovl_config.ovl_type,
+                ovl_config.version,
+                ovl_config.src_path_full.parent / ovl_config.name / "header.c",
+            )
+            spinner.message = f"adding header subsegment"
+            header_offset = ovl_header["address"] - ovl_config.vram + ovl_config.start
+            header_subseg = [
+                header_offset,
+                ".data",
+                (
+                    f"{ovl_config.name}/header"
+                    if ovl_config.platform == "psp"
+                    else "header"
+                ),
+                ovl_header.get("size_bytes", 0),
+            ]
+            ovl_config.subsegments.append(header_subseg)
+
+        if ovl_config.version == "us":
+            spinner.message = "creating e_init.c"
+            e_init_success = create_e_init_c(
+                entity_updates.get("items"), e_inits, ovl_config.name, e_init_c_path
+            )
+        if parsed_symbols:
+            spinner.message = (
+                f"adding {len(parsed_symbols)} parsed symbols and splitting again"
+            )
+            sotn_utils.add_symbols(
+                ovl_config.ovl_symbol_addrs_path,
+                parsed_symbols,
+                ovl_config.name,
+                ovl_config.vram,
+                ovl_config.symbol_name_format.replace("$VRAM", ""),
+                ovl_config.src_path_full,
+                ovl_config.symexport_path,
+            )
+            sotn_utils.shell(f"git clean -fdx {ovl_config.asm_path}")
+            sotn_utils.splat_split(ovl_config.config_path)
+        ovl_include_path = (
+            ovl_config.src_path_full.parent / ovl_config.name / f"{ovl_config.name}.h"
+        )
+        ovl_include_path = (
+            ovl_config.src_path_full.parent / ovl_config.name / f"{ovl_config.name}.h"
+        )
+        create_ovl_include(
+            entity_updates.get("items"),
+            ovl_config.name,
+            ovl_config.ovl_type,
+            ovl_include_path,
         )
 
     with sotn_utils.Spinner(message="gathering reference overlays") as spinner:
@@ -488,7 +746,11 @@ def extract(args, version):
         spinner.message = f"finding segments and splitting source files"
         include_path = f"../{ovl_config.name}/" if ovl_config.platform == "psp" else ""
         file_header = f'// SPDX-License-Identifier: AGPL-3.0-or-later\n#include "{include_path}{ovl_config.name}.h"\n\n'
-        ovl_config.subsegments = sotn_utils.find_segments(ovl_config, file_header)
+
+        known_starts = get_known_starts(ovl_config.name, Path(args.segments))
+        ovl_config.subsegments = sotn_utils.find_segments(
+            ovl_config, file_header, known_starts
+        )
         ovl_config.write_config()
 
         built_bin_path = ovl_config.build_path / ovl_config.target_path.name
@@ -506,9 +768,6 @@ def extract(args, version):
 
     with sotn_utils.Spinner(message=f"cleaning up {ovl_config.name}.h") as spinner:
         # just in case any function got renamed after the files were created
-        ovl_include_path = (
-            ovl_config.src_path_full.parent / ovl_config.name / f"{ovl_config.name}.h"
-        )
         ovl_header_text = ovl_include_path.read_text()
         ovl_header_text = re.sub(
             rf"{ovl_config.name.upper()}_(\w\w+)\b", r"OVL_EXPORT(\1)", ovl_header_text
@@ -549,7 +808,6 @@ def extract(args, version):
         ovl_include_path.write_text("\n".join(ovl_header_lines) + "\n")
 
         spinner.message = "cleaning up e_init.c"
-        e_init_c_path = ovl_config.src_path_full.with_name(ovl_config.name) / "e_init.c"
         e_init_c_path.write_text(
             re.sub(
                 rf"{ovl_config.name.upper()}_(\w+)\b",
@@ -644,11 +902,32 @@ if __name__ == "__main__":
         help="The version of the game to target (-v/--version can be passed multiple times or multiple comma separated versions: i.e. '-v us,pspeu' or '-v us -v pspeu'), use 'all' to extract us, pspeu, and hd",
     )
     parser.add_argument(
+        "-s",
+        "--segments",
+        required=False,
+        default=f"{Path(__file__).parent / 'segments.yaml'}",
+        help=f"Specify a path to the segments yaml file (default is '{Path(__file__).parent.relative_to(Path.cwd()) / 'segments.yaml'}')",
+    )
+    parser.add_argument(
+        "-t",
+        "--templates",
+        required=False,
+        default=f"{Path(__file__).parent}",
+        help=f"Specify a directory where mako templates can be found (default is '{Path(__file__).parent.relative_to(Path.cwd())}')",
+    )
+    parser.add_argument(
         "-l",
         "--log",
         required=False,
-        default=f"{Path(__file__).parent / 'sotn_utils' / 'logs' / 'sotn_log.json'}",
-        help="Use an alternate path for the log file",
+        default=f"{Path(__file__).parent / 'extract_overlay_log.json'}",
+        help=f"Specify a path for the log file (default is '{Path(__file__).parent.relative_to(Path.cwd()) / 'extract_overlay_log.json'}')",
+    )
+    parser.add_argument(
+        "-e",
+        "--make-expected",
+        required=False,
+        action="store_true",
+        help="Run 'make expected' after successful extraction",
     )
     parser.add_argument(
         "--clean",
@@ -661,13 +940,6 @@ if __name__ == "__main__":
         required=False,
         action="store_true",
         help="DESTRUCTIVE: Remove any existing overlay artifacts without re-extracting the overlay",
-    )
-    parser.add_argument(
-        "-e",
-        "--make-expected",
-        required=False,
-        action="store_true",
-        help="Run 'make expected' after successful extraction",
     )
 
     args = parser.parse_args()
