@@ -70,8 +70,8 @@ static s16 g_PotionItemsParamMap[] = {ITEM_POTION, 16, ITEM_HIGH_POTION, 17};
 extern AnimationFrame* g_FaerieAnimationFrames[];
 extern FaerieSfx g_FaerieSfx;
 extern s32 g_SfxRandomizerHammerResist[];
-extern s32 g_FaerieIntroRandomizer[];
-extern s32 g_SfxEventRandomizer[];
+extern s32* g_FaerieIntroRandomizer[];
+extern s32* g_SfxEventRandomizer[];
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_FaerieAnimationFrames[animationIndex]) {
@@ -1343,7 +1343,7 @@ void UpdateServantAdditionalInit(Entity* self) {
         rnd = rand() % 0x100;
         if (s_FaerieStats.unk8 == 1) {
             for (i = 0; true; i++) {
-                if (rnd <= g_FaerieIntroRandomizer[i * 2]) {
+                if (rnd <= (s32)g_FaerieIntroRandomizer[i * 2]) {
                     self->ext.faerie.currentSfxEvent = (ServantSfxEventDesc*)
                         g_FaerieIntroRandomizer[i * 2 + 1];
                     break;
@@ -1351,7 +1351,7 @@ void UpdateServantAdditionalInit(Entity* self) {
             }
         } else {
             for (i = 0; true; i++) {
-                if (rnd <= g_SfxEventRandomizer[i * 2]) {
+                if (rnd <= (s32)g_SfxEventRandomizer[i * 2]) {
                     self->ext.faerie.currentSfxEvent =
                         (ServantSfxEventDesc*)g_SfxEventRandomizer[i * 2 + 1];
                     break;
@@ -1685,7 +1685,7 @@ void UpdateServantOfferHint(Entity* self) {
         s_zPriority = self->zPriority;
     }
 
-    if (g_FaerieHints[self->params * 3] == -1 || self->step <= 0) {
+    if ((s32)g_FaerieHints[self->params * 3] == -1 || self->step <= 0) {
         s_TargetLocOffset_calc = -0x18;
         if (!PLAYER.facingLeft) {
             s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
@@ -1738,10 +1738,10 @@ void UpdateServantOfferHint(Entity* self) {
     switch (self->step) {
     case 0:
         ExecuteAbilityInitialize(self);
-        s_HintTargetX =
-            g_FaerieHints[self->params * 3 + 0] + self->ext.faerie.tileMapX;
-        s_HintTargetY =
-            g_FaerieHints[self->params * 3 + 1] + self->ext.faerie.tileMapY;
+        s_HintTargetX = (s32)g_FaerieHints[self->params * 3 + 0] +
+                        self->ext.faerie.tileMapX;
+        s_HintTargetY = (s32)g_FaerieHints[self->params * 3 + 1] +
+                        self->ext.faerie.tileMapY;
         self->ext.faerie.timer = -1;
         break;
 
@@ -2234,7 +2234,11 @@ static ServantEvent g_Events[] = {
     MAKE_EVENT(FAM_ACTIVE_SWORD, 49, 20, 0, 4, CHECK_NONE, 0, E_UNK_DC, 0),
     MAKE_EVENT(FAM_ACTIVE_SWORD, 16, 21, 0, 4, CHECK_NONE, 0, E_UNK_DC, 0),
     MAKE_EVENT(FAM_ACTIVE_SWORD, 41, 50, 0, 4, FOR_CASTLE_FLAG(CAT_SPIKE_ROOM_LIT), 1, E_UNK_DC, 15),
+#if defined(VERSION_HD)
+    { 0, 0, -1, 1, -1, -1, -1, -1, -1, -1, 0, 0, 0 }
+#else
     NULL_EVENT
+#endif
 };
 static s32 g_PlaySfxStep = 99;
 static s16 g_EntityRanges[] = {5, 7, 32, 63};

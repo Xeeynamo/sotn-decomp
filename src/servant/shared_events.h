@@ -55,5 +55,9 @@ ServantEvent g_Events[] = {
     MAKE_EVENT(FAM_ACTIVE_SWORD, 49, 20, 0, 4, CHECK_NONE, 0, E_UNK_DC, 0),
     MAKE_EVENT(FAM_ACTIVE_SWORD, 16, 21, 0, 4, CHECK_NONE, 0, E_UNK_DC, 0),
     MAKE_EVENT(FAM_ACTIVE_SWORD, 41, 50, 0, 4, FOR_CASTLE_FLAG(CAT_SPIKE_ROOM_LIT), 1, E_UNK_DC, 15),
+#if defined(VERSION_HD)
+    { 0, 0, -1, 1, -1, -1, -1, -1, -1, -1, 0, 0, 0 }
+#else
     NULL_EVENT
+#endif
 };

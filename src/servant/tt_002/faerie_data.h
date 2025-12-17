@@ -151,15 +151,15 @@ static ServantSfxEventDesc s_IntroEventLifeVO[] = {
     {0, 34, FAERIE_INTRO_LIFE}, {-1, 14, 0}};
 static ServantSfxEventDesc s_IntroEventCommandVO[] = {
     {0, 34, FAERIE_INTRO_COMMAND}, {-1, 14, 0}};
-s32 g_FaerieIntroRandomizer[] = {
-    0x7F, (long)s_IntroEventLifeVO, 0xFF, (long)s_IntroEventCommandVO};
+s32* g_FaerieIntroRandomizer[] = {(s32*)0x7F, (s32*)s_IntroEventLifeVO,
+                                  (s32*)0xFF, (s32*)s_IntroEventCommandVO};
 
 static ServantSfxEventDesc s_SfxEventLetsGo[] = {
     {0, 38, FAERIE_LETS_GO}, {-1, 14, 0}};
 static ServantSfxEventDesc s_SfxEventFollow[] = {
     {0, 38, FAERIE_FOLLOW}, {-1, 14, 0}};
-s32 g_SfxEventRandomizer[] = {
-    0x7F, (long)s_SfxEventLetsGo, 0xFF, (long)s_SfxEventFollow};
+s32* g_SfxEventRandomizer[] = {
+    (s32*)0x7F, (s32*)s_SfxEventLetsGo, (s32*)0xFF, (s32*)s_SfxEventFollow};
 
 static ServantSfxEventDesc s_DarknessHint[] = {
     {0, 14, FAERIE_DARKNESS_HINT}, {-1, 14, 0}};
@@ -171,10 +171,15 @@ static ServantSfxEventDesc s_SuspiciousHint[] = {
     {0, 36, FAERIE_SUSPICIOUS_HINT}, {-1, 14, 0}};
 static ServantSfxEventDesc s_WallHint2[] = {
     {0, 36, FAERIE_WALL_HINT}, {-1, 14, 0}};
-static s32 g_FaerieHints[] = {
-    -1,  -1,  (long)s_DarknessHint, -1,  -1,  (long)s_MistHint,
-    88,  184, (long)s_WallHint1,    32,  128, (long)s_SuspiciousHint,
-    56,  128, (long)s_WallHint2,    128, 208, (long)s_WallHint1,
-    208, 112, (long)s_WallHint2,    160, 128, (long)s_SuspiciousHint,
-    208, 120, (long)s_WallHint2,    48,  128, (long)s_SuspiciousHint,
+static s32* g_FaerieHints[] = {
+    (s32*)-1,  (s32*)-1,  (s32*)s_DarknessHint,
+    (s32*)-1,  (s32*)-1,  (s32*)s_MistHint,
+    (s32*)88,  (s32*)184, (s32*)s_WallHint1,
+    (s32*)32,  (s32*)128, (s32*)s_SuspiciousHint,
+    (s32*)56,  (s32*)128, (s32*)s_WallHint2,
+    (s32*)128, (s32*)208, (s32*)s_WallHint1,
+    (s32*)208, (s32*)112, (s32*)s_WallHint2,
+    (s32*)160, (s32*)128, (s32*)s_SuspiciousHint,
+    (s32*)208, (s32*)120, (s32*)s_WallHint2,
+    (s32*)48,  (s32*)128, (s32*)s_SuspiciousHint,
 };
