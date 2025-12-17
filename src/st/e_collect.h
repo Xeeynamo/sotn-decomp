@@ -727,7 +727,6 @@ void Unreferenced_MAD_ST0_func(Entity* self) {
 #ifdef VERSION_PSP
 char* obtainedStr;
 #endif
-u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 void EntityEquipItemDrop(Entity* self) {
     Collider collider;
