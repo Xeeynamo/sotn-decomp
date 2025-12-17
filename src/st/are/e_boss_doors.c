@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "are.h"
 
-extern EInit D_us_80180AF8;
+extern EInit g_EInitEnvironment;
 
 #ifdef VERSION_PSP
 extern s32 E_ID(BOSS_DOORS);
@@ -13,7 +13,7 @@ void EntityBossDoors(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180AF8);
+        InitializeEntity(g_EInitEnvironment);
         if (self->params & 0x100) {
             self->animCurFrame = 2;
             self->zPriority = 0x6A;

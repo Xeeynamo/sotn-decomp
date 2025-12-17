@@ -142,5 +142,5 @@ segments:
       - [0x41680, .bss, e_gear_puzzle]
       - [0x41688, .bss, create_entity]
       - [0x41698, bss]
-      - [0x42300, .bss, e_collect]
+      - [0x42300, .bss, st_update]
   - [0x42340]

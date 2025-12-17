@@ -117,5 +117,5 @@ segments:
       - [0x53D24, .bss, doppleganger]
       - [0x53D30, .bss, unk_46E7C]
       - [0x54118, .bss, bss]
-      - [0x54DF8, .bss, e_collect]
+      - [0x54DF8, .bss, st_update]
   - [0x54E38]

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "are.h"
 
-extern EInit D_us_80180AF8;
+extern EInit g_EInitEnvironment;
 
 enum ElevatorPosition { TOP = 0, MIDDLE = 1, BOTTOM = 2 };
 
@@ -37,7 +37,7 @@ void EntityElevator(Entity* self) {
     playerCollision = GetPlayerCollisionWith(self, 0x30, 4, 4);
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180AF8);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 0x10;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
         if (primIndex == -1) {
@@ -242,7 +242,7 @@ void EntityElevatorGates(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180AF8);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 0xF;
         self->zPriority = 0x69;
         if (self->params & 1) {
@@ -296,7 +296,7 @@ void EntityElevatorSwitch(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180AF8);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 9;
         self->zPriority = 0x69;
         if (g_CastleFlags[ARE_ELEVATOR_ACTIVATED]) {
