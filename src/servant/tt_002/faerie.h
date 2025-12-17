@@ -75,7 +75,3 @@ typedef struct {
     /* 0x16 */ s16 unk16;
     /* 0x18 */ u32 flags;
 } ItemPrimitiveParams; // size = 0x1C
-
-extern u16 g_FaerieClut[64];
-extern SpriteParts* g_FaerieSpriteParts[];
-extern s32 g_PlaySfxStep;

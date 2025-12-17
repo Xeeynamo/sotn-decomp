@@ -26,6 +26,9 @@ static s32 s_AllowedAngle;
 static s32 s_DistToTargetLocation;
 static s16 s_TargetLocOffset_calc;
 
+extern SpriteParts* g_FaerieSpriteParts[];
+extern u16 g_FaerieClut[64];
+static s32 g_PlaySfxStep;
 extern s32 g_AlucardChairSleepTimer;
 
 // Map is used in the wing animation selector. The Z index param is used
