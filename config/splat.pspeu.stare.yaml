@@ -54,7 +54,7 @@ segments:
       - [0x2360, c, are/e_lock_camera]
       - [0x25C0, c, are/e_boss_doors]
       - [0x2BE8, c, are/e_explosion_puff_opaque]
-      - [0x3180, c, are_psp/e_cavern_door]
+      - [0x3180, c, are/e_cavern_door]
       - [0x3C40, c, are/e_secrets]
       - [0x3F40, c, are/create_entity]
       - [0x4EE8, c, are/e_blue_axe_knight]

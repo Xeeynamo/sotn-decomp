@@ -57,8 +57,8 @@ enum Entities {
     E_GREY_PUFF,                    // EntityGreyPuff
     E_BOSS_TORCH,                   // EntityBossTorch
     E_BOSS_DOORS,                   // EntityBossDoors
-    E_BRIDGE_BACKGROUND_PIECE,      // EntityBridgeBackgroundPiece
-    E_UNK_19,                       // func_us_801B6DF0
+    E_CAVERN_DOOR_SWITCH,           // EntityCavernDoorSwitch
+    E_CAVERN_DOOR,                  // EntityCavernDoor
     E_ELEVATOR,                     // EntityElevator
     E_ELEVATOR_SWITCH,              // EntityElevatorSwitch
     E_ELEVATOR_GATES,               // EntityElevatorGates
