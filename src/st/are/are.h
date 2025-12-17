@@ -20,6 +20,10 @@ enum Palettes {
     PAL_PLATE_LORD_UNK1 = 0x226,
     PAL_PLATE_LORD_UNK2 = 0x227,
     PAL_PLATE_LORD_UNK3 = 0x228,
+    PAL_BREAKABLE_TORCH_A = 0x228,
+    PAL_BREAKABLE_TORCH_B = 0x229,
+    PAL_BREAKABLE = 0x22A,
+    PAL_BREAKABLE_DEBRIS = 0x22E,
     // puff params 0,1
     PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
     // puff params 2 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 3)

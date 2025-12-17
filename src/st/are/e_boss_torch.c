@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "are.h"
 
-extern EInit D_us_80180AF8;
+extern EInit g_EInitEnvironment;
 static AnimateEntityFrame anim_boss_torch[] = {
     {.duration = 5, .pose = 0x04}, {.duration = 5, .pose = 0x05},
     {.duration = 5, .pose = 0x06}, {.duration = 5, .pose = 0x07},
@@ -14,7 +14,7 @@ static s16 scale[] = {256, 200, 164};
 void EntityBossTorch(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180AF8);
+        InitializeEntity(g_EInitEnvironment);
         self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
         self->scaleX = self->scaleY = scale[self->params];
         // fallthrough

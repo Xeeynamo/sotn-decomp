@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "are.h"
 
-extern EInit D_us_80180AF8;
+extern EInit g_EInitEnvironment;
 static s16 breakableCeilingTilesCollision[] = {
     0x0476,
     0x0477,
@@ -23,7 +23,7 @@ void EntityBreakableCeilingSecret(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180AF8);
+        InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 0xA;
         self->zPriority = 0x69;
 

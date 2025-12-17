@@ -45,7 +45,7 @@ segments:
       - [0xC84, data]
       - [0xD04, .data, e_red_door_tiles]
       - [0xD24, .data, e_lock_camera]
-      - [0xDA4, data]
+      - [0xDA4, .data, e_breakable]
       - [0xEB8, .data, e_boss_torch]
       - [0xECC, .data, e_boss_doors]
       - [0xED0, .data, e_elevator]
