@@ -42,7 +42,7 @@ segments:
       - [0x0, .data, header]
       - [0x2C, data]
       - [0x958, .data, e_init]
-      - [0xC84, data]
+      - [0xC84, .data, background_block_init]
       - [0xD04, .data, e_red_door_tiles]
       - [0xD24, .data, e_lock_camera]
       - [0xDA4, .data, e_breakable]
@@ -52,7 +52,7 @@ segments:
       - [0xF2C, .data, e_secrets]
       - [0xF3C, .data, e_background_door_rubble]
       - [0xF7C, .data, e_explosion_puff_opaque]
-      - [0xFE8, data] # prize_drops
+      - [0xFE8, .data, d_prize_drops]
       - [0x1018, .data, st_update]
       - [0x1044, .data, st_collision]
       - [0x1404, .data, e_red_door]
