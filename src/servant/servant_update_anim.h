@@ -14,7 +14,7 @@ u32 ServantUpdateAnim(Entity* self, s8* frameProps, AnimationFrame** frames) {
             self->poseTimer = ((u16*)self->anim)[self->pose * 2];
             ret = 0;
         } else if (((u16*)self->anim)[self->pose * 2] == 0xFFFF) {
-            self->pose -= 1;
+            self->pose--;
             self->poseTimer = -1;
             ret = -1;
         } else if (((u16*)self->anim)[self->pose * 2] == 0xFFFE) {
