@@ -636,7 +636,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 drawMode;
+    /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unkAccumulator;
     /* 0x82 */ s16 unkFlag;
 } ET_FaerieItem;
@@ -662,8 +662,8 @@ typedef struct {
     /* 0x92 */ s16 requireAntivenomLuckCheck;
     /* 0x94 */ s16 requirePotionLuckCheck;
     /* 0x96 */ s16 timer;
-    /* 0x98 */ s32 tileMapX;
-    /* 0x9C */ s32 tileMapY;
+    /* 0x98 */ u32 tileMapX;
+    /* 0x9C */ u32 tileMapY;
     /* 0xA0 */ s16 idleFrameCounter;
     /* 0xA2 */ s16 : 16;
     /* 0xA4 */ ServantSfxEventDesc* currentSfxEvent;

@@ -272,5 +272,6 @@ g_GpuBuffers = 0x091FC4E8; // size:0x38238
 D_8006C384 = 0x09234720;
 D_8006C38C = 0x09234728;
 g_CastleFlags = 0x09234730; // size:0x300
+g_AlucardChairSleepTimer = 0x09234CB8;
 richter_sprites = 0x092703C0;
 DestroyEntity = 0x092EE938;
