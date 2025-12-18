@@ -178,6 +178,72 @@ files:
     asset_path: assets/st/are
     src_path: src/st/are
     splat_config_path: config/splat.us.stare.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, us/sprite_banks]
+          - [0x90, palette, pal_90, 16]
+          - [0xB0, palette, pal_B0, 16]
+          - [0xD0, palette, pal_D0, 16]
+          - [0xF0, palette, pal_F0, 16]
+          - [0x110, palette, pal_110, 16]
+          - [0x130, skip] # extra palette def
+          - [0x154, paldef, palette_def]
+          - [0x214, skip] # multiple cluts here are not importing correctly, see issue #2401
+          - [0x218, layers, layers]
+          - [0x3E8, gfx_banks, us/graphics_banks]
+          - [0x7B0, layout, entity_layouts]
+          - [0x958, skip]
+          - [0x2E5C, rooms, rooms]
+          - [0x2F00, skip]
+          - [0x3C10, cmpgfx, gfx_stage_name_jp_sm, 128, 128, 4] # unused
+          - [0x3EE4, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4]
+          - [0x4428, cmpgfx, gfx_cavern_door, 128, 128, 4, 0x19A90]
+          - [0x521C, cmpgfx, gfx_stage_name_en, 128, 128, 4]
+          - [0x54C8, cmpgfx, gfx_blade_master_1, 128, 128, 4, 0x19AB0]
+          - [0x5E38, cmpgfx, gfx_blade_master_2, 128, 128, 4, 0x19AB0]
+          - [0x6750, cmpgfx, gfx_blade_master_3, 128, 128, 4, 0x19AB0]
+          - [0x69FC, cmpgfx, gfx_blade_soldier, 128, 128, 4, 0x19AF0]
+          - [0x74F0, cmpgfx, gfx_bone_musket, 128, 128, 4, 0x19B30]
+          - [0x802C, cmpgfx, gfx_owl_knight_owl, 128, 128, 4, 0x19BB0]
+          - [0x90B0, cmpgfx, gfx_owl_knight_1, 128, 128, 4, 0x19BD0]
+          - [0x9F28, cmpgfx, gfx_owl_knight_2, 128, 128, 4, 0x19BD0]
+          - [0xAC40, cmpgfx, gfx_valhalla_knight_1, 128, 128, 4, 0x19C90]
+          - [0xBA90, cmpgfx, gfx_valhalla_knight_2, 128, 128, 4, 0x19C90]
+          - [0xCC74, cmpgfx, gfx_valhalla_knight_3, 128, 128, 4, 0x19C90]
+          - [0xDA70, cmpgfx, gfx_axe_knight_1, 128, 128, 4, 0x19E70]
+          - [0xE960, cmpgfx, gfx_axe_knight_2, 128, 128, 4, 0x19E70]
+          - [0xF550, cmpgfx, gfx_armor_lord_1, 128, 128, 4, 0x19CF0]
+          - [0x10484, cmpgfx, gfx_armor_lord_2, 128, 128, 4, 0x19CF0]
+          - [0x114E4, cmpgfx, gfx_armor_lord_3, 128, 128, 4, 0x19CF0]
+          - [0x120F4, cmpgfx, gfx_armor_lord_4, 128, 128, 4, 0x19CF0]
+          - [0x12BB0, cmpgfx, gfx_hunting_girl, 128, 128, 4, 0x19EF0]
+          - [0x132E8, cmpgfx, gfx_paranthropus_1, 128, 128, 4, 0x19F50]
+          - [0x13BB4, cmpgfx, gfx_paranthropus_2, 128, 128, 4, 0x19F50]
+          - [0x1422C, cmpgfx, gfx_flea_man_armor, 128, 128, 4, 0x19FB0] # unused
+          - [0x14CF8, cmpgfx, gfx_bone_scimitar, 128, 128, 4, 0x1A010]
+          - [0x158D4, cmpgfx, e_explosion_unk_1, 128, 128, 4]
+          - [0x16604, cmpgfx, e_explosion_unk_2, 128, 128, 4]
+          - [0x177AC, cmpgfx, gfx_plate_lord, 128, 128, 4, 0x1A070]
+          - [0x18278, cmpgfx, gfx_grave_keeper, 128, 128, 4, 0x1A0D0]
+          - [0x18EDC, cmpgfx, gfx_grave_keeper_tombstone, 128, 128, 4, 0x1A0D0]
+          - [0x197D0, palette, pal_puff_opaque, 16] # 0x2E0
+          - [0x19A90, palette, pal_cavern_door, 16] # 0x200
+          - [0x19AB0, palette, pal_blade_master, 16] # 0x201
+          - [0x19AF0, palette, pal_blade_soldier, 16] # 0x203
+          - [0x19B30, palette, pal_bone_musket, 16] # 0x205
+          - [0x19BB0, palette, pal_owl_knight, 16] # 0x209
+          - [0x19C90, palette, pal_valhalla_knight, 16] # 0x210
+          - [0x19CF0, palette, pal_armor_lord, 16] # 0x216
+          - [0x19E70, palette, pal_blue_axe_knight, 16] # 0x213
+          - [0x19EF0, palette, pal_hunting_girl, 16] # 0x21C
+          - [0x19F50, palette, pal_paranthropus, 16] # 0x21F
+          - [0x19FB0, palette, pal_flea_man_armor, 16] # 0x222
+          - [0x1A010, palette, pal_bone_scimitar, 16] # 0x225
+          - [0x1A070, palette, pal_plate_lord, 16] # 0x226
+          - [0x1A0D0, palette, pal_grave_keeper_tombstone, 16] # 0x229
+          - [0x1A110, skip]
   - target: disks/us/ST/CAT/CAT.BIN
     asset_path: assets/st/cat
     src_path: src/st/cat
