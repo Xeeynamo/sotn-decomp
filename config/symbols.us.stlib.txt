@@ -2,4 +2,3 @@ LIB_cluts = 0x80180194;
 LIB_rooms_layers = 0x8018029C;
 LIB_gfxBanks = 0x801804D4;
 LIB_PrizeDrops = 0x80181A90;
-g_UnkPrimHelperRot = 0x801ADDA4;

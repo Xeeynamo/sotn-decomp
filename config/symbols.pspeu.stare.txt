@@ -1,4 +1,4 @@
-sprites_3 = 0x0928D548;
+sprites_are_7 = 0x0928D548;
 ARE_spriteBanks = 0x09294418;
 ARE_rooms_layers = 0x092945B0;
 ARE_cluts = 0x092947C8;
