@@ -29,7 +29,7 @@ s32 Random(void) {
     return (g_randomNext >> 0x18) & 0xFF;
 }
 
-#include <stage.h>
+u16 g_ItemIconSlots[ICON_SLOT_NUM];
 
 void Update(void) {
     s16 x;

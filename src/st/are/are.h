@@ -9,6 +9,8 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_TORCH_A = 0x5A,
+    PAL_TORCH_B = 0x5B,
     PAL_BACKGROUND_DOOR_RUBBLE = 0x9E,
     PAL_FOUNTAIN_WATER = 0xC0,
     // 0xC0 - 0xCA are cycled in EntityFountainWater based on g_Timer
@@ -18,6 +20,10 @@ enum Palettes {
     PAL_PLATE_LORD_UNK1 = 0x226,
     PAL_PLATE_LORD_UNK2 = 0x227,
     PAL_PLATE_LORD_UNK3 = 0x228,
+    PAL_BREAKABLE_TORCH_A = 0x228,
+    PAL_BREAKABLE_TORCH_B = 0x229,
+    PAL_BREAKABLE = 0x22A,
+    PAL_BREAKABLE_DEBRIS = 0x22E,
     // puff params 0,1
     PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
     // puff params 2 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 3)
@@ -49,13 +55,13 @@ enum Entities {
     E_UNK_ID13,                     // EntityUnkId13
     E_EXPLOSION_VARIANTS,           // EntityExplosionVariants
     E_GREY_PUFF,                    // EntityGreyPuff
-    E_UNK_16,                       // func_us_801B628C
-    E_UNK_17,                       // func_us_801B6420
-    E_BRIDGE_BACKGROUND_PIECE,      // EntityBridgeBackgroundPiece
-    E_UNK_19,                       // func_us_801B6DF0
-    E_UNK_1A,                       // func_us_801B7184
-    E_HEART_ROOM_SWITCH,            // EntityHeartRoomSwitch
-    E_UNK_1C,                       // func_us_801B7998
+    E_BOSS_TORCH,                   // EntityBossTorch
+    E_BOSS_DOORS,                   // EntityBossDoors
+    E_CAVERN_DOOR_SWITCH,           // EntityCavernDoorSwitch
+    E_CAVERN_DOOR,                  // EntityCavernDoor
+    E_ELEVATOR,                     // EntityElevator
+    E_ELEVATOR_SWITCH,              // EntityElevatorSwitch
+    E_ELEVATOR_GATES,               // EntityElevatorGates
     E_UNK_1D,                       // EntityFountainWater
     E_BREAKABLE_CEILING_SECRET,     // EntityBreakableCeilingSecret
     E_BACKGROUND_DOOR_RUBBLE,       // EntityBackgroundDoorRubble

@@ -22,13 +22,13 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801B628C(Entity* self);
-void func_us_801B6420(Entity* self);
-void EntityBridgeBackgroundPiece(Entity* self);
-void func_us_801B6DF0(Entity* self);
-void func_us_801B7184(Entity* self);
-void EntityHeartRoomSwitch(Entity* self);
-void func_us_801B7998(Entity* self);
+void EntityBossTorch(Entity* self);
+void EntityBossDoors(Entity* self);
+void EntityCavernDoorSwitch(Entity* self);
+void EntityCavernDoor(Entity* self);
+void EntityElevator(Entity* self);
+void EntityElevatorSwitch(Entity* self);
+void EntityElevatorGates(Entity* self);
 void EntityFountainWater(Entity* self);
 void EntityBreakableCeilingSecret(Entity* self);
 void EntityBackgroundDoorRubble(Entity* self);
@@ -101,13 +101,13 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801B628C,
-    func_us_801B6420,
-    EntityBridgeBackgroundPiece,
-    func_us_801B6DF0,
-    func_us_801B7184,
-    EntityHeartRoomSwitch,
-    func_us_801B7998,
+    EntityBossTorch,
+    EntityBossDoors,
+    EntityCavernDoorSwitch,
+    EntityCavernDoor,
+    EntityElevator,
+    EntityElevatorSwitch,
+    EntityElevatorGates,
     EntityFountainWater,
     EntityBreakableCeilingSecret,
     EntityBackgroundDoorRubble,
@@ -170,9 +170,8 @@ EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x003};
-
-EInit D_us_80180AF8 = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
-EInit D_us_80180B04 = {ANIMSET_OVL(0x02), 0x00, 0x53, 0x0200, 0x005};
+EInit g_EInitEnvironment = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
+EInit g_EInitCavernDoor = {ANIMSET_OVL(0x02), 0x00, 0x53, 0x0200, 0x005};
 
 // Blade Master
 EInit g_EInitBladeMaster = {ANIMSET_OVL(0x03), 0x01, 0x48, 0x0201, 0x07A};
