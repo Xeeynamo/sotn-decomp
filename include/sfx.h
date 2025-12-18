@@ -213,12 +213,12 @@ enum {
 #define NA_VO_ML_THANKS 0x3AB     // Master Librarian says "Thank you"
 #define NA_VO_ML_FAREWELL 0x3B0   // Master Librarian says "Farewell for now"
 #else
+#define NA_VO_AL_DEATH_DREAM_WORLD                                             \
+    0x391 // Alucard: Death in the dream world will set your soul wandering for
+          // eternity, demon.
 #define NA_VO_AL_INTERESTED 0x3A9 // Alucard says "I'm interested in this"
 #define NA_VO_ML_THANKS 0x3AD     // Master Librarian says "Thank you"
 #define NA_VO_ML_FAREWELL 0x3B2   // Master Librarian says "Farewell for now"
-#endif
-
-#if defined(VERSION_US)
 #define NA_VO_MA_IF_YOU_WEAR                                                   \
     0x3CE // Maria: If you wear these, you can see beyond evil illusions.
 
@@ -229,12 +229,20 @@ enum {
     0x3DB // Richter: Impressive, but you can't escape this.
 #define NA_VO_RI_ONLY_THE_COUNT                                                \
     0x3DC // Richter: Hah, I knew it. Only the count is a true match for me.
-
-#define NA_VO_AL_DEATH_DREAM_WORLD                                             \
-    0x391 // Alucard: Death in the dream world will set your soul wandering for
-          // eternity, demon.
+#endif
 
 // Fairy voiceovers
+#if defined(VERSION_PSP)
+#define FAERIE_INTRO_LIFE 0x470    // "Thank you for giving me life"
+#define FAERIE_INTRO_COMMAND 0x471 // "Your word is my command"
+#define FAERIE_LETS_GO 0x474       // "Let's go!"
+#define FAERIE_FOLLOW 0x477        // "I'll follow you anywhere"
+#define FAERIE_WALL_HINT 0x478     // "There is something funny about this wall"
+#define FAERIE_SUSPICIOUS_HINT 0x488 // "This is really suspicious looking"
+#define FAERIE_MIST_HINT 0x48C       // "If only you could transform into mist"
+#define FAERIE_DARKNESS_HINT                                                   \
+    0x490 // "Some animals can live in complete darkness"
+#else
 #define FAERIE_INTRO_LIFE 0x472    // "Thank you for giving me life"
 #define FAERIE_INTRO_COMMAND 0x473 // "Your word is my command"
 #define FAERIE_LETS_GO 0x476       // "Let's go!"
@@ -244,8 +252,14 @@ enum {
 #define FAERIE_MIST_HINT 0x48E       // "If only you could transform into mist"
 #define FAERIE_DARKNESS_HINT                                                   \
     0x492 // "Some animals can live in complete darkness"
+#endif
+
+// STAGE DAI
+// Unknown SFX related to the priest
+#define SFX_UNK_4E5 0x4E5
 
 // Demon voiceovers
+#if defined(VERSION_US)
 #define DEMON_INTRO_COMMAND 0x4E8 // Command me, my lord and master
 #define DEMON_INTRO_READY 0x4ED   // I'm ready to serve, master
 #define DEMON_SWITCH_1 0x4EE // Hmm, a switch.  Why don't I press it and see?
@@ -255,10 +269,6 @@ enum {
 #define JP_VO_SH_SCREAM 0x52F     // Shaft screams
 #define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
 #endif
-
-// STAGE DAI
-// Unknown SFX related to the priest
-#define SFX_UNK_4E5 0x4E5
 
 // The VAB IDs appear in large chunks so all sounds proceeding
 // a vabid label comment will belong in that VAB group unless noted.

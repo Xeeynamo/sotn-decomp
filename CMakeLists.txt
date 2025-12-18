@@ -287,12 +287,9 @@ set(SOURCE_FILES_TT_001
 )
 
 set(SOURCE_FILES_TT_002
+    src/servant/tt_002/init.c
     src/servant/tt_002/faerie.c
-    src/servant/tt_002/faerie_ability_data.c
-    src/servant/tt_002/faerie_animation_data.c
-    src/servant/tt_002/faerie_data.c
     src/servant/tt_002/faerie_spriteparts.c
-    src/servant/tt_002/servant_events.c
 )
 
 set(SOURCE_FILES_STAGE_SEL

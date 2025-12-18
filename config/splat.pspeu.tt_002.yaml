@@ -1,0 +1,52 @@
+options:
+  platform: psp
+  basename: tt_002
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_002.bin
+  asm_path: asm/pspeu/servant/tt_002
+  asset_path: assets/servant/tt_002
+  src_path: src/servant/tt_002
+  ld_script_path: build/pspeu/tt_002.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.tt_002.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.tt_002.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.tt_002.txt
+  find_file_boundaries: yes
+  use_legacy_include_asm: no
+  migrate_rodata_to_functions: yes
+  asm_jtbl_label_macro: jlabel
+  disassemble_all: true
+  section_order:
+    - ".text"
+    - ".data"
+    - ".rodata"
+    - ".bss"
+  ld_bss_is_noload: True
+  disasm_unknown: True
+  global_vram_start: 0x08000000
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+  ld_generate_symbol_per_data_segment: true
+sha1: fd55d945a5815d5777cd4c091e27f545419b4b4e
+segments:
+  - [0x0, bin, mwo_header]
+  - name: tt_002
+    type: code
+    start: 0x00000080
+    vram: 0x092E7680
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, faerie]
+      - [0x7C90, c, init]
+      - [0x7D00, .data, faerie_spriteparts]
+      - [0xA178, .data, faerie]
+      - [0xB528, .data, init]
+      - [0xB580, .rodata, faerie]
+      - [0xB700, .bss, faerie_spriteparts]
+      - [0xB708, .bss, faerie]
+  - [0xB7F0]
