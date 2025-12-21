@@ -48,6 +48,7 @@ typedef enum {
     /* 0x35 */ IVE_BEEN_ROBBED = 53, // Set when Death takes your stuff
     /* 0x36 */ NO3_STAGE_FLAG = 54,
     /* 0x36 */ NP3_STAGE_FLAG = 54,
+    /* 0x36 */ MAD_STAGE_FLAG = 54,
     /* 0x37 */ CASTLE_TURNED_ON = 55,      // Sets in first NO3 Hallway
     /* 0x38 */ DEATH_STAIRWAY_BROKEN = 56, // Break the ledge just before Death
     /* 0x39 */ SLO_GAI_RETREATED = 57,     // Slogra/Gaibon retreated in NP3
