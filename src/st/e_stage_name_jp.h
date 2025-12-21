@@ -12,7 +12,7 @@
 #define STAGE_NAME_BOX_RIGHT_X 248
 #endif
 
-#ifdef VERSION_HD
+#if defined(VERSION_HD) || defined(VERSION_BETA)
 #define NUM_PRIMS 181
 #define TEXT_X 192
 #define TEXT_Y 177
@@ -79,7 +79,7 @@ static void LoadStageNameGraphics(void) {
 // This is the banner version which "shutter opens" and wipes away to the left.
 // psp prims 8-183 and hd prims 6-181 seem to be completely unused
 void EntityStageNamePopup(Entity* self) {
-#ifdef VERSION_HD
+#if defined(VERSION_HD) || defined(VERSION_BETA)
     u8 padding[0xD8];
 #endif
     Primitive* prim;
@@ -117,7 +117,7 @@ void EntityStageNamePopup(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         prim = &g_PrimBuf[primIndex];
         self->ext.stpopupj.firstTextPrim = prim;
-#if !defined(VERSION_HD)
+#if !defined(VERSION_HD) && !defined(VERSION_BETA)
         while (prim != NULL) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
@@ -135,7 +135,7 @@ void EntityStageNamePopup(Entity* self) {
 // This splits the two loops in the middle because that is what is happening
 // functionally.  The two prims for psp together have the same left and right
 // sides (conceptually) as the single prim for hd.
-#if !defined(VERSION_HD)
+#if !defined(VERSION_HD) && !defined(VERSION_BETA)
             prim->x3 = prim->x1 = 128;
             prim->y3 = prim->y2 = 173;
             prim->u2 = prim->u0 = 0;
@@ -226,7 +226,7 @@ void EntityStageNamePopup(Entity* self) {
         prim->v2 = 255;
         prim->v3 = prim->v2;
         prim->x2 = prim->x0 = STAGE_NAME_BOX_LEFT_X;
-#ifdef VERSION_HD
+#if defined(VERSION_HD) || defined(VERSION_BETA)
         prim->y1 = prim->y0 = 155;
         prim->x3 = prim->x1 = STAGE_NAME_BOX_RIGHT_X;
 #else
@@ -263,7 +263,7 @@ void EntityStageNamePopup(Entity* self) {
                 prim = prim->next;
             }
 
-#if !defined(VERSION_HD)
+#if !defined(VERSION_HD) && !defined(VERSION_BETA)
             for (i = 0; i < 2; i++) {
                 prim->u0 = prim->u2 = 128;
                 prim->v0 = prim->v1 = 48;
@@ -302,11 +302,11 @@ void EntityStageNamePopup(Entity* self) {
 
             if (!primsSet) {
                 self->step_s++;
-#if !defined(VERSION_HD)
+#if !defined(VERSION_HD) && !defined(VERSION_BETA)
                 self->ext.stpopupj.timer = 0;
 #endif
                 prim = self->ext.stpopupj.firstTextPrim;
-#if !defined(VERSION_HD)
+#if !defined(VERSION_HD) && !defined(VERSION_BETA)
                 prim = prim->next;
                 prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_COLORS;
                 prim = prim->next;
@@ -320,7 +320,7 @@ void EntityStageNamePopup(Entity* self) {
             break;
         case STAGE_NAME_DRAW_TEXT:
             prim = self->ext.stpopupj.firstTextPrim;
-#ifdef VERSION_HD
+#if defined(VERSION_HD) || defined(VERSION_BETA)
             for (i = 0; i < 2; i++) {
                 prim->u0 -= 8;
                 prim->u2 = prim->u0;
@@ -377,7 +377,7 @@ void EntityStageNamePopup(Entity* self) {
                     } else {
                         self->step_s = STAGE_NAME_HOLD_TEXT;
                     }
-#if !defined(VERSION_HD)
+#if !defined(VERSION_HD) && !defined(VERSION_BETA)
                     if (prim->y2 < i * 2 + PRIM_BOTTOM_Y) {
                         prim->v2++;
                         prim->v3 = prim->v2;
@@ -423,7 +423,7 @@ void EntityStageNamePopup(Entity* self) {
         prim->x1 -= 4; // Aligns right side of box with right side of text
         boxRightX = prim->x3 = prim->x1;
         prim = self->ext.stpopupj.firstTextPrim;
-#ifdef VERSION_HD
+#if defined(VERSION_HD) || defined(VERSION_BETA)
         for (i = 0; i < 2; i++) {
             if (prim->x1 > boxRightX) {
                 prim->x1 -= 4;
@@ -437,7 +437,7 @@ void EntityStageNamePopup(Entity* self) {
                 if (prim->x1 < prim->x0) {
                     prim->drawMode = DRAW_HIDE;
                 }
-#ifdef VERSION_HD
+#if defined(VERSION_HD) || defined(VERSION_BETA)
                 prim->u1 -= 4;
                 prim->u3 = prim->u1;
             }
