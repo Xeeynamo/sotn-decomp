@@ -304,15 +304,15 @@ enum {
     /* us:0x4EF, jp:0x4ED */ DEMON_SWITCH_2,    // Hmm, this switch hasn't been
                                                 // pressed yet
     /* us:0x52D, jp:0x52D */ UNK_52D = 0x52D,
-#ifdef VERSION_PSP
-    /*           jp:0x52E */ VO_GAMEOVER_DEATH_TAUNT_1,
-    /*           jp:0x52F */ VO_GAMEOVER_DEATH_TAUNT_2,
-    /*           jp:0x530 */ VO_GAMEOVER_DEATH_TAUNT_3,
-#else
+#ifdef VERSION_US
     /* us:0x52E,          */ JP_VO_SH_GROAN,      // Shaft groans
     /* us:0x52F,          */ JP_VO_SH_SCREAM,     // Shaft screams
     /* us:0x530,          */ JP_VO_SH_SONO_TEIDO, // Shaft: Sono teido no
                                                   // chikara de tatakai...
+#else
+    /*           jp:0x52E */ VO_GAMEOVER_DEATH_TAUNT_1,
+    /*           jp:0x52F */ VO_GAMEOVER_DEATH_TAUNT_2,
+    /*           jp:0x530 */ VO_GAMEOVER_DEATH_TAUNT_3,
 #endif
 };
 
