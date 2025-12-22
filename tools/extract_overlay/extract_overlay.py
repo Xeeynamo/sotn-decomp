@@ -8,9 +8,11 @@ import hashlib
 import time
 import re
 import multiprocessing
+from enum import Enum
 from pathlib import Path
 from subprocess import run
 from types import SimpleNamespace
+from collections import Counter
 from mako.template import Template
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
@@ -20,7 +22,7 @@ from symbols import sort, extract_dynamic_symbols, Symbol
 """
 Handles many tasks for adding an overlay:
 - Extracts the data necessary to generate an initial config
-- Parses known data tables (psx header, entity table, psp export table)
+- Parses known data tables (psx header, EntityUpdates, psp export table)
 - Compares newly extracted functions to existing asm files to identify functions
 - Adds and renames identified symbols
 - Cross references asm with existing asm and matches symbols from identical instruction sequences
@@ -38,6 +40,185 @@ Additional notes:
 - If a segment has only one function, it is named as that function in snake case.  If the function name starts with Entity, it replaces it with 'e'.
     For example: A segment with the only function being EntityShuttingWindow would be named as e_shutting_window
 """
+
+
+class EnemyDefs(Enum):
+    BlueAxeKnight = 0x006
+    SwordLord = 0x009
+    Skelerang = 0x00B
+    BloodyZombie = 0x00D
+    FlyingZombieHalf1 = 0x00E
+    FlyingZombieHalf2 = 0x00F
+    Diplocephalus = 0x010
+    OwlKnight = 0x014
+    Owl = 0x016
+    LesserDemon = 0x017
+    MermanLvl2 = 0x01B
+    MermanLvl3 = 0x01D
+    Gorgon = 0x01F
+    ArmorLord = 0x022
+    BlackPanther = 0x025
+    DarkOctopus = 0x026
+    FleaMan = 0x028
+    FleaArmor = 0x029
+    WhiteDragon = 0x02B
+    BoneArk = 0x02D
+    BoneArkSkeleton = 0x02E
+    BoneArkProjectile = 0x2F
+    FleaRider = 0x030
+    Marionette = 0x031
+    OlroxLvl25 = 0x032
+    OlroxLvl0 = 0x037
+    Wereskeleton = 0x03D
+    Bat = 0x040
+    LargeSlime = 0x041
+    Slime = 0x042
+    PhantomSkull = 0x043
+    FlailGuard = 0x044
+    BloodSkeleton = 0x046
+    HellfireBeast = 0x047
+    Skeleton = 0x04B
+    DiscusLordLvl22 = 0x04D
+    DiscusLordLvl0 = 0x04E
+    FireDemon = 0x04F
+    SpittleBone = 0x051
+    SkeletonApe = 0x053
+    StoneRose = 0x055
+    Ectoplasm = 0x058
+    BonePillarLvl1 = 0x05A
+    SpearGuard = 0x05D
+    PlateLord = 0x061
+    FrozenShade = 0x063
+    BoneMusket = 0x066
+    DodoBird = 0x068
+    BoneScimitar = 0x069
+    Toad = 0x06A
+    Frog = 0x06B
+    BoneArcher = 0x06C
+    Zombie = 0x06E
+    GraveKeeper = 0x06F
+    Tombstone = 0x071
+    BlueRaven = 0x072
+    BlackCrow = 0x073
+    JackOBones = 0x074
+    BoneHalberd = 0x076
+    Yorick = 0x078
+    Skull = 0x079
+    BladeMaster = 0x07A
+    BladeSoldier = 0x07C
+    NovaSkeleton = 0x07E
+    WingedGuard = 0x080
+    SpectralSwordNO2 = 0x081
+    Poltergeist = 0x082
+    Lossoth = 0x083
+    ValhallaKnight = 0x085
+    SpectralSwordDAI = 0x088
+    SpectralSwordPuppetSword = 0x089
+    SpectralSwordRDAI = 0x08A
+    Spear = 0x08B
+    Shield = 0x08C
+    Orobourous = 0x08D
+    Oruburos = 0x08E
+    OruburosRider = 0x08F
+    DragonRider1 = 0x090
+    DragonRider2 = 0x091
+    Dhuron = 0x092
+    FireWarg = 0x094
+    WargRider = 0x097
+    CaveTroll = 0x099
+    Ghost = 0x09C
+    Thornweed = 0x09D
+    CorpseweedUnused = 0x09E
+    Corpseweed = 0x09F
+    VenusWeedRoot = 0x0A1
+    VenusWeedFlower = 0x0A2
+    BombKnight = 0x0A5
+    RockKnight = 0x0A7
+    DraculaLvl0 = 0x0A9
+    GreaterDemon = 0x0AC
+    Warg = 0x0AF
+    Slinger = 0x0B2
+    CornerGuard = 0x0B4
+    Bitterfly = 0x0B6
+    BonePillarSkull = 0x0B7
+    BonePillarFireBreath = 0xB8
+    BonePillarSpikedBall = 0x0B9
+    Hammer = 0x0BA
+    Gurkha = 0x0BC
+    Blade = 0x0BE
+    OuijaTable = 0x0C1
+    SniperofGoth = 0x0C3
+    GalamothLvl50 = 0x0C6
+    GalamothLvl0 = 0x0C7
+    Minotaurus = 0x0CB
+    WerewolfARE = 0x0CE
+    Paranthropus = 0x0D3
+    Mudman = 0x0D6
+    GhostDancer = 0x0D8
+    FrozenHalf = 0x0D9
+    SalemWitch = 0x0DD
+    Azaghal = 0x0E0
+    Gremlin = 0x0E1
+    HuntingGirl = 0x0E3
+    VandalSword = 0x0E4
+    Salome = 0x0E5
+    Ctulhu = 0x0E9
+    Malachi = 0x0EC
+    Harpy = 0x0EF
+    Slogra = 0x0F3
+    GreenAxeKnight = 0x0F6
+    Spellbook = 0x0F7
+    MagicTomeLvl8 = 0x0F9
+    MagicTomeLvl12 = 0x0FB
+    Doppleganger10 = 0x0FD
+    Gaibon = 0x0FE
+    SkullLord = 0x105
+    Lion = 0x106
+    Tinman = 0x108
+    AkmodanII = 0x10B
+    Cloakedknight = 0x10F
+    DarkwingBat = 0x111
+    Fishhead = 0x115
+    Karasuman = 0x118
+    Imp = 0x11C
+    Balloonpod = 0x11D
+    Scylla = 0x11F
+    Scyllawyrm = 0x126
+    Granfaloon1 = 0x127
+    Granfaloon2 = 0x128
+    Hippogryph = 0x12C
+    MedusaHead1 = 0x12F
+    MedusaHead2 = 0x130
+    Archer = 0x131
+    RichterBelmont = 0x133
+    Scarecrow = 0x142
+    Schmoo = 0x143
+    Beezelbub = 0x144
+    FakeTrevor = 0x148
+    FakeGrant = 0x14E
+    FakeSypha = 0x151
+    Succubus = 0x156
+    KillerFish = 0x15E
+    Shaft = 0x15F
+    Death1 = 0x164
+    Death2 = 0x169
+    Cerberos = 0x16B
+    Medusa = 0x16E
+    TheCreature = 0x172
+    Doppleganger40 = 0x174
+    DraculaLvl98 = 0x17B
+    StoneSkull = 0x180
+    Minotaur = 0x182
+    WerewolfRARE = 0x185
+    BlueVenusWeed1 = 0x188
+    BlueVenusWeed2 = 0x189
+    Guardian = 0x18C
+
+
+def get_enemy_defs():
+    return sotn_utils.yaml.safe_load(
+        (Path(__file__).parent / "segments.yaml").read_text()
+    )
 
 
 def build(targets=[], plan=True, dynamic_syms=False, build=True, version="us"):
@@ -186,6 +367,7 @@ def create_initial_files(ovl_config, spinner=SimpleNamespace(message="")):
 def create_ovl_include(entity_updates, ovl_name, ovl_type, ovl_include_path):
     entity_funcs = []
     if entity_updates:
+        camel_case_pattern = re.compile(r"([A-Za-z])([A-Z][a-z])")
         for i, func in enumerate([symbol.name for symbol in entity_updates]):
             if func == "EntityDummy":
                 entity_funcs.append((func, f"E_DUMMY_{i+1:X}"))
@@ -193,7 +375,7 @@ def create_ovl_include(entity_updates, ovl_name, ovl_type, ovl_include_path):
                 entity_funcs.append(
                     (
                         func,
-                        sotn_utils.RE_PATTERNS.camel_case.sub(
+                        camel_case_pattern.sub(
                             r"\1_\2", func.replace("OVL_EXPORT(", "").replace(")", "")
                         )
                         .upper()
@@ -280,12 +462,27 @@ def find_files_to_compare(ref_ovls, ovl_name, version):
 # Validate logic and move to sotn-decomp
 def parse_psp_ovl_load(ovl_name, path_prefix, asm_path):
     first_address_pattern = re.compile(r"\s+/\*\s+[A-F0-9]{1,5}\s+([A-F0-9]{8})\s")
-    ovl_load_name, ovl_load_symbol, ovl_header_symbol, entity_updates_name = (
-        None,
-        None,
-        None,
-        None,
+    psp_entity_updates_pattern=r"""
+        \s+/\*\s[A-F0-9]{1,5}(?:\s[A-F0-9]{8}){2}\s\*/\s+lui\s+\$v1,\s+%hi\((?P<entity>[A-Za-z0-9_]+)\)\n
+        .*\n
+        \s+/\*\s[A-F0-9]{1,5}\s[A-F0-9]{8}\sC708023C\s\*/.*\n
+        \s+/\*\s[A-F0-9]{1,5}\s[A-F0-9]{8}\s30BC43AC\s\*/.*\n
+    """
+    psp_ovl_header_pattern=r"""
+        \s+/\*\s[A-F0-9]{1,5}\s[A-F0-9]{8}\s1D09043C\s\*/.*\n
+        \s+/\*\s[A-F0-9]{1,5}\s[A-F0-9]{8}\s38F78424\s\*/.*\n
+        \s+/\*\s[A-F0-9]{1,5}(?:\s[A-F0-9]{8}){2}\s\*/\s+lui\s+\$a1,\s+%hi\((?P<header>[A-Za-z0-9_]+)\)\n
+        (?:.*\n){2}
+        \s+/\*\s[A-F0-9]{1,5}\s[A-F0-9]{8}\sE127240E\s\*/.*\n
+    """
+    psp_ovl_header_entity_table_pattern = re.compile(
+        rf"{psp_entity_updates_pattern}(?:.*\n)+{psp_ovl_header_pattern}",
+        re.VERBOSE,
     )
+    ovl_load_name = None
+    ovl_load_symbol = None
+    ovl_header_symbol = None
+    entity_updates_name = None
     for file in (
         dirpath / f
         for dirpath, _, filenames in asm_path.walk()
@@ -301,7 +498,7 @@ def parse_psp_ovl_load(ovl_name, path_prefix, asm_path):
             and " C708023C " in file_text
             and " 30BC43AC " in file_text
         ):
-            if match := sotn_utils.RE_PATTERNS.psp_ovl_header_entity_table_pattern.search(
+            if match := psp_ovl_header_entity_table_pattern.search(
                 file_text
             ):
                 if ovl_load_address := first_address_pattern.search(file_text):
@@ -438,6 +635,682 @@ def get_known_starts(ovl_name, segments_path):
             )
     # TODO: Check if this is an issue for multiple segments with the same start
     return {x.start: x for x in known_segments}
+
+
+def find_psx_entity_updates(first_data_text, pStObjLayoutHorizontal_address=None):
+    # we know that the EntityUpdates is always after the ovl header
+    end_of_header = first_data_text.find(".size")
+    # use the address of pStObjLayoutHorizontal if it was parsed from the header to reduce the amount of data we're searching through
+    if pStObjLayoutHorizontal_address:
+        start_index = first_data_text.find(
+            f"{pStObjLayoutHorizontal_address:08X}", end_of_header
+        )
+    else:
+        sotn_utils.get_logger().warning(
+            "No address found for pStObjLayoutHorizontal, starting at end of header"
+        )
+        start_index = end_of_header
+
+    # the first entity referenced after the ovl header, which should be the first element of EntityUpdates
+    first_entity_index = first_data_text.find(" func_", start_index)
+    # the last glabel before the first function pointer should be the EntityUpdates symbol
+    entity_updates_index = first_data_text.rfind(
+        "glabel", start_index, first_entity_index
+    )
+    # this is just a convoluted way of extracting the EntityUpdates symbol name
+    # get the second word of the first line, which should be the EntityUpdates symbol name
+    return {
+        "name": first_data_text[entity_updates_index:first_entity_index]
+        .splitlines()[0]
+        .split()[1]
+    }
+
+
+def get_known_pairs(ovl_name, version):
+    # TODO: move to yaml file
+    known_pairs = [
+        SimpleNamespace(first="func_801CC5A4", last="func_801CF438"),
+        SimpleNamespace(first="func_801CC90C", last="func_801CF6D8"),
+        SimpleNamespace(
+            first="GetAnglePointToEntityShifted", last="GetAnglePointToEntity"
+        ),
+        SimpleNamespace(
+            first="CreateEntityWhenInVerticalRange",
+            last="CreateEntityWhenInHorizontalRange",
+        ),
+        SimpleNamespace(first="FindFirstEntityToTheRight", last="FindFirstEntityAbove"),
+        SimpleNamespace(first="FindFirstEntityToTheLeft", last="FindFirstEntityBelow"),
+        SimpleNamespace(first="CreateEntitiesToTheRight", last="CreateEntitiesAbove"),
+        SimpleNamespace(first="CreateEntitiesToTheLeft", last="CreateEntitiesBelow"),
+    ]
+    # e_red_door typically comes before e_sealed door, but us rno2 and bo0 have e_sealed_door first
+    if version == "us" and ovl_name in ["rno2", "bo0"]:
+        known_pairs.append(
+            SimpleNamespace(first="SealedDoorIsNearPlayer", last="EntityIsNearPlayer")
+        )
+    else:
+        known_pairs.append(
+            SimpleNamespace(first="EntityIsNearPlayer", last="SealedDoorIsNearPlayer")
+        )
+
+    return known_pairs
+
+
+def parse_ovl_header(data_file_text, ovl_name, platform, header_symbol=None):
+    ovl_header = [
+        "Update",
+        "HitDetection",
+        "UpdateRoomPosition",
+        "InitRoomEntities",
+        f"{ovl_name.upper()}_rooms",
+        f"{ovl_name.upper()}_spriteBanks",
+        f"{ovl_name.upper()}_cluts",
+        (
+            "g_pStObjLayoutHorizontal"
+            if platform == "psp"
+            else f"{ovl_name.upper()}_pStObjLayoutHorizontal"
+        ),
+        f"{ovl_name.upper()}_rooms_layers",
+        f"{ovl_name.upper()}_gfxBanks",
+        "UpdateStageEntities",
+        "unk2C",  # g_SpriteBank1
+        "unk30",  # g_SpriteBank2
+        "unk34",
+        "unk38",
+        "StageEndCutScene",
+    ]
+    header_start = (
+        data_file_text.find(f"glabel {header_symbol}")
+        if header_symbol
+        else data_file_text.find("glabel ")
+    )
+    header_end = (
+        data_file_text.find(f".size {header_symbol}")
+        if header_symbol
+        else data_file_text.find(".size ")
+    )
+    if header_start != -1:
+        header = data_file_text[header_start:header_end]
+        header_address = int(header.splitlines()[0].split("_")[-1], 16)
+    else:
+        return {}, None
+    # Todo: Should this be findall or finditer?
+    matches = re.findall(r"/\*\s[0-9A-F]{1,5}\s[0-9A-F]{8}\s(?P<address>[0-9A-F]{8})\s\*/\s+\.word\s+(?P<name>\w+)", header)
+    if matches:
+        if len(matches) > 7:
+            pStObjLayoutHorizontal_address = int.from_bytes(
+                bytes.fromhex(matches[7][0]), "little"
+            )
+        else:
+            pStObjLayoutHorizontal_address = None
+
+        # Todo: Ensure this is doing a 1 for 1 line replacement, whether func, d_ or null
+        # Todo: Make the address parsing more straight forward, instead of capturing both address and name
+        header_items = tuple(
+            Symbol(
+                (
+                    address[1]
+                    if name.startswith("unk")
+                    or (
+                        not address[1].startswith("func_")
+                        and not address[1].startswith("D_")
+                        and not address[1].startswith("g_")
+                    )
+                    else "NULL" if address[0] == "0x00000000" else name
+                ),
+                int.from_bytes(bytes.fromhex(address[0]), "little"),
+                None,
+            )
+            # Todo: Does this need the filtering, or should it just overwrite the existing regardless?
+            for name, address in zip(ovl_header, matches)
+        )
+        return {
+            "address": header_address,
+            "size_bytes": len(header_items) * 4,
+            "symbols": tuple(symbol for symbol in header_items if symbol.address),
+            "items": header_items,
+        }, pStObjLayoutHorizontal_address
+    else:
+        return {}, None
+
+
+# TODO: Validate logic and move to sotn-decomp
+def parse_init_room_entities(ovl_name, platform, init_room_entities_path, vram_start):
+    init_room_entities_map = {
+        f"{ovl_name.upper()}_pStObjLayoutHorizontal": 14 if platform == "psp" else 9,
+        f"{ovl_name.upper()}_pStObjLayoutVertical": 22 if platform == "psp" else 12,
+        "g_LayoutObjHorizontal": 18 if platform == "psp" else 17,
+        "g_LayoutObjVertical": 26 if platform == "psp" else 19,
+        "g_LayoutObjPosHorizontal": (
+            138
+            if platform == "psp" and ovl_name == "rnz0"
+            else 121 if platform == "psp" else 81
+        ),
+        "g_LayoutObjPosVertical": (
+            140
+            if platform == "psp" and ovl_name == "rnz0"
+            else 123 if platform == "psp" else 83
+        ),
+    }
+    init_room_entities_symbol_pattern=re.compile(
+        r"\s+/\*\s[0-9A-F]{1,5}\s[0-9A-F]{8}\s[0-9A-F]{8}\s\*/\s+[a-z]{1,5}[ \t]*\$\w+,\s%hi\(D_(?:\w+_)?(?P<address>[A-F0-9]{8})\)\s*"
+    )
+    lines = init_room_entities_path.read_text().splitlines()
+    init_room_entities_symbols = {
+        Symbol(
+            name,
+            int(
+                init_room_entities_symbol_pattern.fullmatch(
+                    lines[i]
+                ).group("address"),
+                16,
+            ),
+            None,
+        )
+        for name, i in init_room_entities_map.items()
+        if "(D_" in lines[i]
+    }
+
+    create_entity_bss_start = (
+        min(
+            x.address
+            for x in init_room_entities_symbols
+            if x.name.startswith("g_Layout")
+        )
+        - vram_start
+    )
+
+    return init_room_entities_symbols, create_entity_bss_start
+
+
+def parse_entity_updates(data_file_text, ovl_name, entity_updates_symbol):
+    parsed_entity_updates = None
+    known_entity_updates = [
+        f"{ovl_name.upper()}_EntityBreakable",
+        "EntityExplosion",
+        "EntityPrizeDrop",
+        "EntityDamageDisplay",
+        f"{ovl_name.upper()}_EntityRedDoor",
+        "EntityIntenseExplosion",
+        "EntitySoulStealOrb",
+        "EntityRoomForeground",
+        "EntityStageNamePopup",
+        "EntityEquipItemDrop",
+        "EntityRelicOrb",
+        "EntityHeartDrop",
+        "EntityEnemyBlood",
+        "EntityMessageBox",
+        "EntityDummy",
+        "EntityDummy",
+        f"{ovl_name.upper()}_EntityBackgroundBlock",
+        f"{ovl_name.upper()}_EntityLockCamera",
+        "EntityUnkId13",
+        "EntityExplosionVariants",
+        "EntityGreyPuff",
+    ]
+    entity_updates_start = data_file_text.find(f"glabel {entity_updates_symbol}")
+    entity_updates_end = data_file_text.find(f".size {entity_updates_symbol}")
+    if entity_updates_start != -1:
+        entity_updates_lines = data_file_text[
+            entity_updates_start:entity_updates_end
+        ].splitlines()
+
+        first_e_init_start = data_file_text.find("glabel ", entity_updates_end)
+        first_e_init_end = data_file_text.find("\n", first_e_init_start)
+        first_e_init = data_file_text[first_e_init_start:first_e_init_end].split()[1]
+
+        # if the last item is a null address, then it is padding
+        if entity_updates_lines[-1].endswith("0x00000000"):
+            entity_updates_lines.pop()
+
+        table_start, entity_updates_address = next(
+            (
+                (i, int(line.split()[2], 16))
+                for i, line in enumerate(entity_updates_lines)
+                if " func" in line or " Entity" in line
+            ),
+            (len(entity_updates_lines) - 1, None),
+        )
+        entity_updates_lines = entity_updates_lines[table_start:]
+        if matches := re.findall(r"/\*\s[0-9A-F]{1,5}\s[0-9A-F]{8}\s(?P<address>[0-9A-F]{8})\s\*/\s+\.word\s+(?P<name>\w+)",
+            "\n".join(entity_updates_lines)
+        ):
+            entity_dummy_address = Counter([x[0] for x in matches]).most_common(1)[0][0]
+            entity_dummy_address = int.from_bytes(
+                bytes.fromhex(entity_dummy_address), "little"
+            )
+            known_symbols = tuple(
+                Symbol(
+                    address[1] if name == "skip" else name,
+                    int.from_bytes(bytes.fromhex(address[0]), "little"),
+                    None,
+                )
+                for name, address in zip(known_entity_updates, matches)
+            )
+            parsed_entity_updates = known_symbols + tuple(
+                Symbol(
+                    name.split()[-1],
+                    int.from_bytes(bytes.fromhex(address[0]), "little"),
+                    None,
+                )
+                for name, address in zip(
+                    entity_updates_lines[len(known_symbols) :],
+                    matches[len(known_symbols) :],
+                )
+            )
+            parsed_entity_updates = tuple(
+                Symbol(
+                    (
+                        "EntityDummy"
+                        if symbol.address == entity_dummy_address
+                        else symbol.name
+                    ),
+                    symbol.address,
+                    None,
+                )
+                for symbol in parsed_entity_updates
+            )
+            symbols = tuple(
+                symbol
+                for symbol in parsed_entity_updates
+                if symbol.name.split("_")[-1] != f"{symbol.address:08X}"
+            )
+        else:
+            symbols = tuple()
+    # TODO: Why the weird + () ?
+    return {
+        "address": entity_updates_address,
+        "first_e_init": first_e_init,
+        "items": parsed_entity_updates,
+        "symbols": symbols + (),
+    }
+
+
+def cross_reference_e_init_c(
+    check_entity_updates, check_e_inits, ref_e_init_path, ovl_name, map_path
+):
+    if ref_e_init_path.is_file():
+        symbols = []
+        file_text = ref_e_init_path.read_text()
+        e_init_pattern = re.compile(
+            r"""
+        \nEInit\s+(?P<name>(?:OVL_EXPORT\()?\w+\)?)\s*=\s*\{(?:\s*|\n?)
+        (?P<animSet>(?:ANIMSET_(?:OVL|DRA)\()?(?:0x)?[0-9A-Fa-f]{1,4}\)?)\s*
+        ,\s*(?P<animCurFrame>(?:0x)?[0-9A-Fa-f]{1,4})\s*
+        ,\s*(?P<unk5A>(?:0x)?[0-9A-Fa-f]{1,4})\s*
+        ,\s*(?P<palette>(?:0x)?[0-9A-Fa-f]{1,4}|PAL_[A-Z0-9_]+)\s*
+        ,\s*(?P<enemyID>(?:0x)?[0-9A-Fa-f]{1,4})\};
+        """,
+            re.VERBOSE,
+        )
+
+        if check_entity_updates:
+            entity_updates_start = file_text.find("EntityUpdates")
+            entity_updates_end = file_text.find("};", entity_updates_start)
+            ref_entity_updates = [
+                item.strip().replace("OVL_EXPORT(", f"{ovl_name.upper()}_").rstrip(",)")
+                for item in file_text[
+                    entity_updates_start:entity_updates_end
+                ].splitlines()[1:]
+                if item
+            ]
+            if len(check_entity_updates) == len(ref_entity_updates):
+                symbols.extend(
+                    Symbol(to_name, from_symbol.address, None)
+                    for from_symbol, to_name in zip(
+                        check_entity_updates, ref_entity_updates
+                    )
+                )
+
+        if check_e_inits:
+            ref_e_inits = []
+            e_init_idx = file_text.find("EInit")
+            while e_init_idx != -1:
+                if e_init := e_init_pattern.match(file_text[e_init_idx - 1 :]):
+                    name = (
+                        e_init.group("name")
+                        .replace("OVL_EXPORT(", f"{ovl_name.upper()}_")
+                        .rstrip(")")
+                    )
+                    animSet = e_init.group("animSet")
+                    animCurFrame = e_init.group("animCurFrame")
+                    animCurFrame = int(animCurFrame, 16 if "0x" in animCurFrame else 10)
+                    unk5A = e_init.group("unk5A")
+                    unk5A = int(unk5A, 16 if "0x" in unk5A else 10)
+                    palette = e_init.group("palette")
+                    palette = (
+                        palette
+                        if "PAL_" in palette
+                        else int(palette, 16) if "0x" in palette else int(palette)
+                    )
+                    enemyID = e_init.group("enemyID")
+                    ref_e_inits.append(
+                        (name, animSet, animCurFrame, unk5A, palette, enemyID)
+                    )
+                e_init_idx = file_text.find("EInit", e_init_idx + 1)
+
+            not_matched = 0
+            for i, ref_e_init in enumerate(ref_e_inits):
+                if i - not_matched < len(check_e_inits):
+                    if ref_e_init[1:] != check_e_inits[i - not_matched][1:]:
+                        not_matched += 1
+                    else:
+                        symbols.append(
+                            Symbol(
+                                ref_e_init[0],
+                                sotn_utils.get_symbol_address(
+                                    map_path, check_e_inits[i - not_matched][0]
+                                ),
+                                None,
+                            )
+                        )
+
+        return symbols, len(ref_e_inits) == len(check_e_inits) + not_matched
+    return [], False
+
+
+def parse_e_inits(data_file_text, first_e_init, ovl_name, platform):
+    e_init_pattern = re.compile(
+        r"""
+    glabel\s+(?P<name>\w+)\n
+    \s+/\*\s+(?P<offset>[0-9A-Fa-f]+)\s+(?P<address>[0-9A-Fa-f]{8})\s+[0-9A-Fa-f]{8}\s+\*/\s+\.word\s+0x(?P<animCurFrame>[0-9A-Fa-f]{4})(?P<animSet>[0-9A-Fa-f]{4})\n
+    \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+[0-9A-Fa-f]{8}\s+\*/\s+\.word\s+0x(?P<palette>[0-9A-Fa-f]{4})(?P<unk5A>[0-9A-Fa-f]{4})\n
+    \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+[0-9A-Fa-f]{8}\s+\*/\s+\.word\s+0x0000(?P<enemyID>[0-9A-Fa-f]{4})\n
+    """
+        + (
+            r"""
+    \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+00000000\s+\*/\s+\.word\s+0x00000000\n
+    """
+            if platform == "psp"
+            else ""
+        )
+        + r"""
+    (?P<size>\.size\s+(?P=name),\s+\.\s+-\s+(?P=name)\n?)?
+    """,
+        re.VERBOSE,
+    )
+    unused_e_init_pattern = r"""
+    \s+/\*\s+(?P<offset>[0-9A-Fa-f]+)\s+(?P<address>[0-9A-Fa-f]{8})\s+[0-9A-Fa-f]{8}\s+\*/\s+\.word\s+0x(?P<animCurFrame>[0-9A-Fa-f]{4})(?P<animSet>[0-9A-Fa-f]{4})\n
+    \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+[0-9A-Fa-f]{8}\s+\*/\s+\.word\s+0x(?P<palette>[0-9A-Fa-f]{4})(?P<unk5A>[0-9A-Fa-f]{4})\n
+    \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+[0-9A-Fa-f]{8}\s+\*/\s+\.word\s+0x0000(?P<enemyID>[0-9A-Fa-f]{4})\n
+    """
+    # when e_init[3] is referenced in code
+    split_e_init_pattern = re.compile(
+        r"""
+    glabel\s+(?P<name>\w+)\n
+    \s+/\*\s+(?P<offset>[0-9A-Fa-f]+)\s+(?P<address>[0-9A-Fa-f]{8})\s+(?P<raw_val>[0-9A-Fa-f]{8})\s+\*/\s+\.word\s+0x(?P<animCurFrame>[0-9A-Fa-f]{4})(?P<animSet>[0-9A-Fa-f]{4})\n
+    \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+\*/\s+\.short\s+0x(?P<unk5A>[0-9A-Fa-f]{4})\n
+    \.size\s+(?P=name),\s+\.\s+-\s+(?P=name)\n
+    \n
+    glabel\s+(?P<pal_sym>\w+)\n
+    \s+/\*\s+(?P<pal_offset>[0-9A-Fa-f]+)\s+(?P<pal_address>[0-9A-Fa-f]{8})\s+\*/\s+\.short\s+0x(?P<palette>[0-9A-Fa-f]{4})\n
+    \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+[0-9A-Fa-f]{8}\s+\*/\s+\.word\s+0x0000(?P<enemyID>[0-9A-Fa-f]{4})\n
+    """
+        + (
+            r"""
+    \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+00000000\s+\*/\s+\.word\s+0x00000000\n
+    """
+            if platform == "psp"
+            else ""
+        )
+        + r"""
+    (?P<size>\.size\s+(?P=pal_sym),\s+\.\s+-\s+(?P=pal_sym)\n?)
+    """,
+        re.VERBOSE,
+    )
+    if platform == "psx":
+        # when e_init[3] and e_init[5] are referenced in code in us
+        short_e_init_pattern = re.compile(
+            r"""
+        glabel\s+(?P<name>\w+)\n
+        \s+/\*\s+(?P<offset>[0-9A-Fa-f]+)\s+(?P<address>[0-9A-Fa-f]{8})\s+[0-9A-Fa-f]{8}\s+\*/\s+\.word\s+0x(?P<animCurFrame>[0-9A-Fa-f]{4})(?P<animSet>[0-9A-Fa-f]{4})\n
+        \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+\*/\s+\.short\s+0x(?P<unk5A>[0-9A-Fa-f]{4})\n
+        \.size\s+(?P=name),\s+\.\s+-\s+(?P=name)\n
+        \n
+        glabel\s+(?P<pal_sym>\w+)\n
+        \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+\*/\s+\.short\s+0x(?P<palette>[0-9A-Fa-f]{4})\n
+        \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+\*/\s+\.short\s+0x(?P<enemyID>[0-9A-Fa-f]{4})\n
+        \.size\s+(?P=pal_sym),\s+\.\s+-\s+(?P=pal_sym)\n
+        \n
+        glabel\s+(?P<unk_sym>\w+)\n
+        \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+\*/\s+\.short\s+0x0000\n
+        (?P<size>\.size\s+(?P=unk_sym),\s+\.\s+-\s+(?P=unk_sym)\n?)
+        """,
+            re.VERBOSE,
+        )
+    if platform == "psp":
+        short_e_init_pattern = re.compile(
+            r"""
+        glabel\s+(?P<name>\w+)\n
+        \s+/\*\s+(?P<offset>[0-9A-Fa-f]+)\s+(?P<address>[0-9A-Fa-f]{8})\s+\*/\s+\.short\s+0x(?P<animSet>[0-9A-Fa-f]{4})\n
+        \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+\*/\s+\.short\s+0x(?P<animCurFrame>[0-9A-Fa-f]{4})\n
+        \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+\*/\s+\.short\s+0x(?P<unk5A>[0-9A-Fa-f]{4})\n
+        \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+\*/\s+\.short\s+0x(?P<palette>[0-9A-Fa-f]{4})\n
+        \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+\*/\s+\.short\s+0x(?P<enemyID>[0-9A-Fa-f]{4})\n
+        \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+\*/\s+\.short\s+0x0000\n
+        \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+\*/\s+\.short\s+0x0000\n
+        \s+/\*\s+[0-9A-Fa-f]+\s+[0-9A-Fa-f]{8}\s+\*/\s+\.short\s+0x0000\n
+        (?P<size>\.size\s+(?P=name),\s+\.\s+-\s+(?P=name)\n?)
+        """,
+            re.VERBOSE,
+        )
+
+    known_e_inits = [
+        f"{ovl_name.upper()}_EInitBreakable",
+        "g_EInitObtainable",
+        "g_EInitParticle",
+        "g_EInitSpawner",
+        "g_EInitInteractable",
+        "g_EInitUnkId13",
+        "g_EInitLockCamera",
+        "g_EInitCommon",
+        "g_EInitDamageNum",
+    ]
+
+    text = data_file_text[data_file_text.find(f"glabel {first_e_init}") :]
+    parsed_e_inits = []
+    while not parsed_e_inits or matches:
+        matches = (
+            re.match(e_init_pattern, text)
+            or re.match(split_e_init_pattern, text)
+            or re.match(short_e_init_pattern, text)
+        )
+        if platform != "psp" and matches and not matches.groupdict().get("size"):
+            size_name = matches.groupdict().get("name")
+            while not matches.groupdict().get("size"):
+                address = int(matches.group("address"), 16)
+                name = matches.groupdict().get("name") or f"g_EInitUnused{address:08X}"
+                animSet = int(matches.group("animSet"), 16)
+                parsed_e_inits.append(
+                    (
+                        Symbol(name, address, None),
+                        f"ANIMSET_{'OVL' if animSet & 0x8000 else 'DRA'}({animSet & ~0x8000})",
+                        int(matches.group("animCurFrame"), 16),
+                        int(matches.group("unk5A"), 16),
+                        int(matches.group("palette"), 16),
+                        int(matches.group("enemyID"), 16),
+                    )
+                )
+                if matches.groupdict().get("size"):
+                    break
+                text = text[matches.end() :]
+                unused_last_line_pattern = (
+                    rf"(?P<size>\.size\s+{size_name},\s+\.\s+-\s+{size_name}\n?)?"
+                )
+                matches = re.match(
+                    unused_e_init_pattern + unused_last_line_pattern, text, re.VERBOSE
+                )
+
+        if matches:
+            address = int(matches.group("address"), 16)
+            name = matches.groupdict().get("name") or f"g_EInitUnused{address:08X}"
+            animSet = int(matches.group("animSet"), 16)
+            parsed_e_inits.append(
+                (
+                    Symbol(name, address, None),
+                    f"ANIMSET_{'OVL' if animSet & 0x8000 else 'DRA'}({animSet & ~0x8000})",
+                    int(matches.group("animCurFrame"), 16),
+                    int(matches.group("unk5A"), 16),
+                    int(matches.group("palette"), 16),
+                    int(matches.group("enemyID"), 16),
+                )
+            )
+            text = text[matches.end() + 1 :]
+
+    EnemyDefsVals = [x.value for x in EnemyDefs]
+
+    symbols = [
+        Symbol(name, e_init[0].address, None)
+        for name, e_init in zip(known_e_inits, parsed_e_inits)
+        if platform != "psp"
+    ]
+    added_names = []
+    for e_init in parsed_e_inits[len(symbols) :]:
+        if e_init[5] in EnemyDefsVals:
+            name = f"g_EInit{EnemyDefs(e_init[5])}".replace("EnemyDefs.", "")
+            if name in added_names:
+                symbols.append(
+                    Symbol(f"{name}{e_init[0].address:X}", e_init[0].address, None)
+                )
+            else:
+                symbols.append(Symbol(name, e_init[0].address, None))
+            added_names.append(name)
+        else:
+            symbols.append(Symbol(e_init[0].name, e_init[0].address, None))
+
+    e_inits = [
+        (
+            symbol.name if platform != "psp" else e_init[0].name,
+            e_init[1],
+            e_init[2],
+            e_init[3],
+            e_init[4],
+            f"0x{e_init[5]:03X}",
+        )
+        for symbol, e_init in zip(symbols, parsed_e_inits)
+    ]
+    next_offset = re.match(r"glabel\s+\w+\n\s+/\*\s+(?P<offset>[0-9A-Fa-f]+)\s+", text)
+    return (
+        e_inits,
+        int(next_offset.group("offset"), 16) if next_offset else None,
+        [x for x in symbols if not x.name.startswith("D_")],
+    )
+
+
+def add_initial_symbols(
+    ovl_config,
+    e_init_c_path,
+    ovl_header_symbol,
+    parsed_symbols=[],
+    entity_updates={},
+    spinner=SimpleNamespace(message=""),
+):
+    subsegments = ovl_config.subsegments.copy()
+
+    ### group change ###
+    spinner.message = f"finding the first data file"
+    first_data_offset = next(subseg[0] for subseg in subsegments if "data" in subseg)
+    first_data_path = ovl_config.asm_path / "data" / f"{first_data_offset:X}.data.s"
+    if first_data_path.exists():
+        first_data_text = first_data_path.read_text()
+        ### group change ###
+        spinner.message = f"parsing the overlay header for symbols"
+        ovl_header, pStObjLayoutHorizontal_address = parse_ovl_header(
+            first_data_text,
+            ovl_config.name,
+            ovl_config.platform,
+            ovl_header_symbol,
+        )
+        # TODO: Add data segments for follow-on header symbols
+        if ovl_config.platform == "psx":
+            ### group change ###
+            spinner.message = f"finding the entity table"
+            entity_updates = find_psx_entity_updates(
+                first_data_text, pStObjLayoutHorizontal_address
+            )
+    else:
+        first_data_text = None
+        ovl_header, pStObjLayoutHorizontal_address = {}, None
+        entity_updates = {}
+
+    ### group change ###
+    spinner.message = "gathering initial symbols"
+    if entity_updates and first_data_text:
+        ### group change ###
+        spinner.message = "parsing EntityUpdates"
+        entity_updates.update(
+            parse_entity_updates(
+                first_data_text, ovl_config.name, entity_updates.get("name")
+            )
+        )
+        ### group change ###
+        spinner.message = "parsing EInits"
+        e_inits, next_offset, symbols = parse_e_inits(
+            first_data_text,
+            entity_updates.get("first_e_init"),
+            ovl_config.name,
+            ovl_config.platform,
+        )
+        parsed_symbols.extend(symbols)
+
+        ### group change ###
+        if ovl_config.version == "us":
+            e_init_success = True
+        else:
+            spinner.message = "cross-referencing e_init.c"
+            e_init_symbols, e_init_success = cross_reference_e_init_c(
+                entity_updates.get("items"),
+                e_inits,
+                e_init_c_path,
+                ovl_config.name,
+                ovl_config.ld_script_path.with_suffix(".map"),
+            )
+            parsed_symbols.extend(e_init_symbols)
+
+        entity_updates_offset = (
+            entity_updates.get("address", 0) - ovl_config.vram + ovl_config.start
+        )
+        if entity_updates_offset > 0:
+            e_init_subseg = [
+                entity_updates_offset,
+                f"{'.' if e_init_success else ''}data",
+                (
+                    f"{ovl_config.name}/e_init"
+                    if ovl_config.platform == "psp"
+                    else "e_init"
+                ),
+                next_offset - entity_updates_offset,
+            ]
+            subsegments.append(e_init_subseg)
+
+    if ovl_header.get("symbols") or entity_updates.get("symbols"):
+        parsed_symbols.extend(
+            (
+                symbol
+                for symbols in (
+                    ovl_header.get("symbols"),
+                    entity_updates.get("symbols"),
+                )
+                if symbols is not None
+                for symbol in symbols
+            )
+        )
+    if entity_updates.get("address"):
+        parsed_symbols.append(
+            Symbol(
+                f"{ovl_config.name.upper()}_EntityUpdates",
+                entity_updates.get("address"),
+                None,
+            )
+        )
+    if ovl_header.get("address"):
+        parsed_symbols.append(
+            Symbol(
+                f"{ovl_config.name.upper()}_Overlay", ovl_header.get("address"), None
+            )
+        )
+
+    return subsegments, parsed_symbols, ovl_header, entity_updates, e_inits
 
 
 def validate_binary(
@@ -581,7 +1454,7 @@ def extract(args, version):
     with sotn_utils.Spinner(message="gathering initial symbols") as spinner:
         e_init_c_path = ovl_config.src_path_full.with_name(ovl_config.name) / "e_init.c"
         ovl_config.subsegments, parsed_symbols, ovl_header, entity_updates, e_inits = (
-            sotn_utils.add_initial_symbols(
+            add_initial_symbols(
                 ovl_config,
                 e_init_c_path,
                 ovl_header_symbol,
@@ -664,8 +1537,9 @@ def extract(args, version):
 
         if parsed_check_files and parsed_ref_files:
             spinner.message = "searching for similar functions"
+            known_pairs = get_known_pairs(ovl_config.name, ovl_config.version)
             ambiguous_renames, unhandled_renames = sotn_utils.rename_similar_functions(
-                ovl_config, parsed_check_files, parsed_ref_files, spinner
+                ovl_config, parsed_check_files, parsed_ref_files, known_pairs, spinner
             )
             spinner.message += (
                 f" (compared {len(check_files)} new to {len(ref_files)} reference)"
@@ -691,7 +1565,7 @@ def extract(args, version):
 
         if init_room_entities_path.exists():
             init_room_entities_symbols, create_entity_bss_start = (
-                sotn_utils.parse_init_room_entities(
+                parse_init_room_entities(
                     ovl_config.name,
                     ovl_config.platform,
                     init_room_entities_path,
