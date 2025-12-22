@@ -2144,8 +2144,8 @@ void func_us_80177590(Entity* self) {
     }
 }
 
-//#include "../shared_events.h"
-//#include "../shared_globals.h"
+// #include "../shared_events.h"
+// #include "../shared_globals.h"
 
 #define E_UNK_DC 220
 #define E_UNK_DF 223
