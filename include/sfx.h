@@ -242,7 +242,7 @@ enum {
     /* us:0x3DC,          */ NA_VO_RI_ONLY_THE_COUNT,    // Richter: Hah, I knew
                                                       // it. Only the count is a
                                                       // true match for me.
-#else 
+#else
     /*           jp:0x3DA */ VO_GAMEOVER_RICHTER_TAUNT_1 = 0x3DA,
     /*           jp:0x3DB */ VO_GAMEOVER_RICHTER_TAUNT_2,
     /*           jp:0x3DC */ VO_GAMEOVER_RICHTER_TAUNT_3,
