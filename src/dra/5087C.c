@@ -1201,11 +1201,7 @@ void func_800F2860(void) {
         }
         break;
     case 3:
-#if defined(VERSION_US)
-        PlaySfx(0x33F);
-#else
-        PlaySfx(0x33C);
-#endif
+        PlaySfx(MU_NOCTURNE);
         D_801375C8++;
         break;
     case 4:

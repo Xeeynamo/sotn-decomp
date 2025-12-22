@@ -38,5 +38,6 @@ typedef struct {
 } DemonAttackInfo;
 
 extern s32 g_PlaySfxStep;
+extern SpriteParts* g_DemonSpriteParts[];
 
 #endif

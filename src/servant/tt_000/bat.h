@@ -6,7 +6,7 @@
 
 typedef struct {
     s32 delayFrames;
-    s32 maxAngle;
+    s32 angleStep;
     s32 additionalBatCount;
     s32 minimumEnemyHp;
     s32 makeBadAttacks;

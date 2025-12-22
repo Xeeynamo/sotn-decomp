@@ -41,7 +41,7 @@ extern Sprite g_BatSpriteData[];
 #include "../../set_speed_x.h"
 #include "../set_entity_animation.h"
 #include "../calculate_angle_to_entity.h"
-#include "../get_target_position_with_distance_buffer.h"
+#include "../step_angle_towards.h"
 
 // new function
 INCLUDE_ASM("servant/fname/nonmatchings/fname", func_80170914);

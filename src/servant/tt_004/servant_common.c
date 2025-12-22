@@ -9,7 +9,7 @@ void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
 #include "../accumulate_toward_zero.h"
 #include "../search_for_entity_in_range.h"
 #include "../calculate_angle_to_entity.h"
-#include "../get_target_position_with_distance_buffer.h"
+#include "../step_angle_towards.h"
 #include "../calculate_distance.h"
 #include "../play_sfx.h"
 #include "../process_event.h"

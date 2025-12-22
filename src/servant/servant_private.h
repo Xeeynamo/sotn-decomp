@@ -17,8 +17,7 @@ STATIC s32 CalculateDistance(Entity* entity, s32 targetX, s32 targetY);
 STATIC s32 CheckAllEntitiesValid(void);
 STATIC s32 CheckEntityValid(Entity* entity);
 STATIC void CreateEventEntity(Entity* entityParent, s32 entityId, s32 params);
-STATIC s16 GetTargetPositionWithDistanceBuffer(
-    s16 currentX, s16 targetX, s16 distanceBuffer);
+STATIC s16 StepAngleTowards(s16 current, s16 target, s16 step);
 STATIC s32 IsMovementAllowed(s32 arg0);
 STATIC void ProcessEvent(Entity* self, bool resetEvent);
 STATIC void ProcessSfxState(Entity* entity);

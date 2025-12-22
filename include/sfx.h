@@ -63,12 +63,12 @@ enum SfxModes {
 #define SET_UNK_82 0x82
 #define SET_UNK_90 0x90
 #define SET_UNK_92 0x92
-#define SET_RELEASE_RATE_HIGH_20_21 0xa1
-#define SET_RELEASE_RATE_LOW_20_21 0xa3
+#define SET_RELEASE_RATE_HIGH_20_21 0xA1
+#define SET_RELEASE_RATE_LOW_20_21 0xA3
+#define SET_KEY_ON_20_21 0xA4
 #define SET_UNK_A6 0xA6
-#define SET_RELEASE_RATE_LOW_22_23 0xa7
-#define SET_KEY_ON_20_21 0xa4
-#define SET_KEY_ON_22_23 0xa8
+#define SET_RELEASE_RATE_LOW_22_23 0xA7
+#define SET_KEY_ON_22_23 0xA8
 
 #define CD_SOUND_COMMAND_FADE_OUT_2 2
 #define CD_SOUND_COMMAND_FADE_OUT_1 3
@@ -156,20 +156,17 @@ enum {
     /* us:0x340, jp:0x33D */ MU_MOONLIGHT_NOCTURNE,
 
 #if defined(VERSION_US)
-    // japanese intro: "Katsute ..."
-    /* us:0x341           */ JP_VO_NARRATOR_KATSUTE,
-
-    // japanese intro: "Soshite 5 nen no tsukihi ga nagareta"
-    /* us:0x342           */ JP_VO_NARRATOR_SOSHITE,
-
-    // japanese intro: "Akumajo Dracula X Gekka no Yasoukyoku"
-    /* us:0x343           */ JP_VO_NARRATOR_AKUMAJO,
-
+    // Japanese intro
+    /* us:0x341           */ JP_VO_NARRATOR_KATSUTE, // "Katsute ..."
+    /* us:0x342           */ JP_VO_NARRATOR_SOSHITE, // "Soshite 5 nen no
+                                                     // tsukihi ga nagareta"
+    /* us:0x343           */ JP_VO_NARRATOR_AKUMAJO, // "Akumajo Dracula X Gekka
+                                                     // no Yasoukyoku"
 #elif defined(VERSION_PSP)
     __ALIGN_ID_341 = 0x341, // TODO check what this ID does on JP/HD/PSP
 #endif
 
-    // used for the japanese sound test, messages from the developers
+    // Used for the japanese sound test, messages from the developers
     /* us:0x344, jp:0x342 */ JP_VO_FUKAMI_RIKA_MESSAGE,      // Fukami Rika
     /* us:0x345, jp:0x343 */ JP_VO_SHIINA_HEKIRU_MESSAGE,    // Shiina Hekiru
     /* us:0x346, jp:0x344 */ JP_VO_YANADA_KIYOYUKI_MESSAGE,  // Yanada Kiyoyuki
@@ -179,7 +176,8 @@ enum {
     /* us:0x34A, jp:0x348 */ JP_VO_YOKOYAMA_CHISA_MESSAGE,   // Yokoyama Chisa
     /* us:0x34B, jp:0x349 */ JP_VO_YANAMI_JYOUJI_MESSAGE,    // Yanami Jyouji
 
-    // various voice actors saying konami
+#ifdef VERSION_US
+    // Various voice actors saying konami
     /* us:0x34C           */ JP_VO_KONAMI_1,  // woman says konami
     /* us:0x34D           */ JP_VO_KONAMI_2,  // woman says konami
     /* us:0x34E           */ JP_VO_KONAMI_3,  // woman says konami
@@ -193,82 +191,130 @@ enum {
     /* us:0x356           */ JP_VO_KONAMI_11, // man says konami
     /* us:0x357           */ JP_VO_KONAMI_12, // man says konami
 
+    // Prologue cutscene
+    /* us:0x358,          */ NA_VO_RI_DIE_MONSTER, // Richter: "Die monster ..."
+    /* us:0x359,          */ NA_VO_DR_IT_WAS_NOT,  // Dracula: "It was not by my
+                                                   // hand ..."
+    /* us:0x35A,          */ NA_VO_RI_TRIBUTE,     // Richter: "Tribute? ..."
+    /* us:0x390,          */ UNK_390 = 0x390,
+    /* us:0x391,          */ NA_VO_AL_DEATH_DREAM_WORLD, // Alucard: Death in
+                                                         // the dream world will
+                                                         // set your soul
+                                                         // wandering for
+                                                         // eternity, demon.
+#else
     /*           jp:0x391 */ VO_GAMEOVER_SUCCUBUS_TAUNT = 0x391,
     /*           jp:0x3CE */ VO_GAMEOVER_MARIA = 0x3CE,
     /*           jp:0x3DA */ VO_GAMEOVER_RICHTER_TAUNT_1 = 0x3DA,
-    /*           jp:0x3DB */ VO_GAMEOVER_RICHTER_TAUNT_2 = 0x3DB,
-    /*           jp:0x3DC */ VO_GAMEOVER_RICHTER_TAUNT_3 = 0x3DC,
-    /*           jp:0x52E */ VO_GAMEOVER_DEATH_TAUNT_1 = 0x52E,
-    /*           jp:0x52F */ VO_GAMEOVER_DEATH_TAUNT_2 = 0x52F,
-    /*           jp:0x530 */ VO_GAMEOVER_DEATH_TAUNT_3 = 0x530,
+    /*           jp:0x3DB */ VO_GAMEOVER_RICHTER_TAUNT_2,
+    /*           jp:0x3DC */ VO_GAMEOVER_RICHTER_TAUNT_3,
+#endif
+#ifdef VERSION_US
+    /* us:0x3A8, jp:0x3A6 */ UNK_3A8 = 0x3A8,
+#else
+    /* us:0x3A8, jp:0x3A6 */ UNK_3A8 = 0x3A6,
+#endif
+    /* us:0x3A9, jp:0x3A7 */ NA_VO_AL_INTERESTED, // Alucard: "I'm interested in
+                                                  // this"
+    /* us:0x3AA, jp:0x3A8 */ UNK_3AA,
+    /* us:0x3AB, jp:0x3A9 */ UNK_3AB,
+    /* us:0x3AC, jp:0x3AA */ UNK_3AC,
+    /* us:0x3AD, jp:0x3AB */ NA_VO_ML_THANKS, // Master Librarian: "Thank you"
+    /* us:0x3AE, jp:0x3AC */ UNK_3AE,
+    /* us:0x3AF, jp:0x3AD */ UNK_3AF,
+    /* us:0x3B0, jp:0x3AE */ UNK_3B0,
+    /* us:0x3B1, jp:0x3AF */ UNK_3B1,
+    /* us:0x3B2, jp:0x3B0 */ NA_VO_ML_FAREWELL, // Master Librarian: "Farewell
+                                                // for now"
+#ifdef VERSION_US
+    /* us:0x3CD,          */ UNK_3CD = 0x3CD,
+    /* us:0x3CE,          */ NA_VO_MA_IF_YOU_WEAR, // Maria: If you wear these,
+                                                   // you can see beyond evil
+                                                   // illusions.
+    /* us:0x3D9,          */ UNK_3D9 = 0x3D9,
+    /* us:0x3DA,          */ NA_VO_RI_IMPRESSIVE_WHIP, // Richter: Impressive,
+                                                       // you were able to avoid
+                                                       // my whip. Let's see how
+                                                       // you like this!
+    /* us:0x3DB,          */ NA_VO_RI_IMPRESSIVE_ESCAPE, // Richter: Impressive,
+                                                         // but you can't escape
+                                                         // this.
+    /* us:0x3DC,          */ NA_VO_RI_ONLY_THE_COUNT,    // Richter: Hah, I knew
+                                                      // it. Only the count is a
+                                                      // true match for me.
+#endif
+#ifdef VERSION_US
+    /* us:0x471, jp:0x46F */ UNK_471 = 0x471,
+#else
+    /* us:0x471, jp:0x46F */ UNK_471 = 0x46F,
+#endif
+    /* us:0x472, jp:0x470 */ FAERIE_INTRO_LIFE,    // "Thank you for giving me
+                                                   // life"
+    /* us:0x473, jp:0x471 */ FAERIE_INTRO_COMMAND, // "Your word is my command"
+    /* us:0x474, jp:0x472 */ UNK_474,
+    /* us:0x475, jp:0x473 */ UNK_475,
+    /* us:0x476, jp:0x474 */ FAERIE_LETS_GO, // "Let's go!"
+    /* us:0x477, jp:0x475 */ UNK_477,
+    /* us:0x478, jp:0x476 */ UNK_478,
+    /* us:0x479, jp:0x477 */ FAERIE_FOLLOW,    // "I'll follow you anywhere"
+    /* us:0x47A, jp:0x478 */ FAERIE_WALL_HINT, // "There is something funny
+                                               // about this wall"
+    /* us:0x47B, jp:0x479 */ UNK_47B,
+    /* us:0x47C, jp:0x47A */ UNK_47C,
+    /* us:0x47D, jp:0x47B */ UNK_47D,
+    /* us:0x47E, jp:0x47C */ UNK_47E,
+    /* us:0x47F, jp:0x47D */ UNK_47F,
+    /* us:0x480, jp:0x47E */ UNK_480,
+    /* us:0x481, jp:0x47F */ UNK_481,
+    /* us:0x482, jp:0x480 */ UNK_482,
+    /* us:0x483, jp:0x481 */ UNK_483,
+    /* us:0x484, jp:0x482 */ UNK_484,
+    /* us:0x485, jp:0x483 */ UNK_485,
+    /* us:0x486, jp:0x484 */ UNK_486,
+    /* us:0x487, jp:0x485 */ UNK_487,
+    /* us:0x488, jp:0x486 */ UNK_488,
+    /* us:0x489, jp:0x487 */ UNK_489,
+    /* us:0x48A, jp:0x488 */ FAERIE_SUSPICIOUS_HINT, // "This is really
+                                                     // suspicious looking"
+    /* us:0x48B, jp:0x489 */ UNK_48B,
+    /* us:0x48C, jp:0x48A */ UNK_48C,
+    /* us:0x48D, jp:0x48B */ UNK_48D,
+    /* us:0x48E, jp:0x48C */ FAERIE_MIST_HINT, // "If only you could transform
+                                               // into mist"
+    /* us:0x48F, jp:0x48C */ UNK_48F,
+    /* us:0x490, jp:0x48D */ UNK_490,
+    /* us:0x491, jp:0x48E */ UNK_491,
+    /* us:0x492, jp:0x48F */ FAERIE_DARKNESS_HINT, // "Some animals can live in
+                                                   // complete darkness"
+#ifdef VERSION_US
+    /* us:0x4E6, jp:0x4E4 */ UNK_4E6 = 0x4E6,
+#else
+    /* us:0x4E6, jp:0x4E4 */ UNK_4E6 = 0x4E4,
+#endif
+    /* us:0x4E7, jp:0x4E5 */ UNK_4E7, // PSP: Unknown SFX related to the priest
+    /* us:0x4E8, jp:0x4E6 */ DEMON_INTRO_COMMAND, // Command me, my lord and
+                                                  // master
+    /* us:0x4E9, jp:0x4E7 */ UNK_4E9,
+    /* us:0x4EA, jp:0x4E8 */ UNK_4EA,
+    /* us:0x4EB, jp:0x4E9 */ UNK_4EB,
+    /* us:0x4EC, jp:0x4EA */ UNK_4EC,
+    /* us:0x4ED, jp:0x4EB */ DEMON_INTRO_READY, // I'm ready to serve, master
+    /* us:0x4EE, jp:0x4EC */ DEMON_SWITCH_1,    // Hmm, a switch.  Why don't I
+                                                // press it and see?
+    /* us:0x4EF, jp:0x4ED */ DEMON_SWITCH_2,    // Hmm, this switch hasn't been
+                                                // pressed yet
+    /* us:0x52D, jp:0x52D */ UNK_52D = 0x52D,
+#ifdef VERSION_PSP
+    /*           jp:0x52E */ VO_GAMEOVER_DEATH_TAUNT_1,
+    /*           jp:0x52F */ VO_GAMEOVER_DEATH_TAUNT_2,
+    /*           jp:0x530 */ VO_GAMEOVER_DEATH_TAUNT_3,
+#else
+    /* us:0x52E,          */ JP_VO_SH_GROAN,      // Shaft groans
+    /* us:0x52F,          */ JP_VO_SH_SCREAM,     // Shaft screams
+    /* us:0x530,          */ JP_VO_SH_SONO_TEIDO, // Shaft: Sono teido no
+                                                  // chikara de tatakai...
+#endif
 };
-
-// Prologue cutscene
-#define NA_VO_RI_DIE_MONSTER 0x358 // Richter says "Die monster ..."
-#define NA_VO_DR_IT_WAS_NOT 0x359  // Dracula says "It was not by my hand ..."
-#define NA_VO_RI_TRIBUTE 0x35A     // Richter says "Tribute? ..."
-
-#if defined(VERSION_PSP)
-#define NA_VO_AL_INTERESTED 0x3A7 // Alucard says "I'm interested in this"
-#define NA_VO_ML_THANKS 0x3AB     // Master Librarian says "Thank you"
-#define NA_VO_ML_FAREWELL 0x3B0   // Master Librarian says "Farewell for now"
-#else
-#define NA_VO_AL_DEATH_DREAM_WORLD                                             \
-    0x391 // Alucard: Death in the dream world will set your soul wandering for
-          // eternity, demon.
-#define NA_VO_AL_INTERESTED 0x3A9 // Alucard says "I'm interested in this"
-#define NA_VO_ML_THANKS 0x3AD     // Master Librarian says "Thank you"
-#define NA_VO_ML_FAREWELL 0x3B2   // Master Librarian says "Farewell for now"
-#define NA_VO_MA_IF_YOU_WEAR                                                   \
-    0x3CE // Maria: If you wear these, you can see beyond evil illusions.
-
-#define NA_VO_RI_IMPRESSIVE_WHIP                                               \
-    0x3DA // Richter: Impressive, you were able to avoid my whip. Let's see how
-          // you like this!
-#define NA_VO_RI_IMPRESSIVE_ESCAPE                                             \
-    0x3DB // Richter: Impressive, but you can't escape this.
-#define NA_VO_RI_ONLY_THE_COUNT                                                \
-    0x3DC // Richter: Hah, I knew it. Only the count is a true match for me.
-#endif
-
-// Fairy voiceovers
-#if defined(VERSION_PSP)
-#define FAERIE_INTRO_LIFE 0x470    // "Thank you for giving me life"
-#define FAERIE_INTRO_COMMAND 0x471 // "Your word is my command"
-#define FAERIE_LETS_GO 0x474       // "Let's go!"
-#define FAERIE_FOLLOW 0x477        // "I'll follow you anywhere"
-#define FAERIE_WALL_HINT 0x478     // "There is something funny about this wall"
-#define FAERIE_SUSPICIOUS_HINT 0x488 // "This is really suspicious looking"
-#define FAERIE_MIST_HINT 0x48C       // "If only you could transform into mist"
-#define FAERIE_DARKNESS_HINT                                                   \
-    0x490 // "Some animals can live in complete darkness"
-#else
-#define FAERIE_INTRO_LIFE 0x472    // "Thank you for giving me life"
-#define FAERIE_INTRO_COMMAND 0x473 // "Your word is my command"
-#define FAERIE_LETS_GO 0x476       // "Let's go!"
-#define FAERIE_FOLLOW 0x479        // "I'll follow you anywhere"
-#define FAERIE_WALL_HINT 0x47A     // "There is something funny about this wall"
-#define FAERIE_SUSPICIOUS_HINT 0x48A // "This is really suspicious looking"
-#define FAERIE_MIST_HINT 0x48E       // "If only you could transform into mist"
-#define FAERIE_DARKNESS_HINT                                                   \
-    0x492 // "Some animals can live in complete darkness"
-#endif
-
-// STAGE DAI
-// Unknown SFX related to the priest
-#define SFX_UNK_4E5 0x4E5
-
-// Demon voiceovers
-#if defined(VERSION_US)
-#define DEMON_INTRO_COMMAND 0x4E8 // Command me, my lord and master
-#define DEMON_INTRO_READY 0x4ED   // I'm ready to serve, master
-#define DEMON_SWITCH_1 0x4EE // Hmm, a switch.  Why don't I press it and see?
-#define DEMON_SWITCH_2 0x4EF // Hmm, this switch hasn't been pressed yet
-
-#define JP_VO_SH_GROAN 0x52E      // Shaft groans
-#define JP_VO_SH_SCREAM 0x52F     // Shaft screams
-#define JP_VO_SH_SONO_TEIDO 0x530 // Shaft: Sono teido no chikara de tatakai...
-#endif
 
 // The VAB IDs appear in large chunks so all sounds proceeding
 // a vabid label comment will belong in that VAB group unless noted.

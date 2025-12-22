@@ -81,12 +81,12 @@ static s32 D_us_80170220 = 15;
 
 // sets up familiar entity id "state" during initialization
 // and level change
-void func_us_80172420(Entity* self, s32 entityId) {
+void func_us_80172420(Entity* parent, s32 entityId) {
     Entity* entity;
     s32 i;
 
-    if (self == NULL) {
-        self = &g_Entities[UNK_ENTITY_4];
+    if (parent == NULL) {
+        parent = &g_Entities[UNK_ENTITY_4];
     }
 
     for (i = 0; i < 3; i++) {
@@ -103,27 +103,27 @@ void func_us_80172420(Entity* self, s32 entityId) {
     if (!entity->entityId) {
         DestroyEntity(entity);
         entity->entityId = entityId + SWORD_UNK_DA;
-        entity->zPriority = self->zPriority;
-        entity->facingLeft = self->facingLeft;
+        entity->zPriority = parent->zPriority;
+        entity->facingLeft = parent->facingLeft;
         entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
-        entity->posX.val = self->posX.val;
-        entity->posY.val = self->posY.val;
-        entity->ext.factory.parent = self;
+        entity->posX.val = parent->posX.val;
+        entity->posY.val = parent->posY.val;
+        entity->ext.factory.parent = parent;
     }
 }
 
-void func_us_801724E8(Entity* self, s32 arg1, u32 params) {
+void func_us_801724E8(Entity* parent, s32 arg1, u32 params) {
     Entity* entity;
 
     if (entity = g_api.GetFreeEntity(UNK_ENTITY_11, 0x2F)) {
         DestroyEntity(entity);
         entity->entityId = arg1 ? SWORD_UNK_DF : SWORD_UNK_DE;
-        entity->zPriority = self->zPriority;
-        entity->facingLeft = self->facingLeft;
+        entity->zPriority = parent->zPriority;
+        entity->facingLeft = parent->facingLeft;
         entity->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
-        entity->posX.val = self->posX.val;
-        entity->posY.val = self->posY.val;
-        entity->ext.factory.parent = self;
+        entity->posX.val = parent->posX.val;
+        entity->posY.val = parent->posY.val;
+        entity->ext.factory.parent = parent;
         entity->params = params;
     }
 }
@@ -852,12 +852,12 @@ void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
         if (D_us_80178560 > 16) {
             self->ext.swordFamiliar.unk84 =
                 ratan2(D_us_80178554, D_us_80178550) & 0xFFF;
-            self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
-                self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88,
-                8);
+            self->ext.swordFamiliar.unk86 =
+                StepAngleTowards(self->ext.swordFamiliar.unk84,
+                                 self->ext.swordFamiliar.unk88, 8);
         } else {
-            self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
-                FLT(0.25), self->ext.swordFamiliar.unk88, 8);
+            self->ext.swordFamiliar.unk86 =
+                StepAngleTowards(FLT(0.25), self->ext.swordFamiliar.unk88, 8);
         }
 
         self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
@@ -871,9 +871,9 @@ void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
         self->ext.swordFamiliar.currentX =
             ratan2(D_us_80178558, D_us_8017855C) & 0xFFF;
 
-        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
-            self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
-            32);
+        self->ext.swordFamiliar.unk8c =
+            StepAngleTowards(self->ext.swordFamiliar.currentX,
+                             self->ext.swordFamiliar.targetX, 32);
         self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
 
         D_us_80170080.vz +=
@@ -949,7 +949,7 @@ void func_us_801746BC(Entity* self) {
             (D_us_8017857C - self->ext.swordFamiliar.posY) - self->posY.i.hi;
         self->ext.swordFamiliar.unk84 =
             ratan2(D_us_80178574, D_us_80178570) & 0xFFF;
-        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+        self->ext.swordFamiliar.unk86 = StepAngleTowards(
             self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 32);
         self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
 
@@ -1100,7 +1100,7 @@ void func_us_80174B6C(Entity* self) {
 
         self->ext.swordFamiliar.unk84 =
             ratan2(D_us_80178590, D_us_8017858C) & 0xFFF;
-        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+        self->ext.swordFamiliar.unk86 = StepAngleTowards(
             self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 0x80);
         self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
 
@@ -1117,9 +1117,9 @@ void func_us_80174B6C(Entity* self) {
 
         self->ext.swordFamiliar.currentX =
             ratan2(D_us_80178594, D_us_80178598) & 0xFFF;
-        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
-            self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
-            0x40);
+        self->ext.swordFamiliar.unk8c =
+            StepAngleTowards(self->ext.swordFamiliar.currentX,
+                             self->ext.swordFamiliar.targetX, 0x40);
 
         self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
         D_us_801785A4 = FLT_TO_I(rsin(self->ext.swordFamiliar.unk8c) * 0xA0);
@@ -1149,13 +1149,13 @@ void func_us_80174B6C(Entity* self) {
         D_us_80170080.vy += D_us_801785A0;
         D_us_80170080.vz += D_us_801785A4;
 
-        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
-            FLT(0.25), self->ext.swordFamiliar.unk88, 32);
+        self->ext.swordFamiliar.unk86 =
+            StepAngleTowards(FLT(0.25), self->ext.swordFamiliar.unk88, 32);
         self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
         D_us_80170078.vz = self->ext.swordFamiliar.unk86 - FLT(0.25);
 
-        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
-            FLT(0), self->ext.swordFamiliar.targetX, 32);
+        self->ext.swordFamiliar.unk8c =
+            StepAngleTowards(FLT(0), self->ext.swordFamiliar.targetX, 32);
 
         self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
         D_us_80170078.vx = self->ext.swordFamiliar.unk8c;
@@ -1205,7 +1205,7 @@ void func_us_80174B6C(Entity* self) {
 
         self->ext.swordFamiliar.unk84 =
             ratan2(D_us_80178590, D_us_8017858C) & 0xFFF;
-        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+        self->ext.swordFamiliar.unk86 = StepAngleTowards(
             self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 0x80);
         self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
 
@@ -1223,9 +1223,9 @@ void func_us_80174B6C(Entity* self) {
 
         self->ext.swordFamiliar.currentX =
             ratan2(D_us_80178594, D_us_80178598) & 0xFFF;
-        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
-            (s16)self->ext.swordFamiliar.currentX,
-            self->ext.swordFamiliar.targetX, 0x80);
+        self->ext.swordFamiliar.unk8c =
+            StepAngleTowards((s16)self->ext.swordFamiliar.currentX,
+                             self->ext.swordFamiliar.targetX, 0x80);
 
         self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
         D_us_801785A4 =
@@ -1259,7 +1259,7 @@ void func_us_80174B6C(Entity* self) {
         self->ext.swordFamiliar.unk84 =
             ratan2(D_us_801785A0, D_us_8017859C) & 0xFFF;
 
-        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+        self->ext.swordFamiliar.unk86 = StepAngleTowards(
             self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 0x80);
         self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
 
@@ -1273,9 +1273,9 @@ void func_us_80174B6C(Entity* self) {
 
         self->ext.swordFamiliar.currentX =
             ratan2(D_us_80178594, D_us_80178598) & 0xFFF;
-        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
-            self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
-            0x80);
+        self->ext.swordFamiliar.unk8c =
+            StepAngleTowards(self->ext.swordFamiliar.currentX,
+                             self->ext.swordFamiliar.targetX, 0x80);
         self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
         D_us_80170078.vx = self->ext.swordFamiliar.unk8c;
         D_us_801785B4++;
@@ -1319,7 +1319,7 @@ void func_us_80174B6C(Entity* self) {
 
         self->ext.swordFamiliar.unk84 =
             ratan2(D_us_80178590, D_us_8017858C) & 0xFFF;
-        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+        self->ext.swordFamiliar.unk86 = StepAngleTowards(
             self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 0x80);
         self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
 
@@ -1337,9 +1337,9 @@ void func_us_80174B6C(Entity* self) {
         self->ext.swordFamiliar.currentX =
             ratan2(D_us_80178594, D_us_80178598) & 0xFFF;
 
-        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
-            self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
-            128);
+        self->ext.swordFamiliar.unk8c =
+            StepAngleTowards(self->ext.swordFamiliar.currentX,
+                             self->ext.swordFamiliar.targetX, 128);
         self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
         D_us_801785A4 =
             FLT_TO_I(rsin(self->ext.swordFamiliar.unk8c) * FLT(3.0 / 64.0));
@@ -1430,9 +1430,9 @@ void func_us_801758C8(Entity* self) {
         self->ext.swordFamiliar.unk84 =
             ratan2(D_us_801785C8, D_us_801785C4) & 0xFFF;
 
-        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
-            self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88,
-            0x180);
+        self->ext.swordFamiliar.unk86 =
+            StepAngleTowards(self->ext.swordFamiliar.unk84,
+                             self->ext.swordFamiliar.unk88, 0x180);
         self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
         D_us_801785D4 = FLT_TO_I(rcos(self->ext.swordFamiliar.unk86) << 7);
         D_us_801785D8 = FLT_TO_I(rsin(self->ext.swordFamiliar.unk86) << 7);
@@ -1445,9 +1445,9 @@ void func_us_801758C8(Entity* self) {
 
         self->ext.swordFamiliar.currentX =
             ratan2(D_us_801785CC, D_us_801785D0) & 0xFFF;
-        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
-            self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
-            0x40);
+        self->ext.swordFamiliar.unk8c =
+            StepAngleTowards(self->ext.swordFamiliar.currentX,
+                             self->ext.swordFamiliar.targetX, 0x40);
 
         self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
 
@@ -1657,9 +1657,9 @@ void func_us_80176270(Entity* self) {
         self->ext.swordFamiliar.unk84 =
             ratan2(D_us_801785FC, D_us_801785F8) & 0xFFF;
 
-        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
-            self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88,
-            0x180);
+        self->ext.swordFamiliar.unk86 =
+            StepAngleTowards(self->ext.swordFamiliar.unk84,
+                             self->ext.swordFamiliar.unk88, 0x180);
         self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
         D_us_80178608 = FLT_TO_I(rcos(self->ext.swordFamiliar.unk86) << 8);
         D_us_8017860C = FLT_TO_I(rsin(self->ext.swordFamiliar.unk86) << 8);
@@ -1673,9 +1673,9 @@ void func_us_80176270(Entity* self) {
         self->ext.swordFamiliar.currentX =
             ratan2(D_us_80178600, D_us_80178604) & 0xFFF;
 
-        self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
-            self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
-            0x40);
+        self->ext.swordFamiliar.unk8c =
+            StepAngleTowards(self->ext.swordFamiliar.currentX,
+                             self->ext.swordFamiliar.targetX, 0x40);
         self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
 
         D_us_80178610 = FLT_TO_I(rsin(self->ext.swordFamiliar.unk8c) << 8);
@@ -1780,11 +1780,11 @@ void func_us_80176674(Entity* self) {
     if (D_us_80178634 > 16) {
         self->ext.swordFamiliar.unk84 =
             ratan2(D_us_80178628, D_us_80178624) & 0xFFF;
-        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
+        self->ext.swordFamiliar.unk86 = StepAngleTowards(
             self->ext.swordFamiliar.unk84, self->ext.swordFamiliar.unk88, 8);
     } else {
-        self->ext.swordFamiliar.unk86 = GetTargetPositionWithDistanceBuffer(
-            FLT(0.25), self->ext.swordFamiliar.unk88, 8);
+        self->ext.swordFamiliar.unk86 =
+            StepAngleTowards(FLT(0.25), self->ext.swordFamiliar.unk88, 8);
     }
 
     self->ext.swordFamiliar.unk88 = self->ext.swordFamiliar.unk86;
@@ -1797,9 +1797,9 @@ void func_us_80176674(Entity* self) {
 
     self->ext.swordFamiliar.currentX =
         ratan2(D_us_8017862C, D_us_80178630) & 0xFFF;
-    self->ext.swordFamiliar.unk8c = GetTargetPositionWithDistanceBuffer(
-        self->ext.swordFamiliar.currentX, self->ext.swordFamiliar.targetX,
-        0x20);
+    self->ext.swordFamiliar.unk8c =
+        StepAngleTowards(self->ext.swordFamiliar.currentX,
+                         self->ext.swordFamiliar.targetX, 0x20);
 
     self->ext.swordFamiliar.targetX = self->ext.swordFamiliar.unk8c;
     D_us_80170080.vz += FLT_TO_I(rsin(self->ext.swordFamiliar.unk8c) * 96);
@@ -2144,5 +2144,75 @@ void func_us_80177590(Entity* self) {
     }
 }
 
-#include "../shared_events.h"
-#include "../shared_globals.h"
+//#include "../shared_events.h"
+//#include "../shared_globals.h"
+
+#define E_UNK_DC 220
+#define E_UNK_DF 223
+// clang-format off
+#define MAKE_EVENT(servant, roomX, roomY, camX, camY, check, delay, entity, params) \
+    { 0, 0, servant, roomX, roomY, camX, camY, check, delay, entity, params, 1 }
+#define NULL_EVENT \
+    { 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, 0, 0 }
+ServantEvent g_Events[] = {
+    NULL_EVENT,
+    MAKE_EVENT(FAM_ACTIVE_BAT, 41, 50, 0, 4, FOR_CASTLE_FLAG(CAT_SPIKE_ROOM_LIT), 1, E_UNK_DF, 15),
+    MAKE_EVENT(FAM_ACTIVE_GHOST, 41, 50, 0, 4, FOR_CASTLE_FLAG(CAT_SPIKE_ROOM_LIT), 1, E_UNK_DF, 15),
+    MAKE_EVENT(FAM_ACTIVE_DEMON, 49, 20, 0, 4, CHECK_NONE, 0, E_UNK_DF, 0),
+    MAKE_EVENT(FAM_ACTIVE_DEMON, 32, 40, 0, 4, FOR_CASTLE_FLAG(CHI_DEMON_SWITCH), 8, E_UNK_DF, 1),
+    MAKE_EVENT(FAM_ACTIVE_DEMON, 16, 21, 0, 4, CHECK_NONE, 0, E_UNK_DF, 0),
+    MAKE_EVENT(FAM_ACTIVE_DEMON, -31, 20, 0, 772, FOR_CASTLE_FLAG(RCHI_DEMON_SWITCH), 8, E_UNK_DF, 1),
+    MAKE_EVENT(FAM_ACTIVE_DEMON, 41, 50, 0, 4, FOR_CASTLE_FLAG(CAT_SPIKE_ROOM_LIT), 1, E_UNK_DF, 15),
+    MAKE_EVENT(FAM_ACTIVE_NOSE_DEMON, 49, 20, 0, 4, CHECK_NONE, 0, E_UNK_DF, 0),
+    MAKE_EVENT(FAM_ACTIVE_NOSE_DEMON, 32, 40, 0, 4, FOR_CASTLE_FLAG(CHI_DEMON_SWITCH), 8, E_UNK_DF, 1),
+    MAKE_EVENT(FAM_ACTIVE_NOSE_DEMON, 16, 21, 0, 4, CHECK_NONE, 0, E_UNK_DF, 0),
+    MAKE_EVENT(FAM_ACTIVE_NOSE_DEMON, -31, 20, 0, 772, FOR_CASTLE_FLAG(RCHI_DEMON_SWITCH), 8, E_UNK_DF, 1),
+    MAKE_EVENT(FAM_ACTIVE_NOSE_DEMON, 41, 50, 0, 4, FOR_CASTLE_FLAG(CAT_SPIKE_ROOM_LIT), 1, E_UNK_DF, 15),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 49, 20, 0, 4, CHECK_NONE, 0, E_UNK_DC, 0),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 16, 21, 0, 4, CHECK_NONE, 0, E_UNK_DC, 0),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 41, 50, 0, 4, FOR_CASTLE_FLAG(CAT_SPIKE_ROOM_LIT), 48, E_UNK_DC, 1),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 21, 22, 150, 4, FOR_RELIC(RELIC_FORM_OF_MIST), 96, E_UNK_DC, 2),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 60, 26, 0, 255, FOR_RELIC(RELIC_FORM_OF_MIST), 96, E_UNK_DC, 2),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 44, 18, 633, 772, FOR_RELIC(RELIC_FORM_OF_MIST), 96, E_UNK_DC, 2),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 10, 15, 790, 4, FOR_RELIC(RELIC_FORM_OF_MIST), 96, E_UNK_DC, 2),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 39, 37, 0, 516, FOR_CASTLE_FLAG(NO4_SECRET_FLOOR_OPEN), 96, E_UNK_DC, 3),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 36, 27, 0, 4, FOR_CASTLE_FLAG(NO4_SECRET_WALL_OPEN), 256, E_UNK_DC, 4),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 12, 32, 0, 516, FOR_CASTLE_FLAG(NZ0_SECRET_WALL_OPEN), 160, E_UNK_DC, 5),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 12, 32, 0, 511, FOR_CASTLE_FLAG(NZ0_SECRET_FLOOR_OPEN), 32, E_UNK_DC, 6),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 27, 21, 512, 260, FOR_CASTLE_FLAG(NO2_SECRET_WALL_OPEN), 64, E_UNK_DC, 7),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 49, 18, 0, 4, FOR_CASTLE_FLAG(LIB_BOOKSHELF_SECRET), 512, E_UNK_DC, 8),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 50, 11, 0, 4, FOR_CASTLE_FLAG(NZ1_UPPER_WALL_OPEN), 32, E_UNK_DC, 9),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 43, 10, 0, 255, FOR_CASTLE_FLAG(NZ1_LOWER_WALL_OPEN), 0x80, E_UNK_DC, 10),
+    MAKE_EVENT(FAM_ACTIVE_FAERIE, 41, 50, 0, 4, FOR_CASTLE_FLAG(CAT_SPIKE_ROOM_LIT), 1, E_UNK_DC, 15),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 49, 20, 0, 4, CHECK_NONE, 0, E_UNK_DC, 0),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 16, 21, 0, 4, CHECK_NONE, 0, E_UNK_DC, 0),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 41, 50, 0, 4, FOR_CASTLE_FLAG(CAT_SPIKE_ROOM_LIT), 48, E_UNK_DC, 1),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 21, 22, 150, 4, FOR_RELIC(RELIC_FORM_OF_MIST), 96, E_UNK_DC, 2),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 60, 26, 0, 255, FOR_RELIC(RELIC_FORM_OF_MIST), 96, E_UNK_DC, 2),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 44, 18, 633, 772, FOR_RELIC(RELIC_FORM_OF_MIST), 96, E_UNK_DC, 2),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 10, 15, 790, 4, FOR_RELIC(RELIC_FORM_OF_MIST), 96, E_UNK_DC, 2),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 39, 37, 0, 516, FOR_CASTLE_FLAG(NO4_SECRET_FLOOR_OPEN), 96, E_UNK_DC, 3),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 36, 27, 0, 4, FOR_CASTLE_FLAG(NO4_SECRET_WALL_OPEN), 256, E_UNK_DC, 4),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 12, 32, 0, 516, FOR_CASTLE_FLAG(NZ0_SECRET_WALL_OPEN), 160, E_UNK_DC, 5),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 12, 32, 0, 511, FOR_CASTLE_FLAG(NZ0_SECRET_FLOOR_OPEN), 32, E_UNK_DC, 6),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 27, 21, 512, 260, FOR_CASTLE_FLAG(NO2_SECRET_WALL_OPEN), 64, E_UNK_DC, 7),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 49, 18, 0, 4, FOR_CASTLE_FLAG(LIB_BOOKSHELF_SECRET), 512, E_UNK_DC, 8),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 50, 11, 0, 4, FOR_CASTLE_FLAG(NZ1_UPPER_WALL_OPEN), 32, E_UNK_DC, 9),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 43, 10, 0, 255, FOR_CASTLE_FLAG(NZ1_LOWER_WALL_OPEN), 128, E_UNK_DC, 10),
+    MAKE_EVENT(FAM_ACTIVE_YOUSEI, 41, 50, 0, 4, FOR_CASTLE_FLAG(CAT_SPIKE_ROOM_LIT), 1, E_UNK_DC, 15),
+    MAKE_EVENT(FAM_ACTIVE_SWORD, 49, 20, 0, 4, CHECK_NONE, 0, E_UNK_DC, 0),
+    MAKE_EVENT(FAM_ACTIVE_SWORD, 16, 21, 0, 4, CHECK_NONE, 0, E_UNK_DC, 0),
+    MAKE_EVENT(FAM_ACTIVE_SWORD, 41, 50, 0, 4, FOR_CASTLE_FLAG(CAT_SPIKE_ROOM_LIT), 1, E_UNK_DC, 15),
+#if defined(VERSION_HD)
+    { 0, 0, -1, 1, -1, -1, -1, -1, -1, -1, 0, 0, 0 }
+#else
+    NULL_EVENT
+#endif
+};
+
+s32 g_PlaySfxStep = 99;
+s16 g_EntityRanges[] = {5, 7, 32, 63};
+ServantEvent* g_EventQueue = g_Events;
+u32 g_CurrentServant = 0;
+s32 g_CurrentRoomX = 0;
+s32 g_CurrentRoomY = 0;

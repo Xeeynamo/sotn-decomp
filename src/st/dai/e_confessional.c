@@ -203,7 +203,7 @@ void EntityConfessionalGhost(Entity* self) {
                 SetStep(CONFESSIONAL_GHOST_GOOD_SIT);
 #ifdef VERSION_PSP
                 if (!(self->params & CONFESSIONAL_GHOST_PARISHIONER)) {
-                    g_api.PlaySfx(SFX_UNK_4E5);
+                    g_api.PlaySfx(UNK_4E7);
                 }
 #endif
             }
