@@ -8,7 +8,6 @@ import hashlib
 import time
 import re
 import multiprocessing
-from enum import Enum
 from pathlib import Path
 from subprocess import run
 from types import SimpleNamespace
@@ -40,185 +39,6 @@ Additional notes:
 - If a segment has only one function, it is named as that function in snake case.  If the function name starts with Entity, it replaces it with 'e'.
     For example: A segment with the only function being EntityShuttingWindow would be named as e_shutting_window
 """
-
-
-class EnemyDefs(Enum):
-    BlueAxeKnight = 0x006
-    SwordLord = 0x009
-    Skelerang = 0x00B
-    BloodyZombie = 0x00D
-    FlyingZombieHalf1 = 0x00E
-    FlyingZombieHalf2 = 0x00F
-    Diplocephalus = 0x010
-    OwlKnight = 0x014
-    Owl = 0x016
-    LesserDemon = 0x017
-    MermanLvl2 = 0x01B
-    MermanLvl3 = 0x01D
-    Gorgon = 0x01F
-    ArmorLord = 0x022
-    BlackPanther = 0x025
-    DarkOctopus = 0x026
-    FleaMan = 0x028
-    FleaArmor = 0x029
-    WhiteDragon = 0x02B
-    BoneArk = 0x02D
-    BoneArkSkeleton = 0x02E
-    BoneArkProjectile = 0x2F
-    FleaRider = 0x030
-    Marionette = 0x031
-    OlroxLvl25 = 0x032
-    OlroxLvl0 = 0x037
-    Wereskeleton = 0x03D
-    Bat = 0x040
-    LargeSlime = 0x041
-    Slime = 0x042
-    PhantomSkull = 0x043
-    FlailGuard = 0x044
-    BloodSkeleton = 0x046
-    HellfireBeast = 0x047
-    Skeleton = 0x04B
-    DiscusLordLvl22 = 0x04D
-    DiscusLordLvl0 = 0x04E
-    FireDemon = 0x04F
-    SpittleBone = 0x051
-    SkeletonApe = 0x053
-    StoneRose = 0x055
-    Ectoplasm = 0x058
-    BonePillarLvl1 = 0x05A
-    SpearGuard = 0x05D
-    PlateLord = 0x061
-    FrozenShade = 0x063
-    BoneMusket = 0x066
-    DodoBird = 0x068
-    BoneScimitar = 0x069
-    Toad = 0x06A
-    Frog = 0x06B
-    BoneArcher = 0x06C
-    Zombie = 0x06E
-    GraveKeeper = 0x06F
-    Tombstone = 0x071
-    BlueRaven = 0x072
-    BlackCrow = 0x073
-    JackOBones = 0x074
-    BoneHalberd = 0x076
-    Yorick = 0x078
-    Skull = 0x079
-    BladeMaster = 0x07A
-    BladeSoldier = 0x07C
-    NovaSkeleton = 0x07E
-    WingedGuard = 0x080
-    SpectralSwordNO2 = 0x081
-    Poltergeist = 0x082
-    Lossoth = 0x083
-    ValhallaKnight = 0x085
-    SpectralSwordDAI = 0x088
-    SpectralSwordPuppetSword = 0x089
-    SpectralSwordRDAI = 0x08A
-    Spear = 0x08B
-    Shield = 0x08C
-    Orobourous = 0x08D
-    Oruburos = 0x08E
-    OruburosRider = 0x08F
-    DragonRider1 = 0x090
-    DragonRider2 = 0x091
-    Dhuron = 0x092
-    FireWarg = 0x094
-    WargRider = 0x097
-    CaveTroll = 0x099
-    Ghost = 0x09C
-    Thornweed = 0x09D
-    CorpseweedUnused = 0x09E
-    Corpseweed = 0x09F
-    VenusWeedRoot = 0x0A1
-    VenusWeedFlower = 0x0A2
-    BombKnight = 0x0A5
-    RockKnight = 0x0A7
-    DraculaLvl0 = 0x0A9
-    GreaterDemon = 0x0AC
-    Warg = 0x0AF
-    Slinger = 0x0B2
-    CornerGuard = 0x0B4
-    Bitterfly = 0x0B6
-    BonePillarSkull = 0x0B7
-    BonePillarFireBreath = 0xB8
-    BonePillarSpikedBall = 0x0B9
-    Hammer = 0x0BA
-    Gurkha = 0x0BC
-    Blade = 0x0BE
-    OuijaTable = 0x0C1
-    SniperofGoth = 0x0C3
-    GalamothLvl50 = 0x0C6
-    GalamothLvl0 = 0x0C7
-    Minotaurus = 0x0CB
-    WerewolfARE = 0x0CE
-    Paranthropus = 0x0D3
-    Mudman = 0x0D6
-    GhostDancer = 0x0D8
-    FrozenHalf = 0x0D9
-    SalemWitch = 0x0DD
-    Azaghal = 0x0E0
-    Gremlin = 0x0E1
-    HuntingGirl = 0x0E3
-    VandalSword = 0x0E4
-    Salome = 0x0E5
-    Ctulhu = 0x0E9
-    Malachi = 0x0EC
-    Harpy = 0x0EF
-    Slogra = 0x0F3
-    GreenAxeKnight = 0x0F6
-    Spellbook = 0x0F7
-    MagicTomeLvl8 = 0x0F9
-    MagicTomeLvl12 = 0x0FB
-    Doppleganger10 = 0x0FD
-    Gaibon = 0x0FE
-    SkullLord = 0x105
-    Lion = 0x106
-    Tinman = 0x108
-    AkmodanII = 0x10B
-    Cloakedknight = 0x10F
-    DarkwingBat = 0x111
-    Fishhead = 0x115
-    Karasuman = 0x118
-    Imp = 0x11C
-    Balloonpod = 0x11D
-    Scylla = 0x11F
-    Scyllawyrm = 0x126
-    Granfaloon1 = 0x127
-    Granfaloon2 = 0x128
-    Hippogryph = 0x12C
-    MedusaHead1 = 0x12F
-    MedusaHead2 = 0x130
-    Archer = 0x131
-    RichterBelmont = 0x133
-    Scarecrow = 0x142
-    Schmoo = 0x143
-    Beezelbub = 0x144
-    FakeTrevor = 0x148
-    FakeGrant = 0x14E
-    FakeSypha = 0x151
-    Succubus = 0x156
-    KillerFish = 0x15E
-    Shaft = 0x15F
-    Death1 = 0x164
-    Death2 = 0x169
-    Cerberos = 0x16B
-    Medusa = 0x16E
-    TheCreature = 0x172
-    Doppleganger40 = 0x174
-    DraculaLvl98 = 0x17B
-    StoneSkull = 0x180
-    Minotaur = 0x182
-    WerewolfRARE = 0x185
-    BlueVenusWeed1 = 0x188
-    BlueVenusWeed2 = 0x189
-    Guardian = 0x18C
-
-
-def get_enemy_defs():
-    return sotn_utils.yaml.safe_load(
-        (Path(__file__).parent / "segments.yaml").read_text()
-    )
 
 
 def build(targets=[], plan=True, dynamic_syms=False, build=True, version="us"):
@@ -462,13 +282,13 @@ def find_files_to_compare(ref_ovls, ovl_name, version):
 # Validate logic and move to sotn-decomp
 def parse_psp_ovl_load(ovl_name, path_prefix, asm_path):
     first_address_pattern = re.compile(r"\s+/\*\s+[A-F0-9]{1,5}\s+([A-F0-9]{8})\s")
-    psp_entity_updates_pattern=r"""
+    psp_entity_updates_pattern = r"""
         \s+/\*\s[A-F0-9]{1,5}(?:\s[A-F0-9]{8}){2}\s\*/\s+lui\s+\$v1,\s+%hi\((?P<entity>[A-Za-z0-9_]+)\)\n
         .*\n
         \s+/\*\s[A-F0-9]{1,5}\s[A-F0-9]{8}\sC708023C\s\*/.*\n
         \s+/\*\s[A-F0-9]{1,5}\s[A-F0-9]{8}\s30BC43AC\s\*/.*\n
     """
-    psp_ovl_header_pattern=r"""
+    psp_ovl_header_pattern = r"""
         \s+/\*\s[A-F0-9]{1,5}\s[A-F0-9]{8}\s1D09043C\s\*/.*\n
         \s+/\*\s[A-F0-9]{1,5}\s[A-F0-9]{8}\s38F78424\s\*/.*\n
         \s+/\*\s[A-F0-9]{1,5}(?:\s[A-F0-9]{8}){2}\s\*/\s+lui\s+\$a1,\s+%hi\((?P<header>[A-Za-z0-9_]+)\)\n
@@ -498,9 +318,7 @@ def parse_psp_ovl_load(ovl_name, path_prefix, asm_path):
             and " C708023C " in file_text
             and " 30BC43AC " in file_text
         ):
-            if match := psp_ovl_header_entity_table_pattern.search(
-                file_text
-            ):
+            if match := psp_ovl_header_entity_table_pattern.search(file_text):
                 if ovl_load_address := first_address_pattern.search(file_text):
                     ovl_load_symbol = Symbol(
                         f"{ovl_name.upper()}_Load",
@@ -595,7 +413,7 @@ def create_e_init_c(entity_updates, e_inits, ovl_name, e_init_c_path):
         return False
 
 
-def get_known_starts(ovl_name, segments_path):
+def get_known_segments(ovl_name, segments_path):
     segments_config = sotn_utils.yaml.safe_load(segments_path.read_text())
     known_segments = []
     # TODO: Simplify this logic
@@ -735,7 +553,10 @@ def parse_ovl_header(data_file_text, ovl_name, platform, header_symbol=None):
     else:
         return {}, None
     # Todo: Should this be findall or finditer?
-    matches = re.findall(r"/\*\s[0-9A-F]{1,5}\s[0-9A-F]{8}\s(?P<address>[0-9A-F]{8})\s\*/\s+\.word\s+(?P<name>\w+)", header)
+    matches = re.findall(
+        r"/\*\s[0-9A-F]{1,5}\s[0-9A-F]{8}\s(?P<address>[0-9A-F]{8})\s\*/\s+\.word\s+(?P<name>\w+)",
+        header,
+    )
     if matches:
         if len(matches) > 7:
             pStObjLayoutHorizontal_address = int.from_bytes(
@@ -792,7 +613,7 @@ def parse_init_room_entities(ovl_name, platform, init_room_entities_path, vram_s
             else 123 if platform == "psp" else 83
         ),
     }
-    init_room_entities_symbol_pattern=re.compile(
+    init_room_entities_symbol_pattern = re.compile(
         r"\s+/\*\s[0-9A-F]{1,5}\s[0-9A-F]{8}\s[0-9A-F]{8}\s\*/\s+[a-z]{1,5}[ \t]*\$\w+,\s%hi\(D_(?:\w+_)?(?P<address>[A-F0-9]{8})\)\s*"
     )
     lines = init_room_entities_path.read_text().splitlines()
@@ -800,9 +621,7 @@ def parse_init_room_entities(ovl_name, platform, init_room_entities_path, vram_s
         Symbol(
             name,
             int(
-                init_room_entities_symbol_pattern.fullmatch(
-                    lines[i]
-                ).group("address"),
+                init_room_entities_symbol_pattern.fullmatch(lines[i]).group("address"),
                 16,
             ),
             None,
@@ -872,8 +691,9 @@ def parse_entity_updates(data_file_text, ovl_name, entity_updates_symbol):
             (len(entity_updates_lines) - 1, None),
         )
         entity_updates_lines = entity_updates_lines[table_start:]
-        if matches := re.findall(r"/\*\s[0-9A-F]{1,5}\s[0-9A-F]{8}\s(?P<address>[0-9A-F]{8})\s\*/\s+\.word\s+(?P<name>\w+)",
-            "\n".join(entity_updates_lines)
+        if matches := re.findall(
+            r"/\*\s[0-9A-F]{1,5}\s[0-9A-F]{8}\s(?P<address>[0-9A-F]{8})\s\*/\s+\.word\s+(?P<name>\w+)",
+            "\n".join(entity_updates_lines),
         ):
             entity_dummy_address = Counter([x[0] for x in matches]).most_common(1)[0][0]
             entity_dummy_address = int.from_bytes(
@@ -1009,7 +829,7 @@ def cross_reference_e_init_c(
     return [], False
 
 
-def parse_e_inits(data_file_text, first_e_init, ovl_name, platform):
+def parse_e_inits(data_file_text, first_e_init, ovl_name, platform, config_yaml_dir):
     e_init_pattern = re.compile(
         r"""
     glabel\s+(?P<name>\w+)\n
@@ -1157,7 +977,12 @@ def parse_e_inits(data_file_text, first_e_init, ovl_name, platform):
             )
             text = text[matches.end() + 1 :]
 
-    EnemyDefsVals = [x.value for x in EnemyDefs]
+    enemy_defs = {
+        v: k
+        for k, v in sotn_utils.yaml.safe_load(
+            (Path(config_yaml_dir) / "enemy_defs.yaml").read_text()
+        ).items()
+    }
 
     symbols = [
         Symbol(name, e_init[0].address, None)
@@ -1166,8 +991,8 @@ def parse_e_inits(data_file_text, first_e_init, ovl_name, platform):
     ]
     added_names = []
     for e_init in parsed_e_inits[len(symbols) :]:
-        if e_init[5] in EnemyDefsVals:
-            name = f"g_EInit{EnemyDefs(e_init[5])}".replace("EnemyDefs.", "")
+        if e_init[5] in enemy_defs:
+            name = f"g_EInit{enemy_defs[e_init[5]]}"
             if name in added_names:
                 symbols.append(
                     Symbol(f"{name}{e_init[0].address:X}", e_init[0].address, None)
@@ -1199,6 +1024,7 @@ def parse_e_inits(data_file_text, first_e_init, ovl_name, platform):
 
 def add_initial_symbols(
     ovl_config,
+    config_yaml_dir,
     e_init_c_path,
     ovl_header_symbol,
     parsed_symbols=[],
@@ -1250,6 +1076,7 @@ def add_initial_symbols(
             entity_updates.get("first_e_init"),
             ovl_config.name,
             ovl_config.platform,
+            config_yaml_dir,
         )
         parsed_symbols.extend(symbols)
 
@@ -1456,6 +1283,7 @@ def extract(args, version):
         ovl_config.subsegments, parsed_symbols, ovl_header, entity_updates, e_inits = (
             add_initial_symbols(
                 ovl_config,
+                args.config_dir,
                 e_init_c_path,
                 ovl_header_symbol,
                 [ovl_load_symbol] if ovl_load_symbol else [],
@@ -1621,9 +1449,11 @@ def extract(args, version):
         include_path = f"../{ovl_config.name}/" if ovl_config.platform == "psp" else ""
         file_header = f'// SPDX-License-Identifier: AGPL-3.0-or-later\n#include "{include_path}{ovl_config.name}.h"\n\n'
 
-        known_starts = get_known_starts(ovl_config.name, Path(args.segments))
+        known_segments = get_known_segments(
+            ovl_config.name, Path(args.config_dir) / "segments.yaml"
+        )
         ovl_config.subsegments = sotn_utils.find_segments(
-            ovl_config, file_header, known_starts
+            ovl_config, file_header, known_segments
         )
         ovl_config.write_config()
 
@@ -1776,11 +1606,11 @@ if __name__ == "__main__":
         help="The version of the game to target (-v/--version can be passed multiple times or multiple comma separated versions: i.e. '-v us,pspeu' or '-v us -v pspeu'), use 'all' to extract us, pspeu, and hd",
     )
     parser.add_argument(
-        "-s",
-        "--segments",
+        "-c",
+        "--config-dir",
         required=False,
-        default=f"{Path(__file__).parent / 'segments.yaml'}",
-        help=f"Specify a path to the segments yaml file (default is '{Path(__file__).parent.relative_to(Path.cwd()) / 'segments.yaml'}')",
+        default=f"{Path(__file__).parent}",
+        help=f"Specify a path to yaml config files (default is '{Path(__file__).parent.relative_to(Path.cwd())}')",
     )
     parser.add_argument(
         "-t",
