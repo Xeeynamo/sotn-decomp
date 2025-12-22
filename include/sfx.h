@@ -204,10 +204,6 @@ enum {
                                                          // eternity, demon.
 #else
     /*           jp:0x391 */ VO_GAMEOVER_SUCCUBUS_TAUNT = 0x391,
-    /*           jp:0x3CE */ VO_GAMEOVER_MARIA = 0x3CE,
-    /*           jp:0x3DA */ VO_GAMEOVER_RICHTER_TAUNT_1 = 0x3DA,
-    /*           jp:0x3DB */ VO_GAMEOVER_RICHTER_TAUNT_2,
-    /*           jp:0x3DC */ VO_GAMEOVER_RICHTER_TAUNT_3,
 #endif
 #ifdef VERSION_US
     /* us:0x3A8, jp:0x3A6 */ UNK_3A8 = 0x3A8,
@@ -231,6 +227,10 @@ enum {
     /* us:0x3CE,          */ NA_VO_MA_IF_YOU_WEAR, // Maria: If you wear these,
                                                    // you can see beyond evil
                                                    // illusions.
+#else
+    /*           jp:0x3CE */ VO_GAMEOVER_MARIA = 0x3CE,
+#endif
+#ifdef VERSION_US
     /* us:0x3D9,          */ UNK_3D9 = 0x3D9,
     /* us:0x3DA,          */ NA_VO_RI_IMPRESSIVE_WHIP, // Richter: Impressive,
                                                        // you were able to avoid
@@ -242,6 +242,10 @@ enum {
     /* us:0x3DC,          */ NA_VO_RI_ONLY_THE_COUNT,    // Richter: Hah, I knew
                                                       // it. Only the count is a
                                                       // true match for me.
+#else 
+    /*           jp:0x3DA */ VO_GAMEOVER_RICHTER_TAUNT_1 = 0x3DA,
+    /*           jp:0x3DB */ VO_GAMEOVER_RICHTER_TAUNT_2,
+    /*           jp:0x3DC */ VO_GAMEOVER_RICHTER_TAUNT_3,
 #endif
 #ifdef VERSION_US
     /* us:0x471, jp:0x46F */ UNK_471 = 0x471,
