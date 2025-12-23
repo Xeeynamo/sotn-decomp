@@ -1,1 +1,0 @@
-g_PauseAllowed = 0x091CE578; // used:true

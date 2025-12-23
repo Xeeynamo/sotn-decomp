@@ -31,7 +31,6 @@ extern s32 D_psp_08C630D8;
 extern s32 D_psp_08C630DC;
 extern u8 D_psp_08D39D3C[];
 extern u_long D_psp_08D6DC40;
-extern s32* D_psp_08D97C40;
 
 // PSP exclusive functions in PS.ELF
 void func_psp_0891CEB8(s32, s32);

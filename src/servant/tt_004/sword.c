@@ -1488,7 +1488,7 @@ void func_us_801758C8(Entity* self) {
             D_us_80170080.vy = 0;
             D_us_801785E4 = 0;
             g_api.PlaySfx(D_us_80170090[4]);
-            g_PauseAllowed = false;
+            pauseAllowed = false;
             self->step++;
         }
         break;
@@ -1542,7 +1542,7 @@ void func_us_801758C8(Entity* self) {
         D_us_801785E4++;
         if (D_us_801785E4 > 15) {
             D_us_801785E4 = 0;
-            g_PauseAllowed = true;
+            pauseAllowed = true;
             func_us_801724E8(self, 1, false);
             g_api.PlaySfx(SFX_MAGIC_SWITCH);
             self->step++;
@@ -1837,7 +1837,7 @@ void func_us_80176674(Entity* self) {
         break;
 
     case 2:
-        g_PauseAllowed = false;
+        pauseAllowed = false;
 #ifdef VERSION_PSP
 #define params 0x4F9
 #else
@@ -1864,7 +1864,7 @@ void func_us_80176674(Entity* self) {
         break;
 
     case 4:
-        g_PauseAllowed = true;
+        pauseAllowed = true;
         self->entityId = SWORD_DEFAULT;
         self->step = 0;
         break;

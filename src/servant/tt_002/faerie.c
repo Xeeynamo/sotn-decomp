@@ -1360,7 +1360,7 @@ void UpdateServantAdditionalInit(Entity* self) {
         }
         self->ext.faerie.sfxEventFlag =
             ((s16*)self->ext.faerie.currentSfxEvent)[0];
-        g_PauseAllowed = false;
+        pauseAllowed = false;
         self->step++;
         break;
 
@@ -1405,7 +1405,7 @@ void UpdateServantAdditionalInit(Entity* self) {
 
     case 5:
         SetAnimationFrame(self, 14);
-        g_PauseAllowed = true;
+        pauseAllowed = true;
         self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
         self->step = 0;
         break;
@@ -1762,7 +1762,7 @@ void UpdateServantOfferHint(Entity* self) {
         // needed for match
         self->ext.faerie.sfxEventFlag =
             *((s16*)self->ext.faerie.currentSfxEvent);
-        g_PauseAllowed = false;
+        pauseAllowed = false;
         self->step++;
         break;
 
@@ -1804,7 +1804,7 @@ void UpdateServantOfferHint(Entity* self) {
 
     case 4:
         SetAnimationFrame(self, 14);
-        g_PauseAllowed = true;
+        pauseAllowed = true;
         self->entityId = FAERIE_MODE_DEFAULT_UPDATE;
         self->step = 0;
         break;

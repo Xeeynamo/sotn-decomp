@@ -9,6 +9,13 @@
 #define STATIC
 #endif
 
+#ifndef VERSION_PSP
+#define pauseAllowed g_PauseAllowed
+#else
+extern s32 D_psp_091CE578;
+#define pauseAllowed D_psp_091CE578
+#endif
+
 // all of the shared functions need to be marked static for PC build due to name
 // collisions
 STATIC s32 AccumulateTowardZero(s32 arg0, s32 arg1);

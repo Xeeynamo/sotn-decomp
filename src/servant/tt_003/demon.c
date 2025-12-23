@@ -1079,7 +1079,7 @@ void UpdateServantPressSwitch(Entity* self) {
     case 2:
         sfxFlag = ((s16*)sfxEvent)[0];
 #ifndef VERSION_PSP
-        g_PauseAllowed = false;
+        pauseAllowed = false;
 #endif
         self->step++;
         // fallthrough
@@ -1088,7 +1088,7 @@ void UpdateServantPressSwitch(Entity* self) {
             if (g_PlaySfxStep > 4) {
                 SetAnimationFrame(self, sfxEvent->animIndex);
 #ifndef VERSION_PSP
-                g_PauseAllowed = true;
+                pauseAllowed = true;
 #endif
                 self->step++;
             }
@@ -1120,7 +1120,7 @@ void UpdateServantPressSwitch(Entity* self) {
 
     if (s_CurrentSwitch && !s_CurrentSwitch->entityId) {
 #ifndef VERSION_PSP
-        g_PauseAllowed = true;
+        pauseAllowed = true;
 #endif
         self->entityId = DEMON_MODE_DEFAULT_UPDATE;
         self->step = 0;
@@ -1313,7 +1313,7 @@ void UpdateServantAdditionalInit(Entity* self) {
             }
         }
         sfxFlag = ((s16*)sfxEvent)[0];
-        g_PauseAllowed = false;
+        pauseAllowed = false;
         self->step++;
         break;
 
@@ -1354,7 +1354,7 @@ void UpdateServantAdditionalInit(Entity* self) {
 
     case 5:
         SetAnimationFrame(self, 0);
-        g_PauseAllowed = true;
+        pauseAllowed = true;
         self->entityId = DEMON_MODE_DEFAULT_UPDATE;
         self->step = 0;
         break;

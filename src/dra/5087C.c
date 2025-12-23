@@ -16,10 +16,8 @@ extern void (*D_psp_08CE9C48)();
 extern s32 D_psp_091CE570;
 
 #if defined(VERSION_PSP)
-#define SAVE_DATA_PTR &D_psp_08D97C40
 #define CAN_PAUSE g_PauseAllowed&& D_psp_091CE578
 #else
-#define SAVE_DATA_PTR 0x801EA000
 #define CAN_PAUSE g_PauseAllowed
 #endif
 

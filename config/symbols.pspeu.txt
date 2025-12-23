@@ -189,6 +189,7 @@ g_SaveAreaNamesSecondPart = 0x091CE250;
 g_SaveAreaNames = 0x091CE258;
 D_800978B4 = 0x091CE548;
 D_800987B4 = 0x091CE558;
+D_psp_091CE578 = 0x091CE578;
 g_PauseAllowed = 0x091CE580;
 D_8003C744 = 0x091CE588;
 g_CutsceneHasControl = 0x091CE598;
