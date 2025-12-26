@@ -43,6 +43,8 @@ segments:
       - [0x2C, data]
       - [0x664, .data, e_init]
       - [0x808, data]
+      - [0xB0C, .data, collision]
+      - [0xECC, data]
       - [0x25284, .rodata, e_breakable]
       - [0x252A8, .rodata, unk_25E8C]
       - [0x252C0, .rodata, e_red_door]
