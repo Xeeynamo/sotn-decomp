@@ -31,7 +31,7 @@ const gameMetadata = {
             "name": "PlayStation 1 US",
             "overlays": [
                 "dra", "ric", "weapon",
-                "stcen", "stchi", "stdai", "stdre", "stlib", "stmad", "stno0", "stno1", "stno2", "stno3", "stno4", "stnp3", "stnz0", "stsel", "stst0", "sttop", "stwrp",
+                "stcen", "stchi", "stdai", "stdre", "stlib", "stmad", "stno0", "stno1", "stno2", "stno3", "stno4", "stnp3", "stnz0", "stnz1", "stsel", "stst0", "sttop", "stwrp",
                 "strtop", "strwrp",
                 "bomar", "bobo4", "bobo6", "borbo3", "borbo5",
                 "tt_000", "tt_001", "tt_002","tt_003", "tt_004"
@@ -42,7 +42,7 @@ const gameMetadata = {
             "name": "PSP EU",
             "overlays": [
                 "dra", "maria", "ric",
-                "stchi", "stdai", "stlib", "stno2", "stno3", "stno4", "stnp3", "stst0", "stwrp",
+                "stchi", "stdai", "stlib", "stno2", "stno3", "stno4", "stnp3", "stnz1", "stst0", "stwrp",
                 "tt_000"
             ]
         },
