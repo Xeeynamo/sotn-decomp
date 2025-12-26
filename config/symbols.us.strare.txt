@@ -143,3 +143,4 @@ g_LayoutObjHorizontal = 0x801B86D8;
 g_LayoutObjVertical = 0x801B86DC;
 g_LayoutObjPosHorizontal = 0x801B86E0;
 g_LayoutObjPosVertical = 0x801B86E4;
+g_bigRedFireballAnim = 0x8018133C;
