@@ -1,4 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rare.h"
 
-INCLUDE_ASM("st/rare/nonmatchings/e_lock_camera", RARE_EntityLockCamera);
+#include "../entity_lock_camera.h"

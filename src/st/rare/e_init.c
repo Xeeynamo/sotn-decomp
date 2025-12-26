@@ -89,7 +89,6 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B6824,
 };
 
-// clang-format off
 // animSet, animCurFrame, unk5A, palette, enemyID
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0, 0, 0x000};
 EInit g_EInitObtainable = {ANIMSET_DRA(3), 0, 0, 0, 0x001};
@@ -100,16 +99,20 @@ EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
+
 EInit D_us_80180778 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
 EInit D_us_80180784 = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
-EInit g_EInitMinotaur = {ANIMSET_OVL(3), 1, 72, 512, 0x182};
-EInit D_us_8018079C = {ANIMSET_OVL(3), 0, 72, 512, 0x183};
+
+EInit g_EInitMinotaur = {ANIMSET_OVL(3), 1, 72, 0x200, 0x182};
+EInit D_us_8018079C = {ANIMSET_OVL(3), 0, 72, 0x200, 0x183};
 EInit D_us_801807A8 = {ANIMSET_DRA(2), 1, 0, 0, 0x002};
 EInit D_us_801807B4 = {ANIMSET_DRA(2), 1, 0, 0, 0x184};
-EInit g_EInitWerewolfRARE = {ANIMSET_OVL(4), 1, 80, 553, 0x185};
-EInit D_us_801807CC = {ANIMSET_OVL(4), 0, 80, 553, 0x186};
-EInit D_us_801807D8 = {ANIMSET_OVL(4), 54, 80, 553, 0x187};
+
+EInit g_EInitWerewolfRARE = {ANIMSET_OVL(4), 1, 80, 0x229, 0x185};
+EInit D_us_801807CC = {ANIMSET_OVL(4), 0, 80, 0x229, 0x186};
+EInit D_us_801807D8 = {ANIMSET_OVL(4), 54, 80, 0x229, 0x187};
+
 EInit g_EInitAzaghal = {ANIMSET_OVL(0), 0, 0, 0, 0x0E0};
-EInit D_us_801807F0 = {ANIMSET_DRA(14), 0, 121, 738, 0x02C};
-EInit g_EInitStoneSkull = {ANIMSET_OVL(7), 0, 73, 552, 0x180};
-// clang-format on
+EInit D_us_801807F0 = {ANIMSET_DRA(14), 0, 121, 0x2E2, 0x02C};
+
+EInit g_EInitStoneSkull = {ANIMSET_OVL(7), 0, 73, 0x228, 0x180};
