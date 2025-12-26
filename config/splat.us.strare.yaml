@@ -71,5 +71,6 @@ segments:
       - [0x31BC8, c, unk_31BC8]
       - [0x36A60, c, prim_helpers]
       - [0x37290, c, e_werewolf]
-      - [0x386D8, bss]
+      - [0x386D8, .bss, create_entity]
+      - [0x386E8, bss]
   - [0x39390]
