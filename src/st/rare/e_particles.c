@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rare.h"
 
-INCLUDE_ASM("st/rare/nonmatchings/e_particles", EntitySoulStealOrb);
-
-INCLUDE_ASM("st/rare/nonmatchings/e_particles", EntityEnemyBlood);
+#include "../e_particles.h"
