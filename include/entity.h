@@ -565,7 +565,7 @@ typedef struct {
     /* 0x84 */ s16 randomMovementAngle;
     /* 0x84 */ s16 targetAngle;
     /* 0x88 */ s16 randomMovementScaler;
-    /* 0x8A */ s16 maxAngle;
+    /* 0x8A */ s16 angleStep;
     /* 0x8C */ s16 frameCounter;
     /* 0x8e */ s16 doUpdateCloseAnimation;
     /* 0x90 */ s32 unk90;
@@ -649,7 +649,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 isAbilityInitialized;
+    /* 0x7E */ s16 abilityId;
     /* 0x80 */ s16 animationFlag;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 randomMovementAngle;
@@ -673,19 +673,24 @@ typedef struct {
 } ET_Faerie;
 
 typedef struct {
-    /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 isAbilityInitialized;
+    /* 0x7C */ s16 frameCounter;
+    /* 0x7E */ s16 abilityId;
     /* 0x80 */ s16 : 16;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 randomMovementAngle;
     /* 0x86 */ s16 targetAngle;
     /* 0x88 */ s16 defaultDistToTargetLoc;
-    /* 0x8A */ s16 maxAngle;
+    /* 0x8A */ s16 angleStep;
     /* 0x8C */ s16 abilityTimer;
-    /* 0x8E */ s16 pad_8E[2];
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 : 16;
     /* 0x92 */ s16 attackEndCounter;
     /* 0x94 */ s16 switchPressVelocityOffset;
-    /* 0x96 */ s16 pad_96[5];
+    /* 0x96 */ s16 : 16;
+    /* 0x98 */ s16 : 16;
+    /* 0x9A */ s16 : 16;
+    /* 0x9C */ s16 : 16;
+    /* 0x9E */ s16 : 16;
     /* 0xA0 */ s16 unkCounter;
     /* 0xA4 */ struct Entity* target;
 } ET_Demon;
@@ -2548,19 +2553,6 @@ typedef struct {
 } ET_PlatelordUnknown;
 
 typedef struct {
-    s16 frameCounter[0x1E];
-} ET_80176814;
-
-typedef struct {
-    s16 animationTriggerCount; // Auxiliary counter, previously ILLEGAL.u16[0]
-    s16 animationTimer;        // Another counter, previously ILLEGAL.u16[1]
-    s16 stepCounter;           // Counter for steps, previously ILLEGAL.u16[2]
-    s16 angle;                 // Rotation angle, previously ILLEGAL.u16[3]
-    s32 _align_parent[2];
-    struct Entity* parent;
-} ET_801737F0;
-
-typedef struct {
     /* 0x7C */ u8 unk7C;
     /* 0x7D */ u8 : 8;
     /* 0x7E */ u16 : 16;
@@ -3742,9 +3734,7 @@ typedef union { // offset=0x7C
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
     ET_801CC9B4 et_801CC9B4;
-    ET_801737F0 et_801737F0;
     ET_HellfireHandler hellfireHandler;
-    ET_80176814 et_80176814;
     ET_8016D9C4 et_8016D9C4;
     ET_ReboundStoneCrashExplosion reboundStoneCrashExplosion;
     ET_CrossBoomerang crossBoomerang;

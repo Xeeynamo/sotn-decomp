@@ -105,6 +105,7 @@ Pos D_80097488;
 u8 D_psp_08C6BC40[0x4000];
 u8 D_psp_08C6FC40[0x4000];
 u8 D_psp_08D2DC40[0x4000];
+u8 D_psp_08D97C40[0x4000];
 
 // dra.h
 s16 D_800AC958[] = {

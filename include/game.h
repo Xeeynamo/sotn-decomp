@@ -285,6 +285,7 @@ typedef enum {
 
 #if !defined(VERSION_PC) && (defined(VERSION_US) || defined(VERSION_HD))
 #define DRA_PRG_PTR 0x800A0000
+#define SAVE_DATA_PTR 0x801EA000
 #define RIC_PRG_PTR 0x8013C000
 #define SPRITESHEET_PTR 0x8013C020
 #define FAMILIAR_PTR 0x80170000
@@ -292,15 +293,17 @@ typedef enum {
 #define WEAPON1_PTR 0x8017D000
 #define STAGE_PRG_PTR 0x80180000
 #define CASTLE_MAP_PTR 0x801E0000
+
 #ifndef DEMO_KEY_PTR
 #define DEMO_KEY_PTR 0x801E8000
 #endif
+
 #define SIM_CHR0 0x80280000
 #define SIM_CHR1 0x80284000
 #define SIM_PTR 0x80280000
-
 #else
 #define DRA_PRG_PTR 0x800A0000
+#define SAVE_DATA_PTR D_psp_08D97C40
 #define RIC_PRG_PTR &g_PlOvl
 #define SPRITESHEET_PTR g_PlOvlSpritesheet
 #define FAMILIAR_PTR 0x80170000
@@ -308,9 +311,11 @@ typedef enum {
 #define WEAPON1_PTR &D_8017D000
 #define STAGE_PRG_PTR D_psp_08D2DC40
 #define CASTLE_MAP_PTR g_BmpCastleMap
+
 #ifndef DEMO_KEY_PTR
 #define DEMO_KEY_PTR D_psp_08D95C40
 #endif
+
 #define SIM_CHR0 D_psp_08C6BC40
 #define SIM_CHR1 D_psp_08C6FC40
 #define SIM_PTR D_psp_08C6BC40
@@ -320,6 +325,7 @@ extern u8 D_psp_08C6BC40[];
 extern u8 D_psp_08C6FC40[];
 extern u8 D_psp_08D2DC40[];
 extern u8 D_psp_08D95C40[];
+extern u8 D_psp_08D97C40[];
 
 #endif
 

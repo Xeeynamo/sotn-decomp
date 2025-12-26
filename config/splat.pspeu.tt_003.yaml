@@ -1,18 +1,18 @@
 options:
   platform: psp
-  basename: tt_002
+  basename: tt_003
   base_path: ..
   build_path: build/pspeu
-  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_002.bin
-  asm_path: asm/pspeu/servant/tt_002
-  asset_path: assets/servant/tt_002
-  src_path: src/servant/tt_002
-  ld_script_path: build/pspeu/tt_002.ld
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_003.bin
+  asm_path: asm/pspeu/servant/tt_003
+  asset_path: assets/servant/tt_003
+  src_path: src/servant/tt_003
+  ld_script_path: build/pspeu/tt_003.ld
   compiler: GCC
   symbol_addrs_path:
     - config/symbols.pspeu.txt
-  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.tt_002.txt
-  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.tt_002.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.tt_003.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.tt_003.txt
   find_file_boundaries: yes
   use_legacy_include_asm: no
   migrate_rodata_to_functions: yes
@@ -30,22 +30,21 @@ options:
     .set noat      /* allow manual use of $at */
     .set noreorder /* don't insert nops after branches */
   ld_generate_symbol_per_data_segment: true
-sha1: fd55d945a5815d5777cd4c091e27f545419b4b4e
+sha1: ca15c105a7c6941fcfd1c709b739f5bba5f98358
 segments:
   - [0x0, bin, mwo_header]
-  - name: tt_002
+  - name: tt_003
     type: code
     start: 0x00000080
     vram: 0x092E7680
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, faerie]
-      - [0x7C90, c, init]
-      - [0x7D00, .data, faerie_spriteparts]
-      - [0xA178, .data, faerie]
-      - [0xB528, .data, init]
-      - [0xB580, .rodata, faerie]
-      - [0xB700, .bss, faerie_spriteparts]
-      - [0xB708, .bss, faerie]
-  - [0xB7F0]
+      - [0x80, c, demon]
+      - [0x8308, c, init]
+      - [0x8380, .data, demon_spriteparts]
+      - [0x9D60, .data, demon]
+      - [0xAD88, .data, init]
+      - [0xAE00, .rodata, demon]
+      - [0xAE80, .bss, demon]
+  - [0xB2A0]
