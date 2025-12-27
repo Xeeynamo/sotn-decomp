@@ -48,7 +48,7 @@ segments:
       - [0x238, c, rare_psp/e_boss_torch]
       - [0x430, c, rare_psp/e_breakable]
       - [0xDB0, c, rare_psp/unk_DB0]
-      - [0x12B0, c, rare_psp/e_room_bg]
+      - [0x12B0, c, rare/e_room_bg]
       - [0x1390, c, rare/e_lock_camera]
       - [0x15F0, c, rare_psp/unk_15F0]
       - [0x1F80, c, rare/create_entity]
