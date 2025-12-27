@@ -45,6 +45,7 @@ segments:
       - [0x808, data]
       - [0x8A8, .data, e_lock_camera]
       - [0x928, data]
+      - [0xAE0, .data, st_update]
       - [0xB0C, .data, collision]
       - [0xECC, .data, e_red_door]
       - [0xEE4, .data, st_common]
@@ -81,4 +82,5 @@ segments:
       - [0x37290, c, e_werewolf]
       - [0x386D8, .bss, create_entity]
       - [0x386E8, bss]
+      - [0x39350, .bss, st_update]
   - [0x39390]
