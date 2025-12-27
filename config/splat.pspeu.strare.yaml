@@ -53,7 +53,7 @@ segments:
       - [0x15F0, c, rare_psp/unk_15F0]
       - [0x1F80, c, rare/create_entity]
       - [0x2F28, c, rare_psp/unk_2F28]
-      - [0x6198, c, rare_psp/e_stage_name]
+      - [0x6198, c, rare/e_stage_name]
       - [0x7018, c, rare/e_red_door]
       - [0x8320, c, rare_psp/st_update]
       - [0x8858, c, rare/e_particles]
