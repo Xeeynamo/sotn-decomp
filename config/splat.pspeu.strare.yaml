@@ -65,7 +65,7 @@ segments:
       - [0x11F68, c, rare/popup]
       - [0x12560, c, rare/e_room_fg]
       - [0x12678, c, rare_psp/st_common]
-      - [0x13940, c, rare_psp/prim_helpers]
+      - [0x13940, c, rare/prim_helpers]
       - [0x14190, c, rare_psp/unk_14190]
       - [0x18180, data]
       - [0x1CA88, .data, rare/e_init]
