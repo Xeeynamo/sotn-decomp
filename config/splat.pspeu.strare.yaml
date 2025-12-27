@@ -62,7 +62,7 @@ segments:
       - [0xE038, c, rare/e_misc]
       - [0xE740, c, rare/collision]
       - [0x10918, c, rare_psp/unk_10918]
-      - [0x11F68, c, rare_psp/popup]
+      - [0x11F68, c, rare/popup]
       - [0x12560, c, rare/e_room_fg]
       - [0x12678, c, rare_psp/st_common]
       - [0x13940, c, rare_psp/prim_helpers]
