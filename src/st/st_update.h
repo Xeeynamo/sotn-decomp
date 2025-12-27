@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
 
-#if !defined(STAGE_IS_CAT) && !defined(STAGE_IS_NZ1) && !defined(STAGE_IS_ARE)
+#if !defined(STAGE_IS_CAT) && !defined(STAGE_IS_NZ1) &&                        \
+    !defined(STAGE_IS_ARE) && !defined(STAGE_IS_RARE)
 static u16 unused[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0001, 0x0000,
     0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0101};

@@ -9,6 +9,7 @@ typedef enum {
     /* 0x1 */ NO4_OPEN = 1, // Floor switch behind the blue door in NO0
     /* 0x2 */ NULL_STAGE_FLAG = 2, // When a stage flag isn't defined
     /* 0x2 */ NO0_STAGE_FLAG = 2,
+    /* 0x2 */ RARE_STAGE_FLAG = 2,
     /* 0x10 */ NO1_ELEVATOR_ACTIVATED = 16, // Set by switch in outer wall
     /* 0x11 */ NO1_UNKNOWN_FLAG = 17,       // Unknown trigger
     /* 0x12 */ NO1_SECRET_WALL_BROKEN = 18, // Wall chicken wall fully broken

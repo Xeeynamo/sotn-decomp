@@ -1,0 +1,86 @@
+options:
+  platform: psx
+  basename: strare
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/RARE/RARE.BIN
+  asm_path: asm/us/st/rare
+  asset_path: assets/st/rare
+  src_path: src/st/rare
+  ld_script_path: build/us/strare.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.strare.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.strare.txt
+  undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.strare.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: 08c03da5abd58a0a9b410a58793b9579f9fec8c8
+segments:
+  - name: strare
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x2C, data]
+      - [0x664, .data, e_init]
+      - [0x808, data]
+      - [0x8A8, .data, e_lock_camera]
+      - [0x928, data]
+      - [0xAE0, .data, st_update]
+      - [0xB0C, .data, collision]
+      - [0xECC, .data, e_red_door]
+      - [0xEE4, .data, st_common]
+      - [0x10E4, .data, e_collect]
+      - [0x1438, .data, e_misc]
+      - [0x14F0, .data, e_particles]
+      - [0x1570, .data, e_room_fg]
+      - [0x15FC, data]
+      - [0x25284, .rodata, e_breakable]
+      - [0x252A8, .rodata, unk_25E8C]
+      - [0x252C0, .rodata, e_red_door]
+      - [0x252D8, .rodata, e_collect]
+      - [0x253AC, .rodata, e_stage_name]
+      - [0x253E0, .rodata, unk_31BC8]
+      - [0x254DC, .rodata, prim_helpers]
+      - [0x254E4, .rodata, e_werewolf]
+      - [0x25520, c, e_room_bg]
+      - [0x255E8, c, e_lock_camera]
+      - [0x257A4, c, e_breakable]
+      - [0x25E8C, c, unk_25E8C]
+      - [0x26B40, c, st_update]
+      - [0x26F74, c, collision]
+      - [0x28730, c, create_entity]
+      - [0x292A8, c, e_red_door]
+      - [0x29F58, c, st_common]
+      - [0x2B408, c, e_collect]
+      - [0x2DD78, c, e_misc]
+      - [0x30114, c, e_stage_name]
+      - [0x30F68, c, e_particles]
+      - [0x317AC, c, e_room_fg]
+      - [0x31898, c, popup]
+      - [0x31BC8, c, unk_31BC8]
+      - [0x36A60, c, prim_helpers]
+      - [0x37290, c, e_werewolf]
+      - [0x386D8, .bss, create_entity]
+      - [0x386E8, bss]
+      - [0x39350, .bss, st_update]
+  - [0x39390]

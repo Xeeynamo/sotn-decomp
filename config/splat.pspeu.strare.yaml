@@ -1,0 +1,96 @@
+options:
+  platform: psp
+  basename: strare
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rare.bin
+  asm_path: asm/pspeu/st/rare_psp
+  asset_path: assets/st/rare
+  src_path: src/st
+  ld_script_path: build/pspeu/strare.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.strare.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.strare.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.strare.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: fa099a792be2833ed38936e3f35cf6eba65abb67
+segments:
+  - [0x0, bin, mwo_header]
+  - name: strare
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09274180
+    bss_size: 0x180
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, rare_psp/st_init]
+      - [0x238, c, rare_psp/e_boss_torch]
+      - [0x430, c, rare_psp/e_breakable]
+      - [0xDB0, c, rare_psp/unk_DB0]
+      - [0x12B0, c, rare/e_room_bg]
+      - [0x1390, c, rare/e_lock_camera]
+      - [0x15F0, c, rare_psp/unk_15F0]
+      - [0x1F80, c, rare/create_entity]
+      - [0x2F28, c, rare_psp/unk_2F28]
+      - [0x6198, c, rare/e_stage_name]
+      - [0x7018, c, rare/e_red_door]
+      - [0x8320, c, rare/st_update]
+      - [0x8858, c, rare/e_particles]
+      - [0x9DE8, c, rare/e_collect]
+      - [0xE038, c, rare/e_misc]
+      - [0xE740, c, rare/collision]
+      - [0x10918, c, rare_psp/unk_10918]
+      - [0x11F68, c, rare/popup]
+      - [0x12560, c, rare/e_room_fg]
+      - [0x12678, c, rare/st_common]
+      - [0x13940, c, rare/prim_helpers]
+      - [0x14190, c, rare_psp/unk_14190]
+      - [0x18180, data]
+      - [0x1CA88, .data, rare/e_init]
+      - [0x1CC80, data]
+      - [0x3B1A8, .data, rare/header]
+      - [0x3B1D8, data]
+      - [0x3B290, .data, rare/e_lock_camera]
+      - [0x3B308, data]
+      - [0x3B6B8, .data, rare/e_red_door]
+      - [0x3B6D0, .data, rare/st_update]
+      - [0x3B700, .data, rare/e_particles]
+      - [0x3B780, .data, rare/e_collect]
+      - [0x3BCC8, .data, rare/e_misc]
+      - [0x3BD18, .data, rare/collision]
+      - [0x3C0F0, data]
+      - [0x3C3E8, .data, rare/e_room_fg]
+      - [0x3C488, .data, rare/st_common]
+      - [0x3C688, data]
+      - [0x3CA00, .rodata, rare_psp/unk_2F28]
+      - [0x3CA38, .rodata, rare/e_red_door]
+      - [0x3CA50, .rodata, rare/e_collect]
+      - [0x3CAB0, .rodata, rare_psp/unk_14190]
+      - [0x3CB00, bss, 3CB00]
+      - [0x3CB10, .bss, rare_psp/st_init]
+      - [0x3CBE0, .bss, rare/e_lock_camera]
+      - [0x3CBE8, .bss, rare/create_entity]
+      - [0x3CC08, .bss, rare/st_update]
+      - [0x3CC48, bss, 3CC48]
+  - [0x3CC80]
