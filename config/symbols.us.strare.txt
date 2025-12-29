@@ -24,7 +24,6 @@ RARE_EntityBreakableDebris = 0x801A5B70;
 EntityBreakableCeilingSecret = 0x801A5E8C;
 EntityBackgroundDoorRubble = 0x801A6104;
 EntityFountainWater = 0x801A62CC;
-EntityBossDoors = 0x801A6660;
 Random = 0x801A6B40;
 CreateEntityFromCurrentEntity = 0x801A91B8;
 CreateEntityFromEntity = 0x801A922C;
