@@ -20,7 +20,6 @@ RARE_rooms = 0x80181C58;
 g_UnkPrimHelperRot = 0x801A54DC;
 RARE_EntityBreakable = 0x801A57A4;
 RARE_EntityBreakableDebris = 0x801A5B70;
-EntityFountainWater = 0x801A62CC;
 Random = 0x801A6B40;
 CreateEntityFromCurrentEntity = 0x801A91B8;
 CreateEntityFromEntity = 0x801A922C;

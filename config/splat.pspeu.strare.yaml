@@ -48,7 +48,7 @@ segments:
       - [0x238, c, rare/e_boss_torch]
       - [0x430, c, rare_psp/e_breakable]
       - [0xDB0, c, rare/e_background_door_rubble]
-      - [0x1018, c, rare_psp/e_fountain_water]
+      - [0x1018, c, rare/e_fountain_water]
       - [0x12B0, c, rare/e_room_bg]
       - [0x1390, c, rare/e_lock_camera]
       - [0x15F0, c, rare/e_boss_doors]

@@ -13,6 +13,9 @@ enum Palettes {
     PAL_TORCH_A = 0x5A,
     PAL_TORCH_B = 0x5B,
     PAL_BACKGROUND_DOOR_RUBBLE = 0x9E,
+    PAL_FOUNTAIN_WATER = 0xC0,
+    // 0xC0 - 0xCA are cycled in EntityFountainWater based on g_Timer
+    PAL_FOUNTAIN_WATER_MAX = 0xCA,
 };
 
 enum Entities {
