@@ -641,9 +641,10 @@ files:
           - [0x80, skip]
           - [0xF5F8, layers, layers]
           - [0xF6E8, skip]
-
- 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rare.bin
+    asset_path: assets/st/rare
+    src_path: src/st/rare
+    splat_config_path: config/splat.pspeu.strare.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rcat.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rcen.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rchi.bin

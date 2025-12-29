@@ -946,6 +946,9 @@ files:
           - [0x2968, skip] # tile definitions
           - [0x6D88, skip] # sprites
   - target: disks/us/ST/RARE/RARE.BIN
+    asset_path: assets/st/rare
+    src_path: src/st/rare
+    splat_config_path: config/splat.us.strare.yaml
   - target: disks/us/ST/RCAT/RCAT.BIN
   - target: disks/us/ST/RCEN/RCEN.BIN
   - target: disks/us/ST/RCHI/RCHI.BIN
