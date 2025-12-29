@@ -3723,6 +3723,12 @@ typedef struct {
     /* 0x80 */ s16 timer;
 } ET_ARE_BossDoor;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ s32 startingPosY;
+} ET_StoneSkull;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4044,6 +4050,7 @@ typedef union { // offset=0x7C
     ET_GearPuzzle gearPuzzle;
     ET_Pendulum pendulum;
     ET_ARE_BossDoor areBossDoor;
+    ET_StoneSkull stoneSkull;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

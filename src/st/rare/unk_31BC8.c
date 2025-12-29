@@ -44,5 +44,3 @@ INCLUDE_ASM("st/rare/nonmatchings/unk_31BC8", func_us_801B5448);
 INCLUDE_ASM("st/rare/nonmatchings/unk_31BC8", func_us_801B6578);
 
 INCLUDE_ASM("st/rare/nonmatchings/unk_31BC8", func_us_801B65F8);
-
-INCLUDE_ASM("st/rare/nonmatchings/unk_31BC8", func_us_801B6824);

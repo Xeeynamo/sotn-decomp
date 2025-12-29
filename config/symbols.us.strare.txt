@@ -11,7 +11,6 @@ g_EInitInteractable = 0x8018073C;
 g_EInitMinotaur = 0x80180790;
 g_EInitWerewolfRARE = 0x801807C0;
 g_EInitAzaghal = 0x801807E4;
-g_EInitStoneSkull = 0x801807FC;
 RARE_BackgroundBlockInit = 0x80180824;
 RARE_RedDoorTiles = 0x80180888;
 RARE_PrizeDrops = 0x80180A3C;
