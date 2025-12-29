@@ -34,7 +34,7 @@ void func_us_801B81CC(Entity* self);
 void func_us_801B2B2C(Entity* self);
 void func_us_801B3B34(Entity* self);
 void func_us_801B4E9C(Entity* self);
-void EntityBreakableCeilingSecret(Entity* self);
+void EntityBreakableFloorSecret(Entity* self);
 void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
 void EntityBackgroundDoorRubble(Entity* self);
 void EntityFountainWater(Entity* self);
@@ -78,7 +78,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B2B2C,
     func_us_801B3B34,
     func_us_801B4E9C,
-    EntityBreakableCeilingSecret,
+    EntityBreakableFloorSecret,
     OVL_EXPORT(EntityBreakableDebris),
     EntityBackgroundDoorRubble,
     EntityFountainWater,
