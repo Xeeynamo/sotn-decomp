@@ -10,6 +10,8 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_TORCH_A = 0x5A,
+    PAL_TORCH_B = 0x5B,
 };
 
 enum Entities {

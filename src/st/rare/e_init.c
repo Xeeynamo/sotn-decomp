@@ -101,7 +101,7 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 
 EInit D_us_80180778 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
-EInit D_us_80180784 = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
+EInit g_EInitEnvironment = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
 
 EInit g_EInitMinotaur = {ANIMSET_OVL(3), 1, 72, 0x200, 0x182};
 EInit D_us_8018079C = {ANIMSET_OVL(3), 0, 72, 0x200, 0x183};
