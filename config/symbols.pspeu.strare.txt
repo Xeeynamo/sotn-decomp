@@ -1,6 +1,5 @@
 RARE_EntityBreakable = 0x09237AB0;
 RARE_EntityBreakableDebris = 0x09238008;
-EntityBackgroundDoorRubble = 0x09238430;
 EntityFountainWater = 0x09238698;
 CreateEntityFromCurrentEntity = 0x0923A498;
 CreateEntityFromEntity = 0x0923A520;
