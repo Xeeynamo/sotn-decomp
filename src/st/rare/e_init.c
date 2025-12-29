@@ -34,7 +34,7 @@ void func_us_801B81CC(Entity* self);
 void func_us_801B2B2C(Entity* self);
 void func_us_801B3B34(Entity* self);
 void func_us_801B4E9C(Entity* self);
-void EntityBreakableCeilingSecret(Entity* self);
+void EntityBreakableFloorSecret(Entity* self);
 void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
 void EntityBackgroundDoorRubble(Entity* self);
 void EntityFountainWater(Entity* self);
@@ -78,7 +78,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B2B2C,
     func_us_801B3B34,
     func_us_801B4E9C,
-    EntityBreakableCeilingSecret,
+    EntityBreakableFloorSecret,
     OVL_EXPORT(EntityBreakableDebris),
     EntityBackgroundDoorRubble,
     EntityFountainWater,
@@ -101,7 +101,7 @@ EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0, 0x003};
 
 EInit D_us_80180778 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
-EInit D_us_80180784 = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
+EInit g_EInitEnvironment = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
 
 EInit g_EInitMinotaur = {ANIMSET_OVL(3), 1, 72, 0x200, 0x182};
 EInit D_us_8018079C = {ANIMSET_OVL(3), 0, 72, 0x200, 0x183};
