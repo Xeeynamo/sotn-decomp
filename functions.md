@@ -3333,7 +3333,7 @@
 | main   | func_psp_0891E420                 |      139 |         12 |        |       |     |
 | ric    | func_pspeu_092C9988               |      139 |         12 |        |       |     |
 | dra    | func_psp_090E7BC0                 |      139 |         15 |        |       |     |
-| rare   | EntityBossTorch                   |      139 |         17 |        |       |     |
+| rare   | func_pspeu_092378B8               |      139 |         17 |        |       |     |
 | dra    | func_psp_091293E8                 |      140 |         10 |        |       |     |
 | ric    | func_pspeu_092CDD08               |      140 |         13 |        |       |     |
 | lib    | func_psp_09239308                 |      140 |         13 |        |       |     |
@@ -3473,7 +3473,7 @@
 | maria  | func_pspeu_092A7F78               |      163 |         26 |        |       |     |
 | sel    | func_psp_09247718                 |      163 |         27 |        |       |     |
 | main   | func_psp_08925600                 |      164 |         11 |        |       |     |
-| rare   | EntityBackgroundDoorRubble        |      164 |         12 |        |       |     |
+| rare   | func_pspeu_09238430               |      164 |         12 |        |       |     |
 | dra    | func_psp_090E6058                 |      164 |         14 |        |       |     |
 | rare   | func_pspeu_0924BC90               |      164 |         19 |        |       |     |
 | dra    | func_psp_0910EA68                 |      164 |         24 |        |       |     |
@@ -3532,7 +3532,7 @@
 | dre    | func_pspeu_0924D300               |      175 |          6 |        |       |     |
 | no2    | func_pspeu_09259AA8               |      175 |          6 |        |       |     |
 | nz1    | func_pspeu_09258CE0               |      175 |         10 |        |       |     |
-| rare   | EntityFountainWater               |      175 |         11 |        |       |     |
+| rare   | func_pspeu_09238698               |      175 |         11 |        |       |     |
 | cat    | func_pspeu_09262528               |      175 |         17 |        |       |     |
 | dai    | func_pspeu_09258590               |      175 |         17 |        |       |     |
 | dra    | func_psp_090EB5E0                 |      176 |         11 |        |       |     |
@@ -3719,7 +3719,7 @@
 | nz1    | EntitySmallWaterDrop              |      220 |         22 |        |       |     |
 | main   | func_psp_08918D8C                 |      221 |         13 |        |       |     |
 | no4    | func_pspeu_0923E368               |      221 |         22 |        |       |     |
-| rare   | EntityBreakableCeilingSecret      |      221 |         31 |        |       |     |
+| rare   | func_pspeu_092392E0               |      221 |         31 |        |       |     |
 | dra    | func_psp_091127A0                 |      221 |         35 |        |       |     |
 | maria  | func_pspeu_092B14A0               |      221 |         40 | Yes    |       |     |
 | ric    | func_pspeu_092AA388               |      221 |         40 | Yes    |       |     |
@@ -4245,7 +4245,7 @@
 | no3    | func_pspeu_0923AFD8               |      434 |         43 |        |       |     |
 | np3    | EntityStairwayPiece               |      434 |         43 |        |       |     |
 | dra    | func_psp_09138778                 |      434 |         82 |        |       |     |
-| rare   | EntityBossDoors                   |      435 |         39 |        |       |     |
+| rare   | func_pspeu_09238C70               |      435 |         39 |        |       |     |
 | ric    | func_pspeu_092B4030               |      435 |         44 |        |       |     |
 | chi    | func_psp_0923A7F0                 |      437 |         25 |        |       |     |
 | ric    | func_pspeu_092CCA98               |      438 |         38 |        |       |     |
