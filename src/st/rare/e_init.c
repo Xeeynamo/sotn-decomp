@@ -113,6 +113,8 @@ EInit D_us_801807CC = {ANIMSET_OVL(4), 0, 80, 0x229, 0x186};
 EInit D_us_801807D8 = {ANIMSET_OVL(4), 54, 80, 0x229, 0x187};
 
 EInit g_EInitAzaghal = {ANIMSET_OVL(0), 0, 0, 0, 0x0E0};
-EInit D_us_801807F0 = {ANIMSET_DRA(14), 0, 121, 0x2E2, 0x02C};
+
+// nb. Main White Dragon entity uses a g_EInitSpawner to initialise
+EInit g_EInitWhiteDragonFlameBreath = {ANIMSET_DRA(14), 0, 121, 0x2E2, 0x02C};
 
 EInit g_EInitStoneSkull = {ANIMSET_OVL(7), 0, 73, 0x228, 0x180};

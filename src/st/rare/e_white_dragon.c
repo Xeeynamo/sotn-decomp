@@ -3,7 +3,7 @@
 
 extern u16 UNK_Invincibility0[];
 extern EInit g_EInitSpawner;
-extern EInit D_us_801807F0;
+extern EInit g_EInitWhiteDragonFlameBreath;
 
 static s16 z_priorities[] = {8, 7, 6, 5, 4, 3, 2, 1, 0, 1, 2, 3, 4, 5, 6, 7};
 static s16 attack_timers[] = {
@@ -845,7 +845,7 @@ void EntityWhiteDragonFlameBreath(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801807F0);
+        InitializeEntity(g_EInitWhiteDragonFlameBreath);
         self->zPriority += 1;
         self->hitboxState = 0;
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
