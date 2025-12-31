@@ -34,7 +34,7 @@ static u8 hitbox_indices[] = {
 };
 extern EInit g_EInitStoneSkull;
 
-void func_us_801B6824(Entity* self) {
+void EntityStoneSkull(Entity* self) {
     s8* ptr;
     s32 posY;
 

@@ -42,7 +42,7 @@ void EntityBossTorch(Entity* self);
 void EntityBossDoors(Entity* self);
 void EntityWhiteDragon(Entity* self);
 void EntityWhiteDragonFlameBreath(Entity* self);
-void func_us_801B6824(Entity* self);
+void EntityStoneSkull(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     OVL_EXPORT(EntityBreakable),
@@ -86,7 +86,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBossDoors,
     EntityWhiteDragon,
     EntityWhiteDragonFlameBreath,
-    func_us_801B6824,
+    EntityStoneSkull,
 };
 
 // animSet, animCurFrame, unk5A, palette, enemyID

@@ -63,7 +63,7 @@ enum Entities {
     E_BOSS_DOORS,                // EntityBossDoors
     E_WHITE_DRAGON,              // EntityWhiteDragon
     E_WHITE_DRAGON_FLAME_BREATH, // EntityWhiteDragonFlameBreath
-    E_UNK_2A,                    // func_us_801B6824
+    E_STONE_SKULL,               // EntityStoneSkull
     NUM_ENTITIES,
 };
 
