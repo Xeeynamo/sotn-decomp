@@ -26,21 +26,3 @@ INCLUDE_ASM("st/rare/nonmatchings/unk_31BC8", func_us_801B3A1C);
 INCLUDE_ASM("st/rare/nonmatchings/unk_31BC8", func_us_801B3B34);
 
 INCLUDE_ASM("st/rare/nonmatchings/unk_31BC8", func_us_801B4E9C);
-
-INCLUDE_ASM("st/rare/nonmatchings/unk_31BC8", func_us_801B4F00);
-
-INCLUDE_ASM("st/rare/nonmatchings/unk_31BC8", func_us_801B5250);
-
-INCLUDE_ASM("st/rare/nonmatchings/unk_31BC8", func_us_801B5408);
-
-INCLUDE_RODATA("st/rare/nonmatchings/unk_31BC8", D_us_801A54A0);
-
-INCLUDE_RODATA("st/rare/nonmatchings/unk_31BC8", D_us_801A54A8);
-
-INCLUDE_RODATA("st/rare/nonmatchings/unk_31BC8", D_us_801A54B0);
-
-INCLUDE_ASM("st/rare/nonmatchings/unk_31BC8", func_us_801B5448);
-
-INCLUDE_ASM("st/rare/nonmatchings/unk_31BC8", func_us_801B6578);
-
-INCLUDE_ASM("st/rare/nonmatchings/unk_31BC8", func_us_801B65F8);
