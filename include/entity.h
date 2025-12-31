@@ -3733,14 +3733,14 @@ typedef struct {
     /* 0x7C */ struct Entity* entity;
     /* 0x80 */ u8 unk80;
     /* 0x81 */ u8 unk81;
-    /* 0x82 */ u8 unk82;
+    /* 0x82 */ u8 angle;
     /* 0x83 */ u8 unk83;
     /* 0x84 */ s16 unk84;
     /* 0x86 */ s16 unk86;
     /* 0x88 */ s32 unk88;
     /* 0x8C */ f32 posX;
     /* 0x90 */ f32 posY;
-    /* 0x94 */ s16 unk94;
+    /* 0x94 */ s16 attackTimer;
     /* 0x96 */ s16 unk96;
     /* 0x98 */ u8 unk98;
     /* 0x99 */ u8 unk99;
@@ -3755,7 +3755,7 @@ typedef struct {
     /* 0xA6 */ u8 : 8;
     /* 0xA7 */ u8 : 8;
     /* 0xA8 */ struct Primitive* prim;
-} ET_801B4F00;
+} ET_WhiteDragon;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4079,7 +4079,7 @@ typedef union { // offset=0x7C
     ET_Pendulum pendulum;
     ET_ARE_BossDoor areBossDoor;
     ET_StoneSkull stoneSkull;
-    ET_801B4F00 et_801B4F00;
+    ET_WhiteDragon whiteDragon;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

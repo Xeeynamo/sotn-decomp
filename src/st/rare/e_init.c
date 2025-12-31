@@ -40,8 +40,8 @@ void EntityBackgroundDoorRubble(Entity* self);
 void EntityFountainWater(Entity* self);
 void EntityBossTorch(Entity* self);
 void EntityBossDoors(Entity* self);
-void func_us_801B5448(Entity* self);
-void func_us_801B65F8(Entity* self);
+void EntityWhiteDragon(Entity* self);
+void EntityWhiteDragonFlameBreath(Entity* self);
 void func_us_801B6824(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
@@ -84,8 +84,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFountainWater,
     EntityBossTorch,
     EntityBossDoors,
-    func_us_801B5448,
-    func_us_801B65F8,
+    EntityWhiteDragon,
+    EntityWhiteDragonFlameBreath,
     func_us_801B6824,
 };
 
