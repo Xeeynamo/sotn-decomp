@@ -885,9 +885,9 @@
 | nz1    | MoveEntity                        |       25 |          1 |        |       |     |
 | nz1    | SetStep                           |       25 |          1 |        |       |     |
 | nz1    | func_pspeu_0924FFA8               |       25 |          1 |        |       |     |
-| rare   | GetSineScaled                     |       25 |          1 |        |       |     |
 | rare   | MoveEntity                        |       25 |          1 |        |       |     |
 | rare   | SetStep                           |       25 |          1 |        |       |     |
+| rare   | func_pspeu_0924A710               |       25 |          1 |        |       |     |
 | st0    | func_pspeu_092500A8               |       25 |          1 |        |       |     |
 | st0    | func_pspeu_09250670               |       25 |          1 |        |       |     |
 | wrp    | func_psp_09243850                 |       25 |          1 |        |       |     |
@@ -987,7 +987,7 @@
 | no2    | func_pspeu_0924D1F0               |       27 |          2 |        |       |     |
 | np3    | func_pspeu_0925A580               |       27 |          2 |        |       |     |
 | nz1    | func_pspeu_09250060               |       27 |          2 |        |       |     |
-| rare   | Ratan2Shifted                     |       27 |          2 |        |       |     |
+| rare   | func_pspeu_0924A7C8               |       27 |          2 |        |       |     |
 | sel    | func_psp_09237F40                 |       27 |          2 |        |       |     |
 | dra    | func_psp_091428D0                 |       27 |          3 |        |       |     |
 | dra    | func_psp_09142928                 |       27 |          3 |        |       |     |
@@ -1113,7 +1113,7 @@
 | lib    | en_thornweed_corpseweed.rodata    |       30 |          0 | Yes    |       |     |
 | no2    | gurkha.rodata                     |       30 |          0 | Yes    |       |     |
 | nz1    | e_flail_guard.rodata              |       30 |          0 | Yes    |       |     |
-| rare   | unk_14190.rodata                  |       30 |          0 | Yes    |       |     |
+| rare   | e_white_dragon.rodata             |       30 |          0 | Yes    |       |     |
 | sel    | 94D8.rodata                       |       30 |          0 | Yes    |       |     |
 | st0    | prologue_scroll.rodata            |       30 |          0 | Yes    |       |     |
 | main   | sceVfpuVector4HermiteXYZ          |       30 |          1 |        |       |     |
@@ -1185,7 +1185,7 @@
 | np3    | func_pspeu_0925A518               |       31 |          3 |        |       |     |
 | np3    | func_801CE228                     |       31 |          3 |        |       |     |
 | nz1    | SetEntityVelocityFromAngle        |       31 |          3 |        |       |     |
-| rare   | SetEntityVelocityFromAngle        |       31 |          3 |        |       |     |
+| rare   | func_pspeu_0924A760               |       31 |          3 |        |       |     |
 | sel    | func_psp_092409C8                 |       31 |          3 |        |       |     |
 | st0    | func_pspeu_09242F00               |       31 |          3 |        |       |     |
 | dra    | func_psp_090F89B0                 |       31 |          4 |        |       |     |
@@ -1506,7 +1506,7 @@
 | nz1    | GetAngleBetweenEntitiesShifted    |       39 |          2 |        |       |     |
 | rare   | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
 | rare   | CreateEntityFromEntity            |       39 |          2 |        |       |     |
-| rare   | GetAngleBetweenEntitiesShifted    |       39 |          2 |        |       |     |
+| rare   | func_pspeu_0924A820               |       39 |          2 |        |       |     |
 | st0    | func_pspeu_09248F18               |       39 |          2 |        |       |     |
 | st0    | func_pspeu_09248FA0               |       39 |          2 |        |       |     |
 | wrp    | func_psp_09238598                 |       39 |          2 |        |       |     |
@@ -2920,7 +2920,7 @@
 | no4    | func_pspeu_0924DA78               |       99 |          9 |        |       |     |
 | np3    | EntityExplosion                   |       99 |          9 |        |       |     |
 | nz1    | func_pspeu_09243498               |       99 |          9 |        |       |     |
-| rare   | EntityExplosion                   |       99 |          9 |        |       |     |
+| rare   | func_pspeu_092430E0               |       99 |          9 |        |       |     |
 | st0    | EntityExplosion                   |       99 |          9 |        |       |     |
 | wrp    | func_psp_0923DF70                 |       99 |          9 |        |       |     |
 | are    | func_pspeu_09257018               |       99 |         10 |        |       |     |
@@ -3680,8 +3680,8 @@
 | main   | sceGupSetMatrix                   |      211 |          9 |        |       |     |
 | maria  | func_pspeu_092A9288               |      211 |         19 |        |       |     |
 | dra    | func_psp_091012A8                 |      211 |         20 |        |       |     |
-| rare   | func_us_801B6824                  |      211 |         22 |        |       |     |
-| rare   | func_us_801B65F8                  |      211 |         26 |        |       |     |
+| rare   | func_pspeu_0923D508               |      211 |         22 |        |       |     |
+| rare   | func_pspeu_0924D830               |      211 |         26 |        |       |     |
 | lib    | e_shop.rodata                     |      212 |          0 | Yes    |       |     |
 | maria  | func_pspeu_092B8AF8               |      212 |         12 |        |       |     |
 | ric    | func_pspeu_092C1EF0               |      212 |         12 |        |       |     |
@@ -4581,7 +4581,7 @@
 | no4    | func_pspeu_0924CC60               |      972 |        120 | Yes    |       |     |
 | np3    | EntityPrizeDrop                   |      972 |        120 | Yes    |       |     |
 | nz1    | EntityPrizeDrop                   |      972 |        120 | Yes    |       |     |
-| rare   | EntityPrizeDrop                   |      972 |        120 | Yes    |       |     |
+| rare   | func_pspeu_092422C8               |      972 |        120 | Yes    |       |     |
 | wrp    | func_psp_0923D158                 |      972 |        120 | Yes    |       |     |
 | no4    | func_pspeu_092449B0               |      979 |        177 |        |       |     |
 | dai    | func_pspeu_0924FFA0               |      987 |         83 |        |       |     |
@@ -4724,7 +4724,7 @@
 | no4    | func_pspeu_09239B00               |     1639 |        210 | Yes    |       |     |
 | np3    | EntityMerman2                     |     1649 |        195 | Yes    |       |     |
 | no3    | func_pspeu_0924DB10               |     1668 |        195 | Yes    |       |     |
-| rare   | func_us_801B5448                  |     1701 |        204 | Yes    |       |     |
+| rare   | func_pspeu_0924BF58               |     1701 |        204 | Yes    |       |     |
 | no4    | func_pspeu_0925E548               |     1731 |        172 | Yes    |       |     |
 | st0    | EntityDraculaFinalForm            |     1733 |        251 | Yes    |       |     |
 | dra    | func_psp_091224B0                 |     1738 |        127 | Yes    |       |     |
