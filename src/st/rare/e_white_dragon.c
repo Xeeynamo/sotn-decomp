@@ -25,7 +25,7 @@ static void func_us_801B4F00(void) {
     u8 angle;
     Entity* var_s4;
     s16 dx;
-    s16 var_s7;
+    s16 magnitude;
     s32 var_s6;
     s32 var_s5;
 
@@ -36,13 +36,13 @@ static void func_us_801B4F00(void) {
     for (i = SEGMENT_COUNT - 1; i >= 0; i--) {
         dx = (currentEntity + 1)->ext.whiteDragon.unk84;
         baseSine = GetSineScaled(currentEntity->ext.whiteDragon.unk80, dx);
-        var_s7 = (((0x100 - dx) * var_s4->ext.whiteDragon.unk88) / 0xA0000);
+        magnitude = (((0x100 - dx) * var_s4->ext.whiteDragon.unk88) / FIX(10));
         if (!var_s4->facingLeft) {
-            var_s7 = -var_s7;
+            magnitude = -magnitude;
         }
-        sineX =
-            GetSineScaled(currentEntity->ext.whiteDragon.unk83 + 0x40, var_s7);
-        sineY = GetSineScaled(currentEntity->ext.whiteDragon.unk83, var_s7);
+        sineX = GetSineScaled(
+            currentEntity->ext.whiteDragon.unk83 + 0x40, magnitude);
+        sineY = GetSineScaled(currentEntity->ext.whiteDragon.unk83, magnitude);
         (currentEntity + 1)->ext.whiteDragon.posY.val =
             currentEntity->ext.whiteDragon.posY.val + baseSine + sineY;
         (currentEntity + 1)->ext.whiteDragon.posX.val =
@@ -136,8 +136,8 @@ static void func_us_801B5250(void) {
         currentEntity->ext.whiteDragon.unk80 +=
             currentEntity->ext.whiteDragon.unk99;
     }
-    if (currentEntity->ext.whiteDragon.unk88 < 0x60000) {
-        currentEntity->ext.whiteDragon.unk88 += 0x400;
+    if (currentEntity->ext.whiteDragon.unk88 < FIX(6)) {
+        currentEntity->ext.whiteDragon.unk88 += FIX(1.0 / 64.0);
     }
 
     var_s0 = currentEntity;
@@ -252,10 +252,10 @@ void EntityWhiteDragon(Entity* self) {
         g_api.PlaySfx(SFX_WHITE_DRAGON_HIT);
     }
 
-    if ((entity->flags & FLAG_DEAD) && self->step != 5) {
+    if ((entity->flags & FLAG_DEAD) && self->step != DEATH) {
         self->step = DEATH;
         self->ext.whiteDragon.unk96 = 0x80;
-        self->ext.whiteDragon.unkA0 = 0x400;
+        self->ext.whiteDragon.unkA0 = FIX(1.0 / 64.0);
 
         entity = self;
         for (i = SEGMENT_COUNT - 1; i >= 0; i--) {
@@ -325,7 +325,7 @@ void EntityWhiteDragon(Entity* self) {
             self->ext.whiteDragon.attackTimer = 0x200;
             self->ext.whiteDragon.unk9A = 0x280;
             LOHU(self->ext.whiteDragon.unk98) = 0x400;
-            self->ext.whiteDragon.unk88 = 0x20000;
+            self->ext.whiteDragon.unk88 = FIX(2);
 
             entity = self + SEGMENT_COUNT;
             if (self->facingLeft) {
@@ -437,8 +437,8 @@ void EntityWhiteDragon(Entity* self) {
                 self->ext.whiteDragon.unk80 += self->ext.whiteDragon.unk99;
             }
 
-            if (self->ext.whiteDragon.unk88 > 0x28000) {
-                self->ext.whiteDragon.unk88 -= 0x1000;
+            if (self->ext.whiteDragon.unk88 > FIX(2.5)) {
+                self->ext.whiteDragon.unk88 -= FIX(1.0 / 16.0);
             }
 
             entity = self;
@@ -553,8 +553,8 @@ void EntityWhiteDragon(Entity* self) {
                 }
             }
 
-            if (self->ext.whiteDragon.unk88 < 0x60000) {
-                self->ext.whiteDragon.unk88 += 0x4650;
+            if (self->ext.whiteDragon.unk88 < FIX(6)) {
+                self->ext.whiteDragon.unk88 += FIX(1125.0 / 4096.0);
             } else {
                 entity = self + SEGMENT_COUNT;
                 entity->attackElement = ELEMENT_UNK_1;
@@ -578,8 +578,8 @@ void EntityWhiteDragon(Entity* self) {
         func_us_801B4F00();
         return;
     case HIT_BY_PLAYER:
-        if (self->ext.whiteDragon.unk88 < 0x38001) {
-            self->ext.whiteDragon.unk88 = 0x38000;
+        if (self->ext.whiteDragon.unk88 < FIX(3.5) + 1) {
+            self->ext.whiteDragon.unk88 = FIX(3.5);
             if (self->ext.whiteDragon.unk96) {
                 self->ext.whiteDragon.unk96--;
             } else {
@@ -587,7 +587,7 @@ void EntityWhiteDragon(Entity* self) {
                 LOH(self->ext.whiteDragon.unk98) = 0;
             }
         } else {
-            self->ext.whiteDragon.unk88 -= 0x4000;
+            self->ext.whiteDragon.unk88 -= FIX(0.25);
         }
         func_us_801B4F00();
         break;
@@ -685,12 +685,12 @@ void EntityWhiteDragon(Entity* self) {
         func_us_801B4F00();
         break;
     case DEATH:
-        if (self->ext.whiteDragon.unk88 < 0x50000) {
-            self->ext.whiteDragon.unkA0 = 0x4000;
+        if (self->ext.whiteDragon.unk88 < FIX(5)) {
+            self->ext.whiteDragon.unkA0 = FIX(0.25);
         }
 
-        if (self->ext.whiteDragon.unk88 > 0x60000) {
-            self->ext.whiteDragon.unkA0 = -0x4000;
+        if (self->ext.whiteDragon.unk88 > FIX(6)) {
+            self->ext.whiteDragon.unkA0 = -FIX(0.25);
         }
 
         self->ext.whiteDragon.unk88 += self->ext.whiteDragon.unkA0;
