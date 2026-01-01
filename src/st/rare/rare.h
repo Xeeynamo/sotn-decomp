@@ -17,7 +17,9 @@ enum Palettes {
     // 0xC0 - 0xCA are cycled in EntityFountainWater based on g_Timer
     PAL_FOUNTAIN_WATER_MAX = 0xCA,
     PAL_WHITE_DRAGON_A = 0x216,
-    PAL_WHITE_DRAGON_B = 0x217
+    PAL_WHITE_DRAGON_B = 0x217,
+    PAL_WEREWOLF_DEATH_FLAMES_A = 0x254,
+    PAL_WEREWOLF_DEATH_FLAMES_B = 0x2E4
 };
 
 enum Entities {
@@ -47,11 +49,11 @@ enum Entities {
     E_UNK_17,                    // func_us_801B2800
     E_UNK_18,                    // func_us_801B28F4
     E_UNK_19,                    // func_us_801B29E0
-    E_UNK_1A,                    // func_us_801B7290
-    E_CORNER_GUARD_ATTACK,       // EntityCornerGuardAttack
-    E_UNK_1C,                    // func_us_801B7FF8
-    E_UNK_1D,                    // func_us_801B80E8
-    E_UNK_1E,                    // func_us_801B81CC
+    E_WEREWOLF,                  // EntityWerewolf
+    E_WEREWOLF_ATTACK_HITBOX,    // EntityWerewolfAttackHitbox
+    E_WEREWOLF_ENERGY_WAVE,      // EntityWerewolfEnergyWave
+    E_WEREWOLF_AFTERIMAGE,       // EntityWerewolfSpinAttackAfterImage
+    E_WEREWOLF_DEATH_FLAMES,     // EntityWerewolfDeathFlames
     E_UNK_1F,                    // func_us_801B2B2C
     E_UNK_20,                    // func_us_801B3B34
     E_UNK_21,                    // func_us_801B4E9C
