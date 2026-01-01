@@ -123,7 +123,11 @@ void func_us_801D1BCC(void) {
                 gte_ldv0(vecPtr[3]);
                 gte_rtps();
                 gte_stsxy((long*)&prim->x3);
+#ifdef VERSION_PSP
+                gte_minsz4();
+#else
                 gte_avsz4();
+#endif
                 gte_stotz(scratchpad2);
                 prim->priority =
                     ((g_CurrentEntity->ext.spellbookMagicTome.unk8A + 0x200) /
