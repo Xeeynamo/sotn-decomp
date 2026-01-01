@@ -16,5 +16,3 @@ INCLUDE_ASM("st/rare_psp/nonmatchings/rare_psp/unk_2F28", func_pspeu_0923B798);
 INCLUDE_ASM("st/rare_psp/nonmatchings/rare_psp/unk_2F28", func_us_801B3B34);
 
 INCLUDE_ASM("st/rare_psp/nonmatchings/rare_psp/unk_2F28", func_us_801B4E9C);
-
-INCLUDE_ASM("st/rare_psp/nonmatchings/rare_psp/unk_2F28", func_us_801B6824);

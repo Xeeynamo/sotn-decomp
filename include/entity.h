@@ -3723,6 +3723,40 @@ typedef struct {
     /* 0x80 */ s16 timer;
 } ET_ARE_BossDoor;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ s32 startingPosY;
+} ET_StoneSkull;
+
+typedef struct {
+    /* 0x7C */ struct Entity* entity;
+    /* 0x80 */ u8 unk80;
+    /* 0x81 */ u8 unk81;
+    /* 0x82 */ u8 angle;
+    /* 0x83 */ u8 unk83;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ f32 posX;
+    /* 0x90 */ f32 posY;
+    /* 0x94 */ s16 attackTimer;
+    /* 0x96 */ s16 unk96;
+    /* 0x98 */ u8 unk98;
+    /* 0x99 */ u8 unk99;
+    /* 0x9A */ s16 unk9A;
+    /* 0x9C */ u8 unk9C;
+    /* 0x9D */ u8 unk9D;
+    /* 0x9E */ u8 unk9E;
+    /* 0x9F */ u8 unk9F;
+    /* 0xA0 */ s32 unkA0;
+    /* 0xA4 */ u8 unkA4;
+    /* 0xA5 */ u8 : 8;
+    /* 0xA6 */ u8 : 8;
+    /* 0xA7 */ u8 : 8;
+    /* 0xA8 */ struct Primitive* prim;
+} ET_WhiteDragon;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4044,6 +4078,8 @@ typedef union { // offset=0x7C
     ET_GearPuzzle gearPuzzle;
     ET_Pendulum pendulum;
     ET_ARE_BossDoor areBossDoor;
+    ET_StoneSkull stoneSkull;
+    ET_WhiteDragon whiteDragon;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

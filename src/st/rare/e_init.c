@@ -40,9 +40,9 @@ void EntityBackgroundDoorRubble(Entity* self);
 void EntityFountainWater(Entity* self);
 void EntityBossTorch(Entity* self);
 void EntityBossDoors(Entity* self);
-void func_us_801B5448(Entity* self);
-void func_us_801B65F8(Entity* self);
-void func_us_801B6824(Entity* self);
+void EntityWhiteDragon(Entity* self);
+void EntityWhiteDragonFlameBreath(Entity* self);
+void EntityStoneSkull(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     OVL_EXPORT(EntityBreakable),
@@ -84,9 +84,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityFountainWater,
     EntityBossTorch,
     EntityBossDoors,
-    func_us_801B5448,
-    func_us_801B65F8,
-    func_us_801B6824,
+    EntityWhiteDragon,
+    EntityWhiteDragonFlameBreath,
+    EntityStoneSkull,
 };
 
 // animSet, animCurFrame, unk5A, palette, enemyID
@@ -113,6 +113,8 @@ EInit D_us_801807CC = {ANIMSET_OVL(4), 0, 80, 0x229, 0x186};
 EInit D_us_801807D8 = {ANIMSET_OVL(4), 54, 80, 0x229, 0x187};
 
 EInit g_EInitAzaghal = {ANIMSET_OVL(0), 0, 0, 0, 0x0E0};
-EInit D_us_801807F0 = {ANIMSET_DRA(14), 0, 121, 0x2E2, 0x02C};
+
+// nb. Main White Dragon entity uses a g_EInitSpawner to initialise
+EInit g_EInitWhiteDragonFlameBreath = {ANIMSET_DRA(14), 0, 121, 0x2E2, 0x02C};
 
 EInit g_EInitStoneSkull = {ANIMSET_OVL(7), 0, 73, 0x228, 0x180};
