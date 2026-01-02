@@ -16,10 +16,12 @@ enum Palettes {
     PAL_FOUNTAIN_WATER = 0xC0,
     // 0xC0 - 0xCA are cycled in EntityFountainWater based on g_Timer
     PAL_FOUNTAIN_WATER_MAX = 0xCA,
+    PAL_MINOTAUR_SPIT = 0x16B,
     PAL_WHITE_DRAGON_A = 0x216,
     PAL_WHITE_DRAGON_B = 0x217,
     PAL_WEREWOLF_DEATH_FLAMES_A = 0x254,
-    PAL_WEREWOLF_DEATH_FLAMES_B = 0x2E4
+    PAL_WEREWOLF_DEATH_FLAMES_B = 0x2E4,
+    PAL_MINOTAUR_DEATH_PUFF = 0x2E8
 };
 
 enum Entities {
@@ -45,16 +47,16 @@ enum Entities {
     E_UNK_ID13,                  // EntityUnkId13
     E_EXPLOSION_VARIANTS,        // EntityExplosionVariants
     E_GREY_PUFF,                 // EntityGreyPuff
-    E_UNK_16,                    // func_us_801B1BC8
-    E_UNK_17,                    // func_us_801B2800
-    E_UNK_18,                    // func_us_801B28F4
-    E_UNK_19,                    // func_us_801B29E0
+    E_MINOTAUR,                  // EntityMinotaur
+    E_MINOTAUR_ATTACK_HITBOX,    // EntityMinotaurAttackHitbox
+    E_MINOTAUR_FIREBALL,         // EntityMinotaurFireball
+    E_MINOTAUR_SPIT_LIQUID,      // EntityMinotaurSpitLiquid
     E_WEREWOLF,                  // EntityWerewolf
     E_WEREWOLF_ATTACK_HITBOX,    // EntityWerewolfAttackHitbox
     E_WEREWOLF_ENERGY_WAVE,      // EntityWerewolfEnergyWave
     E_WEREWOLF_AFTERIMAGE,       // EntityWerewolfSpinAttackAfterImage
     E_WEREWOLF_DEATH_FLAMES,     // EntityWerewolfDeathFlames
-    E_UNK_1F,                    // func_us_801B2B2C
+    E_MINOTAUR_DEATH_PUFF,       // EntityMinotaurDeathPuff
     E_UNK_20,                    // func_us_801B3B34
     E_UNK_21,                    // func_us_801B4E9C
     E_BREAKABLE_FLOOR_SECRET,    // EntityBreakableFloorSecret
