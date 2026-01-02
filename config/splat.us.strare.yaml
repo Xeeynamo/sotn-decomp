@@ -60,7 +60,9 @@ segments:
       - [0x15FC, data]
       - [0x1B64, .data, e_white_dragon]
       - [0x1BE4, .data, e_stone_skull]
-      - [0x1C58, data]
+      - [0x1C58, data] # rooms
+      - [0x1CFC, .data, e_werewolf]
+      - [0x1F78, data]
       - [0x25284, .rodata, e_breakable]
       - [0x252A8, .rodata, e_boss_torch]
       - [0x252B4, .rodata, e_boss_doors]

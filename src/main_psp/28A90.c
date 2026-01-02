@@ -516,12 +516,12 @@ void gte_avsz3(void) {
         (D_psp_08C63B6C + D_psp_08C63B70 + D_psp_08C63B74) / 3;
 }
 
-void func_psp_089295E4(void) {
+void gte_avsz4(void) {
     D_psp_08C63B88 = D_psp_08C63B44 =
         (D_psp_08C63B68 + D_psp_08C63B6C + D_psp_08C63B70 + D_psp_08C63B74) / 4;
 }
 
-void gte_avsz4(void) {
+void gte_minsz4(void) {
     s32 min;
 
     min = D_psp_08C63B68;

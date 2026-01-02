@@ -3757,6 +3757,22 @@ typedef struct {
     /* 0xA8 */ struct Primitive* prim;
 } ET_WhiteDragon;
 
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 moveTimer;
+    /* 0x84 */ u8 moveAway;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u8 : 8;
+    /* 0x87 */ u8 : 8;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ s16 unk9C;
+} ET_Werewolf;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4080,6 +4096,7 @@ typedef union { // offset=0x7C
     ET_ARE_BossDoor areBossDoor;
     ET_StoneSkull stoneSkull;
     ET_WhiteDragon whiteDragon;
+    ET_Werewolf werewolf;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

@@ -26,11 +26,11 @@ void func_us_801B1BC8(Entity* self);
 void func_us_801B2800(Entity* self);
 void func_us_801B28F4(Entity* self);
 void func_us_801B29E0(Entity* self);
-void func_us_801B7290(Entity* self);
-void EntityCornerGuardAttack(Entity* self);
-void func_us_801B7FF8(Entity* self);
-void func_us_801B80E8(Entity* self);
-void func_us_801B81CC(Entity* self);
+void EntityWerewolf(Entity* self);
+void EntityWerewolfAttackHitbox(Entity* self);
+void EntityWerewolfEnergyWave(Entity* self);
+void EntityWerewolfSpinAttackAfterImage(Entity* self);
+void EntityWerewolfDeathFlames(Entity* self);
 void func_us_801B2B2C(Entity* self);
 void func_us_801B3B34(Entity* self);
 void func_us_801B4E9C(Entity* self);
@@ -70,11 +70,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B2800,
     func_us_801B28F4,
     func_us_801B29E0,
-    func_us_801B7290,
-    EntityCornerGuardAttack,
-    func_us_801B7FF8,
-    func_us_801B80E8,
-    func_us_801B81CC,
+    EntityWerewolf,
+    EntityWerewolfAttackHitbox,
+    EntityWerewolfEnergyWave,
+    EntityWerewolfSpinAttackAfterImage,
+    EntityWerewolfDeathFlames,
     func_us_801B2B2C,
     func_us_801B3B34,
     func_us_801B4E9C,
@@ -108,9 +108,9 @@ EInit D_us_8018079C = {ANIMSET_OVL(3), 0, 72, 0x200, 0x183};
 EInit D_us_801807A8 = {ANIMSET_DRA(2), 1, 0, 0, 0x002};
 EInit D_us_801807B4 = {ANIMSET_DRA(2), 1, 0, 0, 0x184};
 
-EInit g_EInitWerewolfRARE = {ANIMSET_OVL(4), 1, 80, 0x229, 0x185};
-EInit D_us_801807CC = {ANIMSET_OVL(4), 0, 80, 0x229, 0x186};
-EInit D_us_801807D8 = {ANIMSET_OVL(4), 54, 80, 0x229, 0x187};
+EInit g_EInitWerewolf = {ANIMSET_OVL(4), 1, 80, 0x229, 0x185};
+EInit g_EInitWerewolfAttackHitbox = {ANIMSET_OVL(4), 0, 80, 0x229, 0x186};
+EInit g_EInitWerewolfEnergyWave = {ANIMSET_OVL(4), 54, 80, 0x229, 0x187};
 
 EInit g_EInitAzaghal = {ANIMSET_OVL(0), 0, 0, 0, 0x0E0};
 
