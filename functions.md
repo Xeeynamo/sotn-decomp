@@ -975,8 +975,8 @@
 | lib    | func_psp_09251040                 |       27 |          1 |        |       |     |
 | no2    | func_pspeu_0924E9A0               |       27 |          1 |        |       |     |
 | np3    | func_pspeu_09262600               |       27 |          1 |        |       |     |
-| rare   | UnkPolyFunc0                      |       27 |          1 |        |       |     |
-| main   | func_psp_089295E4                 |       27 |          2 |        |       |     |
+| rare   | func_pspeu_0924B6E8               |       27 |          1 |        |       |     |
+| main   | gte_avsz4                         |       27 |          2 |        |       |     |
 | main   | ratan2                            |       27 |          2 |        |       |     |
 | are    | func_pspeu_09257FE0               |       27 |          2 |        |       |     |
 | are    | func_pspeu_09261CD8               |       27 |          2 |        |       |     |
@@ -1290,7 +1290,7 @@
 | dra    | func_psp_090F1B60                 |       34 |          4 |        |       |     |
 | main   | func_psp_0891A800                 |       34 |          4 |        |       |     |
 | main   | func_psp_08928428                 |       34 |          4 |        |       |     |
-| main   | gte_avsz4                         |       34 |          4 |        |       |     |
+| main   | gte_minsz4                        |       34 |          4 |        |       |     |
 | main   | func_psp_08919FF8                 |       34 |          5 |        |       |     |
 | main   | sceWaveAudioSetSample             |       34 |          5 |        |       |     |
 | maria  | func_pspeu_092B2170               |       34 |          5 |        |       |     |
@@ -2104,7 +2104,7 @@
 | lib    | func_psp_09250D30                 |       59 |         11 |        |       |     |
 | no2    | func_pspeu_0924E778               |       59 |         11 |        |       |     |
 | np3    | func_pspeu_092623D8               |       59 |         11 |        |       |     |
-| rare   | FindFirstUnkPrim2                 |       59 |         11 |        |       |     |
+| rare   | func_pspeu_0924B4C0               |       59 |         11 |        |       |     |
 | dra    | func_psp_090F9F20                 |       59 |         14 |        |       |     |
 | main   | func_psp_08930A1C                 |       59 |         15 |        |       |     |
 | dra    | 692E8.rodata                      |       60 |          0 | Yes    |       |     |
@@ -2654,7 +2654,7 @@
 | lib    | func_psp_0924CE08                 |       83 |          7 |        |       |     |
 | no3    | func_pspeu_09239D40               |       83 |          7 |        |       |     |
 | nz1    | CheckFieldCollisionY              |       83 |          7 |        |       |     |
-| rare   | func_us_801B80E8                  |       83 |          7 |        |       |     |
+| rare   | func_pspeu_0924EFE8               |       83 |          7 |        |       |     |
 | nz1    | func_pspeu_09258BB8               |       83 |          8 |        |       |     |
 | dra    | func_psp_090E8760                 |       83 |         11 |        |       |     |
 | dra    | func_psp_091142B0                 |       83 |         14 |        |       |     |
@@ -2691,7 +2691,7 @@
 | np3    | EntityTilemapShufflerUnused       |       86 |          6 |        |       |     |
 | nz1    | EntityHarpyKick                   |       86 |          6 |        |       |     |
 | nz1    | EntitySwordLordAttackHitbox       |       86 |          6 |        |       |     |
-| rare   | EntityCornerGuardAttack           |       86 |          6 |        |       |     |
+| rare   | func_pspeu_0924ED60               |       86 |          6 |        |       |     |
 | main   | func_psp_0892F848                 |       86 |          7 |        |       |     |
 | main   | sceGupLightColor                  |       86 |          8 | Yes    |       |     |
 | no4    | func_pspeu_09239788               |       86 |          8 |        |       |     |
@@ -2860,7 +2860,7 @@
 | st0    | func_pspeu_09248708               |       96 |         12 |        |       |     |
 | wrp    | func_psp_09237D88                 |       96 |         12 |        |       |     |
 | main   | _malloc_trim_r                    |       96 |         13 |        |       |     |
-| rare   | func_us_801B7FF8                  |       96 |         13 |        |       |     |
+| rare   | func_pspeu_0924EE98               |       96 |         13 |        |       |     |
 | main   | __swsetup_r                       |       96 |         15 |        |       |     |
 | dra    | func_psp_091060E0                 |       96 |         16 |        |       |     |
 | maria  | func_pspeu_092AB7E8               |       96 |         16 |        |       |     |
@@ -4283,7 +4283,7 @@
 | lib    | func_psp_0926CF18                 |      473 |         53 |        |       |     |
 | nz1    | func_pspeu_09258F78               |      473 |         59 |        |       |     |
 | sel    | func_psp_09242010                 |      473 |         70 | Yes    |       |     |
-| rare   | func_us_801B81CC                  |      475 |         56 |        |       |     |
+| rare   | func_pspeu_0924F110               |      475 |         56 |        |       |     |
 |        | func_092E8B58                     |      478 |         60 |        |       |     |
 | no3    | func_pspeu_0924C078               |      480 |         31 |        |       |     |
 | dra    | StoreSaveData                     |      481 |         49 |        |       |     |
@@ -4662,7 +4662,7 @@
 | are    | func_pspeu_09244FA0               |     1229 |         86 | Yes    |       |     |
 | lib    | func_psp_09268528                 |     1229 |        132 | Yes    |       |     |
 | no3    | func_pspeu_09247CA0               |     1232 |        112 | Yes    |       |     |
-| rare   | func_us_801B7290                  |     1242 |        223 |        |       |     |
+| rare   | func_pspeu_0924DB40               |     1242 |        223 |        |       |     |
 | are    | func_pspeu_09241218               |     1247 |        112 | Yes    |       |     |
 | cat    | func_pspeu_0923BF88               |     1247 |        112 | Yes    |       |     |
 | chi    | func_psp_0923D390                 |     1247 |        112 | Yes    |       |     |
