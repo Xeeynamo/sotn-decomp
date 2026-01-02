@@ -20,5 +20,4 @@ RARE_gfxBanks = 0x092540B8;
 RARE_RedDoorTiles = 0x092540E8;
 g_EInitAzaghal = 0x092542D0;
 RARE_rooms = 0x09254300;
-RARE_PrizeDrops = 0x09272858;
 RARE_BackgroundBlockInit = 0x092728A8;
