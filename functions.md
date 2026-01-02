@@ -712,7 +712,7 @@
 | nz1    | SetSubStep                        |       21 |          1 |        |       |     |
 | nz1    | Random                            |       21 |          1 |        |       |     |
 | rare   | func_pspeu_09241500               |       21 |          1 |        |       |     |
-| rare   | SetSubStep                        |       21 |          1 |        |       |     |
+| rare   | func_pspeu_0924AB18               |       21 |          1 |        |       |     |
 | rare   | Random                            |       21 |          1 |        |       |     |
 | sel    | func_psp_09243268                 |       21 |          1 |        |       |     |
 | st0    | func_pspeu_09242A58               |       21 |          1 |        |       |     |
@@ -2645,7 +2645,7 @@
 | no4    | func_pspeu_09238CF0               |       82 |          8 |        |       |     |
 | dra    | func_psp_090F76D0                 |       82 |          9 |        |       |     |
 | lib    | func_psp_0924E8D8                 |       82 |          9 |        |       |     |
-| rare   | func_us_801B28F4                  |       82 |          9 |        |       |     |
+| rare   | func_pspeu_09249180               |       82 |          9 |        |       |     |
 | main   | exit                              |       82 |         10 |        |       |     |
 | dra    | func_psp_090FF298                 |       82 |         11 |        |       |     |
 | dra    | func_psp_09141C10                 |       82 |         15 |        |       |     |
@@ -2827,7 +2827,7 @@
 | np3    | EntityCavernDoorPlatform          |       95 |          7 |        |       |     |
 | lib    | func_psp_09254120                 |       95 |          8 |        |       |     |
 | no4    | func_pspeu_09237FB0               |       95 |          8 |        |       |     |
-| rare   | func_us_801B2800                  |       95 |          8 |        |       |     |
+| rare   | func_pspeu_09249028               |       95 |          8 |        |       |     |
 | maria  | func_pspeu_092B6CB8               |       95 |          9 |        |       |     |
 | ric    | func_pspeu_092BFDF0               |       95 |          9 |        |       |     |
 | lib    | func_psp_09263410                 |       95 |          9 |        |       |     |
@@ -3074,7 +3074,7 @@
 | no4    | func_pspeu_09242E30               |      107 |          9 |        |       |     |
 | dra    | func_psp_090E88C0                 |      107 |         10 |        |       |     |
 | are    | func_pspeu_0925F050               |      107 |         11 |        |       |     |
-| rare   | func_us_801B2B2C                  |      107 |         13 |        |       |     |
+| rare   | func_pspeu_09249460               |      107 |         13 |        |       |     |
 | dra    | func_psp_09138600                 |      107 |         17 |        |       |     |
 | main   | func_psp_089117F4                 |      108 |          1 |        |       |     |
 | dra    | func_psp_090EC0C0                 |      108 |          3 |        |       |     |
@@ -3217,7 +3217,7 @@
 | no3    | func_pspeu_09249590               |      118 |         27 |        |       |     |
 | no3    | func_pspeu_0923D198               |      119 |         14 |        |       |     |
 | np3    | EntityTrapDoor                    |      119 |         14 |        |       |     |
-| rare   | func_us_801B29E0                  |      119 |         14 |        |       |     |
+| rare   | func_pspeu_092492A8               |      119 |         14 |        |       |     |
 | np3    | EntityZombieSpawner               |      119 |         15 |        |       |     |
 | dra    | func_psp_091279A0                 |      119 |         19 |        |       |     |
 | main   | func_psp_0890FCD0                 |      119 |         31 |        |       |     |
@@ -3649,7 +3649,7 @@
 | no4    | func_pspeu_0925B140               |      200 |         20 |        |       |     |
 | np3    | func_pspeu_0925A178               |      200 |         20 |        |       |     |
 | nz1    | UnkCollisionFunc2                 |      200 |         20 |        |       |     |
-| rare   | UnkCollisionFunc2                 |      200 |         20 |        |       |     |
+| rare   | func_pspeu_0924A3C0               |      200 |         20 |        |       |     |
 | dra    | func_psp_090E7150                 |      200 |         22 | Yes    |       |     |
 | dre    | func_pspeu_0924B520               |      200 |         22 |        |       |     |
 |        | func_092E8090                     |      201 |         21 |        |       |     |
@@ -4625,7 +4625,7 @@
 | cat    | func_pspeu_092395A8               |     1126 |        161 |        |       |     |
 | cat    | func_pspeu_09259E28               |     1129 |        174 |        |       |     |
 | are    | func_pspeu_09242CC0               |     1137 |        210 | Yes    |       |     |
-| rare   | func_us_801B1BC8                  |     1138 |        202 |        |       |     |
+| rare   | func_pspeu_09247F98               |     1138 |        202 |        |       |     |
 | cat    | func_pspeu_0923DA30               |     1139 |        210 | Yes    |       |     |
 | np3    | EntitySlogra                      |     1154 |        213 |        |       |     |
 | st0    | EntityCutscenePhotograph          |     1164 |         88 | Yes    |       |     |
