@@ -3775,11 +3775,11 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u32 : 32;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ s32 unk84;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 moveTimer;
+    /* 0x84 */ s32 deathPuffPosX;
     /* 0x88 */ u32 : 32;
-    /* 0x8C */ u8 unk8C;
+    /* 0x8C */ u8 moveAway;
     /* 0x8D */ u8 : 8;
     /* 0x8E */ u8 : 8;
     /* 0x8F */ u8 : 8;

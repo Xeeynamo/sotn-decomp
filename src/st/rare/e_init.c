@@ -22,16 +22,16 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801B1BC8(Entity* self);
-void func_us_801B2800(Entity* self);
-void func_us_801B28F4(Entity* self);
-void func_us_801B29E0(Entity* self);
+void EntityMinotaur(Entity* self);
+void EntityMinotaurAttackHitbox(Entity* self);
+void EntityMinotaurFireball(Entity* self);
+void EntityMinotaurSpitLiquid(Entity* self);
 void EntityWerewolf(Entity* self);
 void EntityWerewolfAttackHitbox(Entity* self);
 void EntityWerewolfEnergyWave(Entity* self);
 void EntityWerewolfSpinAttackAfterImage(Entity* self);
 void EntityWerewolfDeathFlames(Entity* self);
-void func_us_801B2B2C(Entity* self);
+void EntityMinotaurDeathPuff(Entity* self);
 void func_us_801B3B34(Entity* self);
 void func_us_801B4E9C(Entity* self);
 void EntityBreakableFloorSecret(Entity* self);
@@ -66,16 +66,16 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801B1BC8,
-    func_us_801B2800,
-    func_us_801B28F4,
-    func_us_801B29E0,
+    EntityMinotaur,
+    EntityMinotaurAttackHitbox,
+    EntityMinotaurFireball,
+    EntityMinotaurSpitLiquid,
     EntityWerewolf,
     EntityWerewolfAttackHitbox,
     EntityWerewolfEnergyWave,
     EntityWerewolfSpinAttackAfterImage,
     EntityWerewolfDeathFlames,
-    func_us_801B2B2C,
+    EntityMinotaurDeathPuff,
     func_us_801B3B34,
     func_us_801B4E9C,
     EntityBreakableFloorSecret,
@@ -104,9 +104,9 @@ EInit D_us_80180778 = {ANIMSET_OVL(1), 0, 0, 0, 0x005};
 EInit g_EInitEnvironment = {ANIMSET_OVL(2), 0, 0, 0, 0x005};
 
 EInit g_EInitMinotaur = {ANIMSET_OVL(3), 1, 72, 0x200, 0x182};
-EInit D_us_8018079C = {ANIMSET_OVL(3), 0, 72, 0x200, 0x183};
-EInit D_us_801807A8 = {ANIMSET_DRA(2), 1, 0, 0, 0x002};
-EInit D_us_801807B4 = {ANIMSET_DRA(2), 1, 0, 0, 0x184};
+EInit g_EInitMinotaurAttackHitbox = {ANIMSET_OVL(3), 0, 72, 0x200, 0x183};
+EInit g_EInitMinotaurFireball = {ANIMSET_DRA(2), 1, 0, 0, 0x002};
+EInit g_EInitMinotaurSpitLiquid = {ANIMSET_DRA(2), 1, 0, 0, 0x184};
 
 EInit g_EInitWerewolf = {ANIMSET_OVL(4), 1, 80, 0x229, 0x185};
 EInit g_EInitWerewolfAttackHitbox = {ANIMSET_OVL(4), 0, 80, 0x229, 0x186};
