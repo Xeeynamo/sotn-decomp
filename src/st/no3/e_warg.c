@@ -84,10 +84,10 @@ void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
 
 static void func_801CF58C(Entity* self) {
     self->velocityX = 0;
-    self->ext.warg.unk86 = 0x100;
+    self->ext.warg.attackTimer = 0x100;
     SetStep(6);
     g_api.PlaySfx(SFX_WARG_GROWL);
-    self->ext.warg.unk80 = 0x20;
+    self->ext.warg.timer = 0x20;
 }
 
 static void func_801CF5E0(Entity* self) {
@@ -105,46 +105,46 @@ static void func_801CF5E0(Entity* self) {
         return;
     }
 
-    if (!self->ext.warg.unk86) {
+    if (!self->ext.warg.attackTimer) {
         func_801CF58C(self);
         return;
     }
 
-    temp_v0 = self->ext.warg.unk84 - self->posX.i.hi - tilemap->scrollX.i.hi;
+    temp_v0 = self->ext.warg.anchorX - self->posX.i.hi - tilemap->scrollX.i.hi;
 
     if (temp_v0 > 16) {
         SetStep(3);
         if (self->facingLeft) {
-            self->ext.warg.unk7C = 0;
+            self->ext.warg.movingBackward = 0;
         } else {
-            self->ext.warg.unk7C = 1;
+            self->ext.warg.movingBackward = 1;
         }
     } else if (temp_v0 < -16) {
         SetStep(3);
         if (self->facingLeft) {
-            self->ext.warg.unk7C = 1;
+            self->ext.warg.movingBackward = 1;
         } else {
-            self->ext.warg.unk7C = 0;
+            self->ext.warg.movingBackward = 0;
         }
     } else {
         SetStep(7);
     }
 
-    self->ext.warg.unk80 = 0;
-    self->ext.warg.unk82 = 32;
+    self->ext.warg.timer = 0;
+    self->ext.warg.decisionDelay = 32;
 }
 
 static void func_801CF6D8(Entity* self) {
     u16 xDist = GetDistanceToPlayerX();
 
-    if (self->ext.warg.unk86) {
+    if (self->ext.warg.attackTimer) {
         if (xDist < 0x60) {
-            self->ext.warg.unk86 -= 2;
-            if (self->ext.warg.unk86 < 0) {
-                self->ext.warg.unk86 = 0;
+            self->ext.warg.attackTimer -= 2;
+            if (self->ext.warg.attackTimer < 0) {
+                self->ext.warg.attackTimer = 0;
             }
         } else {
-            self->ext.warg.unk86--;
+            self->ext.warg.attackTimer--;
         }
     }
 }
@@ -205,14 +205,14 @@ void EntityWarg(Entity* self) {
             }
             self->velocityX = 0;
             self->velocityY = 0;
-            self->ext.warg.unk88 = self->posX.i.hi + gTilemap->scrollX.i.hi;
-            self->ext.warg.unk8A = self->posY.i.hi + gTilemap->scrollY.i.hi;
+            self->ext.warg.deathPosX = self->posX.i.hi + gTilemap->scrollX.i.hi;
+            self->ext.warg.deathPosY = self->posY.i.hi + gTilemap->scrollY.i.hi;
             g_api.PlaySfx(SFX_STUTTER_EXPLODE_A);
             SetStep(11);
         }
     } else if (self->hitFlags & 0xF) {
-        if (self->ext.warg.unk86 >= 0x10) {
-            self->ext.warg.unk86 /= 2;
+        if (self->ext.warg.attackTimer >= 0x10) {
+            self->ext.warg.attackTimer /= 2;
         }
         if (switchTemp == 2 || switchTemp == 3 || switchTemp == 7) {
             SetStep(10);
@@ -233,13 +233,13 @@ void EntityWarg(Entity* self) {
         } else {
             self->posX.i.hi += 0x20;
         }
-        self->ext.warg.unk86 = 0x40;
+        self->ext.warg.attackTimer = 0x40;
         break;
     case 1:
         AnimateEntity(D_801830FC, self);
         if (UnkCollisionFunc3(D_8018327C) & 1) {
             SetStep(2);
-            self->ext.warg.unk84 = self->posX.i.hi + gTilemap->scrollX.i.hi;
+            self->ext.warg.anchorX = self->posX.i.hi + gTilemap->scrollX.i.hi;
         }
         break;
     case 2:
@@ -250,29 +250,29 @@ void EntityWarg(Entity* self) {
         break;
     case 3:
         func_801CF6D8(self);
-        xVar = self->ext.warg.unk84 - self->posX.i.hi - gTilemap->scrollX.i.hi;
-        if (self->ext.warg.unk80) {
-            self->ext.warg.unk80 -= 1;
+        xVar = self->ext.warg.anchorX - self->posX.i.hi - gTilemap->scrollX.i.hi;
+        if (self->ext.warg.timer) {
+            self->ext.warg.timer -= 1;
             self->poseTimer = 0;
             break;
         }
-        if (!self->ext.warg.unk7C) {
+        if (!self->ext.warg.movingBackward) {
             animResult = AnimateEntity(D_801830BC, self);
             if (!animResult || (animResult & 0x80)) {
                 animResult = self->pose - 1;
                 if (self->facingLeft) {
                     self->velocityX = D_8018328C[animResult];
                     if (xVar < -0x10) {
-                        self->ext.warg.unk7C = 1;
+                        self->ext.warg.movingBackward = 1;
                         self->pose = 7 - self->pose;
-                        self->ext.warg.unk80 = 0x10;
+                        self->ext.warg.timer = 0x10;
                     }
                 } else {
                     self->velocityX = -D_8018328C[animResult];
                     if (xVar > 0x10) {
-                        self->ext.warg.unk7C = 1;
+                        self->ext.warg.movingBackward = 1;
                         self->pose = 7 - self->pose;
-                        self->ext.warg.unk80 = 0x10;
+                        self->ext.warg.timer = 0x10;
                     }
                 }
             }
@@ -283,30 +283,30 @@ void EntityWarg(Entity* self) {
                 if (self->facingLeft) {
                     self->velocityX = -D_801832A4[animResult];
                     if (xVar > 0x10) {
-                        self->ext.warg.unk7C = 0;
+                        self->ext.warg.movingBackward = 0;
                         self->pose = 7 - self->pose;
-                        self->ext.warg.unk80 = 0x10;
+                        self->ext.warg.timer = 0x10;
                     }
                 } else {
                     self->velocityX = D_801832A4[animResult];
                     if (xVar < -0x10) {
-                        self->ext.warg.unk7C = 0;
+                        self->ext.warg.movingBackward = 0;
                         self->pose = 7 - self->pose;
-                        self->ext.warg.unk80 = 0x10;
+                        self->ext.warg.timer = 0x10;
                     }
                 }
             }
         }
         UnkCollisionFunc2(D_80183274);
-        if (self->ext.warg.unk82) {
-            --self->ext.warg.unk82;
+        if (self->ext.warg.decisionDelay) {
+            --self->ext.warg.decisionDelay;
             break;
         }
         if ((self->facingLeft == GetSideToPlayer()) & 1) {
             SetStep(5);
             break;
         }
-        if (!self->ext.warg.unk86) {
+        if (!self->ext.warg.attackTimer) {
             func_801CF58C(self);
             break;
         }
@@ -328,7 +328,7 @@ void EntityWarg(Entity* self) {
         switch (self->step_s) {
         case 0:
             AnimateEntity(D_80183178, self);
-            if (!--self->ext.warg.unk80) {
+            if (!--self->ext.warg.timer) {
                 SetSubStep(1);
             }
             break;
@@ -364,11 +364,11 @@ void EntityWarg(Entity* self) {
         }
         break;
     case 7:
-        self->ext.warg.unk80 += 1;
+        self->ext.warg.timer += 1;
         func_801CF6D8(self);
         AnimateEntity(D_80183180, self);
-        if (self->ext.warg.unk82) {
-            self->ext.warg.unk82 -= 1;
+        if (self->ext.warg.decisionDelay) {
+            self->ext.warg.decisionDelay -= 1;
             break;
         }
         // Same weird issue with GetSideToPlayer in func_801CF5E0
@@ -376,7 +376,7 @@ void EntityWarg(Entity* self) {
             SetStep(5);
             break;
         }
-        if (!self->ext.warg.unk86) {
+        if (!self->ext.warg.attackTimer) {
             func_801CF58C(self);
         }
         break;
@@ -425,7 +425,7 @@ void EntityWarg(Entity* self) {
         }
         break;
     case 11:
-        if (++self->ext.warg.unk80 & 1) {
+        if (++self->ext.warg.timer & 1) {
             otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (otherEnt != NULL) {
                 CreateEntityFromCurrentEntity(E_EXPLODE_PUFF_TRANS, otherEnt);
@@ -443,9 +443,9 @@ void EntityWarg(Entity* self) {
                     1;
 #endif
                 otherEnt->posX.i.hi =
-                    self->ext.warg.unk88 - gTilemap->scrollX.i.hi;
+                    self->ext.warg.deathPosX - gTilemap->scrollX.i.hi;
                 otherEnt->posY.i.hi =
-                    self->ext.warg.unk8A - gTilemap->scrollY.i.hi;
+                    self->ext.warg.deathPosY - gTilemap->scrollY.i.hi;
                 if (self->facingLeft) {
                     otherEnt->posX.i.hi += (((Random() & 0xF) - 8) * 8);
                 } else {
