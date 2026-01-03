@@ -130,7 +130,7 @@ void EntityUnkId18(Entity* self) {
         if (D_us_801805B8 & 4) {
             g_api.PlaySfx(SET_UNK_92);
 #ifdef VERSION_PSP
-            currentMusicId = 0x313;
+            currentMusicId = MU_TOWER_OF_MIST;
 #endif
             self->step++;
         }
@@ -901,7 +901,7 @@ void EntityUnkId1E(Entity* self) {
             self->step++;
         }
         D_80097928 = 1;
-        currentMusicId = 0x31D;
+        currentMusicId = MU_FESTIVAL_OF_SERVANTS;
         self->step++;
         break;
     case 5:

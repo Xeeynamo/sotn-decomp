@@ -113,7 +113,7 @@ void EntityUnkId18(Entity* self) {
         dop->zPriority = 0x56;
         if (D_us_801805A0 & 4) {
             g_api.PlaySfx(SET_UNK_92);
-            currentMusicId = 0x313;
+            currentMusicId = MU_TOWER_OF_MIST;
             self->step++;
         }
         break;

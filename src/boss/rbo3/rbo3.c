@@ -768,7 +768,11 @@ void func_us_80192B38(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_MEDUSA_DEFEAT, TIMEATTACK_SET_VISITED);
             D_80097928 = 1;
-            currentMusicId = 0x330;
+#ifdef VERSION_PSP
+            currentMusicId = 0x32D;
+#else
+            currentMusicId = MU_ENCHANTED_BANQUET;
+#endif
             self->step++;
         }
         break;
@@ -785,7 +789,7 @@ void func_us_80192B38(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_MEDUSA_DEFEAT, TIMEATTACK_SET_RECORD);
             g_api.PlaySfx(SET_UNK_90);
-            currentMusicId = 0x301;
+            currentMusicId = MU_LOST_PAINTING;
             self->step++;
         }
         break;
@@ -814,7 +818,7 @@ void func_us_80192B38(Entity* self) {
         entity->params = 0x11;
         D_us_8018072C = 0;
         D_80097928 = 1;
-        currentMusicId = 0x301;
+        currentMusicId = MU_LOST_PAINTING;
         self->step++;
         break;
 
