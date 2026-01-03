@@ -1301,7 +1301,7 @@ void RunMainEngine(void) {
             (D_8003C730 == 0) && !(D_8003C708.flags & FLAG_UNK_20)) {
             PlaySfx(currentMusicId);
         }
-        D_80097928 = 0;
+        stopMusicFlag = 0;
         func_800EA538(2);
         if (D_801375BC.def->tilesetId != 0) {
             func_800EA5E4((D_801375BC.def->tilesetId & 0xFF) + 0x7fff | 0x4000);
@@ -1380,7 +1380,7 @@ void RunMainEngine(void) {
 #if defined(VERSION_PSP)
         if (D_8003C730 == 4) {
             D_8003C730 = 0;
-            D_80097928 = 1;
+            stopMusicFlag = 1;
             if (D_8006C374 == 0x25) {
                 g_Tilemap.scrollX.i.hi = 0x640;
                 g_Tilemap.scrollY.i.hi = 0x4BF;
@@ -1610,10 +1610,10 @@ void RunMainEngine(void) {
             MuteCd();
         } else if (g_unkGraphicsStruct.D_800973FC == 0 && D_8006BB00 != 0) {
             if (g_unkGraphicsStruct.pauseEnemies != 0) {
-                D_80097928 = 0;
+                stopMusicFlag = 0;
                 D_8006BB00 = 0;
                 UnMuteCd();
-            } else if (D_80097928 == 0) {
+            } else if (stopMusicFlag == 0) {
                 D_8006BB00 = 0;
                 UnMuteCd();
             } else {
@@ -1621,7 +1621,7 @@ void RunMainEngine(void) {
                 if (!(D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20))) {
                     PlaySfx(currentMusicId);
                     if (currentMusicId != 0) {
-                        D_80097928 = 0;
+                        stopMusicFlag = 0;
                     }
                 }
                 D_8006BB00 = 0;
@@ -1737,7 +1737,7 @@ void RunMainEngine(void) {
                     func_800EA5AC(0xFF, 0xFF, 0xFF, 0xFF);
                 }
                 break;
-            } else if (D_80097928 != 0) {
+            } else if (stopMusicFlag != 0) {
                 currentMusicId = g_StagesLba[g_StageId].unk18;
                 if (g_unkGraphicsStruct.D_800973FC != 1) {
                     PlaySfx(SET_STOP_MUSIC);
@@ -1745,7 +1745,7 @@ void RunMainEngine(void) {
                         break;
                     }
                     PlaySfx(currentMusicId);
-                    D_80097928 = 0;
+                    stopMusicFlag = 0;
                 }
             }
             if (D_80137598) {

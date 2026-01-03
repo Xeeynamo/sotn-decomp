@@ -3566,7 +3566,7 @@ block_4:
             break;
         }
         currentMusicId = D_80137958;
-        if (D_80097928 == 0) {
+        if (stopMusicFlag == 0) {
             PlaySfx(SET_UNK_11);
         }
         CheckWeaponCombo();

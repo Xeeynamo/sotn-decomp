@@ -2230,7 +2230,7 @@ extern DemoMode g_DemoMode;
 extern s32 g_LoadOvlIdx; // 0x80097918
 extern Point32 D_8009791C;
 extern s32 D_80097924;
-extern s32 D_80097928;
+extern s32 stopMusicFlag;
 extern GpuUsage g_GpuUsage;
 extern PlayerStatus g_Status;
 extern u32 D_80097C98;

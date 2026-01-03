@@ -51,7 +51,7 @@ void func_800E414C(void) {
             D_8003C712 ^= STAGE_INVERTEDCASTLE_FLAG;
         }
         PlaySfx(0x80);
-        D_80097928 = 1;
+        stopMusicFlag = 1;
         if (D_8003C708.flags == FLAG_UNK_40) {
             g_Player.demo_timer = 24;
             g_Player.padSim = PAD_LEFT;

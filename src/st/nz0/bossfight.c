@@ -160,7 +160,7 @@ void EntityBossFightManager(Entity* self) {
             g_BossFlag |= BOSS_FLAG_DOORS_CLOSED;
             // Unknown sound
             g_api.PlaySfx(0x90);
-            D_80097928 = 0;
+            stopMusicFlag = 0;
             self->step++;
         }
         break;
@@ -173,14 +173,14 @@ void EntityBossFightManager(Entity* self) {
         if (g_BossFlag & BOSS_FLAG_FIGHT_BEGIN) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT, TIMEATTACK_SET_VISITED);
-            D_80097928 = 1;
+            stopMusicFlag = 1;
             currentMusicId = MU_FESTIVAL_OF_SERVANTS;
             self->step++;
         }
         break;
     case 3: // Fight is now active.
         if (g_api.func_80131F68() == false) {
-            D_80097928 = 0;
+            stopMusicFlag = 0;
             g_api.PlaySfx(currentMusicId);
             self->step++;
         }
@@ -211,13 +211,13 @@ void EntityBossFightManager(Entity* self) {
         newEnt->params = 5;
         g_BossFlag |= BOSS_FLAG_DOORS_OPEN; // Reopen the door
         g_CastleFlags[SLO_GAI_DEFEATED] = 1;
-        D_80097928 = 1;
+        stopMusicFlag = 1;
         currentMusicId = MU_DANCE_OF_GOLD;
         self->step++;
         return;
     case 6:
         if (g_api.func_80131F68() == false) {
-            D_80097928 = 0;
+            stopMusicFlag = 0;
             g_api.PlaySfx(currentMusicId);
             self->step++;
             return;

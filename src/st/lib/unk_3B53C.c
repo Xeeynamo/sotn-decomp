@@ -8,7 +8,7 @@ extern s32 E_ID(ID_42);
 extern Entity D_91E5084;
 #endif
 extern s32 currentMusicId;
-extern s32 D_80097928;
+extern s32 stopMusicFlag;
 extern s32 D_us_80181AC8;
 extern s32 D_us_80181ACC;
 extern s32 D_us_80181AD0;
@@ -67,13 +67,13 @@ void func_us_801BB53C(Entity* self) {
         if (g_api.func_80131F68()) {
             g_api.PlaySfx(SET_UNK_90);
         }
-        D_80097928 = 1;
+        stopMusicFlag = 1;
         currentMusicId = MU_FESTIVAL_OF_SERVANTS;
         self->step++;
         break;
     case 3:
         if (!g_api.func_80131F68()) {
-            D_80097928 = 0;
+            stopMusicFlag = 0;
             g_api.PlaySfx(currentMusicId);
             self->step++;
         }
@@ -98,7 +98,7 @@ void func_us_801BB53C(Entity* self) {
                 tempEntity->posY.i.hi = 0x80;
                 tempEntity->params = 7;
                 D_us_80181AC8 = 0;
-                D_80097928 = 1;
+                stopMusicFlag = 1;
                 currentMusicId = MU_WOOD_CARVING_PARTITA;
                 D_us_80181AD0 = 1;
                 D_us_80181ACC &= ~1;
@@ -108,7 +108,7 @@ void func_us_801BB53C(Entity* self) {
         break;
     case 6:
         if (!g_api.func_80131F68()) {
-            D_80097928 = 0;
+            stopMusicFlag = 0;
             g_api.PlaySfx(currentMusicId);
             self->step++;
         }

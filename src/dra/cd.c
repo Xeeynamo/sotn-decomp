@@ -1001,7 +1001,7 @@ void UpdateCd(void) {
             if ((result[0] & (CdlStatShellOpen | CdlStatStandby)) == 2) {
                 g_CdStep = CdStep_Retry;
                 if (g_LoadFile == CdFile_None && currentMusicId != 0 &&
-                    D_80097928 == 0) {
+                    stopMusicFlag == 0) {
                     g_CdStep = CdStep_RetryXa;
                 }
             } else {

@@ -56,7 +56,7 @@ s32 currentMusicId;
 s32 g_LoadOvlIdx;
 Point32 D_8009791C;
 s32 D_80097924;
-s32 D_80097928;
+s32 stopMusicFlag;
 s32 D_8006C3AC;
 s32 D_800978C4;
 u32 D_80097C98;
