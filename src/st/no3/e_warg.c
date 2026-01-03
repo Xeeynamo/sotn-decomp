@@ -115,16 +115,16 @@ static void func_801CF5E0(Entity* self) {
     if (temp_v0 > 16) {
         SetStep(3);
         if (self->facingLeft) {
-            self->ext.warg.movingBackward = 0;
+            self->ext.warg.movingBackward = false;
         } else {
-            self->ext.warg.movingBackward = 1;
+            self->ext.warg.movingBackward = true;
         }
     } else if (temp_v0 < -16) {
         SetStep(3);
         if (self->facingLeft) {
-            self->ext.warg.movingBackward = 1;
+            self->ext.warg.movingBackward = true;
         } else {
-            self->ext.warg.movingBackward = 0;
+            self->ext.warg.movingBackward = false;
         }
     } else {
         SetStep(7);
@@ -264,14 +264,14 @@ void EntityWarg(Entity* self) {
                 if (self->facingLeft) {
                     self->velocityX = D_8018328C[animResult];
                     if (xVar < -0x10) {
-                        self->ext.warg.movingBackward = 1;
+                        self->ext.warg.movingBackward = true;
                         self->pose = 7 - self->pose;
                         self->ext.warg.timer = 0x10;
                     }
                 } else {
                     self->velocityX = -D_8018328C[animResult];
                     if (xVar > 0x10) {
-                        self->ext.warg.movingBackward = 1;
+                        self->ext.warg.movingBackward = true;
                         self->pose = 7 - self->pose;
                         self->ext.warg.timer = 0x10;
                     }
@@ -284,14 +284,14 @@ void EntityWarg(Entity* self) {
                 if (self->facingLeft) {
                     self->velocityX = -D_801832A4[animResult];
                     if (xVar > 0x10) {
-                        self->ext.warg.movingBackward = 0;
+                        self->ext.warg.movingBackward = false;
                         self->pose = 7 - self->pose;
                         self->ext.warg.timer = 0x10;
                     }
                 } else {
                     self->velocityX = D_801832A4[animResult];
                     if (xVar < -0x10) {
-                        self->ext.warg.movingBackward = 0;
+                        self->ext.warg.movingBackward = false;
                         self->pose = 7 - self->pose;
                         self->ext.warg.timer = 0x10;
                     }
