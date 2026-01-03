@@ -19,17 +19,17 @@ typedef union {
 
 typedef struct {
     /* 0x7C */ u16 timer;
-    /* 0x7E */ s16 unk7E;
+    /* 0x7E */ s16 : 16;
     /* 0x80 */ u8 aliveTimer;
-    /* 0x81 */ s8 unk81;
-    /* 0x82 */ s16 unk82;
+    /* 0x81 */ s8 : 8;
+    /* 0x82 */ s16 : 16;
     /* 0x84 */ s32 fallSpeed;
     /* 0x88 */ s16 gravity;
-    /* 0x8A */ s16 unk8A;
+    /* 0x8A */ s16 sparkleTimer;
     /* 0x8C */ u16 iconSlot;
-    /* 0x8E */ s16 unk8E;
-    /* 0x90 */ s16 unk90;
-    /* 0x92 */ s16 unk92;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 : 16;
+    /* 0x92 */ s16 : 16;
     /* 0x94 */ s32 castleFlag;
 } ET_EquipItemDrop;
 
