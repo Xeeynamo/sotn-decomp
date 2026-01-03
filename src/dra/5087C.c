@@ -1215,7 +1215,7 @@ void func_800F2860(void) {
         }
         break;
     case 6:
-        PlaySfx(D_80097910);
+        PlaySfx(currentMusicId);
         D_801375C8 = 0;
         return;
     case 7:
@@ -1290,16 +1290,16 @@ void RunMainEngine(void) {
         if (D_8003C708.flags & FLAG_UNK_40) {
             LoadGfxAsync(ANIMSET_DRA(4));
         }
-        D_80097910 = g_StagesLba[g_StageId].unk18;
+        currentMusicId = g_StagesLba[g_StageId].unk18;
         if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
-            D_80097910 = SE_INTRO_WIND;
+            currentMusicId = SE_INTRO_WIND;
         }
         if (
 #if defined(VERSION_PSP)
             (D_8003C730 == 4) ||
 #endif
             (D_8003C730 == 0) && !(D_8003C708.flags & FLAG_UNK_20)) {
-            PlaySfx(D_80097910);
+            PlaySfx(currentMusicId);
         }
         D_80097928 = 0;
         func_800EA538(2);
@@ -1619,8 +1619,8 @@ void RunMainEngine(void) {
             } else {
                 UnMuteCd();
                 if (!(D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20))) {
-                    PlaySfx(D_80097910);
-                    if (D_80097910 != 0) {
+                    PlaySfx(currentMusicId);
+                    if (currentMusicId != 0) {
                         D_80097928 = 0;
                     }
                 }
@@ -1738,13 +1738,13 @@ void RunMainEngine(void) {
                 }
                 break;
             } else if (D_80097928 != 0) {
-                D_80097910 = g_StagesLba[g_StageId].unk18;
+                currentMusicId = g_StagesLba[g_StageId].unk18;
                 if (g_unkGraphicsStruct.D_800973FC != 1) {
                     PlaySfx(SET_STOP_MUSIC);
                     if (func_80131F68()) {
                         break;
                     }
-                    PlaySfx(D_80097910);
+                    PlaySfx(currentMusicId);
                     D_80097928 = 0;
                 }
             }
@@ -1975,7 +1975,7 @@ void RunMainEngine(void) {
                 break;
             }
             PlaySfx(0x81);
-            D_80097910 = 0;
+            currentMusicId = 0;
             if (g_StageId == STAGE_ST0) {
                 SetGameState(Game_GameOver);
                 ClearImage(&g_Vram.D_800ACDA0, 0xFF, 0xFF, 0xFF);

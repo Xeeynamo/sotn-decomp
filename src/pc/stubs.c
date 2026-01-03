@@ -52,7 +52,7 @@ u32 g_Timer;
 s32 D_80097904;
 s32 g_ScrollDeltaX;
 s32 g_ScrollDeltaY;
-s32 D_80097910;
+s32 currentMusicId;
 s32 g_LoadOvlIdx;
 Point32 D_8009791C;
 s32 D_80097924;

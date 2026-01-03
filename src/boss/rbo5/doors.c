@@ -130,7 +130,7 @@ void EntityUnkId18(Entity* self) {
         if (D_us_801805B8 & 4) {
             g_api.PlaySfx(SET_UNK_92);
 #ifdef VERSION_PSP
-            D_80097910 = 0x313;
+            currentMusicId = 0x313;
 #endif
             self->step++;
         }
@@ -901,7 +901,7 @@ void EntityUnkId1E(Entity* self) {
             self->step++;
         }
         D_80097928 = 1;
-        D_80097910 = 0x31D;
+        currentMusicId = 0x31D;
         self->step++;
         break;
     case 5:
@@ -910,7 +910,7 @@ void EntityUnkId1E(Entity* self) {
         } else {
             if (g_api.func_80131F68() == false) {
                 D_80097928 = 0;
-                g_api.PlaySfx(D_80097910);
+                g_api.PlaySfx(currentMusicId);
                 self->step++;
             }
         }

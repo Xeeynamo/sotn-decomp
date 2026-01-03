@@ -113,7 +113,7 @@ void EntityUnkId18(Entity* self) {
         dop->zPriority = 0x56;
         if (D_us_801805A0 & 4) {
             g_api.PlaySfx(SET_UNK_92);
-            D_80097910 = 0x313;
+            currentMusicId = 0x313;
             self->step++;
         }
         break;
@@ -777,7 +777,7 @@ void EntityUnkId1A(Entity* self) {
         if (g_Player.demo_timer == 0) {
             g_api.FreePrimitives(self->primIndex);
             D_80097928 = 1;
-            D_80097910 = MU_FESTIVAL_OF_SERVANTS;
+            currentMusicId = MU_FESTIVAL_OF_SERVANTS;
             self->step = 4;
             self->flags &= ~FLAG_HAS_PRIMS;
             return;
@@ -786,7 +786,7 @@ void EntityUnkId1A(Entity* self) {
     case 4:
         if (g_api.func_80131F68() == false) {
             D_80097928 = 0;
-            g_api.PlaySfx(D_80097910);
+            g_api.PlaySfx(currentMusicId);
             DestroyEntity(self);
         }
         break;

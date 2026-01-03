@@ -174,14 +174,14 @@ void EntityBossFightManager(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_SLOGRA_GAIBON_DEFEAT, TIMEATTACK_SET_VISITED);
             D_80097928 = 1;
-            D_80097910 = MU_FESTIVAL_OF_SERVANTS;
+            currentMusicId = MU_FESTIVAL_OF_SERVANTS;
             self->step++;
         }
         break;
     case 3: // Fight is now active.
         if (g_api.func_80131F68() == false) {
             D_80097928 = 0;
-            g_api.PlaySfx(D_80097910);
+            g_api.PlaySfx(currentMusicId);
             self->step++;
         }
         /* fallthrough */
@@ -194,7 +194,7 @@ void EntityBossFightManager(Entity* self) {
             if (g_api.func_80131F68() != false) {
                 g_api.PlaySfx(SET_UNK_90);
             }
-            D_80097910 = MU_DANCE_OF_GOLD;
+            currentMusicId = MU_DANCE_OF_GOLD;
             self->step++;
         }
         return;
@@ -212,13 +212,13 @@ void EntityBossFightManager(Entity* self) {
         g_BossFlag |= BOSS_FLAG_DOORS_OPEN; // Reopen the door
         g_CastleFlags[SLO_GAI_DEFEATED] = 1;
         D_80097928 = 1;
-        D_80097910 = MU_DANCE_OF_GOLD;
+        currentMusicId = MU_DANCE_OF_GOLD;
         self->step++;
         return;
     case 6:
         if (g_api.func_80131F68() == false) {
             D_80097928 = 0;
-            g_api.PlaySfx(D_80097910);
+            g_api.PlaySfx(currentMusicId);
             self->step++;
             return;
         }

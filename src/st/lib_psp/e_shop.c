@@ -5551,7 +5551,7 @@ void func_us_801B5F84(Entity* self) {
         } else if ((player->posY.i.hi + g_Tilemap.scrollY.i.hi) < 0x100 &&
                    player->posX.i.hi > 0xC0) {
             D_80097928 = 1;
-            D_80097910 = 0;
+            currentMusicId = 0;
         }
         break;
 

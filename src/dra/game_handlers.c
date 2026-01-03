@@ -790,7 +790,7 @@ void HandleGameOver(void) {
             break;
         }
         PlaySfx(0x80);
-        D_80097910 = 0;
+        currentMusicId = 0;
         g_GameStep++;
         break;
     case Gameover_Init:

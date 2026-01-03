@@ -768,14 +768,14 @@ void func_us_80192B38(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_MEDUSA_DEFEAT, TIMEATTACK_SET_VISITED);
             D_80097928 = 1;
-            D_80097910 = 0x330;
+            currentMusicId = 0x330;
             self->step++;
         }
         break;
     case 2:
         if (g_api.func_80131F68() == false) {
             D_80097928 = 0;
-            g_api.PlaySfx(D_80097910);
+            g_api.PlaySfx(currentMusicId);
             self->step++;
         }
         break;
@@ -785,7 +785,7 @@ void func_us_80192B38(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_MEDUSA_DEFEAT, TIMEATTACK_SET_RECORD);
             g_api.PlaySfx(SET_UNK_90);
-            D_80097910 = 0x301;
+            currentMusicId = 0x301;
             self->step++;
         }
         break;
@@ -814,14 +814,14 @@ void func_us_80192B38(Entity* self) {
         entity->params = 0x11;
         D_us_8018072C = 0;
         D_80097928 = 1;
-        D_80097910 = 0x301;
+        currentMusicId = 0x301;
         self->step++;
         break;
 
     case 6:
         if (g_api.func_80131F68() == false) {
             D_80097928 = 0;
-            g_api.PlaySfx(D_80097910);
+            g_api.PlaySfx(currentMusicId);
             self->step++;
         }
         break;

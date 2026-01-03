@@ -35,7 +35,7 @@ void EntityEndConfessionalChime(Entity* self) {
         }
         break;
     case END_CHIME_START_MUSIC:
-        g_api.PlaySfx(D_80097910);
+        g_api.PlaySfx(currentMusicId);
         D_80097928 = false;
         g_confessionalChimeActive = false;
         self->step++; // No case defined, resulting in nop

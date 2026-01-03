@@ -960,7 +960,7 @@ void UpdateCd(void) {
         do {
         } while (CdInit() == 0);
         MuteSound();
-        PlaySfx(D_80097910);
+        PlaySfx(currentMusicId);
         g_CdStep = CdStep_None;
         D_800ACD7C = 1;
         break;
@@ -1000,7 +1000,7 @@ void UpdateCd(void) {
         if (temp_v1_9 != 0) {
             if ((result[0] & (CdlStatShellOpen | CdlStatStandby)) == 2) {
                 g_CdStep = CdStep_Retry;
-                if (g_LoadFile == CdFile_None && D_80097910 != 0 &&
+                if (g_LoadFile == CdFile_None && currentMusicId != 0 &&
                     D_80097928 == 0) {
                     g_CdStep = CdStep_RetryXa;
                 }

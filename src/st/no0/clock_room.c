@@ -133,7 +133,7 @@ void EntityClockRoomController(Entity* self) {
 
         g_api.PlaySfx(SET_STOP_MUSIC);
         D_80097928 = 1;
-        D_80097910 = 0;
+        currentMusicId = 0;
         entity = &PLAYER;
         g_Statues[RIGHT_STATUE] = false; // right statue closed
 

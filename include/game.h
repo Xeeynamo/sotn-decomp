@@ -2225,7 +2225,7 @@ extern u32 g_MenuStep;
 extern s32 D_80097904;
 extern s32 g_ScrollDeltaX;
 extern s32 g_ScrollDeltaY;
-extern s32 D_80097910;
+extern s32 currentMusicId;
 extern DemoMode g_DemoMode;
 extern s32 g_LoadOvlIdx; // 0x80097918
 extern Point32 D_8009791C;

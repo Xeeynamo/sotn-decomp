@@ -3432,8 +3432,8 @@ block_4:
         break;
     case MENU_STEP_OPENING:
         if (func_80133950()) {
-            D_80137958 = D_80097910;
-            D_80097910 = 0;
+            D_80137958 = currentMusicId;
+            currentMusicId = 0;
             func_800F6A48();
             func_800F84CC();
             SetFadeMode(FADE_FROM_BLACK);
@@ -3565,7 +3565,7 @@ block_4:
         if (!CdSoundCommandQueueEmpty()) {
             break;
         }
-        D_80097910 = D_80137958;
+        currentMusicId = D_80137958;
         if (D_80097928 == 0) {
             PlaySfx(SET_UNK_11);
         }
