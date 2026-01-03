@@ -1290,7 +1290,7 @@ void RunMainEngine(void) {
         if (D_8003C708.flags & FLAG_UNK_40) {
             LoadGfxAsync(ANIMSET_DRA(4));
         }
-        currentMusicId = g_StagesLba[g_StageId].unk18;
+        currentMusicId = g_StagesLba[g_StageId].musicID;
         if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
             currentMusicId = SE_INTRO_WIND;
         }
@@ -1738,7 +1738,7 @@ void RunMainEngine(void) {
                 }
                 break;
             } else if (stopMusicFlag != 0) {
-                currentMusicId = g_StagesLba[g_StageId].unk18;
+                currentMusicId = g_StagesLba[g_StageId].musicID;
                 if (g_unkGraphicsStruct.D_800973FC != 1) {
                     PlaySfx(SET_STOP_MUSIC);
                     if (func_80131F68()) {
