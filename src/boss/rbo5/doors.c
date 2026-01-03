@@ -900,7 +900,7 @@ void EntityUnkId1E(Entity* self) {
         if (self->params != 1) {
             self->step++;
         }
-        stopMusicFlag = 1;
+        stopMusicFlag = true;
         currentMusicId = MU_FESTIVAL_OF_SERVANTS;
         self->step++;
         break;
@@ -909,7 +909,7 @@ void EntityUnkId1E(Entity* self) {
             self->step++;
         } else {
             if (g_api.func_80131F68() == false) {
-                stopMusicFlag = 0;
+                stopMusicFlag = false;
                 g_api.PlaySfx(currentMusicId);
                 self->step++;
             }

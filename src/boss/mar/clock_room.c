@@ -80,7 +80,7 @@ void EntityClockRoomController(Entity* self) {
 
         InitializeEntity(g_EInitCommon);
         g_api.PlaySfx(SET_STOP_MUSIC);
-        stopMusicFlag = 1;
+        stopMusicFlag = true;
         g_Statues[RIGHT_STATUE] = false; // right statue closed
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 23;

@@ -776,7 +776,7 @@ void EntityUnkId1A(Entity* self) {
         }
         if (g_Player.demo_timer == 0) {
             g_api.FreePrimitives(self->primIndex);
-            stopMusicFlag = 1;
+            stopMusicFlag = true;
             currentMusicId = MU_FESTIVAL_OF_SERVANTS;
             self->step = 4;
             self->flags &= ~FLAG_HAS_PRIMS;
@@ -785,7 +785,7 @@ void EntityUnkId1A(Entity* self) {
         break;
     case 4:
         if (g_api.func_80131F68() == false) {
-            stopMusicFlag = 0;
+            stopMusicFlag = false;
             g_api.PlaySfx(currentMusicId);
             DestroyEntity(self);
         }

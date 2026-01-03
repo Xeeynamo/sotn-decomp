@@ -767,7 +767,7 @@ void func_us_80192B38(Entity* self) {
             D_us_80180728 = 1;
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_MEDUSA_DEFEAT, TIMEATTACK_SET_VISITED);
-            stopMusicFlag = 1;
+            stopMusicFlag = true;
 #ifdef VERSION_PSP
             currentMusicId = 0x32D;
 #else
@@ -778,7 +778,7 @@ void func_us_80192B38(Entity* self) {
         break;
     case 2:
         if (g_api.func_80131F68() == false) {
-            stopMusicFlag = 0;
+            stopMusicFlag = false;
             g_api.PlaySfx(currentMusicId);
             self->step++;
         }
@@ -817,14 +817,14 @@ void func_us_80192B38(Entity* self) {
         entity->posY.i.hi = y;
         entity->params = 0x11;
         D_us_8018072C = 0;
-        stopMusicFlag = 1;
+        stopMusicFlag = true;
         currentMusicId = MU_LOST_PAINTING;
         self->step++;
         break;
 
     case 6:
         if (g_api.func_80131F68() == false) {
-            stopMusicFlag = 0;
+            stopMusicFlag = false;
             g_api.PlaySfx(currentMusicId);
             self->step++;
         }
