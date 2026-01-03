@@ -250,7 +250,8 @@ void EntityWarg(Entity* self) {
         break;
     case 3:
         func_801CF6D8(self);
-        xVar = self->ext.warg.anchorX - self->posX.i.hi - gTilemap->scrollX.i.hi;
+        xVar =
+            self->ext.warg.anchorX - self->posX.i.hi - gTilemap->scrollX.i.hi;
         if (self->ext.warg.timer) {
             self->ext.warg.timer -= 1;
             self->poseTimer = 0;
