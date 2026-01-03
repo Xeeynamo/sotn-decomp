@@ -713,7 +713,7 @@
 | nz1    | Random                            |       21 |          1 |        |       |     |
 | rare   | func_pspeu_09241500               |       21 |          1 |        |       |     |
 | rare   | func_pspeu_0924AB18               |       21 |          1 |        |       |     |
-| rare   | Random                            |       21 |          1 |        |       |     |
+| rare   | func_pspeu_0923F9A0               |       21 |          1 |        |       |     |
 | sel    | func_psp_09243268                 |       21 |          1 |        |       |     |
 | st0    | func_pspeu_09242A58               |       21 |          1 |        |       |     |
 | st0    | func_pspeu_092506C0               |       21 |          1 |        |       |     |
@@ -1163,7 +1163,7 @@
 | no4    | func_pspeu_0925C8A8               |       31 |          2 |        |       |     |
 | np3    | func_pspeu_09262598               |       31 |          2 |        |       |     |
 | nz1    | UnkPolyFunc2                      |       31 |          2 |        |       |     |
-| rare   | UnkPolyFunc2                      |       31 |          2 |        |       |     |
+| rare   | func_pspeu_0924B680               |       31 |          2 |        |       |     |
 | sel    | func_psp_09240820                 |       31 |          2 |        |       |     |
 | st0    | func_pspeu_09251A18               |       31 |          2 |        |       |     |
 | wrp    | func_psp_09244628                 |       31 |          2 |        |       |     |
@@ -1505,7 +1505,7 @@
 | nz1    | CreateEntityFromEntity            |       39 |          2 |        |       |     |
 | nz1    | GetAngleBetweenEntitiesShifted    |       39 |          2 |        |       |     |
 | rare   | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
-| rare   | CreateEntityFromEntity            |       39 |          2 |        |       |     |
+| rare   | func_pspeu_0923A520               |       39 |          2 |        |       |     |
 | rare   | func_pspeu_0924A820               |       39 |          2 |        |       |     |
 | st0    | func_pspeu_09248F18               |       39 |          2 |        |       |     |
 | st0    | func_pspeu_09248FA0               |       39 |          2 |        |       |     |
@@ -1561,7 +1561,7 @@
 | no4    | func_pspeu_0925AAB8               |       40 |          2 |        |       |     |
 | np3    | func_pspeu_09259AF0               |       40 |          2 |        |       |     |
 | nz1    | func_pspeu_0924F5D0               |       40 |          2 |        |       |     |
-| rare   | PreventEntityFromRespawning       |       40 |          2 |        |       |     |
+| rare   | func_pspeu_09249D90               |       40 |          2 |        |       |     |
 | st0    | func_pspeu_0924FE28               |       40 |          2 |        |       |     |
 | wrp    | func_psp_092435D0                 |       40 |          2 |        |       |     |
 | main   | func_psp_08936B40                 |       40 |          3 |        |       |     |
@@ -2429,7 +2429,7 @@
 | nz1    | func_pspeu_092421A8               |       71 |          7 |        |       |     |
 | nz1    | func_pspeu_09250D08               |       71 |          7 |        |       |     |
 | rare   | func_pspeu_09241DF0               |       71 |          7 |        |       |     |
-| rare   | ReplaceBreakableWithItemDrop      |       71 |          7 |        |       |     |
+| rare   | func_pspeu_0924AEC8               |       71 |          7 |        |       |     |
 | st0    | func_pspeu_09250580               |       71 |          7 |        |       |     |
 | wrp    | func_psp_0923CC80                 |       71 |          7 |        |       |     |
 | wrp    | func_psp_09243F28                 |       71 |          7 |        |       |     |
@@ -2943,7 +2943,7 @@
 | no4    | AnimateEntity                     |      101 |          7 |        |       |     |
 | np3    | func_pspeu_09259B78               |      101 |          7 |        |       |     |
 | nz1    | AnimateEntity                     |      101 |          7 |        |       |     |
-| rare   | AnimateEntity                     |      101 |          7 |        |       |     |
+| rare   | func_pspeu_09249E18               |      101 |          7 |        |       |     |
 | sel    | func_psp_092432A8                 |      101 |          7 |        |       |     |
 | st0    | func_pspeu_0924FEB0               |      101 |          7 |        |       |     |
 | wrp    | func_psp_09243658                 |      101 |          7 |        |       |     |
@@ -3912,7 +3912,7 @@
 | dra    | func_psp_0910F370                 |      279 |         38 | Yes    |       |     |
 | dra    | func_psp_0911E3D0                 |      280 |         15 |        |       |     |
 | are    | func_pspeu_092381A0               |      281 |         30 |        |       |     |
-| rare   | RARE_EntityBreakableDebris        |      281 |         30 |        |       |     |
+| rare   | func_pspeu_09238008               |      281 |         30 |        |       |     |
 | np3    | EntityBackgroundLightning         |      281 |         31 |        |       |     |
 | cat    | func_pspeu_09251C28               |      282 |         34 |        |       |     |
 |        | func_092E76F0                     |      282 |         36 |        |       |     |
@@ -4057,7 +4057,7 @@
 | no4    | func_pspeu_0925C2A0               |      338 |         36 |        |       |     |
 | np3    | func_pspeu_09261C08               |      338 |         36 |        |       |     |
 | nz1    | UnkPrimHelper                     |      338 |         36 |        |       |     |
-| rare   | UnkPrimHelper                     |      338 |         36 |        |       |     |
+| rare   | func_pspeu_0924AFC0               |      338 |         36 |        |       |     |
 | st0    | func_pspeu_09251410               |      338 |         36 |        |       |     |
 | wrp    | func_psp_09244020                 |      338 |         36 |        |       |     |
 | main   | func_psp_08931D64                 |      339 |         68 |        |       |     |
@@ -4129,7 +4129,7 @@
 | cat    | func_pspeu_092572D0               |      369 |         26 |        |       |     |
 | dra    | func_psp_0913B5D0                 |      369 |         35 | Yes    |       |     |
 | are    | func_pspeu_09237C48               |      369 |         55 |        |       |     |
-| rare   | RARE_EntityBreakable              |      369 |         55 |        |       |     |
+| rare   | func_pspeu_09237AB0               |      369 |         55 |        |       |     |
 | no3    | func_pspeu_0923D428               |      372 |         50 |        |       |     |
 | np3    | EntityExplosionPuffOpaque         |      372 |         50 |        |       |     |
 | dra    | func_psp_090F8348                 |      373 |         35 |        |       |     |
