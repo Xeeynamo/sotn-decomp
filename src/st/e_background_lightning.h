@@ -207,12 +207,7 @@ void EntityBackgroundLightning(Entity* self) {
             g_api.PlaySfx(SET_UNK_90);
             self->ext.backgroundLightning.unk84++;
             stopMusicFlag = true;
-#ifdef VERSION_PSP
-            // TODO: SFX enum needs entries changed for PSP
-            currentMusicId = 0x329;
-#else
             currentMusicId = SE_INTRO_WIND_QUIET;
-#endif
             break;
         case 1:
             if (g_api.func_80131F68() == false) {

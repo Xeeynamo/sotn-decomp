@@ -768,11 +768,7 @@ void func_us_80192B38(Entity* self) {
             g_api.TimeAttackController(
                 TIMEATTACK_EVENT_MEDUSA_DEFEAT, TIMEATTACK_SET_VISITED);
             stopMusicFlag = true;
-#ifdef VERSION_PSP
-            currentMusicId = 0x32D;
-#else
             currentMusicId = MU_ENCHANTED_BANQUET;
-#endif
             self->step++;
         }
         break;
