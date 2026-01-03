@@ -239,13 +239,16 @@ void func_us_801D8150(Entity* self) {
         self->ext.stoneRose.waveBase = 0x480;
         self->ext.stoneRose.waveAmplitude = params * 0x40 + 0x100;
         if (params == 0) {
-            self->ext.stoneRose.waveAmplitude = self->ext.stoneRose.waveAmplitude * 1 / 4;
+            self->ext.stoneRose.waveAmplitude =
+                self->ext.stoneRose.waveAmplitude * 1 / 4;
         }
         if (params == 1) {
-            self->ext.stoneRose.waveAmplitude = self->ext.stoneRose.waveAmplitude * 2 / 4;
+            self->ext.stoneRose.waveAmplitude =
+                self->ext.stoneRose.waveAmplitude * 2 / 4;
         }
         if (params == 2) {
-            self->ext.stoneRose.waveAmplitude = self->ext.stoneRose.waveAmplitude * 3 / 4;
+            self->ext.stoneRose.waveAmplitude =
+                self->ext.stoneRose.waveAmplitude * 3 / 4;
         }
         break;
     case 1:
@@ -254,7 +257,8 @@ void func_us_801D8150(Entity* self) {
             self->ext.stoneRose.seedTimer++;
         }
         self->ext.stoneRose.wavePhase += 0x30;
-        if (((self->ext.stoneRose.seedTimer & 0x1F) == 0x1F) && (params == 0xB)) {
+        if (((self->ext.stoneRose.seedTimer & 0x1F) == 0x1F) &&
+            (params == 0xB)) {
             self->pose = 0;
             self->poseTimer = 0;
             self->anim = D_us_8018228C;
@@ -435,7 +439,9 @@ void func_us_801D8150(Entity* self) {
     }
     self->ext.stoneRose.segmentAngle =
         self->ext.stoneRose.waveBase +
-        ((rsin(self->ext.stoneRose.wavePhase) * self->ext.stoneRose.waveAmplitude) >> 0xC);
+        ((rsin(self->ext.stoneRose.wavePhase) *
+          self->ext.stoneRose.waveAmplitude) >>
+         0xC);
     if (!(g_GameTimer & 7) || (self->step > 6)) {
         self->ext.stoneRose.swayIndex++;
         self->ext.stoneRose.swayIndex &= 0xF;
