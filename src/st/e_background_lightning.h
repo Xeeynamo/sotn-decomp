@@ -206,18 +206,13 @@ void EntityBackgroundLightning(Entity* self) {
         case 0:
             g_api.PlaySfx(SET_UNK_90);
             self->ext.backgroundLightning.unk84++;
-            D_80097928 = 1;
-#ifdef VERSION_PSP
-            // TODO: SFX enum needs entries changed for PSP
-            D_80097910 = 0x329;
-#else
-            D_80097910 = SE_INTRO_WIND_QUIET;
-#endif
+            stopMusicFlag = true;
+            currentMusicId = SE_INTRO_WIND_QUIET;
             break;
         case 1:
             if (g_api.func_80131F68() == false) {
-                D_80097928 = 0;
-                g_api.PlaySfx(D_80097910);
+                stopMusicFlag = false;
+                g_api.PlaySfx(currentMusicId);
                 self->ext.backgroundLightning.unk84++;
             }
             break;
@@ -226,15 +221,15 @@ void EntityBackgroundLightning(Entity* self) {
             playerRealX = g_Tilemap.scrollX.i.hi + otherEnt->posX.i.hi;
             if (playerRealX > 0x300) {
                 g_api.PlaySfx(SET_UNK_90);
-                D_80097928 = 1;
-                D_80097910 = MU_DRACULAS_CASTLE;
+                stopMusicFlag = true;
+                currentMusicId = MU_DRACULAS_CASTLE;
                 self->ext.backgroundLightning.unk84++;
             }
             break;
         case 3:
             if (g_api.func_80131F68() == false) {
-                D_80097928 = 0;
-                g_api.PlaySfx(D_80097910);
+                stopMusicFlag = false;
+                g_api.PlaySfx(currentMusicId);
                 self->ext.backgroundLightning.unk84++;
             }
             break;
