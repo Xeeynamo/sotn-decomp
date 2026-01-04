@@ -7,7 +7,16 @@ INCLUDE_ASM("st/rare/nonmatchings/unk_32C40", func_us_801B30A8);
 
 INCLUDE_ASM("st/rare/nonmatchings/unk_32C40", func_us_801B33F4);
 
-INCLUDE_ASM("st/rare/nonmatchings/unk_32C40", func_us_801B3938);
+void func_us_801B3938(u16* arg0) {
+    ET_RareUnk20* self = &g_CurrentEntity->ext.rareUnk20;
+
+    self->offsetX = arg0[0] - self->posX;
+    self->offsetY = arg0[1] - self->posY;
+    self->offsetZ = arg0[2] - self->posZ;
+    self->baseX = self->posX;
+    self->baseY = self->posY;
+    self->baseZ = self->posZ;
+}
 
 INCLUDE_ASM("st/rare/nonmatchings/unk_32C40", func_us_801B398C);
 
