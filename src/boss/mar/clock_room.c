@@ -80,11 +80,11 @@ void EntityClockRoomController(Entity* self) {
 
         InitializeEntity(g_EInitCommon);
         g_api.PlaySfx(SET_STOP_MUSIC);
-        D_80097928 = 1;
+        stopMusicFlag = true;
         g_Statues[RIGHT_STATUE] = false; // right statue closed
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 23;
-        D_80097910 = 0;
+        currentMusicId = 0;
         self->zPriority = 0x40;
 
         // Create clock hands

@@ -1521,8 +1521,8 @@ loop_5:
     D_800973EC = 0;
     D_800974A4 = 0;
     g_CdStep = CdStep_None;
-    D_80097928 = 0;
-    D_80097910 = 0;
+    stopMusicFlag = false;
+    currentMusicId = 0;
     D_80097904 = 0;
     D_psp_091FC4A0 = 0;
     D_80097C98 = 0;
