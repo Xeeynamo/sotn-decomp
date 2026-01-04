@@ -904,7 +904,7 @@ void func_801042C4(s32 arg0) {
     D_801379BC = 0;
     D_80137E54 = 0;
     PlaySfx(SET_STOP_MUSIC);
-    D_80097928 = 1;
+    stopMusicFlag = true;
     func_80103EAC();
     D_801379B8 = ((s32)(g_StageId & STAGE_INVERTEDCASTLE_FLAG) / 2) + 8;
     D_801379C8.vx = D_801379C8.vy = D_801379C8.vz = 0;

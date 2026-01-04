@@ -72,10 +72,10 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u32 unused7C;
     /* 0x80 */ s16 unused80;
-    /* 0x82 */ s16 unk82;
+    /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 angle;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ s16 unk88;
+    /* 0x86 */ s16 xOffset;
+    /* 0x88 */ s16 isBackgroundDoor;
 } ET_RedDoor; // Normal red doors between stages
 
 typedef struct {
