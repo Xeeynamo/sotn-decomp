@@ -3793,7 +3793,7 @@ typedef struct {
     /* 0x8C */ u32 : 32;
     /* 0x90 */ u32 : 32;
     /* 0x94 */ u32 : 32;
-    /* 0x98 */ u32 : 32;
+    /* 0x98 */ s32 lerpT;
     /* 0x9C */ s16 posX;
     /* 0x9E */ s16 posY;
     /* 0xA0 */ s16 posZ;

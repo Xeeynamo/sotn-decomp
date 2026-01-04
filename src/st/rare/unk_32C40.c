@@ -7,18 +7,25 @@ INCLUDE_ASM("st/rare/nonmatchings/unk_32C40", func_us_801B30A8);
 
 INCLUDE_ASM("st/rare/nonmatchings/unk_32C40", func_us_801B33F4);
 
-void func_us_801B3938(u16* arg0) {
+void func_us_801B3938(u16* target) {
     ET_RareUnk20* self = &g_CurrentEntity->ext.rareUnk20;
 
-    self->offsetX = arg0[0] - self->posX;
-    self->offsetY = arg0[1] - self->posY;
-    self->offsetZ = arg0[2] - self->posZ;
+    self->offsetX = target[0] - self->posX;
+    self->offsetY = target[1] - self->posY;
+    self->offsetZ = target[2] - self->posZ;
     self->baseX = self->posX;
     self->baseY = self->posY;
     self->baseZ = self->posZ;
 }
 
-INCLUDE_ASM("st/rare/nonmatchings/unk_32C40", func_us_801B398C);
+void func_us_801B398C(void) {
+    ET_RareUnk20* self = &g_CurrentEntity->ext.rareUnk20;
+    s32 t = self->lerpT;
+
+    self->posX = self->baseX + (self->offsetX * t) / 4096;
+    self->posY = self->baseY + (self->offsetY * t) / 4096;
+    self->posZ = self->baseZ + (self->offsetZ * t) / 4096;
+}
 
 INCLUDE_ASM("st/rare/nonmatchings/unk_32C40", func_us_801B3A1C);
 
