@@ -602,8 +602,8 @@ void EntityPrizeDrop(Entity* self) {
             }
             CheckFieldCollision(D_80180EB8, 2);
             self->animCurFrame = 0;
-            if (self->ext.equipItemDrop.unk8A) {
-                self->ext.equipItemDrop.unk8A--;
+            if (self->ext.equipItemDrop.sparkleTimer) {
+                self->ext.equipItemDrop.sparkleTimer--;
             } else {
                 prim = &g_PrimBuf[self->primIndex];
                 prim->x0 = prim->x2 = self->posX.i.hi - 1;
@@ -617,12 +617,12 @@ void EntityPrizeDrop(Entity* self) {
         case 2:
             PrizeDropFall2(itemId);
             prim = &g_PrimBuf[self->primIndex];
-            self->ext.equipItemDrop.unk8A++;
-            if (self->ext.equipItemDrop.unk8A < 17) {
-                index = self->ext.equipItemDrop.unk8A;
+            self->ext.equipItemDrop.sparkleTimer++;
+            if (self->ext.equipItemDrop.sparkleTimer < 17) {
+                index = self->ext.equipItemDrop.sparkleTimer;
                 self->animCurFrame = 0;
             } else {
-                index = 32 - self->ext.equipItemDrop.unk8A;
+                index = 32 - self->ext.equipItemDrop.sparkleTimer;
                 prim->r0 = prim->r1 = prim->r2 = prim->r3 -= 8;
                 prim->g0 = prim->g1 = prim->g2 = prim->g3 -= 8;
                 prim->b0 = prim->b1 = prim->b2 = prim->b3 -= 8;
@@ -631,7 +631,7 @@ void EntityPrizeDrop(Entity* self) {
             prim->x1 = prim->x3 = self->posX.i.hi + index;
             prim->y0 = prim->y1 = self->posY.i.hi - index;
             prim->y2 = prim->y3 = self->posY.i.hi + index;
-            if (self->ext.equipItemDrop.unk8A == 32) {
+            if (self->ext.equipItemDrop.sparkleTimer == 32) {
                 g_api.FreePrimitives(self->primIndex);
                 self->flags &= ~FLAG_HAS_PRIMS;
                 self->ext.equipItemDrop.aliveTimer = 208;
