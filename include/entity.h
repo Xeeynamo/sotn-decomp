@@ -2036,16 +2036,16 @@ typedef struct {
 } ET_MermanRock;
 
 typedef struct {
-    /* 0x7C */ u8 unk7C;
-    /* 0x7D */ u8 unk7D;
-    /* 0x7E */ u8 unk7E;
-    /* 0x7F */ u8 unk7F;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u16 unk84;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ u16 unk88;
-    /* 0x8A */ u16 unk8A;
+    /* 0x7C */ u8 movingBackward;
+    /* 0x7D */ s8 : 8;
+    /* 0x7E */ s8 : 8;
+    /* 0x7F */ s8 : 8;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 decisionDelay;
+    /* 0x84 */ u16 anchorX;
+    /* 0x86 */ s16 attackTimer;
+    /* 0x88 */ u16 deathPosX;
+    /* 0x8A */ u16 deathPosY;
 } ET_Warg;
 
 typedef struct {
