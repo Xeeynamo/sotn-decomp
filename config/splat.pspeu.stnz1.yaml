@@ -90,7 +90,7 @@ segments:
       - [0x242B0, c, nz1/e_gear_small]
       - [0x24700, c, nz1/e_gear_vertical]
       - [0x24A00, data]
-      - [0x24A50, data, nz1_psp/e_life_up]
+      - [0x24A50, .data, nz1_psp/e_life_up]
       - [0x24AA0, .data, nz1/e_stage_name]
       - [0x25380, data]
       - [0x25398, .data, nz1/st_update]
@@ -140,7 +140,7 @@ segments:
       - [0x49B00, bss]
       # - {start: 0x49B00, type: bss, vram: 0x9281180}
       - [0x49B00, .bss, nz1/create_entity]
-      - [0x49B20, bss, nz1_psp/e_life_up]
+      - [0x49B20, .bss, nz1_psp/e_life_up]
       - [0x49B28, .bss, nz1/e_collect]
       - [0x49B88, bss, nz1_psp/49B88]
       - [0x49DE8, .bss, nz1/e_breakable_bridge]
