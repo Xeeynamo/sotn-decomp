@@ -885,9 +885,9 @@
 | nz1    | MoveEntity                        |       25 |          1 |        |       |     |
 | nz1    | SetStep                           |       25 |          1 |        |       |     |
 | nz1    | func_pspeu_0924FFA8               |       25 |          1 |        |       |     |
-| rare   | MoveEntity                        |       25 |          1 |        |       |     |
-| rare   | SetStep                           |       25 |          1 |        |       |     |
+| rare   | func_pspeu_0924A080               |       25 |          1 |        |       |     |
 | rare   | func_pspeu_0924A710               |       25 |          1 |        |       |     |
+| rare   | func_pspeu_0924AAC8               |       25 |          1 |        |       |     |
 | st0    | func_pspeu_092500A8               |       25 |          1 |        |       |     |
 | st0    | func_pspeu_09250670               |       25 |          1 |        |       |     |
 | wrp    | func_psp_09243850                 |       25 |          1 |        |       |     |
@@ -1028,7 +1028,7 @@
 | no4    | e_frozen_shade.rodata             |       28 |          0 | Yes    |       |     |
 | np3    | e_collect.rodata                  |       28 |          0 | Yes    |       |     |
 | nz1    | e_boss_doors.rodata               |       28 |          0 | Yes    |       |     |
-| rare   | unk_2F28.rodata                   |       28 |          0 | Yes    |       |     |
+| rare   | e_azaghal.rodata                  |       28 |          0 | Yes    |       |     |
 | st0    | e_collect.rodata                  |       28 |          0 | Yes    |       |     |
 | st0    | title_card.rodata                 |       28 |          0 | Yes    |       |     |
 | main   | func_psp_0891089C                 |       28 |          1 |        |       |     |
@@ -1285,7 +1285,7 @@
 | no4    | func_pspeu_0925ACB0               |       34 |          2 |        |       |     |
 | np3    | func_pspeu_09259CE8               |       34 |          2 |        |       |     |
 | nz1    | GetDistanceToPlayerX              |       34 |          2 |        |       |     |
-| rare   | GetDistanceToPlayerX              |       34 |          2 |        |       |     |
+| rare   | func_pspeu_09249F88               |       34 |          2 |        |       |     |
 | dra    | func_psp_09101F60                 |       34 |          4 |        |       |     |
 | dra    | func_psp_090F1B60                 |       34 |          4 |        |       |     |
 | main   | func_psp_0891A800                 |       34 |          4 |        |       |     |
@@ -1415,7 +1415,7 @@
 | main   | func_psp_08931410                 |       37 |          5 |        |       |     |
 | main   | func_psp_0892A76C                 |       37 |          5 |        |       |     |
 | ric    | func_pspeu_092AF600               |       37 |          5 |        |       |     |
-| rare   | func_us_801B4E9C                  |       37 |          5 |        |       |     |
+| rare   | func_pspeu_0923D490               |       37 |          5 |        |       |     |
 | dra    | func_psp_091162B8                 |       37 |          6 |        |       |     |
 | main   | func_psp_089195C0                 |       37 |          6 |        |       |     |
 | are    | func_pspeu_09261BB0               |       37 |          6 |        |       |     |
@@ -1429,7 +1429,7 @@
 | no4    | AllocEntity                       |       37 |          6 |        |       |     |
 | np3    | func_pspeu_0925A458               |       37 |          6 |        |       |     |
 | nz1    | AllocEntity                       |       37 |          6 |        |       |     |
-| rare   | AllocEntity                       |       37 |          6 |        |       |     |
+| rare   | func_pspeu_0924A6A0               |       37 |          6 |        |       |     |
 | st0    | func_pspeu_092503E8               |       37 |          6 |        |       |     |
 | wrp    | func_psp_092438D8                 |       37 |          6 |        |       |     |
 | are    | e_owl_knight.rodata               |       38 |          0 | Yes    |       |     |
@@ -1504,7 +1504,7 @@
 | nz1    | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
 | nz1    | CreateEntityFromEntity            |       39 |          2 |        |       |     |
 | nz1    | GetAngleBetweenEntitiesShifted    |       39 |          2 |        |       |     |
-| rare   | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
+| rare   | func_pspeu_0923A498               |       39 |          2 |        |       |     |
 | rare   | func_pspeu_0923A520               |       39 |          2 |        |       |     |
 | rare   | func_pspeu_0924A820               |       39 |          2 |        |       |     |
 | st0    | func_pspeu_09248F18               |       39 |          2 |        |       |     |
@@ -1607,7 +1607,7 @@
 | no4    | GetSideToPlayer                   |       41 |          3 |        |       |     |
 | np3    | GetSideToPlayer                   |       41 |          3 |        |       |     |
 | nz1    | GetSideToPlayer                   |       41 |          3 |        |       |     |
-| rare   | GetSideToPlayer                   |       41 |          3 |        |       |     |
+| rare   | func_pspeu_09249FF8               |       41 |          3 |        |       |     |
 | st0    | func_pspeu_0923F8B0               |       41 |          3 |        |       |     |
 | st0    | func_pspeu_09250020               |       41 |          3 |        |       |     |
 | wrp    | func_psp_092437C8                 |       41 |          3 |        |       |     |
@@ -1805,7 +1805,7 @@
 | no4    | DestroyEntity                     |       46 |          5 |        |       |     |
 | np3    | func_pspeu_09259A58               |       46 |          5 |        |       |     |
 | nz1    | DestroyEntity                     |       46 |          5 |        |       |     |
-| rare   | DestroyEntity                     |       46 |          5 |        |       |     |
+| rare   | func_pspeu_09249CF8               |       46 |          5 |        |       |     |
 | sel    | func_psp_092431D0                 |       46 |          5 |        |       |     |
 | st0    | func_pspeu_0924FD90               |       46 |          5 |        |       |     |
 | wrp    | func_psp_09243538                 |       46 |          5 |        |       |     |
@@ -2221,7 +2221,7 @@
 | no3    | func_pspeu_09261748               |       63 |          7 |        |       |     |
 | no4    | func_pspeu_0925C910               |       63 |          7 |        |       |     |
 | nz1    | PrimDecreaseBrightness            |       63 |          7 |        |       |     |
-| rare   | PrimDecreaseBrightness            |       63 |          7 |        |       |     |
+| rare   | func_pspeu_0924B740               |       63 |          7 |        |       |     |
 | st0    | func_pspeu_09251A80               |       63 |          7 |        |       |     |
 | wrp    | func_psp_09244690                 |       63 |          7 |        |       |     |
 | dra    | func_psp_090E0D68                 |       63 |          8 |        |       |     |
@@ -2885,7 +2885,7 @@
 | no4    | PlaySfxPositional                 |       97 |         12 |        |       |     |
 | np3    | PlaySfxPositional                 |       97 |         12 |        |       |     |
 | nz1    | PlaySfxPositional                 |       97 |         12 |        |       |     |
-| rare   | PlaySfxPositional                 |       97 |         12 |        |       |     |
+| rare   | func_pspeu_09245C68               |       97 |         12 |        |       |     |
 | wrp    | func_psp_09240AF8                 |       97 |         12 |        |       |     |
 | are    | func_pspeu_0925E158               |       97 |         13 |        |       |     |
 | main   | func_psp_08930120                 |       97 |         17 |        |       |     |
@@ -3126,7 +3126,7 @@
 | no4    | InitializeEntity                  |      112 |          2 |        |       |     |
 | np3    | InitializeEntity                  |      112 |          2 |        |       |     |
 | nz1    | InitializeEntity                  |      112 |          2 |        |       |     |
-| rare   | InitializeEntity                  |      112 |          2 |        |       |     |
+| rare   | func_pspeu_0924AB58               |      112 |          2 |        |       |     |
 | st0    | func_pspeu_09250700               |      112 |          2 |        |       |     |
 | wrp    | func_psp_09243BB8                 |      112 |          2 |        |       |     |
 | dra    | func_psp_091287D8                 |      112 |          9 |        |       |     |
@@ -3588,7 +3588,7 @@
 | no4    | func_pspeu_0925AE88               |      186 |         20 |        |       |     |
 | np3    | UnkCollisionFunc3                 |      186 |         20 |        |       |     |
 | nz1    | UnkCollisionFunc3                 |      186 |         20 |        |       |     |
-| rare   | UnkCollisionFunc3                 |      186 |         20 |        |       |     |
+| rare   | func_pspeu_0924A108               |      186 |         20 |        |       |     |
 | st0    | func_pspeu_09250130               |      186 |         20 |        |       |     |
 | main   | _main                             |      186 |         21 |        |       |     |
 | lib    | func_psp_09254DC0                 |      186 |         25 |        |       |     |
@@ -4082,7 +4082,7 @@
 | ric    | func_pspeu_092B59F0               |      349 |         43 |        |       |     |
 | no3    | func_pspeu_09240690               |      350 |         35 | Yes    |       |     |
 | dra    | func_psp_091136F8                 |      350 |         56 |        |       |     |
-| rare   | StainedGlassRecurseDepth          |      351 |         12 |        |       |     |
+| rare   | func_pspeu_0923A5A8               |      351 |         12 |        |       |     |
 |        | func_092E91A8                     |      351 |         21 |        |       |     |
 | nz1    | VandalSwordDrawAlastor            |      351 |         27 |        |       |     |
 | no3    | func_pspeu_0925E610               |      352 |         30 |        |       |     |
@@ -4733,7 +4733,7 @@
 | lib    | func_psp_09261718                 |     1891 |        203 | Yes    |       |     |
 | sel    | func_psp_09245A10                 |     1895 |        161 | Yes    |       |     |
 | main   | _svfprintf_r                      |     1905 |        329 | Yes    |       |     |
-| rare   | func_us_801B3B34                  |     1910 |        249 | Yes    |       |     |
+| rare   | func_pspeu_0923B8F0               |     1910 |        249 | Yes    |       |     |
 | lib    | func_psp_09258B50                 |     1920 |        313 |        |       |     |
 | maria  | func_pspeu_092B9B68               |     1981 |        164 | Yes    |       |     |
 | ric    | func_pspeu_092C2F50               |     1985 |        164 | Yes    |       |     |
