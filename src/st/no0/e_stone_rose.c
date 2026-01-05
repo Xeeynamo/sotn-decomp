@@ -16,7 +16,7 @@ static AnimationFrame D_us_801822B4[] = {
 static AnimationFrame D_us_80182300[] = {
     {5, 8}, {5, 7}, {5, 6}, {5, 5}, {5, 4}, {0, 0}};
 static AnimationFrame D_us_80182318[] = {{4, 10}, {4, 11}, {0, 0}};
-static u16 g_StoneRoseSwayTable[] = {
+static u16 stone_rose_sway_table[] = {
     0, 2, 4, 6, 8, 6, 4, 2, 0, -2, -4, -6, -8, -6, -2};
 static s16 D_us_80182344[] = {0, 40, 8, 0};
 
@@ -448,7 +448,7 @@ void func_us_801D8150(Entity* self) {
     }
     i = 0;
     if (params == 0) {
-        i = g_StoneRoseSwayTable[self->ext.stoneRose.swayIndex];
+        i = stone_rose_sway_table[self->ext.stoneRose.swayIndex];
     }
     if (params == 1) {
         i = 0x30;
