@@ -1,23 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 
-// BSS shared between 627C4.c and 63ED4.c
-extern s32 g_MemCardRetryCount;
-extern s32 D_80137E54;
-extern s32 D_80137E58;
-extern s32 D_80137E5C;
-extern s32 D_80137E60;
-extern s32 g_MemCardRStep;
-extern s32 g_MemCardRStepSub;
-extern s32 D_80137E6C;
-extern SVECTOR D_80137E70[14];
-extern s32 D_80137EE0;
-extern s32 D_80137EE4;
-extern s32 D_80137EE8;
-extern s32 D_80137EEC;
-extern s32 D_80137EF0;
-extern s32 D_80137EF4;
-
 // BSS TODO merge? 6D59C.c, 704D0.c
 extern s16 g_WasFacingLeft;  // for QCF to tell what's "forward"
 extern s16 g_WasFacingLeft2; // for BF to tell what's "forward"
