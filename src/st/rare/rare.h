@@ -17,6 +17,10 @@ enum Palettes {
     // 0xC0 - 0xCA are cycled in EntityFountainWater based on g_Timer
     PAL_FOUNTAIN_WATER_MAX = 0xCA,
     PAL_MINOTAUR_SPIT = 0x16B,
+    PAL_AZAGHAL_BODY_A = 0x211,
+    PAL_AZAGHAL_BODY_B = 0x212,
+    PAL_AZAGHAL_COMBO_A = 0x213,
+    PAL_AZAGHAL_COMBO_B = 0x214,
     PAL_WHITE_DRAGON_A = 0x216,
     PAL_WHITE_DRAGON_B = 0x217,
     PAL_BREAKABLE_TORCH_A = 0x228,
@@ -61,8 +65,8 @@ enum Entities {
     E_WEREWOLF_AFTERIMAGE,       // EntityWerewolfSpinAttackAfterImage
     E_WEREWOLF_DEATH_FLAMES,     // EntityWerewolfDeathFlames
     E_MINOTAUR_DEATH_PUFF,       // EntityMinotaurDeathPuff
-    E_UNK_20,                    // func_us_801B3B34
-    E_UNK_21,                    // func_us_801B4E9C
+    E_AZAGHAL,                   // EntityAzaghal
+    E_AZAGHAL_SWORD_HITBOX,      // EntityAzaghalSwordHitbox
     E_BREAKABLE_FLOOR_SECRET,    // EntityBreakableFloorSecret
     E_BREAKABLE_DEBRIS,          // OVL_EXPORT(EntityBreakableDebris)
     E_BACKGROUND_DOOR_RUBBLE,    // EntityBackgroundDoorRubble
