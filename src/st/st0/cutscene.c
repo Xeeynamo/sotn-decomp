@@ -280,7 +280,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         if (g_Dialogue.primIndex[0] != -1) {
             g_api.FreePrimitives(g_Dialogue.primIndex[0]);
         }
-        g_api.PlaySfx(0x80);
+        g_api.PlaySfx(SET_UNK_80);
         self->step = 1;
         self->step_s = 0;
     }

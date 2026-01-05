@@ -1189,7 +1189,7 @@ void func_800F2860(void) {
     case 0:
         break;
     case 1:
-        PlaySfx(0x80);
+        PlaySfx(SET_UNK_80);
         D_801375C8++;
         break;
     case 2:
@@ -1225,7 +1225,7 @@ void func_800F2860(void) {
         D_801375C8--;
         break;
     case 8:
-        PlaySfx(0x80);
+        PlaySfx(SET_UNK_80);
         D_801375C8--;
         break;
     }
@@ -1974,7 +1974,7 @@ void RunMainEngine(void) {
             if (g_IsUsingCd) {
                 break;
             }
-            PlaySfx(0x81);
+            PlaySfx(SET_UNK_81);
             currentMusicId = 0;
             if (g_StageId == STAGE_ST0) {
                 SetGameState(Game_GameOver);
