@@ -16,7 +16,7 @@ static AnimationFrame D_us_801822B4[] = {
 static AnimationFrame D_us_80182300[] = {
     {5, 8}, {5, 7}, {5, 6}, {5, 5}, {5, 4}, {0, 0}};
 static AnimationFrame D_us_80182318[] = {{4, 10}, {4, 11}, {0, 0}};
-static u16 D_us_80182324[] = {
+static u16 g_StoneRoseSwayTable[] = {
     0, 2, 4, 6, 8, 6, 4, 2, 0, -2, -4, -6, -8, -6, -2};
 static s16 D_us_80182344[] = {0, 40, 8, 0};
 
@@ -140,7 +140,7 @@ void func_us_801D8150(Entity* self) {
     s32 i;
     s32 posX;
     s32 posY;
-    s16 temp_s0;
+    s16 angle;
     u32 params;
     Entity* entity;
 
@@ -280,9 +280,9 @@ void func_us_801D8150(Entity* self) {
         break;
     case 3:
         self->ext.stoneRose.wavePhase += 0x100;
-        self->ext.stoneRose.recoilAngle += 0x180;
+        self->ext.stoneRose.recoilAngle += ROT(33.75);
         self->rotate = rsin(self->ext.stoneRose.recoilAngle) >> 3;
-        if (self->ext.stoneRose.recoilAngle >= 0x6000) {
+        if (self->ext.stoneRose.recoilAngle >= FLT(6)) {
             self->drawFlags &= ~FLAG_DRAW_ROTATE;
         }
         g_api.UpdateAnim(NULL, NULL);
@@ -448,7 +448,7 @@ void func_us_801D8150(Entity* self) {
     }
     i = 0;
     if (params == 0) {
-        i = D_us_80182324[self->ext.stoneRose.swayIndex];
+        i = g_StoneRoseSwayTable[self->ext.stoneRose.swayIndex];
     }
     if (params == 1) {
         i = 0x30;
@@ -469,14 +469,14 @@ void func_us_801D8150(Entity* self) {
         self--;
         posX = self->posX.val;
         posY = self->posY.val;
-        temp_s0 = self->ext.stoneRose.segmentAngle;
+        angle = self->ext.stoneRose.segmentAngle;
         self++;
         if (params == 0xB) {
             self->posX.val = posX;
             self->posY.val = posY;
         } else {
-            self->posX.val = posX + (rcos(temp_s0) << 4) * 7;
-            self->posY.val = posY - (rsin(temp_s0) << 4) * 7;
+            self->posX.val = posX + (rcos(angle) << 4) * 7;
+            self->posY.val = posY - (rsin(angle) << 4) * 7;
         }
     }
 }
