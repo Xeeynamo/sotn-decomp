@@ -4,127 +4,173 @@
 extern EInit g_EInitAzaghal;
 
 typedef struct {
-    SVECTOR* vec;
-    s16* ptr;
-} Unk;
+    SVECTOR* targetPosition;
+    s16* lerpVals;
+} AzaghalPosition;
 
-static s16 D_us_801818B0[] = {
-    0x0000, 0x0048, 0x0000, 0x0004, 0x0004, 0xFFFC, 0xFFF8, 0x0000,
-};
-static s16 D_us_801818C0[][6] = {
-    {0x0040, 0x0000, 0x003F, 0x007F, 0xFFF8, 0xFFE2},
-    {0x0080, 0x0000, 0x0057, 0x007F, 0xFFF8, 0xFFE8},
-    {0x0000, 0x0080, 0x005F, 0x006F, 0xFFC0, 0xFFF0},
-    {0x0080, 0x0000, 0x0057, 0x007F, 0xFFE8, 0xFFE3},
-};
-static SVECTOR D_us_801818F0 = {0xFFF0, 0x0008, 0x0000, 0x0000};
-static SVECTOR D_us_801818F8 = {0x0010, 0x0008, 0x0000, 0x0000};
-static SVECTOR D_us_80181900 = {0xFFF0, 0x0078, 0x0000, 0x0000};
-static SVECTOR D_us_80181908 = {0x0010, 0x0078, 0x0000, 0x0000};
-static SVECTOR D_us_80181910 = {0x0000, 0x0008, 0xFFF8, 0x0000};
-static SVECTOR D_us_80181918 = {0x0000, 0x0008, 0x0008, 0x0000};
-static SVECTOR D_us_80181920 = {0x0000, 0x0078, 0xFFF8, 0x0000};
-static SVECTOR D_us_80181928 = {0x0000, 0x0078, 0x0008, 0x0000};
-static SVECTOR D_us_80181930 = {0x0000, 0x0078, 0x0000, 0x0000};
+static s16 sensors_ground[] = {0, 72, 0, 4, 4, -4, -8, 0};
 
-static s16 D_us_80181938[] = {
-    0x0000, 0x0000, 0x000C, 0x0100, 0x000C, 0x0200, 0x000C, 0x0400, 0x000C,
-    0x0800, 0x000C, 0x0C00, 0x000C, 0x0E00, 0x000C, 0x0F00, 0x000C, 0x1000,
+// { u, v, x1, y1, x2, y2 }
+static s16 body_config[][6] = {
+    // idle
+    {64, 0, 63, 127, -8, -30},
+    // combo attack
+    {128, 0, 87, 127, -8, -24},
+    // hit by player or dead
+    {0, 128, 95, 111, -64, -16},
+    // sword overhead
+    {128, 0, 87, 127, -24, -29},
 };
+static SVECTOR D_us_801818F0 = {.vx = -16, .vy = 8, .vz = 0};
+static SVECTOR D_us_801818F8 = {.vx = 16, .vy = 8, .vz = 0};
+static SVECTOR D_us_80181900 = {.vx = -16, .vy = 120, .vz = 0};
+static SVECTOR D_us_80181908 = {.vx = 16, .vy = 120, .vz = 0};
+static SVECTOR D_us_80181910 = {.vx = 0, .vy = 8, .vz = -8};
+static SVECTOR D_us_80181918 = {.vx = 0, .vy = 8, .vz = 8};
+static SVECTOR D_us_80181920 = {.vx = 0, .vy = 120, .vz = -8};
+static SVECTOR D_us_80181928 = {.vx = 0, .vy = 120, .vz = 8};
+static SVECTOR D_us_80181930 = {.vx = 0, .vy = 120, .vz = 0};
 
-static s16 D_us_8018195C[] = {
-    0x0000, 0x0000, 0x0020, 0x0400, 0x0008,
-    0x0800, 0x0004, 0x0E00, 0x0010, 0x1000,
-};
-
-static s16 D_us_80181970[] = {
-    0x0000, 0x0000, 0x0020, 0x0400, 0x0008,
-    0x0800, 0x0008, 0x0F00, 0x0030, 0x1000,
+static s16 lerp_a[][2] = {
+    {0, 0},     {12, 256},  {12, 512},  {12, 1024}, {12, 2048},
+    {12, 3072}, {12, 3584}, {12, 3840}, {12, 4096},
 };
 
-static s16 D_us_80181984[] = {
-    0x0000, 0x0000, 0x0008, 0x0100, 0x0006, 0x0800,
-    0x0004, 0x0E00, 0x0004, 0x0F80, 0x0020, 0x1000,
+static s16 lerp_b[][2] = {
+    {0, 0}, {32, 1024}, {8, 2048}, {4, 3584}, {16, 4096},
 };
 
-static s16 D_us_8018199C[] = {
-    0x0000, 0x0000, 0x000E, 0x0100, 0x000A, 0x0800,
-    0x0008, 0x0E00, 0x0008, 0x0F80, 0x0020, 0x1000,
+static s16 lerp_c[][2] = {
+    {0, 0}, {32, 1024}, {8, 2048}, {8, 3840}, {48, 4096},
 };
 
-static s16 D_us_801819B4[] = {
-    0x0000, 0x0000, 0x0006, 0x0100, 0x0006, 0x0400, 0x0006,
-    0x0800, 0x0004, 0x0E00, 0x0004, 0x0F80, 0x0008, 0x1000,
+static s16 lerp_d[][2] = {
+    {0, 0}, {8, 256}, {6, 2048}, {4, 3584}, {4, 3968}, {32, 4096},
 };
 
-static s16 D_us_801819D0[] = {
-    0x0000, 0x0000, 0x0003, 0x0100, 0x0003, 0x0400, 0x0003,
-    0x0800, 0x0002, 0x0E00, 0x0002, 0x0F80, 0x0004, 0x1000,
+static s16 lerp_e[][2] = {
+    {0, 0}, {14, 256}, {10, 2048}, {8, 3584}, {8, 3968}, {32, 4096},
 };
 
-static SVECTOR D_us_801819EC = {0x0000, 0x0000, 0x00E0, 0x0000};
-static SVECTOR D_us_801819F4 = {0x0000, 0x0000, 0x0030, 0x0000};
-static Unk D_us_801819FC[] = {
-    {.vec = &D_us_801819EC, .ptr = D_us_80181938},
-    {.vec = &D_us_801819F4, .ptr = D_us_80181938},
+static s16 lerp_f[][2] = {
+    {0, 0}, {6, 256}, {6, 1024}, {6, 2048}, {4, 3584}, {4, 3968}, {8, 4096},
 };
 
-static SVECTOR D_us_80181A0C = {0xFBE0, 0x0330, 0x0CE0, 0x0000};
-static SVECTOR D_us_80181A14 = {0x0000, 0x0400, 0x0800, 0x0000};
-static SVECTOR D_us_80181A1C = {0x0000, 0x0000, 0x0540, 0x0000};
-static Unk D_us_80181A24 = {.vec = &D_us_80181A0C, .ptr = D_us_80181938};
-static Unk D_us_80181A2C = {.vec = &D_us_80181A14, .ptr = D_us_801819D0};
-static Unk D_us_80181A34 = {.vec = &D_us_80181A1C, .ptr = D_us_8018195C};
-
-static SVECTOR D_us_80181A3C = {0xFE20, 0x0020, 0x07D0, 0x0000};
-static SVECTOR D_us_80181A44 = {0xFE20, 0x0020, 0xFF20, 0x0000};
-static Unk D_us_80181A4C = {.vec = &D_us_80181A3C, .ptr = D_us_80181970};
-static Unk D_us_80181A54 = {.vec = &D_us_80181A44, .ptr = D_us_8018199C};
-
-static SVECTOR D_us_80181A5C = {0xFC80, 0xFFE0, 0x0700, 0x0000};
-static SVECTOR D_us_80181A64 = {0xFC88, 0xFFE0, 0xFE70, 0x0000};
-static Unk D_us_80181A6C = {.vec = &D_us_80181A5C, .ptr = D_us_80181984};
-static Unk D_us_80181A74 = {.vec = &D_us_80181A64, .ptr = D_us_80181970};
-static Unk D_us_80181A7C = {.vec = &D_us_80181A5C, .ptr = D_us_80181938};
-static Unk D_us_80181A84 = {.vec = &D_us_80181A64, .ptr = D_us_80181984};
-
-static SVECTOR D_us_80181A8C = {0xFE30, 0xFE60, 0xFF90, 0x0000};
-static SVECTOR D_us_80181A94 = {0xFE30, 0xFF60, 0x06D0, 0x0000};
-static Unk D_us_80181A9C = {.vec = &D_us_80181A8C, .ptr = D_us_80181970};
-static Unk D_us_80181AA4 = {.vec = &D_us_80181A94, .ptr = D_us_80181984};
-
-static SVECTOR D_us_80181AAC = {0x0000, 0x0000, 0x0930, 0x0000};
-static SVECTOR D_us_80181AB4 = {0x0000, 0x0000, 0x0200, 0x0000};
-// unused
-static Unk D_us_80181ABC[] = {
-    {.vec = &D_us_80181AAC, .ptr = D_us_80181938},
-    {.vec = &D_us_80181AB4, .ptr = D_us_80181938},
+static s16 lerp_g[][2] = {
+    {0, 0}, {3, 256}, {3, 1024}, {3, 2048}, {2, 3584}, {2, 3968}, {4, 4096},
 };
 
-static SVECTOR D_us_80181ACC = {0x0000, 0x0000, 0x0200, 0x0000};
-static Unk D_us_80181AD4 = {.vec = &D_us_80181ACC, .ptr = D_us_80181984};
-
-static SVECTOR D_us_80181ADC = {0x0000, 0x0000, 0xFBC0, 0x0000};
-static SVECTOR D_us_80181AE4 = {0x0000, 0x0000, 0x0400, 0x0000};
-static Unk D_us_80181AEC = {.vec = &D_us_80181ADC, .ptr = D_us_80181984};
-
-static SVECTOR D_us_80181AF4 = {0xFBC0, 0x0000, 0xFBC0, 0x0000};
-static SVECTOR D_us_80181AFC = {0xFBC0, 0x0000, 0xFBC0, 0x0000};
-static SVECTOR D_us_80181B04 = {0xFBC0, 0x0000, 0x0A00, 0x0000};
-static Unk D_us_80181B0C[] = {
-    {.vec = &D_us_80181AF4, .ptr = D_us_801819B4},
-    {.vec = &D_us_80181AFC, .ptr = D_us_801819B4},
-    {.vec = &D_us_80181B04, .ptr = D_us_801819B4},
-    {.vec = &D_us_80181AAC, .ptr = D_us_801819D0},
-    {.vec = &D_us_80181AB4, .ptr = D_us_801819D0},
-    {.vec = &D_us_80181A8C, .ptr = D_us_801819D0},
-    {.vec = &D_us_80181A94, .ptr = D_us_801819D0},
-    {.vec = &D_us_80181AAC, .ptr = D_us_801819D0},
-    {.vec = &D_us_80181AE4, .ptr = D_us_801819D0},
+static SVECTOR D_us_801819EC = {.vx = 0, .vy = 0, .vz = 224};
+static SVECTOR D_us_801819F4 = {.vx = 0, .vy = 0, .vz = 48};
+static AzaghalPosition anim_seek_player[] = {
+    {.targetPosition = &D_us_801819EC, .lerpVals = *lerp_a},
+    {.targetPosition = &D_us_801819F4, .lerpVals = *lerp_a},
 };
-static s16 D_us_80181B54[] = {0, 2, 3, 5, 3, 5, 6, 8};
 
-Primitive* func_us_801B2C40(
+static SVECTOR D_us_80181A0C = {.vx = -1056, .vy = 816, .vz = 3296};
+static SVECTOR D_us_80181A14 = {.vx = 0, .vy = 1024, .vz = 2048};
+static SVECTOR D_us_80181A1C = {.vx = 0, .vy = 0, .vz = 1344};
+static AzaghalPosition anim_sword_overhead_a = {
+    .targetPosition = &D_us_80181A0C,
+    .lerpVals = *lerp_a,
+};
+static AzaghalPosition anim_sword_overhead_b = {
+    .targetPosition = &D_us_80181A14,
+    .lerpVals = *lerp_g,
+};
+static AzaghalPosition anim_sword_overhead_c = {
+    .targetPosition = &D_us_80181A1C,
+    .lerpVals = *lerp_b,
+};
+
+static SVECTOR D_us_80181A3C = {.vx = -480, .vy = 32, .vz = 2000};
+static SVECTOR D_us_80181A44 = {.vx = -480, .vy = 32, .vz = -224};
+static AzaghalPosition anim_slash_down_a = {
+    .targetPosition = &D_us_80181A3C,
+    .lerpVals = *lerp_c,
+};
+static AzaghalPosition anim_slash_down_b = {
+    .targetPosition = &D_us_80181A44,
+    .lerpVals = *lerp_e,
+};
+
+static SVECTOR D_us_80181A5C = {.vx = -896, .vy = -32, .vz = 1792};
+static SVECTOR D_us_80181A64 = {.vx = -888, .vy = -32, .vz = -400};
+static AzaghalPosition anim_long_slash_hor_b = {
+    .targetPosition = &D_us_80181A5C,
+    .lerpVals = *lerp_d,
+};
+static AzaghalPosition anim_long_slash_hor_a = {
+    .targetPosition = &D_us_80181A64,
+    .lerpVals = *lerp_c,
+};
+static AzaghalPosition anim_short_slash_hor_a = {
+    .targetPosition = &D_us_80181A5C,
+    .lerpVals = *lerp_a,
+};
+static AzaghalPosition anim_short_slash_hor_b = {
+    .targetPosition = &D_us_80181A64,
+    .lerpVals = *lerp_d,
+};
+
+static SVECTOR D_us_80181A8C = {.vx = -464, .vy = -416, .vz = -112};
+static SVECTOR D_us_80181A94 = {.vx = -464, .vy = -160, .vz = 1744};
+static AzaghalPosition anim_slash_up_a = {
+    .targetPosition = &D_us_80181A8C,
+    .lerpVals = *lerp_c,
+};
+static AzaghalPosition anim_slash_up_b = {
+    .targetPosition = &D_us_80181A94,
+    .lerpVals = *lerp_d,
+};
+
+static SVECTOR D_us_80181AAC = {.vx = 0, .vy = 0, .vz = 2352};
+static SVECTOR D_us_80181AB4 = {.vx = 0, .vy = 0, .vz = 512};
+// This is unused, but the positions and lerps are integrated into
+// the combo attack. Possible this portion was originally intended
+// to be its own small attack.
+static AzaghalPosition D_us_80181ABC[] = {
+    {
+        .targetPosition = &D_us_80181AAC,
+        .lerpVals = *lerp_a,
+    },
+    {
+        .targetPosition = &D_us_80181AB4,
+        .lerpVals = *lerp_a,
+    },
+};
+
+static SVECTOR D_us_80181ACC = {.vx = 0, .vy = 0, .vz = 512};
+static AzaghalPosition anim_fall_backward = {
+    .targetPosition = &D_us_80181ACC,
+    .lerpVals = *lerp_d,
+};
+
+static SVECTOR D_us_80181ADC = {.vx = 0, .vy = 0, .vz = -1088};
+static SVECTOR D_us_80181AE4 = {.vx = 0, .vy = 0, .vz = 1024};
+static AzaghalPosition anim_combo_init = {
+    .targetPosition = &D_us_80181ADC,
+    .lerpVals = *lerp_d,
+};
+
+static SVECTOR D_us_80181AF4 = {.vx = -1088, .vy = 0, .vz = -1088};
+static SVECTOR D_us_80181AFC = {.vx = -1088, .vy = 0, .vz = -1088};
+static SVECTOR D_us_80181B04 = {.vx = -1088, .vy = 0, .vz = 2560};
+static AzaghalPosition anim_combo[] = {
+    {.targetPosition = &D_us_80181AF4, .lerpVals = *lerp_f},
+    {.targetPosition = &D_us_80181AFC, .lerpVals = *lerp_f},
+    {.targetPosition = &D_us_80181B04, .lerpVals = *lerp_f},
+    {.targetPosition = &D_us_80181AAC, .lerpVals = *lerp_g},
+    {.targetPosition = &D_us_80181AB4, .lerpVals = *lerp_g},
+    {.targetPosition = &D_us_80181A8C, .lerpVals = *lerp_g},
+    {.targetPosition = &D_us_80181A94, .lerpVals = *lerp_g},
+    {.targetPosition = &D_us_80181AAC, .lerpVals = *lerp_g},
+    {.targetPosition = &D_us_80181AE4, .lerpVals = *lerp_g},
+};
+static s16 indices[] = {0, 2, 3, 5, 3, 5, 6, 8};
+
+// nb. this is very similar to the stained glass recursive function in DAI
+static Primitive* func_us_801B2C40(
     SVECTOR* p0, SVECTOR* p1, SVECTOR* p2, SVECTOR* p3, Primitive* srcPrim,
     s32 iterations, Primitive* dstPrim, u8* dataPtr) {
     long sp4C;
@@ -172,7 +218,7 @@ Primitive* func_us_801B2C40(
     uvValues[5].v = (((uvValues[2].v) + (uvValues[8].v) + 1) >> 1);
 
     *tempPrim = *srcPrim;
-    indexPtr = D_us_80181B54;
+    indexPtr = indices;
     for (count = 0; count < 2; count++) {
         index0 = *indexPtr++;
         index1 = *indexPtr++;
@@ -206,29 +252,35 @@ Primitive* func_us_801B2C40(
     return dstPrim;
 }
 
-s32 func_us_801B30A8(s32 arg0, s32 arg1) {
+enum AzaghalBodyStep {
+    INIT_BODY = 0,
+    SHOW_BODY = 1,
+    HIDE_BODY = 2,
+};
+
+static s32 UpdateBodyDisplay(s32 index, s32 action) {
     Primitive* prim;
-    s16* var_s1;
-    u8 var_s2;
+    s16* bodyConfig;
+    u8 color;
 
     prim = g_CurrentEntity->ext.azaghal.primTwo;
-    var_s1 = D_us_801818C0[arg0];
-    switch (arg1) {
-    case 0:
-        prim->u0 = prim->u2 = var_s1[0];
-        prim->u1 = prim->u3 = var_s1[0] + var_s1[2];
-        prim->v0 = prim->v1 = var_s1[1];
-        prim->v2 = prim->v3 = var_s1[1] + var_s1[3];
+    bodyConfig = body_config[index];
+    switch (action) {
+    case INIT_BODY:
+        prim->u0 = prim->u2 = bodyConfig[0];
+        prim->u1 = prim->u3 = bodyConfig[0] + bodyConfig[2];
+        prim->v0 = prim->v1 = bodyConfig[1];
+        prim->v2 = prim->v3 = bodyConfig[1] + bodyConfig[3];
 
         if (g_CurrentEntity->facingLeft) {
-            prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - var_s1[4];
-            prim->x1 = prim->x3 = prim->x0 - var_s1[2];
+            prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - bodyConfig[4];
+            prim->x1 = prim->x3 = prim->x0 - bodyConfig[2];
         } else {
-            prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi + var_s1[4];
-            prim->x1 = prim->x3 = prim->x0 + var_s1[2];
+            prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi + bodyConfig[4];
+            prim->x1 = prim->x3 = prim->x0 + bodyConfig[2];
         }
-        prim->y0 = prim->y1 = g_CurrentEntity->posY.i.hi + var_s1[5];
-        prim->y2 = prim->y3 = prim->y0 + var_s1[3];
+        prim->y0 = prim->y1 = g_CurrentEntity->posY.i.hi + bodyConfig[5];
+        prim->y2 = prim->y3 = prim->y0 + bodyConfig[3];
 
         PGREY(prim, 0) = 0;
         LOW(prim->r1) = LOW(prim->r0);
@@ -237,50 +289,51 @@ s32 func_us_801B30A8(s32 arg0, s32 arg1) {
         prim->priority = g_CurrentEntity->zPriority + 1;
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-        g_CurrentEntity->ext.azaghal.unk8C = 0;
+        g_CurrentEntity->ext.azaghal.bodyGlowIntensity = 0;
         break;
-    case 1:
-        var_s2 = (g_CurrentEntity->ext.azaghal.unk8C *
-                  abs(rsin(g_CurrentEntity->ext.azaghal.unk82))) >>
-                 0xC;
-        prim->r0 = prim->g0 = prim->b0 = var_s2;
+    case SHOW_BODY:
+        // Body color pulses and flickers
+        color = (g_CurrentEntity->ext.azaghal.bodyGlowIntensity *
+                 abs(rsin(g_CurrentEntity->ext.azaghal.bodyGlowPhase))) >>
+                0xC;
+        PGREY(prim, 0) = color;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
 
         if (g_CurrentEntity->facingLeft) {
-            prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - var_s1[4];
-            prim->x1 = prim->x3 = prim->x0 - var_s1[2];
+            prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi - bodyConfig[4];
+            prim->x1 = prim->x3 = prim->x0 - bodyConfig[2];
         } else {
-            prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi + var_s1[4];
-            prim->x1 = prim->x3 = prim->x0 + var_s1[2];
+            prim->x0 = prim->x2 = g_CurrentEntity->posX.i.hi + bodyConfig[4];
+            prim->x1 = prim->x3 = prim->x0 + bodyConfig[2];
         }
 
-        prim->y0 = prim->y1 = g_CurrentEntity->posY.i.hi + var_s1[5];
-        prim->y2 = prim->y3 = prim->y0 + var_s1[3];
+        prim->y0 = prim->y1 = g_CurrentEntity->posY.i.hi + bodyConfig[5];
+        prim->y2 = prim->y3 = prim->y0 + bodyConfig[3];
 
-        if (g_CurrentEntity->ext.azaghal.unk8C < 0x80) {
-            g_CurrentEntity->ext.azaghal.unk8C += 8;
+        if (g_CurrentEntity->ext.azaghal.bodyGlowIntensity < 0x80) {
+            g_CurrentEntity->ext.azaghal.bodyGlowIntensity += 8;
         }
-        g_CurrentEntity->ext.azaghal.unk82 += 0x20;
+        g_CurrentEntity->ext.azaghal.bodyGlowPhase += 0x20;
         if (g_Timer & 2) {
-            prim->clut = 0x211;
+            prim->clut = PAL_AZAGHAL_BODY_A;
         } else {
-            prim->clut = 0x212;
+            prim->clut = PAL_AZAGHAL_BODY_B;
         }
         break;
-    case 2:
+    case HIDE_BODY:
         if (!PrimDecreaseBrightness(prim, 7)) {
             prim->drawMode = DRAW_HIDE;
-            return 1;
+            return true;
         }
         break;
     }
 
-    return 0;
+    return false;
 }
 
-void func_us_801B33F4(void) {
+static void func_us_801B33F4(void) {
 #ifdef VERSION_PC
     u8 sp[SP_LEN];
 #endif
@@ -294,8 +347,8 @@ void func_us_801B33F4(void) {
     Primitive* primTwo;
     Entity* entity;
     s32 i;
-    s32 var_s4;
-    s32 var_s5;
+    s32 swordHitboxOffsetX;
+    s32 swordHitboxOffsetY;
     s32 posX;
     s32 posY;
 
@@ -303,9 +356,9 @@ void func_us_801B33F4(void) {
     posY = g_CurrentEntity->posY.i.hi;
     SetGeomScreen(0x100);
     SetGeomOffset(posX, posY);
-    sVec.vx = g_CurrentEntity->ext.azaghal.vx;
-    sVec.vy = g_CurrentEntity->ext.azaghal.vy;
-    sVec.vz = g_CurrentEntity->ext.azaghal.vz;
+    sVec.vx = g_CurrentEntity->ext.azaghal.pos.vx;
+    sVec.vy = g_CurrentEntity->ext.azaghal.pos.vy;
+    sVec.vz = g_CurrentEntity->ext.azaghal.pos.vz;
     RotMatrix(&sVec, &matrix);
 
     if (g_CurrentEntity->facingLeft) {
@@ -318,6 +371,7 @@ void func_us_801B33F4(void) {
     TransMatrix(&matrix, &vector);
     SetRotMatrix(&matrix);
     SetTransMatrix(&matrix);
+
     prim = g_CurrentEntity->ext.azaghal.prim;
     prim->drawMode = DRAW_UNK02;
     RotTransPers4(&D_us_801818F0, &D_us_801818F8, &D_us_80181900,
@@ -328,6 +382,7 @@ void func_us_801B33F4(void) {
                                &D_us_80181908, prim, 3, primTwo, (u8*)SPAD(0));
     prim->drawMode = DRAW_HIDE;
     prim = prim->next;
+
     prim->drawMode = DRAW_UNK02;
     RotTransPers4(&D_us_80181910, &D_us_80181918, &D_us_80181920,
                   &D_us_80181928, (long*)&prim->x0, (long*)&prim->x1,
@@ -335,6 +390,7 @@ void func_us_801B33F4(void) {
     primTwo = func_us_801B2C40(&D_us_80181910, &D_us_80181918, &D_us_80181920,
                                &D_us_80181928, prim, 3, primTwo, (u8*)SPAD(0));
     prim->drawMode = DRAW_HIDE;
+
     if (g_CurrentEntity->flags & FLAG_DEAD) {
         while (primTwo != NULL) {
             primTwo->drawMode = DRAW_HIDE;
@@ -342,24 +398,24 @@ void func_us_801B33F4(void) {
         }
     } else {
         RotTransPers(&D_us_80181930, (long*)SPAD(0), &p, &flag);
-        var_s4 = *(s16*)SP(0);
-        var_s5 = *(s16*)SP(2);
-        var_s4 -= posX;
-        var_s5 -= posY;
+        swordHitboxOffsetX = *(s16*)SP(0);
+        swordHitboxOffsetY = *(s16*)SP(2);
+        swordHitboxOffsetX -= posX;
+        swordHitboxOffsetY -= posY;
 
-        g_CurrentEntity->hitboxOffX = var_s4 / 8;
+        g_CurrentEntity->hitboxOffX = swordHitboxOffsetX / 8;
         if (g_CurrentEntity->facingLeft) {
             g_CurrentEntity->hitboxOffX = (s16)-g_CurrentEntity->hitboxOffX;
         }
 
-        g_CurrentEntity->hitboxOffY = var_s5 / 8;
+        g_CurrentEntity->hitboxOffY = swordHitboxOffsetY / 8;
 
         for (i = 2; i < 8; i++) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(E_UNK_21, entity);
-                entity->posX.i.hi = posX + ((var_s4 * i) / 8);
-                entity->posY.i.hi = posY + ((var_s5 * i) / 8);
+                CreateEntityFromCurrentEntity(E_AZAGHAL_SWORD_HITBOX, entity);
+                entity->posX.i.hi = posX + ((swordHitboxOffsetX * i) / 8);
+                entity->posY.i.hi = posY + ((swordHitboxOffsetY * i) / 8);
             }
         }
 
@@ -397,106 +453,117 @@ void func_us_801B33F4(void) {
         LOW(prim->x0) = LOW(prim->x2);
         LOW(prim->x1) = LOW(prim->x3);
 
-        prim->x2 = posX + (var_s4 / 4);
-        prim->y2 = posY + (var_s5 / 4);
-        prim->x3 = (posX + var_s4) - (var_s4 / 8);
-        prim->y3 = (posY + var_s5) - (var_s5 / 8);
+        prim->x2 = posX + (swordHitboxOffsetX / 4);
+        prim->y2 = posY + (swordHitboxOffsetY / 4);
+        prim->x3 = (posX + swordHitboxOffsetX) - (swordHitboxOffsetX / 8);
+        prim->y3 = (posY + swordHitboxOffsetY) - (swordHitboxOffsetY / 8);
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
 
-        var_s4 = 0;
+        swordHitboxOffsetX = 0;
         while (prim != NULL) {
             prim->drawMode = DRAW_HIDE;
-            var_s4++;
+            swordHitboxOffsetX++;
             prim = prim->next;
         }
-        FntPrint("no_use %x\n", var_s4);
+        FntPrint("no_use %x\n", swordHitboxOffsetX);
     }
 }
 
-void func_us_801B3938(SVECTOR* vector) {
-    s16* var_s2;
-    s16* var_s1;
-    s16* var_s0;
+static void InitPositionLerp(SVECTOR* vector) {
+    SVECTOR* base = &g_CurrentEntity->ext.azaghal.base;
+    SVECTOR* pos = &g_CurrentEntity->ext.azaghal.pos;
+    SVECTOR* offset = &g_CurrentEntity->ext.azaghal.offset;
 
-    var_s2 = &g_CurrentEntity->ext.azaghal.unkAC;
-    var_s0 = &g_CurrentEntity->ext.azaghal.vx;
-    var_s1 = &g_CurrentEntity->ext.azaghal.unkA4;
+    offset->vx = vector->vx - pos->vx;
+    offset->vy = vector->vy - pos->vy;
+    offset->vz = vector->vz - pos->vz;
 
-    var_s1[0] = vector->vx - var_s0[0];
-    var_s1[1] = vector->vy - var_s0[1];
-    var_s1[2] = vector->vz - var_s0[2];
-
-    var_s2[0] = var_s0[0];
-    var_s2[1] = var_s0[1];
-    var_s2[2] = var_s0[2];
+    base->vx = pos->vx;
+    base->vy = pos->vy;
+    base->vz = pos->vz;
 }
 
-void func_us_801B398C(void) {
-    s16* var_s2;
-    s16* var_s1;
-    s16* var_s0;
-    s32 var_s3;
+static void ApplyPositionLerp(void) {
+    SVECTOR* base = &g_CurrentEntity->ext.azaghal.base;
+    SVECTOR* pos = &g_CurrentEntity->ext.azaghal.pos;
+    SVECTOR* offset = &g_CurrentEntity->ext.azaghal.offset;
+    s32 t = g_CurrentEntity->ext.azaghal.lerpT;
 
-    var_s2 = &g_CurrentEntity->ext.azaghal.unkAC;
-    var_s1 = &g_CurrentEntity->ext.azaghal.vx;
-    var_s0 = &g_CurrentEntity->ext.azaghal.unkA4;
-    var_s3 = g_CurrentEntity->ext.azaghal.unk98;
-    var_s1[0] = var_s2[0] + ((var_s0[0] * var_s3) / 0x1000);
-    var_s1[1] = var_s2[1] + ((var_s0[1] * var_s3) / 0x1000);
-    var_s1[2] = var_s2[2] + ((var_s0[2] * var_s3) / 0x1000);
+    pos->vx = base->vx + ((offset->vx * t) / 4096);
+    pos->vy = base->vy + ((offset->vy * t) / 4096);
+    pos->vz = base->vz + ((offset->vz * t) / 4096);
 }
 
-s32 func_us_801B3A1C(Unk* str) {
-    s16* ptr;
+static s32 AnimateAzaghal(AzaghalPosition* posData) {
+    s16* lerpVal;
     s32 poseTimer;
 
     if (!g_CurrentEntity->pose && !g_CurrentEntity->poseTimer) {
-        func_us_801B3938(str->vec);
+        InitPositionLerp(posData->targetPosition);
     }
 
-    ptr = str->ptr;
-    ptr += g_CurrentEntity->pose * 2;
-    if (ptr[1] == 0x1000) {
-        return 0;
+    lerpVal = posData->lerpVals;
+    lerpVal += g_CurrentEntity->pose * 2;
+    // When we have reached the end of the lerp values, the animation is over
+    if (lerpVal[1] == 4096) {
+        return false;
     }
 
     g_CurrentEntity->poseTimer++;
     poseTimer = g_CurrentEntity->poseTimer;
-    g_CurrentEntity->ext.ILLEGAL.u32[7] =
-        ptr[1] + (((ptr[3] - ptr[1]) * poseTimer) / ptr[2]);
-    func_us_801B398C();
+    g_CurrentEntity->ext.azaghal.lerpT =
+        lerpVal[1] + (((lerpVal[3] - lerpVal[1]) * poseTimer) / lerpVal[2]);
+    ApplyPositionLerp();
 
-    if (poseTimer == ptr[2]) {
+    if (poseTimer == lerpVal[2]) {
         g_CurrentEntity->poseTimer = 0;
         g_CurrentEntity->pose++;
     }
 
-    return 1;
+    return true;
 }
 
-void func_us_801B3B34(Entity* self) {
+void EntityAzaghal(Entity* self) {
+    enum AzaghalStep {
+        INIT = 0,
+        FALL_TO_GROUND = 1,
+        IDLE_WAIT = 3,
+        SWORD_OVERHEAD = 4,
+        SLASH_DOWN = 5,
+        LONG_SLASH_HORIZONTAL = 6,
+        SLASH_UP = 8,
+        SEEK_PLAYER = 10,
+        HIT_BY_PLAYER = 11,
+        SHORT_SLASH_HORIZONTAL = 12,
+        COMBO_ATTACK = 13,
+        DEATH = 15,
+        DEBUG = 255
+    };
+
     Primitive* prim;
     Entity* entity;
     Primitive* primTwo;
     Primitive* primThree;
     s32 i;
-    s32 var_s4;
+    s32 primsHidden;
     s32 primIndex;
-    s32 var_s8;
-    s32 var_s7;
+    s32 posX;
+    s32 posY;
 
     FntPrint("step %x\n", self->step);
     FntPrint("step_s %x\n", self->step_s);
-    if (self->hitFlags & 3 && self->step != 0xB) {
-        SetStep(0xB);
+
+    if (self->hitFlags & 3 && self->step != HIT_BY_PLAYER) {
+        SetStep(HIT_BY_PLAYER);
     }
-    if (self->flags & FLAG_DEAD && self->step < 0xF) {
-        SetStep(0xF);
+
+    if (self->flags & FLAG_DEAD && self->step < DEATH) {
+        SetStep(DEATH);
     }
 
     switch (self->step) {
-    case 0:
+    case INIT:
         InitializeEntity(g_EInitAzaghal);
         self->hitboxState = 0;
         self->hitboxWidth = self->hitboxHeight = 0xC;
@@ -512,7 +579,7 @@ void func_us_801B3B34(Entity* self) {
         self->ext.azaghal.prim = prim;
         while (prim != NULL) {
             prim->tpage = 0x14;
-            prim->clut = 0x211;
+            prim->clut = PAL_AZAGHAL_BODY_A;
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
@@ -541,12 +608,12 @@ void func_us_801B3B34(Entity* self) {
         prim = prim->next;
         self->ext.azaghal.primThree = prim;
         // fallthrough
-    case 1:
-        if (UnkCollisionFunc3(&D_us_801818B0) & 1) {
-            SetStep(3);
+    case FALL_TO_GROUND:
+        if (UnkCollisionFunc3(sensors_ground) & 1) {
+            SetStep(IDLE_WAIT);
         }
         break;
-    case 3:
+    case IDLE_WAIT:
         switch (self->step_s) {
         case 0:
             prim = self->ext.azaghal.prim;
@@ -560,17 +627,17 @@ void func_us_801B3B34(Entity* self) {
             prim->y2 = prim->y3 = self->posY.i.hi + 0x48;
             prim->drawMode = DRAW_UNK02;
             self->posY.i.hi -= 0x18;
-            func_us_801B30A8(0, 0);
+            UpdateBodyDisplay(0, INIT_BODY);
             self->step_s++;
             // fallthrough
         case 1:
-            func_us_801B30A8(0, 1);
+            UpdateBodyDisplay(0, SHOW_BODY);
             if (GetDistanceToPlayerX() < 0x60) {
                 self->step_s++;
             }
             break;
         case 2:
-            if (func_us_801B30A8(0, 2)) {
+            if (UpdateBodyDisplay(0, HIDE_BODY)) {
                 self->step_s++;
             }
             break;
@@ -614,13 +681,13 @@ void func_us_801B3B34(Entity* self) {
                 prim = prim->next;
             }
             self->hitboxState = 2;
-            SetStep(0xA);
+            SetStep(SEEK_PLAYER);
         }
         break;
-    case 4:
+    case SWORD_OVERHEAD:
         switch (self->step_s) {
         case 0:
-            if (!func_us_801B3A1C(&D_us_80181A24)) {
+            if (!AnimateAzaghal(&anim_sword_overhead_a)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
@@ -628,7 +695,7 @@ void func_us_801B3B34(Entity* self) {
             }
             break;
         case 1:
-            if (!func_us_801B3A1C(&D_us_80181A2C)) {
+            if (!AnimateAzaghal(&anim_sword_overhead_b)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
@@ -636,31 +703,31 @@ void func_us_801B3B34(Entity* self) {
             }
             break;
         case 2:
-            if (!func_us_801B3A1C(&D_us_80181A34)) {
-                func_us_801B30A8(3, 0);
-                self->ext.azaghal.unk80 = 0x10;
+            if (!AnimateAzaghal(&anim_sword_overhead_c)) {
+                UpdateBodyDisplay(3, INIT_BODY);
+                self->ext.azaghal.timer = 0x10;
                 self->step_s++;
             }
             break;
         case 3:
-            func_us_801B30A8(3, 1);
-            if (!--self->ext.azaghal.unk80) {
+            UpdateBodyDisplay(3, SHOW_BODY);
+            if (!--self->ext.azaghal.timer) {
                 self->step_s++;
             }
             break;
         case 4:
-            if (func_us_801B30A8(3, 2)) {
+            if (UpdateBodyDisplay(3, HIDE_BODY)) {
                 PlaySfxPositional(SFX_VANDAL_SWORD_ATTACK);
-                if (self->ext.azaghal.unk8D & 1) {
-                    SetStep(5);
+                if (self->ext.azaghal.attackCounter & 1) {
+                    SetStep(SLASH_DOWN);
                 } else {
-                    SetStep(0xC);
+                    SetStep(SHORT_SLASH_HORIZONTAL);
                 }
 
-                self->ext.azaghal.unk8D++;
-                if (self->ext.azaghal.unk8D > 3) {
-                    self->ext.azaghal.unk8D = 0;
-                    SetStep(0xD);
+                self->ext.azaghal.attackCounter++;
+                if (self->ext.azaghal.attackCounter > 3) {
+                    self->ext.azaghal.attackCounter = 0;
+                    SetStep(COMBO_ATTACK);
                 }
             }
             break;
@@ -668,23 +735,23 @@ void func_us_801B3B34(Entity* self) {
 
         func_us_801B33F4();
         break;
-    case 0xA:
+    case SEEK_PLAYER:
         if (!self->step_s) {
-            self->ext.azaghal.unk80 = 0x80;
+            self->ext.azaghal.timer = 0x80;
             self->velocityX = 0;
             self->velocityY = 0;
-            self->ext.azaghal.unk8E = 0;
+            self->ext.azaghal.animIndex = 0;
             self->step_s++;
         }
 
-        if (!func_us_801B3A1C(&D_us_801819FC[self->ext.azaghal.unk8E])) {
-            self->ext.azaghal.unk8E ^= 1;
+        if (!AnimateAzaghal(&anim_seek_player[self->ext.azaghal.animIndex])) {
+            self->ext.azaghal.animIndex ^= 1;
             self->pose = 0;
             self->poseTimer = 0;
         }
 
         MoveEntity();
-        self->rotate += 0x40;
+        self->rotate += ROT(5.625);
         self->velocityY = rsin(self->rotate) * 0xE;
         if (self->posY.val < FIX(128.5)) {
             self->velocityY += FIX(0.25);
@@ -705,59 +772,35 @@ void func_us_801B3B34(Entity* self) {
         }
 
         if (self->facingLeft != ((GetSideToPlayer() & 1) ^ 1)) {
-            SetStep(4);
+            SetStep(SWORD_OVERHEAD);
         }
 
-        if (!--self->ext.azaghal.unk80) {
-            SetStep(4);
+        if (!--self->ext.azaghal.timer) {
+            SetStep(SWORD_OVERHEAD);
         }
         func_us_801B33F4();
         break;
-    case 5:
+    case SLASH_DOWN:
         switch (self->step_s) {
         case 0:
-            if (!func_us_801B3A1C(&D_us_80181A4C)) {
+            if (!AnimateAzaghal(&anim_slash_down_a)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;
             }
             break;
         case 1:
-            if (!func_us_801B3A1C(&D_us_80181A54)) {
-                SetStep(6);
+            if (!AnimateAzaghal(&anim_slash_down_b)) {
+                SetStep(LONG_SLASH_HORIZONTAL);
             }
             break;
         }
         func_us_801B33F4();
         break;
-    case 6:
+    case LONG_SLASH_HORIZONTAL:
         switch (self->step_s) {
         case 0:
-            if (!func_us_801B3A1C(&D_us_80181A74)) {
-                self->pose = 0;
-                self->poseTimer = 0;
-                self->velocityX = FIX(-4.0);
-                if (self->facingLeft) {
-                    self->velocityX = -self->velocityX;
-                }
-                self->velocityY = 0;
-                self->step_s++;
-            }
-            break;
-        case 1:
-            MoveEntity();
-            self->velocityX -= self->velocityX / 16;
-            if (!func_us_801B3A1C(&D_us_80181A6C)) {
-                SetStep(0xA);
-            }
-            break;
-        }
-        func_us_801B33F4();
-        break;
-    case 0xC:
-        switch (self->step_s) {
-        case 0:
-            if (!func_us_801B3A1C(&D_us_80181A7C)) {
+            if (!AnimateAzaghal(&anim_long_slash_hor_a)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->velocityX = FIX(-4.0);
@@ -771,42 +814,66 @@ void func_us_801B3B34(Entity* self) {
         case 1:
             MoveEntity();
             self->velocityX -= self->velocityX / 16;
-            if (!func_us_801B3A1C(&D_us_80181A84)) {
-                SetStep(8);
+            if (!AnimateAzaghal(&anim_long_slash_hor_b)) {
+                SetStep(SEEK_PLAYER);
             }
             break;
         }
         func_us_801B33F4();
         break;
-    case 8:
+    case SHORT_SLASH_HORIZONTAL:
         switch (self->step_s) {
         case 0:
-            if (!func_us_801B3A1C(&D_us_80181A9C)) {
+            if (!AnimateAzaghal(&anim_short_slash_hor_a)) {
+                self->pose = 0;
+                self->poseTimer = 0;
+                self->velocityX = FIX(-4.0);
+                if (self->facingLeft) {
+                    self->velocityX = -self->velocityX;
+                }
+                self->velocityY = 0;
+                self->step_s++;
+            }
+            break;
+        case 1:
+            MoveEntity();
+            self->velocityX -= self->velocityX / 16;
+            if (!AnimateAzaghal(&anim_short_slash_hor_b)) {
+                SetStep(SLASH_UP);
+            }
+            break;
+        }
+        func_us_801B33F4();
+        break;
+    case SLASH_UP:
+        switch (self->step_s) {
+        case 0:
+            if (!AnimateAzaghal(&anim_slash_up_a)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;
             }
             break;
         case 1:
-            if (!func_us_801B3A1C(&D_us_80181AA4)) {
-                SetStep(0xA);
+            if (!AnimateAzaghal(&anim_slash_up_b)) {
+                SetStep(SEEK_PLAYER);
             }
             break;
         }
         func_us_801B33F4();
         break;
-    case 0xD:
+    case COMBO_ATTACK:
         switch (self->step_s) {
         case 0:
-            func_us_801B30A8(1, 0);
+            UpdateBodyDisplay(1, INIT_BODY);
             self->step_s++;
             // fallthrough
         case 1:
-            func_us_801B30A8(1, 1);
-            if (!func_us_801B3A1C(&D_us_80181AEC)) {
+            UpdateBodyDisplay(1, SHOW_BODY);
+            if (!AnimateAzaghal(&anim_combo_init)) {
                 self->pose = 0;
                 self->poseTimer = 0;
-                self->ext.azaghal.unk80 = 0;
+                self->ext.azaghal.timer = 0;
                 self->step_s++;
             }
             break;
@@ -840,7 +907,7 @@ void func_us_801B3B34(Entity* self) {
             self->step_s++;
             // fallthrough
         case 3:
-            var_s4 = 0;
+            primsHidden = 0;
             prim = self->ext.azaghal.primTwo;
             prim = prim->next;
             if (self->facingLeft) {
@@ -855,14 +922,14 @@ void func_us_801B3B34(Entity* self) {
             prim->y2 = prim->y3 += 1;
 
             if (g_Timer & 1) {
-                prim->clut = 0x213;
+                prim->clut = PAL_AZAGHAL_COMBO_A;
             } else {
-                prim->clut = 0x214;
+                prim->clut = PAL_AZAGHAL_COMBO_B;
             }
 
             if (!PrimDecreaseBrightness(prim, 7)) {
                 prim->drawMode = DRAW_HIDE;
-                var_s4 += 1;
+                primsHidden++;
             }
 
             prim = prim->next;
@@ -877,34 +944,34 @@ void func_us_801B3B34(Entity* self) {
             prim->y0 = prim->y1 -= 3;
             prim->y2 = prim->y3 += 3;
             if (g_Timer & 1) {
-                prim->clut = 0x213;
+                prim->clut = PAL_AZAGHAL_COMBO_A;
             } else {
-                prim->clut = 0x214;
+                prim->clut = PAL_AZAGHAL_COMBO_B;
             }
 
             if (!PrimDecreaseBrightness(prim, 7)) {
                 prim->drawMode = DRAW_HIDE;
-                var_s4++;
+                primsHidden++;
             }
 
-            func_us_801B30A8(1, 1);
-            if (var_s4 == 2) {
+            UpdateBodyDisplay(1, SHOW_BODY);
+            if (primsHidden == 2) {
                 self->step_s++;
             }
             break;
         case 4:
-            if (func_us_801B30A8(1, 2)) {
-                self->ext.azaghal.unk8E = 0;
+            if (UpdateBodyDisplay(1, HIDE_BODY)) {
+                self->ext.azaghal.animIndex = 0;
                 self->step_s++;
             }
             break;
         case 5:
-            i = self->ext.azaghal.unk8E;
-            if (!func_us_801B3A1C(&D_us_80181B0C[i])) {
-                self->ext.azaghal.unk8E++;
+            i = self->ext.azaghal.animIndex;
+            if (!AnimateAzaghal(&anim_combo[i])) {
+                self->ext.azaghal.animIndex++;
                 self->pose = 0;
                 self->poseTimer = 0;
-                if (self->ext.azaghal.unk8E == 9) {
+                if (self->ext.azaghal.animIndex == 9) {
                     self->velocityX = FIX(-6.0);
                     if (self->facingLeft) {
                         self->velocityX = -self->velocityX;
@@ -917,14 +984,14 @@ void func_us_801B3B34(Entity* self) {
         case 6:
             MoveEntity();
             self->velocityX -= self->velocityX / 16;
-            if (self->ext.azaghal.unk80++ > 0x40) {
-                SetStep(0xA);
+            if (self->ext.azaghal.timer++ > 0x40) {
+                SetStep(SEEK_PLAYER);
             }
             break;
         }
         func_us_801B33F4();
         break;
-    case 0xB:
+    case HIT_BY_PLAYER:
         switch (self->step_s) {
         case 0:
             if (self->facingLeft) {
@@ -940,13 +1007,13 @@ void func_us_801B3B34(Entity* self) {
             prim = prim->next;
             prim->drawMode = DRAW_HIDE;
 
-            func_us_801B30A8(2, 0);
+            UpdateBodyDisplay(2, INIT_BODY);
             PlaySfxPositional(SFX_VANDAL_SWORD_PAIN);
             self->step_s++;
             // fallthrough
         case 1:
-            func_us_801B3A1C(&D_us_80181AD4);
-            func_us_801B30A8(2, 1);
+            AnimateAzaghal(&anim_fall_backward);
+            UpdateBodyDisplay(2, SHOW_BODY);
             MoveEntity();
             self->velocityX -= self->velocityX / 32;
             self->velocityY += FIX(0.125);
@@ -955,14 +1022,14 @@ void func_us_801B3B34(Entity* self) {
             }
             break;
         case 2:
-            if (func_us_801B30A8(2, 2)) {
-                SetStep(0xA);
+            if (UpdateBodyDisplay(2, HIDE_BODY)) {
+                SetStep(SEEK_PLAYER);
             }
             break;
         }
         func_us_801B33F4();
         break;
-    case 0xF:
+    case DEATH:
         switch (self->step_s) {
         case 0:
             if (self->facingLeft) {
@@ -978,19 +1045,19 @@ void func_us_801B3B34(Entity* self) {
             prim = prim->next;
             prim->drawMode = DRAW_HIDE;
 
-            func_us_801B30A8(2, 0);
+            UpdateBodyDisplay(2, INIT_BODY);
             PlaySfxPositional(SFX_VANDAL_SWORD_DEATH);
             self->step_s++;
             // fallthrough
         case 1:
-            func_us_801B3A1C(&D_us_80181AD4);
-            func_us_801B30A8(2, 1);
+            AnimateAzaghal(&anim_fall_backward);
+            UpdateBodyDisplay(2, SHOW_BODY);
             MoveEntity();
             self->velocityX -= self->velocityX / 32;
             self->velocityY += FIX(0.125);
             if (self->velocityY > FIX(4.0)) {
-                self->ext.azaghal.unk8E = 0;
-                self->ext.azaghal.unk80 = 4;
+                self->ext.azaghal.animIndex = 0;
+                self->ext.azaghal.timer = 4;
                 self->step_s++;
             }
             func_us_801B33F4();
@@ -998,12 +1065,12 @@ void func_us_801B3B34(Entity* self) {
         case 2:
             prim = self->ext.azaghal.primTwo;
             PrimDecreaseBrightness(prim, 1);
-            if (!--self->ext.azaghal.unk80) {
+            if (!--self->ext.azaghal.timer) {
                 PlaySfxPositional(SFX_EXPLODE_B);
-                self->ext.azaghal.unk80 = 4;
+                self->ext.azaghal.timer = 4;
                 prim = self->ext.azaghal.primThree;
 
-                for (i = 0; i < self->ext.azaghal.unk8E; i++) {
+                for (i = 0; i < self->ext.azaghal.animIndex; i++) {
                     prim = prim->next;
                 }
 
@@ -1012,16 +1079,16 @@ void func_us_801B3B34(Entity* self) {
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
                     CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
-                    var_s8 = prim->x0 + prim->x1 + prim->x2 + prim->x3;
-                    var_s8 /= 4;
-                    var_s7 = prim->y0 + prim->y1 + prim->y2 + prim->y3;
-                    var_s7 /= 4;
-                    entity->posX.i.hi = var_s8;
-                    entity->posY.i.hi = var_s7;
+                    posX = prim->x0 + prim->x1 + prim->x2 + prim->x3;
+                    posX /= 4;
+                    posY = prim->y0 + prim->y1 + prim->y2 + prim->y3;
+                    posY /= 4;
+                    entity->posX.i.hi = posX;
+                    entity->posY.i.hi = posY;
                     entity->params = EXPLOSION_FIREBALL;
                 }
-                self->ext.azaghal.unk8E++;
-                if (self->ext.azaghal.unk8E > 7) {
+                self->ext.azaghal.animIndex++;
+                if (self->ext.azaghal.animIndex > 7) {
                     self->step_s++;
                 }
             }
@@ -1031,50 +1098,52 @@ void func_us_801B3B34(Entity* self) {
             return;
         }
         break;
-    case 0xFF:
+    case DEBUG:
         if (g_pads[1].pressed & PAD_TRIANGLE) {
-            self->ext.azaghal.vx += 0x10;
+            self->ext.azaghal.pos.vx += 0x10;
         }
 
         if (g_pads[1].pressed & PAD_CROSS) {
-            self->ext.azaghal.vx -= 0x10;
+            self->ext.azaghal.pos.vx -= 0x10;
         }
 
         if (g_pads[1].pressed & PAD_CIRCLE) {
-            self->ext.azaghal.vy += 0x10;
+            self->ext.azaghal.pos.vy += 0x10;
         }
 
         if (g_pads[1].pressed & PAD_SQUARE) {
-            self->ext.azaghal.vy -= 0x10;
+            self->ext.azaghal.pos.vy -= 0x10;
         }
 
         if (g_pads[1].pressed & PAD_RIGHT) {
-            self->ext.azaghal.vz += 0x10;
+            self->ext.azaghal.pos.vz += 0x10;
         }
 
         if (g_pads[1].pressed & PAD_LEFT) {
-            self->ext.azaghal.vz -= 0x10;
+            self->ext.azaghal.pos.vz -= 0x10;
         }
 
         if (g_pads[1].pressed & PAD_SELECT) {
-            self->ext.azaghal.vx = 0;
-            self->ext.azaghal.vy = 0;
-            self->ext.azaghal.vz = 0;
+            self->ext.azaghal.pos.vx = 0;
+            self->ext.azaghal.pos.vy = 0;
+            self->ext.azaghal.pos.vz = 0;
         }
 
-        FntPrint("x:%4x\n", self->ext.azaghal.vx);
-        FntPrint("y:%4x\n", self->ext.azaghal.vy);
-        FntPrint("z:%4x\n", self->ext.azaghal.vz);
+        FntPrint("x:%4x\n", self->ext.azaghal.pos.vx);
+        FntPrint("y:%4x\n", self->ext.azaghal.pos.vy);
+        FntPrint("z:%4x\n", self->ext.azaghal.pos.vz);
         func_us_801B33F4();
         break;
     }
 
-    D_8006C384.y = self->ext.azaghal.unk98;
+    D_8006C384.y = self->ext.azaghal.lerpT;
     D_8006C38C.x = self->pose;
     D_8006C38C.y = self->poseTimer;
 }
 
-void func_us_801B4E9C(Entity* self) {
+// 6 hitboxes are placed down the length of the sword
+// which can damage the player
+void EntityAzaghalSwordHitbox(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitAzaghal);
         self->hitboxState = 1;

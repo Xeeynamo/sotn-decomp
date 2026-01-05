@@ -3787,29 +3787,20 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 bodyGlowPhase;
     /* 0x84 */ s32 : 32;
     /* 0x88 */ s32 : 32;
-    /* 0x8C */ u8 unk8C;
-    /* 0x8D */ u8 unk8D;
-    /* 0x8E */ u8 unk8E;
+    /* 0x8C */ u8 bodyGlowIntensity;
+    /* 0x8D */ u8 attackCounter;
+    /* 0x8E */ u8 animIndex;
     /* 0x8F */ u8 : 8;
     /* 0x90 */ struct Primitive* primTwo;
     /* 0x94 */ struct Primitive* primThree;
-    /* 0x98 */ s32 unk98;
-    /* 0x9C */ s16 vx;
-    /* 0x9E */ s16 vy;
-    /* 0xA0 */ s16 vz;
-    /* 0xA2 */ s16 : 16; // pad
-    /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ s16 unkA6;
-    /* 0xA8 */ s16 unkA8;
-    /* 0xAA */ s16 : 16; // pad
-    /* 0xAC */ s16 unkAC;
-    /* 0xAE */ s16 unkAE;
-    /* 0xB0 */ s16 unkB0;
-    /* 0xB2 */ s16 : 16; // pad
+    /* 0x98 */ s32 lerpT;
+    /* 0x9C */ SVECTOR pos;
+    /* 0xA4 */ SVECTOR offset;
+    /* 0xAC */ SVECTOR base;
 } ET_Azaghal;
 
 typedef union { // offset=0x7C

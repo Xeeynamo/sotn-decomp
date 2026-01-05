@@ -8,4 +8,3 @@ RARE_BackgroundBlockInit = 0x80180824;
 RARE_RedDoorTiles = 0x80180888;
 RARE_rooms = 0x80181C58;
 sprites_rare_4 = 0x801A4D58;
-g_UnkPrimHelperRot = 0x801A54DC;
