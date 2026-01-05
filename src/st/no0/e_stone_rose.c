@@ -16,7 +16,7 @@ static AnimationFrame D_us_801822B4[] = {
 static AnimationFrame D_us_80182300[] = {
     {5, 8}, {5, 7}, {5, 6}, {5, 5}, {5, 4}, {0, 0}};
 static AnimationFrame D_us_80182318[] = {{4, 10}, {4, 11}, {0, 0}};
-static u16 D_us_80182324[] = {
+static u16 stone_rose_sway_table[] = {
     0, 2, 4, 6, 8, 6, 4, 2, 0, -2, -4, -6, -8, -6, -2};
 static s16 D_us_80182344[] = {0, 40, 8, 0};
 
@@ -30,7 +30,7 @@ Entity* func_us_801D7D00(u16 arg0) {
 
         newEntity->entityId = E_STONEROSE_SEED;
         newEntity->pfnUpdate = PfnEntityUpdates[E_STONEROSE_SEED - 1];
-        newEntity->ext.stoneRose.unk8C = g_CurrentEntity;
+        newEntity->ext.stoneRose.parent = g_CurrentEntity;
         newEntity->params = arg0;
         newEntity->posX.val = g_CurrentEntity->posX.val;
         newEntity->posY.val = g_CurrentEntity->posY.val;
@@ -71,7 +71,7 @@ void func_us_801D7DAC(Entity* self) {
         case 1:
             break;
         case 2:
-            newEntity = self->ext.stoneRose.unk8C;
+            newEntity = self->ext.stoneRose.parent;
             self->posX.val = newEntity->posX.val;
             self->posY.val = newEntity->posY.val;
         }
@@ -81,7 +81,7 @@ void func_us_801D7DAC(Entity* self) {
         case 1:
             break;
         case 2:
-            newEntity = self->ext.stoneRose.unk8C;
+            newEntity = self->ext.stoneRose.parent;
             self->posX.val = newEntity->posX.val;
             self->posY.val = newEntity->posY.val;
         }
@@ -115,7 +115,7 @@ void func_us_801D7DAC(Entity* self) {
         }
         newEntity->pfnUpdate = PfnEntityUpdates[newEntity->entityId - 1];
         newEntity->params = self->hitEffect;
-        newEntity->ext.stoneRose.unk8C = self->ext.stoneRose.unk8C;
+        newEntity->ext.stoneRose.parent = self->ext.stoneRose.parent;
         newEntity->posX.val = self->posX.val;
         newEntity->posY.val = self->posY.val;
         newEntity->facingLeft = self->facingLeft;
@@ -140,7 +140,7 @@ void func_us_801D8150(Entity* self) {
     s32 i;
     s32 posX;
     s32 posY;
-    s16 temp_s0;
+    s16 angle;
     u32 params;
     Entity* entity;
 
@@ -168,26 +168,26 @@ void func_us_801D8150(Entity* self) {
             for (i = 0; i < 0xC; i++, entity++) {
                 entity->hitboxState = 0;
                 entity->step = 7;
-                entity->ext.stoneRose.unk86 = 0xC0;
+                entity->ext.stoneRose.timer = 0xC0;
                 entity->flags |= FLAG_DEAD;
             }
         } else if (
             (entity->step != 3) && (entity->step != 5) && (entity->step != 6)) {
             if ((entity->hitPoints >= 0x1F) || (params != 0xB) ||
-                self->ext.stoneRose.unk8A) {
+                self->ext.stoneRose.hasBeenHit) {
                 PlaySfxPositional(SFX_STONE_ROSE_PAIN);
                 if ((self->step != 6) && (self->step != 5)) {
                     self->step_s = self->step;
                 }
                 self->step = 5;
-                self->ext.stoneRose.unk86 = 0x28;
+                self->ext.stoneRose.timer = 0x28;
                 if ((entity->hitPoints >= 0x1F) && (params == 0xB)) {
                     self->pose = 0;
                     self->poseTimer = 0;
                     self->anim = D_us_80182280;
                 }
             } else {
-                self->ext.stoneRose.unk8A = true;
+                self->ext.stoneRose.hasBeenHit = true;
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->anim = D_us_801822B4;
@@ -235,26 +235,30 @@ void func_us_801D8150(Entity* self) {
         } else {
             self->hitPoints = 0x7FFF;
         }
-        self->ext.stoneRose.unk7E = params * 0x180;
-        self->ext.stoneRose.unk88 = 0x480;
-        self->ext.stoneRose.unk82 = params * 0x40 + 0x100;
+        self->ext.stoneRose.wavePhase = params * 0x180;
+        self->ext.stoneRose.waveBase = 0x480;
+        self->ext.stoneRose.waveAmplitude = params * 0x40 + 0x100;
         if (params == 0) {
-            self->ext.stoneRose.unk82 = self->ext.stoneRose.unk82 * 1 / 4;
+            self->ext.stoneRose.waveAmplitude =
+                self->ext.stoneRose.waveAmplitude * 1 / 4;
         }
         if (params == 1) {
-            self->ext.stoneRose.unk82 = self->ext.stoneRose.unk82 * 2 / 4;
+            self->ext.stoneRose.waveAmplitude =
+                self->ext.stoneRose.waveAmplitude * 2 / 4;
         }
         if (params == 2) {
-            self->ext.stoneRose.unk82 = self->ext.stoneRose.unk82 * 3 / 4;
+            self->ext.stoneRose.waveAmplitude =
+                self->ext.stoneRose.waveAmplitude * 3 / 4;
         }
         break;
     case 1:
         if ((self->posX.i.hi < 0x120) || (self->posX.i.hi >= -0x1F) ||
             (self->posY.i.hi < 0xE8)) {
-            self->ext.stoneRose.unk84++;
+            self->ext.stoneRose.seedTimer++;
         }
-        self->ext.stoneRose.unk7E += 0x30;
-        if (((self->ext.stoneRose.unk84 & 0x1F) == 0x1F) && (params == 0xB)) {
+        self->ext.stoneRose.wavePhase += 0x30;
+        if (((self->ext.stoneRose.seedTimer & 0x1F) == 0x1F) &&
+            (params == 0xB)) {
             self->pose = 0;
             self->poseTimer = 0;
             self->anim = D_us_8018228C;
@@ -263,7 +267,7 @@ void func_us_801D8150(Entity* self) {
         }
         break;
     case 2:
-        self->ext.stoneRose.unk7E += 0x30;
+        self->ext.stoneRose.wavePhase += 0x30;
         g_api.UpdateAnim(NULL, NULL);
         if (self->pose == 0x8 && self->poseTimer == 0x2F) {
             PlaySfxPositional(SFX_STONE_ROSE_SEED);
@@ -275,10 +279,10 @@ void func_us_801D8150(Entity* self) {
         }
         break;
     case 3:
-        self->ext.stoneRose.unk7E += 0x100;
-        self->ext.stoneRose.unk90 += 0x180;
-        self->rotate = rsin(self->ext.stoneRose.unk90) >> 3;
-        if (self->ext.stoneRose.unk90 >= 0x6000) {
+        self->ext.stoneRose.wavePhase += 0x100;
+        self->ext.stoneRose.recoilAngle += ROT(33.75);
+        self->rotate = rsin(self->ext.stoneRose.recoilAngle) >> 3;
+        if (self->ext.stoneRose.recoilAngle >= FLT(6)) {
             self->drawFlags &= ~FLAG_DRAW_ROTATE;
         }
         g_api.UpdateAnim(NULL, NULL);
@@ -295,10 +299,10 @@ void func_us_801D8150(Entity* self) {
         self->hitboxHeight = 0x1C;
         self->hitboxOffX = 8;
         self->hitboxOffY = 0;
-        self->ext.stoneRose.unk7E += 0x30;
+        self->ext.stoneRose.wavePhase += 0x30;
         g_api.UpdateAnim(NULL, NULL);
-        --self->ext.stoneRose.unk84;
-        if ((self->ext.stoneRose.unk84 & 0x3F) == 0x1F) {
+        --self->ext.stoneRose.seedTimer;
+        if ((self->ext.stoneRose.seedTimer & 0x3F) == 0x1F) {
             PlaySfxPositional(SFX_STONE_ROSE_SEED);
             func_us_801D7D00(1U);
         }
@@ -307,10 +311,10 @@ void func_us_801D8150(Entity* self) {
         if (params == 0xB) {
             g_api.UpdateAnim(NULL, NULL);
         }
-        self->ext.stoneRose.unk88 -= 8;
-        self->ext.stoneRose.unk7E += 0xC0;
-        if (--self->ext.stoneRose.unk86 == 0) {
-            self->ext.stoneRose.unk86 = 0xC;
+        self->ext.stoneRose.waveBase -= 8;
+        self->ext.stoneRose.wavePhase += 0xC0;
+        if (--self->ext.stoneRose.timer == 0) {
+            self->ext.stoneRose.timer = 0xC;
             self->step++;
         }
         break;
@@ -318,12 +322,12 @@ void func_us_801D8150(Entity* self) {
         if (params == 0xB) {
             g_api.UpdateAnim(NULL, NULL);
         }
-        if (!self->ext.stoneRose.unk86) {
-            self->ext.stoneRose.unk7E += 0x30;
-            self->ext.stoneRose.unk88 += 0x10;
+        if (!self->ext.stoneRose.timer) {
+            self->ext.stoneRose.wavePhase += 0x30;
+            self->ext.stoneRose.waveBase += 0x10;
 
-            if (self->ext.stoneRose.unk88 >= 0x480) {
-                self->ext.stoneRose.unk88 = 0x480;
+            if (self->ext.stoneRose.waveBase >= 0x480) {
+                self->ext.stoneRose.waveBase = 0x480;
                 self->step = self->step_s;
                 if (params == 0xB && (self->step == 2 || self->step == 1)) {
                     self->pose = 7;
@@ -333,15 +337,15 @@ void func_us_801D8150(Entity* self) {
                 }
             }
         } else {
-            self->ext.stoneRose.unk86--;
+            self->ext.stoneRose.timer--;
         }
         break;
     case 7:
         if (!(g_Timer & 7)) {
             PlaySfxPositional(SFX_EXPLODE_B);
         }
-        self->ext.stoneRose.unk7E += 0x180;
-        if ((params == 0xB) && !(self->ext.stoneRose.unk86 & 1)) {
+        self->ext.stoneRose.wavePhase += 0x180;
+        if ((params == 0xB) && !(self->ext.stoneRose.timer & 1)) {
             entity = g_api.GetFreeEntity(0xE0, 0x100);
             if (entity != NULL) {
                 DestroyEntity(entity);
@@ -357,13 +361,13 @@ void func_us_801D8150(Entity* self) {
                 entity->posY.i.hi = self->posY.i.hi + (rand() & 0x1F) - 0x10;
             }
         }
-        if (--self->ext.stoneRose.unk86 == 0) {
+        if (--self->ext.stoneRose.timer == 0) {
             self->step++;
-            self->ext.stoneRose.unk86 = (0xC - params) * 2;
+            self->ext.stoneRose.timer = (0xC - params) * 2;
         }
         break;
     case 8:
-        if (--self->ext.stoneRose.unk86 == 0) {
+        if (--self->ext.stoneRose.timer == 0) {
             if (params == 0xB) {
                 PlaySfxPositional(SFX_STUTTER_EXPLODE_B);
             }
@@ -394,17 +398,17 @@ void func_us_801D8150(Entity* self) {
                 PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) =
                     PGREY(prim, 3) = 0x80;
 
-                prim->x0 = prim->x2 = posX - self->ext.stoneRose.unk94;
-                prim->x1 = prim->x3 = posX + self->ext.stoneRose.unk94;
-                prim->y0 = prim->y1 = posY - self->ext.stoneRose.unk94;
-                prim->y2 = prim->y3 = posY + self->ext.stoneRose.unk94;
+                prim->x0 = prim->x2 = posX - self->ext.stoneRose.blastRadius;
+                prim->x1 = prim->x3 = posX + self->ext.stoneRose.blastRadius;
+                prim->y0 = prim->y1 = posY - self->ext.stoneRose.blastRadius;
+                prim->y2 = prim->y3 = posY + self->ext.stoneRose.blastRadius;
             }
-            self->ext.stoneRose.unk86 = 0x18;
+            self->ext.stoneRose.timer = 0x18;
             return;
         }
         break;
     case 9:
-        if (--self->ext.stoneRose.unk86) {
+        if (--self->ext.stoneRose.timer) {
             posX = self->posX.i.hi;
             posY = self->posY.i.hi;
             if (self->primIndex != -1) {
@@ -414,11 +418,11 @@ void func_us_801D8150(Entity* self) {
                 }
                 PGREY(prim, 0) = PGREY(prim, 1) = PGREY(prim, 2) = prim->r3 =
                     prim->g3 = prim->b3;
-                self->ext.stoneRose.unk94 += 4;
-                prim->x0 = prim->x2 = posX - self->ext.stoneRose.unk94;
-                prim->x1 = prim->x3 = posX + self->ext.stoneRose.unk94;
-                prim->y0 = prim->y1 = posY - self->ext.stoneRose.unk94;
-                prim->y2 = prim->y3 = posY + self->ext.stoneRose.unk94;
+                self->ext.stoneRose.blastRadius += 4;
+                prim->x0 = prim->x2 = posX - self->ext.stoneRose.blastRadius;
+                prim->x1 = prim->x3 = posX + self->ext.stoneRose.blastRadius;
+                prim->y0 = prim->y1 = posY - self->ext.stoneRose.blastRadius;
+                prim->y2 = prim->y3 = posY + self->ext.stoneRose.blastRadius;
             }
         } else {
             DestroyEntity(self);
@@ -433,16 +437,18 @@ void func_us_801D8150(Entity* self) {
             self->hitboxState = 3;
         }
     }
-    self->ext.stoneRose.unk7C =
-        self->ext.stoneRose.unk88 +
-        ((rsin(self->ext.stoneRose.unk7E) * self->ext.stoneRose.unk82) >> 0xC);
+    self->ext.stoneRose.segmentAngle =
+        self->ext.stoneRose.waveBase +
+        ((rsin(self->ext.stoneRose.wavePhase) *
+          self->ext.stoneRose.waveAmplitude) >>
+         0xC);
     if (!(g_GameTimer & 7) || (self->step > 6)) {
-        self->ext.stoneRose.unk80++;
-        self->ext.stoneRose.unk80 &= 0xF;
+        self->ext.stoneRose.swayIndex++;
+        self->ext.stoneRose.swayIndex &= 0xF;
     }
     i = 0;
     if (params == 0) {
-        i = D_us_80182324[self->ext.stoneRose.unk80];
+        i = stone_rose_sway_table[self->ext.stoneRose.swayIndex];
     }
     if (params == 1) {
         i = 0x30;
@@ -463,14 +469,14 @@ void func_us_801D8150(Entity* self) {
         self--;
         posX = self->posX.val;
         posY = self->posY.val;
-        temp_s0 = self->ext.stoneRose.unk7C;
+        angle = self->ext.stoneRose.segmentAngle;
         self++;
         if (params == 0xB) {
             self->posX.val = posX;
             self->posY.val = posY;
         } else {
-            self->posX.val = posX + (rcos(temp_s0) << 4) * 7;
-            self->posY.val = posY - (rsin(temp_s0) << 4) * 7;
+            self->posX.val = posX + (rcos(angle) << 4) * 7;
+            self->posY.val = posY - (rsin(angle) << 4) * 7;
         }
     }
 }
@@ -502,7 +508,7 @@ void func_us_801D8DF0(Entity* self) {
         } else {
             spawnXOffset = -0x28;
         }
-        self->ext.stoneRose.unk86 = 2;
+        self->ext.stoneRose.timer = 2;
         self->posX.i.hi = spawnXOffset + self->posX.i.hi;
         break;
     case 1:
@@ -511,14 +517,14 @@ void func_us_801D8DF0(Entity* self) {
         g_api.CheckCollision(
             self->posX.i.hi, self->posY.i.hi + 4, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            if (self->ext.stoneRose.unk86 == 0) {
+            if (self->ext.stoneRose.timer == 0) {
                 EntityExplosionSpawn(0, 0);
                 return;
             }
             self->posY.i.hi += collider.unk18;
             self->velocityX = self->velocityX >> 1;
             self->velocityY = FIX(-2.0);
-            self->ext.stoneRose.unk86--;
+            self->ext.stoneRose.timer--;
 
             self->drawFlags |= FLAG_BLINK;
         }
@@ -559,7 +565,7 @@ void func_us_801D8FFC(Entity* self) {
         InitializeEntity(D_us_80180B0C);
         self->zPriority = PLAYER.zPriority + 0x10;
         self->anim = D_us_80182318;
-        self->ext.stoneRose.unk86 = rand();
+        self->ext.stoneRose.timer = rand();
         angle = (rand() & 0x1FF) + 0x700;
         self->velocityX = rcos(angle) * 0x10;
         if (!self->facingLeft) {
@@ -583,8 +589,8 @@ void func_us_801D8FFC(Entity* self) {
             return;
         }
         g_api.UpdateAnim(NULL, NULL);
-        yOffset = rsin(self->ext.stoneRose.unk86) * 4;
-        self->ext.stoneRose.unk86 += 0x60;
+        yOffset = rsin(self->ext.stoneRose.timer) * 4;
+        self->ext.stoneRose.timer += 0x60;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         self->posY.val += yOffset;
