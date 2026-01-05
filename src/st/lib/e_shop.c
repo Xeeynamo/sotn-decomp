@@ -506,7 +506,7 @@ void func_us_801AFE0C(Entity* self) {
 #endif
         g_Player.demo_timer = 32;
         g_Player.padSim = PAD_RIGHT;
-        D_80097928 = 1;
+        stopMusicFlag = true;
         self->step++;
         break;
 
@@ -3713,8 +3713,8 @@ void func_us_801B5F84(Entity* self) {
             self->step++;
         } else if ((player->posY.i.hi + g_Tilemap.scrollY.i.hi) < 0x100 &&
                    player->posX.i.hi > 0xC0) {
-            D_80097928 = 1;
-            D_80097910 = 0;
+            stopMusicFlag = true;
+            currentMusicId = 0;
         }
         break;
 
