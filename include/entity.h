@@ -3786,26 +3786,31 @@ typedef struct {
 } ET_Minotaur;
 
 typedef struct {
-    /* 0x7C */ u32 : 32;
-    /* 0x80 */ u32 : 32;
-    /* 0x84 */ u32 : 32;
-    /* 0x88 */ u32 : 32;
-    /* 0x8C */ u32 : 32;
-    /* 0x90 */ u32 : 32;
-    /* 0x94 */ u32 : 32;
-    /* 0x98 */ s32 lerpT;
-    /* 0x9C */ s16 posX;
-    /* 0x9E */ s16 posY;
-    /* 0xA0 */ s16 posZ;
-    /* 0xA2 */ s16 : 16;
-    /* 0xA4 */ s16 offsetX;
-    /* 0xA6 */ s16 offsetY;
-    /* 0xA8 */ s16 offsetZ;
-    /* 0xAA */ s16 : 16;
-    /* 0xAC */ s16 baseX;
-    /* 0xAE */ s16 baseY;
-    /* 0xB0 */ s16 baseZ;
-} ET_RareUnk20;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ u8 unk8C;
+    /* 0x8D */ u8 unk8D;
+    /* 0x8E */ u8 unk8E;
+    /* 0x8F */ u8 : 8;
+    /* 0x90 */ struct Primitive* primTwo;
+    /* 0x94 */ struct Primitive* primThree;
+    /* 0x98 */ s32 unk98;
+    /* 0x9C */ s16 vx;
+    /* 0x9E */ s16 vy;
+    /* 0xA0 */ s16 vz;
+    /* 0xA2 */ s16 : 16; // pad
+    /* 0xA4 */ s16 unkA4;
+    /* 0xA6 */ s16 unkA6;
+    /* 0xA8 */ s16 unkA8;
+    /* 0xAA */ s16 : 16; // pad
+    /* 0xAC */ s16 unkAC;
+    /* 0xAE */ s16 unkAE;
+    /* 0xB0 */ s16 unkB0;
+    /* 0xB2 */ s16 : 16; // pad
+} ET_Azaghal;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4132,7 +4137,7 @@ typedef union { // offset=0x7C
     ET_WhiteDragon whiteDragon;
     ET_Werewolf werewolf;
     ET_Minotaur minotaur;
-    ET_RareUnk20 rareUnk20;
+    ET_Azaghal azaghal;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
