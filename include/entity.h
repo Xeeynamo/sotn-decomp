@@ -19,17 +19,17 @@ typedef union {
 
 typedef struct {
     /* 0x7C */ u16 timer;
-    /* 0x7E */ s16 unk7E;
+    /* 0x7E */ s16 : 16;
     /* 0x80 */ u8 aliveTimer;
-    /* 0x81 */ s8 unk81;
-    /* 0x82 */ s16 unk82;
+    /* 0x81 */ s8 : 8;
+    /* 0x82 */ s16 : 16;
     /* 0x84 */ s32 fallSpeed;
     /* 0x88 */ s16 gravity;
-    /* 0x8A */ s16 unk8A;
+    /* 0x8A */ s16 sparkleTimer;
     /* 0x8C */ u16 iconSlot;
-    /* 0x8E */ s16 unk8E;
-    /* 0x90 */ s16 unk90;
-    /* 0x92 */ s16 unk92;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 : 16;
+    /* 0x92 */ s16 : 16;
     /* 0x94 */ s32 castleFlag;
 } ET_EquipItemDrop;
 
@@ -72,10 +72,10 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u32 unused7C;
     /* 0x80 */ s16 unused80;
-    /* 0x82 */ s16 unk82;
+    /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 angle;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ s16 unk88;
+    /* 0x86 */ s16 xOffset;
+    /* 0x88 */ s16 isBackgroundDoor;
 } ET_RedDoor; // Normal red doors between stages
 
 typedef struct {
@@ -2036,16 +2036,16 @@ typedef struct {
 } ET_MermanRock;
 
 typedef struct {
-    /* 0x7C */ u8 unk7C;
-    /* 0x7D */ u8 unk7D;
-    /* 0x7E */ u8 unk7E;
-    /* 0x7F */ u8 unk7F;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u16 unk84;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ u16 unk88;
-    /* 0x8A */ u16 unk8A;
+    /* 0x7C */ u8 movingBackward;
+    /* 0x7D */ s8 : 8;
+    /* 0x7E */ s8 : 8;
+    /* 0x7F */ s8 : 8;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 decisionDelay;
+    /* 0x84 */ u16 anchorX;
+    /* 0x86 */ s16 attackTimer;
+    /* 0x88 */ u16 deathPosX;
+    /* 0x8A */ u16 deathPosY;
 } ET_Warg;
 
 typedef struct {
@@ -3785,6 +3785,28 @@ typedef struct {
     /* 0x8F */ u8 : 8;
 } ET_Minotaur;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u32 : 32;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ s32 lerpT;
+    /* 0x9C */ s16 posX;
+    /* 0x9E */ s16 posY;
+    /* 0xA0 */ s16 posZ;
+    /* 0xA2 */ s16 : 16;
+    /* 0xA4 */ s16 offsetX;
+    /* 0xA6 */ s16 offsetY;
+    /* 0xA8 */ s16 offsetZ;
+    /* 0xAA */ s16 : 16;
+    /* 0xAC */ s16 baseX;
+    /* 0xAE */ s16 baseY;
+    /* 0xB0 */ s16 baseZ;
+} ET_RareUnk20;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4110,6 +4132,7 @@ typedef union { // offset=0x7C
     ET_WhiteDragon whiteDragon;
     ET_Werewolf werewolf;
     ET_Minotaur minotaur;
+    ET_RareUnk20 rareUnk20;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

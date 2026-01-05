@@ -167,14 +167,14 @@ void EntityConfessionalGhost(Entity* self) {
             (self->params & CONFESSIONAL_GHOST_PARISHIONER)) {
             g_api.PlaySfx(MU_SEQ_CONFESSIONAL_BELLS_PSP);
             g_confessionalChimeActive = true;
-            D_80097928 = 0;
+            stopMusicFlag = false;
         }
         break;
 #else
         if (self->params & CONFESSIONAL_GHOST_PARISHIONER) {
             g_api.PlaySfx(SET_UNK_90);
             g_api.PlaySfx(MU_SEQ_CONFESSIONAL_BELLS);
-            D_80097928 = 0;
+            stopMusicFlag = false;
             g_confessionalChimeActive = true;
         }
         break;

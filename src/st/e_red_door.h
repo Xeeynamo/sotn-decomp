@@ -54,14 +54,14 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
     switch (self->step) {
     case 0:
 #ifdef STAGE_IS_NO1
-        self->ext.redDoor.unk88 = self->params & 0x10;
+        self->ext.redDoor.isBackgroundDoor = self->params & 0x10;
         self->params &= 0xFFEF;
 #endif
         InitializeEntity(g_EInitCommon);
         self->animSet = 7;
         self->animCurFrame = 1;
 #ifdef STAGE_IS_NO1
-        if (self->ext.redDoor.unk88) {
+        if (self->ext.redDoor.isBackgroundDoor) {
             self->zPriority = 0x58;
         } else {
             self->zPriority = PLAYER.zPriority - 0x20;
@@ -73,11 +73,11 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
         self->posY.i.hi += 0x1F;
 
         if (self->params & 0x100) {
-            self->ext.redDoor.unk86 = -4;
+            self->ext.redDoor.xOffset = -4;
         } else {
-            self->ext.redDoor.unk86 = 4;
+            self->ext.redDoor.xOffset = 4;
         }
-        self->posX.i.hi += self->ext.redDoor.unk86;
+        self->posX.i.hi += self->ext.redDoor.xOffset;
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, LEN(g_eRedDoorUV));
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -100,7 +100,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             prim->tpage = 0x1F;
             prim->clut = PAL_UNK_198;
 #ifdef STAGE_IS_NO1
-            if (self->ext.redDoor.unk88) {
+            if (self->ext.redDoor.isBackgroundDoor) {
                 prim->priority = 0x58;
             } else {
                 prim->priority = PLAYER.zPriority - 0x20;
@@ -144,7 +144,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             g_Player.padSim = 0;
             g_Player.demo_timer = 24;
 #ifdef STAGE_IS_NO1
-            if (self->ext.redDoor.unk88 && self->step == 3) {
+            if (self->ext.redDoor.isBackgroundDoor && self->step == 3) {
                 PLAYER.zPriority = 0x5C;
             }
 #endif
@@ -221,7 +221,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             }
         }
 #ifdef STAGE_IS_NO1
-        if (self->ext.redDoor.unk88 && self->step == 3) {
+        if (self->ext.redDoor.isBackgroundDoor && self->step == 3) {
             g_Tilemap.x = 0x98;
             PLAYER.zPriority = 0x5C;
         }
@@ -239,7 +239,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
         }
         g_Player.demo_timer = 3;
 #ifdef STAGE_IS_NO1
-        if (PLAYER.posX.i.hi < 0x64 && self->ext.redDoor.unk88) {
+        if (PLAYER.posX.i.hi < 0x64 && self->ext.redDoor.isBackgroundDoor) {
             g_Tilemap.left++;
             g_PlayerX -= 0x100;
             g_Tilemap.x = 0x100;
@@ -259,7 +259,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
         g_Player.demo_timer = 4;
         if (EntityIsNearPlayer(self) == 0) {
 #ifdef STAGE_IS_NO1
-            if (self->ext.redDoor.unk88) {
+            if (self->ext.redDoor.isBackgroundDoor) {
                 PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
             }
             self->step++;
@@ -310,7 +310,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
         g_api.func_8010DFF0(1, 1);
     }
 
-    x = self->posX.i.hi - self->ext.redDoor.unk86;
+    x = self->posX.i.hi - self->ext.redDoor.xOffset;
     if (self->params & 0x100) {
         x--;
     } else {
