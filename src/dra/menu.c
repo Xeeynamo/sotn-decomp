@@ -44,7 +44,7 @@ static s32 D_80137948;
 static s8* D_8013794C; // Pointer to texture pattern
 static s32 D_80137950;
 static s32 D_80137954;
-static s32 D_80137958;
+static s32 prevMusicId;
 static s32 g_ServantPrevious;
 
 extern s32 g_PrevEquippedWeapons[2];
@@ -3432,7 +3432,7 @@ block_4:
         break;
     case MENU_STEP_OPENING:
         if (func_80133950()) {
-            D_80137958 = currentMusicId;
+            prevMusicId = currentMusicId;
             currentMusicId = 0;
             func_800F6A48();
             func_800F84CC();
@@ -3565,7 +3565,7 @@ block_4:
         if (!CdSoundCommandQueueEmpty()) {
             break;
         }
-        currentMusicId = D_80137958;
+        currentMusicId = prevMusicId;
         if (stopMusicFlag == 0) {
             PlaySfx(SET_UNK_11);
         }
