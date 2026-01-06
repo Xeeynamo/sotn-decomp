@@ -32,8 +32,8 @@ void EntityWerewolfEnergyWave(Entity* self);
 void EntityWerewolfSpinAttackAfterImage(Entity* self);
 void EntityWerewolfDeathFlames(Entity* self);
 void EntityMinotaurDeathPuff(Entity* self);
-void func_us_801B3B34(Entity* self);
-void func_us_801B4E9C(Entity* self);
+void EntityAzaghal(Entity* self);
+void EntityAzaghalSwordHitbox(Entity* self);
 void EntityBreakableFloorSecret(Entity* self);
 void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
 void EntityBackgroundDoorRubble(Entity* self);
@@ -76,8 +76,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityWerewolfSpinAttackAfterImage,
     EntityWerewolfDeathFlames,
     EntityMinotaurDeathPuff,
-    func_us_801B3B34,
-    func_us_801B4E9C,
+    EntityAzaghal,
+    EntityAzaghalSwordHitbox,
     EntityBreakableFloorSecret,
     OVL_EXPORT(EntityBreakableDebris),
     EntityBackgroundDoorRubble,
