@@ -47,7 +47,7 @@ static s32 D_80137950;
 static s32 D_80137954;
 s32 D_psp_091CDD70[2];
 s32 g_PrevEquippedWeapons[2];
-static s32 D_80137958;
+static s32 prevMusicId;
 static s32 g_ServantPrevious;
 s32 D_psp_091CDD50;
 bool D_psp_091CDD48;
@@ -3566,7 +3566,7 @@ block_4:
         break;
     case MENU_STEP_OPENING:
         if (func_80133950()) {
-            D_80137958 = currentMusicId;
+            prevMusicId = currentMusicId;
             currentMusicId = 0;
             func_800F6A48();
             func_800F84CC();
@@ -3699,7 +3699,7 @@ block_4:
         if (!CdSoundCommandQueueEmpty()) {
             break;
         }
-        currentMusicId = D_80137958;
+        currentMusicId = prevMusicId;
         if (D_psp_091CDD48 != 0) {
             PlaySfx(SET_UNK_0B);
         } else {

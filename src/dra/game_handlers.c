@@ -50,7 +50,7 @@ void func_800E414C(void) {
         if (g_StageId & STAGE_INVERTEDCASTLE_FLAG) {
             D_8003C712 ^= STAGE_INVERTEDCASTLE_FLAG;
         }
-        PlaySfx(0x80);
+        PlaySfx(SET_UNK_80);
         stopMusicFlag = true;
         if (D_8003C708.flags == FLAG_UNK_40) {
             g_Player.demo_timer = 24;
@@ -789,7 +789,7 @@ void HandleGameOver(void) {
         if (g_IsUsingCd) {
             break;
         }
-        PlaySfx(0x80);
+        PlaySfx(SET_UNK_80);
         currentMusicId = 0;
         g_GameStep++;
         break;
@@ -1030,7 +1030,7 @@ void HandleGameOver(void) {
     case Gameover_8:
         func_800E5358();
         if (g_pads[0].tapped & PAD_START) {
-            PlaySfx(0x81);
+            PlaySfx(SET_UNK_81);
             g_GameStep++;
             break;
         }
@@ -2000,7 +2000,7 @@ void HandlePrologueEnd(void) {
             }
         }
         if (func_80131F68()) {
-            PlaySfx(0x80);
+            PlaySfx(SET_UNK_80);
         }
         SetGPUBuffRGBZero();
         g_GameStep++;

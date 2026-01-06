@@ -3786,26 +3786,22 @@ typedef struct {
 } ET_Minotaur;
 
 typedef struct {
-    /* 0x7C */ u32 : 32;
-    /* 0x80 */ u32 : 32;
-    /* 0x84 */ u32 : 32;
-    /* 0x88 */ u32 : 32;
-    /* 0x8C */ u32 : 32;
-    /* 0x90 */ u32 : 32;
-    /* 0x94 */ u32 : 32;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 bodyGlowPhase;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ u8 bodyGlowIntensity;
+    /* 0x8D */ u8 attackCounter;
+    /* 0x8E */ u8 animIndex;
+    /* 0x8F */ u8 : 8;
+    /* 0x90 */ struct Primitive* primTwo;
+    /* 0x94 */ struct Primitive* primThree;
     /* 0x98 */ s32 lerpT;
-    /* 0x9C */ s16 posX;
-    /* 0x9E */ s16 posY;
-    /* 0xA0 */ s16 posZ;
-    /* 0xA2 */ s16 : 16;
-    /* 0xA4 */ s16 offsetX;
-    /* 0xA6 */ s16 offsetY;
-    /* 0xA8 */ s16 offsetZ;
-    /* 0xAA */ s16 : 16;
-    /* 0xAC */ s16 baseX;
-    /* 0xAE */ s16 baseY;
-    /* 0xB0 */ s16 baseZ;
-} ET_RareUnk20;
+    /* 0x9C */ SVECTOR pos;
+    /* 0xA4 */ SVECTOR offset;
+    /* 0xAC */ SVECTOR base;
+} ET_Azaghal;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4132,7 +4128,7 @@ typedef union { // offset=0x7C
     ET_WhiteDragon whiteDragon;
     ET_Werewolf werewolf;
     ET_Minotaur minotaur;
-    ET_RareUnk20 rareUnk20;
+    ET_Azaghal azaghal;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

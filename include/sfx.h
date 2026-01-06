@@ -60,6 +60,7 @@ enum SfxModes {
 #define SET_UNK_12 0x12
 #define SET_UNK_13 0x13
 #define SET_UNK_80 0x80
+#define SET_UNK_81 0x81
 #define SET_UNK_82 0x82
 #define SET_UNK_90 0x90
 #define SET_UNK_92 0x92
