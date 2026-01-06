@@ -10,7 +10,9 @@ static s16 sensors_ground[][2] = {{0, 10}, {0, 4}, {6, -4}, {-12, 0}};
 static s16 sensors_move_y[][2] = {{0, -8}, {4, 0}, {-8, 0}};
 static s16 sensors_move_x[][2] = {{-9, 6}, {0, -12}};
 
+#ifdef STAGE_IS_LIB
 extern s32 D_us_80181ACC;
+#endif
 
 // Checks for collisions while the entity is moving downward, updating position
 // if collision occurs. This is similar to other function CheckFieldCollision

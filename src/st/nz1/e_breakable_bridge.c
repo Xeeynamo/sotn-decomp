@@ -30,21 +30,6 @@ static PosRot D_us_80180F24[] = {
     {0x00D0, 0x0400, 0x0088},
 };
 
-// pspeu deadstrips this function
-static void DropBridgePiece(void) {
-    s32 i, j;
-    s32 x = g_CurrentEntity->posX.i.hi + g_Tilemap.scrollX.i.hi - 64;
-    s32 y = g_CurrentEntity->posY.i.hi + g_Tilemap.scrollY.i.hi - 32;
-
-    for (i = 0; i < 4; i++) {
-        for (j = 0; j < 8; j++) {
-            const s32 index = ((x + j * 16) >> 4) +
-                              ((((y + i * 16) >> 4) * g_Tilemap.hSize) << 4);
-            g_Tilemap.fg[index] = 0;
-        }
-    }
-}
-
 static void BreakBridge(s32 tileIndex) {
     s32 i;
     s32 n;
@@ -98,11 +83,7 @@ void EntityBridgeBreakTrigger(Entity* self) {
         var_s3 = D_us_80180EDC & (1 << params);
         if (var_s3) {
             BreakBridge(3);
-#ifdef VERSION_PSP
-            BossDoorHelper();
-#else
             DropBridgePiece();
-#endif
             if (params == 0 || params == 3) {
                 self->zPriority = 0x6E;
             }
@@ -169,11 +150,7 @@ void EntityBridgeBreakTrigger(Entity* self) {
         break;
 
     case 3:
-#ifdef VERSION_PSP
-        BossDoorHelper();
-#else
         DropBridgePiece();
-#endif
         var_s3 = (self->params >> 8) - 1;
         for (i = 0; i < 2; i++) {
             if (var_s3 != i) {
