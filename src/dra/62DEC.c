@@ -19,6 +19,32 @@ static s32 D_80137E40;
 static s32 D_80137E44;
 static s32 D_80137E48;
 static s32 D_80137E4C;
+static u32 g_MemCardRetryCount;
+static s32 D_80137E54;
+static s32 D_80137E58;
+static s32 D_80137E5C;
+static s32 D_80137E60;
+static s32 g_MemCardRStep;
+static s32 g_MemCardRStepSub;
+
+#ifdef VERSION_PSP
+// PSP will place these here even if they are redeclared lower
+static s32 D_80137EE4;
+static s32 D_80137EE8;
+static s32 D_80137EEC;
+static s32 D_80137EF0;
+static s32 D_80137EF4;
+#endif
+
+static bool D_80137E6C;
+static SVECTOR D_80137E70[14];
+static s32 D_80137EE0;
+
+static s32 D_80137EE4;
+static s32 D_80137EE8;
+static s32 D_80137EEC;
+static s32 D_80137EF0;
+static s32 D_80137EF4;
 
 #ifdef VERSION_PSP
 extern s32* D_psp_091CE248;
@@ -328,12 +354,12 @@ static s32 HandleSaveMenu(s32 arg0) {
 #endif
                 prim2->p1 += 2;
             }
-        } else if ((D_80137E4C == 7 || D_80137E4C == 8) && (temp_t0 < 33)) {
+        } else if ((D_80137E4C == 7 || D_80137E4C == 8) && temp_t0 < 33) {
             SetTexturedPrimRect(prim2, 80, 96 - temp_t0, 96, temp_t0, 0, 0);
             prim2->p1 += 2;
             SetPrimRect(prim1, 72, 96 - temp_t0, 112, temp_t0);
             func_80103148(prim3, prim1);
-        } else if ((D_80137E4C == 9 || D_80137E4C == 11) && (temp_t0 < 33)) {
+        } else if ((D_80137E4C == 9 || D_80137E4C == 11) && temp_t0 < 33) {
             SetTexturedPrimRect(prim2, 68, 96 - temp_t0, 120, temp_t0, 0, 0);
             prim2->p1 += 2;
             SetPrimRect(prim1, 60, 96 - temp_t0, 136, temp_t0);
@@ -482,7 +508,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 #else
                 func_800F9D88("初期化してもいいですか　", 0, 1);
 #endif
-            D_80137E6C = 1;
+            D_80137E6C = true;
         }
         if (arg0 == 3) {
 #if defined(VERSION_US)
@@ -492,7 +518,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 #else
                 func_800F9D88(D_psp_091CE240, 0, 1);
 #endif
-            D_80137E6C = 0;
+            D_80137E6C = false;
         }
         if (arg0 == 4) {
 #if defined(VERSION_US)
@@ -502,7 +528,7 @@ static s32 HandleSaveMenu(s32 arg0) {
 #else
                 func_800F9D88(D_psp_091CE248, 0, 1);
 #endif
-            D_80137E6C = 0;
+            D_80137E6C = false;
         }
 #if defined(VERSION_US)
         func_800F9D88("Yes ", 1, 0);
@@ -546,16 +572,16 @@ static s32 HandleSaveMenu(s32 arg0) {
         func_80103148(prim3, prim1);
     } else {
         if (g_pads[0].tapped & PAD_LEFT) {
-            if (D_80137E6C != 0) {
+            if (D_80137E6C) {
                 PlaySfx(SFX_UI_SUBWEAPON_TINK);
             }
-            D_80137E6C = 0;
+            D_80137E6C = false;
         }
         if (g_pads[0].tapped & PAD_RIGHT) {
-            if (D_80137E6C == 0) {
+            if (!D_80137E6C) {
                 PlaySfx(SFX_UI_SUBWEAPON_TINK);
             }
-            D_80137E6C = 1;
+            D_80137E6C = true;
         }
 
         prim3 = func_80103148(prim3, prim1);
@@ -567,7 +593,7 @@ static s32 HandleSaveMenu(s32 arg0) {
         func_801030B4(1, prim1, D_80137E6C);
         func_80103148(prim3, prim1);
         if (g_pads[0].tapped & EXIT) {
-            D_80137E6C = 1;
+            D_80137E6C = true;
             FreePrimitives(D_80137E58);
             FreePrimitives(D_80137E5C);
             FreePrimitives(D_80137E60);
@@ -590,12 +616,6 @@ static void func_80103EAC(void) {
 }
 
 static void func_80103ED4(void) {
-#if defined(VERSION_PSP)
-#define IFSTATEMENT (g_MemCardRetryCount-- == 0)
-#else
-#define IFSTATEMENT (--g_MemCardRetryCount == -1)
-#endif
-
     char saveFile[32];
     s32 memCardClose;
     s32 i;
@@ -607,6 +627,7 @@ static void func_80103ED4(void) {
         g_MemCardRetryCount = 4;
         D_80137E4C++;
         break;
+
     case 1:
         // This really should be doable as a switch, but that doesn't match.
         case1_state = func_800E9880(D_80097924, 0);
@@ -614,11 +635,11 @@ static void func_80103ED4(void) {
             break;
         }
         if (case1_state == -1) {
-            if (IFSTATEMENT) {
+            if (!g_MemCardRetryCount--) {
                 D_80137E4C = 7;
             }
         } else if (case1_state == -3) {
-            if (IFSTATEMENT) {
+            if (!g_MemCardRetryCount--) {
                 D_80137E4C = 8;
             }
         } else if (case1_state == -2) {
@@ -628,6 +649,7 @@ static void func_80103ED4(void) {
             D_80137E4C++;
         }
         break;
+
     case 2:
         if (MemcardParse(D_80097924, 0) >= 0) {
             g_MemCardRetryCount = 10;
@@ -640,8 +662,7 @@ static void func_80103ED4(void) {
                             break;
                         }
                     }
-                    if ((i == 15) &&
-                        (GetMemcardFreeBlockCount(D_80097924) == 0)) {
+                    if (i == 15 && GetMemcardFreeBlockCount(D_80097924) == 0) {
                         D_80137E54 = 3;
                     }
                 }
@@ -653,6 +674,7 @@ static void func_80103ED4(void) {
             }
         }
         break;
+
     case 3:
         for (i = 0; i < 15; i++) {
             MakeMemcardPath(saveFile, i);
@@ -667,6 +689,7 @@ static void func_80103ED4(void) {
         D_8006C378 = i;
         D_80137E4C++;
         break;
+
     case 4:
         MakeMemcardPath(saveFile, D_8006C378);
         // careful with i here, it's not an iterator.
@@ -694,23 +717,23 @@ static void func_80103ED4(void) {
             D_80137E4C = 6;
 #else
         if (MemcardWriteFile(D_80097924, 0, saveFile, g_Pix, 1, i) != 0) {
-            if (--g_MemCardRetryCount == -1) {
+            if (!g_MemCardRetryCount--) {
                 D_80137E4C = 0;
             }
 #endif
         } else {
             g_MemCardRetryCount = 10;
             D_80137E4C++;
-            break;
         }
         break;
+
     case 5:
         memCardClose = MemcardClose(D_80097924);
         if (memCardClose == 0) {
             break;
         }
         if (memCardClose == -3) {
-            if (IFSTATEMENT) {
+            if (!g_MemCardRetryCount--) {
                 D_80137E4C = 0;
                 break;
             }
@@ -719,6 +742,7 @@ static void func_80103ED4(void) {
         }
         D_80137E4C = 6;
         break;
+
     case 6:
         break;
     }
@@ -1424,7 +1448,7 @@ void func_80105428(void) {
         D_801379C8.vy += D_80137EE8;
         func_80104790(0, D_80137EE4, 0);
         if (HandleSaveMenu(3) != 0) {
-            if (D_80137E6C == 0) {
+            if (!D_80137E6C) {
                 D_80137E54 = 2;
                 D_801379BC = 2;
 #if defined(VERSION_PSP)
@@ -1442,7 +1466,7 @@ void func_80105428(void) {
         func_80104790(0, D_80137EE4, 0);
 
         if (HandleSaveMenu(4) != 0) {
-            if (D_80137E6C == 0) {
+            if (!D_80137E6C) {
                 D_80097924 = 0;
                 func_80102EB8();
                 D_801379BC = 0x100;
@@ -1606,7 +1630,7 @@ void func_80105428(void) {
     case 0x200:
         func_80105408();
         if (HandleSaveMenu(2) != 0) {
-            if (D_80137E6C == 0) {
+            if (!D_80137E6C) {
                 D_8006C378 = -1;
                 PlaySfx(SFX_UI_CONFIRM);
                 MemCardSetPort(D_80097924);
