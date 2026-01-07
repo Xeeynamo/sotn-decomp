@@ -261,7 +261,9 @@ segments:
       - [0x9796C, .bss, 5F60C]
       - [0x9799C, .bss, 624DC]
       - [0x979B8, .bss, 62DEC]
-      - [0x97E50, .bss, bss]
+      - [0x97EF8, .bss, 66590]
+      - [0x97F58, .bss, cd]
+      - [0x97FB4, .bss, bss]
   - name: dra_data
     type: data
     start: 0x9B6A0
