@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "game.h"
+#include "sfx.h"
 
 // clang-format off
 Lba g_StagesLba[] = {
