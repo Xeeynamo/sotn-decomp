@@ -89,6 +89,7 @@ enum {
 
     // us: includes US build
     // jp: includes HD and PSP builds
+    /* us:0x2FF, jp:0x2FF */ MU_NO_AUDIO = 0x2FF, // for cutscenes and bosses
     /* us:0x301, jp:0x301 */ MU_LOST_PAINTING = 0x301,
     /* us:0x302, jp:0x302 */ MU_LOST_PAINTING_LOOP_POINT,
     /* us:0x303, jp:0x303 */ MU_CURSE_ZONE,
