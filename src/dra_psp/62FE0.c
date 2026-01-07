@@ -5,6 +5,7 @@
 extern u16 D_800AC910[];
 extern u8 D_800AC914[10][30];
 extern u16 D_800AC934[];
+extern u16 D_80137EF8[];
 
 static char D_psp_09187068[] =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -26,8 +27,6 @@ static u16 D_psp_091871B0[] = {
     0x85F0, 0x85F3, 0x85F2, 0x85FE, 0x85FD, 0x8600, 0x85FF, 0x860D,
     0x860F, 0x860E, 0x8611, 0x8610, 0x8620, 0x861F, 0x8622, 0x8621,
     0x8577, 0x8586, 0x814E, 0x8636, 0x8147, 0x8621, 0x0000};
-
-extern u16 D_80137EF8[];
 
 u16 func_psp_0913F960(char* str, u8* type) {
     u32 i;

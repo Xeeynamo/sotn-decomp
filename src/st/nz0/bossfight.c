@@ -159,7 +159,7 @@ void EntityBossFightManager(Entity* self) {
         if (24 < xPos && xPos < 968) {
             g_BossFlag |= BOSS_FLAG_DOORS_CLOSED;
             // Unknown sound
-            g_api.PlaySfx(0x90);
+            g_api.PlaySfx(SET_UNK_90);
             stopMusicFlag = false;
             self->step++;
         }

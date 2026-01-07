@@ -198,20 +198,22 @@ s32 D_800ACD7C = 0;
 
 extern u16 D_800A04CC[]; // palette?
 extern u32* D_801EE000;
-
 extern s32 g_VabAddrs[];
 
 // BSS
-extern CdCallbacks g_CdCallback;
-extern CdlLOC g_CdLoc;
-extern CdThing g_Cd;
-extern s16 g_VabId;
-extern u8 D_80137F96;
-extern s32 D_80137F9C;
-extern s32 D_80137FA0;
-extern s16 D_80137FA8;
-extern s32 D_80137FAC;
-extern s32 D_80137FB0;
+static CdCallbacks g_CdCallback;
+static CdlLOC g_CdLoc;
+static CdThing g_Cd;
+static s16 g_VabId;
+static u8 D_80137F96;
+STATIC_PAD_BSS(5);
+static s32 D_80137F9C;
+static s32 D_80137FA0;
+STATIC_PAD_BSS(4);
+static s16 D_80137FA8;
+STATIC_PAD_BSS(2);
+static s32 D_80137FAC;
+static s32 D_80137FB0;
 
 void func_801073C0(void) {
     CdReadyCallback(NULL);
