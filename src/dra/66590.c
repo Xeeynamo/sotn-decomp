@@ -126,6 +126,8 @@ void DrawEntitiesHitbox(s32 drawMode) {
 
 #ifndef VERSION_PC
 
+u16 D_80137EF8[0x30];
+
 u16 D_800AC910[] = {
 #ifndef VERSION_US
     '踪', '眷', '翔', '彷', '徨', '苺', '獰', '賤', '贄',
@@ -309,12 +311,6 @@ u8 D_800AC914[][30] = {
 };
 // LUT of ceil(index / 2)
 u16 D_800AC934[] = {0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8};
-
-#ifdef VERSION_US
-u16 D_800AC956 = 0x0D09;
-#endif
-
-extern u16 D_80137EF8[];
 
 #define ExtractBit(x)                                                          \
     x & 1;                                                                     \

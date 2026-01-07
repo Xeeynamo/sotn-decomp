@@ -24,9 +24,7 @@ s32 D_800ACE48[] = {
 RECT D_800ACE60 = {0x0200, 0x01C0, 0x003F, 0x003F};
 
 // BSS
-extern s32 D_80137FB4;
-extern s32 D_80137FB8;
-extern s32 D_80137FBC;
+extern bool D_80137FBC;
 
 #elif defined(VERSION_HD)
 s16 D_800ACE20[] = {
@@ -47,9 +45,6 @@ s32 D_800ACE00[] = {
     PAD_SQUARE, PAD_CIRCLE, PAD_CROSS, PAD_TRIANGLE,
     PAD_R2,     PAD_L1,     PAD_R1,    PAD_L2,
 };
-
-extern s32 D_80137FB4;
-extern s32 D_80137FB8;
 
 #elif defined(VERSION_PSP)
 
@@ -121,9 +116,10 @@ s32 D_800ACDF8 = 0;
 s32 D_800ACDFC = 0;
 static s32 D_psp_09234B88 = 0;
 static s32 D_psp_09234B90 = 0;
+#endif
+
 extern s32 D_80137FB4;
 extern s32 D_80137FB8;
-#endif
 
 #include "../get_lang.h"
 
@@ -205,6 +201,7 @@ void func_801093C4(void) {
 
 // Corresponding RIC function is RicInit
 void func_psp_091040A0(u_long** gfxBank);
+
 void AluInit() {
     Entity* e;
     Primitive* prim;
@@ -266,7 +263,7 @@ void AluInit() {
     D_80137FB8 = 0;
 
 #if defined(VERSION_US)
-    D_80137FBC = 1;
+    D_80137FBC = true;
 #endif
 
     if (g_Status.mp != g_Status.mpMax) {
@@ -335,11 +332,6 @@ void func_80109990(void) {
         D_80137FB4 = 0;
     }
 }
-
-void CheckFloor(void);
-void CheckCeiling(void);
-void CheckWallRight(void);
-void CheckWallLeft(void);
 
 static void CheckStageCollision(s32 isTransformed) {
     s32 i;
@@ -567,6 +559,7 @@ void func_8010A234(s32 arg0) {
 void func_8010A3F0(void) {
     s32 (*getID)(void);
     s32 id;
+
     getID = D_8017A000.GetWeaponId;
     id = getID();
     if (id == 0x38) {
@@ -590,6 +583,7 @@ typedef enum {
     TELEPORT_CHECK_TO_RTOP = 2,
     TELEPORT_CHECK_TO_TOP = 4
 } TeleportCheck;
+
 static TeleportCheck GetTeleportToOtherCastle(void) {
     // Is player in the pose when pressing UP?
     if (PLAYER.step != Player_Stand || PLAYER.step_s != Player_Stand_PressUp) {
@@ -631,7 +625,6 @@ void EntityAlucard() {
     DamageParam damage;
     s32 sp40 = 0;
     AluFrame* sp3c;
-    s32 sp38;
     void (*weapon_func)();
     PlayerDraw* draw;
 
@@ -663,450 +656,418 @@ void EntityAlucard() {
     g_Player.unk70 = 0;
 
     g_Player.unk72 = func_80110394();
-    if (!(g_Player.status & PLAYER_STATUS_DEAD)) {
-        i = GetTeleportToOtherCastle();
-        if (i != 0) {
-            func_8010E42C(i);
-        }
-        if (PLAYER.step != Player_Teleport) {
-            func_8010A234(0);
-            func_8010A3F0();
-            func_80109990();
-            if (g_Player.unk56) {
-                g_Status.hp += g_Player.unk58;
-                func_800FE8F0();
-                CreateHPNumMove(g_Player.unk58, 1);
-                if (g_Player.unk56 == 1) {
-                    PlaySfx(SFX_HEALTH_PICKUP);
-                    if (!(g_Player.status & PLAYER_STATUS_STONE)) {
-                        CreateEntFactoryFromEntity(
-                            g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x48), 0);
-                        CreateEntFactoryFromEntity(
-                            g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x44), 0);
-                    }
-                }
-                if ((g_Player.unk56 == 2) &&
-                    !(g_Player.status & PLAYER_STATUS_STONE)) {
-                    CreateEntFactoryFromEntity(
-                        g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x48), 0);
-                }
-                if (g_Status.hpMax < g_Status.hp) {
-                    g_Status.hp = g_Status.hpMax;
-                }
-                g_Player.unk56 = 0;
-            }
-            i = CheckAndDoLevelUp();
-            if (i != 0) {
+    if (g_Player.status & PLAYER_STATUS_DEAD) {
+        goto block_159;
+    }
+    i = GetTeleportToOtherCastle();
+    if (i != 0) {
+        func_8010E42C(i);
+    }
+    if (PLAYER.step == Player_Teleport) {
+        goto block_159;
+    }
+    func_8010A234(0);
+    func_8010A3F0();
+    func_80109990();
+    if (g_Player.unk56) {
+        g_Status.hp += g_Player.unk58;
+        func_800FE8F0();
+        CreateHPNumMove(g_Player.unk58, 1);
+        if (g_Player.unk56 == 1) {
+            PlaySfx(SFX_HEALTH_PICKUP);
+            if (!(g_Player.status & PLAYER_STATUS_STONE)) {
                 CreateEntFactoryFromEntity(
-                    g_CurrentEntity, FACTORY(BP_25, i - 1), 0);
+                    g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x48), 0);
+                CreateEntFactoryFromEntity(
+                    g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x44), 0);
             }
-            for (i = 0; i < 16; i++) {
-                if (g_Player.timers[i]) {
-                    switch (i) {
-                    case 0:
-                    case 1:
-                    case 5:
-                    case 6:
-                    case 7:
-                    case 8:
-                    case 9:
-                    case 10:
-                    case 12:
-                    case 13:
-                    case 14:
-                        break;
-                    case 2:
-                        PLAYER.palette = g_Player.damagePalette;
-                        break;
-                    case 3:
-                        PLAYER.palette = g_Player.high_jump_timer;
-                        g_Player.timers[15] = 12;
-                        break;
-                    case 4: {
-                        angle = ((g_GameTimer & 0xF) * 256);
-                        draw = g_PlayerDraw;
-                        draw->r0 = draw->g0 = draw->b0 =
-                            (rsin(angle) + 0x1000) / 64 + 0x60;
-                        angle += 0x200;
-                        draw->r1 = draw->g1 = draw->b1 =
-                            (rsin(angle) + 0x1000) / 64 + 0x60;
-                        angle += 0x200;
-                        draw->r3 = draw->g3 = draw->b3 =
-                            (rsin(angle) + 0x1000) / 64 + 0x60;
-                        angle += 0x200;
-                        draw->r2 = draw->g2 = draw->b2 =
-                            (rsin(angle) + 0x1000) / 64 + 0x60;
-                        draw->enableColorBlend = 1;
-                        break;
-                    }
-                    case 15:
-                        func_8010DFF0(0, 0);
-                        break;
-                    case 11:
-                        if (D_800ACDF8 == 0) {
-                            func_801092E8(1);
-                        }
-                        break;
-                    }
-                    if (--g_Player.timers[i] == 0) {
-                        switch (i) {
-                        case 5:
-                        case 7:
-                        case 8:
-                        case 9:
-                        case 10:
-                        case 12:
-                        case 14:
-                            break;
-                        case 0:
-                            if (!(g_Player.status & (PLAYER_STATUS_STONE |
-                                                     PLAYER_STATUS_CURSE))) {
-                                g_Player.timers[4] = 0xC;
-                                g_Player.timers[15] = 0xC;
-                                func_8010E168(1, 0xC);
-                            }
-                            continue;
-                        case 1:
-                            if (!(g_Player.status & (PLAYER_STATUS_STONE |
-                                                     PLAYER_STATUS_CURSE))) {
-                                g_Player.timers[4] = 0xC;
-                                g_Player.timers[15] = 0xC;
-                                func_8010E168(1, 0xC);
-                            }
-                            continue;
-                        case 2:
-                            PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
-                            continue;
-                        case 3:
-                            PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
-                            if (!(g_Player.status &
-                                  (PLAYER_STATUS_STONE | PLAYER_STATUS_POISON |
-                                   PLAYER_STATUS_CURSE))) {
-                                g_Player.timers[4] = 0xC;
-                                g_Player.timers[15] = 0xC;
-                                func_8010E168(1, 0xC);
-                            }
-                            continue;
-                        case 4:
-                            draw->enableColorBlend = 0;
-                            continue;
-                        case 6:
-                            if ((PLAYER.step == 3) &&
-                                (PLAYER.ext.player.anim != 0x1C)) {
-                                SetPlayerAnim(0x1C);
-                                g_Player.unk44 &= 0xFFEF;
-                            }
-                            continue;
-                        case 13:
-                            func_8010E168(1, 0x10);
-                            continue;
-                        case 15:
-                            EnableAfterImage();
-                            continue;
-                        case 11:
-                            func_801092E8(0);
-                            continue;
-                        }
-                    }
+        }
+        if ((g_Player.unk56 == 2) && !(g_Player.status & PLAYER_STATUS_STONE)) {
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x48), 0);
+        }
+        if (g_Status.hpMax < g_Status.hp) {
+            g_Status.hp = g_Status.hpMax;
+        }
+        g_Player.unk56 = 0;
+    }
+    i = CheckAndDoLevelUp();
+    if (i != 0) {
+        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_25, i - 1), 0);
+    }
+    for (i = 0; i < 16; i++) {
+        if (g_Player.timers[i]) {
+            switch (i) {
+            case 0:
+            case 1:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+            case 10:
+            case 12:
+            case 13:
+            case 14:
+                break;
+            case 2:
+                PLAYER.palette = g_Player.damagePalette;
+                break;
+            case 3:
+                PLAYER.palette = g_Player.high_jump_timer;
+                g_Player.timers[15] = 12;
+                break;
+            case 4: {
+                angle = ((g_GameTimer & 0xF) * 256);
+                draw = g_PlayerDraw;
+                draw->r0 = draw->g0 = draw->b0 =
+                    (rsin(angle) + 0x1000) / 64 + 0x60;
+                angle += 0x200;
+                draw->r1 = draw->g1 = draw->b1 =
+                    (rsin(angle) + 0x1000) / 64 + 0x60;
+                angle += 0x200;
+                draw->r3 = draw->g3 = draw->b3 =
+                    (rsin(angle) + 0x1000) / 64 + 0x60;
+                angle += 0x200;
+                draw->r2 = draw->g2 = draw->b2 =
+                    (rsin(angle) + 0x1000) / 64 + 0x60;
+                draw->enableColorBlend = 1;
+                break;
+            }
+            case 15:
+                func_8010DFF0(0, 0);
+                break;
+            case 11:
+                if (D_800ACDF8 == 0) {
+                    func_801092E8(1);
                 }
+                break;
             }
-            if (D_800ACDFC != 0) {
-                D_800ACDFC--;
-            }
-            g_Player.padHeld = g_Player.padPressed;
-
-#if defined(VERSION_PSP)
-            if (g_Player.demo_timer != 0) {
-                sp38 = 1;
-            } else {
-                sp38 = 0;
-            }
-            sp40 = sp38;
-#endif
-
-            if (g_Player.demo_timer != 0) {
-                g_Player.demo_timer--;
-#ifdef VERSION_US
-                if (g_Player.demo_timer == 0) {
-                    D_80137FBC = 1;
-                }
-#endif
-                g_Player.padPressed = g_Player.padSim & 0xFFFF;
-                switch (g_Player.padSim >> 0x10) {
+            if (--g_Player.timers[i] == 0) {
+                switch (i) {
+                case 5:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                case 12:
+                case 14:
+                    break;
+                case 0:
+                    if (!(g_Player.status &
+                          (PLAYER_STATUS_STONE | PLAYER_STATUS_CURSE))) {
+                        g_Player.timers[4] = 0xC;
+                        g_Player.timers[15] = 0xC;
+                        func_8010E168(1, 0xC);
+                    }
+                    continue;
                 case 1:
-                    if (PLAYER.step != Player_Unk48) {
-                        func_8010E168(1, 4);
-                        SetPlayerStep(Player_Unk48);
-                        g_unkGraphicsStruct.pauseEnemies = 1;
+                    if (!(g_Player.status &
+                          (PLAYER_STATUS_STONE | PLAYER_STATUS_CURSE))) {
+                        g_Player.timers[4] = 0xC;
+                        g_Player.timers[15] = 0xC;
+                        func_8010E168(1, 0xC);
                     }
-                    break;
+                    continue;
                 case 2:
-                    func_8010E168(1, 4);
-                    if (g_Player.status & PLAYER_STATUS_AXEARMOR) {
-                        SetPlayerStep(Player_Unk50);
-                    } else {
-                        SetPlayerStep(Player_Unk49);
+                    PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
+                    continue;
+                case 3:
+                    PLAYER.palette = PAL_FLAG(PAL_ALUCARD);
+                    if (!(g_Player.status &
+                          (PLAYER_STATUS_STONE | PLAYER_STATUS_POISON |
+                           PLAYER_STATUS_CURSE))) {
+                        g_Player.timers[4] = 0xC;
+                        g_Player.timers[15] = 0xC;
+                        func_8010E168(1, 0xC);
                     }
-                    g_unkGraphicsStruct.pauseEnemies = 1;
-                    break;
-                }
-            } else {
-                g_Player.padPressed =
-                    g_pads[0].pressed & ~(PAD_SHOULDERS | PAD_SHAPES);
-#if defined(VERSION_PSP)
-#define TEST_BTN()                                                             \
-    (g_Settings.buttonMask[i] == (g_pads[0].pressed & g_Settings.buttonMask[i]))
-                for (i = 0; i < 6; i++) {
-#else
-#define TEST_BTN() (g_pads[0].pressed & g_Settings.buttonMask[i])
-                for (i = 0; i < 8; i++) {
-#endif
-                    if (TEST_BTN()) {
-                        g_Player.padPressed |= D_800ACE00[i];
+                    continue;
+                case 4:
+                    draw->enableColorBlend = 0;
+                    continue;
+                case 6:
+                    if ((PLAYER.step == 3) &&
+                        (PLAYER.ext.player.anim != 0x1C)) {
+                        SetPlayerAnim(0x1C);
+                        g_Player.unk44 &= 0xFFEF;
                     }
-                }
-#ifdef VERSION_US
-                if (D_80137FBC != 0) {
-                    D_80137FBC = 0;
-                    g_Player.padHeld = g_Player.padPressed;
-                }
-#endif
-            }
-            g_Player.padTapped =
-                (g_Player.padHeld ^ g_Player.padPressed) & g_Player.padPressed;
-            if (g_Player.status & PLAYER_STATUS_UNK8) {
-                g_Player.padTapped &= ~(PAD_SQUARE | PAD_CIRCLE);
-                g_Player.padPressed &= ~(PAD_SQUARE | PAD_CIRCLE);
-            }
-            if ((g_DebugPlayer != 0) && (func_801119C4() != 0)) {
-#ifdef VERSION_US
-                FntPrint("step:%04x\n", PLAYER.step);
-                FntPrint("bat_i_step:%04x\n", g_Player.unk66);
-#endif
-                return;
-            }
-            if ((D_80097448[1] != 0) &&
-                (IsRelicActive(RELIC_HOLY_SYMBOL) == 0) &&
-                !(PLAYER.hitParams & 0x1F)) {
-                PLAYER.hitParams = 6;
-            }
-
-// US uses a different ordering than HD/PSP
-#if !defined(VERSION_US)
-            if (g_Player.timers[13] | g_Player.timers[14]) {
-                goto specialmove;
-            }
-#endif
-            if (g_Player.unk60 < 2) {
-                if (g_Player.unk60 == 1) {
-                    playerStep = PLAYER.step;
-                    playerStepS = PLAYER.step_s;
-                    SetPlayerStep(Player_BossGrab);
-                } else {
-#if defined(VERSION_US)
-                    if (!(g_Player.timers[13] | g_Player.timers[14])) {
-#else
-                    if (1) { // to make curly braces match
-#endif
-                        if (PLAYER.hitParams) {
-                            playerStep = PLAYER.step;
-                            playerStepS = PLAYER.step_s;
-                            i = HandleDamage(
-                                &damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
-#if defined(VERSION_PSP)
-                            if (D_psp_08C630C4) {
-                                PLAYER.hitPoints = 0;
-                                i = 0;
-                            }
-#endif
-                            if ((g_Player.status & PLAYER_STATUS_AXEARMOR) &&
-                                ((i == 1) || (i == 8) || (i == 7))) {
-                                i = 3;
-                                damage.damageKind = DAMAGEKIND_1;
-                            }
-                            switch (i) {
-                            case 0:
-                                CreateEntFactoryFromEntity(
-                                    g_CurrentEntity, FACTORY(BP_47, 0), 0);
-                                CreateEntFactoryFromEntity(
-                                    g_CurrentEntity,
-                                    FACTORY(BP_BLINK_WHITE, 0x43), 0);
-                                CreateEntFactoryFromEntity(
-                                    g_CurrentEntity,
-                                    FACTORY(BP_BLINK_WHITE, 0x51), 0);
-                                CreateHPNumMove(0, 0);
-                                func_8010E168(1, 0xC);
-                                break;
-                            case 1:
-                                g_Player.unk18 = damage.effects;
-                                g_Player.high_jump_timer = 0x8166;
-                                func_8010E168(1, 0xC);
-                                g_Player.timers[3] = 6;
-                                PlaySfx(SFX_VO_ALU_PAIN_A);
-                                CreateHPNumMove(1, 0);
-                                break;
-                            case 2:
-                                g_Player.unk18 = damage.effects;
-                                CreateEntFactoryFromEntity(
-                                    g_CurrentEntity, FACTORY(BP_115, 0), 0);
-                                CreateEntFactoryFromEntity(
-                                    g_CurrentEntity,
-                                    FACTORY(BP_BLINK_WHITE, 0x58), 0);
-                                g_Player.high_jump_timer = 0x8166;
-                                func_8010E168(1, 0xC);
-                                g_Player.timers[3] = 6;
-                                break;
-                            case 3:
-                                g_Player.unk18 = damage.effects;
-                                SetPlayerStep(Player_Hit);
-                                CreateHPNumMove(damage.damageTaken, 0);
-                                break;
-                            case 4:
-                                CreateHPNumMove(damage.damageTaken, 0);
-                                SetPlayerStep(Player_Kill);
-                                break;
-                            case 5:
-                                CreateEntFactoryFromEntity(
-                                    g_CurrentEntity,
-                                    FACTORY(BP_BLINK_WHITE, 0x44), 0);
-                                CreateEntFactoryFromEntity(
-                                    g_CurrentEntity,
-                                    FACTORY(BP_BLINK_WHITE, 0x48), 0);
-                                CreateHPNumMove(damage.unkC, 1);
-                                func_8010E168(1, 0xC);
-                                break;
-                            case 6:
-                                SetPlayerStep(Player_KillWater);
-                                break;
-                            case 7:
-                                g_Player.unk18 = damage.effects;
-                                SetPlayerStep(Player_StatusStone);
-                                CreateHPNumMove(damage.damageTaken, 0);
-                                break;
-                            case 8:
-                                g_Player.unk18 = damage.effects;
-                                CreateHPNumMove(damage.damageTaken, 0);
-                                var_s8 = 1;
-                                break;
-                            case 9:
-                                CreateEntFactoryFromEntity(
-                                    g_CurrentEntity,
-                                    FACTORY(BP_BLINK_WHITE, 0x4E), 0);
-                                if (D_800ACDFC == 0) {
-                                    PlaySfx(SFX_VO_ALU_PAIN_E);
-                                }
-                                D_800ACDFC = 0x20;
-                                if (damage.damageTaken != 0) {
-                                    PlaySfx(SFX_RAPID_SCRAPE_3X);
-                                }
-                                break;
-                            }
-                        }
-                    }
-                specialmove:
-                    CheckSpecialMoveInputs();
-                    if (TRANSFORM_LOCKOUT_TIMER != 0) {
-                        TRANSFORM_LOCKOUT_TIMER--;
-                    }
-                    if (TRANSFORM_LOCKOUT_TIMER == 0) {
-
-#if defined(VERSION_PSP)
-                        var_s7 = g_Player.padPressed;
-                        if (sp40 != 0 || PLAYER.step == Player_MorphMist ||
-                            PLAYER.step == Player_MorphWolf ||
-                            PLAYER.step == Player_MorphBat) {
-                            D_psp_09234B88 = 0;
-                            D_psp_09234B90 = g_Player.padTapped;
-                        } else {
-                            if (var_s7 & 0x300) {
-                                D_psp_09234B90 |= (var_s7 & 0x300);
-                                D_psp_09234B88++;
-                                if (D_psp_09234B88 <= 5) {
-                                    g_Player.padTapped = var_s7 & ~0x300;
-                                }
-                                if (D_psp_09234B88 == 6) {
-                                    g_Player.padTapped |= D_psp_09234B90;
-                                }
-                            } else {
-                                if (D_psp_09234B88 != 0) {
-                                    D_psp_09234B88 = 0;
-                                    g_Player.padTapped = D_psp_09234B90;
-                                } else {
-                                    D_psp_09234B88 = 0;
-                                    D_psp_09234B90 = 0;
-                                }
-                            }
-                        }
-#endif
-
-                        if (D_80097448[1] == 0) {
-                            if (CHECK_SHOULDER(BTN_MIST) &&
-                                (HandleTransformationMP(
-                                     FORM_MIST, CHECK_ONLY) == 0) &&
-                                ((PLAYER.step == Player_Stand) ||
-                                 (PLAYER.step == Player_Walk) ||
-                                 (PLAYER.step == Player_Crouch) ||
-                                 (PLAYER.step == Player_Fall) ||
-                                 (PLAYER.step == Player_Jump) ||
-                                 (PLAYER.step == Player_AlucardStuck) ||
-                                 (PLAYER.step == Player_HighJump) ||
-                                 ((PLAYER.step == Player_MorphBat) &&
-                                  (PLAYER.step_s)) ||
-                                 ((PLAYER.step == Player_MorphWolf) &&
-                                  (PLAYER.step_s) && (PLAYER.step_s != 8)))) {
-                                func_80109328();
-                                SetPlayerStep(Player_MorphMist);
-                                PlaySfx(SFX_TRANSFORM_LOW);
-                                goto block_159;
-                            }
-                            if (CHECK_SHOULDER(PAD_R1) &&
-                                (HandleTransformationMP(FORM_BAT, CHECK_ONLY) ==
-                                 0) &&
-                                ((PLAYER.step == Player_Stand) ||
-                                 (PLAYER.step == Player_Walk) ||
-                                 (PLAYER.step == Player_Crouch) ||
-                                 (PLAYER.step == Player_Fall) ||
-                                 (PLAYER.step == Player_Jump) ||
-                                 (PLAYER.step == Player_AlucardStuck) ||
-                                 (PLAYER.step == Player_HighJump) ||
-                                 (PLAYER.step == Player_MorphMist) ||
-                                 ((PLAYER.step == Player_MorphWolf) &&
-                                  (PLAYER.step_s) && (PLAYER.step_s != 8)))) {
-                                if (PLAYER.step == 6 || PLAYER.step == 2) {
-                                    D_8013AECC = 0xC;
-                                }
-                                func_80109328();
-                                SetPlayerStep(Player_MorphBat);
-                                PlaySfx(SFX_TRANSFORM_LOW);
-                                goto block_160;
-                            }
-                        }
-                        if (CHECK_SHOULDER(BTN_WOLF) &&
-                            (HandleTransformationMP(FORM_WOLF, CHECK_ONLY) ==
-                             0) &&
-                            ((D_80097448[1] == 0) ||
-                             IsRelicActive(RELIC_HOLY_SYMBOL)) &&
-                            ((PLAYER.step == Player_Stand) ||
-                             (PLAYER.step == Player_Walk) ||
-                             (PLAYER.step == Player_Crouch) ||
-                             (PLAYER.step == Player_Fall) ||
-                             (PLAYER.step == Player_Jump) ||
-                             (PLAYER.step == Player_AlucardStuck) ||
-                             (PLAYER.step == Player_HighJump) ||
-                             (PLAYER.step == Player_MorphMist) ||
-                             ((PLAYER.step == Player_MorphBat) &&
-                              (PLAYER.step_s)))) {
-                            func_80109328();
-                            SetPlayerStep(Player_MorphWolf);
-                            PlaySfx(SFX_TRANSFORM);
-                        }
-                    }
+                    continue;
+                case 13:
+                    func_8010E168(1, 0x10);
+                    continue;
+                case 15:
+                    EnableAfterImage();
+                    continue;
+                case 11:
+                    func_801092E8(0);
+                    continue;
                 }
             }
         }
     }
+    if (D_800ACDFC != 0) {
+        D_800ACDFC--;
+    }
+    g_Player.padHeld = g_Player.padPressed;
+
+#if defined(VERSION_PSP)
+    sp40 = (g_Player.demo_timer != 0) ? 1 : 0;
+#endif
+
+    if (g_Player.demo_timer != 0) {
+        g_Player.demo_timer--;
+#ifdef VERSION_US
+        if (g_Player.demo_timer == 0) {
+            D_80137FBC = true;
+        }
+#endif
+        g_Player.padPressed = g_Player.padSim & 0xFFFF;
+        switch (g_Player.padSim >> 0x10) {
+        case 1:
+            if (PLAYER.step != Player_Unk48) {
+                func_8010E168(1, 4);
+                SetPlayerStep(Player_Unk48);
+                g_unkGraphicsStruct.pauseEnemies = 1;
+            }
+            break;
+        case 2:
+            func_8010E168(1, 4);
+            if (g_Player.status & PLAYER_STATUS_AXEARMOR) {
+                SetPlayerStep(Player_Unk50);
+            } else {
+                SetPlayerStep(Player_Unk49);
+            }
+            g_unkGraphicsStruct.pauseEnemies = 1;
+            break;
+        }
+    } else {
+        g_Player.padPressed = g_pads[0].pressed & ~(PAD_SHOULDERS | PAD_SHAPES);
+#if defined(VERSION_PSP)
+#define TEST_BTN()                                                             \
+    ((g_pads[0].pressed & g_Settings.buttonMask[i]) == g_Settings.buttonMask[i])
+        for (i = 0; i < 6; i++) {
+#else
+#define TEST_BTN() (g_pads[0].pressed & g_Settings.buttonMask[i])
+        for (i = 0; i < 8; i++) {
+#endif
+            if (TEST_BTN()) {
+                g_Player.padPressed |= D_800ACE00[i];
+            }
+        }
+#ifdef VERSION_US
+        if (D_80137FBC) {
+            D_80137FBC = false;
+            g_Player.padHeld = g_Player.padPressed;
+        }
+#endif
+    }
+    g_Player.padTapped =
+        (g_Player.padHeld ^ g_Player.padPressed) & g_Player.padPressed;
+    if (g_Player.status & PLAYER_STATUS_UNK8) {
+        g_Player.padTapped &= ~(PAD_SQUARE | PAD_CIRCLE);
+        g_Player.padPressed &= ~(PAD_SQUARE | PAD_CIRCLE);
+    }
+    if ((g_DebugPlayer != 0) && (func_801119C4() != 0)) {
+#ifdef VERSION_US
+        FntPrint("step:%04x\n", PLAYER.step);
+        FntPrint("bat_i_step:%04x\n", g_Player.unk66);
+#endif
+        return;
+    }
+    if ((D_80097448[1] != 0) && (IsRelicActive(RELIC_HOLY_SYMBOL) == 0) &&
+        !(PLAYER.hitParams & 0x1F)) {
+        PLAYER.hitParams = 6;
+    }
+
+// US uses a different ordering than HD/PSP
+#if !defined(VERSION_US)
+    if (g_Player.timers[13] | g_Player.timers[14]) {
+        goto specialmove;
+    }
+#endif
+    if (g_Player.unk60 >= 2) {
+        goto block_159;
+    }
+    if (g_Player.unk60 == 1) {
+        playerStep = PLAYER.step;
+        playerStepS = PLAYER.step_s;
+        SetPlayerStep(Player_BossGrab);
+        goto block_159;
+    }
+#if defined(VERSION_US)
+    if (g_Player.timers[13] | g_Player.timers[14]) {
+        goto specialmove;
+    }
+#endif
+    if (PLAYER.hitParams) {
+        playerStep = PLAYER.step;
+        playerStepS = PLAYER.step_s;
+        i = HandleDamage(&damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
+#if defined(VERSION_PSP)
+        if (D_psp_08C630C4) {
+            PLAYER.hitPoints = 0;
+            i = 0;
+        }
+#endif
+        if ((g_Player.status & PLAYER_STATUS_AXEARMOR) &&
+            (i == 1 || i == 8 || i == 7)) {
+            i = 3;
+            damage.damageKind = DAMAGEKIND_1;
+        }
+        switch (i) {
+        case 0:
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_47, 0), 0);
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x43), 0);
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x51), 0);
+            CreateHPNumMove(0, 0);
+            func_8010E168(1, 0xC);
+            break;
+        case 1:
+            g_Player.unk18 = damage.effects;
+            g_Player.high_jump_timer = 0x8166;
+            func_8010E168(1, 0xC);
+            g_Player.timers[3] = 6;
+            PlaySfx(SFX_VO_ALU_PAIN_A);
+            CreateHPNumMove(1, 0);
+            break;
+        case 2:
+            g_Player.unk18 = damage.effects;
+            CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_115, 0), 0);
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x58), 0);
+            g_Player.high_jump_timer = 0x8166;
+            func_8010E168(1, 0xC);
+            g_Player.timers[3] = 6;
+            break;
+        case 3:
+            g_Player.unk18 = damage.effects;
+            SetPlayerStep(Player_Hit);
+            CreateHPNumMove(damage.damageTaken, 0);
+            break;
+        case 4:
+            CreateHPNumMove(damage.damageTaken, 0);
+            SetPlayerStep(Player_Kill);
+            break;
+        case 5:
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x44), 0);
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x48), 0);
+            CreateHPNumMove(damage.unkC, 1);
+            func_8010E168(1, 0xC);
+            break;
+        case 6:
+            SetPlayerStep(Player_KillWater);
+            break;
+        case 7:
+            g_Player.unk18 = damage.effects;
+            SetPlayerStep(Player_StatusStone);
+            CreateHPNumMove(damage.damageTaken, 0);
+            break;
+        case 8:
+            g_Player.unk18 = damage.effects;
+            CreateHPNumMove(damage.damageTaken, 0);
+            var_s8 = 1;
+            break;
+        case 9:
+            CreateEntFactoryFromEntity(
+                g_CurrentEntity, FACTORY(BP_BLINK_WHITE, 0x4E), 0);
+            if (D_800ACDFC == 0) {
+                PlaySfx(SFX_VO_ALU_PAIN_E);
+            }
+            D_800ACDFC = 0x20;
+            if (damage.damageTaken != 0) {
+                PlaySfx(SFX_RAPID_SCRAPE_3X);
+            }
+            break;
+        }
+    }
+specialmove:
+    CheckSpecialMoveInputs();
+    if (TRANSFORM_LOCKOUT_TIMER != 0) {
+        TRANSFORM_LOCKOUT_TIMER--;
+    }
+    if (TRANSFORM_LOCKOUT_TIMER == 0) {
+
+#if defined(VERSION_PSP)
+        var_s7 = g_Player.padPressed;
+        if (sp40 != 0 || PLAYER.step == Player_MorphMist ||
+            PLAYER.step == Player_MorphWolf || PLAYER.step == Player_MorphBat) {
+            D_psp_09234B88 = 0;
+            D_psp_09234B90 = g_Player.padTapped;
+        } else if (var_s7 & 0x300) {
+            D_psp_09234B90 |= (var_s7 & 0x300);
+            D_psp_09234B88++;
+            if (D_psp_09234B88 <= 5) {
+                g_Player.padTapped = var_s7 & ~0x300;
+            }
+            if (D_psp_09234B88 == 6) {
+                g_Player.padTapped |= D_psp_09234B90;
+            }
+        } else {
+            if (D_psp_09234B88 != 0) {
+                D_psp_09234B88 = 0;
+                g_Player.padTapped = D_psp_09234B90;
+            } else {
+                D_psp_09234B88 = 0;
+                D_psp_09234B90 = 0;
+            }
+        }
+#endif
+
+        if (D_80097448[1] == 0) {
+            if (CHECK_SHOULDER(BTN_MIST) &&
+                (HandleTransformationMP(FORM_MIST, CHECK_ONLY) == 0) &&
+                (PLAYER.step == Player_Stand || PLAYER.step == Player_Walk ||
+                 PLAYER.step == Player_Crouch || PLAYER.step == Player_Fall ||
+                 PLAYER.step == Player_Jump ||
+                 PLAYER.step == Player_AlucardStuck ||
+                 PLAYER.step == Player_HighJump ||
+                 (PLAYER.step == Player_MorphBat && PLAYER.step_s) ||
+                 (PLAYER.step == Player_MorphWolf && PLAYER.step_s &&
+                  PLAYER.step_s != 8))) {
+                func_80109328();
+                SetPlayerStep(Player_MorphMist);
+                PlaySfx(SFX_TRANSFORM_LOW);
+                goto block_159;
+            }
+            if (CHECK_SHOULDER(PAD_R1) &&
+                (HandleTransformationMP(FORM_BAT, CHECK_ONLY) == 0) &&
+                (PLAYER.step == Player_Stand || PLAYER.step == Player_Walk ||
+                 PLAYER.step == Player_Crouch || PLAYER.step == Player_Fall ||
+                 PLAYER.step == Player_Jump ||
+                 PLAYER.step == Player_AlucardStuck ||
+                 PLAYER.step == Player_HighJump ||
+                 PLAYER.step == Player_MorphMist ||
+                 (PLAYER.step == Player_MorphWolf && PLAYER.step_s &&
+                  PLAYER.step_s != 8))) {
+                if (PLAYER.step == Player_AlucardStuck ||
+                    PLAYER.step == Player_Crouch) {
+                    D_8013AECC = 0xC;
+                }
+                func_80109328();
+                SetPlayerStep(Player_MorphBat);
+                PlaySfx(SFX_TRANSFORM_LOW);
+                goto block_159;
+            }
+        }
+        if (CHECK_SHOULDER(BTN_WOLF) &&
+            (HandleTransformationMP(FORM_WOLF, CHECK_ONLY) == 0) &&
+            ((D_80097448[1] == 0) || IsRelicActive(RELIC_HOLY_SYMBOL)) &&
+            (PLAYER.step == Player_Stand || PLAYER.step == Player_Walk ||
+             PLAYER.step == Player_Crouch || PLAYER.step == Player_Fall ||
+             PLAYER.step == Player_Jump || PLAYER.step == Player_AlucardStuck ||
+             PLAYER.step == Player_HighJump ||
+             PLAYER.step == Player_MorphMist ||
+             (PLAYER.step == Player_MorphBat && PLAYER.step_s))) {
+            func_80109328();
+            SetPlayerStep(Player_MorphWolf);
+            PlaySfx(SFX_TRANSFORM);
+        }
+    }
 block_159:
-block_160:
     g_Player.prev_step = PLAYER.step;
     g_Player.prev_step_s = PLAYER.step_s;
     D_800ACDF8 = g_Player.timers[ALU_T_DARKMETAMORPH];
