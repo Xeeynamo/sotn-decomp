@@ -806,7 +806,7 @@ typedef struct {
     /* 0x0C */ u32 vhOff;
     /* 0x10 */ u32 vhLen;
     /* 0x14 */ u32 vbLen;
-    /* 0x18 */ u32 musicID;
+    /* 0x18 */ u32 musicId;
     /* 0x1C */ const char* gfxName;
     /* 0x20 */ const char* ovlName;
     /* 0x24 */ char* name;
