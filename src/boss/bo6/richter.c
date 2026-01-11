@@ -1,6 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo6.h"
 
+extern s32 D_us_801CF3C8;
+extern s32 D_us_801CF3CC;
+extern s16 RIC_posX_i_hi;
+extern s16 PLAYER_posX_i_hi;
+
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B4BD0);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B4EAC);
@@ -11,7 +16,10 @@ INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_CheckHighJumpInput);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicMain);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B5A14);
+void func_us_801B5A14(s32 arg0) {
+    D_us_801CF3C8 = arg0;
+    D_us_801CF3CC = 0;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", RichterThinking);
 
@@ -33,7 +41,13 @@ INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepCrouch);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicResetPose);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/richter", func_us_801B77D8);
+void func_us_801B77D8(void) {
+    if (RIC_posX_i_hi - PLAYER_posX_i_hi > 0) {
+        RIC.entityRoomIndex = 1;
+    } else {
+        RIC.entityRoomIndex = 0;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/richter", BO6_RicStepHit);
 

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo6.h"
 
+extern s32 RIC_velocityX;
+
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B9144);
 
 void func_us_801B9338(void) {}
@@ -23,15 +25,25 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicCheckFacing);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetSpeedX);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B9ACC);
+void func_us_801B9ACC(s32 velocityX) {
+    if (RIC.entityRoomIndex == 1) {
+        velocityX = -velocityX;
+    }
+    RIC_velocityX = velocityX;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetInvincibilityFrames);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_DisableAfterImage);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B9C14);
+void func_us_801B9C14(void) {
+    g_Entities[E_ID_41].ext.afterImage.timer = 0;
+    g_Entities[E_ID_41].ext.afterImage.index = 0;
+    g_Entities[E_ID_41].ext.afterImage.resetFlag = 0;
+    g_Entities[E_ID_41].ext.afterImage.disableFlag = 0;
+}
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801B9C3C);
+void func_us_801B9C3C(void) { BO6_RicSetStep(PL_S_DEBUG); }
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicSetCrouch);
 
