@@ -124,13 +124,13 @@
 | main   | gte_stopz                         |        9 |          1 |        |       |     |
 | main   | gte_strgb                         |        9 |          1 |        |       |     |
 | main   | gte_stsxy                         |        9 |          1 |        |       |     |
+| main   | createPlayModeFlag                |        9 |          1 |        |       |     |
+| main   | waitPlayMode                      |        9 |          1 |        |       |     |
 | main   | func_psp_08930A0C                 |        9 |          1 |        |       |     |
 | main   | func_psp_089125F8                 |        9 |          1 |        |       |     |
 | main   | func_psp_0891273C                 |        9 |          1 |        |       |     |
 | main   | func_psp_0891274C                 |        9 |          1 |        |       |     |
 | main   | func_psp_089127D8                 |        9 |          1 |        |       |     |
-| main   | createPlayModeFlag                |        9 |          1 |        |       |     |
-| main   | waitPlayMode                      |        9 |          1 |        |       |     |
 | main   | func_psp_0892CB30                 |        9 |          1 |        |       |     |
 | main   | func_psp_08933F5C                 |        9 |          1 |        |       |     |
 | main   | func_psp_08933F6C                 |        9 |          1 |        |       |     |
