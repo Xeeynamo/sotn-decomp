@@ -9,12 +9,34 @@
 extern s32 D_psp_08C63B24;
 extern u8 g_BmpCastleMap[0x8000];
 extern u16 g_Clut[3][0x1000];
+extern u16 D_psp_08C63324[];
 
 void func_psp_089262C4(void);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2758C", FntPrint);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2758C", func_psp_08925F7C);
+void func_psp_08925F7C(s32 x, s32 y0, s32 w, s32 h) {
+    RECT rect;
+    s32 y;
+    s32 i;
+
+    for (y = y0; y < (y0 + h); y++) {
+        rect.x = x;
+        rect.y = y;
+        rect.w = w;
+        rect.h = 1;
+        StoreImage(&rect, (u_long*)D_psp_08C63324);
+        if (D_psp_08C63324[0] == 0x7FFF) {
+            D_psp_08C63324[0] = 0xFFFF;
+        }
+        for (i = 0; i < w; i++) {
+            if (D_psp_08C63324[i] == 0x8000) {
+                D_psp_08C63324[i] = 0x8001;
+            }
+        }
+        LoadImage(&rect, (u_long*)D_psp_08C63324);
+    }
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2758C", func_psp_089260AC);
 
