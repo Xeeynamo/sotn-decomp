@@ -31,6 +31,7 @@
 | main   | SquareRoot0                       |        7 |          1 |        |       |     |
 | main   | gte_dpcs                          |        7 |          1 |        |       |     |
 | main   | gte_stub                          |        7 |          1 |        |       |     |
+| main   | strFileLseek                      |        7 |          1 |        |       |     |
 | main   | func_psp_0892BFD0                 |        7 |          1 |        |       |     |
 | main   | func_psp_0892EAFC                 |        7 |          1 |        |       |     |
 | main   | func_psp_08937650                 |        7 |          1 |        |       |     |
@@ -43,7 +44,6 @@
 | main   | func_psp_089005B0                 |        7 |          1 |        |       |     |
 | main   | func_psp_089005B8                 |        7 |          1 |        |       |     |
 | main   | func_psp_089005C0                 |        7 |          1 |        |       |     |
-| main   | strFileLseek                      |        7 |          1 |        |       |     |
 | main   | func_psp_0892CF88                 |        7 |          1 |        |       |     |
 | main   | func_psp_0892D518                 |        7 |          1 |        |       |     |
 |        | func_092EA930                     |        7 |          1 |        |       |     |
@@ -84,7 +84,7 @@
 | main   | func_psp_0892CB10                 |        8 |          1 |        |       |     |
 | main   | func_psp_0892CF7C                 |        8 |          1 |        |       |     |
 | main   | func_psp_08912814                 |        8 |          1 |        |       |     |
-| main   | SsSetSerialVol                    |        8 |          1 |        |       |     |
+| main   | func_psp_0892A9D4                 |        8 |          1 |        |       |     |
 | main   | func_psp_0892A9E0                 |        8 |          1 |        |       |     |
 | main   | func_psp_0892F83C                 |        8 |          1 |        |       |     |
 | main   | sceGuGetAllStatus                 |        8 |          1 |        |       |     |
@@ -1133,7 +1133,7 @@
 | main   | func_psp_0892DD54                 |       30 |          5 |        |       |     |
 | main   | sceGuSetCallback2                 |       30 |          5 |        |       |     |
 | st0    | func_pspeu_09237CB8               |       30 |          5 |        |       |     |
-| main   | strFileClose                      |       30 |          6 |        |       |     |
+| main   | func_psp_0892AB14                 |       30 |          6 |        |       |     |
 | dra    | func_psp_0910A138                 |       30 |          7 |        |       |     |
 | main   | func_psp_08911FA0                 |       31 |          1 |        |       |     |
 | main   | func_psp_08912008                 |       31 |          1 |        |       |     |
@@ -1328,8 +1328,8 @@
 | wrp    | func_psp_092447C0                 |       35 |          4 |        |       |     |
 | dra    | func_psp_09108CD0                 |       35 |          5 |        |       |     |
 | main   | cleanup_glue                      |       35 |          5 |        |       |     |
-| main   | func_psp_08916830                 |       35 |          5 |        |       |     |
 | main   | DvdUmdIoTerm                      |       35 |          5 |        |       |     |
+| main   | func_psp_08916830                 |       35 |          5 |        |       |     |
 |        | func_092EE3D0                     |       35 |          5 |        |       |     |
 | dai    | func_pspeu_09239890               |       35 |          5 |        |       |     |
 | no2    | func_pspeu_0923A9D8               |       35 |          5 |        |       |     |
@@ -1364,8 +1364,8 @@
 | wrp    | func_psp_09237B50                 |       36 |          4 |        |       |     |
 | dra    | func_psp_091040A0                 |       36 |          5 |        |       |     |
 | dra    | func_psp_0913F7F8                 |       36 |          5 |        |       |     |
-| main   | func_psp_08937740                 |       36 |          5 |        |       |     |
 | main   | strFileRead                       |       36 |          5 |        |       |     |
+| main   | func_psp_08937740                 |       36 |          5 |        |       |     |
 | main   | func_psp_0892D4A8                 |       36 |          5 |        |       |     |
 | main   | func_psp_0890F3E0                 |       36 |          7 |        |       |     |
 | main   | func_psp_0890F4E0                 |       36 |          7 |        |       |     |
@@ -2928,7 +2928,7 @@
 | np3    | EntityBoneScimitarParts           |       99 |         10 |        |       |     |
 | np3    | EntitySmallGaibonProjectile       |       99 |         11 |        |       |     |
 | dra    | func_psp_090ED310                 |       99 |         12 |        |       |     |
-| main   | DvdUmdRetryOpenCB                 |       99 |         22 |        |       |     |
+| main   | func_psp_0892BBD4                 |       99 |         22 |        |       |     |
 | main   | func_psp_089144BC                 |      100 |         19 |        |       |     |
 | main   | _lseek                            |      100 |         27 |        |       |     |
 | st0    | func_pspeu_09241BF0               |      101 |          5 |        |       |     |
@@ -3271,7 +3271,7 @@
 | main   | scalbn                            |      127 |         18 |        |       |     |
 | dra    | func_psp_090F1618                 |      128 |         16 |        |       |     |
 | dra    | func_psp_090EDC48                 |      128 |         17 |        |       |     |
-| main   | DvdUmdRetryRead                   |      128 |         26 |        |       |     |
+| main   | func_psp_0892BD3C                 |      128 |         26 |        |       |     |
 | dra    | func_psp_090EC608                 |      129 |         11 |        |       |     |
 | are    | func_pspeu_0924D918               |      129 |         11 |        |       |     |
 | no2    | func_pspeu_0923DCC0               |      129 |         11 |        |       |     |
