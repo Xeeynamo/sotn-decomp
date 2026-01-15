@@ -137,7 +137,6 @@ SetColorMatrix = 0x08929700;
 SetLightMatrix = 0x08929770;
 SetBackColor = 0x089297E0;
 NormalColorCol = 0x08929F60;
-SsSetSerialVol = 0x0892A9D4;
 GsClearVcount = 0x0892EA18;
 SpuGetAllKeysStatus = 0x0892ECAC;
 SsUtKeyOnV = 0x0892ECF4;

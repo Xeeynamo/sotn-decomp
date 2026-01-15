@@ -9,9 +9,14 @@
 #include <pspatrac3.h>
 #include <pspkerror.h>
 
+extern char D_psp_08962E80[];
+extern char D_psp_08962E88[];
+extern char D_psp_08962E90[];
+extern char D_psp_08962E98[];
+extern char D_psp_08962EBC[];
 extern char D_psp_08962F50[];
 extern char D_psp_08962FCC[];
-extern char D_psp_08962E90[];
+extern char D_psp_08962EDC[];
 extern u32 D_psp_08DADCB4;
 
 typedef struct {
@@ -26,7 +31,32 @@ typedef struct {
                        // and ending
     s32 outputChannel; // Channel when outputting to libwave
     s32 iEndSample;
+    s32 iVol;
+    s32 unk24;
+    s32 unk28;
 } SceAtracArg;
+
+typedef struct {
+    char* filename;     // "ATRAC3plus" file
+    u8* pucFirstBuf;    // FirstBuffer starting address
+    s32 iFirstBufSize;  // FirstBuffer size
+    u8* pucSecondBuf;   // SecondBuffer starting address
+    s32 iSecondBufSize; // SecondBuffer size
+    s32 iOutputChannel; // Output channel
+    SceUID playFlag;    // Event flag for setting playback mode
+} SceBGMArg;
+
+// clang-format off
+// Values for setting playback mode and EVENTFLAG
+#define BGM_INIT_END              (0x00000001U) // Status when playback initialization ended
+#define BGM_PLAY_START            (0x00000002U) // State when playback start instruction was received
+#define BGM_RESET_POSITION        (0x00000004U) // Status when playback position changes
+#define BGM_PLAY_FINISH           (0x00000008U) // Status when playback termination is specified
+#define BGM_UNK_10                (0x00000010U)
+// clang-format on
+
+void setPlayMode(SceUID playFlag, u32 uiPlayMode);
+void waitPlayMode(SceUID playFlag, u32 uiPlayMode);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_08929FA8);
 
@@ -64,19 +94,86 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A97C);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A998);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", SsSetSerialVol);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A9D4);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", func_psp_0892A9E0);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", strFileOpen);
+s32 strFileOpen(StrFile* file, const char* filename, s32 flags) {
+    if (memcmp(filename, D_psp_08962E80, 6) == 0) {
+        strcpy(file->assignName, D_psp_08962E80);
+        file->fd = sceIoOpen(filename, flags, 0);
+    } else if (memcmp(filename, D_psp_08962E88, 4) == 0) {
+        strcpy(file->assignName, D_psp_08962E88);
+        file->fd = sceIoOpen(filename, flags, 0);
+    } else if (memcmp(filename, D_psp_08962E90, 6) == 0) {
+        strcpy(file->assignName, D_psp_08962E90);
+        file->fd = DvdUmdRetryOpenCB(filename, flags, 0);
+    } else {
+        printf(D_psp_08962E98);
+        return -1;
+    }
+    if (file->fd < 0) {
+        printf(D_psp_08962EBC, file->fd);
+        return -1;
+    }
+    return 0;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", strFileClose);
+s32 strFileClose(StrFile* file) {
+    SceInt64 result;
+    s32 ret;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", strFileRead);
+    if (file->fd >= 0) {
+        ret = sceIoClose(file->fd);
+        if (ret == SCE_KERNEL_ERROR_ASYNC_BUSY) {
+            sceIoWaitAsync(file->fd, &result);
+            ret = sceIoClose(file->fd);
+        }
+    } else {
+        return -1;
+    }
+    return ret;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", strFileLseek);
+s32 strFileRead(StrFile* file, void* buff, SceSize size) {
+    s32 readsize;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", play_bgm);
+    if (strcmp(file->assignName, D_psp_08962E90) == 0) {
+        readsize = DvdUmdRetryRead(file->fd, buff, size);
+    } else {
+        readsize = sceIoRead(file->fd, buff, size);
+    }
+    return readsize;
+}
+
+SceOff strFileLseek(StrFile* file, SceOff offset, s32 whence) {
+    return sceIoLseek(file->fd, offset, whence);
+}
+
+s32 play_bgm(u32 args, void* argp) {
+    s32 status;
+    SceBGMArg* pBGMArg;
+    SceAtracArg atracArg;
+
+    pBGMArg = (SceBGMArg*)argp;
+
+    sceKernelClearEventFlag(pBGMArg->playFlag, 0);
+    setPlayMode(pBGMArg->playFlag, BGM_UNK_10);
+    status = init_atrac3plus(pBGMArg, &atracArg);
+    if (status < 0) {
+        printf(D_psp_08962EDC, status);
+        setPlayMode(pBGMArg->playFlag, BGM_PLAY_FINISH);
+        goto TERM;
+    }
+    setPlayMode(pBGMArg->playFlag, BGM_INIT_END);
+    waitPlayMode(pBGMArg->playFlag, BGM_PLAY_START | BGM_PLAY_FINISH);
+    play_atrac3plus(&atracArg);
+
+TERM:
+    setPlayMode(pBGMArg->playFlag, BGM_PLAY_FINISH);
+    sceKernelExitThread(0);
+    return 0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", init_atrac3plus);
 
@@ -261,11 +358,3 @@ void fadeoutOperation(
         pusValue[2 * i + 1] = 0;
     }
 }
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", DvdUmdIoInit);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", DvdUmdIoTerm);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", DvdUmdRetryOpenCB);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2B69C", DvdUmdRetryRead);
