@@ -418,8 +418,8 @@ int main(int argc, char* argv[]) {
     D_psp_08B42000 = sceKernelGetThreadId();
     func_psp_0891269C();
     func_psp_0891249C();
-    D_psp_08B41FE0 =
-        sceKernelCreateEventFlag("FileIOWakeUP", PSP_EVENT_WAITMULTIPLE, 0, 0);
+    D_psp_08B41FE0 = sceKernelCreateEventFlag(
+        "FileIOWakeUP", PSP_EVENT_WAITMULTIPLE, 0x00000000, NULL);
     sceKernelChangeCurrentThreadAttr(0, PSP_THREAD_ATTR_VFPU);
     func_psp_0891B400();
     func_psp_08937560();

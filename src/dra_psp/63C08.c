@@ -858,7 +858,7 @@ void InitSoundVars1(void) {
 }
 
 void SetCdVolume(s8 s_num, s16 arg1, s16 arg2) {
-    SsSetSerialVol((arg1 << 0xF) / 127, arg1, arg2);
+    func_psp_0892A9D4((s16)((arg1 << 0xF) / 127));
 }
 
 void SetMonoStereo(u8 soundMode) {
