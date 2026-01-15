@@ -31,8 +31,8 @@ const gameMetadata = {
             "name": "PlayStation 1 US",
             "overlays": [
                 "dra", "ric", "weapon",
-                "stcen", "stchi", "stdai", "stdre", "stlib", "stmad", "stno0", "stno1", "stno2", "stno3", "stno4", "stnp3", "stnz0", "stnz1", "stsel", "stst0", "sttop", "stwrp",
-                "strtop", "strwrp",
+                "stare", "stcat", "stcen", "stchi", "stdai", "stdre", "stlib", "stmad", "stno0", "stno1", "stno2", "stno3", "stno4", "stnp3", "stnz0", "stnz1", "stsel", "stst0", "sttop", "stwrp",
+                "strare", "strtop", "strwrp",
                 "bomar", "bobo4", "bobo6", "borbo3", "borbo5",
                 "tt_000", "tt_001", "tt_002","tt_003", "tt_004"
             ]
@@ -42,7 +42,8 @@ const gameMetadata = {
             "name": "PSP EU",
             "overlays": [
                 "dra", "maria", "ric",
-                "stchi", "stdai", "stlib", "stno2", "stno3", "stno4", "stnp3", "stnz1", "stst0", "stwrp",
+                "stare", "stcat", "stchi", "stdai", "stdre", "stlib", "stno2", "stno3", "stno4", "stnp3", "stnz1", "stsel", "stst0", "stwrp",
+                "strare",
                 "tt_000"
             ]
         },
@@ -72,6 +73,14 @@ const gameMetadata = {
         "ric": {
             "name": "BIN/RIC.BIN",
             "desc": "Richter program"
+        },
+        "stare": {
+            "name": "ST/ARE/ARE.BIN",
+            "desc": "Colosseum"
+        },
+        "stcat": {
+            "name": "ST/CAT/CAT.BIN",
+            "desc": "Catacombs"
         },
         "stcen": {
             "name": "ST/CEN/CEN.BIN",
@@ -144,6 +153,58 @@ const gameMetadata = {
         "stwrp": {
             "name": "ST/WRP/WRP.BIN",
             "desc": "Warp rooms"
+        },
+        "strare": {
+            "name": "ST/RARE/RARE.BIN",
+            "desc": "Reverse Colosseum"
+        },
+        "strcat": {
+            "name": "ST/RCAT/RCAT.BIN",
+            "desc": "Floating Catacombs"
+        },
+        "strcen": {
+            "name": "ST/RCEN/RCEN.BIN",
+            "desc": "Reverse Center"
+        },
+        "strchi": {
+            "name": "ST/RCHI/RCHI.BIN",
+            "desc": "Cave"
+        },
+        "strdai": {
+            "name": "ST/RDAI/RDAI.BIN",
+            "desc": "Anti-Chapel"
+        },
+        "strlib": {
+            "name": "ST/RLIB/RLIB.BIN",
+            "desc": "Forbidden Library"
+        },
+        "strno0": {
+            "name": "ST/RNO0/RNO0.BIN",
+            "desc": "Black Marble Gallery"
+        },
+        "strno1": {
+            "name": "ST/RNO1/RNO1.BIN",
+            "desc": "Reverse Outer Wall",
+        },
+        "strno2": {
+            "name": "ST/RNO2/RNO2.BIN",
+            "desc": "Death Wing's Lair"
+        },
+        "strno3": {
+            "name": "ST/RNO3/RNO3.BIN",
+            "desc": "Reverse Entrance"
+        },
+        "strno4": {
+            "name": "ST/RNO4/RNO4.BIN",
+            "desc": "Reverce Caverns"
+        },
+        "strnz0": {
+            "name": "ST/RNZ0/RNZ0.BIN",
+            "desc": "Necromancy Laboratory"
+        },
+        "strnz1": {
+            "name": "ST/RNZ1/RNZ1.BIN",
+            "desc": "Reverse Clock Tower"
         },
         "strtop": {
             "name": "ST/RTOP/RTOP.BIN",

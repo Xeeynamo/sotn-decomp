@@ -15,18 +15,28 @@ export const ChartsVersion = ({
             return;
         }
 
-        const timeline = [wholeTimeline[0]];
-        const funcs = [ovlFuncs[0]];
-        const code = [ovlCode[0]];
+        const timeline = [wholeTimeline[wholeTimeline.length - 1]];
+        const funcs = [ovlFuncs[ovlFuncs - 1]];
+        const code = [ovlCode[ovlCode - 1]];
         var prevFuncs = funcs[0];
-        for (var i = 1; i < length; i++) {
-            if (prevFuncs !== ovlFuncs[i]) {
+        for (var i = length - 2; i >= 0; i--) {
+            if (!isNaN(ovlFuncs[i]) && prevFuncs !== ovlFuncs[i]) {
                 prevFuncs = ovlFuncs[i]
                 timeline.push(wholeTimeline[i])
                 funcs.push(ovlFuncs[i])
                 code.push(ovlCode[i])
             }
         }
+
+        timeline.reverse();
+        funcs.reverse();
+        code.reverse();
+
+        // add the current date with the last entry values
+        // to fill the remaining space.
+        timeline.unshift(new Date().getTime() / 1000)
+        funcs.unshift(funcs[0])
+        code.unshift(code[0])
 
         const ovlMeta = overlays[overlayId];
         const data = [
