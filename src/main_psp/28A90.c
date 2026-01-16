@@ -6,7 +6,7 @@
 
 double sin(double x);
 double cos(double x);
-float func_psp_08906994(float, float);
+float atan2f(float, float);
 
 extern SVECTOR D_psp_08C63B28; // Vector 0
 extern SVECTOR D_psp_08C63B30; // Vector 1
@@ -179,9 +179,7 @@ long SquareRoot0(long a) { return SquareRoot(a); }
 
 long SquareRoot12(long a) { return SquareRoot(a / 0x1000) * 0x1000; }
 
-long ratan2(long y, long x) {
-    return (func_psp_08906994(y, x) * 0x1000 / 2) / 3.1415927f;
-}
+long ratan2(long y, long x) { return (atan2f(y, x) * 0x1000 / 2) / 3.1415927f; }
 
 long VectorNormalS(VECTOR* v0, SVECTOR* v1) {
     s32 len;
