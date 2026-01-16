@@ -3635,17 +3635,17 @@
 | 1.00 | true     | CheckFieldCollisionY                | asm/us/st/are/matchings/e_flea_man/CheckFieldCollisionY.s 
 | 1.00 | true     | CheckFieldCollisionY                | asm/us/st/lib/matchings/e_flea_man/CheckFieldCollisionY.s 
 | 1.00 | true     | CheckFieldCollisionY                | asm/us/st/no0/matchings/e_flea_man/CheckFieldCollisionY.s 
-| 1.00 | false    | CheckFieldCollisionY                | asm/us/st/nz1/nonmatchings/e_flea_man/CheckFieldCollisionY.s 
+| 1.00 | true     | CheckFieldCollisionY                | asm/us/st/nz1/matchings/e_flea_man/CheckFieldCollisionY.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityFleaMan                       | asm/us/st/are/matchings/e_flea_man/EntityFleaMan.s 
 | 0.96 | true     | EntityFleaMan                       | asm/us/st/lib/matchings/e_flea_man/EntityFleaMan.s 
 | 1.00 | true     | EntityFleaMan                       | asm/us/st/no0/matchings/e_flea_man/EntityFleaMan.s 
-| 1.00 | false    | EntityFleaMan                       | asm/us/st/nz1/nonmatchings/e_flea_man/EntityFleaMan.s 
+| 1.00 | true     | EntityFleaMan                       | asm/us/st/nz1/matchings/e_flea_man/EntityFleaMan.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | UpdateFacingDirection               | asm/us/st/are/matchings/e_flea_man/UpdateFacingDirection.s 
 | 1.00 | true     | UpdateFacingDirection               | asm/us/st/lib/matchings/e_flea_man/UpdateFacingDirection.s 
 | 1.00 | true     | UpdateFacingDirection               | asm/us/st/no0/matchings/e_flea_man/UpdateFacingDirection.s 
-| 1.00 | false    | UpdateFacingDirection               | asm/us/st/nz1/nonmatchings/e_flea_man/UpdateFacingDirection.s 
+| 1.00 | true     | UpdateFacingDirection               | asm/us/st/nz1/matchings/e_flea_man/UpdateFacingDirection.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityMistDoor                      | asm/us/st/are/matchings/e_mist_door/EntityMistDoor.s 
 | 1.00 | true     | EntityMistDoor                      | asm/us/st/dai/matchings/e_mist_door/EntityMistDoor.s 
