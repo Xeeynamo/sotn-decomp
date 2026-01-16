@@ -311,13 +311,13 @@ void EntityCloakedKnightCloak(Entity* self) {
     }
 }
 
-extern EInit D_us_80180C00;
+extern EInit g_EInitCloakedKnightAura;
 
 void EntityCloakedKnightAura(Entity* self) {
     Entity* parent;
 
     if (!self->step) {
-        InitializeEntity(D_us_80180C00);
+        InitializeEntity(g_EInitCloakedKnightAura);
         self->hitboxState = 0;
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->animCurFrame = 1;
