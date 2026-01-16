@@ -68,12 +68,16 @@ extern s32 D_psp_08DAE784;
 extern s32 D_psp_08DAE788;
 extern s32 D_psp_08DAE78C;
 extern s32 D_psp_08DAE7A0;
+extern char D_psp_089632D8[];
 
 void func_psp_0892BFD8(unkStruct2*);
 void func_psp_0892C174(unkStruct2*, unkStruct*);
 void func_psp_0892C4F8(unkStruct2*, s32);
 void func_psp_0892C3D4(unkStruct2*, s32);
+void func_psp_0892CAD8(void);
 void func_psp_0892CB10(void);
+void func_psp_0892CB1C(void);
+void func_psp_0892CB30(void);
 void func_psp_0892C168(void);
 s32 func_psp_0892CB40(void);
 
@@ -350,13 +354,15 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892CA28);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892CA90);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892CAD8);
+void func_psp_0892CAD8(void) {
+    D_psp_08DAE780 = sceKernelCreateSema(D_psp_089632D8, 0, 1, 1, NULL);
+}
 
 void func_psp_0892CB10(void) { sceKernelDeleteSema(D_psp_08DAE780); }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892CB1C);
+void func_psp_0892CB1C(void) { sceKernelWaitSema(D_psp_08DAE780, 1, NULL); }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/2D608", func_psp_0892CB30);
+void func_psp_0892CB30(void) { sceKernelSignalSema(D_psp_08DAE780, 1); }
 
 s32 func_psp_0892CB40(void) {
     volatile s32 i;

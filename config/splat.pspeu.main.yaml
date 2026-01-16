@@ -46,213 +46,221 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x16F4, asm, _open] # kernel_bridge.c
-      - [0x178C, asm, _lseek] # kernel_bridge.c
-      - [0x18BC, asm, _exit] # kernel_bridge.c
-      - [0x1984, asm, _sbrk] # kernel_bridge.c
-      - [0x1A74, asm, _read] # kernel_bridge.c
-      - [0x1B18, asm, _write] # kernel_bridge.c
-      - [0x1BBC, asm, _close] # kernel_bridge.c
-      - [0x1C40, asm, _fstat] # kernel_bridge.c
-      - [0x1C50, asm, isatty] # kernel_bridge.c
-      - [0x1C58, asm, _rename] # kernel_bridge.c
-      - [0x1C74, c, main_psp/1C74] # kernel_bridge.c
-      - [0x1CBC, asm, __free_heap] # kernel_bridge.c
-      - [0x1CF8, asm, clock] # kernel_bridge.c
-      - [0x1D14, asm, time] # kernel_bridge.c
-      - [0x1D30, asm, _gettimeofday] # kernel_bridge.c
-      - [0x1D4C, asm, _times] # kernel_bridge.c
-      - [0x1D54, asm, sigfillset] # kernel_bridge.c
-      - [0x1D64, asm, sigprocmask] # kernel_bridge.c
-      - [0x1D6C, asm, sceGuInit] # libgu.c
-      - [0x1EA8, asm, sceGuStart] # libgu.c
-      - [0x2110, asm, sceGuFinishId] # libgu.c
-      - [0x22B4, asm, sceGuSignalSync] # libgu.c
-      - [0x2368, asm, sceGuCallList] # libgu.c
-      - [0x241C, asm, sceGuSendList] # libgu.c
-      - [0x24C0, asm, sceGuDispBuffer2] # libgu.c
-      - [0x259C, asm, sceGuSwapBuffers] # libgu.c
-      - [0x2664, asm, sceGuDrawBuffer] # libgu.c
-      - [0x277C, asm, sceGuSetAllStatus] # libgu.c
-      - [0x2828, asm, sceGuSetDither] # libgu.c
-      - [0x2954, asm, sceGuEndObject] # libgu.c
-      - [0x29F0, asm, sceGuPatchDivide] # libgu.c
-      - [0x2A1C, asm, sceGuColorMaterial] # libgu.c
-      - [0x2A44, asm, sceGuSpecular] # libgu.c
-      - [0x2A70, asm, sceGuTexScale] # libgu.c
-      - [0x2AB4, asm, _sceGuSetDebugFontCallback] # libgu.c
-      - [0x2B20, asm, sceGuTerm] # libgu.c
-      - [0x2B98, asm, sceGuFinish] # libgu.c
-      - [0x2BB4, asm, sceGuGetMemory] # libgu.c
-      - [0x2C04, asm, sceGuGetAlignedMemory] # libgu.c
-      - [0x2C5C, asm, sceGuCheckList] # libgu.c
-      - [0x2C74, asm, sceGuBeginPacket] # libgu.c
-      - [0x2CB0, asm, sceGuEndPacket] # libgu.c
-      - [0x2CC0, asm, sceGuSignal] # libgu.c
-      - [0x2CF8, asm, sceGuSetCallback2] # libgu.c
-      - [0x2D34, asm, sceGuBreak] # libgu.c
-      - [0x2D54, asm, sceGuContinue] # libgu.c
-      - [0x2D70, asm, sceGuCallMode] # libgu.c
-      - [0x2D7C, asm, sceGuJumpList] # libgu.c
-      - [0x2DC0, asm, sceGuSync] # libgu.c
-      - [0x2E2C, asm, sceGuFlush] # libgu.c
-      - [0x2E48, asm, sceGuDisplay] # libgu.c
-      - [0x2EB4, asm, sceGuDispBuffer] # libgu.c
-      - [0x2F28, asm, sceGuDrawBuffer2] # libgu.c
-      - [0x2FE0, asm, sceGuDrawBufferList] # libgu.c
-      - [0x3030, asm, sceGuDepthBuffer] # libgu.c
-      - [0x3084, asm, sceGuEnable] # libgu.c
-      - [0x30DC, asm, sceGuDisable] # libgu.c
-      - [0x3138, asm, sceGuSetStatus] # libgu.c
-      - [0x31C4, asm, sceGuGetStatus] # libgu.c
-      - [0x31E8, c, main_psp/31E8] # libgu.c
-      - [0x4484, asm, sceGupSetStatus] # libgu.c
-      - [0x4690, asm, sceGupSetMatrix] # libgu.c
-      - [0x4994, asm, sceGupDrawSprite] # libgu.c
-      - [0x4B30, asm, sceGupClear] # libgu.c
-      - [0x4E84, asm, sceGupDepthRange] # libgu.c
-      - [0x4F2C, asm, sceGupDepthOffset] # libgu.c
-      - [0x4FD8, asm, sceGupPatchPrim] # libgu.c
-      - [0x5048, asm, sceGupModelColor] # libgu.c
-      - [0x50AC, asm, sceGupMaterial] # libgu.c
-      - [0x513C, asm, sceGupFrontFace] # libgu.c
-      - [0x5168, asm, sceGupLight] # libgu.c
-      - [0x51FC, asm, sceGupLightColor] # libgu.c
-      - [0x5300, asm, sceGupTexMode] # libgu.c
-      - [0x5344, asm, sceGupScissor] # libgu.c
-      - [0x53C4, asm, sceGupShadeModel] # libgu.c
-      - [0x53F0, asm, _sceGuCallbackSignal] # libgu.c
-      - [0x546C, asm, _sceGuCallbackFinish] # libgu.c
-      - [0x549C, asm, _sceGuResetGlobalVariables] # libgu.c
-      - [0x55A8, asm, _sceGuUpdateStallAddr] # libgu.c
-      - [0x5600, asm, sceGuDebugPrint] # libgu.c
-      - [0x57E8, asm, sceGuDebugFlush] # libgu.c
-      - [0x5A5C, asm, _sceGuDebugFontInit] # libgu.c
-      - [0x5AB8, asm, _sceGuDebugSwapBuffer] # libgu.c
-      - [0x5ACC, asm, _sceGuDebugDispBuffer] # libgu.c
-      - [0x5AE8, asm, _sceGuDebugDrawBuffer] # libgu.c
+      - [0x16F4, asm, kernel_bridge/_open]
+      - [0x178C, asm, kernel_bridge/_lseek]
+      - [0x18BC, asm, kernel_bridge/_exit]
+      - [0x1984, asm, kernel_bridge/_sbrk]
+      - [0x1A74, asm, kernel_bridge/_read]
+      - [0x1B18, asm, kernel_bridge/_write]
+      - [0x1BBC, asm, kernel_bridge/_close]
+      - [0x1C40, asm, kernel_bridge/_fstat]
+      - [0x1C50, asm, kernel_bridge/isatty]
+      - [0x1C58, asm, kernel_bridge/_rename]
+      - [0x1C74, asm, kernel_bridge/func_psp_08900580]
+      - [0x1C7C, asm, kernel_bridge/func_psp_08900588]
+      - [0x1C84, asm, kernel_bridge/func_psp_08900590]
+      - [0x1C8C, asm, kernel_bridge/func_psp_08900598]
+      - [0x1C94, asm, kernel_bridge/_kill]
+      - [0x1C9C, asm, kernel_bridge/_getpid]
+      - [0x1CA4, asm, kernel_bridge/func_psp_089005B0]
+      - [0x1CAC, asm, kernel_bridge/func_psp_089005B8]
+      - [0x1CB4, asm, kernel_bridge/func_psp_089005C0]
+      - [0x1CBC, asm, kernel_bridge/__free_heap]
+      - [0x1CF8, asm, kernel_bridge/clock]
+      - [0x1D14, asm, kernel_bridge/time]
+      - [0x1D30, asm, kernel_bridge/_gettimeofday]
+      - [0x1D4C, asm, kernel_bridge/_times]
+      - [0x1D54, asm, kernel_bridge/sigfillset]
+      - [0x1D64, asm, kernel_bridge/sigprocmask]
+      - [0x1D6C, asm, libgu/sceGuInit]
+      - [0x1EA8, asm, libgu/sceGuStart]
+      - [0x2110, asm, libgu/sceGuFinishId]
+      - [0x22B4, asm, libgu/sceGuSignalSync]
+      - [0x2368, asm, libgu/sceGuCallList]
+      - [0x241C, asm, libgu/sceGuSendList]
+      - [0x24C0, asm, libgu/sceGuDispBuffer2]
+      - [0x259C, asm, libgu/sceGuSwapBuffers]
+      - [0x2664, asm, libgu/sceGuDrawBuffer]
+      - [0x277C, asm, libgu/sceGuSetAllStatus]
+      - [0x2828, asm, libgu/sceGuSetDither]
+      - [0x2954, asm, libgu/sceGuEndObject]
+      - [0x29F0, asm, libgu/sceGuPatchDivide]
+      - [0x2A1C, asm, libgu/sceGuColorMaterial]
+      - [0x2A44, asm, libgu/sceGuSpecular]
+      - [0x2A70, asm, libgu/sceGuTexScale]
+      - [0x2AB4, asm, libgu/_sceGuSetDebugFontCallback]
+      - [0x2B20, asm, libgu/sceGuTerm]
+      - [0x2B98, asm, libgu/sceGuFinish]
+      - [0x2BB4, asm, libgu/sceGuGetMemory]
+      - [0x2C04, asm, libgu/sceGuGetAlignedMemory]
+      - [0x2C5C, asm, libgu/sceGuCheckList]
+      - [0x2C74, asm, libgu/sceGuBeginPacket]
+      - [0x2CB0, asm, libgu/sceGuEndPacket]
+      - [0x2CC0, asm, libgu/sceGuSignal]
+      - [0x2CF8, asm, libgu/sceGuSetCallback2]
+      - [0x2D34, asm, libgu/sceGuBreak]
+      - [0x2D54, asm, libgu/sceGuContinue]
+      - [0x2D70, asm, libgu/sceGuCallMode]
+      - [0x2D7C, asm, libgu/sceGuJumpList]
+      - [0x2DC0, asm, libgu/sceGuSync]
+      - [0x2E2C, asm, libgu/sceGuFlush]
+      - [0x2E48, asm, libgu/sceGuDisplay]
+      - [0x2EB4, asm, libgu/sceGuDispBuffer]
+      - [0x2F28, asm, libgu/sceGuDrawBuffer2]
+      - [0x2FE0, asm, libgu/sceGuDrawBufferList]
+      - [0x3030, asm, libgu/sceGuDepthBuffer]
+      - [0x3084, asm, libgu/sceGuEnable]
+      - [0x30DC, asm, libgu/sceGuDisable]
+      - [0x3138, asm, libgu/sceGuSetStatus]
+      - [0x31C4, asm, libgu/sceGuGetStatus]
+      - [0x31E8, c, main_psp/libgu]
+      - [0x4484, asm, libgu/sceGupSetStatus]
+      - [0x4690, asm, libgu/sceGupSetMatrix]
+      - [0x4994, asm, libgu/sceGupDrawSprite]
+      - [0x4B30, asm, libgu/sceGupClear]
+      - [0x4E84, asm, libgu/sceGupDepthRange]
+      - [0x4F2C, asm, libgu/sceGupDepthOffset]
+      - [0x4FD8, asm, libgu/sceGupPatchPrim]
+      - [0x5048, asm, libgu/sceGupModelColor]
+      - [0x50AC, asm, libgu/sceGupMaterial]
+      - [0x513C, asm, libgu/sceGupFrontFace]
+      - [0x5168, asm, libgu/sceGupLight]
+      - [0x51FC, asm, libgu/sceGupLightColor]
+      - [0x5300, asm, libgu/sceGupTexMode]
+      - [0x5344, asm, libgu/sceGupScissor]
+      - [0x53C4, asm, libgu/sceGupShadeModel]
+      - [0x53F0, asm, libgu/_sceGuCallbackSignal]
+      - [0x546C, asm, libgu/_sceGuCallbackFinish]
+      - [0x549C, asm, libgu/_sceGuResetGlobalVariables]
+      - [0x55A8, asm, libgu/_sceGuUpdateStallAddr]
+      - [0x5600, asm, libgu/sceGuDebugPrint]
+      - [0x57E8, asm, libgu/sceGuDebugFlush]
+      - [0x5A5C, asm, libgu/_sceGuDebugFontInit]
+      - [0x5AB8, asm, libgu/_sceGuDebugSwapBuffer]
+      - [0x5ACC, asm, libgu/_sceGuDebugDispBuffer]
+      - [0x5AE8, asm, libgu/_sceGuDebugDrawBuffer]
       - [0x5AFC, asm, func_psp_08904408]
-      - [0x5B64, asm, __ieee754_rem_pio2]
-      - [0x622C, asm, __ieee754_atan2f]
-      - [0x6478, asm, __kernel_cos]
-      - [0x67E0, asm, __kernel_rem_pio2]
-      - [0x74B8, asm, __kernel_sin]
-      - [0x7784, asm, copysign]
-      - [0x77A4, asm, cos]
-      - [0x78B0, asm, fabs]
-      - [0x78BC, asm, floor]
-      - [0x7AB8, asm, isinf]
-      - [0x7AEC, asm, isnan]
-      - [0x7B10, asm, func_psp_0890641C]
-      - [0x7B18, asm, scalbn]
-      - [0x7CB8, asm, sin]
-      - [0x7DC4, asm, atanf]
-      - [0x8060, asm, fabsf]
-      - [0x8074, asm, func_psp_08906980]
-      - [0x8088, asm, func_psp_08906994]
-      - [0x81CC, asm, abort]
-      - [0x81E4, asm, abs]
-      - [0x81F0, asm, atexit]
-      - [0x82C4, asm, _calloc_r]
-      - [0x8380, asm, _close_r]
-      - [0x83DC, asm, quorem]
-      - [0x8624, asm, _dtoa_r]
-      - [0x9A70, asm, func_psp_0890837C]
-      - [0x9AB4, asm, exit]
-      - [0x9BB4, asm, _fflush_r]
-      - [0x9CB0, asm, std]
-      - [0x9D08, asm, __sfmoreglue]
-      - [0x9D7C, asm, __sfp]
-      - [0x9E60, asm, _cleanup_r]
-      - [0x9E80, asm, _cleanup]
-      - [0x9EA4, asm, __sinit]
+      - [0x5B64, asm, newlib/libm/math/e_rem_pio2/__ieee754_rem_pio2]
+      - [0x622C, asm, newlib/libm/math/ef_atan2/__ieee754_atan2f]
+      - [0x6478, asm, newlib/libm/math/k_cos/__kernel_cos]
+      - [0x67E0, asm, newlib/libm/math/kf_rem_pio2/__kernel_rem_pio2]
+      - [0x74B8, asm, newlib/libm/math/k_sin/__kernel_sin]
+      - [0x7784, asm, newlib/libm/common/s_copysign/copysign]
+      - [0x77A4, asm, newlib/libm/math/s_cos/cos]
+      - [0x78B0, asm, newlib/libm/math/s_fabs/fabs]
+      - [0x78BC, asm, newlib/libm/math/s_floor/floor]
+      - [0x7AB8, asm, newlib/libm/common/s_isinf/isinf]
+      - [0x7AEC, asm, newlib/libm/common/s_isnan/isnan]
+      - [0x7B10, asm, newlib/libm/common/s_matherr/matherr]
+      - [0x7B18, asm, newlib/libm/common/s_scalbn/scalbn]
+      - [0x7CB8, asm, newlib/libm/math/s_sin/sin]
+      - [0x7DC4, asm, newlib/libm/math/sf_atan/atanf]
+      - [0x8060, asm, newlib/libm/math/sf_fabs/fabsf]
+      - [0x8074, asm, newlib/libm/common/sf_isnanf/isnanf]
+      - [0x8088, asm, newlib/libm/math/wf_atan2/atan2f]
+      - [0x81CC, asm, newlib/libc/stdlib/abort/abort]
+      - [0x81E4, asm, newlib/libc/stdlib/abs/abs]
+      - [0x81F0, asm, newlib/libc/stdlib/atexit/atexit]
+      - [0x82C4, asm, newlib/libc/stdlib/mallocr/_calloc_r]
+      - [0x8380, asm, newlib/libc/reent/closer/_close_r]
+      - [0x83DC, asm, newlib/libc/stdlib/dtoa/quorem]
+      - [0x8624, asm, newlib/libc/stdlib/dtoa/_dtoa_r]
+      - [0x9A70, asm, newlib/libc/reent/errno/__errno]
+      - [0x9AB4, asm, newlib/libc/stdlib/exit/exit]
+      - [0x9BB4, asm, newlib/libc/stdio/fflush/_fflush_r]
+      - [0x9CB0, asm, newlib/libc/stdio/findfp/std]
+      - [0x9D08, asm, newlib/libc/stdio/findfp/__sfmoreglue]
+      - [0x9D7C, asm, newlib/libc/stdio/findfp/__sfp]
+      - [0x9E60, asm, newlib/libc/stdio/findfp/_cleanup_r]
+      - [0x9E80, asm, newlib/libc/stdio/findfp/_cleanup]
+      - [0x9EA4, asm, newlib/libc/stdio/findfp/__sinit]
       - [0x9F28, asm, func_psp_08908834]
-      - [0x9F5C, asm, _free_r]
-      - [0xA1D8, asm, _malloc_trim_r]
-      - [0xA314, asm, _fstat_r]
-      - [0xA378, asm, __sfvwrite_r]
-      - [0xA758, asm, _fwalk]
-      - [0xA860, asm, __getreent]
-      - [0xA888, asm, labs]
-      - [0xA894, asm, _setlocale_r]
-      - [0xA928, asm, __locale_charset]
-      - [0xA934, asm, _localeconv_r]
-      - [0xA940, asm, setlocale]
-      - [0xA980, asm, localeconv]
-      - [0xA9A4, asm, _lseek_r]
-      - [0xAA0C, asm, __smakebuf_r]
-      - [0xAB74, asm, memalign]
-      - [0xABB4, asm, _memalign_r]
-      - [0xAD3C, asm, malloc]
-      - [0xAD6C, asm, free]
-      - [0xAD9C, asm, malloc_extend_top]
-      - [0xAFC4, asm, _malloc_r]
-      - [0xB50C, asm, memchr]
-      - [0xB5F4, asm, memcmp]
-      - [0xB678, asm, memcpy]
-      - [0xB7B4, asm, memmove]
-      - [0xBAB4, asm, memset]
-      - [0xBB6C, asm, __malloc_lock]
-      - [0xBBA8, asm, __malloc_unlock]
+      - [0x9F5C, asm, newlib/libc/stdlib/mallocr/_free_r]
+      - [0xA1D8, asm, newlib/libc/stdlib/mallocr/_malloc_trim_r]
+      - [0xA314, asm, newlib/libc/reent/fstatr/_fstat_r]
+      - [0xA378, asm, newlib/libc/stdio/fvwrite/__sfvwrite_r]
+      - [0xA758, asm, newlib/libc/stdio/fwalk/_fwalk]
+      - [0xA860, asm, newlib/libc/reent/getreent/__getreent]
+      - [0xA888, asm, newlib/libc/stdlib/labs/labs]
+      - [0xA894, asm, newlib/libc/locale/locale/_setlocale_r]
+      - [0xA928, asm, newlib/libc/locale/locale/__locale_charset]
+      - [0xA934, asm, newlib/libc/locale/locale/_localeconv_r]
+      - [0xA940, asm, newlib/libc/locale/locale/setlocale]
+      - [0xA980, asm, newlib/libc/locale/locale/localeconv]
+      - [0xA9A4, asm, newlib/libc/reent/lseekr/_lseek_r]
+      - [0xAA0C, asm, newlib/libc/stdio/makebuf/__smakebuf_r]
+      - [0xAB74, asm, newlib/libc/stdlib/malign/memalign]
+      - [0xABB4, asm, newlib/libc/stdlib/mallocr/_memalign_r]
+      - [0xAD3C, asm, newlib/libc/stdlib/malloc/malloc]
+      - [0xAD6C, asm, newlib/libc/stdlib/malloc/free]
+      - [0xAD9C, asm, newlib/libc/stdlib/mallocr/malloc_extend_top]
+      - [0xAFC4, asm, newlib/libc/stdlib/mallocr/_malloc_r]
+      - [0xB50C, asm, newlib/libc/string/memchr/memchr]
+      - [0xB5F4, asm, newlib/libc/string/memcmp/memcmp]
+      - [0xB678, asm, newlib/libc/string/memcpy/memcpy]
+      - [0xB7B4, asm, newlib/libc/string/memmove/memmove]
+      - [0xBAB4, asm, newlib/libc/string/memset/memset]
+      - [0xBB6C, asm, newlib/libc/stdlib/mlock/__malloc_lock]
+      - [0xBBA8, asm, newlib/libc/stdlib/mlock/__malloc_unlock]
       - [0xBBF4, asm, _getmodreent]
       - [0xBD04, asm, _setmodreent]
       - [0xBE10, asm, _clrmodreent]
       - [0xBE94, asm, _reent_init_ptr]
-      - [0xC074, asm, _Balloc]
-      - [0xC12C, asm, _Bfree]
-      - [0xC158, asm, __multadd]
-      - [0xC268, asm, __s2b]
-      - [0xC388, asm, __hi0bits]
-      - [0xC410, asm, __lo0bits]
-      - [0xC4C8, asm, __i2b]
-      - [0xC4FC, asm, __multiply]
-      - [0xC714, asm, __pow5mult]
-      - [0xC82C, asm, __lshift]
-      - [0xC964, asm, __mcmp]
-      - [0xC9CC, asm, __mdiff]
-      - [0xCB48, asm, __ulp]
-      - [0xCBB8, asm, __b2d]
-      - [0xCCDC, asm, __d2b]
-      - [0xCE40, asm, __ratio]
-      - [0xCEE0, asm, _mprec_log10]
-      - [0xCF80, asm, func_psp_0890B88C]
-      - [0xCFC0, asm, printf]
-      - [0xD010, asm, srand]
-      - [0xD048, asm, rand]
-      - [0xD0D4, asm, _read_r]
-      - [0xD13C, asm, _realloc_r]
-      - [0xD694, asm, cleanup_glue]
+      - [0xC074, asm, newlib/libc/stdlib/mprec/_Balloc]
+      - [0xC12C, asm, newlib/libc/stdlib/mprec/_Bfree]
+      - [0xC158, asm, newlib/libc/stdlib/mprec/__multadd]
+      - [0xC268, asm, newlib/libc/stdlib/mprec/__s2b]
+      - [0xC388, asm, newlib/libc/stdlib/mprec/__hi0bits]
+      - [0xC410, asm, newlib/libc/stdlib/mprec/__lo0bits]
+      - [0xC4C8, asm, newlib/libc/stdlib/mprec/__i2b]
+      - [0xC4FC, asm, newlib/libc/stdlib/mprec/__multiply]
+      - [0xC714, asm, newlib/libc/stdlib/mprec/__pow5mult]
+      - [0xC82C, asm, newlib/libc/stdlib/mprec/__lshift]
+      - [0xC964, asm, newlib/libc/stdlib/mprec/__mcmp]
+      - [0xC9CC, asm, newlib/libc/stdlib/mprec/__mdiff]
+      - [0xCB48, asm, newlib/libc/stdlib/mprec/__ulp]
+      - [0xCBB8, asm, newlib/libc/stdlib/mprec/__b2d]
+      - [0xCCDC, asm, newlib/libc/stdlib/mprec/__d2b]
+      - [0xCE40, asm, newlib/libc/stdlib/mprec/__ratio]
+      - [0xCEE0, asm, newlib/libc/stdlib/mprec/_mprec_log10]
+      - [0xCF80, asm, newlib/libc/stdio/printf/_printf_r]
+      - [0xCFC0, asm, newlib/libc/stdio/printf/printf]
+      - [0xD010, asm, newlib/libc/stdlib/rand/srand]
+      - [0xD048, asm, newlib/libc/stdlib/rand/rand]
+      - [0xD0D4, asm, newlib/libc/reent/readr/_read_r]
+      - [0xD13C, asm, newlib/libc/stdlib/mallocr/_realloc_r]
+      - [0xD694, asm, newlib/libc/reent/reent/cleanup_glue]
       - [0xD6E8, asm, func_psp_0890BFF4]
-      - [0xD77C, asm, _reclaim_reent]
+      - [0xD77C, asm, newlib/libc/reent/reent/_reclaim_reent]
       - [0xD8F0, asm, func_psp_0890C1FC]
-      - [0xD9A0, asm, _sbrk_r]
-      - [0xD9FC, asm, _init_signal_r]
-      - [0xDA5C, asm, _signal_r]
-      - [0xDAE4, asm, _raise_r]
-      - [0xDBA8, asm, __sigtramp_r]
-      - [0xDC44, asm, raise]
-      - [0xDC74, asm, signal]
-      - [0xDCB4, asm, _init_signal]
-      - [0xDCD8, asm, __sigtramp]
-      - [0xDD08, asm, _kill_r]
-      - [0xDD6C, asm, _getpid_r]
-      - [0xDD88, asm, func_psp_0890C694]
-      - [0xDDF0, asm, sprintf]
-      - [0xDE70, asm, __sread]
-      - [0xDEE8, asm, __swrite]
-      - [0xDF74, asm, __sseek]
-      - [0xDFEC, asm, __sclose]
-      - [0xE01C, asm, strcat]
-      - [0xE0C8, asm, strcmp]
-      - [0xE13C, asm, strcpy]
-      - [0xE1D4, asm, strlen]
+      - [0xD9A0, asm, newlib/libc/reent/sbrkr/_sbrk_r]
+      - [0xD9FC, asm, newlib/libc/signal/signal/_init_signal_r]
+      - [0xDA5C, asm, newlib/libc/signal/signal/_signal_r]
+      - [0xDAE4, asm, newlib/libc/signal/signal/_raise_r]
+      - [0xDBA8, asm, newlib/libc/signal/signal/__sigtramp_r]
+      - [0xDC44, asm, newlib/libc/signal/signal/raise]
+      - [0xDC74, asm, newlib/libc/signal/signal/signal]
+      - [0xDCB4, asm, newlib/libc/signal/signal/_init_signal]
+      - [0xDCD8, asm, newlib/libc/signal/signal/__sigtramp]
+      - [0xDD08, asm, newlib/libc/reent/signalr/_kill_r]
+      - [0xDD6C, asm, newlib/libc/reent/signalr/_getpid_r]
+      - [0xDD88, asm, newlib/libc/stdio/sprintf/_sprintf_r]
+      - [0xDDF0, asm, newlib/libc/stdio/sprintf/sprintf]
+      - [0xDE70, asm, newlib/libc/stdio/stdio/__sread]
+      - [0xDEE8, asm, newlib/libc/stdio/stdio/__swrite]
+      - [0xDF74, asm, newlib/libc/stdio/stdio/__sseek]
+      - [0xDFEC, asm, newlib/libc/stdio/stdio/__sclose]
+      - [0xE01C, asm, newlib/libc/string/strcat/strcat]
+      - [0xE0C8, asm, newlib/libc/string/strcmp/strcmp]
+      - [0xE13C, asm, newlib/libc/string/strcpy/strcpy]
+      - [0xE1D4, asm, newlib/libc/string/strlen/strlen]
       - [0xE1EC, asm, func_psp_0890CAF8]
-      - [0xE23C, asm, __sprint_r]
-      - [0xE288, asm, __sbprintf]
+      - [0xE23C, asm, newlib/libc/stdio/vfprintf/__sprint_r]
+      - [0xE288, asm, newlib/libc/stdio/vfprintf/__sbprintf]
       - [0xE330, asm, func_psp_0890CC3C]
-      - [0xE3AC, asm, _svfprintf_r]
-      - [0xFDC4, asm, cvt]
-      - [0xFF8C, asm, func_psp_0890E898]
+      - [0xE3AC, asm, newlib/libc/stdio/vfprintf/_svfprintf_r]
+      - [0xFDC4, asm, newlib/libc/stdio/vfprintf/cvt]
+      - [0xFF8C, asm, newlib/libc/stdio/vfprintf/exponent]
       - [0x10064, asm, func_psp_0890E970]
       - [0x100D8, asm, func_psp_0890E9E4]
       - [0x10128, asm, func_psp_0890EA34]
@@ -260,8 +268,8 @@ segments:
       - [0x101E4, asm, func_psp_0890EAF0]
       - [0x1033C, asm, func_psp_0890EC48]
       - [0x1039C, asm, func_psp_0890ECA8]
-      - [0x107BC, asm, _write_r]
-      - [0x10824, asm, __swsetup_r]
+      - [0x107BC, asm, newlib/libc/reent/writer/_write_r]
+      - [0x10824, asm, newlib/libc/stdio/wsetup/__swsetup_r]
       - [0x10944, c, main_psp/10944]
       - [0x11320, c, main_psp/11320]
       - [0x138B0, c, main_psp/138B0]
@@ -338,7 +346,7 @@ segments:
       - [0x3AEA4, asm, __fixdfsi]
       - [0x3AF78, asm, __negdf2]
       - [0x3AFBC, asm, func_psp_089398C8]
-      - [0x3AFF0, asm, func_psp_089398FC]
+      - [0x3AFF0, asm, __truncdfsf2]
       - [0x3B068, asm, _start] # crt0.c
       - [0x3B13C, asm, _main] # crt0.c
       - [0x3B3CC, asm, _stop] # crt0.c
