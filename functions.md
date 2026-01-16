@@ -584,8 +584,8 @@
 | main   | time                              |       19 |          2 |        |       |     |
 | are    | func_pspeu_09259478               |       19 |          2 |        |       |     |
 | lib    | func_psp_0924CF30                 |       19 |          2 |        |       |     |
-| nz1    | func_pspeu_09249C58               |       19 |          2 |        |       |     |
 | nz1    | UpdateFacingDirection             |       19 |          2 |        |       |     |
+| nz1    | func_pspeu_09249C58               |       19 |          2 |        |       |     |
 | sel    | func_psp_0923F498                 |       19 |          2 |        |       |     |
 | dra    | func_psp_090EDB70                 |       19 |          3 |        |       |     |
 | main   | RotAverageNclip3                  |       19 |          3 |        |       |     |
@@ -2544,7 +2544,7 @@
 | wrp    | func_psp_09237700                 |       77 |          2 |        |       |     |
 | dra    | func_psp_090EF8F0                 |       77 |          4 |        |       |     |
 | no2    | func_pspeu_0924BE50               |       77 |          5 |        |       |     |
-| nz1    | BossDoorHelper                    |       77 |          5 |        |       |     |
+| nz1    | DropBridgePiece                   |       77 |          5 |        |       |     |
 | are    | func_pspeu_092599A8               |       77 |          6 |        |       |     |
 | cat    | func_pspeu_0924C918               |       77 |          6 |        |       |     |
 | chi    | func_psp_092471A0                 |       77 |          6 |        |       |     |
