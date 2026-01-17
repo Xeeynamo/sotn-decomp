@@ -731,7 +731,7 @@ static s16 g_QuadIndices1[] = {
 Primitive* UnkRecursivePrimFunc1(
     SVECTOR* p0, SVECTOR* p1, SVECTOR* p2, SVECTOR* p3, Primitive* srcPrim,
     s32 iterations, Primitive* dstPrim, u8* dataPtr) {
-    long p, flag;
+    long flag, p;
     s32 i;
     Primitive* tempPrim;
     s16* indices;
@@ -746,14 +746,13 @@ Primitive* UnkRecursivePrimFunc1(
     dataPtr += sizeof(Primitive);
     points = (SVECTOR*)dataPtr;
     dataPtr += sizeof(SVECTOR) * 9;
+    uv_values = (uvPair*)dataPtr;
+    dataPtr += sizeof(uvPair) * 10;
 
     points[0] = *p0;
     points[2] = *p1;
     points[6] = *p2;
     points[8] = *p3;
-
-    uv_values = (uvPair*)dataPtr;
-    dataPtr += sizeof(uvPair) * 10;
 
     points[1].vx = (points[0].vx + points[2].vx + 1) >> 1;
     points[1].vy = (points[0].vy + points[2].vy + 1) >> 1;
