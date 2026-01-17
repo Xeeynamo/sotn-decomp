@@ -12,7 +12,3 @@ INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/unk_36E8", func_us_801C02C4);
 INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/unk_36E8", func_us_801C0718);
 
 INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/unk_36E8", func_us_801C0844);
-
-INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/unk_36E8", func_psp_0923AD68);
-
-INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/unk_36E8", func_psp_0923B2F0);
