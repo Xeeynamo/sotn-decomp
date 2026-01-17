@@ -19,17 +19,17 @@ typedef union {
 
 typedef struct {
     /* 0x7C */ u16 timer;
-    /* 0x7E */ s16 unk7E;
+    /* 0x7E */ s16 : 16;
     /* 0x80 */ u8 aliveTimer;
-    /* 0x81 */ s8 unk81;
-    /* 0x82 */ s16 unk82;
+    /* 0x81 */ s8 : 8;
+    /* 0x82 */ s16 : 16;
     /* 0x84 */ s32 fallSpeed;
     /* 0x88 */ s16 gravity;
-    /* 0x8A */ s16 unk8A;
+    /* 0x8A */ s16 sparkleTimer;
     /* 0x8C */ u16 iconSlot;
-    /* 0x8E */ s16 unk8E;
-    /* 0x90 */ s16 unk90;
-    /* 0x92 */ s16 unk92;
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 : 16;
+    /* 0x92 */ s16 : 16;
     /* 0x94 */ s32 castleFlag;
 } ET_EquipItemDrop;
 
@@ -72,10 +72,10 @@ typedef struct {
 typedef struct {
     /* 0x7C */ u32 unused7C;
     /* 0x80 */ s16 unused80;
-    /* 0x82 */ s16 unk82;
+    /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 angle;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ s16 unk88;
+    /* 0x86 */ s16 xOffset;
+    /* 0x88 */ s16 isBackgroundDoor;
 } ET_RedDoor; // Normal red doors between stages
 
 typedef struct {
@@ -565,7 +565,7 @@ typedef struct {
     /* 0x84 */ s16 randomMovementAngle;
     /* 0x84 */ s16 targetAngle;
     /* 0x88 */ s16 randomMovementScaler;
-    /* 0x8A */ s16 maxAngle;
+    /* 0x8A */ s16 angleStep;
     /* 0x8C */ s16 frameCounter;
     /* 0x8e */ s16 doUpdateCloseAnimation;
     /* 0x90 */ s32 unk90;
@@ -636,7 +636,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 drawMode;
+    /* 0x7E */ s16 unk7E;
     /* 0x80 */ s16 unkAccumulator;
     /* 0x82 */ s16 unkFlag;
 } ET_FaerieItem;
@@ -649,7 +649,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 isAbilityInitialized;
+    /* 0x7E */ s16 abilityId;
     /* 0x80 */ s16 animationFlag;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 randomMovementAngle;
@@ -662,8 +662,8 @@ typedef struct {
     /* 0x92 */ s16 requireAntivenomLuckCheck;
     /* 0x94 */ s16 requirePotionLuckCheck;
     /* 0x96 */ s16 timer;
-    /* 0x98 */ s32 tileMapX;
-    /* 0x9C */ s32 tileMapY;
+    /* 0x98 */ u32 tileMapX;
+    /* 0x9C */ u32 tileMapY;
     /* 0xA0 */ s16 idleFrameCounter;
     /* 0xA2 */ s16 : 16;
     /* 0xA4 */ ServantSfxEventDesc* currentSfxEvent;
@@ -673,19 +673,24 @@ typedef struct {
 } ET_Faerie;
 
 typedef struct {
-    /* 0x7C */ s16 : 16;
-    /* 0x7E */ s16 isAbilityInitialized;
+    /* 0x7C */ s16 frameCounter;
+    /* 0x7E */ s16 abilityId;
     /* 0x80 */ s16 : 16;
     /* 0x82 */ s16 : 16;
     /* 0x84 */ s16 randomMovementAngle;
     /* 0x86 */ s16 targetAngle;
     /* 0x88 */ s16 defaultDistToTargetLoc;
-    /* 0x8A */ s16 maxAngle;
+    /* 0x8A */ s16 angleStep;
     /* 0x8C */ s16 abilityTimer;
-    /* 0x8E */ s16 pad_8E[2];
+    /* 0x8E */ s16 : 16;
+    /* 0x90 */ s16 : 16;
     /* 0x92 */ s16 attackEndCounter;
     /* 0x94 */ s16 switchPressVelocityOffset;
-    /* 0x96 */ s16 pad_96[5];
+    /* 0x96 */ s16 : 16;
+    /* 0x98 */ s16 : 16;
+    /* 0x9A */ s16 : 16;
+    /* 0x9C */ s16 : 16;
+    /* 0x9E */ s16 : 16;
     /* 0xA0 */ s16 unkCounter;
     /* 0xA4 */ struct Entity* target;
 } ET_Demon;
@@ -701,8 +706,8 @@ typedef struct {
     /* 0x8A */ s16 currentX;
     /* 0x8c */ s16 unk8c;
     /* 0x8e */ s16 targetX;
-    /* 0x90 */ s32 posX;
-    /* 0x94 */ s32 posY;
+    /* 0x90 */ u32 posX;
+    /* 0x94 */ u32 posY;
     /* 0x98 */ s16 unk98;
     /* 0x9A */ s16 : 16;
     /* 0x9C */ s32 : 32;
@@ -785,6 +790,8 @@ typedef struct {
     /* 0x86 */ s16 : 16;
     /* 0x88 */ u8 puffStyle;
     /* 0x89 */ u8 speed;
+    /* 0x8A */ u16 : 16;
+    /* 0x8C */ s32 unk8C;
 } ET_ExplosionPuffOpaque;
 
 typedef struct ET_CastleDoor {
@@ -1984,17 +1991,6 @@ typedef struct {
 } ET_EntityExplosion3;
 
 typedef struct {
-#ifdef PLATFORM_64BIT
-    s32 _align_parent[2];
-#endif
-    /* 0x7C */ s32 : 32;
-    /* 0x80 */ s32 : 32;
-    /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 : 32;
-    /* 0x8C */ struct Entity* parent;
-} ET_GhostEvent;
-
-typedef struct {
     s32 : 32;
     s16 timer;
     s16 : 16;
@@ -2040,16 +2036,16 @@ typedef struct {
 } ET_MermanRock;
 
 typedef struct {
-    /* 0x7C */ u8 unk7C;
-    /* 0x7D */ u8 unk7D;
-    /* 0x7E */ u8 unk7E;
-    /* 0x7F */ u8 unk7F;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u16 unk84;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ u16 unk88;
-    /* 0x8A */ u16 unk8A;
+    /* 0x7C */ u8 movingBackward;
+    /* 0x7D */ s8 : 8;
+    /* 0x7E */ s8 : 8;
+    /* 0x7F */ s8 : 8;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 decisionDelay;
+    /* 0x84 */ u16 anchorX;
+    /* 0x86 */ s16 attackTimer;
+    /* 0x88 */ u16 deathPosX;
+    /* 0x8A */ u16 deathPosY;
 } ET_Warg;
 
 typedef struct {
@@ -2090,6 +2086,13 @@ typedef struct {
     /* 0x98 */ s32 : 32;
     /* 0x9C */ struct Primitive* prim;
 } ET_TOP_Elevator;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 elevatorPosition;
+} ET_ARE_Elevator;
 
 typedef struct {
     /* 0x7C */ s32 : 32;
@@ -2422,18 +2425,18 @@ typedef struct {
 } ET_MedusaUnk1A;
 
 typedef struct {
-    /* 0x7C */ s16 unk7C;
-    /* 0x7E */ s16 unk7E;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ s16 unk84;
-    /* 0x86 */ s16 unk86;
-    /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 unk8A;
-    /* 0x8C */ struct Entity* unk8C;
-    /* 0x90 */ s16 unk90;
+    /* 0x7C */ s16 segmentAngle;
+    /* 0x7E */ s16 wavePhase;
+    /* 0x80 */ s16 swayIndex;
+    /* 0x82 */ s16 waveAmplitude;
+    /* 0x84 */ s16 seedTimer;
+    /* 0x86 */ s16 timer;
+    /* 0x88 */ s16 waveBase;
+    /* 0x8A */ s16 hasBeenHit;
+    /* 0x8C */ struct Entity* parent;
+    /* 0x90 */ s16 recoilAngle;
     /* 0x92 */ s16 : 16;
-    /* 0x94 */ s16 unk94;
+    /* 0x94 */ s16 blastRadius;
 } ET_StoneRose;
 
 typedef struct {
@@ -2548,19 +2551,6 @@ typedef struct {
     /* 0xAE */ s16 : 16;
     /* 0xB0 */ s16 unkB0;
 } ET_PlatelordUnknown;
-
-typedef struct {
-    s16 frameCounter[0x1E];
-} ET_80176814;
-
-typedef struct {
-    s16 animationTriggerCount; // Auxiliary counter, previously ILLEGAL.u16[0]
-    s16 animationTimer;        // Another counter, previously ILLEGAL.u16[1]
-    s16 stepCounter;           // Counter for steps, previously ILLEGAL.u16[2]
-    s16 angle;                 // Rotation angle, previously ILLEGAL.u16[3]
-    s32 _align_parent[2];
-    struct Entity* parent;
-} ET_801737F0;
 
 typedef struct {
     /* 0x7C */ u8 unk7C;
@@ -3694,6 +3684,152 @@ typedef struct {
     /* 0x90 */ u8* animPtr;
 } ET_BladeSoldier;
 
+typedef struct {
+    /* 0x7C */ u8 unk7C;
+    /* 0x7D */ u8 lastFacingDirection;
+    /* 0x7E */ u8 unk7E;
+    /* 0x7F */ u8 deathVortexColor;
+    /* 0x80 */ Primitive* deathVortexPrim;
+    /* 0x84 */ u8 unk84;
+    /* 0x85 */ u8 nextAttack;
+} ET_Paranthropus;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 cooldownTimer;
+    /* 0x82 */ s16 timer2;
+    /* 0x84 */ u8 collision;
+    /* 0x85 */ u32 : 24;
+    /* 8x88 */ u32 : 32;
+    /* 0x8C */ s16 offsetX;
+    /* 0x8E */ s16 offsetY;
+} ET_GearPuzzle;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ u8 collision;
+    /* 0x85 */ u32 : 24;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ s16 offsetX;
+    /* 0x8E */ s16 offsetY;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ s16 chainAngle;
+    /* 0x98 */ s16 weightAngle;
+} ET_Pendulum;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 timer;
+} ET_ARE_BossDoor;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u32 : 32;
+    /* 0x84 */ s32 startingPosY;
+} ET_StoneSkull;
+
+typedef struct {
+    /* 0x7C */ struct Entity* entity;
+    /* 0x80 */ u8 unk80;
+    /* 0x81 */ u8 unk81;
+    /* 0x82 */ u8 angle;
+    /* 0x83 */ u8 unk83;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 unk86;
+    /* 0x88 */ s32 unk88;
+    /* 0x8C */ f32 posX;
+    /* 0x90 */ f32 posY;
+    /* 0x94 */ s16 attackTimer;
+    /* 0x96 */ s16 unk96;
+    /* 0x98 */ u8 unk98;
+    /* 0x99 */ u8 unk99;
+    /* 0x9A */ s16 unk9A;
+    /* 0x9C */ u8 unk9C;
+    /* 0x9D */ u8 unk9D;
+    /* 0x9E */ u8 unk9E;
+    /* 0x9F */ u8 unk9F;
+    /* 0xA0 */ s32 unkA0;
+    /* 0xA4 */ u8 unkA4;
+    /* 0xA5 */ u8 : 8;
+    /* 0xA6 */ u8 : 8;
+    /* 0xA7 */ u8 : 8;
+    /* 0xA8 */ struct Primitive* prim;
+} ET_WhiteDragon;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 moveTimer;
+    /* 0x84 */ u8 moveAway;
+    /* 0x85 */ u8 : 8;
+    /* 0x86 */ u8 : 8;
+    /* 0x87 */ u8 : 8;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ s16 unk9C;
+} ET_Werewolf;
+
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 moveTimer;
+    /* 0x84 */ s32 deathPuffPosX;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u8 moveAway;
+    /* 0x8D */ u8 : 8;
+    /* 0x8E */ u8 : 8;
+    /* 0x8F */ u8 : 8;
+} ET_Minotaur;
+
+typedef struct {
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 bodyGlowPhase;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ u8 bodyGlowIntensity;
+    /* 0x8D */ u8 attackCounter;
+    /* 0x8E */ u8 animIndex;
+    /* 0x8F */ u8 : 8;
+    /* 0x90 */ struct Primitive* primTwo;
+    /* 0x94 */ struct Primitive* primThree;
+    /* 0x98 */ s32 lerpT;
+    /* 0x9C */ SVECTOR pos;
+    /* 0xA4 */ SVECTOR offset;
+    /* 0xAC */ SVECTOR base;
+} ET_Azaghal;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u8 flag0;
+    /* 0x85 */ u8 flag1;
+    /* 0x86 */ u8 flag2;
+    /* 0x87 */ u8 : 8;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 : 32;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 : 32;
+    /* 0x9C */ struct Entity* parent;
+    /* 0xA0 */ s16 angle;
+} ET_Karasuman;
+
+typedef struct {
+    /* 0x7C */ s16 playerAngle;
+    /* 0x7E */ u16 : 16;
+    /* 0x80 */ s32 velocity;
+    /* 0x84 */ u8 targetIsLeft;
+    /* 0x85 */ u8 timer;
+    /* 0x86 */ u16 : 16;
+    /* 0x88 */ s16 acceleration;
+} ET_PhantomSkull;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -3705,9 +3841,7 @@ typedef union { // offset=0x7C
     ET_Entity13 ent13; // entityID 13
     ET_8011E4BC et_8011E4BC;
     ET_801CC9B4 et_801CC9B4;
-    ET_801737F0 et_801737F0;
     ET_HellfireHandler hellfireHandler;
-    ET_80176814 et_80176814;
     ET_8016D9C4 et_8016D9C4;
     ET_ReboundStoneCrashExplosion reboundStoneCrashExplosion;
     ET_CrossBoomerang crossBoomerang;
@@ -3840,7 +3974,6 @@ typedef union { // offset=0x7C
     ET_DisableAfterImage disableAfterImage;
     ET_EntityMermanFireSpit EntityMermanFireSpit;
     ET_EntityExplosion3 entityExplosion3;
-    ET_GhostEvent ghostEvent;
     ET_BackgroundLightning backgroundLightning;
     ET_DestructAnimation destructAnim;
     ET_SecretStairs secretStairs;
@@ -3852,6 +3985,7 @@ typedef union { // offset=0x7C
     ET_Unused_MAD_ST0 unusedMadST0;
     ET_CEN_Elevator cenElevator;
     ET_TOP_Elevator topElevator;
+    ET_ARE_Elevator areElevator;
     ET_BloodSkeleton bloodSkeleton;
     ET_SmallRisingHeart smallRisingHeart;
     ET_EntranceUnk16 entrance16;
@@ -4013,6 +4147,17 @@ typedef union { // offset=0x7C
     ET_Lava lava;
     ET_BladeMaster bladeMaster;
     ET_BladeSoldier bladeSoldier;
+    ET_Paranthropus paranthropus;
+    ET_GearPuzzle gearPuzzle;
+    ET_Pendulum pendulum;
+    ET_ARE_BossDoor areBossDoor;
+    ET_StoneSkull stoneSkull;
+    ET_WhiteDragon whiteDragon;
+    ET_Werewolf werewolf;
+    ET_Minotaur minotaur;
+    ET_Azaghal azaghal;
+    ET_Karasuman karasuman;
+    ET_PhantomSkull phantom_skull;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
@@ -4060,7 +4205,6 @@ SYNC_FIELD(ET_EntFactory, ET_stopwatchCircle, parent);
 SYNC_FIELD(ET_EntFactory, ET_AguneaCrash, parent);
 SYNC_FIELD(ET_EntFactory, ET_8017091C, parent);
 SYNC_FIELD(ET_EntFactory, ET_Teleport, parent);
-SYNC_FIELD(ET_EntFactory, ET_GhostEvent, parent);
 SYNC_FIELD(ET_EntFactory, ET_MariaDoll, parent);
 
 SYNC_FIELD(ET_Subweapon, ET_HolyWater, subweaponId);

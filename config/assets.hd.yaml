@@ -230,6 +230,9 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/rbo7.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/rbo8.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/tt_000.bin
+    asset_path: assets/servant/tt_000
+    src_path: src/servant/tt_000
+    splat_config_path: config/splat.hd.tt_000.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/tt_001.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/tt_002.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/hdbin/tt_003.bin

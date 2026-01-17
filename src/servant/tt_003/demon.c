@@ -1,140 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
 #include "demon.h"
-#include "sfx.h"
 #include "../servant_private.h"
 
-static s32 s_TargetMatch[0x80];
-static s32 s_TargetLocationX;
-static s32 s_TargetLocationY;
-static s16 s_TargetLocationX_calc;
-STATIC_PAD_BSS(2);
-static s16 s_TargetLocationY_calc;
-STATIC_PAD_BSS(2);
-static s16 s_AngleToTarget;
-STATIC_PAD_BSS(2);
-static s16 s_AllowedAngle;
-STATIC_PAD_BSS(2);
-static s16 s_DistToTargetLocation;
-STATIC_PAD_BSS(2);
-static s16 s_TargetLocOffset_calc;
-STATIC_PAD_BSS(2);
-static s32 s_DeltaX;
-static s32 s_DeltaY;
-static s32 s_DistToTargetLocation2;
-static s32 s_AttackTargetLocationX;
-static s32 s_AttackTargetLocationY;
-static s32 s_AttackLocationDeltaX;
-static s32 s_AttackLocationDeltaY;
-static u32 s_AttackAnimationStatus;
-static s32 s_IsTargetFacingLeft;
-static s32 s_TempRand;
-static s32 s_SpecialAttackTargetPosX;
-static s32 s_SpecialAttackTargetPosY;
-static s32 s_SpecialAttackLocationDeltaX;
-static s32 s_SpecialAttackLocationDeltaY;
-static s32 s_SpecialAttackAnimationStatus;
-static s32 s_IsSpecialAttackTargetFacingLeft;
-static s32 s_SpecialAttackIdx;
-static s32 s_SwitchPoxX;
-static s32 s_SwitchPoxY;
-STATIC_PAD_BSS(4);
-static ServantSfxEventDesc* s_SwitchSfxEvent;
-static s16 s_CurrentSwitchSfxFlag;
-STATIC_PAD_BSS(2);
-static s32 D_us_8017863C;
-static s32 D_us_80178640;
-static s16 D_us_80178644;
-STATIC_PAD_BSS(2);
-static s16 D_us_80178648;
-STATIC_PAD_BSS(2);
-static s16 D_us_8017864C;
-STATIC_PAD_BSS(2);
-static s16 D_us_80178650;
-STATIC_PAD_BSS(2);
-static s16 D_us_80178654;
-STATIC_PAD_BSS(2);
-static s16 D_us_80178658;
-STATIC_PAD_BSS(2);
-static s32 D_us_8017865C;
-static s32 D_us_80178660;
-static s32 D_us_80178664;
-static ServantSfxEventDesc* s_CurrentIntroEvent;
-static s16 s_CurrentIntroSfxFlag;
-STATIC_PAD_BSS(2);
-static s32 D_us_80178670;
-static s32 D_us_80178674;
-static s32 D_us_80178678;
-static s32 D_us_8017867C;
-static s32 D_us_80178680;
-static s32 D_us_80178684;
-static s32 D_us_80178688;
-static s32 D_us_8017868C;
 static s32 s_ServantId;
 static FamiliarStats s_DemonStats;
 static s16 D_us_801786A0[3][8];
 static s32 D_us_801786D0;
 static s32 D_us_801786D4;
 static Entity* s_CurrentSwitch;
-static s32 D_us_801786DC;
+static bool D_us_801786DC;
 static s32 s_LastTargetedEntityIndex;
 
-extern DemonAbilityStats g_DemonAbilityStats[10];
-extern AnimationFrame* g_DemonAnimationFrames[];
-extern u16 g_DemonClut[80];
-extern SpriteParts* g_DemonSpriteParts[];
+#include "demon_data.h"
+
+#ifdef VERSION_PSP
+extern s16 D_092F2810[];
+#define buggyPtr D_092F2810
+#else
 extern ServantEvent g_Events[];
-extern s8 g_DemonFrameProps[40];
-extern s16 g_DemonAttackSelector[10][6];
-extern s32 g_DemonSfxMap[8];
-extern u32 D_us_80171B74[8][4];
-extern u32 D_us_80171BF4[][4];
-extern s16 D_us_80171B44[3][8];
-extern DemonAttackInfo g_DemonAttackIdSfxLookup[5];
-extern s32 g_SfxDemonSwitchRandomizer[];
-extern s32 g_SfxDemonIntroPrevSummoned[];
-extern s32 g_SfxDemonIntroNewSummoned[];
-extern AnimationFrame D_us_80171CD8;
-// Horizontal offsets for positioning primitives
-extern u16 D_us_80171D10[];
-
-extern void (*g_AttackFunctions[])(Entity*);
-
-static void ServantInit(InitializeMode);
-static void UpdateServantDefault(Entity*);
-static void UpdateServantBasicAttack(Entity*);
-static void UpdateServantSpecialAttack(Entity*);
-static void unused_5800(Entity*);
-static void unused_5808(Entity*);
-static void UpdateServantPressSwitch(Entity*);
-static void UpdateSubentitySwitch(Entity*);
-static void UpdateServantAdditionalInit(Entity*);
-static void UpdateServantSfxPassthrough(Entity*);
-static void UpdateEventAttack(Entity*);
-static void func_us_801765A0(Entity*);
-static void func_us_80176814(Entity*);
-static void func_us_80176C1C(Entity*);
-static void func_us_801771B0(Entity*);
-static void func_us_80177690(Entity*);
-
-ServantDesc demon_ServantDesc = {
-    ServantInit,
-    UpdateServantDefault,
-    UpdateServantBasicAttack,
-    UpdateServantSpecialAttack,
-    unused_5800,
-    unused_5808,
-    UpdateServantPressSwitch,
-    UpdateSubentitySwitch,
-    UpdateServantAdditionalInit,
-    UpdateServantSfxPassthrough,
-    UpdateEventAttack,
-    func_us_801765A0,
-    func_us_80176814,
-    func_us_80176C1C,
-    func_us_801771B0,
-    func_us_80177690,
-};
+#define buggyPtr ((s16*)g_Events)
+#endif
 
 static void SetAnimationFrame(Entity* self, s32 animationIndex) {
     if (self->anim != g_DemonAnimationFrames[animationIndex]) {
@@ -145,7 +30,9 @@ static void SetAnimationFrame(Entity* self, s32 animationIndex) {
 }
 
 static Entity* FindValidTarget(Entity* self) {
-    const int EntitySearchCount = 128;
+    static bool s_TargetMatch[0x80];
+
+    const int EntitySearchCount = 0x80;
     s32 foundIndex;
     s32 i;
     u32 found;
@@ -155,7 +42,7 @@ static Entity* FindValidTarget(Entity* self) {
     found = 0;
     entity = &g_Entities[STAGE_ENTITY_START];
     for (i = 0; i < EntitySearchCount; i++, entity++) {
-        s_TargetMatch[i] = 0;
+        s_TargetMatch[i] = false;
         if (!entity->entityId) {
             continue;
         }
@@ -204,7 +91,7 @@ static Entity* FindValidTarget(Entity* self) {
             if (entity->hitPoints >=
                 g_DemonAbilityStats[s_DemonStats.level / 10].minimumEnemyHp) {
                 found++;
-                s_TargetMatch[i] = 1;
+                s_TargetMatch[i] = true;
             }
         } else {
             entity->flags |= FLAG_UNK_80000;
@@ -233,18 +120,20 @@ static Entity* FindValidTarget(Entity* self) {
 void unused_2DBC(Entity* self) {}
 
 void ExecuteAbilityInitialize(Entity* self) {
-    if (!self->ext.demon.isAbilityInitialized) {
-        if ((self->entityId == DEMON_MODE_DEFAULT_UPDATE) ||
-            (self->entityId == DEMON_MODE_ADDITIONAL_INIT)) {
+    if (!self->ext.demon.abilityId) {
+        switch (self->entityId) {
+        case DEMON_MODE_DEFAULT_UPDATE:
+        case DEMON_MODE_ADDITIONAL_INIT:
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
                           FLAG_UNK_20000;
             SetAnimationFrame(self, 0);
 
-            self->ext.demon.randomMovementAngle = rand() % 4096;
-            self->ext.demon.defaultDistToTargetLoc = 8;
+            self->ext.demon.randomMovementAngle = rand() % 0x1000;
             self->ext.demon.targetAngle = 0;
-            self->ext.demon.maxAngle = 0x20;
+            self->ext.demon.defaultDistToTargetLoc = 8;
+            self->ext.demon.angleStep = 0x20;
             self->step++;
+            break;
         }
     } else {
         switch (self->entityId) {
@@ -260,8 +149,8 @@ void ExecuteAbilityInitialize(Entity* self) {
             break;
         }
     }
+    self->ext.demon.abilityId = self->entityId;
     D_us_801786D0 = 0;
-    self->ext.demon.isAbilityInitialized = self->entityId;
 }
 
 void DestroyEntityPassthrough(Entity* self) { DestroyEntity(self); }
@@ -270,8 +159,8 @@ void func_us_80172EF8(Entity* self) {
     Primitive* prim;
     s32 posX, posY;
 
-    self->posX.val = self->ext.et_801737F0.parent->posX.val;
-    self->posY.val = self->ext.et_801737F0.parent->posY.val;
+    self->posX.val = self->ext.factory.parent->posX.val;
+    self->posY.val = self->ext.factory.parent->posY.val;
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
@@ -298,24 +187,26 @@ void func_us_80172EF8(Entity* self) {
         prim->v0 = prim->v1 = 0xC0;
         prim->v2 = prim->v3 = 0xFF;
 
-        self->ext.et_801737F0.animationTriggerCount = 0;
-        self->ext.et_801737F0.animationTimer = 0;
+        self->ext.factory.unk7C = 0;
+        self->ext.factory.unk7E = 0;
         self->step++;
         break;
+
     case 1:
-        self->ext.et_801737F0.animationTriggerCount++;
-        self->ext.et_801737F0.animationTriggerCount &= 7;
-        self->ext.et_801737F0.animationTimer += 8;
-        if (self->ext.et_801737F0.animationTimer >= 0x100) {
+        self->ext.factory.unk7C++;
+        self->ext.factory.unk7C &= 7;
+        self->ext.factory.unk7E += 8;
+        if (self->ext.factory.unk7E >= 0x100) {
             self->step++;
         }
-        self->ext.et_801737F0.stepCounter++;
+        self->ext.factory.unk80++;
         break;
+
     case 2:
-        self->ext.et_801737F0.animationTriggerCount++;
-        self->ext.et_801737F0.animationTriggerCount &= 7;
-        self->ext.et_801737F0.stepCounter++;
-        if (self->ext.et_801737F0.stepCounter > 50) {
+        self->ext.factory.unk7C++;
+        self->ext.factory.unk7C &= 7;
+        self->ext.factory.unk80++;
+        if (self->ext.factory.unk80 > 50) {
             CreateEventEntity(self, DEMON_MODE_UNK_DB, 0);
             DestroyEntity(self);
             return;
@@ -326,37 +217,28 @@ void func_us_80172EF8(Entity* self) {
     posY = self->posY.i.hi - 0xC;
     prim = &g_PrimBuf[self->primIndex];
 
-    prim->u0 = prim->u1 =
-        D_us_80171B74[self->ext.et_801737F0.animationTriggerCount][0];
-    prim->u2 = prim->u3 =
-        D_us_80171B74[self->ext.et_801737F0.animationTriggerCount][1];
-    prim->v0 = prim->v2 =
-        D_us_80171B74[self->ext.et_801737F0.animationTriggerCount][2];
-    prim->v1 = prim->v3 =
-        D_us_80171B74[self->ext.et_801737F0.animationTriggerCount][3];
-    prim->x0 = prim->x2 = posX - self->ext.et_801737F0.animationTimer * 8 / 256;
-    prim->x1 = prim->x3 = posX + self->ext.et_801737F0.animationTimer * 8 / 256;
-    prim->y0 = prim->y1 =
-        posY - self->ext.et_801737F0.animationTimer * 32 / 256;
+    prim->u0 = prim->u1 = D_us_80171B74[self->ext.factory.unk7C][0];
+    prim->u2 = prim->u3 = D_us_80171B74[self->ext.factory.unk7C][1];
+    prim->v0 = prim->v2 = D_us_80171B74[self->ext.factory.unk7C][2];
+    prim->v1 = prim->v3 = D_us_80171B74[self->ext.factory.unk7C][3];
+    prim->x0 = prim->x2 = posX - self->ext.factory.unk7E * 8 / 256;
+    prim->x1 = prim->x3 = posX + self->ext.factory.unk7E * 8 / 256;
+    prim->y0 = prim->y1 = posY - self->ext.factory.unk7E * 32 / 256;
     prim->y2 = prim->y3 = posY;
     prim = prim->next;
-    PCOL(prim) = self->ext.et_801737F0.animationTimer / 2;
-    prim->x0 = prim->x2 =
-        posX - (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
-    prim->x1 = prim->x3 =
-        posX + (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
-    prim->y0 = prim->y1 =
-        posY - (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
-    prim->y2 = prim->y3 =
-        posY + (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+    PCOL(prim) = self->ext.factory.unk7E / 2;
+    prim->x0 = prim->x2 = posX - (0x100 - self->ext.factory.unk7E) * 32 / 256;
+    prim->x1 = prim->x3 = posX + (0x100 - self->ext.factory.unk7E) * 32 / 256;
+    prim->y0 = prim->y1 = posY - (0x100 - self->ext.factory.unk7E) * 32 / 256;
+    prim->y2 = prim->y3 = posY + (0x100 - self->ext.factory.unk7E) * 32 / 256;
 }
 
 void func_us_80173348(Entity* self) {
     Primitive* prim;
     s32 posX, posY;
 
-    self->posX.val = self->ext.et_801737F0.parent->posX.val;
-    self->posY.val = self->ext.et_801737F0.parent->posY.val;
+    self->posX.val = self->ext.factory.parent->posX.val;
+    self->posY.val = self->ext.factory.parent->posY.val;
 
     switch (self->step) {
     case 0:
@@ -385,27 +267,27 @@ void func_us_80173348(Entity* self) {
         prim->v0 = prim->v1 = 0xC0;
         prim->v2 = prim->v3 = 0xFF;
 
-        self->ext.et_801737F0.animationTriggerCount = 0;
-        self->ext.et_801737F0.animationTimer = 0;
+        self->ext.factory.unk7C = 0;
+        self->ext.factory.unk7E = 0;
         self->step++;
         break;
 
     case 1:
-        self->ext.et_801737F0.stepCounter++;
-        if ((self->ext.et_801737F0.stepCounter % 10) == 0 &&
-            self->ext.et_801737F0.animationTriggerCount < 2) {
-            self->ext.et_801737F0.animationTriggerCount++;
+        self->ext.factory.unk80++;
+        if ((self->ext.factory.unk80 % 10) == 0 &&
+            self->ext.factory.unk7C < 2) {
+            self->ext.factory.unk7C++;
         }
 
-        self->ext.et_801737F0.animationTimer += 8;
-        if (self->ext.et_801737F0.animationTimer >= 0x100) {
+        self->ext.factory.unk7E += 8;
+        if (self->ext.factory.unk7E >= 0x100) {
             self->step++;
         }
         break;
 
     case 2:
-        self->ext.et_801737F0.stepCounter++;
-        if (self->ext.et_801737F0.stepCounter > 0x32) {
+        self->ext.factory.unk80++;
+        if (self->ext.factory.unk80 > 0x32) {
             CreateEventEntity(self, DEMON_MODE_UNK_DC, 0);
             DestroyEntity(self);
             return;
@@ -417,47 +299,31 @@ void func_us_80173348(Entity* self) {
     posY = self->posY.i.hi - 0xC;
 
     prim = &g_PrimBuf[self->primIndex];
-    prim->u0 = prim->u2 =
-        D_us_80171BF4[self->ext.et_801737F0.animationTriggerCount][0];
-    prim->u1 = prim->u3 =
-        D_us_80171BF4[self->ext.et_801737F0.animationTriggerCount][1];
-    prim->v0 = prim->v1 =
-        D_us_80171BF4[self->ext.et_801737F0.animationTriggerCount][2];
-    prim->v2 = prim->v3 =
-        D_us_80171BF4[self->ext.et_801737F0.animationTriggerCount][3];
-    prim->x0 = prim->x2 =
-        posX - self->ext.et_801737F0.animationTimer * 16 / 256;
-    prim->x1 = prim->x3 =
-        posX + self->ext.et_801737F0.animationTimer * 16 / 256;
-    prim->y0 = prim->y1 =
-        posY - self->ext.et_801737F0.animationTimer * 16 / 256;
-    prim->y2 = prim->y3 =
-        posY + self->ext.et_801737F0.animationTimer * 16 / 256;
+    prim->u0 = prim->u2 = D_us_80171BF4[self->ext.factory.unk7C][0];
+    prim->u1 = prim->u3 = D_us_80171BF4[self->ext.factory.unk7C][1];
+    prim->v0 = prim->v1 = D_us_80171BF4[self->ext.factory.unk7C][2];
+    prim->v2 = prim->v3 = D_us_80171BF4[self->ext.factory.unk7C][3];
+    prim->x0 = prim->x2 = posX - self->ext.factory.unk7E * 16 / 256;
+    prim->x1 = prim->x3 = posX + self->ext.factory.unk7E * 16 / 256;
+    prim->y0 = prim->y1 = posY - self->ext.factory.unk7E * 16 / 256;
+    prim->y2 = prim->y3 = posY + self->ext.factory.unk7E * 16 / 256;
 
     prim = prim->next;
-    PCOL(prim) = self->ext.et_801737F0.animationTimer / 2;
-    prim->x0 = prim->x2 =
-        posX - (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
-    prim->x1 = prim->x3 =
-        posX + (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
-    prim->y0 = prim->y1 =
-        posY - (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
-    prim->y2 = prim->y3 =
-        posY + (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+    PCOL(prim) = self->ext.factory.unk7E / 2;
+    prim->x0 = prim->x2 = posX - (256 - self->ext.factory.unk7E) * 32 / 256;
+    prim->x1 = prim->x3 = posX + (256 - self->ext.factory.unk7E) * 32 / 256;
+    prim->y0 = prim->y1 = posY - (256 - self->ext.factory.unk7E) * 32 / 256;
+    prim->y2 = prim->y3 = posY + (256 - self->ext.factory.unk7E) * 32 / 256;
 }
 
-// PSX: https://decomp.me/scratch/QGDMn
-// PSP: https://decomp.me/scratch/TKY2r
 void func_us_801737F0(Entity* self) {
     Primitive* prim;
-    s32 sine;
-    s32 cosine;
-    s32 posXOffset;
-    s32 posYOffset;
-    s32 scaledCounter;
+    s32 s, c;
+    s32 dx, dy;
+    s32 t;
 
-    self->posX.val = self->ext.et_801737F0.parent->posX.val;
-    self->posY.val = self->ext.et_801737F0.parent->posY.val;
+    self->posX.val = self->ext.factory.parent->posX.val;
+    self->posY.val = self->ext.factory.parent->posY.val;
 
     switch (self->step) {
     case 0:
@@ -491,31 +357,31 @@ void func_us_801737F0(Entity* self) {
         prim->v0 = prim->v1 = 0xC0;
         prim->v2 = prim->v3 = 0xFF;
 
-        self->ext.et_801737F0.animationTriggerCount = 0;
-        self->ext.et_801737F0.animationTimer = 0;
-        self->ext.et_801737F0.angle = 0;
+        self->ext.factory.unk7C = 0;
+        self->ext.factory.unk7E = 0;
+        self->ext.factory.unk82 = 0;
 
         self->step++;
         break;
 
     case 1:
-        self->ext.et_801737F0.stepCounter++;
-        if ((self->ext.et_801737F0.stepCounter % 10 == 0) &&
-            (self->ext.et_801737F0.animationTriggerCount < 2)) {
-            self->ext.et_801737F0.animationTriggerCount++;
+        self->ext.factory.unk80++;
+        if ((self->ext.factory.unk80 % 10) == 0 &&
+            self->ext.factory.unk7C < 2) {
+            self->ext.factory.unk7C++;
         }
 
-        self->ext.et_801737F0.animationTimer += 8;
+        self->ext.factory.unk7E += 8;
 
-        if (self->ext.et_801737F0.animationTimer >= 0x100) {
+        if (self->ext.factory.unk7E >= 0x100) {
             self->step++;
         }
         break;
 
     case 2:
-        self->ext.et_801737F0.stepCounter++;
+        self->ext.factory.unk80++;
 
-        if (self->ext.et_801737F0.stepCounter > 50) {
+        if (self->ext.factory.unk80 > 50) {
             CreateEventEntity(self, DEMON_MODE_UNK_DD, 0);
             DestroyEntity(self);
             return;
@@ -523,51 +389,39 @@ void func_us_801737F0(Entity* self) {
         break;
     }
 
-    self->ext.et_801737F0.angle += 0x400;
-    self->ext.et_801737F0.angle &= 0xFFF;
+    self->ext.factory.unk82 += 0x400;
+    self->ext.factory.unk82 &= 0xFFF;
 
-    sine = rsin(self->ext.et_801737F0.angle);
-    cosine = rcos(self->ext.et_801737F0.angle);
+    s = rsin(self->ext.factory.unk82);
+    c = rcos(self->ext.factory.unk82);
 
-    posXOffset = (self->posX.i.hi) + ((self->facingLeft) ? (6) : (-6));
-    posYOffset = self->posY.i.hi - 0xC;
+    dx = self->posX.i.hi + (self->facingLeft ? 6 : -6);
+    dy = self->posY.i.hi - 0xC;
     prim = &g_PrimBuf[self->primIndex];
 
-    scaledCounter = (self->ext.et_801737F0.animationTimer * 16) / 256;
+    t = (self->ext.factory.unk7E * 16) / 256;
 
-    prim->x0 = posXOffset +
-               ((cosine * -(scaledCounter)-sine * -(scaledCounter)) >> 12);
-    prim->y0 = posYOffset +
-               ((sine * -(scaledCounter) + cosine * -(scaledCounter)) >> 12);
+    prim->x0 = dx + ((c * -t - s * -t) >> 12);
+    prim->y0 = dy + ((s * -t + c * -t) >> 12);
 
-    prim->x1 =
-        posXOffset + ((cosine * (scaledCounter)-sine * -(scaledCounter)) >> 12);
-    prim->y1 = posYOffset +
-               ((sine * (scaledCounter) + cosine * -(scaledCounter)) >> 12);
+    prim->x1 = dx + ((c * t - s * -t) >> 12);
+    prim->y1 = dy + ((s * t + c * -t) >> 12);
 
-    prim->x2 =
-        posXOffset + ((cosine * -(scaledCounter)-sine * (scaledCounter)) >> 12);
-    prim->y2 = posYOffset +
-               ((sine * -(scaledCounter) + cosine * (scaledCounter)) >> 12);
+    prim->x2 = dx + ((c * -t - s * t) >> 12);
+    prim->y2 = dy + ((s * -t + c * t) >> 12);
 
-    prim->x3 =
-        posXOffset + ((cosine * (scaledCounter)-sine * (scaledCounter)) >> 12);
-    prim->y3 = posYOffset +
-               ((sine * (scaledCounter) + cosine * (scaledCounter)) >> 12);
-    PCOL(prim) = (self->ext.et_801737F0.stepCounter & 1) * 128;
+    prim->x3 = dx + ((c * t - s * t) >> 12);
+    prim->y3 = dy + ((s * t + c * t) >> 12);
+    PCOL(prim) = (self->ext.factory.unk80 & 1) * 128;
 
     prim = prim->next;
 
-    PCOL(prim) = self->ext.et_801737F0.animationTimer / 2;
+    PCOL(prim) = self->ext.factory.unk7E / 2;
 
-    prim->x0 = prim->x2 =
-        posXOffset - (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
-    prim->x1 = prim->x3 =
-        posXOffset + (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
-    prim->y0 = prim->y1 =
-        posYOffset - (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
-    prim->y2 = prim->y3 =
-        posYOffset + (256 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+    prim->x0 = prim->x2 = dx - (256 - self->ext.factory.unk7E) * 32 / 256;
+    prim->x1 = prim->x3 = dx + (256 - self->ext.factory.unk7E) * 32 / 256;
+    prim->y0 = prim->y1 = dy - (256 - self->ext.factory.unk7E) * 32 / 256;
+    prim->y2 = prim->y3 = dy + (256 - self->ext.factory.unk7E) * 32 / 256;
 }
 
 void func_us_80173D14(Entity* self) {
@@ -578,8 +432,8 @@ void func_us_80173D14(Entity* self) {
     s32 s, c;
     s32 i;
 
-    self->posX.val = self->ext.et_801737F0.parent->posX.val;
-    self->posY.val = self->ext.et_801737F0.parent->posY.val;
+    self->posX.val = self->ext.factory.parent->posX.val;
+    self->posY.val = self->ext.factory.parent->posY.val;
     switch (self->step) {
     case 0:
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 4);
@@ -636,16 +490,18 @@ void func_us_80173D14(Entity* self) {
         prim->v2 = prim->v3 = 0xFF;
         self->step++;
         break;
+
     case 1:
-        self->ext.et_801737F0.animationTriggerCount++;
-        self->ext.et_801737F0.animationTimer += 8;
-        if (self->ext.et_801737F0.animationTimer >= 0x100) {
+        self->ext.factory.unk7C++;
+        self->ext.factory.unk7E += 8;
+        if (self->ext.factory.unk7E >= 0x100) {
             self->step++;
         }
         break;
+
     case 2:
-        self->ext.et_801737F0.animationTriggerCount++;
-        if (self->ext.et_801737F0.animationTriggerCount > 50) {
+        self->ext.factory.unk7C++;
+        if (self->ext.factory.unk7C > 50) {
             CreateEventEntity(self, DEMON_MODE_UNK_DE, 0);
             DestroyEntity(self);
             return;
@@ -657,40 +513,27 @@ void func_us_80173D14(Entity* self) {
     posY = self->posY.i.hi - 0xC;
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 3; i++) {
-        prim->x0 = posX + D_us_801786A0[i][0] *
-                              self->ext.et_801737F0.animationTimer / 256;
-        prim->y0 = posY + D_us_801786A0[i][1] *
-                              self->ext.et_801737F0.animationTimer / 256;
-        prim->x1 = posX + D_us_801786A0[i][2] *
-                              self->ext.et_801737F0.animationTimer / 256;
-        prim->y1 = posY + D_us_801786A0[i][3] *
-                              self->ext.et_801737F0.animationTimer / 256;
-        prim->x2 = posX + D_us_801786A0[i][4] *
-                              self->ext.et_801737F0.animationTimer / 256;
-        prim->y2 = posY + D_us_801786A0[i][5] *
-                              self->ext.et_801737F0.animationTimer / 256;
-        prim->x3 = posX + D_us_801786A0[i][6] *
-                              self->ext.et_801737F0.animationTimer / 256;
-        prim->y3 = posY + D_us_801786A0[i][7] *
-                              self->ext.et_801737F0.animationTimer / 256;
-        PCOL(prim) =
-            ((self->ext.et_801737F0.animationTriggerCount & 1) * 64) + 0x40;
+        prim->x0 = posX + D_us_801786A0[i][0] * self->ext.factory.unk7E / 256;
+        prim->y0 = posY + D_us_801786A0[i][1] * self->ext.factory.unk7E / 256;
+        prim->x1 = posX + D_us_801786A0[i][2] * self->ext.factory.unk7E / 256;
+        prim->y1 = posY + D_us_801786A0[i][3] * self->ext.factory.unk7E / 256;
+        prim->x2 = posX + D_us_801786A0[i][4] * self->ext.factory.unk7E / 256;
+        prim->y2 = posY + D_us_801786A0[i][5] * self->ext.factory.unk7E / 256;
+        prim->x3 = posX + D_us_801786A0[i][6] * self->ext.factory.unk7E / 256;
+        prim->y3 = posY + D_us_801786A0[i][7] * self->ext.factory.unk7E / 256;
+        PCOL(prim) = ((self->ext.factory.unk7C & 1) * 64) + 0x40;
         prim = prim->next;
     }
 
     posX = self->posX.i.hi + (self->facingLeft ? 4 : -4);
-    PCOL(prim) = self->ext.et_801737F0.animationTimer / 2;
-    prim->x0 = prim->x2 =
-        posX - (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
-    prim->x1 = prim->x3 =
-        posX + (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
-    prim->y0 = prim->y1 =
-        posY - (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
-    prim->y2 = prim->y3 =
-        posY + (0x100 - self->ext.et_801737F0.animationTimer) * 32 / 256;
+    PCOL(prim) = self->ext.factory.unk7E / 2;
+    prim->x0 = prim->x2 = posX - (0x100 - self->ext.factory.unk7E) * 32 / 256;
+    prim->x1 = prim->x3 = posX + (0x100 - self->ext.factory.unk7E) * 32 / 256;
+    prim->y0 = prim->y1 = posY - (0x100 - self->ext.factory.unk7E) * 32 / 256;
+    prim->y2 = prim->y3 = posY + (0x100 - self->ext.factory.unk7E) * 32 / 256;
 }
 
-void ServantInit(InitializeMode mode) {
+void OVL_EXPORT(ServantInit)(InitializeMode mode) {
     u16* src;
     u16* dst;
     RECT rect;
@@ -708,7 +551,7 @@ void ServantInit(InitializeMode mode) {
 
     s_ServantId = g_Servant;
 
-    if ((mode == MENU_SWITCH_SERVANT) || (mode == MENU_SAME_SERVANT)) {
+    if (mode == MENU_SWITCH_SERVANT || mode == MENU_SAME_SERVANT) {
         ProcessEvent(NULL, true);
         if (mode == MENU_SAME_SERVANT) {
             return;
@@ -744,15 +587,20 @@ void ServantInit(InitializeMode mode) {
 
     DestroyEntity(entity);
     entity->unk5A = 0x6C;
-    entity->palette = 0x140;
+    entity->palette = PAL_SERVANT;
     entity->animSet = ANIMSET_OVL(20);
     entity->zPriority = PLAYER.zPriority - 2;
     entity->facingLeft = PLAYER.facingLeft;
     entity->params = 0;
 
     if (mode == MENU_SWITCH_SERVANT) {
+#ifdef VERSION_PSP
+        if ((D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_20) ||
+            (D_8003C708.flags & LAYOUT_RECT_PARAMS_UNKNOWN_40)) {
+#else
         if (LOW(D_8003C708.flags) &
             (LAYOUT_RECT_PARAMS_UNKNOWN_20 | LAYOUT_RECT_PARAMS_UNKNOWN_40)) {
+#endif
             entity->entityId = DEMON_MODE_DEFAULT_UPDATE;
         } else {
             entity->entityId = DEMON_MODE_ADDITIONAL_INIT;
@@ -780,8 +628,26 @@ void ServantInit(InitializeMode mode) {
     g_api.GetServantStats(entity, 0, 0, &s_DemonStats);
 }
 
-void UpdateServantDefault(Entity* self) {
-    s32 temp;
+void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
+    static s32 targetX;
+    static s32 targetY;
+    static s16 dx0;
+    STATIC_PAD_BSS(2);
+    static s16 dy0;
+    STATIC_PAD_BSS(2);
+    static s16 angle;
+    STATIC_PAD_BSS(2);
+    static s16 dAngle;
+    STATIC_PAD_BSS(2);
+    static s16 distance0;
+    STATIC_PAD_BSS(2);
+    static s16 xOffset;
+    STATIC_PAD_BSS(2);
+
+    static s32 dx1;
+    static s32 dy1;
+    static s32 distance1;
+
     s32 i;
     s32 rnd;
 
@@ -793,127 +659,107 @@ void UpdateServantDefault(Entity* self) {
     if (D_8003C708.flags & FLAG_UNK_20) {
         switch (ServantUnk0()) {
         case 0:
-            s_TargetLocationX = 0x40;
+            targetX = 0x40;
             break;
+
         case 1:
-            s_TargetLocationX = 0xC0;
+            targetX = 0xC0;
             break;
+
         case 2:
-
-            if (self->posX.i.hi > 0x80) {
-                temp = 0xC0;
-            } else {
-                temp = 0x40;
-            }
-            s_TargetLocationX = temp;
+            targetX = (self->posX.i.hi > 0x80) ? 0xC0 : 0x40;
             break;
         }
-        s_TargetLocationY = 0xA0;
+        targetY = 0xA0;
     } else {
-        s_TargetLocOffset_calc = -0x18;
+        xOffset = -0x18;
         if (PLAYER.facingLeft) {
-            s_TargetLocOffset_calc = -s_TargetLocOffset_calc;
+            xOffset = -xOffset;
         }
-        s_TargetLocationX_calc = PLAYER.posX.i.hi + s_TargetLocOffset_calc;
-        s_TargetLocationY_calc = PLAYER.posY.i.hi - 0x20;
+        dx0 = PLAYER.posX.i.hi + xOffset;
+        dy0 = PLAYER.posY.i.hi - 0x20;
 
-        s_AngleToTarget = self->ext.demon.randomMovementAngle;
+        angle = self->ext.demon.randomMovementAngle;
         self->ext.demon.randomMovementAngle += 0x10;
         self->ext.demon.randomMovementAngle &= 0xFFF;
-        s_DistToTargetLocation = self->ext.demon.defaultDistToTargetLoc;
+        distance0 = self->ext.demon.defaultDistToTargetLoc;
 
-        s_TargetLocationX =
-            s_TargetLocationX_calc +
-            ((rcos(s_AngleToTarget / 2) * s_DistToTargetLocation) >> 0xC);
-        s_TargetLocationY =
-            s_TargetLocationY_calc -
-            ((rsin(s_AngleToTarget) * (s_DistToTargetLocation / 2)) >> 0xC);
+        targetX = dx0 + ((rcos(angle / 2) * distance0) >> 0xC);
+        targetY = dy0 - ((rsin(angle) * (distance0 / 2)) >> 0xC);
     }
     switch (self->step) {
     case 0:
         ExecuteAbilityInitialize(self);
         break;
+
     case 1:
         if (D_8003C708.flags & FLAG_UNK_20) {
             if (PLAYER.posX.i.hi >= self->posX.i.hi) {
-                self->facingLeft = 0;
+                self->facingLeft = false;
             } else {
-                self->facingLeft = 1;
+                self->facingLeft = true;
             }
         } else {
             if (PLAYER.facingLeft != self->facingLeft) {
-                if (abs(s_TargetLocationX - self->posX.i.hi) <= 0) {
+                if (abs(targetX - self->posX.i.hi) <= 0) {
                     self->facingLeft = PLAYER.facingLeft;
-                } else if (
-                    !self->facingLeft && s_TargetLocationX < self->posX.i.hi) {
+                } else if (!self->facingLeft && targetX < self->posX.i.hi) {
                     self->facingLeft = PLAYER.facingLeft;
-                } else if (
-                    self->facingLeft && s_TargetLocationX > self->posX.i.hi) {
+                } else if (self->facingLeft && targetX > self->posX.i.hi) {
                     self->facingLeft = PLAYER.facingLeft;
                 }
-            } else if (!self->facingLeft &&
-                       (self->posX.i.hi - s_TargetLocationX) > 0x28) {
-                self->facingLeft = PLAYER.facingLeft ? 0 : 1;
-            } else if (self->facingLeft &&
-                       (s_TargetLocationX - self->posX.i.hi) > 0x28) {
-                self->facingLeft = PLAYER.facingLeft ? 0 : 1;
+            } else if (
+                !self->facingLeft && (self->posX.i.hi - targetX) > 0x28) {
+                self->facingLeft = PLAYER.facingLeft ? false : true;
+            } else if (self->facingLeft && (targetX - self->posX.i.hi) > 0x28) {
+                self->facingLeft = PLAYER.facingLeft ? false : true;
             }
         }
 
-        s_AngleToTarget =
-            CalculateAngleToEntity(self, s_TargetLocationX, s_TargetLocationY);
-        s_AllowedAngle = GetTargetPositionWithDistanceBuffer(
-            s_AngleToTarget, self->ext.demon.targetAngle,
-            self->ext.demon.maxAngle);
-        self->ext.demon.targetAngle = s_AllowedAngle;
-        s_TargetLocationX_calc = s_TargetLocationX - self->posX.i.hi;
-        s_TargetLocationY_calc = s_TargetLocationY - self->posY.i.hi;
-        s_DistToTargetLocation =
-            SquareRoot12(((s_TargetLocationX_calc * s_TargetLocationX_calc) +
-                          (s_TargetLocationY_calc * s_TargetLocationY_calc))
-                         << 0xC) >>
-            0xC;
-        if (s_DistToTargetLocation < 0x28) {
-            self->velocityY = -(rsin((s32)s_AllowedAngle) << 3);
-            self->velocityX = rcos((s32)s_AllowedAngle) << 3;
-            self->ext.demon.maxAngle = 0x20;
-        } else if (s_DistToTargetLocation < 0x3C) {
-            self->velocityY = -(rsin((s32)s_AllowedAngle) << 4);
-            self->velocityX = rcos((s32)s_AllowedAngle) << 4;
-            self->ext.demon.maxAngle = 0x40;
-        } else if (s_DistToTargetLocation < 0x64) {
-            self->velocityY = -(rsin((s32)s_AllowedAngle) << 5);
-            self->velocityX = rcos((s32)s_AllowedAngle) << 5;
-            self->ext.demon.maxAngle = 0x60;
-        } else if (s_DistToTargetLocation < 0x100) {
-            self->velocityY = -(rsin((s32)s_AllowedAngle) << 6);
-            self->velocityX = rcos((s32)s_AllowedAngle) << 6;
-            self->ext.demon.maxAngle = 0x80;
+        angle = CalculateAngleToEntity(self, targetX, targetY);
+        dAngle = StepAngleTowards(
+            angle, self->ext.demon.targetAngle, self->ext.demon.angleStep);
+        self->ext.demon.targetAngle = dAngle;
+        dx0 = targetX - self->posX.i.hi;
+        dy0 = targetY - self->posY.i.hi;
+        distance0 = SquareRoot12((dx0 * dx0 + dy0 * dy0) << 12) >> 12;
+        if (distance0 < 40) {
+            self->velocityY = -(rsin(dAngle) << 3);
+            self->velocityX = rcos(dAngle) << 3;
+            self->ext.demon.angleStep = 0x20;
+        } else if (distance0 < 60) {
+            self->velocityY = -(rsin(dAngle) << 4);
+            self->velocityX = rcos(dAngle) << 4;
+            self->ext.demon.angleStep = 0x40;
+        } else if (distance0 < 100) {
+            self->velocityY = -(rsin(dAngle) << 5);
+            self->velocityX = rcos(dAngle) << 5;
+            self->ext.demon.angleStep = 0x60;
+        } else if (distance0 < 256) {
+            self->velocityY = -(rsin(dAngle) << 6);
+            self->velocityX = rcos(dAngle) << 6;
+            self->ext.demon.angleStep = 0x80;
         } else {
-            self->velocityX = (s_TargetLocationX - self->posX.i.hi) << 0xE;
-            self->velocityY = (s_TargetLocationY - self->posY.i.hi) << 0xE;
-            self->ext.demon.maxAngle = 0x80;
+            self->velocityX = (targetX - self->posX.i.hi) << 0xE;
+            self->velocityY = (targetY - self->posY.i.hi) << 0xE;
+            self->ext.demon.angleStep = 0x80;
         }
         if (self->velocityY > FIX(1.0)) {
-            SetAnimationFrame(self, 0xA);
-        } else if (s_DistToTargetLocation < 0x3C) {
+            SetAnimationFrame(self, 10);
+        } else if (distance0 < 60) {
             SetAnimationFrame(self, 0);
-
-        } else if (s_DistToTargetLocation > 0x64) {
-            SetAnimationFrame(self, 0xB);
+        } else if (distance0 > 100) {
+            SetAnimationFrame(self, 11);
         }
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
         if (!g_CutsceneHasControl) {
-            s_DeltaX = s_TargetLocationX - self->posX.i.hi;
-            s_DeltaY = s_TargetLocationY - self->posY.i.hi;
+            dx1 = targetX - self->posX.i.hi;
+            dy1 = targetY - self->posY.i.hi;
 
-            s_DistToTargetLocation2 =
-                SquareRoot12(
-                    ((s_DeltaX * s_DeltaX) + (s_DeltaY * s_DeltaY)) << 0xC) >>
-                0xC;
+            distance1 = SquareRoot12((dx1 * dx1 + dy1 * dy1) << 12) >> 12;
 
-            if (s_DistToTargetLocation2 < 0x20) {
+            if (distance1 < 0x20) {
                 self->ext.demon.abilityTimer++;
                 if (self->ext.demon.abilityTimer >
                     g_DemonAbilityStats[s_DemonStats.level / 10].timer) {
@@ -944,11 +790,11 @@ void UpdateServantDefault(Entity* self) {
                     self->ext.demon.unkCounter = 0;
                 }
                 if (self->ext.demon.unkCounter == 18000) {
-
-                    for (rnd = rand() % 0x100, i = 0; true; i++) {
-                        if (rnd <= ((s16*)g_Events)[i * 2]) {
+                    rnd = rand() % 0x100;
+                    for (i = 0; true; i++) {
+                        if (rnd <= buggyPtr[i * 2]) {
                             CreateEventEntity(self, DEMON_EVENT_SFX_PASSTHROUGH,
-                                              ((s16*)g_Events)[i * 2 + 1]);
+                                              buggyPtr[i * 2 + 1]);
                             break;
                         }
                     }
@@ -969,6 +815,14 @@ void UpdateServantDefault(Entity* self) {
 }
 
 void UpdateServantBasicAttack(Entity* self) {
+    static s32 targetX;
+    static s32 targetY;
+    static s32 dx;
+    static s32 dy;
+    static u32 animStatus;
+    static s32 targetFacingLeft;
+    static s32 rnd;
+
     if (D_us_801786D4) {
         self->zPriority = PLAYER.zPriority - 2;
     }
@@ -976,68 +830,69 @@ void UpdateServantBasicAttack(Entity* self) {
     case 0:
         ExecuteAbilityInitialize(self);
         break;
+
     case 1:
-        s_IsTargetFacingLeft = self->ext.demon.target->facingLeft;
+        targetFacingLeft = self->ext.demon.target->facingLeft;
         self->step++;
-        // fallthrough
+        /* fallthrough */
     case 2:
         if (!CheckEntityValid(self->ext.demon.target) &&
-            !(self->ext.demon.target = FindValidTarget(self))) {
+            (self->ext.demon.target = FindValidTarget(self)) == NULL) {
             self->entityId = DEMON_MODE_DEFAULT_UPDATE;
             self->step = 0;
         } else {
-            s_AttackTargetLocationX = self->ext.demon.target->posX.val;
-            s_AttackTargetLocationX +=
-                s_IsTargetFacingLeft ? FIX(32) : FIX(-32);
+            targetX = self->ext.demon.target->posX.val;
+            targetX += targetFacingLeft ? FIX(32) : FIX(-32);
+            targetY = self->ext.demon.target->posY.val;
 
-            s_AttackTargetLocationY = self->ext.demon.target->posY.val;
-            self->velocityX = (s_AttackTargetLocationX - self->posX.val) >> 3;
-            self->velocityY = (s_AttackTargetLocationY - self->posY.val) >> 3;
+            self->velocityX = (targetX - self->posX.val) >> 3;
+            self->velocityY = (targetY - self->posY.val) >> 3;
 
-            self->facingLeft = self->velocityX > 0 ? 0 : 1;
+            self->facingLeft = self->velocityX > 0 ? false : true;
+
             self->posX.val += self->velocityX;
-
             self->posY.val += self->velocityY;
-            s_AttackLocationDeltaX =
-                abs(s_AttackTargetLocationX - self->posX.val);
-            s_AttackLocationDeltaY =
-                abs(s_AttackTargetLocationY - self->posY.val);
-            if ((s_AttackLocationDeltaX < FIX(8)) &&
-                (s_AttackLocationDeltaY < FIX(1))) {
-                self->facingLeft = s_IsTargetFacingLeft;
+            dx = abs(targetX - self->posX.val);
+            dy = abs(targetY - self->posY.val);
+            if (dx < FIX(8) && dy < FIX(1)) {
+                self->facingLeft = targetFacingLeft;
                 self->step++;
             }
         }
         break;
+
     case 3:
-        s_TempRand = rand() % 2;
-        SetAnimationFrame(self, s_TempRand ? 1 : 3);
+        rnd = rand() % 2;
+        SetAnimationFrame(self, rnd ? 1 : 3);
 
         g_api.GetServantStats(
-            self,
-            s_TempRand ? FAM_ABILITY_DEMON_UNK21 : FAM_ABILITY_DEMON_UNK22, 1,
+            self, rnd ? FAM_ABILITY_DEMON_UNK21 : FAM_ABILITY_DEMON_UNK22, 1,
             &s_DemonStats);
 
-        s_TempRand = rand() % 8;
-        switch (s_TempRand) {
+        rnd = rand() % 8;
+        switch (rnd) {
         case 0:
             g_api.PlaySfx(g_DemonSfxMap[0]);
             break;
+
         case 1:
             g_api.PlaySfx(g_DemonSfxMap[1]);
             break;
+
         case 2:
             g_api.PlaySfx(g_DemonSfxMap[2]);
             break;
         }
         self->step++;
         break;
+
     case 4:
-        if (s_AttackAnimationStatus == -2) {
+        if (animStatus == -2) {
             self->ext.demon.abilityTimer = 0;
             self->step++;
         }
         break;
+
     case 5:
         self->velocityX = self->facingLeft ? FIX(0.125) : FIX(-0.125);
         self->velocityY = FIX(-0.25);
@@ -1048,9 +903,10 @@ void UpdateServantBasicAttack(Entity* self) {
             self->step++;
         }
         break;
+
     case 6:
         if (g_CutsceneHasControl ||
-            !(self->ext.demon.target = FindValidTarget(self))) {
+            (self->ext.demon.target = FindValidTarget(self)) == NULL) {
             self->entityId = DEMON_MODE_DEFAULT_UPDATE;
             self->step = 0;
             break;
@@ -1062,16 +918,21 @@ void UpdateServantBasicAttack(Entity* self) {
             self->entityId = DEMON_MODE_SPECIAL_ATTACK;
             self->step = 0;
         }
-
         break;
     }
-    s_AttackAnimationStatus =
+    animStatus =
         ServantUpdateAnim(self, g_DemonFrameProps, g_DemonAnimationFrames);
 }
 
-// PSX: https://decomp.me/scratch/vbedA
-// PSP: https://decomp.me/scratch/mRGqb
 void UpdateServantSpecialAttack(Entity* self) {
+    static s32 targetX;
+    static s32 targetY;
+    static s32 dx;
+    static s32 dy;
+    static s32 animStatus;
+    static s32 targetFacingLeft;
+    static s32 attackIdx;
+
     s32 i;
 
     if (D_us_801786D4) {
@@ -1081,71 +942,68 @@ void UpdateServantSpecialAttack(Entity* self) {
     case 0:
         ExecuteAbilityInitialize(self);
         break;
-    case 1:
-        s_IsSpecialAttackTargetFacingLeft = self->ext.demon.target->facingLeft;
-        self->step++;
 
+    case 1:
+        targetFacingLeft = self->ext.demon.target->facingLeft;
+        self->step++;
+        /* fallthrough */
     case 2:
         if (!CheckEntityValid(self->ext.demon.target) &&
-            !(self->ext.demon.target = FindValidTarget(self))) {
+            (self->ext.demon.target = FindValidTarget(self)) == NULL) {
             self->entityId = DEMON_MODE_DEFAULT_UPDATE;
             self->step = 0;
         } else {
-            s_SpecialAttackTargetPosX = self->ext.demon.target->posX.val;
-            s_SpecialAttackTargetPosX +=
-                s_IsSpecialAttackTargetFacingLeft ? FIX(32) : FIX(-32);
+            targetX = self->ext.demon.target->posX.val;
+            targetX += targetFacingLeft ? FIX(32) : FIX(-32);
 
-            s_SpecialAttackTargetPosY = self->ext.demon.target->posY.val;
-            self->velocityX = (s_SpecialAttackTargetPosX - self->posX.val) >> 3;
-            self->velocityY = (s_SpecialAttackTargetPosY - self->posY.val) >> 3;
+            targetY = self->ext.demon.target->posY.val;
+            self->velocityX = (targetX - self->posX.val) >> 3;
+            self->velocityY = (targetY - self->posY.val) >> 3;
             self->facingLeft = self->velocityX > 0 ? 0 : 1;
 
             self->posX.val += self->velocityX;
             self->posY.val += self->velocityY;
 
-            s_SpecialAttackLocationDeltaX =
-                abs(s_SpecialAttackTargetPosX - self->posX.val);
-            s_SpecialAttackLocationDeltaY =
-                abs(s_SpecialAttackTargetPosY - self->posY.val);
-            if ((s_SpecialAttackLocationDeltaX < FIX(8)) &&
-                (s_SpecialAttackLocationDeltaY < FIX(1))) {
-                self->facingLeft = s_IsSpecialAttackTargetFacingLeft;
+            dx = abs(targetX - self->posX.val);
+            dy = abs(targetY - self->posY.val);
+            if (dx < FIX(8) && dy < FIX(1)) {
+                self->facingLeft = targetFacingLeft;
                 self->step++;
             }
         }
         break;
-    case 3:
-        s_SpecialAttackIdx = rand() % 256;
 
+    case 3:
+        attackIdx = rand() % 256;
         for (i = 1; i < 6; i++) {
-            if (s_SpecialAttackIdx <=
+            if (attackIdx <=
                 g_DemonAttackSelector[s_DemonStats.level / 10][i]) {
-                s_SpecialAttackIdx = i - 1;
+                attackIdx = i - 1;
                 break;
             }
         }
 
         SetAnimationFrame(
-            self, g_DemonAttackIdSfxLookup[s_SpecialAttackIdx].animationIndex);
-        g_api.PlaySfx(g_DemonSfxMap[g_DemonAttackIdSfxLookup[s_SpecialAttackIdx]
-                                        .sfxIndex]);
+            self, g_DemonAttackIdSfxLookup[attackIdx].animationIndex);
+        g_api.PlaySfx(
+            g_DemonSfxMap[g_DemonAttackIdSfxLookup[attackIdx].sfxIndex]);
 
         g_api.GetServantStats(
-            self, g_DemonAttackIdSfxLookup[s_SpecialAttackIdx].abilityId, 1,
+            self, g_DemonAttackIdSfxLookup[attackIdx].abilityId, 1,
             &s_DemonStats);
         // This is for the different Attack types.  Param selects update
         // function from passthrough array
-        CreateEventEntity(
-            self, DEMON_SPECIAL_ATTACK_UPDATE, s_SpecialAttackIdx);
-
+        CreateEventEntity(self, DEMON_SPECIAL_ATTACK_UPDATE, attackIdx);
         self->step++;
         break;
+
     case 4:
-        if (s_SpecialAttackAnimationStatus == -2) {
+        if (animStatus == -2) {
             self->ext.demon.abilityTimer = 0;
             self->step++;
         }
         break;
+
     case 5:
         self->velocityX = self->facingLeft ? FIX(0.125) : FIX(-0.125);
         self->velocityY = FIX(-0.25);
@@ -1160,33 +1018,39 @@ void UpdateServantSpecialAttack(Entity* self) {
         }
         break;
     }
-    s_SpecialAttackAnimationStatus =
+    animStatus =
         ServantUpdateAnim(self, g_DemonFrameProps, g_DemonAnimationFrames);
 }
 
-void unused_5800(Entity* self) {}
-void unused_5808(Entity* self) {}
+void unused_5800(void) {}
+
+void unused_5808(void) {}
 
 void UpdateServantPressSwitch(Entity* self) {
-    Entity* sfxEntity;
-    s32 xCalc;
-    s32 yCalc;
-    s32 facingLeft;
+    static s32 targetX;
+    static s32 targetY;
+    STATIC_PAD_BSS(4);
+    static ServantSfxEventDesc* sfxEvent;
+    static s16 sfxFlag;
+    STATIC_PAD_BSS(2);
+
+    Entity* entity;
+    s32 dx, dy;
 
     if (D_us_801786D4) {
         self->zPriority = PLAYER.zPriority - 2;
     }
     if (s_CurrentSwitch) {
-        s_SwitchPoxX = s_CurrentSwitch->posX.val;
-        s_SwitchPoxY = s_CurrentSwitch->posY.val;
+        targetX = s_CurrentSwitch->posX.val;
+        targetY = s_CurrentSwitch->posY.val;
         self->ext.demon.switchPressVelocityOffset += 0x40;
         self->ext.demon.switchPressVelocityOffset &= 0xFFF;
-        s_SwitchPoxY =
+        targetY =
             (rsin((s32)self->ext.demon.switchPressVelocityOffset) << 3 << 4) +
-            s_SwitchPoxY;
+            targetY;
 
-        self->velocityX = (s_SwitchPoxX - self->posX.val) >> 5;
-        self->velocityY = (s_SwitchPoxY - self->posY.val) >> 5;
+        self->velocityX = (targetX - self->posX.val) >> 5;
+        self->velocityY = (targetY - self->posY.val) >> 5;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
     }
@@ -1194,63 +1058,57 @@ void UpdateServantPressSwitch(Entity* self) {
     case 0:
         ExecuteAbilityInitialize(self);
         break;
-    case 1:
-        if (self->velocityX > 0) {
-            facingLeft = false;
-        } else {
-            facingLeft = true;
-        }
-        self->facingLeft = facingLeft;
 
-        xCalc = (s_SwitchPoxX - self->posX.val) >> 0x10;
-        yCalc = (s_SwitchPoxY - self->posY.val) >> 0x10;
-        if ((SquareRoot12((SQ(xCalc) + SQ(yCalc)) << 0xC) >> 0xC) < 0x10) {
-            if (g_StageId < STAGE_RNO0 || g_StageId >= STAGE_RNZ1_DEMO) {
-                self->facingLeft = 0;
-                s_SwitchSfxEvent =
-                    (ServantSfxEventDesc*)g_SfxDemonSwitchRandomizer[1];
+    case 1:
+        self->facingLeft = (self->velocityX > 0) ? false : true;
+
+        dx = (targetX - self->posX.val) >> 0x10;
+        dy = (targetY - self->posY.val) >> 0x10;
+        if ((SquareRoot12((dx * dx + dy * dy) << 12) >> 12) < 0x10) {
+            if (g_StageId < STAGE_RNO0 || g_StageId > STAGE_RNZ1_DEMO - 1) {
+                self->facingLeft = false;
+                sfxEvent = (ServantSfxEventDesc*)g_SfxDemonSwitchRandomizer[1];
             } else {
-                self->facingLeft = 1;
-                s_SwitchSfxEvent =
-                    (ServantSfxEventDesc*)g_SfxDemonSwitchRandomizer[3];
+                self->facingLeft = true;
+                sfxEvent = (ServantSfxEventDesc*)g_SfxDemonSwitchRandomizer[3];
             }
             self->step++;
         }
         break;
+
     case 2:
-        s_CurrentSwitchSfxFlag = ((s16*)s_SwitchSfxEvent)[0];
+        sfxFlag = ((s16*)sfxEvent)[0];
 #ifndef VERSION_PSP
-        g_PauseAllowed = false;
+        pauseAllowed = false;
 #endif
         self->step++;
         // fallthrough
     case 3:
-
-        if (s_CurrentSwitchSfxFlag < 0) {
+        if (sfxFlag < 0) {
             if (g_PlaySfxStep > 4) {
-
-                SetAnimationFrame(self, s_SwitchSfxEvent->animIndex);
+                SetAnimationFrame(self, sfxEvent->animIndex);
 #ifndef VERSION_PSP
-                g_PauseAllowed = true;
+                pauseAllowed = true;
 #endif
                 self->step++;
             }
         } else {
-            if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 0x63)) {
-                s_CurrentSwitchSfxFlag--;
+            if (g_PlaySfxStep == 4 || g_PlaySfxStep >= 99) {
+                sfxFlag--;
             }
-            if (s_CurrentSwitchSfxFlag < 0) {
-                SetAnimationFrame(self, s_SwitchSfxEvent->animIndex);
-                if (s_SwitchSfxEvent->sfxId != 0 &&
+            if (sfxFlag < 0) {
+                SetAnimationFrame(self, sfxEvent->animIndex);
+                if (sfxEvent->sfxId != 0 &&
                     !SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH)) {
-                    CreateEventEntity(self, DEMON_EVENT_SFX_PASSTHROUGH,
-                                      s_SwitchSfxEvent->sfxId);
+                    CreateEventEntity(
+                        self, DEMON_EVENT_SFX_PASSTHROUGH, sfxEvent->sfxId);
                 }
-                s_SwitchSfxEvent++;
-                s_CurrentSwitchSfxFlag = ((s16*)s_SwitchSfxEvent)[0];
+                sfxEvent++;
+                sfxFlag = ((s16*)sfxEvent)[0];
             }
         }
         break;
+
     case 4:
         self->ext.demon.attackEndCounter++;
         if (self->ext.demon.attackEndCounter > 120) {
@@ -1262,53 +1120,52 @@ void UpdateServantPressSwitch(Entity* self) {
 
     if (s_CurrentSwitch && !s_CurrentSwitch->entityId) {
 #ifndef VERSION_PSP
-        g_PauseAllowed = true;
+        pauseAllowed = true;
 #endif
         self->entityId = DEMON_MODE_DEFAULT_UPDATE;
         self->step = 0;
 
-        if ((sfxEntity =
-                 SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH)) &&
-            sfxEntity->step < 5) {
-            sfxEntity->step = 7;
+        if ((entity = SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH)) !=
+                NULL &&
+            entity->step < 5) {
+            entity->step = 7;
         }
     }
-    if ((self->anim == g_DemonAnimationFrames[7]) && (self->pose == 8)) {
-        D_us_801786DC = 1;
+    if (self->anim == g_DemonAnimationFrames[7] && self->pose == 8) {
+        D_us_801786DC = true;
     }
     ServantUpdateAnim(self, NULL, g_DemonAnimationFrames);
 }
 
 void UpdateSubentitySwitch(Entity* self) {
-
     switch (self->step) {
     case 0:
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         s_CurrentSwitch = self;
-        D_us_801786DC = 0;
+        D_us_801786DC = false;
 
-        if (g_StageId < STAGE_RNO0 || g_StageId >= STAGE_RNZ1_DEMO) {
+        if (g_StageId < STAGE_RNO0 || g_StageId > STAGE_RNZ1_DEMO - 1) {
             self->posX.i.hi = 200;
             self->posY.i.hi = 36;
-            self->facingLeft = 0;
+            self->facingLeft = false;
         } else {
             self->posX.i.hi = 56;
             self->posY.i.hi = 196;
-            self->facingLeft = 1;
+            self->facingLeft = true;
         }
 
         self->step++;
         break;
 
     case 1:
-        if (D_us_801786DC != 0) {
+        if (D_us_801786DC) {
             self->hitboxOffX = 0x18;
             self->hitboxOffY = 4;
             self->hitboxWidth = 2;
             self->hitboxHeight = 2;
+            self->attack = 0;
             self->attackElement = ELEMENT_HIT;
             self->hitboxState = 2;
-            self->attack = 0;
             self->nFramesInvincibility = 0;
             self->stunFrames = 0;
             self->hitEffect = 7;
@@ -1318,12 +1175,36 @@ void UpdateSubentitySwitch(Entity* self) {
 
             self->step++;
         }
+        break;
+
     case 2:
-        return;
+        break;
     }
 }
 
 void UpdateServantAdditionalInit(Entity* self) {
+    static s32 targetX;
+    static s32 targetY;
+    static s16 dx0;
+    STATIC_PAD_BSS(2);
+    static s16 dy0;
+    STATIC_PAD_BSS(2);
+    static s16 angle;
+    STATIC_PAD_BSS(2);
+    static s16 dAngle;
+    STATIC_PAD_BSS(2);
+    static s16 distance0;
+    STATIC_PAD_BSS(2);
+    static s16 xOffset;
+    STATIC_PAD_BSS(2);
+
+    static s32 dx1;
+    static s32 dy1;
+    static s32 distance1;
+    static ServantSfxEventDesc* sfxEvent;
+    static s16 sfxFlag;
+    STATIC_PAD_BSS(2);
+
     s16 rnd;
     s32 i;
 
@@ -1331,46 +1212,41 @@ void UpdateServantAdditionalInit(Entity* self) {
     if (D_us_801786D4) {
         self->zPriority = PLAYER.zPriority - 2;
     }
-    D_us_80178658 = -0x18;
+
+    xOffset = -0x18;
     if (!PLAYER.facingLeft) {
-        D_us_80178658 = -D_us_80178658;
+        xOffset = -xOffset;
     }
 
-    D_us_80178644 = PLAYER.posX.i.hi + D_us_80178658;
-    D_us_80178648 = PLAYER.posY.i.hi - 0x20;
-    D_us_8017864C = self->ext.demon.randomMovementAngle;
+    dx0 = PLAYER.posX.i.hi + xOffset;
+    dy0 = PLAYER.posY.i.hi - 0x20;
+    angle = self->ext.demon.randomMovementAngle;
     self->ext.demon.randomMovementAngle += 0x10;
     self->ext.demon.randomMovementAngle &= 0xFFF;
-    D_us_80178654 = self->ext.demon.defaultDistToTargetLoc;
+    distance0 = self->ext.demon.defaultDistToTargetLoc;
 
-    D_us_8017863C =
-        D_us_80178644 + (rcos(D_us_8017864C / 2) * (D_us_80178654) >> 0xC);
-    D_us_80178640 =
-        D_us_80178648 - (rsin(D_us_8017864C) * (D_us_80178654 / 2) >> 0xC);
+    targetX = dx0 + ((rcos(angle / 2) * distance0) >> 12);
+    targetY = dy0 - ((rsin(angle) * (distance0 / 2)) >> 12);
 
-    D_us_8017864C = CalculateAngleToEntity(self, D_us_8017863C, D_us_80178640);
-    D_us_80178650 = GetTargetPositionWithDistanceBuffer(
-        D_us_8017864C, self->ext.demon.targetAngle, self->ext.demon.maxAngle);
-    self->ext.demon.targetAngle = D_us_80178650;
-    D_us_80178644 = D_us_8017863C - self->posX.i.hi;
-    D_us_80178648 = D_us_80178640 - self->posY.i.hi;
-    D_us_80178654 =
-        SquareRoot12(
-            ((D_us_80178644 * D_us_80178644) + (D_us_80178648 * D_us_80178648))
-            << 0xC) >>
-        0xC;
-    if (D_us_80178654 < 0x3C) {
-        self->velocityY = -(rsin(D_us_80178650) << 3);
-        self->velocityX = (rcos(D_us_80178650) << 3);
-        self->ext.demon.maxAngle = 0x40;
-    } else if (D_us_80178654 < 0x64) {
-        self->velocityY = -(rsin(D_us_80178650) << 4);
-        self->velocityX = (rcos(D_us_80178650) << 4);
-        self->ext.demon.maxAngle = 0x60;
+    angle = CalculateAngleToEntity(self, targetX, targetY);
+    dAngle = StepAngleTowards(
+        angle, self->ext.demon.targetAngle, self->ext.demon.angleStep);
+    self->ext.demon.targetAngle = dAngle;
+    dx0 = targetX - self->posX.i.hi;
+    dy0 = targetY - self->posY.i.hi;
+    distance0 = SquareRoot12((dx0 * dx0 + dy0 * dy0) << 12) >> 12;
+    if (distance0 < 60) {
+        self->velocityY = -(rsin(dAngle) << 3);
+        self->velocityX = (rcos(dAngle) << 3);
+        self->ext.demon.angleStep = 0x40;
+    } else if (distance0 < 100) {
+        self->velocityY = -(rsin(dAngle) << 4);
+        self->velocityX = (rcos(dAngle) << 4);
+        self->ext.demon.angleStep = 0x60;
     } else {
-        self->velocityY = -(rsin(D_us_80178650) << 5);
-        self->velocityX = (rcos(D_us_80178650) << 5);
-        self->ext.demon.maxAngle = 0x80;
+        self->velocityY = -(rsin(dAngle) << 5);
+        self->velocityX = (rcos(dAngle) << 5);
+        self->ext.demon.angleStep = 0x80;
     }
     self->posX.val += self->velocityX;
     self->posY.val += self->velocityY;
@@ -1378,26 +1254,26 @@ void UpdateServantAdditionalInit(Entity* self) {
     case 0:
         ExecuteAbilityInitialize(self);
         break;
+
     case 1:
         if (PLAYER.facingLeft != self->facingLeft) {
-            if (abs(D_us_8017863C - self->posX.i.hi) <= 0) {
+            if (abs(targetX - self->posX.i.hi) <= 0) {
                 self->facingLeft = PLAYER.facingLeft;
-            } else if (!self->facingLeft && D_us_8017863C < self->posX.i.hi) {
+            } else if (!self->facingLeft && targetX < self->posX.i.hi) {
                 self->facingLeft = PLAYER.facingLeft;
-            } else if (self->facingLeft && D_us_8017863C > self->posX.i.hi) {
+            } else if (self->facingLeft && targetX > self->posX.i.hi) {
                 self->facingLeft = PLAYER.facingLeft;
             }
-        } else if (
-            !self->facingLeft && (self->posX.i.hi - D_us_8017863C) > 40) {
-            self->facingLeft = PLAYER.facingLeft ? 0 : 1;
-        } else if (self->facingLeft && (D_us_8017863C - self->posX.i.hi) > 40) {
-            self->facingLeft = PLAYER.facingLeft ? 0 : 1;
+        } else if (!self->facingLeft && (self->posX.i.hi - targetX) > 40) {
+            self->facingLeft = PLAYER.facingLeft ? false : true;
+        } else if (self->facingLeft && (targetX - self->posX.i.hi) > 40) {
+            self->facingLeft = PLAYER.facingLeft ? false : true;
         }
         if (self->velocityY > FIX(1.0)) {
             SetAnimationFrame(self, 10);
-        } else if (D_us_80178654 < 60) {
+        } else if (distance0 < 60) {
             SetAnimationFrame(self, 0);
-        } else if (D_us_80178654 > 100) {
+        } else if (distance0 > 100) {
             SetAnimationFrame(self, 11);
         }
         if (IsMovementAllowed(1) || CheckAllEntitiesValid() ||
@@ -1408,23 +1284,21 @@ void UpdateServantAdditionalInit(Entity* self) {
             self->step = 0;
             return;
         }
-        D_us_8017865C = D_us_8017863C - self->posX.i.hi;
-        D_us_80178660 = D_us_80178640 - self->posY.i.hi;
-        D_us_80178664 = SquareRoot12(((D_us_8017865C * D_us_8017865C) +
-                                      (D_us_80178660 * D_us_80178660))
-                                     << 0xC) >>
-                        0xC;
-        if (D_us_80178664 < 0x20) {
-            self->facingLeft = PLAYER.facingLeft ? 0 : 1;
+        dx1 = targetX - self->posX.i.hi;
+        dy1 = targetY - self->posY.i.hi;
+        distance1 = SquareRoot12((dx1 * dx1 + dy1 * dy1) << 12) >> 12;
+        if (distance1 < 0x20) {
+            self->facingLeft = PLAYER.facingLeft ? false : true;
             self->step++;
         }
         break;
+
     case 2:
         rnd = rand() % 0x100;
         if (s_DemonStats.unk8 == true) {
             for (i = 0; true; i++) {
                 if (rnd <= g_SfxDemonIntroPrevSummoned[i * 2]) {
-                    s_CurrentIntroEvent = (ServantSfxEventDesc*)
+                    sfxEvent = (ServantSfxEventDesc*)
                         g_SfxDemonIntroPrevSummoned[i * 2 + 1];
                     break;
                 }
@@ -1432,52 +1306,55 @@ void UpdateServantAdditionalInit(Entity* self) {
         } else {
             for (i = 0; true; i++) {
                 if (rnd <= g_SfxDemonIntroNewSummoned[i * 2]) {
-                    s_CurrentIntroEvent = (ServantSfxEventDesc*)
+                    sfxEvent = (ServantSfxEventDesc*)
                         g_SfxDemonIntroNewSummoned[i * 2 + 1];
                     break;
                 }
             }
         }
-        s_CurrentIntroSfxFlag = ((s16*)s_CurrentIntroEvent)[0];
-        g_PauseAllowed = false;
+        sfxFlag = ((s16*)sfxEvent)[0];
+        pauseAllowed = false;
         self->step++;
         break;
+
     case 3:
         if (PLAYER.posX.i.hi >= self->posX.i.hi) {
             self->facingLeft = false;
         } else {
             self->facingLeft = true;
         }
-        if (s_CurrentIntroSfxFlag < 0) {
+        if (sfxFlag < 0) {
             if (g_PlaySfxStep > 4) {
-                SetAnimationFrame(self, s_CurrentIntroEvent->animIndex);
+                SetAnimationFrame(self, sfxEvent->animIndex);
                 self->step++;
             }
             break;
         }
-        if ((g_PlaySfxStep == 4) || (g_PlaySfxStep >= 99)) {
-            s_CurrentIntroSfxFlag--;
+        if (g_PlaySfxStep == 4 || g_PlaySfxStep >= 99) {
+            sfxFlag--;
         }
-        if (s_CurrentIntroSfxFlag < 0) {
-            SetAnimationFrame(self, s_CurrentIntroEvent->animIndex);
-            if ((s_CurrentIntroEvent->sfxId != 0) &&
+        if (sfxFlag < 0) {
+            SetAnimationFrame(self, sfxEvent->animIndex);
+            if (sfxEvent->sfxId != 0 &&
                 (SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH) ==
                  NULL)) {
-                CreateEventEntity(self, DEMON_EVENT_SFX_PASSTHROUGH,
-                                  s_CurrentIntroEvent->sfxId);
+                CreateEventEntity(
+                    self, DEMON_EVENT_SFX_PASSTHROUGH, sfxEvent->sfxId);
             }
-            s_CurrentIntroEvent++;
-            s_CurrentIntroSfxFlag = ((s16*)s_CurrentIntroEvent)[0];
+            sfxEvent++;
+            sfxFlag = ((s16*)sfxEvent)[0];
         }
         break;
+
     case 4:
         if (g_PlaySfxStep == 99) {
             self->step++;
         }
         break;
+
     case 5:
         SetAnimationFrame(self, 0);
-        g_PauseAllowed = true;
+        pauseAllowed = true;
         self->entityId = DEMON_MODE_DEFAULT_UPDATE;
         self->step = 0;
         break;
@@ -1491,17 +1368,17 @@ void UpdateServantSfxPassthrough(Entity* self) { ProcessSfxState(self); }
 void UpdateEventAttack(Entity* self) { g_AttackFunctions[self->params](self); }
 
 void func_us_801765A0(Entity* self) {
-    s32 velocityX;
-    s32 posX_hi;
-    s16 step;
+    static s32 origX;
+    static s32 origY;
+
     switch (self->step) {
-    case 0: {
-        if (self->params == 0) {
-            D_us_80178670 = self->posX.val;
-            D_us_80178674 = self->posY.val;
+    case 0:
+        if (!self->params) {
+            origX = self->posX.val;
+            origY = self->posY.val;
         } else {
-            self->posX.val = D_us_80178670;
-            self->posY.val = D_us_80178674;
+            self->posX.val = origX;
+            self->posY.val = origY;
         }
 
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
@@ -1509,20 +1386,13 @@ void func_us_801765A0(Entity* self) {
         self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
         self->animSet = 0xE;
         self->unk5A = 0x79;
-        self->anim = &D_us_80171CD8;
+        self->anim = D_us_80171CD8;
         self->pose = 0;
         self->poseTimer = 0;
         self->drawFlags |= FLAG_DRAW_SCALEY;
         self->scaleY = 0xC0;
 
-        // velocityX = 0xC0;
-        if (self->facingLeft != 0) {
-            velocityX = -0xC000;
-
-        } else {
-            velocityX = 0xC000;
-        }
-        self->velocityX = velocityX;
+        self->velocityX = self->facingLeft ? -0xC000 : 0xC000;
 
         switch (self->params) {
         case 2:
@@ -1530,69 +1400,61 @@ void func_us_801765A0(Entity* self) {
         case 1:
             self->posY.i.hi += 8;
         case 0:
-            self->posX.i.hi += (self->facingLeft ? -0x20 : 0x20);
+            self->posX.i.hi += self->facingLeft ? -0x20 : 0x20;
         }
 
         g_api.GetServantStats(self, FAM_ABILITY_DEMON_UNK24, 1, &s_DemonStats);
 
         self->hitboxOffX = 0;
         self->hitboxOffY = 0;
-        self->hitboxWidth = 0xC;
-        self->hitboxHeight = 0xA;
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 10;
 
         self->step++;
         if (self->params >= 2) {
             self->step++;
         }
         break;
-    }
 
-    case 1: {
-
+    case 1:
         self->posX.val += self->velocityX;
 
-        self->ext.et_80176814.frameCounter[1]++;
-
-        if (self->ext.et_80176814.frameCounter[1] >= 7) {
+        self->ext.demon.abilityId++;
+        if (self->ext.demon.abilityId > 6) {
             CreateEventEntity(self, DEMON_MODE_UNK_DB, self->params + 1);
             self->step++;
         }
-
         break;
-    }
 
-    case 2: {
+    case 2:
         self->posX.val += self->velocityX;
 
-        if (self->ext.et_80176814.frameCounter[0] == -1) {
+        if (self->ext.demon.frameCounter == -1) {
             DestroyEntity(self);
             return;
         }
-    }
-    default:
         break;
     }
 
-    self->ext.et_80176814.frameCounter[0] = ServantUpdateAnim(self, NULL, NULL);
+    self->ext.demon.frameCounter = ServantUpdateAnim(self, NULL, NULL);
 }
 
-// PSX: https://decomp.me/scratch/NMQwa
-// PSP: https://decomp.me/scratch/6hM5K
 void func_us_80176814(Entity* self) {
+    static s32 origX;
+    static s32 origY;
+
     Primitive* prim;
     s32 i;
-    s32 newX;
-    s32 newY;
-    s32 offset;
+    s32 x, y;
 
     switch (self->step) {
     case 0:
-        if (self->params == 0) {
-            D_us_80178678 = self->posX.val;
-            D_us_8017867C = self->posY.val;
+        if (!self->params) {
+            origX = self->posX.val;
+            origY = self->posY.val;
         } else {
-            self->posX.val = D_us_80178678;
-            self->posY.val = D_us_8017867C;
+            self->posX.val = origX;
+            self->posY.val = origY;
         }
 
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 0xC);
@@ -1611,14 +1473,11 @@ void func_us_80176814(Entity* self) {
             prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                              DRAW_UNK02 | DRAW_TRANSP;
 
-            offset = (i % 4) * 4;
-            prim->u0 = prim->u2 = offset + 8;
-            prim->u1 = prim->u3 = (offset) + 0xC;
+            prim->u0 = prim->u2 = ((i % 4) * 4) + 8;
+            prim->u1 = prim->u3 = ((i % 4) * 4) + 12;
             prim->v0 = prim->v1 = 0x60;
             prim->v2 = prim->v3 = 0x80;
-            prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g0 = prim->g1 =
-                prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
-                    prim->b3 = 0x80;
+            PCOL(prim) = 0x80;
             prim = prim->next;
         }
         self->velocityX = self->facingLeft ? FIX(-4.0) : FIX(4.0);
@@ -1631,7 +1490,6 @@ void func_us_80176814(Entity* self) {
         self->hitboxHeight = 10;
 
         self->step++;
-
         if (self->params >= 2) {
             self->step++;
         }
@@ -1639,9 +1497,9 @@ void func_us_80176814(Entity* self) {
 
     case 1:
         self->posX.val += self->velocityX;
-        self->ext.et_80176814.frameCounter[0]++;
+        self->ext.demon.frameCounter++;
 
-        if (self->ext.et_80176814.frameCounter[0] >= 3) {
+        if (self->ext.demon.frameCounter > 2) {
             CreateEventEntity(self, 220, self->params + 1);
             self->step++;
         }
@@ -1649,20 +1507,20 @@ void func_us_80176814(Entity* self) {
 
     case 2:
         self->posX.val += self->velocityX;
-        self->ext.et_80176814.frameCounter[0]++;
-        if (self->ext.et_80176814.frameCounter[0] >= 9) {
+        self->ext.demon.frameCounter++;
+        if (self->ext.demon.frameCounter > 8) {
             DestroyEntity(self);
             return;
         }
     }
-    newX = self->posX.i.hi;
-    newY = self->posY.i.hi - 12;
+    x = self->posX.i.hi;
+    y = self->posY.i.hi - 12;
     prim = &g_PrimBuf[self->primIndex];
 
     for (i = 0; i < 12; i++) {
         if (self->facingLeft) {
-            prim->x2 = newX - D_us_80171D10[i];
-            prim->x3 = newX - D_us_80171D10[i + 1];
+            prim->x2 = x - D_us_80171D10[i];
+            prim->x3 = x - D_us_80171D10[i + 1];
             if (i == 0) {
                 prim->x0 = prim->x2 - 0x10;
             } else {
@@ -1675,8 +1533,8 @@ void func_us_80176814(Entity* self) {
             }
 
         } else {
-            prim->x2 = newX + D_us_80171D10[i];
-            prim->x3 = newX + D_us_80171D10[i + 1];
+            prim->x2 = x + D_us_80171D10[i];
+            prim->x3 = x + D_us_80171D10[i + 1];
 
             if (i == 0) {
                 prim->x0 = prim->x2 + 0x10;
@@ -1690,25 +1548,28 @@ void func_us_80176814(Entity* self) {
             }
         }
 
-        prim->y0 = prim->y2 = newY + (i * 2);
-        prim->y1 = prim->y3 = newY + ((i + 1) * 2);
+        prim->y0 = prim->y2 = y + (i * 2);
+        prim->y1 = prim->y3 = y + ((i + 1) * 2);
 
         prim = prim->next;
     }
 }
 
 void func_us_80176C1C(Entity* self) {
+    static s32 origX;
+    static s32 origY;
+
     Primitive* prim;
     s32 i;
 
     switch (self->step) {
     case 0:
         if (!self->params) {
-            D_us_80178680 = self->posX.val;
-            D_us_80178684 = self->posY.val;
+            origX = self->posX.val;
+            origY = self->posY.val;
         } else {
-            self->posX.val = D_us_80178680;
-            self->posY.val = D_us_80178684;
+            self->posX.val = origX;
+            self->posY.val = origY;
         }
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
         if (self->primIndex == -1) {
@@ -1721,10 +1582,12 @@ void func_us_80176C1C(Entity* self) {
         case 0:
             self->posX.i.hi += self->facingLeft ? -0x20 : 0x20;
             break;
+
         case 1:
             self->posX.i.hi += self->facingLeft ? -0x18 : 0x18;
             self->posY.i.hi += 8;
             break;
+
         case 2:
             self->posX.i.hi += self->facingLeft ? -0x10 : 0x10;
             self->posY.i.hi += 0x10;
@@ -1756,8 +1619,7 @@ void func_us_80176C1C(Entity* self) {
                 prim->y0 = prim->y1 = self->posY.i.hi - 4;
                 prim->y2 = prim->y3 = self->posY.i.hi + 4;
             }
-            // this looks like a mistake but it is needed to get a match on PSP:
-            // https://decomp.me/scratch/28GaG
+            // this looks like a mistake but it is needed to get a match on PSP
             prim->r0 = prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 =
                 prim->g2 = prim->g3 = prim->b0 = prim->b1 = prim->b2 =
                     prim->b3 = 0;
@@ -1774,24 +1636,26 @@ void func_us_80176C1C(Entity* self) {
             self->step++;
         }
         break;
+
     case 1:
-        self->ext.et_801737F0.animationTriggerCount++;
-        if (self->ext.et_801737F0.animationTriggerCount > 2) {
+        self->ext.factory.unk7C++;
+        if (self->ext.factory.unk7C > 2) {
             CreateEventEntity(self, DEMON_MODE_UNK_DD, self->params + 1);
             self->step++;
         }
         break;
+
     case 2:
-        self->ext.et_801737F0.animationTriggerCount++;
-        if (self->ext.et_801737F0.animationTriggerCount > 16) {
+        self->ext.factory.unk7C++;
+        if (self->ext.factory.unk7C > 16) {
             DestroyEntity(self);
             return;
         }
         break;
     }
-    if (self->ext.et_801737F0.animationTimer < 8) {
+    if (self->ext.factory.unk7E < 8) {
         prim = &g_PrimBuf[self->primIndex];
-        for (i = 0; i < self->ext.et_801737F0.animationTimer; i++) {
+        for (i = 0; i < self->ext.factory.unk7E; i++) {
             prim = prim->next;
         }
 
@@ -1799,7 +1663,7 @@ void func_us_80176C1C(Entity* self) {
         prim->r0 = 0x80;
         self->hitboxOffX += 4;
         self->hitboxWidth += 4;
-        self->ext.et_801737F0.animationTimer++;
+        self->ext.factory.unk7E++;
     }
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 8; i++) {
@@ -1807,8 +1671,7 @@ void func_us_80176C1C(Entity* self) {
         if (prim->r0 < 0x20) {
             prim->drawMode |= DRAW_HIDE;
         } else {
-            // this looks like a mistake but it is needed to get a match on PSP:
-            // https://decomp.me/scratch/28GaG
+            // this looks like a mistake but it is needed to get a match on PSP
             prim->r1 = prim->r2 = prim->r3 = prim->g1 = prim->g2 = prim->g2 =
                 prim->g3 = prim->b0 = prim->b1 = prim->b2 = prim->b3 = prim->r0;
             prim->u0 = prim->u2 = (rand() % 5) * 0x10 + 0x90;
@@ -1818,25 +1681,22 @@ void func_us_80176C1C(Entity* self) {
     }
 }
 
-// PSX: https://decomp.me/scratch/qDGTj
-// PSP: https://decomp.me/scratch/D67x7
 void func_us_801771B0(Entity* self) {
+    static s32 origX;
+    static s32 origY;
+
     Primitive* prim;
-    s16 colorValue;
     s32 i;
-    // s32 i;
-    s32 posX_hi;
-    s32 posY_hi;
-    s16* uvCoords;
+    s32 x, y;
 
     switch (self->step) {
     case 0:
-        if (self->params == 0) {
-            D_us_80178688 = self->posX.val;
-            D_us_8017868C = self->posY.val;
+        if (!self->params) {
+            origX = self->posX.val;
+            origY = self->posY.val;
         } else {
-            self->posX.val = D_us_80178688;
-            self->posY.val = D_us_8017868C;
+            self->posX.val = origX;
+            self->posY.val = origY;
         }
 
         self->primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
@@ -1847,7 +1707,7 @@ void func_us_801771B0(Entity* self) {
 
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS;
-        HIH(self->velocityX) = (self->facingLeft != 0) ? -0x10 : 0x10;
+        HIH(self->velocityX) = self->facingLeft ? -0x10 : 0x10;
 
         switch (self->params) {
         case 2:
@@ -1855,7 +1715,7 @@ void func_us_801771B0(Entity* self) {
         case 1:
             self->posY.i.hi += 8;
         case 0:
-            self->posX.i.hi += (self->facingLeft != 0) ? -0x20 : 0x20;
+            self->posX.i.hi += self->facingLeft ? -0x20 : 0x20;
         }
 
         prim = &g_PrimBuf[self->primIndex];
@@ -1878,7 +1738,7 @@ void func_us_801771B0(Entity* self) {
 
         self->hitboxOffX = -4;
         self->hitboxOffY = 0;
-        self->hitboxWidth = 0x1C;
+        self->hitboxWidth = 28;
         self->hitboxHeight = 4;
 
         self->step++;
@@ -1888,54 +1748,53 @@ void func_us_801771B0(Entity* self) {
         break;
 
     case 1:
-        self->ext.et_801737F0.animationTriggerCount++;
+        self->ext.factory.unk7C++;
         self->posX.val += self->velocityX;
 
-        if (self->ext.et_801737F0.animationTriggerCount >= 3) {
+        if (self->ext.factory.unk7C > 2) {
             CreateEventEntity(self, DEMON_MODE_UNK_DE, self->params + 1);
             self->step++;
         }
         break;
 
     case 2:
+        self->ext.factory.unk7C++;
         self->posX.val += self->velocityX;
-        self->ext.et_801737F0.animationTriggerCount++;
 
-        if ((u16)(self->posX.i.hi + 0x20) > 0x140) {
+        if (self->posX.i.hi < -0x20 || self->posX.i.hi > 0x120) {
             DestroyEntity(self);
             return;
         }
         break;
     }
 
-    posX_hi = self->posX.i.hi;
-    posY_hi = self->posY.i.hi;
+    x = self->posX.i.hi;
+    y = self->posY.i.hi;
 
     prim = &g_PrimBuf[self->primIndex];
     for (i = 0; i < 3; i++) {
 
         if (self->facingLeft) {
-            prim->x0 = posX_hi - D_us_80171B44[i][0];
-            prim->y0 = posY_hi - D_us_80171B44[i][1];
-            prim->x1 = posX_hi - D_us_80171B44[i][2];
-            prim->y1 = posY_hi - D_us_80171B44[i][3];
-            prim->x2 = posX_hi - D_us_80171B44[i][4];
-            prim->y2 = posY_hi - D_us_80171B44[i][5];
-            prim->x3 = posX_hi - D_us_80171B44[i][6];
-            prim->y3 = posY_hi - D_us_80171B44[i][7];
+            prim->x0 = x - D_us_80171B44[i][0];
+            prim->y0 = y - D_us_80171B44[i][1];
+            prim->x1 = x - D_us_80171B44[i][2];
+            prim->y1 = y - D_us_80171B44[i][3];
+            prim->x2 = x - D_us_80171B44[i][4];
+            prim->y2 = y - D_us_80171B44[i][5];
+            prim->x3 = x - D_us_80171B44[i][6];
+            prim->y3 = y - D_us_80171B44[i][7];
         } else {
-            prim->x0 = posX_hi + D_us_80171B44[i][0];
-            prim->y0 = posY_hi + D_us_80171B44[i][1];
-            prim->x1 = posX_hi + D_us_80171B44[i][2];
-            prim->y1 = posY_hi + D_us_80171B44[i][3];
-            prim->x2 = posX_hi + D_us_80171B44[i][4];
-            prim->y2 = posY_hi + D_us_80171B44[i][5];
-            prim->x3 = posX_hi + D_us_80171B44[i][6];
-            prim->y3 = posY_hi + D_us_80171B44[i][7];
+            prim->x0 = x + D_us_80171B44[i][0];
+            prim->y0 = y + D_us_80171B44[i][1];
+            prim->x1 = x + D_us_80171B44[i][2];
+            prim->y1 = y + D_us_80171B44[i][3];
+            prim->x2 = x + D_us_80171B44[i][4];
+            prim->y2 = y + D_us_80171B44[i][5];
+            prim->x3 = x + D_us_80171B44[i][6];
+            prim->y3 = y + D_us_80171B44[i][7];
         }
 
-        PCOL(prim) =
-            ((self->ext.et_801737F0.animationTriggerCount & 1) * 64) + 0x40;
+        PCOL(prim) = ((self->ext.factory.unk7C & 1) * 64) + 0x40;
         prim = prim->next;
     }
 }
@@ -1946,14 +1805,17 @@ void func_us_80177690(Entity* self) {
     switch (self->params) {
     case 0:
         D_us_801786D0 = 1;
-        entity = SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH);
-        if ((entity != NULL) && (entity->step < 5)) {
+        if ((entity = SearchForEntityInRange(0, DEMON_EVENT_SFX_PASSTHROUGH)) !=
+                NULL &&
+            entity->step < 5) {
             entity->step = 8;
         }
         break;
+
     case 1:
         D_us_801786D0 = 2;
         break;
+
     case 15:
         D_us_801786D4 = 1;
         break;
@@ -1961,34 +1823,22 @@ void func_us_80177690(Entity* self) {
     DestroyEntity(self);
 }
 
-#ifndef VERSION_PSP
-#include "../servant_update_anim.h"
+#ifdef VERSION_PSP
+s16 D_092F2810[4] = {0};
 #endif
 
+#include "../shared_events.h"
+#include "../shared_globals.h"
+#include "../servant_update_anim.h"
 #include "../../destroy_entity.h"
-
-#ifndef VERSION_PSP
 #include "../accumulate_toward_zero.h"
 #include "../search_for_entity_in_range.h"
-#endif
-
 #include "../calculate_angle_to_entity.h"
-
-#include "../get_target_position_with_distance_buffer.h"
-
-#ifndef VERSION_PSP
+#include "../step_angle_towards.h"
 #include "../calculate_distance.h"
 #include "../play_sfx.h"
-#endif
-
 #include "../process_event.h"
-
 #include "../create_event_entity.h"
-
 #include "../is_movement_allowed.h"
-
-#ifndef VERSION_PSP
 #include "../check_all_entities_valid.h"
-#endif
-
 #include "../servant_unk0.h"

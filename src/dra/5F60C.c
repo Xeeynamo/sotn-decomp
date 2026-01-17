@@ -433,7 +433,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
             g_Status.equipment[ACCESSORY_2_SLOT] = ITEM_LAPIS_LAZULI;
         }
 
-        if (g_IsTimeAttackUnlocked) {
+        if (g_GameClearFlag) {
             fileName = (s8*)g_AxeArmorCode;
             for (i = 0; i < 8; i++) {
                 if (g_Status.saveName[i] != *fileName++) {
@@ -837,9 +837,6 @@ void func_psp_090E4C90(void) {
     }
 }
 
-extern float func_89260AC(float);
-extern float func_89260D0(float);
-
 Primitive* func_psp_090E4CD0(Primitive* prim) {
     float sp2C;
     float sp28;
@@ -855,8 +852,8 @@ Primitive* func_psp_090E4CD0(Primitive* prim) {
     u32 temp_s0;
 
     if (D_psp_091474B8 >= 0) {
-        sp14 = func_89260AC((3.1415925f * D_psp_091474B8) / 10.0f);
-        sp10 = func_89260D0((3.1415925f * D_psp_091474B8) / 10.0f);
+        sp14 = func_psp_089260AC((3.1415925f * D_psp_091474B8) / 10.0f);
+        sp10 = func_psp_089260D0((3.1415925f * D_psp_091474B8) / 10.0f);
 
         sp2C = 5.0f + (-5.0f * sp10);
         sp28 = -(6.0f * sp14);

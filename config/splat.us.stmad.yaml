@@ -88,7 +88,7 @@ segments:
       - [0xD83C, .rodata, e_collect]
       - [0xD85C, .rodata, e_collect] # EntityEquipItemDrop
       - [0xD874, .rodata, e_misc]
-      - [0xD8AC, .rodata, 17B94]
+      - [0xD8AC, .rodata, e_stage_name]
       - [0xD8C0, .rodata, prim_helpers]
       - [0xD8C8, c]
       - [0xE5AC, c, e_room_bg]
@@ -101,7 +101,7 @@ segments:
       - [0x11D3C, c, st_common]
       - [0x1344C, c, e_collect]
       - [0x149C0, c, e_misc]
-      - [0x17B94, c]
+      - [0x17B94, c, e_stage_name]
       - [0x182BC, c, e_particles]
       - [0x18B00, c, e_room_fg]
       - [0x18BC8, c, popup]

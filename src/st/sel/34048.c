@@ -7,7 +7,7 @@ void OVL_EXPORT(Init)() {
         if (g_IsUsingCd) {
             break;
         }
-        g_IsTimeAttackUnlocked = true;
+        g_GameClearFlag = SAVE_FLAG_CLEAR;
         D_8003C728 = 1;
         g_CurrentStream = 0;
         g_GameEngineStep++;
@@ -24,7 +24,7 @@ void OVL_EXPORT(Init)() {
             break;
         }
 #endif
-        g_IsTimeAttackUnlocked = false;
+        g_GameClearFlag = SAVE_FLAG_NORMAL;
         g_CurrentStream = 0;
         func_801B18F4();
         g_GameState = Game_Title;

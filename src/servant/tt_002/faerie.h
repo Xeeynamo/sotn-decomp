@@ -3,6 +3,8 @@
 #include <servant.h>
 #include <sfx.h>
 
+#define OVL_EXPORT(x) TT_002_##x
+
 typedef enum {
     FAERIE_MODE_DEFAULT_UPDATE = ENTITY_ID_SERVANT,
     FAERIE_MODE_USE_LIFE_APPLE,
@@ -50,12 +52,6 @@ typedef struct {
 } FaerieAbilityStats;
 
 typedef struct {
-    s32 left;
-    s32 top;
-    ServantSfxEventDesc* hint;
-} HintTriggerMap;
-
-typedef struct {
     s32 healing;
     s32 potion;
     s32 regeneration;
@@ -64,6 +60,18 @@ typedef struct {
     s32 areYouOk;
 } FaerieSfx;
 
-extern SpriteParts* g_FaerieSpriteParts[];
-extern s32* g_FaerieIntroRandomizer[];
-extern s32* g_SfxEventRandomizer[];
+typedef struct {
+    /* 0x00 */ s16 count;
+    /* 0x02 */ s16 unk2;
+    /* 0x04 */ s16 unk4;
+    /* 0x06 */ s16 unk6;
+    /* 0x08 */ s16 w;
+    /* 0x0A */ s16 h;
+    /* 0x0C */ s16 r;
+    /* 0x0E */ s16 g;
+    /* 0x10 */ s16 b;
+    /* 0x12 */ s16 priority;
+    /* 0x14 */ s16 drawMode;
+    /* 0x16 */ s16 unk16;
+    /* 0x18 */ u32 flags;
+} ItemPrimitiveParams; // size = 0x1C

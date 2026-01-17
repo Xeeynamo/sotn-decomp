@@ -61,7 +61,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 
     if (self->step) {
         if (g_IsCutsceneDone && !g_SkipCutscene &&
-            ((g_IsTimeAttackUnlocked) || (g_Settings.D_8003CB04 & 8))) {
+            ((g_GameClearFlag) || (g_Settings.D_8003CB04 & 8))) {
             CutsceneSkip(self);
         }
         if (self->step && g_Dialogue.unk3C) {

@@ -1,0 +1,5 @@
+g_CastleFlags       = 0x8003BDE8;
+g_api               = 0x8003C670;
+g_Clut              = 0x8006C688;
+g_Player            = 0x8007268C;
+g_Tilemap           = 0x80072B40;

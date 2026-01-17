@@ -532,7 +532,7 @@ void EntityCutscenePhotograph(Entity* self) {
     switch (self->step) {
     case 0:
 #ifdef VERSION_PSP
-        func_891B0BC(0);
+        func_psp_0891B0BC(0);
 #endif
         InitializeEntity(g_EInit3DObject);
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
@@ -550,7 +550,7 @@ void EntityCutscenePhotograph(Entity* self) {
         }
 
 #ifdef VERSION_PSP
-        func_891B0DC(0x300, 0);
+        func_psp_0891B0DC(0x300, 0);
         prim = self->ext.prim;
         prim->tpage = 0;
         self->step = 2;
@@ -598,7 +598,7 @@ void EntityCutscenePhotograph(Entity* self) {
             return;
         }
         self->step++;
-        func_891B0DC(0x300, 0);
+        func_psp_0891B0DC(0x300, 0);
         return;
 #else
     case 1:
@@ -846,7 +846,7 @@ void EntityCutscenePhotograph(Entity* self) {
         }
         self->step++;
 #ifdef VERSION_PSP
-        func_891B0DC(0x300, 0);
+        func_psp_0891B0DC(0x300, 0);
 #endif
         return;
     case 6:
@@ -981,7 +981,7 @@ void EntityCutscenePhotograph(Entity* self) {
         g_api.PlaySfx(SFX_BURNING_PHOTOGRAPH);
         self->step++;
 #ifdef VERSION_PSP
-        func_891B0BC(1);
+        func_psp_0891B0BC(1);
 #endif
         /* fallthrough */
     case 8:

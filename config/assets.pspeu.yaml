@@ -595,6 +595,9 @@ files:
           - [0x66F38, cmpgfx, stage_name_fr, 128, 64, 4]
           - [0x671D0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/np3.bin
+    asset_path: assets/st/np3
+    src_path: src/st/np3
+    splat_config_path: config/splat.pspeu.stnp3.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/nz0.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/nz1.bin
     asset_path: assets/st/nz1
@@ -641,9 +644,10 @@ files:
           - [0x80, skip]
           - [0xF5F8, layers, layers]
           - [0xF6E8, skip]
-
- 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rare.bin
+    asset_path: assets/st/rare
+    src_path: src/st/rare
+    splat_config_path: config/splat.pspeu.strare.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rcat.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rcen.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rchi.bin
@@ -677,10 +681,25 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo7.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo8.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_000.bin
+    asset_path: assets/servant/tt_000
+    src_path: src/servant/tt_000
+    splat_config_path: config/splat.pspeu.tt_000.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_001.bin
+    asset_path: assets/servant/tt_001
+    src_path: src/servant/tt_001
+    splat_config_path: config/splat.pspeu.tt_001.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_002.bin
+    asset_path: assets/servant/tt_002
+    src_path: src/servant/tt_002
+    splat_config_path: config/splat.pspeu.tt_002.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_003.bin
+    asset_path: assets/servant/tt_003
+    src_path: src/servant/tt_003
+    splat_config_path: config/splat.pspeu.tt_003.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_004.bin
+    asset_path: assets/servant/tt_004
+    src_path: src/servant/tt_004
+    splat_config_path: config/splat.pspeu.tt_004.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_005.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/tt_006.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/w0_000.bin

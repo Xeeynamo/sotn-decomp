@@ -43,10 +43,6 @@ typedef struct {
     PfnEntityUpdate Unk3C;
 } ServantDesc;
 
-typedef struct {
-    u16 start, end;
-} EntitySearch;
-
 typedef struct ServantEvent {
     /* 0x00 */ struct ServantEvent* next; // next event in the queue
     /* 0x04 */ u32 timer;     // internal timer from 'delay' to the activation 0
@@ -76,9 +72,6 @@ typedef struct ServantEvent {
 extern SpriteParts* g_ServantSpriteParts[];
 extern u16 g_ServantClut[48];
 #endif
-
-extern s32 g_PlaySfxStep;
-extern EntitySearch g_EntityRanges[];
 
 void DestroyEntity(Entity* entity);
 extern ServantDesc g_ServantDesc;

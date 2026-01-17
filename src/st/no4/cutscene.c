@@ -188,7 +188,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     // This is a big if condition, spans 4 lines
     if ((self->step && dialogue_started && !skip_cutscene) &&
         ((g_Settings.D_8003CB04 & 1 << (self->params + 5)) ||
-         g_IsTimeAttackUnlocked) &&
+         g_GameClearFlag) &&
         g_pads[0].tapped & PAD_START) {
 
         skip_cutscene = true;

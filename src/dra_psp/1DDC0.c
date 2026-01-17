@@ -4,11 +4,7 @@
 #include "../dra/dra_bss.h"
 #include "lba.h"
 
-extern u_long D_8D6DC40;
-extern s32 D_8B42064;
-extern char* D_psp_08B42060;
 extern u8 g_ServantDesc;
-extern s32 g_UserLanguage;
 
 s32 g_SimVabId = 0;
 
@@ -484,7 +480,7 @@ s32 LoadFileSimToMem(SimKind kind) {
     case SIM_1:
         LoadStageTileset(STAGE_PRG_PTR, 0x100);
         LoadImage(&g_Vram.D_800ACD98, (u_long*)D_800A04CC);
-        D_psp_091CE378 = &D_8D6DC40;
+        D_psp_091CE378 = &D_psp_08D6DC40;
         LoadImage(&g_Vram.D_800ACDA8, D_psp_091CE378);
         clutAddr = (u_long*)g_Clut[1];
         StoreImage(&g_Vram.D_800ACDA8, clutAddr);
@@ -710,20 +706,20 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         g_SimFile = &D_80136450;
         strcpy(buf, "hdbin/");
         strcpy(buf1, g_StagesLba[g_StageId].ovlName);
-        func_890CAF8(buf1);
+        func_psp_0890CAF8(buf1);
         strcat(buf, buf1);
         strcat(buf, ".bin;1");
         g_SimFile->path = buf;
         g_SimFile->addr = STAGE_PRG_PTR;
         g_SimFile->size = 0x60000;
         g_SimFile->kind = SIM_STAGE_PRG;
-        var_s1 = func_8932BF0();
-        var_s0 = func_8932C80();
-        var_s6 = func_8932C5C();
+        var_s1 = func_psp_08932BF0();
+        var_s0 = func_psp_08932C80();
+        var_s6 = func_psp_08932C5C();
     }
     if (type == SimFileType_Vh) {
         if (fileId & 0x8000) {
-            if (!D_8B42064) {
+            if (!D_psp_08B42064) {
                 var_a0 = fileId & 0x7FFF;
                 g_SimFile = &D_800A036C[var_a0];
             } else {
@@ -731,11 +727,11 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
                 g_SimFile = &D_psp_09160430[var_a0];
             }
             if (var_a0 == 4) {
-                var_s1 = func_89330A0();
+                var_s1 = func_psp_089330A0();
             } else if ((var_a0 >= 6) && (var_a0 < 0x13)) {
-                var_s1 = func_8932F44();
+                var_s1 = func_psp_08932F44();
             } else {
-                var_s1 = func_893307C();
+                var_s1 = func_psp_0893307C();
             }
         } else {
             g_SimFile = &D_80136450;
@@ -747,7 +743,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
             g_SimFile->addr = aPbav_2;
             g_SimFile->size = g_StagesLba[g_StageId].vhLen;
             g_SimFile->kind = SIM_VH;
-            var_s1 = func_8932C14();
+            var_s1 = func_psp_08932C14();
         }
         if (g_SimFile->addr == aPbav) {
             g_SimVabId = 0;
@@ -762,15 +758,15 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
             g_SimVabId = 2;
         }
         if (arg2) {
-            func_892EB04(g_SimFile->path, g_SimVabId, var_s1);
+            func_psp_0892EB04(g_SimFile->path, g_SimVabId, var_s1);
         } else {
-            func_892EB04(g_SimFile->path, g_SimVabId, 0);
+            func_psp_0892EB04(g_SimFile->path, g_SimVabId, 0);
         }
         return 0;
     }
     if (type == SimFileType_Vb) {
         if (fileId & 0x8000) {
-            if (!D_8B42064) {
+            if (!D_psp_08B42064) {
                 g_SimFile = &D_800A036C[fileId & 0x7FFF];
             } else {
                 g_SimFile = &D_psp_09160430[fileId & 0x7FFF];
@@ -789,7 +785,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         return 0;
     }
     if (type == SimFileType_Seq) {
-        if (!D_8B42064) {
+        if (!D_psp_08B42064) {
             g_SimFile = &D_800A04AC[fileId];
         } else {
             g_SimFile = &D_psp_091605D0[fileId];
@@ -800,14 +796,14 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         g_SimFile = &D_80136450;
         strcpy(buf, "hdbin/");
         strcpy(buf2, g_StagesLba[g_StageId].gfxName);
-        func_890CAF8(buf2);
+        func_psp_0890CAF8(buf2);
         strcat(buf, buf2);
         strcat(buf, ".bin;1");
         g_SimFile->path = buf;
         g_SimFile->addr = SIM_PTR;
         g_SimFile->size = 0x40000;
         g_SimFile->kind = SIM_STAGE_CHR;
-        var_s1 = func_8932C38();
+        var_s1 = func_psp_08932C38();
     }
     if (type == SimFileType_Weapon0Prg) {
         g_SimFile = &D_80136450;
@@ -817,9 +813,9 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         g_SimFile->addr = &D_8017A000;
         g_SimFile->size = 0x3000;
         g_SimFile->kind = SIM_WEAPON_PRG;
-        var_s1 = func_8932DC8(0);
-        var_s0 = func_8932E4C(0);
-        var_s6 = func_8932E20(0);
+        var_s1 = func_psp_08932DC8(0);
+        var_s0 = func_psp_08932E4C(0);
+        var_s6 = func_psp_08932E20(0);
     }
     if (type == SimFileType_Weapon1Prg) {
         g_SimFile = &D_80136450;
@@ -829,9 +825,9 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         g_SimFile->addr = WEAPON1_PTR;
         g_SimFile->size = 0x3000;
         g_SimFile->kind = SIM_WEAPON_PRG;
-        var_s1 = func_8932DC8(1);
-        var_s0 = func_8932E4C(1);
-        var_s6 = func_8932E20(1);
+        var_s1 = func_psp_08932DC8(1);
+        var_s0 = func_psp_08932E4C(1);
+        var_s6 = func_psp_08932E20(1);
     }
     if (type == SimFileType_Weapon0Chr) {
         g_SimFile = &D_80136450;
@@ -840,7 +836,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         g_SimFile->addr = g_Pix[0];
         g_SimFile->size = 0x4000;
         g_SimFile->kind = SIM_WEAPON0_CHR;
-        var_s1 = func_8932DF4(0);
+        var_s1 = func_psp_08932DF4(0);
     }
     if (type == SimFileType_Weapon1Chr) {
         g_SimFile = &D_80136450;
@@ -849,7 +845,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         g_SimFile->addr = g_Pix[2];
         g_SimFile->size = 0x4000;
         g_SimFile->kind = SIM_WEAPON1_CHR;
-        var_s1 = func_8932DF4(1);
+        var_s1 = func_psp_08932DF4(1);
     }
     if (type == SimFileType_FamiliarPrg) {
         g_SimFile = &D_80136450;
@@ -859,9 +855,9 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         g_SimFile->addr = &g_ServantDesc;
         g_SimFile->size = 0xA000;
         g_SimFile->kind = SIM_FAMILIAR_PRG;
-        var_s1 = func_8932F20();
-        var_s0 = func_8932FB0();
-        var_s6 = func_8932F8C();
+        var_s1 = func_psp_08932F20();
+        var_s0 = func_psp_08932FB0();
+        var_s6 = func_psp_08932F8C();
     }
     if (type == SimFileType_FamiliarChr) {
         g_SimFile = &D_80136450;
@@ -870,7 +866,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         g_SimFile->addr = SIM_PTR;
         g_SimFile->size = 0x6000;
         g_SimFile->kind = SIM_FAMILIAR_CHR;
-        var_s1 = func_8932F68();
+        var_s1 = func_psp_08932F68();
     }
     if (type == SimFileType_Monster) {
         g_SimFile = &D_80136450;
@@ -882,7 +878,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     }
     if (type == SimFileType_System) {
         if (fileId == 1 || fileId == 13) {
-            var_s1 = func_89331AC();
+            var_s1 = func_psp_089331AC();
         } else if (fileId == 9) {
             SimFile buf3[] = {
                 {
@@ -953,23 +949,24 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         }
         if (strcmp(g_SimFile->path, "hdbin/ric.bin;1") == 0) {
             if (g_PlayableCharacter != 2) {
-                var_s1 = func_89330C4();
+                var_s1 = func_psp_089330C4();
                 var_s2 = 0x35;
             } else {
-                var_s1 = func_89330C4();
+                var_s1 = func_psp_089330C4();
                 var_s2 = 0x37;
             }
         } else if (strcmp(g_SimFile->path, "hdbin/arc_f.bin;1") == 0) {
             var_s2 = 0x36;
-            var_s1 = func_89330C4();
+            var_s1 = func_psp_089330C4();
         }
-        var_s0 = func_893310C();
-        var_s6 = func_89330E8();
+        var_s0 = func_psp_0893310C();
+        var_s6 = func_psp_089330E8();
     }
     if (arg2) {
         memcpy(g_SimFile->addr, (void*)var_s1, g_SimFile->size);
     } else {
-        func_890FBEC(g_SimFile->path, g_SimFile->addr, 0, (s32)g_SimFile->size);
+        func_psp_0890FBEC(
+            g_SimFile->path, g_SimFile->addr, 0, (s32)g_SimFile->size);
     }
     if (LoadFileSimToMem(g_SimFile->kind) < 0) {
         FntPrint("tr err\n");
@@ -977,9 +974,9 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     }
     if (var_s2 >= 0) {
         if (arg2) {
-            func_892A0F0(var_s2, var_s6, var_s0);
+            func_psp_0892A0F0(var_s2, var_s6, var_s0);
         } else {
-            func_892A1EC(var_s2);
+            func_psp_0892A1EC(var_s2);
         }
     }
     return 0;

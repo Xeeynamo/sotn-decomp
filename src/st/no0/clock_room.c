@@ -132,8 +132,8 @@ void EntityClockRoomController(Entity* self) {
         prim->drawMode = DRAW_HIDE;
 
         g_api.PlaySfx(SET_STOP_MUSIC);
-        D_80097928 = 1;
-        D_80097910 = 0;
+        stopMusicFlag = true;
+        currentMusicId = 0;
         entity = &PLAYER;
         g_Statues[RIGHT_STATUE] = false; // right statue closed
 

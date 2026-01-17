@@ -22,16 +22,16 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void func_us_801B628C(Entity* self);
-void func_us_801B6420(Entity* self);
-void EntityBridgeBackgroundPiece(Entity* self);
-void func_us_801B6DF0(Entity* self);
-void func_us_801B7184(Entity* self);
-void EntityHeartRoomSwitch(Entity* self);
-void func_us_801B7998(Entity* self);
-void func_us_801B7C7C(Entity* self);
-void func_us_801B7E7C(Entity* self);
-void func_us_801B80C0(Entity* self);
+void EntityBossTorch(Entity* self);
+void EntityBossDoors(Entity* self);
+void EntityCavernDoorSwitch(Entity* self);
+void EntityCavernDoor(Entity* self);
+void EntityElevator(Entity* self);
+void EntityElevatorSwitch(Entity* self);
+void EntityElevatorGates(Entity* self);
+void EntityFountainWater(Entity* self);
+void EntityBreakableCeilingSecret(Entity* self);
+void EntityBackgroundDoorRubble(Entity* self);
 void EntityExplosionPuffOpaque(Entity* self);
 void OVL_EXPORT(EntityBreakableDebris)(Entity* self);
 void EntityBladeMaster(Entity* self);
@@ -60,10 +60,10 @@ void EntityArmorLordFireWave(Entity* self);
 void func_us_801D3700(Entity* self);
 void EntityHuntingGirl(Entity* self);
 void EntityHuntingGirlAttack(Entity* self);
-void func_us_801CDCF4(Entity* self);
-void func_us_801CEBC8(Entity* self);
-void func_us_801CECAC(Entity* self);
-void func_us_801CEB00(Entity* self);
+void EntityParanthropus(Entity* self);
+void EntityParanthropusBoneHitbox(Entity* self);
+void EntityParanthropusSkull(Entity* self);
+void EntityParanthropusThrownBone(Entity* self);
 void EntityFleaArmor(Entity* self);
 void EntityFleaArmorAttackHitbox(Entity* self);
 void EntityFleaMan(Entity* self);
@@ -101,16 +101,16 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
-    func_us_801B628C,
-    func_us_801B6420,
-    EntityBridgeBackgroundPiece,
-    func_us_801B6DF0,
-    func_us_801B7184,
-    EntityHeartRoomSwitch,
-    func_us_801B7998,
-    func_us_801B7C7C,
-    func_us_801B7E7C,
-    func_us_801B80C0,
+    EntityBossTorch,
+    EntityBossDoors,
+    EntityCavernDoorSwitch,
+    EntityCavernDoor,
+    EntityElevator,
+    EntityElevatorSwitch,
+    EntityElevatorGates,
+    EntityFountainWater,
+    EntityBreakableCeilingSecret,
+    EntityBackgroundDoorRubble,
     EntityExplosionPuffOpaque,
     OVL_EXPORT(EntityBreakableDebris),
     EntityBladeMaster,
@@ -139,10 +139,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801D3700,
     EntityHuntingGirl,
     EntityHuntingGirlAttack,
-    func_us_801CDCF4,
-    func_us_801CEBC8,
-    func_us_801CECAC,
-    func_us_801CEB00,
+    EntityParanthropus,
+    EntityParanthropusBoneHitbox,
+    EntityParanthropusSkull,
+    EntityParanthropusThrownBone,
     EntityFleaArmor,
     EntityFleaArmorAttackHitbox,
     EntityFleaMan,
@@ -170,9 +170,8 @@ EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x0000, 0x003};
-
-EInit D_us_80180AF8 = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
-EInit D_us_80180B04 = {ANIMSET_OVL(0x02), 0x00, 0x53, 0x0200, 0x005};
+EInit g_EInitEnvironment = {ANIMSET_OVL(0x01), 0x00, 0x00, 0x0000, 0x005};
+EInit g_EInitCavernDoor = {ANIMSET_OVL(0x02), 0x00, 0x53, 0x0200, 0x005};
 
 // Blade Master
 EInit g_EInitBladeMaster = {ANIMSET_OVL(0x03), 0x01, 0x48, 0x0201, 0x07A};
@@ -217,9 +216,11 @@ EInit D_us_80180AF4 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x024};
 EInit g_EInitHuntingGirl = {ANIMSET_OVL(0x0A), 0x00, 0x54, 0x021D, 0x0E3};
 
 // Paranthropus
-EInit D_us_80180BF4 = {ANIMSET_OVL(0x0B), 0x01, 0x48, 0x021F, 0x0D3};
-EInit D_us_80180C00 = {ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x0D4};
-EInit D_us_80180C0C = {ANIMSET_OVL(0x0B), 0x36, 0x48, 0x021F, 0x0D5};
+EInit g_EInitParanthropus = {ANIMSET_OVL(0x0B), 0x01, 0x48, 0x021F, 0x0D3};
+EInit g_EInitParanthropusBoneHitbox = {
+    ANIMSET_OVL(0x00), 0x00, 0x00, 0x0000, 0x0D4};
+EInit g_EInitParanthropusThrownBone = {
+    ANIMSET_OVL(0x0B), 0x36, 0x48, 0x021F, 0x0D5};
 
 // Flea Armor
 EInit g_EInitFleaArmor = {ANIMSET_OVL(0x0C), 0x01, 0x48, 0x0222, 0x029};

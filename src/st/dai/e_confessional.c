@@ -157,7 +157,7 @@ void EntityConfessionalGhost(Entity* self) {
 #ifdef VERSION_PSP
         self->ext.confessionalGhost.activateChime = false;
         if (self->params & CONFESSIONAL_GHOST_PARISHIONER) {
-            func_892A620(0, 1);
+            func_psp_0892A620(0, 1);
         }
         break;
     // psx starts the chime in INIT, but pspeu starts it in READY
@@ -167,14 +167,14 @@ void EntityConfessionalGhost(Entity* self) {
             (self->params & CONFESSIONAL_GHOST_PARISHIONER)) {
             g_api.PlaySfx(MU_SEQ_CONFESSIONAL_BELLS_PSP);
             g_confessionalChimeActive = true;
-            D_80097928 = 0;
+            stopMusicFlag = false;
         }
         break;
 #else
         if (self->params & CONFESSIONAL_GHOST_PARISHIONER) {
             g_api.PlaySfx(SET_UNK_90);
             g_api.PlaySfx(MU_SEQ_CONFESSIONAL_BELLS);
-            D_80097928 = 0;
+            stopMusicFlag = false;
             g_confessionalChimeActive = true;
         }
         break;
@@ -203,7 +203,7 @@ void EntityConfessionalGhost(Entity* self) {
                 SetStep(CONFESSIONAL_GHOST_GOOD_SIT);
 #ifdef VERSION_PSP
                 if (!(self->params & CONFESSIONAL_GHOST_PARISHIONER)) {
-                    g_api.PlaySfx(SFX_UNK_4E5);
+                    g_api.PlaySfx(UNK_4E7);
                 }
 #endif
             }

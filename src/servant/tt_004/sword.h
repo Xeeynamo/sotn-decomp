@@ -2,6 +2,8 @@
 #define NO_SERVANT_CLUT
 #include <servant.h>
 
+#define OVL_EXPORT(x) TT_004_##x
+
 typedef enum {
     SWORD_DEFAULT = ENTITY_ID_SERVANT,
     SWORD_CIRCLE_ATTACK,
@@ -22,9 +24,9 @@ typedef enum {
 
 typedef struct {
     s32 unk0; // flag checked by `UpdateServantDefault`, changes at level 70
-    s16 unk4;
-    s16 unk6;
+    s32 unk4;
     s32 unk8; // flag checked by `CheckSwordLevel`, changes at level 90
 } SwordUnk_A0;
 
-extern ServantDesc sword_ServantDesc;
+extern u16 g_ServantClut[16];
+extern s32 g_PlaySfxStep;

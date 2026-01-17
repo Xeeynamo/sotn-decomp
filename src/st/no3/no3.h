@@ -5,10 +5,18 @@
 
 #define OVL_EXPORT(x) NO3_##x
 
-#define E_PUFF_OPAQUE_PALETTE_OFFSET 0xD0
-
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
+
+enum Palettes {
+    PAL_NONE = 0,
+    // puff params 0,1
+    PAL_PUFF_OPAQUE_OFFSET = 0xD0,
+    // puff params 2 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 3)
+    PAL_PUFF_OPAQUE_2 = 0xD3,
+    // puff params 3 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 4)
+    PAL_PUFF_OPAQUE_3 = 0xD4
+};
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,

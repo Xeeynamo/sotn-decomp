@@ -269,7 +269,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
     s32 ptr;
 
     if (g_IsCutsceneDone && !g_SkipCutscene &&
-        ((g_Settings.D_8003CB04 & 1) || g_IsTimeAttackUnlocked) &&
+        ((g_Settings.D_8003CB04 & 1) || g_GameClearFlag) &&
         (g_pads[0].tapped == PAD_START)) {
         g_SkipCutscene = true;
         g_api.FreePrimitives(self->primIndex);
@@ -280,7 +280,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
         if (g_Dialogue.primIndex[0] != -1) {
             g_api.FreePrimitives(g_Dialogue.primIndex[0]);
         }
-        g_api.PlaySfx(0x80);
+        g_api.PlaySfx(SET_UNK_80);
         self->step = 1;
         self->step_s = 0;
     }

@@ -4,7 +4,6 @@ NZ1_rooms_layers = 0x801804E0;
 NZ1_gfxBanks = 0x801807CC;
 NZ1_pStObjLayoutHorizontal = 0x80180820;
 NZ1_pStObjLayoutVertical = 0x801808F4;
-g_EInitParticle = 0x80180B40;
 g_EInitSpawner = 0x80180B4C;
 g_EInitInteractable = 0x80180B58;
 g_EInitCommon = 0x80180B7C;
@@ -14,28 +13,16 @@ NZ1_BackgroundBlockInit = 0x80180D08;
 entityLockCameraHitbox = 0x80180DA0;
 entityLockCameraData = 0x80180DA4;
 entityLockCameraTilemapProps = 0x80180DA8;
+g_WaterSounds = 0x801810CC;
+g_WaterXTbl = 0x801810D0;
 NZ1_PrizeDrops = 0x8018111C;
 g_HarpyFlameAnim = 0x80181F74;
 NZ1_rooms = 0x8018233C;
 PlayerIsWithinHitbox = 0x801A5E18;
 NZ1_EntityLockCamera = 0x801A5E9C; // source=match
-DropBridgePiece = 0x801A6ACC;
-BreakBridge = 0x801A6B6C;
-EntityBridgeBreakTrigger = 0x801A6C54;
 EntityBridgeBackgroundPiece = 0x801A7118;
-CreateExplosionPuff = 0x801A7424;
-EntityExplosionPuffOpaque = 0x801A74E4;
 EntityClouds = 0x801A7970;
 EntityBackgroundGears = 0x801A7DC4;
-EntityGearSidewaysLarge = 0x801A7FD4;
-EntityGearHorizontal = 0x801A824C;
-EntityGearVertical = 0x801A8354;
-EntityGearSidewaysSmall = 0x801A857C;
-EntityWallGear = 0x801A88E4;
-EntitySecretAreaDoor = 0x801A8A94;
-EntityPendulumAnchor = 0x801A8D6C;
-EntityPendulumBoneChain = 0x801A8EA0;
-EntityPendulumWeight = 0x801A8F80;
 EntityBreakableWall = 0x801A9154;
 EntityBreakableWallPartial = 0x801A94CC;
 EntitySecretWallDebris = 0x801A97C4;
@@ -110,9 +97,6 @@ EntityFlailGuardFlail = 0x801BF104;
 CheckFieldCollisionY = 0x801BFD64; // source=match
 UpdateFacingDirection = 0x801BFE6C; // source=match
 EntityFleaMan = 0x801BFEA0; // source=match
-EntityMedusaHeadSpawner = 0x801C01C8; // source=match
-EntityMedusaHeadYellow = 0x801C0394; // source=match
-EntityMedusaHeadBlue = 0x801C03B8; // source=match
 UnkPrimHelper = 0x801C059C; // source=match
 UnkPolyFunc2 = 0x801C0CE8; // source=match
 PrimDecreaseBrightness = 0x801C0D68; // source=match

@@ -285,6 +285,7 @@ typedef enum {
 
 #if !defined(VERSION_PC) && (defined(VERSION_US) || defined(VERSION_HD))
 #define DRA_PRG_PTR 0x800A0000
+#define SAVE_DATA_PTR 0x801EA000
 #define RIC_PRG_PTR 0x8013C000
 #define SPRITESHEET_PTR 0x8013C020
 #define FAMILIAR_PTR 0x80170000
@@ -292,34 +293,39 @@ typedef enum {
 #define WEAPON1_PTR 0x8017D000
 #define STAGE_PRG_PTR 0x80180000
 #define CASTLE_MAP_PTR 0x801E0000
+
 #ifndef DEMO_KEY_PTR
 #define DEMO_KEY_PTR 0x801E8000
 #endif
+
 #define SIM_CHR0 0x80280000
 #define SIM_CHR1 0x80284000
 #define SIM_PTR 0x80280000
-
 #else
 #define DRA_PRG_PTR 0x800A0000
+#define SAVE_DATA_PTR D_psp_08D97C40
 #define RIC_PRG_PTR &g_PlOvl
 #define SPRITESHEET_PTR g_PlOvlSpritesheet
 #define FAMILIAR_PTR 0x80170000
 #define WEAPON0_PTR 0x8017A000
 #define WEAPON1_PTR &D_8017D000
-#define STAGE_PRG_PTR D_8D2DC40
+#define STAGE_PRG_PTR D_psp_08D2DC40
 #define CASTLE_MAP_PTR g_BmpCastleMap
+
 #ifndef DEMO_KEY_PTR
-#define DEMO_KEY_PTR D_8D95C40
+#define DEMO_KEY_PTR D_psp_08D95C40
 #endif
-#define SIM_CHR0 D_8C6BC40
-#define SIM_CHR1 D_8C6FC40
-#define SIM_PTR D_8C6BC40
+
+#define SIM_CHR0 D_psp_08C6BC40
+#define SIM_CHR1 D_psp_08C6FC40
+#define SIM_PTR D_psp_08C6BC40
 
 extern u8 g_BmpCastleMap[0x20000];
-extern u8 D_8C6BC40[];
-extern u8 D_8C6FC40[];
-extern u8 D_8D2DC40[];
-extern u8 D_8D95C40[];
+extern u8 D_psp_08C6BC40[];
+extern u8 D_psp_08C6FC40[];
+extern u8 D_psp_08D2DC40[];
+extern u8 D_psp_08D95C40[];
+extern u8 D_psp_08D97C40[];
 
 #endif
 
@@ -431,7 +437,7 @@ typedef enum {
     PLAYER_STATUS_UNK100 = 0x100,
     PLAYER_STATUS_UNK200 = 0x200,
     PLAYER_STATUS_UNK400 = 0x400,
-    PLAYER_STATUS_UNK800 = 0x800,
+    PLAYER_STATUS_UNK800 = 0x800, // possibly thrown subweapon?
     PLAYER_STATUS_UNK1000 = 0x1000,
     PLAYER_STATUS_UNK2000 = 0x2000,
     PLAYER_STATUS_POISON = 0x4000,
@@ -800,7 +806,7 @@ typedef struct {
     /* 0x0C */ u32 vhOff;
     /* 0x10 */ u32 vhLen;
     /* 0x14 */ u32 vbLen;
-    /* 0x18 */ u32 unk18;
+    /* 0x18 */ u32 musicId;
     /* 0x1C */ const char* gfxName;
     /* 0x20 */ const char* ovlName;
     /* 0x24 */ char* name;
@@ -976,7 +982,10 @@ typedef struct GpuBuffer { // also called 'DB' in the PSY-Q samples
     /* 0x117F4 */ SPRT_16 sprite16[MAXSPRT16];          // tile map sprites
     /* 0x13FF4 */ TILE tiles[MAX_TILE_COUNT];           // squared sprites
     /* 0x14FF4 */ SPRT sprite[MAX_SPRT_COUNT];          // dynamic-size sprites
-} GpuBuffer;                                            // size=0x177F4
+#ifdef VERSION_SD
+    /* 0x177F4*/ s8 unk177F4[0x800];
+#endif
+} GpuBuffer; // size=0x177F4
 
 typedef struct {
     /* 0x00 */ u32 drawModes;
@@ -2074,7 +2083,7 @@ typedef struct {
 } Unkstruct_8006C3C4;             // size = 0x40
 
 extern s32 D_8003925C;
-extern s32 g_IsTimeAttackUnlocked;
+extern s32 g_GameClearFlag;
 
 extern s32 D_8003C0EC[4];
 extern s32 D_8003C100;
@@ -2216,19 +2225,19 @@ extern u32 g_MenuStep;
 extern s32 D_80097904;
 extern s32 g_ScrollDeltaX;
 extern s32 g_ScrollDeltaY;
-extern s32 D_80097910;
+extern s32 currentMusicId;
 extern DemoMode g_DemoMode;
 extern s32 g_LoadOvlIdx; // 0x80097918
 extern Point32 D_8009791C;
 extern s32 D_80097924;
-extern s32 D_80097928;
+extern s32 stopMusicFlag;
 extern GpuUsage g_GpuUsage;
 extern PlayerStatus g_Status;
 extern u32 D_80097C98;
 extern s32 subWeapon; // g_SubweaponId
 extern u32 D_80097C40[];
 extern PlayerDraw g_PlayerDraw[0x10];
-extern s32 D_8C630C4;
+extern s32 D_psp_08C630C4;
 extern s32 D_800987B4;
 extern StHEADER* D_800987C8;
 extern s32 g_DebugPlayer;
@@ -2263,7 +2272,8 @@ typedef enum {
     PAL_UNK_138 = 0x138,
     PAL_UNK_13C = 0x13C,
     PAL_UNK_13D = 0x13D, // richter
-    PAL_UNK_140 = 0x140,
+    PAL_SERVANT = 0x140,
+    PAL_RIC_WHIP = 0x140,
     PAL_UNK_143 = 0x143,
     PAL_UNK_148 = 0x148,
     PAL_UNK_149 = 0x149,

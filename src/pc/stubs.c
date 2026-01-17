@@ -52,11 +52,11 @@ u32 g_Timer;
 s32 D_80097904;
 s32 g_ScrollDeltaX;
 s32 g_ScrollDeltaY;
-s32 D_80097910;
+s32 currentMusicId;
 s32 g_LoadOvlIdx;
 Point32 D_8009791C;
 s32 D_80097924;
-s32 D_80097928;
+s32 stopMusicFlag;
 s32 D_8006C3AC;
 s32 D_800978C4;
 u32 D_80097C98;
@@ -84,7 +84,7 @@ Event g_EvSwCardNew;
 s32 g_PrevScrollX;
 s32 g_PrevScrollY;
 s32 D_80073080;
-s32 g_IsTimeAttackUnlocked;
+s32 g_GameClearFlag;
 bool D_8003C908;
 s32 D_8003C100;
 s32 D_800978B4;
@@ -102,9 +102,10 @@ u32 D_8003C744 = 0;
 s32 D_80097448[2];
 s32 D_80097450;
 Pos D_80097488;
-u8 D_8C6BC40[0x4000];
-u8 D_8C6FC40[0x4000];
-u8 D_8D2DC40[0x4000];
+u8 D_psp_08C6BC40[0x4000];
+u8 D_psp_08C6FC40[0x4000];
+u8 D_psp_08D2DC40[0x4000];
+u8 D_psp_08D97C40[0x4000];
 
 // dra.h
 s16 D_800AC958[] = {

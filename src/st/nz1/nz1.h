@@ -7,8 +7,9 @@
 #define OVL_EXPORT(x) NZ1_##x
 #define STAGE_IS_NZ1
 
-enum OVL_EXPORT(Palettes) {
+enum Palettes {
     PAL_NONE,
+    PAL_SPIKES_DUST = 0x161,
     PAL_UNK_200 = 0x200,
     PAL_UNK_206 = 0x206,
     PAL_UNK_20A = 0x20A,
@@ -22,7 +23,12 @@ enum OVL_EXPORT(Palettes) {
     PAL_UNK_232 = 0x232,
     PAL_UNK_238 = 0x238,
     PAL_UNK_239 = 0x239,
-    PAL_SPIKES_DUST = 0x161,
+    // puff params 0,1
+    PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
+    // puff params 2 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 3)
+    PAL_PUFF_OPAQUE_2 = 0x2E3,
+    // puff params 3 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 4)
+    PAL_PUFF_OPAQUE_3 = 0x2E4
 };
 
 enum OVL_EXPORT(Entities) {
@@ -49,7 +55,7 @@ enum OVL_EXPORT(Entities) {
     E_EXPLOSION_VARIANTS,       // EntityExplosionVariants
     E_GREY_PUFF,                // EntityGreyPuff
     E_BRIDGE_TRIGGER,           // EntityBridgeBreakTrigger
-    E_EXPLOSION_PUFF_OPAGE,     // EntityExplosionPuffOpaque
+    E_EXPLODE_PUFF_OPAQUE,      // EntityExplosionPuffOpaque
     E_CLOUDS,                   // EntityClouds
     E_BACKGROUND_GEARS,         // EntityBackgroundGears
     E_GEAR_SIDEWAYS_LARGE,      // EntityGearSidewaysLarge
@@ -111,11 +117,88 @@ enum OVL_EXPORT(Entities) {
     E_KARASUMAN_RAVEN_ATTACK,   // EntityKarasumanRavenAttack
     E_KARASUMAN_FEATHER,        // EntityKarasumanFeather
     E_KARASUMAN_RAVEN_ABSORB,   // EntityKarasumanRavenAbsorb
-    E_LIFE_UPSPAWN,             // EntityLifeUpSpawn
+    E_LIFE_UP_SPAWN,            // EntityLifeUpSpawn
     E_MEDUSA_HEAD_SPAWNER,      // EntityMedusaHeadSpawner
     E_MEDUSA_HEAD_BLUE,         // EntityMedusaHeadBlue
     E_MEDUSA_HEAD_YELLOW,       // EntityMedusaHeadYellow
     NUM_ENTITIES,
 };
+
+#ifdef VERSION_PSP
+extern s32 E_ID(ALUCARD_WATER_EFFECT);
+extern s32 E_ID(BACKGROUND_BLOCK);
+extern s32 E_ID(BACKGROUND_GEARS);
+extern s32 E_ID(BOSS_DOORS);
+extern s32 E_ID(BOSS_DOOR_TRIGGER);
+extern s32 E_ID(BREAKABLE_DEBRIS);
+extern s32 E_ID(BREAKABLE_WALL);
+extern s32 E_ID(BREAKABLE_WALL_PARTIAL);
+extern s32 E_ID(BRIDGE_BACKGROUND_PIECE);
+extern s32 E_ID(BRIDGE_TRIGGER);
+extern s32 E_ID(CLOAKED_KNIGHT);
+extern s32 E_ID(CLOAKED_KNIGHT_AURA);
+extern s32 E_ID(CLOAKED_KNIGHT_CLOAK);
+extern s32 E_ID(CLOAKED_KNIGHT_SWORD);
+extern s32 E_ID(CLOUDS);
+extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
+extern s32 E_ID(EXPLOSION_VARIANTS);
+extern s32 E_ID(FLAIL_GUARD);
+extern s32 E_ID(FLAIL_GUARD_FLAIL);
+extern s32 E_ID(FLEA_ARMOR);
+extern s32 E_ID(FLEA_ARMOR_ATTACK_HITBOX);
+extern s32 E_ID(FLEA_MAN);
+extern s32 E_ID(GEAR_HORIZONTAL);
+extern s32 E_ID(GEAR_SIDEWAYS_LARGE);
+extern s32 E_ID(GEAR_SIDEWAYS_SMALL);
+extern s32 E_ID(GEAR_VERTICAL);
+extern s32 E_ID(GREY_PUFF);
+extern s32 E_ID(HARPY);
+extern s32 E_ID(HARPY_DAGGER);
+extern s32 E_ID(HARPY_FEATHER);
+extern s32 E_ID(HARPY_FLAME);
+extern s32 E_ID(HARPY_KICK);
+extern s32 E_ID(KARASUMAN);
+extern s32 E_ID(KARASUMAN_FEATHER);
+extern s32 E_ID(KARASUMAN_FEATHER_ATTACK);
+extern s32 E_ID(KARASUMAN_ORB_ATTACK);
+extern s32 E_ID(KARASUMAN_RAVEN_ABSORB);
+extern s32 E_ID(KARASUMAN_RAVEN_ATTACK);
+extern s32 E_ID(LIFE_UP_SPAWN);
+extern s32 E_ID(LOCK_CAMERA);
+extern s32 E_ID(MEDUSA_HEAD_BLUE);
+extern s32 E_ID(MEDUSA_HEAD_SPAWNER);
+extern s32 E_ID(MEDUSA_HEAD_YELLOW);
+extern s32 E_ID(PENDULUM_ANCHOR);
+extern s32 E_ID(PENDULUM_BONE_CHAIN);
+extern s32 E_ID(PENDULUM_WEIGHT);
+extern s32 E_ID(PHANTOM_SKULL);
+extern s32 E_ID(PHANTOM_SKULL_TRAIL);
+extern s32 E_ID(ROOM_EXIT);
+extern s32 E_ID(SECRET_AREA_DOOR);
+extern s32 E_ID(SECRET_WALL_DEBRIS);
+extern s32 E_ID(SIDE_WATER_SPLASH);
+extern s32 E_ID(SKULL_LORD);
+extern s32 E_ID(SKULL_LORD_FLAMES);
+extern s32 E_ID(SKULL_LORD_OUTLINE);
+extern s32 E_ID(SKULL_LORD_PIECES);
+extern s32 E_ID(SMALL_WATER_DROP);
+extern s32 E_ID(SPIKES);
+extern s32 E_ID(SPIKES_DAMAGE);
+extern s32 E_ID(SPIKES_DUST);
+extern s32 E_ID(SPIKES_PARTS);
+extern s32 E_ID(SPLASH_WATER);
+extern s32 E_ID(SURFACING_WATER);
+extern s32 E_ID(SWORD_LORD);
+extern s32 E_ID(SWORD_LORD_ATTACK_HITBOX);
+extern s32 E_ID(UNK_ID13);
+extern s32 E_ID(VANDAL_SWORD);
+extern s32 E_ID(VANDAL_SWORD_DEATH);
+extern s32 E_ID(VANDAL_SWORD_HITBOX);
+extern s32 E_ID(WALL_GEAR);
+extern s32 E_ID(WATER_DROP);
+extern s32 E_ID(WATER_FOREGROUND);
+#endif
+
+extern EInit g_EInitEnvironment;
 
 #endif // NZ1_H

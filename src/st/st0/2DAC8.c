@@ -617,7 +617,7 @@ void EntityDraculaFinalForm(Entity* self) {
             for (i = 0; i < 3; i++, entity++) {
                 DestroyEntity(entity);
             }
-            g_api.PlaySfx(0x80);
+            g_api.PlaySfx(SET_UNK_80);
             self->ext.dracFinalForm.timer = 4;
             self->ext.dracFinalForm.unk84 = 0;
             g_api.TimeAttackController(
@@ -644,7 +644,7 @@ void EntityDraculaFinalForm(Entity* self) {
 
                 if (--D_80181148 == 0) {
                     D_80181148 = 0x800;
-                    g_api.PlaySfx(0x80);
+                    g_api.PlaySfx(SET_UNK_80);
                 }
             } else {
                 g_api.PlaySfx(0x35E);
@@ -672,7 +672,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 D_80181148--;
                 if (D_80181148 == 0) {
                     D_80181148 = 0x800;
-                    g_api.PlaySfx(0x80);
+                    g_api.PlaySfx(SET_UNK_80);
                     self->step_s--;
                     break;
                 }

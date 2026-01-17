@@ -1407,7 +1407,8 @@ void EntityMariaOwl(Entity* self) {
             self->ext.mariaOwl.velocityX = 0x400;
         }
         SetGeomOffset(0, 0);
-        func_89285A0(self->ext.mariaOwl.angle, &sp6C); // rotate matirx by angle
+        func_psp_089285A0(
+            self->ext.mariaOwl.angle, &sp6C); // rotate matirx by angle
         TransMatrix(&sp6C, &sp5C);
         SetRotMatrix(&sp6C);
         SetTransMatrix(&sp6C);

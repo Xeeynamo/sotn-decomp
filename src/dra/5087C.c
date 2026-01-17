@@ -11,17 +11,13 @@ typedef struct {
     Point32 pos;
 } RoomLoadDefHolder;
 
-extern bool D_8C630C8;
 extern s32 D_psp_091CE578;
-extern void (*D_8CE9C48)();
+extern void (*D_psp_08CE9C48)();
 extern s32 D_psp_091CE570;
 
 #if defined(VERSION_PSP)
-extern s32* D_8D97C40;
-#define SAVE_DATA_PTR &D_8D97C40
 #define CAN_PAUSE g_PauseAllowed&& D_psp_091CE578
 #else
-#define SAVE_DATA_PTR 0x801EA000
 #define CAN_PAUSE g_PauseAllowed
 #endif
 
@@ -1193,7 +1189,7 @@ void func_800F2860(void) {
     case 0:
         break;
     case 1:
-        PlaySfx(0x80);
+        PlaySfx(SET_UNK_80);
         D_801375C8++;
         break;
     case 2:
@@ -1203,11 +1199,7 @@ void func_800F2860(void) {
         }
         break;
     case 3:
-#if defined(VERSION_US)
-        PlaySfx(0x33F);
-#else
-        PlaySfx(0x33C);
-#endif
+        PlaySfx(MU_NOCTURNE);
         D_801375C8++;
         break;
     case 4:
@@ -1223,7 +1215,7 @@ void func_800F2860(void) {
         }
         break;
     case 6:
-        PlaySfx(D_80097910);
+        PlaySfx(currentMusicId);
         D_801375C8 = 0;
         return;
     case 7:
@@ -1233,7 +1225,7 @@ void func_800F2860(void) {
         D_801375C8--;
         break;
     case 8:
-        PlaySfx(0x80);
+        PlaySfx(SET_UNK_80);
         D_801375C8--;
         break;
     }
@@ -1251,7 +1243,7 @@ void RunMainEngine(void) {
     u32 tempY;
 
 #if defined(VERSION_PSP)
-    if (D_8C630C8) {
+    if (D_psp_08C630C8) {
         g_Status.hearts = 99;
     }
 #endif
@@ -1298,18 +1290,18 @@ void RunMainEngine(void) {
         if (D_8003C708.flags & FLAG_UNK_40) {
             LoadGfxAsync(ANIMSET_DRA(4));
         }
-        D_80097910 = g_StagesLba[g_StageId].unk18;
+        currentMusicId = g_StagesLba[g_StageId].musicId;
         if (g_StageId == STAGE_NO3 && D_8003C730 == 0) {
-            D_80097910 = SE_INTRO_WIND;
+            currentMusicId = SE_INTRO_WIND;
         }
         if (
 #if defined(VERSION_PSP)
             (D_8003C730 == 4) ||
 #endif
             (D_8003C730 == 0) && !(D_8003C708.flags & FLAG_UNK_20)) {
-            PlaySfx(D_80097910);
+            PlaySfx(currentMusicId);
         }
-        D_80097928 = 0;
+        stopMusicFlag = false;
         func_800EA538(2);
         if (D_801375BC.def->tilesetId != 0) {
             func_800EA5E4((D_801375BC.def->tilesetId & 0xFF) + 0x7fff | 0x4000);
@@ -1388,7 +1380,7 @@ void RunMainEngine(void) {
 #if defined(VERSION_PSP)
         if (D_8003C730 == 4) {
             D_8003C730 = 0;
-            D_80097928 = 1;
+            stopMusicFlag = true;
             if (D_8006C374 == 0x25) {
                 g_Tilemap.scrollX.i.hi = 0x640;
                 g_Tilemap.scrollY.i.hi = 0x4BF;
@@ -1525,7 +1517,7 @@ void RunMainEngine(void) {
                 return;
             }
 #if defined(VERSION_PSP)
-            func_8932B50();
+            func_psp_08932B50();
 #endif
             g_GameEngineStep = Engine_3;
             g_MenuStep = MENU_STEP_INIT;
@@ -1618,18 +1610,18 @@ void RunMainEngine(void) {
             MuteCd();
         } else if (g_unkGraphicsStruct.D_800973FC == 0 && D_8006BB00 != 0) {
             if (g_unkGraphicsStruct.pauseEnemies != 0) {
-                D_80097928 = 0;
+                stopMusicFlag = false;
                 D_8006BB00 = 0;
                 UnMuteCd();
-            } else if (D_80097928 == 0) {
+            } else if (stopMusicFlag == 0) {
                 D_8006BB00 = 0;
                 UnMuteCd();
             } else {
                 UnMuteCd();
                 if (!(D_8003C708.flags & (FLAG_UNK_40 | FLAG_UNK_20))) {
-                    PlaySfx(D_80097910);
-                    if (D_80097910 != 0) {
-                        D_80097928 = 0;
+                    PlaySfx(currentMusicId);
+                    if (currentMusicId != 0) {
+                        stopMusicFlag = false;
                     }
                 }
                 D_8006BB00 = 0;
@@ -1745,15 +1737,15 @@ void RunMainEngine(void) {
                     func_800EA5AC(0xFF, 0xFF, 0xFF, 0xFF);
                 }
                 break;
-            } else if (D_80097928 != 0) {
-                D_80097910 = g_StagesLba[g_StageId].unk18;
+            } else if (stopMusicFlag != 0) {
+                currentMusicId = g_StagesLba[g_StageId].musicId;
                 if (g_unkGraphicsStruct.D_800973FC != 1) {
                     PlaySfx(SET_STOP_MUSIC);
                     if (func_80131F68()) {
                         break;
                     }
-                    PlaySfx(D_80097910);
-                    D_80097928 = 0;
+                    PlaySfx(currentMusicId);
+                    stopMusicFlag = false;
                 }
             }
             if (D_80137598) {
@@ -1948,7 +1940,7 @@ void RunMainEngine(void) {
                 } else if (g_unkGraphicsStruct.unk20 == 0x100) {
                     RichterUpdater = g_PlOvl.D_8013C000;
                     RichterUpdater();
-                    RichterUpdater = D_8CE9C48;
+                    RichterUpdater = D_psp_08CE9C48;
                     RichterUpdater();
                     g_api.o.UpdateStageEntities();
                     func_80102D70();
@@ -1982,8 +1974,8 @@ void RunMainEngine(void) {
             if (g_IsUsingCd) {
                 break;
             }
-            PlaySfx(0x81);
-            D_80097910 = 0;
+            PlaySfx(SET_UNK_81);
+            currentMusicId = 0;
             if (g_StageId == STAGE_ST0) {
                 SetGameState(Game_GameOver);
                 ClearImage(&g_Vram.D_800ACDA0, 0xFF, 0xFF, 0xFF);

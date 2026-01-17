@@ -237,7 +237,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
 #endif
 
     if (self->step && dialogue_started && !g_SkipCutscene) {
-        if (g_IsTimeAttackUnlocked) {
+        if (g_GameClearFlag) {
             CutsceneSkip(self);
         } else if (self->params) {
             if (g_Settings.D_8003CB04 & 0x2000) {

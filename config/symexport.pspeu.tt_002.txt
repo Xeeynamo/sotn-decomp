@@ -1,0 +1,2 @@
+EXTERN(_binary_assets_servant_tt_002_mwo_header_bin_start);
+EXTERN(func_092EF290);

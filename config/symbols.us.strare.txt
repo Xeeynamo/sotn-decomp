@@ -1,0 +1,10 @@
+RARE_spriteBanks = 0x8018002C;
+RARE_cluts = 0x801800DC;
+RARE_rooms_layers = 0x80180220;
+RARE_gfxBanks = 0x80180490;
+RARE_pStObjLayoutHorizontal = 0x801804BC;
+RARE_pStObjLayoutVertical = 0x80180590;
+RARE_BackgroundBlockInit = 0x80180824;
+RARE_RedDoorTiles = 0x80180888;
+RARE_rooms = 0x80181C58;
+sprites_rare_4 = 0x801A4D58;

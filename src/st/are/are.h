@@ -9,11 +9,27 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_TORCH_A = 0x5A,
+    PAL_TORCH_B = 0x5B,
+    PAL_BACKGROUND_DOOR_RUBBLE = 0x9E,
+    PAL_FOUNTAIN_WATER = 0xC0,
+    // 0xC0 - 0xCA are cycled in EntityFountainWater based on g_Timer
+    PAL_FOUNTAIN_WATER_MAX = 0xCA,
     PAL_ARMOR_LORD_UNK = 0x21A,
     PAL_HUNTING_GIRL = 0x21C,
     PAL_PLATE_LORD_UNK1 = 0x226,
     PAL_PLATE_LORD_UNK2 = 0x227,
     PAL_PLATE_LORD_UNK3 = 0x228,
+    PAL_BREAKABLE_TORCH_A = 0x228,
+    PAL_BREAKABLE_TORCH_B = 0x229,
+    PAL_BREAKABLE = 0x22A,
+    PAL_BREAKABLE_DEBRIS = 0x22E,
+    // puff params 0,1
+    PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
+    // puff params 2 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 3)
+    PAL_PUFF_OPAQUE_2 = 0x2E3,
+    // puff params 3 (not used directly, PAL_PUFF_OPAQUE_OFFSET + 4)
+    PAL_PUFF_OPAQUE_3 = 0x2E4
 };
 
 enum Entities {
@@ -39,17 +55,17 @@ enum Entities {
     E_UNK_ID13,                     // EntityUnkId13
     E_EXPLOSION_VARIANTS,           // EntityExplosionVariants
     E_GREY_PUFF,                    // EntityGreyPuff
-    E_UNK_16,                       // func_us_801B628C
-    E_UNK_17,                       // func_us_801B6420
-    E_BRIDGE_BACKGROUND_PIECE,      // EntityBridgeBackgroundPiece
-    E_UNK_19,                       // func_us_801B6DF0
-    E_UNK_1A,                       // func_us_801B7184
-    E_HEART_ROOM_SWITCH,            // EntityHeartRoomSwitch
-    E_UNK_1C,                       // func_us_801B7998
-    E_UNK_1D,                       // func_us_801B7C7C
-    E_UNK_1E,                       // func_us_801B7E7C
-    E_UNK_1F,                       // func_us_801B80C0
-    E_EXPLOSION_PUFF_OPAQUE,        // EntityExplosionPuffOpaque
+    E_BOSS_TORCH,                   // EntityBossTorch
+    E_BOSS_DOORS,                   // EntityBossDoors
+    E_CAVERN_DOOR_SWITCH,           // EntityCavernDoorSwitch
+    E_CAVERN_DOOR,                  // EntityCavernDoor
+    E_ELEVATOR,                     // EntityElevator
+    E_ELEVATOR_SWITCH,              // EntityElevatorSwitch
+    E_ELEVATOR_GATES,               // EntityElevatorGates
+    E_UNK_1D,                       // EntityFountainWater
+    E_BREAKABLE_CEILING_SECRET,     // EntityBreakableCeilingSecret
+    E_BACKGROUND_DOOR_RUBBLE,       // EntityBackgroundDoorRubble
+    E_EXPLODE_PUFF_OPAQUE,          // EntityExplosionPuffOpaque
     E_BREAKABLE_DEBRIS,             // OVL_EXPORT(EntityBreakableDebris)
     E_BLADE_MASTER,                 // EntityBladeMaster
     E_BLADE_MASTER_ATTACK_HITBOX,   // EntityBladeMasterAttackHitbox
@@ -77,10 +93,10 @@ enum Entities {
     E_ARMOR_LORD_UNK2,              // func_us_801D3700
     E_HUNTING_GIRL,                 // EntityHuntingGirl
     E_HUNTING_GIRL_ATTACK,          // EntityHuntingGirlAttack
-    E_UNK_3C,                       // func_us_801CDCF4
-    E_UNK_3D,                       // func_us_801CEBC8
-    E_UNK_3E,                       // func_us_801CECAC
-    E_UNK_3F,                       // func_us_801CEB00
+    E_PARANTHROPUS,                 // EntityParanthropus
+    E_PARANTHROPUS_BONE_HITBOX,     // EntityParanthropusBoneHitbox
+    E_PARANTHROPUS_SKULL,           // EntityParanthropusSkull
+    E_PARANTHROPUS_THROWN_BONE,     // EntityParanthropusThrownBone
     E_FLEA_ARMOR,                   // EntityFleaArmor
     E_FLEA_ARMOR_ATTACK_HITBOX,     // EntityFleaArmorAttackHitbox
     E_FLEA_MAN,                     // EntityFleaMan

@@ -21,11 +21,15 @@
 #define blue GU_RGBA(0, 0, 0xFF, 0x80)
 #define magenta GU_RGBA(0xFF, 0, 0xFF, 0x80)
 
+#undef MIN
 #define MIN(a, b) (a) < (b) ? (a) : (b)
 
 typedef enum {
-    SCREEN_MODE_ZERO,
-    SCREEN_MODE_ONE,
+    // stretches the game resolution to fill the PSP screen vertically
+    SCREEN_MODE_FULL,
+
+    // pixel perfect, but with borders around the game screen
+    SCREEN_MODE_PERFECT,
 } ScreenMode;
 
 typedef struct {
@@ -83,8 +87,8 @@ extern s32 D_psp_08B42000; // kernel thread ID
 extern s32 D_psp_08B42044;
 extern s32 D_psp_08B42048;
 extern int D_psp_08B4204C; // button swap
-extern s32 D_psp_08B42050;
-extern s32 D_psp_08B42054;
+extern u32 D_psp_08B42050;
+extern u32 D_psp_08B42054;
 extern s32 g_UserLanguage;
 extern char* D_psp_08B4205C;
 extern char* D_psp_08B42060;
@@ -142,9 +146,9 @@ extern bool D_psp_08C630C4;
 extern bool D_psp_08C630C8;
 extern u32 D_psp_08C630CC;
 extern s32 D_psp_08C630D0;
-extern s32 D_psp_08C630E0;
+extern s32 D_psp_08C630E0; // play_wait - slow-downs the game
 extern char D_psp_08C630E4[];
-#define g_IsTimeAttackUnlocked (*((s32*)0x091FC418))
+#define g_GameClearFlag (*((s32*)0x091FC418))
 
 void* memalign(size_t, size_t);
 void func_psp_08919C4C(void);
@@ -414,8 +418,8 @@ int main(int argc, char* argv[]) {
     D_psp_08B42000 = sceKernelGetThreadId();
     func_psp_0891269C();
     func_psp_0891249C();
-    D_psp_08B41FE0 =
-        sceKernelCreateEventFlag("FileIOWakeUP", PSP_EVENT_WAITMULTIPLE, 0, 0);
+    D_psp_08B41FE0 = sceKernelCreateEventFlag(
+        "FileIOWakeUP", PSP_EVENT_WAITMULTIPLE, 0x00000000, NULL);
     sceKernelChangeCurrentThreadAttr(0, PSP_THREAD_ATTR_VFPU);
     func_psp_0891B400();
     func_psp_08937560();
@@ -427,7 +431,7 @@ int main(int argc, char* argv[]) {
     func_psp_08919A0C();
     func_psp_0891ACBC();
     func_psp_08930324();
-    func_psp_0891A6A8(SCREEN_MODE_ZERO);
+    func_psp_0891A6A8(SCREEN_MODE_FULL);
     printf("月下描画開始00\n"); // Moonlight Drawing begins
     sceGuDisplay(GU_DISPLAY_ON);
     func_psp_08910044();
@@ -437,7 +441,7 @@ int main(int argc, char* argv[]) {
     printf("月下ユーティリティ終了00\n"); // Moonlight End utility
     func_psp_0891A14C();
     func_psp_0891A6A8(
-        func_psp_08932754() == 0 ? SCREEN_MODE_ONE : SCREEN_MODE_ZERO);
+        func_psp_08932754() == 0 ? SCREEN_MODE_PERFECT : SCREEN_MODE_FULL);
     func_psp_08933A10();
     func_psp_0892E9B0();
     func_psp_0892A2D8();
@@ -456,15 +460,15 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-s32 D_psp_089464D0 = -1;
-s32 D_psp_089464D4 = -1;
-s32 D_psp_089464D8 = 320; // screen_w
-s32 D_psp_089464DC = 240; // screen_h
-float D_psp_089464E0 = 1.0f;
-float D_psp_089464E4 = 1.0f;
+static s32 D_psp_089464D0 = -1;
+static s32 D_psp_089464D4 = -1;
+static s32 screen_w = 320;
+static s32 screen_h = 240;
+static float D_psp_089464E0 = 1.0f;
+static float D_psp_089464E4 = 1.0f;
 s32 D_psp_089464E8 = 2;
-s32 D_psp_089464EC = 1;
-s32 D_psp_089464F0 = 1;
+static s32 D_psp_089464EC = 1;
+static s32 D_psp_089464F0 = 1;
 
 void func_psp_0891A608(void) {
     float x = D_psp_08C629C8;
@@ -503,17 +507,17 @@ void func_psp_0891A650(void) {
 static void func_psp_0891A6A8(s32 screen_mode) {
     D_psp_08C62A30 = screen_mode;
     switch (D_psp_08C62A30) {
-    case SCREEN_MODE_ZERO:
-        D_psp_089464D8 = 362;
-        D_psp_089464DC = 272;
+    case SCREEN_MODE_FULL:
+        screen_w = 362;
+        screen_h = 272;
         break;
-    case SCREEN_MODE_ONE:
-        D_psp_089464D8 = 320;
-        D_psp_089464DC = 240;
+    case SCREEN_MODE_PERFECT:
+        screen_w = 320;
+        screen_h = 240;
         break;
     }
-    D_psp_08C62A34 = (GU_SCR_WIDTH - D_psp_089464D8) / 2;
-    D_psp_08C62A38 = (GU_SCR_HEIGHT - D_psp_089464DC) / 2;
+    D_psp_08C62A34 = (GU_SCR_WIDTH - screen_w) / 2;
+    D_psp_08C62A38 = (GU_SCR_HEIGHT - screen_h) / 2;
     D_psp_089464E8 = 2;
 }
 
@@ -623,7 +627,7 @@ static void func_psp_0891ACBC(void) {
     D_psp_08C42188 = 0;
     func_psp_0891A790();
     func_psp_0891A800();
-    func_psp_0891A6A8(SCREEN_MODE_ZERO);
+    func_psp_0891A6A8(SCREEN_MODE_FULL);
     func_psp_0891A868(24, 1);
     func_psp_0891A868(8, 1);
     func_psp_0891A868(9, 1);
@@ -1310,36 +1314,34 @@ DISPENV* PutDispEnv(DISPENV* env) {
     D_psp_08C629D8.pad0 = env->pad0;
     D_psp_08C629D8.pad1 = env->pad1;
     switch (D_psp_08C62A30) {
-    case SCREEN_MODE_ZERO:
-        D_psp_089464D8 = 362;
-        D_psp_089464DC = 272;
+    case SCREEN_MODE_FULL:
+        screen_w = 362;
+        screen_h = 272;
         break;
-    case SCREEN_MODE_ONE:
-        D_psp_089464D8 = 320;
-        D_psp_089464DC = 240;
+    case SCREEN_MODE_PERFECT:
+        screen_w = 320;
+        screen_h = 240;
         break;
     }
-    D_psp_08C62A34 = (GU_SCR_WIDTH - D_psp_089464D8) / 2;
-    D_psp_08C62A38 = (GU_SCR_HEIGHT - D_psp_089464DC) / 2;
+    D_psp_08C62A34 = (GU_SCR_WIDTH - screen_w) / 2;
+    D_psp_08C62A38 = (GU_SCR_HEIGHT - screen_h) / 2;
     if (D_psp_08C629D8.disp.w == 256 && D_psp_08C629D8.disp.h == 240) {
-        if (D_psp_08C62A30 == SCREEN_MODE_ONE) {
+        if (D_psp_08C62A30 == SCREEN_MODE_PERFECT) {
             D_psp_08C62A34 += D_psp_08C629EC.clip.x;
             D_psp_08C62A38 += D_psp_08C629EC.clip.y;
-            D_psp_089464DC = D_psp_08C629EC.clip.h;
-            D_psp_089464D8 = (D_psp_08C62A30 == SCREEN_MODE_ZERO) ? 418 : 320;
+            screen_h = D_psp_08C629EC.clip.h;
+            screen_w = (D_psp_08C62A30 == SCREEN_MODE_FULL) ? 418 : 320;
         } else {
-            D_psp_089464D8 = (D_psp_08C62A30 == SCREEN_MODE_ZERO) ? 418 : 320;
-            D_psp_08C62A34 = (GU_SCR_WIDTH - D_psp_089464D8) / 2;
+            screen_w = (D_psp_08C62A30 == SCREEN_MODE_FULL) ? 418 : 320;
+            D_psp_08C62A34 = (GU_SCR_WIDTH - screen_w) / 2;
             D_psp_089464E0 = D_psp_089464E4 = 1.0f;
         }
     } else {
         if (D_psp_08C629D8.disp.w <= 480 && D_psp_08C629D8.disp.h <= 256) {
             D_psp_089464E0 = D_psp_089464E4 = 1.0f;
         } else {
-            D_psp_089464E0 =
-                (float)D_psp_089464D8 / (float)D_psp_08C629D8.disp.w;
-            D_psp_089464E4 =
-                (float)D_psp_089464DC / (float)D_psp_08C629D8.disp.h;
+            D_psp_089464E0 = (float)screen_w / (float)D_psp_08C629D8.disp.w;
+            D_psp_089464E4 = (float)screen_h / (float)D_psp_08C629D8.disp.h;
         }
     }
     return env;
@@ -1495,8 +1497,8 @@ void func_psp_0891DE74(void) {
         v[0].c = v[1].c = v[2].c = v[3].c = 0xFFFFFFFF;
         v[0].x = v[2].x = D_psp_08C62A34;
         v[0].y = v[1].y = D_psp_08C62A38;
-        v[1].x = v[3].x = D_psp_08C62A34 + D_psp_089464D8;
-        v[2].y = v[3].y = D_psp_08C62A38 + D_psp_089464DC;
+        v[1].x = v[3].x = D_psp_08C62A34 + screen_w;
+        v[2].y = v[3].y = D_psp_08C62A38 + screen_h;
         v[0].z = v[1].z = v[2].z = v[3].z = 1.0f;
         v[0].u = v[0].v = v[1].v = v[2].u = 0.0f;
         v[1].u = D_psp_089464FC;
@@ -1573,8 +1575,8 @@ void func_psp_0891E420(void) {
     v[0].c = v[1].c = v[2].c = v[3].c = D_psp_08946504;
     v[0].x = v[2].x = D_psp_08C62A34;
     v[0].y = v[1].y = D_psp_08C62A38;
-    v[1].x = v[3].x = D_psp_08C62A34 + D_psp_089464D8;
-    v[2].y = v[3].y = D_psp_08C62A38 + D_psp_089464DC;
+    v[1].x = v[3].x = D_psp_08C62A34 + screen_w;
+    v[2].y = v[3].y = D_psp_08C62A38 + screen_h;
     v[0].z = v[1].z = v[2].z = v[3].z = 1.0f;
     v[0].u = v[2].u = D_psp_08C629EC.clip.x;
     v[0].v = v[1].v = D_psp_08C629EC.clip.y;
@@ -1668,7 +1670,7 @@ void func_psp_0891E944(void) {
     D_psp_08C42188 = D_psp_08C42180;
 }
 
-void func_psp_0891E994(void* p) {
+void func_psp_0891E994(OT_TYPE* p) {
     s32 sp5C;
     s32 sp58;
     s32 sp54;
@@ -1746,11 +1748,11 @@ void func_psp_0891E994(void* p) {
         } else {
             sp50 = D_psp_08C62A40;
             switch (D_psp_08C62A30) {
-            case SCREEN_MODE_ZERO:
+            case SCREEN_MODE_FULL:
                 sp54 = 418;
                 var_fp = 272;
                 break;
-            case SCREEN_MODE_ONE:
+            case SCREEN_MODE_PERFECT:
                 sp54 = 369;
                 var_fp = 240;
                 break;
@@ -1812,12 +1814,11 @@ void func_psp_0891E994(void* p) {
         func_psp_0891E944();
         if (D_psp_08C62A44) {
             fps = (D_psp_08C42180 != D_psp_08C42188)
-                      ? 0x3C / (D_psp_08C42180 - D_psp_08C42188)
+                      ? 60 / (D_psp_08C42180 - D_psp_08C42188)
                       : 0;
             sprintf(D_psp_08C62EC4, "Frame=%d/ResetGraph=%2d/W:%d,H:%d/%2dfps",
-                    D_psp_08C62A4C, D_psp_08C62A48, D_psp_089464D8,
-                    D_psp_089464DC, fps);
-            sceGuDebugPrint(0, 0x108, 0xFFFFFFFF, D_psp_08C62EC4);
+                    D_psp_08C62A4C, D_psp_08C62A48, screen_w, screen_h, fps);
+            sceGuDebugPrint(0, 264, 0xFFFFFFFF, D_psp_08C62EC4);
         }
         D_psp_08C62A4C++;
         ResetGraph(0);
@@ -1875,8 +1876,7 @@ void DrawOTag(OT_TYPE* p) {
                 if (thisPad & PSP_CTRL_CIRCLE) {
                     switch (cursor) {
                     case 0:
-                        g_IsTimeAttackUnlocked =
-                            g_IsTimeAttackUnlocked ? false : true;
+                        g_GameClearFlag = g_GameClearFlag ? false : true;
                         break;
                     case 1:
                         D_psp_08C630C4 = D_psp_08C630C4 ? false : true;
@@ -1919,12 +1919,12 @@ void DrawOTag(OT_TYPE* p) {
                     }
                 }
             }
-            x = 0x130;
+            x = 304;
             y = 0;
             sprintf(D_psp_08C630E4, "=== DEGUG MENU ===");
             sceGuDebugPrint(x, y, 0xFFFFFFFF, D_psp_08C630E4);
             sprintf(D_psp_08C630E4, "GameClearFlag:%s",
-                    off_on[g_IsTimeAttackUnlocked ? 1 : 0]);
+                    off_on[g_GameClearFlag ? 1 : 0]);
             sceGuDebugPrint(x + 0x10, y + 0x8, 0xFFFFFFFF, D_psp_08C630E4);
             sprintf(D_psp_08C630E4, "MutekiFlag:%s", off_on[D_psp_08C630C4]);
             sceGuDebugPrint(x + 0x10, y + 0x10, 0xFFFFFFFF, D_psp_08C630E4);

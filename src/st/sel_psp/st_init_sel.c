@@ -2,7 +2,6 @@
 #include "../sel/sel.h"
 #include <cutscene.h>
 
-extern u8 D_psp_08D39D3C[];
 extern Overlay OVL_EXPORT(Overlay);
 
 // BSS
@@ -285,12 +284,12 @@ void OVL_EXPORT(Load)(void) {
     D_psp_09285B80 =
         GetLangAt(4, cutscene_script_en, cutscene_script_fr, cutscene_script_sp,
                   cutscene_script_ge, cutscene_script_it);
-    func_8929FA8(D_8018C404, 0xC5);
+    func_psp_08929FA8(D_8018C404, 0xC5);
     memcpy(&g_api.o, &OVL_EXPORT(Overlay), sizeof(Overlay));
     D_psp_0927C6F0[3] =
         (u_long*)GetLang(D_psp_092630D8, D_psp_09264868, D_psp_09263700,
                          D_psp_09264290, D_psp_09263CE0);
-    func_892667C(0x8020, D_psp_0924EA78);
+    func_psp_0892667C(0x8020, D_psp_0924EA78);
     func_91040A0(D_psp_0927C6F0);
     D_psp_0927C708[3] =
         (u_long*)GetLang(D_psp_09266578, D_psp_092738F8, D_psp_0926A9E8,
@@ -321,19 +320,19 @@ void OVL_EXPORT(Load)(void) {
 
 void func_psp_09237C38(void) {
     func_91040A0(D_psp_0927C7B0);
-    func_892667C(0x8196, D_psp_0924F810);
+    func_psp_0892667C(0x8196, D_psp_0924F810);
 }
 
 void func_psp_09237C78(void) {
     func_91040A0(D_psp_0927C7C8);
-    func_892667C(0x8196, D_psp_0924F810);
+    func_psp_0892667C(0x8196, D_psp_0924F810);
 }
 
 void func_psp_09237CB8(void) {
     RECT rect;
     s32 height = 0x80;
 
-    func_89264CC(0x8000, D_psp_0925F850, 1);
+    func_psp_089264CC(0x8000, D_psp_0925F850, 1);
     rect.x = D_psp_0924F800 << 6;
     rect.y = 0;
     rect.w = 0x40;

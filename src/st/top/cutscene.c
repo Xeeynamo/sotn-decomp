@@ -46,7 +46,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 
     if (self->step) {
         if (g_IsCutsceneDone && !g_SkipCutscene) {
-            if (g_IsTimeAttackUnlocked) {
+            if (g_GameClearFlag) {
                 CutsceneSkip(self);
             } else if (g_Settings.D_8003CB04 & 0x800000) {
                 CutsceneSkip(self);

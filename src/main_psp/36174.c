@@ -1,5 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include <game_psp.h>
+
+// https://pspdev.github.io/pspsdk/
+#define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
+#include <pspiofilemgr.h>
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_08934A80);
 
@@ -141,11 +145,47 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_089375A0);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_089375C0);
 
-void func_psp_08937650(void) {}
+void func_psp_08937650() {}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_08937658);
+s32 func_psp_08937658(char* file, void* buf) {
+    s32 size;
+    s32 fd;
+    s32 ret;
+    s32 var_s3;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_08937740);
+    fd = -1;
+    var_s3 = 0;
+    ret = 0;
+    fd = sceIoOpen(file, PSP_O_RDONLY, 0);
+    if (fd >= 0) {
+        ret = sceIoLseek(fd, 0, PSP_SEEK_END);
+        sceIoLseek(fd, 0, PSP_SEEK_SET);
+    }
+    if (ret != 0) {
+        size = ret;
+        ret = sceIoRead(fd, buf, size);
+        if (ret != size) {
+            ret = -1;
+        }
+    }
+    if (fd >= 0) {
+        sceIoClose(fd);
+    }
+    return ret;
+}
+
+s32 func_psp_08937740(char* file, void* buf) {
+    s32 ret = 0;
+    bool var_s1 = false;
+
+    ret = func_psp_08937658(file, buf);
+    if (ret > 0) {
+        func_psp_08937650(buf);
+        func_psp_089375C0(buf, ret);
+        var_s1 = true;
+    }
+    return var_s1;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_089377B8);
 

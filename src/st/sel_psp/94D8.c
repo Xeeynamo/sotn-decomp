@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../sel/sel.h"
 
-extern s32 g_UserLanguage;
 extern s32 D_psp_0924F800;
 extern s32 D_psp_0924F808;
-extern s32 D_psp_08B42050;
 
 // BSS
 static s32 D_801BB010;
@@ -216,11 +214,11 @@ void HandleTitleScreen(void) {
         func_801B18F4();
         D_801BB014 = 0;
         g_GameEngineStep++;
-        func_891CEB8(0x200, 0xF0);
-        func_891CEB8(0x200, 0xF1);
-        func_8925F7C(0x200, 0xF2, 0x10, 1);
-        func_8925F7C(0x210, 0xF2, 0x10, 1);
-        func_8925F7C(0x220, 0xF2, 0x10, 1);
+        func_psp_0891CEB8(0x200, 0xF0);
+        func_psp_0891CEB8(0x200, 0xF1);
+        func_psp_08925F7C(0x200, 0xF2, 0x10, 1);
+        func_psp_08925F7C(0x210, 0xF2, 0x10, 1);
+        func_psp_08925F7C(0x220, 0xF2, 0x10, 1);
         break;
 
     case 1:

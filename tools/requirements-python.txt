@@ -16,3 +16,4 @@ n64img==0.3.3
 pygfxd
 pillow
 toml
+intervaltree==3.1.0
