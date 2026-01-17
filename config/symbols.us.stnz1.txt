@@ -22,21 +22,11 @@ PlayerIsWithinHitbox = 0x801A5E18;
 NZ1_EntityLockCamera = 0x801A5E9C; // source=match
 EntityBridgeBackgroundPiece = 0x801A7118;
 EntityClouds = 0x801A7970;
-EntityBackgroundGears = 0x801A7DC4;
 EntityBreakableWall = 0x801A9154;
 EntityBreakableWallPartial = 0x801A94CC;
 EntitySecretWallDebris = 0x801A97C4;
 EntityRoomExit = 0x801A9A5C;
 EntityWaterForeground = 0x801A9BEC;
-EntityBossDoorTrigger = 0x801AA48C;
-EntityBossDoors = 0x801AA814;
-BossDoorHelper = 0x801AAB0C;
-EntityKarasuman = 0x801AAB90;
-EntityKarasumanFeatherAttack = 0x801ABBF0;
-EntityKarasumanOrbAttack = 0x801ABD68;
-EntityKarasumanRavenAttack = 0x801ABFE8;
-EntityKarasumanFeather = 0x801AC354;
-EntityKarasumanRavenAbsorb = 0x801AC528;
 Random = 0x801AC6E0; // source=match
 CreateEntityFromCurrentEntity = 0x801AED58; // source=match
 CreateEntityFromEntity = 0x801AEDCC; // source=match
@@ -51,16 +41,10 @@ MoveEntity = 0x801AFED0; // source=match
 UnkCollisionFunc3 = 0x801AFF2C; // source=match
 UnkCollisionFunc2 = 0x801B01A4; // source=match
 AllocEntity = 0x801B038C; // source=match
-SetEntityVelocityFromAngle = 0x801B0434; // source=match
-GetAngleBetweenEntitiesShifted = 0x801B04D8; // source=match
 GetAngleBetweenEntities = 0x801B067C; // source=match
 GetNormalizedAngle = 0x801B06FC; // source=match
 SetStep = 0x801B075C; // source=match
-SetSubStep = 0x801B077C; // source=match
-EntityExplosionSpawn = 0x801B0798; // source=match
 InitializeEntity = 0x801B082C; // source=match
-CheckFieldCollision = 0x801B0A78; // source=match
-GetPlayerCollisionWith = 0x801B0BD0; // source=match
 EntityPrizeDrop = 0x801B153C; // source=match
 EntityEquipItemDrop = 0x801B1F50; // source=match
 EntityRelicOrb = 0x801B27E8; // source=match
@@ -90,13 +74,8 @@ VandalSwordTrail = 0x801BDE3C;
 EntityVandalSword = 0x801BDEBC;
 EntityVandalSwordHitbox = 0x801BE73C;
 EntityVandalSwordDeath = 0x801BE82C;
-EntityPhantomSkull = 0x801BE8E0;
-EntityPhantomSkullTrail = 0x801BEBE8;
 EntityFlailGuard = 0x801BEC98;
 EntityFlailGuardFlail = 0x801BF104;
-CheckFieldCollisionY = 0x801BFD64; // source=match
-UpdateFacingDirection = 0x801BFE6C; // source=match
-EntityFleaMan = 0x801BFEA0; // source=match
 UnkPrimHelper = 0x801C059C; // source=match
 UnkPolyFunc2 = 0x801C0CE8; // source=match
 PrimDecreaseBrightness = 0x801C0D68; // source=match
