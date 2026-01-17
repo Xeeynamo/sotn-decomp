@@ -43,6 +43,8 @@ segments:
       - [0x2C, data]
       - [0xED4, .data, e_init]
       - [0x10E4, data]
+      - [0x1590, .data, collision]
+      - [0x1950, data]
       - [0x2F5FC, .rodata, unk_31F1C]
       - [0x2F620, .rodata, unk_33038]
       - [0x2F69C, .rodata, e_bat]
