@@ -2,7 +2,7 @@
 #ifndef GAME_H
 #define GAME_H
 #include "common.h"
-#include "log.h"
+#include <psyz/log.h>
 #include "castle_flags.h"
 #include "player_steps.h"
 #include <psxsdk/kernel.h>

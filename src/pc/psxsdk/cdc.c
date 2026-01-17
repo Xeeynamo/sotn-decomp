@@ -77,8 +77,8 @@ struct XA_SoundGroup {
 
 int16_t xa_previous[2][2];
 
-extern int current_file;
-extern int current_channel;
+int current_file = 0;
+int current_channel = 0;
 
 void XA_ProcessSector(const uint8_t* sdata, struct CD_Audio_Buffer* ab) {
     const struct XA_Subheader* sh = (const struct XA_Subheader*)&sdata[12 + 4];

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <dra.h>
 #include "dra_bss.h"
-#include <log.h>
+#include <psyz/log.h>
 #include "pc.h"
 #include <stdio.h>
 #include <stdlib.h>

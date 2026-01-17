@@ -150,11 +150,6 @@ void func_801073C0(void) { NOT_IMPLEMENTED; }
 
 void UpdateCd(void) { NOT_IMPLEMENTED; }
 
-int CdInit(void) {
-    NOT_IMPLEMENTED;
-    return 0;
-}
-
 void func_801083BC(void) { NOT_IMPLEMENTED; }
 
 u16 g_FontCharData[0x60] = {1, 1, 1, 0, 0, 0};

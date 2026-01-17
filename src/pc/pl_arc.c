@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game.h>
-#include <log.h>
+#include <psyz/log.h>
 #include "pc.h"
 #include <stdlib.h>
 #include <string.h>

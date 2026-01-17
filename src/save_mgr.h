@@ -185,7 +185,7 @@ s32 MemcardReadFile(
         nBytes = nBlock * CARD_BLOCK_SIZE;
     }
 
-    fd = open(savePath, O_RDONLY | O_NOWAIT);
+    fd = open(savePath,  FREAD | FASYNC);
     if (fd == -1) {
         return -1;
     }
@@ -217,7 +217,7 @@ s32 MemcardWriteFile(
     }
 
     len = flags << 0xD;
-    fd = open(savePath, O_WRONLY | O_NOWAIT);
+    fd = open(savePath, FWRITE | FASYNC);
 
     if (fd == -1) {
         return -1;

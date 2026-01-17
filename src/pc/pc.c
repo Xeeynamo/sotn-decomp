@@ -2,7 +2,7 @@
 #include <common.h>
 #include <stdarg.h>
 #include <stdio.h>
-#include <log.h>
+#include <psyz/log.h>
 #include "psxsdk/cdc.h"
 
 bool g_IsQuitRequested;   // controls whenever MainGame should quit

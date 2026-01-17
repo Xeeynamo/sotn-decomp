@@ -1,6 +1,6 @@
 #include <common.h>
 #include <libcd.h>
-#include <log.h>
+#include <psyz/log.h>
 
 #include <inttypes.h>
 #include "cdc.h"

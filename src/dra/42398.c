@@ -2,6 +2,7 @@
 #include "dra.h"
 #include "dra_bss.h"
 #include "lba.h"
+#include "psyz.h"
 
 #if defined(VERSION_US)
 #define PAD_RESETCOMBO ((PAD_START) | (PAD_SELECT))
