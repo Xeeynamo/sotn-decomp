@@ -1,0 +1,2 @@
+EXTERN(_binary_assets_st_rcat_mwo_header_bin_start);
+EXTERN(RCAT_Load);

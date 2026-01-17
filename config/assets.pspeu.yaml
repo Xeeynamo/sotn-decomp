@@ -649,6 +649,9 @@ files:
     src_path: src/st/rare
     splat_config_path: config/splat.pspeu.strare.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rcat.bin
+    asset_path: assets/st/rcat
+    src_path: src/st/rcat
+    splat_config_path: config/splat.pspeu.strcat.yaml
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rcen.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rchi.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rdai.bin

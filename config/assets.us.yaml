@@ -950,6 +950,9 @@ files:
     src_path: src/st/rare
     splat_config_path: config/splat.us.strare.yaml
   - target: disks/us/ST/RCAT/RCAT.BIN
+    asset_path: assets/st/rcat
+    src_path: src/st/rcat
+    splat_config_path: config/splat.us.strcat.yaml
   - target: disks/us/ST/RCEN/RCEN.BIN
   - target: disks/us/ST/RCHI/RCHI.BIN
   - target: disks/us/ST/RDAI/RDAI.BIN
