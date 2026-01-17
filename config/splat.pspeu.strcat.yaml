@@ -67,7 +67,7 @@ segments:
       - [0x14E88, c, rcat_psp/st_init]
       - [0x150D0, c, rcat_psp/e_breakable]
       - [0x15498, c, rcat_psp/unk_15498]
-      - [0x161D0, c, rcat_psp/e_room_bg]
+      - [0x161D0, c, rcat/e_room_bg]
       - [0x162B0, c, rcat/e_lock_camera]
       - [0x16510, c, rcat_psp/unk_16510]
       - [0x16BE0, c, rcat_psp/e_spikes]
