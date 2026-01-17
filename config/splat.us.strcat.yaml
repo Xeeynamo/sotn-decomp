@@ -1,0 +1,82 @@
+options:
+  platform: psx
+  basename: strcat
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/RCAT/RCAT.BIN
+  asm_path: asm/us/st/rcat
+  asset_path: assets/st/rcat
+  src_path: src/st/rcat
+  ld_script_path: build/us/strcat.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.strcat.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.strcat.txt
+  undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.strcat.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  disassemble_all: true
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  global_vram_start: 0x80010000
+  ld_generate_symbol_per_data_segment: true
+sha1: de0a202f1ed432e27202f3f191425ac50c3b0d18
+segments:
+  - name: strcat
+    type: code
+    start: 0x0
+    vram: 0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, .data, header]
+      - [0x2C, data]
+      - [0xED4, .data, e_init]
+      - [0x10E4, data]
+      - [0x2F5FC, .rodata, unk_31F1C]
+      - [0x2F620, .rodata, unk_33038]
+      - [0x2F69C, .rodata, e_bat]
+      - [0x2F6B0, .rodata, e_red_door]
+      - [0x2F6C8, .rodata, e_collect]
+      - [0x2F79C, .rodata, e_stage_name]
+      - [0x2F7D0, .rodata, unk_3EFD8]
+      - [0x2F830, .rodata, e_blood_skeleton]
+      - [0x2F844, .rodata, e_skeleton]
+      - [0x2F860, .rodata, prim_helpers]
+      - [0x2F868, c, e_room_bg]
+      - [0x2F930, c, e_lock_camera]
+      - [0x2FAEC, c, e_breakable]
+      - [0x2FD98, c, unk_2FD98]
+      - [0x3171C, c, e_spikes]
+      - [0x31F1C, c, unk_31F1C]
+      - [0x32B98, c, e_breakable_wall]
+      - [0x33038, c, unk_33038]
+      - [0x33C34, c, e_bat]
+      - [0x33F50, c, st_update]
+      - [0x34384, c, collision]
+      - [0x35B40, c, create_entity]
+      - [0x366B8, c, e_red_door]
+      - [0x37368, c, st_common]
+      - [0x38818, c, e_collect]
+      - [0x3B188, c, e_misc]
+      - [0x3D524, c, e_stage_name]
+      - [0x3E378, c, e_particles]
+      - [0x3EBBC, c, e_room_fg]
+      - [0x3ECA8, c, popup]
+      - [0x3EFD8, c, unk_3EFD8]
+      - [0x41D70, c, e_blood_skeleton]
+      - [0x42154, c, e_skeleton]
+      - [0x428A0, c, rcat_unused801c28a0]
+      - [0x42954, c, prim_helpers]
+      - [0x43184, bss]
+  - [0x43EAC]

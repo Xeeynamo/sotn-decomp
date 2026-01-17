@@ -1,0 +1,86 @@
+options:
+  platform: psp
+  basename: strcat
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rcat.bin
+  asm_path: asm/pspeu/st/rcat_psp
+  asset_path: assets/st/rcat
+  src_path: src/st
+  ld_script_path: build/pspeu/strcat.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.strcat.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.strcat.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.strcat.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 70114880083d2549f08461efc8a5be57245bc22c
+segments:
+  - [0x0, bin, mwo_header]
+  - name: strcat
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x0927BB00
+    bss_size: 0xE80
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, rcat_psp/create_entity]
+      - [0x1028, c, rcat_psp/e_stage_name]
+      - [0x1EA8, c, rcat_psp/e_red_door]
+      - [0x31B0, c, rcat_psp/st_update]
+      - [0x36E8, c, rcat_psp/unk_36E8]
+      - [0x6538, c, rcat_psp/e_particles]
+      - [0x70B0, c, rcat_psp/unk_70B0]
+      - [0x7188, c, rcat_psp/e_collect]
+      - [0xB300, c, rcat_psp/e_misc]
+      - [0xB9F8, c, rcat_psp/unk_B9F8]
+      - [0xC2D0, c, rcat_psp/collision]
+      - [0xE4A8, c, rcat_psp/popup]
+      - [0xEAA0, c, rcat_psp/e_room_fg]
+      - [0xEBB8, c, rcat_psp/e_blood_skeleton]
+      - [0xF100, c, rcat_psp/unk_F100]
+      - [0x10D38, c, rcat_psp/e_skeleton]
+      - [0x11730, c, rcat_psp/st_common]
+      - [0x12C70, c, rcat_psp/prim_helpers]
+      - [0x13400, c, rcat_psp/e_breakable_wall]
+      - [0x13908, c, rcat_psp/unk_13908]
+      - [0x14A10, c, rcat_psp/e_bat]
+      - [0x14E88, c, rcat_psp/st_init]
+      - [0x150D0, c, rcat_psp/e_breakable]
+      - [0x15498, c, rcat_psp/unk_15498]
+      - [0x161D0, c, rcat_psp/e_room_bg]
+      - [0x162B0, c, rcat_psp/e_lock_camera]
+      - [0x16510, c, rcat_psp/unk_16510]
+      - [0x16BE0, c, rcat_psp/e_spikes]
+      - [0x176C8, c, rcat_psp/unk_176C8]
+      - [0x19180, data]
+      - [0x1FC70, .data, rcat/e_init]
+      - [0x1FEE8, data]
+      - [0x44168, .data, rcat/header]
+      - [0x44198, data]
+      - [0x44380, .rodata, rcat_psp/e_red_door]
+      - [0x44398, .rodata, rcat_psp/unk_36E8]
+      - [0x443B0, .rodata, rcat_psp/e_collect]
+      - [0x44410, .rodata, rcat_psp/e_skeleton]
+      - [0x44480, bss]
+  - [0x45300]
