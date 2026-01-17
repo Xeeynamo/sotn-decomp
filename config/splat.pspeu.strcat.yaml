@@ -96,6 +96,8 @@ segments:
       - [0x444A0, .bss, rcat/st_update]
       - [0x444E0, .bss, rcat/e_collect]
       - [0x44500, bss, 44500]
+      - [0x44510, .bss, rcat_psp/st_init]
+      - [0x44640, bss, 44640]
       - [0x45258, .bss, rcat/e_lock_camera]
       - [0x45260, bss, 45260]
   - [0x45300]
