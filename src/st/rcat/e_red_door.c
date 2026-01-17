@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rcat.h"
 
-INCLUDE_ASM("st/rcat/nonmatchings/e_red_door", EntityIsNearPlayer);
-
-INCLUDE_ASM("st/rcat/nonmatchings/e_red_door", RCAT_EntityRedDoor);
+#include "../e_red_door.h"
