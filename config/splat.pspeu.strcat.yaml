@@ -44,7 +44,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, rcat_psp/create_entity]
+      - [0x80, c, rcat/create_entity]
       - [0x1028, c, rcat_psp/e_stage_name]
       - [0x1EA8, c, rcat_psp/e_red_door]
       - [0x31B0, c, rcat_psp/st_update]
@@ -84,5 +84,6 @@ segments:
       - [0x44398, .rodata, rcat_psp/unk_36E8]
       - [0x443B0, .rodata, rcat_psp/e_collect]
       - [0x44410, .rodata, rcat_psp/e_skeleton]
-      - [0x44480, bss]
+      - [0x44480, .bss, rcat/create_entity]
+      - [0x444A0, bss, 444A0]
   - [0x45300]

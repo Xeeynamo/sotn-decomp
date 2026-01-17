@@ -80,5 +80,7 @@ segments:
       - [0x42154, c, e_skeleton]
       - [0x428A0, c, rcat_unused801c28a0]
       - [0x42954, c, prim_helpers]
-      - [0x43184, bss]
+      - [0x43184, bss, 43184]
+      - [0x431F4, .bss, create_entity]
+      - [0x43204, bss, 43204]
   - [0x43EAC]
