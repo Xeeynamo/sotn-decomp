@@ -1,8 +1,6 @@
 CreateEntityFromCurrentEntity = 0x09238598;
 CreateEntityFromEntity = 0x09238620;
 Random = 0x0923A830;
-Update = 0x0923A870;
-UpdateStageEntities = 0x0923AC50;
 func_us_801BEFD8 = 0x0923AD68;
 func_us_801BFF94 = 0x0923C490;
 func_us_801C0118 = 0x0923C690;
@@ -121,3 +119,4 @@ D_us_801810D8 = 0x09257558;
 RCAT_rooms = 0x09257568;
 RCAT_Overlay = 0x0927B7E8;
 RCAT_BackgroundBlockInit = 0x0927B8C8;
+g_ItemIconSlots = 0x0927BB20;

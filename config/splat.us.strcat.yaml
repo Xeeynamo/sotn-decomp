@@ -45,6 +45,7 @@ segments:
       - [0x10E4, data]
       - [0x1134, .data, e_lock_camera]
       - [0x11B4, data]
+      - [0x1544, .data, st_update]
       - [0x1590, .data, collision]
       - [0x1950, .data, e_red_door]
       - [0x1968, .data, st_common]
@@ -91,4 +92,5 @@ segments:
       - [0x43184, bss, 43184]
       - [0x431F4, .bss, create_entity]
       - [0x43204, bss, 43204]
+      - [0x43E6C, .bss, st_update]
   - [0x43EAC]
