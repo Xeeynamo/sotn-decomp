@@ -220,8 +220,8 @@ enum AluBlueprints {
     BP_REBOUND_STONE,
     BP_LEVEL_UP_TEXT,
     BP_VIBHUTI,
-    BP_HOLY_WATER,
-    BP_HOLY_WATER_FLAME,
+    BP_HOLYWATER, // Alucard's holy water subweapon is different from Ricther's
+    BP_HOLYWATER_GREEN_FIRE,
     BP_29,
     BP_30,
     BP_31,

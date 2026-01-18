@@ -554,7 +554,7 @@ void EntitySubwpnHolyWater(Entity* self) {
         if (!(self->ext.holywater.timer & 3)) {
             // Factory 28 has child 23, EntitySubwpnHolyWaterFlame
             CreateEntFactoryFromEntity(
-                self, FACTORY(BP_HOLY_WATER_FLAME, D_8013841C),
+                self, FACTORY(BP_HOLYWATER_GREEN_FIRE, D_8013841C),
                 self->ext.holywater.unkB2 << 9);
             D_8013841C++;
         }
