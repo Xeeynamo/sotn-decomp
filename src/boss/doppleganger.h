@@ -150,7 +150,7 @@ enum DopBlueprints {
     BP_21,
     BP_22,
     BP_23,
-    BP_24,
+    BP_REBOUND_STONE,
     BP_LEVEL_UP_TEXT,
     BP_26,
     BP_27,
