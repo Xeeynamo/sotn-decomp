@@ -218,7 +218,7 @@ enum AluBlueprints {
     BP_22,
     BP_23,
     BP_24,
-    BP_25,
+    BP_LEVEL_UP_TEXT,
     BP_26,
     BP_27,
     BP_28,
