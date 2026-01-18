@@ -203,7 +203,7 @@ enum AluBlueprints {
     BP_7,
     BP_8,
     BP_9,
-    BP_10,
+    BP_REBOUND_STONE_HIT,
     BP_11,
     BP_12,
     BP_13,

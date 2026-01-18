@@ -90,7 +90,8 @@ void EntitySubwpnKnife(Entity* self) {
                 self->velocityY = FIX(-2.5);
                 self->hitboxState = 0;
                 self->posX.i.hi += xCol;
-                CreateEntFactoryFromEntity(self, FACTORY(BP_10, 0), 0);
+                CreateEntFactoryFromEntity(
+                    self, FACTORY(BP_REBOUND_STONE_HIT, 0), 0);
                 self->posX.i.hi -= xCol;
                 PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 self->step++;
