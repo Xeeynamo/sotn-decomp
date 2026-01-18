@@ -463,9 +463,9 @@ target_compile_definitions(core PUBLIC
 )
 
 add_executable(${PROJECT_NAME} src/pc/psyz.c)
-add_subdirectory(psyz/psyz)
+add_subdirectory(tools/psyz/psyz)
 target_link_libraries(core PRIVATE psyz)
-target_include_directories(psyz PRIVATE psyz/psyz/include)
+target_include_directories(psyz PRIVATE tools/psyz/psyz/include)
 target_compile_definitions(psyz PRIVATE __psyz)
 target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS})
 if (WIN32)

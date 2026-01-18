@@ -21,3 +21,6 @@
 [submodule "tools/mipsmatch"]
 	path = tools/mipsmatch
 	url = https://github.com/ttkb-oss/mipsmatch
+[submodule "tools/psyz"]
+	path = tools/psyz
+	url = https://github.com/Xeeynamo/psyz
