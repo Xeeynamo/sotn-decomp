@@ -153,7 +153,7 @@ enum DopBlueprints {
     BP_REBOUND_STONE,
     BP_LEVEL_UP_TEXT,
     BP_VIBHUTI,
-    BP_27,
+    BP_HOLY_WATER,
     BP_28,
     BP_29,
     BP_30,
