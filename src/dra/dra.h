@@ -219,7 +219,7 @@ enum AluBlueprints {
     BP_23,
     BP_REBOUND_STONE,
     BP_LEVEL_UP_TEXT,
-    BP_26,
+    BP_VIBHUTI,
     BP_27,
     BP_28,
     BP_29,
