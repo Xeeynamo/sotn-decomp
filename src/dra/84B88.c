@@ -552,8 +552,9 @@ void EntitySubwpnHolyWater(Entity* self) {
     case HOLYWATER_BREAK:
         if (!(self->ext.holywater.timer & 3)) {
             // Factory 28 has child 23, EntitySubwpnHolyWaterFlame
-            CreateEntFactoryFromEntity(self, FACTORY(BP_28, D_8013841C),
-                                       self->ext.holywater.unkB2 << 9);
+            CreateEntFactoryFromEntity(
+                self, FACTORY(BP_HOLY_WATER_FLAME, D_8013841C),
+                self->ext.holywater.unkB2 << 9);
             D_8013841C++;
         }
         if (--self->ext.holywater.timer == 0) {

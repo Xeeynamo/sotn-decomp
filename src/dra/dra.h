@@ -221,7 +221,7 @@ enum AluBlueprints {
     BP_LEVEL_UP_TEXT,
     BP_VIBHUTI,
     BP_HOLY_WATER,
-    BP_28,
+    BP_HOLY_WATER_FLAME,
     BP_29,
     BP_30,
     BP_31,
