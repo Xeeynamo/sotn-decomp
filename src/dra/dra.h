@@ -850,6 +850,7 @@ void func_80118894(Entity*);
 Entity* func_80118970(void);
 void func_80118C28(s32 arg0);
 void GetServantStats(Entity* entity, s32 spellId, s32 arg2, FamiliarStats* out);
+bool func_8010FDF8(s32 branchFlags);
 
 #ifndef CREATE_FACTORY_FAKE_ARGS
 Entity* CreateEntFactoryFromEntity(Entity* entity, u32, s32);
