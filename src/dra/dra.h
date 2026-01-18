@@ -199,7 +199,7 @@ enum AluBlueprints {
     BP_3,
     BP_4,
     BP_5,
-    BP_6,
+    BP_HOLY_CROSS,
     BP_7,
     BP_8,
     BP_9,
