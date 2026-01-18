@@ -1,0 +1,977 @@
+# The functions key is the only required key
+# If no start functions are specified, the first item in functions will be used
+# Start functions can be included in functions, but aren't required to be
+# If an end function is specified, the segment will include the start, the end, and everything in between
+# GetLang for pspeu is a special case where it starts the segment, but should not be listed as a start
+# because it has the possibility of starting multiple different segments.
+# It should only be included as a function in the segment and will be used as a start if it is found.
+#example_segment_name:
+#  start:
+#    - Optional
+#    - Segment
+#    - Start
+#    - Functions
+#  functions:
+#    - All
+#    - Segment
+#    - Functions
+#  end: OptionalEndFunction
+e_armor_lord_guardian:
+  functions:
+  - func_us_801D1184
+  - func_us_801D1388
+  - EntityArmorLordFireWave
+  - func_us_801D1A94
+  - func_us_801D1A9C
+  - func_us_801D1DAC
+  - EntityArmorLord
+  - func_us_801D348C
+  - func_us_801D3700
+e_axe_knight:
+  functions:
+  - AxeKnightUnkFunc1
+  - func_801C4198
+  - func_801C4550
+  - EntityAxeKnight
+  - EntityAxeKnightRotateAxe
+  - EntityAxeKnightThrowingAxe
+e_background_bushes_trees:
+  functions:
+  - EntityBackgroundBushes
+  - EntityBackgroundTrees
+e_background_clock_pendulum:
+  functions:
+  - func_us_801C2A34 # animation and sound
+  - func_us_801C2B24 # sound only
+e_background_clouds:
+  functions:
+  - EntityBackgroundClouds
+e_background_house:
+  functions:
+  - DrawFacade
+  - DrawSides
+  - DrawRoof
+  - Entity3DHouseSpawner
+  - Entity3DBackgroundHouse
+e_background_lightning:
+  functions:
+  - EntityBackgroundLightning
+e_background_pillars:
+  functions:
+  - func_us_801CC750
+  - func_us_801CC8F8
+  - func_us_801CC9B4
+e_bat:
+  functions:
+  - EntityBat
+e_bell:
+  functions:
+  - EntityBell
+  - EntityBellHelper
+e_blade:
+  functions:
+  - func_801D0A00
+  - func_801D0B40
+  - func_801D0B78
+  - EntityBlade
+  - EntityBladeWeapon
+e_blood_skeleton:
+  functions:
+  - EntityBloodSkeleton
+e_bloody_zombie:
+  functions:
+  - EntityBloodSplatter
+  - func_801C53AC
+  - EntityBloodyZombie
+  - EntityBloodDrips
+e_blue_axe_knight:
+  functions:
+  - AxeKnightUnkFunc1
+  - func_us_801CA51C
+  - func_us_801C8D98
+  - func_us_801CAD20
+  - func_us_801C959C
+  - EntityAxeKnightBlue
+  - EntityAxeKnightRotateAxe
+  - EntityAxeKnightThrowingAxe
+  - func_us_801CBA30
+e_blue_venus_weed:
+  functions:
+  - SetupPrimsForEntitySpriteParts
+  - EntityVenusWeed
+  - EntityVenusWeedFlower
+  - func_us_801C5850 # rno3
+  - EntityVenusWeedTendril
+  - func_us_801C5F40 # rno3
+  - EntityVenusWeedDart
+  - func_us_801D7940 # rno4
+  - EntityVenusWeedSpike
+  - func_us_801D8030 # rno4
+  ovl:
+  - rno3
+  - rno4
+e_bone_archer:
+  functions:
+  - EntityBoneArcher
+  - EntityBoneArcherArrow
+e_bone_musket:
+  functions: 
+  - EntityBoneMusket
+  - func_us_801CF298
+e_bone_scimitar:
+  functions:
+  - BoneScimitarAttackCheck
+  - EntityBoneScimitar
+  - EntityBoneScimitarParts
+  - EntityBoneHalberdParts
+e_bossfight:
+  functions:
+  - EntityBossFightManager
+  - EntityBossRoomBlock
+e_breakable:
+  functions:
+  - ${prefix}_EntityBreakable
+  - EntityBreakableHelper
+  - ${prefix}_EntityBreakableDebris
+  - EntityBreakableDebris
+  - func_us_801C123C
+e_breakable_wall:
+  functions:
+  - EntityBreakableWallDebris
+  - EntityBreakableWall
+e_candle_table:
+  functions:
+  - EntityCandleTable
+e_castle_door:
+  functions:
+  - EntityCastleDoor
+e_chair:
+  functions:
+  - ChairSitCheck
+  - func_us_801BEDD8
+  - EntityChair
+  - func_us_801B81E8
+e_cloaked_knight:
+  functions:
+  - StepTowards
+  - EntityCloakedKnight
+  - EntityCloakedKnightCloak
+  - EntityCloakedKnightAura
+  - EntityCloakedKnightSword
+  ovl:
+  - nz1
+  - rnz1
+e_clock_room:
+  start:
+    - func_us_801CCAAC
+    - EntityClockRoomController
+  functions:
+  - func_us_801CCAAC
+  - UpdateBirdcages
+  - UpdateClockHands
+  - EntityClockRoomController
+  - EntityClockHands
+  - EntityBirdcageDoor
+  - UpdateStatueTiles
+  - EntityStatue
+  - EntityStatueGear
+  - UpdateStoneDoorTiles
+  - EntityStoneDoor
+  - EntityClockRoomUnused
+e_clock_tower:
+  functions:
+  - EntityClockTower3D
+e_clouds:
+  functions:
+  - EntityClouds
+e_collect:
+  start:
+  - func_us_0923C2F8
+  - BlitChar
+  - PrizeDropFall
+  functions:
+  - func_us_0923C2F8
+  - func_us_0923C390
+  - BlitChar
+  - PrizeDropFall
+  - PrizeDropFall2
+  - CollectHeart
+  - CollectGold
+  - CollectSubweapon
+  - CollectHeartVessel
+  - CollectLifeVessel
+  - CollectDummy
+  - func_801939C4
+  - EntityPrizeDrop
+  - EntityExplosion
+  - BlinkItem
+  - Unreferenced_MAD_ST0_func
+  - EntityEquipItemDrop
+  - EntityRelicOrb
+  - EntityHeartDrop
+  - EntityMessageBox
+e_ctulhu:
+  functions:
+  - EntityCtulhu
+  - EntityCtulhuFireball
+  - EntityCtulhuIceShockwave
+  - EntityCtulhuDeath
+e_cutscene_actors:
+  start:
+  - func_us_801A8FC0
+  - CutsceneCameraPan
+  functions:
+  - CutsceneCameraPan
+  - ${prefix}_EntityCutsceneStage
+  - ${prefix}_EntityCutsceneMaria
+  - func_us_801A8FC0
+  - func_801961DC
+  - func_us_801A9084
+  - func_us_801A9208
+  - func_us_801A95F4
+  - func_us_801A9944
+e_cutscene_dialogue:
+  start:
+  - DrawCutsceneActorName
+  - CutsceneUnk1
+  functions:
+  - GetLang
+  - CutsceneUnk1
+  - SetCutsceneScript
+  - CutsceneUnk3
+  - CutsceneUnk4
+  - DrawCutsceneActorName
+  - SetCutsceneEnd
+  - CutsceneRun
+  - CutsceneSkip
+  - ScaleCutsceneAvatar
+  - ${prefix}_EntityCutscene
+  - ${prefix}_EntityCutsceneDialogue
+  - func_us_801A7DC0
+  - func_us_801A6EF8
+  - func_us_801A7340
+  - func_us_801A75B4
+  - func_us_8018C90C
+e_dai_no2_shortcut:
+  functions:
+  - EntityBlock
+  - EntityStatue
+e_debug_cerberus_gate:
+  functions:
+  - EntityCerberusGateDebug
+e_demon_switch_wall:
+  functions:
+  - UpdateFallingPebble
+  - EntityDemonSwitch
+  - EntityDemonSwitchWall
+e_dracula:
+  functions:
+  - func_801ABBBC
+  - func_801AC458
+  - EntityDracula
+  - EntityDraculaBody
+  - EntityDraculaFireball
+  - EntityDraculaMeteorball
+  - func_801AD838
+  - EntityDraculaGlass
+e_dracula_final:
+  functions:
+  - func_801ADAC8
+  - func_801ADB10
+  - EntityDraculaFinalForm
+  - EntityDraculaMegaFireball
+  - EntityDraculaRainAttack
+  - func_801AF380
+  - func_801AF6D0
+  - func_801AF774
+e_elevator:
+  start:
+  - func_us_801C1F98 # no0
+  - func_us_8019FD4C # rcen
+  - func_us_801B6654 # rno0
+  functions:
+  - func_us_801C1F98
+  - func_us_8019FD4C
+  - func_us_801B6654
+  - func_us_801C2044
+  - func_us_801C2184
+  - EntityUnkId1B
+  - func_us_801C27A4 # no0
+e_explosion_puff_opaque:
+  functions:
+  - CreateExplosionPuff
+  - EntityExplosionPuffOpaque
+e_falling_stairs:
+  functions:
+  - UpdateDustParticles
+  - EntityFallingStairs
+  - EntityFallingStep
+e_fire_warg:
+  functions:
+  - func_801CC5A4
+  - func_801CC6F8
+  - func_801CC820
+  - func_801CC90C
+  - EntityFireWarg
+  - EntityUnkId30
+  - EntityUnkId31
+  - EntityExplosion3
+  - func_801CE740
+  - EntityFireWargWaveAttack
+  - EntityUnkId2F
+  - EntityFireWargDeathBeams
+e_flea_armor:
+  functions:
+  - EntityFleaArmor
+  - EntityFleaArmorAttackHitbox
+e_flea_man:
+  functions:
+  - CheckFieldCollisionY
+  - UpdateFacingDirection
+  - EntityFleaMan
+e_gaibon:
+  functions:
+  - EntityGaibon
+  - EntityGaibonLeg
+  - func_801B69E8
+  - EntitySmallGaibonProjectile
+  - EntityLargeGaibonProjectile
+e_gorgon:
+  functions:
+  - func_801CD78C # rno0 func_801CD78C_801CEB40
+  - func_us_801D2424 # are
+  - func_us_801CEEB4 # rno0
+  - func_us_801CF08C # rno0
+  - func_us_801CF24C # rno0
+  - func_us_801CF380 # rno0
+  - StepTowards
+  - func_us_801CF64C # rno0
+  - func_us_801CF7D0 # rno0
+e_grave_keeper:
+  functions:
+  - SpawnDustParticles
+  - func_us_801D12E0
+  - EntityGraveKeeper
+  - EntityGraveKeeperHitbox
+e_gremlin:
+  functions:
+  - EntityGremlin
+  - EntityGremlinEffect
+  - EntityGremlinFire
+e_gurkha:
+  functions:
+  - func_801CF778
+  - func_801CF7A0
+  - EntityGurkha
+  - EntityGurkhaWeapon
+e_hammer:
+  start:
+  - func_801CE4CC
+  - EntityHammer
+  functions:
+  - func_801CE4CC
+  - EntityHammer
+  - EntityGurkhaBodyParts
+  - EntityHammerWeapon
+e_harpy:
+  functions:
+  - EntityHarpy
+  - EntityHarpyDagger
+  - EntityHarpyFlame
+  - EntityHarpyKick
+  - EntityHarpyFeather
+e_heartroom:
+  functions:
+  - EntityHeartRoomSwitch
+  - EntityHeartRoomGoldDoor
+e_hunting_girl:
+  functions:
+  - HuntingGirlDrawAttack
+  - HuntingGirlDrawSpirit
+  - HuntingGirlTransitionToStep
+  - EntityHuntingGirl
+  - EntityHuntingGirlAttack
+e_jack_o_bones:
+  functions:
+  - func_us_801C8100 # rno0 jack o move
+  - func_us_801C81A4 # rno0 EntityJackOBones
+  - func_us_801C86B4 # rno0 jack o death
+  - func_us_801C87B0 # rno0 jack o projectile
+e_jewel_sword_puzzle:
+  functions:
+  - EntityMermanRockLeftSide
+  - EntityMermanRockRightSide
+  - EntityJewelSwordDoor
+  - EntityFallingRock2
+e_killer_fish:
+  functions:
+  - EntityKillerFish
+  - EntityKillerFishDeathPuff
+  - EntityWargExplosionPuffTransparent
+e_lesser_demon:
+  start:
+  - func_us_801BB8DC
+  - func_801966B0
+  functions:
+  - func_us_801BB8DC
+  - func_801966B0
+  - func_us_801BBAB4
+  - EntityLesserDemonSpit
+  - func_us_801BC28C
+  - func_us_801BC57C
+  - func_us_801BC814
+  - func_us_801BCC10
+  - func_us_801BCFD4
+  - func_us_801BD268
+  - func_us_801BDA34
+  - EntityLesserDemon
+  - func_us_801BED48
+  - func_us_801BF7B0 # rnz0
+e_life_up:
+  functions:
+  - EntityLifeUpSpawn
+e_lock_camera:
+  start:
+  - PlayerIsWithinHitbox
+  - ${prefix}_EntityLockCamera
+  - EntityLockCamera
+  functions:
+  - PlayerIsWithinHitbox
+  - ${prefix}_EntityLockCamera
+  - EntityLockCamera
+e_maria:
+  functions:
+  - func_801B8E0C
+  - EntityMariaNZ0
+e_medusa:
+  functions:
+  - func_us_80191438
+  - EntityMedusa
+  - func_us_80192020
+  - func_us_801922EC
+  - func_us_801923DC
+  - func_us_80192998
+  - func_us_80192B38
+e_medusa_head:
+  functions:
+  - EntityMedusaHeadSpawner
+  - EntityMedusaHeadYellow
+  - EntityMedusaHeadBlue
+e_merman:
+  functions:
+  - EntityMerman
+  - EntityMermanFireball
+  - EntityMermanJumpAir
+  - EntityMermanExplosion
+e_merman2:
+  functions:
+  - CheckMermanEnteringWater
+  - EntityMerman2
+  - EntityMermanFireSpit
+  - EntityMediumWaterSplash
+  - EntityMermanWaterSplash
+  - EntityMerman2JumpAir
+  - EntityHighWaterSplash
+  - EntityDeadMerman
+  - EntityMermanSpawner
+e_misc:
+  functions:
+  - CheckColliderOffsets
+  - EntityUnkId13
+  - EntityExplosionVariantsSpawner
+  - EntityGreyPuffSpawner
+  - EntityExplosionVariants
+  - EntityGreyPuff
+  - EntityOlroxDrool
+  - UnkCollisionFunc5
+  - UnkCollisionFunc4
+  - EntityIntenseExplosion
+  - InitializeUnkEntity
+  - MakeEntityFromId
+  - MakeExplosions
+  - EntityBigRedFireball
+  - UnkRecursivePrimFunc1
+  - UnkRecursivePrimFunc2
+  - ClutLerp
+  - PlaySfxPositional
+  - func_us_801C55AC
+e_mist_door:
+  start:
+  - EntityMistDoor
+  functions:
+  - GetLang
+  - EntityMistDoor
+e_nova_skeleton:
+  functions:
+  - func_us_801C8A74 # rno0 nova skeleton move
+  - func_us_801C8B14 # rno0 beam ring burst
+  - func_us_801C8D44 # rno0 EntityNovaSkeleton
+  - EntityBladeSoldierDeathParts
+  - func_us_801C9324 # rno0 beam attack
+  - func_us_801C97D4 # rno0 beam attack pulse
+e_owl_knight:
+  functions:
+  - EntityOwl
+  - OwlKnightDeathAnim
+  - EntityOwlKnight
+  - EntityOwlKnightSword
+  - EntityOwlTarget
+e_particles:
+  start:
+  - EntitySoulStealOrb
+  - func_us_0923AD68
+  functions: 
+  - EntitySoulStealOrb
+  - func_us_0923AD68
+  - EntityEnemyBlood
+e_plate_lord:
+  functions:
+  - func_801CD78C
+  - func_us_801D2424
+  - func_us_801D26CC
+  - func_us_801D274C
+  - func_us_801D27C4
+  - StepTowards
+  - EntityPlateLord
+  - func_us_801D4324
+  - func_us_801D44A0
+  - func_us_801D4AA4
+  - func_us_801D4CAC
+  ovl:
+  - are
+  - no0
+e_red_door:
+  functions:
+  - EntityIsNearPlayer
+  - ${prefix}_EntityRedDoor
+e_richter:
+  functions:
+  - func_us_801B4BD0
+  - func_us_801B4EAC
+  - ${prefix}_CheckBladeDashInput
+  - ${prefix}_CheckHighJumpInput
+  - ${prefix}_RicMain
+  - func_us_801B5A14
+  - RichterThinking
+  - func_us_801B6998
+  - EntityRichter
+  - ${prefix}_RicStepStand
+  - ${prefix}_RicStepWalk
+  - ${prefix}_RicStepRun
+  - ${prefix}_RicStepJump
+  - ${prefix}_RicStepFall
+  - ${prefix}_RicStepCrouch
+  - ${prefix}_RicResetPose
+  - func_us_801B77D8
+  - ${prefix}_RicStepHit
+  - ${prefix}_RicStepDead
+  - ${prefix}_RicStepStandInAir
+  - ${prefix}_RicStepEnableFlameWhip
+  - ${prefix}_RicStepHydrostorm
+  - ${prefix}_RicStepGenericSubwpnCrash
+  - ${prefix}_RicStepThrowDaggers
+  - ${prefix}_RicStepSlide
+  - ${prefix}_RicStepSlideKick
+  - ${prefix}_RicStepBladeDash
+  - func_us_801B8E80
+  - ${prefix}_RicStepHighJump
+e_richter_fight_trigger:
+  functions:
+  - func_us_801A9250
+e_room_bg:
+  functions:
+  - ${prefix}_EntityBackgroundBlock
+e_room_fg:
+  functions:
+  - EntityRoomForeground
+e_room_fg_2:
+  functions:
+  - EntityCastleWall1
+  - EntityCastleWall2
+  - EntityStaircase
+e_salem_witch:
+  functions:
+  - SalemWitchTrySpawnShadow
+  - EntitySalemWitch
+  - EntitySalemWitchGlow
+  - EntitySalemWitchCurse
+  - EntitySalemWitchTriboltLaunch
+  - EntitySalemWitchTriboltProjectile
+  ovl: rnz0
+e_sealed_door:
+  start:
+  - SealedDoorIsNearPlayer
+  functions:
+  - GetLang
+  - EntitySealedDoor
+e_shutting_window:
+  functions:
+  - EntityShuttingWindow
+e_skelerang:
+  functions:
+  - EntitySkelerang
+  - EntitySkelerangBoomerang
+  - EntitySkelerangUnknown
+e_skeleton:
+  functions:
+  - SkeletonAttackCheck
+  - EntitySkeleton
+  - EntitySkeletonPieces
+  - EntitySkeletonThrownBone
+  - UnusedSkeletonEntity
+  - ${prefix}_Unused
+e_skeleton_ape:
+  functions:
+  - EntitySkeletonApe
+  - EntitySkeletonApePunch
+  - SkeletonApeBarrelHelper
+  - EntitySkeletonApeBarrel
+e_skull_lord:
+  functions:
+  - EntitySkullLord
+  - EntitySkullLordOutline
+  - EntitySkullLordFlames
+  - EntitySkullLordPieces
+e_sky_entities:
+  functions:
+  - EntityLightningThunder
+  - EntityLightningCloud
+e_spear_guard:
+  functions:
+  - func_us_801D37A4
+  - func_us_801D38E4
+  - func_us_801D3918
+  - EntitySpearGuard
+  - EntitySpearGuardBlock
+  - EntityThrownSpear
+e_slogra:
+  start:
+  - EntitySlograSpecialCollision
+  - EntitySlogra
+  functions:
+  - EntitySlograSpecialCollision
+  - EntitySlogra
+  - EntitySlograSpear
+  - EntitySlograSpearProjectile
+e_spectral_sword:
+  functions:
+  - StepTowards
+  - EntitySpectralSword
+  - func_us_801C0C44 # rdai
+  - EntitySpectralSwordAura
+  - func_us_801CEB08
+  - EntitySpectralSwordWeapon
+  - func_us_801C17E8 # rdai
+  - EntityPoltergeist
+  ovl: rdai
+e_spike_room:
+  functions:
+  - IncreaseBrightness
+  - DecreaseBrightness
+  - EntitySpikeRoomDarkness
+e_spikes:
+  functions:
+  - EntitySpikesDust
+  - EntitySpikesParts
+  - SpikesBreak
+  - SpikesApplyDamage
+  - EntitySpikes
+  - EntitySpikesDamage
+e_stage_name:
+  start:
+  - StageNamePopupDissolver
+  - LoadStageNameGraphics
+  - EntityStageNamePopup
+  - func_us_0923C0C0
+  functions:
+  - StageNamePopupDissolver
+  - LoadStageNameGraphics
+  - EntityStageNamePopup
+  - func_us_0923C0C0
+e_stained_glass:
+  functions:
+  - StainedGlassBlendPalette
+  - StainedGlassRecurseDepth
+  - EntityStainedGlass
+  - EntityStainedGlassBackground
+e_stairway:
+  functions:
+  - EntityStairwayPiece
+  - EntityFallingRock
+e_stone_skull:
+  functions:
+  - func_us_801C7F24 # rno0
+e_subweapon_container:
+  functions:
+  - EntitySubWeaponContainer
+  - EntitySubWpnContGlass
+  - func_801C7654
+  - func_801C77B8
+  - func_801C7884
+e_succubus:
+  functions:
+  - EntitySuccubus
+  - EntitySuccubusPetal
+  - EntitySuccubusWingOverlay
+  - EntitySuccubusClone
+  - EntityPinkBallProjectile
+  - EntitySuccubusWingSpike
+  - EntitySuccubusWingSpikeTip
+e_sword_lord:
+  start:
+  - func_us_801CF57C
+  - func_us_801BC9BC
+  functions:
+  - func_us_801CF57C
+  - func_us_801BC9BC
+  - EntitySwordLord
+  - func_us_801D04B8
+  - EntitySwordLordAttackHitbox
+e_thornweed_corpseweed:
+  functions:
+  - EntityThornweed
+  - EntityCorpseweed
+  - EntityCorpseweedProjectile
+e_tilemap_shuffler:
+  functions:
+  - EntityTilemapShufflerUnused
+e_tombstone:
+  functions:
+  - EntityTombstone
+e_transparent_water:
+  functions:
+  - EntityTransparentWater
+e_trapdoor:
+  functions:
+  - EntityTrapDoor
+e_valhalla_knight:
+  functions:
+  - EntityValhallaKnight
+  - func_us_801C8954
+  - func_us_801C8AAC
+e_werewolf:
+  functions:
+  - func_us_801B7290 # rare EntityWerewolf
+  - EntityCornerGuardAttack # werewolf punch attack hitbox
+  - func_us_801B7FF8 # rare blue energy attack
+  - func_us_801B80E8 # rare somersault trail
+  - func_us_801B81CC # rare death fire pillar
+e_wereskeleton:
+  functions:
+  - func_us_801CDDD8
+  - EntityWereskeleton
+  - func_us_801CE958
+  - func_us_801CEA2C
+e_venus_weed:
+  functions:
+  - SetupPrimsForEntitySpriteParts
+  - EntityVenusWeed
+  - EntityVenusWeedFlower
+  - EntityVenusWeedTendril
+  - EntityVenusWeedDart
+  - EntityVenusWeedSpike
+  ovl: chi
+e_zombie:
+  functions:
+  - EntityZombie
+  - EntityZombieSpawner
+e_warg:
+  functions:
+  - func_801CF438
+  - EntityWargExplosionPuffTransparent
+e_warp_room:
+  start:
+  - EntityWarpRoom
+  - EntityRWarpRoom
+  functions:
+  - EntityWarpRoom
+  - EntityRWarpRoom
+  - EntityWarpSmallRocks
+e_water_effects:
+  functions:
+  - func_801C4144
+  - EntityAlucardWaterEffect
+  - EntitySplashWater
+  - EntitySurfacingWater
+  - EntitySideWaterSplash
+  - EntitySmallWaterDrop
+  - EntityWaterDrop
+collision:
+  start:
+  - HitDetection
+  - ${prefix}_HitDetection
+  functions:
+  - HitDetection
+  - ${prefix}_HitDetection
+  - EntityDamageDisplay
+create_entity:
+  functions:
+  - CreateEntityFromLayout
+  - CreateEntityWhenInVerticalRange
+  - CreateEntityWhenInHorizontalRange
+  - FindFirstEntityToTheRight
+  - FindFirstEntityToTheLeft
+  - CreateEntitiesToTheRight
+  - CreateEntitiesToTheLeft
+  - FindFirstEntityAbove
+  - FindFirstEntityBelow
+  - CreateEntitiesAbove
+  - CreateEntitiesBelow
+  - InitRoomEntities
+  - UpdateRoomPosition
+  - CreateEntityFromCurrentEntity
+  - CreateEntityFromEntity
+doors:
+  functions:
+  - EntityUnkId18
+  - EntityUnkId17
+  - EntityUnkId1C
+  - EntityUnkId19
+  - EntityUnkId1A
+  - func_us_801B5004
+  - EntityUnkId1E
+dop_anim:
+  functions:
+  - SetDopplegangerStep
+  - ${prefix}_InitPlayerAfterImage
+  - ${prefix}_DrawPlayerAfterImage
+  - ${prefix}_func_8010DA2C
+  - SetDopplegangerAnim
+  - ${prefix}_func_8010DA70
+  - ${prefix}_UpdateUnarmedAnim
+  - ${prefix}_PlayAnimation
+  - ${prefix}_UpdateAnim
+doppleganger:
+  start:
+  - func_us_801C1A38
+  - func_us_801C096C
+  functions:
+  - func_us_801C1A38
+  - func_us_801C096C
+  - ${prefix}_CheckStageCollision
+  - EntityDoppleganger10
+  - EntityDoppleganger40
+  - func_us_801C1DB0
+  - func_us_801C1DC8
+  - DopplegangerThinking
+  - EntityUnkId16
+  - ${prefix}_CheckFloor
+  - ${prefix}_CheckCeiling
+  - ${prefix}_CheckWallRight
+  - ${prefix}_CheckWallLeft
+entrance_weights:
+  functions:
+  - UpdateWeightChains
+  - EntityWeightsSwitch
+  - EntityPathBlockSmallWeight
+  - EntityPathBlockTallWeight
+  - func_us_801B2578 # rno3
+giantbro_helpers:
+  functions:
+  - func_801CD658
+  - func_801CD734
+  - func_801CD78C
+  - polarPlacePart
+  - func_801CD91C
+  - func_801CDA14
+  - func_801CDA6C
+  - func_801CDAC8
+  - func_801CDC80
+  - func_801CDD00
+  - func_801CDD80
+  - func_801CDE10
+  - polarPlacePartsWithAngvel
+  - func_801CDF1C
+  - func_801CDFD8
+  - func_801CE04C
+  - func_801CE120
+  - func_801CE1E8
+  - func_801CE228
+  - polarPlacePartsList
+  - func_801CE2CC
+  - func_801CE3FC
+popup:
+  functions:
+  - BottomCornerText
+prim_helpers:
+  functions:
+  - UnkPrimHelper
+  - UpdateAnimation
+  - FindFirstUnkPrim
+  - FindFirstUnkPrim2
+  - PrimToggleVisibility
+  - PrimResetNext
+  - UnkPolyFunc2
+  - UnkPolyFunc0
+  - PrimDecreaseBrightness
+  - func_us_801ABD24
+prologue_scroll:
+  functions:
+  - SetGameState
+  - InitClutIndices
+  - ClearScreen
+  - SetDisplayBufferColorsToBlack
+  - SetStageCinematicBorders
+  - SetStageDisplayBuffer
+  - SetTitleDisplayBuffer
+  - IsSkipRequested
+  - PrologueScroll
+servant_common:
+  functions:
+  - ServantUpdateAnim
+  - ServantUnk0
+st_common:
+  functions:
+  - DestroyEntity
+  - DestroyEntitiesFromIndex
+  - PreventEntityFromRespawning
+  - AnimateEntity
+  - UnkAnimFunc
+  - GetDistanceToPlayerX
+  - GetDistanceToPlayerY
+  - GetSideToPlayer
+  - MoveEntity
+  - FallEntity
+  - func_8019214C
+  - UnkCollisionFunc3
+  - func_80192408
+  - UnkCollisionFunc2
+  - AllocEntity
+  - GetSineScaled
+  - GetSine
+  - SetEntityVelocityFromAngle
+  - Ratan2Shifted
+  - GetAngleBetweenEntitiesShifted
+  - GetAnglePointToEntityShifted
+  - AdjustValueWithinThreshold
+  - UnkEntityFunc0
+  - Ratan2
+  - GetAngleBetweenEntities
+  - GetAnglePointToEntity
+  - GetNormalizedAngle
+  - SetStep
+  - SetSubStep
+  - EntityExplosionSpawn
+  - InitializeEntity
+  - EntityDummy
+  - UnkCollisionFunc
+  - CheckFieldCollision
+  - GetPlayerCollisionWith
+  - ReplaceBreakableWithItemDrop
+st_init:
+  start:
+  - GetLangAt
+  - InitEntityIds
+  functions:
+  - GetLangAt
+  - InitEntityIds
+  - ${prefix}_Load
+st_update:
+  functions:
+  - Random
+  - Update
+  - UpdateStageEntities
+title_card:
+  functions:
+  - EntityStageTitleFadeout
+  - EntityStageTitleCard
