@@ -5,6 +5,7 @@ altering the actual decomp-permuter code.
 The goal is to make it easier to effectively use decomp-permuter, so feel free to reach out to me with any comments, suggestions, or issues.
 For usage instructions, refer to tool/sotn_permuter/README.md
 """
+
 import argparse
 import os
 import shutil
