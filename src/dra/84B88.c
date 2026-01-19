@@ -90,7 +90,8 @@ void EntitySubwpnKnife(Entity* self) {
                 self->velocityY = FIX(-2.5);
                 self->hitboxState = 0;
                 self->posX.i.hi += xCol;
-                CreateEntFactoryFromEntity(self, FACTORY(BP_10, 0), 0);
+                CreateEntFactoryFromEntity(
+                    self, FACTORY(BP_REBOUND_STONE_HIT, 0), 0);
                 self->posX.i.hi -= xCol;
                 PlaySfx(SFX_UI_SUBWEAPON_TINK);
                 self->step++;
@@ -552,8 +553,9 @@ void EntitySubwpnHolyWater(Entity* self) {
     case HOLYWATER_BREAK:
         if (!(self->ext.holywater.timer & 3)) {
             // Factory 28 has child 23, EntitySubwpnHolyWaterFlame
-            CreateEntFactoryFromEntity(self, FACTORY(BP_28, D_8013841C),
-                                       self->ext.holywater.unkB2 << 9);
+            CreateEntFactoryFromEntity(
+                self, FACTORY(BP_HOLYWATER_GREEN_FIRE, D_8013841C),
+                self->ext.holywater.unkB2 << 9);
             D_8013841C++;
         }
         if (--self->ext.holywater.timer == 0) {

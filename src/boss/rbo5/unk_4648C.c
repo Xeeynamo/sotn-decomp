@@ -4304,7 +4304,7 @@ void EntitySubwpnReboundStone(Entity* self) {
         break;
     case 1:
         if (self->flags & FLAG_DEAD) {
-            CreateEntFactoryFromEntity(self, BP_10, 0);
+            CreateEntFactoryFromEntity(self, BP_REBOUND_STONE_HIT, 0);
             g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
             self->step = 2;
             break;
@@ -4671,7 +4671,8 @@ void EntitySubwpnKnife(Entity* self) {
                 self->velocityY = FIX(-2.5);
                 self->hitboxState = 0;
                 self->posX.i.hi += xCol;
-                CreateEntFactoryFromEntity(self, FACTORY(BP_10, 0), 0);
+                CreateEntFactoryFromEntity(
+                    self, FACTORY(BP_REBOUND_STONE_HIT, 0), 0);
                 self->posX.i.hi -= xCol;
                 if (collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
                     g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);

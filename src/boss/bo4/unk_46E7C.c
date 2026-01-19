@@ -5147,7 +5147,8 @@ void OVL_EXPORT(EntitySubwpnReboundStone)(Entity* self) {
         break;
     case 1:
         if (self->flags & FLAG_DEAD) {
-            OVL_EXPORT(CreateEntFactoryFromEntity)(self, BP_10, 0);
+            OVL_EXPORT(CreateEntFactoryFromEntity)
+            (self, BP_REBOUND_STONE_HIT, 0);
             g_api.PlaySfx(SFX_UI_SUBWEAPON_TINK);
             self->step = 2;
             break;
@@ -5515,7 +5516,7 @@ void OVL_EXPORT(EntitySubwpnKnife)(Entity* self) {
                 self->hitboxState = 0;
                 self->posX.i.hi += xCol;
                 OVL_EXPORT(CreateEntFactoryFromEntity)
-                (self, FACTORY(BP_10, 0), 0);
+                (self, FACTORY(BP_REBOUND_STONE_HIT, 0), 0);
                 self->posX.i.hi -= xCol;
                 if (collider.effects & (EFFECT_SOLID | EFFECT_UNK_0002)) {
                     // n.b.! this is the same sound effect as the other side
