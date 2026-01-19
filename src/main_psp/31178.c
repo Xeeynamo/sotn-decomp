@@ -637,7 +637,7 @@ s32 func_psp_08930B34(void) {
         break;
 
     case 3:
-        if ((D_psp_08E2E5DC == 0) || (D_psp_08E2E5DC == 2)) {
+        if (D_psp_08E2E5DC == 0 || D_psp_08E2E5DC == 2) {
             D_psp_08E2E5E0 = 5;
         } else {
             func_psp_08930934(D_psp_08DEC9C8.base.result);
@@ -652,8 +652,8 @@ s32 func_psp_08930B34(void) {
         break;
 
     case 5:
-        if ((D_psp_08E2E5E4 == 1) &&
-            ((D_psp_08E2E5DC == 0) || (D_psp_08E2E5DC == 1))) {
+        if (D_psp_08E2E5E4 == 1 &&
+            (D_psp_08E2E5DC == 0 || D_psp_08E2E5DC == 1)) {
             memcpy(D_psp_08DED03C, D_psp_08E0DB0C, sizeof(D_psp_08E0DB0C));
         }
         return D_psp_08E2E5E4;
