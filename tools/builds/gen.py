@@ -95,6 +95,7 @@ class CompilerParams:
     cc_opt: str = "-O2"
     mwcc_opt: str = "-Op"
     aspsx_ver: str = "2.34"
+    encoding: str = "sjis"
 
 
 def get_compiler_params(source_file_path: str) -> CompilerParams:
@@ -109,6 +110,7 @@ def get_compiler_params(source_file_path: str) -> CompilerParams:
         PSYQ: Overrides the ASPSX assembler version.
         O:    Overrides the PS1 C Compiler optimization level.
         PSPO: Overrides the PSP C Compiler optimization flags.
+        ENCODING: Overrides file encoding.
 
     Example Header:
         //! PSYQ=3.3 O=1 PSPO=4,p
@@ -144,6 +146,8 @@ def get_compiler_params(source_file_path: str) -> CompilerParams:
             c.cc_opt = f"-O{value}"
         elif key == "PSPO":
             c.mwcc_opt = f"-O{value}"
+        elif key == "ENCODING":
+            c.encoding = value
         else:
             raise ValueError(f"Compiler override flag '{key}' is not recognized")
     return c
@@ -302,6 +306,7 @@ def add_c_psp(
             "cpp_flags": cpp_flags,
             "opt_level": c_params.mwcc_opt,
             "src_dir": os.path.dirname(file_name),
+            "encoding": c_params.encoding,
         },
     )
 
@@ -855,7 +860,7 @@ with open(build_ninja, "w") as f:
             " tools/sotn_str/target/release/sotn_str process -p -f $in"
             " | .venv/bin/python3 tools/mwccgap/mwccgap.py $out --src-dir $src_dir"
             " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path tools/pspas/target/release/pspas"
-            " --asm-dir-prefix asm/pspeu --target-encoding sjis --macro-inc-path include/macro.inc"
+            " --asm-dir-prefix asm/pspeu --target-encoding $encoding --macro-inc-path include/macro.inc"
             f" -gccinc -Iinclude -Iinclude/pspsdk -D_internal_version_$version -DSOTN_STR {extra_cpp_defs} -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
             " $opt_level -opt nointrinsics"
         ),

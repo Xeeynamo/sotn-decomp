@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//! ENCODING=utf8
 #include <game_psp.h>
 
 // https://pspdev.github.io/pspsdk/
@@ -701,58 +702,13 @@ static u8 D_psp_08969A78[] = {
 #include "gen/D_psp_08969A78.h"
 };
 
-char D_psp_089ACEC8[] = {
-    0xE6, 0x82, 0xAA, 0xE9, 0xAD, 0x94, 0xE5, 0x9F, 0x8E, 0xE3, 0x83,
-    0x89, 0xE3, 0x83, 0xA9, 0xE3, 0x82, 0xAD, 0xE3, 0x83, 0xA5, 0xE3,
-    0x83, 0xA9, 0xEF, 0xBC, 0xB8, 0xE3, 0x82, 0xAF, 0xE3, 0x83, 0xAD,
-    0xE3, 0x83, 0x8B, 0xE3, 0x82, 0xAF, 0xE3, 0x83, 0xAB, 0x00, 0x00,
-};
-
-char D_psp_089ACEF4[] = {
-    0xE3, 0x82, 0xBB, 0xE3, 0x83, 0xBC, 0xE3, 0x83, 0x96, 0xE3,
-    0x83, 0x87, 0xE3, 0x83, 0xBC, 0xE3, 0x82, 0xBF, 0x00, 0x00,
-};
-
-char D_psp_089ACF08[] = {
-    0xE9, 0x96, 0x8B, 0xE6, 0x94, 0xBE, 0xE3, 0x81, 0x95, 0xE3, 0x82, 0x8C,
-    0xE3, 0x81, 0xA6, 0xE3, 0x81, 0x84, 0xE3, 0x82, 0x8B, 0xE3, 0x82, 0xAA,
-    0xE3, 0x83, 0xAA, 0xE3, 0x82, 0xB8, 0xE3, 0x83, 0x8A, 0xE3, 0x83, 0xAB,
-    0xE3, 0x82, 0xB2, 0xE3, 0x83, 0xBC, 0xE3, 0x83, 0xA0, 0x00, 0x00, 0x00,
-};
-
-char D_psp_089ACF38[] = {
-    0xE3, 0x80, 0x8E, 0xE6, 0x82, 0xAA, 0xE9, 0xAD, 0x94, 0xE5, 0x9F,
-    0x8E, 0xE3, 0x83, 0x89, 0xE3, 0x83, 0xA9, 0xE3, 0x82, 0xAD, 0xE3,
-    0x83, 0xA5, 0xE3, 0x83, 0xA9, 0xEF, 0xBC, 0xB8, 0xE3, 0x80, 0x80,
-    0xE8, 0xA1, 0x80, 0xE3, 0x81, 0xAE, 0xE8, 0xBC, 0xAA, 0xE5, 0xBB,
-    0xBB, 0xE3, 0x80, 0x8F, 0x00, 0x00, 0x00, 0x00,
-};
-
-char D_psp_089ACF6C[] = {
-    0xE3, 0x80, 0x8E, 0xE6, 0x82, 0xAA, 0xE9, 0xAD, 0x94, 0xE5, 0x9F, 0x8E,
-    0xE3, 0x83, 0x89, 0xE3, 0x83, 0xA9, 0xE3, 0x82, 0xAD, 0xE3, 0x83, 0xA5,
-    0xE3, 0x83, 0xA9, 0xEF, 0xBC, 0xB8, 0xE3, 0x80, 0x80, 0xE6, 0x9C, 0x88,
-    0xE4, 0xB8, 0x8B, 0xE3, 0x81, 0xAE, 0xE5, 0xA4, 0x9C, 0xE6, 0x83, 0xB3,
-    0xE6, 0x9B, 0xB2, 0xE3, 0x80, 0x8F, 0x00, 0x00,
-};
-
-char D_psp_089ACFA4[] = {
-    0xE3, 0x80, 0x8E, 0xE3, 0x81, 0x82, 0xE3, 0x81, 0x8F, 0xE3, 0x81, 0xBE,
-    0xE3, 0x81, 0xA2, 0xE3, 0x82, 0x87, 0xE3, 0x81, 0x8A, 0xE3, 0x81, 0xA9,
-    0xE3, 0x82, 0x89, 0xE3, 0x81, 0x8D, 0xE3, 0x82, 0x85, 0xE3, 0x82, 0x89,
-    0xE3, 0x83, 0x9A, 0xE3, 0x82, 0xB1, 0xE3, 0x80, 0x8F, 0x00, 0x00, 0x00,
-};
-
-char D_psp_089ACFD4[] = {
-    0xE6, 0x82, 0xAA, 0xE9, 0xAD, 0x94, 0xE5, 0x9F, 0x8E, 0xE3, 0x83,
-    0x89, 0xE3, 0x83, 0xA9, 0xE3, 0x82, 0xAD, 0xE3, 0x83, 0xA5, 0xE3,
-    0x83, 0xA9, 0xEF, 0xBC, 0xB8, 0xE3, 0x82, 0xAF, 0xE3, 0x83, 0xAD,
-    0xE3, 0x83, 0x8B, 0xE3, 0x82, 0xAF, 0xE3, 0x83, 0xAB, 0xE3, 0x81,
-    0xAE, 0xE3, 0x82, 0xBB, 0xE3, 0x83, 0xBC, 0xE3, 0x83, 0x96, 0xE3,
-    0x83, 0x87, 0xE3, 0x83, 0xBC, 0xE3, 0x82, 0xBF, 0xE3, 0x81, 0xA7,
-    0xE3, 0x81, 0x99, 0xE3, 0x80, 0x82, 0x00, 0x00, 0x00, 0x00,
-};
-
+char D_psp_089ACEC8[] = "悪魔城ドラキュラＸクロニクル";
+char D_psp_089ACEF4[] = "セーブデータ";
+char D_psp_089ACF08[] = "開放されているオリジナルゲーム";
+char D_psp_089ACF38[] = "『悪魔城ドラキュラＸ　血の輪廻』";
+char D_psp_089ACF6C[] = "『悪魔城ドラキュラＸ　月下の夜想曲』";
+char D_psp_089ACFA4[] = "『あくまぢょおどらきゅらペケ』";
+char D_psp_089ACFD4[] = "悪魔城ドラキュラＸクロニクルのセーブデータです。";
 char D_psp_089AD020[] = "Castlevania The Dracula X Chronicles";
 char D_psp_089AD048[] = "Save data";
 char D_psp_089AD054[] = "Unlocked Original Game";
@@ -762,7 +718,7 @@ char D_psp_089AD0AC[] = "Akumajyo Dracula Peke";
 char D_psp_089AD0C4[] = "Castlevania The Dracula X Chronicles save data.";
 char D_psp_089AD0F4[] = "Castlevania The Dracula X Chronicles";
 char D_psp_089AD11C[] = "Sauvegarde";
-char D_psp_089AD128[] = "Jeu original d\303\251bloqu\303\251";
+char D_psp_089AD128[] = "Jeu original débloqué";
 char D_psp_089AD140[] = "Castlevania Rondo of Blood";
 char D_psp_089AD15C[] = "Castlevania Symphony of the Night";
 char D_psp_089AD180[] = "Akumajyo Dracula Peke";
@@ -777,7 +733,7 @@ char D_psp_089AD274[] =
     "Datos guardados de Castlevania The Dracula X Chronicles.";
 char D_psp_089AD2B0[] = "Castlevania The Dracula X Chronicles";
 char D_psp_089AD2D8[] = "Daten speichern\t";
-char D_psp_089AD2EC[] = "Verf\303\274gbares Originalspiel\t";
+char D_psp_089AD2EC[] = "Verfügbares Originalspiel\t";
 char D_psp_089AD308[] = "Castlevania Rondo of Blood";
 char D_psp_089AD324[] = "Castlevania Symphony of the Night";
 char D_psp_089AD348[] = "Akumajyo Dracula Peke";
@@ -791,11 +747,25 @@ char D_psp_089AD424[] = "Akumajyo Dracula Peke";
 char D_psp_089AD43C[] =
     "Dati di salvataggio di Castlevania The Dracula X Chronicles.";
 
-extern char D_psp_089AD48C[];
-extern char D_psp_089AD4A8[];
-extern char D_psp_089AD4B0[];
+void func_psp_08931228(void) {
+    PspUtilitySavedataParam* ptr = &D_psp_08DEC9C8;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08931228);
+    memset(ptr, 0, sizeof(PspUtilitySavedataParam));
+    ptr->base.size = sizeof(PspUtilitySavedataParam);
+    ptr->base.language = D_psp_08B42048;
+    ptr->base.buttonSwap = D_psp_08B4204C;
+    ptr->base.graphicsThread = KERNEL_USER_HIGHEST_PRIORITY + 1;
+    ptr->base.accessThread = KERNEL_USER_HIGHEST_PRIORITY + 3;
+    ptr->base.fontThread = KERNEL_USER_HIGHEST_PRIORITY + 2;
+    ptr->base.soundThread = KERNEL_USER_HIGHEST_PRIORITY;
+    ptr->overwrite = 0;
+    memcpy(ptr->gameName, "ULES00841", strlen("ULES00841"));
+    sprintf(ptr->fileName, "%s", "DRACULA.BIN");
+    {
+        u8 key[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6};
+        memcpy(ptr->key, key, sizeof(key));
+    }
+}
 
 s32 func_psp_08931334(void) {
     PspUtilitySavedataParam* param = &D_psp_08DEC9C8;
@@ -804,7 +774,7 @@ s32 func_psp_08931334(void) {
     memset(&D_psp_08DECFC8, 0, sizeof(PspUtilitySavedataMsFreeSize));
     memset(&D_psp_08DECFDC, 0, sizeof(PspUtilitySavedataMsDataSize));
     memset(&D_psp_08DED01C, 0, sizeof(PspUtilitySavedataUtilityDataSize));
-    memcpy(D_psp_08DECFDC.gameName, D_psp_089AD48C, strlen(D_psp_089AD48C));
+    memcpy(D_psp_08DECFDC.gameName, "ULES00841", strlen("ULES00841"));
     param->msFree = &D_psp_08DECFC8;
     param->msData = &D_psp_08DECFDC;
     param->utilityData = &D_psp_08DED01C;
@@ -850,18 +820,18 @@ s32 func_psp_08931488(void) {
     switch (g_UserLanguage) {
     case LANG_JP:
         if ((temp_s3 + temp_s2 + temp_s1) != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089ACF08);
+            sprintf(buf, "%s%s\n", buf, D_psp_089ACF08);
         } else {
-            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089ACFD4);
+            sprintf(buf, "%s%s", buf, D_psp_089ACFD4);
         }
         if (temp_s3 != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089ACF38);
+            sprintf(buf, "%s%s\n", buf, D_psp_089ACF38);
         }
         if (temp_s2 != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089ACF6C);
+            sprintf(buf, "%s%s\n", buf, D_psp_089ACF6C);
         }
         if (temp_s1 != 0) {
-            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089ACFA4);
+            sprintf(buf, "%s%s", buf, D_psp_089ACFA4);
         }
         memcpy(param->sfoParam.title, D_psp_089ACEC8, 43);
         memcpy(param->sfoParam.savedataTitle, D_psp_089ACEF4, 19);
@@ -870,18 +840,18 @@ s32 func_psp_08931488(void) {
 
     case LANG_EN:
         if ((temp_s3 + temp_s2 + temp_s1) != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD054);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD054);
         } else {
-            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD0C4);
+            sprintf(buf, "%s%s", buf, D_psp_089AD0C4);
         }
         if (temp_s3 != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD06C);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD06C);
         }
         if (temp_s2 != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD088);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD088);
         }
         if (temp_s1 != 0) {
-            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD0AC);
+            sprintf(buf, "%s%s", buf, D_psp_089AD0AC);
         }
         memcpy(param->sfoParam.title, D_psp_089AD020, 37);
         memcpy(param->sfoParam.savedataTitle, D_psp_089AD048, 10);
@@ -890,18 +860,18 @@ s32 func_psp_08931488(void) {
 
     case LANG_FR:
         if ((temp_s3 + temp_s2 + temp_s1) != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD128);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD128);
         } else {
-            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD198);
+            sprintf(buf, "%s%s", buf, D_psp_089AD198);
         }
         if (temp_s3 != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD140);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD140);
         }
         if (temp_s2 != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD15C);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD15C);
         }
         if (temp_s1 != 0) {
-            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD180);
+            sprintf(buf, "%s%s", buf, D_psp_089AD180);
         }
         memcpy(param->sfoParam.title, D_psp_089AD0F4, 37);
         memcpy(param->sfoParam.savedataTitle, D_psp_089AD11C, 11);
@@ -910,18 +880,18 @@ s32 func_psp_08931488(void) {
 
     case LANG_SP:
         if ((temp_s3 + temp_s2 + temp_s1) != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD200);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD200);
         } else {
-            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD274);
+            sprintf(buf, "%s%s", buf, D_psp_089AD274);
         }
         if (temp_s3 != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD21C);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD21C);
         }
         if (temp_s2 != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD238);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD238);
         }
         if (temp_s1 != 0) {
-            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD25C);
+            sprintf(buf, "%s%s", buf, D_psp_089AD25C);
         }
         memcpy(param->sfoParam.title, D_psp_089AD1C8, 37);
         memcpy(param->sfoParam.savedataTitle, D_psp_089AD1F0, 14);
@@ -930,18 +900,18 @@ s32 func_psp_08931488(void) {
 
     case LANG_GE:
         if ((temp_s3 + temp_s2 + temp_s1) != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD2EC);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD2EC);
         } else {
-            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD360);
+            sprintf(buf, "%s%s", buf, D_psp_089AD360);
         }
         if (temp_s3 != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD308);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD308);
         }
         if (temp_s2 != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD324);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD324);
         }
         if (temp_s1 != 0) {
-            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD348);
+            sprintf(buf, "%s%s", buf, D_psp_089AD348);
         }
         memcpy(param->sfoParam.title, D_psp_089AD2B0, 37);
         memcpy(param->sfoParam.savedataTitle, D_psp_089AD2D8, 17);
@@ -950,18 +920,18 @@ s32 func_psp_08931488(void) {
 
     case LANG_IT:
         if ((temp_s3 + temp_s2 + temp_s1) != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD3C8);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD3C8);
         } else {
-            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD43C);
+            sprintf(buf, "%s%s", buf, D_psp_089AD43C);
         }
         if (temp_s3 != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD3E4);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD3E4);
         }
         if (temp_s2 != 0) {
-            sprintf(buf, D_psp_089AD4A8, buf, D_psp_089AD400);
+            sprintf(buf, "%s%s\n", buf, D_psp_089AD400);
         }
         if (temp_s1 != 0) {
-            sprintf(buf, D_psp_089AD4B0, buf, D_psp_089AD424);
+            sprintf(buf, "%s%s", buf, D_psp_089AD424);
         }
         memcpy(param->sfoParam.title, D_psp_089AD394, 37);
         memcpy(param->sfoParam.savedataTitle, D_psp_089AD3BC, 12);
