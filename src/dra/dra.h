@@ -196,7 +196,7 @@ enum AluBlueprints {
     BP_0,
     BP_1,
     BP_GRAVITY_BOOT_BEAM,
-    BP_3,
+    BP_KNIFE,
     BP_4,
     BP_5,
     BP_CRASH_CROSS,
