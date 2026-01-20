@@ -1234,11 +1234,11 @@
 | dra    | func_psp_091143D0                 |       32 |          3 |        |       |     |
 | dra    | func_psp_09141608                 |       32 |          3 |        |       |     |
 | dra    | func_psp_090EB850                 |       32 |          3 |        |       |     |
-| main   | func_psp_0890EAA0                 |       32 |          3 |        |       |     |
 | main   | func_psp_08916BB8                 |       32 |          3 |        |       |     |
 | main   | LoadClut                          |       32 |          3 |        |       |     |
 | main   | func_psp_0891CCBC                 |       32 |          3 |        |       |     |
 | main   | printf                            |       32 |          3 |        |       |     |
+| main   | wcrtomb                           |       32 |          3 |        |       |     |
 | no2    | func_pspeu_09257B10               |       32 |          3 |        |       |     |
 | sel    | func_psp_09237ED8                 |       32 |          3 |        |       |     |
 | dra    | func_psp_090F01C0                 |       32 |          4 |        |       |     |
@@ -1359,7 +1359,7 @@
 | main   | func_psp_08911F24                 |       36 |          1 |        |       |     |
 | dra    | func_psp_0910F128                 |       36 |          2 |        |       |     |
 | main   | func_psp_08916110                 |       36 |          2 |        |       |     |
-| main   | func_psp_0890EC48                 |       36 |          3 |        |       |     |
+| main   | wcsrtombs                         |       36 |          3 |        |       |     |
 | main   | func_psp_0891275C                 |       36 |          3 |        |       |     |
 | no4    | func_pspeu_0923D428               |       36 |          3 |        |       |     |
 | dra    | func_psp_09103DF0                 |       36 |          4 |        |       |     |
@@ -1738,7 +1738,7 @@
 | maria  | func_pspeu_092BEAB0               |       43 |          5 |        |       |     |
 | dra    | func_psp_09114500                 |       43 |          6 |        |       |     |
 | dra    | func_psp_090F53A8                 |       43 |          6 |        |       |     |
-| main   | func_psp_0890EA34                 |       43 |          6 |        |       |     |
+| main   | _wcrtomb_r                        |       43 |          6 |        |       |     |
 | maria  | func_pspeu_092B22B8               |       43 |          6 |        |       |     |
 | sel    | func_psp_0923BD98                 |       43 |          6 |        |       |     |
 | main   | sceGupPatchPrim                   |       43 |          7 |        |       |     |
@@ -3180,7 +3180,7 @@
 | dra    | func_psp_090E8B30                 |      109 |         19 |        |       |     |
 | no3    | func_pspeu_092493F8               |      110 |          5 |        |       |     |
 | nz1    | EntityWaterForeground             |      110 |          9 |        |       |     |
-| main   | func_psp_0890EAF0                 |      110 |         11 |        |       |     |
+| main   | _wcsrtombs_r                      |      110 |         11 |        |       |     |
 | no2    | func_pspeu_0925BE88               |      110 |         12 |        |       |     |
 | main   | func_psp_0891BB18                 |      111 |         13 |        |       |     |
 | no4    | func_pspeu_09242940               |      111 |         14 |        |       |     |
@@ -4048,7 +4048,7 @@
 |        | func_092EF098                     |      293 |         42 |        |       |     |
 |        | func_092EEF10                     |      293 |         42 |        |       |     |
 | no4    | func_pspeu_09241410               |      294 |         16 |        |       |     |
-| main   | func_psp_0890ECA8                 |      294 |         40 |        |       |     |
+| main   | __wctomb                          |      294 |         40 |        |       |     |
 | lib    | func_psp_092546D0                 |      294 |         47 |        |       |     |
 | main   | __sfvwrite_r                      |      295 |         56 |        |       |     |
 | no3    | func_pspeu_0923DEE8               |      296 |         32 |        |       |     |
