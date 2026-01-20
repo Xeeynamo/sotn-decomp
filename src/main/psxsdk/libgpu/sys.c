@@ -108,7 +108,8 @@ static volatile int _qout = 0;
 #define CMD_COPY_VRAM_TO_CPU 0xC0000000
 #define CMD_COPY_CPU_TO_VRAM 0xA0000000
 
-// gpu display control commands (see https://psx-spx.consoledev.net/graphicsprocessingunitgpu/#gpu-display-control-commands-gp1)
+// gpu display control commands (see
+// https://psx-spx.consoledev.net/graphicsprocessingunitgpu/#gpu-display-control-commands-gp1)
 #define CMD_RESET_GPU 0x00000000
 #define CMD_RESET_CMD_BUF 0x01000000
 #define CMD_ACK_GPU_INTR 0x02000000
@@ -152,8 +153,8 @@ int ResetGraph(int mode) {
     memset2(&D_80037E60, -1, sizeof(DRAWENV));
     memset2(&D_80037EBC, -1, sizeof(DISPENV));
     if (D_8002C26C != 0) {
-        D_8002C260->ctl(
-            CMD_SET_DISP_MODE | (D_8002C270 ? 0x80 : 0) | D_8002C260->getctl(8));
+        D_8002C260->ctl(CMD_SET_DISP_MODE | (D_8002C270 ? 0x80 : 0) |
+                        D_8002C260->getctl(8));
         if (mode & 8) {
             D_8002C26C = 2;
             D_8002C260->ctl(CMD_SET_VRAM_SIZE | (D_8002C270 ? 0x501 : 0x504));
@@ -343,8 +344,10 @@ DISPENV* PutDispEnv(DISPENV* env) {
     if (D_8002C268 >= 2) {
         GPU_printf("PutDispEnv(%08x)...\n", env);
     }
-    D_8002C260->ctl(CMD_SET_DISP_AREA_START | (D_8002C26C ? ((env->disp.y & 0xFFF) << 0xC) | (get_dx(env) & 0xFFF)
-                                      : ((env->disp.y & 0x1FF) << 0xA) | (env->disp.x & 0x3FF)));
+    D_8002C260->ctl(
+        CMD_SET_DISP_AREA_START |
+        (D_8002C26C ? ((env->disp.y & 0xFFF) << 0xC) | (get_dx(env) & 0xFFF)
+                    : ((env->disp.y & 0x1FF) << 0xA) | (env->disp.x & 0x3FF)));
     if (!(LOW(D_80037EBC.screen.x) == LOW(env->screen.x) &&
           LOW(D_80037EBC.screen.w) == LOW(env->screen.w))) {
         env->pad0 = GetVideoMode();
@@ -356,10 +359,10 @@ DISPENV* PutDispEnv(DISPENV* env) {
         h_end = CLAMP(h_end, h_start + 0x50, 0xCDA);
         v_start = CLAMP(v_start, 0, (env->pad0 ? 0x136 : 0xFE));
         v_end = CLAMP(v_end, v_start + 1, (env->pad0 ? 0x138 : 0x100));
-        D_8002C260->ctl(
-            CMD_SET_H_DISP_RANGE | ((h_end & 0xFFF) << 0xC) | (h_start & 0xFFF));
-        D_8002C260->ctl(
-            CMD_SET_V_DISP_RANGE | ((v_end & 0x3FF) << 0xA) | (v_start & 0x3FF));
+        D_8002C260->ctl(CMD_SET_H_DISP_RANGE | ((h_end & 0xFFF) << 0xC) |
+                        (h_start & 0xFFF));
+        D_8002C260->ctl(CMD_SET_V_DISP_RANGE | ((v_end & 0x3FF) << 0xA) |
+                        (v_start & 0x3FF));
     }
     if (LOW(D_80037EBC.isinter) != LOW(env->isinter) ||
         !(LOW(D_80037EBC.disp.x) == LOW(env->disp.x) &&
@@ -586,7 +589,8 @@ int _clr(RECT* arg0, int color) {
         D_80037E20[7] = LOW(temp.w);
         D_80037E20[8] = 0x03FFFFFF;
         D_80037E20[9] = 0xE3000000 | _param(3); // set drawing area top left
-        D_80037E20[10] = 0xE4000000 | _param(4); // set drawing area bottom right
+        D_80037E20[10] =
+            0xE4000000 | _param(4); // set drawing area bottom right
         D_80037E20[11] = 0xE5000000 | _param(5); // set drawing offset
     } else {
         D_80037E20[0] = 0x04FFFFFF;
