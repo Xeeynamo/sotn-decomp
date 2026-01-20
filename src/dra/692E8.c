@@ -693,7 +693,8 @@ void EntityAlucard() {
     }
     i = CheckAndDoLevelUp();
     if (i != 0) {
-        CreateEntFactoryFromEntity(g_CurrentEntity, FACTORY(BP_25, i - 1), 0);
+        CreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_LEVEL_UP_TEXT, i - 1), 0);
     }
     for (i = 0; i < 16; i++) {
         if (g_Player.timers[i]) {
