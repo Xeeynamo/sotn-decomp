@@ -263,11 +263,11 @@ segments:
       - [0xFF8C, asm, newlib/libc/stdio/vfprintf/exponent]
       - [0x10064, asm, func_psp_0890E970]
       - [0x100D8, asm, func_psp_0890E9E4]
-      - [0x10128, asm, func_psp_0890EA34]
-      - [0x10194, asm, func_psp_0890EAA0]
-      - [0x101E4, asm, func_psp_0890EAF0]
-      - [0x1033C, asm, func_psp_0890EC48]
-      - [0x1039C, asm, func_psp_0890ECA8]
+      - [0x10128, asm, newlib/libc/stdlib/wcrtomb/_wcrtomb_r]
+      - [0x10194, asm, newlib/libc/stdlib/wcrtomb/wcrtomb]
+      - [0x101E4, asm, newlib/libc/stdlib/wcsrtombs/_wcsrtombs_r]
+      - [0x1033C, asm, newlib/libc/stdlib/wcsrtombs/wcsrtombs]
+      - [0x1039C, asm, newlib/libc/stdlib/wctomb/__wctomb]
       - [0x107BC, asm, newlib/libc/reent/writer/_write_r]
       - [0x10824, asm, newlib/libc/stdio/wsetup/__swsetup_r]
       - [0x10944, c, main_psp/10944]
@@ -376,7 +376,7 @@ segments:
       - [0x649A4, .data, main_psp/dvdumd_io]
       - [0x649BC, data]
       - [0x65808, .data, main_psp/31178]
-      - [0xAEB70, data]
+      - [0xAEBAC, data]
       - {start: 0xAEF24, type: bss, vram: 0x089AD830, name: bss0}
       - {start: 0xAEF24, type: .bss, vram: 0x08C63C28, name: main_psp/28A90}
       - {start: 0xAEF24, type: bss, vram: 0x08C6BC30, name: bss1}
