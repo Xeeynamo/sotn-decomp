@@ -3,6 +3,10 @@
 #define CUTSCENE_UNK3_RECT_X 0
 #endif
 
+#ifndef CUTSCENE_UNK3_RECT_Y
+#define CUTSCENE_UNK3_RECT_Y 384
+#endif
+
 #ifdef VERSION_HD
 #define CUTSCENE_UNK3_RECT_H 16
 #else
@@ -16,7 +20,7 @@ extern u8 cutsceneUnk3Unknown[0x380]; // bss
 static void CutsceneUnk3(s16 nextCharY) {
     RECT rect;
     rect.x = CUTSCENE_UNK3_RECT_X;
-    rect.y = (nextCharY * CUTSCENE_UNK3_RECT_H) + 384;
+    rect.y = (nextCharY * CUTSCENE_UNK3_RECT_H) + CUTSCENE_UNK3_RECT_Y;
     rect.w = 64;
     rect.h = CUTSCENE_UNK3_RECT_H;
     ClearImage(&rect, 0, 0, 0);

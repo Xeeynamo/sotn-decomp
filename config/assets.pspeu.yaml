@@ -548,7 +548,7 @@ files:
           - [0x2F298, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no3.bin
     asset_path: assets/st/no3
-    src_path: src/st/no3_psp
+    src_path: src/st/no3
     splat_config_path: config/splat.pspeu.stno3.yaml
     segments:
       - start: 0x80
