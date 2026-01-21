@@ -131,11 +131,11 @@ static volatile int _qout = 0;
 #define STATUS_READY_TO_RECEIVE_CMD (1 << 26)
 #define STATUS_READY_TO_SEND_VRAM_TO_CPU (1 << 27)
 
-int ResetGraph(int mode) {
+int ResetGraph(int level) {
     if (D_8002C268 >= 2) {
-        GPU_printf("ResetGraph(%d)...\n", mode);
+        GPU_printf("ResetGraph(%d)...\n", level);
     }
-    switch (mode & 3) {
+    switch (level & 3) {
     case 0:
         ResetCallback();
         D_8002C26C = D_8002C260->reset(0);
@@ -155,7 +155,7 @@ int ResetGraph(int mode) {
     if (D_8002C26C != 0) {
         D_8002C260->ctl(CMD_SET_DISP_MODE | (D_8002C270 ? 0x80 : 0) |
                         D_8002C260->getctl(8));
-        if (mode & 8) {
+        if (level & 8) {
             D_8002C26C = 2;
             D_8002C260->ctl(CMD_SET_VRAM_SIZE | (D_8002C270 ? 0x501 : 0x504));
         }

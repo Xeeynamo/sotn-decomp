@@ -2237,7 +2237,7 @@ extern u32 D_80097C98;
 extern s32 subWeapon; // g_SubweaponId
 extern u32 D_80097C40[];
 extern PlayerDraw g_PlayerDraw[0x10];
-extern s32 D_psp_08C630C4;
+extern bool g_MutekiFlag;
 extern s32 D_800987B4;
 extern StHEADER* D_800987C8;
 extern s32 g_DebugPlayer;

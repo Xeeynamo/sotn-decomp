@@ -189,7 +189,7 @@ void func_psp_089197C8(s32 arg0) {
     }
     DrawSync(0);
     VSync(0);
-    func_psp_0891AEC8();
+    EndFrame();
     func_psp_0891FC64();
     DrawSync(0);
     func_psp_0893116C();

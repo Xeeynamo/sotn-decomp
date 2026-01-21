@@ -50,7 +50,6 @@ extern pspUtilityMsgDialogParams D_psp_08DEC780;
 extern s32 D_psp_08DEC9C4;
 extern PspUtilitySavedataParam D_psp_08DEC9C8;
 extern PspUtilitySavedataMsFreeSize D_psp_08DECFC8;
-extern u32 D_psp_08DECFD0;
 extern PspUtilitySavedataMsDataSize D_psp_08DECFDC;
 extern PspUtilitySavedataUtilityDataSize D_psp_08DED01C;
 extern s32 D_psp_08DED038;
@@ -623,7 +622,7 @@ s32 func_psp_08930B34(void) {
                 break;
 
             default:
-                if (D_psp_08DECFD0 >= 0x220) {
+                if (D_psp_08DECFC8.freeSpaceKB >= 0x220) {
                     D_psp_08E2E5E4 = 1;
                     D_psp_08E2E5E0 = 5;
                 } else {
