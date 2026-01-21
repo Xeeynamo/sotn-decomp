@@ -108,6 +108,25 @@ static volatile int _qout = 0;
 #define CMD_COPY_VRAM_TO_CPU 0xC0000000
 #define CMD_COPY_CPU_TO_VRAM 0xA0000000
 
+// gpu display control commands (see
+// https://psx-spx.consoledev.net/graphicsprocessingunitgpu/#gpu-display-control-commands-gp1)
+#define CMD_RESET_GPU 0x00000000
+#define CMD_RESET_CMD_BUF 0x01000000
+#define CMD_ACK_GPU_INTR 0x02000000
+#define CMD_DISP_ENABLE 0x03000000
+#define CMD_DATA_REQUEST 0x04000000
+#define CMD_SET_DISP_AREA_START 0x05000000
+#define CMD_SET_H_DISP_RANGE 0x06000000
+#define CMD_SET_V_DISP_RANGE 0x07000000
+#define CMD_SET_DISP_MODE 0x08000000
+#define CMD_GPU_READ_REG 0x10000000
+#define CMD_SET_VRAM_SIZE 0x20000000
+
+#define DATA_REQ_OFF 0
+#define DATA_REQ_FIFO 1
+#define DATA_REQ_CPU_TO_GPU 2
+#define DATA_REQ_GPU_TO_CPU 3
+
 // status reg bits
 #define STATUS_READY_TO_RECEIVE_CMD (1 << 26)
 #define STATUS_READY_TO_SEND_VRAM_TO_CPU (1 << 27)
@@ -134,11 +153,11 @@ int ResetGraph(int mode) {
     memset2(&D_80037E60, -1, sizeof(DRAWENV));
     memset2(&D_80037EBC, -1, sizeof(DISPENV));
     if (D_8002C26C != 0) {
-        D_8002C260->ctl(
-            D_8002C260->getctl(8) | (D_8002C270 ? 0x08000080 : 0x08000000));
+        D_8002C260->ctl(CMD_SET_DISP_MODE | (D_8002C270 ? 0x80 : 0) |
+                        D_8002C260->getctl(8));
         if (mode & 8) {
             D_8002C26C = 2;
-            D_8002C260->ctl(D_8002C270 ? 0x20000501 : 0x20000504);
+            D_8002C260->ctl(CMD_SET_VRAM_SIZE | (D_8002C270 ? 0x501 : 0x504));
         }
     }
 }
@@ -152,9 +171,9 @@ int SetGraphReverse(int mode) {
 
     D_8002C270 = mode;
     D_8002C260->ctl(
-        D_8002C260->getctl(8) | (D_8002C270 ? 0x08000080 : 0x08000000));
+        CMD_SET_DISP_MODE | (D_8002C270 ? 0x80 : 0) | D_8002C260->getctl(8));
     if (D_8002C26C == 2) {
-        D_8002C260->ctl(D_8002C270 ? 0x20000501 : 0x20000504);
+        D_8002C260->ctl(CMD_SET_VRAM_SIZE | (D_8002C270 ? 0x501 : 0x504));
     }
     return old;
 }
@@ -204,7 +223,7 @@ void SetDispMask(int mask) {
     if (D_8002C268 >= 2) {
         GPU_printf("SetDispMask(%d)...\n", mask);
     }
-    D_8002C260->ctl(mask ? 0x03000000 : 0x03000001);
+    D_8002C260->ctl(mask ? (CMD_DISP_ENABLE | 0) : (CMD_DISP_ENABLE | 1));
 }
 
 int DrawSync(int mode) {
@@ -317,18 +336,18 @@ DRAWENV* GetDrawEnv(DRAWENV* env) {
 DISPENV* PutDispEnv(DISPENV* env) {
     int h_start;
     int v_start;
-    int mode;
+    int cmd;
     int v_end;
     int h_end;
 
-    mode = 0x08000000;
+    cmd = CMD_SET_DISP_MODE;
     if (D_8002C268 >= 2) {
         GPU_printf("PutDispEnv(%08x)...\n", env);
     }
-    D_8002C260->ctl((D_8002C26C != 0) ? ((env->disp.y & 0xFFF) << 0xC) |
-                                            (get_dx(env) & 0xFFF) | 0x05000000
-                                      : ((env->disp.y & 0x1FF) << 0xA) |
-                                            (env->disp.x & 0x3FF) | 0x05000000);
+    D_8002C260->ctl(
+        CMD_SET_DISP_AREA_START |
+        (D_8002C26C ? ((env->disp.y & 0xFFF) << 0xC) | (get_dx(env) & 0xFFF)
+                    : ((env->disp.y & 0x1FF) << 0xA) | (env->disp.x & 0x3FF)));
     if (!(LOW(D_80037EBC.screen.x) == LOW(env->screen.x) &&
           LOW(D_80037EBC.screen.w) == LOW(env->screen.w))) {
         env->pad0 = GetVideoMode();
@@ -340,43 +359,43 @@ DISPENV* PutDispEnv(DISPENV* env) {
         h_end = CLAMP(h_end, h_start + 0x50, 0xCDA);
         v_start = CLAMP(v_start, 0, (env->pad0 ? 0x136 : 0xFE));
         v_end = CLAMP(v_end, v_start + 1, (env->pad0 ? 0x138 : 0x100));
-        D_8002C260->ctl(
-            ((h_end & 0xFFF) << 0xC) | 0x06000000 | (h_start & 0xFFF));
-        D_8002C260->ctl(
-            ((v_end & 0x3FF) << 0xA) | 0x07000000 | (v_start & 0x3FF));
+        D_8002C260->ctl(CMD_SET_H_DISP_RANGE | ((h_end & 0xFFF) << 0xC) |
+                        (h_start & 0xFFF));
+        D_8002C260->ctl(CMD_SET_V_DISP_RANGE | ((v_end & 0x3FF) << 0xA) |
+                        (v_start & 0x3FF));
     }
     if (LOW(D_80037EBC.isinter) != LOW(env->isinter) ||
         !(LOW(D_80037EBC.disp.x) == LOW(env->disp.x) &&
           LOW(D_80037EBC.disp.w) == LOW(env->disp.w))) {
         env->pad0 = GetVideoMode();
         if (env->pad0 == 1) {
-            mode |= 0x8;
+            cmd |= 0x8;
         }
         if (env->isrgb24) {
-            mode |= 0x10;
+            cmd |= 0x10;
         }
         if (env->isinter) {
-            mode |= 0x20;
+            cmd |= 0x20;
         }
         if (D_8002C270 != 0) {
-            mode |= 0x80;
+            cmd |= 0x80;
         }
         if (env->disp.w > 0x118) {
             if (env->disp.w <= 0x160) {
-                mode |= 1;
+                cmd |= 1;
             } else if (env->disp.w <= 0x190) {
-                mode |= 0x40;
+                cmd |= 0x40;
             } else if (env->disp.w <= 0x230) {
-                mode |= 2;
+                cmd |= 2;
             } else {
-                mode |= 3;
+                cmd |= 3;
             }
         }
         if (env->disp.h <= (env->pad0 ? 0x120 : 0x100)) {
         } else {
-            mode |= 0x24;
+            cmd |= 0x24;
         }
-        D_8002C260->ctl(mode);
+        D_8002C260->ctl(cmd);
     }
     memcpy((u8*)&D_80037EBC, (u8*)env, sizeof(DISPENV));
     return env;
@@ -409,7 +428,7 @@ void SetDrawOffset(DR_OFFSET* p, u_short* ofs) {
 
 void SetPriority(DR_PRIO* p, int pbc, int pbw) {
     setlen(p, 2);
-    p->code[0] = (pbc ? 0xE6000002 : 0xE6000000) | (pbw ? 1 : 0);
+    p->code[0] = 0xE6000000 | (pbc ? 2 : 0) | (pbw ? 1 : 0);
     p->code[1] = 0;
 }
 
@@ -440,8 +459,8 @@ void SetDrawEnv(DR_ENV* dr_env_in, DRAWENV* env) {
         clip_rect.y = env->clip.y;
         clip_rect.w = env->clip.w;
         clip_rect.h = env->clip.h;
-        clip_rect.w = CLAMP(clip_rect.w, 0, 1023);
-        clip_rect.h = CLAMP(clip_rect.h, 0, (D_8002C26C ? 1024 : 512) - 1);
+        clip_rect.w = CLAMP(clip_rect.w, 0, 0x400 - 1);
+        clip_rect.h = CLAMP(clip_rect.h, 0, (D_8002C26C ? 0x400 : 0x200) - 1);
 
         if ((clip_rect.x & 0x3F) || (clip_rect.w & 0x3F)) {
             clip_rect.x -= env->ofs[0];
@@ -465,10 +484,10 @@ void SetDrawEnv(DR_ENV* dr_env_in, DRAWENV* env) {
 
 int get_mode(int dfe, int dtd, int tpage) {
     if (D_8002C26C) {
-        return (dtd ? 0xE1000800 : 0xE1000000) | (dfe ? 0x1000 : 0) |
+        return 0xE1000000 | (dtd ? 0x800 : 0) | (dfe ? 0x1000 : 0) |
                (tpage & 0x27FF);
     } else {
-        return (dtd ? 0xE1000200 : 0xE1000000) | (dfe ? 0x400 : 0) |
+        return 0xE1000000 | (dtd ? 0x200 : 0) | (dfe ? 0x400 : 0) |
                (tpage & 0x1FF);
     }
 }
@@ -501,15 +520,15 @@ u_long get_ofs(short x, short y) {
     }
 }
 
-u_long get_tw(RECT* arg0) {
+u_long get_tw(RECT* tw) {
     u_long pad[4];
 
-    if (arg0 != 0) {
-        pad[0] = (u8)arg0->x >> 3;
-        pad[2] = (int)(-arg0->w & 0xFF) >> 3;
-        pad[1] = (u8)arg0->y >> 3;
-        pad[3] = (int)(-arg0->h & 0xFF) >> 3;
-        return (pad[1] << 0xF) | 0xE2000000 | (pad[0] << 0xA) | (pad[3] << 5) |
+    if (tw != NULL) {
+        pad[0] = (tw->x & 0xFF) >> 3;
+        pad[2] = (-tw->w & 0xFF) >> 3;
+        pad[1] = (tw->y & 0xFF) >> 3;
+        pad[3] = (-tw->h & 0xFF) >> 3;
+        return 0xE2000000 | (pad[1] << 0xF) | (pad[0] << 0xA) | (pad[3] << 5) |
                pad[2];
     }
     return 0;
@@ -554,12 +573,12 @@ int _clr(RECT* arg0, int color) {
     temp.w = arg0->w;
     temp.h = arg0->h;
 
-    temp.w = CLAMP(temp.w, 0, 1023);
-    temp.h = CLAMP(temp.h, 0, (D_8002C26C ? 1024 : 512) - 1);
+    temp.w = CLAMP(temp.w, 0, 0x400 - 1);
+    temp.h = CLAMP(temp.h, 0, (D_8002C26C ? 0x400 : 0x200) - 1);
 
     if ((temp.x & 0x3F) || (temp.w & 0x3F)) {
         ptr = &D_80037E20[8];
-        D_80037E20[0] = ((int)ptr & 0xFFFFFF) | 0x07000000; // set up otag
+        D_80037E20[0] = 0x07000000 | ((int)ptr & 0xFFFFFF); // set up otag
         D_80037E20[1] = 0xE3000000; // set drawing area top left
         D_80037E20[2] = 0xE4FFFFFF; // set drawing area bottom right
         D_80037E20[3] = 0xE5000000; // set drawing offset
@@ -569,10 +588,10 @@ int _clr(RECT* arg0, int color) {
         D_80037E20[6] = LOW(temp.x);
         D_80037E20[7] = LOW(temp.w);
         D_80037E20[8] = 0x03FFFFFF;
-        D_80037E20[9] = _param(3) | 0xE3000000; // set drawing area top left
+        D_80037E20[9] = 0xE3000000 | _param(3); // set drawing area top left
         D_80037E20[10] =
-            _param(4) | 0xE4000000; // set drawing area bottom right
-        D_80037E20[11] = _param(5) | 0xE5000000; // set drawing offset
+            0xE4000000 | _param(4); // set drawing area bottom right
+        D_80037E20[11] = 0xE5000000 | _param(5); // set drawing offset
     } else {
         D_80037E20[0] = 0x04FFFFFF;
         D_80037E20[1] = 0xE6000000; // mask bit setting
@@ -600,8 +619,8 @@ int _dws(RECT* arg0, int* arg1) {
     temp.h = arg0->h;
     var_s4 = 0;
 
-    temp.w = CLAMP(temp.w, 0, 1023);
-    temp.h = CLAMP(temp.h, 0, (D_8002C26C ? 1024 : 512) - 1);
+    temp.w = CLAMP(temp.w, 0, 0x400 - 1);
+    temp.h = CLAMP(temp.h, 0, (D_8002C26C ? 0x400 : 0x200) - 1);
 
     temp_a0 = ((temp.w * temp.h) + 1) / 2;
     if (temp_a0 <= 0) {
@@ -615,7 +634,7 @@ int _dws(RECT* arg0, int* arg1) {
         }
     }
 
-    *GPU_STATUS = STATUS_READY_TO_RECEIVE_CMD;
+    *GPU_STATUS = CMD_DATA_REQUEST | DATA_REQ_OFF;
 
     *GPU_DATA = CMD_CLEAR_CACHE;
     *GPU_DATA = var_s4 ? 0xB0000000 : CMD_COPY_CPU_TO_VRAM;
@@ -627,7 +646,7 @@ int _dws(RECT* arg0, int* arg1) {
     }
 
     if (size != 0) {
-        *GPU_STATUS = 0x04000002;
+        *GPU_STATUS = CMD_DATA_REQUEST | DATA_REQ_CPU_TO_GPU;
         *DMA2_MADR = arg1;
         *DMA2_BCR = (size << 0x10) | 0x10;
         *DMA2_CHCR = 0x01000201;
@@ -650,8 +669,8 @@ int _drs(RECT* arg0, int* arg1) {
     temp.w = arg0->w;
     temp.h = arg0->h;
 
-    temp.w = CLAMP(temp.w, 0, 1023);
-    temp.h = CLAMP(temp.h, 0, (D_8002C26C ? 1024 : 512) - 1);
+    temp.w = CLAMP(temp.w, 0, 0x400 - 1);
+    temp.h = CLAMP(temp.h, 0, (D_8002C26C ? 0x400 : 0x200) - 1);
 
     temp_a0 = ((temp.w * temp.h) + 1) / 2;
     if (temp_a0 <= 0) {
@@ -665,7 +684,7 @@ int _drs(RECT* arg0, int* arg1) {
         }
     }
 
-    *GPU_STATUS = STATUS_READY_TO_RECEIVE_CMD;
+    *GPU_STATUS = CMD_DATA_REQUEST | DATA_REQ_OFF;
 
     *GPU_DATA = CMD_CLEAR_CACHE;
     *GPU_DATA = CMD_COPY_VRAM_TO_CPU;
@@ -683,7 +702,7 @@ int _drs(RECT* arg0, int* arg1) {
     }
 
     if (size != 0) {
-        *GPU_STATUS = 0x04000003;
+        *GPU_STATUS = CMD_DATA_REQUEST | DATA_REQ_GPU_TO_CPU;
         *DMA2_MADR = arg1;
         *DMA2_BCR = (size << 0x10) | 0x10;
         *DMA2_CHCR = 0x01000200;
@@ -700,7 +719,7 @@ void _ctl(u_long arg0) {
 int _getctl(int arg0) { return (arg0 << 0x18) | ctlbuf[arg0]; }
 
 int _cwb(int* arg0, int arg1) {
-    *GPU_STATUS = 0x04000000;
+    *GPU_STATUS = CMD_DATA_REQUEST | DATA_REQ_OFF;
     while (arg1--) {
         *GPU_DATA = *arg0++;
     }
@@ -708,14 +727,14 @@ int _cwb(int* arg0, int arg1) {
 }
 
 void _cwc(int arg0) {
-    *GPU_STATUS = 0x04000002;
+    *GPU_STATUS = CMD_DATA_REQUEST | DATA_REQ_CPU_TO_GPU;
     *DMA2_MADR = arg0;
     *DMA2_BCR = 0;
     *DMA2_CHCR = 0x01000401;
 }
 
 int _param(int arg0) {
-    *GPU_STATUS = arg0 | 0x10000000;
+    *GPU_STATUS = CMD_GPU_READ_REG | arg0;
     return *GPU_DATA & 0xFFFFFF;
 }
 
@@ -854,13 +873,13 @@ inline int _reset(int arg0) {
     case 0:
         *DMA2_CHCR = 0x401;
         *DPCR |= 0x800;
-        *GPU_STATUS = 0;
+        *GPU_STATUS = CMD_RESET_GPU;
         break;
     case 1:
         *DMA2_CHCR = 0x401;
         *DPCR |= 0x800;
-        *GPU_STATUS = 0x02000000;
-        *GPU_STATUS = 0x01000000;
+        *GPU_STATUS = CMD_ACK_GPU_INTR;
+        *GPU_STATUS = CMD_RESET_CMD_BUF;
         break;
     default:
         break;
