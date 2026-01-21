@@ -3833,6 +3833,25 @@ typedef struct {
     /* 0x88 */ s16 acceleration;
 } ET_PhantomSkull;
 
+typedef struct {
+    /* 0x7C */ u8 timer;
+    /* 0x7D */ u8 facingLeft;
+} ET_FlailGuard;
+
+typedef struct {
+    /* 0x7C */ s16 unk0;
+    /* 0x7E */ s16 unk2;
+    /* 0x80 */ s16 unk4;
+    /* 0x82 */ s16 unk6;
+    /* 0x84 */ struct Primitive* prim;
+    /* 0x88 */ u32 : 32;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ s32 prevAttack;
+} ET_FlailGuardFlail;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4161,6 +4180,8 @@ typedef union { // offset=0x7C
     ET_Azaghal azaghal;
     ET_Karasuman karasuman;
     ET_PhantomSkull phantom_skull;
+    ET_FlailGuard flailGuard;
+    ET_FlailGuardFlail flailGuardFlail;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
