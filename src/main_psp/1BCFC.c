@@ -60,10 +60,10 @@ static s32 playWait; // Slows the game up to 6 frames.
 s32 D_psp_08C630DC;
 s32 D_psp_08C630D8;
 s32 D_psp_08C630D4;
-bool g_Oyaji;
+bool g_UnlockAllTactics;
 static u32 at3Index;
-bool g_Heart99;
-bool g_MutekiFlag;
+bool g_InfiniteHearts;
+bool g_InvincibleFlag;
 static char D_psp_08C62EC4[0x200];
 static s32 D_psp_08C62EC0;
 static s32 D_psp_08C62EBC;
@@ -1522,10 +1522,10 @@ void DrawOTag(OT_TYPE* p) {
                         g_GameClearFlag = g_GameClearFlag ? false : true;
                         break;
                     case 1:
-                        g_MutekiFlag = g_MutekiFlag ? false : true;
+                        g_InvincibleFlag = g_InvincibleFlag ? false : true;
                         break;
                     case 2:
-                        g_Heart99 = g_Heart99 ? false : true;
+                        g_InfiniteHearts = g_InfiniteHearts ? false : true;
                         break;
                     case 3:
                         D_psp_08C62A30 = (D_psp_08C62A30 + 1) % 2;
@@ -1557,7 +1557,7 @@ void DrawOTag(OT_TYPE* p) {
                         func_psp_09141878(at3Index);
                         break;
                     case 10:
-                        g_Oyaji = g_Oyaji ? false : true;
+                        g_UnlockAllTactics = g_UnlockAllTactics ? false : true;
                         break;
                     }
                 }
@@ -1569,9 +1569,9 @@ void DrawOTag(OT_TYPE* p) {
             sprintf(D_psp_08C630E4, "GameClearFlag:%s",
                     off_on[g_GameClearFlag ? 1 : 0]);
             sceGuDebugPrint(x + 0x10, y + 0x8, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "MutekiFlag:%s", off_on[g_MutekiFlag]);
+            sprintf(D_psp_08C630E4, "MutekiFlag:%s", off_on[g_InvincibleFlag]);
             sceGuDebugPrint(x + 0x10, y + 0x10, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "Heart99:%s", off_on[g_Heart99]);
+            sprintf(D_psp_08C630E4, "Heart99:%s", off_on[g_InfiniteHearts]);
             sceGuDebugPrint(x + 0x10, y + 0x18, 0xFFFFFFFF, D_psp_08C630E4);
             sprintf(D_psp_08C630E4, "ScreenMode:%d", D_psp_08C62A30);
             sceGuDebugPrint(x + 0x10, y + 0x20, 0xFFFFFFFF, D_psp_08C630E4);
@@ -1588,7 +1588,7 @@ void DrawOTag(OT_TYPE* p) {
             sceGuDebugPrint(x + 0x10, y + 0x48, 0xFFFFFFFF, D_psp_08C630E4);
             sprintf(D_psp_08C630E4, "CpuGpuTime:%s", off_on[cpuGpuTime]);
             sceGuDebugPrint(x + 0x10, y + 0x50, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "OYAJI:%03d", g_Oyaji);
+            sprintf(D_psp_08C630E4, "OYAJI:%03d", g_UnlockAllTactics);
             sceGuDebugPrint(x + 0x10, y + 0x58, 0xFFFFFFFF, D_psp_08C630E4);
             sprintf(D_psp_08C630E4, "AT3:%03d", at3Index);
             sceGuDebugPrint(x + 0x10, y + 0x60, 0xFFFFFFFF, D_psp_08C630E4);

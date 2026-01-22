@@ -1243,7 +1243,7 @@ void RunMainEngine(void) {
     u32 tempY;
 
 #if defined(VERSION_PSP)
-    if (g_Heart99) {
+    if (g_InfiniteHearts) {
         g_Status.hearts = 99;
     }
 #endif

@@ -592,7 +592,7 @@ void MarMain(void) {
                     damage.effects = PLAYER.hitParams & ~0x1F;
                     damage.damageKind = PLAYER.hitParams & 0x1F;
 #ifdef VERSION_PSP
-                    if (g_MutekiFlag) {
+                    if (g_InvincibleFlag) {
                         PLAYER.hitPoints = 0;
                     }
 #endif
