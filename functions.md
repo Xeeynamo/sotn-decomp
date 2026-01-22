@@ -92,8 +92,8 @@
 | dra    | MemcardInit                       |        9 |          1 |        |       |     |
 | main   | func_psp_08910088                 |        9 |          1 |        |       |     |
 | main   | func_psp_08919560                 |        9 |          1 |        |       |     |
-| main   | SetDispMask                       |        9 |          1 |        |       |     |
 | main   | func_psp_08919CE4                 |        9 |          1 |        |       |     |
+| main   | SetDispMask                       |        9 |          1 |        |       |     |
 | main   | func_psp_0891B528                 |        9 |          1 |        |       |     |
 | main   | func_psp_0891B6FC                 |        9 |          1 |        |       |     |
 | main   | func_psp_08920488                 |        9 |          1 |        |       |     |
@@ -163,8 +163,8 @@
 | dra    | func_psp_090F67E8                 |       11 |          1 |        |       |     |
 | dra    | func_psp_090DFC68                 |       11 |          1 |        |       |     |
 | dra    | func_psp_090DFC80                 |       11 |          1 |        |       |     |
+| dra    | GetAT3FileName                    |       11 |          1 |        |       |     |
 | dra    | func_psp_091405C8                 |       11 |          1 |        |       |     |
-| dra    | func_psp_09141860                 |       11 |          1 |        |       |     |
 | dra    | func_psp_09141F38                 |       11 |          1 |        |       |     |
 | dra    | func_psp_091420E0                 |       11 |          1 |        |       |     |
 | dra    | func_psp_091420F8                 |       11 |          1 |        |       |     |
@@ -747,7 +747,7 @@
 | main   | func_psp_08936E54                 |       21 |          3 |        |       |     |
 | sel    | func_psp_09237C38                 |       21 |          3 |        |       |     |
 | sel    | func_psp_09237C78                 |       21 |          3 |        |       |     |
-| main   | 1B0F0.rodata                      |       22 |          0 | Yes    |       |     |
+| main   | 1BCFC.rodata                      |       22 |          0 | Yes    |       |     |
 | are    | e_paranthropus.rodata             |       22 |          0 | Yes    |       |     |
 | are    | D_pspeu_09297D90                  |       22 |          0 |        |       |     |
 | cat    | e_spike_room_light_switch.rodata  |       22 |          0 | Yes    |       |     |
@@ -1608,7 +1608,7 @@
 | main   | func_psp_089373F0                 |       40 |          5 |        |       |     |
 | main   | DvdUmdIoInit                      |       40 |          6 |        |       |     |
 | dra    | func_800E9880                     |       40 |          8 |        |       |     |
-| main   | func_psp_0891AEC8                 |       40 |          8 |        |       |     |
+| main   | EndFrame                          |       40 |          8 |        |       |     |
 | dra    | func_psp_09104958                 |       41 |          1 |        |       |     |
 | main   | func_psp_08915294                 |       41 |          1 |        |       |     |
 | main   | func_psp_089329EC                 |       41 |          1 |        |       |     |
