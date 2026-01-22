@@ -212,9 +212,9 @@ typedef struct PspUtilitySavedataFileListInfo
 
 typedef struct PspUtilitySavedataMsFreeSize
 {
-	int clusterSize;
-	int freeClusters;
-	int freeSpaceKB;
+	uint32_t clusterSize;
+	uint32_t freeClusters;
+	uint32_t freeSpaceKB;
 	char freeSpaceStr[8];
 
 } PspUtilitySavedataMsFreeSize;
