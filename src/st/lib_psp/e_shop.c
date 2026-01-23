@@ -5641,7 +5641,7 @@ void func_us_801B6124(Primitive* prim, Entity* arg1) {
         itemId = enemyTactics->itemId;
         itemMask = g_CastleFlags[(itemId >> 3) + ENEMY_TACTICS_180];
 #ifdef VERSION_PSP
-        if (D_psp_08C630D0) {
+        if (g_UnlockAllTactics) {
             itemMask |= (1 << (itemId & 7));
         }
 #endif
@@ -5823,7 +5823,7 @@ void func_us_801B6324(Entity* self) {
             for (i = 0; i < LEN(D_us_8018173C); i++) {
                 itemID = D_us_8018173C[i].itemId;
 #ifdef VERSION_PSP
-                if (D_psp_08C630D0) {
+                if (g_UnlockAllTactics) {
                     g_Settings.D_8003CB00 |= (1 << itemID);
                 }
 #endif

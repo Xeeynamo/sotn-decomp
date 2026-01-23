@@ -7,8 +7,6 @@
 
 extern void* g_ApiInit[sizeof(GameApi) / sizeof(void*)];
 
-extern s32 D_psp_091CE1E8;
-
 extern u8 D_psp_09192EB0;
 extern u8 D_psp_091A4CE8;
 extern u8 D_psp_09197640;
@@ -489,7 +487,7 @@ void SetMenuDisplayBuffer(void) {
 
 void VSyncHandler(void) {
     if (D_psp_091CE1E8 != 0) {
-        func_psp_0891AEC8();
+        EndFrame();
         D_psp_091CE1E8 = 0;
     }
     func_psp_090FA740();

@@ -107,7 +107,7 @@ static s16 D_800BD17C[][2] = {
     {0x50, 0x7F}, {0x60, 0x7F}, {0x70, 0x7F}, {0x7F, 0x7F}, {0x7F, 0x70},
     {0x7F, 0x60}, {0x7F, 0x50}, {0x7F, 0x40}, {0x7F, 0x30}, {0x7F, 0x20},
     {0x7F, 0x10}, {0x7F, 0x00}};
-static char* D_psp_091893B8[] = {
+static char* at3FileNames[] = {
     "PS_OP_NA.at3",
     "PS_ARTBGM.at3",
     "PS_SEQ_LIBRARY.at3",
@@ -1102,51 +1102,49 @@ s32 func_psp_09141608(s32 arg0) {
 s32 func_psp_09141668(s32 arg0) {
     s32 sp1C;
     s32 sp18;
-    s32 var_s2;
+    s32 i;
     s32 var_s0, var_s1;
-    s8* temp_a3;
+    s8* fileName;
 
     var_s0 = 0;
     var_s1 = 0;
-    var_s2 = func_psp_09141608(arg0);
-    func_psp_09141570(var_s2, &sp1C, &sp18);
-    temp_a3 = (s8*)D_psp_091893B8[var_s2];
-    if ((temp_a3[0] == 'P') && (temp_a3[1] == 'S') && (temp_a3[2] == '_')) {
-        sprintf(D_psp_09236888, "%sPS_BGM/%s", D_psp_08B42060,
-                D_psp_091893B8[var_s2]);
+    i = func_psp_09141608(arg0);
+    func_psp_09141570(i, &sp1C, &sp18);
+    fileName = (s8*)at3FileNames[i];
+    if (fileName[0] == 'P' && fileName[1] == 'S' && fileName[2] == '_') {
+        sprintf(D_psp_09236888, "%sPS_BGM/%s", D_psp_08B42060, at3FileNames[i]);
         if (func_psp_0890FA7C(D_psp_09236888) < 0) {
-            var_s2 = D_psp_09189D68;
+            i = D_psp_09189D68;
         }
-        D_psp_09189D68 = var_s2;
+        D_psp_09189D68 = i;
         sprintf(D_psp_09236888, "disc0:/PSP_GAME/USRDIR/res/ps/%sPS_BGM/%s",
-                D_psp_08B42060, D_psp_091893B8[var_s2]);
-        if (func_psp_09141550(var_s2)) {
+                D_psp_08B42060, at3FileNames[i]);
+        if (func_psp_09141550(i)) {
             var_s0 = func_psp_08933F5C();
             var_s1 = func_psp_08933F6C();
         }
         func_psp_0892A620(~sp18 & 1, 1);
         func_psp_0892A414(sp18, D_psp_09236888, 1, sp1C, var_s0, var_s1);
     } else {
-        sprintf(
-            D_psp_09236888, "%sXA/%s", D_psp_08B42060, D_psp_091893B8[var_s2]);
+        sprintf(D_psp_09236888, "%sXA/%s", D_psp_08B42060, at3FileNames[i]);
         if (func_psp_0890FA7C(D_psp_09236888) < 0) {
-            var_s2 = D_psp_09236880;
+            i = D_psp_09236880;
         }
-        D_psp_09236880 = var_s2;
+        D_psp_09236880 = i;
         sprintf(D_psp_09236888, "disc0:/PSP_GAME/USRDIR/res/ps/%sXA/%s",
-                D_psp_08B42060, D_psp_091893B8[var_s2]);
+                D_psp_08B42060, at3FileNames[i]);
         func_psp_0892A414(sp18, D_psp_09236888, 0, sp1C, 0, 0);
     }
     return sp1C;
 }
 
-char* func_psp_09141860(s32 arg0) { return D_psp_091893B8[arg0]; }
+char* GetAT3FileName(s32 at3Index) { return at3FileNames[at3Index]; }
 
-void func_psp_09141878(s32 arg0) {
+void func_psp_09141878(s32 at3Index) {
     func_psp_0892A620(0, 0);
     SetCdVolume(0, 0x7F, 0x7F);
-    if (arg0 >= 0 && arg0 <= 0x230) {
-        func_psp_09141668(arg0);
+    if (at3Index >= 0 && at3Index <= 0x230) {
+        func_psp_09141668(at3Index);
     }
 }
 
