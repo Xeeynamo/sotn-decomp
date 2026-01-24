@@ -41,8 +41,6 @@ jobs:
           sudo dpkg -i fdpp-dev_1.6-1_amd64.deb
           sudo dpkg -i comcom32_0.1~alpha3-1_all.deb
           sudo dpkg -i dosemu2_2.0~pre9-1_amd64.deb
-      - name: Extract dependencies
-        run: VERSION=saturn make extract_disk
       - name: Extract asm
         run: VERSION=saturn make extract
       - name: Build saturn binaries
@@ -66,8 +64,6 @@ jobs:
       - name: Install bchunk
         run: |
           sudo apt-get install bchunk binutils-sh-elf
-      - name: Extract dependencies
-        run: VERSION=saturn make extract_disk
       - name: Extract asm
         run: VERSION=saturn make extract
       - name: Clone asset repository

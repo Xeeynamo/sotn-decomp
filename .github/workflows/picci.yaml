@@ -37,8 +37,6 @@ jobs:
         uses: ./.github/actions/get-dependencies
         with:
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-      - name: Extract dependencies
-        run: make extract_disk
       - name: Extract game assets
         run: |
           make update-dependencies

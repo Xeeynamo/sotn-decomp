@@ -39,11 +39,6 @@ jobs:
         uses: ./.github/actions/get-dependencies
         with:
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-      - name: Extract dependencies
-        run: |
-          mkdir -p ~/go/bin
-          ln -s $(which go) ~/go/bin/
-          VERSION=pspeu make extract_disk
       - name: build
         working-directory: mods/mariapsp-forpsx
         run: VERSION=${{ matrix.version }} make

@@ -50,8 +50,6 @@ jobs:
         uses: ./.github/actions/get-dependencies
         with:
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-      - name: Extract dependencies
-        run: make extract_disk
       - name: Build binaries and check if they match
         run: make build
       - name: Generate progress report
@@ -106,8 +104,6 @@ jobs:
         uses: ./.github/actions/get-dependencies
         with:
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-      - name: Extract dependencies
-        run: make extract_disk && make VERSION=pspeu extract_disk
       - name: Build binaries and check if they match
         run: make
 
@@ -133,8 +129,6 @@ jobs:
         uses: ./.github/actions/get-dependencies
         with:
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-      - name: Extract dependencies
-        run: make extract_disk
       - name: Obtain built binaries
         uses: actions/download-artifact@v4
         with:
@@ -192,8 +186,6 @@ jobs:
         uses: ./.github/actions/get-dependencies
         with:
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-      - name: Extract dependencies
-        run: make extract_disk
       - name: Obtain built binaries
         uses: actions/download-artifact@v4
         with:
