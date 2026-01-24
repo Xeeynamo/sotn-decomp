@@ -45,6 +45,7 @@ segments:
       - [0x10E4, data]
       - [0x1134, .data, e_lock_camera]
       - [0x11B4, data]
+      - [0x150C, .data, e_bat]
       - [0x1544, .data, st_update]
       - [0x1590, .data, collision]
       - [0x1950, .data, e_red_door]
