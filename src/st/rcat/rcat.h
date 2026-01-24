@@ -10,6 +10,7 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_BREAKABLE = 0x237,
 };
 
 enum Entities {

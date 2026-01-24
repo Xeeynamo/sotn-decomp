@@ -197,8 +197,6 @@ extern u16 D_80180BC8[];
 extern u16 D_80181CA8[];
 extern u16 D_80181CD8[];
 extern u8* g_SubweaponAnimPrizeDrop[];
-extern EInit g_EInitSkeletonPieces;
-extern EInit g_EInitSkeletonBone;
 
 // *** EntityLeftSecretRoomWall properties START ***
 

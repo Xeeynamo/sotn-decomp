@@ -124,9 +124,6 @@ extern EInit g_EInitAxeKnight;
 extern EInit g_EInitAxeKnightAxe;
 extern EInit g_EInitOuijaTable;
 extern EInit g_EInitOuijaTableComponent;
-extern EInit g_EInitSkeleton;
-extern EInit g_EInitSkeletonPieces;
-extern EInit g_EInitSkeletonBone;
 
 // Clock room
 extern u16 g_Statues[];
