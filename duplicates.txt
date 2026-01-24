@@ -3311,8 +3311,8 @@
 | 0.90 | true     | EntitySlingerPieces                 | asm/us/st/no0/matchings/e_slinger/EntitySlingerPieces.s 
 | 0.90 | true     | EntitySkeletonPieces                | asm/us/st/no1/matchings/e_skeleton/EntitySkeletonPieces.s 
 | 0.90 | true     | EntitySkeletonPieces                | asm/us/st/nz0/matchings/e_skeleton/EntitySkeletonPieces.s 
+| 0.90 | true     | EntitySkeletonPieces                | asm/us/st/rcat/matchings/e_skeleton/EntitySkeletonPieces.s 
 | 0.97 | true     | EntitySkeletonPieces                | asm/us/st/rtop/matchings/e_yorick/EntitySkeletonPieces.s 
-| 0.90 | false    | EntitySkeletonPieces                | asm/us/st/rcat/nonmatchings/e_skeleton/EntitySkeletonPieces.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | ARE_EntityBreakableDebris           | asm/us/st/are/matchings/e_breakable/ARE_EntityBreakableDebris.s 
 | 0.95 | true     | DAI_EntityBreakableDebris           | asm/us/st/dai/matchings/e_breakable/DAI_EntityBreakableDebris.s 
@@ -3348,7 +3348,6 @@
 | 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
 | 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
 | 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
 | 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | DMACallback                         | asm/us/main/matchings/psxsdk/libetc/intr/DMACallback.s 
@@ -3379,7 +3378,7 @@
 | 0.90 | true     | EntitySlinger                       | asm/us/st/no0/matchings/e_slinger/EntitySlinger.s 
 | 0.90 | true     | EntitySkeleton                      | asm/us/st/no1/matchings/e_skeleton/EntitySkeleton.s 
 | 0.90 | true     | EntitySkeleton                      | asm/us/st/nz0/matchings/e_skeleton/EntitySkeleton.s 
-| 0.90 | false    | EntitySkeleton                      | asm/us/st/rcat/nonmatchings/e_skeleton/EntitySkeleton.s 
+| 0.90 | true     | EntitySkeleton                      | asm/us/st/rcat/matchings/e_skeleton/EntitySkeleton.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | BO4_func_8010DA2C                   | asm/us/boss/bo4/matchings/dop_anim/BO4_func_8010DA2C.s 
 | 1.00 | true     | RBO5_func_8010DA2C                  | asm/us/boss/rbo5/matchings/dop_anim/RBO5_func_8010DA2C.s 
@@ -3637,13 +3636,13 @@
 | 1.00 | true     | EntitySkeletonThrownBone            | asm/us/st/no0/matchings/e_skeleton/EntitySkeletonThrownBone.s 
 | 1.00 | true     | EntitySkeletonThrownBone            | asm/us/st/no1/matchings/e_skeleton/EntitySkeletonThrownBone.s 
 | 1.00 | true     | EntitySkeletonThrownBone            | asm/us/st/nz0/matchings/e_skeleton/EntitySkeletonThrownBone.s 
-| 1.00 | false    | EntitySkeletonThrownBone            | asm/us/st/rcat/nonmatchings/e_skeleton/EntitySkeletonThrownBone.s 
+| 1.00 | true     | EntitySkeletonThrownBone            | asm/us/st/rcat/matchings/e_skeleton/EntitySkeletonThrownBone.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | SkeletonAttackCheck                 | asm/us/st/lib/matchings/e_skeleton/SkeletonAttackCheck.s 
 | 1.00 | true     | SkeletonAttackCheck                 | asm/us/st/no0/matchings/e_skeleton/SkeletonAttackCheck.s 
 | 1.00 | true     | SkeletonAttackCheck                 | asm/us/st/no1/matchings/e_skeleton/SkeletonAttackCheck.s 
 | 1.00 | true     | SkeletonAttackCheck                 | asm/us/st/nz0/matchings/e_skeleton/SkeletonAttackCheck.s 
-| 1.00 | false    | SkeletonAttackCheck                 | asm/us/st/rcat/nonmatchings/e_skeleton/SkeletonAttackCheck.s 
+| 1.00 | true     | SkeletonAttackCheck                 | asm/us/st/rcat/matchings/e_skeleton/SkeletonAttackCheck.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | UnusedSkeletonEntity                | asm/us/st/lib/matchings/e_skeleton/UnusedSkeletonEntity.s 
 | 1.00 | true     | UnusedSkeletonEntity                | asm/us/st/no0/matchings/e_skeleton/UnusedSkeletonEntity.s 
@@ -4621,6 +4620,9 @@
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | RicEntityCrashReboundStoneParticles | asm/us/ric/matchings/2F8E8/RicEntityCrashReboundStoneParticles.s 
 | 1.00 | true     | RicEntityStopwatchCrashLightning    | asm/us/ric/matchings/319C4/RicEntityStopwatchCrashLightning.s 
 -------------------------------------------------------------------------------
@@ -4916,10 +4918,10 @@
 | 1.00 | true     | func_us_801C8AAC                    | asm/us/st/no2/matchings/e_valhalla_knight/func_us_801C8AAC.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBloodSkeleton                 | asm/us/st/cat/matchings/e_blood_skeleton/EntityBloodSkeleton.s 
-| 1.00 | false    | EntityBloodSkeleton                 | asm/us/st/rcat/nonmatchings/e_blood_skeleton/EntityBloodSkeleton.s 
+| 1.00 | true     | EntityBloodSkeleton                 | asm/us/st/rcat/matchings/e_blood_skeleton/EntityBloodSkeleton.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CAT_EntityBreakable                 | asm/us/st/cat/matchings/e_breakable/CAT_EntityBreakable.s 
-| 1.00 | false    | RCAT_EntityBreakable                | asm/us/st/rcat/nonmatchings/e_breakable/RCAT_EntityBreakable.s 
+| 1.00 | true     | RCAT_EntityBreakable                | asm/us/st/rcat/matchings/e_breakable/RCAT_EntityBreakable.s 
 -------------------------------------------------------------------------------
 | 0.98 | true     | EntityCavernBackgroundDiscusLord    | asm/us/st/cat/matchings/e_cavern_background/EntityCavernBackgroundDiscusLord.s 
 | 1.00 | true     | EntityCavernBackgroundLossoth       | asm/us/st/cat/matchings/e_cavern_background/EntityCavernBackgroundLossoth.s 
@@ -5270,7 +5272,7 @@
 | 1.00 | true     | UpdateWeightChains                  | asm/us/st/np3/matchings/entrance_weights/UpdateWeightChains.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | EntityBat                           | asm/us/st/no4/matchings/e_bat/EntityBat.s 
-| 0.91 | false    | EntityBat                           | asm/us/st/rcat/nonmatchings/e_bat/EntityBat.s 
+| 0.91 | true     | EntityBat                           | asm/us/st/rcat/matchings/e_bat/EntityBat.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801C2E60                    | asm/us/st/no4/matchings/first_c_file/func_us_801C2E60.s 
 | 0.94 | true     | func_us_801C3CC4                    | asm/us/st/no4/matchings/first_c_file/func_us_801C3CC4.s 
