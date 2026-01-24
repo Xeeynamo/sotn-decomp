@@ -13,3 +13,7 @@ target/
 # Matches in tools only
 /sotn-disk/sotn-disk
 /sotn-assets/sotn-assets
+
+
+GCCSH/
+.dosemu*
