@@ -29,19 +29,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone main repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
           submodules: false
       - name: Get dependencies
-        uses: actions/cache@v4
-        id: get-dependencies
+        uses: ./.github/actions/get-dependencies
         with:
-          path: 'disks/dependencies'
-          key: sotn-us-deps
-      - name: Setting up dependencies
-        working-directory: disks
-        run: cat dependencies/* | tar -zxf -
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
       - name: Extract dependencies
         run: make extract_disk
       - name: Extract game assets
@@ -74,7 +69,7 @@ jobs:
           sudo apt-get update
           sudo apt-get install gcc-multilib g++-multilib libsdl2-dev:i386
       - name: Clone repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
           submodules: false
@@ -113,7 +108,7 @@ jobs:
       - name: Install requirements
         run: brew install SDL2
       - name: Clone repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
           submodules: false
@@ -152,7 +147,7 @@ jobs:
         powershell Invoke-WebRequest 'https://github.com/libsdl-org/SDL/releases/download/release-2.28.5/SDL2-devel-2.28.5-VC.zip' -OutFile C:\temp-sdl2\SDL2-devel-2.28.5-VC.zip
         7z x C:\temp-sdl2\SDL2-devel-2.28.5-VC.zip -oC:\temp-sdl2
     - name: Clone repo
-      uses: actions/checkout@v4
+      uses: actions/checkout@v6
       with:
         ref: ${{ github.ref }}
         submodules: false

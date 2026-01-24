@@ -22,29 +22,23 @@ jobs:
     steps:
       - name: Clone main repo (PR)
         if: github.event_name == 'pull_request_target'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           submodules: false
       - name: Clone main repo
         if: github.event_name != 'pull_request_target'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
           submodules: false
-      - name: Clone dependencies
-        uses: actions/checkout@v4
+      - name: Get dependencies
+        uses: ./.github/actions/get-dependencies
         with:
-          repository: xeeynamo/sotn-decomp-dependencies
-          ref: saturn
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-          path: 'disks/dependencies'
-      - name: Setting up dependencies
-        working-directory: disks
-        run: cat dependencies/* | tar -zxf -
-      - name: Install bchunk 7zip
+      - name: Install bchunk
         run: |
-          sudo apt-get install p7zip-full bchunk binutils-sh-elf
+          sudo apt-get install bchunk binutils-sh-elf
       - name: Install dosemu
         run: |
           git clone https://github.com/sozud/dosemu-deb.git
@@ -69,35 +63,29 @@ jobs:
     steps:
       - name: Clone main repo (PR)
         if: github.event_name == 'pull_request_target'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           submodules: false
       - name: Clone main repo
         if: github.event_name != 'pull_request_target'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
           submodules: false
-      - name: Clone dependencies
-        uses: actions/checkout@v4
+      - name: Get dependencies
+        uses: ./.github/actions/get-dependencies
         with:
-          repository: xeeynamo/sotn-decomp-dependencies
-          ref: saturn
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-          path: 'disks/dependencies'
-      - name: Setting up dependencies
-        working-directory: disks
-        run: cat dependencies/* | tar -zxf -
-      - name: Install bchunk 7zip
+      - name: Install bchunk
         run: |
-          sudo apt-get install p7zip-full bchunk binutils-sh-elf
+          sudo apt-get install bchunk binutils-sh-elf
       - name: Extract dependencies
         run: VERSION=saturn make extract_disk
       - name: Extract asm
         run: VERSION=saturn make extract
       - name: Clone asset repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: 'gh-functions-saturn'
           path: 'gh-functions-saturn'

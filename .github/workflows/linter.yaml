@@ -21,13 +21,13 @@ jobs:
         run: pip install black pyyaml mapfile-parser==2.1.4
       - name: Clone main repo (PR)
         if: github.event_name == 'pull_request_target'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           submodules: false
       - name: Clone main repo
         if: github.event_name != 'pull_request_target'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
           submodules: false

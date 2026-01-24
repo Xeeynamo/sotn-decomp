@@ -22,13 +22,6 @@ jobs:
     strategy:
       matrix:
         version: ["us", "hd", "pspeu"]
-        include:
-          - dependency: us
-            version: us
-          - dependency: pspeu
-            version: hd
-          - dependency: pspeu
-            version: pspeu
     # Building and testing cannot work if the repository owner is not Xeeynamo
     # due to the missing secrets to clone the CI dependencies
     if: github.repository == 'Xeeynamo/sotn-decomp'
@@ -41,13 +34,13 @@ jobs:
     steps:
       - name: Clone main repo (PR)
         if: github.event_name == 'pull_request_target'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           submodules: false
       - name: Clone main repo
         if: github.event_name != 'pull_request_target'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
           submodules: false
@@ -61,28 +54,9 @@ jobs:
       - name: Install tools requirements
         run: make update-dependencies
       - name: Get dependencies
-        uses: actions/cache@v4
-        id: get-dependencies
+        uses: ./.github/actions/get-dependencies
         with:
-          path: 'disks/dependencies/${{ matrix.dependency }}'
-          key: sotn-${{ matrix.dependency }}-deps
-      - name: Get dependencies (uncached)
-        if: steps.get-dependencies.outputs.cache-hit != 'true'
-        uses: actions/checkout@v4
-        with:
-          repository: xeeynamo/sotn-decomp-dependencies
-          ref: ${{ matrix.dependency }}
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-          path: 'disks/dependencies/${{ matrix.dependency }}'
-      - name: Cache dependencies
-        if: steps.get-dependencies.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v3
-        with:
-          path: 'disks/dependencies/${{ matrix.dependency }}'
-          key: sotn-${{ matrix.dependency }}-deps
-      - name: Setting up dependencies
-        working-directory: disks
-        run: cat dependencies/${{ matrix.dependency }}/* | tar -zxf -
       - name: Extract dependencies
         run: make extract_disk
       - name: Build binaries and check if they match
@@ -125,13 +99,13 @@ jobs:
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repo (PR)
         if: github.event_name == 'pull_request_target'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           submodules: false
       - name: Clone main repo
         if: github.event_name != 'pull_request_target'
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
           submodules: false
@@ -142,51 +116,10 @@ jobs:
           cache-dependency-path: "**/*.sum"
       - name: Install tools requirements
         run: make update-dependencies
-      - name: Get dependencies (us)
-        uses: actions/cache@v4
-        id: get-dependencies-us
+      - name: Get dependencies
+        uses: ./.github/actions/get-dependencies
         with:
-          path: 'disks/dependencies/us'
-          key: sotn-us-deps
-      - name: Get dependencies (us) (uncached)
-        if: steps.get-dependencies-us.outputs.cache-hit != 'true'
-        uses: actions/checkout@v4
-        with:
-          repository: xeeynamo/sotn-decomp-dependencies
-          ref: us
           token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-          path: 'disks/dependencies/us'
-      - name: Cache dependencies (us)
-        if: steps.get-dependencies-us.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v3
-        with:
-          path: 'disks/dependencies/us'
-          key: sotn-us-deps
-      - name: Get dependencies (pspeu/hd)
-        uses: actions/cache@v4
-        id: get-dependencies-pspeu
-        with:
-          path: 'disks/dependencies/pspeu'
-          key: sotn-pspeu-deps
-      - name: Get dependencies (pspeu/hd) (uncached)
-        if: steps.get-dependencies-pspeu.outputs.cache-hit != 'true'
-        uses: actions/checkout@v4
-        with:
-          repository: xeeynamo/sotn-decomp-dependencies
-          ref: pspeu
-          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
-          path: 'disks/dependencies/pspeu'
-      - name: Cache dependencies (pspeu/hd)
-        if: steps.get-dependencies-pspeu.outputs.cache-hit != 'true'
-        uses: actions/cache/save@v3
-        with:
-          path: 'disks/dependencies/pspeu'
-          key: sotn-pspeu-deps
-      - name: Setting up dependencies
-        working-directory: disks
-        run: |
-            cat dependencies/us/* | tar -zxf - ; \
-            cat dependencies/pspeu/* | tar -zxf -
       - name: Extract dependencies
         run: make extract_disk && make VERSION=pspeu extract_disk
       - name: Build binaries and check if they match
@@ -196,9 +129,6 @@ jobs:
     strategy:
       matrix:
         version: ["us"]
-        include:
-          - dependency: us
-            version: us
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
     runs-on: ubuntu-latest
@@ -208,19 +138,15 @@ jobs:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: false
       - name: Install tool requirements
         run: make update-dependencies
       - name: Get dependencies
-        uses: actions/cache@v4
+        uses: ./.github/actions/get-dependencies
         with:
-          path: 'disks/dependencies/${{ matrix.dependency }}'
-          key: sotn-${{ matrix.dependency }}-deps
-      - name: Setting up dependencies
-        working-directory: disks
-        run: cat dependencies/${{ matrix.dependency }}/* | tar -zxf -
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
       - name: Extract dependencies
         run: make extract_disk
       - name: Obtain built binaries
@@ -229,7 +155,7 @@ jobs:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
       - name: Clone asset repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: 'gh-duplicates'
           path: 'gh-duplicates'
@@ -262,9 +188,6 @@ jobs:
     strategy:
       matrix:
         version: ["pspeu"]
-        include:
-          - dependency: pspeu
-            version: pspeu
     if: github.ref == 'refs/heads/master' && github.event_name == 'push'
     needs: build-and-test
     runs-on: ubuntu-latest
@@ -274,19 +197,15 @@ jobs:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone main repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: false
       - name: Install requirements
         run: make update-dependencies
       - name: Get dependencies
-        uses: actions/cache@v4
+        uses: ./.github/actions/get-dependencies
         with:
-          path: 'disks/dependencies/${{ matrix.dependency }}'
-          key: sotn-${{ matrix.dependency }}-deps
-      - name: Setting up dependencies
-        working-directory: disks
-        run: cat dependencies/${{ matrix.dependency }}/* | tar -zxf -
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
       - name: Extract dependencies
         run: make extract_disk
       - name: Obtain built binaries
@@ -295,7 +214,7 @@ jobs:
           name: build_${{ matrix.version }}
           path: build/${{ matrix.version }}
       - name: Clone asset repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: 'gh-duplicates-${{ matrix.version }}'
           path: 'gh-duplicates'

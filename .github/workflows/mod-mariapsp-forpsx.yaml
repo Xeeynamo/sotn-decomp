@@ -28,7 +28,7 @@ jobs:
       - name: Install requirements
         run: sudo apt-get install gcc-mipsel-linux-gnu
       - name: Clone repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ github.ref }}
           submodules: false
@@ -36,13 +36,9 @@ jobs:
         with:
           go-version: '>=1.24.4'
       - name: Get dependencies
-        uses: actions/cache@v4
+        uses: ./.github/actions/get-dependencies
         with:
-          path: 'disks/dependencies'
-          key: sotn-pspeu-deps
-      - name: Setting up dependencies
-        working-directory: disks
-        run: cat dependencies/* | tar -zxf -
+          token: ${{ secrets.SOTN_DECOMP_DEPENDENCIES_TOKEN }}
       - name: Extract dependencies
         run: |
           mkdir -p ~/go/bin
@@ -56,7 +52,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Clone main repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: false
       - name: Set up Docker Buildx

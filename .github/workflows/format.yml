@@ -28,7 +28,7 @@ jobs:
       - name: Install black
         run: pip install black pyyaml mapfile-parser==2.1.4
       - name: Clone main repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           submodules: false
       - name: Format code
