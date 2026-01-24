@@ -33,6 +33,7 @@ DEPENDENCIES			+= $(SATURN_SPLITTER_APP)
 .PHONY: saturn
 saturn: build_saturn check_saturn
 
+.PHONY: check # TODO: remove once `make saturn` in validate-and-report is merged to master
 .PHONY: check_saturn
 check_saturn:
 	sha1sum --check config/check.saturn.sha
