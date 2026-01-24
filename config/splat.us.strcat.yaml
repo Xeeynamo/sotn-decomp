@@ -54,6 +54,7 @@ segments:
       - [0x1F74, .data, e_particles]
       - [0x1FF4, .data, e_room_fg]
       - [0x2080, data]
+      - [0x22DC, .data, e_blood_skeleton]
       - [0x2384, .data, e_skeleton]
       - [0x2484, data]
       - [0x2F5FC, .rodata, unk_31F1C]
