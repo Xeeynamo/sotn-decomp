@@ -144,6 +144,6 @@ EInit g_EInitBat = {ANIMSET_OVL(9), 0, 95, 0x240, 0x040};
 EInit g_EInitBloodSkeleton = {ANIMSET_OVL(10), 0, 93, 0x250, 0x046};
 
 EInit g_EInitSkeleton = {ANIMSET_OVL(11), 1, 94, 0x260, 0x04B};
-EInit D_us_801810CC = {ANIMSET_OVL(11), 0, 94, 0x260, 0x002};
-EInit D_us_801810D8 = {ANIMSET_OVL(11), 21, 94, 0x260, 0x04C};
+EInit g_EInitSkeletonPieces = {ANIMSET_OVL(11), 0, 94, 0x260, 0x002};
+EInit g_EInitSkeletonBone = {ANIMSET_OVL(11), 21, 94, 0x260, 0x04C};
 // clang-format on

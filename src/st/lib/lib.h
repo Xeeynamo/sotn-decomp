@@ -132,8 +132,5 @@ extern EInit g_EInitLesserDemon;
 extern EInit g_EInitLesserDemonSpit;
 extern EInit D_us_80180980;
 extern EInit D_us_8018098C;
-extern EInit g_EInitSkeleton;
-extern EInit g_EInitSkeletonPieces;
-extern EInit g_EInitSkeletonBone;
 extern EInit g_EInitMudman;
 extern EInit D_us_801809EC;

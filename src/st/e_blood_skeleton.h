@@ -69,7 +69,7 @@ void EntityBloodSkeleton(Entity* self) {
         break;
 
     case BLOOD_SKELETON_WALK:
-#ifdef STAGE_IS_CAT
+#if defined(STAGE_IS_CAT) || defined(STAGE_IS_RCAT)
         if (!self->step_s) {
             self->ext.bloodSkeleton.timer = timers[Random() & 3];
             self->step_s++;
