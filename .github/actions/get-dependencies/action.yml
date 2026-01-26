@@ -1,0 +1,39 @@
+name: 'Get Dependencies'
+description: 'Retrieve and extract sotn-decomp-dependencies with caching'
+
+inputs:
+  token:
+    description: 'GitHub token for cloning the private dependencies repository'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Get dependencies (cached)
+      uses: actions/cache@v5
+      id: cache-deps
+      with:
+        path: 'disks/dependencies'
+        key: sotn-deps
+
+    - name: Get dependencies (uncached)
+      if: steps.cache-deps.outputs.cache-hit != 'true'
+      uses: actions/checkout@v6
+      with:
+        repository: xeeynamo/sotn-decomp-dependencies
+        ref: all
+        fetch-depth: 1
+        token: ${{ inputs.token }}
+        path: 'disks/dependencies'
+
+    - name: Cache dependencies
+      if: steps.cache-deps.outputs.cache-hit != 'true'
+      uses: actions/cache/save@v5
+      with:
+        path: 'disks/dependencies'
+        key: sotn-deps
+
+    - name: Extract dependencies
+      shell: bash
+      working-directory: disks
+      run: 7z x dependencies/sotn.8z

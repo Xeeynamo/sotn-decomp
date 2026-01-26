@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sfx.h"
 
-extern s32 D_us_80181ACC;
+extern EInit g_EInitSkeleton;
+extern EInit g_EInitSkeletonPieces;
+extern EInit g_EInitSkeletonBone;
 
 typedef enum {
     SKELETON_INIT,
@@ -19,6 +21,9 @@ typedef enum {
     SKELETON_IN_AIR,
     SKELETON_LAND
 } SkeletonJumpSubSteps;
+
+// BSS used in LIB only
+extern s32 D_us_80181ACC;
 
 #ifndef STAGE_IS_NZ0
 static u8 unused[] = {0x06, 0x01, 0x04, 0x01, 0x04, 0x02, 0x06,
@@ -292,6 +297,7 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
     }
 }
 
+#if !defined(STAGE_IS_RCAT)
 // Unclear if this has a way to run. Not called, and not in
 // the main entity list.
 void UnusedSkeletonEntity(Entity* self) {
@@ -316,3 +322,4 @@ void UnusedSkeletonEntity(Entity* self) {
         DestroyEntity(self);
     }
 }
+#endif

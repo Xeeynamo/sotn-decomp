@@ -265,7 +265,7 @@ void EntityBladeSoldier(Entity* self) {
             }
 
             if (!self->poseTimer && self->pose == 0xF) {
-                PlaySfxPositional(SFX_MULTI_NOISE_SWEEP_DOWN);
+                PlaySfxPositional(SFX_BLADE_SOLDIER_CHARGE_STAB);
             }
 
             // NOTE: result appears unused?

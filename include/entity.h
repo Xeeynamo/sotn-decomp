@@ -2305,7 +2305,10 @@ typedef struct {
 // ET_BatFam and this be ET_Bat? Seems familiars should all be labeled since
 // there are fewer of those than there are enemies.
 typedef struct {
-    s32 accelY;
+    /* 0x7C */ u32 accelY;
+    /* 0x80 */ s32 yProximity;
+    /* 0x84 */ s32 xProximity;
+    /* 0x88 */ s32 unk88;
 } ET_BatEnemy;
 
 typedef struct {
