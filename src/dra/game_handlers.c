@@ -490,7 +490,7 @@ void HandlePlay(void) {
     case Play_PrepareNextStage:
 #ifdef VERSION_PSP
         func_psp_0891B0DC(0, 0x100);
-        func_psp_0891B6FC();
+        ClearClut256();
 #endif
         PlaySfx(SET_UNK_12);
         PlaySfx(SET_UNK_0B);
@@ -808,7 +808,7 @@ void HandleGameOver(void) {
         HideAllBackgroundLayers();
         func_800EAD7C();
 #ifdef VERSION_PSP
-        func_psp_0891B6FC();
+        ClearClut256();
         func_psp_0892F83C();
 #endif
         g_GameStep++;
