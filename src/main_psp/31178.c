@@ -362,19 +362,19 @@ void func_psp_08930484(s16 x, s16 y, s16 w, s16 h, u16 u, u16 v, u16 du, u16 dv,
     vertex[1].x = x + w;
     vertex[1].y = y + h;
     vertex[1].z = z;
-    func_psp_089109E4(GU_TFX_MODULATE, GU_TCC_RGBA, 1);
+    PutTexFunc(GU_TFX_MODULATE, GU_TCC_RGBA, GU_TRUE);
     func_psp_089111C0(
         func_psp_08932994(&D_psp_08DB0314), func_psp_08932978(&D_psp_08DB0314),
         5, func_psp_089329B0(&D_psp_08DB0314), 9, 9);
-    func_psp_089105DC(1);
-    func_psp_08910778(0);
-    func_psp_0891068C(1);
-    func_psp_089106B8(GU_GEQUAL, 1, 0xFF);
-    func_psp_08910660(0);
-    func_psp_08910810(
+    PutTextureMappingEnable(GU_TRUE);
+    PutColorTestEnable(GU_FALSE);
+    PutAlphaTestEnable(GU_TRUE);
+    PutAlphaFunc(GU_GEQUAL, 1, 0xFF);
+    PutAlphaBlendingEnable(GU_FALSE);
+    PutBlendFunc(
         GU_ADD, GU_ONE_MINUS_DST_ALPHA, GU_DST_ALPHA, 0x00000000, 0x00000000);
     func_psp_08910A80(vertex, 2, sizeof(TVertex), GU_SPRITES, vertexFormat);
-    func_psp_089109E4(GU_TFX_MODULATE, GU_TCC_RGBA, 0);
+    PutTexFunc(GU_TFX_MODULATE, GU_TCC_RGBA, GU_FALSE);
 }
 
 void func_psp_089307D4(s16 x, s16 y, s16 w, s16 h, s32 color) {
@@ -390,16 +390,16 @@ void func_psp_089307D4(s16 x, s16 y, s16 w, s16 h, s32 color) {
     v[1].x = x + w;
     v[1].y = y + h;
     v[1].z = 0.0f;
-    func_psp_089105DC(0);
-    func_psp_08910778(0);
-    func_psp_0891068C(1);
-    func_psp_089106B8(GU_GEQUAL, 1, 0xFF);
-    func_psp_08910660(1);
-    func_psp_08910810(GU_ADD, GU_FIX, GU_FIX, gray, gray);
+    PutTextureMappingEnable(GU_FALSE);
+    PutColorTestEnable(GU_FALSE);
+    PutAlphaTestEnable(GU_TRUE);
+    PutAlphaFunc(GU_GEQUAL, 1, 0xFF);
+    PutAlphaBlendingEnable(GU_TRUE);
+    PutBlendFunc(GU_ADD, GU_FIX, GU_FIX, gray, gray);
     func_psp_08910A80(&v, 2, sizeof(TVertex), GU_SPRITES,
                       vertexFormat); // BUG, should be sizeof(Vertex)
-    func_psp_089105DC(1);
-    func_psp_089106B8(GU_GEQUAL, 1, 0xFF);
+    PutTextureMappingEnable(GU_TRUE);
+    PutAlphaFunc(GU_GEQUAL, 1, 0xFF);
 }
 
 void func_psp_08930934(s32 errorVal) {

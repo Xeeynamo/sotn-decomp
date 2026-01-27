@@ -11,7 +11,7 @@ extern u8 g_BmpCastleMap[0x8000];
 extern u16 g_Clut[3][0x1000];
 extern u16 D_psp_08C63324[];
 
-void func_psp_089262C4(void);
+void InitVCount(void);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/2758C", FntPrint);
 
@@ -95,13 +95,11 @@ void PadInit(int mode) {}
 
 u_long PadRead(int id) { return 0; }
 
-void GsInitVcount(void) { func_psp_089262C4(); }
+void GsInitVcount(void) { InitVCount(); }
 
-void func_psp_089262C4(void) { D_psp_08C63B24 = func_psp_0891B528(); }
+void InitVCount(void) { D_psp_08C63B24 = GetVCount(); }
 
-long GsGetVcount(void) {
-    return ((func_psp_0891B528() - D_psp_08C63B24) + 1) << 8;
-}
+long GsGetVcount(void) { return ((GetVCount() - D_psp_08C63B24) + 1) << 8; }
 
 int CdControl(u_char com, u_char* param, u_char* result) { return 2; }
 
@@ -134,35 +132,35 @@ void DisableAutoPowerOff(void) {
     FntPrint("Disable Auto Power Off\n");
 }
 
-void func_psp_089264CC(s32 arg0, u_long* arg1, s32 arg2) {
+void func_psp_089264CC(s32 paletteID, u16* data, bool arg2) {
     RECT rect;
-    u16* var_s0;
+    u16* clutPtr;
 
-    var_s0 = (u16*)g_Clut;
-    arg0 &= 0x3FF;
-    if ((arg0 >= 0) && (arg0 < 0x100)) {
+    clutPtr = (u16*)g_Clut;
+    paletteID &= 0x3FF;
+    if (paletteID >= 0 && paletteID < 0x100) {
         rect.x = 0x200;
-    } else if ((arg0 >= 0x100) && (arg0 < 0x200)) {
+    } else if (paletteID >= 0x100 && paletteID < 0x200) {
         rect.x = 0;
-        var_s0 += 0x1000;
-    } else if ((arg0 >= 0x200) && (arg0 < 0x300)) {
+        clutPtr += 0x1000;
+    } else if (paletteID >= 0x200 && paletteID < 0x300) {
         rect.x = 0x100;
-        var_s0 += 0x2000;
+        clutPtr += 0x2000;
     } else {
         return;
     }
-    if (arg2 != 0) {
-        u8* p = (u8*)arg1;
+    if (arg2) {
+        u8* p = (u8*)data;
         p[0] = 0;
         p[1] = 0;
     }
-    rect.x += (arg0 & 0xF) * 0x10;
-    rect.y = ((arg0 / 0x10) & 0xF) + 0xF0;
+    rect.x += (paletteID & 0xF) * 0x10;
+    rect.y = ((paletteID / 0x10) & 0xF) + 0xF0;
     rect.w = 0x100;
     rect.h = 1;
-    LoadImage(&rect, arg1);
-    var_s0 += (((arg0 / 0x10) & 0xF) << 8) + ((arg0 & 0xF) * 0x10);
-    memcpy(var_s0, arg1, 0x200);
+    LoadImage(&rect, (u_long*)data);
+    clutPtr += (((paletteID / 0x10) & 0xF) << 8) + ((paletteID & 0xF) * 0x10);
+    memcpy(clutPtr, data, 0x200);
 }
 
 void func_psp_0892667C(s32 paletteID, u16* data) {
@@ -191,30 +189,30 @@ void func_psp_0892667C(s32 paletteID, u16* data) {
     memcpy(clutPtr, data, 0x20);
 }
 
-void func_psp_08926808(s32 arg0, u_long* arg1) {
+void func_psp_08926808(s32 paletteID, u16* data) {
     RECT rect;
     u16* clutPtr;
 
     clutPtr = (u16*)g_Clut;
-    arg0 &= 0x3FF;
-    if ((arg0 >= 0) && (arg0 < 0x100)) {
+    paletteID &= 0x3FF;
+    if (paletteID >= 0 && paletteID < 0x100) {
         rect.x = 0x200;
-    } else if ((arg0 >= 0x100) && (arg0 < 0x200)) {
+    } else if (paletteID >= 0x100 && paletteID < 0x200) {
         rect.x = 0;
         clutPtr += 0x1000;
-    } else if ((arg0 >= 0x200) && (arg0 < 0x300)) {
+    } else if (paletteID >= 0x200 && paletteID < 0x300) {
         rect.x = 0x100;
         clutPtr += 0x2000;
     } else {
         return;
     }
-    rect.x += (arg0 & 0xF) * 0x10;
-    rect.y = ((arg0 / 0x10) & 0xF) + 0xF0;
+    rect.x += (paletteID & 0xF) * 0x10;
+    rect.y = ((paletteID / 0x10) & 0xF) + 0xF0;
     rect.w = 0x10;
     rect.h = 1;
-    func_psp_0891C1C0(&rect, arg1);
-    clutPtr += (((arg0 / 0x10) & 0xF) << 8) + ((arg0 & 0xF) * 0x10);
-    memcpy(clutPtr, arg1, 0x20);
+    func_psp_0891C1C0(&rect, (u_long*)data);
+    clutPtr += (((paletteID / 0x10) & 0xF) << 8) + ((paletteID & 0xF) * 0x10);
+    memcpy(clutPtr, data, 0x20);
 }
 
 void GameEntrypoint(void) {

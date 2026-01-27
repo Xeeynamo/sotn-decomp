@@ -377,7 +377,7 @@ void func_us_801BBD90(Entity* self) {
             }
             self->step_s++;
 #ifdef VERSION_PSP
-            D_psp_08C62AA4 = 1;
+            D_psp_08C62AA4 = true;
 #endif
         }
         if ((self->posX.i.hi & 0x100) || (self->posY.i.hi < 0)) {

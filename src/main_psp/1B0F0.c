@@ -68,7 +68,7 @@ void func_psp_08919C4C(void);
 s32 func_psp_08933F7C(u8, u8);
 void func_psp_08919D98(Unk08919D98* arg0);
 extern void FinishedRenderingCB(s32 arg0);
-extern void func_psp_0891B570(int arg0, int arg1);
+extern void VBlankhandler(int idx, void* cookie);
 
 void _init(void) {}
 
@@ -330,13 +330,13 @@ int main(int argc, char* argv[]) {
     func_psp_08937560();
     sceCtrlSetSamplingCycle(0);
     sceGuSetCallback2(GU_CALLBACK_FINISH, &FinishedRenderingCB);
-    func_psp_08904408(0, &func_psp_0891B570, 0);
+    sceDisplaySetVblankCallback(0, &VBlankhandler, NULL);
     func_psp_08919C00(0x480000);
     func_psp_0891273C();
     func_psp_08919A0C();
     func_psp_0891ACBC();
     func_psp_08930324();
-    func_psp_0891A6A8(SCREEN_MODE_FULL);
+    SetScreenMode(SCREEN_MODE_FULL);
     printf("月下描画開始00\n"); // Moonlight Drawing begins
     sceGuDisplay(GU_DISPLAY_ON);
     func_psp_08910044();
@@ -345,7 +345,7 @@ int main(int argc, char* argv[]) {
     func_psp_0891979C(4);
     printf("月下ユーティリティ終了00\n"); // Moonlight End utility
     func_psp_0891A14C();
-    func_psp_0891A6A8(
+    SetScreenMode(
         func_psp_08932754() == 0 ? SCREEN_MODE_PERFECT : SCREEN_MODE_FULL);
     func_psp_08933A10();
     func_psp_0892E9B0();

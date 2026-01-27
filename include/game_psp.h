@@ -23,7 +23,7 @@ extern u32 D_psp_08B42054; // psp triangle button
 extern s32 g_UserLanguage; // Defined in global address space
 extern char* D_psp_08B42060;
 extern s32 D_psp_08B42064;
-extern s32 D_psp_08C62AA4;
+extern bool D_psp_08C62AA4;
 extern bool g_InfiniteHearts;
 extern bool g_UnlockAllTactics;
 extern s32 D_psp_08C630D4;

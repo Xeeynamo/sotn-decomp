@@ -23,6 +23,8 @@
 #define g_GameClearFlag (*((s32*)0x091FC418))
 
 #define getTPF(tpage) (((tpage) >> 7) & 3) // Get Texture Pattern Format
+#define getABR(tpage)                                                          \
+    (((tpage) >> 5) & 3) // Semi Transparency (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)
 
 typedef enum {
     // stretches the game resolution to fill the PSP screen vertically
@@ -40,6 +42,15 @@ typedef enum {
     SUB_BUF_ALL = 4,
 } SubBufType;
 
+#define SB_TEMP_ADDR (s32) sceGeEdramGetAddr() + GU_VRAM_BUFSIZE * 3
+#define SB_TEMP_WIDTH 0x100
+
+#define SB_PS_ADDR SB_TEMP_ADDR + (0x200 * SB_TEMP_WIDTH)
+#define SB_PS_WIDTH 0x200
+
+#define SB_WOLF_ADDR SB_PS_ADDR + (0x201 * SB_PS_WIDTH)
+#define SB_WOLF_WIDTH 0x40
+
 typedef struct {
     s32 x;
     s32 y;
@@ -56,30 +67,32 @@ typedef struct {
     float x, y, z;
 } TVertex;
 
+typedef void (*Callback)();
+
 // BSS
-static char debugBuf[0x40];
-static s32 skipFrames;
+static char debugBuf[0x40]; // local
+static s32 skipFrames;      // local
 s32 D_psp_08C630DC;
 s32 D_psp_08C630D8;
 s32 D_psp_08C630D4;
 bool g_UnlockAllTactics;
-static u32 at3Index;
+static u32 at3Index; // local
 bool g_InfiniteHearts;
 bool g_InvincibleFlag;
 static char D_psp_08C62EC4[0x200];
-static s32 D_psp_08C62EC0;
-static s32 D_psp_08C62EBC;
-static u16 D_psp_08C62CBC[0x100];
-static u16 tempClutBuf[0x100];
-static u8* D_psp_08C62AB8;
-static u16 D_psp_08C62AB4;
+static s32 packetsDrawn;
+static bool drawDebugMenuBG;
+static u16 D_psp_08C62CBC[0x100]; // local
+static u16 tempClutBuf[0x100];    // local
+static u8* D_psp_08C62AB8;        // local
+static u16 D_psp_08C62AB4;        // local
 static Unk08C4218C D_psp_08C62AAC;
 static bool D_psp_08C62AA8;
-static s32 D_psp_08C62AA4;
+bool D_psp_08C62AA4;
 static bool D_psp_08C62AA0;
 static s32 D_psp_08C62A9C;
-static s8 D_psp_08C62A98;
-static char D_psp_08C62A78[0x20];
+static s8 D_psp_08C62A98;         // local
+static char D_psp_08C62A78[0x20]; // local
 static OT_TYPE* D_psp_08C62A74;
 bool D_psp_08C62A70;
 s32 D_psp_08C62A6C;
@@ -88,12 +101,12 @@ static s32 frameTime;
 static s32 gpuTime;
 static s32 cpuTime;
 static bool cpuGpuTime;
-static s32 D_psp_08C62A54;
-static s32 D_psp_08C62A50;
+static s32 polysDrawn;
+static s32 D_psp_08C62A50; // spritesDrawn
 static s32 frameCount;
 static u32 resetGraphLevel;
 static bool gpuEmuInfo;
-static s32 D_psp_08C62A40;
+static SubBufType D_psp_08C62A40; // currend sub buffer
 s32 D_psp_08C62A3C;
 static Point32 screenOffset;
 s32 D_psp_08C62A30; // screen_mode
@@ -108,8 +121,8 @@ static u8 D_psp_08C429C0[0x100][0x200];
 static u8 D_psp_08C4298C[0x34] UNUSED;
 static Point32 clut8bppIndexMap[0x100];
 static u32 D_psp_08C42188;
-static void (*D_psp_08C42184)();
-static u32 D_psp_08C42180;
+static Callback currVSyncCallback;
+static u32 VCount;
 static u8* D_psp_08C42100[0x20];
 static s32 D_psp_08C42080[0x20];
 static u8 D_psp_08B42080[0x20][0x8000];
@@ -118,19 +131,18 @@ static SubBufType dispSubBuffer;
 static bool drawPolyline;
 
 // DATA
-static s32 D_psp_089464D0 = -1;
+static s32 lastVCount = -1; // VCount at last vSync(n)
 static s32 D_psp_089464D4 = -1;
 static s32 screenW = 320;
 static s32 screenH = 240;
-static float D_psp_089464E0 = 1.0f;
-static float D_psp_089464E4 = 1.0f;
+static ScePspFVector2 screenScale = {1, 1};
 s32 D_psp_089464E8 = 2;
-static s32 D_psp_089464EC = 1;
+static bool D_psp_089464EC = true;
 static s32 D_psp_089464F0 = 1;
 
-extern s32 D_psp_08B41FC0;
+extern s32 g_currFrameBuf;
 
-void func_psp_089113A8(s32 arg0, u8 arg1);
+void func_psp_089113A8(s32 abr, u8 arg1);
 void ClearClut8bpp(void);
 void func_psp_0891CD28(u_long* p, s32 x, s32 y);
 void func_psp_0891CEB8(s32 x, s32 y);
@@ -169,8 +181,8 @@ void func_psp_0891A650(void) {
             : "m"(x), "m"(y));
 }
 
-void func_psp_0891A6A8(s32 screen_mode) {
-    D_psp_08C62A30 = screen_mode;
+void SetScreenMode(s32 screenMode) {
+    D_psp_08C62A30 = screenMode;
     switch (D_psp_08C62A30) {
     case SCREEN_MODE_FULL:
         screenW = 362;
@@ -205,7 +217,7 @@ void func_psp_0891A800(void) {
     }
 }
 
-static void func_psp_0891A868(s32 arg0, s32 arg1) {
+static void func_psp_0891A868(s32 arg0, bool arg1) {
     s32 i;
     u8* addr;
 
@@ -249,7 +261,7 @@ static char* func_psp_0891AA00(void) {
     return D_psp_08C62A78;
 }
 
-static u8* func_psp_0891AAC8(s32 arg0) { return D_psp_08C42100[arg0 & 0x1F]; }
+static u8* func_psp_0891AAC8(s32 tpage) { return D_psp_08C42100[tpage & 0x1F]; }
 
 static void func_psp_0891AAF8() {
     s32 i;
@@ -269,12 +281,11 @@ static void func_psp_0891AAF8() {
 static void func_psp_0891ABE4(void) { D_psp_08C62A9C = D_psp_08C62A9C ? 0 : 1; }
 
 static u8* func_psp_0891AC24(void) {
-    return (u8*)((long)sceGeEdramGetAddr() + 0xEC000 + D_psp_08C62A9C * 0x200);
+    return (u8*)(SB_PS_ADDR + D_psp_08C62A9C * SB_PS_WIDTH);
 }
 
 static u8* func_psp_0891AC60(void) {
-    return (u8*)((long)sceGeEdramGetAddr() + 0xEC000 +
-                 (D_psp_08C62A9C ? 0 : 1) * 0x200);
+    return (u8*)(SB_PS_ADDR + (D_psp_08C62A9C ? 0 : 1) * SB_PS_WIDTH);
 }
 
 void func_psp_0891ACBC(void) {
@@ -284,46 +295,46 @@ void func_psp_0891ACBC(void) {
     D_psp_08C629C8 = 0;
     D_psp_08C629CC = 0;
     func_psp_0891A608();
-    D_psp_08C62A40 = 0;
-    D_psp_089464D0 = -1;
+    D_psp_08C62A40 = SUB_BUF_OFF;
+    lastVCount = -1;
     D_psp_089464D4 = -1;
-    D_psp_08C42180 = 0;
-    D_psp_08C42184 = NULL;
+    VCount = 0;
+    currVSyncCallback = NULL;
     D_psp_08C42188 = 0;
     func_psp_0891A790();
     func_psp_0891A800();
-    func_psp_0891A6A8(SCREEN_MODE_FULL);
-    func_psp_0891A868(24, 1);
-    func_psp_0891A868(8, 1);
-    func_psp_0891A868(9, 1);
-    func_psp_0891A868(10, 1);
-    func_psp_0891A868(11, 1);
-    func_psp_0891A868(12, 1);
-    func_psp_0891A868(13, 1);
-    func_psp_0891A868(14, 1);
-    func_psp_0891A868(15, 1);
+    SetScreenMode(SCREEN_MODE_FULL);
+    func_psp_0891A868(24, true);
+    func_psp_0891A868(8, true);
+    func_psp_0891A868(9, true);
+    func_psp_0891A868(10, true);
+    func_psp_0891A868(11, true);
+    func_psp_0891A868(12, true);
+    func_psp_0891A868(13, true);
+    func_psp_0891A868(14, true);
+    func_psp_0891A868(15, true);
     func_psp_08911C3C(0, 0, 0);
     func_psp_0891A650();
 }
 
 void func_psp_0891AE04(void) {
-    func_psp_0891A868(1, 1);
-    func_psp_0891A868(2, 1);
-    func_psp_0891A868(3, 1);
-    func_psp_0891A868(4, 1);
+    func_psp_0891A868(1, true);
+    func_psp_0891A868(2, true);
+    func_psp_0891A868(3, true);
+    func_psp_0891A868(4, true);
     D_psp_08C62AA0 = true;
 }
 
 void func_psp_0891AE68(void) {
-    func_psp_0891A868(1, 0);
-    func_psp_0891A868(2, 0);
-    func_psp_0891A868(3, 0);
-    func_psp_0891A868(4, 0);
+    func_psp_0891A868(1, false);
+    func_psp_0891A868(2, false);
+    func_psp_0891A868(3, false);
+    func_psp_0891A868(4, false);
     D_psp_08C62AA0 = false;
 }
 
 void EndFrame(void) {
-    D_psp_08B41FC0 = D_psp_08B41FC0 ? 0 : 1;
+    g_currFrameBuf = g_currFrameBuf ? 0 : 1;
     sceGuSwapBuffers();
     if (cpuGpuTime) {
         frameTime = GetTimeSinceStartOfFrame();
@@ -332,35 +343,35 @@ void EndFrame(void) {
     }
 }
 
-void func_psp_0891AF48(s32 arg0) {
-    s32 base_addr;
+static void SetSubBufType(SubBufType bufType) {
+    void* base_addr;
 
-    switch (arg0) {
-    case 1:
-        D_psp_08C62A40 = 1;
-        func_psp_08910A20((u8*)sceGeEdramGetAddr() + 0xCC000, 0x100);
-        func_psp_08910944(GU_NEAREST, GU_NEAREST);
+    switch (bufType) {
+    case SUB_BUF_TEMP:
+        D_psp_08C62A40 = SUB_BUF_TEMP;
+        PutDrawBuffer((u8*)SB_TEMP_ADDR, SB_TEMP_WIDTH);
+        PutTexFilter(GU_NEAREST, GU_NEAREST);
         break;
-    case 3:
-        D_psp_08C62A40 = 3;
-        func_psp_08910A20((u8*)sceGeEdramGetAddr() + 0x12C200, 0x40);
-        func_psp_08910944(GU_NEAREST, GU_NEAREST);
+    case SUB_BUF_WOLF:
+        D_psp_08C62A40 = SUB_BUF_WOLF;
+        PutDrawBuffer((u8*)SB_WOLF_ADDR, SB_WOLF_WIDTH);
+        PutTexFilter(GU_NEAREST, GU_NEAREST);
         break;
-    case 2:
-        D_psp_08C62A40 = 2;
-        func_psp_08910A20(func_psp_0891AC24(), 0x200);
-        func_psp_08910944(GU_NEAREST, GU_NEAREST);
+    case SUB_BUF_PS:
+        D_psp_08C62A40 = SUB_BUF_PS;
+        PutDrawBuffer(func_psp_0891AC24(), SB_PS_WIDTH);
+        PutTexFilter(GU_NEAREST, GU_NEAREST);
         break;
     default:
-    case 0:
-        D_psp_08C62A40 = 0;
-        if (D_psp_08B41FC0 != 0) {
-            base_addr = 0x44000;
+    case SUB_BUF_OFF:
+        D_psp_08C62A40 = SUB_BUF_OFF;
+        if (g_currFrameBuf != 0) {
+            base_addr = GU_VRAM_BP_1;
         } else {
-            base_addr = 0;
+            base_addr = GU_VRAM_BP_0;
         }
-        func_psp_08910A20((u8*)sceGeEdramGetAddr() + base_addr, 0x200);
-        func_psp_08910944(GU_LINEAR, GU_LINEAR);
+        PutDrawBuffer((u8*)sceGeEdramGetAddr() + (s32)base_addr, GU_VRAM_WIDTH);
+        PutTexFilter(GU_LINEAR, GU_LINEAR);
         break;
     }
 }
@@ -424,7 +435,7 @@ static s32 DrawSolidRect(s32 x, s32 y, s32 w, s32 h, s32 color) {
 s32 func_psp_0891B400(void) {
     if (~D_psp_089464D4 > 0U) {
     }
-    D_psp_08C42180 = 0;
+    VCount = 0;
     D_psp_089464D4 = sceDisplayGetVcount();
     return D_psp_089464D4;
 }
@@ -447,7 +458,7 @@ s32 DrawSync(s32 arg0) {
     return sceGuSync(GU_SYNC_FINISH, GU_SYNC_NOWAIT);
 }
 
-s32 func_psp_0891B528() { return D_psp_08C42180; }
+s32 GetVCount() { return VCount; }
 
 void FinishedRenderingCB(s32 arg0) {
     if (cpuGpuTime) {
@@ -455,30 +466,30 @@ void FinishedRenderingCB(s32 arg0) {
     }
 }
 
-void func_psp_0891B570(int arg0, int arg1) {
-    D_psp_08C42180++;
-    if (D_psp_08C42184 != NULL) {
-        D_psp_08C42184();
+void VBlankhandler(int idx, void* cookie) {
+    VCount++;
+    if (currVSyncCallback != NULL) {
+        currVSyncCallback();
     }
 }
 
 s32 VSync(s32 mode) {
-    s32 vCount;
+    s32 thisVCount;
     if (mode == 0) {
         sceDisplayWaitVblankStartCB();
-        D_psp_089464D0 = sceDisplayGetVcount();
+        lastVCount = sceDisplayGetVcount();
     } else if (mode == 1) {
-        vCount = sceDisplayGetVcount();
-        return D_psp_089464D0 - vCount;
+        thisVCount = sceDisplayGetVcount();
+        return lastVCount - thisVCount;
     } else if (mode > 1) {
         while (mode) {
             sceDisplayWaitVblankStartCB();
-            D_psp_089464D0 = sceDisplayGetVcount();
+            lastVCount = sceDisplayGetVcount();
             mode--;
         }
     } else {
-        vCount = sceDisplayGetVcount();
-        return vCount - D_psp_089464D4;
+        thisVCount = sceDisplayGetVcount();
+        return thisVCount - D_psp_089464D4;
     }
     return 0;
 }
@@ -564,7 +575,7 @@ u8* func_psp_0891B8F0(u16 clut, s32 tpf, s32 arg2) {
     return D_psp_08C62AB8;
 }
 
-void func_psp_0891BB18(RECT* rect, u_long* p, s32 width) {
+static void func_psp_0891BB18(RECT* rect, u_long* p, s32 width) {
     u16* dst = (u16*)p;
     s32 x1 = rect->x + rect->w;
     s32 x0 = rect->x;
@@ -582,7 +593,7 @@ void func_psp_0891BB18(RECT* rect, u_long* p, s32 width) {
     }
 }
 
-s32 func_psp_0891BCA0(RECT* rect, u_long* p, s32 width, s32 arg3) {
+static s32 func_psp_0891BCA0(RECT* rect, u_long* p, s32 width, bool arg3) {
     s32 sp3C;
     s32 x0, y0;
     s32 x1, y1;
@@ -645,9 +656,8 @@ static inline u16* RemapClut(u16* clut, s32 w, s32 h) {
 }
 
 s32 LoadImage(RECT* rect, u_long* p) {
-    s32 var_a4;
+    bool var_a4 = false;
 
-    var_a4 = 0;
     if (rect->h == 1 &&
         (rect->w == 0x10 || rect->w == 0x100 || rect->w == 0x80)) {
         p = (u_long*)RemapClut((u16*)p, rect->w, rect->h);
@@ -659,7 +669,7 @@ s32 LoadImage(RECT* rect, u_long* p) {
 }
 
 void func_psp_0891C1C0(RECT* rect, u_long* p) {
-    func_psp_0891BCA0(rect, p, rect->w * 2, 0);
+    func_psp_0891BCA0(rect, p, rect->w * 2, false);
 }
 
 static int func_psp_0891C204(RECT* rect, u_long* p, s32 width, s32 arg3) {
@@ -851,12 +861,12 @@ u_short LoadTPage(u_long* pix, s32 tpf, s32 abr, s32 x, s32 y, s32 w, s32 h) {
 
 void AddPrim(void* ot, void* p) { addPrim(ot, p); }
 
-s32 VSyncCallback(void (*f)()) {
-    void (*temp_s0)();
+Callback VSyncCallback(Callback f) {
+    Callback prev;
 
-    temp_s0 = D_psp_08C42184;
-    D_psp_08C42184 = f;
-    return (s32)temp_s0;
+    prev = currVSyncCallback;
+    currVSyncCallback = f;
+    return prev;
 }
 
 OT_TYPE* ClearOTag(OT_TYPE* ot, int n) {
@@ -982,15 +992,13 @@ DISPENV* PutDispEnv(DISPENV* env) {
         } else {
             screenW = (D_psp_08C62A30 == SCREEN_MODE_FULL) ? 418 : 320;
             screenOffset.x = (GU_SCR_WIDTH - screenW) / 2;
-            D_psp_089464E0 = D_psp_089464E4 = 1.0f;
+            screenScale.x = screenScale.y = 1.0f;
         }
+    } else if (D_psp_08C629D8.disp.w <= 480 && D_psp_08C629D8.disp.h <= 256) {
+        screenScale.x = screenScale.y = 1.0f;
     } else {
-        if (D_psp_08C629D8.disp.w <= 480 && D_psp_08C629D8.disp.h <= 256) {
-            D_psp_089464E0 = D_psp_089464E4 = 1.0f;
-        } else {
-            D_psp_089464E0 = (float)screenW / (float)D_psp_08C629D8.disp.w;
-            D_psp_089464E4 = (float)screenH / (float)D_psp_08C629D8.disp.h;
-        }
+        screenScale.x = (float)screenW / (float)D_psp_08C629D8.disp.w;
+        screenScale.y = (float)screenH / (float)D_psp_08C629D8.disp.h;
     }
     return env;
 }
@@ -999,36 +1007,36 @@ void func_psp_0891D9F4(TVertex* ptr, s32 len) {
     s32 i;
 
     if (len == 2) {
-        ptr->x = screenOffset.x + ptr->x * D_psp_089464E0;
-        ptr->y = screenOffset.y + ptr->y * D_psp_089464E4;
+        ptr->x = screenOffset.x + ptr->x * screenScale.x;
+        ptr->y = screenOffset.y + ptr->y * screenScale.y;
         ptr++;
-        ptr->x = screenOffset.x + (ptr->x + 1) * D_psp_089464E0;
-        ptr->y = screenOffset.y + (ptr->y + 1) * D_psp_089464E4;
+        ptr->x = screenOffset.x + (ptr->x + 1) * screenScale.x;
+        ptr->y = screenOffset.y + (ptr->y + 1) * screenScale.y;
     } else {
         for (i = 0; i < len; i++) {
-            ptr->x = screenOffset.x + ptr->x * D_psp_089464E0;
-            ptr->y = screenOffset.y + ptr->y * D_psp_089464E4;
+            ptr->x = screenOffset.x + ptr->x * screenScale.x;
+            ptr->y = screenOffset.y + ptr->y * screenScale.y;
             ptr++;
         }
     }
 }
 
-void func_psp_0891DB9C(Vertex* ptr, s32 len) {
+void ApplyScreenAdjustmentsPoly(Vertex* ptr, s32 len) {
     s32 i;
 
     for (i = 0; i < len; i++) {
-        ptr->x = screenOffset.x + ptr->x * D_psp_089464E0;
-        ptr->y = screenOffset.y + ptr->y * D_psp_089464E4;
+        ptr->x = screenOffset.x + ptr->x * screenScale.x;
+        ptr->y = screenOffset.y + ptr->y * screenScale.y;
         ptr++;
     }
 }
 
-void func_psp_0891DC48(Vertex* ptr, s32 len) {
+void ApplyScreenAdjustmentsLine(Vertex* ptr, s32 len) {
     s32 i;
 
     for (i = 0; i < len; i++) {
-        ptr->x = screenOffset.x + ptr->x * D_psp_089464E0;
-        ptr->y = screenOffset.y + ptr->y * D_psp_089464E4;
+        ptr->x = screenOffset.x + ptr->x * screenScale.x;
+        ptr->y = screenOffset.y + ptr->y * screenScale.y;
         ptr++;
     }
 }
@@ -1112,17 +1120,13 @@ static s32 (*packetFuncs[])(void*) = {
 };
 // clang-format on
 
-void func_psp_0891DE74(void) {
-    s32 var_s1;
-    s32 var_s2;
-    TVertex* v;
+static void DebugDisplaySubBuffer(void) {
+    s32 var_s2 = 0;
+    TVertex* v = (TVertex*)SP(0);
 
-    var_s2 = 0;
-    v = (TVertex*)SP(0);
-    var_s1 = D_psp_08C62A40;
-
-    func_psp_0891AF48(0);
-    func_psp_08910660(0);
+    SubBufType prevType = D_psp_08C62A40;
+    SetSubBufType(SUB_BUF_OFF);
+    PutAlphaBlendingEnable(GU_FALSE);
     v[0].c = v[1].c = v[2].c = v[3].c = white;
     func_psp_08911F24(0, D_psp_089464F0);
     func_psp_08911B7C();
@@ -1136,16 +1140,16 @@ void func_psp_0891DE74(void) {
         v[0].z = v[1].z = v[2].z = v[3].z = 1.0f;
         v[0].u = v[0].v = v[1].v = v[2].u = 0.0f;
         v[1].u = v[2].v = v[3].u = v[3].v = 255.0f;
-        func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-        func_psp_08911990((s32)sceGeEdramGetAddr() + 0xCC000, 0x100);
+        PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+        func_psp_08911990(SB_TEMP_ADDR, SB_TEMP_WIDTH);
         func_psp_08910A80(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
                           GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
                               GU_TEXTURE_32BITF);
         break;
 
     case SUB_BUF_PS:
-        func_psp_08910660(1);
-        func_psp_08910810(GU_ADD, GU_FIX, GU_FIX, 0xFFFFFFFF, 0xFF808080);
+        PutAlphaBlendingEnable(GU_TRUE);
+        PutBlendFunc(GU_ADD, GU_FIX, GU_FIX, 0xFFFFFFFF, 0xFF808080);
         v[0].c = v[1].c = v[2].c = v[3].c = 0xFFFFFFFF;
         v[0].x = v[2].x = screenOffset.x;
         v[0].y = v[1].y = screenOffset.y;
@@ -1157,8 +1161,8 @@ void func_psp_0891DE74(void) {
         v[2].v = D_psp_08946500;
         v[3].u = D_psp_089464FC;
         v[3].v = D_psp_08946500;
-        func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-        func_psp_08911990(func_psp_0891AC24(), 0x200);
+        PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+        func_psp_08911990(func_psp_0891AC24(), SB_PS_WIDTH);
         func_psp_08910A80(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
                           GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
                               GU_TEXTURE_32BITF);
@@ -1172,8 +1176,8 @@ void func_psp_0891DE74(void) {
         v[0].u = v[0].v = v[1].v = v[2].u = 0.0f;
         v[1].u = v[3].u = 63.0f;
         v[2].v = v[3].v = 63.0f;
-        func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-        func_psp_08911990((s32)sceGeEdramGetAddr() + 0x12C200, 0x40);
+        PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+        func_psp_08911990(SB_WOLF_ADDR, SB_WOLF_WIDTH);
         func_psp_08910A80(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
                           GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
                               GU_TEXTURE_32BITF);
@@ -1197,8 +1201,8 @@ void func_psp_0891DE74(void) {
         v[2].v = 272.0f;
         v[3].u = 256.0f;
         v[3].v = 272.0f;
-        func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-        func_psp_08911990((s32)sceGeEdramGetAddr() + 0xCC000, 0x100);
+        PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+        func_psp_08911990(SB_TEMP_ADDR, SB_TEMP_WIDTH);
         func_psp_08910A80(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
                           GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
                               GU_TEXTURE_32BITF);
@@ -1208,24 +1212,21 @@ void func_psp_0891DE74(void) {
         v[3].y += 136.0f;
         v[1].u = 512.0f;
         v[3].u = 512.0f;
-        func_psp_08911990(func_psp_0891AC24(), 0x200);
+        func_psp_08911990(func_psp_0891AC24(), SB_PS_WIDTH);
         func_psp_08910A80(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
                           GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
                               GU_TEXTURE_32BITF);
         break;
     }
-    func_psp_0891AF48(var_s1);
+    SetSubBufType(prevType);
 }
 
 void func_psp_0891E420(void) {
-    s32 var_s1;
-    TVertex* v;
+    s32 var_s1 = 0;
+    TVertex* v = (TVertex*)SP(0);
 
-    var_s1 = 0;
-    v = (TVertex*)SP(0);
-
-    func_psp_08911990(func_psp_0891AC24(), 0x200);
-    func_psp_08910660(0);
+    func_psp_08911990(func_psp_0891AC24(), SB_PS_WIDTH);
+    PutAlphaBlendingEnable(GU_FALSE);
     v[0].c = v[1].c = v[2].c = v[3].c = D_psp_08946504;
     v[0].x = v[2].x = screenOffset.x;
     v[0].y = v[1].y = screenOffset.y;
@@ -1236,27 +1237,24 @@ void func_psp_0891E420(void) {
     v[0].v = v[1].v = D_psp_08C629EC.clip.y;
     v[1].u = v[3].u = D_psp_08C629EC.clip.x + (float)D_psp_08C629EC.clip.w;
     v[2].v = v[3].v = D_psp_08C629EC.clip.y + (float)D_psp_08C629EC.clip.h;
-    func_psp_0891AF48(0);
+    SetSubBufType(SUB_BUF_OFF);
     func_psp_08911F24(0, D_psp_089464F0);
     func_psp_08911B7C();
-    func_psp_089109E4(GU_TFX_MODULATE, GU_TCC_RGBA, 1);
-    func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+    PutTexFunc(GU_TFX_MODULATE, GU_TCC_RGBA, GU_TRUE);
+    PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
     func_psp_08910A80(
         v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
         GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 | GU_TEXTURE_32BITF);
-    func_psp_089109E4(GU_TFX_MODULATE, GU_TCC_RGBA, 0);
-    func_psp_0891AF48(2);
+    PutTexFunc(GU_TFX_MODULATE, GU_TCC_RGBA, GU_FALSE);
+    SetSubBufType(SUB_BUF_PS);
 }
 
 void func_psp_0891E638(void) {
-    s32 temp_s2;
-    s32 temp_s1;
-    TVertex* v;
+    s32 temp_s2 = 0;
+    TVertex* v = (TVertex*)SP(0);
+    SubBufType prevType;
 
-    temp_s2 = 0;
-    v = (TVertex*)SP(0);
-
-    func_psp_08910660(0);
+    PutAlphaBlendingEnable(GU_FALSE);
     v[0].c = v[1].c = v[2].c = v[3].c = white;
     v[0].x = 0.0f;
     v[0].y = 0.0f;
@@ -1275,21 +1273,23 @@ void func_psp_0891E638(void) {
     v[2].v = GU_SCR_HEIGHT;
     v[3].u = GU_SCR_WIDTH;
     v[3].v = GU_SCR_HEIGHT;
-    temp_s1 = D_psp_08C62A40;
-    func_psp_0891AF48(0);
+    prevType = D_psp_08C62A40;
+    SetSubBufType(SUB_BUF_OFF);
     func_psp_08911F24(0, D_psp_089464F0);
     func_psp_08911B7C();
-    func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+    PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
     if (func_psp_08919E44()) {
         func_psp_08910FD8((s32)sceGeEdramGetAddr() + 0x1BC000,
-                          (s32)sceGeEdramGetAddr() + 0x1DE000, 5, 0x200, 9, 9);
+                          (s32)sceGeEdramGetAddr() + 0x1BC000 +
+                              (GU_VRAM_WIDTH * GU_SCR_HEIGHT),
+                          5, GU_VRAM_WIDTH, 9, 9);
     } else {
         DrawSolidRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT, black);
     }
     func_psp_08910A80(
         v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
         GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 | GU_TEXTURE_32BITF);
-    func_psp_0891AF48(temp_s1);
+    SetSubBufType(prevType);
 }
 
 void func_psp_0891E840(void) {
@@ -1297,22 +1297,22 @@ void func_psp_0891E840(void) {
     func_psp_0890FC2C();
     func_psp_0890FF84();
     func_psp_08910298(1);
-    func_psp_08910558(0);
-    func_psp_08910608(0);
-    func_psp_089105DC(1);
-    func_psp_08910660(1);
-    func_psp_0891068C(1);
-    func_psp_089107A4(0);
-    func_psp_089106F4(0);
-    func_psp_089105B0(0);
-    func_psp_08910584(0);
-    func_psp_08910634(1);
-    func_psp_0891074C(0);
-    func_psp_08910778(0);
-    func_psp_0891052C(1);
-    func_psp_08910720(0);
-    func_psp_089107DC(1, 1);
-    func_psp_089108F8(0, 0);
+    PutLightingEnable(GU_FALSE);
+    PutFoggingEnable(GU_FALSE);
+    PutTextureMappingEnable(GU_TRUE);
+    PutAlphaBlendingEnable(GU_TRUE);
+    PutAlphaTestEnable(GU_TRUE);
+    PutDepthMask(0);
+    PutDepthFunc(GU_NEVER);
+    PutPrimitiveCullingEnable(GU_FALSE);
+    PutClippingEnable(GU_FALSE);
+    PutDitheringEnable(GU_TRUE);
+    PutAntiAliasEnable(GU_FALSE);
+    PutColorTestEnable(GU_FALSE);
+    PutShadeModel(GU_SMOOTH);
+    PutStencilTestEnable(GU_FALSE);
+    PutTexWrap(GU_CLAMP, GU_CLAMP);
+    PutOffset(0, 0);
 }
 
 void func_psp_0891E944(void) {
@@ -1321,25 +1321,40 @@ void func_psp_0891E944(void) {
     func_psp_0890FE98();
     D_psp_08C62A6C = 0;
     D_psp_08C62A68 = 0;
-    D_psp_08C42188 = D_psp_08C42180;
+    D_psp_08C42188 = VCount;
 }
 
-void func_psp_0891E994(OT_TYPE* p) {
-    s32 sp5C;
-    s32 sp58;
-    s32 sp54;
-    s32 sp50;
-    u32 fps;
-    s32 code;
+static inline OT_TYPE* DrawPackets(OT_TYPE* p) {
+    OT_TYPE* ret = NULL;
+
+    while (p != NULL) {
+        s32 code = getcode(p) & 0x3F;
+        if (code >= 0 && code < LEN(packetFuncs)) {
+            if (code != 0) {
+                packetFuncs[code](p);
+                if (code != 0) {
+                    packetsDrawn++;
+                }
+            }
+        }
+        if (getaddr(p) == -1 || getaddr(p) == NULL) {
+            break;
+        }
+        ret = p;
+        p = (OT_TYPE*)getaddr(p);
+    }
+    return ret;
+}
+
+static void DrawOTag_PSP(OT_TYPE* p) {
+    s32 x, y;
+    s32 w, h;
+    SubBufType prevType;
     u8* temp_s5;
     s32 temp_v0;
-    s32 var_fp;
     s32 i;
     s32 var_s4;
     s32 var_s3;
-    OT_TYPE* var_s1;
-    OT_TYPE* var_s6;
-    u32 var_s7;
 
     if (p != (OT_TYPE*)-1) {
         D_psp_08C62A74 = p;
@@ -1348,15 +1363,16 @@ void func_psp_0891E994(OT_TYPE* p) {
             D_psp_08C62AA8 = false;
             temp_s5 = func_psp_0891AC24();
             if (D_psp_08C62AAC.x == 0 && D_psp_08C62AAC.y == 0x100) {
-                func_psp_089117F4(1, 0, 0, 0x100, 0x100, 0x200, temp_s5, 0, 0,
-                                  0x100, (u8*)sceGeEdramGetAddr() + 0xCC000);
+                func_psp_089117F4(1, 0, 0, 0x100, 0x100, SB_PS_WIDTH, temp_s5,
+                                  0, 0, SB_TEMP_WIDTH, (u8*)SB_TEMP_ADDR);
                 for (i = 0; i < 0x20; i++) {
                     func_psp_0891A99C(i);
                 }
             } else {
                 for (var_s4 = 0; var_s4 < 0x100; var_s4 += 0x40) {
                     func_psp_089117F4(
-                        1, var_s4, 0, 0x40, 0xF0, 0x200, temp_s5, 0, 0, 0x40,
+                        1, var_s4, 0, 0x40, 0xF0, SB_PS_WIDTH, temp_s5, 0, 0,
+                        0x40,
                         &D_psp_08B42080[(D_psp_08C62AAC.x + var_s4) / 0x40 +
                                         (D_psp_08C62AAC.y / 0x100) * 0x10]
                                        [((D_psp_08C62AAC.x + var_s4) % 0x40) *
@@ -1368,14 +1384,13 @@ void func_psp_0891E994(OT_TYPE* p) {
                 }
             }
         }
-        if (D_psp_08C62AA4 != 0) {
-            D_psp_08C62AA4 = 0;
+        if (D_psp_08C62AA4) {
+            D_psp_08C62AA4 = false;
             for (var_s3 = 0; var_s3 < 0x40; var_s3 += 0x40) {
-                func_psp_089117F4(
-                    1, var_s3, 0, 0x40, 0x100, 0x100,
-                    (u8*)sceGeEdramGetAddr() + 0xCC000, 0, 0, 0x40,
-                    &D_psp_08B42080[(var_s3 / 0x40) + 0x10]
-                                   [(var_s3 % 0x40) * 2]);
+                func_psp_089117F4(1, var_s3, 0, 0x40, 0x100, SB_TEMP_WIDTH,
+                                  (u8*)SB_TEMP_ADDR, 0, 0, 0x40,
+                                  &D_psp_08B42080[(var_s3 / 0x40) + 0x10]
+                                                 [(var_s3 % 0x40) * 2]);
             }
             for (i = 0; i < 0x20; i++) {
                 func_psp_0891A99C(i);
@@ -1384,85 +1399,69 @@ void func_psp_0891E994(OT_TYPE* p) {
         func_psp_0891AAF8();
         func_psp_0891ABE4();
         if (D_psp_08C62A3C > 0) {
-            func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+            PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
             DrawSolidRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT, black);
             if (D_psp_08C62A3C > 0) {
                 D_psp_08C62A3C--;
             }
         }
-        if ((D_psp_08C629D8.disp.w > 0x100) || (D_psp_089464E8 > 0)) {
+        if (D_psp_08C629D8.disp.w > 0x100 || D_psp_089464E8 > 0) {
             func_psp_0891E638();
             if (D_psp_089464E8 > 0) {
                 D_psp_089464E8--;
             }
         } else {
-            sp50 = D_psp_08C62A40;
+            prevType = D_psp_08C62A40;
             switch (D_psp_08C62A30) {
             case SCREEN_MODE_FULL:
-                sp54 = 418;
-                var_fp = 272;
+                w = 418;
+                h = 272;
                 break;
             case SCREEN_MODE_PERFECT:
-                sp54 = 369;
-                var_fp = 240;
+                w = 369;
+                h = 240;
                 break;
             }
-            sp5C = (GU_SCR_WIDTH - sp54) / 2;
-            sp58 = (GU_SCR_HEIGHT - var_fp) / 2;
-            func_psp_0891AF48(0);
-            func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-            DrawSolidRect(sp5C, sp58, sp54 - 1, var_fp - 1, black);
-            func_psp_0891AF48(sp50);
+            x = (GU_SCR_WIDTH - w) / 2;
+            y = (GU_SCR_HEIGHT - h) / 2;
+            SetSubBufType(SUB_BUF_OFF);
+            PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+            DrawSolidRect(x, y, w - 1, h - 1, black);
+            SetSubBufType(prevType);
         }
         SetDREnv(&D_psp_08C629EC.dr_env);
-        D_psp_08C62EC0 = 0;
+        packetsDrawn = 0;
         D_psp_08C62A50 = 0;
-        D_psp_08C62A54 = 0;
-        var_s1 = p;
-        var_s6 = NULL;
-        while (var_s1 != NULL) {
-            code = getcode(var_s1) & 0x3F;
-            if ((code >= 0) && (code < 0x11) && (code != 0)) {
-                packetFuncs[code](var_s1);
-                if (code != 0) {
-                    D_psp_08C62EC0++;
-                }
-            }
-            if (getaddr(var_s1) == -1 || getaddr(var_s1) == NULL) {
-                break;
-            }
-            var_s6 = var_s1;
-            var_s1 = (OT_TYPE*)getaddr(var_s1);
-        }
-        if (D_psp_08C62A40 == 2) {
+        polysDrawn = 0;
+        DrawPackets(p);
+        if (D_psp_08C62A40 == SUB_BUF_PS) {
             func_psp_0891E420();
         }
         if (dispSubBuffer != SUB_BUF_OFF) {
-            func_psp_0891DE74();
+            DebugDisplaySubBuffer();
         }
-        if (D_psp_08C62EBC != 0) {
-            func_psp_0891AF48(0);
-            func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+        if (drawDebugMenuBG) {
+            SetSubBufType(SUB_BUF_OFF);
+            PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
             DrawSolidRect(0x130, 0, 0xB0, 0x70, black);
         }
         if (cpuGpuTime && frameTime != 0) {
-            var_s7 = (D_psp_08C42180 != D_psp_08C42188)
-                         ? (D_psp_08C42180 - D_psp_08C42188) * 0xF0
-                         : 0xF0;
-            func_psp_0891AF48(0);
-            func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+            u32 var_s7 = (VCount != D_psp_08C42188)
+                             ? (VCount - D_psp_08C42188) * 0xF0
+                             : 0xF0;
+            SetSubBufType(SUB_BUF_OFF);
+            PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
             DrawSolidLine(0, 0, (frameTime * var_s7) / frameTime, 0, white);
             DrawSolidLine(0, 1, (cpuTime * var_s7) / frameTime, 1, red);
             DrawSolidLine(0, 2, (gpuTime * var_s7) / frameTime, 2, green);
         }
-        func_psp_0891AF48(0);
-        func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+        SetSubBufType(SUB_BUF_OFF);
+        PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
         func_psp_08932228();
         func_psp_0891E944();
         if (gpuEmuInfo) {
-            fps = (D_psp_08C42180 != D_psp_08C42188)
-                      ? 60 / (D_psp_08C42180 - D_psp_08C42188)
-                      : 0;
+            s32 fps =
+                (VCount != D_psp_08C42188) ? 60 / (VCount - D_psp_08C42188) : 0;
             sprintf(D_psp_08C62EC4, "Frame=%d/ResetGraph=%2d/W:%d,H:%d/%2dfps",
                     frameCount, resetGraphLevel, screenW, screenH, fps);
             sceGuDebugPrint(0, 264, 0xFFFFFFFF, D_psp_08C62EC4);
@@ -1476,27 +1475,23 @@ void DrawOTag(OT_TYPE* p) {
     static char* off_on[] = {"OFF", "ON"};
     static char* subBufType[] = {"OFF", "TEMP", "PS", "WOLF", "ALL"};
 
-    s32 prevPad, thisPad;
-    s32 sp48;
-    s32 i;
-    s32 cursor;
     s32 x, y;
 
     D_psp_08C62A74 = p;
     if (PadReadPSP() & PSP_CTRL_R3) {
-        prevPad = PadReadPSP();
-        cursor = 0;
-        sp48 = -1;
-        D_psp_08C62EBC = 1;
+        s32 prevPad = PadReadPSP();
+        s32 cursor = 0;
+        s32 sp48 = -1;
+        drawDebugMenuBG = true;
         while (cursor >= 0) {
-            thisPad = PadReadPSP();
+            s32 thisPad = PadReadPSP();
             if (prevPad == 0 && thisPad != 0) {
                 if (thisPad & PSP_CTRL_CROSS) {
                     while (PadReadPSP() != 0) {
                         VSync(0);
                     }
-                    D_psp_08C62EBC = 0;
-                    func_psp_0891E994(p);
+                    drawDebugMenuBG = false;
+                    DrawOTag_PSP(p);
                     break;
                 }
                 if (thisPad & PSP_CTRL_UP) {
@@ -1533,7 +1528,7 @@ void DrawOTag(OT_TYPE* p) {
                         break;
                     case 3:
                         D_psp_08C62A30 = (D_psp_08C62A30 + 1) % 2;
-                        func_psp_0891A6A8(D_psp_08C62A30);
+                        SetScreenMode(D_psp_08C62A30);
                         break;
                     case 4:
                         skipFrames++;
@@ -1598,24 +1593,25 @@ void DrawOTag(OT_TYPE* p) {
             sprintf(debugBuf, "[%s]", GetAT3FileName(at3Index));
             sceGuDebugPrint(x + 0x10, y + 0x68, 0xFFFFFFFF, debugBuf);
             func_psp_0892A8FC();
-            if (func_psp_0891B528() & 0x20) {
+            if (GetVCount() & 0x20) {
                 sceGuDebugPrint(x, y + (cursor + 1) * 8, 0xFFFFFFFF, "=>");
             }
-            func_psp_0891E994(p);
+            DrawOTag_PSP(p);
             GsClearVcount();
             DrawSync(0);
             VSync(0);
             EndFrame();
             prevPad = thisPad;
         }
-        D_psp_08C62EBC = 0;
+        drawDebugMenuBG = false;
         D_psp_089464E8 = 2;
     } else {
+        s32 i;
         for (i = 0; i < skipFrames; i++) {
             GsClearVcount();
             VSync(0);
         }
-        func_psp_0891E994(p);
+        DrawOTag_PSP(p);
     }
 }
 
@@ -1634,9 +1630,8 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1BCFC", func_psp_0891FCC0);
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1BCFC", func_psp_0891FCF0);
 
 s32 SetDROffset(void* p) {
-    DR_OFFSET* ptr;
+    DR_OFFSET* ptr = p;
 
-    ptr = p;
     D_psp_08C629C8 = ptr->ofs[0];
     D_psp_08C629CC = ptr->ofs[1];
     func_psp_0891A608();
@@ -1644,9 +1639,8 @@ s32 SetDROffset(void* p) {
 }
 
 s32 SetDRArea(void* p) {
-    DR_AREA* ptr;
+    DR_AREA* ptr = p;
 
-    ptr = p;
     D_psp_08C629D0.x = ptr->clip.x;
     D_psp_08C629D0.y = ptr->clip.y;
     D_psp_08C629D0.w = ptr->clip.w;
@@ -1655,11 +1649,9 @@ s32 SetDRArea(void* p) {
 }
 
 s32 SetDREnv(void* p) {
-    DR_ENV* ptr;
+    DR_ENV* ptr = p;
     RECT rect;
     s32 x, y;
-
-    ptr = p;
 
     D_psp_08C629EC.dr_env.tag = ptr->tag;
     D_psp_08C629EC.dr_env.len = ptr->len;
@@ -1674,7 +1666,7 @@ s32 SetDREnv(void* p) {
     D_psp_08C629EC.dr_env.dtd = ptr->dtd;
     D_psp_08C629EC.dr_env.dfe = ptr->dfe;
     D_psp_08C629EC.dr_env.isbg = ptr->isbg;
-    if ((ptr->ofs[0] == 0x40) && (ptr->clip.x == 0x40)) {
+    if (ptr->ofs[0] == 0x40 && ptr->clip.x == 0x40) {
         D_psp_08C629C8 = 0x40;
     } else {
         D_psp_08C629C8 = 0;
@@ -1685,47 +1677,46 @@ s32 SetDREnv(void* p) {
     y = 0;
     rect = ptr->clip;
     if (D_psp_089464EC && ptr->ofs[1] == 0x100) {
-        func_psp_0891AF48(1);
+        SetSubBufType(SUB_BUF_TEMP);
         rect.y -= ptr->ofs[1];
     } else if (ptr->ofs[0] == 0x200 && ptr->ofs[1] == 0x1C0) {
-        func_psp_0891AF48(3);
+        SetSubBufType(SUB_BUF_WOLF);
         rect.x = 0;
         rect.y = 0;
-    } else if (
-        D_psp_08C629D8.disp.w <= 0x1E0 && D_psp_08C629D8.disp.h <= 0x100) {
-        func_psp_0891AF48(2);
+    } else if (D_psp_08C629D8.disp.w <= 480 && D_psp_08C629D8.disp.h <= 256) {
+        SetSubBufType(SUB_BUF_PS);
     } else {
-        func_psp_0891AF48(0);
+        SetSubBufType(SUB_BUF_OFF);
         x = screenOffset.x;
         y = screenOffset.y;
-        rect.x *= D_psp_089464E0;
-        rect.y *= D_psp_089464E4;
-        rect.w *= D_psp_089464E0;
-        rect.h *= D_psp_089464E4;
+        rect.x *= screenScale.x;
+        rect.y *= screenScale.y;
+        rect.w *= screenScale.x;
+        rect.h *= screenScale.y;
     }
-    func_psp_0891089C(
+    PutScissorRect(
         x + rect.x, y + rect.y, x + rect.x + rect.w, y + rect.y + rect.h);
     if (ptr->isbg == true) {
         DrawSolidRect(x + rect.x, y + rect.y, rect.w, rect.h,
                       GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80));
     }
-    func_psp_08910634(D_psp_08C629EC.dtd ? 1 : 0);
+    PutDitheringEnable(D_psp_08C629EC.dtd ? GU_TRUE : GU_FALSE);
     return 0;
 }
 
 void func_psp_089201E8(SPRT* ptr, TVertex* v, float arg2, float arg3,
-                       float arg4, float arg5, u8 arg6) {
+                       float arg4, float arg5, u8 tpf) {
     float u0, v0;
     float u1, v1;
     u16 temp_s2;
     u16 temp_s1;
     u32 var_s0;
 
-    if (arg6 == 0) {
+    if (tpf == 0) {
         var_s0 = 0x100;
-    } else if (arg6 == 1) {
+    } else if (tpf == 1) {
         var_s0 = 0x80;
-    } else if (arg6 == 2) {
+    } else if (tpf == 2) {
         var_s0 = 0x40;
     }
     temp_s2 = (u16)ptr->u0 + arg2;
@@ -1744,16 +1735,16 @@ void func_psp_089201E8(SPRT* ptr, TVertex* v, float arg2, float arg3,
 
 s32 DrawNone(void* p) {}
 
-static inline u8* unkInlineFunc(s32 tpage) {
-    if (D_psp_089464EC != 0) {
+static inline u8* GetTextureAddr(s32 tpage) {
+    if (D_psp_089464EC) {
         if ((tpage & 0x1F) == 0x10 && getTPF(tpage) == 2) {
-            return (u8*)sceGeEdramGetAddr() + 0xCC000;
+            return (u8*)SB_TEMP_ADDR;
         }
         if ((tpage & 0xF000) == 0x8000) {
-            return (u8*)sceGeEdramGetAddr() + 0xCC000;
+            return (u8*)SB_TEMP_ADDR;
         }
         if ((tpage & 0xF000) == 0x4000) {
-            return (u8*)sceGeEdramGetAddr() + 0x12C200;
+            return (u8*)SB_WOLF_ADDR;
         }
     }
     if ((tpage & 0x1F) == 0 && getTPF(tpage) == 2) {
@@ -1767,31 +1758,29 @@ static inline u8* unkInlineFunc(s32 tpage) {
     return func_psp_0891AAC8(tpage);
 }
 
-static inline void unkInlineFunc2(u8* arg0, u8* arg1, s32 tpf) {
-    if (arg0 == (u8*)((s32)sceGeEdramGetAddr() + 0xCC000)) {
+static inline void unkInlineFunc2(u8* texPtr, u8* clutPtr, s32 tpf) {
+    if (texPtr == (u8*)(SB_TEMP_ADDR)) {
         if (tpf == 2) {
-            func_psp_08911990(arg0, 0x100);
+            func_psp_08911990(texPtr, SB_TEMP_WIDTH);
         } else {
-            func_psp_0891149C(arg0, 0x400, 0x100, arg1, tpf);
+            func_psp_0891149C(texPtr, 0x400, 0x100, clutPtr, tpf);
         }
-    } else if (arg0 == func_psp_0891AC24()) {
-        func_psp_08911990(arg0, 0x200);
-    } else if (arg0 == func_psp_0891AC60()) {
-        func_psp_08911990(arg0, 0x200);
-    } else if (arg0 == (u8*)((s32)sceGeEdramGetAddr() + 0x12C200)) {
-        func_psp_0891149C(arg0, 0x40, 0x40, 0, 2);
+    } else if (texPtr == func_psp_0891AC24()) {
+        func_psp_08911990(texPtr, SB_PS_WIDTH);
+    } else if (texPtr == func_psp_0891AC60()) {
+        func_psp_08911990(texPtr, SB_PS_WIDTH);
+    } else if (texPtr == (u8*)(SB_WOLF_ADDR)) {
+        func_psp_0891149C(texPtr, 0x40, 0x40, NULL, 2);
     } else {
-        func_psp_08910D44(arg0, arg1, tpf);
+        func_psp_08910D44(texPtr, clutPtr, tpf);
     }
 }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1BCFC", func_psp_08920498);
 
 s32 DrawSprt16(void* p) {
-    SPRT_16* ptr;
+    SPRT_16* ptr = p;
     TVertex* v;
-
-    ptr = p;
 
     v = (TVertex*)func_psp_089104B4(0xC);
     if (getTPF(D_psp_08C629C4) == 2) {
@@ -1804,7 +1793,7 @@ s32 DrawSprt16(void* p) {
                         ((ptr->clut >> 6) % 0x100) * 0x80],
         getTPF(D_psp_08C629C4));
     if (isSemiTrans(ptr)) {
-        switch ((D_psp_08C629C4 >> 5) & 3) {
+        switch (getABR(D_psp_08C629C4)) {
         case 0:
             func_psp_08911B84(
                 1, GU_ADD, GU_FIX, GU_FIX, 0xFF808080, 0xFF808080);
@@ -1882,15 +1871,13 @@ s32 DrawSprt16(void* p) {
 }
 
 s32 DrawPolyG4(void* p) {
+    POLY_G4* ptr = p;
     Vertex v[4];
-    POLY_G4* ptr;
     u8 var_s1;
-
-    ptr = p;
 
     if (isSemiTrans(ptr)) {
         var_s1 = 0x80;
-        func_psp_089113A8((D_psp_08C629C4 >> 5) & 3, var_s1);
+        func_psp_089113A8(getABR(D_psp_08C629C4), var_s1);
     } else {
         func_psp_089113A8(-1, 0x80);
     }
@@ -1910,8 +1897,8 @@ s32 DrawPolyG4(void* p) {
     v[1].c = GU_RGBA(ptr->r1, ptr->g1, ptr->b1, 0x80);
     v[2].c = GU_RGBA(ptr->r2, ptr->g2, ptr->b2, 0x80);
     v[3].c = GU_RGBA(ptr->r3, ptr->g3, ptr->b3, 0x80);
-    if (D_psp_08C62A40 == 0) {
-        func_psp_0891DB9C(v, 4);
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
+        ApplyScreenAdjustmentsPoly(v, 4);
     }
     func_psp_08912008();
     func_psp_08910A80(v, 4, sizeof(Vertex), GU_TRIANGLE_STRIP,
@@ -1921,28 +1908,27 @@ s32 DrawPolyG4(void* p) {
 }
 
 s32 DrawPolyFT4(void* p) {
-    POLY_FT4* ptr;
+    POLY_FT4* ptr = p;
     s32 isSemiTrans;
     u8 tpf;
-    u8* var_s7;
-    u8* var_s2;
+    u8* clutPtr;
+    u8* texPtr;
     TVertex* v;
 
-    ptr = p;
-    var_s7 = NULL;
+    clutPtr = NULL;
     isSemiTrans = isSemiTrans(ptr);
     D_psp_08C629C4 = ptr->tpage;
     v = (TVertex*)SP(0);
     tpf = getTPF(ptr->tpage);
-    var_s2 = unkInlineFunc(ptr->tpage);
+    texPtr = GetTextureAddr(ptr->tpage);
     if (tpf != 2) {
-        var_s7 = func_psp_0891B8F0(ptr->clut, tpf, 1);
+        clutPtr = func_psp_0891B8F0(ptr->clut, tpf, 1);
     }
-    unkInlineFunc2(var_s2, var_s7, tpf);
+    unkInlineFunc2(texPtr, clutPtr, tpf);
     if (isSemiTrans(ptr)) {
-        func_psp_089113A8((ptr->tpage >> 5) & 3, 0x80);
+        func_psp_089113A8(getABR(ptr->tpage), 0x80);
     } else {
-        func_psp_08910660(0);
+        PutAlphaBlendingEnable(GU_FALSE);
     }
     if (isFlatShaded(ptr)) {
         v[0].c = GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80);
@@ -1972,7 +1958,7 @@ s32 DrawPolyFT4(void* p) {
     v[3].u = ptr->u3;
     v[3].v = ptr->v3;
 
-    if (D_psp_08C62A40 == 0) {
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
         func_psp_0891D9F4(v, 4);
     }
     func_psp_08911F24(isSemiTrans, D_psp_089464F0);
@@ -1992,34 +1978,32 @@ s32 DrawPolyFT4(void* p) {
         DrawSolidLine(v[3].x, v[3].y, v[2].x, v[2].y, color);
         DrawSolidLine(v[2].x, v[2].y, v[0].x, v[0].y, color);
     }
-    D_psp_08C62A54++;
+    polysDrawn++;
     return 0;
 }
 
 s32 DrawPolyGT3(void* p) {
-    POLY_GT3* ptr;
+    POLY_GT3* ptr = p;
     TVertex* v;
     u8 tpf;
-    u8* var_v0;
-    u8* var_s1;
+    u8* texPtr;
+    u8* clutPtr;
     s32 isSemiTrans;
 
-    ptr = p;
-
-    var_s1 = NULL;
+    clutPtr = NULL;
     isSemiTrans = isSemiTrans(ptr);
     D_psp_08C629C4 = ptr->tpage;
     v = (TVertex*)func_psp_089104B4(0x12);
     tpf = getTPF(ptr->tpage);
-    var_v0 = unkInlineFunc(ptr->tpage);
+    texPtr = GetTextureAddr(ptr->tpage);
     if (tpf != 2) {
-        var_s1 = func_psp_0891B8F0(ptr->clut, tpf, 1);
+        clutPtr = func_psp_0891B8F0(ptr->clut, tpf, 1);
     }
-    unkInlineFunc2(var_v0, var_s1, tpf);
+    unkInlineFunc2(texPtr, clutPtr, tpf);
     if (isSemiTrans(ptr)) {
-        func_psp_089113A8((ptr->tpage >> 5) & 3, 0x80);
+        func_psp_089113A8(getABR(ptr->tpage), 0x80);
     } else {
-        func_psp_08910660(0);
+        PutAlphaBlendingEnable(GU_FALSE);
     }
     if (isFlatShaded(ptr)) {
         v[0].c = GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80);
@@ -2077,7 +2061,7 @@ s32 DrawPolyGT3(void* p) {
         : "+r"(v)
         : "r"(ptr));
 
-    if (D_psp_08C62A40 == 0) {
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
         func_psp_0891D9F4(v, 3);
     }
     func_psp_08911F24(isSemiTrans, D_psp_089464F0);
@@ -2096,28 +2080,27 @@ s32 DrawPolyGT3(void* p) {
         DrawSolidLine(v[1].x, v[1].y, v[2].x, v[2].y, color);
         DrawSolidLine(v[2].x, v[2].y, v[0].x, v[0].y, color);
     }
-    D_psp_08C62A54++;
+    polysDrawn++;
     return 0;
 }
 
 s32 func_psp_08922C14(void* p) {
-    POLY_GT4* ptr;
+    POLY_GT4* ptr = p;
     s32 r, g, b;
     s32 fix;
     TVertex* v;
 
-    ptr = p;
     D_psp_08C629C4 = ptr->tpage;
     v = (TVertex*)SP(0);
 
-    func_psp_0891149C((s32)sceGeEdramGetAddr() + 0x12C200, 0x40, 0x40, 0, 2);
+    func_psp_0891149C(SB_WOLF_ADDR, 0x40, 0x40, 0, 2);
     r = (ptr->r0 >= 0x80) ? 0xFF : ptr->r0 * 2;
     g = (ptr->g0 >= 0x80) ? 0xFF : ptr->g0 * 2;
     b = (ptr->b0 >= 0x80) ? 0xFF : ptr->b0 * 2;
     r = g = b;
     fix = GU_RGBA(r, g, b, 0);
-    func_psp_08910660(1);
-    func_psp_08910810(GU_ADD, GU_FIX, GU_FIX, fix, 0x00FFFFFF - fix);
+    PutAlphaBlendingEnable(GU_TRUE);
+    PutBlendFunc(GU_ADD, GU_FIX, GU_FIX, fix, 0x00FFFFFF - fix);
     v[0].c = v[1].c = v[2].c = v[3].c = white;
     v[0].x = D_psp_08C629C8 + ptr->x0;
     v[0].y = D_psp_08C629CC + ptr->y0;
@@ -2136,8 +2119,8 @@ s32 func_psp_08922C14(void* p) {
     v[2].v = ptr->v2;
     v[3].u = ptr->u3;
     v[3].v = ptr->v3;
-    func_psp_0891068C(0);
-    func_psp_089105DC(1);
+    PutAlphaTestEnable(GU_FALSE);
+    PutTextureMappingEnable(GU_TRUE);
     func_psp_08911AB8(0, 0, 0);
     func_psp_08910A80(
         v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
@@ -2149,30 +2132,29 @@ s32 func_psp_08922C14(void* p) {
         DrawSolidLine(v[3].x, v[3].y, v[2].x, v[2].y, color);
         DrawSolidLine(v[2].x, v[2].y, v[0].x, v[0].y, color);
     }
-    D_psp_08C62A54++;
+    polysDrawn++;
     return 0;
 }
 
 s32 func_psp_089231F8(void* p) {
-    POLY_GT4* ptr;
+    POLY_GT4* ptr = p;
     u8 tpf;
-    u8* var_fp;
+    u8* clutPtr;
     s32 isSemiTrans;
-    u8* var_s2;
+    u8* texPtr;
     TVertex* v;
 
-    ptr = p;
-    var_fp = NULL;
+    clutPtr = NULL;
     isSemiTrans = isSemiTrans(ptr);
     D_psp_08C629C4 = ptr->tpage;
     tpf = getTPF(ptr->tpage);
-    var_s2 = unkInlineFunc(ptr->tpage);
+    texPtr = GetTextureAddr(ptr->tpage);
     if (tpf != 2) {
-        var_fp = func_psp_0891B8F0(ptr->clut, tpf, 1);
+        clutPtr = func_psp_0891B8F0(ptr->clut, tpf, 1);
     }
-    unkInlineFunc2(var_s2, var_fp, tpf);
+    unkInlineFunc2(texPtr, clutPtr, tpf);
     if (isSemiTrans(ptr)) {
-        switch ((ptr->tpage >> 5) & 3) {
+        switch (getABR(ptr->tpage)) {
         case 0:
             func_psp_08911B84(
                 1, GU_ADD, GU_FIX, GU_FIX, 0xFF808080, 0xFF808080);
@@ -2223,15 +2205,15 @@ s32 func_psp_089231F8(void* p) {
     v[2].v = ptr->v2;
     v[3].u = ptr->u3;
     v[3].v = ptr->v3;
-    if (D_psp_08C62A40 == 0) {
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
         func_psp_0891D9F4(v, 4);
     }
-    if (D_psp_08C62A40 == 1) {
-        func_psp_08910634(0);
+    if (D_psp_08C62A40 == SUB_BUF_TEMP) {
+        PutDitheringEnable(GU_FALSE);
         if (isSemiTrans) {
-            func_psp_0891068C(1);
-            func_psp_089106B8(GU_ALWAYS, 0, 0);
-            func_psp_089105DC(1);
+            PutAlphaTestEnable(GU_TRUE);
+            PutAlphaFunc(GU_ALWAYS, 0, 0);
+            PutTextureMappingEnable(GU_TRUE);
             func_psp_08911AB8(0, 0, 0);
             func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
                               GU_TRANSFORM_2D | GU_VERTEX_32BITF |
@@ -2269,9 +2251,9 @@ s32 func_psp_089231F8(void* p) {
             v[3].v++;
         }
         if (isSemiTrans) {
-            func_psp_0891068C(1);
-            func_psp_089106B8(GU_ALWAYS, 0, 0);
-            func_psp_089105DC(1);
+            PutAlphaTestEnable(GU_TRUE);
+            PutAlphaFunc(GU_ALWAYS, 0, 0);
+            PutTextureMappingEnable(GU_TRUE);
             func_psp_08911AB8(0, 0, 0);
             func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
                               GU_TRANSFORM_2D | GU_VERTEX_32BITF |
@@ -2290,30 +2272,25 @@ s32 func_psp_089231F8(void* p) {
         DrawSolidLine(v[3].x, v[3].y, v[2].x, v[2].y, color);
         DrawSolidLine(v[2].x, v[2].y, v[0].x, v[0].y, color);
     }
-    D_psp_08C62A54++;
+    polysDrawn++;
     return 0;
 }
 
 s32 DrawPolyGT4(void* p) {
-    POLY_GT4 sp78;
-    POLY_GT4 sp40;
-    SPRT sp28;
-
+    POLY_GT4* ptr = p;
     u8 tpf;
-    s32 var_a0;
+    s32 u0;
     s32 dx0, dy0;
     s32 dx1, dy1;
     s32 i;
-    s32 var_s2_3;
-    s32 var_s1_2;
-    u8* var_v0;
-    u8* var_s2;
+    s32 x0;
+    s32 dx;
+    u8* texPtr;
+    u8* clutPtr;
     TVertex* v;
     s32 isSemiTrans;
-    POLY_GT4* ptr;
 
-    ptr = p;
-    var_s2 = NULL;
+    clutPtr = NULL;
     isSemiTrans = isSemiTrans(ptr);
     if (LOW(((POLY_GT4*)p)->x0) == 0 && LOW(((POLY_GT4*)p)->x1) == 0 &&
         LOW(((POLY_GT4*)p)->x2) == 0 && LOW(((POLY_GT4*)p)->x3) == 0) {
@@ -2322,117 +2299,121 @@ s32 DrawPolyGT4(void* p) {
     D_psp_08C629C4 = ptr->tpage;
     if (getTPF(ptr->tpage) == 2 && (ptr->tpage & 0x1F) != 0x10) {
         if (ptr->u1 == 0xFF && ptr->u0 == 0) {
-            sp78.tag = ptr->tag;
-            sp78.len = ptr->len;
-            sp78.r0 = ptr->r0;
-            sp78.g0 = ptr->g0;
-            sp78.b0 = ptr->b0;
-            sp78.code = ptr->code;
-            sp78.x0 = ptr->x0;
-            sp78.y0 = ptr->y0;
-            sp78.u0 = ptr->u0;
-            sp78.v0 = ptr->v0;
-            sp78.clut = ptr->clut;
-            sp78.r1 = ptr->r1;
-            sp78.g1 = ptr->g1;
-            sp78.b1 = ptr->b1;
-            sp78.p1 = ptr->p1;
-            sp78.x1 = ptr->x1;
-            sp78.y1 = ptr->y1;
-            sp78.u1 = ptr->u1;
-            sp78.v1 = ptr->v1;
-            sp78.tpage = ptr->tpage;
-            sp78.r2 = ptr->r2;
-            sp78.g2 = ptr->g2;
-            sp78.b2 = ptr->b2;
-            sp78.p2 = ptr->p2;
-            sp78.x2 = ptr->x2;
-            sp78.y2 = ptr->y2;
-            sp78.u2 = ptr->u2;
-            sp78.v2 = ptr->v2;
-            sp78.pad2 = ptr->pad2;
-            sp78.r3 = ptr->r3;
-            sp78.g3 = ptr->g3;
-            sp78.b3 = ptr->b3;
-            sp78.p3 = ptr->p3;
-            sp78.x3 = ptr->x3;
-            sp78.y3 = ptr->y3;
-            sp78.u3 = ptr->u3;
-            sp78.v3 = ptr->v3;
-            sp78.pad3 = ptr->pad3;
+            POLY_GT4 poly;
+            poly.tag = ptr->tag;
+            poly.len = ptr->len;
+            poly.r0 = ptr->r0;
+            poly.g0 = ptr->g0;
+            poly.b0 = ptr->b0;
+            poly.code = ptr->code;
+            poly.x0 = ptr->x0;
+            poly.y0 = ptr->y0;
+            poly.u0 = ptr->u0;
+            poly.v0 = ptr->v0;
+            poly.clut = ptr->clut;
+            poly.r1 = ptr->r1;
+            poly.g1 = ptr->g1;
+            poly.b1 = ptr->b1;
+            poly.p1 = ptr->p1;
+            poly.x1 = ptr->x1;
+            poly.y1 = ptr->y1;
+            poly.u1 = ptr->u1;
+            poly.v1 = ptr->v1;
+            poly.tpage = ptr->tpage;
+            poly.r2 = ptr->r2;
+            poly.g2 = ptr->g2;
+            poly.b2 = ptr->b2;
+            poly.p2 = ptr->p2;
+            poly.x2 = ptr->x2;
+            poly.y2 = ptr->y2;
+            poly.u2 = ptr->u2;
+            poly.v2 = ptr->v2;
+            poly.pad2 = ptr->pad2;
+            poly.r3 = ptr->r3;
+            poly.g3 = ptr->g3;
+            poly.b3 = ptr->b3;
+            poly.p3 = ptr->p3;
+            poly.x3 = ptr->x3;
+            poly.y3 = ptr->y3;
+            poly.u3 = ptr->u3;
+            poly.v3 = ptr->v3;
+            poly.pad3 = ptr->pad3;
+
             dx0 = ((ptr->x1 - ptr->x0) + 1) / 4;
             dy0 = ((ptr->y1 - ptr->y0) + 1) / 4;
             dx1 = ((ptr->x3 - ptr->x2) + 1) / 4;
             dy1 = ((ptr->y3 - ptr->y2) + 1) / 4;
             for (i = 0; i < 4; i++) {
-                sp78.x0 = ptr->x0 + dx0 * i;
-                sp78.y0 = ptr->y0 + dy0 * i;
-                sp78.x1 = sp78.x0 + dx0;
-                sp78.y1 = sp78.y0 + dy0;
-                sp78.x2 = ptr->x2 + dx1 * i;
-                sp78.y2 = ptr->y2 + dy1 * i;
-                sp78.x3 = sp78.x2 + dx1;
-                sp78.y3 = sp78.y2 + dy1;
-                sp78.u0 = sp78.u2 = 0;
-                sp78.u1 = sp78.u3 = 0x3F;
-                DrawPolyGT4(&sp78);
-                sp78.tpage++;
+                poly.x0 = ptr->x0 + dx0 * i;
+                poly.y0 = ptr->y0 + dy0 * i;
+                poly.x1 = poly.x0 + dx0;
+                poly.y1 = poly.y0 + dy0;
+                poly.x2 = ptr->x2 + dx1 * i;
+                poly.y2 = ptr->y2 + dy1 * i;
+                poly.x3 = poly.x2 + dx1;
+                poly.y3 = poly.y2 + dy1;
+                poly.u0 = poly.u2 = 0;
+                poly.u1 = poly.u3 = 0x3F;
+                DrawPolyGT4(&poly);
+                poly.tpage++;
             }
             return 0;
         }
         if (ptr->u1 == 0xF9 && ptr->u0 == 6) {
-            sp40.tag = ptr->tag;
-            sp40.len = ptr->len;
-            sp40.r0 = ptr->r0;
-            sp40.g0 = ptr->g0;
-            sp40.b0 = ptr->b0;
-            sp40.code = ptr->code;
-            sp40.x0 = ptr->x0;
-            sp40.y0 = ptr->y0;
-            sp40.u0 = ptr->u0;
-            sp40.v0 = ptr->v0;
-            sp40.clut = ptr->clut;
-            sp40.r1 = ptr->r1;
-            sp40.g1 = ptr->g1;
-            sp40.b1 = ptr->b1;
-            sp40.p1 = ptr->p1;
-            sp40.x1 = ptr->x1;
-            sp40.y1 = ptr->y1;
-            sp40.u1 = ptr->u1;
-            sp40.v1 = ptr->v1;
-            sp40.tpage = ptr->tpage;
-            sp40.r2 = ptr->r2;
-            sp40.g2 = ptr->g2;
-            sp40.b2 = ptr->b2;
-            sp40.p2 = ptr->p2;
-            sp40.x2 = ptr->x2;
-            sp40.y2 = ptr->y2;
-            sp40.u2 = ptr->u2;
-            sp40.v2 = ptr->v2;
-            sp40.pad2 = ptr->pad2;
-            sp40.r3 = ptr->r3;
-            sp40.g3 = ptr->g3;
-            sp40.b3 = ptr->b3;
-            sp40.p3 = ptr->p3;
-            sp40.x3 = ptr->x3;
-            sp40.y3 = ptr->y3;
-            sp40.u3 = ptr->u3;
-            sp40.v3 = ptr->v3;
-            sp40.pad3 = ptr->pad3;
-            var_s2_3 = ptr->x0;
-            while (var_s2_3 < ptr->x1) {
-                var_a0 = var_s2_3 % 0x40;
-                var_s1_2 = 0x40 - var_a0;
-                if ((var_s2_3 + var_s1_2) > ptr->x1) {
-                    var_s1_2 = ptr->x1 - var_s2_3;
+            POLY_GT4 poly;
+            poly.tag = ptr->tag;
+            poly.len = ptr->len;
+            poly.r0 = ptr->r0;
+            poly.g0 = ptr->g0;
+            poly.b0 = ptr->b0;
+            poly.code = ptr->code;
+            poly.x0 = ptr->x0;
+            poly.y0 = ptr->y0;
+            poly.u0 = ptr->u0;
+            poly.v0 = ptr->v0;
+            poly.clut = ptr->clut;
+            poly.r1 = ptr->r1;
+            poly.g1 = ptr->g1;
+            poly.b1 = ptr->b1;
+            poly.p1 = ptr->p1;
+            poly.x1 = ptr->x1;
+            poly.y1 = ptr->y1;
+            poly.u1 = ptr->u1;
+            poly.v1 = ptr->v1;
+            poly.tpage = ptr->tpage;
+            poly.r2 = ptr->r2;
+            poly.g2 = ptr->g2;
+            poly.b2 = ptr->b2;
+            poly.p2 = ptr->p2;
+            poly.x2 = ptr->x2;
+            poly.y2 = ptr->y2;
+            poly.u2 = ptr->u2;
+            poly.v2 = ptr->v2;
+            poly.pad2 = ptr->pad2;
+            poly.r3 = ptr->r3;
+            poly.g3 = ptr->g3;
+            poly.b3 = ptr->b3;
+            poly.p3 = ptr->p3;
+            poly.x3 = ptr->x3;
+            poly.y3 = ptr->y3;
+            poly.u3 = ptr->u3;
+            poly.v3 = ptr->v3;
+            poly.pad3 = ptr->pad3;
+
+            x0 = ptr->x0;
+            while (x0 < ptr->x1) {
+                u0 = x0 % 0x40;
+                dx = 0x40 - u0;
+                if ((x0 + dx) > ptr->x1) {
+                    dx = ptr->x1 - x0;
                 }
-                sp40.x0 = sp40.x2 = var_s2_3;
-                sp40.x1 = sp40.x3 = var_s2_3 + var_s1_2;
-                sp40.u0 = sp40.u2 = var_a0;
-                sp40.u1 = sp40.u3 = (var_a0 + var_s1_2) - 1;
-                DrawPolyGT4(&sp40);
-                sp40.tpage++;
-                var_s2_3 += var_s1_2;
+                poly.x0 = poly.x2 = x0;
+                poly.x1 = poly.x3 = x0 + dx;
+                poly.u0 = poly.u2 = u0;
+                poly.u1 = poly.u3 = (u0 + dx) - 1;
+                DrawPolyGT4(&poly);
+                poly.tpage++;
+                x0 += dx;
             }
             return 0;
         }
@@ -2442,32 +2423,33 @@ s32 DrawPolyGT4(void* p) {
             return func_psp_08922C14(p);
         }
         if ((ptr->tpage & 0xF000) == 0x2000) {
+            SPRT sprt;
             DrawSolidRect(ptr->x0, ptr->y0, ptr->x3 - ptr->x0,
                           ptr->y3 - ptr->y0, GU_RGBA(0, 0, 8, 0x80));
-            sp28.u0 = ptr->u0;
-            sp28.v0 = ptr->v0;
-            sp28.w = ptr->x3 - ptr->x0;
-            sp28.h = ptr->y3 - ptr->y0;
-            sp28.x0 = ptr->x0;
-            sp28.y0 = ptr->y0;
-            sp28.r0 = sp28.g0 = sp28.b0 = 0x80;
-            sp28.clut = ptr->clut;
-            sp28.code = ptr->code;
+            sprt.u0 = ptr->u0;
+            sprt.v0 = ptr->v0;
+            sprt.w = ptr->x3 - ptr->x0;
+            sprt.h = ptr->y3 - ptr->y0;
+            sprt.x0 = ptr->x0;
+            sprt.y0 = ptr->y0;
+            sprt.r0 = sprt.g0 = sprt.b0 = 0x80;
+            sprt.clut = ptr->clut;
+            sprt.code = ptr->code;
             D_psp_08C629C4 &= 0x9FF;
-            return func_psp_08920498(&sp28);
+            return func_psp_08920498(&sprt);
         }
         if ((ptr->tpage & 0xF000) == 0x1000) {
             return func_psp_089231F8(p);
         }
     }
     tpf = getTPF(ptr->tpage);
-    var_v0 = unkInlineFunc(ptr->tpage);
+    texPtr = GetTextureAddr(ptr->tpage);
     if (tpf != 2) {
-        var_s2 = func_psp_0891B8F0(ptr->clut, tpf, 1);
+        clutPtr = func_psp_0891B8F0(ptr->clut, tpf, 1);
     }
-    unkInlineFunc2(var_v0, var_s2, tpf);
+    unkInlineFunc2(texPtr, clutPtr, tpf);
     if (isSemiTrans(ptr)) {
-        switch ((ptr->tpage >> 5) & 3) {
+        switch (getABR(ptr->tpage)) {
         case 0:
             func_psp_08911B84(
                 1, GU_ADD, GU_FIX, GU_FIX, 0xFF808080, 0xFF808080);
@@ -2564,11 +2546,11 @@ s32 DrawPolyGT4(void* p) {
         : "+r"(v)
         : "r"(ptr));
 
-    if (D_psp_08C62A40 == 0) {
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
         func_psp_0891D9F4(v, 4);
     }
-    if (D_psp_08C62A40 == 1) {
-        func_psp_08910634(0);
+    if (D_psp_08C62A40 == SUB_BUF_TEMP) {
+        PutDitheringEnable(GU_FALSE);
         if (isSemiTrans) {
             func_psp_08912070(D_psp_089464F0, 0, 0, 0);
             func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
@@ -2633,29 +2615,27 @@ s32 DrawPolyGT4(void* p) {
         DrawSolidLine(v[3].x, v[3].y, v[2].x, v[2].y, color);
         DrawSolidLine(v[2].x, v[2].y, v[0].x, v[0].y, color);
     }
-    D_psp_08C62A54++;
+    polysDrawn++;
     return 0;
 }
 
 s32 DrawTile(void* p) {
+    TILE* ptr = p;
     Vertex v[4];
-    TILE* ptr;
     u8 var_s1;
-
-    ptr = p;
 
     if (ptr->w == 0 || ptr->h == 0) {
         return 0;
     }
-    if (D_psp_08C62A40 == 1) {
+    if (D_psp_08C62A40 == SUB_BUF_TEMP) {
         return 0;
     }
     if (isSemiTrans(ptr)) {
         var_s1 = 0x80;
-        if (((D_psp_08C629C4 >> 5) & 3) == 2) {
+        if (getABR(D_psp_08C629C4) == 2) {
             var_s1 = (ptr->b0 + ptr->g0 + ptr->r0) / 3;
         }
-        func_psp_089113A8((D_psp_08C629C4 >> 5) & 3, var_s1);
+        func_psp_089113A8(getABR(D_psp_08C629C4), var_s1);
     } else {
         func_psp_089113A8(-1, 0x80);
     }
@@ -2670,8 +2650,8 @@ s32 DrawTile(void* p) {
     v[0].z = v[1].z = v[2].z = v[3].z = 1.0f;
     v[0].c = v[1].c = v[2].c = v[3].c =
         GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80);
-    if (D_psp_08C62A40 == 0) {
-        func_psp_0891DB9C(v, 4);
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
+        ApplyScreenAdjustmentsPoly(v, 4);
     }
     func_psp_08912008();
     func_psp_08910A80(v, 4, sizeof(Vertex), GU_TRIANGLE_STRIP,
@@ -2681,10 +2661,8 @@ s32 DrawTile(void* p) {
 }
 
 s32 DrawLineF2(void* p) {
+    LINE_F2* ptr = p;
     Vertex v[2];
-    LINE_F2* ptr;
-
-    ptr = p;
 
     v[0].x = ptr->x0;
     v[0].y = ptr->y0;
@@ -2695,8 +2673,8 @@ s32 DrawLineF2(void* p) {
     }
     v[0].z = v[1].z = 1.0f;
     v[0].c = v[1].c = GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80);
-    if (D_psp_08C62A40 == 0) {
-        func_psp_0891DC48(v, 2);
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
+        ApplyScreenAdjustmentsLine(v, 2);
     }
     func_psp_08912008();
     func_psp_08910A80(v, 2, sizeof(Vertex), GU_LINES,
@@ -2705,10 +2683,8 @@ s32 DrawLineF2(void* p) {
 }
 
 s32 DrawLineF4(void* p) {
+    LINE_F4* ptr = p;
     Vertex v[2];
-    LINE_F4* ptr;
-
-    ptr = p;
 
     v[0].z = v[1].z = 1.0f;
     v[0].c = v[1].c = GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80);
@@ -2720,8 +2696,8 @@ s32 DrawLineF4(void* p) {
     if (v[0].x > v[1].x) {
         v[0].x++;
     }
-    if (D_psp_08C62A40 == 0) {
-        func_psp_0891DC48(v, 2);
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
+        ApplyScreenAdjustmentsLine(v, 2);
     }
     func_psp_08910A80(v, 2, sizeof(Vertex), GU_LINES,
                       GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
@@ -2732,8 +2708,8 @@ s32 DrawLineF4(void* p) {
     if (v[0].x > v[1].x) {
         v[0].x++;
     }
-    if (D_psp_08C62A40 == 0) {
-        func_psp_0891DC48(v, 2);
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
+        ApplyScreenAdjustmentsLine(v, 2);
     }
     func_psp_08910A80(v, 2, sizeof(Vertex), GU_LINES,
                       GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
@@ -2744,8 +2720,8 @@ s32 DrawLineF4(void* p) {
     if (v[0].x > v[1].x) {
         v[0].x++;
     }
-    if (D_psp_08C62A40 == 0) {
-        func_psp_0891DC48(v, 2);
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
+        ApplyScreenAdjustmentsLine(v, 2);
     }
     func_psp_08910A80(v, 2, sizeof(Vertex), GU_LINES,
                       GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
@@ -2753,10 +2729,8 @@ s32 DrawLineF4(void* p) {
 }
 
 s32 DrawLineG2(void* p) {
+    LINE_G2* ptr = p;
     Vertex v[2];
-    LINE_G2* ptr;
-
-    ptr = p;
 
     v[0].x = ptr->x0;
     v[0].y = ptr->y0;
@@ -2768,11 +2742,11 @@ s32 DrawLineG2(void* p) {
     v[0].z = v[1].z = 1.0f;
     v[0].c = GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80);
     v[1].c = GU_RGBA(ptr->r1, ptr->g1, ptr->b1, 0x80);
-    if (D_psp_08C62A40 == 0) {
-        func_psp_0891DC48(v, 2);
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
+        ApplyScreenAdjustmentsLine(v, 2);
     }
     if (isSemiTrans(ptr)) {
-        func_psp_089113A8((D_psp_08C629C4 >> 5) & 3, 0x80);
+        func_psp_089113A8(getABR(D_psp_08C629C4), 0x80);
     } else {
         func_psp_089113A8(-1, 0x80);
     }
@@ -2783,10 +2757,8 @@ s32 DrawLineG2(void* p) {
 }
 
 s32 DrawLineG4(void* p) {
+    LINE_G4* ptr = p;
     Vertex v[2];
-    LINE_G4* ptr;
-
-    ptr = p;
 
     v[0].z = v[1].z = 1.0f;
     func_psp_08912008();
@@ -2799,8 +2771,8 @@ s32 DrawLineG4(void* p) {
     }
     v[0].c = GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80);
     v[1].c = GU_RGBA(ptr->r1, ptr->g1, ptr->b1, 0x80);
-    if (D_psp_08C62A40 == 0) {
-        func_psp_0891DC48(v, 2);
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
+        ApplyScreenAdjustmentsLine(v, 2);
     }
     func_psp_08910A80(v, 2, sizeof(Vertex), GU_LINES,
                       GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
@@ -2813,8 +2785,8 @@ s32 DrawLineG4(void* p) {
     }
     v[0].c = GU_RGBA(ptr->r1, ptr->g1, ptr->b1, 0x80);
     v[1].c = GU_RGBA(ptr->r2, ptr->g2, ptr->b2, 0x80);
-    if (D_psp_08C62A40 == 0) {
-        func_psp_0891DC48(v, 2);
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
+        ApplyScreenAdjustmentsLine(v, 2);
     }
     func_psp_08910A80(v, 2, sizeof(Vertex), GU_LINES,
                       GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
@@ -2827,8 +2799,8 @@ s32 DrawLineG4(void* p) {
     }
     v[0].c = GU_RGBA(ptr->r2, ptr->g2, ptr->b2, 0x80);
     v[1].c = GU_RGBA(ptr->r3, ptr->g3, ptr->b3, 0x80);
-    if (D_psp_08C62A40 == 0) {
-        func_psp_0891DC48(v, 2);
+    if (D_psp_08C62A40 == SUB_BUF_OFF) {
+        ApplyScreenAdjustmentsLine(v, 2);
     }
     func_psp_08910A80(v, 2, sizeof(Vertex), GU_LINES,
                       GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888);
