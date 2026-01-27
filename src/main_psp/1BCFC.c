@@ -22,6 +22,8 @@
 
 #define g_GameClearFlag (*((s32*)0x091FC418))
 
+#define getTPF(tpage) (((tpage) >> 7) & 3) // Get Texture Pattern Format
+
 typedef enum {
     // stretches the game resolution to fill the PSP screen vertically
     SCREEN_MODE_FULL,
@@ -55,8 +57,8 @@ typedef struct {
 } TVertex;
 
 // BSS
-static char D_psp_08C630E4[0x40];
-static s32 playWait; // Slows the game up to 6 frames.
+static char debugBuf[0x40];
+static s32 skipFrames;
 s32 D_psp_08C630DC;
 s32 D_psp_08C630D8;
 s32 D_psp_08C630D4;
@@ -68,7 +70,7 @@ static char D_psp_08C62EC4[0x200];
 static s32 D_psp_08C62EC0;
 static s32 D_psp_08C62EBC;
 static u16 D_psp_08C62CBC[0x100];
-static u16 D_psp_08C62ABC[0x100];
+static u16 tempClutBuf[0x100];
 static u8* D_psp_08C62AB8;
 static u16 D_psp_08C62AB4;
 static Unk08C4218C D_psp_08C62AAC;
@@ -101,10 +103,10 @@ static RECT D_psp_08C629D0;
 static s32 D_psp_08C629CC; // ofsy
 static s32 D_psp_08C629C8; // ofsx
 static u32 D_psp_08C629C4; // tpage
-static s32 D_psp_08C629C0;
+static s32 clut8bppCount;
 static u8 D_psp_08C429C0[0x100][0x200];
 static u8 D_psp_08C4298C[0x34] UNUSED;
-static Point32 D_psp_08C4218C[0x100];
+static Point32 clut8bppIndexMap[0x100];
 static u32 D_psp_08C42188;
 static void (*D_psp_08C42184)();
 static u32 D_psp_08C42180;
@@ -129,7 +131,7 @@ static s32 D_psp_089464F0 = 1;
 extern s32 D_psp_08B41FC0;
 
 void func_psp_089113A8(s32 arg0, u8 arg1);
-void func_psp_0891B6FC(void);
+void ClearClut8bpp(void);
 void func_psp_0891CD28(u_long* p, s32 x, s32 y);
 void func_psp_0891CEB8(s32 x, s32 y);
 
@@ -276,8 +278,8 @@ static u8* func_psp_0891AC60(void) {
 }
 
 void func_psp_0891ACBC(void) {
-    func_psp_0891B6FC();
-    D_psp_08C629C0 = 0;
+    ClearClut8bpp();
+    clut8bppCount = 0;
     D_psp_08C629C4 = 0;
     D_psp_08C629C8 = 0;
     D_psp_08C629CC = 0;
@@ -371,7 +373,7 @@ void func_psp_0891B0DC(s32 x, s32 y) {
     D_psp_08C62AAC.y = y;
 }
 
-s32 func_psp_0891B118(s32 x0, s32 y0, s32 x1, s32 y1, s32 color) {
+static s32 DrawSolidLine(s32 x0, s32 y0, s32 x1, s32 y1, s32 color) {
     Vertex v[2];
 
     v[0].x = x0;
@@ -391,25 +393,25 @@ s32 func_psp_0891B118(s32 x0, s32 y0, s32 x1, s32 y1, s32 color) {
 
 s32 func_psp_0891B1F8(s32 x0, s32 y0, s32 x1, s32 y1, s32 color) {
     if (drawPolyline == true) {
-        func_psp_0891B118(x0, y0, x1 - 1, y0, color);
-        func_psp_0891B118(x1 - 1, y0, x1 - 1, y1 - 1, color);
-        func_psp_0891B118(x1 - 1, y1 - 1, x0, y1 - 1, color);
-        func_psp_0891B118(x0, y1 - 1, x0, y0, color);
+        DrawSolidLine(x0, y0, x1 - 1, y0, color);
+        DrawSolidLine(x1 - 1, y0, x1 - 1, y1 - 1, color);
+        DrawSolidLine(x1 - 1, y1 - 1, x0, y1 - 1, color);
+        DrawSolidLine(x0, y1 - 1, x0, y0, color);
     }
     return 0;
 }
 
-s32 func_psp_0891B2CC(s32 arg0, s32 arg1, s32 arg2, s32 arg3, s32 color) {
+static s32 DrawSolidRect(s32 x, s32 y, s32 w, s32 h, s32 color) {
     Vertex v[4];
 
-    v[0].x = arg0;
-    v[0].y = arg1;
-    v[1].x = arg0 + arg2;
-    v[1].y = arg1;
-    v[2].x = arg0;
-    v[2].y = arg1 + arg3;
-    v[3].x = arg0 + arg2;
-    v[3].y = arg1 + arg3;
+    v[0].x = x;
+    v[0].y = y;
+    v[1].x = x + w;
+    v[1].y = y;
+    v[2].x = x;
+    v[2].y = y + h;
+    v[3].x = x + w;
+    v[3].y = y + h;
     v[0].z = v[1].z = v[2].z = v[3].z = 1.0f;
     v[1].c = v[0].c = v[3].c = v[2].c = color;
     func_psp_08912008();
@@ -490,49 +492,49 @@ s32 ResetGraph(s32 level) {
     return 0;
 }
 
-static void func_psp_0891B6FC() { D_psp_08C629C0 = 0; }
+void ClearClut8bpp() { clut8bppCount = 0; }
 
-static s32 func_psp_0891B70C(s32 x, s32 y) {
+static s32 FindClut8bppIndex(s32 x, s32 y) {
     s32 i;
 
-    for (i = 0; i < D_psp_08C629C0; i++) {
-        if (x == D_psp_08C4218C[i].x && y == D_psp_08C4218C[i].y) {
+    for (i = 0; i < clut8bppCount; i++) {
+        if (x == clut8bppIndexMap[i].x && y == clut8bppIndexMap[i].y) {
             return i;
         }
     }
     return -1;
 }
 
-static s32 func_psp_0891B7A0(s32 x, s32 y, s32 w, void* ptr) {
-    s32 var_s1;
-    Point32* var_s0;
+static s32 LoadClut8bpp(s32 x, s32 y, s32 w, void* p) {
+    s32 clutIndex;
+    Point32* ptr;
 
-    if ((var_s1 = func_psp_0891B70C(x, y)) < 0) {
-        if (D_psp_08C629C0 < 0x100) {
-            var_s1 = D_psp_08C629C0;
-            D_psp_08C629C0 = var_s1 + 1;
+    if ((clutIndex = FindClut8bppIndex(x, y)) < 0) {
+        if (clut8bppCount < 0x100) {
+            clutIndex = clut8bppCount;
+            clut8bppCount = clutIndex + 1;
         } else {
             return 0;
-            var_s0 = var_s0; // FAKE!
+            ptr = ptr; // FAKE!
         }
     }
-    var_s0 = &D_psp_08C4218C[var_s1];
-    var_s0->x = x;
-    var_s0->y = y;
-    memcpy(D_psp_08C429C0[var_s1], ptr, w * 2);
+    ptr = &clut8bppIndexMap[clutIndex];
+    ptr->x = x;
+    ptr->y = y;
+    memcpy(D_psp_08C429C0[clutIndex], p, w * 2);
     return 1;
 }
 
 static u16 GetClut(s32 x, s32 y) {
-    s32 clut = func_psp_0891B70C(x, y);
-    if (clut >= 0) {
-        return (u16)clut | 0x8000;
+    s32 clutIndex = FindClut8bppIndex(x, y);
+    if (clutIndex >= 0) {
+        return (u16)clutIndex | 0x8000;
     } else {
         return getClut(x, y);
     }
 }
 
-u8* func_psp_0891B8F0(u16 clut, s32 arg1, s32 arg2) {
+u8* func_psp_0891B8F0(u16 clut, s32 tpf, s32 arg2) {
     Unk08C4218C v;
     u16 var_s0;
 
@@ -542,7 +544,7 @@ u8* func_psp_0891B8F0(u16 clut, s32 arg1, s32 arg2) {
     if (!(clut & 0x8000)) {
         v.y = (clut & 0x3F) * 0x10;
         v.x = clut >> 6;
-        if (arg1 == 1 && arg2) {
+        if (tpf == 1 && arg2) {
             var_s0 = GetClut(v.y, v.x);
             if (var_s0 & 0x8000) {
                 D_psp_08C62AB8 = D_psp_08C429C0[var_s0 & 0x7FFF];
@@ -629,17 +631,17 @@ s32 func_psp_0891BCA0(RECT* rect, u_long* p, s32 width, s32 arg3) {
     return 0;
 }
 
-static inline u16* unkFunc(u16* clut, s32 w, s32 h) {
+static inline u16* RemapClut(u16* clut, s32 w, s32 h) {
     s32 i;
 
     for (i = 0; i < w * h; i++) {
         if (clut[i] == 0x8000) {
-            D_psp_08C62ABC[i] = 0x8001;
+            tempClutBuf[i] = 0x8001;
         } else {
-            D_psp_08C62ABC[i] = clut[i];
+            tempClutBuf[i] = clut[i];
         }
     }
-    return D_psp_08C62ABC;
+    return tempClutBuf;
 }
 
 s32 LoadImage(RECT* rect, u_long* p) {
@@ -648,10 +650,10 @@ s32 LoadImage(RECT* rect, u_long* p) {
     var_a4 = 0;
     if (rect->h == 1 &&
         (rect->w == 0x10 || rect->w == 0x100 || rect->w == 0x80)) {
-        p = (u_long*)unkFunc((u16*)p, rect->w, rect->h);
+        p = (u_long*)RemapClut((u16*)p, rect->w, rect->h);
     }
     if (rect->h == 1 && rect->w == 0x100) {
-        func_psp_0891B7A0(rect->x, rect->y, rect->w, p);
+        LoadClut8bpp(rect->x, rect->y, rect->w, p);
     }
     return func_psp_0891BCA0(rect, p, rect->w * 2, var_a4);
 }
@@ -806,9 +808,9 @@ void func_psp_0891CCBC(u_long* clut, s32 x, s32 y) {
 
 static void func_psp_0891CD28(u_long* p, s32 x, s32 y) {
     RECT rect;
-    s32 index;
+    s32 clutIndex;
 
-    if ((index = func_psp_0891B70C(x, y)) < 0) {
+    if ((clutIndex = FindClut8bppIndex(x, y)) < 0) {
         rect.x = x;
         rect.y = y;
         rect.w = 0x100;
@@ -816,12 +818,12 @@ static void func_psp_0891CD28(u_long* p, s32 x, s32 y) {
         func_psp_0891C204(&rect, p, rect.w * 2, 0);
         return;
     }
-    memcpy(p, &D_psp_08C429C0[index], sizeof(*D_psp_08C429C0));
+    memcpy(p, &D_psp_08C429C0[clutIndex], sizeof(*D_psp_08C429C0));
 }
 
 static void func_psp_0891CDE0(u16* clut, s32 x, s32 y) {
-    clut = unkFunc(clut, 0x100, 1);
-    func_psp_0891B7A0(x, y, 0x100, clut);
+    clut = RemapClut(clut, 0x100, 1);
+    LoadClut8bpp(x, y, 0x100, clut);
 }
 
 static void func_psp_0891CEB8(s32 x, s32 y) {
@@ -835,15 +837,15 @@ static void func_psp_0891CEB8(s32 x, s32 y) {
     func_psp_0891CDE0(D_psp_08C62CBC, x, y);
 }
 
-u_short LoadTPage(u_long* pix, s32 tp, s32 abr, s32 x, s32 y, s32 w, s32 h) {
+u_short LoadTPage(u_long* pix, s32 tpf, s32 abr, s32 x, s32 y, s32 w, s32 h) {
     RECT rect;
 
     rect.x = x;
     rect.y = y;
-    rect.w = (tp == 0) ? w / 4 : (tp == 1) ? w / 2 : w;
+    rect.w = (tpf == 0) ? w / 4 : (tpf == 1) ? w / 2 : w;
     rect.h = h;
     LoadImage(&rect, pix);
-    return ((tp & 3) << 7) | ((abr & 3) << 5) | ((y & 0x100) >> 4) |
+    return ((tpf & 3) << 7) | ((abr & 3) << 5) | ((y & 0x100) >> 4) |
            ((x & 0x3FF) >> 6) | ((y & 0x200) << 2);
 }
 
@@ -1070,43 +1072,45 @@ float D_psp_089464FC = 382.0f;
 float D_psp_08946500 = 240.0f;
 s32 D_psp_08946504 = GU_RGBA(0xA0, 0xA0, 0xA0, 0x80);
 
-s32 func_psp_08920488(void*);
+s32 DrawNone(void*);
 s32 func_psp_08920498(void*);
-s32 func_psp_089215A4(void*);
-s32 func_psp_08921D44(void*);
-s32 func_psp_089225D8(void*);
-s32 func_psp_08923FA4(void*);
-s32 func_psp_08921A38(void*);
-s32 func_psp_089254D8(void*);
-s32 func_psp_08925600(void*);
-s32 func_psp_08925860(void*);
-s32 func_psp_08925A04(void*);
-s32 func_psp_08925194(void*);
+s32 DrawSprt16(void*);
+s32 DrawPolyFT4(void*);
+s32 DrawPolyGT3(void*);
+s32 DrawPolyGT4(void*);
+s32 DrawPolyG4(void*);
+s32 DrawLineF2(void*);
+s32 DrawLineF4(void*);
+s32 DrawLineG2(void*);
+s32 DrawLineG4(void*);
+s32 DrawTile(void*);
 s32 func_psp_0891FCC0(void*);
 s32 func_psp_0891FCF0(void*);
-s32 func_psp_0891FD20(void*);
-s32 func_psp_0891FD74(void*);
-s32 func_psp_0891FDC8(void*);
+s32 SetDROffset(void*);
+s32 SetDRArea(void*);
+s32 SetDREnv(void*);
 
-s32 (*D_psp_08946508[])(void*) = {
-    func_psp_08920488, // NONE
+// clang-format off
+static s32 (*packetFuncs[])(void*) = {
+    DrawNone,
     func_psp_08920498, // SPRT
-    func_psp_089215A4, // SPRT_16
-    func_psp_08921D44, // POLY_FT4
-    func_psp_089225D8, // POLY_GT3
-    func_psp_08923FA4, // POLY_GT4
-    func_psp_08921A38, // POLY_G4
-    func_psp_089254D8, // LINE_F2
-    func_psp_08925600, // LINE_F4
-    func_psp_08925860, // LINE_G2
-    func_psp_08925A04, // LINE_G4
-    func_psp_08925194, // TILE
+    DrawSprt16,
+    DrawPolyFT4,
+    DrawPolyGT3,
+    DrawPolyGT4,
+    DrawPolyG4,
+    DrawLineF2,
+    DrawLineF4,
+    DrawLineG2,
+    DrawLineG4,
+    DrawTile,
     func_psp_0891FCC0, // DR_MODE OR DR_TWIN ?
     func_psp_0891FCF0, // DR_MODE OR DR_TWIN ?
-    func_psp_0891FD20, // DR_OFFSET
-    func_psp_0891FD74, // DR_AREA
-    func_psp_0891FDC8, // DR_ENV
+    SetDROffset,
+    SetDRArea,
+    SetDREnv,
 };
+// clang-format on
 
 void func_psp_0891DE74(void) {
     s32 var_s1;
@@ -1280,7 +1284,7 @@ void func_psp_0891E638(void) {
         func_psp_08910FD8((s32)sceGeEdramGetAddr() + 0x1BC000,
                           (s32)sceGeEdramGetAddr() + 0x1DE000, 5, 0x200, 9, 9);
     } else {
-        func_psp_0891B2CC(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT, black);
+        DrawSolidRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT, black);
     }
     func_psp_08910A80(
         v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
@@ -1381,7 +1385,7 @@ void func_psp_0891E994(OT_TYPE* p) {
         func_psp_0891ABE4();
         if (D_psp_08C62A3C > 0) {
             func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-            func_psp_0891B2CC(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT, black);
+            DrawSolidRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT, black);
             if (D_psp_08C62A3C > 0) {
                 D_psp_08C62A3C--;
             }
@@ -1407,10 +1411,10 @@ void func_psp_0891E994(OT_TYPE* p) {
             sp58 = (GU_SCR_HEIGHT - var_fp) / 2;
             func_psp_0891AF48(0);
             func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-            func_psp_0891B2CC(sp5C, sp58, sp54 - 1, var_fp - 1, black);
+            DrawSolidRect(sp5C, sp58, sp54 - 1, var_fp - 1, black);
             func_psp_0891AF48(sp50);
         }
-        func_psp_0891FDC8(&D_psp_08C629EC.dr_env);
+        SetDREnv(&D_psp_08C629EC.dr_env);
         D_psp_08C62EC0 = 0;
         D_psp_08C62A50 = 0;
         D_psp_08C62A54 = 0;
@@ -1419,7 +1423,7 @@ void func_psp_0891E994(OT_TYPE* p) {
         while (var_s1 != NULL) {
             code = getcode(var_s1) & 0x3F;
             if ((code >= 0) && (code < 0x11) && (code != 0)) {
-                D_psp_08946508[code](var_s1);
+                packetFuncs[code](var_s1);
                 if (code != 0) {
                     D_psp_08C62EC0++;
                 }
@@ -1439,7 +1443,7 @@ void func_psp_0891E994(OT_TYPE* p) {
         if (D_psp_08C62EBC != 0) {
             func_psp_0891AF48(0);
             func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-            func_psp_0891B2CC(0x130, 0, 0xB0, 0x70, black);
+            DrawSolidRect(0x130, 0, 0xB0, 0x70, black);
         }
         if (cpuGpuTime && frameTime != 0) {
             var_s7 = (D_psp_08C42180 != D_psp_08C42188)
@@ -1447,9 +1451,9 @@ void func_psp_0891E994(OT_TYPE* p) {
                          : 0xF0;
             func_psp_0891AF48(0);
             func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-            func_psp_0891B118(0, 0, (frameTime * var_s7) / frameTime, 0, white);
-            func_psp_0891B118(0, 1, (cpuTime * var_s7) / frameTime, 1, red);
-            func_psp_0891B118(0, 2, (gpuTime * var_s7) / frameTime, 2, green);
+            DrawSolidLine(0, 0, (frameTime * var_s7) / frameTime, 0, white);
+            DrawSolidLine(0, 1, (cpuTime * var_s7) / frameTime, 1, red);
+            DrawSolidLine(0, 2, (gpuTime * var_s7) / frameTime, 2, green);
         }
         func_psp_0891AF48(0);
         func_psp_0891089C(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
@@ -1532,9 +1536,9 @@ void DrawOTag(OT_TYPE* p) {
                         func_psp_0891A6A8(D_psp_08C62A30);
                         break;
                     case 4:
-                        playWait++;
-                        if (playWait > 6) {
-                            playWait = 0;
+                        skipFrames++;
+                        if (skipFrames > 6) {
+                            skipFrames = 0;
                         }
                         break;
                     case 5:
@@ -1564,36 +1568,35 @@ void DrawOTag(OT_TYPE* p) {
             }
             x = 304;
             y = 0;
-            sprintf(D_psp_08C630E4, "=== DEGUG MENU ===");
-            sceGuDebugPrint(x, y, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "GameClearFlag:%s",
-                    off_on[g_GameClearFlag ? 1 : 0]);
-            sceGuDebugPrint(x + 0x10, y + 0x8, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "MutekiFlag:%s", off_on[g_InvincibleFlag]);
-            sceGuDebugPrint(x + 0x10, y + 0x10, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "Heart99:%s", off_on[g_InfiniteHearts]);
-            sceGuDebugPrint(x + 0x10, y + 0x18, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "ScreenMode:%d", D_psp_08C62A30);
-            sceGuDebugPrint(x + 0x10, y + 0x20, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "PlayWait:%d", playWait);
-            sceGuDebugPrint(x + 0x10, y + 0x28, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "FntPrint:%s", off_on[D_psp_08C62A70]);
-            sceGuDebugPrint(x + 0x10, y + 0x30, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "DrawPolyline:%s", off_on[drawPolyline]);
-            sceGuDebugPrint(x + 0x10, y + 0x38, 0xFFFFFFFF, D_psp_08C630E4);
+            sprintf(debugBuf, "=== DEGUG MENU ===");
+            sceGuDebugPrint(x, y, 0xFFFFFFFF, debugBuf);
             sprintf(
-                D_psp_08C630E4, "DispSubBuffer:%s", subBufType[dispSubBuffer]);
-            sceGuDebugPrint(x + 0x10, y + 0x40, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "GpuEmuInfo:%s", off_on[gpuEmuInfo]);
-            sceGuDebugPrint(x + 0x10, y + 0x48, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "CpuGpuTime:%s", off_on[cpuGpuTime]);
-            sceGuDebugPrint(x + 0x10, y + 0x50, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "OYAJI:%03d", g_UnlockAllTactics);
-            sceGuDebugPrint(x + 0x10, y + 0x58, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "AT3:%03d", at3Index);
-            sceGuDebugPrint(x + 0x10, y + 0x60, 0xFFFFFFFF, D_psp_08C630E4);
-            sprintf(D_psp_08C630E4, "[%s]", GetAT3FileName(at3Index));
-            sceGuDebugPrint(x + 0x10, y + 0x68, 0xFFFFFFFF, D_psp_08C630E4);
+                debugBuf, "GameClearFlag:%s", off_on[g_GameClearFlag ? 1 : 0]);
+            sceGuDebugPrint(x + 0x10, y + 0x8, 0xFFFFFFFF, debugBuf);
+            sprintf(debugBuf, "MutekiFlag:%s", off_on[g_InvincibleFlag]);
+            sceGuDebugPrint(x + 0x10, y + 0x10, 0xFFFFFFFF, debugBuf);
+            sprintf(debugBuf, "Heart99:%s", off_on[g_InfiniteHearts]);
+            sceGuDebugPrint(x + 0x10, y + 0x18, 0xFFFFFFFF, debugBuf);
+            sprintf(debugBuf, "ScreenMode:%d", D_psp_08C62A30);
+            sceGuDebugPrint(x + 0x10, y + 0x20, 0xFFFFFFFF, debugBuf);
+            sprintf(debugBuf, "PlayWait:%d", skipFrames);
+            sceGuDebugPrint(x + 0x10, y + 0x28, 0xFFFFFFFF, debugBuf);
+            sprintf(debugBuf, "FntPrint:%s", off_on[D_psp_08C62A70]);
+            sceGuDebugPrint(x + 0x10, y + 0x30, 0xFFFFFFFF, debugBuf);
+            sprintf(debugBuf, "DrawPolyline:%s", off_on[drawPolyline]);
+            sceGuDebugPrint(x + 0x10, y + 0x38, 0xFFFFFFFF, debugBuf);
+            sprintf(debugBuf, "DispSubBuffer:%s", subBufType[dispSubBuffer]);
+            sceGuDebugPrint(x + 0x10, y + 0x40, 0xFFFFFFFF, debugBuf);
+            sprintf(debugBuf, "GpuEmuInfo:%s", off_on[gpuEmuInfo]);
+            sceGuDebugPrint(x + 0x10, y + 0x48, 0xFFFFFFFF, debugBuf);
+            sprintf(debugBuf, "CpuGpuTime:%s", off_on[cpuGpuTime]);
+            sceGuDebugPrint(x + 0x10, y + 0x50, 0xFFFFFFFF, debugBuf);
+            sprintf(debugBuf, "OYAJI:%03d", g_UnlockAllTactics);
+            sceGuDebugPrint(x + 0x10, y + 0x58, 0xFFFFFFFF, debugBuf);
+            sprintf(debugBuf, "AT3:%03d", at3Index);
+            sceGuDebugPrint(x + 0x10, y + 0x60, 0xFFFFFFFF, debugBuf);
+            sprintf(debugBuf, "[%s]", GetAT3FileName(at3Index));
+            sceGuDebugPrint(x + 0x10, y + 0x68, 0xFFFFFFFF, debugBuf);
             func_psp_0892A8FC();
             if (func_psp_0891B528() & 0x20) {
                 sceGuDebugPrint(x, y + (cursor + 1) * 8, 0xFFFFFFFF, "=>");
@@ -1608,7 +1611,7 @@ void DrawOTag(OT_TYPE* p) {
         D_psp_08C62EBC = 0;
         D_psp_089464E8 = 2;
     } else {
-        for (i = 0; i < playWait; i++) {
+        for (i = 0; i < skipFrames; i++) {
             GsClearVcount();
             VSync(0);
         }
@@ -1630,7 +1633,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/1BCFC", func_psp_0891FCC0);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1BCFC", func_psp_0891FCF0);
 
-s32 func_psp_0891FD20(void* p) {
+s32 SetDROffset(void* p) {
     DR_OFFSET* ptr;
 
     ptr = p;
@@ -1640,7 +1643,7 @@ s32 func_psp_0891FD20(void* p) {
     return 0;
 }
 
-s32 func_psp_0891FD74(void* p) {
+s32 SetDRArea(void* p) {
     DR_AREA* ptr;
 
     ptr = p;
@@ -1651,7 +1654,7 @@ s32 func_psp_0891FD74(void* p) {
     return 0;
 }
 
-s32 func_psp_0891FDC8(void* p) {
+s32 SetDREnv(void* p) {
     DR_ENV* ptr;
     RECT rect;
     s32 x, y;
@@ -1702,9 +1705,9 @@ s32 func_psp_0891FDC8(void* p) {
     }
     func_psp_0891089C(
         x + rect.x, y + rect.y, x + rect.x + rect.w, y + rect.y + rect.h);
-    if (ptr->isbg == 1) {
-        func_psp_0891B2CC(x + rect.x, y + rect.y, rect.w, rect.h,
-                          GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80));
+    if (ptr->isbg == true) {
+        DrawSolidRect(x + rect.x, y + rect.y, rect.w, rect.h,
+                      GU_RGBA(ptr->r0, ptr->g0, ptr->b0, 0x80));
     }
     func_psp_08910634(D_psp_08C629EC.dtd ? 1 : 0);
     return 0;
@@ -1739,11 +1742,11 @@ void func_psp_089201E8(SPRT* ptr, TVertex* v, float arg2, float arg3,
     v[1].v = v1;
 }
 
-s32 func_psp_08920488(void* p) {}
+s32 DrawNone(void* p) {}
 
 static inline u8* unkInlineFunc(s32 tpage) {
     if (D_psp_089464EC != 0) {
-        if ((tpage & 0x1F) == 0x10 && ((tpage >> 7) & 3) == 2) {
+        if ((tpage & 0x1F) == 0x10 && getTPF(tpage) == 2) {
             return (u8*)sceGeEdramGetAddr() + 0xCC000;
         }
         if ((tpage & 0xF000) == 0x8000) {
@@ -1753,23 +1756,23 @@ static inline u8* unkInlineFunc(s32 tpage) {
             return (u8*)sceGeEdramGetAddr() + 0x12C200;
         }
     }
-    if ((tpage & 0x1F) == 0 && ((tpage >> 7) & 3) == 2) {
+    if ((tpage & 0x1F) == 0 && getTPF(tpage) == 2) {
         return func_psp_0891AC60();
     }
     if (!D_psp_08C62AA0) {
-        if ((tpage & 0x1F) == 4 && ((tpage >> 7) & 3) == 2) {
+        if ((tpage & 0x1F) == 4 && getTPF(tpage) == 2) {
             return func_psp_0891AC24();
         }
     }
     return func_psp_0891AAC8(tpage);
 }
 
-static inline void unkInlineFunc2(u8* arg0, u8* arg1, s32 arg2) {
+static inline void unkInlineFunc2(u8* arg0, u8* arg1, s32 tpf) {
     if (arg0 == (u8*)((s32)sceGeEdramGetAddr() + 0xCC000)) {
-        if (arg2 == 2) {
+        if (tpf == 2) {
             func_psp_08911990(arg0, 0x100);
         } else {
-            func_psp_0891149C(arg0, 0x400, 0x100, arg1, arg2);
+            func_psp_0891149C(arg0, 0x400, 0x100, arg1, tpf);
         }
     } else if (arg0 == func_psp_0891AC24()) {
         func_psp_08911990(arg0, 0x200);
@@ -1778,20 +1781,20 @@ static inline void unkInlineFunc2(u8* arg0, u8* arg1, s32 arg2) {
     } else if (arg0 == (u8*)((s32)sceGeEdramGetAddr() + 0x12C200)) {
         func_psp_0891149C(arg0, 0x40, 0x40, 0, 2);
     } else {
-        func_psp_08910D44(arg0, arg1, arg2);
+        func_psp_08910D44(arg0, arg1, tpf);
     }
 }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/1BCFC", func_psp_08920498);
 
-s32 func_psp_089215A4(void* p) {
+s32 DrawSprt16(void* p) {
     SPRT_16* ptr;
     TVertex* v;
 
     ptr = p;
 
     v = (TVertex*)func_psp_089104B4(0xC);
-    if (((D_psp_08C629C4 >> 7) & 3) == 2) {
+    if (getTPF(D_psp_08C629C4) == 2) {
     }
     func_psp_08910D44(
         D_psp_08B42080[D_psp_08C629C4 & 0x1F],
@@ -1799,7 +1802,7 @@ s32 func_psp_089215A4(void* p) {
                         ((ptr->clut >> 6) / 0x100) * 0x10]
                        [(((ptr->clut & 0x3F) << 4) % 0x40) * 2 +
                         ((ptr->clut >> 6) % 0x100) * 0x80],
-        (D_psp_08C629C4 >> 7) & 3);
+        getTPF(D_psp_08C629C4));
     if (isSemiTrans(ptr)) {
         switch ((D_psp_08C629C4 >> 5) & 3) {
         case 0:
@@ -1878,7 +1881,7 @@ s32 func_psp_089215A4(void* p) {
     return 0;
 }
 
-s32 func_psp_08921A38(void* p) {
+s32 DrawPolyG4(void* p) {
     Vertex v[4];
     POLY_G4* ptr;
     u8 var_s1;
@@ -1917,10 +1920,10 @@ s32 func_psp_08921A38(void* p) {
     return 0;
 }
 
-s32 func_psp_08921D44(void* p) {
+s32 DrawPolyFT4(void* p) {
     POLY_FT4* ptr;
     s32 isSemiTrans;
-    u8 temp_s5;
+    u8 tpf;
     u8* var_s7;
     u8* var_s2;
     TVertex* v;
@@ -1930,12 +1933,12 @@ s32 func_psp_08921D44(void* p) {
     isSemiTrans = isSemiTrans(ptr);
     D_psp_08C629C4 = ptr->tpage;
     v = (TVertex*)SP(0);
-    temp_s5 = (ptr->tpage >> 7) & 3;
+    tpf = getTPF(ptr->tpage);
     var_s2 = unkInlineFunc(ptr->tpage);
-    if (temp_s5 != 2) {
-        var_s7 = func_psp_0891B8F0(ptr->clut, temp_s5, 1);
+    if (tpf != 2) {
+        var_s7 = func_psp_0891B8F0(ptr->clut, tpf, 1);
     }
-    unkInlineFunc2(var_s2, var_s7, temp_s5);
+    unkInlineFunc2(var_s2, var_s7, tpf);
     if (isSemiTrans(ptr)) {
         func_psp_089113A8((ptr->tpage >> 5) & 3, 0x80);
     } else {
@@ -1984,19 +1987,19 @@ s32 func_psp_08921D44(void* p) {
     }
     if (drawPolyline == true) {
         s32 color = red;
-        func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
-        func_psp_0891B118(v[1].x, v[1].y, v[3].x, v[3].y, color);
-        func_psp_0891B118(v[3].x, v[3].y, v[2].x, v[2].y, color);
-        func_psp_0891B118(v[2].x, v[2].y, v[0].x, v[0].y, color);
+        DrawSolidLine(v[0].x, v[0].y, v[1].x, v[1].y, color);
+        DrawSolidLine(v[1].x, v[1].y, v[3].x, v[3].y, color);
+        DrawSolidLine(v[3].x, v[3].y, v[2].x, v[2].y, color);
+        DrawSolidLine(v[2].x, v[2].y, v[0].x, v[0].y, color);
     }
     D_psp_08C62A54++;
     return 0;
 }
 
-s32 func_psp_089225D8(void* p) {
+s32 DrawPolyGT3(void* p) {
     POLY_GT3* ptr;
     TVertex* v;
-    u8 temp_s3;
+    u8 tpf;
     u8* var_v0;
     u8* var_s1;
     s32 isSemiTrans;
@@ -2007,12 +2010,12 @@ s32 func_psp_089225D8(void* p) {
     isSemiTrans = isSemiTrans(ptr);
     D_psp_08C629C4 = ptr->tpage;
     v = (TVertex*)func_psp_089104B4(0x12);
-    temp_s3 = (ptr->tpage >> 7) & 3;
+    tpf = getTPF(ptr->tpage);
     var_v0 = unkInlineFunc(ptr->tpage);
-    if (temp_s3 != 2) {
-        var_s1 = func_psp_0891B8F0(ptr->clut, temp_s3, 1);
+    if (tpf != 2) {
+        var_s1 = func_psp_0891B8F0(ptr->clut, tpf, 1);
     }
-    unkInlineFunc2(var_v0, var_s1, temp_s3);
+    unkInlineFunc2(var_v0, var_s1, tpf);
     if (isSemiTrans(ptr)) {
         func_psp_089113A8((ptr->tpage >> 5) & 3, 0x80);
     } else {
@@ -2089,9 +2092,9 @@ s32 func_psp_089225D8(void* p) {
     }
     if (drawPolyline == true) {
         s32 color = green;
-        func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
-        func_psp_0891B118(v[1].x, v[1].y, v[2].x, v[2].y, color);
-        func_psp_0891B118(v[2].x, v[2].y, v[0].x, v[0].y, color);
+        DrawSolidLine(v[0].x, v[0].y, v[1].x, v[1].y, color);
+        DrawSolidLine(v[1].x, v[1].y, v[2].x, v[2].y, color);
+        DrawSolidLine(v[2].x, v[2].y, v[0].x, v[0].y, color);
     }
     D_psp_08C62A54++;
     return 0;
@@ -2141,10 +2144,10 @@ s32 func_psp_08922C14(void* p) {
         GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 | GU_TEXTURE_32BITF);
     if (drawPolyline == true) {
         s32 color = magenta;
-        func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
-        func_psp_0891B118(v[1].x, v[1].y, v[3].x, v[3].y, color);
-        func_psp_0891B118(v[3].x, v[3].y, v[2].x, v[2].y, color);
-        func_psp_0891B118(v[2].x, v[2].y, v[0].x, v[0].y, color);
+        DrawSolidLine(v[0].x, v[0].y, v[1].x, v[1].y, color);
+        DrawSolidLine(v[1].x, v[1].y, v[3].x, v[3].y, color);
+        DrawSolidLine(v[3].x, v[3].y, v[2].x, v[2].y, color);
+        DrawSolidLine(v[2].x, v[2].y, v[0].x, v[0].y, color);
     }
     D_psp_08C62A54++;
     return 0;
@@ -2152,7 +2155,7 @@ s32 func_psp_08922C14(void* p) {
 
 s32 func_psp_089231F8(void* p) {
     POLY_GT4* ptr;
-    u8 temp_s5;
+    u8 tpf;
     u8* var_fp;
     s32 isSemiTrans;
     u8* var_s2;
@@ -2162,12 +2165,12 @@ s32 func_psp_089231F8(void* p) {
     var_fp = NULL;
     isSemiTrans = isSemiTrans(ptr);
     D_psp_08C629C4 = ptr->tpage;
-    temp_s5 = (ptr->tpage >> 7) & 3;
+    tpf = getTPF(ptr->tpage);
     var_s2 = unkInlineFunc(ptr->tpage);
-    if (temp_s5 != 2) {
-        var_fp = func_psp_0891B8F0(ptr->clut, temp_s5, 1);
+    if (tpf != 2) {
+        var_fp = func_psp_0891B8F0(ptr->clut, tpf, 1);
     }
-    unkInlineFunc2(var_s2, var_fp, temp_s5);
+    unkInlineFunc2(var_s2, var_fp, tpf);
     if (isSemiTrans(ptr)) {
         switch ((ptr->tpage >> 5) & 3) {
         case 0:
@@ -2239,7 +2242,7 @@ s32 func_psp_089231F8(void* p) {
                               GU_TRANSFORM_2D | GU_VERTEX_32BITF |
                                   GU_COLOR_8888 | GU_TEXTURE_32BITF);
         }
-    } else if ((temp_s5 == 2) && !isSemiTrans) {
+    } else if (tpf == 2 && !isSemiTrans) {
         if ((ptr->x1 - ptr->x0) != 1) {
             func_psp_08911F24(0, D_psp_089464F0);
             func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
@@ -2282,21 +2285,21 @@ s32 func_psp_089231F8(void* p) {
     }
     if (drawPolyline == true) {
         s32 color = green;
-        func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
-        func_psp_0891B118(v[1].x, v[1].y, v[3].x, v[3].y, color);
-        func_psp_0891B118(v[3].x, v[3].y, v[2].x, v[2].y, color);
-        func_psp_0891B118(v[2].x, v[2].y, v[0].x, v[0].y, color);
+        DrawSolidLine(v[0].x, v[0].y, v[1].x, v[1].y, color);
+        DrawSolidLine(v[1].x, v[1].y, v[3].x, v[3].y, color);
+        DrawSolidLine(v[3].x, v[3].y, v[2].x, v[2].y, color);
+        DrawSolidLine(v[2].x, v[2].y, v[0].x, v[0].y, color);
     }
     D_psp_08C62A54++;
     return 0;
 }
 
-s32 func_psp_08923FA4(void* p) {
+s32 DrawPolyGT4(void* p) {
     POLY_GT4 sp78;
     POLY_GT4 sp40;
     SPRT sp28;
 
-    u8 temp_s4;
+    u8 tpf;
     s32 var_a0;
     s32 dx0, dy0;
     s32 dx1, dy1;
@@ -2317,7 +2320,7 @@ s32 func_psp_08923FA4(void* p) {
         return 0;
     }
     D_psp_08C629C4 = ptr->tpage;
-    if (((ptr->tpage >> 7) & 3) == 2 && (ptr->tpage & 0x1F) != 0x10) {
+    if (getTPF(ptr->tpage) == 2 && (ptr->tpage & 0x1F) != 0x10) {
         if (ptr->u1 == 0xFF && ptr->u0 == 0) {
             sp78.tag = ptr->tag;
             sp78.len = ptr->len;
@@ -2372,7 +2375,7 @@ s32 func_psp_08923FA4(void* p) {
                 sp78.y3 = sp78.y2 + dy1;
                 sp78.u0 = sp78.u2 = 0;
                 sp78.u1 = sp78.u3 = 0x3F;
-                func_psp_08923FA4(&sp78);
+                DrawPolyGT4(&sp78);
                 sp78.tpage++;
             }
             return 0;
@@ -2427,7 +2430,7 @@ s32 func_psp_08923FA4(void* p) {
                 sp40.x1 = sp40.x3 = var_s2_3 + var_s1_2;
                 sp40.u0 = sp40.u2 = var_a0;
                 sp40.u1 = sp40.u3 = (var_a0 + var_s1_2) - 1;
-                func_psp_08923FA4(&sp40);
+                DrawPolyGT4(&sp40);
                 sp40.tpage++;
                 var_s2_3 += var_s1_2;
             }
@@ -2439,8 +2442,8 @@ s32 func_psp_08923FA4(void* p) {
             return func_psp_08922C14(p);
         }
         if ((ptr->tpage & 0xF000) == 0x2000) {
-            func_psp_0891B2CC(ptr->x0, ptr->y0, ptr->x3 - ptr->x0,
-                              ptr->y3 - ptr->y0, GU_RGBA(0, 0, 8, 0x80));
+            DrawSolidRect(ptr->x0, ptr->y0, ptr->x3 - ptr->x0,
+                          ptr->y3 - ptr->y0, GU_RGBA(0, 0, 8, 0x80));
             sp28.u0 = ptr->u0;
             sp28.v0 = ptr->v0;
             sp28.w = ptr->x3 - ptr->x0;
@@ -2457,12 +2460,12 @@ s32 func_psp_08923FA4(void* p) {
             return func_psp_089231F8(p);
         }
     }
-    temp_s4 = (ptr->tpage >> 7) & 3;
+    tpf = getTPF(ptr->tpage);
     var_v0 = unkInlineFunc(ptr->tpage);
-    if (temp_s4 != 2) {
-        var_s2 = func_psp_0891B8F0(ptr->clut, temp_s4, 1);
+    if (tpf != 2) {
+        var_s2 = func_psp_0891B8F0(ptr->clut, tpf, 1);
     }
-    unkInlineFunc2(var_v0, var_s2, temp_s4);
+    unkInlineFunc2(var_v0, var_s2, tpf);
     if (isSemiTrans(ptr)) {
         switch ((ptr->tpage >> 5) & 3) {
         case 0:
@@ -2581,7 +2584,7 @@ s32 func_psp_08923FA4(void* p) {
                               GU_TRANSFORM_2D | GU_VERTEX_32BITF |
                                   GU_COLOR_8888 | GU_TEXTURE_32BITF);
         }
-    } else if ((temp_s4 == 2) && !isSemiTrans) {
+    } else if (tpf == 2 && !isSemiTrans) {
         if ((ptr->x1 - ptr->x0) != 1) {
             func_psp_08911F24(0, D_psp_089464F0);
             func_psp_08910C74(v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
@@ -2625,16 +2628,16 @@ s32 func_psp_08923FA4(void* p) {
     }
     if (drawPolyline == true) {
         s32 color = green;
-        func_psp_0891B118(v[0].x, v[0].y, v[1].x, v[1].y, color);
-        func_psp_0891B118(v[1].x, v[1].y, v[3].x, v[3].y, color);
-        func_psp_0891B118(v[3].x, v[3].y, v[2].x, v[2].y, color);
-        func_psp_0891B118(v[2].x, v[2].y, v[0].x, v[0].y, color);
+        DrawSolidLine(v[0].x, v[0].y, v[1].x, v[1].y, color);
+        DrawSolidLine(v[1].x, v[1].y, v[3].x, v[3].y, color);
+        DrawSolidLine(v[3].x, v[3].y, v[2].x, v[2].y, color);
+        DrawSolidLine(v[2].x, v[2].y, v[0].x, v[0].y, color);
     }
     D_psp_08C62A54++;
     return 0;
 }
 
-s32 func_psp_08925194(void* p) {
+s32 DrawTile(void* p) {
     Vertex v[4];
     TILE* ptr;
     u8 var_s1;
@@ -2677,7 +2680,7 @@ s32 func_psp_08925194(void* p) {
     return 0;
 }
 
-s32 func_psp_089254D8(void* p) {
+s32 DrawLineF2(void* p) {
     Vertex v[2];
     LINE_F2* ptr;
 
@@ -2701,7 +2704,7 @@ s32 func_psp_089254D8(void* p) {
     return 0;
 }
 
-s32 func_psp_08925600(void* p) {
+s32 DrawLineF4(void* p) {
     Vertex v[2];
     LINE_F4* ptr;
 
@@ -2749,7 +2752,7 @@ s32 func_psp_08925600(void* p) {
     return 0;
 }
 
-s32 func_psp_08925860(void* p) {
+s32 DrawLineG2(void* p) {
     Vertex v[2];
     LINE_G2* ptr;
 
@@ -2779,7 +2782,7 @@ s32 func_psp_08925860(void* p) {
     return 0;
 }
 
-s32 func_psp_08925A04(void* p) {
+s32 DrawLineG4(void* p) {
     Vertex v[2];
     LINE_G4* ptr;
 
