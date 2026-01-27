@@ -103,10 +103,10 @@ static RECT D_psp_08C629D0;
 static s32 D_psp_08C629CC; // ofsy
 static s32 D_psp_08C629C8; // ofsx
 static u32 D_psp_08C629C4; // tpage
-static s32 clut256Count;
+static s32 clut8bppCount;
 static u8 D_psp_08C429C0[0x100][0x200];
 static u8 D_psp_08C4298C[0x34] UNUSED;
-static Point32 clut256IndexMap[0x100];
+static Point32 clut8bppIndexMap[0x100];
 static u32 D_psp_08C42188;
 static void (*D_psp_08C42184)();
 static u32 D_psp_08C42180;
@@ -131,7 +131,7 @@ static s32 D_psp_089464F0 = 1;
 extern s32 D_psp_08B41FC0;
 
 void func_psp_089113A8(s32 arg0, u8 arg1);
-void ClearClut256(void);
+void ClearClut8bpp(void);
 void func_psp_0891CD28(u_long* p, s32 x, s32 y);
 void func_psp_0891CEB8(s32 x, s32 y);
 
@@ -278,8 +278,8 @@ static u8* func_psp_0891AC60(void) {
 }
 
 void func_psp_0891ACBC(void) {
-    ClearClut256();
-    clut256Count = 0;
+    ClearClut8bpp();
+    clut8bppCount = 0;
     D_psp_08C629C4 = 0;
     D_psp_08C629C8 = 0;
     D_psp_08C629CC = 0;
@@ -492,33 +492,33 @@ s32 ResetGraph(s32 level) {
     return 0;
 }
 
-void ClearClut256() { clut256Count = 0; }
+void ClearClut8bpp() { clut8bppCount = 0; }
 
-static s32 FindClut256Index(s32 x, s32 y) {
+static s32 FindClut8bppIndex(s32 x, s32 y) {
     s32 i;
 
-    for (i = 0; i < clut256Count; i++) {
-        if (x == clut256IndexMap[i].x && y == clut256IndexMap[i].y) {
+    for (i = 0; i < clut8bppCount; i++) {
+        if (x == clut8bppIndexMap[i].x && y == clut8bppIndexMap[i].y) {
             return i;
         }
     }
     return -1;
 }
 
-static s32 LoadClut256(s32 x, s32 y, s32 w, void* p) {
+static s32 LoadClut8bpp(s32 x, s32 y, s32 w, void* p) {
     s32 clutIndex;
     Point32* ptr;
 
-    if ((clutIndex = FindClut256Index(x, y)) < 0) {
-        if (clut256Count < 0x100) {
-            clutIndex = clut256Count;
-            clut256Count = clutIndex + 1;
+    if ((clutIndex = FindClut8bppIndex(x, y)) < 0) {
+        if (clut8bppCount < 0x100) {
+            clutIndex = clut8bppCount;
+            clut8bppCount = clutIndex + 1;
         } else {
             return 0;
             ptr = ptr; // FAKE!
         }
     }
-    ptr = &clut256IndexMap[clutIndex];
+    ptr = &clut8bppIndexMap[clutIndex];
     ptr->x = x;
     ptr->y = y;
     memcpy(D_psp_08C429C0[clutIndex], p, w * 2);
@@ -526,7 +526,7 @@ static s32 LoadClut256(s32 x, s32 y, s32 w, void* p) {
 }
 
 static u16 GetClut(s32 x, s32 y) {
-    s32 clutIndex = FindClut256Index(x, y);
+    s32 clutIndex = FindClut8bppIndex(x, y);
     if (clutIndex >= 0) {
         return (u16)clutIndex | 0x8000;
     } else {
@@ -653,7 +653,7 @@ s32 LoadImage(RECT* rect, u_long* p) {
         p = (u_long*)RemapClut((u16*)p, rect->w, rect->h);
     }
     if (rect->h == 1 && rect->w == 0x100) {
-        LoadClut256(rect->x, rect->y, rect->w, p);
+        LoadClut8bpp(rect->x, rect->y, rect->w, p);
     }
     return func_psp_0891BCA0(rect, p, rect->w * 2, var_a4);
 }
@@ -810,7 +810,7 @@ static void func_psp_0891CD28(u_long* p, s32 x, s32 y) {
     RECT rect;
     s32 clutIndex;
 
-    if ((clutIndex = FindClut256Index(x, y)) < 0) {
+    if ((clutIndex = FindClut8bppIndex(x, y)) < 0) {
         rect.x = x;
         rect.y = y;
         rect.w = 0x100;
@@ -823,7 +823,7 @@ static void func_psp_0891CD28(u_long* p, s32 x, s32 y) {
 
 static void func_psp_0891CDE0(u16* clut, s32 x, s32 y) {
     clut = RemapClut(clut, 0x100, 1);
-    LoadClut256(x, y, 0x100, clut);
+    LoadClut8bpp(x, y, 0x100, clut);
 }
 
 static void func_psp_0891CEB8(s32 x, s32 y) {
