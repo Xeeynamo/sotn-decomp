@@ -23,59 +23,68 @@ typedef enum EntityIDs {
     /* 0x0E */ E_MESSAGE_BOX,
     /* 0x0F */ E_DUMMY_0F,
     /* 0x10 */ E_DUMMY_10,
-
-    /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
+    /* 0x11 */ E_BACKGROUND_BLOCK,
+    /* 0x12 */ E_LOCK_CAMERA,
+    /* 0x13 */ E_UNK_ID13,
+    /* 0x14 */ E_EXPLOSION_VARIANTS,
     /* 0x15 */ E_GREY_PUFF,
-    /* 0x16 */ E_PURPLE_BRICK_BG,
-    /* 0x17 */ E_LEFT_SECRET_WALL,
-    /* 0x18 */ E_BOTT_SECRET_FLOOR,
-    /* 0x19 */ E_BP_FLOOR_BUTTON,
-    /* 0x1A */ E_BP_SPIKES,
-    /* 0x1B */ E_MOVABLE_BOX,
-    /* 0x1C */ E_CANNON_LEVER,
-    /* 0x1D */ E_CANNON,
-    /* 0x1E */ E_CANNON_SHOT,
-    /* 0x1F */ E_CANNON_WALL,
-    /* 0x20 */ E_BLOOD_SKEL_ELEV_BUTTON,
-    /* 0x21 */ E_ELEVATOR_2,
-    /* 0x22 */ E_WALL_DEBRIS,
-    /* 0x23 */ E_RED_EYE_BUST,
-    /* 0x24 */ E_FLOOR_BUTTON,
-    /* 0x25 */ E_FLOOR_SPIKES,
-    /* 0x26 */ E_BLOOD_SKELETON,
-    /* 0x27 */ E_BONE_SCIMITAR,
-    /* 0x28 */ E_BONE_SCIMITAR_PARTS,
-    /* 0x29 */ E_AXE_KNIGHT,
-    /* 0x2A */ E_AXE_KNIGHT_AXE,
-    /* 0x2B */ E_BLOODY_ZOMBIE,
-    /* 0x2C */ E_BLOOD_DRIPS,
-    /* 0x2D */ E_BLOOD_SPLATTER,
-    /* 0x2E */ E_SKELETON,
-    /* 0x2F */ E_SKELETON_THROWN_BONE,
-    /* 0x30 */ E_SKELETON_PIECES,
-    /* 0x31 */ E_SPITTLEBONE,
-    /* 0x32 */ E_ROTATE_SPITTLEBONE,
-    /* 0x33 */ E_SPITTLEBONE_SPIT,
-    /* 0x34 */ E_GLOBE_TABLE,
-    /* 0x35 */ E_LIFE_MAX_TANK,
-    /* 0x36 */ E_BLUE_FLAME_TABLE,
-    /* 0x37 */ E_RELIC_CONTAINER,
-    /* 0x38 */ E_EXPLODE_PUFF_OPAQUE,
-    /* 0x39 */ E_SUBWPN_CONTAINER,
-    /* 0x3A */ E_FALLING_GLASS,
-    /* 0x3B */ E_FALLING_LIQUID,
-    /* 0x3C */ E_LIQUID_BUBBLES,
-    /* 0x3D */ E_func_801C7884,
-    /* 0x3E */ E_BOSS_FIGHT_MANAGER,
-    /* 0x3F */ E_BOSS_ROOM_BLOCK,
-    /* 0x40 */ E_SLOGRA,
-    /* 0x41 */ E_SLOGRA_SPEAR,
-    /* 0x42 */ E_SLOGRA_SPEAR_PROJECTILE,
-    /* 0x43 */ E_GAIBON,
-    /* 0x44 */ E_GAIBON_UNK0,
-    /* 0x45 */ E_GAIBON_SMALL_FIREBALL,
-    /* 0x46 */ E_GAIBON_BIG_FIREBALL,
-    /* 0x49 */ E_LIFE_UP_SPAWN = 0x49
+    /* 0x16 */ E_PURPLE_BRICK_BG,         // func_pspeu_09237BA0
+    /* 0x17 */ E_LEFT_SECRET_WALL,        // func_pspeu_0923C450
+    /* 0x18 */ E_BOTT_SECRET_FLOOR,       // func_pspeu_0923C7C0
+    /* 0x19 */ E_BP_FLOOR_BUTTON,         // func_pspeu_0923B1F0
+    /* 0x1A */ E_BP_SPIKES,               // func_pspeu_0923B4D0
+    /* 0x1B */ E_MOVABLE_BOX,             // func_pspeu_0923B860
+    /* 0x1C */ E_CANNON_LEVER,            // func_pspeu_09237E20
+    /* 0x1D */ E_CANNON,                  // func_pspeu_092380B0
+    /* 0x1E */ E_CANNON_SHOT,             // func_pspeu_09238420
+    /* 0x1F */ E_CANNON_WALL,             // func_pspeu_09238560
+    /* 0x20 */ E_BLOOD_SKEL_ELEV_BUTTON,  // func_pspeu_09239D38
+    /* 0x21 */ E_ELEVATOR_2,              // func_pspeu_0923A048
+    /* 0x22 */ E_WALL_DEBRIS,             // func_pspeu_0923CAA0
+    /* 0x23 */ E_RED_EYE_BUST,            // func_pspeu_0923A7A0
+    /* 0x24 */ E_FLOOR_BUTTON,            // func_pspeu_0923BBE8
+    /* 0x25 */ E_FLOOR_SPIKES,            // func_pspeu_0923BF70
+    /* 0x26 */ E_BLOOD_SKELETON,          // func_pspeu_09252590
+    /* 0x27 */ E_BONE_SCIMITAR,           // func_pspeu_09251348
+    /* 0x28 */ E_BONE_SCIMITAR_PARTS,     // func_pspeu_09251D18
+    /* 0x29 */ E_AXE_KNIGHT,              // func_pspeu_092427E0
+    /* 0x2A */ E_AXE_KNIGHT_AXE,          // func_pspeu_09243338
+    /* 0x2B */ E_BLOODY_ZOMBIE,           // func_pspeu_09243D18
+    /* 0x2C */ E_BLOOD_DRIPS,             // func_pspeu_09244730
+    /* 0x2D */ E_BLOOD_SPLATTER,          // func_pspeu_09243540
+    /* 0x2E */ E_SKELETON,                // func_pspeu_09252B68
+    /* 0x2F */ E_SKELETON_THROWN_BONE,    // func_pspeu_09253330
+    /* 0x30 */ E_SKELETON_PIECES,         // func_pspeu_09253208
+    /* 0x31 */ E_SPITTLEBONE,             // func_pspeu_0924F040
+    /* 0x32 */ E_ROTATE_SPITTLEBONE,      // func_pspeu_0924F5B0
+    /* 0x33 */ E_SPITTLEBONE_SPIT,        // func_pspeu_0924F7D0
+    /* 0x34 */ E_GLOBE_TABLE,             // func_pspeu_0923C300
+    /* 0x35 */ E_LIFE_MAX_TANK,           // func_pspeu_0923A9D0
+    /* 0x36 */ E_BLUE_FLAME_TABLE,        // func_pspeu_09239BD0
+    /* 0x37 */ E_RELIC_CONTAINER,         // func_pspeu_09239858
+    /* 0x38 */ E_EXPLODE_PUFF_OPAQUE,     // func_pspeu_0923AC80
+    /* 0x39 */ E_SUBWPN_CONTAINER,        // func_pspeu_09253478
+    /* 0x3A */ E_FALLING_GLASS,           // func_pspeu_09253A58
+    /* 0x3B */ E_FALLING_LIQUID,          // func_pspeu_09253BE8
+    /* 0x3C */ E_LIQUID_BUBBLES,          // func_pspeu_09253DC0
+    /* 0x3D */ E_func_801C7884,           // func_pspeu_09253EE0
+    /* 0x3E */ E_BOSS_FIGHT_MANAGER,      // func_pspeu_09238700
+    /* 0x3F */ E_BOSS_ROOM_BLOCK,         // func_pspeu_09238D50
+    /* 0x40 */ E_SLOGRA,                  // func_pspeu_09259230
+    /* 0x41 */ E_SLOGRA_SPEAR,            // func_pspeu_0925A420
+    /* 0x42 */ E_SLOGRA_SPEAR_PROJECTILE, // func_pspeu_0925A668
+    /* 0x43 */ E_GAIBON,                  // func_pspeu_09256FF8
+    /* 0x44 */ E_GAIBON_UNK0,             // func_pspeu_09258B68
+    /* 0x45 */ E_GAIBON_SMALL_FIREBALL,   // func_pspeu_09258C98
+    /* 0x46 */ E_GAIBON_BIG_FIREBALL,     // func_pspeu_09258E00
+    /* 0x47 */ E_UNK47,                   // func_pspeu_09239250
+    /* 0x48 */ E_UNK48,                   // func_pspeu_09238F48
+    /* 0x49 */ E_LIFE_UP_SPAWN,           // func_pspeu_09255978
+    /* 0x4A */ E_UNK4A,                   // func_pspeu_0924FE70
+    /* 0x4B */ E_UNK4B,                   // func_pspeu_0923E810
+    /* 0x4C */ E_UNK4C,                   // func_pspeu_0925A980
+    /* 0x4D */ E_UNK4D,                   // func_pspeu_0925A7B8
+    NUM_ENTITIES,
 } EntityIDs;
 
 #define BOSS_FLAG_DOORS_CLOSED (1 << 0)

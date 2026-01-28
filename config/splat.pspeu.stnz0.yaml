@@ -1,0 +1,104 @@
+options:
+  platform: psp
+  basename: stnz0
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/nz0.bin
+  asm_path: asm/pspeu/st/nz0_psp
+  asset_path: assets/st/nz0
+  src_path: src/st
+  ld_script_path: build/pspeu/stnz0.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.stnz0.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.stnz0.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.stnz0.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 38da3a24e9203e904c962f74a8cfe43d28dedb47
+segments:
+  - [0x0, bin, mwo_header]
+  - name: stnz0
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x0928B600
+    bss_size: 0x900
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, nz0_psp/st_init]
+      - [0x520, c, nz0_psp/unk_520]
+      - [0x1080, c, nz0_psp/e_bossfight]
+      - [0x18C8, c, nz0_psp/unk_18C8]
+      - [0x2D78, c, nz0_psp/e_breakable]
+      - [0x3120, c, nz0_psp/e_red_eye_bust]
+      - [0x3270, c, nz0_psp/e_room_bg]
+      - [0x3350, c, nz0_psp/e_life_max_tank]
+      - [0x3520, c, nz0_psp/e_explosion_puff_opaque]
+      - [0x3B70, c, nz0_psp/unk_3B70]
+      - [0x5790, c, nz0_psp/e_stage_name]
+      - [0x6648, c, nz0_psp/e_cutscene_dialogue]
+      - [0x9160, c, nz0_psp/e_lock_camera]
+      - [0x98E0, c, nz0_psp/create_entity]
+      - [0xA888, c, nz0_psp/e_blue_axe_knight]
+      - [0xAB08, c, nz0_psp/unk_AB08]
+      - [0xBEC0, c, nz0_psp/e_bloody_zombie]
+      - [0xD340, c, nz0_psp/e_red_door]
+      - [0xE648, c, nz0_psp/st_update]
+      - [0xEB80, c, nz0_psp/unk_EB80]
+      - [0xF598, c, nz0_psp/e_particles]
+      - [0x10110, c, nz0_psp/unk_10110]
+      - [0x101E8, c, nz0_psp/e_collect]
+      - [0x14360, c, nz0_psp/e_misc]
+      - [0x157E8, c, nz0_psp/collision]
+      - [0x179C0, c, nz0_psp/unk_179C0]
+      - [0x18668, c, nz0_psp/e_sealed_door]
+      - [0x19BC8, c, nz0_psp/e_bone_scimitar]
+      - [0x1A800, c, nz0_psp/popup]
+      - [0x1ADF8, c, nz0_psp/e_room_fg]
+      - [0x1AF10, c, nz0_psp/e_blood_skeleton]
+      - [0x1B400, c, nz0_psp/e_skeleton]
+      - [0x1BDF8, c, nz0_psp/e_subweapon_container]
+      - [0x1CA78, c, nz0_psp/st_common]
+      - [0x1E2F8, c, nz0_psp/e_life_up]
+      - [0x1EF78, c, nz0_psp/prim_helpers]
+      - [0x1F978, c, nz0_psp/e_gaibon]
+      - [0x21A48, c, nz0_psp/func_pspeu_092590c8]
+      - [0x21BB0, c, nz0_psp/e_slogra]
+      - [0x23138, c, nz0_psp/e_maria]
+      - [0x23980, data]
+      - [0x2DDB8, data, nz0/e_init]
+      - [0x2E100, data]
+      - [0x51098, .data, nz0/header]
+      - [0x510C8, data]
+      - [0x53D00, .rodata, nz0_psp/e_stage_name]
+      - [0x53D18, .rodata, nz0_psp/e_cutscene_dialogue]
+      - [0x53DD0, .rodata, nz0_psp/unk_AB08]
+      - [0x53DF8, .rodata, nz0_psp/e_bloody_zombie]
+      - [0x53E20, .rodata, nz0_psp/e_red_door]
+      - [0x53E38, .rodata, nz0_psp/e_collect]
+      - [0x53E98, .rodata, nz0_psp/e_sealed_door]
+      - [0x53EB0, .rodata, nz0_psp/e_bone_scimitar]
+      - [0x53ED0, .rodata, nz0_psp/e_skeleton]
+      - [0x53EF0, .rodata, nz0_psp/e_life_up]
+      - [0x53F10, .rodata, nz0_psp/e_maria]
+      - [0x53F80, bss]
+  - [0x54880]
