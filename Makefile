@@ -229,6 +229,7 @@ format-tools:
 	$(BLACK) tools/sotn_permuter/permuter_loader.py
 	$(BLACK) diff_settings.py
 	$(BLACK) tools/function_finder/*.py
+	$(BLACK) tools/extract_overlay/*.py
 
 .PHONY: format-symbols format-symbols-%
 format-symbols-us-sort:

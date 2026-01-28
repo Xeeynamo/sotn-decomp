@@ -6,6 +6,7 @@ out
 permute.me/
 target/
 !sotn-debugmodule/sotn-debugmodule.ld
+extract_overlay_log.json
 
 # Dependency installation checkpoints
 *.make.chkpt
