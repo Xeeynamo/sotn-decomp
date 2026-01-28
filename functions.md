@@ -1650,8 +1650,8 @@
 | dra    | func_psp_09128A78                 |       41 |          6 |        |       |     |
 | dra    | func_psp_090F5318                 |       41 |          6 |        |       |     |
 | main   | func_psp_08919188                 |       41 |          6 |        |       |     |
-| main   | func_psp_08904408                 |       41 |          7 |        |       |     |
 | main   | func_psp_08936A44                 |       41 |          7 |        |       |     |
+| main   | sceDisplaySetVblankCallback       |       41 |          7 |        |       |     |
 | dra    | func_psp_090F6A90                 |       41 |         15 |        |       |     |
 |        | bat.rodata                        |       42 |          0 | Yes    |       |     |
 | are    | e_collect.rodata                  |       42 |          0 | Yes    |       |     |
