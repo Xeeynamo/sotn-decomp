@@ -139,7 +139,7 @@ segments:
       - [0x5AB8, asm, libgu/_sceGuDebugSwapBuffer]
       - [0x5ACC, asm, libgu/_sceGuDebugDispBuffer]
       - [0x5AE8, asm, libgu/_sceGuDebugDrawBuffer]
-      - [0x5AFC, asm, func_psp_08904408]
+      - [0x5AFC, asm, sceDisplaySetVblankCallback]
       - [0x5B64, asm, newlib/libm/math/e_rem_pio2/__ieee754_rem_pio2]
       - [0x622C, asm, newlib/libm/math/ef_atan2/__ieee754_atan2f]
       - [0x6478, asm, newlib/libm/math/k_cos/__kernel_cos]

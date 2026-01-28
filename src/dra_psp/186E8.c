@@ -1563,7 +1563,7 @@ loop_5:
         D_psp_091CE2A0 = GsGetVcount();
         GsClearVcount();
         func_psp_090F5520();
-        func_psp_089262C4();
+        InitVCount();
         LoadPendingGfx();
         ReadPads();
 

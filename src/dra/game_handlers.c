@@ -1147,7 +1147,7 @@ void AnimateNowLoading(NowLoadingModel* self, s16 x, s16 y, bool isDone) {
     // These two lines load up the SOTN logo in the lower right.
     // First line loads palettized image, second loads the palette
     LoadImage(&sp48, (u_long*)&D_psp_09156F48);
-    func_psp_089264CC(0x81D0, &D_psp_0915AF48, 1);
+    func_psp_089264CC(0x81D0, &D_psp_0915AF48, true);
     D_psp_0915E4E8[3] =
         (u_long*)GetLang(NULL, loading_fr, loading_sp, loading_ge, loading_it);
     if (D_psp_0915E4E8[3] != NULL) {
