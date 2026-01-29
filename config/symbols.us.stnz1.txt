@@ -10,17 +10,11 @@ g_EInitCommon = 0x80180B7C;
 g_EInitEnvironment = 0x80180B94;
 g_EInitHarpyFlame = 0x80180BD0;
 NZ1_BackgroundBlockInit = 0x80180D08;
-entityLockCameraHitbox = 0x80180DA0;
-entityLockCameraData = 0x80180DA4;
-entityLockCameraTilemapProps = 0x80180DA8;
 g_WaterSounds = 0x801810CC;
 g_WaterXTbl = 0x801810D0;
 NZ1_PrizeDrops = 0x8018111C;
 g_HarpyFlameAnim = 0x80181F74;
 NZ1_rooms = 0x8018233C;
-PlayerIsWithinHitbox = 0x801A5E18;
-NZ1_EntityLockCamera = 0x801A5E9C; // source=match
-EntityBridgeBackgroundPiece = 0x801A7118;
 EntityClouds = 0x801A7970;
 EntityBreakableWall = 0x801A9154;
 EntityBreakableWallPartial = 0x801A94CC;
@@ -57,11 +51,9 @@ EntitySplashWater = 0x801B8414; // source=match
 EntitySurfacingWater = 0x801B8D20; // source=match
 EntitySideWaterSplash = 0x801B920C; // source=match
 EntitySmallWaterDrop = 0x801B95A0; // source=match
-EntityWaterDrop = 0x801B97FC; // source=match
 EntitySkullLord = 0x801B9AA0; // source=match
 EntitySkullLordOutline = 0x801BA250; // source=match
 EntitySkullLordFlames = 0x801BA52C; // source=match
-EntitySkullLordPieces = 0x801BA7F8; // source=match
 EntityHarpyDagger = 0x801BB628;
 EntityHarpyFlame = 0x801BB7C0;
 EntityHarpyKick = 0x801BB9E8;
