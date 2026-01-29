@@ -118,8 +118,8 @@ endif
 ##@
 
 .PHONY: all
-all: ##@ (Default) build
-all: build_all
+all: ##@ (Default) build all versions
+all: build
 
 .PHONY: extract_assets
 extract_assets:
@@ -137,20 +137,23 @@ extract_hd: extract_assets
 extract_pspeu: extract_assets
 
 .PHONY: build
-build: ##@ build game files
-build: build_$(VERSION)
-build_us: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
+build: ##@ build all game versions
+build: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNSTR_APP) $(PSPAS) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
+	$(PYTHON) tools/builds/gen.py
+	ninja
+
+.PHONY: us hd pspeu
+us: ##@ build US version only
+us: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
 	VERSION=us .venv/bin/python3 tools/builds/gen.py
 	ninja
-build_hd: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
+hd: ##@ build HD version only
+hd: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
 	VERSION=hd .venv/bin/python3 tools/builds/gen.py
 	ninja
-build_pspeu: $(SOTNSTR_APP) $(PSPAS) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
+pspeu: ##@ build PSP EU version only
+pspeu: $(SOTNSTR_APP) $(PSPAS) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
 	VERSION=pspeu .venv/bin/python3 tools/builds/gen.py
-	ninja
-.PHONY: build_all
-build_all: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNSTR_APP) $(PSPAS) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
-	$(PYTHON) tools/builds/gen.py
 	ninja
 
 .PHONY: clean clean_asm clean_all
