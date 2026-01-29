@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game_psp.h>
+#include "main_psp_private.h"
 
 // https://pspdev.github.io/pspsdk/
 #define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
@@ -9,14 +10,6 @@
 #include <pspthreadman.h>
 #include <psputility_modules.h>
 #include <psputility_sysparam.h>
-
-typedef enum {
-    // stretches the game resolution to fill the PSP screen vertically
-    SCREEN_MODE_FULL,
-
-    // pixel perfect, but with borders around the game screen
-    SCREEN_MODE_PERFECT,
-} ScreenMode;
 
 typedef struct {
     s32 unk0;
@@ -41,15 +34,17 @@ extern char D_psp_0893CED0[];
 extern s32 D_psp_0893CF74[];
 
 // BSS
-extern SceCtrlData D_psp_08B41F40;
-extern SceCtrlData D_psp_08B41F50;
-extern u16 D_psp_08B41F60;
-extern u8* D_psp_08B41F64;
-extern s32 D_psp_08B41F68;
-extern s32 D_psp_08B41F9C;
-extern s32 timeStartOfFrame;
-extern s32 timeNow;
-extern s32 timeSinceStartOfFrame;
+static s32 timeSinceStartOfFrame;
+static s32 timeNow;
+static s32 timeStartOfFrame;
+static Picture D_psp_08B41F9C;
+static u8 D_psp_08B41F6C[0x30] UNUSED;
+static s32 D_psp_08B41F68;
+static u8* D_psp_08B41F64;
+static u16 D_psp_08B41F60;
+static SceCtrlData D_psp_08B41F50;
+static SceCtrlData D_psp_08B41F40;
+
 extern s32 D_psp_08B41FD0; // exit callback ID
 extern s32 D_psp_08B41FE0;
 extern s32 D_psp_08B42000; // kernel thread ID
@@ -163,15 +158,11 @@ static void func_psp_08919D98(Unk08919D98* arg0) {
     }
 }
 
-u8* func_psp_08919DF4(u8* arg0) {
-    return (u8*)func_psp_08932978(&D_psp_08B41F9C);
-}
+u8* func_psp_08919DF4(u8* arg0) { return (u8*)GetPictureClut(&D_psp_08B41F9C); }
 
-u8* func_psp_08919E1C(u8* arg0) {
-    return (u8*)func_psp_08932994(&D_psp_08B41F9C);
-}
+u8* func_psp_08919E1C(u8* arg0) { return (u8*)GetPictureTex(&D_psp_08B41F9C); }
 
-s32 func_psp_08919E44() { return func_psp_08932994(&D_psp_08B41F9C); }
+s32 func_psp_08919E44() { return GetPictureTex(&D_psp_08B41F9C); }
 
 s32 func_psp_08919E6C(s32 arg0, u8* src) {
     s32 temp_v0;
@@ -186,7 +177,7 @@ s32 func_psp_08919E6C(s32 arg0, u8* src) {
     }
     temp_v0 = func_psp_0890FB70(D_psp_0893CF74[var_s0], src, 0, 0x20040);
     if (temp_v0 > 0) {
-        func_psp_08932830(&D_psp_08B41F9C, src);
+        FillPictureStruct(&D_psp_08B41F9C, src);
     }
     return temp_v0;
 }
@@ -247,12 +238,12 @@ static void func_psp_0891A104(void) {
     sceUtilityUnloadModule(PSP_MODULE_AV_SASCORE);
 }
 
-char* D_psp_08946424 = "PACK/";
-char* D_psp_08946430 = "sound/";
-char* D_psp_0894643C = "PACK_E/";
-char* D_psp_08946448 = "snd_e/";
-
 static void func_psp_0891A14C(void) {
+    static char* D_psp_08946424 = "PACK/";
+    static char* D_psp_08946430 = "sound/";
+    static char* D_psp_0894643C = "PACK_E/";
+    static char* D_psp_08946448 = "snd_e/";
+
     D_psp_08B42064 = func_psp_0893277C();
     if (D_psp_08B42064 == 0) {
         D_psp_08B4205C = D_psp_08946424;
@@ -264,7 +255,7 @@ static void func_psp_0891A14C(void) {
 }
 
 int main(int argc, char* argv[]) {
-    int language;
+    int systemLang;
 
     printf("月下開始00\n"); // Moonlight Start
     func_psp_08919FF8();
@@ -272,8 +263,8 @@ int main(int argc, char* argv[]) {
     sceGuInit();
     sceGuDisplay(GU_DISPLAY_OFF);
     memset(sceGeEdramGetAddr(), 0, 0x22100);
-    sceUtilityGetSystemParamInt(PSP_SYSTEMPARAM_ID_INT_LANGUAGE, &language);
-    switch (language) {
+    sceUtilityGetSystemParamInt(PSP_SYSTEMPARAM_ID_INT_LANGUAGE, &systemLang);
+    switch (systemLang) {
     default:
     case PSP_SYSTEMPARAM_LANGUAGE_ENGLISH:
         g_UserLanguage = LANG_EN;
@@ -346,7 +337,7 @@ int main(int argc, char* argv[]) {
     printf("月下ユーティリティ終了00\n"); // Moonlight End utility
     func_psp_0891A14C();
     SetScreenMode(
-        func_psp_08932754() == 0 ? SCREEN_MODE_PERFECT : SCREEN_MODE_FULL);
+        GetDxCScreenMode() == 0 ? SCREEN_MODE_PERFECT : SCREEN_MODE_FULL);
     func_psp_08933A10();
     func_psp_0892E9B0();
     func_psp_0892A2D8();
