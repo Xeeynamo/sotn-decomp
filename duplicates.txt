@@ -3613,7 +3613,7 @@
 | 1.00 | true     | func_801CDC80                       | asm/us/st/lib/matchings/e_spellbook_magic_tome/func_801CDC80.s 
 | 1.00 | true     | func_801CDC80                       | asm/us/st/no2/matchings/giantbro_helpers/func_801CDC80.s 
 | 1.00 | true     | func_801CDC80                       | asm/us/st/np3/matchings/giantbro_helpers/func_801CDC80.s 
-| 1.00 | false    | VandalSwordTrail                    | asm/us/st/nz1/nonmatchings/e_vandal_sword/VandalSwordTrail.s 
+| 1.00 | true     | ApproachTarget                      | asm/us/st/nz1/matchings/e_vandal_sword/ApproachTarget.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | DAI_EntityBreakable                 | asm/us/st/dai/matchings/e_breakable/DAI_EntityBreakable.s 
 | 0.92 | true     | NO1_EntityBreakable                 | asm/us/st/no1/matchings/e_breakable/NO1_EntityBreakable.s 
