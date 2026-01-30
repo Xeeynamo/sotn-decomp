@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <psxsdk/libgte.h>
 #include "clock_tower.h"
+#include <scratchpad.h>
 
 extern EInit g_EInitSpawner;
 

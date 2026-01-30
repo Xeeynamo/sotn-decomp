@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
+#include <scratchpad.h>
 
 extern SVECTOR D_801C1BC8[];
 extern u8 D_801C23C8[16];

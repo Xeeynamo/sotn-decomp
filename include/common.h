@@ -111,16 +111,6 @@
 #define FLT_TO_I(x) ((s32)(x) >> 12)
 #define FLT_TO_FIX(x) ((s32)(x) << 4)
 
-// Access to the Scratchpad memory. Different on different systems.
-#if defined(VERSION_PC)
-#define SP_LEN 0x400
-#define SP(x) (&sp[x])
-#elif defined(VERSION_PSP)
-#define SP(x) (0x00010000 + (x))
-#else
-#define SP(x) (0x1F800000 + (x))
-#endif
-
 #define CLAMP(x, min, max) x < min ? min : (x > max ? max : x)
 #define CLAMP_MIN(v, min) ((v) < (min) ? (min) : (v))
 #define CLAMP_MAX(v, max) ((v) > (max) ? (max) : (v))

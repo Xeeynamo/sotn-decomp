@@ -21,11 +21,9 @@ NZ1_rooms = 0x8018233C;
 PlayerIsWithinHitbox = 0x801A5E18;
 NZ1_EntityLockCamera = 0x801A5E9C; // source=match
 EntityBridgeBackgroundPiece = 0x801A7118;
-EntityClouds = 0x801A7970;
 EntityBreakableWall = 0x801A9154;
 EntityBreakableWallPartial = 0x801A94CC;
 EntitySecretWallDebris = 0x801A97C4;
-EntityRoomExit = 0x801A9A5C;
 EntityWaterForeground = 0x801A9BEC;
 Random = 0x801AC6E0; // source=match
 CreateEntityFromCurrentEntity = 0x801AED58; // source=match
@@ -42,7 +40,6 @@ UnkCollisionFunc3 = 0x801AFF2C; // source=match
 UnkCollisionFunc2 = 0x801B01A4; // source=match
 AllocEntity = 0x801B038C; // source=match
 GetAngleBetweenEntities = 0x801B067C; // source=match
-GetNormalizedAngle = 0x801B06FC; // source=match
 SetStep = 0x801B075C; // source=match
 InitializeEntity = 0x801B082C; // source=match
 EntityPrizeDrop = 0x801B153C; // source=match
@@ -68,15 +65,6 @@ EntityHarpyKick = 0x801BB9E8;
 EntityHarpyFeather = 0x801BBAC4;
 EntitySwordLord = 0x801BCC90;
 EntitySwordLordAttackHitbox = 0x801BD970;
-VandalSwordDrawAlastor = 0x801BDA50;
-VandalSwordTargetPlayer = 0x801BDDBC;
-VandalSwordTrail = 0x801BDE3C;
-EntityVandalSword = 0x801BDEBC;
-EntityVandalSwordHitbox = 0x801BE73C;
-EntityVandalSwordDeath = 0x801BE82C;
-EntityFlailGuard = 0x801BEC98;
-EntityFlailGuardFlail = 0x801BF104;
 UnkPrimHelper = 0x801C059C; // source=match
 UnkPolyFunc2 = 0x801C0CE8; // source=match
-PrimDecreaseBrightness = 0x801C0D68; // source=match
 EntityLifeUpSpawn = 0x801C0DCC; // source=match

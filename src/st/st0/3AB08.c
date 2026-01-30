@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
+#include <scratchpad.h>
+#include <sfx.h>
 #include "../clock_tower.h"
-#include "sfx.h"
 
 static s16 D_80182084[] = {
     0x0000, 0x0000, 0x0000, 0x0000, 0xC181, 0xC1BE, 0xDE81, 0xDEBE, 0xE181,

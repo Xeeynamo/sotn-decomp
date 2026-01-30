@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
-#include "sfx.h"
+#include <scratchpad.h>
+#include <sfx.h>
 
 // Likely copied out of DRA. This code
 // appears to go unused.
