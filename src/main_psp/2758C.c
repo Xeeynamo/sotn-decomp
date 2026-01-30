@@ -111,9 +111,9 @@ void func_psp_08926348(void) {
     temp_v0 = (u8*)func_psp_08919C8C(0);
     if (func_psp_08919E6C(0, temp_v0) > 0) {
         func_psp_08910D28();
-        func_psp_0890FC2C();
+        ClearDispLists();
         func_psp_0890FF84();
-        func_psp_08910298(1);
+        SetCurrDispList(1);
         func_psp_089117F4(
             1, 0, 0, 0x100, 0x110, 0xF0, (u8*)func_psp_08919E1C(temp_v0), 0, 0,
             0x100, (u8*)sceGeEdramGetAddr() + 0x1BC000);
