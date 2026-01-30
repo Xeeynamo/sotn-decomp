@@ -2,7 +2,6 @@ D_800AD57C = 0x80181834;
 g_DopAnimationFrames = 0x801840B0;
 g_SpriteSheet = 0x80184434;
 g_PlOvlDopBatSpritesheet = 0x801AAE4C;
-D_us_801B2D0C = 0x801B2D0C;
 g_Dop = 0x801D3FF0; // size:0x3D0
 g_Dop_padPressed = 0x801D4308;
 g_Dop_padTapped = 0x801D430C;
