@@ -30,8 +30,6 @@
 #define PSP_RANDMASK 0xFFFFFFFF
 #endif
 
-#define SPAD(x) ((s32*)SP(x * sizeof(s32)))
-
 typedef long Event;
 
 typedef struct Vertex {

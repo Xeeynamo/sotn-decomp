@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
+#include <scratchpad.h>
 
 s16 D_800B0884[] = {0, 1, 2, 3, 4, 5, 5, 5, 5, 5, 5, 5, 5, 4, 3, 2, 1};
 s16 D_800B08A8[] = {0x00, 0x20, 0x40, 0x60, 0x80, 0xA0, 0xAA, 0xAA, 0xAA,

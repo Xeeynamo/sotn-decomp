@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "lib.h"
+#include <scratchpad.h>
 
 static SVECTOR D_us_80182F44 = {4, 0, 16};
 static SVECTOR D_us_80182F4C = {0, 0, 16};

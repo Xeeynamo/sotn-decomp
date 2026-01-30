@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
+#include <scratchpad.h>
 
 void func_800EB758(
     s16 pivotX, s16 pivotY, Entity* e, u8 flags, POLY_GT4* p, u8 flipX) {

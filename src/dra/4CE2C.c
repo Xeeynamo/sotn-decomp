@@ -2,6 +2,7 @@
 //! PSPO=4,p
 #include "dra.h"
 #include "dra_bss.h"
+#include <scratchpad.h>
 
 void HideAllBackgroundLayers(void) {
     s32 i;

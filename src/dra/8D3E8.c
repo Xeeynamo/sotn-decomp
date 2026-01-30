@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "dra.h"
 #include "dra_bss.h"
+#include <scratchpad.h>
 
 static s32 D_800B0924[] = {14, 6, 4, 4, 6, 14};
 

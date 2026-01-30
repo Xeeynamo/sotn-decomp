@@ -2,6 +2,7 @@
 #include "sword.h"
 #include "../servant_private.h"
 #include <items.h>
+#include <scratchpad.h>
 #include <sfx.h>
 
 #define UNK_SWORD_PRIM_COUNT 96

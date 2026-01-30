@@ -179,8 +179,8 @@ void EntityFlailGuardFlail(Entity* self) {
         InitializeEntity(g_EInitFlailGuardFlail);
 
         self->animCurFrame = 17;
-        self->ext.flailGuardFlail.unk0 = 0x100;
-        self->ext.flailGuardFlail.unk4 = 8;
+        self->ext.flailGuardFlail.unk7C = 0x100;
+        self->ext.flailGuardFlail.unk80 = 8;
         self->ext.flailGuardFlail.prevAttack = self->attack;
         self->attack = self->ext.flailGuardFlail.prevAttack / 4;
 
@@ -221,19 +221,19 @@ void EntityFlailGuardFlail(Entity* self) {
         self->animCurFrame = 17;
         self->attack = self->ext.flailGuardFlail.prevAttack;
         if (parent->facingLeft) {
-            self->ext.flailGuardFlail.unk0 += self->ext.flailGuardFlail.unk2;
+            self->ext.flailGuardFlail.unk7C += self->ext.flailGuardFlail.unk7E;
             posX = parent->posX.i.hi + 64;
-            rotX = -FLT_TO_I(rcos(self->ext.flailGuardFlail.unk0) * 20);
+            rotX = -FLT_TO_I(rcos(self->ext.flailGuardFlail.unk7C) * 20);
         } else {
-            self->ext.flailGuardFlail.unk0 -= self->ext.flailGuardFlail.unk2;
+            self->ext.flailGuardFlail.unk7C -= self->ext.flailGuardFlail.unk7E;
             posX = parent->posX.i.hi - 64;
-            rotX = FLT_TO_I(rcos(self->ext.flailGuardFlail.unk0) * 20);
+            rotX = FLT_TO_I(rcos(self->ext.flailGuardFlail.unk7C) * 20);
         }
         posY = (s32)parent->posY.i.hi; // n.b.! necessary cast
-        rotY = FLT_TO_I(rsin(self->ext.flailGuardFlail.unk0) * 20);
+        rotY = FLT_TO_I(rsin(self->ext.flailGuardFlail.unk7C) * 20);
         self->posX.i.hi = posX + rotX;
         self->posY.i.hi = posY + rotY;
-        self->ext.flailGuardFlail.unk2 -= 8;
+        self->ext.flailGuardFlail.unk7E -= 8;
         break;
     case 2:
     case 3:
@@ -243,37 +243,37 @@ void EntityFlailGuardFlail(Entity* self) {
         self->attack = self->ext.flailGuardFlail.prevAttack / 8;
         if (parent->facingLeft) {
             posX = parent->posX.i.hi - 51;
-            rotX = FLT_TO_I(rcos(self->ext.flailGuardFlail.unk0) * 16);
+            rotX = FLT_TO_I(rcos(self->ext.flailGuardFlail.unk7C) * 16);
         } else {
             posX = parent->posX.i.hi + 51;
-            rotX = -FLT_TO_I(rcos(self->ext.flailGuardFlail.unk0) * 16);
+            rotX = -FLT_TO_I(rcos(self->ext.flailGuardFlail.unk7C) * 16);
         }
         posY = parent->posY.i.hi + D_us_801821F0[parent->animCurFrame - 2];
-        rotY = FLT_TO_I(rsin(self->ext.flailGuardFlail.unk0) * 16);
+        rotY = FLT_TO_I(rsin(self->ext.flailGuardFlail.unk7C) * 16);
         self->posX.i.hi = posX + rotX;
         self->posY.i.hi = posY + rotY;
-        self->ext.flailGuardFlail.unk0 += self->ext.flailGuardFlail.unk2;
-        self->ext.flailGuardFlail.unk2 += self->ext.flailGuardFlail.unk4;
-        if (self->ext.flailGuardFlail.unk2 > 0) {
+        self->ext.flailGuardFlail.unk7C += self->ext.flailGuardFlail.unk7E;
+        self->ext.flailGuardFlail.unk7E += self->ext.flailGuardFlail.unk80;
+        if (self->ext.flailGuardFlail.unk7E > 0) {
             self->step_s |= 1;
         }
 
-        if (self->step_s && (self->ext.flailGuardFlail.unk2 < -0x70 ||
-                             self->ext.flailGuardFlail.unk2 > 0x70)) {
-            self->ext.flailGuardFlail.unk4 = -self->ext.flailGuardFlail.unk4;
+        if (self->step_s && (self->ext.flailGuardFlail.unk7E < -0x70 ||
+                             self->ext.flailGuardFlail.unk7E > 0x70)) {
+            self->ext.flailGuardFlail.unk80 = -self->ext.flailGuardFlail.unk80;
         }
         break;
     case 5:
-        self->ext.flailGuardFlail.unk2 = 0x200;
+        self->ext.flailGuardFlail.unk7E = 0x200;
         self->hitboxState = 0;
         self->animCurFrame = 0;
         break;
 
     case 7:
         self->attack = self->ext.flailGuardFlail.prevAttack / 2;
-        self->ext.flailGuardFlail.unk4 = 8;
-        self->ext.flailGuardFlail.unk2 = -0x110;
-        self->ext.flailGuardFlail.unk0 = 0x360;
+        self->ext.flailGuardFlail.unk80 = 8;
+        self->ext.flailGuardFlail.unk7E = -0x110;
+        self->ext.flailGuardFlail.unk7C = 0x360;
         self->step_s = 0;
         // fallthrough
 

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no3.h"
+#include <scratchpad.h>
 
 static SVECTOR vec_negneg = {-0x100, 0, -0x100};
 static SVECTOR vec_posneg = {0x100, 0, -0x100};

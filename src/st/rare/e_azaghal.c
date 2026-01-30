@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rare.h"
+#include <scratchpad.h>
 
 extern EInit g_EInitAzaghal;
 
