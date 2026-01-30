@@ -404,8 +404,8 @@
 | np3    | jtbl_pspeu_09291A68               |       16 |          0 | Yes    |       |     |
 | np3    | jtbl_pspeu_09291A00               |       16 |          0 | Yes    |       |     |
 | nz1    | e_breakable_bridge.rodata         |       16 |          0 | Yes    |       |     |
-| nz1    | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | nz1    | e_vandal_sword.rodata             |       16 |          0 | Yes    |       |     |
+| nz1    | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rare   | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rcat   | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rcat   | unk_36E8.rodata                   |       16 |          0 | Yes    |       |     |
@@ -1703,7 +1703,7 @@
 | np3    | func_pspeu_09241300               |       42 |          5 |        |       |     |
 | nz1    | func_pspeu_09237BC0               |       42 |          5 |        |       |     |
 | nz1    | func_pspeu_09237F58               |       42 |          5 |        |       |     |
-| nz1    | VandalSwordTargetPlayer           |       42 |          5 |        |       |     |
+| nz1    | func_pspeu_09238BE0               |       42 |          5 |        |       |     |
 | rare   | func_pspeu_09239AC0               |       42 |          5 |        |       |     |
 | rare   | func_pspeu_09239E58               |       42 |          5 |        |       |     |
 | rcat   | func_pspeu_09237BC0               |       42 |          5 |        |       |     |
@@ -2236,7 +2236,7 @@
 | maria  | func_pspeu_092B1C10               |       62 |          6 |        |       |     |
 | ric    | func_pspeu_092AF4D0               |       62 |          6 |        |       |     |
 |        | func_092E7798                     |       62 |          6 |        |       |     |
-| nz1    | EntityVandalSwordDeath            |       62 |          6 |        |       |     |
+| nz1    | func_pspeu_09239A78               |       62 |          6 |        |       |     |
 | main   | func_psp_0891B7A0                 |       62 |          7 |        |       |     |
 | cat    | func_pspeu_09249C80               |       62 |          8 |        |       |     |
 | main   | func_psp_089121BC                 |       62 |          9 |        |       |     |
@@ -2263,7 +2263,7 @@
 | no2    | func_pspeu_0924E9F8               |       63 |          7 |        |       |     |
 | no3    | func_pspeu_09261748               |       63 |          7 |        |       |     |
 | no4    | func_pspeu_0925C910               |       63 |          7 |        |       |     |
-| nz1    | PrimDecreaseBrightness            |       63 |          7 |        |       |     |
+| nz1    | func_pspeu_09251470               |       63 |          7 |        |       |     |
 | rare   | func_pspeu_0924B740               |       63 |          7 |        |       |     |
 | rcat   | func_pspeu_0924A9B0               |       63 |          7 |        |       |     |
 | st0    | func_pspeu_09251A80               |       63 |          7 |        |       |     |
@@ -2360,7 +2360,7 @@
 | no2    | func_pspeu_0924EFD0               |       67 |          6 |        |       |     |
 | no4    | func_pspeu_092482B0               |       67 |          6 |        |       |     |
 | np3    | func_801CDC80                     |       67 |          6 |        |       |     |
-| nz1    | VandalSwordTrail                  |       67 |          6 |        |       |     |
+| nz1    | func_pspeu_09238C70               |       67 |          6 |        |       |     |
 | sel    | func_psp_0923F668                 |       67 |          6 |        |       |     |
 | sel    | func_psp_0923F760                 |       67 |          6 |        |       |     |
 | sel    | func_psp_09243F78                 |       67 |          6 |        |       |     |
@@ -2535,7 +2535,7 @@
 | np3    | EntityDeadMerman                  |       73 |          7 |        |       |     |
 | np3    | func_pspeu_0923EF28               |       73 |          7 |        |       |     |
 | np3    | func_pspeu_0925A870               |       73 |          7 |        |       |     |
-| nz1    | GetNormalizedAngle                |       73 |          7 |        |       |     |
+| nz1    | func_pspeu_09250268               |       73 |          7 |        |       |     |
 | rare   | func_pspeu_0924A9D0               |       73 |          7 |        |       |     |
 | rcat   | func_pspeu_09249AE0               |       73 |          7 |        |       |     |
 | wrp    | func_psp_09243A70                 |       73 |          7 |        |       |     |
@@ -2845,7 +2845,7 @@
 | main   | _fwalk                            |       91 |         12 |        |       |     |
 | dra    | func_psp_09110E90                 |       91 |         19 |        |       |     |
 | main   | func_psp_08918438                 |       92 |          3 |        |       |     |
-| nz1    | EntityVandalSwordHitbox           |       92 |          8 |        |       |     |
+| nz1    | func_pspeu_09239928               |       92 |          8 |        |       |     |
 | no3    | func_pspeu_0924D9C0               |       92 |          9 |        |       |     |
 | np3    | func_pspeu_092458C8               |       92 |          9 |        |       |     |
 | dra    | func_psp_091446D0                 |       92 |         11 |        |       |     |
@@ -3302,7 +3302,7 @@
 | st0    | func_pspeu_0924BBA0               |      120 |          9 |        |       |     |
 | dra    | func_psp_090ED658                 |      120 |         11 |        |       |     |
 | dra    | func_psp_09101DB0                 |      120 |         13 |        |       |     |
-| nz1    | EntityRoomExit                    |      120 |         14 |        |       |     |
+| nz1    | func_pspeu_0925ACF0               |      120 |         14 |        |       |     |
 | main   | func_psp_08915088                 |      120 |         18 |        |       |     |
 | no3    | func_pspeu_092420C0               |      120 |         20 |        |       |     |
 | dra    | func_psp_090E8EC0                 |      120 |         21 | Yes    |       |     |
@@ -4190,7 +4190,7 @@
 | dra    | func_psp_091136F8                 |      350 |         56 |        |       |     |
 | rare   | func_pspeu_0923A5A8               |      351 |         12 |        |       |     |
 |        | func_092E91A8                     |      351 |         21 |        |       |     |
-| nz1    | VandalSwordDrawAlastor            |      351 |         27 |        |       |     |
+| nz1    | func_pspeu_092386A8               |      351 |         27 |        |       |     |
 | no3    | func_pspeu_0925E610               |      352 |         30 |        |       |     |
 | no4    | func_pspeu_09254DE8               |      352 |         30 |        |       |     |
 | np3    | EntitySideWaterSplash             |      352 |         30 |        |       |     |
@@ -4230,7 +4230,7 @@
 | rcat   | func_pspeu_09246238               |      364 |         59 |        |       |     |
 | lib    | func_psp_0924CF68                 |      364 |         72 |        |       |     |
 | dai    | func_pspeu_09239900               |      365 |         61 |        |       |     |
-| nz1    | EntityClouds                      |      366 |         33 |        |       |     |
+| nz1    | func_pspeu_09257C20               |      366 |         33 |        |       |     |
 | lib    | func_psp_092537F8                 |      367 |         31 |        |       |     |
 | dra    | func_psp_090EB8B8                 |      368 |         17 |        |       |     |
 | dai    | func_pspeu_09258EC0               |      369 |         21 |        |       |     |
@@ -4345,7 +4345,7 @@
 | rcat   | func_pspeu_0923E118               |      418 |         45 |        |       |     |
 | wrp    | func_psp_0923BCE0                 |      418 |         45 |        |       |     |
 | no4    | func_pspeu_0924A260               |      420 |         78 |        |       |     |
-| nz1    | EntityFlailGuard                  |      421 |         55 | Yes    |       |     |
+| nz1    | func_pspeu_0924DCE8               |      421 |         55 | Yes    |       |     |
 | rcat   | EntityCavernBackgroundDiscusLord  |      422 |         34 |        |       |     |
 | st0    | EntitySecretStairs                |      422 |         46 |        |       |     |
 | rare   | func_pspeu_0923AF80               |      424 |         37 |        |       |     |
@@ -4475,7 +4475,7 @@
 |        | func_092EC688                     |      539 |         54 |        |       |     |
 |        | func_092ED2A0                     |      539 |         59 |        |       |     |
 | dra    | MainGame                          |      539 |         84 |        |       |     |
-| nz1    | EntityFlailGuardFlail             |      542 |         38 | Yes    |       |     |
+| nz1    | func_pspeu_0924E2C8               |      542 |         38 | Yes    |       |     |
 |        | func_092E8260                     |      542 |         56 |        |       |     |
 | maria  | func_pspeu_092A82E0               |      543 |         60 |        |       |     |
 | ric    | func_pspeu_092C9C98               |      544 |         53 | Yes    |       |     |
@@ -4657,7 +4657,7 @@
 | ric    | func_pspeu_092C5DD8               |      802 |         82 |        |       |     |
 | lib    | func_psp_0926A238                 |      803 |         77 | Yes    |       |     |
 | dra    | func_psp_09120D88                 |      809 |         78 |        |       |     |
-| nz1    | EntityVandalSword                 |      815 |        115 | Yes    |       |     |
+| nz1    | func_pspeu_09238D58               |      815 |        115 | Yes    |       |     |
 | dra    | func_psp_0910AA60                 |      815 |        149 |        |       |     |
 | dra    | func_psp_090F6B28                 |      816 |        115 | Yes    |       |     |
 | lib    | func_psp_09260748                 |      820 |         58 |        |       |     |
