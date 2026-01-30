@@ -17,9 +17,7 @@ s32 MemcardParse(s32 nPort, s32 nCard) {
     s32 blocksFree = 0;
 
     if (nPort == 0) {
-        // Presumably func_psp_08919278 is something like
-        // getNumFreeBlocks, but I don't know the SDK function set.
-        blocksFree = func_psp_08919278();
+        blocksFree = GetFreeSaveDataSlotCount();
     }
     g_MemcardInfo[nPort].nBlockUsed = BLOCK_PER_CARD - blocksFree;
     g_MemcardInfo[nPort].nFreeBlock = blocksFree;
@@ -32,16 +30,11 @@ s32 GetMemcardFreeBlockCount(s32 nPort) {
 
 bool MemcardDetectSave(s32 nPort, u8* expectedSaveName, s32 block) {
     bool isCastlevaniaSave;
-    bool found;
 
     isCastlevaniaSave = false;
     if (nPort == 0) {
-        if (func_psp_08919188(expectedSaveName) >= 0) {
-            found = true;
-        } else {
-            found = false;
-        }
-        isCastlevaniaSave = found;
+        isCastlevaniaSave =
+            FindSaveDataSlot(expectedSaveName) >= 0 ? true : false;
     }
     g_MemcardInfo[nPort].blocks[block] = isCastlevaniaSave;
     return isCastlevaniaSave;
@@ -65,7 +58,7 @@ s32 MemcardReadFile(s32 nPort, s32 nCard, char* name, void* data, s32 nblock) {
     if (nblock == 0) {
         len = 0x238;
     }
-    if (func_psp_089194E4(data, name, len) > 0) {
+    if (TryLoadSaveData(data, name, len) > 0) {
         ret = 0;
     } else {
         ret = -1;

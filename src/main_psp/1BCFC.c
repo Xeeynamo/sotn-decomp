@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game_psp.h>
 #include <scratchpad.h>
+#include "main_psp_private.h"
 
 // https://pspdev.github.io/pspsdk/
 #define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
@@ -28,14 +29,6 @@
     (((tpage) >> 5) & 3) // Semi Transparency (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)
 
 typedef enum {
-    // stretches the game resolution to fill the PSP screen vertically
-    SCREEN_MODE_FULL,
-
-    // pixel perfect, but with borders around the game screen
-    SCREEN_MODE_PERFECT,
-} ScreenMode;
-
-typedef enum {
     SUB_BUF_OFF = 0,
     SUB_BUF_TEMP = 1,
     SUB_BUF_PS = 2,
@@ -57,22 +50,11 @@ typedef struct {
     s32 y;
 } Unk08C4218C;
 
-typedef struct {
-    u32 c;
-    float x, y, z;
-} Vertex;
-
-typedef struct {
-    float u, v;
-    u32 c;
-    float x, y, z;
-} TVertex;
-
 typedef void (*Callback)();
 
 // BSS
-static char debugBuf[0x40]; // local
-static s32 skipFrames;      // local
+static char dbgBuf[0x40]; // local
+static s32 skipFrames;    // local
 s32 D_psp_08C630DC;
 s32 D_psp_08C630D8;
 s32 D_psp_08C630D4;
@@ -107,7 +89,7 @@ static s32 D_psp_08C62A50; // spritesDrawn
 static s32 frameCount;
 static u32 resetGraphLevel;
 static bool gpuEmuInfo;
-static SubBufType D_psp_08C62A40; // currend sub buffer
+static SubBufType D_psp_08C62A40; // current sub buffer
 s32 D_psp_08C62A3C;
 static Point32 screenOffset;
 s32 D_psp_08C62A30; // screen_mode
@@ -122,14 +104,14 @@ static u8 D_psp_08C429C0[0x100][0x200];
 static u8 D_psp_08C4298C[0x34] UNUSED;
 static Point32 clut8bppIndexMap[0x100];
 static u32 D_psp_08C42188;
-static Callback currVSyncCallback;
+static Callback vSyncCallback;
 static u32 VCount;
 static u8* D_psp_08C42100[0x20];
 static s32 D_psp_08C42080[0x20];
 static u8 D_psp_08B42080[0x20][0x8000];
 static u8 D_psp_08B42070[0x10] UNUSED;
-static SubBufType dispSubBuffer;
-static bool drawPolyline;
+static SubBufType dbgDispSubBuf;
+static bool dbgDrawPolyRects;
 
 // DATA
 static s32 lastVCount = -1; // VCount at last vSync(n)
@@ -141,7 +123,7 @@ s32 D_psp_089464E8 = 2;
 static bool D_psp_089464EC = true;
 static s32 D_psp_089464F0 = 1;
 
-extern s32 g_currFrameBuf;
+extern s32 g_frameBufIdx;
 
 void func_psp_089113A8(s32 abr, u8 arg1);
 void ClearClut8bpp(void);
@@ -262,7 +244,7 @@ static char* func_psp_0891AA00(void) {
     return D_psp_08C62A78;
 }
 
-static u8* func_psp_0891AAC8(s32 tpage) { return D_psp_08C42100[tpage & 0x1F]; }
+static u8* func_psp_0891AAC8(s32 arg0) { return D_psp_08C42100[arg0 & 0x1F]; }
 
 static void func_psp_0891AAF8() {
     s32 i;
@@ -300,7 +282,7 @@ void func_psp_0891ACBC(void) {
     lastVCount = -1;
     D_psp_089464D4 = -1;
     VCount = 0;
-    currVSyncCallback = NULL;
+    vSyncCallback = NULL;
     D_psp_08C42188 = 0;
     func_psp_0891A790();
     func_psp_0891A800();
@@ -335,7 +317,7 @@ void func_psp_0891AE68(void) {
 }
 
 void EndFrame(void) {
-    g_currFrameBuf = g_currFrameBuf ? 0 : 1;
+    g_frameBufIdx = g_frameBufIdx ? 0 : 1;
     sceGuSwapBuffers();
     if (cpuGpuTime) {
         frameTime = GetTimeSinceStartOfFrame();
@@ -345,8 +327,6 @@ void EndFrame(void) {
 }
 
 static void SetSubBufType(SubBufType bufType) {
-    void* base_addr;
-
     switch (bufType) {
     case SUB_BUF_TEMP:
         D_psp_08C62A40 = SUB_BUF_TEMP;
@@ -366,12 +346,9 @@ static void SetSubBufType(SubBufType bufType) {
     default:
     case SUB_BUF_OFF:
         D_psp_08C62A40 = SUB_BUF_OFF;
-        if (g_currFrameBuf != 0) {
-            base_addr = GU_VRAM_BP_1;
-        } else {
-            base_addr = GU_VRAM_BP_0;
-        }
-        PutDrawBuffer((u8*)sceGeEdramGetAddr() + (s32)base_addr, GU_VRAM_WIDTH);
+        PutDrawBuffer((u8*)sceGeEdramGetAddr() +
+                          (s32)(g_frameBufIdx ? GU_VRAM_BP_1 : GU_VRAM_BP_0),
+                      GU_VRAM_WIDTH);
         PutTexFilter(GU_LINEAR, GU_LINEAR);
         break;
     }
@@ -404,7 +381,7 @@ static s32 DrawSolidLine(s32 x0, s32 y0, s32 x1, s32 y1, s32 color) {
 }
 
 s32 func_psp_0891B1F8(s32 x0, s32 y0, s32 x1, s32 y1, s32 color) {
-    if (drawPolyline == true) {
+    if (dbgDrawPolyRects == true) {
         DrawSolidLine(x0, y0, x1 - 1, y0, color);
         DrawSolidLine(x1 - 1, y0, x1 - 1, y1 - 1, color);
         DrawSolidLine(x1 - 1, y1 - 1, x0, y1 - 1, color);
@@ -444,9 +421,9 @@ s32 func_psp_0891B400(void) {
 s32 DrawSync(s32 arg0) {
     if (gpuEmuInfo) {
         if (sceGuSync(GU_SYNC_FINISH, GU_SYNC_NOWAIT) == 1) {
-            sceGuDebugPrint(472, 0, 0xFFFFFFFF, "G");
+            sceGuDebugPrint(472, 0, 0xFFFFFFFF, "G"); // gpu bottleneck
         } else {
-            sceGuDebugPrint(472, 0, 0xFFFFFFFF, "C");
+            sceGuDebugPrint(472, 0, 0xFFFFFFFF, "C"); // cpu bottleneck
         }
     }
     if (arg0 == 0) {
@@ -469,8 +446,8 @@ void FinishedRenderingCB(s32 arg0) {
 
 void VBlankhandler(int idx, void* cookie) {
     VCount++;
-    if (currVSyncCallback != NULL) {
-        currVSyncCallback();
+    if (vSyncCallback != NULL) {
+        vSyncCallback();
     }
 }
 
@@ -582,15 +559,15 @@ static void func_psp_0891BB18(RECT* rect, u_long* p, s32 width) {
     s32 x0 = rect->x;
 
     while (x0 < x1) {
-        s32 dx = 0x40 - (x0 % 0x40);
-        if (x1 < (x0 + dx)) {
-            dx = x1 - x0;
+        s32 w = 0x40 - (x0 % 0x40);
+        if (x0 + w > x1) {
+            w = x1 - x0;
         }
 
         memcpy(&D_psp_08B42080[x0 / 0x40 + (rect->y / 0x100) * 0x10]
                               [(x0 % 0x40) * 2 + (rect->y % 0x100) * 0x80],
-               &dst[x0 - rect->x], dx * 2);
-        x0 += dx;
+               &dst[x0 - rect->x], w * 2);
+        x0 += w;
     }
 }
 
@@ -865,8 +842,8 @@ void AddPrim(void* ot, void* p) { addPrim(ot, p); }
 Callback VSyncCallback(Callback f) {
     Callback prev;
 
-    prev = currVSyncCallback;
-    currVSyncCallback = f;
+    prev = vSyncCallback;
+    vSyncCallback = f;
     return prev;
 }
 
@@ -1131,7 +1108,7 @@ static void DebugDisplaySubBuffer(void) {
     v[0].c = v[1].c = v[2].c = v[3].c = white;
     func_psp_08911F24(0, D_psp_089464F0);
     func_psp_08911B7C();
-    switch (dispSubBuffer) {
+    switch (dbgDispSubBuf) {
     case SUB_BUF_OFF:
         break;
 
@@ -1295,9 +1272,9 @@ void func_psp_0891E638(void) {
 
 void func_psp_0891E840(void) {
     func_psp_08910D28();
-    func_psp_0890FC2C();
+    ClearDispLists();
     func_psp_0890FF84();
-    func_psp_08910298(1);
+    SetCurrDispList(1);
     PutLightingEnable(GU_FALSE);
     PutFoggingEnable(GU_FALSE);
     PutTextureMappingEnable(GU_TRUE);
@@ -1438,7 +1415,7 @@ static void DrawOTag_PSP(OT_TYPE* p) {
         if (D_psp_08C62A40 == SUB_BUF_PS) {
             func_psp_0891E420();
         }
-        if (dispSubBuffer != SUB_BUF_OFF) {
+        if (dbgDispSubBuf != SUB_BUF_OFF) {
             DebugDisplaySubBuffer();
         }
         if (drawDebugMenuBG) {
@@ -1541,11 +1518,11 @@ void DrawOTag(OT_TYPE* p) {
                         D_psp_08C62A70 = D_psp_08C62A70 ? false : true;
                         break;
                     case 6:
-                        drawPolyline = drawPolyline ? false : true;
+                        dbgDrawPolyRects = dbgDrawPolyRects ? false : true;
                         break;
                     case 7:
-                        dispSubBuffer =
-                            (dispSubBuffer < 4) ? dispSubBuffer + 1 : 0;
+                        dbgDispSubBuf =
+                            (dbgDispSubBuf < 4) ? dbgDispSubBuf + 1 : 0;
                         break;
                     case 8:
                         gpuEmuInfo = gpuEmuInfo ? false : true;
@@ -1564,35 +1541,35 @@ void DrawOTag(OT_TYPE* p) {
             }
             x = 304;
             y = 0;
-            sprintf(debugBuf, "=== DEGUG MENU ===");
-            sceGuDebugPrint(x, y, 0xFFFFFFFF, debugBuf);
+            sprintf(dbgBuf, "=== DEGUG MENU ===");
+            sceGuDebugPrint(x, y, 0xFFFFFFFF, dbgBuf);
             sprintf(
-                debugBuf, "GameClearFlag:%s", off_on[g_GameClearFlag ? 1 : 0]);
-            sceGuDebugPrint(x + 0x10, y + 0x8, 0xFFFFFFFF, debugBuf);
-            sprintf(debugBuf, "MutekiFlag:%s", off_on[g_InvincibleFlag]);
-            sceGuDebugPrint(x + 0x10, y + 0x10, 0xFFFFFFFF, debugBuf);
-            sprintf(debugBuf, "Heart99:%s", off_on[g_InfiniteHearts]);
-            sceGuDebugPrint(x + 0x10, y + 0x18, 0xFFFFFFFF, debugBuf);
-            sprintf(debugBuf, "ScreenMode:%d", D_psp_08C62A30);
-            sceGuDebugPrint(x + 0x10, y + 0x20, 0xFFFFFFFF, debugBuf);
-            sprintf(debugBuf, "PlayWait:%d", skipFrames);
-            sceGuDebugPrint(x + 0x10, y + 0x28, 0xFFFFFFFF, debugBuf);
-            sprintf(debugBuf, "FntPrint:%s", off_on[D_psp_08C62A70]);
-            sceGuDebugPrint(x + 0x10, y + 0x30, 0xFFFFFFFF, debugBuf);
-            sprintf(debugBuf, "DrawPolyline:%s", off_on[drawPolyline]);
-            sceGuDebugPrint(x + 0x10, y + 0x38, 0xFFFFFFFF, debugBuf);
-            sprintf(debugBuf, "DispSubBuffer:%s", subBufType[dispSubBuffer]);
-            sceGuDebugPrint(x + 0x10, y + 0x40, 0xFFFFFFFF, debugBuf);
-            sprintf(debugBuf, "GpuEmuInfo:%s", off_on[gpuEmuInfo]);
-            sceGuDebugPrint(x + 0x10, y + 0x48, 0xFFFFFFFF, debugBuf);
-            sprintf(debugBuf, "CpuGpuTime:%s", off_on[cpuGpuTime]);
-            sceGuDebugPrint(x + 0x10, y + 0x50, 0xFFFFFFFF, debugBuf);
-            sprintf(debugBuf, "OYAJI:%03d", g_UnlockAllTactics);
-            sceGuDebugPrint(x + 0x10, y + 0x58, 0xFFFFFFFF, debugBuf);
-            sprintf(debugBuf, "AT3:%03d", at3Index);
-            sceGuDebugPrint(x + 0x10, y + 0x60, 0xFFFFFFFF, debugBuf);
-            sprintf(debugBuf, "[%s]", GetAT3FileName(at3Index));
-            sceGuDebugPrint(x + 0x10, y + 0x68, 0xFFFFFFFF, debugBuf);
+                dbgBuf, "GameClearFlag:%s", off_on[g_GameClearFlag ? 1 : 0]);
+            sceGuDebugPrint(x + 0x10, y + 0x8, 0xFFFFFFFF, dbgBuf);
+            sprintf(dbgBuf, "MutekiFlag:%s", off_on[g_InvincibleFlag]);
+            sceGuDebugPrint(x + 0x10, y + 0x10, 0xFFFFFFFF, dbgBuf);
+            sprintf(dbgBuf, "Heart99:%s", off_on[g_InfiniteHearts]);
+            sceGuDebugPrint(x + 0x10, y + 0x18, 0xFFFFFFFF, dbgBuf);
+            sprintf(dbgBuf, "ScreenMode:%d", D_psp_08C62A30);
+            sceGuDebugPrint(x + 0x10, y + 0x20, 0xFFFFFFFF, dbgBuf);
+            sprintf(dbgBuf, "PlayWait:%d", skipFrames);
+            sceGuDebugPrint(x + 0x10, y + 0x28, 0xFFFFFFFF, dbgBuf);
+            sprintf(dbgBuf, "FntPrint:%s", off_on[D_psp_08C62A70]);
+            sceGuDebugPrint(x + 0x10, y + 0x30, 0xFFFFFFFF, dbgBuf);
+            sprintf(dbgBuf, "DrawPolyline:%s", off_on[dbgDrawPolyRects]);
+            sceGuDebugPrint(x + 0x10, y + 0x38, 0xFFFFFFFF, dbgBuf);
+            sprintf(dbgBuf, "DispSubBuffer:%s", subBufType[dbgDispSubBuf]);
+            sceGuDebugPrint(x + 0x10, y + 0x40, 0xFFFFFFFF, dbgBuf);
+            sprintf(dbgBuf, "GpuEmuInfo:%s", off_on[gpuEmuInfo]);
+            sceGuDebugPrint(x + 0x10, y + 0x48, 0xFFFFFFFF, dbgBuf);
+            sprintf(dbgBuf, "CpuGpuTime:%s", off_on[cpuGpuTime]);
+            sceGuDebugPrint(x + 0x10, y + 0x50, 0xFFFFFFFF, dbgBuf);
+            sprintf(dbgBuf, "OYAJI:%03d", g_UnlockAllTactics);
+            sceGuDebugPrint(x + 0x10, y + 0x58, 0xFFFFFFFF, dbgBuf);
+            sprintf(dbgBuf, "AT3:%03d", at3Index);
+            sceGuDebugPrint(x + 0x10, y + 0x60, 0xFFFFFFFF, dbgBuf);
+            sprintf(dbgBuf, "[%s]", GetAT3FileName(at3Index));
+            sceGuDebugPrint(x + 0x10, y + 0x68, 0xFFFFFFFF, dbgBuf);
             func_psp_0892A8FC();
             if (GetVCount() & 0x20) {
                 sceGuDebugPrint(x, y + (cursor + 1) * 8, 0xFFFFFFFF, "=>");
@@ -1626,9 +1603,19 @@ void func_psp_0891FC64(void) {
 
 void SetDispMask(int mask) {}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1BCFC", func_psp_0891FCC0);
+s32 func_psp_0891FCC0(void* p) {
+    s32* ptr = p;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/1BCFC", func_psp_0891FCF0);
+    D_psp_08C629C4 = ptr[2];
+    return 0;
+}
+
+s32 func_psp_0891FCF0(void* p) {
+    s32* ptr = p;
+
+    D_psp_08C629C4 = ptr[2];
+    return 0;
+}
 
 s32 SetDROffset(void* p) {
     DR_OFFSET* ptr = p;
@@ -1972,7 +1959,7 @@ s32 DrawPolyFT4(void* p) {
                           GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
                               GU_TEXTURE_32BITF);
     }
-    if (drawPolyline == true) {
+    if (dbgDrawPolyRects == true) {
         s32 color = red;
         DrawSolidLine(v[0].x, v[0].y, v[1].x, v[1].y, color);
         DrawSolidLine(v[1].x, v[1].y, v[3].x, v[3].y, color);
@@ -2075,7 +2062,7 @@ s32 DrawPolyGT3(void* p) {
                           GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 |
                               GU_TEXTURE_32BITF);
     }
-    if (drawPolyline == true) {
+    if (dbgDrawPolyRects == true) {
         s32 color = green;
         DrawSolidLine(v[0].x, v[0].y, v[1].x, v[1].y, color);
         DrawSolidLine(v[1].x, v[1].y, v[2].x, v[2].y, color);
@@ -2126,7 +2113,7 @@ s32 func_psp_08922C14(void* p) {
     func_psp_08910A80(
         v, 4, sizeof(TVertex), GU_TRIANGLE_STRIP,
         GU_TRANSFORM_2D | GU_VERTEX_32BITF | GU_COLOR_8888 | GU_TEXTURE_32BITF);
-    if (drawPolyline == true) {
+    if (dbgDrawPolyRects == true) {
         s32 color = magenta;
         DrawSolidLine(v[0].x, v[0].y, v[1].x, v[1].y, color);
         DrawSolidLine(v[1].x, v[1].y, v[3].x, v[3].y, color);
@@ -2266,7 +2253,7 @@ s32 func_psp_089231F8(void* p) {
                                   GU_COLOR_8888 | GU_TEXTURE_32BITF);
         }
     }
-    if (drawPolyline == true) {
+    if (dbgDrawPolyRects == true) {
         s32 color = green;
         DrawSolidLine(v[0].x, v[0].y, v[1].x, v[1].y, color);
         DrawSolidLine(v[1].x, v[1].y, v[3].x, v[3].y, color);
@@ -2609,7 +2596,7 @@ s32 DrawPolyGT4(void* p) {
                                   GU_COLOR_8888 | GU_TEXTURE_32BITF);
         }
     }
-    if (drawPolyline == true) {
+    if (dbgDrawPolyRects == true) {
         s32 color = green;
         DrawSolidLine(v[0].x, v[0].y, v[1].x, v[1].y, color);
         DrawSolidLine(v[1].x, v[1].y, v[3].x, v[3].y, color);
