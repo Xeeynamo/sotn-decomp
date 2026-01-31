@@ -184,6 +184,7 @@ D_80180E54 = 0x09288A00;
 UNK_Invincibility0 = 0x09289E78;
 g_goldCollectTexts = 0x0928A288;
 D_psp_E_WALL_DEBRIS = 0x0928B778;
+D_psp_E_CANNON_SHOT = 0x0928B798;
 D_80180ED0 = 0x0928B808;
 g_Dialogue = 0x0928BDF8;
 g_LayoutObjPosVertical = 0x0928BE50;

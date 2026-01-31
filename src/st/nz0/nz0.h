@@ -88,6 +88,8 @@ typedef enum EntityIDs {
 } EntityIDs;
 
 #ifdef VERSION_PSP
+extern s32 E_ID(EXPLOSION);
+extern s32 E_ID(CANNON_SHOT);
 extern s32 E_ID(WALL_DEBRIS);
 #endif
 
