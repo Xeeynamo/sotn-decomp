@@ -54,7 +54,7 @@ void EntityCannonLever(Entity* self) {
     case 2:
         MoveEntity();
         self->velocityX -= self->velocityX / 16;
-        if (abs(self->velocityX < 0x2000)) {
+        if (abs(self->velocityX < FIX(0.125))) {
             self->step++;
         }
         break;
