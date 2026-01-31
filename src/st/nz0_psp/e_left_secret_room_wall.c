@@ -89,3 +89,8 @@ void EntityLeftSecretRoomWall(Entity* self) {
         break;
     }
 }
+
+// clang-format off
+INCLUDE_ASM("st/nz0_psp/nonmatchings/nz0_psp/e_left_secret_room_wall", EntityBottomSecretRoomFloor);
+
+INCLUDE_ASM("st/nz0_psp/nonmatchings/nz0_psp/e_left_secret_room_wall", EntitySecretWallDebris);
