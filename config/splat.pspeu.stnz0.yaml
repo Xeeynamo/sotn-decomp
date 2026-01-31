@@ -45,7 +45,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, nz0_psp/st_init]
-      - [0x520, c, nz0_psp/e_purple_brick]
+      - [0x520, c, nz0/e_purple_brick]
       - [0x7A0, c, nz0_psp/e_cannon]
       - [0x1080, c, nz0_psp/e_bossfight]
       - [0x18C8, c, nz0_psp/e_elevator]

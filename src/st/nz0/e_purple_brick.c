@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
-#include "sfx.h"
 
 // A purplish-red brick background that scrolls behind the foreground layer
 void EntityPurpleBrickScrollingBackground(Entity* self) {
