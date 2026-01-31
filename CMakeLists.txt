@@ -355,8 +355,15 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/e_lock_camera.c
     src/st/nz0/e_breakable.c
     src/st/nz0/d_prize_drops.c
-    src/st/nz0/311C0.c
-    src/st/nz0/337B4.c
+    src/st/nz0/e_red_eye_bust.c
+    src/st/nz0/e_purple_brick.c
+    src/st/nz0/e_left_secret_room_wall.c
+    src/st/nz0/e_puzzle.c
+    src/st/nz0/e_cannon.c
+    src/st/nz0/e_elevator2.c
+    src/st/nz0/e_nz0_room2.c
+    src/st/nz0/e_life_max_tank.c
+    src/st/nz0/e_blue_flame_table.c
     src/st/nz0/e_explosion_puff_opaque.c
     src/st/nz0/bossfight.c
     src/st/nz0/slogra.c
