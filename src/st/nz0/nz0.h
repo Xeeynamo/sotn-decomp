@@ -87,6 +87,10 @@ typedef enum EntityIDs {
     NUM_ENTITIES,
 } EntityIDs;
 
+#ifdef VERSION_PSP
+extern s32 E_ID(WALL_DEBRIS);
+#endif
+
 #define BOSS_FLAG_DOORS_CLOSED (1 << 0)
 #define BOSS_FLAG_DOORS_OPEN (1 << 1)
 #define BOSS_FLAG_FIGHT_BEGIN (1 << 2)

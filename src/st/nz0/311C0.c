@@ -39,10 +39,10 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = &g_PrimBuf[primIndex];
-        self->primIndex = primIndex;
-        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
+        self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
         while (prim != NULL) {
             prim->tpage = 0xF;
             prim->clut = 4;
@@ -59,17 +59,18 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
         // Add a scrolling effect
         tempPosX = self->posX.i.hi;
         tempPosX = tempPosX & 0x7F;
-        tempPosX = tempPosX - 0x80;
+        tempPosX = (tempPosX)-0x80;
         tempPosY = self->posY.i.hi;
-        tempPosY = (tempPosY & 0x3F) - 0x40;
+        tempPosY = tempPosY & 0x3F;
+        tempPosY = tempPosY - 0x40;
         prim = self->ext.prim;
         // Primitives are laid out in a 5-tall by 3-wide grid
         for (y = 0; y < 5; y++) {
             for (x = 0; x < 3; x++) {
                 prim->x0 = prim->x2 = tempPosX + (x * 0x80);
-                prim->x1 = prim->x3 = prim->x0 + 0x80;
+                prim->x1 = prim->x3 = tempPosX + (x * 0x80) + 0x80;
                 prim->y0 = prim->y1 = tempPosY + (y * 0x40);
-                prim->y2 = prim->y3 = prim->y0 + 0x40;
+                prim->y2 = prim->y3 = tempPosY + (y * 0x40) + 0x40;
                 prim->drawMode = DRAW_DEFAULT;
                 prim = prim->next;
             }
@@ -82,15 +83,20 @@ void EntityPurpleBrickScrollingBackground(Entity* self) {
     }
 }
 
-static u16 D_80180E54[] = {
+static s16 tiles_wall[] = {
+    // wall closed
     0x05C0, 0x05C1, 0x05C8, 0x05C9, 0x05D0, 0x05D1, 0x05D8, 0x05D9,
+    // wall opening #1
     0x05C2, 0x05C3, 0x05CA, 0x05CB, 0x05D2, 0x05D3, 0x05DA, 0x05DB,
+    // wall opening #2
     0x05C4, 0x05C5, 0x05CC, 0x05CD, 0x05D4, 0x05D5, 0x05DC, 0x05DD,
+    // wall open
     0x05C6, 0x05C7, 0x05CE, 0x05CF, 0x05D6, 0x05D7, 0x05DE, 0x05DF};
-void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
-    Entity* newEntity;
-    s32 cond;
+void EntityLeftSecretRoomWall(Entity* self) {
     s32 i;
+    s16* tileLayoutPtr;
+    s32 tilePos;
+    Entity* newEntity;
 
     switch (self->step) {
     case LEFT_SECRET_ROOM_WALL_INIT:
@@ -99,24 +105,26 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         self->hitboxHeight = 32;
         self->hitboxState = 2;
 
-        cond = g_CastleFlags[NZ0_SECRET_WALL_OPEN] != 0;
-        tileLayoutPtr = D_80180E54 + (-cond & 24);
-
+        if (g_CastleFlags[NZ0_SECRET_WALL_OPEN]) {
+            i = 8 * 3;
+        } else {
+            i = 0;
+        }
+        tileLayoutPtr = tiles_wall + i;
         tilePos = 0x260;
-        for (i = 0; i < 4; i++) {
-            g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-            g_Tilemap.fg[tilePos + 1] = *(tileLayoutPtr + 1);
+        for (i = 0; i < 4; i++, tileLayoutPtr += 2) {
+            (&g_Tilemap.fg[tilePos])[0] = tileLayoutPtr[0];
+            (&g_Tilemap.fg[tilePos])[1] = tileLayoutPtr[1];
             tilePos += 0x10;
-            tileLayoutPtr += 2;
         }
 
-        if (g_CastleFlags[NZ0_SECRET_WALL_OPEN] != 0) {
+        if (g_CastleFlags[NZ0_SECRET_WALL_OPEN]) {
             DestroyEntity(self);
             break;
         }
 
     case LEFT_SECRET_ROOM_WALL_IDLE:
-        if (self->hitFlags != 0) {
+        if (self->hitFlags) {
             PlaySfxPositional(SFX_WALL_DEBRIS_B);
             self->step++;
         }
@@ -124,18 +132,16 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
 
     case LEFT_SECRET_ROOM_WALL_BREAK:
         self->ext.breakable.breakCount++;
-        tileLayoutPtr = D_80180E54 + (self->ext.breakable.breakCount * 8);
-
+        tileLayoutPtr = tiles_wall + (self->ext.breakable.breakCount * 8);
         tilePos = 0x260;
-        for (i = 0; i < 4; i++) {
-            g_Tilemap.fg[tilePos] = *tileLayoutPtr;
-            g_Tilemap.fg[tilePos + 1] = *(tileLayoutPtr + 1);
-            tileLayoutPtr += 2;
+        for (i = 0; i < 4; i++, tileLayoutPtr += 2) {
+            (&g_Tilemap.fg[tilePos])[0] = tileLayoutPtr[0];
+            (&g_Tilemap.fg[tilePos])[1] = tileLayoutPtr[1];
             tilePos += 0x10;
         }
 
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (newEntity != NULL) {
+        if (newEntity) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 0x13;
         }
@@ -146,13 +152,12 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
             g_CastleFlags[NZ0_SECRET_WALL_OPEN] = 1;
             g_api.RevealSecretPassageAtPlayerPositionOnMap(
                 NZ0_SECRET_WALL_OPEN);
-
             for (i = 0; i < 8; i++) {
                 newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (newEntity != NULL) {
-                    CreateEntityFromEntity(E_WALL_DEBRIS, self, newEntity);
+                    CreateEntityFromEntity(E_ID(WALL_DEBRIS), self, newEntity);
                     newEntity->posX.i.hi += (Random() & 0xF);
-                    newEntity->posY.i.hi -= 0x20 - (Random() & 0x3F);
+                    newEntity->posY.i.hi += (Random() & 0x3F) - 0x20;
                 }
             }
             DestroyEntity(self);
@@ -160,7 +165,7 @@ void EntityLeftSecretRoomWall(Entity* self, u16* tileLayoutPtr, s32 tilePos) {
         break;
 
     case LEFT_SECRET_ROOM_WALL_CHECK:
-        if (--self->ext.breakable.resetTimer == 0) {
+        if (!--self->ext.breakable.resetTimer) {
             self->step = LEFT_SECRET_ROOM_WALL_IDLE;
         }
         break;
@@ -544,10 +549,8 @@ void EntityMovableBox(Entity* self) {
 static s32 D_80180ED0[] = {0};
 void EntityCannonLever(Entity* self) {
     Primitive* prim;
-    s16 primIndex;
-    s32 temp_v0_2;
-    s32 temp_v1_2;
-    s32 var_v0;
+    Entity* player;
+    s32 primIndex;
 
     switch (self->step) {
     case 0:
@@ -561,11 +564,11 @@ void EntityCannonLever(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = &g_PrimBuf[primIndex];
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
 
-        self->flags |= FLAG_HAS_PRIMS;
         prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
@@ -576,13 +579,14 @@ void EntityCannonLever(Entity* self) {
         prim->priority = 0x70;
         prim->drawMode = DRAW_UNK02;
 
-        if (PLAYER.posX.i.hi < 128) {
+        player = &PLAYER;
+        if (player->posX.i.hi < 128) {
             self->hitboxState = 0;
         }
         break;
 
     case 1:
-        if (self->hitFlags != 0) {
+        if (self->hitFlags) {
             self->velocityX = FIX(-4);
             self->step++;
         }
@@ -590,15 +594,8 @@ void EntityCannonLever(Entity* self) {
 
     case 2:
         MoveEntity();
-        temp_v1_2 = self->velocityX;
-        if (temp_v1_2 < 0) {
-            var_v0 = temp_v1_2 + 0xF;
-        } else {
-            var_v0 = temp_v1_2;
-        }
-        temp_v0_2 = temp_v1_2 - (var_v0 >> 4);
-        self->velocityX = temp_v0_2;
-        if (temp_v0_2 < 0x2000) {
+        self->velocityX -= self->velocityX / 16;
+        if (abs(self->velocityX < 0x2000)) {
             self->step++;
         }
         break;
@@ -608,7 +605,7 @@ void EntityCannonLever(Entity* self) {
         break;
     }
 
-    if (g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT] != 0) {
+    if (g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT]) {
         self->hitboxState = 0;
     }
     prim = self->ext.prim;

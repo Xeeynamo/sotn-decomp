@@ -185,3 +185,7 @@ g_LayoutObjPosVertical = 0x0928BE50;
 g_LayoutObjPosHorizontal = 0x0928BE58;
 g_LayoutObjVertical = 0x0928BE60;
 g_LayoutObjHorizontal = 0x0928BE68;
+g_EInitInteractable= 0x092655B0;
+D_80180E54 = 0x09288A00;
+D_80180ED0 = 0x0928B808;
+D_psp_E_WALL_DEBRIS = 0x0928B778;

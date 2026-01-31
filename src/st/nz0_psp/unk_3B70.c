@@ -12,9 +12,3 @@ INCLUDE_ASM("st/nz0_psp/nonmatchings/nz0_psp/unk_3B70", EntityFloorButton);
 INCLUDE_ASM("st/nz0_psp/nonmatchings/nz0_psp/unk_3B70", EntityFloorSpikes);
 
 INCLUDE_ASM("st/nz0_psp/nonmatchings/nz0_psp/unk_3B70", EntityTableWithGlobe);
-
-INCLUDE_ASM("st/nz0_psp/nonmatchings/nz0_psp/unk_3B70", EntityLeftSecretRoomWall);
-
-INCLUDE_ASM("st/nz0_psp/nonmatchings/nz0_psp/unk_3B70", EntityBottomSecretRoomFloor);
-
-INCLUDE_ASM("st/nz0_psp/nonmatchings/nz0_psp/unk_3B70", EntitySecretWallDebris);
