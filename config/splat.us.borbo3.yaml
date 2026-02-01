@@ -61,9 +61,8 @@ segments:
       - [0x1288, .data, e_life_up]
       - [0x12DC, .data, e_clouds]
       - [0x1414, data] # begin RBO3_pStObjLayoutHorizontal ptr data
-      - [0x7350, pal, D_80187350]
-      - [0x7550, pal, D_80187550] # unused
-      - [0x7610, pal, D_80187610]
+      - [0x7350, .data, pal_unk]
+      - [0x7630, data]
       - [0x10E80, .rodata, rbo3]
       - [0x10F0C, .rodata, 12D64]
       - [0x10F3C, .rodata, e_red_door]

@@ -69,7 +69,7 @@ segments:
       - [0xF438, .data, wrp/e_room_fg]
       - [0xF4D8, data] # WRP_spriteBanks
       - [0xF5F8, .data, wrp_psp/layers] # OVL_EXPORT(rooms_layers)
-      - [0xF6E8, data] # WRP_cluts
+      - [0xF6E8, .data, wrp_psp/header_cluts]
       - [0xF708, .data, wrp_psp/graphics_banks]
       - [0xF790, .data, wrp/e_red_door_tiles]
       - [0xF7B0, .data, wrp_psp/e_init]

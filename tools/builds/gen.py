@@ -643,16 +643,6 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
                         ld_path,
                     )
                 )
-            elif kind == "pal":
-                objs.append(
-                    add_copy_psx(
-                        nw,
-                        ver,
-                        f"{asset_path}/{name}.palbin",
-                        f"{asset_path}/{name}",
-                        ld_path,
-                    )
-                )
             else:
                 continue
     if sotn_progress_report:
