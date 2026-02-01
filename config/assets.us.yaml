@@ -1097,6 +1097,10 @@ files:
           - [0x340, skip]
           - [0x1258, rooms, rooms]
           - [0x1274, skip]
+          - [0x2BF78, cmpgfx, D_801ABF78, 128, 128, 4]
+          - [0x2C258, cmpgfx, D_801AC258, 128, 128, 4]
+          - [0x2C360, palette, D_us_801AC360, 16]
+          - [0x2C740, skip]
   - target: disks/us/BOSS/RBO6/RBO6.BIN
   - target: disks/us/BOSS/RBO7/RBO7.BIN
   - target: disks/us/SERVANT/TT_000.BIN
