@@ -1014,6 +1014,14 @@ files:
           - [0x1308, skip]
           - [0x1424, cutscene, cutscene_data]
           - [0x15DC, skip]
+          - [0x30F0, cmpgfx, D_801830F0, 128, 128, 4]
+          - [0x4220, cmpgfx, D_80184220, 128, 128, 4]
+          - [0x4EE0, palette, D_80184EE0, 16]
+          - [0x4FE0, palette, D_80184FE0, 16] # unused
+          - [0x50E0, palette, D_801850E0, 16]
+          - [0x51E0, palette, D_801851E0, 16] # unused
+          - [0x52E0, palette, D_801852E0, 16]
+          - [0x5300, skip]
   - target: disks/us/BOSS/BO0/BO0.BIN
   - target: disks/us/BOSS/BO1/BO1.BIN
   - target: disks/us/BOSS/BO2/BO2.BIN

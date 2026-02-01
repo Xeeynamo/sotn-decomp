@@ -633,7 +633,7 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
                 objs.append(add_s(nw, ver, f"{asm_path}/data/{name}.s", ld_path))
             elif kind == "asm":
                 objs.append(add_s(nw, ver, f"{asm_path}/{name}.s", ld_path))
-            elif kind == "raw" or kind == "cmp":
+            elif kind == "raw":
                 objs.append(
                     add_copy_psx(
                         nw,
