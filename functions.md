@@ -2732,7 +2732,7 @@
 | no3    | func_pspeu_092492E0                  |       79 |          9 |        |       |     |
 | no4    | UpdateStageEntities                  |       79 |          9 |        |       |     |
 | np3    | UpdateStageEntities                  |       79 |          9 |        |       |     |
-| nz0    | UpdateStageEntities                  |       79 |          9 |        |       |     |
+| nz0    | func_pspeu_092460E8                  |       79 |          9 |        |       |     |
 | nz1    | func_pspeu_0923E298                  |       79 |          9 |        |       |     |
 | rare   | func_pspeu_0923FDC0                  |       79 |          9 |        |       |     |
 | rcat   | func_pspeu_0923AC50                  |       79 |          9 |        |       |     |
@@ -4034,7 +4034,7 @@
 | dra    | func_psp_0913C788                    |      245 |         26 | Yes    |       |     |
 | dra    | func_psp_090FA828                    |      245 |         39 | Yes    |       |     |
 | dre    | func_pspeu_0924C750                  |      246 |         18 |        |       |     |
-| nz0    | NZ0_EntityBreakable                  |      246 |         21 |        |       |     |
+| nz0    | EntityBreakableNZ0                   |      246 |         21 |        |       |     |
 | dra    | func_psp_09112AC8                    |      246 |         41 |        |       |     |
 | no4    | func_pspeu_09237BE8                  |      247 |          1 |        |       |     |
 | np3    | EntityPathBlockSmallWeight           |      247 |         26 |        |       |     |
@@ -4124,7 +4124,7 @@
 | no3    | func_pspeu_09248F00                  |      269 |         44 |        |       |     |
 | no4    | Update                               |      269 |         44 |        |       |     |
 | np3    | Update                               |      269 |         44 |        |       |     |
-| nz0    | Update                               |      269 |         44 |        |       |     |
+| nz0    | func_pspeu_09245D08                  |      269 |         44 |        |       |     |
 | nz1    | func_pspeu_0923DEB8                  |      269 |         44 |        |       |     |
 | rare   | func_pspeu_0923F9E0                  |      269 |         44 |        |       |     |
 | rcat   | func_pspeu_0923A870                  |      269 |         44 |        |       |     |
