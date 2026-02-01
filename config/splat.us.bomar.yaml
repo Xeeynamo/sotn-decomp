@@ -70,15 +70,7 @@ segments:
       - [0x15DC, data]
       - [0x15F0, raw, cutscene_alucard]
       - [0x2370, raw, cutscene_maria]
-      - [0x30F0, cmp, D_801830F0]
-      - [0x4220, cmp, D_80184220]
-      - [0x4EE0, pal, D_80184EE0]
-      - [0x4FE0, pal, D_80184FE0] # unused
-      - [0x50E0, pal, D_801850E0]
-      - [0x51E0, pal, D_801851E0] # unused
-      - [0x52E0, pal, D_801852E0]
-      - [0x5300, .data, tile_data] # tile data
-      - [0x5700, .data, tile_data] # tile definitions
+      - [0x30F0, .data, stage_data]
       - [0x9710, .data, gen/sprites]
       - [0xA9D4, .rodata, cutscene] # actor names
       - [0xA9EC, .rodata, cutscene]

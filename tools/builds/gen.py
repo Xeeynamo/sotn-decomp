@@ -633,7 +633,7 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
                 objs.append(add_s(nw, ver, f"{asm_path}/data/{name}.s", ld_path))
             elif kind == "asm":
                 objs.append(add_s(nw, ver, f"{asm_path}/{name}.s", ld_path))
-            elif kind == "raw" or kind == "cmp":
+            elif kind == "raw":
                 objs.append(
                     add_copy_psx(
                         nw,
@@ -643,35 +643,6 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
                         ld_path,
                     )
                 )
-            elif kind == "cmpgfx":
-                objs.append(
-                    add_copy_psx(
-                        nw,
-                        ver,
-                        f"{asset_path}/{name}.gfxbin",
-                        f"{asset_path}/{name}",
-                        ld_path,
-                    )
-                )
-            elif kind == "pal":
-                objs.append(
-                    add_copy_psx(
-                        nw,
-                        ver,
-                        f"{asset_path}/{name}.palbin",
-                        f"{asset_path}/{name}",
-                        ld_path,
-                    )
-                )
-            elif kind == "palette":
-                objs_memcard = add_memcard_img_psx(
-                    nw,
-                    ver,
-                    f"{asset_path}/{name}.png",
-                    f"{asset_path}/{name}",
-                    ld_path,
-                )
-                objs += objs_memcard
             else:
                 continue
     if sotn_progress_report:
