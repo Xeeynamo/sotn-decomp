@@ -91,6 +91,10 @@ typedef enum EntityIDs {
 extern s32 E_ID(EXPLOSION);
 extern s32 E_ID(CANNON_SHOT);
 extern s32 E_ID(WALL_DEBRIS);
+extern s32 E_ID(BOSS_ROOM_BLOCK);
+extern s32 E_ID(SLOGRA);
+extern s32 E_ID(GAIBON);
+extern s32 E_ID(LIFE_UP_SPAWN);
 #endif
 
 #define BOSS_FLAG_DOORS_CLOSED (1 << 0)

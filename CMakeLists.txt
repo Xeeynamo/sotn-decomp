@@ -366,6 +366,7 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/e_blue_flame_table.c
     src/st/nz0/e_explosion_puff_opaque.c
     src/st/nz0/bossfight.c
+    src/st/nz0/unk_105C.c
     src/st/nz0/slogra.c
     src/st/nz0/gaibon.c
     src/st/nz0/e_elevator.c
