@@ -69,21 +69,13 @@ segments:
       - [0xF438, .data, wrp/e_room_fg]
       - [0xF4D8, data] # WRP_spriteBanks
       - [0xF5F8, .data, wrp_psp/layers] # OVL_EXPORT(rooms_layers)
-      - [0xF6E8, data] # WRP_cluts
+      - [0xF6E8, .data, wrp_psp/header_cluts]
       - [0xF708, .data, wrp_psp/graphics_banks]
       - [0xF790, .data, wrp/e_red_door_tiles]
       - [0xF7B0, .data, wrp_psp/e_init]
       - [0xF8A0, data] # WRP_gen_rooms.c
       - [0xF920, .data, wrp/e_breakable]
-      - [0xF970, data] # [0xF970, cmpgfx, stage_title_jp, 128, 128, 4]
-      - [0xFCB8, data] # [0xFCB8, cmpgfx, stage_placeholder, 128, 128, 4]
-      - [0x10260, data] # D_psp_092478E0
-      - [0x102C0, data] # D_psp_09247940
-      - [0x104C0, data] # D_psp_09247B40
-      - [0x106C0, data] # D_psp_09247D40
-      - [0x108C0, data] # D_psp_09247F40
-      - [0x10AC0, .data, wrp/stage_data] # tile data
-      - [0x10EC0, .data, wrp/stage_data] # tile definitions
+      - [0xF970, .data, wrp/stage_data]
       - [0x142E0, .data, wrp_psp/header]
       - [0x14320, .data, wrp/background_block_init]
       - [0x14360, .data, wrp/e_lock_camera]

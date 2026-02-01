@@ -73,10 +73,7 @@ segments:
       - [0x4290, .data, e_life_up]
       - [0x42E4, .data, gen/e_layout]
       - [0x435C, .data, spritesheets] # doppleganger_sprites, bat_form_sprites
-      - [0x2BEA0, cmp, D_801ABEA0]
-      - [0x2C180, cmp, D_801AC180]
-      - [0x2C288, pal, D_us_801AC288]
-      - [0x2C668, .data, tile_data]
+      - [0x2BEA0, .data, stage_data]
       - [0x30A78, data] # small animationframe sets, unimportable
       - [0x340E4, .rodata, doors]
       - [0x34188, .rodata, unk_365FC]
