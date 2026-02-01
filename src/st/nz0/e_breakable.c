@@ -19,19 +19,15 @@ static u8 g_eBreakableDrawModes[] = {
     DRAW_DEFAULT,
     DRAW_DEFAULT,
     DRAW_DEFAULT};
-
-#ifndef VERSION_PSP
-// on PSP this might be either optimised out to BSS or completely removed
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
-#endif
 
 extern EInit OVL_EXPORT(EInitBreakable);
 void EntityBreakableNZ0(Entity* self) {
-    u16 breakableType = self->params >> 12;
-    s16 top, bottom, left, right;
-    Entity* entityDropItem;
     Primitive* prim;
+    u16 breakableType;
+    Entity* entityDropItem;
 
+    breakableType = self->params >> 12;
     if (self->step) {
         AnimateEntity(g_eBreakableAnimations[breakableType], self);
         if (breakableType == 2) {
@@ -78,14 +74,10 @@ void EntityBreakableNZ0(Entity* self) {
             prim->u1 = prim->u3 = 0xF8;
             prim->v0 = prim->v1 = 0x80;
             prim->v2 = prim->v3 = 0xA0;
-            left = self->posX.i.hi - 23;
-            right = self->posX.i.hi + 25;
-            prim->x0 = prim->x2 = left;
-            prim->x1 = prim->x3 = right;
-            top = self->posY.i.hi - 23;
-            bottom = self->posY.i.hi + 9;
-            prim->y0 = prim->y1 = top;
-            prim->y2 = prim->y3 = bottom;
+            prim->x0 = prim->x2 = self->posX.i.hi + (u16)-23;
+            prim->x1 = prim->x3 = prim->x0 + 48;
+            prim->y0 = prim->y1 = self->posY.i.hi + (u16)-23;
+            prim->y2 = prim->y3 = prim->y0 + 32;
             prim->priority = self->zPriority;
             prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE |
                              DRAW_UNK02 | DRAW_TRANSP;
