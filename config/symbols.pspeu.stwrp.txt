@@ -5,3 +5,5 @@ WRP_rooms = 0x09246F20;
 stage_title_wrp_jp = 0x09246FF0;
 stage_placeholder_wrp = 0x09247338;
 WarpRoomCoords = 0x0924BA98;
+D_80181D08 = 0x092478E0;
+

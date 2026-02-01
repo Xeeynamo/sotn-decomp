@@ -938,10 +938,9 @@ files:
           - [0x3E4, skip]
           - [0x11AC, rooms, rooms]
           - [0x1228, skip]
-          - [0x1420, cmpgfx, stage_title_wrp_jp, 128, 128, 4]
-          - [0x1764, cmpgfx, stage_placeholder_wrp, 128, 128, 4]
+          - [0x1420, cmpgfx, us/stage_title_wrp_jp, 128, 128, 4]
+          - [0x1764, cmpgfx, us/stage_placeholder_wrp, 128, 128, 4]
           - [0x1D08, palette, D_80181D08, 16]
-          - [0x1D28, palette, D_80181D28, 16]
           - [0x1D68, skip] # tile data
           - [0x2968, skip] # tile definitions
           - [0x6D88, skip] # sprites

@@ -647,6 +647,10 @@ files:
           - [0x80, skip]
           - [0xF5F8, layers, layers]
           - [0xF6E8, skip]
+          - [0xF970, cmpgfx, psp/stage_title_wrp_jp, 128, 128, 4]
+          - [0xFCB8, cmpgfx, psp/stage_placeholder_wrp, 128, 128, 4]
+          - [0x10260, palette, D_80181D08, 16]
+          - [0x102C0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rare.bin
     asset_path: assets/st/rare
     src_path: src/st/rare
