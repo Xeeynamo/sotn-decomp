@@ -170,6 +170,7 @@ NZ0_gfxBanks = 0x092653D0;
 NZ0_EntityUpdates = 0x09265438;
 g_EInitInteractable = 0x092655B0;
 g_EInitCommon = 0x092655E0;
+g_EInitDamageNum = 0x092655F0;
 g_EInitBloodSkeleton = 0x09265610;
 g_EInitBoneScimitar = 0x09265620;
 g_EInitGreenAxeKnight = 0x09265640;
