@@ -29,10 +29,9 @@ void EntityRelicContainer(Entity* self) {
             self->hitboxOffY = -0xA;
             self->hitboxState = 2;
             newEntity = self + 1;
-            CreateEntityFromEntity(E_RELIC_CONTAINER, self, newEntity);
+            CreateEntityFromEntity(E_ID(RELIC_CONTAINER), self, newEntity);
             newEntity->params = 0x100;
         }
-
     case 1:
         if (self->params & 0x100) {
             AnimateEntity(anim_relic_container_alt, self);
@@ -44,7 +43,6 @@ void EntityRelicContainer(Entity* self) {
             SetStep(2);
         }
         break;
-
     case 2:
         if (self->params > 0x1) {
             newEntity = self + 1;
@@ -64,11 +62,9 @@ void EntityRelicContainer(Entity* self) {
         }
         PlaySfxPositional(SFX_GLASS_BREAK_E);
         self->step++;
-
     case 3:
         self->animCurFrame = 4;
         break;
-
     case 255:
 #include "../pad2_anim_debug.h"
     }
@@ -76,30 +72,30 @@ void EntityRelicContainer(Entity* self) {
 
 // Table in room with bone-throwing skeleton. Drops a Resist Thunder.
 void EntityBlueFlameTable(Entity* self) {
+    Entity* newEntity;
+
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitPrizeContainer);
         self->zPriority = 0x6A;
         self->hitboxWidth = 8;
         self->hitboxHeight = 16;
-        self->hitboxOffY = -0xA;
         self->hitboxOffX = 0;
+        self->hitboxOffY = -10;
         self->hitboxState = 2;
-
     case 1:
         AnimateEntity(anim_blue_flame_table, self);
-        if (self->hitFlags != 0) {
+        if (self->hitFlags) {
             g_api.PlaySfx(SFX_CANDLE_HIT);
             self->hitboxState = 0;
             SetStep(2);
         }
         break;
-
     case 2:
-        CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
-        self[1].params = D_80180F9C[self->params];
+        newEntity = &self[1];
+        CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+        newEntity->params = D_80180F9C[self->params];
         self->step++;
-
     case 3:
         self->animCurFrame = 18;
         break;

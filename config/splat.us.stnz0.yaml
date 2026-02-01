@@ -56,6 +56,7 @@ segments:
       - [0xF50, .data, e_blue_flame_table]
       - [0xFA4, .data, e_explosion_puff_opaque]
       - [0x1014, .data, bossfight]
+      - [0x105C, .data, unk_105C]
       - [0x13A4, .data, e_elevator]
       - [0x13BC, .data, d_prize_drops]
       - [0x13C8, .data, cutscene]
