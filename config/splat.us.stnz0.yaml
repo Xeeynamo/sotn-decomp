@@ -47,10 +47,15 @@ segments:
       - [0xD8C, .data, e_red_door_tiles]
       - [0xDBC, .data, e_lock_camera]
       - [0xDE4, .data, e_breakable]
-      - [0xE54, .data, 311C0]
-      - [0xF50, .data, 337B4]
+      - [0xE54, .data, e_left_secret_room_wall]
+      - [0xEB4, .data, e_puzzle]
+      - [0xED0, .data, e_cannon]
+      - [0xEEC, .data, e_elevator2]
+      - [0xEF0, .data, e_nz0_room2]
+      - [0xF1C, .data, e_life_max_tank]
+      - [0xF50, .data, e_blue_flame_table]
       - [0xFA4, .data, e_explosion_puff_opaque]
-      - [0x1010, .data, bossfight]
+      - [0x1014, .data, bossfight]
       - [0x13A4, .data, e_elevator]
       - [0x13BC, .data, d_prize_drops]
       - [0x13C8, .data, cutscene]
@@ -78,8 +83,8 @@ segments:
       - [0x3CB8, data]
       - [0x3CCC, .data, stage_data]
       - [0x26E8C, .data, gen/sprites]
-      - [0x3058C, .rodata, 311C0] # EntityRedEyeBust
-      - [0x30598, .rodata, 337B4] # EntityRelicContainer
+      - [0x3058C, .rodata, e_red_eye_bust] # EntityRedEyeBust
+      - [0x30598, .rodata, e_blue_flame_table] # EntityRelicContainer
       - [0x305A4, .rodata, e_explosion_puff_opaque] # EntityExplosionPuffOpaque
       - [0x305B8, .rodata, bossfight] # EntityBossFightManager
       - [0x305E8, .rodata, bossfight] # EntityBossRoomBlock
@@ -109,8 +114,15 @@ segments:
       - [0x30958, c, e_room_bg]
       - [0x30A20, c, e_lock_camera]
       - [0x30EEC, c, e_breakable]
-      - [0x311C0, c]
-      - [0x337B4, c]
+      - [0x311C0, c, e_red_eye_bust]
+      - [0x312E8, c, e_purple_brick]
+      - [0x314C4, c, e_left_secret_room_wall]
+      - [0x31C18, c, e_puzzle]
+      - [0x323B4, c, e_cannon]
+      - [0x32AD8, c, e_elevator2]
+      - [0x32FD8, c, e_nz0_room2]
+      - [0x33648, c, e_life_max_tank]
+      - [0x337B4, c, e_blue_flame_table]
       - [0x33B78, c, e_explosion_puff_opaque]
       - [0x33FCC, c, bossfight] # Slogra & Gaibon Boss
       - [0x34690, c, slogra]
