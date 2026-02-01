@@ -43,10 +43,6 @@ BUILD_DISK_DIR  := $(BUILD_DIR)/disk
 # Files
 ST_ASSETS		:= D_801*.bin *.gfxbin *.palbin cutscene_*.bin
 CLEAN_FILES		:= $(ASSETS_DIR) $(ASM_DIR) $(BUILD_DIR) $(SRC_DIR)/weapon $(CONFIG_DIR)/*$(VERSION)* function_calls sotn_calltree.txt
-FORMAT_SRC_IGNORE	:= $(call rwildcard,src/pc/3rd/,*)
-FORMAT_SRC_FILES	:= $(filter-out $(FORMAT_SRC_IGNORE),$(call rwildcard,$(SRC_DIR)/ $(INCLUDE_DIR)/,*.c *.h))
-FORMAT_SYMBOLS_IGNORE	:= $(addprefix $(CONFIG_DIR)/,splat.us.weapon.yaml assets.hd.yaml assets.us.yaml)
-FORMAT_SYMBOLS_FILES	:= $(filter-out $(FORMAT_SYMBOLS_IGNORE),$(wildcard $(CONFIG_DIR)/*.yaml))
 
 # Toolchain
 CROSS           := mipsel-linux-gnu-
@@ -58,15 +54,12 @@ MWCCPSP         := $(BIN_DIR)/mwccpsp.exe
 CYGNUS			:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
 
 # Other tooling
-BLACK			:= $(and $(PYTHON_BIN),$(PYTHON_BIN)/)black
 SPLAT           := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)splat split
 ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
 DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
 SHASUM          := shasum
 GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
 PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
-CLANG			:= $(BIN_DIR)/clang-format
-SOTNLINT		:= cargo run --release --manifest-path $(TOOLS_DIR)/lints/sotn-lint/Cargo.toml $(SRC_DIR)/
 DUPS_THRESHOLD  ?= .90
 DUPS			:= cd $(TOOLS_DIR)/dups; cargo run --release -- --threshold $(DUPS_THRESHOLD) --output-file ../../$(REPORTS_DIR)/duplicates.txt
 MIPSMATCH_APP   := $(BIN_DIR)/mipsmatch
@@ -196,72 +189,8 @@ help: ##@ Print listing of key targets with their descriptions
 
 .PHONY: format
 format: ##@ Format source code, clean symbols, other linting
-format: format-src format-tools format-symbols format-license
-
-
-.PHONY: lint format-sotn-lint
-lint: format-sotn-lint
-format-sotn-lint:
-	$(SOTNLINT) || ( echo lint failed 1>&2 && exit 1 )
-
-.PHONY: format-src
-format-src: bin/clang-format format-sotn-lint
-	@# find explainer:
-	@#    find $(SRC_DIR) $(INCLUDE_DIR)                      : look in src and include
-	@#    -type d \( -name 3rd -o -name pspsdk -o -name CMakeFiles \) -prune  : if an entry is both a directory and 3rd or CMakeFiles
-	@#                                                          ignore it and don't traverse it
-	@#    -o \( -type f \( -name '*.h' -o -name '*.c' \) \)   : or if an entry is a file and named *.h or *.c, include it
-	@#    -print0                                             : print only the matching entries, delimit by NULL to
-	@#                                                          ensure files with characters xargs uses as delimiters are
-	@#                                                          properly handled
-	find $(SRC_DIR) $(INCLUDE_DIR) mods \
-        -type d \( -name 3rd -o -name pspsdk -o -name CMakeFiles -o -name gen \) -prune \
-        -o \( -type f \( -name '*.c' -o -name '*.h' \) \) \
-        -print0 \
-        | xargs -0 -n10 -P$$(nproc) bin/clang-format -i
-
-.PHONY: format-tools
-format-tools:
-	$(BLACK) tools/*.py
-	$(BLACK) tools/builds/gen.py
-	$(BLACK) tools/splat_ext/*.py
-	$(BLACK) tools/split_jpt_yaml/*.py
-	$(BLACK) tools/sotn_permuter/permuter_loader.py
-	$(BLACK) diff_settings.py
-	$(BLACK) tools/function_finder/*.py
-
-.PHONY: format-symbols format-symbols-%
-format-symbols-us-sort:
-	VERSION=us $(PYTHON) ./tools/symbols.py sort
-format-symbols-us-%: format-symbols-us-sort
-	$(PYTHON) ./tools/symbols.py clean config/splat.us.$*.yaml
-format-symbols-us: $(patsubst config/splat.us.%.yaml,format-symbols-us-%,$(wildcard config/splat.us.*.yaml))
-format-symbols-hd-sort:
-	VERSION=hd $(PYTHON) ./tools/symbols.py sort
-format-symbols-hd-%: format-symbols-hd-sort
-	$(PYTHON) ./tools/symbols.py clean config/splat.hd.$*.yaml
-format-symbols-hd: $(patsubst config/splat.hd.%.yaml,format-symbols-hd-%,$(wildcard config/splat.hd.*.yaml))
-format-symbols-pspeu-sort:
-	VERSION=pspeu $(PYTHON) ./tools/symbols.py sort
-format-symbols-pspeu-%: format-symbols-pspeu-sort
-	$(PYTHON) ./tools/symbols.py clean config/splat.pspeu.$*.yaml
-format-symbols-pspeu: $(patsubst config/splat.pspeu.%.yaml,format-symbols-pspeu-%,$(wildcard config/splat.pspeu.*.yaml))
-format-symbols: format-symbols-us format-symbols-hd format-symbols-pspeu
-
-format-license:
-	find src/ mods/ | grep -E '\.c$$|\.h$$' | grep -vE 'PsyCross|mednafen|psxsdk|pspsdk|3rd|saturn/lib' | $(PYTHON) ./tools/lint-license.py - AGPL-3.0-or-later
-	find src/main/psxsdk | grep -E '\.c$$|\.h$$' | $(PYTHON) ./tools/lint-license.py - MIT
-	$(PYTHON) ./tools/lint-license.py include/game.h AGPL-3.0-or-later
-	$(PYTHON) ./tools/lint-license.py include/entity.h AGPL-3.0-or-later
-	$(PYTHON) ./tools/lint-license.py include/items.h AGPL-3.0-or-later
-	$(PYTHON) ./tools/lint-license.py include/lba.h AGPL-3.0-or-later
-	$(PYTHON) ./tools/lint-license.py include/memcard.h AGPL-3.0-or-later
-
-# fast-format
-.PHONY: ff
-ff: MAKEFLAGS += --jobs
-ff:
-	$(MAKE) format
+format:
+	@./sotn.sh format
 
 .PHONY: expected
 expected: build
@@ -521,8 +450,6 @@ disks/sotn.%.bin disks/sotn.%.cue:
 PHONY: # Since .PHONY reads % as a literal %, we need this target as a prereq to treat pattern targets as .PHONY
 PHONY_TARGETS += all all-clean clean $(addprefix CLEAN_,$(CLEAN_FILES)) extract build patch expected
 PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto) extract-disk disk disk-prepare disk-debug
-PHONY_TARGETS += format-src format-src.run $(addprefix FORMAT_,$(FORMAT_SRC_FILES)) format-tools $(addprefix FORMAT_,$(PY_TOOLS_DIRS))
-PHONY_TARGETS += format-symbols format-symbols.run $(addprefix format-symbols_,us hd pspeu saturn) $(addprefix FORMAT_,$(FORMAT_SYMBOLS_FILES)) format-license
 PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context function-finder duplicates-report
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
 PHONY_TARGETS += help get-debug get-phony get-silent

@@ -7,6 +7,7 @@ import (
 	"slices"
 
 	"github.com/spf13/cobra"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/format"
 )
 
 var acceptedVersions = []string{"us", "hd", "pspeu"}
@@ -64,6 +65,14 @@ func main() {
 				_ = os.Setenv("VERSION", c.Version)
 			}
 			return buildFromConfig(c)
+		},
+	})
+	rootCmd.AddCommand(&cobra.Command{
+		Use:          "format",
+		Short:        "Format code base",
+		SilenceUsage: true,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return format.Format()
 		},
 	})
 	rootCmd.AddCommand(&cobra.Command{

@@ -11,19 +11,20 @@ jobs:
   linter:
     runs-on: ubuntu-latest
     steps:
-      - name: Install requirements
-        run: sudo apt-get install clang-format
       - name: Install python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
-      - name: Install black
-        run: pip install black pyyaml mapfile-parser==2.1.4
       - name: Clone main repo
         uses: actions/checkout@v6
         with:
           ref: ${{ github.event_name == 'pull_request_target' && github.event.pull_request.head.sha || github.ref }}
           submodules: false
+      - uses: actions/setup-go@v6
+        with:
+          go-version-file: 'go.work'
+          cache: true
+          cache-dependency-path: "**/*.sum"
       - name: Format code
         run: make format
       - name: Check for pending changes
