@@ -1039,7 +1039,10 @@ files:
           - [0x4290, skip]
           - [0x435C, spritesheet, doppleganger]
           - [0x2AD74, spritesheet, bat_form]
-          - [0x2BEA0, skip]
+          - [0x2BEA0, cmpgfx, D_801ABEA0, 128, 128, 4]
+          - [0x2C180, cmpgfx, D_801AC180, 128, 128, 4]
+          - [0x2C288, palette, D_us_801AC288, 16]
+          - [0x2C668, skip]
   - target: disks/us/BOSS/BO5/BO5.BIN
   - target: disks/us/BOSS/BO6/BO6.BIN
     asset_path: assets/boss/bo6
