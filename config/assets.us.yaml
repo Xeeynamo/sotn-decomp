@@ -938,10 +938,9 @@ files:
           - [0x3E4, skip]
           - [0x11AC, rooms, rooms]
           - [0x1228, skip]
-          - [0x1420, cmpgfx, stage_title_wrp_jp, 128, 128, 4]
-          - [0x1764, cmpgfx, stage_placeholder_wrp, 128, 128, 4]
+          - [0x1420, cmpgfx, us/stage_title_wrp_jp, 128, 128, 4]
+          - [0x1764, cmpgfx, us/stage_placeholder_wrp, 128, 128, 4]
           - [0x1D08, palette, D_80181D08, 16]
-          - [0x1D28, palette, D_80181D28, 16]
           - [0x1D68, skip] # tile data
           - [0x2968, skip] # tile definitions
           - [0x6D88, skip] # sprites
@@ -1015,6 +1014,14 @@ files:
           - [0x1308, skip]
           - [0x1424, cutscene, cutscene_data]
           - [0x15DC, skip]
+          - [0x30F0, cmpgfx, D_801830F0, 128, 128, 4]
+          - [0x4220, cmpgfx, D_80184220, 128, 128, 4]
+          - [0x4EE0, palette, D_80184EE0, 16]
+          - [0x4FE0, palette, D_80184FE0, 16] # unused
+          - [0x50E0, palette, D_801850E0, 16]
+          - [0x51E0, palette, D_801851E0, 16] # unused
+          - [0x52E0, palette, D_801852E0, 16]
+          - [0x5300, skip]
   - target: disks/us/BOSS/BO0/BO0.BIN
   - target: disks/us/BOSS/BO1/BO1.BIN
   - target: disks/us/BOSS/BO2/BO2.BIN
@@ -1040,7 +1047,10 @@ files:
           - [0x4290, skip]
           - [0x435C, spritesheet, doppleganger]
           - [0x2AD74, spritesheet, bat_form]
-          - [0x2BEA0, skip]
+          - [0x2BEA0, cmpgfx, D_801ABEA0, 128, 128, 4]
+          - [0x2C180, cmpgfx, D_801AC180, 128, 128, 4]
+          - [0x2C288, palette, D_us_801AC288, 16]
+          - [0x2C668, skip]
   - target: disks/us/BOSS/BO5/BO5.BIN
   - target: disks/us/BOSS/BO6/BO6.BIN
     asset_path: assets/boss/bo6
@@ -1078,6 +1088,10 @@ files:
           - [0x394, skip]
           - [0x126C, rooms, rooms]
           - [0x1288, skip]
+          - [0x7350, palette, D_80187350, 16]
+          - [0x7550, palette, D_80187550, 16]
+          - [0x7610, palette, D_80187610, 16]
+          - [0x7630, skip]
   - target: disks/us/BOSS/RBO4/RBO4.BIN
   - target: disks/us/BOSS/RBO5/RBO5.BIN
     asset_path: assets/boss/rbo5
@@ -1095,6 +1109,10 @@ files:
           - [0x340, skip]
           - [0x1258, rooms, rooms]
           - [0x1274, skip]
+          - [0x2BF78, cmpgfx, D_801ABF78, 128, 128, 4]
+          - [0x2C258, cmpgfx, D_801AC258, 128, 128, 4]
+          - [0x2C360, palette, D_us_801AC360, 16]
+          - [0x2C740, skip]
   - target: disks/us/BOSS/RBO6/RBO6.BIN
   - target: disks/us/BOSS/RBO7/RBO7.BIN
   - target: disks/us/SERVANT/TT_000.BIN

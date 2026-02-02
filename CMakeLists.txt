@@ -366,6 +366,7 @@ set(SOURCE_FILES_STAGE_NZ0
     src/st/nz0/e_blue_flame_table.c
     src/st/nz0/e_explosion_puff_opaque.c
     src/st/nz0/bossfight.c
+    src/st/nz0/unk_105C.c
     src/st/nz0/slogra.c
     src/st/nz0/gaibon.c
     src/st/nz0/e_elevator.c
@@ -495,7 +496,7 @@ SET(SOURCE_FILES_BOSS_BO4
     src/boss/bo4/spritesheets.c
     src/boss/bo4/st_common.c
     src/boss/bo4/st_update.c
-    src/boss/bo4/tile_data.c
+    src/boss/bo4/stage_data.c
     src/boss/bo4/unk_365FC.c
     src/boss/bo4/unk_45354.c
     src/boss/bo4/unk_46E7C.c
