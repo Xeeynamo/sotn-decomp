@@ -396,7 +396,7 @@ static void ShowErrorDialog(s32 errorVal) {
 
 bool IsErrorDialogOpen(void) { return errorDialogOpen; }
 
-void func_psp_08930A1C(void) {
+void UpdateErrorDialog(void) {
     volatile s32 ret;
     s32 status;
 

@@ -636,7 +636,7 @@ void StoreSaveData(SaveData* save, s32 block, s32 cardIcon) {
     dst->rng = g_randomNext;
 }
 
-s32 LoadSaveData(SaveData* save) {
+s32 ApplySaveData(SaveData* save) {
     s32 i;
     u32 prevCompletionFlags1;
     u32 prevCompletionFlags2;

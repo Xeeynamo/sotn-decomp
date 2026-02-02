@@ -365,6 +365,7 @@ segments:
       - [0x3DA1C, rodata] # literal floats
       - [0x3DA9C, rodata] # literal doubles
       - [0x3DC24, data]
+      - [0x3E3D0, .data, main_psp/10944]
       - [0x3E3F0, .data, main_psp/11320]
       - [0x3E414, .data, main_psp/138B0]
       - [0x3E438, data]

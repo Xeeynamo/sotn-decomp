@@ -57,7 +57,7 @@ long CdReadyCallback(void (*func)()) { return NULL; }
 
 void ChangeClearPAD(long) {}
 
-void InitCARD(long val) { func_psp_08919140(); }
+void InitCARD(long val) { InitSaveData(); }
 
 long StartCARD(void) { return 0; }
 
