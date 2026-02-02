@@ -67,7 +67,7 @@ s32 MemcardReadFile(s32 nPort, s32 nCard, char* name, void* data, s32 nblock) {
 }
 
 s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data,
-                     s32 flags, s32 unused, s32 create) {
+                     s32 flags, s32 create, bool clearQuickSave) {
     s32 ret;
 
     if (nPort != 0) {
@@ -76,7 +76,7 @@ s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data,
     if (nCard != 0) {
         return -2;
     }
-    if (func_psp_089193D4(data, name, flags << 0xD, create) > 0) {
+    if (WriteSaveDataSlot(data, name, flags << 0xD, clearQuickSave) > 0) {
         ret = 0;
     } else {
         ret = -1;
@@ -84,14 +84,15 @@ s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data,
     return ret;
 }
 
-s32 MemcardEraseFile(s32 nPort, s32 nCard, const char* name, s32 arg3) {
+s32 MemcardEraseFile(
+    s32 nPort, s32 nCard, const char* name, bool clearQuickSave) {
     if (nPort != 0) {
         return -1;
     }
     if (nCard != 0) {
         return -1;
     }
-    return func_psp_089192EC(name, arg3);
+    return ClearSaveDataSlot(name, clearQuickSave);
 }
 
 s32 MemcardClose(s32 nPort) { return 1; }
@@ -361,7 +362,7 @@ extern s32 D_psp_091FC400;
 extern s32 D_psp_091FC408;
 extern s32 D_psp_091FC410;
 
-s32 LoadSaveData(SaveData* save) {
+s32 ApplySaveData(SaveData* save) {
     s32 i;
     u32 prevCompletionFlags1;
     u32 prevCompletionFlags2;

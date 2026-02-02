@@ -5,14 +5,13 @@
 #define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
 #include <pspiofilemgr.h>
 
-extern s8 D_psp_0893CCDC[];
 extern char D_psp_089B6330[];
 
 void func_psp_0890F250(s8* arg0, char* arg1) {
     s32 i, j;
     s8* ptr;
 
-    ptr = D_psp_0893CCDC;
+    ptr = (s8*)"disc0:/PSP_GAME/USRDIR/res/ps/";
     i = 0;
     do {
         arg1[i] = ptr[i];
@@ -23,7 +22,7 @@ void func_psp_0890F250(s8* arg0, char* arg1) {
         arg1[i] = arg0[j];
         i++;
         j++;
-    } while (arg0[j] != 0x3B);
+    } while (arg0[j] != ';');
     arg1[i] = 0;
 }
 
@@ -223,7 +222,28 @@ void func_psp_0890F7CC(void* buf, s32* arg1, s32 offset, s32 nbyte, s8* arg4) {
     sceKernelDcacheWritebackAll();
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_0890FA7C);
+s32 func_psp_0890FA7C(s8* arg0) {
+    SceIoStat stat;
+    s8* src;
+    s32 ret;
+    s8* dst;
+
+    dst = (s8*)D_psp_089B6330;
+    src = (s8*)"disc0:/PSP_GAME/USRDIR/res/ps/";
+
+    while (*src != 0) {
+        *dst++ = *src++;
+    }
+    src = arg0;
+    while (*src != 0 && *src != ';') {
+        *dst++ = *src++;
+    }
+    *dst = 0;
+    if ((ret = func_psp_0890F300(D_psp_089B6330, &stat)) != 0) {
+        return -1;
+    }
+    return stat.st_size;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_0890FB70);
 

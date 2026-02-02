@@ -18,8 +18,8 @@ typedef enum {
 typedef struct {
     s8 name[SAVE_SLOT_COUNT][0x15];
     u8 data[SAVE_SLOT_COUNT][0x2000];
-    s32 unk2;
-    u8 unk3[0x2000];
+    s32 quickSaveSlot;
+    u8 quickSaveData[0x2000];
 } SoTNSaveData; // size: 0x20140
 
 typedef struct {

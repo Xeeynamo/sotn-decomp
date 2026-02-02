@@ -295,7 +295,7 @@ s32 TryLoadFromMemcard(void) {
                 }
                 g_MemCardRStep--;
             } else {
-                ret = LoadSaveData(g_Pix[0]);
+                ret = ApplySaveData(g_Pix[0]);
                 if (ret < 0) {
                     return -2;
                 } else {
@@ -396,7 +396,7 @@ s32 func_801B3A94(s32 arg0) {
                         strcpy(save->status.saveName, (const char*)arg0);
                     }
                 }
-                LoadSaveData(g_Pix);
+                ApplySaveData(g_Pix);
                 StoreSaveData(g_Pix, D_801BB008, save->info.cardIcon);
                 g_MemCardRetryCount = 10;
                 g_MemCardRStep++;

@@ -11,20 +11,20 @@ static SoTNSaveData* D_psp_08B41F2C;
 static SoTNSaveData saveData;
 static SoTNSaveData* D_psp_08B21DE8;
 
-void func_psp_089190A0(SoTNSaveData* ptr, s32 len) {
+static void func_psp_089190A0(SoTNSaveData* ptr, s32 len) {
     memmove(ptr, D_psp_08B21DE8, len);
     (u8*)D_psp_08B21DE8 += len;
 }
 
-void func_psp_089190F0(SoTNSaveData* ptr, s32 len) {
+static void func_psp_089190F0(SoTNSaveData* ptr, s32 len) {
     memmove(D_psp_08B21DE8, ptr, len);
     (u8*)D_psp_08B21DE8 += len;
 }
 
-void func_psp_08919140(void) {
+void InitSaveData(void) {
     memset(&saveData, 0, sizeof(SoTNSaveData));
-    saveData.unk2 = -2;
-    func_psp_08919570();
+    saveData.quickSaveSlot = -2;
+    ClearQuickSaveDataSlot();
 }
 
 s32 FindSaveDataSlot(char* name) {
@@ -61,7 +61,7 @@ s32 GetFreeSaveDataSlotCount(void) {
     return freeSlotCount;
 }
 
-s32 func_psp_089192EC(char* name, s32 arg1) {
+s32 ClearSaveDataSlot(char* name, bool clearQuickSave) {
     s32 slot;
 
     slot = FindSaveDataSlot(name);
@@ -70,8 +70,8 @@ s32 func_psp_089192EC(char* name, s32 arg1) {
     }
     saveData.name[slot][0] = 0;
     memset(saveData.data[slot], 0, 0x2000);
-    if (arg1 && slot == func_psp_08919560()) {
-        func_psp_08919570();
+    if (clearQuickSave && slot == GetQuickSaveDataSlot()) {
+        ClearQuickSaveDataSlot();
     }
     if (func_psp_08919770(3) == 0) {
         func_psp_08919770(4);
@@ -80,7 +80,7 @@ s32 func_psp_089192EC(char* name, s32 arg1) {
     return 0;
 }
 
-s32 func_psp_089193D4(u8* data, char* name, u32 len, s32 arg3) {
+s32 WriteSaveDataSlot(u8* data, char* name, u32 len, bool clearQuickSave) {
     s32 slot;
 
     slot = FindSaveDataSlot(name);
@@ -92,8 +92,8 @@ s32 func_psp_089193D4(u8* data, char* name, u32 len, s32 arg3) {
     }
     strcpy(saveData.name[slot], name);
     memcpy(saveData.data[slot], data, (s32)len);
-    if (arg3 && func_psp_08919560() >= 0) {
-        func_psp_08919570();
+    if (clearQuickSave && GetQuickSaveDataSlot() >= 0) {
+        ClearQuickSaveDataSlot();
     }
     if (func_psp_08919770(3) == 0) {
         func_psp_08919770(4);
@@ -113,19 +113,19 @@ s32 TryLoadSaveData(u8* data, char* name, u32 len) {
     return len;
 }
 
-s32 func_psp_08919560(void) { return saveData.unk2; }
+s32 GetQuickSaveDataSlot(void) { return saveData.quickSaveSlot; }
 
-s32 func_psp_08919570(void) {
-    s32 prev = saveData.unk2;
-    saveData.unk2 = -2;
+s32 ClearQuickSaveDataSlot(void) {
+    s32 prev = saveData.quickSaveSlot;
+    saveData.quickSaveSlot = -2;
     return prev;
 }
 
-void func_psp_089195A0(s32 arg0) { saveData.unk2 = arg0; }
+void SetQuickSaveDataSlot(s32 slot) { saveData.quickSaveSlot = slot; }
 
-s32 func_psp_089195C0(u8* data, u32 len, s32 arg2) {
-    saveData.unk2 = arg2;
-    memcpy(saveData.unk3, data, (s32)len);
+s32 WriteQuickSaveData(u8* data, u32 len, s32 slot) {
+    saveData.quickSaveSlot = slot;
+    memcpy(saveData.quickSaveData, data, (s32)len);
     if (func_psp_08919770(3) == 0) {
         func_psp_08919770(4);
         return -1;
@@ -133,8 +133,8 @@ s32 func_psp_089195C0(u8* data, u32 len, s32 arg2) {
     return len;
 }
 
-s32 func_psp_08919638(u8* data, u32 len) {
-    memcpy(data, saveData.unk3, (s32)len);
+s32 LoadQuickSaveData(u8* data, u32 len) {
+    memcpy(data, saveData.quickSaveData, (s32)len);
     return len;
 }
 
@@ -182,7 +182,7 @@ void func_psp_089197C8(s32 arg0) {
     func_psp_0891FC64();
     DrawSync(0);
     UpdateSaveDataUtility();
-    func_psp_08930A1C();
+    UpdateErrorDialog();
 }
 
 s32 func_psp_0891985C(s32 arg0) {
@@ -193,7 +193,7 @@ s32 func_psp_0891985C(s32 arg0) {
     func_psp_08919674();
     func_psp_08931D3C();
     UpdateSaveDataUtility();
-    func_psp_08930A1C();
+    UpdateErrorDialog();
     var_s0 = 0;
     while (var_s0 == 0) {
         PadReadPSP();
@@ -208,7 +208,7 @@ s32 func_psp_08919928(s32 arg0) {
 
     StartDxCSaveDataTask(AUTOLOAD_DXC_SAVEDATA);
     UpdateSaveDataUtility();
-    func_psp_08930A1C();
+    UpdateErrorDialog();
     var_s0 = 0;
     while (var_s0 == 0) {
         PadReadPSP();
