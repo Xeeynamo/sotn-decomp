@@ -1454,7 +1454,7 @@ void RunMainEngine(void) {
         if (g_DemoMode == Demo_End) {
             g_DemoMode = Demo_None;
             D_80097C98 = 0x08000000;
-            LoadSaveData(SAVE_DATA_PTR);
+            ApplySaveData(SAVE_DATA_PTR);
             D_8003C730 = 2;
             g_GameStep = Play_PrepareNextStage;
             return;

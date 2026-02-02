@@ -273,7 +273,7 @@ s32 TryLoadFromMemcard(void) {
                 }
                 g_MemCardRStep--;
             } else {
-                ret = LoadSaveData(g_Pix[0]);
+                ret = ApplySaveData(g_Pix[0]);
                 if (ret < 0) {
                     return -2;
                 } else {
@@ -374,7 +374,7 @@ s32 func_801B3A94(s32 arg0) {
                         strcpy(save->status.saveName, (char*)arg0);
                     }
                 }
-                LoadSaveData(g_Pix);
+                ApplySaveData(g_Pix);
                 StoreSaveData(g_Pix, D_801BB00C, save->info.cardIcon);
                 g_MemCardRetryCount = 0;
                 g_MemCardRStep++;
@@ -390,7 +390,7 @@ s32 func_801B3A94(s32 arg0) {
         }
         MakeMemcardPath(saveFile, D_801BB008);
         ret = MemcardWriteFile(D_801BB004, 0, saveFile, g_Pix, 1, var_s3,
-                               D_801BB008 == func_psp_08919560() ? 1 : 0);
+                               D_801BB008 == GetQuickSaveDataSlot() ? 1 : 0);
         if (ret != 0) {
             if (!g_MemCardRetryCount--) {
                 return -3;
@@ -443,7 +443,7 @@ s32 func_801B3E2C(void) {
     case 1:
         MakeMemcardPath(saveFile, blockId);
         ret = MemcardEraseFile(
-            port, 0, saveFile, slot == func_psp_08919560() ? 1 : 0);
+            port, 0, saveFile, slot == GetQuickSaveDataSlot() ? true : false);
         if (ret != 0) {
             if (!g_MemCardRetryCount--) {
                 return -1;
