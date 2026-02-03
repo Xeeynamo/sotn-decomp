@@ -406,9 +406,9 @@ s32 func_801B3A94(s32 arg0) {
 
     case 3:
         if (g_SaveSummary[D_801BB004].icon[D_801BB00C] >= 0) {
-            create = 0;
+            create = false;
         } else {
-            create = 1;
+            create = true;
         }
         MakeMemcardPath(saveFile, D_801BB008);
         ret = MemcardWriteFile(D_801BB004, 0, saveFile, g_Pix, 1, create);
