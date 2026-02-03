@@ -13,6 +13,18 @@ typedef enum {
     SCREEN_MODE_PERFECT,
 } ScreenMode;
 
+#define SB_TEMP_ADDR (s32) sceGeEdramGetAddr() + GU_VRAM_BUFSIZE * 3
+#define SB_TEMP_WIDTH 0x100
+
+#define SB_PS_ADDR SB_TEMP_ADDR + (0x200 * SB_TEMP_WIDTH)
+#define SB_PS_WIDTH 0x200
+
+#define SB_WOLF_ADDR SB_PS_ADDR + (0x201 * SB_PS_WIDTH)
+#define SB_WOLF_WIDTH 0x40
+
+#define WALLPAPER_TEX_ADDR (s32) sceGeEdramGetAddr() + 0x1BC000
+#define WALLPAPER_CLUT_ADDR WALLPAPER_TEX_ADDR + (GU_VRAM_WIDTH * GU_SCR_HEIGHT)
+
 #define SAVE_SLOT_COUNT 0xF
 
 typedef struct {
@@ -26,7 +38,7 @@ typedef struct {
     u8 unk0[0x10];
     u8 unlockedGames[3];
     u8 screenMode;
-    u8 unk3;
+    u8 wallpaperIndex;
     u8 unk4[0x10];
     u8 unk5;
     u8 unk6;

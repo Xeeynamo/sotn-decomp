@@ -815,11 +815,11 @@ void HandleGameOver(void) {
         break;
     case Gameover_AllocResources:
         if (g_StageId != STAGE_ST0) {
-#ifndef VERSION_PSP
-            MoveImage(&g_CurrentBuffer->next->disp.disp, 0x300, 0);
-#else
+#ifdef VERSION_PSP
             func_psp_0891B0DC(0x40, 0);
             func_psp_0891AE04();
+#else
+            MoveImage(&g_CurrentBuffer->next->disp.disp, 0x300, 0);
 #endif
             SetGPUBuffRGBZero();
             g_GpuBuffers[1].draw.isbg = 1;

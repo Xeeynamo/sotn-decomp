@@ -67,7 +67,7 @@ s32 MemcardReadFile(s32 nPort, s32 nCard, char* name, void* data, s32 nblock) {
 }
 
 s32 MemcardWriteFile(s32 nPort, s32 nCard, const char* name, void* data,
-                     s32 flags, s32 create, bool clearQuickSave) {
+                     s32 flags, bool create, bool clearQuickSave) {
     s32 ret;
 
     if (nPort != 0) {

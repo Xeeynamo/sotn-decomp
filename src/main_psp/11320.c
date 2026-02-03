@@ -101,7 +101,7 @@ static void func_psp_0890FCD0(void) {
     sceGuFinish();
 }
 
-void func_psp_0890FE98(void) {
+void DrawDispLists(void) {
     sceGuStart(GU_IMMEDIATE, immDispList, sizeof(immDispList));
     sceGuCallList(globalParamDispList[g_frameBufIdx]);
     sceGuCallList(genericDispList[g_frameBufIdx]);
@@ -109,7 +109,7 @@ void func_psp_0890FE98(void) {
     sceGuFinish();
 }
 
-s32 func_psp_0890FF2C(void) {
+s32 FinishDispLists(void) {
     s32 ret;
 
     ret = sceGuFinish();
@@ -571,8 +571,8 @@ s32 func_psp_0891149C(u8* texPtr, s32 width, s32 height, u8* clutPtr, s32 tpf) {
     return 0;
 }
 
-void func_psp_089117F4(s32 mode, s32 sx, s32 sy, s32 height, s32 width, s32 sbw,
-                       u8* sbp, s32 dx, s32 dy, s32 dbw, u8* dbp) {
+void PutBlitTexture(s32 tpf, s32 sx, s32 sy, s32 height, s32 width, s32 sbw,
+                    u8* sbp, s32 dx, s32 dy, s32 dbw, u8* dbp) {
     *pktList++ = GE_SET_TSYNC();
     *pktList++ = GE_SET_XBP1_ADDR24(sbp);
     *pktList++ = GE_SET_XBW1_BASE8(sbw, sbp);
@@ -581,7 +581,7 @@ void func_psp_089117F4(s32 mode, s32 sx, s32 sy, s32 height, s32 width, s32 sbw,
     *pktList++ = GE_SET_XBW2_BASE8(dbw, dbp);
     *pktList++ = GE_SET_XPOS2(dx, dy);
     *pktList++ = GE_SET_XSIZE(height - 1, width - 1);
-    *pktList++ = GE_SET_XSTART(mode == 3);
+    *pktList++ = GE_SET_XSTART(tpf == GU_PSM_8888);
     *pktList++ = GE_SET_TSYNC();
 }
 

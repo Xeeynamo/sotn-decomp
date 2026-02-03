@@ -1,14 +1,17 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game_psp.h>
+#include "main_psp_private.h"
 
 // https://pspdev.github.io/pspsdk/
 #define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
+#include <pspgu.h>
 #include <pspumd.h>
 #include <psppower.h>
 
 char D_psp_0893CD20[] = "DVDUMD_SAMPLE";
 char D_psp_0893CD30[] = PSP_UMD_ALIAS_NAME;
 char D_psp_0893CD38[] = "DVDUMD_CTRL";
+extern s32 g_drawWallpaperBackground;
 extern s32 D_psp_08B1FB54;
 extern s32 D_psp_08B1FB58;
 extern s32 D_psp_08B1FB5C;
@@ -18,6 +21,9 @@ extern s32 D_psp_08B1FB68;
 extern s32 D_psp_08B1FB70;
 extern s32 D_psp_08B41FF0;
 extern volatile s32 D_psp_08B1FB50;
+extern s32 D_psp_089B7140[2][0xD000];
+
+void func_psp_089144BC(void);
 
 s32 func_psp_089121BC(s32 count, s32 arg, void* param) {
     D_psp_08B1FB58 = arg;
@@ -150,7 +156,22 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_089127E8);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08912814);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08912820);
+s32 func_psp_08912820(s32 arg0, s32 arg1) {
+    s32 temp_s0;
+
+    func_psp_0892A8C0();
+    DrawSync(0);
+    VSync(0);
+    temp_s0 = func_psp_089128C4(arg0, arg1);
+    g_drawWallpaperBackground = 2;
+    func_psp_08910044();
+    func_psp_0891A800();
+    sceGuSync(0, 0);
+    func_psp_089144BC();
+    func_psp_089144BC();
+    func_psp_089144BC();
+    return temp_s0;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_089128C4);
 
@@ -184,7 +205,26 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08913F5C);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_089140DC);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_089144BC);
+void func_psp_089144BC(void) {
+    s32* dispList = D_psp_089B7140[0];
+
+    sceGuStart(0, dispList, sizeof(D_psp_089B7140[0]));
+    sceGuTexMode(GU_PSM_T8, 0, GU_SINGLE_CLUT, GU_TEXBUF_NORMAL);
+    sceGuTexImage(0, 0x200, 0x200, 0x200, (u8*)(WALLPAPER_TEX_ADDR));
+    sceGuClutMode(GU_PSM_5551, 0, 0xFF, 0);
+    sceGuClutLoad(32, (u8*)(WALLPAPER_CLUT_ADDR));
+    sceGuEnable(GU_TEXTURE_2D);
+    sceGuBlendFunc(GU_ADD, GU_FIX, GU_FIX, 0xFFFFFFFF, 0x00000000);
+    sceGuEnable(GU_BLEND);
+    sceGuColor(0xFFFFFFFF);
+    sceGuSpriteMode(GU_SCR_WIDTH, GU_SCR_HEIGHT, GU_SCR_WIDTH, GU_SCR_HEIGHT);
+    sceGuDrawSprite(0, 0, 0, 0, 0, GU_NOFLIP, GU_NOROTATE);
+    sceGuBlendFunc(GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0x00000000, 0x00000000);
+    sceGuFinish();
+    sceGuSync(GU_SYNC_FINISH, GU_SYNC_WAIT);
+    sceDisplayWaitVblankStartCB();
+    EndFrame();
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08914638);
 

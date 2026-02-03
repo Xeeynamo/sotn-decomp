@@ -36,15 +36,6 @@ typedef enum {
     SUB_BUF_ALL = 4,
 } SubBufType;
 
-#define SB_TEMP_ADDR (s32) sceGeEdramGetAddr() + GU_VRAM_BUFSIZE * 3
-#define SB_TEMP_WIDTH 0x100
-
-#define SB_PS_ADDR SB_TEMP_ADDR + (0x200 * SB_TEMP_WIDTH)
-#define SB_PS_WIDTH 0x200
-
-#define SB_WOLF_ADDR SB_PS_ADDR + (0x201 * SB_PS_WIDTH)
-#define SB_WOLF_WIDTH 0x40
-
 typedef struct {
     s32 x;
     s32 y;
@@ -76,7 +67,7 @@ static bool D_psp_08C62AA0;
 static s32 D_psp_08C62A9C;
 static s8 D_psp_08C62A98;         // local
 static char D_psp_08C62A78[0x20]; // local
-static OT_TYPE* D_psp_08C62A74;
+static OT_TYPE* prevOTag;
 bool D_psp_08C62A70;
 s32 D_psp_08C62A6C;
 s32 D_psp_08C62A68;
@@ -90,7 +81,7 @@ static s32 frameCount;
 static u32 resetGraphLevel;
 static bool gpuEmuInfo;
 static SubBufType D_psp_08C62A40; // current sub buffer
-s32 D_psp_08C62A3C;
+s32 g_drawBlackBackground;
 static Point32 screenOffset;
 s32 D_psp_08C62A30; // screen_mode
 static DRAWENV D_psp_08C629EC;
@@ -103,9 +94,9 @@ static s32 clut8bppCount;
 static u8 D_psp_08C429C0[0x100][0x200];
 static u8 D_psp_08C4298C[0x34] UNUSED;
 static Point32 clut8bppIndexMap[0x100];
-static u32 D_psp_08C42188;
+static u32 prevVCount;
 static Callback vSyncCallback;
-static u32 VCount;
+static u32 vCount;
 static u8* D_psp_08C42100[0x20];
 static s32 D_psp_08C42080[0x20];
 static u8 D_psp_08B42080[0x20][0x8000];
@@ -114,12 +105,12 @@ static SubBufType dbgDispSubBuf;
 static bool dbgDrawPolyRects;
 
 // DATA
-static s32 lastVCount = -1; // VCount at last vSync(n)
+static s32 lastVCount = -1; // vCount at last vSync(n)
 static s32 D_psp_089464D4 = -1;
 static s32 screenW = 320;
 static s32 screenH = 240;
 static ScePspFVector2 screenScale = {1, 1};
-s32 D_psp_089464E8 = 2;
+s32 g_drawWallpaperBackground = 2;
 static bool D_psp_089464EC = true;
 static s32 D_psp_089464F0 = 1;
 
@@ -178,7 +169,7 @@ void SetScreenMode(s32 screenMode) {
     }
     screenOffset.x = (GU_SCR_WIDTH - screenW) / 2;
     screenOffset.y = (GU_SCR_HEIGHT - screenH) / 2;
-    D_psp_089464E8 = 2;
+    g_drawWallpaperBackground = 2;
 }
 
 void func_psp_0891A790(void) {
@@ -254,8 +245,8 @@ static void func_psp_0891AAF8() {
     }
     for (i = 0; i < LEN(D_psp_08C42080); i++) {
         if (D_psp_08C42080[i] > 0) {
-            func_psp_089117F4(1, 0, 0, 0x40, 0x100, 0x40, D_psp_08B42080[i], 0,
-                              0, 0x40, func_psp_0891AAC8(i));
+            PutBlitTexture(GU_PSM_5551, 0, 0, 0x40, 0x100, 0x40,
+                           D_psp_08B42080[i], 0, 0, 0x40, func_psp_0891AAC8(i));
             D_psp_08C42080[i] = 0;
         }
     }
@@ -281,9 +272,9 @@ void func_psp_0891ACBC(void) {
     D_psp_08C62A40 = SUB_BUF_OFF;
     lastVCount = -1;
     D_psp_089464D4 = -1;
-    VCount = 0;
+    vCount = 0;
     vSyncCallback = NULL;
-    D_psp_08C42188 = 0;
+    prevVCount = 0;
     func_psp_0891A790();
     func_psp_0891A800();
     SetScreenMode(SCREEN_MODE_FULL);
@@ -413,7 +404,7 @@ static s32 DrawSolidRect(s32 x, s32 y, s32 w, s32 h, s32 color) {
 s32 func_psp_0891B400(void) {
     if (~D_psp_089464D4 > 0U) {
     }
-    VCount = 0;
+    vCount = 0;
     D_psp_089464D4 = sceDisplayGetVcount();
     return D_psp_089464D4;
 }
@@ -436,7 +427,7 @@ s32 DrawSync(s32 arg0) {
     return sceGuSync(GU_SYNC_FINISH, GU_SYNC_NOWAIT);
 }
 
-s32 GetVCount() { return VCount; }
+s32 GetVCount() { return vCount; }
 
 void FinishedRenderingCB(s32 arg0) {
     if (cpuGpuTime) {
@@ -445,7 +436,7 @@ void FinishedRenderingCB(s32 arg0) {
 }
 
 void VBlankhandler(int idx, void* cookie) {
-    VCount++;
+    vCount++;
     if (vSyncCallback != NULL) {
         vSyncCallback();
     }
@@ -1199,7 +1190,7 @@ static void DebugDisplaySubBuffer(void) {
     SetSubBufType(prevType);
 }
 
-void func_psp_0891E420(void) {
+static void func_psp_0891E420(void) {
     s32 var_s1 = 0;
     TVertex* v = (TVertex*)SP(0);
 
@@ -1227,7 +1218,7 @@ void func_psp_0891E420(void) {
     SetSubBufType(SUB_BUF_PS);
 }
 
-void func_psp_0891E638(void) {
+static void DrawFullScreenWallpaper(void) {
     s32 temp_s2 = 0;
     TVertex* v = (TVertex*)SP(0);
     SubBufType prevType;
@@ -1256,11 +1247,9 @@ void func_psp_0891E638(void) {
     func_psp_08911F24(0, D_psp_089464F0);
     func_psp_08911B7C();
     PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-    if (func_psp_08919E44()) {
-        func_psp_08910FD8((s32)sceGeEdramGetAddr() + 0x1BC000,
-                          (s32)sceGeEdramGetAddr() + 0x1BC000 +
-                              (GU_VRAM_WIDTH * GU_SCR_HEIGHT),
-                          5, GU_VRAM_WIDTH, 9, 9);
+    if (IsWallpaperValid()) {
+        func_psp_08910FD8(
+            WALLPAPER_TEX_ADDR, WALLPAPER_CLUT_ADDR, 5, GU_VRAM_WIDTH, 9, 9);
     } else {
         DrawSolidRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT, black);
     }
@@ -1270,7 +1259,7 @@ void func_psp_0891E638(void) {
     SetSubBufType(prevType);
 }
 
-void func_psp_0891E840(void) {
+static void func_psp_0891E840(void) {
     func_psp_08910D28();
     ClearDispLists();
     func_psp_0890FF84();
@@ -1293,13 +1282,13 @@ void func_psp_0891E840(void) {
     PutOffset(0, 0);
 }
 
-void func_psp_0891E944(void) {
-    func_psp_0890FF2C();
+static void func_psp_0891E944(void) {
+    FinishDispLists();
     sceKernelDcacheWritebackAll();
-    func_psp_0890FE98();
+    DrawDispLists();
     D_psp_08C62A6C = 0;
     D_psp_08C62A68 = 0;
-    D_psp_08C42188 = VCount;
+    prevVCount = vCount;
 }
 
 static inline OT_TYPE* DrawPackets(OT_TYPE* p) {
@@ -1328,33 +1317,30 @@ static void DrawOTag_PSP(OT_TYPE* p) {
     s32 x, y;
     s32 w, h;
     SubBufType prevType;
-    u8* temp_s5;
-    s32 temp_v0;
+    u8* src;
     s32 i;
-    s32 var_s4;
-    s32 var_s3;
 
     if (p != (OT_TYPE*)-1) {
-        D_psp_08C62A74 = p;
+        prevOTag = p;
         func_psp_0891E840();
         if (D_psp_08C62AA8) {
             D_psp_08C62AA8 = false;
-            temp_s5 = func_psp_0891AC24();
+            src = func_psp_0891AC24();
             if (D_psp_08C62AAC.x == 0 && D_psp_08C62AAC.y == 0x100) {
-                func_psp_089117F4(1, 0, 0, 0x100, 0x100, SB_PS_WIDTH, temp_s5,
-                                  0, 0, SB_TEMP_WIDTH, (u8*)SB_TEMP_ADDR);
+                PutBlitTexture(GU_PSM_5551, 0, 0, 0x100, 0x100, SB_PS_WIDTH,
+                               src, 0, 0, SB_TEMP_WIDTH, (u8*)SB_TEMP_ADDR);
                 for (i = 0; i < 0x20; i++) {
                     func_psp_0891A99C(i);
                 }
             } else {
-                for (var_s4 = 0; var_s4 < 0x100; var_s4 += 0x40) {
-                    func_psp_089117F4(
-                        1, var_s4, 0, 0x40, 0xF0, SB_PS_WIDTH, temp_s5, 0, 0,
+                s32 sx;
+                for (sx = 0; sx < 0x100; sx += 0x40) {
+                    PutBlitTexture(
+                        GU_PSM_5551, sx, 0, 0x40, 0xF0, SB_PS_WIDTH, src, 0, 0,
                         0x40,
-                        &D_psp_08B42080[(D_psp_08C62AAC.x + var_s4) / 0x40 +
+                        &D_psp_08B42080[(D_psp_08C62AAC.x + sx) / 0x40 +
                                         (D_psp_08C62AAC.y / 0x100) * 0x10]
-                                       [((D_psp_08C62AAC.x + var_s4) % 0x40) *
-                                            2 +
+                                       [((D_psp_08C62AAC.x + sx) % 0x40) * 2 +
                                         (D_psp_08C62AAC.y % 0x100) * 0x80]);
                 }
                 for (i = 0; i < 0x20; i++) {
@@ -1363,12 +1349,13 @@ static void DrawOTag_PSP(OT_TYPE* p) {
             }
         }
         if (D_psp_08C62AA4) {
+            s32 sx;
             D_psp_08C62AA4 = false;
-            for (var_s3 = 0; var_s3 < 0x40; var_s3 += 0x40) {
-                func_psp_089117F4(1, var_s3, 0, 0x40, 0x100, SB_TEMP_WIDTH,
-                                  (u8*)SB_TEMP_ADDR, 0, 0, 0x40,
-                                  &D_psp_08B42080[(var_s3 / 0x40) + 0x10]
-                                                 [(var_s3 % 0x40) * 2]);
+            for (sx = 0; sx < 0x40; sx += 0x40) {
+                PutBlitTexture(
+                    GU_PSM_5551, sx, 0, 0x40, 0x100, SB_TEMP_WIDTH,
+                    (u8*)SB_TEMP_ADDR, 0, 0, 0x40,
+                    &D_psp_08B42080[(sx / 0x40) + 0x10][(sx % 0x40) * 2]);
             }
             for (i = 0; i < 0x20; i++) {
                 func_psp_0891A99C(i);
@@ -1376,17 +1363,17 @@ static void DrawOTag_PSP(OT_TYPE* p) {
         }
         func_psp_0891AAF8();
         func_psp_0891ABE4();
-        if (D_psp_08C62A3C > 0) {
+        if (g_drawBlackBackground > 0) {
             PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
             DrawSolidRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT, black);
-            if (D_psp_08C62A3C > 0) {
-                D_psp_08C62A3C--;
+            if (g_drawBlackBackground > 0) {
+                g_drawBlackBackground--;
             }
         }
-        if (D_psp_08C629D8.disp.w > 0x100 || D_psp_089464E8 > 0) {
-            func_psp_0891E638();
-            if (D_psp_089464E8 > 0) {
-                D_psp_089464E8--;
+        if (D_psp_08C629D8.disp.w > 0x100 || g_drawWallpaperBackground > 0) {
+            DrawFullScreenWallpaper();
+            if (g_drawWallpaperBackground > 0) {
+                g_drawWallpaperBackground--;
             }
         } else {
             prevType = D_psp_08C62A40;
@@ -1424,9 +1411,8 @@ static void DrawOTag_PSP(OT_TYPE* p) {
             DrawSolidRect(0x130, 0, 0xB0, 0x70, black);
         }
         if (cpuGpuTime && frameTime != 0) {
-            u32 var_s7 = (VCount != D_psp_08C42188)
-                             ? (VCount - D_psp_08C42188) * 0xF0
-                             : 0xF0;
+            u32 var_s7 =
+                (vCount != prevVCount) ? (vCount - prevVCount) * 240 : 240;
             SetSubBufType(SUB_BUF_OFF);
             PutScissorRect(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
             DrawSolidLine(0, 0, (frameTime * var_s7) / frameTime, 0, white);
@@ -1438,8 +1424,7 @@ static void DrawOTag_PSP(OT_TYPE* p) {
         func_psp_08932228();
         func_psp_0891E944();
         if (gpuEmuInfo) {
-            s32 fps =
-                (VCount != D_psp_08C42188) ? 60 / (VCount - D_psp_08C42188) : 0;
+            s32 fps = (vCount != prevVCount) ? 60 / (vCount - prevVCount) : 0;
             sprintf(D_psp_08C62EC4, "Frame=%d/ResetGraph=%2d/W:%d,H:%d/%2dfps",
                     frameCount, resetGraphLevel, screenW, screenH, fps);
             sceGuDebugPrint(0, 264, 0xFFFFFFFF, D_psp_08C62EC4);
@@ -1455,7 +1440,7 @@ void DrawOTag(OT_TYPE* p) {
 
     s32 x, y;
 
-    D_psp_08C62A74 = p;
+    prevOTag = p;
     if (PadReadPSP() & PSP_CTRL_R3) {
         s32 prevPad = PadReadPSP();
         s32 cursor = 0;
@@ -1582,7 +1567,7 @@ void DrawOTag(OT_TYPE* p) {
             prevPad = thisPad;
         }
         drawDebugMenuBG = false;
-        D_psp_089464E8 = 2;
+        g_drawWallpaperBackground = 2;
     } else {
         s32 i;
         for (i = 0; i < skipFrames; i++) {
@@ -1593,9 +1578,9 @@ void DrawOTag(OT_TYPE* p) {
     }
 }
 
-void func_psp_0891FC64(void) {
-    if (D_psp_08C62A74 != NULL) {
-        DrawOTag(D_psp_08C62A74);
+void RedrawPrevOTag(void) {
+    if (prevOTag != NULL) {
+        DrawOTag(prevOTag);
     } else {
         DrawOTag(NULL);
     }

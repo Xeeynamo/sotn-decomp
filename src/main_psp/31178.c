@@ -58,7 +58,7 @@ extern s32 D_psp_08B4204C;
 
 void func_psp_08930290(void);
 s32 func_psp_08931488(void);
-void FillPictureStruct(Picture* out, void* data);
+void FillPictureStruct(Picture* out, void* tm2Data);
 u8* GetPictureClut(Picture* ptr);
 u8* GetPictureTex(Picture* ptr);
 u16 GetPictureWidth(Picture* ptr);
@@ -309,11 +309,11 @@ void func_psp_08930324(void) {
 }
 
 static void func_psp_08930484(s16 x, s16 y, s16 w, s16 h, u16 u, u16 v, u16 du,
-                              u16 dv, s32 color, s32 arg9, u16 z) {
+                              u16 dv, s32 color, bool center, u16 z) {
     TVertex vertex[2];
     s32 vertexFormat;
 
-    if (arg9) {
+    if (center) {
         x -= w / 2;
         y -= h / 2;
     }
@@ -1080,15 +1080,15 @@ void func_psp_08932228(void) {
         alpha = D_psp_08E2E5EC * 0xFF / 10;
         func_psp_089307D4(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT, (alpha / 2) << 24);
         func_psp_08930484(0, 0x52, GU_SCR_WIDTH, 0x6E, 0, 0x92, GU_SCR_WIDTH,
-                          0x6E, alpha << 24 | lightBlue, 0, 0);
+                          0x6E, alpha << 24 | lightBlue, false, 0);
         func_psp_08930484(0x70, 0x7A, 0x100, 0x10, 0, 0x72, 0x100, 0x10,
-                          alpha << 24 | white, 0, 0);
+                          alpha << 24 | white, false, 0);
         func_psp_08930484(
             0x6E, 0x94, 0x70, 0x10, 0x100, 0x72, 0x70, 0x10,
-            alpha << 24 | (D_psp_08E2E5F0 == 0 ? red : white), 0, 0);
+            alpha << 24 | (D_psp_08E2E5F0 == 0 ? red : white), false, 0);
         func_psp_08930484(
             0x102, 0x94, 0x70, 0x10, 0x170, 0x72, 0x70, 0x10,
-            alpha << 24 | (D_psp_08E2E5F0 == 1 ? red : white), 0, 0);
+            alpha << 24 | (D_psp_08E2E5F0 == 1 ? red : white), false, 0);
         break;
 
     case 20:
@@ -1098,17 +1098,17 @@ void func_psp_08932228(void) {
         alpha = D_psp_08E2E5EC * 0xFF / 10;
         func_psp_089307D4(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT, (alpha / 2) << 24);
         func_psp_08930484(0, 0x52, GU_SCR_WIDTH, 0x6E, 0, 0x92, GU_SCR_WIDTH,
-                          0x6E, alpha << 24 | lightBlue, 0, 0);
+                          0x6E, alpha << 24 | lightBlue, false, 0);
         func_psp_08930484(0, 0x5E, GU_SCR_WIDTH, 0x2A, 0, 0x48, GU_SCR_WIDTH,
-                          0x2A, alpha << 24 | white, 0, 0);
+                          0x2A, alpha << 24 | white, false, 0);
         func_psp_08930484(0x5C, 0x8E, 0x128, 0x10, 0, 0x82, 0x128, 0x10,
-                          alpha << 24 | white, 0, 0);
+                          alpha << 24 | white, false, 0);
         func_psp_08930484(
             0x6E, 0xA0, 0x70, 0x10, 0x100, 0x72, 0x70, 0x10,
-            alpha << 24 | (D_psp_08E2E5F0 == 0 ? red : white), 0, 0);
+            alpha << 24 | (D_psp_08E2E5F0 == 0 ? red : white), false, 0);
         func_psp_08930484(
             0x102, 0xA0, 0x70, 0x10, 0x170, 0x72, 0x70, 0x10,
-            alpha << 24 | (D_psp_08E2E5F0 == 1 ? red : white), 0, 0);
+            alpha << 24 | (D_psp_08E2E5F0 == 1 ? red : white), false, 0);
         break;
 
     case 30:
@@ -1126,7 +1126,7 @@ s32 GetDxCUnlockedGame(s32 game) { return D_psp_08DED03C.unlockedGames[game]; }
 
 s32 GetDxCScreenMode(void) { return D_psp_08DED03C.screenMode; }
 
-s32 func_psp_08932768(void) { return D_psp_08DED03C.unk3; }
+s32 GetDxCWallpaperIndex(void) { return D_psp_08DED03C.wallpaperIndex; }
 
 s32 func_psp_0893277C(void) { return D_psp_08DED03C.unk5; }
 
@@ -1141,12 +1141,12 @@ Unk08919D98* func_psp_089327E4(Unk08919D98* arg0, s16 arg1) {
     return arg0;
 }
 
-void FillPictureStruct(Picture* out, void* data) {
+void FillPictureStruct(Picture* out, void* tm2Data) {
     s32 bitPos;
     s32 msb;
     s32 inc;
 
-    out->data = data;
+    out->data = tm2Data;
     out->headerPtr = (Tm2Header*)out->data;
     out->pictPtr = (Tm2Pict*)(out->data + sizeof(Tm2Header));
     out->imagePtr = out->data + out->pictPtr->header_size + sizeof(Tm2Header);
