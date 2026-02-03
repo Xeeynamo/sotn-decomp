@@ -3653,7 +3653,7 @@
 | nz1    | func_pspeu_09257610                  |      159 |         18 |        |       |     |
 | dra    | func_psp_09137110                    |      159 |         21 |        |       |     |
 |        | func_092E92C0                        |      159 |         25 |        |       |     |
-| dra    | LoadSaveData                         |      160 |         10 |        |       |     |
+| dra    | ApplySaveData                        |      160 |         10 |        |       |     |
 | ric    | func_pspeu_092CDF18                  |      160 |         11 |        |       |     |
 | are    | func_pspeu_092385C8                  |      160 |         12 |        |       |     |
 | sel    | func_psp_092426D8                    |      160 |         25 |        |       |     |
