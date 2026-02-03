@@ -219,7 +219,8 @@ void func_psp_089144BC(void) {
     sceGuColor(0xFFFFFFFF);
     sceGuSpriteMode(GU_SCR_WIDTH, GU_SCR_HEIGHT, GU_SCR_WIDTH, GU_SCR_HEIGHT);
     sceGuDrawSprite(0, 0, 0, 0, 0, GU_NOFLIP, GU_NOROTATE);
-    sceGuBlendFunc(GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0x00000000, 0x00000000);
+    sceGuBlendFunc(
+        GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0x00000000, 0x00000000);
     sceGuFinish();
     sceGuSync(GU_SYNC_FINISH, GU_SYNC_WAIT);
     sceDisplayWaitVblankStartCB();
