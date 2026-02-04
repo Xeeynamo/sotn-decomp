@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game_psp.h>
+#include "main_psp_private.h"
 
 // https://pspdev.github.io/pspsdk/
 #define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
+#include <pspgu.h>
 #include <psppower.h>
 #include <psxsdk/libgpu.h>
 
@@ -105,24 +107,24 @@ int CdControl(u_char com, u_char* param, u_char* result) { return 2; }
 
 int CdSync(int mode, u_char* result) { return 2; }
 
-void func_psp_08926348(void) {
-    u8* temp_v0;
+static void DrawWallpaperOffscreen(void) {
+    u8* tm2Data;
 
-    temp_v0 = (u8*)func_psp_08919C8C(0);
-    if (func_psp_08919E6C(0, temp_v0) > 0) {
+    tm2Data = (u8*)func_psp_08919C8C(0);
+    if (LoadWallpaper(0, tm2Data) > 0) {
         func_psp_08910D28();
         ClearDispLists();
         func_psp_0890FF84();
         SetCurrDispList(1);
-        func_psp_089117F4(
-            1, 0, 0, 0x100, 0x110, 0xF0, (u8*)func_psp_08919E1C(temp_v0), 0, 0,
-            0x100, (u8*)sceGeEdramGetAddr() + 0x1BC000);
-        func_psp_089117F4(
-            3, 0, 0, 0x100, 1, 0x100, (u8*)func_psp_08919DF4(temp_v0), 0, 0,
-            0x100, (u8*)sceGeEdramGetAddr() + 0x1DE000);
-        func_psp_0890FF2C();
+        PutBlitTexture(GU_PSM_5551, 0, 0, 0x100, 0x110, 0xF0,
+                       (u8*)GetWallpaperTex(tm2Data), 0, 0, 0x100,
+                       (u8*)WALLPAPER_TEX_ADDR);
+        PutBlitTexture(
+            GU_PSM_8888, 0, 0, 0x100, 1, 0x100, (u8*)GetWallpaperClut(tm2Data),
+            0, 0, 0x100, (u8*)WALLPAPER_CLUT_ADDR);
+        FinishDispLists();
         sceKernelDcacheWritebackAll();
-        func_psp_0890FE98();
+        DrawDispLists();
         DrawSync(0);
     }
 }
@@ -216,7 +218,7 @@ void func_psp_08926808(s32 paletteID, u16* data) {
 }
 
 void GameEntrypoint(void) {
-    func_psp_08926348();
+    DrawWallpaperOffscreen();
     func_psp_0892A1EC(0);
     while (func_psp_0890FB70("F_MAP.BIN;1", g_BmpCastleMap, 0, 0x8000) == 0) {
         sceKernelDelayThreadCB(1000000);

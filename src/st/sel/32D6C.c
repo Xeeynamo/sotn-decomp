@@ -354,7 +354,7 @@ s32 func_801B3A94(s32 arg0) {
     char saveFile[0x20];
     s32 ret;
     SaveData* save;
-    u32 var_s3;
+    bool create;
 
     FntPrint("\nrstep:%d,%d,%d\n", g_MemCardRStep,
              D_801BB000 + (D_801BAFFC * 15), D_801BB008 + (D_801BB004 * 15));
@@ -406,12 +406,12 @@ s32 func_801B3A94(s32 arg0) {
 
     case 3:
         if (g_SaveSummary[D_801BB004].icon[D_801BB00C] >= 0) {
-            var_s3 = 0;
+            create = false;
         } else {
-            var_s3 = 1;
+            create = true;
         }
         MakeMemcardPath(saveFile, D_801BB008);
-        ret = MemcardWriteFile(D_801BB004, 0, saveFile, g_Pix, 1, var_s3);
+        ret = MemcardWriteFile(D_801BB004, 0, saveFile, g_Pix, 1, create);
         if (ret != 0) {
             if (!g_MemCardRetryCount--) {
                 return -3;
