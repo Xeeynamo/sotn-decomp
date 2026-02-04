@@ -34,7 +34,7 @@ typedef u16 EInit[5];
 // common stage initialization data
 extern EInit g_EInitSpawner;
 
-typedef struct {
+typedef struct AnimateEntityFrame {
     u8 duration;
     u8 pose;
 } AnimateEntityFrame;

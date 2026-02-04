@@ -791,6 +791,21 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo6.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo7.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo0.bin
+    asset_path: assets/boss/rbo0
+    src_path: src/boss/rbo0
+    splat_config_path: config/splat.pspeu.borbo0.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x1BB58, sprite_banks, sprite_banks]
+          - [0x1BBB8, layers, layers]
+          - [0x1BBD0, paldef, psp/palette_def]  # TODO: remove namespace once unified
+          - [0x1BC08, gfx_banks, graphics_banks]
+          - [0x1BD00, skip]
+          - [0x1BF50, rooms, rooms]
+          - [0x1BF70, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo1.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo2.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rbo3.bin
