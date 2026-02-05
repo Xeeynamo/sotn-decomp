@@ -57,6 +57,8 @@ typedef struct SceMpegRingbuffer
     /** mpeg id */
 	SceMpeg				pSceMpeg;
 
+	SceUInt32 reserved[21];
+
 } SceMpegRingbuffer;
 
 typedef struct SceMpegAu
@@ -74,6 +76,8 @@ typedef struct SceMpegAu
     /** Au size */
 	SceUInt32			iAuSize;
 
+	u8 reserved[40];
+
 } SceMpegAu;
 
 #define SCE_MPEG_AVC_FORMAT_DEFAULT -1
@@ -88,6 +92,8 @@ typedef struct SceMpegAvcMode
 	SceInt32			iUnk0;
 	/** Decode pixelformat */
 	SceInt32			iPixelFormat;
+
+	u8 reserved[8];
 
 } SceMpegAvcMode;
 
