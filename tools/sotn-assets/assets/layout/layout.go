@@ -34,7 +34,13 @@ type layouts struct {
 }
 
 func fetchEntityIDsFromHeaderFile(overlay string) (map[int]string, error) {
-	return sotn.FetchEnumWithMin("src/st/" + overlay, overlay, "EntityIDs", 0x100)
+	var path = "src/st"
+	if strings.HasPrefix(overlay, "bo") || strings.HasPrefix(overlay, "rbo") ||
+		overlay == "mar" {
+		path = "src/boss"
+	}
+	path += "/" + overlay
+	return sotn.FetchEnumWithMin(path, overlay, "EntityIDs", 0x100)
 }
 
 func readEntityLayoutEntry(file io.ReadSeeker, ovlName string) (layoutEntry, error) {
