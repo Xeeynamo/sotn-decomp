@@ -127,7 +127,7 @@ s32 func_psp_0890F670(s8* arg0) {
     }
     func_psp_0890F250(arg0, D_psp_089B6330);
     while (true) {
-        ret = func_psp_0890F3E0(D_psp_089B6330, PSP_O_RDONLY, 0x1FF);
+        ret = func_psp_0890F3E0(D_psp_089B6330, PSP_O_RDONLY, 0777);
         if (ret < 0) {
             sceKernelDelayThreadCB(166);
             continue;
@@ -165,7 +165,7 @@ void func_psp_0890F7CC(void* buf, s32* arg1, s32 offset, s32 nbyte, s8* arg4) {
             }
             func_psp_0890F250(arg4, D_psp_089B6330);
             while (true) {
-                *arg1 = func_psp_0890F3E0(D_psp_089B6330, PSP_O_RDONLY, 0x1FF);
+                *arg1 = func_psp_0890F3E0(D_psp_089B6330, PSP_O_RDONLY, 0777);
                 if (*arg1 < 0) {
                     sceKernelDelayThreadCB(166);
                     continue;

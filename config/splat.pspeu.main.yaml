@@ -273,6 +273,10 @@ segments:
       - [0x10944, c, main_psp/10944]
       - [0x11320, c, main_psp/11320]
       - [0x138B0, c, main_psp/138B0]
+      - [0x15650, c, main_psp/mpeg/display]
+      - [0x1660C, c, main_psp/mpeg/fileread]
+      - [0x17364, c, main_psp/mpeg/sound]
+      - [0x17D24, c, main_psp/mpeg/strfile]
       - [0x18020, asm, func_psp_0891692C]
       - [0x18078, asm, func_psp_08916984]
       - [0x180DC, asm, func_psp_089169E8]
@@ -372,6 +376,11 @@ segments:
       - [0x3E3F0, .data, main_psp/11320]
       - [0x3E414, .data, main_psp/138B0]
       - [0x3E438, data]
+      - [0x3E4D4, .data, main_psp/mpeg/display]
+      - [0x3E540, .data, main_psp/mpeg/fileread]
+      - [0x3E554, .data, main_psp/mpeg/sound]
+      - [0x3E57C, .data, main_psp/mpeg/strfile]
+      - [0x3E5A8, data]
       - [0x3E5C4, .data, main_psp/1B0F0]
       - [0x3E680, .data, main_psp/portrait_data]
       - [0x47B00, data]
@@ -388,16 +397,19 @@ segments:
       - {start: 0xAEF24, type: bss, vram: 0x089AD830, name: bss0}
       - {start: 0xAEF24, type: .bss, vram: 0x089B6540, name: main_psp/11320}
       - {start: 0xAEF24, type: bss, vram: 0x08B1FB50, name: bss1}
+      - {start: 0xAEF24, type: .bss, vram: 0x08B1FBBC, name: main_psp/mpeg/fileread}
+      - {start: 0xAEF24, type: .bss, vram: 0x08B1FBDC, name: main_psp/mpeg/sound}
+      - {start: 0xAEF24, type: bss, vram: 0x08B1FBFC, name: bss2}
       - {start: 0xAEF24, type: .bss, vram: 0x08B21DE8, name: main_psp/1A794}
-      - {start: 0xAEF24, type: bss, vram: 0x08B41F30, name: bss2}
+      - {start: 0xAEF24, type: bss, vram: 0x08B41F30, name: bss3}
       - {start: 0xAEF24, type: .bss, vram: 0x08B41F40, name: main_psp/1B0F0}
       - {start: 0xAEF24, type: .bss, vram: 0x08B41FB4, name: main_psp/1B61C}
-      - {start: 0xAEF24, type: bss, vram: 0x08B41FC0, name: bss3}
+      - {start: 0xAEF24, type: bss, vram: 0x08B41FC0, name: bss4}
       - {start: 0xAEF24, type: .bss, vram: 0x08B42068, name: main_psp/1BCFC}
-      - {start: 0xAEF24, type: bss, vram: 0x08C63124, name: bss4}
+      - {start: 0xAEF24, type: bss, vram: 0x08C63124, name: bss5}
       - {start: 0xAEF24, type: .bss, vram: 0x08C63C28, name: main_psp/28A90}
-      - {start: 0xAEF24, type: bss, vram: 0x08C6BC30, name: bss5}
+      - {start: 0xAEF24, type: bss, vram: 0x08C6BC30, name: bss6}
       - {start: 0xAEF24, type: .bss, vram: 0x08DAF2C8, name: main_psp/31178}
-      - {start: 0xAEF24, type: bss, vram: 0x08E2E5F8, name: bss6}
+      - {start: 0xAEF24, type: bss, vram: 0x08E2E5F8, name: bss7}
   - [0xAEF24, bin, elf_footer]
   - [0xB3E1C]
