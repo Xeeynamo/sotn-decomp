@@ -6,20 +6,13 @@
 #include <pspdisplay.h>
 
 extern s32 D_psp_089B7140[2][0xD000];
-extern s32 D_psp_08B1FB94;
-extern s32 D_psp_08B1FB98;
-extern s32 D_psp_08B1FB9C;
-extern s32 D_psp_08B1FBA0;
-extern s32 D_psp_08B1FBA4;
-extern s32 D_psp_08B1FBA8;
-extern s32 D_psp_08B1FBAC;
-extern s16 D_psp_08B1FBB0;
-extern s16 D_psp_08B1FBB2;
-extern s16 D_psp_08B1FBB4;
-extern s16 D_psp_08B1FBB6;
-extern s32 D_psp_08B1FBB8;
-
 extern s32 D_psp_08C62A30;
+
+// BSS
+static s32 D_psp_08B1FBB8;
+static ScePspSRect D_psp_08B1FBB0;
+static s32 frameLoss;
+static s32 frameCount;
 
 s32 func_psp_08913F5C(t_displayBuffer* pDisp) {
     s32* dispList;
@@ -44,10 +37,10 @@ s32 func_psp_08913F5C(t_displayBuffer* pDisp) {
     sceGuSync(GU_SYNC_FINISH, GU_SYNC_WAIT);
     sceDisplayWaitVblankStart();
     sceGuDisplay(GU_DISPLAY_ON);
-    D_psp_08B1FBB0 = 0;
-    D_psp_08B1FBB2 = 0;
-    D_psp_08B1FBB4 = 0x140;
-    D_psp_08B1FBB6 = 0xF0;
+    D_psp_08B1FBB0.x = 0;
+    D_psp_08B1FBB0.y = 0;
+    D_psp_08B1FBB0.w = 320;
+    D_psp_08B1FBB0.h = 240;
     D_psp_08B1FBB8 = 0;
     return 0;
 }
@@ -108,7 +101,7 @@ void draw_frame(t_displayBuffer* pDisp, u8* buffer) {
     }
     x = (GU_SCR_WIDTH - w) / 2;
     y = (GU_SCR_HEIGHT - h) / 2;
-    sceGuSpriteMode(D_psp_08B1FBB4, D_psp_08B1FBB6, w, h);
+    sceGuSpriteMode(D_psp_08B1FBB0.w, D_psp_08B1FBB0.h, w, h);
     sceGuDrawSprite(x, y, 0, 0, 0, GU_NOFLIP, GU_NOROTATE);
     sceGuBlendFunc(
         GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0x00000000, 0x00000000);
@@ -141,7 +134,7 @@ void func_psp_089144BC(void) {
 s32 dispbuf_create(
     t_displayBuffer* pDisp, s32 arg1, s32 dispNum, s32 pixelFormat) {
     s32 ret = 0;
-    u8* ptr;
+    u8* ge_addr;
 
     pDisp->buf = NULL;
     pDisp->startSema = sceKernelCreateSema("start_sema", 0, 0, 1, NULL);
@@ -163,15 +156,23 @@ s32 dispbuf_create(
         ret = -1;
         goto error;
     }
-    ptr = sceGeEdramGetAddr();
-    ptr += 0xCC000;
-    *pDisp->buf = ptr;
-    pDisp->write = &D_psp_08B1FB94;
-    pDisp->read = &D_psp_08B1FB98;
-    pDisp->count = &D_psp_08B1FB9C;
-    pDisp->size = &D_psp_08B1FBA0;
-    pDisp->displayMode = &D_psp_08B1FBA4;
-    ptr = ptr; // FAKE
+    ge_addr = sceGeEdramGetAddr();
+    ge_addr += GU_VRAM_BUFSIZE * 3;
+    *pDisp->buf = ge_addr;
+    {
+        static s32 D_psp_08B1FB94;
+        static s32 D_psp_08B1FB98;
+        static s32 D_psp_08B1FB9C;
+        static s32 D_psp_08B1FBA0;
+        static s32 D_psp_08B1FBA4;
+
+        pDisp->write = &D_psp_08B1FB94;
+        pDisp->read = &D_psp_08B1FB98;
+        pDisp->count = &D_psp_08B1FB9C;
+        pDisp->size = &D_psp_08B1FBA0;
+        pDisp->displayMode = &D_psp_08B1FBA4;
+    }
+    ge_addr = ge_addr; // FAKE
     *pDisp->size = dispNum;
     goto term;
 error:
@@ -186,19 +187,19 @@ term:
 }
 
 s32 dispbuf_reset(t_displayBuffer* pDisp) {
-    u8* ptr;
+    u8* ge_addr;
 
-    D_psp_08B1FBA8 = 0;
-    D_psp_08B1FBAC = 0;
+    frameCount = 0;
+    frameLoss = 0;
 
     *pDisp->write = 0;
     *pDisp->read = 0;
     *pDisp->count = 0;
-    *pDisp->displayMode = 1;
+    *pDisp->displayMode = DISPLAY_MODE_NORMAL;
     sceKernelPollSema(pDisp->startSema, 1);
     sceKernelPollSema(pDisp->displayWaitSema, 1);
-    ptr = (u8*)sceGeEdramGetAddr();
-    sceDisplaySetFrameBuf(ptr, GU_VRAM_WIDTH, PSP_DISPLAY_PIXEL_FORMAT_5551,
+    ge_addr = (u8*)sceGeEdramGetAddr();
+    sceDisplaySetFrameBuf(ge_addr, GU_VRAM_WIDTH, PSP_DISPLAY_PIXEL_FORMAT_5551,
                           PSP_DISPLAY_SETBUF_NEXTFRAME);
     return 0;
 }
@@ -245,7 +246,7 @@ s32 dispbuf_getCurrentCount(t_displayBuffer* pDisp) { return *pDisp->count; }
 s32 func_psp_08914B08(t_displayBuffer* pDisp) {
     s32 ret;
 
-    if (dispbuf_getMode(pDisp) == 0xFF) {
+    if (dispbuf_getMode(pDisp) == DISPLAY_MODE_END) {
         ret = 1;
     } else {
         ret = 0;
@@ -287,21 +288,22 @@ s32 dispbuf_func(s32 size, void* argp) {
     while (func_psp_08914B08(pDisp) == 0) {
         if (func_psp_089123B8() != 0) {
             currentMode = dispbuf_getMode(pDisp);
-            if (currentMode != 4) {
+            if (currentMode != DISPLAY_MODE_UNK) {
                 currentMode = avsync_Compare(pAvSync);
                 dispbuf_setMode(pDisp, currentMode);
             }
             if (dispbuf_getCurrentCount(pDisp) > 0) {
-                if (currentMode == 1 || currentMode == 2) {
+                if (currentMode == DISPLAY_MODE_NORMAL ||
+                    currentMode == DISPLAY_MODE_SKIP) {
                     dispbuf_show(pDisp);
                     sceKernelWaitSema(pDisp->lockSema, 1, NULL);
                     (*pDisp->count)--;
                     sceKernelSignalSema(pDisp->lockSema, 1);
                 }
                 sceKernelSignalSema(pDisp->displayWaitSema, 1);
-                D_psp_08B1FBA8++;
+                frameCount++;
             } else {
-                D_psp_08B1FBAC++;
+                frameLoss++;
             }
         }
         sceDisplayWaitVblankStartCB();
@@ -312,7 +314,7 @@ s32 dispbuf_func(s32 size, void* argp) {
         (*pDisp->count)--;
         sceKernelSignalSema(pDisp->lockSema, 1);
         sceDisplayWaitVblankStartCB();
-        D_psp_08B1FBA8++;
+        frameCount++;
     }
     sceDisplayWaitVblankStartCB();
     sceKernelExitThread(0);
@@ -326,7 +328,7 @@ void func_psp_08914E44(t_displayBuffer* pDisp) {
 s32 dispbuf_show(t_displayBuffer* pDisp) {
     u8* buffer;
 
-    if (*pDisp->displayMode == 1) {
+    if (*pDisp->displayMode == DISPLAY_MODE_NORMAL) {
         u8* buffer = *pDisp->buf;
         draw_frame(pDisp, buffer);
         sceDisplayWaitVblankStartCB();
@@ -336,6 +338,6 @@ s32 dispbuf_show(t_displayBuffer* pDisp) {
 }
 
 void func_psp_08914EE0(s32 arg0, s32 arg1) {
-    D_psp_08B1FBB4 = arg0;
-    D_psp_08B1FBB6 = arg1;
+    D_psp_08B1FBB0.w = arg0;
+    D_psp_08B1FBB0.h = arg1;
 }

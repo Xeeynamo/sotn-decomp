@@ -273,6 +273,7 @@ segments:
       - [0x10944, c, main_psp/10944]
       - [0x11320, c, main_psp/11320]
       - [0x138B0, c, main_psp/138B0]
+      - [0x1528C, c, main_psp/mpeg/avsync]
       - [0x15650, c, main_psp/mpeg/display]
       - [0x1660C, c, main_psp/mpeg/fileread]
       - [0x17364, c, main_psp/mpeg/sound]
@@ -397,6 +398,8 @@ segments:
       - {start: 0xAEF24, type: bss, vram: 0x089AD830, name: bss0}
       - {start: 0xAEF24, type: .bss, vram: 0x089B6540, name: main_psp/11320}
       - {start: 0xAEF24, type: bss, vram: 0x08B1FB50, name: bss1}
+      - {start: 0xAEF24, type: .bss, vram: 0x08B1FB90, name: main_psp/mpeg/avsync}
+      - {start: 0xAEF24, type: .bss, vram: 0x08B1FB94, name: main_psp/mpeg/display}
       - {start: 0xAEF24, type: .bss, vram: 0x08B1FBBC, name: main_psp/mpeg/fileread}
       - {start: 0xAEF24, type: .bss, vram: 0x08B1FBDC, name: main_psp/mpeg/sound}
       - {start: 0xAEF24, type: bss, vram: 0x08B1FBFC, name: bss2}

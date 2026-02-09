@@ -7,6 +7,12 @@
 #include <pspmpeg.h>
 #include <pspiofilemgr.h>
 
+#define DISPLAY_MODE_NORMAL (0x01)
+#define DISPLAY_MODE_SKIP (0x02)
+#define DISPLAY_MODE_WAIT (0x03)
+#define DISPLAY_MODE_UNK (0x04)
+#define DISPLAY_MODE_END (0xFF)
+
 typedef struct t_displayBuffer {
     s32 startSema;
     s32 lockSema;
