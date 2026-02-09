@@ -71,6 +71,12 @@ extern u32 D_psp_08B1FBC8;
 extern s32 D_psp_08B1FBD8;
 extern s32 D_psp_08B1FB90;
 extern s32 D_psp_08B1FB78;
+extern char D_psp_0893CE88[];
+extern char D_psp_0893CE90[];
+extern char D_psp_0893CE98[];
+extern char D_psp_0893CEA0[];
+extern char D_psp_0893CEA8[];
+extern char D_psp_0893CEB0[];
 
 void func_psp_089144BC(void);
 
@@ -295,8 +301,7 @@ typedef struct StrFile {
     s32 unkC;
     s32 unk10;
     s16 unk14;
-    s16 unk16;
-    u8 unk18[0x200];
+    u8 unk16[0x200];
 } StrFile;
 
 typedef struct t_mpegStreamData {
@@ -1564,18 +1569,69 @@ s32 soundbuf_output(t_soundBuffer* pSound) {
     return soundbuf_swapbuf(pSound, currentBuf);
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08916630);
+s32 func_psp_08916630(char* filename) {
+    s32 temp_v0;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08916724);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08916830);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_0891689C);
-
-SceOff func_psp_089168E8(StrFile* pStrFile, SceOff offset, s32 whence) {
-    return sceIoLseek(pStrFile->fd, offset, whence);
+    if (memcmp(filename, D_psp_0893CE88, 5) != 0) {
+        if (memcmp(filename, D_psp_0893CE90, 5) == 0) {
+            do {
+                sceUmdActivate(1, D_psp_0893CE98);
+                temp_v0 = sceUmdGetErrorStat();
+                if (temp_v0 < 0) {
+                    sceKernelDelayThreadCB(0x64);
+                }
+            } while (temp_v0 < 0);
+            do {
+                temp_v0 = sceUmdWaitDriveStatCB(0x20, 0x64);
+            } while (temp_v0 < 0);
+            goto term;
+        }
+        if (memcmp(filename, D_psp_0893CEA0, 3) != 0) {
+            return -1;
+        }
+        goto term;
+    }
+term:
+    return 1;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_0891692C);
+s32 func_psp_08916724(StrFile* file, char* filename, s32 flags) {
+    if ((memcmp(filename, D_psp_0893CE88, 5) == 0) ||
+        (memcmp(filename, D_psp_0893CE90, 5) == 0) ||
+        (memcmp(filename, D_psp_0893CEA8, 6) == 0) ||
+        (memcmp(filename, D_psp_0893CEB0, 3) == 0)) {
+        func_psp_08916630(filename);
+        file->fd = sceIoOpen(filename, flags, 0x1FF);
+        if (file->fd < 0) {
+            return -1;
+        }
+    } else {
+        return -1;
+    }
+    strcpy(&file->unk16, filename);
+    return 1;
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08916984);
+s32 func_psp_08916830(StrFile* file) {
+    s32 ret;
+
+    if (file->fd >= 0) {
+        ret = sceIoClose(file->fd);
+        file->fd = -1;
+    } else {
+        return -1;
+    }
+    return ret;
+}
+
+s32 func_psp_0891689C(StrFile* file, void* buff, s32 size) {
+    s32 readsize;
+
+    readsize = sceIoRead(file->fd, buff, size);
+
+    return readsize;
+}
+
+SceOff func_psp_089168E8(StrFile* file, SceOff offset, s32 whence) {
+    return sceIoLseek(file->fd, offset, whence);
+}
