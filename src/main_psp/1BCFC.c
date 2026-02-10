@@ -24,9 +24,10 @@
 
 #define g_GameClearFlag (*((s32*)0x091FC418))
 
-#define getTPF(tpage) (((tpage) >> 7) & 3) // Get Texture Pattern Format
-#define getABR(tpage)                                                          \
-    (((tpage) >> 5) & 3) // Semi Transparency (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)
+// Get Texture Pattern Format
+#define getTPF(tpage) (((tpage) >> 7) & 3)
+// Get Semi Transparency (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)
+#define getABR(tpage) (((tpage) >> 5) & 3)
 
 typedef enum {
     SUB_BUF_OFF = 0,

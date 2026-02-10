@@ -1,14 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <game_psp.h>
 #include "main_psp_private.h"
+#include "mpeg/mpeg_private.h"
 
-// https://pspdev.github.io/pspsdk/
-#define PSP_LEGACY_TYPES_DEFINED // avoid processing psptypes.h
 #include <pspgu.h>
-#include <pspdisplay.h>
 #include <pspumd.h>
 #include <psppower.h>
-#include <pspmpeg.h>
+
+typedef struct unkStruct {
+    char* unk0;
+    s32 unk4;
+} unkStruct;
 
 char D_psp_0893CD20[] = "DVDUMD_SAMPLE";
 char D_psp_0893CD30[] = PSP_UMD_ALIAS_NAME;
@@ -20,39 +22,11 @@ extern s32 D_psp_08B1FB5C;
 extern s32 D_psp_08B1FB60;
 extern s32 D_psp_08B1FB64;
 extern s32 D_psp_08B1FB68;
+extern s32 D_psp_08B1FB6C;
 extern s32 D_psp_08B1FB70;
 extern s32 D_psp_08B41FF0;
 extern volatile s32 D_psp_08B1FB50;
-extern s32 D_psp_089B7140[2][0xD000];
-extern ScePspIMatrix4 D_psp_0893CDE0;
-extern s16 D_psp_08B1FBB4;
-extern s16 D_psp_08B1FBB6;
-extern s32 D_psp_08C62A30;
-extern s32 D_psp_08B1FBA8;
-extern s32 D_psp_08B1FBAC;
-extern s16 D_psp_08B1FBB0;
-extern s16 D_psp_08B1FBB2;
-extern s32 D_psp_08B1FBB8;
-extern s32 D_psp_0893CE60;
-extern s32 soundframeCount;
-extern s32 soundframeDelay;
 extern s32 D_psp_08B1FB7C;
-extern u32 D_psp_08B1FBF8;
-extern char D_psp_0893CE64[];
-extern char D_psp_0893CE74[];
-extern s32 D_psp_08B1FBDC;
-extern s32 D_psp_08B1FBE0;
-extern s32 D_psp_08B1FBE4;
-extern s32 D_psp_08B1FBE8;
-extern s32 D_psp_08B1FBEC;
-extern char D_psp_0893CE20[];
-extern char D_psp_0893CE2C[];
-extern char D_psp_0893CE38[];
-extern s32 D_psp_08B1FB94;
-extern s32 D_psp_08B1FB98;
-extern s32 D_psp_08B1FB9C;
-extern s32 D_psp_08B1FBA0;
-extern s32 D_psp_08B1FBA4;
 extern char D_psp_0893CDB8[];
 extern char D_psp_0893CDC8[];
 extern char D_psp_0893CDD4[];
@@ -61,6 +35,7 @@ extern s32 D_psp_08B1FB84;
 extern s32 D_psp_08B42010;
 extern s32 D_psp_08B42020;
 extern s32 D_psp_08B42030;
+extern unkStruct D_psp_0893CD98[];
 
 void func_psp_089144BC(void);
 
@@ -175,9 +150,12 @@ s32 func_psp_08912530(s32 count, s32 arg, void* param) {
     return 0;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_089125F8);
+s32 func_psp_089125F8(void) { return D_psp_08B1FB64; }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08912608);
+void func_psp_08912608(void) {
+    sceKernelPowerLock(0);
+    D_psp_08B1FB6C++;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08912640);
 
@@ -193,7 +171,7 @@ void func_psp_089127D8(void* arg0) {}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_089127E8);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08912814);
+s32 func_psp_08912814(void) { return 0x5333; }
 
 s32 func_psp_08912820(s32 arg0, s32 arg1) {
     s32 temp_s0;
@@ -212,70 +190,10 @@ s32 func_psp_08912820(s32 arg0, s32 arg1) {
     return temp_s0;
 }
 
-typedef struct t_displayBuffer {
-    s32 startSema;
-    s32 lockSema;
-    s32 displayWaitSema;
-    u8** buf;
-    u32* pts;
-    s32* write;
-    s32* read;
-    s32* count;
-    s32* size;
-    s32 pixelFormat;
-    s32* displayMode;
-} t_displayBuffer;
-
-typedef struct t_soundBuffer {
-    s32 lockSema;
-    s32* unk4;
-    u8** buf;
-    u32* pts;
-    s32* write;
-    s32* read;
-    s32* count;
-    s32* size;
-    s32 startSema;
-} t_soundBuffer;
-
-typedef struct t_avSyncControl {
-    t_displayBuffer* pDisp;
-    t_soundBuffer* pSound;
-    s32 unk8;
-    s32 unkC;
-    s32 unk10;
-    s32 unk14;
-    s32 unk18;
-} t_avSyncControl;
-
-typedef struct unkStruct {
-    char* unk0;
-    s32 unk4;
-} unkStruct;
-
-typedef struct StrFile {
-    s32 unk0;
-    u8 unk4[0x214];
-} StrFile;
-
-typedef struct t_mpegStreamData {
-    SceMpegStream* pAvcStream;
-    SceMpegAu* pAvcAu;
-    SceMpegStream* pAtracStream;
-    SceMpegAu* pAtracAu;
-} t_mpegStreamData;
-
-typedef struct t_ringBuffer {
-    u8 unk0[0x50];
-} t_ringBuffer;
-
 s32 dispbuf_func(s32 args, void* argp);
 s32 read_func(s32 args, void* argp);
 s32 soundbuf_func(s32 args, void* argp);
-s64 func_psp_089168E8(StrFile, s64, s32);
 s32 ringbufferCallBack(void* pBuf, s32 iNum, void* CallbackData);
-
-extern unkStruct D_psp_0893CD98[];
 
 s32 func_psp_089128C4(s32 arg0, s32 arg1) {
     SceMpeg mpeg;
@@ -360,7 +278,7 @@ s32 func_psp_089128C4(s32 arg0, s32 arg1) {
     ret[0] = sceMpegAvcDecodeMode(&mpeg, &decodeMode);
     func_psp_0890F250(temp_s6, &filename);
     var_s7 = 0;
-    strFile.unk0 = -1;
+    strFile.fd = -1;
     sceDisplayWaitVblankStartCB();
     D_psp_08B1FB80 = func_psp_089125F8();
     while (true) {
@@ -375,7 +293,8 @@ s32 func_psp_089128C4(s32 arg0, s32 arg1) {
             func_psp_08916830(&strFile);
             continue;
         }
-        if ((ret[0] = func_psp_08916724(&strFile, &filename, 1)) >= 0) {
+        if ((ret[0] = func_psp_08916724(&strFile, &filename, PSP_O_RDONLY)) >=
+            0) {
             sceDisplayWaitVblankStartCB();
         } else {
             0;
@@ -386,8 +305,8 @@ s32 func_psp_089128C4(s32 arg0, s32 arg1) {
             func_psp_08916830(&strFile);
             continue;
         }
-        if ((ret[0] = func_psp_08913A04(
-                 &mpeg, &strFile, &fileSize, &streamOffset)) == 0) {
+        if ((ret[0] = readHeader(&mpeg, &strFile, &fileSize, &streamOffset)) ==
+            0) {
             sceDisplayWaitVblankStartCB();
         } else {
             func_psp_08916830(&strFile);
@@ -398,7 +317,8 @@ s32 func_psp_089128C4(s32 arg0, s32 arg1) {
             func_psp_08916830(&strFile);
             continue;
         }
-        if ((ret[0] = func_psp_089168E8(strFile, streamOffset, 0)) >= 0) {
+        if ((ret[0] = func_psp_089168E8(
+                 &strFile, streamOffset, PSP_SEEK_SET)) >= 0) {
             sceDisplayWaitVblankStartCB();
         } else {
             0;
@@ -490,7 +410,7 @@ s32 func_psp_089128C4(s32 arg0, s32 arg1) {
         soundbuf_reset(&pSound);
     }
     dispbuf_reset(&pDisp);
-    func_psp_08914FA8(&pRing, fileSize, streamOffset);
+    read_reset(&pRing, fileSize, streamOffset);
     avsync_reset(&pAvSync);
     if (D_psp_08B1FB7C != 0) {
         sceKernelStartThread(D_psp_08B42030, sizeof(t_avSyncControl), &pAvSync);
@@ -565,9 +485,18 @@ label0:
     return (ret[0] == 0xA) ? 1 : 0;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_089132C8);
+s32 func_psp_089132C8(t_avSyncControl* pAvSync, t_ringBuffer* pRing) {
+    s32 ret;
 
-s32 func_psp_08913314(t_avSyncControl* pAvSync, s32 arg1) {
+    if (func_psp_0891527C(pRing)) {
+        ret = 1;
+    } else {
+        ret = -1;
+    }
+    return ret;
+}
+
+s32 func_psp_08913314(t_avSyncControl* pAvSync, t_ringBuffer* pRing) {
     s32 var_s0;
 
     if (D_psp_08B1FB7C != 0) {
@@ -591,619 +520,42 @@ s32 func_psp_08913314(t_avSyncControl* pAvSync, s32 arg1) {
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", playMovie);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08913A04);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08913B48);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", avsync_create);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", avsync_reset);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", avsync_delete);
-
-void func_psp_08914E44(t_displayBuffer* pDisp);
-void func_psp_08916310(t_soundBuffer* pSound);
-
-s32 func_psp_08913CA0(t_avSyncControl* pAvSync) {
-    func_psp_08914E44(pAvSync->pDisp);
-    if (pAvSync->pSound != NULL) {
-        func_psp_08916310(pAvSync->pSound);
-    }
-    return 0;
-}
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08913CF0);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08913D20);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08913DD4);
-
-s32 avsync_Compare(t_avSyncControl* pAvSync) {
+s32 readHeader(
+    SceMpeg* pMpeg, StrFile* pStrFile, s32* pFilesize, s32* strOffset) {
+    s32 iReadSize[1];
     s32 ret;
-    s32 ptsDiff;
-    u32 soundPts, videoPts;
+    u8 stream_buf[0x800];
 
-    if (pAvSync->pSound == NULL) {
-        ret = 1;
+    if (func_psp_089168E8(pStrFile, 0, PSP_SEEK_SET) < 0) {
+        ret = -1;
         goto term;
     }
-    if (soundbuf_getCurrentCount(pAvSync->pSound) == 0 ||
-        dispbuf_getCurrentCount(pAvSync->pDisp) == 0) {
-        ret = 1;
+    if ((iReadSize[0] = func_psp_0891689C(pStrFile, stream_buf, 0x800)) <
+        0x800) {
+        ret = -1;
         goto term;
     }
-    soundbuf_getPts(pAvSync->pSound, &soundPts);
-    dispbuf_getPts(pAvSync->pDisp, &videoPts);
-    ptsDiff = soundPts - videoPts;
-    if (ptsDiff >= -0x1778 && ptsDiff <= 0x1778) {
-        ret = 1;
-    } else if (ptsDiff > 0x1778) {
-        ret = 2;
-    } else {
-        ret = 3;
-    }
-term:
-    return ret;
-}
-
-s32 func_psp_08913F5C(t_displayBuffer* pDisp) {
-    s32* dispList;
-
-    sceGuInit();
-    dispList = D_psp_089B7140[0];
-    sceGuStart(0, dispList, sizeof(D_psp_089B7140[0]));
-    sceGuDrawBuffer(GU_PSM_5551, GU_VRAM_BP_0, GU_VRAM_WIDTH);
-    sceGuDispBuffer(GU_SCR_WIDTH, GU_SCR_HEIGHT, GU_VRAM_BP_1, GU_VRAM_WIDTH);
-    sceGuDepthBuffer(GU_VRAM_BP_2, GU_VRAM_WIDTH);
-    sceGuOffset(0, 0);
-    sceGuScissor(0, 0, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-    sceGuEnable(GU_SCISSOR_TEST);
-    sceGuTexFunc(GU_TFX_MODULATE, GU_TCC_RGBA);
-    sceGuTexFilter(GU_LINEAR, GU_LINEAR);
-    sceGuTexWrap(GU_REPEAT, GU_REPEAT);
-    sceGuEnable(GU_TEXTURE_2D);
-    sceGuClearColor(0x00000000);
-    sceGuClearDepth(0);
-    sceGuClearStencil(0);
-    sceGuFinish();
-    sceGuSync(GU_SYNC_FINISH, GU_SYNC_WAIT);
-    sceDisplayWaitVblankStart();
-    sceGuDisplay(GU_DISPLAY_ON);
-    D_psp_08B1FBB0 = 0;
-    D_psp_08B1FBB2 = 0;
-    D_psp_08B1FBB4 = 0x140;
-    D_psp_08B1FBB6 = 0xF0;
-    D_psp_08B1FBB8 = 0;
-    return 0;
-}
-
-void draw_frame(t_displayBuffer* pDisp, u8* buffer) {
-    s32* dispList = D_psp_089B7140[0];
-    s32 x, y;
-    s32 w, h;
-
-    sceGuStart(GU_IMMEDIATE, dispList, sizeof(D_psp_089B7140[0]));
-    sceGuClear(GU_CLEAR_ALL);
-    sceGuTexMode(GU_PSM_T8, 0, GU_SINGLE_CLUT, GU_TEXBUF_NORMAL);
-    sceGuTexImage(0, 0x200, 0x200, 0x200, (u8*)(WALLPAPER_TEX_ADDR));
-    sceGuClutMode(GU_PSM_5551, 0, 0xFF, 0);
-    sceGuClutLoad(32, (u8*)(WALLPAPER_CLUT_ADDR));
-    sceGuEnable(GU_TEXTURE_2D);
-    sceGuBlendFunc(GU_ADD, GU_FIX, GU_FIX, 0xFFFFFFFF, 0x00000000);
-    sceGuEnable(GU_BLEND);
-    sceGuColor(0xFFFFFFFF);
-    sceGuSpriteMode(GU_SCR_WIDTH, GU_SCR_HEIGHT, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-    sceGuDrawSprite(0, 0, 0, 0, 0, GU_NOFLIP, GU_NOROTATE);
-    sceGuBlendFunc(
-        GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0x00000000, 0x00000000);
-    {
-        const ScePspIMatrix4 dither = D_psp_0893CDE0;
-        sceGuSetDither(&dither);
-        sceGuEnable(GU_DITHER);
-    }
-    switch (pDisp->pixelFormat) {
-    case GU_PSM_8888:
-        sceGuTexMode(GU_PSM_8888, 0, GU_SINGLE_CLUT, GU_TEXBUF_NORMAL);
-        break;
-    case GU_PSM_5650:
-        sceGuTexMode(GU_PSM_5650, 0, GU_SINGLE_CLUT, GU_TEXBUF_NORMAL);
-        break;
-    case GU_PSM_5551:
-        sceGuTexMode(GU_PSM_5551, 0, GU_SINGLE_CLUT, GU_TEXBUF_NORMAL);
-        break;
-    case GU_PSM_4444:
-        sceGuTexMode(GU_PSM_4444, 0, GU_SINGLE_CLUT, GU_TEXBUF_NORMAL);
-        break;
-    }
-    sceGuTexImage(0, 0x200, 0x200, 0x200, buffer);
-    sceGuEnable(GU_TEXTURE_2D);
-    sceGuBlendFunc(GU_ADD, GU_FIX, GU_FIX, 0xFFFFFFFF, 0x00000000);
-    sceGuEnable(GU_BLEND);
-    sceGuColor(0xFFFFFFFF);
-    switch (D_psp_08C62A30) {
-    case SCREEN_MODE_FULL:
-        w = 418;
-        h = 272;
-        break;
-    case SCREEN_MODE_PERFECT:
-        w = 369;
-        h = 240;
-        break;
-    }
-    x = (GU_SCR_WIDTH - w) / 2;
-    y = (GU_SCR_HEIGHT - h) / 2;
-    sceGuSpriteMode(D_psp_08B1FBB4, D_psp_08B1FBB6, w, h);
-    sceGuDrawSprite(x, y, 0, 0, 0, GU_NOFLIP, GU_NOROTATE);
-    sceGuBlendFunc(
-        GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0x00000000, 0x00000000);
-    sceGuFinish();
-    sceGuSync(GU_SYNC_FINISH, GU_SYNC_WAIT);
-}
-
-void func_psp_089144BC(void) {
-    s32* dispList = D_psp_089B7140[0];
-
-    sceGuStart(0, dispList, sizeof(D_psp_089B7140[0]));
-    sceGuTexMode(GU_PSM_T8, 0, GU_SINGLE_CLUT, GU_TEXBUF_NORMAL);
-    sceGuTexImage(0, 0x200, 0x200, 0x200, (u8*)(WALLPAPER_TEX_ADDR));
-    sceGuClutMode(GU_PSM_5551, 0, 0xFF, 0);
-    sceGuClutLoad(32, (u8*)(WALLPAPER_CLUT_ADDR));
-    sceGuEnable(GU_TEXTURE_2D);
-    sceGuBlendFunc(GU_ADD, GU_FIX, GU_FIX, 0xFFFFFFFF, 0x00000000);
-    sceGuEnable(GU_BLEND);
-    sceGuColor(0xFFFFFFFF);
-    sceGuSpriteMode(GU_SCR_WIDTH, GU_SCR_HEIGHT, GU_SCR_WIDTH, GU_SCR_HEIGHT);
-    sceGuDrawSprite(0, 0, 0, 0, 0, GU_NOFLIP, GU_NOROTATE);
-    sceGuBlendFunc(
-        GU_ADD, GU_SRC_ALPHA, GU_ONE_MINUS_SRC_ALPHA, 0x00000000, 0x00000000);
-    sceGuFinish();
-    sceGuSync(GU_SYNC_FINISH, GU_SYNC_WAIT);
-    sceDisplayWaitVblankStartCB();
-    EndFrame();
-}
-
-s32 dispbuf_create(
-    t_displayBuffer* pDisp, s32 arg1, s32 dispNum, s32 pixelFormat) {
-    s32 ret = 0;
-    u8* ptr;
-
-    pDisp->buf = NULL;
-    pDisp->startSema = sceKernelCreateSema(D_psp_0893CE20, 0, 0, 1, 0);
-    pDisp->lockSema = sceKernelCreateSema(D_psp_0893CE2C, 0, 1, 1, 0);
-    pDisp->displayWaitSema = sceKernelCreateSema(D_psp_0893CE38, 0, 0, 1, 0);
-    pDisp->buf = (u8**)func_psp_0891275C(dispNum * 4);
-    if (pDisp->buf == NULL) {
+    if (sceMpegQueryStreamOffset(pMpeg, stream_buf, strOffset) != 0) {
         ret = -1;
-        goto error;
+        goto term;
     }
-    pDisp->pts = (u32*)func_psp_0891275C(dispNum * 4);
-    if (pDisp->pts == NULL) {
+    if (sceMpegQueryStreamSize(stream_buf, pFilesize) != 0) {
         ret = -1;
-        goto error;
+        goto term;
     }
-    pDisp->pixelFormat = pixelFormat;
-    if (func_psp_08913F5C(pDisp) != 0) {
+    if (func_psp_089168E8(pStrFile, 0, PSP_SEEK_SET) < 0) {
         ret = -1;
-        goto error;
+        goto term;
     }
-    ptr = sceGeEdramGetAddr();
-    ptr += 0xCC000;
-    *pDisp->buf = ptr;
-    pDisp->write = &D_psp_08B1FB94;
-    pDisp->read = &D_psp_08B1FB98;
-    pDisp->count = &D_psp_08B1FB9C;
-    pDisp->size = &D_psp_08B1FBA0;
-    pDisp->displayMode = &D_psp_08B1FBA4;
-    ptr = ptr; // FAKE
-    *pDisp->size = dispNum;
-    goto term;
-error:
-    if (pDisp->buf != NULL) {
-        func_psp_089127D8(pDisp->buf);
-    }
-    if (pDisp->pts != NULL) {
-        func_psp_089127D8(pDisp->pts);
-    }
-term:
-    return ret;
-}
-
-s32 dispbuf_reset(t_displayBuffer* pDisp) {
-    u8* ptr;
-
-    D_psp_08B1FBA8 = 0;
-    D_psp_08B1FBAC = 0;
-
-    *pDisp->write = 0;
-    *pDisp->read = 0;
-    *pDisp->count = 0;
-    *pDisp->displayMode = 1;
-    sceKernelPollSema(pDisp->startSema, 1);
-    sceKernelPollSema(pDisp->displayWaitSema, 1);
-    ptr = (u8*)sceGeEdramGetAddr();
-    sceDisplaySetFrameBuf(ptr, GU_VRAM_WIDTH, PSP_DISPLAY_PIXEL_FORMAT_5551,
-                          PSP_DISPLAY_SETBUF_NEXTFRAME);
-    return 0;
-}
-
-s32 dispbuf_delete(t_displayBuffer* pDisp) {
-    sceKernelDeleteSema(pDisp->startSema);
-    sceKernelDeleteSema(pDisp->lockSema);
-    sceKernelDeleteSema(pDisp->displayWaitSema);
-    if (pDisp->buf != NULL) {
-        func_psp_089127D8(pDisp->buf);
-    }
-    if (pDisp->pts != NULL) {
-        func_psp_089127D8(pDisp->pts);
-    }
-    return 0;
-}
-
-s32 dispbuf_getDrawbuf(t_displayBuffer* pDisp, u8** buffer) {
-    s32 ret;
-
-    ret = dispbuf_getCapacity(pDisp);
-    if (ret > 0) {
-        *buffer = pDisp->buf[*pDisp->write];
-    } else {
-        *buffer = NULL;
-    }
-    return ret;
-}
-
-s32 dispbuf_dataSet(t_displayBuffer* pDisp) {
-    sceKernelWaitSema(pDisp->lockSema, 1, NULL);
-    (*pDisp->count)++;
-    *pDisp->write = (*pDisp->write + 1) % *pDisp->size;
-    sceKernelSignalSema(pDisp->lockSema, 1);
-    return 0;
-}
-
-s32 dispbuf_getCapacity(t_displayBuffer* pDisp) {
-    return *pDisp->size - *pDisp->count;
-}
-
-s32 dispbuf_getCurrentCount(t_displayBuffer* pDisp) { return *pDisp->count; }
-
-s32 func_psp_08914B08(t_displayBuffer* pDisp) {
-    s32 ret;
-
-    if (dispbuf_getMode(pDisp) == 0xFF) {
-        ret = 1;
-    } else {
-        ret = 0;
-    }
-    return ret;
-}
-
-s32 dispbuf_setPts(t_displayBuffer* pDisp, u32 pts) {
-    s32 ret = 0;
-
-    pDisp->pts[*pDisp->write] = pts;
-
-    return ret;
-}
-
-s32 dispbuf_getPts(t_displayBuffer* pDisp, u32* pPts) {
-    s32 ret = 0;
-
-    *pPts = pDisp->pts[*pDisp->read];
-
-    return ret;
-}
-
-s32 dispbuf_setMode(t_displayBuffer* pDisp, s32 mode) {
-    *pDisp->displayMode = mode;
-    return 0;
-}
-
-s32 dispbuf_getMode(t_displayBuffer* pDisp) { return *pDisp->displayMode; }
-
-s32 dispbuf_func(s32 size, void* argp) {
-    s32 currentMode;
-    t_avSyncControl* pAvSync;
-    t_displayBuffer* pDisp;
-
-    pAvSync = (t_avSyncControl*)argp;
-    pDisp = pAvSync->pDisp;
-    sceKernelWaitSema(pDisp->startSema, 1, NULL);
-    while (func_psp_08914B08(pDisp) == 0) {
-        if (func_psp_089123B8() != 0) {
-            currentMode = dispbuf_getMode(pDisp);
-            if (currentMode != 4) {
-                currentMode = avsync_Compare(pAvSync);
-                dispbuf_setMode(pDisp, currentMode);
-            }
-            if (dispbuf_getCurrentCount(pDisp) > 0) {
-                if (currentMode == 1 || currentMode == 2) {
-                    dispbuf_show(pDisp);
-                    sceKernelWaitSema(pDisp->lockSema, 1, NULL);
-                    (*pDisp->count)--;
-                    sceKernelSignalSema(pDisp->lockSema, 1);
-                }
-                sceKernelSignalSema(pDisp->displayWaitSema, 1);
-                D_psp_08B1FBA8++;
-            } else {
-                D_psp_08B1FBAC++;
-            }
-        }
-        sceDisplayWaitVblankStartCB();
-    }
-    while (dispbuf_getCurrentCount(pDisp) > 0) {
-        dispbuf_show(pDisp);
-        sceKernelWaitSema(pDisp->lockSema, 1, NULL);
-        (*pDisp->count)--;
-        sceKernelSignalSema(pDisp->lockSema, 1);
-        sceDisplayWaitVblankStartCB();
-        D_psp_08B1FBA8++;
-    }
-    sceDisplayWaitVblankStartCB();
-    sceKernelExitThread(0);
-    return 0;
-}
-
-void func_psp_08914E44(t_displayBuffer* pDisp) {
-    sceKernelSignalSema(pDisp->startSema, 1);
-}
-
-s32 dispbuf_show(t_displayBuffer* pDisp) {
-    u8* buffer;
-
-    if (*pDisp->displayMode == 1) {
-        u8* buffer = *pDisp->buf;
-        draw_frame(pDisp, buffer);
-        sceDisplayWaitVblankStartCB();
-        EndFrame();
-    }
-    return 0;
-}
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08914EE0);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", read_create);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08914FA8);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", read_delete);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_0891504C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08915070);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08915088);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08915228);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08915250);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_0891527C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08915294);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08915324);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08915340);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_0891535C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_0891539C);
-
-s32 func_psp_08915454(s32* arg0) { return arg0[5]; }
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", ringbufferCallBack);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", read_func);
-
-s32 soundbuf_create(t_soundBuffer* pSound, s32 bufSize, s32 bufNum, s32 arg3) {
-    s32 i;
-    s32 ret;
-
-    pSound->buf = NULL;
-    pSound->pts = NULL;
     ret = 0;
-    if (sceWaveAudioSetSample(1, 0x800) != 0) {
-        ret = -1;
-        goto error;
-    }
-    pSound->lockSema = sceKernelCreateSema(D_psp_0893CE64, 0, 1, 1, NULL);
-    pSound->startSema = sceKernelCreateSema(D_psp_0893CE74, 0, 0, 1, NULL);
-    pSound->buf = (u8**)func_psp_0891275C(bufNum * 4);
-    if (pSound->buf == NULL) {
-        ret = -1;
-        goto error;
-    }
-    for (i = 0; i < bufNum; i++) {
-        pSound->buf[i] = NULL;
-    }
-    for (i = 0; i < bufNum; i++) {
-        pSound->buf[i] = (u8*)func_psp_0891275C(bufSize);
-        pSound->buf[i] = (u8*)(((u32)pSound->buf[i] & 0x0FFFFFFF) | 0x40000000);
-        if (pSound->buf[i] == NULL) {
-            ret = -1;
-            goto error;
-        }
-    }
-    pSound->pts = (u32*)func_psp_0891275C(0x10);
-    if (pSound->pts == NULL) {
-        ret = -1;
-        goto error;
-    }
-    pSound->unk4 = &D_psp_08B1FBDC;
-    pSound->write = &D_psp_08B1FBE0;
-    pSound->read = &D_psp_08B1FBE4;
-    pSound->count = &D_psp_08B1FBE8;
-    pSound->size = &D_psp_08B1FBEC;
-    D_psp_0893CE60 = arg3;
-    *pSound->size = bufNum;
-    goto term;
-error:
-    if (pSound->buf != NULL) {
-        for (i = 0; i < *pSound->size; i++) {
-            pSound->buf[i] = NULL;
-        }
-        func_psp_089127D8(pSound->buf);
-    }
-    if (pSound->pts != NULL) {
-        func_psp_089127D8(pSound->pts);
-    }
 term:
     return ret;
 }
 
-s32 soundbuf_reset(t_soundBuffer* pSound) {
-    soundframeCount = 0;
-    soundframeDelay = 0;
-    sceKernelPollSema(pSound->startSema, 1);
-    *pSound->unk4 = 0;
-    *pSound->write = 0;
-    *pSound->read = 0;
-    *pSound->count = 0;
-    return 0;
-}
-
-s32 soundbuf_delete(t_soundBuffer* pSound) {
-    s32 i;
-
-    sceKernelDeleteSema(pSound->lockSema);
-    sceKernelDeleteSema(pSound->startSema);
-    if (pSound->buf != NULL) {
-        for (i = 0; i < *pSound->size; i++) {
-            pSound->buf[i] = 0;
-        }
-        func_psp_089127D8(pSound->buf);
-    }
-    if (pSound->pts != NULL) {
-        func_psp_089127D8(pSound->pts);
+s32 func_psp_08913B48(t_displayBuffer* pDisp, s32 arg1) {
+    if (arg1 & PadReadPSP()) {
+        D_psp_08B1FB84 = 1;
+        return 1;
     }
     return 0;
 }
-
-s32 soundbuf_getDrawbuf(t_soundBuffer* pSound, u8** buffer) {
-    s32 ret;
-
-    ret = soundbuf_getCapacity(pSound);
-    if (ret > 0) {
-        *buffer = pSound->buf[*pSound->write];
-    } else {
-        *buffer = NULL;
-    }
-    return ret;
-}
-
-s32 soundbuf_setPts(t_soundBuffer* pSound, u32 pts) {
-    s32 ret = 0;
-
-    if (pts == -1) {
-        pts = D_psp_08B1FBF8 + 0x1054;
-    }
-    D_psp_08B1FBF8 = pts;
-    pSound->pts[*pSound->write] = pts;
-
-    return ret;
-}
-
-s32 soundbuf_getPts(t_soundBuffer* pSound, u32* pPts) {
-    s32 ret = 0;
-
-    *pPts = pSound->pts[*pSound->read];
-
-    return ret;
-}
-
-s32 soundbuf_setBuf(t_soundBuffer* pSound) {
-    sceKernelWaitSema(pSound->lockSema, 1, NULL);
-    (*pSound->count)++;
-    sceKernelSignalSema(pSound->lockSema, 1);
-    *pSound->write = (*pSound->write + 1) % *pSound->size;
-    return 0;
-}
-
-s32 soundbuf_getCapacity(t_soundBuffer* pSound) {
-    return *pSound->size - *pSound->count;
-}
-
-s32 soundbuf_getCurrentCount(t_soundBuffer* pSound) { return *pSound->count; }
-
-s32 func_psp_089162C8(t_soundBuffer* pSound) {
-    *pSound->unk4 = 1;
-    return 0;
-}
-
-s32 func_psp_089162F0(t_soundBuffer* pSound) { return *pSound->unk4; }
-
-void func_psp_08916310(t_soundBuffer* pSound) {
-    sceKernelSignalSema(pSound->startSema, 1);
-}
-
-s32 soundbuf_func(s32 size, void* argp) {
-    s32 var_s1 = 0;
-    t_avSyncControl* pAvSync = (t_avSyncControl*)argp;
-    t_soundBuffer* pSound = pAvSync->pSound;
-    s32 var_s2 = 0;
-
-    sceKernelWaitSema(pSound->startSema, 1, NULL);
-    while (func_psp_089162F0(pSound) == 0) {
-        if (func_psp_0891504C() != 0 && soundbuf_getCurrentCount(pSound) < 2) {
-            D_psp_0893CE60 = 0;
-            break;
-        }
-        if (func_psp_089123B8() != 0 && soundbuf_getCurrentCount(pSound) > 0) {
-            var_s2 = soundbuf_output(pSound);
-            if (var_s1 <= 0) {
-                var_s1++;
-            } else {
-                sceKernelWaitSema(pSound->lockSema, 1, NULL);
-                (*pSound->count)--;
-                sceKernelSignalSema(pSound->lockSema, 1);
-            }
-            soundframeCount++;
-        } else {
-            soundframeDelay++;
-            sceDisplayWaitVblankStartCB();
-        }
-    }
-
-    while (soundbuf_getCurrentCount(pSound) > 0) {
-        soundbuf_output(pSound);
-        sceKernelWaitSema(pSound->lockSema, 1, NULL);
-        (*pSound->count)--;
-        sceKernelSignalSema(pSound->lockSema, 1);
-        soundframeCount++;
-    }
-    sceWaveAudioWriteBlocking(1, D_psp_0893CE60, D_psp_0893CE60, 0);
-    sceKernelExitThread(0);
-    return 0;
-}
-
-static inline s32 soundbuf_swapbuf(t_soundBuffer* pSound, u8* buf) {
-    s32 ret;
-
-    sceWaveAudioSetSample(1, 0x800);
-    sceWaveAudioWriteBlocking(1, D_psp_0893CE60, D_psp_0893CE60, 0);
-    *pSound->read = (*pSound->read + 1) % *pSound->size;
-    ret = sceWaveAudioWriteBlocking(1, D_psp_0893CE60, D_psp_0893CE60, buf);
-
-    return ret;
-}
-
-s32 soundbuf_output(t_soundBuffer* pSound) {
-    u8* currentBuf;
-
-    currentBuf = pSound->buf[*pSound->read];
-
-    return soundbuf_swapbuf(pSound, currentBuf);
-}
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08916630);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08916724);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08916830);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_0891689C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_089168E8);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_0891692C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08916984);

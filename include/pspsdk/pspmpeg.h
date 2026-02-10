@@ -80,6 +80,21 @@ typedef struct SceMpegAu
 
 } SceMpegAu;
 
+typedef struct {
+	SceInt32	iDecodeResult;
+	SceUInt32	uiRecoveryPoint;
+
+	SceUInt32	uiHorizontalSize;
+	SceUInt32	uiVerticalSize;
+	SceUInt32	uiFrameCropLeftOffset;
+	SceUInt32	uiFrameCropRightOffset;
+	SceUInt32	uiFrameCropTopOffset;
+	SceUInt32	uiFrameCropBottomOffset;
+	SceUInt32	uiDisplayFrameNum;
+
+	SceUChar8 reserved[28];
+} SceMpegAvcDecodeDetailInfo;
+
 #define SCE_MPEG_AVC_FORMAT_DEFAULT -1
 #define SCE_MPEG_AVC_FORMAT_5650 0
 #define SCE_MPEG_AVC_FORMAT_5551 1
