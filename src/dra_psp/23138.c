@@ -5,22 +5,22 @@
 extern s32 g_CurrentStream;
 
 void func_psp_090FFAB8(void) {
-    s32 restartButton = PAD_NONE;
+    s32 skipButton = PAD_NONE;
     switch (g_CurrentStream) {
     case 0:
-        restartButton = PAD_START;
+        skipButton = PAD_START;
         break;
     case 1:
-        restartButton = PAD_START;
+        skipButton = PAD_START;
         break;
     case 2:
-        restartButton = PAD_CROSS | PAD_CIRCLE | PAD_START;
+        skipButton = PAD_CROSS | PAD_CIRCLE | PAD_START;
         break;
     case 3:
-        restartButton = PAD_CROSS | PAD_CIRCLE | PAD_START;
+        skipButton = PAD_CROSS | PAD_CIRCLE | PAD_START;
         break;
     }
-    func_psp_08912820(g_CurrentStream, restartButton);
+    func_psp_08912820(g_CurrentStream, skipButton);
     D_8003C728 = 0;
     g_IsUsingCd = 0;
 }

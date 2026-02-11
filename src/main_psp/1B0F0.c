@@ -52,7 +52,7 @@ void InitPad(void) {
 static void UpdatePad(void) {
     u32 buttons = 0;
     sceCtrlPeekBufferPositive(&thisPad, 1);
-    if (func_psp_08932790()) {
+    if (GetDxCUseAnalogStick()) {
         thisPad.Buttons &=
             ~(PSP_CTRL_UP | PSP_CTRL_RIGHT | PSP_CTRL_DOWN | PSP_CTRL_LEFT);
         if (!(thisPad.Buttons & PSP_CTRL_HOLD)) {

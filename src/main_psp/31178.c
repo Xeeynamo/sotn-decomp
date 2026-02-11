@@ -1130,7 +1130,7 @@ s32 GetDxCWallpaperIndex(void) { return D_psp_08DED03C.wallpaperIndex; }
 
 s32 func_psp_0893277C(void) { return D_psp_08DED03C.unk5; }
 
-s32 func_psp_08932790(void) { return D_psp_08DED03C.unk6; }
+s32 GetDxCUseAnalogStick(void) { return D_psp_08DED03C.useAnalogStick; }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_089327A4);
 

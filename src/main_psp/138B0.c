@@ -8,7 +8,7 @@
 #include <psppower.h>
 
 #define PLAY_NORMAL (0)
-#define PLAY_RESTART (1)
+#define PLAY_SKIP (1)
 #define PLAY_STOP (10)
 
 // BSS
@@ -210,13 +210,13 @@ void func_psp_089127E8(void) {
 
 s32 func_psp_08912814(void) { return 0x5333; }
 
-s32 func_psp_08912820(s32 movieIdx, s32 restartButton) {
+s32 func_psp_08912820(s32 movieIdx, s32 skipButton) {
     s32 ret;
 
     func_psp_0892A8C0();
     DrawSync(0);
     VSync(0);
-    ret = func_psp_089128C4(movieIdx, restartButton);
+    ret = func_psp_089128C4(movieIdx, skipButton);
     g_drawWallpaperBackground = 2;
     func_psp_08910044();
     func_psp_0891A800();
@@ -239,7 +239,7 @@ static unkStruct D_psp_0893CD98[] = {
     {"MOVIE/no4.pmf;1", true},
 };
 
-s32 func_psp_089128C4(s32 movieIdx, s32 restartButton) {
+s32 func_psp_089128C4(s32 movieIdx, s32 skipButton) {
     SceMpeg mpeg;
     SceMpegRingbuffer ringbuf;
     SceMpegStream* pStream[2];
@@ -462,8 +462,8 @@ s32 func_psp_089128C4(s32 movieIdx, s32 restartButton) {
     sceKernelStartThread(dispThread, sizeof(t_avSyncControl), &pAvSync);
     sceKernelStartThread(readThread, sizeof(t_ringBuffer), &pRing);
     if ((ret[0] = playMovie(&mpeg, &ringbuf, &pStreamData, &pRing, &pAvSync,
-                            restartButton)) != 0) {
-        if (playMode == PLAY_RESTART) {
+                            skipButton)) != 0) {
+        if (playMode == PLAY_SKIP) {
             if (sceMpegFlushAllStream(&mpeg) != 0) {
                 0;
                 goto label6;
@@ -596,9 +596,9 @@ term:
     return ret;
 }
 
-s32 pad_read(t_displayBuffer* pDisp, s32 restartButton) {
-    if (restartButton & PadReadPSP()) {
-        playMode = PLAY_RESTART;
+s32 pad_read(t_displayBuffer* pDisp, s32 skipButton) {
+    if (skipButton & PadReadPSP()) {
+        playMode = PLAY_SKIP;
         return 1;
     }
     return 0;

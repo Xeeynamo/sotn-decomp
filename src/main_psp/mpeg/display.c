@@ -337,7 +337,7 @@ s32 dispbuf_show(t_displayBuffer* pDisp) {
     return 0;
 }
 
-void func_psp_08914EE0(s32 arg0, s32 arg1) {
-    D_psp_08B1FBB0.w = arg0;
-    D_psp_08B1FBB0.h = arg1;
+void func_psp_08914EE0(s32 w, s32 h) {
+    D_psp_08B1FBB0.w = w;
+    D_psp_08B1FBB0.h = h;
 }

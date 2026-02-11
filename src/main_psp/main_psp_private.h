@@ -41,7 +41,7 @@ typedef struct {
     u8 wallpaperIndex;
     u8 unk4[0x10];
     u8 unk5;
-    u8 unk6;
+    u8 useAnalogStick;
     u8 unk7[0x969];
     SoTNSaveData sotnSaveData;
 } DxCSaveData; // size: 0x20AD0
