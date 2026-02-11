@@ -153,7 +153,7 @@ s32 func_psp_089162C8(t_soundBuffer* pSound) {
 
 s32 func_psp_089162F0(t_soundBuffer* pSound) { return *pSound->unk4; }
 
-void func_psp_08916310(t_soundBuffer* pSound) {
+void soundbuf_startAudio(t_soundBuffer* pSound) {
     sceKernelSignalSema(pSound->startSema, 1);
 }
 

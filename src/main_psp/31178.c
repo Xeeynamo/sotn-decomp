@@ -1301,5 +1301,3 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08933ED8);
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08933F5C);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08933F6C);
-
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/31178", func_psp_08933F7C);

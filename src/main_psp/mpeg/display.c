@@ -321,7 +321,7 @@ s32 dispbuf_func(s32 size, void* argp) {
     return 0;
 }
 
-void func_psp_08914E44(t_displayBuffer* pDisp) {
+void dispbuf_startVideo(t_displayBuffer* pDisp) {
     sceKernelSignalSema(pDisp->startSema, 1);
 }
 

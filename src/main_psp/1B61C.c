@@ -173,7 +173,7 @@ int main(int argc, char* argv[]) {
     sceDisplaySetVblankCallback(0, &VBlankhandler, NULL);
     func_psp_08919C00(0x480000);
     func_psp_0891273C();
-    func_psp_08919A0C();
+    InitPad();
     func_psp_0891ACBC();
     func_psp_08930324();
     SetScreenMode(SCREEN_MODE_FULL);
