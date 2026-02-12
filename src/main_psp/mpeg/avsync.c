@@ -31,10 +31,10 @@ s32 avsync_delete(t_avSyncControl* pAvSync) {
     return 0;
 }
 
-s32 func_psp_08913CA0(t_avSyncControl* pAvSync) {
-    func_psp_08914E44(pAvSync->pDisp);
+s32 avsync_startAudioVideo(t_avSyncControl* pAvSync) {
+    dispbuf_startVideo(pAvSync->pDisp);
     if (pAvSync->pSound != NULL) {
-        func_psp_08916310(pAvSync->pSound);
+        soundbuf_startAudio(pAvSync->pSound);
     }
     return 0;
 }

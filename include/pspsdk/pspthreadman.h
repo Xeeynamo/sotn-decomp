@@ -506,14 +506,14 @@ typedef struct SceKernelSemaInfo {
  * @par Example:
  * @code
  * int semaid;
- * semaid = sceKernelCreateSema("MyMutex", 0, 1, 1, 0);
+ * semaid = sceKernelCreateSema("MyMutex", 0, 1, 1, NULL);
  * @endcode
  *
  * @param name - Specifies the name of the sema
  * @param attr - Sema attribute flags (normally set to 0)
  * @param initVal - Sema initial value 
  * @param maxVal - Sema maximum value
- * @param option - Sema options (normally set to 0)
+ * @param option - Sema options (normally set to NULL)
  * @return A semaphore id
  */
 SceUID sceKernelCreateSema(const char *name, SceUInt attr, int initVal, int maxVal, SceKernelSemaOptParam *option);

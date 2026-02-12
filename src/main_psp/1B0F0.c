@@ -30,59 +30,59 @@ static Picture wallpaper;
 static u8 D_psp_08B41F6C[0x30] UNUSED;
 static s32 D_psp_08B41F68;
 static u8* D_psp_08B41F64;
-static u16 D_psp_08B41F60;
-static SceCtrlData D_psp_08B41F50;
-static SceCtrlData D_psp_08B41F40;
+static u16 buttonsPressed;
+static SceCtrlData prevPad;
+static SceCtrlData thisPad;
 
 void* memalign(size_t, size_t);
 void func_psp_08919C4C(void);
-s32 func_psp_08933F7C(u8, u8);
+s32 MapJoystickToButtons(u8, u8);
 void func_psp_08919D98(Unk08919D98* arg0);
 
 void _init(void) {}
 
 void _fini(void) {}
 
-void func_psp_08919A0C(void) {
+void InitPad(void) {
     sceCtrlSetSamplingMode(PSP_CTRL_MODE_ANALOG);
-    sceCtrlReadBufferPositive(&D_psp_08B41F40, 1);
-    sceCtrlReadBufferPositive(&D_psp_08B41F50, 1);
+    sceCtrlReadBufferPositive(&thisPad, 1);
+    sceCtrlReadBufferPositive(&prevPad, 1);
 }
 
 static void UpdatePad(void) {
     u32 buttons = 0;
-    sceCtrlPeekBufferPositive(&D_psp_08B41F40, 1);
-    if (func_psp_08932790()) {
-        D_psp_08B41F40.Buttons &=
+    sceCtrlPeekBufferPositive(&thisPad, 1);
+    if (GetDxCUseAnalogStick()) {
+        thisPad.Buttons &=
             ~(PSP_CTRL_UP | PSP_CTRL_RIGHT | PSP_CTRL_DOWN | PSP_CTRL_LEFT);
-        if (!(D_psp_08B41F40.Buttons & PSP_CTRL_HOLD)) {
-            buttons = func_psp_08933F7C(D_psp_08B41F40.Lx, D_psp_08B41F40.Ly);
+        if (!(thisPad.Buttons & PSP_CTRL_HOLD)) {
+            buttons = MapJoystickToButtons(thisPad.Lx, thisPad.Ly);
         }
         if (buttons != 0) {
             sceKernelPowerTick(PSP_POWER_TICK_DISPLAY);
         }
-        D_psp_08B41F40.Buttons |= buttons;
+        thisPad.Buttons |= buttons;
     }
-    if (D_psp_08B41F40.TimeStamp != D_psp_08B41F50.TimeStamp) {
-        D_psp_08B41F60 = D_psp_08B41F40.Buttons & 0xFFFF;
-        D_psp_08B41F60 ^= D_psp_08B41F50.Buttons & 0xFFFF;
-        D_psp_08B41F60 &= D_psp_08B41F40.Buttons & 0xFFFF;
-        memcpy(&D_psp_08B41F50, &D_psp_08B41F40, sizeof(SceCtrlData));
+    if (thisPad.TimeStamp != prevPad.TimeStamp) {
+        buttonsPressed = thisPad.Buttons & 0xFFFF;
+        buttonsPressed ^= prevPad.Buttons & 0xFFFF;
+        buttonsPressed &= thisPad.Buttons & 0xFFFF;
+        memcpy(&prevPad, &thisPad, sizeof(SceCtrlData));
     }
 }
 
 u32 PadReadPSP(void) {
     u32 buttons;
     UpdatePad();
-    buttons = D_psp_08B41F40.Buttons & 0xFFFF;
+    buttons = thisPad.Buttons & 0xFFFF;
     return buttons;
 }
 
 u32 PadRead_PSP(void) { return PadReadPSP(); }
 
-void func_psp_08919C00(s32 arg0) {
+void func_psp_08919C00(s32 size) {
     func_psp_08919C4C();
-    D_psp_08B41F68 = arg0;
+    D_psp_08B41F68 = size;
     D_psp_08B41F64 = memalign(0x40, D_psp_08B41F68);
 }
 
@@ -96,7 +96,7 @@ void func_psp_08919C4C(void) {
 u8* func_psp_08919C8C(s32 arg0) {
     s32 sp10 = arg0;
     if (func_psp_08919CE4() < sp10) {
-        return 0;
+        return NULL;
     }
     return D_psp_08B41F64 + arg0;
 }

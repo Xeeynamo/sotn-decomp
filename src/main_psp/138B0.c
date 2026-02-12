@@ -7,39 +7,41 @@
 #include <pspumd.h>
 #include <psppower.h>
 
-typedef struct unkStruct {
-    char* unk0;
-    s32 unk4;
-} unkStruct;
+#define PLAY_NORMAL (0)
+#define PLAY_SKIP (1)
+#define PLAY_STOP (10)
 
-char D_psp_0893CD20[] = "DVDUMD_SAMPLE";
-char D_psp_0893CD30[] = PSP_UMD_ALIAS_NAME;
-char D_psp_0893CD38[] = "DVDUMD_CTRL";
+// BSS
+static s32 D_psp_08B1FB8C;
+static s32 D_psp_08B1FB88 UNUSED;
+static s32 playMode;
+static u32 D_psp_08B1FB80;
+static bool audioOn;
+static s32 D_psp_08B1FB78;
+static s32 D_psp_08B1FB74;
+static bool D_psp_08B1FB70;
+static s32 D_psp_08B1FB6C;
+static s32 D_psp_08B1FB68;
+static s32 D_psp_08B1FB64;
+static bool D_psp_08B1FB60;
+static s32 D_psp_08B1FB5C;
+static s32 D_psp_08B1FB58;
+static s32 D_psp_08B1FB54;
+static s32 umd_cb;
+
 extern s32 g_drawWallpaperBackground;
-extern s32 D_psp_08B1FB54;
-extern s32 D_psp_08B1FB58;
-extern s32 D_psp_08B1FB5C;
-extern s32 D_psp_08B1FB60;
-extern s32 D_psp_08B1FB64;
-extern s32 D_psp_08B1FB68;
-extern s32 D_psp_08B1FB6C;
-extern s32 D_psp_08B1FB70;
 extern s32 D_psp_08B41FF0;
-extern volatile s32 D_psp_08B1FB50;
-extern s32 D_psp_08B1FB7C;
-extern char D_psp_0893CDB8[];
-extern char D_psp_0893CDC8[];
-extern char D_psp_0893CDD4[];
-extern u32 D_psp_08B1FB80;
-extern s32 D_psp_08B1FB84;
-extern s32 D_psp_08B42010;
-extern s32 D_psp_08B42020;
-extern s32 D_psp_08B42030;
-extern unkStruct D_psp_0893CD98[];
+extern s32 dispThread;
+extern s32 readThread;
+extern s32 soundThread;
+extern s32 power_cb;
 
-void func_psp_089144BC(void);
+s32 dispbuf_func(s32 args, void* argp);
+s32 read_func(s32 args, void* argp);
+s32 soundbuf_func(s32 args, void* argp);
+s32 ringbufferCallBack(void* pBuf, s32 iNum, void* CallbackData);
 
-s32 func_psp_089121BC(s32 count, s32 arg, void* param) {
+s32 umd_func(s32 count, s32 arg, void* param) {
     D_psp_08B1FB58 = arg;
     if (arg & PSP_UMD_MEDIA_IN) {
         D_psp_08B1FB54 |= 1;
@@ -60,18 +62,19 @@ s32 func_psp_089121BC(s32 count, s32 arg, void* param) {
 void func_psp_0891228C(void) {
     volatile s32 ret;
 
-    D_psp_08B1FB50 =
-        sceKernelCreateCallback(D_psp_0893CD20, func_psp_089121BC, NULL);
-    D_psp_08B1FB50;
-    ret = sceUmdRegisterUMDCallBack(D_psp_08B1FB50);
+    umd_cb = sceKernelCreateCallback("DVDUMD_SAMPLE", umd_func, NULL);
+    if (umd_cb < 0) {
+        umd_cb;
+    }
+    ret = sceUmdRegisterUMDCallBack(umd_cb);
     ret;
     if (sceUmdCheckMedium() == 0) {
         sceUmdWaitDriveStatCB(PSP_UMD_MEDIA_IN, 0);
     }
-    ret = sceUmdActivate(PSP_UMD_MODE_POWERON, D_psp_0893CD30);
+    ret = sceUmdActivate(PSP_UMD_MODE_POWERON, PSP_UMD_ALIAS_NAME);
     if (ret < 0) {
-        sceUmdUnRegisterUMDCallBack(D_psp_08B1FB50);
-        sceKernelDeleteCallback(D_psp_08B1FB50);
+        sceUmdUnRegisterUMDCallBack(umd_cb);
+        sceKernelDeleteCallback(umd_cb);
     }
     D_psp_08B1FB5C = 1;
     sceUmdWaitDriveStatCB(PSP_UMD_READABLE, 0);
@@ -121,31 +124,31 @@ void func_psp_0891249C(void) {
     D_psp_08B1FB5C = 0;
     func_psp_0891228C();
     sp18 = sceKernelCreateThread(
-        D_psp_0893CD38, func_psp_08912398, 0x32, 0x1000, 0, NULL);
+        "DVDUMD_CTRL", func_psp_08912398, 0x32, 0x1000, 0, NULL);
     sp18;
     D_psp_08B41FF0 = sp18;
     sp1C = sceKernelStartThread(D_psp_08B41FF0, 0, 0);
     sp1C;
 }
 
-s32 func_psp_08912530(s32 count, s32 arg, void* param) {
+s32 power_func(s32 count, s32 arg, void* param) {
     if (arg & PSP_POWER_CB_POWER_SWITCH) {
-        D_psp_08B1FB70 = 1;
+        D_psp_08B1FB70 = true;
     }
     if (arg & PSP_POWER_CB_HOLD_SWITCH) {
     }
     if (arg & PSP_POWER_CB_STANDBY) {
     }
     if (arg & PSP_POWER_CB_RESUME_COMPLETE) {
-        D_psp_08B1FB70 = 0;
-        D_psp_08B1FB60 = 0;
+        D_psp_08B1FB70 = false;
+        D_psp_08B1FB60 = false;
         D_psp_08B1FB64++;
     }
     if (arg & PSP_POWER_CB_RESUMING) {
-        D_psp_08B1FB60 = 1;
+        D_psp_08B1FB60 = true;
     }
     if (arg & PSP_POWER_CB_SUSPENDING) {
-        D_psp_08B1FB60 = 1;
+        D_psp_08B1FB60 = true;
     }
     return 0;
 }
@@ -157,29 +160,63 @@ void func_psp_08912608(void) {
     D_psp_08B1FB6C++;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_08912640);
+void func_psp_08912640(void) {
+    volatile s32* var_s0;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_0891269C);
+    if (D_psp_08B1FB6C <= 0) {
+        var_s0 = &D_psp_08B1FB6C;
+        *var_s0;
+    }
+    D_psp_08B1FB6C--;
+    sceKernelPowerUnlock(0);
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_0891273C);
+void func_psp_0891269C(void) {
+    volatile s32 ret;
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_0891274C);
+    D_psp_08B1FB60 = false;
+    D_psp_08B1FB64 = 0;
+    power_cb = sceKernelCreateCallback("DVDUMD_SAMPLE", power_func, NULL);
+    if (power_cb < 0) {
+        power_cb;
+    }
+    ret = scePowerRegisterCallback(0, power_cb);
+    ret;
+    D_psp_08B1FB6C = 0;
+    D_psp_08B1FB68 = sceKernelCreateSema("p_off_lock_sema", 0, 1, 1, NULL);
+}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_0891275C);
+void func_psp_0891273C(void) { D_psp_08B1FB74 = 0; }
+
+void func_psp_0891274C(void) { D_psp_08B1FB8C = 0; }
+
+s32 func_psp_0891275C(s32 arg0) {
+    s32 ret;
+
+    ret = func_psp_08919C8C(D_psp_08B1FB8C);
+    D_psp_08B1FB8C += ((arg0 + 0x3FU) / 0x40) * 0x40;
+    if (func_psp_08919C8C(D_psp_08B1FB8C) == 0) {
+    }
+    return ret;
+}
 
 void func_psp_089127D8(void* arg0) {}
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", func_psp_089127E8);
+void func_psp_089127E8(void) {
+    dispThread = -1;
+    readThread = -1;
+    soundThread = -1;
+}
 
 s32 func_psp_08912814(void) { return 0x5333; }
 
-s32 func_psp_08912820(s32 arg0, s32 arg1) {
-    s32 temp_s0;
+s32 func_psp_08912820(s32 movieIdx, s32 skipButton) {
+    s32 ret;
 
     func_psp_0892A8C0();
     DrawSync(0);
     VSync(0);
-    temp_s0 = func_psp_089128C4(arg0, arg1);
+    ret = func_psp_089128C4(movieIdx, skipButton);
     g_drawWallpaperBackground = 2;
     func_psp_08910044();
     func_psp_0891A800();
@@ -187,29 +224,36 @@ s32 func_psp_08912820(s32 arg0, s32 arg1) {
     func_psp_089144BC();
     func_psp_089144BC();
     func_psp_089144BC();
-    return temp_s0;
+    return ret;
 }
 
-s32 dispbuf_func(s32 args, void* argp);
-s32 read_func(s32 args, void* argp);
-s32 soundbuf_func(s32 args, void* argp);
-s32 ringbufferCallBack(void* pBuf, s32 iNum, void* CallbackData);
+typedef struct unkStruct {
+    char* unk0;
+    bool usesAudio;
+} unkStruct;
 
-s32 func_psp_089128C4(s32 arg0, s32 arg1) {
+static unkStruct D_psp_0893CD98[] = {
+    {"MOVIE/logo.pmf;1", true},
+    {"MOVIE/no2.pmf;1", true},
+    {"MOVIE/no3.pmf;1", true},
+    {"MOVIE/no4.pmf;1", true},
+};
+
+s32 func_psp_089128C4(s32 movieIdx, s32 skipButton) {
     SceMpeg mpeg;
     SceMpegRingbuffer ringbuf;
     SceMpegStream* pStream[2];
     SceMpegAu avcAu;
     SceMpegAu atracAu;
     char filename[0x200];
+
     StrFile strFile;
-    s32 bufferSize[1];
-    s32 workSize[1];
-    s32 fileSize;
-    s32 audioEsSize;
-    s32 audioOutSize;
+
+    s32 bufferSize[1], workSize[1], fileSize;
+    s32 audioEsSize, audioOutSize;
     s32 streamOffset;
     s32 ret[1];
+
     t_displayBuffer pDisp;
     t_ringBuffer pRing;
     t_soundBuffer pSound;
@@ -219,22 +263,22 @@ s32 func_psp_089128C4(s32 arg0, s32 arg1) {
     SceMpegAvcMode decodeMode;
     s32 var_s7;
     char* temp_s6;
-    unkStruct* temp_s4;
+    unkStruct* ptr;
 
     u8* avcEsBuf;
     u8* pPSPStream;
     u8* pWorkBuf;
     u8* pAudioBuf;
 
-    temp_s4 = &D_psp_0893CD98[arg0];
+    ptr = &D_psp_0893CD98[movieIdx];
     memset(&pRing, 0, sizeof(t_ringBuffer));
     func_psp_0891274C();
     avcEsBuf = NULL;
     pPSPStream = NULL;
     pWorkBuf = NULL;
     pAudioBuf = NULL;
-    temp_s6 = temp_s4->unk0;
-    D_psp_08B1FB7C = temp_s4->unk4;
+    temp_s6 = ptr->unk0;
+    audioOn = ptr->usesAudio;
     decodeMode.iUnk0 = -1;
     decodeMode.iPixelFormat = 3;
     ret[0] = sceMpegInit();
@@ -332,7 +376,7 @@ s32 func_psp_089128C4(s32 arg0, s32 arg1) {
         0;
         goto label1;
     }
-    if (D_psp_08B1FB7C != 0) {
+    if (audioOn) {
         pStream[1] = sceMpegRegistStream(&mpeg, 1, 0);
         if (pStream[1] == NULL) {
             0;
@@ -349,7 +393,7 @@ s32 func_psp_089128C4(s32 arg0, s32 arg1) {
         0;
         goto label1;
     }
-    if (D_psp_08B1FB7C != 0) {
+    if (audioOn) {
         ret[0] = sceMpegQueryAtracEsSize(&mpeg, &audioEsSize, &audioOutSize);
         if (ret[0] != 0) {
             0;
@@ -374,7 +418,7 @@ s32 func_psp_089128C4(s32 arg0, s32 arg1) {
         0;
         goto label2;
     }
-    if (D_psp_08B1FB7C != 0) {
+    if (audioOn) {
         if (soundbuf_create(&pSound, audioOutSize, 4, func_psp_08912814()) <
             0) {
             0;
@@ -385,7 +429,7 @@ s32 func_psp_089128C4(s32 arg0, s32 arg1) {
         0;
         goto label4;
     }
-    if (D_psp_08B1FB7C != 0) {
+    if (audioOn) {
         if (avsync_create(&pAvSync, &pDisp, &pSound, 3) < 0) {
             0;
             goto label5;
@@ -397,77 +441,77 @@ s32 func_psp_089128C4(s32 arg0, s32 arg1) {
         }
     }
     sceKernelChangeThreadPriority(sceKernelGetThreadId(), 0x40);
-    D_psp_08B42010 =
-        sceKernelCreateThread(D_psp_0893CDB8, dispbuf_func, 0x3F, 0x2000, 0, 0);
-    D_psp_08B42020 =
-        sceKernelCreateThread(D_psp_0893CDC8, read_func, 0x41, 0x2000, 0, 0);
-    if (D_psp_08B1FB7C != 0) {
-        D_psp_08B42030 = sceKernelCreateThread(
-            D_psp_0893CDD4, soundbuf_func, 0x3D, 0x2000, 0, 0);
+    dispThread = sceKernelCreateThread(
+        "displayThread", dispbuf_func, 0x3F, 0x2000, 0, 0);
+    readThread =
+        sceKernelCreateThread("readThread", read_func, 0x41, 0x2000, 0, 0);
+    if (audioOn) {
+        soundThread = sceKernelCreateThread(
+            "soundThread", soundbuf_func, 0x3D, 0x2000, 0, 0);
     }
-    D_psp_08B1FB84 = 0;
-    if (D_psp_08B1FB7C != 0) {
+    playMode = PLAY_NORMAL;
+    if (audioOn) {
         soundbuf_reset(&pSound);
     }
     dispbuf_reset(&pDisp);
     read_reset(&pRing, fileSize, streamOffset);
     avsync_reset(&pAvSync);
-    if (D_psp_08B1FB7C != 0) {
-        sceKernelStartThread(D_psp_08B42030, sizeof(t_avSyncControl), &pAvSync);
+    if (audioOn) {
+        sceKernelStartThread(soundThread, sizeof(t_avSyncControl), &pAvSync);
     }
-    sceKernelStartThread(D_psp_08B42010, sizeof(t_avSyncControl), &pAvSync);
-    sceKernelStartThread(D_psp_08B42020, sizeof(t_ringBuffer), &pRing);
-    if ((ret[0] = playMovie(
-             &mpeg, &ringbuf, &pStreamData, &pRing, &pAvSync, arg1)) != 0) {
-        if (D_psp_08B1FB84 == 1) {
+    sceKernelStartThread(dispThread, sizeof(t_avSyncControl), &pAvSync);
+    sceKernelStartThread(readThread, sizeof(t_ringBuffer), &pRing);
+    if ((ret[0] = playMovie(&mpeg, &ringbuf, &pStreamData, &pRing, &pAvSync,
+                            skipButton)) != 0) {
+        if (playMode == PLAY_SKIP) {
             if (sceMpegFlushAllStream(&mpeg) != 0) {
                 0;
                 goto label6;
             }
-            D_psp_08B1FB84 = 0;
+            playMode = PLAY_NORMAL;
         } else {
-            if (D_psp_08B1FB84 == 0xA) {
+            if (playMode == PLAY_STOP) {
                 0;
                 goto label6;
             }
         }
     }
-    if (D_psp_08B1FB7C != 0) {
-        sceKernelWaitThreadEnd(D_psp_08B42030, NULL);
+    if (audioOn) {
+        sceKernelWaitThreadEnd(soundThread, NULL);
     }
-    sceKernelWaitThreadEnd(D_psp_08B42010, NULL);
-    sceKernelWaitThreadEnd(D_psp_08B42020, NULL);
+    sceKernelWaitThreadEnd(dispThread, NULL);
+    sceKernelWaitThreadEnd(readThread, NULL);
 label6:
-    if (D_psp_08B1FB7C != 0) {
-        sceKernelWaitThreadEnd(D_psp_08B42030, NULL);
+    if (audioOn) {
+        sceKernelWaitThreadEnd(soundThread, NULL);
     }
-    sceKernelWaitThreadEnd(D_psp_08B42010, NULL);
-    sceKernelWaitThreadEnd(D_psp_08B42020, NULL);
-    if (D_psp_08B1FB7C != 0) {
-        sceKernelTerminateDeleteThread(D_psp_08B42030);
-        D_psp_08B42030 = -1;
+    sceKernelWaitThreadEnd(dispThread, NULL);
+    sceKernelWaitThreadEnd(readThread, NULL);
+    if (audioOn) {
+        sceKernelTerminateDeleteThread(soundThread);
+        soundThread = -1;
     }
-    sceKernelTerminateDeleteThread(D_psp_08B42010);
-    D_psp_08B42010 = -1;
-    sceKernelTerminateDeleteThread(D_psp_08B42020);
-    D_psp_08B42020 = -1;
+    sceKernelTerminateDeleteThread(dispThread);
+    dispThread = -1;
+    sceKernelTerminateDeleteThread(readThread);
+    readThread = -1;
 label5:
     avsync_delete(&pAvSync);
 label4:
     read_delete(&pRing);
 label3:
-    if (D_psp_08B1FB7C != 0) {
+    if (audioOn) {
         soundbuf_delete(&pSound);
     }
 label2:
     dispbuf_delete(&pDisp);
 label1:
-    if (D_psp_08B1FB7C != 0) {
+    if (audioOn) {
         pAudioBuf = NULL;
     }
     sceMpegFreeAvcEsBuf(&mpeg, avcEsBuf);
     sceMpegUnRegistStream(&mpeg, pStream[0]);
-    if (D_psp_08B1FB7C != 0) {
+    if (audioOn) {
         sceMpegUnRegistStream(&mpeg, pStream[1]);
     }
 label0:
@@ -496,26 +540,26 @@ s32 func_psp_089132C8(t_avSyncControl* pAvSync, t_ringBuffer* pRing) {
     return ret;
 }
 
-s32 func_psp_08913314(t_avSyncControl* pAvSync, t_ringBuffer* pRing) {
-    s32 var_s0;
+s32 startCheck(t_avSyncControl* pAvSync, t_ringBuffer* pRing) {
+    s32 ret;
 
-    if (D_psp_08B1FB7C != 0) {
+    if (audioOn) {
         if (dispbuf_getCapacity(pAvSync->pDisp) == 0 &&
             soundbuf_getCapacity(pAvSync->pSound) == 0) {
-            func_psp_08913CA0(pAvSync);
-            var_s0 = 1;
+            avsync_startAudioVideo(pAvSync);
+            ret = 1;
         } else {
-            var_s0 = -1;
+            ret = -1;
         }
     } else {
         if (dispbuf_getCapacity(pAvSync->pDisp) == 0) {
-            func_psp_08913CA0(pAvSync);
-            var_s0 = 0;
+            avsync_startAudioVideo(pAvSync);
+            ret = 0;
         } else {
-            var_s0 = -1;
+            ret = -1;
         }
     }
-    return var_s0;
+    return ret;
 }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/138B0", playMovie);
@@ -552,9 +596,9 @@ term:
     return ret;
 }
 
-s32 func_psp_08913B48(t_displayBuffer* pDisp, s32 arg1) {
-    if (arg1 & PadReadPSP()) {
-        D_psp_08B1FB84 = 1;
+s32 pad_read(t_displayBuffer* pDisp, s32 skipButton) {
+    if (skipButton & PadReadPSP()) {
+        playMode = PLAY_SKIP;
         return 1;
     }
     return 0;
