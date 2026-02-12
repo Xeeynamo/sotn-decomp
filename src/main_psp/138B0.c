@@ -20,7 +20,7 @@ static bool audioOn;
 static s32 D_psp_08B1FB78;
 static s32 D_psp_08B1FB74;
 static bool D_psp_08B1FB70;
-static s32 D_psp_08B1FB6C;
+static s32 powerLockCount;
 static s32 D_psp_08B1FB68;
 static s32 D_psp_08B1FB64;
 static bool D_psp_08B1FB60;
@@ -155,19 +155,19 @@ s32 power_func(s32 count, s32 arg, void* param) {
 
 s32 func_psp_089125F8(void) { return D_psp_08B1FB64; }
 
-void func_psp_08912608(void) {
+void LockPowerSwitch(void) {
     sceKernelPowerLock(0);
-    D_psp_08B1FB6C++;
+    powerLockCount++;
 }
 
-void func_psp_08912640(void) {
+void UnlockPowerSwitch(void) {
     volatile s32* var_s0;
 
-    if (D_psp_08B1FB6C <= 0) {
-        var_s0 = &D_psp_08B1FB6C;
+    if (powerLockCount <= 0) {
+        var_s0 = &powerLockCount;
         *var_s0;
     }
-    D_psp_08B1FB6C--;
+    powerLockCount--;
     sceKernelPowerUnlock(0);
 }
 
@@ -182,7 +182,7 @@ void func_psp_0891269C(void) {
     }
     ret = scePowerRegisterCallback(0, power_cb);
     ret;
-    D_psp_08B1FB6C = 0;
+    powerLockCount = 0;
     D_psp_08B1FB68 = sceKernelCreateSema("p_off_lock_sema", 0, 1, 1, NULL);
 }
 
@@ -442,12 +442,12 @@ s32 func_psp_089128C4(s32 movieIdx, s32 skipButton) {
     }
     sceKernelChangeThreadPriority(sceKernelGetThreadId(), 0x40);
     dispThread = sceKernelCreateThread(
-        "displayThread", dispbuf_func, 0x3F, 0x2000, 0, 0);
+        "displayThread", dispbuf_func, 0x3F, 0x2000, 0, NULL);
     readThread =
-        sceKernelCreateThread("readThread", read_func, 0x41, 0x2000, 0, 0);
+        sceKernelCreateThread("readThread", read_func, 0x41, 0x2000, 0, NULL);
     if (audioOn) {
         soundThread = sceKernelCreateThread(
-            "soundThread", soundbuf_func, 0x3D, 0x2000, 0, 0);
+            "soundThread", soundbuf_func, 0x3D, 0x2000, 0, NULL);
     }
     playMode = PLAY_NORMAL;
     if (audioOn) {

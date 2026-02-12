@@ -137,13 +137,13 @@ s32 ringbufferCallBack(void* pBuf, s32 iNum, void* CallbackData) {
     if (temp_s0->unk2C < func_psp_089125F8()) {
         return -3;
     }
-    func_psp_08912608();
+    LockPowerSwitch();
     if (func_psp_089123B8() == 0 || D_psp_08B1FBC8 != func_psp_089125F8()) {
-        func_psp_08912640();
+        UnlockPowerSwitch();
         return -3;
     }
     iReadSize = func_psp_0891689C(pStrFile, pBuf, iTypeSize * iNum);
-    func_psp_08912640();
+    UnlockPowerSwitch();
     if (iReadSize > 0) {
         func_psp_0891535C(temp_s0, iReadSize);
         temp_s0->unk24 = 0;
@@ -195,23 +195,23 @@ s32 read_func(s32 args, void* argp) {
                     pStrFile->unk4 = 1;
                 }
                 if (pStrFile->unk4 == 1 || pStrFile->fd == -1) {
-                    func_psp_08912608();
+                    LockPowerSwitch();
                     if ((D_psp_08B1FBD8 = func_psp_08916724(
                              pStrFile, &pStrFile->unk16, PSP_O_RDONLY)) >= 0) {
                         pStrFile->unk4 = 2;
                     }
-                    func_psp_08912640();
+                    UnlockPowerSwitch();
                     continue;
                 }
                 if (pStrFile->unk4 == 2) {
-                    func_psp_08912608();
+                    LockPowerSwitch();
                     if ((D_psp_08B1FBD8 = func_psp_089168E8(
                              pStrFile, D_psp_08B1FBD4->unk8, PSP_SEEK_SET)) >=
                         0) {
                         D_psp_08B1FBC8 = func_psp_089125F8();
                         pStrFile->unk4 = 0;
                     }
-                    func_psp_08912640();
+                    UnlockPowerSwitch();
                     continue;
                 }
             }
