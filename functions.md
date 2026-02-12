@@ -92,6 +92,8 @@
 | dra    | MemcardInit                          |        9 |          1 |        |       |     |
 | main   | func_psp_08910088                    |        9 |          1 |        |       |     |
 | main   | func_psp_089125F8                    |        9 |          1 |        |       |     |
+| main   | func_psp_0891273C                    |        9 |          1 |        |       |     |
+| main   | func_psp_0891274C                    |        9 |          1 |        |       |     |
 | main   | func_psp_089127D8                    |        9 |          1 |        |       |     |
 | main   | func_psp_08919560                    |        9 |          1 |        |       |     |
 | main   | func_psp_08919CE4                    |        9 |          1 |        |       |     |
@@ -121,8 +123,6 @@
 | main   | waitPlayMode                         |        9 |          1 |        |       |     |
 | main   | func_psp_0892CB30                    |        9 |          1 |        |       |     |
 | main   | func_psp_08930A0C                    |        9 |          1 |        |       |     |
-| main   | func_psp_0891273C                    |        9 |          1 |        |       |     |
-| main   | func_psp_0891274C                    |        9 |          1 |        |       |     |
 | main   | func_psp_08933F5C                    |        9 |          1 |        |       |     |
 | main   | func_psp_08933F6C                    |        9 |          1 |        |       |     |
 | main   | sceGuClearDepth                      |        9 |          1 |        |       |     |
@@ -432,6 +432,7 @@
 | main   | func_psp_08910720                    |       16 |          1 |        |       |     |
 | main   | func_psp_0891074C                    |       16 |          1 |        |       |     |
 | main   | func_psp_08910778                    |       16 |          1 |        |       |     |
+| main   | func_psp_089127E8                    |       16 |          1 |        |       |     |
 | main   | SetLineG2                            |       16 |          1 |        |       |     |
 | main   | SetPolyG4                            |       16 |          1 |        |       |     |
 | main   | SetPolyGT3                           |       16 |          1 |        |       |     |
@@ -441,7 +442,6 @@
 | main   | SetTile                              |       16 |          1 |        |       |     |
 | main   | func_psp_08932728                    |       16 |          1 |        |       |     |
 | main   | dispbuf_setMode                      |       16 |          1 |        |       |     |
-| main   | func_psp_089127E8                    |       16 |          1 |        |       |     |
 | main   | func_psp_0892A0C4                    |       16 |          1 |        |       |     |
 | main   | sceGuTexFilter                       |       16 |          1 |        |       |     |
 | main   | sceGuTexSlope                        |       16 |          1 |        |       |     |
@@ -984,7 +984,7 @@
 | dra    | func_psp_09140D68                    |       26 |          4 |        |       |     |
 | main   | _sceGuCallbackFinish                 |       26 |          4 |        |       |     |
 | main   | func_psp_089132C8                    |       26 |          4 |        |       |     |
-| main   | func_psp_08913CA0                    |       26 |          4 |        |       |     |
+| main   | avsync_startAudioVideo               |       26 |          4 |        |       |     |
 | main   | func_psp_08914FFC                    |       26 |          4 |        |       |     |
 | main   | __getreent                           |       26 |          4 |        |       |     |
 | main   | func_psp_08916CA4                    |       26 |          4 |        |       |     |
@@ -1029,7 +1029,7 @@
 | main   | func_psp_08916EC0                    |       27 |          3 |        |       |     |
 | ric    | func_pspeu_092AF5A8                  |       27 |          3 |        |       |     |
 | sel    | func_psp_092395E8                    |       27 |          3 |        |       |     |
-| main   | func_psp_08913B48                    |       27 |          4 |        |       |     |
+| main   | pad_read                             |       27 |          4 |        |       |     |
 | main   | func_psp_08914B08                    |       27 |          4 |        |       |     |
 | main   | func_psp_08935BD0                    |       27 |          4 |        |       |     |
 | are    | func_pspeu_092500B0                  |       27 |          4 |        |       |     |
@@ -1383,8 +1383,8 @@
 | main   | func_psp_08911F24                    |       36 |          1 |        |       |     |
 | dra    | func_psp_0910F128                    |       36 |          2 |        |       |     |
 | main   | soundbuf_setPts                      |       36 |          2 |        |       |     |
-| main   | wcsrtombs                            |       36 |          3 |        |       |     |
 | main   | func_psp_0891275C                    |       36 |          3 |        |       |     |
+| main   | wcsrtombs                            |       36 |          3 |        |       |     |
 | no4    | func_pspeu_0923D428                  |       36 |          3 |        |       |     |
 | dra    | func_psp_09103DF0                    |       36 |          4 |        |       |     |
 | dra    | func_psp_0910BC00                    |       36 |          4 |        |       |     |
@@ -1813,8 +1813,8 @@
 | main   | func_psp_0892CF90                    |       45 |          3 |        |       |     |
 | no2    | func_pspeu_09254960                  |       45 |          3 |        |       |     |
 | np3    | func_801CE1E8                        |       45 |          3 |        |       |     |
-| main   | __sinit                              |       45 |          4 |        |       |     |
 | main   | func_psp_0891269C                    |       45 |          4 |        |       |     |
+| main   | __sinit                              |       45 |          4 |        |       |     |
 | main   | _sceGuCallbackSignal                 |       45 |          5 |        |       |     |
 | main   | func_psp_08935C28                    |       45 |          5 |        |       |     |
 | maria  | func_pspeu_092BF8B8                  |       45 |          5 |        |       |     |
@@ -2155,7 +2155,7 @@
 | dra    | func_psp_09109140                    |       57 |          9 |        |       |     |
 | dra    | MemcardReadFile                      |       57 |          9 |        |       |     |
 | main   | func_psp_08919E6C                    |       57 |          9 |        |       |     |
-| main   | func_psp_08913314                    |       57 |         13 |        |       |     |
+| main   | startCheck                           |       57 |         13 |        |       |     |
 | dra    | func_psp_090E80E0                    |       57 |         15 |        |       |     |
 | are    | func_pspeu_09247060                  |       58 |          4 |        |       |     |
 | no2    | func_pspeu_0924EAC8                  |       58 |          4 |        |       |     |
