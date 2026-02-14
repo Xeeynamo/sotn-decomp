@@ -175,16 +175,16 @@ s32 func_psp_08937658(char* file, void* buf) {
 }
 
 s32 func_psp_08937740(char* file, void* buf) {
-    s32 ret = 0;
-    bool var_s1 = false;
+    s32 size = 0;
+    bool ret = false;
 
-    ret = func_psp_08937658(file, buf);
-    if (ret > 0) {
+    size = func_psp_08937658(file, buf);
+    if (size > 0) {
         func_psp_08937650(buf);
-        func_psp_089375C0(buf, ret);
-        var_s1 = true;
+        func_psp_089375C0(buf, size);
+        ret = true;
     }
-    return var_s1;
+    return ret;
 }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36174", func_psp_089377B8);

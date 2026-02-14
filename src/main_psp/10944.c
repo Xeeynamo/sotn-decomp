@@ -30,10 +30,10 @@ s32 func_psp_0890F300(char* file, SceIoStat* stat) {
     s32 ret;
 
     sceKernelDelayThreadCB(1);
-    func_psp_08912608();
+    LockPowerSwitch();
     sceKernelDelayThreadCB(1);
     ret = sceIoGetstat(file, stat);
-    func_psp_08912640();
+    UnlockPowerSwitch();
     sceKernelDelayThreadCB(1);
     return ret;
 }
@@ -42,10 +42,10 @@ s32 func_psp_0890F374(s32 fd) {
     s32 ret;
 
     sceKernelDelayThreadCB(1);
-    func_psp_08912608();
+    LockPowerSwitch();
     sceKernelDelayThreadCB(1);
     ret = sceIoClose(fd);
-    func_psp_08912640();
+    UnlockPowerSwitch();
     sceKernelDelayThreadCB(1);
     return ret;
 }
@@ -54,10 +54,10 @@ s32 func_psp_0890F3E0(char* file, s32 flags, s32 mode) {
     s32 ret;
 
     sceKernelDelayThreadCB(1);
-    func_psp_08912608();
+    LockPowerSwitch();
     sceKernelDelayThreadCB(1);
     ret = sceIoOpenAsync(file, flags, mode);
-    func_psp_08912640();
+    UnlockPowerSwitch();
     sceKernelDelayThreadCB(1);
     return ret;
 }
@@ -66,10 +66,10 @@ s32 func_psp_0890F45C(s32 fd, s64 offset, s32 whence) {
     s32 ret;
 
     sceKernelDelayThreadCB(1);
-    func_psp_08912608();
+    LockPowerSwitch();
     sceKernelDelayThreadCB(1);
     ret = sceIoLseekAsync(fd, offset, whence);
-    func_psp_08912640();
+    UnlockPowerSwitch();
     sceKernelDelayThreadCB(1);
     return ret;
 }
@@ -78,10 +78,10 @@ s32 func_psp_0890F4E0(s32 fd, void* buf, u32 nbyte) {
     s32 ret;
 
     sceKernelDelayThreadCB(1);
-    func_psp_08912608();
+    LockPowerSwitch();
     sceKernelDelayThreadCB(1);
     ret = sceIoReadAsync(fd, buf, nbyte);
-    func_psp_08912640();
+    UnlockPowerSwitch();
     sceKernelDelayThreadCB(1);
     return ret;
 }
@@ -90,10 +90,10 @@ s32 func_psp_0890F55C(s32 fd, s64* result) {
     s32 ret;
 
     sceKernelDelayThreadCB(1);
-    func_psp_08912608();
+    LockPowerSwitch();
     sceKernelDelayThreadCB(1);
     ret = sceIoPollAsync(fd, result);
-    func_psp_08912640();
+    UnlockPowerSwitch();
     sceKernelDelayThreadCB(1);
     return ret;
 }

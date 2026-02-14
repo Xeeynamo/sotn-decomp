@@ -153,7 +153,7 @@ void func_psp_0892BFD8(unkStruct2* arg0) {
     func_psp_0892CAD8();
     D_psp_08DAE784 = 1;
     D_psp_089632C8 = sceKernelCreateThread(
-        D_psp_089632CC, func_psp_0892CB40, 0x10, 0x1000, 0, 0);
+        D_psp_089632CC, func_psp_0892CB40, 0x10, 0x1000, 0, NULL);
     sceKernelStartThread(D_psp_089632C8, 0, 0);
 }
 

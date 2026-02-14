@@ -496,8 +496,8 @@ void HandlePlay(void) {
         PlaySfx(SET_UNK_0B);
         MuteSound();
 #ifdef VERSION_PSP
-        func_psp_0892A620(0, 1);
-        func_psp_0892A620(1, 1);
+        func_psp_0892A620(0, true);
+        func_psp_0892A620(1, true);
 #endif
         if (D_80097C98 & 0x80000000) {
             func_800E4970();
@@ -532,8 +532,8 @@ void HandlePlay(void) {
         }
         if (D_80097C98 & 0x08000000) {
 #ifdef VERSION_PSP
-            func_psp_0892A620(0, 1);
-            func_psp_0892A620(1, 1);
+            func_psp_0892A620(0, true);
+            func_psp_0892A620(1, true);
 #endif
             func_800E4970();
             return;

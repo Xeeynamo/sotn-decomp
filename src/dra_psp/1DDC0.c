@@ -536,7 +536,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
 
     s32 var_a0;
     s32 i;
-    s32 var_s2;
+    s32 ovlIndex;
     s32 var_s1;
     s32 var_s0;
     s32 var_s6;
@@ -545,163 +545,163 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     u32* dst;
 
     g_SimFile = &D_800A024C[fileId];
-    var_s2 = -1;
+    ovlIndex = -1;
     if (type == SimFileType_StagePrg) {
         if (strcmp(g_StagesLba[g_StageId].ovlName, "SEL") == 0) {
-            var_s2 = 1;
+            ovlIndex = 1;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "ST0") == 0) {
-            var_s2 = 2;
+            ovlIndex = 2;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "ARE") == 0) {
-            var_s2 = 3;
+            ovlIndex = 3;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "CAT") == 0) {
-            var_s2 = 4;
+            ovlIndex = 4;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "CEN") == 0) {
-            var_s2 = 5;
+            ovlIndex = 5;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "CHI") == 0) {
-            var_s2 = 6;
+            ovlIndex = 6;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "DAI") == 0) {
-            var_s2 = 7;
+            ovlIndex = 7;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "DRE") == 0) {
-            var_s2 = 8;
+            ovlIndex = 8;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "LIB") == 0) {
-            var_s2 = 9;
+            ovlIndex = 9;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "NO0") == 0) {
-            var_s2 = 0xA;
+            ovlIndex = 0xA;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "NO1") == 0) {
-            var_s2 = 0xB;
+            ovlIndex = 0xB;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "NO2") == 0) {
-            var_s2 = 0xC;
+            ovlIndex = 0xC;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "NO3") == 0) {
-            var_s2 = 0xD;
+            ovlIndex = 0xD;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "NO4") == 0) {
-            var_s2 = 0xE;
+            ovlIndex = 0xE;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "NP3") == 0) {
-            var_s2 = 0xF;
+            ovlIndex = 0xF;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "NZ0") == 0) {
-            var_s2 = 0x10;
+            ovlIndex = 0x10;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "NZ1") == 0) {
-            var_s2 = 0x11;
+            ovlIndex = 0x11;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "TOP") == 0) {
-            var_s2 = 0x12;
+            ovlIndex = 0x12;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "WRP") == 0) {
-            var_s2 = 0x13;
+            ovlIndex = 0x13;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RARE") == 0) {
-            var_s2 = 0x14;
+            ovlIndex = 0x14;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RCAT") == 0) {
-            var_s2 = 0x15;
+            ovlIndex = 0x15;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RCEN") == 0) {
-            var_s2 = 0x16;
+            ovlIndex = 0x16;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RCHI") == 0) {
-            var_s2 = 0x17;
+            ovlIndex = 0x17;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RDAI") == 0) {
-            var_s2 = 0x18;
+            ovlIndex = 0x18;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RLIB") == 0) {
-            var_s2 = 0x19;
+            ovlIndex = 0x19;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RNO0") == 0) {
-            var_s2 = 0x1A;
+            ovlIndex = 0x1A;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RNO1") == 0) {
-            var_s2 = 0x1B;
+            ovlIndex = 0x1B;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RNO2") == 0) {
-            var_s2 = 0x1C;
+            ovlIndex = 0x1C;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RNO3") == 0) {
-            var_s2 = 0x1D;
+            ovlIndex = 0x1D;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RNO4") == 0) {
-            var_s2 = 0x1E;
+            ovlIndex = 0x1E;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RNZ0") == 0) {
-            var_s2 = 0x1F;
+            ovlIndex = 0x1F;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RNZ1") == 0) {
-            var_s2 = 0x20;
+            ovlIndex = 0x20;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RTOP") == 0) {
-            var_s2 = 0x21;
+            ovlIndex = 0x21;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RWRP") == 0) {
-            var_s2 = 0x22;
+            ovlIndex = 0x22;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "MAR") == 0) {
-            var_s2 = 0x23;
+            ovlIndex = 0x23;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "BO0") == 0) {
-            var_s2 = 0x24;
+            ovlIndex = 0x24;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "BO1") == 0) {
-            var_s2 = 0x25;
+            ovlIndex = 0x25;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "BO2") == 0) {
-            var_s2 = 0x26;
+            ovlIndex = 0x26;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "BO3") == 0) {
-            var_s2 = 0x27;
+            ovlIndex = 0x27;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "BO4") == 0) {
-            var_s2 = 0x28;
+            ovlIndex = 0x28;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "BO5") == 0) {
-            var_s2 = 0x29;
+            ovlIndex = 0x29;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "BO6") == 0) {
-            var_s2 = 0x2A;
+            ovlIndex = 0x2A;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "BO7") == 0) {
-            var_s2 = 0x2B;
+            ovlIndex = 0x2B;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO0") == 0) {
-            var_s2 = 0x2C;
+            ovlIndex = 0x2C;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO1") == 0) {
-            var_s2 = 0x2D;
+            ovlIndex = 0x2D;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO2") == 0) {
-            var_s2 = 0x2E;
+            ovlIndex = 0x2E;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO3") == 0) {
-            var_s2 = 0x2F;
+            ovlIndex = 0x2F;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO4") == 0) {
-            var_s2 = 0x30;
+            ovlIndex = 0x30;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO5") == 0) {
-            var_s2 = 0x31;
+            ovlIndex = 0x31;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO6") == 0) {
-            var_s2 = 0x32;
+            ovlIndex = 0x32;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO7") == 0) {
-            var_s2 = 0x33;
+            ovlIndex = 0x33;
         }
         if (strcmp(g_StagesLba[g_StageId].ovlName, "RBO8") == 0) {
-            var_s2 = 0x34;
+            ovlIndex = 0x34;
         }
         g_SimFile = &D_80136450;
         strcpy(buf, "hdbin/");
@@ -807,7 +807,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     }
     if (type == SimFileType_Weapon0Prg) {
         g_SimFile = &D_80136450;
-        var_s2 = fileId + 0x3F;
+        ovlIndex = fileId + 0x3F;
         sprintf(buf, "hdbin/w0_%03d.bin;1", fileId);
         g_SimFile->path = buf;
         g_SimFile->addr = &D_8017A000;
@@ -819,7 +819,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     }
     if (type == SimFileType_Weapon1Prg) {
         g_SimFile = &D_80136450;
-        var_s2 = fileId + 0x7A;
+        ovlIndex = fileId + 0x7A;
         sprintf(buf, "hdbin/w1_%03d.bin;1", fileId);
         g_SimFile->path = buf;
         g_SimFile->addr = WEAPON1_PTR;
@@ -849,7 +849,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     }
     if (type == SimFileType_FamiliarPrg) {
         g_SimFile = &D_80136450;
-        var_s2 = fileId + 0x38;
+        ovlIndex = fileId + 0x38;
         sprintf(buf, "hdbin/tt_%03d.bin;1", fileId);
         g_SimFile->path = buf;
         g_SimFile->addr = &g_ServantDesc;
@@ -950,13 +950,13 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         if (strcmp(g_SimFile->path, "hdbin/ric.bin;1") == 0) {
             if (g_PlayableCharacter != 2) {
                 var_s1 = func_psp_089330C4();
-                var_s2 = 0x35;
+                ovlIndex = 0x35;
             } else {
                 var_s1 = func_psp_089330C4();
-                var_s2 = 0x37;
+                ovlIndex = 0x37;
             }
         } else if (strcmp(g_SimFile->path, "hdbin/arc_f.bin;1") == 0) {
-            var_s2 = 0x36;
+            ovlIndex = 0x36;
             var_s1 = func_psp_089330C4();
         }
         var_s0 = func_psp_0893310C();
@@ -972,11 +972,11 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         FntPrint("tr err\n");
         return -1;
     }
-    if (var_s2 >= 0) {
+    if (ovlIndex >= 0) {
         if (arg2) {
-            func_psp_0892A0F0(var_s2, var_s6, var_s0);
+            LoadOverlay(ovlIndex, var_s6, var_s0);
         } else {
-            func_psp_0892A1EC(var_s2);
+            func_psp_0892A1EC(ovlIndex);
         }
     }
     return 0;

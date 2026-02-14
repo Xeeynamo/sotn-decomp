@@ -157,7 +157,7 @@ void EntityConfessionalGhost(Entity* self) {
 #ifdef VERSION_PSP
         self->ext.confessionalGhost.activateChime = false;
         if (self->params & CONFESSIONAL_GHOST_PARISHIONER) {
-            func_psp_0892A620(0, 1);
+            func_psp_0892A620(0, true);
         }
         break;
     // psx starts the chime in INIT, but pspeu starts it in READY

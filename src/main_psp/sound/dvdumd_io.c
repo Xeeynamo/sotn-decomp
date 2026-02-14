@@ -1,7 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <game_psp.h>
-#include <pspkerror.h>
-#include <pspumd.h>
+#include "sound_private.h"
 
 // clang-format off
 #define SCE_ERROR_ERRNO_ENOENT			0x80010002		// Associated file or directory does not exist
