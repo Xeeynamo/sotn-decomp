@@ -2,6 +2,71 @@
 #include "np3.h"
 #include "sfx.h"
 
+s32 func_801CE4CC(Entity* self) {
+    Entity* entity;
+    s32 step;
+    s32 x;
+
+    if (g_CurrentEntity->ext.GH_Props.unk8E != 0) {
+        g_CurrentEntity->ext.GH_Props.unk8E--;
+    }
+
+    x = self->posX.i.hi - PLAYER.posX.i.hi;
+    if (g_CurrentEntity->facingLeft != 0) {
+        x = -x;
+    }
+
+    if (x < -16) {
+        func_801CE1E8(10);
+        return;
+    }
+
+    if (g_CurrentEntity->ext.GH_Props.unk84 == 1) {
+        entity = g_CurrentEntity + 10;
+    } else {
+        entity = g_CurrentEntity + 13;
+    }
+
+    if (func_801CE120(entity, g_CurrentEntity->facingLeft) != 0) {
+        func_801CE1E8(7);
+        return;
+    }
+    if (func_801CE120(entity, g_CurrentEntity->facingLeft ^ 1) != 0) {
+        func_801CE1E8(5);
+        return;
+    }
+
+    if (g_CurrentEntity->step == 8) {
+        if (x < 80) {
+            step = 5;
+        } else {
+            step = 8;
+        }
+    } else {
+        if (x < 80) {
+            step = 7;
+        } else {
+            step = 5;
+        }
+        if (x > 160) {
+            step = 8;
+        }
+    }
+
+    if ((g_CurrentEntity->ext.GH_Props.unk8E == 0) && (x < 96)) {
+        g_CurrentEntity->ext.GH_Props.unk8E = 3;
+        step = 6;
+    }
+    if (step != g_CurrentEntity->step) {
+        func_801CE1E8(step);
+    }
+    if (g_CurrentEntity->step == 7) {
+        if (step == 5) {
+            g_CurrentEntity->ext.GH_Props.unkB0[0] = 1;
+        }
+    }
+}
+
 void EntityHammer(Entity* self) {
     Collider collider;
     Entity* otherEnt;
