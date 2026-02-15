@@ -24,7 +24,7 @@ enum OVL_EXPORT(Palette) {
     PAL_OWL_KNIGHT_SWORD = 0x2CB,
 };
 
-enum OVL_EXPORT(Entities) {
+enum EntityIDs {
     E_NONE,
     E_BREAKABLE,            // OVL_EXPORT(EntityBreakable)
     E_EXPLOSION,            // EntityExplosion

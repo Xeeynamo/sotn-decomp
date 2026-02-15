@@ -31,7 +31,7 @@ enum Palettes {
     PAL_PUFF_OPAQUE_3 = 0x2E4
 };
 
-enum OVL_EXPORT(Entities) {
+enum EntityIDs {
     E_NONE,
     E_BREAKABLE,                // OVL_EXPORT(EntityBreakable)
     E_EXPLOSION,                // EntityExplosion

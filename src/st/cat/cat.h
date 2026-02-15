@@ -37,7 +37,7 @@ enum OVL_EXPORT(Palette) {
     PAL_HELLFIRE_BEAST_CAST_ONE = 0x300,
 };
 
-enum OVL_EXPORT(Entities) {
+enum EntityIDs {
     E_NONE,
     E_BREAKABLE,                        // OVL_EXPORT(EntityBreakable)
     E_EXPLOSION,                        // EntityExplosion
