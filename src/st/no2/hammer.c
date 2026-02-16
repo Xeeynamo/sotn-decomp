@@ -4,12 +4,25 @@
 // clang-format off
 static u16 D_us_8018219C[] = {0, 9, 0, 4, 4, -4, -8, 0};
 // Struct reminder: Entity slot offset, parent entity's slot offset, length, params, zOffset
+// To view the body parts, make sure Hammer is loaded, then invoke:
+// python3 tools/display_animset_frames.py LIVE no2 0x8006 0x23E 48 48 --unk5A 0x4C
+
 static giantBroBodyPartsInit D_us_801821AC[] = {
-    {9, 0, 16, 7, 1},    {10, 9, 14, 8, 2},    {11, 10, 0, 9, 3},
-    {12, 0, 16, 13, -1}, {13, 12, 14, 14, -2}, {14, 13, 0, 15, -3},
-    {2, 0, -18, 2, 1},   {1, 2, -4, 16, 0},    {3, 2, 0, 4, 2},
-    {4, 3, 10, 5, 5},    {5, 4, 13, 6, 4},     {6, 2, 0, 10, -2},
-    {7, 6, 10, 11, -4},  {8, 7, 13, 12, -3},   {0, 0, 0, 0, 0}};
+    {9 , 0, 16, 7, 1},
+    {10, 9, 14, 8, 2},
+    {11, 10, 0, 9, 3},
+    {12, 0, 16, 13, -1},
+    {13, 12, 14, 14, -2},
+    {14, 13, 0, 15, -3},
+    {2, 0, -18, 2, 1}, // Frame 2, the chestpiece   
+    {1, 2, -4, 16, 0},
+    {3, 2, 0, 4, 2}, // Frame 4, shoulder
+    {4, 3, 10, 5, 5},
+    {5, 4, 13, 6, 4},
+    {6, 2, 0, 10, -2},
+    {7, 6, 10, 11, -4},
+    {8, 7, 13, 12, -3},
+    {0, 0, 0, 0, 0}};
 static s16 D_us_80182244[] = {2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0};
 static s16 D_us_80182264[] = {9, 10, 12, 13, 11, 14, 2, 1, 4, 5, 7, 8, 15, 0};
 static s16 D_us_80182280[] = {12, 13, 9, 10, 14, 11, 2, 1, 4, 5, 7, 8, 15, 0};
@@ -264,8 +277,10 @@ void EntityHammer(Entity* self) {
         break;
 
     case HAMMER_STEP_2:
-    // Loop through all parts until the eArrayOffset is zero (null-terminated)
-        for (parts = D_us_801821AC, var_s3 = self; parts->eArrayOffset; parts++) {
+        // Loop through all parts until the eArrayOffset is zero
+        // (null-terminated)
+        for (parts = D_us_801821AC, var_s3 = self; parts->eArrayOffset;
+             parts++) {
             otherEnt = self + parts->eArrayOffset;
             CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, otherEnt);
             otherEnt->ext.GH_Props.length = parts->length;

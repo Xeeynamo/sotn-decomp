@@ -17,7 +17,6 @@ lazy_static! {
         (1 << 5, "FLAG_DRAW_UNK20"),
         (1 << 6, "FLAG_DRAW_UNK40"),
         (1 << 7, "FLAG_BLINK"),
-        (1 << 8, "FLAG_DRAW_UNK100"),
     ];
 }
 

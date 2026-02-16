@@ -1887,15 +1887,15 @@ void UpdateSubEntityUseLifeApple(Entity* self) {
 
         prim->r1 = prim->r3 = prim->g1 = prim->g3 = prim->b1 = prim->b3 = 0xFF;
         prim->priority = 0x1C0;
-        prim->drawMode = FLAG_DRAW_UNK400 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
-                         FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEX;
+        prim->drawMode =
+            DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
 
         prim = prim->next;
 
         prim->r1 = prim->r3 = prim->g1 = prim->g3 = prim->b1 = prim->b3 = 0xFF;
         prim->priority = 0x1C0;
-        prim->drawMode = FLAG_DRAW_UNK400 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
-                         FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEX;
+        prim->drawMode =
+            DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
 
         for (i = 0; i < 8; i++) {
             prim = prim->next;
@@ -1906,9 +1906,8 @@ void UpdateSubEntityUseLifeApple(Entity* self) {
             prim->y2 = (rsin(i << 8) * 3) << 5 >> 0xC;
             prim->y3 = (rsin((i + 1) << 8) * 3) << 5 >> 0xC;
             prim->priority = 0x1C0;
-            prim->drawMode =
-                FLAG_DRAW_UNK400 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
-                FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEX;
+            prim->drawMode = DRAW_UNK_400 | DRAW_TPAGE2 | DRAW_TPAGE |
+                             DRAW_COLORS | DRAW_TRANSP;
         }
         self->ext.faerieLifeApple.primX = 0x10;
         self->ext.faerieLifeApple.primY = 0;

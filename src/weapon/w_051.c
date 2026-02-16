@@ -461,9 +461,9 @@ static void func_ptr_80170008(Entity* self) {
         prim->b0 = prim->b2 = 0;
         prim->tpage = 0x19;
         prim->priority = PLAYER.zPriority + 4;
-        prim->drawMode = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE;
-        prim->drawMode |= FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
-        prim->drawMode |= FLAG_DRAW_UNK100;
+        prim->drawMode = DRAW_TRANSP | DRAW_UNK02 | DRAW_COLORS;
+        prim->drawMode |= DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40;
+        prim->drawMode |= DRAW_UNK_100;
         if (color == 3) {
             prim->drawMode &= ~(FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40);
         }
