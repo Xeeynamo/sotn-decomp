@@ -142,7 +142,7 @@ s32 ringbufferCallBack(void* pBuf, s32 iNum, void* CallbackData) {
         UnlockPowerSwitch();
         return -3;
     }
-    iReadSize = func_psp_0891689C(pStrFile, pBuf, iTypeSize * iNum);
+    iReadSize = strFileReadNoRetry(pStrFile, pBuf, iTypeSize * iNum);
     UnlockPowerSwitch();
     if (iReadSize > 0) {
         func_psp_0891535C(temp_s0, iReadSize);
@@ -190,13 +190,13 @@ s32 read_func(s32 args, void* argp) {
             capacitySize[0] = sceMpegRingbufferAvailableSize(pRing->pRingbuf);
             if (*pRing->statusFlag == 0) {
                 if (D_psp_08B1FBD4->unk2C < func_psp_089125F8()) {
-                    func_psp_08916830(pStrFile);
+                    strFileClose(pStrFile);
                     D_psp_08B1FBD4->unk2C = func_psp_089125F8();
                     pStrFile->unk4 = 1;
                 }
                 if (pStrFile->unk4 == 1 || pStrFile->fd == -1) {
                     LockPowerSwitch();
-                    if ((D_psp_08B1FBD8 = func_psp_08916724(
+                    if ((D_psp_08B1FBD8 = strFileOpen(
                              pStrFile, &pStrFile->unk16, PSP_O_RDONLY)) >= 0) {
                         pStrFile->unk4 = 2;
                     }
@@ -205,7 +205,7 @@ s32 read_func(s32 args, void* argp) {
                 }
                 if (pStrFile->unk4 == 2) {
                     LockPowerSwitch();
-                    if ((D_psp_08B1FBD8 = func_psp_089168E8(
+                    if ((D_psp_08B1FBD8 = strFileLseek(
                              pStrFile, D_psp_08B1FBD4->unk8, PSP_SEEK_SET)) >=
                         0) {
                         D_psp_08B1FBC8 = func_psp_089125F8();
@@ -238,7 +238,7 @@ s32 read_func(s32 args, void* argp) {
                             pStrFile->unk4 = 1;
                             break;
                         case -3:
-                            func_psp_08916830(pStrFile);
+                            strFileClose(pStrFile);
                             pStrFile->unk4 = 1;
                             break;
                         }
@@ -248,7 +248,7 @@ s32 read_func(s32 args, void* argp) {
                 readSize[0] = 0;
             }
         } else {
-            func_psp_08916830(pStrFile);
+            strFileClose(pStrFile);
             pStrFile->unk4 = 1;
         }
         if (*pRing->statusFlag == 0) {

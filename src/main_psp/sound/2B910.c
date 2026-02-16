@@ -64,7 +64,7 @@ s32 func_psp_0892A2D8(void) {
 }
 
 void func_psp_0892A3D4(void) {
-    if (func_psp_08917E4C() != 0) {
+    if (sceWaveExit() != 0) {
         status = -1;
     }
     status = strFileUnassign();

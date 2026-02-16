@@ -99,4 +99,4 @@ typedef struct t_ringBuffer {
     unkStruct2 unk1C;
 } t_ringBuffer;
 
-SceOff func_psp_089168E8(StrFile*, SceOff, s32);
+SceOff strFileLseek(StrFile*, SceOff, s32);

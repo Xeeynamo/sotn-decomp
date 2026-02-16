@@ -146,7 +146,7 @@ s32 func_psp_0890F670(s8* arg0) {
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_0890F754);
 
-void func_psp_0890F7CC(void* buf, s32* arg1, s32 offset, s32 nbyte, s8* arg4) {
+void func_psp_0890F7CC(void* buf, s32* arg1, u32 offset, s32 nbyte, s8* arg4) {
     bool var_s0;
     s32 var_s1;
 
@@ -245,8 +245,18 @@ s32 func_psp_0890FA7C(s8* arg0) {
     return stat.st_size;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/10944", func_psp_0890FB70);
+s32 func_psp_0890FB70(s8* arg0, s32* arg1, s32 offset, u32 nbyte) {
+    s32 ret;
 
-void func_psp_0890FBEC(char* arg0, s32 arg1, s32 arg2, s32 arg3) {
-    func_psp_0890FB70(arg0, arg1, arg2, arg3);
+    ret = func_psp_0890F670(arg0);
+    if (ret < 0) {
+        return -1;
+    }
+    func_psp_0890F7CC(arg1, &ret, offset, nbyte, arg0);
+    func_psp_0890F754(ret);
+    return nbyte;
+}
+
+void func_psp_0890FBEC(s8* arg0, s32* arg1, s32 offset, u32 nbyte) {
+    func_psp_0890FB70(arg0, arg1, offset, nbyte);
 }

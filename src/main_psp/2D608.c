@@ -82,7 +82,7 @@ void func_psp_0892C168(void);
 s32 func_psp_0892CB40(void);
 
 void func_psp_0892BF14(unkStruct2* arg0) {
-    func_psp_08917328();
+    sceWaveInit();
     func_psp_089172E4();
     func_psp_0892BFD8(arg0);
 }
@@ -92,7 +92,7 @@ void func_psp_0892BF48(unkStruct2* arg0) {
     s32 temp_v0;
     s32 i;
 
-    temp_v0 = func_psp_08916F14();
+    temp_v0 = sceSasGetEndFlag();
     if (temp_v0 == arg0->unkC) {
         return;
     }
@@ -117,10 +117,10 @@ void func_psp_0892BFD8(unkStruct2* arg0) {
     func_psp_0892C4F8(arg0, 0x1000);
     arg0->unk0 = 0;
     arg0->unk4 = 0;
-    func_psp_089171CC(-1);
-    func_psp_08917250(0, 0);
-    func_psp_08917138(arg0->unk0, arg0->unk4);
-    func_psp_089170A4(1, 1);
+    sceSasSetEffectType(-1);
+    sceSasSetEffectParam(0, 0);
+    sceSasSetEffectVolume(arg0->unk0, arg0->unk4);
+    sceSasSetEffect(1, 1);
     arg0->unk254 = NULL;
     arg0->unk258 = NULL;
     arg0->unk25C = 0;
@@ -133,8 +133,8 @@ void func_psp_0892BFD8(unkStruct2* arg0) {
     arg0->unkC = -1;
     arg0->unk278 = 1;
     for (i = 0; i < 0x18U; i++) {
-        func_psp_08916EC0(i, 0, 0);
-        func_psp_08916C40(i, 0x1000, 0x1000, arg0->unk0, arg0->unk4);
+        sceSasSetSimpleADSR(i, 0, 0);
+        sceSasSetVolume(i, 0x1000, 0x1000, arg0->unk0, arg0->unk4);
         func_psp_0892C174(arg0, &arg0->unk10[i]);
         if (arg0->unk26C != NULL) {
             arg0->unk10[i].next = NULL;
@@ -319,30 +319,30 @@ void func_psp_0892C4F8(unkStruct2* arg0, s32 arg1) {
     }
 }
 
-void func_psp_0892C524(unkStruct2* arg0, s32 arg1, s32 arg2, s32 arg3) {
-    func_psp_08916C40(arg1, arg2, arg3, arg0->unk0, arg0->unk4);
+void func_psp_0892C524(unkStruct2* arg0, s32 iVoiceNum, s32 l, s32 r) {
+    sceSasSetVolume(iVoiceNum, l, r, arg0->unk0, arg0->unk4);
 }
 
-void func_psp_0892C540(unkStruct2* arg0, s32 arg1, s32 arg2, s32 arg3, s32 arg4,
-                       s32 arg5, s32 arg6, s32 arg7) {
-    s32 temp_s7;
+void func_psp_0892C540(unkStruct2* arg0, s32 iVoiceNum, s32 arg2, s32 size,
+                       s32 arg4, s32 arg5, s32 arg6, s32 loopflag) {
+    s32 pitch;
 
     if (arg2 != 0) {
-        temp_s7 = arg4 * arg0->unk278;
+        pitch = arg4 * arg0->unk278;
         func_psp_0892CB1C();
-        func_psp_08916B24(arg1);
-        func_psp_08916CF4(
-            arg1, 0x40000000 | (arg2 + 0x30) & 0x0FFFFFFF, arg3, arg7);
-        func_psp_0892C524(arg0, arg1, arg5, arg6);
-        func_psp_08916CA4(arg1, temp_s7);
-        func_psp_08916AE8(arg1);
+        sceSasSetKeyOff(iVoiceNum);
+        sceSasSetVoice(
+            iVoiceNum, 0x40000000 | (arg2 + 0x30) & 0x0FFFFFFF, size, loopflag);
+        func_psp_0892C524(arg0, iVoiceNum, arg5, arg6);
+        sceSasSetPitch(iVoiceNum, pitch);
+        sceSasSetKeyOn(iVoiceNum);
         func_psp_0892CB30();
     }
 }
 
-void func_psp_0892C62C(s32 arg0, s32 arg1) {
+void func_psp_0892C62C(s32 arg0, s32 iVoiceNum) {
     func_psp_0892CB1C();
-    func_psp_08916B24(arg1);
+    sceSasSetKeyOff(iVoiceNum);
     func_psp_0892CB30();
 }
 
@@ -371,7 +371,7 @@ s32 func_psp_0892CB40(void) {
     i = 0;
     while (D_psp_08DAE784 != 0) {
         func_psp_0892CB1C();
-        func_psp_0891692C(D_psp_08DADF80[i]);
+        sceSasCore(D_psp_08DADF80[i]);
         func_psp_0892CB30();
         vol = (D_psp_08DAE788 / 4096.0f) * 32768.0f;
         sceWaveAudioWriteBlocking(0, vol, vol, D_psp_08DADF80[i]);
