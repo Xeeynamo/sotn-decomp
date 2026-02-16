@@ -8,7 +8,7 @@ pub struct DrawFlagsTransformer {
 }
 
 lazy_static! {
-    static ref DRAW_FLAGS: [(u16, &'static str); 9] = [
+    static ref DRAW_FLAGS: [(u16, &'static str); 8] = [
         (1 << 0, "FLAG_DRAW_SCALEX"),
         (1 << 1, "FLAG_DRAW_SCALEY"),
         (1 << 2, "FLAG_DRAW_ROTATE"),
