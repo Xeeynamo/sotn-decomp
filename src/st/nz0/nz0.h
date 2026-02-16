@@ -259,7 +259,7 @@ extern Primitive* D_801CB6A0[];
 extern s32 D_801CB6B8;
 extern s32 D_801CB6BC;
 extern s32 D_801CB6C0[];
-extern u16 D_801CB736[];
+extern s16 D_801CB738[];
 
 // *** EntitySoulStealOrb properties START ***
 
