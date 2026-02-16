@@ -63,11 +63,9 @@
 |        | func_092ED290                        |        7 |          1 |        |       |     |
 |        | func_092ED298                        |        7 |          1 |        |       |     |
 |        | func_092EDA98                        |        7 |          1 |        |       |     |
-| main   | D_psp_0893BE34                       |        8 |          0 |        |       |     |
 | main   | D_psp_0893C094                       |        8 |          0 |        |       |     |
 | main   | D_psp_0893C1A0                       |        8 |          0 |        |       |     |
 | main   | func_psp_08910360                    |        8 |          1 |        |       |     |
-| main   | func_psp_08912814                    |        8 |          1 |        |       |     |
 | main   | CdInit                               |        8 |          1 |        |       |     |
 | main   | StartCARD                            |        8 |          1 |        |       |     |
 | main   | SetGeomScreen                        |        8 |          1 |        |       |     |
@@ -75,6 +73,7 @@
 | main   | func_psp_0892C168                    |        8 |          1 |        |       |     |
 | main   | func_psp_0892CB10                    |        8 |          1 |        |       |     |
 | main   | func_psp_0892CF7C                    |        8 |          1 |        |       |     |
+| main   | func_psp_08912814                    |        8 |          1 |        |       |     |
 | main   | func_psp_0892A9D4                    |        8 |          1 |        |       |     |
 | main   | func_psp_0892A9E0                    |        8 |          1 |        |       |     |
 | main   | func_psp_0892F83C                    |        8 |          1 |        |       |     |
@@ -93,8 +92,6 @@
 | main   | func_psp_08910088                    |        9 |          1 |        |       |     |
 | main   | func_psp_089125F8                    |        9 |          1 |        |       |     |
 | main   | func_psp_0891273C                    |        9 |          1 |        |       |     |
-| main   | func_psp_0891274C                    |        9 |          1 |        |       |     |
-| main   | func_psp_089127D8                    |        9 |          1 |        |       |     |
 | main   | func_psp_08919560                    |        9 |          1 |        |       |     |
 | main   | func_psp_08919CE4                    |        9 |          1 |        |       |     |
 | main   | SetDispMask                          |        9 |          1 |        |       |     |
@@ -121,6 +118,8 @@
 | main   | gte_stsxy                            |        9 |          1 |        |       |     |
 | main   | func_psp_0892CB30                    |        9 |          1 |        |       |     |
 | main   | func_psp_08930A0C                    |        9 |          1 |        |       |     |
+| main   | func_psp_0891274C                    |        9 |          1 |        |       |     |
+| main   | func_psp_089127D8                    |        9 |          1 |        |       |     |
 | main   | func_psp_0892B2D8                    |        9 |          1 |        |       |     |
 | main   | func_psp_0892B384                    |        9 |          1 |        |       |     |
 | main   | func_psp_08933F5C                    |        9 |          1 |        |       |     |
@@ -186,7 +185,6 @@
 | lib    | func_psp_09264E08                    |       11 |          1 |        |       |     |
 | sel    | func_psp_0923FBF0                    |       11 |          1 |        |       |     |
 | sel    | func_psp_09241C38                    |       11 |          1 |        |       |     |
-| main   | 192C0.rodata                         |       12 |          0 |        |       |     |
 | no3    | jtbl_pspeu_09298DF0                  |       12 |          0 | Yes    |       |     |
 | np3    | jtbl_pspeu_09291B58                  |       12 |          0 | Yes    |       |     |
 | main   | func_psp_08910498                    |       12 |          1 |        |       |     |
@@ -244,9 +242,9 @@
 | main   | PadRead_PSP                          |       13 |          2 |        |       |     |
 | main   | GsInitVcount                         |       13 |          2 |        |       |     |
 | main   | InitCARD                             |       13 |          2 |        |       |     |
+| main   | func_psp_089375A0                    |       13 |          2 |        |       |     |
 | main   | func_psp_08934F04                    |       13 |          2 |        |       |     |
 | main   | func_psp_08934F24                    |       13 |          2 |        |       |     |
-| main   | func_psp_089375A0                    |       13 |          2 |        |       |     |
 | sel    | func_psp_09239180                    |       13 |          2 |        |       |     |
 | no2    | jtbl_pspeu_0928D418                  |       14 |          0 | Yes    |       |     |
 | np3    | jtbl_pspeu_09291AF0                  |       14 |          0 | Yes    |       |     |
@@ -432,7 +430,6 @@
 | main   | func_psp_08910720                    |       16 |          1 |        |       |     |
 | main   | func_psp_0891074C                    |       16 |          1 |        |       |     |
 | main   | func_psp_08910778                    |       16 |          1 |        |       |     |
-| main   | func_psp_089127E8                    |       16 |          1 |        |       |     |
 | main   | SetLineG2                            |       16 |          1 |        |       |     |
 | main   | SetPolyG4                            |       16 |          1 |        |       |     |
 | main   | SetPolyGT3                           |       16 |          1 |        |       |     |
@@ -442,6 +439,7 @@
 | main   | SetTile                              |       16 |          1 |        |       |     |
 | main   | func_psp_0892A0C4                    |       16 |          1 |        |       |     |
 | main   | func_psp_08932728                    |       16 |          1 |        |       |     |
+| main   | func_psp_089127E8                    |       16 |          1 |        |       |     |
 | main   | dispbuf_setMode                      |       16 |          1 |        |       |     |
 | main   | sceGuTexFilter                       |       16 |          1 |        |       |     |
 | main   | sceGuTexSlope                        |       16 |          1 |        |       |     |
@@ -681,7 +679,6 @@
 | main   | func_psp_0891B538                    |       20 |          3 |        |       |     |
 | main   | CdDataCallback                       |       20 |          3 |        |       |     |
 | main   | func_psp_0892A998                    |       20 |          3 |        |       |     |
-| main   | func_psp_08917FCC                    |       20 |          3 |        |       |     |
 | no4    | func_pspeu_0925CB30                  |       20 |          4 |        |       |     |
 | main   | func_psp_08919FBC                    |       20 |          5 |        |       |     |
 | dra    | func_psp_09116B48                    |       21 |          1 |        |       |     |
@@ -756,9 +753,6 @@
 | main   | InitGeom                             |       21 |          3 |        |       |     |
 | main   | localeconv                           |       21 |          3 |        |       |     |
 | main   | _init_signal                         |       21 |          3 |        |       |     |
-| main   | func_psp_08917D74                    |       21 |          3 |        |       |     |
-| main   | func_psp_08918004                    |       21 |          3 |        |       |     |
-| main   | sceWaveAudioGetRestSample            |       21 |          3 |        |       |     |
 | main   | func_psp_08936E54                    |       21 |          3 |        |       |     |
 | sel    | func_psp_09237C38                    |       21 |          3 |        |       |     |
 | sel    | func_psp_09237C78                    |       21 |          3 |        |       |     |
@@ -820,7 +814,6 @@
 | dra    | func_psp_090F1C98                    |       23 |          3 |        |       |     |
 | main   | func_psp_08919140                    |       23 |          3 |        |       |     |
 | main   | func_psp_0891ABE4                    |       23 |          3 |        |       |     |
-| main   | func_psp_08917F88                    |       23 |          3 |        |       |     |
 | main   | func_psp_089356A0                    |       23 |          3 |        |       |     |
 | ric    | func_pspeu_092C8D48                  |       23 |          3 |        |       |     |
 | dra    | func_psp_090F6A50                    |       23 |          4 |        |       |     |
@@ -947,8 +940,6 @@
 | main   | sceGupShadeModel                     |       25 |          3 |        |       |     |
 | main   | func_psp_0891B570                    |       25 |          3 |        |       |     |
 | main   | func_psp_0892CF34                    |       25 |          3 |        |       |     |
-| main   | func_psp_08916D50                    |       25 |          3 |        |       |     |
-| main   | func_psp_08916E74                    |       25 |          3 |        |       |     |
 | main   | func_psp_0892D1D8                    |       25 |          3 |        |       |     |
 | sel    | func_psp_0923FB40                    |       25 |          3 |        |       |     |
 | dra    | func_psp_09102B78                    |       25 |          4 |        |       |     |
@@ -987,7 +978,6 @@
 | main   | avsync_startAudioVideo               |       26 |          4 |        |       |     |
 | main   | func_psp_08914FFC                    |       26 |          4 |        |       |     |
 | main   | __getreent                           |       26 |          4 |        |       |     |
-| main   | func_psp_08916CA4                    |       26 |          4 |        |       |     |
 | main   | func_psp_08936CE0                    |       26 |          4 |        |       |     |
 | main   | func_psp_0891FC64                    |       26 |          5 |        |       |     |
 | main   | func_psp_0892A28C                    |       26 |          5 |        |       |     |
@@ -1022,11 +1012,11 @@
 | sel    | func_psp_09237F40                    |       27 |          2 |        |       |     |
 | dra    | func_psp_091428D0                    |       27 |          3 |        |       |     |
 | dra    | func_psp_09142928                    |       27 |          3 |        |       |     |
+| main   | func_psp_08917FCC                    |       27 |          3 |        |       |     |
 | main   | func_psp_0890FF2C                    |       27 |          3 |        |       |     |
 | main   | SetSemiTrans                         |       27 |          3 |        |       |     |
 | main   | SetShadeTex                          |       27 |          3 |        |       |     |
 | main   | RotTrans                             |       27 |          3 |        |       |     |
-| main   | func_psp_08916EC0                    |       27 |          3 |        |       |     |
 | ric    | func_pspeu_092AF5A8                  |       27 |          3 |        |       |     |
 | sel    | func_psp_092395E8                    |       27 |          3 |        |       |     |
 | main   | pad_read                             |       27 |          4 |        |       |     |
@@ -1081,14 +1071,16 @@
 | nz0    | GetDistanceToPlayerY                 |       28 |          2 |        |       |     |
 | nz1    | GetDistanceToPlayerY                 |       28 |          2 |        |       |     |
 | rcat   | GetDistanceToPlayerY                 |       28 |          2 |        |       |     |
-| main   | func_psp_08916AE8                    |       28 |          3 |        |       |     |
-| main   | func_psp_08916B24                    |       28 |          3 |        |       |     |
-| main   | func_psp_08916F50                    |       28 |          3 |        |       |     |
+| main   | sceSasGetEnvelope                    |       28 |          3 |        |       |     |
+| main   | sceSasSetKeyOff                      |       28 |          3 |        |       |     |
+| main   | sceSasSetKeyOn                       |       28 |          3 |        |       |     |
+| main   | func_psp_08917D74                    |       28 |          3 |        |       |     |
+| main   | sceWaveAudioGetRestSample            |       28 |          3 |        |       |     |
+| main   | sceWaveAudioSetFormat                |       28 |          3 |        |       |     |
 | main   | setlocale                            |       28 |          3 |        |       |     |
 | main   | signal                               |       28 |          3 |        |       |     |
 | main   | memalign                             |       28 |          3 |        |       |     |
 | main   | __malloc_lock                        |       28 |          3 |        |       |     |
-| main   | func_psp_08917ED0                    |       28 |          3 |        |       |     |
 | main   | func_psp_0892D598                    |       28 |          3 |        |       |     |
 | main   | sceGuDrawSprite                      |       28 |          3 |        |       |     |
 | dra    | func_psp_09141F50                    |       28 |          4 |        |       |     |
@@ -1117,11 +1109,10 @@
 | dra    | func_psp_090F2118                    |       29 |          3 |        |       |     |
 | main   | __negdf2                             |       29 |          3 |        |       |     |
 | main   | func_psp_08912640                    |       29 |          3 |        |       |     |
-| main   | func_psp_08916CF4                    |       29 |          3 |        |       |     |
 | no3    | func_pspeu_09252C78                  |       29 |          3 |        |       |     |
-| main   | func_psp_08916C04                    |       29 |          4 |        |       |     |
-| main   | func_psp_08916F14                    |       29 |          4 |        |       |     |
 | main   | __free_heap                          |       29 |          4 |        |       |     |
+| main   | sceSasGetEndFlag                     |       29 |          4 |        |       |     |
+| main   | sceSasGetPauseFlag                   |       29 |          4 |        |       |     |
 | main   | func_psp_08919C8C                    |       29 |          4 |        |       |     |
 | main   | func_psp_08919D98                    |       29 |          4 |        |       |     |
 | main   | func_psp_08934D78                    |       29 |          4 |        |       |     |
@@ -1156,9 +1147,9 @@
 | dra    | func_psp_090E7ED8                    |       30 |          2 |        |       |     |
 | dra    | func_psp_090E7F38                    |       30 |          2 |        |       |     |
 | dra    | func_psp_090E7E38                    |       30 |          3 |        |       |     |
-| main   | func_psp_08916FD4                    |       30 |          3 |        |       |     |
-| main   | func_psp_08917060                    |       30 |          3 |        |       |     |
-| main   | func_psp_08917F28                    |       30 |          3 |        |       |     |
+| main   | sceSasGetGrain                       |       30 |          3 |        |       |     |
+| main   | sceSasGetOutputmode                  |       30 |          3 |        |       |     |
+| main   | func_psp_08917F88                    |       30 |          3 |        |       |     |
 | no4    | func_pspeu_09243260                  |       30 |          3 |        |       |     |
 | dra    | func_psp_09102AF0                    |       30 |          4 |        |       |     |
 | main   | func_psp_0891AC60                    |       30 |          4 |        |       |     |
@@ -1208,9 +1199,8 @@
 | dra    | func_psp_091030C8                    |       31 |          3 |        |       |     |
 | dra    | func_psp_0913E4F8                    |       31 |          3 |        |       |     |
 | main   | __extendsfdf2                        |       31 |          3 |        |       |     |
-| main   | func_psp_08916F8C                    |       31 |          3 |        |       |     |
-| main   | func_psp_08917018                    |       31 |          3 |        |       |     |
-| main   | func_psp_08916C40                    |       31 |          3 |        |       |     |
+| main   | sceSasSetGrain                       |       31 |          3 |        |       |     |
+| main   | sceSasSetOutputmode                  |       31 |          3 |        |       |     |
 | are    | func_pspeu_0923E550                  |       31 |          3 |        |       |     |
 | are    | func_pspeu_09261C70                  |       31 |          3 |        |       |     |
 | cat    | func_pspeu_09252B00                  |       31 |          3 |        |       |     |
@@ -1256,7 +1246,9 @@
 | dra    | func_psp_091143D0                    |       32 |          3 |        |       |     |
 | dra    | func_psp_09141608                    |       32 |          3 |        |       |     |
 | dra    | func_psp_090EB850                    |       32 |          3 |        |       |     |
-| main   | func_psp_08916BB8                    |       32 |          3 |        |       |     |
+| main   | sceSasSetNoise                       |       32 |          3 |        |       |     |
+| main   | sceSasSetPauseMulti                  |       32 |          3 |        |       |     |
+| main   | sceSasSetSL                          |       32 |          3 |        |       |     |
 | main   | LoadClut                             |       32 |          3 |        |       |     |
 | main   | func_psp_0891CCBC                    |       32 |          3 |        |       |     |
 | main   | printf                               |       32 |          3 |        |       |     |
@@ -1266,9 +1258,6 @@
 | dra    | func_psp_090F01C0                    |       32 |          4 |        |       |     |
 | main   | RotAverageNclip4                     |       32 |          4 |        |       |     |
 | main   | func_psp_0892A70C                    |       32 |          4 |        |       |     |
-| main   | func_psp_08917C3C                    |       32 |          5 |        |       |     |
-| main   | func_psp_08917CA4                    |       32 |          5 |        |       |     |
-| main   | sceWaveAudioWriteBlocking            |       32 |          5 |        |       |     |
 | main   | func_psp_0892DF08                    |       32 |          5 |        |       |     |
 | main   | func_psp_0890F374                    |       32 |          7 |        |       |     |
 | main   | sceGuDepthBuffer                     |       33 |          1 |        |       |     |
@@ -1282,10 +1271,9 @@
 | no4    | func_pspeu_0925E2C8                  |       33 |          1 |        |       |     |
 | main   | func_psp_0892CA28                    |       33 |          2 |        |       |     |
 |        | func_092EF290                        |       33 |          2 |        |       |     |
-| main   | func_psp_08916D9C                    |       33 |          3 |        |       |     |
-| main   | func_psp_08916E08                    |       33 |          3 |        |       |     |
 | main   | func_psp_0892DF70                    |       33 |          3 |        |       |     |
 | dra    | func_psp_091149C8                    |       33 |          4 |        |       |     |
+| main   | sceSasSetPitch                       |       33 |          4 |        |       |     |
 | main   | __sprint_r                           |       33 |          4 |        |       |     |
 | main   | __malloc_unlock                      |       33 |          4 |        |       |     |
 | sel    | func_psp_0923FB88                    |       33 |          4 |        |       |     |
@@ -1327,13 +1315,13 @@
 | nz1    | GetDistanceToPlayerX                 |       34 |          2 |        |       |     |
 | rare   | func_pspeu_09249F88                  |       34 |          2 |        |       |     |
 | rcat   | GetDistanceToPlayerX                 |       34 |          2 |        |       |     |
+| main   | sceSasSetSimpleADSR                  |       34 |          3 |        |       |     |
 | dra    | func_psp_09101F60                    |       34 |          4 |        |       |     |
 | dra    | func_psp_090F1B60                    |       34 |          4 |        |       |     |
 | main   | func_psp_0891A800                    |       34 |          4 |        |       |     |
 | main   | func_psp_08928428                    |       34 |          4 |        |       |     |
 | main   | gte_minsz4                           |       34 |          4 |        |       |     |
 | main   | func_psp_08919FF8                    |       34 |          5 |        |       |     |
-| main   | sceWaveAudioSetSample                |       34 |          5 |        |       |     |
 | maria  | func_pspeu_092B2170                  |       34 |          5 |        |       |     |
 | dra    | MemcardEraseFile                     |       34 |          6 |        |       |     |
 | main   | func_psp_0892B31C                    |       34 |          6 |        |       |     |
@@ -1350,6 +1338,7 @@
 | dra    | func_psp_091324E0                    |       35 |          3 |        |       |     |
 | dra    | func_psp_090F1EC8                    |       35 |          3 |        |       |     |
 | main   | _sceGuDebugFontInit                  |       35 |          3 |        |       |     |
+| main   | func_psp_08917ED0                    |       35 |          3 |        |       |     |
 | main   | func_psp_0891A790                    |       35 |          3 |        |       |     |
 | main   | func_psp_08929FA8                    |       35 |          3 |        |       |     |
 | sel    | func_psp_09238DA8                    |       35 |          3 |        |       |     |
@@ -1357,7 +1346,7 @@
 | dra    | func_psp_090E8E58                    |       35 |          4 |        |       |     |
 | dra    | func_psp_090FFAB8                    |       35 |          4 |        |       |     |
 | main   | func_psp_0890CAF8                    |       35 |          4 |        |       |     |
-| main   | func_psp_08916B60                    |       35 |          4 |        |       |     |
+| main   | sceSasSetPause                       |       35 |          4 |        |       |     |
 | are    | func_pspeu_092379E8                  |       35 |          4 |        |       |     |
 | cat    | func_pspeu_0925E600                  |       35 |          4 |        |       |     |
 | chi    | func_psp_0924BCA8                    |       35 |          4 |        |       |     |
@@ -1369,7 +1358,7 @@
 | st0    | func_pspeu_09246B10                  |       35 |          4 |        |       |     |
 | wrp    | func_psp_092447C0                    |       35 |          4 |        |       |     |
 | dra    | func_psp_09108CD0                    |       35 |          5 |        |       |     |
-| main   | func_psp_0891692C                    |       35 |          5 |        |       |     |
+| main   | sceSasCore                           |       35 |          5 |        |       |     |
 | main   | func_psp_08916830                    |       35 |          5 |        |       |     |
 | main   | func_psp_0892BB60                    |       35 |          5 |        |       |     |
 | main   | cleanup_glue                         |       35 |          5 |        |       |     |
@@ -1383,12 +1372,13 @@
 | main   | func_psp_08911F24                    |       36 |          1 |        |       |     |
 | dra    | func_psp_0910F128                    |       36 |          2 |        |       |     |
 | main   | soundbuf_setPts                      |       36 |          2 |        |       |     |
+| main   | sceSasSetVoice                       |       36 |          3 |        |       |     |
 | main   | func_psp_0891275C                    |       36 |          3 |        |       |     |
 | main   | wcsrtombs                            |       36 |          3 |        |       |     |
 | no4    | func_pspeu_0923D428                  |       36 |          3 |        |       |     |
 | dra    | func_psp_09103DF0                    |       36 |          4 |        |       |     |
 | dra    | func_psp_0910BC00                    |       36 |          4 |        |       |     |
-| main   | func_psp_08917780                    |       36 |          4 |        |       |     |
+| main   | sceWaveSetVolumeEx                   |       36 |          4 |        |       |     |
 | main   | func_psp_08910220                    |       36 |          4 |        |       |     |
 | maria  | func_pspeu_092B2040                  |       36 |          4 |        |       |     |
 | are    | func_pspeu_0923BA10                  |       36 |          4 |        |       |     |
@@ -1443,6 +1433,7 @@
 | dra    | func_psp_090EAFA8                    |       37 |          3 |        |       |     |
 | dra    | func_psp_090ECF60                    |       37 |          3 |        |       |     |
 | dra    | func_psp_090EEDF8                    |       37 |          3 |        |       |     |
+| main   | func_psp_08917F28                    |       37 |          3 |        |       |     |
 | main   | ClearOTag                            |       37 |          3 |        |       |     |
 | maria  | func_pspeu_092BEA38                  |       37 |          3 |        |       |     |
 | dai    | func_pspeu_09253E28                  |       37 |          3 |        |       |     |
@@ -1452,7 +1443,7 @@
 | sel    | func_psp_09245610                    |       37 |          3 |        |       |     |
 | st0    | func_pspeu_09238F10                  |       37 |          3 |        |       |     |
 | dra    | func_psp_090ED958                    |       37 |          4 |        |       |     |
-| main   | func_psp_089177DC                    |       37 |          4 |        |       |     |
+| main   | sceWaveGetVolume                     |       37 |          4 |        |       |     |
 | main   | func_psp_08919278                    |       37 |          4 |        |       |     |
 | main   | func_psp_0891B878                    |       37 |          4 |        |       |     |
 | dra    | func_psp_091163A8                    |       37 |          5 |        |       |     |
@@ -1492,6 +1483,7 @@
 | main   | _sprintf_r                           |       38 |          2 |        |       |     |
 | main   | func_psp_0892E6A4                    |       38 |          2 |        |       |     |
 | dra    | func_psp_0913E7B8                    |       38 |          3 |        |       |     |
+| main   | sceSasSetVolume                      |       38 |          3 |        |       |     |
 | main   | func_psp_0891CEB8                    |       38 |          3 |        |       |     |
 | dra    | func_psp_090E0CF0                    |       38 |          4 |        |       |     |
 | dra    | func_psp_091009E0                    |       38 |          4 |        |       |     |
@@ -1517,8 +1509,8 @@
 | st0    | func_pspeu_09248860                  |       38 |          4 |        |       |     |
 | wrp    | func_psp_09237EE0                    |       38 |          4 |        |       |     |
 | main   | __adddf3                             |       38 |          5 |        |       |     |
-| main   | func_psp_08916984                    |       38 |          5 |        |       |     |
 | main   | _sceGuUpdateStallAddr                |       38 |          5 |        |       |     |
+| main   | sceSasCoreWithMix                    |       38 |          5 |        |       |     |
 | main   | func_psp_089194E4                    |       38 |          5 |        |       |     |
 | main   | func_psp_08928498                    |       38 |          5 |        |       |     |
 | main   | func_psp_0892851C                    |       38 |          5 |        |       |     |
@@ -1587,10 +1579,12 @@
 | sel    | func_psp_092407A0                    |       39 |          4 |        |       |     |
 | sel    | func_psp_09243610                    |       39 |          4 |        |       |     |
 | dra    | func_psp_0913F780                    |       39 |          5 |        |       |     |
+| main   | sceWaveAudioSetVolume                |       39 |          5 |        |       |     |
+| main   | sceWaveAudioWrite                    |       39 |          5 |        |       |     |
+| main   | sceWaveAudioWriteBlocking            |       39 |          5 |        |       |     |
 | ric    | func_pspeu_092B5F48                  |       39 |          5 |        |       |     |
 | sel    | func_psp_092404A8                    |       39 |          5 |        |       |     |
 | main   | _init_signal_r                       |       39 |          6 |        |       |     |
-| main   | func_psp_08917E4C                    |       39 |          6 |        |       |     |
 | main   | func_psp_0892B3C8                    |       39 |          7 |        |       |     |
 | main   | func_psp_0892D520                    |       39 |          7 |        |       |     |
 | maria  | func_pspeu_092B1D98                  |       39 |          7 |        |       |     |
@@ -1627,6 +1621,8 @@
 | st0    | func_pspeu_0924FE28                  |       40 |          2 |        |       |     |
 | wrp    | func_psp_092435D0                    |       40 |          2 |        |       |     |
 | main   | sceGuDisplay                         |       40 |          3 |        |       |     |
+| main   | sceSasSetADSR                        |       40 |          3 |        |       |     |
+| main   | sceSasSetADSRmode                    |       40 |          3 |        |       |     |
 | main   | func_psp_08936B40                    |       40 |          3 |        |       |     |
 | dai    | func_pspeu_09258AF0                  |       40 |          3 |        |       |     |
 | lib    | func_psp_09266E60                    |       40 |          3 |        |       |     |
@@ -1655,7 +1651,7 @@
 | dra    | func_psp_09103F08                    |       41 |          3 |        |       |     |
 | dra    | func_psp_091272B8                    |       41 |          3 |        |       |     |
 | main   | func_psp_0890E970                    |       41 |          3 |        |       |     |
-| main   | func_psp_0891783C                    |       41 |          3 |        |       |     |
+| main   | sceWaveGetRestByte                   |       41 |          3 |        |       |     |
 | main   | RotTransPers4                        |       41 |          3 |        |       |     |
 | main   | func_psp_08914F18                    |       41 |          3 |        |       |     |
 | are    | func_pspeu_09261508                  |       41 |          3 |        |       |     |
@@ -1681,6 +1677,7 @@
 | main   | _write_r                             |       41 |          4 |        |       |     |
 | main   | __mcmp                               |       41 |          4 |        |       |     |
 | main   | __subdf3                             |       41 |          5 |        |       |     |
+| main   | sceWaveAudioSetSample                |       41 |          5 |        |       |     |
 | maria  | func_pspeu_092B36C8                  |       41 |          5 |        |       |     |
 | dra    | func_psp_09128A78                    |       41 |          6 |        |       |     |
 | dra    | func_psp_090F5318                    |       41 |          6 |        |       |     |
@@ -1859,7 +1856,6 @@
 | wrp    | func_psp_0923CBE0                    |       46 |          4 |        |       |     |
 | dra    | func_psp_090FA790                    |       46 |          5 |        |       |     |
 | dra    | MemcardDetectSave                    |       46 |          5 |        |       |     |
-| main   | func_psp_08917DB0                    |       46 |          5 |        |       |     |
 | maria  | func_pspeu_092AB750                  |       46 |          5 |        |       |     |
 | ric    | func_pspeu_092ACF18                  |       46 |          5 |        |       |     |
 |        | func_092EB850                        |       46 |          5 |        |       |     |
@@ -1885,6 +1881,7 @@
 | st0    | func_pspeu_0924FD90                  |       46 |          5 |        |       |     |
 | wrp    | func_psp_09243538                    |       46 |          5 |        |       |     |
 | dra    | func_psp_090E7DA8                    |       46 |          6 |        |       |     |
+| main   | sceWaveExit                          |       46 |          6 |        |       |     |
 | main   | func_psp_0891B70C                    |       46 |          6 |        |       |     |
 | main   | func_psp_089368F0                    |       46 |          6 |        |       |     |
 | are    | func_pspeu_0924F2D0                  |       46 |          7 |        |       |     |
@@ -1937,8 +1934,8 @@
 | main   | __gedf2                              |       48 |          7 |        |       |     |
 | main   | __gtdf2                              |       48 |          7 |        |       |     |
 | main   | __nedf2                              |       48 |          7 |        |       |     |
-| main   | func_psp_089171CC                    |       48 |          7 |        |       |     |
 | main   | func_psp_0893964C                    |       48 |          7 |        |       |     |
+| main   | sceSasSetEffectType                  |       48 |          7 |        |       |     |
 | main   | func_psp_0892ABF0                    |       48 |         12 |        |       |     |
 | dai    | func_pspeu_09258810                  |       49 |          1 |        |       |     |
 | sel    | func_psp_09240280                    |       49 |          3 |        |       |     |
@@ -2042,21 +2039,21 @@
 | main   | _open                                |       52 |          4 |        |       |     |
 | chi    | func_psp_092386A8                    |       52 |          5 |        |       |     |
 | dra    | func_psp_090E0F00                    |       52 |          6 |        |       |     |
-| main   | func_psp_089170A4                    |       52 |          7 |        |       |     |
-| main   | func_psp_08917138                    |       52 |          7 |        |       |     |
-| main   | func_psp_08917250                    |       52 |          7 |        |       |     |
+| main   | sceSasSetEffect                      |       52 |          7 |        |       |     |
+| main   | sceSasSetEffectParam                 |       52 |          7 |        |       |     |
+| main   | sceSasSetEffectVolume                |       52 |          7 |        |       |     |
 |        | func_092EE600                        |       52 |          9 |        |       |     |
 | st0    | func_801AD838                        |       52 |         10 |        |       |     |
 | maria  | func_pspeu_092AE4A8                  |       52 |         13 |        |       |     |
 | dra    | func_psp_090F18B0                    |       53 |          3 |        |       |     |
 | no4    | func_pspeu_0923D0C8                  |       53 |          3 |        |       |     |
-| main   | func_psp_089175F0                    |       53 |          4 |        |       |     |
+| main   | sceWaveSetVolume                     |       53 |          4 |        |       |     |
 | sel    | func_psp_0923F508                    |       53 |          4 |        |       |     |
 | dra    | func_psp_091049E8                    |       53 |          5 |        |       |     |
 | dra    | func_psp_090FF3C0                    |       53 |          5 |        |       |     |
+| main   | sceWaveEnd                           |       53 |          5 |        |       |     |
 | main   | strcpy                               |       53 |          5 |        |       |     |
 | main   | func_psp_0891CD28                    |       53 |          6 |        |       |     |
-| main   | func_psp_0891807C                    |       53 |          6 |        |       |     |
 | dra    | func_psp_09111B00                    |       53 |          7 |        |       |     |
 | main   | _setlocale_r                         |       53 |          7 |        |       |     |
 | maria  | func_pspeu_092A6958                  |       53 |          7 |        |       |     |
@@ -2199,6 +2196,7 @@
 | dra    | func_psp_0913F960                    |       60 |          5 |        |       |     |
 | main   | sceGuDrawArray                       |       60 |          5 |        |       |     |
 | dai    | func_pspeu_0924A618                  |       60 |          5 |        |       |     |
+| main   | sceWaveStart                         |       60 |          6 |        |       |     |
 | are    | func_pspeu_09262150                  |       60 |          6 |        |       |     |
 | lib    | func_psp_0924FA00                    |       60 |          6 |        |       |     |
 | no4    | func_pspeu_0925B740                  |       60 |          6 |        |       |     |
@@ -2697,7 +2695,7 @@
 | main   | func_psp_089372DC                    |       78 |          7 |        |       |     |
 | maria  | func_pspeu_092AE0A8                  |       78 |          7 |        |       |     |
 | ric    | func_pspeu_092A6610                  |       78 |          7 |        |       |     |
-| main   | func_psp_08917A44                    |       78 |          8 |        |       |     |
+| main   | sceWavePlayEx                        |       78 |          8 |        |       |     |
 | ric    | func_pspeu_092C9B88                  |       78 |          8 |        |       |     |
 | lib    | func_psp_0926A128                    |       78 |          8 |        |       |     |
 |        | func_092EB988                        |       78 |          9 |        |       |     |
@@ -2739,7 +2737,7 @@
 | st0    | UpdateStageEntities                  |       79 |          9 |        |       |     |
 | wrp    | func_psp_0923AC50                    |       79 |          9 |        |       |     |
 | dra    | func_psp_09100A58                    |       79 |         11 |        |       |     |
-| main   | func_psp_08917690                    |       79 |         11 |        |       |     |
+| main   | sceWaveGetVolumeEx                   |       79 |         11 |        |       |     |
 | maria  | func_pspeu_092B1F30                  |       79 |         14 |        |       |     |
 |        | func_092E7A78                        |       79 |         15 |        |       |     |
 |        | func_092E7E68                        |       79 |         15 |        |       |     |
@@ -2757,7 +2755,7 @@
 | np3    | polarPlacePart                       |       81 |          6 |        |       |     |
 | dra    | func_psp_090E2F60                    |       81 |         11 | Yes    |       |     |
 | main   | func_psp_0893676C                    |       81 |         11 | Yes    |       |     |
-| main   | func_psp_089169E8                    |       81 |         12 |        |       |     |
+| main   | sceSasInitWithGrain                  |       81 |         12 |        |       |     |
 | main   | func_psp_0892CC48                    |       81 |         13 |        |       |     |
 | main   | func_psp_0892D030                    |       81 |         13 |        |       |     |
 | ric    | 319C4.rodata                         |       82 |          0 | Yes    |       |     |
@@ -3110,7 +3108,7 @@
 | sel    | func_psp_09237CB8                    |      101 |          8 |        |       |     |
 | no3    | func_pspeu_09251578                  |      101 |          9 |        |       |     |
 | np3    | EntityMermanExplosion                |      101 |          9 |        |       |     |
-| main   | func_psp_08917498                    |      101 |         11 |        |       |     |
+| main   | sceWaveSetVoice                      |      101 |         11 |        |       |     |
 | main   | memcpy                               |      101 |         13 |        |       |     |
 | dra    | func_psp_0910BD28                    |      101 |         14 |        |       |     |
 | maria  | func_pspeu_092AF258                  |      101 |         14 |        |       |     |
@@ -3238,7 +3236,6 @@
 | wrp    | func_psp_0923CA60                    |      106 |         16 |        |       |     |
 | main   | func_psp_08936BCC                    |      106 |         18 | Yes    |       |     |
 | dra    | func_psp_09143ED8                    |      106 |         33 |        |       |     |
-| main   | func_psp_089178DC                    |      107 |          8 |        |       |     |
 | no4    | func_pspeu_09242E30                  |      107 |          9 |        |       |     |
 | dra    | func_psp_090E88C0                    |      107 |         10 |        |       |     |
 | are    | func_pspeu_0925F050                  |      107 |         11 |        |       |     |
@@ -3276,6 +3273,7 @@
 | cat    | func_pspeu_09257148                  |      109 |         13 |        |       |     |
 | dra    | func_psp_090E8B30                    |      109 |         19 |        |       |     |
 | no3    | func_pspeu_092493F8                  |      110 |          5 |        |       |     |
+| main   | sceWavePlay                          |      110 |          8 |        |       |     |
 | nz1    | EntityWaterForeground                |      110 |          9 |        |       |     |
 | main   | _wcsrtombs_r                         |      110 |         11 |        |       |     |
 | no2    | func_pspeu_0925BE88                  |      110 |         12 |        |       |     |
@@ -3284,7 +3282,7 @@
 | main   | func_psp_0892667C                    |      111 |         15 |        |       |     |
 | main   | func_psp_08926808                    |      111 |         15 |        |       |     |
 | nz0    | EntitySubWpnContGlass                |      111 |         15 |        |       |     |
-| main   | func_psp_08917328                    |      111 |         19 |        |       |     |
+| main   | sceWaveInit                          |      111 |         19 |        |       |     |
 | main   | __smakebuf_r                         |      111 |         19 |        |       |     |
 | no3    | func_pspeu_09252CD8                  |      111 |         19 |        |       |     |
 | are    | func_pspeu_09262220                  |      112 |          2 |        |       |     |
@@ -4995,9 +4993,9 @@
 | nz0    | EntitySealedDoor                     |     1360 |        119 | Yes    |       |     |
 | no2    | func_pspeu_092515D0                  |     1369 |        212 | Yes    |       |     |
 | no2    | func_pspeu_09257ED8                  |     1372 |        125 | Yes    |       |     |
-| main   | 3C524.rodata                         |     1389 |          0 | Yes    |       |     |
 | np3    | EntityGurkha                         |     1391 |        212 | Yes    |       |     |
 | no3    | func_pspeu_09252EF8                  |     1392 |        193 | Yes    |       |     |
+| main   | 3C524.rodata                         |     1395 |          0 | Yes    |       |     |
 | st0    | EntityDracula                        |     1396 |        179 | Yes    |       |     |
 | are    | func_pspeu_0923E970                  |     1406 |        163 | Yes    |       |     |
 |        | func_092EAA58                        |     1431 |        108 | Yes    |       |     |
