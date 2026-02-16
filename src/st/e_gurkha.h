@@ -432,7 +432,7 @@ void EntityGurkha(Entity* self) {
                 // we appear to write 0x10 twice here, weird
                 self->ext.GH_Props.unk80 = 0x10;
                 ent_s0 = self + 15;
-                ent_s0->ext.GH_Props.unkA6 = 0;
+                ent_s0->ext.GH_Props.rotVel = 0;
                 self->ext.GH_Props.unk80 = 0x10;
                 if (self->ext.GH_Props.unk8C) {
                     self->step_s = 1;
@@ -444,14 +444,14 @@ void EntityGurkha(Entity* self) {
         case 1:
             ent_s0 = self + 15;
             if (ent_s0->ext.GH_Props.rotate > -0x800) {
-                ent_s0->ext.GH_Props.unkA6 -= 0x10;
+                ent_s0->ext.GH_Props.rotVel -= 0x10;
             } else {
-                ent_s0->ext.GH_Props.unkA6 += 0x10;
+                ent_s0->ext.GH_Props.rotVel += 0x10;
             }
-            if (ent_s0->ext.GH_Props.unkA6 > -0x20) {
-                ent_s0->ext.GH_Props.unkA6 = -0x20;
+            if (ent_s0->ext.GH_Props.rotVel > -0x20) {
+                ent_s0->ext.GH_Props.rotVel = -0x20;
             }
-            ent_s0->ext.GH_Props.rotate += ent_s0->ext.GH_Props.unkA6;
+            ent_s0->ext.GH_Props.rotate += ent_s0->ext.GH_Props.rotVel;
             polarPlacePartsList(D_80182F9C);
             if (ent_s0->ext.GH_Props.rotate < -0x1100) {
                 ent_s0->ext.GH_Props.rotate = -0x100;
@@ -521,8 +521,8 @@ void EntityGurkha(Entity* self) {
             func_801CDE10(var_s1);
             func_801CE2CC(var_s1);
             ent_s0 = self + 15;
-            ent_s0->ext.GH_Props.rotate += ent_s0->ext.GH_Props.unkA6;
-            ent_s0->ext.GH_Props.unkA6 -= ent_s0->ext.GH_Props.unkA6 / 16;
+            ent_s0->ext.GH_Props.rotate += ent_s0->ext.GH_Props.rotVel;
+            ent_s0->ext.GH_Props.rotVel -= ent_s0->ext.GH_Props.rotVel / 16;
             polarPlacePartsList(D_80182F9C);
             if (!self->ext.GH_Props.unkB0[0] && !self->ext.GH_Props.unkB4[0]) {
                 SetStep(5);
@@ -634,7 +634,7 @@ void EntityGurkhaWeapon(Entity* self) {
         MoveEntity();
         self->rotate -= 0x100;
         self->ext.GH_Props.rotate = self->rotate;
-        self->ext.GH_Props.unkA6 = -0xC0;
+        self->ext.GH_Props.rotVel = -0xC0;
         angle = self->rotate;
         self->hitboxOffX = (rsin(angle) * 16) >> 12;
         self->hitboxOffY = (rcos(angle) * -16) >> 12;
@@ -671,7 +671,7 @@ void EntityGurkhaWeapon(Entity* self) {
         case 1:
             MoveEntity();
             self->velocityY += FIX(0.125);
-            self->rotate += self->ext.GH_Props.unkA6;
+            self->rotate += self->ext.GH_Props.rotVel;
             if (!--self->ext.GH_Props.unk80) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;

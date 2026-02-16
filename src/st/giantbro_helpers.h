@@ -173,7 +173,7 @@ void func_801CDD00(Entity* entity, s16 arg1, s16 arg2) {
     }
 
     temp_t0 = temp_t0 / arg2;
-    entity->ext.GH_Props.unkA6 = temp_t0;
+    entity->ext.GH_Props.rotVel = temp_t0;
     entity->ext.GH_Props.unkA4 = arg1;
 }
 
@@ -197,7 +197,7 @@ void func_801CDE10(s16* entOffsets) {
     while (*entOffsets) {
         if (*entOffsets != 0xFF) {
             ent = g_CurrentEntity + *entOffsets;
-            ent->ext.GH_Props.rotate += ent->ext.GH_Props.unkA6;
+            ent->ext.GH_Props.rotate += ent->ext.GH_Props.rotVel;
         }
         entOffsets++;
     }
@@ -209,7 +209,7 @@ void polarPlacePartsWithAngvel(s16* entOffsets) {
     while (*entOffsets) {
         if (*entOffsets != 0xFF) {
             ent = g_CurrentEntity + *entOffsets;
-            ent->ext.GH_Props.rotate += ent->ext.GH_Props.unkA6;
+            ent->ext.GH_Props.rotate += ent->ext.GH_Props.rotVel;
             polarPlacePart(ent);
         }
         entOffsets++;
@@ -240,6 +240,6 @@ void func_801CDFD8(Entity* self, s32 arg1) {
         self->ext.GH_Props.unkB4[0] = arg1;
     }
     self->ext.GH_Props.unkB4[0]--;
-    self->ext.GH_Props.rotate += self->ext.GH_Props.unkA6;
+    self->ext.GH_Props.rotate += self->ext.GH_Props.rotVel;
     polarPlacePart(self);
 }

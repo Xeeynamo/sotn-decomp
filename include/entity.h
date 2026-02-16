@@ -857,7 +857,7 @@ typedef struct {
     /* 0x9E */ s16 length;
     /* 0xA0 */ struct Entity* parent;
     /* 0xA4 */ s16 unkA4;
-    /* 0xA6 */ s16 unkA6;
+    /* 0xA6 */ s16 rotVel;
     /* 0xA8 */ u8 unkA8;
     /* 0xA9 */ char pad_A9[0x7];
     /* 0xB0 */ u16 unkB0[2];

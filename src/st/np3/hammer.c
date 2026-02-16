@@ -433,7 +433,7 @@ void EntityGurkhaBodyParts(Entity* self) {
         case 1:
             MoveEntity();
             self->velocityY += FIX(0.125);
-            self->rotate += self->ext.GH_Props.unkA6;
+            self->rotate += self->ext.GH_Props.rotVel;
             if (--self->ext.GH_Props.unk80 == 0) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;

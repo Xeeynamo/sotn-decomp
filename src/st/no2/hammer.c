@@ -3,6 +3,7 @@
 
 // clang-format off
 static u16 D_us_8018219C[] = {0, 9, 0, 4, 4, -4, -8, 0};
+// Struct reminder: Entity slot offset, parent entity's slot offset, length, params, zOffset
 static giantBroBodyPartsInit D_us_801821AC[] = {
     {9, 0, 16, 7, 1},    {10, 9, 14, 8, 2},    {11, 10, 0, 9, 3},
     {12, 0, 16, 13, -1}, {13, 12, 14, 14, -2}, {14, 13, 0, 15, -3},
@@ -263,6 +264,7 @@ void EntityHammer(Entity* self) {
         break;
 
     case HAMMER_STEP_2:
+    // Loop through all parts until the eArrayOffset is zero (null-terminated)
         for (parts = D_us_801821AC, var_s3 = self; parts->eArrayOffset; parts++) {
             otherEnt = self + parts->eArrayOffset;
             CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, otherEnt);
@@ -615,7 +617,7 @@ void EntityGurkhaBodyParts(Entity* self) {
         case 1:
             MoveEntity();
             self->velocityY += FIX(0.125);
-            self->rotate += self->ext.GH_Props.unkA6;
+            self->rotate += self->ext.GH_Props.rotVel;
             if (!--self->ext.GH_Props.unk80) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
