@@ -389,13 +389,13 @@ void EntityGurkha(Entity* self) {
             func_801CE2CC(var_s1);
             polarPlacePartsList(D_80182F9C);
             if (!self->ext.GH_Props.unkB0[0] && !self->ext.GH_Props.unkB4[0]) {
-                self->ext.GH_Props.unk80 = 0;
+                self->ext.GH_Props.timer = 0;
                 self->step_s++;
             }
             break;
         case 1:
-            self->ext.GH_Props.unk80 += 0x80;
-            self->posY.val += rcos(self->ext.GH_Props.unk80) * 2;
+            self->ext.GH_Props.timer += 0x80;
+            self->posY.val += rcos(self->ext.GH_Props.timer) * 2;
             ent_s0 = self + 9;
             ent_s3 = self + 10;
             func_801CDAC8(ent_s0, ent_s3);
@@ -409,7 +409,7 @@ void EntityGurkha(Entity* self) {
             ent_s3->ext.GH_Props.rotate = ent_s3->ext.GH_Props.unkA4;
             ent_s3->ext.GH_Props.unkA8 = 1;
             polarPlacePartsList(D_80182F9C);
-            if ((self->ext.GH_Props.unk80 & 0x7FF) == 0) {
+            if ((self->ext.GH_Props.timer & 0x7FF) == 0) {
                 func_801CF7A0(self);
             }
             break;
@@ -430,10 +430,10 @@ void EntityGurkha(Entity* self) {
             if (!self->ext.GH_Props.unkB0[0] && !self->ext.GH_Props.unkB4[0]) {
                 PlaySfxPositional(SFX_GURKHA_ATTACK);
                 // we appear to write 0x10 twice here, weird
-                self->ext.GH_Props.unk80 = 0x10;
+                self->ext.GH_Props.timer = 0x10;
                 ent_s0 = self + 15;
                 ent_s0->ext.GH_Props.rotVel = 0;
-                self->ext.GH_Props.unk80 = 0x10;
+                self->ext.GH_Props.timer = 0x10;
                 if (self->ext.GH_Props.unk8C) {
                     self->step_s = 1;
                 } else {
@@ -459,7 +459,7 @@ void EntityGurkha(Entity* self) {
             }
             break;
         case 2:
-            if (!--self->ext.GH_Props.unk80) {
+            if (!--self->ext.GH_Props.timer) {
                 self->step_s++;
             }
             break;
@@ -662,7 +662,7 @@ void EntityGurkhaWeapon(Entity* self) {
             angle = (Random() * 6) + 0x900;
             self->velocityX = (rnd * rcos(angle)) / 2;
             self->velocityY = rnd * rsin(angle);
-            self->ext.GH_Props.unk80 = (Random() & 0x1F) + 0x20;
+            self->ext.GH_Props.timer = (Random() & 0x1F) + 0x20;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->hitboxState = 0;
             self->step_s++;
@@ -672,7 +672,7 @@ void EntityGurkhaWeapon(Entity* self) {
             MoveEntity();
             self->velocityY += FIX(0.125);
             self->rotate += self->ext.GH_Props.rotVel;
-            if (!--self->ext.GH_Props.unk80) {
+            if (!--self->ext.GH_Props.timer) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
                 self->params = 0;

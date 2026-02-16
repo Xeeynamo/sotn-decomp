@@ -684,12 +684,12 @@ void EntityBlade(Entity* self) {
                 ent_s0->ext.GH_Props.unk8C = 1;
                 ent_s0->ext.GH_Props.rotate = 0x400;
                 ent_s0->rotate = 0x400;
-                self->ext.GH_Props.unk80 = 0x20;
+                self->ext.GH_Props.timer = 0x20;
                 self->step_s++;
             }
             break;
         case 3:
-            if (!--self->ext.GH_Props.unk80) {
+            if (!--self->ext.GH_Props.timer) {
                 self->step_s++;
             }
             break;
@@ -699,7 +699,7 @@ void EntityBlade(Entity* self) {
                 ent_s0->step = 0x18;
                 ent_s0->step_s = 0;
             }
-            self->ext.GH_Props.unk80 = 0x40;
+            self->ext.GH_Props.timer = 0x40;
             self->step_s++;
             /* fallthrough */
         case 5:
@@ -710,7 +710,7 @@ void EntityBlade(Entity* self) {
                     PlaySfxPositional(SFX_EXPLODE_D);
                 }
             }
-            if (!--self->ext.GH_Props.unk80) {
+            if (!--self->ext.GH_Props.timer) {
                 DestroyEntity(self);
             }
             return;

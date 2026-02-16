@@ -843,7 +843,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
+    /* 0x80 */ s16 timer;
     /* 0x82 */ char pad_82[2];
     /* 0x84 */ u8 unk84;
     /* 0x85 */ char pad_85[3];
