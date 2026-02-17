@@ -1,41 +1,144 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no2.h"
 
+typedef enum {
+    HAMMER_STEP_0,
+    HAMMER_STEP_1,
+    HAMMER_STEP_2,
+    HAMMER_STEP_3,
+    HAMMER_STEP_5 = 5,
+    HAMMER_STEP_6,
+    HAMMER_STEP_7,
+    HAMMER_STEP_8,
+    HAMMER_STEP_10 = 10,
+    HAMMER_STEP_12 = 12,
+    HAMMER_DYING = 24
+} HammerSteps;
+
 // clang-format off
-static u16 D_us_8018219C[] = {0, 9, 0, 4, 4, -4, -8, 0};
+static u16 sensors1[] = {0, 9, 0, 4, 4, -4, -8, 0};
+
+// Hammer is a complex construction made of 16 entities.
+// EntityHammer is the pelvis, and itself +1, +2, etc up to +14
+// are the body parts. +15 is the hammer (the weapon).
+// these are useful names for those body parts.
+// The arms and legs are in 2 pairs. There is a bright blue foreground arm,
+// and a dim grey background arm. Foreground is unprefixed, background is BACK_
+typedef enum {
+    PELVIS,
+    HEAD,
+    TORSO,
+    SHOULDER,
+    ARM_UPPER,
+    ARM_LOWER,
+    BACK_SHOULDER,
+    BACK_ARM_UPPER,
+    BACK_ARM_LOWER,
+    LEG_UPPER,
+    LEG_LOWER,
+    FOOT,
+    BACK_LEG_UPPER,
+    BACK_LEG_LOWER,
+    BACK_FOOT,
+    HAMMER_WEAPON
+} partEntOffsets;
 // Struct reminder: Entity slot offset, parent entity's slot offset, length, params, zOffset
 // To view the body parts, make sure Hammer is loaded, then invoke:
 // python3 tools/display_animset_frames.py LIVE no2 0x8006 0x23E 48 48 --unk5A 0x4C
-
 static giantBroBodyPartsInit D_us_801821AC[] = {
-    {9 , 0, 16, 7, 1},
-    {10, 9, 14, 8, 2},
-    {11, 10, 0, 9, 3},
-    {12, 0, 16, 13, -1},
-    {13, 12, 14, 14, -2},
-    {14, 13, 0, 15, -3},
-    {2, 0, -18, 2, 1}, // Frame 2, the chestpiece   
-    {1, 2, -4, 16, 0},
-    {3, 2, 0, 4, 2}, // Frame 4, shoulder
-    {4, 3, 10, 5, 5},
-    {5, 4, 13, 6, 4},
-    {6, 2, 0, 10, -2},
-    {7, 6, 10, 11, -4},
-    {8, 7, 13, 12, -3},
+    {LEG_UPPER, PELVIS, 16, 7, 1},
+    {LEG_LOWER, LEG_UPPER, 14, 8, 2},
+    {FOOT, LEG_LOWER, 0, 9, 3},
+    {BACK_LEG_UPPER, PELVIS, 16, 13, -1},
+    {BACK_LEG_LOWER, BACK_LEG_UPPER, 14, 14, -2},
+    {BACK_FOOT, BACK_LEG_LOWER, 0, 15, -3},
+    {TORSO, PELVIS, -18, 2, 1},
+    {HEAD, TORSO, -4, 16, 0},
+    {SHOULDER, TORSO, 0, 4, 2},
+    {ARM_UPPER, SHOULDER, 10, 5, 5},
+    {ARM_LOWER, ARM_UPPER, 13, 6, 4},
+    {BACK_SHOULDER, TORSO, 0, 10, -2},
+    {BACK_ARM_UPPER, BACK_SHOULDER, 10, 11, -4},
+    {BACK_ARM_LOWER, BACK_ARM_UPPER, 13, 12, -3},
     {0, 0, 0, 0, 0}};
-static s16 D_us_80182244[] = {2, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0};
-static s16 D_us_80182264[] = {9, 10, 12, 13, 11, 14, 2, 1, 4, 5, 7, 8, 15, 0};
-static s16 D_us_80182280[] = {12, 13, 9, 10, 14, 11, 2, 1, 4, 5, 7, 8, 15, 0};
-static s16 D_us_8018229C[] = {9, 10, 12, 13, 0}; // unused
-static s16 D_us_801822A8[] = {12, 13, 9, 10, 0}; // unused
-static s16 D_us_801822B4[] = {9, 10, 12, 13, 2, 255, 255, 7, 8, 0}; // unused
-static s16 D_us_801822C8[] = {12, 13, 9, 10, 2, 7, 8, 255, 255, 0}; // unused
-static s16 D_us_801822DC[] = {9, 10, 12, 13, 11, 14, 2, 255, 255, 7, 8, 0};
-static s16 D_us_801822F4[] = {12, 13, 9, 10, 14, 11, 2, 7, 8, 255, 255, 0};
-static s16 D_us_8018230C[] = {9, 10, 12, 13, 11, 14, 2, 4, 5, 15, 0};
-static s16 D_us_80182324[] = {12, 13, 9, 10, 14, 11, 2, 4, 5, 15, 0};
-static s16 D_us_8018233C[] = {9, 10, 12, 13, 11, 14, 0}; //unused
-static s16 D_us_8018234C[] = {12, 13, 9, 10, 14, 11, 0}; //unused
+
+static s16 partsList1[] = {TORSO, HEAD,
+                           SHOULDER, ARM_UPPER, ARM_LOWER,
+                           BACK_SHOULDER, BACK_ARM_UPPER, BACK_ARM_LOWER,
+                           LEG_UPPER, LEG_LOWER, FOOT,
+                           BACK_LEG_UPPER, BACK_LEG_LOWER, BACK_FOOT,
+                           HAMMER_WEAPON,
+                           0};
+static s16 partsList2[] = {LEG_UPPER, LEG_LOWER,
+                           BACK_LEG_UPPER, BACK_LEG_LOWER,
+                           FOOT, BACK_FOOT,
+                           TORSO, HEAD,
+                           ARM_UPPER, ARM_LOWER,
+                           BACK_ARM_UPPER, BACK_ARM_LOWER,
+                           HAMMER_WEAPON,
+                           0};
+static s16 partsList3[] = {BACK_LEG_UPPER, BACK_LEG_LOWER,
+                           LEG_UPPER, LEG_LOWER,
+                           BACK_FOOT, FOOT,
+                           TORSO, HEAD,
+                           ARM_UPPER, ARM_LOWER,
+                           BACK_ARM_UPPER, BACK_ARM_LOWER,
+                           HAMMER_WEAPON,
+                           0};
+static s16 partsList4[] = {LEG_UPPER, LEG_LOWER,
+                           BACK_LEG_UPPER, BACK_LEG_LOWER,
+                           0}; // unused
+static s16 partsList5[] = {BACK_LEG_UPPER, BACK_LEG_LOWER,
+                           LEG_UPPER, LEG_LOWER,
+                           0}; // unused
+static s16 partsList6[] = {LEG_UPPER, LEG_LOWER,
+                           BACK_LEG_UPPER, BACK_LEG_LOWER,
+                           TORSO,
+                           255, 255,
+                           BACK_ARM_UPPER, BACK_ARM_LOWER,
+                           0}; // unused
+static s16 partsList7[] = {BACK_LEG_UPPER, BACK_LEG_LOWER,
+                           LEG_UPPER, LEG_LOWER,
+                           TORSO,
+                           BACK_ARM_UPPER, BACK_ARM_LOWER,
+                           255, 255,
+                           0}; // unused
+static s16 partsList8[] = {LEG_UPPER, LEG_LOWER,
+                           BACK_LEG_UPPER, BACK_LEG_LOWER,
+                           FOOT, BACK_FOOT,
+                           TORSO,
+                           255, 255,
+                           BACK_ARM_UPPER, BACK_ARM_LOWER,
+                           0};
+static s16 partsList9[] = {BACK_LEG_UPPER, BACK_LEG_LOWER,
+                           LEG_UPPER, LEG_LOWER,
+                           BACK_FOOT, FOOT,
+                           TORSO,
+                           BACK_ARM_UPPER, BACK_ARM_LOWER,
+                           255, 255,
+                           0};
+static s16 partsList10[] = {LEG_UPPER, LEG_LOWER,
+                            BACK_LEG_UPPER, BACK_LEG_LOWER,
+                            FOOT, BACK_FOOT,
+                            TORSO,
+                            ARM_UPPER, ARM_LOWER,
+                            HAMMER_WEAPON,
+                            0};
+static s16 partsList11[] = {BACK_LEG_UPPER, BACK_LEG_LOWER,
+                            LEG_UPPER, LEG_LOWER,
+                            BACK_FOOT, FOOT,
+                            TORSO,
+                            ARM_UPPER, ARM_LOWER,
+                            HAMMER_WEAPON,
+                            0};
+static s16 partsList12[] = {LEG_UPPER, LEG_LOWER,
+                            BACK_LEG_UPPER, BACK_LEG_LOWER,
+                            FOOT, BACK_FOOT,
+                            0}; //unused
+static s16 partsList13[] = {BACK_LEG_UPPER, BACK_LEG_LOWER,
+                            LEG_UPPER, LEG_LOWER,
+                            BACK_FOOT, FOOT,
+                            0}; //unused
 
 static s16 D_us_8018235C[] = {0x000, 0x000, 0x080, -0x100, 0x000, 0x000, 0x000,
                               0x000, 0x100, 0x680, 0x000,  0x200, 0x2C0, 0x000};
@@ -177,24 +280,24 @@ static s32 func_801CE4CC(Entity* self) {
     }
 
     if (dx < -16) {
-        func_801CE1E8(10);
+        func_801CE1E8(HAMMER_STEP_10);
         return;
     }
 
     if (g_CurrentEntity->ext.GH_Props.unk84 == 1) {
-        otherEnt = g_CurrentEntity + 10;
+        otherEnt = g_CurrentEntity + LEG_LOWER;
     } else {
-        otherEnt = g_CurrentEntity + 13;
+        otherEnt = g_CurrentEntity + BACK_LEG_LOWER;
     }
 
     step = func_801CE120(otherEnt, g_CurrentEntity->facingLeft);
     if (step != 0) {
-        func_801CE1E8(7);
+        func_801CE1E8(HAMMER_STEP_7);
         return;
     }
     step = func_801CE120(otherEnt, g_CurrentEntity->facingLeft ^ 1);
     if (step != 0) {
-        func_801CE1E8(5);
+        func_801CE1E8(HAMMER_STEP_5);
         return;
     }
 
@@ -233,20 +336,6 @@ static s32 func_801CE4CC(Entity* self) {
     }
 }
 
-typedef enum {
-    HAMMER_STEP_0,
-    HAMMER_STEP_1,
-    HAMMER_STEP_2,
-    HAMMER_STEP_3,
-    HAMMER_STEP_5 = 5,
-    HAMMER_STEP_6,
-    HAMMER_STEP_7,
-    HAMMER_STEP_8,
-    HAMMER_STEP_10 = 10,
-    HAMMER_STEP_12 = 12,
-    HAMMER_DYING = 24
-} HammerSteps;
-
 void EntityHammer(Entity* self) {
     Collider collider;
     Entity* otherEnt;
@@ -270,7 +359,7 @@ void EntityHammer(Entity* self) {
         self->hitboxHeight = 6;
         /* fallthrough */
     case HAMMER_STEP_1:
-        if (UnkCollisionFunc3(D_us_8018219C) & 1) {
+        if (UnkCollisionFunc3(sensors1) & 1) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             self->step++;
         }
@@ -293,34 +382,34 @@ void EntityHammer(Entity* self) {
         }
         self->unk60 = var_s3;
         self->unk5C = NULL;
-        otherEnt = self + 15;
+        otherEnt = self + HAMMER_WEAPON;
         CreateEntityFromCurrentEntity(E_HAMMER_WEAPON, otherEnt);
         otherEnt->ext.GH_Props.length = 12;
-        otherEnt->ext.GH_Props.parent = self + 5;
+        otherEnt->ext.GH_Props.parent = self + ARM_LOWER;
         otherEnt->zPriority = self->zPriority + 3;
         otherEnt->params = 0x12;
         self->step++;
         /* fallthrough */
     case HAMMER_STEP_3:
         func_801CE228();
-        otherEnt = self + 4;
+        otherEnt = self + ARM_UPPER;
         otherEnt->ext.GH_Props.rotate = 0x100;
-        otherEnt = self + 5;
+        otherEnt = self + ARM_LOWER;
         otherEnt->ext.GH_Props.rotate = 0x680;
-        otherEnt = self + 15;
+        otherEnt = self + HAMMER_WEAPON;
         otherEnt->ext.GH_Props.rotate = 0x2C0;
-        func_801CE1E8(5);
+        func_801CE1E8(HAMMER_STEP_5);
         /* fallthrough */
     case HAMMER_STEP_5:
         if (self->ext.GH_Props.unk84 == 1) {
-            ptr = D_us_801822DC;
+            ptr = partsList8;
         } else {
-            ptr = D_us_801822F4;
+            ptr = partsList9;
         }
         func_801CDF1C(ptr, D_us_801823D8, 0);
         func_801CDE10(ptr);
         func_801CE2CC(ptr);
-        polarPlacePartsList(D_us_80182244);
+        polarPlacePartsList(partsList1);
         if (self->ext.GH_Props.unkB0[0] > 1) {
             collider.unk18 = 9;
             otherEnt = self + ptr[3];
@@ -339,14 +428,14 @@ void EntityHammer(Entity* self) {
 
     case HAMMER_STEP_7:
         if (self->ext.GH_Props.unk84 == 1) {
-            ptr = D_us_801822DC;
+            ptr = partsList8;
         } else {
-            ptr = D_us_801822F4;
+            ptr = partsList9;
         }
         func_801CDF1C(ptr, D_us_80182410, 0);
         func_801CDE10(ptr);
         func_801CE2CC(ptr);
-        polarPlacePartsList(D_us_80182244);
+        polarPlacePartsList(partsList1);
         if (self->ext.GH_Props.unkB0[0] > 1) {
             collider.unk18 = 9;
             otherEnt = self + ptr[3];
@@ -367,16 +456,16 @@ void EntityHammer(Entity* self) {
 
     case HAMMER_STEP_8:
         if (self->ext.GH_Props.unk84 == 1) {
-            ptr = D_us_801822DC;
+            ptr = partsList8;
         } else {
-            ptr = D_us_801822F4;
+            ptr = partsList9;
         }
         switch (self->step_s) {
         case 0:
             if (self->ext.GH_Props.unk84 == 1) {
-                ptr = D_us_80182264;
+                ptr = partsList2;
             } else {
-                ptr = D_us_80182280;
+                ptr = partsList3;
             }
             func_801CDF1C(ptr, D_us_80182378, 0);
             func_801CDE10(ptr);
@@ -425,7 +514,7 @@ void EntityHammer(Entity* self) {
             }
             break;
         }
-        polarPlacePartsList(D_us_80182244);
+        polarPlacePartsList(partsList1);
         break;
 
     case HAMMER_STEP_6:
@@ -435,22 +524,22 @@ void EntityHammer(Entity* self) {
             /* fallthrough */
         case 1:
             if (self->ext.GH_Props.unk84 == 1) {
-                ptr = D_us_8018230C;
+                ptr = partsList10;
             } else {
-                ptr = D_us_80182324;
+                ptr = partsList11;
             }
             func_801CDF1C(ptr, D_us_8018265C, 0);
             func_801CDE10(ptr);
             func_801CE2CC(ptr);
-            otherEnt = self + 15;
-            var_s3 = self + 8;
+            otherEnt = self + HAMMER_WEAPON;
+            var_s3 = self + BACK_ARM_LOWER;
             var_s3->posX.val = otherEnt->posX.val;
             var_s3->posY.val = otherEnt->posY.val;
-            otherEnt = self + 7;
+            otherEnt = self + BACK_ARM_UPPER;
             func_801CDAC8(otherEnt, var_s3);
             func_801CDFD8(otherEnt, 0x10);
             func_801CDFD8(var_s3, 0x10);
-            polarPlacePartsList(D_us_80182244);
+            polarPlacePartsList(partsList1);
             if (!self->ext.GH_Props.unkB0[0] && !self->ext.GH_Props.unkB4[0]) {
                 PlaySfxPositional(SFX_HAMMER_ATTACK);
                 self->step_s++;
@@ -459,22 +548,22 @@ void EntityHammer(Entity* self) {
 
         case 2:
             if (self->ext.GH_Props.unk84 == 1) {
-                ptr = D_us_8018230C;
+                ptr = partsList10;
             } else {
-                ptr = D_us_80182324;
+                ptr = partsList11;
             }
             func_801CDF1C(ptr, D_us_8018266C, 0);
             func_801CDE10(ptr);
             func_801CE2CC(ptr);
-            otherEnt = self + 15;
-            var_s3 = self + 8;
+            otherEnt = self + HAMMER_WEAPON;
+            var_s3 = self + BACK_ARM_LOWER;
             var_s3->posX.val = otherEnt->posX.val;
             var_s3->posY.val = otherEnt->posY.val;
-            otherEnt = self + 7;
+            otherEnt = self + BACK_ARM_UPPER;
             func_801CDAC8(otherEnt, var_s3);
             func_801CDFD8(otherEnt, 2);
             func_801CDFD8(var_s3, 2);
-            polarPlacePartsList(D_us_80182244);
+            polarPlacePartsList(partsList1);
             if (self->ext.GH_Props.unkB0[0] == 4 &&
                 !self->ext.GH_Props.unkB4[0]) {
                 self->ext.GH_Props.unk84 ^= 1;
@@ -492,14 +581,14 @@ void EntityHammer(Entity* self) {
 
         case 3:
             if (self->ext.GH_Props.unk84 == 1) {
-                ptr = D_us_8018230C;
+                ptr = partsList10;
             } else {
-                ptr = D_us_80182324;
+                ptr = partsList11;
             }
             func_801CDF1C(ptr, D_us_8018265C, 0);
             func_801CDE10(ptr);
             func_801CE2CC(ptr);
-            polarPlacePartsList(D_us_80182244);
+            polarPlacePartsList(partsList1);
             if (!self->ext.GH_Props.unkB0[0] && !self->ext.GH_Props.unkB4[0]) {
                 self->step_s++;
             }
@@ -513,14 +602,14 @@ void EntityHammer(Entity* self) {
 
     case HAMMER_STEP_10:
         if (self->ext.GH_Props.unk84 == 1) {
-            ptr = D_us_801822DC;
+            ptr = partsList8;
         } else {
-            ptr = D_us_801822F4;
+            ptr = partsList9;
         }
         func_801CDF1C(ptr, D_us_80182520, 0);
         func_801CDE10(ptr);
         func_801CE2CC(ptr);
-        polarPlacePartsList(D_us_80182244);
+        polarPlacePartsList(partsList1);
         if (!self->ext.GH_Props.unkB4[0]) {
             self->facingLeft ^= 1;
             func_801CE4CC(self);
@@ -533,14 +622,14 @@ void EntityHammer(Entity* self) {
             self->step_s++;
         }
         if (self->ext.GH_Props.unk84 == 1) {
-            ptr = D_us_80182264;
+            ptr = partsList2;
         } else {
-            ptr = D_us_80182280;
+            ptr = partsList3;
         }
         func_801CDF1C(ptr, D_us_80182700, 0);
         func_801CDE10(ptr);
         func_801CE2CC(ptr);
-        polarPlacePartsList(D_us_80182244);
+        polarPlacePartsList(partsList1);
         if (!self->ext.GH_Props.unkB0[0] && !self->ext.GH_Props.unkB4[0]) {
             func_801CE4CC(self);
         }
@@ -549,7 +638,7 @@ void EntityHammer(Entity* self) {
     case HAMMER_DYING:
         switch (self->step_s) {
         case 0:
-            for (ptr = D_us_80182244; *ptr; ptr++) {
+            for (ptr = partsList1; *ptr; ptr++) {
                 otherEnt = self + *ptr;
                 otherEnt->hitboxState = 0;
                 otherEnt->step = 24;
@@ -574,7 +663,7 @@ void EntityHammer(Entity* self) {
         }
         break;
     }
-    for (ptr = D_us_80182244; *ptr; ptr++) {
+    for (ptr = partsList1; *ptr; ptr++) {
         otherEnt = self + *ptr;
         otherEnt->facingLeft = self->facingLeft;
         otherEnt->ext.GH_Props.unkA8 = 0;
