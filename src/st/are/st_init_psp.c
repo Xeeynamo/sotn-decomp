@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../are/are.h"
+#include "are.h"
 
 #include "../pfn_entity_update.h"
 
