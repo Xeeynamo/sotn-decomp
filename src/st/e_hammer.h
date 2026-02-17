@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 typedef enum {
     HAMMER_STEP_0,
     HAMMER_STEP_1,
