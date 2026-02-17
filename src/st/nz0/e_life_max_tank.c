@@ -24,10 +24,9 @@ void EntityLifeMaxTank(Entity* self) {
         self->zPriority = 0x6A;
         self->hitboxWidth = 8;
         self->hitboxHeight = 12;
-        self->hitboxOffY = -0xA;
         self->hitboxOffX = 0;
+        self->hitboxOffY = -10;
         self->hitboxState = 2;
-
     case 1:
         AnimateEntity(D_80180F1C, self);
         if (self->hitFlags) {
@@ -36,24 +35,22 @@ void EntityLifeMaxTank(Entity* self) {
             SetStep(2);
         }
         break;
-
     case 2:
         if (AnimateEntity(D_80180F30, self) == 0) {
-            CreateEntityFromEntity(E_HEART_DROP, self, &self[1]);
-            self[1].params = D_80180F4C[self->params];
+            newEntity = &self[1];
+            CreateEntityFromEntity(E_HEART_DROP, self, newEntity);
+            newEntity->params = D_80180F4C[self->params];
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->params = 2;
                 newEntity->posY.i.hi -= 8;
+                newEntity->params = 2;
             }
             self->step++;
         }
         break;
-
     case 3:
-        newEntity = self;
-        newEntity->animCurFrame = 20;
+        self->animCurFrame = 20;
         break;
     }
 }
