@@ -2272,8 +2272,8 @@
 | no4    | func_pspeu_09238520                  |       62 |          5 |        |       |     |
 | np3    | func_pspeu_0924B210                  |       62 |          5 |        |       |     |
 | np3    | EntityUnkId16                        |       62 |          5 |        |       |     |
-| nz0    | PrizeDropFall                        |       62 |          5 |        |       |     |
 | nz0    | NZ0_EntityBackgroundBlock            |       62 |          5 |        |       |     |
+| nz0    | PrizeDropFall                        |       62 |          5 |        |       |     |
 | nz1    | func_pspeu_09241EB0                  |       62 |          5 |        |       |     |
 | rare   | func_pspeu_09241AF8                  |       62 |          5 |        |       |     |
 | rare   | func_pspeu_09238930                  |       62 |          5 |        |       |     |
@@ -5022,7 +5022,7 @@
 | no3    | func_pspeu_09259348                  |     1627 |        196 |        |       |     |
 | no4    | HitDetection                         |     1627 |        196 |        |       |     |
 | np3    | HitDetection                         |     1627 |        196 |        |       |     |
-| nz0    | HitDetection                         |     1627 |        196 |        |       |     |
+| nz0    | func_pspeu_0924CE68                  |     1627 |        196 |        |       |     |
 | nz1    | func_pspeu_09246400                  |     1627 |        196 |        |       |     |
 | rare   | func_pspeu_09245DC0                  |     1627 |        196 |        |       |     |
 | rcat   | func_pspeu_09243950                  |     1627 |        196 |        |       |     |
