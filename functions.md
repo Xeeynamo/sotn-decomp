@@ -1864,7 +1864,7 @@
 |        | func_092EEAB0                        |       46 |          5 |        |       |     |
 |        | DestroyEntity                        |       46 |          5 |        |       |     |
 | are    | func_pspeu_092611B0                  |       46 |          5 |        |       |     |
-| cat    | DestroyEntity                        |       46 |          5 |        |       |     |
+| cat    | func_pspeu_09252040                  |       46 |          5 |        |       |     |
 | chi    | DestroyEntity                        |       46 |          5 |        |       |     |
 | dai    | func_pspeu_0924D108                  |       46 |          5 |        |       |     |
 | dre    | func_pspeu_092435B8                  |       46 |          5 |        |       |     |
@@ -3286,7 +3286,7 @@
 | main   | __smakebuf_r                         |      111 |         19 |        |       |     |
 | no3    | func_pspeu_09252CD8                  |      111 |         19 |        |       |     |
 | are    | func_pspeu_09262220                  |      112 |          2 |        |       |     |
-| cat    | InitializeEntity                     |      112 |          2 |        |       |     |
+| cat    | func_pspeu_09252EF8                  |      112 |          2 |        |       |     |
 | chi    | InitializeEntity                     |      112 |          2 |        |       |     |
 | dai    | func_pspeu_0924E0A8                  |      112 |          2 |        |       |     |
 | dre    | func_pspeu_09243CE8                  |      112 |          2 |        |       |     |
@@ -3525,7 +3525,7 @@
 | ric    | func_pspeu_092CDD08                  |      140 |         13 |        |       |     |
 | lib    | func_psp_09239308                    |      140 |         13 |        |       |     |
 | sel    | func_psp_092457C0                    |      141 |          5 |        |       |     |
-| cat    | func_us_801BB4CC                     |      141 |         12 |        |       |     |
+| cat    | func_pspeu_09260290                  |      141 |         12 |        |       |     |
 | dra    | func_psp_09124D28                    |      141 |         14 |        |       |     |
 |        | func_092ECE88                        |      141 |         18 | Yes    |       |     |
 | rcat   | func_us_801BFF94                     |      141 |         21 |        |       |     |
@@ -4723,7 +4723,7 @@
 | dai    | func_pspeu_09259CA0                  |      656 |         41 |        |       |     |
 | dra    | func_psp_0912E3C0                    |      657 |         61 |        |       |     |
 | cat    | func_pspeu_09241E58                  |      657 |         69 | Yes    |       |     |
-| cat    | func_us_801BACF4                     |      658 |         41 |        |       |     |
+| cat    | func_pspeu_0925EA40                  |      658 |         41 |        |       |     |
 | dra    | func_psp_091203E0                    |      661 |         70 |        |       |     |
 | lib    | UnkRecursivePrimFunc2                |      663 |         11 |        |       |     |
 | ric    | func_pspeu_092B4DE0                  |      663 |         70 |        |       |     |
