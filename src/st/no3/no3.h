@@ -120,7 +120,6 @@ typedef enum EntityIDs {
     /* 0x62 */ E_EXPLODE_PUFF_OPAQUE,
 } EntityIDs;
 
-extern void ReplaceBreakableWithItemDrop(Entity*);
 extern s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
 

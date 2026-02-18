@@ -11,7 +11,6 @@ options:
   compiler: GCC
   symbol_addrs_path:
     - config/symbols.us.txt
-    - config/symbols.us.stnp3.txt
   undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.stnp3.txt
   undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.stnp3.txt
   find_file_boundaries: yes
@@ -53,11 +52,11 @@ segments:
       - [0x1104, .data, e_trapdoor]
       - [0x1114, .data, e_jewel_sword_puzzle]
       - [0x11CC, .data, e_sky_entities]
-      - [0x122C, data]
+      - [0x122C, .data, d_water_data]
       - [0x1260, .data, e_explosion_puff_opaque]
       - [0x12CC, .data, slogra]
       - [0x14B4, .data, gaibon]
-      - [0x1618, data, d_prize_drops]
+      - [0x1618, .data, d_prize_drops]
       - [0x162C, .data, st_update]
       - [0x1678, .data, collision]
       - [0x1A38, .data, e_red_door]
@@ -153,5 +152,5 @@ segments:
       - [0x52768, .bss, create_entity]
       - [0x5277D, .bss, bss]
       - [0x53378, .bss, giantbro_helpers]
-      - [0x533F4, .bss, e_collect]
+      - [0x533F4, .bss, st_update]
   - [0x53434]

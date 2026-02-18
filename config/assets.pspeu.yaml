@@ -598,6 +598,12 @@ files:
     asset_path: assets/st/np3
     src_path: src/st/np3
     splat_config_path: config/splat.pspeu.stnp3.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+        - [0x33308, sprite_banks, psp/sprite_banks]
+        - [0x33368, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/nz0.bin
     asset_path: assets/st/nz0
     src_path: src/st/nz0

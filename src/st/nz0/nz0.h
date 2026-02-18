@@ -110,7 +110,6 @@ extern s32 E_ID(LIFE_UP_SPAWN);
 void DestroyEntity(Entity* item);
 void func_8019B858(void);
 void func_801BDD9C(void);
-s32 UnkCollisionFunc(s16* hitSensors, s16 sensorCount);
 s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
 void EntityExplosion(Entity*);
 void func_801C33D8(const u32*, s32);
@@ -197,7 +196,6 @@ extern u8 D_80180E2C[];
 extern s16 D_80180E34[];
 extern s8 D_80180E44[];
 extern u32 g_randomNext;
-extern s8 c_HeartPrizes[];
 extern Entity* g_CurrentEntity;
 extern s32 g_BossFlag; // original names: boss_flag / beri_flag
 extern u8 D_8018136C[];
@@ -260,14 +258,6 @@ extern s32 D_801CB6B8;
 extern s32 D_801CB6BC;
 extern s32 D_801CB6C0[];
 extern s16 D_801CB738[];
-
-// *** EntitySoulStealOrb properties START ***
-
-extern u16 g_ESoulStealOrbAngles[];
-extern s16 g_ESoulStealOrbSprt[];
-extern u8 g_ESoulStealOrbAnim[];
-
-// *** EntitySoulStealOrb properties END ***
 
 // For EntityLifeUpSpawn
 extern u16 D_80182850[];

@@ -70,10 +70,6 @@ extern u8 D_801805B4[];
 extern s16 D_801805BC[];
 extern u16 D_80180EEC[];
 extern u16 D_80180F1C[];
-extern s8 c_HeartPrizes[];
-extern u16 g_ESoulStealOrbAngles[];
-extern s16 g_ESoulStealOrbSprt[];
-extern u8 g_ESoulStealOrbAnim[];
 extern ObjInit D_8018125C[];
 
 #endif
