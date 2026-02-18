@@ -119,7 +119,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->ext.weapon.lifetime = 0x16;
         self->drawFlags = FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->rotate = self->ext.weapon.parent->rotate;
         self->opacity = 0x80;
         self->step++;
@@ -299,7 +299,7 @@ s32 func_ptr_80170010(Entity* self) {
         self->posX.i.hi += -3 + (rand() & 7);
         D_74000_8017BD74 += 1;
         if (!(rand() & 1)) {
-            self->drawMode |= DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode |= DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         }
         self->step += 1;
     }

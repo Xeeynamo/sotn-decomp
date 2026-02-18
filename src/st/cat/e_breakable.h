@@ -65,13 +65,13 @@ static u16 anim_sets[] = {
     ANIMSET_OVL(12), ANIMSET_OVL(12), ANIMSET_OVL(12), ANIMSET_OVL(2)};
 #endif
 static u16 unk_5A[] = {0, 0, 0, 91, 91, 91, 91, 91, 91, 91};
-static u8 draw_modes[] = {
-    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2, DRAW_DEFAULT};
+static u8 blend_modes[] = {
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD, BLEND_NO};
 static u16 z_priorities[] = {168, 168, 96, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static u16 hitbox_offsets_y[12] = {0};
 
@@ -92,7 +92,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
         if (z_priorities[breakableType]) {
             self->zPriority = z_priorities[breakableType];
         }
-        self->drawMode = draw_modes[breakableType];
+        self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = hitbox_heights[breakableType];
         self->animSet = anim_sets[breakableType];
         self->unk5A = unk_5A[breakableType];

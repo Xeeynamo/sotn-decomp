@@ -851,7 +851,7 @@ void MarStepDead(
             MarCreateEntFactoryFromEntity(
                 g_CurrentEntity, FACTORY(BP_HIT_BY_ICE, 1), 0);
             death_kind = DEATH_BY_ICE;
-            PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            PLAYER.blendMode = BLEND_TRANSP | BLEND_ADD;
         } else {
             func_maria_8015FA5C(1);
             // RIC blueprint 33 has child 31, EntityPlayerBlinkWhite

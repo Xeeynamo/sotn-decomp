@@ -11,7 +11,7 @@ static u8 g_eBreakableExplosionTypes[8] = {0};
 
 static u16 g_eBreakableanimSets[] = {
     ANIMSET_DRA(3), ANIMSET_DRA(3), 0, 0, 0, 0, 0, 0};
-static u8 g_eBreakableDrawModes[] = {
+static u8 blend_modes[] = {
     DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40,
     DRAW_TPAGE | DRAW_TPAGE2,
     DRAW_DEFAULT,

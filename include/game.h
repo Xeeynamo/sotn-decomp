@@ -90,6 +90,14 @@ typedef enum {
     DRAW_ABSPOS = 0x2000,   // use absolute coordinates with DRAW_MENU
 } DrawMode;
 
+typedef enum {
+    BLEND_NO = 0x00,      // full opaque
+    BLEND_TRANSP = 0x10,  // 50% opaque, sets setSemiTrans flag to 1
+    BLEND_ADD = 0x20,     // additive blending - implies BLEND_TRANSP
+    BLEND_SUB = 0x40,     // subtractive blending - implies BLEND_TRANSP
+    BLEND_QUARTER = 0x60, // 25% opaque - implies BLEND_TRANSP
+} BlendModes;
+
 #include "entity.h"
 
 // These are used for RGB5551
@@ -895,7 +903,7 @@ typedef struct Entity {
     /* 0x12 */ s16 hitboxOffY;
     /* 0x14 */ u16 facingLeft;
     /* 0x16 */ u16 palette;
-    /* 0x18 */ u8 drawMode;
+    /* 0x18 */ u8 blendMode; // refer to enum BlendModes
     /* 0x19 */ u8 drawFlags;
     /* 0x1A */ s16 scaleX; // 0x100 = 1.0
     /* 0x1C */ s16 scaleY; // 0x100 = 1.0
@@ -947,7 +955,7 @@ typedef struct {
     /* 0x04 */ u16 unk5A; // not 5A in this struct, but goes to 5A in entity
     /* 0x06 */ u16 palette;
     /* 0x08 */ u16 drawFlags;
-    /* 0x0A */ u16 drawMode;
+    /* 0x0A */ u16 blendMode;
     /* 0x0C */ u32 flags;
     /* 0x10 */ u8* animFrames;
 } ObjInit; // size = 0x14
@@ -959,7 +967,7 @@ typedef struct { // only difference from above is this one uses a facingLeft
     /* 0x05 */ u8 unk5A;
     /* 0x06 */ u16 palette;
     /* 0x08 */ u16 drawFlags;
-    /* 0x0A */ u16 drawMode;
+    /* 0x0A */ u16 blendMode;
     /* 0x0C */ u32 flags;
     /* 0x10 */ u8* animFrames;
 } ObjInit2; // size = 0x14

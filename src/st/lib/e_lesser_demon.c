@@ -80,7 +80,7 @@ void func_us_801BB8DC(s16* unkArg) {
         g_CurrentEntity->opacity += 4;
         if (g_CurrentEntity->opacity > 0xA0) {
             g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
-            g_CurrentEntity->drawMode = DRAW_DEFAULT;
+            g_CurrentEntity->blendMode = BLEND_NO;
             g_CurrentEntity->ext.lesserDemon.unkB0 = 0x20;
             g_CurrentEntity->step_s++;
         }
@@ -207,7 +207,7 @@ void EntityLesserDemonSpit(Entity* self) {
     case 0:
         InitializeEntity(g_EInitLesserDemonSpit);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
         self->scaleX = 0x180;
         self->scaleY = 0x180;
@@ -1482,7 +1482,7 @@ void EntityLesserDemon(Entity* self) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->drawFlags = FLAG_DRAW_OPACITY;
-                self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+                self->blendMode = BLEND_TRANSP | BLEND_ADD;
                 self->opacity = 0x80;
                 self->ext.lesserDemon.unk80 = 0x40;
                 self->step_s++;

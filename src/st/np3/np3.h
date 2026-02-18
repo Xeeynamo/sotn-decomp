@@ -164,7 +164,7 @@ extern u8* g_eBreakableAnimations[8];
 extern u8 g_eBreakableHitboxes[];
 extern u8 g_eBreakableExplosionTypes[];
 extern u16 g_eBreakableanimSets[];
-extern u8 g_eBreakableDrawModes[];
+extern u8 blend_modes[];
 extern u16 D_80180AF0[];
 extern u16 D_8018112C[];
 extern u16 D_80181144[];

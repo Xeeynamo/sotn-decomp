@@ -620,7 +620,7 @@ void MarEntitySmokePuff(Entity* self) {
         self->anim = anim_smoke_puff;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags =
             FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_OPACITY;
         self->opacity = 0x60;
@@ -1050,13 +1050,13 @@ void func_maria_80161C2C(Entity* self) {
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != anim_smoke_puff)) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             if (!(paramsLo & 1) && self->poseTimer == 1) {
                 MarCreateEntFactoryFromEntity(self, FACTORY(BP_EMBERS, 4), 0);
             }
         }
         if (self->pose == 16 && self->anim == anim_smoke_puff) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
         if (self->poseTimer < 0) {
             DestroyEntity(self);
@@ -2420,12 +2420,12 @@ static void func_80165DD8(
 
 static void func_80166024() {
     PLAYER.palette = PAL_FLAG(PAL_FILL_BLACK);
-    PLAYER.drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+    PLAYER.blendMode = BLEND_TRANSP | BLEND_QUARTER;
 }
 
 static void func_80166044() {
     PLAYER.palette = PAL_FLAG(PAL_RICHTER);
-    PLAYER.drawMode = DRAW_DEFAULT;
+    PLAYER.blendMode = BLEND_NO;
 }
 
 // Entity ID 66. Made by blueprint 77 (the very last one).
@@ -2669,10 +2669,10 @@ void MarEntityTeleport(Entity* self) {
 
 void SetOpacity(Entity* entity, s32 opacity) {
     if (opacity >= 128) {
-        entity->drawMode = entity->drawFlags = FLAG_DRAW_DEFAULT;
+        entity->blendMode = entity->drawFlags = FLAG_DRAW_DEFAULT;
         entity->opacity = 128;
     } else {
-        entity->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
+        entity->blendMode = BLEND_TRANSP | BLEND_ADD;
         entity->drawFlags = FLAG_DRAW_OPACITY;
         entity->opacity = opacity;
     }

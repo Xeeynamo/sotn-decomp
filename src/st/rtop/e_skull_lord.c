@@ -188,7 +188,7 @@ void EntitySkullLord(Entity* self) {
             self->opacity -= 4;
             if (!self->opacity) {
                 self->animCurFrame = 0;
-                self->drawMode = self->drawFlags = FLAG_DRAW_DEFAULT;
+                self->blendMode = self->drawFlags = FLAG_DRAW_DEFAULT;
                 self->ext.skullLord.timer = 0x100;
                 PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
                 self->step_s++;
@@ -229,9 +229,9 @@ void EntitySkullLord(Entity* self) {
 
     if (!(self->palette & PAL_UNK_FLAG)) {
         self->palette = g_EInitSkullLord[3] + self->ext.skullLord.unk84;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
     } else {
-        self->drawMode = DRAW_DEFAULT;
+        self->blendMode = BLEND_NO;
     }
 
     if (!(g_Timer & 3)) {
@@ -256,7 +256,7 @@ void EntitySkullLordOutline(Entity* self) {
         InitializeEntity(D_us_801805FC);
         self->hitboxState = 0;
         self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
-        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         if (self->params) {
             self->drawFlags |= FLAG_DRAW_OPACITY;
             self->animCurFrame = (s16)self->params;
@@ -479,7 +479,7 @@ void EntitySkullLordPieces(Entity* self) {
         self->velocityX = rand * rcos(angle);
         rand = 0x20 - (Random() & 0x1F);
         self->velocityY = -rand * rsin(angle);
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = FLAG_DRAW_ROTATE;
         break;
 

@@ -42,7 +42,7 @@ void EntityPhantomSkull(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitPhantomSkull);
-        self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         break;
     case 1:
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
@@ -116,7 +116,7 @@ void EntityPhantomSkullTrail(Entity* self) {
         InitializeEntity(g_EInitPhantomSkullTrail);
         self->hitboxState = 0;
         self->animCurFrame = 0x12;
-        self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         self->drawFlags |= FLAG_DRAW_OPACITY;
         self->opacity = 0x40;
         break;

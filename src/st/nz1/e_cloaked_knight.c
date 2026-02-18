@@ -324,7 +324,7 @@ void EntityCloakedKnightAura(Entity* self) {
         self->palette += 1; // n.b.! increment operator doesn't work
         self->drawFlags |=
             FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->scaleX = self->scaleY = 0x100;
         self->opacity = 0x80;
     }

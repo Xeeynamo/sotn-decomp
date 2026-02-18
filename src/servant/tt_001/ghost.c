@@ -358,7 +358,7 @@ void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
         self->ext.ghost.unk7E = self->params;
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = FLAG_DRAW_OPACITY;
         SetEntityAnimation(self, g_DefaultGhostAnimationFrame);
         self->ext.ghost.maxAngle = 512;

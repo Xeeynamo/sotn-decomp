@@ -45,7 +45,7 @@ void EntityWeaponAttack(Entity* self) {
         self->palette += anim->palette;
         self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
 
         if (animIndex == 1) {
             g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_A);

@@ -734,7 +734,7 @@ void func_us_801A21F8(Entity* self) {
     case 3:
         self->animSet = PAL_FLAG(1);
         self->animCurFrame = 0xB;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->palette = 0;
         self->zPriority = 0x70;
         self->step++;

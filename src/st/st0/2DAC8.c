@@ -558,7 +558,7 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->animCurFrame = 0x5A;
                     self->unk5A = 0x5E;
                     self->palette = PAL_FLAG(PAL_FILL_WHITE);
-                    self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+                    self->blendMode = BLEND_TRANSP | BLEND_ADD;
                     self->drawFlags = FLAG_DRAW_OPACITY;
                     self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
                     self->opacity = 0x10;
@@ -572,7 +572,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 self->scaleX = self->scaleY;
                 if (self->scaleY < 0x100) {
                     self->animCurFrame = 0;
-                    self->drawMode = DRAW_DEFAULT;
+                    self->blendMode = BLEND_NO;
                     self->drawFlags = FLAG_DRAW_DEFAULT;
                     self->step_s++;
                 }
@@ -584,7 +584,7 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->palette = PAL_FLAG(PAL_FILL_WHITE);
                     self->drawFlags = FLAG_DRAW_OPACITY;
                     self->opacity = 0;
-                    self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+                    self->blendMode = BLEND_TRANSP | BLEND_ADD;
                     self->step_s++;
                 }
                 break;
@@ -600,7 +600,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 self->animCurFrame = entity->animCurFrame;
                 if (!self->opacity) {
                     self->animCurFrame = 0;
-                    self->drawMode = DRAW_DEFAULT;
+                    self->blendMode = BLEND_NO;
                     self->drawFlags = FLAG_DRAW_DEFAULT;
                     self->step_s++;
                 }
@@ -1060,7 +1060,7 @@ void func_801AF774(Entity* self) {
         InitializeEntity(g_EInitDracula);
         self->hitboxState = 0;
         self->animCurFrame = 0;
-        self->drawMode |= (DRAW_TPAGE | 0x20);
+        self->blendMode |= (DRAW_TPAGE | 0x20);
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         D_801C2578 = 1;
         self->ext.et_801AF774.unk90 = 1;

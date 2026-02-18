@@ -517,7 +517,7 @@ void EntityKarasuman(Entity* self) {
 
             if (!--self->ext.karasuman.timer) {
                 self->palette = PAL_FLAG(0x2E4);
-                self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+                self->blendMode = BLEND_TRANSP | BLEND_ADD;
                 self->drawFlags |= FLAG_DRAW_OPACITY;
                 self->opacity = 0x80;
                 self->ext.karasuman.timer = 64;
@@ -642,7 +642,7 @@ void EntityKarasumanOrbAttack(Entity* self) {
         InitializeEntity(g_EInitKarasumanOrbAttack);
         self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
         self->scaleX = self->scaleY = 0;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         // fallthrough
 
     case 1:
@@ -752,7 +752,7 @@ void EntityKarasumanRavenAttack(Entity* self) {
         self->palette = PAL_FLAG(0x15F);
         self->drawFlags = FLAG_DRAW_OPACITY;
         self->opacity = 0;
-        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_SUB;
         entity = self->ext.karasuman.parent;
         angle = Random() * 16;
         self->posX.i.hi += FLT_TO_I(128 * rcos(angle));
@@ -862,7 +862,7 @@ void EntityKarasumanRavenAbsorb(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitKarasumanRavenAttack);
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->drawFlags = FLAG_DRAW_ROTATE;
         self->hitboxState = 0;
 

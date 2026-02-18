@@ -1077,10 +1077,10 @@ void EntityCutscenePhotographFire(Entity* entity) {
         if (entity->params) {
             entity->opacity = 0x10;
             entity->zPriority = 0x1FB;
-            entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
+            entity->blendMode = BLEND_TRANSP | BLEND_SUB;
         } else {
             entity->zPriority = 0x1FE;
-            entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            entity->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
     case 1:
         entity->posY.val -= FIX(1.0);

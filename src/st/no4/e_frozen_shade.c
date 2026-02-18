@@ -278,7 +278,7 @@ void EntityFrozenShade(Entity* self) {
         InitializeEntity(g_EInitFrozenShade);
         self->opacity = 0x40;
         self->palette += self->params;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = FLAG_DRAW_OPACITY;
         self->ext.frozenShade.unk7C = 0;
         if (self->posX.val < tempEntity->posX.val) {

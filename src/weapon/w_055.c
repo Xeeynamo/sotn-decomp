@@ -43,7 +43,7 @@ void EntityWeaponAttack(Entity* self) {
         self->palette += anim->palette;
         self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         if (animIndex == 1) {
             g_api.PlaySfx(SFX_MAGIC_SWITCH);
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0), 0);
@@ -131,7 +131,7 @@ s32 func_ptr_80170004(Entity* self) {
                       FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->anim = D_185000_8017B174;
         self->zPriority = PLAYER.zPriority + 4;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         SetWeaponProperties(self, 0);
         self->enemyId = self->ext.weapon.parent->enemyId;

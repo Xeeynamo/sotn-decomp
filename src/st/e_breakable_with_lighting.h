@@ -34,15 +34,15 @@ static AnimateEntityFrame* animations[] = {
 static u8 hitbox_heights[] = {12, 20, 0, 0, 0, 0, 0, 0};
 static u8 explosion_types[] = {3, 3, 0, 0, 0, 0, 0, 0};
 static u16 anim_sets[] = {ANIMSET_OVL(1), ANIMSET_OVL(1), 0, 0, 0, 0, 0, 0};
-static u8 draw_modes[] = {
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT};
+static u8 blend_modes[] = {
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO};
 static s16 debris_offsets_y[] = {
     -4, -4, 3, -6, 2, 9, -4, 12, 0, 2, 0, 15, 0, 31};
 
@@ -60,7 +60,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
     if (!self->step) {
         InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = BREAKABLE_ZPRIORITY;
-        self->drawMode = draw_modes[breakableType];
+        self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = hitbox_heights[breakableType];
         self->animSet = anim_sets[breakableType];
 

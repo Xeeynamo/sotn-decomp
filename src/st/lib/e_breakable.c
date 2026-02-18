@@ -64,7 +64,7 @@ static u16 anim_sets[] = {
     ANIMSET_OVL(1),    ANIMSET_OVL(1),    ANIMSET_OVL(1),    ANIMSET_OVL(1),
     BREAKABLE_ANIMSET, BREAKABLE_ANIMSET, BREAKABLE_ANIMSET, BREAKABLE_ANIMSET,
     BREAKABLE_ANIMSET, BREAKABLE_ANIMSET};
-static u8 draw_modes[] = {
+static u8 blend_modes[] = {
     DRAW_TPAGE2 | DRAW_TPAGE, DRAW_TPAGE2 | DRAW_TPAGE,
     DRAW_TPAGE2 | DRAW_TPAGE, DRAW_TPAGE2 | DRAW_TPAGE,
     DRAW_TPAGE2 | DRAW_TPAGE, DRAW_TPAGE2 | DRAW_TPAGE,
@@ -90,7 +90,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
             entity->params = breakableType;
             entity->zPriority = self->zPriority;
         }
-        self->drawMode = draw_modes[breakableType];
+        self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = hitbox_heights[breakableType];
         self->animSet = anim_sets[breakableType];
         self->unk5A = unk_5A[breakableType];
@@ -163,7 +163,7 @@ void EntityBreakableHelper(Entity* self) {
     Entity* entity;
     if (!self->step) {
         InitializeEntity(g_EInitInteractable);
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->animSet = ANIMSET_OVL(1);
     }
     if (!self->params) {

@@ -576,7 +576,7 @@ void EntitySalemWitch(Entity* self) {
         self->flags |= FLAG_UNK_2000;
         self->hitboxState = 0;
         self->animCurFrame = self->params;
-        self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = FLAG_DRAW_OPACITY;
         self->opacity = ShadowDuration;
         // fallthrough
@@ -613,7 +613,7 @@ void EntitySalemWitchGlow(Entity* self) {
         InitializeEntity(g_EInitSalemWitch);
         self->flags |= FLAG_UNK_2000;
         self->hitboxState = 0;
-        self->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD | DRAW_UNK_40;
     }
 
     AnimateEntity(AnimFrames_Twinkle, self);
@@ -855,7 +855,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = 5;
         self->palette = PAL_FLAG(0x2EB);
-        self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags |= FLAG_DRAW_OPACITY;
         self->opacity = 0x60;
 
@@ -983,7 +983,7 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
         InitializeEntity(g_EInitSalemWitchTribolt);
         self->hitboxState = 0;
         self->animCurFrame = self->params;
-        self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = FLAG_DRAW_ROTATE;
         self->drawFlags |= FLAG_DRAW_SCALEX;
         self->drawFlags |= FLAG_DRAW_OPACITY;

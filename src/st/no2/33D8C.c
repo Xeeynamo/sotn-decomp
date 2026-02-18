@@ -72,7 +72,7 @@ void func_us_801B3F30(Entity* self) {
         self->ext.et_801B3F30.unk7C = 2;
         self->ext.et_801B3F30.unk80 = 0x10;
         self->zPriority = 0x80;
-        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         break;
     case 1:
         if (g_Tilemap.scrollY.i.hi >= 0x304) {

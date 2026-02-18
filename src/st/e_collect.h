@@ -370,7 +370,7 @@ void EntityPrizeDrop(Entity* self) {
     case 0:
         InitializeEntity(g_EInitObtainable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
-        self->drawMode = DRAW_DEFAULT;
+        self->blendMode = BLEND_NO;
 #if STAGE == STAGE_ST0
         if (itemId > 22) {
 #else
@@ -656,10 +656,10 @@ void EntityExplosion(Entity* entity) {
         entity->pose = 0;
         entity->poseTimer = 0;
         entity->animSet = ANIMSET_DRA(2);
-        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        entity->blendMode = BLEND_TRANSP | BLEND_ADD;
         if (entity->params & 0xF0) {
             entity->palette = PAL_FLAG(PAL_UNK_195);
-            entity->drawMode = DRAW_TPAGE;
+            entity->blendMode = BLEND_TRANSP;
         }
 
         if (entity->params & 0xFF00) {

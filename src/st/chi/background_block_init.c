@@ -24,7 +24,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .unk5A = 0,
         .palette = 0,
         .drawFlags = DRAW_DEFAULT,
-        .drawMode = DRAW_TPAGE,
+        .blendMode = BLEND_TRANSP,
         .animFrames = AnimFrames_80180730,
     },
     {
@@ -33,7 +33,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .unk5A = 0,
         .palette = 0,
         .drawFlags = DRAW_TRANSP | DRAW_UNK02,
-        .drawMode = DRAW_TPAGE2 | DRAW_TPAGE,
+        .blendMode = BLEND_TRANSP | BLEND_ADD,
         .flags = 0,
         .animFrames = AnimFrames_80180734,
     }};

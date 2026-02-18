@@ -110,7 +110,7 @@ typedef struct {
     u16 animSet;
     u16 unk5A;
     u16 palette;
-    u16 drawMode;
+    u16 blendMode;
     u8* animData;
 } EntityConfig;
 

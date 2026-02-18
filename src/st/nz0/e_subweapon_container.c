@@ -35,7 +35,7 @@ void EntitySubWeaponContainer(Entity* self) {
     switch (self->step) {
     case SUBWPNCONT_INIT:
         InitializeEntity(g_EInitSubwpnCloche);
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->animCurFrame = 1;
         self->zPriority = 0x70;
         self->hitboxWidth = 14;
@@ -205,7 +205,7 @@ void func_801C7654(Entity* entity) {
         InitializeEntity(g_EInitParticle);
         entity->animSet = ANIMSET_DRA(2);
         entity->palette = PAL_FLAG(PAL_CC_RED_EFFECT_B);
-        entity->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        entity->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         entity->velocityX = rcos(entity->rotate) * 0x10;
         entity->velocityY = rsin(entity->rotate) * 0x10;
         break;

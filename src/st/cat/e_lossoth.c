@@ -379,7 +379,7 @@ void EntityLossothEffects(Entity* self) {
     case 0:
         InitializeEntity(g_EInitLossothEffects);
         self->hitboxState = 0;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         // fallthrough
     case 1:
         // Walk state, move lantern glow in step with Lossoth
@@ -406,7 +406,7 @@ void EntityLossothEffects(Entity* self) {
         case 0:
             // Drop lantern on ground
             self->animCurFrame = 0x1C;
-            self->drawMode = DRAW_DEFAULT;
+            self->blendMode = BLEND_NO;
             if (self->facingLeft) {
                 self->velocityX = FIX(-0.75);
             } else {
@@ -472,7 +472,7 @@ void EntityLossothEffects(Entity* self) {
             self->animCurFrame = 0x2E;
             self->palette = PAL_FLAG(0x21A);
             self->opacity = 0;
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
             self->drawFlags = FLAG_DRAW_OPACITY;
 
             // self - 1 is the main Lossoth entity
@@ -800,7 +800,7 @@ void EntityLossothFlames(Entity* self) {
         default:
             self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
             self->scaleY = self->scaleX = 0;
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
             self->ext.lossoth.timer = 0x40;
             self->step = 2;
             break;

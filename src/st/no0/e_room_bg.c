@@ -22,7 +22,7 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
         self->unk5A = unk5A[params];
         self->palette = palette[params];
         self->drawFlags = drawFlags[params];
-        self->drawMode = drawMode[params];
+        self->blendMode = drawMode[params];
 
         if (flags[params] != 0) {
             self->flags = flags[params];

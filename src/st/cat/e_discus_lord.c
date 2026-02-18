@@ -806,7 +806,7 @@ void EntityDiscusTrail(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitDiscus);
         self->hitboxState = 0;
-        self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
         self->opacity = 0x30;
         if (self->params) {

@@ -480,7 +480,7 @@ void RicEntityWhip(Entity* self) {
             angle = (((g_GameTimer >> 2) & 7) + D_80155C98[psp_s4]) * 512;
             self->opacity = (rsin(angle) >> 6) + 0x80;
             self->drawFlags |= DRAW_HIDE;
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
         self->palette = PAL_FLAG(PAL_CC_FIRE_EFFECT);
     }

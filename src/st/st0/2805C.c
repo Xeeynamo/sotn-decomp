@@ -26,12 +26,12 @@ static u16 animset[] = {
     ANIMSET_OVL(4), ANIMSET_OVL(4)};
 static u16 D_80180738[] = {0x007C, 0x007C, 0x005B, 0x005B, 0x005B,
                            0x005B, 0x005B, 0x005B, 0x005B, 0x005B};
-static u8 draw_mode[] = {
-    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2, DRAW_TPAGE | DRAW_TPAGE2};
+static u8 blend_modes[] = {
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD};
 static u16 hitbox_y[] = {0, 0, 0xFFE8, 0xFFF0, 0, 0, 0, 0, 0, 0, 0, 0};
 static s16 D_80180770[][5] = {{0, 1, 2, 2, 3}, {0, 1, 2, 3, 0}};
 void func_801A805C(Entity* self) {
@@ -99,7 +99,7 @@ void func_801A805C(Entity* self) {
     } else {
         InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
-        self->drawMode = draw_mode[params];
+        self->blendMode = blend_modes[params];
         self->hitboxHeight = hitbox_height[params];
         self->animSet = animset[params];
         self->unk5A = D_80180738[params];
