@@ -3462,7 +3462,7 @@
 | no3    | func_pspeu_0925C158                  |      129 |         12 |        |       |     |
 | no4    | func_pspeu_09252930                  |      129 |         12 |        |       |     |
 | np3    | func_pspeu_092526F0                  |      129 |         12 |        |       |     |
-| nz1    | func_801C4144                        |      129 |         12 |        |       |     |
+| nz1    | func_pspeu_09249F10                  |      129 |         12 |        |       |     |
 | main   | sceGuFinishId                        |      129 |         14 | Yes    |       |     |
 | main   | func_psp_0892C860                    |      129 |         17 |        |       |     |
 | nz0    | func_801B8E0C                        |      129 |         17 |        |       |     |
@@ -3938,7 +3938,7 @@
 | no3    | func_pspeu_0925EB38                  |      220 |         22 |        |       |     |
 | no4    | func_pspeu_09255310                  |      220 |         22 |        |       |     |
 | np3    | EntitySmallWaterDrop                 |      220 |         22 |        |       |     |
-| nz1    | EntitySmallWaterDrop                 |      220 |         22 |        |       |     |
+| nz1    | func_pspeu_0924C8F0                  |      220 |         22 |        |       |     |
 | main   | func_psp_08918D8C                    |      221 |         13 |        |       |     |
 | no4    | func_pspeu_0923E368                  |      221 |         22 |        |       |     |
 | rare   | func_pspeu_092392E0                  |      221 |         31 |        |       |     |
@@ -3988,7 +3988,7 @@
 | np3    | EntityBackgroundTrees                |      233 |         25 |        |       |     |
 | np3    | EntityWaterDrop                      |      233 |         25 |        |       |     |
 | nz0    | EntityCannon                         |      233 |         25 |        |       |     |
-| nz1    | EntityWaterDrop                      |      233 |         25 |        |       |     |
+| nz1    | func_pspeu_0924CC20                  |      233 |         25 |        |       |     |
 |        | func_092ECD88                        |      234 |         25 |        |       |     |
 |        | func_092E7B10                        |      234 |         35 |        |       |     |
 | dra    | func_psp_09108988                    |      235 |         31 |        |       |     |
@@ -4339,7 +4339,7 @@
 | no3    | func_pspeu_0925E610                  |      352 |         30 |        |       |     |
 | no4    | func_pspeu_09254DE8                  |      352 |         30 |        |       |     |
 | np3    | EntitySideWaterSplash                |      352 |         30 |        |       |     |
-| nz1    | EntitySideWaterSplash                |      352 |         30 |        |       |     |
+| nz1    | func_pspeu_0924C3C8                  |      352 |         30 |        |       |     |
 | dra    | func_psp_0913B0F8                    |      352 |         34 | Yes    |       |     |
 | are    | func_pspeu_09257778                  |      354 |         31 |        |       |     |
 | dai    | func_pspeu_092471E8                  |      354 |         31 |        |       |     |
@@ -4579,7 +4579,7 @@
 | no3    | func_pspeu_0925DEB8                  |      495 |         38 |        |       |     |
 | no4    | func_pspeu_09254690                  |      495 |         38 |        |       |     |
 | np3    | EntitySurfacingWater                 |      495 |         38 |        |       |     |
-| nz1    | EntitySurfacingWater                 |      495 |         38 |        |       |     |
+| nz1    | func_pspeu_0924BC70                  |      495 |         38 |        |       |     |
 | dra    | func_psp_0911FCA0                    |      495 |         59 |        |       |     |
 | ric    | func_pspeu_092B6DD8                  |      496 |         50 |        |       |     |
 | rcat   | func_pspeu_092484A0                  |      496 |         70 | Yes    |       |     |
@@ -4808,7 +4808,7 @@
 | no3    | func_pspeu_0925D328                  |      785 |         68 |        |       |     |
 | no4    | func_pspeu_09253B00                  |      785 |         68 |        |       |     |
 | np3    | EntitySplashWater                    |      785 |         68 |        |       |     |
-| nz1    | EntitySplashWater                    |      785 |         68 |        |       |     |
+| nz1    | func_pspeu_0924B0E0                  |      785 |         68 |        |       |     |
 | ric    | func_pspeu_092AC2A8                  |      786 |         53 |        |       |     |
 | lib    | func_psp_0923FCD8                    |      787 |        114 |        |       |     |
 |        | func_092E7C68                        |      788 |         88 |        |       |     |
@@ -4913,7 +4913,7 @@
 | no3    | func_pspeu_0925C328                  |     1095 |        132 |        |       |     |
 | no4    | func_pspeu_09252B00                  |     1095 |        132 |        |       |     |
 | np3    | EntityAlucardWaterEffect             |     1095 |        132 |        |       |     |
-| nz1    | EntityAlucardWaterEffect             |     1095 |        132 |        |       |     |
+| nz1    | func_pspeu_0924A0E0                  |     1095 |        132 |        |       |     |
 | dra    | func_psp_090E5020                    |     1102 |        110 |        |       |     |
 | dai    | func_pspeu_0924BB50                  |     1116 |        152 | Yes    |       |     |
 | are    | func_pspeu_0924BD30                  |     1117 |        140 |        |       |     |
