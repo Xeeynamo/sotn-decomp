@@ -878,7 +878,7 @@
 | cat    | func_pspeu_09252420                  |       25 |          1 |        |       |     |
 | cat    | func_pspeu_09252AB0                  |       25 |          1 |        |       |     |
 | cat    | func_pspeu_09252E68                  |       25 |          1 |        |       |     |
-| chi    | MoveEntity                           |       25 |          1 |        |       |     |
+| chi    | func_psp_09247698                    |       25 |          1 |        |       |     |
 | chi    | func_psp_09247F48                    |       25 |          1 |        |       |     |
 | dai    | func_pspeu_0924D4E8                  |       25 |          1 |        |       |     |
 | dai    | func_pspeu_0924DB78                  |       25 |          1 |        |       |     |
@@ -1868,7 +1868,7 @@
 | chi    | DestroyEntity                        |       46 |          5 |        |       |     |
 | dai    | func_pspeu_0924D108                  |       46 |          5 |        |       |     |
 | dre    | func_pspeu_092435B8                  |       46 |          5 |        |       |     |
-| lib    | DestroyEntity                        |       46 |          5 |        |       |     |
+| lib    | func_psp_0924EB48                    |       46 |          5 |        |       |     |
 | no2    | func_pspeu_0924C6C8                  |       46 |          5 |        |       |     |
 | no3    | func_pspeu_0925F8D8                  |       46 |          5 |        |       |     |
 | no4    | DestroyEntity                        |       46 |          5 |        |       |     |
@@ -3024,7 +3024,7 @@
 | chi    | func_psp_09244878                    |       97 |         12 |        |       |     |
 | dai    | func_pspeu_092430D8                  |       97 |         12 |        |       |     |
 | dre    | func_pspeu_09240B78                  |       97 |         12 |        |       |     |
-| lib    | PlaySfxPositional                    |       97 |         12 |        |       |     |
+| lib    | func_psp_09248FB0                    |       97 |         12 |        |       |     |
 | no2    | func_pspeu_09244490                  |       97 |         12 |        |       |     |
 | no3    | func_pspeu_092591F0                  |       97 |         12 |        |       |     |
 | no4    | PlaySfxPositional                    |       97 |         12 |        |       |     |
@@ -3290,7 +3290,7 @@
 | chi    | InitializeEntity                     |      112 |          2 |        |       |     |
 | dai    | func_pspeu_0924E0A8                  |      112 |          2 |        |       |     |
 | dre    | func_pspeu_09243CE8                  |      112 |          2 |        |       |     |
-| lib    | InitializeEntity                     |      112 |          2 |        |       |     |
+| lib    | func_psp_0924FAD0                    |      112 |          2 |        |       |     |
 | no2    | func_pspeu_0924D668                  |      112 |          2 |        |       |     |
 | no3    | func_pspeu_092605F8                  |      112 |          2 |        |       |     |
 | no4    | InitializeEntity                     |      112 |          2 |        |       |     |
@@ -4092,7 +4092,7 @@
 | no2    | func_pspeu_092571F8                  |      262 |         27 |        |       |     |
 | nz1    | func_pspeu_09255108                  |      262 |         27 |        |       |     |
 | st0    | func_801A8328                        |      262 |         27 |        |       |     |
-| chi    | EntityBreakableWallDebris            |      262 |         33 |        |       |     |
+| chi    | func_psp_0924F300                    |      262 |         33 |        |       |     |
 | lib    | func_psp_0925D4D0                    |      263 |         19 |        |       |     |
 | rcat   | func_us_801B3248                     |      263 |         32 |        |       |     |
 | are    | func_pspeu_0924ADC0                  |      263 |         36 |        |       |     |
@@ -4725,7 +4725,7 @@
 | cat    | func_pspeu_09241E58                  |      657 |         69 | Yes    |       |     |
 | cat    | func_pspeu_0925EA40                  |      658 |         41 |        |       |     |
 | dra    | func_psp_091203E0                    |      661 |         70 |        |       |     |
-| lib    | UnkRecursivePrimFunc2                |      663 |         11 |        |       |     |
+| lib    | func_psp_09248588                    |      663 |         11 |        |       |     |
 | ric    | func_pspeu_092B4DE0                  |      663 |         70 |        |       |     |
 | maria  | func_pspeu_092BD1B8                  |      670 |         62 |        |       |     |
 | ric    | func_pspeu_092C69A8                  |      670 |         62 |        |       |     |
@@ -4843,7 +4843,7 @@
 | st0    | func_801AF774                        |      868 |         52 | Yes    |       |     |
 | no4    | func_pspeu_0923C460                  |      870 |        106 | Yes    |       |     |
 |        | func_092EBFB0                        |      874 |         53 | Yes    |       |     |
-| lib    | func_us_801AE8E8                     |      883 |         80 |        |       |     |
+| lib    | func_psp_09255068                    |      883 |         80 |        |       |     |
 | lib    | func_psp_09263810                    |      884 |         74 | Yes    |       |     |
 | st0    | EntityBackgroundVortex               |      890 |        109 |        |       |     |
 | dra    | func_psp_0913A448                    |      893 |        109 | Yes    |       |     |
