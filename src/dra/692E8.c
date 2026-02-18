@@ -143,7 +143,7 @@ void func_80109328(void) {
         g_Player.timers[ALU_T_DARKMETAMORPH] = 0;
         func_801092E8(0);
     }
-    PLAYER.drawMode = DRAW_DEFAULT;
+    PLAYER.blendMode = BLEND_NO;
 }
 
 void func_801093C4(void) {

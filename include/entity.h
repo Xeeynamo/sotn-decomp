@@ -3881,6 +3881,18 @@ typedef struct {
     /* 0x9C */ Primitive* prim;
 } ET_VandalSword;
 
+typedef struct {
+    /* 0x7C */ s16 : 16;
+    /* 0x7E */ s16 unk7E;
+    /* 0x80 */ s16 unk80;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ Primitive* unk84;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ s16 : 16;
+    /* 0x8E */ s16 unk8E;
+} ET_801BACF4;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4213,6 +4225,7 @@ typedef union { // offset=0x7C
     ET_FlailGuardFlail flailGuardFlail;
     ET_ClockTowerClouds clockTowerClouds;
     ET_VandalSword vandalSword;
+    ET_801BACF4 et_801BACF4;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

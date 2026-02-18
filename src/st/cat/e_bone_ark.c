@@ -210,7 +210,7 @@ void EntityBoneArkProjectile(Entity* self) {
                 g_api.PlaySfx(SFX_THUNDER_B);
             }
             if (self->ext.boneArk.unk8C.i.lo > 0x40) {
-                self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
+                self->blendMode |= BLEND_TRANSP | BLEND_ADD;
                 self->drawFlags |= FLAG_DRAW_OPACITY;
                 self->opacity = 0xC0;
                 self->step_s = 0;
@@ -381,7 +381,7 @@ void EntityBoneArkProjectile(Entity* self) {
             if (!self->scaleX) {
                 self->animCurFrame = 0;
                 self->drawFlags = FLAG_DRAW_DEFAULT;
-                self->drawMode = DRAW_DEFAULT;
+                self->blendMode = BLEND_NO;
                 self->step_s++;
             }
             break;
@@ -541,7 +541,7 @@ void EntityBoneArkAttackEffects(Entity* self) {
         self->palette = PAL_FLAG(PAL_BONE_ARK_PROJECTILE);
         self->drawFlags =
             FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEX;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->scaleX = 0x100;
         self->opacity = 0;
         self->hitboxState = 0;

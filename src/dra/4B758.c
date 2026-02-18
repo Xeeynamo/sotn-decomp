@@ -292,10 +292,9 @@ void RenderEntities(void) {
             } else {
                 poly->clut = g_ClutIds[animFrame[2] + palette];
             }
-            if (entity->drawMode) {
+            if (entity->blendMode) {
                 setSemiTrans(poly, true);
-                poly->tpage +=
-                    entity->drawMode & (FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20);
+                poly->tpage += entity->blendMode & BLEND_QUARTER;
             } else {
                 setSemiTrans(poly, false);
             }
@@ -477,10 +476,10 @@ void RenderEntities(void) {
                         poly->v3 = uvTop - 1;
                     }
                 }
-                if (entity->drawMode) {
+                if (entity->blendMode) {
                     setSemiTrans(poly, true);
                     poly->tpage +=
-                        entity->drawMode & (FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20);
+                        entity->blendMode & (FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20);
                 } else {
                     setSemiTrans(poly, false);
                 }
@@ -790,10 +789,10 @@ void RenderEntitiesPSP(void) {
             } else {
                 poly->clut = g_ClutIds[animFrame[2] + palette];
             }
-            if (entity->drawMode) {
+            if (entity->blendMode) {
                 setSemiTrans(poly, true);
                 poly->tpage +=
-                    entity->drawMode & (FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20);
+                    entity->blendMode & (FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20);
             } else {
                 setSemiTrans(poly, false);
             }
@@ -981,10 +980,10 @@ void RenderEntitiesPSP(void) {
                         poly->v3 = uvTop - 1;
                     }
                 }
-                if (entity->drawMode) {
+                if (entity->blendMode) {
                     setSemiTrans(poly, true);
                     poly->tpage +=
-                        entity->drawMode & (FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20);
+                        entity->blendMode & (FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20);
                 } else {
                     setSemiTrans(poly, false);
                 }

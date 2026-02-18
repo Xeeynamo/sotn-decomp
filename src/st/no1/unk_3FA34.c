@@ -7,7 +7,7 @@ void func_us_801BFA34(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_19E);
         self->animSet = 2;
         self->animCurFrame = 9;
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->scaleX = 64;
         self->scaleY = 64;
         self->rotate = -0x400;

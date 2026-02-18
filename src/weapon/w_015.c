@@ -118,7 +118,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->palette = self->ext.weapon.parent->palette;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->ext.timer.t = 10;
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->drawFlags = FLAG_DRAW_OPACITY;
         self->opacity = 0x80;
         self->step++;
@@ -158,7 +158,7 @@ static void func_ptr_80170008(Entity* self) {
         D_6D000_8017BFC8++;
 
         if (!(rand() & 1)) {
-            self->drawMode =
+            self->blendMode =
                 FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10;
         }
         self->step++;
@@ -412,7 +412,7 @@ s32 func_ptr_80170010(Entity* self) {
         self->anim = D_6D000_8017A770;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         if (params >= 0x10) {
             rotation = D_6D000_8017A78C[params];
             self->scaleY = rotation;
@@ -486,7 +486,7 @@ static s32 func_ptr_80170014(Entity* self) {
         self->anim = D_6D000_8017A770;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE | 0x20;
+        self->blendMode = BLEND_TRANSP | 0x20;
         angle = ratan2(-self->ext.weapon.parent->velocityY,
                        self->ext.weapon.parent->velocityX);
         angle += (0x500 + (rand() % 0x600));

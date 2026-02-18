@@ -48,9 +48,9 @@ void EntitySpectralSword(Entity* self) {
         InitializeEntity(g_EInitSpectralSword);
         self->animCurFrame = 1;
 #ifdef VERSION_PSP
-        self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode |= BLEND_TRANSP | BLEND_ADD;
 #else
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
 #endif
         self->hitboxOffX = 0;
         self->hitboxOffY = 4;
@@ -402,7 +402,7 @@ void func_us_801CEB08(Entity* self) {
         self->palette += 2;
         self->drawFlags |=
             FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->scaleX = self->scaleY = 0x100;
         self->opacity = 0x80;
     }

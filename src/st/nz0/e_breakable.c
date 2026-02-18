@@ -10,15 +10,15 @@ static u8 g_eBreakableHitboxes[] = {8, 8, 8, 0, 0, 0, 0, 0};
 static u8 g_eBreakableExplosionTypes[] = {0, 0, 0, 0, 0, 0, 0, 0};
 static u16 g_eBreakableanimSets[] = {
     ANIMSET_DRA(3), ANIMSET_OVL(1), ANIMSET_OVL(8), 0, 0, 0, 0, 0};
-static u8 g_eBreakableDrawModes[] = {
-    DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40,
-    DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40,
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT};
+static u8 blend_modes[] = {
+    BLEND_TRANSP | BLEND_QUARTER,
+    BLEND_TRANSP | BLEND_QUARTER,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO};
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
 
 extern EInit OVL_EXPORT(EInitBreakable);
@@ -56,7 +56,7 @@ void EntityBreakableNZ0(Entity* self) {
     } else {
         InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 20;
-        self->drawMode = g_eBreakableDrawModes[breakableType];
+        self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = g_eBreakableHitboxes[breakableType];
         self->animSet = g_eBreakableanimSets[breakableType];
         if (breakableType == 2) {

@@ -127,7 +127,7 @@ void EntityClockRoomController(Entity* self) {
         self[shadow].zPriority = 0x40;
         self[shadow].palette = PAL_FLAG(0x4B);
         self[shadow].drawFlags = FLAG_DRAW_OPACITY;
-        self[shadow].drawMode = DRAW_TPAGE;
+        self[shadow].blendMode = BLEND_TRANSP;
         self[shadow].flags = FLAG_DESTROY_IF_OUT_OF_CAMERA |
                              FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         self[shadow].posY.i.hi += 4;

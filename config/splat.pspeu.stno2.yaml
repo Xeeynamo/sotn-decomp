@@ -67,7 +67,7 @@ segments:
       - [0x1B730, c, no2/hammer]
       - [0x1D0C8, c, no2/4966C]
       - [0x1D6F8, c, no2/e_secrets]
-      - [0x1F3B8, c, no2_psp/st_init_no2]
+      - [0x1F3B8, c, no2/st_init_psp]
       - [0x1F688, c, no2/e_breakable]
       - [0x1FF58, c, no2/33D8C]
       - [0x20770, c, no2/e_sealed_door]
@@ -132,7 +132,7 @@ segments:
       - {start: 0x55E00, type: .bss, vram: 0x0928D4A0, name: no2/e_collect}
       - {start: 0x55E00, type: bss, vram: 0x0928D500, name: bss1}
       - {start: 0x55E00, type: .bss, vram: 0x0928D508, name: no2/layers}
-      - {start: 0x55E00, type: .bss, vram: 0x0928D518, name: no2_psp/st_init_no2}
+      - {start: 0x55E00, type: .bss, vram: 0x0928D518, name: no2/st_init_psp}
       - {start: 0x55E00, type: .bss, vram: 0x0928D6A0, name: no2/e_lock_camera}
       - {start: 0x55E00, type: bss, vram: 0x0928D6A8, name: bss2}
   - [0x56080]

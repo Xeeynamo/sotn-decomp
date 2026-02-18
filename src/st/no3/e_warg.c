@@ -677,7 +677,7 @@ void EntityWargExplosionPuffTransparent(Entity* self) {
         self->animSet = ANIMSET_DRA(14);
         self->unk5A = 0x79;
         self->palette = 0xD0;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = FLAG_DRAW_OPACITY;
         self->opacity = 0x60;
         if (self->params & 0xFF00) {

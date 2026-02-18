@@ -2130,7 +2130,7 @@ void func_us_801C5020(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 12;
         self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
-        self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->opacity = 128;
         self->rotate = 0;
         self->zPriority = 159;

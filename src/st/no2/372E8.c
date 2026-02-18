@@ -17,25 +17,25 @@ static EntityConfig D_us_80180EF8[] = {
 
 void func_us_801B72E8(Entity* self) {
     s32 params;
-    EntityConfig* ptr;
+    EntityConfig* obj;
 
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitParticle);
         params = self->params & 0xF;
-        ptr = &D_us_80180EF8[params];
-        self->palette = ptr->palette + 0x226;
-        self->drawMode = ptr->drawMode;
-        self->animSet = ptr->animSet;
-        self->unk5A = ptr->unk5A;
-        self->ext.et_801B72E8.animData = ptr->animData;
+        obj = &D_us_80180EF8[params];
+        self->palette = obj->palette + 0x226;
+        self->blendMode = obj->blendMode;
+        self->animSet = obj->animSet;
+        self->unk5A = obj->unk5A;
+        self->ext.et_801B72E8.animData = obj->animData;
         self->step = params + 1;
         if (self->params & 0xFF00) {
             self->zPriority = (self->params & 0xFF00) >> 8;
         }
         if (self->params & 0xF0) {
             self->palette = PAL_FLAG(PAL_UNK_19F);
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             self->facingLeft = 1;
         }
         break;

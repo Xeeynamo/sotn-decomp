@@ -146,7 +146,7 @@ void func_us_801CD318(Entity* self) {
                 self->hitboxState = 0;
                 self->ext.ectoplasm.unk90 = 0;
                 self->ext.ectoplasm.unk96 = 0x100;
-                self->drawMode |= DRAW_TPAGE;
+                self->blendMode |= BLEND_TRANSP;
                 self->step = 4;
                 self->ext.ectoplasm.unk82 = 0;
             } else if (self->step != 3) {
@@ -279,7 +279,7 @@ void func_us_801CD318(Entity* self) {
                     (self->posX.i.hi + (rand() & 0x1F)) - 0x10;
                 tempEntity->posY.i.hi =
                     (self->posY.i.hi + (rand() & 0x1F)) - 0x10;
-                tempEntity->drawMode = DRAW_TPAGE;
+                tempEntity->blendMode = BLEND_TRANSP;
             }
         }
         if (self->posY.i.hi > 0x100) {
@@ -342,9 +342,9 @@ void func_us_801CD9EC(Entity* self) {
     g_api.UpdateAnim(NULL, NULL);
     if (tempEntity->step == 4) {
         if (--self->ext.ectoplasm.unk82 & 1) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         } else {
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
     }
 }

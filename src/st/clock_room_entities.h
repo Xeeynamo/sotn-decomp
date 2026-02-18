@@ -15,7 +15,7 @@ void EntityClockHands(Entity* self) {
         // Create hand shadows
         CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, handShadow);
         handShadow->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
-        handShadow->drawMode = DRAW_TPAGE;
+        handShadow->blendMode = BLEND_TRANSP;
         handShadow->animSet = ANIMSET_OVL(1);
         handShadow->animCurFrame = params + 25;
         handShadow->zPriority = 0x3F - params;
@@ -165,7 +165,7 @@ void EntityStatue(Entity* self) {
         entity->animCurFrame = params + 10;
         entity->zPriority = 0x3F;
         entity->drawFlags = FLAG_DRAW_OPACITY;
-        entity->drawMode = DRAW_TPAGE;
+        entity->blendMode = BLEND_TRANSP;
 #ifndef STAGE_IS_NO0
         entity->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_POS_CAMERA_LOCKED |
                         FLAG_KEEP_ALIVE_OFFCAMERA;

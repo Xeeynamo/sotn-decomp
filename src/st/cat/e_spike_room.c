@@ -5,7 +5,6 @@
 extern s32 E_ID(UNK_23);
 #endif
 
-// nb. this can be made static after merging files
 s32 echo_flag = false;
 
 // Used when echo_flag == 1

@@ -44,7 +44,7 @@ void EntityWeaponAttack(Entity* self) {
         self->palette += anim->palette;
         self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
 
         if (animIndex != 0) {
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0), 0);

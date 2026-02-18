@@ -728,7 +728,7 @@ void PlayerStepMorphWolf(void) {
     s32 var_s0;
 
     PLAYER.palette = PAL_ALUCARD_WOLF;
-    PLAYER.drawMode = DRAW_DEFAULT;
+    PLAYER.blendMode = BLEND_NO;
 #if defined(VERSION_US)
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter - 2;
 #endif
@@ -1048,8 +1048,7 @@ void func_8012F894(Entity* self) {
     animControl = 0;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         PLAYER.drawFlags = self->drawFlags |= DRAW_HIDE;
-        PLAYER.drawMode = self->drawMode =
-            DRAW_UNK_40 | DRAW_TPAGE | DRAW_TPAGE2;
+        PLAYER.blendMode = self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
 
         var_s1 = (abs(PLAYER.velocityX) - FIX(3)) >> 11;
         if (var_s1 > 0x80) {
@@ -1059,7 +1058,7 @@ void func_8012F894(Entity* self) {
     } else {
         self->drawFlags &= ~DRAW_HIDE;
         PLAYER.drawFlags = self->drawFlags;
-        PLAYER.drawMode = self->drawMode = DRAW_DEFAULT;
+        PLAYER.blendMode = self->blendMode = BLEND_NO;
     }
     switch (PLAYER.step_s) {
     case 1:
@@ -1518,11 +1517,11 @@ void func_80130618(Entity* self) {
         break;
     }
     self->palette = PLAYER.palette;
-    self->drawMode = DRAW_DEFAULT;
+    self->blendMode = BLEND_NO;
     self->drawFlags &= ~FLAG_DRAW_OPACITY;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         self->drawFlags |= FLAG_DRAW_OPACITY;
-        self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
+        self->blendMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
         temp_s1 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
         if (temp_s1 > 0xA0) {
             temp_s1 = 0xA0;
@@ -1847,11 +1846,11 @@ void func_80130E94(Entity* self) {
     self->posX.val = var_s4 + rcos(var_s3) * var_s7 * 0x10;
     self->posY.val = sp3c - rsin(var_s3) * var_s7 * 0x10;
     self->palette = PLAYER.palette;
-    self->drawMode = DRAW_DEFAULT;
+    self->blendMode = BLEND_NO;
     self->drawFlags &= ~FLAG_DRAW_OPACITY;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         self->drawFlags |= FLAG_DRAW_OPACITY;
-        self->drawMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
+        self->blendMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
         temp_s2 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
         if (temp_s2 > 0x80) {
             temp_s2 = 0x80;

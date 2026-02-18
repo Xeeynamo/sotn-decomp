@@ -759,7 +759,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
             self->scaleX = 0x100;
             self->opacity = 0x80;
             self->palette = PAL_FLAG(PAL_UNK_1F3);
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
             self->step = 2;
             self->hitboxState = 0;
             self->flags |= FLAG_UNK_2000;

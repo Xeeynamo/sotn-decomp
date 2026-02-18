@@ -23,7 +23,7 @@ void EntityClouds(Entity* self) {
         self->animCurFrame = 2;
         self->drawFlags = FLAG_DRAW_OPACITY;
         self->opacity = 0x40;
-        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         self->zPriority = 0x1C;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         self->posX.i.hi = 0x50;

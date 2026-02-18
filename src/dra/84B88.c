@@ -2314,7 +2314,7 @@ void func_80129864(Entity* self) {
         self->animSet = 9;
         self->anim = D_800B0798;
         self->palette = PAL_FLAG(PAL_UNK_19F);
-        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         self->zPriority = 0x1C3;
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |

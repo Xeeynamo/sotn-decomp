@@ -27,7 +27,7 @@ void func_us_801C13A8(Entity* self) {
         self->animSet = ANIMSET_DRA(14);
         self->zPriority = RIC.zPriority + 6;
         self->palette = PAL_FLAG(0x25E);
-        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
         self->scaleX = self->scaleY = 0xC0;
         self->anim = D_us_80181EDC;
@@ -770,7 +770,7 @@ void BO6_RicEntityVibhutiCrashCloud(Entity* self) {
         self->animSet = 0xE;
         self->palette = PAL_FLAG(0x19E);
         self->anim = D_us_801829D4;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = FLAG_DRAW_OPACITY;
         self->opacity = 0x60;
         self->hitboxWidth = 8;

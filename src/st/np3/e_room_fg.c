@@ -8,12 +8,12 @@ static u8 anim4[] = {64, 1, 255, 0};
 static u8 anim5[] = {64, 3, 255, 0};
 
 static ObjInit objData[] = {
-    {0x6, 492, 0, 0x0, 0x0, 16, 0, anim1},
-    {0xc, 492, 0, 0x0, 0x0, 16, 0, anim3},
-    {0xc, 128, 0, 0x0, 0x0, 16, 0, anim4},
-    {0x6, 492, 0, 0x0, 0x0, 16, 0, anim2},
-    {0xc, 492, 0, 0x0, 0x0, 16, 0, anim5},
-    {0xc, 128, 0, 0x0, 0x0, 16, 0, anim4},
+    {0x6, 492, 0, 0x0, 0x0, BLEND_TRANSP, 0, anim1},
+    {0xc, 492, 0, 0x0, 0x0, BLEND_TRANSP, 0, anim3},
+    {0xc, 128, 0, 0x0, 0x0, BLEND_TRANSP, 0, anim4},
+    {0x6, 492, 0, 0x0, 0x0, BLEND_TRANSP, 0, anim2},
+    {0xc, 492, 0, 0x0, 0x0, BLEND_TRANSP, 0, anim5},
+    {0xc, 128, 0, 0x0, 0x0, BLEND_TRANSP, 0, anim4},
 };
 
 void EntityRoomForeground(Entity* self) {
@@ -26,7 +26,7 @@ void EntityRoomForeground(Entity* self) {
         self->unk5A = objInit->unk5A;
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
-        self->drawMode = objInit->drawMode;
+        self->blendMode = objInit->blendMode;
         if (objInit->flags != 0) {
             self->flags = objInit->flags;
         }

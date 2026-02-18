@@ -638,7 +638,7 @@ void EntityDeathScytheShadow(Entity* self) {
             self->ext.deathScythe.timer = 0x20;
         }
         self->opacity = 0x40;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         break;
 
     case 1:

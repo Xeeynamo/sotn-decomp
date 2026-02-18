@@ -824,10 +824,10 @@ void EntityHighWaterSplash(Entity* self) {
         self->animSet = ANIMSET_DRA(2);
         self->velocityY = FIX(-5);
         self->palette = PAL_FLAG(PAL_CC_MAGIC_HUD_EFFECT);
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
         self->palette = PAL_FLAG(0x18);
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags |= FLAG_DRAW_OPACITY;
         self->opacity = 0xA0;
         self->scaleX = 0x100;

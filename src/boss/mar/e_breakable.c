@@ -16,20 +16,17 @@ extern u8 g_eBreakableExplosionTypes[];
 
 static u16 g_eBreakableanimSets[] = {
     ANIMSET_DRA(3), ANIMSET_DRA(3), ANIMSET_OVL(1), 0, 0, 0, 0, 0};
-static u8 g_eBreakableDrawModes[] = {
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT};
+static u8 blend_modes[] = {
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO};
 
-#ifndef VERSION_PSP
-// on PSP this might be either optimised out to BSS or completely removed
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
-#endif
 
 #define SFX_BREAKABLE_HIT SFX_CANDLE_HIT_WHOOSH_A
 #include "../../st/e_breakable.h"

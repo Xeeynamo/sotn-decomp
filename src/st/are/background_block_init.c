@@ -17,7 +17,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .unk5A = 0,
         .palette = 0,
         .drawFlags = FLAG_DRAW_DEFAULT,
-        .drawMode = DRAW_DEFAULT,
+        .blendMode = BLEND_NO,
         .animFrames = (u8*)anim_one,
     },
     {
@@ -27,7 +27,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .unk5A = 0,
         .palette = 0,
         .drawFlags = FLAG_DRAW_DEFAULT,
-        .drawMode = DRAW_TPAGE | DRAW_TPAGE2,
+        .blendMode = BLEND_TRANSP | BLEND_ADD,
         .animFrames = (u8*)anim_two,
     },
     {
@@ -37,7 +37,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .unk5A = 0,
         .palette = 0,
         .drawFlags = FLAG_DRAW_DEFAULT,
-        .drawMode = DRAW_DEFAULT,
+        .blendMode = BLEND_NO,
         .animFrames = (u8*)anim_three,
     },
     {
@@ -47,7 +47,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .unk5A = 0,
         .palette = 0,
         .drawFlags = FLAG_DRAW_DEFAULT,
-        .drawMode = DRAW_DEFAULT,
+        .blendMode = BLEND_NO,
         .animFrames = (u8*)anim_four,
     },
     {
@@ -57,7 +57,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .unk5A = 0,
         .palette = 0,
         .drawFlags = FLAG_DRAW_DEFAULT,
-        .drawMode = DRAW_DEFAULT,
+        .blendMode = BLEND_NO,
         .animFrames = (u8*)anim_five,
     },
 };

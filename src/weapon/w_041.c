@@ -284,7 +284,7 @@ void EntityWeaponAttack(Entity* self) {
             self->anim = D_123000_8017A4DC;
             self->poseTimer = 0;
             self->pose = 0;
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
             g_api.PlaySfxVolPan(SFX_GLASS_BREAK_A, 0x50, 0);
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 0), 0);
             self->step++;

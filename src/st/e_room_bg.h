@@ -19,7 +19,7 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
 #endif
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
-        self->drawMode = objInit->drawMode;
+        self->blendMode = objInit->blendMode;
         if (objInit->flags) {
             self->flags = objInit->flags;
         }

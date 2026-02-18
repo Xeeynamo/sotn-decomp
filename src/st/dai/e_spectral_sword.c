@@ -85,7 +85,7 @@ void EntitySpectralSword(Entity* self) {
     case SPECTRAL_SWORD_INIT:
         InitializeEntity(g_EInitSpectralSword);
         self->animCurFrame = 1;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->hitboxOffX = 0;
         self->hitboxOffY = 4;
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
@@ -400,7 +400,7 @@ void EntitySpectralSwordAura(Entity* self) {
         self->palette += 13;
         self->drawFlags |=
             FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->scaleX = self->scaleY = 256;
         self->opacity = 128;
     }

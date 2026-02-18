@@ -38,7 +38,7 @@ void func_us_801D4558(Entity* self) {
         self->scaleX = 0;
         self->scaleY = 0;
         self->ext.et_801D4558.unk7D = 0;
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         break;
 
     case 1:
@@ -127,7 +127,7 @@ void func_us_801D4950(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180B18);
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->hitboxState = 0;
         break;
 

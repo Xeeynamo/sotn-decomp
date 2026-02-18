@@ -57,7 +57,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
         params = self->params & 0xF;
         obj = &puff_config[params];
         self->palette = obj->palette + PAL_PUFF_OPAQUE_OFFSET;
-        self->drawMode = obj->drawMode;
+        self->blendMode = obj->blendMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk5A;
         self->ext.opaquePuff.anim = obj->animData;
@@ -69,7 +69,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
 
         if (self->params & 0xF0) {
             self->palette = PAL_FLAG(PAL_UNK_19F);
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             self->facingLeft = 1;
         }
         break;

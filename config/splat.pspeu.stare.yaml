@@ -44,7 +44,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, are_psp/st_init]
+      - [0x80, c, are/st_init_psp]
       - [0x3E0, c, are/e_boss_torch]
       - [0x5C8, c, are/e_breakable]
       - [0xF48, c, are/e_background_door_rubble]
@@ -140,7 +140,7 @@ segments:
       - [0x60878, .rodata, are/e_bone_musket]
       - [0x608A0, .rodata, are/e_blade_soldier]
       - [0x60900, bss, 60900]
-      - [0x60910, .bss, are_psp/st_init]
+      - [0x60910, .bss, are/st_init_psp]
       - [0x60AF8, .bss, are/e_lock_camera]
       - [0x60B00, .bss, are/e_boss_doors]
       - [0x60B08, .bss, are/create_entity]

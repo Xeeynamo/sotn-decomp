@@ -451,7 +451,7 @@ void EntityVandalSwordDeath(Entity* self) {
         self->hitboxState = 0;
         self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
         self->opacity = 0x80;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->palette++;
     }
     self->opacity -= 4;

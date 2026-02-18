@@ -848,7 +848,7 @@ void EntityWhiteDragonFlameBreath(Entity* self) {
         InitializeEntity(g_EInitWhiteDragonFlameBreath);
         self->zPriority += 1;
         self->hitboxState = 0;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         entity = self->ext.whiteDragon.entity;
         SetEntityVelocityFromAngle(entity->ext.whiteDragon.angle, 0x60);
         LOWU(self->ext.whiteDragon.unk80) = 0x28;
