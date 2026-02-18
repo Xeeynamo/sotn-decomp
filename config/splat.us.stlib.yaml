@@ -47,7 +47,7 @@ segments:
       - [0xAC8, .data, e_red_door_tiles]
       - [0xAD8, .data, e_lock_camera]
       - [0xB58, .data, e_breakable]
-      - [0xC48, data]
+      - [0xC48, .data, first_c_file]
       - [0xDC0, .data, e_library_bg]
       - [0xE90, .data, e_shop]
       - [0x19BC, .data, cutscene]
