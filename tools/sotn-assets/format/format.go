@@ -74,9 +74,9 @@ func updateLine(total, index int, message string, err error, duration time.Durat
 	fmt.Printf("\033[%dA\r\033[K", linesToMoveUp) // Move up and clear line
 
 	if err != nil {
-		fmt.Printf("%s... Error: %v (%.1fs)", message, err, duration.Seconds())
+		fmt.Printf("%s... \x1b[31mError\x1b[0m (%.1fs)", message, duration.Seconds())
 	} else {
-		fmt.Printf("%s... OK (%.1fs)", message, duration.Seconds())
+		fmt.Printf("%s... \033[32mOK\033[0m (%.1fs)", message, duration.Seconds())
 	}
 
 	fmt.Printf("\033[%dB\r", linesToMoveUp) // Move back down

@@ -67,7 +67,7 @@ fn transform_file(
                 match linter.check_line(&line_str) {
                     Ok(_) => (),
                     Err(msg) => {
-                        println!("{}:{} \x1b[31m{}\x1b[0m -> {}", file_path, i, msg, line_str);
+                        eprintln!("{}:{} \x1b[31m{}\x1b[0m -> {}", file_path, i, msg, line_str);
                         lint_passed = false;
                     }
                 }
