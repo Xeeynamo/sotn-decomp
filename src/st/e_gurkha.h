@@ -207,7 +207,7 @@ static s32 func_801CF7A0(Entity* self) {
 void EntityGurkha(Entity* self) {
     Collider collider;
     Entity* ent_s0;
-    Entity* ent_s3;
+    Entity* part;
     s16* var_s1;
     giantBroBodyPartsInit* parts;
     s32 res;
@@ -234,19 +234,19 @@ void EntityGurkha(Entity* self) {
         }
         break;
     case 2:
-        for (parts = D_80182F04, ent_s3 = self; parts->eArrayOffset; parts++) {
+        for (parts = D_80182F04, part = self; parts->eArrayOffset; parts++) {
             ent_s0 = self + parts->eArrayOffset;
             CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, ent_s0);
             ent_s0->ext.GH_Props.length = parts->length;
             ent_s0->ext.GH_Props.parent = self + parts->eArrayParentOffset;
             ent_s0->params = parts->params + 0x100;
             ent_s0->zPriority = self->zPriority + parts->zOffset;
-            ent_s0->unk5C = self;
-            ent_s0->unk60 = ent_s3;
-            ent_s3 = ent_s0;
+            ent_s0->parent = self;
+            ent_s0->nextPart = part;
+            part = ent_s0;
         }
-        self->unk60 = ent_s3;
-        self->unk5C = NULL;
+        self->nextPart = part;
+        self->parent = NULL;
         ent_s0 = self + 15;
         CreateEntityFromCurrentEntity(E_GURKHA_WEAPON, ent_s0);
         ent_s0->ext.GH_Props.length = 0;
@@ -397,17 +397,17 @@ void EntityGurkha(Entity* self) {
             self->ext.GH_Props.timer += 0x80;
             self->posY.val += rcos(self->ext.GH_Props.timer) * 2;
             ent_s0 = self + 9;
-            ent_s3 = self + 10;
-            func_801CDAC8(ent_s0, ent_s3);
+            part = self + 10;
+            func_801CDAC8(ent_s0, part);
             ent_s0->ext.GH_Props.rotate = ent_s0->ext.GH_Props.unkA4;
-            ent_s3->ext.GH_Props.rotate = ent_s3->ext.GH_Props.unkA4;
-            ent_s3->ext.GH_Props.unkA8 = 1;
+            part->ext.GH_Props.rotate = part->ext.GH_Props.unkA4;
+            part->ext.GH_Props.unkA8 = 1;
             ent_s0 = self + 12;
-            ent_s3 = self + 13;
-            func_801CDAC8(ent_s0, ent_s3);
+            part = self + 13;
+            func_801CDAC8(ent_s0, part);
             ent_s0->ext.GH_Props.rotate = ent_s0->ext.GH_Props.unkA4;
-            ent_s3->ext.GH_Props.rotate = ent_s3->ext.GH_Props.unkA4;
-            ent_s3->ext.GH_Props.unkA8 = 1;
+            part->ext.GH_Props.rotate = part->ext.GH_Props.unkA4;
+            part->ext.GH_Props.unkA8 = 1;
             polarPlacePartsList(D_80182F9C);
             if ((self->ext.GH_Props.timer & 0x7FF) == 0) {
                 func_801CF7A0(self);

@@ -209,7 +209,7 @@ void func_801ADB10(u16* arg0, u16 arg1, u16 arg2, s32 steps, u8* arg4) {
 extern s32 D_80180910;
 void EntityDraculaFinalForm(Entity* self) {
     byte stackpad[56];
-    Entity* entity;
+    Entity* part;
     Primitive* prim;
     u32 primIndex;
     s32 i;
@@ -245,19 +245,19 @@ void EntityDraculaFinalForm(Entity* self) {
         if (!self->params) {
             D_8003C744 = 2;
             self->animCurFrame = 0;
-            entity = self + 1;
-            for (i = 1; i < 4; i++, entity++) {
-                CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK20), entity);
-                entity->zPriority = self->zPriority + 2;
-                entity->params = i;
-                entity->unk60 = entity - 1;
-                entity->unk5C = self;
+            part = self + 1;
+            for (i = 1; i < 4; i++, part++) {
+                CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK20), part);
+                part->zPriority = self->zPriority + 2;
+                part->params = i;
+                part->nextPart = part - 1;
+                part->parent = self;
 
                 // seems hitPoints might be used for something else
-                entity->hitPoints = 0x7FFE;
+                part->hitPoints = 0x7FFE;
             }
-            self->unk5C = NULL;
-            self->unk60 = self + 3;
+            self->parent = NULL;
+            self->nextPart = self + 3;
         } else {
             self->animCurFrame = 0;
             SetStep(16);
@@ -381,17 +381,17 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             break;
         case 1:
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (entity != NULL) {
-                CreateEntityFromEntity(E_ID(DRACULA_UNK21), self, entity);
+            part = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (part != NULL) {
+                CreateEntityFromEntity(E_ID(DRACULA_UNK21), self, part);
 #ifndef VERSION_PSP
                 // Appears to be a bug on PSX.
                 // Possibly supposed to be assigning from self
-                entity->posX.i.hi = entity->posX.i.hi;
-                entity->posY.i.hi = entity->posY.i.hi;
+                part->posX.i.hi = part->posX.i.hi;
+                part->posY.i.hi = part->posY.i.hi;
 #endif
-                entity->facingLeft = self->facingLeft;
-                entity->params = 1;
+                part->facingLeft = self->facingLeft;
+                part->params = 1;
             }
             self->ext.dracFinalForm.timer = 32;
             self->step_s++;
@@ -420,15 +420,15 @@ void EntityDraculaFinalForm(Entity* self) {
                 xShift = -32;
             }
             yShift = -4;
-            entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (entity != NULL) {
+            part = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (part != NULL) {
                 g_api.PlaySfx(SFX_FIREBALL_SHOT_A);
-                CreateEntityFromEntity(E_ID(DRACULA_UNK21), self, entity);
-                entity->posX.i.hi += xShift;
-                entity->posY.i.hi += yShift;
-                entity->rotate = *temp_s1;
+                CreateEntityFromEntity(E_ID(DRACULA_UNK21), self, part);
+                part->posX.i.hi += xShift;
+                part->posY.i.hi += yShift;
+                part->rotate = *temp_s1;
                 if (self->facingLeft) {
-                    entity->rotate = (0x800 - entity->rotate);
+                    part->rotate = (0x800 - part->rotate);
                 }
             }
             self->ext.dracFinalForm.unk84++;
@@ -463,13 +463,12 @@ void EntityDraculaFinalForm(Entity* self) {
                     return;
                 }
                 self->ext.dracFinalForm.timer = 6;
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                if (entity != NULL) {
+                part = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (part != NULL) {
                     g_api.PlaySfx(SFX_FIREBALL_SHOT_B);
-                    CreateEntityFromEntity(
-                        E_ID(DRACULA_FIREBALL), self, entity);
-                    entity->posX.i.hi += *temp_s1;
-                    entity->zPriority = (self->zPriority + 1);
+                    CreateEntityFromEntity(E_ID(DRACULA_FIREBALL), self, part);
+                    part->posX.i.hi += *temp_s1;
+                    part->zPriority = (self->zPriority + 1);
                 }
                 self->ext.dracFinalForm.unk84++;
             }
@@ -503,16 +502,16 @@ void EntityDraculaFinalForm(Entity* self) {
             if (AnimateEntity(anim_80180AFC, self) == 0) {
                 // The audio is muted for this sfxID
                 g_api.PlaySfx(SFX_UNK_ST0_856);
-                entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                if (entity != NULL) {
-                    CreateEntityFromEntity(E_ID(DRACULA_UNK2E), self, entity);
+                part = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (part != NULL) {
+                    CreateEntityFromEntity(E_ID(DRACULA_UNK2E), self, part);
                     if (self->facingLeft) {
-                        entity->posX.i.hi += 40;
+                        part->posX.i.hi += 40;
                     } else {
-                        entity->posX.i.hi -= 40;
+                        part->posX.i.hi -= 40;
                     }
-                    entity->posY.i.hi += 16;
-                    entity->facingLeft = self->facingLeft;
+                    part->posY.i.hi += 16;
+                    part->facingLeft = self->facingLeft;
                 }
                 SetSubStep(2);
             }
@@ -533,12 +532,12 @@ void EntityDraculaFinalForm(Entity* self) {
         }
         break;
     case 16:
-        entity = self - self->params;
-        self->facingLeft = entity->facingLeft;
-        self->hitboxState = entity->hitboxState;
-        self->posX.i.hi = entity->posX.i.hi;
-        self->posY.i.hi = entity->posY.i.hi;
-        i = entity->animCurFrame - 1;
+        part = self - self->params;
+        self->facingLeft = part->facingLeft;
+        self->hitboxState = part->hitboxState;
+        self->posX.i.hi = part->posX.i.hi;
+        self->posY.i.hi = part->posY.i.hi;
+        i = part->animCurFrame - 1;
         temp_s1 = &D_80180BE4[0][0][0];
         temp_s1 += i * 12;
         temp_s1 += (self->params - 1) * 4;
@@ -590,14 +589,14 @@ void EntityDraculaFinalForm(Entity* self) {
                 break;
             case 4:
                 self->opacity += 4;
-                self->animCurFrame = entity->animCurFrame;
+                self->animCurFrame = part->animCurFrame;
                 if (self->opacity > 0x60) {
                     self->step_s++;
                 }
                 break;
             case 5:
                 self->opacity -= 4;
-                self->animCurFrame = entity->animCurFrame;
+                self->animCurFrame = part->animCurFrame;
                 if (!self->opacity) {
                     self->animCurFrame = 0;
                     self->blendMode = BLEND_NO;
@@ -613,9 +612,9 @@ void EntityDraculaFinalForm(Entity* self) {
         case 0:
             g_api.PlaySfx(SFX_DRACULA_MONSTER_ROAR);
             self->hitboxState = 0;
-            entity = self + 1;
-            for (i = 0; i < 3; i++, entity++) {
-                DestroyEntity(entity);
+            part = self + 1;
+            for (i = 0; i < 3; i++, part++) {
+                DestroyEntity(part);
             }
             g_api.PlaySfx(SET_UNK_80);
             self->ext.dracFinalForm.timer = 4;
@@ -689,8 +688,8 @@ void EntityDraculaFinalForm(Entity* self) {
             }
             break;
         case 5:
-            entity = self + 1;
-            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK2C), entity);
+            part = self + 1;
+            CreateEntityFromCurrentEntity(E_ID(DRACULA_UNK2C), part);
             self->step_s++;
             primIndex = g_api.AllocPrimitives(PRIM_G4, 1);
             if (primIndex == -1) {
@@ -731,14 +730,14 @@ void EntityDraculaFinalForm(Entity* self) {
         if (!--self->ext.dracFinalForm.timer) {
             g_api.PlaySfx(SFX_EXPLODE_B);
             self->ext.dracFinalForm.timer = 8;
-            entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            part = AllocEntity(&g_Entities[224], &g_Entities[256]);
             temp_s1 = &D_80181108[self->ext.dracFinalForm.unk84 * 2];
-            if (entity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, entity);
-                entity->params = 3;
-                entity->zPriority = (self->zPriority + 1);
-                entity->posX.i.hi += temp_s1[0];
-                entity->posY.i.hi += temp_s1[1];
+            if (part != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, part);
+                part->params = 3;
+                part->zPriority = (self->zPriority + 1);
+                part->posX.i.hi += temp_s1[0];
+                part->posY.i.hi += temp_s1[1];
             }
             self->ext.dracFinalForm.unk84++;
             self->ext.dracFinalForm.unk84 &= 0xF;

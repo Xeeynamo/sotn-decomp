@@ -934,23 +934,23 @@ void func_us_801DB1E8(Entity* self) {
 }
 
 void EntityFrozenShadeIcicle(Entity* self) {
-    Entity* entity;
+    Entity* part;
     Primitive* prim;
     s32 primIndex;
     s16 velocity;
     u16 i;
 
     if (self->hitFlags & 0x80) {
-        entity = &PLAYER;
-        self->ext.frozenShadeIcicle.posX = self->posX.i.hi - entity->posX.i.hi;
-        self->ext.frozenShadeIcicle.posY = self->posY.i.hi - entity->posY.i.hi;
+        part = &PLAYER;
+        self->ext.frozenShadeIcicle.posX = self->posX.i.hi - part->posX.i.hi;
+        self->ext.frozenShadeIcicle.posY = self->posY.i.hi - part->posY.i.hi;
         self->ext.frozenShadeIcicle.unk84 = 0;
         self->step = 6;
     }
 
-    entity = self->ext.frozenShadeIcicle.unk8C;
+    part = self->ext.frozenShadeIcicle.unk8C;
     if ((self->flags & FLAG_DEAD ||
-         (entity->flags & FLAG_DEAD && self->step != 4)) &&
+         (part->flags & FLAG_DEAD && self->step != 4)) &&
         self->step < 5) {
         if (self->step < 2) {
             DestroyEntity(self);
@@ -963,7 +963,7 @@ void EntityFrozenShadeIcicle(Entity* self) {
         g_api.PlaySfx(SFX_DRA_GLASS_BREAK);
     }
 
-    entity = self->unk60;
+    part = self->nextPart;
     switch (self->step) {
     case 0:
         primIndex = g_api.AllocPrimitives(PRIM_G4, 8);
@@ -971,15 +971,15 @@ void EntityFrozenShadeIcicle(Entity* self) {
             return;
         }
 
-        entity = AllocEntity(self, &g_Entities[192]);
-        if (entity == NULL) {
+        part = AllocEntity(self, &g_Entities[192]);
+        if (part == NULL) {
             return;
         }
 
-        CreateEntityFromCurrentEntity(E_FROZEN_SHADE_ICICLE_UNK, entity);
-        self->unk60 = entity;
-        entity->unk60 = self;
-        entity->unk5C = self;
+        CreateEntityFromCurrentEntity(E_FROZEN_SHADE_ICICLE_UNK, part);
+        self->nextPart = part;
+        part->nextPart = self;
+        part->parent = self;
         InitializeEntity(g_EInitFrozenShadeIcicle);
         self->primIndex = primIndex;
         self->flags |= FLAG_HAS_PRIMS;
@@ -1080,9 +1080,9 @@ void EntityFrozenShadeIcicle(Entity* self) {
 
         break;
     case 6:
-        entity = &PLAYER;
-        self->posX.i.hi = entity->posX.i.hi + self->ext.frozenShadeIcicle.posX;
-        self->posY.i.hi = entity->posY.i.hi + self->ext.frozenShadeIcicle.posY;
+        part = &PLAYER;
+        self->posX.i.hi = part->posX.i.hi + self->ext.frozenShadeIcicle.posX;
+        self->posY.i.hi = part->posY.i.hi + self->ext.frozenShadeIcicle.posY;
         if (++self->ext.frozenShadeIcicle.unk84 >= 0x20) {
             DestroyEntity(self);
             return;
@@ -1094,7 +1094,7 @@ void EntityFrozenShadeIcicle(Entity* self) {
         break;
     }
 
-    entity->params = (self->ext.frozenShadeIcicle.unk7E + 0x400) & 0xFFF;
+    part->params = (self->ext.frozenShadeIcicle.unk7E + 0x400) & 0xFFF;
 }
 
 // Not certain what this is, appears to be something related to
@@ -1102,9 +1102,9 @@ void EntityFrozenShadeIcicle(Entity* self) {
 void EntityFrozenShadeIcicleUnk(Entity* self) {
     Entity* parent;
 
-    parent = self->unk60;
+    parent = self->nextPart;
     if ((parent->entityId != E_FROZEN_SHADE_ICICLE) ||
-        (parent->unk60 != self)) {
+        (parent->nextPart != self)) {
         DestroyEntity(self);
     }
 

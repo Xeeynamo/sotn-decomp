@@ -185,7 +185,7 @@ static s16 D_801832EC[] = {
 void EntityWarg(Entity* self) {
     DR_ENV* dr_env;
     Tilemap* gTilemap;
-    Entity* otherEnt;
+    Entity* part;
     Primitive* prim;
     s16* hitboxPtr;
     u16 switchTemp;
@@ -221,12 +221,12 @@ void EntityWarg(Entity* self) {
     switchTemp = self->step;
     switch (switchTemp) {
     case 0:
-        otherEnt = self + 1;
-        self->unk60 = otherEnt;
-        CreateEntityFromCurrentEntity(E_ID_4B, otherEnt);
-        otherEnt->unk5C = self;
+        part = self + 1;
+        self->nextPart = part;
+        CreateEntityFromCurrentEntity(E_ID_4B, part);
+        part->parent = self;
         InitializeEntity(g_EInitWarg);
-        otherEnt->unk60 = self;
+        part->nextPart = self;
         self->facingLeft = (GetSideToPlayer() ^ 1) & 1;
         if (self->facingLeft) {
             self->posX.i.hi -= 0x20;
@@ -334,7 +334,7 @@ void EntityWarg(Entity* self) {
             }
             break;
         case 1:
-            otherEnt = self + 1;
+            part = self + 1;
             animResult = AnimateEntity(D_80183148, self);
             if (self->velocityX) {
                 if (self->velocityX < 0) {
@@ -343,8 +343,8 @@ void EntityWarg(Entity* self) {
                     self->velocityX -= FIX(0.375);
                 }
             } else {
-                otherEnt->attackElement = self->attackElement;
-                otherEnt->attack = self->attack;
+                part->attackElement = self->attackElement;
+                part->attack = self->attack;
             }
 
             if (animResult & 0x80 && self->pose == 7) {
@@ -355,8 +355,8 @@ void EntityWarg(Entity* self) {
                 }
                 g_api.PlaySfx(SFX_WARG_ATTACK);
                 enemy = &g_api.enemyDefs[176];
-                otherEnt->attackElement = enemy->attackElement;
-                otherEnt->attack = enemy->attack;
+                part->attackElement = enemy->attackElement;
+                part->attack = enemy->attack;
             }
             UnkCollisionFunc2(D_80183274);
             if (!animResult) {
@@ -427,32 +427,32 @@ void EntityWarg(Entity* self) {
         break;
     case 11:
         if (++self->ext.warg.timer & 1) {
-            otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (otherEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLODE_PUFF_TRANS, otherEnt);
+            part = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (part != NULL) {
+                CreateEntityFromCurrentEntity(E_EXPLODE_PUFF_TRANS, part);
 // These are the same code, but compiler instruction reordering is messing it
 // up. There's almost certainly a single solution, but I can't find it.
 #ifdef VERSION_PSP
-                otherEnt->params =
+                part->params =
                     ((g_unkGraphicsStruct.g_zEntityCenter - 8 - (Random() & 7))
                      << 8) +
                     1;
 #else
-                otherEnt->params =
+                part->params =
                     ((g_unkGraphicsStruct.g_zEntityCenter - (Random() & 7) - 8)
                      << 8) +
                     1;
 #endif
-                otherEnt->posX.i.hi =
+                part->posX.i.hi =
                     self->ext.warg.deathPosX - gTilemap->scrollX.i.hi;
-                otherEnt->posY.i.hi =
+                part->posY.i.hi =
                     self->ext.warg.deathPosY - gTilemap->scrollY.i.hi;
                 if (self->facingLeft) {
-                    otherEnt->posX.i.hi += (((Random() & 0xF) - 8) * 8);
+                    part->posX.i.hi += (((Random() & 0xF) - 8) * 8);
                 } else {
-                    otherEnt->posX.i.hi += (((Random() & 0xF) - 7) * 8);
+                    part->posX.i.hi += (((Random() & 0xF) - 7) * 8);
                 }
-                otherEnt->posY.i.hi += (((Random() & 7) - 2) * 8);
+                part->posY.i.hi += (((Random() & 7) - 2) * 8);
             }
         }
         switch (self->step_s) {

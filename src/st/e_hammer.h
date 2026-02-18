@@ -337,7 +337,7 @@ static s32 func_801CE4CC(Entity* self) {
 void EntityHammer(Entity* self) {
     Collider collider;
     Entity* otherEnt;
-    Entity* var_s3;
+    Entity* part;
     s16* ptr;
     giantBroBodyPartsInit* parts;
     s32 step;
@@ -366,20 +366,19 @@ void EntityHammer(Entity* self) {
     case HAMMER_STEP_2:
         // Loop through all parts until the eArrayOffset is zero
         // (null-terminated)
-        for (parts = D_us_801821AC, var_s3 = self; parts->eArrayOffset;
-             parts++) {
+        for (parts = D_us_801821AC, part = self; parts->eArrayOffset; parts++) {
             otherEnt = self + parts->eArrayOffset;
             CreateEntityFromCurrentEntity(E_GURKHA_BODY_PARTS, otherEnt);
             otherEnt->ext.GH_Props.length = parts->length;
             otherEnt->ext.GH_Props.parent = self + parts->eArrayParentOffset;
             otherEnt->params = parts->params;
             otherEnt->zPriority = self->zPriority + parts->zOffset;
-            otherEnt->unk5C = self;
-            otherEnt->unk60 = var_s3;
-            var_s3 = otherEnt;
+            otherEnt->parent = self;
+            otherEnt->nextPart = part;
+            part = otherEnt;
         }
-        self->unk60 = var_s3;
-        self->unk5C = NULL;
+        self->nextPart = part;
+        self->parent = NULL;
         otherEnt = self + HAMMER_WEAPON;
         CreateEntityFromCurrentEntity(E_HAMMER_WEAPON, otherEnt);
         otherEnt->ext.GH_Props.length = 12;
@@ -530,13 +529,13 @@ void EntityHammer(Entity* self) {
             func_801CDE10(ptr);
             func_801CE2CC(ptr);
             otherEnt = self + HAMMER_WEAPON;
-            var_s3 = self + BACK_ARM_LOWER;
-            var_s3->posX.val = otherEnt->posX.val;
-            var_s3->posY.val = otherEnt->posY.val;
+            part = self + BACK_ARM_LOWER;
+            part->posX.val = otherEnt->posX.val;
+            part->posY.val = otherEnt->posY.val;
             otherEnt = self + BACK_ARM_UPPER;
-            func_801CDAC8(otherEnt, var_s3);
+            func_801CDAC8(otherEnt, part);
             func_801CDFD8(otherEnt, 0x10);
-            func_801CDFD8(var_s3, 0x10);
+            func_801CDFD8(part, 0x10);
             polarPlacePartsList(partsList1);
             if (!self->ext.GH_Props.unkB0[0] && !self->ext.GH_Props.unkB4[0]) {
                 PlaySfxPositional(SFX_HAMMER_ATTACK);
@@ -554,13 +553,13 @@ void EntityHammer(Entity* self) {
             func_801CDE10(ptr);
             func_801CE2CC(ptr);
             otherEnt = self + HAMMER_WEAPON;
-            var_s3 = self + BACK_ARM_LOWER;
-            var_s3->posX.val = otherEnt->posX.val;
-            var_s3->posY.val = otherEnt->posY.val;
+            part = self + BACK_ARM_LOWER;
+            part->posX.val = otherEnt->posX.val;
+            part->posY.val = otherEnt->posY.val;
             otherEnt = self + BACK_ARM_UPPER;
-            func_801CDAC8(otherEnt, var_s3);
+            func_801CDAC8(otherEnt, part);
             func_801CDFD8(otherEnt, 2);
-            func_801CDFD8(var_s3, 2);
+            func_801CDFD8(part, 2);
             polarPlacePartsList(partsList1);
             if (self->ext.GH_Props.unkB0[0] == 4 &&
                 !self->ext.GH_Props.unkB4[0]) {

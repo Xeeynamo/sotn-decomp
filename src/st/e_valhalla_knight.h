@@ -43,7 +43,7 @@ static unkStr_80182100 D_us_80182100[] = {
 };
 
 void EntityValhallaKnight(Entity* self) {
-    Entity* tempEntity;
+    Entity* part;
     Entity* tempEntity2;
     s32 i;
     s32 posX;
@@ -59,14 +59,14 @@ void EntityValhallaKnight(Entity* self) {
         self->animCurFrame = 1;
         self->ext.valhallaKnight.unk84 =
             g_Tilemap.scrollX.i.hi + self->posX.i.hi;
-        tempEntity = self + 1;
-        CreateEntityFromCurrentEntity(E_VALHALLA_KNIGHT_UNK1, tempEntity);
-        tempEntity->params = 0;
-        self->unk60 = tempEntity;
-        self->unk5C = NULL;
-        tempEntity = self + 2;
-        CreateEntityFromCurrentEntity(E_VALHALLA_KNIGHT_UNK1, tempEntity);
-        tempEntity->params = 1;
+        part = self + 1;
+        CreateEntityFromCurrentEntity(E_VALHALLA_KNIGHT_UNK1, part);
+        part->params = 0;
+        self->nextPart = part;
+        self->parent = NULL;
+        part = self + 2;
+        CreateEntityFromCurrentEntity(E_VALHALLA_KNIGHT_UNK1, part);
+        part->params = 1;
         /* fallthrough */
     case 1:
         if (UnkCollisionFunc3(D_us_80182028) & 1) {
@@ -224,27 +224,26 @@ void EntityValhallaKnight(Entity* self) {
 
     case 6:
         for (i = 0; i < 3; i++) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+            part = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (part != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, part);
                 if (self->facingLeft) {
-                    tempEntity->posX.i.hi -= D_us_801820F4[i].x;
+                    part->posX.i.hi -= D_us_801820F4[i].x;
                 } else {
-                    tempEntity->posX.i.hi += D_us_801820F4[i].x;
+                    part->posX.i.hi += D_us_801820F4[i].x;
                 }
-                tempEntity->posY.i.hi += D_us_801820F4[i].y;
-                tempEntity->params = 3;
+                part->posY.i.hi += D_us_801820F4[i].y;
+                part->params = 3;
             }
         }
         for (i = 0; i < 13; i++) {
-            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (tempEntity != NULL) {
-                CreateEntityFromEntity(
-                    E_VALHALLA_KNIGHT_UNK2, self, tempEntity);
-                tempEntity->params = i;
-                tempEntity->facingLeft = self->facingLeft;
-                tempEntity->velocityX = self->velocityX;
-                tempEntity->velocityY = self->velocityY;
+            part = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (part != NULL) {
+                CreateEntityFromEntity(E_VALHALLA_KNIGHT_UNK2, self, part);
+                part->params = i;
+                part->facingLeft = self->facingLeft;
+                part->velocityX = self->velocityX;
+                part->velocityY = self->velocityY;
             }
         }
         g_api.PlaySfx(SFX_EXPLODE_A);
@@ -277,8 +276,8 @@ void func_us_801C8954(Entity* self) {
             InitializeEntity(g_EInitValhallaKnightUnk3);
         } else {
             InitializeEntity(g_EInitValhallaKnightUnk2);
-            self->unk5C = self - 1;
-            self->unk60 = self - 1;
+            self->parent = self - 1;
+            self->nextPart = self - 1;
         }
     }
     tempEntity = self - self->params - 1;

@@ -277,7 +277,7 @@ void EntityWhiteDragon(Entity* self) {
 
             entity = self;
             for (i = SEGMENT_COUNT - 1; i >= 0; i--) {
-                entity->unk60 = entity + 1;
+                entity->nextPart = entity + 1;
                 entity++;
                 DestroyEntity(entity);
 
@@ -315,7 +315,7 @@ void EntityWhiteDragon(Entity* self) {
                     entity->entityRoomIndex = self->entityRoomIndex;
                     entity->flags |=
                         FLAG_POS_CAMERA_LOCKED | FLAG_SUPPRESS_STUN;
-                    entity->unk60 = self;
+                    entity->nextPart = self;
                 } else {
                     entity->hitPoints = 0x7FFF;
                     entity->hitboxWidth = 4;

@@ -185,7 +185,7 @@ void EntityDiplocephalusTail(Entity* self) {
     s32 xOffset;
     s32 i;
     Entity* tempEntity2;
-    Entity* tempEntity;
+    Entity* part;
 
     if (self->ext.diplocephalusUnk.entity8C == NULL) {
         FntPrint("stail_step %x\n", self->step);
@@ -218,44 +218,44 @@ void EntityDiplocephalusTail(Entity* self) {
         self->ext.diplocephalusUnk.unk9D = 0;
         self->ext.diplocephalusUnk.entity8C = NULL;
         tempEntity2 = self;
-        tempEntity = self;
+        part = self;
         for (i = 0; i < 6; i++) {
-            tempEntity++;
-            CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_TAIL, tempEntity);
-            tempEntity->ext.diplocephalusUnk.entity8C = tempEntity - 1;
-            (tempEntity - 1)->ext.diplocephalusUnk.unk90 = tempEntity;
-            tempEntity->step = 3;
-            tempEntity->animSet = self->animSet;
-            tempEntity->animCurFrame = 0x13;
-            tempEntity->facingLeft =
+            part++;
+            CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_TAIL, part);
+            part->ext.diplocephalusUnk.entity8C = part - 1;
+            (part - 1)->ext.diplocephalusUnk.unk90 = part;
+            part->step = 3;
+            part->animSet = self->animSet;
+            part->animCurFrame = 0x13;
+            part->facingLeft =
                 self->ext.diplocephalusUnk.parent->facingLeft ^ 1;
-            tempEntity->zPriority =
+            part->zPriority =
                 self->ext.diplocephalusUnk.parent->zPriority - i - 1;
-            tempEntity->attackElement = self->attackElement;
-            tempEntity->attack = self->attack;
-            tempEntity->hitPoints = self->hitPoints;
-            tempEntity->enemyId = self->enemyId;
-            tempEntity->hitboxState = 0;
-            tempEntity->hitboxWidth = self->hitboxWidth;
-            tempEntity->hitboxHeight = self->hitboxHeight;
-            tempEntity->flags = self->flags;
-            tempEntity->unk5A = self->unk5A;
-            tempEntity->palette = self->palette;
-            tempEntity->ext.diplocephalusUnk.parent =
+            part->attackElement = self->attackElement;
+            part->attack = self->attack;
+            part->hitPoints = self->hitPoints;
+            part->enemyId = self->enemyId;
+            part->hitboxState = 0;
+            part->hitboxWidth = self->hitboxWidth;
+            part->hitboxHeight = self->hitboxHeight;
+            part->flags = self->flags;
+            part->unk5A = self->unk5A;
+            part->palette = self->palette;
+            part->ext.diplocephalusUnk.parent =
                 self->ext.diplocephalusUnk.parent;
-            tempEntity->drawFlags = ENTITY_ROTATE;
-            tempEntity2 = tempEntity;
-            tempEntity->unk60 = tempEntity + 1;
+            part->drawFlags = ENTITY_ROTATE;
+            tempEntity2 = part;
+            part->nextPart = part + 1;
         }
-        tempEntity->unk60 = NULL;
-        (tempEntity - 1)->ext.diplocephalusUnk.unk9F = 1;
-        tempEntity->hitboxState = 3;
-        tempEntity->hitboxWidth = 8;
-        tempEntity->hitboxHeight = 0xD;
-        tempEntity->hitboxOffY = -8;
-        tempEntity->ext.diplocephalusUnk.unk90 = NULL;
-        tempEntity->flags |= FLAG_UNK_20000000;
-        self->ext.diplocephalusUnk.entity = tempEntity;
+        part->nextPart = NULL;
+        (part - 1)->ext.diplocephalusUnk.unk9F = 1;
+        part->hitboxState = 3;
+        part->hitboxWidth = 8;
+        part->hitboxHeight = 0xD;
+        part->hitboxOffY = -8;
+        part->ext.diplocephalusUnk.unk90 = NULL;
+        part->flags |= FLAG_UNK_20000000;
+        self->ext.diplocephalusUnk.entity = part;
         self->ext.diplocephalusUnk.entity->animCurFrame = 0x17;
         self->ext.diplocephalusUnk.entity->zPriority = self->zPriority;
         self->ext.diplocephalusUnk.entity->step = 5;
@@ -337,43 +337,43 @@ void EntityDiplocephalusTail(Entity* self) {
              self->ext.diplocephalusUnk.unk84) /
             6;
 
-        tempEntity = self;
+        part = self;
         i = 0;
         while (!(three < i)) {
-            tempEntity->ext.diplocephalusUnk.unk84 =
+            part->ext.diplocephalusUnk.unk84 =
                 self->ext.diplocephalusUnk.unk84 + temp_s5 * i;
-            xOffset = (rcos(tempEntity->ext.diplocephalusUnk.unk84) << 3) << 4;
-            yOffset = (rsin(tempEntity->ext.diplocephalusUnk.unk84) << 3) << 4;
+            xOffset = (rcos(part->ext.diplocephalusUnk.unk84) << 3) << 4;
+            yOffset = (rsin(part->ext.diplocephalusUnk.unk84) << 3) << 4;
             if (self->facingLeft) {
-                tempEntity->ext.diplocephalusUnk.unk90->posX.val =
-                    tempEntity->posX.val - xOffset;
+                part->ext.diplocephalusUnk.unk90->posX.val =
+                    part->posX.val - xOffset;
             } else {
-                tempEntity->ext.diplocephalusUnk.unk90->posX.val =
-                    tempEntity->posX.val + xOffset;
+                part->ext.diplocephalusUnk.unk90->posX.val =
+                    part->posX.val + xOffset;
             }
-            tempEntity->ext.diplocephalusUnk.unk90->posY.val =
-                tempEntity->posY.val - yOffset;
+            part->ext.diplocephalusUnk.unk90->posY.val =
+                part->posY.val - yOffset;
             i++;
-            tempEntity->rotate = -tempEntity->ext.diplocephalusUnk.unk84;
-            tempEntity = tempEntity->ext.diplocephalusUnk.unk90;
+            part->rotate = -part->ext.diplocephalusUnk.unk84;
+            part = part->ext.diplocephalusUnk.unk90;
         }
         i = 0;
-        while (tempEntity->ext.diplocephalusUnk.unk90 != NULL) {
-            tempEntity->ext.diplocephalusUnk.unk84 = temp_a2 + temp_s6 * i;
-            xOffset = (rcos(tempEntity->ext.diplocephalusUnk.unk84) << 3) << 4;
-            yOffset = (rsin(tempEntity->ext.diplocephalusUnk.unk84) << 3) << 4;
+        while (part->ext.diplocephalusUnk.unk90 != NULL) {
+            part->ext.diplocephalusUnk.unk84 = temp_a2 + temp_s6 * i;
+            xOffset = (rcos(part->ext.diplocephalusUnk.unk84) << 3) << 4;
+            yOffset = (rsin(part->ext.diplocephalusUnk.unk84) << 3) << 4;
             if (self->facingLeft) {
-                tempEntity->ext.diplocephalusUnk.unk90->posX.val =
-                    tempEntity->posX.val - xOffset;
+                part->ext.diplocephalusUnk.unk90->posX.val =
+                    part->posX.val - xOffset;
             } else {
-                tempEntity->ext.diplocephalusUnk.unk90->posX.val =
-                    tempEntity->posX.val + xOffset;
+                part->ext.diplocephalusUnk.unk90->posX.val =
+                    part->posX.val + xOffset;
             }
-            tempEntity->ext.diplocephalusUnk.unk90->posY.val =
-                tempEntity->posY.val - yOffset;
+            part->ext.diplocephalusUnk.unk90->posY.val =
+                part->posY.val - yOffset;
             i++;
-            tempEntity->rotate = -tempEntity->ext.diplocephalusUnk.unk84;
-            tempEntity = tempEntity->ext.diplocephalusUnk.unk90;
+            part->rotate = -part->ext.diplocephalusUnk.unk84;
+            part = part->ext.diplocephalusUnk.unk90;
         }
         self->ext.diplocephalusUnk.entity->posX.i.hi += 1;
         self->ext.diplocephalusUnk.entity->posY.i.hi -= 2;
@@ -383,13 +383,13 @@ void EntityDiplocephalusTail(Entity* self) {
             self->ext.diplocephalusUnk.parent->velocityX;
         self->ext.diplocephalusUnk.unk9C++;
         if (self->ext.diplocephalusUnk.unk9C > 0x20) {
-            tempEntity = self->ext.diplocephalusUnk.unk90;
+            part = self->ext.diplocephalusUnk.unk90;
             for (i = 0; i < self->ext.diplocephalusUnk.unk9D; i++) {
-                tempEntity = tempEntity->ext.diplocephalusUnk.unk90;
+                part = part->ext.diplocephalusUnk.unk90;
             }
-            tempEntity->poseTimer = 0;
-            tempEntity->pose = 0;
-            tempEntity->step = 4;
+            part->poseTimer = 0;
+            part->pose = 0;
+            part->step = 4;
             self->ext.diplocephalusUnk.unk9C = 0;
             self->ext.diplocephalusUnk.unk9D++;
         }
@@ -430,11 +430,11 @@ void EntityDiplocephalusTail(Entity* self) {
         break;
     case 7:
         if (AnimateEntity(D_us_80181DEC, self) == 0) {
-            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
-                tempEntity->params = 3;
-                tempEntity->zPriority = self->zPriority + 9;
+            part = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (part != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, part);
+                part->params = 3;
+                part->zPriority = self->zPriority + 9;
             }
             g_api.func_80102CD8(1);
             EntityExplosionSpawn(0, 0);
@@ -447,10 +447,10 @@ void EntityDiplocephalusTail(Entity* self) {
         self->ext.diplocephalusUnk.entity->step = 7;
         self->ext.diplocephalusUnk.entity->flags &= ~FLAG_UNK_20000000;
         PlaySfxPositional(SFX_DIPLOCEPHALUS_DEATH);
-        tempEntity = self;
-        while (tempEntity->ext.diplocephalusUnk.unk90 != NULL) {
-            tempEntity->hitboxState = 0;
-            tempEntity++;
+        part = self;
+        while (part->ext.diplocephalusUnk.unk90 != NULL) {
+            part->hitboxState = 0;
+            part++;
         }
         self->ext.diplocephalusUnk.entity->hitboxState = 0;
         PlaySfxPositional(SFX_STUTTER_EXPLODE_B);
@@ -465,8 +465,8 @@ void EntityDiplocephalusTail(Entity* self) {
                 self->ext.diplocephalusUnk.unk9D++;
                 self->ext.diplocephalusUnk.unk9C = 0;
                 self->ext.diplocephalusUnk.entity--;
-                tempEntity = self->ext.diplocephalus.entity;
-                tempEntity->step = 10;
+                part = self->ext.diplocephalus.entity;
+                part->step = 10;
             }
         }
         break;
@@ -484,18 +484,17 @@ void EntityDiplocephalusTail(Entity* self) {
         }
         if (self->pose == 8 && self->params) {
             PlaySfxPositional(SFX_DIPLOCEPHALUS_ATTACK);
-            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-            if (tempEntity != NULL) {
+            part = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (part != NULL) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
-                CreateEntityFromCurrentEntity(
-                    E_DIPLOCEPHALUS_FIREBALL, tempEntity);
-                tempEntity->facingLeft = self->facingLeft;
+                CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_FIREBALL, part);
+                part->facingLeft = self->facingLeft;
                 if (self->facingLeft) {
-                    tempEntity->posX.i.hi += 0xC;
+                    part->posX.i.hi += 0xC;
                 } else {
-                    tempEntity->posX.i.hi -= 0xC;
+                    part->posX.i.hi -= 0xC;
                 }
-                tempEntity->posY.i.hi -= 0x10;
+                part->posY.i.hi -= 0x10;
                 self->params = 0;
             }
         }

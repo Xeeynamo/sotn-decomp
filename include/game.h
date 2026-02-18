@@ -932,8 +932,8 @@ typedef struct Entity {
     /* 0x56 */ s16 animCurFrame;
     /* 0x58 */ s16 stunFrames;
     /* 0x5A */ u16 unk5A;
-    /* 0x5C */ struct Entity* unk5C;
-    /* 0x60 */ struct Entity* unk60;
+    /* 0x5C */ struct Entity* parent;   // for multi-part entities only
+    /* 0x60 */ struct Entity* nextPart; // next linked-list entity part
     /* 0x64 */ s32 primIndex;
     /* 0x68 */ u16 unk68; // Appears to be set for entities with parallax
     /* 0x6A */ u16 hitEffect;
