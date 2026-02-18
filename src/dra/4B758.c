@@ -478,8 +478,7 @@ void RenderEntities(void) {
                 }
                 if (entity->blendMode) {
                     setSemiTrans(poly, true);
-                    poly->tpage +=
-                        entity->blendMode & (FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20);
+                    poly->tpage += entity->blendMode & BLEND_QUARTER;
                 } else {
                     setSemiTrans(poly, false);
                 }
@@ -791,8 +790,7 @@ void RenderEntitiesPSP(void) {
             }
             if (entity->blendMode) {
                 setSemiTrans(poly, true);
-                poly->tpage +=
-                    entity->blendMode & (FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20);
+                poly->tpage += entity->blendMode & BLEND_QUARTER;
             } else {
                 setSemiTrans(poly, false);
             }
@@ -982,8 +980,7 @@ void RenderEntitiesPSP(void) {
                 }
                 if (entity->blendMode) {
                     setSemiTrans(poly, true);
-                    poly->tpage +=
-                        entity->blendMode & (FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20);
+                    poly->tpage += entity->blendMode & BLEND_QUARTER;
                 } else {
                     setSemiTrans(poly, false);
                 }

@@ -486,7 +486,7 @@ static s32 func_ptr_80170014(Entity* self) {
         self->anim = D_6D000_8017A770;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 2;
-        self->blendMode = BLEND_TRANSP | 0x20;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         angle = ratan2(-self->ext.weapon.parent->velocityY,
                        self->ext.weapon.parent->velocityX);
         angle += (0x500 + (rand() % 0x600));

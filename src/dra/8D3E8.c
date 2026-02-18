@@ -1521,7 +1521,7 @@ void func_80130618(Entity* self) {
     self->drawFlags &= ~FLAG_DRAW_OPACITY;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         self->drawFlags |= FLAG_DRAW_OPACITY;
-        self->blendMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
+        self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         temp_s1 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
         if (temp_s1 > 0xA0) {
             temp_s1 = 0xA0;
@@ -1850,7 +1850,7 @@ void func_80130E94(Entity* self) {
     self->drawFlags &= ~FLAG_DRAW_OPACITY;
     if (abs(PLAYER.velocityX) > FIX(3)) {
         self->drawFlags |= FLAG_DRAW_OPACITY;
-        self->blendMode = FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40;
+        self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         temp_s2 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
         if (temp_s2 > 0x80) {
             temp_s2 = 0x80;

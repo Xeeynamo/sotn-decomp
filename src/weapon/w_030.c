@@ -54,7 +54,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->palette += anim->palette;
         self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority - 2;
-        self->blendMode = BLEND_TRANSP | BLEND_ADD | DRAW_UNK_40;
+        self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         SetWeaponProperties(self, 0);
         self->step++;
     }

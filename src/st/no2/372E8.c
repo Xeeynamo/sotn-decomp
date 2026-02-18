@@ -10,9 +10,9 @@ static u8 D_us_80180ED8[] = {2, 1, 2, 2, 2,  3, 2,  4, 2,  5, 2,  6, 2,  7,  2,
                              8, 2, 9, 2, 10, 2, 11, 2, 12, 2, 13, 2, 14, -1, 0};
 
 static EntityConfig D_us_80180EF8[] = {
-    {ANIMSET_OVL(10), 0x4D, 0, DRAW_DEFAULT, D_us_80180EA8},
-    {ANIMSET_OVL(11), 0x56, 3, DRAW_TPAGE2 | DRAW_TPAGE, D_us_80180EC4},
-    {ANIMSET_OVL(12), 0x53, 9, DRAW_DEFAULT, D_us_80180ED8},
+    {ANIMSET_OVL(10), 0x4D, 0, BLEND_NO, D_us_80180EA8},
+    {ANIMSET_OVL(11), 0x56, 3, BLEND_TRANSP | BLEND_ADD, D_us_80180EC4},
+    {ANIMSET_OVL(12), 0x53, 9, BLEND_NO, D_us_80180ED8},
 };
 
 void func_us_801B72E8(Entity* self) {

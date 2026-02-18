@@ -1,6 +1,7 @@
 package deps
 
 import (
+	"bytes"
 	"fmt"
 	"os"
 	"os/exec"
@@ -153,10 +154,26 @@ func CargoRun(manifest string, args ...string) error {
 	if _, err := os.Stat(manifest); os.IsNotExist(err) {
 		return fmt.Errorf("%s not found", manifest)
 	}
-	return (&exec.Cmd{
-		Path: binPath,
-		Args: append([]string{binPath, "run", "--release", "--manifest-path", manifest}, args...),
-	}).Run()
+
+	cmd := exec.Command(binPath,
+		append([]string{
+			"run",
+			"--release",
+			"--manifest-path", manifest,
+		}, args...)...,
+	)
+
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
+
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("cargo run failed: %w\nstderr:\n%s",
+			err,
+			stderr.String(),
+		)
+	}
+
+	return nil
 }
 
 func SotnLint(args ...string) error {
