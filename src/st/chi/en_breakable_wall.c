@@ -69,7 +69,8 @@ void EntityBreakableWallDebris(Entity* self) {
                 for (i = 0; i < 2; i++) {
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(E_BREAKABLE_WALL_DEBRIS, self, entity);
+                        CreateEntityFromEntity(
+                            E_BREAKABLE_WALL_DEBRIS, self, entity);
                         entity->params = (Random() & 3) + 9;
                         entity->params |= 0x100;
                     }
