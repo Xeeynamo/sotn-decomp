@@ -33,6 +33,4 @@ extern EInit g_EInitCommon;
 extern EInit g_EInitParticle;
 extern EInit g_EInitLockCamera;
 
-extern s8 c_HeartPrizes[];
-
 #endif // RBO3_H

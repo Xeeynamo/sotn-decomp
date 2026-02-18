@@ -152,5 +152,5 @@ segments:
       - [0x52768, .bss, create_entity]
       - [0x5277D, .bss, bss]
       - [0x53378, .bss, giantbro_helpers]
-      - [0x533F4, .bss, e_collect]
+      - [0x533F4, .bss, st_update]
   - [0x53434]

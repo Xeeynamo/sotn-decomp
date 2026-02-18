@@ -45,7 +45,6 @@ void CreateEntitiesAbove(s16);
 void CreateEntitiesBelow(s16);
 void CreateEntityFromCurrentEntity(u16, Entity*);
 u8 func_80192914(s16 arg0, s16 arg1);
-void ReplaceBreakableWithItemDrop(Entity*);
 void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2);
 void BottomCornerText(u8* str, u8 lowerLeft);
 void func_8019344C(void);
@@ -85,19 +84,7 @@ extern u8 g_UnkEntityAnimData[];
 extern RoomHeader g_rooms[];
 
 extern EInit OVL_EXPORT(EInitBreakable);
-extern u8* g_eBreakableAnimations[8];
-extern u8 g_eBreakableHitboxes[];
-extern u8 g_eBreakableExplosionTypes[];
-extern u16 g_eBreakableanimSets[];
 extern u8 blend_modes[];
-
-// *** EntitySoulStealOrb properties START ***
-
-extern u16 g_ESoulStealOrbAngles[];
-extern s16 g_ESoulStealOrbSprt[];
-extern u8 g_ESoulStealOrbAnim[];
-
-// *** EntitySoulStealOrb properties END ***
 
 extern s16 D_80199DE8;
 

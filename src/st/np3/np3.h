@@ -107,8 +107,6 @@ typedef enum EntityIDs {
     /* 0x5B */ E_BLADE_WEAPON
 } EntityIDs;
 
-extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
-
 extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
@@ -141,105 +139,9 @@ extern EInit g_EInitGurkhaWeapon;
 extern EInit g_EInitBlade;
 extern EInit g_EInitBladeWeapon;
 
-extern void ReplaceBreakableWithItemDrop(Entity*);
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
-
-extern void func_801BAFA0(s16);
-extern void func_801BB044(s16);
-extern void func_801BB140(s16);
-extern void func_801BB2F8(s16);
-extern void func_801BB3F4(s16);
-extern s32 UnkCollisionFunc(s16* hitSensors, s16 sensorCount);
-extern s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
-#ifdef VERSION_PC
-extern s16 GetDistanceToPlayerX(void);
-#endif
-extern void EntityExplosionVariants(Entity* entity);
-extern void func_801CD658();
-extern void EntityPrizeDrop(Entity* entity);
-extern void EntityEquipItemDrop(Entity* entity);
-extern Primitive* func_801D2470(Primitive* poly);
-void EntityGreyPuff(Entity* entity);
-extern u8* g_eBreakableAnimations[8];
-extern u8 g_eBreakableHitboxes[];
-extern u8 g_eBreakableExplosionTypes[];
-extern u16 g_eBreakableanimSets[];
-extern u8 blend_modes[];
-extern u16 D_80180AF0[];
-extern u16 D_8018112C[];
-extern u16 D_80181144[];
-extern u16 D_8018115C[]; // this could be a struct
-extern u16 D_80181168[];
-extern u16 D_80181180[];
-extern u16 D_801811AA[];
-extern u16 D_801811E6[];
+extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
 extern s16 g_WaterXTbl[]; // pos TBL
-
-extern s16 D_80181A50[];
-extern u16 D_80181D80[];
-extern u16 D_80181DB0[];
-extern u16 D_80181E74[];
-extern s8 c_HeartPrizes[];
-extern s32 D_80181E80[];
-extern const u8* D_80181F2C[];
-extern u8 D_80182008[];
-extern u8 D_80182400[];
-extern u8 D_80182414[];
-extern s32 D_80182440[];
-extern u8 D_80182454[];
-extern u16 D_80182458[];
-extern u8 D_80182594[];
-extern u8 D_801825A8[];
-extern u8 D_801825BC[];
-extern u16 D_801825CC;
-
-// *** EntityBloodyZombie properties START ***
-
-extern s32 D_801825D4;
-extern u16 D_801825E4[];
-extern u8 D_801825EC[]; // Animation: Walking
-extern u8 D_801825FC[]; // Animation: Bloody Zombie sword slash
-extern u8 D_80182620[]; // Animation: Recoil from being hit
-extern u8 D_80182634[]; // Animation: Dying
-extern u8 D_8018267C[]; // Animation: Walking faster
-// unk80 Walking direction timer
-// unk84 BloodSplatter facing
-
-// *** EntityBloodyZombie properties END ***
-
-extern s32 D_8018268C;
-extern s32 D_801826A4;
-extern s32 D_801826C4;
-
-// *** EntitySoulStealOrb properties START ***
-
-extern u16 g_ESoulStealOrbAngles[];
-extern s16 g_ESoulStealOrbSprt[];
-extern u8 g_ESoulStealOrbAnim[];
-
-// *** EntitySoulStealOrb properties END ***
-
-extern SVECTOR g_CastleDoorVector;
-
-// For EntityHammer
-extern u16 D_80182978[];
-extern s16 D_80182988[];
-extern s16 D_80182A20[];
-extern s16 D_80182A40[];
-extern s16 D_80182A5C[];
-extern s16 D_80182AB8[];
-extern s16 D_80182AD0[];
-extern s16 D_80182AE8[];
-extern s16 D_80182B00[];
-extern s16 D_80182B54[];
-extern s16 D_80182BB4[];
-extern s16 D_80182BEC[];
-extern s16 D_80182C9C[];
-extern s16 D_80182CC4[];
-extern s16 D_80182CFC[];
-extern s16 D_80182E38[];
-extern s16 D_80182E48[];
-extern s16 D_80182EDC[];
 
 extern bool slograGaibonRetreat;
