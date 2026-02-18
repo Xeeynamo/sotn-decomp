@@ -57,7 +57,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
         params = self->params & 0xF;
         obj = &puff_config[params];
         self->palette = obj->palette + PAL_PUFF_OPAQUE_OFFSET;
-        self->blendMode = obj->drawMode;
+        self->blendMode = obj->blendMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk5A;
         self->ext.opaquePuff.anim = obj->animData;

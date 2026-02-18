@@ -709,7 +709,7 @@ void func_us_80192998(Entity* self) {
         params = self->params & 0xF;
         obj = &D_us_8018071C[params];
         self->palette = obj->palette + 0x2E0;
-        self->blendMode = obj->drawMode;
+        self->blendMode = obj->blendMode;
         self->animSet = obj->animSet;
         self->unk5A = obj->unk5A;
         self->ext.e_80192998.anim = obj->animData;
