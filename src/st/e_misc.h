@@ -661,8 +661,8 @@ void EntityBigRedFireball(Entity* self) {
         InitializeEntity(g_EInitParticle);
         self->animSet = ANIMSET_DRA(2);
         self->palette = PAL_FLAG(PAL_UNK_1B6);
-        self->drawFlags |= (FLAG_DRAW_ROTATE + FLAG_DRAW_OPACITY);
-        self->blendMode |= (DRAW_TPAGE + DRAW_TPAGE2);
+        self->drawFlags |= FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
+        self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         self->opacity = 0x70;
         self->zPriority = 192;
 

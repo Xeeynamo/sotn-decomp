@@ -299,7 +299,7 @@ s32 func_ptr_80170010(Entity* self) {
         self->posX.i.hi += -3 + (rand() & 7);
         D_74000_8017BD74 += 1;
         if (!(rand() & 1)) {
-            self->blendMode |= DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode |= BLEND_TRANSP | BLEND_QUARTER;
         }
         self->step += 1;
     }

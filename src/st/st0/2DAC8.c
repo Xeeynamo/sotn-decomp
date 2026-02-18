@@ -1060,7 +1060,7 @@ void func_801AF774(Entity* self) {
         InitializeEntity(g_EInitDracula);
         self->hitboxState = 0;
         self->animCurFrame = 0;
-        self->blendMode |= (DRAW_TPAGE | 0x20);
+        self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         D_801C2578 = 1;
         self->ext.et_801AF774.unk90 = 1;

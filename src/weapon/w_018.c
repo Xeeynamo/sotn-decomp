@@ -65,7 +65,7 @@ void EntityWeaponAttack(Entity* self) {
     // image of dracula appears
     case 1:
         if (self->poseTimer < 0) {
-            self->blendMode = FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
             self->anim = D_82000_8017A6E4;
             self->pose = 0;
             self->poseTimer = 0;

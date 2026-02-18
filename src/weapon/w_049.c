@@ -480,7 +480,7 @@ static s32 func_ptr_80170014(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
         self->scaleX = self->scaleY = 0x100;
-        self->blendMode = BLEND_TRANSP | 0x20;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         SetWeaponProperties(self, 0);
         self->enemyId = self->ext.weapon.parent->enemyId;

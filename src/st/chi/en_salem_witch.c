@@ -613,7 +613,7 @@ void EntitySalemWitchGlow(Entity* self) {
         InitializeEntity(g_EInitSalemWitch);
         self->flags |= FLAG_UNK_2000;
         self->hitboxState = 0;
-        self->blendMode = BLEND_TRANSP | BLEND_ADD | DRAW_UNK_40;
+        self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
     }
 
     AnimateEntity(AnimFrames_Twinkle, self);
