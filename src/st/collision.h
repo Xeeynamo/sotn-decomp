@@ -416,7 +416,6 @@ void HitDetection(void) {
                     otherEntity =
                         AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (otherEntity) {
-                        // EntitySoulStealOrb
                         CreateEntityFromEntity(
                             E_SOUL_STEAL_ORB, entity, otherEntity);
                     }
