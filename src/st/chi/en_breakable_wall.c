@@ -15,98 +15,82 @@
 // func_8019C31C
 // https://decomp.me/scratch/NKGUh
 void EntityBreakableWallDebris(Entity* self) {
-    const int Gravity = FIX(0.125);
-
     typedef enum Step {
         INIT = 0,
         CHECK_FLAG = 1,
         MOVEMENT = 2,
     };
 
-    Collider collider;
-    s32 velX;
-    s32 velY;
-    s32 newVelY;
-    s32 i;
-    u16 params;
-    u8 animCurFrame;
+    Collider col;
     Entity* entity;
+    s16 posX, posY;
+    s32 i;
 
     switch (self->step) {
     case INIT:
-        InitializeEntity(&g_EInitSecret);
-        animCurFrame = self->params;
+        InitializeEntity(g_EInitSecret);
+        self->animCurFrame = self->params & 0xFF;
         self->drawFlags = FLAG_DRAW_ROTATE;
         self->zPriority = 0x69;
-        self->animCurFrame = animCurFrame;
         if (self->rotate & 1) {
             self->facingLeft = true;
             self->rotate &= 0xFFF0;
         }
 
-        velX = (Random() & 0xF) << 0xC;
-        self->velocityX = velX;
+        self->velocityX = (Random() & 0xF) << 0xC;
         if (self->animCurFrame == 0xD) {
-            self->velocityX = velX + FIX(0.25);
+            self->velocityX += FIX(0.25);
         }
-
-        velY = ((Random() & 7) << 0xB) - FIX(0.25);
-        self->velocityY = velY;
+        self->velocityY = ((Random() & 7) << 0xB) - FIX(0.25);
         if (self->animCurFrame < 0xB) {
-            self->velocityY = velY - FIX(1);
+            self->velocityY -= FIX(1);
         }
-
-        self->ext.breakableDebris.rotSpeed = ((Random() & 3) + 1) * 32;
-        return;
+        self->ext.breakableDebris.rotSpeed = ((Random() & 3) + 1) * 0x20;
+        break;
 
     case CHECK_FLAG:
-        params = self->params;
-
-        if (params & 0x100) {
-            self->params = params & 0xFF;
+        if (self->params & 0x100) {
+            self->params &= 0xFF;
             self->step++;
-            return;
         }
-        return;
+        break;
 
     case MOVEMENT:
         self->rotate += self->ext.breakableDebris.rotSpeed;
-
         MoveEntity();
-
-        self->velocityY += Gravity;
-
-        g_api.CheckCollision(
-            self->posX.i.hi, (s16)(self->posY.i.hi + 6), &collider, 0);
-        if (collider.effects & EFFECT_SOLID) {
-            self->posY.i.hi += collider.unk18;
-            if (self->animCurFrame >= 0xC) {
+        self->velocityY += FIX(0.125);
+        posX = self->posX.i.hi;
+        posY = self->posY.i.hi + 6;
+        g_api.CheckCollision(posX, posY, &col, 0);
+        if (col.effects & EFFECT_SOLID) {
+            self->posY.i.hi += col.unk18;
+            if (self->animCurFrame > 0xB) {
                 // Break into a couple pieces
                 for (i = 0; i < 2; i++) {
                     entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                     if (entity != NULL) {
-                        CreateEntityFromEntity(
-                            E_BREAKABLE_WALL_DEBRIS, self, entity);
-                        entity->params = ((Random() & 3) + 9) | 0x100;
+                        CreateEntityFromEntity(E_BREAKABLE_WALL_DEBRIS, self, entity);
+                        entity->params = (Random() & 3) + 9;
+                        entity->params |= 0x100;
                     }
                 }
                 DestroyEntity(self);
                 return;
             }
-            newVelY = self->velocityY;
-            if (newVelY < FIX(0.5)) {
+            if (self->velocityY < FIX(0.5)) {
                 // Poof, gone
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
                     CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, entity);
-                    entity->params = 0xC010;
+                    entity->params = 0x10;
+                    entity->params |= 0xC000;
                 }
                 DestroyEntity(self);
                 return;
             }
 
             // Bounce
-            self->velocityY = -newVelY * 2 / 3;
+            self->velocityY = -self->velocityY * 2 / 3;
         }
         break;
     }
