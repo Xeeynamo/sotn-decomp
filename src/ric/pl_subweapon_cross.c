@@ -420,7 +420,7 @@ void RicEntitySubwpnCrossTrail(Entity* self) {
         self->animCurFrame = D_80155E68[self->params];
         self->unk5A = 0x66;
         self->palette = PAL_FLAG(PAL_UNK_1B0);
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority;
         self->drawFlags = FLAG_DRAW_ROTATE;

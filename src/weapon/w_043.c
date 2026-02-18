@@ -73,7 +73,7 @@ void EntityWeaponAttack(Entity* self) {
                 FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         }
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         SetWeaponProperties(self, 0);
         self->step++;
     }
@@ -155,7 +155,7 @@ s32 func_ptr_80170004(Entity* self) {
         // produce the same set of instructions
         self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
         self->animSet = ANIMSET_DRA(1);
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->unk5A = 0;
         SetSpeedX(FIX(13.0));
@@ -177,7 +177,7 @@ s32 func_ptr_80170004(Entity* self) {
         break;
 
     case 2:
-        self->drawMode = DRAW_DEFAULT;
+        self->blendMode = BLEND_NO;
         self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
         if (PLAYER.pose == 0xE) {
             self->facingLeft++;
@@ -189,7 +189,7 @@ s32 func_ptr_80170004(Entity* self) {
         break;
 
     case 3:
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
@@ -221,7 +221,7 @@ static void func_ptr_80170008(Entity* self) {
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000 |
                       FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         SetWeaponProperties(self, 0);
         self->enemyId = self->ext.weapon.parent->enemyId;

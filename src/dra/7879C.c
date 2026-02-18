@@ -2153,7 +2153,7 @@ void EntitySmokePuff(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->palette = PAL_FLAG(PAL_UNK_195);
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
 
         posX = D_800AD54C[paramsLo];
@@ -2285,7 +2285,7 @@ void EntityUnkId24(Entity* self) {
         if (upperparams == 0) {
             self->posX.i.hi += (rand() & 63) - 32;
             self->posY.i.hi += (rand() & 63) - 48;
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             self->palette = PAL_FLAG(PAL_UNK_195);
         }
         // Silly, this should just be an "else"
@@ -3352,7 +3352,7 @@ void EntityWingSmashTrail(Entity* entity) {
             PLAYER.drawFlags |
             (FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
         entity->opacity = 0x80;
-        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        entity->blendMode = BLEND_TRANSP | BLEND_ADD;
         entity->rotate = PLAYER.rotate;
         entity->facingLeft = PLAYER.facingLeft;
         entity->palette = PAL_FLAG(PAL_ALUCARD_BLUE_OUTLINE_MASK);

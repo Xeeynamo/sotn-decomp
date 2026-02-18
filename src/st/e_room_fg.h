@@ -29,7 +29,7 @@ void EntityRoomForeground(Entity* entity) {
         entity->unk5A = objInit->unk5A;
         entity->palette = objInit->palette;
         entity->drawFlags = objInit->drawFlags;
-        entity->drawMode = objInit->drawMode;
+        entity->blendMode = objInit->drawMode;
         if (objInit->flags != 0) {
             entity->flags = objInit->flags;
         }

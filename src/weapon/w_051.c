@@ -312,13 +312,13 @@ static void EntityWeaponAttack(Entity* self) {
         self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority - 2;
         if (subType == 1) {
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
         if (subType == 2) {
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
         if (subType == 3) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
         if (subType != 0) {
             _r = D_169000_8017AD58[subType * 0x10 - 2];
@@ -374,13 +374,13 @@ s32 func_ptr_80170004(Entity* self) {
         self->palette += subType * 2;
         self->zPriority = PLAYER.zPriority - 2;
         if (subType == 1) {
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
         if (subType == 2) {
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
         if (subType == 3) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
         if (subType != 0) {
             _r = D_169000_8017AD58[subType * 0x10 - 2];

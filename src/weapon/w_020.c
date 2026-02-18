@@ -177,7 +177,7 @@ static void EntityWeaponAttack(Entity* self) {
                 // soul-steal.
                 g_Player.timers[12] = 4;
                 self->drawFlags = FLAG_BLINK;
-                self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+                self->blendMode = BLEND_TRANSP | BLEND_ADD;
                 self->posY.i.hi = 0;
                 self->posX.i.hi = 0x80;
                 self->zPriority = 0x1BA;

@@ -1055,7 +1055,7 @@ void EntityMariaCardinalAttack(Entity* self) {
 #else
         self->unk5A = 0x65;
 #endif
-        self->drawMode = DRAW_TPAGE | DRAW_TPAGE2;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->zPriority = PLAYER.zPriority - 8;
         self->palette = PAL_WPN_CARDINAL;
         self->animSet = ANIMSET_WPN_CARDINAL;
@@ -1762,7 +1762,7 @@ void EntityMariaTurtleCrashVortex(Entity* self) {
         self->scaleX = 0;
         self->scaleY = 0;
         self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
-        self->drawMode |= DRAW_TPAGE;
+        self->blendMode |= BLEND_TRANSP;
         self->drawFlags |= FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
         self->rotate = 0;
         self->opacity = 0x80;

@@ -47,7 +47,7 @@ void EntityWeaponAttack(Entity* self) {
         self->palette += anim->palette;
         self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
 
         if (animIndex == 1) {
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x5B, 0), 0);
@@ -366,9 +366,9 @@ void func_ptr_8017000C(Entity* self) {
         self->scaleX = self->scaleY = (rand() & 0x3F) | 0x80;
         self->zPriority = PLAYER.zPriority + (rand() & 1) * 4;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         if (rand() % 3) {
-            self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         }
 
         self->velocityY = -FIX(0.5);
@@ -480,7 +480,7 @@ static s32 func_ptr_80170014(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
         self->scaleX = self->scaleY = 0x100;
-        self->drawMode = DRAW_TPAGE | 0x20;
+        self->blendMode = BLEND_TRANSP | 0x20;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;
         SetWeaponProperties(self, 0);
         self->enemyId = self->ext.weapon.parent->enemyId;

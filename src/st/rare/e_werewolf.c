@@ -611,7 +611,7 @@ void EntityWerewolfSpinAttackAfterImage(Entity* self) {
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
         self->animCurFrame = self->params;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->opacity = 0x60;
     }
 

@@ -65,7 +65,7 @@ void EntityWeaponAttack(Entity* self) {
     // image of dracula appears
     case 1:
         if (self->poseTimer < 0) {
-            self->drawMode = FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10;
+            self->blendMode = FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10;
             self->anim = D_82000_8017A6E4;
             self->pose = 0;
             self->poseTimer = 0;
@@ -149,7 +149,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->facingLeft = 0;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
         self->anim = D_82000_8017A724;
         self->scaleX = self->scaleY = 256;

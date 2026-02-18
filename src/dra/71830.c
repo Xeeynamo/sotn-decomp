@@ -1164,7 +1164,7 @@ void func_80113EE0(void) {
     PLAYER.pose = PLAYER.poseTimer = 0;
     PLAYER.animSet = ANIMSET_DRA(1);
     PLAYER.entityId = 0;
-    PLAYER.drawMode = DRAW_DEFAULT;
+    PLAYER.blendMode = BLEND_NO;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
     PLAYER.drawFlags &= (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
@@ -1856,7 +1856,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
             // Blueprint 46 has child 33, EntityHitByIce
             CreateEntFactoryFromEntity(g_CurrentEntity, BP_HIT_BY_ICE, 0);
             D_80137FEC = 3;
-            PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            PLAYER.blendMode = BLEND_TRANSP | BLEND_ADD;
         } else {
             func_80118C28(1);
             // Blueprint 44 has child 11, EntityPlayerBlinkWhite
@@ -2123,7 +2123,7 @@ void PlayerStepKillWater(void) {
         func_80113EE0();
         PLAYER.velocityY = FIX(-1.625);
         PLAYER.ext.player.anim = 0xC1;
-        PLAYER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        PLAYER.blendMode = BLEND_TRANSP | BLEND_ADD;
         PLAYER.rotate = 0x200;
         func_80118C28(1);
         CreateEntFactoryFromEntity(

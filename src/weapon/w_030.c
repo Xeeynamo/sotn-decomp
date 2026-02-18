@@ -54,7 +54,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->palette += anim->palette;
         self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD | DRAW_UNK_40;
         SetWeaponProperties(self, 0);
         self->step++;
     }
@@ -953,7 +953,7 @@ s32 func_ptr_80170010(Entity* self) {
         if (self->ext.weapon.parent->pose == 0x20 && self->poseTimer == 1) {
             g_api.PlaySfx(SFX_EXPLODE_SMALL);
             if ((u8)self->params != 0) {
-                self->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
+                self->blendMode = BLEND_TRANSP | BLEND_SUB;
                 self->step++;
                 break;
             }

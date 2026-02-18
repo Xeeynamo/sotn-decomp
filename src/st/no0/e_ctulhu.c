@@ -674,7 +674,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
         InitializeEntity(g_EInitCtulhuIceShockwave);
         self->animCurFrame = 44;
         self->hitboxOffX = 7;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags = FLAG_DRAW_SCALEY;
         self->scaleY = 256;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 128);
@@ -882,11 +882,11 @@ void EntityCtulhuDeath(Entity* self) {
         self->opacity = 16;
         if (self->params) {
             self->opacity = 16;
-            self->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_SUB;
             self->flags &= ~FLAG_POS_CAMERA_LOCKED;
         } else {
             self->zPriority += 2;
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
         // fallthrough
     case 1:

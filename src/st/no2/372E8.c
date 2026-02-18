@@ -25,7 +25,7 @@ void func_us_801B72E8(Entity* self) {
         params = self->params & 0xF;
         ptr = &D_us_80180EF8[params];
         self->palette = ptr->palette + 0x226;
-        self->drawMode = ptr->drawMode;
+        self->blendMode = ptr->drawMode;
         self->animSet = ptr->animSet;
         self->unk5A = ptr->unk5A;
         self->ext.et_801B72E8.animData = ptr->animData;
@@ -35,7 +35,7 @@ void func_us_801B72E8(Entity* self) {
         }
         if (self->params & 0xF0) {
             self->palette = PAL_FLAG(PAL_UNK_19F);
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             self->facingLeft = 1;
         }
         break;

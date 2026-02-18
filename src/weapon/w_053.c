@@ -40,19 +40,19 @@ void EntityWeaponAttack(Entity* self) {
             self->palette += anim->palette;
             self->flags = FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
             self->zPriority = PLAYER.zPriority - 2;
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
 
             switch (animIndex) {
             case 0:
                 break;
             case 1:
-                self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+                self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
                 g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 0), 0);
                 break;
             case 2:
                 break;
             case 3:
-                self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+                self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
                 g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 10), 0);
                 break;
             case 4:
@@ -271,7 +271,7 @@ static void func_ptr_80170008(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
         self->animSet = 1;
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->unk5A = 0;
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
 
@@ -293,7 +293,7 @@ static void func_ptr_80170008(Entity* self) {
         }
         break;
     case 2:
-        self->drawMode = DRAW_DEFAULT;
+        self->blendMode = BLEND_NO;
         self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
         if (PLAYER.pose == 8 && PLAYER.poseTimer == 1) {
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(0x38, 0x1E), 0);
@@ -305,7 +305,7 @@ static void func_ptr_80170008(Entity* self) {
         }
         break;
     case 3:
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->animCurFrame = PLAYER.animCurFrame + ANIM_FRAME_LOAD;
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;

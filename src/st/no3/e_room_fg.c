@@ -26,7 +26,7 @@ void EntityRoomForeground(Entity* self) {
         self->unk5A = objInit->unk5A;
         self->palette = objInit->palette;
         self->drawFlags = objInit->drawFlags;
-        self->drawMode = objInit->drawMode;
+        self->blendMode = objInit->drawMode;
         if (objInit->flags != 0) {
             self->flags = objInit->flags;
         }

@@ -57,7 +57,7 @@ void EntityFleaArmor(Entity* self) {
     case 0:
         InitializeEntity(g_EInitFleaArmor);
         CreateEntityFromEntity(E_FLEA_ARMOR_ATTACK_HITBOX, self, self + 1);
-        self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         break;
 
     case 1:

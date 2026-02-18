@@ -451,7 +451,7 @@ static void func_ptr_80170024(Entity* self) {
             self->flags = FLAG_POS_CAMERA_LOCKED;
             self->animCurFrame = self->ext.shield.parent->animCurFrame;
             self->drawFlags = FLAG_DRAW_OPACITY;
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             self->opacity = 0x80;
             self->poseTimer = 0x18;
             self->zPriority -= 2;

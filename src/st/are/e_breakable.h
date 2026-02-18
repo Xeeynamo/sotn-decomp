@@ -64,17 +64,12 @@ static u16 anim_sets[] = {
     ANIMSET_OVL(10), ANIMSET_OVL(10), ANIMSET_OVL(10), ANIMSET_OVL(10),
     ANIMSET_OVL(10), ANIMSET_OVL(10), ANIMSET_OVL(10), ANIMSET_OVL(10)};
 static u16 unk_5A[] = {0, 0, 91, 91, 91, 91, 91, 91, 91, 91};
-static u8 draw_modes[] = {
-    DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40,
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_TPAGE | DRAW_TPAGE2,
+static u8 blend_modes[] = {
+    BLEND_TRANSP | BLEND_QUARTER, BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,     BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,     BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,     BLEND_TRANSP | BLEND_ADD,
+    BLEND_TRANSP | BLEND_ADD,     BLEND_TRANSP | BLEND_ADD,
 };
 // Strangely this is defined as a u16 for PSP match?
 static u16 hitbox_offsets_y[] = {0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -93,7 +88,7 @@ void OVL_EXPORT(EntityBreakable)(Entity* self) {
     if (!self->step) {
         InitializeEntity(OVL_EXPORT(EInitBreakable));
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
-        self->drawMode = draw_modes[breakableType];
+        self->blendMode = blend_modes[breakableType];
         self->hitboxHeight = hitbox_heights[breakableType];
         self->animSet = anim_sets[breakableType];
         self->unk5A = unk_5A[breakableType];

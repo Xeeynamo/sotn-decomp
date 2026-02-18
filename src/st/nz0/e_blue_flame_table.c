@@ -20,7 +20,7 @@ void EntityRelicContainer(Entity* self) {
     case 0:
         InitializeEntity(g_EInitPrizeContainer);
         if (self->params & 0x100) {
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
         } else {
             self->zPriority = 0x6A;
             self->hitboxWidth = 8;

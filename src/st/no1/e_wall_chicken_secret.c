@@ -377,7 +377,7 @@ void func_us_801BF3F4(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180A40);
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->zPriority = 0x6A;
         if (self->params) {
             if (collision) {

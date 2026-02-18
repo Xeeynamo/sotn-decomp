@@ -1029,7 +1029,7 @@ void func_us_801D348C(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180AE8);
-        self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode |= BLEND_TRANSP | BLEND_ADD;
         self->drawFlags |= FLAG_DRAW_OPACITY;
         self->animCurFrame = 0;
         break;

@@ -664,7 +664,7 @@ void EntityFireWarg(Entity* self) {
                 PlaySfxPositional(SFX_WARG_DEATH_HOWL);
             }
             if (!self->opacity) {
-                self->drawMode = DRAW_UNK_40 | DRAW_TPAGE;
+                self->blendMode = BLEND_TRANSP | BLEND_SUB;
                 self->palette = PAL_FILL_WHITE;
                 self->opacity = 0x80;
                 self->step_s += 1;

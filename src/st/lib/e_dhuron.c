@@ -177,7 +177,7 @@ void EntityDhuron(Entity* self) {
             if (!--self->ext.dhuron.unk84) {
                 self->ext.dhuron.unk89 = 1;
                 (self + 1)->ext.dhuron.unk89 = 1;
-                self->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE;
+                self->blendMode |= BLEND_TRANSP | BLEND_ADD;
                 SetStep(3);
             }
             break;
@@ -453,7 +453,7 @@ void func_us_801CC984(Entity* self) {
         self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY;
         self->scaleY = 0x180;
         self->opacity = 0x80;
-        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         self->palette = PAL_FLAG(PAL_FILL_BLUE);
         self->unk5A = 0x4E;
         self->animSet = ANIMSET_OVL(4);

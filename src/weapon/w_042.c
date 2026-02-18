@@ -103,7 +103,7 @@ static void EntityWeaponAttack(Entity* self) {
             self->anim = D_12A000_8017A684;
             self->poseTimer = 0;
             self->pose = 0;
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
             g_api.PlaySfxVolPan(SFX_GLASS_BREAK_A, 0x50, 0);
             // TODO: FACTORY()
             g_api.CreateEntFactoryFromEntity(self, WFACTORY(56, 0), 0);
@@ -284,7 +284,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = self->ext.weapon.parent->zPriority + 2;
         self->anim = D_12A000_8017A684;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->posY.i.hi += 0x10;
         self->step++;
     } else if (self->poseTimer < 0) {

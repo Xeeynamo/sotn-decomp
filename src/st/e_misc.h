@@ -179,7 +179,7 @@ void EntityExplosionVariants(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_195);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = explode_startFrame[self->params];
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->step++;
     } else {
         self->posY.val -= self->velocityY;
@@ -203,7 +203,7 @@ void EntityGreyPuff(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_195);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
         self->scaleX = greyPuff_rot[self->params];
         self->scaleY = self->scaleX;
@@ -507,10 +507,10 @@ void EntityIntenseExplosion(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_170);
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         if (self->params & 0xF0) {
             self->palette = PAL_FLAG(PAL_UNK_195);
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
 
         if (self->params & 0xFF00) {
@@ -580,7 +580,7 @@ void func_801966B0(u16* sensors) {
         g_CurrentEntity->opacity += 2;
         if (g_CurrentEntity->opacity == 0xC0) {
             g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
-            g_CurrentEntity->drawMode = DRAW_DEFAULT;
+            g_CurrentEntity->blendMode = BLEND_NO;
             g_CurrentEntity->hitEffect = g_CurrentEntity->palette;
             g_CurrentEntity->step_s++;
             D_80199DE8 = 64;
@@ -662,7 +662,7 @@ void EntityBigRedFireball(Entity* self) {
         self->animSet = ANIMSET_DRA(2);
         self->palette = PAL_FLAG(PAL_UNK_1B6);
         self->drawFlags |= (FLAG_DRAW_ROTATE + FLAG_DRAW_OPACITY);
-        self->drawMode |= (DRAW_TPAGE + DRAW_TPAGE2);
+        self->blendMode |= (DRAW_TPAGE + DRAW_TPAGE2);
         self->opacity = 0x70;
         self->zPriority = 192;
 

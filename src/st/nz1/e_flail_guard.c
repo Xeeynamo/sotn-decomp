@@ -49,7 +49,7 @@ void EntityFlailGuard(Entity* self) {
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         CreateEntityFromEntity(E_FLAIL_GUARD_FLAIL, self, self + 1);
         self->hitboxOffX = 4;
-        self->drawMode |= DRAW_TPAGE;
+        self->blendMode |= BLEND_TRANSP;
         break;
     case 1:
         UnkCollisionFunc3(D_us_801821E4);

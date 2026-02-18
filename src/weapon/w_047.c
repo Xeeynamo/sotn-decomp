@@ -317,9 +317,9 @@ s32 func_ptr_80170004(Entity* self) {
             self->velocityY = -(rsin((s32)speed) << 7);
             self->posX.val += self->velocityX * 2;
             self->posY.val += self->velocityY * 2;
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
             if (rand() & 1) {
-                self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+                self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
             }
             self->step += 1;
         }

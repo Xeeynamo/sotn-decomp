@@ -86,7 +86,7 @@ void EntityWeaponAttack(Entity* self) {
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi;
         if (self->poseTimer == 1 && self->pose == 3) {
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
         }
         if (self->pose == 5) {
             self->opacity = 0x80;

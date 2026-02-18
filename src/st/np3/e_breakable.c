@@ -11,15 +11,15 @@ static u8 g_eBreakableExplosionTypes[8] = {0};
 
 static u16 g_eBreakableanimSets[] = {
     ANIMSET_DRA(3), ANIMSET_DRA(3), 0, 0, 0, 0, 0, 0};
-static u8 g_eBreakableDrawModes[] = {
-    DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40,
-    DRAW_TPAGE | DRAW_TPAGE2,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT,
-    DRAW_DEFAULT};
+static u8 blend_modes[] = {
+    BLEND_TRANSP | BLEND_QUARTER,
+    BLEND_TRANSP | BLEND_ADD,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO,
+    BLEND_NO};
 
 // Stripped on PSP
 static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};

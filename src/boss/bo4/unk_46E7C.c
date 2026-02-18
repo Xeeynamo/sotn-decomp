@@ -142,7 +142,7 @@ static void func_us_801C72BC(void) {
         FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
     DOPPLEGANGER.poseTimer = 0;
     DOPPLEGANGER.pose = 0;
-    DOPPLEGANGER.drawMode = DRAW_DEFAULT;
+    DOPPLEGANGER.blendMode = BLEND_NO;
     g_Dop.unk44 = 0;
     g_Dop.unk46 = 0;
     DOPPLEGANGER.rotate = 0;
@@ -375,7 +375,7 @@ void DopplegangerStepKill(DamageParam* damage, s16 dopStep, s16 arg2) {
             OVL_EXPORT(CreateEntFactoryFromEntity)
             (g_CurrentEntity, BP_HIT_BY_ICE, 0);
             D_us_801D3D38 = 3;
-            DOPPLEGANGER.drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+            DOPPLEGANGER.blendMode = BLEND_TRANSP | BLEND_ADD;
         } else {
             func_80118C28(1);
             OVL_EXPORT(CreateEntFactoryFromEntity)
@@ -1885,7 +1885,7 @@ void OVL_EXPORT(EntitySmokePuff)(Entity* self) {
         self->zPriority = DOPPLEGANGER.zPriority + 2;
         self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
         self->palette = PAL_FLAG(PAL_UNK_195);
-        self->drawMode = DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP;
         self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
 
         posX = D_us_80181778[paramsLo];
@@ -2021,9 +2021,9 @@ void DopEntityHitByDark(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_19F);
 
         if (D_us_801D3D9C & 1) {
-            self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         } else {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
         D_us_801D3D9C++;
         self->opacity = 0xFF;
@@ -3495,7 +3495,7 @@ void OVL_EXPORT(EntityWingSmashTrail)(Entity* self) {
             DOPPLEGANGER.drawFlags |
             (FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
         self->opacity = 0x80;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->rotate = DOPPLEGANGER.rotate;
         self->facingLeft = DOPPLEGANGER.facingLeft;
         self->palette = PAL_FLAG(0x202);
@@ -3865,14 +3865,14 @@ void func_us_801CD89C(Entity* self) {
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != D_us_801817A8)) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             if (!(paramsLo & 1) && (self->poseTimer == 1)) {
                 OVL_EXPORT(CreateEntFactoryFromEntity)(self, FACTORY(4, 4), 0);
             }
         }
 
         if ((self->pose == 16) && (self->anim == D_us_801817A8)) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
 
         if (self->poseTimer < 0) {
@@ -5416,7 +5416,7 @@ void DopplegangerUnarmedAttack(Entity* self) {
             self->attack /= 2;
         }
         self->zPriority = DOPPLEGANGER.zPriority - 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->flags = FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED;
         self->step = Dop_Stand;
     }

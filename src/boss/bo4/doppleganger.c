@@ -28,7 +28,7 @@ static void func_us_801C1A38(void) {
     DOPPLEGANGER.palette = PAL_FLAG(0x200);
     DOPPLEGANGER.scaleX = 0x100;
     DOPPLEGANGER.scaleY = 0x100;
-    DOPPLEGANGER.drawMode = DRAW_DEFAULT;
+    DOPPLEGANGER.blendMode = BLEND_NO;
     DOPPLEGANGER.flags =
         FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_UNK_400000;
 

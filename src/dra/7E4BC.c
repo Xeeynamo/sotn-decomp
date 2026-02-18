@@ -540,14 +540,14 @@ void func_8011EDA8(Entity* self) {
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         if ((self->pose == 8) && (self->anim != D_800AD57C)) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
             if (!(paramsLo & 1) && (self->poseTimer == 1)) {
                 CreateEntFactoryFromEntity(self, FACTORY(BP_4, 4), 0);
             }
         }
 
         if ((self->pose == 16) && (self->anim == D_800AD57C)) {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
 
         if (self->poseTimer < 0) {
@@ -568,9 +568,9 @@ void func_8011F074(Entity* self) {
         self->palette = PAL_FLAG(PAL_UNK_19F);
 
         if (D_8013808C & 1) {
-            self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         } else {
-            self->drawMode = DRAW_TPAGE;
+            self->blendMode = BLEND_TRANSP;
         }
         D_8013808C++;
         self->opacity = 0xFF;
@@ -2317,7 +2317,7 @@ void func_80123F78(Entity* self) {
         self->animCurFrame = PLAYER.animCurFrame;
         self->unk5A = 0xD;
         self->drawFlags = PLAYER.drawFlags;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->palette = PAL_FLAG(PAL_FILL_WHITE);
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;

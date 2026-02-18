@@ -126,7 +126,7 @@ void DrawPlayerAfterImage(void) {
         g_Entities[(i / 2) + E_AFTERIMAGE_1].posX.i.hi = prim->x0;
         g_Entities[(i / 2) + E_AFTERIMAGE_1].posY.i.hi = prim->y0;
         g_Entities[(i / 2) + E_AFTERIMAGE_1].animCurFrame = prim->x1;
-        g_Entities[(i / 2) + E_AFTERIMAGE_1].drawMode = prim->y1;
+        g_Entities[(i / 2) + E_AFTERIMAGE_1].blendMode = prim->y1;
         g_Entities[(i / 2) + E_AFTERIMAGE_1].facingLeft = prim->x2;
         g_Entities[(i / 2) + E_AFTERIMAGE_1].palette = prim->y2;
         g_Entities[(i / 2) + E_AFTERIMAGE_1].zPriority = PLAYER.zPriority - 2;

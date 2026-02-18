@@ -817,7 +817,7 @@ void RicEntityVibhutiCrashCloud(Entity* entity) {
         entity->animSet = ANIMSET_DRA(14);
         entity->palette = PAL_FLAG(PAL_UNK_19E);
         entity->anim = D_80155EA8;
-        entity->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        entity->blendMode = BLEND_TRANSP | BLEND_ADD;
         entity->drawFlags = FLAG_DRAW_OPACITY;
         entity->opacity = 0x60;
         entity->hitboxWidth = 8;

@@ -131,7 +131,7 @@ void EntityConfessionalGhost(Entity* self) {
             self->palette = PAL_CONFESSIONAL_GHOST;
         }
         self->opacity = 0;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->drawFlags |= FLAG_DRAW_OPACITY;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {

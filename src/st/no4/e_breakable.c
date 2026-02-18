@@ -31,7 +31,7 @@ static u16 anim_sets[] = {
     ANIMSET_OVL(0xB), ANIMSET_OVL(0xB)};
 static u16 unk5a_arr[] = {0x0000, 0x007C, 0x005B, 0x005B, 0x005B,
                           0x005B, 0x005B, 0x005B, 0x005B, 0x005B};
-static u8 draw_modes[] = {
+static u8 blend_modes[] = {
     DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE,
     DRAW_TPAGE2 | DRAW_TPAGE,
     DRAW_TPAGE2 | DRAW_TPAGE,
@@ -57,7 +57,7 @@ void EntityBreakable(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitBreakable);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0x14;
-        self->drawMode = draw_modes[params];
+        self->blendMode = blend_modes[params];
         self->hitboxHeight = hitbox_heights[params];
         self->animSet = anim_sets[params];
         self->unk5A = unk5a_arr[params];
