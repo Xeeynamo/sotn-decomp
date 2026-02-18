@@ -6,6 +6,7 @@ mod attackelement;
 mod bit_flag_line_transformer;
 mod c;
 mod collider_effects;
+mod blendmodes;
 mod drawflags;
 mod drawmodes;
 mod enum_line_transformer;
@@ -21,14 +22,15 @@ mod sfx;
 mod vram_flag;
 
 use attackelement::AttackElementTransformer;
+use blendmodes::BlendModeTransformer;
 use collider_effects::ColliderEffectsTransformer;
 use drawflags::DrawFlagsTransformer;
 use drawmodes::DrawModeTransformer;
 use fixed::FixedTransformer;
 use flags::FlagsTransformer;
 use line_transformer::LineTransformer;
-use linter::Linter;
 use linter::EntityRangeLinter;
+use linter::Linter;
 use linter::LocalExternLinter;
 use linter::RegexLinter;
 use player_status::PlayerStatusTransformer;
@@ -38,8 +40,11 @@ use relics::RelicsTransformer;
 use sfx::SfxLineTransformer;
 use vram_flag::PlayerVramFlagTransformer;
 
-fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>, linters: &Vec<Box<dyn Linter>>) ->
-(usize, bool) {
+fn transform_file(
+    file_path: &str,
+    transformers: &Vec<Box<dyn LineTransformer>>,
+    linters: &Vec<Box<dyn Linter>>,
+) -> (usize, bool) {
     let mut alterations = 0;
     let mut lines = Vec::new();
     let mut original_lines = Vec::new();
@@ -72,7 +77,11 @@ fn transform_file(file_path: &str, transformers: &Vec<Box<dyn LineTransformer>>,
         lines.push(line_str);
     }
 
-    if let Some(_) = original_lines.iter().zip(lines.iter()).position(|(a, b)| a != b) {
+    if let Some(_) = original_lines
+        .iter()
+        .zip(lines.iter())
+        .position(|(a, b)| a != b)
+    {
         let mut file = File::create(file_path).expect("Unable to create file");
         for (i, line) in lines.iter().enumerate() {
             if lines[i] != original_lines[i] {
@@ -90,6 +99,7 @@ fn process_directory(dir_path: &str) -> bool {
     let fixed_transformer = FixedTransformer;
     let relics_transformer = RelicsTransformer;
     let draw_mode_transformer = DrawModeTransformer::new();
+    let blend_mode_transformer = BlendModeTransformer::new();
     let flags_transformer = FlagsTransformer::new();
     let draw_flags_transformer = DrawFlagsTransformer::new();
     let primitive_type_transformer = PrimitiveTypeTransformer::new();
@@ -102,6 +112,7 @@ fn process_directory(dir_path: &str) -> bool {
         Box::new(relics_transformer),
         Box::new(ColliderEffectsTransformer::new()),
         Box::new(draw_mode_transformer),
+        Box::new(blend_mode_transformer),
         Box::new(flags_transformer),
         Box::new(draw_flags_transformer),
         Box::new(primitive_type_transformer),
@@ -123,23 +134,31 @@ fn process_directory(dir_path: &str) -> bool {
 
     let entries = std::fs::read_dir(dir_path).expect("Unable to read directory");
 
-    entries.par_bridge().fold(|| true, |mut lint_passed, entry| {
-        if let Ok(entry) = entry {
-            let item_path = entry.path();
-            if item_path.is_file() &&
-                (item_path.to_string_lossy().ends_with(".c") ||
-                 item_path.to_string_lossy().ends_with(".h")) {
-                let (_, passed) = transform_file(&item_path.to_string_lossy(), &transformers, &linters);
+    entries
+        .par_bridge()
+        .fold(
+            || true,
+            |mut lint_passed, entry| {
+                if let Ok(entry) = entry {
+                    let item_path = entry.path();
+                    if item_path.is_file()
+                        && (item_path.to_string_lossy().ends_with(".c")
+                            || item_path.to_string_lossy().ends_with(".h"))
+                    {
+                        let (_, passed) =
+                            transform_file(&item_path.to_string_lossy(), &transformers, &linters);
 
-                lint_passed &= passed
-            } else if item_path.is_dir() {
-                if item_path.file_name().unwrap() != "mednafen" {
-                    lint_passed &= process_directory(&item_path.to_string_lossy());
+                        lint_passed &= passed
+                    } else if item_path.is_dir() {
+                        if item_path.file_name().unwrap() != "mednafen" {
+                            lint_passed &= process_directory(&item_path.to_string_lossy());
+                        }
+                    }
                 }
-            }
-        }
-        lint_passed
-    }).reduce(|| true, |a, b| a & b)
+                lint_passed
+            },
+        )
+        .reduce(|| true, |a, b| a & b)
 }
 
 fn main() -> ExitCode {
