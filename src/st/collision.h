@@ -561,8 +561,8 @@ void HitDetection(void) {
                             otherEntity =
                                 AllocEntity(&g_Entities[160], &g_Entities[192]);
                             if (otherEntity != NULL) {
-                                // EntityEnemyBlood
-                                CreateEntityFromEntity(13, entity, otherEntity);
+                                CreateEntityFromEntity(
+                                    E_ENEMY_BLOOD, entity, otherEntity);
                                 if (xCoord > entity->posX.i.hi) {
                                     otherEntity->params = 1;
                                 }
@@ -653,11 +653,11 @@ void HitDetection(void) {
                             }
                             if (miscVar3 >= 0x80) {
                                 miscVar3 -= 0x80;
-                                // Create an EntityEquipItemDrop
-                                CreateEntityFromEntity(10, entity, otherEntity);
+                                CreateEntityFromEntity(
+                                    E_EQUIP_ITEM_DROP, entity, otherEntity);
                             } else {
-                                // Create an EntityPrizeDrop
-                                CreateEntityFromEntity(3, entity, otherEntity);
+                                CreateEntityFromEntity(
+                                    E_PRIZE_DROP, entity, otherEntity);
                             }
                             otherEntity->ext.equipItemDrop.castleFlag =
                                 miscVar1;
