@@ -238,8 +238,8 @@ void EntityFireWarg(Entity* self) {
             self->params = 0;
             self->flags &= ~(FLAG_NOT_AN_ENEMY | FLAG_DEAD);
             ent_s0->flags &= ~(FLAG_NOT_AN_ENEMY | FLAG_DEAD);
-            self->flags |= FLAG_UNK_400000 | FLAG_UNK_400;
-            ent_s0->flags |= FLAG_UNK_400000;
+            self->flags |= FLAG_SUPPRESS_STUN | FLAG_UNK_400;
+            ent_s0->flags |= FLAG_SUPPRESS_STUN;
             self->enemyId = ent_s0->enemyId = 0x94;
             ent_s0->flags = self->flags;
             enemyDefPtr = &g_api.enemyDefs[148];

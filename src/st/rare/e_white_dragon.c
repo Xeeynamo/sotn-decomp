@@ -271,7 +271,7 @@ void EntityWhiteDragon(Entity* self) {
             self->step = INIT;
             self->step_s++;
             self->flags |=
-                FLAG_POS_CAMERA_LOCKED | FLAG_UNK_400000 | FLAG_UNK_10;
+                FLAG_POS_CAMERA_LOCKED | FLAG_SUPPRESS_STUN | FLAG_UNK_10;
             self->facingLeft = self->params & 1;
             enemyDef = &g_api.enemyDefs[WHITE_DRAGON_ID];
 
@@ -313,7 +313,8 @@ void EntityWhiteDragon(Entity* self) {
                     entity->hitPoints = enemyDef->hitPoints;
                     entity->hitboxState = enemyDef->hitboxState;
                     entity->entityRoomIndex = self->entityRoomIndex;
-                    entity->flags |= FLAG_POS_CAMERA_LOCKED | FLAG_UNK_400000;
+                    entity->flags |=
+                        FLAG_POS_CAMERA_LOCKED | FLAG_SUPPRESS_STUN;
                     entity->unk60 = self;
                 } else {
                     entity->hitPoints = 0x7FFF;

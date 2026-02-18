@@ -446,7 +446,7 @@ void HitDetection(void) {
                             if (entFrom5C < otherEntity) {
                                 otherEntity->unk6D[miscVar3]++;
                             }
-                            if (!(iterEnt1->flags & FLAG_UNK_400000)) {
+                            if (!(iterEnt1->flags & FLAG_SUPPRESS_STUN)) {
                                 otherEntity->stunFrames = iterEnt2->stunFrames;
                             }
                             if ((!otherEntity->hitEffect) &&

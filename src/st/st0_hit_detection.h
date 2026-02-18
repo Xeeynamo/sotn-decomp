@@ -418,7 +418,7 @@ void OVL_EXPORT(HitDetection)(void) {
                         do {
                             otherEntity->unk6D[miscVar3] =
                                 iterEnt2->nFramesInvincibility;
-                            if (!(iterEnt1->flags & FLAG_UNK_400000)) {
+                            if (!(iterEnt1->flags & FLAG_SUPPRESS_STUN)) {
                                 otherEntity->stunFrames = iterEnt2->stunFrames;
                             }
                             if ((!otherEntity->hitEffect) &&
