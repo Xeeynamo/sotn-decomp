@@ -359,7 +359,7 @@ void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_OPACITY;
         SetEntityAnimation(self, g_DefaultGhostAnimationFrame);
         self->ext.ghost.maxAngle = 512;
         self->ext.ghost.opacity = 128;
@@ -571,7 +571,7 @@ void OVL_EXPORT(UpdateServantDefault)(Entity* self) {
         self->ext.ghost.opacityAdjustmentAmount *= -1;
     }
 
-    // opacity is used in conjunction with self->drawFlags = FLAG_DRAW_OPACITY
+    // opacity is used in conjunction with self->drawFlags = ENTITY_OPACITY
     // to set the alpha/saturation. Zero means fully transparent. 0x80 shows
     // the raw sprite. Values over 0x80 make it "over-bright".
     self->opacity = self->ext.ghost.opacity;

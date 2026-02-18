@@ -292,7 +292,7 @@ void EntitySkelerangBoomerang(Entity* self) {
     switch (self->step) {
     case BOOMERANG_INIT:
         InitializeEntity(g_EInitSkelerangBoomerang);
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->animCurFrame = 0;
         self->hitboxState = 0;
         break;

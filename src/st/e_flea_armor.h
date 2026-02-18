@@ -214,7 +214,7 @@ void EntityFleaArmor(Entity* self) {
         }
 
         if (entity != NULL) {
-            entity->drawFlags |= FLAG_DRAW_ROTATE;
+            entity->drawFlags |= ENTITY_ROTATE;
         }
 
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -225,7 +225,7 @@ void EntityFleaArmor(Entity* self) {
         }
         self->velocityX = 0;
         self->flags = FLAG_POS_CAMERA_LOCKED;
-        self->drawFlags = FLAG_DRAW_DEFAULT;
+        self->drawFlags = ENTITY_DEFAULT;
         LOHU(self->ext.fleaArmor.counter) = 16;
         self->hitPoints = S16_MAX;
         self->step = 0;

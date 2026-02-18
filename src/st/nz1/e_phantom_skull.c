@@ -117,7 +117,7 @@ void EntityPhantomSkullTrail(Entity* self) {
         self->hitboxState = 0;
         self->animCurFrame = 0x12;
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_OPACITY;
         self->opacity = 0x40;
         break;
     case 1:

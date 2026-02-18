@@ -139,7 +139,7 @@ void EntityKillerFishDeathPuff(Entity* self) {
         self->unk5A = 0x79;
         self->palette = 0x2E8;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0x60;
         if (self->params & 0xFF00) {
             self->zPriority = (self->params & 0xFF00) >> 8;

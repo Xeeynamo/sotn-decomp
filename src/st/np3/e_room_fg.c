@@ -31,7 +31,7 @@ void EntityRoomForeground(Entity* self) {
             self->flags = objInit->flags;
         }
         if (self->params > 4) {
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
             self->rotate = 0x800;
         }
     }

@@ -250,7 +250,7 @@ void EntityElevatorGates(Entity* self) {
         }
 
         if (self->params & 0x100) {
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
             self->rotate = ROT(180);
         }
 

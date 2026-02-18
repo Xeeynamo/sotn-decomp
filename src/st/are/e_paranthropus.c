@@ -250,10 +250,10 @@ void EntityParanthropus(Entity* self) {
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                            FLAG_UNK_00200000 | FLAG_UNK_2000;
-            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_ROTATE;
             self->step = DEATH_SKULL_REMAINS;
         } else {
-            self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x100;
 
             entity = self + 1;
@@ -618,7 +618,7 @@ void EntityParanthropusThrownBone(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitParanthropusThrownBone);
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         if (self->facingLeft) {
             self->velocityX = FIX(2.0);
         } else {

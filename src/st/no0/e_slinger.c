@@ -213,7 +213,7 @@ void EntitySlingerPieces(Entity* self) {
     }
 
     InitializeEntity(g_EInitSlingerPieces);
-    self->drawFlags = FLAG_DRAW_ROTATE;
+    self->drawFlags = ENTITY_ROTATE;
     self->animCurFrame = self->params + 15;
 
     if (self->facingLeft) {
@@ -238,6 +238,6 @@ void EntitySlingerRib(Entity* self) {
         GetDistanceToPlayerX();
         self->velocityX = self->facingLeft ? FIX(1.75) : FIX(-1.75);
         self->velocityY = 0;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
     }
 }

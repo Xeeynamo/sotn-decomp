@@ -1248,7 +1248,7 @@ void EntityBatFireball(Entity* self) {
         // Initial fireball size is 0x40 by 0x40
         self->posX.val += self->velocityX * 2;
         self->posY.i.hi -= 4;
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0x40;
         func_8011A328(self, 9);
         self->hitboxWidth = 4;
@@ -1291,7 +1291,7 @@ void EntityHellfireBigFireball(Entity* entity) {
         } else {
             entity->posY.i.hi -= 4;
         }
-        entity->drawFlags |= FLAG_DRAW_ROTATE;
+        entity->drawFlags |= ENTITY_ROTATE;
         entity->rotate = 0;
         entity->animSet = ANIMSET_DRA(9);
         entity->anim = D_800B07C8;
@@ -2319,7 +2319,7 @@ void func_80129864(Entity* self) {
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA |
             FLAG_HAS_PRIMS | FLAG_UNK_100000 | FLAG_UNK_20000 | FLAG_UNK_10000;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         if (self->params & 0x7F00) {
             func_8011A328(self, 3);
         } else {

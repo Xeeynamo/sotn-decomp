@@ -190,7 +190,7 @@ static s32 func_ptr_80170004(Entity* self) {
         self->velocityY = FIX(-0.25);
         self->ext.sword.unk86 = FIX(1.0 / 64);
         self->rotate = 0;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         SetWeaponProperties(self, 0);
         DestroyEntityWeapon(true);
         self->hitboxHeight = 9;

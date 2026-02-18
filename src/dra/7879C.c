@@ -1352,7 +1352,7 @@ void EntitySmallRisingHeart(Entity* self) {
 
     case 1:
         if (self->ext.smallRisingHeart.timer < 32) {
-            self->drawFlags = FLAG_BLINK;
+            self->drawFlags = ENTITY_BLINK;
         }
         self->posY.val += self->velocityY;
         swayX = rcos(self->ext.smallRisingHeart.swayAngle) * 8;
@@ -2154,7 +2154,7 @@ void EntitySmokePuff(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->palette = PAL_FLAG(PAL_UNK_195);
         self->blendMode = BLEND_TRANSP;
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
 
         posX = D_800AD54C[paramsLo];
         if (paramsHi == 0) {
@@ -2291,7 +2291,7 @@ void EntityUnkId24(Entity* self) {
         // Silly, this should just be an "else"
         if (upperparams) {
             self->posY.i.hi += rand() % 24 - 12;
-            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x80;
             self->palette = PAL_FLAG(PAL_UNK_170);
         }
@@ -2447,7 +2447,7 @@ void EntityPlayerBlinkWhite(Entity* self) {
             sp7c = D_8013AEBC[2];
             sp7a = D_8013AEBC[3];
             self->facingLeft = 0;
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             goto block_748;
         }
     } else {
@@ -2920,8 +2920,7 @@ block_748:
             prim->v0 = prim->v1 = var_s6 + var_s5 * var_s1 / 8;
             prim->v2 = prim->v3 = var_s6 + var_s5 * (var_s1 + 1) / 8;
         }
-        if (self->drawFlags &
-            (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE)) {
+        if (self->drawFlags & (ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_ROTATE)) {
             func_800EB758(self->posX.i.hi, self->posY.i.hi, self,
                           self->drawFlags, prim, self->facingLeft);
         }
@@ -3045,7 +3044,7 @@ void EntityPlayerOutline(Entity* self) {
     xOffset = animFramePtr[0] + spritesheetPtr[2];
     yOffset = animFramePtr[1] + spritesheetPtr[3];
     self->rotate = PLAYER.rotate;
-    self->drawFlags |= (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY);
+    self->drawFlags |= (ENTITY_SCALEX | ENTITY_SCALEY);
     primData = D_800AD9B8[upperparams];
     switch (self->step) {
     case 0: // Initialization
@@ -3349,8 +3348,7 @@ void EntityWingSmashTrail(Entity* entity) {
         entity->animCurFrame = PLAYER.animCurFrame | ANIM_FRAME_LOAD;
         entity->zPriority = PLAYER.zPriority - 2;
         entity->drawFlags =
-            PLAYER.drawFlags |
-            (FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
+            PLAYER.drawFlags | (ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX);
         entity->opacity = 0x80;
         entity->blendMode = BLEND_TRANSP | BLEND_ADD;
         entity->rotate = PLAYER.rotate;

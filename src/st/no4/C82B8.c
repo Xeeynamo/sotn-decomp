@@ -37,7 +37,7 @@ void func_us_801C82B8(Entity* self) {
         DestroyEntity(newEnt);
         SetStep(5);
         self->ext.spearGuard.unk7C = 64;
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_OPACITY;
         self->hitboxState = 0;
         self->opacity = 127;
     }

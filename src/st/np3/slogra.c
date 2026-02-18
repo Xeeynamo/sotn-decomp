@@ -466,7 +466,7 @@ void EntitySlograSpear(Entity* self) {
     case 2:
         switch (self->step_s) {
         case 0:
-            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_ROTATE;
             self->hitboxState = 0;
             if (self->facingLeft) {
                 self->velocityX = FIX(-2.25);

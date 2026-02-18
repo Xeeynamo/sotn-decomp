@@ -274,7 +274,6 @@ typedef enum {
 #define MAX_PRIM_ALLOC_COUNT 0x400
 #define MAX_BG_LAYER_COUNT 16
 
-#define RENDERFLAGS_NOSHADOW 2
 #define PLAYER_ALUCARD 0
 #define PLAYER_RICHTER 1
 #define PLAYER_MARIA 2
@@ -378,17 +377,16 @@ typedef enum {
 
 // Flags for entity->drawFlags
 typedef enum {
-    FLAG_DRAW_DEFAULT = 0x00,
-    FLAG_DRAW_SCALEX = 0x01,
-    FLAG_DRAW_SCALEY = 0x02,
-    FLAG_DRAW_ROTATE = 0x04,
-    FLAG_DRAW_OPACITY = 0x08,
-    FLAG_DRAW_UNK10 = 0x10,
-    FLAG_DRAW_UNK20 = 0x20,
-    FLAG_DRAW_UNK40 = 0x40,
-    // renderEntities uses this to disable rendering on even/odd g_Timer
-    FLAG_BLINK = 0x80,
-} DrawFlag;
+    ENTITY_DEFAULT = 0x00, // use plain rendering, fastest drawing method
+    ENTITY_SCALEX = 0x01,  // use entity->scaleX
+    ENTITY_SCALEY = 0x02,  // use entity->scaleY
+    ENTITY_ROTATE = 0x04,  // use entity->rotate
+    ENTITY_OPACITY = 0x08, // use entity->opacity, enable texture shading
+    ENTITY_MASK_R = 0x10,  // set red to 128, must set ENTITY_OPACITY
+    ENTITY_MASK_G = 0x20,  // set green to 128, must set ENTITY_OPACITY
+    ENTITY_MASK_B = 0x40,  // set blue to 128, must set ENTITY_OPACITY
+    ENTITY_BLINK = 0x80,   // disable rendering on even/odd g_Timer
+} EntityDrawFlags;
 
 // Flags for entity->flags
 typedef enum {
@@ -904,10 +902,10 @@ typedef struct Entity {
     /* 0x14 */ u16 facingLeft;
     /* 0x16 */ u16 palette;
     /* 0x18 */ u8 blendMode; // refer to enum BlendModes
-    /* 0x19 */ u8 drawFlags;
-    /* 0x1A */ s16 scaleX; // 0x100 = 1.0
-    /* 0x1C */ s16 scaleY; // 0x100 = 1.0
-    /* 0x1E */ s16 rotate; // 0x1000 = 360 degrees
+    /* 0x19 */ u8 drawFlags; // refer to enum EntityDrawFlags
+    /* 0x1A */ s16 scaleX;   // 0x100: 1.0, enabled with ENTITY_SCALE_X
+    /* 0x1C */ s16 scaleY;   // 0x100: 1.0, enabled with ENTITY_SCALE_Y
+    /* 0x1E */ s16 rotate;   // 0x1000: 360 degrees, enabled with ENTITY_ROTATE
     /* 0x20 */ s16 rotPivotX;
     /* 0x22 */ s16 rotPivotY;
     /* 0x24 */ u16 zPriority;
@@ -942,7 +940,7 @@ typedef struct Entity {
     /* 0x64 */ s32 primIndex;
     /* 0x68 */ u16 unk68; // Appears to be set for entities with parallax
     /* 0x6A */ u16 hitEffect;
-    /* 0x6C */ u8 opacity;
+    /* 0x6C */ u8 opacity; // enabled with ENTITY_OPACITY
     /* 0x6D */ u8 unk6D[11];
     /* 0x78 */ s32 unk78;
     /* 0x7C */ Ext ext;

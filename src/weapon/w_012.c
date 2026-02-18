@@ -424,7 +424,7 @@ static s32 func_ptr_80170004(Entity* self) {
         }
         self->ext.weapon_012.unk82 = angle & 0xFFF;
         self->facingLeft = 0;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->rotate = 0x800 - self->ext.weapon_012.unk82;
         self->posX.val += rcos(self->ext.weapon_012.unk82) << 6;
         self->posY.val -= rsin(self->ext.weapon_012.unk82) << 6;
@@ -459,8 +459,7 @@ static void func_ptr_80170008(Entity* self) {
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->palette = self->ext.weapon.parent->palette;
-        self->drawFlags =
-            self->ext.weapon.parent->drawFlags + FLAG_DRAW_OPACITY;
+        self->drawFlags = self->ext.weapon.parent->drawFlags + ENTITY_OPACITY;
         self->rotate = self->ext.weapon.parent->rotate;
         self->opacity = 0x80;
         self->step++;

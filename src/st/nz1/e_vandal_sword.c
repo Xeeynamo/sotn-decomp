@@ -168,7 +168,7 @@ void EntityVandalSword(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitVandalSword);
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->rotate = 0;
         self->hitboxState = 2;
         self->hitboxWidth = self->hitboxHeight = 0xE;
@@ -449,7 +449,7 @@ void EntityVandalSwordDeath(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitVandSwordDeath);
         self->hitboxState = 0;
-        self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE;
         self->opacity = 0x80;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->palette++;

@@ -442,7 +442,7 @@ static void RicResetPose(void) {
     PLAYER.pose = PLAYER.poseTimer = 0;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
-    PLAYER.drawFlags &= ~FLAG_DRAW_ROTATE;
+    PLAYER.drawFlags &= ~ENTITY_ROTATE;
 }
 
 static void func_80159C04(void) {
@@ -1177,11 +1177,11 @@ void RicStepDeadPrologue(void) {
         break;
     case 1:
         D_801545AA += 64;
-        PLAYER.drawFlags = FLAG_DRAW_SCALEY;
+        PLAYER.drawFlags = ENTITY_SCALEY;
         PLAYER.scaleY = (rsin(D_801545AA) >> 0xA) + 256;
         if (D_801545AC) {
             if (--D_801545AC == 0) {
-                PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
+                PLAYER.drawFlags = ENTITY_DEFAULT;
                 PLAYER.scaleY = 0x100;
                 RicCreateEntFactoryFromEntity(
                     g_CurrentEntity, BP_MARIA_POWERS_APPLIED, 0);

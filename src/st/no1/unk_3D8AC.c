@@ -89,8 +89,8 @@ void func_us_801BDA0C(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_801809C8);
-        self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE |
-                           FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |=
+            ENTITY_OPACITY | ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         if ((self->params & 0xF) > 1) {
             self->opacity = 0x20;
         } else {

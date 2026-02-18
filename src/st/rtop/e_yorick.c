@@ -203,7 +203,7 @@ void EntityYorickSkull(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_801805E4);
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->animCurFrame = 0x1E;
         break;
 
@@ -312,7 +312,7 @@ void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
         FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
         FLAG_UNK_00200000 | FLAG_UNK_2000;
     self->animCurFrame = self->params + 15;
-    self->drawFlags = FLAG_DRAW_ROTATE;
+    self->drawFlags = ENTITY_ROTATE;
 
     if (self->facingLeft) {
         self->velocityX = -self->velocityX;

@@ -229,8 +229,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->flags =
             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000;
         self->palette = self->ext.weapon.parent->ext.weapon.childPalette;
-        self->drawFlags =
-            self->ext.weapon.parent->drawFlags + FLAG_DRAW_OPACITY;
+        self->drawFlags = self->ext.weapon.parent->drawFlags + ENTITY_OPACITY;
         self->rotate = self->ext.weapon.parent->rotate;
         self->opacity = 0x80;
         self->step++;
@@ -264,7 +263,7 @@ static void func_ptr_80170008(Entity* self) {
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->posY.i.hi = PLAYER.posY.i.hi + PLAYER.hitboxOffY - 8;
         if (PLAYER.step != Player_Crouch) {
             self->posY.i.hi -= 8;
@@ -332,7 +331,7 @@ static void func_ptr_80170008(Entity* self) {
         break;
     case 2:
         if (--self->ext.heavenSword.unk82 == 0) {
-            self->drawFlags = FLAG_BLINK;
+            self->drawFlags = ENTITY_BLINK;
             self->step++;
         }
         break;
@@ -349,11 +348,11 @@ static void func_ptr_80170008(Entity* self) {
             self->hitboxHeight = 4;
         }
         if (self->ext.heavenSword.unk82 > 0x30) {
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
         }
         if (self->ext.heavenSword.unk82 == 0x34) {
             g_api.PlaySfx(SFX_MAGIC_WEAPON_APPEAR_B);
-            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
             self->scaleX = self->scaleY = 0x100;
             self->palette = PAL_FLAG(PAL_FILL_WHITE);
             self->primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 1);
@@ -437,7 +436,7 @@ static void func_ptr_8017000C(Entity* self) {
         self->zPriority = self->ext.weapon.parent->zPriority;
         self->flags = FLAG_KEEP_ALIVE_OFFCAMERA;
         self->palette = self->ext.weapon.parent->palette + (self->params >> 8);
-        self->drawFlags = self->ext.weapon.parent->drawFlags | FLAG_BLINK;
+        self->drawFlags = self->ext.weapon.parent->drawFlags | ENTITY_BLINK;
         self->rotate = self->ext.weapon.parent->rotate;
         self->ext.weapon.childPalette =
             self->ext.weapon.parent->ext.weapon.childPalette;

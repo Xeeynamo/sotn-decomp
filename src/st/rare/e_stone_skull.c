@@ -41,7 +41,7 @@ void EntityStoneSkull(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitStoneSkull);
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0xFF;
         self->ext.stoneSkull.startingPosY =
             g_Tilemap.scrollY.i.hi + self->posY.i.hi;

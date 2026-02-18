@@ -118,7 +118,7 @@ void EntityFleaRider(Entity* self) {
             self->animCurFrame = 6;
             self->step = 5;
             self->hitboxState = 0;
-            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_ROTATE;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                            FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
                            FLAG_UNK_00200000 | FLAG_UNK_2000;

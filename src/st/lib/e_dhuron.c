@@ -266,7 +266,7 @@ void func_us_801CC7BC(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_801808B4);
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->animCurFrame = self->params + 0x1B;
         self->zPriority += self->params;
         ptr = &D_us_80182A64[self->params];
@@ -285,7 +285,7 @@ void func_us_801CC7BC(Entity* self) {
         ptr = &D_us_80182A64[self->params];
         self->rotate += ptr->rotate;
         if (!--self->ext.dhuron.unk84) {
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             self->step = 0;
             self->entityId = E_EXPLOSION;
             self->pfnUpdate = EntityExplosion;
@@ -450,7 +450,7 @@ void func_us_801CC984(Entity* self) {
         posX = tempEntity->posX.i.hi;
         self->posY.i.hi = posY + 0x18;
         self->posX.i.hi = posX;
-        self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_OPACITY | ENTITY_SCALEY;
         self->scaleY = 0x180;
         self->opacity = 0x80;
         self->blendMode = BLEND_TRANSP | BLEND_QUARTER;

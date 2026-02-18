@@ -58,7 +58,7 @@ void DopplegangerStepHighJump(void) {
                 DOPPLEGANGER.rotate = 0x800;
                 DOPPLEGANGER.rotPivotX = 0;
                 DOPPLEGANGER.rotPivotY = 2;
-                DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTATE;
+                DOPPLEGANGER.drawFlags |= ENTITY_ROTATE;
                 DOPPLEGANGER.facingLeft = (DOPPLEGANGER.facingLeft + 1) & 1;
                 SetDopplegangerAnim(0x2B);
             } else {
@@ -84,7 +84,7 @@ void DopplegangerStepHighJump(void) {
         break;
 
     case 2:
-        DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTATE;
+        DOPPLEGANGER.drawFlags |= ENTITY_ROTATE;
         DOPPLEGANGER.rotPivotX = 0;
         DOPPLEGANGER.rotPivotY = 2;
         if (g_Dop.unk4A > 56) {
@@ -92,9 +92,8 @@ void DopplegangerStepHighJump(void) {
             DOPPLEGANGER.rotate = 0;
             DOPPLEGANGER.step_s = 4;
             DOPPLEGANGER.drawFlags &=
-                FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
-                FLAG_DRAW_SCALEX;
+                ENTITY_BLINK | ENTITY_MASK_B | ENTITY_MASK_G | ENTITY_MASK_R |
+                ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
             DOPPLEGANGER.facingLeft = (DOPPLEGANGER.facingLeft + 1) & 1;
         }
         break;
@@ -130,9 +129,8 @@ s32 func_80113E68(void) {
 
 void func_us_801C68CC(void) {
     DOPPLEGANGER.animSet = ANIMSET_OVL(1);
-    DOPPLEGANGER.drawFlags &=
-        FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
-        FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+    DOPPLEGANGER.drawFlags &= ENTITY_BLINK | ENTITY_MASK_B | ENTITY_MASK_G |
+                              ENTITY_MASK_R | ENTITY_SCALEY | ENTITY_SCALEX;
     DOPPLEGANGER.poseTimer = 0;
     DOPPLEGANGER.pose = 0;
     DOPPLEGANGER.blendMode = BLEND_NO;
@@ -522,7 +520,7 @@ void ControlBatForm(void) {
     directionsPressed =
         g_Dop.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
     pressingCross = g_Dop.padPressed & PAD_CROSS;
-    DOPPLEGANGER.drawFlags = FLAG_DRAW_ROTATE;
+    DOPPLEGANGER.drawFlags = ENTITY_ROTATE;
     DOPPLEGANGER.rotPivotY = 0;
 
     if (CheckWingSmashInput() && (DOPPLEGANGER.step_s)) {
@@ -830,7 +828,7 @@ void DopplegangerStepUnmorphBat(void) {
     s32 count;
     u8 _pad[40]; // must be between 33 & 40
 
-    DOPPLEGANGER.drawFlags = FLAG_DRAW_ROTATE;
+    DOPPLEGANGER.drawFlags = ENTITY_ROTATE;
     DecelerateX(FIX(1.0 / 8.0));
     if (g_Dop.vram_flag & (TOUCHING_CEILING | TOUCHING_GROUND)) {
         DOPPLEGANGER.velocityY = 0;
@@ -861,7 +859,7 @@ void DopplegangerStepUnmorphBat(void) {
 
         if (count == 8) {
             DOPPLEGANGER.animSet = ANIMSET_OVL(1);
-            DOPPLEGANGER.drawFlags = FLAG_DRAW_DEFAULT;
+            DOPPLEGANGER.drawFlags = ENTITY_DEFAULT;
             DOPPLEGANGER.rotate = 0;
             g_Dop.unk66 = 1;
             DOPPLEGANGER.step_s = 1;
@@ -1196,12 +1194,11 @@ void DopplegangerStepStone(s32 arg0) {
         if (DOPPLEGANGER.poseTimer < 0) {
             DOPPLEGANGER.step_s = 2;
             DOPPLEGANGER.drawFlags &=
-                FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
-                FLAG_DRAW_SCALEX;
+                ENTITY_BLINK | ENTITY_MASK_B | ENTITY_MASK_G | ENTITY_MASK_R |
+                ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
         } else {
             DOPPLEGANGER.rotPivotX = 0;
-            DOPPLEGANGER.drawFlags |= FLAG_DRAW_ROTATE;
+            DOPPLEGANGER.drawFlags |= ENTITY_ROTATE;
             DOPPLEGANGER.rotate = D_us_801813D8[DOPPLEGANGER.poseTimer] >> 0x4;
             if (DOPPLEGANGER.rotate == 0) {
                 DOPPLEGANGER.rotPivotY = 24;
@@ -1810,7 +1807,7 @@ void EntitySmokePuff(Entity* self) {
         self->flags = FLAG_UNK_20000000 | FLAG_POS_CAMERA_LOCKED;
         self->palette = PAL_FLAG(PAL_UNK_195);
         self->blendMode = BLEND_TRANSP;
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
 
         posX = D_us_80181804[paramsLo];
         if (paramsHi == 0) {
@@ -1946,8 +1943,8 @@ void DopEntityHitByDark(Entity* self) {
         }
         D_us_801D3374++;
         self->opacity = 0xFF;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY |
-                          FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
+        self->drawFlags =
+            ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_MASK_R | ENTITY_MASK_G;
         self->scaleX = self->scaleY = 0x40;
         self->anim = D_us_801818B4;
 
@@ -2488,8 +2485,7 @@ void EntityDopplegangerOutline(Entity* self) {
     xOffset = animFramePtr[0] + spritesheetPtr[2];
     yOffset = animFramePtr[1] + spritesheetPtr[3];
     self->rotate = DOPPLEGANGER.rotate;
-    self->drawFlags =
-        DOPPLEGANGER.drawFlags | (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY);
+    self->drawFlags = DOPPLEGANGER.drawFlags | (ENTITY_SCALEX | ENTITY_SCALEY);
     primData = D_us_80181C00[upperparams];
     switch (self->step) {
     case 0: // Initialization
@@ -2793,9 +2789,8 @@ void EntityWingSmashTrail(Entity* self) {
         self->animCurFrame = DOPPLEGANGER.animCurFrame | ANIM_FRAME_LOAD;
         self->unk5A = 8;
         self->zPriority = DOPPLEGANGER.zPriority - 2;
-        self->drawFlags =
-            DOPPLEGANGER.drawFlags |
-            (FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
+        self->drawFlags = DOPPLEGANGER.drawFlags |
+                          (ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX);
         self->opacity = 0x80;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->rotate = DOPPLEGANGER.rotate;
@@ -3052,7 +3047,7 @@ void func_8011EDA8(Entity* self) {
         if (paramsHi == 1) {
             self->scaleX = 0xC0;
             self->scaleY = 0xC0;
-            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
             self->animSet = ANIMSET_DRA(2);
             self->anim = D_us_80181E04;
         }
@@ -3062,7 +3057,7 @@ void func_8011EDA8(Entity* self) {
                 self->anim = D_us_80181DC8;
                 self->scaleX = 0x120;
                 self->scaleY = 0x120;
-                self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+                self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);

@@ -21,7 +21,7 @@ void EntityClouds(Entity* self) {
     case 0:
         InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 2;
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0x40;
         self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         self->zPriority = 0x1C;

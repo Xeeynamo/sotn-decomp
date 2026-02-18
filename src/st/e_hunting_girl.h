@@ -334,7 +334,7 @@ void EntityHuntingGirl(Entity* self) {
 #ifdef STAGE_IS_DAI
         self->zPriority = 176;
 #endif
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->rotate = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 32);
         if (primIndex == -1) {

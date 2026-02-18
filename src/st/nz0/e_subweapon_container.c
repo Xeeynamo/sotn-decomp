@@ -169,7 +169,7 @@ void EntitySubWpnContGlass(Entity* self) {
         InitializeEntity(g_EInitSubwpnClochePieces);
         self->animCurFrame = self->params;
         self->palette += self->ext.subwpnContGlass.palette;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->velocityX = self->ext.subwpnContGlass.velX * 0x1000;
         self->velocityX -= (Random() * 0x100) + FIX(-0.5);
         self->velocityY -= (Random() & 0x1F) * 0x1000;
@@ -219,7 +219,7 @@ void func_801C7654(Entity* entity) {
             entity->posX.i.hi, entity->posY.i.hi + 8, &collider.effects, 0);
 
         if (collider.effects & EFFECT_SOLID) {
-            entity->drawFlags = FLAG_DRAW_SCALEY;
+            entity->drawFlags = ENTITY_SCALEY;
             entity->scaleY = 0x100;
             entity->velocityY = FIX(0.25);
             entity->velocityX *= 8;
@@ -244,7 +244,7 @@ void func_801C77B8(Entity* entity) {
     switch (entity->step) {
     case 0:
         InitializeEntity(g_EInitSubwpnClochePieces);
-        entity->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        entity->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         entity->scaleY = 0x100;
         entity->scaleX = 0x100;
         entity->velocityX = 0;

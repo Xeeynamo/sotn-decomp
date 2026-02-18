@@ -189,8 +189,8 @@ void EntityUnkId17(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(EInitUnk17);
-        self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE |
-                           FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |=
+            ENTITY_OPACITY | ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         if ((self->params & 0xF) > 1) {
             self->opacity = 0x20;
         } else {
@@ -337,7 +337,7 @@ void EntityUnkId1C(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(EInitUnk17);
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->rotate = -0x400;
         if (self->params & 1) {
             self->animCurFrame = 0x64;

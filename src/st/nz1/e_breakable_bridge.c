@@ -91,7 +91,7 @@ void EntityBridgeBreakTrigger(Entity* self) {
             self->posY.i.hi = D_us_80180F24[params].y - g_Tilemap.scrollY.i.hi;
             self->rotate = D_us_80180F24[params].r;
             self->opacity = 0x40;
-            self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_OPACITY | ENTITY_ROTATE;
             self->step = 16;
             break;
         }
@@ -164,7 +164,7 @@ void EntityBridgeBreakTrigger(Entity* self) {
             }
         };
         self->velocityY = FIX(2.0);
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         params = self->params & 0xF;
         if ((params == 0) || (params == 3)) {
             self->zPriority = 0x6E;
@@ -200,7 +200,7 @@ void EntityBridgeBreakTrigger(Entity* self) {
                 entity->posY.i.hi += (Random() & 0xF) + 12;
             }
         }
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_OPACITY;
         self->opacity = 0x40;
         self->step++;
         break;

@@ -169,7 +169,7 @@ void EntitySecretWallDebris(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitEnemy3);
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
 
         if (Random() & 1) {
             self->animCurFrame = 1;

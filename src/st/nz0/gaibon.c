@@ -602,7 +602,7 @@ void func_801B69E8(Entity* self) {
 void EntitySmallGaibonProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->pfnUpdate = EntityExplosion;
-        self->drawFlags = FLAG_DRAW_DEFAULT;
+        self->drawFlags = ENTITY_DEFAULT;
         self->step = 0;
         self->entityId = 2;
         self->params = 0;
@@ -614,7 +614,7 @@ void EntitySmallGaibonProjectile(Entity* self) {
         InitializeEntity(g_EInitGaibonProjectile);
         self->animSet = ANIMSET_DRA(2);
         self->animCurFrame = 1;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_ROTATE;
         self->scaleX = 0xC0;
         self->velocityX = (rcos(self->rotate) * 0x28000) >> 0xC;
         self->velocityY = (rsin(self->rotate) * 0x28000) >> 0xC;
@@ -635,7 +635,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
     if (self->flags & FLAG_DEAD) {
         self->pfnUpdate = EntityExplosion;
         self->entityId = 2;
-        self->drawFlags = FLAG_DRAW_DEFAULT;
+        self->drawFlags = ENTITY_DEFAULT;
         self->step = 0;
         self->params = 1;
         return;
@@ -646,7 +646,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
         InitializeEntity(g_EInitGaibonLargeProjectile);
         if (self->params == 0) {
             self->animSet = ANIMSET_DRA(2);
-            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_ROTATE;
             self->velocityX = (rcos(self->rotate) * 0x38000) >> 0xC;
             self->velocityY = (rsin(self->rotate) * 0x38000) >> 0xC;
             self->palette = PAL_FLAG(PAL_UNK_1B6);
@@ -654,8 +654,7 @@ void EntityLargeGaibonProjectile(Entity* self) {
         } else {
             self->animSet = ANIMSET_DRA(14);
             self->unk5A = 0x79;
-            self->drawFlags =
-                FLAG_DRAW_SCALEX | FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_SCALEX | ENTITY_ROTATE | ENTITY_OPACITY;
             self->scaleX = 0x100;
             self->opacity = 0x80;
             self->palette = PAL_FLAG(PAL_UNK_1F3);

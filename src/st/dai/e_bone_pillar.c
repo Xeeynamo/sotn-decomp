@@ -210,7 +210,7 @@ void EntityBonePillarSkull(Entity* self) {
             self->animCurFrame = 24;
             self->hitboxOffX = 0;
             self->hitboxOffY = 0;
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
             self->velocityX = FIX(-0.75);
             self->velocityY = FIX(-1.0);
             self->flags &= ~FLAG_UNK_20000000;
@@ -238,7 +238,7 @@ void EntityBonePillarSkull(Entity* self) {
             if (self->flags & FLAG_DEAD) {
                 PlaySfxPositional(SFX_QUICK_STUTTER_EXPLODE_B);
                 self->hitboxState = 0;
-                self->drawFlags = FLAG_DRAW_DEFAULT;
+                self->drawFlags = ENTITY_DEFAULT;
                 self->step = BONE_PILLAR_INIT;
                 self->pfnUpdate = EntityExplosion;
                 self->params = EXPLOSION_FIREBALL;
@@ -302,7 +302,7 @@ void EntityBonePillarSpikeBall(Entity* self) {
         prim->drawMode = DRAW_UNK02;
     case BONE_PILLAR_BALL_LINK:
         if (self->ext.bonePillar.bottomDead) {
-            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_ROTATE;
             self->hitPoints = 32767;
             self->hitboxState = 1;
             self->velocityX = FIX(-0.75);

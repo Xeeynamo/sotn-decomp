@@ -100,7 +100,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
         }
         switch (self->step_s) {
         case 0:
-            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0x80;
             self->step_s++;
             break;
@@ -120,7 +120,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
 
     case 3:
         if (!self->step_s) {
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
             switch (self->ext.opaquePuff.puffStyle) {
             case 1:
                 if (self->ext.opaquePuff.speed > 3) {
@@ -156,8 +156,8 @@ void EntityExplosionPuffOpaque(Entity* self) {
     case 4:
 #ifdef STAGE_IS_NZ1
         if (!self->step_s) {
-            self->drawFlags = FLAG_DRAW_OPACITY;
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_OPACITY;
+            self->drawFlags |= ENTITY_ROTATE;
             self->opacity = 0x80;
             self->facingLeft = Random() & 1;
             self->rotate = (Random() & 0x1F) * 0x10;
@@ -182,7 +182,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
 #else
         if (!self->step_s) {
             self->facingLeft = Random() & 1;
-            self->drawFlags |= FLAG_DRAW_SCALEX;
+            self->drawFlags |= ENTITY_SCALEX;
             self->scaleX = 0xC0;
             self->step_s++;
             self->velocityY = FIX(-0.75);

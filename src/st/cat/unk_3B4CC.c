@@ -19,8 +19,7 @@ void func_us_801BB4CC(Entity* self) {
     case 0:
         InitializeEntity(g_EInitInteractable);
         self->palette = 0x815E;
-        self->drawFlags |=
-            FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = 0x120;
         self->scaleY = 0x200;
         self->opacity = 0;

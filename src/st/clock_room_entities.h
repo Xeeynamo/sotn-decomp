@@ -10,11 +10,11 @@ void EntityClockHands(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 25;
         self->zPriority = 0x3F - params;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
 
         // Create hand shadows
         CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, handShadow);
-        handShadow->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
+        handShadow->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE;
         handShadow->blendMode = BLEND_TRANSP;
         handShadow->animSet = ANIMSET_OVL(1);
         handShadow->animCurFrame = params + 25;
@@ -56,8 +56,7 @@ void EntityBirdcageDoor(Entity* self) {
 
     case 1:
         if (self->ext.birdcage.prevState != self->ext.birdcage.state) {
-            self->drawFlags =
-                FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
             self->ext.birdcage.timer = 64;
             self->ext.birdcage.prevState = self->ext.birdcage.state;
             self->step++;
@@ -102,7 +101,7 @@ void EntityBirdcageDoor(Entity* self) {
         self->scaleX = self->scaleY += 2;
         self->opacity += 1;
         if (--self->ext.birdcage.timer == 0) {
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             self->step = 1;
         }
         break;
@@ -164,7 +163,7 @@ void EntityStatue(Entity* self) {
         entity->animSet = ANIMSET_OVL(1);
         entity->animCurFrame = params + 10;
         entity->zPriority = 0x3F;
-        entity->drawFlags = FLAG_DRAW_OPACITY;
+        entity->drawFlags = ENTITY_OPACITY;
         entity->blendMode = BLEND_TRANSP;
 #ifndef STAGE_IS_NO0
         entity->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_POS_CAMERA_LOCKED |

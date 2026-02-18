@@ -19,7 +19,7 @@ void EntityGearSidewaysSmall(Entity* self) {
         InitializeEntity(g_EInitEnvironment);
         self->zPriority = 0x6C;
         self->animCurFrame = 0xC;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->velocityY = FIX(0.5);
         // fallthrough
 

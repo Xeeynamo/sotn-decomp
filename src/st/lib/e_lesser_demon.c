@@ -59,7 +59,7 @@ void func_us_801BB8DC(s16* unkArg) {
         g_CurrentEntity->hitboxState = 0;
         g_CurrentEntity->zPriority -= 0x10;
         g_CurrentEntity->ext.lesserDemon.unkB2 = g_CurrentEntity->palette;
-        g_CurrentEntity->drawFlags |= FLAG_DRAW_OPACITY;
+        g_CurrentEntity->drawFlags |= ENTITY_OPACITY;
         g_CurrentEntity->opacity = 2;
         g_CurrentEntity->step_s++;
         g_CurrentEntity->flags |= FLAG_UNK_2000;
@@ -79,7 +79,7 @@ void func_us_801BB8DC(s16* unkArg) {
     case 2:
         g_CurrentEntity->opacity += 4;
         if (g_CurrentEntity->opacity > 0xA0) {
-            g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
+            g_CurrentEntity->drawFlags = ENTITY_DEFAULT;
             g_CurrentEntity->blendMode = BLEND_NO;
             g_CurrentEntity->ext.lesserDemon.unkB0 = 0x20;
             g_CurrentEntity->step_s++;
@@ -208,7 +208,7 @@ void EntityLesserDemonSpit(Entity* self) {
         InitializeEntity(g_EInitLesserDemonSpit);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = 0x180;
         self->scaleY = 0x180;
         break;
@@ -317,7 +317,7 @@ void EntityLesserDemonSpit(Entity* self) {
     case 6:
         self->scaleY -= 0x20;
         if (!AnimateEntity(D_us_80181BE8, self)) {
-            self->drawFlags |= FLAG_DRAW_OPACITY;
+            self->drawFlags |= ENTITY_OPACITY;
             self->opacity = 0x80;
             self->step++;
         }
@@ -596,7 +596,7 @@ void func_us_801BCC10(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180980);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
-        self->drawFlags = FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_SCALEX;
         self->scaleX = 0x180;
         if (self->facingLeft) {
             self->velocityX = FIX(5.0);
@@ -1481,7 +1481,7 @@ void EntityLesserDemon(Entity* self) {
             if (!AnimateEntity(D_us_80181BAC, self) || hit) {
                 self->pose = 0;
                 self->poseTimer = 0;
-                self->drawFlags = FLAG_DRAW_OPACITY;
+                self->drawFlags = ENTITY_OPACITY;
                 self->blendMode = BLEND_TRANSP | BLEND_ADD;
                 self->opacity = 0x80;
                 self->ext.lesserDemon.unk80 = 0x40;

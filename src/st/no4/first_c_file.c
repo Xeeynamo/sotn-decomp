@@ -1873,7 +1873,7 @@ void func_us_801C4738(Entity* self) {
         InitializeEntity(g_EInitInteractable);
         self->animSet = ANIMSET_OVL(1);
         self->palette = 68;
-        self->drawFlags = FLAG_DRAW_UNK10;
+        self->drawFlags = ENTITY_MASK_R;
         self->posX.i.hi = 0x711 - g_Tilemap.scrollX.i.hi;
         if (g_CastleFlags[NO4_WATER_BLOCKED] != 0) {
             self->ext.et_waterAlcove.waterHeight = 64;
@@ -1951,7 +1951,7 @@ void func_us_801C4980(Entity* self) {
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = hitboxIndex + 25;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->ext.et_801C4980.posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     }
 
@@ -2129,7 +2129,7 @@ void func_us_801C5020(Entity* self) {
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 12;
-        self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->opacity = 128;
         self->rotate = 0;
@@ -2259,7 +2259,7 @@ void func_us_801C542C(Entity* self) {
         self->animCurFrame = D_us_801815DC[params];
         self->facingLeft = D_us_801815EC[params];
         self->velocityY = D_us_8018160C[params];
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->rotate = false;
     }
     if (F(self->velocityY).i.hi < 8) {

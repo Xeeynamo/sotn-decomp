@@ -621,8 +621,7 @@ void MarEntitySmokePuff(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000 | FLAG_UNK_10000;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags =
-            FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_OPACITY;
         self->opacity = 0x60;
         posX = pos_x_80154C50[paramsLo];
         if (paramsHi == 0) {
@@ -1010,7 +1009,7 @@ void func_maria_80161C2C(Entity* self) {
         if (paramsHi == 1) {
             self->scaleX = 0xC0;
             self->scaleY = 0xC0;
-            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
             self->animSet = ANIMSET_DRA(2);
             self->anim = anim_80154E04;
         }
@@ -1019,7 +1018,7 @@ void func_maria_80161C2C(Entity* self) {
                 self->anim = anim_80154DC8;
                 self->scaleX = 0x120;
                 self->scaleY = 0x120;
-                self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+                self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
@@ -2669,11 +2668,11 @@ void MarEntityTeleport(Entity* self) {
 
 void SetOpacity(Entity* entity, s32 opacity) {
     if (opacity >= 128) {
-        entity->blendMode = entity->drawFlags = FLAG_DRAW_DEFAULT;
+        entity->blendMode = entity->drawFlags = ENTITY_DEFAULT;
         entity->opacity = 128;
     } else {
         entity->blendMode = BLEND_TRANSP | BLEND_ADD;
-        entity->drawFlags = FLAG_DRAW_OPACITY;
+        entity->drawFlags = ENTITY_OPACITY;
         entity->opacity = opacity;
     }
 }

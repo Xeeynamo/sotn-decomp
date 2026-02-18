@@ -172,7 +172,7 @@ void EntityClockRoomController(Entity* self) {
         entity->animCurFrame = 23;
         entity->zPriority = 0x40;
         entity->palette = PAL_FLAG(0x4B);
-        entity->drawFlags = FLAG_DRAW_OPACITY;
+        entity->drawFlags = ENTITY_OPACITY;
         entity->blendMode = BLEND_TRANSP;
         entity->posY.i.hi += 4;
 

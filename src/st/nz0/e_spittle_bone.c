@@ -35,7 +35,7 @@ void EntitySpittleBone(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpittleBone);
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->rotate = 0;
         self->flags &= ~(FLAG_UNK_2000 | FLAG_UNK_200);
         self->facingLeft = self->params;
@@ -95,7 +95,7 @@ void EntitySpittleBone(Entity* self) {
                                    FLAG_DESTROY_IF_OUT_OF_CAMERA;
                 newEntity->palette = 0x20D;
                 newEntity->animCurFrame = i + 0x3A;
-                newEntity->drawFlags |= FLAG_DRAW_ROTATE;
+                newEntity->drawFlags |= ENTITY_ROTATE;
                 newEntity->rotate = self->rotate;
                 newEntity->step = 4;
                 newEntity->velocityX = D_80182504[i];

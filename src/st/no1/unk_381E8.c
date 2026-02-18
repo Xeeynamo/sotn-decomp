@@ -408,7 +408,7 @@ void func_us_801B9028(Entity* self) {
         InitializeEntity(D_us_80180A4C);
         self->animCurFrame = self->params + 1;
         self->zPriority = D_us_8018142C[self->params];
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_OPACITY;
         self->opacity = D_us_80181440[self->params];
         return;
     case 1:
@@ -734,7 +734,7 @@ void func_us_801B9BE4(Entity* self) {
             self->hitboxWidth = 6;
             self->hitboxHeight = 0x12;
             self->hitboxOffY = -4;
-            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_ROTATE;
             self->rotate = -0x80;
             self->animCurFrame = 0x1D;
             self->step = 1;
@@ -861,7 +861,7 @@ void func_us_801BA034(Entity* self) {
                 entity->posY.i.hi = 0xBC;
                 entity->rotate = -0x300;
                 entity->posX.i.hi -= 11;
-                entity->drawFlags |= FLAG_DRAW_ROTATE;
+                entity->drawFlags |= ENTITY_ROTATE;
             }
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
@@ -870,7 +870,7 @@ void func_us_801BA034(Entity* self) {
                 entity->posY.i.hi = 0xBC;
                 entity->rotate = 0x300;
                 entity->posX.i.hi += 11;
-                entity->drawFlags |= FLAG_DRAW_ROTATE;
+                entity->drawFlags |= ENTITY_ROTATE;
             }
         }
         break;
@@ -1539,7 +1539,7 @@ void func_us_801BB4C0(Entity* self) {
         InitializeEntity(D_us_80180A34);
         self->zPriority = 0x49;
         self->animCurFrame = 0;
-        self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleY = self->scaleX;
         self->ext.fish.timer = D_us_801814F8[Random() & 7];
         if (self->scaleX < 0x100) {

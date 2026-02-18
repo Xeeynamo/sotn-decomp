@@ -76,7 +76,7 @@ void func_801CF438(Entity* entity, u8 count, u8 params, s32 xDist, s32 yDist,
             newEnt->posY.i.hi = y;
             newEnt->ext.destructAnim.index = D_801832E8[i];
             newEnt->scaleY = newEnt->scaleX = D_801832D8[D_801832E8[i] + arg5];
-            newEnt->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            newEnt->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             newEnt->zPriority = entity->zPriority + 1;
         }
     }
@@ -458,7 +458,7 @@ void EntityWarg(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (UnkCollisionFunc3(D_8018327C) & 1) {
-                self->drawFlags = FLAG_DRAW_OPACITY;
+                self->drawFlags = ENTITY_OPACITY;
                 self->opacity = 0x80;
                 SetSubStep(1);
             }
@@ -678,7 +678,7 @@ void EntityWargExplosionPuffTransparent(Entity* self) {
         self->unk5A = 0x79;
         self->palette = 0xD0;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0x60;
         if (self->params & 0xFF00) {
             self->zPriority = (self->params & 0xFF00) >> 8;

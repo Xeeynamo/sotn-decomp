@@ -60,7 +60,7 @@ void EntityStairSwitch(Entity* self) {
     case 4:
         switch (self->step_s) {
         case 0:
-            self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE;
             self->opacity = 0x60;
             self->velocityX = 0;
             self->velocityY = 0;
@@ -209,7 +209,7 @@ void EntitySecretStairs(Entity* self) {
             self->posY.i.hi = posY - g_Tilemap.scrollY.i.hi;
             self->step = 15;
         } else {
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
             self->rotate = -FLT(1.0 / 8.0);
         }
         break;
@@ -224,7 +224,7 @@ void EntitySecretStairs(Entity* self) {
     case 2:
         self->rotate += 16;
         if (!self->rotate) {
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             self->step++;
         }
         break;

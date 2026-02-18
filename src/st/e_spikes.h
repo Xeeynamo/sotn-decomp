@@ -80,7 +80,7 @@ void EntitySpikesParts(Entity* self) {
 #ifdef SPIKES_PARTS_FRAME
         self->animCurFrame = SPIKES_PARTS_FRAME;
 #endif
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         self->zPriority = 160;

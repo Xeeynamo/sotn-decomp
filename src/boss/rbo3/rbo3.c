@@ -728,7 +728,7 @@ void func_us_80192998(Entity* self) {
 
     case 1:
         if (self->step_s == 0) {
-            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0xC0;
             self->facingLeft = Random() & 1;
             self->velocityX = (Random() << 8) - FIX(1.0 / 2.0);

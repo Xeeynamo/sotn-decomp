@@ -206,7 +206,7 @@ s32 func_ptr_80170004(Entity* self) {
     }
     x = PLAYER.posX.i.hi + xOffset;
     y = PLAYER.posY.i.hi - 26;
-    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
+    if (PLAYER.drawFlags & ENTITY_SCALEY) {
         y -= 5;
     }
 
@@ -305,7 +305,7 @@ void func_ptr_80170008(Entity* self) {
 
     offsetY = PLAYER.posY.i.hi;
     self->posY.i.hi = offsetY - 0x1A;
-    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
+    if (PLAYER.drawFlags & ENTITY_SCALEY) {
         self->posY.i.hi = offsetY - 0x1F;
     }
 
@@ -520,7 +520,7 @@ s32 func_ptr_80170010(Entity* self) {
         baseX = point.x;
         baseY = point.y;
 
-        if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
+        if (PLAYER.drawFlags & ENTITY_SCALEY) {
             if ((PLAYER.ext.player.anim - 0x41) == 2 ||
                 (PLAYER.ext.player.anim - 0x41) == 3) {
                 self->posY.i.hi -= 1;

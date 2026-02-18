@@ -199,6 +199,7 @@ extern s32 E_ID(WATER_DROP);
 extern s32 E_ID(WATER_FOREGROUND);
 #endif
 
+extern EInit g_EInitCommon;
 extern EInit g_EInitEnvironment;
 
 #endif // NZ1_H

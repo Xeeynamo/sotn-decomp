@@ -58,8 +58,7 @@ void EntityWeaponAttack(Entity* self) {
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_HAS_PRIMS | FLAG_POS_PLAYER_LOCKED;
         self->zPriority = PLAYER.zPriority + 4;
-        self->drawFlags =
-            FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_ROTATE;
         self->scaleX = self->scaleY = 0x100;
 
         g_api.PlaySfx(SFX_WEAPON_APPEAR);
@@ -91,7 +90,7 @@ void EntityWeaponAttack(Entity* self) {
         if (self->pose == 5) {
             self->opacity = 0x80;
             self->flags &= ~FLAG_POS_PLAYER_LOCKED;
-            self->drawFlags |= FLAG_DRAW_OPACITY;
+            self->drawFlags |= ENTITY_OPACITY;
             self->step++;
         }
         break;

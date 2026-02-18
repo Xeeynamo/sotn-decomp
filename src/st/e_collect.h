@@ -13,6 +13,8 @@
 #include "blit_char_psp.h"
 #endif
 
+#define RENDERFLAGS_NOSHADOW 2
+
 #if STAGE == STAGE_ST0
 static u8 D_80180C94[] = {
     0x02, 0x1A, 0x02, 0x1B, 0x02, 0x1C, 0x02, 0x1D, 0x02, 0x1E,

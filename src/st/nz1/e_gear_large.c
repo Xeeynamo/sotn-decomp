@@ -16,7 +16,7 @@ void EntityGearSidewaysLarge(Entity* self) {
         self->hitboxWidth = 8;
         self->hitboxHeight = 3;
         self->animCurFrame = 3;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->ext.gearPuzzle.cooldownTimer = 0x80;
         // fallthrough
 

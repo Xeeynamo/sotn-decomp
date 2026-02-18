@@ -67,7 +67,7 @@ void EntityWeaponAttack(Entity* self) {
         self->hitboxHeight = 4;
         self->hitboxWidth = 4;
         self->rotate = -0x700;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
 
         prim = &g_PrimBuf[self->primIndex];
         for (i = 0; prim != NULL; i++) {
@@ -128,7 +128,7 @@ void EntityWeaponAttack(Entity* self) {
         }
         break;
     case 2:
-        self->drawFlags &= ~FLAG_DRAW_ROTATE;
+        self->drawFlags &= ~ENTITY_ROTATE;
         self->posX.val += self->velocityX;
         if (--self->ext.weapon.lifetime == 0) {
             self->step++;
@@ -154,7 +154,7 @@ void EntityWeaponAttack(Entity* self) {
         } else {
             self->rotate = 0x800 - angle;
         }
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         break;
     }
 
@@ -244,7 +244,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->step++;
     }
 
-    if (self->ext.weapon.parent->drawFlags & FLAG_DRAW_ROTATE) {
+    if (self->ext.weapon.parent->drawFlags & ENTITY_ROTATE) {
         angle = self->ext.weapon.parent->rotate;
     }
     if (self->facingLeft) {

@@ -290,8 +290,8 @@ void EntityDiscusLord(Entity* self) {
         self->hitboxState = 0;
         self->flags &= ~(FLAG_UNK_20000000 | FLAG_UNK_200);
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
-        self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
-        self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_OPACITY | ENTITY_ROTATE;
+        self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = 0x100;
         self->scaleY = 0x100;
         self->opacity = 0x80;
@@ -338,9 +338,9 @@ void EntityDiscusLord(Entity* self) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (entity != NULL) {
                 CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, entity);
-                entity->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+                entity->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
                 entity->scaleX = entity->scaleY = self->scaleX;
-                entity->drawFlags |= FLAG_DRAW_OPACITY;
+                entity->drawFlags |= ENTITY_OPACITY;
                 entity->opacity = 0x30;
                 self->ext.discusLord.entity = entity;
                 self->animCurFrame = 0;
@@ -505,7 +505,7 @@ void EntityDiscus(Entity* self) {
         self->hitboxOffX = 1;
         self->hitboxOffY = 1;
         self->zPriority = discusLord->zPriority + 1;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->ext.discusLord.angle = 4;
         primIndex = g_api.func_800EDB58(PRIM_TILE_ALT, 0x3C);
         if (primIndex != -1) {
@@ -807,7 +807,7 @@ void EntityDiscusTrail(Entity* self) {
         InitializeEntity(g_EInitDiscus);
         self->hitboxState = 0;
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags |= FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_OPACITY | ENTITY_ROTATE;
         self->opacity = 0x30;
         if (self->params) {
             // If we are doing a close range strike

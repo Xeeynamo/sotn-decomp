@@ -279,7 +279,7 @@ void EntityFrozenShade(Entity* self) {
         self->opacity = 0x40;
         self->palette += self->params;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_OPACITY;
         self->ext.frozenShade.unk7C = 0;
         if (self->posX.val < tempEntity->posX.val) {
             self->facingLeft = true;

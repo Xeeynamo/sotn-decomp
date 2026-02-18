@@ -23,7 +23,7 @@ void EntityTombstone(Entity* self) {
     case 0:
         InitializeEntity(g_EInitTombstone);
         self->hitboxOffY = -6;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->animCurFrame = 0x15;
         break;
 

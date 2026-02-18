@@ -111,7 +111,7 @@ void EntitySecretStairs(Entity* self) {
     case 2:
         self->rotate += 16;
         if (!self->rotate) {
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             self->step++;
         }
         break;

@@ -1083,7 +1083,7 @@ void EntitySuccubusPetal(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_801804DC);
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->rotate = rand() & 0xFFF;
         temp_s2 = Random() & 3;
         if (temp_s2 > 2) {
@@ -1286,19 +1286,19 @@ void EntityPinkBallProjectile(Entity* self) {
     case 0:
         InitializeEntity(D_80180500);
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = 0;
 
     case 1:
         self->scaleX = self->scaleY += 4;
         if (self->scaleX > 256) {
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
         }
         AnimateEntity(D_80180794, self);
 
         entity = self->ext.succubus.real;
         if (entity->ext.succubus.unk85) {
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             self->step++;
         }
         if (entity->flags & FLAG_DEAD) {
@@ -1355,11 +1355,11 @@ void EntitySuccubusWingSpike(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_801804E8);
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->animCurFrame = 0;
         var_s0 = D_801807F0[self->params];
         self->rotate = var_s0;
-        self->drawFlags |= FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_SCALEX;
         self->scaleX = 0x100;
         entity = self + 1;
         CreateEntityFromEntity(E_ID(SUCCUBUS_WING_SPIKE_TIP), self, entity);
@@ -1415,7 +1415,7 @@ void EntitySuccubusWingSpikeTip(Entity* self) {
     case 0:
         InitializeEntity(D_8018050C);
         self->animCurFrame = 0;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
 
     case 1:

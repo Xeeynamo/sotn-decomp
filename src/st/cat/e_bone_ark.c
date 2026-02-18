@@ -69,9 +69,9 @@ void EntityBoneArkProjectile(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitBoneArkProjectile);
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         if (self->params) {
-            self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0;
             self->animCurFrame = 0x1A;
             self->palette = PAL_FLAG(PAL_BONE_ARK_LIGHTNING_BALL);
@@ -155,7 +155,7 @@ void EntityBoneArkProjectile(Entity* self) {
         if (!self->ext.boneArk.projectileVelocity) {
             g_api.PlaySfx(SFX_FM_EXPLODE_B);
             self->palette = PAL_BONE_ARK_PROJECTILE_EXPLODE;
-            self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0;
             self->pose = 0;
             self->poseTimer = 0;
@@ -211,7 +211,7 @@ void EntityBoneArkProjectile(Entity* self) {
             }
             if (self->ext.boneArk.unk8C.i.lo > 0x40) {
                 self->blendMode |= BLEND_TRANSP | BLEND_ADD;
-                self->drawFlags |= FLAG_DRAW_OPACITY;
+                self->drawFlags |= ENTITY_OPACITY;
                 self->opacity = 0xC0;
                 self->step_s = 0;
                 LOH(prim->next->r2) = 0x40;
@@ -380,7 +380,7 @@ void EntityBoneArkProjectile(Entity* self) {
             self->scaleY -= 0x10;
             if (!self->scaleX) {
                 self->animCurFrame = 0;
-                self->drawFlags = FLAG_DRAW_DEFAULT;
+                self->drawFlags = ENTITY_DEFAULT;
                 self->blendMode = BLEND_NO;
                 self->step_s++;
             }
@@ -539,8 +539,7 @@ void EntityBoneArkAttackEffects(Entity* self) {
         InitializeEntity(g_EInitBoneArkAttackEffects);
         self->animCurFrame = 0x2A;
         self->palette = PAL_FLAG(PAL_BONE_ARK_PROJECTILE);
-        self->drawFlags =
-            FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE | ENTITY_SCALEX;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->scaleX = 0x100;
         self->opacity = 0;
@@ -657,7 +656,7 @@ void EntityBoneArkSkull(Entity* self) {
         InitializeEntity(g_EInitBoneArkAttackEffects);
         self->ext.boneArk.unk80 = 0x800;
         self->zPriority = (self - self->params)->zPriority + 2;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->ext.boneArk.unk82 = 8;
         break;
     case 1:
@@ -855,7 +854,7 @@ void EntityBoneArkUpperNeck(Entity* self) {
             if (entity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, entity);
                 entity->params = 0;
-                entity->drawFlags |= FLAG_DRAW_ROTATE;
+                entity->drawFlags |= ENTITY_ROTATE;
                 entity->rotate = self->ext.boneArk.unk80 - ROT(90);
             }
             self->animCurFrame = 0;
@@ -996,7 +995,7 @@ void EntityBoneArk(Entity* self) {
     switch (self->step) {
     case INIT:
         InitializeEntity(g_EInitBoneArk);
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->hitboxState = 0;
         self->rotate = 0;
         self->animCurFrame = 0xD;

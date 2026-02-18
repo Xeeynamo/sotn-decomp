@@ -125,13 +125,13 @@ static void EntityWeaponAttack(Entity* self) {
     case 4:
         self->hitboxState = 0;
         g_Player.unk48 = 0;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         self->velocityY += FIX(20.0 / 128);
         self->rotate = self->rotate + 0x80;
         if (--self->ext.weapon.lifetime < 16) {
-            self->drawFlags |= FLAG_BLINK;
+            self->drawFlags |= ENTITY_BLINK;
         }
         if (--self->ext.weapon.lifetime == 0) {
             DestroyEntity(self);
@@ -165,7 +165,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->ext.weapon.unk80 = self->ext.weapon.parent->ext.weapon.unk80;
         self->animCurFrame = self->ext.weapon.parent->animCurFrame;
         self->flags = FLAG_POS_CAMERA_LOCKED;
-        self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_UNK10;
+        self->drawFlags = ENTITY_OPACITY | ENTITY_MASK_R;
         self->opacity = 0x80;
         self->ext.weapon.unk7E = 0x14;
         self->step++;
@@ -226,7 +226,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = 0x3E;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleY = 0;
         self->scaleX = 0;
         prim = &g_PrimBuf[self->primIndex];

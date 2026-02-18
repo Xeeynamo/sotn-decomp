@@ -275,7 +275,7 @@ void EntityOuijaTableComponent(Entity* self) {
             self->hitboxState = 0;
             self->velocityX = 0;
             self->velocityY = 0;
-            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_ROTATE;
             self->step_s++;
             // fallthrough
 
@@ -284,7 +284,7 @@ void EntityOuijaTableComponent(Entity* self) {
             // After hitting the floor, begin death timer
             self->rotate += 64;
             if (UnkCollisionFunc3(sensors_ground_components) & 1) {
-                self->drawFlags = FLAG_DRAW_DEFAULT;
+                self->drawFlags = ENTITY_DEFAULT;
                 self->animCurFrame++;
                 self->ext.ouijaTable.timer = 32;
                 PlaySfxPositional(SFX_SKULL_BONK);

@@ -1389,7 +1389,7 @@ void func_us_801765A0(Entity* self) {
         self->anim = D_us_80171CD8;
         self->pose = 0;
         self->poseTimer = 0;
-        self->drawFlags |= FLAG_DRAW_SCALEY;
+        self->drawFlags |= ENTITY_SCALEY;
         self->scaleY = 0xC0;
 
         self->velocityX = self->facingLeft ? -0xC000 : 0xC000;

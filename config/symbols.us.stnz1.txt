@@ -4,7 +4,6 @@ NZ1_rooms_layers = 0x801804E0;
 NZ1_gfxBanks = 0x801807CC;
 NZ1_pStObjLayoutHorizontal = 0x80180820;
 NZ1_pStObjLayoutVertical = 0x801808F4;
-g_EInitSpawner = 0x80180B4C;
 g_EInitInteractable = 0x80180B58;
 g_EInitCommon = 0x80180B7C;
 g_EInitEnvironment = 0x80180B94;
@@ -48,13 +47,6 @@ EntityRelicOrb = 0x801B27E8; // source=match
 EntityExplosionVariantsSpawner = 0x801B3B3C; // source=match
 PlaySfxPositional = 0x801B5BE0; // source=match
 BottomCornerText = 0x801B745C; // source=match
-func_801C4144 = 0x801B778C; // source=match
-EntityAlucardWaterEffect = 0x801B7894; // source=match
-EntitySplashWater = 0x801B8414; // source=match
-EntitySurfacingWater = 0x801B8D20; // source=match
-EntitySideWaterSplash = 0x801B920C; // source=match
-EntitySmallWaterDrop = 0x801B95A0; // source=match
-EntityWaterDrop = 0x801B97FC; // source=match
 EntitySkullLord = 0x801B9AA0; // source=match
 EntitySkullLordOutline = 0x801BA250; // source=match
 EntitySkullLordFlames = 0x801BA52C; // source=match

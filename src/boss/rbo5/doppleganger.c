@@ -114,7 +114,7 @@ void EntityDoppleganger40(void) {
     step = 0;
     step_s = 0;
     var_s5 = 0;
-    DOPPLEGANGER.drawFlags = FLAG_DRAW_DEFAULT;
+    DOPPLEGANGER.drawFlags = ENTITY_DEFAULT;
 
     if (!(g_Dop.status & PLAYER_STATUS_DEAD)) {
         if ((DOPPLEGANGER.step != Dop_Kill) &&

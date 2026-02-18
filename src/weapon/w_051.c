@@ -465,7 +465,7 @@ static void func_ptr_80170008(Entity* self) {
         prim->drawMode |= DRAW_TPAGE | DRAW_TPAGE2 | DRAW_UNK_40;
         prim->drawMode |= DRAW_UNK_100;
         if (color == 3) {
-            prim->drawMode &= ~(FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40);
+            prim->drawMode &= ~(ENTITY_MASK_G | ENTITY_MASK_B);
         }
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS | FLAG_UNK_20000;
         if (temp_s6 == 0) {

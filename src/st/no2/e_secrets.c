@@ -446,7 +446,7 @@ void func_us_801B68EC(Entity* self) {
     case 0:
         InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 0;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->rotate = 0xC00;
         if (g_CastleFlags[NO2_SECRET_CEILING_OPEN]) {
             for (i = 0; i < 8; i++) {

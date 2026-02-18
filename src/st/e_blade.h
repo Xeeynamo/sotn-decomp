@@ -740,7 +740,7 @@ void EntityBladeWeapon(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitBladeWeapon);
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->hitboxWidth = 6;
         self->hitboxHeight = 6;
         primIndex = g_api.AllocPrimitives(PRIM_G4, 6);

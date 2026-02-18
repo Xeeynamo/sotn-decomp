@@ -724,7 +724,7 @@ void EntityGurkhaBodyParts(Entity* self) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
                 self->params = 0;
-                self->drawFlags = FLAG_DRAW_DEFAULT;
+                self->drawFlags = ENTITY_DEFAULT;
             }
             return;
         }
@@ -779,7 +779,7 @@ void EntityHammerWeapon(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitHammerWeapon);
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->hitboxWidth = 10;
         self->hitboxHeight = 10;
         /* fallthrough */

@@ -495,7 +495,7 @@ void func_8011EDA8(Entity* self) {
         if (paramsHi == 1) {
             self->scaleX = 0xC0;
             self->scaleY = 0xC0;
-            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
             self->animSet = ANIMSET_DRA(2);
             self->anim = D_800ADC10;
         }
@@ -505,7 +505,7 @@ void func_8011EDA8(Entity* self) {
                 self->anim = D_800ADBD4;
                 self->scaleX = 0x120;
                 self->scaleY = 0x120;
-                self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+                self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
                 self->animSet = ANIMSET_DRA(2);
             } else {
                 self->animSet = ANIMSET_DRA(5);
@@ -574,8 +574,8 @@ void func_8011F074(Entity* self) {
         }
         D_8013808C++;
         self->opacity = 0xFF;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY |
-                          FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20;
+        self->drawFlags =
+            ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_MASK_R | ENTITY_MASK_G;
         self->scaleX = self->scaleY = 0x40;
         self->anim = D_800ADC44;
 
@@ -2152,7 +2152,7 @@ void UnknownEntId49(Entity* self) {
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
         self->step++;
     }
-    self->drawFlags = PLAYER.drawFlags & FLAG_DRAW_OPACITY;
+    self->drawFlags = PLAYER.drawFlags & ENTITY_OPACITY;
     self->opacity = PLAYER.opacity;
 
     if (abs(PLAYER.rotate) == 0x200) {

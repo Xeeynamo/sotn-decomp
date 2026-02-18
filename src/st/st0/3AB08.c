@@ -1072,7 +1072,7 @@ void EntityCutscenePhotographFire(Entity* entity) {
         entity->unk5A = 0x57;
         entity->palette = PAL_FLAG(0x285);
         entity->flags &= ~FLAG_POS_CAMERA_LOCKED;
-        entity->drawFlags = FLAG_DRAW_OPACITY;
+        entity->drawFlags = ENTITY_OPACITY;
         entity->opacity = 0x40;
         if (entity->params) {
             entity->opacity = 0x10;

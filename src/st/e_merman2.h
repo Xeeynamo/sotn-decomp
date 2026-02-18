@@ -91,7 +91,7 @@ void EntityMerman2(Entity* self) {
 
     if ((self->flags & FLAG_DEAD) && (self->step < MERMAN2_DYING)) {
         PlaySfxPositional(SFX_MERMAN_DEATH);
-        self->drawFlags = FLAG_DRAW_DEFAULT;
+        self->drawFlags = ENTITY_DEFAULT;
         if (self->flags & FLAG_HAS_PRIMS) {
             primIndex = self->primIndex;
             g_api.FreePrimitives(primIndex);
@@ -231,7 +231,7 @@ void EntityMerman2(Entity* self) {
                     newEntity->posY.i.hi -= 24;
                     newEntity->zPriority = self->zPriority;
                 }
-                self->drawFlags |= FLAG_DRAW_ROTATE;
+                self->drawFlags |= ENTITY_ROTATE;
                 self->rotate = 0;
                 self->step_s++;
             }
@@ -286,9 +286,9 @@ void EntityMerman2(Entity* self) {
                     g_api.FreePrimitives(primIndex);
                     self->flags &= ~FLAG_HAS_PRIMS;
                     self->drawFlags &=
-                        FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                        FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
-                        FLAG_DRAW_SCALEX;
+                        ENTITY_BLINK | ENTITY_MASK_B | ENTITY_MASK_G |
+                        ENTITY_MASK_R | ENTITY_OPACITY | ENTITY_SCALEY |
+                        ENTITY_SCALEX;
                     self->hitboxHeight = 21;
                     SetStep(MERMAN2_WALKING_TO_PLAYER);
                 }
@@ -389,7 +389,7 @@ void EntityMerman2(Entity* self) {
                         }
                     }
                 }
-                self->drawFlags |= FLAG_DRAW_ROTATE;
+                self->drawFlags |= ENTITY_ROTATE;
                 self->rotate = 0;
                 self->ext.merman2.rotation = 1;
                 if (self->facingLeft) {
@@ -461,9 +461,9 @@ void EntityMerman2(Entity* self) {
             if (self->rotate > 0x1000) {
                 self->posY.i.hi -= 10;
                 self->drawFlags &=
-                    FLAG_BLINK | FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 |
-                    FLAG_DRAW_UNK10 | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
-                    FLAG_DRAW_SCALEX;
+                    ENTITY_BLINK | ENTITY_MASK_B | ENTITY_MASK_G |
+                    ENTITY_MASK_R | ENTITY_OPACITY | ENTITY_SCALEY |
+                    ENTITY_SCALEX;
                 SetStep(MERMAN2_WALKING_TO_PLAYER);
             }
             if (CheckMermanEnteringWater(0x1B)) {
@@ -825,10 +825,10 @@ void EntityHighWaterSplash(Entity* self) {
         self->velocityY = FIX(-5);
         self->palette = PAL_FLAG(PAL_CC_MAGIC_HUD_EFFECT);
         self->blendMode = BLEND_TRANSP;
-        self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
         self->palette = PAL_FLAG(0x18);
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_OPACITY;
         self->opacity = 0xA0;
         self->scaleX = 0x100;
         self->scaleY = 0x1A0;
@@ -880,7 +880,7 @@ void EntityDeadMerman(Entity* self) {
         self->ext.merman.timer = 0x20;
         self->velocityY = FIX(0.0625);
         self->hitboxState = 0;
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_OPACITY;
         self->opacity = 0x80;
         self->flags |= FLAG_UNK_2000;
         return;
