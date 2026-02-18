@@ -1,23 +1,23 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
 
-void func_801CE04C(Entity* entity, Collider* collider) {
-    s16 var_s0 = 0;
+void func_801CE04C(Entity* self, Collider* col) {
+    u16 var_s0 = 0;
+    s16 x = self->posX.i.hi;
+    s16 y = self->posY.i.hi + col->unk18;
 
-    g_api.CheckCollision(
-        entity->posX.i.hi, (s16)(entity->posY.i.hi + collider->unk18), collider,
-        0);
-    if (collider->effects & EFFECT_SOLID) {
+    g_api.CheckCollision(x, y, col, 0);
+    if (col->effects & EFFECT_SOLID) {
         var_s0 = 1;
-        if (collider->effects & EFFECT_UNK_8000) {
-            if (collider->effects & EFFECT_UNK_4000) {
-                if (g_CurrentEntity->facingLeft != 0) {
+        if (col->effects & EFFECT_UNK_8000) {
+            if (col->effects & EFFECT_UNK_4000) {
+                if (g_CurrentEntity->facingLeft) {
                     var_s0 = 4;
                 } else {
                     var_s0 = 2;
                 }
             } else {
-                if (g_CurrentEntity->facingLeft != 0) {
+                if (g_CurrentEntity->facingLeft) {
                     var_s0 = 2;
                 } else {
                     var_s0 = 4;
@@ -25,35 +25,35 @@ void func_801CE04C(Entity* entity, Collider* collider) {
             }
         }
     }
-    entity->ext.GH_Props.unk88 = var_s0;
+    self->ext.GH_Props.unk88 = var_s0;
 }
 
 s32 func_801CE120(Entity* self, s32 facing) {
-    Collider collider;
+    Collider col;
+    s32 ret = 0;
     s32 x = self->posX.i.hi;
     s32 y = self->posY.i.hi + 9;
-    s32 ret = 0;
 
-    if (facing != 0) {
+    if (facing) {
         x += 64;
     } else {
         x -= 64;
     }
 
-    g_api.CheckCollision(x, y - 6, &collider, 0);
-    if (collider.effects & EFFECT_SOLID) {
+    g_api.CheckCollision(x, y - 6, &col, 0);
+    if (col.effects & EFFECT_SOLID) {
         ret |= 2;
     }
 
-    g_api.CheckCollision(x, y + 6, &collider, 0);
-    if (!(collider.effects & EFFECT_SOLID)) {
+    g_api.CheckCollision(x, y + 6, &col, 0);
+    if ((col.effects & EFFECT_SOLID) == 0) {
         ret |= 4;
     }
 
     return ret;
 }
 
-void func_801CE1E8(s16 step) {
+void func_801CE1E8(s32 step) {
     s32 i;
 
     g_CurrentEntity->step = step;
@@ -84,46 +84,55 @@ void func_801CE228() {
     }
 }
 
-void polarPlacePartsList(s16* entOffsets) {
+void polarPlacePartsList(s16* offsets) {
     Entity* entity;
 
-    while (*entOffsets) {
-        entity = &g_CurrentEntity[*entOffsets];
-        if (entity->ext.GH_Props.unkA8 == 0) {
+    while (*offsets) {
+        entity = &g_CurrentEntity[*offsets];
+        if (!entity->ext.GH_Props.unkA8) {
             polarPlacePart(entity);
         }
-        entOffsets++;
+        offsets++;
     }
 }
 
-void func_801CE2CC(s16* arg0) {
-    s16* var_s0;
+void func_801CE2CC(s16* offsets) {
+    Entity* entity;
 
-    func_801CD91C(&g_CurrentEntity[arg0[1]]);
-    func_801CD91C(&g_CurrentEntity[arg0[0]]);
-    polarPlacePart(&g_CurrentEntity[arg0[2]]);
-    polarPlacePart(&g_CurrentEntity[arg0[3]]);
+    entity = &g_CurrentEntity[offsets[1]];
+    func_801CD91C(entity);
+    entity = &g_CurrentEntity[offsets[0]];
+    func_801CD91C(entity);
+    entity = &g_CurrentEntity[offsets[2]];
+    polarPlacePart(entity);
+    entity = &g_CurrentEntity[offsets[3]];
+    polarPlacePart(entity);
+    offsets += 4;
 
-    for (arg0 += 4; *arg0 != 0; arg0++) {
-        if (*arg0 != 0xFF) {
-            polarPlacePart(&g_CurrentEntity[*arg0]);
+    while (*offsets) {
+        if (*offsets != 0xFF) {
+            entity = &g_CurrentEntity[*offsets];
+            polarPlacePart(entity);
         }
+        offsets++;
     }
 }
 
-void func_801CE3FC(s16* arg0) {
-    s16* var_s0;
-    s16 var_v0;
+void func_801CE3FC(s16* offsets) {
+    Entity* entity;
     s32 i;
 
-    for (i = 0, var_s0 = arg0; i < 4; i++) {
-        polarPlacePart(&g_CurrentEntity[*var_s0]);
-        var_s0++;
+    for (i = 0; i < 4; i++) {
+        entity = &g_CurrentEntity[offsets[i]];
+        polarPlacePart(entity);
     }
+    offsets += 4;
 
-    for (arg0 += 4; *arg0 != 0; arg0++) {
-        if (*arg0 != 0xFF) {
-            polarPlacePart(&g_CurrentEntity[*arg0]);
+    while (*offsets) {
+        if (*offsets != 0xFF) {
+            entity = &g_CurrentEntity[*offsets];
+            polarPlacePart(entity);
         }
+        offsets++;
     }
 }
