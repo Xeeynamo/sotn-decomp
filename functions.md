@@ -1439,7 +1439,7 @@
 | dai    | func_pspeu_09253E28                  |       37 |          3 |        |       |     |
 | dre    | func_pspeu_092454E8                  |       37 |          3 |        |       |     |
 | no4    | func_pspeu_0925E178                  |       37 |          3 |        |       |     |
-| nz0    | CutsceneUnk3                         |       37 |          3 |        |       |     |
+| nz0    | func_pspeu_0923E080                  |       37 |          3 |        |       |     |
 | sel    | func_psp_09245610                    |       37 |          3 |        |       |     |
 | st0    | func_pspeu_09238F10                  |       37 |          3 |        |       |     |
 | dra    | func_psp_090ED958                    |       37 |          4 |        |       |     |
@@ -2026,7 +2026,7 @@
 | lib    | func_psp_0925D430                    |       51 |         10 |        |       |     |
 | no3    | func_pspeu_09242C00                  |       51 |         10 |        |       |     |
 | no4    | func_pspeu_0925DDC0                  |       51 |         10 |        |       |     |
-| nz0    | GetLang_0923DCC8                     |       51 |         10 |        |       |     |
+| nz0    | func_pspeu_0923DCC8                  |       51 |         10 |        |       |     |
 | nz0    | GetLang_0924FCE8                     |       51 |         10 |        |       |     |
 | sel    | func_psp_09237E38                    |       51 |         10 |        |       |     |
 | sel    | func_psp_0923F3C0                    |       51 |         10 |        |       |     |
@@ -2333,7 +2333,7 @@
 | dre    | e_cutscene_dialogue.rodata           |       64 |          0 | Yes    |       |     |
 | lib    | cutscene.rodata                      |       64 |          0 | Yes    |       |     |
 | no3    | cutscene.rodata                      |       64 |          0 | Yes    |       |     |
-| nz0    | e_cutscene_dialogue.rodata           |       64 |          0 | Yes    |       |     |
+| nz0    | cutscene_psp.rodata                  |       64 |          0 | Yes    |       |     |
 | main   | sceGuCopyImage                       |       64 |          2 |        |       |     |
 | dra    | func_psp_090F17D8                    |       64 |          5 |        |       |     |
 | are    | func_pspeu_09260620                  |       64 |          6 |        |       |     |
