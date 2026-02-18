@@ -163,8 +163,7 @@ void EntityFallingRock(Entity* self) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = animFrame + 31;
-        self->drawFlags |=
-            FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0x60;
         rnd = (Random() & 0x1F) + 16;
         rndAngle = (Random() * 6) + 0x900;

@@ -192,7 +192,7 @@ void func_us_801D8150(Entity* self) {
                 self->poseTimer = 0;
                 self->anim = D_us_801822B4;
                 self->step = 3;
-                self->drawFlags |= FLAG_DRAW_ROTATE;
+                self->drawFlags |= ENTITY_ROTATE;
             }
         }
     }
@@ -206,7 +206,7 @@ void func_us_801D8150(Entity* self) {
                 entity->facingLeft = self->facingLeft;
             }
         }
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         InitializeEntity(g_EInitStoneRose);
         if (params == 0xB) {
             self->flags &= ~FLAG_KEEP_ALIVE_OFFCAMERA;
@@ -283,7 +283,7 @@ void func_us_801D8150(Entity* self) {
         self->ext.stoneRose.recoilAngle += ROT(33.75);
         self->rotate = rsin(self->ext.stoneRose.recoilAngle) >> 3;
         if (self->ext.stoneRose.recoilAngle >= FLT(6)) {
-            self->drawFlags &= ~FLAG_DRAW_ROTATE;
+            self->drawFlags &= ~ENTITY_ROTATE;
         }
         g_api.UpdateAnim(NULL, NULL);
         if (self->poseTimer < 0) {
@@ -526,7 +526,7 @@ void func_us_801D8DF0(Entity* self) {
             self->velocityY = FIX(-2.0);
             self->ext.stoneRose.timer--;
 
-            self->drawFlags |= FLAG_BLINK;
+            self->drawFlags |= ENTITY_BLINK;
         }
 
         if (self->velocityX < 0) {
@@ -544,7 +544,7 @@ void func_us_801D8DF0(Entity* self) {
     }
     self->velocityY += FIX(1.5 / 16);
     zRotation = (ratan2(-self->velocityY, self->velocityX) + 0x600) & 0xFFF;
-    self->drawFlags = FLAG_DRAW_ROTATE;
+    self->drawFlags = ENTITY_ROTATE;
     self->rotate = zRotation;
 }
 

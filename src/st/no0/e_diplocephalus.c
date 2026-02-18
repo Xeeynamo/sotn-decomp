@@ -202,7 +202,7 @@ void func_us_801CF910(Entity* self) {
 
         break;
     case 6:
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
         self->velocityY =
             D_us_80181CE8[self->params][self->ext.diplocephalusUnk.unk9E + 3] -

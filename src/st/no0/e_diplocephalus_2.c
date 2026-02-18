@@ -41,8 +41,7 @@ void EntityDiplocephalusFireball(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitDiplocephalusFireball);
-        self->drawFlags |=
-            FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0x60;
 
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 20);
@@ -132,7 +131,7 @@ void EntityDiplocephalusFireball(Entity* self) {
 
             self->velocityX >>= 1;
             self->velocityY >>= 1;
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             self->step_s++;
             self->flags = 0xFFFFFFF0;
             self->palette = 0x2C0;
@@ -213,7 +212,7 @@ void EntityDiplocephalusTail(Entity* self) {
     case 0:
         InitializeEntity(g_EInitDiplocephalusTail);
         self->hitboxState = 1;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->ext.diplocephalusUnk.unk84 = 0;
         self->ext.diplocephalusUnk.unk9C = 0;
         self->ext.diplocephalusUnk.unk9D = 0;
@@ -244,7 +243,7 @@ void EntityDiplocephalusTail(Entity* self) {
             tempEntity->palette = self->palette;
             tempEntity->ext.diplocephalusUnk.parent =
                 self->ext.diplocephalusUnk.parent;
-            tempEntity->drawFlags = FLAG_DRAW_ROTATE;
+            tempEntity->drawFlags = ENTITY_ROTATE;
             tempEntity2 = tempEntity;
             tempEntity->unk60 = tempEntity + 1;
         }
@@ -260,7 +259,7 @@ void EntityDiplocephalusTail(Entity* self) {
         self->ext.diplocephalusUnk.entity->animCurFrame = 0x17;
         self->ext.diplocephalusUnk.entity->zPriority = self->zPriority;
         self->ext.diplocephalusUnk.entity->step = 5;
-        self->ext.diplocephalusUnk.entity->drawFlags = FLAG_DRAW_DEFAULT;
+        self->ext.diplocephalusUnk.entity->drawFlags = ENTITY_DEFAULT;
         self->ext.diplocephalusUnk.entity->ext.diplocephalusUnk.unk84 = 0x500U;
         self->ext.diplocephalusUnk.entity->ext.diplocephalusUnk.entity8C
             ->animCurFrame = 0x16;

@@ -13,8 +13,7 @@ void func_us_801BFA34(Entity* self) {
         self->rotate = -0x400;
         self->velocityX = FIX(-5.0 / 4.0);
         self->zPriority += 8;
-        self->drawFlags |=
-            FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
     } else {
         self->scaleX += 4;
         self->scaleY += 14;

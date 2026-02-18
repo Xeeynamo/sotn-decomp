@@ -140,7 +140,7 @@ void EntityMariaDollActivate(Entity* self) {
         self->scaleX = self->ext.mariaDoll.scale;
         self->scaleY = self->ext.mariaDoll.scale;
         SetOpacity(self, 64);
-        self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         break;
     case 2:
         self->ext.mariaDoll.timer++;
@@ -152,7 +152,7 @@ void EntityMariaDollActivate(Entity* self) {
         self->ext.mariaDoll.opacity -= 2;
         self->ext.mariaDoll.scale += 8;
         SetOpacity(self, self->ext.mariaDoll.opacity);
-        self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         // scaleX and scaleY are also used to scale horizontally and vertically
         self->scaleX = self->ext.mariaDoll.scale;
         self->scaleY = self->ext.mariaDoll.scale;
@@ -738,7 +738,7 @@ void EntityMariaDragonCrash(Entity* self) {
             self->step = 2;
             g_api.PlaySfx(SFX_VO_MAR_8F1);
         }
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         break;
     case 2:
         if (self->ext.mariaDragon.opacity < 128) {
@@ -747,7 +747,7 @@ void EntityMariaDragonCrash(Entity* self) {
         } else {
             SetOpacity(self, 128);
         }
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         {
             MATRIX m;
             VECTOR vTranslate = {0, 0, 0};
@@ -1066,7 +1066,7 @@ void EntityMariaCardinalAttack(Entity* self) {
         self->posY.i.hi = PLAYER.posY.i.hi + 0x18 + GetFireWingsPivotY();
         self->scaleX = 0;
         self->scaleY = 0;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->hitboxWidth = 48;
         self->hitboxHeight = 40;
         self->hitboxOffX = 0;
@@ -1093,7 +1093,7 @@ void EntityMariaCardinalAttack(Entity* self) {
         self->posX.i.hi = PLAYER.posX.i.hi;
         self->posY.i.hi = PLAYER.posY.i.hi + 0x18 + GetFireWingsPivotY();
         self->hitboxOffY = -20;
-        self->drawFlags = FLAG_DRAW_DEFAULT;
+        self->drawFlags = ENTITY_DEFAULT;
         self->ext.mariaCardinal.timer++;
         if (self->ext.mariaCardinal.timer >= 60) {
             self->step++;
@@ -1518,7 +1518,7 @@ void EntityMariaCardinalCrashFireball(Entity* self) {
 #else
                     prim->tpage = 0x39;
 #endif
-                    prim->drawMode |= FLAG_DRAW_SCALEX | FLAG_DRAW_ROTATE;
+                    prim->drawMode |= ENTITY_SCALEX | ENTITY_ROTATE;
                     if (i == 1) {
                         color = -0x80;
                     } else if (i == 2) {
@@ -1625,7 +1625,7 @@ void EntityMariaTurtleCrash(Entity* self) {
         self->posY.i.hi = PLAYER.posY.i.hi - 16;
         self->scaleX = 0;
         self->scaleY = 0;
-        self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         g_Player.unk28 = NULL;
 #if defined(VERSION_PC)
         g_Player.unk20 = (signed long long)self;
@@ -1661,7 +1661,7 @@ void EntityMariaTurtleCrash(Entity* self) {
             self->scaleX += 16;
             self->scaleY += 16;
         } else {
-            self->drawFlags &= ~(FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY);
+            self->drawFlags &= ~(ENTITY_SCALEX | ENTITY_SCALEY);
         }
         if ((self->ext.mariaTurtleCrash.timer % 60) == 0) {
             g_api.PlaySfx(SFX_MAGIC_NOISE_SWEEP);
@@ -1673,8 +1673,7 @@ void EntityMariaTurtleCrash(Entity* self) {
         break;
     case 5:
         if (self->scaleX > 0x80) {
-            self->drawFlags |=
-                FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_ROTATE;
             self->scaleX -= 0x20;
             self->scaleY -= 0x20;
             self->rotate += 0xF78;
@@ -1687,16 +1686,14 @@ void EntityMariaTurtleCrash(Entity* self) {
         self->ext.mariaTurtleCrash.timer2 -= 0x10;
         if (self->ext.mariaTurtleCrash.timer2 <= 0) {
             SetOpacity(self, 0);
-            self->drawFlags |=
-                FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
             self->step = 6;
             func_pspeu_092BFEB0(g_Player.unk20);
             g_Player.unk2C = 0xB4;
             return;
         }
         SetOpacity(self, self->ext.mariaTurtleCrash.timer2);
-        self->drawFlags |=
-            FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_ROTATE;
         break;
     case 6:
         if (g_Player.unk28 == NULL) {
@@ -1761,9 +1758,9 @@ void EntityMariaTurtleCrashVortex(Entity* self) {
         }
         self->scaleX = 0;
         self->scaleY = 0;
-        self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         self->blendMode |= BLEND_TRANSP;
-        self->drawFlags |= FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_ROTATE | ENTITY_OPACITY;
         self->rotate = 0;
         self->opacity = 0x80;
         self->hitboxWidth = 48;
@@ -1786,7 +1783,7 @@ void EntityMariaTurtleCrashVortex(Entity* self) {
             self->scaleY += 16;
         } else {
             self->hitboxState = self->ext.mariaTurtleVortex.hitboxState;
-            self->drawFlags &= ~(FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY);
+            self->drawFlags &= ~(ENTITY_SCALEX | ENTITY_SCALEY);
         }
         self->ext.mariaTurtleVortex.timer++;
         if (self->ext.mariaTurtleVortex.timer >= 240) {
@@ -1812,7 +1809,7 @@ void EntityMariaTurtleCrashVortex(Entity* self) {
         if (self->scaleX > 0) {
             self->scaleX -= 8;
             self->scaleY -= 8;
-            self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         } else {
             self->step = 4;
         }

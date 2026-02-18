@@ -577,7 +577,7 @@ void EntitySalemWitch(Entity* self) {
         self->hitboxState = 0;
         self->animCurFrame = self->params;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_OPACITY;
         self->opacity = ShadowDuration;
         // fallthrough
     case SHADOW_WAIT:
@@ -856,7 +856,7 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
         self->animSet = 5;
         self->palette = PAL_FLAG(0x2EB);
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_OPACITY;
         self->opacity = 0x60;
 
         PlaySfxPositional(SFX_CANDLE_HIT);
@@ -870,9 +870,9 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
     case SPAWN_PROJECTILES:
         self->animSet = ANIMSET_OVL(6);
         self->unk5A = 0x4B;
-        self->drawFlags |= FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = BurstStartRotation;
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_OPACITY;
         self->opacity = 0x80;
         self->step++;
 
@@ -937,8 +937,8 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
     switch (self->step) {
     case INIT:
         InitializeEntity(g_EInitSalemWitchTribolt);
-        self->drawFlags = FLAG_DRAW_ROTATE;
-        self->drawFlags |= FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_ROTATE;
+        self->drawFlags |= ENTITY_SCALEX;
         self->scaleX = 0x80;
         launchDir = self->params - 1;
         entity = &PLAYER;
@@ -984,9 +984,9 @@ void EntitySalemWitchTriboltProjectile(Entity* self) {
         self->hitboxState = 0;
         self->animCurFrame = self->params;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags = FLAG_DRAW_ROTATE;
-        self->drawFlags |= FLAG_DRAW_SCALEX;
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_ROTATE;
+        self->drawFlags |= ENTITY_SCALEX;
+        self->drawFlags |= ENTITY_OPACITY;
         self->opacity = 0x60;
         self->pose = self->animCurFrame;
         // fallthrough

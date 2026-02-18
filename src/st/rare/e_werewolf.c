@@ -422,7 +422,7 @@ void EntityWerewolf(Entity* self) {
             if (!AnimateEntity(anim_spin_attack, self)) {
                 self->ext.werewolf.timer = 0x20;
                 self->animCurFrame = 0x15;
-                self->drawFlags |= FLAG_DRAW_ROTATE;
+                self->drawFlags |= ENTITY_ROTATE;
                 self->step_s++;
                 self->velocityY = FIX(-4.0);
                 self->step_s = 3;
@@ -447,7 +447,7 @@ void EntityWerewolf(Entity* self) {
             }
 
             if (!--self->ext.werewolf.timer) {
-                self->drawFlags = FLAG_DRAW_DEFAULT;
+                self->drawFlags = ENTITY_DEFAULT;
                 self->animCurFrame = 0xA;
                 self->ext.werewolf.timer = 0x10;
                 self->step_s = 4;
@@ -471,7 +471,7 @@ void EntityWerewolf(Entity* self) {
             }
 
             if (UnkCollisionFunc3(sensors_ground) & 1) {
-                self->drawFlags = FLAG_DRAW_DEFAULT;
+                self->drawFlags = ENTITY_DEFAULT;
                 self->animCurFrame = 0xA;
                 self->ext.werewolf.timer = 0x10;
                 self->step_s = 4;
@@ -609,7 +609,7 @@ void EntityWerewolfSpinAttackAfterImage(Entity* self) {
         self->palette = g_EInitWerewolf[3] + PAL_FLAG(9);
         self->hitboxState = 0;
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
-        self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE;
         self->animCurFrame = self->params;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->opacity = 0x60;

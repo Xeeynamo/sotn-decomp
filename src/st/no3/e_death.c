@@ -352,7 +352,7 @@ void EntityDeath(Entity* self) {
     case 1:
         if (AnimateEntity(deathAnim14, self) == 0) {
             SetStep(2);
-            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_ROTATE;
             self->rotate = 0x1000;
             self->posY.i.hi += 16;
             self->animCurFrame = 0x3A;
@@ -365,7 +365,7 @@ void EntityDeath(Entity* self) {
         self->rotate -= 0x40;
         if (!self->rotate) {
             SetStep(3);
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
         }
 
         self->posX.i.hi =
@@ -631,10 +631,10 @@ void EntityDeathScytheShadow(Entity* self) {
         self->palette = 0x2D6;
         self->unk5A = 0x44;
         if (self->params) {
-            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_OPACITY;
             self->ext.deathScythe.timer = 0x40;
         } else {
-            self->drawFlags = FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_ROTATE | ENTITY_OPACITY;
             self->ext.deathScythe.timer = 0x20;
         }
         self->opacity = 0x40;

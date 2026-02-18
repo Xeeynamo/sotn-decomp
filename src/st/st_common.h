@@ -483,7 +483,7 @@ void EntityExplosionSpawn(u16 params, u16 arg1) {
     g_CurrentEntity->pfnUpdate = (PfnEntityUpdate)EntityExplosion;
     g_CurrentEntity->params = params;
     g_CurrentEntity->animCurFrame = 0;
-    g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
+    g_CurrentEntity->drawFlags = ENTITY_DEFAULT;
     g_CurrentEntity->step = 0;
     g_CurrentEntity->step_s = 0;
 }

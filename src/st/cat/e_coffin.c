@@ -110,7 +110,7 @@ void EntityCoffin(Entity* self) {
     case BROKEN_COFFIN_PARTS:
         InitializeEntity(g_EInitCoffin);
         self->flags |= FLAG_UNK_2000;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->hitboxState = 0;
 
         params = self->params;

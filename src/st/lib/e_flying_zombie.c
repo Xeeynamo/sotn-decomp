@@ -328,7 +328,7 @@ void EntityFlyingZombie1(Entity* self) {
                     if (tempEntity != NULL) {
                         CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
                         tempEntity->params = 1;
-                        tempEntity->drawFlags = FLAG_DRAW_ROTATE;
+                        tempEntity->drawFlags = ENTITY_ROTATE;
                         tempEntity->rotate = self->rotate;
                     }
                     self->ext.flyingZombie.unk7C = 6;

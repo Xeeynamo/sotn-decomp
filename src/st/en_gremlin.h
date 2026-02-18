@@ -245,7 +245,7 @@ void EntityGremlinEffect(Entity* self) {
         self->step = GLOW;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->opacity = 0xC0;
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_OPACITY;
         break;
 
     case GLOW:
@@ -323,7 +323,7 @@ void EntityGremlinFire(Entity* self) {
     case DEATH:
         switch (self->step_s) {
         case DEATH_INIT:
-            self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
             self->scaleX = 0x100;
             self->scaleY = 0x100;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;

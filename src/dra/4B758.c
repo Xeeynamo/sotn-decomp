@@ -20,7 +20,7 @@ void func_800EB758(
     }
     py = pivotY + e->rotPivotY;
 
-    if (flags & FLAG_DRAW_SCALEX) {
+    if (flags & ENTITY_SCALEX) {
         dx = p->x0 - px;
         dx = (e->scaleX * dx + 0x80000000) >> 8;
         p->x0 = p->x2 = dx + px;
@@ -28,7 +28,7 @@ void func_800EB758(
         dx = (e->scaleX * dx + 0x80000000) >> 8;
         p->x1 = p->x3 = dx + px;
     }
-    if (flags & FLAG_DRAW_SCALEY) {
+    if (flags & ENTITY_SCALEY) {
         dy = p->y0 - py;
         dy = (e->scaleY * dy + 0x80000000) >> 8;
         p->y0 = p->y1 = dy + py;
@@ -36,7 +36,7 @@ void func_800EB758(
         dy = (e->scaleY * dy + 0x80000000) >> 8;
         p->y2 = p->y3 = dy + py;
     }
-    if (flags & FLAG_DRAW_ROTATE) {
+    if (flags & ENTITY_ROTATE) {
 #ifdef VERSION_PSP
         if (e->rotate == 0x800) {
             dx2 = p->x1 - p->x0;
@@ -176,7 +176,7 @@ void RenderEntities(void) {
             continue;
         }
         r->eDrawFlags = entity->drawFlags;
-        if ((r->eDrawFlags & FLAG_BLINK) && (r->index ^ g_Timer) & 1) {
+        if ((r->eDrawFlags & ENTITY_BLINK) && (r->index ^ g_Timer) & 1) {
             continue;
         }
         r->flipX = entity->facingLeft << 1;
@@ -313,17 +313,17 @@ void RenderEntities(void) {
                 poly->b3 = plDraw->b3;
                 setShadeTex(poly, false);
             } else {
-                if (r->eDrawFlags & FLAG_DRAW_OPACITY) {
+                if (r->eDrawFlags & ENTITY_OPACITY) {
                     poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 =
                         poly->b1 = poly->r2 = poly->g2 = poly->b2 = poly->r3 =
                             poly->g3 = poly->b3 = entity->opacity;
-                    if (r->eDrawFlags & FLAG_DRAW_UNK10) {
+                    if (r->eDrawFlags & ENTITY_MASK_R) {
                         poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0x80;
                     }
-                    if (r->eDrawFlags & FLAG_DRAW_UNK20) {
+                    if (r->eDrawFlags & ENTITY_MASK_G) {
                         poly->g0 = poly->g1 = poly->g2 = poly->g3 = 0x80;
                     }
-                    if (r->eDrawFlags & FLAG_DRAW_UNK40) {
+                    if (r->eDrawFlags & ENTITY_MASK_B) {
                         poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0x80;
                     }
                     setShadeTex(poly, false);
@@ -400,7 +400,7 @@ void RenderEntities(void) {
                     poly->y3 = polyY + r->h;
                 }
                 if (r->eDrawFlags &
-                    (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE)) {
+                    (ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_ROTATE)) {
                     func_800EB758(
                         r->x, r->y, entity, r->eDrawFlags, poly, r->flipX);
                 }
@@ -482,17 +482,17 @@ void RenderEntities(void) {
                 } else {
                     setSemiTrans(poly, false);
                 }
-                if (r->eDrawFlags & FLAG_DRAW_OPACITY) {
+                if (r->eDrawFlags & ENTITY_OPACITY) {
                     poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 =
                         poly->b1 = poly->r2 = poly->g2 = poly->b2 = poly->r3 =
                             poly->g3 = poly->b3 = entity->opacity;
-                    if (r->eDrawFlags & FLAG_DRAW_UNK10) {
+                    if (r->eDrawFlags & ENTITY_MASK_R) {
                         poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0x80;
                     }
-                    if (r->eDrawFlags & FLAG_DRAW_UNK20) {
+                    if (r->eDrawFlags & ENTITY_MASK_G) {
                         poly->g0 = poly->g1 = poly->g2 = poly->g3 = 0x80;
                     }
-                    if (r->eDrawFlags & FLAG_DRAW_UNK40) {
+                    if (r->eDrawFlags & ENTITY_MASK_B) {
                         poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0x80;
                     }
                     setShadeTex(poly, false);
@@ -672,7 +672,7 @@ void RenderEntitiesPSP(void) {
         r->animSet = entity->animSet;
         r->animCurFrame = entity->animCurFrame;
         r->eDrawFlags = entity->drawFlags;
-        if ((r->eDrawFlags & FLAG_BLINK) && (r->index ^ g_Timer) & 1) {
+        if ((r->eDrawFlags & ENTITY_BLINK) && (r->index ^ g_Timer) & 1) {
             continue;
         }
         r->flipX = entity->facingLeft << 1;
@@ -809,17 +809,17 @@ void RenderEntitiesPSP(void) {
                 poly->b3 = plDraw->b3;
                 setShadeTex(poly, false);
             } else {
-                if (r->eDrawFlags & FLAG_DRAW_OPACITY) {
+                if (r->eDrawFlags & ENTITY_OPACITY) {
                     poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 =
                         poly->b1 = poly->r2 = poly->g2 = poly->b2 = poly->r3 =
                             poly->g3 = poly->b3 = entity->opacity;
-                    if (r->eDrawFlags & FLAG_DRAW_UNK10) {
+                    if (r->eDrawFlags & ENTITY_MASK_R) {
                         poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0x80;
                     }
-                    if (r->eDrawFlags & FLAG_DRAW_UNK20) {
+                    if (r->eDrawFlags & ENTITY_MASK_G) {
                         poly->g0 = poly->g1 = poly->g2 = poly->g3 = 0x80;
                     }
-                    if (r->eDrawFlags & FLAG_DRAW_UNK40) {
+                    if (r->eDrawFlags & ENTITY_MASK_B) {
                         poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0x80;
                     }
                     setShadeTex(poly, false);
@@ -896,7 +896,7 @@ void RenderEntitiesPSP(void) {
                     poly->y3 = polyY + r->h;
                 }
                 if (r->eDrawFlags &
-                    (FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE)) {
+                    (ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_ROTATE)) {
                     if ((animFrameFlags & 2) == 0 && entity->rotate == 0x800) {
                         poly->x0++;
                         poly->x1++;
@@ -984,17 +984,17 @@ void RenderEntitiesPSP(void) {
                 } else {
                     setSemiTrans(poly, false);
                 }
-                if (r->eDrawFlags & FLAG_DRAW_OPACITY) {
+                if (r->eDrawFlags & ENTITY_OPACITY) {
                     poly->r0 = poly->g0 = poly->b0 = poly->r1 = poly->g1 =
                         poly->b1 = poly->r2 = poly->g2 = poly->b2 = poly->r3 =
                             poly->g3 = poly->b3 = entity->opacity;
-                    if (r->eDrawFlags & FLAG_DRAW_UNK10) {
+                    if (r->eDrawFlags & ENTITY_MASK_R) {
                         poly->r0 = poly->r1 = poly->r2 = poly->r3 = 0x80;
                     }
-                    if (r->eDrawFlags & FLAG_DRAW_UNK20) {
+                    if (r->eDrawFlags & ENTITY_MASK_G) {
                         poly->g0 = poly->g1 = poly->g2 = poly->g3 = 0x80;
                     }
-                    if (r->eDrawFlags & FLAG_DRAW_UNK40) {
+                    if (r->eDrawFlags & ENTITY_MASK_B) {
                         poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0x80;
                     }
                     setShadeTex(poly, false);

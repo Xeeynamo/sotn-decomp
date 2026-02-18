@@ -607,7 +607,7 @@ void EntityGurkhaWeapon(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitGurkhaWeapon);
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->hitboxWidth = 8;
         self->hitboxHeight = 8;
         break;
@@ -676,7 +676,7 @@ void EntityGurkhaWeapon(Entity* self) {
                 self->step = 0;
                 self->pfnUpdate = EntityExplosion;
                 self->params = 0;
-                self->drawFlags = FLAG_DRAW_DEFAULT;
+                self->drawFlags = ENTITY_DEFAULT;
             }
         }
         break;

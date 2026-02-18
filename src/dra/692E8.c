@@ -530,9 +530,8 @@ void func_8010A234(s32 arg0) {
         PLAYER.animSet = 1;
         PLAYER.unk5A = 0;
         PLAYER.rotate = 0;
-        PLAYER.drawFlags &=
-            (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 | FLAG_BLINK |
-             FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
+        PLAYER.drawFlags &= (ENTITY_MASK_R | ENTITY_MASK_G | ENTITY_MASK_B |
+                             ENTITY_BLINK | ENTITY_SCALEY | ENTITY_SCALEX);
         func_8010FAF4();
         PLAYER.rotPivotY = 0;
         PLAYER.rotPivotX = 0;
@@ -651,7 +650,7 @@ void EntityAlucard() {
     playerStep = 0;
     playerStepS = 0;
     var_s8 = 0;
-    PLAYER.drawFlags = FLAG_DRAW_DEFAULT;
+    PLAYER.drawFlags = ENTITY_DEFAULT;
     g_Player.unk18 = 0;
     g_Player.unk70 = 0;
 
@@ -1404,8 +1403,8 @@ block_159:
             !(g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10 |
                                  PLAYER_STATUS_UNK10000 | PLAYER_STATUS_DEAD |
                                  PLAYER_STATUS_AXEARMOR)) &&
-            !(PLAYER.drawFlags & (FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE))) {
-            PLAYER.drawFlags |= FLAG_DRAW_SCALEY;
+            !(PLAYER.drawFlags & (ENTITY_SCALEY | ENTITY_ROTATE))) {
+            PLAYER.drawFlags |= ENTITY_SCALEY;
             PLAYER.scaleY = 0x110;
             PLAYER.rotPivotY = 0x18;
         }

@@ -1088,7 +1088,7 @@ void func_us_801D44A0(Entity* self) {
         self->zPriority = 0xB1;
         self->hitboxWidth = 0xC;
         self->hitboxHeight = 0xC;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
 
         primIndex = g_api.AllocPrimitives(PRIM_LINE_G2, 2);
         if (primIndex == -1) {
@@ -1271,13 +1271,13 @@ void func_us_801D4AA4(Entity* self) {
             self->animCurFrame = 9;
             self->zPriority = 0xAD;
             self->step = 3;
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
             break;
         case 3:
             self->animCurFrame = 0xA;
             self->zPriority = 0xAE;
             self->step = 4;
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
             break;
         }
         break;

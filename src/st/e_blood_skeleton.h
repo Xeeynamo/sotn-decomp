@@ -115,7 +115,7 @@ void EntityBloodSkeleton(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (!--self->ext.bloodSkeleton.timer) {
-                self->drawFlags |= FLAG_DRAW_ROTATE;
+                self->drawFlags |= ENTITY_ROTATE;
                 self->rotate = 0;
                 PlaySfxPositional(SFX_RED_SKEL_REBUILD);
                 self->step_s++;
@@ -134,7 +134,7 @@ void EntityBloodSkeleton(Entity* self) {
             }
 
             if (self->ext.bloodSkeleton.timer > 8) {
-                self->drawFlags = FLAG_DRAW_DEFAULT;
+                self->drawFlags = ENTITY_DEFAULT;
                 self->rotate = 0;
                 self->step_s++;
             }

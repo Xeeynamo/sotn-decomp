@@ -60,7 +60,7 @@ void EntityPendulumBoneChain(Entity* self) {
     case 0:
         InitializeEntity(g_EInitEnvironment);
         self->animCurFrame = 0xA;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         // fallthrough
 
     case 1:
@@ -97,7 +97,7 @@ void EntityPendulumWeight(Entity* self) {
         self->hitboxWidth = self->hitboxHeight = 0xC;
         self->hitboxState = 1;
         self->animCurFrame = 0xB;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         // fallthrough
 
     case 1:

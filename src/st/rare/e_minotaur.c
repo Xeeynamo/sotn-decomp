@@ -604,8 +604,8 @@ void EntityMinotaurSpitLiquid(Entity* self) {
         self->velocityX = rsin(angle) * 0x24;
         self->velocityY = rcos(angle) * -0x24;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags = FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE |
-                          FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags =
+            ENTITY_OPACITY | ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = 0x40;
         self->scaleY = 0x80;
         self->opacity = 0x80;
@@ -631,8 +631,7 @@ void EntityMinotaurDeathPuff(Entity* self) {
         self->palette = PAL_MINOTAUR_DEATH_PUFF;
         self->unk5A = 0x79;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags =
-            FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleY = 0x180;
         self->scaleX = 0xA0;
         self->opacity = 0x60 - (self->params * 2);

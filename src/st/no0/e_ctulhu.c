@@ -601,7 +601,7 @@ void EntityCtulhuFireball(Entity* self) {
 
     if (!self->step) {
         InitializeEntity(g_EInitCtulhuFireball);
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         rotate = self->rotate;
         if (self->facingLeft) {
             rotate = -rotate;
@@ -675,7 +675,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
         self->animCurFrame = 44;
         self->hitboxOffX = 7;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags = FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEY;
         self->scaleY = 256;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 128);
         if (primIndex == -1) {
@@ -770,7 +770,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
         }
 
         if (self->flags & FLAG_DEAD) {
-            self->drawFlags |= FLAG_DRAW_OPACITY;
+            self->drawFlags |= ENTITY_OPACITY;
             self->opacity = 128;
             self->hitboxState = 0;
             self->step++;
@@ -878,7 +878,7 @@ void EntityCtulhuDeath(Entity* self) {
         self->animSet = 14;
         self->unk5A = 121;
         self->palette = PAL_FLAG(0x2CE);
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_OPACITY;
         self->opacity = 16;
         if (self->params) {
             self->opacity = 16;

@@ -38,7 +38,7 @@ void EntityCandleTable(Entity* self) {
         }
         if (self->params & 0x100) {
             self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
-            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0xC0;
         } else {
             self->zPriority += 4;

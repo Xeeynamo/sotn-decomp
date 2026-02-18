@@ -119,7 +119,7 @@ void EntityHarpy(Entity* self) {
         case 0:
             if (AnimateEntity(&D_us_80181F28, self) == 0) {
                 self->animCurFrame = 8;
-                self->drawFlags = FLAG_DRAW_ROTATE;
+                self->drawFlags = ENTITY_ROTATE;
                 self->rotate = ROT(0);
                 self->step_s += 1;
             }
@@ -131,7 +131,7 @@ void EntityHarpy(Entity* self) {
         case 1:
             self->rotate += ROT(22.5);
             if (self->rotate > ROT(360)) {
-                self->drawFlags = FLAG_DRAW_DEFAULT;
+                self->drawFlags = ENTITY_DEFAULT;
                 self->animCurFrame = 10;
                 SetSubStep(2);
                 return;
@@ -301,11 +301,11 @@ void EntityHarpy(Entity* self) {
     case 14:
         switch (self->step_s) {
         case 0:
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             self->hitboxState = 0;
             entity = self + 1;
             DestroyEntity(entity);
-            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_ROTATE;
             self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
             self->step_s++;
             // fallthrough

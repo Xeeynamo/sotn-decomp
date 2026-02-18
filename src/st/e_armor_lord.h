@@ -488,7 +488,7 @@ static s32 func_us_801D1DAC(void) {
         g_CurrentEntity->ext.armorLord.unk8A = 0;
         g_CurrentEntity->ext.armorLord.unk88 = 0;
         g_CurrentEntity->ext.armorLord.unk8C = 0;
-        g_CurrentEntity->drawFlags |= FLAG_DRAW_OPACITY;
+        g_CurrentEntity->drawFlags |= ENTITY_OPACITY;
         g_CurrentEntity->opacity = 0x80;
         g_CurrentEntity->step_s++;
         break;
@@ -1030,7 +1030,7 @@ void func_us_801D348C(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180AE8);
         self->blendMode |= BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_OPACITY;
         self->animCurFrame = 0;
         break;
     case 1:
@@ -1038,8 +1038,7 @@ void func_us_801D348C(Entity* self) {
             self->step = 2;
             self->animCurFrame = 0x20;
             self->opacity = 0x60;
-            self->drawFlags =
-                FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = 0x1C8;
             self->scaleY = 0x1C8;
         }
@@ -1047,8 +1046,7 @@ void func_us_801D348C(Entity* self) {
             self->step = 3;
             self->animCurFrame = 0x21;
             self->opacity = 0x60;
-            self->drawFlags =
-                FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = 0x1B8;
             self->scaleY = 0x1B8;
         }

@@ -313,7 +313,7 @@ void func_us_801C8AAC(Entity* self) {
         self->animCurFrame = self->params + 18;
         self->zPriority += self->params;
         self->flags |= FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         ptr = D_us_80182100;
         ptr += self->params;
         if (self->facingLeft) {

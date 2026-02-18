@@ -54,8 +54,8 @@ void func_us_801B72E8(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (!AnimateEntity(self->ext.et_801B72E8.animData, self)) {
-                self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
-                self->drawFlags |= FLAG_DRAW_OPACITY;
+                self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
+                self->drawFlags |= ENTITY_OPACITY;
                 self->scaleX = self->scaleY = 256;
                 self->opacity = 128;
                 self->step_s++;
@@ -80,7 +80,7 @@ void func_us_801B72E8(Entity* self) {
         }
         switch (self->step_s) {
         case 0:
-            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_OPACITY;
             self->opacity = 128;
             self->step_s++;
             break;

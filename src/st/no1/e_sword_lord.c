@@ -415,7 +415,7 @@ void EntitySwordLord(Entity* self) {
                 DestroyEntity(self);
             }
         } else if (collider.effects != EFFECT_NONE) {
-            self->drawFlags |= FLAG_DRAW_OPACITY;
+            self->drawFlags |= ENTITY_OPACITY;
             self->step++;
         }
         break;

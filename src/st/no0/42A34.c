@@ -21,7 +21,7 @@ void func_us_801C2A34(Entity* self) {
         self->zPriority = 0x50;
         self->unk5A = 0;
         self->palette = 0;
-        self->drawFlags = FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_ROTATE | ENTITY_OPACITY;
         self->opacity = 0x60;
     }
     angle = rsin((((g_Timer % 120) << 0xC) + 0x3C) / 120);

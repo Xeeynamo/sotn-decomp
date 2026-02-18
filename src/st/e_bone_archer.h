@@ -368,7 +368,7 @@ void EntityBoneArcherArrow(Entity* self) {
         }
         if (self->params) {
             self->hitboxState = 0;
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
             self->animCurFrame += self->params;
             if (self->params == 1) {
                 self->velocityX = FIX(-0.5);

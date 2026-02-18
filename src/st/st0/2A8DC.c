@@ -78,7 +78,7 @@ void EntitySecretButton(Entity* self) {
     case 4:
         switch (self->step_s) {
         case 0:
-            self->drawFlags = FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_ROTATE | ENTITY_OPACITY;
             self->opacity = 0x60;
             self->velocityX = 0;
             self->velocityY = 0;
@@ -187,7 +187,7 @@ void EntitySecretStairs(Entity* self) {
             self->step = 15;
             break;
         }
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->rotate = -0x200;
         break;
 
@@ -201,7 +201,7 @@ void EntitySecretStairs(Entity* self) {
     case 2:
         self->rotate += 0x10;
         if (!self->rotate) {
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             self->step++;
         }
         break;

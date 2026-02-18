@@ -131,13 +131,13 @@ static void EntityWeaponAttack(Entity* self) {
     case 4:
         self->hitboxState = 0;
         g_Player.unk48 = 0;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         self->velocityY += FIX(20.0 / 128);
         self->rotate += 0x80;
         if (--self->ext.timer.t < 0x10) {
-            self->drawFlags |= FLAG_BLINK;
+            self->drawFlags |= ENTITY_BLINK;
         }
         if (--self->ext.timer.t == 0) {
             DestroyEntity(self);
@@ -211,7 +211,7 @@ void EntityWeaponShieldSpell(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = 0x3E;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = 0;
 
         prim = &g_PrimBuf[self->primIndex];
@@ -450,7 +450,7 @@ static void func_ptr_80170024(Entity* self) {
         if (self->params & 0x7F00) {
             self->flags = FLAG_POS_CAMERA_LOCKED;
             self->animCurFrame = self->ext.shield.parent->animCurFrame;
-            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_OPACITY;
             self->blendMode = BLEND_TRANSP;
             self->opacity = 0x80;
             self->poseTimer = 0x18;

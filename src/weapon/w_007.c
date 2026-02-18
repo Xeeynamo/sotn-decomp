@@ -278,7 +278,7 @@ static void func_ptr_80170004(Entity* self) {
                 self->velocityY = FIX(2.75);
                 SetSpeedX(FIX(3.75));
             }
-            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x10;
             self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
             self->hitboxWidth = self->hitboxHeight = 9;

@@ -176,7 +176,7 @@ static void EntityWeaponAttack(Entity* self) {
                 // effect. Not clear what part of the function triggers
                 // soul-steal.
                 g_Player.timers[12] = 4;
-                self->drawFlags = FLAG_BLINK;
+                self->drawFlags = ENTITY_BLINK;
                 self->blendMode = BLEND_TRANSP | BLEND_ADD;
                 self->posY.i.hi = 0;
                 self->posX.i.hi = 0x80;
@@ -329,7 +329,7 @@ static void EntityWeaponAttack(Entity* self) {
         prim->r2 = prim->g2 = prim->b2 = prim->r3 = prim->g3 = prim->b3;
         break;
     case 8:
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_OPACITY;
         self->opacity--;
         if (self->opacity < 4) {
             self->opacity = 4;
@@ -349,7 +349,7 @@ static void EntityWeaponAttack(Entity* self) {
         }
         break;
     case 9:
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_OPACITY;
         self->opacity -= 2;
         if (self->opacity < 4) {
             self->opacity = 4;

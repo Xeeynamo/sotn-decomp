@@ -135,7 +135,7 @@ void EntitySpearGuard(Entity* self) {
         SetStep(12);
         self->hitboxState = 0;
         self->ext.spearGuard.unk7C = 0x40;
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0x7F;
     }
     switch (self->step) {
@@ -416,7 +416,7 @@ void EntityThrownSpear(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitThrownSpear);
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->rotate = 0;
         break;
 

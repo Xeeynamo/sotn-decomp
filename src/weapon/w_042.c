@@ -156,7 +156,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->anim = D_12A000_8017A604;
-        self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleY = 0;
         self->scaleX = 0;
         self->rotPivotY = 0x14;
@@ -230,7 +230,7 @@ static void func_ptr_80170008(Entity* self) {
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->palette = self->ext.weapon.parent->palette;
         self->flags = FLAG_POS_CAMERA_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->posY.i.hi -= 0x10;
         if (self->facingLeft == 0) {
@@ -260,7 +260,7 @@ static void func_ptr_80170008(Entity* self) {
             self->unk5A = 0;
             self->poseTimer = 0;
             self->pose = 0;
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             self->velocityY = -FIX(0.5);
             self->step++;
         }

@@ -320,7 +320,7 @@ void EntityBoneScimitarParts(Entity* self) {
     }
     InitializeEntity(g_EInitScimitarParts);
     self->animCurFrame = (self->params & 0xFF) + 16;
-    self->drawFlags = FLAG_DRAW_ROTATE;
+    self->drawFlags = ENTITY_ROTATE;
 
     if (self->facingLeft) {
         self->velocityX = -self->velocityX;

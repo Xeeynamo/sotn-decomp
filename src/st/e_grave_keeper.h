@@ -68,7 +68,7 @@ static void SpawnDustParticles(void) {
             dustEntity->posX.i.hi += 8;
         }
 
-        dustEntity->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        dustEntity->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
         dustEntity->scaleX = dustEntity->scaleY = 0xA0;
         dustEntity->zPriority = g_CurrentEntity->zPriority + 2;
         dustEntity->params = 0x10;

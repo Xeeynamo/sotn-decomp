@@ -33,7 +33,7 @@ void func_us_801D4558(Entity* self) {
         InitializeEntity(D_us_80180B18);
         self->ext.et_801D4558.unk80 = self->hitboxState;
         self->hitboxState = 0;
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
 
         self->scaleX = 0;
         self->scaleY = 0;
@@ -57,13 +57,13 @@ void func_us_801D4558(Entity* self) {
         self->scaleY += 8;
         if (self->ext.et_801D4558.unk7C == 0x20) {
             self->hitboxState = 2;
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
         }
         if (self->ext.et_801D4558.unk7C == 0x28) {
             self->hitboxState = self->ext.et_801D4558.unk80;
             SetStep(3);
             self->ext.et_801D4558.unk82 = 0;
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
         }
         break;
 

@@ -1057,7 +1057,7 @@ void PlayerStepHighJump(void) {
             func_801139CC(3);
             if (g_Player.unk4A > 4) {
                 PLAYER.step_s = 2;
-                PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
+                PLAYER.drawFlags |= ENTITY_ROTATE;
                 PLAYER.rotate = 0x800;
                 PLAYER.rotPivotX = 0;
                 PLAYER.rotPivotY = 2;
@@ -1087,15 +1087,14 @@ void PlayerStepHighJump(void) {
         break;
 
     case 2:
-        PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
+        PLAYER.drawFlags |= ENTITY_ROTATE;
         PLAYER.rotPivotX = 0;
         PLAYER.rotPivotY = 2;
         if (g_Player.unk4A > 0x38) {
             SetPlayerAnim(0x2D);
             PLAYER.drawFlags &=
-                (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
-                 FLAG_BLINK | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
-                 FLAG_DRAW_SCALEX);
+                (ENTITY_MASK_R | ENTITY_MASK_G | ENTITY_MASK_B | ENTITY_BLINK |
+                 ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX);
             PLAYER.rotate = 0;
             PLAYER.facingLeft += 1;
             PLAYER.facingLeft &= 1;
@@ -1167,8 +1166,8 @@ void func_80113EE0(void) {
     PLAYER.blendMode = BLEND_NO;
     g_Player.unk44 = 0;
     g_Player.unk46 = 0;
-    PLAYER.drawFlags &= (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
-                         FLAG_BLINK | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX);
+    PLAYER.drawFlags &= (ENTITY_MASK_R | ENTITY_MASK_G | ENTITY_MASK_B |
+                         ENTITY_BLINK | ENTITY_SCALEY | ENTITY_SCALEX);
     PLAYER.rotate = 0;
     PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
     if (g_Entities[E_WEAPON].entityId == E_MIST) {
@@ -1547,7 +1546,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         PLAYER.velocityY = 0;
         g_Player.timers[8] = 48;
         PlaySfx(SFX_STOMP_HARD_B);
-        PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
+        PLAYER.drawFlags |= ENTITY_ROTATE;
         PLAYER.rotate = 0x400;
         PLAYER.rotPivotX = 0x10;
         PLAYER.rotPivotY = 4;
@@ -1595,9 +1594,9 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
         PLAYER.poseTimer = PLAYER.pose = 0;
         break;
     case 14:
-        PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
+        PLAYER.drawFlags |= ENTITY_ROTATE;
         if (g_Player.timers[8] <= 0) {
-            PLAYER.drawFlags &= ~FLAG_DRAW_ROTATE;
+            PLAYER.drawFlags &= ~ENTITY_ROTATE;
             PLAYER.rotate = 0x800;
             PLAYER.velocityX = -(PLAYER.velocityX / 2);
             PLAYER.velocityY = 0;
@@ -1766,12 +1765,11 @@ void PlayerStepStoned(s32 arg0) {
         if (PLAYER.poseTimer < 0) {
             PLAYER.step_s = 2;
             PLAYER.drawFlags &=
-                (FLAG_DRAW_UNK10 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK40 |
-                 FLAG_BLINK | FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY |
-                 FLAG_DRAW_SCALEX);
+                (ENTITY_MASK_R | ENTITY_MASK_G | ENTITY_MASK_B | ENTITY_BLINK |
+                 ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX);
         } else {
             PLAYER.rotPivotX = 0;
-            PLAYER.drawFlags |= FLAG_DRAW_ROTATE;
+            PLAYER.drawFlags |= ENTITY_ROTATE;
             PLAYER.rotate = D_800ACF94[PLAYER.poseTimer] >> 4;
             if (PLAYER.rotate) {
                 PLAYER.rotPivotY = 0x14;
@@ -1981,7 +1979,7 @@ void PlayerStepKill(DamageParam* damage, s16 arg_PlayerStep, s16 arg2) {
 }
 
 void PlayerStepUnk17(void) {
-    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
+    PLAYER.drawFlags = ENTITY_ROTATE;
     PLAYER.velocityX = PLAYER.velocityY = 0;
     PLAYER.poseTimer = 4;
 
@@ -2107,7 +2105,7 @@ void PlayerStepKillWater(void) {
     bool var_s2;
 
     var_s2 = false;
-    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
+    PLAYER.drawFlags = ENTITY_ROTATE;
     plDraw = g_PlayerDraw;
     if (g_unkGraphicsStruct.unk20 == 0xFFF && PLAYER.step_s) {
         SetPlayerStep(Player_Unk17);
@@ -2502,7 +2500,7 @@ void ControlBatForm(void) {
     directionsPressed =
         g_Player.padPressed & (PAD_UP | PAD_RIGHT | PAD_DOWN | PAD_LEFT);
     pressingCross = g_Player.padPressed & PAD_CROSS;
-    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
+    PLAYER.drawFlags = ENTITY_ROTATE;
     PLAYER.rotPivotY = 0;
 
 #if defined(VERSION_HD)
@@ -2862,7 +2860,7 @@ void PlayerStepUnmorphBat(void) {
     s32 i;
     s32 else_cycles;
 
-    PLAYER.drawFlags = FLAG_DRAW_ROTATE;
+    PLAYER.drawFlags = ENTITY_ROTATE;
     DecelerateX(FIX(0.125));
     if (g_Player.vram_flag & (TOUCHING_CEILING | TOUCHING_GROUND)) {
         PLAYER.velocityY = 0;

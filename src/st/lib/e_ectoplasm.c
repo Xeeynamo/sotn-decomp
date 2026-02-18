@@ -171,7 +171,7 @@ void func_us_801CD318(Entity* self) {
             return;
         }
         self->flags |= FLAG_HAS_PRIMS;
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleY = 0x100;
         self->scaleX = 0x100;
         prim = &g_PrimBuf[self->primIndex];

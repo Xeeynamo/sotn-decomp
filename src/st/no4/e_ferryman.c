@@ -158,7 +158,7 @@ void EntityFerrymanController(Entity* self) {
         self->animCurFrame = 0x21;
         self->zPriority = 0x9A;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         CreateEntityFromCurrentEntity(E_ID(FERRYMAN), ferrymanEntity);
         ferrymanEntity->facingLeft = self->facingLeft;
         break;
@@ -594,7 +594,7 @@ void EntityFerryman(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 0x1C;
         self->flags |= FLAG_POS_CAMERA_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->zPriority = 0x9A;
     }
 
@@ -990,7 +990,7 @@ void EntityBoatElevatorController(Entity* self) {
             InitializeEntity(g_EInitInteractable);
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
-            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_ROTATE;
             prim = &g_PrimBuf[primIndex];
             sp38 = 0;
             ptr = *D_us_8018176C;

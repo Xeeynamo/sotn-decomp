@@ -38,7 +38,7 @@ void func_us_801B6E34(Entity* self) {
             return;
         }
         self->blendMode = BLEND_TRANSP | BLEND_SUB;
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_OPACITY;
         self->opacity = 0x80;
         self->zPriority += 1;
         self->step = 8;
@@ -83,10 +83,10 @@ void func_us_801B6E34(Entity* self) {
         tempEntity->animCurFrame = self->animCurFrame + 2;
         tempEntity->zPriority = 0x6A;
         tempEntity->blendMode = BLEND_NO;
-        tempEntity->drawFlags = FLAG_DRAW_DEFAULT;
+        tempEntity->drawFlags = ENTITY_DEFAULT;
         if (GetDistanceToPlayerX() > 0x40) {
             tempEntity->blendMode = BLEND_TRANSP | BLEND_SUB;
-            tempEntity->drawFlags |= FLAG_DRAW_OPACITY;
+            tempEntity->drawFlags |= ENTITY_OPACITY;
             tempEntity->zPriority = self->zPriority + 1;
             SetStep(4);
         }

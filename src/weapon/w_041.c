@@ -321,7 +321,7 @@ s32 func_ptr_80170004(Entity* self) {
 
         self->zPriority = self->ext.weapon.parent->zPriority - 2;
         self->anim = D_123000_8017A4A4;
-        self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0;
         self->step++;
         break;

@@ -90,7 +90,7 @@ void EntityExplosionVariantsSpawner(
             newEntity->ext.destructAnim.index = i + index;
             newEntity->scaleX = explosionVariantSizes[i + index];
             newEntity->scaleY = newEntity->scaleX;
-            newEntity->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            newEntity->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
             newEntity->zPriority = self->zPriority + 1;
         }
     }
@@ -204,7 +204,7 @@ void EntityGreyPuff(Entity* self) {
         self->animSet = ANIMSET_DRA(5);
         self->animCurFrame = 1;
         self->blendMode = BLEND_TRANSP;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = greyPuff_rot[self->params];
         self->scaleY = self->scaleX;
         self->velocityY = greyPuff_yVel[self->params];
@@ -579,7 +579,7 @@ void func_801966B0(u16* sensors) {
     case 2:
         g_CurrentEntity->opacity += 2;
         if (g_CurrentEntity->opacity == 0xC0) {
-            g_CurrentEntity->drawFlags = FLAG_DRAW_DEFAULT;
+            g_CurrentEntity->drawFlags = ENTITY_DEFAULT;
             g_CurrentEntity->blendMode = BLEND_NO;
             g_CurrentEntity->hitEffect = g_CurrentEntity->palette;
             g_CurrentEntity->step_s++;
@@ -661,8 +661,8 @@ void EntityBigRedFireball(Entity* self) {
         InitializeEntity(g_EInitParticle);
         self->animSet = ANIMSET_DRA(2);
         self->palette = PAL_FLAG(PAL_UNK_1B6);
-        self->drawFlags |= FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
-        self->blendMode |= BLEND_TRANSP | BLEND_ADD;
+        self->drawFlags |= (ENTITY_ROTATE + ENTITY_OPACITY);
+        self->blendMode |= (BLEND_TRANSP + BLEND_ADD);
         self->opacity = 0x70;
         self->zPriority = 192;
 

@@ -87,7 +87,7 @@ void EntityWeaponAttack(Entity* self) {
 
         self->ext.weapon.lifetime--;
         if ((self->ext.weapon.lifetime) == 0) {
-            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleY = 256;
             self->scaleX = 256;
             self->ext.weapon.lifetime = 14;
@@ -150,7 +150,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
         self->zPriority = PLAYER.zPriority - 2;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->anim = D_82000_8017A724;
         self->scaleX = self->scaleY = 256;
 

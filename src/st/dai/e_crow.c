@@ -53,7 +53,7 @@ void EntityBlackCrow(Entity* self) {
     Entity* explosion;
 
     if ((self->flags & FLAG_DEAD) && self->step != CROW_DEATH) {
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->velocityY = 0;
         self->hitboxState = 0;
         PlaySfxPositional(SFX_CROW_DEATH);

@@ -297,7 +297,7 @@ void EntityWhiteDragon(Entity* self) {
                 entity->attackElement = ELEMENT_UNK_1;
                 entity->attack = 1;
                 if (!i) {
-                    entity->drawFlags = FLAG_DRAW_ROTATE;
+                    entity->drawFlags = ENTITY_ROTATE;
                     entity->animSet = ANIMSET_OVL(1);
                     entity->animCurFrame = 1;
                     entity->unk5A = 0x57;
@@ -755,7 +755,7 @@ void EntityWhiteDragon(Entity* self) {
             entity = self;
             for (i = SEGMENT_COUNT - 1; i >= 0; i--) {
                 entity++;
-                entity->drawFlags = FLAG_DRAW_DEFAULT;
+                entity->drawFlags = ENTITY_DEFAULT;
                 if (i & 1) {
                     entity->entityId = E_EXPLOSION;
                     entity->pfnUpdate = EntityExplosion;
@@ -863,7 +863,7 @@ void EntityWhiteDragonFlameBreath(Entity* self) {
             self->zPriority = g_unkGraphicsStruct.g_zEntityCenter - 0xC;
             self->hitboxState = 1;
             self->ext.whiteDragon.unk84 = 0;
-            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         }
 
         func_us_801B6578(self);

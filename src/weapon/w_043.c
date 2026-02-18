@@ -93,7 +93,7 @@ void EntityWeaponAttack(Entity* self) {
     self->rotPivotY = PLAYER.rotPivotY;
 
     modifierY = 0;
-    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
+    if (PLAYER.drawFlags & ENTITY_SCALEY) {
         modifierY = -3;
         if (PLAYER.ext.player.anim >= 0x43 && PLAYER.ext.player.anim < 0x45) {
             modifierY = -1;

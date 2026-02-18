@@ -445,7 +445,7 @@ void EntityMermanFireball(Entity* self) {
             self->velocityX = FIX(-1.5);
         }
 
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = 0x80;
         self->scaleY = 0x80;
 
@@ -453,7 +453,7 @@ void EntityMermanFireball(Entity* self) {
         if (entity != NULL) {
             CreateEntityFromEntity(E_GREY_PUFF, self, entity);
             entity->ext.destructAnim.index = 4;
-            entity->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+            entity->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
             entity->zPriority = self->zPriority + 8;
             entity->scaleX = 192;
             entity->scaleY = 192;

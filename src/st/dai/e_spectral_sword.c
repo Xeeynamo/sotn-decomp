@@ -281,7 +281,7 @@ void EntitySpectralSword(Entity* self) {
             for (count = 0; count < 16; count++, entity++) {
                 entity->flags |= FLAG_DEAD;
             }
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
             self->rotate = 0;
             self->step_s++;
             break;
@@ -398,8 +398,7 @@ void EntitySpectralSwordAura(Entity* self) {
         self->hitboxState = 0;
         self->animCurFrame = 1;
         self->palette += 13;
-        self->drawFlags |=
-            FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->scaleX = self->scaleY = 256;
         self->opacity = 128;
@@ -449,7 +448,7 @@ void EntitySpectralSwordWeapon(Entity* self) {
             self->animCurFrame = 3;
             self->zPriority--;
         }
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->step = SPECTRAL_WEAPON_WAIT;
         break;
     // Wait for EntitySpectralSword to set step to SPECTRAL_WEAPON_MAKE_READY
@@ -511,9 +510,9 @@ void EntitySpectralSwordWeapon(Entity* self) {
         break;
     }
     if (self->rotate) {
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
     } else {
-        self->drawFlags = FLAG_DRAW_DEFAULT;
+        self->drawFlags = ENTITY_DEFAULT;
     }
     angle = self->rotate + ROT(90);
     hitboxPtr = hitbox[self->animCurFrame];

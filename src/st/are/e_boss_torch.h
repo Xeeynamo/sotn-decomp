@@ -16,7 +16,7 @@ void EntityBossTorch(Entity* self) {
 #ifdef INVERTED_STAGE
         self->zPriority = 0x6A;
 #endif
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = scale[self->params];
         // fallthrough
     case 1:

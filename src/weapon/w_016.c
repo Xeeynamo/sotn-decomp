@@ -35,7 +35,7 @@ static void EntityWeaponAttack(Entity* self) {
         self->animCurFrame = 14;
         self->facingLeft = PLAYER.facingLeft;
         self->zPriority = PLAYER.zPriority - 2;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
         if (self->primIndex == -1) {
             DestroyEntity(self);
@@ -118,7 +118,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->palette = self->ext.weapon.parent->palette;
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->ext.weapon.lifetime = 0x16;
-        self->drawFlags = FLAG_DRAW_ROTATE | FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_ROTATE | ENTITY_OPACITY;
         self->blendMode = BLEND_TRANSP;
         self->rotate = self->ext.weapon.parent->rotate;
         self->opacity = 0x80;
@@ -403,7 +403,7 @@ static s32 func_ptr_80170014(Entity* self) {
             if (--self->ext.weapon.unk7E == 0) {
                 self->step = 3;
                 self->ext.weapon.unk7E = 0x20;
-                self->drawFlags = FLAG_BLINK;
+                self->drawFlags = ENTITY_BLINK;
             }
         }
         collX = self->posX.i.hi;

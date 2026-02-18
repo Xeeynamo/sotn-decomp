@@ -159,7 +159,7 @@ s32 func_ptr_80170004(Entity* self) {
     x = PLAYER.posX.i.hi + xPos;
     y = PLAYER.posY.i.hi + yPos;
 
-    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
+    if (PLAYER.drawFlags & ENTITY_SCALEY) {
         y -= 3;
     }
 

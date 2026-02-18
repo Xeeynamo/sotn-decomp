@@ -261,7 +261,7 @@ void EntityLossoth(Entity* self) {
         case 0:
             self->animCurFrame = 0x2E;
             self->hitboxState = 0;
-            self->drawFlags |= FLAG_DRAW_OPACITY;
+            self->drawFlags |= ENTITY_OPACITY;
             self->opacity = 0x80;
 
             // Spawn three flames on the dying Lossoth's jacket
@@ -283,7 +283,7 @@ void EntityLossoth(Entity* self) {
             break;
         case 1:
             if (!self->opacity) {
-                self->drawFlags = FLAG_DRAW_DEFAULT;
+                self->drawFlags = ENTITY_DEFAULT;
                 self->animCurFrame = 0x18;
                 self->ext.lossoth.timer = 0;
                 SetSubStep(2);
@@ -421,7 +421,7 @@ void EntityLossothEffects(Entity* self) {
             break;
         case 2:
             if (!AnimateEntity(anim_lantern_smash, self)) {
-                self->drawFlags |= FLAG_DRAW_SCALEX;
+                self->drawFlags |= ENTITY_SCALEX;
                 self->scaleX = 0x100;
                 self->step_s++;
             }
@@ -473,7 +473,7 @@ void EntityLossothEffects(Entity* self) {
             self->palette = PAL_FLAG(0x21A);
             self->opacity = 0;
             self->blendMode = BLEND_TRANSP | BLEND_ADD;
-            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_OPACITY;
 
             // self - 1 is the main Lossoth entity
             entity = self - 1;
@@ -561,7 +561,7 @@ void EntityLossothFireball(Entity* self) {
     s32 posY;
 
     if (self->hitParams || self->flags & FLAG_DEAD) {
-        self->drawFlags = FLAG_DRAW_DEFAULT;
+        self->drawFlags = ENTITY_DEFAULT;
         self->pfnUpdate = EntityExplosion;
         self->step = 0;
         self->params = 0;
@@ -572,7 +572,7 @@ void EntityLossothFireball(Entity* self) {
     case 0:
         InitializeEntity(g_EInitLossothAttack);
         self->animCurFrame = 0x2B;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->rotate = Random() * 0x10;
         params = self->params;
         self->velocityX = fireball_velocities[params].x;
@@ -773,7 +773,7 @@ void EntityLossothFlames(Entity* self) {
         switch (self->params) {
         // Fireball embers
         case 0:
-            self->drawFlags |= FLAG_DRAW_ROTATE;
+            self->drawFlags |= ENTITY_ROTATE;
             self->animCurFrame = 0x2D;
             self->ext.lossoth.timer = 0x10;
             self->velocityX = rcos(self->rotate) * 0x10;
@@ -798,7 +798,7 @@ void EntityLossothFlames(Entity* self) {
             break;
         // 2,3,4 = Death flames on jacket
         default:
-            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleY = self->scaleX = 0;
             self->blendMode = BLEND_TRANSP | BLEND_ADD;
             self->ext.lossoth.timer = 0x40;
@@ -822,7 +822,7 @@ void EntityLossothFlames(Entity* self) {
 
         self->scaleY = self->scaleX += 4;
         if (self->scaleX > 0x100) {
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
         }
 
         AnimateEntity(anim_death_jacket_flames, self);

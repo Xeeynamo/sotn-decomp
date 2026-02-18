@@ -295,7 +295,7 @@ void EntityFallingRock2(Entity* self) {
     case 0:
         InitializeEntity(g_EInitStInteractable);
         self->animCurFrame = animFrame + 31;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->zPriority = 0x9F;
         break;
 

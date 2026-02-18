@@ -30,7 +30,7 @@ void EntityBreakableWallDebris(Entity* self) {
     case INIT:
         InitializeEntity(g_EInitSecret);
         self->animCurFrame = self->params & 0xFF;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->zPriority = 0x69;
         if (self->rotate & 1) {
             self->facingLeft = true;

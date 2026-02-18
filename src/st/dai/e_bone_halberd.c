@@ -298,7 +298,7 @@ void EntityBoneHalberdParts(Entity* self) {
         FLAG_DESTROY_IF_OUT_OF_CAMERA | FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA |
         FLAG_UNK_00200000 | FLAG_UNK_2000;
     self->animCurFrame = self->params + 32;
-    self->drawFlags = FLAG_DRAW_ROTATE;
+    self->drawFlags = ENTITY_ROTATE;
 
     if (self->facingLeft) {
         self->velocityX = -self->velocityX;

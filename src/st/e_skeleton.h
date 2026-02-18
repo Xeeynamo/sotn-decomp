@@ -254,7 +254,7 @@ void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
 
     InitializeEntity(g_EInitSkeletonPieces);
     self->animCurFrame = self->params + 15;
-    self->drawFlags = FLAG_DRAW_ROTATE;
+    self->drawFlags = ENTITY_ROTATE;
 
     if (self->facingLeft) {
         self->velocityX = -self->velocityX;
@@ -293,7 +293,7 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
 
         self->velocityX = velocityX;
         self->velocityY = FIX(-4.5);
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
     }
 }
 
@@ -307,8 +307,7 @@ void UnusedSkeletonEntity(Entity* self) {
         self->scaleY = 0x200;
         self->opacity = 0;
         self->hitboxState = 0;
-        self->drawFlags |=
-            FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
         return;
     }
 

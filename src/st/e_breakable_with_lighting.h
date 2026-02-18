@@ -146,7 +146,7 @@ void OVL_EXPORT(EntityBreakableDebris)(Entity* self) {
         self->hitboxState = 0;
 #endif
         self->zPriority = BREAKABLE_ZPRIORITY;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->animCurFrame = self->params + 28;
         facingLeft = GetSideToPlayer() & 1;
 

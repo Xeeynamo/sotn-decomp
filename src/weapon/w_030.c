@@ -713,7 +713,7 @@ void func_ptr_80170008(Entity* self) {
     case 7:
     case 8:
         stopAnimationUpdate = true;
-        self->drawFlags |= FLAG_BLINK;
+        self->drawFlags |= ENTITY_BLINK;
         if (--self->ext.weapon_030.unk7E == 0) {
             if (self->step == 7) {
                 DestroyEntity(self);
@@ -721,9 +721,8 @@ void func_ptr_80170008(Entity* self) {
             }
             self->step = 3;
             self->drawFlags &=
-                FLAG_DRAW_UNK40 | FLAG_DRAW_UNK20 | FLAG_DRAW_UNK10 |
-                FLAG_DRAW_OPACITY | FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY |
-                FLAG_DRAW_SCALEX;
+                ENTITY_MASK_B | ENTITY_MASK_G | ENTITY_MASK_R | ENTITY_OPACITY |
+                ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
             break;
         }
         break;
@@ -881,7 +880,7 @@ void func_ptr_8017000C(Entity* self) {
         self->posY.val += self->velocityY;
         return;
     case 2:
-        self->drawFlags |= FLAG_BLINK;
+        self->drawFlags |= ENTITY_BLINK;
         if (--self->ext.weapon.lifetime == 0) {
             DestroyEntity(self);
             return;
@@ -913,8 +912,7 @@ s32 func_ptr_80170010(Entity* self) {
     case 0:
         self->animSet = 9;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
-        self->drawFlags =
-            FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY | FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY | ENTITY_ROTATE;
         self->scaleX = self->scaleY = 0x20;
         self->anim = D_D6000_8017A514;
         if ((u8)self->params != 0) {

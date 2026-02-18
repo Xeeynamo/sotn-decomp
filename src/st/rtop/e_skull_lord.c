@@ -179,7 +179,7 @@ void EntitySkullLord(Entity* self) {
                 }
             }
             PlaySfxPositional(SFX_SKELETON_DEATH_B);
-            self->drawFlags = FLAG_DRAW_OPACITY;
+            self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0xC0;
             self->step_s++;
             break;
@@ -188,7 +188,7 @@ void EntitySkullLord(Entity* self) {
             self->opacity -= 4;
             if (!self->opacity) {
                 self->animCurFrame = 0;
-                self->blendMode = self->drawFlags = FLAG_DRAW_DEFAULT;
+                self->blendMode = self->drawFlags = ENTITY_DEFAULT;
                 self->ext.skullLord.timer = 0x100;
                 PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
                 self->step_s++;
@@ -255,10 +255,10 @@ void EntitySkullLordOutline(Entity* self) {
     case 0:
         InitializeEntity(D_us_801805FC);
         self->hitboxState = 0;
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         if (self->params) {
-            self->drawFlags |= FLAG_DRAW_OPACITY;
+            self->drawFlags |= ENTITY_OPACITY;
             self->animCurFrame = (s16)self->params;
             self->step = 2;
             return;
@@ -480,7 +480,7 @@ void EntitySkullLordPieces(Entity* self) {
         rand = 0x20 - (Random() & 0x1F);
         self->velocityY = -rand * rsin(angle);
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         break;
 
     case 1:

@@ -134,7 +134,7 @@ s32 func_ptr_80170004(Entity* self) {
 
     baseX = offsetX + PLAYER.posX.i.hi;
     baseY = PLAYER.posY.i.hi - 0x1A;
-    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
+    if (PLAYER.drawFlags & ENTITY_SCALEY) {
         baseY = PLAYER.posY.i.hi - 0x1F;
     }
 
@@ -146,7 +146,7 @@ s32 func_ptr_80170004(Entity* self) {
         self->zPriority = PLAYER.zPriority + 2;
         self->facingLeft = 1;
         self->flags = FLAG_UNK_100000 | FLAG_POS_PLAYER_LOCKED | FLAG_UNK_20000;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->ext.weapon.unk80 = params * 512;
         self->rotate = self->ext.weapon.unk80 - FIX(1.0 / 64);
         self->attack = self->ext.weapon.parent->attack;
@@ -219,7 +219,7 @@ void func_ptr_80170008(Entity* self) {
 
     self->posX.i.hi = xOffset + PLAYER.posX.i.hi;
     self->posY.i.hi = PLAYER.posY.i.hi - 26;
-    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
+    if (PLAYER.drawFlags & ENTITY_SCALEY) {
         self->posY.i.hi -= 5;
     }
 
@@ -360,7 +360,7 @@ void func_ptr_8017000C(Entity* self) {
             self->animSet += 2;
         }
         self->anim = D_15B000_8017B0D4;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = 0x80;
         self->scaleY = 0x80;
         self->scaleX = self->scaleY = (rand() & 0x3F) | 0x80;
@@ -372,7 +372,7 @@ void func_ptr_8017000C(Entity* self) {
         }
 
         self->velocityY = -FIX(0.5);
-        if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
+        if (PLAYER.drawFlags & ENTITY_SCALEY) {
             if (PLAYER.ext.player.anim >= 0x43 &&
                 PLAYER.ext.player.anim < 0x45) {
                 self->posY.i.hi -= 1;
@@ -418,7 +418,7 @@ s32 func_ptr_80170010(Entity* self) {
 
     baseX = offsetX + PLAYER.posX.i.hi;
     baseY = PLAYER.posY.i.hi - 0x1A;
-    if (PLAYER.drawFlags & FLAG_DRAW_SCALEY) {
+    if (PLAYER.drawFlags & ENTITY_SCALEY) {
         baseY = PLAYER.posY.i.hi - 0x1F;
     }
 
@@ -478,7 +478,7 @@ static s32 func_ptr_80170014(Entity* self) {
         self->anim = D_15B000_8017B10C;
         self->zPriority = PLAYER.zPriority + 2;
         self->flags = FLAG_POS_CAMERA_LOCKED | FLAG_UNK_100000;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = 0x100;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->ext.weapon.equipId = self->ext.weapon.parent->ext.weapon.equipId;

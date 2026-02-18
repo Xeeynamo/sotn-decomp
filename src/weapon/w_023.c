@@ -146,13 +146,13 @@ static void EntityWeaponAttack(Entity* self) {
     case 4:
         self->hitboxState = 0;
         g_Player.unk48 = 0;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->posY.val += self->velocityY;
         self->posX.val += self->velocityX;
         self->velocityY += FIX(20.0 / 128);
         self->rotate += 0x80;
         if (--self->ext.timer.t < 0x10) {
-            self->drawFlags |= FLAG_BLINK;
+            self->drawFlags |= ENTITY_BLINK;
         }
         if (--self->ext.timer.t == 0) {
             DestroyEntity(self);
@@ -225,7 +225,7 @@ static void EntityWeaponShieldSpell(Entity* self) {
         self->zPriority = PLAYER.zPriority - 2;
         self->facingLeft = PLAYER.facingLeft;
         self->animCurFrame = 0x3E;
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
 
         self->scaleX = self->scaleY = 0;
         prim = &g_PrimBuf[self->primIndex];
@@ -599,7 +599,7 @@ static void func_ptr_80170028(Entity* self) {
         self->unk5A = self->ext.weapon.parent->unk5A;
         self->anim = D_A5000_8017AB58;
         self->flags |= (FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_100000);
-        self->drawFlags = FLAG_DRAW_SCALEX | FLAG_DRAW_SCALEY;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
 
         self->scaleX = self->scaleY = 0;
         self->posY.i.hi += 40;

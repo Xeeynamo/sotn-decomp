@@ -286,7 +286,7 @@ void EntityCloakedKnightCloak(Entity* self) {
         InitializeEntity(g_EInitCloakedKnight);
         self->hitboxState = 0;
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         // fallthrough
 
     case 1:
@@ -322,8 +322,7 @@ void EntityCloakedKnightAura(Entity* self) {
         self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
         self->animCurFrame = 1;
         self->palette += 1; // n.b.! increment operator doesn't work
-        self->drawFlags |=
-            FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
         self->scaleX = self->scaleY = 0x100;
         self->opacity = 0x80;
@@ -372,7 +371,7 @@ void EntityCloakedKnightSword(Entity* self) {
     case 0:
         InitializeEntity(g_EInitCloakedKnightSword);
         self->animCurFrame = 7;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         if (!self->params) {
             entity = self + 1;
             CreateEntityFromCurrentEntity(E_CLOAKED_KNIGHT_SWORD, entity);

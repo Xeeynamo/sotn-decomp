@@ -126,7 +126,7 @@ void EntityFallingStairs(Entity* self) {
         self->posY.i.hi = NotFallenPosY - g_Tilemap.scrollY.i.hi;
         InitializeEntity(g_EInitSecret);
 
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->animCurFrame = 0;
 
         // Change tileset to show UNfallen stairs
@@ -414,7 +414,7 @@ void EntityFallingStep(Entity* self) {
         }
         InitializeEntity(g_EInitSecret);
         self->animCurFrame = 0;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         g_Tilemap.fg[TilePos] = TileInitVal;
         // Fallthrough
     case WAIT_FOR_TRIGGER:

@@ -132,7 +132,7 @@ void EntityConfessionalGhost(Entity* self) {
         }
         self->opacity = 0;
         self->blendMode = BLEND_TRANSP | BLEND_ADD;
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_OPACITY;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -480,7 +480,7 @@ void EntityConfessionalBladeDebris(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitConfessionalBlades);
         self->animCurFrame = 42;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         self->zPriority = 158;
         if (self->params) {
             self->velocityX = (Random() << 8) + FIX(0.25);

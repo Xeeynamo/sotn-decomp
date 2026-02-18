@@ -732,7 +732,7 @@ void EntityAxeKnightThrowingAxe(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitAxeKnightAxe);
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->velocityY = init_velocity_y[self->params];
         velocityX = init_velocity_x[self->params];
 

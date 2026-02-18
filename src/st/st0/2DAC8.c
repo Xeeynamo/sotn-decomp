@@ -271,7 +271,7 @@ void EntityDraculaFinalForm(Entity* self) {
             self->animCurFrame = 1;
             self->hitboxState = 3;
             self->opacity = 0x80;
-            self->drawFlags = FLAG_DRAW_DEFAULT;
+            self->drawFlags = ENTITY_DEFAULT;
             SetStep(2);
         }
         break;
@@ -559,8 +559,8 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->unk5A = 0x5E;
                     self->palette = PAL_FLAG(PAL_FILL_WHITE);
                     self->blendMode = BLEND_TRANSP | BLEND_ADD;
-                    self->drawFlags = FLAG_DRAW_OPACITY;
-                    self->drawFlags |= FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+                    self->drawFlags = ENTITY_OPACITY;
+                    self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
                     self->opacity = 0x10;
                     self->scaleX = self->scaleY = 0x400;
                     g_api.PlaySfx(SFX_DRACULA_MONSTER_SILHOUETTE_APPEAR);
@@ -573,7 +573,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 if (self->scaleY < 0x100) {
                     self->animCurFrame = 0;
                     self->blendMode = BLEND_NO;
-                    self->drawFlags = FLAG_DRAW_DEFAULT;
+                    self->drawFlags = ENTITY_DEFAULT;
                     self->step_s++;
                 }
                 break;
@@ -582,7 +582,7 @@ void EntityDraculaFinalForm(Entity* self) {
                     self->animCurFrame = 1;
                     self->unk5A = 0x50;
                     self->palette = PAL_FLAG(PAL_FILL_WHITE);
-                    self->drawFlags = FLAG_DRAW_OPACITY;
+                    self->drawFlags = ENTITY_OPACITY;
                     self->opacity = 0;
                     self->blendMode = BLEND_TRANSP | BLEND_ADD;
                     self->step_s++;
@@ -601,7 +601,7 @@ void EntityDraculaFinalForm(Entity* self) {
                 if (!self->opacity) {
                     self->animCurFrame = 0;
                     self->blendMode = BLEND_NO;
-                    self->drawFlags = FLAG_DRAW_DEFAULT;
+                    self->drawFlags = ENTITY_DEFAULT;
                     self->step_s++;
                 }
                 break;
@@ -829,8 +829,7 @@ void EntityDraculaMegaFireball(Entity* self) {
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
         if (!self->params) {
-            self->drawFlags |=
-                FLAG_DRAW_ROTATE | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleX = self->scaleY = 0x80;
             angle = self->rotate;
             self->rotate = 0x1C0;

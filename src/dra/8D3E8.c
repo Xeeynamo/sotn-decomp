@@ -1323,7 +1323,7 @@ void func_80130264(Entity* self) {
 #endif
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->rotPivotX = 0;
         self->rotPivotY = 9;
         LOH(self->hitboxOffX) = -4;
@@ -1435,7 +1435,7 @@ void func_80130618(Entity* self) {
 #endif
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->rotPivotX = 1;
         self->rotPivotY = 8;
         self->step++;
@@ -1518,9 +1518,9 @@ void func_80130618(Entity* self) {
     }
     self->palette = PLAYER.palette;
     self->blendMode = BLEND_NO;
-    self->drawFlags &= ~FLAG_DRAW_OPACITY;
+    self->drawFlags &= ~ENTITY_OPACITY;
     if (abs(PLAYER.velocityX) > FIX(3)) {
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_OPACITY;
         self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         temp_s1 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
         if (temp_s1 > 0xA0) {
@@ -1847,9 +1847,9 @@ void func_80130E94(Entity* self) {
     self->posY.val = sp3c - rsin(var_s3) * var_s7 * 0x10;
     self->palette = PLAYER.palette;
     self->blendMode = BLEND_NO;
-    self->drawFlags &= ~FLAG_DRAW_OPACITY;
+    self->drawFlags &= ~ENTITY_OPACITY;
     if (abs(PLAYER.velocityX) > FIX(3)) {
-        self->drawFlags |= FLAG_DRAW_OPACITY;
+        self->drawFlags |= ENTITY_OPACITY;
         self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
         temp_s2 = (abs(PLAYER.velocityX) - FIX(3)) >> 12;
         if (temp_s2 > 0x80) {
@@ -1872,7 +1872,7 @@ void func_8013136C(Entity* self) {
         self->palette = PLAYER.palette;
         self->flags =
             FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED;
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->rotPivotX = -8;
         self->step++;
     }
