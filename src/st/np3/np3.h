@@ -143,5 +143,3 @@ extern Primitive* FindFirstUnkPrim(Primitive* poly);
 extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
 extern s16 g_WaterXTbl[]; // pos TBL
-
-extern bool slograGaibonRetreat;

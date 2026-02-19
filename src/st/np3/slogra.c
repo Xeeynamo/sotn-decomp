@@ -49,29 +49,29 @@ bool slograGaibonRetreat = false;
 
 static s16 sensors1[] = {0, 32, 0, 4, 16, -4, -32, 0};
 static s16 sensors2[] = {0, 32, 16, 0};
-static u8 anim1[] = {9, 1, 8, 2, 12, 3, 10, 2, 0};
-static u8 anim2[] = {7, 1, 7, 4, 7, 5, 17, 1, 0};
-static u8 anim3[] = {8, 1, 4, 31, 10, 32, 4, 33, 4, 34, 4, 6, 255, 0};
-static u8 anim4[] = {4, 6, 3, 7, 2, 9, 4, 8, 32, 6, 255, 0};
-static u8 anim5[] = {1, 6, 6, 32, 6, 31, 53, 1, 255, 0};
-static u8 anim6[] = {7,  1, 5,  10, 22, 11, 2,  12,  2,
-                     13, 2, 14, 2,  15, 65, 14, 255, 0};
-static u8 unused_anim[] = {24, 14, 6, 13, 5, 31, 34, 1, 255, 0};
-static u8 anim7[] = {3,  16, 3,  17, 1,  18, 1,  19,  1,
-                     18, 1,  19, 1,  18, 24, 19, 255, 0};
-static u8 anim8[] = {3, 16, 3, 17, 3, 18, 1,  21, 1,   20,
-                     1, 21, 1, 20, 1, 21, 40, 20, 255, 0};
-static u8 anim9[] = {9, 22, 8, 23, 12, 24, 10, 23, 0};
-static u8 anim10[] = {7, 22, 7, 25, 7, 26, 17, 22, 0};
-static u8 anim11[] = {3,  27, 3,  28, 1,  21, 1,  20,  1,
-                      21, 1,  20, 1,  21, 24, 20, 255, 0};
-static u8 anim12[] = {5, 25, 5, 26, 5, 27, 5, 28, 7,  20, 14,  21,
-                      5, 27, 2, 30, 1, 29, 1, 30, 50, 29, 255, 0};
-static u8 anim13[] = {2, 21, 2, 27, 2, 30, 1, 29, 1, 30, 2, 29, 255, 0};
-static u8 anim14[] = {2, 21, 3, 20, 0};
-static u8 anim15[] = {3, 36, 2, 37, 255, 0};
-static u8 anim16[] = {2, 38, 2, 39, 2, 40, 2, 41, 2, 42, 2, 43, 255, 0};
-static u8 anim17[] = {1, 38, 1, 39, 0};
+static u8 anim1[] = {9, 1, 8, 2, 12, 3, 10, 2, 0, 0};
+static u8 anim2[] = {7, 1, 7, 4, 7, 5, 17, 1, 0, 0};
+static u8 anim3[] = {8, 1, 4, 31, 10, 32, 4, 33, 4, 34, 4, 6, -1, 0};
+static u8 anim4[] = {4, 6, 3, 7, 2, 9, 4, 8, 32, 6, -1, 0};
+static u8 anim5[] = {1, 6, 6, 32, 6, 31, 53, 1, -1, 0};
+static u8 anim6[] = {7,  1, 5,  10, 22, 11, 2,  12, 2,
+                     13, 2, 14, 2,  15, 65, 14, -1, 0};
+static u8 unused_anim[] = {24, 14, 6, 13, 5, 31, 34, 1, -1, 0};
+static u8 anim7[] = {3,  16, 3,  17, 1,  18, 1,  19, 1,
+                     18, 1,  19, 1,  18, 24, 19, -1, 0};
+static u8 anim8[] = {3, 16, 3, 17, 3, 18, 1,  21, 1,  20,
+                     1, 21, 1, 20, 1, 21, 40, 20, -1, 0};
+static u8 anim9[] = {9, 22, 8, 23, 12, 24, 10, 23, 0, 0};
+static u8 anim10[] = {7, 22, 7, 25, 7, 26, 17, 22, 0, 0};
+static u8 anim11[] = {3,  27, 3,  28, 1,  21, 1,  20, 1,
+                      21, 1,  20, 1,  21, 24, 20, -1, 0};
+static u8 anim12[] = {5, 25, 5, 26, 5, 27, 5, 28, 7,  20, 14, 21,
+                      5, 27, 2, 30, 1, 29, 1, 30, 50, 29, -1, 0};
+static u8 anim13[] = {2, 21, 2, 27, 2, 30, 1, 29, 1, 30, 2, 29, -1, 0};
+static u8 anim14[] = {2, 21, 3, 20, 0, 0};
+static u8 anim15[] = {3, 36, 2, 37, -1, 0};
+static u8 anim16[] = {2, 38, 2, 39, 2, 40, 2, 41, 2, 42, 2, 43, -1, 0};
+static u8 anim17[] = {1, 38, 1, 39, 0, 0};
 static s8 slograHitboxes[] = {
     0,  0, 0,  0,  -8,  2,   19, 27, -12, 6,   19, 24, -11, 6,  19, 24,
     -7, 2, 19, 27, 0,   2,   19, 27, -82, -96, 0,  0,  -27, 13, 32, 11,
@@ -89,7 +89,8 @@ static u8 spearHitboxIdx[] = {
     0,  0,  0,  0,  0,  0,  3,  4,  3,  3,  0,  0, 0, 0, 9, 9, 10, 10, 10, 10,
     10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0, 0, 0, 0, 0, 13, 13, 0,  0};
 
-extern u16 g_EInitSlograNP3[]; // Init
+extern EInit g_EInitSlograNP3; // Init
+
 void EntitySlogra(Entity* self) {
     Entity* otherEnt;
     s32 unusedCollResult;
@@ -112,8 +113,8 @@ void EntitySlogra(Entity* self) {
         }
         otherEnt = self + 8;
         if (otherEnt->ext.GS_Props.grabedAscending) {
-            if ((self->step != SLOGRA_DYING) &&
-                (self->step != SLOGRA_GAIBON_COMBO_ATTACK)) {
+            if (self->step != SLOGRA_DYING &&
+                self->step != SLOGRA_GAIBON_COMBO_ATTACK) {
                 SetStep(SLOGRA_GAIBON_COMBO_ATTACK);
             }
         }
@@ -141,7 +142,7 @@ void EntitySlogra(Entity* self) {
         CreateEntityFromCurrentEntity(E_ID(SLOGRA_SPEAR), otherEnt);
 
     case SLOGRA_FLOOR_ALIGN:
-        if (UnkCollisionFunc3(&sensors1) & 1) {
+        if (UnkCollisionFunc3(sensors1) & 1) {
             SetStep(SLOGRA_IDLE);
         }
         break;
@@ -177,7 +178,7 @@ void EntitySlogra(Entity* self) {
         } else {
             self->velocityX = FIX(-0.75);
         }
-        UnkCollisionFunc2(&sensors2);
+        UnkCollisionFunc2(sensors2);
         if (!self->ext.GS_Props.flag) {
             if (GetDistanceToPlayerX() < 72) {
                 if (!self->ext.GS_Props.attackMode) {
@@ -196,7 +197,7 @@ void EntitySlogra(Entity* self) {
                 }
             }
         }
-        if (!(Random() & 0x3F)) {
+        if ((Random() & 0x3F) == 0) {
             SetStep(SLOGRA_TAUNT_WITH_SPEAR);
         }
         if (!--self->ext.GS_Props.timer) {
@@ -312,16 +313,18 @@ void EntitySlogra(Entity* self) {
             self->velocityX = FIX(-0.75);
         }
 
-        UnkCollisionFunc2(&sensors2);
-        if (!self->ext.GS_Props.flag && GetDistanceToPlayerX() < 72) {
-            self->ext.GS_Props.flag ^= 1;
+        UnkCollisionFunc2(sensors2);
+        if (!self->ext.GS_Props.flag) {
+            if (GetDistanceToPlayerX() < 72) {
+                self->ext.GS_Props.flag ^= 1;
+            }
         }
         if (self->ext.GS_Props.flag) {
             if (GetDistanceToPlayerX() > 112) {
                 self->ext.GS_Props.flag ^= 1;
             }
         }
-        if (!(Random() & 0x3F)) {
+        if ((Random() & 0x3F) == 0) {
             SetStep(SLOGRA_TAUNT_WITHOUT_SPEAR);
         }
         if (!--self->ext.GS_Props.timer) {
@@ -349,7 +352,7 @@ void EntitySlogra(Entity* self) {
             }
             break;
 
-        case 1:
+        case SLOGRA_COMBO_ATTACK_PLUNGE:
             if (self->ext.GS_Props.nearDeath) {
                 animation = anim13;
             } else {
@@ -357,7 +360,7 @@ void EntitySlogra(Entity* self) {
             }
             AnimateEntity(animation, self);
 
-            if (UnkCollisionFunc3(&sensors1) & 1) {
+            if (UnkCollisionFunc3(sensors1) & 1) {
                 g_api.func_80102CD8(1);
                 self->ext.GS_Props.timer = 16;
                 self->step_s++;
@@ -397,9 +400,9 @@ void EntitySlogra(Entity* self) {
             self->step_s++;
 
         case SLOGRA_DYING_EXPLODING:
-            unusedCollResult = UnkCollisionFunc3(&sensors1);
+            unusedCollResult = UnkCollisionFunc3(sensors1);
             AnimateEntity(anim14, self);
-            if (!(g_Timer & 3)) {
+            if ((g_Timer & 3) == 0) {
                 otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (otherEnt != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, otherEnt);
@@ -489,7 +492,6 @@ void EntitySlograSpear(Entity* self) {
     }
 }
 
-// projectile fired from slogra's spear
 void EntitySlograSpearProjectile(Entity* self) {
     Entity* entity;
 
@@ -514,7 +516,7 @@ void EntitySlograSpearProjectile(Entity* self) {
 
     case 1:
         if (AnimateEntity(anim16, self) == 0) {
-            SetStep(2);
+            SetStep(SLOGRA_IDLE);
         }
         break;
 

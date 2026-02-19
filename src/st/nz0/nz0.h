@@ -74,7 +74,7 @@ typedef enum EntityIDs {
     /* 0x41 */ E_SLOGRA_SPEAR,            // func_pspeu_0925A420
     /* 0x42 */ E_SLOGRA_SPEAR_PROJECTILE, // func_pspeu_0925A668
     /* 0x43 */ E_GAIBON,                  // func_pspeu_09256FF8
-    /* 0x44 */ E_GAIBON_UNK0,             // func_pspeu_09258B68
+    /* 0x44 */ E_GAIBON_LEG,              // func_pspeu_09258B68
     /* 0x45 */ E_GAIBON_SMALL_FIREBALL,   // func_pspeu_09258C98
     /* 0x46 */ E_GAIBON_BIG_FIREBALL,     // func_pspeu_09258E00
     /* 0x47 */ E_UNK47,                   // func_pspeu_09239250
@@ -88,6 +88,7 @@ typedef enum EntityIDs {
 } EntityIDs;
 
 #ifdef VERSION_PSP
+extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
 extern s32 E_ID(EXPLOSION);
 extern s32 E_ID(CANNON_SHOT);
 extern s32 E_ID(WALL_DEBRIS);
@@ -138,30 +139,7 @@ extern EInit g_EInitBossDoor;
 
 // *** EntitySlogra properties START ***
 
-extern EInit g_EInitSlogra; // Init
-extern s16 D_8018105C[];
-extern s16 D_8018106C[];
-extern u8 D_80181074[]; // Animation
-extern u8 D_80181080[]; // Animation: Taunt
-extern u8 D_8018108C[]; // Animation: Firing projectiles
-extern u8 D_8018109C[]; // Animation
-extern u8 D_801810A8[]; // Animation
-extern u8 D_801810B4[]; // Animation
-extern u8 D_801810D4[]; // Animation
-extern u8 D_801810E8[]; // Animation
-extern u8 D_801810FC[]; // Animation
-extern u8 D_80181108[]; // Animation
-extern u8 D_80181114[]; // Animation
-extern u8 D_80181128[]; // Animation
-extern u8 D_80181140[]; // Animation
-extern u8 D_80181150[]; // Animation
-extern u8 D_80181158[]; // Animation
-extern u8 D_80181160[];
-extern u8 D_80181170[];
-extern u8 D_80181178[][4];
-extern u8 D_801811B8[];
-extern s8 D_801811E0[][4];
-extern u8 D_80181218[];
+extern EInit g_EInitSlogra;
 
 // *** EntitySlogra properties END ***
 
@@ -171,50 +149,16 @@ extern EInit g_EInitSlograProjectile;
 // *** EntityGaibon properties START ***
 
 extern EInit g_EInitGaibon;
-extern u16 D_80180D36;
-extern u16 D_80181240[];
-extern u8 D_80181250[];
-extern u8 D_80181264[];
-extern u8 D_80181298[];
-extern u8 D_801812AC[];
-extern u8 D_801812C0[];
-extern u8 D_801812CC[];
-extern u8 D_801812DC[];
-extern u8 D_801812F0[];
-extern u8 D_801812FC[];
-extern u8 D_80181304[];
-extern s8 D_80181310[];
-extern u8 D_80181340[];
 
 // *** EntityGaibon properties END ***
 
 extern EInit g_EInitGaibonProjectile;
 extern EInit g_EInitGaibonLargeProjectile;
-extern s32 D_80180E04[];
-extern u8 D_80180E24[];
-extern u8 D_80180E2C[];
-extern s16 D_80180E34[];
-extern s8 D_80180E44[];
 extern u32 g_randomNext;
 extern Entity* g_CurrentEntity;
 extern s32 g_BossFlag; // original names: boss_flag / beri_flag
-extern u8 D_8018136C[];
-extern u8 D_80181378[];
-extern u8 D_80181388[];
-extern s16 D_80181978[];
-extern u16 D_80181D9C[];
-extern s32 D_80181DA8[];
-extern const u8* D_80181E54[];
-extern s16 D_80181EDC[];
-extern u32 D_80181EEC[];
-extern ObjInit D_80182014[];
-
-extern u8 D_80181F30[];
 extern EInit g_EInitSubwpnClochePieces;
 extern EInit g_EInitObtainable;
-extern u16 D_80180BC8[];
-extern u16 D_80181CA8[];
-extern u16 D_80181CD8[];
 extern u8* g_SubweaponAnimPrizeDrop[];
 
 // *** EntityLeftSecretRoomWall properties START ***

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "np3.h"
 
+extern bool slograGaibonRetreat;
+
 #ifdef VERSION_PSP
 extern s32 E_ID(GAIBON);
 extern s32 E_ID(GAIBON_LEG);
@@ -54,7 +56,7 @@ typedef enum {
     GAIBON_FLY_SHOOT_BIG_FIREBALL_SETUP,
     GAIBON_FLY_SHOOT_BIG_FIREBALL_SHOOTING,
     GAIBON_FLY_SHOOT_BIG_FIREBALL_END,
-} GaibonFlyShootBigFirewallSubSteps;
+} GaibonFlyShootBigFireballSubSteps;
 
 typedef enum {
     GAIBON_PICKUP_SLOGRA_SETUP,
@@ -83,19 +85,20 @@ typedef enum {
 } GaibonDyingSubSteps;
 
 static s16 sensors[] = {0, 28, 0, 4, 4, -4, -8, 0};
-static u8 anim1[] = {6, 1, 3, 9, 2, 2, 2, 3, 3, 4, 4, 10, 5, 3, 5, 2, 0};
+static u8 anim1[] = {6, 1, 3, 9, 2, 2, 2, 3, 3, 4, 4, 10, 5, 3, 5, 2, 0, 0};
 static u8 anim2[] = {2, 1, 1, 9, 1, 2, 1, 3, 1, 4,  1,  10, 2, 3, 2, 2, 4,
                      1, 2, 9, 1, 2, 1, 3, 2, 4, 2,  10, 3,  3, 3, 2, 5, 1,
-                     2, 9, 2, 2, 2, 3, 2, 4, 3, 10, 4,  3,  4, 2, 0};
-static u8 anim3[] = {6, 5, 3, 11, 2, 6, 2, 7, 3, 8, 4, 12, 5, 7, 5, 6, 0};
-static u8 anim4[] = {6, 32, 3, 33, 2, 34, 2, 35, 3, 36, 4, 37, 5, 35, 5, 34, 0};
-static u8 anim5[] = {5, 13, 5, 14, 4, 15, 8, 14, 255, 0};
-static u8 anim6[] = {3, 14, 3, 16, 3, 17, 4, 18, 4, 19, 34, 18, 255, 0};
-static u8 anim7[] = {4,  3, 1,  22, 1,  21, 1,  22,  4,
-                     21, 4, 23, 4,  20, 1,  24, 255, 0};
-static u8 anim8[] = {5, 13, 5, 18, 5, 25, 4, 26, 41, 25, 255, 0};
-static u8 anim9[] = {2, 25, 2, 27, 0, 0, 0, 0};
-static u8 anim10[] = {16, 25, 5, 28, 6, 29, 32, 30, 255, 0};
+                     2, 9, 2, 2, 2, 3, 2, 4, 3, 10, 4,  3,  4, 2, 0, 0};
+static u8 anim3[] = {6, 5, 3, 11, 2, 6, 2, 7, 3, 8, 4, 12, 5, 7, 5, 6, 0, 0};
+static u8 anim4[] = {6,  32, 3,  33, 2,  34, 2,  35, 3,
+                     36, 4,  37, 5,  35, 5,  34, 0,  0};
+static u8 anim5[] = {5, 13, 5, 14, 4, 15, 8, 14, -1, 0};
+static u8 anim6[] = {3, 14, 3, 16, 3, 17, 4, 18, 4, 19, 34, 18, -1, 0};
+static u8 anim7[] = {4,  3, 1,  22, 1,  21, 1,  22, 4,
+                     21, 4, 23, 4,  20, 1,  24, -1, 0};
+static u8 anim8[] = {5, 13, 5, 18, 5, 25, 4, 26, 41, 25, -1, 0};
+static u8 anim9[] = {2, 25, 2, 27, 0, 0};
+static u8 anim10[] = {16, 25, 5, 28, 6, 29, 32, 30, -1, 0};
 static s8 gaibonHitboxes[][4] = {
     {0, 0, 0, 0},     {-3, -4, 15, 27}, {-3, -3, 15, 25}, {-3, -1, 15, 24},
     {-3, -1, 15, 23}, {-4, 4, 15, 23},  {-3, -3, 16, 21}, {-3, -3, 16, 20},
@@ -128,8 +131,8 @@ void EntityGaibon(Entity* self) {
         }
         if (!(self->flags & FLAG_DEAD) || (self->step >= GAIBON_NEAR_DEATH)) {
             other = &SLOGRA;
-            if ((other->ext.GS_Props.pickupFlag) &&
-                (self->step < GAIBON_LANDING_AFTER_SHOOTING)) {
+            if (other->ext.GS_Props.pickupFlag &&
+                self->step < GAIBON_LANDING_AFTER_SHOOTING) {
                 SetStep(GAIBON_PICKUP_SLOGRA);
             }
         }
@@ -141,7 +144,7 @@ void EntityGaibon(Entity* self) {
         }
     }
     switch (self->step) {
-    case 0x0:
+    case GAIBON_INIT:
         if (g_CastleFlags[SLO_GAI_DEFEATED]) {
             DestroyEntity(self);
             return;
@@ -163,8 +166,7 @@ void EntityGaibon(Entity* self) {
         if (!self->poseTimer && self->pose == 1) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
-        if ((GetDistanceToPlayerX() < 0x60) &&
-            (GetDistanceToPlayerY() < 0x60)) {
+        if (GetDistanceToPlayerX() < 0x60 && GetDistanceToPlayerY() < 0x60) {
             SetStep(GAIBON_FLY_TOWARDS_PLAYER);
         }
         break;
@@ -282,7 +284,7 @@ void EntityGaibon(Entity* self) {
                     other->zPriority = (self->zPriority + 1);
                 }
             }
-            if (!(--self->ext.GS_Props.timer)) {
+            if (!--self->ext.GS_Props.timer) {
                 self->step_s++;
             }
             break;
@@ -293,9 +295,9 @@ void EntityGaibon(Entity* self) {
             if (AnimateEntity(anim2, self) == 0) {
                 xVar = self->posX.i.hi - 0x80;
                 if (abs(xVar) < 0x60) {
-                    SetStep(5);
+                    SetStep(GAIBON_LANDING_AFTER_SHOOTING);
                 } else {
-                    SetStep(3);
+                    SetStep(GAIBON_FLY_TOWARDS_PLAYER);
                 }
                 if (self->ext.GS_Props.nearDeath) {
                     SetStep(GAIBON_FLY_SHOOT_BIG_FIREBALL);
@@ -385,7 +387,7 @@ void EntityGaibon(Entity* self) {
                     other->zPriority = self->zPriority + 1;
                 }
             }
-            if (!(--self->ext.GS_Props.timer)) {
+            if (!--self->ext.GS_Props.timer) {
                 SetStep(GAIBON_FLY_TOWARDS_PLAYER);
             }
             break;
@@ -431,7 +433,7 @@ void EntityGaibon(Entity* self) {
             MoveEntity();
             self->velocityX -= self->velocityX / 16;
             self->velocityY -= self->velocityY / 16;
-            if (!(--self->ext.GS_Props.timer)) {
+            if (!--self->ext.GS_Props.timer) {
                 xVar = self->posX.i.hi - 0x80;
                 if (abs(xVar) < 0x60) {
                     SetStep(GAIBON_LANDING_AFTER_SHOOTING);
@@ -468,7 +470,7 @@ void EntityGaibon(Entity* self) {
             self->velocityX = (speed * rcos(angle)) >> 0xC;
             self->velocityY = (speed * rsin(angle)) >> 0xC;
             MoveEntity();
-            if ((abs(xVar) < 8) && (abs(yVar) < 8)) {
+            if (abs(xVar) < 8 && abs(yVar) < 8) {
                 self->ext.GS_Props.grabedAscending = 1;
                 self->velocityX = 0;
                 self->velocityY = 0;
@@ -522,7 +524,7 @@ void EntityGaibon(Entity* self) {
             other->posY.i.hi = self->posY.i.hi + 28;
             other->velocityY = 0;
             self->ext.GS_Props.grabedAscending = 0;
-            if (!(--self->ext.GS_Props.timer)) {
+            if (!--self->ext.GS_Props.timer) {
                 self->step_s++;
             }
             break;
@@ -637,7 +639,7 @@ void EntityGaibon(Entity* self) {
                     other->params = 2;
                 }
             }
-            if (!(--self->ext.GS_Props.timer)) {
+            if (!--self->ext.GS_Props.timer) {
                 DestroyEntity(self);
                 return;
             }
@@ -690,14 +692,12 @@ void EntityGaibonLeg(Entity* self) {
     }
 }
 
-static u8 anim_small_fireball[] = {
-    0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02, 0x04, 0x00};
-static u8 anim_large_fireball1[] = {0x02, 0x0D, 0x02, 0x0E, 0x02, 0x0F, 0x02,
-                                    0x10, 0x02, 0x0F, 0x02, 0x0E, 0x00};
+static u8 anim_small_fireball[] = {2, 3, 2, 4, 2, 5, 2, 4, 0, 0};
+static u8 anim_large_fireball1[] = {
+    2, 13, 2, 14, 2, 15, 2, 16, 2, 15, 2, 14, 0, 0};
 static u8 anim_large_fireball2[] = {
-    0x01, 0x01, 0x01, 0x02, 0x01, 0x03, 0x01, 0x04, 0x01, 0x05,
-    0x01, 0x06, 0x01, 0x07, 0x01, 0x08, 0x01, 0x09, 0x01, 0x0A,
-    0x01, 0x0B, 0x01, 0x0C, 0x01, 0x0D, 0xFF, 0x00};
+    1, 1, 1, 2, 1, 3,  1, 4,  1, 5,  1, 6,  1,  7,
+    1, 8, 1, 9, 1, 10, 1, 11, 1, 12, 1, 13, -1, 0};
 
 // small red projectile from gaibon
 void EntitySmallGaibonProjectile(Entity* self) {
