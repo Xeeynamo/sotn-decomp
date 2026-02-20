@@ -569,7 +569,7 @@
 | dre    | func_pspeu_092458A8                  |       19 |          1 |        |       |     |
 | lib    | func_psp_0925AFB0                    |       19 |          1 |        |       |     |
 | no3    | func_pspeu_09243378                  |       19 |          1 |        |       |     |
-| nz0    | SetCutsceneEnd                       |       19 |          1 |        |       |     |
+| nz0    | func_pspeu_0923E440                  |       19 |          1 |        |       |     |
 | sel    | func_psp_0923F460                    |       19 |          1 |        |       |     |
 | sel    | func_psp_0923F4D0                    |       19 |          1 |        |       |     |
 | sel    | func_psp_092459D8                    |       19 |          1 |        |       |     |
@@ -1095,7 +1095,7 @@
 | dre    | func_pspeu_09245638                  |       29 |          1 |        |       |     |
 | lib    | func_psp_0925AD40                    |       29 |          1 |        |       |     |
 | no3    | func_pspeu_09243108                  |       29 |          1 |        |       |     |
-| nz0    | CutsceneUnk1                         |       29 |          1 |        |       |     |
+| nz0    | func_pspeu_0923E1D0                  |       29 |          1 |        |       |     |
 | sel    | func_psp_09242B40                    |       29 |          1 |        |       |     |
 | sel    | func_psp_09245760                    |       29 |          1 |        |       |     |
 | st0    | func_pspeu_09239060                  |       29 |          1 |        |       |     |
@@ -2141,7 +2141,7 @@
 | dre    | func_pspeu_09245568                  |       57 |          2 |        |       |     |
 | lib    | func_psp_0925AC70                    |       57 |          2 |        |       |     |
 | no4    | func_pspeu_0925E1F8                  |       57 |          2 |        |       |     |
-| nz0    | CutsceneUnk4                         |       57 |          2 |        |       |     |
+| nz0    | func_pspeu_0923E100                  |       57 |          2 |        |       |     |
 | sel    | func_psp_09245690                    |       57 |          2 |        |       |     |
 | st0    | func_pspeu_09238F90                  |       57 |          2 |        |       |     |
 | sel    | func_psp_09239228                    |       57 |          3 |        |       |     |
@@ -2825,7 +2825,7 @@
 | dra    | func_psp_0910BAC8                    |       86 |         11 |        |       |     |
 | dra    | func_psp_09140698                    |       86 |         12 |        |       |     |
 | np3    | EntityGaibonLeg                      |       86 |         12 |        |       |     |
-| nz0    | func_801B69E8                        |       86 |         12 |        |       |     |
+| nz0    | EntityGaibonLeg                      |       86 |         12 |        |       |     |
 | maria  | func_pspeu_092A81C0                  |       86 |         17 |        |       |     |
 | maria  | func_pspeu_092A9C28                  |       86 |         17 |        |       |     |
 | main   | sceGuSetDither                       |       87 |          1 |        |       |     |
@@ -3515,7 +3515,7 @@
 | lib    | func_psp_0925ADA0                    |      139 |          5 |        |       |     |
 | no3    | func_pspeu_09243168                  |      139 |          5 |        |       |     |
 | no4    | func_pspeu_0925E338                  |      139 |          5 |        |       |     |
-| nz0    | SetCutsceneScript                    |      139 |          5 |        |       |     |
+| nz0    | func_pspeu_0923E230                  |      139 |          5 |        |       |     |
 | st0    | func_pspeu_092390C0                  |      139 |          5 |        |       |     |
 | main   | func_psp_0891E420                    |      139 |         12 |        |       |     |
 | ric    | func_pspeu_092C9988                  |      139 |         12 |        |       |     |
@@ -3910,7 +3910,7 @@
 | lib    | func_psp_0925A8D0                    |      212 |         14 |        |       |     |
 | no3    | func_pspeu_09242CA0                  |      212 |         14 |        |       |     |
 | no4    | func_pspeu_0925DE60                  |      212 |         14 |        |       |     |
-| nz0    | DrawCutsceneActorName                |      212 |         14 |        |       |     |
+| nz0    | func_pspeu_0923DD68                  |      212 |         14 |        |       |     |
 | sel    | func_psp_092452F8                    |      212 |         14 |        |       |     |
 | st0    | func_pspeu_09238BF8                  |      212 |         14 |        |       |     |
 | lib    | func_psp_092670F8                    |      213 |         19 |        |       |     |
@@ -4023,7 +4023,7 @@
 | nz0    | BoxPuzzleSpikes                      |      243 |         17 |        |       |     |
 | lib    | func_psp_0925AFE8                    |      243 |         18 |        |       |     |
 | no3    | func_pspeu_092433B0                  |      243 |         18 |        |       |     |
-| nz0    | CutsceneRun                          |      243 |         18 |        |       |     |
+| nz0    | func_pspeu_0923E478                  |      243 |         18 |        |       |     |
 | st0    | func_pspeu_09239308                  |      243 |         18 |        |       |     |
 | no4    | func_pspeu_09241098                  |      243 |         25 |        |       |     |
 | nz0    | EntityMovableBox                     |      243 |         30 |        |       |     |
