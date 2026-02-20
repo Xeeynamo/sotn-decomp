@@ -16,6 +16,7 @@ typedef enum {
     /* 0x07 */ E_SOUL_STEAL_ORB = 0x7,
     /* 0x0A */ E_EQUIP_ITEM_DROP = 0xA,
     /* 0x0B */ E_RELIC_ORB,
+    /* 0x0D */ E_ENEMY_BLOOD = 13,
     /* 0x11 */ E_MEDUSA,
     /* 0x14 */ E_EXPLOSION_VARIANTS = 0x14,
     /* 0x15 */ E_GREY_PUFF,

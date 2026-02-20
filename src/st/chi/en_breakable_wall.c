@@ -159,7 +159,7 @@ void EntityBreakableWall(Entity* self) {
         self->hitboxHeight = 32;
         self->hitboxState = 2;
 
-        self->flags |= FLAG_UNK_400000;
+        self->flags |= FLAG_SUPPRESS_STUN;
 
         // Determine tile indices to use
         pSrcTile = BreakableWallTilesCollision;

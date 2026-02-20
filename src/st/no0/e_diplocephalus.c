@@ -264,7 +264,7 @@ void EntityDiplocephalus(Entity* self) {
         self->ext.diplocephalus.unk9C = 0;
         self->ext.diplocephalus.unk9E = 0;
         self->facingLeft = GetSideToPlayer() & 1;
-        self->unk60 = self + 1;
+        self->nextPart = self + 1;
         entityRef = self;
 
         for (i = 0; i < 4; i++) {
@@ -279,7 +279,7 @@ void EntityDiplocephalus(Entity* self) {
             entityRef->facingLeft = self->facingLeft ^ 1;
             entityRef->ext.diplocephalus.parent = self;
             entityRef->ext.diplocephalus.unk9E = i + 1;
-            entityRef->unk60 = entityRef + 1;
+            entityRef->nextPart = entityRef + 1;
         }
 
         self->ext.diplocephalus.entity8C = entityRef;
@@ -307,7 +307,7 @@ void EntityDiplocephalus(Entity* self) {
                 entityRef->ext.diplocephalus.unk9F = self->facingLeft;
             }
             (entityRef - 4)->ext.diplocephalus.entity90 = entityRef;
-            entityRef->unk60 = entityRef + 1;
+            entityRef->nextPart = entityRef + 1;
         }
 
         entityRef++;
@@ -316,7 +316,7 @@ void EntityDiplocephalus(Entity* self) {
         entityRef->facingLeft = self->facingLeft ^ 1;
         entityRef->ext.diplocephalus.parent = self;
         self->ext.diplocephalus.entityA0 = entityRef;
-        entityRef->unk60 = entityRef + 1;
+        entityRef->nextPart = entityRef + 1;
 
         entityRef += 9;
         DestroyEntity(entityRef);

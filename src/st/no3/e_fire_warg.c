@@ -216,7 +216,7 @@ static s16 D_80182A4C[] = {
     8,  12, 28, 28, -18, -25, 8,  13};
 
 void EntityFireWarg(Entity* self) {
-    Entity* ent_s0;
+    Entity* part;
     Entity* ent_s4;
     EnemyDef* enemyDefPtr;
     s16* hitboxPtr;
@@ -234,23 +234,23 @@ void EntityFireWarg(Entity* self) {
                 SetStep(11);
             }
         } else {
-            ent_s0 = (self + 1);
+            part = (self + 1);
             self->params = 0;
             self->flags &= ~(FLAG_NOT_AN_ENEMY | FLAG_DEAD);
-            ent_s0->flags &= ~(FLAG_NOT_AN_ENEMY | FLAG_DEAD);
-            self->flags |= FLAG_UNK_400000 | FLAG_UNK_400;
-            ent_s0->flags |= FLAG_UNK_400000;
-            self->enemyId = ent_s0->enemyId = 0x94;
-            ent_s0->flags = self->flags;
+            part->flags &= ~(FLAG_NOT_AN_ENEMY | FLAG_DEAD);
+            self->flags |= FLAG_SUPPRESS_STUN | FLAG_UNK_400;
+            part->flags |= FLAG_SUPPRESS_STUN;
+            self->enemyId = part->enemyId = 0x94;
+            part->flags = self->flags;
             enemyDefPtr = &g_api.enemyDefs[148];
             self->hitPoints = enemyDefPtr->hitPoints;
-            ent_s0->attack = self->attack;
-            ent_s0->attack = self->attack;
-            ent_s0->unk60 = self;
+            part->attack = self->attack;
+            part->attack = self->attack;
+            part->nextPart = self;
 
             for (var_s2 = 0; var_s2 < 11; var_s2++) {
                 self->unk6D[var_s2] = 0x10;
-                ent_s0->unk6D[var_s2] = 0x10;
+                part->unk6D[var_s2] = 0x10;
             }
 
             if (var_s1 != 4) {
@@ -277,26 +277,26 @@ void EntityFireWarg(Entity* self) {
     switch (var_s1) {
     case 0:
         // The self + 1 entity is an E_ID_30, or EntityUnkId30
-        ent_s0 = self + 1;
-        self->unk60 = ent_s0;
+        part = self + 1;
+        self->nextPart = part;
         // PSP version: 0x20
-        CreateEntityFromCurrentEntity(E_ID_30, ent_s0);
-        ent_s0->unk5C = self;
+        CreateEntityFromCurrentEntity(E_ID_30, part);
+        part->parent = self;
         if (self->params) {
             InitializeEntity(g_EInitFireWarg2);
             self->animCurFrame = 0x32;
             // The self + 2 entity is an E_ID_31, or EntityUnkId31
             ent_s4 = self + 2;
-            ent_s0->unk60 = ent_s4;
-            ent_s0 = ent_s4;
+            part->nextPart = ent_s4;
+            part = ent_s4;
             // PSP version: 0x21
-            CreateEntityFromCurrentEntity(E_ID_31, ent_s0);
-            ent_s0->unk5C = self;
-            ent_s0->unk60 = self;
+            CreateEntityFromCurrentEntity(E_ID_31, part);
+            part->parent = self;
+            part->nextPart = self;
         } else {
             InitializeEntity(g_EInitFireWarg1);
         }
-        ent_s0->unk60 = self;
+        part->nextPart = self;
         self->facingLeft = (GetSideToPlayer() ^ 1) & 1;
         if (self->facingLeft) {
             self->posX.i.hi -= 0x20;
@@ -519,7 +519,7 @@ void EntityFireWarg(Entity* self) {
             }
             break;
         case 1:
-            ent_s0 = self + 1;
+            part = self + 1;
             frameIdx = AnimateEntity(&D_801828A8, self);
 
             if (self->velocityX) {
@@ -529,8 +529,8 @@ void EntityFireWarg(Entity* self) {
                     self->velocityX -= FIX(0.5);
                 }
             } else {
-                ent_s0->attackElement = self->attackElement;
-                ent_s0->attack = self->attack;
+                part->attackElement = self->attackElement;
+                part->attack = self->attack;
             }
 
             if ((frameIdx & 0x80) && (self->pose == 7)) {
@@ -541,8 +541,8 @@ void EntityFireWarg(Entity* self) {
                 }
                 PlaySfxPositional(SFX_WARG_GROWL);
                 enemyDefPtr = &g_api.enemyDefs[149];
-                ent_s0->attackElement = enemyDefPtr->attackElement;
-                ent_s0->attack = enemyDefPtr->attack;
+                part->attackElement = enemyDefPtr->attackElement;
+                part->attack = enemyDefPtr->attack;
             }
 
             UnkCollisionFunc2(&D_801829D4);
@@ -577,16 +577,15 @@ void EntityFireWarg(Entity* self) {
 
             if (self->animCurFrame == 0x14) {
                 if (self->ext.fireWarg.unk80 == 0) {
-                    ent_s0 = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                    if (ent_s0 != NULL) {
-                        CreateEntityFromCurrentEntity(
-                            E_FIRE_WARG_ATTACK, ent_s0);
-                        ent_s0->facingLeft = self->facingLeft;
-                        ent_s0->posY.i.hi += 0x28;
+                    part = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                    if (part != NULL) {
+                        CreateEntityFromCurrentEntity(E_FIRE_WARG_ATTACK, part);
+                        part->facingLeft = self->facingLeft;
+                        part->posY.i.hi += 0x28;
                         if (self->facingLeft) {
-                            ent_s0->posX.i.hi += 0x40;
+                            part->posX.i.hi += 0x40;
                         } else {
-                            ent_s0->posX.i.hi -= 0x40;
+                            part->posX.i.hi -= 0x40;
                         }
                     }
                 }
@@ -644,14 +643,14 @@ void EntityFireWarg(Entity* self) {
                 self->ext.fireWarg.unk80 = 0;
                 SetSubStep(1);
                 self->ext.fireWarg.unk80++;
-                ent_s0 = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (ent_s0 != NULL) {
-                    CreateEntityFromCurrentEntity(E_FIRE_WARG_DEATH, ent_s0);
-                    ent_s0->unk5A = self->unk5A;
+                part = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (part != NULL) {
+                    CreateEntityFromCurrentEntity(E_FIRE_WARG_DEATH, part);
+                    part->unk5A = self->unk5A;
                     if (self->hitEffect) {
-                        ent_s0->palette = self->hitEffect;
+                        part->palette = self->hitEffect;
                     } else {
-                        ent_s0->palette = self->palette;
+                        part->palette = self->palette;
                     }
                 }
             }
@@ -682,27 +681,27 @@ void EntityFireWarg(Entity* self) {
         }
         break;
     case 12:
-        ent_s0 = self + 2;
+        part = self + 2;
         ent_s4 = self + 3;
         switch (self->step_s) {
         case 0:
-            ent_s0->poseTimer = 0;
-            ent_s0->pose = 0;
-            ent_s0->ext.fireWargHelper.unk7C = true;
+            part->poseTimer = 0;
+            part->pose = 0;
+            part->ext.fireWargHelper.unk7C = true;
 
             if (!(Random() & 7)) {
-                AnimateEntity(&D_8018296C, ent_s0);
+                AnimateEntity(&D_8018296C, part);
                 AnimateEntity(&D_80182980, self);
                 self->step_s += 1;
             } else {
-                AnimateEntity(&D_80182990, ent_s0);
+                AnimateEntity(&D_80182990, part);
                 AnimateEntity(&D_801829B4, self);
                 self->step_s += 2;
             }
             self->animCurFrame = 0x32;
             break;
         case 1:
-            var_s1 = AnimateEntity(&D_8018296C, ent_s0);
+            var_s1 = AnimateEntity(&D_8018296C, part);
             AnimateEntity(&D_80182980, self);
             if (self->velocityX != 0) {
                 if (self->velocityX < 0) {
@@ -724,7 +723,7 @@ void EntityFireWarg(Entity* self) {
                 ent_s4->attack = self->attack;
             }
 
-            if ((var_s1 & 0x80) && (ent_s0->pose == 5)) {
+            if ((var_s1 & 0x80) && (part->pose == 5)) {
                 if (self->facingLeft) {
                     self->velocityX = FIX(4.0);
                 } else {
@@ -741,11 +740,11 @@ void EntityFireWarg(Entity* self) {
             UnkCollisionFunc2(&D_801829D4);
             if (!var_s1) {
                 func_801CC820(self);
-                ent_s0->ext.fireWargHelper.unk7C = false;
+                part->ext.fireWargHelper.unk7C = false;
             }
             break;
         case 2:
-            var_s1 = AnimateEntity(&D_80182990, ent_s0);
+            var_s1 = AnimateEntity(&D_80182990, part);
             AnimateEntity(&D_801829B4, self);
             if (self->velocityX != 0) {
                 if (self->velocityX < 0) {
@@ -766,7 +765,7 @@ void EntityFireWarg(Entity* self) {
                 ent_s4->attackElement = self->attackElement;
                 ent_s4->attack = self->attack;
             }
-            frameIdx = ent_s0->pose;
+            frameIdx = part->pose;
             if ((var_s1 & 0x80) &&
                 ((frameIdx == 5) || (frameIdx == 9) || (frameIdx == 0xD))) {
                 if (self->facingLeft) {
@@ -784,7 +783,7 @@ void EntityFireWarg(Entity* self) {
             UnkCollisionFunc2(&D_801829D4);
             if (!var_s1) {
                 func_801CC820(self);
-                ent_s0->ext.fireWargHelper.unk7C = false;
+                part->ext.fireWargHelper.unk7C = false;
             }
         }
         break;
@@ -900,7 +899,7 @@ static s16 D_80182FE8[] = {
     -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 4, -8, 8};
 
 void EntityUnkId31(Entity* self) {
-    Entity* otherEnt;
+    Entity* part;
     s16* hitboxPtr;
     u16 animCurFrame;
     s16 i;
@@ -908,66 +907,66 @@ void EntityUnkId31(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitFireWarg1);
         self->zPriority++;
-        otherEnt = self + 1;
-        CreateEntityFromCurrentEntity(E_ID_30, otherEnt);
-        otherEnt->params = 1;
+        part = self + 1;
+        CreateEntityFromCurrentEntity(E_ID_30, part);
+        part->params = 1;
     }
-    otherEnt = self - 2;
+    part = self - 2;
     if (self->ext.fireWargHelper.unk7C) {
         animCurFrame = (self->pose - 1) * 2;
-        if (otherEnt->step_s == 1) {
+        if (part->step_s == 1) {
             hitboxPtr = D_80182FC8 + animCurFrame;
         } else {
             hitboxPtr = D_80182FE8 + animCurFrame;
         }
 
         if (self->facingLeft) {
-            self->posX.i.hi = otherEnt->posX.i.hi - *hitboxPtr++;
+            self->posX.i.hi = part->posX.i.hi - *hitboxPtr++;
         } else {
-            self->posX.i.hi = otherEnt->posX.i.hi + *hitboxPtr++;
+            self->posX.i.hi = part->posX.i.hi + *hitboxPtr++;
         }
-        self->posY.i.hi = otherEnt->posY.i.hi + *hitboxPtr;
+        self->posY.i.hi = part->posY.i.hi + *hitboxPtr;
     } else {
-        self->posX.i.hi = otherEnt->posX.i.hi;
-        self->posY.i.hi = otherEnt->posY.i.hi;
+        self->posX.i.hi = part->posX.i.hi;
+        self->posY.i.hi = part->posY.i.hi;
     }
-    self->facingLeft = otherEnt->facingLeft;
-    animCurFrame = otherEnt->animCurFrame;
+    self->facingLeft = part->facingLeft;
+    animCurFrame = part->animCurFrame;
     if (self->flags & FLAG_DEAD) {
         hitboxPtr = D_80182F9C;
         PlaySfxPositional(SFX_FM_THUNDER_EXPLODE);
 
         for (i = 0; i < 3; i++) {
-            otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (otherEnt != NULL) {
-                CreateEntityFromCurrentEntity(E_EXPLOSION_3, otherEnt);
+            part = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (part != NULL) {
+                CreateEntityFromCurrentEntity(E_EXPLOSION_3, part);
                 if (self->facingLeft) {
-                    otherEnt->posX.i.hi -= *hitboxPtr++;
+                    part->posX.i.hi -= *hitboxPtr++;
                 } else {
-                    otherEnt->posX.i.hi += *hitboxPtr++;
+                    part->posX.i.hi += *hitboxPtr++;
                 }
-                otherEnt->posY.i.hi += *hitboxPtr++;
-                otherEnt->params = i;
-                otherEnt->facingLeft = self->facingLeft;
+                part->posY.i.hi += *hitboxPtr++;
+                part->params = i;
+                part->facingLeft = self->facingLeft;
             }
         }
 
         hitboxPtr = D_80182FA8;
         for (i = 0; i < 8; i++) {
-            otherEnt = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            part = AllocEntity(&g_Entities[224], &g_Entities[256]);
 
-            if (otherEnt == NULL) {
+            if (part == NULL) {
                 break;
             }
 
-            CreateEntityFromCurrentEntity(E_EXPLOSION, otherEnt);
-            otherEnt->params = ((self->zPriority + 1) << 8) + 1;
+            CreateEntityFromCurrentEntity(E_EXPLOSION, part);
+            part->params = ((self->zPriority + 1) << 8) + 1;
             if (self->facingLeft) {
-                otherEnt->posX.i.hi -= *hitboxPtr++;
+                part->posX.i.hi -= *hitboxPtr++;
             } else {
-                otherEnt->posX.i.hi += *hitboxPtr++;
+                part->posX.i.hi += *hitboxPtr++;
             }
-            otherEnt->posY.i.hi += *hitboxPtr++;
+            part->posY.i.hi += *hitboxPtr++;
         }
 
         DestroyEntity(self);
@@ -992,7 +991,7 @@ void EntityUnkId31(Entity* self) {
             // block above. So otherEnt is still set to self - 2.
             // E_ID_31 is created by the fire warg as self + 2.
             // So here we're pointing to the fire warg.
-            if ((otherEnt->step == 3) && (otherEnt->ext.fireWarg.unk7C)) {
+            if ((part->step == 3) && (part->ext.fireWarg.unk7C)) {
                 self->animCurFrame = animCurFrame + 58;
             } else {
                 self->animCurFrame = animCurFrame;

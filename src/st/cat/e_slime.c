@@ -42,8 +42,8 @@ void EntityLargeSlime(Entity* self) {
         InitializeEntity(g_EInitLargeSlime);
         self->ext.slime.deathTimer = 0x20;
         self->ext.slime.unk8C = 0;
-        self->unk60 = self + 1;
-        self->unk5C = NULL;
+        self->nextPart = self + 1;
+        self->parent = NULL;
         // fallthrough
     case 1:
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
@@ -576,8 +576,8 @@ void func_us_801D3D08(Entity* self) {
     case 0:
         InitializeEntity(g_EInitLargeSlime);
         self->hitPoints = 0x7FFF;
-        self->unk5C = self - 1;
-        self->unk60 = self - 1;
+        self->parent = self - 1;
+        self->nextPart = self - 1;
         // fallthrough
     case 1:
     case 2:

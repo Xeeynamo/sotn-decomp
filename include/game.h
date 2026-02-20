@@ -394,8 +394,7 @@ typedef enum {
     FLAG_UNK_20 = 0x20,
     FLAG_UNK_40 = 0x40,
     FLAG_UNK_80 = 0x80,
-    // Signals that the entity should run its death routine
-    FLAG_DEAD = 0x100,
+    FLAG_DEAD = 0x100, // entity must execute its death routine
     FLAG_UNK_200 = 0x200,
     FLAG_UNK_400 = 0x400,
     FLAG_UNK_800 = 0x800,
@@ -404,20 +403,18 @@ typedef enum {
     FLAG_UNK_4000 = 0x4000,
     FLAG_UNK_8000 = 0x8000,
     FLAG_UNK_10000 = 0x10000,
-    FLAG_UNK_20000 = 0x20000, // func_8011A9D8 will destroy if not set
-    FLAG_POS_PLAYER_LOCKED = 0x40000,
+    FLAG_UNK_20000 = 0x20000,         // func_8011A9D8 will destroy if not set
+    FLAG_POS_PLAYER_LOCKED = 0x40000, // entity follows player position
     FLAG_UNK_80000 = 0x80000,
     FLAG_UNK_100000 = 0x100000,
     FLAG_UNK_00200000 = 0x00200000,
-    FLAG_UNK_400000 = 0x400000,
-    // When an entity used AllocPrimitives and their primIndex set.
-    // At their destruction they need to free the prims with FreePrimitives.
-    FLAG_HAS_PRIMS = 0x800000,
+    FLAG_SUPPRESS_STUN = 0x400000, // disable invincibility frames
+    FLAG_HAS_PRIMS = 0x800000,     // call FreePrimitives on DestroyEntity
     FLAG_NOT_AN_ENEMY = 0x01000000,
     FLAG_UNK_02000000 = 0x02000000,
-    FLAG_KEEP_ALIVE_OFFCAMERA = 0x04000000,
-    FLAG_POS_CAMERA_LOCKED = 0x08000000,
-    FLAG_UNK_10000000 = 0x10000000, // CHI func_801A169C: "Is Airborne"?
+    FLAG_KEEP_ALIVE_OFFCAMERA = 0x04000000, // don't destroy entity off-screen
+    FLAG_POS_CAMERA_LOCKED = 0x08000000,    // entity follows camera position
+    FLAG_UNK_10000000 = 0x10000000,         // CHI func_801A169C: "Is Airborne"?
     FLAG_UNK_20000000 = 0x20000000,
     FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA = 0x40000000,
     FLAG_DESTROY_IF_OUT_OF_CAMERA = 0x80000000,
@@ -916,8 +913,8 @@ typedef struct Entity {
     /* 0x30 */ u16 params;
     /* 0x32 */ u16 entityRoomIndex;
     /* 0x34 */ s32 flags;
-    /* 0x38 */ s16 unk38;
-    /* 0x3A */ u16 enemyId;
+    /* 0x38 */ s16 : 16;
+    /* 0x3A */ u16 enemyId; // also used as a Alucard weapon entity slot index
     /* 0x3C */ u16 hitboxState;
     /* 0x3E */ s16 hitPoints;
     /* 0x40 */ s16 attack;
@@ -935,8 +932,8 @@ typedef struct Entity {
     /* 0x56 */ s16 animCurFrame;
     /* 0x58 */ s16 stunFrames;
     /* 0x5A */ u16 unk5A;
-    /* 0x5C */ struct Entity* unk5C;
-    /* 0x60 */ struct Entity* unk60;
+    /* 0x5C */ struct Entity* parent;   // for multi-part entities only
+    /* 0x60 */ struct Entity* nextPart; // next linked-list entity part
     /* 0x64 */ s32 primIndex;
     /* 0x68 */ u16 unk68; // Appears to be set for entities with parallax
     /* 0x6A */ u16 hitEffect;

@@ -30,7 +30,7 @@ static void func_us_801C1A38(void) {
     DOPPLEGANGER.scaleY = 0x100;
     DOPPLEGANGER.blendMode = BLEND_NO;
     DOPPLEGANGER.flags =
-        FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_UNK_400000;
+        FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_SUPPRESS_STUN;
 
     // BUG: this loop seems to be clearing parts of the floor
     //      ceiling colliders, but not all of them

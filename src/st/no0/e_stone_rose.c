@@ -142,38 +142,38 @@ void func_us_801D8150(Entity* self) {
     s32 posY;
     s16 angle;
     u32 params;
-    Entity* entity;
+    Entity* part;
 
     params = self->params;
     if (self->step < 7) {
-        entity = self - params;
-        if ((entity->posX.i.hi > 0x180) || (entity->posX.i.hi < -0x80) ||
-            (entity->posY.i.hi > 0x180) || (entity->posY.i.hi < 0)) {
+        part = self - params;
+        if ((part->posX.i.hi > 0x180) || (part->posX.i.hi < -0x80) ||
+            (part->posY.i.hi > 0x180) || (part->posY.i.hi < 0)) {
             return;
         }
     }
 
-    entity = self - self->params + 0xB;
+    part = self - self->params + 0xB;
     if (self->step == 1) {
         if (self->params == 0) {
-            self->unk60 = entity;
+            self->nextPart = part;
         } else {
-            self->unk60 = self - 1;
+            self->nextPart = self - 1;
         }
     }
-    if ((entity->hitFlags & 0xF) && (self->step < 7)) {
-        if (entity->flags & FLAG_DEAD) {
+    if ((part->hitFlags & 0xF) && (self->step < 7)) {
+        if (part->flags & FLAG_DEAD) {
             PlaySfxPositional(SFX_STONE_ROSE_DEATH);
-            entity -= 0xB;
-            for (i = 0; i < 0xC; i++, entity++) {
-                entity->hitboxState = 0;
-                entity->step = 7;
-                entity->ext.stoneRose.timer = 0xC0;
-                entity->flags |= FLAG_DEAD;
+            part -= 0xB;
+            for (i = 0; i < 0xC; i++, part++) {
+                part->hitboxState = 0;
+                part->step = 7;
+                part->ext.stoneRose.timer = 0xC0;
+                part->flags |= FLAG_DEAD;
             }
         } else if (
-            (entity->step != 3) && (entity->step != 5) && (entity->step != 6)) {
-            if ((entity->hitPoints >= 0x1F) || (params != 0xB) ||
+            (part->step != 3) && (part->step != 5) && (part->step != 6)) {
+            if ((part->hitPoints >= 0x1F) || (params != 0xB) ||
                 self->ext.stoneRose.hasBeenHit) {
                 PlaySfxPositional(SFX_STONE_ROSE_PAIN);
                 if ((self->step != 6) && (self->step != 5)) {
@@ -181,7 +181,7 @@ void func_us_801D8150(Entity* self) {
                 }
                 self->step = 5;
                 self->ext.stoneRose.timer = 0x28;
-                if ((entity->hitPoints >= 0x1F) && (params == 0xB)) {
+                if ((part->hitPoints >= 0x1F) && (params == 0xB)) {
                     self->pose = 0;
                     self->poseTimer = 0;
                     self->anim = D_us_80182280;
@@ -199,11 +199,11 @@ void func_us_801D8150(Entity* self) {
     switch (self->step) {
     case 0:
         if (params == 0) {
-            entity = self + 1;
-            for (i = 1; i < 0xC; i++, entity++) {
-                CreateEntityFromCurrentEntity(E_ID_3D, entity);
-                entity->params = i;
-                entity->facingLeft = self->facingLeft;
+            part = self + 1;
+            for (i = 1; i < 0xC; i++, part++) {
+                CreateEntityFromCurrentEntity(E_ID_3D, part);
+                part->params = i;
+                part->facingLeft = self->facingLeft;
             }
         }
         self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
@@ -346,19 +346,18 @@ void func_us_801D8150(Entity* self) {
         }
         self->ext.stoneRose.wavePhase += 0x180;
         if ((params == 0xB) && !(self->ext.stoneRose.timer & 1)) {
-            entity = g_api.GetFreeEntity(0xE0, 0x100);
-            if (entity != NULL) {
-                DestroyEntity(entity);
-                CreateEntityFromCurrentEntity(E_EXPLOSION, entity);
-                entity->params = 1;
-                entity->zPriority = self->zPriority + 2;
+            part = g_api.GetFreeEntity(0xE0, 0x100);
+            if (part != NULL) {
+                DestroyEntity(part);
+                CreateEntityFromCurrentEntity(E_EXPLOSION, part);
+                part->params = 1;
+                part->zPriority = self->zPriority + 2;
                 if (self->facingLeft) {
-                    entity->posX.i.hi =
-                        self->posX.i.hi + (rand() & 0x1F) - 0x1F;
+                    part->posX.i.hi = self->posX.i.hi + (rand() & 0x1F) - 0x1F;
                 } else {
-                    entity->posX.i.hi = self->posX.i.hi + (rand() & 0x1F) - 0xF;
+                    part->posX.i.hi = self->posX.i.hi + (rand() & 0x1F) - 0xF;
                 }
-                entity->posY.i.hi = self->posY.i.hi + (rand() & 0x1F) - 0x10;
+                part->posY.i.hi = self->posY.i.hi + (rand() & 0x1F) - 0x10;
             }
         }
         if (--self->ext.stoneRose.timer == 0) {

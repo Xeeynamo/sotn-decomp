@@ -127,10 +127,10 @@ static u16 g_eDamageDisplayClut[] = {
 void OVL_EXPORT(HitDetection)(void) {
     s32* scratchpad_1;
     s32* scratchpad_2;
-    Entity* iterEnt1;
+    Entity* entity;
     Entity* iterEnt2;
     Entity* otherEntity;
-    Entity* entFrom5C;
+    Entity* entityHit;
     Primitive* prim;
     s32 hitboxWidth;
     s32 yCoord1;
@@ -149,67 +149,67 @@ void OVL_EXPORT(HitDetection)(void) {
 
     scratchpad_1 = (s32*)SP(0);
     scratchpad_2 = (s32*)SP(0xC0);
-    for (iterEnt1 = &g_Entities[0]; iterEnt1 < &g_Entities[48]; scratchpad_1++,
-        iterEnt1++) {
-        *scratchpad_1 = iterEnt1->hitboxState;
+    for (entity = &g_Entities[0]; entity < &g_Entities[48]; scratchpad_1++,
+        entity++) {
+        *scratchpad_1 = entity->hitboxState;
         if ((*scratchpad_1 != 0) && !(*scratchpad_1 & 0x80)) {
-            *scratchpad_2 = iterEnt1->posX.i.hi;
-            if (iterEnt1->facingLeft) {
-                *scratchpad_2 -= iterEnt1->hitboxOffX;
+            *scratchpad_2 = entity->posX.i.hi;
+            if (entity->facingLeft) {
+                *scratchpad_2 -= entity->hitboxOffX;
             } else {
-                *scratchpad_2 += iterEnt1->hitboxOffX;
+                *scratchpad_2 += entity->hitboxOffX;
             }
-            yCoord1 = iterEnt1->posY.i.hi + iterEnt1->hitboxOffY;
+            yCoord1 = entity->posY.i.hi + entity->hitboxOffY;
             if ((*scratchpad_2 < -32) || (*scratchpad_2 > 288) ||
-                (yCoord1 < -32) || (yCoord1 > 256) || !iterEnt1->hitboxWidth ||
-                !iterEnt1->hitboxHeight) {
+                (yCoord1 < -32) || (yCoord1 > 256) || !entity->hitboxWidth ||
+                !entity->hitboxHeight) {
                 *scratchpad_1 = 0;
                 scratchpad_2 += 4;
             } else {
                 scratchpad_2++;
-                *scratchpad_2++ = iterEnt1->hitboxWidth;
+                *scratchpad_2++ = entity->hitboxWidth;
                 *scratchpad_2++ = yCoord1;
-                *scratchpad_2++ = iterEnt1->hitboxHeight;
+                *scratchpad_2++ = entity->hitboxHeight;
             }
         } else {
             scratchpad_2 += 4;
         }
     }
-    for (iterEnt1 = &g_Entities[64]; iterEnt1 < &g_Entities[192]; iterEnt1++) {
-        miscVar1 = iterEnt1->hitboxState;
-        if (!miscVar1 || !(iterEnt1->hitboxWidth) ||
-            !(iterEnt1->hitboxHeight) || (iterEnt1->flags & FLAG_DEAD)) {
+    for (entity = &g_Entities[64]; entity < &g_Entities[192]; entity++) {
+        miscVar1 = entity->hitboxState;
+        if (!miscVar1 || !(entity->hitboxWidth) || !(entity->hitboxHeight) ||
+            (entity->flags & FLAG_DEAD)) {
             continue;
         }
         for (i = 0; i < 11; i++) {
-            if (iterEnt1->unk6D[i]) {
-                iterEnt1->unk6D[i]--;
+            if (entity->unk6D[i]) {
+                entity->unk6D[i]--;
             }
         }
-        xCoord = iterEnt1->posX.i.hi;
-        if (iterEnt1->facingLeft) {
-            xCoord -= iterEnt1->hitboxOffX;
+        xCoord = entity->posX.i.hi;
+        if (entity->facingLeft) {
+            xCoord -= entity->hitboxOffX;
         } else {
-            xCoord += iterEnt1->hitboxOffX;
+            xCoord += entity->hitboxOffX;
         }
-        yCoord2 = iterEnt1->posY.i.hi + iterEnt1->hitboxOffY;
+        yCoord2 = entity->posY.i.hi + entity->hitboxOffY;
         if ((xCoord <= -32) || (xCoord >= 288) || (yCoord2 <= -32) ||
             (yCoord2 >= 256)) {
             continue;
         }
         miscVar2 = 0;
         miscVar3 = (u16)(miscVar1 & 0x3E);
-        hitboxWidth = iterEnt1->hitboxWidth - 1;
-        yCoord1 = iterEnt1->hitboxHeight - 1;
+        hitboxWidth = entity->hitboxWidth - 1;
+        yCoord1 = entity->hitboxHeight - 1;
         if (miscVar3) {
             scratchpad_1 = (s32*)SP(4);
             scratchpad_2 = (s32*)SP(0xD0);
             for (iterEnt2 = &g_Entities[1]; iterEnt2 < &g_Entities[48];
                  iterEnt2++) {
                 if ((*scratchpad_1 & miscVar3) &&
-                    (!iterEnt1->unk6D[iterEnt2->enemyId])) {
+                    (!entity->unk6D[iterEnt2->enemyId])) {
                     if (*scratchpad_1 & 0x80) {
-                        iterEnt1->hitParams = iterEnt2->hitEffect;
+                        entity->hitParams = iterEnt2->hitEffect;
                         miscVar2 = 0xFF;
                         break;
                     } else {
@@ -226,22 +226,22 @@ void OVL_EXPORT(HitDetection)(void) {
                                 // reusing the i variable here, maybe can be a
                                 // different var
                                 i = iterEnt2->hitEffect;
-                                if (!(iterEnt2->flags & iterEnt1->flags &
+                                if (!(iterEnt2->flags & entity->flags &
                                       FLAG_UNK_100000)) {
                                     // Probably has to stay generic since
                                     // iterEnt2 could be any entity?
-                                    iterEnt2->unkB8 = iterEnt1;
+                                    iterEnt2->unkB8 = entity;
                                     iterEnt2->hitFlags = 1;
                                     if ((i == 12) &&
-                                        (iterEnt1->flags & FLAG_UNK_8000)) {
+                                        (entity->flags & FLAG_UNK_8000)) {
                                         iterEnt2->hitFlags = 2;
                                     }
                                     if ((i == 10) &&
-                                        (iterEnt1->flags & FLAG_UNK_4000)) {
+                                        (entity->flags & FLAG_UNK_4000)) {
                                         iterEnt2->hitFlags = 2;
                                     }
                                 }
-                                iterEnt1->hitParams = i;
+                                entity->hitParams = i;
                                 miscVar2 = 0xFF;
                                 break;
                             } else {
@@ -266,7 +266,7 @@ void OVL_EXPORT(HitDetection)(void) {
             iterEnt2 = &PLAYER;
             scratchpad_1 = (s32*)SP(0);
             scratchpad_2 = (s32*)SP(0xC0);
-            if (!iterEnt1->unk6D[iterEnt2->enemyId] && (*scratchpad_1 & 1)) {
+            if (!entity->unk6D[iterEnt2->enemyId] && (*scratchpad_1 & 1)) {
                 hitboxCheck2 = (u16)*scratchpad_2++ - (u16)xCoord;
                 hitboxCheck1 = hitboxWidth + *scratchpad_2++;
                 hitboxCheck2 += hitboxCheck1;
@@ -277,43 +277,43 @@ void OVL_EXPORT(HitDetection)(void) {
                     hitboxCheck2 += hitboxCheck1;
                     hitboxCheck1 *= 2;
                     if (hitboxCheck2 <= hitboxCheck1) {
-                        iterEnt2->unkB8 = iterEnt1;
+                        iterEnt2->unkB8 = entity;
                         iterEnt2->hitFlags = 1;
-                        iterEnt2->hitParams = iterEnt1->attackElement;
-                        iterEnt2->hitPoints = iterEnt1->attack;
-                        iterEnt1->hitParams = iterEnt2->hitEffect;
+                        iterEnt2->hitParams = entity->attackElement;
+                        iterEnt2->hitPoints = entity->attack;
+                        entity->hitParams = iterEnt2->hitEffect;
                         miscVar2 = 0xFF;
-                        iterEnt1->hitFlags = 0x80;
+                        entity->hitFlags = 0x80;
                     }
                 }
             }
         }
         if (miscVar2) {
-            if (iterEnt1->unk5C != NULL) {
-                entFrom5C = iterEnt1->unk5C;
-                entFrom5C->hitParams = (u16)iterEnt1->hitParams;
+            if (entity->parent) {
+                entityHit = entity->parent;
+                entityHit->hitParams = entity->hitParams;
             } else {
-                entFrom5C = iterEnt1;
+                entityHit = entity;
             }
-            if (!(entFrom5C->flags & FLAG_DEAD) && miscVar2) {
-                miscVar1 = g_testCollEnemyLookup[entFrom5C->enemyId];
+            if (!(entityHit->flags & FLAG_DEAD) && miscVar2) {
+                miscVar1 = g_testCollEnemyLookup[entityHit->enemyId];
                 if (miscVar1) {
                     miscVar1--;
                     miscVar3 = 1 << (miscVar1 & 7);
                     g_CastleFlags[(miscVar1 >> 3) + ENEMY_LIST_190] |= miscVar3;
                 }
                 if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
-                    !(entFrom5C->flags & FLAG_NOT_AN_ENEMY)) {
+                    !(entityHit->flags & FLAG_NOT_AN_ENEMY)) {
                     if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
                         g_api.FreePrimitives(
                             g_unkGraphicsStruct.BottomCornerTextPrims);
                         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
                     }
                     BottomCornerText(
-                        g_api.enemyDefs[entFrom5C->enemyId].name, 0);
-                    entFrom5C->flags |= FLAG_NOT_AN_ENEMY;
+                        g_api.enemyDefs[entityHit->enemyId].name, 0);
+                    entityHit->flags |= FLAG_NOT_AN_ENEMY;
                 }
-                if (entFrom5C->hitPoints) {
+                if (entityHit->hitPoints) {
                     if (iterEnt2->attack) {
                         if (!(iterEnt2->hitboxState & 0x80)) {
                             scratchpad_2 -= 4;
@@ -334,10 +334,10 @@ void OVL_EXPORT(HitDetection)(void) {
                                     yCoord2 - 10 + (Random() & 7) - 3;
                                 prim->y2 = prim->y3 = prim->y0 + 0x20;
                                 prim->p1 = 0;
-                                if (iterEnt2->zPriority > iterEnt1->zPriority) {
+                                if (iterEnt2->zPriority > entity->zPriority) {
                                     prim->priority = iterEnt2->zPriority + 1;
                                 } else {
-                                    prim->priority = iterEnt1->zPriority + 1;
+                                    prim->priority = entity->zPriority + 1;
                                 }
                                 prim->drawMode = DRAW_UNK02;
                                 break;
@@ -345,13 +345,13 @@ void OVL_EXPORT(HitDetection)(void) {
                         }
                     }
                     if ((iterEnt2->attack) &&
-                        (entFrom5C->hitPoints != 0x7FFF)) {
-                        miscVar1 = g_api.DealDamage(iterEnt1, iterEnt2);
+                        (entityHit->hitPoints != 0x7FFF)) {
+                        miscVar1 = g_api.DealDamage(entity, iterEnt2);
                         if (miscVar1 == 0x4000) {
                             miscVar1 = 0;
                         }
                         if ((g_Status.relics[RELIC_SPIRIT_ORB] & 2) &&
-                            !(entFrom5C->flags & FLAG_KEEP_ALIVE_OFFCAMERA)) {
+                            !(entityHit->flags & FLAG_KEEP_ALIVE_OFFCAMERA)) {
                             otherEntity =
                                 AllocEntity(&g_Entities[224], &g_Entities[256]);
                             if (otherEntity != NULL) {
@@ -385,40 +385,40 @@ void OVL_EXPORT(HitDetection)(void) {
                             }
                         }
                     } else {
-                        entFrom5C->hitFlags |= 0x20;
+                        entityHit->hitFlags |= 0x20;
                         miscVar1 = 0;
                     }
                     if (!miscVar1) {
                         goto unusual_spot;
                     }
                     if (miscVar1 & 0x8000) {
-                        entFrom5C->hitPoints += (miscVar1 & 0x3FFF);
+                        entityHit->hitPoints += (miscVar1 & 0x3FFF);
                         miscVar3 =
-                            g_api.enemyDefs[entFrom5C->enemyId].hitPoints;
-                        if (entFrom5C->hitPoints > miscVar3) {
-                            entFrom5C->hitPoints = miscVar3;
+                            g_api.enemyDefs[entityHit->enemyId].hitPoints;
+                        if (entityHit->hitPoints > miscVar3) {
+                            entityHit->hitPoints = miscVar3;
                         }
                     } else {
                         miscVar1 &= 0x3FFF;
                         g_api.PlaySfx(SFX_RIC_WHIP_HIT);
-                        if (entFrom5C->hitPoints != 0x7FFE) {
-                            if (entFrom5C->hitPoints < (miscVar1 * 2)) {
-                                entFrom5C->hitFlags |= 3;
-                            } else if (entFrom5C->hitPoints < (miscVar1 * 4)) {
-                                entFrom5C->hitFlags |= 2;
+                        if (entityHit->hitPoints != 0x7FFE) {
+                            if (entityHit->hitPoints < (miscVar1 * 2)) {
+                                entityHit->hitFlags |= 3;
+                            } else if (entityHit->hitPoints < (miscVar1 * 4)) {
+                                entityHit->hitFlags |= 2;
                             } else {
-                                entFrom5C->hitFlags |= 1;
+                                entityHit->hitFlags |= 1;
                             }
-                            entFrom5C->hitPoints -= miscVar1;
+                            entityHit->hitPoints -= miscVar1;
                         }
                     }
-                    if (entFrom5C->hitPoints > 0) {
-                        otherEntity = entFrom5C;
+                    if (entityHit->hitPoints > 0) {
+                        otherEntity = entityHit;
                         miscVar3 = iterEnt2->enemyId;
                         do {
                             otherEntity->unk6D[miscVar3] =
                                 iterEnt2->nFramesInvincibility;
-                            if (!(iterEnt1->flags & FLAG_UNK_400000)) {
+                            if (!(entity->flags & FLAG_SUPPRESS_STUN)) {
                                 otherEntity->stunFrames = iterEnt2->stunFrames;
                             }
                             if ((!otherEntity->hitEffect) &&
@@ -427,23 +427,23 @@ void OVL_EXPORT(HitDetection)(void) {
                             }
                             otherEntity->nFramesInvincibility = miscVar2;
                             otherEntity->flags |= 0xF;
-                            otherEntity = otherEntity->unk60;
+                            otherEntity = otherEntity->nextPart;
                         } while ((otherEntity != NULL) &&
-                                 (otherEntity != entFrom5C));
+                                 (otherEntity != entityHit));
                         // I don't understand this; we write to a spot but we
                         // never reference it again.
-                        uselessVar = ((u32)entFrom5C->flags >> 4) & 7;
+                        uselessVar = ((u32)entityHit->flags >> 4) & 7;
                         continue;
                     }
                 }
-                PreventEntityFromRespawning(entFrom5C);
-                g_api.func_800FE044(g_api.enemyDefs[entFrom5C->enemyId].exp,
+                PreventEntityFromRespawning(entityHit);
+                g_api.func_800FE044(g_api.enemyDefs[entityHit->enemyId].exp,
                                     g_api.enemyDefs[miscVar1].level);
-                if ((entFrom5C->flags & FLAG_UNK_1000) &&
+                if ((entityHit->flags & FLAG_UNK_1000) &&
                     (g_Status.killCount < 999999)) {
                     g_Status.killCount++;
                 }
-                if (entFrom5C->flags & (FLAG_UNK_800 | FLAG_UNK_400)) {
+                if (entityHit->flags & (FLAG_UNK_800 | FLAG_UNK_400)) {
                     miscVar3 = rand() & 0xFF;
                     if (miscVar3 < 32) {
                         otherEntity =
@@ -467,11 +467,11 @@ void OVL_EXPORT(HitDetection)(void) {
                                 miscVar3 -= 0x80;
                                 // Create an EntityEquipItemDrop
                                 CreateEntityFromEntity(
-                                    E_EQUIP_ITEM_DROP, iterEnt1, otherEntity);
+                                    E_EQUIP_ITEM_DROP, entity, otherEntity);
                             } else {
                                 // Create an EntityPrizeDrop
                                 CreateEntityFromEntity(
-                                    E_PRIZE_DROP, iterEnt1, otherEntity);
+                                    E_PRIZE_DROP, entity, otherEntity);
                             }
                             otherEntity->params = miscVar3;
                             // item pops up in the air a bit when spawned
@@ -479,7 +479,7 @@ void OVL_EXPORT(HitDetection)(void) {
                         }
                     }
                 }
-                otherEntity = entFrom5C;
+                otherEntity = entityHit;
                 do {
                     otherEntity->flags |= (FLAG_UNK_100000 + FLAG_UNK_8000 +
                                            FLAG_UNK_4000 + FLAG_DEAD);
@@ -489,21 +489,21 @@ void OVL_EXPORT(HitDetection)(void) {
                     }
                     otherEntity->nFramesInvincibility = miscVar2;
                     otherEntity->flags |= 0xF;
-                    otherEntity = otherEntity->unk60;
-                } while (otherEntity != NULL && otherEntity != entFrom5C);
+                    otherEntity = otherEntity->nextPart;
+                } while (otherEntity != NULL && otherEntity != entityHit);
                 continue;
             // this spot is unusual because of where it appears in the code. I
             // would have expected this to be included in the spot with the
             // goto, since there is no way to reach this without using that one
             // single goto.
             unusual_spot:
-                if (!(entFrom5C->hitFlags & 0xF)) {
-                    entFrom5C->hitFlags |= 0x10;
+                if (!(entityHit->hitFlags & 0xF)) {
+                    entityHit->hitFlags |= 0x10;
                 }
-                otherEntity = entFrom5C;
+                otherEntity = entityHit;
                 miscVar3 = iterEnt2->enemyId;
                 do {
-                    if (iterEnt1->hitPoints == 0x7FFF) {
+                    if (entity->hitPoints == 0x7FFF) {
                         if (otherEntity->hitPoints == 0x7FFF) {
                             otherEntity->unk6D[miscVar3] =
                                 iterEnt2->nFramesInvincibility;
@@ -512,8 +512,8 @@ void OVL_EXPORT(HitDetection)(void) {
                         otherEntity->unk6D[miscVar3] =
                             iterEnt2->nFramesInvincibility;
                     }
-                    otherEntity = otherEntity->unk60;
-                } while ((otherEntity != NULL) && (otherEntity != entFrom5C));
+                    otherEntity = otherEntity->nextPart;
+                } while ((otherEntity != NULL) && (otherEntity != entityHit));
             }
         }
     }
