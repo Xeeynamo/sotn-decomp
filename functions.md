@@ -393,9 +393,9 @@
 | no3    | e_castle_door.rodata                 |       16 |          0 | Yes    |       |     |
 | no3    | e_outdoor_ents.rodata                |       16 |          0 | Yes    |       |     |
 | no3    | jtbl_pspeu_09298E68                  |       16 |          0 | Yes    |       |     |
+| no4    | 482B8.rodata                         |       16 |          0 | Yes    |       |     |
 | no4    | e_fishhead.rodata                    |       16 |          0 | Yes    |       |     |
 | no4    | e_red_door.rodata                    |       16 |          0 | Yes    |       |     |
-| no4    | unk_5EE8.rodata                      |       16 |          0 | Yes    |       |     |
 | np3    | blade.rodata                         |       16 |          0 | Yes    |       |     |
 | np3    | e_red_door.rodata                    |       16 |          0 | Yes    |       |     |
 | np3    | jtbl_pspeu_09291AC8                  |       16 |          0 | Yes    |       |     |
@@ -893,8 +893,8 @@
 | no2    | func_pspeu_0924D5D8                  |       25 |          1 |        |       |     |
 | no3    | func_pspeu_0925FCB8                  |       25 |          1 |        |       |     |
 | no3    | func_pspeu_09260568                  |       25 |          1 |        |       |     |
-| no4    | MoveEntity                           |       25 |          1 |        |       |     |
-| no4    | SetStep                              |       25 |          1 |        |       |     |
+| no4    | func_pspeu_0925AE00                  |       25 |          1 |        |       |     |
+| no4    | func_pspeu_0925B6B0                  |       25 |          1 |        |       |     |
 | np3    | func_pspeu_09259E38                  |       25 |          1 |        |       |     |
 | np3    | func_pspeu_0925A4C8                  |       25 |          1 |        |       |     |
 | np3    | func_pspeu_0925A968                  |       25 |          1 |        |       |     |
@@ -1465,7 +1465,7 @@
 | lib    | func_psp_0924F548                    |       37 |          6 |        |       |     |
 | no2    | func_pspeu_0924D0C8                  |       37 |          6 |        |       |     |
 | no3    | func_pspeu_092602D8                  |       37 |          6 |        |       |     |
-| no4    | AllocEntity                          |       37 |          6 |        |       |     |
+| no4    | func_pspeu_0925B420                  |       37 |          6 |        |       |     |
 | np3    | func_pspeu_0925A458                  |       37 |          6 |        |       |     |
 | nz0    | AllocEntity                          |       37 |          6 |        |       |     |
 | nz1    | AllocEntity                          |       37 |          6 |        |       |     |
@@ -1543,7 +1543,7 @@
 | no2    | func_pspeu_0924D248                  |       39 |          2 |        |       |     |
 | no3    | func_pspeu_092468F0                  |       39 |          2 |        |       |     |
 | no3    | func_pspeu_09246978                  |       39 |          2 |        |       |     |
-| no4    | CreateEntityFromCurrentEntity        |       39 |          2 |        |       |     |
+| no4    | func_pspeu_092448A0                  |       39 |          2 |        |       |     |
 | no4    | func_pspeu_09244928                  |       39 |          2 |        |       |     |
 | np3    | func_pspeu_09241940                  |       39 |          2 |        |       |     |
 | np3    | func_pspeu_092419C8                  |       39 |          2 |        |       |     |
@@ -1662,7 +1662,7 @@
 | lib    | func_psp_0924EEA0                    |       41 |          3 |        |       |     |
 | no2    | func_pspeu_0924CA20                  |       41 |          3 |        |       |     |
 | no3    | func_pspeu_0925FC30                  |       41 |          3 |        |       |     |
-| no4    | GetSideToPlayer                      |       41 |          3 |        |       |     |
+| no4    | func_pspeu_0925AD78                  |       41 |          3 |        |       |     |
 | np3    | func_pspeu_09259DB0                  |       41 |          3 |        |       |     |
 | nz0    | GetSideToPlayer                      |       41 |          3 |        |       |     |
 | nz1    | GetSideToPlayer                      |       41 |          3 |        |       |     |
@@ -1871,7 +1871,7 @@
 | lib    | func_psp_0924EB48                    |       46 |          5 |        |       |     |
 | no2    | func_pspeu_0924C6C8                  |       46 |          5 |        |       |     |
 | no3    | func_pspeu_0925F8D8                  |       46 |          5 |        |       |     |
-| no4    | DestroyEntity                        |       46 |          5 |        |       |     |
+| no4    | func_pspeu_0925AA20                  |       46 |          5 |        |       |     |
 | np3    | func_pspeu_09259A58                  |       46 |          5 |        |       |     |
 | nz0    | DestroyEntity                        |       46 |          5 |        |       |     |
 | nz1    | DestroyEntity                        |       46 |          5 |        |       |     |
@@ -3027,7 +3027,7 @@
 | lib    | func_psp_09248FB0                    |       97 |         12 |        |       |     |
 | no2    | func_pspeu_09244490                  |       97 |         12 |        |       |     |
 | no3    | func_pspeu_092591F0                  |       97 |         12 |        |       |     |
-| no4    | PlaySfxPositional                    |       97 |         12 |        |       |     |
+| no4    | func_pspeu_09250600                  |       97 |         12 |        |       |     |
 | np3    | func_pspeu_0924F788                  |       97 |         12 |        |       |     |
 | nz0    | PlaySfxPositional                    |       97 |         12 |        |       |     |
 | nz1    | PlaySfxPositional                    |       97 |         12 |        |       |     |
@@ -3095,7 +3095,7 @@
 | lib    | func_psp_0924EC68                    |      101 |          7 |        |       |     |
 | no2    | func_pspeu_0924C7E8                  |      101 |          7 |        |       |     |
 | no3    | func_pspeu_0925F9F8                  |      101 |          7 |        |       |     |
-| no4    | AnimateEntity                        |      101 |          7 |        |       |     |
+| no4    | func_pspeu_0925AB40                  |      101 |          7 |        |       |     |
 | np3    | func_pspeu_09259B78                  |      101 |          7 |        |       |     |
 | nz0    | AnimateEntity                        |      101 |          7 |        |       |     |
 | nz1    | AnimateEntity                        |      101 |          7 |        |       |     |
@@ -3293,7 +3293,7 @@
 | lib    | func_psp_0924FAD0                    |      112 |          2 |        |       |     |
 | no2    | func_pspeu_0924D668                  |      112 |          2 |        |       |     |
 | no3    | func_pspeu_092605F8                  |      112 |          2 |        |       |     |
-| no4    | InitializeEntity                     |      112 |          2 |        |       |     |
+| no4    | func_pspeu_0925B810                  |      112 |          2 |        |       |     |
 | np3    | func_pspeu_0925A9F8                  |      112 |          2 |        |       |     |
 | nz0    | InitializeEntity                     |      112 |          2 |        |       |     |
 | nz1    | InitializeEntity                     |      112 |          2 |        |       |     |
@@ -4282,7 +4282,7 @@
 | lib    | func_psp_0924FF90                    |      332 |         41 |        |       |     |
 | no2    | func_pspeu_0924D9D8                  |      332 |         41 |        |       |     |
 | no3    | func_pspeu_09260AB8                  |      332 |         41 |        |       |     |
-| no4    | GetPlayerCollisionWith               |      332 |         41 |        |       |     |
+| no4    | func_pspeu_0925BCD0                  |      332 |         41 |        |       |     |
 | np3    | func_pspeu_0925AEB8                  |      332 |         41 |        |       |     |
 | nz0    | GetPlayerCollisionWith               |      332 |         41 |        |       |     |
 | nz1    | func_pspeu_09250830                  |      332 |         41 |        |       |     |
@@ -4592,7 +4592,7 @@
 | main   | func_psp_08929860                    |      502 |         34 |        |       |     |
 | ric    | func_pspeu_092BF718                  |      504 |         41 | Yes    |       |     |
 |        | func_092E9C38                        |      507 |         52 |        |       |     |
-| no4    | EntitySkeletonApe                    |      507 |         90 | Yes    |       |     |
+| no4    | func_pspeu_09259878                  |      507 |         90 | Yes    |       |     |
 | maria  | func_pspeu_092B04F8                  |      508 |         59 |        |       |     |
 | ric    | func_pspeu_092A8D28                  |      508 |         59 |        |       |     |
 | ric    | func_pspeu_092AD730                  |      509 |         51 |        |       |     |
