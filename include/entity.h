@@ -3893,6 +3893,24 @@ typedef struct {
     /* 0x8E */ s16 unk8E;
 } ET_801BACF4;
 
+typedef struct {
+    /* 0x7C */ u32 : 32;
+    /* 0x80 */ u16 : 16;
+    /* 0x82 */ s16 bobPhase;
+    /* 0x84 */ u8 moveLeft;
+    /* 0x85 */ u8 thrownObject;
+    /* 0x86 */ u8 playerWithinProximity;
+    /* 0x87 */ u8 shieldActivated;
+    /* 0x88 */ s16 attackTimer;
+    /* 0x8C */ u32 : 32;
+    /* 0x90 */ u32 : 32;
+    /* 0x94 */ u32 : 32;
+    /* 0x98 */ u32 : 32;
+    /* 0x9C */ u8 touchedGround;
+    /* 0x9D */ u8 unk9D;
+    /* 0x9E */ u8 isDeathCat;
+} ET_Salome;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4226,6 +4244,7 @@ typedef union { // offset=0x7C
     ET_ClockTowerClouds clockTowerClouds;
     ET_VandalSword vandalSword;
     ET_801BACF4 et_801BACF4;
+    ET_Salome salome;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

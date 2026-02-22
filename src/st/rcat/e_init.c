@@ -40,11 +40,11 @@ void func_us_801C0118(Entity* self);
 void func_us_801C02C4(Entity* self);
 void func_us_801C0718(Entity* self);
 void func_us_801C0844(Entity* self);
-void func_us_801C0990(Entity* self);
-void func_us_801C1194(Entity* self);
-void func_us_801C13B4(Entity* self);
-void func_us_801C148C(Entity* self);
-void func_us_801C1804(Entity* self);
+void EntitySalome(Entity* self);
+void EntitySalomeEffects(Entity* self);
+void EntitySalomeMagicOrb(Entity* self);
+void EntitySalomeSkull(Entity* self);
+void EntitySalomeCat(Entity* self);
 void func_us_801B3248(Entity* self);
 void EntitySecretWall(Entity* self);
 void EntityBreakableWallSegment(Entity* self);
@@ -96,11 +96,11 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801C02C4,
     func_us_801C0718,
     func_us_801C0844,
-    func_us_801C0990,
-    func_us_801C1194,
-    func_us_801C13B4,
-    func_us_801C148C,
-    func_us_801C1804,
+    EntitySalome,
+    EntitySalomeEffects,
+    EntitySalomeMagicOrb,
+    EntitySalomeSkull,
+    EntitySalomeCat,
     func_us_801B3248,
     EntitySecretWall,
     EntityBreakableWallSegment,
@@ -134,10 +134,10 @@ EInit D_us_80181054 = {ANIMSET_OVL(3), 23, 72, 0x200, 0x005};
 EInit D_us_80181060 = {ANIMSET_OVL(3), 28, 72, 0x200, 0x0DC};
 
 EInit g_EInitSalome = {ANIMSET_OVL(4), 0, 76, 0x206, 0x0E5};
-EInit D_us_80181078 = {ANIMSET_OVL(4), 0, 76, 0x206, 0x005};
-EInit D_us_80181084 = {ANIMSET_OVL(4), 0, 76, 0x206, 0x0E6};
-EInit D_us_80181090 = {ANIMSET_OVL(4), 0, 76, 0x206, 0x0E7};
-EInit D_us_8018109C = {ANIMSET_OVL(4), 0, 76, 0x206, 0x0E8};
+EInit g_EInitSalomeEffects = {ANIMSET_OVL(4), 0, 76, 0x206, 0x005};
+EInit g_EInitSalomeMagicOrb = {ANIMSET_OVL(4), 0, 76, 0x206, 0x0E6};
+EInit g_EInitSalomeSkull = {ANIMSET_OVL(4), 0, 76, 0x206, 0x0E7};
+EInit g_EInitSalomeCat = {ANIMSET_OVL(4), 0, 76, 0x206, 0x0E8};
 
 EInit g_EInitBat = {ANIMSET_OVL(9), 0, 95, 0x240, 0x040};
 

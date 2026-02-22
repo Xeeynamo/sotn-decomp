@@ -54,11 +54,11 @@ enum Entities {
     E_UNK_25,                        // func_us_801C02C4
     E_UNK_26,                        // func_us_801C0718
     E_UNK_27,                        // func_us_801C0844
-    E_UNK_28,                        // func_us_801C0990
-    E_UNK_29,                        // func_us_801C1194
-    E_UNK_2A,                        // func_us_801C13B4
-    E_UNK_2B,                        // func_us_801C148C
-    E_UNK_2C,                        // func_us_801C1804
+    E_SALOME,                        // EntitySalome
+    E_SALOME_EFFECTS,                // EntitySalomeEffects
+    E_SALOME_MAGIC_ORB,              // EntitySalomeMagicOrb
+    E_SALOME_SKULL,                  // EntitySalomeSkull
+    E_SALOME_CAT,                    // EntitySalomeCat
     E_UNK_2D,                        // func_us_801B3248
     E_SECRET_WALL,                   // EntitySecretWall
     E_BREAKABLE_WALL_SEGMENT,        // EntityBreakableWallSegment
