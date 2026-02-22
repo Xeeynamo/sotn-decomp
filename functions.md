@@ -1070,7 +1070,7 @@
 | np3    | func_pspeu_09259D58                  |       28 |          2 |        |       |     |
 | nz0    | GetDistanceToPlayerY                 |       28 |          2 |        |       |     |
 | nz1    | GetDistanceToPlayerY                 |       28 |          2 |        |       |     |
-| rcat   | GetDistanceToPlayerY                 |       28 |          2 |        |       |     |
+| rcat   | func_pspeu_092490B0                  |       28 |          2 |        |       |     |
 | main   | sceSasGetEnvelope                    |       28 |          3 |        |       |     |
 | main   | sceSasSetKeyOff                      |       28 |          3 |        |       |     |
 | main   | sceSasSetKeyOn                       |       28 |          3 |        |       |     |
@@ -2485,7 +2485,7 @@
 | main   | _start                               |       70 |         10 |        |       |     |
 | dra    | func_psp_0910EFE0                    |       70 |         11 |        |       |     |
 | main   | func_psp_0892A620                    |       70 |         11 |        |       |     |
-| rcat   | func_us_801C13B4                     |       70 |         11 |        |       |     |
+| rcat   | func_pspeu_09247638                  |       70 |         11 |        |       |     |
 | main   | sceGuSwapBuffers                     |       70 |         12 |        |       |     |
 | main   | func_psp_0891E840                    |       70 |         21 |        |       |     |
 | dra    | func_psp_091407E0                    |       71 |          1 |        |       |     |
@@ -3866,7 +3866,7 @@
 | nz0    | UnkCollisionFunc2                    |      200 |         20 |        |       |     |
 | nz1    | UnkCollisionFunc2                    |      200 |         20 |        |       |     |
 | rare   | func_pspeu_0924A3C0                  |      200 |         20 |        |       |     |
-| rcat   | UnkCollisionFunc2                    |      200 |         20 |        |       |     |
+| rcat   | func_pspeu_092494D0                  |      200 |         20 |        |       |     |
 | dra    | func_psp_090E7150                    |      200 |         22 | Yes    |       |     |
 | dre    | func_pspeu_0924B520                  |      200 |         22 |        |       |     |
 |        | func_092E8090                        |      201 |         21 |        |       |     |
@@ -3927,7 +3927,7 @@
 |        | func_092E7DB0                        |      217 |         22 |        |       |     |
 | dre    | func_pspeu_0924B1F8                  |      217 |         30 |        |       |     |
 | lib    | func_psp_09265320                    |      218 |         16 | Yes    |       |     |
-| rcat   | func_us_801C1194                     |      218 |         23 |        |       |     |
+| rcat   | func_pspeu_09247310                  |      218 |         23 |        |       |     |
 | no3    | func_pspeu_09261818                  |      218 |         39 |        |       |     |
 | np3    | EntityZombie                         |      218 |         39 |        |       |     |
 | dra    | func_psp_091041D0                    |      218 |         47 | Yes    |       |     |
@@ -4241,7 +4241,7 @@
 | ric    | func_pspeu_092AD298                  |      313 |         33 |        |       |     |
 | no3    | func_pspeu_09239E68                  |      313 |         39 |        |       |     |
 | ric    | func_pspeu_092BB860                  |      314 |         24 |        |       |     |
-| rcat   | func_us_801C148C                     |      314 |         43 |        |       |     |
+| rcat   | func_pspeu_09247730                  |      314 |         43 |        |       |     |
 | lib    | func_psp_09256018                    |      315 |         26 |        |       |     |
 |        | func_092E97B8                        |      315 |         34 |        |       |     |
 | no2    | func_pspeu_09254098                  |      315 |         48 |        |       |     |
@@ -4644,7 +4644,7 @@
 | maria  | func_pspeu_092B92F0                  |      550 |         56 | Yes    |       |     |
 | dra    | func_psp_090F2258                    |      554 |         79 |        |       |     |
 | dra    | func_psp_09131CA8                    |      555 |         41 |        |       |     |
-| rcat   | func_us_801C1804                     |      555 |         81 |        |       |     |
+| rcat   | func_pspeu_09247BC8                  |      555 |         81 |        |       |     |
 | lib    | func_psp_092697D0                    |      556 |         54 |        |       |     |
 | dra    | func_psp_09127DC0                    |      557 |         48 | Yes    |       |     |
 | st0    | EntityCutscene                       |      557 |         84 | Yes    |       |     |
@@ -4814,7 +4814,7 @@
 |        | func_092E7C68                        |      788 |         88 |        |       |     |
 | main   | SsUtKeyOnV                           |      788 |        119 |        |       |     |
 | chi    | func_psp_0924D948                    |      791 |         88 |        |       |     |
-| rcat   | func_us_801C0990                     |      791 |        122 |        |       |     |
+| rcat   | func_pspeu_09246780                  |      791 |        122 |        |       |     |
 |        | func_092E92F8                        |      792 |         43 |        |       |     |
 | no2    | func_pspeu_0923D188                  |      795 |        116 | Yes    |       |     |
 | st0    | EntityPrizeDrop                      |      797 |         92 | Yes    |       |     |
