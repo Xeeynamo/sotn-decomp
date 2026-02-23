@@ -5,6 +5,14 @@
 
 #define OVL_EXPORT(x) NZ0_##x
 
+enum Palettes {
+    PAL_NONE,
+    PAL_BREAKABLE = 0x219,
+    PAL_UNK_21B = 0x21B,
+    PAL_UNK_21C,
+    PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
+};
+
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
@@ -87,6 +95,8 @@ typedef enum EntityIDs {
     NUM_ENTITIES,
 } EntityIDs;
 
+Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
+
 #ifdef VERSION_PSP
 extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
 extern s32 E_ID(EXPLOSION);
@@ -106,110 +116,38 @@ extern s32 E_ID(LIFE_UP_SPAWN);
 #define BOSS_FLAG_GAIBON_DEAD (1 << 3)
 #define BOSS_FLAG_SLOGRA_DEAD (1 << 4)
 
-#define PAL_PUFF_OPAQUE_OFFSET 0x2E0
-
-void DestroyEntity(Entity* item);
-void func_8019B858(void);
-void func_801BDD9C(void);
-s32 GetPlayerCollisionWith(Entity* entity, u16 w, u16 h, u16 flags);
-void EntityExplosion(Entity*);
-void func_801C33D8(const u32*, s32);
-void EntityExplosionVariants(Entity* entity);
-void EntityGreyPuff(Entity* entity);
-void func_801C4CC0(void);
-
-extern EInit g_EInitBloodyZombie;
-
-extern EInit g_EInitParticle;
-extern EInit g_EInitInteractable; // Init Elevator2
-extern EInit g_EInitCommon;
-extern EInit g_EInitEnemy3;
-
-// *** EntityBloodSkeleton properties START ***
-
-extern EInit g_EInitBloodSkeleton;
-
-// *** EntityBloodSkeleton properties END ***
-
-extern EInit g_EInitSkeleton;
-extern EInit g_EInitSpittleBone;
-extern EInit g_EInitTableWithGlobe;
-extern EInit g_EInitSubwpnCloche;
-extern EInit g_EInitBossDoor;
-
-// *** EntitySlogra properties START ***
-
-extern EInit g_EInitSlogra;
-
-// *** EntitySlogra properties END ***
-
-extern EInit g_EInitSlograSpear;
-extern EInit g_EInitSlograProjectile;
-
-// *** EntityGaibon properties START ***
-
-extern EInit g_EInitGaibon;
-
-// *** EntityGaibon properties END ***
-
-extern EInit g_EInitGaibonProjectile;
-extern EInit g_EInitGaibonLargeProjectile;
-extern u32 g_randomNext;
-extern Entity* g_CurrentEntity;
 extern s32 g_BossFlag; // original names: boss_flag / beri_flag
-extern EInit g_EInitSubwpnClochePieces;
+
+extern EInit OVL_EXPORT(EInitBreakable);
 extern EInit g_EInitObtainable;
-extern u8* g_SubweaponAnimPrizeDrop[];
-
-// *** EntityLeftSecretRoomWall properties START ***
-
-typedef enum {
-    LEFT_SECRET_ROOM_WALL_INIT,
-    LEFT_SECRET_ROOM_WALL_IDLE,
-    LEFT_SECRET_ROOM_WALL_BREAK,
-    LEFT_SECRET_ROOM_WALL_CHECK
-} LEFT_SECRET_ROOM_WALL_STEPS;
-
-// *** EntityLeftSecretRoomWall properties END ***
-
-// *** EntityBottomSecretRoomFloor properties START ***
-
-typedef enum {
-    BOTTOM_SECRET_ROOM_FLOOR_INIT,
-    BOTTOM_SECRET_ROOM_FLOOR_IDLE,
-    BOTTOM_SECRET_ROOM_FLOOR_BREAK,
-    BOTTOM_SECRET_ROOM_FLOOR_CHECK
-} BOTTOM_SECRET_ROOM_FLOOR_STEPS;
-
-// *** EntityBottomSecretRoomFloor properties END ***
-
-// *** EntitySpittleBoneSpit properties START ***
-
-extern EInit g_EInitSpittleBoneSpit;
-
-// *** EntitySpittleBoneSpit properties END ***
-
+extern EInit g_EInitParticle;
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
+// extern EInit g_EInitUnkId13;
+extern EInit g_EInitLockCamera;
+extern EInit g_EInitCommon;
+// extern EInit g_EInitDamageNum;
+extern EInit g_EInitEnemy3;
+extern EInit g_EInitBloodSkeleton;
+// extern EInit g_EInitBoneScimitar;
+// extern EInit g_EInitScimitarParts;
 extern EInit g_EInitAxeKnight;
 extern EInit g_EInitAxeKnightAxe;
+extern EInit g_EInitBloodyZombie;
+extern EInit g_EInitSkeleton;
+// extern EInit g_EInitSkeletonPieces;
+// extern EInit g_EInitSkeletonBone;
+extern EInit g_EInitSpittleBone;
+extern EInit g_EInitSpittleBoneSpit;
+extern EInit g_EInitTableWithGlobe;
 extern EInit g_EInitLifeMaxTank;
 extern EInit g_EInitPrizeContainer;
-extern const char D_801B058C[]; // "charal %x\n"
-extern const char D_801B0598[]; // "charal %x\n"
-extern const char D_801B08C8[]; // "charal %x\n"
-
-extern Primitive* D_801CB6A0[];
-extern s32 D_801CB6B8;
-extern s32 D_801CB6BC;
-extern s32 D_801CB6C0[];
-extern s16 D_801CB738[];
-
-// For EntityLifeUpSpawn
-extern u16 D_80182850[];
-extern SVECTOR D_8018287C;
-extern SVECTOR D_80182830;
-extern SVECTOR D_80182838;
-extern SVECTOR D_80182840;
-extern SVECTOR D_80182848;
-
-// EntityMaria, mostly animations
-extern EInit g_EInitSpawner;
+extern EInit g_EInitSubwpnCloche;
+extern EInit g_EInitSubwpnClochePieces;
+extern EInit g_EInitBossDoor;
+extern EInit g_EInitSlogra;
+extern EInit g_EInitSlograSpear;
+extern EInit g_EInitSlograProjectile;
+extern EInit g_EInitGaibon;
+extern EInit g_EInitGaibonProjectile;
+extern EInit g_EInitGaibonLargeProjectile;

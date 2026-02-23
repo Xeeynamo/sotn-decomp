@@ -2,6 +2,8 @@
 #include "nz0.h"
 #include "sfx.h"
 
+extern u8* g_SubweaponAnimPrizeDrop[];
+
 static SubWpnContDebris D_80182584[] = {
     {0x0000, 0xFFA9, 0x0003, 0x0000}, {0xFFF6, 0xFFBA, 0x0007, 0x0001},
     {0xFFF5, 0xFFC9, 0x0006, 0x0000}, {0x0007, 0xFFB6, 0x0007, 0x0001},
@@ -21,6 +23,7 @@ typedef enum {
     SUBWPNCONT_BREAK,
     SUBWPNCONT_DEBUG = 255
 } SUBWPNCONT_STEPS;
+
 void EntitySubWeaponContainer(Entity* self) {
     SubWpnContDebris* glassPieceTBL;
     Entity* newEntity;

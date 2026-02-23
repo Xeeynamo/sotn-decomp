@@ -5,6 +5,7 @@
 // This file holds functions to handle the Slogra and Gaibon fight.
 // Slogra and Gaibon themselves are in individual files.
 s32 g_BossFlag = 0x00000000;
+
 static s16 D_80181014[][3] = {
     {0xFFF8, 0x0068, 0}, {0xFFF8, 0x0078, 0}, {0xFFF8, 0x0088, 0},
     {0xFFF8, 0x0098, 0}, {0x0408, 0x0068, 1}, {0x0408, 0x0078, 1},
