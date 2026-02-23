@@ -83,8 +83,12 @@ func CreateImage(w io.WriterAt, mode TrackMode) (*WritableImage, error) {
 	img.dirMap["."] = &img.root // alias
 
 	// writes the first reserved 16 sectors
-	for i := location(0); i < 16; i++ {
-		img.WriteSector(i, MakeSector(false))
+	for i := location(0); i < 12; i++ {
+		img.WriteSector(i, SubModeData, MakeSector(false))
+	}
+	// sectors 12-15 are Form 2 padding
+	for i := location(12); i < 16; i++ {
+		img.WriteSector(i, SubModeForm2, MakeSector(false))
 	}
 
 	return img, nil
@@ -95,20 +99,21 @@ func (img *WritableImage) FlushChanges() error {
 	const tvdLoc = pvdLoc + 1
 	const pathTableLoc = tvdLoc + 1
 
-	loc := uint32(pathTableLoc)
 	if err := calcSizeDirTree(&img.root); err != nil {
 		return err
 	}
 	sortDirTree(&img.root)
 
-	pathTable := img.getPathTable()
-	pathTableLSB := serializePathTableLSB(pathTable)
-	pathTableMSB := serializePathTableMSB(pathTable)
-	img.Pvd.PathTableSize.LSB = uint32(len(pathTableLSB))
-	img.Pvd.PathTableSize.MSB = uint32(len(pathTableMSB))
-	lPathTableNBlock := (img.Pvd.PathTableSize.LSB + sectorSize - 1) / sectorMode2Size
-	mPathTableNBlock := (img.Pvd.PathTableSize.MSB + sectorSize - 1) / sectorMode2Size
+	// Serialize once to determine path table size; locations are not yet known
+	dummyPathTable := img.getPathTable()
+	dummyLSB := serializePathTableLSB(dummyPathTable)
+	dummyMSB := serializePathTableMSB(dummyPathTable)
+	img.Pvd.PathTableSize.LSB = uint32(len(dummyLSB))
+	img.Pvd.PathTableSize.MSB = uint32(len(dummyMSB))
+	lPathTableNBlock := (img.Pvd.PathTableSize.LSB + sectorSize - 1) / sectorSize
+	mPathTableNBlock := (img.Pvd.PathTableSize.MSB + sectorSize - 1) / sectorSize
 
+	loc := uint32(pathTableLoc)
 	img.Pvd.PathLTableLocation.LSB = uint16(loc)
 	img.Pvd.PathLTableLocation.MSB = 0
 	loc += lPathTableNBlock
@@ -122,37 +127,44 @@ func (img *WritableImage) FlushChanges() error {
 	img.Pvd.PathOptionalMTableLocation.MSB = uint16(loc)
 	loc += mPathTableNBlock
 
+	// Assign root directory sector
 	img.root.dirent.ExtentLocation = make32(loc)
 	img.Pvd.DirectoryRecord.ExtentLocation = img.root.dirent.ExtentLocation
-	pathTable[0].loc = loc
-	pathTableLSB = serializePathTableLSB(pathTable) // HACK serialize twice due to 'loc' recalculated
-	pathTableMSB = serializePathTableMSB(pathTable) // HACK serialize twice due to 'loc' recalculated
 
-	img.calcLocDirTree(loc + 1)
+	// Assign locations for all files and subdirectories; root may span multiple sectors
+	rootSectors := img.root.dirent.DataLength.LSB / sectorSize
+	img.calcLocDirTree(loc + rootSectors)
+
+	// Now that all locations are assigned, re-build path table with correct values
+	pathTable := img.getPathTable()
+	pathTableLSB := serializePathTableLSB(pathTable)
+	pathTableMSB := serializePathTableMSB(pathTable)
 
 	if err := img.writeTree(); err != nil {
 		return err
 	}
-	img.Pvd.DirectoryRecord = img.root.dirent
 
-	writeSector(img.writer, pvdLoc, img.mode, serializePVD(img.Pvd))
-	writeSector(img.writer, tvdLoc, img.mode, serializeTVD(DefaultTVD))
+	// Preserve RecordingDateTime set by the caller, update the rest from computed root
+	savedTs := img.Pvd.DirectoryRecord.RecordingDateTime
+	img.Pvd.DirectoryRecord = img.root.dirent
+	img.Pvd.DirectoryRecord.RecordingDateTime = savedTs
+
+	img.Pvd.VolumeSpaceSize = make32(248015)
+	writeSector(img.writer, pvdLoc, img.mode, SubModeData|SubModeEOR, serializePVD(img.Pvd))
+	writeSector(img.writer, tvdLoc, img.mode, SubModeData|SubModeEOR|SubModeEOF, serializeTVD(DefaultTVD))
 
 	if img.Pvd.PathLTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathLTableLocation.LSB), pathTableLSB)
+		img.WriteData(location(img.Pvd.PathLTableLocation.LSB), SubModeData|SubModeEOR|SubModeEOF, pathTableLSB)
 	}
 	if img.Pvd.PathOptionalLTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathOptionalLTableLocation.LSB), pathTableLSB)
+		img.WriteData(location(img.Pvd.PathOptionalLTableLocation.LSB), SubModeData|SubModeEOR|SubModeEOF, pathTableLSB)
 	}
 	if img.Pvd.PathMTableLocation.MSB > 0 {
-		img.WriteData(location(img.Pvd.PathMTableLocation.MSB), pathTableMSB)
+		img.WriteData(location(img.Pvd.PathMTableLocation.MSB), SubModeData|SubModeEOR|SubModeEOF, pathTableMSB)
 	}
 	if img.Pvd.PathOptionalMTableLocation.MSB > 0 {
-		img.WriteData(location(img.Pvd.PathOptionalMTableLocation.MSB), pathTableMSB)
+		img.WriteData(location(img.Pvd.PathOptionalMTableLocation.MSB), SubModeData|SubModeEOR|SubModeEOF, pathTableMSB)
 	}
-
-	// TODO start to write all the LBA and files based on the pre-calculated table
-	img.Pvd.VolumeSpaceSize = make32(248015)
 
 	return nil
 }
@@ -339,7 +351,7 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 			offset += len(data)
 			finalData = append(finalData, data...)
 		}
-		img.WriteData(loc, finalData)
+		img.WriteData(loc, SubModeData|SubModeEOR|SubModeEOF, finalData)
 		return nil
 	} else {
 		r, err := os.Open(node.fullPath)
@@ -367,7 +379,11 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 				return err
 			}
 
-			img.WriteSector(loc, sec)
+			subMode := SubModeData
+			if size <= 0 {
+				subMode = SubModeData | SubModeEOR | SubModeEOF
+			}
+			img.WriteSector(loc, subMode, sec)
 			loc++
 		}
 	}
@@ -389,11 +405,11 @@ func sortDirTree(dt *dirTree) {
 	}
 }
 
-func (img *WritableImage) WriteSector(loc location, data sectorData) error {
-	return writeSector(img.writer, loc, img.mode, data)
+func (img *WritableImage) WriteSector(loc location, subMode byte, data sectorData) error {
+	return writeSector(img.writer, loc, img.mode, subMode, data)
 }
 
-func (img *WritableImage) Write(loc location, r io.Reader, size int64) error {
+func (img *WritableImage) Write(loc location, r io.Reader, size int64, lastSubMode byte) error {
 	for size > 0 {
 		toWrite := int64(sectorSize)
 		if toWrite > size {
@@ -407,16 +423,20 @@ func (img *WritableImage) Write(loc location, r io.Reader, size int64) error {
 			return err
 		}
 
-		img.WriteSector(loc, sec)
+		subMode := SubModeData
+		if size <= 0 {
+			subMode = lastSubMode
+		}
+		img.WriteSector(loc, subMode, sec)
 		loc++
 	}
 
 	return nil
 }
 
-func (img *WritableImage) WriteData(loc location, data []byte) error {
+func (img *WritableImage) WriteData(loc location, lastSubMode byte, data []byte) error {
 	reader := bytes.NewReader(data)
-	return img.Write(loc, reader, reader.Size())
+	return img.Write(loc, reader, reader.Size(), lastSubMode)
 }
 
 func makeApplicationUse(name string) []byte {

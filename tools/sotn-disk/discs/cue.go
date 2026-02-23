@@ -1,4 +1,4 @@
-package main
+package discs
 
 import (
 	"errors"
@@ -47,7 +47,9 @@ func openImageFromCueFile(cuePath string) (*iso9660.Image, error) {
 	return iso9660.OpenImage(f, mode)
 }
 
-func performCueAction(path string, action imageAction) error {
+type imageAction func(iso9660.File) error
+
+func PerformCueAction(path string, action imageAction) error {
 	stat, err := os.Stat(path)
 	if err != nil {
 		return err

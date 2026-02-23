@@ -4,10 +4,9 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-disk/discs"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-disk/iso9660"
 )
-
-type imageAction func(iso9660.File) error
 
 func printHelp() {
 	fmt.Printf("Usage: sotn-disc <command> <sotn.cue> [args]\n\n")
@@ -33,7 +32,7 @@ func main() {
 	cuePath := os.Args[2]
 	switch cmd {
 	case "list":
-		err = performCueAction(cuePath, list)
+		err = discs.PerformCueAction(cuePath, discs.List)
 	case "extract":
 		if len(os.Args) < 4 {
 			fmt.Printf("wrong number of arguments\n\n")
@@ -41,8 +40,8 @@ func main() {
 			return
 		}
 		outPath := os.Args[3]
-		err = performCueAction(cuePath, func(f iso9660.File) error {
-			return extract(f, outPath)
+		err = discs.PerformCueAction(cuePath, func(f iso9660.File) error {
+			return discs.Extract(f, outPath)
 		})
 	case "inject":
 		if len(os.Args) < 4 {
@@ -52,7 +51,7 @@ func main() {
 		}
 		destination := os.Args[3]
 		inputPath := os.Args[4]
-		err = inject(cuePath, destination, inputPath)
+		err = discs.Inject(cuePath, destination, inputPath)
 	case "make":
 		if len(os.Args) < 5 {
 			fmt.Printf("wrong number of arguments\n\n")
@@ -61,7 +60,7 @@ func main() {
 		}
 		inPath := os.Args[3]
 		fileListPath := os.Args[4]
-		err = makeDisc(cuePath, inPath, fileListPath)
+		err = discs.MakeDisk(cuePath, inPath, fileListPath)
 	default:
 		fmt.Printf("Invalid command: %s\n\n", cmd)
 		printHelp()

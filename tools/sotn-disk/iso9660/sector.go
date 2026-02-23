@@ -14,6 +14,14 @@ type sectorData []byte
 const sectorSize = 0x800
 const sectorMode2Size = 0x800 + 0x130
 
+// CD-ROM XA subheader submode flags
+const (
+	SubModeEOR   byte = 0x01 // End of Record
+	SubModeData  byte = 0x08 // Data sector
+	SubModeForm2 byte = 0x20 // Form 2 (no ECC, extended data area)
+	SubModeEOF   byte = 0x80 // End of File
+)
+
 var (
 	sync = []byte{
 		0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
@@ -44,7 +52,7 @@ func readSector(r io.ReaderAt, loc location, mode TrackMode, useMode2 bool) (sec
 	return sec, err
 }
 
-func writeSector(w io.WriterAt, loc location, mode TrackMode, s sectorData) error {
+func writeSector(w io.WriterAt, loc location, mode TrackMode, subMode byte, s sectorData) error {
 	var offset int64
 	if mode == TrackMode1_2048 {
 		offset = int64(loc) * sectorSize
@@ -63,13 +71,12 @@ func writeSector(w io.WriterAt, loc location, mode TrackMode, s sectorData) erro
 		switch len(s) {
 		case sectorSize:
 			const TrackMode = 2
-			const Form2_2352 = 8
 			seconds := 2 + loc/75
 			subHeader := []byte{
-				0x00,       // file
-				0x00,       // channel
-				Form2_2352, // submode
-				0x00,       // coding info
+				0x00,    // file
+				0x00,    // channel
+				subMode, // submode
+				0x00,    // coding info
 			}
 			block := make([]byte, 0x930)
 			copy(block[0:], sync)
@@ -81,10 +88,24 @@ func writeSector(w io.WriterAt, loc location, mode TrackMode, s sectorData) erro
 			copy(block[16:], subHeader)
 			copy(block[20:], subHeader)
 			copy(block[0x18:], s)
-			binary.LittleEndian.PutUint32(block[0x818:], computeEDC(block[0x10:0x818]))
-			calcPParity(block)
-			calcQParity(block)
-			//replicateBugs(block)
+
+			if subMode&SubModeForm2 != 0 {
+				// Form 2: optional EDC at 0x92C, no ECC
+				binary.LittleEndian.PutUint32(block[0x92C:], computeEDC(block[0x10:0x92C]))
+			} else {
+				// Form 1: EDC + ECC
+				binary.LittleEndian.PutUint32(block[0x818:], computeEDC(block[0x10:0x818]))
+				// Per ECMA-130, Mode 2 Form 1 ECC is computed with the
+				// 4-byte header (address) field zeroed out.
+				savedHeader := [4]byte{block[12], block[13], block[14], block[15]}
+				block[12], block[13], block[14], block[15] = 0, 0, 0, 0
+				calcPParity(block)
+				calcQParity(block)
+				block[12] = savedHeader[0]
+				block[13] = savedHeader[1]
+				block[14] = savedHeader[2]
+				block[15] = savedHeader[3]
+			}
 
 			if _, err := w.WriteAt(block, offset); err != nil {
 				return err
@@ -110,27 +131,3 @@ func decToHex(n location) byte {
 	return byte((n % 10) + (n/10)*16)
 }
 
-func replicateBugs(block []byte) {
-	block[0x81C] = 0
-	block[0x81D] = 0
-	block[0x81E] = 0
-	block[0x81F] = 0
-	block[0x872] = 0
-	block[0x873] = 0
-	block[0x874] = 0
-	block[0x875] = 0
-	block[0x8C8] = 0
-	block[0x8C9] = 0
-	block[0x8F7] = 0
-	block[0x8F8] = 0
-	block[0x8F9] = 0
-	block[0x8FA] = 0
-	block[0x8FB] = 0
-	block[0x8FC] = 0
-	block[0x8FD] = 0
-	block[0x92B] = 0
-	block[0x92C] = 0
-	block[0x92D] = 0
-	block[0x92E] = 0
-	block[0x92F] = 0
-}

@@ -1,4 +1,4 @@
-package main
+package discs
 
 import (
 	"fmt"
@@ -15,7 +15,7 @@ type fileMeta struct {
 	xaMode    string
 }
 
-func list(f iso9660.File) error {
+func List(f iso9660.File) error {
 	meta, err := dumpFileMeta(f)
 	if err != nil {
 		return err
