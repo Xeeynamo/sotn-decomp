@@ -8,9 +8,9 @@ package iso9660
 
 const eccPolynomial = 0xD8018001
 
-var ecc_f_lut, ecc_b_lut, edc_lut = eecEdcInit()
+var ecc_f_lut, ecc_b_lut, edc_lut = eccEdcInit()
 
-func eecEdcInit() ([]byte, []byte, []uint32) {
+func eccEdcInit() ([]byte, []byte, []uint32) {
 	ecc_f_lut := make([]byte, 256)
 	ecc_b_lut := make([]byte, 256)
 	edc_lut := make([]uint32, 256)

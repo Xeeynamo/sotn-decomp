@@ -82,9 +82,16 @@ func writeSector(w io.WriterAt, loc location, mode TrackMode, s sectorData) erro
 			copy(block[20:], subHeader)
 			copy(block[0x18:], s)
 			binary.LittleEndian.PutUint32(block[0x818:], computeEDC(block[0x10:0x818]))
+			// Per ECMA-130, Mode 2 Form 1 ECC is computed with the
+			// 4-byte header (address) field zeroed out.
+			savedHeader := [4]byte{block[12], block[13], block[14], block[15]}
+			block[12], block[13], block[14], block[15] = 0, 0, 0, 0
 			calcPParity(block)
 			calcQParity(block)
-			//replicateBugs(block)
+			block[12] = savedHeader[0]
+			block[13] = savedHeader[1]
+			block[14] = savedHeader[2]
+			block[15] = savedHeader[3]
 
 			if _, err := w.WriteAt(block, offset); err != nil {
 				return err
@@ -110,27 +117,3 @@ func decToHex(n location) byte {
 	return byte((n % 10) + (n/10)*16)
 }
 
-func replicateBugs(block []byte) {
-	block[0x81C] = 0
-	block[0x81D] = 0
-	block[0x81E] = 0
-	block[0x81F] = 0
-	block[0x872] = 0
-	block[0x873] = 0
-	block[0x874] = 0
-	block[0x875] = 0
-	block[0x8C8] = 0
-	block[0x8C9] = 0
-	block[0x8F7] = 0
-	block[0x8F8] = 0
-	block[0x8F9] = 0
-	block[0x8FA] = 0
-	block[0x8FB] = 0
-	block[0x8FC] = 0
-	block[0x8FD] = 0
-	block[0x92B] = 0
-	block[0x92C] = 0
-	block[0x92D] = 0
-	block[0x92E] = 0
-	block[0x92F] = 0
-}
