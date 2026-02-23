@@ -1,4 +1,4 @@
-package main
+package discs
 
 import (
 	"encoding/binary"

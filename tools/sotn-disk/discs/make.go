@@ -1,9 +1,8 @@
-package main
+package discs
 
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
@@ -18,7 +17,7 @@ var (
 )
 
 type makeFileMeta struct {
-	name   string
+	Name   string
 	time   iso9660.Timestamp
 	xaMode iso9660.XaMode
 }
@@ -33,7 +32,7 @@ func removePathVersion(str string) string {
 	return str[:len(str)-2]
 }
 
-func readFileList(fileListPath string) ([]makeFileMeta, error) {
+func ReadFileList(fileListPath string) ([]makeFileMeta, error) {
 	atoi := func(s string) (byte, error) {
 		v, err := strconv.Atoi(s)
 		return byte(v), err
@@ -57,7 +56,7 @@ func readFileList(fileListPath string) ([]makeFileMeta, error) {
 		}
 	}
 
-	content, err := ioutil.ReadFile(fileListPath)
+	content, err := os.ReadFile(fileListPath)
 	if err != nil {
 		return nil, err
 	}
@@ -70,7 +69,7 @@ func readFileList(fileListPath string) ([]makeFileMeta, error) {
 		}
 
 		tokens := strings.Split(v, ",")
-		meta := makeFileMeta{name: tokens[0]}
+		meta := makeFileMeta{Name: tokens[0]}
 		if len(tokens) > 1 {
 			meta.xaMode = xaModeStr(tokens[1])
 		}
@@ -106,8 +105,8 @@ func readFileList(fileListPath string) ([]makeFileMeta, error) {
 
 func validateFileList(metas []makeFileMeta, basePath string) error {
 	for _, meta := range metas {
-		if isPathFile(meta.name) {
-			fullPath := path.Join(basePath, removePathVersion((meta.name)))
+		if isPathFile(meta.Name) {
+			fullPath := path.Join(basePath, removePathVersion((meta.Name)))
 			if _, err := os.Stat(fullPath); err != nil {
 				return err
 			}
@@ -117,8 +116,8 @@ func validateFileList(metas []makeFileMeta, basePath string) error {
 	return nil
 }
 
-func makeDisc(cuePath string, inputPath string, fileListPath string) error {
-	metas, err := readFileList(fileListPath)
+func MakeDisk(cuePath string, inputPath string, fileListPath string) error {
+	metas, err := ReadFileList(fileListPath)
 	if err != nil {
 		return err
 	}
@@ -163,7 +162,7 @@ func makeDisc(cuePath string, inputPath string, fileListPath string) error {
 	}
 
 	for _, meta := range metas {
-		if err := img.AddFile(meta.name, inputPath, meta.time, meta.xaMode); err != nil {
+		if err := img.AddFile(meta.Name, inputPath, meta.time, meta.xaMode); err != nil {
 			return err
 		}
 	}

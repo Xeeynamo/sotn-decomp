@@ -1,10 +1,11 @@
-package main
+package discs
 
 import (
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-disk/iso9660"
 	"os"
 	"strings"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-disk/iso9660"
 )
 
 func findFile(f *iso9660.File, basePath, dst, name string) (*iso9660.File, error) {
@@ -29,8 +30,8 @@ func findFile(f *iso9660.File, basePath, dst, name string) (*iso9660.File, error
 	return nil, &os.PathError{Op: "find", Path: name, Err: fmt.Errorf("file not found")}
 }
 
-func inject(cuePath string, destination string, inputPath string) error {
-	return performCueAction(cuePath, func(f iso9660.File) error {
+func Inject(cuePath string, destination string, inputPath string) error {
+	return PerformCueAction(cuePath, func(f iso9660.File) error {
 		destination := "/" + strings.ToLower(destination) + ";1"
 		found, err := findFile(&f, "", destination, inputPath)
 		if err != nil {

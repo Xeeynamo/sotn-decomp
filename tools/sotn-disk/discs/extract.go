@@ -1,4 +1,4 @@
-package main
+package discs
 
 import (
 	"fmt"
@@ -8,7 +8,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-disk/iso9660"
 )
 
-func extract(f iso9660.File, basePath string) error {
+func Extract(f iso9660.File, basePath string) error {
 	if _, err := os.Stat(basePath); os.IsNotExist(err) {
 		if err := os.Mkdir(basePath, 0744); err != nil {
 			return err
@@ -23,7 +23,7 @@ func extract(f iso9660.File, basePath string) error {
 	for _, child := range children[2:] {
 		outPath := path.Join(basePath, child.FileIdentifier)
 		if child.IsDirectory() {
-			if err = extract(child, outPath); err != nil {
+			if err = Extract(child, outPath); err != nil {
 				return err
 			}
 		} else {
