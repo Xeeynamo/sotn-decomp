@@ -83,8 +83,12 @@ func CreateImage(w io.WriterAt, mode TrackMode) (*WritableImage, error) {
 	img.dirMap["."] = &img.root // alias
 
 	// writes the first reserved 16 sectors
-	for i := location(0); i < 16; i++ {
-		img.WriteSector(i, MakeSector(false))
+	for i := location(0); i < 12; i++ {
+		img.WriteSector(i, SubModeData, MakeSector(false))
+	}
+	// sectors 12-15 are Form 2 padding
+	for i := location(12); i < 16; i++ {
+		img.WriteSector(i, SubModeForm2, MakeSector(false))
 	}
 
 	return img, nil
@@ -146,20 +150,20 @@ func (img *WritableImage) FlushChanges() error {
 	img.Pvd.DirectoryRecord.RecordingDateTime = savedTs
 
 	img.Pvd.VolumeSpaceSize = make32(248015)
-	writeSector(img.writer, pvdLoc, img.mode, serializePVD(img.Pvd))
-	writeSector(img.writer, tvdLoc, img.mode, serializeTVD(DefaultTVD))
+	writeSector(img.writer, pvdLoc, img.mode, SubModeData|SubModeEOR, serializePVD(img.Pvd))
+	writeSector(img.writer, tvdLoc, img.mode, SubModeData|SubModeEOR|SubModeEOF, serializeTVD(DefaultTVD))
 
 	if img.Pvd.PathLTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathLTableLocation.LSB), pathTableLSB)
+		img.WriteData(location(img.Pvd.PathLTableLocation.LSB), SubModeData|SubModeEOR|SubModeEOF, pathTableLSB)
 	}
 	if img.Pvd.PathOptionalLTableLocation.LSB > 0 {
-		img.WriteData(location(img.Pvd.PathOptionalLTableLocation.LSB), pathTableLSB)
+		img.WriteData(location(img.Pvd.PathOptionalLTableLocation.LSB), SubModeData|SubModeEOR|SubModeEOF, pathTableLSB)
 	}
 	if img.Pvd.PathMTableLocation.MSB > 0 {
-		img.WriteData(location(img.Pvd.PathMTableLocation.MSB), pathTableMSB)
+		img.WriteData(location(img.Pvd.PathMTableLocation.MSB), SubModeData|SubModeEOR|SubModeEOF, pathTableMSB)
 	}
 	if img.Pvd.PathOptionalMTableLocation.MSB > 0 {
-		img.WriteData(location(img.Pvd.PathOptionalMTableLocation.MSB), pathTableMSB)
+		img.WriteData(location(img.Pvd.PathOptionalMTableLocation.MSB), SubModeData|SubModeEOR|SubModeEOF, pathTableMSB)
 	}
 
 	return nil
@@ -347,7 +351,7 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 			offset += len(data)
 			finalData = append(finalData, data...)
 		}
-		img.WriteData(loc, finalData)
+		img.WriteData(loc, SubModeData|SubModeEOR|SubModeEOF, finalData)
 		return nil
 	} else {
 		r, err := os.Open(node.fullPath)
@@ -375,7 +379,11 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 				return err
 			}
 
-			img.WriteSector(loc, sec)
+			subMode := SubModeData
+			if size <= 0 {
+				subMode = SubModeData | SubModeEOR | SubModeEOF
+			}
+			img.WriteSector(loc, subMode, sec)
 			loc++
 		}
 	}
@@ -397,11 +405,11 @@ func sortDirTree(dt *dirTree) {
 	}
 }
 
-func (img *WritableImage) WriteSector(loc location, data sectorData) error {
-	return writeSector(img.writer, loc, img.mode, data)
+func (img *WritableImage) WriteSector(loc location, subMode byte, data sectorData) error {
+	return writeSector(img.writer, loc, img.mode, subMode, data)
 }
 
-func (img *WritableImage) Write(loc location, r io.Reader, size int64) error {
+func (img *WritableImage) Write(loc location, r io.Reader, size int64, lastSubMode byte) error {
 	for size > 0 {
 		toWrite := int64(sectorSize)
 		if toWrite > size {
@@ -415,16 +423,20 @@ func (img *WritableImage) Write(loc location, r io.Reader, size int64) error {
 			return err
 		}
 
-		img.WriteSector(loc, sec)
+		subMode := SubModeData
+		if size <= 0 {
+			subMode = lastSubMode
+		}
+		img.WriteSector(loc, subMode, sec)
 		loc++
 	}
 
 	return nil
 }
 
-func (img *WritableImage) WriteData(loc location, data []byte) error {
+func (img *WritableImage) WriteData(loc location, lastSubMode byte, data []byte) error {
 	reader := bytes.NewReader(data)
-	return img.Write(loc, reader, reader.Size())
+	return img.Write(loc, reader, reader.Size(), lastSubMode)
 }
 
 func makeApplicationUse(name string) []byte {

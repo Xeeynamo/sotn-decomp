@@ -168,8 +168,8 @@ func makeDisc(cuePath string, inputPath string, fileListPath string) error {
 		}
 	}
 
-	img.WriteData(4, []byte(usLicense))
-	img.WriteData(5, playstationLogo)
+	img.WriteData(4, iso9660.SubModeData, []byte(usLicense))
+	img.WriteData(5, iso9660.SubModeData, playstationLogo)
 
 	if err := img.FlushChanges(); err != nil {
 		return err
