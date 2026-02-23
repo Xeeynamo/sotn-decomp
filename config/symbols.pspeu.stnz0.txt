@@ -146,6 +146,7 @@ g_EInitDamageNum = 0x092655F0;
 g_EInitEnemy3 = 0x09265600;
 g_EInitBloodSkeleton = 0x09265610;
 g_EInitBoneScimitar = 0x09265620;
+g_EInitScimitarParts = 0x09265630;
 g_EInitGreenAxeKnight = 0x09265640;
 g_EInitBloodyZombie = 0x09265660;
 g_EInitSkeleton = 0x09265670;
