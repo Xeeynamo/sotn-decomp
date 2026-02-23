@@ -160,8 +160,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 };
 
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_DRA(3), 0, 0x00, 0x000, 0};
-#define USE_ENEMY_3
 #include "../e_init_common.h"
+EInit g_EInitEnemy3 = {ANIMSET_OVL(1), 0, 0x00, 0x000, 3};
 EInit g_EInitBloodSkeleton = {0x8002, 0x0000, 0x004C, 0x0200, 0x0046};
 EInit g_EInitBoneScimitar = {0x8003, 0x0001, 0x004D, 0x0204, 0x0069};
 EInit g_EInitScimitarParts = {0x8003, 0x0000, 0x004D, 0x0204, 0x0002};
