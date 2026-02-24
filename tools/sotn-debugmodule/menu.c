@@ -1,8 +1,8 @@
 #include "debugmode.h"
 
-int g_OtIdx;
+static int g_OtIdx;
 
-POLY_G4* GetNextPolyG4() {
+static POLY_G4* GetNextPolyG4() {
     POLY_G4* poly;
 
     if (g_GpuUsage.g4 >= LEN(g_CurrentBuffer->polyG4)) {
@@ -78,7 +78,7 @@ void DbgDrawCursor(int x, int y, int w, int h) {
     poly->b0 = poly->b1 = poly->b2 = poly->b3 = 0;
 }
 
-int DbgGetMenuItemCount(DbgMenuCtrl* ctrl) {
+static int DbgGetMenuItemCount(DbgMenuCtrl* ctrl) {
     int i;
 
     for (i = 0; ctrl->items[i].action != NULL; i++) {
@@ -86,7 +86,7 @@ int DbgGetMenuItemCount(DbgMenuCtrl* ctrl) {
     return i;
 }
 
-void DbgMenuCtrlInit(DbgMenuCtrl* ctrl) {
+static void DbgMenuCtrlInit(DbgMenuCtrl* ctrl) {
     DbgMenuItem* item;
     int i;
 
@@ -167,6 +167,6 @@ void DbgMenuNavigate(DbgMenuCtrl* ctrl) {
 }
 
 Lba* DbgGetStageLba(int stageId) {
-    Lba* lba = 0x800A3C40;
+    Lba* lba = (Lba*)0x800A3C40;
     return &lba[stageId];
 }

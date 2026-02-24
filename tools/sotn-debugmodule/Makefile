@@ -5,9 +5,10 @@ VERSION			?= us
 MODULE_NAME		:= sotn-debugmodule
 
 # Directories
-INCLUDE_DIR     := ../../include
-BUILD_DIR       := ../../build
-CONFIG_DIR      := ../../config
+SOTN_ROOT       := ../..
+INCLUDE_DIR     := $(SOTN_ROOT)/include
+BUILD_DIR       := $(SOTN_ROOT)/build
+CONFIG_DIR      := $(SOTN_ROOT)/config
 
 # Compilers
 CROSS           := mipsel-linux-gnu-
@@ -15,8 +16,9 @@ CC				:= $(CROSS)gcc
 LD              := $(CROSS)ld
 CPP				:= $(CROSS)cpp
 OBJCOPY         := $(CROSS)objcopy
-CC_FLAGS        += -c -march=r3000 -fno-stack-protector -mtune=r3000 -EL -G0 -O2 -g -funsigned-char -w -mno-abicalls -msoft-float
-CPP_FLAGS       += -I$(INCLUDE_DIR) -undef
+CC_FLAGS        := -std=c11 -c -G0 -O2 -g -funsigned-char -Werror -Wall -Wno-unused-function
+CC_FLAGS        += -march=mips1 -mabi=32 -EL -mfp32 -fno-pic -mno-shared -mno-abicalls -fno-stack-protector -nostdlib
+CPP_FLAGS       += -isystem $(INCLUDE_DIR) -undef
 CPP_FLAGS       += -D_internal_version_$(VERSION) -Dmips -D__OPTIMIZE__ -D__mips__ -D__mips -Dpsx -D__psx__ -D__psx -D_PSYQ -D__EXTENSIONS__ -D_MIPSEL -DNO_LOGS -D_LANGUAGE_C -DLANGUAGE_C
 
 all: clean_symbols build

@@ -2,15 +2,15 @@
 
 #define MaxFlagChangeLogCount 4
 
-const char ChToHex[] = {'0', '1', '2', '3', '4', '5', '6', '7',
-                        '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+static const char ChToHex[] = {'0', '1', '2', '3', '4', '5', '6', '7',
+                               '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
-int g_FlagOffset;
-int g_FlagCursor;
-bool g_IsFlagEditMode;
-u8 g_CastleFlagsCopy[LEN(g_CastleFlags)];
-char g_CastleFlagChanges[MaxFlagChangeLogCount][8];
-int g_CastleFlagChangeCursor;
+static int g_FlagOffset;
+static int g_FlagCursor;
+static bool g_IsFlagEditMode;
+static u8 g_CastleFlagsCopy[LEN(g_CastleFlags)];
+static char g_CastleFlagChanges[MaxFlagChangeLogCount][8];
+static int g_CastleFlagChangeCursor;
 
 void InitFlagChecker(void) {
     int i;
@@ -23,9 +23,9 @@ void InitFlagChecker(void) {
         g_CastleFlagChanges[i][0] = '\0';
 }
 
-void FlipBit(int offset, int bit) { g_CastleFlags[offset] ^= 1 << bit; }
+static void FlipBit(int offset, int bit) { g_CastleFlags[offset] ^= 1 << bit; }
 
-void ReportFlagChange(int offset, u8 prev, u8 cur) {
+static void ReportFlagChange(int offset, u8 prev, u8 cur) {
     char* str =
         g_CastleFlagChanges[g_CastleFlagChangeCursor % MaxFlagChangeLogCount];
     g_CastleFlagChangeCursor++;
@@ -40,14 +40,14 @@ void ReportFlagChange(int offset, u8 prev, u8 cur) {
     str[7] = '\0';
 }
 
-int UpdateFlagCheckerListenMode(void) {
+static int UpdateFlagCheckerListenMode(void) {
     const int MenuWidth = 64;
     int i;
 
     if (g_pads[0].tapped & PAD_L2) {
         // exit listen mode
         g_CastleFlagChangeCursor = -1;
-        return;
+        return 0;
     }
 
     for (i = 0; i < LEN(g_CastleFlags); i++) {
@@ -66,12 +66,12 @@ int UpdateFlagCheckerListenMode(void) {
     return true;
 }
 
-void InitFlagCheckerListenMode(void) {
+static void InitFlagCheckerListenMode(void) {
     g_CastleFlagChangeCursor = 0;
     __builtin_memcpy(g_CastleFlagsCopy, g_CastleFlags, LEN(g_CastleFlags));
 }
 
-void PrintFlagLine(int offset, int columnCount) {
+static void PrintFlagLine(int offset, int columnCount) {
     char buf[10];
     u8 ch;
 
