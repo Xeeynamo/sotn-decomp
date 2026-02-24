@@ -1068,7 +1068,7 @@
 | no3    | func_pspeu_0925FBD8                  |       28 |          2 |        |       |     |
 | no4    | func_pspeu_0925AD20                  |       28 |          2 |        |       |     |
 | np3    | func_pspeu_09259D58                  |       28 |          2 |        |       |     |
-| nz0    | GetDistanceToPlayerY                 |       28 |          2 |        |       |     |
+| nz0    | func_pspeu_092543F8                  |       28 |          2 |        |       |     |
 | nz1    | GetDistanceToPlayerY                 |       28 |          2 |        |       |     |
 | rcat   | func_pspeu_092490B0                  |       28 |          2 |        |       |     |
 | main   | sceSasGetEnvelope                    |       28 |          3 |        |       |     |
@@ -1478,7 +1478,7 @@
 | no2    | e_owl_knight.rodata                  |       38 |          0 | Yes    |       |     |
 | no4    | e_ferryman.rodata                    |       38 |          0 | Yes    |       |     |
 | np3    | giantbro_helpers.rodata              |       38 |          0 | Yes    |       |     |
-| nz0    | e_maria.rodata                       |       38 |          0 | Yes    |       |     |
+| nz0    | maria.rodata                         |       38 |          0 | Yes    |       |     |
 | rcat   | e_skeleton.rodata                    |       38 |          0 | Yes    |       |     |
 | main   | _sprintf_r                           |       38 |          2 |        |       |     |
 | main   | func_psp_0892E6A4                    |       38 |          2 |        |       |     |
@@ -2027,7 +2027,7 @@
 | no3    | func_pspeu_09242C00                  |       51 |         10 |        |       |     |
 | no4    | func_pspeu_0925DDC0                  |       51 |         10 |        |       |     |
 | nz0    | func_pspeu_0923DCC8                  |       51 |         10 |        |       |     |
-| nz0    | GetLang_0924FCE8                     |       51 |         10 |        |       |     |
+| nz0    | func_pspeu_0924FCE8                  |       51 |         10 |        |       |     |
 | sel    | func_psp_09237E38                    |       51 |         10 |        |       |     |
 | sel    | func_psp_0923F3C0                    |       51 |         10 |        |       |     |
 | sel    | func_psp_09245258                    |       51 |         10 |        |       |     |
@@ -2391,8 +2391,8 @@
 | no3    | func_pspeu_09247BB8                  |       66 |          7 |        |       |     |
 | no4    | func_pspeu_09246A70                  |       66 |          7 |        |       |     |
 | np3    | func_pspeu_09244088                  |       66 |          7 |        |       |     |
-| nz0    | EntityIsNearPlayer                   |       66 |          7 |        |       |     |
-| nz0    | SealedDoorIsNearPlayer               |       66 |          7 |        |       |     |
+| nz0    | func_pspeu_092449C0                  |       66 |          7 |        |       |     |
+| nz0    | func_pspeu_0924FD88                  |       66 |          7 |        |       |     |
 | nz1    | EntityIsNearPlayer                   |       66 |          7 |        |       |     |
 | rare   | func_pspeu_0923E698                  |       66 |          7 |        |       |     |
 | rcat   | func_pspeu_09239528                  |       66 |          7 |        |       |     |
@@ -2429,7 +2429,7 @@
 | main   | __lo0bits                            |       67 |         10 |        |       |     |
 | main   | memset                               |       67 |         10 |        |       |     |
 | lib    | func_psp_0924E068                    |       67 |         10 |        |       |     |
-| nz0    | SkeletonAttackCheck                  |       67 |         10 |        |       |     |
+| nz0    | func_pspeu_09252A80                  |       67 |         10 |        |       |     |
 | rcat   | func_pspeu_092483B8                  |       67 |         10 |        |       |     |
 | maria  | func_pspeu_092C0040                  |       67 |         12 |        |       |     |
 |        | func_092EF0D8                        |       67 |         12 |        |       |     |
@@ -2576,7 +2576,7 @@
 | dai    | func_pspeu_09242FD0                  |       73 |          4 |        |       |     |
 | lib    | func_psp_09248480                    |       73 |          4 |        |       |     |
 | no2    | func_pspeu_092440F0                  |       73 |          4 |        |       |     |
-| nz0    | MakeEntityFromId                     |       73 |          4 |        |       |     |
+| nz0    | func_pspeu_0924CC08                  |       73 |          4 |        |       |     |
 | nz1    | func_pspeu_092461A0                  |       73 |          4 |        |       |     |
 | dra    | func_psp_0913E558                    |       73 |          7 |        |       |     |
 | dra    | func_psp_090ECD78                    |       73 |          7 |        |       |     |
@@ -2614,7 +2614,7 @@
 | are    | func_pspeu_09256548                  |       73 |         14 |        |       |     |
 | no3    | func_pspeu_0925B520                  |       73 |         14 |        |       |     |
 | np3    | func_pspeu_09251AB8                  |       73 |         14 |        |       |     |
-| nz0    | BoneScimitarAttackCheck              |       73 |         14 |        |       |     |
+| nz0    | func_pspeu_09251248                  |       73 |         14 |        |       |     |
 | main   | func_psp_089113A8                    |       73 |         16 |        |       |     |
 | main   | VSync                                |       73 |         16 |        |       |     |
 | dra    | func_psp_090E8658                    |       74 |          6 |        |       |     |
@@ -2893,7 +2893,7 @@
 | lib    | func_psp_09247AD8                    |       91 |          7 |        |       |     |
 | no2    | func_pspeu_092438C8                  |       91 |          7 |        |       |     |
 | np3    | func_pspeu_0924EDD0                  |       91 |          7 |        |       |     |
-| nz0    | CheckColliderOffsets                 |       91 |          7 |        |       |     |
+| nz0    | func_pspeu_0924B9E0                  |       91 |          7 |        |       |     |
 | rcat   | func_pspeu_09242980                  |       91 |          7 |        |       |     |
 | main   | __b2d                                |       91 |          8 |        |       |     |
 | ric    | func_pspeu_092CC930                  |       91 |          8 |        |       |     |
@@ -2985,7 +2985,7 @@
 | no3    | func_pspeu_092607D8                  |       96 |         11 |        |       |     |
 | no4    | func_pspeu_0925B9F0                  |       96 |         11 |        |       |     |
 | np3    | func_pspeu_0925ABD8                  |       96 |         11 |        |       |     |
-| nz0    | UnkCollisionFunc                     |       96 |         11 |        |       |     |
+| nz0    | func_pspeu_092550C8                  |       96 |         11 |        |       |     |
 | rcat   | func_pspeu_09249F18                  |       96 |         11 |        |       |     |
 | are    | func_pspeu_0923BC48                  |       96 |         12 |        |       |     |
 | cat    | func_pspeu_09237D88                  |       96 |         12 |        |       |     |
@@ -3170,7 +3170,7 @@
 | dai    | func_pspeu_092429E8                  |      104 |          5 |        |       |     |
 | lib    | func_psp_09247D68                    |      104 |          5 |        |       |     |
 | no3    | func_pspeu_09258A78                  |      104 |          5 |        |       |     |
-| nz0    | EntityExplosionVariantsSpawner       |      104 |          5 |        |       |     |
+| nz0    | func_pspeu_0924BC70                  |      104 |          5 |        |       |     |
 | nz1    | EntityExplosionVariantsSpawner       |      104 |          5 |        |       |     |
 | maria  | func_pspeu_092BFD30                  |      104 |          8 |        |       |     |
 | dra    | func_psp_090EF200                    |      104 |         10 |        |       |     |
@@ -4284,7 +4284,7 @@
 | no3    | func_pspeu_09260AB8                  |      332 |         41 |        |       |     |
 | no4    | func_pspeu_0925BCD0                  |      332 |         41 |        |       |     |
 | np3    | func_pspeu_0925AEB8                  |      332 |         41 |        |       |     |
-| nz0    | GetPlayerCollisionWith               |      332 |         41 |        |       |     |
+| nz0    | func_pspeu_092553A8                  |      332 |         41 |        |       |     |
 | nz1    | func_pspeu_09250830                  |      332 |         41 |        |       |     |
 | dai    | func_pspeu_09257AE0                  |      333 |         35 | Yes    |       |     |
 | ric    | func_pspeu_092B00F0                  |      333 |         60 | Yes    |       |     |
@@ -4718,7 +4718,7 @@
 | rcat   | func_us_801BACF4_from_cat            |      652 |         41 |        |       |     |
 | ric    | func_pspeu_092BAEE8                  |      655 |         49 | Yes    |       |     |
 | cat    | func_pspeu_09249058                  |      655 |         51 |        |       |     |
-| nz0    | UnkCollisionFunc4                    |      655 |         51 |        |       |     |
+| nz0    | func_pspeu_0924C0E8                  |      655 |         51 |        |       |     |
 | lib    | func_psp_0924D598                    |      655 |         98 |        |       |     |
 | dai    | func_pspeu_09259CA0                  |      656 |         41 |        |       |     |
 | dra    | func_psp_0912E3C0                    |      657 |         61 |        |       |     |
