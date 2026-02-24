@@ -33,6 +33,10 @@ type pathTable struct {
 	parent int
 }
 
+func (img *WritableImage) Mode() TrackMode {
+	return img.mode
+}
+
 func CreateImage(w io.WriterAt, mode TrackMode) (*WritableImage, error) {
 	img := &WritableImage{
 		writer: w,
@@ -133,7 +137,7 @@ func (img *WritableImage) FlushChanges() error {
 
 	// Assign locations for all files and subdirectories; root may span multiple sectors
 	rootSectors := img.root.dirent.DataLength.LSB / sectorSize
-	img.calcLocDirTree(loc + rootSectors)
+	volumeSpaceSize := img.calcLocDirTree(loc + rootSectors)
 
 	// Now that all locations are assigned, re-build path table with correct values
 	pathTable := img.getPathTable()
@@ -149,7 +153,9 @@ func (img *WritableImage) FlushChanges() error {
 	img.Pvd.DirectoryRecord = img.root.dirent
 	img.Pvd.DirectoryRecord.RecordingDateTime = savedTs
 
-	img.Pvd.VolumeSpaceSize = make32(248015)
+	const Track02Len = 18995
+	const CrapData = 150
+	img.Pvd.VolumeSpaceSize = make32(volumeSpaceSize + CrapData + Track02Len)
 	writeSector(img.writer, pvdLoc, img.mode, SubModeData|SubModeEOR, serializePVD(img.Pvd))
 	writeSector(img.writer, tvdLoc, img.mode, SubModeData|SubModeEOR|SubModeEOF, serializeTVD(DefaultTVD))
 
@@ -287,13 +293,14 @@ func calcSizeDirTree(dt *dirTree) error {
 	return nil
 }
 
-func (img *WritableImage) calcLocDirTree(startLoc uint32) {
+func (img *WritableImage) calcLocDirTree(startLoc uint32) uint32 {
 	loc := startLoc
 	for _, name := range img.order {
 		node := img.dirMap[name]
 		node.dirent.ExtentLocation = make32(loc)
 		loc += (node.dirent.DataLength.LSB + sectorSize - 1) / sectorSize
 	}
+	return loc
 }
 
 func (img *WritableImage) writeTree() error {
@@ -303,7 +310,7 @@ func (img *WritableImage) writeTree() error {
 
 	for _, name := range img.order {
 		if err := img.writeNode(img.dirMap[name]); err != nil {
-			return nil
+			return err
 		}
 	}
 

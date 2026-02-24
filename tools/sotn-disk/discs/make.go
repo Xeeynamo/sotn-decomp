@@ -3,6 +3,7 @@ package discs
 import (
 	"bufio"
 	"fmt"
+	"io"
 	"os"
 	"path"
 	"path/filepath"
@@ -103,6 +104,39 @@ func ReadFileList(fileListPath string) ([]makeFileMeta, error) {
 	return metaList, nil
 }
 
+func MakeDiskDryRun(inputPath string, fileListPath string) (*iso9660.WritableImage, error) {
+	tmpFile, err := os.CreateTemp("", "sotn-disk-layout-*.bin")
+	if err != nil {
+		return nil, err
+	}
+	tmpFile.Close()
+	tmpPath := tmpFile.Name()
+	defer os.Remove(tmpPath)
+
+	return makeDiskImage(tmpFile, inputPath, fileListPath)
+}
+
+func MakeDisk(cuePath string, inputPath string, fileListPath string) error {
+	imgPath := strings.Replace(cuePath, ".cue", ".bin", 1)
+	f, err := os.Create(imgPath)
+	if err != nil {
+		return err
+	}
+
+	img, err := makeDiskImage(f, inputPath, fileListPath)
+	if err != nil {
+		_ = f.Close()
+		_ = os.Remove(imgPath)
+		return fmt.Errorf("make disk: %w", err)
+	}
+	if err := writeCue(cuePath, filepath.Base(imgPath), img.Mode()); err != nil {
+		_ = f.Close()
+		_ = os.Remove(imgPath)
+		return fmt.Errorf("make disk: %w", err)
+	}
+	return f.Close()
+}
+
 func validateFileList(metas []makeFileMeta, basePath string) error {
 	for _, meta := range metas {
 		if isPathFile(meta.Name) {
@@ -116,28 +150,19 @@ func validateFileList(metas []makeFileMeta, basePath string) error {
 	return nil
 }
 
-func MakeDisk(cuePath string, inputPath string, fileListPath string) error {
+func makeDiskImage(f io.WriterAt, inputPath string, fileListPath string) (*iso9660.WritableImage, error) {
 	metas, err := ReadFileList(fileListPath)
 	if err != nil {
-		return err
+		return nil, err
 	}
 
 	if err := validateFileList(metas, inputPath); err != nil {
-		return err
+		return nil, err
 	}
 
-	imgPath := strings.Replace(cuePath, ".cue", ".bin", 1)
-
-	f, err := os.Create(imgPath)
+	img, err := iso9660.CreateImage(f, iso9660.TrackMode2_2352)
 	if err != nil {
-		return err
-	}
-	defer f.Close()
-
-	mode := iso9660.TrackMode2_2352
-	img, err := iso9660.CreateImage(f, mode)
-	if err != nil {
-		return err
+		return nil, err
 	}
 
 	img.Pvd.SystemIdentifier = iso9660.ToAString("PLAYSTATION", 32)
@@ -163,36 +188,21 @@ func MakeDisk(cuePath string, inputPath string, fileListPath string) error {
 
 	for _, meta := range metas {
 		if err := img.AddFile(meta.Name, inputPath, meta.time, meta.xaMode); err != nil {
-			return err
+			return nil, err
 		}
 	}
 
-	img.WriteData(4, iso9660.SubModeData, []byte(usLicense))
-	img.WriteData(5, iso9660.SubModeData, playstationLogo)
+	if err := img.WriteData(4, iso9660.SubModeData, []byte(usLicense)); err != nil {
+		return nil, err
+	}
+	if err := img.WriteData(5, iso9660.SubModeData, playstationLogo); err != nil {
+		return nil, err
+	}
 
 	if err := img.FlushChanges(); err != nil {
-		return err
+		return nil, err
 	}
-
-	if err := patchDRA(path.Join(inputPath, "DRA.BIN"), img); err != nil {
-		return err
-	}
-	if err := patchSEL(path.Join(inputPath, "ST/SEL/SEL.BIN"), img); err != nil {
-		return err
-	}
-
-	if err := img.FlushSingleFile("DRA.BIN;1"); err != nil {
-		return err
-	}
-	if err := img.FlushSingleFile("ST/SEL/SEL.BIN;1"); err != nil {
-		return err
-	}
-
-	if err := writeCue(cuePath, filepath.Base(imgPath), mode); err != nil {
-		return err
-	}
-
-	return nil
+	return img, nil
 }
 
 func writeCue(cuePath string, imgPath string, mode iso9660.TrackMode) error {

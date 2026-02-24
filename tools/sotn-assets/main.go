@@ -8,6 +8,8 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/format"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/mods"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 )
 
 var acceptedVersions = []string{"us", "hd", "pspeu"}
@@ -195,6 +197,34 @@ func main() {
 			return handleObjdiffReport(version)
 		},
 	})
+	diskCmd := &cobra.Command{
+		Use:          "disk",
+		Short:        "Generate a PlayStation 1 disk image from build/us",
+		SilenceUsage: true,
+		Args: func(cmd *cobra.Command, args []string) error {
+			version, _, err := getVersionFromArgs(args)
+			if err != nil {
+				return err
+			}
+			cmd.SetContext(context.WithValue(cmd.Context(), "version", version))
+			return nil
+		},
+		RunE: func(cmd *cobra.Command, args []string) error {
+			version := cmd.Context().Value("version").(string)
+			if sotn.Version(version) != sotn.VersionUS {
+				_, _ = fmt.Fprintf(os.Stderr, "SOTN version %s not supported\n", sotn.Version(version))
+				return nil
+			}
+			lbaDryRun, _ := cmd.Flags().GetBool("lba-dry-run")
+			err := mods.MakeDisk("build/sotn.us.cue", "build/us", "disks/us", "config/disk.us.lba", lbaDryRun)
+			if err != nil {
+				_, _ = fmt.Fprintf(os.Stderr, "generate modded disk: %s\n", err)
+			}
+			return err
+		},
+	}
+	diskCmd.Flags().Bool("lba-dry-run", false, "Compute disk layout and print include/lba.h to stdout")
+	rootCmd.AddCommand(diskCmd)
 	if err := rootCmd.Execute(); err != nil {
 		_, _ = fmt.Fprintln(os.Stderr, err)
 		os.Exit(1)
