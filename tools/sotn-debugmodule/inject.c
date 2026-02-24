@@ -19,24 +19,24 @@ typedef struct {
     u32 Unk3C;
 } ServantDesc;
 
-const u32 INJECT_MAIN_ADDR = 0x80280040; // sotn-debugmodule.map
-const u32 MODULE_ADDR = 0x80280000;      // sotn-debugmodule.ld
-const u32 LOAD_ADDR = 0x80170000;        // Familiar overlay address
-const u32 INJECT = INJECT_MAIN_ADDR - (MODULE_ADDR - LOAD_ADDR);
+static const u32 INJECT_MAIN_ADDR = 0x80280040; // sotn-debugmodule.map
+static const u32 MODULE_ADDR = 0x80280000;      // sotn-debugmodule.ld
+static const u32 LOAD_ADDR = 0x80170000;        // Familiar overlay address
+static const u32 INJECT = INJECT_MAIN_ADDR - (MODULE_ADDR - LOAD_ADDR);
 
-void Dummy(Entity* e);
+static void Dummy(Entity* e);
 ServantDesc g_ServantDesc __attribute__((section(".inject-head"))) = {
-    INJECT, Dummy, Dummy, Dummy, Dummy, Dummy, Dummy, Dummy,
-    Dummy,  Dummy, Dummy, Dummy, Dummy, Dummy, Dummy, Dummy,
-
+    INJECT,          (u32)Dummy, (u32)Dummy, (u32)Dummy, (u32)Dummy,
+    (u32)Dummy,      (u32)Dummy, (u32)Dummy, (u32)Dummy, (u32)Dummy,
+    (u32)Dummy,      (u32)Dummy, (u32)Dummy, (u32)Dummy, (u32)Dummy,
+    (u32)Dummy,
 };
 
 #define JAL(addr) ((((u32)(addr)&0x3FFFFFFU) >> 2) | 0x0C000000U)
 
 int MainLoop();
 void __attribute__((section(".inject-func"))) InjectMain(void) {
-    u32* const InjectPoint = 0x800E3D00U;
-    int i;
+    u32* const InjectPoint = (u32*)0x800E3D00U;
 
     // Enable 8MB of ram
     *(unsigned int*)0x1F801060 |= 0xE00;
@@ -48,9 +48,9 @@ void __attribute__((section(".inject-func"))) InjectMain(void) {
     // Now we say to 'entrypoint_sotn' to call our main every frame
     *InjectPoint = JAL(MainLoop);
 }
-void Dummy(Entity* e) {}
+static void Dummy(Entity* e) {}
 
-bool g_Init = false;
+static bool g_Init = false;
 void Init(void);
 bool Update(void);
 int MainLoop() {

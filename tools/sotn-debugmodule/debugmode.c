@@ -9,7 +9,7 @@ typedef struct {
     const char* name;
 } DebugMenu;
 
-void DummyDummyDummy() {}
+static void DummyDummyDummy() {}
 void InitDebugFlagsPlayer(void);
 void InitEntitySpawn(void);
 void InitSfxPlayer(void);
@@ -19,28 +19,27 @@ void UpdateEntitySpawn();
 void UpdateSfxPlayer(void);
 void UpdateFlagChecker(void);
 
-DebugMenu g_DebugMenus[] = {
-    DummyDummyDummy,      DummyDummyDummy,        true, false, "L2 = debug",
-    InitDebugFlagsPlayer, UpdateDebugFlagsPlayer, true, true,  "Debug mode",
-    InitEntitySpawn,      UpdateEntitySpawn,      true, true,  "Entity spwn",
-    InitSfxPlayer,        UpdateSfxPlayer,        true, true,  "Snd player",
-    InitFlagChecker,      UpdateFlagChecker,      true, true,  "Castleflags",
+static DebugMenu g_DebugMenus[] = {
+    {DummyDummyDummy,      DummyDummyDummy,        true, false, "L2 = debug"},
+    {InitDebugFlagsPlayer, UpdateDebugFlagsPlayer, true, true,  "Debug mode"},
+    {InitEntitySpawn,      UpdateEntitySpawn,      true, true,  "Entity spwn"},
+    {InitSfxPlayer,        UpdateSfxPlayer,        true, true,  "Snd player"},
+    {InitFlagChecker,      UpdateFlagChecker,      true, true,  "Castleflags"},
 };
 
-int g_DebugMode;
-bool g_DebugModePaused;
+static int g_DebugMode;
+static bool g_DebugModePaused;
 bool g_EntitiesPaused;
 bool g_ShowDebugMessages;
 bool g_ShowCollisionLayer;
 bool g_FrameByFrame;
 int g_ShowDrawCalls;
 bool g_ShowHBlankInfo;
-int (*g_Hook)(void);
+static int (*g_Hook)(void);
 
-void DrawCollisionLayer();
-void ShowDrawCalls(int mode);
-void ShowHBlankInfo();
-void DestroyEntity(Entity* item);
+static void DrawCollisionLayer();
+static void ShowDrawCalls(int mode);
+static void ShowHBlankInfo();
 
 void Init(void) {
     int i;
@@ -59,7 +58,7 @@ void Init(void) {
     }
 }
 
-bool UpdateLogic() {
+static bool UpdateLogic() {
     if (g_pads[0].tapped & PAD_L2) {
         if (!g_DebugModePaused) {
             g_DebugMode++;
@@ -73,12 +72,12 @@ bool UpdateLogic() {
     }
 
     if (g_DebugModePaused) {
-        return;
+        return true;
     }
 
     if (g_pads[0].pressed & PAD_TRIANGLE || g_pads[0].pressed & PAD_START) {
         PauseDebugMode();
-        return;
+        return true;
     }
 
     if (g_DebugMenus[g_DebugMode].pauseGame != g_EntitiesPaused) {
@@ -142,7 +141,7 @@ void PauseDebugMode() { g_DebugModePaused = true; }
 
 void SetHook(int (*hook)(void)) { g_Hook = hook; }
 
-u8 GetColType(s32 x, s32 y) {
+static u8 GetColType(s32 x, s32 y) {
     // borrowing first part of CheckCollision
     s32 absX;
     s32 absY;
@@ -169,7 +168,7 @@ u8 GetColType(s32 x, s32 y) {
     return colType;
 }
 
-void DrawCollisionLayer() {
+static void DrawCollisionLayer() {
     int x;
     int y;
     u8 colType;
@@ -180,13 +179,13 @@ void DrawCollisionLayer() {
     SetFontCoord(-(cameraX & 0xF) + 8, -(cameraY & 0xF) + 16);
     for (y = 16; y < 224; y += 16) {
         // skip first column since we are stuck with their FntOpen settings
-        FntPrint(" ", colType);
+        FntPrint(" ");
         for (x = 16; x < 256; x += 16) {
             colType = GetColType(x, y);
 
             // skip empty tiles
             if (colType == 0) {
-                FntPrint("  ", colType);
+                FntPrint("  ");
             } else {
                 FntPrint("%02x", colType);
             }
@@ -195,9 +194,9 @@ void DrawCollisionLayer() {
     }
 }
 
-void ShowDrawCalls(int mode) {
-    const GpuUsage* const gpuMaxUsage = (GpuUsage*)0x801362DCU;
-    GpuUsage* gpuUsage;
+static void ShowDrawCalls(int mode) {
+    const GpuUsage* const gpuMaxUsage = (const GpuUsage*)0x801362DCU;
+    const GpuUsage* gpuUsage;
 
     switch (mode) {
     case 1:
@@ -224,7 +223,7 @@ void ShowDrawCalls(int mode) {
     FntPrint("env :%03x\n", gpuUsage->env);
 }
 
-void ShowHBlankInfo() {
+static void ShowHBlankInfo() {
     GpuUsage* const gpuMaxUsage = (GpuUsage*)0x801362D0U;
     if (g_Timer & 1) {
         FntPrint("l=%03x/100\n", gpuMaxUsage[1]);
