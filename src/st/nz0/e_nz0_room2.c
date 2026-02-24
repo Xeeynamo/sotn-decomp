@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
-#include "sfx.h"
 
 // First floor button encountered
 void EntityFloorButton(Entity* self) {
@@ -8,9 +7,8 @@ void EntityFloorButton(Entity* self) {
     Primitive* prim;
     Entity* player;
     s32 primIndex;
-    s32 x;
-    s32 y;
     s32 tileIndex;
+    s32 x, y;
     Entity* child;
 
     collided = GetPlayerCollisionWith(self, 8, 8, 4);
@@ -26,7 +24,7 @@ void EntityFloorButton(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.nz0311c0.prim = prim;
         prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
@@ -39,8 +37,8 @@ void EntityFloorButton(Entity* self) {
 
         x = self->posX.i.hi;
         y = self->posY.i.hi + 4;
-        x += g_Tilemap.scrollX.i.hi;
-        y += g_Tilemap.scrollY.i.hi;
+        x = x + g_Tilemap.scrollX.i.hi;
+        y = y + g_Tilemap.scrollY.i.hi;
         tileIndex = (x >> 4) + (y >> 4) * g_Tilemap.hSize * 0x10;
         g_Tilemap.fg[tileIndex] = 0x5AF;
     case 1:
@@ -79,9 +77,8 @@ void EntityFloorButton(Entity* self) {
 void EntityFloorSpikes(Entity* self) {
     Primitive* prim;
     s32 primIndex;
-    s32 x;
-    s32 y;
     s32 tileIndex;
+    s32 x, y;
 
     switch (self->step) {
     case 0:
@@ -95,8 +92,8 @@ void EntityFloorSpikes(Entity* self) {
 
         x = self->posX.i.hi - 4;
         y = self->posY.i.hi - 4;
-        x += g_Tilemap.scrollX.i.hi;
-        y += g_Tilemap.scrollY.i.hi;
+        x = x + g_Tilemap.scrollX.i.hi;
+        y = y + g_Tilemap.scrollY.i.hi;
         tileIndex = (x >> 4) + (y >> 4) * g_Tilemap.hSize * 0x10;
         g_Tilemap.fg[tileIndex] = 0x102;
         (&g_Tilemap.fg[tileIndex])[1] = 0x103;
@@ -109,7 +106,7 @@ void EntityFloorSpikes(Entity* self) {
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
-        self->ext.prim = prim;
+        self->ext.nz0311c0.prim = prim;
         prim->type = PRIM_SPRT;
         prim->tpage = 0xF;
         prim->clut = 9;
@@ -152,11 +149,12 @@ void EntityFloorSpikes(Entity* self) {
 }
 
 // table with globe on it that can be broken
-static u8 D_80180EF0[] = {0x02, 0x01, 0x02, 0x02, 0x00, 0x00, 0x00, 0x00};
+static u8 D_80180EF0[] = {2, 1, 2, 2, 0, 0};
 
 static u8 D_80180EF8[] = {
-    0x03, 0x03, 0x03, 0x04, 0x03, 0x05, 0x03, 0x06, 0x03, 0x07, 0x03, 0x08,
-    0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B, 0x03, 0x0C, 0x21, 0x0D, 0xFF, 0x00};
+    3, 3, 3, 4,  3, 5,  3, 6,  3,  7,  3,  8,
+    2, 9, 2, 10, 2, 11, 3, 12, 33, 13, -1, 0,
+};
 
 static u16 D_80180F10[] = {0, 1, 2, 6, 10, 0};
 

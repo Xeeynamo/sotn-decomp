@@ -289,7 +289,6 @@ void EntityYorickSkull(Entity* self) {
 }
 
 extern u16 anim_bone_rot[];
-extern EInit g_EInitSkeletonPieces;
 
 void EntitySkeletonPieces(Entity* self) { // From skeleton death explosion
     if (self->step) {

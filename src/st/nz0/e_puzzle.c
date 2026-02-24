@@ -2,6 +2,8 @@
 #include "nz0.h"
 #include "sfx.h"
 
+extern s16 D_801CB738[];
+
 static s32 D_80180EB4 = 0;
 
 void BoxPuzzleFloorButton(Entity* self) {
@@ -140,6 +142,7 @@ void BoxPuzzleSpikes(Entity* self) {
 // movable box for spike/switch areas
 static s16 D_80180EB8[][2] = {{0, 16}, {16, 0}};
 static s16 unk_stuff[][2] = {{0, 16}, {0, 4}, {2, -4}, {-4, 0}};
+
 void EntityMovableBox(Entity* self) {
     s32 primIndex;
     Entity* player;

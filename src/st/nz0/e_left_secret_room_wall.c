@@ -1,6 +1,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz0.h"
 
+typedef enum {
+    LEFT_SECRET_ROOM_WALL_INIT,
+    LEFT_SECRET_ROOM_WALL_IDLE,
+    LEFT_SECRET_ROOM_WALL_BREAK,
+    LEFT_SECRET_ROOM_WALL_CHECK
+} LEFT_SECRET_ROOM_WALL_STEPS;
+
+typedef enum {
+    BOTTOM_SECRET_ROOM_FLOOR_INIT,
+    BOTTOM_SECRET_ROOM_FLOOR_IDLE,
+    BOTTOM_SECRET_ROOM_FLOOR_BREAK,
+    BOTTOM_SECRET_ROOM_FLOOR_CHECK
+} BOTTOM_SECRET_ROOM_FLOOR_STEPS;
+
 static s16 tiles_wall[] = {
     // wall closed
     0x05C0, 0x05C1, 0x05C8, 0x05C9, 0x05D0, 0x05D1, 0x05D8, 0x05D9,
@@ -10,6 +24,7 @@ static s16 tiles_wall[] = {
     0x05C4, 0x05C5, 0x05CC, 0x05CD, 0x05D4, 0x05D5, 0x05DC, 0x05DD,
     // wall open
     0x05C6, 0x05C7, 0x05CE, 0x05CF, 0x05D6, 0x05D7, 0x05DE, 0x05DF};
+
 void EntityLeftSecretRoomWall(Entity* self) {
     s32 i;
     s16* tileLayoutPtr;
@@ -90,6 +105,7 @@ void EntityLeftSecretRoomWall(Entity* self) {
 static s16 D_80180E94[] = {
     0x05B8, 0x05B8, 0x05B9, 0x05B9, 0x05B2, 0x05B3, 0x05BA, 0x05BB,
     0x05B4, 0x05B5, 0x05BC, 0x05BD, 0x05B6, 0x05B7, 0x05BE, 0x05BF};
+
 void EntityBottomSecretRoomFloor(Entity* self) {
     Entity* newEntity;
     s32 i;

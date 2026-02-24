@@ -3,7 +3,6 @@
 
 #include "../player_is_within_hitbox.h"
 
-extern u16 g_EInitLockCamera[];
 static u8 lockCamera_hitbox[] = {32, 32, 32, 32};
 static u8 lockCamera_data[] = {0, 0, 0, 0};
 static u16 lockCamera_mapScroll[] = {
