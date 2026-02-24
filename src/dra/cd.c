@@ -161,17 +161,10 @@ CdFile* D_800ACC74[] = {
     &g_LbaBinDemokey,
 };
 
-#if defined(VERSION_US)
 CdFileSeq D_800ACCF8[] = {
     {OFF_SEQ_LIB_SEQ, SEQ_LIB_SEQ_LEN, MU_SEQ_LIBRARIAN},
     {OFF_SEQ_DAI_SEQ, SEQ_DAI_SEQ_LEN, MU_SEQ_CONFESSIONAL_BELLS},
 };
-#elif defined(VERSION_HD)
-CdFileSeq D_800ACCF8[] = {
-    {OFF_SEQ_LIB_SEQ, SEQ_LIB_SEQ_LEN, MU_SEQ_LIBRARIAN},
-    {OFF_SEQ_DAI_SEQ, SEQ_DAI_SEQ_LEN, MU_SEQ_CONFESSIONAL_BELLS},
-};
-#endif
 
 const char* D_800ACD10[] = {
     aPbav, aPbav_0, aPbav_1, aPbav_2, aPbav, NULL, aPqes_1,
