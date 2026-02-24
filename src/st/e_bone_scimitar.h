@@ -26,22 +26,15 @@ typedef enum {
 extern u16 g_EInitBoneScimitar[];
 extern u16 g_EInitScimitarParts[];
 
-static bool spawn_special =
-    false; // Flag for special bone scimitar to appear or not
-static u8 anim_walk[] = {0x06, 0x01, 0x04, 0x02, 0x04, 0x03, 0x06,
-                         0x04, 0x05, 0x05, 0x05, 0x06, 0x00};
-static u8 anim_walk_backwards[] = {0x06, 0x01, 0x05, 0x06, 0x05, 0x05, 0x06,
-                                   0x04, 0x04, 0x03, 0x04, 0x02, 0x00};
-static u8 anim_swing_sword[] = {
-    0x05, 0x01, 0x05, 0x02, 0x05, 0x07, 0x06, 0x08, 0x05,
-    0x09, 0x05, 0x0A, 0x05, 0x0B, 0x01, 0x0C, 0x1E, 0x0D,
-    0x04, 0x04, 0x04, 0x05, 0x04, 0x06, 0xFF, 0x00};
-static u8 anim_jump[] = {
-    0x01, 0x01, 0x04, 0x0E, 0x04, 0x0F, 0x01, 0x01, 0xFF, 0x00};
-static u8 anim_land[] = {
-    0x01, 0x01, 0x04, 0x0E, 0x06, 0x0F, 0x04, 0x0E, 0x01, 0x01, 0xFF, 0x00};
-static u16 anim_bone_rot[] = {
-    0x0100, 0x0080, 0x0048, 0x0020, 0x0040, 0x0010, 0x0018, 0x0000};
+// Flag for special bone scimitar to appear or not
+static bool spawn_special = false;
+static u8 anim_walk[] = {6, 1, 4, 2, 4, 3, 6, 4, 5, 5, 5, 6, 0, 0};
+static u8 anim_walk_backwards[] = {6, 1, 5, 6, 5, 5, 6, 4, 4, 3, 4, 2, 0, 0};
+static u8 anim_swing_sword[] = {5,  1, 5,  2,  5,  7, 6, 8, 5, 9, 5, 10, 5,
+                                11, 1, 12, 30, 13, 4, 4, 4, 5, 4, 6, -1, 0};
+static u8 anim_jump[] = {1, 1, 4, 14, 4, 15, 1, 1, -1, 0};
+static u8 anim_land[] = {1, 1, 4, 14, 6, 15, 4, 14, 1, 1, -1, 0};
+static u16 anim_bone_rot[] = {0x100, 0x080, 0x048, 0x020, 0x040, 0x010, 0x018};
 static u8 dead_parts_selector[] = {0x30, 0x20, 0x14, 0x0C, 0x18, 0x10, 0x14};
 static s32 dead_parts_velocity_x[] = {
     FIX(.75), FIX(1.75), FIX(1.5), FIX(1), FIX(2), FIX(1.75), FIX(0.75)};
@@ -62,7 +55,7 @@ static void BoneScimitarAttackCheck(void) {
     s32 temp = UnkCollisionFunc2(sensors_special);
     u16 temp2 = UnkCollisionFunc(sensor_move, 3);
 
-    if ((temp == 128) || (temp2 & 2)) {
+    if (temp == 0x80 || temp2 & 2) {
         SetStep(BONE_SCIMITAR_JUMP);
         return;
     }
@@ -222,9 +215,9 @@ void EntityBoneScimitar(Entity* self) {
         self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         UnkCollisionFunc2(sensors_special);
         if (self->velocityX < 0) {
-            leftTemp = 1;
+            leftTemp = true;
         } else {
-            leftTemp = 0;
+            leftTemp = false;
         }
         leftTemp ^= self->facingLeft;
         if (leftTemp) {
@@ -258,7 +251,7 @@ void EntityBoneScimitar(Entity* self) {
             return;
         }
 
-        if ((GetDistanceToPlayerX() < 48) && (GetDistanceToPlayerY() < 32)) {
+        if (GetDistanceToPlayerX() < 48 && GetDistanceToPlayerY() < 32) {
             SetStep(BONE_SCIMITAR_ATTACK);
         }
         break;
