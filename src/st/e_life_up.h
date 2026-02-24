@@ -9,6 +9,7 @@ u16 D_80182850[] = {0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17, 0x17,
 SVECTOR D_8018287C = {0};
 
 extern u16 g_EInitInteractable[];
+
 void EntityLifeUpSpawn(Entity* self) {
     s32 sp98; // weird stuff
     s32 sp9C; // unused

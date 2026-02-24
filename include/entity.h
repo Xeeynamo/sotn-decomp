@@ -905,7 +905,7 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u16 unk7C;
-    /* 0x7E */ char pad_7E[0x2];
+    /* 0x7E */ s16 : 16;
     /* 0x80 */ s16 posX;
     /* 0x82 */ s16 posY;
     /* 0x84 */ u16 moveTimer;
@@ -914,7 +914,8 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ u8 unk7C;
-    /* 0x7D */ char pad_7D[0x3];
+    /* 0x7D */ u8 : 8;
+    /* 0x7E */ s16 : 16;
     /* 0x80 */ s16 unk80;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ struct Entity* unk84;
