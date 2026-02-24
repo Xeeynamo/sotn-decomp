@@ -10,6 +10,7 @@ enum Palettes {
     PAL_BREAKABLE = 0x219,
     PAL_UNK_21B = 0x21B,
     PAL_UNK_21C,
+    PAL_UNK_237 = 0x237,
     PAL_PUFF_OPAQUE_OFFSET = 0x2E0,
 };
 
@@ -123,7 +124,7 @@ extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
-// extern EInit g_EInitUnkId13;
+extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 // extern EInit g_EInitDamageNum;
@@ -135,8 +136,8 @@ extern EInit g_EInitAxeKnight;
 extern EInit g_EInitAxeKnightAxe;
 extern EInit g_EInitBloodyZombie;
 extern EInit g_EInitSkeleton;
-// extern EInit g_EInitSkeletonPieces;
-// extern EInit g_EInitSkeletonBone;
+extern EInit g_EInitSkeletonPieces;
+extern EInit g_EInitSkeletonBone;
 extern EInit g_EInitSpittleBone;
 extern EInit g_EInitSpittleBoneSpit;
 extern EInit g_EInitTableWithGlobe;
