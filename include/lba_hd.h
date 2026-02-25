@@ -3,6 +3,8 @@
 #ifndef LBA_MANUAL_H
 #define LBA_MANUAL_H
 
+#define OFF_WARNING_TIM 0x5FE1
+#define LEN_WARNING_TIM 0x50014
 #define OFF_BIN_FGAME2 25248
 #define OFF_BIN_FGAME 25116
 
