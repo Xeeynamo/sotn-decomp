@@ -1421,7 +1421,7 @@
 | no3    | func_pspeu_092603F0                  |       37 |          2 |        |       |     |
 | no4    | func_pspeu_0925B538                  |       37 |          2 |        |       |     |
 | np3    | func_pspeu_0925A7F0                  |       37 |          2 |        |       |     |
-| nz0    | GetAngleBetweenEntities              |       37 |          2 |        |       |     |
+| nz0    | func_pspeu_09254C10                  |       37 |          2 |        |       |     |
 | nz1    | GetAngleBetweenEntities              |       37 |          2 |        |       |     |
 | rare   | func_pspeu_0924A950                  |       37 |          2 |        |       |     |
 | rcat   | GetAngleBetweenEntities              |       37 |          2 |        |       |     |
@@ -1954,7 +1954,7 @@
 | no3    | func_pspeu_09238360                  |       49 |          5 |        |       |     |
 | no4    | func_pspeu_0925B490                  |       49 |          5 |        |       |     |
 | np3    | func_pspeu_0925A748                  |       49 |          5 |        |       |     |
-| nz0    | UnkEntityFunc0                       |       49 |          5 |        |       |     |
+| nz0    | func_pspeu_09254B68                  |       49 |          5 |        |       |     |
 | nz1    | func_pspeu_09250140                  |       49 |          5 |        |       |     |
 | rare   | func_pspeu_0924A8A8                  |       49 |          5 |        |       |     |
 | rcat   | func_pspeu_092499B8                  |       49 |          5 |        |       |     |
@@ -2597,7 +2597,7 @@
 | np3    | EntityDeadMerman                     |       73 |          7 |        |       |     |
 | np3    | func_pspeu_0923EF28                  |       73 |          7 |        |       |     |
 | np3    | func_pspeu_0925A870                  |       73 |          7 |        |       |     |
-| nz0    | GetNormalizedAngle                   |       73 |          7 |        |       |     |
+| nz0    | func_pspeu_09254C90                  |       73 |          7 |        |       |     |
 | nz1    | func_pspeu_09250268                  |       73 |          7 |        |       |     |
 | rare   | func_pspeu_0924A9D0                  |       73 |          7 |        |       |     |
 | rcat   | func_pspeu_09249AE0                  |       73 |          7 |        |       |     |
@@ -4216,7 +4216,7 @@
 | no3    | func_pspeu_09251C70                  |      307 |         26 |        |       |     |
 | no4    | func_pspeu_0924ADF8                  |      307 |         26 |        |       |     |
 | np3    | func_pspeu_09249B78                  |      307 |         26 |        |       |     |
-| nz0    | func_psp_0923B2F0                    |      307 |         26 |        |       |     |
+| nz0    | func_pspeu_09246788                  |      307 |         26 |        |       |     |
 | nz1    | func_pspeu_09240818                  |      307 |         26 |        |       |     |
 | rare   | func_pspeu_09240460                  |      307 |         26 |        |       |     |
 | rcat   | func_pspeu_0923D728                  |      307 |         26 |        |       |     |
@@ -4402,7 +4402,7 @@
 | no3    | func_pspeu_092516E8                  |      374 |         35 |        |       |     |
 | no4    | func_pspeu_0924A870                  |      374 |         35 |        |       |     |
 | np3    | func_pspeu_092495F0                  |      374 |         35 |        |       |     |
-| nz0    | func_psp_0923AD68                    |      374 |         35 |        |       |     |
+| nz0    | func_pspeu_09246200                  |      374 |         35 |        |       |     |
 | nz1    | func_pspeu_09240290                  |      374 |         35 |        |       |     |
 | rare   | func_pspeu_0923FED8                  |      374 |         35 |        |       |     |
 | rcat   | func_pspeu_0923D1A0                  |      374 |         35 |        |       |     |
