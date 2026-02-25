@@ -2240,7 +2240,7 @@
 | no3    | func_pspeu_09237700                  |       61 |         10 |        |       |     |
 | no4    | func_pspeu_09237B20                  |       61 |         10 |        |       |     |
 | no4    | func_pspeu_0923D4A0                  |       61 |         10 |        |       |     |
-| nz0    | GetLangAt                            |       61 |         10 |        |       |     |
+| nz0    | func_pspeu_09237700                  |       61 |         10 |        |       |     |
 | nz1    | func_pspeu_09259670                  |       61 |         10 |        |       |     |
 | rcat   | EntitySpikesDust                     |       61 |         10 |        |       |     |
 | sel    | func_psp_09237700                    |       61 |         10 |        |       |     |
@@ -2354,7 +2354,7 @@
 | dai    | func_pspeu_0924BA70                  |       65 |          6 |        |       |     |
 | dai    | func_pspeu_09251430                  |       65 |          6 |        |       |     |
 | no2    | func_pspeu_0924AAB8                  |       65 |          6 |        |       |     |
-| nz0    | NZ0_Load                             |       65 |          6 |        |       |     |
+| nz0    | func_pspeu_09237AB0                  |       65 |          6 |        |       |     |
 | nz1    | func_pspeu_092485D8                  |       65 |          6 |        |       |     |
 | no2    | func_pspeu_09254880                  |       65 |          7 |        |       |     |
 | np3    | func_pspeu_09261240                  |       65 |          7 |        |       |     |
@@ -3819,7 +3819,7 @@
 | main   | func_psp_0893858C                    |      190 |         21 |        |       |     |
 | main   | func_psp_08911C3C                    |      191 |          1 |        |       |     |
 | are    | func_pspeu_09237700                  |      191 |          1 |        |       |     |
-| nz0    | InitEntityIds                        |      191 |          1 |        |       |     |
+| nz0    | func_pspeu_092377C8                  |      191 |          1 |        |       |     |
 | are    | func_pspeu_0924B6D8                  |      191 |         11 |        |       |     |
 | sel    | func_psp_09243690                    |      191 |         14 |        |       |     |
 | main   | atanf                                |      191 |         21 |        |       |     |
