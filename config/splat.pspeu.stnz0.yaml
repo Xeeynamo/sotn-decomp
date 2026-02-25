@@ -86,7 +86,7 @@ segments:
       - [0x21A48, c, nz0/slogra]
       - [0x23138, c, nz0/maria]
       - [0x23980, data]
-      - [0x2DDB8, data, nz0/e_init]
+      - [0x2DDB8, .data, nz0/e_init]
       - [0x2E100, .data, nz0/e_red_door_tiles]
       - [0x2E130, data]
       - [0x51098, .data, nz0/header]
