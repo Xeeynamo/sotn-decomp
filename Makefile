@@ -233,78 +233,27 @@ $(EXTRACTED_DISK_DIR:$(VERSION)=saturn):
 .PHONY: extract_%
 extract_disk: ##@ Extract game files from a disc image.
 extract_disk: extract_disk_$(VERSION)
-disk_prepare: build $(SOTNDISK)
-	mkdir -p $(DISK_DIR)
-	cp -r disks/${VERSION}/* $(DISK_DIR)
-	cp $(BUILD_DIR)/main.exe $(DISK_DIR)/SLUS_000.67
-	cp $(BUILD_DIR)/DRA.BIN $(DISK_DIR)/DRA.BIN
-	cp $(BUILD_DIR)/RIC.BIN $(DISK_DIR)/BIN/RIC.BIN
-	cp $(BUILD_DIR)/ARE.BIN $(DISK_DIR)/ST/ARE/ARE.BIN
-	cp $(BUILD_DIR)/F_ARE.BIN $(DISK_DIR)/ST/ARE/F_ARE.BIN
-	cp $(BUILD_DIR)/CAT.BIN $(DISK_DIR)/ST/CAT/CAT.BIN
-	cp $(BUILD_DIR)/F_CAT.BIN $(DISK_DIR)/ST/CAT/F_CAT.BIN
-	cp $(BUILD_DIR)/CEN.BIN $(DISK_DIR)/ST/CEN/CEN.BIN
-	cp $(BUILD_DIR)/F_CEN.BIN $(DISK_DIR)/ST/CEN/F_CEN.BIN
-	cp $(BUILD_DIR)/CHI.BIN $(DISK_DIR)/ST/CHI/CHI.BIN
-	cp $(BUILD_DIR)/F_CHI.BIN $(DISK_DIR)/ST/CHI/F_CHI.BIN
-	cp $(BUILD_DIR)/DAI.BIN $(DISK_DIR)/ST/DAI/DAI.BIN
-	cp $(BUILD_DIR)/F_DAI.BIN $(DISK_DIR)/ST/DAI/F_DAI.BIN
-	cp $(BUILD_DIR)/DRE.BIN $(DISK_DIR)/ST/DRE/DRE.BIN
-	cp $(BUILD_DIR)/F_DRE.BIN $(DISK_DIR)/ST/DRE/F_DRE.BIN
-	cp $(BUILD_DIR)/LIB.BIN $(DISK_DIR)/ST/LIB/LIB.BIN
-	cp $(BUILD_DIR)/F_LIB.BIN $(DISK_DIR)/ST/LIB/F_LIB.BIN
-	cp $(BUILD_DIR)/MAD.BIN $(DISK_DIR)/ST/MAD/MAD.BIN
-	cp $(BUILD_DIR)/F_MAD.BIN $(DISK_DIR)/ST/MAD/F_MAD.BIN
-	cp $(BUILD_DIR)/NO0.BIN $(DISK_DIR)/ST/NO0/NO0.BIN
-	cp $(BUILD_DIR)/F_NO0.BIN $(DISK_DIR)/ST/NO0/F_NO0.BIN
-	cp $(BUILD_DIR)/NO1.BIN $(DISK_DIR)/ST/NO1/NO1.BIN
-	cp $(BUILD_DIR)/F_NO1.BIN $(DISK_DIR)/ST/NO1/F_NO1.BIN
-	cp $(BUILD_DIR)/NO2.BIN $(DISK_DIR)/ST/NO2/NO2.BIN
-	cp $(BUILD_DIR)/F_NO2.BIN $(DISK_DIR)/ST/NO2/F_NO2.BIN
-	cp $(BUILD_DIR)/NO3.BIN $(DISK_DIR)/ST/NO3/NO3.BIN
-	cp $(BUILD_DIR)/F_NO3.BIN $(DISK_DIR)/ST/NO3/F_NO3.BIN
-	cp $(BUILD_DIR)/NO4.BIN $(DISK_DIR)/ST/NO4/NO4.BIN
-	cp $(BUILD_DIR)/F_NO4.BIN $(DISK_DIR)/ST/NO4/F_NO4.BIN
-	cp $(BUILD_DIR)/NP3.BIN $(DISK_DIR)/ST/NP3/NP3.BIN
-	cp $(BUILD_DIR)/F_NP3.BIN $(DISK_DIR)/ST/NP3/F_NP3.BIN
-	cp $(BUILD_DIR)/NZ0.BIN $(DISK_DIR)/ST/NZ0/NZ0.BIN
-	cp $(BUILD_DIR)/F_NZ0.BIN $(DISK_DIR)/ST/NZ0/F_NZ0.BIN
-	cp $(BUILD_DIR)/NZ1.BIN $(DISK_DIR)/ST/NZ1/NZ1.BIN
-	cp $(BUILD_DIR)/F_NZ1.BIN $(DISK_DIR)/ST/NZ1/F_NZ1.BIN
-	cp $(BUILD_DIR)/RARE.BIN $(DISK_DIR)/ST/RARE/RARE.BIN
-	cp $(BUILD_DIR)/F_RARE.BIN $(DISK_DIR)/ST/RARE/F_RARE.BIN
-	cp $(BUILD_DIR)/SEL.BIN $(DISK_DIR)/ST/SEL/SEL.BIN
-	cp $(BUILD_DIR)/ST0.BIN $(DISK_DIR)/ST/ST0/ST0.BIN
-	cp $(BUILD_DIR)/F_ST0.BIN $(DISK_DIR)/ST/ST0/F_ST0.BIN
-	cp $(BUILD_DIR)/TOP.BIN $(DISK_DIR)/ST/TOP/TOP.BIN
-	cp $(BUILD_DIR)/F_TOP.BIN $(DISK_DIR)/ST/TOP/F_TOP.BIN
-	cp $(BUILD_DIR)/WRP.BIN $(DISK_DIR)/ST/WRP/WRP.BIN
-	cp $(BUILD_DIR)/F_WRP.BIN $(DISK_DIR)/ST/WRP/F_WRP.BIN
-	cp $(BUILD_DIR)/RTOP.BIN $(DISK_DIR)/ST/RTOP/RTOP.BIN
-	cp $(BUILD_DIR)/F_RTOP.BIN $(DISK_DIR)/ST/RTOP/F_RTOP.BIN
-	cp $(BUILD_DIR)/RWRP.BIN $(DISK_DIR)/ST/RWRP/RWRP.BIN
-	cp $(BUILD_DIR)/F_RWRP.BIN $(DISK_DIR)/ST/RWRP/F_RWRP.BIN
-	cp $(BUILD_DIR)/MAR.BIN $(DISK_DIR)/BOSS/MAR/MAR.BIN
-	cp $(BUILD_DIR)/F_MAR.BIN $(DISK_DIR)/BOSS/MAR/F_MAR.BIN
-	cp $(BUILD_DIR)/BO4.BIN $(DISK_DIR)/BOSS/BO4/BO4.BIN
-	cp $(BUILD_DIR)/F_BO4.BIN $(DISK_DIR)/BOSS/BO4/F_BO4.BIN
-	cp $(BUILD_DIR)/BO6.BIN $(DISK_DIR)/BOSS/BO6/BO6.BIN
-	cp $(BUILD_DIR)/F_BO6.BIN $(DISK_DIR)/BOSS/BO6/F_BO6.BIN
-	cp $(BUILD_DIR)/RBO3.BIN $(DISK_DIR)/BOSS/RBO3/RBO3.BIN
-	cp $(BUILD_DIR)/F_RBO3.BIN $(DISK_DIR)/BOSS/RBO3/F_RBO3.BIN
-	cp $(BUILD_DIR)/RBO5.BIN $(DISK_DIR)/BOSS/RBO5/RBO5.BIN
-	cp $(BUILD_DIR)/F_RBO5.BIN $(DISK_DIR)/BOSS/RBO5/F_RBO5.BIN
-	cp $(BUILD_DIR)/TT_000.BIN $(DISK_DIR)/SERVANT/TT_000.BIN
-	cp $(BUILD_DIR)/TT_001.BIN $(DISK_DIR)/SERVANT/TT_001.BIN
-	cp $(BUILD_DIR)/TT_002.BIN $(DISK_DIR)/SERVANT/TT_002.BIN
-	cp $(BUILD_DIR)/TT_003.BIN $(DISK_DIR)/SERVANT/TT_003.BIN
-	cp $(BUILD_DIR)/TT_004.BIN $(DISK_DIR)/SERVANT/TT_004.BIN
-disk: disk_prepare
-	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
-disk_debug: disk_prepare
-	cd tools/sotn-debugmodule && make
-	cp $(BUILD_DIR)/../sotn-debugmodule.bin $(DISK_DIR)/SERVANT/TT_000.BIN
-	$(SOTNDISK) make build/sotn.$(VERSION).cue $(DISK_DIR) $(CONFIG_DIR)/disk.us.lba
+disk: $(SOTNASSETS)
+	@echo "🔧 Compile game"
+	@VERSION=us SKIP_CHECK=1 .venv/bin/python3 tools/builds/gen.py
+	@ninja
+	@echo "🔧 Re-compile game with adjusted offsets"
+	@VERSION=us $(SOTNASSETS) disk --lba-dry-run > include/lba_us.h
+	@ninja
+	@echo "🪄 Generate new disk image build/sotn.us.cue"
+	@VERSION=us $(SOTNASSETS) disk
+disk_debug: $(SOTNASSETS)
+	@echo "🔧 Compile game"
+	@VERSION=us SKIP_CHECK=1 .venv/bin/python3 tools/builds/gen.py
+	@ninja
+	@echo "💡 Compile debug module"
+	@cd tools/sotn-debugmodule && make
+	@cp $(BUILD_DIR)/../sotn-debugmodule.bin build/us/TT_000.BIN
+	@echo "🔧 Re-compile game with adjusted offsets"
+	@VERSION=us $(SOTNASSETS) disk --lba-dry-run > include/lba_us.h
+	@ninja
+	@echo "🪄 Generate new disk image build/sotn.us.cue"
+	@VERSION=us $(SOTNASSETS) disk
 
 # put this here as both PSX HD and PSP use it
 extract_disk_us: extract_disk_psxus
