@@ -44,7 +44,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, nz0_psp/st_init]
+      - [0x80, c, nz0/st_init_psp]
       - [0x520, c, nz0/e_purple_brick]
       - [0x7A0, c, nz0/e_cannon]
       - [0x1080, c, nz0/bossfight]
@@ -86,7 +86,7 @@ segments:
       - [0x21A48, c, nz0/slogra]
       - [0x23138, c, nz0/maria]
       - [0x23980, data]
-      - [0x2DDB8, data, nz0/e_init]
+      - [0x2DDB8, .data, nz0/e_init]
       - [0x2E100, .data, nz0/e_red_door_tiles]
       - [0x2E130, data]
       - [0x51098, .data, nz0/header]
@@ -137,6 +137,7 @@ segments:
       - [0x53EF0, .rodata, nz0/e_life_up]
       - [0x53F10, .rodata, nz0/maria]
       - [0x53F80, bss, 53F80]
+      - [0x53FA0, .bss, nz0/st_init_psp]
       - [0x54188, .bss, nz0/e_cannon]
       - [0x54190, .bss, nz0/bossfight]
       - [0x54198, .bss, nz0/e_elevator]
