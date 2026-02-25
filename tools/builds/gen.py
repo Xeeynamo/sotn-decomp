@@ -16,6 +16,7 @@ linker_scripts = set()
 
 extra_cpp_defs = ""
 sotn_progress_report = os.environ.get("SOTN_PROGRESS_REPORT") == "1"
+skip_check = os.environ.get("SKIP_CHECK") == "1"
 dummy_object = bytes()
 if sotn_progress_report:
     # https://decomp.wiki/en/tools/decomp-dev
@@ -918,7 +919,7 @@ with open(build_ninja, "w") as f:
                 continue
             add_splat_config(nw, version, entry.path)
         add_assets_config(nw, version)
-        if not sotn_progress_report:
+        if not sotn_progress_report and not skip_check:
             add_checksum(nw, version, f"config/check.{version}.sha")
 
     nw.build(
