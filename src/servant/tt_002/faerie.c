@@ -523,7 +523,7 @@ void OVL_EXPORT(ServantInit)(InitializeMode mode) {
         } else {
             entity->posX.val =
                 PLAYER.posX.val + (PLAYER.facingLeft ? FIX(24) : FIX(-24));
-            entity->posY.val = PLAYER.posY.val + FIX(-32);
+            entity->posY.val = PLAYER.posY.val - FIX(32);
         }
     }
 

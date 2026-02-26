@@ -890,7 +890,7 @@ void RicEntityCrashVibhuti(Entity* self) {
                 prim = prim->next;
             }
             prim->posX.val = PLAYER.posX.val;
-            prim->posY.val = PLAYER.posY.val + FIX(-24);
+            prim->posY.val = PLAYER.posY.val - FIX(24);
             angle = rand() % 0x200 + 0x300;
             magnitude = (rand() % 24) + 0x20;
             prim->velocityX.val = (rcos(angle) * magnitude);

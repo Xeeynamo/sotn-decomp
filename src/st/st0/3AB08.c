@@ -169,15 +169,15 @@ void EntityClouds(Entity* self) {
 
             sp4C = FIX(15) - var_s2 * 0x1A0;
             var_s3[0] = sp4C >> 12;
-            var_s3[4] = (sp4C + FIX(-1.625)) >> 12;
+            var_s3[4] = (sp4C - FIX(1.625)) >> 12;
 
             sp4C = FIX(15) - var_s2 * 0x1C0;
             var_s3[1] = sp4C >> 12;
-            var_s3[5] = (sp4C + FIX(-1.75)) >> 12;
+            var_s3[5] = (sp4C - FIX(1.75)) >> 12;
 
             sp4C = FIX(15) - var_s2 * 0x160;
             var_s3[2] = sp4C >> 12;
-            var_s3[6] = (sp4C + FIX(-1.375)) >> 12;
+            var_s3[6] = (sp4C - FIX(1.375)) >> 12;
 
             sp44 = posX;
             j = 0;

@@ -1288,7 +1288,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             case 1:
                 break;
             }
-            PLAYER.velocityY = i + FIX(-4);
+            PLAYER.velocityY = i - FIX(4);
             func_8010E3B8(FIX(-5.0 / 3));
             PLAYER.step_s = 1;
             if (func_80113E68() == 0) {
@@ -1306,7 +1306,7 @@ void AlucardHandleDamage(DamageParam* damage, s16 arg1, s16 arg2) {
             case 1:
             case 5:
             default:
-                PLAYER.velocityY = i + FIX(-4);
+                PLAYER.velocityY = i - FIX(4);
                 func_8010E3B8(FIX(-5.0 / 3));
                 PLAYER.step_s = 1;
                 if (func_80113E68() == 0) {

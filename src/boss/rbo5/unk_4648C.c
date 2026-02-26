@@ -2896,7 +2896,7 @@ void func_us_801CC788(Entity* self) {
                     twelveShift = -twelveShift;
                 }
                 tilePrim->velocityX.val =
-                    (((rand() & PSP_RANDMASK) * 4) + FIX(-1));
+                    ((rand() & PSP_RANDMASK) * 4) - FIX(1);
                 tilePrim->velocityY.val = -(rand() & 0x3FFF);
                 tilePrim->posX.val +=
                     ((tilePrim->velocityX.val * 35) + (twelveShift << 16));
