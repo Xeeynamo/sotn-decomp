@@ -169,17 +169,6 @@ typedef struct {
 } unkStr_80182100;
 
 /*******/
-/* NZ0 */
-/*******/
-// Used in nz0/e_subweapon_container
-typedef struct SubWpnContDebris {
-    s16 velX;
-    s16 velY;
-    u16 params;
-    u16 facingLeft;
-} SubWpnContDebris;
-
-/*******/
 /* ST0 */
 /*******/
 // Used in st0/3D8F0
