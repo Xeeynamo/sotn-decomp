@@ -932,7 +932,7 @@
 | lib    | func_psp_0923C0C0                 |       25 |          2 |        |       |     |
 | no2    | func_pspeu_0923AA48               |       25 |          2 |        |       |     |
 | no4    | func_pspeu_09245B68               |       25 |          2 |        |       |     |
-| nz0    | LoadStageNameGraphics             |       25 |          2 |        |       |     |
+| nz0    | func_pspeu_0923CE10               |       25 |          2 |        |       |     |
 | nz1    | func_pspeu_0923BC48               |       25 |          2 |        |       |     |
 | dra    | func_psp_09101AA8                 |       25 |          3 |        |       |     |
 | main   | _stop                             |       25 |          3 |        |       |     |
@@ -4888,7 +4888,7 @@
 | no3    | func_pspeu_092412B8               |      990 |        134 | Yes    |       |     |
 | cat    | func_pspeu_09243078               |      997 |        101 |        |       |     |
 | chi    | func_psp_0924C620                 |     1000 |         92 | Yes    |       |     |
-| nz0    | EntityStageNamePopup              |     1000 |         92 | Yes    |       |     |
+| nz0    | func_pspeu_0923CE60               |     1000 |         92 | Yes    |       |     |
 | cat    | func_pspeu_0924CF78               |     1001 |        100 | Yes    |       |     |
 |        | func_092E8368                     |     1001 |        113 | Yes    |       |     |
 | are    | func_pspeu_09240280               |     1002 |         86 |        |       |     |
