@@ -3,19 +3,12 @@
 #include <scratchpad.h>
 
 static SVECTOR D_us_80180C48 = {0xFFF4, 0xFFA0, 0xFFE0};
-
 static SVECTOR D_us_80180C50 = {0x000C, 0xFFA0, 0xFFE0};
-
 static SVECTOR D_us_80180C58 = {0xFFF4, 0x0000, 0xFFE0};
-
 static SVECTOR D_us_80180C60 = {0x000C, 0x0000, 0xFFE0};
-
 static SVECTOR D_us_80180C68 = {0x000C, 0xFFA0, 0x0020};
-
 static SVECTOR D_us_80180C70 = {0xFFF4, 0xFFA0, 0x0020};
-
 static SVECTOR D_us_80180C78 = {0x000C, 0x0000, 0x0020};
-
 static SVECTOR D_us_80180C80 = {0xFFF4, 0x0000, 0x0020};
 
 static SVECTOR* D_us_80180C88[] = {
@@ -23,42 +16,27 @@ static SVECTOR* D_us_80180C88[] = {
     &D_us_80180C68, &D_us_80180C70, &D_us_80180C78, &D_us_80180C80,
 };
 
-static SVECTOR D_us_80180CA8[] = {
-    {0x1000, 0x0000, 0x0000}, {0x1000, 0x0000, 0x0000}};
+static VECTOR D_us_80180CA8 = {FLT(1.0), FLT(0.0), FLT(1.0)};
+static VECTOR D_us_80180CB8 = {FLT(-1.0), FLT(0.0), FLT(1.0)};
+static VECTOR D_us_80180CC8 = {FLT(1.0), FLT(0.0), FLT(1.0)};
+static VECTOR D_us_80180CD8 = {FLT(-1.0), FLT(0.0), FLT(1.0)};
+static VECTOR D_us_80180CE8 = {FLT(-1.0), FLT(0.0), FLT(-1.0)};
+static VECTOR D_us_80180CF8 = {FLT(1.0), FLT(0.0), FLT(-1.0)};
+static VECTOR D_us_80180D08 = {FLT(-1.0), FLT(0.0), FLT(-1.0)};
+static VECTOR D_us_80180D18 = {FLT(1.0), FLT(0.0), FLT(-1.0)};
 
-static SVECTOR D_us_80180CB8[] = {
-    {0xF000, 0xFFFF, 0x0000}, {0x1000, 0x0000, 0x0000}};
-
-static SVECTOR D_us_80180CC8[] = {
-    {0x1000, 0x0000, 0x0000}, {0x1000, 0x0000, 0x0000}};
-
-static SVECTOR D_us_80180CD8[] = {
-    {0xF000, 0xFFFF, 0x0000}, {0x1000, 0x0000, 0x0000}};
-
-static SVECTOR D_us_80180CE8[] = {
-    {0xF000, 0xFFFF, 0x0000}, {0xF000, 0xFFFF, 0x0000}};
-
-static SVECTOR D_us_80180CF8[] = {
-    {0x1000, 0x0000, 0x0000}, {0xF000, 0xFFFF, 0x0000}};
-
-static SVECTOR D_us_80180D08[] = {
-    {0xF000, 0xFFFF, 0x0000}, {0xF000, 0xFFFF, 0x0000}};
-
-static SVECTOR D_us_80180D18[] = {
-    {0x1000, 0x0000, 0x0000}, {0xF000, 0xFFFF, 0x0000}};
-
-static SVECTOR* D_us_80180D28[] = {
-    D_us_80180CA8, D_us_80180CB8, D_us_80180CC8, D_us_80180CD8,
-    D_us_80180CE8, D_us_80180CF8, D_us_80180D08, D_us_80180D18,
+static VECTOR* D_us_80180D28[] = {
+    &D_us_80180CA8, &D_us_80180CB8, &D_us_80180CC8, &D_us_80180CD8,
+    &D_us_80180CE8, &D_us_80180CF8, &D_us_80180D08, &D_us_80180D18,
 };
 
 static s32 D_us_80180D48[] = {
     0, 1, 2, 3, 4, 5, 6, 7, 1, 4, 3, 6, 5, 0, 7, 2,
 };
 
-static MATRIX D_us_80180D88 = {{{0x1000, 0x0000, 0x0800},
-                                {0x1000, 0x0000, 0x0800},
-                                {0x1000, 0x0000, 0x0800}}};
+static MATRIX D_us_80180D88 = {{{FLT(1.0), FLT(0.0), FLT(0.5)},
+                                {FLT(1.0), FLT(0.0), FLT(0.5)},
+                                {FLT(1.0), FLT(0.0), FLT(0.5)}}};
 
 static s16 D_us_80180DA8[] = {0x0000, 0xFE00, 0x0240, 0x0400};
 
@@ -79,7 +57,7 @@ void func_us_801AE8E8(Entity* self) {
     Primitive* prim;
     Primitive* prim2;
     SVECTOR** temp_a0_2;
-    SVECTOR** temp_a0_3;
+    VECTOR** temp_a0_3;
     s16 temp_v1_2;
     s32 i;
     s16 posX;
