@@ -34,12 +34,13 @@ static SVEC4 castleDoorVectors[3] = {
         &doorvec12,
     }};
 
-static MATRIX castleDoorColorMatrix = {
-    {{0x800, 0, 0x800}, {0x800, 0, 0x800}, {0x800, 0, 0x800}}};
+static MATRIX castleDoorColorMatrix = {{{FLT(0.5), FLT(0.0), FLT(0.5)},
+                                        {FLT(0.5), FLT(0.0), FLT(0.5)},
+                                        {FLT(0.5), FLT(0.0), FLT(0.5)}}};
 
-static SVECTOR doorColNormVec1 = {0, 0, 0x1000};
-static SVECTOR doorColNormVec2 = {0x1000, 0, 0};
-static SVECTOR doorColNormVec3 = {-0x1000, 0, 0};
+static SVECTOR doorColNormVec1 = {FLT(0.0), FLT(0.0), FLT(1.0)};
+static SVECTOR doorColNormVec2 = {FLT(1.0), FLT(0.0), FLT(0.0)};
+static SVECTOR doorColNormVec3 = {FLT(-1.0), FLT(0.0), FLT(0.0)};
 
 static SVECTOR* doorColorNormalVectors[] = {
     &doorColNormVec1, &doorColNormVec2, &doorColNormVec3};
