@@ -156,8 +156,6 @@ clean: clean_asm
 	find src -type d -name gen -exec git clean -fdx {} +
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
-	# n.b.! temporary clean for old auto sym files. remove 12/2025
-	rm -f config/*auto.*.txt
 clean_all: clean
 	git clean -fdx asm/
 	git clean -fdx build/
