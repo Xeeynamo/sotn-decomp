@@ -153,7 +153,7 @@ clean: ##@ clean extracted files, assets, and build artifacts
 clean: clean_asm
 	git clean -fdx assets/
 	git clean -fdx build/$(VERSION)/
-	git clean -fdx src/**/gen/
+	find src -type d -name gen -exec git clean -fdx {} +
 	git clean -fdx function_calls/
 	git clean -fdx sotn_calltree.txt
 	# n.b.! temporary clean for old auto sym files. remove 12/2025
