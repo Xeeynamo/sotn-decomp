@@ -278,6 +278,7 @@ files:
             - [0x839C, cmpgfx, gfx_unk_839C, 128, 128, 4]
             - [0xA320, cmpgfx, gfx_unk_A320, 128, 128, 4, 0x17038]
             - [0xAC48, cmpgfx, gfx_bone_ark, 128, 128, 4, 0x17078]
+            - [0xBAA8, cmpgfx, gfx_stage_name_jp, 128, 128, 4]
             - [0xBD70, cmpgfx, gfx_stage_name_jp_lg, 128, 128, 4]
             - [0xD490, cmpgfx, gfx_discus_lord_1, 128, 128, 4, 0x170F8]
             - [0xE00C, cmpgfx, gfx_discus_lord_2, 128, 128, 4, 0x170F8]
@@ -293,6 +294,7 @@ files:
             - [0x14ACC, cmpgfx, gfx_grave_keeper_tombstone, 128, 128, 4, 0x16B78]
             - [0x153C0, cmpgfx, gfx_gremlin, 128, 128, 4, 0x16BB8]
             - [0x15DE0, cmpgfx, gfx_slime, 128, 128, 4, 0x17478]
+            - [0x166F8, palette, pal_2C0, 16]
             - [0x16718, palette, pal_2E0, 16] # 0x2E0
             - [0x169D8, palette, pal_lossoth, 16] # 0x216
             - [0x16B78, palette, pal_grave_keeper_tombstone, 16] # 0x236
@@ -619,6 +621,7 @@ files:
           - [0xBA28, cmpgfx, D_8018BA28, 128, 128, 4]
           - [0xC3D4, cmpgfx, D_8018C3D4, 128, 128, 4]
           - [0xD2CC, cmpgfx, D_8018D2CC, 128, 128, 4]
+          - [0xD9BC, cmpgfx, D_8018D9BC, 128, 128, 4]
           - [0xF7DC, cmpgfx, e_valhalla_knight_1, 128, 128, 4, 0x149A8]
           - [0x1062C, cmpgfx, e_valhalla_knight_2, 128, 128, 4, 0x149A8]
           - [0x11810, cmpgfx, e_valhalla_knight_3, 128, 128, 4, 0x149A8]
@@ -626,6 +629,7 @@ files:
           - [0x12D6C, cmpgfx, e_spectral_sword, 128, 128, 4, 0x14B28]
           - [0x13660, cmpgfx, e_breakable, 128, 128, 4, 0x14D28]
           - [0x14014, cmpgfx, stage_title_no2, 128, 128, 4]
+          - [0x14428, palette, D_80194428, 16]
           - [0x144E8, palette, e_skelerang_pal, 16]
           - [0x14548, palette, D_80194548, 16]
           - [0x14588, palette, D_80194588, 16]
