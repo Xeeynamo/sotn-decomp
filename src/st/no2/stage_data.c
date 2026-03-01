@@ -58,6 +58,11 @@ u8 D_8018D9BC[] = {
 #include "gen/D_8018D9BC.h"
 };
 
+// unreferenced
+u8 D_8018E860[] = {
+#include "gen/D_8018E860.h"
+};
+
 u8 e_valhalla_knight_1[] = {
 #include "gen/e_valhalla_knight_1.h"
 };
