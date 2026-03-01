@@ -5,9 +5,7 @@ import (
 	"crypto/sha1"
 	"encoding/binary"
 	"fmt"
-	"image"
 	"image/color"
-	"image/png"
 	"io"
 	"os"
 	"path/filepath"
@@ -18,6 +16,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util/png"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -115,17 +114,13 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		}
 		entries = append(entries, entry)
 		eg.Go(func() error {
-			bitmap, err := util.MakeBitmap(spriteData[4:4+w*h/2], BPP)
-			if err != nil {
-				return fmt.Errorf("error generating image: %v", err)
-			}
 			f, err := util.CreateAtomicWriter(filepath.Join(e.AssetDir, entry.Name))
 			if err != nil {
 				return err
 			}
 			defer f.Close()
-			if err := util.PngEncode(f, bitmap, w, h, palette); err != nil {
-				return fmt.Errorf("failed to encode %s: %w", entry.Name, err)
+			if err := png.Encode(f, spriteData[4:4+w*h/2], w, h, palette); err != nil {
+				return fmt.Errorf("png encode: %w", err)
 			}
 			return nil
 		})
@@ -168,19 +163,17 @@ func (h *handler) Build(e assets.BuildArgs) error {
 			symbolDataLen[i] = -1
 			continue
 		}
-		img, err := png.Decode(bytes.NewReader(pngData))
+		bitmap, meta, err := png.Decode(bytes.NewReader(pngData))
 		if err != nil {
-			return fmt.Errorf("failed to decode PNG %s: %w", entry.Name, err)
+			return fmt.Errorf("png decode: %w", entry.Name, err)
 		}
-		palettedImg, ok := img.(*image.Paletted)
-		if !ok {
+		if meta.NumPaletteColors == 0 {
 			return fmt.Errorf("image %s is not paletted", entry.Name)
 		}
-		if palettedImg.Rect.Dx()%4 != 0 {
+		if meta.Width%4 != 0 {
 			return fmt.Errorf("image %s is not a multiple of 4 pixels wide", entry.Name)
 		}
-		rawData := util.Make4bppFromBitmap(palettedImg.Pix)
-		symbolDataLen[i] = 4 + len(rawData)
+		symbolDataLen[i] = 4 + len(bitmap)
 		if entry.Padding != 0 {
 			symbolDataLen[i] += 2
 		}
@@ -190,11 +183,11 @@ func (h *handler) Build(e assets.BuildArgs) error {
 		lastSymbol = symbol
 		sbData.WriteString(fmt.Sprintf("static unsigned char %s[] = {\n", symbol))
 		sbData.WriteString(fmt.Sprintf("%d, %d, %d, %d,\n",
-			palettedImg.Rect.Dx(),
-			palettedImg.Rect.Dy(),
+			meta.Width,
+			meta.Height,
 			entry.PivotX,
 			entry.PivotY))
-		util.WriteBytesAsHex(&sbData, rawData)
+		util.WriteBytesAsHex(&sbData, bitmap)
 		if entry.Padding != 0 {
 			util.WriteBytesAsHex(&sbData, []byte{byte(entry.Padding & 0xFF), byte(entry.Padding >> 8)})
 		}
