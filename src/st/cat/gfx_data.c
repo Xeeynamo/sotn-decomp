@@ -46,6 +46,11 @@ u8 gfx_stage_name_jp_lg[] = {
 #include "gen/gfx_stage_name_jp_lg.h"
 };
 
+// unreferenced
+u8 D_8018C290[] = {
+#include "gen/D_8018C290.h"
+};
+
 u8 gfx_discus_lord_1[] = {
 #include "gen/gfx_discus_lord_1.h"
 };

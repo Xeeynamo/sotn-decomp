@@ -11,6 +11,28 @@ u8 gfx_stage_name_jp_lg[] = {
 #include GEN_VERSION(gfx_stage_name_jp_lg.h)
 };
 
+#ifdef VERSION_US
+// unreferenced
+u8 D_801843AC[] = {
+#include GEN_VERSION(D_801843AC.h)
+};
+
+// unreferenced
+u8 D_80185BD4[] = {
+#include GEN_VERSION(D_80185BD4.h)
+};
+
+// unreferenced
+u8 D_80187470[] = {
+#include GEN_VERSION(D_80187470.h)
+};
+
+// unreferenced
+u8 D_80187CA4[] = {
+#include GEN_VERSION(D_80187CA4.h)
+};
+#endif
+
 u8 gfx_confessional[] = {
 #include GEN_VERSION(gfx_confessional.h)
 };
