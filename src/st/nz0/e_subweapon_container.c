@@ -266,6 +266,8 @@ void func_801C7884(Entity* self) {
     Entity* tempEntity;
     s32 params = self->params;
 
+// VERSION_US does not test g_PlayableCharacter, this define is a convenient
+// 'hack' that will compile out all tests against PLAYER_MARIA
 #ifdef VERSION_US
 #define g_PlayableCharacter PLAYER_ALUCARD
 #endif
