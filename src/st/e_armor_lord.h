@@ -20,12 +20,13 @@ static u8 D_us_80182DC4[] = {32, 1, 6,  15, 6,  23, 6,  24, 40, 25, 1, 26, 1,
 static u8 D_us_80182DE0[] = {8, 1, 6, 4, 97, 30, 4, 4, -1, 0};
 static u8 D_us_80182DEC[] = {24, 34, 24, 35, -1, 0};
 
-static MATRIX armorLordColorMatrix = {
-    {{0, 0, 0x1000}, {0, 0, 0x800}, {0, 0, 0x1000}}};
+static MATRIX armorLordColorMatrix = {{{FLT(0.0), FLT(0.0), FLT(1.0)},
+                                       {FLT(0.0), FLT(0.0), FLT(0.5)},
+                                       {FLT(0.0), FLT(0.0), FLT(1.0)}}};
 
-static SVECTOR armorLordColNormVec1 = {0, 0, 0x1000};
-static SVECTOR armorLordColNormVec2 = {0, 0x800, 0x800};
-static SVECTOR armorLordRotVec = {0, 0, 0};
+static SVECTOR armorLordColNormVec1 = {FLT(0.0), FLT(0.0), FLT(1.0)};
+static SVECTOR armorLordColNormVec2 = {FLT(0.0), FLT(0.5), FLT(0.5)};
+static SVECTOR armorLordRotVec = {FLT(0.0), FLT(0.0), FLT(0.0)};
 
 // BUG! These data types seem backwards but PSP does actually appear
 // to load them as s16 and u16 respectively.

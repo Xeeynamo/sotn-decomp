@@ -2315,9 +2315,9 @@ typedef enum {
     PAL_UNK_198 = 0x198,
     PAL_UNK_199 = 0x199,
     PAL_UNK_19C = 0x19C,
-    PAL_UNK_19D = 0x19D,
+    PAL_UNK_19D = 0x19D, // Light grey to black gradient
     PAL_UNK_19E = 0x19E,
-    PAL_UNK_19F = 0x19F,
+    PAL_UNK_19F = 0x19F, // Black to white gradient
     // eDamageDisplay
     PAL_UNK_1B0 = 0x1B0,
     PAL_UNK_1B1 = 0x1B1,

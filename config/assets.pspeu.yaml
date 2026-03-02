@@ -608,6 +608,16 @@ files:
     asset_path: assets/st/nz0
     src_path: src/st/nz0
     splat_config_path: config/splat.pspeu.stnz0.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x51430, cmpgfx, stage_name_en, 128, 64, 4]
+          - [0x51700, cmpgfx, stage_name_it, 128, 64, 4]
+          - [0x519F0, cmpgfx, stage_name_sp, 128, 64, 4]
+          - [0x51CE0, cmpgfx, stage_name_ge, 128, 64, 4]
+          - [0x51EF8, cmpgfx, stage_name_fr, 128, 64, 4]
+          - [0x521D0, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/nz1.bin
     asset_path: assets/st/nz1
     src_path: src/st/nz1

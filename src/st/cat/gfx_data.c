@@ -37,8 +37,18 @@ u8 gfx_bone_ark[] = {
 #include "gen/gfx_bone_ark.h"
 };
 
+// unreferenced
+u8 gfx_stage_name_jp[] = {
+#include "gen/gfx_stage_name_jp.h"
+};
+
 u8 gfx_stage_name_jp_lg[] = {
 #include "gen/gfx_stage_name_jp_lg.h"
+};
+
+// unreferenced
+u8 D_8018C290[] = {
+#include "gen/D_8018C290.h"
 };
 
 u8 gfx_discus_lord_1[] = {
@@ -154,6 +164,10 @@ u8 gfx_slime[] = {
 
 // u16 pal_blood_skeleton[] = {
 // #include "gen/pal_blood_skeleton.h"
+// };
+
+// u16 pal_2C0[] = {
+// #include "gen/pal_2C0.h"
 // };
 
 // u16 pal_2E0[] = {

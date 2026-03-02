@@ -3,11 +3,12 @@ package rawgfx
 import (
 	"bytes"
 	"fmt"
+
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
-	"image"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util/png"
+
 	"image/color"
-	"image/png"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -53,11 +54,7 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 	} else {
 		palette = util.MakeGreyPalette(bpp)
 	}
-	dec := e.Data[e.Start:e.End]
-	bitmap, err := util.MakeBitmap(dec, bpp)
-	if err != nil {
-		return fmt.Errorf("error generating image: %v", err)
-	}
+	bitmap := e.Data[e.Start:e.End]
 	if err := os.MkdirAll(filepath.Dir(assetPath(e.AssetDir, e.Name)), 0755); err != nil {
 		return fmt.Errorf("error creating directory: %v", err)
 	}
@@ -66,7 +63,10 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		return fmt.Errorf("error creating file: %v", err)
 	}
 	defer fout.Close()
-	return util.PngEncode(fout, bitmap, width, height, palette)
+	if err := png.Encode(fout, bitmap, width, height, palette); err != nil {
+		return fmt.Errorf("png encode: %w", err)
+	}
+	return nil
 }
 
 func (h *handler) Build(e assets.BuildArgs) error {
@@ -75,32 +75,16 @@ func (h *handler) Build(e assets.BuildArgs) error {
 	if err != nil {
 		return fmt.Errorf("failed to read file: %w", err)
 	}
-
-	img, err := png.Decode(bytes.NewReader(pngData))
+	bitmap, meta, err := png.Decode(bytes.NewReader(pngData))
 	if err != nil {
-		return fmt.Errorf("failed to decode PNG %s: %w", inFileName, err)
+		return fmt.Errorf("png encode: %w", err)
 	}
-	palettedImg, ok := img.(*image.Paletted)
-	if !ok {
+	if meta.NumPaletteColors == 0 {
 		return fmt.Errorf("image %s is not paletted", inFileName)
-	}
-	bpp, err := strconv.Atoi(e.Args[2])
-	if err != nil {
-		return fmt.Errorf("bpp value %v is not a number", e.Args[2])
-	}
-	data := palettedImg.Pix
-	switch bpp {
-	case 1:
-		data = util.Make1bppFromBitmap(data)
-	case 4:
-		data = util.Make4bppFromBitmap(data)
-	case 8:
-	default:
-		return fmt.Errorf("bpp value %v is not supported", bpp)
 	}
 	sb := strings.Builder{}
 	sb.WriteString("// clang-format off\n")
-	util.WriteBytesAsHex(&sb, data)
+	util.WriteBytesAsHex(&sb, bitmap)
 	return util.WriteFile(sourcePath(e.SrcDir, e.Name), []byte(sb.String()))
 }
 

@@ -3,16 +3,17 @@ package util
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
-	"golang.org/x/exp/constraints"
 	"image/color"
-    "io"
+	"io"
 	"os"
 	"path/filepath"
 	"slices"
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"golang.org/x/exp/constraints"
 )
 
 func JoinMapKeys[T any](m map[string]T, sep string) string {
@@ -142,19 +143,19 @@ func WriteFile(name string, content []byte) error {
 	if err := os.MkdirAll(dir, 0755); err != nil {
 		return fmt.Errorf("failed to create directory %q: %v\n", dir, err)
 	}
-    return WriteFileAtomic(name, content)
+	return WriteFileAtomic(name, content)
 }
 
 func WriteFileAtomic(name string, content []byte) error {
-    w, err := CreateAtomicWriter(name)
-    if err != nil {
-        return fmt.Errorf("could not create writer for %q: %v\n", name, err)
-    }
-    defer w.Close()
-    if _, err := w.Write(content); err != nil {
-        return fmt.Errorf("could not write  %q: %v\n", name, err)
-    }
-    return nil
+	w, err := CreateAtomicWriter(name)
+	if err != nil {
+		return fmt.Errorf("could not create writer for %q: %v\n", name, err)
+	}
+	defer w.Close()
+	if _, err := w.Write(content); err != nil {
+		return fmt.Errorf("could not write  %q: %v\n", name, err)
+	}
+	return nil
 }
 
 // WriteJsonFile converts the passed object as a JSON and internally calls WriteFile
@@ -252,44 +253,6 @@ func MakeGreyPalette(bpp int) []color.RGBA {
 	}
 }
 
-// ensure the returned bitmap is a 8bpp
-func MakeBitmap(data []byte, bpp int) ([]byte, error) {
-	switch bpp {
-	case 1:
-		out := make([]byte, len(data)*8)
-		for i := 0; i < len(data); i++ {
-			out[i*8+0] = data[i] & 0x80 >> 7
-			out[i*8+1] = data[i] & 0x40 >> 6
-			out[i*8+2] = data[i] & 0x20 >> 5
-			out[i*8+3] = data[i] & 0x10 >> 4
-			out[i*8+4] = data[i] & 0x8 >> 3
-			out[i*8+5] = data[i] & 0x4 >> 2
-			out[i*8+6] = data[i] & 0x2 >> 1
-			out[i*8+7] = data[i] & 0x1 >> 0
-		}
-		return out, nil
-	case 4:
-		out := make([]byte, len(data)*2)
-		for i := 0; i < len(data); i++ {
-			out[i*2+0] = data[i] & 15
-			out[i*2+1] = data[i] >> 4
-		}
-		return out, nil
-	case 8:
-		return data, nil
-	default:
-		return nil, fmt.Errorf("bpp %d invalid or not supported", bpp)
-	}
-}
-
-func Make1bppFromBitmap(data []byte) []byte {
-	out := make([]byte, len(data)/8)
-	for i := 0; i < len(data); i += 8 {
-		out[i>>3] = ((data[i] & 1) << 7) | ((data[i+1] & 1) << 6) | ((data[i+2] & 1) << 5) | ((data[i+3] & 1) << 4) | ((data[i+4] & 1) << 3) | ((data[i+5] & 1) << 2) | ((data[i+6] & 1) << 1) | ((data[i+7] & 1) << 0)
-	}
-	return out
-}
-
 func Make4bppFromBitmap(data []byte) []byte {
 	out := make([]byte, len(data)/2)
 	for i := 0; i < len(data); i += 2 {
@@ -299,50 +262,53 @@ func Make4bppFromBitmap(data []byte) []byte {
 }
 
 type StringWriteCloser interface {
-    io.WriteCloser
-    io.StringWriter
+	io.WriteCloser
+	io.StringWriter
 
-    Name() string
+	Name() string
 }
 
 type AtomicWriter struct {
-    name string
-    f *os.File
+	name string
+	f    *os.File
 }
 
 func CreateAtomicWriter(name string) (StringWriteCloser, error) {
-    base := filepath.Base(name)
-    dir := filepath.Dir(name)
-    f, err := os.CreateTemp(dir, base)
-    if err != nil {
-        return nil, fmt.Errorf("failed to create temp file for %q: %v\n", name, err)
-    }
+	base := filepath.Base(name)
+	dir := filepath.Dir(name)
+	if err := os.MkdirAll(dir, 0755); err != nil {
+		return nil, fmt.Errorf("failed to create directory %q: %v\n", dir, err)
+	}
+	f, err := os.CreateTemp(dir, base)
+	if err != nil {
+		return nil, fmt.Errorf("failed to create temp file for %q: %v\n", name, err)
+	}
 
-    a := AtomicWriter { name: name, f: f }
+	a := AtomicWriter{name: name, f: f}
 
-    return a, nil
+	return a, nil
 }
 
 func (a AtomicWriter) Close() error {
-    a.f.Close()
-    if err := os.Rename(a.f.Name(), a.name); err != nil {
-        // in the common case, a.f will already be renamed
-        // in case it isn't remove the temp file
-        os.Remove(a.f.Name())
-        return fmt.Errorf("failed to move temp file to destination %q: %v\n", a.name, err)
-    }
+	a.f.Close()
+	if err := os.Rename(a.f.Name(), a.name); err != nil {
+		// in the common case, a.f will already be renamed
+		// in case it isn't remove the temp file
+		os.Remove(a.f.Name())
+		return fmt.Errorf("failed to move temp file to destination %q: %v\n", a.name, err)
+	}
 
-    return nil
+	return nil
 }
 
 func (a AtomicWriter) Write(p []byte) (int, error) {
-    return a.f.Write(p)
+	return a.f.Write(p)
 }
 
 func (a AtomicWriter) WriteString(s string) (int, error) {
-    return a.f.WriteString(s)
+	return a.f.WriteString(s)
 }
 
 func (a AtomicWriter) Name() string {
-    return a.f.Name()
+	return a.f.Name()
 }
