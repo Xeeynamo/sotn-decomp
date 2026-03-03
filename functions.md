@@ -724,7 +724,7 @@
 | np3    | func_pspeu_09245390               |       21 |          1 |        |       |     |
 | nz0    | func_pspeu_09247828               |       21 |          1 |        |       |     |
 | nz0    | func_pspeu_09254DD8               |       21 |          1 |        |       |     |
-| nz0    | Random                            |       21 |          1 |        |       |     |
+| nz0    | func_pspeu_09245CC8               |       21 |          1 |        |       |     |
 | nz1    | func_pspeu_092418B8               |       21 |          1 |        |       |     |
 | nz1    | func_pspeu_092503B0               |       21 |          1 |        |       |     |
 | nz1    | Random                            |       21 |          1 |        |       |     |
@@ -898,7 +898,7 @@
 | np3    | func_pspeu_09259E38               |       25 |          1 |        |       |     |
 | np3    | func_pspeu_0925A4C8               |       25 |          1 |        |       |     |
 | np3    | func_pspeu_0925A968               |       25 |          1 |        |       |     |
-| nz0    | MoveEntity                        |       25 |          1 |        |       |     |
+| nz0    | func_pspeu_092544D8               |       25 |          1 |        |       |     |
 | nz0    | func_pspeu_09254D88               |       25 |          1 |        |       |     |
 | nz1    | MoveEntity                        |       25 |          1 |        |       |     |
 | nz1    | SetStep                           |       25 |          1 |        |       |     |
@@ -1467,7 +1467,7 @@
 | no3    | func_pspeu_092602D8               |       37 |          6 |        |       |     |
 | no4    | func_pspeu_0925B420               |       37 |          6 |        |       |     |
 | np3    | func_pspeu_0925A458               |       37 |          6 |        |       |     |
-| nz0    | AllocEntity                       |       37 |          6 |        |       |     |
+| nz0    | func_pspeu_09254AF8               |       37 |          6 |        |       |     |
 | nz1    | AllocEntity                       |       37 |          6 |        |       |     |
 | rare   | func_pspeu_0924A6A0               |       37 |          6 |        |       |     |
 | rcat   | AllocEntity                       |       37 |          6 |        |       |     |
@@ -1548,8 +1548,8 @@
 | np3    | func_pspeu_09241940               |       39 |          2 |        |       |     |
 | np3    | func_pspeu_092419C8               |       39 |          2 |        |       |     |
 | np3    | func_pspeu_0925A5D8               |       39 |          2 |        |       |     |
-| nz0    | CreateEntityFromEntity            |       39 |          2 |        |       |     |
 | nz0    | func_pspeu_09241DF8               |       39 |          2 |        |       |     |
+| nz0    | func_pspeu_09241E80               |       39 |          2 |        |       |     |
 | nz1    | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
 | nz1    | CreateEntityFromEntity            |       39 |          2 |        |       |     |
 | nz1    | func_pspeu_092500B8               |       39 |          2 |        |       |     |
@@ -1873,7 +1873,7 @@
 | no3    | func_pspeu_0925F8D8               |       46 |          5 |        |       |     |
 | no4    | func_pspeu_0925AA20               |       46 |          5 |        |       |     |
 | np3    | func_pspeu_09259A58               |       46 |          5 |        |       |     |
-| nz0    | DestroyEntity                     |       46 |          5 |        |       |     |
+| nz0    | func_pspeu_092540F8               |       46 |          5 |        |       |     |
 | nz1    | DestroyEntity                     |       46 |          5 |        |       |     |
 | rare   | func_pspeu_09249CF8               |       46 |          5 |        |       |     |
 | rcat   | DestroyEntity                     |       46 |          5 |        |       |     |
@@ -2747,7 +2747,7 @@
 | dra    | func_psp_090EBFA8                 |       80 |          3 |        |       |     |
 |        | func_092E7680                     |       80 |          8 |        |       |     |
 |        | func_092E7F80                     |       80 |          9 |        |       |     |
-| nz0    | func_801C77B8                     |       80 |          9 |        |       |     |
+| nz0    | func_pspeu_09253DC0               |       80 |          9 |        |       |     |
 | no4    | func_pspeu_09259648               |       80 |         10 |        |       |     |
 | main   | func_psp_08911990                 |       81 |          4 |        |       |     |
 | no4    | func_pspeu_09242D08               |       81 |          5 |        |       |     |
@@ -3029,7 +3029,7 @@
 | no3    | func_pspeu_092591F0               |       97 |         12 |        |       |     |
 | no4    | func_pspeu_09250600               |       97 |         12 |        |       |     |
 | np3    | func_pspeu_0924F788               |       97 |         12 |        |       |     |
-| nz0    | PlaySfxPositional                 |       97 |         12 |        |       |     |
+| nz0    | func_pspeu_0924CD10               |       97 |         12 |        |       |     |
 | nz1    | PlaySfxPositional                 |       97 |         12 |        |       |     |
 | rare   | func_pspeu_09245C68               |       97 |         12 |        |       |     |
 | rcat   | PlaySfxPositional                 |       97 |         12 |        |       |     |
@@ -3097,7 +3097,7 @@
 | no3    | func_pspeu_0925F9F8               |      101 |          7 |        |       |     |
 | no4    | func_pspeu_0925AB40               |      101 |          7 |        |       |     |
 | np3    | func_pspeu_09259B78               |      101 |          7 |        |       |     |
-| nz0    | AnimateEntity                     |      101 |          7 |        |       |     |
+| nz0    | func_pspeu_09254218               |      101 |          7 |        |       |     |
 | nz1    | AnimateEntity                     |      101 |          7 |        |       |     |
 | rare   | func_pspeu_09249E18               |      101 |          7 |        |       |     |
 | rcat   | AnimateEntity                     |      101 |          7 |        |       |     |
@@ -3281,7 +3281,7 @@
 | no4    | func_pspeu_09242940               |      111 |         14 |        |       |     |
 | main   | func_psp_0892667C                 |      111 |         15 |        |       |     |
 | main   | func_psp_08926808                 |      111 |         15 |        |       |     |
-| nz0    | EntitySubWpnContGlass             |      111 |         15 |        |       |     |
+| nz0    | func_pspeu_09253A58               |      111 |         15 |        |       |     |
 | main   | sceWaveInit                       |      111 |         19 |        |       |     |
 | main   | __smakebuf_r                      |      111 |         19 |        |       |     |
 | no3    | func_pspeu_09252CD8               |      111 |         19 |        |       |     |
@@ -3449,7 +3449,7 @@
 | lib    | func_psp_09268360                 |      127 |         12 |        |       |     |
 | no3    | func_pspeu_0924FFF0               |      127 |         17 |        |       |     |
 | np3    | EntityMermanSpawner               |      127 |         17 |        |       |     |
-| nz0    | func_801C7654                     |      127 |         17 |        |       |     |
+| nz0    | func_pspeu_09253BE8               |      127 |         17 |        |       |     |
 | dra    | func_psp_09142980                 |      127 |         18 |        |       |     |
 | main   | scalbn                            |      127 |         18 |        |       |     |
 | nz0    | func_pspeu_0923A9D0               |      127 |         19 |        |       |     |
@@ -3601,7 +3601,7 @@
 | main   | func_psp_08915470                 |      150 |         31 |        |       |     |
 | dra    | func_psp_090F0330                 |      151 |         12 |        |       |     |
 | are    | func_pspeu_0924B178               |      151 |         14 |        |       |     |
-| nz0    | func_801C7884                     |      151 |         26 |        |       |     |
+| nz0    | func_pspeu_09253EE0               |      151 |         26 |        |       |     |
 | dai    | func_pspeu_092588C0               |      152 |         17 |        |       |     |
 | are    | func_pspeu_09239558               |      152 |         21 |        |       |     |
 | no2    | func_pspeu_092513B8               |      152 |         22 |        |       |     |
@@ -4436,7 +4436,7 @@
 | lib    | func_psp_09257100                 |      396 |         35 |        |       |     |
 | main   | 3DA9C.rodata                      |      398 |          0 |        |       |     |
 | no4    | func_pspeu_09243478               |      399 |         56 | Yes    |       |     |
-| nz0    | EntitySubWeaponContainer          |      400 |         50 |        |       |     |
+| nz0    | func_pspeu_09253478               |      400 |         50 |        |       |     |
 |        | func_092ECC98                     |      401 |         36 |        |       |     |
 | main   | func_psp_08922C14                 |      405 |         36 |        |       |     |
 | main   | func_psp_0891881C                 |      405 |         51 |        |       |     |
@@ -4873,7 +4873,7 @@
 | no3    | func_pspeu_09255540               |      972 |        120 | Yes    |       |     |
 | no4    | func_pspeu_0924CC60               |      972 |        120 | Yes    |       |     |
 | np3    | EntityPrizeDrop                   |      972 |        120 | Yes    |       |     |
-| nz0    | EntityPrizeDrop                   |      972 |        120 | Yes    |       |     |
+| nz0    | func_pspeu_092485F0               |      972 |        120 | Yes    |       |     |
 | nz1    | func_pspeu_09242680               |      972 |        120 | Yes    |       |     |
 | rare   | func_pspeu_092422C8               |      972 |        120 | Yes    |       |     |
 | rcat   | func_pspeu_0923F590               |      972 |        120 | Yes    |       |     |
