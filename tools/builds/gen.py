@@ -296,11 +296,6 @@ def add_c_psp(
         implicit=[
             f"src/.assets_build_done_{ver}",
             ld_path,
-            "include/types.h",
-            "include/common.h",
-            "include/game.h",
-            "include/entity.h",
-            "include/sfx.h",
         ],
         variables={
             "version": ver,
@@ -830,13 +825,17 @@ with open(build_ninja, "w") as f:
         command=(
             "VERSION=$version"
             " tools/sotn_str/target/release/sotn_str process -p -f $in"
-            " | .venv/bin/python3 tools/mwccgap/mwccgap.py $out --src-dir $src_dir"
+            " | bin/mw -o $out --src-dir $src_dir"
             " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path tools/pspas/target/release/pspas"
-            " --asm-dir-prefix asm/pspeu --target-encoding $encoding --macro-inc-path include/macro.inc"
+            " --asm-dir asm/pspeu --target-encoding $encoding --macro-inc-path include/macro.inc"
+            " -gccdep -MD"  # for metrowerks, "system" headers seem to be anything included with angle brackets
             f" -gccinc -Iinclude -Iinclude/pspsdk -D_internal_version_$version -DSOTN_STR {extra_cpp_defs} -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
             " $opt_level -opt nointrinsics"
+            " -"
         ),
         description="psp cc $in",
+        depfile="$out.d",
+        deps="gcc",
     )
     nw.rule(
         "psp-as",
