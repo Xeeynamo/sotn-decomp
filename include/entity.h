@@ -3363,7 +3363,7 @@ typedef struct {
 } ET_YorickSkull;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ struct Primitive* prim;
     /* 0x80 */ s16 timer;
     /* 0x82 */ s16 unk82;
     /* 0x84 */ s16 unk84;

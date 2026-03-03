@@ -46,7 +46,7 @@ segments:
     subsegments:
       - [0x80, c, nz1/create_entity]
       - [0x1028, c, nz1/e_vandal_sword]
-      - [0x24D0, c, nz1_psp/e_skull_lord]
+      - [0x24D0, c, nz1/e_skull_lord]
       - [0x3948, c, nz1_psp/e_life_up]
       - [0x45C8, c, nz1/e_stage_name]
       - [0x54C8, c, nz1_psp/e_red_door]
@@ -91,7 +91,7 @@ segments:
       - [0x242B0, c, nz1/e_gear_small]
       - [0x24700, c, nz1/e_gear_vertical]
       - [0x24A00, .data, nz1/e_vandal_sword]
-      - [0x24A30, data]
+      - [0x24A30, .data, nz1/e_skull_lord]
       - [0x24A50, .data, nz1_psp/e_life_up]
       - [0x24AA0, .data, nz1/e_stage_name]
       - [0x25380, data]
