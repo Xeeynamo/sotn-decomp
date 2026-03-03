@@ -1069,7 +1069,7 @@
 | no4    | func_pspeu_0925AD20               |       28 |          2 |        |       |     |
 | np3    | func_pspeu_09259D58               |       28 |          2 |        |       |     |
 | nz0    | func_pspeu_092543F8               |       28 |          2 |        |       |     |
-| nz1    | GetDistanceToPlayerY              |       28 |          2 |        |       |     |
+| nz1    | func_pspeu_0924F838               |       28 |          2 |        |       |     |
 | rcat   | func_pspeu_092490B0               |       28 |          2 |        |       |     |
 | main   | sceSasGetEnvelope                 |       28 |          3 |        |       |     |
 | main   | sceSasSetKeyOff                   |       28 |          3 |        |       |     |
@@ -1422,7 +1422,7 @@
 | no4    | func_pspeu_0925B538               |       37 |          2 |        |       |     |
 | np3    | func_pspeu_0925A7F0               |       37 |          2 |        |       |     |
 | nz0    | func_pspeu_09254C10               |       37 |          2 |        |       |     |
-| nz1    | GetAngleBetweenEntities           |       37 |          2 |        |       |     |
+| nz1    | func_pspeu_092501E8               |       37 |          2 |        |       |     |
 | rare   | func_pspeu_0924A950               |       37 |          2 |        |       |     |
 | rcat   | GetAngleBetweenEntities           |       37 |          2 |        |       |     |
 | st0    | func_pspeu_09250500               |       37 |          2 |        |       |     |
@@ -3217,7 +3217,7 @@
 | dra    | func_psp_09111BB8                 |      106 |         11 |        |       |     |
 | are    | func_pspeu_09239778               |      106 |         11 |        |       |     |
 | dra    | func_psp_09136620                 |      106 |         12 |        |       |     |
-| nz1    | EntitySkullLordPieces             |      106 |         15 |        |       |     |
+| nz1    | func_pspeu_0923AE48               |      106 |         15 |        |       |     |
 | are    | func_pspeu_0924FA38               |      106 |         16 |        |       |     |
 | cat    | func_pspeu_09244EB8               |      106 |         16 |        |       |     |
 | chi    | func_psp_092407E0                 |      106 |         16 |        |       |     |
@@ -4098,7 +4098,7 @@
 | are    | func_pspeu_0924ADC0               |      263 |         36 |        |       |     |
 | ric    | func_pspeu_092A6728               |      263 |         51 |        |       |     |
 | dra    | func_psp_09118408                 |      264 |         28 |        |       |     |
-| nz1    | EntitySkullLordFlames             |      264 |         29 |        |       |     |
+| nz1    | func_pspeu_0923AA78               |      264 |         29 |        |       |     |
 | cat    | func_pspeu_09241A88               |      264 |         34 |        |       |     |
 | main   | func_psp_089140DC                 |      264 |         47 |        |       |     |
 | ric    | func_pspeu_092C4C00               |      265 |         13 |        |       |     |
@@ -4165,7 +4165,7 @@
 | no2    | func_pspeu_09259E40               |      284 |         39 |        |       |     |
 | np3    | EntityCastleDoor                  |      285 |         32 |        |       |     |
 | dra    | func_psp_090F9B38                 |      285 |         37 | Yes    |       |     |
-| nz1    | EntitySkullLordOutline            |      285 |         37 |        |       |     |
+| nz1    | func_pspeu_0923A658               |      285 |         37 |        |       |     |
 | no4    | func_pspeu_09237700               |      285 |         47 |        |       |     |
 | are    | func_pspeu_0923AA20               |      287 |         30 |        |       |     |
 | lib    | func_psp_0923B010                 |      287 |         30 |        |       |     |
@@ -4791,7 +4791,7 @@
 | dra    | func_psp_0911A0B8                 |      749 |         52 |        |       |     |
 | rcat   | EntityLava                        |      749 |         71 |        |       |     |
 |        | func_092EBBD8                     |      753 |         93 | Yes    |       |     |
-| nz1    | EntitySkullLord                   |      754 |        105 |        |       |     |
+| nz1    | func_pspeu_09239B50               |      754 |        105 |        |       |     |
 | ric    | func_pspeu_092B3578               |      754 |        126 |        |       |     |
 | maria  | func_pspeu_092B7730               |      757 |         84 | Yes    |       |     |
 | ric    | func_pspeu_092C09D8               |      757 |         84 | Yes    |       |     |
