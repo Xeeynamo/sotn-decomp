@@ -19,7 +19,7 @@ void DoorCascadePhysics(EntranceCascadePrim* prim) {
         } else {
             prim->velocityX.val = -Random() * 0x40;
         }
-        prim->velocityY.val = (Random() << 8) + FIX(-4);
+        prim->velocityY.val = (Random() << 8) - FIX(4);
         prim->drawMode = DRAW_UNK02;
         prim->p3++;
         /* fallthrough */

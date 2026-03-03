@@ -747,7 +747,7 @@ s32 func_ptr_80170004(Entity* self) {
             prim->r0 = (rand() & 0xF) + 1;
             D_170000_8017CBD0[i][0].i.hi = playerX;
             D_170000_8017CBD0[i][1].i.hi = playerY;
-            D_170000_8017CBD0[i][2].val = (rand() * 6) + FIX(-1.5);
+            D_170000_8017CBD0[i][2].val = (rand() * 6) - FIX(1.5);
             D_170000_8017CBD0[i][3].val = FIX(-2) - (rand() * 4);
             prim = prim->next;
         }

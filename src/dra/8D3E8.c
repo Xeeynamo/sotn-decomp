@@ -960,13 +960,13 @@ static void func_8012F178(Primitive* prim, s32 count, bool finishUp) {
     s->prim->y0 = s->prim->y1 = s->y;
     s->prim->y2 = s->prim->y3 = s->y + 0x3F;
 
-    s->i = abs(PLAYER.velocityX) + FIX(-3) >> 8;
+    s->i = abs(PLAYER.velocityX) - FIX(3) >> 8;
     if (s->i > 0x7F) {
         s->i = 0x7F;
     }
     s->colors[1] = (u8)s->i + 0x80;
 
-    s->i = abs(PLAYER.velocityX) + FIX(-3) >> 8;
+    s->i = abs(PLAYER.velocityX) - FIX(3) >> 8;
     if (s->i > 0x7F) {
         s->i = 0x7F;
     }

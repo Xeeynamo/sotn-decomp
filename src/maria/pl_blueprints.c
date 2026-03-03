@@ -1344,7 +1344,7 @@ void EntityMariaOwl(Entity* self) {
         self->velocityY = FIX(1);
         self->posY.val -= self->velocityY;
         self->ext.mariaOwl.unk7E++;
-        self->velocityX += FIX(-0.5) + FIX(-0.5);
+        self->velocityX -= FIX(1);
         self->posX.val += self->facingLeft ? -self->velocityX : self->velocityX;
         if (self->velocityX <= 0) {
             self->facingLeft = self->facingLeft ? 0 : 1;

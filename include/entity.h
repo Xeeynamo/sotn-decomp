@@ -2022,7 +2022,7 @@ typedef struct {
 } ET_DestructAnimation;
 
 typedef struct {
-    /* 0x7C */ s32 : 32;
+    /* 0x7C */ struct Primitive* unk7C;
     /* 0x80 */ s32 : 32;
     /* 0x84 */ s16 velX;
     /* 0x86 */ s16 palette;

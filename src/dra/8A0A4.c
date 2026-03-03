@@ -242,7 +242,7 @@ void EntityStopWatch(Entity* self) {
         prim = &g_PrimBuf[self->primIndex];
         if (self->step < 5) {
             x = PLAYER.posX.val + (PLAYER.facingLeft ? FIX(8) : FIX(-8));
-            y = PLAYER.posY.val + FIX(-16);
+            y = PLAYER.posY.val - FIX(16);
             self->posX.val += (x - self->posX.val) / 12;
             self->posY.val += (y - self->posY.val) / 4;
 
