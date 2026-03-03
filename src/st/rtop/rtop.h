@@ -13,6 +13,7 @@ enum OVL_EXPORT(Palette) {
     PAL_NONE = 0,
     PAL_BREAKABLE = 0x200,
     PAL_BREAKABLE_DEBRIS = 0x204,
+    PAL_UNK_220 = 0x220,
 };
 
 typedef enum EntityIDs {
@@ -45,8 +46,25 @@ typedef enum EntityIDs {
     /* 0x25 */ E_TOMBSTONE,
     /* 0x26 */ E_SKULL_LORD,
     /* 0x27 */ E_SKULL_LORD_OUTLINE,
-    /* 0x27 */ E_SKULL_LORD_FLAMES,
-    /* 0x27 */ E_SKULL_LORD_PIECES,
+    /* 0x28 */ E_SKULL_LORD_FLAMES,
+    /* 0x29 */ E_SKULL_LORD_PIECES,
 } EntityIDs;
+
+extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitObtainable;
+extern EInit g_EInitParticle;
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitUnkId13;
+extern EInit g_EInitLockCamera;
+extern EInit g_EInitCommon;
+extern EInit g_EInitDamageNum;
+extern EInit __unused__;
+extern EInit g_EInitRTOPCommon;
+extern EInit g_EInitTombstone;
+extern EInit g_EInitSkeletonPieces;
+extern EInit D_us_801805E4;
+extern EInit g_EInitSkullLord;
+extern EInit g_EInitSkullLord2;
 
 #endif // RTOP_H

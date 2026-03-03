@@ -199,7 +199,43 @@ extern s32 E_ID(WATER_DROP);
 extern s32 E_ID(WATER_FOREGROUND);
 #endif
 
+extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitObtainable;
+extern EInit g_EInitParticle;
+extern EInit g_EInitSpawner;
+extern EInit g_EInitInteractable;
+extern EInit g_EInitUnkId13;
+extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
+extern EInit g_EInitDamageNum;
 extern EInit g_EInitEnvironment;
+extern EInit g_EInitSkullLord;
+extern EInit g_EInitSkullLord2;
+extern EInit g_EInitHarpy;
+extern EInit D_us_80180BC4;
+extern EInit g_EInitHarpyFlame;
+extern EInit D_us_80180BDC;
+extern EInit D_us_80180BE8;
+extern EInit g_EInitCloakedKnight;
+extern EInit g_EInitCloakedKnightAura;
+extern EInit g_EInitCloakedKnightSword;
+extern EInit D_us_80180C18;
+extern EInit D_us_80180C24;
+extern EInit g_EInitVandalSword;
+extern EInit g_EInitVandSwordDeath;
+extern EInit g_EInitPhantomSkull;
+extern EInit g_EInitPhantomSkullTrail;
+extern EInit g_EInitFlailGuard;
+extern EInit g_EInitFlailGuardFlail;
+extern EInit g_EInitFleaArmor;
+extern EInit g_EInitFleaArmorAttackHitbox;
+extern EInit g_EInitFleaMan;
+extern EInit g_EInitKarasuman;
+extern EInit g_EInitKarasumanFeatherAttack;
+extern EInit g_EInitKarasumanOrbAttack;
+extern EInit g_EInitKarasumanRavenAttack;
+extern EInit g_EInitKarasumanFeather;
+extern EInit g_EInitMedusaHeadBlue;
+extern EInit g_EInitMedusaHeadYellow;
 
 #endif // NZ1_H
