@@ -7,7 +7,6 @@ NZ1_pStObjLayoutVertical = 0x801808F4;
 g_EInitInteractable = 0x80180B58;
 g_EInitCommon = 0x80180B7C;
 g_EInitEnvironment = 0x80180B94;
-g_EInitHarpyFlame = 0x80180BD0;
 NZ1_BackgroundBlockInit = 0x80180D08;
 entityLockCameraHitbox = 0x80180DA0;
 entityLockCameraData = 0x80180DA4;
@@ -15,7 +14,6 @@ entityLockCameraTilemapProps = 0x80180DA8;
 g_WaterSounds = 0x801810CC;
 g_WaterXTbl = 0x801810D0;
 NZ1_PrizeDrops = 0x8018111C;
-g_HarpyFlameAnim = 0x80181F74;
 NZ1_rooms = 0x8018233C;
 PlayerIsWithinHitbox = 0x801A5E18;
 NZ1_EntityLockCamera = 0x801A5E9C; // source=match
@@ -37,7 +35,6 @@ MoveEntity = 0x801AFED0; // source=match
 UnkCollisionFunc3 = 0x801AFF2C; // source=match
 UnkCollisionFunc2 = 0x801B01A4; // source=match
 AllocEntity = 0x801B038C; // source=match
-SetStep = 0x801B075C; // source=match
 InitializeEntity = 0x801B082C; // source=match
 EntityPrizeDrop = 0x801B153C; // source=match
 EntityEquipItemDrop = 0x801B1F50; // source=match
@@ -45,10 +42,6 @@ EntityRelicOrb = 0x801B27E8; // source=match
 EntityExplosionVariantsSpawner = 0x801B3B3C; // source=match
 PlaySfxPositional = 0x801B5BE0; // source=match
 BottomCornerText = 0x801B745C; // source=match
-EntityHarpyDagger = 0x801BB628;
-EntityHarpyFlame = 0x801BB7C0;
-EntityHarpyKick = 0x801BB9E8;
-EntityHarpyFeather = 0x801BBAC4;
 EntitySwordLord = 0x801BCC90;
 EntitySwordLordAttackHitbox = 0x801BD970;
 UnkPrimHelper = 0x801C059C; // source=match
