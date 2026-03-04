@@ -425,7 +425,7 @@ void EntityHarpyFlame(Entity* self) {
             self->opacity = 0x40;
             self->step = 2;
             self->drawFlags |= ENTITY_OPACITY;
-            self->blendMode = BLEND_ADD | BLEND_TRANSP;
+            self->blendMode = BLEND_TRANSP | BLEND_ADD;
             return;
         }
         angle = (self->params * 0x180) - 0x180;
