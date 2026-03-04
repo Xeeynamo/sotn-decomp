@@ -559,6 +559,7 @@
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/np3/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/nz0/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | SealedDoorIsNearPlayer              | asm/us/st/nz0/matchings/e_sealed_door/SealedDoorIsNearPlayer.s 
+| 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/nz1/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/rare/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/rcat/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/rtop/matchings/e_red_door/EntityIsNearPlayer.s 
@@ -566,7 +567,6 @@
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/st0/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/top/matchings/e_red_door/EntityIsNearPlayer.s 
 | 1.00 | true     | EntityIsNearPlayer                  | asm/us/st/wrp/matchings/e_red_door/EntityIsNearPlayer.s 
-| 1.00 | false    | EntityIsNearPlayer                  | asm/us/st/nz1/nonmatchings/e_red_door/EntityIsNearPlayer.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | CollectDummy                        | asm/us/boss/bo4/matchings/e_collect/CollectDummy.s 
 | 1.00 | true     | CollectDummy                        | asm/us/boss/bo6/matchings/e_collect/CollectDummy.s 
@@ -2618,6 +2618,7 @@
 | 1.00 | true     | NO4_EntityRedDoor                   | asm/us/st/no4/matchings/e_red_door/NO4_EntityRedDoor.s 
 | 1.00 | true     | NP3_EntityRedDoor                   | asm/us/st/np3/matchings/e_red_door/NP3_EntityRedDoor.s 
 | 1.00 | true     | NZ0_EntityRedDoor                   | asm/us/st/nz0/matchings/e_red_door/NZ0_EntityRedDoor.s 
+| 0.99 | true     | NZ1_EntityRedDoor                   | asm/us/st/nz1/matchings/e_red_door/NZ1_EntityRedDoor.s 
 | 1.00 | true     | RARE_EntityRedDoor                  | asm/us/st/rare/matchings/e_red_door/RARE_EntityRedDoor.s 
 | 1.00 | true     | RCAT_EntityRedDoor                  | asm/us/st/rcat/matchings/e_red_door/RCAT_EntityRedDoor.s 
 | 1.00 | true     | RTOP_EntityRedDoor                  | asm/us/st/rtop/matchings/e_red_door/RTOP_EntityRedDoor.s 
@@ -2625,7 +2626,6 @@
 | 1.00 | true     | ST0_EntityRedDoor                   | asm/us/st/st0/matchings/e_red_door/ST0_EntityRedDoor.s 
 | 1.00 | true     | TOP_EntityRedDoor                   | asm/us/st/top/matchings/e_red_door/TOP_EntityRedDoor.s 
 | 1.00 | true     | WRP_EntityRedDoor                   | asm/us/st/wrp/matchings/e_red_door/WRP_EntityRedDoor.s 
-| 0.99 | false    | NZ1_EntityRedDoor                   | asm/us/st/nz1/nonmatchings/e_red_door/NZ1_EntityRedDoor.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | BottomCornerText                    | asm/us/boss/bo4/matchings/popup/BottomCornerText.s 
 | 1.00 | true     | BottomCornerText                    | asm/us/boss/bo6/matchings/popup/BottomCornerText.s 
@@ -3348,6 +3348,7 @@
 | 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
 | 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
 | 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
+| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
 | 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | DMACallback                         | asm/us/main/matchings/psxsdk/libetc/intr/DMACallback.s 
@@ -4617,9 +4618,6 @@
 -------------------------------------------------------------------------------
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
-| 0.90 | true     | DecDCTinCallback                    | asm/us/st/sel/matchings/libpress/DecDCTinCallback.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | RicEntityCrashReboundStoneParticles | asm/us/ric/matchings/2F8E8/RicEntityCrashReboundStoneParticles.s 
 | 1.00 | true     | RicEntityStopwatchCrashLightning    | asm/us/ric/matchings/319C4/RicEntityStopwatchCrashLightning.s 
