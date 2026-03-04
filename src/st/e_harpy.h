@@ -489,17 +489,17 @@ void EntityHarpyKick(Entity* self) {
 }
 
 void EntityHarpyFeather(Entity* self) {
-    s32 scale;
+    s32 speed;
     s16 angle;
 
     if (!self->step) {
         InitializeEntity(g_EInitHarpyFeather);
         self->facingLeft = Random() & 1;
         self->drawFlags = ENTITY_ROTATE;
-        scale = (Random() & 0x1F) + 0x10;
+        speed = (Random() & 0x1F) + 0x10;
         angle = (Random() * 6) + ROT(202.5);
-        self->velocityX = scale * rcos(angle);
-        self->velocityY = scale * rsin(angle);
+        self->velocityX = speed * rcos(angle);
+        self->velocityY = speed * rsin(angle);
     }
     MoveEntity();
     self->rotate += 0x20;
