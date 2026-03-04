@@ -210,7 +210,7 @@ extern EInit g_EInitCommon;
 extern EInit g_EInitDamageNum;
 extern EInit g_EInitEnvironment;
 extern EInit g_EInitSkullLord;
-extern EInit g_EInitSkullLord2;
+extern EInit g_EInitSkullLordEffects;
 extern EInit g_EInitHarpy;
 extern EInit g_EInitHarpyDagger;
 extern EInit g_EInitHarpyFlame;

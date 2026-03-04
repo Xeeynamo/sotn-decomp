@@ -60,7 +60,7 @@ segments:
       - [0x115C, .data, e_karasuman]
       - [0x1318, .data, st_update]
       - [0x1344, .data, collision]
-      - [0x1704, data, e_red_door]
+      - [0x1704, .data, e_red_door]
       - [0x171C, .data, st_common]
       - [0x191C, .data, e_collect]
       - [0x1C70, .data, e_misc]

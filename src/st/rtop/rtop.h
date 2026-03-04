@@ -65,6 +65,6 @@ extern EInit g_EInitTombstone;
 extern EInit g_EInitSkeletonPieces;
 extern EInit D_us_801805E4;
 extern EInit g_EInitSkullLord;
-extern EInit g_EInitSkullLord2;
+extern EInit g_EInitSkullLordEffects;
 
 #endif // RTOP_H
