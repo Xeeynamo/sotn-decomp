@@ -464,16 +464,16 @@ void EntityHarpyFlame(Entity* self) {
 void EntityHarpyKick(Entity* self) {
     s32 animFrame;
     s8* hitboxPtr;
-    Entity* tempEntity;
+    Entity* harpy;
 
     if (!self->step) {
         InitializeEntity(g_EInitHarpyKick);
     }
-    tempEntity = self - 1;
-    self->facingLeft = tempEntity->facingLeft;
-    self->posX.val = tempEntity->posX.val;
-    self->posY.val = tempEntity->posY.val;
-    animFrame = tempEntity->animCurFrame;
+    harpy = self - 1;
+    self->facingLeft = harpy->facingLeft;
+    self->posX.val = harpy->posX.val;
+    self->posY.val = harpy->posY.val;
+    animFrame = harpy->animCurFrame;
     if (animFrame > 13) {
         animFrame = 0;
     }
@@ -483,7 +483,7 @@ void EntityHarpyKick(Entity* self) {
     self->hitboxOffY = *hitboxPtr++;
     self->hitboxWidth = *hitboxPtr++;
     self->hitboxHeight = *hitboxPtr++;
-    if (tempEntity->entityId != E_HARPY) {
+    if (harpy->entityId != E_HARPY) {
         DestroyEntity(self);
     }
 }
