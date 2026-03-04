@@ -96,4 +96,4 @@ EInit g_EInitTombstone = {ANIMSET_OVL(5), 21, 0x4D, 0x208, 0x71};
 EInit g_EInitSkeletonPieces = {ANIMSET_OVL(6), 1, 0x56, 0x20A, 0x78};
 EInit D_us_801805E4 = {ANIMSET_OVL(6), 0x1E, 0x56, 0x20A, 0x79};
 EInit g_EInitSkullLord = {ANIMSET_OVL(7), 1, 0x48, 0x20B, 0x105};
-EInit g_EInitSkullLord2 = {ANIMSET_OVL(7), 1, 0x48, 0x20B, 0x5};
+EInit g_EInitSkullLordEffects = {ANIMSET_OVL(7), 1, 0x48, 0x20B, 0x5};
