@@ -3,6 +3,7 @@
 #include "clock_tower.h"
 #include <scratchpad.h>
 
+extern EInit g_EInitInteractable;
 extern EInit g_EInitSpawner;
 
 extern s16 D_us_80181BFC[];
@@ -250,7 +251,6 @@ extern ClockTowerData2 s_TowerTextureData[];
 extern u8 s_ClockRoofScript[];
 extern u8 s_ClockTowerScript[];
 extern SVECTOR* s_ClockVertexSets[];
-extern u16 g_EInitInteractable;
 
 void EntityClockTower3D(Entity* self) {
     SVECTOR rotVector;
@@ -264,7 +264,7 @@ void EntityClockTower3D(Entity* self) {
     ClockTowerData2* var_s3;
 
     if (self->step == 0) {
-        InitializeEntity(&g_EInitInteractable);
+        InitializeEntity(g_EInitInteractable);
 #ifdef STAGE_IS_TOP
         self->posX.i.hi = 0x700 - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = 0x3C0 - g_Tilemap.scrollY.i.hi;

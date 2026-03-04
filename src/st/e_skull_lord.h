@@ -230,7 +230,7 @@ void EntitySkullLordOutline(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSkullLord2);
+        InitializeEntity(g_EInitSkullLordEffects);
         self->hitboxState = 0;
         self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
         self->blendMode = BLEND_TRANSP | BLEND_QUARTER;
@@ -349,7 +349,7 @@ void EntitySkullLordFlames(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSkullLord2);
+        InitializeEntity(g_EInitSkullLordEffects);
         self->palette = PAL_UNK_1CF;
         self->animCurFrame = 4;
         primIndex = g_api.AllocPrimitives(PRIM_SPRT, 1);
@@ -439,7 +439,7 @@ void EntitySkullLordPieces(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(g_EInitSkullLord2);
+        InitializeEntity(g_EInitSkullLordEffects);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         rand = Random() & 3;
         if (rand == 3) {
