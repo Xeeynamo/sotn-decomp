@@ -406,8 +406,8 @@
 | nz0    | e_sealed_door.rodata              |       16 |          0 | Yes    |       |     |
 | nz0    | e_stage_name.rodata               |       16 |          0 | Yes    |       |     |
 | nz1    | e_breakable_bridge.rodata         |       16 |          0 | Yes    |       |     |
-| nz1    | e_vandal_sword.rodata             |       16 |          0 | Yes    |       |     |
 | nz1    | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
+| nz1    | e_vandal_sword.rodata             |       16 |          0 | Yes    |       |     |
 | rare   | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rcat   | e_red_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rcat   | unk_36E8.rodata                   |       16 |          0 | Yes    |       |     |
@@ -2393,7 +2393,7 @@
 | np3    | func_pspeu_09244088               |       66 |          7 |        |       |     |
 | nz0    | func_pspeu_092449C0               |       66 |          7 |        |       |     |
 | nz0    | func_pspeu_0924FD88               |       66 |          7 |        |       |     |
-| nz1    | EntityIsNearPlayer                |       66 |          7 |        |       |     |
+| nz1    | func_pspeu_0923CB48               |       66 |          7 |        |       |     |
 | rare   | func_pspeu_0923E698               |       66 |          7 |        |       |     |
 | rcat   | func_pspeu_09239528               |       66 |          7 |        |       |     |
 | st0    | func_pspeu_09249028               |       66 |          7 |        |       |     |
@@ -4978,7 +4978,7 @@
 | st0    | ST0_EntityRedDoor                 |     1247 |        112 | Yes    |       |     |
 | wrp    | func_psp_09239610                 |     1247 |        112 | Yes    |       |     |
 | nz1    | func_pspeu_0923E8D0               |     1250 |        188 |        |       |     |
-| nz1    | NZ1_EntityRedDoor                 |     1258 |        114 | Yes    |       |     |
+| nz1    | func_pspeu_0923CC30               |     1258 |        114 | Yes    |       |     |
 | chi    | func_psp_09238760                 |     1258 |        210 |        |       |     |
 | are    | func_pspeu_09258038               |     1260 |        196 | Yes    |       |     |
 | dai    | func_pspeu_09247AA8               |     1264 |        196 | Yes    |       |     |
