@@ -2,11 +2,3 @@
 #include "nz1.h"
 
 #include "../e_harpy.h"
-
-INCLUDE_ASM("st/nz1/nonmatchings/e_harpy", EntityHarpyDagger);
-
-INCLUDE_ASM("st/nz1/nonmatchings/e_harpy", EntityHarpyFlame);
-
-INCLUDE_ASM("st/nz1/nonmatchings/e_harpy", EntityHarpyKick);
-
-INCLUDE_ASM("st/nz1/nonmatchings/e_harpy", EntityHarpyFeather);
