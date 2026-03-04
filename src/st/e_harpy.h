@@ -417,7 +417,7 @@ void EntityHarpyFlame(Entity* self) {
     case 0:
         InitializeEntity(g_EInitHarpyFlame);
         self->drawFlags = ENTITY_ROTATE;
-        self->drawFlags |= ENTITY_SCALEY | ENTITY_SCALEX;
+        self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = 0x200;
         if (self->params & 0xFF00) {
             self->animCurFrame = self->params >> 8;
