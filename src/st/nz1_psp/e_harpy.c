@@ -1,4 +1,0 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../nz1/nz1.h"
-
-#include "../e_harpy.h"
