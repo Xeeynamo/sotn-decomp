@@ -901,8 +901,8 @@
 | nz0    | func_pspeu_092544D8               |       25 |          1 |        |       |     |
 | nz0    | func_pspeu_09254D88               |       25 |          1 |        |       |     |
 | nz1    | MoveEntity                        |       25 |          1 |        |       |     |
-| nz1    | SetStep                           |       25 |          1 |        |       |     |
 | nz1    | func_pspeu_0924FFA8               |       25 |          1 |        |       |     |
+| nz1    | func_pspeu_09250360               |       25 |          1 |        |       |     |
 | rare   | func_pspeu_0924A080               |       25 |          1 |        |       |     |
 | rare   | func_pspeu_0924A710               |       25 |          1 |        |       |     |
 | rare   | func_pspeu_0924AAC8               |       25 |          1 |        |       |     |
@@ -2480,7 +2480,7 @@
 | rcat   | SpikesApplyDamage                 |       70 |          4 |        |       |     |
 | dai    | func_pspeu_09250E68               |       70 |          6 |        |       |     |
 | sel    | func_psp_09240520                 |       70 |          6 |        |       |     |
-| nz1    | EntityHarpyFeather                |       70 |          9 |        |       |     |
+| nz1    | func_pspeu_09240190               |       70 |          9 |        |       |     |
 | sel    | func_psp_0923F858                 |       70 |          9 |        |       |     |
 | main   | _start                            |       70 |         10 |        |       |     |
 | dra    | func_psp_0910EFE0                 |       70 |         11 |        |       |     |
@@ -2815,7 +2815,7 @@
 | no3    | func_pspeu_092423D8               |       86 |          6 |        |       |     |
 | np3    | EntityOwlKnightSword              |       86 |          6 |        |       |     |
 | np3    | EntityTilemapShufflerUnused       |       86 |          6 |        |       |     |
-| nz1    | EntityHarpyKick                   |       86 |          6 |        |       |     |
+| nz1    | func_pspeu_09240058               |       86 |          6 |        |       |     |
 | nz1    | EntitySwordLordAttackHitbox       |       86 |          6 |        |       |     |
 | rare   | func_pspeu_0924ED60               |       86 |          6 |        |       |     |
 | main   | func_psp_0892F848                 |       86 |          7 |        |       |     |
@@ -3533,7 +3533,7 @@
 | sel    | func_psp_09243968                 |      142 |         10 |        |       |     |
 | dra    | func_psp_090F1418                 |      142 |         13 |        |       |     |
 | ric    | func_pspeu_092BA338               |      142 |         19 |        |       |     |
-| nz1    | EntityHarpyDagger                 |      142 |         19 |        |       |     |
+| nz1    | func_pspeu_0923FB48               |      142 |         19 |        |       |     |
 | nz0    | func_pspeu_09238D50               |      142 |         24 |        |       |     |
 |        | func_092EE720                     |      143 |         10 |        |       |     |
 | sel    | func_psp_0923A010                 |      143 |         16 |        |       |     |
@@ -3895,7 +3895,7 @@
 | no4    | func_pspeu_0925A720               |      209 |         23 |        |       |     |
 | no3    | func_pspeu_0924D030               |      209 |         25 |        |       |     |
 | nz0    | func_pspeu_09239D38               |      210 |         16 |        |       |     |
-| nz1    | EntityHarpyFlame                  |      210 |         26 |        |       |     |
+| nz1    | func_pspeu_0923FD48               |      210 |         26 |        |       |     |
 | cat    | func_pspeu_0925E2C8               |      211 |          1 |        |       |     |
 | main   | sceGupSetMatrix                   |      211 |          9 |        |       |     |
 | maria  | func_pspeu_092A9288               |      211 |         19 |        |       |     |
