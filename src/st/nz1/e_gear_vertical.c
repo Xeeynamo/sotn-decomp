@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
+extern EInit g_EInitEnvironment;
+
 static AnimationFrame D_us_80180FC0[] = {
     {0x0408, 0x0508},
     {0x0608, 0x0000},

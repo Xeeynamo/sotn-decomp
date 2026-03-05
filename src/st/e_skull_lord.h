@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+extern EInit g_EInitSkullLord;
+extern EInit g_EInitSkullLordEffects;
+
 static u8 D_us_80181EF0[] = {3, 6, 3, 7, 3, 8, 3, 7, 0, 0};
 static u8 D_us_80181EFC[] = {32, 1, 32, 2, 0, 0}; // unused
 

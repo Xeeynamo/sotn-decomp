@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+
+extern EInit g_EInitCommon;
+
 extern u16 g_WaterSounds[];
 extern s16 g_WaterXTbl[];
 

@@ -2639,8 +2639,8 @@ typedef struct {
 } ET_Wereskeleton;
 
 typedef struct {
-    /* 0x7C */ u8 unk7C;
-    /* 0x7D */ u8 unk7D;
+    /* 0x7C */ u8 timer;
+    /* 0x7D */ u8 delay;
     /* 0x7E */ u8 unk7E;
     /* 0x7F */ u8 : 8;
     /* 0x80 */ u32 unk80;
@@ -2648,8 +2648,8 @@ typedef struct {
     /* 0x85 */ u8 : 8;
     /* 0x86 */ u8 : 8;
     /* 0x87 */ u8 : 8;
-    /* 0x88 */ struct Primitive* unk88;
-} ET_801CF850;
+    /* 0x88 */ struct Primitive* prim;
+} ET_SwordLord;
 
 typedef struct {
     /* 0x7C */ struct Primitive* unk7C;
@@ -4133,7 +4133,7 @@ typedef union { // offset=0x7C
     ET_801BA290 et_801BA290;
     ET_801BCB34 et_801BCB34;
     ET_Wereskeleton wereskeleton;
-    ET_801CF850 et_801CF850;
+    ET_SwordLord swordLord;
     ET_801CEB28 et_801CEB28;
     ET_MedusaHead medusaHead;
     ET_801B9304 et_801B9304;
