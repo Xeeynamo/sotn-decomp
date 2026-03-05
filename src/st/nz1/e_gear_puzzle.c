@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
+extern EInit g_EInitEnvironment;
+
 static s32 D_us_80180FD0 = 0;
 static s16 D_us_80180FD4[] = {
     0x200,

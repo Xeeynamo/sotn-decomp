@@ -3,6 +3,7 @@
 #include <scratchpad.h>
 
 extern EInit g_EInitEnvironment;
+
 typedef s16 CloudData[5];
 
 // This EntityClouds is quite a bit different from the dai and rbo3 EntityClouds

@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
+extern EInit g_EInitEnvironment;
+
 static u8 D_us_80180FB8[] = {8, 4, 8, 5, 8, 6, 0, 0};
 
 void EntityGearHorizontal(Entity* self) {

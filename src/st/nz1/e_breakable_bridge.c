@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
+extern EInit g_EInitEnvironment;
+
 static s32 D_us_80180EDC = 0;
 static s16 D_us_80180EE0[] = {
     0x0000, 0x0010, 0x0000, 0x0004, 0x0010, 0xFFFC, 0xFFE0, 0x0000,
@@ -61,8 +63,6 @@ static void BreakBridge(s32 tileIndex) {
         }
     }
 }
-
-extern EInit g_EInitEnvironment;
 
 void EntityBridgeBreakTrigger(Entity* self) {
     Entity* entity;
