@@ -23,25 +23,16 @@ EntityBreakableWallPartial = 0x801A94CC;
 EntitySecretWallDebris = 0x801A97C4;
 EntityWaterForeground = 0x801A9BEC;
 Random = 0x801AC6E0; // source=match
-CreateEntityFromCurrentEntity = 0x801AED58; // source=match
 CreateEntityFromEntity = 0x801AEDCC; // source=match
 DestroyEntity = 0x801AFB1C; // source=match
-AnimateEntity = 0x801AFC4C; // source=match
-GetDistanceToPlayerX = 0x801AFE1C; // source=match
 GetSideToPlayer = 0x801AFE8C; // source=match
 MoveEntity = 0x801AFED0; // source=match
-UnkCollisionFunc3 = 0x801AFF2C; // source=match
-UnkCollisionFunc2 = 0x801B01A4; // source=match
 AllocEntity = 0x801B038C; // source=match
 InitializeEntity = 0x801B082C; // source=match
 EntityPrizeDrop = 0x801B153C; // source=match
 EntityEquipItemDrop = 0x801B1F50; // source=match
 EntityRelicOrb = 0x801B27E8; // source=match
-EntityExplosionVariantsSpawner = 0x801B3B3C; // source=match
 PlaySfxPositional = 0x801B5BE0; // source=match
 BottomCornerText = 0x801B745C; // source=match
-EntitySwordLord = 0x801BCC90;
-EntitySwordLordAttackHitbox = 0x801BD970;
-UnkPrimHelper = 0x801C059C; // source=match
 UnkPolyFunc2 = 0x801C0CE8; // source=match
 EntityLifeUpSpawn = 0x801C0DCC; // source=match

@@ -73,7 +73,7 @@ void EntityBoneArcherArrow(Entity* self);
 void EntityBoneMusket(Entity* self);
 void func_us_801CF298(Entity* self);
 void EntitySwordLord(Entity* self);
-void func_us_801D04B8(Entity* self);
+void EntitySwordLordAttack(Entity* self);
 void EntityArmorLord(Entity* self);
 void func_us_801D348C(Entity* self);
 void EntityArmorLordFireWave(Entity* self);
@@ -169,7 +169,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x45 */ EntityBoneMusket,
     /* 0x46 */ func_us_801CF298,
     /* 0x47 */ EntitySwordLord,
-    /* 0x48 */ func_us_801D04B8,
+    /* 0x48 */ EntitySwordLordAttack,
     /* 0x49 */ EntityArmorLord,
     /* 0x4A */ func_us_801D348C,
     /* 0x4B */ EntityArmorLordFireWave,
@@ -225,7 +225,7 @@ EInit D_us_80180A88 = {ANIMSET_OVL(0x06), 0x00, 0x4E, 0x213, 0x03E};
 EInit g_EInitBoneMusket = {ANIMSET_OVL(0x09), 0x00, 0x4C, 0x216, 0x066};
 EInit D_us_80180AA0 = {ANIMSET_OVL(0x09), 0x00, 0x4C, 0x216, 0x067};
 EInit g_EInitSwordLord = {ANIMSET_OVL(0x0A), 0x01, 0x50, 0x21A, 0x009};
-EInit D_us_80180AB8 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x00A};
+EInit g_EInitSwordLordAttack = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x00A};
 EInit g_EInitBoneArcher = {ANIMSET_OVL(0x07), 0x01, 0x4B, 0x215, 0x06C};
 EInit g_EInitBoneArcherArrow = {ANIMSET_OVL(0x07), 0x00, 0x4B, 0x215, 0x06D};
 EInit g_EInitArmorLord = {ANIMSET_OVL(0x0B), 0x01, 0x52, 0x21C, 0x022};

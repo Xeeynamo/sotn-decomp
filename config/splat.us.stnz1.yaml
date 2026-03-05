@@ -70,7 +70,7 @@ segments:
       - [0x1EF0, .data, e_skull_lord]
       - [0x1F04, .data, e_harpy]
       - [0x1FB0, .data, e_cloaked_knight]
-      - [0x1FBC, data]
+      - [0x1FBC, .data, e_sword_lord]
       - [0x2114, .data, e_vandal_sword]
       - [0x2134, .data, e_phantom_skull]
       - [0x2160, .data, e_flail_guard]

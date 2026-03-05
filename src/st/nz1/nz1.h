@@ -96,7 +96,7 @@ enum EntityIDs {
     E_CLOAKED_KNIGHT_SWORD,     // EntityCloakedKnightSword
     E_CLOAKED_KNIGHT_AURA,      // EntityCloakedKnightAura
     E_SWORD_LORD,               // EntitySwordLord
-    E_SWORD_LORD_ATTACK_HITBOX, // EntitySwordLordAttackHitbox
+    E_SWORD_LORD_ATTACK,        // EntitySwordLordAttack
     E_VANDAL_SWORD,             // EntityVandalSword
     E_VANDAL_SWORD_DEATH,       // EntityVandalSwordDeath
     E_VANDAL_SWORD_HITBOX,      // EntityVandalSwordHitbox
@@ -219,8 +219,8 @@ extern EInit g_EInitHarpyFeather;
 extern EInit g_EInitCloakedKnight;
 extern EInit g_EInitCloakedKnightAura;
 extern EInit g_EInitCloakedKnightSword;
-extern EInit D_us_80180C18;
-extern EInit D_us_80180C24;
+extern EInit g_EInitSwordLord;
+extern EInit g_EInitSwordLordAttack;
 extern EInit g_EInitVandalSword;
 extern EInit g_EInitVandSwordDeath;
 extern EInit g_EInitPhantomSkull;
