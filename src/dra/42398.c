@@ -800,7 +800,7 @@ void MainGame(void) {
     g_Settings.D_8003CB04 = 0;
     g_CurrentBuffer = &g_GpuBuffers[0];
 #if defined(VERSION_US)
-    SetCdPos(0xB9B6);
+    SetCdPos(OFF_SD_XA_STR1);
 #elif defined(VERSION_HD)
     do {
 
