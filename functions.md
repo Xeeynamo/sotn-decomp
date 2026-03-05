@@ -1190,7 +1190,7 @@
 | no4    | func_pspeu_0925C8A8               |       31 |          2 |        |       |     |
 | np3    | func_pspeu_09262598               |       31 |          2 |        |       |     |
 | nz0    | func_pspeu_09256F38               |       31 |          2 |        |       |     |
-| nz1    | UnkPolyFunc2                      |       31 |          2 |        |       |     |
+| nz1    | func_pspeu_09251408               |       31 |          2 |        |       |     |
 | rare   | func_pspeu_0924B680               |       31 |          2 |        |       |     |
 | rcat   | UnkPolyFunc2                      |       31 |          2 |        |       |     |
 | sel    | func_psp_09240820                 |       31 |          2 |        |       |     |
@@ -1312,7 +1312,7 @@
 | no4    | func_pspeu_0925ACB0               |       34 |          2 |        |       |     |
 | np3    | func_pspeu_09259CE8               |       34 |          2 |        |       |     |
 | nz0    | func_pspeu_09254388               |       34 |          2 |        |       |     |
-| nz1    | GetDistanceToPlayerX              |       34 |          2 |        |       |     |
+| nz1    | func_pspeu_0924F7C8               |       34 |          2 |        |       |     |
 | rare   | func_pspeu_09249F88               |       34 |          2 |        |       |     |
 | rcat   | GetDistanceToPlayerX              |       34 |          2 |        |       |     |
 | main   | sceSasSetSimpleADSR               |       34 |          3 |        |       |     |
@@ -1550,8 +1550,8 @@
 | np3    | func_pspeu_0925A5D8               |       39 |          2 |        |       |     |
 | nz0    | func_pspeu_09241DF8               |       39 |          2 |        |       |     |
 | nz0    | func_pspeu_09241E80               |       39 |          2 |        |       |     |
-| nz1    | CreateEntityFromCurrentEntity     |       39 |          2 |        |       |     |
 | nz1    | CreateEntityFromEntity            |       39 |          2 |        |       |     |
+| nz1    | func_pspeu_09238598               |       39 |          2 |        |       |     |
 | nz1    | func_pspeu_092500B8               |       39 |          2 |        |       |     |
 | rare   | func_pspeu_0923A498               |       39 |          2 |        |       |     |
 | rare   | func_pspeu_0923A520               |       39 |          2 |        |       |     |
@@ -2816,7 +2816,7 @@
 | np3    | EntityOwlKnightSword              |       86 |          6 |        |       |     |
 | np3    | EntityTilemapShufflerUnused       |       86 |          6 |        |       |     |
 | nz1    | func_pspeu_09240058               |       86 |          6 |        |       |     |
-| nz1    | EntitySwordLordAttackHitbox       |       86 |          6 |        |       |     |
+| nz1    | func_pspeu_09252CC8               |       86 |          6 |        |       |     |
 | rare   | func_pspeu_0924ED60               |       86 |          6 |        |       |     |
 | main   | func_psp_0892F848                 |       86 |          7 |        |       |     |
 | main   | sceGupLightColor                  |       86 |          8 | Yes    |       |     |
@@ -3098,7 +3098,7 @@
 | no4    | func_pspeu_0925AB40               |      101 |          7 |        |       |     |
 | np3    | func_pspeu_09259B78               |      101 |          7 |        |       |     |
 | nz0    | func_pspeu_09254218               |      101 |          7 |        |       |     |
-| nz1    | AnimateEntity                     |      101 |          7 |        |       |     |
+| nz1    | func_pspeu_0924F658               |      101 |          7 |        |       |     |
 | rare   | func_pspeu_09249E18               |      101 |          7 |        |       |     |
 | rcat   | AnimateEntity                     |      101 |          7 |        |       |     |
 | sel    | func_psp_092432A8                 |      101 |          7 |        |       |     |
@@ -3171,7 +3171,7 @@
 | lib    | func_psp_09247D68                 |      104 |          5 |        |       |     |
 | no3    | func_pspeu_09258A78               |      104 |          5 |        |       |     |
 | nz0    | func_pspeu_0924BC70               |      104 |          5 |        |       |     |
-| nz1    | EntityExplosionVariantsSpawner    |      104 |          5 |        |       |     |
+| nz1    | func_pspeu_09245BB8               |      104 |          5 |        |       |     |
 | maria  | func_pspeu_092BFD30               |      104 |          8 |        |       |     |
 | dra    | func_psp_090EF200                 |      104 |         10 |        |       |     |
 | ric    | func_pspeu_092BFF48               |      104 |         10 |        |       |     |
@@ -3798,7 +3798,7 @@
 | no4    | func_pspeu_0925AE88               |      186 |         20 |        |       |     |
 | np3    | func_pspeu_09259EC0               |      186 |         20 |        |       |     |
 | nz0    | func_pspeu_09254560               |      186 |         20 |        |       |     |
-| nz1    | UnkCollisionFunc3                 |      186 |         20 |        |       |     |
+| nz1    | func_pspeu_0924F9A0               |      186 |         20 |        |       |     |
 | rare   | func_pspeu_0924A108               |      186 |         20 |        |       |     |
 | rcat   | func_pspeu_09249218               |      186 |         20 |        |       |     |
 | st0    | func_pspeu_09250130               |      186 |         20 |        |       |     |
@@ -3864,7 +3864,7 @@
 | no4    | func_pspeu_0925B140               |      200 |         20 |        |       |     |
 | np3    | func_pspeu_0925A178               |      200 |         20 |        |       |     |
 | nz0    | func_pspeu_09254818               |      200 |         20 |        |       |     |
-| nz1    | UnkCollisionFunc2                 |      200 |         20 |        |       |     |
+| nz1    | func_pspeu_0924FC58               |      200 |         20 |        |       |     |
 | rare   | func_pspeu_0924A3C0               |      200 |         20 |        |       |     |
 | rcat   | func_pspeu_092494D0               |      200 |         20 |        |       |     |
 | dra    | func_psp_090E7150                 |      200 |         22 | Yes    |       |     |
@@ -4071,7 +4071,7 @@
 | maria  | func_pspeu_092B6188               |      256 |         35 |        |       |     |
 | ric    | func_pspeu_092BF288               |      256 |         35 |        |       |     |
 | ric    | func_pspeu_092A9EA0               |      256 |         45 |        |       |     |
-| nz1    | func_us_801BC9BC                  |      257 |         17 |        |       |     |
+| nz1    | func_pspeu_09251540               |      257 |         17 |        |       |     |
 | ric    | func_pspeu_092BEC98               |      257 |         29 |        |       |     |
 |        | func_092E76C8                     |      257 |         36 |        |       |     |
 | no4    | func_pspeu_09241E38               |      258 |         19 |        |       |     |
@@ -4304,7 +4304,7 @@
 | no4    | func_pspeu_0925C2A0               |      338 |         36 |        |       |     |
 | np3    | func_pspeu_09261C08               |      338 |         36 |        |       |     |
 | nz0    | func_pspeu_092565F8               |      338 |         36 |        |       |     |
-| nz1    | UnkPrimHelper                     |      338 |         36 |        |       |     |
+| nz1    | func_pspeu_09250E00               |      338 |         36 |        |       |     |
 | rare   | func_pspeu_0924AFC0               |      338 |         36 |        |       |     |
 | rcat   | UnkPrimHelper                     |      338 |         36 |        |       |     |
 | st0    | func_pspeu_09251410               |      338 |         36 |        |       |     |
@@ -4987,7 +4987,7 @@
 | lib    | func_psp_092515F8                 |     1267 |        134 | Yes    |       |     |
 | no2    | func_pspeu_0924AB98               |     1280 |        160 |        |       |     |
 | st0    | ST0_HitDetection                  |     1332 |        147 |        |       |     |
-| nz1    | EntitySwordLord                   |     1335 |        185 |        |       |     |
+| nz1    | func_pspeu_09251918               |     1335 |        185 |        |       |     |
 | dra    | func_psp_0910BE88                 |     1338 |        206 | Yes    |       |     |
 | dai    | func_pspeu_09245590               |     1360 |        119 | Yes    |       |     |
 | nz0    | func_pspeu_0924FE70               |     1360 |        119 | Yes    |       |     |
