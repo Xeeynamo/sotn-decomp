@@ -16,13 +16,19 @@ const (
 	PlatformPSP    = Platform("psp")
 	PlatformPSX    = Platform("psx")
 
-	VersionUS    = Version("us")
-	VersionHD    = Version("hd")
-	VersionPSPEU = Version("pspeu")
+	VersionUS     = Version("us")
+	VersionHD     = Version("hd")
+	VersionPSPEU  = Version("pspeu")
+	VersionSaturn = Version("saturn")
 )
 
 var (
+	// VersionsAll defaults when doing `build [all]`
 	VersionsAll = []Version{VersionUS, VersionHD, VersionPSPEU}
+
+	// VersionsEverything adds Saturn to the mix for more specific stuff we do
+	// not want to propagate to the usual build chain
+	VersionsEverything = append(VersionsAll, VersionSaturn)
 )
 
 func GetVersion() Version {

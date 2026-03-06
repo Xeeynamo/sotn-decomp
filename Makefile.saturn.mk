@@ -1,10 +1,5 @@
 # Saturn is special and does not yet conform
 VERSION_PREFIX 	:= SATURN
-SATURN_GAME		:= GAME ALUCARD RICHTER
-SATURN_STAGES	:= STAGE_02 WARP
-SATURN_STAGES	+= 
-SATURN_BOSSES 	:= 
-SATURN_SERVANTS	:= T_BAT
 
 # Extract targets is for when stages and bosses need to be prefixed with st and bo respectively
 $(VERSION_PREFIX)_EXTRACT_TARGETS	:= $($(VERSION_PREFIX)_GAME) $(addprefix st,$($(VERSION_PREFIX)_STAGES)) $(addprefix bo,$($(VERSION_PREFIX)_BOSSES)) $($(VERSION_PREFIX)_SERVANTS)
@@ -44,13 +39,13 @@ build_saturn: $(SATURN_TOOLCHAIN)
 
 .PHONY: extract_saturn
 extract_saturn: $(SATURN_SPLITTER_APP)
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/game.prg.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/t_bat.prg.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/zero.bin.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/stage_02.prg.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/warp.prg.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/alucard.prg.yaml
-	$(SATURN_SPLITTER_APP) $(CONFIG_DIR)/saturn/richter.prg.yaml
+	$(SATURN_SPLITTER_APP) config/saturn/game.prg.yaml
+	$(SATURN_SPLITTER_APP) config/saturn/t_bat.prg.yaml
+	$(SATURN_SPLITTER_APP) config/saturn/zero.bin.yaml
+	$(SATURN_SPLITTER_APP) config/saturn/stage_02.prg.yaml
+	$(SATURN_SPLITTER_APP) config/saturn/warp.prg.yaml
+	$(SATURN_SPLITTER_APP) config/saturn/alucard.prg.yaml
+	$(SATURN_SPLITTER_APP) config/saturn/richter.prg.yaml
 
 .PHONY: extract_disk_saturn
 extract_disk_saturn:

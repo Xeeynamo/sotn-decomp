@@ -80,6 +80,68 @@ func extractTarGz(tarGzPath, targetName, destination string) error {
 	return fmt.Errorf("file %s not found in archive", targetName)
 }
 
+func downloadAndExtractStructuredTarGzFromGithub(repo, tag, name, destDir string) error {
+	tagPath := filepath.Join(destDir, name+".tag")
+	if tagData, err := os.ReadFile(tagPath); err == nil && string(tagData) == tag {
+		return nil
+	}
+	url := fmt.Sprintf("https://github.com/%s/releases/download/%s/%s.tar.gz", repo, tag, name)
+	tarGzPath := filepath.Join(destDir, name+".tar.gz")
+	if err := download(url, tarGzPath); err != nil {
+		return fmt.Errorf("failed to download %s: %w", url, err)
+	}
+	defer os.Remove(tarGzPath)
+	if err := extractTarGzWithStructure(tarGzPath, destDir); err != nil {
+		return fmt.Errorf("failed to extract %s: %w", tarGzPath, err)
+	}
+	return os.WriteFile(tagPath, []byte(tag), 0o644)
+}
+
+func extractTarGzWithStructure(tarGzPath, destDir string) error {
+	f, err := os.Open(tarGzPath)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	gr, err := gzip.NewReader(f)
+	if err != nil {
+		return err
+	}
+	defer gr.Close()
+	tr := tar.NewReader(gr)
+	for {
+		header, err := tr.Next()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return err
+		}
+		dest := filepath.Join(destDir, header.Name)
+		switch header.Typeflag {
+		case tar.TypeDir:
+			if err := os.MkdirAll(dest, 0755); err != nil {
+				return err
+			}
+		case tar.TypeReg:
+			if err := os.MkdirAll(filepath.Dir(dest), 0755); err != nil {
+				return err
+			}
+			out, err := os.Create(dest)
+			if err != nil {
+				return err
+			}
+			if _, err := io.Copy(out, tr); err != nil {
+				out.Close()
+				return err
+			}
+			out.Close()
+			os.Chmod(dest, os.FileMode(header.Mode))
+		}
+	}
+	return nil
+}
+
 func downloadAndExtractAllTarGzFromGithub(repo, tag, name, destDir string) error {
 	return downloadGithubReleaseTarGz(
 		repo, tag, name,
