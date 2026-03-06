@@ -29,10 +29,5 @@ GetSideToPlayer = 0x801AFE8C; // source=match
 MoveEntity = 0x801AFED0; // source=match
 AllocEntity = 0x801B038C; // source=match
 InitializeEntity = 0x801B082C; // source=match
-EntityPrizeDrop = 0x801B153C; // source=match
-EntityEquipItemDrop = 0x801B1F50; // source=match
-EntityRelicOrb = 0x801B27E8; // source=match
 PlaySfxPositional = 0x801B5BE0; // source=match
 BottomCornerText = 0x801B745C; // source=match
-UnkPolyFunc2 = 0x801C0CE8; // source=match
-EntityLifeUpSpawn = 0x801C0DCC; // source=match
