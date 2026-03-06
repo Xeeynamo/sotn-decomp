@@ -1,10 +1,7 @@
-# This file is used by modern gas.
-# Defines the expected assembly macros
+# This file is used by the original compiler/assembler.
+# Defines the expected assembly macros.
 
-# Evaluate this file only once in case it's included more than once
-.ifndef _MACRO_INC_GUARD
-.internal _MACRO_INC_GUARD
-.set _MACRO_INC_GUARD, 1
+.include "gte_macros.inc"
 
 # A function symbol.
 .macro glabel label, visibility=global
@@ -36,7 +33,7 @@
 
 
 # A label referenced by a jumptable.
-.macro jlabel label, visibility=global
+.macro jlabel label, visibility=local
     .\visibility \label
     \label:
 .endm
@@ -62,7 +59,3 @@
     .size \label\().NON_MATCHING, \size
     \label\().NON_MATCHING:
 .endm
-
-.include "gte_macros.inc"
-
-.endif
