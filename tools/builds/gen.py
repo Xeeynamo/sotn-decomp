@@ -15,8 +15,9 @@ entries = dict()
 linker_scripts = set()
 
 extra_cpp_defs = ""
-sotn_progress_report = os.environ.get("SOTN_PROGRESS_REPORT") == "1"
-skip_check = os.environ.get("SKIP_CHECK") == "1"
+sotn_progress_report = "SOTN_PROGRESS_REPORT" in os.environ
+skip_check = "SKIP_CHECK" in os.environ
+force_symbols = "FORCE_SYMBOLS" in os.environ
 dummy_object = bytes()
 if sotn_progress_report:
     # https://decomp.wiki/en/tools/decomp-dev
@@ -516,12 +517,13 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
         inputs=weapons,
     )
 
-    dyn_symbols_file = build_path(ver, f"config/dyn_syms.{ovl_name}.txt")
-    nw.build(
-        rule="export-dynamic-symbols-dummy",
-        outputs=[dyn_symbols_file],
-        inputs=[f"config/splat.{ver}.weapon.yaml"],
-    )
+    if force_symbols:
+        dyn_symbols_file = build_path(ver, f"config/dyn_syms.{ovl_name}.txt")
+        nw.build(
+            rule="export-dynamic-symbols-dummy",
+            outputs=[dyn_symbols_file],
+            inputs=[f"config/splat.{ver}.weapon.yaml"],
+        )
 
 
 def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
@@ -532,11 +534,15 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
     ld_path = str(splat_config["options"]["ld_script_path"])
 
     if not sotn_progress_report:
+        linker_scripts.add(ld_path)
+
+    dyn_symbols_file = ""
+    dyn_syms_splat_config = ""
+    if force_symbols and not sotn_progress_report:
         dyn_symbols_file = build_path(ver, f"config/dyn_syms.{ovl_name}.txt")
         dyn_syms_splat_config = build_path(
             ver, f"config/splat.{ver}.{ovl_name}.yaml.dyn_syms"
         )
-        linker_scripts.add(ld_path)
         nw.build(
             rule="dynamic-splat-config",
             inputs=dyn_symbols_file,
@@ -557,7 +563,7 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
     src_path = str(splat_config["options"]["src_path"])
 
     dynamic_symbols = ""
-    if "FORCE_SYMBOLS" in os.environ and Path(dyn_symbols_file).exists():
+    if force_symbols and Path(dyn_symbols_file).exists():
         dynamic_symbols = dyn_syms_splat_config
 
     nw.build(
@@ -729,12 +735,13 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
             target_f_path = os.path.join(os.path.dirname(target_path), gfx_name)
             add_gfx_stage(nw, target_f_path, asset_path, stage_gfx_path)
 
-    nw.build(
-        rule="export-dynamic-symbols",
-        outputs=[dyn_symbols_file],
-        inputs=[file_name],
-        implicit=[output_elf],
-    )
+    if force_symbols:
+        nw.build(
+            rule="export-dynamic-symbols",
+            outputs=[dyn_symbols_file],
+            inputs=[file_name],
+            implicit=[output_elf],
+        )
 
 
 def add_checksum(nw: ninja_syntax.Writer, ver: str, file_name: str):
