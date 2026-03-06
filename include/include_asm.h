@@ -1,38 +1,63 @@
 #ifndef INCLUDE_ASM_H
 #define INCLUDE_ASM_H
 
-#if !defined(M2CTX) && !defined(PERMUTER)
+#define STRINGIFY_(x) #x
+#define STRINGIFY(x) STRINGIFY_(x)
 
-#ifndef INCLUDE_ASM
-#define INCLUDE_ASM(FOLDER, NAME) \
-    __asm__( \
-        ".section .text\n" \
-        "    .set noat\n" \
-        "    .set noreorder\n" \
-        "    .include \"" FOLDER "/" #NAME ".s\"\n" \
-        "    .set reorder\n" \
-        "    .set at\n" \
-    )
-#endif
-#ifndef INCLUDE_RODATA
-#define INCLUDE_RODATA(FOLDER, NAME) \
-    __asm__( \
-        ".section .rodata\n" \
-        "    .include \"" FOLDER "/" #NAME ".s\"\n" \
-        ".section .text" \
-    )
-#endif
-__asm__(".include \"include/labels.inc\"\n");
+#define ASM_RODATA __asm__(".section .rodata")
 
-#else
+#if !defined(PERMUTER) && !defined(VERSION_PSP)
 
-#ifndef INCLUDE_ASM
+#ifdef SKIP_ASM
 #define INCLUDE_ASM(FOLDER, NAME)
-#endif
-#ifndef INCLUDE_RODATA
 #define INCLUDE_RODATA(FOLDER, NAME)
 #endif
 
-#endif /* !defined(M2CTX) && !defined(PERMUTER) */
+#ifndef INCLUDE_ASM
 
-#endif /* INCLUDE_ASM_H */
+#ifndef INCLUDE_ASM_OLD
+#define INCLUDE_ASM(FOLDER, NAME)                                              \
+    __asm__(".pushsection .text\n"                                             \
+            "\t.align\t2\n"                                                    \
+            "\t.globl\t" #NAME ".NON_MATCHING\n"                               \
+            "\t.ent\t" #NAME "\n" #NAME ":\n"                                  \
+            "\t.type\t" #NAME ".NON_MATCHING, @object\n"                       \
+            "\t" #NAME ".NON_MATCHING:\n"                                      \
+            ".include \"asm/" VERSION "/" FOLDER "/" #NAME ".s\"\n"            \
+            "\t.set reorder\n"                                                 \
+            "\t.set at\n"                                                      \
+            "\t.end\t" #NAME "\n"                                              \
+            ".popsection")
+#else
+#define INCLUDE_ASM(FOLDER, NAME)                                              \
+    __asm__(".pushsection .text\n"                                             \
+            "\t.align\t2\n"                                                    \
+            "\t.globl\t" #NAME ".NON_MATCHING\n"                               \
+            "\t.ent\t" #NAME "\n" #NAME ":\n"                                  \
+            "\t.type\t" #NAME ".NON_MATCHING, @object\n"                       \
+            "\t" #NAME ".NON_MATCHING:\n"                                      \
+            ".include \"" FOLDER "/" #NAME ".s\"\n"                            \
+            "\t.set reorder\n"                                                 \
+            "\t.set at\n"                                                      \
+            "\t.end\t" #NAME "\n"                                              \
+            ".popsection")
+#endif
+
+#define INCLUDE_RODATA(FOLDER, NAME)                                           \
+    __asm__(".pushsection .rodata\n"                                           \
+            ".include \"asm/" VERSION "/" FOLDER "/" #NAME ".s\"\n"            \
+            ".popsection")
+
+#endif
+
+// omit .global
+#ifdef USE_INCLUDE_ASM
+__asm__(".include \"macro.inc\"\n");
+#endif
+
+#else // PERMUTER || VERSION_PSP
+#define INCLUDE_ASM(FOLDER, NAME)
+#define INCLUDE_RODATA(FOLDER, NAME)
+#endif
+
+#endif
