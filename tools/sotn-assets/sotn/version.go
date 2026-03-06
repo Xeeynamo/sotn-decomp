@@ -34,14 +34,7 @@ func GetVersion() Version {
 }
 
 func GetPlatform() Platform {
-	version := GetVersion()
-	if version == "saturn" {
-		return PlatformSaturn
-	}
-	if strings.HasPrefix(string(version), "psp") {
-		return PlatformPSP
-	}
-	return PlatformPSX
+	return GetVersion().GetPlatform()
 }
 
 func (p Platform) GetBoundaries() psx.Offsets {
@@ -53,4 +46,18 @@ func (p Platform) GetBoundaries() psx.Offsets {
 	default:
 		panic("unsupported platform " + string(p))
 	}
+}
+
+func (v Version) IsAll() bool {
+	return len(v) == 0 || v == "all"
+}
+
+func (v Version) GetPlatform() Platform {
+	if v == "saturn" {
+		return PlatformSaturn
+	}
+	if strings.HasPrefix(string(v), "psp") {
+		return PlatformPSP
+	}
+	return PlatformPSX
 }

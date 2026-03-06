@@ -13,28 +13,30 @@ import (
 	"sync"
 )
 
-func downloadTarGzFromGithubIfNotExists(repo, tag, name, destination string) error {
-	tagPath := destination + ".tag"
+func downloadGithubReleaseTarGz(repo, tag, name, tagPath, tarGzPath string, extract func(string) error) error {
 	if tagData, err := os.ReadFile(tagPath); err == nil && string(tagData) == tag {
 		return nil
 	}
-	_ = os.Remove(destination)
 	url := fmt.Sprintf("https://github.com/%s/releases/download/%s/%s.tar.gz", repo, tag, name)
-	tarGzPath := destination + ".tar.gz"
 	if err := download(url, tarGzPath); err != nil {
 		return fmt.Errorf("failed to download %s: %w", url, err)
 	}
 	defer os.Remove(tarGzPath)
-
-	if err := extractTarGz(tarGzPath, name, destination); err != nil {
+	if err := extract(tarGzPath); err != nil {
 		return fmt.Errorf("failed to extract %s: %w", tarGzPath, err)
 	}
-
-	if err := os.Chmod(destination, 0755); err != nil {
-		return fmt.Errorf("failed to chmod %s: %w", destination, err)
-	}
-
 	return os.WriteFile(tagPath, []byte(tag), 0o644)
+}
+
+func downloadTarGzFromGithubIfNotExists(repo, tag, name, destination string) error {
+	return downloadGithubReleaseTarGz(repo, tag, name, destination+".tag", destination+".tar.gz",
+		func(tarGzPath string) error {
+			_ = os.Remove(destination)
+			if err := extractTarGz(tarGzPath, name, destination); err != nil {
+				return err
+			}
+			return os.Chmod(destination, 0755)
+		})
 }
 
 func extractTarGz(tarGzPath, targetName, destination string) error {
@@ -78,6 +80,56 @@ func extractTarGz(tarGzPath, targetName, destination string) error {
 	return fmt.Errorf("file %s not found in archive", targetName)
 }
 
+func downloadAndExtractAllTarGzFromGithub(repo, tag, name, destDir string) error {
+	return downloadGithubReleaseTarGz(
+		repo, tag, name,
+		filepath.Join(destDir, name+".tag"),
+		filepath.Join(destDir, name+".tar.gz"),
+		func(tarGzPath string) error {
+			return extractTarGzAll(tarGzPath, destDir)
+		})
+}
+
+func extractTarGzAll(tarGzPath, destDir string) error {
+	f, err := os.Open(tarGzPath)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+
+	gr, err := gzip.NewReader(f)
+	if err != nil {
+		return err
+	}
+	defer gr.Close()
+
+	tr := tar.NewReader(gr)
+	for {
+		header, err := tr.Next()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			return err
+		}
+		if header.Typeflag != tar.TypeReg {
+			continue
+		}
+		dest := filepath.Join(destDir, filepath.Base(header.Name))
+		out, err := os.Create(dest)
+		if err != nil {
+			return err
+		}
+		if _, err := io.Copy(out, tr); err != nil {
+			out.Close()
+			return err
+		}
+		out.Close()
+		os.Chmod(dest, os.FileMode(header.Mode))
+	}
+	return nil
+}
+
 func downloadFromGithubIfNotExists(repo, tag, name, destination string) error {
 	tagPath := destination + ".tag"
 	if tagData, err := os.ReadFile(tagPath); err == nil && string(tagData) == tag {
@@ -99,6 +151,9 @@ func downloadIfNotExists(url string, filename string) error {
 }
 
 func download(url string, filename string) error {
+	if err := os.MkdirAll(filepath.Dir(filename), 0755); err != nil {
+		return err
+	}
 	resp, err := http.Get(url)
 	if err != nil {
 		return err

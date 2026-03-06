@@ -167,10 +167,8 @@ def add_c_psx(
         rule="psx-cc",
         outputs=output,
         inputs=file_name,
-        implicit=[
-            f"src/.assets_build_done_{ver}",
-            ld_path,
-        ],
+        implicit=[ld_path],
+        order_only=[f"src/.assets_build_done_{ver}"],
         variables={
             "version": ver,
             "cpp_flags": cpp_flags,
@@ -188,7 +186,7 @@ def add_c_psx(
     nw.build(
         rule="phony",
         outputs=file_name,
-        implicit=[f"src/.assets_build_done_{ver}"],
+        order_only=[f"src/.assets_build_done_{ver}"],
     )
 
     return output
@@ -295,9 +293,9 @@ def add_c_psp(
         outputs=output,
         inputs=file_name,
         implicit=[
-            f"src/.assets_build_done_{ver}",
             ld_path,
         ],
+        order_only=[f"src/.assets_build_done_{ver}"],
         variables={
             "version": ver,
             "cpp_flags": cpp_flags,
@@ -316,7 +314,7 @@ def add_c_psp(
     nw.build(
         rule="phony",
         outputs=file_name,
-        implicit=[f"src/.assets_build_done_{ver}"],
+        order_only=[f"src/.assets_build_done_{ver}"],
     )
     return output
 
@@ -856,12 +854,12 @@ with open(build_ninja, "w") as f:
     )
     nw.rule(
         "assets-extract",
-        command="bin/sotn-assets extract $in && touch $out",
+        command="bin/sotn-assets extract-assets $in && touch $out",
         description="extract $in",
     )
     nw.rule(
         "assets-build",
-        command="bin/sotn-assets build $in && mkdir -p $$(dirname $out) && touch $out",
+        command="bin/sotn-assets build-assets $in && mkdir -p $$(dirname $out) && touch $out",
         description="build $in",
     )
     nw.rule(
