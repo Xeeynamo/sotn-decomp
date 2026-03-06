@@ -7,7 +7,6 @@
 #define OVL_EXPORT(x) RNZ0_##x
 #define STAGE_FLAG OVL_EXPORT(STAGE_FLAG)
 
-typedef enum EntityIDs {
-} EntityIDs;
+typedef enum EntityIDs {} EntityIDs;
 
 #endif // RNZ0_H
