@@ -119,6 +119,42 @@ func ObjdiffGUI(args ...string) error {
 	return cmd.Start()
 }
 
+func RunApp(app string, args ...string) error {
+	return (&exec.Cmd{
+		Path:   app,
+		Args:   append([]string{app}, args...),
+		Stdout: os.Stdout,
+		Stderr: os.Stderr,
+	}).Run()
+}
+
+func GenSaturnNinja() error {
+	binPath, err := venvPython()
+	if err != nil {
+		return err
+	}
+	return (&exec.Cmd{
+		Path:   binPath,
+		Args:   []string{binPath, "tools/builds/saturn.py"},
+		Stdin:  os.Stdin,
+		Stdout: os.Stdout,
+		Stderr: os.Stderr,
+	}).Run()
+}
+
+func CheckSHA(checkFile string) error {
+	binPath, err := venvPython()
+	if err != nil {
+		return err
+	}
+	return (&exec.Cmd{
+		Path:   binPath,
+		Args:   []string{binPath, "tools/builds/check.py", checkFile},
+		Stdout: os.Stdout,
+		Stderr: os.Stderr,
+	}).Run()
+}
+
 func GenNinja(args ...string) error {
 	binPath, err := venvPython()
 	if err != nil {

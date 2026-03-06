@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/util"
 	"golang.org/x/sync/errgroup"
 )
 
@@ -25,6 +26,8 @@ func EnsureBuildDeps(versions []string) error {
 			ensurePSXDeps(&eg)
 		case sotn.PlatformPSP:
 			ensurePSPDeps(&eg)
+		case sotn.PlatformSaturn:
+			ensureSaturnDeps(&eg)
 		default:
 			return fmt.Errorf("unsupported platform version: %s", version)
 		}
@@ -111,4 +114,32 @@ func ensurePythonDeps() error {
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 	return cmd.Run()
+}
+
+func ensureSaturnDeps(eg *errgroup.Group) {
+	eg.Go(func() error {
+		if err := downloadAndExtractStructuredTarGzFromGithub(
+			"Xeeynamo/sotn-decomp", cc1Psx26Release,
+			"cygnus-2.7-96Q3-bin", "bin",
+		); err != nil {
+			return err
+		}
+		const dst = "tools/builds/GCCSH"
+		if _, err := os.Stat(dst + "/CC1.EXE"); err == nil {
+			return nil
+		}
+		return util.CopyDirRecursive("bin/cygnus-2.7-96Q3-bin", dst)
+	})
+	eg.Go(func() error {
+		if err := GitSubmoduleInitAndUpdate("tools/saturn-splitter", true); err != nil {
+			return err
+		}
+		if err := CargoBuild("tools/saturn-splitter/rust-dis/Cargo.toml", ""); err != nil {
+			return err
+		}
+		if err := CargoBuild("tools/saturn-splitter/adpcm-extract/Cargo.toml", ""); err != nil {
+			return err
+		}
+		return nil
+	})
 }

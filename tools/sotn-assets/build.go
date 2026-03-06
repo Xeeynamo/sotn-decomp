@@ -10,17 +10,35 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/deps"
 )
 
+// allVersions are built by `./sotn.sh build` with no arguments.
 var allVersions = []string{"us", "hd", "pspeu"}
+
+// buildableVersions are all versions accepted by the build command.
+var buildableVersions = []string{"us", "hd", "pspeu", "saturn"}
 
 func buildVersions(versions []string) error {
 	if err := deps.EnsureBuildDeps(versions); err != nil {
-		return fmt.Errorf("ensuring build deps: %w", err)
+		return fmt.Errorf("ensuring build dependencies: %w", err)
 	}
-	versionStr := strings.Join(versions, ",")
-	if err := genNinjaIfNeeded(versionStr, versions); err != nil {
-		return err
+	var regular []string
+	for _, v := range versions {
+		if v == "saturn" {
+			if err := buildSaturn(); err != nil {
+				return fmt.Errorf("build saturn: %w", err)
+			}
+		} else {
+			regular = append(regular, v)
+		}
 	}
-	return deps.Ninja()
+	if len(regular) > 0 {
+		if err := genNinjaIfNeeded(strings.Join(regular, ","), regular); err != nil {
+			return err
+		}
+		if err := deps.Ninja(); err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 func ninjaStampValue(versionStr string) string {
@@ -92,8 +110,8 @@ func parseBuildArgs(args []string) ([]string, error) {
 		if arg == "all" {
 			return allVersions, nil
 		}
-		if !slices.Contains(allVersions, arg) {
-			return nil, fmt.Errorf("unknown version %q; valid values: %v", arg, allVersions)
+		if !slices.Contains(buildableVersions, arg) {
+			return nil, fmt.Errorf("unknown version %q; valid values: %v", arg, buildableVersions)
 		}
 		versions = append(versions, arg)
 	}
