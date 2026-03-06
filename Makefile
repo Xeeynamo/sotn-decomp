@@ -2,21 +2,10 @@
 .SECONDARY:
 .DEFAULT_GOAL := all
 
-### Begin new header ###
-PHONY_TARGETS := # Empty variable
-MUFFLED_TARGETS := # Empty variable
-
 VERSION		?= us# Only when env not set
 VENV_DIR	?= .venv# Can be overriden with env
-comma		:= ,# For escaping a literal comma
-muffle 		:= $(if $(DEBUG),,@)# Allows DEBUG to unmuffle targets which can't use .SILENT
-
-# Utility functions
-rwildcard	= $(subst //,/,$(foreach dir,$(wildcard $(1:=/*)),$(call rwildcard,$(dir),$(2)) $(filter $(subst *,%,$(2)),$(dir))))
-wget		= wget -a wget-$(or $(3),$(2),$(1)).log $(if $(2),-O $(2) )$(1)
 
 # System related variables
-OS 				:= $(subst Darwin,macOS,$(shell uname -s))
 SYSTEM_PYTHON	:= $(or $(shell which python),/usr/bin/python3)# Only used for installing venv
 PYTHON_BIN		:= $(or $(realpath $(VENV_DIR)/bin/))
 PYTHON          := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)python3# This is slightly redundant to handle the slash
@@ -27,72 +16,30 @@ SHELL 			:= $(BASH) $(BASH_FLAGS)
 
 # Directories
 BIN_DIR			:= bin
-ASM_DIR         := asm/$(VERSION)
-SRC_DIR         := src
-INCLUDE_DIR     := include
-ASSETS_DIR      := assets
-CONFIG_DIR      := config
-TOOLS_DIR       := tools
-BUILD_DIR       := build/$(VERSION)
-REPORTS_DIR     := $(BUILD_DIR)/reports
-PY_TOOLS_DIRS	:= $(TOOLS_DIR)/ $(addprefix $(TOOLS_DIR)/,splat_ext/ split_jpt_yaml/ sotn_permuter/permuter_loader)
+TOOLS_DIR		:= tools
+BUILD_DIR		:= build/$(VERSION)
+REPORTS_DIR		:= $(BUILD_DIR)/reports
 RETAIL_DISK_DIR := disks
 EXTRACTED_DISK_DIR := $(RETAIL_DISK_DIR)/$(VERSION)
-BUILD_DISK_DIR  := $(BUILD_DIR)/disk
 
-# Files
-ST_ASSETS		:= D_801*.bin *.gfxbin *.palbin cutscene_*.bin
-CLEAN_FILES		:= $(ASSETS_DIR) $(ASM_DIR) $(BUILD_DIR) $(SRC_DIR)/weapon $(CONFIG_DIR)/*$(VERSION)* function_calls sotn_calltree.txt
-
-# Toolchain
-CROSS           := mipsel-linux-gnu-
-LD              := $(CROSS)ld
-OBJCOPY         := $(CROSS)objcopy
-CYGNUS			:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
-
-# Other tooling
-SPLAT           := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)splat split
-ICONV           := iconv --from-code=UTF-8 --to-code=Shift-JIS
-DIRT_PATCHER    := $(PYTHON) $(TOOLS_DIR)/dirt_patcher.py
-SHASUM          := shasum
-GFXSTAGE        := $(PYTHON) $(TOOLS_DIR)/gfxstage.py
-PNG2S           := $(PYTHON) $(TOOLS_DIR)/png2s.py
+# Tooling
 DUPS_THRESHOLD  ?= .90
 DUPS			:= cd $(TOOLS_DIR)/dups; cargo run --release -- --threshold $(DUPS_THRESHOLD) --output-file ../../$(REPORTS_DIR)/duplicates.txt
-MIPSMATCH_APP   := $(BIN_DIR)/mipsmatch
-ASMDIFFER_APP	:= $(TOOLS_DIR)/asm-differ/diff.py
-M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
-M2C_APP         := $(TOOLS_DIR)/m2c/m2c.py
-PERMUTER_APP	:= $(TOOLS_DIR)/decomp-permuter
-MASPSX_APP      := $(TOOLS_DIR)/maspsx/maspsx.py
-MWCCGAP_APP     := $(TOOLS_DIR)/mwccgap/mwccgap.py
-DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
-SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
-SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
-SOTNDISK        := bin/sotn-disk
-SOTNASSETS      := bin/sotn-assets
-
-# Directories
-DISK_DIR        := $(BUILD_DIR)/${VERSION}/disk
-
-# Symbols
-MAIN_TARGET     := $(BUILD_DIR)/main
-
 MIPSMATCH_DIR   := $(TOOLS_DIR)/mipsmatch
+MIPSMATCH_APP   := $(BIN_DIR)/mipsmatch
 ASMDIFFER_DIR   := $(TOOLS_DIR)/asm-differ
+ASMDIFFER_APP	:= $(ASMDIFFER_DIR)/diff.py
 M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
 M2CTX           := $(PYTHON) $(M2CTX_APP)
 M2C_DIR         := $(TOOLS_DIR)/m2c
 M2C_APP         := $(M2C_DIR)/m2c.py
-M2C             := $(PYTHON) $(M2C_APP)
-M2C_ARGS        := -P 4
 MASPSX_DIR      := $(TOOLS_DIR)/maspsx
 MASPSX_APP      := $(MASPSX_DIR)/maspsx.py
+MWCCGAP_APP     := $(TOOLS_DIR)/mwccgap/mwccgap.py
+SOTNDISK        := bin/sotn-disk
+SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
 
 DEPENDENCIES	= $(ASMDIFFER_APP) $(M2CTX_APP) $(M2C_APP) $(MASPSX_APP) $(MIPSMATCH_APP) python-dependencies
-
-SOTNDISK_SOURCES   := $(shell find tools/sotn-disk -name '*.go')
-SOTNASSETS_SOURCES := $(shell find tools/sotn-assets -name '*.go')
 
 ifeq ($(VERSION),saturn)
 include Makefile.saturn.mk
@@ -111,10 +58,8 @@ all: build_all
 
 .PHONY: extract_assets
 extract_assets:
-extract_assets:
 	@./sotn.sh extract-assets config/assets.$(VERSION).yaml
 .PHONY: build_assets
-build_assets:
 build_assets:
 	@./sotn.sh build-assets config/assets.$(VERSION).yaml
 .PHONY: extract
@@ -357,28 +302,3 @@ disks/sotn.%.bin disks/sotn.%.cue:
             sotn.$*.toc && \
         toc2cue sotn.$*.toc sotn.$*.cue && \
         rm sotn.$*.toc
-
-# .PHONY and .SILENT group
-# Putting this in a separate section because if it is included with the targets as I'd prefer, it becomes very cluttered and harder to read.
-# These lists can be added to at any point since adding the lists to the actual .PHONY and .SILENT targets is the final action and order does not matter.
-# I'd prefer assigning to .PHONY and .SILENT directly without using the list, but the list allows us to have a target that displays it to the user for debugging.
-# They are grouped in the general order you will find the targets in the file.
-PHONY: # Since .PHONY reads % as a literal %, we need this target as a prereq to treat pattern targets as .PHONY
-PHONY_TARGETS += all all-clean clean $(addprefix CLEAN_,$(CLEAN_FILES)) extract build patch expected
-PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us usproto) extract-disk disk disk-prepare disk-debug
-PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context function-finder duplicates-report
-PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
-PHONY_TARGETS += help get-debug get-phony get-silent
-MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
-MUFFLED_TARGETS += $(DOSEMU_APP) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(SOTNDISK) $(VENV_DIR) $(VENV_DIR)/bin
-.PHONY: $(PHONY_TARGETS)
-# Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
-#$(DEBUG).SILENT: $(MUFFLED_TARGETS)
-# These are walls of text, so they're redirected to files instead of stdout for debugging
-get-debug: get-phony get-silent
-get-phony:
-	echo ".PHONY:" > make.phony.targets
-	$(foreach target,$(PHONY_TARGETS),echo $(target) >> make.phony.targets;)
-get-silent:
-	echo ".SILENT:" > make.silent.targets
-	$(foreach target,$(MUFFLED_TARGETS),echo $(target) >> make.silent.targets;)
