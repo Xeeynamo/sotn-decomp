@@ -11,8 +11,9 @@ import (
 type location uint32
 type sectorData []byte
 
-const sectorSize = 0x800
-const sectorMode2Size = 0x800 + 0x130
+const sectorSize = 0x800              // 2048: data sector with implicit ECC
+const sectorXaSize = 0x920            // 2336: subheader (8) + data (2328), no sync/MSF
+const sectorMode2Size = 0x800 + 0x130 // 2352: full raw sector
 
 // CD-ROM XA subheader submode flags
 const (
@@ -110,6 +111,23 @@ func writeSector(w io.WriterAt, loc location, mode TrackMode, subMode byte, s se
 			if _, err := w.WriteAt(block, offset); err != nil {
 				return err
 			}
+		case sectorXaSize:
+			// 2336-byte XA sector: subheader (8) + data (2328)
+			// Wrap with sync pattern and MSF header to produce full 2352-byte sector
+			const TrackModeXa = 2
+			secondsXa := 2 + loc/75
+			block := make([]byte, sectorMode2Size)
+			copy(block[0:], sync)
+			block[12] = decToHex(secondsXa / 60)
+			block[13] = decToHex(secondsXa % 60)
+			block[14] = decToHex(loc % 75)
+			block[15] = TrackModeXa
+			copy(block[16:], s) // subheader (8) + data (2328) from file
+			// Form 2 EDC
+			binary.LittleEndian.PutUint32(block[0x92C:], computeEDC(block[0x10:0x92C]))
+			if _, err := w.WriteAt(block, offset); err != nil {
+				return err
+			}
 		case sectorMode2Size:
 			if _, err := w.WriteAt(s, offset); err != nil {
 				return err
@@ -127,7 +145,23 @@ func MakeSector(useMode2 bool) sectorData {
 	return sectorData(make([]byte, sectorSize))
 }
 
+// makeSectorForSize creates a sector buffer matching the XA file's sector size.
+func makeSectorForSize(fileSize int64) sectorData {
+	secSize := xaFileSectorSize(fileSize)
+	return sectorData(make([]byte, secSize))
+}
+
+// xaFileSectorSize returns the per-sector size for an XA streaming file.
+func xaFileSectorSize(fileSize int64) int64 {
+	if fileSize%sectorMode2Size == 0 {
+		return sectorMode2Size
+	}
+	if fileSize%sectorXaSize == 0 {
+		return sectorXaSize
+	}
+	return sectorSize
+}
+
 func decToHex(n location) byte {
 	return byte((n % 10) + (n/10)*16)
 }
-

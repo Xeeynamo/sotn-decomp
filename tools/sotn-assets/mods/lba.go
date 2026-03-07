@@ -74,6 +74,7 @@ var miscEntries = []lbaEntry{
 	{"LEN_WARNING_TIM", "WARNING.TIM", lbaSize},
 	{"OFF_BIN_FGAME2", "BIN/F_GAME2.BIN", lbaOffset},
 	{"OFF_BIN_FGAME", "BIN/F_GAME.BIN", lbaOffset},
+	{"OFF_SD_XA_STR1", "SD/XA_STR1.", lbaOffset},
 	{"vab0Len", "SD_J010.VB", lbaSize},
 	{"SD_ALK_VH_LEN", "VAB/SD_ALK.VH", lbaSize},
 	{"SD_RIH_VH_LEN", "VAB/SD_RIH.VH", lbaSize},
