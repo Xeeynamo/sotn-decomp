@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "rnz0.h"
 
-INCLUDE_ASM("st/rnz0/nonmatchings/collision", HitDetection);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/collision", EntityDamageDisplay);
+#include "../collision.h"
