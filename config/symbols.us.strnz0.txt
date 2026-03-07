@@ -1,15 +1,8 @@
-RNZ0_spriteBanks = 0x80180040;
-RNZ0_cluts = 0x80180148;
-RNZ0_rooms_layers = 0x8018037C;
-RNZ0_gfxBanks = 0x801806A4;
-RNZ0_pStObjLayoutHorizontal = 0x801806F0;
-RNZ0_pStObjLayoutVertical = 0x801807C4;
 g_EInitInteractable = 0x801809B4;
 g_EInitLockCamera = 0x801809CC;
 g_EInitCommon = 0x801809D8;
 RNZ0_RedDoorTiles = 0x80180B48;
 RNZ0_PrizeDrops = 0x80180CC8;
-RNZ0_rooms = 0x80181FA8;
 sprites_rnz0_13 = 0x801AA72C;
 sprites_rnz0_14 = 0x801AA8E4;
 RNZ0_EntityBackgroundBlock = 0x801AAF54; // source=match
