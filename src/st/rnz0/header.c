@@ -27,3 +27,5 @@ Overlay OVL_EXPORT(Overlay) = {
 };
 
 #include "gen/sprite_banks.h"
+#include "gen/palette_def.h"
+

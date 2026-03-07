@@ -980,7 +980,22 @@ files:
         vram: 0x80180000
         assets:
           - [0x40, sprite_banks, sprite_banks]
-          - [0xA0, skip]
+          - [0xA4, paldef, palette_def]
+          - [0x14C, skip]
+          - [0x1396C, palette, D_8019396C, 16]
+          - [0x13C2C, palette, D_80193C2C, 16]
+          - [0x13D4C, palette, D_80193D4C, 16]
+          - [0x13DEC, palette, D_80193DEC, 16]
+          - [0x13FEC, palette, D_80193FEC, 16]
+          - [0x1410C, palette, D_8019410C, 16]
+          - [0x1418C, palette, D_8019418C, 16]
+          - [0x1420C, palette, D_8019420C, 16]
+          - [0x1428C, palette, D_8019428C, 16]
+          - [0x1434C, palette, D_8019434C, 16]
+          - [0x143EC, palette, D_801943EC, 16]
+          - [0x1444C, palette, D_8019444C, 16]
+          - [0x144CC, palette, D_801944CC, 16]
+          - [0x1450C, skip]
   - target: disks/us/ST/RNZ1/RNZ1.BIN
   - target: disks/us/ST/RTOP/RTOP.BIN
     asset_path: assets/st/rtop
