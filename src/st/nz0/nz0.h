@@ -89,7 +89,7 @@ typedef enum EntityIDs {
     /* 0x47 */ E_UNK47,                   // func_pspeu_09239250
     /* 0x48 */ E_UNK48,                   // func_pspeu_09238F48
     /* 0x49 */ E_LIFE_UP_SPAWN,           // func_pspeu_09255978
-    /* 0x4A */ E_UNK4A,                   // func_pspeu_0924FE70
+    /* 0x4A */ E_SEALED_DOOR,             // func_pspeu_0924FE70
     /* 0x4B */ E_UNK4B,                   // func_pspeu_0923E810
     /* 0x4C */ E_UNK4C,                   // func_pspeu_0925A980
     /* 0x4D */ E_UNK4D,                   // func_pspeu_0925A7B8

@@ -46,8 +46,6 @@ ReplaceBreakableWithItemDrop = 0x801B1414; // source=match
 CheckColliderOffsets = 0x801B3E3C; // source=match
 EntityGreyPuffSpawner = 0x801B416C; // source=match
 PlaySfxPositional = 0x801B60E0; // source=match
-StageNamePopupDissolver = 0x801B61D8; // source=match
-EntityStageNamePopup = 0x801B63A8; // source=match
 SealedDoorIsNearPlayer = 0x801BF820; // source=match
 EntitySealedDoor = 0x801BF898; // source=match
 SalemWitchTrySpawnShadow = 0x801C1FA0; // source=match
