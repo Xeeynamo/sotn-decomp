@@ -121,7 +121,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySalemWitchGlow,
     EntitySalemWitchCurse,
     EntitySalemWitchTriboltLaunch,
-    EntitySalemWitchTriboltProjectile};
+    EntitySalemWitchTriboltProjectile,
+};
 
 EInit D_us_80180984 = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 0x000};
 #include "../e_init_common.h"

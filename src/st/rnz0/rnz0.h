@@ -65,8 +65,8 @@ typedef enum EntityIDs {
     /* 0x37 */ E_SALEM_WITCH,
     /* 0x38 */ E_SALEM_WITCH_GLOW,
     /* 0x39 */ E_SALEM_WITCH_CURSE,
-    /* 0x40 */ E_SALEM_WITCH_TRIBOLT_LAUNCH,
-    /* 0x41 */ E_SALEM_WITCH_TRIBOLT_PROJECTILE
+    /* 0x3A */ E_SALEM_WITCH_TRIBOLT_LAUNCH,
+    /* 0x3B */ E_SALEM_WITCH_TRIBOLT_PROJECTILE
 } EntityIDs;
 
 #endif // RNZ0_H

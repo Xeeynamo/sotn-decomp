@@ -1072,11 +1072,13 @@ def get_symbol_table(splat_config, table):
                 line = f.readline()
                 if line == "":
                     break
-                if f"glabel {table_symbol}" not in line:
+                if not (
+                    f"dlabel {table_symbol}" in line or f"glabel {table_symbol}" in line
+                ):
                     continue
                 while True:
                     line = f.readline()
-                    if f".size {table_symbol}" in line:
+                    if f"enddlabel {table_symbol}" in line:
                         break
                     table += [line]
                 break

@@ -1,0 +1,71 @@
+options:
+  platform: psp
+  basename: strnz0
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz0.bin
+  asm_path: asm/pspeu/st/rnz0_psp
+  asset_path: assets/st/rnz0
+  src_path: src/st/rnz0
+  ld_script_path: build/pspeu/strnz0.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.strnz0.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.strnz0.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.strnz0.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x8000000
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 56bbb04006e93d41b990b4afe11f6a89bd03294c
+segments:
+  - [0x0, bin, mwo_header]
+  - name: strnz0
+    type: code
+    start: 0x80
+    vram:  0x09237700
+    bss_size: 0x280
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, rnz0_psp/80]
+      # - [0x3718, c, rnz0_psp/80] # en_salem_witch
+      # - [0x5860, c, rnz0_psp/80]
+      # - [0x9308, c, rnz0_psp/80] # e_stage_name
+      # - [0xA188, c, rnz0_psp/80] # e_red_door
+      # - [0xB490, c, rnz0_psp/80] # st_update
+      # - [0xB9C8, c, rnz0_psp/80] # e_particles
+      # - [0xCF58, c, rnz0_psp/80]
+      # - [0xE248, c, rnz0_psp/80] # e_collect
+      # - [0x12498, c, rnz0_psp/80]
+      # - [0x12E18, c, rnz0_psp/80] # collision
+      # - [0x14FF0, c, rnz0_psp/80]
+      # - [0x1AB90, c, rnz0_psp/80] # popup
+      # - [0x1B188, c, rnz0_psp/80] # e_room_fg
+      # - [0x1B2A0, c, rnz0_psp/80]
+      - [0x1F2A8, c, rnz0_psp/st_init_psp] # st_init_chi
+      - [0x1F530, c, rnz0_psp/1F530]
+      # - [0x1FEB8, c, rnz0_psp/80] # e_room_bg
+      # - [0x1FFC8, c, rnz0_psp/80] # e_lock_camera
+      # - [0x20228, c, rnz0_psp/80]
+      - [0x20F00, data]
+      - [0x4A400, .rodata, rnz0_psp/80]
+      - [0x4A580, bss, 4A580]
+      - [0x4A620, .bss, rnz0_psp/st_init_psp]
+      - [0x4A778, bss, 4A778]
+
+  - [0x4A580]
