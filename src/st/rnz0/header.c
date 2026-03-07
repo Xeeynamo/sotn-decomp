@@ -25,3 +25,5 @@ Overlay OVL_EXPORT(Overlay) = {
     .gfxBanks = OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
 };
+
+#include "gen/sprite_banks.h"

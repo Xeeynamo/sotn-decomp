@@ -975,6 +975,12 @@ files:
     asset_path: assets/st/rnz0
     src_path: src/st/rnz0
     splat_config_path: config/splat.us.strnz0.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA0, skip]
   - target: disks/us/ST/RNZ1/RNZ1.BIN
   - target: disks/us/ST/RTOP/RTOP.BIN
     asset_path: assets/st/rtop
