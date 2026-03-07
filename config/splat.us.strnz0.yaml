@@ -38,29 +38,41 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
-      - [0x2AC04, .rodata, us]
-      - [0x2AF54, c, us] # e_room_bg
-      # - [0x2B034, c, us] # e_lock_camera
-      # - [0x2B1F0, c, us]
-      # - [0x2B4E8, c, us] # e_red_eye_bust
-      # - [0x2B610, c, us] # e_purple_brick
-      # - [0x2B7EC, c, us]
-      # - [0x2CC04, c, us] # st_update
-      # - [0x2D038, c, us] # collision
-      # - [0x2E7F4, c, us] # create_entity
-      # - [0x2F36C, c, us] # e_red_door
-      # - [0x3001C, c, us] # st_common
-      # - [0x314CC, c, us] # e_collect
-      # - [0x33E3C, c, us] # e_misc
-      # - [0x361D8, c, us] # e_stage_name
-      # - [0x3702C, c, us] # e_particles
-      # - [0x37870, c, us] # e_room_fg
-      # - [0x3795C, c, us] # popup
-      # - [0x37C8C, c, us]
-      # - [0x3F820, c, us] # e_sealed_door
-      # - [0x4060C, c, us]
-      # - [0x41FA0, c, us] # en_salem_witch
-      # - [0x436C0, c, us] # prim_helpers
-      - [0x43EF0, sbss]
+      - [0x0, .data, header]
+      - [0x40, data]
+      - [0x898, .data, e_init]
+      - [0xB10, data]
+      - [0xDA0, .data, st_update]
+      - [0xDEC, .data, collision]
+      - [0x11AC, .data, e_red_door]
+      - [0x11C4, .data, st_common]
+      - [0x13C4, .data, e_collect]
+      - [0x1718, .data, e_misc]
+      - [0x17D0, .data, e_particles]
+      - [0x1850, .data, e_room_fg]
+      - [0x18DC, data]
+      - [0x2AC04, .rodata, first_c_file]
+      - [0x2AC04, .rodata, e_red_door]
+      - [0x2AC1C, .rodata, e_collect]
+      - [0x2ACF0, .rodata, e_stage_name]
+      - [0x2AD24, .rodata, unk_37C8C]
+      - [0x2AF4C, .rodata, prim_helpers]
+      - [0x2AF54, c, first_c_file]
+      - [0x2CC04, c, st_update]
+      - [0x2D038, c, collision]
+      - [0x2E7F4, c, create_entity]
+      - [0x2F36C, c, e_red_door]
+      - [0x3001C, c, st_common]
+      - [0x314CC, c, e_collect]
+      - [0x33E3C, c, e_misc]
+      - [0x361D8, c, e_stage_name]
+      - [0x3702C, c, e_particles]
+      - [0x37870, c, e_room_fg]
+      - [0x3795C, c, popup]
+      - [0x37C8C, c, unk_37C8C]
+      - [0x436C0, c, prim_helpers]
+      - [0x43EF0, .bss, create_entity]
+      - [0x43F00, bss]
+      - [0x44B68, .bss, st_update]
+      
   - [0x44BA8]

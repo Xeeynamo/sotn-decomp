@@ -76,7 +76,7 @@ enum EntityIDs {
     E_UNK_30,               // func_us_801B72E8
     E_SPIKES_DAMAGE,        // EntitySpikesDamage
     E_ID_32,                // func_us_801B7580
-    E_UNK_33,               // func_us_801B7980
+    E_SEALED_DOOR,          // func_us_801B7980
     E_VALHALLA_KNIGHT,      // EntityValhallaKnight
     E_VALHALLA_KNIGHT_UNK1, // func_us_801C8954
     E_VALHALLA_KNIGHT_UNK2, // func_us_801C8AAC
