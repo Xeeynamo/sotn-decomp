@@ -4,17 +4,11 @@ RNZ0_rooms_layers = 0x8018037C;
 RNZ0_gfxBanks = 0x801806A4;
 RNZ0_pStObjLayoutHorizontal = 0x801806F0;
 RNZ0_pStObjLayoutVertical = 0x801807C4;
-RNZ0_EntityUpdates = 0x80180898;
-g_EInitObtainable = 0x80180990;
-g_EInitParticle = 0x8018099C;
-g_EInitSpawner = 0x801809A8;
 g_EInitInteractable = 0x801809B4;
-g_EInitUnkId13 = 0x801809C0;
 g_EInitLockCamera = 0x801809CC;
 g_EInitCommon = 0x801809D8;
-g_EInitDamageNum = 0x801809E4;
 RNZ0_RedDoorTiles = 0x80180B48;
-g_bigRedFireballAnim = 0x8018161C;
+RNZ0_PrizeDrops = 0x80180CC8;
 RNZ0_rooms = 0x80181FA8;
 RNZ0_EntityBackgroundBlock = 0x801AAF54; // source=match
 RNZ0_EntityLockCamera = 0x801AB034; // source=match
@@ -31,102 +25,29 @@ EntityBlueFlameTable = 0x801AC430; // source=duplicate
 EntityCannonLever = 0x801AC548; // source=duplicate
 EntityCannonShot = 0x801AC9CC; // source=duplicate
 Random = 0x801ACC04; // source=match
-Update = 0x801ACC34; // source=match
-UpdateStageEntities = 0x801ACF30; // source=match
-HitDetection = 0x801AD038; // source=match
-EntityDamageDisplay = 0x801AE150; // source=match
-CreateEntityFromLayout = 0x801AE7F4; // source=match
-CreateEntityWhenInVerticalRange = 0x801AE8B8; // source=match
-CreateEntityWhenInHorizontalRange = 0x801AE9D0; // source=match
-FindFirstEntityToTheRight = 0x801AEAE8; // source=match
-FindFirstEntityToTheLeft = 0x801AEB34; // source=match
-CreateEntitiesToTheRight = 0x801AEB8C; // source=match
-CreateEntitiesToTheLeft = 0x801AEC88; // source=match
-FindFirstEntityAbove = 0x801AED9C; // source=match
-FindFirstEntityBelow = 0x801AEDE8; // source=match
-CreateEntitiesAbove = 0x801AEE40; // source=match
-CreateEntitiesBelow = 0x801AEF3C; // source=match
-InitRoomEntities = 0x801AF050; // source=match
-UpdateRoomPosition = 0x801AF1C8; // source=match
 CreateEntityFromCurrentEntity = 0x801AF27C; // source=match
 CreateEntityFromEntity = 0x801AF2F0; // source=match
-EntityIsNearPlayer = 0x801AF36C; // source=match
-RNZ0_EntityRedDoor = 0x801AF3E4; // source=match
 DestroyEntity = 0x801B001C; // source=match
-DestroyEntitiesFromIndex = 0x801B0088; // source=match
-PreventEntityFromRespawning = 0x801B0104; // source=match
 AnimateEntity = 0x801B014C; // source=match
-UnkAnimFunc = 0x801B0204; // source=match
 GetDistanceToPlayerX = 0x801B031C; // source=match
 GetDistanceToPlayerY = 0x801B0358; // source=match
 GetSideToPlayer = 0x801B038C; // source=match
 MoveEntity = 0x801B03D0; // source=match
-FallEntity = 0x801B0400; // source=match
 UnkCollisionFunc3 = 0x801B042C; // source=match
 UnkCollisionFunc2 = 0x801B06A4; // source=match
 AllocEntity = 0x801B088C; // source=match
-GetSineScaled = 0x801B08EC; // source=match
-GetSine = 0x801B0918; // source=match
-SetEntityVelocityFromAngle = 0x801B0934; // source=match
-Ratan2Shifted = 0x801B09A0; // source=match
-GetAngleBetweenEntitiesShifted = 0x801B09D8; // source=match
-GetAnglePointToEntityShifted = 0x801B0A20; // source=match
-AdjustValueWithinThreshold = 0x801B0A68; // source=match
-UnkEntityFunc0 = 0x801B0AC0; // source=match
-Ratan2 = 0x801B0B4C; // source=match
 GetAngleBetweenEntities = 0x801B0B7C; // source=match
-GetAnglePointToEntity = 0x801B0BB4; // source=match
 GetNormalizedAngle = 0x801B0BFC; // source=match
-RNZ0_PrizeDrops = 0x80180CC8;
 SetStep = 0x801B0C5C; // source=match
 SetSubStep = 0x801B0C7C; // source=match
-EntityExplosionSpawn = 0x801B0C98; // source=match
 InitializeEntity = 0x801B0D2C; // source=match
-EntityDummy = 0x801B0E28; // source=match
-UnkCollisionFunc = 0x801B0E50; // source=match
-CheckFieldCollision = 0x801B0F78; // source=match
 GetPlayerCollisionWith = 0x801B10D0; // source=match
 ReplaceBreakableWithItemDrop = 0x801B1414; // source=match
-PrizeDropFall = 0x801B14CC; // source=match
-PrizeDropFall2 = 0x801B1550; // source=match
-CollectHeart = 0x801B16AC; // source=match
-CollectGold = 0x801B172C; // source=match
-CollectSubweapon = 0x801B1808; // source=match
-CollectHeartVessel = 0x801B1920; // source=match
-CollectLifeVessel = 0x801B19C4; // source=match
-CollectDummy = 0x801B1A14; // source=match
-EntityPrizeDrop = 0x801B1A3C; // source=match
-EntityExplosion = 0x801B22B0; // source=match
-BlinkItem = 0x801B23AC; // source=match
-EntityEquipItemDrop = 0x801B2450; // source=match
-BlitChar = 0x801B2A38; // source=match
-EntityRelicOrb = 0x801B2CE8; // source=match
-EntityHeartDrop = 0x801B37B8; // source=match
-EntityMessageBox = 0x801B38E0; // source=match
 CheckColliderOffsets = 0x801B3E3C; // source=match
-EntityUnkId13 = 0x801B3F2C; // source=match
-EntityExplosionVariantsSpawner = 0x801B403C; // source=match
 EntityGreyPuffSpawner = 0x801B416C; // source=match
-EntityExplosionVariants = 0x801B4254; // source=match
-EntityGreyPuff = 0x801B4344; // source=match
-EntityOlroxDrool = 0x801B4438; // source=match
-UnkCollisionFunc5 = 0x801B4668; // source=match
-UnkCollisionFunc4 = 0x801B4764; // source=match
-EntityIntenseExplosion = 0x801B4CE4; // source=match
-InitializeUnkEntity = 0x801B4DE4; // source=match
-MakeEntityFromId = 0x801B4EB0; // source=match
-MakeExplosions = 0x801B4F78; // source=match
-EntityBigRedFireball = 0x801B5030; // source=match
-UnkRecursivePrimFunc1 = 0x801B5208; // source=match
-UnkRecursivePrimFunc2 = 0x801B57E8; // source=match
-ClutLerp = 0x801B5EE8; // source=match
 PlaySfxPositional = 0x801B60E0; // source=match
 StageNamePopupDissolver = 0x801B61D8; // source=match
 EntityStageNamePopup = 0x801B63A8; // source=match
-EntitySoulStealOrb = 0x801B702C; // source=match
-EntityEnemyBlood = 0x801B73C0; // source=match
-EntityRoomForeground = 0x801B7870; // source=match
-BottomCornerText = 0x801B795C; // source=match
 SealedDoorIsNearPlayer = 0x801BF820; // source=match
 EntitySealedDoor = 0x801BF898; // source=match
 SalemWitchTrySpawnShadow = 0x801C1FA0; // source=match
@@ -138,10 +59,6 @@ EntitySalemWitchTriboltProjectile = 0x801C3480; // source=match
 UnkPrimHelper = 0x801C36C0; // source=match
 UpdateAnimation = 0x801C3AA8; // source=match
 FindFirstUnkPrim = 0x801C3BF8; // source=match
-FindFirstUnkPrim2 = 0x801C3C28; // source=match
 PrimToggleVisibility = 0x801C3CA4; // source=match
-PrimResetNext = 0x801C3D2C; // source=match
 UnkPolyFunc2 = 0x801C3E0C; // source=match
-UnkPolyFunc0 = 0x801C3E60; // source=match
 PrimDecreaseBrightness = 0x801C3E8C; // source=match
-g_ItemIconSlots = 0x801C4B68;
