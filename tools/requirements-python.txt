@@ -1,6 +1,6 @@
 pre-commit
 black
-pycparser
+pycparser<3
 watchdog
 python-Levenshtein
 cxxfilt
