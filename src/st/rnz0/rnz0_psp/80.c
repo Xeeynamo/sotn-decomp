@@ -31,9 +31,9 @@ INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/80", func_pspeu_0923A690);
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/80", func_pspeu_0923A7D8);
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/80", func_pspeu_0923A938);
+INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/80", InitRoomEntities);
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/80", func_pspeu_0923ABA8);
+INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/80", UpdateRoomPosition);
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/80", func_pspeu_0923AC88);
 

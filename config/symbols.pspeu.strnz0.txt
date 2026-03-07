@@ -2,6 +2,8 @@ func_us_801B8238 = 0x09237700;
 func_us_801B9430 = 0x09238F80;
 func_us_801B965C = 0x09239298;
 func_us_801B9D78 = 0x09239C80;
+InitRoomEntities = 0x0923A938;
+UpdateRoomPosition = 0x0923ABA8;
 SalemWitchTrySpawnShadow = 0x0923AD98; // source=match
 EntitySalemWitch = 0x0923AE50; // source=match
 EntitySalemWitchGlow = 0x0923C0A0; // source=match
@@ -79,7 +81,12 @@ EntityTableWithGlobe = 0x09257A60;
 EntityLeftSecretRoomWall = 0x09257B98;
 EntityBottomSecretRoomFloor = 0x09257F10;
 EntitySecretWallDebris = 0x092581F8;
+RNZ0_spriteBanks = 0x0925FED0;
+RNZ0_rooms_layers = 0x09260158;
+RNZ0_cluts = 0x092602E8;
+RNZ0_gfxBanks = 0x092604E0;
 RNZ0_EntityUpdates = 0x09260560;
+RNZ0_rooms = 0x09260840;
 RNZ0_Overlay = 0x092817D8;
 D_psp_E_RELIC_CONTAINER = 0x09281D28;
 D_psp_E_WALL_DEBRIS = 0x09281DB0;
