@@ -7,10 +7,10 @@ void UpdateRoomPosition(void);
 void InitRoomEntities(s32 objLayoutId);
 
 extern RoomHeader OVL_EXPORT(rooms)[];
-extern s16** OVL_EXPORT(spriteBanks)[];
+extern SpriteParts* OVL_EXPORT(spriteBanks)[];
 extern u_long* OVL_EXPORT(cluts)[];
 extern RoomDef OVL_EXPORT(rooms_layers)[];
-extern u_long** OVL_EXPORT(gfxBanks)[];
+extern GfxBank* OVL_EXPORT(gfxBanks)[];
 
 Overlay OVL_EXPORT(Overlay) = {
     .Update = Update,
