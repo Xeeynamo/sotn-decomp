@@ -55,6 +55,7 @@ segments:
       - [0x17D0, .data, e_particles]
       - [0x1850, .data, e_room_fg]
       - [0x18DC, data]
+      - [0x1FA8, .data, gen/rooms]
       - [0x20AC, .data, gen/e_layout]
       - [0x326C, data]
       - [0x3B54, .data, stage_data]
