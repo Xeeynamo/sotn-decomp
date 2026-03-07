@@ -975,6 +975,54 @@ files:
     asset_path: assets/st/rnz0
     src_path: src/st/rnz0
     splat_config_path: config/splat.us.strnz0.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x40, sprite_banks, sprite_banks]
+          - [0xA4, paldef, palette_def]
+          - [0x14C, layers, layers]
+          - [0x464, gfx_banks, graphics_banks]
+          - [0x6F0, layout, entity_layouts]
+          - [0x898, skip]
+          - [0x1FA8, rooms, rooms]
+          - [0x20AC, skip]
+          - [0x3B54, cmpgfx, D_80183B54, 128, 128, 4]
+          - [0x3EC8, cmpgfx, D_80183EC8, 128, 128, 4]
+          - [0x4EB8, cmpgfx, D_80184EB8, 128, 128, 4]
+          - [0x5DF4, cmpgfx, D_80185DF4, 128, 128, 4]
+          - [0x6C4C, cmpgfx, D_80186C4C, 128, 128, 4]
+          - [0x7A34, cmpgfx, D_80187A34, 128, 128, 4]
+          - [0x8A64, cmpgfx, D_80188A64, 128, 128, 4]
+          - [0x98D0, cmpgfx, D_801898D0, 128, 128, 4]
+          - [0xA4B8, cmpgfx, D_8018A4B8, 128, 128, 4]
+          - [0xB14C, cmpgfx, D_8018B14C, 128, 128, 4]
+          - [0xBF30, cmpgfx, D_8018BF30, 128, 128, 4]
+          - [0xC4F8, cmpgfx, D_8018C4F8, 128, 128, 4]
+          - [0xCADC, cmpgfx, D_8018CADC, 128, 128, 4]
+          - [0xD6E0, cmpgfx, D_8018D6E0, 128, 128, 4]
+          - [0xDFF0, cmpgfx, D_8018DFF0, 128, 128, 4]
+          - [0xEF38, cmpgfx, D_8018EF38, 128, 128, 4]
+          - [0xF2DC, cmpgfx, D_8018F2DC, 128, 128, 4]
+          - [0x100B8, cmpgfx, D_801900B8, 128, 128, 4]
+          - [0x10AD8, cmpgfx, D_80190AD8, 128, 128, 4]
+          - [0x11850, cmpgfx, D_80191850, 128, 128, 4]
+          - [0x12414, cmpgfx, D_80192414, 128, 128, 4]
+          - [0x13390, cmpgfx, D_80193390, 128, 128, 4]
+          - [0x1396C, palette, D_8019396C, 16]
+          - [0x13C2C, palette, D_80193C2C, 16]
+          - [0x13D4C, palette, D_80193D4C, 16]
+          - [0x13DEC, palette, D_80193DEC, 16]
+          - [0x13FEC, palette, D_80193FEC, 16]
+          - [0x1410C, palette, D_8019410C, 16]
+          - [0x1418C, palette, D_8019418C, 16]
+          - [0x1420C, palette, D_8019420C, 16]
+          - [0x1428C, palette, D_8019428C, 16]
+          - [0x1434C, palette, D_8019434C, 16]
+          - [0x143EC, palette, D_801943EC, 16]
+          - [0x1444C, palette, D_8019444C, 16]
+          - [0x144CC, palette, D_801944CC, 16]
+          - [0x1450C, skip]
   - target: disks/us/ST/RNZ1/RNZ1.BIN
   - target: disks/us/ST/RTOP/RTOP.BIN
     asset_path: assets/st/rtop
