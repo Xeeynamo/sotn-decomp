@@ -1,3 +1,5 @@
+RNZ0_pStObjLayoutHorizontal = 0x801806F0;
+RNZ0_pStObjLayoutVertical = 0x801807C4;
 RNZ0_EntityUpdates = 0x80180898;
 g_EInitObtainable = 0x80180990;
 g_EInitParticle = 0x8018099C;

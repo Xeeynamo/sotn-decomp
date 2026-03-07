@@ -68,5 +68,7 @@ segments:
       - [0x3795C, c, popup]
       - [0x37C8C, c, unk_37C8C]
       - [0x436C0, c, prim_helpers]
-      - [0x43EF0, sbss]
+      - [0x43EF0, .bss, create_entity]
+      - [0x43F00, bss]
+      
   - [0x44BA8]
