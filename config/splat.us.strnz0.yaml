@@ -41,6 +41,7 @@ segments:
       - [0x0, data]
       - [0x894, .data, e_init]
       - [0xB10, data]
+      - [0x17D0, .data, e_particles]
       - [0x1850, .data, e_room_fg]
       - [0x18DC, data]
       - [0x2AC04, .rodata, first_c_file]

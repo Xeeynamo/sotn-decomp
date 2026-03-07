@@ -1,4 +1,5 @@
 RNZ0_EntityUpdates = 0x80180894;
+g_EInitObtainable = 0x80180990;
 g_EInitCommon = 0x801809D8;
 RNZ0_EntityBackgroundBlock = 0x801AAF54; // source=match
 RNZ0_EntityLockCamera = 0x801AB034; // source=match

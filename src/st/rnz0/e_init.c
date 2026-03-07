@@ -126,7 +126,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 };
 
 EInit D_us_80180984 = {ANIMSET_OVL(1), 0,  0, PAL_NULL, 0x000};
-EInit D_us_80180990 = {ANIMSET_DRA(3), 0,  0, PAL_NULL, 0x001};
+EInit g_EInitObtainable = {ANIMSET_DRA(3), 0,  0, PAL_NULL, 0x001};
 EInit D_us_8018099C = {ANIMSET_DRA(3), 0,  0, PAL_NULL, 0x002};
 EInit D_us_801809A8 = {ANIMSET_DRA(0), 0,  0, PAL_NULL, 0x004};
 EInit D_us_801809B4 = {ANIMSET_DRA(0), 0,  0, PAL_NULL, 0x005};
