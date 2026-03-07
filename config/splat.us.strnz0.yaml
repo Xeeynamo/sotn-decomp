@@ -43,7 +43,7 @@ segments:
       - [0xA4, .data, header] # palette_def
       - [0x14C, .data, header] # layers
       - [0x464, .data, header] # graphics banks
-      - [0x6F0, data]
+      - [0x6F0, .data, gen/e_laydef]
       - [0x898, .data, e_init]
       - [0xB10, data]
       - [0xDA0, .data, st_update]
@@ -55,6 +55,8 @@ segments:
       - [0x17D0, .data, e_particles]
       - [0x1850, .data, e_room_fg]
       - [0x18DC, data]
+      - [0x20AC, .data, gen/e_layout]
+      - [0x326C, data]
       - [0x3B54, .data, stage_data]
       - [0x2493C, .data, gen/sprites]
       - [0x2ABEC, rodata]
