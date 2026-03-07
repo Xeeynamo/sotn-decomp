@@ -273,7 +273,8 @@ func calcSizeDirTree(dt *dirTree) error {
 
 		realSize := info.Size()
 		if dt.dirent.IsXaStreaming() {
-			realSize = (realSize / sectorMode2Size) * sectorSize
+			xaSecSize := xaFileSectorSize(realSize)
+			realSize = (realSize / xaSecSize) * sectorSize
 		}
 		dt.dirent.DataLength = make32(uint32(realSize))
 	} else {
@@ -374,7 +375,12 @@ func (img *WritableImage) writeNode(node *dirTree) error {
 
 		size := info.Size()
 		for size > 0 {
-			sec := MakeSector(node.dirent.IsXaStreaming())
+			var sec sectorData
+			if node.dirent.IsXaStreaming() {
+				sec = makeSectorForSize(info.Size())
+			} else {
+				sec = MakeSector(false)
+			}
 			toWrite := int64(len(sec))
 			if toWrite > size {
 				toWrite = size
