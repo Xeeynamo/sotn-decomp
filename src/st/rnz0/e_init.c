@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later(Entity* self);
 #include "rnz0.h"
 
-void D_us_8018324C(Entity* self);
 void EntityBreakableNZ0(Entity* self);
 void EntityExplosion(Entity* self);
 void EntityPrizeDrop(Entity* self);
@@ -63,7 +62,6 @@ void EntitySalemWitchTriboltLaunch(Entity* self);
 void EntitySalemWitchTriboltProjectile(Entity* self);
 
 PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
-    D_us_8018324C,
     EntityBreakableNZ0,
     EntityExplosion,
     EntityPrizeDrop,
@@ -126,14 +124,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 };
 
 EInit D_us_80180984 = {ANIMSET_OVL(1), 0,  0, PAL_NULL, 0x000};
-EInit g_EInitObtainable = {ANIMSET_DRA(3), 0,  0, PAL_NULL, 0x001};
-EInit D_us_8018099C = {ANIMSET_DRA(3), 0,  0, PAL_NULL, 0x002};
-EInit D_us_801809A8 = {ANIMSET_DRA(0), 0,  0, PAL_NULL, 0x004};
-EInit D_us_801809B4 = {ANIMSET_DRA(0), 0,  0, PAL_NULL, 0x005};
-EInit D_us_801809C0 = {ANIMSET_DRA(0), 0,  0, PAL_NULL, 0x002};
-EInit D_us_801809CC = {ANIMSET_DRA(0), 0,  0, PAL_NULL, 0x001};
-EInit g_EInitCommon = {ANIMSET_DRA(0), 0,  0, PAL_NULL, 0x003};
-EInit D_us_801809E4 = {ANIMSET_DRA(0), 0,  0, PAL_NULL, 0x003};
+#include "../e_init_common.h"
 EInit D_us_801809F0 = {ANIMSET_OVL(3), 0,  75, 0x200, 0x005};
 EInit D_us_801809FC = {ANIMSET_OVL(4), 0,  72, 0x209, 0x0E9};
 EInit D_us_80180A08 = {ANIMSET_OVL(4), 0,  72, 0x209, 0x0EA};

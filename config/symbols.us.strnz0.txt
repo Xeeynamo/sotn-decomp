@@ -1,6 +1,13 @@
-RNZ0_EntityUpdates = 0x80180894;
+RNZ0_EntityUpdates = 0x80180898;
 g_EInitObtainable = 0x80180990;
+g_EInitParticle = 0x8018099C;
+g_EInitSpawner = 0x801809A8;
+g_EInitInteractable = 0x801809B4;
+g_EInitUnkId13 = 0x801809C0;
+g_EInitLockCamera = 0x801809CC;
 g_EInitCommon = 0x801809D8;
+g_EInitDamageNum = 0x801809E4;
+g_bigRedFireballAnim = 0x8018161C;
 RNZ0_EntityBackgroundBlock = 0x801AAF54; // source=match
 RNZ0_EntityLockCamera = 0x801AB034; // source=match
 EntityBreakableNZ0 = 0x801AB1F0; // source=duplicate
@@ -62,6 +69,7 @@ Ratan2 = 0x801B0B4C; // source=match
 GetAngleBetweenEntities = 0x801B0B7C; // source=match
 GetAnglePointToEntity = 0x801B0BB4; // source=match
 GetNormalizedAngle = 0x801B0BFC; // source=match
+RNZ0_PrizeDrops = 0x80180CC8;
 SetStep = 0x801B0C5C; // source=match
 SetSubStep = 0x801B0C7C; // source=match
 EntityExplosionSpawn = 0x801B0C98; // source=match
@@ -128,3 +136,4 @@ PrimResetNext = 0x801C3D2C; // source=match
 UnkPolyFunc2 = 0x801C3E0C; // source=match
 UnkPolyFunc0 = 0x801C3E60; // source=match
 PrimDecreaseBrightness = 0x801C3E8C; // source=match
+g_ItemIconSlots = 0x801C4B68;

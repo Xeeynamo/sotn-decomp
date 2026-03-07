@@ -39,10 +39,10 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, data]
-      - [0x894, .data, e_init]
+      - [0x898, .data, e_init]
       - [0xB10, data]
-      - [0x16B4, data]
-      - [0x17CC, data]
+      - [0x13C4, data]
+      - [0x1718, .data, e_misc]
       - [0x17D0, .data, e_particles]
       - [0x1850, .data, e_room_fg]
       - [0x18DC, data]
