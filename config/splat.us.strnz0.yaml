@@ -41,7 +41,8 @@ segments:
       - [0x0, .data, header]
       - [0x40, .data, header] # sprite_banks
       - [0xA4, .data, header] # palette_def
-      - [0x14C, data]
+      - [0x14C, .data, header] # layers
+      - [0x464, data]
       - [0x898, .data, e_init]
       - [0xB10, data]
       - [0xDA0, .data, st_update]
@@ -54,7 +55,6 @@ segments:
       - [0x1850, .data, e_room_fg]
       - [0x18DC, data]
       - [0x1396C, .data, stage_data]
-      - [0x1450C, data]
       - [0x2493C, .data, gen/sprites]
       - [0x2ABEC, rodata]
       - [0x2AC04, .rodata, first_c_file]

@@ -981,7 +981,8 @@ files:
         assets:
           - [0x40, sprite_banks, sprite_banks]
           - [0xA4, paldef, palette_def]
-          - [0x14C, skip]
+          - [0x14C, layers, layers]
+          - [0x464, skip]
           - [0x1396C, palette, D_8019396C, 16]
           - [0x13C2C, palette, D_80193C2C, 16]
           - [0x13D4C, palette, D_80193D4C, 16]
