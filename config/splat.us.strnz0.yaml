@@ -38,9 +38,11 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, header]
+      - [0x40, data]
       - [0x898, .data, e_init]
       - [0xB10, data]
+      - [0xDA0, .data, st_update]
       - [0xDEC, .data, collision]
       - [0x11AC, .data, e_red_door]
       - [0x11C4, .data, st_common]
@@ -71,5 +73,6 @@ segments:
       - [0x436C0, c, prim_helpers]
       - [0x43EF0, .bss, create_entity]
       - [0x43F00, bss]
+      - [0x44B68, .bss, st_update]
       
   - [0x44BA8]
