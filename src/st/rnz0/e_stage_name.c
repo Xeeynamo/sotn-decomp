@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "rnz0.h"
 
-INCLUDE_ASM("st/rnz0/nonmatchings/e_stage_name", StageNamePopupDissolver);
+#include "../e_stage_name_us.h"
 
-INCLUDE_ASM("st/rnz0/nonmatchings/e_stage_name", EntityStageNamePopup);
