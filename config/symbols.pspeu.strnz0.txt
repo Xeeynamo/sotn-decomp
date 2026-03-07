@@ -1,0 +1,46 @@
+SalemWitchTrySpawnShadow = 0x0923AD98; // source=match
+EntitySalemWitch = 0x0923AE50; // source=match
+EntitySalemWitchGlow = 0x0923C0A0; // source=match
+EntitySalemWitchCurse = 0x0923C1B8; // source=match
+EntitySalemWitchTriboltLaunch = 0x0923C958; // source=match
+EntitySalemWitchTriboltProjectile = 0x0923CB98; // source=match
+EntityStageNamePopup = 0x09240988; // source=match
+EntityIsNearPlayer = 0x09241808; // source=match
+RNZ0_EntityRedDoor = 0x092418F0; // source=match
+Random = 0x09242B10; // source=match
+Update = 0x09242B50; // source=match
+UpdateStageEntities = 0x09242F30; // source=match
+func_psp_0923AD68 = 0x09243048; // source=match
+func_psp_0923B2F0 = 0x092435D0; // source=match
+EntitySoulStealOrb = 0x09243A60; // source=match
+EntityEnemyBlood = 0x09243FC0; // source=match
+func_psp_0923C2F8 = 0x092458C8; // source=match
+func_psp_0923C390 = 0x09245960; // source=match
+BlitChar = 0x092459A0; // source=match
+PrizeDropFall = 0x09245F58; // source=match
+PrizeDropFall2 = 0x09246030; // source=match
+CollectHeart = 0x092461B0; // source=match
+CollectGold = 0x09246250; // source=match
+CollectSubweapon = 0x09246350; // source=match
+CollectHeartVessel = 0x092465E8; // source=match
+CollectLifeVessel = 0x092466A8; // source=match
+CollectDummy = 0x09246700; // source=match
+EntityPrizeDrop = 0x09246728; // source=match
+EntityExplosion = 0x09247540; // source=match
+BlinkItem = 0x092476A8; // source=match
+EntityEquipItemDrop = 0x09247840; // source=match
+EntityRelicOrb = 0x09248098; // source=match
+EntityHeartDrop = 0x092491D0; // source=match
+EntityMessageBox = 0x092493A0; // source=match
+HitDetection = 0x0924A498; // source=match
+EntityDamageDisplay = 0x0924BC68; // source=match
+BottomCornerText = 0x09252210; // source=match
+EntityRoomForeground = 0x09252808; // source=match
+InitEntityIds = 0x09256928; // source=match
+RNZ0_Load = 0x09256B38; // source=match
+RNZ0_EntityBackgroundBlock = 0x09257538; // source=match
+RNZ0_EntityLockCamera = 0x09257648; // source=match
+RNZ0_EntityUpdates = 0x09260560;
+RNZ0_Overlay = 0x092817D8;
+D_psp_E_RELIC_CONTAINER = 0x09281D28;
+D_psp_E_WALL_DEBRIS = 0x09281DB0;
