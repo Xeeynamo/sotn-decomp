@@ -7,6 +7,7 @@ g_EInitUnkId13 = 0x801809C0;
 g_EInitLockCamera = 0x801809CC;
 g_EInitCommon = 0x801809D8;
 g_EInitDamageNum = 0x801809E4;
+RNZ0_RedDoorTiles = 0x80180B48;
 g_bigRedFireballAnim = 0x8018161C;
 RNZ0_EntityBackgroundBlock = 0x801AAF54; // source=match
 RNZ0_EntityLockCamera = 0x801AB034; // source=match
