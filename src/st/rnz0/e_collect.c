@@ -44,3 +44,13 @@ INCLUDE_ASM("st/rnz0/nonmatchings/e_collect", EntityExplosion);
 INCLUDE_ASM("st/rnz0/nonmatchings/e_collect", BlinkItem);
 
 INCLUDE_ASM("st/rnz0/nonmatchings/e_collect", EntityEquipItemDrop);
+
+INCLUDE_ASM("st/rnz0/nonmatchings/e_collect", BlitChar);
+
+INCLUDE_RODATA("st/rnz0/nonmatchings/e_collect", D_us_801AACA4);
+
+INCLUDE_ASM("st/rnz0/nonmatchings/e_collect", EntityRelicOrb);
+
+INCLUDE_ASM("st/rnz0/nonmatchings/e_collect", EntityHeartDrop);
+
+INCLUDE_ASM("st/rnz0/nonmatchings/e_collect", EntityMessageBox);
