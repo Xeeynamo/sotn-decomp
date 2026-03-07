@@ -1,3 +1,5 @@
+RNZ0_EntityUpdates = 0x80180894;
+
 RNZ0_EntityBackgroundBlock = 0x801AAF54; // source=match
 RNZ0_EntityLockCamera = 0x801AB034; // source=match
 EntityBreakableNZ0 = 0x801AB1F0; // source=duplicate
