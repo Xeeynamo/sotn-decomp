@@ -1,0 +1,66 @@
+options:
+  platform: psx
+  basename: strnz0
+  base_path: ..
+  build_path: build/us
+  target_path: disks/us/ST/RNZ0/RNZ0.BIN
+  asm_path: asm/us/st/rnz0
+  asset_path: assets/st/rnz0
+  src_path: src/st/rnz0
+  ld_script_path: build/us/strnz0.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.us.txt
+    - config/symbols.us.strnz0.txt
+  undefined_funcs_auto_path: build/us/config/undefined_funcs_auto.us.strnz0.txt
+  undefined_syms_auto_path: build/us/config/undefined_syms_auto.us.strnz0.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: us_$VRAM
+  section_order:
+    - .data
+    - .rodata
+    - .text
+    - .bss
+    - .sbss
+  ld_bss_is_noload: false
+  disasm_unknown: true
+  disassemble_all: true
+  global_vram_start: 0x80010000
+sha1: d2e6eaef70625b8832a2c5af151fe987748c8d73
+segments:
+  - name: strnz0
+    type: code
+    start: 0
+    vram:  0x80180000
+    align: 4
+    subalign: 4
+    subsegments:
+      - [0x0, data]
+      - [0x2AC04, .rodata, us]
+      - [0x2AF54, c, us] # e_room_bg
+      # - [0x2B034, c, us] # e_lock_camera
+      # - [0x2B1F0, c, us]
+      # - [0x2B4E8, c, us] # e_red_eye_bust
+      # - [0x2B610, c, us] # e_purple_brick
+      # - [0x2B7EC, c, us]
+      # - [0x2CC04, c, us] # st_update
+      # - [0x2D038, c, us] # collision
+      # - [0x2E7F4, c, us] # create_entity
+      # - [0x2F36C, c, us] # e_red_door
+      # - [0x3001C, c, us] # st_common
+      # - [0x314CC, c, us] # e_collect
+      # - [0x33E3C, c, us] # e_misc
+      # - [0x361D8, c, us] # e_stage_name
+      # - [0x3702C, c, us] # e_particles
+      # - [0x37870, c, us] # e_room_fg
+      # - [0x3795C, c, us] # popup
+      # - [0x37C8C, c, us]
+      # - [0x3F820, c, us] # e_sealed_door
+      # - [0x4060C, c, us]
+      # - [0x41FA0, c, us] # en_salem_witch
+      # - [0x436C0, c, us] # prim_helpers
+      - [0x43EF0, sbss]
+  - [0x44BA8]

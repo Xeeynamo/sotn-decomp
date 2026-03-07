@@ -103,8 +103,8 @@ def sort_symbols_from_file(symbol_file_name):
         offsets.sort(key=lambda x: x[1])
         sorted_lines = list(OrderedDict.fromkeys([line[0] for line in offsets]))
 
-        if not list[-1].endswith("\n"):
-            list[-1] += "\n"
+        if not sorted_lines[-1].endswith("\n"):
+            sorted_lines[-1] += "\n"
         with open(symbol_file_name, "w") as symbol_file:
             symbol_file.writelines(sorted_lines)
 

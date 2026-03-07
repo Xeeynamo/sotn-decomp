@@ -972,6 +972,9 @@ files:
   - target: disks/us/ST/RNO3/RNO3.BIN
   - target: disks/us/ST/RNO4/RNO4.BIN
   - target: disks/us/ST/RNZ0/RNZ0.BIN
+    asset_path: assets/st/rnz0
+    src_path: src/st/rnz0
+    splat_config_path: config/splat.us.strnz0.yaml
   - target: disks/us/ST/RNZ1/RNZ1.BIN
   - target: disks/us/ST/RTOP/RTOP.BIN
     asset_path: assets/st/rtop
