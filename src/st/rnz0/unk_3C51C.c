@@ -24,7 +24,3 @@ INCLUDE_ASM("st/rnz0/nonmatchings/unk_3C51C", func_us_801BE550);
 INCLUDE_ASM("st/rnz0/nonmatchings/unk_3C51C", func_us_801BE600);
 
 INCLUDE_ASM("st/rnz0/nonmatchings/unk_3C51C", func_us_801BF7B0);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_3C51C", SealedDoorIsNearPlayer);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_3C51C", EntitySealedDoor);
