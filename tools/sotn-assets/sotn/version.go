@@ -16,13 +16,19 @@ const (
 	PlatformPSP    = Platform("psp")
 	PlatformPSX    = Platform("psx")
 
-	VersionUS    = Version("us")
-	VersionHD    = Version("hd")
-	VersionPSPEU = Version("pspeu")
+	VersionUS     = Version("us")
+	VersionHD     = Version("hd")
+	VersionPSPEU  = Version("pspeu")
+	VersionSaturn = Version("saturn")
 )
 
 var (
+	// VersionsAll defaults when doing `build [all]`
 	VersionsAll = []Version{VersionUS, VersionHD, VersionPSPEU}
+
+	// VersionsEverything adds Saturn to the mix for more specific stuff we do
+	// not want to propagate to the usual build chain
+	VersionsEverything = append(VersionsAll, VersionSaturn)
 )
 
 func GetVersion() Version {
@@ -34,14 +40,7 @@ func GetVersion() Version {
 }
 
 func GetPlatform() Platform {
-	version := GetVersion()
-	if version == "saturn" {
-		return PlatformSaturn
-	}
-	if strings.HasPrefix(string(version), "psp") {
-		return PlatformPSP
-	}
-	return PlatformPSX
+	return GetVersion().GetPlatform()
 }
 
 func (p Platform) GetBoundaries() psx.Offsets {
@@ -53,4 +52,18 @@ func (p Platform) GetBoundaries() psx.Offsets {
 	default:
 		panic("unsupported platform " + string(p))
 	}
+}
+
+func (v Version) IsAll() bool {
+	return len(v) == 0 || v == "all"
+}
+
+func (v Version) GetPlatform() Platform {
+	if v == "saturn" {
+		return PlatformSaturn
+	}
+	if strings.HasPrefix(string(v), "psp") {
+		return PlatformPSP
+	}
+	return PlatformPSX
 }

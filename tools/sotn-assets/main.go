@@ -38,7 +38,35 @@ func main() {
 		SilenceErrors: true,
 	}
 	rootCmd.AddCommand(&cobra.Command{
-		Use:          "extract <asset.yaml>",
+		Use:          "build [version...]",
+		Short:        "Build game files (downloads dependencies automatically)",
+		Long:         "Build one or more game versions. If no version is specified, builds all versions (us, hd, pspeu).",
+		SilenceUsage: true,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			versions, err := parseBuildArgs(args)
+			if err != nil {
+				return err
+			}
+			return buildVersions(versions)
+		},
+	})
+	cleanCmd := &cobra.Command{
+		Use:          "clean [version|all]",
+		Short:        "Clean extracted files, assets, and build artifacts for a version (or all versions)",
+		SilenceUsage: true,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			verbose, _ := cmd.Flags().GetBool("verbose")
+			version := ""
+			if len(args) > 0 {
+				version = args[0]
+			}
+			return clean(version, verbose)
+		},
+	}
+	cleanCmd.Flags().BoolP("verbose", "v", false, "Echo git clean stdout and stderr")
+	rootCmd.AddCommand(cleanCmd)
+	rootCmd.AddCommand(&cobra.Command{
+		Use:          "extract-assets <asset.yaml>",
 		Short:        "Extract asset files from the disk files",
 		SilenceUsage: true,
 		Args:         cobra.ExactArgs(1),
@@ -54,7 +82,7 @@ func main() {
 		},
 	})
 	rootCmd.AddCommand(&cobra.Command{
-		Use:          "build <asset.yaml>",
+		Use:          "build-assets <asset.yaml>",
 		Short:        "Build asset files from the extracted assets",
 		SilenceUsage: true,
 		Args:         cobra.ExactArgs(1),
