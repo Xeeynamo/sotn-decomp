@@ -66,8 +66,8 @@ segments:
       - [0x1E9E0, c, rnz0_psp/e_cannon]
       - [0x1F2A8, c, rnz0_psp/st_init_psp] # st_init_chi
       - [0x1F530, c, rnz0_psp/1F530]
-      # - [0x1FEB8, c, rnz0_psp/80] # e_room_bg
-      # - [0x1FFC8, c, rnz0_psp/80] # e_lock_camera
+      - [0x1FEB8, c, rnz0_psp/e_room_bg] # e_room_bg
+      - [0x1FFC8, c, rnz0_psp/1FFC8] # e_lock_camera
       # - [0x20228, c, rnz0_psp/80]
       - [0x20F00, data]
       - [0x213C8, .data, e_red_door]
