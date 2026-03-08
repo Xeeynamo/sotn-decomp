@@ -52,9 +52,6 @@ func ensurePSXDeps(eg *errgroup.Group) {
 
 func ensurePSPDeps(eg *errgroup.Group) {
 	eg.Go(func() error {
-		return GitSubmoduleInitAndUpdate("tools/mwccgap", true)
-	})
-	eg.Go(func() error {
 		return downloadTarGzFromGithubIfNotExists(
 			"Xeeynamo/sotn-decomp", cc1Psx26Release,
 			"allegrex-as", "bin/allegrex-as",
@@ -74,6 +71,25 @@ func ensurePSPDeps(eg *errgroup.Group) {
 			"Xeeynamo/sotn-decomp", cc1Psx26Release,
 			"mwccpsp_219", "bin",
 		)
+	})
+	eg.Go(func() error {
+		const MetroWrapVersion = "0.1.2"
+		_, err := os.Stat("bin/.mw-version-" + MetroWrapVersion)
+		if err == nil {
+			return nil
+		}
+		if !os.IsNotExist(err) {
+			return fmt.Errorf("check bin/.mw-version-*: %w", err)
+		}
+		if err := Cargo("install", "metrowrap", "--bins", "--root", ".", "--locked", "--version", MetroWrapVersion); err != nil {
+			return fmt.Errorf("install metrowrap: %w", err)
+		}
+		if err := os.WriteFile("bin/.mw-version-"+MetroWrapVersion, []byte{}, 0644); err != nil {
+			return fmt.Errorf("write bin/.mw-version-*: %w", err)
+		}
+		_ = os.Remove(".crates.toml")
+		_ = os.Remove(".crates2.json")
+		return nil
 	})
 }
 

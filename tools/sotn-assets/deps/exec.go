@@ -240,6 +240,20 @@ func CargoBuild(manifest, outputBin string, args ...string) error {
 	return nil
 }
 
+func Cargo(args ...string) error {
+	binPath, err := exec.LookPath("cargo")
+	if err != nil {
+		return err
+	}
+	cmd := exec.Command(binPath, args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("cargo %v: %w", args, err)
+	}
+	return nil
+}
+
 func SotnLint(args ...string) error {
 	return CargoRun("tools/lints/sotn-lint/Cargo.toml", args...)
 }

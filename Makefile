@@ -66,8 +66,6 @@ M2C_APP         := $(TOOLS_DIR)/m2c/m2c.py
 PERMUTER_APP	:= $(TOOLS_DIR)/decomp-permuter
 MASPSX_APP      := $(TOOLS_DIR)/maspsx/maspsx.py
 PSPAS           := $(TOOLS_DIR)/pspas/target/release/pspas
-MW              := $(BIN_DIR)/mw
-MW_VERSION      := 0.1.2
 DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
 SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
@@ -253,7 +251,7 @@ $(VENV_DIR):
 
 .PHONY: update-dependencies
 update-dependencies: ##@ update tools and internal dependencies
-update-dependencies: $(DEPENDENCIES) $(MW)
+update-dependencies: $(DEPENDENCIES)
 	rm $(SOTNDISK) && make $(SOTNDISK) || true
 	rustup update
 	cargo build --release --manifest-path ./tools/sotn_str/Cargo.toml
@@ -286,12 +284,6 @@ $(MIPSMATCH_DIR)/target/release/mipsmatch: $(MIPSMATCH_DIR) $(shell find $(MIPSM
 	    cargo build --release
 $(MIPSMATCH_APP): $(MIPSMATCH_DIR)/target/release/mipsmatch
 	cp $< $@
-bin/.mw-version-%:
-	cargo install metrowrap --bins --root . --locked --version "$(MW_VERSION)"
-	rm -f bin/.mw-version-*
-	touch $@
-.PHONY: $(MW)
-$(MW): bin/.mw-version-$(MW_VERSION)
 $(SOTNDISK): $(SOTNDISK_SOURCES)
 	go build -C tools/sotn-disk -o ../../$@ .
 
@@ -373,7 +365,7 @@ PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us uspr
 PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context function-finder duplicates-report
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
 PHONY_TARGETS += help get-debug get-phony get-silent
-MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MW) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
+MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
 MUFFLED_TARGETS += $(DOSEMU_APP) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)/bin
 .PHONY: $(PHONY_TARGETS)
 # Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
