@@ -78,6 +78,7 @@ segments:
       - [0x2B1F0, c, 2B1F0]
       - [0x2B610, c, e_purple_brick]
       - [0x2B7EC, c, 2B7EC]
+      - [0x2C1CC, c, e_blue_flame_table]
       - [0x2C548, c, e_cannon]
       - [0x2CC04, c, st_update]
       - [0x2D038, c, collision]

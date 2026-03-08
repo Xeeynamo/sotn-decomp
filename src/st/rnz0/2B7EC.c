@@ -10,7 +10,3 @@ INCLUDE_ASM("st/rnz0/nonmatchings/2B7EC", EntitySecretWallDebris);
 INCLUDE_ASM("st/rnz0/nonmatchings/2B7EC", EntityTableWithGlobe);
 
 INCLUDE_ASM("st/rnz0/nonmatchings/2B7EC", EntityLifeMaxTank);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/2B7EC", EntityRelicContainer);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/2B7EC", EntityBlueFlameTable);
