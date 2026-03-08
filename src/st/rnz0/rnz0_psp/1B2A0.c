@@ -39,38 +39,6 @@ INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", EntityDummy);
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", CheckFieldCollision);
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_pspeu_092539B0);
+INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", GetPlayerCollisionWith);
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_pspeu_09253E88);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_pspeu_09253F80);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_pspeu_09254480);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_pspeu_09254700);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_pspeu_09254750);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_pspeu_09254838);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_pspeu_09254940);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_pspeu_092549A8);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_us_801B7C8C);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_us_801C1758);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_us_801C1CC0);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_us_801C1E14);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", EntityPurpleBrickScrollingBackground);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", EntityCannonLever);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_us_801AC758);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", EntityCannonShot);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_us_801ACAD0);
+INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", ReplaceBreakableWithItemDrop);
