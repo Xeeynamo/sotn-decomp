@@ -12,6 +12,32 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 )
 
+func GitClean(path string, verbose bool) error {
+	cmd := exec.Command("git", "clean", "-fdx", path)
+	if verbose {
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+	}
+	return cmd.Run()
+}
+
+func GitSubmoduleInitAndUpdate(dir string, verbose bool) error {
+	entries, err := os.ReadDir(dir)
+	if err == nil && len(entries) > 0 {
+		return nil
+	}
+	gitPath, err := exec.LookPath("git")
+	if err != nil {
+		return fmt.Errorf("git not found: %w", err)
+	}
+	cmd := exec.Command(gitPath, "submodule", "update", "--init", dir)
+	if verbose {
+		cmd.Stdout = os.Stdout
+		cmd.Stderr = os.Stderr
+	}
+	return cmd.Run()
+}
+
 func ClangFormat(files ...string) error {
 	binPath := "bin/clang-format"
 	if err := downloadTarGzFromGithubIfNotExists("xeeynamo/sotn-decomp", "cc1-psx-26", filepath.Base(binPath), binPath); err != nil {
@@ -173,6 +199,58 @@ func CargoRun(manifest string, args ...string) error {
 		)
 	}
 
+	return nil
+}
+
+func CargoBuild(manifest, outputBin string, args ...string) error {
+	binPath, err := exec.LookPath("cargo")
+	if err != nil {
+		return err
+	}
+	if _, err := os.Stat(manifest); os.IsNotExist(err) {
+		return fmt.Errorf("%s not found", manifest)
+	}
+	cmd := exec.Command(binPath,
+		append([]string{
+			"build",
+			"--release",
+			"--manifest-path", manifest,
+		}, args...)...,
+	)
+
+	var stderr bytes.Buffer
+	cmd.Stderr = &stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("cargo run failed: %w\nstderr:\n%s",
+			err,
+			stderr.String(),
+		)
+	}
+
+	if outputBin != "" && filepath.Dir(outputBin) == "bin" {
+		// Find the built binary in the target directory
+		manifestDir := filepath.Dir(manifest)
+		builtBin := filepath.Join(manifestDir, "target", "release", filepath.Base(outputBin))
+		data, err := os.ReadFile(builtBin)
+		if err != nil {
+			return fmt.Errorf("read built binary %s: %w", builtBin, err)
+		}
+		return os.WriteFile(outputBin, data, 0755)
+	}
+	return nil
+}
+
+func Cargo(args ...string) error {
+	binPath, err := exec.LookPath("cargo")
+	if err != nil {
+		return err
+	}
+	cmd := exec.Command(binPath, args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		return fmt.Errorf("cargo %v: %w", args, err)
+	}
 	return nil
 }
 
