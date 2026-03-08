@@ -56,15 +56,3 @@ INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", func_us_801C1758);
 INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", func_us_801C1CC0);
 
 INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", func_us_801C1E14);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", SalemWitchTrySpawnShadow);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", EntitySalemWitch);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", EntitySalemWitchGlow);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", EntitySalemWitchCurse);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", EntitySalemWitchTriboltLaunch);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", EntitySalemWitchTriboltProjectile);

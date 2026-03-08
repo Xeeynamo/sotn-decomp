@@ -45,7 +45,7 @@ segments:
       - [0x80, c, rnz0_psp/e_unk1B-1E]
       - [0x2730, c, create_entity] # create_entity
       - [0x3718, c, rnz0_psp/3718] # en_salem_witch
-      # - [0x5860, c, rnz0_psp/80]
+      - [0x5860, c, rnz0_psp/5860]
       - [0x9308, c, e_stage_name] # e_stage_name
       - [0xA188, c, e_red_door] # e_red_door
       - [0xB490, c, st_update] # st_update
@@ -80,7 +80,7 @@ segments:
       - [0x4A158, .data, header]
       - [0x4A198, data]
       - [0x4A400, .rodata, rnz0_psp/e_unk1B-1E]
-      - [0x4A420, .rodata, rnz0_psp/3718]
+      - [0x4A420, .rodata, rnz0_psp/5860]
       - [0x4A478, .rodata, e_red_door]
       - [0x4A490, .rodata, rnz0_psp/CF58]
       - [0x4A520, .rodata, rnz0_psp/14FF0]
