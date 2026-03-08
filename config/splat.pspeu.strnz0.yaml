@@ -52,8 +52,8 @@ segments:
       # - [0xCF58, c, rnz0_psp/80]
       # - [0xE248, c, rnz0_psp/80] # e_collect
       # - [0x12498, c, rnz0_psp/80]
-      # - [0x12E18, c, rnz0_psp/80] # collision
-      # - [0x14FF0, c, rnz0_psp/80]
+      - [0x12E18, c, collision] # collision
+      - [0x14FF0, c, rnz0_psp/14FF0]
       # - [0x1AB90, c, rnz0_psp/80] # popup
       # - [0x1B188, c, rnz0_psp/80] # e_room_fg
       # - [0x1B2A0, c, rnz0_psp/80]
@@ -63,9 +63,12 @@ segments:
       # - [0x1FFC8, c, rnz0_psp/80] # e_lock_camera
       # - [0x20228, c, rnz0_psp/80]
       - [0x20F00, data]
+      - [0x21A60, .data, collision]
+      - [0x21E38, data]
       - [0x4A158, .data, header]
       - [0x4A198, data]
       - [0x4A400, .rodata, rnz0_psp/80]
+      - [0x4A520, .rodata, rnz0_psp/14FF0]
       - [0x4A580, bss, 4A580]
       - [0x4A620, .bss, rnz0_psp/st_init_psp]
       - [0x4A778, bss, 4A778]
