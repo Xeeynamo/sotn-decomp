@@ -69,8 +69,9 @@ M2CTX_APP       := $(TOOLS_DIR)/m2ctx.py
 M2C_APP         := $(TOOLS_DIR)/m2c/m2c.py
 PERMUTER_APP	:= $(TOOLS_DIR)/decomp-permuter
 MASPSX_APP      := $(TOOLS_DIR)/maspsx/maspsx.py
-MWCCGAP_APP     := $(TOOLS_DIR)/mwccgap/mwccgap.py
 PSPAS           := $(TOOLS_DIR)/pspas/target/release/pspas
+MW              := $(BIN_DIR)/mw
+MW_VERSION      := 0.1.2
 DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
 SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
 SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
@@ -138,11 +139,11 @@ build_us: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
 build_hd: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNASSETS)
 	VERSION=hd .venv/bin/python3 tools/builds/gen.py
 	ninja
-build_pspeu: $(SOTNSTR_APP) $(PSPAS) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
+build_pspeu: $(SOTNSTR_APP) $(PSPAS) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MW) $(ALLEGREX) | $(VENV_DIR)/bin
 	VERSION=pspeu .venv/bin/python3 tools/builds/gen.py
 	ninja
 .PHONY: build_all
-build_all: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNSTR_APP) $(PSPAS) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MWCCGAP_APP) $(ALLEGREX) | $(VENV_DIR)/bin
+build_all: bin/cc1-psx-26 $(MASPSX_APP) $(SOTNSTR_APP) $(PSPAS) $(SOTNASSETS) $(ALLEGREX) $(MWCCPSP) $(MW) $(ALLEGREX) | $(VENV_DIR)/bin
 	$(PYTHON) tools/builds/gen.py
 	ninja
 
@@ -280,9 +281,7 @@ update-dependencies: $(DEPENDENCIES) dependencies_pspeu
 	cargo build --release --manifest-path ./tools/sotn_str/Cargo.toml
 	git clean -fd bin/
 
-dependencies_pspeu: $(ALLEGREX) $(MWCCGAP_APP) $(MWCCPSP)
-$(MWCCGAP_APP): | $(VENV_DIR)
-	git submodule update --init $(dir $(MWCCGAP_APP))
+dependencies_pspeu: $(ALLEGREX $(MWCCPSP) $(MW)
 $(WIBO):
 	curl -sSfL -o $@ https://github.com/decompals/wibo/releases/download/0.6.13/wibo
 	$(muffle)sha256sum --check $(WIBO).sha256; chmod +x $(WIBO)
@@ -317,6 +316,12 @@ $(MIPSMATCH_DIR)/target/release/mipsmatch: $(MIPSMATCH_DIR) $(shell find $(MIPSM
 	    cargo build --release
 $(MIPSMATCH_APP): $(MIPSMATCH_DIR)/target/release/mipsmatch
 	cp $< $@
+bin/.mw-version-%:
+	cargo install metrowrap --bins --root . --locked --version "$(MW_VERSION)"
+	rm -f bin/.mw-version-*
+	touch $@
+.PHONY: $(MW)
+$(MW): bin/.mw-version-$(MW_VERSION)
 $(SOTNDISK): $(SOTNDISK_SOURCES)
 	go build -C tools/sotn-disk -o ../../$@ .
 $(SOTNASSETS): $(SOTNASSETS_SOURCES)
@@ -400,7 +405,7 @@ PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us uspr
 PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context function-finder duplicates-report
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
 PHONY_TARGETS += help get-debug get-phony get-silent
-MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MWCCGAP_APP) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
+MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(MW) $(MWCCPSP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
 MUFFLED_TARGETS += $(DOSEMU_APP) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)/bin
 .PHONY: $(PHONY_TARGETS)
 # Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging

@@ -33,3 +33,6 @@ build.ninja
 
 # objdiff stuff
 objdiff*.json
+
+# rust
+target/**
