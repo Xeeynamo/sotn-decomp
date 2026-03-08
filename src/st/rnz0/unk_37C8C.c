@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_37C8C", func_us_801B7C8C);
+INCLUDE_ASM("st/rnz0/nonmatchings/unk_37C8C", EntityUnk1A);
 
 INCLUDE_ASM("st/rnz0/nonmatchings/unk_37C8C", func_us_801B8238);
 

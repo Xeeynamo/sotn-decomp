@@ -27,7 +27,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self);
 void EntityLeftSecretRoomWall(Entity* self);
 void EntityBottomSecretRoomFloor(Entity* self);
 void EntitySecretWallDebris(Entity* self);
-void func_us_801B7C8C(Entity* self);
+void EntityUnk1A(Entity* self);
 void func_us_801B8238(Entity* self);
 void func_us_801B9430(Entity* self);
 void func_us_801B965C(Entity* self);
@@ -88,7 +88,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityLeftSecretRoomWall,
     EntityBottomSecretRoomFloor,
     EntitySecretWallDebris,
-    func_us_801B7C8C,
+    EntityUnk1A,
     func_us_801B8238,
     func_us_801B9430,
     func_us_801B965C,

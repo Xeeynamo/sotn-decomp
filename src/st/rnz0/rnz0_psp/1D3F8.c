@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rnz0.h"
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1D3F8", func_us_801B7C8C);
+INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1D3F8", EntityUnk1A);
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1D3F8", func_us_801C1758);
 
