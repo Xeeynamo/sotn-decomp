@@ -42,7 +42,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, rnz0_psp/80]
+      - [0x80, c, rnz0_psp/e_unk1B-1E]
       - [0x2730, c, create_entity] # create_entity
       - [0x3718, c, rnz0_psp/3718] # en_salem_witch
       # - [0x5860, c, rnz0_psp/80]
@@ -79,7 +79,7 @@ segments:
       - [0x22140, data]
       - [0x4A158, .data, header]
       - [0x4A198, data]
-      - [0x4A400, .rodata, rnz0_psp/80]
+      - [0x4A400, .rodata, rnz0_psp/e_unk1B-1E]
       - [0x4A420, .rodata, rnz0_psp/3718]
       - [0x4A478, .rodata, e_red_door]
       - [0x4A490, .rodata, rnz0_psp/CF58]
