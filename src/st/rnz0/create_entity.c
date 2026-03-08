@@ -2,4 +2,7 @@
 #include "rnz0.h"
 
 #include "../../st/pfn_entity_update.h"
+
+#define PSP_RNZ0_WTF
+
 #include "../create_entity.h"
