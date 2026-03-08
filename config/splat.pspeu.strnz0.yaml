@@ -45,7 +45,7 @@ segments:
       - [0x80, c, rnz0_psp/e_unk1B-1E]
       - [0x2730, c, create_entity] # create_entity
       - [0x3718, c, rnz0_psp/e_salem_witch] # en_salem_witch
-      - [0x5860, c, rnz0_psp/e_unk1F-2C]
+      - [0x5860, c, rnz0_psp/e_unk1F-23]
       - [0x8DE8, c, rnz0_psp/e_unk31]
       - [0x9308, c, e_stage_name] # e_stage_name
       - [0xA188, c, e_red_door] # e_red_door
@@ -56,7 +56,7 @@ segments:
       - [0x12498, c, e_misc]
       - [0x12E18, c, collision] # collision
       - [0x14FF0, c, rnz0_psp/e_sealed_door]
-      - [0x16550, c, rnz0_psp/16550]
+      - [0x16550, c, rnz0_psp/e_unk24-26]
       - [0x1AB90, c, popup] # popup
       - [0x1B188, c, e_room_fg] # e_room_fg
       - [0x1B2A0, c, st_common]
@@ -88,11 +88,11 @@ segments:
       - [0x4A158, .data, header]
       - [0x4A198, data]
       - [0x4A400, .rodata, rnz0_psp/e_unk1B-1E]
-      - [0x4A420, .rodata, rnz0_psp/e_unk1F-2C]
+      - [0x4A420, .rodata, rnz0_psp/e_unk1F-23]
       - [0x4A478, .rodata, e_red_door]
       - [0x4A490, .rodata, rnz0_psp/e_unk32-33]
       - [0x4A520, .rodata, rnz0_psp/e_sealed_door]
-      - [0x4A538, .rodata, rnz0_psp/16550]
+      - [0x4A538, .rodata, rnz0_psp/e_unk24-26]
       - [0x4A580, .bss, create_entity]
       - [0x4A5A0, .bss, st_update]
       - [0x4A5E0, .bss, e_collect]
