@@ -44,15 +44,3 @@ INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", func_us_801BF7B0);
 INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", SealedDoorIsNearPlayer);
 
 INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", EntitySealedDoor);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", func_us_801C060C);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", func_us_801C09E8);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", func_us_801C1668);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", func_us_801C1758);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", func_us_801C1CC0);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/unk_39E64", func_us_801C1E14);

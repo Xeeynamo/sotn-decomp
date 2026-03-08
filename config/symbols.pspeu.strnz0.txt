@@ -14,7 +14,7 @@ func_us_801B9E64 = 0x0923CEE0;
 func_us_801BA21C = 0x0923D3F8;
 func_us_801BB000 = 0x0923E620;
 func_us_801BB5D8 = 0x0923EDC8;
-func_us_801C060C = 0x09240468;
+EntityUnk31 = 0x09240468;
 EntityStageNamePopup = 0x09240988; // source=match
 RNZ0_EntityRedDoor = 0x092418F0; // source=match
 Random = 0x09242B10; // source=match
