@@ -412,6 +412,12 @@ void InitRoomEntities(s32 objLayoutId) {
     g_LayoutObjHorizontal = (u16*)OBJ_LAYOUT_HORIZONTAL[objLayoutId];
     g_LayoutObjVertical = (u16*)OBJ_LAYOUT_VERTICAL[objLayoutId];
 
+#ifdef PSP_RNZ0_WTF
+    if (objLayoutId == 8 && g_LayoutObjHorizontal[15] == 0x78) {
+        g_LayoutObjHorizontal[15] += 16;
+    }
+#endif
+
     if (*g_LayoutObjHorizontal != LAYOUT_OBJ_START) {
         g_LayoutObjHorizontal++;
         temp = Random() & 0xFF;
