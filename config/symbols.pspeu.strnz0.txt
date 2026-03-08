@@ -2,6 +2,7 @@ func_us_801B8238 = 0x09237700;
 func_us_801B9430 = 0x09238F80;
 func_us_801B965C = 0x09239298;
 func_us_801B9D78 = 0x09239C80;
+FindFirstEntityAbove = 0x0923A590;
 InitRoomEntities = 0x0923A938;
 UpdateRoomPosition = 0x0923ABA8;
 CreateEntityFromEntity = 0x0923AD10;
