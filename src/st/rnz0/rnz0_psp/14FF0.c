@@ -30,8 +30,3 @@ INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/14FF0", func_pspeu_09250678);
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/14FF0", func_us_801BE600);
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/14FF0", func_us_801BF7B0);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/14FF0", BottomCornerText);
-
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/14FF0", EntityRoomForeground);
-

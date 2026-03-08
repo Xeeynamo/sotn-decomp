@@ -5,7 +5,7 @@ INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", DestroyEntity);
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", PreventEntityFromRespawning);
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_pspeu_09252A40);
+INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", AnimateEntity);
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/1B2A0", func_pspeu_09252BB0);
 

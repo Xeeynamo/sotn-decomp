@@ -54,8 +54,8 @@ segments:
       # - [0x12498, c, rnz0_psp/80]
       - [0x12E18, c, collision] # collision
       - [0x14FF0, c, rnz0_psp/14FF0]
-      # - [0x1AB90, c, rnz0_psp/80] # popup
-      # - [0x1B188, c, rnz0_psp/80] # e_room_fg
+      - [0x1AB90, c, popup] # popup
+      - [0x1B188, c, e_room_fg] # e_room_fg
       - [0x1B2A0, c, rnz0_psp/1B2A0]
       - [0x1F2A8, c, rnz0_psp/st_init_psp] # st_init_chi
       - [0x1F530, c, rnz0_psp/1F530]
@@ -65,6 +65,8 @@ segments:
       - [0x20F00, data]
       - [0x21A60, .data, collision]
       - [0x21E38, data]
+      - [0x220A0, .data, e_room_fg]
+      - [0x22140, data]
       - [0x4A158, .data, header]
       - [0x4A198, data]
       - [0x4A400, .rodata, rnz0_psp/80]

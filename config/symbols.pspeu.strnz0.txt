@@ -61,6 +61,7 @@ BottomCornerText = 0x09252210; // source=match
 EntityRoomForeground = 0x09252808; // source=match
 DestroyEntity = 0x09252920;
 PreventEntityFromRespawning = 0x092529B8;
+AnimateEntity = 0x09252A40;
 AllocEntity = 0x09253320;
 InitializeEntity = 0x09253640;
 EntityDummy = 0x092537E8;
@@ -91,6 +92,7 @@ RNZ0_rooms_layers = 0x09260158;
 RNZ0_cluts = 0x092602E8;
 RNZ0_gfxBanks = 0x092604E0;
 RNZ0_EntityUpdates = 0x09260560;
+g_EInitCommon = 0x092606B0;
 g_EInitDamageNum = 0x092606C0;
 RNZ0_rooms = 0x09260840;
 RNZ0_Overlay = 0x092817D8;
