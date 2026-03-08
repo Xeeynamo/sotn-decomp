@@ -70,7 +70,8 @@ segments:
       - [0x1FA68, c, rnz0_psp/e_blue_flame_table]
       - [0x1FEB8, c, rnz0_psp/e_room_bg] # e_room_bg
       - [0x1FFC8, c, rnz0_psp/e_lock_camera] # e_lock_camera
-      - [0x20228, c, rnz0_psp/20228]
+      - [0x20228, c, rnz0_psp/e_life_max_tank]
+      - [0x203E0, c, rnz0_psp/203E0]
       - [0x20F00, data]
       - [0x213C8, .data, e_red_door]
       - [0x213E0, .data, st_update]

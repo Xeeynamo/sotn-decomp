@@ -79,6 +79,7 @@ segments:
       - [0x2B4E8, c, e_red_eye_bust]
       - [0x2B610, c, e_purple_brick]
       - [0x2B7EC, c, 2B7EC]
+      - [0x2C064, c, e_life_max_tank]
       - [0x2C1CC, c, e_blue_flame_table]
       - [0x2C548, c, e_cannon]
       - [0x2CC04, c, st_update]
