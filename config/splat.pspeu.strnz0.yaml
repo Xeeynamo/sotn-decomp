@@ -47,7 +47,7 @@ segments:
       - [0x3718, c, rnz0_psp/3718] # en_salem_witch
       # - [0x5860, c, rnz0_psp/80]
       - [0x9308, c, e_stage_name] # e_stage_name
-      - [0xA188, c, rnz0_psp/A188] # e_red_door
+      - [0xA188, c, e_red_door] # e_red_door
       - [0xB490, c, rnz0_psp/B490] # st_update
       # - [0xB9C8, c, rnz0_psp/80] # e_particles
       # - [0xCF58, c, rnz0_psp/80]
@@ -65,6 +65,8 @@ segments:
       # - [0x1FFC8, c, rnz0_psp/80] # e_lock_camera
       # - [0x20228, c, rnz0_psp/80]
       - [0x20F00, data]
+      - [0x213C8, .data, e_red_door]
+      - [0x213E0, data]
       - [0x214C8, .data, e_collect]
       - [0x21A10, data]
       - [0x21A60, .data, collision]
@@ -75,7 +77,7 @@ segments:
       - [0x4A198, data]
       - [0x4A400, .rodata, rnz0_psp/80]
       - [0x4A420, .rodata, rnz0_psp/3718]
-      - [0x4A478, .rodata, rnz0_psp/A188]
+      - [0x4A478, .rodata, e_red_door]
       - [0x4A490, .rodata, rnz0_psp/B490]
       - [0x4A520, .rodata, rnz0_psp/14FF0]
       - [0x4A580, .bss, create_entity]

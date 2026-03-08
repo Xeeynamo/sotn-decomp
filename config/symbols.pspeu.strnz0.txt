@@ -111,6 +111,7 @@ RNZ0_spriteBanks = 0x0925FED0;
 RNZ0_rooms_layers = 0x09260158;
 RNZ0_cluts = 0x092602E8;
 RNZ0_gfxBanks = 0x092604E0;
+RNZ0_RedDoorTiles = 0x09260530;
 RNZ0_EntityUpdates = 0x09260560;
 g_EInitObtainable = 0x09260660;
 g_EInitParticle = 0x09260670;
