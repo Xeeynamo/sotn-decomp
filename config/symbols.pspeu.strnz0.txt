@@ -48,10 +48,13 @@ EntityEquipItemDrop = 0x09247840; // source=match
 EntityRelicOrb = 0x09248098; // source=match
 EntityHeartDrop = 0x092491D0; // source=match
 EntityMessageBox = 0x092493A0; // source=match
+CheckColliderOffsets = 0x09249B18;
 EntityUnkId13 = 0x09249C60;
+EntityGreyPuffSpawner = 0x09249DA8;
 EntityExplosionVariants = 0x09249ED8;
 EntityGreyPuff = 0x0924A050;
 EntityIntenseExplosion = 0x0924A1D0;
+PlaySfxPositional = 0x0924A340;
 HitDetection = 0x0924A498; // source=match
 EntityDamageDisplay = 0x0924BC68; // source=match
 EntitySealedDoor = 0x0924C7F8;
@@ -116,6 +119,7 @@ RNZ0_EntityUpdates = 0x09260560;
 g_EInitObtainable = 0x09260660;
 g_EInitParticle = 0x09260670;
 g_EInitInteractable = 0x09260680;
+g_EInitUnkId13 = 0x09260690;
 g_EInitCommon = 0x092606B0;
 g_EInitDamageNum = 0x092606C0;
 RNZ0_rooms = 0x09260840;

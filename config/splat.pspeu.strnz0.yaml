@@ -52,7 +52,7 @@ segments:
       - [0xB9C8, c, e_particles] # e_particles
       - [0xCF58, c, rnz0_psp/CF58]
       - [0xE248, c, e_collect]
-      - [0x12498, c, rnz0_psp/12498]
+      - [0x12498, c, e_misc]
       - [0x12E18, c, collision] # collision
       - [0x14FF0, c, rnz0_psp/14FF0]
       - [0x1AB90, c, popup] # popup
