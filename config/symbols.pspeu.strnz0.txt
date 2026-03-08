@@ -2,9 +2,6 @@ func_us_801B8238 = 0x09237700;
 func_us_801B9430 = 0x09238F80;
 func_us_801B965C = 0x09239298;
 func_us_801B9D78 = 0x09239C80;
-FindFirstEntityAbove = 0x0923A590;
-InitRoomEntities = 0x0923A938;
-UpdateRoomPosition = 0x0923ABA8;
 CreateEntityFromCurrentEntity = 0x0923AC88;
 CreateEntityFromEntity = 0x0923AD10;
 SalemWitchTrySpawnShadow = 0x0923AD98; // source=match
@@ -19,31 +16,14 @@ func_us_801BB000 = 0x0923E620;
 func_us_801BB5D8 = 0x0923EDC8;
 func_us_801C060C = 0x09240468;
 EntityStageNamePopup = 0x09240988; // source=match
-EntityIsNearPlayer = 0x09241808; // source=match
 RNZ0_EntityRedDoor = 0x092418F0; // source=match
 Random = 0x09242B10; // source=match
-Update = 0x09242B50; // source=match
-UpdateStageEntities = 0x09242F30; // source=match
-func_psp_0923AD68 = 0x09243048; // source=match
-func_psp_0923B2F0 = 0x092435D0; // source=match
 EntitySoulStealOrb = 0x09243A60; // source=match
 EntityEnemyBlood = 0x09243FC0; // source=match
 func_us_801C09E8 = 0x092445D8;
 func_us_801C1668 = 0x092457C0;
-func_psp_0923C2F8 = 0x092458C8; // source=match
-func_psp_0923C390 = 0x09245960; // source=match
-BlitChar = 0x092459A0; // source=match
-PrizeDropFall = 0x09245F58; // source=match
-PrizeDropFall2 = 0x09246030; // source=match
-CollectHeart = 0x092461B0; // source=match
-CollectGold = 0x09246250; // source=match
-CollectSubweapon = 0x09246350; // source=match
-CollectHeartVessel = 0x092465E8; // source=match
-CollectLifeVessel = 0x092466A8; // source=match
-CollectDummy = 0x09246700; // source=match
 EntityPrizeDrop = 0x09246728; // source=match
 EntityExplosion = 0x09247540; // source=match
-BlinkItem = 0x092476A8; // source=match
 EntityEquipItemDrop = 0x09247840; // source=match
 EntityRelicOrb = 0x09248098; // source=match
 EntityHeartDrop = 0x092491D0; // source=match
@@ -55,34 +35,28 @@ EntityExplosionVariants = 0x09249ED8;
 EntityGreyPuff = 0x0924A050;
 EntityIntenseExplosion = 0x0924A1D0;
 PlaySfxPositional = 0x0924A340;
-HitDetection = 0x0924A498; // source=match
 EntityDamageDisplay = 0x0924BC68; // source=match
 EntitySealedDoor = 0x0924C7F8;
 func_us_801BCAB0 = 0x0924E280;
 func_us_801BD7D0 = 0x0924F3D8;
 func_us_801BE600 = 0x09250790;
 func_us_801BF7B0 = 0x09252198;
-BottomCornerText = 0x09252210; // source=match
 EntityRoomForeground = 0x09252808; // source=match
 DestroyEntity = 0x09252920;
-PreventEntityFromRespawning = 0x092529B8;
 AnimateEntity = 0x09252A40;
 GetDistanceToPlayerX = 0x09252BB0;
 GetDistanceToPlayerY = 0x09252C20;
 GetSideToPlayer = 0x09252C78;
 MoveEntity = 0x09252D00;
-FallEntity = 0x09252D50;
 UnkCollisionFunc3 = 0x09252D88;
 UnkCollisionFunc2 = 0x09253040;
 AllocEntity = 0x09253320;
-UnkEntityFunc0 = 0x09253390;
 GetAngleBetweenEntities = 0x09253438;
 GetNormalizedAngle = 0x092534B8;
 SetStep = 0x092535B0;
 SetSubStep = 0x09253600;
 InitializeEntity = 0x09253640;
 EntityDummy = 0x092537E8;
-CheckFieldCollision = 0x09253820;
 GetPlayerCollisionWith = 0x092539B0;
 ReplaceBreakableWithItemDrop = 0x09253E88;
 UnkPrimHelper = 0x09253F80;
@@ -100,8 +74,6 @@ EntityCannonLever = 0x09256060;
 func_us_801AC758 = 0x092562F0;
 EntityCannonShot = 0x09256678;
 func_us_801ACAD0 = 0x092567B8;
-InitEntityIds = 0x09256928; // source=match
-RNZ0_Load = 0x09256B38; // source=match
 EntityBreakableNZ0 = 0x09256BB0;
 EntityRedEyeBust = 0x09256F98;
 EntityRelicContainer = 0x092570E8;
@@ -126,8 +98,6 @@ g_EInitUnkId13 = 0x09260690;
 g_EInitCommon = 0x092606B0;
 g_EInitDamageNum = 0x092606C0;
 RNZ0_rooms = 0x09260840;
-RNZ0_Overlay = 0x092817D8;
 RNZ0_PrizeDrops = 0x09281880;
-g_ItemIconSlots = 0x09281C20;
 D_psp_E_RELIC_CONTAINER = 0x09281D28;
 D_psp_E_WALL_DEBRIS = 0x09281DB0;
