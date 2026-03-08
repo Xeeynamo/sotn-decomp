@@ -48,7 +48,7 @@ segments:
       # - [0x5860, c, rnz0_psp/80]
       - [0x9308, c, e_stage_name] # e_stage_name
       - [0xA188, c, rnz0_psp/A188] # e_red_door
-      # - [0xB490, c, rnz0_psp/80] # st_update
+      - [0xB490, c, rnz0_psp/B490] # st_update
       # - [0xB9C8, c, rnz0_psp/80] # e_particles
       # - [0xCF58, c, rnz0_psp/80]
       - [0xE248, c, e_collect]
@@ -76,6 +76,7 @@ segments:
       - [0x4A400, .rodata, rnz0_psp/80]
       - [0x4A420, .rodata, rnz0_psp/3718]
       - [0x4A478, .rodata, rnz0_psp/A188]
+      - [0x4A490, .rodata, rnz0_psp/B490]
       - [0x4A520, .rodata, rnz0_psp/14FF0]
       - [0x4A580, .bss, create_entity]
       - [0x4A5A0, bss, 4A5A0]
