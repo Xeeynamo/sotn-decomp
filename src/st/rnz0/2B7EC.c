@@ -6,5 +6,3 @@ INCLUDE_ASM("st/rnz0/nonmatchings/2B7EC", EntityLeftSecretRoomWall);
 INCLUDE_ASM("st/rnz0/nonmatchings/2B7EC", EntityBottomSecretRoomFloor);
 
 INCLUDE_ASM("st/rnz0/nonmatchings/2B7EC", EntitySecretWallDebris);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/2B7EC", EntityTableWithGlobe);
