@@ -74,6 +74,8 @@ segments:
       - [0x2AF10, .rodata, e_salem_witch]
       - [0x2AF4C, .rodata, prim_helpers]
       - [0x2AF54, c, first_c_file]
+      - [0x2B610, c, e_purple_brick]
+      - [0x2B7EC, c, 2B7EC]
       - [0x2CC04, c, st_update]
       - [0x2D038, c, collision]
       - [0x2E7F4, c, create_entity]
