@@ -43,6 +43,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, rnz0_psp/80]
+      - [0x2730, c, rnz0_psp/2730] # create_entity
       - [0x3718, c, rnz0_psp/3718] # en_salem_witch
       # - [0x5860, c, rnz0_psp/80]
       # - [0x9308, c, rnz0_psp/80] # e_stage_name
