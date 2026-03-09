@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "nz1.h"
 
+extern EInit g_EInitInteractable;
 extern EInit g_EInitEnvironment;
 
 static s32 D_us_80180EDC = 0;
-static s16 D_us_80180EE0[] = {
-    0x0000, 0x0010, 0x0000, 0x0004, 0x0010, 0xFFFC, 0xFFE0, 0x0000,
-};
+
+static s16 D_us_80180EE0[] = {0, 16, 0, 4, 16, -4, -32, 0};
 
 // clang-format off
 static s16 D_us_80180EF0[] = {
@@ -18,48 +18,42 @@ static s16 D_us_80180EF0[] = {
 // clang-format on
 
 static Point16 D_us_80180F10[] = {
-    {0x0490, 0x0370}, {0x0350, 0x0370}, {0x02D0, 0x0370},
-    {0x0190, 0x0370}, {0x00D0, 0x03C0},
+    {0x490, 0x370}, {0x350, 0x370}, {0x2D0, 0x370},
+    {0x190, 0x370}, {0x0D0, 0x3C0},
 };
 
-typedef struct {
-    s16 x, y, r;
-} PosRot;
-
-static PosRot D_us_80180F24[] = {
-    {0x0490, 0x04C0, 0xFF08}, {0x0350, 0x03B0, 0xFFBC},
-    {0x02D0, 0x03B0, 0x0088}, {0x0190, 0x04C0, 0xFE10},
-    {0x00D0, 0x0400, 0x0088},
-};
+static s16 D_us_80180F24[][3] = {
+    {0x490, 0x4C0, ROT(-21.8)},
+    {0x350, 0x3B0, ROT(-6)},
+    {0x2D0, 0x3B0, ROT(12)},
+    {0x190, 0x4C0, ROT(-43.6)},
+    {0x0D0, 0x400, ROT(12)}};
 
 static void BreakBridge(s32 tileIndex) {
     s32 i;
     s32 n;
-    s32 offsetX;
-    s32 offsetY;
-    s32 indexX;
-    s32 indexY;
-    s32 fgIndex;
-    s16* temp_a3;
+    s32 tileX, tileY;
+    s32 dx, dy;
+    s32 tileIdx;
+    s16* ptr;
 
-    offsetX = g_CurrentEntity->posX.i.hi + g_Tilemap.scrollX.i.hi;
-    offsetY = g_CurrentEntity->posY.i.hi + g_Tilemap.scrollY.i.hi;
-    indexX = offsetX - 80;
-    indexY = offsetY - 32;
+    tileX = g_CurrentEntity->posX.i.hi + g_Tilemap.scrollX.i.hi;
+    tileY = g_CurrentEntity->posY.i.hi + g_Tilemap.scrollY.i.hi;
+    dx = tileX - 80;
+    dy = tileY - 32;
 
-    temp_a3 = &D_us_80180EF0[tileIndex * 4];
+    ptr = &D_us_80180EF0[tileIndex * 4];
     n = (g_CurrentEntity->params >> 8) - 1;
-    for (i = 0; i < 2; i++, indexX += 0x80) {
+    for (i = 0; i < 2; i++, dx += 0x80) {
         if (n != i) {
-            offsetX = indexX;
-            offsetY = indexY;
-            fgIndex =
-                (offsetX >> 4) + (((offsetY >> 4) * (g_Tilemap.hSize)) << 4);
+            tileX = dx;
+            tileY = dy;
+            tileIdx = (tileX >> 4) + (((tileY >> 4) * g_Tilemap.hSize) << 4);
 
-            (&g_Tilemap.fg[fgIndex])[0] = temp_a3[0];
-            (&g_Tilemap.fg[fgIndex])[1] = temp_a3[1];
-            (&g_Tilemap.fg[fgIndex])[0x60] = temp_a3[2];
-            (&g_Tilemap.fg[fgIndex])[0x61] = temp_a3[3];
+            (&g_Tilemap.fg[tileIdx])[0] = ptr[0];
+            (&g_Tilemap.fg[tileIdx])[1] = ptr[1];
+            (&g_Tilemap.fg[tileIdx])[0x60] = ptr[2];
+            (&g_Tilemap.fg[tileIdx])[0x61] = ptr[3];
         }
     }
 }
@@ -87,9 +81,9 @@ void EntityBridgeBreakTrigger(Entity* self) {
             if (params == 0 || params == 3) {
                 self->zPriority = 0x6E;
             }
-            self->posX.i.hi = D_us_80180F24[params].x - g_Tilemap.scrollX.i.hi;
-            self->posY.i.hi = D_us_80180F24[params].y - g_Tilemap.scrollY.i.hi;
-            self->rotate = D_us_80180F24[params].r;
+            self->posX.i.hi = D_us_80180F24[params][0] - g_Tilemap.scrollX.i.hi;
+            self->posY.i.hi = D_us_80180F24[params][1] - g_Tilemap.scrollY.i.hi;
+            self->rotate = D_us_80180F24[params][2];
             self->opacity = 0x40;
             self->drawFlags |= ENTITY_OPACITY | ENTITY_ROTATE;
             self->step = 16;
@@ -182,7 +176,7 @@ void EntityBridgeBreakTrigger(Entity* self) {
             self->rotate -= 4;
         }
 
-        if (UnkCollisionFunc3(&D_us_80180EE0) & 1) {
+        if (UnkCollisionFunc3(D_us_80180EE0) & 1) {
             PlaySfxPositional(SFX_FIREBALL_SHOT_A);
             self->step++;
         }
@@ -206,11 +200,6 @@ void EntityBridgeBreakTrigger(Entity* self) {
         break;
     }
 }
-
-#ifdef VERSION_PSP
-INCLUDE_ASM("st/nz1_psp/nonmatchings/nz1/e_breakable_bridge", EntityBridgeBackgroundPiece);
-#else
-extern EInit g_EInitInteractable;
 
 void EntityBridgeBackgroundPiece(Entity* self) {
     Primitive* prim;
@@ -295,4 +284,3 @@ void EntityBridgeBackgroundPiece(Entity* self) {
         break;
     }
 }
-#endif
