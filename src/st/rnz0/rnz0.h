@@ -4,6 +4,8 @@
 
 #include <stage.h>
 
+#define STAGE_IS_RNZ0
+
 #define OVL_EXPORT(x) RNZ0_##x
 
 typedef enum EntityIDs {

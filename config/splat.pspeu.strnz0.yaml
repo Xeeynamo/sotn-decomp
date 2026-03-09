@@ -70,7 +70,7 @@ segments:
       - [0x1F918, c, rnz0_psp/e_red_eye_bust]
       - [0x1FA68, c, rnz0_psp/e_blue_flame_table]
       - [0x1FEB8, c, e_room_bg] # e_room_bg
-      - [0x1FFC8, c, rnz0_psp/e_lock_camera] # e_lock_camera
+      - [0x1FFC8, c, e_lock_camera] # e_lock_camera
       - [0x20228, c, rnz0_psp/e_life_max_tank]
       - [0x203E0, c, rnz0_psp/e_globe_table]
       - [0x20518, c, rnz0_psp/e_left_secret_room_wall]
@@ -88,7 +88,8 @@ segments:
       - [0x4A158, .data, header]
       - [0x4A198, data]
       - [0x4A220, .data, e_room_bg]
-      - [0x4A260, data]
+      - [0x4A260, .data, e_lock_camera]
+      - [0x4A2D8, data]
       - [0x4A400, .rodata, rnz0_psp/e_unk1B-1E]
       - [0x4A420, .rodata, rnz0_psp/e_unk1F-23]
       - [0x4A478, .rodata, e_red_door]
@@ -101,5 +102,6 @@ segments:
       - [0x4A600, bss, 4A600]
       - [0x4A620, .bss, rnz0_psp/st_init_psp]
       - [0x4A778, bss, 4A778]
+      - [0x4A780, .bss, e_lock_camera]
 
   - [0x4A580]
