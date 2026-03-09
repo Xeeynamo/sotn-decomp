@@ -29,6 +29,27 @@ static s16 D_us_80180F24[][3] = {
     {0x190, 0x4C0, ROT(-43.6)},
     {0x0D0, 0x400, ROT(12)}};
 
+static void DropBridgePiece(void) {
+    s32 i, j;
+    s32 dx, dy;
+    s32 tileX, tileY;
+    s32 tileIdx;
+
+    tileX = g_CurrentEntity->posX.i.hi + g_Tilemap.scrollX.i.hi;
+    tileY = g_CurrentEntity->posY.i.hi + g_Tilemap.scrollY.i.hi;
+    dx = tileX - 64;
+    dy = tileY - 32;
+
+    for (i = 0; i < 4; i++) {
+        tileY = i * 16 + dy;
+        for (j = 0; j < 8; j++) {
+            tileX = j * 16 + dx;
+            tileIdx = (tileX >> 4) + (((tileY >> 4) * g_Tilemap.hSize) << 4);
+            g_Tilemap.fg[tileIdx] = 0;
+        }
+    }
+}
+
 static void BreakBridge(s32 tileIndex) {
     s32 i;
     s32 n;
