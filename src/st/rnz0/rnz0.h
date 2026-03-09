@@ -8,6 +8,14 @@
 
 #define OVL_EXPORT(x) RNZ0_##x
 
+enum Palettes {
+    PAL_NONE,
+    PAL_BREAKABLE = 0x236,
+    PAL_UNK_237 = 0x237,
+    PAL_UNK_238 = 0x238,
+    PAL_UNK_239 = 0x239,
+};
+
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
     /* 0x01 */ E_BREAKABLE,
