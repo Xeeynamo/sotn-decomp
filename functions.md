@@ -415,6 +415,7 @@
 | rcat   | e_red_door.rodata                    |       16 |          0 | Yes    |       |     |
 | rcat   | unk_36E8.rodata                      |       16 |          0 | Yes    |       |     |
 | rnz0   | e_red_door.rodata                    |       16 |          0 | Yes    |       |     |
+| rnz0   | e_sealed_door.rodata                 |       16 |          0 | Yes    |       |     |
 | rnz0   | jtbl_pspeu_09281B78                  |       16 |          0 | Yes    |       |     |
 | st0    | e_red_door.rodata                    |       16 |          0 | Yes    |       |     |
 | wrp    | e_red_door.rodata                    |       16 |          0 | Yes    |       |     |
@@ -522,7 +523,7 @@
 | nz0    | e_life_up.rodata                     |       18 |          0 | Yes    |       |     |
 | nz0    | e_skeleton.rodata                    |       18 |          0 | Yes    |       |     |
 | nz1    | e_life_up.rodata                     |       18 |          0 | Yes    |       |     |
-| rnz0   | 80.rodata                            |       18 |          0 | Yes    |       |     |
+| rnz0   | e_unk1B-1E.rodata                    |       18 |          0 | Yes    |       |     |
 | sel    | A578.rodata                          |       18 |          0 | Yes    |       |     |
 | main   | sceGuCheckList                       |       18 |          1 |        |       |     |
 | main   | func_psp_089107DC                    |       18 |          1 |        |       |     |
@@ -1252,6 +1253,7 @@
 | dra    | 5D5BC.rodata                         |       32 |          0 | Yes    |       |     |
 | dra    | 1DDC0.rodata                         |       32 |          0 | Yes    |       |     |
 | no3    | popup.rodata                         |       32 |          0 | Yes    |       |     |
+| rnz0   | e_unk24-26.rodata                    |       32 |          0 | Yes    |       |     |
 | main   | sceGuDrawBufferList                  |       32 |          1 |        |       |     |
 | main   | sceGuGetMemory                       |       32 |          1 |        |       |     |
 | main   | func_psp_08910978                    |       32 |          1 |        |       |     |
@@ -1620,7 +1622,7 @@
 | cat    | e_slime.rodata                       |       40 |          0 | Yes    |       |     |
 | lib    | e_spellbook_magic_tome.rodata        |       40 |          0 | Yes    |       |     |
 | np3    | gurkha.rodata                        |       40 |          0 | Yes    |       |     |
-| rnz0   | 3718.rodata                          |       40 |          0 | Yes    |       |     |
+| rnz0   | e_unk1F-23.rodata                    |       40 |          0 | Yes    |       |     |
 | st0    | 2DAC8.rodata                         |       40 |          0 | Yes    |       |     |
 | main   | func_psp_08910810                    |       40 |          1 |        |       |     |
 | dra    | func_psp_0911EA78                    |       40 |          2 |        |       |     |
@@ -1729,7 +1731,6 @@
 | nz1    | e_collect.rodata                     |       42 |          0 | Yes    |       |     |
 | rare   | e_collect.rodata                     |       42 |          0 | Yes    |       |     |
 | rcat   | e_collect.rodata                     |       42 |          0 | Yes    |       |     |
-| rnz0   | 14FF0.rodata                         |       42 |          0 | Yes    |       |     |
 | wrp    | e_collect.rodata                     |       42 |          0 | Yes    |       |     |
 | dra    | MemcardParse                         |       42 |          3 |        |       |     |
 | dra    | func_psp_090ED1B8                    |       42 |          3 |        |       |     |
@@ -2193,7 +2194,7 @@
 | main   | func_psp_08919E6C                    |       57 |          9 |        |       |     |
 | main   | startCheck                           |       57 |         13 |        |       |     |
 | dra    | func_psp_090E80E0                    |       57 |         15 |        |       |     |
-| rnz0   | CF58.rodata                          |       58 |          0 | Yes    |       |     |
+| rnz0   | e_unk32-33.rodata                    |       58 |          0 | Yes    |       |     |
 | are    | func_pspeu_09247060                  |       58 |          4 |        |       |     |
 | no2    | func_pspeu_0924EAC8                  |       58 |          4 |        |       |     |
 | np3    | func_pspeu_0925B488                  |       58 |          4 |        |       |     |
@@ -4460,7 +4461,7 @@
 | dra    | func_psp_0913B0F8                    |      352 |         34 | Yes    |       |     |
 | are    | func_pspeu_09257778                  |      354 |         31 |        |       |     |
 | dai    | func_pspeu_092471E8                  |      354 |         31 |        |       |     |
-| rnz0   | func_us_801C060C                     |      354 |         65 |        |       |     |
+| rnz0   | EntityUnk31                          |      354 |         65 |        |       |     |
 | are    | func_pspeu_092594B0                  |      355 |         71 |        |       |     |
 | nz1    | func_pspeu_0924D6D8                  |      355 |         71 |        |       |     |
 | no4    | func_pspeu_09249030                  |      356 |         34 |        |       |     |
@@ -4772,7 +4773,7 @@
 | ric    | func_pspeu_092C9C98                  |      544 |         53 | Yes    |       |     |
 | dra    | func_psp_09143758                    |      546 |        139 |        |       |     |
 | maria  | func_pspeu_092B92F0                  |      550 |         56 | Yes    |       |     |
-| rnz0   | func_us_801B7C8C                     |      553 |         69 |        |       |     |
+| rnz0   | EntityUnk1A                          |      553 |         69 |        |       |     |
 | dra    | func_psp_090F2258                    |      554 |         79 |        |       |     |
 | dra    | func_psp_09131CA8                    |      555 |         41 |        |       |     |
 | rcat   | func_pspeu_09247BC8                  |      555 |         81 |        |       |     |
