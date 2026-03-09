@@ -4,30 +4,4 @@ NZ1_rooms_layers = 0x801804E0;
 NZ1_gfxBanks = 0x801807CC;
 NZ1_pStObjLayoutHorizontal = 0x80180820;
 NZ1_pStObjLayoutVertical = 0x801808F4;
-g_EInitInteractable = 0x80180B58;
-g_EInitEnvironment = 0x80180B94;
-NZ1_BackgroundBlockInit = 0x80180D08;
-NZ1_RedDoorTiles = 0x80180D80;
-entityLockCameraHitbox = 0x80180DA0;
-entityLockCameraData = 0x80180DA4;
-entityLockCameraTilemapProps = 0x80180DA8;
-g_WaterSounds = 0x801810CC;
-g_WaterXTbl = 0x801810D0;
-NZ1_PrizeDrops = 0x8018111C;
 NZ1_rooms = 0x8018233C;
-PlayerIsWithinHitbox = 0x801A5E18;
-NZ1_EntityLockCamera = 0x801A5E9C; // source=match
-EntityBridgeBackgroundPiece = 0x801A7118;
-EntityBreakableWall = 0x801A9154;
-EntityBreakableWallPartial = 0x801A94CC;
-EntitySecretWallDebris = 0x801A97C4;
-EntityWaterForeground = 0x801A9BEC;
-Random = 0x801AC6E0; // source=match
-CreateEntityFromEntity = 0x801AEDCC; // source=match
-DestroyEntity = 0x801AFB1C; // source=match
-GetSideToPlayer = 0x801AFE8C; // source=match
-MoveEntity = 0x801AFED0; // source=match
-AllocEntity = 0x801B038C; // source=match
-InitializeEntity = 0x801B082C; // source=match
-PlaySfxPositional = 0x801B5BE0; // source=match
-BottomCornerText = 0x801B745C; // source=match

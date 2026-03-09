@@ -25,7 +25,7 @@ void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
         }
 #ifdef BG_BLOCK_NEEDS_SCALE
         if (self->params == 1) {
-            self->scaleX = self->scaleY = 0x0200;
+            self->scaleX = self->scaleY = 0x200;
         }
 #endif
     }

@@ -41,6 +41,11 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self) {
         self->ext.lockCamera.unk88 = 2;
     }
 
+    switch (params) {
+    default:
+        break;
+    }
+
     if (PlayerIsWithinHitbox(self)) {
         var_s2 = GetSideToPlayer();
         if (self->ext.lockCamera.unk7C) {
@@ -93,8 +98,13 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self) {
         self->ext.lockCamera.unk88 = 2;
     }
 
+    switch (self->params) {
+    case 4:
+        break;
+    }
+
     if (self->ext.lockCamera.unk7E) {
-        if (!(--self->ext.lockCamera.unk8A)) {
+        if (!--self->ext.lockCamera.unk8A) {
             tilemap->x = self->ext.lockCamera.unk80;
             tilemap->y = self->ext.lockCamera.unk82;
             tilemap->width = self->ext.lockCamera.unk84;
