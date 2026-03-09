@@ -30,6 +30,10 @@ format-symbols.run
 .ninja_log
 .ninja_deps
 build.ninja
+build.ninja.version
 
 # objdiff stuff
 objdiff*.json
+
+# rust
+target/**

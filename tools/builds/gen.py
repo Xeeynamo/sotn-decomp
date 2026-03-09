@@ -15,8 +15,9 @@ entries = dict()
 linker_scripts = set()
 
 extra_cpp_defs = ""
-sotn_progress_report = os.environ.get("SOTN_PROGRESS_REPORT") == "1"
-skip_check = os.environ.get("SKIP_CHECK") == "1"
+sotn_progress_report = "SOTN_PROGRESS_REPORT" in os.environ
+skip_check = "SKIP_CHECK" in os.environ
+force_symbols = "FORCE_SYMBOLS" in os.environ
 dummy_object = bytes()
 if sotn_progress_report:
     # https://decomp.wiki/en/tools/decomp-dev
@@ -166,10 +167,8 @@ def add_c_psx(
         rule="psx-cc",
         outputs=output,
         inputs=file_name,
-        implicit=[
-            f"src/.assets_build_done_{ver}",
-            ld_path,
-        ],
+        implicit=[ld_path],
+        order_only=[f"src/.assets_build_done_{ver}"],
         variables={
             "version": ver,
             "cpp_flags": cpp_flags,
@@ -187,7 +186,7 @@ def add_c_psx(
     nw.build(
         rule="phony",
         outputs=file_name,
-        implicit=[f"src/.assets_build_done_{ver}"],
+        order_only=[f"src/.assets_build_done_{ver}"],
     )
 
     return output
@@ -294,14 +293,9 @@ def add_c_psp(
         outputs=output,
         inputs=file_name,
         implicit=[
-            f"src/.assets_build_done_{ver}",
             ld_path,
-            "include/types.h",
-            "include/common.h",
-            "include/game.h",
-            "include/entity.h",
-            "include/sfx.h",
         ],
+        order_only=[f"src/.assets_build_done_{ver}"],
         variables={
             "version": ver,
             "cpp_flags": cpp_flags,
@@ -320,7 +314,7 @@ def add_c_psp(
     nw.build(
         rule="phony",
         outputs=file_name,
-        implicit=[f"src/.assets_build_done_{ver}"],
+        order_only=[f"src/.assets_build_done_{ver}"],
     )
     return output
 
@@ -516,12 +510,13 @@ def add_weapon_splat_config(nw: ninja_syntax.Writer, ver: str, splat_config):
         inputs=weapons,
     )
 
-    dyn_symbols_file = build_path(ver, f"config/dyn_syms.{ovl_name}.txt")
-    nw.build(
-        rule="export-dynamic-symbols-dummy",
-        outputs=[dyn_symbols_file],
-        inputs=[f"config/splat.{ver}.weapon.yaml"],
-    )
+    if force_symbols:
+        dyn_symbols_file = build_path(ver, f"config/dyn_syms.{ovl_name}.txt")
+        nw.build(
+            rule="export-dynamic-symbols-dummy",
+            outputs=[dyn_symbols_file],
+            inputs=[f"config/splat.{ver}.weapon.yaml"],
+        )
 
 
 def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
@@ -532,11 +527,15 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
     ld_path = str(splat_config["options"]["ld_script_path"])
 
     if not sotn_progress_report:
+        linker_scripts.add(ld_path)
+
+    dyn_symbols_file = ""
+    dyn_syms_splat_config = ""
+    if force_symbols and not sotn_progress_report:
         dyn_symbols_file = build_path(ver, f"config/dyn_syms.{ovl_name}.txt")
         dyn_syms_splat_config = build_path(
             ver, f"config/splat.{ver}.{ovl_name}.yaml.dyn_syms"
         )
-        linker_scripts.add(ld_path)
         nw.build(
             rule="dynamic-splat-config",
             inputs=dyn_symbols_file,
@@ -557,7 +556,7 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
     src_path = str(splat_config["options"]["src_path"])
 
     dynamic_symbols = ""
-    if "FORCE_SYMBOLS" in os.environ and Path(dyn_symbols_file).exists():
+    if force_symbols and Path(dyn_symbols_file).exists():
         dynamic_symbols = dyn_syms_splat_config
 
     nw.build(
@@ -729,12 +728,13 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
             target_f_path = os.path.join(os.path.dirname(target_path), gfx_name)
             add_gfx_stage(nw, target_f_path, asset_path, stage_gfx_path)
 
-    nw.build(
-        rule="export-dynamic-symbols",
-        outputs=[dyn_symbols_file],
-        inputs=[file_name],
-        implicit=[output_elf],
-    )
+    if force_symbols:
+        nw.build(
+            rule="export-dynamic-symbols",
+            outputs=[dyn_symbols_file],
+            inputs=[file_name],
+            implicit=[output_elf],
+        )
 
 
 def add_checksum(nw: ninja_syntax.Writer, ver: str, file_name: str):
@@ -830,13 +830,17 @@ with open(build_ninja, "w") as f:
         command=(
             "VERSION=$version"
             " tools/sotn_str/target/release/sotn_str process -p -f $in"
-            " | .venv/bin/python3 tools/mwccgap/mwccgap.py $out --src-dir $src_dir"
+            " | bin/mw -o $out --src-dir $src_dir"
             " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path tools/pspas/target/release/pspas"
-            " --asm-dir-prefix asm/pspeu --target-encoding $encoding --macro-inc-path include/macro.inc"
+            " --asm-dir asm/pspeu --target-encoding $encoding --macro-inc-path include/macro.inc"
+            " -gccdep -MD"  # for metrowerks, "system" headers seem to be anything included with angle brackets
             f" -gccinc -Iinclude -Iinclude/pspsdk -D_internal_version_$version -DSOTN_STR {extra_cpp_defs} -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
             " $opt_level -opt nointrinsics"
+            " -"
         ),
         description="psp cc $in",
+        depfile="$out.d",
+        deps="gcc",
     )
     nw.rule(
         "psp-as",
@@ -850,12 +854,12 @@ with open(build_ninja, "w") as f:
     )
     nw.rule(
         "assets-extract",
-        command="bin/sotn-assets extract $in && touch $out",
+        command="bin/sotn-assets extract-assets $in && touch $out",
         description="extract $in",
     )
     nw.rule(
         "assets-build",
-        command="bin/sotn-assets build $in && mkdir -p $$(dirname $out) && touch $out",
+        command="bin/sotn-assets build-assets $in && mkdir -p $$(dirname $out) && touch $out",
         description="build $in",
     )
     nw.rule(

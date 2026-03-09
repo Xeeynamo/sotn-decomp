@@ -26,9 +26,8 @@ build: $(OVERLAY)
 $(BUILD_DIR):
 	mkdir -p $@
 $(ASSETS): $(BUILD_DIR)
-	cd $(ROOT_DIR) && make bin/sotn-assets
-	cd $(ROOT_DIR) && bin/sotn-assets extract config/assets.pspeu.yaml
-	cd $(ROOT_DIR) && bin/sotn-assets build config/assets.pspeu.yaml
+	cd $(ROOT_DIR) && ./sotn.sh extract-assets config/assets.pspeu.yaml
+	cd $(ROOT_DIR) && ./sotn.sh build-assets config/assets.pspeu.yaml
 	touch $@
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR) $(ASSETS)
