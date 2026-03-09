@@ -42,29 +42,38 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, rnz0_psp/80]
+      - [0x80, c, rnz0_psp/e_unk1B-1E]
       - [0x2730, c, create_entity] # create_entity
-      - [0x3718, c, rnz0_psp/3718] # en_salem_witch
-      # - [0x5860, c, rnz0_psp/80]
+      - [0x3718, c, rnz0_psp/e_salem_witch] # en_salem_witch
+      - [0x5860, c, rnz0_psp/e_unk1F-23]
+      - [0x8DE8, c, rnz0_psp/e_unk31]
       - [0x9308, c, e_stage_name] # e_stage_name
       - [0xA188, c, e_red_door] # e_red_door
       - [0xB490, c, st_update] # st_update
       - [0xB9C8, c, e_particles] # e_particles
-      - [0xCF58, c, rnz0_psp/CF58]
+      - [0xCF58, c, rnz0_psp/e_unk32-33]
       - [0xE248, c, e_collect]
       - [0x12498, c, e_misc]
       - [0x12E18, c, collision] # collision
-      - [0x14FF0, c, rnz0_psp/14FF0]
+      - [0x14FF0, c, rnz0_psp/e_sealed_door]
+      - [0x16550, c, rnz0_psp/e_unk24-26]
       - [0x1AB90, c, popup] # popup
       - [0x1B188, c, e_room_fg] # e_room_fg
       - [0x1B2A0, c, st_common]
       - [0x1C900, c, prim_helpers]
-      - [0x1D3F8, c, rnz0_psp/1D3F8]
+      - [0x1D3F8, c, rnz0_psp/e_unk1A]
+      - [0x1DC08, c, rnz0_psp/e_unk34-36]
+      - [0x1E760, c, rnz0_psp/e_purple_brick]
+      - [0x1E9E0, c, rnz0_psp/e_cannon]
       - [0x1F2A8, c, rnz0_psp/st_init_psp] # st_init_chi
-      - [0x1F530, c, rnz0_psp/1F530]
-      # - [0x1FEB8, c, rnz0_psp/80] # e_room_bg
-      # - [0x1FFC8, c, rnz0_psp/80] # e_lock_camera
-      # - [0x20228, c, rnz0_psp/80]
+      - [0x1F530, c, rnz0_psp/e_breakable]
+      - [0x1F918, c, rnz0_psp/e_red_eye_bust]
+      - [0x1FA68, c, rnz0_psp/e_blue_flame_table]
+      - [0x1FEB8, c, rnz0_psp/e_room_bg] # e_room_bg
+      - [0x1FFC8, c, rnz0_psp/e_lock_camera] # e_lock_camera
+      - [0x20228, c, rnz0_psp/e_life_max_tank]
+      - [0x203E0, c, rnz0_psp/e_globe_table]
+      - [0x20518, c, rnz0_psp/e_left_secret_room_wall]
       - [0x20F00, data]
       - [0x213C8, .data, e_red_door]
       - [0x213E0, .data, st_update]
@@ -78,11 +87,12 @@ segments:
       - [0x22140, data]
       - [0x4A158, .data, header]
       - [0x4A198, data]
-      - [0x4A400, .rodata, rnz0_psp/80]
-      - [0x4A420, .rodata, rnz0_psp/3718]
+      - [0x4A400, .rodata, rnz0_psp/e_unk1B-1E]
+      - [0x4A420, .rodata, rnz0_psp/e_unk1F-23]
       - [0x4A478, .rodata, e_red_door]
-      - [0x4A490, .rodata, rnz0_psp/CF58]
-      - [0x4A520, .rodata, rnz0_psp/14FF0]
+      - [0x4A490, .rodata, rnz0_psp/e_unk32-33]
+      - [0x4A520, .rodata, rnz0_psp/e_sealed_door]
+      - [0x4A538, .rodata, rnz0_psp/e_unk24-26]
       - [0x4A580, .bss, create_entity]
       - [0x4A5A0, .bss, st_update]
       - [0x4A5E0, .bss, e_collect]

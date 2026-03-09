@@ -27,7 +27,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self);
 void EntityLeftSecretRoomWall(Entity* self);
 void EntityBottomSecretRoomFloor(Entity* self);
 void EntitySecretWallDebris(Entity* self);
-void func_us_801B7C8C(Entity* self);
+void EntityUnk1A(Entity* self);
 void func_us_801B8238(Entity* self);
 void func_us_801B9430(Entity* self);
 void func_us_801B965C(Entity* self);
@@ -50,7 +50,7 @@ void EntityCannonLever(Entity* self);
 void func_us_801AC758(Entity* self);
 void EntityCannonShot(Entity* self);
 void func_us_801ACAD0(Entity* self);
-void func_us_801C060C(Entity* self);
+void EntityUnk31(Entity* self);
 void func_us_801C09E8(Entity* self);
 void func_us_801C1668(Entity* self);
 void func_us_801C1758(Entity* self);
@@ -88,7 +88,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityLeftSecretRoomWall,
     EntityBottomSecretRoomFloor,
     EntitySecretWallDebris,
-    func_us_801B7C8C,
+    EntityUnk1A,
     func_us_801B8238,
     func_us_801B9430,
     func_us_801B965C,
@@ -111,7 +111,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801AC758,
     EntityCannonShot,
     func_us_801ACAD0,
-    func_us_801C060C,
+    EntityUnk31,
     func_us_801C09E8,
     func_us_801C1668,
     func_us_801C1758,
