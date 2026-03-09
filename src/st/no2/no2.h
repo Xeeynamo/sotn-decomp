@@ -51,8 +51,8 @@ enum EntityIDs {
     E_SKELERANG_BOOMERANG,  // EntitySkelerangBoomerang
     E_SKELERANG_UNKNOWN,    // EntitySkelerangUnknown
     E_UNK_19,               // func_us_801B3D8C
-    E_UNK_1A,               // func_us_801B3F30
-    E_UNK_1B,               // func_us_801B4148
+    E_FLOORTRAP,            // func_us_801B3F30
+    E_CTULHU,               // func_us_801B4148
     E_UNK_1C,               // func_us_801B41A4
     E_UNK_1D,               // func_us_801B4210
     E_3D_BACKGROUND_HOUSE,  // Entity3DBackgroundHouse

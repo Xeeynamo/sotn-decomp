@@ -64,7 +64,7 @@ enum EntityIDs {
     E_CAVERN_BACKGROUND_LOSSOTH,        // EntityCavernBackgroundLossoth
     E_CAVERN_BACKGROUND_DISCUS_LORD,    // EntityCavernBackgroundDiscusLord
     E_LAVA_EMBERS,                      // func_us_801C56A0
-    E_UNK_1A,                           // func_us_801CA13C
+    E_FLOORTRAP,                        // func_us_801CA13C
     E_SPIKE_ROOM_LIGHT_SWITCH,          // EntitySpikeRoomLightSwitch
     E_SPIKES,                           // EntitySpikes
     E_SPIKES_PARTS,                     // EntitySpikesParts

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz0.h"
 
-static u32 D_us_80180B10[] = {0x00FF0140};
-static u32 D_us_80180B14[] = {0x26022502, 0x26022702, 0x00000000};
+static u8 anim1[] = {64, 1, 255, 0};
+static u8 anim2[] = {2, 37, 2, 38, 2, 39, 2, 38, 0};
 
 ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
     {
@@ -13,7 +13,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .drawFlags = ENTITY_DEFAULT,
         .blendMode = BLEND_TRANSP,
         .flags = 0,
-        .animFrames = D_us_80180B10,
+        .animFrames = anim1,
     },
     {
         .animSet = ANIMSET_OVL(1),
@@ -23,7 +23,7 @@ ObjInit2 OVL_EXPORT(BackgroundBlockInit)[] = {
         .drawFlags = ENTITY_SCALEY | ENTITY_SCALEX,
         .blendMode = BLEND_TRANSP | BLEND_ADD,
         .flags = 0,
-        .animFrames = D_us_80180B14,
+        .animFrames = anim2,
     }};
 
 #define BG_BLOCK_NEEDS_SCALE
