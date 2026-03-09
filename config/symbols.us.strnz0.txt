@@ -5,7 +5,6 @@ RNZ0_RedDoorTiles = 0x80180B48;
 RNZ0_PrizeDrops = 0x80180CC8;
 sprites_rnz0_13 = 0x801AA72C;
 sprites_rnz0_14 = 0x801AA8E4;
-RNZ0_EntityBackgroundBlock = 0x801AAF54; // source=match
 RNZ0_EntityLockCamera = 0x801AB034; // source=match
 EntityBreakableNZ0 = 0x801AB1F0; // source=duplicate
 EntityRedEyeBust = 0x801AB4E8; // source=match
