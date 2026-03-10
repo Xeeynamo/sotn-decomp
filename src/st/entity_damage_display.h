@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-extern u16 g_EInitDamageNum[];
+extern EInit g_EInitDamageNum;
 extern u16 g_eDamageDisplayClut[];
 
 // params: (0xC000) "GUARD" (exclusive)
@@ -20,7 +20,7 @@ void EntityDamageDisplay(Entity* self) {
 
     if (self->ext.ndmg.unk88) {
         self->posX.val = PLAYER.posX.val;
-        self->posY.val = PLAYER.posY.val + -FIX(16.0);
+        self->posY.val = PLAYER.posY.val - FIX(16.0);
     }
 
     switch (self->step) {

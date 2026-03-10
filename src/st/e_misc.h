@@ -1,10 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+extern EInit g_EInitUnkId13;
+extern EInit g_EInitParticle;
+
+extern void EntityExplosionVariants(Entity* entity);
+extern void EntityGreyPuff(Entity* entity);
+
 // arg0 is a pointer to X and Y offsets from the current entity.
 // iterates through those locations, running CheckCollision on
 // each location, returning a set of bit flags indicating which
 // offset X,Y locations resulted in a collision (with EFFECT_SOLID)
-
 u8 CheckColliderOffsets(s16* arg0, u8 facing) {
     u8 ret = 0;
     Collider collider;
@@ -28,8 +33,6 @@ u8 CheckColliderOffsets(s16* arg0, u8 facing) {
 
     return ret;
 }
-
-extern u16 g_EInitUnkId13[];
 
 // EntityParticleTrail as a possible name here?
 // params: The E_EXPLOSION params to use for the trail
@@ -62,16 +65,8 @@ void EntityUnkId13(Entity* self) {
 }
 
 static s16 explosionVariantSizes[] = {
-    /* FE8 */ 0x0010,
-    /* FEA */ 0x0020,
-    /* FEC */ 0x0030,
-    /* FEE */ 0x0040,
-    /* FF0 */ 0x0050,
-    /* FF2 */ 0x0060,
-    /* FF4 */ 0x0070,
-    /* FF6 */ 0x0000,
-};
-extern void EntityExplosionVariants(Entity* entity);
+    0x10, 0x20, 0x30, 0x40, 0x50, 0x60, 0x70, 0x00};
+
 void EntityExplosionVariantsSpawner(
     Entity* self, u8 count, u8 params, s16 x, s16 y, u8 index, s16 xGap) {
     Entity* newEntity;
@@ -95,8 +90,6 @@ void EntityExplosionVariantsSpawner(
         }
     }
 }
-
-extern void EntityGreyPuff(Entity* entity);
 
 void EntityGreyPuffSpawner(
     Entity* self, u8 count, u8 params, s16 x, s16 y, u8 index, s16 xGap) {
@@ -170,7 +163,6 @@ static u16 explode_lifetime[] = {
 // Creates 4 different explosion animations for when objects or enemies are
 // destroyed or killed. The animations are more intense as self->params
 // increases (from 0 to 3).
-
 void EntityExplosionVariants(Entity* self) {
     if (!self->step) {
         self->velocityY = explode_yVel[self->ext.destructAnim.index];
@@ -230,7 +222,6 @@ static u32 g_olroxDroolCollOffsets[] = {
     /* 1048 */ 0x000000FF,
 };
 
-extern u16 g_EInitParticle[];
 void EntityOlroxDrool(Entity* self) {
     s16 primIndex;
     Primitive* prim;
@@ -257,8 +248,8 @@ void EntityOlroxDrool(Entity* self) {
             prim->b0 = 255;
             prim->b1 = 16;
             prim->priority = self->zPriority + 1;
-            prim->drawMode |= (DRAW_TPAGE2 + DRAW_TPAGE + DRAW_COLORS +
-                               DRAW_UNK02 + DRAW_TRANSP);
+            prim->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
+                              DRAW_UNK02 | DRAW_TRANSP;
             prim = prim->next;
         }
         break;
@@ -603,6 +594,7 @@ void func_801966B0(u16* sensors) {
 #endif
 
 extern PfnEntityUpdate OVL_EXPORT(EntityUpdates)[];
+
 void MakeEntityFromId(u16 entityId, Entity* src, Entity* dst) {
     DestroyEntity(dst);
     dst->entityId = entityId;
@@ -648,12 +640,11 @@ void MakeExplosions(void) {
     }
 }
 
+extern u8 g_bigRedFireballAnim[];
+
 // Not used in any current overlays. Seems to resemble Gaibon's big fireball,
 // but is not actually called in NZ0. Will need to check future overlays for
 // any actual uses.
-
-extern u8 g_bigRedFireballAnim[];
-
 void EntityBigRedFireball(Entity* self) {
     s32 speedTemp;
 
