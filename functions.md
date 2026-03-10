@@ -2590,7 +2590,7 @@
 | rcat   | func_pspeu_0923F0B8                  |       71 |          7 |        |       |     |
 | rcat   | func_pspeu_0924A1F8                  |       71 |          7 |        |       |     |
 | rnz0   | func_pspeu_09246250                  |       71 |          7 |        |       |     |
-| rnz0   | ReplaceBreakableWithItemDrop         |       71 |          7 |        |       |     |
+| rnz0   | func_pspeu_09253E88                  |       71 |          7 |        |       |     |
 | st0    | func_pspeu_09250580                  |       71 |          7 |        |       |     |
 | wrp    | func_psp_0923CC80                    |       71 |          7 |        |       |     |
 | wrp    | func_psp_09243F28                    |       71 |          7 |        |       |     |
