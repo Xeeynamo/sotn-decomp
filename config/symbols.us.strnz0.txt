@@ -1,13 +1,9 @@
 g_EInitInteractable = 0x801809B4;
-g_EInitLockCamera = 0x801809CC;
 g_EInitCommon = 0x801809D8;
 RNZ0_RedDoorTiles = 0x80180B48;
 RNZ0_PrizeDrops = 0x80180CC8;
 sprites_rnz0_13 = 0x801AA72C;
 sprites_rnz0_14 = 0x801AA8E4;
-RNZ0_EntityBackgroundBlock = 0x801AAF54; // source=match
-RNZ0_EntityLockCamera = 0x801AB034; // source=match
-EntityBreakableNZ0 = 0x801AB1F0; // source=duplicate
 EntityRedEyeBust = 0x801AB4E8; // source=match
 EntityPurpleBrickScrollingBackground = 0x801AB610; // source=match
 EntityLeftSecretRoomWall = 0x801AB7EC; // source=duplicate
@@ -37,7 +33,6 @@ SetStep = 0x801B0C5C; // source=match
 SetSubStep = 0x801B0C7C; // source=match
 InitializeEntity = 0x801B0D2C; // source=match
 GetPlayerCollisionWith = 0x801B10D0; // source=match
-ReplaceBreakableWithItemDrop = 0x801B1414; // source=match
 CheckColliderOffsets = 0x801B3E3C; // source=match
 EntityGreyPuffSpawner = 0x801B416C; // source=match
 PlaySfxPositional = 0x801B60E0; // source=match

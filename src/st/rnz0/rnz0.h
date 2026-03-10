@@ -4,7 +4,17 @@
 
 #include <stage.h>
 
+#define STAGE_IS_RNZ0
+
 #define OVL_EXPORT(x) RNZ0_##x
+
+enum Palettes {
+    PAL_NONE,
+    PAL_BREAKABLE = 0x236,
+    PAL_UNK_237 = 0x237,
+    PAL_UNK_238 = 0x238,
+    PAL_UNK_239 = 0x239,
+};
 
 typedef enum EntityIDs {
     /* 0x00 */ E_NONE,
@@ -33,16 +43,16 @@ typedef enum EntityIDs {
     /* 0x17 */ E_LEFT_SECRET_WALL,
     /* 0x18 */ E_BOTT_SECRET_FLOOR,
     /* 0x19 */ E_WALL_DEBRIS,
-    /* 0x1A */ E_UNK_1A,
-    /* 0x1B */ E_UNK_1B,
+    /* 0x1A */ E_FLOORTRAP,
+    /* 0x1B */ E_CTULHU,
     /* 0x1C */ E_UNK_1C,
     /* 0x1D */ E_UNK_1D,
     /* 0x1E */ E_UNK_1E,
-    /* 0x1F */ E_UNK_1F,
+    /* 0x1F */ E_FIRE_DEMON,
     /* 0x20 */ E_UNK_20,
     /* 0x21 */ E_UNK_21,
     /* 0x22 */ E_UNK_22,
-    /* 0x23 */ E_UNK_23,
+    /* 0x23 */ E_LESSER_DEMON,
     /* 0x24 */ E_UNK_24,
     /* 0x25 */ E_UNK_25,
     /* 0x26 */ E_UNK_26,
@@ -56,10 +66,10 @@ typedef enum EntityIDs {
     /* 0x2E */ E_UNK_2E,
     /* 0x2F */ E_CANNON_SHOT,
     /* 0x30 */ E_UNK_30,
-    /* 0x31 */ E_UNK_31,
-    /* 0x32 */ E_UNK_32,
+    /* 0x31 */ E_BITTERFLY,
+    /* 0x32 */ E_IMP,
     /* 0x33 */ E_UNK_33,
-    /* 0x34 */ E_UNK_34,
+    /* 0x34 */ E_GREMLIN,
     /* 0x35 */ E_UNK_35,
     /* 0x36 */ E_UNK_36,
     /* 0x37 */ E_SALEM_WITCH,
