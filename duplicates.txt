@@ -3348,7 +3348,6 @@
 | 0.90 | true     | SsSepClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSepClose.s 
 | 0.90 | true     | SsSeqClose                          | asm/us/main/matchings/psxsdk/libsnd/ssclose/SsSeqClose.s 
 | 0.90 | true     | SsSeqStop                           | asm/us/main/matchings/psxsdk/libsnd/stop/SsSeqStop.s 
-| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/libpress/func_801BA6A8.s 
 | 1.00 | true     | func_801B9924                       | asm/us/st/sel/matchings/stream/func_801B9924.s 
 -------------------------------------------------------------------------------
 | 0.92 | true     | DMACallback                         | asm/us/main/matchings/psxsdk/libetc/intr/DMACallback.s 
@@ -4616,6 +4615,9 @@
 | 1.00 | true     | SpuRead                             | asm/us/main/matchings/psxsdk/libspu/s_r/SpuRead.s 
 | 1.00 | true     | SpuWrite                            | asm/us/main/matchings/psxsdk/libspu/s_w/SpuWrite.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | SpuSetVoiceAttr                     | asm/us/main/matchings/psxsdk/libspu/s_sva/SpuSetVoiceAttr.s 
+| 0.90 | true     | func_801BA6A8                       | asm/us/st/sel/matchings/libpress/func_801BA6A8.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_8016B97C                       | asm/us/ric/matchings/2F8E8/func_8016B97C.s 
 | 0.98 | false    | BO6_RicEntitySubwpnReboundStone     | asm/us/boss/bo6/nonmatchings/us_3E79C/BO6_RicEntitySubwpnReboundStone.s 
 -------------------------------------------------------------------------------
@@ -5051,14 +5053,14 @@
 | 1.00 | true     | func_us_801D0F0C                    | asm/us/st/no1/matchings/e_bone_archer/func_us_801D0F0C.s 
 | 1.00 | true     | func_us_801DD410                    | asm/us/st/no4/matchings/e_bone_archer/func_us_801DD410.s 
 -------------------------------------------------------------------------------
+| 1.00 | true     | func_us_801D563C                    | asm/us/st/no1/matchings/e_medusa_head/func_us_801D563C.s 
+| 1.00 | true     | func_us_801C01C8                    | asm/us/st/nz1/matchings/e_medusa_head/func_us_801C01C8.s 
+-------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801D5808                    | asm/us/st/no1/matchings/e_medusa_head/func_us_801D5808.s 
 | 1.00 | true     | func_us_801C0394                    | asm/us/st/nz1/matchings/e_medusa_head/func_us_801C0394.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801D582C                    | asm/us/st/no1/matchings/e_medusa_head/func_us_801D582C.s 
 | 1.00 | true     | func_us_801C03B8                    | asm/us/st/nz1/matchings/e_medusa_head/func_us_801C03B8.s 
--------------------------------------------------------------------------------
-| 1.00 | true     | func_us_801D563C                    | asm/us/st/no1/matchings/e_medusa_head_spawner/func_us_801D563C.s 
-| 1.00 | true     | func_us_801C01C8                    | asm/us/st/nz1/matchings/e_medusa_head_spawner/func_us_801C01C8.s 
 -------------------------------------------------------------------------------
 | 1.00 | true     | func_us_801D49E4                    | asm/us/st/no1/matchings/e_skeleton_ape/func_us_801D49E4.s 
 | 1.00 | true     | func_us_801DD688                    | asm/us/st/no4/matchings/e_skeleton_ape/func_us_801DD688.s 
