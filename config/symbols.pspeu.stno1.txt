@@ -153,4 +153,7 @@ g_EInitSkeletonApe = 0x092755D8;
 g_EInitSkeletonApeBarrel = 0x092755E8;
 g_EInitSkeletonApePunch = 0x092755F8;
 NO1_rooms = 0x09275628;
+NO1_Overlay = 0x09297708;
+NO1_RedDoorTiles = 0x09297750;
+NO1_PrizeDrops = 0x09297888;
 D_psp_E_BREAKABLE_DEBRIS = 0x0929A590;
