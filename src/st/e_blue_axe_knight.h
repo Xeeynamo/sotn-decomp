@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+extern EInit g_EInitAxeKnight;
+extern EInit g_EInitAxeKnightAxe;
+
 // Code in this file is very similar to entity_axe_knight.h
 // but has some additional attacks and code not present in the lower
 // level green axe knight
@@ -103,10 +106,9 @@ static void AxeKnightUnkFunc1(AxePrim* prim) {
     }
 }
 
-extern EInit g_EInitAxeKnight;
+extern s16* SPRITE_BANK[];
 
 // Called by EntityAxeKnightBlue
-extern s16* SPRITE_BANK[];
 static s32 func_us_801CA51C(Entity* axeKnight) {
     Entity* entity;
     Primitive* prim;
@@ -719,7 +721,6 @@ static void EntityAxeKnightRotateAxe(void) {
 static s32 init_velocity_x[] = {FIX(2), FIX(2), FIX(1)};
 static s32 init_velocity_y[] = {FIX(0), FIX(0), FIX(-4)};
 
-extern EInit g_EInitAxeKnightAxe;
 void EntityAxeKnightThrowingAxe(Entity* self) {
     s32 velocityX;
 

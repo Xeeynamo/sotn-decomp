@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+extern EInit g_EInitObtainable;
+
 // the signature is purposely wrong for this file
 // this is how the original source code worked
 void MoveEntity(Entity*);
@@ -8,8 +10,6 @@ void MoveEntity(Entity*);
 #if defined(VERSION_HD)
 static u32 padding = 0;
 #endif
-
-extern EInit g_EInitObtainable;
 
 u16 g_ESoulStealOrbAngles[] = {
     0x820, 0x840, 0x860, 0x880, 0x8C0, 0x900, 0x940, 0xA00,

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+extern EInit g_EInitInteractable;
+
 #ifndef STAGE_FLAG
 #define STAGE_FLAG NULL_STAGE_FLAG
 #endif
@@ -51,8 +53,6 @@ enum StageNameSubSteps {
     STAGE_NAME_VERTICAL_REVEAL,
     STAGE_NAME_HOLD_TEXT,
 };
-
-extern EInit g_EInitInteractable;
 
 // While all stages have EntityStageNamePopup, only stages that display the
 // banner use these functions

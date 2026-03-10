@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "sfx.h"
 
+extern EInit g_EInitCommon;
+
 #ifdef STAGE_IS_NZ1
 extern s32 D_us_80181134;
 #endif
 
-extern u16 g_EInitCommon[];
 extern u16 OVL_EXPORT(RedDoorTiles)[2][8];
 
 static u8 g_eRedDoorUV[][8] = {

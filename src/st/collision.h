@@ -366,7 +366,7 @@ void HitDetection(void) {
             }
         }
 
-        if ((miscVar1 & 1) && (!miscVar2)) {
+        if ((miscVar1 & 1) && !miscVar2) {
             // Note that in this block, iterEnt2 is never advanced, so it's
             // always the player.
             iterEnt2 = &PLAYER;
@@ -473,8 +473,7 @@ void HitDetection(void) {
                             }
                         }
                     }
-                    if ((iterEnt2->attack) &&
-                        (entityHit->hitPoints != 0x7FFF)) {
+                    if (iterEnt2->attack && (entityHit->hitPoints != 0x7FFF)) {
                         miscVar1 = g_api.DealDamage(entity, iterEnt2);
                         if (iterEnt2->hitboxState == 4) {
                             miscVar1 = 0;
@@ -717,9 +716,9 @@ void HitDetection(void) {
             }
         }
     }
-    for (prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8]; prim != NULL;
-         prim = prim->next) {
-        if ((prim->drawMode) != DRAW_HIDE) {
+    prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
+    while (prim != NULL) {
+        if (prim->drawMode != DRAW_HIDE) {
             miscVar2 = prim->p1;
             prim->u0 = prim->u2 = g_testColluCoords[miscVar2];
             prim->u1 = prim->u3 = prim->u0 + 0x20;
@@ -732,6 +731,7 @@ void HitDetection(void) {
                 prim->p1 = miscVar2;
             }
         }
+        prim = prim->next;
     }
 }
 

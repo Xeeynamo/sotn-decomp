@@ -59,7 +59,7 @@ static u8 blend_modes[] = {
     BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
     BLEND_TRANSP | BLEND_ADD, BLEND_TRANSP | BLEND_ADD,
 };
-static s16 hitbox_offsets_y[] = {0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
+static u16 hitbox_offsets_y[] = {0, 0, -24, -16, 0, 0, 0, 0, 0, 0, 0, 0};
 static s16 candelabra_debris_offsets_y[] = {0, 1, 2, 2, 3, 0, 1, 2, 3, 0};
 
 #include "../e_breakable_with_debris.h"
