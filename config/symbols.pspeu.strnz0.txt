@@ -98,6 +98,7 @@ g_EInitUnkId13 = 0x09260690;
 g_EInitLockCamera = 0x092606A0;
 g_EInitCommon = 0x092606B0;
 g_EInitDamageNum = 0x092606C0;
+g_EInitEnemy3 = 0x09260780;
 RNZ0_rooms = 0x09260840;
 RNZ0_PrizeDrops = 0x09281880;
 D_psp_E_RELIC_CONTAINER = 0x09281D28;
