@@ -45,7 +45,11 @@ segments:
       - [0x464, .data, header] # graphics banks
       - [0x6F0, .data, gen/e_laydef]
       - [0x898, .data, e_init]
-      - [0xB10, data]
+      - [0xB10, .data, e_room_bg]
+      - [0xB48, data]
+      - [0xB78, .data, e_lock_camera]
+      - [0xBF8, .data, e_breakable]
+      - [0xC68, data]
       - [0xDA0, .data, st_update]
       - [0xDEC, .data, collision]
       - [0x11AC, .data, e_red_door]
