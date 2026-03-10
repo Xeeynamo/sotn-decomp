@@ -62,7 +62,7 @@ segments:
       - [0x13568, c, no1_psp/e_bone_musket]
       - [0x14468, c, no1_psp/e_skeleton]
       - [0x14E60, c, no1_psp/st_common]
-      - [0x169E8, c, no1_psp/prim_helpers]
+      - [0x169E8, c, no1/prim_helpers]
       - [0x174B8, c, no1_psp/e_sword_lord]
       - [0x18CF0, c, no1_psp/e_wereskeleton]
       - [0x1A048, c, no1_psp/e_spear_guard]

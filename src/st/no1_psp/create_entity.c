@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "common.h"
 
-INCLUDE_ASM("st/no1_psp/nonmatchings/no1_psp/create_entity", func_pspeu_09237700);
+INCLUDE_ASM("st/no1_psp/nonmatchings/no1_psp/create_entity", CreateEntityFromLayout);
 
-INCLUDE_ASM("st/no1_psp/nonmatchings/no1_psp/create_entity", func_pspeu_09237820);
+INCLUDE_ASM("st/no1_psp/nonmatchings/no1_psp/create_entity", CreateEntityWhenInVerticalRange);
 
-INCLUDE_ASM("st/no1_psp/nonmatchings/no1_psp/create_entity", func_pspeu_092379B8);
+INCLUDE_ASM("st/no1_psp/nonmatchings/no1_psp/create_entity", CreateEntityWhenInHorizontalRange);
 
 INCLUDE_ASM("st/no1_psp/nonmatchings/no1_psp/create_entity", func_pspeu_09237B50);
 
