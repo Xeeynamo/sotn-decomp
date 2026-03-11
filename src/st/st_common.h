@@ -372,15 +372,15 @@ u8 Ratan2Shifted(s16 x, s16 y) {
 }
 
 u8 GetAngleBetweenEntitiesShifted(Entity* a, Entity* b) {
-    s16 diffX = b->posX.i.hi - a->posX.i.hi;
-    s16 diffY = b->posY.i.hi - a->posY.i.hi;
-    return Ratan2Shifted(diffX, diffY);
+    s16 dx = b->posX.i.hi - a->posX.i.hi;
+    s16 dy = b->posY.i.hi - a->posY.i.hi;
+    return Ratan2Shifted(dx, dy);
 }
 
-u8 GetAnglePointToEntityShifted(s32 x, s32 y) {
-    s32 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
-    s32 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
-    return Ratan2Shifted(diffX, diffY);
+u8 GetAnglePointToEntityShifted(s16 x, s16 y) {
+    s16 dx = x - g_CurrentEntity->posX.i.hi;
+    s16 dy = y - g_CurrentEntity->posY.i.hi;
+    return Ratan2Shifted(dx, dy);
 }
 
 u8 AdjustValueWithinThreshold(u8 threshold, u8 currentValue, u8 targetValue) {
@@ -414,15 +414,15 @@ void UnkEntityFunc0(u16 slope, s16 speed) {
 u16 Ratan2(s16 x, s16 y) { return ratan2(y, x); }
 
 u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
-    s32 diffX = b->posX.i.hi - a->posX.i.hi;
-    s32 diffY = b->posY.i.hi - a->posY.i.hi;
-    return ratan2(diffY, diffX);
+    s32 dx = b->posX.i.hi - a->posX.i.hi;
+    s32 dy = b->posY.i.hi - a->posY.i.hi;
+    return ratan2(dy, dx);
 }
 
 u16 GetAnglePointToEntity(s32 x, s32 y) {
-    s16 diffX = x - (u16)g_CurrentEntity->posX.i.hi;
-    s16 diffY = y - (u16)g_CurrentEntity->posY.i.hi;
-    return ratan2(diffY, diffX);
+    s16 dx = x - (u16)g_CurrentEntity->posX.i.hi;
+    s16 dy = y - (u16)g_CurrentEntity->posY.i.hi;
+    return ratan2(dy, dx);
 }
 
 u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {

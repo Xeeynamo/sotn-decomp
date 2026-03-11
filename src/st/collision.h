@@ -148,12 +148,7 @@ static u16 g_testCollEnemyLookup[] = {
 
 #endif
 
-static u8 g_testCollLuckCutoff[] = {
-    0x00,
-    0x40,
-    0x20,
-    0x10,
-};
+static u8 g_testCollLuckCutoff[] = {0x00, 0x40, 0x20, 0x10};
 
 static u8 g_testColluCoords[] = {
     0x80, 0x80, 0xA0, 0xA0, 0xC0, 0xC0, 0x00, 0x00,
@@ -383,7 +378,7 @@ void HitDetection(void) {
                     hitboxCheck2 += hitboxCheck1;
                     hitboxCheck1 *= 2;
                     if (hitboxCheck2 <= hitboxCheck1) {
-                        if ((entity->attack) &&
+                        if (entity->attack &&
                             (iterEnt2->hitPoints < entity->attack)) {
                             iterEnt2->unkB8 = entity;
                             if (miscVar1 & 8) {

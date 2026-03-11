@@ -1,51 +1,57 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+typedef struct {
+    u8* animation;
+    u8 frameA;
+    u8 frameB;
+    s16 xOffset;
+    s16 yOffset;
+    s16 pad;
+} unk_801D0598; /* size=0xC */
+
 static s16 D_us_80182BD8[] = {0, 16, 0, 4, 8, -4, -16, 0};
 static s16 D_us_80182BE8[] = {0, 16, 12, 0};
 static s16 D_us_80182BF0[] = {-12, 16, 0, -16};
-static u8 D_us_80182BF8[] = {8, 11, 7, 12, 8, 13, 7, 12, 0, 0};
-static u8 D_us_80182C04[] = {5, 13, 5, 12, 5, 11, -1, 0};
-static u8 D_us_80182C0C[] = {5, 14, 5, 13, 5, 1, -1, 0};
-static u8 D_us_80182C14[] = {
+
+static u8 anim0[] = {8, 11, 7, 12, 8, 13, 7, 12, 0, 0};
+static u8 anim1[] = {5, 13, 5, 12, 5, 11, -1, 0};
+static u8 anim2[] = {5, 14, 5, 13, 5, 1, -1, 0};
+static u8 anim3[] = {
     32, 1, 1, 2, 1, 3, 1,  4, 17, 5, 28, 6,  1, 7, 1, 8, 1, 7, 1,  8, 1,  7,
-    2,  8, 2, 7, 3, 8, 32, 7, 8,  9, 12, 10, 7, 5, 4, 4, 4, 3, 16, 2, -1, 0};
-static u8 D_us_80182C40[] = {
+    2,  8, 2, 7, 3, 8, 32, 7, 8,  9, 12, 10, 7, 5, 4, 4, 4, 3, 16, 2, -1, 0,
+};
+static u8 anim4[] = {
     17, 1,  28, 15, 1, 16, 1,  17, 1, 16, 1, 17, 1, 16, 2,  17, 2,  16,
-    3,  17, 32, 16, 8, 9,  12, 10, 7, 5,  4, 4,  4, 3,  16, 2,  -1, 0};
-static u8 D_us_80182C64[] = {
+    3,  17, 32, 16, 8, 9,  12, 10, 7, 5,  4, 4,  4, 3,  16, 2,  -1, 0,
+};
+static u8 anim5[] = {
     12, 10, 32, 18, 28, 19, 1,  20, 1, 21, 1, 20, 1, 21, 1, 20, 2,
     21, 2,  20, 3,  21, 16, 20, 16, 1, 1,  2, 1,  3, 1,  4, 16, 5,
     28, 6,  1,  7,  1,  8,  1,  7,  1, 8,  1, 7,  2, 8,  2, 7,  3,
-    8,  32, 7,  8,  9,  12, 10, 7,  5, 4,  4, 4,  3, 16, 2, -1, 0};
-static u8 D_us_80182CA8[] = {
+    8,  32, 7,  8,  9,  12, 10, 7,  5, 4,  4, 4,  3, 16, 2, -1, 0,
+};
+static u8 anim6[] = {
     28, 11, 1,  33, 1, 34, 16, 35, 28, 36, 1,  37, 1,  38,
     1,  37, 1,  38, 1, 37, 2,  38, 2,  37, 3,  38, 32, 37,
-    8,  39, 12, 40, 3, 35, 3,  34, 3,  33, 16, 11, -1, 0};
+    8,  39, 12, 40, 3, 35, 3,  34, 3,  33, 16, 11, -1, 0,
+};
+
 static unk_801D0598 D_us_80182CD4[] = {
-    {.animation = D_us_80182C14,
-     .frameA = 6,
-     .frameB = 0,
-     .xOffset = 10,
-     .yOffset = -2},
-    {.animation = D_us_80182C40,
-     .frameA = 15,
-     .frameB = 0,
-     .xOffset = 10,
-     .yOffset = 2},
-    {.animation = D_us_80182CA8,
-     .frameA = 36,
-     .frameB = 0,
-     .xOffset = 8,
-     .yOffset = -15},
-    {.animation = D_us_80182C64,
-     .frameA = 19,
-     .frameB = 6,
-     .xOffset = 10,
-     .yOffset = 2}};
-static s32 D_us_80182D04[] = {FIX(0.75), FIX(1.75), FIX(1.5),  FIX(1.0),
-                              FIX(2.0),  FIX(1.75), FIX(0.75), FIX(1.5)};
-static s32 D_us_80182D24[] = {FIX(-5.0), FIX(-3.0),   FIX(-2.0), FIX(-3.0),
-                              FIX(-4.0), FIX(-0.875), FIX(-4.0), FIX(-2.0)};
+    {anim3, 6, 0, 10, -2},
+    {anim4, 15, 0, 10, 2},
+    {anim6, 36, 0, 8, -15},
+    {anim5, 19, 6, 10, 2},
+};
+
+static s32 D_us_80182D04[] = {
+    FIX(0.75), FIX(1.75), FIX(1.5),  FIX(1.0),
+    FIX(2.0),  FIX(1.75), FIX(0.75), FIX(1.5),
+};
+static s32 D_us_80182D24[] = {
+    FIX(-5.0), FIX(-3.0),   FIX(-2.0), FIX(-3.0),
+    FIX(-4.0), FIX(-0.875), FIX(-4.0), FIX(-2.0),
+};
+
 static u8 D_80182D44[] = {48, 32, 20, 12, 24, 16, 20, 40};
 
 void EntityBoneArcher(Entity* self) {
@@ -110,13 +116,13 @@ void EntityBoneArcher(Entity* self) {
         break;
 
     case 13:
-        if (!AnimateEntity(D_us_80182C04, self)) {
+        if (!AnimateEntity(anim1, self)) {
             SetStep(5);
         }
         break;
 
     case 14:
-        if (!AnimateEntity(D_us_80182C0C, self)) {
+        if (!AnimateEntity(anim2, self)) {
             SetStep(3);
         }
         break;
@@ -127,7 +133,7 @@ void EntityBoneArcher(Entity* self) {
             self->ext.boneArcher.unk86 = 0x40;
             self->step_s++;
         }
-        if (!AnimateEntity(D_us_80182BF8, self)) {
+        if (!AnimateEntity(anim0, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         step = 0;
@@ -214,13 +220,13 @@ void EntityBoneArcher(Entity* self) {
             break;
 
         case 1:
-            if (!AnimateEntity(D_us_80182C0C, self)) {
+            if (!AnimateEntity(anim2, self)) {
                 SetSubStep(3);
             }
             break;
 
         case 2:
-            if (!AnimateEntity(D_us_80182C04, self)) {
+            if (!AnimateEntity(anim1, self)) {
                 SetSubStep(3);
             }
             break;
