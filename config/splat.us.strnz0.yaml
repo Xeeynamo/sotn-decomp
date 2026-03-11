@@ -54,7 +54,7 @@ segments:
       - [0xCE8, .data, e_globe_table]
       - [0xD08, .data, e_life_max_tank]
       - [0xD38, .data, e_blue_flame_table]
-      - [0xD84, data]
+      - [0xD84, .data, e_cannon]
       - [0xDA0, .data, st_update]
       - [0xDEC, .data, collision]
       - [0x11AC, .data, e_red_door]

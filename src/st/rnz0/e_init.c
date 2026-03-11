@@ -47,9 +47,9 @@ void EntityRelicContainer(Entity* self);
 void EntitySealedDoor(Entity* self);
 void EntityRedEyeBust(Entity* self);
 void EntityCannonLever(Entity* self);
-void func_us_801AC758(Entity* self);
+void EntityCannon(Entity* self);
 void EntityCannonShot(Entity* self);
-void func_us_801ACAD0(Entity* self);
+void EntityCannonWall(Entity* self);
 void EntityUnk31(Entity* self);
 void func_us_801C09E8(Entity* self);
 void func_us_801C1668(Entity* self);
@@ -108,9 +108,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySealedDoor,
     EntityRedEyeBust,
     EntityCannonLever,
-    func_us_801AC758,
+    EntityCannon,
     EntityCannonShot,
-    func_us_801ACAD0,
+    EntityCannonWall,
     EntityUnk31,
     func_us_801C09E8,
     func_us_801C1668,
