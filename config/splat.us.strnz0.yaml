@@ -51,6 +51,8 @@ segments:
       - [0xBF8, .data, e_breakable]
       - [0xC68, .data, e_left_secret_room_wall]
       - [0xCC8, data]
+      - [0xCE8, .data, e_globe_table]
+      - [0xD08, data]
       - [0xDA0, .data, st_update]
       - [0xDEC, .data, collision]
       - [0x11AC, .data, e_red_door]

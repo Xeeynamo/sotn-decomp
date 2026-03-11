@@ -4,11 +4,6 @@ RNZ0_RedDoorTiles = 0x80180B48;
 RNZ0_PrizeDrops = 0x80180CC8;
 sprites_rnz0_13 = 0x801AA72C;
 sprites_rnz0_14 = 0x801AA8E4;
-EntityPurpleBrickScrollingBackground = 0x801AB610; // source=match
-EntityLeftSecretRoomWall = 0x801AB7EC; // source=duplicate
-EntityBottomSecretRoomFloor = 0x801ABAA4; // source=duplicate
-EntitySecretWallDebris = 0x801ABCE0; // source=duplicate
-EntityTableWithGlobe = 0x801ABF64; // source=duplicate
 EntityLifeMaxTank = 0x801AC064; // source=duplicate
 EntityRelicContainer = 0x801AC1CC; // source=duplicate
 EntityBlueFlameTable = 0x801AC430; // source=duplicate
