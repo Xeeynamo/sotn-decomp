@@ -102,6 +102,7 @@ D_us_80180A68 = 0x09260770;
 g_EInitEnemy3 = 0x09260780;
 g_EInitTableWithGlobe = 0x09260790;
 g_EInitLifeMaxTank = 0x092607A0;
+g_EInitPrizeContainer = 0x092607B0;
 RNZ0_rooms = 0x09260840;
 RNZ0_PrizeDrops = 0x09281880;
 D_psp_E_RELIC_CONTAINER = 0x09281D28;
