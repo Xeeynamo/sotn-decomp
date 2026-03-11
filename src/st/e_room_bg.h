@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+extern EInit g_EInitCommon;
+
 extern ObjInit2 OVL_EXPORT(BackgroundBlockInit)[];
-extern u16 g_EInitCommon[];
 
 void OVL_EXPORT(EntityBackgroundBlock)(Entity* self) {
     ObjInit2* objInit = &OVL_EXPORT(BackgroundBlockInit)[self->params];
