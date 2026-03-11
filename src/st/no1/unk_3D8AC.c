@@ -1,22 +1,26 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
+#ifdef VERSION_PSP
+extern s32 E_ID(ID_36);
+extern s32 E_ID(ID_38);
+extern s32 E_ID(ID_39);
+#endif
+
 static s32 D_us_80181570 = 0;
 static s16 D_us_80181574[] = {0x80, 0x80, 0x100, 0x300, 0x500, 0x700};
 static s16 D_us_80181580[] = {0xC, 0xC, 0x12, 0x16, 0x20, 0x26};
 static s16 D_us_8018158C[] = {0x100, 0x100, 0xF8, 0xF2, 0xEE, 0xEC};
-static u8 D_us_80181598[] = {1, 98, 1, 99, 0, 0};
-static u8 D_us_801815A0[] = {1, 100, 1, 101, 0, 0};
-static u8 D_us_801815A8[] = {2, 98, 2, 99, 0, 0};
-static u8 D_us_801815B0[] = {2, 100, 2, 101, 0, 0};
+
+static u8 anim0[] = {1, 98, 1, 99, 0, 0};
+static u8 anim1[] = {1, 100, 1, 101, 0, 0};
+static u8 anim2[] = {2, 98, 2, 99, 0, 0};
+static u8 anim3[] = {2, 100, 2, 101, 0, 0};
+
 static s16 D_us_801815B8[] = {
     0x000, 0x600, 0xE00, 0x100, 0x800, 0xA00, 0x200, 0x400, 0xC00, 0x000};
 static s16 D_us_801815CC[] = {4, 8, 13, -24, -20, -12, 21, -12, 2, 0};
 static s16 D_us_801815E0[] = {20, 8, 12, 13, 16, 6, 12, 16, 8, 4};
-
-extern s32 D_psp_0929A6C0;
-extern s32 D_psp_0929A6B0;
-extern s32 D_psp_0929A6A8;
 
 void func_us_801BD8AC(Entity* self) {
     Entity* tempEntity;
@@ -30,30 +34,16 @@ void func_us_801BD8AC(Entity* self) {
         self->animCurFrame = 0;
         tempEntity = self + 1;
         for (i = 1; i < 6; i++) {
-#ifdef VERSION_PSP
-            CreateEntityFromEntity(D_psp_0929A6C0, self, tempEntity);
-#else
-            CreateEntityFromEntity(E_ID_36, self, tempEntity);
-#endif
+            CreateEntityFromEntity(E_ID(ID_36), self, tempEntity);
             tempEntity->params = i + 0x100;
             tempEntity++;
-#ifdef VERSION_PSP
-            CreateEntityFromEntity(D_psp_0929A6C0, self, tempEntity);
-#else
-            CreateEntityFromEntity(E_ID_36, self, tempEntity);
-#endif
+            CreateEntityFromEntity(E_ID(ID_36), self, tempEntity);
             tempEntity->params = i;
             tempEntity++;
         }
-#ifdef VERSION_PSP
-        CreateEntityFromEntity(D_psp_0929A6B0, self, tempEntity);
+        CreateEntityFromEntity(E_ID(ID_38), self, tempEntity);
         tempEntity++;
-        CreateEntityFromEntity(D_psp_0929A6A8, self, tempEntity);
-#else
-        CreateEntityFromEntity(E_ID_38, self, tempEntity);
-        tempEntity++;
-        CreateEntityFromEntity(E_ID_39, self, tempEntity);
-#endif
+        CreateEntityFromEntity(E_ID(ID_39), self, tempEntity);
         break;
 
     case 1:
@@ -99,15 +89,15 @@ void func_us_801BDA0C(Entity* self) {
         self->scaleX = D_us_8018158C[self->params & 0xF];
         self->scaleY = self->scaleX;
         if ((self->params & 0xF) % 2) {
-            self->rotate = -0x400;
+            self->rotate = ROT(-90);
         } else {
-            self->rotate = 0;
+            self->rotate = ROT(0);
         }
         self->zPriority = (0x40 - self->params) & 0xF;
         if (self->params & 0x100) {
-            self->animCurFrame = 0x64;
+            self->animCurFrame = 100;
         } else {
-            self->animCurFrame = 0x62;
+            self->animCurFrame = 98;
         }
         primIndex = g_api.AllocPrimitives(PRIM_TILE, 1);
         if (primIndex != -1) {
@@ -139,9 +129,9 @@ void func_us_801BDA0C(Entity* self) {
             self->step++;
         } else {
             if (self->params & 0x100) {
-                AnimateEntity(D_us_801815A0, self);
+                AnimateEntity(anim1, self);
             } else {
-                AnimateEntity(D_us_80181598, self);
+                AnimateEntity(anim0, self);
             }
             if ((g_Timer & 0xF) == 0) {
                 g_api.PlaySfx(SFX_STONE_MOVE_B);
@@ -155,7 +145,7 @@ void func_us_801BDA0C(Entity* self) {
     case 3:
         if (g_Timer % 2 == 0) {
             self->palette++;
-            if (self->palette > 0x8058) {
+            if (self->palette > PAL_FLAG(0x58)) {
                 g_api.PlaySfx(SFX_ELECTRICITY);
                 self->palette = PAL_FLAG(0x4F);
                 self->step++;
@@ -167,16 +157,16 @@ void func_us_801BDA0C(Entity* self) {
         break;
 
     case 4:
-        magnitude = self->ext.et_801BDA0C.unk80 / 0x10000;
-        xOffset = (rcos(self->rotate - 0x400) * magnitude) >> 0xC;
-        yOffset = (rsin(self->rotate - 0x400) * magnitude) >> 0xC;
+        magnitude = self->ext.et_801BDA0C.unk80 / FIX(1.0);
+        xOffset = FLT_TO_I(rcos(self->rotate - ROT(90)) * magnitude);
+        yOffset = FLT_TO_I(rsin(self->rotate - ROT(90)) * magnitude);
         prim = self->ext.et_801BDA0C.unk7C;
         self->posX.i.hi = prim->x0 + xOffset;
         self->posY.i.hi = prim->y0 + yOffset;
         if (self->params & 0x100) {
-            AnimateEntity(D_us_801815A0, self);
+            AnimateEntity(anim1, self);
         } else {
-            AnimateEntity(D_us_80181598, self);
+            AnimateEntity(anim0, self);
         }
         if ((g_Timer & 0xF) == 0) {
             g_api.PlaySfx(SFX_STONE_MOVE_B);
@@ -205,16 +195,16 @@ void func_us_801BDA0C(Entity* self) {
         if (tempEntity->opacity < 0x80) {
             tempEntity->opacity += 2;
         }
-        magnitude = self->ext.et_801BDA0C.unk80 / 0x10000;
-        xOffset = (rcos(self->rotate - 0x400) * magnitude) >> 0xC;
-        yOffset = (rsin(self->rotate - 0x400) * magnitude) >> 0xC;
+        magnitude = self->ext.et_801BDA0C.unk80 / FIX(1.0);
+        xOffset = FLT_TO_I(rcos(self->rotate - ROT(90)) * magnitude);
+        yOffset = FLT_TO_I(rsin(self->rotate - ROT(90)) * magnitude);
         prim = self->ext.et_801BDA0C.unk7C;
         self->posX.i.hi = prim->x0 + xOffset;
         self->posY.i.hi = prim->y0 + yOffset;
         if (self->params & 0x100) {
-            AnimateEntity(D_us_801815B0, self);
+            AnimateEntity(anim3, self);
         } else {
-            AnimateEntity(D_us_801815A8, self);
+            AnimateEntity(anim2, self);
         }
         self->rotate += D_us_80181580[self->params & 0xF];
         if (self->params & 0x100) {
@@ -275,7 +265,7 @@ void func_us_801BDF9C(Entity* self) {
 
     case 3:
         xOffset = (self - 1)->ext.et_801BDA0C.unk80 /
-                  0x10000; // note previous entity uses a different ext.
+                  FIX(1.0); // note previous entity uses a different ext.
         if (xOffset < 0) {
             xOffset = -xOffset;
         }

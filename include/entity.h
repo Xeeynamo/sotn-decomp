@@ -2765,7 +2765,7 @@ typedef struct {
 } ET_ThrownSpear;
 
 typedef struct {
-    /* 0x7C */ struct Entity* unk7C;
+    /* 0x7C */ struct Primitive* unk7C;
     /* 0x80 */ s32 unk80;
     /* 0x84 */ u8 unk84;
     /* 0x85 */ u8 : 8;
