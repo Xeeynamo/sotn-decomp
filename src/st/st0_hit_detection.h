@@ -310,7 +310,7 @@ void OVL_EXPORT(HitDetection)(void) {
                         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
                     }
                     BottomCornerText(
-                        g_api.enemyDefs[entityHit->enemyId].name, 0);
+                        g_api.enemyDefs[entityHit->enemyId].name, false);
                     entityHit->flags |= FLAG_NOT_AN_ENEMY;
                 }
                 if (entityHit->hitPoints) {

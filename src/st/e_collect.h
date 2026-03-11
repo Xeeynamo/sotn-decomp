@@ -267,7 +267,7 @@ void CollectGold(u16 goldSize) {
         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
     }
 
-    BottomCornerText(g_goldCollectTexts[goldSize], 1);
+    BottomCornerText(g_goldCollectTexts[goldSize], true);
     DestroyEntity(g_CurrentEntity);
 #endif
 }
@@ -895,7 +895,7 @@ void EntityEquipItemDrop(Entity* self) {
             name = g_api.accessoryDefs[itemId].name;
             g_api.AddToInventory(itemId, EQUIP_ARMOR);
         }
-        BottomCornerText(name, 1);
+        BottomCornerText(name, true);
         DestroyEntity(self);
         break;
     }

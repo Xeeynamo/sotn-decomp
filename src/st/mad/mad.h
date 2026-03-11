@@ -46,7 +46,6 @@ void CreateEntitiesBelow(s16);
 void CreateEntityFromCurrentEntity(u16, Entity*);
 u8 func_80192914(s16 arg0, s16 arg1);
 void CreateEntityFromEntity(u16 entityId, Entity* ent1, Entity* ent2);
-void BottomCornerText(u8* str, u8 lowerLeft);
 void func_8019344C(void);
 void EntityExplosionVariants(Entity* entity);
 void EntityGreyPuff(Entity* entity);
