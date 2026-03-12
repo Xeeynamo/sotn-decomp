@@ -3912,6 +3912,22 @@ typedef struct {
     /* 0x9E */ u8 isDeathCat;
 } ET_Salome;
 
+typedef struct {
+    /* 7C */ s32 : 32;
+    /* 80 */ s16 timer;
+    /* 82 */ s16 : 16;
+    /* 84 */ s16 unk84;
+    /* 86 */ s16 unk86;
+    /* 88 */ s16 unk88;
+    /* 8A */ s16 : 16;
+    /* 8C */ s32 paletteTimer;
+    /* 90 */ s16 unk90;
+    /* 92 */ s16 : 16;
+    /* 94 */ s32 : 32;
+    /* 98 */ s32 : 32;
+    /* 9C */ struct Entity* unkEnt;
+} ET_FloorTrap;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4246,6 +4262,7 @@ typedef union { // offset=0x7C
     ET_VandalSword vandalSword;
     ET_801BACF4 et_801BACF4;
     ET_Salome salome;
+    ET_FloorTrap floorTrap;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

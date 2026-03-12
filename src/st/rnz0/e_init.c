@@ -27,7 +27,7 @@ void EntityPurpleBrickScrollingBackground(Entity* self);
 void EntityLeftSecretRoomWall(Entity* self);
 void EntityBottomSecretRoomFloor(Entity* self);
 void EntitySecretWallDebris(Entity* self);
-void EntityUnk1A(Entity* self);
+void EntityFloorTrap(Entity* self);
 void func_us_801B8238(Entity* self);
 void func_us_801B9430(Entity* self);
 void func_us_801B965C(Entity* self);
@@ -88,7 +88,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityLeftSecretRoomWall,
     EntityBottomSecretRoomFloor,
     EntitySecretWallDebris,
-    EntityUnk1A,
+    EntityFloorTrap,
     func_us_801B8238,
     func_us_801B9430,
     func_us_801B965C,
@@ -126,7 +126,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 0x000};
 #include "../e_init_common.h"
-EInit D_us_801809F0 = {ANIMSET_OVL(3), 0, 75, 0x200, 0x005};
+EInit g_EInitFloorTrap = {ANIMSET_OVL(3), 0, 75, 0x200, 0x005};
 EInit D_us_801809FC = {ANIMSET_OVL(4), 0, 72, 0x209, 0x0E9};
 EInit D_us_80180A08 = {ANIMSET_OVL(4), 0, 72, 0x209, 0x0EA};
 EInit D_us_80180A14 = {ANIMSET_OVL(4), 44, 72, 0x209, 0x0EB};
