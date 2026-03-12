@@ -3392,7 +3392,7 @@
 | sel    | func_psp_09238E68                    |      105 |         10 |        |       |     |
 | sel    | func_psp_0923FCC8                    |      105 |         11 |        |       |     |
 | dra    | func_psp_09141AA0                    |      105 |         15 |        |       |     |
-| rnz0   | func_us_801ACAD0                     |      105 |         16 |        |       |     |
+| rnz0   | EntityCannonWall                     |      105 |         16 |        |       |     |
 | main   | func_psp_0891AF48                    |      105 |         23 |        |       |     |
 | main   | 36174.rodata                         |      106 |          0 | Yes    |       |     |
 | main   | func_psp_0892D96C                    |      106 |          6 |        |       |     |
@@ -4248,7 +4248,7 @@
 |        | func_092ECD88                        |      234 |         25 |        |       |     |
 |        | func_092E7B10                        |      234 |         35 |        |       |     |
 | dra    | func_psp_09108988                    |      235 |         31 |        |       |     |
-| rnz0   | func_us_801AC758                     |      236 |         16 |        |       |     |
+| rnz0   | EntityCannon                         |      236 |         16 |        |       |     |
 | main   | func_psp_0891BCA0                    |      236 |         29 |        |       |     |
 | lib    | func_psp_09253498                    |      236 |         29 |        |       |     |
 | ric    | func_pspeu_092AFDA8                  |      236 |         46 |        |       |     |
