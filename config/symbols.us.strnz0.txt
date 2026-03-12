@@ -2,18 +2,16 @@ g_EInitInteractable = 0x801809B4;
 g_EInitCommon = 0x801809D8;
 RNZ0_RedDoorTiles = 0x80180B48;
 RNZ0_PrizeDrops = 0x80180CC8;
+tiles_wall = 0x80180D94;
 sprites_rnz0_13 = 0x801AA72C;
 sprites_rnz0_14 = 0x801AA8E4;
-EntityPurpleBrickScrollingBackground = 0x801AB610; // source=match
-EntityLeftSecretRoomWall = 0x801AB7EC; // source=duplicate
-EntityBottomSecretRoomFloor = 0x801ABAA4; // source=duplicate
-EntitySecretWallDebris = 0x801ABCE0; // source=duplicate
-EntityTableWithGlobe = 0x801ABF64; // source=duplicate
 EntityLifeMaxTank = 0x801AC064; // source=duplicate
 EntityRelicContainer = 0x801AC1CC; // source=duplicate
 EntityBlueFlameTable = 0x801AC430; // source=duplicate
 EntityCannonLever = 0x801AC548; // source=duplicate
+EntityCannon = 0x801AC758;
 EntityCannonShot = 0x801AC9CC; // source=duplicate
+EntityCannonWall = 0x801ACAD0;
 Random = 0x801ACC04; // source=match
 CreateEntityFromCurrentEntity = 0x801AF27C; // source=match
 CreateEntityFromEntity = 0x801AF2F0; // source=match
