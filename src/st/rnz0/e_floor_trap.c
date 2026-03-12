@@ -3,8 +3,9 @@
 
 extern EInit g_EInitFloorTrap;
 
-static u8 anim[] = {1, 3, 1, 4, 1, 5, 1,  6, 1, 7, 1, 8,
-                    0, 0, 0, 0, 0, 0, 40, 0, 8, 0, 0, 0};
+static u8 anim[] = {1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 0, 0};
+// This could be anything (and might not be u16). Stripped on PSP.
+static u16 unused[] = {0, 40, 8, 0};
 
 // Sliding spikes on the floor throughout the second castle
 void EntityFloorTrap(Entity* self) {
