@@ -95,16 +95,6 @@ typedef struct {
     u16 zOffset;
 } giantBroBodyPartsInit;
 
-// Used in e_bone_archer.h
-typedef struct {
-    u8* animation;
-    u8 frameA;
-    u8 frameB;
-    s16 xOffset;
-    s16 yOffset;
-    s16 pad;
-} unk_801D0598; /* size=0xC */
-
 // Used by no2/372E8, rbo3/rbo3, e_explosion_puff_opaque
 typedef struct {
     u16 animSet;

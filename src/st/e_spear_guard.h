@@ -13,27 +13,31 @@ static u16 frameIndexes[] = {2, 2, 2, 2};
 static s32 xVelocities[] = {-0x1000, -0x600, -0x2000, -0x1E00};
 
 // anims
-static u8 D_us_80182F8C[] = {6, 1, 4, 2, 28, 2, 10, 3, 0, 0};
-static u8 D_us_80182F98[] = {14, 4, 8, 4, 8, 5, 0, 0};
-static u8 D_us_80182FA0[] = {9, 5, 1, 5, 10, 4, 0, 0};
-static u8 D_us_80182FA8[] = {11, 5, 1, 5, 12, 4, 0, 0};
-static u8 D_us_80182FB0[] = {8, 4, 48, 6, 37, 7, 6, 6, 0, 0};
-static u8 D_us_80182FBC[] = {
+static u8 anim0[] = {6, 1, 4, 2, 28, 2, 10, 3, 0, 0};
+static u8 anim1[] = {14, 4, 8, 4, 8, 5, 0, 0};
+static u8 anim2[] = {9, 5, 1, 5, 10, 4, 0, 0};
+static u8 anim3[] = {11, 5, 1, 5, 12, 4, 0, 0};
+static u8 anim4[] = {8, 4, 48, 6, 37, 7, 6, 6, 0, 0};
+static u8 anim5[] = {
     6, 16, 6, 17, 6, 18, 1, 21, 1, 22, 1, 21, 1, 22, 1, 21,
-    1, 22, 1, 21, 1, 22, 1, 21, 1, 22, 6, 19, 6, 20, 0, 0};
-static u8 D_us_80182FDC[] = {
-    6, 4, 6, 8, 6, 9, 8, 10, 48, 11, 2, 10, 2, 12, 2, 13, 2, 14, 49, 15, 0, 0};
-static u8 D_us_80182FF4[] = {
-    6, 4, 6, 23, 6, 24, 4, 25, 4, 26, 48, 27, 2, 28, 1, 29, 49, 30, -1, 0};
-static u8 D_us_80183008[] = {
-    8, 62, 8, 63, 8, 64, 8, 63, 8, 64, 8, 63, 8, 64, -1, 0};
-static u8 D_us_80183018[] = {6,  4, 6,  33, 15, 34, 3,  35, 3,  36, 3,  37, 22,
-                             38, 2, 37, 2,  36, 2,  35, 6,  34, 6,  33, 0,  0};
-static u8 D_us_80183034[] = {
+    1, 22, 1, 21, 1, 22, 1, 21, 1, 22, 6, 19, 6, 20, 0, 0,
+};
+static u8 anim6[] = {
+    6, 4, 6, 8, 6, 9, 8, 10, 48, 11, 2, 10, 2, 12, 2, 13, 2, 14, 49, 15, 0, 0,
+};
+static u8 anim7[] = {
+    6, 4, 6, 23, 6, 24, 4, 25, 4, 26, 48, 27, 2, 28, 1, 29, 49, 30, -1, 0,
+};
+static u8 anim8[] = {8, 62, 8, 63, 8, 64, 8, 63, 8, 64, 8, 63, 8, 64, -1, 0};
+static u8 anim9[] = {
+    6,  4, 6,  33, 15, 34, 3,  35, 3,  36, 3,  37, 22,
+    38, 2, 37, 2,  36, 2,  35, 6,  34, 6,  33, 0,  0,
+};
+static u8 anim10[] = {
     6,  4, 6,  39, 6,  40, 15, 41, 3,  42, 3,  43, 3,  44, 22,
-    45, 2, 44, 2,  43, 2,  42, 6,  41, 6,  40, 6,  39, 0,  0};
-static u8* animations[] = {
-    D_us_80182F8C, D_us_80182F98, D_us_80182FA0, D_us_80182FA8};
+    45, 2, 44, 2,  43, 2,  42, 6,  41, 6,  40, 6,  39, 0,  0,
+};
+static u8* animations[] = {anim0, anim1, anim2, anim3};
 
 // sensors
 static s16 D_us_80183064[][2] = {{0, 24}, {8, 0}};
@@ -200,7 +204,7 @@ void EntitySpearGuard(Entity* self) {
         break;
 
     case 6:
-        tempVar = AnimateEntity(D_us_80182FB0, self);
+        tempVar = AnimateEntity(anim4, self);
         if (!tempVar) {
             SetStep(4);
             PlaySfxPositional(SFX_SPEAR_GUARD_MOVE);
@@ -242,9 +246,9 @@ void EntitySpearGuard(Entity* self) {
 
     case 8:
         if (self->ext.spearGuard.unk8C & 2) {
-            anim = D_us_80183034;
+            anim = anim10;
         } else {
-            anim = D_us_80183018;
+            anim = anim9;
         }
         tempVar = AnimateEntity(anim, self);
         tempEntity->attack = g_api.enemyDefs[94].attack;
@@ -264,7 +268,7 @@ void EntitySpearGuard(Entity* self) {
         }
         tempEntity->hitboxState |= 2;
         tempEntity->flags |= FLAG_UNK_8000 | FLAG_UNK_4000;
-        if (!AnimateEntity(D_us_80182FBC, self)) {
+        if (!AnimateEntity(anim5, self)) {
             tempEntity->hitboxState &= 0xFFFD;
             tempEntity->flags &= ~(FLAG_UNK_8000 | FLAG_UNK_4000);
             SetStep(5);
@@ -272,7 +276,7 @@ void EntitySpearGuard(Entity* self) {
         break;
 
     case 10:
-        tempVar = AnimateEntity(D_us_80182FDC, self);
+        tempVar = AnimateEntity(anim6, self);
         if (!tempVar) {
             SetStep(4);
             PlaySfxPositional(SFX_SPEAR_GUARD_MOVE);
@@ -311,7 +315,7 @@ void EntitySpearGuard(Entity* self) {
         break;
 
     case 11:
-        tempVar = AnimateEntity(D_us_80182FF4, self);
+        tempVar = AnimateEntity(anim7, self);
         if (!tempVar) {
             SetStep(4);
             PlaySfxPositional(SFX_SPEAR_GUARD_MOVE);
@@ -343,7 +347,7 @@ void EntitySpearGuard(Entity* self) {
         break;
 
     case 12:
-        AnimateEntity(D_us_80183008, self);
+        AnimateEntity(anim8, self);
         if (self->opacity) {
             self->opacity--;
         }

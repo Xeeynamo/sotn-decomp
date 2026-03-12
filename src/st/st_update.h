@@ -97,26 +97,29 @@ void Update(void) {
                 }
             }
 
-            if (!(flags & FLAG_UNK_20000000) || (flags & FLAG_UNK_10000000) ||
-                (e->posX.i.hi >= -64 && e->posX.i.hi <= 320 &&
-                 e->posY.i.hi >= -64 && e->posY.i.hi <= 288)) {
-                if (!e->stunFrames ||
-                    (e->stunFrames--, flags & FLAG_UNK_100000)) {
-                    if (!g_unkGraphicsStruct.D_800973FC ||
-                        flags & (FLAG_UNK_2000 | FLAG_DEAD) ||
-                        (flags & FLAG_UNK_200 && !(g_GameTimer & 3))) {
-                    process_entity:
-                        g_CurrentEntity = e;
-                        e->pfnUpdate(e);
-                        e->hitParams = 0;
-                        e->hitFlags = 0;
-                        continue;
-                    }
+            if ((flags & FLAG_UNK_20000000) && !(flags & FLAG_UNK_10000000)) {
+                if (e->posX.i.hi < -64 || e->posX.i.hi > 320 ||
+                    e->posY.i.hi < -64 || e->posY.i.hi > 288) {
+                    continue;
                 }
             }
-        } else {
-            goto process_entity;
+            if (e->stunFrames) {
+                e->stunFrames--;
+                if (!(flags & FLAG_UNK_100000)) {
+                    continue;
+                }
+            }
+            if (g_unkGraphicsStruct.D_800973FC) {
+                if (!(flags & (FLAG_UNK_2000 | FLAG_DEAD)) &&
+                    !(flags & FLAG_UNK_200 && !(g_GameTimer & 3))) {
+                    continue;
+                }
+            }
         }
+        g_CurrentEntity = e;
+        e->pfnUpdate(e);
+        e->hitParams = 0;
+        e->hitFlags = 0;
     }
 }
 
