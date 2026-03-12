@@ -28,10 +28,10 @@ void EntityLeftSecretRoomWall(Entity* self);
 void EntityBottomSecretRoomFloor(Entity* self);
 void EntitySecretWallDebris(Entity* self);
 void EntityFloorTrap(Entity* self);
-void func_us_801B8238(Entity* self);
-void func_us_801B9430(Entity* self);
-void func_us_801B965C(Entity* self);
-void func_us_801B9D78(Entity* self);
+void EntityCtulhu(Entity* self);
+void EntityCtulhuFireball(Entity* self);
+void EntityCtulhuIceShockwave(Entity* self);
+void EntityCtulhuDeath(Entity* self);
 void func_us_801BB5D8(Entity* self);
 void func_us_801BB000(Entity* self);
 void func_us_801BA21C(Entity* self);
@@ -89,10 +89,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBottomSecretRoomFloor,
     EntitySecretWallDebris,
     EntityFloorTrap,
-    func_us_801B8238,
-    func_us_801B9430,
-    func_us_801B965C,
-    func_us_801B9D78,
+    EntityCtulhu,
+    EntityCtulhuFireball,
+    EntityCtulhuIceShockwave,
+    EntityCtulhuDeath,
     func_us_801BB5D8,
     func_us_801BB000,
     func_us_801BA21C,
@@ -127,9 +127,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
 EInit OVL_EXPORT(EInitBreakable) = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 0x000};
 #include "../e_init_common.h"
 EInit g_EInitFloorTrap = {ANIMSET_OVL(3), 0, 75, 0x200, 0x005};
-EInit D_us_801809FC = {ANIMSET_OVL(4), 0, 72, 0x209, 0x0E9};
-EInit D_us_80180A08 = {ANIMSET_OVL(4), 0, 72, 0x209, 0x0EA};
-EInit D_us_80180A14 = {ANIMSET_OVL(4), 44, 72, 0x209, 0x0EB};
+EInit g_EInitCtulhu = {ANIMSET_OVL(4), 0, 72, 0x209, 0x0E9};
+EInit g_EInitCtulhuFireball = {ANIMSET_OVL(4), 0, 72, 0x209, 0x0EA};
+EInit g_EInitCtulhuIceShockwave = {ANIMSET_OVL(4), 44, 72, 0x209, 0x0EB};
 EInit D_us_80180A20 = {ANIMSET_OVL(5), 1, 79, 0x21D, 0x04F};
 EInit D_us_80180A2C = {ANIMSET_DRA(2), 1, 0, PAL_NULL, 0x050};
 EInit D_us_80180A38 = {ANIMSET_OVL(6), 1, 76, 0x22D, 0x017};

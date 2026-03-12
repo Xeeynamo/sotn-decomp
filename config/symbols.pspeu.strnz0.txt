@@ -1,7 +1,7 @@
-func_us_801B8238 = 0x09237700;
-func_us_801B9430 = 0x09238F80;
-func_us_801B965C = 0x09239298;
-func_us_801B9D78 = 0x09239C80;
+EntityCtulhu = 0x09237700;
+EntityCtulhuFireball = 0x09238F80;
+EntityCtulhuIceShockwave = 0x09239298;
+EntityCtulhuDeath = 0x09239C80;
 CreateEntityFromCurrentEntity = 0x0923AC88;
 CreateEntityFromEntity = 0x0923AD10;
 SalemWitchTrySpawnShadow = 0x0923AD98; // source=match
