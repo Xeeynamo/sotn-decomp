@@ -40,12 +40,7 @@ static u16 g_testCollEnemyLookup[] = {
     0x0000, 0x0000, 0x0000,
 };
 
-static u8 g_testCollLuckCutoff[] = {
-    0x00,
-    0x40,
-    0x20,
-    0x10,
-};
+static u8 g_testCollLuckCutoff[] = {0x00, 0x40, 0x20, 0x10};
 
 static u8 g_testColluCoords[] = {
     0x80, 0x80, 0xA0, 0xA0, 0xC0, 0xC0, 0x00, 0x00,
@@ -94,28 +89,26 @@ static u16 g_eDamageDisplayClut[] = {
 // Slightly different to other overlays. May be possible to
 //  de-duplicate with several #ifdef, but for now it's broken out.
 void HitDetection(void) {
-    s32 temp_rand;
     Entity* otherEntity;
     Primitive* prim;
     Entity* entityHit;
     s32* scratchpad_2;
     Entity* iterEnt2;
-    u16 miscVar3;
-    u16 i;
     s32* scratchpad_1;
     u16* dropTable;
-    u32 hitboxCheck1;
-    EnemyDef* sp3C;
     s16 xCoord;
     s16 yCoord2;
     u16 miscVar1;
     u16 hitboxCheck2;
-    s32 yCoord1;
     s32 hitboxWidth;
-    s8 uselessVar;
+    s32 yCoord1;
+    u32 hitboxCheck1;
+    EnemyDef* sp3C;
+    u16 i;
     Entity* entity;
     u8 miscVar2;
-
+    u16 miscVar3;
+    u8 uselessVar;
     u32 flaggy_flags;
 
     scratchpad_1 = (s32*)SP(0);
@@ -188,12 +181,12 @@ void HitDetection(void) {
                         hitboxCheck1 = hitboxWidth + *scratchpad_2++;
                         hitboxCheck2 += hitboxCheck1;
                         hitboxCheck1 *= 2;
-                        if (hitboxCheck1 >= hitboxCheck2) {
+                        if (hitboxCheck2 <= hitboxCheck1) {
                             hitboxCheck2 = (u16)*scratchpad_2++ - (u16)yCoord2;
                             hitboxCheck1 = yCoord1 + *scratchpad_2++;
                             hitboxCheck2 += hitboxCheck1;
                             hitboxCheck1 *= 2;
-                            if (hitboxCheck1 >= hitboxCheck2) {
+                            if (hitboxCheck2 <= hitboxCheck1) {
                                 // reusing the i variable here, maybe can be a
                                 // different var
                                 i = iterEnt2->hitEffect & 0x7F;
@@ -239,7 +232,7 @@ void HitDetection(void) {
             }
         }
 
-        if ((miscVar1 & 1) && (!miscVar2)) {
+        if ((miscVar1 & 1) && !miscVar2) {
             // Note that in this block, iterEnt2 is never advanced, so it's
             // always the player.
             iterEnt2 = &PLAYER;
@@ -250,12 +243,12 @@ void HitDetection(void) {
                 hitboxCheck1 = hitboxWidth + *scratchpad_2++;
                 hitboxCheck2 += hitboxCheck1;
                 hitboxCheck1 *= 2;
-                if (hitboxCheck1 >= hitboxCheck2) {
+                if (hitboxCheck2 <= hitboxCheck1) {
                     hitboxCheck2 = (u16)*scratchpad_2++ - (u16)yCoord2;
                     hitboxCheck1 = yCoord1 + *scratchpad_2++;
                     hitboxCheck2 += hitboxCheck1;
                     hitboxCheck1 *= 2;
-                    if (hitboxCheck1 >= hitboxCheck2) {
+                    if (hitboxCheck2 <= hitboxCheck1) {
                         if (entity->attack) {
                             iterEnt2->unkB8 = entity;
                             if (miscVar1 & 8) {
@@ -288,7 +281,6 @@ void HitDetection(void) {
                     otherEntity =
                         AllocEntity(&g_Entities[160], &g_Entities[192]);
                     if (otherEntity) {
-                        // EntitySoulStealOrb
                         CreateEntityFromEntity(
                             E_SOUL_STEAL_ORB, entity, otherEntity);
                     }
@@ -308,14 +300,15 @@ void HitDetection(void) {
                         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
                     }
                     BottomCornerText(
-                        g_api.enemyDefs[entityHit->enemyId].name, 0);
+                        g_api.enemyDefs[entityHit->enemyId].name, false);
                     entityHit->flags |= FLAG_NOT_AN_ENEMY;
                 }
                 miscVar2 = 0;
-                if ((entity->hitboxState & 8) && (iterEnt2->hitboxState & 4)) {
-                    goto block_164;
-                }
-                if (entityHit->hitPoints) {
+                // Odd structure - may be a macro or a fake match,
+                // the block is intentionally a no-op to match PSP
+                if (entity->hitboxState & 8 && iterEnt2->hitboxState & 4) {
+                    (void)0;
+                } else if (entityHit->hitPoints) {
                     if (iterEnt2->attack) {
                         if (!(iterEnt2->hitboxState & 0x80)) {
                             scratchpad_2 -= 4;
@@ -329,11 +322,11 @@ void HitDetection(void) {
                              prim != NULL; prim = prim->next) {
                             if (prim->drawMode == DRAW_HIDE) {
                                 prim->clut = PAL_UNK_199;
-                                temp_rand = (Random() & 7) - 13;
-                                prim->x0 = prim->x2 = xCoord + temp_rand - 3;
+                                prim->x0 = prim->x2 =
+                                    xCoord - 13 + (Random() & 7) - 3;
                                 prim->x1 = prim->x3 = prim->x0 + 0x20;
-                                temp_rand = (Random() & 7) - 10;
-                                prim->y0 = prim->y1 = yCoord2 + temp_rand - 3;
+                                prim->y0 = prim->y1 =
+                                    yCoord2 - 10 + (Random() & 7) - 3;
                                 prim->y2 = prim->y3 = prim->y0 + 0x20;
                                 prim->p1 = 0;
                                 if (iterEnt2->zPriority > entity->zPriority) {
@@ -346,8 +339,7 @@ void HitDetection(void) {
                             }
                         }
                     }
-                    if ((iterEnt2->attack) &&
-                        (entityHit->hitPoints != 0x7FFF)) {
+                    if (iterEnt2->attack && (entityHit->hitPoints != 0x7FFF)) {
                         miscVar1 = g_api.DealDamage(entity, iterEnt2);
                         if (iterEnt2->hitboxState == 4) {
                             miscVar1 = 0;
@@ -424,7 +416,6 @@ void HitDetection(void) {
                             otherEntity =
                                 AllocEntity(&g_Entities[160], &g_Entities[192]);
                             if (otherEntity != NULL) {
-                                // EntityEnemyBlood
                                 CreateEntityFromEntity(
                                     E_ENEMY_BLOOD, entity, otherEntity);
                                 if (xCoord > entity->posX.i.hi) {
@@ -459,11 +450,10 @@ void HitDetection(void) {
                                  (otherEntity != entityHit));
                         // I don't understand this; we write to a spot but we
                         // never reference it again.
-                        uselessVar = ((u32)entityHit->flags >> 4) & 7 & 0xFF;
+                        uselessVar = ((u32)entityHit->flags >> 4) & 7;
                         continue;
                     }
                 }
-            block_164:
                 PreventEntityFromRespawning(entityHit);
                 sp3C = &g_api.enemyDefs[entityHit->enemyId];
                 if (!(entityHit->hitFlags & 0x80)) {
@@ -485,7 +475,7 @@ void HitDetection(void) {
                             if (hitboxCheck2 == 5) {
                                 dropTable = g_jewelSwordDropTable;
                                 miscVar3 = rand() & 0xFFF;
-                                while (1) {
+                                while (true) {
                                     if (*dropTable++ >= miscVar3) {
                                         miscVar3 = *dropTable;
                                         break;
@@ -520,11 +510,9 @@ void HitDetection(void) {
                             }
                             if (miscVar3 >= 0x80) {
                                 miscVar3 -= 0x80;
-                                // Create an EntityEquipItemDrop
                                 CreateEntityFromEntity(
                                     E_EQUIP_ITEM_DROP, entity, otherEntity);
                             } else {
-                                // Create an EntityPrizeDrop
                                 CreateEntityFromEntity(
                                     E_PRIZE_DROP, entity, otherEntity);
                             }
@@ -585,21 +573,22 @@ void HitDetection(void) {
             }
         }
     }
-    for (prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8]; prim != NULL;
-         prim = prim->next) {
-        if ((prim->drawMode) != DRAW_HIDE) {
+    prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
+    while (prim != NULL) {
+        if (prim->drawMode != DRAW_HIDE) {
             miscVar2 = prim->p1;
             prim->u0 = prim->u2 = g_testColluCoords[miscVar2];
             prim->u1 = prim->u3 = prim->u0 + 0x20;
             prim->v0 = prim->v1 = g_testCollvCoords[miscVar2];
             prim->v2 = prim->v3 = prim->v0 + 0x20;
             miscVar2++;
-            if (miscVar2 >= 7) {
+            if (miscVar2 > 6) {
                 prim->drawMode = DRAW_HIDE;
             } else {
                 prim->p1 = miscVar2;
             }
         }
+        prim = prim->next;
     }
 }
 #include "../entity_damage_display.h"
