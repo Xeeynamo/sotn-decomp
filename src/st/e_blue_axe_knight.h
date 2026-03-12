@@ -431,15 +431,15 @@ void EntityAxeKnightBlue(Entity* self) {
 
         if (self->pose == 1 || self->pose == 4) {
             if (self->facingLeft) {
-                self->velocityX += 0x600;
+                self->velocityX += FIX(3.0 / 128);
             } else {
-                self->velocityX -= 0x600;
+                self->velocityX -= FIX(3.0 / 128);
             }
         } else {
             if (self->facingLeft) {
-                self->velocityX -= 0x600;
+                self->velocityX -= FIX(3.0 / 128);
             } else {
-                self->velocityX += 0x600;
+                self->velocityX += FIX(3.0 / 128);
             }
         }
 
@@ -482,15 +482,15 @@ void EntityAxeKnightBlue(Entity* self) {
 
         if (self->pose == 1 || self->pose == 4) {
             if (self->facingLeft) {
-                self->velocityX -= 0x400;
+                self->velocityX -= FIX(1.0 / 64);
             } else {
-                self->velocityX += 0x400;
+                self->velocityX += FIX(1.0 / 64);
             }
         } else {
             if (self->facingLeft) {
-                self->velocityX += 0x400;
+                self->velocityX += FIX(1.0 / 64);
             } else {
-                self->velocityX -= 0x400;
+                self->velocityX -= FIX(1.0 / 64);
             }
         }
 
