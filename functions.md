@@ -4956,7 +4956,7 @@
 | ric    | func_pspeu_092C9C98                  |      544 |         53 | Yes    |       |     |
 | dra    | func_psp_09143758                    |      546 |        139 |        |       |     |
 | maria  | func_pspeu_092B92F0                  |      550 |         56 | Yes    |       |     |
-| rnz0   | EntityUnk1A                          |      553 |         69 |        |       |     |
+| rnz0   | EntityFloorTrap                      |      553 |         69 |        |       |     |
 | dra    | func_psp_090F2258                    |      554 |         79 |        |       |     |
 | dra    | func_psp_09131CA8                    |      555 |         41 |        |       |     |
 | rcat   | func_pspeu_09247BC8                  |      555 |         81 |        |       |     |
