@@ -79,7 +79,7 @@ void EntityLeftSecretRoomWall(Entity* self) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-            newEntity->params = 0x13;
+            newEntity->params = EXPLOSION_UNK_19;
         }
         self->ext.breakable.resetTimer = 16;
         self->step++;
@@ -157,7 +157,7 @@ void EntityBottomSecretRoomFloor(Entity* self) {
         newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-            newEntity->params = 0x11;
+            newEntity->params = EXPLOSION_UNK_17;
         }
         self->ext.breakable.resetTimer = 16;
         self->step++;

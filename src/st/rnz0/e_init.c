@@ -47,9 +47,9 @@ void EntityRelicContainer(Entity* self);
 void EntitySealedDoor(Entity* self);
 void EntityRedEyeBust(Entity* self);
 void EntityCannonLever(Entity* self);
-void func_us_801AC758(Entity* self);
+void EntityCannon(Entity* self);
 void EntityCannonShot(Entity* self);
-void func_us_801ACAD0(Entity* self);
+void EntityCannonWall(Entity* self);
 void EntityUnk31(Entity* self);
 void func_us_801C09E8(Entity* self);
 void func_us_801C1668(Entity* self);
@@ -108,9 +108,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySealedDoor,
     EntityRedEyeBust,
     EntityCannonLever,
-    func_us_801AC758,
+    EntityCannon,
     EntityCannonShot,
-    func_us_801ACAD0,
+    EntityCannonWall,
     EntityUnk31,
     func_us_801C09E8,
     func_us_801C1668,
@@ -138,9 +138,9 @@ EInit D_us_80180A50 = {ANIMSET_DRA(9), 1, 0, 0x81B0, 0x01A};
 EInit D_us_80180A5C = {ANIMSET_DRA(0), 0, 0, PAL_NULL, 0x018};
 EInit D_us_80180A68 = {ANIMSET_OVL(1), 0, 0, PAL_NULL, 0x003};
 EInit g_EInitEnemy3 = {ANIMSET_OVL(2), 0, 0, PAL_NULL, 0x003};
-EInit D_us_80180A80 = {ANIMSET_OVL(7), 0, 75, 0x236, 0x005};
-EInit D_us_80180A8C = {ANIMSET_OVL(8), 0, 79, 0x23A, 0x005};
-EInit D_us_80180A98 = {ANIMSET_OVL(9), 0, 83, 0x23E, 0x005};
+EInit g_EInitTableWithGlobe = {ANIMSET_OVL(7), 0, 75, 0x236, 0x005};
+EInit g_EInitLifeMaxTank = {ANIMSET_OVL(8), 0, 79, 0x23A, 0x005};
+EInit g_EInitPrizeContainer = {ANIMSET_OVL(9), 0, 83, 0x23E, 0x005};
 EInit D_us_80180AA4 = {ANIMSET_OVL(10), 1, 72, 0x247, 0x0B6};
 EInit D_us_80180AB0 = {ANIMSET_OVL(11), 1, 95, 0x260, 0x11C};
 EInit D_us_80180ABC = {ANIMSET_OVL(11), 1, 95, 0x260, 0x002};
