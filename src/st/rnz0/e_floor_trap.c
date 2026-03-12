@@ -12,7 +12,8 @@ typedef enum {
     FLOORTRAP_DEBUG = 0xFF
 } FloorTrapSteps;
 
-// tools/play_animation.py indicates that this animation displays the wheel spinning.
+// tools/play_animation.py indicates that this animation displays the wheel
+// spinning.
 static u8 anim[] = {1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 0, 0};
 
 // This could be anything (and might not be u16). Stripped on PSP.
@@ -153,7 +154,8 @@ void EntityFloorTrap(Entity* self) {
         self->posX.i.hi = other->posX.i.hi;
         self->posY.i.hi = other->posY.i.hi;
         if (other->velocityX != 0) {
-            // Plays the wheel spinning animation - indicates that this entity is the wheel
+            // Plays the wheel spinning animation - indicates that this entity
+            // is the wheel
             AnimateEntity(anim, self);
         }
         break;

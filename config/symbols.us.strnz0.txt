@@ -2,16 +2,8 @@ g_EInitInteractable = 0x801809B4;
 g_EInitCommon = 0x801809D8;
 RNZ0_RedDoorTiles = 0x80180B48;
 RNZ0_PrizeDrops = 0x80180CC8;
-tiles_wall = 0x80180D94;
 sprites_rnz0_13 = 0x801AA72C;
 sprites_rnz0_14 = 0x801AA8E4;
-EntityLifeMaxTank = 0x801AC064; // source=duplicate
-EntityRelicContainer = 0x801AC1CC; // source=duplicate
-EntityBlueFlameTable = 0x801AC430; // source=duplicate
-EntityCannonLever = 0x801AC548; // source=duplicate
-EntityCannon = 0x801AC758;
-EntityCannonShot = 0x801AC9CC; // source=duplicate
-EntityCannonWall = 0x801ACAD0;
 Random = 0x801ACC04; // source=match
 CreateEntityFromCurrentEntity = 0x801AF27C; // source=match
 CreateEntityFromEntity = 0x801AF2F0; // source=match
@@ -33,7 +25,6 @@ GetPlayerCollisionWith = 0x801B10D0; // source=match
 CheckColliderOffsets = 0x801B3E3C; // source=match
 EntityGreyPuffSpawner = 0x801B416C; // source=match
 PlaySfxPositional = 0x801B60E0; // source=match
-EntityUnk1A = 0x801B7C8C;
 SealedDoorIsNearPlayer = 0x801BF820; // source=match
 EntitySealedDoor = 0x801BF898; // source=match
 EntityUnk31 = 0x801C060C;
