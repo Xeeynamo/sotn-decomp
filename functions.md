@@ -634,8 +634,8 @@
 | dai    | e_hunting_girl.rodata                |       20 |          0 | Yes    |       |     |
 | lib    | e_dhuron.rodata                      |       20 |          0 | Yes    |       |     |
 | lib    | e_flying_zombie.rodata               |       20 |          0 | Yes    |       |     |
-| no1    | e_bone_musket.rodata                 |       20 |          0 | Yes    |       |     |
 | no1    | e_blue_axe_knight.rodata             |       20 |          0 | Yes    |       |     |
+| no1    | e_bone_musket.rodata                 |       20 |          0 | Yes    |       |     |
 | no2    | e_bloody_zombie.rodata               |       20 |          0 | Yes    |       |     |
 | np3    | e_misc.rodata                        |       20 |          0 | Yes    |       |     |
 | np3    | e_stage_name.rodata                  |       20 |          0 | Yes    |       |     |
@@ -1259,8 +1259,8 @@
 | cat    | func_pspeu_09252B00                  |       31 |          3 |        |       |     |
 | dai    | func_pspeu_0924DBC8                  |       31 |          3 |        |       |     |
 | lib    | func_psp_0924F608                    |       31 |          3 |        |       |     |
-| no1    | SetEntityVelocityFromAngle           |       31 |          3 |        |       |     |
 | no1    | func_pspeu_0923A690                  |       31 |          3 |        |       |     |
+| no1    | SetEntityVelocityFromAngle           |       31 |          3 |        |       |     |
 | no2    | func_pspeu_092549F8                  |       31 |          3 |        |       |     |
 | no2    | func_pspeu_0924D188                  |       31 |          3 |        |       |     |
 | no4    | func_pspeu_092428E0                  |       31 |          3 |        |       |     |
@@ -3124,7 +3124,7 @@
 | main   | func_psp_08913A04                    |       94 |         20 |        |       |     |
 | chi    | func_psp_0924BB40                    |       95 |          1 |        |       |     |
 | are    | func_pspeu_0923E7B8                  |       95 |          5 |        |       |     |
-| no1    | func_us_801CBA30                     |       95 |          5 |        |       |     |
+| no1    | func_pspeu_0923A8F8                  |       95 |          5 |        |       |     |
 | main   | func_psp_0892F958                    |       95 |          6 |        |       |     |
 | np3    | EntityCavernDoorPlatform             |       95 |          7 |        |       |     |
 | lib    | func_psp_09254120                    |       95 |          8 |        |       |     |
@@ -3740,7 +3740,7 @@
 | ric    | func_pspeu_092CDD08                  |      140 |         13 |        |       |     |
 | lib    | func_psp_09239308                    |      140 |         13 |        |       |     |
 | sel    | func_psp_092457C0                    |      141 |          5 |        |       |     |
-| no1    | NO1_EntityBackgroundBlock            |      141 |         11 |        |       |     |
+| no1    | func_pspeu_0925D240                  |      141 |         11 |        |       |     |
 | cat    | func_pspeu_09260290                  |      141 |         12 |        |       |     |
 | dra    | func_psp_09124D28                    |      141 |         14 |        |       |     |
 |        | func_092ECE88                        |      141 |         18 | Yes    |       |     |
@@ -3761,7 +3761,7 @@
 |        | func_092E7700                        |      144 |         16 | Yes    |       |     |
 | main   | func_psp_0892C660                    |      144 |         21 |        |       |     |
 | are    | func_pspeu_0923E5B0                  |      144 |         23 |        |       |     |
-| no1    | EntityAxeKnightThrowingAxe           |      144 |         23 |        |       |     |
+| no1    | func_pspeu_0923A6F0                  |      144 |         23 |        |       |     |
 | nz0    | func_pspeu_09243338                  |      144 |         23 |        |       |     |
 | maria  | func_pspeu_092ACA78                  |      144 |         24 |        |       |     |
 | dra    | func_psp_09100E90                    |      145 |         15 | Yes    |       |     |
@@ -3908,7 +3908,7 @@
 | chi    | func_psp_0924D598                    |      165 |         18 |        |       |     |
 | dai    | func_pspeu_09256690                  |      165 |         18 |        |       |     |
 | dre    | func_pspeu_09247EB0                  |      165 |         18 |        |       |     |
-| no1    | NO1_EntityLockCamera                 |      165 |         18 |        |       |     |
+| no1    | func_pspeu_0925D450                  |      165 |         18 |        |       |     |
 | no2    | func_pspeu_0925B018                  |      165 |         18 |        |       |     |
 | no3    | func_pspeu_092457F8                  |      165 |         18 |        |       |     |
 | no4    | func_pspeu_09238600                  |      165 |         18 |        |       |     |
@@ -4458,7 +4458,7 @@
 |        | func_092EF098                        |      293 |         42 |        |       |     |
 |        | func_092EEF10                        |      293 |         42 |        |       |     |
 | no4    | func_pspeu_09241410                  |      294 |         16 |        |       |     |
-| no1    | EntityMouse                          |      294 |         30 |        |       |     |
+| no1    | func_pspeu_0925CDE8                  |      294 |         30 |        |       |     |
 | main   | __wctomb                             |      294 |         40 |        |       |     |
 | lib    | func_psp_092546D0                    |      294 |         47 |        |       |     |
 | main   | __sfvwrite_r                         |      295 |         56 |        |       |     |
@@ -4744,7 +4744,7 @@
 | dai    | func_pspeu_09246BF0                  |      406 |         25 |        |       |     |
 | dre    | func_pspeu_09242EA8                  |      406 |         25 |        |       |     |
 | lib    | func_psp_0924C810                    |      406 |         25 |        |       |     |
-| no1    | BottomCornerText                     |      406 |         25 |        |       |     |
+| no1    | func_pspeu_09249330                  |      406 |         25 |        |       |     |
 | no2    | func_pspeu_092467C0                  |      406 |         25 |        |       |     |
 | no3    | func_pspeu_0925F1C8                  |      406 |         25 |        |       |     |
 | no4    | func_pspeu_092559A0                  |      406 |         25 |        |       |     |
@@ -5293,7 +5293,7 @@
 | maria  | func_pspeu_092ACC80                  |     1197 |        200 | Yes    |       |     |
 |        | func_092E8D18                        |     1198 |        126 | Yes    |       |     |
 | are    | func_pspeu_0923D440                  |     1198 |        195 | Yes    |       |     |
-| no1    | EntityAxeKnightBlue                  |     1198 |        195 | Yes    |       |     |
+| no1    | func_pspeu_09239580                  |     1198 |        195 | Yes    |       |     |
 | lib    | func_psp_0924B568                    |     1202 |        112 | Yes    |       |     |
 | dra    | func_psp_090E31F8                    |     1203 |        134 |        |       |     |
 | dra    | func_psp_090F8A08                    |     1203 |        196 |        |       |     |
