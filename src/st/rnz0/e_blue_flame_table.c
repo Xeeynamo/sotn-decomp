@@ -58,7 +58,7 @@ void EntityRelicContainer(Entity* self) {
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->posY.i.hi -= 8;
-            newEntity->params = 2;
+            newEntity->params = EXPLOSION_SMALL_MULTIPLE;
         }
         PlaySfxPositional(SFX_GLASS_BREAK_E);
         self->step++;

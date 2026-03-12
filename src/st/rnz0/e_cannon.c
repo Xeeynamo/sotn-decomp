@@ -160,7 +160,7 @@ void EntityCannonShot(Entity* self) {
             newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (newEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-                newEntity->params = 3;
+                newEntity->params = EXPLOSION_BIG;
             }
             g_CastleFlags[NZ0_CANNON_WALL_SHORTCUT] = 1;
             DestroyEntity(self);
