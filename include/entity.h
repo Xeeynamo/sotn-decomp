@@ -3925,7 +3925,7 @@ typedef struct {
     /* 92 */ s16 : 16;
     /* 94 */ s32 : 32;
     /* 98 */ s32 : 32;
-    /* 9C */ struct Entity* unkEnt;
+    /* 9C */ struct Entity* wheelParent;
 } ET_FloorTrap;
 
 typedef union { // offset=0x7C

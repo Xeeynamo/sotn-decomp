@@ -3,9 +3,22 @@
 
 extern EInit g_EInitFloorTrap;
 
+typedef enum {
+    FLOORTRAP_INIT,
+    FLOORTRAP_1,
+    FLOORTRAP_2,
+    FLOORTRAP_3,
+    IM_A_WHEEL = 8,
+    FLOORTRAP_DEBUG = 0xFF
+} FloorTrapSteps;
+
+// tools/play_animation.py indicates that this animation displays the wheel spinning.
 static u8 anim[] = {1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 0, 0};
+
 // This could be anything (and might not be u16). Stripped on PSP.
 static u16 unused[] = {0, 40, 8, 0};
+
+#define PARAMS_IS_WHEEL 0x100
 
 // Sliding spikes on the floor throughout the second castle
 void EntityFloorTrap(Entity* self) {
@@ -16,11 +29,11 @@ void EntityFloorTrap(Entity* self) {
     s32 dX;
 
     switch (self->step) {
-    case 0:
+    case FLOORTRAP_INIT:
         InitializeEntity(g_EInitFloorTrap);
-        if (self->params & 0x100) {
+        if (self->params & PARAMS_IS_WHEEL) {
             self->animCurFrame = 3;
-            self->step = 8;
+            self->step = IM_A_WHEEL;
         } else {
             if (self->params) {
                 self->animCurFrame = 2;
@@ -37,22 +50,26 @@ void EntityFloorTrap(Entity* self) {
             self->attackElement = ELEMENT_CUT | ELEMENT_UNK_10;
             self->attack = 15;
             self->hitboxState = 1;
+
+            // Create the wheel
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(E_FLOORTRAP, self, other);
-                other->params = 0x100;
-                other->ext.floorTrap.unkEnt = self;
+                other->params = PARAMS_IS_WHEEL;
+                other->ext.floorTrap.wheelParent = self;
                 other->zPriority = self->zPriority + 1;
             }
         }
         break;
-    case 1:
+    case FLOORTRAP_1:
         self->ext.floorTrap.unk84 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+        // Find our partner floor trap
         if (self->params) {
             other = self - 1;
         } else {
             other = self + 1;
         }
+        // Make sure we actually got our partner
         if (other->entityId == E_FLOORTRAP) {
             dX = other->posX.i.hi + g_Tilemap.scrollX.i.hi;
             self->ext.floorTrap.unk86 = (self->ext.floorTrap.unk84 + dX) / 2;
@@ -66,7 +83,7 @@ void EntityFloorTrap(Entity* self) {
             self->step++;
         }
         break;
-    case 2:
+    case FLOORTRAP_2:
         other = &PLAYER;
         player_dY = self->posY.i.hi - other->posY.i.hi;
         if ((g_Player.vram_flag & TOUCHING_GROUND) && (abs(player_dY) < 0x21)) {
@@ -75,11 +92,11 @@ void EntityFloorTrap(Entity* self) {
                 dX = -dX;
             }
             if ((dX < self->ext.floorTrap.unk88) && (dX > 0)) {
-                SetStep(3);
+                SetStep(FLOORTRAP_3);
             }
         }
         break;
-    case 3:
+    case FLOORTRAP_3:
         switch (self->step_s) {
         case 0:
             if (self->params) {
@@ -126,24 +143,26 @@ void EntityFloorTrap(Entity* self) {
                 self->posX.i.hi =
                     self->ext.floorTrap.unk84 - g_Tilemap.scrollX.i.hi;
                 self->velocityX = 0;
-                SetStep(2);
+                SetStep(FLOORTRAP_2);
             }
             break;
         }
         break;
-    case 8:
-        other = self->ext.floorTrap.unkEnt;
+    case IM_A_WHEEL:
+        other = self->ext.floorTrap.wheelParent;
         self->posX.i.hi = other->posX.i.hi;
         self->posY.i.hi = other->posY.i.hi;
         if (other->velocityX != 0) {
+            // Plays the wheel spinning animation - indicates that this entity is the wheel
             AnimateEntity(anim, self);
         }
         break;
-    case 255:
+    case FLOORTRAP_DEBUG:
 #include "../pad2_anim_debug.h"
     }
     collision = GetPlayerCollisionWith(self, 7, 6, 4);
-    if (!(self->params & 0x100) && (collision & 4)) {
+    // We're not a wheel, we're the spike. And we hit the player.
+    if (!(self->params & PARAMS_IS_WHEEL) && (collision & 4)) {
         // Launch the player proportional to self's speed
         launchSpeed = self->velocityX;
         other = &PLAYER;
