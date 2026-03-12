@@ -61,7 +61,7 @@ segments:
       - [0x1B188, c, e_room_fg] # e_room_fg
       - [0x1B2A0, c, st_common]
       - [0x1C900, c, prim_helpers]
-      - [0x1D3F8, c, rnz0_psp/e_unk1A]
+      - [0x1D3F8, c, e_floor_trap]
       - [0x1DC08, c, rnz0_psp/e_unk34-36]
       - [0x1E760, c, e_purple_brick]
       - [0x1E9E0, c, e_cannon]
@@ -84,7 +84,8 @@ segments:
       - [0x21A60, .data, collision]
       - [0x21E38, data]
       - [0x220A0, .data, e_room_fg]
-      - [0x22140, data]
+      - [0x22140, .data, e_floor_trap]
+      - [0x22160, data]
       - [0x221C0, .data, e_cannon]
       - [0x221D8, data]
       - [0x292C8, .data, e_breakable]
