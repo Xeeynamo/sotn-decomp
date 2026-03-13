@@ -81,3 +81,6 @@ typedef enum EntityIDs {
 } EntityIDs;
 
 #endif // RNZ0_H
+
+extern Primitive* FindFirstUnkPrim(Primitive* poly);
+

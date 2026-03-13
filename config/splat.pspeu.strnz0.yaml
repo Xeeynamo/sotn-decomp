@@ -42,7 +42,7 @@ segments:
     align: 128
     subalign: 8
     subsegments:
-      - [0x80, c, rnz0_psp/e_unk1B-1E]
+      - [0x80, c, e_ctulhu]
       - [0x2730, c, create_entity] # create_entity
       - [0x3718, c, rnz0_psp/e_salem_witch] # en_salem_witch
       - [0x5860, c, rnz0_psp/e_unk1F-23]
@@ -74,7 +74,8 @@ segments:
       - [0x20228, c, e_life_max_tank]
       - [0x203E0, c, e_globe_table]
       - [0x20518, c, e_left_secret_room_wall]
-      - [0x20F00, data]
+      - [0x20F00, .data, e_ctulhu]
+      - [0x21050, data]
       - [0x213C8, .data, e_red_door]
       - [0x213E0, .data, st_update]
       - [0x21410, .data, e_particles]
@@ -99,7 +100,7 @@ segments:
       - [0x4A2D8, .data, e_life_max_tank]
       - [0x4A310, .data, e_globe_table]
       - [0x4A330, .data, e_left_secret_room_wall]
-      - [0x4A400, .rodata, rnz0_psp/e_unk1B-1E]
+      - [0x4A400, .rodata, e_ctulhu]
       - [0x4A420, .rodata, rnz0_psp/e_unk1F-23]
       - [0x4A478, .rodata, e_red_door]
       - [0x4A490, .rodata, rnz0_psp/e_unk32-33]

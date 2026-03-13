@@ -42,8 +42,7 @@ static u8 anim_fireball[] = {2, 38, 2, 39, 2, 40, 2, 41, 2, 42, 0, 0};
 static u8 anim_land[] = {
     1, 1, 1, 2, 1, 3, 1, 4, 1, 30, 1, 31, 5, 30, 4, 4, 3, 3, 2, 2, 2, 1, 0, 0};
 static s16 triple_fireball_rot_z[] = {384, 0, -384};
-static u8 anim_death[] = {3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,  7,
-                          3, 8, 3, 9, 3, 10, 3, 11, 3, 12, 3, 13, -1, 0};
+
 extern s16* ctulhu_shockwave_uvs[]; // uvs for shockwave
 
 void EntityCtulhu(Entity* self) {
@@ -225,11 +224,11 @@ void EntityCtulhu(Entity* self) {
                 // shoot a triple
                 if (self->ext.ctulhu.hopCount == 1) {
                     SetStep(CTULHU_TRIPLE_FIREBALL);
+                    #ifndef DISABLE_TRIPLE_FIREBALL
                     posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
 
                     // If Ctulhu has chased the player far enough, or fired
                     // enough triple fireballs, it can fire an ice shockwave
-                    #ifndef DISABLE_TRIPLE_FIREBALL
                     if (posX > 0x400) {
                         self->facingLeft = 1;
                         self->ext.ctulhu.tripleFireballCount = 3;
@@ -417,7 +416,8 @@ void EntityCtulhu(Entity* self) {
             SetDrawEnv(dr_env, &drawEnv);
             prim = prim->next;
 
-            if (g_api.func_800EDB08((POLY_GT4*)prim) == NULL) {
+            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            if (dr_env == NULL) {
                 DestroyEntity(self);
                 return;
             }
@@ -436,7 +436,7 @@ void EntityCtulhu(Entity* self) {
             } else {
                 posY = 0x7F;
             }
-
+            dr_env = dr_env; // I dunno, permuter found it
             prim->type = PRIM_GT4;
             prim->tpage = 0x110;
             prim->u0 = prim->u2 = 0;
@@ -878,6 +878,9 @@ void EntityCtulhuIceShockwave(Entity* self) {
         DestroyEntity(self);
     }
 }
+
+static u8 anim_death[] = {3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,  7,
+                          3, 8, 3, 9, 3, 10, 3, 11, 3, 12, 3, 13, -1, 0};
 
 void EntityCtulhuDeath(Entity* self) {
     switch (self->step) {
