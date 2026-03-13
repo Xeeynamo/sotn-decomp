@@ -14,6 +14,7 @@ enum Palettes {
     PAL_UNK_237 = 0x237,
     PAL_UNK_238 = 0x238,
     PAL_UNK_239 = 0x239,
+    PAL_CTULHU_DEATH = 0x2EE,
 };
 
 typedef enum EntityIDs {
@@ -45,9 +46,9 @@ typedef enum EntityIDs {
     /* 0x19 */ E_WALL_DEBRIS,
     /* 0x1A */ E_FLOORTRAP,
     /* 0x1B */ E_CTULHU,
-    /* 0x1C */ E_UNK_1C,
-    /* 0x1D */ E_UNK_1D,
-    /* 0x1E */ E_UNK_1E,
+    /* 0x1C */ E_CTULHU_FIREBALL,
+    /* 0x1D */ E_CTULHU_ICE_SHOCKWAVE,
+    /* 0x1E */ E_CTULHU_DEATH,
     /* 0x1F */ E_FIRE_DEMON,
     /* 0x20 */ E_UNK_20,
     /* 0x21 */ E_UNK_21,
@@ -80,3 +81,5 @@ typedef enum EntityIDs {
 } EntityIDs;
 
 #endif // RNZ0_H
+
+extern Primitive* FindFirstUnkPrim(Primitive* poly);
