@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 extern EInit g_EInitCtulhu;
 extern EInit g_EInitCtulhuFireball;
 extern EInit g_EInitCtulhuIceShockwave;
@@ -224,7 +225,7 @@ void EntityCtulhu(Entity* self) {
                 // shoot a triple
                 if (self->ext.ctulhu.hopCount == 1) {
                     SetStep(CTULHU_TRIPLE_FIREBALL);
-                    #ifndef DISABLE_TRIPLE_FIREBALL
+#ifndef DISABLE_TRIPLE_FIREBALL
                     posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
 
                     // If Ctulhu has chased the player far enough, or fired
@@ -233,7 +234,7 @@ void EntityCtulhu(Entity* self) {
                         self->facingLeft = 1;
                         self->ext.ctulhu.tripleFireballCount = 3;
                     }
-                    #endif
+#endif
                     if (++self->ext.ctulhu.tripleFireballCount > 2) {
                         self->ext.ctulhu.tripleFireballCount = 0;
                         SetStep(CTULHU_ICE_SHOCKWAVE);
@@ -625,11 +626,11 @@ void EntityCtulhuFireball(Entity* self) {
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
-        #ifdef STAGE_IS_RNZ0
+#ifdef STAGE_IS_RNZ0
         prim->tpage = 0x12;
-        #else
+#else
         prim->tpage = 0x14;
-        #endif
+#endif
         prim->clut = g_EInitCtulhuFireball[3] + 1;
         prim->u0 = prim->u2 = 224;
         prim->u1 = prim->u3 = 255;
