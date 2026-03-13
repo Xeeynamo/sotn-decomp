@@ -437,7 +437,6 @@ void EntityCtulhu(Entity* self) {
             } else {
                 posY = 0x7F;
             }
-            dr_env = dr_env; // I dunno, permuter found it
             prim->type = PRIM_GT4;
             prim->tpage = 0x110;
             prim->u0 = prim->u2 = 0;
