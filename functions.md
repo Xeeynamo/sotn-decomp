@@ -535,7 +535,7 @@
 | nz0    | e_life_up.rodata                     |       18 |          0 | Yes    |       |     |
 | nz0    | e_skeleton.rodata                    |       18 |          0 | Yes    |       |     |
 | nz1    | e_life_up.rodata                     |       18 |          0 | Yes    |       |     |
-| rnz0   | e_unk1B-1E.rodata                    |       18 |          0 | Yes    |       |     |
+| rnz0   | e_ctulhu.rodata                      |       18 |          0 | Yes    |       |     |
 | sel    | A578.rodata                          |       18 |          0 | Yes    |       |     |
 | main   | sceGuCheckList                       |       18 |          1 |        |       |     |
 | main   | func_psp_089107DC                    |       18 |          1 |        |       |     |
@@ -2947,7 +2947,7 @@
 | main   | func_psp_0892A9EC                    |       84 |         16 |        |       |     |
 | rare   | func_pspeu_09237700                  |       85 |          1 |        |       |     |
 | np3    | func_pspeu_09262658                  |       85 |          7 |        |       |     |
-| rnz0   | func_us_801B9D78                     |       85 |         10 |        |       |     |
+| rnz0   | EntityCtulhuDeath                    |       85 |         10 |        |       |     |
 | dra    | func_psp_090E83E8                    |       85 |         12 |        |       |     |
 | main   | func_psp_08935808                    |       85 |         12 |        |       |     |
 | nz1    | func_pspeu_0925AEA8                  |       85 |         12 |        |       |     |
@@ -4032,7 +4032,7 @@
 | chi    | func_psp_09247720                    |      186 |         20 |        |       |     |
 | dai    | func_pspeu_0924D570                  |      186 |         20 |        |       |     |
 | lib    | func_psp_0924EFB0                    |      186 |         20 |        |       |     |
-| no1    | UnkCollisionFunc3                    |      186 |         20 |        |       |     |
+| no1    | func_pspeu_0924C948                  |      186 |         20 |        |       |     |
 | no2    | func_pspeu_0924CB30                  |      186 |         20 |        |       |     |
 | no3    | func_pspeu_0925FD40                  |      186 |         20 |        |       |     |
 | no4    | func_pspeu_0925AE88                  |      186 |         20 |        |       |     |
@@ -4103,7 +4103,7 @@
 | chi    | func_psp_092479D8                    |      200 |         20 |        |       |     |
 | dai    | func_pspeu_0924D828                  |      200 |         20 |        |       |     |
 | lib    | func_psp_0924F268                    |      200 |         20 |        |       |     |
-| no1    | UnkCollisionFunc2                    |      200 |         20 |        |       |     |
+| no1    | func_pspeu_0924CC00                  |      200 |         20 |        |       |     |
 | no2    | func_pspeu_0924CDE8                  |      200 |         20 |        |       |     |
 | no3    | func_pspeu_0925FFF8                  |      200 |         20 |        |       |     |
 | no4    | func_pspeu_0925B140                  |      200 |         20 |        |       |     |
@@ -4151,7 +4151,7 @@
 | main   | sceGupSetMatrix                      |      211 |          9 |        |       |     |
 | maria  | func_pspeu_092A9288                  |      211 |         19 |        |       |     |
 | dra    | func_psp_091012A8                    |      211 |         20 |        |       |     |
-| rnz0   | func_us_801B9430                     |      211 |         20 |        |       |     |
+| rnz0   | EntityCtulhuFireball                 |      211 |         20 |        |       |     |
 | rare   | func_pspeu_0923D508                  |      211 |         22 |        |       |     |
 | rare   | func_pspeu_0924D830                  |      211 |         26 |        |       |     |
 | lib    | e_shop.rodata                        |      212 |          0 | Yes    |       |     |
@@ -5052,7 +5052,7 @@
 | maria  | func_pspeu_092BD1B8                  |      670 |         62 |        |       |     |
 | ric    | func_pspeu_092C69A8                  |      670 |         62 |        |       |     |
 | dra    | func_psp_0910D8F8                    |      672 |         81 |        |       |     |
-| rnz0   | func_us_801B965C                     |      674 |         61 |        |       |     |
+| rnz0   | EntityCtulhuIceShockwave             |      674 |         61 |        |       |     |
 | ric    | func_pspeu_092B7FF8                  |      675 |         75 |        |       |     |
 | no3    | func_pspeu_0925B620                  |      678 |         98 | Yes    |       |     |
 | np3    | EntityBoneScimitar                   |      678 |         98 | Yes    |       |     |
@@ -5385,7 +5385,7 @@
 | no1    | func_us_801BA290                     |     1646 |        130 | Yes    |       |     |
 | np3    | EntityMerman2                        |     1649 |        195 | Yes    |       |     |
 | no3    | func_pspeu_0924DB10                  |     1668 |        195 | Yes    |       |     |
-| rnz0   | func_us_801B8238                     |     1687 |        246 | Yes    |       |     |
+| rnz0   | EntityCtulhu                         |     1687 |        246 | Yes    |       |     |
 | rare   | func_pspeu_0924BF58                  |     1701 |        204 | Yes    |       |     |
 | no4    | func_pspeu_0925E548                  |     1731 |        172 | Yes    |       |     |
 | st0    | EntityDraculaFinalForm               |     1733 |        251 | Yes    |       |     |
