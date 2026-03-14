@@ -3928,6 +3928,23 @@ typedef struct {
     /* 9C */ struct Entity* wheelParent;
 } ET_FloorTrap;
 
+typedef struct {
+    u32 : 32; //7C
+    u32 : 32; //80
+    u32 : 32; //84
+    s16 unk88;
+    u16: 16;
+    u32 : 32; //8C
+    u32 : 32; //90
+    s16 unk94;
+    u16 : 16; // 96
+    u32 : 32; //98
+    s16 unk9C; //9C
+    s16 unk9E;
+    u8 unkA0;
+    struct Primitive* primA4;
+} ET_FireDemon;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4263,6 +4280,7 @@ typedef union { // offset=0x7C
     ET_801BACF4 et_801BACF4;
     ET_Salome salome;
     ET_FloorTrap floorTrap;
+    ET_FireDemon fireDemon;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \

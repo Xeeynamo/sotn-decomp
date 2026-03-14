@@ -146,7 +146,7 @@ void func_us_801BA21C(Entity* self) {
         }
         self->velocityX = rsin(angle) * -0x40;
         self->velocityY = rcos(angle) * -0x40;
-        self->ext.ILLEGAL.s16[0xC] = angle;
+        self->ext.fireDemon.unk94 = angle;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 6);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -189,23 +189,23 @@ void func_us_801BA21C(Entity* self) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
-        self->ext.ILLEGAL.u32[0xA] = 0;
+        self->ext.fireDemon.primA4 = NULL;
     case 1:
         MoveEntity();
-        self->ext.ILLEGAL.s16[6]++;
+        self->ext.fireDemon.unk88++;
         prim = self->ext.prim;
-        if (!(self->ext.ILLEGAL.s16[6] % 2)) {
+        if (!(self->ext.fireDemon.unk88 % 2)) {
             NEXT_DUDE->unk22 ^= 8;
         }
         UpdateAnimation(&D_pspeu_09258910, prim);
         UnkPrimHelper(prim);
         prim = prim->next;
         prim = prim->next;
-        if ((self->ext.ILLEGAL.s16[6] % 3) == 0) {
+        if ((self->ext.fireDemon.unk88 % 3) == 0) {
             NEXT_DUDE->unk22++;
         }
 
-        if (((self->ext.ILLEGAL.s16[6] % 4) == 0) && (NEXT_DUDE->unk20 > 8)) {
+        if (((self->ext.fireDemon.unk88 % 4) == 0) && (NEXT_DUDE->unk20 > 8)) {
             NEXT_DUDE->unk20--;
         }
         UpdateAnimation(&D_pspeu_09258928, prim);
@@ -252,7 +252,7 @@ void func_us_801BA21C(Entity* self) {
         NEXT_DUDE->unk30 = NEXT_DUDE->unk22 / 2;
         prim = prim->next;
         prim = prim->next;
-        self->ext.ILLEGAL.u32[0xA] = (u32)prim;
+        self->ext.fireDemon.primA4 = prim;
         self->step += 1;
         /* fallthrough */
     case 3:
@@ -277,13 +277,13 @@ void func_us_801BA21C(Entity* self) {
         break;
     case 4:
         prim = self->ext.prim;
-        self->ext.ILLEGAL.s16[0x11] = (prim->x3 - self->posX.i.hi) - 0x10;
+        self->ext.fireDemon.unk9E = (prim->x3 - self->posX.i.hi) - 0x10;
         prim->p1 = 0;
         prim->p2 = 0;
         prim = prim->next;
         prim = prim->next;
-        self->ext.ILLEGAL.s16[0x10] = ((prim->x2 - self->posX.i.hi) + 0x10);
-        self->ext.ILLEGAL.u8[0x24] = 1;
+        self->ext.fireDemon.unk9C = ((prim->x2 - self->posX.i.hi) + 0x10);
+        self->ext.fireDemon.unkA0 = 1;
         prim->p1 = 2;
         prim->p2 = 0;
         g_api.func_80102CD8(1);
@@ -353,12 +353,12 @@ void func_us_801BA21C(Entity* self) {
             prim = prim->next;
         }
         self->ext.prim = NULL;
-        self->ext.ILLEGAL.u32[0xA] = 0;
-        self->ext.ILLEGAL.s16[6] = 0x10;
+        self->ext.fireDemon.primA4 = NULL;
+        self->ext.fireDemon.unk88 = 0x10;
         self->step += 1;
         break;
     case 9:
-        if (!--self->ext.ILLEGAL.s16[6]) {
+        if (!--self->ext.fireDemon.unk88) {
             DestroyEntity(self);
             return;
         }
@@ -380,13 +380,13 @@ void func_us_801BA21C(Entity* self) {
         self->hitboxWidth = 0xC;
         self->hitboxHeight = 0xC;
     }
-    if (self->ext.ILLEGAL.u32[0xA] != 0) {
-        prim = (Primitive*)self->ext.ILLEGAL.u32[0xA];
+    if (self->ext.fireDemon.primA4 != NULL) {
+        prim = self->ext.fireDemon.primA4;
         func_pspeu_0923D100(prim);
     }
-    if (self->ext.ILLEGAL.u8[0x24]) {
-        for (xVar = self->ext.ILLEGAL.s16[0x10];
-             xVar < self->ext.ILLEGAL.s16[0x11]; xVar += 8) {
+    if (self->ext.fireDemon.unkA0) {
+        for (xVar = self->ext.fireDemon.unk9C;
+             xVar < self->ext.fireDemon.unk9E; xVar += 8) {
             if (!(Random() & 3)) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
