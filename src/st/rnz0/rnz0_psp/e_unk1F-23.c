@@ -42,7 +42,7 @@ void EntityUnkId22(Entity* self) {
 }
 
 typedef struct weirdPrim {
-    s32 : 32;
+    struct weirdPrim* next;
     s32 : 32;
     s32 : 32;
     s16 unkC;
@@ -62,6 +62,9 @@ typedef struct weirdPrim {
     s16 : 16;
     s8 unk2E;
     s16 unk30;
+    s16: 16;
+    s16: 16;
+    u16 unk36;
 } weirdPrim;
 
 #define NEXT_DUDE ((weirdPrim*)prim->next)
@@ -400,7 +403,37 @@ void func_us_801BA21C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk1F-23", func_pspeu_0923E290);
+void func_pspeu_0923E290(Primitive* prim) {
+    switch (NEXT_DUDE->unk28) {
+    case 0:
+        prim->drawMode = 8;
+        NEXT_DUDE->unk30 -= 1;
+        if (!NEXT_DUDE->unk30) {
+            g_api.PlaySfx(0x644);
+            NEXT_DUDE->unk28 = 1;
+        }
+        NEXT_DUDE->unk36 &= ~2;
+        return;
+    case 1:
+        prim->drawMode = 0;
+        NEXT_DUDE->unk10 = 0x7000 - ((Random() & 7) << 0xD);
+        NEXT_DUDE->unk14 = -0x40000;
+        NEXT_DUDE->unk28 += 1;
+        return;
+    case 2:
+        UnkPrimHelper(prim);
+        if (NEXT_DUDE->unk14 < 0) {
+            NEXT_DUDE->unk14 += 0x2000;
+        } else {
+            NEXT_DUDE->unk14 += 0x1000;
+        }
+        if (NEXT_DUDE->unk10 > 0) {
+            NEXT_DUDE->unk1E += 0x80;
+        } else {
+            NEXT_DUDE->unk1E -= 0x80;
+        }
+    }
+}
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk1F-23", func_pspeu_0923E448);
 
