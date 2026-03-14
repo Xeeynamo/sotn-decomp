@@ -126,7 +126,7 @@ extern EInit D_pspeu_09260720;
 
 void func_us_801BA21C(Entity* self) {
     Entity* player = &PLAYER; // unused
-    Entity* other;
+    Entity* explosion;
     Primitive* prim;
     Primitive* prim2;
     s16 xVar;
@@ -216,10 +216,10 @@ void func_us_801BA21C(Entity* self) {
         yVar = self->posY.i.hi;
         g_api.CheckCollision(xVar, yVar, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
-            if (other != NULL) {
-                CreateEntityFromEntity(2U, self, other);
-                other->params = 0x13;
+            explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (explosion != NULL) {
+                CreateEntityFromEntity(E_EXPLOSION, self, explosion);
+                explosion->params = EXPLOSION_UNK_19;
             }
             self->posY.i.hi += collider.unk18;
             self->step += 1;
@@ -293,7 +293,7 @@ void func_us_801BA21C(Entity* self) {
     case 5:
         prim = self->ext.prim;
         UpdateAnimation(&D_pspeu_09258970, prim);
-        prim->y0 -= 0xC;
+        prim->y0 -= 12;
         prim->y1 += 3;
         prim->x1 = prim->x3 -= 1;
         prim2 = prim;
@@ -366,7 +366,7 @@ void func_us_801BA21C(Entity* self) {
     }
     if (self->ext.prim != NULL) {
         prim = self->ext.prim;
-        self->hitboxWidth = 0xC;
+        self->hitboxWidth = 12;
         self->hitboxHeight = (self->posY.i.hi - prim->y0) / 4;
         if (self->hitboxHeight & 0xF000) {
             self->hitboxHeight = 0;
@@ -377,8 +377,8 @@ void func_us_801BA21C(Entity* self) {
     }
     if (self->step < 3) {
         self->hitboxOffY = 0;
-        self->hitboxWidth = 0xC;
-        self->hitboxHeight = 0xC;
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
     }
     if (self->ext.fireDemon.primA4 != NULL) {
         prim = self->ext.fireDemon.primA4;
@@ -388,12 +388,12 @@ void func_us_801BA21C(Entity* self) {
         for (xVar = self->ext.fireDemon.unk9C;
              xVar < self->ext.fireDemon.unk9E; xVar += 8) {
             if (!(Random() & 3)) {
-                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
-                if (other != NULL) {
-                    CreateEntityFromEntity(2U, self, other);
-                    other->posX.i.hi += xVar;
-                    other->posY.i.hi += (((Random() & 3) * 2) + 6);
-                    other->params = 0x5F00;
+                explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (explosion != NULL) {
+                    CreateEntityFromEntity(E_EXPLOSION, self, explosion);
+                    explosion->posX.i.hi += xVar;
+                    explosion->posY.i.hi += (((Random() & 3) * 2) + 6);
+                    explosion->params = 0x5F00;
                 }
             }
         }
