@@ -59,7 +59,6 @@ InitializeEntity = 0x09253640;
 EntityDummy = 0x092537E8;
 GetPlayerCollisionWith = 0x092539B0;
 UnkPrimHelper = 0x09253F80;
-UpdateAnimation = 0x09254480;
 FindFirstUnkPrim = 0x09254700;
 PrimToggleVisibility = 0x09254750;
 UnkPolyFunc2 = 0x09254940;

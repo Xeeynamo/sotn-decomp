@@ -4,11 +4,9 @@
 extern u16 g_EInitInteractable;
 
 static s32 D_us_80181A68[] = {
-    FIX(-1), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3)
-};
+    FIX(-1), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3)};
 static u8 D_us_80181A7C[] = {1, 9, 21, 43};
 static u16 D_us_80181A80[] = {16, 24, 42, 46};
-
 
 void EntityUnkId22(Entity* self) {
     if (!self->step) {
@@ -51,10 +49,9 @@ extern s32 D_pspeu_09258948;
 extern s32 D_pspeu_09258970;
 extern s32 D_pspeu_09258980;
 
-
 extern EInit D_pspeu_09260720;
 
-typedef struct weirdPrim{
+typedef struct weirdPrim {
     s32 : 32;
     s32 : 32;
     s32 : 32;
@@ -87,7 +84,6 @@ void func_us_801BA21C(Entity* self) {
     s16 angle;
     Collider collider;
 
-
     ((u16*)&D_8006C384)[3] = self->step; // what is this madness
     switch (self->step) {
     case 0:
@@ -105,7 +101,7 @@ void func_us_801BA21C(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        self->flags |= 0x800000;
+        self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
         self->ext.prim = prim;
@@ -120,7 +116,7 @@ void func_us_801BA21C(Entity* self) {
         NEXT_DUDE->unk10 = (-rsin(angle) * 0x38);
         NEXT_DUDE->unk14 = (-rcos(angle) * 0x38);
         prim->priority = self->zPriority;
-        prim->drawMode = 0x33;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
         prim = prim->next;
         UnkPolyFunc2(prim);
@@ -135,11 +131,11 @@ void func_us_801BA21C(Entity* self) {
         NEXT_DUDE->unk10 = (rsin(angle) * -0x40);
         NEXT_DUDE->unk14 = (rcos(angle) * -0x40);
         prim->priority = self->zPriority;
-        prim->drawMode = 0x33;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
         prim = prim->next;
         while (prim != NULL) {
-            prim->drawMode = 8;
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         self->ext.ILLEGAL.u32[0xA] = 0;
@@ -148,7 +144,7 @@ void func_us_801BA21C(Entity* self) {
         self->ext.ILLEGAL.s16[6]++;
         prim = self->ext.prim;
         if (!(self->ext.ILLEGAL.s16[6] % 2)) {
-            NEXT_DUDE->unk22 ^=  8;
+            NEXT_DUDE->unk22 ^= 8;
         }
         UpdateAnimation(&D_pspeu_09258910, prim);
         UnkPrimHelper(prim);
@@ -168,7 +164,7 @@ void func_us_801BA21C(Entity* self) {
         xVar = self->posX.i.hi;
         yVar = self->posY.i.hi;
         g_api.CheckCollision(xVar, yVar, &collider, 0);
-        if (collider.effects & 1) {
+        if (collider.effects & EFFECT_SOLID) {
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(2U, self, other);
@@ -176,7 +172,7 @@ void func_us_801BA21C(Entity* self) {
             }
             self->posY.i.hi += collider.unk18;
             self->step += 1;
-            PlaySfxPositional(0x655);
+            PlaySfxPositional(SFX_EXPLODE_B);
         }
         break;
     case 2:
@@ -240,14 +236,14 @@ void func_us_801BA21C(Entity* self) {
         prim->p1 = 2;
         prim->p2 = 0;
         g_api.func_80102CD8(1);
-        PlaySfxPositional(0x661);
+        PlaySfxPositional(SFX_FIREBALL_SHOT_B);
         self->step += 1;
         break;
     case 5:
         prim = self->ext.prim;
         UpdateAnimation(&D_pspeu_09258970, prim);
         prim->y0 -= 0xC;
-        prim->y1 += 3;        
+        prim->y1 += 3;
         prim->x1 = prim->x3 -= 1;
         prim2 = prim;
         prim = prim->next;
@@ -301,8 +297,8 @@ void func_us_801BA21C(Entity* self) {
         break;
     case 8:
         prim = self->ext.prim;
-        while(prim != NULL) {
-            prim->drawMode = 8;
+        while (prim != NULL) {
+            prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
         self->ext.prim = NULL;
@@ -338,7 +334,8 @@ void func_us_801BA21C(Entity* self) {
         func_pspeu_0923D100(prim);
     }
     if (self->ext.ILLEGAL.u8[0x24]) {
-        for(xVar = self->ext.ILLEGAL.s16[0x10]; xVar < self->ext.ILLEGAL.s16[0x11]; xVar+= 8){
+        for (xVar = self->ext.ILLEGAL.s16[0x10];
+             xVar < self->ext.ILLEGAL.s16[0x11]; xVar += 8) {
             if (!(Random() & 3)) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {

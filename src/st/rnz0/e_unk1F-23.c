@@ -4,11 +4,9 @@
 extern u16 g_EInitInteractable;
 
 static s32 D_us_80181A68[] = {
-    FIX(-1), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3)
-};
+    FIX(-1), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3)};
 static u8 D_us_80181A7C[] = {1, 9, 21, 43};
 static u16 D_us_80181A80[] = {16, 24, 42, 46};
-
 
 void EntityUnkId22(Entity* self) {
     if (!self->step) {
