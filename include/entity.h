@@ -3929,17 +3929,17 @@ typedef struct {
 } ET_FloorTrap;
 
 typedef struct {
-    u32 : 32; //7C
-    u32 : 32; //80
-    u32 : 32; //84
+    u32 : 32; // 7C
+    struct Primitive* prim80;
+    struct Primitive* prim84;
     s16 unk88;
-    u16: 16;
-    u32 : 32; //8C
-    u32 : 32; //90
+    u16 : 16;
+    u32 : 32; // 8C
+    u32 : 32; // 90
     s16 unk94;
-    u16 : 16; // 96
-    u32 : 32; //98
-    s16 unk9C; //9C
+    u16 : 16;  // 96
+    u32 : 32;  // 98
+    s16 unk9C; // 9C
     s16 unk9E;
     u8 unkA0;
     struct Primitive* primA4;
