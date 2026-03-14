@@ -10,7 +10,7 @@ EntitySalemWitchGlow = 0x0923C0A0; // source=match
 EntitySalemWitchCurse = 0x0923C1B8; // source=match
 EntitySalemWitchTriboltLaunch = 0x0923C958; // source=match
 EntitySalemWitchTriboltProjectile = 0x0923CB98; // source=match
-func_us_801B9E64 = 0x0923CEE0;
+EntityUnkId22 = 0x0923CEE0;
 func_us_801BA21C = 0x0923D3F8;
 func_us_801BB000 = 0x0923E620;
 func_us_801BB5D8 = 0x0923EDC8;
