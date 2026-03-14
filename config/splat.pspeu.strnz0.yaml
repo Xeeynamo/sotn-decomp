@@ -76,6 +76,8 @@ segments:
       - [0x20518, c, e_left_secret_room_wall]
       - [0x20F00, .data, e_ctulhu]
       - [0x21050, data]
+      - [0x21268, .data, rnz0_psp/e_unk1F-23]
+      - [0x21290, data]
       - [0x213C8, .data, e_red_door]
       - [0x213E0, .data, st_update]
       - [0x21410, .data, e_particles]
