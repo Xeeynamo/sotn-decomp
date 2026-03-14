@@ -41,16 +41,6 @@ void EntityUnkId22(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk1F-23", func_pspeu_0923D100);
-
-extern s32 D_pspeu_09258910;
-extern s32 D_pspeu_09258928;
-extern s32 D_pspeu_09258948;
-extern s32 D_pspeu_09258970;
-extern s32 D_pspeu_09258980;
-
-extern EInit D_pspeu_09260720;
-
 typedef struct weirdPrim {
     s32 : 32;
     s32 : 32;
@@ -65,13 +55,74 @@ typedef struct weirdPrim {
     s16 unk1E;
     s16 unk20;
     s16 unk22;
-    s32 : 32;
-    s32 : 32;
-    s32 : 32;
+    s16 unk24;
+    s16 unk26;
+    u8 unk28;
+    s16 : 16;
+    s16 : 16;
+    s8 unk2E;
     s16 unk30;
 } weirdPrim;
 
 #define NEXT_DUDE ((weirdPrim*)prim->next)
+
+void func_pspeu_0923D100(Primitive* prim) {
+    switch (NEXT_DUDE->unk28) {
+    case 0:
+        UnkPolyFunc2(prim);
+        prim->tpage = 0x1A;
+        prim->clut = 0x19D;
+        prim->u0 = prim->u2 = 0;
+        prim->u1 = prim->u3 = 0x3F;
+        prim->v0 = prim->v1 = 0xC0;
+        prim->v2 = prim->v3 = 0xFF;
+        NEXT_DUDE->unk18 = g_CurrentEntity->posX.i.hi;
+        NEXT_DUDE->unkE = g_CurrentEntity->posY.i.hi;
+        NEXT_DUDE->unk20 = 0x40;
+        NEXT_DUDE->unk22 = 0x40;
+        NEXT_DUDE->unk2E = 0x40;
+        prim->p3 |= 0x10;
+        NEXT_DUDE->unk24 = 0;
+        NEXT_DUDE->unk26 = NEXT_DUDE->unk24;
+        prim->priority = g_CurrentEntity->zPriority + 3;
+        prim->drawMode = 0x37;
+        NEXT_DUDE->unk28 ++;
+        /* fallthrough */
+    case 1:
+        NEXT_DUDE->unk24 += 0x300;
+        NEXT_DUDE->unk26 = NEXT_DUDE->unk24;
+        if (NEXT_DUDE->unk24 > 0x1800) {
+            prim->clut = 0x19C;
+            NEXT_DUDE->unk2E = 0x28;
+            NEXT_DUDE->unk28 ++;
+        }
+        break;
+    case 2:
+        NEXT_DUDE->unk24 += 0x180;
+        NEXT_DUDE->unk26 = NEXT_DUDE->unk24;
+        if (NEXT_DUDE->unk24 > 0x2000) {
+            NEXT_DUDE->unk28 ++;
+        }
+        break;
+    case 3:
+        if (PrimDecreaseBrightness(prim, 6) == 0) {
+            prim->drawMode = 8;
+            NEXT_DUDE->unk28 ++;
+        }
+        break;
+    }
+    if (NEXT_DUDE->unk28 < 3) {
+        UnkPrimHelper(prim);
+    }
+}
+
+extern s32 D_pspeu_09258910;
+extern s32 D_pspeu_09258928;
+extern s32 D_pspeu_09258948;
+extern s32 D_pspeu_09258970;
+extern s32 D_pspeu_09258980;
+
+extern EInit D_pspeu_09260720;
 
 void func_us_801BA21C(Entity* self) {
     Entity* player = &PLAYER; // unused
