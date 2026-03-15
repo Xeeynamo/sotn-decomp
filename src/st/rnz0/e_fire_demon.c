@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "../rnz0.h"
+#include "rnz0.h"
 
 extern EInit g_EInitInteractable;
 // Fire demon head and arms go back. Maybe prep for shooting fireball?
@@ -716,6 +716,13 @@ typedef enum {
     FIRE_DEMON_ANIM_DEBUG = 0x20
 } FireDemonSteps;
 
+// PSP uses 15E for everything. US has a mix of 15E and 15F.
+#ifdef VERSION_PSP
+#define SECONDARY_PAL PAL_FIREDEMON_15E
+#else
+#define SECONDARY_PAL PAL_FIREDEMON_15F
+#endif
+
 void EntityFireDemon(Entity* self) {
     Collider sp7C;
     DRAWENV sp38;
@@ -753,7 +760,7 @@ void EntityFireDemon(Entity* self) {
         self->animCurFrame = 3;
         SetStep(FIRE_DEMON_3);
         if (self->params & 0x80) {
-            self->palette = PAL_FLAG(PAL_FIREDEMON_15E);
+            self->palette = PAL_FLAG(SECONDARY_PAL);
             self->blendMode = BLEND_ADD | BLEND_TRANSP;
             self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0x60;
@@ -1012,7 +1019,7 @@ void EntityFireDemon(Entity* self) {
                 other->facingLeft = self->facingLeft;
             }
             self->drawFlags = ENTITY_DEFAULT;
-            self->palette = PAL_FLAG(PAL_FIREDEMON_15E);
+            self->palette = PAL_FLAG(SECONDARY_PAL);
             self->zPriority = 0xD4;
             self->posX.i.hi = 0x28;
             self->posY.i.hi = 0xD5;
@@ -1023,7 +1030,7 @@ void EntityFireDemon(Entity* self) {
             break;
         case 3:
             var_s3 = 0;
-            self->palette = PAL_FLAG(PAL_FIREDEMON_15E);
+            self->palette = PAL_FLAG(SECONDARY_PAL);
             if (self->ext.fireDemon.unk88) {
                 if (--self->ext.fireDemon.unk88 % 8 == 0) {
                     var_s3 = 1;
@@ -1085,7 +1092,7 @@ void EntityFireDemon(Entity* self) {
         }
         break;
     case FIRE_DEMON_TYPE14:
-        self->palette = PAL_FLAG(PAL_FIREDEMON_15E);
+        self->palette = PAL_FLAG(SECONDARY_PAL);
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         self->drawFlags = ENTITY_OPACITY;
         self->hitboxState = 0;
@@ -1101,7 +1108,7 @@ void EntityFireDemon(Entity* self) {
         }
         break;
     case FIRE_DEMON_TYPE15:
-        self->palette = PAL_FLAG(PAL_FIREDEMON_15E);
+        self->palette = PAL_FLAG(SECONDARY_PAL);
         self->hitboxState = 0;
         self->ext.fireDemon.palTimer = 7;
         other = self->ext.fireDemon.unk9C.otherEnt;
@@ -1117,7 +1124,7 @@ void EntityFireDemon(Entity* self) {
         }
         break;
     case FIRE_DEMON_ANIM_DEBUG:
-#include "../../pad2_anim_debug.h"
+#include "../pad2_anim_debug.h"
     }
     if (!--self->ext.fireDemon.palTimer) {
         self->ext.fireDemon.palTimer = var_s2;
