@@ -3933,14 +3933,21 @@ typedef struct {
     struct Primitive* prim80;
     struct Primitive* prim84;
     s16 unk88;
-    u16 : 16;
-    u32 : 32; // 8C
-    u32 : 32; // 90
+    u8 unk8A;
+    u8: 8;
+    u32 unk8C; // 8C
+    u8 unk90;
+    u8 unk91;
+    u8 unk92;
+    u8 unk93;
     s16 unk94;
-    u16 : 16;  // 96
-    u32 : 32;  // 98
-    s16 unk9C; // 9C
-    s16 unk9E;
+    u16 unk96;  // 96
+    s16 unk98;
+    u16: 16;
+    union{
+        s16 xVars[2]; // 9C
+        struct Entity* otherEnt;
+    } unk9C;
     u8 unkA0;
     struct Primitive* primA4;
 } ET_FireDemon;
