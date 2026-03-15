@@ -1,7 +1,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rnz0.h"
 
-extern u16 g_EInitInteractable;
+extern EInit g_EInitInteractable;
+
+static u8 D_pspeu_09258898[] = {1, 13, 1, 14, 2, 16, 8, 2, 10, 3, 10, 4, 10, 5, 10, 6, 255, 0};
+
+static u8 D_pspeu_092588B0[] = {10, 3, 10, 4, 10, 5, 10, 6, 0};
+
+static u8 D_pspeu_092588C0[] = {24, 7, 23, 8, 16, 9, 20, 10, 20, 11, 16, 12, 0};
+
+static u8 D_pspeu_092588D0[] = {1, 13, 1, 14, 0};
+
+static u8 D_pspeu_092588D8[] = {1, 15, 2, 16, 0};
+
+static u8 D_pspeu_092588E0[] = {32, 17, 32, 18, 255, 0};
+
 
 static s32 D_us_80181A68[] = {
     FIX(-1), FIX(-1.5), FIX(-1.5), FIX(-1.5), FIX(-3)};
@@ -10,7 +23,7 @@ static u16 D_us_80181A80[] = {16, 24, 42, 46};
 
 void EntityUnkId22(Entity* self) {
     if (!self->step) {
-        InitializeEntity(&g_EInitInteractable);
+        InitializeEntity(g_EInitInteractable);
         self->animSet = 2;
         self->animCurFrame = D_us_80181A7C[self->params & 0xF];
         self->velocityY = D_us_80181A68[self->params & 0xF];
@@ -120,11 +133,11 @@ void func_pspeu_0923D100(Primitive* prim) {
     }
 }
 
-extern s32 D_pspeu_09258910;
-extern s32 D_pspeu_09258928;
-extern s32 D_pspeu_09258948;
-extern s32 D_pspeu_09258970;
-extern s32 D_pspeu_09258980;
+static u8 D_pspeu_09258910[] = {4, 0, 32, 31, 31, 2, 64, 32, 225, 16, 4, 32, 32, 225, 31, 2, 32, 32, 31, 16, 0};
+static u8 D_pspeu_09258928[] = {3, 64, 32, 15, 15, 3, 80, 32, 15, 15, 3, 80, 32, 241, 15, 3, 96, 32, 241, 15, 3, 96, 32, 15, 15, 0};
+static u8 D_pspeu_09258948[] = {2, 0, 32, 31, 15, 2, 96, 0, 31, 15, 2, 128, 0, 225, 15, 2, 64, 0, 31, 15, 2, 96, 0, 225, 15, 2, 32, 0, 31, 15, 2, 64, 0, 225, 15, 255, 0};
+static u8 D_pspeu_09258970[] = {2, 32, 0, 31, 15, 3, 64, 0, 225, 15, 3, 96, 0, 225, 15, 0};
+static u8 D_pspeu_09258980[] = {2, 64, 0, 225, 15, 2, 64, 0, 31, 15, 2, 96, 0, 225, 15, 0};
 
 extern EInit D_pspeu_09260720;
 
@@ -473,7 +486,7 @@ void func_pspeu_0923E448(Primitive* prim) {
     }
 }
 
-extern RECT D_pspeu_09258990;
+static RECT D_pspeu_09258990 = {0, 0x100, 0x80, 0x100};
 
 void func_us_801BB000(Entity* self) {
     DRAWENV sp2C;
@@ -489,7 +502,7 @@ void func_us_801BB000(Entity* self) {
     sp24 = D_pspeu_09258990;
     switch (self->step) {
     case 0:
-        InitializeEntity(&g_EInitInteractable);
+        InitializeEntity(g_EInitInteractable);
         primIndex = g_api.func_800EDB58(0x11, 0x42);
         if (primIndex != -1) {
             self->flags |= FLAG_HAS_PRIMS;
@@ -644,4 +657,449 @@ void func_us_801BB000(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk1F-23", func_us_801BB5D8);
+static s16 D_pspeu_09258998[] = {0, 42, 0, 4, 8, -4, -16, 0};
+static s16 D_pspeu_092589A8[] = {0, 42, 16, 0};
+
+static RECT D_pspeu_092589B0 = {0, 0x100, 0x80, 0x100};
+
+extern EInit D_pspeu_09260710;
+
+void func_us_801BB5D8(Entity* self) {
+    Entity* other;
+    s32 primIndex;
+    Collider sp7C;
+    DRAWENV sp38;
+    RECT sp30;
+    s16 xVar;
+    s16 yVar;
+    
+    DR_ENV* dr_env;
+    Primitive* prim;
+    u8 var_s3;
+    u8 var_s2;
+
+    sp30 = D_pspeu_092589B0;
+    FntPrint("step %x\n", self->step);
+    FntPrint("step_s %x\n", self->step_s);
+    var_s2 = 8;
+    if ((self->flags & 0x100) && ((self->step) < 0x10)) {
+        PlaySfxPositional(0x711);
+        self->hitboxState = 0;
+        SetStep(0x10U);
+    }
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_pspeu_09260710);
+        self->hitboxState = 0;
+        self->ext.ILLEGAL.s16[0xD] = self->zPriority;
+        self->zPriority = 0x6E;
+        self->ext.ILLEGAL.u8[0x17] = 3;
+        self->ext.ILLEGAL.u8[0xE] = 1;
+        self->ext.ILLEGAL.u8[0x16] = 1;
+        self->ext.ILLEGAL.u8[0x14] = 1;
+        self->ext.ILLEGAL.u8[0x15] = 2;
+        self->hitboxState = 3;
+        self->zPriority = self->ext.ILLEGAL.u16[0xD];
+        self->animCurFrame = 3;
+        SetStep(3U);
+        if (self->params & 0x80) {
+            self->palette = 0x815E;
+            self->blendMode = 0x30;
+            self->drawFlags = 8;
+            self->opacity = 0x60;
+            self->ext.ILLEGAL.s16[6] = 0x60;
+            self->flags |= 0x202000;
+            SetStep(0x15U);
+        }
+        if (self->params & 0x100) {
+            self->palette = 0x815E;
+            self->animCurFrame = self->params & 0xFF;
+            self->opacity = 0xC0;
+            self->ext.ILLEGAL.s16[6] = 0x20;
+            self->zPriority -= 1;
+            self->flags |= 0x202000;
+            SetStep(0x14U);
+        }
+        break;
+    case 1:
+        self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+        if (GetDistanceToPlayerX() < 0x40) {
+            self->step += 1;
+        }
+        break;
+    case 2:
+        var_s2 = 2;
+        switch (self->step_s) {
+        case 0:             
+            self->drawFlags = 8;
+            self->opacity = 0x30;
+            self->velocityX = 0;
+            if (self->facingLeft) {
+                self->velocityX = -self->velocityX;
+            }
+            self->velocityY = -0x88000;
+            self->ext.ILLEGAL.u32[4] = 0;
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (other != NULL) {
+                CreateEntityFromEntity(0x1FU, self, other);
+                other->params |= 0x80;
+                other->ext.ILLEGAL.u32[8] = (u32) self;
+                self->ext.ILLEGAL.u32[8] = (u32) other;
+            } else {
+                self->ext.ILLEGAL.u32[8] = 0;
+            }
+            self->step_s += 1;
+            break;
+        case 1:
+            xVar = self->posX.i.hi;
+            yVar = self->posY.i.hi - 0x20;
+            g_api.CheckCollision(xVar, yVar, &sp7C, 0);
+            if (!(sp7C.effects & 1)) {
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (other != NULL) {
+                    CreateEntityFromEntity(0x20U, self, other);
+                    other->posY.i.hi -= 0x18;
+                }
+                self->step_s += 1;
+            }
+            /* fallthrough */
+        case 2:             
+            MoveEntity();
+            self->velocityY += self->ext.ILLEGAL.u32[4];
+            self->ext.ILLEGAL.u32[4] += 0x1000;
+            if (self->velocityY > 0) {
+                self->hitboxState = 3;
+                self->animCurFrame = 0x13;
+                self->step_s += 1;
+            }
+            break;
+        case 3:             
+            if (UnkCollisionFunc3(D_pspeu_09258998) & 1) {
+                self->ext.ILLEGAL.s16[6] = 0x20;
+                SetSubStep(4);
+            } else {
+                self->velocityY -= 0x3000;
+            }
+            break;
+        case 4:             
+            AnimateEntity(&D_pspeu_092588D0, self);
+            if (!--self->ext.ILLEGAL.s16[6]) {
+                SetSubStep(5);
+            }
+            break;
+        case 5:             
+            AnimateEntity(&D_pspeu_09258898, self);
+            self->opacity += 1;
+            if (self->opacity > 128) {
+                SetStep(3);
+                self->drawFlags = 0;
+            }
+            break;
+        }
+        break;
+    case 3:
+        var_s2 = 8;
+        self->ext.ILLEGAL.u8[0x17] = 3;
+        self->ext.ILLEGAL.u8[0xE] = 1;
+        if (!self->step_s) {
+            self->ext.ILLEGAL.s16[6] = 0x80;
+            self->step_s += 1;
+        }
+        AnimateEntity(&D_pspeu_092588B0, self);
+        if (!--self->ext.ILLEGAL.s16[6]) {
+            self->zPriority = self->ext.ILLEGAL.u16[0xD];
+            self->ext.ILLEGAL.s16[6] = 0x80;
+            SetStep(4U);
+        }
+        break;
+    case 4:
+        var_s2 = 0x10;
+        if (!self->step_s) {
+            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+            self->velocityX = -0x4000;
+            if (self->facingLeft) {
+                self->velocityX = -self->velocityX;
+            }
+            self->step_s += 1;
+        }
+        if (!AnimateEntity(&D_pspeu_092588C0, self)) {
+            PlaySfxPositional(0x646);
+            self->step_s = 0;
+        }
+        var_s3 = UnkCollisionFunc2(&D_pspeu_092589A8);
+        if (var_s3 & 0x60) {
+            self->velocityX = -self->velocityX;
+        }
+        if (self->ext.ILLEGAL.s16[6]) {
+            self->ext.ILLEGAL.s16[6]--;
+        } else if (GetDistanceToPlayerX() < 0x80) {
+            SetStep(5U);
+        }
+        break;
+    case 5:
+        var_s2 = 8;
+        self->ext.ILLEGAL.u8[0x17] = 6;
+        self->ext.ILLEGAL.u8[0xE] = 3;
+        switch (self->step_s) {
+        case 0:                                     
+            self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
+            self->ext.ILLEGAL.s16[6] = 0x80;
+            self->step_s += 1;
+            break;
+        case 1:                                     
+            AnimateEntity(&D_pspeu_092588D0, self);
+            var_s2 = (self->ext.ILLEGAL.s16[6] >> 4);
+            if ((var_s2) < 2) {
+                var_s2 = 2;
+            }
+            if ((self->ext.ILLEGAL.s16[6] % ((var_s2) * 2)) == 0) {
+                PlaySfxPositional(0x791);
+            }
+            if (!--self->ext.ILLEGAL.s16[6]) {
+                self->ext.ILLEGAL.s16[6] = 0x20;
+                SetSubStep(2);
+            }
+            break;
+        case 2:                                     
+            var_s2 = 1;
+            AnimateEntity(&D_pspeu_092588D8, self);
+            if (!--self->ext.ILLEGAL.s16[6]) {
+                other = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (other != NULL) {
+                    CreateEntityFromEntity(0x21U, self, other);
+                    if (self->facingLeft) {
+                        other->posX.i.hi += 0x10;
+                    } else {
+                        other->posX.i.hi -= 0x10;
+                    }
+                    other->posY.i.hi -= 0x18;
+                    other->facingLeft = self->facingLeft;
+                }
+                PlaySfxPositional(0x65E);
+                SetSubStep(3);
+            }
+            break;
+        case 3:                                     
+            var_s2 = 1;
+            self->ext.ILLEGAL.u8[0xE] = 6;
+            self->palette = 0x220;
+            if (!AnimateEntity(&D_pspeu_092588E0, self)) {
+                SetStep(3U);
+            }
+            break;
+        }
+        break;
+    case 16:                                        
+        self->ext.ILLEGAL.u8[0x15] = 2;
+        switch (self->step_s) {                        
+        case 0:                                     
+            self->drawFlags |= 8;
+            self->opacity = 0x80;
+            self->step_s += 1;
+            break;
+        case 1:                                     
+            self->opacity -= 2;
+            if (!self->opacity) {
+                self->step_s += 1;
+            }
+            break;
+        case 2:                                     
+            primIndex = g_api.AllocPrimitives(PRIM_GT4, 3);
+            if (primIndex == -1) {
+                DestroyEntity(self);
+                return;
+            }
+            self->flags |= 0x800000;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            if (dr_env == NULL) {
+                DestroyEntity(self);
+                return;
+            }
+            prim->type = 7;
+            prim->priority = 0xD3;
+            prim->drawMode = 0;
+            sp38 = g_CurrentBuffer->draw;
+            sp38.isbg = 1;
+            sp38.clip = sp30;            
+            sp38.r0 = sp38.g0 = sp38.b0 = 0;
+            sp38.ofs[0] = 0;
+            sp38.ofs[1] = 0x100;
+            SetDrawEnv(dr_env, &sp38);
+            prim = prim->next;
+            dr_env = g_api.func_800EDB08((POLY_GT4*)prim);
+            if (dr_env == NULL) {
+                DestroyEntity(self);
+                return;
+            }
+            prim->type = 7;
+            prim->priority = 0xD6;
+            prim->drawMode = 0x800;
+            prim = prim->next;
+            self->ext.prim = prim;
+            prim->type = 4;
+            prim->tpage = 0x110;
+            
+            prim->u0 = prim->u2 = 0;
+            prim->u1 = prim->u3 = 0x4F;
+            prim->v0 = prim->v1 = 0x80;
+            prim->v2 = prim->v3 = 0xFF;
+            prim->x0 = prim->x2 = self->posX.i.hi - 0x28;       
+            prim->x1 = prim->x3 = prim->x0 + 0x4F;      
+            prim->y2 = prim->y3 = self->posY.i.hi + 0x2A;
+            prim->y0 = prim->y1 = prim->y2 - 0x7F;
+            prim->priority = self->zPriority;
+            prim->drawMode = 0x53;
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (other != NULL) {
+                CreateEntityFromEntity(0x1FU, self, other);
+                other->params |= 0x100;
+                other->params |= self->animCurFrame;
+                other->facingLeft = self->facingLeft;
+            }
+            self->drawFlags = 0;
+            self->palette = 0x815E;
+            self->zPriority = 0xD4;
+            self->posX.i.hi = 0x28;
+            self->posY.i.hi = 0xD5;
+            self->flags &= 0xF7FFFFFF;
+            self->ext.ILLEGAL.s16[6] = 0x20;
+            self->ext.ILLEGAL.s16[0xE] = 0xC0;
+            self->step_s += 1;
+            break;
+        case 3:                                     
+            var_s3 = 0;
+            self->palette = 0x815E;
+            if (self->ext.ILLEGAL.s16[6]) {
+                if (--self->ext.ILLEGAL.s16[6] % 8 == 0) {
+                    var_s3 = 1;
+                }
+            } else {
+                if (--self->ext.ILLEGAL.s16[0xE]) {
+                    if ((self->ext.ILLEGAL.s16[0xE] % (self->ext.ILLEGAL.s16[0xE] / 32 + 1)) == 0) {
+                        var_s3 = 1;
+                    }
+                } else {
+                    PlaySfxPositional(0x654);
+                    self->step_s += 1;
+                }
+            }
+            if (!(g_Timer & 7)) {
+                PlaySfxPositional(0x652);
+            }
+            if (var_s3) {
+                other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (other != NULL) {
+                    CreateEntityFromCurrentEntity(0x22, other);
+                    other->params = 0x22;
+                    other->params += 0xD500;
+                    other->posX.i.hi = self->posX.i.hi + ((Random() & 3) * 8) - 12;
+                    other->posY.i.hi = 0x100 - ((Random() & 7) * 0x10);
+                }
+            }
+            break;
+        case 4:                                     
+            prim = self->ext.prim;
+            prim->v2 = prim->v3--;
+            prim->y2 = prim->y3--;
+            if ((prim->v2) < (prim->v0)) {
+                prim->drawMode = 8;
+                self->ext.ILLEGAL.s16[6] = 0x40;
+                self->step_s += 1;
+            }
+            other = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (other != NULL) {
+                CreateEntityFromCurrentEntity(0x22, other);
+                other->params = 0x20;
+                other->params += 0xD500;
+                other->posX.i.hi = (self->posX.i.hi + ((Random() & 3) * 8)) - 0xC;
+                other->posY.i.hi = (prim->v2) - 4;
+            }
+            break;
+        case 5:                                     
+            self->animCurFrame = 0;
+            if (!--self->ext.ILLEGAL.s16[6]) {
+                DestroyEntity(self);
+                return;
+            }
+            break;
+        }
+        break;
+    case 20:                                        
+        self->palette = 0x815E;
+        self->blendMode = 0x30;
+        self->drawFlags = 8;
+        self->hitboxState = 0;
+        self->ext.ILLEGAL.u8[0x15] = 7;
+        if (self->ext.ILLEGAL.s16[6]) {
+            self->ext.ILLEGAL.s16[6]--;
+            break;
+        }
+        self->opacity--;
+        if (!self->opacity) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 21:                                        
+        self->palette = 0x815E;
+        self->hitboxState = 0;
+        self->ext.ILLEGAL.u8[0x15] = 7;
+        other = (Entity*)self->ext.ILLEGAL.u32[8];
+        self->posX.i.hi = other->posX.i.hi;
+        self->posY.i.hi = other->posY.i.hi;
+        self->facingLeft = other->facingLeft;
+        self->zPriority = ((other->zPriority) + 1);
+        self->animCurFrame = other->animCurFrame;
+        self->opacity = (0x80 - other->opacity) / 3;
+        if (!self->opacity) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    case 32:                                        
+        FntPrint("charal %x\n", self->animCurFrame);
+        if (g_pads[1].pressed & PAD_SQUARE) {
+            if (self->params) {
+                break;
+            }
+            self->animCurFrame++;
+            self->params |= 1;
+        } else {
+            self->params = 0;
+        }
+        if (g_pads[1].pressed & PAD_CIRCLE) {
+            if (self->step_s) {
+                break;
+            }
+            self->animCurFrame--;
+            self->step_s |= 1;
+        } else {
+            self->step_s = 0;
+        }
+        break;
+    }
+    if (!--self->ext.ILLEGAL.u8[0x15]) {
+        self->ext.ILLEGAL.u8[0x15] = var_s2;
+        self->palette = ((self->ext.ILLEGAL.u8[0x16]) + 0x21D);
+        self->ext.ILLEGAL.u8[0x16] += self->ext.ILLEGAL.u8[0x14];
+        if (self->ext.ILLEGAL.u8[0x16] > self->ext.ILLEGAL.u8[0x17]) {
+            self->ext.ILLEGAL.u8[0x14] = 0xFF;
+        }
+        if ((self->ext.ILLEGAL.u8[0x16]) < (self->ext.ILLEGAL.u8[0xE])) {
+            self->ext.ILLEGAL.u8[0x14] = 1;
+        }
+    }
+    if (self->animCurFrame < 0xD) {
+        self->hitboxOffX = -6;
+        self->hitboxOffY = -1;
+        self->hitboxWidth = 8;
+        self->hitboxHeight = 0x28;
+    } else {
+        self->hitboxOffX = -1;
+        self->hitboxOffY = -1;
+        self->hitboxWidth = 0xB;
+        self->hitboxHeight = 0x28;
+    }
+}
