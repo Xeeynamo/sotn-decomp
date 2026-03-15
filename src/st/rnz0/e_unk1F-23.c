@@ -56,7 +56,9 @@ void EntityUnkId22(Entity* self) {
 
 typedef struct fireDemonPrim {
     struct fireDemonPrim* next;
+    #ifdef VERSION_PSP
     s32 : 32;
+    #endif
     s32 : 32;
     s16 unkC;
     s16 unkE;
@@ -169,8 +171,8 @@ void EntityUnkId21(Entity* self) {
         if (self->facingLeft) {
             angle = -0x600;
         }
-        self->velocityX = rsin(angle) * -0x40;
-        self->velocityY = rcos(angle) * -0x40;
+        self->velocityX = -rsin(angle) * 0x40;
+        self->velocityY = -rcos(angle) * 0x40;
         self->ext.fireDemon.angle = angle;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 6);
         if (primIndex == -1) {
@@ -204,8 +206,8 @@ void EntityUnkId21(Entity* self) {
         FD_NEXT->unk22 = 0x18;
         FD_NEXT->unk18 = self->posX.i.hi;
         FD_NEXT->unkE = self->posY.i.hi;
-        FD_NEXT->unk10 = (rsin(angle) * -0x40);
-        FD_NEXT->unk14 = (rcos(angle) * -0x40);
+        FD_NEXT->unk10 = (-rsin(angle) * 0x40);
+        FD_NEXT->unk14 = (-rcos(angle) * 0x40);
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
