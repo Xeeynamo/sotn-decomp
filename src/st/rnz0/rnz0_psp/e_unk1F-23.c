@@ -2,18 +2,18 @@
 #include "../rnz0.h"
 
 extern EInit g_EInitInteractable;
-
-static u8 D_pspeu_09258898[] = {
+// Fire demon head and arms go back. Maybe prep for shooting fireball?
+static u8 D_pspeu_09258898[] = { 
     1, 13, 1, 14, 2, 16, 8, 2, 10, 3, 10, 4, 10, 5, 10, 6, 255, 0};
-
+// Idle animation, just moving up and down a little
 static u8 D_pspeu_092588B0[] = {10, 3, 10, 4, 10, 5, 10, 6, 0};
-
+// Walk cycle
 static u8 D_pspeu_092588C0[] = {24, 7, 23, 8, 16, 9, 20, 10, 20, 11, 16, 12, 0};
-
+// Big shaking charge-up animation
 static u8 D_pspeu_092588D0[] = {1, 13, 1, 14, 0};
-
+// head rears back to shoot
 static u8 D_pspeu_092588D8[] = {1, 15, 2, 16, 0};
-
+// blasting fireball from mouth
 static u8 D_pspeu_092588E0[] = {32, 17, 32, 18, 255, 0};
 
 static s32 D_us_80181A68[] = {
@@ -147,7 +147,7 @@ static u8 D_pspeu_09258970[] = {
 static u8 D_pspeu_09258980[] = {
     2, 64, 0, 225, 15, 2, 64, 0, 31, 15, 2, 96, 0, 225, 15, 0};
 
-extern EInit D_us_80180A30;
+extern EInit D_us_80180A2C;
 
 void EntityUnkId21(Entity* self) {
     Entity* player = &PLAYER; // unused
@@ -163,7 +163,7 @@ void EntityUnkId21(Entity* self) {
     ((u16*)&D_8006C384)[3] = self->step; // what is this madness
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A30);
+        InitializeEntity(D_us_80180A2C);
         self->animCurFrame = 0;
         angle = 0x600;
         if (self->facingLeft) {
@@ -672,6 +672,19 @@ static RECT D_pspeu_092589B0 = {0, 0x100, 0x80, 0x100};
 
 extern EInit D_us_80180A20;
 
+typedef enum{
+    FIRE_DEMON_INIT,
+    FIRE_DEMON_1,
+    FIRE_DEMON_2,
+    FIRE_DEMON_3,
+    FIRE_DEMON_4,
+    FIRE_DEMON_5,
+    FIRE_DEMON_DEAD = 0x10,
+    FIRE_DEMON_TYPE14 = 0x14,
+    FIRE_DEMON_TYPE15 = 0x15,
+    FIRE_DEMON_ANIM_DEBUG = 0x20
+} FireDemonSteps;
+
 void EntityFireDemon(Entity* self) {
     Entity* other;
     s32 primIndex;
@@ -693,10 +706,10 @@ void EntityFireDemon(Entity* self) {
     if ((self->flags & FLAG_DEAD) && ((self->step) < 0x10)) {
         PlaySfxPositional(SFX_UNK_RNZ0_711);
         self->hitboxState = 0;
-        SetStep(0x10U);
+        SetStep(FIRE_DEMON_DEAD);
     }
     switch (self->step) {
-    case 0:
+    case FIRE_DEMON_INIT:
         InitializeEntity(D_us_80180A20);
         self->hitboxState = 0;
         self->ext.ILLEGAL.s16[0xD] = self->zPriority;
@@ -709,7 +722,7 @@ void EntityFireDemon(Entity* self) {
         self->hitboxState = 3;
         self->zPriority = self->ext.ILLEGAL.u16[0xD];
         self->animCurFrame = 3;
-        SetStep(3U);
+        SetStep(FIRE_DEMON_3);
         if (self->params & 0x80) {
             self->palette = 0x815E;
             self->blendMode = BLEND_ADD | BLEND_TRANSP;
@@ -717,7 +730,7 @@ void EntityFireDemon(Entity* self) {
             self->opacity = 0x60;
             self->ext.ILLEGAL.s16[6] = 0x60;
             self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
-            SetStep(0x15U);
+            SetStep(FIRE_DEMON_TYPE15);
         }
         if (self->params & 0x100) {
             self->palette = 0x815E;
@@ -726,16 +739,16 @@ void EntityFireDemon(Entity* self) {
             self->ext.ILLEGAL.s16[6] = 0x20;
             self->zPriority -= 1;
             self->flags |= FLAG_UNK_00200000 | FLAG_UNK_2000;
-            SetStep(0x14U);
+            SetStep(FIRE_DEMON_TYPE14);
         }
         break;
-    case 1:
+    case FIRE_DEMON_1:
         self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
         if (GetDistanceToPlayerX() < 0x40) {
             self->step += 1;
         }
         break;
-    case 2:
+    case FIRE_DEMON_2:
         var_s2 = 2;
         switch (self->step_s) {
         case 0:
@@ -749,7 +762,7 @@ void EntityFireDemon(Entity* self) {
             self->ext.ILLEGAL.u32[4] = 0;
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(0x1FU, self, other);
+                CreateEntityFromEntity(E_FIRE_DEMON, self, other);
                 other->params |= 0x80;
                 other->ext.ILLEGAL.u32[8] = (u32)self;
                 self->ext.ILLEGAL.u32[8] = (u32)other;
@@ -765,7 +778,7 @@ void EntityFireDemon(Entity* self) {
             if (!(sp7C.effects & EFFECT_SOLID)) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(0x20U, self, other);
+                    CreateEntityFromEntity(E_UNK_20, self, other);
                     other->posY.i.hi -= 0x18;
                 }
                 self->step_s += 1;
@@ -799,13 +812,13 @@ void EntityFireDemon(Entity* self) {
             AnimateEntity(&D_pspeu_09258898, self);
             self->opacity += 1;
             if (self->opacity > 128) {
-                SetStep(3);
+                SetStep(FIRE_DEMON_3);
                 self->drawFlags = ENTITY_DEFAULT;
             }
             break;
         }
         break;
-    case 3:
+    case FIRE_DEMON_3:
         var_s2 = 8;
         self->ext.ILLEGAL.u8[0x17] = 3;
         self->ext.ILLEGAL.u8[0xE] = 1;
@@ -817,10 +830,10 @@ void EntityFireDemon(Entity* self) {
         if (!--self->ext.ILLEGAL.s16[6]) {
             self->zPriority = self->ext.ILLEGAL.u16[0xD];
             self->ext.ILLEGAL.s16[6] = 0x80;
-            SetStep(4U);
+            SetStep(FIRE_DEMON_4);
         }
         break;
-    case 4:
+    case FIRE_DEMON_4:
         var_s2 = 0x10;
         if (!self->step_s) {
             self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
@@ -841,10 +854,10 @@ void EntityFireDemon(Entity* self) {
         if (self->ext.ILLEGAL.s16[6]) {
             self->ext.ILLEGAL.s16[6]--;
         } else if (GetDistanceToPlayerX() < 0x80) {
-            SetStep(5U);
+            SetStep(5);
         }
         break;
-    case 5:
+    case FIRE_DEMON_5:
         var_s2 = 8;
         self->ext.ILLEGAL.u8[0x17] = 6;
         self->ext.ILLEGAL.u8[0xE] = 3;
@@ -874,7 +887,7 @@ void EntityFireDemon(Entity* self) {
             if (!--self->ext.ILLEGAL.s16[6]) {
                 other = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (other != NULL) {
-                    CreateEntityFromEntity(0x21U, self, other);
+                    CreateEntityFromEntity(E_UNK_21, self, other);
                     if (self->facingLeft) {
                         other->posX.i.hi += 0x10;
                     } else {
@@ -892,12 +905,12 @@ void EntityFireDemon(Entity* self) {
             self->ext.ILLEGAL.u8[0xE] = 6;
             self->palette = 0x220;
             if (!AnimateEntity(&D_pspeu_092588E0, self)) {
-                SetStep(3U);
+                SetStep(3);
             }
             break;
         }
         break;
-    case 16:
+    case FIRE_DEMON_DEAD:
         self->ext.ILLEGAL.u8[0x15] = 2;
         switch (self->step_s) {
         case 0:
@@ -962,7 +975,7 @@ void EntityFireDemon(Entity* self) {
                 DRAW_UNK_40 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromEntity(0x1FU, self, other);
+                CreateEntityFromEntity(E_FIRE_DEMON, self, other);
                 other->params |= 0x100;
                 other->params |= self->animCurFrame;
                 other->facingLeft = self->facingLeft;
@@ -1038,7 +1051,7 @@ void EntityFireDemon(Entity* self) {
             break;
         }
         break;
-    case 20:
+    case FIRE_DEMON_TYPE14:
         self->palette = 0x815E;
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         self->drawFlags = ENTITY_OPACITY;
@@ -1054,7 +1067,7 @@ void EntityFireDemon(Entity* self) {
             return;
         }
         break;
-    case 21:
+    case FIRE_DEMON_TYPE15:
         self->palette = 0x815E;
         self->hitboxState = 0;
         self->ext.ILLEGAL.u8[0x15] = 7;
@@ -1070,27 +1083,8 @@ void EntityFireDemon(Entity* self) {
             return;
         }
         break;
-    case 32:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & PAD_SQUARE) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & PAD_CIRCLE) {
-            if (self->step_s) {
-                break;
-            }
-            self->animCurFrame--;
-            self->step_s |= 1;
-        } else {
-            self->step_s = 0;
-        }
-        break;
+    case FIRE_DEMON_ANIM_DEBUG:
+#include "../../pad2_anim_debug.h"
     }
     if (!--self->ext.ILLEGAL.u8[0x15]) {
         self->ext.ILLEGAL.u8[0x15] = var_s2;
