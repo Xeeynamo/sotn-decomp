@@ -436,7 +436,42 @@ void func_pspeu_0923E290(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk1F-23", func_pspeu_0923E448);
+void func_pspeu_0923E448(Primitive* prim) {
+    u16 sp1C[2];
+    s16 sp18[2];
+
+    switch (prim->g3) {
+    case 0:
+        prim->drawMode = DRAW_HIDE;
+        prim->r3--;
+        if (!prim->r3) {
+            prim->g3 = 1;
+        }
+        break;
+    case 1:
+        prim->drawMode = DRAW_DEFAULT;
+        LOW(prim->x2) = (0x8000 - (Random() << 8));
+        LOW(prim->x3) = -0x40000;
+        prim->g3 += 1;
+        break;
+    case 2:
+        if (LOW(prim->x3) < 0) {
+            LOW(sp1C) = (prim->x0 << 0x10) + prim->x1;
+            LOW(prim->x3) += 0x2000;
+        } else {
+            LOW(sp1C) = (prim->x0 << 0x10) + prim->x1;
+            LOW(prim->x3) += 0x400;
+        }
+        LOW(sp1C) += LOW(prim->x2);
+        prim->x0 = sp1C[1];
+        prim->x1 = sp1C[0];
+        LOW(sp18) = (prim->y0 << 0x10) + prim->y1;
+        LOW(sp18) += LOW(prim->x3);
+        prim->y0 = sp18[1];
+        prim->y1 = sp18[0];
+        break;
+    }
+}
 
 extern RECT D_pspeu_09258990;
 
