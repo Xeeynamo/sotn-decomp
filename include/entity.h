@@ -3929,27 +3929,30 @@ typedef struct {
 } ET_FloorTrap;
 
 typedef struct {
-    u32 : 32; // 7C
-    struct Primitive* prim80;
-    struct Primitive* prim84;
-    s16 unk88;
-    u8 unk8A;
-    u8: 8;
-    u32 unk8C; // 8C
-    u8 unk90;
-    u8 unk91;
-    u8 unk92;
-    u8 unk93;
-    s16 unk94;
-    u16 unk96;  // 96
-    s16 unk98;
-    u16: 16;
+    /* 7C */ u32 : 32;
+    /* 80 */ struct Primitive* prim80;
+    /* 84 */ struct Primitive* prim84;
+    /* 88 */ s16 unk88;
+    /* 8A */ u8 unk8A;
+    /* 8B */ u8: 8;
+    /* 8C */ u32 unk8C;
+    /* 90 */ u8 unk90;
+    /* 91 */ u8 unk91;
+    /* 92 */ u8 unk92;
+    /* 93 */ u8 unk93;
+    /* 94 */ s16 unk94;
+    /* 96 */ u16 unk96;
+    /* 98 */ s16 unk98;
+    /* 9A */ u16: 16;
+    // This union is a compromise. Almost all the entities in the Fire
+    // Demon file share struct members, except this member. Easiest to
+    // just make it a union and share all the rest.
     union{
-        s16 xVars[2]; // 9C
+        s16 xVars[2];
         struct Entity* otherEnt;
     } unk9C;
-    u8 unkA0;
-    struct Primitive* primA4;
+    /* A0 */ u8 unkA0;
+    /* A4 */ struct Primitive* primA4;
 } ET_FireDemon;
 
 typedef union { // offset=0x7C

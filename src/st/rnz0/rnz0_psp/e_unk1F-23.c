@@ -1091,7 +1091,7 @@ void EntityFireDemon(Entity* self) {
         self->palette = ((self->ext.fireDemon.unk92) + 0x21D);
         self->ext.fireDemon.unk92 += self->ext.fireDemon.unk90;
         if (self->ext.fireDemon.unk92 > self->ext.fireDemon.unk93) {
-            self->ext.fireDemon.unk90 = 0xFF;
+            self->ext.fireDemon.unk90 = -1;
         }
         if ((self->ext.fireDemon.unk92) < (self->ext.fireDemon.unk8A)) {
             self->ext.fireDemon.unk90 = 1;
