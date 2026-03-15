@@ -425,6 +425,7 @@ void EntityUnkId21(Entity* self) {
                     explosion->params = 0x5F00;
                 }
             }
+            do { } while (0);
         }
     }
 }
@@ -461,41 +462,58 @@ void func_pspeu_0923E290(Primitive* prim) {
     }
 }
 
-void func_pspeu_0923E448(Primitive* prim) {
-    u16 sp1C[2];
-    s16 sp18[2];
-
-    switch (prim->g3) {
+typedef struct {
+    s16 sp10[2];
+    s16 sp14[2];
+} stupid;
+void func_us_801BAE9C(Primitive *prim)
+{
+  stupid dumb;
+  u16 *new_var;
+    int a, b;
+  switch (prim->g3)
+  {
     case 0:
-        prim->drawMode = DRAW_HIDE;
-        prim->r3--;
-        if (!prim->r3) {
-            prim->g3 = 1;
-        }
-        break;
-    case 1:
-        prim->drawMode = DRAW_DEFAULT;
-        LOW(prim->x2) = (0x8000 - (Random() << 8));
-        LOW(prim->x3) = -0x40000;
-        prim->g3++;
-        break;
-    case 2:
-        if (LOW(prim->x3) < 0) {
-            LOW(sp1C) = (prim->x0 << 0x10) + prim->x1;
-            LOW(prim->x3) += 0x2000;
-        } else {
-            LOW(sp1C) = (prim->x0 << 0x10) + prim->x1;
-            LOW(prim->x3) += 0x400;
-        }
-        LOW(sp1C) += LOW(prim->x2);
-        prim->x0 = sp1C[1];
-        prim->x1 = sp1C[0];
-        LOW(sp18) = (prim->y0 << 0x10) + prim->y1;
-        LOW(sp18) += LOW(prim->x3);
-        prim->y0 = sp18[1];
-        prim->y1 = sp18[0];
-        break;
+      prim->drawMode = DRAW_HIDE;
+      prim->r3 += 0xFF; // ????
+      if (!prim->r3)
+    {
+      prim->g3 = 1;
     }
+      break;
+
+    case 1:
+      prim->drawMode = DRAW_DEFAULT;
+      LOW(prim->x2) = 0x8000 - (Random() << 8);
+      LOW(prim->x3) = -0x40000;
+      prim->g3++;
+      break;
+
+    case 2:
+      if ((LOW(prim->x3)) < 0)
+    {
+      LOW(dumb.sp10) = (prim->x0 << 0x10) + LOHU(prim->x1);
+      LOW(prim->x3) += 0x2000;
+    }
+    else
+    {
+      LOW(dumb.sp10) = (prim->x0 << 0x10) + LOHU(prim->x1);
+      LOW(prim->x3) += 0x400;
+    }
+        b =  LOW(prim->x2);
+        a =  LOW(dumb.sp10);
+      LOW(dumb.sp10) = a + b;
+      new_var = dumb.sp10;
+      prim->x0 = new_var[1];
+      prim->x1 = new_var[0];
+      LOW(dumb.sp14) = (prim->y0 << 0x10) + LOHU(prim->y1);
+      LOW(dumb.sp14) += LOW(prim->x3);
+      new_var = dumb.sp14;
+      prim->y0 = new_var[1];
+      prim->y1 = new_var[0];
+      break;
+
+  }
 }
 
 void EntityUnkId20(Entity* self) {
@@ -641,7 +659,7 @@ void EntityUnkId20(Entity* self) {
             prim = prim->next;
         }
         while (prim != NULL) {
-            func_pspeu_0923E448(prim);
+            func_us_801BAE9C(prim);
             prim = prim->next;
         }
         prim = self->ext.fireDemon.prim84;

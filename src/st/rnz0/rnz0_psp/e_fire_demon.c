@@ -459,7 +459,7 @@ void func_pspeu_0923E290(Primitive* prim) {
     }
 }
 
-void func_pspeu_0923E448(Primitive* prim) {
+void func_us_801BAE9C(Primitive* prim) {
     u16 sp1C[2];
     s16 sp18[2];
 
@@ -642,7 +642,7 @@ void EntityUnkId20(Entity* self) {
             prim = prim->next;
         }
         while (prim != NULL) {
-            func_pspeu_0923E448(prim);
+            func_us_801BAE9C(prim);
             prim = prim->next;
         }
         prim = self->ext.fireDemon.prim84;
