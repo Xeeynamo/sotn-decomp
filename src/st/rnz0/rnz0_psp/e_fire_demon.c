@@ -56,7 +56,9 @@ void EntityUnkId22(Entity* self) {
 
 typedef struct fireDemonPrim {
     struct fireDemonPrim* next;
+    #ifdef VERSION_PSP
     s32 : 32;
+    #endif
     s32 : 32;
     s16 unkC;
     s16 unkE;
@@ -169,8 +171,8 @@ void EntityUnkId21(Entity* self) {
         if (self->facingLeft) {
             angle = -0x600;
         }
-        self->velocityX = rsin(angle) * -0x40;
-        self->velocityY = rcos(angle) * -0x40;
+        self->velocityX = -rsin(angle) * 0x40;
+        self->velocityY = -rcos(angle) * 0x40;
         self->ext.fireDemon.angle = angle;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 6);
         if (primIndex == -1) {
@@ -204,8 +206,8 @@ void EntityUnkId21(Entity* self) {
         FD_NEXT->unk22 = 0x18;
         FD_NEXT->unk18 = self->posX.i.hi;
         FD_NEXT->unkE = self->posY.i.hi;
-        FD_NEXT->unk10 = (rsin(angle) * -0x40);
-        FD_NEXT->unk14 = (rcos(angle) * -0x40);
+        FD_NEXT->unk10 = (-rsin(angle) * 0x40);
+        FD_NEXT->unk14 = (-rcos(angle) * 0x40);
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
@@ -423,6 +425,7 @@ void EntityUnkId21(Entity* self) {
                     explosion->params = 0x5F00;
                 }
             }
+            do { } while (0);
         }
     }
 }
@@ -533,8 +536,6 @@ void func_us_801BAE9C(Primitive *prim)
   }
 }
 
-static RECT D_pspeu_09258990 = {0, 0x100, 0x80, 0x100};
-
 void EntityUnkId20(Entity* self) {
     DRAWENV sp2C;
     s32 primIndex;
@@ -544,9 +545,8 @@ void EntityUnkId20(Entity* self) {
     Primitive* prim2;
     s16 xVar;
     s32 i;
-    RECT sp24;
+    RECT sp24 = {0, 0x100, 0x80, 0x100};
 
-    sp24 = D_pspeu_09258990;
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
@@ -707,8 +707,6 @@ void EntityUnkId20(Entity* self) {
 static s16 D_pspeu_09258998[] = {0, 42, 0, 4, 8, -4, -16, 0};
 static s16 D_pspeu_092589A8[] = {0, 42, 16, 0};
 
-static RECT D_pspeu_092589B0 = {0, 0x100, 0x80, 0x100};
-
 extern EInit D_us_80180A20;
 
 typedef enum {
@@ -725,20 +723,18 @@ typedef enum {
 } FireDemonSteps;
 
 void EntityFireDemon(Entity* self) {
-    Entity* other;
-    s32 primIndex;
     Collider sp7C;
     DRAWENV sp38;
-    RECT sp30;
+    RECT sp30 = {0, 0x100, 0x80, 0x100};
+    Entity* other;
+    s32 primIndex;
     s16 xVar;
     s16 yVar;
-
     DR_ENV* dr_env;
     Primitive* prim;
     u8 var_s3;
     u8 var_s2;
 
-    sp30 = D_pspeu_092589B0;
     FntPrint("step %x\n", self->step);
     FntPrint("step_s %x\n", self->step_s);
     var_s2 = 8;
@@ -763,7 +759,7 @@ void EntityFireDemon(Entity* self) {
         self->animCurFrame = 3;
         SetStep(FIRE_DEMON_3);
         if (self->params & 0x80) {
-            self->palette = 0x815E;
+            self->palette = PAL_FLAG(PAL_FIREDEMON_15E);
             self->blendMode = BLEND_ADD | BLEND_TRANSP;
             self->drawFlags = ENTITY_OPACITY;
             self->opacity = 0x60;
@@ -772,7 +768,7 @@ void EntityFireDemon(Entity* self) {
             SetStep(FIRE_DEMON_TYPE15);
         }
         if (self->params & 0x100) {
-            self->palette = 0x815E;
+            self->palette = PAL_FLAG(PAL_FIREDEMON_15E);
             self->animCurFrame = self->params & 0xFF;
             self->opacity = 0xC0;
             self->ext.fireDemon.unk88 = 0x20;
@@ -983,7 +979,9 @@ void EntityFireDemon(Entity* self) {
             sp38 = g_CurrentBuffer->draw;
             sp38.isbg = 1;
             sp38.clip = sp30;
+            #ifdef VERSION_PSP
             sp38.r0 = sp38.g0 = sp38.b0 = 0;
+            #endif
             sp38.ofs[0] = 0;
             sp38.ofs[1] = 0x100;
             SetDrawEnv(dr_env, &sp38);
@@ -1020,7 +1018,7 @@ void EntityFireDemon(Entity* self) {
                 other->facingLeft = self->facingLeft;
             }
             self->drawFlags = ENTITY_DEFAULT;
-            self->palette = 0x815E;
+            self->palette = PAL_FLAG(PAL_FIREDEMON_15E);
             self->zPriority = 0xD4;
             self->posX.i.hi = 0x28;
             self->posY.i.hi = 0xD5;
@@ -1031,7 +1029,7 @@ void EntityFireDemon(Entity* self) {
             break;
         case 3:
             var_s3 = 0;
-            self->palette = 0x815E;
+            self->palette = PAL_FLAG(PAL_FIREDEMON_15E);
             if (self->ext.fireDemon.unk88) {
                 if (--self->ext.fireDemon.unk88 % 8 == 0) {
                     var_s3 = 1;
@@ -1093,7 +1091,7 @@ void EntityFireDemon(Entity* self) {
         }
         break;
     case FIRE_DEMON_TYPE14:
-        self->palette = 0x815E;
+        self->palette = PAL_FLAG(PAL_FIREDEMON_15E);
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         self->drawFlags = ENTITY_OPACITY;
         self->hitboxState = 0;
@@ -1109,7 +1107,7 @@ void EntityFireDemon(Entity* self) {
         }
         break;
     case FIRE_DEMON_TYPE15:
-        self->palette = 0x815E;
+        self->palette = PAL_FLAG(PAL_FIREDEMON_15E);
         self->hitboxState = 0;
         self->ext.fireDemon.palTimer = 7;
         other = self->ext.fireDemon.unk9C.otherEnt;
