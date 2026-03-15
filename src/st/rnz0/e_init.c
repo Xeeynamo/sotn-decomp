@@ -93,10 +93,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCtulhuFireball,
     EntityCtulhuIceShockwave,
     EntityCtulhuDeath,
-    EntityFireDemon, // 1F
-    EntityUnkId20, // 20
-    EntityUnkId21, // 21
-    EntityUnkId22,    // 22
+    EntityFireDemon,   // 1F
+    EntityUnkId20,     // 20
+    EntityUnkId21,     // 21
+    EntityUnkId22,     // 22
     EntityLesserDemon, // 23
     func_us_801BCAB0,
     func_us_801BD7D0,

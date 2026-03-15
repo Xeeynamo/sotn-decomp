@@ -3,7 +3,7 @@
 
 extern EInit g_EInitInteractable;
 // Fire demon head and arms go back. Maybe prep for shooting fireball?
-static u8 D_pspeu_09258898[] = { 
+static u8 D_pspeu_09258898[] = {
     1, 13, 1, 14, 2, 16, 8, 2, 10, 3, 10, 4, 10, 5, 10, 6, 255, 0};
 // Idle animation, just moving up and down a little
 static u8 D_pspeu_092588B0[] = {10, 3, 10, 4, 10, 5, 10, 6, 0};
@@ -54,8 +54,8 @@ void EntityUnkId22(Entity* self) {
     }
 }
 
-typedef struct weirdPrim {
-    struct weirdPrim* next;
+typedef struct fireDemonPrim {
+    struct fireDemonPrim* next;
     s32 : 32;
     s32 : 32;
     s16 unkC;
@@ -78,12 +78,12 @@ typedef struct weirdPrim {
     s16 : 16;
     s16 : 16;
     u16 unk36;
-} weirdPrim;
+} fireDemonPrim;
 
-#define NEXT_DUDE ((weirdPrim*)prim->next)
+#define FD_NEXT ((fireDemonPrim*)prim->next)
 
 void func_pspeu_0923D100(Primitive* prim) {
-    switch (NEXT_DUDE->unk28) {
+    switch (FD_NEXT->unk28) {
     case 0:
         UnkPolyFunc2(prim);
         prim->tpage = 0x1A;
@@ -92,43 +92,43 @@ void func_pspeu_0923D100(Primitive* prim) {
         prim->u1 = prim->u3 = 0x3F;
         prim->v0 = prim->v1 = 0xC0;
         prim->v2 = prim->v3 = 0xFF;
-        NEXT_DUDE->unk18 = g_CurrentEntity->posX.i.hi;
-        NEXT_DUDE->unkE = g_CurrentEntity->posY.i.hi;
-        NEXT_DUDE->unk20 = 0x40;
-        NEXT_DUDE->unk22 = 0x40;
-        NEXT_DUDE->unk2E = 0x40;
+        FD_NEXT->unk18 = g_CurrentEntity->posX.i.hi;
+        FD_NEXT->unkE = g_CurrentEntity->posY.i.hi;
+        FD_NEXT->unk20 = 0x40;
+        FD_NEXT->unk22 = 0x40;
+        FD_NEXT->unk2E = 0x40;
         prim->p3 |= 0x10;
-        NEXT_DUDE->unk24 = 0;
-        NEXT_DUDE->unk26 = NEXT_DUDE->unk24;
+        FD_NEXT->unk24 = 0;
+        FD_NEXT->unk26 = FD_NEXT->unk24;
         prim->priority = g_CurrentEntity->zPriority + 3;
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-        NEXT_DUDE->unk28++;
+        FD_NEXT->unk28++;
         /* fallthrough */
     case 1:
-        NEXT_DUDE->unk24 += 0x300;
-        NEXT_DUDE->unk26 = NEXT_DUDE->unk24;
-        if (NEXT_DUDE->unk24 > 0x1800) {
+        FD_NEXT->unk24 += 0x300;
+        FD_NEXT->unk26 = FD_NEXT->unk24;
+        if (FD_NEXT->unk24 > 0x1800) {
             prim->clut = 0x19C;
-            NEXT_DUDE->unk2E = 0x28;
-            NEXT_DUDE->unk28++;
+            FD_NEXT->unk2E = 0x28;
+            FD_NEXT->unk28++;
         }
         break;
     case 2:
-        NEXT_DUDE->unk24 += 0x180;
-        NEXT_DUDE->unk26 = NEXT_DUDE->unk24;
-        if (NEXT_DUDE->unk24 > 0x2000) {
-            NEXT_DUDE->unk28++;
+        FD_NEXT->unk24 += 0x180;
+        FD_NEXT->unk26 = FD_NEXT->unk24;
+        if (FD_NEXT->unk24 > 0x2000) {
+            FD_NEXT->unk28++;
         }
         break;
     case 3:
         if (PrimDecreaseBrightness(prim, 6) == 0) {
             prim->drawMode = DRAW_HIDE;
-            NEXT_DUDE->unk28++;
+            FD_NEXT->unk28++;
         }
         break;
     }
-    if (NEXT_DUDE->unk28 < 3) {
+    if (FD_NEXT->unk28 < 3) {
         UnkPrimHelper(prim);
     }
 }
@@ -171,7 +171,7 @@ void EntityUnkId21(Entity* self) {
         }
         self->velocityX = rsin(angle) * -0x40;
         self->velocityY = rcos(angle) * -0x40;
-        self->ext.fireDemon.unk94 = angle;
+        self->ext.fireDemon.angle = angle;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 6);
         if (primIndex == -1) {
             DestroyEntity(self);
@@ -184,28 +184,28 @@ void EntityUnkId21(Entity* self) {
         UnkPolyFunc2(prim);
         prim->tpage = 0x1A;
         prim->clut = 0x170;
-        NEXT_DUDE->unk1E = -angle;
-        NEXT_DUDE->unk20 = 0x18;
-        NEXT_DUDE->unk22 = 0x40;
-        NEXT_DUDE->unk18 = self->posX.i.hi;
-        NEXT_DUDE->unkE = self->posY.i.hi;
-        NEXT_DUDE->unk10 = (-rsin(angle) * 0x38);
-        NEXT_DUDE->unk14 = (-rcos(angle) * 0x38);
+        FD_NEXT->unk1E = -angle;
+        FD_NEXT->unk20 = 0x18;
+        FD_NEXT->unk22 = 0x40;
+        FD_NEXT->unk18 = self->posX.i.hi;
+        FD_NEXT->unkE = self->posY.i.hi;
+        FD_NEXT->unk10 = (-rsin(angle) * 0x38);
+        FD_NEXT->unk14 = (-rcos(angle) * 0x38);
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
         prim = prim->next;
         UnkPolyFunc2(prim);
-        NEXT_DUDE->unk1E = angle;
+        FD_NEXT->unk1E = angle;
         prim->tpage = 0x1A;
         prim->clut = 0x170;
-        NEXT_DUDE->unk1E = (0x800 - angle);
-        NEXT_DUDE->unk20 = 0x10;
-        NEXT_DUDE->unk22 = 0x18;
-        NEXT_DUDE->unk18 = self->posX.i.hi;
-        NEXT_DUDE->unkE = self->posY.i.hi;
-        NEXT_DUDE->unk10 = (rsin(angle) * -0x40);
-        NEXT_DUDE->unk14 = (rcos(angle) * -0x40);
+        FD_NEXT->unk1E = (0x800 - angle);
+        FD_NEXT->unk20 = 0x10;
+        FD_NEXT->unk22 = 0x18;
+        FD_NEXT->unk18 = self->posX.i.hi;
+        FD_NEXT->unkE = self->posY.i.hi;
+        FD_NEXT->unk10 = (rsin(angle) * -0x40);
+        FD_NEXT->unk14 = (rcos(angle) * -0x40);
         prim->priority = self->zPriority;
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         prim = prim->next;
@@ -220,18 +220,18 @@ void EntityUnkId21(Entity* self) {
         self->ext.fireDemon.unk88++;
         prim = self->ext.prim;
         if (!(self->ext.fireDemon.unk88 % 2)) {
-            NEXT_DUDE->unk22 ^= 8;
+            FD_NEXT->unk22 ^= 8;
         }
         UpdateAnimation(&D_pspeu_09258910, prim);
         UnkPrimHelper(prim);
         prim = prim->next;
         prim = prim->next;
         if ((self->ext.fireDemon.unk88 % 3) == 0) {
-            NEXT_DUDE->unk22++;
+            FD_NEXT->unk22++;
         }
 
-        if (((self->ext.fireDemon.unk88 % 4) == 0) && (NEXT_DUDE->unk20 > 8)) {
-            NEXT_DUDE->unk20--;
+        if (((self->ext.fireDemon.unk88 % 4) == 0) && (FD_NEXT->unk20 > 8)) {
+            FD_NEXT->unk20--;
         }
         UpdateAnimation(&D_pspeu_09258928, prim);
         UnkPrimHelper(prim);
@@ -255,26 +255,26 @@ void EntityUnkId21(Entity* self) {
         prim = self->ext.prim;
         prim->p2 = 0;
         prim->p1 = 0;
-        NEXT_DUDE->unk18 = self->posX.i.hi;
-        NEXT_DUDE->unkE = self->posY.i.hi - 8;
-        NEXT_DUDE->unk10 = 0x30000;
-        NEXT_DUDE->unk14 = 0;
-        NEXT_DUDE->unk1E = 0;
-        NEXT_DUDE->unk20 = 0x20;
-        NEXT_DUDE->unk22 = 0x10;
-        NEXT_DUDE->unk30 = NEXT_DUDE->unk22 / 2;
+        FD_NEXT->unk18 = self->posX.i.hi;
+        FD_NEXT->unkE = self->posY.i.hi - 8;
+        FD_NEXT->unk10 = 0x30000;
+        FD_NEXT->unk14 = 0;
+        FD_NEXT->unk1E = 0;
+        FD_NEXT->unk20 = 0x20;
+        FD_NEXT->unk22 = 0x10;
+        FD_NEXT->unk30 = FD_NEXT->unk22 / 2;
         prim = prim->next;
         prim = prim->next;
         prim->p2 = 0;
         prim->p1 = 0;
-        NEXT_DUDE->unk18 = self->posX.i.hi;
-        NEXT_DUDE->unkE = self->posY.i.hi - 8;
-        NEXT_DUDE->unk10 = 0xFFFD0000;
-        NEXT_DUDE->unk14 = 0;
-        NEXT_DUDE->unk1E = 0;
-        NEXT_DUDE->unk20 = 0x20;
-        NEXT_DUDE->unk22 = 0x10;
-        NEXT_DUDE->unk30 = NEXT_DUDE->unk22 / 2;
+        FD_NEXT->unk18 = self->posX.i.hi;
+        FD_NEXT->unkE = self->posY.i.hi - 8;
+        FD_NEXT->unk10 = 0xFFFD0000;
+        FD_NEXT->unk14 = 0;
+        FD_NEXT->unk1E = 0;
+        FD_NEXT->unk20 = 0x20;
+        FD_NEXT->unk22 = 0x10;
+        FD_NEXT->unk30 = FD_NEXT->unk22 / 2;
         prim = prim->next;
         prim = prim->next;
         self->ext.fireDemon.primA4 = prim;
@@ -284,31 +284,33 @@ void EntityUnkId21(Entity* self) {
         prim = self->ext.prim;
         UnkPrimHelper(prim);
         UpdateAnimation(&D_pspeu_09258948, prim);
-        NEXT_DUDE->unk10 -= 0x3000;
-        NEXT_DUDE->unk30 += 2;
+        FD_NEXT->unk10 -= 0x3000;
+        FD_NEXT->unk30 += 2;
         prim->x0 = prim->x2 = self->posX.i.hi - 0x10;
-        prim->y1 = (u32)self->posY.i.hi - NEXT_DUDE->unk30;
+        prim->y1 = (u32)self->posY.i.hi - FD_NEXT->unk30;
         prim = prim->next;
         prim = prim->next;
         UnkPrimHelper(prim);
         UpdateAnimation(&D_pspeu_09258948, prim);
-        NEXT_DUDE->unk10 += 0x3000;
-        NEXT_DUDE->unk30 += 2;
+        FD_NEXT->unk10 += 0x3000;
+        FD_NEXT->unk30 += 2;
         prim->x1 = prim->x3 = self->posX.i.hi + 0x10;
-        prim->y0 = (u32)self->posY.i.hi - NEXT_DUDE->unk30;
-        if (NEXT_DUDE->unk10 == 0) {
+        prim->y0 = (u32)self->posY.i.hi - FD_NEXT->unk30;
+        if (FD_NEXT->unk10 == 0) {
             self->step = 4;
         }
         break;
     case 4:
         prim = self->ext.prim;
-        self->ext.fireDemon.unk9C.xVars[1] = (prim->x3 - self->posX.i.hi) - 0x10;
+        self->ext.fireDemon.unk9C.xVars[1] =
+            (prim->x3 - self->posX.i.hi) - 0x10;
         prim->p1 = 0;
         prim->p2 = 0;
         prim = prim->next;
         prim = prim->next;
-        self->ext.fireDemon.unk9C.xVars[0] = ((prim->x2 - self->posX.i.hi) + 0x10);
-        self->ext.fireDemon.unkA0 = 1;
+        self->ext.fireDemon.unk9C.xVars[0] =
+            ((prim->x2 - self->posX.i.hi) + 0x10);
+        self->ext.fireDemon.unkA0 = true;
         prim->p1 = 2;
         prim->p2 = 0;
         g_api.func_80102CD8(1);
@@ -338,14 +340,14 @@ void EntityUnkId21(Entity* self) {
         break;
     case 6:
         prim = self->ext.prim;
-        NEXT_DUDE->unkE = prim->y0;
-        NEXT_DUDE->unk14 = 0;
+        FD_NEXT->unkE = prim->y0;
+        FD_NEXT->unk14 = 0;
         prim->p1 = 2;
         prim->p2 = 0;
         prim = prim->next;
         prim = prim->next;
-        NEXT_DUDE->unkE = prim->y0;
-        NEXT_DUDE->unk14 = 0;
+        FD_NEXT->unkE = prim->y0;
+        FD_NEXT->unk14 = 0;
         prim->p1 = 1;
         prim->p2 = 0;
         self->step += 1;
@@ -353,9 +355,9 @@ void EntityUnkId21(Entity* self) {
     case 7:
         prim = self->ext.prim;
         UpdateAnimation(&D_pspeu_09258980, prim);
-        prim->y0 = NEXT_DUDE->unkE;
-        LOW(NEXT_DUDE->unkC) += NEXT_DUDE->unk14;
-        NEXT_DUDE->unk14 += 0x3000;
+        prim->y0 = FD_NEXT->unkE;
+        LOW(FD_NEXT->unkC) += FD_NEXT->unk14;
+        FD_NEXT->unk14 += 0x3000;
         prim2 = prim;
         prim = prim->next;
         prim = prim->next;
@@ -410,8 +412,8 @@ void EntityUnkId21(Entity* self) {
         func_pspeu_0923D100(prim);
     }
     if (self->ext.fireDemon.unkA0) {
-        for (xVar = self->ext.fireDemon.unk9C.xVars[0]; xVar < self->ext.fireDemon.unk9C.xVars[1];
-             xVar += 8) {
+        for (xVar = self->ext.fireDemon.unk9C.xVars[0];
+             xVar < self->ext.fireDemon.unk9C.xVars[1]; xVar += 8) {
             if (!(Random() & 3)) {
                 explosion = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (explosion != NULL) {
@@ -426,33 +428,33 @@ void EntityUnkId21(Entity* self) {
 }
 
 void func_pspeu_0923E290(Primitive* prim) {
-    switch (NEXT_DUDE->unk28) {
+    switch (FD_NEXT->unk28) {
     case 0:
         prim->drawMode = DRAW_HIDE;
-        NEXT_DUDE->unk30 -= 1;
-        if (!NEXT_DUDE->unk30) {
+        FD_NEXT->unk30 -= 1;
+        if (!FD_NEXT->unk30) {
             g_api.PlaySfx(SFX_WALL_DEBRIS_B);
-            NEXT_DUDE->unk28 = 1;
+            FD_NEXT->unk28 = 1;
         }
-        NEXT_DUDE->unk36 &= ~2;
+        FD_NEXT->unk36 &= ~2;
         return;
     case 1:
         prim->drawMode = DRAW_DEFAULT;
-        NEXT_DUDE->unk10 = 0x7000 - ((Random() & 7) << 0xD);
-        NEXT_DUDE->unk14 = -0x40000;
-        NEXT_DUDE->unk28 += 1;
+        FD_NEXT->unk10 = 0x7000 - ((Random() & 7) << 0xD);
+        FD_NEXT->unk14 = -0x40000;
+        FD_NEXT->unk28 += 1;
         return;
     case 2:
         UnkPrimHelper(prim);
-        if (NEXT_DUDE->unk14 < 0) {
-            NEXT_DUDE->unk14 += 0x2000;
+        if (FD_NEXT->unk14 < 0) {
+            FD_NEXT->unk14 += 0x2000;
         } else {
-            NEXT_DUDE->unk14 += 0x1000;
+            FD_NEXT->unk14 += 0x1000;
         }
-        if (NEXT_DUDE->unk10 > 0) {
-            NEXT_DUDE->unk1E += 0x80;
+        if (FD_NEXT->unk10 > 0) {
+            FD_NEXT->unk1E += 0x80;
         } else {
-            NEXT_DUDE->unk1E -= 0x80;
+            FD_NEXT->unk1E -= 0x80;
         }
     }
 }
@@ -597,14 +599,14 @@ void EntityUnkId20(Entity* self) {
                 prim->v1 = prim->v0;
                 prim->v2 = prim->v0 + (Random() & 7) + 8;
                 prim->v3 = prim->v2;
-                NEXT_DUDE->unk20 = prim->u1 - prim->u0 + 1;
-                NEXT_DUDE->unk22 = prim->v2 - prim->v0 + 1;
-                NEXT_DUDE->unk18 = 0x40;
-                NEXT_DUDE->unkE = 0x100;
+                FD_NEXT->unk20 = prim->u1 - prim->u0 + 1;
+                FD_NEXT->unk22 = prim->v2 - prim->v0 + 1;
+                FD_NEXT->unk18 = 0x40;
+                FD_NEXT->unkE = 0x100;
                 prim->priority = 0x72;
                 prim->drawMode = DRAW_HIDE;
-                NEXT_DUDE->unk28 = 0;
-                NEXT_DUDE->unk30 = i * 4;
+                FD_NEXT->unk28 = 0;
+                FD_NEXT->unk30 = i * 4;
                 prim = prim->next;
                 prim = prim->next;
             }
@@ -672,7 +674,7 @@ static RECT D_pspeu_092589B0 = {0, 0x100, 0x80, 0x100};
 
 extern EInit D_us_80180A20;
 
-typedef enum{
+typedef enum {
     FIRE_DEMON_INIT,
     FIRE_DEMON_1,
     FIRE_DEMON_2,
@@ -712,15 +714,15 @@ void EntityFireDemon(Entity* self) {
     case FIRE_DEMON_INIT:
         InitializeEntity(D_us_80180A20);
         self->hitboxState = 0;
-        self->ext.fireDemon.unk96 = self->zPriority;
+        self->ext.fireDemon.zPriority = self->zPriority;
         self->zPriority = 0x6E;
-        self->ext.fireDemon.unk93 = 3;
-        self->ext.fireDemon.unk8A = 1;
-        self->ext.fireDemon.unk92 = 1;
-        self->ext.fireDemon.unk90 = 1;
-        self->ext.fireDemon.unk91 = 2;
+        self->ext.fireDemon.palOffMax = 3;
+        self->ext.fireDemon.palOffMin = 1;
+        self->ext.fireDemon.pal_offset = 1;
+        self->ext.fireDemon.palDirection = 1;
+        self->ext.fireDemon.palTimer = 2;
         self->hitboxState = 3;
-        self->zPriority = self->ext.fireDemon.unk96;
+        self->zPriority = self->ext.fireDemon.zPriority;
         self->animCurFrame = 3;
         SetStep(FIRE_DEMON_3);
         if (self->params & 0x80) {
@@ -759,7 +761,7 @@ void EntityFireDemon(Entity* self) {
                 self->velocityX = -self->velocityX;
             }
             self->velocityY = FIX(-8.5);
-            self->ext.fireDemon.unk8C = 0;
+            self->ext.fireDemon.accelerationY = 0;
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
                 CreateEntityFromEntity(E_FIRE_DEMON, self, other);
@@ -786,8 +788,8 @@ void EntityFireDemon(Entity* self) {
             /* fallthrough */
         case 2:
             MoveEntity();
-            self->velocityY += self->ext.fireDemon.unk8C;
-            self->ext.fireDemon.unk8C += 0x1000;
+            self->velocityY += self->ext.fireDemon.accelerationY;
+            self->ext.fireDemon.accelerationY += FIX(1.0 / 16);
             if (self->velocityY > 0) {
                 self->hitboxState = 3;
                 self->animCurFrame = 0x13;
@@ -820,15 +822,15 @@ void EntityFireDemon(Entity* self) {
         break;
     case FIRE_DEMON_3:
         var_s2 = 8;
-        self->ext.fireDemon.unk93 = 3;
-        self->ext.fireDemon.unk8A = 1;
+        self->ext.fireDemon.palOffMax = 3;
+        self->ext.fireDemon.palOffMin = 1;
         if (!self->step_s) {
             self->ext.fireDemon.unk88 = 0x80;
             self->step_s += 1;
         }
         AnimateEntity(&D_pspeu_092588B0, self);
         if (!--self->ext.fireDemon.unk88) {
-            self->zPriority = self->ext.fireDemon.unk96;
+            self->zPriority = self->ext.fireDemon.zPriority;
             self->ext.fireDemon.unk88 = 0x80;
             SetStep(FIRE_DEMON_4);
         }
@@ -859,8 +861,8 @@ void EntityFireDemon(Entity* self) {
         break;
     case FIRE_DEMON_5:
         var_s2 = 8;
-        self->ext.fireDemon.unk93 = 6;
-        self->ext.fireDemon.unk8A = 3;
+        self->ext.fireDemon.palOffMax = 6;
+        self->ext.fireDemon.palOffMin = 3;
         switch (self->step_s) {
         case 0:
             self->facingLeft = ((GetSideToPlayer() & 1) ^ 1);
@@ -902,7 +904,7 @@ void EntityFireDemon(Entity* self) {
             break;
         case 3:
             var_s2 = 1;
-            self->ext.fireDemon.unk8A = 6;
+            self->ext.fireDemon.palOffMin = 6;
             self->palette = 0x220;
             if (!AnimateEntity(&D_pspeu_092588E0, self)) {
                 SetStep(3);
@@ -911,7 +913,7 @@ void EntityFireDemon(Entity* self) {
         }
         break;
     case FIRE_DEMON_DEAD:
-        self->ext.fireDemon.unk91 = 2;
+        self->ext.fireDemon.palTimer = 2;
         switch (self->step_s) {
         case 0:
             self->drawFlags |= ENTITY_OPACITY;
@@ -999,6 +1001,8 @@ void EntityFireDemon(Entity* self) {
                 }
             } else {
                 if (--self->ext.fireDemon.unk98) {
+                    // Hello, yes, I would like one dose of whatever the SOTN
+                    // devs were smoking when they wrote this math
                     if ((self->ext.fireDemon.unk98 %
                          (self->ext.fireDemon.unk98 / 32 + 1)) == 0) {
                         var_s3 = 1;
@@ -1056,7 +1060,7 @@ void EntityFireDemon(Entity* self) {
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         self->drawFlags = ENTITY_OPACITY;
         self->hitboxState = 0;
-        self->ext.fireDemon.unk91 = 7;
+        self->ext.fireDemon.palTimer = 7;
         if (self->ext.fireDemon.unk88) {
             self->ext.fireDemon.unk88--;
             break;
@@ -1070,7 +1074,7 @@ void EntityFireDemon(Entity* self) {
     case FIRE_DEMON_TYPE15:
         self->palette = 0x815E;
         self->hitboxState = 0;
-        self->ext.fireDemon.unk91 = 7;
+        self->ext.fireDemon.palTimer = 7;
         other = self->ext.fireDemon.unk9C.otherEnt;
         self->posX.i.hi = other->posX.i.hi;
         self->posY.i.hi = other->posY.i.hi;
@@ -1086,15 +1090,19 @@ void EntityFireDemon(Entity* self) {
     case FIRE_DEMON_ANIM_DEBUG:
 #include "../../pad2_anim_debug.h"
     }
-    if (!--self->ext.fireDemon.unk91) {
-        self->ext.fireDemon.unk91 = var_s2;
-        self->palette = ((self->ext.fireDemon.unk92) + 0x21D);
-        self->ext.fireDemon.unk92 += self->ext.fireDemon.unk90;
-        if (self->ext.fireDemon.unk92 > self->ext.fireDemon.unk93) {
-            self->ext.fireDemon.unk90 = -1;
+    if (!--self->ext.fireDemon.palTimer) {
+        self->ext.fireDemon.palTimer = var_s2;
+
+        // Set the palette to an offsetted value.
+        self->palette = (self->ext.fireDemon.pal_offset + 0x21D);
+        // Increase or decrease by 1.
+        self->ext.fireDemon.pal_offset += self->ext.fireDemon.palDirection;
+        // When we reach the max or min, flip direction.
+        if (self->ext.fireDemon.pal_offset > self->ext.fireDemon.palOffMax) {
+            self->ext.fireDemon.palDirection = -1;
         }
-        if ((self->ext.fireDemon.unk92) < (self->ext.fireDemon.unk8A)) {
-            self->ext.fireDemon.unk90 = 1;
+        if (self->ext.fireDemon.pal_offset < self->ext.fireDemon.palOffMin) {
+            self->ext.fireDemon.palDirection = 1;
         }
     }
     if (self->animCurFrame < 0xD) {

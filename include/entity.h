@@ -3933,21 +3933,21 @@ typedef struct {
     /* 80 */ struct Primitive* prim80;
     /* 84 */ struct Primitive* prim84;
     /* 88 */ s16 unk88;
-    /* 8A */ u8 unk8A;
-    /* 8B */ u8: 8;
-    /* 8C */ u32 unk8C;
-    /* 90 */ u8 unk90;
-    /* 91 */ u8 unk91;
-    /* 92 */ u8 unk92;
-    /* 93 */ u8 unk93;
-    /* 94 */ s16 unk94;
-    /* 96 */ u16 unk96;
+    /* 8A */ u8 palOffMin;
+    /* 8B */ u8 : 8;
+    /* 8C */ u32 accelerationY;
+    /* 90 */ u8 palDirection;
+    /* 91 */ u8 palTimer;
+    /* 92 */ u8 pal_offset;
+    /* 93 */ u8 palOffMax;
+    /* 94 */ s16 angle;
+    /* 96 */ u16 zPriority;
     /* 98 */ s16 unk98;
-    /* 9A */ u16: 16;
+    /* 9A */ u16 : 16;
     // This union is a compromise. Almost all the entities in the Fire
     // Demon file share struct members, except this member. Easiest to
     // just make it a union and share all the rest.
-    union{
+    union {
         s16 xVars[2];
         struct Entity* otherEnt;
     } unk9C;
