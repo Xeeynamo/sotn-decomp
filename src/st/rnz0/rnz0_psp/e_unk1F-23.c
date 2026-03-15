@@ -147,7 +147,7 @@ static u8 D_pspeu_09258970[] = {
 static u8 D_pspeu_09258980[] = {
     2, 64, 0, 225, 15, 2, 64, 0, 31, 15, 2, 96, 0, 225, 15, 0};
 
-extern EInit D_pspeu_09260720;
+extern EInit D_us_80180A30;
 
 void EntityUnkId21(Entity* self) {
     Entity* player = &PLAYER; // unused
@@ -163,7 +163,7 @@ void EntityUnkId21(Entity* self) {
     ((u16*)&D_8006C384)[3] = self->step; // what is this madness
     switch (self->step) {
     case 0:
-        InitializeEntity(D_pspeu_09260720);
+        InitializeEntity(D_us_80180A30);
         self->animCurFrame = 0;
         angle = 0x600;
         if (self->facingLeft) {
@@ -670,7 +670,7 @@ static s16 D_pspeu_092589A8[] = {0, 42, 16, 0};
 
 static RECT D_pspeu_092589B0 = {0, 0x100, 0x80, 0x100};
 
-extern EInit D_pspeu_09260710;
+extern EInit D_us_80180A20;
 
 void EntityFireDemon(Entity* self) {
     Entity* other;
@@ -697,7 +697,7 @@ void EntityFireDemon(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_pspeu_09260710);
+        InitializeEntity(D_us_80180A20);
         self->hitboxState = 0;
         self->ext.ILLEGAL.s16[0xD] = self->zPriority;
         self->zPriority = 0x6E;

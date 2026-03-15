@@ -93,6 +93,7 @@ def get_initializer_for_ent(anim_name, src_file, overlay):
                 if "InitializeEntity" in lbline:
                     print("Best guess entity initializer:", lbline)
                     initName = re.findall(r"(?<=\()[^\)]*", lbline)[0]
+                    break
     if initName is None:
         # if we reach this point, we didn't find an automatic initializer
         # Prompt the user.
