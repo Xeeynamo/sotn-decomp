@@ -149,7 +149,7 @@ static u8 D_pspeu_09258980[] = {
 
 extern EInit D_pspeu_09260720;
 
-void func_us_801BA21C(Entity* self) {
+void EntityUnkId21(Entity* self) {
     Entity* player = &PLAYER; // unused
     Entity* explosion;
     Primitive* prim;
@@ -496,7 +496,7 @@ void func_pspeu_0923E448(Primitive* prim) {
 
 static RECT D_pspeu_09258990 = {0, 0x100, 0x80, 0x100};
 
-void func_us_801BB000(Entity* self) {
+void EntityUnkId20(Entity* self) {
     DRAWENV sp2C;
     s32 primIndex;
     DR_ENV* dr_env;
@@ -672,7 +672,7 @@ static RECT D_pspeu_092589B0 = {0, 0x100, 0x80, 0x100};
 
 extern EInit D_pspeu_09260710;
 
-void func_us_801BB5D8(Entity* self) {
+void EntityFireDemon(Entity* self) {
     Entity* other;
     s32 primIndex;
     Collider sp7C;
@@ -1001,7 +1001,7 @@ void func_us_801BB5D8(Entity* self) {
             if (var_s3) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromCurrententity(E_UNK_22, other);
+                    CreateEntityFromCurrentEntity(E_UNK_22, other);
                     other->params = 0x22;
                     other->params += 0xD500;
                     other->posX.i.hi =
@@ -1021,7 +1021,7 @@ void func_us_801BB5D8(Entity* self) {
             }
             other = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (other != NULL) {
-                CreateEntityFromCurrententity(E_UNK_22, other);
+                CreateEntityFromCurrentEntity(E_UNK_22, other);
                 other->params = 0x20;
                 other->params += 0xD500;
                 other->posX.i.hi =

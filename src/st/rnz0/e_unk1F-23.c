@@ -43,14 +43,14 @@ void EntityUnkId22(Entity* self) {
 
 INCLUDE_ASM("st/rnz0/nonmatchings/e_unk1F-23", func_us_801B9FC8);
 
-INCLUDE_ASM("st/rnz0/nonmatchings/e_unk1F-23", func_us_801BA21C);
+INCLUDE_ASM("st/rnz0/nonmatchings/e_unk1F-23", EntityUnkId21);
 
 INCLUDE_ASM("st/rnz0/nonmatchings/e_unk1F-23", func_us_801BAD1C);
 
 INCLUDE_ASM("st/rnz0/nonmatchings/e_unk1F-23", func_us_801BAE9C);
 
-INCLUDE_ASM("st/rnz0/nonmatchings/e_unk1F-23", func_us_801BB000);
+INCLUDE_ASM("st/rnz0/nonmatchings/e_unk1F-23", EntityUnkId20);
 
 INCLUDE_RODATA("st/rnz0/nonmatchings/e_unk1F-23", D_us_801AAD84);
 
-INCLUDE_ASM("st/rnz0/nonmatchings/e_unk1F-23", func_us_801BB5D8);
+INCLUDE_ASM("st/rnz0/nonmatchings/e_unk1F-23", EntityFireDemon);

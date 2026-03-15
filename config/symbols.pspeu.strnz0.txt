@@ -11,9 +11,9 @@ EntitySalemWitchCurse = 0x0923C1B8; // source=match
 EntitySalemWitchTriboltLaunch = 0x0923C958; // source=match
 EntitySalemWitchTriboltProjectile = 0x0923CB98; // source=match
 EntityUnkId22 = 0x0923CEE0;
-func_us_801BA21C = 0x0923D3F8;
-func_us_801BB000 = 0x0923E620;
-func_us_801BB5D8 = 0x0923EDC8;
+EntityUnkId21 = 0x0923D3F8;
+EntityUnkId20 = 0x0923E620;
+EntityFireDemon = 0x0923EDC8;
 EntityUnk31 = 0x09240468;
 EntityStageNamePopup = 0x09240988; // source=match
 RNZ0_EntityRedDoor = 0x092418F0; // source=match
@@ -39,7 +39,7 @@ EntityDamageDisplay = 0x0924BC68; // source=match
 EntitySealedDoor = 0x0924C7F8;
 func_us_801BCAB0 = 0x0924E280;
 func_us_801BD7D0 = 0x0924F3D8;
-func_us_801BE600 = 0x09250790;
+EntityLesserDemon = 0x09250790;
 func_us_801BF7B0 = 0x09252198;
 EntityRoomForeground = 0x09252808; // source=match
 DestroyEntity = 0x09252920;
