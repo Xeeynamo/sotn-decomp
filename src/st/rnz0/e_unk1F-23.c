@@ -462,9 +462,6 @@ void func_pspeu_0923E290(Primitive* prim) {
     }
 }
 
-// This is the best the permuter could do with the US version
-
-
 void func_us_801BAE9C(Primitive *prim)
 {
     #ifdef VERSION_PSP
@@ -487,7 +484,7 @@ void func_us_801BAE9C(Primitive *prim)
   {
     case 0:
       prim->drawMode = DRAW_HIDE;
-      prim->r3 += 0xFF; // ????
+      prim->r3 -= 1;
       if (!prim->r3)
     {
       prim->g3 = 1;
