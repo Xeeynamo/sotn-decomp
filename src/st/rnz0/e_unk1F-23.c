@@ -496,8 +496,6 @@ void func_pspeu_0923E448(Primitive* prim) {
     }
 }
 
-static RECT D_pspeu_09258990 = {0, 0x100, 0x80, 0x100};
-
 void EntityUnkId20(Entity* self) {
     DRAWENV sp2C;
     s32 primIndex;
@@ -507,9 +505,8 @@ void EntityUnkId20(Entity* self) {
     Primitive* prim2;
     s16 xVar;
     s32 i;
-    RECT sp24;
+    RECT sp24 = {0, 0x100, 0x80, 0x100};
 
-    sp24 = D_pspeu_09258990;
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitInteractable);
@@ -670,8 +667,6 @@ void EntityUnkId20(Entity* self) {
 static s16 D_pspeu_09258998[] = {0, 42, 0, 4, 8, -4, -16, 0};
 static s16 D_pspeu_092589A8[] = {0, 42, 16, 0};
 
-static RECT D_pspeu_092589B0 = {0, 0x100, 0x80, 0x100};
-
 extern EInit D_us_80180A20;
 
 typedef enum {
@@ -690,7 +685,7 @@ typedef enum {
 void EntityFireDemon(Entity* self) {
     Collider sp7C;
     DRAWENV sp38;
-    RECT sp30;
+    RECT sp30 = {0, 0x100, 0x80, 0x100};
     Entity* other;
     s32 primIndex;
     s16 xVar;
@@ -700,7 +695,6 @@ void EntityFireDemon(Entity* self) {
     u8 var_s3;
     u8 var_s2;
 
-    sp30 = D_pspeu_092589B0;
     FntPrint("step %x\n", self->step);
     FntPrint("step_s %x\n", self->step_s);
     var_s2 = 8;
