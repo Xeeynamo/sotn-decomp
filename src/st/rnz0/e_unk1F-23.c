@@ -462,15 +462,27 @@ void func_pspeu_0923E290(Primitive* prim) {
     }
 }
 
-typedef struct {
-    s16 sp10[2];
-    s16 sp14[2];
-} stupid;
+// This is the best the permuter could do with the US version
+
+
 void func_us_801BAE9C(Primitive *prim)
 {
+    #ifdef VERSION_PSP
+    u16 sp10[2];
+    s16 sp14[2];
+    #define VAR(x) (x)
+    #define X1(x) (x)
+    #else
+    typedef struct {
+        s16 sp10[2];
+        s16 sp14[2];
+    } stupid;
   stupid dumb;
-  u16 *new_var;
-    int a, b;
+      u16 *new_var;
+  int a, b;
+    #define VAR(x) (dumb.x)
+    #define X1(x) LOHU(x)
+    #endif
   switch (prim->g3)
   {
     case 0:
@@ -492,27 +504,38 @@ void func_us_801BAE9C(Primitive *prim)
     case 2:
       if ((LOW(prim->x3)) < 0)
     {
-      LOW(dumb.sp10) = (prim->x0 << 0x10) + LOHU(prim->x1);
+      LOW(VAR(sp10)) = (prim->x0 << 0x10) + X1(prim->x1);
       LOW(prim->x3) += 0x2000;
     }
     else
     {
-      LOW(dumb.sp10) = (prim->x0 << 0x10) + LOHU(prim->x1);
+      LOW(VAR(sp10)) = (prim->x0 << 0x10) + X1(prim->x1);
       LOW(prim->x3) += 0x400;
     }
-        b =  LOW(prim->x2);
-        a =  LOW(dumb.sp10);
-      LOW(dumb.sp10) = a + b;
-      new_var = dumb.sp10;
+    #ifdef VERSION_PSP
+        LOW(sp10) += LOW(prim->x2);
+        prim->x0 = sp10[1];
+        prim->x1 = sp10[0];
+        LOW(sp14) = (prim->y0 << 0x10) + prim->y1;
+        LOW(sp14) += LOW(prim->x3);
+        prim->y0 = sp14[1];
+        prim->y1 = sp14[0];
+        break;
+        #else
+
+      b =  LOW(prim->x2);
+      a =  LOW(VAR(sp10));
+      LOW(VAR(sp10)) = a + b;
+      new_var = VAR(sp10);
       prim->x0 = new_var[1];
       prim->x1 = new_var[0];
-      LOW(dumb.sp14) = (prim->y0 << 0x10) + LOHU(prim->y1);
-      LOW(dumb.sp14) += LOW(prim->x3);
-      new_var = dumb.sp14;
+      LOW(VAR(sp14)) = (prim->y0 << 0x10) + LOHU(prim->y1);
+      LOW(VAR(sp14)) += LOW(prim->x3);
+      new_var = VAR(sp14);
       prim->y0 = new_var[1];
       prim->y1 = new_var[0];
       break;
-
+      #endif
   }
 }
 
