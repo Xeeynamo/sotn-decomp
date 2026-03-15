@@ -10,10 +10,10 @@ EntitySalemWitchGlow = 0x0923C0A0; // source=match
 EntitySalemWitchCurse = 0x0923C1B8; // source=match
 EntitySalemWitchTriboltLaunch = 0x0923C958; // source=match
 EntitySalemWitchTriboltProjectile = 0x0923CB98; // source=match
-func_us_801B9E64 = 0x0923CEE0;
-func_us_801BA21C = 0x0923D3F8;
-func_us_801BB000 = 0x0923E620;
-func_us_801BB5D8 = 0x0923EDC8;
+EntityUnkId22 = 0x0923CEE0;
+EntityUnkId21 = 0x0923D3F8;
+EntityUnkId20 = 0x0923E620;
+EntityFireDemon = 0x0923EDC8;
 EntityUnk31 = 0x09240468;
 EntityStageNamePopup = 0x09240988; // source=match
 RNZ0_EntityRedDoor = 0x092418F0; // source=match
@@ -39,7 +39,7 @@ EntityDamageDisplay = 0x0924BC68; // source=match
 EntitySealedDoor = 0x0924C7F8;
 func_us_801BCAB0 = 0x0924E280;
 func_us_801BD7D0 = 0x0924F3D8;
-func_us_801BE600 = 0x09250790;
+EntityLesserDemon = 0x09250790;
 func_us_801BF7B0 = 0x09252198;
 EntityRoomForeground = 0x09252808; // source=match
 DestroyEntity = 0x09252920;
@@ -49,7 +49,6 @@ GetDistanceToPlayerY = 0x09252C20;
 GetSideToPlayer = 0x09252C78;
 MoveEntity = 0x09252D00;
 UnkCollisionFunc3 = 0x09252D88;
-UnkCollisionFunc2 = 0x09253040;
 AllocEntity = 0x09253320;
 GetAngleBetweenEntities = 0x09253438;
 GetNormalizedAngle = 0x092534B8;
@@ -59,7 +58,6 @@ InitializeEntity = 0x09253640;
 EntityDummy = 0x092537E8;
 GetPlayerCollisionWith = 0x092539B0;
 UnkPrimHelper = 0x09253F80;
-UpdateAnimation = 0x09254480;
 FindFirstUnkPrim = 0x09254700;
 PrimToggleVisibility = 0x09254750;
 UnkPolyFunc2 = 0x09254940;
@@ -103,6 +101,8 @@ g_EInitFloorTrap = 0x092606D0;
 g_EInitCtulhu = 0x092606E0;
 g_EInitCtulhuFireball = 0x092606F0;
 g_EInitCtulhuIceShockwave = 0x09260700;
+D_us_80180A20 = 0x09260710;
+D_us_80180A2C = 0x09260720;
 D_us_80180A68 = 0x09260770;
 g_EInitEnemy3 = 0x09260780;
 g_EInitTableWithGlobe = 0x09260790;
