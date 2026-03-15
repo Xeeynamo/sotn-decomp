@@ -56,9 +56,9 @@ void EntityUnkId22(Entity* self) {
 
 typedef struct fireDemonPrim {
     struct fireDemonPrim* next;
-    #ifdef VERSION_PSP
+#ifdef VERSION_PSP
     s32 : 32;
-    #endif
+#endif
     s32 : 32;
     s16 unkC;
     s16 unkE;
@@ -141,9 +141,8 @@ static u8 D_pspeu_09258928[] = {
     3,   64, 32, 15, 15, 3,   80, 32, 15, 15, 3,  80, 32,
     241, 15, 3,  96, 32, 241, 15, 3,  96, 32, 15, 15, 0};
 static u8 D_pspeu_09258948[] = {
-    2,   0,  32, 31, 15, 2,  96, 0,   31, 15,  2,   128, 0,
-    225, 15, 2,  64, 0,  31, 15, 2,   96, 0,   225, 15,  2,
-    32,  0,  31, 15, 2,  64, 0,  225, 15, 255};
+    2,  0,  32, 31, 15, 2,   96, 0, 31, 15, 2,  128, 0, 225, 15, 2,   64, 0,
+    31, 15, 2,  96, 0,  225, 15, 2, 32, 0,  31, 15,  2, 64,  0,  225, 15, 255};
 static u8 D_pspeu_09258970[] = {
     2, 32, 0, 31, 15, 3, 64, 0, 225, 15, 3, 96, 0, 225, 15, 0};
 static u8 D_pspeu_09258980[] = {
@@ -425,7 +424,8 @@ void EntityUnkId21(Entity* self) {
                     explosion->params = 0x5F00;
                 }
             }
-            do { } while (0);
+            do {
+            } while (0);
         }
     }
 }
@@ -462,54 +462,48 @@ void func_pspeu_0923E290(Primitive* prim) {
     }
 }
 
-void func_us_801BAE9C(Primitive *prim)
-{
-    #ifdef VERSION_PSP
+void func_us_801BAE9C(Primitive* prim) {
+#ifdef VERSION_PSP
     u16 sp10[2];
     s16 sp14[2];
-    #define VAR(x) (x)
-    #define X1(x) (x)
-    #else
+#define VAR(x) (x)
+#define X1(x) (x)
+#else
     typedef struct {
         s16 sp10[2];
         s16 sp14[2];
     } stupid;
-  stupid dumb;
-      u16 *new_var;
-  int a, b;
-    #define VAR(x) (dumb.x)
-    #define X1(x) LOHU(x)
-    #endif
-  switch (prim->g3)
-  {
+    stupid dumb;
+    u16* new_var;
+    int a, b;
+#define VAR(x) (dumb.x)
+#define X1(x) LOHU(x)
+#endif
+    switch (prim->g3) {
     case 0:
-      prim->drawMode = DRAW_HIDE;
-      prim->r3 -= 1;
-      if (!prim->r3)
-    {
-      prim->g3 = 1;
-    }
-      break;
+        prim->drawMode = DRAW_HIDE;
+        prim->r3 -= 1;
+        if (!prim->r3) {
+            prim->g3 = 1;
+        }
+        break;
 
     case 1:
-      prim->drawMode = DRAW_DEFAULT;
-      LOW(prim->x2) = 0x8000 - (Random() << 8);
-      LOW(prim->x3) = -0x40000;
-      prim->g3++;
-      break;
+        prim->drawMode = DRAW_DEFAULT;
+        LOW(prim->x2) = 0x8000 - (Random() << 8);
+        LOW(prim->x3) = -0x40000;
+        prim->g3++;
+        break;
 
     case 2:
-      if ((LOW(prim->x3)) < 0)
-    {
-      LOW(VAR(sp10)) = (prim->x0 << 0x10) + X1(prim->x1);
-      LOW(prim->x3) += 0x2000;
-    }
-    else
-    {
-      LOW(VAR(sp10)) = (prim->x0 << 0x10) + X1(prim->x1);
-      LOW(prim->x3) += 0x400;
-    }
-    #ifdef VERSION_PSP
+        if ((LOW(prim->x3)) < 0) {
+            LOW(VAR(sp10)) = (prim->x0 << 0x10) + X1(prim->x1);
+            LOW(prim->x3) += 0x2000;
+        } else {
+            LOW(VAR(sp10)) = (prim->x0 << 0x10) + X1(prim->x1);
+            LOW(prim->x3) += 0x400;
+        }
+#ifdef VERSION_PSP
         LOW(sp10) += LOW(prim->x2);
         prim->x0 = sp10[1];
         prim->x1 = sp10[0];
@@ -518,22 +512,22 @@ void func_us_801BAE9C(Primitive *prim)
         prim->y0 = sp14[1];
         prim->y1 = sp14[0];
         break;
-        #else
+#else
 
-      b =  LOW(prim->x2);
-      a =  LOW(VAR(sp10));
-      LOW(VAR(sp10)) = a + b;
-      new_var = VAR(sp10);
-      prim->x0 = new_var[1];
-      prim->x1 = new_var[0];
-      LOW(VAR(sp14)) = (prim->y0 << 0x10) + LOHU(prim->y1);
-      LOW(VAR(sp14)) += LOW(prim->x3);
-      new_var = VAR(sp14);
-      prim->y0 = new_var[1];
-      prim->y1 = new_var[0];
-      break;
-      #endif
-  }
+        b = LOW(prim->x2);
+        a = LOW(VAR(sp10));
+        LOW(VAR(sp10)) = a + b;
+        new_var = VAR(sp10);
+        prim->x0 = new_var[1];
+        prim->x1 = new_var[0];
+        LOW(VAR(sp14)) = (prim->y0 << 0x10) + LOHU(prim->y1);
+        LOW(VAR(sp14)) += LOW(prim->x3);
+        new_var = VAR(sp14);
+        prim->y0 = new_var[1];
+        prim->y1 = new_var[0];
+        break;
+#endif
+    }
 }
 
 void EntityUnkId20(Entity* self) {
@@ -979,9 +973,9 @@ void EntityFireDemon(Entity* self) {
             sp38 = g_CurrentBuffer->draw;
             sp38.isbg = 1;
             sp38.clip = sp30;
-            #ifdef VERSION_PSP
+#ifdef VERSION_PSP
             sp38.r0 = sp38.g0 = sp38.b0 = 0;
-            #endif
+#endif
             sp38.ofs[0] = 0;
             sp38.ofs[1] = 0x100;
             SetDrawEnv(dr_env, &sp38);

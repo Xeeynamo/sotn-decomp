@@ -13,7 +13,6 @@ GetDistanceToPlayerY = 0x801B0358; // source=match
 GetSideToPlayer = 0x801B038C; // source=match
 MoveEntity = 0x801B03D0; // source=match
 UnkCollisionFunc3 = 0x801B042C; // source=match
-UnkCollisionFunc2 = 0x801B06A4; // source=match
 AllocEntity = 0x801B088C; // source=match
 GetAngleBetweenEntities = 0x801B0B7C; // source=match
 GetNormalizedAngle = 0x801B0BFC; // source=match
@@ -24,9 +23,6 @@ GetPlayerCollisionWith = 0x801B10D0; // source=match
 CheckColliderOffsets = 0x801B3E3C; // source=match
 EntityGreyPuffSpawner = 0x801B416C; // source=match
 PlaySfxPositional = 0x801B60E0; // source=match
-EntityUnkId21 = 0x801BA21C;
-EntityUnkId20 = 0x801BB000;
-EntityFireDemon = 0x801BB5D8;
 EntityLesserDemon = 0x801BE600;
 SealedDoorIsNearPlayer = 0x801BF820; // source=match
 EntitySealedDoor = 0x801BF898; // source=match
@@ -38,7 +34,6 @@ EntitySalemWitchCurse = 0x801C2DA4; // source=match
 EntitySalemWitchTriboltLaunch = 0x801C32CC; // source=match
 EntitySalemWitchTriboltProjectile = 0x801C3480; // source=match
 UnkPrimHelper = 0x801C36C0; // source=match
-UpdateAnimation = 0x801C3AA8;
 FindFirstUnkPrim = 0x801C3BF8; // source=match
 PrimToggleVisibility = 0x801C3CA4; // source=match
 UnkPolyFunc2 = 0x801C3E0C; // source=match

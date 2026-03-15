@@ -49,7 +49,6 @@ GetDistanceToPlayerY = 0x09252C20;
 GetSideToPlayer = 0x09252C78;
 MoveEntity = 0x09252D00;
 UnkCollisionFunc3 = 0x09252D88;
-UnkCollisionFunc2 = 0x09253040;
 AllocEntity = 0x09253320;
 GetAngleBetweenEntities = 0x09253438;
 GetNormalizedAngle = 0x092534B8;
