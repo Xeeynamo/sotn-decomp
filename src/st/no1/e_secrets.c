@@ -1,12 +1,42 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
-#include "sfx.h"
 
-extern u16 D_us_801815F4[];
-extern u16 D_us_80181604[][8];
-extern s32 D_psp_0929A738;
-extern s32 D_psp_0929A740;
-extern s32 D_psp_0929A748;
+#ifdef VERSION_PSP
+extern s32 E_ID(ID_25);
+extern s32 E_ID(ID_26);
+extern s32 E_ID(ID_27);
+#endif
+
+static u16 D_us_801815F4[] = {0x91, 0x92, 0xA1, 0xA2, 0xB1, 0xB2, 0xC1, 0xC2};
+
+static u16 D_us_80181604[][8] = {
+    {0x3F9, 0x3FB, 0x3FE, 0x401, 0x403, 0x40D, 0x3FE, 0x40F},
+    {0x3F9, 0x3FB, 0x3FE, 0x401, 0x403, 0x40D, 0x3FE, 0x40F},
+    {0x3F9, 0x3FB, 0x3FE, 0x401, 0x403, 0x40D, 0x3FE, 0x40F},
+    {0x3F9, 0x3FB, 0x412, 0x419, 0x50B, 0x4BE, 0x3FE, 0x40F},
+    {0x4B7, 0x4B2, 0x53D, 0x53E, 0x403, 0x40D, 0x3FE, 0x40F},
+    {0x4B7, 0x4B2, 0x4BD, 0x4B8, 0x50B, 0x4BE, 0x4BD, 0x50C},
+};
+
+static s32 D_us_80181664 = 0;
+
+static s16 D_us_80181668[] = {0, 0, 0, 4, 0, -4, 0, 0};
+
+static s32 D_us_80181678[][2] = {
+    {FIX(1.0), FIX(-3.0)}, {FIX(1.5), FIX(-1.5)},  {FIX(0.75), FIX(-2.25)},
+    {FIX(2.0), FIX(-1.0)}, {FIX(0.5), FIX(-0.25)}, {FIX(1.0), FIX(-2.0)},
+};
+
+static s32 D_us_801816A8[][2] = {
+    {FIX(0.0), FIX(0.375)}, {FIX(0.125), FIX(0.25)}, {FIX(0.25), FIX(0.5)},
+    {FIX(0.5), FIX(0.375)}, {FIX(0.75), FIX(0.25)},
+};
+
+static s16 D_us_801816D0[] = {8, 12, 4, 14, 6, 0};
+
+static s16 D_us_801816DC[] = {0x180, 0x100, 0x200, 0x0C0, 0x1C0, 0x000};
+
+static u8 D_us_801816E8[] = {3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, -1, 0};
 
 // Breakable wall with chicken
 void func_us_801BE880(Entity* self) {
@@ -27,19 +57,11 @@ void func_us_801BE880(Entity* self) {
             self->step = 5;
         } else {
             tempEntity = self + 2;
-#ifdef VERSION_PSP
-            CreateEntityFromEntity(D_psp_0929A748, self, tempEntity);
-#else
-            CreateEntityFromEntity(E_ID_25, self, tempEntity);
-#endif
+            CreateEntityFromEntity(E_ID(ID_25), self, tempEntity);
             tempEntity->posY.i.hi -= 0x18;
             tempEntity->params = 2;
             tempEntity = self + 1;
-#ifdef VERSION_PSP
-            CreateEntityFromEntity(D_psp_0929A748, self, tempEntity);
-#else
-            CreateEntityFromEntity(E_ID_25, self, tempEntity);
-#endif
+            CreateEntityFromEntity(E_ID(ID_25), self, tempEntity);
             tempEntity->posY.i.hi -= 0x30;
             tempEntity->params = 1;
         }
@@ -51,11 +73,7 @@ void func_us_801BE880(Entity* self) {
             for (i = 0; i < 5; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-#ifdef VERSION_PSP
-                    CreateEntityFromEntity(D_psp_0929A740, self, tempEntity);
-#else
-                    CreateEntityFromEntity(E_ID_26, self, tempEntity);
-#endif
+                    CreateEntityFromEntity(E_ID(ID_26), self, tempEntity);
                     tempEntity->posX.i.hi += 0x10;
                     tempEntity->posY.i.hi -= 0x30;
                     tempEntity->params = i;
@@ -155,7 +173,8 @@ void func_us_801BEB54(Entity* self) {
         break;
 
     case 2:
-        if (self->step_s == 0) {
+        switch (self->step_s) {
+        case 0:
             tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
@@ -174,25 +193,18 @@ void func_us_801BEB54(Entity* self) {
             for (i = 0; i < 5; i++) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (tempEntity != NULL) {
-#ifdef VERSION_PSP
-                    CreateEntityFromEntity(D_psp_0929A738, self, tempEntity);
-#else
-                    CreateEntityFromEntity(E_ID_27, self, tempEntity);
-#endif
+                    CreateEntityFromEntity(E_ID(ID_27), self, tempEntity);
                     tempEntity->posX.i.hi += (i * 8) - 0x10 + (Random() & 3);
                     tempEntity->posY.i.hi -= (Random() & 7) + 0x14;
                     tempEntity->params = i;
                 }
             }
             self->step_s++;
+            break;
         }
         break;
     }
 }
-
-extern s16 D_us_80181668[];
-extern s32 D_us_80181678[][2];
-extern u8 D_us_801816E8[];
 
 // Wall particles on hit
 void func_us_801BEE00(Entity* self) {
@@ -258,11 +270,6 @@ void func_us_801BEE00(Entity* self) {
         break;
     }
 }
-
-extern s32 D_us_801816A8[][2];
-extern s16 D_us_801816D0[];
-extern s16 D_us_801816DC[];
-extern u8 D_us_801816E8[];
 
 // More particles / stones
 void func_us_801BF074(Entity* self) {
@@ -354,8 +361,6 @@ void func_us_801BF074(Entity* self) {
         break;
     }
 }
-
-extern s32 D_us_80181664;
 
 // Secret elevator inside chicken wall
 // Stand still for ~20 seconds to activate
