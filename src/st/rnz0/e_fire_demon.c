@@ -258,7 +258,7 @@ void EntityUnkId21(Entity* self) {
         prim->p1 = 0;
         FD_NEXT->unk18 = self->posX.i.hi;
         FD_NEXT->unkE = self->posY.i.hi - 8;
-        FD_NEXT->unk10 = 0x30000;
+        FD_NEXT->unk10 = FIX(3);
         FD_NEXT->unk14 = 0;
         FD_NEXT->unk1E = 0;
         FD_NEXT->unk20 = 0x20;
@@ -270,7 +270,7 @@ void EntityUnkId21(Entity* self) {
         prim->p1 = 0;
         FD_NEXT->unk18 = self->posX.i.hi;
         FD_NEXT->unkE = self->posY.i.hi - 8;
-        FD_NEXT->unk10 = 0xFFFD0000;
+        FD_NEXT->unk10 = FIX(-3);
         FD_NEXT->unk14 = 0;
         FD_NEXT->unk1E = 0;
         FD_NEXT->unk20 = 0x20;
@@ -444,7 +444,7 @@ void func_pspeu_0923E290(Primitive* prim) {
     case 1:
         prim->drawMode = DRAW_DEFAULT;
         FD_NEXT->unk10 = 0x7000 - ((Random() & 7) << 0xD);
-        FD_NEXT->unk14 = -0x40000;
+        FD_NEXT->unk14 = FIX(-4);
         FD_NEXT->unk28++;
         return;
     case 2:
