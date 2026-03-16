@@ -1,44 +1,108 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
 
+#ifdef VERSION_PSP
+extern s32 E_ID(ID_57);
+extern s32 E_ID(ID_31);
+extern s32 E_ID(ID_30);
+extern s32 E_ID(ID_2F);
+#endif
+
 void func_us_801BFA34(Entity* self) {
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitParticle);
+        self->zPriority += 8;
         self->palette = PAL_FLAG(PAL_UNK_19E);
         self->animSet = 2;
         self->animCurFrame = 9;
         self->blendMode = BLEND_TRANSP;
+        self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = 64;
         self->scaleY = 64;
-        self->rotate = -0x400;
-        self->velocityX = FIX(-5.0 / 4.0);
-        self->zPriority += 8;
-        self->drawFlags |= ENTITY_ROTATE | ENTITY_SCALEY | ENTITY_SCALEX;
+        self->rotate = ROT(-90);
+        self->velocityX = FIX(-1.25);
     } else {
         self->scaleX += 4;
         self->scaleY += 14;
-        self->poseTimer++;
         self->posX.val += self->velocityX;
 
-        if (!(self->poseTimer & 1)) {
+        self->poseTimer++;
+        if ((self->poseTimer % 2) == 0) {
             self->animCurFrame++;
         }
 
-        if (self->poseTimer >= 24) {
+        if (self->poseTimer > 23) {
             DestroyEntity(self);
         }
     }
 }
 
-extern SVEC4 D_us_80181778[];
-extern SVEC4 D_us_801817D8[];
-extern SVEC4 D_us_801818C0[];
-extern MATRIX D_us_80181920;
-extern u32 D_psp_0929A6E8;
-extern u32 D_psp_0929A6F8;
+static SVECTOR v0_0 = {-8, -8, -8};
+static SVECTOR v0_1 = {8, -8, -8};
+static SVECTOR v0_2 = {-8, 8, -8};
+static SVECTOR v0_3 = {8, 8, -8};
+static SVECTOR v0_4 = {-8, -8, 8};
+static SVECTOR v0_5 = {8, -8, 8};
+static SVECTOR v0_6 = {-8, 8, 8};
+static SVECTOR v0_7 = {8, 8, 8};
+
+static SVECTOR v1_0 = {-16, -8, -8};
+static SVECTOR v1_1 = {16, -8, -8};
+static SVECTOR v1_2 = {-16, 8, -8};
+static SVECTOR v1_3 = {16, 8, -8};
+static SVECTOR v1_4 = {-16, -8, 8};
+static SVECTOR v1_5 = {16, -8, 8};
+static SVECTOR v1_6 = {-16, 8, 8};
+static SVECTOR v1_7 = {16, 8, 8};
+
+static SVEC4 vertices0[] = {
+    {&v0_0, &v0_1, &v0_2, &v0_3}, {&v0_1, &v0_5, &v0_3, &v0_7},
+    {&v0_4, &v0_5, &v0_0, &v0_1}, {&v0_4, &v0_0, &v0_6, &v0_2},
+    {&v0_2, &v0_3, &v0_6, &v0_7}, {&v0_5, &v0_4, &v0_7, &v0_6},
+};
+
+static SVEC4 vertices1[] = {
+    {&v1_0, &v1_1, &v1_2, &v1_3}, {&v1_1, &v1_5, &v1_3, &v1_7},
+    {&v1_4, &v1_5, &v1_0, &v1_1}, {&v1_4, &v1_0, &v1_6, &v1_2},
+    {&v1_2, &v1_3, &v1_6, &v1_7}, {&v1_5, &v1_4, &v1_7, &v1_6},
+};
+
+static SVECTOR u0 = {FLT(0), FLT(0), FLT(1)};
+static SVECTOR u1 = {FLT(-1), FLT(0), FLT(0)};
+static SVECTOR u2 = {FLT(0), FLT(1), FLT(0)};
+static SVECTOR u3 = {FLT(1), FLT(0), FLT(0)};
+static SVECTOR u4 = {FLT(0), FLT(-1), FLT(0)};
+static SVECTOR u5 = {FLT(0), FLT(0), FLT(-1)};
+
+// 1.0 / sqrt(3)
+#define iSqrt3 0.5773502691896258
+
+static SVECTOR n0 = {FLT(iSqrt3), FLT(iSqrt3), FLT(iSqrt3)};
+static SVECTOR n1 = {FLT(iSqrt3), FLT(iSqrt3), FLT(-iSqrt3)};
+static SVECTOR n2 = {FLT(iSqrt3), FLT(-iSqrt3), FLT(iSqrt3)};
+static SVECTOR n3 = {FLT(iSqrt3), FLT(-iSqrt3), FLT(-iSqrt3)};
+static SVECTOR n4 = {FLT(-iSqrt3), FLT(iSqrt3), FLT(iSqrt3)};
+static SVECTOR n5 = {FLT(-iSqrt3), FLT(iSqrt3), FLT(-iSqrt3)};
+static SVECTOR n6 = {FLT(-iSqrt3), FLT(-iSqrt3), FLT(iSqrt3)};
+static SVECTOR n7 = {FLT(-iSqrt3), FLT(-iSqrt3), FLT(-iSqrt3)};
+
+static SVECTOR* unused[] = {&u0, &u1, &u2, &u3, &u4, &u5};
+
+static SVEC4 normals[] = {
+    {&n0, &n4, &n2, &n6}, {&n4, &n5, &n6, &n7}, {&n1, &n5, &n0, &n4},
+    {&n1, &n0, &n3, &n2}, {&n2, &n6, &n3, &n7}, {&n5, &n1, &n7, &n3},
+};
+
+static MATRIX colorMatrix = {{
+    {FLT(1.0 / 2), FLT(1.0 / 3), FLT(1.0 / 2)},
+    {FLT(1.0 / 2), FLT(1.0 / 3), FLT(1.0 / 2)},
+    {FLT(1.0 / 2), FLT(1.0 / 3), FLT(1.0 / 2)},
+}};
+
+STATIC_PAD_DATA(8);
 
 void func_us_801BFB40(Entity* self) {
-    long sxy2, sxy3, p;
+    long p, flag, otz;
     Collider collider;
     SVECTOR rot;
     VECTOR trans;
@@ -49,8 +113,8 @@ void func_us_801BFB40(Entity* self) {
     u8 pad2[2];
     Primitive* prim;
     Entity* tempEntity;
-    SVEC4* positions;
-    SVEC4* normals;
+    SVEC4* vertPtr;
+    SVEC4* normPtr;
     s32 primIndex;
     s16 posX, posY;
     s32 i;
@@ -88,10 +152,11 @@ void func_us_801BFB40(Entity* self) {
                 prim->drawMode = DRAW_UNK02;
                 prim = prim->next;
             }
-            return;
+            break;
         }
         DestroyEntity(self);
         return;
+
     case 1:
         switch (self->step_s) {
         case 0:
@@ -103,6 +168,7 @@ void func_us_801BFB40(Entity* self) {
                 self->velocityY = FIX(-2.25) - (Random() & 3) * FIX(0.25);
             }
             break;
+
         case 1:
             if (!self->params) {
                 self->ext.et_801BFB40.unk80.vx += 0x40;
@@ -158,12 +224,8 @@ void func_us_801BFB40(Entity* self) {
                         tempEntity =
                             AllocEntity(&g_Entities[64], &g_Entities[256]);
                         if (tempEntity != NULL) {
-#ifdef VERSION_PSP
                             CreateEntityFromEntity(
-                                D_psp_0929A6F8, self, tempEntity);
-#else
-                            CreateEntityFromEntity(E_ID_2F, self, tempEntity);
-#endif
+                                E_ID(ID_2F), self, tempEntity);
                             tempEntity->params = i;
                         }
                     }
@@ -173,13 +235,8 @@ void func_us_801BFB40(Entity* self) {
                             tempEntity =
                                 AllocEntity(&g_Entities[64], &g_Entities[256]);
                             if (tempEntity != NULL) {
-#ifdef VERSION_PSP
                                 CreateEntityFromEntity(
-                                    D_psp_0929A6E8, self, tempEntity);
-#else
-                                CreateEntityFromEntity(
-                                    E_ID_31, self, tempEntity);
-#endif
+                                    E_ID(ID_31), self, tempEntity);
                                 tempEntity->params = i + 1;
                             }
                         }
@@ -219,42 +276,50 @@ void func_us_801BFB40(Entity* self) {
         RotMatrix(&rot, &lightMatrix);
         SetBackColor(0x40, 0x40, 0x40);
         SetLightMatrix(&lightMatrix);
-        SetColorMatrix(&D_us_80181920);
+        SetColorMatrix(&colorMatrix);
         SetFarColor(0x60, 0x60, 0x60);
         SetGeomOffset(self->posX.i.hi, self->posY.i.hi);
         if (!self->params) {
-            positions = D_us_801817D8;
+            vertPtr = vertices1;
         } else {
-            positions = D_us_80181778;
+            vertPtr = vertices0;
         }
-        normals = D_us_801818C0;
+        normPtr = normals;
         prim = self->ext.et_801BFB40.unk7C;
         for (i = 0; i < 6; i++) {
             opz = RotAverageNclip4(
-                positions->v0, positions->v1, positions->v2, positions->v3,
+                vertPtr->v0, vertPtr->v1, vertPtr->v2, vertPtr->v3,
                 (long*)(&prim->x0), (long*)(&prim->x1), (long*)(&prim->x2),
-                (long*)(&prim->x3), &sxy2, &p, &sxy3);
+                (long*)(&prim->x3), &p, &otz, &flag);
             if (opz <= 0) {
                 prim->drawMode = DRAW_HIDE;
             } else {
                 prim->drawMode = DRAW_COLORS | DRAW_UNK02;
-                NormalColorCol(normals->v0, &color, (CVECTOR*)(&prim->r0));
-                NormalColorCol(normals->v1, &color, (CVECTOR*)(&prim->r1));
-                NormalColorCol(normals->v2, &color, (CVECTOR*)(&prim->r2));
-                NormalColorCol(normals->v3, &color, (CVECTOR*)(&prim->r3));
+                NormalColorCol(normPtr->v0, &color, (CVECTOR*)(&prim->r0));
+                NormalColorCol(normPtr->v1, &color, (CVECTOR*)(&prim->r1));
+                NormalColorCol(normPtr->v2, &color, (CVECTOR*)(&prim->r2));
+                NormalColorCol(normPtr->v3, &color, (CVECTOR*)(&prim->r3));
             }
-            positions++;
-            normals++;
+            vertPtr++;
+            normPtr++;
             prim = prim->next;
         }
         break;
     }
 }
 
-extern s32 D_us_80181948[][2];
-extern s16 D_us_80181968[];
-extern s16 D_us_80181970[];
-extern u8 D_us_80181978[];
+static s32 D_us_80181948[][2] = {
+    {0x00000000, 0xFFFD0000},
+    {0xFFFFE000, 0xFFFDC000},
+    {0xFFFFC000, 0xFFFC0000},
+    {0xFFFF4000, 0xFFFC8000},
+};
+
+static s16 D_us_80181968[] = {8, 12, 4, 6};
+
+static s16 D_us_80181970[] = {0x180, 0x100, 0x200, 0x1C0};
+
+static u8 D_us_80181978[] = {3, 1, 3, 2, 3, 3, 3, 4, 3, 5, 3, 6, -1, 0};
 
 void func_us_801C01F0(Entity* self) {
     Collider collider;
@@ -359,11 +424,11 @@ void func_us_801C01F0(Entity* self) {
     }
 }
 
-extern s16 D_us_80181988[];
-extern u8 D_us_80181998[];
-extern u32 D_psp_0929A6E8;
-extern u32 D_psp_0929A6F0;
-extern u32 D_psp_0929A6F8;
+static s16 D_us_80181988[] = {
+    0x528, 0x529, 0x52A, 0x52B, 0x4B2, 0x4B8, 0x4BE, 0x4D5,
+};
+
+static u8 D_us_80181998[] = {32, 92, 48, 93, 48, 94, 48, 95, 48, 96, -1, 0};
 
 void func_us_801C05DC(Entity* self) {
     Entity* tempEntity;
@@ -388,19 +453,11 @@ void func_us_801C05DC(Entity* self) {
             self->step++;
             tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
             if (tempEntity != NULL) {
-#ifdef VERSION_PSP
-                CreateEntityFromEntity(D_psp_0929A6F0, self, tempEntity);
-#else
-                CreateEntityFromEntity(E_ID_30, self, tempEntity);
-#endif
+                CreateEntityFromEntity(E_ID(ID_30), self, tempEntity);
             }
             tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
             if (tempEntity != NULL) {
-#ifdef VERSION_PSP
-                CreateEntityFromEntity(D_psp_0929A6F0, self, tempEntity);
-#else
-                CreateEntityFromEntity(E_ID_30, self, tempEntity);
-#endif
+                CreateEntityFromEntity(E_ID(ID_30), self, tempEntity);
                 tempEntity->posY.i.hi -= 0x40;
             }
         }
@@ -421,20 +478,12 @@ void func_us_801C05DC(Entity* self) {
         if (self->poseTimer == 0 && self->pose > 1) {
             tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
             if (tempEntity != NULL) {
-#ifdef VERSION_PSP
-                CreateEntityFromEntity(D_psp_0929A6F0, self, tempEntity);
-#else
-                CreateEntityFromEntity(E_ID_30, self, tempEntity);
-#endif
+                CreateEntityFromEntity(E_ID(ID_30), self, tempEntity);
                 tempEntity->posY.i.hi -= 0x30 - (max * 16);
             }
             tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
             if (tempEntity != NULL) {
-#ifdef VERSION_PSP
-                CreateEntityFromEntity(D_psp_0929A6E8, self, tempEntity);
-#else
-                CreateEntityFromEntity(E_ID_31, self, tempEntity);
-#endif
+                CreateEntityFromEntity(E_ID(ID_31), self, tempEntity);
                 tempEntity->posX.i.hi += 7;
                 tempEntity->posY.i.hi -= 0x38 - (max * 16);
             }
@@ -445,14 +494,10 @@ void func_us_801C05DC(Entity* self) {
             break;
 
         case 1:
-            if (g_Timer % 8 == 0) {
+            if ((g_Timer % 8) == 0) {
                 tempEntity = AllocEntity(&g_Entities[64], &g_Entities[256]);
                 if (tempEntity != NULL) {
-#ifdef VERSION_PSP
-                    CreateEntityFromEntity(D_psp_0929A6F8, self, tempEntity);
-#else
-                    CreateEntityFromEntity(E_ID_2F, self, tempEntity);
-#endif
+                    CreateEntityFromEntity(E_ID(ID_2F), self, tempEntity);
                     tempEntity->posY.i.hi -= 0x3D;
                     tempEntity->posX.i.hi -= (Random() & 3) * 8 - 4;
                 }
@@ -494,8 +539,16 @@ void func_us_801C05DC(Entity* self) {
     }
 }
 
-extern u16 D_us_801819A4[];
-extern u16 D_us_801819D4[];
+static u16 D_us_801819A4[] = {
+    0x02B, 0x02C, 0x023, 0x1BC, 0x001, 0x002, 0x023, 0x01C,
+    0x003, 0x004, 0x023, 0x024, 0x029, 0x02A, 0x023, 0x01C,
+    0x02B, 0x02C, 0x023, 0x024, 0x001, 0x002, 0x023, 0x0A2,
+};
+static u16 D_us_801819D4[] = {
+    0x02B, 0x02C, 0x0FA, 0x1BC, 0x1D8, 0x1D9, 0x1DA, 0x1DB,
+    0x1DC, 0x1DD, 0x1DE, 0x1DF, 0x1E7, 0x1E8, 0x1E9, 0x1EA,
+    0x1EB, 0x1EC, 0x1ED, 0x1EE, 0x001, 0x002, 0x09E, 0x0A2,
+};
 
 void func_us_801C0A40(Entity* self) {
     s32 i, j;
@@ -535,12 +588,12 @@ void func_us_801C0A40(Entity* self) {
     }
 }
 
-extern u8 D_us_80181A04[];
-extern u16 D_us_80181A0C[][2];
+static u8 D_us_80181A04[] = {1, 114, 1, 115, 1, 116, -1, 0};
 
-#ifdef VERSION_PSP
-extern s32 E_ID(ID_57);
-#endif
+static u16 D_us_80181A0C[][2] = {
+    {0x3A1, 0x3A2}, {0x3CA, 0x3BC}, {0x40E, 0x3FC}, {0x438, 0x410},
+    {0x5AE, 0x5AF}, {0x5B0, 0x5B1}, {0x5B2, 0x5B3}, {0x5B4, 0x5B5},
+};
 
 // in the doppleganger room, maybe rotating door
 void func_us_801C0B9C(Entity* self) {
@@ -636,313 +689,4 @@ void func_us_801C0B9C(Entity* self) {
         }
         break;
     }
-}
-
-// black to gray transition for "Elevator activated." text?
-s32 func_us_801C0E98(Primitive* prim) {
-    if (prim->g0 > 96) {
-        if (prim->b0 > 96) {
-            if (prim->r0 <= 96) {
-                prim->r0 += 2;
-            } else {
-                return 1;
-            }
-        } else {
-            prim->b0 += 2;
-        }
-    } else {
-        prim->g0 += 2;
-    }
-
-    if (prim->b2 > 96) {
-        if (prim->r2 > 96) {
-            if (prim->g2 <= 96) {
-                prim->g2 += 2;
-            }
-        } else {
-            prim->r2 += 2;
-        }
-    } else {
-        prim->b2 += 2;
-    }
-
-    if (prim->g1 > 32) {
-        if (prim->r1 > 32) {
-            if (prim->b1 <= 32) {
-                prim->b1 += 2;
-            }
-        } else {
-            prim->r1 += 2;
-        }
-    } else {
-        prim->g1 += 2;
-    }
-    if (prim->r3 > 32) {
-        if (prim->g3 > 32) {
-            if (prim->b3 > 32) {
-                prim->b3 += 8;
-            } else {
-                prim->b3 += 4;
-            }
-            prim->g3 += 2;
-        } else {
-            prim->g3 += 4;
-        }
-        prim->r3 += 2;
-    } else {
-        prim->r3 += 4;
-    }
-
-    return 0;
-}
-
-// support function for `func_us_801C10F4`
-void func_us_801C1090(s32* value, s32 target, s32 step) {
-    if (*value < target) {
-        *value += step;
-    }
-    if (*value > target) {
-        *value -= step;
-    }
-
-    if (*value < 0) {
-        *value = 0;
-    }
-
-    if (*value > 0x80) {
-        *value = 0x80;
-    }
-}
-
-// "Elevator activated." text
-static Primitive* D_us_801D6380;
-extern s32 D_us_801D6FFC;
-extern s32 D_us_801D7000;
-extern s32 D_us_801D7004;
-extern s32 D_us_801D7008;
-extern s32 D_us_801D700C;
-extern s32 D_us_801D7010;
-extern s32 D_us_801D7014;
-extern s32 D_us_801D7018;
-extern s32 D_us_801D701C;
-extern s32 D_us_801D7020;
-
-void func_us_801C10F4(Entity* self) {
-    DRAWENV drawEnv;
-    RECT clipRect;
-    Primitive* prim;
-    s32 hasXOffset;
-    s32 primIndex;
-
-    FntPrint("elemess_step%x\n", self->step);
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitInteractable);
-        self->ext.et_801C10F4.unk80 = 0;
-        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x20);
-        if (primIndex == -1) {
-            DestroyEntity(self);
-            return;
-        }
-        self->flags |= FLAG_HAS_PRIMS;
-        self->primIndex = primIndex;
-        prim = &g_PrimBuf[primIndex];
-        D_us_801D6380 = prim;
-        if (g_api.func_800EDB08((POLY_GT4*)prim) == NULL) {
-            DestroyEntity(self);
-            return;
-        }
-        prim->type = PRIM_ENV;
-        prim->priority = 0xC5;
-        prim->drawMode = DRAW_HIDE;
-
-        prim = prim->next;
-        if (g_api.func_800EDB08((POLY_GT4*)prim) == NULL) {
-            DestroyEntity(self);
-            return;
-        }
-        prim->type = PRIM_ENV;
-        prim->priority = 0xC7;
-        prim->drawMode = DRAW_UNK_800;
-
-        prim = prim->next;
-        self->ext.et_801C10F4.unk7C = prim;
-        while (prim != NULL) {
-            prim->drawMode = DRAW_HIDE;
-            prim = prim->next;
-        }
-    case 1:
-        D_us_801D7018 = 0;
-        D_us_801D7014 = 0;
-        D_us_801D7020 = 0;
-        D_us_801D701C = 0;
-        D_us_801D7004 = 0;
-        D_us_801D7008 = 0;
-        D_us_801D6FFC = 0;
-        D_us_801D7000 = 0;
-        D_us_801D700C = 0;
-        D_us_801D7010 = 0;
-        self->step++;
-    case 2:
-        func_us_801C1090(&D_us_801D7018, 0x80, 1);
-        func_us_801C1090(&D_us_801D7014, 0x40, 1);
-        func_us_801C1090(&D_us_801D7020, 0x80, 1);
-        func_us_801C1090(&D_us_801D701C, 0x80, 1);
-        func_us_801C1090(&D_us_801D7000, 0x80, 2);
-        func_us_801C1090(&D_us_801D6FFC, 0, 1);
-        func_us_801C1090(&D_us_801D7010, D_us_801D700C + 0x10, 2);
-        func_us_801C1090(&D_us_801D700C, D_us_801D7000, 1);
-        func_us_801C1090(&D_us_801D7008, D_us_801D700C, 1);
-        func_us_801C1090(&D_us_801D7004, 0, 1);
-        self->ext.et_801C10F4.unk80++;
-        FntPrint("timer %x\n", self->ext.et_801C10F4.unk80);
-        if (self->ext.et_801C10F4.unk80 > 0xE0) {
-            self->ext.et_801C10F4.unk80 = 0;
-            self->step++;
-        }
-        break;
-    case 3:
-        func_us_801C1090(&D_us_801D7018, 0, 1);
-        func_us_801C1090(&D_us_801D7014, 0, 1);
-        func_us_801C1090(&D_us_801D7020, 0, 1);
-        func_us_801C1090(&D_us_801D701C, 0, 1);
-        if (self->ext.et_801C10F4.unk80++ > 0x100) {
-            DestroyEntity(self);
-            return;
-        }
-    }
-
-    prim = D_us_801D6380;
-    drawEnv = g_CurrentBuffer->draw;
-    drawEnv.isbg = 0;
-    drawEnv.dtd = 1;
-    drawEnv.r0 = 0;
-    drawEnv.g0 = 0;
-    drawEnv.b0 = 0;
-    hasXOffset = drawEnv.ofs[0] != 0;
-    clipRect.x = 0x180;
-    clipRect.y = 0x100;
-    clipRect.w = 0x80;
-    clipRect.h = 0x18;
-    drawEnv.clip = clipRect;
-    drawEnv.ofs[0] = 0x180;
-    drawEnv.ofs[1] = 0x100;
-    SetDrawEnv(LOW(prim->r1), &drawEnv);
-    prim->drawMode = DRAW_DEFAULT;
-    prim->priority = 0xC5;
-
-    prim = self->ext.et_801C10F4.unk7C;
-    prim->tpage = 0x11;
-    prim->type = PRIM_GT4;
-    prim->clut = PAL_UNK_19F;
-    prim->u0 = prim->u2 = D_us_801D7004;
-    prim->u1 = prim->u3 = D_us_801D7004 + (D_us_801D7008 - D_us_801D7004) / 2;
-    prim->v0 = prim->v1 = 0;
-    prim->v2 = prim->v3 = 0x18;
-    prim->x0 = prim->x2 = D_us_801D7004 + 0x40;
-    prim->x1 = prim->x3 =
-        D_us_801D7004 + 0x40 + (D_us_801D7008 - D_us_801D7004) / 2;
-    prim->y0 = prim->y1 = 0xA0;
-    prim->y2 = prim->y3 = 0xB8;
-    PGREY(prim, 0) = PGREY(prim, 2) = D_us_801D701C;
-    PGREY(prim, 1) = PGREY(prim, 3) = D_us_801D701C;
-    prim->priority = 0xC8;
-    prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-
-    prim = prim->next;
-    prim->type = PRIM_GT4;
-    prim->tpage = 0x11;
-    prim->clut = PAL_UNK_19F;
-    prim->u0 = prim->u2 = D_us_801D7004 + (D_us_801D7008 - D_us_801D7004) / 2;
-    prim->u1 = prim->u3 = D_us_801D7008;
-    prim->v0 = prim->v1 = 0;
-    prim->v2 = prim->v3 = 0x18;
-    prim->x0 = prim->x2 =
-        D_us_801D7004 + 0x40 + (D_us_801D7008 - D_us_801D7004) / 2;
-    prim->x1 = prim->x3 = D_us_801D7008 + 0x40;
-    prim->y0 = prim->y1 = 0xA0;
-    prim->y2 = prim->y3 = 0xB8;
-    PGREY(prim, 0) = PGREY(prim, 2) = D_us_801D701C;
-    PGREY(prim, 1) = PGREY(prim, 3) = D_us_801D7020;
-    prim->priority = 0xC8;
-    prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-
-    prim = prim->next;
-    prim->tpage = 0x116;
-    prim->u1 = prim->u3 = 0x80;
-    prim->type = PRIM_GT4;
-    prim->u0 = prim->u2 = 0;
-    prim->v0 = prim->v1 = 0;
-    prim->v2 = prim->v3 = 0x18;
-    prim->x0 = prim->x2 = 0x40;
-    prim->x1 = prim->x3 = 0xC0;
-    prim->y0 = prim->y1 = 0xA0;
-    prim->y2 = prim->y3 = 0xB8;
-    prim->priority = 0xC8;
-    prim->drawMode = DRAW_DEFAULT;
-
-    prim = prim->next;
-    prim->type = PRIM_GT4;
-    if (hasXOffset != 0) {
-        prim->tpage = 0x104;
-    } else {
-        prim->tpage = 0x100;
-    }
-    prim->u0 = prim->u2 = 0x40;
-    prim->u1 = prim->u3 = 0xC0;
-    prim->v0 = prim->v1 = 0xA0;
-    prim->v2 = prim->v3 = 0xB8;
-    prim->x0 = prim->x2 = 0;
-    prim->x1 = prim->x3 = 0x80;
-    prim->y0 = prim->y1 = 0;
-    prim->y2 = prim->y3 = 0x18;
-    prim->priority = 0xC6;
-    prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
-
-    prim = prim->next;
-    prim->type = PRIM_G4;
-    func_us_801C0E98(prim);
-    prim->y0 = prim->y1 = 0;
-    prim->y2 = prim->y3 = 0x18;
-    prim->x0 = prim->x2 = D_us_801D700C;
-    prim->x1 = prim->x3 = D_us_801D7010;
-    prim->priority = 0xC6;
-    prim->drawMode = DRAW_DEFAULT;
-
-    prim = prim->next;
-    prim->type = PRIM_TILE;
-    prim->u0 = 0x80;
-    prim->v0 = 0x18;
-    prim->x0 = 0;
-    prim->y0 = 0;
-    PGREY(prim, 0) = 0;
-    prim->priority = 0xC6;
-    prim->drawMode = DRAW_DEFAULT;
-
-    prim = prim->next;
-    prim->type = PRIM_GT4;
-    prim->tpage = 0x11;
-    prim->clut = PAL_UNK_19C;
-    prim->u0 = prim->u2 = D_us_801D6FFC;
-    prim->u1 = prim->u3 = D_us_801D7000;
-    prim->v0 = prim->v1 = 0;
-    prim->v2 = prim->v3 = 0x18;
-    prim->x0 = prim->x2 = D_us_801D6FFC + 0x40;
-    prim->x1 = prim->x3 = D_us_801D7000 + 0x40;
-    prim->y0 = prim->y1 = 0xA0;
-    prim->y2 = prim->y3 = 0xB8;
-    PGREY(prim, 0) = PGREY(prim, 2) = D_us_801D7014;
-    PGREY(prim, 1) = PGREY(prim, 3) = D_us_801D7018;
-    prim->priority = 0xC4;
-    prim->drawMode = DRAW_UNK_40 | DRAW_TPAGE | DRAW_COLORS | DRAW_TRANSP;
-
-    prim = prim->next;
-    prim->type = PRIM_TILE;
-    prim->u0 = 0x80;
-    prim->v0 = 0x18;
-    prim->x0 = 0x40;
-    prim->y0 = 0xA0;
-    PGREY(prim, 0) = 0;
-    prim->priority = 0xC4;
-    prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
 }

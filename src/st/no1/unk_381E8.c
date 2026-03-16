@@ -4,6 +4,7 @@
 // Likely copied out of DRA. This code
 // appears to go unused.
 static s32 g_DebugWaitInfoTimer;
+
 static void DebugShowWaitInfo(const char* msg) {
     g_CurrentBuffer = g_CurrentBuffer->next;
     FntPrint(msg);
@@ -28,8 +29,9 @@ static void DebugInputWait(const char* msg) {
 extern AnimationFrame* D_us_80181000[];
 
 void func_us_801B8430(Entity* self) {
-    s8 index;
-    if (self->step == 0) {
+
+    switch (self->step) {
+    case 0:
         InitializeEntity(g_EInitCommon);
         self->flags &= ~(FLAG_DESTROY_IF_OUT_OF_CAMERA |
                          FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA);
@@ -37,6 +39,10 @@ void func_us_801B8430(Entity* self) {
         self->zPriority = PLAYER.zPriority + 4;
         self->poseTimer = self->pose = 0;
         self->anim = D_us_80181000[g_CastleFlags[NO1_BIRD_CYCLE]];
+        break;
+
+    case 1:
+        break;
     }
     g_api.UpdateAnim(NULL, NULL);
 }
@@ -56,6 +62,7 @@ void func_us_801B84E4(Entity* self) {
 
     FntPrint("tori_w:%02x\n", g_CastleFlags[NO1_BIRD_CYCLE]);
     FntPrint("obj_step:%02x\n", self->step);
+
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitCommon);
@@ -298,6 +305,7 @@ extern SVECTOR D_us_8018138C;
 extern SVECTOR D_us_80181394;
 extern SVECTOR D_us_8018139C;
 extern SVECTOR D_us_801813A4;
+
 void func_us_801B8D30(Entity* self) {
     s32 primIndex;
     Primitive* prim;
@@ -418,6 +426,7 @@ void func_us_801B9028(Entity* self) {
 
 extern s16 D_us_80181454[];
 extern s16 D_us_80181464[];
+
 u8 func_us_801B9184(Primitive* prim) {
     UnkPrimHelper(prim);
 
@@ -453,6 +462,7 @@ u8 func_us_801B9184(Primitive* prim) {
 }
 
 extern s32 D_psp_091CE570;
+
 void func_us_801B9304(Entity* self) {
     Primitive* prim;
     s32 primIndex;

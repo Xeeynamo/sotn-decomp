@@ -57,7 +57,7 @@ static u16 castleDoorTilesShut[] = {
 // main door to the castle that closes during intro
 void EntityCastleDoor(Entity* self) {
     s32 selfX, selfY;
-    long sxy2, p, sxy3;
+    long p, flag, otz;
     SVECTOR sVec1;
     VECTOR vec1;
     MATRIX mtx1, mtx2;
@@ -196,8 +196,8 @@ void EntityCastleDoor(Entity* self) {
     for (i = 0; i < 3; var_s6++, var_s5++, i++) {
         temp_s3 = RotAverageNclip4(
             var_s6->v0, var_s6->v1, var_s6->v2, var_s6->v3, (long*)&prim->x0,
-            (long*)&prim->x1, (long*)&prim->x2, (long*)&prim->x3, &sxy2, &sxy3,
-            &p);
+            (long*)&prim->x1, (long*)&prim->x2, (long*)&prim->x3, &p, &otz,
+            &flag);
         NormalColorCol(*var_s5, &cVec1, (CVECTOR*)&prim->r0);
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
