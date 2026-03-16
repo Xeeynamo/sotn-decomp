@@ -2,7 +2,6 @@ g_EInitInteractable = 0x801809B4;
 g_EInitCommon = 0x801809D8;
 RNZ0_RedDoorTiles = 0x80180B48;
 RNZ0_PrizeDrops = 0x80180CC8;
-sprites_rnz0_13 = 0x801AA72C;
 sprites_rnz0_14 = 0x801AA8E4;
 Random = 0x801ACC04; // source=match
 CreateEntityFromCurrentEntity = 0x801AF27C; // source=match
