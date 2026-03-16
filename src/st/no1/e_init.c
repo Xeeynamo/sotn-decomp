@@ -22,10 +22,10 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void NO1Unused_801B7D24(Entity* self);
+void func_us_801B7D24(Entity* self);
 void func_us_801B6490(Entity* self);
 void func_us_801B7188(Entity* self);
-void NO1Unused_801B7D2C(Entity* self);
+void func_us_801B7D2C(Entity* self);
 void EntityMouse(Entity* self);
 void EntityChair(Entity* self);
 void func_us_801B81E8(Entity* self);
@@ -120,10 +120,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x12 */ EntityUnkId13,
     /* 0x13 */ EntityExplosionVariants,
     /* 0x14 */ EntityGreyPuff,
-    /* 0x15 */ NO1Unused_801B7D24,
+    /* 0x15 */ func_us_801B7D24,
     /* 0x16 */ func_us_801B6490,
     /* 0x17 */ func_us_801B7188,
-    /* 0x18 */ NO1Unused_801B7D2C,
+    /* 0x18 */ func_us_801B7D2C,
     /* 0x19 */ EntityMouse,
     /* 0x1A */ EntityChair,
     /* 0x1B */ func_us_801B81E8,

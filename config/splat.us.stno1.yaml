@@ -113,7 +113,6 @@ segments:
       - [0x35C64, c, e_lock_camera]
       - [0x35E20, c, e_breakable]
       - [0x36490, c, unk_36490]
-      - [0x37D24, c, unused]
       - [0x37D34, c, e_mouse]
       - [0x38008, c, e_chair]
       - [0x3832C, c, unk_381E8]
