@@ -527,6 +527,20 @@ files:
           - [0x3F608, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no0.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no1.bin
+    asset_path: assets/st/no1
+    src_path: src/st/no1
+    splat_config_path: config/splat.pspeu.stno1.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x607C8, cmpgfx, D_pspeu_09297E48, 128, 128, 4]
+          - [0x60DC8, cmpgfx, D_pspeu_09298448, 128, 128, 4]
+          - [0x613B8, cmpgfx, D_pspeu_09298A38, 128, 128, 4]
+          - [0x61998, cmpgfx, D_pspeu_09299018, 128, 128, 4]
+          - [0x61F88, cmpgfx, D_pspeu_09299608, 128, 128, 4]
+          - [0x62530, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no2.bin
     asset_path: assets/st/no2
     src_path: src/st/no2

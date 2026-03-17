@@ -39,7 +39,8 @@ segments:
     align: 4
     subalign: 4
     subsegments:
-      - [0x0, data]
+      - [0x0, .data, header]
+      - [0x864, .data, gen/e_laydef]
       - [0xA0C, .data, e_init]
       - [0xCF4, .data, background_block_init]
       - [0xD2C, .data, e_red_door_tiles]
@@ -70,9 +71,11 @@ segments:
       - [0x2B10, .data, e_spear_guard]
       - [0x2DE0, .data, e_bone_archer]
       - [0x2F54, .data, e_skeleton_ape]
-      - [0x30F0, data]
+      - [0x30F0, .data, gen/rooms]
+      - [0x3244, .data, gen/e_layout]
       - [0x5354, .data, cutscene_data]
-      - [0x5400, data]
+      - [0x5400, .data, stage_data]
+      - [0x39A84, .data, gen/sprites]
       - [0x40980, .rodata, e_breakable]
       - [0x409A0, .rodata, first_c_file]
       - [0x409B8, .rodata, e_ferryman]
