@@ -724,10 +724,24 @@ files:
         vram: 0x80180000
         assets:
           - [0x2C, sprite_banks, sprite_banks]
-          - [0x8C, skip]
+          - [0x8C, paldef, palette_def]
+          - [0x128, skip]
           - [0x5354, cutscene, cutscene_data_ferryman_left_psx]
           - [0x53B7, cutscene, cutscene_data_ferryman_right_psx]
           - [0x5400, skip]
+          - [0xDA34, palette, D_8018DA34, 16]
+          - [0xDA54, palette, D_8018DA54, 16]
+          - [0xDAB4, palette, D_8018DAB4, 16]
+          - [0xDAF4, palette, D_8018DAF4, 16]
+          - [0xDCF4, palette, D_8018DCF4, 16]
+          - [0xDFB4, palette, D_8018DFB4, 16]
+          - [0xE014, palette, D_8018E014, 16]
+          - [0xE094, palette, D_8018E094, 16]
+          - [0xE0B4, palette, D_8018E0B4, 16]
+          - [0xE0F4, palette, D_8018E0F4, 16]
+          - [0xE154, palette, D_8018E154, 16]
+          - [0xE354, palette, D_8018E354, 16]
+          - [0xE454, skip]
   - target: disks/us/ST/NP3/NP3.BIN
     asset_path: assets/st/np3
     src_path: src/st/np3

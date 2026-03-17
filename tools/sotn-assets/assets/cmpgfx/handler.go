@@ -21,7 +21,6 @@ var Handler = &handler{}
 func (h *handler) Name() string { return "cmpgfx" }
 
 func (h *handler) Extract(e assets.ExtractArgs) error {
-	fmt.Print("Extracting?")
 	if e.Start == e.End {
 		return fmt.Errorf("a compressed image cannot be 0 bytes long")
 	}
@@ -67,9 +66,6 @@ func (h *handler) Extract(e assets.ExtractArgs) error {
 		return fmt.Errorf("error creating file: %v", err)
 	}
 	defer fout.Close()
-	if strings.Contains(e.AssetDir, "no4"){
-		fmt.Print(e.AssetDir, e.Name, width, height, "\n")
-	}
 	if err := png.Encode(fout, sotn.Inflate(cmp), width, height, palette); err != nil {
 		return fmt.Errorf("png encode: %w", err)
 	}
