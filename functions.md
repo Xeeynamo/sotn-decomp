@@ -1671,7 +1671,7 @@
 | cat    | e_slime.rodata                       |       40 |          0 | Yes    |       |     |
 | lib    | e_spellbook_magic_tome.rodata        |       40 |          0 | Yes    |       |     |
 | np3    | gurkha.rodata                        |       40 |          0 | Yes    |       |     |
-| rnz0   | e_unk1F-23.rodata                    |       40 |          0 | Yes    |       |     |
+| rnz0   | e_fire_demon.rodata                  |       40 |          0 | Yes    |       |     |
 | st0    | 2DAC8.rodata                         |       40 |          0 | Yes    |       |     |
 | main   | func_psp_08910810                    |       40 |          1 |        |       |     |
 | dra    | func_psp_0911EA78                    |       40 |          2 |        |       |     |
@@ -3786,7 +3786,7 @@
 | dai    | func_pspeu_0923CEA0                  |      147 |         18 |        |       |     |
 | no3    | func_pspeu_0923B650                  |      147 |         19 |        |       |     |
 | np3    | EntityFallingRock                    |      147 |         19 |        |       |     |
-| rnz0   | func_us_801B9E64                     |      148 |         12 |        |       |     |
+| rnz0   | EntityUnkId22                        |      148 |         12 |        |       |     |
 | rnz0   | func_pspeu_0924DBD0                  |      148 |         17 |        |       |     |
 | ric    | func_pspeu_092AE150                  |      148 |         25 |        |       |     |
 | sel    | func_psp_09242920                    |      149 |         10 |        |       |     |
@@ -3936,7 +3936,7 @@
 | no2    | func_pspeu_0924E4A8                  |      169 |          7 |        |       |     |
 | np3    | func_pspeu_09262108                  |      169 |          7 |        |       |     |
 | nz0    | func_pspeu_09256AF8                  |      169 |          7 |        |       |     |
-| rnz0   | UpdateAnimation                      |      169 |          7 |        |       |     |
+| rnz0   | func_pspeu_09254480                  |      169 |          7 |        |       |     |
 | main   | quorem                               |      169 |         10 |        |       |     |
 | are    | func_pspeu_09238820                  |      169 |         11 |        |       |     |
 | dra    | func_psp_090F2B20                    |      169 |         15 |        |       |     |
@@ -4112,7 +4112,7 @@
 | nz1    | func_pspeu_0924FC58                  |      200 |         20 |        |       |     |
 | rare   | func_pspeu_0924A3C0                  |      200 |         20 |        |       |     |
 | rcat   | func_pspeu_092494D0                  |      200 |         20 |        |       |     |
-| rnz0   | UnkCollisionFunc2                    |      200 |         20 |        |       |     |
+| rnz0   | func_pspeu_09253040                  |      200 |         20 |        |       |     |
 | dra    | func_psp_090E7150                    |      200 |         22 | Yes    |       |     |
 | dre    | func_pspeu_0924B520                  |      200 |         22 |        |       |     |
 | rnz0   | func_pspeu_0923D100                  |      201 |         15 |        |       |     |
@@ -4936,7 +4936,7 @@
 | dra    | func_psp_0911C2F8                    |      519 |         37 |        |       |     |
 | lib    | func_psp_0924E150                    |      519 |         82 |        |       |     |
 |        | func_092EDEA0                        |      520 |         35 |        |       |     |
-| rnz0   | func_us_801BB000                     |      520 |         51 |        |       |     |
+| rnz0   | EntityUnkId20                        |      520 |         51 |        |       |     |
 | cat    | func_pspeu_092543D0                  |      521 |         71 |        |       |     |
 | chi    | func_psp_09248BD0                    |      521 |         71 |        |       |     |
 | cat    | func_pspeu_09250C88                  |      523 |         54 | Yes    |       |     |
@@ -5221,7 +5221,7 @@
 | rnz0   | EntityStageNamePopup                 |      989 |         83 |        |       |     |
 | wrp    | func_psp_092386A8                    |      989 |         83 |        |       |     |
 | no3    | func_pspeu_092412B8                  |      990 |        134 | Yes    |       |     |
-| rnz0   | func_us_801BA21C                     |      993 |         81 | Yes    |       |     |
+| rnz0   | EntityUnkId21                        |      993 |         81 | Yes    |       |     |
 | cat    | func_pspeu_09243078                  |      997 |        101 |        |       |     |
 | chi    | func_psp_0924C620                    |     1000 |         92 | Yes    |       |     |
 | nz0    | func_pspeu_0923CE60                  |     1000 |         92 | Yes    |       |     |
@@ -5355,7 +5355,7 @@
 | np3    | EntityBlade                          |     1457 |        237 | Yes    |       |     |
 | dra    | func_psp_09114A38                    |     1516 |        244 |        |       |     |
 | dra    | func_psp_090FD268                    |     1538 |        105 |        |       |     |
-| rnz0   | func_us_801BB5D8                     |     1545 |        178 | Yes    |       |     |
+| rnz0   | EntityFireDemon                      |     1545 |        178 | Yes    |       |     |
 | dra    | func_psp_090E0FF8                    |     1552 |         69 |        |       |     |
 | ric    | func_pspeu_092B8978                  |     1568 |         75 |        |       |     |
 | np3    | EntityOwl                            |     1582 |        218 | Yes    |       |     |
@@ -5392,7 +5392,7 @@
 | dra    | func_psp_091224B0                    |     1738 |        127 | Yes    |       |     |
 | ric    | func_pspeu_092CAD68                  |     1741 |        169 |        |       |     |
 | dra    | func_psp_090FAB30                    |     1745 |        198 |        |       |     |
-| rnz0   | func_us_801BE600                     |     1771 |        306 |        |       |     |
+| rnz0   | EntityLesserDemon                    |     1771 |        306 |        |       |     |
 | nz0    | func_pspeu_09256FF8                  |     1859 |        266 |        |       |     |
 | lib    | func_psp_09261718                    |     1891 |        203 | Yes    |       |     |
 | sel    | func_psp_09245A10                    |     1895 |        161 | Yes    |       |     |
