@@ -22,10 +22,10 @@ void OVL_EXPORT(EntityLockCamera)(Entity* self);
 void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
-void NO1Unused_801B7D24(Entity* self);
+void func_us_801B7D24(Entity* self);
 void func_us_801B6490(Entity* self);
 void func_us_801B7188(Entity* self);
-void NO1Unused_801B7D2C(Entity* self);
+void func_us_801B7D2C(Entity* self);
 void EntityMouse(Entity* self);
 void EntityChair(Entity* self);
 void func_us_801B81E8(Entity* self);
@@ -120,10 +120,10 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x12 */ EntityUnkId13,
     /* 0x13 */ EntityExplosionVariants,
     /* 0x14 */ EntityGreyPuff,
-    /* 0x15 */ NO1Unused_801B7D24,
+    /* 0x15 */ func_us_801B7D24,
     /* 0x16 */ func_us_801B6490,
     /* 0x17 */ func_us_801B7188,
-    /* 0x18 */ NO1Unused_801B7D2C,
+    /* 0x18 */ func_us_801B7D2C,
     /* 0x19 */ EntityMouse,
     /* 0x1A */ EntityChair,
     /* 0x1B */ func_us_801B81E8,
@@ -211,7 +211,7 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit D_us_801809C8 = {ANIMSET_OVL(0x01), 0x4B, 0x00, 0x000, 0x005};
-EInit D_us_801809D4 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x000}; // unused
+EInit D_us_801809D4 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x000};
 EInit g_EInitAxeKnight = {ANIMSET_OVL(0x03), 0x01, 0x48, 0x200, 0x006};
 EInit g_EInitAxeKnightAxe = {ANIMSET_OVL(0x03), 0x2F, 0x48, 0x200, 0x007};
 EInit D_us_801809F8 = {ANIMSET_OVL(0x01), 0x40, 0x00, 0x000, 0x005};

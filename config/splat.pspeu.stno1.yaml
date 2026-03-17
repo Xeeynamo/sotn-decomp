@@ -49,7 +49,7 @@ segments:
       - [0x33D8, c, no1/e_bone_archer]
       - [0x4590, c, no1_psp/e_stage_name]
       - [0x5490, c, no1/st_update]
-      - [0x59C8, c, no1_psp/59C8]
+      - [0x59C8, c, no1/unk_54400]
       - [0x6068, c, no1/e_armor_lord]
       - [0x9300, c, no1/e_particles]
       - [0xA890, c, no1/e_collect]
@@ -67,7 +67,7 @@ segments:
       - [0x18CF0, c, no1/e_wereskeleton]
       - [0x1A048, c, no1/e_spear_guard]
       - [0x1B410, c, no1/unk_3D8AC]
-      - [0x1CB18, c, no1_psp/e_secrets]
+      - [0x1CB18, c, no1/e_secrets]
       - [0x1E210, c, no1_psp/st_init_psp]
       - [0x1E630, c, no1_psp/1E630]
       - [0x1FF98, c, no1/e_breakable]
@@ -80,17 +80,16 @@ segments:
       - [0x25768, c, no1/e_mouse]
       - [0x25BC0, c, no1/e_room_bg]
       - [0x25DD0, c, no1/e_lock_camera]
-      - [0x26030, c, no1_psp/26030]
+      - [0x26030, c, no1/unk_3FA34]
       - [0x27B60, c, no1_psp/27B60]
-      - [0x292B0, c, no1_psp/292B0]
-      - [0x2B548, c, no1/unused]
+      - [0x292B0, c, no1/unk_36490]
       - [0x2B568, c, no1_psp/2B568]
       - [0x2C580, c, no1/e_medusa_head]
       - [0x2CA80, .data, no1/e_blue_axe_knight]
       - [0x2CC60, .data, no1/e_bone_archer]
       - [0x2CDF8, data, no1_psp/e_stage_name]
       - [0x2D7B0, .data, no1/st_update]
-      - [0x2D7E0, data, no1_psp/59C8]
+      - [0x2D7E0, .data, no1/unk_54400]
       - [0x2D838, .data, no1/e_armor_lord]
       - [0x2D9F8, .data, no1/e_particles]
       - [0x2DA78, .data, no1/e_collect]
@@ -106,7 +105,7 @@ segments:
       - [0x2ED60, .data, no1/e_wereskeleton]
       - [0x2EEC0, .data, no1/e_spear_guard]
       - [0x2F1A0, .data, no1/unk_3D8AC]
-      - [0x2F238, data, no1_psp/e_secrets]
+      - [0x2F238, .data, no1/e_secrets]
       - [0x2F370, data]
       - [0x3DBA0, .data, no1/e_init]
       - [0x3DFA8, data]
@@ -124,9 +123,9 @@ segments:
       - [0x602A8, .data, no1/e_mouse]
       - [0x602F0, .data, no1/e_room_bg]
       - [0x60448, .data, no1/e_lock_camera]
-      - [0x604C0, data, no1_psp/26030]
+      - [0x604C0, .data, no1/unk_3FA34]
       - [0x607A8, data, no1_psp/27B60]
-      - [0x62550, data, no1_psp/292B0]
+      - [0x62550, .data, no1/unk_36490]
       - [0x62608, data, no1_psp/2B568]
       - [0x62A50, .data, no1/e_medusa_head]
       - [0x62B00, .rodata, no1/e_blue_axe_knight]
@@ -137,11 +136,11 @@ segments:
       - [0x62C20, .rodata, no1/e_skeleton]
       - [0x62C40, .rodata, no1/e_spear_guard]
       - [0x62C78, .rodata, no1/unk_3D8AC]
-      - [0x62CA8, .rodata, no1_psp/e_secrets]
+      - [0x62CA8, .rodata, no1/e_secrets]
       - [0x62CC8, .rodata, no1_psp/1E630]
       - [0x62CE8, .rodata, no1_psp/e_red_door]
       - [0x62D00, .rodata, no1_psp/23408]
-      - [0x62D20, .rodata, no1_psp/26030]
+      - [0x62D20, .rodata, no1/unk_3FA34]
       - [0x62D40, .rodata, no1_psp/27B60]
       - [0x62D60, .rodata, no1_psp/2B568]
       - {start: 0x62E00, type: .bss, vram: 0x0929A480, name: no1/create_entity}
@@ -150,8 +149,11 @@ segments:
       - {start: 0x62E00, type: .bss, vram: 0x0929A4F0, name: no1/e_collect}
       - {start: 0x62E00, type: .bss, vram: 0x0929A510, name: no1/e_mist_door}
       - {start: 0x62E00, type: .bss, vram: 0x0929A528, name: no1/unk_3D8AC}
-      - {start: 0x62E00, type: bss, vram: 0x0929A530, name: no1_psp/e_secrets}
+      - {start: 0x62E00, type: .bss, vram: 0x0929A530, name: no1/e_secrets}
       - {start: 0x62E00, type: bss, vram: 0x0929A538, name: bss0}
+      - {start: 0x62E00, type: .bss, vram: 0x0929A578, name: no1/e_init}
+      - {start: 0x62E00, type: bss, vram: 0x0929A588, name: bss1}
       - {start: 0x62E00, type: .bss, vram: 0x0929A7F8, name: no1/e_lock_camera}
-      - {start: 0x62E00, type: bss, vram: 0x0929A800, name: bss1}
+      - {start: 0x62E00, type: .bss, vram: 0x0929A800, name: no1/unk_36490}
+      - {start: 0x62E00, type: bss, vram: 0x0929A868, name: bss2}
   - [0x63200]
