@@ -2612,25 +2612,6 @@ typedef struct {
 } ET_801BA290;
 
 typedef struct {
-    /* 0x7C */ struct Primitive* unk7C;
-    /* 0x80 */ s16 : 16;
-    /* 0x82 */ s16 : 16;
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 unk85;
-    /* 0x86 */ u8 unk86;
-    /* 0x87 */ u8 unk87;
-    /* 0x88 */ s16 unk88;
-    /* 0x8A */ s16 : 16;
-    /* 0x8C */ s16 unk8C;
-    /* 0x8E */ s16 : 16;
-    /* 0x90 */ struct Primitive* unk90;
-    /* 0x94 */ u8 unk94;
-    /* 0x95 */ u8 : 8;
-    /* 0x96 */ u8 : 8;
-    /* 0x97 */ u8 : 8;
-} ET_801BCB34;
-
-typedef struct {
     /* 0x7C */ u8 unk7C;
     /* 0x7D */ u8 unk7D;
     /* 0x7E */ u8 unk7E;
@@ -2685,14 +2666,13 @@ typedef struct {
     /* 0x80 */ s32 : 32;
     /* 0x84 */ u8 unk84;
     /* 0x85 */ u8 unk85;
-    /* 0x86 */ u8 : 8;
+    /* 0x86 */ u8 unk86;
     /* 0x87 */ u8 unk87;
     /* 0x88 */ s16 unk88;
     /* 0x8A */ s16 : 16;
     /* 0x8C */ s16 unk8C;
     /* 0x8E */ s16 : 16;
-    /* 0x90 */ s16 : 16;
-    /* 0x92 */ s16 : 16;
+    /* 0x90 */ struct Primitive* unk90;
     /* 0x94 */ u8 unk94;
     /* 0x95 */ u8 unk95;
 } ET_801BBD90;
@@ -4174,7 +4154,6 @@ typedef union { // offset=0x7C
     ET_801CE2E0 et_801CE2E0;
     ET_ArmorLord armorLord;
     ET_801BA290 et_801BA290;
-    ET_801BCB34 et_801BCB34;
     ET_Wereskeleton wereskeleton;
     ET_SwordLord swordLord;
     ET_801CEB28 et_801CEB28;

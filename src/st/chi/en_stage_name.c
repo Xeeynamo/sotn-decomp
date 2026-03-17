@@ -15,7 +15,7 @@
 #define STAGE_NAME_BOX_LEFT_X 8
 #define STAGE_NAME_BOX_RIGHT_X 0xF8
 
-extern u32 D_91CE570; // Defined in global address space
+extern s32 D_psp_091CE570; // Defined in global address space
 
 enum StageNameSteps {
     STAGE_NAME_INIT = 0,
@@ -87,7 +87,7 @@ void EntityStageNamePopup(Entity* self) {
     s32 primIndex;
     s16* rotSlicePtr;
 
-    if (D_91CE570) {
+    if (D_psp_091CE570) {
         LoadStageNameGraphics();
     }
 
