@@ -2,4 +2,5 @@ g_WaterSounds = 0x80180EE4;
 g_WaterXTbl = 0x80180EE8;
 NO4_PrizeDrops = 0x80181928;
 cutscene_data_ferryman_right = 0x801853B7; // used:true
+sprites_no4_4 = 0x801BCDD8;
 D_801B0934 = 0x801C0D3C;
