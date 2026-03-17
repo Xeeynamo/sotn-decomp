@@ -111,6 +111,7 @@ segments:
       - [0x3E068, .data, no1/unk_3A290]
       - [0x3E0E0, .data, no1/e_breakable]
       - [0x3E228, data]
+      - [0x60088, .data, no1/header]
       - [0x600B8, .data, no1/e_red_door]
       - [0x600D0, .data, no1/e_red_door_tiles]
       - [0x60130, .data, no1/unk_3B5E0]
