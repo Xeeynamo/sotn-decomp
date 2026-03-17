@@ -1,15 +1,25 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no1.h"
-#include "sfx.h"
+
+#ifdef VERSION_PSP
+extern s32 E_ID(ID_2A);
+#endif
+
+extern Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
 
 static s16 D_us_80181508[][3] = {
-    {0x1845, 0x1875, 0x18A5}, {0x1245, 0x1275, 0x12A5}, {0x945, 0x975, 0x9A5}};
+    {0x1845, 0x1875, 0x18A5},
+    {0x1245, 0x1275, 0x12A5},
+    {0x0945, 0x0975, 0x09A5},
+};
+
 static s16 D_us_8018151C[][3] = {
     {0x554, 0x555, 0x554}, {0x554, 0x555, 0x554}, {0x552, 0x553, 0x552},
-    {0x09A, 0x094, 0x09A}, {0x09A, 0x094, 0x09A}, {0x05B, 0x060, 0x05B}};
+    {0x09A, 0x094, 0x09A}, {0x09A, 0x094, 0x09A}, {0x05B, 0x060, 0x05B},
+};
 
 // Called by elevator doors
-void func_us_801BB5E0(void) {
+static void func_us_801BB5E0(void) {
     Primitive* prim;
     s16 yMin, yMax;
 
@@ -58,7 +68,7 @@ void func_us_801BB5E0(void) {
 }
 
 // Called by elevator doors
-void func_us_801BB7B8(void) {
+static void func_us_801BB7B8(void) {
     Primitive* prim;
     s16 yMin, yMax;
 
@@ -171,7 +181,7 @@ void func_us_801BB984(Entity* self) {
             dx = self->posX.i.hi - tempEntity->posX.i.hi;
             if (dx < 0) {
                 self->ext.et_801BBD90.unk88 = 0x20;
-            } else if ((dx < 0x20) && (GetDistanceToPlayerY() < 0x10)) {
+            } else if (dx < 0x20 && GetDistanceToPlayerY() < 0x10) {
                 if (!--self->ext.et_801BBD90.unk88) {
                     self->step = 4;
                 }
@@ -247,10 +257,9 @@ void func_us_801BBD90(Entity* self) {
     s16 temp;
     Primitive* prim;
     s32 dy2;
-    RECT unused;
+    const RECT unused = {0xF0, 0xC0, 0x10, 0x10};
     u8 padding[4];
 
-    unused = (RECT){.x = 0xF0, .y = 0xC0, .w = 0x10, .h = 0x10};
     tempEntity = self - 1;
     self->posX.i.hi = tempEntity->posX.i.hi;
     self->posY.i.hi = tempEntity->posY.i.hi - 0x22;
@@ -455,8 +464,8 @@ void func_us_801BBD90(Entity* self) {
                     prim->priority = 0x69;
                     prim->x2 = posX;
                     prim->y2 = posY;
-                    dx = -(magnitude * rsin(angle)) >> 0xC;
-                    dy = -(magnitude * rcos(angle)) >> 0xC;
+                    dx = FLT_TO_I(-(magnitude * rsin(angle)));
+                    dy = FLT_TO_I(-(magnitude * rcos(angle)));
                     prim->x0 = posX + dx;
                     prim->y0 = posY + dy;
                     prim->x1 = prim->x0 + 4;
@@ -469,11 +478,11 @@ void func_us_801BBD90(Entity* self) {
                         dy2 = 0x10;
                         var9a = ratan2(-dx2, dy2);
                         dAngle = var9a - angle;
-                        if (dAngle > 0x800) {
-                            dAngle = 0x1000 - dAngle;
+                        if (dAngle > ROT(180)) {
+                            dAngle = ROT(360) - dAngle;
                         }
-                        if (dAngle < -0x800) {
-                            dAngle = dAngle + 0x1000;
+                        if (dAngle < ROT(-180)) {
+                            dAngle = dAngle + ROT(360);
                         }
                         dAngle /= 4;
                     }
@@ -505,4 +514,563 @@ void func_us_801BBD90(Entity* self) {
     }
 }
 
-STATIC_PAD_RODATA(4);
+// Mask for all of the statuses where the UP or DOWN button will
+// be ignored when in elevator
+//
+// Value: 0xC5CFFEDF
+#define PLAYER_STATUS_ELEVATOR_READY_MASK                                      \
+    ~(PLAYER_STATUS_UNK20000000 | PLAYER_STATUS_UNK10000000 |                  \
+      PLAYER_STATUS_ABSORB_BLOOD | NO_AFTERIMAGE | PLAYER_STATUS_UNK200000 |   \
+      PLAYER_STATUS_UNK100000 | PLAYER_STATUS_UNK100 | PLAYER_STATUS_CROUCH)
+
+static u8 D_us_80181540[] = {
+    0x02, 0xC0, 0x00, 0x0F, 0x0F, 0x02, 0x70, 0x20,
+    0x0F, 0x0F, 0x02, 0x80, 0x20, 0xF1, 0x0F, 0x00,
+};
+
+static u8 D_us_80181550[] = {32, 64, 8, 65, 8, 66, 16, 67, -1, 0};
+
+static u8 D_us_8018155C[] = {32, 67, 8, 66, 8, 65, 16, 64, -1, 0};
+
+static s16 D_us_80181568[] = {0x82C, 0x62C, 0x32C, 0x000};
+
+static void func_us_801BC598(Primitive* prim) {
+    Primitive* otherPrim;
+    u8 tempVar;
+
+    switch (prim->next->u2) {
+    case 0:
+        prim->tpage = 0x1A;
+        prim->clut = PAL_UNK_1B0;
+        prim->u0 = 0x70;
+        prim->u1 = 0x7F;
+        prim->u2 = prim->u1;
+        prim->u3 = prim->u2;
+        prim->v0 = 0x20;
+        prim->v1 = prim->v0;
+        prim->v2 = 0x2F;
+        prim->v3 = prim->v2;
+        prim->next->b3 = 0x80;
+        if (prim->next->r3 & 0x10) {
+            if (prim->next->r3 & 1) {
+                LOH(prim->next->tpage) = 0xA00;
+            } else {
+                LOH(prim->next->tpage) = 0x600;
+            }
+        } else {
+            if (prim->next->r3 & 1) {
+                LOH(prim->next->tpage) = -0x100;
+            } else {
+                LOH(prim->next->tpage) = 0x100;
+            }
+        }
+        LOH(prim->next->r2) = 0xE;
+        LOH(prim->next->b2) = 0x10;
+        prim->priority = 0xF0;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+        prim->next->x3 = 0x10;
+        prim->next->u2 = 1;
+        /* fallthrough */
+    case 1:
+        if (prim->next->r3 & 1) {
+            prim->next->x1 = g_CurrentEntity->posX.i.hi - 0xC;
+        } else {
+            prim->next->x1 = g_CurrentEntity->posX.i.hi + 0xC;
+        }
+        if (prim->next->r3 & 0x10) {
+            prim->next->y0 = g_CurrentEntity->posY.i.hi - 0x25;
+        } else {
+            prim->next->y0 = g_CurrentEntity->posY.i.hi + 0x23;
+        }
+        UpdateAnimation(D_us_80181540, prim);
+        UnkPrimHelper(prim);
+        if (Random() % 8 == 0) {
+            otherPrim = g_CurrentEntity->ext.et_801BBD90.unk7C;
+            otherPrim = FindFirstUnkPrim2(otherPrim, 2);
+            if (otherPrim != NULL) {
+                UnkPolyFunc2(otherPrim);
+                otherPrim->x0 = prim->next->x1;
+                otherPrim->y0 = prim->next->y0;
+                otherPrim->g1 = (Random() & 1) + 1;
+                otherPrim->g2 = (Random() & 3) + 1;
+                otherPrim->next->u2 = 4;
+                otherPrim->next->r3 = prim->next->r3;
+            }
+        }
+        prim->next->x3--;
+        if (!prim->next->x3) {
+            prim->next->u2 = 0;
+            prim->p1 = 0;
+            prim->p2 = 0;
+            UnkPolyFunc0(prim);
+        }
+        break;
+
+    case 4:
+        prim->type = PRIM_TILE;
+        prim->u0 = 1;
+        prim->v0 = 1;
+        prim->b0 = 0xC0;
+        prim->r0 = 0x40;
+        prim->g0 = 0x40;
+        prim->priority = 0xC0;
+        prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_TRANSP;
+        prim->next->x3 = 0x20;
+        prim->next->u2 = 5;
+        /* fallthrough */
+    case 5:
+        if (prim->next->r3 & 0x10) {
+            prim->y0 -= prim->g1;
+        } else {
+            prim->y0 += prim->g1;
+        }
+        tempVar = prim->g2;
+        if ((g_Timer % tempVar) == 0) {
+            if (prim->next->r3 & 1) {
+                prim->x0++;
+            } else {
+                prim->x0--;
+            }
+        }
+        prim->next->x3--;
+        if (!prim->next->x3) {
+            prim->type = PRIM_GT4;
+            prim->next->u2 = 0;
+            UnkPolyFunc0(prim);
+        }
+        break;
+    }
+}
+
+static void func_us_801BC9A8(Primitive* prim) {
+    s16 posY;
+
+    switch (prim->next->u2) {
+    case 0:
+        prim->tpage = 0xE;
+        prim->clut = 0x4A;
+        prim->u0 = 0xD0;
+        prim->u1 = prim->u0 + 0x1F;
+        prim->u2 = prim->u0;
+        prim->u3 = prim->u1;
+        prim->v0 = 0xC0;
+        prim->v1 = prim->v0;
+        prim->v2 = prim->v0 + 0xF;
+        prim->v3 = prim->v2;
+        prim->priority = 0x70;
+        prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        LOH(prim->next->r2) = 0x20;
+        LOH(prim->next->b2) = 0x10;
+        prim->next->b3 = 0x30;
+        prim->next->u2 = 1;
+        /* fallthrough */
+    case 1:
+        prim->next->x1 = g_CurrentEntity->posX.i.hi;
+        prim->next->y0 = g_CurrentEntity->posY.i.hi + 0x24;
+        UnkPrimHelper(prim);
+        prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        if (g_CurrentEntity->velocityY) {
+            if (g_Timer % 2) {
+                prim->drawMode =
+                    DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+            } else {
+                prim->drawMode = DRAW_HIDE;
+            }
+        }
+        posY = g_Tilemap.scrollY.i.hi + prim->y2;
+        if (posY > 0x810) {
+            prim->drawMode = DRAW_HIDE;
+        }
+        if (posY > 0x610 && posY < 0x650) {
+            prim->drawMode = DRAW_HIDE;
+        }
+        break;
+    }
+}
+
+void func_us_801BCB34(Entity* self) {
+    Collider collider;
+    Primitive* prim;
+    s16 posX, posY;
+    s32 primIndex;
+#ifdef VERSION_PSP
+    s8 dPad;
+#else
+    u8 dPad;
+#endif
+    Entity* player;
+    Entity* tempEntity;
+    s32 i;
+
+    s16 unusedA = g_Tilemap.scrollX.i.hi + self->posX.i.hi;
+    s16 unusedB = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
+
+    player = &PLAYER;
+
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_801809F8);
+        self->ext.et_801BBD90.unk84 = self->params;
+        self->ext.et_801BBD90.unk85 = self->ext.et_801BBD90.unk84;
+        self->ext.et_801BBD90.unk86 = 0;
+        self->ext.et_801BBD90.unk87 = 0;
+        self->zPriority = g_unkGraphicsStruct.g_zEntityCenter + 0x10;
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x28);
+        if (primIndex != -1) {
+            self->flags |= FLAG_HAS_PRIMS;
+            self->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            self->ext.et_801BBD90.unk90 = prim;
+            UnkPolyFunc2(prim);
+            prim->next->u2 = 0;
+            prim = prim->next;
+            prim = prim->next;
+            self->ext.et_801BBD90.unk7C = prim;
+        } else {
+            self->ext.et_801BBD90.unk90 = NULL;
+            self->ext.et_801BBD90.unk7C = NULL;
+        }
+        tempEntity = self + 1;
+        CreateEntityFromEntity(E_ID(ID_2A), self, tempEntity);
+        tempEntity->posY.i.hi -= 0x22;
+        tempEntity->ext.et_801BBD90.unk8C = 0;
+        break;
+    case 1:
+        self->step++;
+        break;
+    case 2:
+        self->velocityY = 0;
+        if (GetDistanceToPlayerX() < 6 && GetDistanceToPlayerY() < 16) {
+            i = g_Player.status;
+            if (i & PLAYER_STATUS_ELEVATOR_READY_MASK) {
+                break;
+            }
+            dPad = 0;
+            if (g_pads[0].pressed & PAD_UP) {
+                dPad = 1;
+            }
+            if (g_pads[0].pressed & PAD_DOWN) {
+                dPad = -1;
+            }
+            if (dPad) {
+                dPad += self->ext.et_801BBD90.unk84;
+#ifdef VERSION_PSP
+                if (dPad == -1U || dPad > 2) {
+                    break;
+                }
+#else
+                if (dPad == 0xFF || dPad > 2) {
+                    break;
+                }
+                g_Player.demo_timer = 2;
+                g_Player.padSim = 0;
+                PLAYER.velocityX = 0;
+                PLAYER.velocityY = 0;
+#endif
+                g_api.func_8010DFF0(0, 1);
+                g_api.func_8010E168(1, 0x20);
+                self->ext.et_801BBD90.unk85 = dPad;
+                self->pose = 0;
+                self->poseTimer = 0;
+                self->step_s = 0;
+                self->step++;
+#ifdef VERSION_PSP
+                PLAYER.posX.val = self->posX.val;
+                PLAYER.velocityX = 0;
+#endif
+            }
+        }
+        if (self->ext.et_801BBD90.unk94) {
+            self->pose = 0;
+            self->poseTimer = 0;
+            self->step_s = 1;
+            self->step = 3;
+        }
+        break;
+    case 3:
+        if (!self->ext.et_801BBD90.unk94) {
+            g_api.func_8010DFF0(0, 1);
+            g_api.func_8010E168(1, 0x20);
+            g_Player.padSim = 0;
+            g_Player.demo_timer = 64;
+        }
+        if (AnimateEntity(D_us_80181550, self) == 0) {
+            PlaySfxPositional(SFX_ELEVATOR_START);
+            if (!self->ext.et_801BBD90.unk94) {
+                g_unkGraphicsStruct.unk1C |= 1;
+            }
+            self->ext.et_801BBD90.unk88 = 0x18;
+            self->step_s = 0;
+            self->pose = 0;
+            self->poseTimer = 0;
+            if (self->ext.et_801BBD90.unk85 > self->ext.et_801BBD90.unk84) {
+                self->step = 4;
+            } else {
+                self->step = 5;
+                if (!self->ext.et_801BBD90.unk94) {
+                    g_api.PlaySfx(SFX_VO_ALU_YELL);
+                }
+            }
+        }
+        break;
+    case 4:
+        if (!self->ext.et_801BBD90.unk94) {
+            if (!self->ext.et_801BBD90.unk88) {
+                MoveEntity();
+                player->posY.i.hi = self->posY.i.hi - 4;
+            } else {
+                player->posY.i.hi = self->posY.i.hi - 4;
+                MoveEntity();
+                self->ext.et_801BBD90.unk88 -= 1;
+            }
+            g_api.func_8010DFF0(0, 1);
+            g_api.func_8010E168(1, 0x20);
+            g_Player.padSim = PAD_DOWN;
+            g_Player.demo_timer = 2;
+            g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
+        } else {
+            MoveEntity();
+        }
+        posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
+        switch (self->step_s) {
+        case 0:
+            self->velocityY -= FIX(0.125);
+            if (self->ext.et_801BBD90.unk7C != NULL) {
+                if ((Random() % 10) == 0) {
+                    prim = self->ext.et_801BBD90.unk7C;
+                    prim = FindFirstUnkPrim2(prim, 2);
+                    if (prim != NULL) {
+                        UnkPolyFunc2(prim);
+                        prim->next->x1 = self->posX.i.hi + 0x10;
+                        prim->next->y0 = self->posY.i.hi + 0x2C;
+                        prim->next->r3 = self->ext.et_801BBD90.unk86;
+                    }
+                    self->ext.et_801BBD90.unk86 ^= 1;
+                }
+            }
+            if (posY < D_us_80181568[self->ext.et_801BBD90.unk85]) {
+                if (self->ext.et_801BBD90.unk85 == 2) {
+                    g_api.PlaySfx(SFX_ELEVATOR_SLAM);
+                    posX = self->posX.i.hi;
+                    posY = self->posY.i.hi - 0x18;
+                    g_api.CheckCollision(posX, posY, &collider, 0);
+                    self->posY.i.hi += collider.unk20;
+                    self->velocityY = -self->velocityY;
+                    self->step_s = 2;
+                    for (i = 0; i < 3; i++) {
+                        tempEntity =
+                            AllocEntity(&g_Entities[224], &g_Entities[256]);
+                        if (tempEntity != NULL) {
+                            CreateEntityFromEntity(
+                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            tempEntity->posX.i.hi += (i * 8) - 8;
+                            tempEntity->posY.i.hi -= 0x18;
+                            tempEntity->drawFlags |= ENTITY_ROTATE;
+                            tempEntity->rotate = 0x400 - (i << 0xA);
+                            tempEntity->params = 0x10;
+                        }
+                    }
+                } else {
+                    g_api.PlaySfx(SFX_LEVER_METAL_BANG);
+                    self->ext.et_801BBD90.unk87 = 1;
+                    self->velocityY /= 2;
+                    self->step_s++;
+                }
+            }
+            break;
+
+        case 1:
+            self->velocityY += FIX(1.0);
+            if (posY > D_us_80181568[self->ext.et_801BBD90.unk85] + 8) {
+                self->velocityY = 0;
+                self->step_s = 3;
+            }
+            break;
+
+        case 2:
+            self->velocityY -= FIX(2.0);
+            if (self->velocityY < 0) {
+                self->velocityY = 0;
+                self->step_s = 3;
+            }
+            break;
+
+        case 3:
+            self->ext.et_801BBD90.unk87 = 0;
+            if (posY == D_us_80181568[self->ext.et_801BBD90.unk85]) {
+                self->step_s = 0;
+                self->step = 6;
+            } else {
+                if (posY > D_us_80181568[self->ext.et_801BBD90.unk85]) {
+                    F(self->velocityY).i.hi = -1;
+                } else {
+                    F(self->velocityY).i.hi = 1;
+                }
+            }
+            break;
+        }
+        break;
+
+    case 5:
+        if (!self->ext.et_801BBD90.unk94) {
+            if (!self->ext.et_801BBD90.unk88) {
+                MoveEntity();
+                player->posY.i.hi = self->posY.i.hi - 4;
+            } else {
+                player->posY.i.hi = self->posY.i.hi - 4;
+                MoveEntity();
+                self->ext.et_801BBD90.unk88 -= 1;
+            }
+            g_api.func_8010DFF0(0, 1);
+            g_api.func_8010E168(1, 0x20);
+            g_Player.padSim = PAD_DOWN;
+            g_Player.demo_timer = 2;
+        } else {
+            MoveEntity();
+        }
+        posY = g_Tilemap.scrollY.i.hi + self->posY.i.hi;
+        switch (self->step_s) {
+        case 0:
+            self->velocityY += FIX(0.25);
+            if (self->ext.et_801BBD90.unk7C != NULL) {
+                if (Random() % 10 == 0) {
+                    prim = self->ext.et_801BBD90.unk7C;
+                    prim = FindFirstUnkPrim2(prim, 2);
+                    if (prim != NULL) {
+                        UnkPolyFunc2(prim);
+                        prim->next->x1 = self->posX.i.hi + 0x10;
+                        prim->next->y0 = self->posY.i.hi + 0x2C;
+                        prim->next->r3 = self->ext.et_801BBD90.unk86;
+                        prim->next->r3 |= 0x10;
+                    }
+                    self->ext.et_801BBD90.unk86 ^= 1;
+                }
+            }
+            if (posY > D_us_80181568[self->ext.et_801BBD90.unk85]) {
+                self->ext.et_801BBD90.unk87 = 1;
+                if (!self->ext.et_801BBD90.unk85) {
+                    g_api.PlaySfx(SFX_ELEVATOR_SLAM);
+                    self->velocityY = -self->velocityY / 2;
+                    posX = self->posX.i.hi;
+                    posY = self->posY.i.hi + 0x24;
+                    g_api.CheckCollision(posX, posY, &collider, 0);
+                    self->posY.i.hi += collider.unk18;
+                    self->step_s = 2;
+                    for (i = 0; i < 3; i++) {
+                        tempEntity =
+                            AllocEntity(&g_Entities[224], &g_Entities[256]);
+                        if (tempEntity != NULL) {
+                            CreateEntityFromEntity(
+                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            tempEntity->posX.i.hi += (i * 8) - 8;
+                            tempEntity->posY.i.hi += 0x24;
+                            tempEntity->drawFlags |= ENTITY_ROTATE;
+                            tempEntity->rotate = 0x400 - (i << 0xA);
+                            tempEntity->params = 0x10;
+                        }
+                    }
+                } else {
+                    g_api.PlaySfx(SFX_LEVER_METAL_BANG);
+                    self->velocityY /= 2;
+                    self->step_s = 1;
+                }
+            }
+            break;
+
+        case 1:
+            self->velocityY -= FIX(1.5);
+            if (posY < D_us_80181568[self->ext.et_801BBD90.unk85]) {
+                self->velocityY = 0;
+                self->step_s = 3;
+            }
+            break;
+
+        case 2:
+            self->velocityY += FIX(1.0);
+            if (self->velocityY > 0) {
+                self->velocityY -= FIX(0.75);
+                if (posY > D_us_80181568[self->ext.et_801BBD90.unk85]) {
+                    posX = self->posX.i.hi;
+                    posY = self->posY.i.hi + 0x24;
+                    g_api.CheckCollision(posX, posY, &collider, 0);
+                    self->posY.i.hi += collider.unk18;
+                    self->velocityY = 0;
+                    self->step_s = 3;
+                    for (i = 0; i < 3; i++) {
+                        tempEntity =
+                            AllocEntity(&g_Entities[224], &g_Entities[256]);
+                        if (tempEntity != NULL) {
+                            CreateEntityFromEntity(
+                                E_INTENSE_EXPLOSION, self, tempEntity);
+                            tempEntity->posX.i.hi += (i * 8) - 8;
+                            tempEntity->posY.i.hi += 0x24;
+                            tempEntity->drawFlags |= ENTITY_ROTATE;
+                            tempEntity->rotate = 0x400 - (i << 0xA);
+                            tempEntity->params = 0x10;
+                        }
+                    }
+                }
+            }
+            break;
+
+        case 3:
+            self->ext.et_801BBD90.unk87 = 0;
+            if (posY == D_us_80181568[self->ext.et_801BBD90.unk85]) {
+                self->step_s = 0;
+                self->step = 6;
+            } else {
+                if (posY > D_us_80181568[self->ext.et_801BBD90.unk85]) {
+                    F(self->velocityY).i.hi = -1;
+                } else {
+                    F(self->velocityY).i.hi = 1;
+                }
+            }
+            break;
+        }
+        break;
+    case 6:
+        switch (self->step_s) {
+        case 0:
+            if (!self->ext.et_801BBD90.unk94) {
+                player->posY.i.hi = self->posY.i.hi - 8;
+            }
+            g_unkGraphicsStruct.unk1C &= ~1;
+            self->velocityY = 0;
+            self->step_s++;
+            break;
+
+        case 1:
+            if (!self->ext.et_801BBD90.unk94) {
+                g_api.func_8010DFF0(0, 1);
+                g_api.func_8010E168(1, 0x20);
+                g_Player.padSim = 0;
+                g_Player.demo_timer = 2;
+            }
+            if (AnimateEntity(D_us_8018155C, self) == 0) {
+                self->pose = 0;
+                self->poseTimer = 0;
+                self->step_s++;
+            }
+            break;
+
+        case 2:
+            self->ext.et_801BBD90.unk84 = self->ext.et_801BBD90.unk85;
+            self->ext.et_801BBD90.unk94 = 0;
+            self->step_s = 0;
+            self->step = 2;
+            break;
+        }
+        break;
+    }
+    prim = self->ext.et_801BBD90.unk90;
+    if (prim != NULL) {
+        func_us_801BC9A8(prim);
+    }
+    prim = self->ext.et_801BBD90.unk7C;
+    while (prim != NULL) {
+        if (prim->p3 & 8) {
+            func_us_801BC598(prim);
+        }
+        prim = prim->next;
+    }
+}
