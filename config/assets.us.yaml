@@ -725,7 +725,8 @@ files:
         assets:
           - [0x2C, sprite_banks, sprite_banks]
           - [0x8C, paldef, palette_def]
-          - [0x128, skip]
+          - [0x128, layers, layers]
+          - [0x668, skip]
           - [0x5354, cutscene, cutscene_data_ferryman_left_psx]
           - [0x53B7, cutscene, cutscene_data_ferryman_right_psx]
           - [0x5400, skip]
