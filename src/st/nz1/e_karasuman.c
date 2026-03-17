@@ -749,7 +749,7 @@ void EntityKarasumanRavenAttack(Entity* self) {
         break;
 
     case 8:
-        self->palette = PAL_FLAG(0x15F);
+        self->palette = PAL_FLAG(PAL_FILL_WHITE);
         self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0;
         self->blendMode = BLEND_TRANSP | BLEND_SUB;

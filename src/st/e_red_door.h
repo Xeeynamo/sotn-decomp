@@ -23,11 +23,7 @@ static bool EntityIsNearPlayer(Entity* self) {
 
     diffX = PLAYER.posX.i.hi - self->posX.i.hi;
     distanceX = abs(diffX);
-#ifdef STAGE_IS_NO1
-    if (distanceX > 24) {
-#else
     if (distanceX > 16) {
-#endif
         return false;
     }
 
@@ -56,22 +52,10 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
 
     switch (self->step) {
     case 0:
-#ifdef STAGE_IS_NO1
-        self->ext.redDoor.isBackgroundDoor = self->params & 0x10;
-        self->params &= 0xFFEF;
-#endif
         InitializeEntity(g_EInitCommon);
         self->animSet = 7;
         self->animCurFrame = 1;
-#ifdef STAGE_IS_NO1
-        if (self->ext.redDoor.isBackgroundDoor) {
-            self->zPriority = 0x58;
-        } else {
-            self->zPriority = PLAYER.zPriority - 0x20;
-        }
-#else
         self->zPriority = PLAYER.zPriority - 0x20;
-#endif
         self->facingLeft = 0;
         self->posY.i.hi += 0x1F;
 
@@ -102,15 +86,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             prim->v3 = uv[7];
             prim->tpage = 0x1F;
             prim->clut = PAL_UNK_198;
-#ifdef STAGE_IS_NO1
-            if (self->ext.redDoor.isBackgroundDoor) {
-                prim->priority = 0x58;
-            } else {
-                prim->priority = PLAYER.zPriority - 0x20;
-            }
-#else
             prim->priority = PLAYER.zPriority - 0x20;
-#endif
             prim->y0 = prim->y1 = y;
             prim->y2 = prim->y3 = y + 62;
             if (i == 0) {
@@ -146,11 +122,6 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             PLAYER.velocityY = 0;
             g_Player.padSim = 0;
             g_Player.demo_timer = 24;
-#ifdef STAGE_IS_NO1
-            if (self->ext.redDoor.isBackgroundDoor && self->step == 3) {
-                PLAYER.zPriority = 0x5C;
-            }
-#endif
         } else {
             self->ext.redDoor.angle = ROT(270);
             prim = &g_PrimBuf[self->primIndex];
@@ -236,13 +207,6 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
                 self->step++;
             }
         }
-#ifdef STAGE_IS_NO1
-        if (self->ext.redDoor.isBackgroundDoor && self->step == 3) {
-            g_Tilemap.x = 0x98;
-            PLAYER.zPriority = 0x5C;
-        }
-        g_unkGraphicsStruct.unk18 = 1;
-#endif
         break;
     case 3:
         if (g_Player.demo_timer >= 4) {
@@ -254,17 +218,6 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             g_Player.padSim = PAD_RIGHT;
         }
         g_Player.demo_timer = 3;
-#ifdef STAGE_IS_NO1
-        if (PLAYER.posX.i.hi < 0x64 && self->ext.redDoor.isBackgroundDoor) {
-            g_Tilemap.left++;
-            g_PlayerX -= 0x100;
-            g_Tilemap.x = 0x100;
-            g_unkGraphicsStruct.unk18 = 0;
-        }
-        if (PLAYER.posX.i.hi < 0 || PLAYER.posX.i.hi > 0x100) {
-            g_unkGraphicsStruct.unk18 = 0;
-        }
-#endif
         break;
     case 4:
         if (!(self->params & 0x100)) {
@@ -274,17 +227,7 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
         }
         g_Player.demo_timer = 4;
         if (!EntityIsNearPlayer(self)) {
-#ifdef STAGE_IS_NO1
-            if (self->ext.redDoor.isBackgroundDoor) {
-                PLAYER.zPriority = g_unkGraphicsStruct.g_zEntityCenter;
-            }
             self->step++;
-#ifdef VERSION_PSP
-            g_Player.demo_timer = 0;
-#endif
-#else
-            self->step++;
-#endif
         }
         break;
     case 5:
@@ -314,9 +257,6 @@ void OVL_EXPORT(EntityRedDoor)(Entity* self) {
             }
             self->animCurFrame = 1;
             self->step = 1;
-#ifdef STAGE_IS_NO1
-            g_unkGraphicsStruct.unk18 = 0;
-#endif
         }
         break;
     }

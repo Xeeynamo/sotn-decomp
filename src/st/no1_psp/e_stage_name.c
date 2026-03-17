@@ -1,6 +1,0 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
-
-INCLUDE_ASM("st/no1_psp/nonmatchings/no1_psp/e_stage_name", func_pspeu_0923BC10);
-
-INCLUDE_ASM("st/no1_psp/nonmatchings/no1_psp/e_stage_name", EntityStageNamePopup);

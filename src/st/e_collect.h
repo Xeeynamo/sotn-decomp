@@ -365,7 +365,7 @@ void EntityPrizeDrop(Entity* self) {
     self->palette = 0;
 #endif
     if (self->unk6D[0] >= 0x18 && !(g_GameTimer & 2) && self->params != 1) {
-        self->palette = 0x815F;
+        self->palette = PAL_FLAG(PAL_FILL_WHITE);
     }
     switch (self->step) {
     case 0:

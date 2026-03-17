@@ -131,7 +131,7 @@ void func_us_801BFB40(Entity* self) {
             self->ext.et_801BFB40.unk7C = prim;
             while (prim != NULL) {
                 prim->tpage = 0xE;
-                prim->clut = 0;
+                prim->clut = PAL_NULL;
                 prim->u0 = 0xE9;
                 prim->u1 = prim->u0 + 0xE;
                 prim->u2 = prim->u0;
