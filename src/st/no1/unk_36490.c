@@ -641,3 +641,7 @@ void func_us_801B7CC4(Entity* self) {
     }
     DestroyEntity(self);
 }
+
+void func_us_801B7D24(Entity* self) {}
+
+void func_us_801B7D2C(Entity* self) {}
