@@ -107,7 +107,7 @@ segments:
       - [0x2F238, .data, no1/e_secrets]
       - [0x2F370, data]
       - [0x3DBA0, .data, no1/e_init]
-      - [0x3DFA8, data]
+      - [0x3DFA8, .data, no1/gen/rooms]
       - [0x3E068, .data, no1/unk_3A290]
       - [0x3E0E0, .data, no1/e_breakable]
       - [0x3E228, data]
