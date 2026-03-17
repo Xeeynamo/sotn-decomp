@@ -71,7 +71,7 @@ segments:
       - [0x2B10, .data, e_spear_guard]
       - [0x2DE0, .data, e_bone_archer]
       - [0x2F54, .data, e_skeleton_ape]
-      - [0x30F0, data]
+      - [0x30F0, .data, gen/rooms]
       - [0x3244, .data, gen/e_layout]
       - [0x5354, .data, cutscene_data]
       - [0x5400, .data, stage_data]
