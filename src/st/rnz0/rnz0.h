@@ -10,6 +10,8 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_FIREDEMON_15E = 0x15E,
+    PAL_FIREDEMON_15F = 0x15F,
     PAL_BREAKABLE = 0x236,
     PAL_UNK_237 = 0x237,
     PAL_UNK_238 = 0x238,
