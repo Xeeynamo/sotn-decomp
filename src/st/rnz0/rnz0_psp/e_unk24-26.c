@@ -21,6 +21,6 @@ INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_0924FE10)
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_09250678);
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_us_801BE600);
+INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", EntityLesserDemon);
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_us_801BF7B0);
