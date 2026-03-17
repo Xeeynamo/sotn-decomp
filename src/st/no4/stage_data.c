@@ -1,6 +1,43 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+u8 D_80185400[] = {
+#include "gen/D_80185400.h"
+};
+u8 D_80185994[] = {
+#include "gen/D_80185994.h"
+};
+u8 D_80186260[] = {
+#include "gen/D_80186260.h"
+};
+u8 D_80186A04[] = {
+#include "gen/D_80186A04.h"
+};
+u8 D_801874E0[] = {
+#include "gen/D_801874E0.h"
+};
+u8 D_80188220[] = {
+#include "gen/D_80188220.h"
+};
+u8 D_80188CE4[] = {
+#include "gen/D_80188CE4.h"
+};
+u8 D_801898C4[] = {
+#include "gen/D_801898C4.h"
+};
+u8 D_80189ECC[] = {
+#include "gen/D_80189ECC.h"
+};
+u8 D_8018A608[] = {
+#include "gen/D_8018A608.h"
+};
+u8 D_8018B8F4[] = {
+#include "gen/D_8018B8F4.h"
+};
+u8 D_8018D080[] = {
+#include "gen/D_8018D080.h"
+};
+
 u16 D_8018DA34[] = {
 #include "gen/D_8018DA34.h"
 };
@@ -111,7 +148,6 @@ u16 D_8018E354[] = {
 #include "gen/no4_tilemap_59.h"
 #include "gen/no4_tilemap_60.h"
 #include "gen/no4_tilemap_61.h"
-
 
 #include "gen/no4_tiledef_0.h"
 #include "gen/no4_tiledef_1.h"
