@@ -151,7 +151,7 @@ segments:
       - {start: 0x62E00, type: bss, vram: 0x0929A538, name: bss0}
       - {start: 0x62E00, type: .bss, vram: 0x0929A578, name: no1/e_init}
       - {start: 0x62E00, type: .bss, vram: 0x0929A588, name: no1/st_init_psp}
-      - {start: 0x62E00, type: bss, vram: 0x0929A7F0, name: bss1}
+      - {start: 0x62E00, type: .bss, vram: 0x0929A7F0, name: no1/unk_3A290}
       - {start: 0x62E00, type: .bss, vram: 0x0929A7F8, name: no1/e_lock_camera}
       - {start: 0x62E00, type: .bss, vram: 0x0929A800, name: no1/unk_36490}
       - {start: 0x62E00, type: .bss, vram: 0x0929A868, name: no1/unk_381E8}
