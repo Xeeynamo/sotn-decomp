@@ -723,6 +723,8 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, skip]
           - [0x5354, cutscene, cutscene_data_ferryman_left_psx]
           - [0x53B7, cutscene, cutscene_data_ferryman_right_psx]
           - [0x5400, skip]
