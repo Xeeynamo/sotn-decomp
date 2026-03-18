@@ -12,10 +12,10 @@ extern s16 D_pspeu_092595A0[];
 // Traveling diagonally downward
 static u8 D_pspeu_09259690[] = {1, 25, 1, 26, 1, 27, 1, 28, 0};
 // Splash when hitting the ground
-static u8 D_pspeu_092596A0[] = {4, 29, 4, 30, 4, 31, 4, 32, 4, 33, 2, 34, 2, 36, 255, 0};
+static u8 D_pspeu_092596A0[] = {
+    4, 29, 4, 30, 4, 31, 4, 32, 4, 33, 2, 34, 2, 36, 255, 0};
 // Fizzling out on ground
 static u8 D_pspeu_092596B0[] = {4, 37, 4, 38, 255, 0};
-
 
 // EntityLesserDemonSpit
 
@@ -279,7 +279,8 @@ static void func_us_801BC814(Primitive* prim) {
 }
 
 extern EInit D_us_80180A50;
-static u8 D_pspeu_092596B8[] = {1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 0};
+static u8 D_pspeu_092596B8[] = {
+    1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 0};
 
 void func_us_801BD7D0(Entity* self) {
     Primitive* prim;
@@ -398,8 +399,6 @@ void func_us_801BD7D0(Entity* self) {
         break;
     }
 }
-
-
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_0924F908);
 
