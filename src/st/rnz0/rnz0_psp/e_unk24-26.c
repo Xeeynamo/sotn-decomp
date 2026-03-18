@@ -407,6 +407,9 @@ static u8 D_pspeu_092596D0[][3] = {
     {0x80, 0xC0, 0x80}, {0x80, 0xA0, 0xA0}, {0x80, 0x80, 0xC0},
     {0xC0, 0x80, 0xC0}};
 
+static s16 D_pspeu_092596E8[] = {0x40, 0x80, 0xC0, 0x80};
+
+
 void func_pspeu_0924F908(Primitive* prim) {
     Primitive* prim2;
 
@@ -668,7 +671,7 @@ void func_pspeu_0924FE10(void) {
     }
 }
 
-extern s16 D_pspeu_092596F0[];
+static s16 D_pspeu_092596F0[] = {0x18, 0x28, 0x18, 0x18, 0xFF, 0x00};
 
 u8 func_pspeu_09250678(void) {
     u8 ret = 0;
@@ -689,6 +692,554 @@ u8 func_pspeu_09250678(void) {
     return ret;
 }
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", EntityLesserDemon);
+extern s16 D_pspeu_09259590[];
+extern s16 D_us_80181AE4[];
+extern s16 D_us_80181AEC[];
+extern s16 D_us_80181AF4[];
+extern u8 D_pspeu_092595B8[];
+extern u8 D_pspeu_092595C8[];
+extern u8 D_pspeu_092595E0[];
+extern u8 D_pspeu_092595E8[];
+extern u8 D_pspeu_092595F8[];
+extern u8 D_pspeu_09259600[];
+extern u8 D_pspeu_09259620[];
+extern u8 D_pspeu_09259640[];
+extern u8 D_pspeu_09259650[];
+extern u8 D_pspeu_09259660[];
+extern u8 D_pspeu_09259670[];
+extern u8 D_pspeu_09259680[];
+extern u8 D_us_80181BCC[];
+extern u8 D_us_80181BD8[];
+extern u8 D_us_80181BE8[];
+extern u8 D_us_80181BF0[];
+extern u8 D_us_80181C04[][3];
+extern u8 D_us_80181C1C[][3];
+
+extern EInit D_us_80180A38;
+
+void EntityLesserDemon(Entity* self) {
+    Collider collider;
+    Entity* tempEntity;
+    s32 xOffset, yOffset;
+    s32 i;
+    u8 hit;
+    s16 posX, posY;
+    s16 tempVar;
+
+    if ((self->flags & FLAG_DEAD) && (self->step < 15)) {
+        if(self->ext.lesserDemon.unk88 != NULL){
+            tempEntity = self->ext.lesserDemon.unk88;
+            DestroyEntity(tempEntity);
+            self->ext.lesserDemon.unk88 = NULL;
+        }
+        if (self->flags & FLAG_HAS_PRIMS) {
+            g_api.FreePrimitives(self->primIndex);
+            self->flags &= ~FLAG_HAS_PRIMS;
+        }
+        self->hitboxState = 0;
+        SetStep(15);
+    }
+    switch (self->step) {
+    case 0:
+        InitializeEntity(D_us_80180A38);
+        self->zPriority -= 2;
+        self->hitboxOffX = 0;
+        self->hitboxOffY = 4;
+        if(self->params & 0x10){
+            self->animCurFrame = 0;
+            self->step = 32;
+            self->hitboxState = 0;
+        }
+        break;
+    case 32:
+        func_pspeu_0924DBD0(D_pspeu_09259590);
+        break;
+    case 1:
+        if (UnkCollisionFunc3(D_pspeu_09259590) & 1) {
+            SetStep(3);
+        }
+        break;
+
+    case 2:
+        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        if (GetDistanceToPlayerX() < 0x80) {
+            SetStep(3);
+        }
+        break;
+
+    case 3:
+        if (!self->step_s) {
+            self->ext.lesserDemon.unk80 = 0x80;
+            self->step_s++;
+        }
+        hit = func_pspeu_09250678();
+        if (hit) {
+            self->facingLeft ^= 1;
+        }
+        if (!AnimateEntity(D_pspeu_092595B8, self)) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        }
+        if (hit) {
+            SetStep(6);
+        }
+        if (--self->ext.lesserDemon.unk80) {
+            break;
+        }
+            if (!(self->posX.i.hi & 0xFF00)) {
+                if (Random() & 1) {
+                    self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+                    self->ext.lesserDemon.unk84 = 0;
+                    SetStep(13);
+                } else {
+                    SetStep(8);
+                }
+            }
+            else if (g_Timer % 4 == 0){
+                SetStep(3);
+            } else {
+                SetStep(8);
+            }
+        
+        break;
+
+    case 6:
+        switch (self->step_s) {
+        case 0:
+            if (!AnimateEntity(D_pspeu_092595E0, self)) {
+                self->pose = 0;
+                self->poseTimer = 0;
+                self->step_s++;
+                self->velocityY = FIX(-4.0);
+                if (self->facingLeft) {
+                    self->velocityX = FIX(1);
+                } else {
+                    self->velocityX = FIX(-1);
+                }
+            }
+            break;
+
+        case 1:
+            AnimateEntity(D_pspeu_092595E8, self);
+            if (UnkCollisionFunc3(D_pspeu_09259590) & 1) {
+                PlaySfxPositional(SFX_STOMP_HARD_B);
+                self->pose = 0;
+                self->poseTimer = 0;
+                self->step_s++;
+            } else {
+                self->velocityY -= FIX(0.125);
+            }
+            break;
+
+        case 2:
+            if (!AnimateEntity(D_pspeu_092595F8, self)) {
+                SetStep(3);
+            }
+            break;
+        }
+        break;
+
+    case 8:
+        if (!AnimateEntity(D_pspeu_09259600, self)) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+        }
+        if (!self->poseTimer && self->pose == 7) {
+            PlaySfxPositional(SFX_WING_FLAP_B);
+        }
+        MoveEntity();
+        self->velocityX = 0;
+        self->velocityY = FIX(-1.5);
+        if (self->posY.i.hi < 0x50) {
+            self->velocityY = 0;
+            SetStep(9);
+        }
+        break;
+
+    case 9:
+        if (!self->step_s) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            self->ext.lesserDemon.unk80 = D_pspeu_092596E8[Random() & 3];
+            self->step_s++;
+            break;
+        }
+        AnimateEntity(D_pspeu_09259600, self);
+        MoveEntity();
+        if (!self->poseTimer && self->pose == 7) {
+            PlaySfxPositional(SFX_WING_FLAP_B);
+        }
+        if (self->facingLeft) {
+            self->velocityX = FIX(1.0);
+        } else {
+            self->velocityX = FIX(-1.0);
+        }
+        if (!--self->ext.lesserDemon.unk80) {
+            self->step_s--;
+            if (self->posX.i.hi & 0xFF00) {
+                if (g_Timer % 2) {
+                    SetStep(10);
+                } else {
+                    SetStep(14);
+                }
+            } else {
+                tempVar = GetDistanceToPlayerX();
+                if (tempVar > 0x40) {
+                    if (Random() & 1) {
+                        SetStep(4);
+                    } else {
+                        SetStep(12);
+                    }
+                } else {
+                    if (Random() & 1) {
+                        SetStep(14);
+                    } else {
+                        SetStep(11);
+                    }
+                }
+            }
+            if (self->posY.i.hi < 0) {
+                SetStep(11);
+            }
+        }
+        break;
+
+    case 10:
+        if (!self->step_s) {
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            if (self->facingLeft) {
+                self->velocityX = FIX(2.0);
+            } else {
+                self->velocityX = FIX(-2.0);
+            }
+            self->ext.lesserDemon.unk80 = 0x60;
+            self->step_s++;
+            break;
+        }
+        MoveEntity();
+        AnimateEntity(D_pspeu_09259620, self);
+        if (g_Timer % 8 == 0) {
+            PlaySfxPositional(SFX_WING_FLAP_B);
+        }
+        if (!--self->ext.lesserDemon.unk80) {
+            SetStep(9);
+        }
+        break;
+
+    case 4:
+        switch (self->step_s) {
+        case 0:
+            tempEntity = &PLAYER;
+            posX = tempEntity->posX.i.hi - self->posX.i.hi;
+            posY = tempEntity->posY.i.hi - self->posY.i.hi;
+            if (posX < 0) {
+                posX += 0x20;
+            } else {
+                posX -= 0x20;
+            }
+            posY += 0x1A;
+            tempVar = ratan2(-posY, posX);
+            self->velocityX = rcos(tempVar) * 0x30;
+            self->velocityY = -rsin(tempVar) * 0x30;
+
+            if (self->velocityX > 0) {
+                self->facingLeft = 1;
+            } else {
+                self->facingLeft = 0;
+            }
+            self->animCurFrame = 0x18;
+            
+            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (tempEntity != NULL) {
+                CreateEntityFromEntity((0x26), self, tempEntity);
+                self->ext.lesserDemon.unk88 = tempEntity;
+            } else {
+                self->ext.lesserDemon.unk88 = NULL;
+            }
+            self->ext.lesserDemon.unk84 = 0;
+            self->ext.lesserDemon.unk87 = 0;
+            self->step_s++;
+            break;
+        case 1:
+            MoveEntity();
+            posX = self->posX.i.hi;
+            posY = self->posY.i.hi + 0x20;
+            g_api.CheckCollision(posX, posY, &collider, 0);
+            if (collider.effects & EFFECT_SOLID) {
+                PlaySfxPositional(SFX_STOMP_HARD_B);
+                self->posY.i.hi += collider.unk18;
+                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+                self->step_s++;
+                if (self->ext.lesserDemon.unk88 == NULL) {
+                    SetStep(3);
+                }
+            }
+            break;
+
+        case 2:
+            tempEntity = self->ext.lesserDemon.unk88;
+            if (!AnimateEntity(D_pspeu_092595C8, self) &&
+                !(self->flags & FLAG_HAS_PRIMS)) {
+                self->ext.lesserDemon.unk87 = 0;
+                DestroyEntity(tempEntity);
+                self->ext.lesserDemon.unk88 = NULL;
+                SetStep(3);
+                break;
+            }
+            if (!self->poseTimer && self->pose == 5) {
+                PlaySfxPositional(SFX_LESSER_DEMON_SWIPE_ATTACK);
+            }
+            if (self->pose > 4 && self->pose < 11) {
+                tempEntity->posX.i.hi = self->posX.i.hi;
+                tempEntity->posY.i.hi = self->posY.i.hi;
+                tempEntity->facingLeft = self->facingLeft;
+                tempEntity->hitboxState = 1;
+                self->ext.lesserDemon.unk87 = 1;
+                if (self->facingLeft) {
+                    EntityGreyPuffSpawner(self, 5, 3, -4, 32, 2, 7);
+                } else {
+                    EntityGreyPuffSpawner(self, 5, 3, 4, 32, 2, -7);
+                }
+            } else {
+                tempEntity->hitboxState = 0;
+            }
+            break;
+        }
+        if (self->ext.lesserDemon.unk87) {
+            func_pspeu_0924E7D0();
+        }
+        break;
+
+    case 11:
+        AnimateEntity(D_pspeu_09259600, self);
+        if (!self->poseTimer && self->pose == 7) {
+            PlaySfxPositional(SFX_WING_FLAP_B);
+        }
+        if (UnkCollisionFunc3(D_pspeu_09259590) & 1) {
+            PlaySfxPositional(SFX_STOMP_HARD_B);
+            SetStep(3);
+        }
+        if (self->posY.i.hi > 0xD0) {
+            SetStep(8);
+        }
+        break;
+
+    case 12:
+        switch (self->step_s) {
+        case 0:
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            AnimateEntity(D_pspeu_09259640, self);
+            if (self->pose == 2) {
+                PlaySfxPositional(SFX_LESSER_DEMON_POISON);
+                self->ext.lesserDemon.unk84 = 0;
+                self->step_s++;
+                self->ext.lesserDemon.unk80 = 0;
+            }
+            break;
+
+        case 1:
+            if (func_pspeu_0924DDF0()) {
+                tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (tempEntity != NULL) {
+                    CreateEntityFromEntity(0x24, self, tempEntity);
+                    tempEntity->facingLeft = self->facingLeft;
+                    if (self->facingLeft) {
+                        tempEntity->posX.i.hi += 12;
+                    } else {
+                        tempEntity->posX.i.hi -= 12;
+                    }
+                    tempEntity->posY.i.hi -= 8;
+                }
+                self->ext.lesserDemon.unk84 = 0;
+                PlaySfxPositional(SFX_FM_EXPLODE_D);
+                self->step_s++;
+            }
+            break;
+
+        case 2:
+            if (!AnimateEntity(D_pspeu_09259640, self)) {
+                SetStep(9);
+            }
+            break;
+        }
+        break;
+
+    case 13:
+        if (!self->step_s) {
+            self->ext.lesserDemon.unk84 = 0;
+            self->step_s++;
+        }
+        if (!AnimateEntity(D_pspeu_09259650, self)) {
+            self->ext.lesserDemon.unk84 = 0;
+            SetStep(3);
+            break;
+        }
+        if (self->pose == 3 && self->poseTimer == 0) {
+            PlaySfxPositional(SFX_SCIFI_BLAST);
+            self->ext.lesserDemon.unk84 = 2;
+            tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+            if (tempEntity != NULL) {
+                CreateEntityFromEntity((0x25), self, tempEntity);
+                tempEntity->facingLeft = self->facingLeft;
+            }
+        }
+        if (self->pose > 1) {
+            func_pspeu_0924EB18();
+        }
+        break;
+
+    case 14:
+        switch (self->step_s) {
+        case 0:
+            posX = self->posX.i.hi;
+            posY = self->posY.i.hi;
+            tempVar = 0;
+            hit = false;
+            for (i = 0; i < 3; i++) {
+                tempVar = posY + i * 16;
+                g_api.CheckCollision(posX, tempVar, &collider, 0);
+                if (collider.effects != EFFECT_NONE) {
+                    self->ext.lesserDemon.unk87 = 0;
+                    SetStep(9);
+                    return;
+                }
+            }
+            hit = false;
+            for (i = 3; i < 10; i++) {
+                tempVar = posY + i * 16;
+                g_api.CheckCollision(posX, tempVar, &collider, 0);
+                if (collider.effects != EFFECT_NONE) {
+                    hit |= true;
+                    break;
+                }
+            }
+            if (!hit) {
+                self->ext.lesserDemon.unk87 = 0;
+                SetStep(9);
+                return;
+            }
+            AnimateEntity(D_pspeu_09259660, self);
+            self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+            if (self->pose == 3) {
+                self->ext.lesserDemon.unk84 = 0;
+                PlaySfxPositional(SFX_RAPID_SYNTH_BUBBLE);
+                self->step_s++;
+                self->ext.lesserDemon.unk80 = 0xE0;
+            }
+            break;
+
+        case 1:
+            if (g_Timer % 2) {
+                self->palette = 0x22D;
+            } else {
+                self->palette = 0x232;
+            }
+            if (!--self->ext.lesserDemon.unk80) {
+                self->palette = 0x22D;
+                self->hitEffect = 0x22D;
+                self->flags &= ~0xF;
+                PlaySfxPositional(SFX_TELEPORT_BANG_A);
+                self->step_s++;
+                self->ext.lesserDemon.unk84++;
+            }
+            func_pspeu_0924FE10();
+            break;
+
+        case 2:
+            self->ext.lesserDemon.unk80--;
+            if (!AnimateEntity(D_pspeu_09259660, self) &&
+                !(self->flags & FLAG_HAS_PRIMS)) {
+                self->ext.lesserDemon.unk87 = 0;
+                SetStep(9);
+            } else {
+                func_pspeu_0924FE10();
+            }
+            break;
+        }
+        break;
+
+    case 15:
+        self->palette = PAL_FLAG(PAL_CC_FIRE_EFFECT);
+        if (!(g_Timer % 8)) {
+            tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+            if (tempEntity != NULL) {
+                CreateEntityFromEntity(E_INTENSE_EXPLOSION, self, tempEntity);
+                tempEntity->posX.i.hi += (Random() & 0x1F) - 0x10;
+                tempEntity->posY.i.hi += (Random() & 0x3F) - 0x20;
+            }
+        }
+        if ((g_Timer & 0xF) == 0) {
+            PlaySfxPositional(SFX_EXPLODE_B);
+        }
+        switch (self->step_s) {
+        case 0:
+            AnimateEntity(D_pspeu_09259600, self);
+            if (!self->poseTimer && self->pose == 7) {
+                PlaySfxPositional(SFX_WING_FLAP_B);
+            }
+            if (UnkCollisionFunc3(D_pspeu_09259590) & 1) {
+                self->step_s++;
+                self->pose = 0;
+                self->poseTimer = 0;
+            } else {
+                self->velocityY -= FIX(3.5 / 16);
+            }
+            break;
+
+        case 1:
+            hit = func_pspeu_09250678();
+            if (!AnimateEntity(D_pspeu_09259670, self) || hit) {
+                self->pose = 0;
+                self->poseTimer = 0;
+                self->drawFlags = ENTITY_OPACITY;
+                self->blendMode = BLEND_TRANSP | BLEND_ADD;
+                self->opacity = 0x80;
+                self->ext.lesserDemon.unk80 = 0x40;
+                self->step_s++;
+            }
+            break;
+
+        case 2:
+            if(!--self->ext.lesserDemon.unk80){
+                PlaySfxPositional(0x65E);
+                DestroyEntity(self);
+                break;
+            }
+            AnimateEntity(D_pspeu_09259680, self);
+            self->opacity -= 2;
+            if (g_Timer % 5 == 0) {
+                tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
+                if (tempEntity != NULL) {
+                    CreateEntityFromEntity(E_EXPLOSION, self, tempEntity);
+                    tempEntity->params = 1;
+                    tempEntity->posX.i.hi += (Random() & 0x1F) - 0x10;
+                    tempEntity->posY.i.hi += (Random() & 0x1F) - 0x10;
+                }
+            }
+            
+            break;
+        }
+        break;
+
+    case 255:
+        FntPrint("charal %x\n", self->animCurFrame);
+        if (g_pads[1].pressed & PAD_SQUARE) {
+            if (self->params) {
+                break;
+            }
+            self->animCurFrame++;
+            self->params |= 1;
+        } else {
+            self->params = 0;
+        }
+
+        if (g_pads[1].pressed & PAD_CIRCLE) {
+            if (!self->step_s) {
+                self->animCurFrame--;
+                self->step_s |= 1;
+            }
+        } else {
+            self->step_s = 0;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_us_801BF7B0);
