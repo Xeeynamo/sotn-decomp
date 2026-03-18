@@ -72,7 +72,7 @@ static s32 E_ID(SKELETON_PIECES);
 static s32 E_ID(ID_46);
 static s32 E_ID(BREAKABLE_DEBRIS);
 s32 E_ID(ID_48);
-static s32 E_ID(ID_49);
+static s32 E_ID(CRYSTAL_FLOOR);
 static s32 E_ID(ID_4A);
 static s32 E_ID(ID_4B);
 static s32 E_ID(ID_4C);
@@ -142,7 +142,7 @@ void InitEntityIds(void) {
     E_ID(ID_46) = 0x46;
     E_ID(BREAKABLE_DEBRIS) = 0x47;
     E_ID(ID_48) = 0x48;
-    E_ID(ID_49) = 0x49;
+    E_ID(CRYSTAL_FLOOR) = 0x49;
     E_ID(ID_4A) = 0x4A;
     E_ID(ID_4B) = 0x4B;
     E_ID(ID_4C) = 0x4C;

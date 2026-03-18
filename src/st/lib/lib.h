@@ -83,7 +83,7 @@ typedef enum EntityIDs {
     /* 0x46 */ E_ID_46,
     /* 0x47 */ E_BREAKABLE_DEBRIS,
     /* 0x48 */ E_ID_48,
-    /* 0x49 */ E_ID_49,
+    /* 0x49 */ E_CRYSTAL_FLOOR,
     /* 0x4A */ E_FLEA_ARMOR,
     /* 0x4B */ E_FLEA_ARMOR_ATTACK_HITBOX,
     /* 0x4C */ E_FLEA_MAN,

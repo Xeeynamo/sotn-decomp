@@ -1908,7 +1908,7 @@ void func_us_801C4228(Entity* self) {
 
 // Function that checks when alucard pushes the box in underground caverns
 // to block the water hole
-void func_us_801C4520(Entity* self) {
+void EntityWaterBox(Entity* self) {
     Entity* player;
     u16 collision;
 
@@ -1928,7 +1928,7 @@ void func_us_801C4520(Entity* self) {
 
     if (collision & 1 && g_Player.vram_flag & TOUCHING_GROUND) {
         if (self->posX.i.hi > player->posX.i.hi) {
-            if (g_pads[0].pressed & PAD_RIGHT && PLAYER.step == 1) {
+            if (g_pads[0].pressed & PAD_RIGHT && PLAYER.step == Player_Walk) {
                 if (self->ext.timer.t) {
                     self->ext.timer.t--;
                     return;
@@ -1940,7 +1940,7 @@ void func_us_801C4520(Entity* self) {
                 self->ext.timer.t = 3;
             }
         } else {
-            if (g_pads[0].pressed & PAD_LEFT && PLAYER.step == 1) {
+            if (g_pads[0].pressed & PAD_LEFT && PLAYER.step == Player_Walk) {
                 if (self->ext.timer.t) {
                     self->ext.timer.t--;
                     return;
