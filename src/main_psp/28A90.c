@@ -8,6 +8,15 @@ double sin(double x);
 double cos(double x);
 float atan2f(float, float);
 
+#define PI 3.1415927f
+
+// multiplying or dividing FLTs require renormalizing
+#define MUL_FLT(x, y) ((x) * (y) / FLT(1.0))
+#define DIV_FLT(x, y) ((x) * FLT(1.0) / (y))
+
+// same as MUL_FLT but returns a float
+#define MUL_FLOAT(x, y) ((float)(x) / FLT(1.0) * (y))
+
 extern SVECTOR D_psp_08C63B28; // Vector 0
 extern SVECTOR D_psp_08C63B30; // Vector 1
 extern SVECTOR D_psp_08C63B38; // Vector 2
@@ -42,15 +51,15 @@ extern s32 D_psp_08C63C24;     // FLAG
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", ApplyRotMatrix);
 
 MATRIX* ScaleMatrix(MATRIX* m, VECTOR* v) {
-    m->m[0][0] = m->m[0][0] * v->vx / 0x1000;
-    m->m[1][0] = m->m[1][0] * v->vx / 0x1000;
-    m->m[2][0] = m->m[2][0] * v->vx / 0x1000;
-    m->m[0][1] = m->m[0][1] * v->vy / 0x1000;
-    m->m[1][1] = m->m[1][1] * v->vy / 0x1000;
-    m->m[2][1] = m->m[2][1] * v->vy / 0x1000;
-    m->m[0][2] = m->m[0][2] * v->vz / 0x1000;
-    m->m[1][2] = m->m[1][2] * v->vz / 0x1000;
-    m->m[2][2] = m->m[2][2] * v->vz / 0x1000;
+    m->m[0][0] = MUL_FLT(m->m[0][0], v->vx);
+    m->m[1][0] = MUL_FLT(m->m[1][0], v->vx);
+    m->m[2][0] = MUL_FLT(m->m[2][0], v->vx);
+    m->m[0][1] = MUL_FLT(m->m[0][1], v->vy);
+    m->m[1][1] = MUL_FLT(m->m[1][1], v->vy);
+    m->m[2][1] = MUL_FLT(m->m[2][1], v->vy);
+    m->m[0][2] = MUL_FLT(m->m[0][2], v->vz);
+    m->m[1][2] = MUL_FLT(m->m[1][2], v->vz);
+    m->m[2][2] = MUL_FLT(m->m[2][2], v->vz);
     return m;
 }
 
@@ -59,15 +68,15 @@ MATRIX* CompMatrix(MATRIX* m0, MATRIX* m1, MATRIX* m2) {
     m2->t = m0->t;
     MulMatrix(m2, m1);
     SetRotMatrix(m0);
-    m2->t[0] = m0->t[0] + ((float)D_psp_08C63BA8.m[0][0] / 0x1000) * m1->t[0] +
-               ((float)D_psp_08C63BA8.m[0][1] / 0x1000) * m1->t[1] +
-               ((float)D_psp_08C63BA8.m[0][2] / 0x1000) * m1->t[2];
-    m2->t[1] = m0->t[1] + ((float)D_psp_08C63BA8.m[1][0] / 0x1000) * m1->t[0] +
-               ((float)D_psp_08C63BA8.m[1][1] / 0x1000) * m1->t[1] +
-               ((float)D_psp_08C63BA8.m[1][2] / 0x1000) * m1->t[2];
-    m2->t[2] = m0->t[2] + ((float)D_psp_08C63BA8.m[2][0] / 0x1000) * m1->t[0] +
-               ((float)D_psp_08C63BA8.m[2][1] / 0x1000) * m1->t[1] +
-               ((float)D_psp_08C63BA8.m[2][2] / 0x1000) * m1->t[2];
+    m2->t[0] = m0->t[0] + MUL_FLOAT(D_psp_08C63BA8.m[0][0], m1->t[0]) +
+               MUL_FLOAT(D_psp_08C63BA8.m[0][1], m1->t[1]) +
+               MUL_FLOAT(D_psp_08C63BA8.m[0][2], m1->t[2]);
+    m2->t[1] = m0->t[1] + MUL_FLOAT(D_psp_08C63BA8.m[1][0], m1->t[0]) +
+               MUL_FLOAT(D_psp_08C63BA8.m[1][1], m1->t[1]) +
+               MUL_FLOAT(D_psp_08C63BA8.m[1][2], m1->t[2]);
+    m2->t[2] = m0->t[2] + MUL_FLOAT(D_psp_08C63BA8.m[2][0], m1->t[0]) +
+               MUL_FLOAT(D_psp_08C63BA8.m[2][1], m1->t[1]) +
+               MUL_FLOAT(D_psp_08C63BA8.m[2][2], m1->t[2]);
     return NULL;
 }
 
@@ -177,9 +186,9 @@ static long SquareRoot(long a) {
 
 long SquareRoot0(long a) { return SquareRoot(a); }
 
-long SquareRoot12(long a) { return SquareRoot(a / 0x1000) * 0x1000; }
+long SquareRoot12(long a) { return SquareRoot(a / FLT(1.0)) * FLT(1.0); }
 
-long ratan2(long y, long x) { return (atan2f(y, x) * 0x1000 / 2) / 3.1415927f; }
+long ratan2(long y, long x) { return (atan2f(y, x) * ROT(360) / 2) / PI; }
 
 long VectorNormalS(VECTOR* v0, SVECTOR* v1) {
     s32 len;
@@ -192,9 +201,9 @@ long VectorNormalS(VECTOR* v0, SVECTOR* v1) {
         v1->vy = 0;
         v1->vz = 0;
     } else {
-        v1->vx = (v0->vx * 0x1000) / len;
-        v1->vy = (v0->vy * 0x1000) / len;
-        v1->vz = (v0->vz * 0x1000) / len;
+        v1->vx = DIV_FLT(v0->vx, len);
+        v1->vy = DIV_FLT(v0->vy, len);
+        v1->vz = DIV_FLT(v0->vz, len);
     }
     return lenSq;
 }
@@ -206,17 +215,17 @@ int rcos(int a) {
 
     if (!rcos_init) {
         for (i = 0; i < LEN(rcos_tbl); i++) {
-            rcos_tbl[i] = 0x1000 * cos((3.1415927f * i) / 0x800);
+            rcos_tbl[i] = cos(i * PI / ROT(180)) * FLT(1.0);
         }
         rcos_init = true;
     }
-    if (a <= -0x1000 || a >= 0x1000) {
-        a %= 0x1000;
+    if (a <= ROT(-360) || a >= ROT(360)) {
+        a %= ROT(360);
     }
     if (a < 0) {
-        a += 0x1000;
+        a += ROT(360);
     }
-    if (a == 0x1000) {
+    if (a == ROT(360)) {
         a = 0;
     }
     return rcos_tbl[a];
@@ -229,17 +238,17 @@ int rsin(int a) {
 
     if (!rsin_init) {
         for (i = 0; i < LEN(rsin_tbl); i++) {
-            rsin_tbl[i] = 0x1000 * sin((3.1415927f * i) / 0x800);
+            rsin_tbl[i] = sin(i * PI / ROT(180)) * FLT(1.0);
         }
         rsin_init = true;
     }
-    if (a <= -0x1000 || a >= 0x1000) {
-        a %= 0x1000;
+    if (a <= ROT(-360) || a >= ROT(360)) {
+        a %= ROT(360);
     }
     if (a < 0) {
-        a += 0x1000;
+        a += ROT(360);
     }
-    if (a == 0x1000) {
+    if (a == ROT(360)) {
         a = 0;
     }
     return rsin_tbl[a];
@@ -250,8 +259,8 @@ void gte_stub(void) {}
 void InitGeom(void) {
     SetGeomScreen(0);
     SetGeomOffset(0, 0);
-    D_psp_08C63C1C = 0x555;
-    D_psp_08C63C20 = 0x400;
+    D_psp_08C63C1C = FLT(1.0 / 3.0);
+    D_psp_08C63C20 = FLT(1.0 / 4.0);
 }
 
 void SetGeomScreen(long h) { D_psp_08C63C10 = h; }
@@ -271,9 +280,9 @@ MATRIX* MulMatrix(MATRIX* m0, MATRIX* m1) {
 
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 3; j++) {
-            temp.m[i][j] = (m0->m[i][0] * m1->m[0][j]) / 0x1000 +
-                           (m0->m[i][1] * m1->m[1][j]) / 0x1000 +
-                           (m0->m[i][2] * m1->m[2][j]) / 0x1000;
+            temp.m[i][j] = MUL_FLT(m0->m[i][0], m1->m[0][j]) +
+                           MUL_FLT(m0->m[i][1], m1->m[1][j]) +
+                           MUL_FLT(m0->m[i][2], m1->m[2][j]);
         }
     }
     m0->m = temp.m;
@@ -287,9 +296,9 @@ MATRIX* MulMatrix2(MATRIX* m0, MATRIX* m1) {
 
     for (i = 0; i < 3; i++) {
         for (j = 0; j < 3; j++) {
-            temp.m[i][j] = (m0->m[i][0] * m1->m[0][j]) / 0x1000 +
-                           (m0->m[i][1] * m1->m[1][j]) / 0x1000 +
-                           (m0->m[i][2] * m1->m[2][j]) / 0x1000;
+            temp.m[i][j] = MUL_FLT(m0->m[i][0], m1->m[0][j]) +
+                           MUL_FLT(m0->m[i][1], m1->m[1][j]) +
+                           MUL_FLT(m0->m[i][2], m1->m[2][j]);
         }
     }
     m1->m = temp.m;
@@ -308,7 +317,7 @@ MATRIX* func_psp_08928428(MATRIX* m0, MATRIX* m1) {
 }
 
 MATRIX* func_psp_08928498(long r, MATRIX* m) {
-    m->m[0][0] = 0x1000;
+    m->m[0][0] = FLT(1.0);
     m->m[0][1] = 0;
     m->m[0][2] = 0;
     m->m[1][0] = 0;
@@ -328,7 +337,7 @@ MATRIX* func_psp_0892851C(long r, MATRIX* m) {
     m->m[0][1] = 0;
     m->m[0][2] = rsin(r);
     m->m[1][0] = 0;
-    m->m[1][1] = 0x1000;
+    m->m[1][1] = FLT(1.0);
     m->m[1][2] = 0;
     m->m[2][0] = -rsin(r);
     m->m[2][1] = 0;
@@ -348,7 +357,7 @@ MATRIX* func_psp_089285A0(long r, MATRIX* m) {
     m->m[1][2] = 0;
     m->m[2][0] = 0;
     m->m[2][1] = 0;
-    m->m[2][2] = 0x1000;
+    m->m[2][2] = FLT(1.0);
     m->t[2] = 0;
     m->t[1] = 0;
     m->t[0] = 0;
@@ -481,17 +490,17 @@ void gte_rtps(void) {
     u16* d;
 
     x = D_psp_08C63BA8.t[0] +
-        ((float)D_psp_08C63BA8.m[0][0] / 0x1000) * D_psp_08C63B28.vx +
-        ((float)D_psp_08C63BA8.m[0][1] / 0x1000) * D_psp_08C63B28.vy +
-        ((float)D_psp_08C63BA8.m[0][2] / 0x1000) * D_psp_08C63B28.vz;
+        MUL_FLOAT(D_psp_08C63BA8.m[0][0], D_psp_08C63B28.vx) +
+        MUL_FLOAT(D_psp_08C63BA8.m[0][1], D_psp_08C63B28.vy) +
+        MUL_FLOAT(D_psp_08C63BA8.m[0][2], D_psp_08C63B28.vz);
     y = D_psp_08C63BA8.t[1] +
-        ((float)D_psp_08C63BA8.m[1][0] / 0x1000) * D_psp_08C63B28.vx +
-        ((float)D_psp_08C63BA8.m[1][1] / 0x1000) * D_psp_08C63B28.vy +
-        ((float)D_psp_08C63BA8.m[1][2] / 0x1000) * D_psp_08C63B28.vz;
+        MUL_FLOAT(D_psp_08C63BA8.m[1][0], D_psp_08C63B28.vx) +
+        MUL_FLOAT(D_psp_08C63BA8.m[1][1], D_psp_08C63B28.vy) +
+        MUL_FLOAT(D_psp_08C63BA8.m[1][2], D_psp_08C63B28.vz);
     z = D_psp_08C63BA8.t[2] +
-        ((float)D_psp_08C63BA8.m[2][0] / 0x1000) * D_psp_08C63B28.vx +
-        ((float)D_psp_08C63BA8.m[2][1] / 0x1000) * D_psp_08C63B28.vy +
-        ((float)D_psp_08C63BA8.m[2][2] / 0x1000) * D_psp_08C63B28.vz;
+        MUL_FLOAT(D_psp_08C63BA8.m[2][0], D_psp_08C63B28.vx) +
+        MUL_FLOAT(D_psp_08C63BA8.m[2][1], D_psp_08C63B28.vy) +
+        MUL_FLOAT(D_psp_08C63BA8.m[2][2], D_psp_08C63B28.vz);
 
     if (z == 0.0f) {
         z = 0.01f;
@@ -611,9 +620,9 @@ void SetLightMatrix(MATRIX* m) {
 }
 
 void SetBackColor(long rbk, long gbk, long bbk) {
-    D_psp_08C63BC8.t[0] = rbk * 0x1000 / 0x80;
-    D_psp_08C63BC8.t[1] = gbk * 0x1000 / 0x80;
-    D_psp_08C63BC8.t[2] = bbk * 0x1000 / 0x80;
+    D_psp_08C63BC8.t[0] = DIV_FLT(rbk, 0x80);
+    D_psp_08C63BC8.t[1] = DIV_FLT(gbk, 0x80);
+    D_psp_08C63BC8.t[2] = DIV_FLT(bbk, 0x80);
 }
 
 void func_psp_08929838(SVECTOR* v) {
@@ -634,59 +643,51 @@ static inline float clamp(float value, s32 min, s32 max, u32 flag) {
 }
 
 void gte_nccs(void) {
-    s32 var_f1;
-    s32 var_f1_2;
-    s32 var_f1_3;
-
-    float var_f4;
-    float var_f3;
-    float var_f1_4;
+    s32 r0, g0, b0;
+    float r1, g1, b1;
 
     s32 temp_a1;
     s32 temp_a2;
     s32 temp_a3;
 
-    u8* r;
-    u8* g;
-    u8* b;
+    u8* rPtr;
+    u8* gPtr;
+    u8* bPtr;
 
-    temp_a3 = (D_psp_08C63BC8.m[0][0] * D_psp_08C63B4C) / 0x1000 +
-              (D_psp_08C63BC8.m[0][1] * D_psp_08C63B50) / 0x1000 +
-              (D_psp_08C63BC8.m[0][2] * D_psp_08C63B54) / 0x1000;
-    temp_a2 = (D_psp_08C63BC8.m[1][0] * D_psp_08C63B4C) / 0x1000 +
-              (D_psp_08C63BC8.m[1][1] * D_psp_08C63B50) / 0x1000 +
-              (D_psp_08C63BC8.m[1][2] * D_psp_08C63B54) / 0x1000;
-    temp_a1 = (D_psp_08C63BC8.m[2][0] * D_psp_08C63B4C) / 0x1000 +
-              (D_psp_08C63BC8.m[2][1] * D_psp_08C63B50) / 0x1000 +
-              (D_psp_08C63BC8.m[2][2] * D_psp_08C63B54) / 0x1000;
+    temp_a3 = MUL_FLT(D_psp_08C63BC8.m[0][0], D_psp_08C63B4C) +
+              MUL_FLT(D_psp_08C63BC8.m[0][1], D_psp_08C63B50) +
+              MUL_FLT(D_psp_08C63BC8.m[0][2], D_psp_08C63B54);
+    temp_a2 = MUL_FLT(D_psp_08C63BC8.m[1][0], D_psp_08C63B4C) +
+              MUL_FLT(D_psp_08C63BC8.m[1][1], D_psp_08C63B50) +
+              MUL_FLT(D_psp_08C63BC8.m[1][2], D_psp_08C63B54);
+    temp_a1 = MUL_FLT(D_psp_08C63BC8.m[2][0], D_psp_08C63B4C) +
+              MUL_FLT(D_psp_08C63BC8.m[2][1], D_psp_08C63B50) +
+              MUL_FLT(D_psp_08C63BC8.m[2][2], D_psp_08C63B54);
 
-    var_f1 = D_psp_08C63BC8.t[0] + (D_psp_08C63BE8.m[0][0] * temp_a3) / 0x1000 +
-             (D_psp_08C63BE8.m[0][1] * temp_a2) / 0x1000 +
-             (D_psp_08C63BE8.m[0][2] * temp_a1) / 0x1000;
-    var_f1_2 =
-        D_psp_08C63BC8.t[1] + (D_psp_08C63BE8.m[1][0] * temp_a3) / 0x1000 +
-        (D_psp_08C63BE8.m[1][1] * temp_a2) / 0x1000 +
-        (D_psp_08C63BE8.m[1][2] * temp_a1) / 0x1000;
-    var_f1_3 =
-        D_psp_08C63BC8.t[2] + (D_psp_08C63BE8.m[2][0] * temp_a3) / 0x1000 +
-        (D_psp_08C63BE8.m[2][1] * temp_a2) / 0x1000 +
-        (D_psp_08C63BE8.m[2][2] * temp_a1) / 0x1000;
+    r0 = D_psp_08C63BC8.t[0] + MUL_FLT(D_psp_08C63BE8.m[0][0], temp_a3) +
+         MUL_FLT(D_psp_08C63BE8.m[0][1], temp_a2) +
+         MUL_FLT(D_psp_08C63BE8.m[0][2], temp_a1);
+    g0 = D_psp_08C63BC8.t[1] + MUL_FLT(D_psp_08C63BE8.m[1][0], temp_a3) +
+         MUL_FLT(D_psp_08C63BE8.m[1][1], temp_a2) +
+         MUL_FLT(D_psp_08C63BE8.m[1][2], temp_a1);
+    b0 = D_psp_08C63BC8.t[2] + MUL_FLT(D_psp_08C63BE8.m[2][0], temp_a3) +
+         MUL_FLT(D_psp_08C63BE8.m[2][1], temp_a2) +
+         MUL_FLT(D_psp_08C63BE8.m[2][2], temp_a1);
 
-    var_f1 = clamp(var_f1, 0, 0x7FFF, 0x1000000);
-    var_f1_2 = clamp(var_f1_2, 0, 0x7FFF, 0x800000);
-    var_f1_3 = clamp(var_f1_3, 0, 0x7FFF, 0x400000);
+    r0 = clamp(r0, 0, 0x7FFF, 0x1000000);
+    g0 = clamp(g0, 0, 0x7FFF, 0x800000);
+    b0 = clamp(b0, 0, 0x7FFF, 0x400000);
 
-    r = (u8*)&D_psp_08C63B78.r;
-    var_f4 = *r * ((float)var_f1 / 0x1000);
-    g = (u8*)&D_psp_08C63B78.g;
-    var_f3 = *g * ((float)var_f1_2 / 0x1000);
-    b = (u8*)&D_psp_08C63B78.b;
-    var_f1_4 = *b * ((float)var_f1_3 / 0x1000);
+    rPtr = (u8*)&D_psp_08C63B78.r;
+    r1 = *rPtr * ((float)r0 / FLT(1.0));
+    gPtr = (u8*)&D_psp_08C63B78.g;
+    g1 = *gPtr * ((float)g0 / FLT(1.0));
+    bPtr = (u8*)&D_psp_08C63B78.b;
+    b1 = *bPtr * ((float)b0 / FLT(1.0));
 
-    D_psp_08C63B7C.r = D_psp_08C63B80.r = *r = clamp(var_f4, 0, 0xFF, 0x200000);
-    D_psp_08C63B7C.g = D_psp_08C63B80.g = *g = clamp(var_f3, 0, 0xFF, 0x200000);
-    D_psp_08C63B7C.b = D_psp_08C63B80.b = *b =
-        clamp(var_f1_4, 0, 0xFF, 0x200000);
+    D_psp_08C63B7C.r = D_psp_08C63B80.r = *rPtr = clamp(r1, 0, 0xFF, 0x200000);
+    D_psp_08C63B7C.g = D_psp_08C63B80.g = *gPtr = clamp(g1, 0, 0xFF, 0x200000);
+    D_psp_08C63B7C.b = D_psp_08C63B80.b = *bPtr = clamp(b1, 0, 0xFF, 0x200000);
 }
 
 void NormalColorCol(SVECTOR* v0, CVECTOR* v1, CVECTOR* v2) {
