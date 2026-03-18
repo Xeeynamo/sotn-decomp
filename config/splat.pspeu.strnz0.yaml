@@ -86,6 +86,8 @@ segments:
       - [0x21A10, data]
       - [0x21A60, .data, collision]
       - [0x21E38, data]
+      - [0x22010, .data, rnz0_psp/e_unk24-26]
+      - [0x22038, data]
       - [0x220A0, .data, e_room_fg]
       - [0x22140, .data, e_floor_trap]
       - [0x22160, data]
