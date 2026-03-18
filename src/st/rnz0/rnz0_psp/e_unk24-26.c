@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rnz0.h"
 
+extern s16 D_pspeu_092595A8[];
+
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_0924DBD0);
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_0924DDF0);
@@ -666,7 +668,26 @@ void func_pspeu_0924FE10(void) {
     }
 }
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_09250678);
+extern s16 D_pspeu_092596F0[];
+
+u8 func_pspeu_09250678(void) {
+    u8 ret = 0;
+
+    ret = CheckColliderOffsets(D_pspeu_092596F0, g_CurrentEntity->facingLeft);
+    if (ret ^ 2) {
+        ret = 1;
+    } else {
+        ret = 0;
+    }
+    if (g_CurrentEntity->poseTimer == 0) {
+        if (g_CurrentEntity->facingLeft) {
+            g_CurrentEntity->posX.i.hi += D_pspeu_092595A8[g_CurrentEntity->pose];
+        } else {
+            g_CurrentEntity->posX.i.hi -= D_pspeu_092595A8[g_CurrentEntity->pose];
+        }
+    }
+    return ret;
+}
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", EntityLesserDemon);
 
