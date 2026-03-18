@@ -58,7 +58,7 @@ static s32 E_ID(ID_32);
 static s32 E_ID(ID_33);
 static s32 E_ID(ID_34);
 s32 E_ID(ID_35);
-static s32 E_ID(E_WATERBOX_DETECTOR);
+static s32 E_ID(E_WATERBOX);
 static s32 E_ID(ID_37);
 static s32 E_ID(ID_38);
 static s32 E_ID(ID_39);
@@ -147,7 +147,7 @@ void InitEntityIds(void) {
     E_ID(ID_33) = 0x33;
     E_ID(ID_34) = 0x34;
     E_ID(ID_35) = 0x35;
-    E_ID(E_WATERBOX_DETECTOR) = 0x36;
+    E_ID(E_WATERBOX) = 0x36;
     E_ID(ID_37) = 0x37;
     E_ID(ID_38) = 0x38;
     E_ID(ID_39) = 0x39;

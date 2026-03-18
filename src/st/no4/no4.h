@@ -59,7 +59,7 @@ typedef enum EntityIDs {
     /* 0x33 */ E_ID_33,
     /* 0x34 */ E_ID_34,
     /* 0x35 */ E_ID_35 = 0x35,
-    /* 0x36 */ E_WATERBOX_DETECTOR,
+    /* 0x36 */ E_WATERBOX,
     /* 0x37 */ E_ID_37,
     /* 0x38 */ E_ID_38,
     /* 0x39 */ E_ID_39,
