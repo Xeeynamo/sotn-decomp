@@ -72,7 +72,7 @@ def load_anims(src_file):
             anim_name = re.findall(r"(?<=staticu8)[^\[]*", anim)[0]
             anim_data = re.findall(r"(?<={)[^}]*", anim)[0]
             # Turn the data into a Python list of numbers
-            anim_data = [int(x, 0) for x in anim_data.split(",")]
+            anim_data = [int(x, 0) for x in anim_data.split(",") if len(x) > 0]
             loaded_anims[anim_name] = anim_data
     return loaded_anims
 
@@ -130,12 +130,13 @@ class AnimationShower:
         self.palette = palette
         self.unk5A = unk5A
         self.textureDisplayer = dt.textureDisplayer(texture_data)
+
+        spritebank = anim_num & 0x7FFF
         # Need to load the animation's frames now.
         # Depends on if we're an ANIMSET_DRA or ANIMSET_OVL.
         if anim_num & 0x8000:
             print("Overlay animation")
             assert overlay != "dra"
-            spritebank = anim_num & 0x7FFF
             main_array_file = f"src/st/{overlay}/gen/sprite_banks.h"
             main_array = "spriteBanks"
             animset_file = f"src/st/{overlay}/gen/sprites.c"
