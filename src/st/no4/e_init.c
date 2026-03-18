@@ -51,8 +51,8 @@ void EntityBoatElevatorController(Entity* self);
 void EntityFerrymanUnused(Entity* self);
 void func_us_801C123C(Entity* self);
 void EntityWaterBox(Entity* self);
-void func_us_801C4738(Entity* self);
-void func_us_801C4980(Entity* self);
+void EntityWaterSpray(Entity* self);
+void EntityFloatingIcePlatform(Entity* self);
 void func_us_801C5518(Entity* self);
 void func_us_801C82B8(Entity* self);
 void EntitySpearGuardBlock(Entity* self);
@@ -149,8 +149,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     /* 0x34 */ EntityDummy,
     /* 0x35 */ func_us_801C123C,
     /* 0x36 */ EntityWaterBox,
-    /* 0x37 */ func_us_801C4738,
-    /* 0x38 */ func_us_801C4980,
+    /* 0x37 */ EntityWaterSpray,
+    /* 0x38 */ EntityFloatingIcePlatform,
     /* 0x39 */ func_us_801C5518,
     /* 0x3A */ func_us_801C82B8,
     /* 0x3B */ EntitySpearGuardBlock,
