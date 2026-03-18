@@ -1241,5 +1241,15 @@ void EntityLesserDemon(Entity* self) {
         break;
     }
 }
+extern EInit D_us_80180A5C;
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_us_801BF7B0);
+void func_us_801BF7B0(Entity* self) {
+    FntPrint("duumy_set\n");
+    if (!self->step) {
+        InitializeEntity(D_us_80180A5C);
+        self->hitboxWidth = 0x1C;
+        self->hitboxHeight = 4;
+        self->hitboxOffX = -0x14;
+        self->hitboxState = 0;
+    }
+}
