@@ -279,7 +279,7 @@ static void func_us_801BC814(Primitive* prim) {
 }
 
 extern EInit D_us_80180A50;
-static u8 D_pspeu_092596B8[] = {
+static u8 blueFireballAnim[] = {
     1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 0};
 
 void func_us_801BD7D0(Entity* self) {
@@ -371,7 +371,7 @@ void func_us_801BD7D0(Entity* self) {
         break;
 
     case 1:
-        AnimateEntity(D_pspeu_092596B8, self);
+        AnimateEntity(blueFireballAnim, self);
         MoveEntity();
         prim = self->ext.lesserDemon.unk7C;
         if (self->facingLeft) {
@@ -400,7 +400,76 @@ void func_us_801BD7D0(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_0924F908);
+static u8 D_pspeu_092596D0[][3] = {
+    {0xC0, 0x80, 0xC0}, {0xC0, 0x80, 0x80}, {0xC0, 0xC0, 0x80},
+    {0x80, 0xC0, 0x80}, {0x80, 0xA0, 0xA0}, {0x80, 0x80, 0xC0},
+    {0xC0, 0x80, 0xC0}};
+
+void func_pspeu_0924F908(Primitive* prim) {
+    Primitive* prim2;
+
+    switch (prim->u0) {
+    case 0:
+        if (prim->u1) {
+            prim->r0 = D_pspeu_092596D0[prim->v0 - 1][0] + 0x20;
+            prim->g0 = D_pspeu_092596D0[prim->v0 - 1][1] + 0x20;
+            prim->b0 = D_pspeu_092596D0[prim->v0 - 1][2] + 0x20;
+            prim->r2 = D_pspeu_092596D0[prim->v0][0] + 0x20;
+            prim->g2 = D_pspeu_092596D0[prim->v0][1] + 0x20;
+            prim->b2 = D_pspeu_092596D0[prim->v0][2] + 0x20;
+        } else {
+            prim->r0 = D_pspeu_092596D0[prim->v0 - 1][0] + 0x20;
+            prim->g0 = D_pspeu_092596D0[prim->v0 - 1][1] + 0x20;
+            prim->b0 = D_pspeu_092596D0[prim->v0 - 1][2] + 0x20;
+            prim->r2 = D_pspeu_092596D0[prim->v0][0] + 0x20;
+            prim->g2 = D_pspeu_092596D0[prim->v0][1] + 0x20;
+            prim->b2 = D_pspeu_092596D0[prim->v0][2] + 0x20;
+        }
+        prim->r1 = prim->r0;
+        prim->g1 = prim->g0;
+        prim->b1 = prim->b0;
+        prim->r3 = prim->r2;
+        prim->g3 = prim->g2;
+        prim->b3 = prim->b2;
+        prim->u0++;
+        break;
+
+    case 1:
+        if (prim->y1 < 0xF0) {
+            prim2 = g_CurrentEntity->ext.lesserDemon.unk7C;
+            prim2 = FindFirstUnkPrim(prim2);
+            if (prim2 != NULL) {
+                prim2->p3 = 2;
+                prim2->x0 = prim->x0;
+                prim2->x1 = prim->x1;
+                prim2->x2 = prim->x2;
+                prim2->x3 = prim->x3;
+                prim2->y0 = prim->y2;
+                prim2->y1 = prim->y3;
+                prim2->y2 = prim2->y0 + 0x20;
+                prim2->y3 = prim2->y1 + 0x20;
+                prim2->priority = prim->priority;
+                prim2->drawMode = prim->drawMode;
+                prim2->u1 = prim->u1;
+                prim2->v0 = prim->v0 + 1;
+                if (prim2->v0 > 6) {
+                    prim2->v0 = 1;
+                }
+            }
+            prim->u0++;
+        }
+        break;
+
+    case 2:
+        PrimDecreaseBrightness(prim, 5);
+        if (prim->y2 < 0) {
+            prim->u0 = 0;
+            prim->drawMode = DRAW_HIDE;
+            prim->p3 = 0;
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_0924FE10);
 
