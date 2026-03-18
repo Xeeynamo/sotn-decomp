@@ -103,6 +103,7 @@ g_EInitCtulhuFireball = 0x092606F0;
 g_EInitCtulhuIceShockwave = 0x09260700;
 D_us_80180A20 = 0x09260710;
 D_us_80180A2C = 0x09260720;
+g_EInitLesserDemonSpit = 0x09260740;
 D_us_80180A68 = 0x09260770;
 g_EInitEnemy3 = 0x09260780;
 g_EInitTableWithGlobe = 0x09260790;
