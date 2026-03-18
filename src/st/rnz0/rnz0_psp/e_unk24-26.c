@@ -471,7 +471,200 @@ void func_pspeu_0924F908(Primitive* prim) {
     }
 }
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_0924FE10);
+// Lesser Demon minion spawn?
+// Seems like the vertical tractor beam effect that spawns
+// Mudmen, Skeleton, Ectoplasm
+void func_pspeu_0924FE10(void) {
+    Entity* tempEntity;
+    Primitive* prim;
+    s32 primIndex;
+    s32 entityId;
+    s16 xOffset;
+
+    switch (g_CurrentEntity->ext.lesserDemon.unk84) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_G4, 0x1E);
+        if (primIndex != -1) {
+            g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
+            g_CurrentEntity->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
+            while (prim != NULL) {
+                prim->priority = g_CurrentEntity->zPriority + 2;
+                prim->drawMode = DRAW_HIDE;
+                prim->p3 = 0;
+                prim = prim->next;
+            }
+        } else {
+            g_CurrentEntity->ext.lesserDemon.unk84 = 6;
+        }
+        g_CurrentEntity->ext.lesserDemon.unk84++;
+        break;
+
+    case 1:
+        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim->p3 = 2;
+        PGREY(prim, 0) = 0;
+        PGREY(prim, 1) = 0;
+        PGREY(prim, 2) = 0x60;
+        PGREY(prim, 3) = 0x60;
+        prim->r2 += 0x40;
+        prim->r3 += 0x40;
+        prim->y0 = 0x120;
+        prim->y1 = 0x100;
+        prim->y2 = 0x140;
+        prim->y3 = 0x120;
+        if (g_CurrentEntity->facingLeft) {
+            xOffset = -8;
+        } else {
+            xOffset = 8;
+        }
+        prim->x0 = g_CurrentEntity->posX.i.hi - 1 + xOffset;
+        prim->x1 = prim->x0 + 2;
+        prim->x2 = prim->x0;
+        prim->x3 = prim->x1;
+        prim->v0 = 1;
+        prim->priority = g_CurrentEntity->zPriority + 4;
+        prim->drawMode =
+            DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        prim->u1 = 1;
+        prim = prim->next;
+
+        prim->p3 = 2;
+        PGREY(prim, 0) = 0;
+        PGREY(prim, 1) = 0;
+        PGREY(prim, 2) = 0x60;
+        PGREY(prim, 3) = 0x60;
+        prim->r2 += 0x40;
+        prim->r3 += 0x40;
+        prim->x0 = g_CurrentEntity->posX.i.hi + 1 + xOffset;
+        prim->x1 = prim->x0 - 2;
+        prim->x2 = prim->x0;
+        prim->x3 = prim->x1;
+        prim->y0 = 0x140;
+        prim->y1 = 0x120;
+        prim->y2 = 0x160;
+        prim->y3 = 0x140;
+        prim->v0 = 1;
+        prim->priority = g_CurrentEntity->zPriority - 2;
+        prim->drawMode = DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
+        prim->u1 = 0;
+        g_CurrentEntity->ext.lesserDemon.unk85 = 0x18;
+        g_CurrentEntity->ext.lesserDemon.unk84 = 3;
+        break;
+
+    case 2:
+        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        while (prim != NULL) {
+            if (prim->p3) {
+                func_pspeu_0924F908(prim);
+            }
+            prim = prim->next;
+        }
+        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        while (prim != NULL) {
+            if (g_CurrentEntity->ext.lesserDemon.unk80 % 2) {
+                if (prim->u1) {
+                    prim->x0--;
+                    prim->x2 = prim->x0;
+                    prim->x1++;
+                    prim->x3 = prim->x1;
+                } else {
+                    prim->x0++;
+                    prim->x2 = prim->x0;
+                    prim->x1--;
+                    prim->x3 = prim->x1;
+                }
+            }
+            prim->y0 -= 8;
+            prim->y1 -= 8;
+            prim->y2 -= 8;
+            prim->y3 -= 8;
+            prim = prim->next;
+        }
+        if (g_CurrentEntity->ext.lesserDemon.unk80 % 2) {
+            if (!--g_CurrentEntity->ext.lesserDemon.unk85) {
+                g_CurrentEntity->ext.lesserDemon.unk84++;
+                tempEntity = AllocEntity(&g_Entities[176], &g_Entities[192]);
+                if (tempEntity != NULL) {
+                    CreateEntityFromEntity(
+                        0x23, g_CurrentEntity, tempEntity);
+                    tempEntity->facingLeft = g_CurrentEntity->facingLeft;
+                    if (g_CurrentEntity->facingLeft) {
+                        tempEntity->posX.i.hi -= 8;
+                    } else {
+                        tempEntity->posX.i.hi += 8;
+                    }
+                    tempEntity->params = 0x10;
+                }
+            }
+        }
+        break;
+
+    case 3:
+        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        while (prim != NULL) {
+            if (prim->p3) {
+                func_pspeu_0924F908(prim);
+            }
+            prim = prim->next;
+        }
+        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        while (prim != NULL) {
+            prim->y0 -= 8;
+            prim->y1 -= 8;
+            prim->y2 -= 8;
+            prim->y3 -= 8;
+            prim = prim->next;
+        }
+        if (g_CurrentEntity->ext.lesserDemon.unk85) {
+            if (!--g_CurrentEntity->ext.lesserDemon.unk85) {
+                g_CurrentEntity->ext.lesserDemon.unk85 = 0x18;
+                g_CurrentEntity->ext.lesserDemon.unk84--;
+            }
+        }
+        break;
+
+    case 4:
+        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        while (prim != NULL) {
+            if (prim->p3) {
+                func_pspeu_0924F908(prim);
+            }
+            prim = prim->next;
+        }
+        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        while (prim != NULL) {
+            if (prim->u1) {
+                prim->x0++;
+                prim->x2 = prim->x0;
+                prim->x1--;
+                prim->x3 = prim->x1;
+            } else {
+                prim->x0--;
+                prim->x2 = prim->x0;
+                prim->x1++;
+                prim->x3 = prim->x1;
+            }
+            prim->y0 -= 8;
+            prim->y1 -= 8;
+            prim->y2 -= 8;
+            prim->y3 -= 8;
+            prim = prim->next;
+        }
+        if (++g_CurrentEntity->ext.lesserDemon.unk85 > 0x18) {
+            g_CurrentEntity->ext.lesserDemon.unk84++;
+        }
+        break;
+
+    case 5:
+        primIndex = g_CurrentEntity->primIndex;
+        g_api.FreePrimitives(primIndex);
+        g_CurrentEntity->flags &= ~FLAG_HAS_PRIMS;
+        g_CurrentEntity->ext.lesserDemon.unk84++;
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_09250678);
 
