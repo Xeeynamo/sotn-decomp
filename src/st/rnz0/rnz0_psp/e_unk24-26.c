@@ -297,9 +297,78 @@ void func_us_801BCAB0(Entity* self) {
     }
 }
 
-// lesser demon helper
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_0924E7D0);
-// lesser demon helper
+// Lesser Demon punch attack
+void func_pspeu_0924E7D0(void) {
+    Primitive* prim;
+    s32 primIndex;
+
+    switch (g_CurrentEntity->ext.lesserDemon.unk84) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex != -1) {
+            g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
+            g_CurrentEntity->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
+            UnkPolyFunc2(prim);
+            prim->tpage = 0x13;
+            prim->clut = 0x22E;
+            prim->v0 = 0x70;
+            prim->v1 = prim->v0;
+            prim->v2 = 0x7F;
+            prim->v3 = prim->v2;
+            if (g_CurrentEntity->facingLeft) {
+                prim->next->x1 = g_CurrentEntity->posX.i.hi + 4;
+                prim->next->clut = 2;
+                prim->u0 = 0x2F;
+                prim->u1 = 0;
+            } else {
+                prim->u0 = 0;
+                prim->u1 = 0x2F;
+                prim->next->x1 = g_CurrentEntity->posX.i.hi - 4;
+                LOH(prim->next->clut) = -2;
+            }
+            prim->u2 = prim->u0;
+            prim->u3 = prim->u1;
+            prim->next->y0 = g_CurrentEntity->posY.i.hi + 1;
+            prim->priority = g_CurrentEntity->zPriority + 2;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            prim->next->b3 = 0x80;
+            LOH(prim->next->r2) = 0x28;
+            LOH(prim->next->b2) = 0x10;
+        } else {
+            g_CurrentEntity->ext.lesserDemon.unk84 = 3;
+        }
+        g_CurrentEntity->ext.lesserDemon.unk84++;
+        break;
+
+    case 1:
+        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        if (prim->next->r3) {
+            prim->clut = 0x236;
+        } else {
+            prim->clut = 0x22E;
+        }
+        prim->next->r3 ^= 1;
+        UnkPrimHelper(prim);
+        LOH(prim->next->r2) += 2;
+        LOH(prim->next->b2) -= 1;
+        prim->next->b3 -= 4;
+        if (LOH(prim->next->r2) > 0x38) {
+            g_CurrentEntity->ext.lesserDemon.unk84++;
+        }
+        break;
+
+    case 2:
+        primIndex = g_CurrentEntity->primIndex;
+        g_api.FreePrimitives(primIndex);
+        g_CurrentEntity->flags &= ~FLAG_HAS_PRIMS;
+        g_CurrentEntity->ext.lesserDemon.unk84++;
+        break;
+    }
+}
+
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_0924EB18);
 
 static void func_us_801BC814(Primitive* prim) {
