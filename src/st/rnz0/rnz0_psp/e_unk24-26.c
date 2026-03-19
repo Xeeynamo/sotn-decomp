@@ -3,7 +3,55 @@
 
 extern s16 D_pspeu_092595A8[];
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_0924DBD0);
+extern EInit D_us_80180A38;
+
+
+// Seems to be related to the iframes of the ectoplasm and the skeleton spawns
+// Mudman spawn animation causes iframes for it
+void func_pspeu_0924DBD0(s16* unkArg) {
+    switch (g_CurrentEntity->step_s) {
+    case 0:
+        g_CurrentEntity->animCurFrame = 0;
+        g_CurrentEntity->hitboxState = 0;
+        g_CurrentEntity->drawFlags |= ENTITY_OPACITY;
+        g_CurrentEntity->opacity = 0;
+        g_CurrentEntity->step_s++;
+        if (!unkArg) {
+            g_CurrentEntity->step_s = 2;
+        }
+        break;
+
+    case 1:
+        if (UnkCollisionFunc3(unkArg) & 1) {
+            g_CurrentEntity->animCurFrame = 1;
+            g_CurrentEntity->step_s++;
+        }
+        break;
+
+    case 2:
+        g_CurrentEntity->opacity += 2;
+        if (g_CurrentEntity->opacity == 0xC0) {
+            g_CurrentEntity->drawFlags = ENTITY_DEFAULT;
+            g_CurrentEntity->blendMode = BLEND_NO;
+            g_CurrentEntity->ext.lesserDemon.unkAC = 0x40;
+            g_CurrentEntity->step_s++;
+        }
+        break;
+
+    case 3:
+        if (g_CurrentEntity->ext.lesserDemon.unkAC & 1) {
+            g_CurrentEntity->palette = D_us_80180A38[3];
+        } else {
+            g_CurrentEntity->palette = PAL_FLAG(PAL_UNK_19F);
+        }
+        if (!(--g_CurrentEntity->ext.lesserDemon.unkAC)) {
+            g_CurrentEntity->palette = D_us_80180A38[3];
+            g_CurrentEntity->hitboxState = 3;
+            SetStep(1);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_0924DDF0);
 
@@ -715,7 +763,6 @@ extern u8 D_us_80181BF0[];
 extern u8 D_us_80181C04[][3];
 extern u8 D_us_80181C1C[][3];
 
-extern EInit D_us_80180A38;
 
 void EntityLesserDemon(Entity* self) {
     Collider collider;
