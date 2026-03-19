@@ -1908,7 +1908,7 @@ void func_us_801C4228(Entity* self) {
 
 // Function that checks when alucard pushes the box in underground caverns
 // to block the water hole
-void func_us_801C4520(Entity* self) {
+void EntityWaterBox(Entity* self) {
     Entity* player;
     u16 collision;
 
@@ -1928,7 +1928,7 @@ void func_us_801C4520(Entity* self) {
 
     if (collision & 1 && g_Player.vram_flag & TOUCHING_GROUND) {
         if (self->posX.i.hi > player->posX.i.hi) {
-            if (g_pads[0].pressed & PAD_RIGHT && PLAYER.step == 1) {
+            if (g_pads[0].pressed & PAD_RIGHT && PLAYER.step == Player_Walk) {
                 if (self->ext.timer.t) {
                     self->ext.timer.t--;
                     return;
@@ -1940,7 +1940,7 @@ void func_us_801C4520(Entity* self) {
                 self->ext.timer.t = 3;
             }
         } else {
-            if (g_pads[0].pressed & PAD_LEFT && PLAYER.step == 1) {
+            if (g_pads[0].pressed & PAD_LEFT && PLAYER.step == Player_Walk) {
                 if (self->ext.timer.t) {
                     self->ext.timer.t--;
                     return;
@@ -1965,7 +1965,7 @@ static u8 D_us_80181588[] = {1, 7, 1, 8, 1, 9, 0, 0};
  * Does something with the water level that kills the 4 spear guards in the
  * alcove
  */
-void func_us_801C4738(Entity* self) {
+void EntityWaterSpray(Entity* self) {
     Entity* newEnt;
     s16* var_s2;
     s16* var_s1;
@@ -2043,7 +2043,7 @@ void func_us_801C4738(Entity* self) {
 
 static u16 D_us_80181590[] = {0x30, 0x0F, 0x28, 0x0F, 0x18, 0x0F};
 
-void func_us_801C4980(Entity* self) {
+void EntityFloatingIcePlatform(Entity* self) {
     u16* hitboxPtr;
     u16 collision;
     Entity* player;
@@ -2271,7 +2271,7 @@ void func_us_801C5020(Entity* self) {
     }
 }
 
-void func_us_801C50FC(void) {
+static void RemoveBridgeTiles(void) {
     u16* tile;
     s16 i;
 
@@ -2327,7 +2327,7 @@ void func_us_801C5268(Entity* self) {
         self->animSet = ANIMSET_OVL(0);
         self->posX.i.hi = 0x380 - g_Tilemap.scrollX.i.hi;
         if (g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE] > 1) {
-            func_us_801C50FC();
+            RemoveBridgeTiles();
             DestroyEntity(self);
             return;
         }
@@ -2359,7 +2359,7 @@ void func_us_801C5268(Entity* self) {
         g_pads[1].tapped & PAD_TRIANGLE) {
         PlaySfxPositional(SFX_WOODEN_BRIDGE_EXPLODE);
         g_CastleFlags[NO4_SKELETON_APE_AND_BRIDGE]++;
-        func_us_801C50FC();
+        RemoveBridgeTiles();
         func_us_801C5134();
     }
 }
