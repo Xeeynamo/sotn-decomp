@@ -235,7 +235,8 @@ void RicEntityWhip(Entity* self) {
         break;
     case 1:
         if (sp4A == 0) {
-            if (self->palette < 0x8148 && self->palette >= 0x8140) {
+            if (self->palette < PAL_FLAG(PAL_UNK_148) &&
+                self->palette >= PAL_FLAG(PAL_RIC_WHIP)) {
                 if (self->ext.whip.unkA4) {
                     self->ext.whip.unkA4--;
                 } else {

@@ -33,7 +33,7 @@ void func_us_801D4558(Entity* self) {
         InitializeEntity(D_us_80180B18);
         self->ext.et_801D4558.unk80 = self->hitboxState;
         self->hitboxState = 0;
-        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
+        self->drawFlags = ENTITY_SCALEX | ENTITY_SCALEY;
 
         self->scaleX = 0;
         self->scaleY = 0;

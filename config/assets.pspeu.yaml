@@ -535,6 +535,14 @@ files:
         vram: 0x09237700
         assets:
           - [0x80, skip]
+          - [0x2CDF8, cmpgfx, stage_name_en, 128, 64, 4]
+          - [0x2CFA0, cmpgfx, stage_name_it, 128, 64, 4]
+          - [0x2D190, cmpgfx, stage_name_sp, 128, 64, 4]
+          - [0x2D360, cmpgfx, stage_name_ge, 128, 64, 4]
+          - [0x2D5A8, cmpgfx, stage_name_fr, 128, 64, 4]
+          - [0x2D780, skip]
+          - [0x3DFA8, rooms, rooms]
+          - [0x3E068, skip]
           - [0x607C8, cmpgfx, D_pspeu_09297E48, 128, 128, 4]
           - [0x60DC8, cmpgfx, D_pspeu_09298448, 128, 128, 4]
           - [0x613B8, cmpgfx, D_pspeu_09298A38, 128, 128, 4]

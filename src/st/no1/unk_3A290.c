@@ -533,30 +533,22 @@ void func_us_801BA290(Entity* self) {
             rotA.pad = 0;
             rotB.pad = 0;
             rotC.pad = 0;
-#ifdef VERSION_PSP
-            RotTransPers3(&rotA, &rotB, &rotC, ((long*)(i * 12)) + (0x4000 | 0),
-                          ((long*)(i * 12)) + (0x4000 | 1),
-                          ((long*)(i * 12)) + (0x4000 | 2), &p, &flag);
-#else
-            RotTransPers3(
-                &rotA, &rotB, &rotC, ((long*)(i * 12)) + (0x7E00000 | 0),
-                ((long*)(i * 12)) + (0x7E00000 | 1),
-                ((long*)(i * 12)) + (0x7E00000 | 2), &p, &flag);
-#endif
+            RotTransPers3(&rotA, &rotB, &rotC, &SPAD(0)[i * 3], &SPAD(1)[i * 3],
+                          &SPAD(2)[i * 3], &p, &flag);
         }
         prim = self->ext.et_801BA290.unk7C;
         rnd = 0;
         for (i = 0; i < 6; i++) {
-            LOW(prim->x0) = SPAD(i * 3)[0];
-            LOW(prim->x1) = SPAD(i * 3)[1];
-            LOW(prim->x2) = SPAD(i * 3)[3];
-            LOW(prim->x3) = SPAD(i * 3)[4];
+            LOW(prim->x0) = SPAD(0)[i * 3];
+            LOW(prim->x1) = SPAD(1)[i * 3];
+            LOW(prim->x2) = SPAD(3)[i * 3];
+            LOW(prim->x3) = SPAD(4)[i * 3];
             prim = prim->next;
 
-            LOW(prim->x0) = SPAD(i * 3)[1];
-            LOW(prim->x1) = SPAD(i * 3)[2];
-            LOW(prim->x2) = SPAD(i * 3)[4];
-            LOW(prim->x3) = SPAD(i * 3)[5];
+            LOW(prim->x0) = SPAD(1)[i * 3];
+            LOW(prim->x1) = SPAD(2)[i * 3];
+            LOW(prim->x2) = SPAD(4)[i * 3];
+            LOW(prim->x3) = SPAD(5)[i * 3];
             prim = prim->next;
             rnd += 3;
         }

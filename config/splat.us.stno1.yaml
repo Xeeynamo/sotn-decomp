@@ -51,7 +51,7 @@ segments:
       - [0xE8C, .data, unk_36490]
       - [0xF48, .data, e_mouse]
       - [0xF8C, .data, e_chair]
-      - [0xFA0, data]
+      - [0xFA0, .data, unk_381E8]
       - [0x13AC, .data, unk_38F50]
       - [0x142C, .data, unk_39028]
       - [0x1454, .data, unk_39184]

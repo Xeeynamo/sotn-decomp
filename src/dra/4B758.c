@@ -287,7 +287,7 @@ void RenderEntities(void) {
             }
             func_800EB758(r->x, r->y, entity, r->eDrawFlags, poly, r->flipX);
             palette = entity->palette;
-            if (palette & 0x8000) {
+            if (palette & PAL_UNK_FLAG) {
                 poly->clut = g_ClutIds[palette & 0x7FFF];
             } else {
                 poly->clut = g_ClutIds[animFrame[2] + palette];
@@ -405,7 +405,7 @@ void RenderEntities(void) {
                         r->x, r->y, entity, r->eDrawFlags, poly, r->flipX);
                 }
                 palette = entity->palette;
-                if (palette & 0x8000) {
+                if (palette & PAL_UNK_FLAG) {
                     poly->clut = g_ClutIds[palette & 0x7FFF];
                 } else {
                     poly->clut = g_ClutIds[animFrame[5] + palette];
@@ -783,7 +783,7 @@ void RenderEntitiesPSP(void) {
             }
             func_800EB758(r->x, r->y, entity, r->eDrawFlags, poly, r->flipX);
             palette = entity->palette;
-            if (palette & 0x8000) {
+            if (palette & PAL_UNK_FLAG) {
                 poly->clut = g_ClutIds[palette & 0x7FFF];
             } else {
                 poly->clut = g_ClutIds[animFrame[2] + palette];
@@ -907,7 +907,7 @@ void RenderEntitiesPSP(void) {
                         r->x, r->y, entity, r->eDrawFlags, poly, r->flipX);
                 }
                 palette = entity->palette;
-                if (palette & 0x8000) {
+                if (palette & PAL_UNK_FLAG) {
                     poly->clut = g_ClutIds[palette & 0x7FFF];
                 } else {
                     poly->clut = g_ClutIds[animFrame[5] + palette];
