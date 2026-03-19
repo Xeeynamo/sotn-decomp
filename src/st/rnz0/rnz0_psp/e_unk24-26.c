@@ -369,7 +369,63 @@ void func_pspeu_0924E7D0(void) {
     }
 }
 
-INCLUDE_ASM("st/rnz0_psp/nonmatchings/rnz0_psp/e_unk24-26", func_pspeu_0924EB18);
+void func_pspeu_0924EB18(void) {
+    Primitive* prim;
+    s32 primIndex;
+
+    switch (g_CurrentEntity->ext.lesserDemon.unk84) {
+    case 0:
+        primIndex = g_api.AllocPrimitives(PRIM_GT4, 2);
+        if (primIndex != -1) {
+            g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
+            g_CurrentEntity->primIndex = primIndex;
+            prim = &g_PrimBuf[primIndex];
+            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
+            UnkPolyFunc2(prim);
+            prim->tpage = 0x1A;
+            prim->clut = PAL_CC_BLUE_EFFECT_A;
+            prim->u0 = prim->u2 = 0xE0;
+            prim->u1 = prim->u3 = 0xFF;
+            prim->v0 = prim->v1 = 0x40;
+            prim->v2 = prim->v3 = 0x5F;
+            if (g_CurrentEntity->facingLeft) {
+                prim->next->x1 = g_CurrentEntity->posX.i.hi - 0x14;
+            } else {
+                prim->next->x1 = g_CurrentEntity->posX.i.hi + 0x14;
+            }
+            prim->next->y0 = g_CurrentEntity->posY.i.hi + 1;
+            prim->priority = g_CurrentEntity->zPriority + 2;
+            prim->drawMode =
+                DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
+            prim->p3 |= 0x10;
+            LOH(prim->next->r2) = 0x10;
+            LOH(prim->next->b2) = 0x10;
+            prim->next->x2 = 0x100;
+            prim->next->y2 = 0x100;
+            prim->next->b3 = 0x80;
+        } else {
+            g_CurrentEntity->ext.lesserDemon.unk84 = 3;
+        }
+        PlaySfxPositional(SFX_ELECTRICITY);
+        g_CurrentEntity->ext.lesserDemon.unk84++;
+        break;
+
+    case 1:
+        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        LOH(prim->next->tpage) += 0x40;
+        prim->next->x2 += 0x40;
+        prim->next->y2 = prim->next->x2;
+        UnkPrimHelper(prim);
+        break;
+
+    case 2:
+        primIndex = g_CurrentEntity->primIndex;
+        g_api.FreePrimitives(primIndex);
+        g_CurrentEntity->flags &= ~FLAG_HAS_PRIMS;
+        g_CurrentEntity->ext.lesserDemon.unk84++;
+        break;
+    }
+}
 
 static void func_us_801BC814(Primitive* prim) {
     s16 angleOffset;
