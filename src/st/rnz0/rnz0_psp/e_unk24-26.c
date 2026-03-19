@@ -1,7 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rnz0.h"
 
+extern s16 D_pspeu_09259590[];
+extern s16 D_pspeu_092595A0[];
 extern s16 D_pspeu_092595A8[];
+extern u8 D_pspeu_092595B8[];
+extern u8 D_pspeu_092595C8[];
+extern u8 D_pspeu_092595E0[];
+extern u8 D_pspeu_092595E8[];
+extern u8 D_pspeu_092595F8[];
+extern u8 D_pspeu_09259600[];
+extern u8 D_pspeu_09259620[];
+extern u8 D_pspeu_09259640[];
+extern u8 D_pspeu_09259650[];
+extern u8 D_pspeu_09259660[];
+extern u8 D_pspeu_09259670[];
+extern u8 D_pspeu_09259680[];
 
 extern EInit D_us_80180A38;
 
@@ -153,7 +167,6 @@ u8 func_pspeu_0924DDF0(void) {
 
 extern EInit g_EInitLesserDemonSpit;
 
-extern s16 D_pspeu_092595A0[];
 
 // Traveling diagonally downward
 static u8 D_pspeu_09259690[] = {1, 25, 1, 26, 1, 27, 1, 28, 0};
@@ -960,30 +973,6 @@ u8 func_pspeu_09250678(void) {
     }
     return ret;
 }
-
-extern s16 D_pspeu_09259590[];
-extern s16 D_us_80181AE4[];
-extern s16 D_us_80181AEC[];
-extern s16 D_us_80181AF4[];
-extern u8 D_pspeu_092595B8[];
-extern u8 D_pspeu_092595C8[];
-extern u8 D_pspeu_092595E0[];
-extern u8 D_pspeu_092595E8[];
-extern u8 D_pspeu_092595F8[];
-extern u8 D_pspeu_09259600[];
-extern u8 D_pspeu_09259620[];
-extern u8 D_pspeu_09259640[];
-extern u8 D_pspeu_09259650[];
-extern u8 D_pspeu_09259660[];
-extern u8 D_pspeu_09259670[];
-extern u8 D_pspeu_09259680[];
-extern u8 D_us_80181BCC[];
-extern u8 D_us_80181BD8[];
-extern u8 D_us_80181BE8[];
-extern u8 D_us_80181BF0[];
-extern u8 D_us_80181C04[][3];
-extern u8 D_us_80181C1C[][3];
-
 
 void EntityLesserDemon(Entity* self) {
     Collider collider;
