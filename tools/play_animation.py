@@ -71,7 +71,7 @@ def load_anims(src_file):
             # Now use regex to find name and the data between the curly brackets
             anim_name = re.findall(r"(?<=staticu8)[^\[]*", anim)[0]
             anim_data = re.findall(r"(?<={)[^}]*", anim)[0]
-            # detect double-nested 2d arrays and skip them 
+            # detect double-nested 2d arrays and skip them
             if "{" in anim_data:
                 continue
             # Turn the data into a Python list of numbers

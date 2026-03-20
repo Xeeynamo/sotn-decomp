@@ -7,36 +7,44 @@ static s16 D_pspeu_092595A0[] = {0, 10, 255, 0};
 static s16 D_pspeu_092595A8[] = {0, 8, 10, 8, 8, 10, 8, 0};
 
 // Walk cycle
-static u8 D_pspeu_092595B8[] = {8, 1, 11, 2, 11, 3, 16, 4, 11, 5, 11, 6, 8, 1, 0};
+static u8 D_pspeu_092595B8[] = {
+    8, 1, 11, 2, 11, 3, 16, 4, 11, 5, 11, 6, 8, 1, 0};
 // Punch attack
-static u8 D_pspeu_092595C8[] = {16, 7, 32, 8, 1, 1, 1, 9, 1, 45, 2, 46, 2, 47, 1, 45, 1, 9, 12, 11, 10, 1, 255, 0};
+static u8 D_pspeu_092595C8[] = {16, 7,  32, 8,  1, 1, 1,  9,  1,  45, 2,   46,
+                                2,  47, 1,  45, 1, 9, 12, 11, 10, 1,  255, 0};
 // Jump windup
 static u8 D_pspeu_092595E0[] = {20, 12, 10, 13, 255, 0};
 // Flying through the air
-static u8 D_pspeu_092595E8[] = {10, 14, 10, 15, 10, 16, 10, 17, 1, 18, 10, 15, 0};
+static u8 D_pspeu_092595E8[] = {
+    10, 14, 10, 15, 10, 16, 10, 17, 1, 18, 10, 15, 0};
 // Jump landing (note it's the windup backward)
 static u8 D_pspeu_092595F8[] = {10, 13, 20, 12, 255, 0};
 // Flying (slow wing flaps)
-static u8 D_pspeu_09259600[] = {5, 39, 4, 41, 4, 15, 5, 42, 3, 16, 3, 43, 2, 44, 10, 40, 1, 44, 1, 16, 1, 15, 2, 41, 0};
+static u8 D_pspeu_09259600[] = {
+    5,  39, 4,  41, 4,  15, 5,  42, 3,  16, 3,  43, 2,
+    44, 10, 40, 1,  44, 1,  16, 1,  15, 2,  41, 0};
 // Flying (faster wing flaps - note same frames for less time)
-static u8 D_pspeu_09259620[] = {3, 39, 2, 41, 2, 15, 3, 42, 2, 16, 2, 43, 1, 44, 6, 40, 1, 44, 1, 16, 1, 15, 2, 41, 0};
+static u8 D_pspeu_09259620[] = {3, 39, 2, 41, 2, 15, 3, 42, 2, 16, 2, 43, 1, 44,
+                                6, 40, 1, 44, 1, 16, 1, 15, 2, 41, 0};
 // Windup for minion spawning
 static u8 D_pspeu_09259640[] = {4, 19, 2, 20, 2, 21, 2, 22, 10, 17, 255, 0};
 // Windup and shoot fireball
 static u8 D_pspeu_09259650[] = {40, 7, 64, 8, 1, 1, 42, 9, 10, 1, 255, 0};
 // Minion spawning animation
-static u8 D_pspeu_09259660[] = {10, 18, 16, 19, 48, 24, 10, 19, 10, 16, 10, 17, 255, 0};
+static u8 D_pspeu_09259660[] = {
+    10, 18, 16, 19, 48, 24, 10, 19, 10, 16, 10, 17, 255, 0};
 // Some kind of death animation
-static u8 D_pspeu_09259670[] = {24, 1, 12, 2, 12, 3, 48, 4, 12, 5, 12, 6, 24, 1, 0};
+static u8 D_pspeu_09259670[] = {
+    24, 1, 12, 2, 12, 3, 48, 4, 12, 5, 12, 6, 24, 1, 0};
 // Final fade-away death animation
-static u8 D_pspeu_09259680[] = {6, 39, 6, 41, 6, 12, 6, 13, 6, 14, 6, 20, 6, 24, 255, 0};
+static u8 D_pspeu_09259680[] = {
+    6, 39, 6, 41, 6, 12, 6, 13, 6, 14, 6, 20, 6, 24, 255, 0};
 
 extern EInit D_us_80180A38;
 
-typedef enum{
+typedef enum {
     LD_STEP_MINION_INIT = 32,
 } LesserDemonSteps;
-
 
 // Seems to be related to the iframes of the minion spawn
 void func_pspeu_0924DBD0(s16* unkArg) {
@@ -181,9 +189,7 @@ u8 func_pspeu_0924DDF0(void) {
     return ret;
 }
 
-
 extern EInit g_EInitLesserDemonSpit;
-
 
 // Traveling diagonally downward
 static u8 D_pspeu_09259690[] = {1, 25, 1, 26, 1, 27, 1, 28, 0};
@@ -707,12 +713,11 @@ static u8 D_pspeu_092596D0[][3] = {
     {0xC0, 0x80, 0xC0}};
 
 static u8 unused_triples[][3] = {
-    {0x60, 0x40, 0x60}, {0x60, 0x40, 0x40}, {0x60, 0x60, 0x40}, 
+    {0x60, 0x40, 0x60}, {0x60, 0x40, 0x40}, {0x60, 0x60, 0x40},
     {0x40, 0x60, 0x40}, {0x40, 0x60, 0x60}, {0x40, 0x40, 0x60},
     {0x60, 0x40, 0x60}};
 
 static s16 D_pspeu_092596E8[] = {0x40, 0x80, 0xC0, 0x80};
-
 
 void func_pspeu_0924F908(Primitive* prim) {
     Primitive* prim2;
@@ -897,7 +902,8 @@ void func_pspeu_0924FE10(void) {
                 g_CurrentEntity->ext.lesserDemon.unk84++;
                 tempEntity = AllocEntity(&g_Entities[176], &g_Entities[192]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_LESSER_DEMON, g_CurrentEntity, tempEntity);
+                    CreateEntityFromEntity(
+                        E_LESSER_DEMON, g_CurrentEntity, tempEntity);
                     tempEntity->facingLeft = g_CurrentEntity->facingLeft;
                     if (g_CurrentEntity->facingLeft) {
                         tempEntity->posX.i.hi -= 8;
@@ -989,9 +995,11 @@ u8 func_pspeu_09250678(void) {
     }
     if (g_CurrentEntity->poseTimer == 0) {
         if (g_CurrentEntity->facingLeft) {
-            g_CurrentEntity->posX.i.hi += D_pspeu_092595A8[g_CurrentEntity->pose];
+            g_CurrentEntity->posX.i.hi +=
+                D_pspeu_092595A8[g_CurrentEntity->pose];
         } else {
-            g_CurrentEntity->posX.i.hi -= D_pspeu_092595A8[g_CurrentEntity->pose];
+            g_CurrentEntity->posX.i.hi -=
+                D_pspeu_092595A8[g_CurrentEntity->pose];
         }
     }
     return ret;
@@ -1007,7 +1015,7 @@ void EntityLesserDemon(Entity* self) {
     s16 tempVar;
 
     if ((self->flags & FLAG_DEAD) && (self->step < 15)) {
-        if(self->ext.lesserDemon.unk88 != NULL){
+        if (self->ext.lesserDemon.unk88 != NULL) {
             tempEntity = self->ext.lesserDemon.unk88;
             DestroyEntity(tempEntity);
             self->ext.lesserDemon.unk88 = NULL;
@@ -1022,13 +1030,13 @@ void EntityLesserDemon(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180A38);
-        #ifdef VERSION_US
+#ifdef VERSION_US
         self->flags |= FLAG_UNK_02000000;
-        #endif
+#endif
         self->zPriority -= 2;
         self->hitboxOffX = 0;
         self->hitboxOffY = 4;
-        if(self->params & PARAM_IS_MINION){
+        if (self->params & PARAM_IS_MINION) {
             self->animCurFrame = 0;
             self->step = LD_STEP_MINION_INIT;
             self->hitboxState = 0;
@@ -1069,21 +1077,20 @@ void EntityLesserDemon(Entity* self) {
         if (--self->ext.lesserDemon.unk80) {
             break;
         }
-            if (!(self->posX.i.hi & 0xFF00)) {
-                if (Random() & 1) {
-                    self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-                    self->ext.lesserDemon.unk84 = 0;
-                    SetStep(13);
-                } else {
-                    SetStep(8);
-                }
-            }
-            else if (g_Timer % 4 == 0){
-                SetStep(3);
+        if (!(self->posX.i.hi & 0xFF00)) {
+            if (Random() & 1) {
+                self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
+                self->ext.lesserDemon.unk84 = 0;
+                SetStep(13);
             } else {
                 SetStep(8);
             }
-        
+        } else if (g_Timer % 4 == 0) {
+            SetStep(3);
+        } else {
+            SetStep(8);
+        }
+
         break;
 
     case 6:
@@ -1229,7 +1236,7 @@ void EntityLesserDemon(Entity* self) {
                 self->facingLeft = 0;
             }
             self->animCurFrame = 0x18;
-            
+
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
                 CreateEntityFromEntity(E_UNK_26, self, tempEntity);
@@ -1481,8 +1488,8 @@ void EntityLesserDemon(Entity* self) {
             break;
 
         case 2:
-            if(!--self->ext.lesserDemon.unk80){
-                PlaySfxPositional(0x65E);
+            if (!--self->ext.lesserDemon.unk80) {
+                PlaySfxPositional(SFX_EXPLODE_SMALL);
                 DestroyEntity(self);
                 break;
             }
@@ -1497,7 +1504,7 @@ void EntityLesserDemon(Entity* self) {
                     tempEntity->posY.i.hi += (Random() & 0x1F) - 0x10;
                 }
             }
-            
+
             break;
         }
         break;

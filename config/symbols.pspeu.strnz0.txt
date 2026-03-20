@@ -61,7 +61,6 @@ UnkPrimHelper = 0x09253F80;
 FindFirstUnkPrim = 0x09254700;
 PrimToggleVisibility = 0x09254750;
 UnkPolyFunc2 = 0x09254940;
-PrimDecreaseBrightness = 0x092549A8;
 EntityFloorTrap = 0x09254A78;
 func_us_801C1758 = 0x09255288;
 func_us_801C1CC0 = 0x09255A00;
