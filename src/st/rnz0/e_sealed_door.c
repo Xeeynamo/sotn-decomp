@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
+#include "rnz0.h"
 
-INCLUDE_ASM("st/rnz0/nonmatchings/e_sealed_door", SealedDoorIsNearPlayer);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/e_sealed_door", EntitySealedDoor);
+#define SEALED_DOOR_PALETTE 0x243
+#include "../e_sealed_door.h"
