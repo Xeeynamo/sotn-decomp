@@ -3,4 +3,3 @@
 
 #define SEALED_DOOR_PALETTE 0x243
 #include "../e_sealed_door.h"
-
