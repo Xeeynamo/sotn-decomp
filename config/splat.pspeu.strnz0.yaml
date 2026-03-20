@@ -46,7 +46,7 @@ segments:
       - [0x2730, c, create_entity] # create_entity
       - [0x3718, c, rnz0_psp/e_salem_witch] # en_salem_witch
       - [0x5860, c, e_fire_demon]
-      - [0x8DE8, c, rnz0_psp/e_unk31]
+      - [0x8DE8, c, e_unk31]
       - [0x9308, c, e_stage_name] # e_stage_name
       - [0xA188, c, e_red_door] # e_red_door
       - [0xB490, c, st_update] # st_update
@@ -77,7 +77,7 @@ segments:
       - [0x20F00, .data, e_ctulhu]
       - [0x21050, data]
       - [0x21218, .data, e_fire_demon]
-      - [0x21368, .data, rnz0_psp/e_unk31]
+      - [0x21368, .data, e_unk31]
       - [0x213C8, .data, e_red_door]
       - [0x213E0, .data, st_update]
       - [0x21410, .data, e_particles]
