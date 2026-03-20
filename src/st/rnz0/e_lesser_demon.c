@@ -1327,7 +1327,8 @@ void EntityLesserDemon(Entity* self) {
             if (func_pspeu_0924DDF0()) {
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_LESSER_DEMON_SPIT, self, tempEntity);
+                    CreateEntityFromEntity(
+                        E_LESSER_DEMON_SPIT, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         tempEntity->posX.i.hi += 12;
@@ -1365,7 +1366,8 @@ void EntityLesserDemon(Entity* self) {
             self->ext.lesserDemon.unk84 = 2;
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_LESSER_DEMON_FIREBALL, self, tempEntity);
+                CreateEntityFromEntity(
+                    E_LESSER_DEMON_FIREBALL, self, tempEntity);
                 tempEntity->facingLeft = self->facingLeft;
             }
         }
