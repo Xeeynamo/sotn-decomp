@@ -37,10 +37,10 @@ EntityIntenseExplosion = 0x0924A1D0;
 PlaySfxPositional = 0x0924A340;
 EntityDamageDisplay = 0x0924BC68; // source=match
 EntitySealedDoor = 0x0924C7F8;
-func_us_801BCAB0 = 0x0924E280;
-func_us_801BD7D0 = 0x0924F3D8;
+EntityLesserDemonSpit = 0x0924E280;
+EntityLesserDemonFireball = 0x0924F3D8;
 EntityLesserDemon = 0x09250790;
-func_us_801BF7B0 = 0x09252198;
+EntityLesserDemonDummy = 0x09252198;
 EntityRoomForeground = 0x09252808; // source=match
 DestroyEntity = 0x09252920;
 AnimateEntity = 0x09252A40;

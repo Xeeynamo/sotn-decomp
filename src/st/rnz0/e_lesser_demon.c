@@ -199,9 +199,7 @@ static u8 D_pspeu_092596A0[] = {
 // Fizzling out on ground
 static u8 D_pspeu_092596B0[] = {4, 37, 4, 38, 255, 0};
 
-// EntityLesserDemonSpit
-
-void func_us_801BCAB0(Entity* self) {
+void EntityLesserDemonSpit(Entity* self) {
     Primitive* prim;
     s32 primIndex;
     u16 posX, posY;
@@ -589,7 +587,7 @@ extern EInit D_us_80180A50;
 static u8 blueFireballAnim[] = {
     1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 0};
 
-void func_us_801BD7D0(Entity* self) {
+void EntityLesserDemonFireball(Entity* self) {
     Primitive* prim;
     Primitive* uninitializedPrim;
     s32 primIndex;
@@ -1239,7 +1237,7 @@ void EntityLesserDemon(Entity* self) {
 
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_UNK_26, self, tempEntity);
+                CreateEntityFromEntity(E_LESSER_DEMON_DUMMY, self, tempEntity);
                 self->ext.lesserDemon.unk88 = tempEntity;
             } else {
                 self->ext.lesserDemon.unk88 = NULL;
@@ -1329,7 +1327,7 @@ void EntityLesserDemon(Entity* self) {
             if (func_pspeu_0924DDF0()) {
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
-                    CreateEntityFromEntity(E_UNK_24, self, tempEntity);
+                    CreateEntityFromEntity(E_LESSER_DEMON_SPIT, self, tempEntity);
                     tempEntity->facingLeft = self->facingLeft;
                     if (self->facingLeft) {
                         tempEntity->posX.i.hi += 12;
@@ -1367,7 +1365,7 @@ void EntityLesserDemon(Entity* self) {
             self->ext.lesserDemon.unk84 = 2;
             tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (tempEntity != NULL) {
-                CreateEntityFromEntity(E_UNK_25, self, tempEntity);
+                CreateEntityFromEntity(E_LESSER_DEMON_FIREBALL, self, tempEntity);
                 tempEntity->facingLeft = self->facingLeft;
             }
         }
@@ -1534,7 +1532,7 @@ void EntityLesserDemon(Entity* self) {
 }
 extern EInit D_us_80180A5C;
 
-void func_us_801BF7B0(Entity* self) {
+void EntityLesserDemonDummy(Entity* self) {
     FntPrint("duumy_set\n");
     if (!self->step) {
         InitializeEntity(D_us_80180A5C);

@@ -37,9 +37,9 @@ void EntityUnkId20(Entity* self);
 void EntityUnkId21(Entity* self);
 void EntityUnkId22(Entity* self);
 void EntityLesserDemon(Entity* self);
-void func_us_801BCAB0(Entity* self);
-void func_us_801BD7D0(Entity* self);
-void func_us_801BF7B0(Entity* self);
+void EntityLesserDemonSpit(Entity* self);
+void EntityLesserDemonFireball(Entity* self);
+void EntityLesserDemonDummy(Entity* self);
 void EntityTableWithGlobe(Entity* self);
 void EntityLifeMaxTank(Entity* self);
 void EntityBlueFlameTable(Entity* self);
@@ -93,14 +93,14 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCtulhuFireball,
     EntityCtulhuIceShockwave,
     EntityCtulhuDeath,
-    EntityFireDemon,   // 1F
-    EntityUnkId20,     // 20
-    EntityUnkId21,     // 21
-    EntityUnkId22,     // 22
-    EntityLesserDemon, // 23
-    func_us_801BCAB0,
-    func_us_801BD7D0,
-    func_us_801BF7B0,
+    EntityFireDemon,
+    EntityUnkId20,
+    EntityUnkId21,
+    EntityUnkId22,
+    EntityLesserDemon,
+    EntityLesserDemonSpit,
+    EntityLesserDemonFireball,
+    EntityLesserDemonDummy,
     EntityTableWithGlobe,
     EntityLifeMaxTank,
     EntityBlueFlameTable,
