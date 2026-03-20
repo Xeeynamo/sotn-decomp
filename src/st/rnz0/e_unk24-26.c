@@ -1024,6 +1024,7 @@ void EntityLesserDemon(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80180A38);
+        self->flags |= FLAG_UNK_02000000;
         self->zPriority -= 2;
         self->hitboxOffX = 0;
         self->hitboxOffY = 4;
