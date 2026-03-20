@@ -11,7 +11,8 @@ static u8 anim_hit[] = {
 static u8 anim_become_skull[] = {
     7, 26, 7, 27, 7, 28, 7, 29, 7, 30, 7, 31, 7, 32, 16, 33, 255, 0};
 // Wing flapping cycle, looks similar to the first animation
-static u8 anim_unused[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 6, 2, 7, 2, 8, 2, 9, 2, 10, 0, 0, 0, 0};
+static u8 anim_unused[] = {
+    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 6, 2, 7, 2, 8, 2, 9, 2, 10, 0, 0, 0, 0};
 
 extern EInit D_us_80180AA4;
 
