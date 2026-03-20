@@ -1290,7 +1290,7 @@
 | dra    | 5D5BC.rodata                         |       32 |          0 | Yes    |       |     |
 | dra    | 1DDC0.rodata                         |       32 |          0 | Yes    |       |     |
 | no3    | popup.rodata                         |       32 |          0 | Yes    |       |     |
-| rnz0   | e_unk24-26.rodata                    |       32 |          0 | Yes    |       |     |
+| rnz0   | e_lesser_demon.rodata                |       32 |          0 | Yes    |       |     |
 | main   | sceGuDrawBufferList                  |       32 |          1 |        |       |     |
 | main   | sceGuGetMemory                       |       32 |          1 |        |       |     |
 | main   | func_psp_08910978                    |       32 |          1 |        |       |     |
@@ -1458,7 +1458,7 @@
 | rare   | func_pspeu_09239A50                  |       36 |          4 |        |       |     |
 | rcat   | func_pspeu_09237B50                  |       36 |          4 |        |       |     |
 | rnz0   | func_pspeu_0923A200                  |       36 |          4 |        |       |     |
-| rnz0   | func_us_801BF7B0                     |       36 |          4 |        |       |     |
+| rnz0   | EntityLesserDemonDummy               |       36 |          4 |        |       |     |
 | st0    | func_pspeu_092484D0                  |       36 |          4 |        |       |     |
 | wrp    | func_psp_09237B50                    |       36 |          4 |        |       |     |
 | dra    | func_psp_091040A0                    |       36 |          5 |        |       |     |
@@ -2426,7 +2426,7 @@
 | nz1    | func_pspeu_09251470                  |       63 |          7 |        |       |     |
 | rare   | func_pspeu_0924B740                  |       63 |          7 |        |       |     |
 | rcat   | func_pspeu_0924A9B0                  |       63 |          7 |        |       |     |
-| rnz0   | PrimDecreaseBrightness               |       63 |          7 |        |       |     |
+| rnz0   | func_pspeu_092549A8                  |       63 |          7 |        |       |     |
 | st0    | func_pspeu_09251A80                  |       63 |          7 |        |       |     |
 | wrp    | func_psp_09244690                    |       63 |          7 |        |       |     |
 | dra    | func_psp_090E0D68                    |       63 |          8 |        |       |     |
@@ -4638,7 +4638,7 @@
 | ric    | func_pspeu_092B6718                  |      358 |         37 |        |       |     |
 |        | func_092EBA40                        |      358 |         42 |        |       |     |
 | lib    | func_psp_092576C8                    |      359 |         33 |        |       |     |
-| rnz0   | func_us_801BD7D0                     |      359 |         33 |        |       |     |
+| rnz0   | EntityLesserDemonFireball            |      359 |         33 |        |       |     |
 | no1    | func_pspeu_0925E620                  |      360 |         53 |        |       |     |
 | cat    | func_pspeu_0924E938                  |      361 |         40 | Yes    |       |     |
 | dre    | func_pspeu_0924B998                  |      361 |         45 | Yes    |       |     |
@@ -4702,7 +4702,7 @@
 | wrp    | func_psp_0923AD68                    |      374 |         35 |        |       |     |
 | dra    | func_psp_09104C80                    |      374 |         48 |        |       |     |
 | rcat   | func_us_801C02C4                     |      376 |         47 |        |       |     |
-| rnz0   | func_us_801BCAB0                     |      377 |         33 | Yes    |       |     |
+| rnz0   | EntityLesserDemonSpit                |      377 |         33 | Yes    |       |     |
 | maria  | func_pspeu_092AAC80                  |      377 |         41 | Yes    |       |     |
 | dra    | func_psp_09132550                    |      381 |         27 |        |       |     |
 | lib    | func_psp_092386A8                    |      382 |         41 |        |       |     |
