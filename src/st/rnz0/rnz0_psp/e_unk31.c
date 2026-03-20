@@ -3,10 +3,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rnz0.h"
 
-extern u8 D_pspeu_092589E8[];
-extern u8 D_pspeu_092589F8[];
-extern u8 D_pspeu_09258A10[];
-extern u8 D_pspeu_09258A30[];
+static s16 D_pspeu_092589E8[] = {0, 4, 0, 4, 4, -4, -8, 0};
+static u8 D_pspeu_092589F8[] = {5, 1, 6, 2, 4, 3, 4, 4, 5, 5, 5, 6, 4, 7, 5, 8, 5, 9, 6, 10, 0};
+static u8 D_pspeu_09258A10[] = {4, 11, 4, 12, 5, 13, 4, 14, 3, 15, 3, 16, 2, 17, 3, 18, 2, 19, 2, 20, 2, 21, 1, 22, 1, 23, 2, 24, 2, 25, 255, 0};
+static u8 D_pspeu_09258A30[] = {7, 26, 7, 27, 7, 28, 7, 29, 7, 30, 7, 31, 7, 32, 16, 33, 255, 0};
 extern EInit D_pspeu_092607C0;
 
 typedef enum { BF_INIT, BF_IDLE = 2, BF_HIT = 4, BF_DEAD = 8 } BitterflySteps;
@@ -94,7 +94,7 @@ void EntityUnk31(Entity* self) {
             }
             break;
         case BF_DEAD_FALL:
-            if (UnkCollisionFunc3(&D_pspeu_092589E8) & 1) {
+            if (UnkCollisionFunc3(D_pspeu_092589E8) & 1) {
                 PlaySfxPositional(SFX_SKULL_KNOCK_B);
                 self->ext.bitterfly.deathTimer = 0x18;
                 self->step_s += 1;
