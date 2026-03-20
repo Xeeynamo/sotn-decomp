@@ -3937,7 +3937,7 @@ typedef struct {
 } ET_FireDemon;
 
 typedef struct {
-    s32: 32;
+    s32 : 32;
     s16 deathTimer;
     s16 angle;
 } ET_Bitterfly;

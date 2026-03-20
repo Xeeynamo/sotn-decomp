@@ -9,14 +9,9 @@ extern u8 D_pspeu_09258A10[];
 extern u8 D_pspeu_09258A30[];
 extern EInit D_pspeu_092607C0;
 
-typedef enum{
-    BF_INIT,
-    BF_IDLE = 2,
-    BF_HIT = 4,
-    BF_DEAD = 8
-} BitterflySteps;
+typedef enum { BF_INIT, BF_IDLE = 2, BF_HIT = 4, BF_DEAD = 8 } BitterflySteps;
 
-typedef enum{
+typedef enum {
     BF_DEAD_INIT,
     BF_DEAD_BECOME_SKULL,
     BF_DEAD_FALL,
