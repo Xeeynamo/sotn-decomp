@@ -50,7 +50,7 @@ void EntityCannonLever(Entity* self);
 void EntityCannon(Entity* self);
 void EntityCannonShot(Entity* self);
 void EntityCannonWall(Entity* self);
-void EntityUnk31(Entity* self);
+void EntityBitterfly(Entity* self);
 void func_us_801C09E8(Entity* self);
 void func_us_801C1668(Entity* self);
 void func_us_801C1758(Entity* self);
@@ -111,7 +111,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCannon,
     EntityCannonShot,
     EntityCannonWall,
-    EntityUnk31,
+    EntityBitterfly,
     func_us_801C09E8,
     func_us_801C1668,
     func_us_801C1758,

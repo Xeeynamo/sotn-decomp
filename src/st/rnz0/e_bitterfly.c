@@ -24,7 +24,7 @@ typedef enum {
     BF_DEAD_EXPLODE
 } BitterflyDeadSubsteps;
 
-void EntityUnk31(Entity* self) {
+void EntityBitterfly(Entity* self) {
     Entity* other;
     s32 xVar;
     s32 yVar;
