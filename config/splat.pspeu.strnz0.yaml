@@ -56,7 +56,7 @@ segments:
       - [0x12498, c, e_misc]
       - [0x12E18, c, collision] # collision
       - [0x14FF0, c, rnz0_psp/e_sealed_door]
-      - [0x16550, c, rnz0_psp/e_unk24-26]
+      - [0x16550, c, e_lesser_demon]
       - [0x1AB90, c, popup] # popup
       - [0x1B188, c, e_room_fg] # e_room_fg
       - [0x1B2A0, c, st_common]
@@ -86,6 +86,7 @@ segments:
       - [0x21A10, data]
       - [0x21A60, .data, collision]
       - [0x21E38, data]
+      - [0x21F10, .data, e_lesser_demon]
       - [0x220A0, .data, e_room_fg]
       - [0x22140, .data, e_floor_trap]
       - [0x22160, data]
@@ -107,7 +108,7 @@ segments:
       - [0x4A478, .rodata, e_red_door]
       - [0x4A490, .rodata, rnz0_psp/e_unk32-33]
       - [0x4A520, .rodata, rnz0_psp/e_sealed_door]
-      - [0x4A538, .rodata, rnz0_psp/e_unk24-26]
+      - [0x4A538, .rodata, e_lesser_demon]
       - [0x4A580, .bss, create_entity]
       - [0x4A5A0, .bss, st_update]
       - [0x4A5E0, .bss, e_collect]

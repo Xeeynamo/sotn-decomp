@@ -71,6 +71,9 @@ def load_anims(src_file):
             # Now use regex to find name and the data between the curly brackets
             anim_name = re.findall(r"(?<=staticu8)[^\[]*", anim)[0]
             anim_data = re.findall(r"(?<={)[^}]*", anim)[0]
+            # detect double-nested 2d arrays and skip them
+            if "{" in anim_data:
+                continue
             # Turn the data into a Python list of numbers
             anim_data = [int(x, 0) for x in anim_data.split(",") if len(x) > 0]
             loaded_anims[anim_name] = anim_data
@@ -132,6 +135,7 @@ class AnimationShower:
         self.textureDisplayer = dt.textureDisplayer(texture_data)
 
         spritebank = anim_num & 0x7FFF
+        animset_file = None
         # Need to load the animation's frames now.
         # Depends on if we're an ANIMSET_DRA or ANIMSET_OVL.
         if anim_num & 0x8000:
@@ -140,16 +144,18 @@ class AnimationShower:
             main_array_file = f"src/st/{overlay}/gen/sprite_banks.h"
             main_array = "spriteBanks"
             animset_file = f"src/st/{overlay}/gen/sprites.c"
-
         else:
-            print(
-                "DRA animation. Not supported as of now. Bug bismurphy to implement it :)"
-            )
+            main_array_file = "src/dra/d_37d8.c"
+            main_array = "D_800A3B70"
         with open(main_array_file) as f:
             animdata = f.read().splitlines()
             animarray = load_array_from_file(animdata, main_array)
             anim_set_name = animarray[spritebank]
+
         print(f"Animation set {spritebank} is {anim_set_name}. Loading.")
+        # Load DRA file dynamically, they are split out different
+        if not anim_num & 0x8000:
+            animset_file = f"src/dra/gen/us/{anim_set_name}.h"
         with open(animset_file) as f:
             self.framesdata = f.read().splitlines()
             print("Loading framearray")

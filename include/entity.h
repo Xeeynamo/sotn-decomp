@@ -2828,7 +2828,8 @@ typedef struct {
     /* 0xA0 */ s32 : 32;
     /* 0xA4 */ s32 : 32;
     /* 0xA8 */ s32 : 32;
-    /* 0xAC */ s32 : 32;
+    /* 0xAC */ s16 unkAC;
+    /* 0xAE */ u16 : 16;
     /* 0xB0 */ s16 unkB0;
     /* 0xB2 */ u16 unkB2;
 } ET_LesserDemon;
