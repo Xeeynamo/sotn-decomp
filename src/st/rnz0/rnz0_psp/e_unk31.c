@@ -4,10 +4,15 @@
 #include "../rnz0.h"
 
 static s16 D_pspeu_092589E8[] = {0, 4, 0, 4, 4, -4, -8, 0};
-static u8 D_pspeu_092589F8[] = {5, 1, 6, 2, 4, 3, 4, 4, 5, 5, 5, 6, 4, 7, 5, 8, 5, 9, 6, 10, 0};
-static u8 D_pspeu_09258A10[] = {4, 11, 4, 12, 5, 13, 4, 14, 3, 15, 3, 16, 2, 17, 3, 18, 2, 19, 2, 20, 2, 21, 1, 22, 1, 23, 2, 24, 2, 25, 255, 0};
-static u8 D_pspeu_09258A30[] = {7, 26, 7, 27, 7, 28, 7, 29, 7, 30, 7, 31, 7, 32, 16, 33, 255, 0};
-extern EInit D_pspeu_092607C0;
+
+static u8 anim_passive_flying[] = {
+    5, 1, 6, 2, 4, 3, 4, 4, 5, 5, 5, 6, 4, 7, 5, 8, 5, 9, 6, 10, 0};
+static u8 anim_hit[] = {
+    4, 11, 4, 12, 5, 13, 4, 14, 3, 15, 3, 16, 2, 17, 3,   18,
+    2, 19, 2, 20, 2, 21, 1, 22, 1, 23, 2, 24, 2, 25, 255, 0};
+static u8 anim_become_skull[] = {
+    7, 26, 7, 27, 7, 28, 7, 29, 7, 30, 7, 31, 7, 32, 16, 33, 255, 0};
+extern EInit D_us_80180AA4;
 
 typedef enum { BF_INIT, BF_IDLE = 2, BF_HIT = 4, BF_DEAD = 8 } BitterflySteps;
 
@@ -33,7 +38,7 @@ void EntityUnk31(Entity* self) {
     }
     switch (self->step) {
     case BF_INIT:
-        InitializeEntity(D_pspeu_092607C0);
+        InitializeEntity(D_us_80180AA4);
         self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0;
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
@@ -41,7 +46,7 @@ void EntityUnk31(Entity* self) {
         SetStep(BF_IDLE);
         break;
     case BF_IDLE:
-        AnimateEntity(D_pspeu_092589F8, self);
+        AnimateEntity(anim_passive_flying, self);
         MoveEntity();
         switch (self->step_s) {
         case 0:
@@ -74,7 +79,7 @@ void EntityUnk31(Entity* self) {
         break;
     case BF_HIT:
         // Run hit animation and go back to idle.
-        if (AnimateEntity(D_pspeu_09258A10, self) == 0) {
+        if (AnimateEntity(anim_hit, self) == 0) {
             SetStep(BF_IDLE);
         }
         break;
@@ -88,7 +93,7 @@ void EntityUnk31(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case BF_DEAD_BECOME_SKULL:
-            if (AnimateEntity(D_pspeu_09258A30, self) == 0) {
+            if (AnimateEntity(anim_become_skull, self) == 0) {
                 self->ext.bitterfly.deathTimer = 0;
                 self->step_s += 1;
             }
@@ -105,7 +110,7 @@ void EntityUnk31(Entity* self) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, other);
-                    other->params = 2;
+                    other->params = EXPLOSION_SMALL_MULTIPLE;
                 }
                 PlaySfxPositional(SFX_RAPID_SCRAPE_3X);
                 DestroyEntity(self);
