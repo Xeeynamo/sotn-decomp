@@ -3941,7 +3941,7 @@ typedef struct {
     s16 deathTimer;
     s16 angle;
 } ET_Bitterfly;
-typedef struct{
+typedef struct {
     /* 7C */ s32 : 32;
     /* 80 */ s16 timer;
     /* 82 */ s16 : 16;

@@ -14,7 +14,6 @@ EntityUnkId22 = 0x0923CEE0;
 EntityUnkId21 = 0x0923D3F8;
 EntityUnkId20 = 0x0923E620;
 EntityFireDemon = 0x0923EDC8;
-EntityBitterfly = 0x09240468;
 EntityStageNamePopup = 0x09240988; // source=match
 RNZ0_EntityRedDoor = 0x092418F0; // source=match
 Random = 0x09242B10; // source=match
@@ -111,7 +110,6 @@ g_EInitEnemy3 = 0x09260780;
 g_EInitTableWithGlobe = 0x09260790;
 g_EInitLifeMaxTank = 0x092607A0;
 g_EInitPrizeContainer = 0x092607B0;
-D_us_80180AA4 = 0x092607C0;
 D_us_80180AB0 = 0x092607D0;
 D_us_80180ABC = 0x092607E0;
 RNZ0_rooms = 0x09260840;
