@@ -1,8 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rnz0.h"
 
-extern u8 D_pspeu_09258B10[];
 extern EInit D_pspeu_092607D0;
+extern EInit D_pspeu_092607E0;
+extern u8 D_pspeu_09258B10[] = {4, 1, 4, 2, 4, 3, 4, 4, 4, 5, 4, 6, 4, 5, 4, 4, 4, 3, 4, 2, 4, 1, 0};
+extern u8 D_pspeu_09258B28[] = {2, 7, 2, 8, 2, 9, 2, 10, 2, 11, 2, 12, 2, 13, 2, 14, 2, 15, 2, 16, 2, 17, 2, 18, 255, 0};
+
 
 void func_us_801C09E8(Entity* self) {
     Entity* other;
@@ -375,8 +378,6 @@ void func_us_801C09E8(Entity* self) {
     }
 }
 
-extern u8 D_pspeu_09258B28[];
-extern EInit D_pspeu_092607E0;
 // The little smoke puff that shows up above and behind Alucard's head
 void func_us_801C1668(Entity* self) {
     Entity* player;

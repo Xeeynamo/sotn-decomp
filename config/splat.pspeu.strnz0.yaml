@@ -81,7 +81,7 @@ segments:
       - [0x213C8, .data, e_red_door]
       - [0x213E0, .data, st_update]
       - [0x21410, .data, e_particles]
-      - [0x21490, data]
+      - [0x21490, .data, e_unk32-33]
       - [0x214C8, .data, e_collect]
       - [0x21A10, data]
       - [0x21A60, .data, collision]
