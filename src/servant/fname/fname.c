@@ -301,13 +301,13 @@ void UpdateBatAttackMode(Entity* self) {
         }
         self->facingLeft = PLAYER.facingLeft ? false : true;
         if (!self->ext.bat.hasShotFireball &&
-            (g_Player.status & PLAYER_STATUS_UNK800)) {
+            (g_Player.status & PLAYER_STATUS_SUBWPN)) {
             // This causes the bat familiar to shoot a fireball when the
             // player does so in bat form.
             g_api.CreateEntFactoryFromEntity(self, FACTORY(81, 1), 0);
             self->ext.bat.hasShotFireball = true;
         } else if (self->ext.bat.hasShotFireball &&
-                   !(g_Player.status & PLAYER_STATUS_UNK800)) {
+                   !(g_Player.status & PLAYER_STATUS_SUBWPN)) {
             self->ext.bat.hasShotFireball = false;
         }
 

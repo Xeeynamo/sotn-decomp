@@ -715,7 +715,7 @@ void RicMain(void) {
         newStatus |= PLAYER_STATUS_UNK400;
     }
     if (g_Player.timers[PL_T_10]) {
-        newStatus |= PLAYER_STATUS_UNK800;
+        newStatus |= PLAYER_STATUS_SUBWPN;
     }
     if (g_Player.timers[PL_T_12]) {
         newStatus |= PLAYER_STATUS_UNK1000;

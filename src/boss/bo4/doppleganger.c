@@ -559,7 +559,7 @@ static void DopplegangerThinking(void) {
     switch (D_us_801D3D24) {
     case THINK_STEP_0:
         if (!(g_Dop.status & PLAYER_STATUS_UNK10000)) {
-            if (g_Player.timers[ALU_T_10]) {
+            if (g_Player.timers[ALU_T_USE_SUBWPN]) {
                 if (rand() & 1) {
                     if (facingLeft) {
                         g_Dop.padSim = PAD_LEFT;
@@ -644,7 +644,7 @@ static void DopplegangerThinking(void) {
                     D_us_801D3D28 = 32;
                     break;
                 }
-            } else if (g_Player.timers[ALU_T_10]) {
+            } else if (g_Player.timers[ALU_T_USE_SUBWPN]) {
                 if (rand() & 1) {
                     if (facingLeft) {
                         g_Dop.padSim = PAD_LEFT;

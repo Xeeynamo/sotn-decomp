@@ -57,7 +57,7 @@ void EntitySubwpnKnife(Entity* self) {
         prim->b0 = 0;
         SetSpeedX(FIX(8));
         PlaySfx(SFX_WEAPON_SWISH_C);
-        g_Player.timers[ALU_T_10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
         break;
     case DAGGER_FLYING:
@@ -291,7 +291,7 @@ void EntitySubwpnThrownAxe(Entity* self) {
         self->hitboxWidth = 12;
         self->hitboxHeight = 12;
         PlaySfx(SFX_WEAPON_SWISH_C);
-        g_Player.timers[ALU_T_10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->ext.subwpnAxe.unk98 = 0x7F;
         self->step++;
         break;
@@ -519,7 +519,7 @@ void EntitySubwpnHolyWater(Entity* self) {
         self->velocityY = FIX(-3.125);
         func_8011A290(self);
         self->hitboxWidth = self->hitboxHeight = 4;
-        g_Player.timers[ALU_T_10] = 4;
+        g_Player.timers[ALU_T_USE_SUBWPN] = 4;
         self->step++;
         break;
     case HOLYWATER_FLYING:

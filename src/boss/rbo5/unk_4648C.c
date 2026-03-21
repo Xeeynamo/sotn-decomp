@@ -4639,7 +4639,7 @@ void EntitySubwpnKnife(Entity* self) {
         prim->b0 = 0;
         SetSpeedX(FIX(8));
         g_api.PlaySfx(SFX_WEAPON_SWISH_C);
-        g_Dop.timers[ALU_T_10] = 4;
+        g_Dop.timers[ALU_T_USE_SUBWPN] = 4;
         break;
     case DAGGER_FLYING:
         self->ext.timer.t++;

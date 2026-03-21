@@ -300,7 +300,7 @@ static s32 func_8010EB5C(void) {
     }
     CreateEntFactoryFromEntity(
         g_CurrentEntity, subWpn.blueprintNum, subWpnId << 9);
-    g_Player.timers[ALU_T_10] = 4;
+    g_Player.timers[ALU_T_USE_SUBWPN] = 4;
     if (PLAYER.step_s >= 64) {
         return 0;
     }

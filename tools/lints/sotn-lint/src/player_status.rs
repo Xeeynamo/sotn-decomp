@@ -20,7 +20,7 @@ lazy_static! {
         (1 << 8, "PLAYER_STATUS_INVINCIBLE"),
         (1 << 9, "PLAYER_STATUS_UNK200"),
         (1 << 10, "PLAYER_STATUS_UNK400"),
-        (1 << 11, "PLAYER_STATUS_UNK800"),
+        (1 << 11, "PLAYER_STATUS_SUBWPN"),
         (1 << 12, "PLAYER_STATUS_UNK1000"),
         (1 << 13, "PLAYER_STATUS_UNK2000"),
         (1 << 14, "PLAYER_STATUS_POISON"),
