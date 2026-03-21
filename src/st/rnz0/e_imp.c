@@ -17,6 +17,12 @@ void EntityImp(Entity* self) {
     s32 yVar;
     s32 tempVar; // Used all over for various temp purposes
     s32 playerStatus;
+    // List of statuses where, if you have one of them, imp can not jam you
+    const u32 immuneStates =
+        PLAYER_STATUS_UNK40000000 | PLAYER_STATUS_AXEARMOR |
+        PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 | PLAYER_STATUS_DEAD |
+        PLAYER_STATUS_STONE | PLAYER_STATUS_UNK40 | PLAYER_STATUS_CROUCH |
+        PLAYER_STATUS_UNK10 | PLAYER_STATUS_TRANSFORM;
 
     if ((self->hitFlags & 3) && (self->step < 0xA)) {
         SetStep(0xA);
@@ -255,12 +261,7 @@ void EntityImp(Entity* self) {
                 self->ext.imp.jamOffsetX <<= 1;
             }
             self->ext.imp.jamOffsetY = -24;
-            if (g_Player.status &
-                (PLAYER_STATUS_UNK40000000 | PLAYER_STATUS_AXEARMOR |
-                 PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |
-                 PLAYER_STATUS_DEAD | PLAYER_STATUS_STONE |
-                 PLAYER_STATUS_UNK40 | PLAYER_STATUS_CROUCH |
-                 PLAYER_STATUS_UNK10 | PLAYER_STATUS_TRANSFORM)) {
+            if (g_Player.status & immuneStates) {
                 SetStep(3);
             }
             self->hitboxState = 0;
@@ -299,12 +300,7 @@ void EntityImp(Entity* self) {
             }
             // Log current pressed buttons for the next time around.
             self->ext.imp.prevDirsPressed = tempVar;
-            if (g_Player.status &
-                (PLAYER_STATUS_UNK40000000 | PLAYER_STATUS_AXEARMOR |
-                 PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |
-                 PLAYER_STATUS_DEAD | PLAYER_STATUS_STONE |
-                 PLAYER_STATUS_UNK40 | PLAYER_STATUS_CROUCH |
-                 PLAYER_STATUS_UNK10 | PLAYER_STATUS_TRANSFORM)) {
+            if (g_Player.status & immuneStates) {
                 SetStep(7);
             }
         }
