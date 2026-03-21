@@ -3941,6 +3941,19 @@ typedef struct {
     s16 deathTimer;
     s16 angle;
 } ET_Bitterfly;
+typedef struct{
+    /* 7C */ s32 : 32;
+    /* 80 */ s16 timer;
+    /* 82 */ s16 : 16;
+    /* 84 */ u32 unk84;
+    /* 88 */ s16 unk88;
+    /* 8A */ s16 unk8A;
+    /* 8C */ s16 unk8C;
+    /* 90 */ s16 unk8E;
+    /* 92 */ s16 : 16;
+    /* 94 */ s32 : 32;
+    /* 98 */ s32 : 32;
+} ET_Imp;
 
 typedef union { // offset=0x7C
     struct Primitive* prim;
@@ -4278,6 +4291,7 @@ typedef union { // offset=0x7C
     ET_FloorTrap floorTrap;
     ET_FireDemon fireDemon;
     ET_Bitterfly bitterfly;
+    ET_Imp imp;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
