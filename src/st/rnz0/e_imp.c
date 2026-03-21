@@ -10,11 +10,25 @@ static u8 anim_imp[] = {
 static u8 anim_smoke[] = {2,  7, 2,  8, 2,  9, 2,  10, 2,  11, 2,  12,  2,
                           13, 2, 14, 2, 15, 2, 16, 2,  17, 2,  18, 255, 0};
 
+typedef enum{
+    IMP_INIT,
+    IMP_IDLE = 2,
+    IMP_3,
+    IMP_4,
+    IMP_5,
+    IMP_JAM_PLAYER,
+    IMP_RETREAT_ESCAPE,
+    IMP_8,
+    IMP_9,
+    IMP_RETREAT_HIT,
+    IMP_DEAD
+} ImpSteps;
+
 void EntityImp(Entity* self) {
     Entity* other;
     s16 angle;
     s32 xVar;
-    s32 yVar;
+    s32 yVar;/*  */
     s32 tempVar; // Used all over for various temp purposes
     s32 playerStatus;
     // List of statuses where, if you have one of them, imp can not jam you
@@ -24,24 +38,24 @@ void EntityImp(Entity* self) {
         PLAYER_STATUS_STONE | PLAYER_STATUS_UNK40 | PLAYER_STATUS_CROUCH |
         PLAYER_STATUS_UNK10 | PLAYER_STATUS_TRANSFORM;
 
-    if ((self->hitFlags & 3) && (self->step < 0xA)) {
-        SetStep(0xA);
+    if ((self->hitFlags & 3) && (self->step < IMP_RETREAT_HIT)) {
+        SetStep(IMP_RETREAT_HIT);
     }
-    if ((self->flags & FLAG_DEAD) && (self->step != 0xB)) {
-        SetStep(0xB);
+    if ((self->flags & FLAG_DEAD) && (self->step != IMP_DEAD)) {
+        SetStep(IMP_DEAD);
     }
     switch (self->step) {
-    case 0:
+    case IMP_INIT:
         InitializeEntity(D_us_80180AB0);
-        SetStep(2);
+        SetStep(IMP_IDLE);
         break;
-    case 2:
+    case IMP_IDLE:
         AnimateEntity(anim_imp, self);
         if (GetDistanceToPlayerX() < 0x80) {
-            SetStep(3);
+            SetStep(IMP_3);
         }
         break;
-    case 3:
+    case IMP_3:
         if (!self->step_s) {
             self->ext.imp.timer = 0xC0;
             self->step_s += 1;
@@ -74,27 +88,27 @@ void EntityImp(Entity* self) {
             playerStatus = g_Player.status;
             if (playerStatus & PLAYER_STATUS_UNK400) {
                 if ((abs(xVar) < 0x40) && (abs(yVar) < 0x20)) {
-                    SetStep(8);
+                    SetStep(IMP_8);
                 }
             }
             if (playerStatus & (PLAYER_STATUS_UNK1000 | PLAYER_STATUS_UNK800)) {
                 yVar += 12;
                 if (yVar < 0x50U) {
-                    SetStep(9);
+                    SetStep(IMP_9);
                 }
             }
         }
 
         if (!--self->ext.imp.timer) {
             if (self->facingLeft == tempVar) {
-                SetStep(5);
+                SetStep(IMP_5);
             } else {
-                SetStep(4);
+                SetStep(IMP_4);
             }
         }
         break;
-    case 8:
-    case 9:
+    case IMP_8:
+    case IMP_9:
         if (!self->step_s) {
             self->facingLeft = GetSideToPlayer() & 1;
             if (!self->facingLeft) {
@@ -102,7 +116,7 @@ void EntityImp(Entity* self) {
             } else {
                 self->velocityX = FIX(8);
             }
-            if (self->step == 9) {
+            if (self->step == IMP_9) {
                 self->velocityX = 0;
                 self->velocityY = FIX(-4);
             }
@@ -114,10 +128,10 @@ void EntityImp(Entity* self) {
         self->velocityX -= self->velocityX >> 3;
         self->velocityY -= self->velocityY >> 4;
         if (!--self->ext.imp.timer) {
-            SetStep(3);
+            SetStep(IMP_3);
         }
         break;
-    case 5:
+    case IMP_5:
         switch (self->step_s) {
         case 0:
             other = &PLAYER;
@@ -164,7 +178,7 @@ void EntityImp(Entity* self) {
                 xVar = -xVar;
             }
             if ((yVar < 6) && (xVar < 4)) {
-                SetStep(6);
+                SetStep(IMP_JAM_PLAYER);
             }
             break;
         case 2:
@@ -173,16 +187,16 @@ void EntityImp(Entity* self) {
             self->velocityX -= self->velocityX >> 4;
             self->velocityY -= self->velocityY >> 4;
             if (!--self->ext.imp.timer) {
-                SetStep(3);
+                SetStep(IMP_3);
             }
         }
         break;
-    case 4:
+    case IMP_4:
         switch (self->step_s) {
         case 0:
             other = &PLAYER;
             xVar = other->posX.i.hi;
-            yVar = (other->posY.i.hi - 0x50);
+            yVar = other->posY.i.hi - 0x50;
             xVar -= self->posX.i.hi;
             yVar -= self->posY.i.hi;
             angle = ratan2(yVar, xVar);
@@ -207,7 +221,7 @@ void EntityImp(Entity* self) {
                     self->step_s -= 1;
                 }
                 if (tempVar == 0) {
-                    SetStep(3);
+                    SetStep(IMP_3);
                 }
             }
             break;
@@ -236,19 +250,21 @@ void EntityImp(Entity* self) {
                 xVar = -xVar;
             }
             if (xVar > 0x40) {
-                SetStep(5);
+                SetStep(IMP_5);
             } else {
                 tempVar = --self->ext.imp.timer;
                 if (!(tempVar & 0xF)) {
                     self->step_s -= 1;
                 }
                 if (tempVar == 0) {
-                    SetStep(3);
+                    SetStep(IMP_3);
                 }
             }
         }
         break;
-    case 6:
+    // Player's controls are jammed, and they spam involuntary attacks. Must
+    // mash directional buttons to escape.
+    case IMP_JAM_PLAYER:
         switch (self->step_s) {
         case 0:
             other = &PLAYER;
@@ -257,12 +273,12 @@ void EntityImp(Entity* self) {
             } else {
                 self->ext.imp.jamOffsetX = 8;
             }
-            if ((other->facingLeft) != (self->facingLeft)) {
+            if (other->facingLeft != self->facingLeft) {
                 self->ext.imp.jamOffsetX <<= 1;
             }
             self->ext.imp.jamOffsetY = -24;
             if (g_Player.status & immuneStates) {
-                SetStep(3);
+                SetStep(IMP_3);
             }
             self->hitboxState = 0;
             self->ext.imp.playerJamTimer = 0x20;
@@ -295,18 +311,19 @@ void EntityImp(Entity* self) {
             if (tempVar != self->ext.imp.prevDirsPressed) {
                 // And once the jam timer runs out, you're freed in step 7.
                 if (!--self->ext.imp.playerJamTimer) {
-                    SetStep(7);
+                    SetStep(IMP_RETREAT_ESCAPE);
                 }
             }
             // Log current pressed buttons for the next time around.
             self->ext.imp.prevDirsPressed = tempVar;
             if (g_Player.status & immuneStates) {
-                SetStep(7);
+                SetStep(IMP_RETREAT_ESCAPE);
             }
         }
         break;
-    case 7:
-    case 10:
+    // 2 different ways to get here, but they behave identical.
+    case IMP_RETREAT_ESCAPE:
+    case IMP_RETREAT_HIT:
         switch (self->step_s) {
         case 0:
             self->facingLeft = GetSideToPlayer() & 1;
@@ -344,11 +361,11 @@ void EntityImp(Entity* self) {
             AnimateEntity(anim_imp, self);
             MoveEntity();
             if (GetDistanceToPlayerX() > 0x60) {
-                SetStep(3);
+                SetStep(IMP_3);
             }
         }
         break;
-    case 11:
+    case IMP_DEAD:
         switch (self->step_s) {
         case 0:
             self->hitboxState = 0;
