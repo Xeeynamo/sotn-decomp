@@ -3945,11 +3945,11 @@ typedef struct{
     /* 7C */ s32 : 32;
     /* 80 */ s16 timer;
     /* 82 */ s16 : 16;
-    /* 84 */ u32 unk84;
-    /* 88 */ s16 unk88;
-    /* 8A */ s16 unk8A;
-    /* 8C */ s16 unk8C;
-    /* 90 */ s16 unk8E;
+    /* 84 */ u32 prevDirsPressed;
+    /* 88 */ s16 playerJamTimer;
+    /* 8A */ s16 angle;
+    /* 8C */ s16 jamOffsetX;
+    /* 90 */ s16 jamOffsetY;
     /* 92 */ s16 : 16;
     /* 94 */ s32 : 32;
     /* 98 */ s32 : 32;

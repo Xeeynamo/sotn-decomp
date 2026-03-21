@@ -2,8 +2,7 @@
 #include "../rnz0.h"
 
 extern u8 D_pspeu_09258B10[];
-extern u16 D_pspeu_092607D0;
-extern Entity g_Entities_224;
+extern EInit D_pspeu_092607D0;
 
 void func_us_801C09E8(Entity* self) {
     Entity* other;
@@ -21,11 +20,11 @@ void func_us_801C09E8(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(&D_pspeu_092607D0);
+        InitializeEntity(D_pspeu_092607D0);
         SetStep(2);
         break;
     case 2:
-        AnimateEntity(&D_pspeu_09258B10, self);
+        AnimateEntity(D_pspeu_09258B10, self);
         if (GetDistanceToPlayerX() < 0x80) {
             SetStep(3);
         }
@@ -35,12 +34,12 @@ void func_us_801C09E8(Entity* self) {
             self->ext.imp.timer = 0xC0;
             self->step_s += 1;
         }
-        AnimateEntity(&D_pspeu_09258B10, self);
+        AnimateEntity(D_pspeu_09258B10, self);
         MoveEntity();
         tempVar = GetSideToPlayer() & 1;
         self->facingLeft = tempVar;
         other = &PLAYER;
-        angle = self->ext.imp.unk8A;
+        angle = self->ext.imp.angle;
         xVar = (rcos(angle) * 0x50) >> 0xC;
         yVar = (rsin(angle) * 0x50) >> 0xC;
         if (yVar > 0) {
@@ -55,18 +54,18 @@ void func_us_801C09E8(Entity* self) {
         angle = ratan2(yVar, xVar);
         self->velocityX = (rcos(angle) << 0x10) >> 0xC;
         self->velocityY = (rsin(angle) << 0x10) >> 0xC;
-        self->ext.imp.unk8A += 8;
+        self->ext.imp.angle += 8;
         tempVar = other->facingLeft;
         xVar = other->posX.i.hi - self->posX.i.hi;
         yVar = other->posY.i.hi - self->posY.i.hi;
         if (tempVar != self->facingLeft) {
             playerStatus = g_Player.status;
-            if (playerStatus & 0x400) {
+            if (playerStatus & PLAYER_STATUS_UNK400) {
                 if ((abs(xVar) < 0x40) && (abs(yVar) < 0x20)) {
                     SetStep(8);
                 }
             }
-            if (playerStatus & 0x1800) {
+            if (playerStatus & (PLAYER_STATUS_UNK1000 | PLAYER_STATUS_UNK800)) {
                 yVar += 12;
                 if (yVar < 0x50U) {
                     SetStep(9);
@@ -104,7 +103,6 @@ void func_us_801C09E8(Entity* self) {
         self->velocityY -= self->velocityY >> 4;
         if (!--self->ext.imp.timer) {
             SetStep(3);
-            return;
         }
         break;
     case 5:
@@ -155,7 +153,6 @@ void func_us_801C09E8(Entity* self) {
             }
             if ((yVar < 6) && (xVar < 4)) {
                 SetStep(6);
-                return;
             }
             break;
         case 2:
@@ -165,9 +162,7 @@ void func_us_801C09E8(Entity* self) {
             self->velocityY -= self->velocityY >> 4;
             if (!--self->ext.imp.timer) {
                 SetStep(3);
-                return;
             }
-            break;
         }
         break;
     case 4:
@@ -194,15 +189,14 @@ void func_us_801C09E8(Entity* self) {
             }
             if (xVar > 0) {
                 self->step_s += 1;
-                return;
-            }
-            tempVar = --self->ext.imp.timer;
-            if (!(tempVar & 0xF)) {
-                self->step_s -= 1;
-            }
-            if (tempVar == 0) {
-                SetStep(3);
-                return;
+            } else {
+                tempVar = --self->ext.imp.timer;
+                if (!(tempVar & 0xF)) {
+                    self->step_s -= 1;
+                }
+                if (tempVar == 0) {
+                    SetStep(3);
+                }
             }
             break;
         case 2:
@@ -231,17 +225,15 @@ void func_us_801C09E8(Entity* self) {
             }
             if (xVar > 0x40) {
                 SetStep(5);
-                return;
+            } else {
+                tempVar = --self->ext.imp.timer;
+                if (!(tempVar & 0xF)) {
+                    self->step_s -= 1;
+                }
+                if (tempVar == 0) {
+                    SetStep(3);
+                }
             }
-            tempVar = --self->ext.imp.timer;
-            if (!(tempVar & 0xF)) {
-                self->step_s -= 1;
-            }
-            if (tempVar == 0) {
-                SetStep(3);
-                return;
-            }
-            break;
         }
         break;
     case 6:
@@ -249,14 +241,14 @@ void func_us_801C09E8(Entity* self) {
         case 0:
             other = &PLAYER;
             if (!self->facingLeft) {
-                self->ext.imp.unk8C = -8;
+                self->ext.imp.jamOffsetX = -8;
             } else {
-                self->ext.imp.unk8C = 8;
+                self->ext.imp.jamOffsetX = 8;
             }
             if ((other->facingLeft) != (self->facingLeft)) {
-                self->ext.imp.unk8C *= 2;
+                self->ext.imp.jamOffsetX *= 2;
             }
-            self->ext.imp.unk8E = -0x18U;
+            self->ext.imp.jamOffsetY = -24;
             if (g_Player.status &
                 (PLAYER_STATUS_UNK40000000 | PLAYER_STATUS_AXEARMOR |
                  PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |
@@ -266,14 +258,14 @@ void func_us_801C09E8(Entity* self) {
                 SetStep(3);
             }
             self->hitboxState = 0;
-            self->ext.imp.unk88 = 0x20;
+            self->ext.imp.playerJamTimer = 0x20;
             self->step_s += 1;
             /* fallthrough */
         case 1:
             AnimateEntity(&D_pspeu_09258B10, self);
             other = &PLAYER;
-            self->posX.i.hi = other->posX.i.hi + self->ext.imp.unk8C;
-            self->posY.i.hi = other->posY.i.hi + self->ext.imp.unk8E;
+            self->posX.i.hi = other->posX.i.hi + self->ext.imp.jamOffsetX;
+            self->posY.i.hi = other->posY.i.hi + self->ext.imp.jamOffsetY;
             if (!(g_Timer & 0xF)) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
@@ -283,20 +275,24 @@ void func_us_801C09E8(Entity* self) {
             g_Player.demo_timer = 1;
             if (g_Timer & 1) {
                 if (Random() & 1) {
-                    g_Player.padSim = 0x8000;
+                    g_Player.padSim = PAD_SQUARE;
                 } else {
-                    g_Player.padSim = 0x2000;
+                    g_Player.padSim = PAD_CIRCLE;
                 }
             } else {
                 g_Player.padSim = 0;
             }
+            // Read what directions are currently pressed.
             tempVar = g_pads[0].pressed & PAD_DIRECTION_MASK;
-            if (tempVar != self->ext.imp.unk84) {
-                if (!--self->ext.imp.unk88) {
+            // If those are different than the previous, you can count down.
+            if (tempVar != self->ext.imp.prevDirsPressed) {
+                // And once the jam timer runs out, you're freed in step 7.
+                if (!--self->ext.imp.playerJamTimer) {
                     SetStep(7);
                 }
             }
-            self->ext.imp.unk84 = tempVar;
+            // Log current pressed buttons for the next time around.
+            self->ext.imp.prevDirsPressed = tempVar;
             if (g_Player.status &
                 (PLAYER_STATUS_UNK40000000 | PLAYER_STATUS_AXEARMOR |
                  PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |
@@ -304,9 +300,7 @@ void func_us_801C09E8(Entity* self) {
                  PLAYER_STATUS_UNK40 | PLAYER_STATUS_CROUCH |
                  PLAYER_STATUS_UNK10 | PLAYER_STATUS_TRANSFORM)) {
                 SetStep(7);
-                return;
             }
-            break;
         }
         break;
     case 7:
@@ -327,13 +321,12 @@ void func_us_801C09E8(Entity* self) {
             if (self->ext.imp.timer < 0x28) {
                 self->hitboxState = 3;
             }
-            AnimateEntity(&D_pspeu_09258B10, self);
+            AnimateEntity(D_pspeu_09258B10, self);
             MoveEntity();
             self->velocityX -= self->velocityX >> 3;
             self->velocityY -= self->velocityY >> 3;
             if (!--self->ext.imp.timer) {
                 self->step_s += 1;
-                return;
             }
             break;
         case 2:
@@ -346,13 +339,11 @@ void func_us_801C09E8(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 3:
-            AnimateEntity(&D_pspeu_09258B10, self);
+            AnimateEntity(D_pspeu_09258B10, self);
             MoveEntity();
             if (GetDistanceToPlayerX() > 0x60) {
                 SetStep(3);
-                return;
             }
-            break;
         }
         break;
     case 11:
@@ -379,7 +370,6 @@ void func_us_801C09E8(Entity* self) {
                 }
                 DestroyEntity(self);
             }
-            break;
         }
         break;
     }
