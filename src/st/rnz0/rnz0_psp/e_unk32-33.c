@@ -258,12 +258,11 @@ void func_us_801C09E8(Entity* self) {
             }
             self->ext.ILLEGAL.s16[9] = -0x18U;
             if (g_Player.status &
-                (PLAYER_STATUS_UNK80000000 | PLAYER_STATUS_AXEARMOR |
+                (PLAYER_STATUS_UNK40000000 | PLAYER_STATUS_AXEARMOR |
                  PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |
                  PLAYER_STATUS_DEAD | PLAYER_STATUS_STONE |
                  PLAYER_STATUS_UNK40 | PLAYER_STATUS_CROUCH |
-                 PLAYER_STATUS_UNK10 | PLAYER_STATUS_WOLF_FORM |
-                 PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM)) {
+                 PLAYER_STATUS_UNK10 | PLAYER_STATUS_TRANSFORM)) {
                 SetStep(3);
             }
             self->hitboxState = 0;
@@ -291,7 +290,7 @@ void func_us_801C09E8(Entity* self) {
             } else {
                 g_Player.padSim = 0;
             }
-            tempVar = g_pads[0].pressed & 0xF0;
+            tempVar = g_pads[0].pressed & PAD_DIRECTION_MASK;
             if (tempVar != self->ext.ILLEGAL.u32[2]) {
                 if (!--self->ext.ILLEGAL.s16[6]) {
                     SetStep(7);
@@ -299,12 +298,11 @@ void func_us_801C09E8(Entity* self) {
             }
             self->ext.ILLEGAL.u32[2] = tempVar;
             if (g_Player.status &
-                (PLAYER_STATUS_UNK80000000 | PLAYER_STATUS_AXEARMOR |
+                (PLAYER_STATUS_UNK40000000 | PLAYER_STATUS_AXEARMOR |
                  PLAYER_STATUS_UNK800000 | PLAYER_STATUS_UNK400000 |
                  PLAYER_STATUS_DEAD | PLAYER_STATUS_STONE |
                  PLAYER_STATUS_UNK40 | PLAYER_STATUS_CROUCH |
-                 PLAYER_STATUS_UNK10 | PLAYER_STATUS_WOLF_FORM |
-                 PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM)) {
+                 PLAYER_STATUS_UNK10 | PLAYER_STATUS_TRANSFORM)) {
                 SetStep(7);
                 return;
             }
