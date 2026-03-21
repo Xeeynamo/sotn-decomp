@@ -10,7 +10,7 @@ static u8 anim_imp[] = {
 static u8 anim_smoke[] = {2,  7, 2,  8, 2,  9, 2,  10, 2,  11, 2,  12,  2,
                           13, 2, 14, 2, 15, 2, 16, 2,  17, 2,  18, 255, 0};
 
-typedef enum{
+typedef enum {
     IMP_INIT,
     IMP_IDLE = 2,
     IMP_3,
@@ -28,7 +28,7 @@ void EntityImp(Entity* self) {
     Entity* other;
     s16 angle;
     s32 xVar;
-    s32 yVar;/*  */
+    s32 yVar;    /*  */
     s32 tempVar; // Used all over for various temp purposes
     s32 playerStatus;
     // List of statuses where, if you have one of them, imp can not jam you
@@ -91,7 +91,8 @@ void EntityImp(Entity* self) {
                     SetStep(IMP_8);
                 }
             }
-            if (playerStatus & (PLAYER_STATUS_SPELLCAST | PLAYER_STATUS_SUBWPN)) {
+            if (playerStatus &
+                (PLAYER_STATUS_SPELLCAST | PLAYER_STATUS_SUBWPN)) {
                 yVar += 12;
                 if (yVar < 0x50U) {
                     SetStep(IMP_9);

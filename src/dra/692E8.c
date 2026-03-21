@@ -881,7 +881,8 @@ void EntityAlucard() {
 
 // US uses a different ordering than HD/PSP
 #if !defined(VERSION_US)
-    if (g_Player.timers[ALU_T_INVINCIBLE] | g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
+    if (g_Player.timers[ALU_T_INVINCIBLE] |
+        g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;
     }
 #endif
@@ -895,7 +896,8 @@ void EntityAlucard() {
         goto block_159;
     }
 #if defined(VERSION_US)
-    if (g_Player.timers[ALU_T_INVINCIBLE] | g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
+    if (g_Player.timers[ALU_T_INVINCIBLE] |
+        g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         goto specialmove;
     }
 #endif
@@ -1371,7 +1373,8 @@ block_159:
     if (newStatus & PLAYER_STATUS_UNK20000000) {
         g_Status.D_80097BF8 |= 1;
     }
-    if (g_Player.timers[ALU_T_INVINCIBLE] | g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
+    if (g_Player.timers[ALU_T_INVINCIBLE] |
+        g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
         g_Player.status |= PLAYER_STATUS_INVINCIBLE;
     }
     if ((g_Player.unk08 & PLAYER_STATUS_UNK10000) &&

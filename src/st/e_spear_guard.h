@@ -63,8 +63,8 @@ static Size16 guardHitboxSizes[] = {
 void func_us_801D37A4(void) {
     Entity* player = &PLAYER;
 
-    if (g_Player.status &
-        (PLAYER_STATUS_SPELLCAST | PLAYER_STATUS_SUBWPN | PLAYER_STATUS_UNK400)) {
+    if (g_Player.status & (PLAYER_STATUS_SPELLCAST | PLAYER_STATUS_SUBWPN |
+                           PLAYER_STATUS_UNK400)) {
         if (GetDistanceToPlayerX() > 0x48 && Random() & 1) {
             SetStep(9);
         }
