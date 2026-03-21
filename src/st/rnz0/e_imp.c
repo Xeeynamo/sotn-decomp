@@ -18,8 +18,8 @@ typedef enum {
     IMP_5,
     IMP_JAM_PLAYER,
     IMP_RETREAT_ESCAPE,
-    IMP_8,
-    IMP_9,
+    IMP_FLEE_HORIZ,
+    IMP_FLEE_VERT,
     IMP_RETREAT_HIT,
     IMP_DEAD
 } ImpSteps;
@@ -62,6 +62,7 @@ void EntityImp(Entity* self) {
         }
         AnimateEntity(anim_imp, self);
         MoveEntity();
+        // Face toward player.
         tempVar = GetSideToPlayer() & 1;
         self->facingLeft = tempVar;
         other = &PLAYER;
@@ -81,6 +82,8 @@ void EntityImp(Entity* self) {
         self->velocityX = (rcos(angle) << 0x10) >> 0xC;
         self->velocityY = (rsin(angle) << 0x10) >> 0xC;
         self->ext.imp.angle += 8;
+
+        // We may flee here, but only if we are facing opposite to player's.
         tempVar = other->facingLeft;
         xVar = other->posX.i.hi - self->posX.i.hi;
         yVar = other->posY.i.hi - self->posY.i.hi;
@@ -88,14 +91,14 @@ void EntityImp(Entity* self) {
             playerStatus = g_Player.status;
             if (playerStatus & PLAYER_STATUS_UNK400) {
                 if ((abs(xVar) < 0x40) && (abs(yVar) < 0x20)) {
-                    SetStep(IMP_8);
+                    SetStep(IMP_FLEE_HORIZ);
                 }
             }
             if (playerStatus &
                 (PLAYER_STATUS_SPELLCAST | PLAYER_STATUS_SUBWPN)) {
                 yVar += 12;
                 if (yVar < 0x50U) {
-                    SetStep(IMP_9);
+                    SetStep(IMP_FLEE_VERT);
                 }
             }
         }
@@ -108,16 +111,18 @@ void EntityImp(Entity* self) {
             }
         }
         break;
-    case IMP_8:
-    case IMP_9:
+    case IMP_FLEE_HORIZ:
+    case IMP_FLEE_VERT:
         if (!self->step_s) {
+            // Face toward player, and fly backward.
             self->facingLeft = GetSideToPlayer() & 1;
             if (!self->facingLeft) {
                 self->velocityX = FIX(-8);
             } else {
                 self->velocityX = FIX(8);
             }
-            if (self->step == IMP_9) {
+            // Actually don't fly backward! Fly upward.
+            if (self->step == IMP_FLEE_VERT) {
                 self->velocityX = 0;
                 self->velocityY = FIX(-4);
             }
