@@ -111,15 +111,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCannon,
     EntityCannonShot,
     EntityCannonWall,
-<<<<<<< HEAD
     EntityBitterfly,
-    func_us_801C09E8,
-    func_us_801C1668,
-=======
-    EntityUnk31,
     EntityImp,
     EntityImpSmoke,
->>>>>>> d42bdf2ed (Proper naming)
     func_us_801C1758,
     func_us_801C1CC0,
     func_us_801C1E14,
