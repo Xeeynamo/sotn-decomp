@@ -4628,7 +4628,7 @@
 | dra    | func_psp_0913B0F8                    |      352 |         34 | Yes    |       |     |
 | are    | func_pspeu_09257778                  |      354 |         31 |        |       |     |
 | dai    | func_pspeu_092471E8                  |      354 |         31 |        |       |     |
-| rnz0   | EntityUnk31                          |      354 |         65 |        |       |     |
+| rnz0   | EntityBitterfly                      |      354 |         65 |        |       |     |
 | are    | func_pspeu_092594B0                  |      355 |         71 |        |       |     |
 | nz1    | func_pspeu_0924D6D8                  |      355 |         71 |        |       |     |
 | no4    | func_pspeu_09249030                  |      356 |         34 |        |       |     |
