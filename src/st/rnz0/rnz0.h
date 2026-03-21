@@ -71,7 +71,7 @@ typedef enum EntityIDs {
     /* 0x30 */ E_UNK_30,
     /* 0x31 */ E_BITTERFLY,
     /* 0x32 */ E_IMP,
-    /* 0x33 */ E_UNK_33,
+    /* 0x33 */ E_IMP_SMOKE,
     /* 0x34 */ E_GREMLIN,
     /* 0x35 */ E_UNK_35,
     /* 0x36 */ E_UNK_36,

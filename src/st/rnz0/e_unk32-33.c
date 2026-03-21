@@ -7,7 +7,7 @@ extern u8 D_pspeu_09258B10[] = {4, 1, 4, 2, 4, 3, 4, 4, 4, 5, 4, 6, 4, 5, 4, 4, 
 extern u8 D_pspeu_09258B28[] = {2, 7, 2, 8, 2, 9, 2, 10, 2, 11, 2, 12, 2, 13, 2, 14, 2, 15, 2, 16, 2, 17, 2, 18, 255, 0};
 
 
-void func_us_801C09E8(Entity* self) {
+void EntityImp(Entity* self) {
     Entity* other;
     s16 angle;
     s32 xVar;
@@ -272,7 +272,7 @@ void func_us_801C09E8(Entity* self) {
             if (!(g_Timer & 0xF)) {
                 other = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (other != NULL) {
-                    CreateEntityFromCurrentEntity(E_UNK_33, other);
+                    CreateEntityFromCurrentEntity(E_IMP_SMOKE, other);
                 }
             }
             g_Player.demo_timer = 1;
@@ -379,7 +379,7 @@ void func_us_801C09E8(Entity* self) {
 }
 
 // The little smoke puff that shows up above and behind Alucard's head
-void func_us_801C1668(Entity* self) {
+void EntityImpSmoke(Entity* self) {
     Entity* player;
     if (!self->step) {
         InitializeEntity(D_us_80180ABC);

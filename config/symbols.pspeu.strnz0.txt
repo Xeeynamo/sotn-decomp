@@ -20,8 +20,8 @@ RNZ0_EntityRedDoor = 0x092418F0; // source=match
 Random = 0x09242B10; // source=match
 EntitySoulStealOrb = 0x09243A60; // source=match
 EntityEnemyBlood = 0x09243FC0; // source=match
-func_us_801C09E8 = 0x092445D8;
-func_us_801C1668 = 0x092457C0;
+EntityImp = 0x092445D8;
+EntityImpSmoke = 0x092457C0;
 EntityPrizeDrop = 0x09246728; // source=match
 EntityExplosion = 0x09247540; // source=match
 EntityEquipItemDrop = 0x09247840; // source=match
