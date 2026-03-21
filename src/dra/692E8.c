@@ -1372,7 +1372,7 @@ block_159:
         g_Status.D_80097BF8 |= 1;
     }
     if (g_Player.timers[ALU_T_INVINCIBLE] | g_Player.timers[ALU_T_INVINCIBLE_CONSUMABLES]) {
-        g_Player.status |= PLAYER_STATUS_UNK100;
+        g_Player.status |= PLAYER_STATUS_INVINCIBLE;
     }
     if ((g_Player.unk08 & PLAYER_STATUS_UNK10000) &&
         !(g_Player.status & (PLAYER_STATUS_UNK10000 | PLAYER_STATUS_DEAD))) {

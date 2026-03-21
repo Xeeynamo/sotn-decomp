@@ -765,7 +765,7 @@ void MarMain(void) {
     }
     if (g_Player.timers[PL_T_INVINCIBLE_SCENE] |
         g_Player.timers[PL_T_INVINCIBLE]) {
-        g_Player.status |= PLAYER_STATUS_UNK100;
+        g_Player.status |= PLAYER_STATUS_INVINCIBLE;
     }
     g_api.UpdateAnim(mar_80155964, (AnimationFrame**)mar_8015538C);
     PLAYER.hitboxState = 1;
