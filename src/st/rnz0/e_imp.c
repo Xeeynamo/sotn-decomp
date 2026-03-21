@@ -4,10 +4,11 @@
 extern EInit D_us_80180AB0;
 extern EInit D_us_80180ABC;
 // Imp flapping wings
-static u8 anim_imp[] = {4, 1, 4, 2, 4, 3, 4, 4, 4, 5, 4, 6, 4, 5, 4, 4, 4, 3, 4, 2, 4, 1, 0};
+static u8 anim_imp[] = {
+    4, 1, 4, 2, 4, 3, 4, 4, 4, 5, 4, 6, 4, 5, 4, 4, 4, 3, 4, 2, 4, 1, 0};
 // Smoke puff from Alucard when jammed by imp
-static u8 anim_smoke[] = {2, 7, 2, 8, 2, 9, 2, 10, 2, 11, 2, 12, 2, 13, 2, 14, 2, 15, 2, 16, 2, 17, 2, 18, 255, 0};
-
+static u8 anim_smoke[] = {2,  7, 2,  8, 2,  9, 2,  10, 2,  11, 2,  12,  2,
+                          13, 2, 14, 2, 15, 2, 16, 2,  17, 2,  18, 255, 0};
 
 void EntityImp(Entity* self) {
     Entity* other;
