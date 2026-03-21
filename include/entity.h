@@ -3950,9 +3950,6 @@ typedef struct{
     /* 8A */ s16 angle;
     /* 8C */ s16 jamOffsetX;
     /* 90 */ s16 jamOffsetY;
-    /* 92 */ s16 : 16;
-    /* 94 */ s32 : 32;
-    /* 98 */ s32 : 32;
 } ET_Imp;
 
 typedef union { // offset=0x7C
