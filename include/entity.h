@@ -3936,6 +3936,12 @@ typedef struct {
     /* A4 */ struct Primitive* primA4;
 } ET_FireDemon;
 
+typedef struct {
+    s32 : 32;
+    s16 deathTimer;
+    s16 angle;
+} ET_Bitterfly;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4271,6 +4277,7 @@ typedef union { // offset=0x7C
     ET_Salome salome;
     ET_FloorTrap floorTrap;
     ET_FireDemon fireDemon;
+    ET_Bitterfly bitterfly;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
