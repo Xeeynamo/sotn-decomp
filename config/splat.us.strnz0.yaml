@@ -69,7 +69,7 @@ segments:
       - [0x1B18, .data, e_lesser_demon]
       - [0x1C8C, .data, e_sealed_door]
       - [0x1CFC, .data, e_bitterfly]
-      - [0x1D70, .data, e_unk32-33]
+      - [0x1D70, .data, e_imp]
       - [0x1DA4, data]
       - [0x1FA8, .data, gen/rooms]
       - [0x20AC, .data, gen/e_layout]
@@ -87,7 +87,7 @@ segments:
       - [0x2AD5C, .rodata, e_fire_demon]
       - [0x2AE6C, .rodata, e_lesser_demon]
       - [0x2AEBC, .rodata, e_sealed_door]
-      - [0x2AED4, .rodata, e_unk32-33]
+      - [0x2AED4, .rodata, e_imp]
       - [0x2AF04, .rodata, e_unk34-36]
       - [0x2AF10, .rodata, e_salem_witch]
       - [0x2AF4C, .rodata, prim_helpers]
@@ -117,8 +117,13 @@ segments:
       - [0x39E64, c, e_fire_demon]
       - [0x3C51C, c, e_lesser_demon]
       - [0x3F820, c, e_sealed_door]
+<<<<<<< HEAD
       - [0x4060C, c, e_bitterfly]
       - [0x409E8, c, e_unk32-33]
+=======
+      - [0x4060C, c, e_unk31]
+      - [0x409E8, c, e_imp]
+>>>>>>> 3545b1d20 (Finish off renaming)
       - [0x41758, c, e_unk34-36]
       - [0x41FA0, c, e_salem_witch]
       - [0x436C0, c, prim_helpers]

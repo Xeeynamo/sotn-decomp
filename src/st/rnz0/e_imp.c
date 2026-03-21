@@ -3,8 +3,10 @@
 
 extern EInit D_us_80180AB0;
 extern EInit D_us_80180ABC;
-extern u8 D_pspeu_09258B10[] = {4, 1, 4, 2, 4, 3, 4, 4, 4, 5, 4, 6, 4, 5, 4, 4, 4, 3, 4, 2, 4, 1, 0};
-extern u8 D_pspeu_09258B28[] = {2, 7, 2, 8, 2, 9, 2, 10, 2, 11, 2, 12, 2, 13, 2, 14, 2, 15, 2, 16, 2, 17, 2, 18, 255, 0};
+// Imp flapping wings
+static u8 anim_imp[] = {4, 1, 4, 2, 4, 3, 4, 4, 4, 5, 4, 6, 4, 5, 4, 4, 4, 3, 4, 2, 4, 1, 0};
+// Smoke puff from Alucard when jammed by imp
+static u8 anim_smoke[] = {2, 7, 2, 8, 2, 9, 2, 10, 2, 11, 2, 12, 2, 13, 2, 14, 2, 15, 2, 16, 2, 17, 2, 18, 255, 0};
 
 
 void EntityImp(Entity* self) {
@@ -27,7 +29,7 @@ void EntityImp(Entity* self) {
         SetStep(2);
         break;
     case 2:
-        AnimateEntity(D_pspeu_09258B10, self);
+        AnimateEntity(anim_imp, self);
         if (GetDistanceToPlayerX() < 0x80) {
             SetStep(3);
         }
@@ -37,7 +39,7 @@ void EntityImp(Entity* self) {
             self->ext.imp.timer = 0xC0;
             self->step_s += 1;
         }
-        AnimateEntity(D_pspeu_09258B10, self);
+        AnimateEntity(anim_imp, self);
         MoveEntity();
         tempVar = GetSideToPlayer() & 1;
         self->facingLeft = tempVar;
@@ -100,7 +102,7 @@ void EntityImp(Entity* self) {
             self->ext.imp.timer = 0x20;
             self->step_s += 1;
         }
-        AnimateEntity(D_pspeu_09258B10, self);
+        AnimateEntity(anim_imp, self);
         MoveEntity();
         self->velocityX -= self->velocityX >> 3;
         self->velocityY -= self->velocityY >> 4;
@@ -126,7 +128,7 @@ void EntityImp(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 1:
-            AnimateEntity(&D_pspeu_09258B10, self);
+            AnimateEntity(&anim_imp, self);
             MoveEntity();
             other = &PLAYER;
             xVar = other->posX.i.hi - self->posX.i.hi;
@@ -159,7 +161,7 @@ void EntityImp(Entity* self) {
             }
             break;
         case 2:
-            AnimateEntity(D_pspeu_09258B10, self);
+            AnimateEntity(anim_imp, self);
             MoveEntity();
             self->velocityX -= self->velocityX >> 4;
             self->velocityY -= self->velocityY >> 4;
@@ -183,7 +185,7 @@ void EntityImp(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 1:
-            AnimateEntity(&D_pspeu_09258B10, self);
+            AnimateEntity(&anim_imp, self);
             MoveEntity();
             other = &PLAYER;
             xVar = other->posX.i.hi - self->posX.i.hi;
@@ -219,7 +221,7 @@ void EntityImp(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 3:
-            AnimateEntity(&D_pspeu_09258B10, self);
+            AnimateEntity(&anim_imp, self);
             MoveEntity();
             other = &PLAYER;
             xVar = other->posX.i.hi - self->posX.i.hi;
@@ -265,7 +267,7 @@ void EntityImp(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 1:
-            AnimateEntity(&D_pspeu_09258B10, self);
+            AnimateEntity(&anim_imp, self);
             other = &PLAYER;
             self->posX.i.hi = other->posX.i.hi + self->ext.imp.jamOffsetX;
             self->posY.i.hi = other->posY.i.hi + self->ext.imp.jamOffsetY;
@@ -324,7 +326,7 @@ void EntityImp(Entity* self) {
             if (self->ext.imp.timer < 0x28) {
                 self->hitboxState = 3;
             }
-            AnimateEntity(D_pspeu_09258B10, self);
+            AnimateEntity(anim_imp, self);
             MoveEntity();
             self->velocityX -= self->velocityX >> 3;
             self->velocityY -= self->velocityY >> 3;
@@ -342,7 +344,7 @@ void EntityImp(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 3:
-            AnimateEntity(D_pspeu_09258B10, self);
+            AnimateEntity(anim_imp, self);
             MoveEntity();
             if (GetDistanceToPlayerX() > 0x60) {
                 SetStep(3);
@@ -360,7 +362,7 @@ void EntityImp(Entity* self) {
             self->step_s += 1;
             /* fallthrough */
         case 1:
-            AnimateEntity(&D_pspeu_09258B10, self);
+            AnimateEntity(&anim_imp, self);
             self->rotate += 0x40;
             MoveEntity();
             self->velocityY += FIX(0.03125);
@@ -395,7 +397,7 @@ void EntityImpSmoke(Entity* self) {
         g_api.PlaySfx(SFX_BONE_THROW);
     }
     self->posY.val -= FIX(0.5);
-    if (AnimateEntity(&D_pspeu_09258B28, self) == 0) {
+    if (AnimateEntity(&anim_smoke, self) == 0) {
         DestroyEntity(self);
     }
 }
