@@ -112,5 +112,7 @@ g_EInitTableWithGlobe = 0x09260790;
 g_EInitLifeMaxTank = 0x092607A0;
 g_EInitPrizeContainer = 0x092607B0;
 D_us_80180AA4 = 0x092607C0;
+D_us_80180AB0 = 0x092607D0;
+D_us_80180ABC = 0x092607E0;
 RNZ0_rooms = 0x09260840;
 RNZ0_PrizeDrops = 0x09281880;
