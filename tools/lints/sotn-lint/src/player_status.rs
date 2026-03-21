@@ -21,7 +21,7 @@ lazy_static! {
         (1 << 9, "PLAYER_STATUS_UNK200"),
         (1 << 10, "PLAYER_STATUS_UNK400"),
         (1 << 11, "PLAYER_STATUS_SUBWPN"),
-        (1 << 12, "PLAYER_STATUS_UNK1000"),
+        (1 << 12, "PLAYER_STATUS_SPELLCAST"),
         (1 << 13, "PLAYER_STATUS_UNK2000"),
         (1 << 14, "PLAYER_STATUS_POISON"),
         (1 << 15, "PLAYER_STATUS_CURSE"),
@@ -127,7 +127,7 @@ mod tests {
     #[test]
     fn test_player_status_clear_many() {
         let input_line = "g_Player.status &= 0xFFFF6FFF;";
-        let expected_line = "g_Player.status &= ~(PLAYER_STATUS_CURSE | PLAYER_STATUS_UNK1000);";
+        let expected_line = "g_Player.status &= ~(PLAYER_STATUS_CURSE | PLAYER_STATUS_SPELLCAST);";
         let result = DMT.transform_line(input_line);
         assert_eq!(result, expected_line)
     }

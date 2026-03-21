@@ -706,7 +706,7 @@ void EntityAlucard() {
             case ALU_T_8:
             case ALU_T_9:
             case ALU_T_USE_SUBWPN:
-            case ALU_T_12:
+            case ALU_T_USE_SPELL:
             case ALU_T_INVINCIBLE:
             case ALU_T_INVINCIBLE_CONSUMABLES:
                 break;
@@ -750,7 +750,7 @@ void EntityAlucard() {
                 case ALU_T_8:
                 case ALU_T_9:
                 case ALU_T_USE_SUBWPN:
-                case ALU_T_12:
+                case ALU_T_USE_SPELL:
                 case ALU_T_INVINCIBLE_CONSUMABLES:
                     break;
                 case ALU_T_POISON:
@@ -1343,8 +1343,8 @@ block_159:
     if (g_Player.timers[ALU_T_USE_SUBWPN]) {
         newStatus |= PLAYER_STATUS_SUBWPN;
     }
-    if (g_Player.timers[ALU_T_12]) {
-        newStatus |= PLAYER_STATUS_UNK1000;
+    if (g_Player.timers[ALU_T_USE_SPELL]) {
+        newStatus |= PLAYER_STATUS_SPELLCAST;
     }
     if (g_Player.timers[ALU_T_POISON]) {
         newStatus |= PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |

@@ -91,7 +91,7 @@ void EntityImp(Entity* self) {
                     SetStep(IMP_8);
                 }
             }
-            if (playerStatus & (PLAYER_STATUS_UNK1000 | PLAYER_STATUS_SUBWPN)) {
+            if (playerStatus & (PLAYER_STATUS_SPELLCAST | PLAYER_STATUS_SUBWPN)) {
                 yVar += 12;
                 if (yVar < 0x50U) {
                     SetStep(IMP_9);

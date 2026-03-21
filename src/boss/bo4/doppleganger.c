@@ -538,7 +538,7 @@ static void DopplegangerThinking(void) {
         D_us_801D3D24 = THINK_STEP_15;
     }
 
-    if ((g_Player.timers[ALU_T_12]) &&
+    if ((g_Player.timers[ALU_T_USE_SPELL]) &&
         (D_us_801D3D24 != THINK_STEP_GAME_OVER) &&
         !(g_Dop.status & PLAYER_STATUS_MIST_FORM)) {
         g_Dop.padSim = PAD_R2;
