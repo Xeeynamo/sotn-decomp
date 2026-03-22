@@ -89,7 +89,7 @@ segments:
       - [0x21F10, .data, e_lesser_demon]
       - [0x220A0, .data, e_room_fg]
       - [0x22140, .data, e_floor_trap]
-      - [0x22160, data]
+      - [0x22160, .data, rnz0_psp/e_unk34-36]
       - [0x221C0, .data, e_cannon]
       - [0x221D8, data]
       - [0x292C8, .data, e_breakable]

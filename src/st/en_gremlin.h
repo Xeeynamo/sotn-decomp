@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+extern EInit g_EInitGremlin;
+extern EInit g_EInitGremlinFire;
 // clang-format off
 // D_801816EC
 static u8 AnimFrames_Running[] = {
@@ -45,7 +47,9 @@ void EntityGremlin(Entity* self) {
 
     // Check for being hurt
     if ((self->hitFlags & 3) && (self->step != HURT_DEATH)) {
+#ifndef GREMLIN_SILENT_HURT
         PlaySfxPositional(SFX_GREMLIN_HURT);
+#endif
         SetStep(HURT_DEATH);
     }
     // Check for being dead
@@ -196,8 +200,9 @@ void EntityGremlin(Entity* self) {
 
             // Check if dead
             if (self->flags & FLAG_DEAD) {
+#ifndef GREMLIN_SILENT_HURT
                 PlaySfxPositional(SFX_GREMLIN_DEATH);
-
+#endif
                 // Spawn fire particles
                 entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (entity != NULL) {
