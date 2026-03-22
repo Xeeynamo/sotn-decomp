@@ -53,9 +53,9 @@ void EntityCannonWall(Entity* self);
 void EntityBitterfly(Entity* self);
 void EntityImp(Entity* self);
 void EntityImpSmoke(Entity* self);
-void func_us_801C1758(Entity* self);
-void func_us_801C1CC0(Entity* self);
-void func_us_801C1E14(Entity* self);
+void EntityGremlin(Entity* self);
+void EntityGremlinEffect(Entity* self);
+void EntityGremlinFire(Entity* self);
 void EntitySalemWitch(Entity* self);
 void EntitySalemWitchGlow(Entity* self);
 void EntitySalemWitchCurse(Entity* self);
@@ -114,9 +114,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityBitterfly,
     EntityImp,
     EntityImpSmoke,
-    func_us_801C1758,
-    func_us_801C1CC0,
-    func_us_801C1E14,
+    EntityGremlin,
+    EntityGremlinEffect,
+    EntityGremlinFire,
     EntitySalemWitch,
     EntitySalemWitchGlow,
     EntitySalemWitchCurse,
@@ -144,9 +144,9 @@ EInit g_EInitPrizeContainer = {ANIMSET_OVL(9), 0, 83, 0x23E, 0x005};
 EInit D_us_80180AA4 = {ANIMSET_OVL(10), 1, 72, 0x247, 0x0B6};
 EInit D_us_80180AB0 = {ANIMSET_OVL(11), 1, 95, 0x260, 0x11C};
 EInit D_us_80180ABC = {ANIMSET_OVL(11), 1, 95, 0x260, 0x002};
-EInit D_us_80180AC8 = {ANIMSET_OVL(12), 0, 94, 0x270, 0x0E1};
+EInit g_EInitGremlin = {ANIMSET_OVL(12), 0, 94, 0x270, 0x0E1};
 EInit D_us_80180AD4 = {ANIMSET_OVL(12), 0, 94, 0x270, 0x005};
-EInit D_us_80180AE0 = {ANIMSET_OVL(12), 0, 94, 0x270, 0x0E2};
+EInit g_EInitGremlinFire = {ANIMSET_OVL(12), 0, 94, 0x270, 0x0E2};
 EInit D_us_80180AEC = {ANIMSET_OVL(13), 1, 80, 0x24C, 0x0DD};
 EInit D_us_80180AF8 = {ANIMSET_OVL(13), 0, 80, 0x24C, 0x0DE};
 EInit D_us_80180B04 = {ANIMSET_OVL(14), 0, 92, 0x2EB, 0x0DF};
