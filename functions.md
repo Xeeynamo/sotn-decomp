@@ -1245,7 +1245,7 @@
 | nz1      | func_pspeu_09251408                  |       31 |          2 |        |       |     |
 | rare     | func_pspeu_0924B680                  |       31 |          2 |        |       |     |
 | rcat     | UnkPolyFunc2                         |       31 |          2 |        |       |     |
-| rnz0     | UnkPolyFunc2                         |       31 |          2 |        |       |     |
+| rnz0     | func_pspeu_09254940                  |       31 |          2 |        |       |     |
 | sel      | func_psp_09240820                    |       31 |          2 |        |       |     |
 | st0      | func_pspeu_09251A18                  |       31 |          2 |        |       |     |
 | wrp      | func_psp_09244628                    |       31 |          2 |        |       |     |
@@ -2677,7 +2677,7 @@
 | lib      | func_psp_09254CD0                    |       71 |          9 |        |       |     |
 | lib      | func_psp_09250DE8                    |       71 |          9 |        |       |     |
 | no1      | func_pspeu_0925C7D8                  |       71 |          9 |        |       |     |
-| rnz0     | PrimToggleVisibility                 |       71 |          9 |        |       |     |
+| rnz0     | func_pspeu_09254750                  |       71 |          9 |        |       |     |
 | dra      | func_psp_090E3030                    |       71 |         10 |        |       |     |
 | dra      | func_psp_0910F1A0                    |       71 |         11 |        |       |     |
 | main     | __fixdfsi                            |       71 |         11 |        |       |     |
@@ -2731,7 +2731,7 @@
 | nz1      | func_pspeu_09250268                  |       73 |          7 |        |       |     |
 | rare     | func_pspeu_0924A9D0                  |       73 |          7 |        |       |     |
 | rcat     | func_pspeu_09249AE0                  |       73 |          7 |        |       |     |
-| rnz0     | GetNormalizedAngle                   |       73 |          7 |        |       |     |
+| rnz0     | func_pspeu_092534B8                  |       73 |          7 |        |       |     |
 | wrp      | func_psp_09243A70                    |       73 |          7 |        |       |     |
 | lib      | func_psp_0926ADD8                    |       73 |          8 |        |       |     |
 | main     | func_psp_0890FA7C                    |       73 |          9 |        |       |     |
@@ -2937,7 +2937,7 @@
 | lib      | func_psp_09247EE8                    |       84 |          5 |        |       |     |
 | no2      | func_pspeu_09243B58                  |       84 |          5 |        |       |     |
 | np3      | func_pspeu_0924F060                  |       84 |          5 |        |       |     |
-| rnz0     | EntityGreyPuffSpawner                |       84 |          5 |        |       |     |
+| rnz0     | func_pspeu_09249DA8                  |       84 |          5 |        |       |     |
 | dai      | func_pspeu_0924B828                  |       84 |          6 |        |       |     |
 | dra      | func_psp_090EEE78                    |       84 |          7 |        |       |     |
 | main     | __multadd                            |       84 |          7 |        |       |     |
@@ -3048,7 +3048,7 @@
 | np3      | func_pspeu_0924EDD0                  |       91 |          7 |        |       |     |
 | nz0      | func_pspeu_0924B9E0                  |       91 |          7 |        |       |     |
 | rcat     | func_pspeu_09242980                  |       91 |          7 |        |       |     |
-| rnz0     | CheckColliderOffsets                 |       91 |          7 |        |       |     |
+| rnz0     | func_pspeu_09249B18                  |       91 |          7 |        |       |     |
 | main     | __b2d                                |       91 |          8 |        |       |     |
 | ric      | func_pspeu_092CC930                  |       91 |          8 |        |       |     |
 | main     | __s2b                                |       91 |         11 |        |       |     |
@@ -3713,11 +3713,11 @@
 | no4      | func_pspeu_0925DBD8                  |      136 |         17 |        |       |     |
 | cat      | func_pspeu_09254B70                  |      136 |         18 |        |       |     |
 | chi      | func_psp_09249370                    |      136 |         18 |        |       |     |
-| rnz0     | func_us_801C1CC0                     |      136 |         18 |        |       |     |
+| rnz0     | EntityGremlinEffect                  |      136 |         18 |        |       |     |
 | dra      | func_psp_09141668                    |      136 |         21 |        |       |     |
 | cat      | func_pspeu_09254D60                  |      136 |         21 |        |       |     |
 | chi      | func_psp_09249560                    |      136 |         21 |        |       |     |
-| rnz0     | func_us_801C1E14                     |      136 |         21 |        |       |     |
+| rnz0     | EntityGremlinFire                    |      136 |         21 |        |       |     |
 | rnz0     | func_pspeu_09256928                  |      137 |          1 |        |       |     |
 | main     | func_psp_0891E638                    |      137 |         15 |        |       |     |
 | main     | cvt                                  |      137 |         15 |        |       |     |
@@ -4041,7 +4041,7 @@
 | nz1      | func_pspeu_0924F9A0                  |      186 |         20 |        |       |     |
 | rare     | func_pspeu_0924A108                  |      186 |         20 |        |       |     |
 | rcat     | func_pspeu_09249218                  |      186 |         20 |        |       |     |
-| rnz0     | UnkCollisionFunc3                    |      186 |         20 |        |       |     |
+| rnz0     | func_pspeu_09252D88                  |      186 |         20 |        |       |     |
 | st0      | func_pspeu_09250130                  |      186 |         20 |        |       |     |
 | main     | _main                                |      186 |         21 |        |       |     |
 | lib      | func_psp_09254DC0                    |      186 |         25 |        |       |     |
@@ -4563,7 +4563,7 @@
 | np3      | func_pspeu_0925AEB8                  |      332 |         41 |        |       |     |
 | nz0      | func_pspeu_092553A8                  |      332 |         41 |        |       |     |
 | nz1      | func_pspeu_09250830                  |      332 |         41 |        |       |     |
-| rnz0     | GetPlayerCollisionWith               |      332 |         41 |        |       |     |
+| rnz0     | func_pspeu_092539B0                  |      332 |         41 |        |       |     |
 | dai      | func_pspeu_09257AE0                  |      333 |         35 | Yes    |       |     |
 | ric      | func_pspeu_092B00F0                  |      333 |         60 | Yes    |       |     |
 | lib      | func_psp_09257BF8                    |      334 |         15 |        |       |     |
@@ -4588,7 +4588,7 @@
 | nz1      | func_pspeu_09250E00                  |      338 |         36 |        |       |     |
 | rare     | func_pspeu_0924AFC0                  |      338 |         36 |        |       |     |
 | rcat     | UnkPrimHelper                        |      338 |         36 |        |       |     |
-| rnz0     | UnkPrimHelper                        |      338 |         36 |        |       |     |
+| rnz0     | func_pspeu_09253F80                  |      338 |         36 |        |       |     |
 | st0      | func_pspeu_09251410                  |      338 |         36 |        |       |     |
 | wrp      | func_psp_09244020                    |      338 |         36 |        |       |     |
 | main     | func_psp_08931D64                    |      339 |         68 |        |       |     |
@@ -4923,7 +4923,7 @@
 | rnz0     | EntityMessageBox                     |      511 |         41 |        |       |     |
 | wrp      | func_psp_0923FDD0                    |      511 |         41 |        |       |     |
 | cat      | func_pspeu_0924DDE0                  |      511 |         53 |        |       |     |
-| rnz0     | func_us_801C1758                     |      511 |         69 |        |       |     |
+| rnz0     | EntityGremlin                        |      511 |         69 |        |       |     |
 | ric      | func_pspeu_092B5FC8                  |      512 |         68 |        |       |     |
 |          | func_092E8B40                        |      514 |         28 |        |       |     |
 | cat      | func_pspeu_09257850                  |      514 |         66 |        |       |     |
