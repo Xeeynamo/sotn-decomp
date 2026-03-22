@@ -744,10 +744,10 @@ void MarMain(void) {
         newStatus |= PLAYER_STATUS_UNK400;
     }
     if (g_Player.timers[PL_T_10]) {
-        newStatus |= PLAYER_STATUS_UNK800;
+        newStatus |= PLAYER_STATUS_SUBWPN;
     }
     if (g_Player.timers[PL_T_12]) {
-        newStatus |= PLAYER_STATUS_UNK1000;
+        newStatus |= PLAYER_STATUS_SPELLCAST;
     }
     if (*D_80097448 != 0) {
         newStatus |= PLAYER_STATUS_UNK20000;
@@ -765,7 +765,7 @@ void MarMain(void) {
     }
     if (g_Player.timers[PL_T_INVINCIBLE_SCENE] |
         g_Player.timers[PL_T_INVINCIBLE]) {
-        g_Player.status |= PLAYER_STATUS_UNK100;
+        g_Player.status |= PLAYER_STATUS_INVINCIBLE;
     }
     g_api.UpdateAnim(mar_80155964, (AnimationFrame**)mar_8015538C);
     PLAYER.hitboxState = 1;

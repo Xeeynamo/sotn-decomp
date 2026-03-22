@@ -258,7 +258,7 @@ void EntityMinotaur(Entity* self) {
 
         // Looks to be triggered by player throwing a subweapon at the Minotaur
         if (self->facingLeft == entity->facingLeft &&
-            g_Player.status & PLAYER_STATUS_UNK800) {
+            g_Player.status & PLAYER_STATUS_SUBWPN) {
             SetStep(BLOCK);
         }
 

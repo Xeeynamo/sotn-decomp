@@ -305,7 +305,7 @@ s32 func_us_801C5B68(void) {
 
     OVL_EXPORT(CreateEntFactoryFromEntity)(g_CurrentEntity, FACTORY(3, 0), 0);
 
-    g_Dop.timers[ALU_T_10] = 4;
+    g_Dop.timers[ALU_T_USE_SUBWPN] = 4;
     if (DOPPLEGANGER.step_s >= 0x40) {
         return 0;
     }

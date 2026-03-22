@@ -87,7 +87,7 @@ void InitEntityIds(void) {
     E_ID(UNK_30) = E_UNK_30;
     E_ID(BITTERFLY) = E_BITTERFLY;
     E_ID(IMP) = E_IMP;
-    E_ID(UNK_33) = E_UNK_33;
+    E_ID(UNK_33) = E_IMP_SMOKE;
     E_ID(GREMLIN) = E_GREMLIN;
     E_ID(UNK_35) = E_UNK_35;
     E_ID(UNK_36) = E_UNK_36;

@@ -538,7 +538,7 @@ static void DopplegangerThinking(void) {
         D_us_801D3D24 = THINK_STEP_15;
     }
 
-    if ((g_Player.timers[ALU_T_12]) &&
+    if ((g_Player.timers[ALU_T_USE_SPELL]) &&
         (D_us_801D3D24 != THINK_STEP_GAME_OVER) &&
         !(g_Dop.status & PLAYER_STATUS_MIST_FORM)) {
         g_Dop.padSim = PAD_R2;
@@ -559,7 +559,7 @@ static void DopplegangerThinking(void) {
     switch (D_us_801D3D24) {
     case THINK_STEP_0:
         if (!(g_Dop.status & PLAYER_STATUS_UNK10000)) {
-            if (g_Player.timers[ALU_T_10]) {
+            if (g_Player.timers[ALU_T_USE_SUBWPN]) {
                 if (rand() & 1) {
                     if (facingLeft) {
                         g_Dop.padSim = PAD_LEFT;
@@ -644,7 +644,7 @@ static void DopplegangerThinking(void) {
                     D_us_801D3D28 = 32;
                     break;
                 }
-            } else if (g_Player.timers[ALU_T_10]) {
+            } else if (g_Player.timers[ALU_T_USE_SUBWPN]) {
                 if (rand() & 1) {
                     if (facingLeft) {
                         g_Dop.padSim = PAD_LEFT;

@@ -19,7 +19,6 @@ SetStep = 0x801B0C5C; // source=match
 SetSubStep = 0x801B0C7C; // source=match
 InitializeEntity = 0x801B0D2C; // source=match
 PlaySfxPositional = 0x801B60E0; // source=match
-EntityBitterfly = 0x801C060C;
 SalemWitchTrySpawnShadow = 0x801C1FA0; // source=match
 EntitySalemWitch = 0x801C2034; // source=match
 EntitySalemWitchGlow = 0x801C2CE0; // source=match
