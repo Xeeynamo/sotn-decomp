@@ -1,11 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-/*
- * File: en_salem_witch.c
- * Overlay: CHI
- * Description: ENTITY - Salem Witch
- */
-
-#include "chi.h"
+extern EInit g_EInitInteractable;
+extern EInit g_EInitSalemWitch;
+extern EInit g_EInitSalemWitchCurse;
+extern EInit g_EInitSalemWitchTribolt;
 
 // func_801A80A8
 void SalemWitchTrySpawnShadow() {
@@ -588,7 +585,7 @@ void EntitySalemWitch(Entity* self) {
         return;
 
     case DEBUG:
-#include "../pad2_anim_debug.h"
+#include "pad2_anim_debug.h"
     }
 
     // Clamp x position to always be on screen
@@ -633,7 +630,7 @@ void EntitySalemWitchGlow(Entity* self) {
     }
 }
 
-extern signed short* sprites_chi_4[];
+extern signed short* sprites_salem_witch_curse[];
 
 // E_SALEM_WITCH_CURSE
 // func_801A8EAC
@@ -679,7 +676,7 @@ void EntitySalemWitchCurse(Entity* self) {
         prim = &g_PrimBuf[primIdx];
         self->ext.prim = prim;
         while (prim != NULL) {
-            prim->tpage = 0x12;
+            prim->tpage = salem_witch_curse_tpage;
             prim->clut = 0x2EB;
             prim->p3 = 0;
             prim->priority = self->zPriority + 1;
@@ -708,7 +705,7 @@ void EntitySalemWitchCurse(Entity* self) {
             }
 
             // Update UVs
-            spriteUVs = sprites_chi_4[prim->p1];
+            spriteUVs = sprites_salem_witch_curse[prim->p1];
             spriteUVs += SpriteUvOffset;
             if (self->facingLeft) {
                 prim->u2 = prim->u3 = *spriteUVs++;
@@ -791,7 +788,7 @@ void EntitySalemWitchCurse(Entity* self) {
                     }
 
                     // Update UVs
-                    spriteUVs = sprites_chi_4[prim->p1];
+                    spriteUVs = sprites_salem_witch_curse[prim->p1];
                     spriteUVs += SpriteUvOffset;
                     if (self->facingLeft) {
                         prim->u2 = prim->u3 = *spriteUVs++;
@@ -868,8 +865,8 @@ void EntitySalemWitchTriboltLaunch(Entity* self) {
         break;
 
     case SPAWN_PROJECTILES:
-        self->animSet = ANIMSET_OVL(6);
-        self->unk5A = 0x4B;
+        self->animSet = salem_witch_tribolt_animset;
+        self->unk5A = salem_witch_tribolt_unk5A;
         self->drawFlags |= ENTITY_SCALEX | ENTITY_SCALEY;
         self->scaleX = self->scaleY = BurstStartRotation;
         self->drawFlags |= ENTITY_OPACITY;

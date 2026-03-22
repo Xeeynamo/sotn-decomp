@@ -71,7 +71,7 @@ segments:
       - [0x1CFC, .data, e_bitterfly]
       - [0x1D70, .data, e_imp]
       - [0x1DA4, .data, e_gremlin]
-      - [0x1DF4, data]
+      - [0x1DF4, .data, e_salem_witch]
       - [0x1FA8, .data, gen/rooms]
       - [0x20AC, .data, gen/e_layout]
       - [0x326C, data]

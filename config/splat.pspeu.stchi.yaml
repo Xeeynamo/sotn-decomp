@@ -44,7 +44,7 @@ segments:
     subalign: 8
     subsegments:
       - [0x80, c, chi/ut_create_entity]
-      - [0x1028, c, chi/en_salem_witch]
+      - [0x1028, c, chi/e_salem_witch]
       - [0x3170, c, chi/en_venus_weed]
       - [0x5C28, c, chi/en_red_door]
       - [0x6F30, c, chi/st_update]
@@ -67,7 +67,7 @@ segments:
       - [0x16178, c, chi/en_falling_stairs]
       - [0x17440, c, chi/en_demon_switch_wall]
       - [0x17C80, c, chi_psp/en_breakable_wall]
-      - [0x18900, .data, chi/en_salem_witch]
+      - [0x18900, .data, chi/e_salem_witch]
       - [0x18AC8, .data, chi/en_venus_weed]
       - [0x18C38, .data, chi/en_red_door]
       - [0x18C50, .data, chi/st_update]

@@ -44,7 +44,7 @@ segments:
     subsegments:
       - [0x80, c, e_ctulhu]
       - [0x2730, c, create_entity] # create_entity
-      - [0x3718, c, rnz0_psp/e_salem_witch] # en_salem_witch
+      - [0x3718, c, e_salem_witch] # e_salem_witch
       - [0x5860, c, e_fire_demon]
       - [0x8DE8, c, e_bitterfly]
       - [0x9308, c, e_stage_name] # e_stage_name
@@ -75,7 +75,7 @@ segments:
       - [0x203E0, c, e_globe_table]
       - [0x20518, c, e_left_secret_room_wall]
       - [0x20F00, .data, e_ctulhu]
-      - [0x21050, data]
+      - [0x21050, .data, e_salem_witch]
       - [0x21218, .data, e_fire_demon]
       - [0x21368, .data, e_bitterfly]
       - [0x213C8, .data, e_red_door]
