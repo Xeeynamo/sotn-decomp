@@ -2,4 +2,4 @@
 #include "rnz0.h"
 
 #define GREMLIN_SILENT_HURT
-#include "../en_gremlin.h"
+#include "../e_gremlin.h"
