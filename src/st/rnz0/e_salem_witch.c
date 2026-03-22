@@ -1,14 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
 
-INCLUDE_ASM("st/rnz0/nonmatchings/e_salem_witch", SalemWitchTrySpawnShadow);
+#include "rnz0.h"
 
-INCLUDE_ASM("st/rnz0/nonmatchings/e_salem_witch", EntitySalemWitch);
+#define sprites_salem_witch_curse sprites_rnz0_14
+#define salem_witch_curse_tpage 0x14
+#define salem_witch_tribolt_animset ANIMSET_OVL(24)
+#define salem_witch_tribolt_unk5A 0x53
 
-INCLUDE_ASM("st/rnz0/nonmatchings/e_salem_witch", EntitySalemWitchGlow);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/e_salem_witch", EntitySalemWitchCurse);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/e_salem_witch", EntitySalemWitchTriboltLaunch);
-
-INCLUDE_ASM("st/rnz0/nonmatchings/e_salem_witch", EntitySalemWitchTriboltProjectile);
+#include "../e_salem_witch.h"

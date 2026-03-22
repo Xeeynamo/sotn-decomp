@@ -1,28 +1,2 @@
-g_EInitInteractable = 0x801809B4;
 RNZ0_RedDoorTiles = 0x80180B48;
 RNZ0_PrizeDrops = 0x80180CC8;
-sprites_rnz0_14 = 0x801AA8E4;
-Random = 0x801ACC04; // source=match
-CreateEntityFromCurrentEntity = 0x801AF27C; // source=match
-CreateEntityFromEntity = 0x801AF2F0; // source=match
-DestroyEntity = 0x801B001C; // source=match
-AnimateEntity = 0x801B014C; // source=match
-GetDistanceToPlayerX = 0x801B031C; // source=match
-GetDistanceToPlayerY = 0x801B0358; // source=match
-GetSideToPlayer = 0x801B038C; // source=match
-MoveEntity = 0x801B03D0; // source=match
-UnkCollisionFunc3 = 0x801B042C; // source=match
-AllocEntity = 0x801B088C; // source=match
-GetAngleBetweenEntities = 0x801B0B7C; // source=match
-GetNormalizedAngle = 0x801B0BFC; // source=match
-SetStep = 0x801B0C5C; // source=match
-SetSubStep = 0x801B0C7C; // source=match
-InitializeEntity = 0x801B0D2C; // source=match
-PlaySfxPositional = 0x801B60E0; // source=match
-SalemWitchTrySpawnShadow = 0x801C1FA0; // source=match
-EntitySalemWitch = 0x801C2034; // source=match
-EntitySalemWitchGlow = 0x801C2CE0; // source=match
-EntitySalemWitchCurse = 0x801C2DA4; // source=match
-EntitySalemWitchTriboltLaunch = 0x801C32CC; // source=match
-EntitySalemWitchTriboltProjectile = 0x801C3480; // source=match
-FindFirstUnkPrim = 0x801C3BF8; // source=match

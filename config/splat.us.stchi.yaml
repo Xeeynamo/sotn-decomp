@@ -65,14 +65,14 @@ segments:
       - [0x140C, .data, en_misc]          # UnkRecursivePrimFunc2
       - [0x142C, .data, en_particles]     # EntitySoulStealOrb
       - [0x14AC, .data, en_room_foreground]
-      - [0x1538, .data, en_salem_witch]   # EntitySalemWitch
-      - [0x162C, .data, en_salem_witch]   # EntitySalemWitchGlow
-      - [0x1638, .data, en_salem_witch]   # EntitySalemWitchCurse
-      - [0x167C, .data, en_salem_witch]   # EntitySalemWitchTriboltLaunch
-      - [0x16C0, .data, en_salem_witch]   # EntitySalemWitchTriboltProjectile
-      - [0x16EC, .data, en_gremlin]       # EntityGremlin
-      - [0x1704, .data, en_gremlin]       # EntityGremlinEffect
-      - [0x1724, .data, en_gremlin]       # EntityGremlinFire
+      - [0x1538, .data, e_salem_witch]   # EntitySalemWitch
+      - [0x162C, .data, e_salem_witch]   # EntitySalemWitchGlow
+      - [0x1638, .data, e_salem_witch]   # EntitySalemWitchCurse
+      - [0x167C, .data, e_salem_witch]   # EntitySalemWitchTriboltLaunch
+      - [0x16C0, .data, e_salem_witch]   # EntitySalemWitchTriboltProjectile
+      - [0x16EC, .data, e_gremlin]       # EntityGremlin
+      - [0x1704, .data, e_gremlin]       # EntityGremlinEffect
+      - [0x1724, .data, e_gremlin]       # EntityGremlinFire
       - [0x173C, .data, en_thornweed_corpseweed]
       - [0x17F4, .data, en_venus_weed]
       # Binary data
@@ -91,10 +91,10 @@ segments:
       - [0x1B234, .rodata, en_misc]                   # EntityRelicOrb string
       - [0x1B244, .rodata, en_misc]                   # jtbl_8019B244 [EntityRelicOrb]
       - [0x1B26C, .rodata, en_misc]                   # jtbl_8019B26C [EntityMessageBox]
-      - [0x1B280, .rodata, en_salem_witch]            # EntitySalemWitch debug string
-      - [0x1B290, .rodata, en_salem_witch]            # jtbl_8019B290 [EntitySalemWitch]
-      - [0x1B2A8, .rodata, en_salem_witch]            # jtbl_8019B2A8 [EntitySalemWitchTribolt]
-      - [0x1B2BC, .rodata, en_gremlin]                # EntityGremlin debug string
+      - [0x1B280, .rodata, e_salem_witch]            # EntitySalemWitch debug string
+      - [0x1B290, .rodata, e_salem_witch]            # jtbl_8019B290 [EntitySalemWitch]
+      - [0x1B2A8, .rodata, e_salem_witch]            # jtbl_8019B2A8 [EntitySalemWitchTribolt]
+      - [0x1B2BC, .rodata, e_gremlin]                # EntityGremlin debug string
       - [0x1B2C8, .rodata, en_thornweed_corpseweed]   # jtbl_8019B2C8 [EntityThornweed]
       - [0x1B2E8, .rodata, en_thornweed_corpseweed]   # jtbl_8019B2E8 [EntityCorpseweed]
       - [0x1B304, .rodata, en_venus_weed]             # jtbl_8019B304 [EntityVenusWeed]
@@ -123,8 +123,8 @@ segments:
       - [0x27448, c, en_particles]
       - [0x27C8C, c, en_room_foreground]
       - [0x27D78, c, en_popup]
-      - [0x2813C, c, en_salem_witch]
-      - [0x297C8, c, en_gremlin]
+      - [0x2813C, c, e_salem_witch]
+      - [0x297C8, c, e_gremlin]
       - [0x2A020, c, en_thornweed_corpseweed]
       - [0x2B548, c, en_venus_weed]
       - [0x2D0EC, c, en_stage_name]
