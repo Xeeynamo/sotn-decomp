@@ -1018,6 +1018,7 @@ files:
           - [0x898, skip]
           - [0x1FA8, rooms, rooms]
           - [0x20AC, skip]
+          - [0x326C, cmpgfx, D_8018326C, 128, 64, 4]
           - [0x3B54, cmpgfx, D_80183B54, 128, 128, 4]
           - [0x3EC8, cmpgfx, D_80183EC8, 128, 128, 4]
           - [0x4EB8, cmpgfx, D_80184EB8, 128, 128, 4]
