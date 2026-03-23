@@ -46,7 +46,7 @@ segments:
       - [0x6F0, .data, gen/e_laydef]
       - [0x898, .data, e_init]
       - [0xB10, .data, e_room_bg]
-      - [0xB48, data]
+      - [0xB48, .data, e_red_door_tiles]
       - [0xB78, .data, e_lock_camera]
       - [0xBF8, .data, e_breakable]
       - [0xC68, .data, e_left_secret_room_wall]
