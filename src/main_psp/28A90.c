@@ -30,6 +30,8 @@ extern s16 D_psp_08C63B5C;     // sx1
 extern s16 D_psp_08C63B5E;     // sy1
 extern s16 D_psp_08C63B60;     // sx2
 extern s16 D_psp_08C63B62;     // sy2
+extern s16 D_psp_08C63B64;     // sxp
+extern s16 D_psp_08C63B66;     // syp
 extern u16 D_psp_08C63B68;     // sz0
 extern u16 D_psp_08C63B6C;     // sz1
 extern u16 D_psp_08C63B70;     // sz2
@@ -44,8 +46,10 @@ extern MATRIX D_psp_08C63BE8;  // Light Color Matrix
 extern s32 D_psp_08C63C08;     // OFX
 extern s32 D_psp_08C63C0C;     // OFY
 extern u16 D_psp_08C63C10;     // H
-extern s16 D_psp_08C63C1C;     // DQA
-extern s16 D_psp_08C63C20;     // DQB
+extern s16 D_psp_08C63C12;     // DQA
+extern s32 D_psp_08C63C14;     // DQB
+extern s16 D_psp_08C63C1C;     // ZSF3
+extern s16 D_psp_08C63C20;     // ZSF4
 extern s32 D_psp_08C63C24;     // FLAG
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", ApplyRotMatrix);
@@ -318,12 +322,12 @@ MATRIX* func_psp_08928428(MATRIX* m0, MATRIX* m1) {
 
 MATRIX* func_psp_08928498(long r, MATRIX* m) {
     m->m[0][0] = FLT(1.0);
-    m->m[0][1] = 0;
-    m->m[0][2] = 0;
-    m->m[1][0] = 0;
+    m->m[0][1] = FLT(0.0);
+    m->m[0][2] = FLT(0.0);
+    m->m[1][0] = FLT(0.0);
     m->m[1][1] = rcos(r);
     m->m[1][2] = -rsin(r);
-    m->m[2][0] = 0;
+    m->m[2][0] = FLT(0.0);
     m->m[2][1] = rsin(r);
     m->m[2][2] = rcos(r);
     m->t[2] = 0;
@@ -334,13 +338,13 @@ MATRIX* func_psp_08928498(long r, MATRIX* m) {
 
 MATRIX* func_psp_0892851C(long r, MATRIX* m) {
     m->m[0][0] = rcos(r);
-    m->m[0][1] = 0;
+    m->m[0][1] = FLT(0.0);
     m->m[0][2] = rsin(r);
-    m->m[1][0] = 0;
+    m->m[1][0] = FLT(0.0);
     m->m[1][1] = FLT(1.0);
-    m->m[1][2] = 0;
+    m->m[1][2] = FLT(0.0);
     m->m[2][0] = -rsin(r);
-    m->m[2][1] = 0;
+    m->m[2][1] = FLT(0.0);
     m->m[2][2] = rcos(r);
     m->t[2] = 0;
     m->t[1] = 0;
@@ -351,12 +355,12 @@ MATRIX* func_psp_0892851C(long r, MATRIX* m) {
 MATRIX* func_psp_089285A0(long r, MATRIX* m) {
     m->m[0][0] = rcos(r);
     m->m[0][1] = -rsin(r);
-    m->m[0][2] = 0;
+    m->m[0][2] = FLT(0.0);
     m->m[1][0] = rsin(r);
     m->m[1][1] = rcos(r);
-    m->m[1][2] = 0;
-    m->m[2][0] = 0;
-    m->m[2][1] = 0;
+    m->m[1][2] = FLT(0.0);
+    m->m[2][0] = FLT(0.0);
+    m->m[2][1] = FLT(0.0);
     m->m[2][2] = FLT(1.0);
     m->t[2] = 0;
     m->t[1] = 0;
@@ -484,10 +488,11 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", func_psp_08928980);
 void gte_rtps(void) {
     float x, y, z;
 
-    u16* a;
-    u16* b;
-    u16* c;
-    u16* d;
+    u16* h;
+
+    u16* sz1;
+    u16* sz2;
+    u16* sz3;
 
     x = D_psp_08C63BA8.t[0] +
         MUL_FLOAT(D_psp_08C63BA8.m[0][0], D_psp_08C63B28.vx) +
@@ -506,17 +511,20 @@ void gte_rtps(void) {
         z = 0.01f;
     }
 
-    a = (u16*)&D_psp_08C63C10;
-    D_psp_08C63B58 = (s32)(x * (*a / z)) + D_psp_08C63C08;
-    D_psp_08C63B5A = (s32)(y * (*a / z)) + D_psp_08C63C0C;
+    h = (u16*)&D_psp_08C63C10;
+    D_psp_08C63B58 = (s32)(x * (*h / z)) + D_psp_08C63C08;
+    D_psp_08C63B5A = (s32)(y * (*h / z)) + D_psp_08C63C0C;
 
-    b = (u16*)&D_psp_08C63B6C;
-    D_psp_08C63B68 = *b;
-    c = (u16*)&D_psp_08C63B70;
-    *b = *c;
-    d = (u16*)&D_psp_08C63B74;
-    *c = *d;
-    *d = D_psp_08C63B44 = z;
+    sz1 = (u16*)&D_psp_08C63B6C;
+    D_psp_08C63B68 = *sz1;
+
+    sz2 = (u16*)&D_psp_08C63B70;
+    *sz1 = *sz2;
+
+    sz3 = (u16*)&D_psp_08C63B74;
+    *sz2 = *sz3;
+
+    *sz3 = D_psp_08C63B44 = z;
 }
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/28A90", gte_rtpt);
