@@ -97,7 +97,7 @@ segments:
       - [0x28C70, data] #RNZ0_gfxBanks
       - [0x28EB0, .data, e_red_door_tiles]
       - [0x28EE0, .data, e_init]
-      - [0x291C0, data] #RNZ0_rooms
+      - [0x291C0, .data, gen/rooms]
       - [0x292C8, .data, e_breakable]
       - [0x29330, .data, e_red_eye_bust]
       - [0x29340, data]

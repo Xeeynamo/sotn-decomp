@@ -711,6 +711,13 @@ files:
     asset_path: assets/st/rnz0
     src_path: src/st/rnz0
     splat_config_path: config/splat.pspeu.strnz0.yaml
+    segments:
+      - start: 0
+        vram: 0x09237700
+        assets:
+          - [0x291C0, rooms, rooms]
+          - [0x292C8, skip]
+
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz1.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rtop.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rwrp.bin
