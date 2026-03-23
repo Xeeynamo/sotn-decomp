@@ -3,7 +3,7 @@
 
 // This is an unused image that says "Golem Maker"
 u8 D_8018326C[] = {
-    #include "gen/D_8018326C.h"
+#include "gen/D_8018326C.h"
 };
 
 u8 D_80183B54[] = {
