@@ -91,7 +91,13 @@ segments:
       - [0x22140, .data, e_floor_trap]
       - [0x22160, .data, e_gremlin]
       - [0x221C0, .data, e_cannon]
-      - [0x221D8, data]
+      - [0x221D8, data] #RNZ0_spriteBanks
+      - [0x288B8, data] #RNZ0_rooms_layers
+      - [0x28BC0, data] #RNZ0_cluts
+      - [0x28C70, data] #RNZ0_gfxBanks
+      - [0x28EB0, data] #RNZ0_RedDoorTiles
+      - [0x28EE0, .data, e_init]
+      - [0x291C0, data] #RNZ0_rooms
       - [0x292C8, .data, e_breakable]
       - [0x29330, .data, e_red_eye_bust]
       - [0x29340, data]
