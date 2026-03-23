@@ -1010,10 +1010,10 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x40, sprite_banks, sprite_banks]
+          - [0x40, sprite_banks, us/sprite_banks]
           - [0xA4, paldef, palette_def]
           - [0x14C, layers, layers]
-          - [0x464, gfx_banks, graphics_banks]
+          - [0x464, gfx_banks, us/graphics_banks]
           - [0x6F0, layout, entity_layouts]
           - [0x898, skip]
           - [0x1FA8, rooms, rooms]

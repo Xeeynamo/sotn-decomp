@@ -39,10 +39,10 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0x40, .data, header] # sprite_banks
-      - [0xA4, .data, header] # palette_def
-      - [0x14C, .data, header] # layers
-      - [0x464, .data, header] # graphics banks
+      - [0x40, .data, sprite_banks]
+      - [0xA4, .data, palette_def]
+      - [0x14C, .data, layers]
+      - [0x464, .data, gfx_banks]
       - [0x6F0, .data, gen/e_laydef]
       - [0x898, .data, e_init]
       - [0xB10, .data, e_room_bg]
@@ -75,7 +75,7 @@ segments:
       - [0x1FA8, .data, gen/rooms]
       - [0x20AC, .data, gen/e_layout]
       - [0x326C, .data, stage_data]
-      - [0x2493C, .data, gen/sprites]
+      - [0x2493C, .data, gen/us/sprites]
       - [0x2ABEC, .rodata, e_red_eye_bust]
       - [0x2ABF8, .rodata, e_blue_flame_table]
       - [0x2AC04, .rodata, e_room_bg]
