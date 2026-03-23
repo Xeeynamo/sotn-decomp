@@ -50,7 +50,7 @@ segments:
       - [0x4728, c, no0_psp/e_stage_name]
       - [0x5628, c, no0_psp/e_marionette]
       - [0x72F0, c, no0_psp/e_red_door]
-      - [0x85F8, c, no0_psp/st_update]
+      - [0x85F8, c, no0/st_update]
       - [0x8B30, c, no0_psp/e_plate_lord]
       - [0xCE78, c, no0_psp/e_plate_lord_2]
       - [0xE898, c, no0_psp/e_stone_rose]
@@ -66,7 +66,7 @@ segments:
       - [0x1D1E0, c, no0_psp/1D1E0]
       - [0x1D5F0, c, no0_psp/e_ghost]
       - [0x1DAE0, c, no0_psp/e_skeleton]
-      - [0x1E4D8, c, no0_psp/1E4D8]
+      - [0x1E4D8, c, no0_psp/st_common]
       - [0x20060, c, no0_psp/e_slinger]
       - [0x20A08, c, no0_psp/20A08]
       - [0x21470, c, no0_psp/e_cthulu]
@@ -86,7 +86,7 @@ segments:
       - [0x29F58, data, no0_psp/e_stage_name]
       - [0x2AB78, data, no0_psp/e_marionette]
       - [0x2AD30, data, no0_psp/e_red_door]
-      - [0x2AD48, data, no0_psp/st_update]
+      - [0x2AD48, .data, no0/st_update]
       - [0x2AD78, data, no0_psp/e_plate_lord]
       - [0x2AD98, data, no0_psp/e_stone_rose]
       - [0x2AE80, data, no0_psp/e_collect]
@@ -100,7 +100,7 @@ segments:
       - [0x2BC08, data, no0_psp/1D1E0]
       - [0x2BC28, data, no0_psp/e_ghost]
       - [0x2BC48, data, no0_psp/e_skeleton]
-      - [0x2BD50, data, no0_psp/1E4D8]
+      - [0x2BD50, data, no0_psp/st_common]
       - [0x2BF50, data, no0_psp/e_slinger]
       - [0x2C038, data, no0_psp/e_cthulu]
       - [0x2C188, data, no0_psp/e_ouija_table]
@@ -130,4 +130,6 @@ segments:
       - [0x6A620, .rodata, no0_psp/e_slinger]
       - [0x6A640, .rodata, no0_psp/e_cthulu]
       - {start: 0x6A680, type: bss, vram: 0x092A1D00, name: bss0}
+      - {start: 0x6A680, type: .bss, vram: 0x092A1D18, name: no0/st_update}
+      - {start: 0x6A680, type: bss, vram: 0x092A1D58, name: bss1}
   - [0x6AA00]
