@@ -91,7 +91,8 @@ segments:
       - [0x22140, .data, e_floor_trap]
       - [0x22160, .data, e_gremlin]
       - [0x221C0, .data, e_cannon]
-      - [0x221D8, data] #RNZ0_spriteBanks
+      - [0x221D8, .data, gen/psp/sprites]
+      - [0x28850, .data, sprite_banks] #RNZ0_spriteBanks
       - [0x288B8, data] #RNZ0_rooms_layers
       - [0x28BC0, data] #RNZ0_cluts
       - [0x28C70, data] #RNZ0_gfxBanks

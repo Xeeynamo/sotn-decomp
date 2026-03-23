@@ -712,9 +712,13 @@ files:
     src_path: src/st/rnz0
     splat_config_path: config/splat.pspeu.strnz0.yaml
     segments:
-      - start: 0
+      - start: 0x80
         vram: 0x09237700
         assets:
+          - [0x80, skip]
+          - [0x221D8, skip]
+          - [0x28850, sprite_banks, psp/sprite_banks]
+          - [0x288B4, skip]
           - [0x291C0, rooms, rooms]
           - [0x292C8, skip]
 
