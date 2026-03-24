@@ -7,9 +7,9 @@ INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", func_pspeu_09255BF0);
 
 INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", AnimateEntity);
 
-INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", func_pspeu_09255DE8);
+INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", GetDistanceToPlayerX);
 
-INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", func_pspeu_09255E58);
+INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", GetDistanceToPlayerY);
 
 INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", GetSideToPlayer);
 
@@ -17,7 +17,7 @@ INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", MoveEntity);
 
 INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", func_pspeu_09255F88);
 
-INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", func_pspeu_09255FC0);
+INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", UnkCollisionFunc3);
 
 INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", func_pspeu_09256278);
 
@@ -45,7 +45,7 @@ INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", SetStep);
 
 INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", func_pspeu_09256B40);
 
-INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", func_pspeu_09256B80);
+INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", EntityExplosionSpawn);
 
 INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", InitializeEntity);
 
@@ -53,7 +53,7 @@ INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", EntityDummy);
 
 INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", func_pspeu_09256E30);
 
-INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", func_pspeu_09256F80);
+INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", CheckFieldCollision);
 
 INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", GetPlayerCollisionWith);
 
