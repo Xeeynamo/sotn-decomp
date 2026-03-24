@@ -721,6 +721,9 @@ files:
           - [0x288B4, skip]
           - [0x291C0, rooms, rooms]
           - [0x292C8, skip]
+          - [0x29340, cmpgfx, D_80183B54, 128, 128, 4]
+          - [0x296B8, skip]
+
 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz1.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rtop.bin

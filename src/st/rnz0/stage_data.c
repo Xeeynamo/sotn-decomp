@@ -1,14 +1,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include <stage.h>
 
+#ifndef VERSION_PSP
+
 // This is an unused image that says "Golem Maker"
 u8 D_8018326C[] = {
 #include "gen/D_8018326C.h"
 };
 
+#endif
+
 u8 D_80183B54[] = {
 #include "gen/D_80183B54.h"
 };
+
+#ifndef VERSION_PSP
 
 u8 D_80183EC8[] = {
 #include "gen/D_80183EC8.h"
@@ -181,3 +187,5 @@ u16 D_801944CC[] = {
 #include "gen/rnz0_tiledef_0.h"
 #include "gen/rnz0_tiledef_1.h"
 #include "gen/rnz0_tiledef_2.h"
+
+#endif
