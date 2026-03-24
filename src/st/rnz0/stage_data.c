@@ -150,8 +150,6 @@ u16 D_801944CC[] = {
 #include "gen/D_801944CC.h"
 };
 
-#ifndef VERSION_PSP
-
 #include "gen/rnz0_tilemap_0.h"
 #include "gen/rnz0_tilemap_1.h"
 #include "gen/rnz0_tilemap_2.h"
@@ -187,5 +185,3 @@ u16 D_801944CC[] = {
 #include "gen/rnz0_tiledef_0.h"
 #include "gen/rnz0_tiledef_1.h"
 #include "gen/rnz0_tiledef_2.h"
-
-#endif

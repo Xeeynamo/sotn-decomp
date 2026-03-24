@@ -719,6 +719,7 @@ files:
           - [0x221D8, skip]
           - [0x28850, sprite_banks, psp/sprite_banks]
           - [0x288B4, skip]
+          - [0x288B8, layers, layers]
           - [0x28BC0, paldef, palette_def]
           - [0x28C70, gfx_banks, psp/graphics_banks]
           - [0x28EB0, skip]
