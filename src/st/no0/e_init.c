@@ -18,7 +18,7 @@ void EntityMessageBox(Entity*);
 void EntityDummy(Entity*);
 void EntityDummy(Entity*);
 void OVL_EXPORT(EntityBackgroundBlock)(Entity*);
-void EntityLockCamera(Entity*);
+void OVL_EXPORT(EntityLockCamera)(Entity*);
 void EntityUnkId13(Entity*);
 void EntityExplosionVariants(Entity*);
 void EntityGreyPuff(Entity*);
@@ -101,7 +101,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityDummy,
     EntityDummy,
     OVL_EXPORT(EntityBackgroundBlock),
-    EntityLockCamera,
+    OVL_EXPORT(EntityLockCamera),
     EntityUnkId13,
     EntityExplosionVariants,
     EntityGreyPuff,
@@ -164,7 +164,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySkeletonThrownBone,
     EntitySkeletonPieces,
     EntityDummy,
-    EntitySealedDoor};
+    EntitySealedDoor,
+};
 
 EInit OVL_EXPORT(
     EInitBreakable) = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x000};
@@ -172,12 +173,12 @@ EInit g_EInitObtainable = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x001};
 EInit g_EInitParticle = {ANIMSET_DRA(0x03), 0x00, 0x00, 0x000, 0x002};
 EInit D_us_80180A88 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x004};
 EInit g_EInitInteractable = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x005};
-EInit D_us_80180AA0 = {ANIMSET_DRA(0x02), 0x00, 0x00, 0x000, 0x02C};
-EInit D_us_80180AAC = {ANIMSET_OVL(0x05), 0x00, 0x24, 0x000, 0x003};
-EInit D_us_80180AB8 = {ANIMSET_DRA(0x02), 0x00, 0x48, 0x000, 0x05B};
-EInit D_us_80180AC4 = {ANIMSET_DRA(0x03), 0x00, 0x48, 0x000, 0x05C};
+EInit D_us_80180AA0 = {ANIMSET_DRA(0x02), 0x00, 0x00, 0x000, 0x02C}; // unused
+EInit D_us_80180AAC = {ANIMSET_OVL(0x05), 0x00, 0x24, 0x000, 0x003}; // unused
+EInit D_us_80180AB8 = {ANIMSET_DRA(0x02), 0x00, 0x48, 0x000, 0x05B}; // unused
+EInit D_us_80180AC4 = {ANIMSET_DRA(0x03), 0x00, 0x48, 0x000, 0x05C}; // unused
 EInit g_EInitUnkId13 = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x002};
-EInit D_us_80180ADC = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
+EInit g_EInitLockCamera = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit g_EInitCommon = {ANIMSET_DRA(0x00), 0x00, 0x00, 0x000, 0x003};
 EInit g_EInitStoneRose = {ANIMSET_OVL(0x0C), 0x00, 0x4A, 0x22E, 0x055};
 EInit D_us_80180B00 = {ANIMSET_OVL(0x0C), 0x00, 0x4A, 0x22E, 0x056};
@@ -205,7 +206,8 @@ EInit g_EInitCtulhuIceShockwave = {ANIMSET_OVL(0x0E), 0x2C, 0x50, 0x238, 0x0EB};
 EInit g_EInitAxeKnight = {ANIMSET_OVL(0x07), 0x01, 0x48, 0x23F, 0x0F6};
 EInit g_EInitAxeKnightAxe = {ANIMSET_OVL(0x07), 0x2F, 0x48, 0x23D, 0x18F};
 EInit g_EInitOuijaTable = {ANIMSET_OVL(0x02), 0x00, 0x4B, 0x241, 0x0C1};
-EInit g_EInitOuijaTableComponent = {ANIMSET_OVL(0x02), 0x0, 0x4B, 0x241, 0x0C2};
+EInit g_EInitOuijaTableComponent = {
+    ANIMSET_OVL(0x02), 0x00, 0x4B, 0x241, 0x0C2};
 EInit g_EInitFleaMan = {ANIMSET_OVL(0x0F), 0x00, 0x53, 0x204, 0x028};
 EInit g_EInitSkeleton = {ANIMSET_OVL(0x18), 0x01, 0x50, 0x207, 0x04B};
 EInit g_EInitSkeletonPieces = {ANIMSET_OVL(0x18), 0x00, 0x50, 0x207, 0x002};

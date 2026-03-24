@@ -6,7 +6,7 @@ static u8 D_us_80180FC0[] = {
 static u8 D_us_80180FD8[] = {
     4, 10, 4, 9, 4, 8, 4, 7, 4, 6, 4, 5, 4, 4, 4, 3, 2, 12, 4, 3, -1, 0};
 
-s16 func_us_801C1F98(Primitive* prim, s16 arg1) {
+static s16 func_us_801C1F98(Primitive* prim, s16 arg1) {
     s16 ret = arg1;
     s16 temp_v0;
 
@@ -32,7 +32,7 @@ s16 func_us_801C1F98(Primitive* prim, s16 arg1) {
     return ret;
 }
 
-s16 func_us_801C2044(Primitive* prim, s16 offset) {
+static s16 func_us_801C2044(Primitive* prim, s16 offset) {
     prim->drawMode = DRAW_UNK02;
     prim->u0 = prim->u2 = 0x50;
     prim->u1 = prim->u3 = 0x60;
