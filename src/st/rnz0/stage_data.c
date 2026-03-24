@@ -14,8 +14,6 @@ u8 D_80183B54[] = {
 #include "gen/D_80183B54.h"
 };
 
-#ifndef VERSION_PSP
-
 u8 D_80183EC8[] = {
 #include "gen/D_80183EC8.h"
 };
@@ -99,6 +97,8 @@ u8 D_80192414[] = {
 u8 D_80193390[] = {
 #include "gen/D_80193390.h"
 };
+
+#ifndef VERSION_PSP
 
 u16 D_8019396C[] = {
 #include "gen/D_8019396C.h"
