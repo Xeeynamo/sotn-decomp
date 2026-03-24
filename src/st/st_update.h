@@ -25,18 +25,17 @@ u16 UNK_Invincibility0[] = {
 #endif
 };
 
+u16 g_ItemIconSlots[ICON_SLOT_NUM];
+
 s32 Random(void) {
     g_randomNext = (g_randomNext * 0x01010101) + 1;
     return (g_randomNext >> 0x18) & 0xFF;
 }
 
-u16 g_ItemIconSlots[ICON_SLOT_NUM];
-
 void Update(void) {
-    s16 x;
+    s16 x, y;
     Entity* e;
     s32 flags;
-    s16 y;
     s16 iFramePalette;
 
     for (x = 0; x < LEN(g_ItemIconSlots); x++) {
@@ -76,11 +75,8 @@ void Update(void) {
 
             if (flags & FLAG_UNK_02000000) {
                 x = e->posY.i.hi + g_Tilemap.scrollY.i.hi;
-#if defined(VERSION_PSP)
-                y = (s16)g_Tilemap.vSize * 256 + 128;
-#else
-                y = (u16)g_Tilemap.vSize * 256 + 128;
-#endif
+                y = ((s16)g_Tilemap.vSize << 8) + 128;
+
                 if (x > y) {
                     DestroyEntity(e);
                     continue;
