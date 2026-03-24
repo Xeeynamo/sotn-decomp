@@ -16,7 +16,6 @@ static u8* g_eBreakableAnimations[] = {
     anim_1, anim_2, anim_3, anim_4, anim_5, anim_6, anim_7, anim_8, anim_10};
 static u8 g_eBreakableHitboxes[] = {8, 8, 8, 8, 8, 8, 8, 8, 8};
 
-// TODO: Check if PSP is in the BSS section like it is on other stages
 static u8 g_eBreakableExplosionTypes[] = {0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 static u16 g_eBreakableanimSets[] = {
