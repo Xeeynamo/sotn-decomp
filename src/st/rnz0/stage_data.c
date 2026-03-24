@@ -3,7 +3,7 @@
 
 #ifndef VERSION_PSP
 
-// This is an unused image that says "Golem Maker"
+// This is an unused image that says "Golem Maker". Likely stripped on PSP.
 u8 D_8018326C[] = {
 #include "gen/D_8018326C.h"
 };
@@ -98,8 +98,6 @@ u8 D_80193390[] = {
 #include "gen/D_80193390.h"
 };
 
-#ifndef VERSION_PSP
-
 u16 D_8019396C[] = {
 #include "gen/D_8019396C.h"
 };
@@ -151,6 +149,8 @@ u16 D_8019444C[] = {
 u16 D_801944CC[] = {
 #include "gen/D_801944CC.h"
 };
+
+#ifndef VERSION_PSP
 
 #include "gen/rnz0_tilemap_0.h"
 #include "gen/rnz0_tilemap_1.h"

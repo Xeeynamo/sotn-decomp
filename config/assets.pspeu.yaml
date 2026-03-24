@@ -719,6 +719,7 @@ files:
           - [0x221D8, skip]
           - [0x28850, sprite_banks, psp/sprite_banks]
           - [0x288B4, skip]
+          - [0x28BC0, paldef, palette_def]
           - [0x28C70, gfx_banks, psp/graphics_banks]
           - [0x28EB0, skip]
           - [0x291C0, rooms, rooms]
@@ -745,8 +746,20 @@ files:
           - [0x37060, cmpgfx, D_80191850, 128, 128, 4]
           - [0x37C28, cmpgfx, D_80192414, 128, 128, 4]
           - [0x38BA8, cmpgfx, D_80193390, 128, 128, 4]
-          - [0x39188, skip]
-
+          - [0x39188, palette, D_8019396C, 16]
+          - [0x39448, palette, D_80193C2C, 16]
+          - [0x39568, palette, D_80193D4C, 16]
+          - [0x39608, palette, D_80193DEC, 16]
+          - [0x39808, palette, D_80193FEC, 16]
+          - [0x39928, palette, D_8019410C, 16]
+          - [0x399A8, palette, D_8019418C, 16]
+          - [0x39A28, palette, D_8019420C, 16]
+          - [0x39AA8, palette, D_8019428C, 16]
+          - [0x39B68, palette, D_8019434C, 16]
+          - [0x39C08, palette, D_801943EC, 16]
+          - [0x39C68, palette, D_8019444C, 16]
+          - [0x39CE8, palette, D_801944CC, 16]
+          - [0x39D28, skip]
 
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rnz1.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rtop.bin
