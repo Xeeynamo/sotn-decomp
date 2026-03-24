@@ -71,7 +71,7 @@ segments:
       - [0x20A08, c, no0_psp/20A08]
       - [0x21470, c, no0_psp/e_cthulu]
       - [0x23B60, c, no0_psp/e_ouija_table]
-      - [0x24708, c, no0_psp/24708]
+      - [0x24708, c, no0_psp/create_entity]
       - [0x256B0, c, no0_psp/st_init_psp]
       - [0x25A40, c, no0/e_breakable]
       - [0x25BF0, c, no0/e_elevator]
