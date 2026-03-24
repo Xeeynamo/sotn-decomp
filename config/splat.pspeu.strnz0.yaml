@@ -104,7 +104,7 @@ segments:
       - [0x29340, .data, stage_data]
       - [0x4A158, .data, header]
       - [0x4A198, .data, e_blue_flame_table]
-      - [0x4A200, data]
+      - [0x4A200, .data, d_prize_drops]
       - [0x4A220, .data, e_room_bg]
       - [0x4A260, .data, e_lock_camera]
       - [0x4A2D8, .data, e_life_max_tank]
