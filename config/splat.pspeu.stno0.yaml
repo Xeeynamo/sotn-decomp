@@ -77,7 +77,7 @@ segments:
       - [0x25BF0, c, no0/e_elevator]
       - [0x26C10, c, no0_psp/e_room_bg]
       - [0x26DA8, c, no0/e_lock_camera]
-      - [0x27538, c, no0_psp/27538]
+      - [0x27538, c, no0/42A34]
       - [0x28120, c, no0/e_explosion_puff_opaque]
       - [0x28770, c, no0_psp/e_particles]
       - [0x29D00, data, no0_psp/e_axe_knight]
@@ -114,7 +114,7 @@ segments:
       - [0x69FE0, .data, no0/d_prize_drops]
       - [0x6A000, data, no0_psp/e_room_bg]
       - [0x6A180, .data, no0/e_lock_camera]
-      - [0x6A1E8, data, no0_psp/27538]
+      - [0x6A1E8, .data, no0/42A34]
       - [0x6A290, .data, no0/e_explosion_puff_opaque]
       - [0x6A300, data, no0_psp/e_particles]
       - [0x6A380, .rodata, no0_psp/e_axe_knight]
@@ -131,10 +131,15 @@ segments:
       - [0x6A600, .rodata, no0_psp/e_skeleton]
       - [0x6A620, .rodata, no0_psp/e_slinger]
       - [0x6A640, .rodata, no0_psp/e_cthulu]
-      - {start: 0x6A680, type: bss, vram: 0x092A1D00, name: bss0}
+      - {start: 0x6A680, type: bss, vram: 0x092A1D00, name: no0_psp/clock_room}
       - {start: 0x6A680, type: .bss, vram: 0x092A1D18, name: no0/st_update}
-      - {start: 0x6A680, type: bss, vram: 0x092A1D58, name: bss1}
+      - {start: 0x6A680, type: bss, vram: 0x092A1D58, name: no0_psp/e_plate_lord}
+      - {start: 0x6A680, type: bss, vram: 0x092A1D60, name: no0_psp/e_plate_lord_2}
+      - {start: 0x6A680, type: bss, vram: 0x092A1D68, name: no0_psp/e_collect}
+      - {start: 0x6A680, type: bss, vram: 0x092A1D88, name: no0_psp/e_sealed_door}
+      - {start: 0x6A680, type: bss, vram: 0x092A1D90, name: no0_psp/create_entity}
+      - {start: 0x6A680, type: bss, vram: 0x092A1DB0, name: bss0}
       - {start: 0x6A680, type: .bss, vram: 0x092A1FC8, name: no0/e_breakable}
-      - {start: 0x6A680, type: bss, vram: 0x092A1FD8, name: bss2}
+      - {start: 0x6A680, type: bss, vram: 0x092A1FD8, name: no0_psp/e_room_bg}
       - {start: 0x6A680, type: .bss, vram: 0x092A20A0, name: no0/e_lock_camera}
   - [0x6AA00]
