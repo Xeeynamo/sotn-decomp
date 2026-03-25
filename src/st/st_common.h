@@ -593,10 +593,9 @@ void CheckFieldCollision(s16* hitSensors, s16 sensorCount) {
 // and from which direction.
 // w and h holds the collider size of the entity
 // while flags stores which sides are solid
-s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
-    Entity* pl = &PLAYER;
-    s16 x;
-    s16 y;
+u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
+    Entity* player = &PLAYER;
+    s16 x, y;
     u16 checks;
 
 #if STAGE != STAGE_ST0
@@ -609,8 +608,8 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
         return 0;
     }
 
-    x = pl->posX.i.hi - x;
-    y = pl->posY.i.hi - y;
+    x = player->posX.i.hi - x;
+    y = player->posY.i.hi - y;
 #else
     if (self->posX.i.hi & 0x100) {
         return 0;
@@ -619,8 +618,8 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
         return 0;
     }
 
-    x = pl->posX.i.hi - self->posX.i.hi;
-    y = pl->posY.i.hi - self->posY.i.hi;
+    x = player->posX.i.hi - self->posX.i.hi;
+    y = player->posY.i.hi - self->posY.i.hi;
 #endif
 
     if (self->facingLeft) {
@@ -659,8 +658,8 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
 
         if (x && x != w) {
             // check collision from top
-            if (flags & 4 && checks ^ 2 && pl->velocityY >= 0 && y < 8) {
-                pl->posY.i.hi -= y;
+            if (flags & 4 && checks ^ 2 && player->velocityY >= 0 && y < 8) {
+                player->posY.i.hi -= y;
 #if STAGE == STAGE_ST0
                 g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
 #else
@@ -677,10 +676,10 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
 
             // check collision from bottom
             if (flags & 2 && checks & 2 &&
-                (pl->velocityY <= 0 || flags & 0x10)) {
+                (player->velocityY <= 0 || flags & 0x10)) {
                 y = (s16)h - y;
                 if (y < 0x10) {
-                    pl->posY.i.hi += y;
+                    player->posY.i.hi += y;
 #if STAGE == STAGE_ST0
                     g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_CEILING;
 #else
@@ -703,7 +702,7 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
                 if (flags & 8 && x > 2) {
                     x = 2;
                 }
-                pl->posX.i.hi += x;
+                player->posX.i.hi += x;
 #if STAGE != STAGE_ST0
                 D_80097488.x.i.hi += x;
                 g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_L_WALL;
@@ -713,7 +712,7 @@ s32 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
                 if (flags & 8 && x > 2) {
                     x = 2;
                 }
-                pl->posX.i.hi -= x;
+                player->posX.i.hi -= x;
 #if STAGE != STAGE_ST0
 
                 D_80097488.x.i.hi -= x;
