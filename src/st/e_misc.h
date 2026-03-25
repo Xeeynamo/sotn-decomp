@@ -116,49 +116,22 @@ void EntityGreyPuffSpawner(
 // but explosion variant entity comes before grey puff entity.
 
 static s16 greyPuff_rot[] = {
-    /* FF8 */ 0x0030,
-    /* FFA */ 0x0050,
-    /* FFC */ 0x0080,
-    /* FFE */ 0x00B0,
-    /* 1000 */ 0x00D0,
-    /* 1002 */ 0x0100,
-    /* 1004 */ 0x0100,
-    /* 1006 */ 0x0000,
+    0x030, 0x050, 0x080, 0x0B0, 0x0D0, 0x100, 0x100, 0x000,
 };
 
 static s32 greyPuff_yVel[] = {
-    /* 1008 */ FIX(2.0 / 128),
-    /* 100C */ FIX(18.0 / 128),
-    /* 1010 */ FIX(30.0 / 128),
-    /* 1014 */ FIX(48.0 / 128),
-    /* 1018 */ FIX(60.0 / 128),
-    /* 101C */ FIX(96.0 / 128),
+    FIX(2.0 / 128),  FIX(18.0 / 128), FIX(30.0 / 128),
+    FIX(48.0 / 128), FIX(60.0 / 128), FIX(96.0 / 128),
 };
 
 static s32 explode_yVel[] = {
-    /* 1020 */ FIX(4.0 / 128),
-    /* 1024 */ FIX(20.0 / 128),
-    /* 1028 */ FIX(36.0 / 128),
-    /* 102C */ FIX(56.0 / 128),
-    /* 1030 */ FIX(112.0 / 128),
-    /* 1034 */ FIX(144.0 / 128),
+    FIX(4.0 / 128),  FIX(20.0 / 128),  FIX(36.0 / 128),
+    FIX(56.0 / 128), FIX(112.0 / 128), FIX(144.0 / 128),
 };
 
-static u8 explode_startFrame[] = {
-    /* 1038 */ 1,
-    /* 1039 */ 9,
-    /* 103A */ 21,
-    /* 103B */ 43,
-};
+static u8 explode_startFrame[] = {1, 9, 21, 43};
 
-static u16 explode_lifetime[] = {
-    /* 103C */ 0x0010,
-    /* 103E */ 0x0018,
-    /* 1040 */ 0x002A,
-    /* 1042 */ 0x002F,
-};
-
-// ID is 0x14.
+static u16 explode_lifetime[] = {16, 24, 42, 47};
 
 // Creates 4 different explosion animations for when objects or enemies are
 // destroyed or killed. The animations are more intense as self->params
@@ -176,7 +149,7 @@ void EntityExplosionVariants(Entity* self) {
     } else {
         self->posY.val -= self->velocityY;
         ++self->poseTimer;
-        if (!(self->poseTimer % 2)) {
+        if ((self->poseTimer % 2) == 0) {
             self->animCurFrame++;
         }
 
@@ -204,7 +177,7 @@ void EntityGreyPuff(Entity* self) {
     } else {
         self->posY.val -= self->velocityY;
         self->poseTimer++;
-        if (!(self->poseTimer % 2)) {
+        if ((self->poseTimer % 2) == 0) {
             self->animCurFrame++;
         }
         if (self->poseTimer > 36) {
@@ -213,18 +186,15 @@ void EntityGreyPuff(Entity* self) {
     }
 }
 
+static s16 g_olroxDroolCollOffsets[] = {0x0000, 0x0000, 0x00FF, 0x0000};
+
 // Purpose is not 100% clear. Creates a falling blue droplet that sizzles after
 // hitting the ground. In existing overlays, this entity is not used. But looks
 // like Olrox's drool, so using that until we find any other uses.
-
-static u32 g_olroxDroolCollOffsets[] = {
-    /* 1044 */ 0x00000000,
-    /* 1048 */ 0x000000FF,
-};
-
 void EntityOlroxDrool(Entity* self) {
-    s16 primIndex;
     Primitive* prim;
+    s32 primIndex;
+    s32 i;
 
     switch (self->step) {
     case 0:
@@ -233,12 +203,13 @@ void EntityOlroxDrool(Entity* self) {
         if (primIndex == -1) {
             return;
         }
-        prim = &g_PrimBuf[primIndex];
         self->primIndex = primIndex;
-        self->hitboxState = 0;
-        self->ext.prim = prim;
         self->flags |= FLAG_HAS_PRIMS;
-        while (prim != NULL) {
+        self->hitboxState = 0;
+        prim = &g_PrimBuf[primIndex];
+        self->ext.prim = prim;
+
+        for (i = 0; prim != NULL; i++, prim = prim->next) {
             prim->x0 = prim->x1 = self->posX.i.hi;
             prim->y0 = prim->y1 = self->posY.i.hi;
             prim->r0 = 64;
@@ -250,21 +221,20 @@ void EntityOlroxDrool(Entity* self) {
             prim->priority = self->zPriority + 1;
             prim->drawMode |= DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS |
                               DRAW_UNK02 | DRAW_TRANSP;
-            prim = prim->next;
         }
         break;
 
     case 1:
         prim = self->ext.prim;
-        if (CheckColliderOffsets((s16*)g_olroxDroolCollOffsets, 0)) {
+        if (CheckColliderOffsets(g_olroxDroolCollOffsets, 0)) {
             prim->y1 += 2;
-            if (self->step_s == 0) {
+            if (!self->step_s) {
                 // When hitting the ground, a sizzling effect is made
                 EntityExplosionVariantsSpawner(self, 1, 2, 0, 0, 3, 0);
                 self->step_s = 1;
             }
         } else {
-            self->velocityY += FIX(0.015625);
+            self->velocityY += FIX(1.0 / 64);
             self->posY.val += self->velocityY;
             if ((prim->y0 - prim->y1) > 8) {
                 prim->y1 = prim->y0 - 8;
@@ -521,17 +491,15 @@ void EntityIntenseExplosion(Entity* self) {
     }
 }
 
-static u8 g_UnkEntityAnimData[] = {
-    2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1,
-};
+static u8 g_UnkEntityAnim[] = {2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 4, 6, -1, 0};
 
 void InitializeUnkEntity(Entity* self) {
     if (!self->step) {
         InitializeEntity(g_EInitParticle);
         self->zPriority += 16;
         self->opacity = 0xF0;
-        self->scaleX = 0x01A0;
-        self->scaleY = 0x01A0;
+        self->scaleX = 0x1A0;
+        self->scaleY = 0x1A0;
         self->animSet = ANIMSET_DRA(8);
         self->animCurFrame = 1;
 
@@ -544,7 +512,7 @@ void InitializeUnkEntity(Entity* self) {
         self->step++;
     } else {
         MoveEntity();
-        if (!AnimateEntity(g_UnkEntityAnimData, self)) {
+        if (!AnimateEntity(g_UnkEntityAnim, self)) {
             DestroyEntity(self);
         }
     }
@@ -956,9 +924,8 @@ Primitive* UnkRecursivePrimFunc2(
 void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     u16 buf[COLORS_PER_PAL];
     RECT bufRect;
-    s32 factor;
-    u32 t;
-    u32 r, g, b;
+    s32 t;
+    u32 r, g, b, a;
     s32 i, j;
     u16 *palA, *palB;
 
@@ -970,18 +937,16 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
     palB = &g_Clut[0][palIdxB * COLORS_PER_PAL];
 
     for (i = 0; i < steps; i++) {
-        factor = i * 4096 / steps;
+        t = i * FLT(1) / steps;
         for (j = 0; j < COLORS_PER_PAL; j++) {
-            r = (palA[j] & 0x1F) * (4096 - factor) + (palB[j] & 0x1F) * factor;
-            g = ((palA[j] >> 5) & 0x1F) * (4096 - factor) +
-                ((palB[j] >> 5) & 0x1F) * factor;
-            b = ((palA[j] >> 10) & 0x1F) * (4096 - factor) +
-                ((palB[j] >> 10) & 0x1F) * factor;
+            r = GET_RED(palA[j]) * (FLT(1) - t) + GET_RED(palB[j]) * t;
+            g = GET_GREEN(palA[j]) * (FLT(1) - t) + GET_GREEN(palB[j]) * t;
+            b = GET_BLUE(palA[j]) * (FLT(1) - t) + GET_BLUE(palB[j]) * t;
 
-            t = palA[j] & 0x8000;
-            t |= palB[j] & 0x8000;
+            a = palA[j] & ALPHA_MASK;
+            a |= palB[j] & ALPHA_MASK;
 
-            buf[j] = t | (r >> 12) | ((g >> 12) << 5) | ((b >> 12) << 10);
+            buf[j] = a | (r >> 12) | ((g >> 12) << 5) | ((b >> 12) << 10);
         }
 
         bufRect.y = rect->y + i;
@@ -991,8 +956,7 @@ void ClutLerp(RECT* rect, u16 palIdxA, u16 palIdxB, s32 steps, u16 offset) {
 }
 
 void PlaySfxPositional(s16 sfxId) {
-    s32 posX;
-    s32 posY;
+    s32 posX, posY;
     s16 sfxPan;
     s16 sfxVol;
 

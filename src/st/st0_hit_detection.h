@@ -4,99 +4,78 @@
 
 #ifdef VERSION_PSP
 static u16 g_testCollEnemyLookup[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x001E, 0x0000, 0x0000,
-    0x002A, 0x0000, 0x0011, 0x0000, 0x000E, 0x0068, 0x0068, 0x0016, 0x0000,
-    0x0000, 0x0000, 0x003D, 0x0000, 0x0028, 0x0052, 0x0000, 0x0000, 0x0000,
-    0x0008, 0x0000, 0x000B, 0x0000, 0x007B, 0x0000, 0x0000, 0x002D, 0x0000,
-    0x0000, 0x006F, 0x007A, 0x0000, 0x0018, 0x0041, 0x0000, 0x0070, 0x0000,
-    0x004D, 0x0000, 0x0000, 0x0035, 0x0015, 0x005C, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0046, 0x0000,
-    0x0000, 0x0005, 0x0056, 0x0042, 0x0025, 0x0034, 0x0000, 0x0002, 0x0059,
-    0x0000, 0x0000, 0x0000, 0x0007, 0x0000, 0x0057, 0x0000, 0x007D, 0x0000,
-    0x0009, 0x0000, 0x0023, 0x0000, 0x001D, 0x0000, 0x0000, 0x002B, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0021, 0x0000, 0x0000, 0x0000, 0x001B, 0x0000,
-    0x0031, 0x0000, 0x0000, 0x0019, 0x0000, 0x008E, 0x000A, 0x002C, 0x0030,
-    0x0020, 0x0000, 0x0004, 0x0048, 0x0000, 0x005E, 0x0037, 0x0036, 0x0069,
-    0x0000, 0x003B, 0x0000, 0x0065, 0x0000, 0x0045, 0x0000, 0x001A, 0x0000,
-    0x006E, 0x0000, 0x0026, 0x0038, 0x0000, 0x004F, 0x0000, 0x004C, 0x0000,
-    0x0000, 0x0040, 0x0000, 0x0076, 0x0000, 0x0000, 0x006D, 0x0000, 0x0000,
-    0x0071, 0x0000, 0x002F, 0x0000, 0x0075, 0x0000, 0x0000, 0x0079, 0x0000,
-    0x007C, 0x0000, 0x0000, 0x0013, 0x000F, 0x0039, 0x0039, 0x0000, 0x005B,
-    0x005B, 0x0000, 0x0000, 0x0067, 0x0000, 0x0077, 0x0000, 0x0001, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0006, 0x0000, 0x0000, 0x000D, 0x0000,
-    0x002E, 0x0000, 0x006A, 0x0029, 0x0000, 0x0000, 0x0054, 0x0000, 0x0053,
-    0x0000, 0x0055, 0x0000, 0x0000, 0x0010, 0x0000, 0x0074, 0x0000, 0x0000,
-    0x008F, 0x0000, 0x0000, 0x0000, 0x0000, 0x004A, 0x0000, 0x0000, 0x0047,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0043, 0x0000, 0x0000, 0x003F, 0x0000,
-    0x0078, 0x008B, 0x0000, 0x0000, 0x0000, 0x004E, 0x0000, 0x0000, 0x008A,
-    0x004B, 0x0000, 0x003E, 0x003C, 0x0089, 0x0000, 0x0000, 0x0000, 0x001F,
-    0x0000, 0x0000, 0x007E, 0x0000, 0x0000, 0x0049, 0x0000, 0x0000, 0x0000,
-    0x0014, 0x0000, 0x0000, 0x000C, 0x0027, 0x0000, 0x0000, 0x0000, 0x0033,
-    0x0000, 0x0024, 0x0012, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0032, 0x0061, 0x0000, 0x0063, 0x0000, 0x0000, 0x0082, 0x0000, 0x0000,
-    0x0000, 0x0051, 0x0000, 0x0073, 0x0000, 0x0000, 0x0000, 0x0050, 0x0000,
-    0x0000, 0x0058, 0x0000, 0x0000, 0x0000, 0x0084, 0x0066, 0x0000, 0x003A,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0022, 0x0064, 0x0064,
-    0x0000, 0x0000, 0x0000, 0x0044, 0x0000, 0x0000, 0x0017, 0x001C, 0x006B,
-    0x0000, 0x008D, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0060, 0x0062,
-    0x0088, 0x0000, 0x0000, 0x0000, 0x0086, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0085, 0x0000, 0x0000, 0x0087, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x005F, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x005D,
-    0x0092, 0x0000, 0x0000, 0x0000, 0x0000, 0x0091, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x005A, 0x0000, 0x0000, 0x0083, 0x0000, 0x0000,
-    0x0000, 0x0080, 0x0000, 0x007F, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0093, 0x0000, 0x0000, 0x0000, 0x0000, 0x0003, 0x0000, 0x0072,
-    0x0000, 0x0000, 0x006C, 0x0000, 0x0000, 0x0081, 0x0081, 0x0000, 0x0000,
-    0x0090, 0x0000, 0x0000, 0x0000, 0x008C, 0x0000, 0x0000, 0x0000};
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E, 0x00, 0x00, 0x2A, 0x00, 0x11,
+    0x00, 0x0E, 0x68, 0x68, 0x16, 0x00, 0x00, 0x00, 0x3D, 0x00, 0x28, 0x52,
+    0x00, 0x00, 0x00, 0x08, 0x00, 0x0B, 0x00, 0x7B, 0x00, 0x00, 0x2D, 0x00,
+    0x00, 0x6F, 0x7A, 0x00, 0x18, 0x41, 0x00, 0x70, 0x00, 0x4D, 0x00, 0x00,
+    0x35, 0x15, 0x5C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x46, 0x00, 0x00, 0x05, 0x56, 0x42, 0x25, 0x34, 0x00, 0x02, 0x59,
+    0x00, 0x00, 0x00, 0x07, 0x00, 0x57, 0x00, 0x7D, 0x00, 0x09, 0x00, 0x23,
+    0x00, 0x1D, 0x00, 0x00, 0x2B, 0x00, 0x00, 0x00, 0x00, 0x21, 0x00, 0x00,
+    0x00, 0x1B, 0x00, 0x31, 0x00, 0x00, 0x19, 0x00, 0x8E, 0x0A, 0x2C, 0x30,
+    0x20, 0x00, 0x04, 0x48, 0x00, 0x5E, 0x37, 0x36, 0x69, 0x00, 0x3B, 0x00,
+    0x65, 0x00, 0x45, 0x00, 0x1A, 0x00, 0x6E, 0x00, 0x26, 0x38, 0x00, 0x4F,
+    0x00, 0x4C, 0x00, 0x00, 0x40, 0x00, 0x76, 0x00, 0x00, 0x6D, 0x00, 0x00,
+    0x71, 0x00, 0x2F, 0x00, 0x75, 0x00, 0x00, 0x79, 0x00, 0x7C, 0x00, 0x00,
+    0x13, 0x0F, 0x39, 0x39, 0x00, 0x5B, 0x5B, 0x00, 0x00, 0x67, 0x00, 0x77,
+    0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x06, 0x00, 0x00, 0x0D, 0x00,
+    0x2E, 0x00, 0x6A, 0x29, 0x00, 0x00, 0x54, 0x00, 0x53, 0x00, 0x55, 0x00,
+    0x00, 0x10, 0x00, 0x74, 0x00, 0x00, 0x8F, 0x00, 0x00, 0x00, 0x00, 0x4A,
+    0x00, 0x00, 0x47, 0x00, 0x00, 0x00, 0x00, 0x43, 0x00, 0x00, 0x3F, 0x00,
+    0x78, 0x8B, 0x00, 0x00, 0x00, 0x4E, 0x00, 0x00, 0x8A, 0x4B, 0x00, 0x3E,
+    0x3C, 0x89, 0x00, 0x00, 0x00, 0x1F, 0x00, 0x00, 0x7E, 0x00, 0x00, 0x49,
+    0x00, 0x00, 0x00, 0x14, 0x00, 0x00, 0x0C, 0x27, 0x00, 0x00, 0x00, 0x33,
+    0x00, 0x24, 0x12, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x32, 0x61, 0x00,
+    0x63, 0x00, 0x00, 0x82, 0x00, 0x00, 0x00, 0x51, 0x00, 0x73, 0x00, 0x00,
+    0x00, 0x50, 0x00, 0x00, 0x58, 0x00, 0x00, 0x00, 0x84, 0x66, 0x00, 0x3A,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x22, 0x64, 0x64, 0x00, 0x00, 0x00,
+    0x44, 0x00, 0x00, 0x17, 0x1C, 0x6B, 0x00, 0x8D, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x60, 0x62,
+    0x88, 0x00, 0x00, 0x00, 0x86, 0x00, 0x00, 0x00, 0x00, 0x00, 0x85, 0x00,
+    0x00, 0x87, 0x00, 0x00, 0x00, 0x00, 0x5F, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x5D, 0x92, 0x00, 0x00, 0x00, 0x00, 0x91, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x5A, 0x00, 0x00, 0x83, 0x00, 0x00, 0x00, 0x80, 0x00,
+    0x7F, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x93, 0x00, 0x00, 0x00, 0x00,
+    0x03, 0x00, 0x72, 0x00, 0x00, 0x6C, 0x00, 0x00, 0x81, 0x81, 0x00, 0x00,
+    0x90, 0x00, 0x00, 0x00, 0x8C, 0x00, 0x00, 0x00};
 #else
 static u16 g_testCollEnemyLookup[] = {
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x001E, 0x0000, 0x0000,
-    0x002B, 0x0000, 0x0010, 0x0000, 0x000D, 0x0068, 0x0068, 0x0016, 0x0000,
-    0x0000, 0x0000, 0x003E, 0x0000, 0x0023, 0x0050, 0x0000, 0x0000, 0x0000,
-    0x0006, 0x0000, 0x000A, 0x0000, 0x007D, 0x0000, 0x0000, 0x002D, 0x0000,
-    0x0000, 0x006D, 0x007B, 0x0000, 0x0017, 0x0041, 0x0000, 0x0073, 0x0000,
-    0x004C, 0x0000, 0x0000, 0x0038, 0x0014, 0x005C, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0046, 0x0000,
-    0x0000, 0x0003, 0x0058, 0x0044, 0x0024, 0x0037, 0x0000, 0x0002, 0x0059,
-    0x0000, 0x0000, 0x0000, 0x0007, 0x0000, 0x0056, 0x0000, 0x007C, 0x0000,
-    0x000B, 0x0000, 0x0026, 0x0000, 0x001D, 0x0000, 0x0000, 0x002A, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0027, 0x0000, 0x0000, 0x0000, 0x001C, 0x0000,
-    0x0031, 0x0000, 0x0000, 0x001A, 0x0000, 0x008D, 0x0009, 0x002C, 0x0030,
-    0x0020, 0x0000, 0x0005, 0x0047, 0x0000, 0x005E, 0x0035, 0x0034, 0x006A,
-    0x0000, 0x003A, 0x0000, 0x0066, 0x0000, 0x0045, 0x0000, 0x0019, 0x0000,
-    0x0071, 0x0000, 0x0029, 0x0039, 0x0000, 0x0051, 0x0000, 0x004D, 0x0000,
-    0x0000, 0x003F, 0x0000, 0x0077, 0x0000, 0x0000, 0x0072, 0x0000, 0x0000,
-    0x006F, 0x0000, 0x002F, 0x0000, 0x0074, 0x0000, 0x0000, 0x0079, 0x0000,
-    0x007A, 0x0000, 0x0000, 0x0013, 0x0011, 0x0036, 0x0036, 0x0000, 0x005F,
-    0x005F, 0x0000, 0x0000, 0x0067, 0x0000, 0x0075, 0x0000, 0x0001, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0008, 0x0000, 0x0000, 0x000E, 0x0000,
-    0x002E, 0x0000, 0x0069, 0x0021, 0x0000, 0x0000, 0x0055, 0x0000, 0x0054,
-    0x0000, 0x0053, 0x0000, 0x0000, 0x000F, 0x0000, 0x0076, 0x0000, 0x0000,
-    0x008E, 0x0000, 0x0000, 0x0000, 0x0000, 0x004A, 0x0000, 0x0000, 0x004B,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0043, 0x0000, 0x0000, 0x003D, 0x0000,
-    0x0078, 0x008A, 0x0000, 0x0000, 0x0000, 0x0052, 0x0000, 0x0000, 0x0089,
-    0x0048, 0x0000, 0x003C, 0x0040, 0x008B, 0x0000, 0x0000, 0x0000, 0x001F,
-    0x0000, 0x0000, 0x007E, 0x0000, 0x0000, 0x0049, 0x0000, 0x0000, 0x0000,
-    0x0015, 0x0000, 0x0000, 0x000C, 0x0028, 0x0000, 0x0000, 0x0000, 0x0032,
-    0x0000, 0x0022, 0x0012, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0033, 0x0060, 0x0000, 0x0064, 0x0000, 0x0000, 0x007F, 0x0000, 0x0000,
-    0x0000, 0x004E, 0x0000, 0x006E, 0x0000, 0x0000, 0x0000, 0x004F, 0x0000,
-    0x0000, 0x0057, 0x0000, 0x0000, 0x0000, 0x0086, 0x0065, 0x0000, 0x003B,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0025, 0x0062, 0x0062,
-    0x0000, 0x0000, 0x0000, 0x0042, 0x0000, 0x0000, 0x0018, 0x001B, 0x006B,
-    0x0000, 0x008C, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0061, 0x0063,
-    0x0088, 0x0000, 0x0000, 0x0000, 0x0085, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0084, 0x0000, 0x0000, 0x0087, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x005D, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000, 0x005B,
-    0x0091, 0x0000, 0x0000, 0x0000, 0x0000, 0x0090, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0000, 0x0000, 0x005A, 0x0000, 0x0000, 0x0082, 0x0000, 0x0000,
-    0x0000, 0x0083, 0x0000, 0x0081, 0x0000, 0x0000, 0x0000, 0x0000, 0x0000,
-    0x0000, 0x0092, 0x0000, 0x0000, 0x0000, 0x0000, 0x0004, 0x0000, 0x0070,
-    0x0000, 0x0000, 0x006C, 0x0000, 0x0000, 0x0080, 0x0080, 0x0000, 0x0000,
-    0x008F, 0x0000, 0x0000, 0x0000,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1E, 0x00, 0x00, 0x2B, 0x00, 0x10,
+    0x00, 0x0D, 0x68, 0x68, 0x16, 0x00, 0x00, 0x00, 0x3E, 0x00, 0x23, 0x50,
+    0x00, 0x00, 0x00, 0x06, 0x00, 0x0A, 0x00, 0x7D, 0x00, 0x00, 0x2D, 0x00,
+    0x00, 0x6D, 0x7B, 0x00, 0x17, 0x41, 0x00, 0x73, 0x00, 0x4C, 0x00, 0x00,
+    0x38, 0x14, 0x5C, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x46, 0x00, 0x00, 0x03, 0x58, 0x44, 0x24, 0x37, 0x00, 0x02, 0x59,
+    0x00, 0x00, 0x00, 0x07, 0x00, 0x56, 0x00, 0x7C, 0x00, 0x0B, 0x00, 0x26,
+    0x00, 0x1D, 0x00, 0x00, 0x2A, 0x00, 0x00, 0x00, 0x00, 0x27, 0x00, 0x00,
+    0x00, 0x1C, 0x00, 0x31, 0x00, 0x00, 0x1A, 0x00, 0x8D, 0x09, 0x2C, 0x30,
+    0x20, 0x00, 0x05, 0x47, 0x00, 0x5E, 0x35, 0x34, 0x6A, 0x00, 0x3A, 0x00,
+    0x66, 0x00, 0x45, 0x00, 0x19, 0x00, 0x71, 0x00, 0x29, 0x39, 0x00, 0x51,
+    0x00, 0x4D, 0x00, 0x00, 0x3F, 0x00, 0x77, 0x00, 0x00, 0x72, 0x00, 0x00,
+    0x6F, 0x00, 0x2F, 0x00, 0x74, 0x00, 0x00, 0x79, 0x00, 0x7A, 0x00, 0x00,
+    0x13, 0x11, 0x36, 0x36, 0x00, 0x5F, 0x5F, 0x00, 0x00, 0x67, 0x00, 0x75,
+    0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x08, 0x00, 0x00, 0x0E, 0x00,
+    0x2E, 0x00, 0x69, 0x21, 0x00, 0x00, 0x55, 0x00, 0x54, 0x00, 0x53, 0x00,
+    0x00, 0x0F, 0x00, 0x76, 0x00, 0x00, 0x8E, 0x00, 0x00, 0x00, 0x00, 0x4A,
+    0x00, 0x00, 0x4B, 0x00, 0x00, 0x00, 0x00, 0x43, 0x00, 0x00, 0x3D, 0x00,
+    0x78, 0x8A, 0x00, 0x00, 0x00, 0x52, 0x00, 0x00, 0x89, 0x48, 0x00, 0x3C,
+    0x40, 0x8B, 0x00, 0x00, 0x00, 0x1F, 0x00, 0x00, 0x7E, 0x00, 0x00, 0x49,
+    0x00, 0x00, 0x00, 0x15, 0x00, 0x00, 0x0C, 0x28, 0x00, 0x00, 0x00, 0x32,
+    0x00, 0x22, 0x12, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x33, 0x60, 0x00,
+    0x64, 0x00, 0x00, 0x7F, 0x00, 0x00, 0x00, 0x4E, 0x00, 0x6E, 0x00, 0x00,
+    0x00, 0x4F, 0x00, 0x00, 0x57, 0x00, 0x00, 0x00, 0x86, 0x65, 0x00, 0x3B,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x25, 0x62, 0x62, 0x00, 0x00, 0x00,
+    0x42, 0x00, 0x00, 0x18, 0x1B, 0x6B, 0x00, 0x8C, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x61, 0x63,
+    0x88, 0x00, 0x00, 0x00, 0x85, 0x00, 0x00, 0x00, 0x00, 0x00, 0x84, 0x00,
+    0x00, 0x87, 0x00, 0x00, 0x00, 0x00, 0x5D, 0x00, 0x00, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x5B, 0x91, 0x00, 0x00, 0x00, 0x00, 0x90, 0x00, 0x00, 0x00,
+    0x00, 0x00, 0x00, 0x5A, 0x00, 0x00, 0x82, 0x00, 0x00, 0x00, 0x83, 0x00,
+    0x81, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x92, 0x00, 0x00, 0x00, 0x00,
+    0x04, 0x00, 0x70, 0x00, 0x00, 0x6C, 0x00, 0x00, 0x80, 0x80, 0x00, 0x00,
+    0x8F, 0x00, 0x00, 0x00,
 };
+
 #endif
 
 static u8 g_testColluCoords[] = {
@@ -112,9 +91,7 @@ static u16 g_testCollElementLookup[] = {
     ELEMENT_STONE, ELEMENT_CURSE,   ELEMENT_POISON, ELEMENT_WATER, ELEMENT_CUT,
 };
 
-static u8 g_testColliFrames[] = {
-    0x02, 0x04, 0x03, 0x05, 0x06, 0x07, 0x08, 0x00, 0x02, 0x01,
-};
+static u8 g_testColliFrames[] = {2, 4, 3, 5, 6, 7, 8, 0, 2, 1};
 
 static u16 g_eDamageDisplayClut[] = {
     PAL_UNK_1B2, PAL_UNK_1B3, PAL_UNK_1B6, PAL_UNK_1B7,
@@ -125,59 +102,58 @@ static u16 g_eDamageDisplayClut[] = {
 // Some of the logic is removed since it doesn't apply in prologue.
 // Attempting to de-duplicate this would involve a lot of #ifdef.
 void OVL_EXPORT(HitDetection)(void) {
-    s32* scratchpad_1;
-    s32* scratchpad_2;
-    Entity* entity;
-    Entity* iterEnt2;
-    Entity* otherEntity;
-    Entity* entityHit;
-    Primitive* prim;
-    s32 hitboxWidth;
-    s32 yCoord1;
-    u32 hitboxCheck1;
-    s16 xCoord;
-    s16 yCoord2;
-    u16 miscVar3;
-    u16 i;
-    u16 miscVar1;
-    u16 hitboxCheck2;
-    u8 uselessVar;
 #ifdef VERSION_PC
     u8 sp[SP_LEN];
 #endif
+    Entity* otherEntity;
+    Primitive* prim;
+    Entity* entityHit;
+    s32* spHitbox;
+    Entity* iterEnt;
+    s32* spHitboxState;
+    s16 x, y;
+    u16 miscVar1;
+    u16 hitboxCheck2;
+    s32 hitboxWidth;
+    s32 yCoord1;
+    u32 hitboxCheck1;
+    u16 i;
+    Entity* entity;
     u8 miscVar2;
+    u16 miscVar3;
+    u8 uselessVar;
 
-    scratchpad_1 = (s32*)SP(0);
-    scratchpad_2 = (s32*)SP(0xC0);
-    for (entity = &g_Entities[0]; entity < &g_Entities[48]; scratchpad_1++,
+    spHitboxState = SPAD(0);
+    spHitbox = SPAD(0x30);
+    for (entity = &g_Entities[0]; entity < &g_Entities[48]; spHitboxState++,
         entity++) {
-        *scratchpad_1 = entity->hitboxState;
-        if ((*scratchpad_1 != 0) && !(*scratchpad_1 & 0x80)) {
-            *scratchpad_2 = entity->posX.i.hi;
+        *spHitboxState = entity->hitboxState;
+        if ((*spHitboxState != 0) && !(*spHitboxState & 0x80)) {
+            *spHitbox = entity->posX.i.hi;
             if (entity->facingLeft) {
-                *scratchpad_2 -= entity->hitboxOffX;
+                *spHitbox -= entity->hitboxOffX;
             } else {
-                *scratchpad_2 += entity->hitboxOffX;
+                *spHitbox += entity->hitboxOffX;
             }
             yCoord1 = entity->posY.i.hi + entity->hitboxOffY;
-            if ((*scratchpad_2 < -32) || (*scratchpad_2 > 288) ||
-                (yCoord1 < -32) || (yCoord1 > 256) || !entity->hitboxWidth ||
+            if ((*spHitbox < -32) || (*spHitbox > 288) || (yCoord1 < -32) ||
+                (yCoord1 > 256) || !entity->hitboxWidth ||
                 !entity->hitboxHeight) {
-                *scratchpad_1 = 0;
-                scratchpad_2 += 4;
+                *spHitboxState = 0;
+                spHitbox += 4;
             } else {
-                scratchpad_2++;
-                *scratchpad_2++ = entity->hitboxWidth;
-                *scratchpad_2++ = yCoord1;
-                *scratchpad_2++ = entity->hitboxHeight;
+                spHitbox++;
+                *spHitbox++ = entity->hitboxWidth;
+                *spHitbox++ = yCoord1;
+                *spHitbox++ = entity->hitboxHeight;
             }
         } else {
-            scratchpad_2 += 4;
+            spHitbox += 4;
         }
     }
     for (entity = &g_Entities[64]; entity < &g_Entities[192]; entity++) {
         miscVar1 = entity->hitboxState;
-        if (!miscVar1 || !(entity->hitboxWidth) || !(entity->hitboxHeight) ||
+        if (!miscVar1 || !entity->hitboxWidth || !entity->hitboxHeight ||
             (entity->flags & FLAG_DEAD)) {
             continue;
         }
@@ -186,15 +162,14 @@ void OVL_EXPORT(HitDetection)(void) {
                 entity->unk6D[i]--;
             }
         }
-        xCoord = entity->posX.i.hi;
+        x = entity->posX.i.hi;
         if (entity->facingLeft) {
-            xCoord -= entity->hitboxOffX;
+            x -= entity->hitboxOffX;
         } else {
-            xCoord += entity->hitboxOffX;
+            x += entity->hitboxOffX;
         }
-        yCoord2 = entity->posY.i.hi + entity->hitboxOffY;
-        if ((xCoord <= -32) || (xCoord >= 288) || (yCoord2 <= -32) ||
-            (yCoord2 >= 256)) {
+        y = entity->posY.i.hi + entity->hitboxOffY;
+        if (x <= -32 || x >= 288 || y <= -32 || y >= 256) {
             continue;
         }
         miscVar2 = 0;
@@ -202,324 +177,312 @@ void OVL_EXPORT(HitDetection)(void) {
         hitboxWidth = entity->hitboxWidth - 1;
         yCoord1 = entity->hitboxHeight - 1;
         if (miscVar3) {
-            scratchpad_1 = (s32*)SP(4);
-            scratchpad_2 = (s32*)SP(0xD0);
-            for (iterEnt2 = &g_Entities[1]; iterEnt2 < &g_Entities[48];
-                 iterEnt2++) {
-                if ((*scratchpad_1 & miscVar3) &&
-                    (!entity->unk6D[iterEnt2->enemyId])) {
-                    if (*scratchpad_1 & 0x80) {
-                        entity->hitParams = iterEnt2->hitEffect;
+            spHitboxState = SPAD(1);
+            spHitbox = SPAD(0x34);
+            for (iterEnt = &g_Entities[1]; iterEnt < &g_Entities[48];
+                 iterEnt++) {
+                if ((*spHitboxState & miscVar3) &&
+                    (!entity->unk6D[iterEnt->enemyId])) {
+                    if (*spHitboxState & 0x80) {
+                        entity->hitParams = iterEnt->hitEffect;
                         miscVar2 = 0xFF;
                         break;
-                    } else {
-                        hitboxCheck2 = (u16)*scratchpad_2++ - (u16)xCoord;
-                        hitboxCheck1 = hitboxWidth + *scratchpad_2++;
-                        hitboxCheck2 += hitboxCheck1;
-                        hitboxCheck1 *= 2;
-                        if (hitboxCheck2 <= hitboxCheck1) {
-                            hitboxCheck2 = (u16)*scratchpad_2++ - (u16)yCoord2;
-                            hitboxCheck1 = yCoord1 + *scratchpad_2++;
-                            hitboxCheck2 += hitboxCheck1;
-                            hitboxCheck1 *= 2;
-                            if (hitboxCheck2 <= hitboxCheck1) {
-                                // reusing the i variable here, maybe can be a
-                                // different var
-                                i = iterEnt2->hitEffect;
-                                if (!(iterEnt2->flags & entity->flags &
-                                      FLAG_UNK_100000)) {
-                                    // Probably has to stay generic since
-                                    // iterEnt2 could be any entity?
-                                    iterEnt2->unkB8 = entity;
-                                    iterEnt2->hitFlags = 1;
-                                    if ((i == 12) &&
-                                        (entity->flags & FLAG_UNK_8000)) {
-                                        iterEnt2->hitFlags = 2;
-                                    }
-                                    if ((i == 10) &&
-                                        (entity->flags & FLAG_UNK_4000)) {
-                                        iterEnt2->hitFlags = 2;
-                                    }
-                                }
-                                entity->hitParams = i;
-                                miscVar2 = 0xFF;
-                                break;
-                            } else {
-                                scratchpad_1++;
-                                continue;
-                            }
-                        } else {
-                            scratchpad_1++;
-                            scratchpad_2 += 2;
-                            continue;
-                        }
                     }
-                } else {
-                    scratchpad_1++;
-                    scratchpad_2 += 4;
-                }
-            }
-        }
-        if ((miscVar1 & 1) && (!miscVar2)) {
-            // Note that in this block, iterEnt2 is never advanced, so it's
-            // always the player.
-            iterEnt2 = &PLAYER;
-            scratchpad_1 = (s32*)SP(0);
-            scratchpad_2 = (s32*)SP(0xC0);
-            if (!entity->unk6D[iterEnt2->enemyId] && (*scratchpad_1 & 1)) {
-                hitboxCheck2 = (u16)*scratchpad_2++ - (u16)xCoord;
-                hitboxCheck1 = hitboxWidth + *scratchpad_2++;
-                hitboxCheck2 += hitboxCheck1;
-                hitboxCheck1 *= 2;
-                if (hitboxCheck2 <= hitboxCheck1) {
-                    hitboxCheck2 = (u16)*scratchpad_2++ - (u16)yCoord2;
-                    hitboxCheck1 = yCoord1 + *scratchpad_2++;
+                    hitboxCheck2 = (u16)*spHitbox++ - (u16)x;
+                    hitboxCheck1 = hitboxWidth + *spHitbox++;
                     hitboxCheck2 += hitboxCheck1;
                     hitboxCheck1 *= 2;
                     if (hitboxCheck2 <= hitboxCheck1) {
-                        iterEnt2->unkB8 = entity;
-                        iterEnt2->hitFlags = 1;
-                        iterEnt2->hitParams = entity->attackElement;
-                        iterEnt2->hitPoints = entity->attack;
-                        entity->hitParams = iterEnt2->hitEffect;
+                        hitboxCheck2 = (u16)*spHitbox++ - (u16)y;
+                        hitboxCheck1 = yCoord1 + *spHitbox++;
+                        hitboxCheck2 += hitboxCheck1;
+                        hitboxCheck1 *= 2;
+                        if (hitboxCheck2 <= hitboxCheck1) {
+                            // reusing the i variable here, maybe can be a
+                            // different var
+                            i = iterEnt->hitEffect;
+                            if (!(iterEnt->flags & entity->flags &
+                                  FLAG_UNK_100000)) {
+                                // Probably has to stay generic since
+                                // iterEnt could be any entity?
+                                iterEnt->unkB8 = entity;
+                                iterEnt->hitFlags = 1;
+                                if ((i == 12) &&
+                                    (entity->flags & FLAG_UNK_8000)) {
+                                    iterEnt->hitFlags = 2;
+                                }
+                                if ((i == 10) &&
+                                    (entity->flags & FLAG_UNK_4000)) {
+                                    iterEnt->hitFlags = 2;
+                                }
+                            }
+                            entity->hitParams = i;
+                            miscVar2 = 0xFF;
+                            break;
+                        } else {
+                            spHitboxState++;
+                            continue;
+                        }
+                    } else {
+                        spHitboxState++;
+                        spHitbox += 2;
+                        continue;
+                    }
+                } else {
+                    spHitboxState++;
+                    spHitbox += 4;
+                }
+            }
+        }
+
+        if ((miscVar1 & 1) && !miscVar2) {
+            // Note that in this block, iterEnt is never advanced, so it's
+            // always the player.
+            iterEnt = &PLAYER;
+            spHitboxState = SPAD(0);
+            spHitbox = SPAD(0x30);
+            if (!entity->unk6D[iterEnt->enemyId] && (*spHitboxState & 1)) {
+                hitboxCheck2 = (u16)*spHitbox++ - (u16)x;
+                hitboxCheck1 = hitboxWidth + *spHitbox++;
+                hitboxCheck2 += hitboxCheck1;
+                hitboxCheck1 *= 2;
+                if (hitboxCheck2 <= hitboxCheck1) {
+                    hitboxCheck2 = (u16)*spHitbox++ - (u16)y;
+                    hitboxCheck1 = yCoord1 + *spHitbox++;
+                    hitboxCheck2 += hitboxCheck1;
+                    hitboxCheck1 *= 2;
+                    if (hitboxCheck2 <= hitboxCheck1) {
+                        iterEnt->unkB8 = entity;
+                        iterEnt->hitFlags = 1;
+                        iterEnt->hitParams = entity->attackElement;
+                        iterEnt->hitPoints = entity->attack;
+                        entity->hitParams = iterEnt->hitEffect;
                         miscVar2 = 0xFF;
                         entity->hitFlags = 0x80;
                     }
                 }
             }
         }
-        if (miscVar2) {
-            if (entity->parent) {
-                entityHit = entity->parent;
-                entityHit->hitParams = entity->hitParams;
-            } else {
-                entityHit = entity;
+        if (!miscVar2) {
+            continue;
+        }
+        if (entity->parent) {
+            entityHit = entity->parent;
+            entityHit->hitParams = entity->hitParams;
+        } else {
+            entityHit = entity;
+        }
+        if ((entityHit->flags & FLAG_DEAD) || !miscVar2) {
+            continue;
+        }
+        miscVar1 = g_testCollEnemyLookup[entityHit->enemyId];
+        if (miscVar1) {
+            miscVar1--;
+            miscVar3 = 1 << (miscVar1 & 7);
+            g_CastleFlags[(miscVar1 >> 3) + ENEMY_LIST_190] |= miscVar3;
+        }
+        if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
+            (entityHit->flags & FLAG_NOT_AN_ENEMY) == 0) {
+            if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
+                g_api.FreePrimitives(g_unkGraphicsStruct.BottomCornerTextPrims);
+                g_unkGraphicsStruct.BottomCornerTextTimer = 0;
             }
-            if (!(entityHit->flags & FLAG_DEAD) && miscVar2) {
-                miscVar1 = g_testCollEnemyLookup[entityHit->enemyId];
-                if (miscVar1) {
-                    miscVar1--;
-                    miscVar3 = 1 << (miscVar1 & 7);
-                    g_CastleFlags[(miscVar1 >> 3) + ENEMY_LIST_190] |= miscVar3;
+            BottomCornerText(g_api.enemyDefs[entityHit->enemyId].name, false);
+            entityHit->flags |= FLAG_NOT_AN_ENEMY;
+        }
+        if (entityHit->hitPoints) {
+            if (iterEnt->attack) {
+                if ((iterEnt->hitboxState & 0x80) == 0) {
+                    spHitbox -= 4;
+                    x += *spHitbox++;
+                    spHitbox++;
+                    y += *spHitbox;
+                    x /= 2;
+                    y /= 2;
                 }
-                if ((g_Status.relics[RELIC_FAERIE_SCROLL] & 2) &&
-                    !(entityHit->flags & FLAG_NOT_AN_ENEMY)) {
-                    if (g_unkGraphicsStruct.BottomCornerTextTimer != 0) {
-                        g_api.FreePrimitives(
-                            g_unkGraphicsStruct.BottomCornerTextPrims);
-                        g_unkGraphicsStruct.BottomCornerTextTimer = 0;
-                    }
-                    BottomCornerText(
-                        g_api.enemyDefs[entityHit->enemyId].name, false);
-                    entityHit->flags |= FLAG_NOT_AN_ENEMY;
-                }
-                if (entityHit->hitPoints) {
-                    if (iterEnt2->attack) {
-                        if (!(iterEnt2->hitboxState & 0x80)) {
-                            scratchpad_2 -= 4;
-                            xCoord += *scratchpad_2++;
-                            scratchpad_2++;
-                            yCoord2 += *scratchpad_2;
-                            xCoord /= 2;
-                            yCoord2 /= 2;
+                prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
+                while (prim != NULL) {
+                    if (prim->drawMode == DRAW_HIDE) {
+                        prim->clut = PAL_UNK_199;
+                        prim->x0 = prim->x2 = x - 13 + (Random() & 7) - 3;
+                        prim->x1 = prim->x3 = prim->x0 + 0x20;
+                        prim->y0 = prim->y1 = y - 10 + (Random() & 7) - 3;
+                        prim->y2 = prim->y3 = prim->y0 + 0x20;
+                        prim->p1 = 0;
+                        if (iterEnt->zPriority > entity->zPriority) {
+                            prim->priority = iterEnt->zPriority + 1;
+                        } else {
+                            prim->priority = entity->zPriority + 1;
                         }
-                        for (prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
-                             prim != NULL; prim = prim->next) {
-                            if (prim->drawMode == DRAW_HIDE) {
-                                prim->clut = PAL_UNK_199;
-                                prim->x0 = prim->x2 =
-                                    xCoord - 13 + (Random() & 7) - 3;
-                                prim->x1 = prim->x3 = prim->x0 + 0x20;
-                                prim->y0 = prim->y1 =
-                                    yCoord2 - 10 + (Random() & 7) - 3;
-                                prim->y2 = prim->y3 = prim->y0 + 0x20;
-                                prim->p1 = 0;
-                                if (iterEnt2->zPriority > entity->zPriority) {
-                                    prim->priority = iterEnt2->zPriority + 1;
-                                } else {
-                                    prim->priority = entity->zPriority + 1;
-                                }
-                                prim->drawMode = DRAW_UNK02;
+                        prim->drawMode = DRAW_UNK02;
+                        break;
+                    }
+                    prim = prim->next;
+                }
+            }
+            if (iterEnt->attack && entityHit->hitPoints != 0x7FFF) {
+                miscVar1 = g_api.DealDamage(entity, iterEnt);
+                if (miscVar1 == 0x4000) {
+                    miscVar1 = 0;
+                }
+                if ((g_Status.relics[RELIC_SPIRIT_ORB] & 2) &&
+                    !(entityHit->flags & FLAG_KEEP_ALIVE_OFFCAMERA)) {
+                    otherEntity =
+                        AllocEntity(&g_Entities[224], &g_Entities[256]);
+                    if (otherEntity != NULL) {
+                        DestroyEntity(otherEntity);
+                        otherEntity->entityId = 4;
+                        otherEntity->pfnUpdate = EntityDamageDisplay;
+                        otherEntity->posX.i.hi = x;
+                        otherEntity->posY.i.hi = y;
+                        otherEntity->params = miscVar1;
+                    }
+                }
+            } else {
+                miscVar1 = 0;
+            }
+            if (miscVar1 != 0xC000) {
+                if (miscVar1 & 0x8000) {
+                    miscVar2 = 9;
+                } else {
+                    miscVar3 = (u16)iterEnt->attackElement;
+                    // includes all elements 0x40 and up
+                    if (miscVar3 & 0xFFC0) {
+                        for (i = 0; i < LEN(g_testCollElementLookup); i++) {
+                            if (miscVar3 & g_testCollElementLookup[i]) {
+                                miscVar2 = g_testColliFrames[i];
                                 break;
                             }
                         }
-                    }
-                    if ((iterEnt2->attack) &&
-                        (entityHit->hitPoints != 0x7FFF)) {
-                        miscVar1 = g_api.DealDamage(entity, iterEnt2);
-                        if (miscVar1 == 0x4000) {
-                            miscVar1 = 0;
-                        }
-                        if ((g_Status.relics[RELIC_SPIRIT_ORB] & 2) &&
-                            !(entityHit->flags & FLAG_KEEP_ALIVE_OFFCAMERA)) {
-                            otherEntity =
-                                AllocEntity(&g_Entities[224], &g_Entities[256]);
-                            if (otherEntity != NULL) {
-                                DestroyEntity(otherEntity);
-                                otherEntity->entityId = 4;
-                                otherEntity->pfnUpdate = EntityDamageDisplay;
-                                otherEntity->posX.i.hi = xCoord;
-                                otherEntity->posY.i.hi = yCoord2;
-                                otherEntity->params = miscVar1;
-                            }
-                        }
                     } else {
-                        miscVar1 = 0;
-                    }
-                    if (miscVar1 != 0xC000) {
-                        if (miscVar1 & 0x8000) {
-                            miscVar2 = 9;
-                        } else {
-                            miscVar3 = (u16)iterEnt2->attackElement;
-                            // includes all elements 0x40 and up
-                            if (miscVar3 & 0xFFC0) {
-                                for (i = 0; i < LEN(g_testCollElementLookup);
-                                     i++) {
-                                    if (miscVar3 & g_testCollElementLookup[i]) {
-                                        miscVar2 = g_testColliFrames[i];
-                                        break;
-                                    }
-                                }
-                            } else {
-                                miscVar2 = 0;
-                            }
-                        }
-                    } else {
-                        entityHit->hitFlags |= 0x20;
-                        miscVar1 = 0;
-                    }
-                    if (!miscVar1) {
-                        goto unusual_spot;
-                    }
-                    if (miscVar1 & 0x8000) {
-                        entityHit->hitPoints += (miscVar1 & 0x3FFF);
-                        miscVar3 =
-                            g_api.enemyDefs[entityHit->enemyId].hitPoints;
-                        if (entityHit->hitPoints > miscVar3) {
-                            entityHit->hitPoints = miscVar3;
-                        }
-                    } else {
-                        miscVar1 &= 0x3FFF;
-                        g_api.PlaySfx(SFX_RIC_WHIP_HIT);
-                        if (entityHit->hitPoints != 0x7FFE) {
-                            if (entityHit->hitPoints < (miscVar1 * 2)) {
-                                entityHit->hitFlags |= 3;
-                            } else if (entityHit->hitPoints < (miscVar1 * 4)) {
-                                entityHit->hitFlags |= 2;
-                            } else {
-                                entityHit->hitFlags |= 1;
-                            }
-                            entityHit->hitPoints -= miscVar1;
-                        }
-                    }
-                    if (entityHit->hitPoints > 0) {
-                        otherEntity = entityHit;
-                        miscVar3 = iterEnt2->enemyId;
-                        do {
-                            otherEntity->unk6D[miscVar3] =
-                                iterEnt2->nFramesInvincibility;
-                            if (!(entity->flags & FLAG_SUPPRESS_STUN)) {
-                                otherEntity->stunFrames = iterEnt2->stunFrames;
-                            }
-                            if ((!otherEntity->hitEffect) &&
-                                !(otherEntity->flags & 0xF)) {
-                                otherEntity->hitEffect = otherEntity->palette;
-                            }
-                            otherEntity->nFramesInvincibility = miscVar2;
-                            otherEntity->flags |= 0xF;
-                            otherEntity = otherEntity->nextPart;
-                        } while ((otherEntity != NULL) &&
-                                 (otherEntity != entityHit));
-                        // I don't understand this; we write to a spot but we
-                        // never reference it again.
-                        uselessVar = ((u32)entityHit->flags >> 4) & 7;
-                        continue;
+                        miscVar2 = 0;
                     }
                 }
-                PreventEntityFromRespawning(entityHit);
-                g_api.func_800FE044(g_api.enemyDefs[entityHit->enemyId].exp,
-                                    g_api.enemyDefs[miscVar1].level);
-                if ((entityHit->flags & FLAG_UNK_1000) &&
-                    (g_Status.killCount < 999999)) {
-                    g_Status.killCount++;
+            } else {
+                entityHit->hitFlags |= 0x20;
+                miscVar1 = 0;
+            }
+            if (!miscVar1) {
+                goto unusual_spot;
+            }
+            if (miscVar1 & 0x8000) {
+                entityHit->hitPoints += (miscVar1 & 0x3FFF);
+                miscVar3 = g_api.enemyDefs[entityHit->enemyId].hitPoints;
+                if (entityHit->hitPoints > miscVar3) {
+                    entityHit->hitPoints = miscVar3;
                 }
-                if (entityHit->flags & (FLAG_UNK_800 | FLAG_UNK_400)) {
-                    miscVar3 = rand() & 0xFF;
-                    if (miscVar3 < 32) {
-                        otherEntity =
-                            AllocEntity(&g_Entities[160], &g_Entities[192]);
-                        if (otherEntity != NULL) {
-                            miscVar3 = rand() & 0xFF;
-                            if (miscVar3 <
-                                g_api.enemyDefs[miscVar1].rareItemDropRate) {
-                                miscVar3 = 1;
-                            } else {
-                                miscVar3 -=
-                                    g_api.enemyDefs[miscVar1].rareItemDropRate;
-                                if (miscVar3 < g_api.enemyDefs[miscVar1]
-                                                   .uncommonItemDropRate) {
-                                    miscVar3 = 0;
-                                } else {
-                                    miscVar3 = 2;
-                                }
-                            }
-                            if (miscVar3 >= 0x80) {
-                                miscVar3 -= 0x80;
-                                // Create an EntityEquipItemDrop
-                                CreateEntityFromEntity(
-                                    E_EQUIP_ITEM_DROP, entity, otherEntity);
-                            } else {
-                                // Create an EntityPrizeDrop
-                                CreateEntityFromEntity(
-                                    E_PRIZE_DROP, entity, otherEntity);
-                            }
-                            otherEntity->params = miscVar3;
-                            // item pops up in the air a bit when spawned
-                            otherEntity->velocityY = FIX(-3.5);
-                        }
+            } else {
+                miscVar1 &= 0x3FFF;
+                g_api.PlaySfx(SFX_RIC_WHIP_HIT);
+                if (entityHit->hitPoints != 0x7FFE) {
+                    if (entityHit->hitPoints < (miscVar1 * 2)) {
+                        entityHit->hitFlags |= 3;
+                    } else if (entityHit->hitPoints < (miscVar1 * 4)) {
+                        entityHit->hitFlags |= 2;
+                    } else {
+                        entityHit->hitFlags |= 1;
                     }
+                    entityHit->hitPoints -= miscVar1;
                 }
+            }
+            if (entityHit->hitPoints > 0) {
                 otherEntity = entityHit;
+                miscVar3 = iterEnt->enemyId;
                 do {
-                    otherEntity->flags |= (FLAG_UNK_100000 + FLAG_UNK_8000 +
-                                           FLAG_UNK_4000 + FLAG_DEAD);
-                    otherEntity->flags &= ~FLAG_UNK_20000000;
-                    if (!otherEntity->hitEffect) {
+                    otherEntity->unk6D[miscVar3] =
+                        iterEnt->nFramesInvincibility;
+                    if (!(entity->flags & FLAG_SUPPRESS_STUN)) {
+                        otherEntity->stunFrames = iterEnt->stunFrames;
+                    }
+                    if (!otherEntity->hitEffect &&
+                        !(otherEntity->flags & 0xF)) {
                         otherEntity->hitEffect = otherEntity->palette;
                     }
                     otherEntity->nFramesInvincibility = miscVar2;
                     otherEntity->flags |= 0xF;
                     otherEntity = otherEntity->nextPart;
                 } while (otherEntity != NULL && otherEntity != entityHit);
+                // I don't understand this; we write to a spot but we
+                // never reference it again.
+                uselessVar = ((u32)entityHit->flags >> 4) & 7;
                 continue;
-            // this spot is unusual because of where it appears in the code. I
-            // would have expected this to be included in the spot with the
-            // goto, since there is no way to reach this without using that one
-            // single goto.
-            unusual_spot:
-                if (!(entityHit->hitFlags & 0xF)) {
-                    entityHit->hitFlags |= 0x10;
-                }
-                otherEntity = entityHit;
-                miscVar3 = iterEnt2->enemyId;
-                do {
-                    if (entity->hitPoints == 0x7FFF) {
-                        if (otherEntity->hitPoints == 0x7FFF) {
-                            otherEntity->unk6D[miscVar3] =
-                                iterEnt2->nFramesInvincibility;
-                        }
-                    } else {
-                        otherEntity->unk6D[miscVar3] =
-                            iterEnt2->nFramesInvincibility;
-                    }
-                    otherEntity = otherEntity->nextPart;
-                } while ((otherEntity != NULL) && (otherEntity != entityHit));
             }
         }
+        PreventEntityFromRespawning(entityHit);
+        g_api.func_800FE044(g_api.enemyDefs[entityHit->enemyId].exp,
+                            g_api.enemyDefs[miscVar1].level);
+        if ((entityHit->flags & FLAG_UNK_1000) && g_Status.killCount < 999999) {
+            g_Status.killCount++;
+        }
+        if (entityHit->flags & (FLAG_UNK_800 | FLAG_UNK_400)) {
+            miscVar3 = rand() & 0xFF;
+            if (miscVar3 < 32) {
+                otherEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+                if (otherEntity != NULL) {
+                    miscVar3 = rand() & 0xFF;
+                    if (miscVar3 < g_api.enemyDefs[miscVar1].rareItemDropRate) {
+                        miscVar3 = 1;
+                    } else {
+                        miscVar3 -= g_api.enemyDefs[miscVar1].rareItemDropRate;
+                        if (miscVar3 <
+                            g_api.enemyDefs[miscVar1].uncommonItemDropRate) {
+                            miscVar3 = 0;
+                        } else {
+                            miscVar3 = 2;
+                        }
+                    }
+                    if (miscVar3 >= 0x80) {
+                        miscVar3 -= 0x80;
+                        CreateEntityFromEntity(
+                            E_EQUIP_ITEM_DROP, entity, otherEntity);
+                    } else {
+                        CreateEntityFromEntity(
+                            E_PRIZE_DROP, entity, otherEntity);
+                    }
+                    otherEntity->params = miscVar3;
+                    // item pops up in the air a bit when spawned
+                    otherEntity->velocityY = FIX(-3.5);
+                }
+            }
+        }
+        otherEntity = entityHit;
+        do {
+            otherEntity->flags |=
+                (FLAG_UNK_100000 | FLAG_UNK_8000 | FLAG_UNK_4000 | FLAG_DEAD);
+            otherEntity->flags &= ~FLAG_UNK_20000000;
+            if (!otherEntity->hitEffect) {
+                otherEntity->hitEffect = otherEntity->palette;
+            }
+            otherEntity->nFramesInvincibility = miscVar2;
+            otherEntity->flags |= 0xF;
+            otherEntity = otherEntity->nextPart;
+        } while (otherEntity != NULL && otherEntity != entityHit);
+        continue;
+    // this spot is unusual because of where it appears in the code. I
+    // would have expected this to be included in the spot with the
+    // goto, since there is no way to reach this without using that one
+    // single goto.
+    unusual_spot:
+        if ((entityHit->hitFlags & 0xF) == 0) {
+            entityHit->hitFlags |= 0x10;
+        }
+        otherEntity = entityHit;
+        miscVar3 = iterEnt->enemyId;
+        do {
+            if (entity->hitPoints == 0x7FFF) {
+                if (otherEntity->hitPoints == 0x7FFF) {
+                    otherEntity->unk6D[miscVar3] =
+                        iterEnt->nFramesInvincibility;
+                }
+            } else {
+                otherEntity->unk6D[miscVar3] = iterEnt->nFramesInvincibility;
+            }
+            otherEntity = otherEntity->nextPart;
+        } while (otherEntity != NULL && otherEntity != entityHit);
     }
-    for (prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8]; prim != NULL;
-         prim = prim->next) {
-        if ((prim->drawMode) != DRAW_HIDE) {
+    prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
+    while (prim != NULL) {
+        if (prim->drawMode != DRAW_HIDE) {
             miscVar2 = prim->p1;
             prim->u0 = prim->u2 = g_testColluCoords[miscVar2];
             prim->u1 = prim->u3 = prim->u0 + 0x20;
@@ -532,5 +495,6 @@ void OVL_EXPORT(HitDetection)(void) {
                 prim->p1 = miscVar2;
             }
         }
+        prim = prim->next;
     }
 }
