@@ -4,7 +4,7 @@
 static s16 D_us_80181C14[] = {0x50, 0x68, 0x70, 0x68, 0x50, 0x38, 0x30, 0x38};
 static s16 D_us_80181C24[] = {0x90, 0x93, 0x9C, 0xA5, 0xA8, 0xA5, 0x9C, 0x93};
 
-extern void func_us_801CC8F8(Entity*);
+void func_us_801CC8F8(Entity*);
 
 void func_us_801CC750(Entity* self) {
     Entity* entityPtr;
@@ -12,18 +12,17 @@ void func_us_801CC750(Entity* self) {
     Primitive* prim;
     s32 primIndex;
 
-    if (self->step != 0) {
+    if (self->step) {
         return;
     }
 
     InitializeEntity(D_us_80180A88);
     primIndex = g_api.AllocPrimitives(PRIM_GT4, 9);
     if (primIndex != -1) {
-        prim = &g_PrimBuf[primIndex];
-        i = -0x10;
         self->primIndex = primIndex;
+        prim = &g_PrimBuf[primIndex];
         self->flags |= FLAG_HAS_PRIMS;
-        while (prim != NULL) {
+        for (i = -0x10; prim != NULL; i += 0x1E) {
             prim->tpage = 0xF;
             prim->clut = 0x2A;
             prim->u0 = prim->u2 = 0xC0;
@@ -37,25 +36,23 @@ void func_us_801CC750(Entity* self) {
             prim->priority = 0;
             prim->drawMode = DRAW_DEFAULT;
             prim = prim->next;
-            i += 0x1E;
         }
     }
 
-    entityPtr = &self[1];
+    entityPtr = self + 1;
 
     for (i = -0x10; i < 0x130; i += 0x60) {
         DestroyEntity(entityPtr);
-        entityPtr->entityId = 0x16;
+        entityPtr->entityId = E_ID_16;
         entityPtr->pfnUpdate = func_us_801CC8F8;
         entityPtr->posY.i.hi = 0x8E;
         entityPtr->posX.i.hi = i;
-
         entityPtr++;
     }
 }
 
 void func_us_801CC8F8(Entity* self) {
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 3;
@@ -69,34 +66,32 @@ void func_us_801CC8F8(Entity* self) {
         self->posX.i.hi += 0x180;
     }
 
-    if (self->posX.i.hi >= 0x141) {
+    if (self->posX.i.hi > 0x140) {
         self->posX.i.hi -= 0x180;
     }
 }
 
 // updates entity movement direction
 void func_us_801CC9B4(Entity* self) {
-    s32 angleIndex;
-    u8 adjustedAngle;
+    u8 angle;
 
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = 5;
         self->zPriority = 1;
-        self->ext.et_801CC9B4.currentAngle = 0;
         self->flags &= ~FLAG_POS_CAMERA_LOCKED;
+        self->ext.et_801CC9B4.currentAngle = 0;
         return;
     }
-    if (!(g_GameTimer & 0xF)) {
-        angleIndex = (Random() & 7);
+    if ((g_GameTimer & 0xF) == 0) {
+        angle = (Random() & 7);
         self->ext.et_801CC9B4.targetAngle = GetAnglePointToEntityShifted(
-            D_us_80181C14[angleIndex], D_us_80181C24[angleIndex]);
+            D_us_80181C14[angle], D_us_80181C24[angle]);
     }
-    adjustedAngle = AdjustValueWithinThreshold(
-        8U, (u8)self->ext.et_801CC9B4.currentAngle,
-        (u8)self->ext.et_801CC9B4.targetAngle);
-    SetEntityVelocityFromAngle(adjustedAngle & 0xFF, 4);
+    angle = AdjustValueWithinThreshold(8, self->ext.et_801CC9B4.currentAngle,
+                                       self->ext.et_801CC9B4.targetAngle);
+    SetEntityVelocityFromAngle(angle, 4);
     MoveEntity();
-    self->ext.et_801CC9B4.currentAngle = (u8)adjustedAngle;
+    self->ext.et_801CC9B4.currentAngle = angle;
 }

@@ -8,14 +8,12 @@ extern s32 E_ID(EXPLODE_PUFF_OPAQUE);
 extern EInit g_EInitParticle;
 
 static u8 puff_anim_one[] = {
-    0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05,
-    0x03, 0x06, 0x03, 0x07, 0x03, 0x08, 0x03, 0x09, 0x03, 0x0A,
-    0x03, 0x0B, 0x03, 0x0C, 0x03, 0x0D, 0xFF, 0x00,
+    3, 1, 3, 2, 3, 3,  3, 4,  3, 5,  3, 6,  3,  7,
+    3, 8, 3, 9, 3, 10, 3, 11, 3, 12, 3, 13, -1, 0,
 };
 static u8 puff_anim_two[] = {
-    0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05,
-    0x02, 0x06, 0x02, 0x07, 0x02, 0x08, 0x02, 0x09, 0x02, 0x0A,
-    0x02, 0x0B, 0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0xFF, 0x00,
+    2, 1, 2, 2, 2,  3, 2,  4, 2,  5, 2,  6, 2,  7,  2,
+    8, 2, 9, 2, 10, 2, 11, 2, 12, 2, 13, 2, 14, -1, 0,
 };
 static EntityConfig puff_config[] = {
     PUFF_PARAMS_0,
@@ -27,7 +25,7 @@ static EntityConfig puff_config[] = {
 void CreateExplosionPuff() {
     Entity* puff;
     s32 rand3 = Random() & 3; // Random puff style 0, 1, 2
-    s16 initAngle = ((Random() & 0xF) << 8) - 0x800;
+    s16 initAngle = ((Random() & 0xF) << 8) - ROT(180);
     s32 i;
 
     for (i = 0; i < 6; i++) {
@@ -126,7 +124,7 @@ void EntityExplosionPuffOpaque(Entity* self) {
                 if (self->ext.opaquePuff.speed > 3) {
                     self->ext.opaquePuff.speed -= 3;
                     self->ext.opaquePuff.angle =
-                        self->ext.opaquePuff.angle - 0x800;
+                        self->ext.opaquePuff.angle - ROT(180);
                 }
                 break;
 

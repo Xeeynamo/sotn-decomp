@@ -19,4 +19,4 @@ INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/e_misc", EntityIntenseExplosion);
 
 INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/e_misc", func_pspeu_0924CDC0);
 
-INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/e_misc", func_pspeu_0924CEC8);
+INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/e_misc", PlaySfxPositional);

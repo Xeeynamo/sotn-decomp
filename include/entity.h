@@ -2114,8 +2114,8 @@ typedef struct {
 } ET_SmallRisingHeart;
 
 typedef struct {
-    /* 0x00 */ s8 currentAngle;
-    /* 0x01 */ s8 targetAngle;
+    /* 0x7C */ u8 currentAngle;
+    /* 0x80 */ u8 targetAngle;
 } ET_801CC9B4;
 
 typedef struct {

@@ -2,10 +2,9 @@
 
 extern EInit g_EInitFleaMan;
 
-static s32 fidgetVelocityX[] = {FIX(-2), FIX(-0.875), FIX(1.5), 0, FIX(-2.5)};
-static s32 fidgetVelocityY[] = {
-    FIX(-0.5), FIX(-6), FIX(-3), FIX(-3.5), FIX(-4)};
-static u8 anim_stand[] = {0x04, 0x10, 0x04, 0x11, 0x04, 0x12, 0x04, 0x13, 0x00};
+static s32 fidgetVelX[] = {FIX(-2), FIX(-0.875), FIX(1.5), FIX(0), FIX(-2.5)};
+static s32 fidgetVelY[] = {FIX(-0.5), FIX(-6), FIX(-3), FIX(-3.5), FIX(-4)};
+static u8 anim_stand[] = {4, 16, 4, 17, 4, 18, 4, 19, 0, 0};
 static s16 sensors_ground[][2] = {{0, 10}, {0, 4}, {6, -4}, {-12, 0}};
 static s16 sensors_move_y[][2] = {{0, -8}, {4, 0}, {-8, 0}};
 static s16 sensors_move_x[][2] = {{-9, 6}, {0, -12}};
@@ -153,14 +152,14 @@ void EntityFleaMan(Entity* self) {
             }
         }
 
-        distanceX = fidgetVelocityX[index];
+        distanceX = fidgetVelX[index];
         if (self->facingLeft) {
             self->velocityX = -distanceX;
         } else {
             self->velocityX = distanceX;
         }
 
-        self->velocityY = fidgetVelocityY[index];
+        self->velocityY = fidgetVelY[index];
         if (index == 1) {
             PlaySfxPositional(SFX_BLIPS_C);
         } else if (index == 0 || index == 2) {
