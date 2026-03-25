@@ -35,7 +35,7 @@ INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", GetAnglePointToEntitySh
 
 INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", AdjustValueWithinThreshold);
 
-INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", func_pspeu_092568D0);
+INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", UnkEntityFunc0);
 
 INCLUDE_ASM("st/no0_psp/nonmatchings/no0_psp/st_common", GetAngleBetweenEntities);
 
