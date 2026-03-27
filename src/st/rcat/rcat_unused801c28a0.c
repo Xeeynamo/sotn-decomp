@@ -11,7 +11,7 @@ void RCAT_Unused801C28A0(Entity* self) {
         self->opacity = 0;
         self->hitboxState = 0;
         self->drawFlags |=
-            FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
         return;
     }
 
