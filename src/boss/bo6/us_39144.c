@@ -537,7 +537,48 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BB314);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BB370);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicCheckSubweapon);
+extern SubweaponDef subweapons_def[];
+s32 BO6_RicCheckSubweapon(
+    SubweaponDef* actualSubwpn, s32 isItemCrash, s32 useHearts) {
+    s32 subwpnId;
+    s32 dist;
+
+    dist = RIC.posX.i.hi - g_Entities[0].posX.i.hi;
+    if (dist < 0) {
+        dist = -dist;
+    }
+    if (!isItemCrash) {
+        if (dist < 0x50) {
+            subwpnId = 3;
+        } else {
+            subwpnId = 4;
+        }
+        dist = RIC.posY.i.hi - g_Entities[0].posY.i.hi;
+        if (dist >= 0x19) {
+            subwpnId = 2;
+        }
+        if (dist < -0x18) {
+            subwpnId = 3;
+        }
+        if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
+            subwpnId = 2;
+        }
+    } else {
+        subwpnId = 4;
+        if (g_Ric.padPressed & PAD_L2) {
+            subwpnId = 2;
+        } else if (g_Ric.padPressed & PAD_UP) {
+            subwpnId = 3;
+        } else if (g_Ric.padPressed & PAD_L1) {
+            subwpnId = 9;
+        } else if (g_Ric.padPressed & PAD_R1) {
+            subwpnId = 5;
+        }
+        subwpnId = subweapons_def[subwpnId].crashId;
+    }
+    *actualSubwpn = subweapons_def[subwpnId];
+    return subwpnId;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BB5BC);
 
