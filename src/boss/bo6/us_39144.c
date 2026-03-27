@@ -231,7 +231,30 @@ void BO6_RicSetFall(void) {
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BA050);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicCheckSubwpnChainLimit);
+s32 BO6_RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
+    Entity* entity;
+    s32 i;
+    s32 nFound;
+    s32 nEmpty;
+
+    entity = &g_Entities[96];
+    for (i = 0, nFound = 0, nEmpty = 0; i < 32; i++, entity++) {
+        if (!entity->entityId) {
+            nEmpty++;
+        }
+        if (entity->ext.subweapon.subweaponId &&
+            entity->ext.subweapon.subweaponId == subwpnId) {
+            nFound++;
+        }
+        if (nFound >= limit) {
+            return -1;
+        }
+    }
+    if (nEmpty) {
+        return 0;
+    }
+    return -1;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoSubweapon);
 
