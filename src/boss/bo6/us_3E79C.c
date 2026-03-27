@@ -1055,7 +1055,27 @@ void func_us_801CA340(Entity* self) {
     DestroyEntity(self);
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_GetAguneaLightningAngle);
+s16 BO6_GetAguneaLightningAngle(s16* arg0, s16 arg1, s16 arg2, s16* arg3);
+s16 BO6_GetAguneaLightningAngle(s16* arg0, s16 arg1, s16 arg2, s16* arg3) {
+    arg1 += rand() % 256 - 0x80;
+    *arg3 = (rand() % 48) + 0x10;
+    arg0[0] = arg0[1];
+    arg0[2] = arg0[3];
+    if (arg2) {
+        arg0[1] += (rcos(arg1) * *arg3) >> 0xC;
+        arg0[3] += (rsin(arg1) * *arg3) >> 0xC;
+        if (arg2 % 2) {
+            return BO6_GetAguneaLightningAngle(
+                arg0, arg1 - 0x140, arg2 / 2, arg3);
+        } else {
+            rand();
+            rand();
+            return BO6_GetAguneaLightningAngle(
+                arg0, arg1 + 0x140, (arg2 - 1) / 2, arg3);
+        }
+    }
+    return arg1;
+}
 
 void BO6_AguneaShuffleParams(s32 bufSize, s32* buf) {
     s32 i, idx, swapTemp;
