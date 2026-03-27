@@ -733,9 +733,23 @@ void OVL_EXPORT(RicEntityCrashAxe)(Entity* self) {
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnKnife);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_ReboundStoneBounce1);
+void BO6_ReboundStoneBounce1(s16 bounceAngle) {
+    g_CurrentEntity->ext.reboundStone.stoneAngle =
+        (bounceAngle * 2) - g_CurrentEntity->ext.reboundStone.stoneAngle;
+    if (g_CurrentEntity->ext.reboundStone.unk82 == 0) {
+        g_CurrentEntity->ext.reboundStone.unk80++;
+        g_CurrentEntity->ext.reboundStone.unk82++;
+    }
+}
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_ReboundStoneBounce2);
+void BO6_ReboundStoneBounce2(s16 bounceAngle) {
+    if (g_CurrentEntity->ext.reboundStone.unk82 == 0) {
+        g_CurrentEntity->ext.reboundStone.stoneAngle =
+            (bounceAngle * 2) - g_CurrentEntity->ext.reboundStone.stoneAngle;
+        g_CurrentEntity->ext.reboundStone.unk80++;
+        g_CurrentEntity->ext.reboundStone.unk82++;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnReboundStone);
 
