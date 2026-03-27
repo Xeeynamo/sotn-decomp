@@ -552,7 +552,50 @@ void func_us_801C488C(Entity* self) {
     }
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnCrossTrail);
+extern s16 D_us_80182994[];
+void OVL_EXPORT(RicEntitySubwpnCrossTrail)(Entity* self) {
+    s16* temp;
+
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_KEEP_ALIVE_OFFCAMERA | FLAG_POS_CAMERA_LOCKED;
+        self->ext.crossBoomerang.unk84 =
+            self->ext.crossBoomerang.parent->ext.crossBoomerang.unk84;
+        self->animSet = ANIMSET_OVL(17);
+        self->animCurFrame = D_us_80182994[self->params];
+        self->unk5A = 0x44;
+        self->palette = PAL_FLAG(PAL_UNK_1B0);
+        self->blendMode = BLEND_TRANSP;
+        self->facingLeft = RIC.facingLeft;
+        self->zPriority = RIC.zPriority;
+        self->drawFlags = ENTITY_ROTATE;
+        self->rotate = 0xC00;
+        self->step++;
+        break;
+    case 1:
+        self->rotate -= 0x80;
+        if ((u16)(self->ext.crossBoomerang.parent->step - 6) < 2) {
+            self->step++;
+            self->ext.crossBoomerang.timer = (self->params + 1) * 4;
+        }
+        break;
+    case 2:
+        self->rotate -= 0x80;
+        if (--self->ext.crossBoomerang.timer == 0) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+
+    temp = (s16*)&self->ext.crossBoomerang.unk84[0];
+    temp += self->ext.crossBoomerang.unk80 * 2;
+    self->posX.i.hi = *temp - g_Tilemap.scrollX.i.hi;
+    temp++;
+    self->posY.i.hi = *temp - g_Tilemap.scrollY.i.hi;
+    self->ext.crossBoomerang.unk80++;
+    self->ext.crossBoomerang.unk80 &= 0x3F;
+}
 
 INCLUDE_ASM(
     "boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnCrashCrossParticles);
