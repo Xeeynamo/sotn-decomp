@@ -571,13 +571,112 @@ Entity* BO6_RicCreateEntFactoryFromEntity(
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityFactory);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BC2F0);
+extern u16 D_us_8018043C[];
+void func_us_801BC2F0(Entity* self) {
+    if (RIC.step != PL_S_SLIDE) {
+        DestroyEntity(self);
+        return;
+    }
+    self->posX.i.hi = RIC.posX.i.hi;
+    self->posY.i.hi = RIC.posY.i.hi;
+    self->facingLeft = RIC.facingLeft;
+    if (!self->step) {
+        InitializeEntity(D_us_8018043C);
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                      FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->hitboxOffX = 0x14;
+        self->hitboxOffY = 0xC;
+        self->hitboxWidth = self->hitboxHeight = 9;
+        self->step = 1;
+        self->ext.subweapon.subweaponId = self->hitboxState;
+    }
+    self->hitboxState = self->ext.subweapon.subweaponId;
+    if (RIC.pose < 2) {
+        self->hitboxState = 0;
+    }
+    if (RIC.pose >= 8) {
+        DestroyEntity(self);
+    }
+}
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BC3E0);
+extern u16 D_us_80180448[];
+void func_us_801BC3E0(Entity* self) {
+    if (RIC.step != PL_S_SLIDE_KICK) {
+        DestroyEntity(self);
+        return;
+    }
+    self->posX.i.hi = RIC.posX.i.hi;
+    self->posY.i.hi = RIC.posY.i.hi;
+    self->facingLeft = RIC.facingLeft;
+    if (!self->step) {
+        InitializeEntity(D_us_80180448);
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                      FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->hitboxOffX = 0x14;
+        self->hitboxWidth = self->hitboxHeight = 9;
+        self->step = 1;
+    }
+    if (RIC.animCurFrame == 140) {
+        self->hitboxOffY = 0;
+    }
+    if (RIC.animCurFrame == 141) {
+        self->hitboxOffY = 12;
+    }
+    if (self->hitFlags) {
+        g_Ric.unk44 |= 0x80;
+    } else {
+        g_Ric.unk44 &= ~0x80;
+    }
+    self->hitFlags = 0;
+}
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BC4F8);
+extern u16 D_us_80180424[];
+void func_us_801BC4F8(Entity* self) {
+    if (RIC.step != PL_S_BLADEDASH) {
+        DestroyEntity(self);
+        return;
+    }
+    self->posX.i.hi = RIC.posX.i.hi;
+    self->posY.i.hi = RIC.posY.i.hi;
+    self->facingLeft = RIC.facingLeft;
+    if (!self->step) {
+        InitializeEntity(D_us_80180424);
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                      FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->hitboxHeight = 20;
+        self->hitboxWidth = 20;
+        self->hitboxHeight = 12;
+        self->hitboxWidth = 12;
+        self->hitboxOffY = 0;
+        self->hitboxOffX = 0;
+        self->ext.subweapon.subweaponId = PL_W_BIBLE_BEAM;
+        self->step++;
+    }
+    if (RIC.pose >= 19) {
+        DestroyEntity(self);
+    }
+}
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BC5C8);
+extern u16 D_us_80180430[];
+void func_us_801BC5C8(Entity* self) {
+    if (RIC.step != PL_S_HIGHJUMP) {
+        DestroyEntity(self);
+        return;
+    }
+    self->posX.i.hi = RIC.posX.i.hi;
+    self->posY.i.hi = RIC.posY.i.hi;
+    self->facingLeft = RIC.facingLeft;
+    if (!self->step) {
+        InitializeEntity(D_us_80180430);
+        self->flags = FLAG_UNK_20000 | FLAG_POS_PLAYER_LOCKED |
+                      FLAG_KEEP_ALIVE_OFFCAMERA;
+        self->hitboxOffX = 0xC;
+        self->hitboxOffY = -0x1A;
+        self->hitboxWidth = 12;
+        self->hitboxHeight = 12;
+        self->step = 1;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BC678);
 
