@@ -297,7 +297,89 @@ s32 BO6_RicDoSubweapon(void) {
     return 0;
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoAttack);
+extern AnimationFrame D_us_80182110[];
+extern AnimationFrame D_us_80182130[];
+extern AnimationFrame D_us_80182150[];
+bool BO6_RicDoAttack(void) {
+    s32 i;
+    s16 poisoned;
+    s16 sfxGrunt;
+
+    sfxGrunt = rand() % 6;
+    if (BO6_RicDoSubweapon() == 0) {
+        if (sfxGrunt == 0) {
+            g_api.PlaySfx(SFX_BOSS_RIC_ATTACK_A);
+        }
+        if (sfxGrunt == 1) {
+            g_api.PlaySfx(SFX_BOSS_RIC_ATTACK_B);
+        }
+        if (sfxGrunt == 2) {
+            g_api.PlaySfx(SFX_BOSS_RIC_ATTACK_C);
+        }
+        if (sfxGrunt == 3) {
+            g_api.PlaySfx(SFX_BOSS_RIC_ATTACK_D);
+        }
+        return true;
+    }
+    if (g_Ric.timers[PL_T_POISON]) {
+        poisoned = true;
+    } else {
+        poisoned = false;
+    }
+    for (i = 80; i < 95; i++) {
+        DestroyEntity(&g_Entities[i]);
+    }
+    if (BO6_RicCreateEntFactoryFromEntity(
+            g_CurrentEntity, FACTORY(BP_WHIP, poisoned), 0)) {
+        if (poisoned) {
+            g_api.PlaySfx(SFX_RIC_FLAME_WHIP);
+        } else {
+            g_api.PlaySfx(SFX_BOSS_RIC_WHIP_ATTACK);
+        }
+        if (sfxGrunt == 0) {
+            g_api.PlaySfx(SFX_BOSS_RIC_ATTACK_A);
+        }
+        if (sfxGrunt == 1) {
+            g_api.PlaySfx(SFX_BOSS_RIC_ATTACK_B);
+        }
+        if (sfxGrunt == 2) {
+            g_api.PlaySfx(SFX_BOSS_RIC_ATTACK_C);
+        }
+        if (sfxGrunt == 3) {
+            g_api.PlaySfx(SFX_BOSS_RIC_ATTACK_D);
+        }
+        switch (RIC.step) {
+        case PL_S_STAND:
+        case PL_S_WALK:
+            RIC.step = PL_S_STAND;
+            BO6_RicSetAnimation(D_us_80182110);
+            g_CurrentEntity->velocityX = 0;
+            break;
+        case PL_S_CROUCH:
+            BO6_RicSetAnimation(D_us_80182130);
+            g_CurrentEntity->velocityX = 0;
+            break;
+        case PL_S_FALL:
+        case PL_S_JUMP:
+            RIC.step = PL_S_JUMP;
+            BO6_RicSetAnimation(D_us_80182150);
+            break;
+        case PL_S_RUN:
+            RIC.step = PL_S_STAND;
+            BO6_RicSetAnimation(D_us_80182110);
+            BO6_RicCreateEntFactoryFromEntity(
+                g_CurrentEntity, BP_SKID_SMOKE, 0);
+            break;
+        default:
+            return false;
+        }
+        g_Ric.unk46 = 1;
+        RIC.step_s = 0x40;
+        g_Ric.timers[PL_T_ATTACK] = 4;
+        return true;
+    }
+    return false;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoCrash);
 
