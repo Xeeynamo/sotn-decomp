@@ -1,14 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rcat.h"
 
-INCLUDE_ASM("st/rcat/nonmatchings/e_spikes", EntitySpikesDust);
+// Use assembly-provided data (12D4.data.s) instead of static copies
+extern AnimateEntityFrame D_us_80181364[];
+extern u8 D_us_80181374[][3];
+#define anim_dust D_us_80181364
+#define parts_params D_us_80181374
+#define SPIKES_EXTERN_DATA
 
-INCLUDE_ASM("st/rcat/nonmatchings/e_spikes", EntitySpikesParts);
+#define HAS_ORIENTATIONS
+#define SPIKES_PARTS_FRAME 18
+#define SPIKES_TILE_WIDTH 48
+#define DAMAGE_ENT_ON_HIT
+#define DAMAGE_ENT_START g_CurrentEntity[1]
+#define DAMAGE_ENT_END g_CurrentEntity[4]
+#define SPIKES_ELEMENT ELEMENT_CUT | ELEMENT_UNK_10 | ELEMENT_UNK_1
 
-INCLUDE_ASM("st/rcat/nonmatchings/e_spikes", SpikesBreak);
-
-INCLUDE_ASM("st/rcat/nonmatchings/e_spikes", SpikesApplyDamage);
-
-INCLUDE_ASM("st/rcat/nonmatchings/e_spikes", EntitySpikes);
-
-INCLUDE_ASM("st/rcat/nonmatchings/e_spikes", EntitySpikesDamage);
+#include "../e_spikes.h"

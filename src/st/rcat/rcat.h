@@ -10,8 +10,13 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_BREAKABLE_WALL_DEBRIS_MAIN = 0x05C,
+    PAL_SPIKES_DUST = 0x09B,
+    PAL_BREAKABLE_WALL_DEBRIS_HIGHLIGHT = 0x15E,
     PAL_BREAKABLE = 0x237,
 };
+
+#define g_EInitEnvironment D_us_80181018
 
 enum Entities {
     E_NONE,
