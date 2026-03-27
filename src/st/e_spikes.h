@@ -44,10 +44,12 @@ extern EInit g_EInitEnvironment;
 extern EInit g_EInitSpawner;
 extern EInit g_EInitInteractable;
 
+#ifndef SPIKES_EXTERN_DATA
 static AnimateEntityFrame anim_dust[] = {
     {2, 1}, {2, 2}, {2, 3}, {2, 4}, {2, 5}, {4, 6}, POSE_END};
 #ifdef HAS_ORIENTATIONS
 static u8 parts_params[][3] = {{5, 4, 6}, {1, 0, 2}, {9, 8, 10}};
+#endif
 #endif
 
 void EntitySpikesDust(Entity* self) {
