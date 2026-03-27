@@ -6,8 +6,6 @@ extern EInit D_us_80181048;
 extern EInit D_us_80181054;
 extern EInit D_us_80181060;
 extern EInit g_EInitParticle;
-extern EInit D_us_80181078;
-extern EInit D_us_80181084;
 
 extern EInit g_EInitFrozenHalf;
 extern u8 D_us_80182080[];
@@ -58,7 +56,7 @@ void func_us_801BEFD8(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitFrozenHalf);
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = DRAW_TPAGE2 | DRAW_TPAGE;
         CreateEntityFromEntity(E_UNK_23, self, self + 1);
         SetStep(3);
         return;
@@ -254,7 +252,7 @@ void func_us_801BEFD8(Entity* self) {
                 SetStep(5);
                 return;
             }
-            if (newEntity->drawFlags & FLAG_DRAW_SCALEX) {
+            if (newEntity->drawFlags & ENTITY_SCALEX) {
                 break;
             }
             PlaySfxPositional(SFX_FROZEN_HALF_ATTACK);
@@ -669,7 +667,6 @@ extern u8 D_us_80182108[];
 extern u8 D_us_80182100[];
 extern u8 D_us_80182140[];
 extern u8 D_us_80182174[];
-extern u8 D_us_801821E8[];
 extern u16 D_us_80182110[];
 extern s16 D_us_80182120[];
 extern s16 D_us_80182128[];
@@ -707,7 +704,7 @@ void func_us_801BFF94(Entity* self) {
     case 16:
         switch (self->step_s) {
         case 0:
-            self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+            self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
             self->scaleY = 0x100;
             self->scaleX = 0x100;
             self->pose = 0;
@@ -733,10 +730,10 @@ void func_us_801C0118(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(D_us_80181048);
-        self->drawFlags = FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
+        self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleY = 0;
         self->scaleX = 0;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
+        self->drawFlags |= ENTITY_ROTATE;
         /* fallthrough */
     case 1:
         AnimateEntity(D_us_80182108, self);
@@ -745,7 +742,7 @@ void func_us_801C0118(Entity* self) {
         self->rotate += 0x10;
         self->scaleY = new_var;
         if ((s16)self->scaleX >= 0x100) {
-            self->drawFlags = FLAG_DRAW_ROTATE;
+            self->drawFlags = ENTITY_ROTATE;
             self->palette = 0x815F;
             self->step++;
             break;
@@ -781,7 +778,7 @@ INCLUDE_ASM("st/rcat/nonmatchings/unk_3EFD8", func_us_801C02C4);
 void func_us_801C02C4(Entity* self) {
     Primitive* prim;
     Entity* newEntity;
-    u32 offset;
+    s32 offset;
     s32 primIdx;
 
     switch (self->step) {
@@ -929,14 +926,14 @@ void func_us_801C0718(Entity* self) {
         InitializeEntity(D_us_80181060);
         if (self->params) {
             self->animCurFrame = 0x16;
-            self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+            self->blendMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
             self->step = 2;
             self->velocityX = FIX(0.75);
             self->hitboxState = 0;
             self->velocityY = FIX(5.0);
             break;
         }
-        self->drawFlags = FLAG_DRAW_ROTATE;
+        self->drawFlags = ENTITY_ROTATE;
         self->velocityX = FIX(0.5);
         self->velocityY = FIX(4.0);
         /* fallthrough */
@@ -975,9 +972,9 @@ void func_us_801C0844(Entity* self) {
             self->animSet = 5;
             self->velocityY = FIX(1.25);
         }
-        self->drawMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
+        self->blendMode = DRAW_UNK_40 | DRAW_TPAGE2 | DRAW_TPAGE;
         self->palette = 0x8202;
-        self->drawFlags = FLAG_DRAW_OPACITY;
+        self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0x80;
         /* fallthrough */
     case 1:
@@ -1005,658 +1002,3 @@ void func_us_801C0844(Entity* self) {
     }
 }
 
-extern EInit g_EInitSalome;
-extern u8 D_us_80182198[];
-extern u8 D_us_801821A0[];
-extern u8 D_us_801821A8[];
-extern u8 D_us_801821B4[];
-extern u8 D_us_801821C4[];
-void func_us_801C1804(Entity*);
-
-void func_us_801C0990(Entity* self) {
-    s32 var_s1;
-    int new_var;
-    Entity* newEntity;
-
-    if (GetDistanceToPlayerX() < 0x50 && GetDistanceToPlayerY() < 0x40) {
-        self->ext.ILLEGAL.u8[10] = 1;
-    } else {
-        self->ext.ILLEGAL.u8[10] = 0;
-    }
-    self->hitboxState = 3;
-    if (((GetSideToPlayer() & 1) ^ 1) == self->facingLeft &&
-        self->ext.ILLEGAL.u8[10]) {
-        self->hitboxState = 1;
-    }
-    if (self->hitFlags & 3) {
-        PlaySfxPositional(SFX_SALOME_PAIN);
-    }
-    if ((self->flags & FLAG_DEAD) && self->step < 8) {
-        SetStep(8);
-    }
-    var_s1 = 5;
-    switch (self->step) {
-    case 0:
-        InitializeEntity(g_EInitSalome);
-        self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-        self->ext.ILLEGAL.u8[9] = Random() & 1;
-        self->ext.ILLEGAL.s16[6] = 0x30;
-        self->zPriority = 0xAA;
-        CreateEntityFromCurrentEntity(E_UNK_29, self + 1);
-        (self + 1)->params = 0;
-        (self + 1)->zPriority = self->zPriority + 1;
-        CreateEntityFromCurrentEntity(E_UNK_29, self - -2);
-        (self + 2)->params = 1;
-        (self + 2)->zPriority = self->zPriority - 1;
-        SetStep(2);
-        /* fallthrough */
-    case 2:
-        switch (self->step_s) {
-        case 0:
-            self->animCurFrame = 1;
-            MoveEntity();
-            self->velocityX = 0;
-            {
-                u16 angle;
-                angle = self->ext.ILLEGAL.u16[3] + 0x20;
-                self->ext.ILLEGAL.u16[3] = angle;
-                self->velocityY = rsin(angle & 0xFFF) * 8;
-            }
-            if (GetDistanceToPlayerX() < 0x60) {
-                self->step_s++;
-                break;
-            }
-            break;
-        case 1:
-            if (!AnimateEntity(D_us_80182198, self)) {
-                SetStep(4);
-            }
-            break;
-        }
-        break;
-    case 4:
-        if (!self->step_s) {
-            self->step_s++;
-        }
-        AnimateEntity(D_us_801821A8, self);
-        MoveEntity();
-        if (self->facingLeft != self->ext.ILLEGAL.u8[8]) {
-            self->velocityX += 0xC00;
-            if (self->velocityX > 0x13FFF) {
-                self->velocityX = FIX(1.25);
-            }
-        } else {
-            self->velocityX -= 0xC00;
-            if (self->velocityX <= FIX(-1.25)) {
-                self->velocityX = FIX(-1.25);
-            }
-        }
-        {
-            s32 diff;
-            s32 selfY;
-            selfY = self->posY.i.hi + 0x48;
-            diff = PLAYER.posY.i.hi - selfY;
-            if (diff < -8) {
-                self->velocityY -= 0x600;
-                if (self->velocityY <= FIX(-0.625)) {
-                    self->velocityY = FIX(-0.625);
-                }
-            }
-            if (diff >= 9) {
-                self->velocityY += 0xC00;
-                if (self->velocityY > 0x9FFF) {
-                    self->velocityY = FIX(0.625);
-                }
-            }
-        }
-        {
-            s16 timer;
-            s16 newTimer;
-            timer = self->ext.ILLEGAL.s16[6];
-            if (!timer) {
-                if (GetDistanceToPlayerX() >= 0x41) {
-                    SetStep(6);
-                } else {
-                    PlaySfxPositional(SFX_SALOME_MAGIC_ATTACK);
-                    newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                    if (newEntity != NULL) {
-                        CreateEntityFromEntity(E_UNK_2A, self, newEntity);
-                        if (self->facingLeft) {
-                            newEntity->posX.i.hi += 0x1C;
-                        } else {
-                            newEntity->posX.i.hi -= 0x1C;
-                        }
-                        newEntity->posY.i.hi += 4;
-                        newEntity->zPriority = self->zPriority + 1;
-                    }
-                }
-                newTimer = 0x30;
-            } else {
-                newTimer = timer - 1;
-            }
-            self->ext.ILLEGAL.s16[6] = newTimer;
-        }
-        {
-            s32 side = (GetSideToPlayer() & 1) ^ 1;
-            if (self->facingLeft != side) {
-                SetStep(5);
-                break;
-            }
-        }
-        break;
-    case 5:
-        if (!AnimateEntity(D_us_801821B4, self)) {
-            self->animCurFrame = 4;
-            self->facingLeft ^= 1;
-            SetStep(4);
-        }
-        MoveEntity();
-        self->velocityX -= self->velocityX / 32;
-        self->velocityY -= self->velocityY / 32;
-        break;
-    case 6:
-        switch (self->step_s) {
-        case 0:
-            MoveEntity();
-            self->velocityX -= self->velocityX / 4;
-            self->velocityY -= self->velocityY / 4;
-            if (!AnimateEntity(D_us_801821A0, self)) {
-                SetSubStep(1);
-            }
-            break;
-        case 1:
-            if (!AnimateEntity(D_us_801821C4, self)) {
-                SetSubStep(2);
-            }
-            if (LOW(self->pose) == var_s1) {
-                do {
-                    self->ext.ILLEGAL.u8[9] ^= 1;
-                    newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
-                    if (newEntity != NULL) {
-                        if (self->ext.ILLEGAL.u8[9]) {
-                            PlaySfxPositional(SFX_SALOME_MEOW_SHORT);
-                            CreateEntityFromEntity(E_UNK_2C, self, newEntity);
-                        } else {
-                            PlaySfxPositional(SFX_SALOME_ATTACK);
-                            CreateEntityFromEntity(E_UNK_2B, self, newEntity);
-                        }
-                        newEntity->zPriority = self->zPriority + 1;
-                        newEntity->facingLeft = self->facingLeft;
-                        if (self->facingLeft) {
-                            newEntity->posX.i.hi += 0x14;
-                        } else {
-                            newEntity->posX.i.hi = newEntity->posX.i.hi - 0x14;
-                        }
-                        newEntity->posY.i.hi -= 4;
-                    }
-                } while (0);
-            }
-            break;
-        case 2:
-            if (!AnimateEntity(D_us_80182198, self)) {
-                SetStep(4);
-            }
-            break;
-        }
-        break;
-    case 8:
-        switch (self->step_s) {
-        case 0:
-            new_var = 0;
-            self->hitboxState = new_var;
-            DestroyEntity(self + 1);
-            (self + 2)->step = 8;
-            self->drawFlags =
-                FLAG_DRAW_OPACITY | FLAG_DRAW_SCALEY | FLAG_DRAW_SCALEX;
-            self->scaleY = 0x100;
-            self->scaleX = 0x100;
-            self->drawMode = DRAW_DEFAULT;
-            self->opacity = 0x80;
-            self->step_s++;
-            /* fallthrough */
-        case 1: {
-            s16 scale;
-            scale = self->scaleY - 8;
-            self->scaleY = scale;
-            self->scaleX = scale;
-            if (self->opacity) {
-                self->opacity += 0xFC;
-            }
-            if ((s16)self->scaleX < 0x40) {
-                self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-            }
-            if (!(s16)self->scaleX) {
-                PlaySfxPositional(SFX_SALOME_MEOW);
-                (self + 2)->entityId = E_UNK_2C;
-                (self + 2)->pfnUpdate = func_us_801C1804;
-                (self + 2)->step = 0;
-                (self + 2)->step_s = 0;
-                (self + 2)->ext.ILLEGAL.u8[34] = 1;
-                DestroyEntity(self);
-            }
-            break;
-        }
-        }
-        break;
-    case 255:
-        FntPrint("charal %x\n", self->animCurFrame);
-        if (g_pads[1].pressed & 0x80) {
-            if (self->params) {
-                break;
-            }
-            self->animCurFrame++;
-            self->params |= 1;
-        } else {
-            self->params = 0;
-        }
-        if (g_pads[1].pressed & 0x20) {
-            if (self->step_s) {
-                break;
-            }
-            self->animCurFrame--;
-            self->step_s |= 1;
-        } else {
-            self->step_s = 0;
-        }
-        break;
-    }
-}
-
-extern u8 D_us_801821E0[];
-extern u8 D_us_8018226C[];
-extern u16 D_us_80182274[];
-extern u16 D_us_80182276[];
-
-void func_us_801C1194(Entity* self) {
-    Entity* prev;
-    Entity* prev2;
-    s32 animCurFrame;
-
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_us_80181078);
-        self->hitboxState = 2;
-        self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-        if (self->params) {
-            self->drawMode = DRAW_TPAGE2 | DRAW_TPAGE;
-            self->hitboxState = 0;
-            self->step = 2;
-            break;
-        }
-        self->drawFlags = FLAG_DRAW_OPACITY;
-        self->hitboxWidth = 0x14;
-        self->hitboxHeight = 0x30;
-        self->hitboxOffX = -0x11;
-        /* fallthrough */
-    case 1:
-        AnimateEntity(D_us_801821E0, self);
-        prev = self - 1;
-        self->facingLeft = prev->facingLeft;
-        self->posX.i.hi = prev->posX.i.hi;
-        self->posY.i.hi = prev->posY.i.hi;
-        if (prev->ext.ILLEGAL.u8[10]) {
-            if (!self->ext.ILLEGAL.u8[11]) {
-                PlaySfxPositional(SFX_MAGIC_NOISE_SWEEP);
-                self->ext.ILLEGAL.u8[11] = 1;
-            }
-            self->opacity += 0x10;
-            self->hitboxState = 2;
-            if (self->opacity < 0x81) {
-                break;
-            }
-            self->opacity = 0x80;
-            break;
-        }
-        self->ext.ILLEGAL.u8[11] = 0;
-        self->hitboxState = 0;
-        if (self->opacity) {
-            self->opacity -= 0x10;
-            break;
-        }
-        self->animCurFrame = 0;
-        break;
-    case 2:
-        AnimateEntity(D_us_8018226C, self);
-        prev2 = self - 2;
-        self->facingLeft = prev2->facingLeft;
-        self->posX.i.hi = prev2->posX.i.hi;
-        animCurFrame = prev2->animCurFrame;
-        self->posY.i.hi = prev2->posY.i.hi;
-        if (self->facingLeft) {
-            self->posX.i.hi -= D_us_80182274[animCurFrame * 2];
-        } else {
-            self->posX.i.hi += D_us_80182274[animCurFrame * 2];
-        }
-        self->posY.i.hi += D_us_80182276[animCurFrame * 2];
-        break;
-    case 8:
-        self->drawFlags = FLAG_DRAW_DEFAULT;
-        self->drawMode = DRAW_DEFAULT;
-        self->animCurFrame = 0x38;
-        prev2 = self - 2;
-        self->facingLeft = prev2->facingLeft;
-        self->posX.i.hi = prev2->posX.i.hi;
-        self->posY.i.hi = prev2->posY.i.hi;
-        break;
-    }
-}
-
-extern u8 D_us_801821E8[];
-
-void func_us_801C13B4(Entity* self) {
-    s16 angle;
-
-    if (!self->step) {
-        InitializeEntity(D_us_80181084);
-        angle = GetAngleBetweenEntities(&PLAYER, self);
-        self->velocityX = -(rcos(angle) << 16) >> 12;
-        self->velocityY = -(rsin(angle) << 16) >> 12;
-    }
-    AnimateEntity(D_us_801821E8, self);
-    MoveEntity();
-    if (self->hitFlags || (self->flags & FLAG_DEAD)) {
-        DestroyEntity(self);
-    }
-}
-
-extern EInit D_us_80181090;
-extern EInit D_us_8018109C;
-extern u8 D_us_801821F4[];
-extern u8 D_us_80182208[];
-
-void func_us_801C148C(Entity* self) {
-    Collider collider;
-    Entity* newEntity;
-    s32 posX;
-    s32 posY;
-
-    if (self->flags & FLAG_DEAD) {
-        newEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
-        if (newEntity != NULL) {
-            CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
-            newEntity->params = 1;
-        }
-        DestroyEntity(self);
-        return;
-    }
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_us_80181090);
-        if (self->facingLeft) {
-            self->velocityX = FIX(1.25);
-        } else {
-            self->velocityX = FIX(-1.25);
-        }
-        self->velocityY = FIX(-1.0);
-        /* fallthrough */
-    case 1:
-        AnimateEntity(D_us_801821F4, self);
-        MoveEntity();
-        self->velocityY += FIX(0.09375);
-        g_api.CheckCollision(
-            self->posX.i.hi, self->posY.i.hi + 2, &collider, 0);
-        if (collider.effects & EFFECT_SOLID) {
-            break;
-        }
-        self->step++;
-        break;
-    case 2: {
-        u8* anim;
-        s32 velY;
-        anim = D_us_801821F4;
-        if (self->ext.ILLEGAL.u8[32]) {
-            anim = D_us_80182208;
-        }
-        AnimateEntity(anim, self);
-        MoveEntity();
-        posX = self->posX.i.hi;
-        posY = self->posY.i.hi;
-        self->velocityY += FIX(0.09375);
-        if (self->velocityX > 0) {
-            g_api.CheckCollision(posX + 8, posY, &collider, 0);
-            if (collider.effects & EFFECT_SOLID) {
-                PlaySfxPositional(SFX_SKULL_KNOCK_B);
-                self->posX.i.hi += collider.unk14;
-                self->velocityX = -self->velocityX;
-            }
-        } else {
-            g_api.CheckCollision(posX - 8, posY, &collider, 0);
-            if (collider.effects & EFFECT_SOLID) {
-                PlaySfxPositional(SFX_SKULL_KNOCK_B);
-                self->posX.i.hi += collider.unk1C;
-                self->velocityX = -self->velocityX;
-            }
-        }
-        posX = self->posX.i.hi;
-        posY = self->posY.i.hi + 8;
-        g_api.CheckCollision(posX, posY, &collider, 0);
-        if (collider.effects & EFFECT_SOLID) {
-            PlaySfxPositional(SFX_SKULL_KNOCK_B);
-            velY = -self->velocityY;
-            self->posY.i.hi += collider.unk18;
-            self->velocityY = velY;
-            self->velocityY = self->velocityY - (velY / 8);
-            if (!self->ext.ILLEGAL.u8[32]) {
-                self->pose = 0;
-                self->poseTimer = 0;
-            }
-            self->ext.ILLEGAL.u8[32] |= 1;
-            if (abs(self->velocityY) < 0x4000) {
-                self->flags |= FLAG_DEAD;
-            }
-        }
-        if (self->velocityY >= 0) {
-            break;
-        }
-        g_api.CheckCollision(posX, posY - 0x10, &collider, 0);
-        if (collider.effects & EFFECT_SOLID) {
-            PlaySfxPositional(SFX_SKULL_KNOCK_B);
-            self->posY.i.hi += collider.unk20;
-            self->velocityY = 0;
-        }
-        break;
-    }
-    }
-}
-
-extern u8 D_us_80182190[];
-extern u8 D_us_8018224C[];
-extern u8 D_us_8018225C[];
-
-#ifndef NON_MATCHING
-INCLUDE_ASM("st/rcat/nonmatchings/unk_3EFD8", func_us_801C1804);
-#else
-void func_us_801C1804(Entity* self) {
-    Collider collider;
-    s32 var_s1;
-    u8* anim;
-    Entity* newEntity;
-
-    {
-        u8 hitFlags;
-        hitFlags = self->hitFlags;
-        if (self->flags & FLAG_DEAD) {
-            hitFlags |= 3;
-        }
-        if (hitFlags && !(hitFlags & 0x80)) {
-            self->ext.ILLEGAL.u8[9] = 1;
-            if (self->step != 1) {
-                self->velocityY = FIX(-2.0);
-                SetStep(1);
-            }
-        }
-    }
-    switch (self->step) {
-    case 0:
-        InitializeEntity(D_us_8018109C);
-        self->hitboxOffY = 7;
-        self->drawFlags |= FLAG_DRAW_ROTATE;
-        if (self->facingLeft) {
-            self->velocityX = FIX(0.5);
-        } else {
-            self->velocityX = FIX(-0.5);
-        }
-        self->velocityY = 0;
-        self->ext.ILLEGAL.u8[8] = 0;
-        if (self->ext.ILLEGAL.u8[10]) {
-            self->zPriority *= 4;
-        }
-        /* fallthrough */
-    case 1:
-        MoveEntity();
-        self->rotate = 0;
-        if (self->ext.ILLEGAL.u8[10]) {
-            self->animCurFrame = 0x38;
-        } else {
-            self->animCurFrame = 0x2F;
-        }
-        if (self->facingLeft) {
-            self->velocityX = FIX(0.5);
-        } else {
-            self->velocityX = FIX(-0.5);
-        }
-        self->velocityY += FIX(0.09375);
-        if (self->ext.ILLEGAL.u8[9]) {
-            self->animCurFrame = 0x30;
-            self->velocityX = -self->velocityX;
-            if (self->ext.ILLEGAL.u8[10]) {
-                self->animCurFrame = 0x39;
-            }
-        }
-        {
-            u32 posX;
-            s32 posY;
-            posX = self->posX.i.hi;
-            posY = self->posY.i.hi;
-            if (self->velocityX > 0) {
-                if (!self->ext.ILLEGAL.u8[8]) {
-                    posX += 2;
-                } else {
-                    posX += 8;
-                }
-                g_api.CheckCollision(posX, posY, &collider, 0);
-                if (collider.effects & EFFECT_SOLID) {
-                    if (self->ext.ILLEGAL.u8[8] & 1) {
-                        self->posX.i.hi += collider.unk14;
-                        self->velocityX = -self->velocityX;
-                    }
-                } else {
-                    self->ext.ILLEGAL.u8[8] |= 1;
-                }
-            } else {
-                if (!self->ext.ILLEGAL.u8[8]) {
-                    posX -= 2;
-                } else {
-                    posX -= 8;
-                }
-                g_api.CheckCollision(posX, posY, &collider, 0);
-                if (collider.effects & EFFECT_SOLID) {
-                    if (self->ext.ILLEGAL.u8[8] & 1) {
-                        self->posX.i.hi += collider.unk1C;
-                        self->velocityX = -self->velocityX;
-                    }
-                } else {
-                    self->ext.ILLEGAL.u8[8] |= 1;
-                }
-            }
-        }
-        {
-            s32 yArg;
-            s32 posXarg = self->posX.i.hi;
-            if (self->ext.ILLEGAL.u8[8] & 2) {
-                yArg = self->posY.i.hi + 8;
-            } else {
-                yArg = self->posY.i.hi + 2;
-            }
-            g_api.CheckCollision(posXarg, yArg, &collider, 0);
-        }
-        if (collider.effects & EFFECT_SOLID) {
-            if (self->ext.ILLEGAL.u8[8] & 2) {
-                self->posY.i.hi += collider.unk18;
-                self->velocityY = 0;
-                if (self->ext.ILLEGAL.u8[9]) {
-                    self->ext.ILLEGAL.u8[9] = 0;
-                    if (self->flags & FLAG_DEAD) {
-                        PlaySfxPositional(SFX_STUTTER_EXPLODE_LOW);
-                        newEntity =
-                            AllocEntity(&g_Entities[224], &g_Entities[256]);
-                        if (newEntity != NULL) {
-                            CreateEntityFromEntity(
-                                E_EXPLOSION, self, newEntity);
-                            newEntity->params = 1;
-                        }
-                        DestroyEntity(self);
-                        return;
-                    }
-                }
-                PlaySfxPositional(SFX_STOMP_SOFT_B);
-                SetStep(2);
-            }
-        } else {
-            self->ext.ILLEGAL.u8[8] |= 2;
-        }
-        break;
-    case 2:
-        if (self->facingLeft) {
-            self->velocityX = FIX(2.0);
-        } else {
-            self->velocityX = FIX(-2.0);
-        }
-        g_api.CheckCollision(
-            self->posX.i.hi, self->posY.i.hi + 8, &collider, 0);
-        if (collider.effects & EFFECT_SOLID) {
-            var_s1 = 1;
-            if (collider.effects & EFFECT_UNK_8000) {
-                if (collider.effects & EFFECT_UNK_4000) {
-                    if (self->facingLeft) {
-                        var_s1 = 4;
-                    } else {
-                        var_s1 = 2;
-                    }
-                } else if (self->facingLeft) {
-                    var_s1 = 2;
-                } else {
-                    var_s1 = 4;
-                }
-            }
-        }
-        self->rotate = 0;
-        if (var_s1 == 2) {
-            self->rotate = 0x200;
-            self->velocityX -= self->velocityX / 2;
-            if (collider.effects & EFFECT_UNK_1000) {
-                self->rotate = 0x100;
-            }
-            if (collider.effects & EFFECT_UNK_2000) {
-                self->rotate = 0x80;
-            }
-        }
-        if (var_s1 == 4) {
-            self->velocityX += self->velocityX / 8;
-            self->rotate = -0x200;
-            if (collider.effects & EFFECT_UNK_1000) {
-                self->rotate = -0x100;
-            }
-            if (collider.effects & EFFECT_UNK_2000) {
-                self->rotate = -0x80;
-            }
-        }
-        anim = D_us_8018224C;
-        if (self->ext.ILLEGAL.u8[10]) {
-            anim = D_us_8018225C;
-        }
-        if (!AnimateEntity(anim, self)) {
-            PlaySfxPositional(SFX_QUIET_STEPS);
-        }
-        var_s1 = UnkCollisionFunc2(D_us_80182190);
-        if (var_s1 == 0xFF) {
-            self->facingLeft ^= 1;
-        }
-        if (var_s1 == 0x80) {
-            self->velocityY = FIX(-2.0);
-            SetStep(1);
-        }
-        break;
-    }
-}
-#endif
