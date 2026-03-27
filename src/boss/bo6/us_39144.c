@@ -727,6 +727,20 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BD0B8);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BD384);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BD47C);
+s32 func_us_801BD47C(Entity* self) {
+    Entity* entity;
+    s32 i;
+
+    entity = &g_Entities[80];
+    for (i = 80; i < 144; i++, entity++) {
+        if (entity->entityId == self->entityId &&
+            entity->params == self->params) {
+            if (entity != self) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityPlayerBlinkWhite);
