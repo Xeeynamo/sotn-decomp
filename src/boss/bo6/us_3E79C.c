@@ -1,7 +1,90 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "bo6.h"
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801BE79C);
+extern u16 RIC_posX_i_hi;
+extern u16 RIC_posY_i_hi;
+extern u16 RIC_zPriority;
+
+void func_us_801BE79C(Entity* self) {
+    Primitive* prim;
+    s16 primIdx;
+    u8 col;
+
+    self->posX.i.hi = RIC_posX_i_hi;
+    self->posY.i.hi = RIC_posY_i_hi - 8;
+    switch (self->step) {
+    case 0:
+        primIdx = g_api_AllocPrimitives(PRIM_GT4, 1);
+        self->primIndex = primIdx;
+        if (primIdx == -1) {
+            DestroyEntity(self);
+            return;
+        }
+        self->ext.crossBoomerang.timer = 0x10;
+        self->ext.crossBoomerang.unk7E = 0xC;
+        prim = &g_PrimBuf[self->primIndex];
+        prim->u2 = 0x40;
+        prim->u0 = 0x40;
+        prim->v1 = 0xC0;
+        prim->v0 = 0xC0;
+        prim->u3 = 0x7F;
+        prim->u1 = 0x7F;
+        prim->v3 = 0xFF;
+        prim->v2 = 0xFF;
+        prim->b3 = 0x80;
+        prim->g3 = 0x80;
+        prim->r3 = 0x80;
+        prim->b2 = 0x80;
+        prim->g2 = 0x80;
+        prim->r2 = 0x80;
+        prim->b1 = 0x80;
+        prim->g1 = 0x80;
+        prim->r1 = 0x80;
+        prim->b0 = 0x80;
+        prim->g0 = 0x80;
+        prim->r0 = 0x80;
+        prim->tpage = 0x1A;
+        prim->clut = 0x160;
+        prim->drawMode = 0x35;
+        prim->priority = RIC_zPriority + 8;
+        self->flags =
+            FLAG_UNK_10000000 | FLAG_POS_CAMERA_LOCKED | FLAG_HAS_PRIMS;
+        self->step++;
+        break;
+    case 1:
+        self->ext.crossBoomerang.timer += 2;
+        self->ext.crossBoomerang.unk7E += 2;
+        if (self->ext.crossBoomerang.timer >= 0x39) {
+            DestroyEntity(self);
+            return;
+        }
+        break;
+    }
+    prim = &g_PrimBuf[self->primIndex];
+    prim->x0 = self->posX.i.hi - self->ext.crossBoomerang.timer;
+    prim->y0 = self->posY.i.hi - self->ext.crossBoomerang.unk7E;
+    prim->x1 = self->posX.i.hi + self->ext.crossBoomerang.timer;
+    prim->y1 = self->posY.i.hi - self->ext.crossBoomerang.unk7E;
+    prim->x2 = self->posX.i.hi - self->ext.crossBoomerang.timer;
+    prim->y2 = self->posY.i.hi + self->ext.crossBoomerang.unk7E;
+    prim->x3 = self->posX.i.hi + self->ext.crossBoomerang.timer;
+    prim->y3 = self->posY.i.hi + self->ext.crossBoomerang.unk7E;
+    if ((u8)prim->b3 >= 0xC) {
+        prim->b3 -= 0xC;
+    }
+    col = prim->b3;
+    prim->g3 = col;
+    prim->r3 = col;
+    prim->b2 = col;
+    prim->g2 = col;
+    prim->r2 = col;
+    prim->b1 = col;
+    prim->g1 = col;
+    prim->r1 = col;
+    prim->b0 = col;
+    prim->g0 = col;
+    prim->r0 = col;
+}
 
 INCLUDE_ASM(
     "boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityShrinkingPowerUpRing);
