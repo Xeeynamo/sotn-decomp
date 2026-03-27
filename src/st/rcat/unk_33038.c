@@ -351,8 +351,7 @@ void EntitySecretWall(Entity* self) {
             posY = self->posY.i.hi + (i * 0x10) + 2;
             scrollX = posX + g_Tilemap.scrollX.i.hi;
             scrollY = posY + g_Tilemap.scrollY.i.hi;
-            tilePos =
-                (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 0x10;
+            tilePos = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 0x10;
             mod = g_Tilemap.fg[tilePos];
             FntPrint("index %x mod:%x\n", tilePos, mod);
         }

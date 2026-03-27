@@ -10,8 +10,7 @@ void RCAT_Unused801C28A0(Entity* self) {
         self->scaleY = 0x200;
         self->opacity = 0;
         self->hitboxState = 0;
-        self->drawFlags |=
-            ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
+        self->drawFlags |= ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
         return;
     }
 

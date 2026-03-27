@@ -5,7 +5,7 @@ extern EInit g_EInitSpawner;
 extern char D_us_801AF5EC[];
 
 void func_us_801B1F1C(Entity* self) {
-    FntPrint(D_us_801AF5EC, self->step);
+    FntPrint(D_us_801AF5EC, self->step); // sotn-lint-ignore
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitSpawner);

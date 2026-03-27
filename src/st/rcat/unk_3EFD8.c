@@ -1001,4 +1001,3 @@ void func_us_801C0844(Entity* self) {
         break;
     }
 }
-
