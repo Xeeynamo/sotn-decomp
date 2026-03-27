@@ -725,7 +725,30 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicEntityHitByCutBlood);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BD0B8);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", func_us_801BD384);
+extern AnimationFrame D_us_80181A40[];
+void func_us_801BD384(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->animSet = 2;
+        self->anim = D_us_80181A40;
+        self->flags = 0x28000000;
+        self->zPriority = RIC.zPriority + 4;
+        self->velocityY = (rand() & 0x3FFF) + 0xFFFF0000;
+        self->step++;
+        break;
+    case 1:
+        if (self->pose == 6 && self->poseTimer == 1) {
+            if (rand() & 1) {
+                BO6_RicCreateEntFactoryFromEntity(self, 4, 0);
+            }
+        }
+        self->posY.val += self->velocityY;
+        if (self->poseTimer < 0) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 s32 func_us_801BD47C(Entity* self) {
     Entity* entity;
