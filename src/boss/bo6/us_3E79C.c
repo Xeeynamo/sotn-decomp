@@ -1157,7 +1157,45 @@ void func_us_801C8618(Entity* self) {
 INCLUDE_ASM(
     "boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashReboundStoneExplosion);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashReboundStone);
+void BO6_RicEntityCrashReboundStone(Entity* entity) {
+    switch (entity->step) {
+    case 0:
+        entity->flags = FLAG_UNK_10000000;
+        entity->step++;
+        entity->ext.timer.t = 0x14;
+        // fallthrough
+    case 1:
+        if (--entity->ext.timer.t) {
+            break;
+        }
+    case 3:
+    case 5:
+        OVL_EXPORT(RicCreateEntFactoryFromEntity)(entity, BP_57, 0);
+        entity->step++;
+    case 2:
+    case 4:
+    case 6:
+        entity->ext.timer.t++;
+        if (entity->ext.timer.t > 10) {
+            entity->ext.timer.t = 0;
+            entity->posX.val = FIX(128);
+            entity->posY.val = 0;
+            OVL_EXPORT(RicCreateEntFactoryFromEntity)(
+                entity, FACTORY(BP_EMBERS, 1), 0);
+            entity->step++;
+        }
+        break;
+    case 7:
+        entity->ext.timer.t++;
+        if (entity->ext.timer.t > 15) {
+            DestroyEntity(entity);
+            g_Ric.unk4E = 1;
+            OVL_EXPORT(RicCreateEntFactoryFromEntity)(
+                entity, BP_CRASH_REBOUND_STONE_EXPLOSION, 0);
+        }
+        break;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashBibleBeam);
 
