@@ -1057,7 +1057,17 @@ void func_us_801CA340(Entity* self) {
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_GetAguneaLightningAngle);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_AguneaShuffleParams);
+void BO6_AguneaShuffleParams(s32 bufSize, s32* buf) {
+    s32 i, idx, swapTemp;
+
+    for (i = bufSize - 1; i > 0; i--) {
+        idx = rand() % bufSize;
+
+        swapTemp = buf[i];
+        buf[i] = buf[idx];
+        buf[idx] = swapTemp;
+    }
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityAguneaLightning);
 
