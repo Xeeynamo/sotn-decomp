@@ -256,7 +256,46 @@ s32 BO6_RicCheckSubwpnChainLimit(s16 subwpnId, s16 limit) {
     return -1;
 }
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoSubweapon);
+extern AnimationFrame D_us_80182170[];
+extern AnimationFrame D_us_801821C0[];
+s32 BO6_RicDoSubweapon(void) {
+    SubweaponDef subweapon;
+    s16 subweaponId;
+
+    if (!(g_Ric.padPressed & PAD_UP)) {
+        return 1;
+    }
+
+    subweaponId = BO6_RicCheckSubweapon(&subweapon, false, false);
+    if (BO6_RicCheckSubwpnChainLimit(subweaponId, subweapon.chainLimit) < 0) {
+        return 2;
+    }
+    BO6_RicCreateEntFactoryFromEntity(
+        g_CurrentEntity, subweapon.blueprintNum, 0);
+    g_Ric.timers[PL_T_10] = 4;
+    switch (RIC.step) {
+    case PL_S_RUN:
+        RIC.step = PL_S_STAND;
+        BO6_RicCreateEntFactoryFromEntity(g_CurrentEntity, BP_SKID_SMOKE, 0);
+        BO6_RicSetAnimation(D_us_80182170);
+        break;
+    case PL_S_STAND:
+    case PL_S_WALK:
+    case PL_S_CROUCH:
+        RIC.step = PL_S_STAND;
+        BO6_RicSetAnimation(D_us_80182170);
+        break;
+    case PL_S_FALL:
+    case PL_S_JUMP:
+        RIC.step = PL_S_JUMP;
+        BO6_RicSetAnimation(D_us_801821C0);
+        break;
+    }
+    g_Ric.unk46 = 3;
+    RIC.step_s = 0x42;
+    g_Ric.timers[PL_T_10] = 4;
+    return 0;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_39144", BO6_RicDoAttack);
 
