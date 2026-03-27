@@ -755,7 +755,30 @@ INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnReboundStone);
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnThrownVibhuti);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_PrimDecreaseBrightness);
+static u8 BO6_PrimDecreaseBrightness(Primitive* prim, u8 amount) {
+    s32 i;
+    s32 j;
+    u8* colorPtr;
+    u8* channelPtr;
+    u8 isEnd;
+
+    isEnd = 0;
+    colorPtr = &prim->r0;
+    for (i = 0; i < 4;
+         colorPtr += OFF(Primitive, r1) - OFF(Primitive, r0), i++) {
+        for (j = 0; j < 3; j++) {
+            channelPtr = &colorPtr[j];
+            *channelPtr -= amount;
+
+            if (*channelPtr < 16) {
+                *channelPtr = 16;
+            } else {
+                isEnd |= 1;
+            }
+        }
+    }
+    return isEnd;
+}
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntitySubwpnAgunea);
 
