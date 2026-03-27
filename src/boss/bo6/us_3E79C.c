@@ -82,9 +82,26 @@ INCLUDE_ASM(
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashHydroStorm);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_DebugShowWaitInfo);
+extern s32 D_us_801D087C;
+void BO6_DebugShowWaitInfo(const char* msg) {
+    g_CurrentBuffer = g_CurrentBuffer->next;
+    FntPrint(msg);
+    if (D_us_801D087C++ & 4) {
+        FntPrint("\no\n");
+    }
+    DrawSync(0);
+    VSync(0);
+    PutDrawEnv(&g_CurrentBuffer->draw);
+    PutDispEnv(&g_CurrentBuffer->disp);
+    FntFlush(-1);
+}
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_DebugInputWait);
+void BO6_DebugInputWait(const char* msg) {
+    while (PadRead(0))
+        BO6_DebugShowWaitInfo(msg);
+    while (PadRead(0) == 0)
+        BO6_DebugShowWaitInfo(msg);
+}
 
 s32 OVL_EXPORT(RicCheckHolyWaterCollision)(s16 height, s16 width) {
     Collider collider;
