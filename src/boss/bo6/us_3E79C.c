@@ -850,7 +850,22 @@ void BO6_RicEntityVibhutiCrashCloud(Entity* self) {
 
 INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", BO6_RicEntityCrashVibhuti);
 
-INCLUDE_ASM("boss/bo6/nonmatchings/us_3E79C", func_us_801C8590);
+void func_us_801C8590(Entity* self) {
+    switch (self->step) {
+    case 0:
+        self->flags = FLAG_UNK_10000000;
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 4;
+        self->step++;
+        break;
+    case 1:
+        self->ext.holywater.timer++;
+        if (self->ext.holywater.timer >= 4) {
+            DestroyEntity(self);
+        }
+        break;
+    }
+}
 
 extern s32 D_us_80182A0C[];
 
