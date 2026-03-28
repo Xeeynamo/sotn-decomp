@@ -225,18 +225,18 @@ void EntitySealedDoor(Entity* self) {
         g_Player.demo_timer = 24;
         if ((self->params & 0x100) == 0) {
             self->ext.sealedDoor.angle += 0x20;
-            if (self->ext.sealedDoor.angle >= 0x1000) {
-                self->ext.sealedDoor.angle = 0x1000;
+            if (self->ext.sealedDoor.angle >= ROT(360)) {
+                self->ext.sealedDoor.angle = ROT(360);
             }
-            if (self->ext.sealedDoor.angle == 0x1000) {
+            if (self->ext.sealedDoor.angle == ROT(360)) {
                 self->step++;
             }
         } else {
             self->ext.sealedDoor.angle -= 0x20;
-            if (self->ext.sealedDoor.angle <= 0x800) {
-                self->ext.sealedDoor.angle = 0x800;
+            if (self->ext.sealedDoor.angle <= ROT(180)) {
+                self->ext.sealedDoor.angle = ROT(180);
             }
-            if (self->ext.sealedDoor.angle == 0x800) {
+            if (self->ext.sealedDoor.angle == ROT(180)) {
                 self->step++;
             }
         }
@@ -274,16 +274,16 @@ void EntitySealedDoor(Entity* self) {
         g_Player.demo_timer = 4;
         if ((self->params & 0x100) == 0) {
             self->ext.sealedDoor.angle -= 0x20;
-            if (self->ext.sealedDoor.angle <= 0xC00) {
-                self->ext.sealedDoor.angle = 0xC00;
+            if (self->ext.sealedDoor.angle <= ROT(270)) {
+                self->ext.sealedDoor.angle = ROT(270);
             }
         } else {
             self->ext.sealedDoor.angle += 0x20;
-            if (self->ext.sealedDoor.angle >= 0xC00) {
-                self->ext.sealedDoor.angle = 0xC00;
+            if (self->ext.sealedDoor.angle >= ROT(270)) {
+                self->ext.sealedDoor.angle = ROT(270);
             }
         }
-        if (self->ext.sealedDoor.angle == 0xC00) {
+        if (self->ext.sealedDoor.angle == ROT(270)) {
             prim = &g_PrimBuf[self->primIndex];
             for (i = 0; prim != NULL; i++, prim = prim->next) {
                 if ((self->params & 0x1000) == 0 || i != 0) {
@@ -319,20 +319,20 @@ void EntitySealedDoor(Entity* self) {
             if (i == 0) {
                 endX = prim->x0 = prim->x2 = x + ((rcos(angle) >> 8) * 32 >> 4);
                 prim->x1 = prim->x3 = prim->x0 - ((rsin(angle) >> 4) * 6 >> 8);
-                if (angle > 0xF80) {
+                if (angle > ROT(348.75)) {
                     prim->x1 = prim->x3 = prim->x0 + 1;
                 }
-                if (angle > 0xE00) {
+                if (angle > ROT(315)) {
                     prim->u0 = prim->u2 = 4;
                     prim->u1 = prim->u3 = 12;
                 }
-                if (angle <= 0xE00) {
+                if (angle <= ROT(315)) {
                     prim->u0 = prim->u2 = 3;
                     prim->u1 = prim->u3 = 13;
                 }
-                if (angle == 0x1000) {
-                    prim->r1 = prim->b1 = prim->g1 = 0x3F;
-                    prim->r3 = prim->b3 = prim->g3 = 0x3F;
+                if (angle == ROT(360)) {
+                    prim->r1 = prim->b1 = prim->g1 = 63;
+                    prim->r3 = prim->b3 = prim->g3 = 63;
                 } else {
                     prim->r1 = prim->b1 = prim->g1 =
                         0x7F - ((angle & 0x3FF) >> 4);
@@ -342,9 +342,9 @@ void EntitySealedDoor(Entity* self) {
             } else {
                 prim->x0 = prim->x2 = x;
                 prim->x1 = prim->x3 = endX;
-                if (angle == 0x1000) {
-                    prim->r0 = prim->b0 = prim->g0 = 0x3F;
-                    prim->r2 = prim->b2 = prim->g2 = 0x3F;
+                if (angle == ROT(360)) {
+                    prim->r0 = prim->b0 = prim->g0 = 63;
+                    prim->r2 = prim->b2 = prim->g2 = 63;
                 } else {
                     prim->r0 = prim->b0 = prim->g0 = (angle & 0x3FF) >> 4;
                     prim->r2 = prim->b2 = prim->g2 = (angle & 0x3FF) >> 4;
@@ -353,39 +353,38 @@ void EntitySealedDoor(Entity* self) {
         } else {
             if (i == 0) {
                 endX = prim->x1 = prim->x3 = x + ((rcos(angle) >> 8) * 32 >> 4);
-                prim->x0 = prim->x2 =
-                    prim->x1 + (((rsin(angle) >> 4) * 6) >> 8);
-                if (angle < 0x880) {
+                prim->x0 = prim->x2 = prim->x1 + ((rsin(angle) >> 4) * 6 >> 8);
+                if (angle < ROT(191.25)) {
                     prim->x0 = prim->x2 = prim->x1 - 1;
                 }
-                if (angle < 0xA00) {
+                if (angle < ROT(225)) {
                     prim->u0 = prim->u2 = 4;
                     prim->u1 = prim->u3 = 12;
                 }
-                if (angle > 0xA00) {
+                if (angle > ROT(225)) {
                     prim->u0 = prim->u2 = 3;
                     prim->u1 = prim->u3 = 13;
                 }
-                if (angle == 0x800) {
-                    prim->r0 = prim->b0 = prim->g0 = 0x7F;
-                    prim->r2 = prim->b2 = prim->g2 = 0x7F;
+                if (angle == ROT(180)) {
+                    prim->r0 = prim->b0 = prim->g0 = 127;
+                    prim->r2 = prim->b2 = prim->g2 = 127;
                 } else {
                     prim->r0 = prim->b0 = prim->g0 =
-                        0x3F + ((angle & 0x3FF) >> 4);
+                        63 + ((angle & 0x3FF) >> 4);
                     prim->r2 = prim->b2 = prim->g2 =
-                        0x3F + ((angle & 0x3FF) >> 4);
+                        63 + ((angle & 0x3FF) >> 4);
                 }
             } else {
                 prim->x0 = prim->x2 = endX - 1;
                 prim->x1 = prim->x3 = x;
-                if (angle == 0x800) {
-                    prim->r1 = prim->b1 = prim->g1 = 0x3F;
-                    prim->r3 = prim->b3 = prim->g3 = 0x3F;
+                if (angle == ROT(180)) {
+                    prim->r1 = prim->b1 = prim->g1 = 63;
+                    prim->r3 = prim->b3 = prim->g3 = 63;
                 } else {
                     prim->r1 = prim->b1 = prim->g1 =
-                        0x3F - ((angle & 0x3FF) >> 4);
+                        63 - ((angle & 0x3FF) >> 4);
                     prim->r3 = prim->b3 = prim->g3 =
-                        0x3F - ((angle & 0x3FF) >> 4);
+                        63 - ((angle & 0x3FF) >> 4);
                 }
             }
         }
