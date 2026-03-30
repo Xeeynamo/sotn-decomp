@@ -21,6 +21,7 @@ typedef enum {
 
 static u16 sensors_unk[] = {0, 72, 8, 0};
 static u16 sensors_ground[][2] = {{0, 40}, {0, 4}, {8, -4}, {-16, 0}};
+
 static u8 anim_shockwave_throw[] = {
     49, 5,  3,  6,  3,  5,  6,  7,  6,  8,  5,  9,  5,  10, 20,
     9,  2,  11, 2,  13, 33, 12, 3,  13, 2,  14, 2,  15, 2,  16,
@@ -42,7 +43,7 @@ static u8 anim_shoot_triple_fireball[] = {
 static u8 anim_fireball[] = {2, 38, 2, 39, 2, 40, 2, 41, 2, 42, 0, 0};
 static u8 anim_land[] = {
     1, 1, 1, 2, 1, 3, 1, 4, 1, 30, 1, 31, 5, 30, 4, 4, 3, 3, 2, 2, 2, 1, 0, 0};
-static s16 triple_fireball_rot_z[] = {384, 0, -384};
+static s16 triple_fireball_rot_z[] = {ROT(33.75), ROT(0), ROT(-33.75)};
 
 extern s16* ctulhu_shockwave_uvs[]; // uvs for shockwave
 
@@ -114,7 +115,7 @@ void EntityCtulhu(Entity* self) {
         case 1:
             self->velocityX = 0;
             self->velocityY = FIX(-4);
-            self->animCurFrame = 0x15;
+            self->animCurFrame = 21;
             self->step_s++;
             // fallthrough
         case 2:
@@ -191,7 +192,7 @@ void EntityCtulhu(Entity* self) {
                 self->velocityX = FIX(-1.5);
             }
             self->velocityY = FIX(-4);
-            self->animCurFrame = 0x15;
+            self->animCurFrame = 21;
             self->step_s++;
             // fallthrough
         case 1:
@@ -266,11 +267,11 @@ void EntityCtulhu(Entity* self) {
                 posX = -posX;
             }
             angle = ratan2(-posY, posX);
-            if (angle > 0x280) {
-                angle = 0x280;
+            if (angle > ROT(56.25)) {
+                angle = ROT(56.25);
             }
-            if (angle < -0x280) {
-                angle = -0x280;
+            if (angle < ROT(-56.25)) {
+                angle = ROT(-56.25);
             }
             if (GetDistanceToPlayerY() < 0x60) {
                 PlaySfxPositional(SFX_FM_EXPLODE_SWISHES);
@@ -334,13 +335,7 @@ void EntityCtulhu(Entity* self) {
                 } else {
                     newEntity->posX.i.hi -= 0x20;
                 }
-
-                // Possible bug?
-#ifdef VERSION_PSP
-                1;
-#else
-                newEntity->posY.i.hi = newEntity->posY.i.hi;
-#endif
+                newEntity->posY.i.hi += 0;
             }
         }
         break;
@@ -359,7 +354,7 @@ void EntityCtulhu(Entity* self) {
             }
             break;
         case 2:
-            if (!(g_Timer & 0xF)) {
+            if ((g_Timer & 0xF) == 0) {
                 PlaySfxPositional(SFX_CTULHU_ROAR);
             }
             AnimateEntity(anim_laugh_static, self);
@@ -373,7 +368,7 @@ void EntityCtulhu(Entity* self) {
         switch (self->step_s) {
         case 0:
             if (self->animCurFrame > 8 && self->animCurFrame < 19) {
-                self->animCurFrame = 0x14;
+                self->animCurFrame = 20;
             }
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 8);
             if (primIndex == -1) {
@@ -532,13 +527,13 @@ void EntityCtulhu(Entity* self) {
             self->step_s++;
             // fallthrough
         case 2:
-            if (!(g_Timer & 7)) {
+            if ((g_Timer & 7) == 0) {
                 PlaySfxPositional(SFX_FM_EXPLODE_B);
             }
             prim = self->ext.ctulhu.deathExplosionPrim;
             posX = Random() & 0x3F;
             posY = self->ext.ctulhu.y;
-            if (!(g_Timer & 0xF)) {
+            if ((g_Timer & 0xF) == 0) {
                 newEntity = AllocEntity(&g_Entities[STAGE_ENTITY_START],
                                         &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (newEntity != NULL) {
@@ -585,15 +580,15 @@ void EntityCtulhu(Entity* self) {
 #include "pad2_anim_debug.h"
     }
     if (self->animCurFrame >= 11 && self->animCurFrame < 15) {
-        LOH(self->hitboxOffX) = -0x12;
-        LOH(self->hitboxOffY) = 0x11;
-        self->hitboxWidth = 0x16;
-        self->hitboxHeight = 0x16;
+        self->hitboxOffX = -18;
+        self->hitboxOffY = 17;
+        self->hitboxWidth = 22;
+        self->hitboxHeight = 22;
     } else {
-        LOH(self->hitboxOffX) = -1;
-        LOH(self->hitboxOffY) = 1;
-        self->hitboxWidth = 0x13;
-        self->hitboxHeight = 0x26;
+        self->hitboxOffX = -1;
+        self->hitboxOffY = 1;
+        self->hitboxWidth = 19;
+        self->hitboxHeight = 38;
     }
 }
 
@@ -610,7 +605,7 @@ void EntityCtulhuFireball(Entity* self) {
         if (self->facingLeft) {
             rotate = -rotate;
         } else {
-            rotate = rotate + 0x800;
+            rotate = rotate + ROT(180);
         }
         self->velocityX = rcos(rotate) * 48;
         self->velocityY = rsin(rotate) * 48;
@@ -774,7 +769,7 @@ void EntityCtulhuIceShockwave(Entity* self) {
                                  DRAW_UNK02 | DRAW_TRANSP;
             }
         } else {
-            self->ext.ctulhu.timer -= 1;
+            self->ext.ctulhu.timer--;
         }
 
         if (self->flags & FLAG_DEAD) {
@@ -901,7 +896,7 @@ void EntityCtulhuDeath(Entity* self) {
         }
         // fallthrough
     case 1:
-        self->posY.val += FIX(-1);
+        self->posY.val -= FIX(1);
         if (!AnimateEntity(anim_death, self)) {
             DestroyEntity(self);
         }

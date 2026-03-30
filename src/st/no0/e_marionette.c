@@ -1,44 +1,60 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
+extern s16* sprites_no0_8[];
+
 static s16 D_us_80181FE8[] = {28, -28, 8};
 static s16 D_us_80181FF0[] = {0, 28, 0, 4, 8, -4, -16, 0};
 static s16 D_us_80182000[] = {0x60, 0x80, 0xC0, 0x80};
-static u8 D_us_80182008[] = {4, 1, 8, 2, 8, 6, 8, 2, 8, 1, 8, 5, 8, 4,
-                             8, 3, 8, 7, 8, 3, 8, 4, 8, 5, 4, 1, 0, 0};
-static u8 D_us_80182024[] = {
+
+static u8 anim0[] = {
+    4, 1, 8, 2, 8, 6, 8, 2, 8, 1, 8, 5, 8, 4,
+    8, 3, 8, 7, 8, 3, 8, 4, 8, 5, 4, 1, 0, 0,
+};
+static u8 anim1[] = {
     8,  8, 8,  9, 18, 10, 40, 11, 20, 12, 6,  13, 6,  14, 6,  15, 6,  16, 6,
-    17, 8, 18, 8, 19, 8,  23, 8,  20, 8,  21, 8,  24, 8,  22, 6,  23, -1, 0};
-static u8 D_us_8018204C[] = {
+    17, 8, 18, 8, 19, 8,  23, 8,  20, 8,  21, 8,  24, 8,  22, 6,  23, -1, 0,
+};
+static u8 anim2[] = {
     8,  25, 8,  26, 18, 27, 40, 28, 20, 29, 6,  30, 6,  31, 6,  32, 6,  33, 6,
-    17, 8,  18, 8,  19, 8,  23, 8,  20, 8,  21, 8,  24, 8,  22, 6,  23, -1, 0};
-static u8 D_us_80182074[] = {8,  34, 8, 35, 8, 34, 6, 35, 4, 36, 4, 37, 40, 28,
-                             20, 29, 6, 31, 6, 32, 6, 33, 6, 17, 6, 18, 6,  19,
-                             8,  23, 8, 20, 8, 21, 8, 24, 8, 22, 6, 23, -1, 0};
-static u8 D_us_801820A0[] = {
-    8, 23, 8, 18, 8, 19, 8, 23, 8, 20, 8, 21, 8, 24, 8, 22, 0, 0};
-static u8 D_us_801820B4[] = {
-    6, 38, 6, 39, 6, 40, 6, 41, 0, 0, 6, 23, 6, 42, -1, 0};
-static u8 D_us_801820C4[] = {
-    16, 23, 8, 20, 8, 43, 8, 44, 8, 45, 8, 46, 8, 47, 8, 48, 1, 44, -1, 0};
-static u8 D_us_801820D8[] = {6, 44, 6, 45, 6, 46, 6, 47, 6, 48, 0, 0};
-static u8 D_us_801820E4[] = {4, 44, 6, 23, 6, 18, 6, 19, 6, 23, 6,  20,
-                             6, 21, 6, 20, 6, 24, 6, 22, 6, 23, -1, 0};
-static u8 D_us_801820FC[] = {
+    17, 8,  18, 8,  19, 8,  23, 8,  20, 8,  21, 8,  24, 8,  22, 6,  23, -1, 0,
+};
+static u8 anim3[] = {
+    8,  34, 8, 35, 8, 34, 6, 35, 4, 36, 4, 37, 40, 28,
+    20, 29, 6, 31, 6, 32, 6, 33, 6, 17, 6, 18, 6,  19,
+    8,  23, 8, 20, 8, 21, 8, 24, 8, 22, 6, 23, -1, 0,
+};
+static u8 anim4[] = {
+    8, 23, 8, 18, 8, 19, 8, 23, 8, 20, 8, 21, 8, 24, 8, 22, 0, 0,
+};
+static u8 anim5[] = {
+    6, 38, 6, 39, 6, 40, 6, 41, 0, 0, 6, 23, 6, 42, -1, 0,
+};
+static u8 anim6[] = {
+    16, 23, 8, 20, 8, 43, 8, 44, 8, 45, 8, 46, 8, 47, 8, 48, 1, 44, -1, 0,
+};
+static u8 anim7[] = {6, 44, 6, 45, 6, 46, 6, 47, 6, 48, 0, 0};
+static u8 anim8[] = {
+    4, 44, 6, 23, 6, 18, 6, 19, 6, 23, 6,  20,
+    6, 21, 6, 20, 6, 24, 6, 22, 6, 23, -1, 0,
+};
+static u8 anim9[] = {
     8,  23, 6,  22, 6,  24, 6,  21, 6,  20, 6,  23, 6,  19, 4, 18, 4, 17, 4,
-    16, 4,  15, 4,  14, 4,  13, 4,  12, 2,  11, 2,  10, 2,  9, 4,  8, -1, 0};
-static u8 D_us_80182124[] = {
+    16, 4,  15, 4,  14, 4,  13, 4,  12, 2,  11, 2,  10, 2,  9, 4,  8, -1, 0,
+};
+static u8 anim10[] = {
     8,  23, 6,  22, 6,  24, 6,  21, 6,  20, 6,  23, 6,  19, 6,  18, 4,  17, 4,
-    33, 4,  32, 4,  31, 4,  30, 3,  29, 3,  28, 2,  27, 2,  26, 4,  25, -1, 0};
-static u8 D_us_8018214C[] = {8, 23, 6, 22, 6, 24, 6, 21, 6, 20, 6, 23, 4,  19,
-                             4, 18, 4, 17, 4, 33, 4, 32, 4, 31, 4, 29, 4,  28,
-                             3, 37, 3, 36, 4, 35, 6, 34, 6, 35, 4, 34, -1, 0};
-static u8* D_us_80182178[] = {D_us_801820FC, D_us_80182124, D_us_8018214C};
-static u8 D_us_80182184[] = {6, 1, 4, 1, 4, 2, 6, 3, 5, 4, 5, 5, 0, 0};
+    33, 4,  32, 4,  31, 4,  30, 3,  29, 3,  28, 2,  27, 2,  26, 4,  25, -1, 0,
+};
+static u8 anim11[] = {
+    8, 23, 6, 22, 6, 24, 6, 21, 6, 20, 6, 23, 4,  19,
+    4, 18, 4, 17, 4, 33, 4, 32, 4, 31, 4, 29, 4,  28,
+    3, 37, 3, 36, 4, 35, 6, 34, 6, 35, 4, 34, -1, 0,
+};
+static u8* anims[] = {anim9, anim10, anim11};
+static u8 anim12[] = {6, 1, 4, 1, 4, 2, 6, 3, 5, 4, 5, 5, 0, 0}; // unused
 
-extern s16* sprites_no0_8[];
-
-u8 func_us_801D6254(s16 arg0[]) {
+static u8 func_us_801D6254(s16 arg0[]) {
     Collider collider;
     s16 xDir;
     u8 ret = 0;
@@ -95,7 +111,7 @@ u8 func_us_801D6254(s16 arg0[]) {
     return ret;
 }
 
-void func_us_801D6474(Primitive* prim) {
+static void func_us_801D6474(Primitive* prim) {
     Collider collider;
     Entity* newEntity;
     s16 xVal;
@@ -113,7 +129,7 @@ void func_us_801D6474(Primitive* prim) {
             prim->next->u2 = 2;
             prim->next->x3 = ((Random() & 15) * 4) + 8;
         }
-        // fallthrough
+        /* fallthrough */
     case 1:
         xVal = prim->next->x1;
         yVal = prim->next->y0 + 4;
@@ -126,7 +142,7 @@ void func_us_801D6474(Primitive* prim) {
             LOW(prim->next->r1) = -LOW(prim->next->r1);
             LOW(prim->next->r1) -= LOW(prim->next->r1) / 2;
         }
-        // fallthrough
+        /* fallthrough */
     case 2:
         if (LOW(prim->next->u0) > 0) {
             HIH(prim->next->u1) -= 32;
@@ -160,19 +176,23 @@ void EntityMarionette(Entity* self) {
 
     if ((self->flags & FLAG_DEAD) && self->step < 10) {
         self->hitboxState = 0;
+#ifdef VERSION_PSP
+        self->palette = self->hitEffect = g_EInitSlinger[3] + 1;
+#else
         self->palette = self->hitEffect = g_EInitSlinger[5] + 1;
+#endif
         SetStep(10);
         PlaySfxPositional(SFX_MARIONETTE_YELL);
     }
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitMarionette);
-        self->animCurFrame = 0x22;
+        self->animCurFrame = 34;
         self->facingLeft = self->params & 1;
         break;
 
     case 1:
-        self->animCurFrame = 0x22;
+        self->animCurFrame = 34;
         UnkCollisionFunc3(D_us_80181FF0);
         if (GetDistanceToPlayerX() < 0x80) {
             SetStep(3);
@@ -186,13 +206,13 @@ void EntityMarionette(Entity* self) {
             self->velocityY = 0;
             switch (self->animCurFrame) {
             case 8:
-                self->ext.marionette.unk80 = D_us_80182024;
+                self->ext.marionette.unk80 = anim1;
                 break;
             case 25:
-                self->ext.marionette.unk80 = D_us_8018204C;
+                self->ext.marionette.unk80 = anim2;
                 break;
             case 34:
-                self->ext.marionette.unk80 = D_us_80182074;
+                self->ext.marionette.unk80 = anim3;
                 break;
             }
             self->step_s++;
@@ -216,7 +236,7 @@ void EntityMarionette(Entity* self) {
             self->ext.marionette.unk84 = D_us_80182000[Random() & 3];
             self->step_s++;
         }
-        flag = AnimateEntity(D_us_80182008, self);
+        flag = AnimateEntity(anim0, self);
         if (!flag) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
@@ -282,8 +302,7 @@ void EntityMarionette(Entity* self) {
                     }
                     flag = 1;
                 }
-                self->ext.marionette.unk80 =
-                    *(&D_us_80182178[flag] + (Random() & 1));
+                self->ext.marionette.unk80 = *(&anims[flag] + (Random() & 1));
                 self->velocityX = 0;
                 self->velocityY = FIX(-1.0);
                 if (self->pose > 0) {
@@ -331,7 +350,7 @@ void EntityMarionette(Entity* self) {
             break;
 
         case 1:
-            if (!AnimateEntity(D_us_801820C4, self)) {
+            if (!AnimateEntity(anim6, self)) {
                 SetSubStep(2);
             }
             flag = func_us_801D6254(D_us_80181FE8);
@@ -343,7 +362,7 @@ void EntityMarionette(Entity* self) {
             break;
 
         case 2:
-            AnimateEntity(D_us_801820D8, self);
+            AnimateEntity(anim7, self);
             flag = func_us_801D6254(D_us_80181FE8);
             if (flag & 4) {
                 self->velocityX = 0;
@@ -371,7 +390,7 @@ void EntityMarionette(Entity* self) {
             break;
 
         case 3:
-            if (!AnimateEntity(D_us_801820E4, self)) {
+            if (!AnimateEntity(anim8, self)) {
                 if (Random() & 1) {
                     SetStep(4);
                 } else {
@@ -403,7 +422,7 @@ void EntityMarionette(Entity* self) {
             if (flag & 4) {
                 self->velocityX = 0;
             }
-            if (!AnimateEntity(D_us_801820C4, self)) {
+            if (!AnimateEntity(anim6, self)) {
                 SetSubStep(2);
                 self->velocityX = FIX(-1.125);
                 if (self->facingLeft) {
@@ -414,7 +433,7 @@ void EntityMarionette(Entity* self) {
             break;
 
         case 2:
-            AnimateEntity(D_us_801820D8, self);
+            AnimateEntity(anim7, self);
             flag = func_us_801D6254(D_us_80181FE8);
             if (flag & 4) {
                 self->velocityX = 0;
@@ -427,7 +446,7 @@ void EntityMarionette(Entity* self) {
             break;
 
         case 3:
-            if (!AnimateEntity(D_us_801820E4, self)) {
+            if (!AnimateEntity(anim8, self)) {
                 if (Random() & 1) {
                     SetStep(4);
                 } else {
@@ -450,7 +469,7 @@ void EntityMarionette(Entity* self) {
             break;
 
         case 1:
-            AnimateEntity(D_us_801820B4, self);
+            AnimateEntity(anim5, self);
             if (!--self->ext.marionette.unk84) {
                 SetSubStep(2);
                 self->pose = 5;
@@ -464,13 +483,13 @@ void EntityMarionette(Entity* self) {
             break;
 
         case 2:
-            if (!AnimateEntity(D_us_801820B4, self)) {
+            if (!AnimateEntity(anim5, self)) {
                 SetStep(4);
             }
             break;
 
         case 3:
-            if (!AnimateEntity(D_us_801820B4, self)) {
+            if (!AnimateEntity(anim5, self)) {
                 SetStep(6);
             }
             break;
@@ -481,7 +500,7 @@ void EntityMarionette(Entity* self) {
         func_us_801D6254(D_us_80181FE8);
         self->velocityX -= self->velocityX / 24;
         self->velocityY -= self->velocityY / 24;
-        if (!AnimateEntity(D_us_801820A0, self)) {
+        if (!AnimateEntity(anim4, self)) {
             SetStep(4);
         }
         break;

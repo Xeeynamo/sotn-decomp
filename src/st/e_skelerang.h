@@ -56,7 +56,7 @@ void EntitySkelerang(Entity* self) {
     s32 i;
     u8 index;
 
-    if (self->step % 2 && GetDistanceToPlayerY() < 32 &&
+    if ((self->step % 2) != 0 && GetDistanceToPlayerY() < 32 &&
         GetDistanceToPlayerX() < 80) {
         SetStep(SKELERANG_COWER);
     }
@@ -91,11 +91,13 @@ void EntitySkelerang(Entity* self) {
 
         self->facingLeft = self->params;
         break;
+
     case SKELERANG_GROUND_INIT:
         if (UnkCollisionFunc3(sensors_ground) & 1) {
             SetStep(SKELERANG_IDLE);
         }
         break;
+
     case SKELERANG_IDLE:
         self->animCurFrame = 1;
         // When player gets close enough shift into wake up animation
@@ -105,11 +107,13 @@ void EntitySkelerang(Entity* self) {
             }
         }
         break;
+
     case SKELERANG_WAKE_ANIM:
         if (!AnimateEntity(anim_wake, self)) {
             SetStep(SKELERANG_ATTACK_INIT);
         }
         break;
+
     case SKELERANG_POST_ATTACK:
         if (!self->step_s) {
             self->ext.skelerang.unk84 = 0;
@@ -130,6 +134,7 @@ void EntitySkelerang(Entity* self) {
             }
         }
         break;
+
     case SKELERANG_ATTACK_INIT:
         if (!AnimateEntity(anim_spin_boomerang, self)) {
             SetStep(SKELERANG_BOOMERANG_CHECK);
@@ -155,6 +160,7 @@ void EntitySkelerang(Entity* self) {
             entity->step++;
         }
         break;
+
     case SKELERANG_BOOMERANG_CHECK:
         entity = self + 2;
         entityTwo = self + 3;
@@ -166,6 +172,7 @@ void EntitySkelerang(Entity* self) {
             SetStep(SKELERANG_CATCH);
         }
         break;
+
     case SKELERANG_CATCH:
         if (!AnimateEntity(anim_catch, self)) {
             self->ext.skelerang.unk84++;
@@ -177,6 +184,7 @@ void EntitySkelerang(Entity* self) {
             }
         }
         break;
+
     case SKELERANG_COWER:
         switch (self->step_s) {
         case 0:
@@ -186,6 +194,7 @@ void EntitySkelerang(Entity* self) {
                 self->step_s++;
             }
             break;
+
         case 1:
             // Play cower animation until player gets far enough away
             AnimateEntity(anim_cower, self);
@@ -195,6 +204,7 @@ void EntitySkelerang(Entity* self) {
                 self->step_s++;
             }
             break;
+
         case 2:
             // Once player is far enough away move out of cower and back into
             // potential attack state
@@ -204,6 +214,7 @@ void EntitySkelerang(Entity* self) {
             break;
         }
         break;
+
     case SKELERANG_DEATH_COWER:
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
@@ -213,6 +224,7 @@ void EntitySkelerang(Entity* self) {
         }
         DestroyEntity(self);
         break;
+
     case SKELERANG_DEATH:
         for (i = 0; i < 8; i++) {
             entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -246,6 +258,7 @@ void EntitySkelerang(Entity* self) {
         }
         DestroyEntity(self);
         break;
+
     case SKELERANG_DEATH_FLY:
         // When dying body goes flying back in flames
         MoveEntity();
@@ -265,6 +278,7 @@ void EntitySkelerang(Entity* self) {
             DestroyEntity(self);
         }
         break;
+
     case SKELERANG_DEBUG:
 #include "pad2_anim_debug.h"
     }
@@ -286,8 +300,7 @@ void EntitySkelerangBoomerang(Entity* self) {
     Entity* entity;
     u8 step;
     s16 angle;
-    s16 posX;
-    s16 posY;
+    s16 posX, posY;
 
     switch (self->step) {
     case BOOMERANG_INIT:
@@ -296,6 +309,7 @@ void EntitySkelerangBoomerang(Entity* self) {
         self->animCurFrame = 0;
         self->hitboxState = 0;
         break;
+
     case BOOMERANG_PRETHROW:
         entity = (self - 2) - self->params;
         self->posX.i.hi = entity->posX.i.hi;
@@ -307,13 +321,14 @@ void EntitySkelerangBoomerang(Entity* self) {
         if (self->params) {
             self->ext.skelerang.angle = 0;
         } else {
-            self->ext.skelerang.angle = 128;
+            self->ext.skelerang.angle = ROT(11.25);
         }
         break;
+
     case BOOMERANG_FLY:
         self->hitboxState = 1;
         MoveEntity();
-        self->rotate += 256;
+        self->rotate += ROT(22.5);
         if (!self->ext.skelerang.unk84) {
             self->step_s = 1;
         } else {
@@ -337,10 +352,12 @@ void EntitySkelerangBoomerang(Entity* self) {
             self->step++;
         }
         break;
+
     case BOOMERANG_IN_HAND:
         self->hitboxState = 0;
-        self->rotate = 512;
+        self->rotate = ROT(45);
         break;
+
     case BOOMERANG_DESTROY:
         entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
@@ -352,13 +369,13 @@ void EntitySkelerangBoomerang(Entity* self) {
     }
 }
 
-void EntitySkelerangUnknown(Entity* entity) {
+void EntitySkelerangUnknown(Entity* self) {
     Entity* parent;
-    if (!entity->step) {
+    if (!self->step) {
         InitializeEntity(g_EInitInteractable);
     }
-    parent = entity - 1;
+    parent = self - 1;
     if (parent->entityId != E_SKELERANG) {
-        DestroyEntity(entity);
+        DestroyEntity(self);
     }
 }
