@@ -72,7 +72,7 @@ segments:
       - [0x21470, c, no0/e_ctulhu]
       - [0x23B60, c, no0/e_ouija_table]
       - [0x24708, c, no0/create_entity]
-      - [0x256B0, c, no0_psp/st_init_psp]
+      - [0x256B0, c, no0/st_init_psp]
       - [0x25A40, c, no0/e_breakable]
       - [0x25BF0, c, no0/e_elevator]
       - [0x26C10, c, no0/e_room_bg]
@@ -139,6 +139,7 @@ segments:
       - {start: 0x6A680, type: .bss, vram: 0x092A1D88, name: no0/e_sealed_door}
       - {start: 0x6A680, type: .bss, vram: 0x092A1D90, name: no0/create_entity}
       - {start: 0x6A680, type: bss, vram: 0x092A1DB0, name: bss0}
+      - {start: 0x6A680, type: .bss, vram: 0x092A1DC0, name: no0/st_init_psp}
       - {start: 0x6A680, type: .bss, vram: 0x092A1FC8, name: no0/e_breakable}
       - {start: 0x6A680, type: .bss, vram: 0x092A1FD8, name: no0/e_room_bg}
       - {start: 0x6A680, type: .bss, vram: 0x092A20A0, name: no0/e_lock_camera}

@@ -49,7 +49,7 @@ void EntityDiplocephalusFoot(Entity* self) {
         self->step++;
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_UNK_ID_13, self, newEntity);
+            CreateEntityFromEntity(E_ID_13, self, newEntity);
             newEntity->params = 2;
             newEntity->ext.ent13.parent = self;
         }
@@ -219,7 +219,7 @@ void EntityDiplocephalusLeg(Entity* self) {
         tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (tempEntity != NULL) {
             DestroyEntity(tempEntity);
-            CreateEntityFromEntity(E_UNK_ID_13, self, tempEntity);
+            CreateEntityFromEntity(E_ID_13, self, tempEntity);
             tempEntity->params = 2;
             tempEntity->ext.ent13.parent = self;
         }
