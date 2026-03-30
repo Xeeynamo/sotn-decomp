@@ -46,7 +46,7 @@ segments:
     subsegments:
       - [0x80, c, no0/e_axe_knight]
       - [0x16B8, c, no0/e_skelerang]
-      - [0x25D8, c, no0_psp/clock_room]
+      - [0x25D8, c, no0/clock_room]
       - [0x4728, c, no0_psp/e_stage_name]
       - [0x5628, c, no0/e_marionette]
       - [0x72F0, c, no0/e_red_door]
@@ -82,7 +82,7 @@ segments:
       - [0x28770, c, no0/e_particles]
       - [0x29D00, .data, no0/e_axe_knight]
       - [0x29DF0, .data, no0/e_skelerang]
-      - [0x29EE0, data, no0_psp/clock_room]
+      - [0x29EE0, .data, no0/clock_room]
       - [0x29F58, data, no0_psp/e_stage_name]
       - [0x2AB78, .data, no0/e_marionette]
       - [0x2AD30, .data, no0/e_red_door]
@@ -119,7 +119,7 @@ segments:
       - [0x6A300, .data, no0/e_particles]
       - [0x6A380, .rodata, no0/e_axe_knight]
       - [0x6A3A8, .rodata, no0/e_skelerang]
-      - [0x6A3F0, .rodata, no0_psp/clock_room]
+      - [0x6A3F0, .rodata, no0/clock_room]
       - [0x6A430, .rodata, no0/e_marionette]
       - [0x6A460, .rodata, no0/e_red_door]
       - [0x6A478, .rodata, no0/e_plate_lord]
@@ -131,7 +131,7 @@ segments:
       - [0x6A600, .rodata, no0/e_skeleton]
       - [0x6A620, .rodata, no0/e_slinger]
       - [0x6A640, .rodata, no0/e_ctulhu]
-      - {start: 0x6A680, type: bss, vram: 0x092A1D00, name: no0_psp/clock_room}
+      - {start: 0x6A680, type: .bss, vram: 0x092A1D00, name: no0/clock_room}
       - {start: 0x6A680, type: .bss, vram: 0x092A1D18, name: no0/st_update}
       - {start: 0x6A680, type: .bss, vram: 0x092A1D58, name: no0/e_plate_lord}
       - {start: 0x6A680, type: .bss, vram: 0x092A1D60, name: no0/e_plate_lord_2}

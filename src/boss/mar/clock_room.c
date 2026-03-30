@@ -1,9 +1,22 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <stage.h>
 #include "mar.h"
-#include "sfx.h"
 
 extern u16 g_Statues[];
+
+static s16 bird_cage_pos_x[] = {0x84, 0x8E};
+static s16 bird_cage_pos_y[] = {0x64, 0x8E};
+static s16 statue_pos_x_1[] = {0x51, -0x50, 0x81, -0x80};
+static s16 gear_pos_x[] = {0x7C, -0x7C};
+static s16 stone_door_pos_x[] = {-0x20, 0x20, -0x50, 0x50};
+static s16 unused[] = {0x51, -0x50};
+static u32 statue_pos_x_3[] = {FIX(0.5), FIX(-0.5)};
+static u16 anim_bird_cage[] = {21, 22};
+static s16 unused2[] = {-14, 14, -8, 8, -23, -14, -8, 8, 14, 23, -8, 8};
+static u8 anim_gear_1[] = {6, 17, 6, 18, 6, 19, 6, 20, 0, 0};
+static u8 anim_gear_2[] = {6, 20, 6, 19, 6, 18, 6, 17, 0, 0};
+static u16 g_StoneDoorTiles[] = {
+    0x597, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x597,
+};
 
 void EntityClockRoomController(Entity* self) {
     PlayerStatus* status = &g_Status;

@@ -62,7 +62,7 @@ segments:
       - [0x1058, .data, e_misc]
       - [0x1174, .data, e_particles]
       - [0x11F4, .data, e_room_fg]
-      - [0x1280, data, clock_room]
+      - [0x1280, .data, clock_room]
       - [0x12EC, .data, gen/rooms]
       - [0x1308, .data, e_life_up]
       - [0x135C, .data, gen/e_layout] # layout entries data
