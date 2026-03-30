@@ -699,12 +699,12 @@ void EntityPlateLord(Entity* self) {
             break;
         case 1:
             towards = 0;
-            towards +=
-                StepTowards(&part->ext.plateLordUnknown.unk80, ROT(191.25), 0x3C);
-            towards +=
-                StepTowards(&part->ext.plateLordUnknown.unk96, ROT(202.5), 0x48);
-            towards +=
-                StepTowards(&part->ext.plateLordUnknown.unk94, ROT(56.25), 0x20);
+            towards += StepTowards(
+                &part->ext.plateLordUnknown.unk80, ROT(191.25), 0x3C);
+            towards += StepTowards(
+                &part->ext.plateLordUnknown.unk96, ROT(202.5), 0x48);
+            towards += StepTowards(
+                &part->ext.plateLordUnknown.unk94, ROT(56.25), 0x20);
             StepTowards(&part->ext.plateLordUnknown.unk98, ROT(67.5), 0x20);
             if (towards == 3) {
                 self->step_s++;
@@ -832,11 +832,12 @@ void EntityPlateLord(Entity* self) {
             break;
         case 1:
             towards = 0;
+            towards += StepTowards(
+                &part->ext.plateLordUnknown.unk80, ROT(33.75), 0x20);
             towards +=
-                StepTowards(&part->ext.plateLordUnknown.unk80, ROT(33.75), 0x20);
-            towards += StepTowards(&part->ext.plateLordUnknown.unk94, ROT(22.5), 8);
-            towards +=
-                StepTowards(&part->ext.plateLordUnknown.unk96, ROT(-39.375), 0x10);
+                StepTowards(&part->ext.plateLordUnknown.unk94, ROT(22.5), 8);
+            towards += StepTowards(
+                &part->ext.plateLordUnknown.unk96, ROT(-39.375), 0x10);
             StepTowards(&part->ext.plateLordUnknown.unk98, ROT(33.75), 0x10);
             if (towards == 3) {
                 self->step = 3;
@@ -912,7 +913,8 @@ void EntityPlateLord(Entity* self) {
                 StepTowards(&part->ext.plateLordUnknown.unk80, ROT(180), 0xA0);
             towards +=
                 StepTowards(&part->ext.plateLordUnknown.unk96, ROT(180), 0xA0);
-            towards += StepTowards(&part->ext.plateLordUnknown.unk94, ROT(0), 0x80);
+            towards +=
+                StepTowards(&part->ext.plateLordUnknown.unk94, ROT(0), 0x80);
             func_us_801D26CC(unkStructA);
             func_us_801D274C(unkStructB);
             if (towards == 3) {
