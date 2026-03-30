@@ -120,7 +120,7 @@ void UpdateStatueTiles(s32 tilePos, u16 tile) {
     }
 }
 
-extern s16 statue_pos_x_1[];
+extern s16 statue_pos_x[];
 extern u32 statue_pos_x_3[];
 
 void EntityStatue(Entity* self) {
@@ -138,14 +138,14 @@ void EntityStatue(Entity* self) {
         self->zPriority = 0x40;
 
         if (!g_Statues[params]) {
-            self->posX.i.hi += statue_pos_x_1[params];
+            self->posX.i.hi += statue_pos_x[params];
             if (self->params) {
                 UpdateStatueTiles(2, 0x597);
             } else {
                 UpdateStatueTiles(12, 0x597);
             }
         } else {
-            self->posX.i.hi += statue_pos_x_1[params + 2];
+            self->posX.i.hi += statue_pos_x[params + 2];
             if (self->params) {
                 UpdateStatueTiles(2, 0);
             } else {
