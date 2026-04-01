@@ -526,6 +526,22 @@ files:
           - [0x3F448, cutscene, cutscene_data_en]
           - [0x3F608, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no0.bin
+    asset_path: assets/st/no0
+    src_path: src/st/no0
+    splat_config_path: config/splat.pspeu.stno0.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x29F58, cmpgfx, stage_name_en, 128, 64, 4]
+          - [0x2A1B0, cmpgfx, stage_name_it, 128, 64, 4]
+          - [0x2A450, cmpgfx, stage_name_sp, 128, 64, 4]
+          - [0x2A6B8, cmpgfx, stage_name_ge, 128, 64, 4]
+          - [0x2A8F8, cmpgfx, stage_name_fr, 128, 64, 4]
+          - [0x2AB48, skip]
+          - [0x38120, rooms, rooms]
+          - [0x38260, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/no1.bin
     asset_path: assets/st/no1
     src_path: src/st/no1

@@ -433,7 +433,7 @@ void EntityConfessionalBlades(Entity* self) {
         break;
     case CONFESSIONAL_BLADES_PRIEST_INIT:
         params = self->params;
-        self->posX.val += FIX(-2.5);
+        self->posX.val -= FIX(2.5);
         if (self->posX.i.hi < xyx_vals[params][2]) {
             self->posX.i.hi = xyx_vals[params][2];
             self->ext.confessionalGhost.timer = 96;
@@ -466,7 +466,7 @@ void EntityConfessionalBlades(Entity* self) {
             return;
         }
         params = self->params;
-        self->posX.val += FIX(-3.5);
+        self->posX.val -= FIX(3.5);
         if (self->posX.i.hi < xyx_vals[params][0]) {
             DestroyEntity(self);
         }

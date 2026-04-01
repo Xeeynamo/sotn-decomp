@@ -2150,7 +2150,7 @@ void RicEntitySubwpnBible(Entity* self) {
     case 2:
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->velocityY += FIX(-2);
+        self->velocityY -= FIX(2);
         break;
     }
     if (self->ext.et_BibleSubwpn.unk86) {

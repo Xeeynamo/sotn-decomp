@@ -1133,7 +1133,7 @@ void EntityGuardText(Entity* self) {
         self->ext.guardText.unk98 = FIX(0x78);
 
         if (params_gtc->mode == 2) {
-            self->ext.guardText.str_x += FIX(-6);
+            self->ext.guardText.str_x -= FIX(6);
             self->ext.guardText.unk98 = FIX(0x78);
         }
         if (params_gtc->mode == 3) {
@@ -1232,7 +1232,7 @@ void EntityGuardText(Entity* self) {
         }
         break;
     case 7:
-        self->velocityX += FIX(-1);
+        self->velocityX -= FIX(1);
         self->ext.guardText.str_x += (u32)self->velocityX;
         self->ext.guardText.timer++;
         hider_ID = self->ext.guardText.timer & 0xF;

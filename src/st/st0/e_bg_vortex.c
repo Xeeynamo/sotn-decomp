@@ -150,7 +150,7 @@ void EntityBackgroundVortex(Entity* self) {
     case 3:
         switch (self->step_s) {
         case 0:
-            self->posY.val += FIX(-0.75);
+            self->posY.val -= FIX(0.75);
             if (self->posY.i.hi < 0xA0) {
                 self->posY.i.hi = 0xA0;
                 self->step_s++;

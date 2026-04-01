@@ -114,7 +114,7 @@ void func_us_80192D64(Entity* self) {
         }
         break;
     case 10:
-        self->posY.val += FIX(-0.75);
+        self->posY.val -= FIX(0.75);
         y = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
         if (y < 96) {
             self->posY.i.hi = 96 - g_Tilemap.scrollY.i.hi;

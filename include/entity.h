@@ -2457,36 +2457,36 @@ typedef struct {
 } ET_Skelerang;
 
 typedef struct {
-    /* 0x7C */ struct Entity* parent;
-    /* 0x80 */ struct Entity* entity;
-    /* 0x84 */ struct Entity* entity84;
-    /* 0x88 */ struct Entity* entity88;
-    /* 0x8C */ struct Entity* entity8C;
-    /* 0x90 */ struct Entity* entity90;
-    /* 0x94 */ s32 velocityX;
-    /* 0x98 */ s32 velocityY;
+    /* 0x7C */ struct Entity* torso;
+    /* 0x80 */ struct Entity* foot0;
+    /* 0x84 */ struct Entity* foot1;
+    /* 0x88 */ struct Entity* foot2;
+    /* 0x8C */ struct Entity* foot3;
+    /* 0x90 */ s32 : 32;
+    /* 0x94 */ s32 : 32;
+    /* 0x98 */ s32 unk98;
     /* 0x9C */ u8 unk9C;
     /* 0x9D */ u8 unk9D;
     /* 0x9E */ u8 unk9E;
     /* 0x9F */ u8 unk9F;
-    /* 0xA0 */ struct Entity* entityA0;
-    /* 0xA4 */ struct Entity* entityA4;
+    /* 0xA0 */ struct Entity* tail;
+    /* 0xA4 */ struct Entity* activeFoot;
     /* 0xA8 */ s32 : 32;
     /* 0xAC */ u8 hitParams;
     /* 0xAD */ u8 hitParams2;
 } ET_Diplocephalus;
 
 typedef struct {
-    /* 0x7C */ struct Entity* parent;
-    /* 0x80 */ struct Entity* entity;
-    /* 0x84 */ s16 unk84;
+    /* 0x7C */ struct Entity* diplo;
+    /* 0x80 */ s32 : 32;
+    /* 0x84 */ s16 : 16;
     /* 0x86 */ s16 : 16;
     /* 0x88 */ s32 : 32;
-    /* 0x8C */ struct Entity* entity8C;
+    /* 0x8C */ s32 : 32;
     /* 0x90 */ struct Entity* unk90;
-    /* 0x94 */ s32 velocityX;
+    /* 0x94 */ s32 : 32;
     /* 0x98 */ s32 velocityY;
-    /* 0x9C */ u8 unk9C;
+    /* 0x9C */ u8 : 8;
     /* 0x9D */ u8 unk9D;
     /* 0x9E */ u8 unk9E;
     /* 0x9F */ u8 unk9F;
@@ -2494,14 +2494,30 @@ typedef struct {
     /* 0xA4 */ s32 unkA4;
     /* 0xA8 */ s32 unkA8;
     /* 0xAC */ s32 unkAC;
-} ET_DiplocephalusUnk;
+} ET_DiplocephalusBody;
+
+typedef struct {
+    /* 0x7C */ struct Entity* diplo;
+    /* 0x80 */ struct Entity* tip;
+    /* 0x84 */ s16 angle;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ struct Entity* prevPart;
+    /* 0x90 */ struct Entity* nextPart;
+    /* 0x94 */ s32 velocityX;
+    /* 0x98 */ s32 velocityY;
+    /* 0x9C */ u8 unk9C;
+    /* 0x9D */ u8 unk9D;
+    /* 0x9E */ u8 : 8;
+    /* 0x9F */ u8 unk9F;
+} ET_DiplocephalusTail;
 
 typedef struct {
     /* 0x7C */ s32 : 32;
     /* 0x80 */ s32 : 32;
     /* 0x84 */ s32 : 32;
-    /* 0x88 */ s32 unk88;
-    /* 0x8C */ s16 unk8C;
+    /* 0x88 */ s32 speed;
+    /* 0x8C */ s16 angle;
     /* 0x8E */ s16 : 16;
     /* 0x90 */ struct Primitive* unk90;
     /* 0x94 */ s32 : 32;
@@ -4161,9 +4177,10 @@ typedef union { // offset=0x7C
     ET_GhostEnemy ghostEnemy;
     ET_GhostEnemySpawner ghostEnemySpawner;
     ET_Skelerang skelerang;
-    ET_Diplocephalus diplocephalus;
-    ET_DiplocephalusUnk diplocephalusUnk;
-    ET_DiplocephalusFireball diplocephalusFireball;
+    ET_Diplocephalus diplo;
+    ET_DiplocephalusBody diploBody;
+    ET_DiplocephalusTail diploTail;
+    ET_DiplocephalusFireball diploFireball;
     ET_PlateLord plateLord;
     ET_PlatelordUnknown plateLordUnknown;
     ET_SkeletonApe skeletonApe;

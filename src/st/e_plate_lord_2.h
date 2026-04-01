@@ -61,9 +61,9 @@ static void func_us_801D4FCC(void) {
     s32 angle = g_CurrentEntity->ext.plateLordUnknown.unk84;
     s8 pad[40];
 
-    for (i = 0; i < 0xA; i++) {
-        xOffset = (rsin(angle) * 8) >> 0xC;
-        yOffset = (rcos(angle) * 8) >> 0xC;
+    for (i = 0; i < 10; i++) {
+        xOffset = FLT_TO_I(rsin(angle) * 8);
+        yOffset = FLT_TO_I(rcos(angle) * 8);
         posX -= xOffset;
         posY += yOffset;
         prim->x0 = posX;
@@ -571,7 +571,7 @@ void func_us_801D542C(Entity* self) {
         tempEntity->posX.i.hi = posX;
         tempEntity->posY.i.hi = posY;
         tempEntity->zPriority = self->zPriority + 0x10 + (z - 0x100);
-        if ((self->step == 0xB) && (var_s3 == 0x800)) {
+        if ((self->step == 11) && (var_s3 == 0x800)) {
             tempEntity = self - 2;
             tempEntity->step = 3;
             if (self->facingLeft) {
@@ -579,7 +579,7 @@ void func_us_801D542C(Entity* self) {
             } else {
                 self->ext.plateLordUnknown.unk84 = 0x400;
             }
-            self->step = 0xC;
+            self->step = 12;
         }
     }
 }

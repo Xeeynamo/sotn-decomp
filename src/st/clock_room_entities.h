@@ -2,10 +2,10 @@
 #include "sfx.h"
 
 void EntityClockHands(Entity* self) {
-    Entity* handShadow = &self[5];
     u16 params = self->params;
+    Entity* handShadow = self + 5;
 
-    if (self->step == 0) {
+    if (!self->step) {
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 25;
@@ -14,22 +14,23 @@ void EntityClockHands(Entity* self) {
 
         // Create hand shadows
         CreateEntityFromCurrentEntity(E_CLOCK_ROOM_SHADOW, handShadow);
-        handShadow->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE;
-        handShadow->blendMode = BLEND_TRANSP;
         handShadow->animSet = ANIMSET_OVL(1);
         handShadow->animCurFrame = params + 25;
         handShadow->zPriority = 0x3F - params;
+        handShadow->drawFlags = ENTITY_OPACITY | ENTITY_ROTATE;
+        handShadow->blendMode = BLEND_TRANSP;
         handShadow->flags = FLAG_DESTROY_IF_OUT_OF_CAMERA |
                             FLAG_POS_CAMERA_LOCKED | FLAG_KEEP_ALIVE_OFFCAMERA;
         handShadow->posY.i.hi += 4;
     }
 
-    self->rotate = (self->ext.clockRoom.hand * 0x1000) / 3600;
-    if (params != 0) {
-        self->rotate += 0x400;
+    self->rotate = (self->ext.clockRoom.hand * ROT(360)) / (60 * 60);
+    if (params) {
+        self->rotate += ROT(90);
     }
 
-    handShadow->rotate = self->rotate &= 0xFFF;
+    self->rotate &= 0xFFF;
+    handShadow->rotate = self->rotate;
 }
 
 extern u16 anim_bird_cage[];
@@ -46,9 +47,9 @@ void EntityBirdcageDoor(Entity* self) {
         InitializeEntity(g_EInitCommon);
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = anim_bird_cage[self->ext.birdcage.state & 1];
+        self->ext.birdcage.prevState = self->ext.birdcage.state;
         self->zPriority = 0x3C;
         self->scaleX = self->scaleY = 0x100;
-        self->ext.birdcage.prevState = self->ext.birdcage.state;
         self->opacity = 0x80;
         self->posX.i.hi = bird_cage_pos_x[params] - g_Tilemap.scrollX.i.hi;
         self->posY.i.hi = bird_cage_pos_y[params] - g_Tilemap.scrollY.i.hi;
@@ -56,9 +57,9 @@ void EntityBirdcageDoor(Entity* self) {
 
     case 1:
         if (self->ext.birdcage.prevState != self->ext.birdcage.state) {
-            self->drawFlags = ENTITY_OPACITY | ENTITY_SCALEY | ENTITY_SCALEX;
-            self->ext.birdcage.timer = 64;
             self->ext.birdcage.prevState = self->ext.birdcage.state;
+            self->drawFlags = ENTITY_OPACITY | ENTITY_SCALEX | ENTITY_SCALEY;
+            self->ext.birdcage.timer = 64;
             self->step++;
             g_api.PlaySfx(SFX_STONE_MOVE_B);
         }
@@ -66,8 +67,8 @@ void EntityBirdcageDoor(Entity* self) {
 
     case 2:
         self->scaleX = self->scaleY -= 2;
-        self->opacity += 0xFF;
-        if (--self->ext.birdcage.timer == 0) {
+        self->opacity -= 1;
+        if (!--self->ext.birdcage.timer) {
             self->ext.birdcage.timer = 64;
             self->zPriority = 0;
             self->step++;
@@ -77,7 +78,7 @@ void EntityBirdcageDoor(Entity* self) {
 
     case 3:
         self->posX.val += FIX(0.125);
-        if (--self->ext.birdcage.timer == 0) {
+        if (!--self->ext.birdcage.timer) {
             self->ext.birdcage.timer = 64;
             self->animCurFrame = anim_bird_cage[self->ext.birdcage.state & 1];
             self->posX.i.hi -= 8;
@@ -89,7 +90,7 @@ void EntityBirdcageDoor(Entity* self) {
 
     case 4:
         self->posY.val -= FIX(0.125);
-        if (--self->ext.birdcage.timer == 0) {
+        if (!--self->ext.birdcage.timer) {
             self->ext.birdcage.timer = 64;
             self->zPriority = 0x3C;
             self->step++;
@@ -100,7 +101,7 @@ void EntityBirdcageDoor(Entity* self) {
     case 5:
         self->scaleX = self->scaleY += 2;
         self->opacity += 1;
-        if (--self->ext.birdcage.timer == 0) {
+        if (!--self->ext.birdcage.timer) {
             self->drawFlags = ENTITY_DEFAULT;
             self->step = 1;
         }
@@ -108,7 +109,7 @@ void EntityBirdcageDoor(Entity* self) {
     }
 }
 
-void UpdateStatueTiles(s32 tilePos, s32 tile) {
+void UpdateStatueTiles(s32 tilePos, u16 tile) {
     u32 i;
 
     for (i = 0; i < 6; i++) {
@@ -119,16 +120,13 @@ void UpdateStatueTiles(s32 tilePos, s32 tile) {
     }
 }
 
-extern u16 statue_pos_x_1[];
-extern u16 statue_pos_x_2[];
-extern s32 statue_pos_x_3[];
+extern s16 statue_pos_x[];
+extern u32 statue_pos_x_3[];
 
 void EntityStatue(Entity* self) {
-    Entity* entity = &self[2];
-    Entity* statueGear = &self[11];
     u16 params = self->params;
-    u16* temp_a0;
-    u16* fakeVar;
+    Entity* entity = self + 2;
+    Entity* statueGear = self + 11;
 
     switch (self->step) {
     case 0:
@@ -139,16 +137,16 @@ void EntityStatue(Entity* self) {
         self->hitboxHeight = 32;
         self->zPriority = 0x40;
 
-        if (g_Statues[params] == 0) {
-            self->posX.i.hi += statue_pos_x_1[params];
-            if (self->params != 0) {
+        if (!g_Statues[params]) {
+            self->posX.i.hi += statue_pos_x[params];
+            if (self->params) {
                 UpdateStatueTiles(2, 0x597);
             } else {
                 UpdateStatueTiles(12, 0x597);
             }
         } else {
-            self->posX.i.hi += statue_pos_x_2[params];
-            if (self->params != 0) {
+            self->posX.i.hi += statue_pos_x[params + 2];
+            if (self->params) {
                 UpdateStatueTiles(2, 0);
             } else {
                 UpdateStatueTiles(12, 0);
@@ -173,16 +171,12 @@ void EntityStatue(Entity* self) {
         break;
 
     case 1:
-        //! FAKE
-        fakeVar = g_Statues;
-        temp_a0 = fakeVar;
-        temp_a0 += params;
-        if (*temp_a0 != self->ext.statue.step) {
-            self->ext.statue.step = *temp_a0;
-            if (self->ext.statue.step == 0) {
-                statueGear->ext.statue.step = 2;
-            } else {
+        if (g_Statues[params] != self->ext.statue.step) {
+            self->ext.statue.step = g_Statues[params];
+            if (self->ext.statue.step) {
                 statueGear->ext.statue.step = 1;
+            } else {
+                statueGear->ext.statue.step = 2;
             }
             self->hitboxState = 2;
             self->step++;
@@ -191,10 +185,10 @@ void EntityStatue(Entity* self) {
         break;
 
     case 2:
-        GetPlayerCollisionWith(self, 0x10, 0x20, 0x13);
-        if (self->step_s == 0) {
-            if (self->ext.statue.step != 0) {
-                if (self->params != 0) {
+        GetPlayerCollisionWith(self, 16, 32, 19);
+        if (!self->step_s) {
+            if (self->ext.statue.step) {
+                if (self->params) {
                     UpdateStatueTiles(2, 0);
                 } else {
                     UpdateStatueTiles(12, 0);
@@ -204,15 +198,15 @@ void EntityStatue(Entity* self) {
             self->step_s++;
         }
 
-        if (self->ext.statue.step != 0) {
+        if (self->ext.statue.step) {
             self->posX.val += statue_pos_x_3[params];
         } else {
             self->posX.val -= statue_pos_x_3[params];
         }
 
-        if (--self->ext.statue.timer == 0) {
-            if (self->ext.statue.step == 0) {
-                if (self->params != 0) {
+        if (!--self->ext.statue.timer) {
+            if (!self->ext.statue.step) {
+                if (self->params) {
                     UpdateStatueTiles(2, 0x597);
                 } else {
                     UpdateStatueTiles(12, 0x597);
@@ -230,17 +224,17 @@ void EntityStatue(Entity* self) {
 
 extern u8 anim_gear_1[];
 extern u8 anim_gear_2[];
-extern u16 gear_pos_x[];
+extern s16 gear_pos_x[];
 
 // Gears that spin while the statues are moving
 void EntityStatueGear(Entity* self) {
     u16 params = self->params;
     Primitive* prim;
-    s16 primIndex;
+    s32 primIndex;
 
     switch (self->step) {
     case 0:
-        if (self->step_s == 0) {
+        if (!self->step_s) {
             InitializeEntity(g_EInitCommon);
             self->animSet = ANIMSET_OVL(1);
             self->animCurFrame = 17;
@@ -269,36 +263,36 @@ void EntityStatueGear(Entity* self) {
         break;
 
     case 1:
-        if (self->ext.statue.step == self->step) {
-            self->step = 2;
+        if (self->ext.statue.step == 1) {
             self->pose = self->animCurFrame - 17;
+            self->step = 2;
         }
         if (self->ext.statue.step == 2) {
-            self->step = 3;
             self->pose = 20 - self->animCurFrame;
+            self->step = 3;
         }
         self->poseTimer = 0;
         break;
 
     case 2:
         AnimateEntity(anim_gear_1, self);
-        if (self->ext.statue.step == 0) {
+        if (!self->ext.statue.step) {
             self->step = 1;
         }
         break;
 
     case 3:
         AnimateEntity(anim_gear_2, self);
-        if (self->ext.statue.step == 0) {
+        if (!self->ext.statue.step) {
             self->step = 1;
         }
         break;
     }
 }
 
-extern s16 g_StoneDoorTiles[];
+extern u16 g_StoneDoorTiles[];
 
-void UpdateStoneDoorTiles(bool doorState) {
+static void UpdateStoneDoorTiles(bool doorState) {
     s32 tilePos;
     s16 i, j;
 
@@ -306,21 +300,17 @@ void UpdateStoneDoorTiles(bool doorState) {
         for (j = 0; j < 8; j++) {
             if (doorState) {
                 // Open stone doors
-                g_Tilemap.fg[tilePos] = 0x597;
-                tilePos++;
+                g_Tilemap.fg[tilePos++] = 0x597;
             } else {
                 // Close stone doors
-                g_Tilemap.fg[tilePos] = g_StoneDoorTiles[j];
-                tilePos++;
+                g_Tilemap.fg[tilePos++] = g_StoneDoorTiles[j];
             }
         }
         tilePos += 8;
     }
 }
 
-// todo overlapping?
-extern s16 stone_door_pos_x_1[];
-extern s16 stone_door_pos_x_2[];
+extern s16 stone_door_pos_x[];
 
 // Stone doors on the floor leading to CEN Entity ID 0x1B
 void EntityStoneDoor(Entity* self) {
@@ -332,11 +322,11 @@ void EntityStoneDoor(Entity* self) {
         self->animSet = ANIMSET_OVL(1);
         self->animCurFrame = params + 27;
         self->zPriority = 0x40;
-        if (g_CastleFlags[CEN_OPEN] == 0) {
-            self->posX.i.hi += stone_door_pos_x_1[params];
+        if (!g_CastleFlags[CEN_OPEN]) {
+            self->posX.i.hi += stone_door_pos_x[params];
             UpdateStoneDoorTiles(true);
         } else {
-            self->posX.i.hi += stone_door_pos_x_2[params];
+            self->posX.i.hi += stone_door_pos_x[params + 2];
             UpdateStoneDoorTiles(false);
         }
         self->posY.i.hi += 88;
@@ -346,20 +336,21 @@ void EntityStoneDoor(Entity* self) {
     case 1:
         if (self->ext.stoneDoor.flag == NULL) {
             if (g_CastleFlags[CEN_OPEN]) {
-                self->ext.stoneDoor.unk80 = 0;
                 self->step++;
+                self->ext.stoneDoor.unk80 = 0;
             }
         }
         self->ext.stoneDoor.flag = g_CastleFlags[CEN_OPEN];
         break;
 
     case 2:
-        if ((self->ext.stoneDoor.unk80 % 32) == 0) {
+        if ((self->ext.stoneDoor.unk80 & 0x1F) == 0) {
             PlaySfxPositional(SFX_STONE_MOVE_A);
         }
 
-        if (++self->ext.stoneDoor.unk80 % 2) {
-            if (params != 0) {
+        ++self->ext.stoneDoor.unk80;
+        if (self->ext.stoneDoor.unk80 & 1) {
+            if (params) {
                 self->posX.i.hi++;
             } else {
                 self->posX.i.hi--;
@@ -379,11 +370,11 @@ void EntityStoneDoor(Entity* self) {
 
         if (self->ext.stoneDoor.unk80 > 96) {
             UpdateStoneDoorTiles(false);
-            g_backbufferY = 0;
             self->step--;
+            g_backbufferY = 0;
         }
         break;
     }
 }
 
-void EntityClockRoomUnused(void) {}
+void EntityClockRoomUnused(Entity* self) {}
