@@ -34,8 +34,8 @@ void EntityStoneDoor(Entity*);
 void EntityClockRoomUnused(Entity*);
 void EntityDummy(Entity*);
 void EntityDiplocephalus(Entity*);
-void func_us_801CF4A8(Entity*);
-void func_us_801CF910(Entity*);
+void EntityDiplocephalusFoot(Entity*);
+void EntityDiplocephalusLeg(Entity*);
 void EntityDiplocephalusTail(Entity*);
 void EntityDiplocephalusFireball(Entity*);
 void EntityDiplocephalusTorso(Entity*);
@@ -117,8 +117,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityClockRoomUnused,
     EntityDummy,
     EntityDiplocephalus,
-    func_us_801CF4A8,
-    func_us_801CF910,
+    EntityDiplocephalusFoot,
+    EntityDiplocephalusLeg,
     EntityDiplocephalusTail,
     EntityDiplocephalusFireball,
     EntityDiplocephalusTorso,

@@ -106,7 +106,7 @@ void EntitySpikesParts(Entity* self) {
 #ifdef HAS_ORIENTATIONS
         params = self->params & 0xFF;
         if (params & SPIKES_POINT_LEFT) {
-            self->velocityX += FIX(-0.75);
+            self->velocityX -= FIX(0.75);
             self->rotate -= ROT(90);
             self->ext.spikes.rotate += ROT(5.625);
         }
@@ -120,7 +120,7 @@ void EntitySpikesParts(Entity* self) {
             self->rotate -= ROT(180);
         }
         if (params & SPIKES_ON_FLOOR) {
-            self->velocityY += FIX(-2.5);
+            self->velocityY -= FIX(2.5);
         }
 #else
         self->velocityY += FIX(0.75);

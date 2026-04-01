@@ -62,7 +62,8 @@ void EntityOuijaTable(Entity* self) {
         InitializeEntity(g_EInitOuijaTable);
         self->animCurFrame = 5;
         self->hitboxOffY = 2;
-        return;
+        break;
+
     case OUIJA_TABLE_INIT_SUBENTITIES:
         if (UnkCollisionFunc3(sensors_ground) & 1) {
             // Spawn objects on the table
@@ -91,16 +92,14 @@ void EntityOuijaTable(Entity* self) {
             } else {
                 otherEntity->posX.i.hi -= 24;
             }
-#ifndef VERSION_PSP
-            // Looks like a coding error
-            otherEntity->posY.i.hi = otherEntity->posY.i.hi;
-#endif
+            otherEntity->posY.i.hi += 0;
             self->step++;
         }
         break;
+
     case OUIJA_TABLE_COME_ALIVE:
         // When player approaches, spring to life
-        if ((GetDistanceToPlayerX() < 80) && (GetDistanceToPlayerY() < 64)) {
+        if (GetDistanceToPlayerX() < 80 && GetDistanceToPlayerY() < 64) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             otherEntity = BEAKER;
             otherEntity->ext.ouijaTable.spawned = true;
@@ -110,10 +109,11 @@ void EntityOuijaTable(Entity* self) {
             SetStep(3);
         }
         break;
+
     case OUIJA_TABLE_ATTACK:
         if (!self->step_s) {
             self->ext.ouijaTable.timer = 128;
-            self->step_s += 1;
+            self->step_s++;
         }
         if (AnimateEntity(anim_walk, self) == 0) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
@@ -126,10 +126,10 @@ void EntityOuijaTable(Entity* self) {
             self->velocityX = FIX(-0.5);
         }
 
-        if (!(--self->ext.ouijaTable.timer)) {
+        if (!--self->ext.ouijaTable.timer) {
             self->ext.ouijaTable.timer = 192;
             // Throw out one of the objects on the table
-            if (self->ext.ouijaTable.isThrown != 0) {
+            if (self->ext.ouijaTable.isThrown) {
                 otherEntity = VASE;
             } else {
                 otherEntity = BEAKER;
@@ -139,8 +139,10 @@ void EntityOuijaTable(Entity* self) {
             self->ext.ouijaTable.isThrown ^= 1;
         }
         break;
+
     case OUIJA_TABLE_UNUSED:
         break;
+
     case OUIJA_TABLE_DEBUG:
 #include "../pad2_anim_debug.h"
     }
@@ -201,13 +203,13 @@ void EntityOuijaTableComponent(Entity* self) {
         otherEntity = self->ext.ouijaTable.parent;
         posX = otherEntity->posX.i.hi;
         posY = otherEntity->posY.i.hi - 32;
-        posY += ((rcos(self->ext.ouijaTable.unk8E) * 8) >> 12);
-        posX += ((rsin(self->ext.ouijaTable.unk8E) * 18) >> 12);
+        posY += FLT_TO_I(rcos(self->ext.ouijaTable.unk8E) * 8);
+        posX += FLT_TO_I(rsin(self->ext.ouijaTable.unk8E) * 18);
         posX -= self->posX.i.hi;
         posY -= self->posY.i.hi;
         angle = ratan2(posY, posX);
-        self->velocityX = (rcos(angle) * FIX(1.5)) >> 12;
-        self->velocityY = (rsin(angle) * FIX(1.5)) >> 12;
+        self->velocityX = FLT_TO_I(rcos(angle) * FLT(24));
+        self->velocityY = FLT_TO_I(rsin(angle) * FLT(24));
         // Beaker and vase move in opposite directions
         if (self->params) {
             self->ext.ouijaTable.unk8E += 48;
@@ -225,8 +227,8 @@ void EntityOuijaTableComponent(Entity* self) {
         otherEntity = self->ext.ouijaTable.parent;
         posX = otherEntity->posX.i.hi;
         posY = otherEntity->posY.i.hi - 32;
-        posY += ((rcos(self->ext.ouijaTable.unk8E) * 8) >> 12);
-        posX += ((rsin(self->ext.ouijaTable.unk8E) * 18) >> 12);
+        posY += FLT_TO_I(rcos(self->ext.ouijaTable.unk8E) * 8);
+        posX += FLT_TO_I(rsin(self->ext.ouijaTable.unk8E) * 18);
         self->posX.i.hi = posX;
         self->posY.i.hi = posY;
         // Beaker and vase move in opposite directions
@@ -240,8 +242,8 @@ void EntityOuijaTableComponent(Entity* self) {
         if (self->ext.ouijaTable.isThrown) {
             otherEntity = &PLAYER;
             angle = GetAngleBetweenEntities(self, otherEntity);
-            self->velocityX = (rcos(angle) << 18) >> 12;
-            self->velocityY = (rsin(angle) << 18) >> 12;
+            self->velocityX = FLT_TO_I(rcos(angle) * FLT(64));
+            self->velocityY = FLT_TO_I(rsin(angle) * FLT(64));
             self->step = OUIJA_COMPONENT_SEEK_ATTACK;
         }
         break;
@@ -277,8 +279,7 @@ void EntityOuijaTableComponent(Entity* self) {
             self->velocityY = 0;
             self->drawFlags = ENTITY_ROTATE;
             self->step_s++;
-            // fallthrough
-
+            /* fallthrough */
         case OUIJA_COMPONENT_FALL_TO_FLOOR:
             // When hit, components rotate and fall to floor
             // After hitting the floor, begin death timer
@@ -294,7 +295,7 @@ void EntityOuijaTableComponent(Entity* self) {
 
         case OUIJA_COMPONENT_DIE_IN_FLAMES:
             // Once death timer expires, burst into flames and get destroyed
-            if (!(--self->ext.ouijaTable.timer)) {
+            if (!--self->ext.ouijaTable.timer) {
                 otherEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
                 if (otherEntity != NULL) {
                     CreateEntityFromEntity(E_EXPLOSION, self, otherEntity);

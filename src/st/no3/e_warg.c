@@ -683,7 +683,7 @@ void EntityWargExplosionPuffTransparent(Entity* self) {
         if (self->params & 0xFF00) {
             self->zPriority = (self->params & 0xFF00) >> 8;
         }
-        self->velocityY += FIX(-1);
+        self->velocityY -= FIX(1);
         return;
     }
     self->posY.val += self->velocityY;

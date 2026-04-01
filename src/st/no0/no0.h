@@ -42,7 +42,7 @@ typedef enum EntityIDs {
     /* 0x10 */ E_DUMMY_10,
     /* 0x11 */ E_ID_11,
     /* 0x12 */ E_ID_12,
-    /* 0x13 */ E_UNK_ID_13,
+    /* 0x13 */ E_ID_13,
     /* 0x14 */ E_EXPLOSION_VARIANTS,
     /* 0x15 */ E_GREY_PUFF,
     /* 0x16 */ E_ID_16,
@@ -57,8 +57,8 @@ typedef enum EntityIDs {
     /* 0x1F */ E_CLOCK_ROOM_UNUSED,
     /* 0x20 */ E_CLOCK_ROOM_SHADOW,
     /* 0x21 */ E_DIPLOCEPHALUS,
-    /* 0x22 */ E_ID_22,
-    /* 0x23 */ E_ID_23,
+    /* 0x22 */ E_DIPLOCEPHALUS_FOOT,
+    /* 0x23 */ E_DIPLOCEPHALUS_LEG,
     /* 0x24 */ E_DIPLOCEPHALUS_TAIL,
     /* 0x25 */ E_DIPLOCEPHALUS_FIREBALL,
     /* 0x26 */ E_DIPLOCEPHALUS_TORSO,
@@ -103,28 +103,28 @@ typedef enum EntityIDs {
     /* 0x4D */ E_SKELETON,
     /* 0x4E */ E_SKELETON_THROWN_BONE,
     /* 0x4F */ E_SKELETON_PIECES,
+    /* 0x50 */ E_ID_50,
+    /* 0x51 */ E_ID_51,
 } EntityIDs;
 
 extern Primitive* FindFirstUnkPrim(Primitive* poly);
 
-extern s16 g_SineTable[];
-
-// extern EInit OVL_EXPORT(EInitBreakable);
-// extern EInit g_EInitObtainable;
+extern EInit OVL_EXPORT(EInitBreakable);
+extern EInit g_EInitObtainable;
 extern EInit g_EInitParticle;
 extern EInit D_us_80180A88;
 extern EInit g_EInitInteractable;
-// extern EInit D_us_80180AA0;
+extern EInit D_us_80180AA0;
 extern EInit D_us_80180AAC;
-// extern EInit D_us_80180AB8;
-// extern EInit D_us_80180AC4;
-// extern EInit g_EInitUnkId13;
+extern EInit D_us_80180AB8;
+extern EInit D_us_80180AC4;
+extern EInit g_EInitUnkId13;
 extern EInit g_EInitLockCamera;
 extern EInit g_EInitCommon;
 extern EInit g_EInitStoneRose;
 extern EInit D_us_80180B00;
 extern EInit D_us_80180B0C;
-// extern EInit g_EInitDamageNum;
+extern EInit g_EInitDamageNum;
 extern EInit g_EInitDiplocephalus;
 extern EInit g_EInitDiplocephalusFoot;
 extern EInit D_us_80180B3C;
@@ -145,6 +145,3 @@ extern EInit g_EInitAxeKnight;
 extern EInit g_EInitAxeKnightAxe;
 extern EInit g_EInitOuijaTable;
 extern EInit g_EInitOuijaTableComponent;
-
-// Clock room
-extern u16 g_Statues[];

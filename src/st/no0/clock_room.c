@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "common.h"
 #include "no0.h"
 
 typedef enum Statues {
@@ -7,35 +6,60 @@ typedef enum Statues {
     /* 1 */ LEFT_STATUE,
 } Statues;
 
-extern u16 g_Statues[];
-
 #ifdef VERSION_PSP
-extern u32 D_psp_092A1D00;
-extern u32 D_psp_092A1D08;
+extern s32 D_91FC3F8;
+extern s32 D_91FC400;
+extern s32 D_91FC408;
+extern s32 D_91FC410;
 #endif
 
-void func_us_801CCAAC(Entity* self) {
-    s32 minute;
-    s32 hour;
+static u16 g_Statues[2];
+#ifdef VERSION_PSP
+static u32 D_pspeu_092A1D08;
+static u32 D_pspeu_092A1D00;
+#endif
 
-    if (!(self->ext.clockRoom.unk88 & 0x1F)) {
+static s16 bird_cage_pos_x[] = {0x84, 0x8E};
+static s16 bird_cage_pos_y[] = {0x64, 0x8E};
+static s16 statue_pos_x[] = {0x51, -0x50, 0x81, -0x80};
+static s16 gear_pos_x[] = {0x7C, -0x7C};
+static s16 stone_door_pos_x[] = {-0x20, 0x20, -0x50, 0x50};
+static s16 unused[] = {0x51, -0x50};
+static u32 statue_pos_x_3[] = {FIX(0.5), FIX(-0.5)};
+static u16 anim_bird_cage[] = {21, 22};
+static s16 unused2[] = {-14, 14, -8, 8, -23, -14, -8, 8, 14, 23, -8, 8};
+static u8 anim_gear_1[] = {6, 17, 6, 18, 6, 19, 6, 20, 0, 0};
+static u8 anim_gear_2[] = {6, 20, 6, 19, 6, 18, 6, 17, 0, 0};
+static u16 g_StoneDoorTiles[] = {
+    0x597, 0x000, 0x000, 0x000, 0x000, 0x000, 0x000, 0x597,
+};
+
+void func_us_801CCAAC(Entity* self) {
+    Entity* tempEntity;
+    s16 angle;
+
+    if ((self->ext.clockRoom.unk88 & 0x1F) == 0) {
         g_api.PlaySfxVolPan(SFX_STONE_MOVE_A, 0x40, 0);
     }
     self->ext.clockRoom.unk88++;
 
     // Minute hand
-    minute =
-        (self->ext.clockRoom.unk88 * LOW((self + 5)->ext.clockRoom.bellTimer)) /
-        512;
-    (self + 5)->ext.clockRoom.hand =
-        (s16)((self + 5)->ext.clockRoom.unk80 + minute) % 3600;
+    tempEntity = self + 5;
+    angle =
+        tempEntity->ext.clockRoom.unk80 +
+        (LOW(tempEntity->ext.clockRoom.bellTimer) * self->ext.clockRoom.unk88) /
+            512;
+    angle %= (60 * 60);
+    tempEntity->ext.clockRoom.hand = angle;
 
     // Hour hand
-    hour =
-        (self->ext.clockRoom.unk88 * LOW((self + 6)->ext.clockRoom.bellTimer)) /
-        512;
-    (self + 6)->ext.clockRoom.hand =
-        (s16)((self + 6)->ext.clockRoom.unk80 - hour) % 3600;
+    tempEntity++;
+    angle =
+        tempEntity->ext.clockRoom.unk80 -
+        (LOW(tempEntity->ext.clockRoom.bellTimer) * self->ext.clockRoom.unk88) /
+            512;
+    angle %= (60 * 60);
+    tempEntity->ext.clockRoom.hand = angle;
 }
 
 void UpdateBirdcages(Entity* self, u32 timerMinutes) {
@@ -56,6 +80,17 @@ void UpdateBirdcages(Entity* self, u32 timerMinutes) {
     }
 }
 
+#ifdef VERSION_PSP
+void UpdateClockHands(Entity* self) {
+    // self + 5 is the minute hand
+    self += 5;
+    self->ext.clockRoom.hand = D_91FC408 * 60;
+
+    // self + 6 is the hour hand
+    self += 1;
+    self->ext.clockRoom.hand = ((D_91FC410 % 12) * 300) + (D_91FC408 * 5);
+}
+#else
 void UpdateClockHands(Entity* self, PlayerStatus* status) {
     // self + 5 is the minute hand
     self += 5;
@@ -66,9 +101,21 @@ void UpdateClockHands(Entity* self, PlayerStatus* status) {
     self->ext.clockRoom.hand =
         (status->timerHours * 300) + (status->timerMinutes * 5);
 }
+#endif
 
 void EntityClockRoomController(Entity* self) {
+#ifdef VERSION_PSP
+#define timer_frames D_91FC3F8
+#define timer_seconds D_91FC400
+#define timer_minutes D_91FC408
+#define timer_hours D_91FC410
+#else
     PlayerStatus* status = &g_Status;
+#define timer_frames status->timerFrames
+#define timer_seconds status->timerSeconds
+#define timer_minutes status->timerMinutes
+#define timer_hours status->timerHours
+#endif
     Primitive* prim;
     Entity* entity;
     s32 primIndex;
@@ -100,7 +147,7 @@ void EntityClockRoomController(Entity* self) {
     self->ext.clockRoom.unk8A = g_unkGraphicsStruct.D_800973FC;
 
     // Every other minute the top left statue opens
-    if (status->timerMinutes & 1) {
+    if (timer_minutes & 1) {
         if (entity->posY.i.hi > 128) {
             g_Statues[LEFT_STATUE] = false;
         }
@@ -110,7 +157,7 @@ void EntityClockRoomController(Entity* self) {
 
     switch (self->step) {
     case 0:
-        if (!(g_Timer % 60)) {
+        if ((g_Timer % 60) == 0) {
             g_api.PlaySfx(SFX_CLOCK_ROOM_TICK);
         }
 
@@ -118,7 +165,9 @@ void EntityClockRoomController(Entity* self) {
         if (primIndex == -1) {
             return;
         }
+#ifndef VERSION_PSP
         InitializeEntity(g_EInitCommon);
+#endif
         self->flags |= FLAG_HAS_PRIMS;
         self->primIndex = primIndex;
         prim = &g_PrimBuf[primIndex];
@@ -130,6 +179,9 @@ void EntityClockRoomController(Entity* self) {
         LOW(prim->r3) = LOW(prim->r0);
         prim->priority = 0x1F0;
         prim->drawMode = DRAW_HIDE;
+#ifdef VERSION_PSP
+        InitializeEntity(g_EInitCommon);
+#endif
 
         g_api.PlaySfx(SET_STOP_MUSIC);
         stopMusicFlag = true;
@@ -138,9 +190,10 @@ void EntityClockRoomController(Entity* self) {
         g_Statues[RIGHT_STATUE] = false; // right statue closed
 
         if (entity->posY.i.hi < 64) {
-            if (entity->posX.i.hi < 64) {
+            posX = entity->posX.i.hi;
+            if (posX < 64) {
                 g_Statues[LEFT_STATUE] = true;
-            } else if (entity->posX.i.hi > 0xC0) {
+            } else if (posX > 0xC0) {
                 g_Statues[RIGHT_STATUE] = true;
             }
         }
@@ -155,7 +208,11 @@ void EntityClockRoomController(Entity* self) {
             CreateEntityFromCurrentEntity(E_CLOCK_HANDS, entity);
             entity->params = i;
         }
+#ifdef VERSION_PSP
+        UpdateClockHands(self);
+#else
         UpdateClockHands(self, status);
+#endif
 
         // Create Birdcage doors
         entity = self + 7;
@@ -163,7 +220,7 @@ void EntityClockRoomController(Entity* self) {
             CreateEntityFromCurrentEntity(E_BIRDCAGE_DOOR, entity);
             entity->params = i;
         }
-        UpdateBirdcages(self, status->timerMinutes);
+        UpdateBirdcages(self, timer_minutes);
 
         // Shadow for the Bighorn sheep head on the center
         entity = self + 9;
@@ -197,25 +254,29 @@ void EntityClockRoomController(Entity* self) {
             entity->params = i;
         }
         break;
+
     case 1:
-        if (!status->timerFrames) {
+        if (!timer_frames) {
             g_api.PlaySfx(SFX_CLOCK_ROOM_TICK);
         }
 
+#ifdef VERSION_PSP
+        UpdateClockHands(self);
+#else
         UpdateClockHands(self, status);
-        if (status->timerSeconds == 0 && status->timerFrames == 0) {
-            if (status->timerMinutes == 0) {
-                self->ext.clockRoom.bellTimer =
-                    ((status->timerHours + 11) % 12) + 1;
+#endif
+        if (timer_seconds == 0 && timer_frames == 0) {
+            if (timer_minutes == 0) {
+                self->ext.clockRoom.bellTimer = ((timer_hours + 11) % 12) + 1;
                 if (!self->ext.clockRoom.bellTimer) {
                     self->ext.clockRoom.bellTimer = 12;
                 }
-            } else if (((status->timerMinutes != 0) ^ 1) == 30) {
+            } else if (((timer_minutes != 0) ^ 1) == 30) {
                 self->ext.clockRoom.bellTimer = 1;
             }
         }
 
-        UpdateBirdcages(self, status->timerMinutes);
+        UpdateBirdcages(self, timer_minutes);
 
         if (!g_CastleFlags[CEN_OPEN]) {
             entity = &PLAYER;
@@ -231,6 +292,7 @@ void EntityClockRoomController(Entity* self) {
             }
         }
         break;
+
     case 2:
         g_Statues[RIGHT_STATUE] = false;
         g_Statues[LEFT_STATUE] = false;
@@ -263,7 +325,7 @@ void EntityClockRoomController(Entity* self) {
             if (g_Player.status & PLAYER_STATUS_BAT_FORM) {
                 g_Player.padSim = PAD_R1;
             } else if (g_Player.status & PLAYER_STATUS_MIST_FORM) {
-                g_Player.padSim = 0;
+                g_Player.padSim = PAD_NONE;
             } else if (g_Player.status & PLAYER_STATUS_WOLF_FORM) {
                 g_Player.padSim = PAD_L1;
             }
@@ -271,16 +333,17 @@ void EntityClockRoomController(Entity* self) {
             self->ext.clockRoom.unk88 = 0;
             self->step_s++;
 #endif
-
             break;
+
         case 1:
             if (g_Player.vram_flag & TOUCHING_GROUND) {
                 self->step_s++;
-                if (posX < 73 && posX > 183) {
+                if (posX < 73 && posX >= 184) {
                     self->step_s++;
                 }
             }
             break;
+
         case 2:
             if (posX > 64 && posX < 128) {
                 g_Player.padSim = PAD_LEFT | PAD_CROSS;
@@ -291,19 +354,18 @@ void EntityClockRoomController(Entity* self) {
             }
 
 #ifdef VERSION_PSP
-            if (D_psp_092A1D00 == PLAYER.posX.i.hi &&
-                D_psp_092A1D08 == PLAYER.posY.i.hi) {
+            if (D_pspeu_092A1D00 == PLAYER.posX.i.hi &&
+                D_pspeu_092A1D08 == PLAYER.posY.i.hi) {
                 g_Player.padSim &= ~PAD_CROSS;
-                D_psp_092A1D08 = NULL;
-                D_psp_092A1D00 = NULL;
-                return;
+                D_pspeu_092A1D08 = NULL;
+                D_pspeu_092A1D00 = NULL;
+            } else {
+                D_pspeu_092A1D00 = PLAYER.posX.i.hi;
+                D_pspeu_092A1D08 = PLAYER.posY.i.hi;
             }
-
-            D_psp_092A1D08 = PLAYER.posX.i.hi;
-            D_psp_092A1D08 = PLAYER.posY.i.hi;
 #endif
-
             break;
+
         case 3:
             if (posX < 73) {
                 if (entity->facingLeft) {
@@ -315,6 +377,7 @@ void EntityClockRoomController(Entity* self) {
 
             self->step_s++;
             break;
+
         case 4:
             prim = &g_PrimBuf[self->primIndex];
             prim->r0 = prim->g0 = prim->b0 += 16;
@@ -326,6 +389,7 @@ void EntityClockRoomController(Entity* self) {
                 self->step_s++;
             }
             break;
+
         case 5:
             prim = &g_PrimBuf[self->primIndex];
             prim->r0 = prim->g0 = prim->b0 -= 4;
@@ -337,6 +401,7 @@ void EntityClockRoomController(Entity* self) {
                 self->step_s++;
             }
             break;
+
         case 6:
             entity = self + 7;
             LOH(entity->ext.clockRoom.unk80) = 1;
@@ -348,26 +413,28 @@ void EntityClockRoomController(Entity* self) {
             self->ext.clockRoom.unk88 = 1;
             self->step_s++;
             break;
+
         case 7:
             if (!--self->ext.clockRoom.unk88) {
                 // Minute hand
                 entity = self + 5;
                 posX = LOW(entity->ext.clockRoom.unk80) =
                     entity->ext.clockRoom.hand;
-                LOW(entity->ext.clockRoom.bellTimer) =
-                    (0x1518 - (s16)(posX % 3600));
+                posX %= (60 * 60);
+                LOW(entity->ext.clockRoom.bellTimer) = 5400 - posX;
 
                 // Hour hand
                 entity++;
                 posX = LOW(entity->ext.clockRoom.unk80) =
                     entity->ext.clockRoom.hand;
-                LOW(entity->ext.clockRoom.bellTimer) =
-                    ((s16)(posX % 3600) + 0x708);
+                posX %= (60 * 60);
+                LOW(entity->ext.clockRoom.bellTimer) = posX + 1800;
 
                 self->ext.clockRoom.unk88 = 0;
                 self->step_s++;
             }
             break;
+
         case 8:
             func_us_801CCAAC(self);
             if (self->ext.clockRoom.unk88 >= 0x200) {
@@ -376,8 +443,9 @@ void EntityClockRoomController(Entity* self) {
                 self->ext.clockRoom.unk88 = 0x380;
             }
             break;
+
         case 9:
-            if (!(--self->ext.clockRoom.unk88)) {
+            if (!--self->ext.clockRoom.unk88) {
                 g_CastleFlags[CEN_OPEN] = 1;
                 g_api.RevealSecretPassageAtPlayerPositionOnMap(CEN_OPEN);
                 SetStep(3);
@@ -385,29 +453,34 @@ void EntityClockRoomController(Entity* self) {
             }
         }
         break;
+
     case 3:
         g_Statues[RIGHT_STATUE] = false;
         g_Statues[LEFT_STATUE] = false;
         switch (self->step_s) {
         case 0:
-            if (!(--self->ext.clockRoom.unk88)) {
+            if (!--self->ext.clockRoom.unk88) {
                 // Minute hand
                 entity = self + 5;
                 LOW(entity->ext.clockRoom.unk80) = entity->ext.clockRoom.hand;
-                LOW(entity->ext.clockRoom.bellTimer) =
-                    ((s16)(status->timerMinutes * 60) + 0x708);
+                posX = timer_minutes * 60;
+                LOW(entity->ext.clockRoom.bellTimer) = posX + 1800;
 
                 // Hour hand
                 entity++;
                 LOW(entity->ext.clockRoom.unk80) = entity->ext.clockRoom.hand;
-                LOW(entity->ext.clockRoom.bellTimer) =
-                    0x1518 - (s16)((status->timerHours * 300) +
-                                   (status->timerMinutes * 5));
+#ifdef VERSION_PSP
+                posX = ((timer_hours % 12) * 300) + (timer_minutes * 5);
+#else
+                posX = (timer_hours * 300) + (timer_minutes * 5);
+#endif
+                LOW(entity->ext.clockRoom.bellTimer) = 5400 - posX;
 
                 self->ext.clockRoom.unk88 = 0;
                 self->step_s++;
             }
             break;
+
         case 1:
             func_us_801CCAAC(self);
             if (self->ext.clockRoom.unk88 >= 0x200) {

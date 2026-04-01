@@ -1,34 +1,40 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "no0.h"
 
-static s32 D_us_80181CC4[] = {
-    FIX(0),    FIX(2),     FIX(-2),    FIX(0.5),   FIX(-0.5),
-    FIX(1.25), FIX(-1.25), FIX(0.125), FIX(-0.125)};
-static s32 D_us_80181CE8[][8] = {
+static s32 feetVelX[] = {FIX(2), FIX(-2), FIX(0.5), FIX(-0.5)};
+static s32 legVelX[] = {FIX(1.25), FIX(-1.25), FIX(0.125), FIX(-0.125)};
+static s32 legVelY[][8] = {
     {FIX(2.5), FIX(1.5), FIX(0.8125), FIX(1.25), FIX(1.25), FIX(2), FIX(1),
      FIX(0.5)},
     {FIX(1.25), FIX(1.9375), FIX(1), FIX(0.625), FIX(1.5), FIX(1.125),
-     FIX(0.25), FIX(1.125)}};
+     FIX(0.25), FIX(1.125)},
+};
+
 static s16 D_us_80181D28[] = {-16, 0, 16};
-static s16 D_us_80181D30[] = {0x40, 0x10, 0x40, 0x20, 0xFF};
-static s16 D_us_80181D3C[] = {-0x48, 0x10, -0x48, 0x24, 0xFF};
-static s16 D_us_80181D48[] = {0x00, 0x18, 0x00, 0x14, 0xFF};
+
+static s16 D_us_80181D30[] = {64, 16, 64, 32, 255};
+static s16 D_us_80181D3C[] = {-72, 16, -72, 36, 255};
+static s16 D_us_80181D48[] = {0, 24, 0, 20, 255};
+
 static s16 D_us_80181D54[] = {0, 16, 0, 4, 8, -4, -16, 0};
 static s16 D_us_80181D64[] = {0, 8, 0, 4, 8, -4, -16, 0};
 static s16 D_us_80181D74[] = {0, 10, 0, 4, 8, -4, -16, 0};
-static u8 D_us_80181D84[] = {12, 14, 16, 18};
-static u8 D_us_80181D88[] = {
-    6, 1, 6, 2, 6, 3, 6, 4, 6, 5, 6, 6, 6, 5, 6, 4, 6, 3, 6, 2, 0, 0};
-static u8 D_us_80181DA0[] = {4, 1, 4, 2, 2, 3, 4, 2, 0, 0};
-static u8 D_us_80181DAC[] = {6, 7, 6, 8, 0, 0};
-static u8 D_us_80181DB4[] = {6, 9, 6, 10, 0, 0};
 
-// Some sort of death entity
-// Perhaps the parts that go flying on death
-void func_us_801CF4A8(Entity* self) {
+static u8 D_us_80181D84[] = {12, 14, 16, 18};
+
+static u8 anim0[] = {6, 1, 6, 2, 6, 3, 6, 4, 6, 5, 6,
+                     6, 6, 5, 6, 4, 6, 3, 6, 2, 0, 0};
+static u8 anim1[] = {4, 1, 4, 2, 2, 3, 4, 2, 0, 0};
+static u8 anim2[] = {6, 7, 6, 8, 0, 0};
+static u8 anim3[] = {6, 9, 6, 10, 0, 0};
+
+u8 CheckColliderOffsets(s16* arg0, s32 facing);
+void func_us_801D0898(Entity* self, s32 count);
+
+void EntityDiplocephalusFoot(Entity* self) {
     Entity* newEntity;
 
-    if (self->ext.diplocephalus.parent->entityId != E_DIPLOCEPHALUS) {
+    if (self->ext.diploBody.diplo->entityId != E_DIPLOCEPHALUS) {
         EntityExplosionSpawn(0, 0);
         return;
     }
@@ -38,27 +44,27 @@ void func_us_801CF4A8(Entity* self) {
         self->drawFlags = DRAW_COLORS;
         self->hitboxState = 0;
         self->velocityY =
-            D_us_80181CE8[self->params][self->ext.diplocephalus.unk9E - 1] -
-            FIX(8);
-        self->ext.diplocephalus.velocityY = self->velocityY;
+            legVelY[self->params][self->ext.diploBody.unk9E - 1] - FIX(8);
+        self->ext.diploBody.velocityY = self->velocityY;
         self->step++;
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
-            CreateEntityFromEntity(E_UNK_ID_13, self, newEntity);
+            CreateEntityFromEntity(E_ID_13, self, newEntity);
             newEntity->params = 2;
-            newEntity->ext.diplocephalus.entity = self;
+            newEntity->ext.ent13.parent = self;
         }
         break;
+
     case 7:
-        self->velocityX = D_us_80181CC4[self->ext.diplocephalus.unk9E];
+        self->velocityX = feetVelX[self->ext.diploBody.unk9E - 1];
         if (self->facingLeft ^ 1) {
             self->velocityX = -self->velocityX;
         }
 
-        if (self->ext.diplocephalus.unk9E % 2) {
-            self->rotate += 0x100;
+        if (self->ext.diploBody.unk9E % 2) {
+            self->rotate += ROT(22.5);
         } else {
-            self->rotate -= 0x100;
+            self->rotate -= ROT(22.5);
         }
 
         if (UnkCollisionFunc3(D_us_80181D54) & EFFECT_SOLID) {
@@ -75,7 +81,7 @@ void func_us_801CF4A8(Entity* self) {
     }
 }
 
-void EntityDiplocephalusFoot(Entity* self) {
+static void UpdateFoot(Entity* self) {
     Entity* currentEntity;
     u16 x;
 
@@ -86,9 +92,9 @@ void EntityDiplocephalusFoot(Entity* self) {
         InitializeEntity(g_EInitDiplocephalusFoot);
         g_CurrentEntity->hitboxOffY = 4;
         g_CurrentEntity->animCurFrame =
-            D_us_80181D84[g_CurrentEntity->ext.diplocephalus.unk9E - 1];
+            D_us_80181D84[g_CurrentEntity->ext.diploBody.unk9E - 1];
         g_CurrentEntity = currentEntity;
-        // fallthrough
+        /* fallthrough */
     case 1:
         currentEntity = g_CurrentEntity;
         g_CurrentEntity = self;
@@ -97,6 +103,7 @@ void EntityDiplocephalusFoot(Entity* self) {
         }
         g_CurrentEntity = currentEntity;
         break;
+
     case 2:
         if (g_CurrentEntity->step >= 4) {
             if (self->facingLeft) {
@@ -105,12 +112,13 @@ void EntityDiplocephalusFoot(Entity* self) {
                 self->velocityX = FIX(-1.0);
             }
             self->velocityY = -0x2AAA4;
-            self->ext.diplocephalus.unk9F = 0;
-            self->ext.diplocephalus.velocityY = -0x71DU;
+            self->ext.diploBody.unk9F = 0;
+            self->ext.diploBody.velocityY = -0x71D;
             self->animCurFrame--;
             self->step = 4;
         }
         break;
+
     case 3:
         if (self->facingLeft) {
             self->velocityX = -0x22AAA;
@@ -118,14 +126,15 @@ void EntityDiplocephalusFoot(Entity* self) {
             self->velocityX = 0x22AAA;
         }
         self->velocityY = -0x7FFFE;
-        self->ext.diplocephalus.unk9F = 0;
-        self->ext.diplocephalus.velocityY = 0x26AAA;
+        self->ext.diploBody.unk9F = 0;
+        self->ext.diploBody.velocityY = 0x26AAA;
         self->animCurFrame--;
         self->step = 4;
         break;
+
     case 4:
-        self->velocityY += self->ext.diplocephalus.velocityY;
-        self->ext.diplocephalus.unk9F++;
+        self->velocityY += (s32)self->ext.diploBody.velocityY;
+        self->ext.diploBody.unk9F++;
         currentEntity = g_CurrentEntity;
         g_CurrentEntity = self;
 
@@ -135,9 +144,9 @@ void EntityDiplocephalusFoot(Entity* self) {
             self->velocityX = 0;
             self->velocityY = 0;
             self->animCurFrame++;
-            if (self->ext.diplocephalus.unk9E < 3) {
+            if (self->ext.diploBody.unk9E < 3) {
                 if (g_CurrentEntity->facingLeft ^
-                    (self->ext.diplocephalus.parent->step % 2)) {
+                    (self->ext.diploBody.diplo->step % 2)) {
                     EntityGreyPuffSpawner(self, 6, 3, 6, 16, 0, -4);
                 } else {
                     EntityGreyPuffSpawner(self, 6, 3, -6, 16, 0, 4);
@@ -147,18 +156,18 @@ void EntityDiplocephalusFoot(Entity* self) {
         }
         g_CurrentEntity = currentEntity;
         break;
+
     case 5:
-        self->ext.diplocephalus.unk9F++;
+        self->ext.diploBody.unk9F++;
         break;
     }
 }
 
-void func_us_801CF910(Entity* self) {
-    Entity* entityOne;
-    Entity* entityTwo;
+void EntityDiplocephalusLeg(Entity* self) {
+    Entity* tempEntity;
+    Entity* diplo;
 
-    // func_us_801CFBE8 (self + 1)
-    if (self->ext.diplocephalusUnk.parent->entityId != E_DIPLOCEPHALUS) {
+    if (self->ext.diploBody.diplo->entityId != E_DIPLOCEPHALUS) {
         EntityExplosionSpawn(0, 0);
         return;
     }
@@ -167,77 +176,75 @@ void func_us_801CF910(Entity* self) {
     case 0:
         InitializeEntity(D_us_80180B3C);
         if (self->facingLeft) {
-            self->ext.diplocephalusUnk.unkA8 = FIX(6);
-            self->ext.diplocephalusUnk.unkAC = FIX(18);
+            self->ext.diploBody.unkA8 = FIX(6);
+            self->ext.diploBody.unkAC = FIX(18);
         } else {
-            self->ext.diplocephalusUnk.unkA8 = FIX(-6);
-            self->ext.diplocephalusUnk.unkAC = FIX(-18);
+            self->ext.diploBody.unkA8 = FIX(-6);
+            self->ext.diploBody.unkAC = FIX(-18);
         }
-        // fallthrough
+        /* fallthrough */
     case 1:
-        entityOne = self->ext.diplocephalusUnk.unk90;
-        entityTwo = self->ext.diplocephalusUnk.parent;
-        self->posX.val =
-            ((entityTwo->posX.val + self->ext.diplocephalusUnk.unkAC +
-              entityOne->posX.val) /
-             2) -
-            self->ext.diplocephalusUnk.unkA8;
-        if (!(self->ext.diplocephalusUnk.unk9E % 2)) {
-            self->posX.val -= self->ext.diplocephalusUnk.unkAC -
-                              self->ext.diplocephalusUnk.unkA8;
+        tempEntity = self->ext.diploBody.unk90;
+        diplo = self->ext.diploBody.diplo;
+        self->posX.val = (((s32)diplo->posX.val + self->ext.diploBody.unkAC +
+                           tempEntity->posX.val) /
+                          2) -
+                         self->ext.diploBody.unkA8;
+        if ((self->ext.diploBody.unk9E % 2) == 0) {
+            self->posX.val -=
+                self->ext.diploBody.unkAC - self->ext.diploBody.unkA8;
         }
 
         self->posY.val =
-            ((entityTwo->posY.val + FIX(12) + entityOne->posY.val) / 2) -
-            FIX(8);
-        if (self->ext.diplocephalusUnk.unk9E % 2) {
+            ((diplo->posY.val + FIX(12) + tempEntity->posY.val) / 2) - FIX(8);
+        if (self->ext.diploBody.unk9E % 2) {
             self->posY.val -= FIX(4.0);
         }
 
-        if (self->ext.diplocephalusUnk.unk9E < 3) {
-            AnimateEntity(D_us_80181DAC, self);
+        if (self->ext.diploBody.unk9E < 3) {
+            AnimateEntity(anim2, self);
         } else {
-            AnimateEntity(D_us_80181DB4, self);
+            AnimateEntity(anim3, self);
         }
-
         break;
+
     case 6:
         self->drawFlags = ENTITY_ROTATE;
         self->hitboxState = 0;
         self->velocityY =
-            D_us_80181CE8[self->params][self->ext.diplocephalusUnk.unk9E + 3] -
-            FIX(8);
-        self->ext.diplocephalusUnk.velocityY = self->velocityY;
+            legVelY[self->params][self->ext.diploBody.unk9E + 3] - FIX(8);
+        self->ext.diploBody.velocityY = self->velocityY;
         self->step++;
 
-        entityOne = AllocEntity(&g_Entities[160], &g_Entities[192]);
-        if (entityOne != NULL) {
-            DestroyEntity(entityOne);
-            CreateEntityFromEntity(E_UNK_ID_13, self, entityOne);
-            entityOne->params = 2;
-            entityOne->ext.diplocephalusUnk.entity = self;
+        tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
+        if (tempEntity != NULL) {
+            DestroyEntity(tempEntity);
+            CreateEntityFromEntity(E_ID_13, self, tempEntity);
+            tempEntity->params = 2;
+            tempEntity->ext.ent13.parent = self;
         }
         break;
+
     case 7:
-        self->velocityX = D_us_80181CC4[self->ext.diplocephalusUnk.unk9E + 4];
+        self->velocityX = legVelX[self->ext.diploBody.unk9E - 1];
         if (self->facingLeft ^ 1) {
             self->velocityX = -self->velocityX;
         }
 
-        if (self->ext.diplocephalusUnk.unk9E % 2) {
-            self->rotate += 0x100;
+        if (self->ext.diploBody.unk9E % 2) {
+            self->rotate += ROT(22.5);
         } else {
-            self->rotate -= 0x100;
+            self->rotate -= ROT(22.5);
         }
 
-        if (UnkCollisionFunc3(D_us_80181D64) & 1) {
-            self->ext.diplocephalusUnk.velocityY /= 2;
-            if (self->ext.diplocephalusUnk.velocityY == 0) {
+        if (UnkCollisionFunc3(D_us_80181D64) & EFFECT_SOLID) {
+            self->ext.diploBody.velocityY /= 2;
+            if (self->ext.diploBody.velocityY == 0) {
                 PlaySfxPositional(SFX_EXPLODE_B);
                 EntityExplosionSpawn(0, 0);
-                return;
+            } else {
+                self->velocityY = self->ext.diploBody.velocityY;
             }
-            self->velocityY = self->ext.diplocephalusUnk.velocityY;
         }
         break;
     }
@@ -246,10 +253,10 @@ void func_us_801CF910(Entity* self) {
 void EntityDiplocephalus(Entity* self) {
     Entity* entityRef;
     s32 i;
-    u8 random;
+    u8 var_s2;
 
-    self->hitParams |= self->ext.diplocephalus.hitParams;
-    self->ext.diplocephalus.hitParams2 = self->hitParams;
+    self->hitParams |= self->ext.diplo.hitParams;
+    self->ext.diplo.hitParams2 = self->hitParams;
     if ((self->flags & FLAG_DEAD) && self->step < 11) {
         self->step = 11;
     }
@@ -257,56 +264,55 @@ void EntityDiplocephalus(Entity* self) {
     switch (self->step) {
     case 0:
         InitializeEntity(g_EInitDiplocephalus);
-        // fallthrough
-
+        /* fallthrough */
     case 1:
         self->step_s = 0;
-        self->ext.diplocephalus.unk9C = 0;
-        self->ext.diplocephalus.unk9E = 0;
+        self->ext.diplo.unk9C = 0;
+        self->ext.diplo.unk9E = 0;
         self->facingLeft = GetSideToPlayer() & 1;
         self->nextPart = self + 1;
         entityRef = self;
 
         for (i = 0; i < 4; i++) {
             DestroyEntity(++entityRef);
-            CreateEntityFromCurrentEntity(E_ID_22, entityRef);
+            CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_FOOT, entityRef);
             if (i < 2) {
                 entityRef->zPriority = self->zPriority + 8;
             } else {
                 entityRef->zPriority = self->zPriority - 8;
             }
-            entityRef->ext.diplocephalus.unk9D = 0;
+            entityRef->ext.diploBody.unk9D = 0;
             entityRef->facingLeft = self->facingLeft ^ 1;
-            entityRef->ext.diplocephalus.parent = self;
-            entityRef->ext.diplocephalus.unk9E = i + 1;
+            entityRef->ext.diploBody.diplo = self;
+            entityRef->ext.diploBody.unk9E = i + 1;
             entityRef->nextPart = entityRef + 1;
         }
 
-        self->ext.diplocephalus.entity8C = entityRef;
-        self->ext.diplocephalus.entity88 = entityRef - 1;
-        self->ext.diplocephalus.entity84 = entityRef - 2;
-        self->ext.diplocephalus.entity = entityRef - 3;
+        self->ext.diplo.foot3 = entityRef;
+        self->ext.diplo.foot2 = entityRef - 1;
+        self->ext.diplo.foot1 = entityRef - 2;
+        self->ext.diplo.foot0 = entityRef - 3;
 
         for (i = 0; i < 4; i++) {
             entityRef++;
-            CreateEntityFromCurrentEntity(E_ID_23, entityRef);
+            CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_LEG, entityRef);
             if (i < 2) {
                 entityRef->zPriority = self->zPriority + 4;
             } else {
                 entityRef->zPriority = self->zPriority - 4;
             }
             entityRef->facingLeft = self->facingLeft ^ 1;
-            entityRef->ext.diplocephalus.parent = self;
-            entityRef->ext.diplocephalus.entity90 = entityRef - 4;
-            entityRef->ext.diplocephalus.parent = self;
-            entityRef->ext.diplocephalus.unk9E = i + 1;
+            entityRef->ext.diploBody.diplo = self;
+            entityRef->ext.diploBody.unk90 = entityRef - 4;
+            entityRef->ext.diploBody.diplo = self;
+            entityRef->ext.diploBody.unk9E = i + 1;
 
             if (i % 2) {
-                entityRef->ext.diplocephalus.unk9F = self->facingLeft ^ 1;
+                entityRef->ext.diploBody.unk9F = self->facingLeft ^ 1;
             } else {
-                entityRef->ext.diplocephalus.unk9F = self->facingLeft;
+                entityRef->ext.diploBody.unk9F = self->facingLeft;
             }
-            (entityRef - 4)->ext.diplocephalus.entity90 = entityRef;
+            (entityRef - 4)->ext.diploBody.unk90 = entityRef;
             entityRef->nextPart = entityRef + 1;
         }
 
@@ -314,15 +320,15 @@ void EntityDiplocephalus(Entity* self) {
         CreateEntityFromCurrentEntity(E_DIPLOCEPHALUS_TAIL, entityRef);
         entityRef->zPriority = self->zPriority;
         entityRef->facingLeft = self->facingLeft ^ 1;
-        entityRef->ext.diplocephalus.parent = self;
-        self->ext.diplocephalus.entityA0 = entityRef;
+        entityRef->ext.diploTail.diplo = self;
+        self->ext.diplo.tail = entityRef;
         entityRef->nextPart = entityRef + 1;
 
         entityRef += 9;
         DestroyEntity(entityRef);
         CreateEntityFromEntity(E_DIPLOCEPHALUS_TORSO, self, entityRef);
-        entityRef->ext.diplocephalus.parent = self;
-        self->ext.diplocephalus.parent = entityRef;
+        entityRef->ext.diploBody.diplo = self;
+        self->ext.diplo.torso = entityRef;
 
         entityRef = self;
         for (i = 0; i < 4; i++) {
@@ -347,7 +353,7 @@ void EntityDiplocephalus(Entity* self) {
         for (i = 0; i < 4; i++) {
             entityRef++;
             entityRef->posY.val = self->posY.val + FIX(14);
-            EntityDiplocephalusFoot(entityRef);
+            UpdateFoot(entityRef);
         }
         self->step++;
         break;
@@ -367,56 +373,52 @@ void EntityDiplocephalus(Entity* self) {
         entityRef = self;
         for (i = 0; i < 4; i++) {
             entityRef++;
-            EntityDiplocephalusFoot(entityRef);
+            UpdateFoot(entityRef);
         }
         break;
 
     case 3:
 #ifdef VERSION_PSP
-        if (self->ext.diplocephalus.unk9F++ == 0) {
+        if (self->ext.diplo.unk9F++ == 0) {
 #else
-        if (++self->ext.diplocephalus.unk9F == 1) {
+        if (++self->ext.diplo.unk9F == 1) {
 #endif
             self->velocityY = 0x7ED0;
-            self->ext.diplocephalus.unk9D++;
+            self->ext.diplo.unk9D++;
         } else {
             self->velocityY -= FIX(0.03125);
         }
 
-        if (self->ext.diplocephalus.unk9F == 32) {
-            self->ext.diplocephalus.unk9F = 0;
-            if (self->ext.diplocephalus.unk9D >= 2) {
-                self->velocityY = 0;
-                self->step_s ^= 1;
-                self->ext.diplocephalus.entityA4 =
-                    self + 4 - (self->step_s << 1);
-                self->step = 4;
-                if (self->ext.diplocephalus.unk9C ||
-                    (CheckColliderOffsets(D_us_80181D30, self->facingLeft ^ 1) &
-                     0xFF) ^
-                        1) {
-                    self->step = 6;
-                    self->step_s ^= 1;
-                }
-            } else {
+        if (self->ext.diplo.unk9F == 32) {
+            self->ext.diplo.unk9F = 0;
+            if (self->ext.diplo.unk9D < 2) {
                 break;
+            }
+            self->velocityY = 0;
+            self->step_s ^= 1;
+            self->ext.diplo.activeFoot = self + 4 - (self->step_s << 1);
+            self->step = 4;
+            if (self->ext.diplo.unk9C ||
+                CheckColliderOffsets(D_us_80181D30, self->facingLeft ^ 1) ^ 1) {
+                self->step = 6;
+                self->step_s ^= 1;
             }
         }
 
-        self->ext.diplocephalus.unk9C |= self->hitParams;
-        AnimateEntity(D_us_80181D88, self);
+        self->ext.diplo.unk9C |= self->hitParams;
+        AnimateEntity(anim0, self);
         MoveEntity();
-        if (CheckColliderOffsets(D_us_80181D48, 1) & 0xFF & 0xFF & 1) {
+        var_s2 = CheckColliderOffsets(D_us_80181D48, 1);
+        if (var_s2 & 1) {
             self->posY.i.hi -= 1;
         }
-
         break;
 
     case 4:
-        entityRef = self->ext.diplocephalus.entityA4;
-        EntityDiplocephalusFoot(entityRef);
-        if (entityRef->ext.diplocephalus.unk9F > 0xC) {
-            EntityDiplocephalusFoot(entityRef - 1);
+        entityRef = self->ext.diplo.activeFoot;
+        UpdateFoot(entityRef);
+        if (entityRef->ext.diploBody.unk9F > 12) {
+            UpdateFoot(entityRef - 1);
         }
 
         if (entityRef->step == 5 && (entityRef - 1)->step == 5) {
@@ -424,27 +426,27 @@ void EntityDiplocephalus(Entity* self) {
             (entityRef - 1)->step = 2;
             g_api.func_80102CD8(1);
             self->step = 3;
-            if (self->ext.diplocephalus.unk9C) {
+            if (self->ext.diplo.unk9C) {
                 self->step = 6;
             }
         }
 
         self->velocityX = (entityRef - (self->step_s * 1))->velocityX >> 1;
-        if (entityRef->ext.diplocephalus.unk9F >= 24) {
+        if (entityRef->ext.diploBody.unk9F >= 24) {
             self->velocityY = 0;
         } else {
             self->velocityY = entityRef->velocityY >> 2;
         }
-        self->ext.diplocephalus.unk9C |= self->hitParams;
-        AnimateEntity(D_us_80181D88, self);
+        self->ext.diplo.unk9C |= self->hitParams;
+        AnimateEntity(anim0, self);
         MoveEntity();
         break;
 
     case 6:
 #ifdef VERSION_PSP
-        if (self->ext.diplocephalus.unk9F++ == 0) {
+        if (self->ext.diplo.unk9F++ == 0) {
 #else
-        if (++self->ext.diplocephalus.unk9F == 1) {
+        if (++self->ext.diplo.unk9F == 1) {
 #endif
             self->poseTimer = 0;
             self->pose = 0;
@@ -453,33 +455,32 @@ void EntityDiplocephalus(Entity* self) {
             self->velocityY -= FIX(1.0);
         }
 
-        if (self->ext.diplocephalus.unk9F == 4) {
+        if (self->ext.diplo.unk9F == 4) {
             self->step_s ^= 1;
-            self->ext.diplocephalus.entityA4 = self + ((self->step_s << 1) + 1);
+            self->ext.diplo.activeFoot = self + ((self->step_s << 1) + 1);
             self->step = 7;
             (self + 1)->step = 3;
             (self + 2)->step = 3;
             (self + 3)->step = 3;
             (self + 4)->step = 3;
-            self->ext.diplocephalus.unk9E++;
-            self->ext.diplocephalus.unk9F = 0;
+            self->ext.diplo.unk9E++;
+            self->ext.diplo.unk9F = 0;
 
-            if ((self->ext.diplocephalus.unk9E % 2 &&
-                 (CheckColliderOffsets(D_us_80181D3C, self->facingLeft ^ 1) &
-                  0xFF) ^
+            if ((self->ext.diplo.unk9E % 2 &&
+                 CheckColliderOffsets(D_us_80181D3C, self->facingLeft ^ 1) ^
                      1) ||
-                self->ext.diplocephalus.unk9E > 8) {
+                self->ext.diplo.unk9E > 8) {
                 self->step = 3;
-                self->ext.diplocephalus.unk9C = 0;
-                self->ext.diplocephalus.unk9E = 0;
-                self->ext.diplocephalus.unk9F = 0;
+                self->ext.diplo.unk9C = 0;
+                self->ext.diplo.unk9E = 0;
+                self->ext.diplo.unk9F = 0;
                 self->velocityY = 0;
                 self->params = 0;
                 (self + 1)->step = 2;
                 (self + 2)->step = 2;
                 (self + 3)->step = 2;
                 (self + 4)->step = 2;
-                self->ext.diplocephalus.unk9D = 0;
+                self->ext.diplo.unk9D = 0;
                 self->poseTimer = 0;
                 self->pose = 0;
                 self->step_s ^= 1;
@@ -500,16 +501,15 @@ void EntityDiplocephalus(Entity* self) {
                 }
             }
         }
-
-        AnimateEntity(D_us_80181DA0, self);
+        AnimateEntity(anim1, self);
         MoveEntity();
         break;
 
     case 7:
-        entityRef = self->ext.diplocephalus.entityA4;
-        EntityDiplocephalusFoot(entityRef);
-        if (entityRef->ext.diplocephalus.unk9F > 2) {
-            EntityDiplocephalusFoot(entityRef + 1);
+        entityRef = self->ext.diplo.activeFoot;
+        UpdateFoot(entityRef);
+        if (entityRef->ext.diploBody.unk9F > 2) {
+            UpdateFoot(entityRef + 1);
         }
 
         if ((entityRef + 1)->step == 5 && entityRef->step == 5) {
@@ -518,17 +518,17 @@ void EntityDiplocephalus(Entity* self) {
             self->step = 6;
         }
         self->velocityX = (entityRef + (self->step_s * 1))->velocityX >> 1;
-        if (entityRef->ext.diplocephalus.unk9F >= 6) {
+        if (entityRef->ext.diploBody.unk9F >= 6) {
             self->velocityY = 0;
         } else {
             self->velocityY = entityRef->velocityY >> 3;
         }
-        AnimateEntity(D_us_80181DA0, self);
+        AnimateEntity(anim1, self);
         MoveEntity();
         break;
 
     case 11:
-        self->ext.diplocephalus.entityA0->step = 8;
+        self->ext.diplo.tail->step = 8;
         self->velocityX = 0;
         self->step++;
         entityRef = self;
@@ -537,30 +537,28 @@ void EntityDiplocephalus(Entity* self) {
             entityRef->hitboxState = 0;
             entityRef++;
         }
-
         break;
 
     case 12:
-        if (self->ext.diplocephalus.entityA0->entityId !=
-                E_DIPLOCEPHALUS_TAIL &&
-            UnkCollisionFunc3(D_us_80181D74) & 1) {
+        if (self->ext.diplo.tail->entityId != E_DIPLOCEPHALUS_TAIL &&
+            UnkCollisionFunc3(D_us_80181D74) & EFFECT_SOLID) {
             g_api.func_80102CD8(1);
             self->step++;
         }
         break;
 
     case 13:
-        random = Random() & 1;
+        var_s2 = Random() & 1;
         entityRef = self;
 
         for (i = 0; i < 4; i++) {
             entityRef++;
             entityRef->step = 6;
-            entityRef->params = random;
-            entityRef->ext.diplocephalus.entity90->step = 6;
-            entityRef->ext.diplocephalus.entity90->params = random;
+            entityRef->params = var_s2;
+            entityRef->ext.diploBody.unk90->step = 6;
+            entityRef->ext.diploBody.unk90->params = var_s2;
         }
-        self->ext.diplocephalus.velocityY = 0;
+        self->ext.diplo.unk98 = 0;
 
         for (i = 0; i < LEN(D_us_80181D28); i++) {
             entityRef = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -574,18 +572,18 @@ void EntityDiplocephalus(Entity* self) {
 
         g_api.func_80102CD8(1);
         PlaySfxPositional(SFX_STUTTER_EXPLODE_C);
-        self->ext.diplocephalus.unk9C = 0;
-        self->ext.diplocephalus.unk9D = 0;
+        self->ext.diplo.unk9C = 0;
+        self->ext.diplo.unk9D = 0;
         self->animCurFrame = 0;
-        entityRef = self->ext.diplocephalus.parent;
+        entityRef = self->ext.diplo.torso;
         DestroyEntity(entityRef);
         self->step++;
         break;
 
     case 14:
-        if (self->ext.diplocephalus.unk9C++ >= 6) {
-            self->ext.diplocephalus.unk9C = 0;
-            if (self->ext.diplocephalus.unk9D < 24) {
+        if (self->ext.diplo.unk9C++ >= 6) {
+            self->ext.diplo.unk9C = 0;
+            if (self->ext.diplo.unk9D < 24) {
                 func_us_801D0898(self, 2);
                 if (!(g_Timer & 2)) {
                     entityRef = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -594,7 +592,7 @@ void EntityDiplocephalus(Entity* self) {
                         entityRef->params = 2;
                     }
                 }
-                self->ext.diplocephalus.unk9D++;
+                self->ext.diplo.unk9D++;
             } else {
                 DestroyEntity(self);
             }
@@ -603,8 +601,8 @@ void EntityDiplocephalus(Entity* self) {
     }
 
     if (self->step < 11 && self->step > 2) {
-        self->posX.val = (self->ext.diplocephalus.entity->posX.val +
-                          self->ext.diplocephalus.entity8C->posX.val) /
+        self->posX.val = (self->ext.diplo.foot0->posX.val +
+                          self->ext.diplo.foot3->posX.val) /
                          2;
     }
 }
@@ -619,20 +617,16 @@ void EntityDiplocephalusTorso(Entity* self) {
 
     if (!self->step) {
         InitializeEntity(g_EInitInteractable);
-        self->ext.diplocephalusUnk.unkA4 =
-            self->posX.i.hi + g_Tilemap.scrollX.i.hi;
-        self->ext.diplocephalusUnk.unkA8 =
-            self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+        self->ext.diploBody.unkA4 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+        self->ext.diploBody.unkA8 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
     }
 
     player = &PLAYER;
-    parent = self->ext.diplocephalus.parent;
+    parent = self->ext.diploBody.diplo;
     self->posX.i.hi = parent->posX.i.hi;
     self->posY.i.hi = parent->posY.i.hi;
-    posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi -
-           self->ext.diplocephalusUnk.unkA4;
-    posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi -
-           self->ext.diplocephalusUnk.unkA8;
+    posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi - self->ext.diploBody.unkA4;
+    posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi - self->ext.diploBody.unkA8;
     collision = 0;
     step = parent->step;
     if (step < 13) {
@@ -644,8 +638,8 @@ void EntityDiplocephalusTorso(Entity* self) {
             D_80097488.y.i.hi += 2;
         }
     }
-    self->ext.diplocephalusUnk.unkA4 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
-    self->ext.diplocephalusUnk.unkA8 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
+    self->ext.diploBody.unkA4 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
+    self->ext.diploBody.unkA8 = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
 
     if (parent->entityId != E_DIPLOCEPHALUS) {
         DestroyEntity(self);
@@ -656,18 +650,17 @@ void EntityDiplocephalusTorso(Entity* self) {
 void func_us_801D0898(Entity* self, s32 count) {
     Entity* newEntity;
     s32 i;
-    s8 randomX;
-    s8 randomY;
+    s8 dx, dy;
 
     for (i = 0; i < count; i++) {
-        randomX = (Random() & 0x3F) - 0x20;
-        randomY = (Random() & 0x1F) - 0xF;
+        dx = (Random() & 0x3F) - 0x20;
+        dy = (Random() & 0x1F) - 0xF;
         newEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
         if (newEntity != NULL) {
             CreateEntityFromEntity(E_EXPLOSION, self, newEntity);
             newEntity->params = 1;
-            newEntity->posX.i.hi += randomX;
-            newEntity->posY.i.hi += randomY;
+            newEntity->posX.i.hi += dx;
+            newEntity->posY.i.hi += dy;
             newEntity->zPriority = self->zPriority + 2;
         }
     }

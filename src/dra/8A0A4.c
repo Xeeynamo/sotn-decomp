@@ -151,7 +151,7 @@ void EntityStopWatch(Entity* self) {
         }
         break;
     case 2:
-        self->ext.stopwatch.unk84.val += FIX(-1);
+        self->ext.stopwatch.unk84.val -= FIX(1);
         if (self->ext.stopwatch.unk84.val <= FIX(16)) {
             self->ext.stopwatch.t = 5;
             PlaySfx(SFX_STOPWATCH_TICK);
@@ -592,7 +592,7 @@ void EntitySubwpnBible(Entity* self) {
     case 2:
         self->posX.val += self->velocityX;
         self->posY.val += self->velocityY;
-        self->velocityY += FIX(-2);
+        self->velocityY -= FIX(2);
         break;
     }
     if (self->ext.et_BibleSubwpn.unk86) {
