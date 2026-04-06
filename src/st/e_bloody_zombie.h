@@ -58,6 +58,9 @@ static u8 unused[] = {0x06, 0x01, 0x04, 0x01, 0x04, 0x02, 0x06, 0x03,
                       0x05, 0x04, 0x05, 0x05, 0x00, 0x00, 0x00, 0x00};
 #endif
 
+extern EInit g_EInitParticle;
+Primitive* FindFirstUnkPrim2(Primitive* prim, u8 index);
+
 void EntityBloodSplatter(Entity* self) {
     Primitive* prim;
     s32 primIndex;
@@ -242,6 +245,8 @@ static void func_801C53AC(Primitive* prim) {
         break;
     }
 }
+
+extern EInit g_EInitBloodyZombie;
 
 void EntityBloodyZombie(Entity* self) {
     Primitive* prim;

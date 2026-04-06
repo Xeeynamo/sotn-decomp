@@ -1,0 +1,125 @@
+options:
+  platform: psp
+  basename: bobo0
+  base_path: ..
+  build_path: build/pspeu
+  target_path: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo0.bin
+  asm_path: asm/pspeu/boss/bo0_psp
+  asset_path: assets/boss/bo0
+  src_path: src/boss
+  ld_script_path: build/pspeu/bobo0.ld
+  compiler: GCC
+  symbol_addrs_path:
+    - config/symbols.pspeu.txt
+    - config/symbols.pspeu.bobo0.txt
+  undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.bobo0.txt
+  undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.bobo0.txt
+  find_file_boundaries: true
+  use_legacy_include_asm: false
+  migrate_rodata_to_functions: true
+  asm_jtbl_label_macro: jlabel
+  symbol_name_format: pspeu_$VRAM
+  disassemble_all: true
+  section_order:
+    - .text
+    - .data
+    - .rodata
+    - .bss
+  ld_bss_is_noload: true
+  disasm_unknown: true
+  global_vram_start: 0x08000000
+  ld_generate_symbol_per_data_segment: true
+  asm_inc_header: |
+    .set noat      /* allow manual use of $at */
+    .set noreorder /* don't insert nops after branches */
+sha1: 53b6c175fda99280a0fa5e2ad3bb4cf2ee8148e0
+segments:
+  - [0x0, bin, mwo_header]
+  - name: bobo0
+    type: code
+    start: 0x80
+    vram: 0x09237700
+    bss_start_address: 0x09290300
+    bss_size: 0x500
+    align: 128
+    subalign: 8
+    subsegments:
+      - [0x80, c, bo0/create_entity]
+      - [0x1028, c, bo0/e_bloody_zombie]
+      - [0x24A8, c, bo0/e_skelerang]
+      - [0x33C8, c, bo0/e_life_up]
+      - [0x4048, c, bo0/e_stage_name]
+      - [0x4EC8, c, bo0_psp/e_marionette]
+      - [0x6B90, c, bo0/e_red_door]
+      - [0x7E98, c, bo0/st_update]
+      - [0x83D0, c, bo0/e_particles]
+      - [0x9960, c, bo0_psp/unk_9960]
+      - [0xA2E8, c, bo0/e_collect]
+      - [0xDBA8, c, bo0/e_misc]
+      - [0xF548, c, bo0/st_collision]
+      - [0x11720, c, bo0/popup]
+      - [0x11D18, c, bo0/e_room_fg]
+      - [0x11E30, c, bo0/e_owl_knight]
+      - [0x15A18, c, bo0/st_common]
+      - [0x172F8, c, bo0/prim_helpers]
+      - [0x17E18, c, bo0_psp/unk_17E18]
+      - [0x19A18, c, bo0_psp/st_init_psp]
+      - [0x19D60, c, bo0/e_breakable]
+      - [0x19EE0, c, bo0_psp/unk_19EE0]
+      - [0x1B260, c, bo0_psp/e_background_house]
+      - [0x1C208, c, bo0_psp/e_chair]
+      - [0x1CCB0, c, bo0_psp/33D8C]
+      - [0x1D4C8, c, bo0/e_room_bg]
+      - [0x1D5A8, c, bo0_psp/unk_1D5A8]
+      - [0x31E80, c, bo0/e_lock_camera]
+      - [0x320E0, c, bo0_psp/unk_320E0]
+      - [0x32790, c, bo0_psp/372E8]
+      - [0x32B30, c, bo0/e_spikes]
+      - [0x33480, .data, bo0/e_bloody_zombie]
+      - [0x33580, .data, bo0/e_skelerang]
+      - [0x33670, .data, bo0/e_life_up]
+      - [0x336C0, data]
+      - [0x33878, .data, bo0/e_red_door]
+      - [0x33890, .data, bo0/st_update]
+      - [0x338C0, .data, bo0/e_particles]
+      - [0x33940, .data, bo0/e_collect]
+      - [0x33E88, .data, bo0/e_misc]
+      - [0x33F08, .data, bo0/st_collision]
+      - [0x342E0, .data, bo0/e_room_fg]
+      - [0x34380, .data, bo0/e_owl_knight]
+      - [0x34670, .data, bo0/st_common]
+      - [0x34870, data]
+      - [0x3E330, data, bo0_psp/sprite_banks]
+      - [0x3E390, data, bo0_psp/layers]
+      - [0x3E3A8, data, bo0_psp/palette_def]
+      - [0x3E418, data, bo0_psp/gfx_banks]
+      - [0x3E630, data]
+      - [0x3E7A0, data, bo0_psp/e_init]
+      - [0x3E960, data, bo0_psp/rooms]
+      - [0x3E980, .data, bo0/e_breakable]
+      - [0x3E9D0, data]
+      - [0x57E20, data, bo0_psp/unk_1D5A8]
+      - [0x58690, .data, bo0/e_lock_camera]
+      - [0x58708, data]
+      - [0x587F8, .data, bo0/e_spikes]
+      - [0x58808, data, __padding]
+      - [0x58880, .rodata, bo0/e_bloody_zombie]
+      - [0x588A8, .rodata, bo0/e_skelerang]
+      - [0x588F0, .rodata, bo0/e_life_up]
+      - [0x58910, .rodata, bo0_psp/e_marionette]
+      - [0x58940, .rodata, bo0/e_red_door]
+      - [0x58958, .rodata, bo0/e_collect]
+      - [0x589B8, .rodata, bo0/e_owl_knight]
+      - [0x58A18, .rodata, bo0_psp/unk_17E18]
+      - [0x58A30, .rodata, bo0_psp/unk_19EE0]
+      - [0x58A48, .rodata, bo0_psp/unk_1D5A8]
+      - {start: 0x58C80, type: .bss, vram: 0x09290300, name: bo0/create_entity}
+      - {start: 0x58C80, type: bss, vram: 0x09290320, name: bo0_psp/09290320}
+      - {start: 0x58C80, type: .bss, vram: 0x09290328, name: bo0/st_update}
+      - {start: 0x58C80, type: .bss, vram: 0x09290368, name: bo0/e_collect}
+      - {start: 0x58C80, type: bss, vram: 0x09290388, name: bo0_psp/layers}
+      - {start: 0x58C80, type: bss, vram: 0x09290398, name, bo0_psp/st_init_psp}
+      - {start: 0x58C80, type: .bss, vram: 0x09290570, name: bo0/e_breakable}
+      - {start: 0x58C80, type: bss, vram: 0x09290578, name:  bo0_psp/prize_drops }
+      - {start: 0x58C80, type: .bss, vram: 0x092907B0, name: bo0/e_lock_camera}
+  - [0x59180]
