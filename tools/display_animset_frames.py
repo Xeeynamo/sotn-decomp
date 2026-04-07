@@ -14,7 +14,6 @@
 # data from. 0x8001 is that animset, 0 is the clut, and then 150x100 will be our
 # viewport size as we click through the entities.
 
-import display_texture as dt
 import argparse
 import re
 import matplotlib.pyplot as plt
@@ -23,8 +22,10 @@ import numpy as np
 
 from PIL import Image
 
+from play_animation import AnimationShower
+
 # holds the list of animsets
-DRA_ANIM_ARRAY_FILE = "src/dra/63ED4.c"
+DRA_ANIM_ARRAY_FILE = "src/dra/d_37d8.c"
 # some day this may have a symbol name
 DRA_ANIM_ARRAY = "D_800A3B70"
 # holds the individual animsets
@@ -55,143 +56,47 @@ def load_array_from_file(filelines, arrayname):
     exit()
 
 
-def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A):
+def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A, dump_filename):
 
     # Now we have an array that tells us the name of all the frames.
     # Start GUI code.
-    class AnimationShower:
-        def __init__(self):
-            self.anim_index = 1
-            self.textureDisplayer = dt.textureDisplayer(texture_data)
-            # Need to load the animation's frames now.
-            # Depends on if we're an ANIMSET_DRA or ANIMSET_OVL.
-            if anim_num & 0x8000:
-                print("Overlay animation")
-                assert ovl_name != "dra"
-                spritebank = anim_num & 0x7FFF
-                main_array_file = f"src/st/{ovl_name}/gen/sprite_banks.h"
-                main_array = "spriteBanks"
-                animset_file = f"src/st/{ovl_name}/gen/sprites.c"
-
-            else:
-                print("DRA animation")
-                assert ovl_name == "dra"
-                main_array_file = DRA_ANIM_ARRAY_FILE
-                main_array = DRA_ANIM_ARRAY
-                animset_file = DRA_ANIMSET_FILE
-                spritebank = anim_num
-            with open(main_array_file) as f:
-                animdata = f.read().splitlines()
-                animarray = load_array_from_file(animdata, main_array)
-                anim_set_name = animarray[spritebank]
-            print(f"Animation set {spritebank} is {anim_set_name}. Loading.")
-            with open(animset_file) as f:
-                self.framesdata = f.read().splitlines()
-                print("Loading framearray")
-                print(animset_file)
-                self.framearray = load_array_from_file(self.framesdata, anim_set_name)
-                print("Loaded framearray.")
-
-        def prev(self, event):
-            self.anim_index -= 1
-            if self.anim_index < 1:
-                self.anim_index = len(self.framearray) - 1
-            self.render_frame()
-
-        def next(self, event):
-            self.anim_index += 1
-            if self.anim_index >= len(self.framearray):
-                self.anim_index = 1
-            self.render_frame()
-
-        def render_frame(self):
-            print("RENDERING", self.anim_index)
-            frame_name = self.framearray[self.anim_index]
-            # prepend the s16 to make sure we get the actual array, not something that
-            # points to the array
-            frame_params = load_array_from_file(self.framesdata, "s16 " + frame_name)
-            data_size = 1 + int(frame_params[0]) * 11
-            frame_params = frame_params[:data_size]
-            frame_params = [int(x) for x in frame_params]
-            print(frame_params)
-            # Now we follow the logic of RenderEntities.
-
-            # r->spriteSheetIdx = *animFrame++;
-            spriteSheetIdx = frame_params[0]
-            frame_params = frame_params[1:]
-
-            # Not prepared to handle this case.
-            if spriteSheetIdx < 0 or spriteSheetIdx & 0x8000:
-                print("I don't know what this is yet, need new program logic")
-                exit()
-            # Now skip to line 984. We're going to make an image from the individual images.
-            overall_image = Image.new("RGBA", (view_w, view_h))
-            for i in range(spriteSheetIdx):
-                ax.clear()
-                print(frame_params)
-                frameFlags = frame_params[0]  # line 989
-                tpage = frame_params[6]  # line 990
-                tpage += unk5A  # line 991
-                runk0 = tpage & 3  # 992
-                tpage >>= 2  # 993
-                xpivot = frame_params[1]  # 994
-                ypivot = frame_params[2]  # 995
-                width = frame_params[3]  # 996
-                height = frame_params[4]  # 997
-
-                # Skip all the logic with positioning and flipping.
-                # Pick up at line 1062
-                if arg_palette & 0x8000:
-                    clut = arg_palette & 0x7FFF
-                else:
-                    clut = frame_params[5] + arg_palette
-                u_0 = frame_params[7]
-                v_0 = frame_params[8]
-                u_1 = frame_params[9]
-                v_1 = frame_params[10]
-                if runk0 & 1:
-                    u_0 += 0x80
-                    u_1 += 0x80
-                if runk0 & 2:
-                    v_0 += 0x80
-                    v_1 += 0x80
-                assert u_1 - u_0 == width
-                assert v_1 - v_0 == height
-                print(
-                    f"Loading texture: {tpage=}, {clut=}, {u_0=}, {v_0=}, {width=}, {height=}"
-                )
-                image = self.textureDisplayer.get_image(
-                    tpage, clut, u_0, v_0, width, height
-                )
-                if frameFlags & 2:
-                    image = np.flip(image, 1)
-                    frameFlags -= 2
-                if frameFlags != 0:
-                    print("We have frame flags. Ignoring for now.", frameFlags)
-                pil_image = Image.fromarray(image)
-                # pass pil_image twice to get transparency
-                overall_image.paste(
-                    pil_image,
-                    (view_w // 2 + xpivot, view_h // 2 + ypivot),
-                    pil_image,
-                )
-                frame_params = frame_params[11:]
-            ax.set_title(
-                f'Frame #{self.anim_index} of {len(self.framearray) - 1}; "{frame_name}"'
-            )
-            ax.imshow(overall_image)
-            plt.draw()
-
-    shower = AnimationShower()
     fig, ax = plt.subplots()
     ax.set_xlim(-32, 32)
     ax.set_ylim(-32, 32)
     plt.subplots_adjust(bottom=0.15)
+
+    class ControllableShower(AnimationShower):
+        def __init__(self, dump_filename, anim_num, ovl_name, arg_palette, unk5A):
+            super().__init__(dump_filename, anim_num, ovl_name, arg_palette, unk5A)
+            # initialize to image 1
+            self.anim_index = 1
+            self.im = ax.imshow([[]], extent=[-view_w/2, view_w/2, -view_h/2, view_h/2])
+            self.update_image()
+        def update_image(self):
+            ax.set_title(f"Displaying {ovl_name} animation {anim_num}, index {self.anim_index}")
+            img = self.render_frame(self.anim_index)
+            self.im.set_data(img)
+            fig.canvas.draw_idle()
+        def prev(self, event):
+            self.anim_index -= 1
+            if self.anim_index < 1:
+                self.anim_index = len(self.framearray) - 1
+            self.update_image()
+        def next(self, event):
+            self.anim_index += 1
+            if self.anim_index >= len(self.framearray):
+                self.anim_index = 1
+            self.update_image()
+        
+
+    shower = ControllableShower(dump_filename, anim_num, ovl_name, arg_palette, unk5A) # imported from play_animation.py
+
     prev_button = Button(plt.axes([0.1, 0.025, 0.3, 0.1], facecolor="k"), "Prev Frame")
     prev_button.on_clicked(shower.prev)
     next_button = Button(plt.axes([0.6, 0.025, 0.3, 0.1], facecolor="k"), "Next Frame")
     next_button.on_clicked(shower.next)
-    shower.render_frame()
+    img = shower.render_frame(1)
+    ax.imshow(img)
     plt.show()
 
 
@@ -224,7 +129,6 @@ parser.add_argument(
 
 args = parser.parse_args()
 
-texture_data = dt.load_raw_dump(args.dump_filename)
 show_animset(
     args.overlay,
     args.animset_num,
@@ -232,4 +136,5 @@ show_animset(
     args.view_width,
     args.view_height,
     args.unk5A,
+    args.dump_filename
 )

@@ -138,6 +138,8 @@ def draw_tpage_selection(raw_dump, tpage_number, clut_number, left, top, width, 
 def get_tpage_selection(
     raw_dump, colored, tpage_number, clut_number, left, top, width, height
 ):
+    print("hi getting tpage selection.")
+    print(f"{tpage_number=:X}, {clut_number=:X}, {left=}, {top=}, {width=}, {height=}")
     ctp = retrieve_colored_tpage(raw_dump, colored, tpage_number, clut_number)
     # Crop it to match the needed UV coords, and display it
     segment = ctp[top : top + height, left : left + width]
