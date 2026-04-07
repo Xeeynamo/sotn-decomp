@@ -1,0 +1,27 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+#include "rbo0.h"
+
+static u8 anim_1[] = {4, 1, 4, 2, 0, 0, 0, 0};
+static u8 anim_2[] = {4, 0, 4, 0, 0, 0, 0, 0};
+static u8* g_eBreakableAnimations[] = {
+    anim_1, anim_2, NULL, NULL, NULL, NULL, NULL, NULL};
+static u8 g_eBreakableHitboxes[] = {8, 8, 0, 0, 0, 0, 0, 0};
+
+static u8 g_eBreakableExplosionTypes[] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+static u16 g_eBreakableanimSets[] = {
+    ANIMSET_DRA(3), ANIMSET_DRA(3), 0, 0, 0, 0, 0, 0};
+
+static u8 blend_modes[] = {
+    DRAW_TPAGE | DRAW_TPAGE2,
+    DRAW_TPAGE | DRAW_TPAGE2,
+    DRAW_DEFAULT,
+    DRAW_DEFAULT,
+    DRAW_DEFAULT,
+    DRAW_DEFAULT,
+    DRAW_DEFAULT,
+    DRAW_DEFAULT};
+
+static u8 unused[] = {0, 0, 0, 0, 0, 0, 0, 0};
+
+#include "../../st/e_breakable.h"

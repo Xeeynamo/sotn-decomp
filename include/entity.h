@@ -3968,6 +3968,63 @@ typedef struct {
     /* 90 */ s16 jamOffsetY;
 } ET_Imp;
 
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+} ET_801806B0;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 unk82;
+    /* 0x84 */ s16 unk84;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s16 unk88;
+    /* 0x8A */ s16 unk8A;
+    /* 0x8C */ s32 unk8C;
+} ET_BossCoffin;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ s32 : 32;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 unk8C;
+} ET_FakeGrant;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 : 16;
+    /* 0x84 */ u16 itemEntityId;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ s32 : 32;
+    /* 0x8C */ s32 unk8C;
+} ET_FakeRalph;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ s16 timer;
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ s16 red;
+    /* 0x86 */ s16 green;
+    /* 0x88 */ s16 blue;
+    /* 0x8A */ s16 : 16;
+    /* 0x8C */ s32 unk8C;
+} ET_FakeSypha;
+
+typedef struct {
+    /* 0x7C */ s32 : 32;
+    /* 0x80 */ struct AnimateEntityFrame* frames;
+    /* 0x84 */ s16 angle;
+    /* 0x86 */ s16 : 16;
+    /* 0x88 */ u8 unk88;
+    /* 0x89 */ u8 unk89;
+    /* 0x8A */ s16 : 16;
+    /* 0x8C */ u32 unk8C;
+} ET_DeathFlames;
+
 typedef union { // offset=0x7C
     struct Primitive* prim;
     ET_Placeholder ILLEGAL;
@@ -4306,6 +4363,12 @@ typedef union { // offset=0x7C
     ET_FireDemon fireDemon;
     ET_Bitterfly bitterfly;
     ET_Imp imp;
+    ET_801806B0 et_801806B0;
+    ET_BossCoffin bossCoffin;
+    ET_FakeRalph ralph;
+    ET_FakeGrant grant;
+    ET_FakeSypha sypha;
+    ET_DeathFlames deathFlames;
 } Ext;
 
 #define SYNC_FIELD(struct1, struct2, field)                                    \
