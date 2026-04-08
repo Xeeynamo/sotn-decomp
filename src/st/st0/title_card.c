@@ -4,7 +4,6 @@
 
 #if defined(VERSION_PSP)
 void* GetLang(void* en, void* fr, void* sp, void* ge, void* it);
-extern s32 D_80180908;
 extern u16 D_pspeu_09253FB0[];
 extern u8 D_pspeu_09253FF0[];
 extern u8 D_pspeu_09254300[];
@@ -13,9 +12,9 @@ extern u8 D_pspeu_092548E8[];
 extern u8 D_pspeu_09254BD8[];
 extern u_long* D_pspeu_09254E98[];
 extern u8* D_pspeu_09254EA4;
-#else
-static s32 D_80180908 = 0;
 #endif
+
+static s32 D_80180908 = 0;
 
 void EntityStageTitleFadeout(Entity* self) {
     Primitive* prim;

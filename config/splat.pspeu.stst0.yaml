@@ -111,7 +111,8 @@ segments:
       - [0x426A0, .rodata, st0/3D8F0]
       - [0x42700, bss, 42700]
       - [0x42710, bss, st0/cutscene_v_coords] # only used in cutscene.c
-      - [0x42718, bss, 42718]
+      - [0x42718, .bss, st0/2A8DC]
+      - [0x42720, .bss, st0/title_card]
       - [0x42728, .bss, st0/2C564]
       - [0x42730, bss, 42730]
       - [0x42748, .bss, st0_psp/st_init_st0]
