@@ -34,7 +34,7 @@ void EntityCtulhuIceShockwave(Entity* self);
 void EntityCtulhuDeath(Entity* self);
 void EntityFireDemon(Entity* self);
 void EntityUnkId20(Entity* self);
-void EntityUnkId21(Entity* self);
+void EntityFireDemonFireball(Entity* self);
 void EntityUnkId22(Entity* self);
 void EntityLesserDemon(Entity* self);
 void EntityLesserDemonSpit(Entity* self);
@@ -95,7 +95,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCtulhuDeath,
     EntityFireDemon,
     EntityUnkId20,
-    EntityUnkId21,
+    EntityFireDemonFireball,
     EntityUnkId22,
     EntityLesserDemon,
     EntityLesserDemonSpit,
@@ -130,8 +130,8 @@ EInit g_EInitFloorTrap = {ANIMSET_OVL(3), 0, 75, 0x200, 0x005};
 EInit g_EInitCtulhu = {ANIMSET_OVL(4), 0, 72, 0x209, 0x0E9};
 EInit g_EInitCtulhuFireball = {ANIMSET_OVL(4), 0, 72, 0x209, 0x0EA};
 EInit g_EInitCtulhuIceShockwave = {ANIMSET_OVL(4), 44, 72, 0x209, 0x0EB};
-EInit D_us_80180A20 = {ANIMSET_OVL(5), 1, 79, 0x21D, 0x04F};
-EInit D_us_80180A2C = {ANIMSET_DRA(2), 1, 0, PAL_NULL, 0x050};
+EInit g_EInitFireDemon = {ANIMSET_OVL(5), 1, 79, 0x21D, 0x04F};
+EInit g_EInitFireDemonFireball = {ANIMSET_DRA(2), 1, 0, PAL_NULL, 0x050};
 EInit D_us_80180A38 = {ANIMSET_OVL(6), 1, 76, 0x22D, 0x017};
 EInit g_EInitLesserDemonSpit = {ANIMSET_OVL(6), 25, 76, 0x22D, 0x019};
 EInit D_us_80180A50 = {ANIMSET_DRA(9), 1, 0, 0x81B0, 0x01A};

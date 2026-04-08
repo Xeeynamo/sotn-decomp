@@ -22,7 +22,7 @@ import numpy as np
 
 from PIL import Image
 
-from play_animation import AnimationShower
+from play_animation import AnimationShower, load_array_from_file
 
 # holds the list of animsets
 DRA_ANIM_ARRAY_FILE = "src/dra/d_37d8.c"
@@ -30,31 +30,6 @@ DRA_ANIM_ARRAY_FILE = "src/dra/d_37d8.c"
 DRA_ANIM_ARRAY = "D_800A3B70"
 # holds the individual animsets
 DRA_ANIMSET_FILE = "src/dra/d_2F324.c"
-
-
-def load_array_from_file(filelines, arrayname):
-    print(f"Trying to load {arrayname}")
-    arraydata = ""
-    inarray = False
-    for line in filelines:
-        if arrayname in line and "{" in line:
-            inarray = True
-        if inarray:
-            arraydata += line
-        if "}" in line:
-            inarray = False
-    # find the data between the curly braces
-    pattern = r"\{([^}]*)\}"
-    match = re.search(pattern, arraydata)
-    if match:
-        array_contents = match.group(1)
-        array_contents = array_contents.rstrip(",")  # remove trailing comma if exists
-        # strip whitespace and turn into list of members
-        array_members = array_contents.replace(" ", "").split(",")
-        return array_members
-    print("Error loading animation array. Hmm.")
-    exit()
-
 
 def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A, dump_filename):
 

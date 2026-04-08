@@ -254,6 +254,7 @@ class AnimationShower:
             if animation_bytes[i] == 0 or animation_bytes[i] == 255:
                 continue
             duration, anim_idx = animation_bytes[i : i + 2]
+            print(f"Rendering frame with {duration=}, {anim_idx=}")
             picture = self.render_frame(anim_idx)
             for _ in range(duration):
                 pictures.append(picture)

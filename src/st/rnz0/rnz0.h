@@ -53,7 +53,7 @@ typedef enum EntityIDs {
     /* 0x1E */ E_CTULHU_DEATH,
     /* 0x1F */ E_FIRE_DEMON,
     /* 0x20 */ E_UNK_20,
-    /* 0x21 */ E_UNK_21,
+    /* 0x21 */ E_FD_FIREBALL,
     /* 0x22 */ E_UNK_22,
     /* 0x23 */ E_LESSER_DEMON,
     /* 0x24 */ E_LESSER_DEMON_SPIT,

@@ -3929,7 +3929,7 @@ typedef struct {
     /* 7C */ u32 : 32;
     /* 80 */ struct Primitive* prim80;
     /* 84 */ struct Primitive* prim84;
-    /* 88 */ s16 unk88;
+    /* 88 */ s16 timer;
     /* 8A */ u8 palOffMin;
     /* 8B */ u8 : 8;
     /* 8C */ u32 accelerationY;
