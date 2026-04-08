@@ -46,10 +46,6 @@ u8 stage_title_p[64];
 
 // bss
 u16 msgBoxTpage[768];
-u32 D_801C06B0[4];
-u32 D_801C06C0[1346];
-SVECTOR D_801C1BC8[0x100];
-u32 D_801C23C8[64];
 u32 D_801C2510[26];
 s32 D_801C2578;
 

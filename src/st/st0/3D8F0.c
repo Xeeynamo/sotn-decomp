@@ -2,12 +2,24 @@
 #include "st0.h"
 #include <scratchpad.h>
 
+typedef struct {
+    Point16 unk0;
+    s16 unk4;
+    s16 unk6;
+    s16 unk8;
+    s16 unkA;
+    s16 unkC;
+    s16 unkE;
+    s32 unk10;
+    s16 unk14;
+} unkstr_801C06B0;
+
 static SVECTOR D_80182690 = {-8, -8, 0};
 static SVECTOR D_80182698 = {8, -8, 0};
 static SVECTOR D_801826A0 = {-8, 8, 0};
 static SVECTOR D_801826A8 = {8, 8, 0};
 static SVECTOR unused = {0, 0, 0};
-extern unkstr_801C06B0 D_801C06B0;
+static unkstr_801C06B0 D_801C06B0[15 * 15];
 
 void func_801BD8F0(Entity* self) {
     DRAWENV drawEnv;
@@ -167,7 +179,7 @@ void func_801BD8F0(Entity* self) {
         g_Tilemap.flags &= 0xFFFE;
         g_BgLayers[0].flags &= 0xFFFE;
         prim = self->ext.prim;
-        unkStr = &D_801C06B0;
+        unkStr = D_801C06B0;
         for (i = 0; i < 15 * 15; i++, unkStr++) {
             xVar = prim->x0 + 8;
             yVar = prim->y0 + 8;
@@ -221,7 +233,7 @@ void func_801BD8F0(Entity* self) {
         sp34[1] = D_80182698;
         sp34[2] = D_801826A0;
         sp34[3] = D_801826A8;
-        unkStr = &D_801C06B0;
+        unkStr = D_801C06B0;
         prim = self->ext.prim;
         for (i = 0; i < 15 * 15; i++, unkStr++) {
             if ((unkStr->unk14) || (unkStr->unk10 > 0x180)) {
@@ -250,7 +262,7 @@ void func_801BD8F0(Entity* self) {
             prim->drawMode = DRAW_DEFAULT;
             prim = prim->next;
         }
-        unkStr = &D_801C06B0;
+        unkStr = D_801C06B0;
         prim = self->ext.prim;
         var_s8 = 0;
         for (i = 0; i < 15 * 15; i++, unkStr++) {
