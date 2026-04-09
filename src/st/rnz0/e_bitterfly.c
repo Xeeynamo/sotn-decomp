@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz0.h"
 
-static s16 D_pspeu_092589E8[] = {0, 4, 0, 4, 4, -4, -8, 0};
+static s16 sensors[] = {0, 4, 0, 4, 4, -4, -8, 0};
 
 static u8 anim_passive_flying[] = {
     5, 1, 6, 2, 4, 3, 4, 4, 5, 5, 5, 6, 4, 7, 5, 8, 5, 9, 6, 10, 0};
@@ -101,7 +101,7 @@ void EntityBitterfly(Entity* self) {
             }
             break;
         case BF_DEAD_FALL:
-            if (UnkCollisionFunc3(D_pspeu_092589E8) & 1) {
+            if (UnkCollisionFunc3(sensors) & 1) {
                 PlaySfxPositional(SFX_SKULL_KNOCK_B);
                 self->ext.bitterfly.deathTimer = 0x18;
                 self->step_s += 1;

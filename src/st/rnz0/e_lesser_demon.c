@@ -40,7 +40,7 @@ static u8 D_pspeu_09259670[] = {
 static u8 D_pspeu_09259680[] = {
     6, 39, 6, 41, 6, 12, 6, 13, 6, 14, 6, 20, 6, 24, 255, 0};
 
-extern EInit D_us_80180A38;
+extern EInit g_EInitLesserDemon;
 
 typedef enum {
     LD_STEP_MINION_INIT = 32,
@@ -79,12 +79,12 @@ void func_pspeu_0924DBD0(s16* unkArg) {
 
     case 3:
         if (g_CurrentEntity->ext.lesserDemon.unkAC & 1) {
-            g_CurrentEntity->palette = D_us_80180A38[3];
+            g_CurrentEntity->palette = g_EInitLesserDemon[3];
         } else {
             g_CurrentEntity->palette = PAL_FLAG(PAL_UNK_19F);
         }
         if (!(--g_CurrentEntity->ext.lesserDemon.unkAC)) {
-            g_CurrentEntity->palette = D_us_80180A38[3];
+            g_CurrentEntity->palette = g_EInitLesserDemon[3];
             g_CurrentEntity->hitboxState = 3;
             SetStep(1);
         }
@@ -461,7 +461,7 @@ void func_pspeu_0924EB18(void) {
     }
 }
 
-static void func_us_801BC814(Primitive* prim) {
+static void fireballHelper(Primitive* prim) {
     s16 angleOffset;
     s32 posX2, posY2;
     Pos params;
@@ -583,7 +583,7 @@ static void func_us_801BC814(Primitive* prim) {
     }
 }
 
-extern EInit D_us_80180A50;
+extern EInit g_EInitLesserDemonFireball;
 static u8 blueFireballAnim[] = {
     1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 0};
 
@@ -595,7 +595,7 @@ void EntityLesserDemonFireball(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A50);
+        InitializeEntity(g_EInitLesserDemonFireball);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         self->drawFlags = ENTITY_SCALEX;
         self->scaleX = 0x180;
@@ -697,7 +697,7 @@ void EntityLesserDemonFireball(Entity* self) {
         prim = prim->next;
         while (prim != NULL) {
             if (prim->p3 & 2) {
-                func_us_801BC814(prim);
+                fireballHelper(prim);
             }
             prim = prim->next;
         }
@@ -1027,7 +1027,7 @@ void EntityLesserDemon(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A38);
+        InitializeEntity(g_EInitLesserDemon);
 #ifdef VERSION_US
         self->flags |= FLAG_UNK_02000000;
 #endif
@@ -1532,12 +1532,12 @@ void EntityLesserDemon(Entity* self) {
         break;
     }
 }
-extern EInit D_us_80180A5C;
+extern EInit g_EInitLesserDemonDummy;
 
 void EntityLesserDemonDummy(Entity* self) {
     FntPrint("duumy_set\n");
     if (!self->step) {
-        InitializeEntity(D_us_80180A5C);
+        InitializeEntity(g_EInitLesserDemonDummy);
         self->hitboxWidth = 0x1C;
         self->hitboxHeight = 4;
         self->hitboxOffX = -0x14;
