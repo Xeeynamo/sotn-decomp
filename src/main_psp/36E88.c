@@ -762,7 +762,7 @@ static int IsInSpecification(char* extype, ex_specification* spec) {
     return false;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", func_psp_08936984);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", __unexpected);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", func_psp_08936A44);
 
@@ -846,7 +846,7 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", SetupCatchInfo);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", __ThrowHandler);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", func_psp_08936E54);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", __end__catch);
 
 INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36E88", D_psp_0893C1A0);
 
