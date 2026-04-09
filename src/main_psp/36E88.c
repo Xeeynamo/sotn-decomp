@@ -112,8 +112,7 @@ typedef struct ExceptionInfo {
 #define __FunctionPointer(info, context, fp) (fp)
 #define __AdjustReturnAddress(info, context, retaddr) (retaddr)
 #define __LocalVariable(context, offset) ((context)->FP + (offset))
-#define __Register(context, regno)                                             \
-    ((context)->target.GPR[regno + 1]) // TODO this should not have + 1
+#define __Register(context, regno) ((context)->target.GPR[regno])
 
 typedef struct ActionIterator {
     ExceptionInfo info;
@@ -846,7 +845,11 @@ INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", SetupCatchInfo);
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", __ThrowHandler);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", __end__catch);
+void __end_catch(CatchInfo* catchinfo) {
+    if (catchinfo->location != NULL && catchinfo->dtor != NULL) {
+        DTORCALL_COMPLETE(catchinfo->dtor, catchinfo->location);
+    }
+}
 
 INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36E88", D_psp_0893C1A0);
 
