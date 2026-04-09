@@ -53,8 +53,8 @@ enum { SKIP = 0, APPLY = 1 };
 typedef void (*DeleteFunc)(void*);
 
 typedef struct TargetContext {
-    unsigned long GPR[16];
     char* throwSP;
+    unsigned long GPR[16];
     unsigned long frame_size;
     unsigned long argument_size;
     unsigned short saved_GPRs;
