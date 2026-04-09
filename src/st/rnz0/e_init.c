@@ -33,9 +33,9 @@ void EntityCtulhuFireball(Entity* self);
 void EntityCtulhuIceShockwave(Entity* self);
 void EntityCtulhuDeath(Entity* self);
 void EntityFireDemon(Entity* self);
-void EntityUnkId20(Entity* self);
+void EntityFireDemonPopoutEffect(Entity* self);
 void EntityFireDemonFireball(Entity* self);
-void EntityUnkId22(Entity* self);
+void EntityFireDemonFlames(Entity* self);
 void EntityLesserDemon(Entity* self);
 void EntityLesserDemonSpit(Entity* self);
 void EntityLesserDemonFireball(Entity* self);
@@ -94,9 +94,9 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityCtulhuIceShockwave,
     EntityCtulhuDeath,
     EntityFireDemon,
-    EntityUnkId20,
+    EntityFireDemonPopoutEffect,
     EntityFireDemonFireball,
-    EntityUnkId22,
+    EntityFireDemonFlames,
     EntityLesserDemon,
     EntityLesserDemonSpit,
     EntityLesserDemonFireball,
