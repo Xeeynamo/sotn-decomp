@@ -53,38 +53,39 @@ enum { SKIP = 0, APPLY = 1 };
 typedef void (*DeleteFunc)(void*);
 
 typedef struct TargetContext {
-    char* throwSP;
-    unsigned long GPR[16];
-    unsigned long frame_size;
-    unsigned long argument_size;
-    unsigned short saved_GPRs;
-    bool has_flushback;
-    bool has_frame_ptr;
-    bool is_Thumb;
-} TargetContext;
+    /* 0x00 */ unsigned long GPR[0x20];
+    /* 0x84 */ unsigned long unk84;
+    /* 0x88 */ unsigned long unk88;
+    /* 0x8C */ s32 unk8C;
+    /* 0x90 */ s32 unk90;
+    /* 0x94 */ bool unk94;
+    /* 0x98 */ unsigned long unk98;
+    /* 0x9C */ unsigned long FPR[0x20];
+} TargetContext; // size: 0x118
 
 typedef s8 vbase_ctor_arg_type;
 typedef s8 local_cond_type;
 
 typedef struct CatchInfo {
-    void* location;
-    void* typeinfo;
-    void* dtor;
-    void* sublocation;
-    long pointercopy;
-    void* stacktop;
-} CatchInfo;
+    /* 0x00 */ void* location;
+    /* 0x04 */ void* typeinfo;
+    /* 0x08 */ void* dtor;
+    /* 0x0C */ void* sublocation;
+    /* 0x10 */ long pointercopy;
+    /* 0x14 */ void* stacktop;
+} CatchInfo; // size: 0x18
 
 typedef struct ThrowContext {
-    u8* throwtype;
-    void* location;
-    void* dtor;
-    CatchInfo* catchinfo;
-    char* returnaddr;
-    char* SP;
-    char* FP;
-    TargetContext target;
-} ThrowContext;
+    /* 0x00 */ s8* throwtype;
+    /* 0x04 */ void* location;
+    /* 0x08 */ void* dtor;
+    /* 0x0C */ CatchInfo* catchinfo;
+    /* 0x10 */ char* returnaddr;
+    /* 0x14 */ char* SP;
+    /* 0x18 */ char* FP;
+    /* 0x1C */ char* throwSP;
+    /* 0x20 */ TargetContext target;
+} ThrowContext; // size: 0x138
 
 typedef struct TargetExceptionInfo {
     float dummy;
@@ -105,10 +106,6 @@ typedef struct ExceptionInfo {
     TargetExceptionInfo target;
 } ExceptionInfo;
 
-#define UNWIND_FRAME_IS_THUMB 0x80
-#define UNWIND_FRAME_IS_DYNAMIC 0x40
-#define UNWIND_FRAME_HAS_FLUSHBACK 0x20
-
 #define __FunctionPointer(info, context, fp) (fp)
 #define __AdjustReturnAddress(info, context, retaddr) (retaddr)
 #define __LocalVariable(context, offset) ((context)->FP + (offset))
@@ -117,7 +114,6 @@ typedef struct ExceptionInfo {
 typedef struct ActionIterator {
     ExceptionInfo info;
     ThrowContext context;
-    u8 pad[0xC0]; // TODO this should not be here
 } ActionIterator;
 
 typedef struct ex_catchblock {
@@ -157,6 +153,7 @@ void DestroyLocal(int apply, ExceptionInfo* info, ThrowContext* context);
 char* __SkipUnwindInfo(char* p);
 char* __PopStackFrame(ThrowContext* context, ExceptionInfo* info);
 ExceptionInfo* func_psp_089368B8(ExceptionInfo* arg0, ExceptionInfo* arg1);
+ThrowContext* func_psp_08936844(ThrowContext* arg0, ThrowContext* arg1);
 
 static ExceptionTableIndex* BinarySearch(
     ExceptionTableIndex* table, unsigned long tablesize, char* return_address) {
@@ -692,7 +689,7 @@ static CatchInfo* FindMostRecentException(
     ex_activecatchblock acb;
 
     func_psp_089368B8(&iter.info, info);
-    func_psp_08936844(iter.context, context);
+    func_psp_08936844(&iter.context, context);
 
     for (action = CurrentAction(&iter);; action = NextAction(&iter)) {
         switch (action) {
@@ -723,7 +720,7 @@ static CatchInfo* FindMostRecentException(
 
     DecodeActiveCatchBlock(iter.info.action_pointer, &acb);
     catchinfo = (CatchInfo*)__LocalVariable(&iter.context, acb.cinfo_ref);
-    context->throwtype = (u8*)catchinfo->typeinfo;
+    context->throwtype = (s8*)catchinfo->typeinfo;
     context->location = catchinfo->location;
     context->dtor = 0;
     context->catchinfo = catchinfo;
@@ -733,7 +730,18 @@ static CatchInfo* FindMostRecentException(
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", DecodeActiveCatchBlock);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", func_psp_08936844);
+ThrowContext* func_psp_08936844(ThrowContext* arg0, ThrowContext* arg1) {
+    arg0->throwtype = arg1->throwtype;
+    arg0->location = arg1->location;
+    arg0->dtor = arg1->dtor;
+    arg0->catchinfo = arg1->catchinfo;
+    arg0->returnaddr = arg1->returnaddr;
+    arg0->SP = arg1->SP;
+    arg0->FP = arg1->FP;
+    arg0->throwSP = arg1->throwSP;
+    arg0->target = arg1->target;
+    return arg0;
+}
 
 ExceptionInfo* func_psp_089368B8(ExceptionInfo* arg0, ExceptionInfo* arg1) {
     arg0->current_function = arg1->current_function;
@@ -798,7 +806,7 @@ static char* FindExceptionHandler(
     ex_specification spec;
 
     func_psp_089368B8(&iter.info, info);
-    func_psp_08936844(iter.context, context);
+    func_psp_08936844(&iter.context, context);
 
     for (action = CurrentAction(&iter);; action = NextAction(&iter)) {
         switch (action) {
@@ -841,7 +849,20 @@ static char* FindExceptionHandler(
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", DecodeCatchBlock);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", SetupCatchInfo);
+static void SetupCatchInfo(
+    ThrowContext* context, long cinfo_ref, long result_offset) {
+    CatchInfo* catchinfo = (CatchInfo*)__LocalVariable(context, cinfo_ref);
+
+    catchinfo->location = context->location;
+    catchinfo->typeinfo = context->throwtype;
+    catchinfo->dtor = context->dtor;
+    if (*context->throwtype == '*') {
+        catchinfo->sublocation = &catchinfo->pointercopy;
+        catchinfo->pointercopy = *(long*)context->location + result_offset;
+    } else {
+        catchinfo->sublocation = (char*)context->location + result_offset;
+    }
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", __ThrowHandler);
 
@@ -855,6 +876,6 @@ INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36E88", D_psp_0893C1A0);
 
 INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36E88", D_psp_0893C1AC);
 
-INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36E88", D_psp_0893C1B4);
+const char D_psp_0893C1B4[] = "bad_exception";
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", func_psp_08936E8C);
