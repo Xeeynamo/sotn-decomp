@@ -1010,36 +1010,37 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x40, sprite_banks, sprite_banks]
+          - [0x40, sprite_banks, us/sprite_banks]
           - [0xA4, paldef, palette_def]
           - [0x14C, layers, layers]
-          - [0x464, gfx_banks, graphics_banks]
+          - [0x464, gfx_banks, us/graphics_banks]
           - [0x6F0, layout, entity_layouts]
           - [0x898, skip]
           - [0x1FA8, rooms, rooms]
           - [0x20AC, skip]
-          - [0x3B54, cmpgfx, D_80183B54, 128, 128, 4]
-          - [0x3EC8, cmpgfx, D_80183EC8, 128, 128, 4]
-          - [0x4EB8, cmpgfx, D_80184EB8, 128, 128, 4]
-          - [0x5DF4, cmpgfx, D_80185DF4, 128, 128, 4]
-          - [0x6C4C, cmpgfx, D_80186C4C, 128, 128, 4]
-          - [0x7A34, cmpgfx, D_80187A34, 128, 128, 4]
-          - [0x8A64, cmpgfx, D_80188A64, 128, 128, 4]
-          - [0x98D0, cmpgfx, D_801898D0, 128, 128, 4]
-          - [0xA4B8, cmpgfx, D_8018A4B8, 128, 128, 4]
-          - [0xB14C, cmpgfx, D_8018B14C, 128, 128, 4]
-          - [0xBF30, cmpgfx, D_8018BF30, 128, 128, 4]
-          - [0xC4F8, cmpgfx, D_8018C4F8, 128, 128, 4]
-          - [0xCADC, cmpgfx, D_8018CADC, 128, 128, 4]
-          - [0xD6E0, cmpgfx, D_8018D6E0, 128, 128, 4]
-          - [0xDFF0, cmpgfx, D_8018DFF0, 128, 128, 4]
-          - [0xEF38, cmpgfx, D_8018EF38, 128, 128, 4]
-          - [0xF2DC, cmpgfx, D_8018F2DC, 128, 128, 4]
-          - [0x100B8, cmpgfx, D_801900B8, 128, 128, 4]
-          - [0x10AD8, cmpgfx, D_80190AD8, 128, 128, 4]
-          - [0x11850, cmpgfx, D_80191850, 128, 128, 4]
-          - [0x12414, cmpgfx, D_80192414, 128, 128, 4]
-          - [0x13390, cmpgfx, D_80193390, 128, 128, 4]
+          - [0x326C, cmpgfx, us/D_8018326C, 128, 64, 4]
+          - [0x3B54, cmpgfx, us/D_80183B54, 128, 128, 4]
+          - [0x3EC8, cmpgfx, us/D_80183EC8, 128, 128, 4]
+          - [0x4EB8, cmpgfx, us/D_80184EB8, 128, 128, 4]
+          - [0x5DF4, cmpgfx, us/D_80185DF4, 128, 128, 4]
+          - [0x6C4C, cmpgfx, us/D_80186C4C, 128, 128, 4]
+          - [0x7A34, cmpgfx, us/D_80187A34, 128, 128, 4]
+          - [0x8A64, cmpgfx, us/D_80188A64, 128, 128, 4]
+          - [0x98D0, cmpgfx, us/D_801898D0, 128, 128, 4]
+          - [0xA4B8, cmpgfx, us/D_8018A4B8, 128, 128, 4]
+          - [0xB14C, cmpgfx, us/D_8018B14C, 128, 128, 4]
+          - [0xBF30, cmpgfx, us/D_8018BF30, 128, 128, 4]
+          - [0xC4F8, cmpgfx, us/D_8018C4F8, 128, 128, 4]
+          - [0xCADC, cmpgfx, us/D_8018CADC, 128, 128, 4]
+          - [0xD6E0, cmpgfx, us/D_8018D6E0, 128, 128, 4]
+          - [0xDFF0, cmpgfx, us/D_8018DFF0, 128, 128, 4]
+          - [0xEF38, cmpgfx, us/D_8018EF38, 128, 128, 4]
+          - [0xF2DC, cmpgfx, us/D_8018F2DC, 128, 128, 4]
+          - [0x100B8, cmpgfx, us/D_801900B8, 128, 128, 4]
+          - [0x10AD8, cmpgfx, us/D_80190AD8, 128, 128, 4]
+          - [0x11850, cmpgfx, us/D_80191850, 128, 128, 4]
+          - [0x12414, cmpgfx, us/D_80192414, 128, 128, 4]
+          - [0x13390, cmpgfx, us/D_80193390, 128, 128, 4]
           - [0x1396C, palette, D_8019396C, 16]
           - [0x13C2C, palette, D_80193C2C, 16]
           - [0x13D4C, palette, D_80193D4C, 16]
@@ -1160,6 +1161,25 @@ files:
             - [0x1210, skip]
   - target: disks/us/BOSS/BO7/BO7.BIN
   - target: disks/us/BOSS/RBO0/RBO0.BIN
+    asset_path: assets/boss/rbo0
+    src_path: src/boss/rbo0
+    splat_config_path: config/splat.us.borbo0.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x2C, sprite_banks, sprite_banks]
+          - [0x8C, paldef, us/palette_def] # TODO: remove namespace once unified
+          - [0xBC, layers, layers]
+          - [0xE4, gfx_banks, graphics_banks]
+          - [0x1D0, layout, entity_layouts]
+          - [0x378, skip]
+          - [0x194C, rooms, rooms]
+          - [0x1968, skip]
+          # - [0xB02C, palette, D_8018B02C]
+          # - [0xB2EC, palette, D_8018B2EC]
+          # - [0xB30C, palette, D_8018B30C]
+          - [0xFD2C, skip]
   - target: disks/us/BOSS/RBO1/RBO1.BIN
   - target: disks/us/BOSS/RBO2/RBO2.BIN
   - target: disks/us/BOSS/RBO3/RBO3.BIN

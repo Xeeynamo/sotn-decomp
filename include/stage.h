@@ -34,7 +34,7 @@ typedef u16 EInit[5];
 // common stage initialization data
 extern EInit g_EInitSpawner;
 
-typedef struct {
+typedef struct AnimateEntityFrame {
     u8 duration;
     u8 pose;
 } AnimateEntityFrame;
@@ -158,22 +158,6 @@ typedef struct {
     u32 velocityY;
     s16 rotate;
 } unkStr_80182100;
-
-/*******/
-/* ST0 */
-/*******/
-// Used in st0/3D8F0
-typedef struct {
-    Point16 unk0;
-    s16 unk4;
-    s16 unk6;
-    s16 unk8;
-    s16 unkA;
-    s16 unkC;
-    s16 unkE;
-    s32 unk10;
-    s16 unk14;
-} unkstr_801C06B0;
 
 /***************/
 /* Scratchpads */

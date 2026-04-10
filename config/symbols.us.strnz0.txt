@@ -1,2 +1,1 @@
-RNZ0_RedDoorTiles = 0x80180B48;
-RNZ0_PrizeDrops = 0x80180CC8;
+

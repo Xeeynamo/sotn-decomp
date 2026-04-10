@@ -1,35 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "wrp.h"
-#include <sfx.h>
-
-static u32 bg_color_angle[] = {
-    0x0000, 0x0200, 0x0400, 0x0600, 0x0800, 0x0A00, 0x0C00, 0x0E00,
-    0x1000, 0x1200, 0x1400, 0x1600, 0x1800, 0x1A00, 0x1C00, 0x1E00,
-};
-
-#ifndef VERSION_PSP
-static u32 D_80180648 = 0;
-static u32 D_8018064C[] = {0x00040000, 0x00040000, 0xFFFC0004, 0x0000FFF8};
-#endif
-
-static Point16 WarpRoomCoords[] = {
-    {0x0F, 0x26}, // Entrance
-    {0x23, 0x2C}, // Abandoned pit to the Catacomb
-    {0x3B, 0x11}, // Outer Wall
-    {0x28, 0x0C}, // Castle Keep
-    {0x25, 0x15}, // Olrox's Quarters
-};
 
 #ifdef VERSION_PSP
-
 extern s32 E_ID(SMALL_ROCKS);
-static s32 DestinationWarpRoom;
-static s32 WarpBackgroundAmplitiude;
-static s32 WarpBackgroundPhase;
-static s32 WarpBackgroundBrightness;
-static u32 D_80180648;
+#endif
 
-#else
+static u32 bg_color_angle[] = {
+    ROT(0),   ROT(45),  ROT(90),  ROT(135), ROT(180), ROT(225),
+    ROT(270), ROT(315), ROT(360), ROT(405), ROT(450), ROT(495),
+    ROT(540), ROT(585), ROT(630), ROT(675),
+};
 
 // the room the player will be warping to
 static s32 DestinationWarpRoom;
@@ -39,7 +19,17 @@ static s32 WarpBackgroundAmplitiude;
 static s32 WarpBackgroundPhase;
 // the brightness of the background layer
 static s32 WarpBackgroundBrightness;
-#endif
+
+static bool D_80180648 = false;
+static s16 D_8018064C[] = {0, 4, 0, 4, 4, -4, -8, 0}; // unused
+
+static Point16 WarpRoomCoords[] = {
+    {0x0F, 0x26}, // Entrance
+    {0x23, 0x2C}, // Abandoned pit to the Catacomb
+    {0x3B, 0x11}, // Outer Wall
+    {0x28, 0x0C}, // Castle Keep
+    {0x25, 0x15}, // Olrox's Quarters
+};
 
 // Mask for all of the statuses where the UP button will
 // be ignored when in warp position or on the warp platform
@@ -150,7 +140,7 @@ void EntityWarpRoom(Entity* self) {
         self->hitboxHeight = 16;
         g_CastleFlags[WRP_UNLOCKS] |= 1;
         g_CastleFlags[WRP_UNLOCKS] |= 1 << self->params;
-        D_80180648 = 0;
+        D_80180648 = false;
         entity = &PLAYER;
         moveX = entity->posX.i.hi + g_Tilemap.scrollX.i.hi;
         if (moveX > 0x60 && moveX < 0xA0) {
@@ -158,7 +148,7 @@ void EntityWarpRoom(Entity* self) {
             g_Player.demo_timer = 16;
             g_PauseAllowed = false;
             self->step = 5;
-            D_80180648 = 1;
+            D_80180648 = true;
             break;
         }
     case 1:
@@ -175,6 +165,7 @@ void EntityWarpRoom(Entity* self) {
             self->step++;
         }
         break;
+
     case 2:
         // Move Alucard in the background and fade him to white
         g_Player.padSim = 0;
@@ -186,11 +177,12 @@ void EntityWarpRoom(Entity* self) {
         prim->drawMode = DRAW_TRANSP | DRAW_TPAGE | DRAW_TPAGE2;
         prim->g0 = prim->b0 = prim->r0 += 2;
         if (prim->r0 > 96) {
-            D_80180648 = 1;
+            D_80180648 = true;
             g_api.PlaySfx(SFX_TELEPORT_BANG_B);
             self->step++;
         }
         break;
+
     case 3:
         // Fade the entire room into white
         g_Player.padSim = 0;
@@ -214,6 +206,7 @@ void EntityWarpRoom(Entity* self) {
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         break;
+
     case 4:
         // Perform the actual warp
         move_room = self->params + 1;
@@ -237,6 +230,7 @@ void EntityWarpRoom(Entity* self) {
         self->step = 0x80;
         D_80097C98 = 2;
         break;
+
     case 5:
         g_Player.padSim = 0;
         g_Player.demo_timer = 16;
@@ -268,13 +262,14 @@ void EntityWarpRoom(Entity* self) {
             self->step = 1;
         }
         if (move_room < 0x28) {
-            D_80180648 = 0;
+            D_80180648 = false;
         }
         prim->g0 = prim->b0 = prim->r0 = move_room;
         LOW(prim->r1) = LOW(prim->r0);
         LOW(prim->r2) = LOW(prim->r0);
         LOW(prim->r3) = LOW(prim->r0);
         break;
+
     default:
         warpCoords = &WarpRoomCoords[DestinationWarpRoom];
         moveX = warpCoords->x - g_Tilemap.left;
@@ -345,6 +340,7 @@ void EntityWarpSmallRocks(Entity* entity) {
             entity->step++;
         }
         break;
+
     case 2:
         if (entity->ext.warpRoom.unk88) {
             entity->ext.warpRoom.unk88--;
@@ -358,6 +354,7 @@ void EntityWarpSmallRocks(Entity* entity) {
             }
         }
         break;
+
     case 3:
         x = 0x80 - entity->posX.i.hi;
         y = 0x80 - entity->posY.i.hi;
@@ -376,6 +373,7 @@ void EntityWarpSmallRocks(Entity* entity) {
             DestroyEntity(entity);
         }
         break;
+
     case 4:
         angle = entity->rotate += 0x20;
         entity->velocityY = rsin(angle) * 4;
@@ -384,6 +382,7 @@ void EntityWarpSmallRocks(Entity* entity) {
             entity->step++;
         }
         break;
+
     case 5:
         if (--entity->ext.warpRoom.unk88 == 0) {
             PlaySfxPositional(SFX_WALL_DEBRIS_B);

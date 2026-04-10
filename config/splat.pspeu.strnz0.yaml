@@ -83,7 +83,7 @@ segments:
       - [0x21410, .data, e_particles]
       - [0x21490, .data, e_imp]
       - [0x214C8, .data, e_collect]
-      - [0x21A10, data]
+      - [0x21A10, .data, e_misc]
       - [0x21A60, .data, collision]
       - [0x21E38, .data, e_sealed_door]
       - [0x21F10, .data, e_lesser_demon]
@@ -91,13 +91,20 @@ segments:
       - [0x22140, .data, e_floor_trap]
       - [0x22160, .data, e_gremlin]
       - [0x221C0, .data, e_cannon]
-      - [0x221D8, data]
+      - [0x221D8, .data, gen/psp/sprites]
+      - [0x28850, .data, sprite_banks] #RNZ0_spriteBanks
+      - [0x288B8, .data, layers] #RNZ0_rooms_layers
+      - [0x28BC0, .data, palette_def] #RNZ0_cluts
+      - [0x28C70, .data, gfx_banks] #RNZ0_gfxBanks
+      - [0x28EB0, .data, e_red_door_tiles]
+      - [0x28EE0, .data, e_init]
+      - [0x291C0, .data, gen/rooms]
       - [0x292C8, .data, e_breakable]
       - [0x29330, .data, e_red_eye_bust]
-      - [0x29340, data]
+      - [0x29340, .data, stage_data]
       - [0x4A158, .data, header]
       - [0x4A198, .data, e_blue_flame_table]
-      - [0x4A200, data]
+      - [0x4A200, .data, d_prize_drops]
       - [0x4A220, .data, e_room_bg]
       - [0x4A260, .data, e_lock_camera]
       - [0x4A2D8, .data, e_life_max_tank]
@@ -112,11 +119,11 @@ segments:
       - [0x4A580, .bss, create_entity]
       - [0x4A5A0, .bss, st_update]
       - [0x4A5E0, .bss, e_collect]
-      - [0x4A600, bss, 4A600]
+      - [0x4A600, .bss, e_sealed_door]
       - [0x4A608, .bss, e_cannon]
-      - [0x4A610, bss, 4A610]
+      - [0x4A610, .bss, layers] # layer_empty
       - [0x4A620, .bss, rnz0_psp/st_init_psp]
-      - [0x4A778, bss, 4A778]
+      - [0x4A778, .bss, e_breakable]
       - [0x4A780, .bss, e_lock_camera]
 
   - [0x4A580]
