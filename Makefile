@@ -138,7 +138,7 @@ clean: ##@ clean extracted files, assets, and build artifacts
 clean:
 	@./sotn.sh clean $(VERSION)
 clean_all:
-	@./sotn.sh clean-all $(VERSION)
+	@./sotn.sh clean all
 
 ##@
 ##@ Misc Targets
