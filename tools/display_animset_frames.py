@@ -31,6 +31,7 @@ DRA_ANIM_ARRAY = "D_800A3B70"
 # holds the individual animsets
 DRA_ANIMSET_FILE = "src/dra/d_2F324.c"
 
+
 def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A, dump_filename):
 
     # Now we have an array that tells us the name of all the frames.
@@ -45,26 +46,34 @@ def show_animset(ovl_name, anim_num, arg_palette, view_w, view_h, unk5A, dump_fi
             super().__init__(dump_filename, anim_num, ovl_name, arg_palette, unk5A)
             # initialize to image 1
             self.anim_index = 1
-            self.im = ax.imshow([[]], extent=[-view_w/2, view_w/2, -view_h/2, view_h/2])
+            self.im = ax.imshow(
+                [[]], extent=[-view_w / 2, view_w / 2, -view_h / 2, view_h / 2]
+            )
             self.update_image()
+
         def update_image(self):
-            ax.set_title(f"Displaying {ovl_name} animation {anim_num}, index {self.anim_index}")
+            ax.set_title(
+                f"Displaying {ovl_name} animation {anim_num}, index {self.anim_index}"
+            )
             img = self.render_frame(self.anim_index)
             self.im.set_data(img)
             fig.canvas.draw_idle()
+
         def prev(self, event):
             self.anim_index -= 1
             if self.anim_index < 1:
                 self.anim_index = len(self.framearray) - 1
             self.update_image()
+
         def next(self, event):
             self.anim_index += 1
             if self.anim_index >= len(self.framearray):
                 self.anim_index = 1
             self.update_image()
-        
 
-    shower = ControllableShower(dump_filename, anim_num, ovl_name, arg_palette, unk5A) # imported from play_animation.py
+    shower = ControllableShower(
+        dump_filename, anim_num, ovl_name, arg_palette, unk5A
+    )  # imported from play_animation.py
 
     prev_button = Button(plt.axes([0.1, 0.025, 0.3, 0.1], facecolor="k"), "Prev Frame")
     prev_button.on_clicked(shower.prev)
@@ -111,5 +120,5 @@ show_animset(
     args.view_width,
     args.view_height,
     args.unk5A,
-    args.dump_filename
+    args.dump_filename,
 )

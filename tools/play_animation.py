@@ -288,7 +288,9 @@ def main(overlay, src_file, dump_filename):
         anim_num, initframe, unk5A, palette, enemyNum = initializer
         print(anim_num, palette)
 
-        shower = AnimationShower(dump_filename, anim_num, overlay, palette=palette, unk5A=unk5A)
+        shower = AnimationShower(
+            dump_filename, anim_num, overlay, palette=palette, unk5A=unk5A
+        )
         fig, ax = plt.subplots()
         ax.set_xlim(0, 256)
         ax.set_ylim(0, 256)
@@ -303,8 +305,11 @@ def main(overlay, src_file, dump_filename):
         export_button.on_clicked(lambda event: save_as_gif(animframes))
         plt.show()
 
+
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Renders in-game animations from ANIMSET")
+    parser = argparse.ArgumentParser(
+        description="Renders in-game animations from ANIMSET"
+    )
 
     parser.add_argument("dump_filename")
 
@@ -317,8 +322,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    main(
-        args.overlay,
-        args.filename,
-        args.dump_filename
-    )
+    main(args.overlay, args.filename, args.dump_filename)

@@ -2828,8 +2828,8 @@ typedef struct {
 } ET_Chair;
 
 typedef struct {
-    /* 0x7C */ struct Primitive* unk7C;
-    /* 0x80 */ u16 unk80;
+    /* 0x7C */ struct Primitive* prim;
+    /* 0x80 */ u16 timer;
     /* 0x82 */ u16 : 16;
     /* 0x84 */ u8 unk84;
     /* 0x85 */ u8 unk85;
