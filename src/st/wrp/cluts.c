@@ -1,4 +1,3 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include <game.h>
-
-u16 msgBoxTpage[768];
+#include "wrp.h"
+#include "gen/palette_def.h"

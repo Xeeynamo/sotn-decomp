@@ -2,10 +2,9 @@
 #include "st0.h"
 #include <scratchpad.h>
 
-extern SVECTOR D_801C1BC8[];
-extern u8 D_801C23C8[16];
-
 void EntityBackgroundVortex(Entity* self) {
+    static SVECTOR D_801C1BC8[0x100];
+    static u8 D_801C23C8[0x100];
 #ifdef VERSION_PC
     u8 sp[SP_LEN];
 #endif

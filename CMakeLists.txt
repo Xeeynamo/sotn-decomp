@@ -436,6 +436,10 @@ set (SOURCE_FILES_STAGE_ST0
 set(SOURCE_FILES_STAGE_WRP
     src/pc/stages/stage_wrp.c
     src/st/wrp/header.c
+    src/st/wrp/sprite_banks.c
+    src/st/wrp/cluts.c
+    src/st/wrp/layers.c
+    src/st/wrp/graphics_banks.c
     src/st/wrp/gen/e_laydef.c
     src/st/wrp/e_init.c
     src/st/wrp/background_block_init.c
