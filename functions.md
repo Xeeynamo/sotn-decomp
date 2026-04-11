@@ -2,6 +2,7 @@
 |----------|-----------------------------------|----------|------------|--------|-------|-----|
 | are      | D_pspeu_09297DD4                  |        6 |          0 |        |       |     |
 | main     | sce_stub                          |        7 |          0 |        |       |     |
+| main     | D_psp_0893C06C                    |        7 |          0 |        |       |     |
 | main     | D_psp_0893C1AC                    |        7 |          0 |        |       |     |
 | are      | e_blade_master.rodata             |        7 |          0 |        |       |     |
 | lib      | e_mist_door.rodata                |        7 |          0 |        |       |     |
@@ -63,6 +64,7 @@
 |          | func_092ED290                     |        7 |          1 |        |       |     |
 |          | func_092ED298                     |        7 |          1 |        |       |     |
 |          | func_092EDA98                     |        7 |          1 |        |       |     |
+| main     | D_psp_0893C074                    |        8 |          0 |        |       |     |
 | main     | D_psp_0893C094                    |        8 |          0 |        |       |     |
 | main     | D_psp_0893C1A0                    |        8 |          0 |        |       |     |
 | main     | func_psp_08910360                 |        8 |          1 |        |       |     |
@@ -145,6 +147,7 @@
 | no1      | func_pspeu_09262BC8               |        9 |          1 |        |       |     |
 | no1      | func_pspeu_09262BD8               |        9 |          1 |        |       |     |
 | no4      | func_pspeu_0923D0B8               |        9 |          1 |        |       |     |
+| main     | D_psp_0893C080                    |       10 |          0 |        |       |     |
 | main     | func_psp_0891034C                 |       10 |          1 |        |       |     |
 | main     | CdControl                         |       10 |          1 |        |       |     |
 | main     | CdMix                             |       10 |          1 |        |       |     |
@@ -174,10 +177,10 @@
 | dra      | MemcardClose                      |       11 |          1 |        |       |     |
 | dra      | func_psp_0913D628                 |       11 |          1 |        |       |     |
 | dra      | func_psp_090F1C80                 |       11 |          1 |        |       |     |
-| main     | func_psp_08915070                 |       11 |          1 |        |       |     |
-| main     | func_psp_0891527C                 |       11 |          1 |        |       |     |
 | main     | func_psp_08934DFC                 |       11 |          1 |        |       |     |
 | main     | func_psp_08934EEC                 |       11 |          1 |        |       |     |
+| main     | func_psp_08915070                 |       11 |          1 |        |       |     |
+| main     | func_psp_0891527C                 |       11 |          1 |        |       |     |
 | main     | sceVfpuVector4Ceil                |       11 |          1 |        |       |     |
 | main     | sceVfpuVector4Floor               |       11 |          1 |        |       |     |
 | main     | sceVfpuVector4FromIVector         |       11 |          1 |        |       |     |
@@ -217,7 +220,7 @@
 | main     | sceVfpuVector4SignInt             |       12 |          1 |        |       |     |
 | main     | sceVfpuVector4Sub                 |       12 |          1 |        |       |     |
 | main     | sceVfpuVector4SubXYZ              |       12 |          1 |        |       |     |
-| main     | func_psp_08936828                 |       12 |          2 |        |       |     |
+| main     | DecodeActiveCatchBlock            |       12 |          2 |        |       |     |
 | dra      | func_psp_09104628                 |       13 |          1 |        |       |     |
 | dra      | func_psp_09101288                 |       13 |          1 |        |       |     |
 | dra      | func_psp_090DEAA8                 |       13 |          1 |        |       |     |
@@ -229,11 +232,11 @@
 | main     | func_psp_0891B0BC                 |       13 |          1 |        |       |     |
 | main     | TransMatrix                       |       13 |          1 |        |       |     |
 | main     | func_psp_0892FCA8                 |       13 |          1 |        |       |     |
+| main     | func_psp_08935934                 |       13 |          1 |        |       |     |
 | main     | func_psp_08914AE8                 |       13 |          1 |        |       |     |
 | main     | func_psp_08914C20                 |       13 |          1 |        |       |     |
 | main     | func_psp_089162A8                 |       13 |          1 |        |       |     |
 | main     | func_psp_089162F0                 |       13 |          1 |        |       |     |
-| main     | func_psp_08935934                 |       13 |          1 |        |       |     |
 | main     | sceGuTexFlush                     |       13 |          1 |        |       |     |
 | main     | sceGuTexSync                      |       13 |          1 |        |       |     |
 | main     | sceVfpuVector4InnerProduct        |       13 |          1 |        |       |     |
@@ -247,9 +250,9 @@
 | main     | PadRead_PSP                       |       13 |          2 |        |       |     |
 | main     | GsInitVcount                      |       13 |          2 |        |       |     |
 | main     | InitCARD                          |       13 |          2 |        |       |     |
-| main     | func_psp_089375A0                 |       13 |          2 |        |       |     |
 | main     | func_psp_08934F04                 |       13 |          2 |        |       |     |
 | main     | func_psp_08934F24                 |       13 |          2 |        |       |     |
+| main     | func_psp_089375A0                 |       13 |          2 |        |       |     |
 | sel      | func_psp_09239180                 |       13 |          2 |        |       |     |
 | no2      | jtbl_pspeu_0928D418               |       14 |          0 | Yes    |       |     |
 | np3      | jtbl_pspeu_09291AF0               |       14 |          0 | Yes    |       |     |
@@ -321,6 +324,7 @@
 | main     | gte_stsxy3                        |       15 |          1 |        |       |     |
 | main     | func_psp_0892CF0C                 |       15 |          1 |        |       |     |
 | main     | func_psp_08931D3C                 |       15 |          1 |        |       |     |
+| main     | func_psp_08934DD4                 |       15 |          1 |        |       |     |
 | main     | func_psp_08915228                 |       15 |          1 |        |       |     |
 | main     | func_psp_089162C8                 |       15 |          1 |        |       |     |
 | main     | __locale_charset                  |       15 |          1 |        |       |     |
@@ -329,7 +333,6 @@
 | main     | labs                              |       15 |          1 |        |       |     |
 | main     | fabs                              |       15 |          1 |        |       |     |
 | main     | func_psp_0892D1B0                 |       15 |          1 |        |       |     |
-| main     | func_psp_08934DD4                 |       15 |          1 |        |       |     |
 | main     | sceGuLightMode                    |       15 |          1 |        |       |     |
 | main     | sceGuLogicalOp                    |       15 |          1 |        |       |     |
 | main     | sceGuTexEnvColor                  |       15 |          1 |        |       |     |
@@ -353,8 +356,8 @@
 | main     | func_psp_089262C4                 |       15 |          2 |        |       |     |
 | main     | RotAverage4                       |       15 |          2 |        |       |     |
 | main     | func_psp_0892FC80                 |       15 |          2 |        |       |     |
-| main     | func_psp_08934F44                 |       15 |          2 |        |       |     |
-| main     | func_psp_08934F6C                 |       15 |          2 |        |       |     |
+| main     | terminate                         |       15 |          2 |        |       |     |
+| main     | unexpected                        |       15 |          2 |        |       |     |
 | main     | sceGuClear                        |       15 |          2 |        |       |     |
 | main     | sceGuDepthOffset                  |       15 |          2 |        |       |     |
 | main     | sceGuFrontFace                    |       15 |          2 |        |       |     |
@@ -554,7 +557,7 @@
 | main     | AddPrim                           |       18 |          1 |        |       |     |
 | main     | VSyncCallback                     |       18 |          1 |        |       |     |
 | main     | gte_stsxy01c                      |       18 |          1 |        |       |     |
-| main     | func_psp_08935D08                 |       18 |          1 |        |       |     |
+| main     | __DecodeAddress                   |       18 |          1 |        |       |     |
 | main     | sceGuStencilFunc                  |       18 |          1 |        |       |     |
 | main     | sceGuStencilOp                    |       18 |          1 |        |       |     |
 | main     | sceVfpuVector4Clamp               |       18 |          1 |        |       |     |
@@ -587,8 +590,8 @@
 | dra      | func_psp_090F1C00                 |       19 |          1 |        |       |     |
 | main     | _sceGuDebugDispBuffer             |       19 |          1 |        |       |     |
 | main     | func_psp_089107A4                 |       19 |          1 |        |       |     |
-| main     | func_psp_08914EE0                 |       19 |          1 |        |       |     |
 | main     | func_psp_089368B8                 |       19 |          1 |        |       |     |
+| main     | func_psp_08914EE0                 |       19 |          1 |        |       |     |
 | main     | sceGuTexProjMapMode               |       19 |          1 |        |       |     |
 | main     | sceVfpuVector4Abs                 |       19 |          1 |        |       |     |
 | main     | sceVfpuVector4NormalizePhase      |       19 |          1 |        |       |     |
@@ -675,8 +678,8 @@
 | main     | sceGuBreak                        |       20 |          2 |        |       |     |
 | main     | func_psp_08919638                 |       20 |          2 |        |       |     |
 | main     | func_psp_0891AC24                 |       20 |          2 |        |       |     |
-| main     | _cleanup_r                        |       20 |          2 |        |       |     |
 | main     | func_psp_08934EB0                 |       20 |          2 |        |       |     |
+| main     | _cleanup_r                        |       20 |          2 |        |       |     |
 | main     | sceGuLight                        |       20 |          2 |        |       |     |
 | main     | sceGuModelColor                   |       20 |          2 |        |       |     |
 | main     | sceGuScissor                      |       20 |          2 |        |       |     |
@@ -800,17 +803,17 @@
 | dra      | func_psp_090E8880                 |       21 |          2 |        |       |     |
 | dra      | func_psp_09116090                 |       21 |          2 |        |       |     |
 | main     | func_psp_0890FBEC                 |       21 |          2 |        |       |     |
+| main     | func_psp_08935B90                 |       21 |          2 |        |       |     |
 | main     | func_psp_0892A8C0                 |       21 |          2 |        |       |     |
 | main     | _cleanup                          |       21 |          2 |        |       |     |
 | main     | func_psp_08933830                 |       21 |          2 |        |       |     |
-| main     | func_psp_08935B90                 |       21 |          2 |        |       |     |
 | main     | func_psp_08937560                 |       21 |          2 |        |       |     |
 | sel      | func_psp_09241BF8                 |       21 |          2 |        |       |     |
 | dra      | func_psp_090F0E10                 |       21 |          3 |        |       |     |
 | main     | InitGeom                          |       21 |          3 |        |       |     |
+| main     | __end_catch                       |       21 |          3 |        |       |     |
 | main     | localeconv                        |       21 |          3 |        |       |     |
 | main     | _init_signal                      |       21 |          3 |        |       |     |
-| main     | func_psp_08936E54                 |       21 |          3 |        |       |     |
 | sel      | func_psp_09237C38                 |       21 |          3 |        |       |     |
 | sel      | func_psp_09237C78                 |       21 |          3 |        |       |     |
 | rbo0     | unk_19B94.rodata                  |       22 |          0 | Yes    |       |     |
@@ -843,9 +846,9 @@
 | no2      | func_pspeu_0924AA78               |       22 |          3 |        |       |     |
 | np3      | EntityOwlTarget                   |       22 |          3 |        |       |     |
 | dra      | func_psp_090F54E0                 |       22 |          4 |        |       |     |
+| main     | DecodeSpecification               |       22 |          4 |        |       |     |
 | main     | func_psp_0892A3D4                 |       22 |          4 |        |       |     |
 | main     | SpuSetVoiceAttr                   |       22 |          4 |        |       |     |
-| main     | func_psp_08936AFC                 |       22 |          4 |        |       |     |
 | maria    | func_pspeu_092A9250               |       22 |          4 |        |       |     |
 | no0      | D_pspeu_092A1B10                  |       23 |          0 |        |       |     |
 | dra      | func_psp_091088F0                 |       23 |          1 |        |       |     |
@@ -924,7 +927,6 @@
 | dra      | func_psp_09141440                 |       24 |          4 |        |       |     |
 | main     | func_psp_08919A0C                 |       24 |          4 |        |       |     |
 | main     | func_psp_08935CBC                 |       24 |          4 |        |       |     |
-| main     | 3D760.rodata                      |       25 |          0 |        |       |     |
 | rbo0     | MoveEntity                        |       25 |          1 |        |       |     |
 | rbo0     | SetStep                           |       25 |          1 |        |       |     |
 | dra      | func_psp_09108938                 |       25 |          1 |        |       |     |
@@ -1027,8 +1029,8 @@
 | no1      | unk_3D8AC.rodata                  |       26 |          0 | Yes    |       |     |
 | st0      | 2A218.rodata                      |       26 |          0 | Yes    |       |     |
 | main     | func_psp_0891FD74                 |       26 |          1 |        |       |     |
-| main     | func_psp_08914FA8                 |       26 |          1 |        |       |     |
 | main     | func_psp_089356E8                 |       26 |          1 |        |       |     |
+| main     | func_psp_08914FA8                 |       26 |          1 |        |       |     |
 | dra      | func_psp_091032C8                 |       26 |          2 |        |       |     |
 | dra      | func_psp_09117B28                 |       26 |          2 |        |       |     |
 | dra      | func_psp_090FA740                 |       26 |          2 |        |       |     |
@@ -1054,7 +1056,7 @@
 | main     | avsync_startAudioVideo            |       26 |          4 |        |       |     |
 | main     | func_psp_08914FFC                 |       26 |          4 |        |       |     |
 | main     | __getreent                        |       26 |          4 |        |       |     |
-| main     | func_psp_08936CE0                 |       26 |          4 |        |       |     |
+| main     | DecodeCatchBlock                  |       26 |          4 |        |       |     |
 | main     | func_psp_0891FC64                 |       26 |          5 |        |       |     |
 | main     | func_psp_0892A28C                 |       26 |          5 |        |       |     |
 | dra      | func_psp_09100818                 |       27 |          1 |        |       |     |
@@ -1100,9 +1102,9 @@
 | ric      | func_pspeu_092AF5A8               |       27 |          3 |        |       |     |
 | sel      | func_psp_092395E8                 |       27 |          3 |        |       |     |
 | rbo0     | func_pspeu_09247DA8               |       27 |          4 |        |       |     |
+| main     | func_psp_08935BD0                 |       27 |          4 |        |       |     |
 | main     | pad_read                          |       27 |          4 |        |       |     |
 | main     | func_psp_08914B08                 |       27 |          4 |        |       |     |
-| main     | func_psp_08935BD0                 |       27 |          4 |        |       |     |
 | are      | func_pspeu_092500B0               |       27 |          4 |        |       |     |
 | cat      | func_pspeu_09245530               |       27 |          4 |        |       |     |
 | chi      | func_psp_09240E58                 |       27 |          4 |        |       |     |
@@ -1255,6 +1257,7 @@
 | st0      | func_pspeu_09237CB8               |       30 |          5 |        |       |     |
 | main     | func_psp_0892AB14                 |       30 |          6 |        |       |     |
 | dra      | func_psp_0910A138                 |       30 |          7 |        |       |     |
+| main     | 36174.rodata                      |       31 |          0 |        |       |     |
 | main     | func_psp_08911FA0                 |       31 |          1 |        |       |     |
 | main     | func_psp_08912008                 |       31 |          1 |        |       |     |
 | main     | func_psp_089120E4                 |       31 |          1 |        |       |     |
@@ -1272,8 +1275,8 @@
 | dra      | func_psp_09142DE0                 |       31 |          2 |        |       |     |
 | dra      | func_psp_090EC968                 |       31 |          2 |        |       |     |
 | main     | func_psp_0891A99C                 |       31 |          2 |        |       |     |
+| main     | SetupCatchInfo                    |       31 |          2 |        |       |     |
 | main     | func_psp_0892E914                 |       31 |          2 |        |       |     |
-| main     | func_psp_08936D30                 |       31 |          2 |        |       |     |
 | are      | func_pspeu_092633C0               |       31 |          2 |        |       |     |
 | cat      | func_pspeu_09254240               |       31 |          2 |        |       |     |
 | chi      | func_psp_09248A98                 |       31 |          2 |        |       |     |
@@ -1323,9 +1326,9 @@
 | dra      | func_psp_090F89B0                 |       31 |          4 |        |       |     |
 | dra      | func_psp_090EBF50                 |       31 |          4 |        |       |     |
 | main     | func_psp_0892CEB0                 |       31 |          4 |        |       |     |
+| main     | func_psp_08935640                 |       31 |          4 |        |       |     |
 | main     | func_psp_0892D154                 |       31 |          4 |        |       |     |
 | main     | func_psp_0892DBE4                 |       31 |          4 |        |       |     |
-| main     | func_psp_08935640                 |       31 |          4 |        |       |     |
 | sel      | func_psp_09240A28                 |       31 |          4 |        |       |     |
 | dra      | func_psp_0913F860                 |       31 |          5 |        |       |     |
 | maria    | func_pspeu_092B0C70               |       31 |          5 |        |       |     |
@@ -1341,7 +1344,7 @@
 | main     | sceGuDrawBufferList               |       32 |          1 |        |       |     |
 | main     | sceGuGetMemory                    |       32 |          1 |        |       |     |
 | main     | func_psp_08910978                 |       32 |          1 |        |       |     |
-| main     | func_psp_08937478                 |       32 |          1 |        |       |     |
+| main     | __TransferControl                 |       32 |          1 |        |       |     |
 | main     | sceGuLightAtt                     |       32 |          1 |        |       |     |
 | dra      | func_psp_090E2EF8                 |       32 |          2 |        |       |     |
 | main     | func_psp_0890E9E4                 |       32 |          2 |        |       |     |
@@ -1440,8 +1443,8 @@
 | dra      | func_psp_091408E8                 |       35 |          2 |        |       |     |
 | main     | sceGuDisable                      |       35 |          2 |        |       |     |
 | main     | func_psp_089104B4                 |       35 |          2 |        |       |     |
-| main     | SsUtSetVVol                       |       35 |          2 |        |       |     |
 | main     | func_psp_08936844                 |       35 |          2 |        |       |     |
+| main     | SsUtSetVVol                       |       35 |          2 |        |       |     |
 |          | func_092EF908                     |       35 |          2 |        |       |     |
 | dra      | func_psp_091324E0                 |       35 |          3 |        |       |     |
 | dra      | func_psp_090F1EC8                 |       35 |          3 |        |       |     |
@@ -1527,7 +1530,7 @@
 | main     | main_                             |       36 |          8 |        |       |     |
 | no0      | e_plate_lord.rodata               |       37 |          0 | Yes    |       |     |
 | main     | sceGupModelColor                  |       37 |          1 |        |       |     |
-| main     | func_psp_089374E0                 |       37 |          1 |        |       |     |
+| main     | __throw                           |       37 |          1 |        |       |     |
 | main     | sceGuTexImage                     |       37 |          1 |        |       |     |
 | rbo0     | GetAngleBetweenEntities           |       37 |          2 |        |       |     |
 | dra      | func_psp_090F2178                 |       37 |          2 |        |       |     |
@@ -1647,8 +1650,8 @@
 | main     | func_psp_08928498                 |       38 |          5 |        |       |     |
 | main     | func_psp_0892851C                 |       38 |          5 |        |       |     |
 | main     | func_psp_089285A0                 |       38 |          5 |        |       |     |
-| main     | func_psp_08933ED8                 |       38 |          5 |        |       |     |
 | main     | func_psp_089364B4                 |       38 |          5 |        |       |     |
+| main     | func_psp_08933ED8                 |       38 |          5 |        |       |     |
 | main     | func_psp_0890FB70                 |       38 |          6 |        |       |     |
 | main     | func_psp_08932AD4                 |       38 |          6 |        |       |     |
 | main     | func_psp_0890F45C                 |       38 |          7 |        |       |     |
@@ -1718,7 +1721,7 @@
 | no4      | func_pspeu_0925A0F0               |       39 |          3 |        |       |     |
 | sel      | func_psp_092391A0                 |       39 |          3 |        |       |     |
 | main     | func_psp_0891A14C                 |       39 |          4 |        |       |     |
-| main     | func_psp_08935794                 |       39 |          4 |        |       |     |
+| main     | BinarySearch                      |       39 |          4 |        |       |     |
 | no4      | func_pspeu_0923BAB0               |       39 |          4 |        |       |     |
 | rare     | func_pspeu_0924BED8               |       39 |          4 |        |       |     |
 | sel      | func_psp_092407A0                 |       39 |          4 |        |       |     |
@@ -1781,11 +1784,11 @@
 | dra      | func_psp_090E3170                 |       40 |          4 |        |       |     |
 | dra      | func_psp_090ECFD8                 |       40 |          4 |        |       |     |
 | dra      | func_psp_090F1D68                 |       40 |          4 |        |       |     |
+| main     | func_psp_08934C9C                 |       40 |          4 |        |       |     |
 | main     | _fstat_r                          |       40 |          4 |        |       |     |
 | main     | _kill_r                           |       40 |          4 |        |       |     |
-| main     | func_psp_08934C9C                 |       40 |          4 |        |       |     |
 | main     | func_psp_0892A8FC                 |       40 |          5 |        |       |     |
-| main     | func_psp_089373F0                 |       40 |          5 |        |       |     |
+| main     | __SkipUnwindInfo                  |       40 |          5 |        |       |     |
 | main     | func_psp_0892BAE0                 |       40 |          6 |        |       |     |
 | dra      | func_800E9880                     |       40 |          8 |        |       |     |
 | main     | func_psp_0891AEC8                 |       40 |          8 |        |       |     |
@@ -2057,7 +2060,7 @@
 | dra      | func_psp_090E7DA8                 |       46 |          6 |        |       |     |
 | main     | sceWaveExit                       |       46 |          6 |        |       |     |
 | main     | func_psp_0891B70C                 |       46 |          6 |        |       |     |
-| main     | func_psp_089368F0                 |       46 |          6 |        |       |     |
+| main     | IsInSpecification                 |       46 |          6 |        |       |     |
 | rbo0     | func_pspeu_09246FC8               |       46 |          7 |        |       |     |
 | are      | func_pspeu_0924F2D0               |       46 |          7 |        |       |     |
 | cat      | func_pspeu_09244750               |       46 |          7 |        |       |     |
@@ -2187,9 +2190,9 @@
 | maria    | func_pspeu_092B59D0               |       51 |          5 |        |       |     |
 | ric      | func_pspeu_092BE4C8               |       51 |          5 |        |       |     |
 | sel      | func_psp_0923FEC0                 |       51 |          5 |        |       |     |
-| main     | __hi0bits                         |       51 |          6 |        |       |     |
 | main     | func_psp_08935E30                 |       51 |          6 |        |       |     |
 | main     | func_psp_0893633C                 |       51 |          6 |        |       |     |
+| main     | __hi0bits                         |       51 |          6 |        |       |     |
 | no0      | func_pspeu_09239D88               |       51 |          7 |        |       |     |
 | no3      | func_pspeu_092514C8               |       51 |          7 |        |       |     |
 | no3      | func_pspeu_0924FBB0               |       51 |          7 |        |       |     |
@@ -2324,8 +2327,8 @@
 | main     | sceGuSendList                     |       56 |          6 |        |       |     |
 | main     | RotTransPers3                     |       56 |          6 |        |       |     |
 | main     | VectorNormalS                     |       56 |          6 |        |       |     |
-| main     | _mprec_log10                      |       56 |          6 |        |       |     |
 | main     | func_psp_08934BD8                 |       56 |          6 |        |       |     |
+| main     | _mprec_log10                      |       56 |          6 |        |       |     |
 | main     | func_psp_089360F4                 |       56 |          7 |        |       |     |
 | main     | func_psp_089361B4                 |       56 |          7 |        |       |     |
 | main     | sceGupSignal                      |       56 |          7 |        |       |     |
@@ -2333,8 +2336,8 @@
 | ric      | func_pspeu_092A94A0               |       56 |          8 |        |       |     |
 |          | func_092EE878                     |       56 |          8 |        |       |     |
 | no3      | func_pspeu_0923FFE0               |       56 |          8 |        |       |     |
-| main     | func_psp_08936D90                 |       56 |         10 |        |       |     |
-| main     | func_psp_08936984                 |       56 |         12 |        |       |     |
+| main     | __ThrowHandler                    |       56 |         10 |        |       |     |
+| main     | __unexpected                      |       56 |         12 |        |       |     |
 | main     | func_psp_0893116C                 |       56 |         14 |        |       |     |
 | lib      | func_psp_09263558                 |       57 |          1 |        |       |     |
 | lib      | func_psp_09263628                 |       57 |          1 |        |       |     |
@@ -2711,8 +2714,8 @@
 | main     | func_psp_0892EB04                 |       69 |          8 |        |       |     |
 | no0      | func_pspeu_09247E38               |       69 |          8 |        |       |     |
 | dra      | func_psp_0913E6D0                 |       69 |          9 |        |       |     |
-| main     | func_psp_0892A7E0                 |       69 |          9 |        |       |     |
 | main     | func_psp_08934A80                 |       69 |          9 |        |       |     |
+| main     | func_psp_0892A7E0                 |       69 |          9 |        |       |     |
 | main     | atexit                            |       69 |         10 |        |       |     |
 | main     | func_psp_0890F670                 |       69 |         18 |        |       |     |
 | sel      | cutscene.rodata                   |       70 |          0 | Yes    |       |     |
@@ -2821,8 +2824,8 @@
 | nz0      | func_pspeu_092407E0               |       72 |          7 |        |       |     |
 | nz1      | func_pspeu_09258280               |       72 |          7 |        |       |     |
 | st0      | func_pspeu_09247CF8               |       72 |          7 |        |       |     |
-| main     | exponent                          |       72 |          8 |        |       |     |
 | main     | func_psp_08935D3C                 |       72 |          8 |        |       |     |
+| main     | exponent                          |       72 |          8 |        |       |     |
 | main     | sceGuDispBuffer2                  |       72 |          9 |        |       |     |
 | main     | func_psp_0892A2D8                 |       72 |         10 |        |       |     |
 | dra      | func_psp_09136D18                 |       72 |         14 |        |       |     |
@@ -2971,7 +2974,7 @@
 | dra      | 5087C.rodata                      |       78 |          0 | Yes    |       |     |
 | rare     | func_pspeu_0923B680               |       78 |          4 |        |       |     |
 | main     | memchr                            |       78 |          7 |        |       |     |
-| main     | func_psp_089372DC                 |       78 |          7 |        |       |     |
+| main     | __FindExceptionTable              |       78 |          7 |        |       |     |
 | maria    | func_pspeu_092AE0A8               |       78 |          7 |        |       |     |
 | ric      | func_pspeu_092A6610               |       78 |          7 |        |       |     |
 | main     | sceWavePlayEx                     |       78 |          8 |        |       |     |
@@ -2995,7 +2998,7 @@
 | np3      | func_pspeu_0925B680               |       79 |          6 |        |       |     |
 | lib      | func_psp_09258A38                 |       79 |          7 |        |       |     |
 | rnz0     | func_pspeu_09250678               |       79 |          7 |        |       |     |
-| main     | func_psp_08937110                 |       79 |          8 |        |       |     |
+| main     | __SetupFrameInfo                  |       79 |          8 |        |       |     |
 | maria    | func_pspeu_092B1E18               |       79 |          8 |        |       |     |
 | chi      | func_psp_092399B0                 |       79 |          8 |        |       |     |
 | no4      | func_pspeu_092427C8               |       79 |          8 |        |       |     |
@@ -3041,7 +3044,6 @@
 | no2      | func_pspeu_0924EB98               |       81 |          6 |        |       |     |
 | np3      | func_pspeu_0925B558               |       81 |          6 |        |       |     |
 | dra      | func_psp_090E2F60                 |       81 |         11 | Yes    |       |     |
-| main     | func_psp_0893676C                 |       81 |         11 | Yes    |       |     |
 | main     | sceSasInitWithGrain               |       81 |         12 |        |       |     |
 | main     | func_psp_0892CC48                 |       81 |         13 |        |       |     |
 | main     | func_psp_0892D030                 |       81 |         13 |        |       |     |
@@ -3050,8 +3052,8 @@
 | main     | func_psp_089254D8                 |       82 |          5 |        |       |     |
 | no2      | func_pspeu_0924F378               |       82 |          6 |        |       |     |
 | np3      | func_pspeu_0925BD38               |       82 |          6 |        |       |     |
-| main     | func_psp_089353F8                 |       82 |          7 |        |       |     |
-| main     | func_psp_0893551C                 |       82 |          7 |        |       |     |
+| main     | __DecodeSignedNumber              |       82 |          7 |        |       |     |
+| main     | __DecodeUnsignedNumber            |       82 |          7 |        |       |     |
 | no3      | func_pspeu_092545B8               |       82 |          8 |        |       |     |
 | no4      | func_pspeu_09238CF0               |       82 |          8 |        |       |     |
 | dra      | func_psp_090F76D0                 |       82 |          9 |        |       |     |
@@ -3064,6 +3066,7 @@
 | rcat     | func_pspeu_09248B40               |       82 |          9 |        |       |     |
 | main     | exit                              |       82 |         10 |        |       |     |
 | dra      | func_psp_090FF298                 |       82 |         11 |        |       |     |
+| main     | FindMostRecentException           |       82 |         11 | Yes    |       |     |
 | no0      | func_pspeu_09257F68               |       82 |         13 |        |       |     |
 | dra      | func_psp_09141C10                 |       82 |         15 |        |       |     |
 | dra      | func_psp_09143548                 |       83 |          4 |        |       |     |
@@ -3100,7 +3103,7 @@
 | no0      | func_pspeu_0925B0B0               |       85 |         10 |        |       |     |
 | rnz0     | func_pspeu_09239C80               |       85 |         10 |        |       |     |
 | dra      | func_psp_090E83E8                 |       85 |         12 |        |       |     |
-| main     | func_psp_08935808                 |       85 |         12 |        |       |     |
+| main     | FindExceptionRecord               |       85 |         12 |        |       |     |
 | nz1      | func_pspeu_0925AEA8               |       85 |         12 |        |       |     |
 | sel      | func_psp_0923B908                 |       85 |         13 |        |       |     |
 | main     | _setmodreent                      |       85 |         15 |        |       |     |
@@ -3525,6 +3528,7 @@
 | sel      | func_psp_0923F9E8                 |      103 |         13 |        |       |     |
 | st0      | func_pspeu_092378A0               |      103 |         13 |        |       |     |
 | dra      | 8D3E8.rodata                      |      104 |          0 | Yes    |       |     |
+| main     | 36E88.rodata                      |      104 |          0 | Yes    |       |     |
 | dra      | func_psp_09143248                 |      104 |          3 |        |       |     |
 | nz1      | func_pspeu_09253E68               |      104 |          4 |        |       |     |
 | are      | func_pspeu_09253668               |      104 |          5 |        |       |     |
@@ -3578,7 +3582,6 @@
 | dra      | func_psp_09141AA0                 |      105 |         15 |        |       |     |
 | rnz0     | func_pspeu_092567B8               |      105 |         16 |        |       |     |
 | main     | func_psp_0891AF48                 |      105 |         23 |        |       |     |
-| main     | 36174.rodata                      |      106 |          0 | Yes    |       |     |
 | main     | func_psp_0892D96C                 |      106 |          6 |        |       |     |
 | are      | func_pspeu_0924B460               |      106 |          7 |        |       |     |
 | no0      | func_pspeu_092445B0               |      106 |          7 |        |       |     |
@@ -3609,7 +3612,6 @@
 | rnz0     | func_pspeu_09246030               |      106 |         16 |        |       |     |
 | st0      | func_pspeu_0924B8B8               |      106 |         16 |        |       |     |
 | wrp      | func_psp_0923CA60                 |      106 |         16 |        |       |     |
-| main     | func_psp_08936BCC                 |      106 |         18 | Yes    |       |     |
 | dra      | func_psp_09143ED8                 |      106 |         33 |        |       |     |
 | no1      | func_pspeu_09252720               |      107 |          9 |        |       |     |
 | no4      | func_pspeu_09242E30               |      107 |          9 |        |       |     |
@@ -3617,6 +3619,7 @@
 | are      | func_pspeu_0925F050               |      107 |         11 |        |       |     |
 | rare     | func_pspeu_09249460               |      107 |         13 |        |       |     |
 | dra      | func_psp_09138600                 |      107 |         17 |        |       |     |
+| main     | FindExceptionHandler              |      107 |         18 | Yes    |       |     |
 | main     | func_psp_089117F4                 |      108 |          1 |        |       |     |
 | dra      | func_psp_090EC0C0                 |      108 |          3 |        |       |     |
 | are      | func_pspeu_0923FEF0               |      108 |          8 |        |       |     |
@@ -4177,7 +4180,7 @@
 | no2      | func_pspeu_0924F738               |      172 |         37 |        |       |     |
 | np3      | func_pspeu_0925C0F8               |      172 |         37 |        |       |     |
 | st0      | ST0_EntityLockCamera              |      173 |         13 |        |       |     |
-| main     | func_psp_08936E98                 |      174 |         15 |        |       |     |
+| main     | __PopStackFrame                   |      174 |         15 |        |       |     |
 | are      | func_pspeu_0923C568               |      174 |         16 |        |       |     |
 | no1      | func_pspeu_092386A8               |      174 |         16 |        |       |     |
 | no3      | func_pspeu_0924FC60               |      174 |         21 |        |       |     |
@@ -4309,16 +4312,16 @@
 | cat      | func_pspeu_0923BBC8               |      194 |         14 |        |       |     |
 | no3      | func_pspeu_0924C7A8               |      194 |         19 |        |       |     |
 | dra      | func_psp_09101AF0                 |      194 |         20 |        |       |     |
-| main     | func_psp_08936534                 |      194 |         39 | Yes    |       |     |
 | no1      | func_pspeu_092593A0               |      195 |         12 |        |       |     |
 | no1      | func_pspeu_09259670               |      195 |         12 |        |       |     |
 | main     | __kernel_sin                      |      195 |         28 |        |       |     |
 | maria    | func_pspeu_092B0E50               |      195 |         32 |        |       |     |
-| main     | func_psp_08935950                 |      195 |         36 | Yes    |       |     |
 |          | func_092EEC50                     |      195 |         37 | Yes    |       |     |
+| main     | UnwindStack                       |      195 |         39 | Yes    |       |     |
 | nz0      | func_pspeu_0923B1F0               |      196 |         18 |        |       |     |
 | dra      | func_psp_09116450                 |      196 |         22 |        |       |     |
 | dra      | func_psp_091398F0                 |      196 |         35 | Yes    |       |     |
+| main     | func_psp_08935950                 |      196 |         36 | Yes    |       |     |
 | lib      | func_psp_09253E20                 |      197 |          1 |        |       |     |
 |          | func_092E81B8                     |      197 |          7 |        |       |     |
 | no2      | func_pspeu_0925BBA8               |      197 |         20 |        |       |     |
