@@ -60,7 +60,7 @@ segments:
       - [0x11B0, .data, gen/rooms]
       - [0x122C, .data, gen/e_layout]
       - [0x1424, .data, stage_data]
-      - [0x6D8C, .data, gen/sprites]
+      - [0x6D8C, .data, gen/hd/sprites]
       - [0x6E34, .rodata, warp]
       - [0x6EAC, .rodata, e_red_door]
       - [0x6EC4, .rodata, e_collect]
