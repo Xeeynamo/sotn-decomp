@@ -4027,14 +4027,15 @@ typedef struct {
 
 typedef struct {
     /* 0x7C */ struct Primitive* prim;
-    /* 0x80 */ s16 unk80;
-    /* 0x82 */ s16 unk82;
-    /* 0x84 */ u8 unk84;
-    /* 0x85 */ u8 unk85;
-    /* 0x86 */ u8 : 8;
-    /* 0x87 */ u8 unk87;
+    /* 0x80 */ s16 timer;
+    // this is shared between the orbiting icicle and the main enemy
+    /* 0x82 */ s16 angle;
+    /* 0x84 */ u8 moveAwayFromPlayer;
+    /* 0x85 */ u8 castBlizzard;
+    /* 0x86 */ u8 iciclePositionIdx;
+    /* 0x87 */ u8 moveUpwards;
     /* 0x88 */ struct Entity* entity;
-    /* 0x8C */ s32 unk8C;
+    /* 0x8C */ s32 deathPrimCount;
 } ET_FrozenHalf;
 
 typedef union { // offset=0x7C

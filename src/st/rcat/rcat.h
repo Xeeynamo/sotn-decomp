@@ -48,12 +48,12 @@ enum Entities {
     E_UNK_1F,                        // func_us_801B1F1C
     E_UNK_20,                        // func_us_801B87E8_from_cat
     E_UNK_21,                        // func_us_801BACF4_from_cat
-    E_UNK_22,                        // func_us_801BEFD8
-    E_UNK_23,                        // func_us_801BFF94
-    E_UNK_24,                        // func_us_801C0118
-    E_UNK_25,                        // func_us_801C02C4
-    E_UNK_26,                        // func_us_801C0718
-    E_UNK_27,                        // func_us_801C0844
+    E_FROZEN_HALF,                   // EntityFrozenHalf
+    E_FROZEN_HALF_ORBIT_ICICLE,      // EntityFrozenHalfOrbitIcicle
+    E_FROZEN_HALF_THROWN_CHUNK,      // EntityFrozenHalfThrownChunk
+    E_FROZEN_HALF_BLIZZARD,          // EntityFrozenHalfBlizzard
+    E_FROZEN_HALF_FALLING_ICE,       // EntityFrozenHalfFallingIce
+    E_FROZEN_HALF_FROST_MIST,        // EntityFrozenHalfFrostMist
     E_SALOME,                        // EntitySalome
     E_SALOME_EFFECTS,                // EntitySalomeEffects
     E_SALOME_MAGIC_ORB,              // EntitySalomeMagicOrb

@@ -3,60 +3,82 @@
 #include <scratchpad.h>
 
 extern EInit g_EInitFrozenHalf;
-extern EInit D_us_8018103C;
-extern EInit D_us_80181048;
-extern EInit D_us_80181054;
-extern EInit D_us_80181060;
+extern EInit g_EInitFrozenHalfOrbitIcicle;
+extern EInit g_EInitFrozenHalfThrownChunk;
+extern EInit g_EInitFrozenHalfBlizzard;
+extern EInit g_EInitFrozenHalfFallingIce;
 extern EInit g_EInitParticle;
 
-static u8 D_us_80182080[] = {
-    0x07, 0x02, 0x07, 0x03, 0x07, 0x04, 0x07, 0x05, 0x07, 0x06,
-    0x07, 0x07, 0x07, 0x08, 0x30, 0x01, 0xFF, 0x00, 0x00, 0x00,
-};
-static u8 D_us_80182094[] = {
-    0x0A, 0x0A, 0x04, 0x06, 0x04, 0x07, 0x04, 0x08, 0x01, 0x01, 0xFF, 0x00,
-};
-static u8 D_us_801820A0[] = {
-    0x05, 0x0A, 0x02, 0x06, 0x02, 0x07, 0x02, 0x08, 0x01, 0x01, 0xFF, 0x00,
-};
-static u8 D_us_801820AC[] = {
-    0x06, 0x02, 0x05, 0x04, 0x04, 0x05, 0x04, 0x06,
-    0x04, 0x07, 0x04, 0x08, 0x01, 0x01, 0xFF, 0x00,
-};
-static u8 D_us_801820BC[] = {
-    0x03, 0x02, 0x03, 0x04, 0x02, 0x05, 0x02, 0x06,
-    0x02, 0x07, 0x02, 0x08, 0x01, 0x01, 0xFF, 0x00,
-};
-static u8 D_us_801820CC[] = {
-    0x06, 0x0F, 0x08, 0x10, 0x07, 0x11, 0x04, 0x12,
-    0x04, 0x13, 0x04, 0x14, 0x01, 0x15, 0xFF, 0x00,
-};
-static u8 D_us_801820DC[] = {
-    0x01, 0x15, 0x03, 0x14, 0x03, 0x13, 0x03, 0x12,
-    0x03, 0x11, 0x01, 0x01, 0xFF, 0x00, 0x00, 0x00,
+static AnimateEntityFrame anim_hair_flick[] = {
+    {0x07, 0x02}, {0x07, 0x03}, {0x07, 0x04}, {0x07, 0x05}, {0x07, 0x06},
+    {0x07, 0x07}, {0x07, 0x08}, {0x30, 0x01}, POSE_END,
 };
 
-static u8 D_us_801820EC[] = {
-    0x01, 0x18, 0x01, 0x19, 0x01, 0x1A, 0x01, 0x1B, 0x00, 0x00, 0x00, 0x00,
+static AnimateEntityFrame anim_move_towards_stop[] = {
+    {0x0A, 0x0A}, {0x04, 0x06}, {0x04, 0x07},
+    {0x04, 0x08}, {0x01, 0x01}, POSE_END,
 };
-static u8 D_us_801820F8[] = {
-    0x03, 0x1A, 0x01, 0x19, 0x01, 0x18, 0xFF, 0x00,
+
+static AnimateEntityFrame anim_move_toward[] = {
+    {0x05, 0x0A}, {0x02, 0x06}, {0x02, 0x07},
+    {0x02, 0x08}, {0x01, 0x01}, POSE_END,
 };
-static u8 D_us_80182100[] = {
-    0x01, 0x1C, 0x01, 0x1D, 0x00, 0x00, 0x00, 0x00,
+
+static AnimateEntityFrame anim_move_away_stop[] = {
+    {0x06, 0x02}, {0x05, 0x04}, {0x04, 0x05}, {0x04, 0x06},
+    {0x04, 0x07}, {0x04, 0x08}, {0x01, 0x01}, POSE_END,
 };
-static u8 D_us_80182108[] = {
-    0x01, 0x1E, 0x01, 0x1F, 0x00, 0x00, 0x00, 0x00,
+
+static AnimateEntityFrame anim_move_away[] = {
+    {0x03, 0x02}, {0x03, 0x04}, {0x02, 0x05}, {0x02, 0x06},
+    {0x02, 0x07}, {0x02, 0x08}, {0x01, 0x01}, POSE_END,
 };
-static s16 D_us_80182110[] = {
+
+static AnimateEntityFrame anim_cast_blizzard[] = {
+    {0x06, 0x0F}, {0x08, 0x10}, {0x07, 0x11}, {0x04, 0x12},
+    {0x04, 0x13}, {0x04, 0x14}, {0x01, 0x15}, POSE_END,
+};
+
+// This basically plays the end of the cast animation in reverse to lower hands
+static AnimateEntityFrame anim_end_blizzard[] = {
+    {0x01, 0x15}, {0x03, 0x14}, {0x03, 0x13}, {0x03, 0x12},
+    {0x03, 0x11}, {0x01, 0x01}, POSE_END,
+};
+
+static AnimateEntityFrame anim_orbit_icicle[] = {
+    {0x01, 0x18}, {0x01, 0x19}, {0x01, 0x1A}, {0x01, 0x1B}, POSE_LOOP(0),
+};
+
+static AnimateEntityFrame anim_orbit_icicle_death[] = {
+    {0x03, 0x1A},
+    {0x01, 0x19},
+    {0x01, 0x18},
+    POSE_END,
+};
+
+static AnimateEntityFrame anim_falling_ice[] = {
+    {0x01, 0x1C},
+    {0x01, 0x1D},
+    POSE_LOOP(0),
+};
+
+static AnimateEntityFrame anim_thrown_chunk[] = {
+    {0x01, 0x1E},
+    {0x01, 0x1F},
+    POSE_LOOP(0),
+};
+
+// X positions for icicles which fall from above during Blizzard attack
+static s16 falling_icicle_posX[] = {
     0x0020, 0x00A0, 0x0030, 0x00C0, 0x0050, 0x0068, 0x00D0, 0x0040,
 };
-static SVECTOR D_us_80182120 = {0xFFC0, 0x0000, 0xFFC0, 0x0000};
-static SVECTOR D_us_80182128 = {0x0040, 0x0000, 0xFFC0, 0x0000};
-static SVECTOR D_us_80182130 = {0xFFC0, 0x0000, 0x0040, 0x0000};
-static SVECTOR D_us_80182138 = {0x0040, 0x0000, 0x0040, 0x0000};
 
-void func_us_801BEFD8(Entity* self) {
+static SVECTOR blizzard_vec_a = {.vx = 0xFFC0, .vy = 0x0000, .vz = 0xFFC0};
+static SVECTOR blizzard_vec_b = {.vx = 0x0040, .vy = 0x0000, .vz = 0xFFC0};
+static SVECTOR blizzard_vec_c = {.vx = 0xFFC0, .vy = 0x0000, .vz = 0x0040};
+static SVECTOR blizzard_vec_d = {.vx = 0x0040, .vy = 0x0000, .vz = 0x0040};
+
+void EntityFrozenHalf(Entity* self) {
     Primitive* prim;
     s32 i;
     s32 j;
@@ -64,8 +86,20 @@ void func_us_801BEFD8(Entity* self) {
     s32 posY;
     Entity* entity;
     s32 animResult;
-    s16 var_s7;
+    s16 angle;
     s32 primIndex;
+
+    enum Step {
+        INIT = 0,
+        IDLE = 3,
+        PLAYER_AGGRO = 5,
+        ATTACK_THROW_CHUNK = 6,
+        MOVE = 7,
+        ATTACK_BLIZZARD = 8,
+        HURT = 10,
+        DEATH = 16,
+        DEBUG = 255,
+    };
 
     if (g_Timer & 1) {
         self->palette = 0x200;
@@ -76,33 +110,33 @@ void func_us_801BEFD8(Entity* self) {
     FntPrint("step %x\n", self->step);
     FntPrint("step_s %x\n", self->step_s);
     if (self->step & 1 && self->hitFlags & 3) {
-        SetStep(10);
+        SetStep(HURT);
     }
 
-    if (self->flags & FLAG_DEAD && self->step < 0x10) {
+    if (self->flags & FLAG_DEAD && self->step < DEATH) {
         PlaySfxPositional(SFX_FROZEN_HALF_DEATH);
         if (self->ext.frozenHalf.entity != NULL) {
             entity = self->ext.frozenHalf.entity;
             DestroyEntity(entity);
         }
-        SetStep(16);
+        SetStep(DEATH);
     }
 
     switch (self->step) {
-    case 0:
+    case INIT:
         InitializeEntity(g_EInitFrozenHalf);
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
         entity = self + 1;
-        CreateEntityFromEntity(E_UNK_23, self, entity);
-        SetStep(3);
+        CreateEntityFromEntity(E_FROZEN_HALF_ORBIT_ICICLE, self, entity);
+        SetStep(IDLE);
         break;
-    case 3:
+    case IDLE:
         self->facingLeft = GetSideToPlayer() & 1;
         if (GetDistanceToPlayerX() < 0x60) {
-            SetStep(5);
+            SetStep(PLAYER_AGGRO);
         }
         break;
-    case 5:
+    case PLAYER_AGGRO:
         if (!self->step_s) {
             self->velocityX = 0;
             self->velocityY = 0;
@@ -111,61 +145,62 @@ void func_us_801BEFD8(Entity* self) {
 
         MoveEntity();
         self->facingLeft = GetSideToPlayer() & 1;
-        var_s7 = self->ext.frozenHalf.unk82 += 0x20;
-        var_s7 &= 0xFFF;
-        self->velocityY = rsin(var_s7) * 0x10;
-        if (self->ext.frozenHalf.unk87) {
+        angle = self->ext.frozenHalf.angle += 0x20;
+        angle &= 0xFFF;
+        self->velocityY = rsin(angle) * 0x10;
+        if (self->ext.frozenHalf.moveUpwards) {
             self->velocityY += FIX(0.125);
         } else {
             self->velocityY -= FIX(0.125);
         }
 
-        AnimateEntity(D_us_80182080, self);
-        if (var_s7 > 0x600) {
+        AnimateEntity(anim_hair_flick, self);
+        if (angle > 0x600) {
             self->pose = 0;
             self->poseTimer = 0;
             self->animCurFrame = 1;
         }
 
-        if (!(self->ext.frozenHalf.unk82 & 0x3FF)) {
+        if (!(self->ext.frozenHalf.angle & 0x3FF)) {
             entity = &PLAYER;
             if (GetDistanceToPlayerX() < 0x68 &&
                 entity->facingLeft != self->facingLeft) {
-                self->ext.frozenHalf.unk84 = 1;
-                SetStep(7);
+                self->ext.frozenHalf.moveAwayFromPlayer = true;
+                SetStep(MOVE);
             }
 
             if (GetDistanceToPlayerX() > 0x50 &&
                 entity->facingLeft == self->facingLeft) {
-                self->ext.frozenHalf.unk84 = 0;
-                SetStep(7);
+                self->ext.frozenHalf.moveAwayFromPlayer = false;
+                SetStep(MOVE);
             }
         }
-        if (!(self->ext.frozenHalf.unk82 & 0xFFF)) {
+
+        if (!(self->ext.frozenHalf.angle & 0xFFF)) {
             if (self->posY.i.hi < 0x60) {
-                self->ext.frozenHalf.unk87 = 1;
+                self->ext.frozenHalf.moveUpwards = true;
             } else {
-                self->ext.frozenHalf.unk87 = 0;
+                self->ext.frozenHalf.moveUpwards = false;
             }
         }
         break;
-    case 7:
+    case MOVE:
         switch (self->step_s) {
         case 0:
             self->velocityY = 0;
-            self->ext.frozenHalf.unk80 = 0x40;
+            self->ext.frozenHalf.timer = 0x40;
             self->step_s++;
             // fallthrough
         case 1:
             MoveEntity();
             self->facingLeft = GetSideToPlayer() & 1;
-            if (self->ext.frozenHalf.unk84) {
+            if (self->ext.frozenHalf.moveAwayFromPlayer) {
                 self->animCurFrame = 0xB;
             } else {
                 self->animCurFrame = 9;
             }
 
-            if (self->facingLeft ^ self->ext.frozenHalf.unk84) {
+            if (self->facingLeft ^ self->ext.frozenHalf.moveAwayFromPlayer) {
                 self->velocityX -= FIX(0.0625);
                 if (self->velocityX <= FIX(-1.0)) {
                     self->velocityX = FIX(-1.0);
@@ -177,17 +212,18 @@ void func_us_801BEFD8(Entity* self) {
                 }
             }
 
-            if (!self->ext.frozenHalf.unk84) {
+            if (!self->ext.frozenHalf.moveAwayFromPlayer) {
                 if (GetDistanceToPlayerX() < 0x48) {
                     SetSubStep(2);
                 }
             }
 
-            if (self->ext.frozenHalf.unk84 && GetDistanceToPlayerX() > 0x70) {
+            if (self->ext.frozenHalf.moveAwayFromPlayer &&
+                GetDistanceToPlayerX() > 0x70) {
                 SetSubStep(2);
             }
 
-            if (!--self->ext.frozenHalf.unk80) {
+            if (!--self->ext.frozenHalf.timer) {
                 SetSubStep(3);
             }
             break;
@@ -195,14 +231,14 @@ void func_us_801BEFD8(Entity* self) {
             MoveEntity();
             self->velocityX -= self->velocityX / 8;
 
-            if (self->ext.frozenHalf.unk84) {
-                animResult = AnimateEntity(D_us_801820BC, self);
+            if (self->ext.frozenHalf.moveAwayFromPlayer) {
+                animResult = AnimateEntity(anim_move_away, self);
             } else {
-                animResult = AnimateEntity(D_us_801820A0, self);
+                animResult = AnimateEntity(anim_move_toward, self);
             }
 
             if (!animResult) {
-                self->ext.frozenHalf.unk84 ^= 1;
+                self->ext.frozenHalf.moveAwayFromPlayer ^= 1;
                 SetSubStep(1);
             }
 
@@ -211,34 +247,36 @@ void func_us_801BEFD8(Entity* self) {
             MoveEntity();
             self->velocityX -= self->velocityX / 16;
 
-            if (self->ext.frozenHalf.unk84) {
-                animResult = AnimateEntity(D_us_801820AC, self);
+            if (self->ext.frozenHalf.moveAwayFromPlayer) {
+                animResult = AnimateEntity(anim_move_away_stop, self);
             } else {
-                animResult = AnimateEntity(D_us_80182094, self);
+                animResult = AnimateEntity(anim_move_towards_stop, self);
             }
 
             if (!animResult) {
-                if (self->ext.frozenHalf.unk85) {
+                // Alternate between throwing ice chunk and casting blizzard
+                if (self->ext.frozenHalf.castBlizzard) {
                     if (self->posX.i.hi & 0xFF00) {
-                        SetStep(7);
+                        SetStep(MOVE);
                     } else {
-                        SetStep(8);
+                        SetStep(ATTACK_BLIZZARD);
                     }
                 } else {
-                    SetStep(6);
+                    SetStep(ATTACK_THROW_CHUNK);
                 }
-                self->ext.frozenHalf.unk85 ^= 1;
+                self->ext.frozenHalf.castBlizzard ^= 1;
             }
             break;
         }
         break;
-    case 6:
+    case ATTACK_THROW_CHUNK:
         switch (self->step_s) {
         case 0:
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
                 PlaySfxPositional(SFX_GLASS_SHARDS);
-                CreateEntityFromEntity(E_UNK_24, self, entity);
+                CreateEntityFromEntity(
+                    E_FROZEN_HALF_THROWN_CHUNK, self, entity);
                 if (self->facingLeft) {
                     entity->posX.i.hi += 0x10;
                 } else {
@@ -249,7 +287,7 @@ void func_us_801BEFD8(Entity* self) {
                 self->ext.frozenHalf.entity = entity;
             } else {
                 self->ext.frozenHalf.entity = NULL;
-                SetStep(5);
+                SetStep(PLAYER_AGGRO);
                 break;
             }
 
@@ -260,25 +298,25 @@ void func_us_801BEFD8(Entity* self) {
             entity = self->ext.frozenHalf.entity;
             if (entity->flags & FLAG_DEAD) {
                 self->ext.frozenHalf.entity = NULL;
-                SetStep(5);
+                SetStep(PLAYER_AGGRO);
             } else if (!(entity->drawFlags & ENTITY_SCALEX)) {
                 PlaySfxPositional(SFX_FROZEN_HALF_ATTACK);
                 PlaySfxPositional(SFX_GLASS_SHARDS);
                 self->ext.frozenHalf.entity = NULL;
-                self->ext.frozenHalf.unk80 = 0x20;
+                self->ext.frozenHalf.timer = 0x20;
                 self->step_s++;
             }
 
             break;
         case 2:
             self->animCurFrame = 0xE;
-            if (!--self->ext.frozenHalf.unk80) {
-                SetStep(5);
+            if (!--self->ext.frozenHalf.timer) {
+                SetStep(PLAYER_AGGRO);
             }
             break;
         }
         break;
-    case 8:
+    case ATTACK_BLIZZARD:
         switch (self->step_s) {
         case 0:
             self->animCurFrame = 1;
@@ -289,10 +327,10 @@ void func_us_801BEFD8(Entity* self) {
             }
             break;
         case 1:
-            if (AnimateEntity(&D_us_801820CC, self) == 0) {
+            if (!AnimateEntity(anim_cast_blizzard, self)) {
                 PlaySfxPositional(SFX_FROZEN_HALF_MAXIMUM_POWER);
                 PlaySfxPositional(SFX_NOISE_SWEEP_DOWN_A);
-                self->ext.frozenHalf.unk80 = 0x40;
+                self->ext.frozenHalf.timer = 0x40;
                 self->step_s++;
             }
             break;
@@ -301,7 +339,8 @@ void func_us_801BEFD8(Entity* self) {
                 entity = AllocEntity(
                     &g_Entities[224], &g_Entities[TOTAL_ENTITY_COUNT]);
                 if (entity != NULL) {
-                    CreateEntityFromEntity(E_UNK_27, self, entity);
+                    CreateEntityFromEntity(
+                        E_FROZEN_HALF_FROST_MIST, self, entity);
                     entity->posY.i.hi -= 0x20;
                     entity->params = g_Timer & 1;
                     if (!entity->params) {
@@ -313,7 +352,7 @@ void func_us_801BEFD8(Entity* self) {
                 }
             }
 
-            if (!--self->ext.frozenHalf.unk80) {
+            if (!--self->ext.frozenHalf.timer) {
                 self->step_s++;
             }
 
@@ -321,7 +360,7 @@ void func_us_801BEFD8(Entity* self) {
         case 3:
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromEntity(E_UNK_25, self, entity);
+                CreateEntityFromEntity(E_FROZEN_HALF_BLIZZARD, self, entity);
                 entity->posY.i.hi -= 0x28;
                 entity->facingLeft = self->facingLeft;
                 entity->zPriority = self->zPriority - 1;
@@ -336,19 +375,19 @@ void func_us_801BEFD8(Entity* self) {
             // fallthrough
         case 4:
             entity = self->ext.frozenHalf.entity;
-            if (entity->entityId != E_UNK_25) {
+            if (entity->entityId != E_FROZEN_HALF_BLIZZARD) {
                 self->ext.frozenHalf.entity = NULL;
                 SetSubStep(5);
             }
             break;
         case 5:
-            if (!AnimateEntity(&D_us_801820DC, self)) {
-                SetStep(5);
+            if (!AnimateEntity(anim_end_blizzard, self)) {
+                SetStep(PLAYER_AGGRO);
             }
             break;
         }
         break;
-    case 10:
+    case HURT:
         switch (self->step_s) {
         case 0:
             self->facingLeft = GetSideToPlayer() & 1;
@@ -358,25 +397,27 @@ void func_us_801BEFD8(Entity* self) {
                 self->velocityX = FIX(-1.0);
             }
             self->velocityY = 0;
-            self->ext.frozenHalf.unk80 = 0x10;
+            self->ext.frozenHalf.timer = 0x10;
             self->animCurFrame = 0xC;
             self->step_s++;
             // fallthrough
         case 1:
             MoveEntity();
             self->velocityX -= self->velocityX / 0x20;
-            if (!--self->ext.frozenHalf.unk80) {
-                SetStep(5);
+            if (!--self->ext.frozenHalf.timer) {
+                SetStep(PLAYER_AGGRO);
             }
             break;
         }
         break;
-    case 16:
+    case DEATH:
         switch (self->step_s) {
         case 0:
+            // Kill off the orbiting icicle
             entity = self + 1;
-            entity->step = 0x10;
+            entity->step = DEATH;
             entity->flags |= FLAG_UNK_2000;
+
             self->hitboxState = 0;
             if (self->facingLeft) {
                 self->velocityX = FIX(1.0);
@@ -384,14 +425,14 @@ void func_us_801BEFD8(Entity* self) {
                 self->velocityX = FIX(-1.0);
             }
             self->velocityY = 0;
-            self->ext.frozenHalf.unk80 = 0x10;
+            self->ext.frozenHalf.timer = 0x10;
             self->animCurFrame = 0xC;
             self->step_s++;
             // fallthrough
         case 1:
             MoveEntity();
             self->velocityX -= self->velocityX / 0x20;
-            if (!--self->ext.frozenHalf.unk80) {
+            if (!--self->ext.frozenHalf.timer) {
                 self->step_s++;
             }
             break;
@@ -468,20 +509,20 @@ void func_us_801BEFD8(Entity* self) {
             }
 
             self->animCurFrame = 0;
-            self->ext.frozenHalf.unk80 = 1;
-            self->ext.frozenHalf.unk8C = 0;
+            self->ext.frozenHalf.timer = 1;
+            self->ext.frozenHalf.deathPrimCount = 0;
             PlaySfxPositional(SFX_GLASS_SHARDS);
             self->step_s++;
             break;
         case 3:
-            if (!--self->ext.frozenHalf.unk80) {
-                self->ext.frozenHalf.unk80 = 6;
+            if (!--self->ext.frozenHalf.timer) {
+                self->ext.frozenHalf.timer = 6;
                 prim = self->ext.frozenHalf.prim;
                 prim->v2 = prim->v3 -= 2;
                 prim->y2 = prim->y3 -= 2;
 
-                self->ext.frozenHalf.unk8C++;
-                if (self->ext.frozenHalf.unk8C >= 0x17) {
+                self->ext.frozenHalf.deathPrimCount++;
+                if (self->ext.frozenHalf.deathPrimCount >= 0x17) {
                     self->step_s++;
                 }
             }
@@ -490,7 +531,7 @@ void func_us_801BEFD8(Entity* self) {
             prim = self->ext.frozenHalf.prim;
             prim = prim->next;
             animResult = 1;
-            for (i = 0; i < self->ext.frozenHalf.unk8C * 0x10; i++) {
+            for (i = 0; i < self->ext.frozenHalf.deathPrimCount * 0x10; i++) {
                 if (!prim->r0) {
                     prim->drawMode = DRAW_HIDE;
                     prim = prim->next;
@@ -532,42 +573,44 @@ void func_us_801BEFD8(Entity* self) {
             break;
         }
         break;
-    // TODO: pad2_anim_debug
-    case 0xFF:
+    case DEBUG:
 #include "../pad2_anim_debug.h"
     }
 }
 
-void func_us_801BFF94(Entity* self) {
+// Magical orbiting icicle object
+void EntityFrozenHalfOrbitIcicle(Entity* self) {
     Entity* parent;
     s32 posX;
     s32 posY;
-    s16 var_s3;
+    s16 angle;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_8018103C);
+        InitializeEntity(g_EInitFrozenHalfOrbitIcicle);
         // fallthrough
     case 1:
+        // Standard routine
         MoveEntity();
-        AnimateEntity(D_us_801820EC, self);
-        self->ext.frozenHalf.unk82 += 0x40;
+        AnimateEntity(anim_orbit_icicle, self);
+        self->ext.frozenHalf.angle += 0x40;
         parent = self - 1;
-        if (parent->entityId != E_UNK_22) {
+        if (parent->entityId != E_FROZEN_HALF) {
             DestroyEntity(self);
             return;
         }
 
         posX = parent->posX.val;
         posY = parent->posY.val;
-        var_s3 = self->ext.frozenHalf.unk82;
+        angle = self->ext.frozenHalf.angle;
 
-        posX += rcos(var_s3) << 9;
-        posY += (rsin(var_s3 / 2)) << 7;
+        posX += rcos(angle) << 9;
+        posY += (rsin(angle / 2)) << 7;
         self->posX.val = posX;
         self->posY.val = posY;
         break;
     case 16:
+        // Death routine
         switch (self->step_s) {
         case 0:
             self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
@@ -577,11 +620,10 @@ void func_us_801BFF94(Entity* self) {
             self->step_s++;
             // fallthrough
         case 1:
-            AnimateEntity(D_us_801820F8, self);
+            AnimateEntity(anim_orbit_icicle_death, self);
             self->scaleX = self->scaleY -= 0x10;
             if (!self->scaleX) {
                 DestroyEntity(self);
-                return;
             }
             break;
         }
@@ -589,24 +631,25 @@ void func_us_801BFF94(Entity* self) {
     }
 }
 
-void func_us_801C0118(Entity* self) {
+// A large chunk of ice that is thrown by the Frozen Half
+void EntityFrozenHalfThrownChunk(Entity* self) {
     Entity* player;
     s16 angle;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80181048);
+        InitializeEntity(g_EInitFrozenHalfThrownChunk);
         self->drawFlags = ENTITY_SCALEY | ENTITY_SCALEX;
         self->scaleX = self->scaleY = 0;
         self->drawFlags |= ENTITY_ROTATE;
         // fallthrough
     case 1:
-        AnimateEntity(D_us_80182108, self);
-        self->rotate += 0x10;
+        AnimateEntity(anim_thrown_chunk, self);
+        self->rotate += ROT(360 / 256.0);
         self->scaleY = self->scaleX += 8;
         if (self->scaleX >= 0x100) {
             self->drawFlags = ENTITY_ROTATE;
-            self->palette = 0x815F;
+            self->palette = PAL_FLAG(PAL_FILL_WHITE);
             self->step++;
         }
         break;
@@ -628,9 +671,9 @@ void func_us_801C0118(Entity* self) {
         self->step++;
         break;
     case 3:
-        AnimateEntity(D_us_80182108, self);
+        AnimateEntity(anim_thrown_chunk, self);
         MoveEntity();
-        self->rotate += 0x40;
+        self->rotate += ROT(360 / 64.0);
         break;
     }
 }
@@ -639,7 +682,8 @@ Primitive* UnkRecursivePrimFunc1(
     SVECTOR* p0, SVECTOR* p1, SVECTOR* p2, SVECTOR* p3, Primitive* srcPrim,
     s32 iterations, Primitive* dstPrim, u8* dataPtr);
 
-void func_us_801C02C4(Entity* self) {
+// Manages the blizzard storm and spawns falling ice
+void EntityFrozenHalfBlizzard(Entity* self) {
 #ifdef VERSION_PC
     u8 sp[SP_LEN];
 #endif
@@ -649,12 +693,12 @@ void func_us_801C02C4(Entity* self) {
     Primitive* prim;
     Primitive* nextPrim;
     Entity* entity;
-    s32 var_s3;
+    s32 posXOffset;
     s32 primIndex;
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80181054);
+        InitializeEntity(g_EInitFrozenHalfBlizzard);
         self->scaleX = self->scaleY = 0;
         self->animCurFrame = 0;
         primIndex = g_api.AllocPrimitives(PRIM_GT4, 0x41);
@@ -678,7 +722,7 @@ void func_us_801C02C4(Entity* self) {
     case 1:
         switch (self->step_s) {
         case 0:
-            self->rotate += 0x40;
+            self->rotate += ROT(360 / 64.0);
             self->scaleX += 0x80;
             self->scaleY = self->scaleX;
             if (self->scaleX >= 0x2000) {
@@ -688,7 +732,7 @@ void func_us_801C02C4(Entity* self) {
         case 1:
             MoveEntity();
             self->velocityY -= FIX(0.25);
-            self->rotate += 0x80;
+            self->rotate += ROT(360 / 32.0);
             self->scaleX += 0x200;
             if (self->posY.i.hi < -0x60) {
                 SetStep(2);
@@ -720,7 +764,7 @@ void func_us_801C02C4(Entity* self) {
         prim->drawMode = DRAW_TPAGE2 | DRAW_TPAGE | DRAW_UNK02 | DRAW_TRANSP;
         nextPrim = prim->next;
         nextPrim = UnkRecursivePrimFunc1(
-            &D_us_80182120, &D_us_80182128, &D_us_80182130, &D_us_80182138,
+            &blizzard_vec_a, &blizzard_vec_b, &blizzard_vec_c, &blizzard_vec_d,
             prim, 2, nextPrim, (u8*)SPAD(0));
         prim->drawMode = DRAW_HIDE;
         while (nextPrim != NULL) {
@@ -734,55 +778,58 @@ void func_us_801C02C4(Entity* self) {
             prim->drawMode = DRAW_HIDE;
             prim = prim->next;
         }
-        self->ext.frozenHalf.unk80 = 0x200;
+        self->ext.frozenHalf.timer = 0x200;
         self->step++;
         break;
     case 3:
         entity = &PLAYER;
-        var_s3 = -0x80;
+        posXOffset = -0x80;
         if (entity->velocityX > 0) {
-            var_s3 += 0x40;
+            posXOffset += 0x40;
         }
 
         if (entity->velocityX < 0) {
-            var_s3 -= 0x40;
+            posXOffset -= 0x40;
         }
 
-        if (!(self->ext.frozenHalf.unk80 & 0xF)) {
+        if (!(self->ext.frozenHalf.timer & 0xF)) {
             entity = AllocEntity(&g_Entities[160], &g_Entities[192]);
             if (entity != NULL) {
-                CreateEntityFromCurrentEntity(E_UNK_26, entity);
+                CreateEntityFromCurrentEntity(
+                    E_FROZEN_HALF_FALLING_ICE, entity);
                 entity->posY.i.hi = -0x20;
-                entity->posX.i.hi = D_us_80182110[self->ext.ILLEGAL.u8[0xA]];
+                entity->posX.i.hi =
+                    falling_icicle_posX[self->ext.frozenHalf.iciclePositionIdx];
                 entity->params = 0;
             }
-            self->ext.ILLEGAL.u8[0xA] += 1;
-            self->ext.ILLEGAL.u8[0xA] &= 7;
+            self->ext.frozenHalf.iciclePositionIdx += 1;
+            self->ext.frozenHalf.iciclePositionIdx &= 7;
         }
 
         entity = AllocEntity(&g_Entities[64], &g_Entities[TOTAL_ENTITY_COUNT]);
         if (entity != NULL) {
-            CreateEntityFromCurrentEntity(E_UNK_26, entity);
+            CreateEntityFromCurrentEntity(E_FROZEN_HALF_FALLING_ICE, entity);
             entity->posY.i.hi = -0x10;
-            entity->posX.i.hi = (Random() * 2) + var_s3;
+            entity->posX.i.hi = (Random() * 2) + posXOffset;
             entity->params = 1;
         }
 
-        if (!(self->ext.frozenHalf.unk80 & 0x1F)) {
+        if (!(self->ext.frozenHalf.timer & 0x1F)) {
             g_api.PlaySfx(SFX_FROZEN_HALF_BLIZZARD);
         }
 
-        if (!--self->ext.frozenHalf.unk80) {
+        if (!--self->ext.frozenHalf.timer) {
             DestroyEntity(self);
         }
         break;
     }
 }
 
-void func_us_801C0718(Entity* self) {
+// Spawned by the Blizzard entity above, these fall from top of screen
+void EntityFrozenHalfFallingIce(Entity* self) {
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80181060);
+        InitializeEntity(g_EInitFrozenHalfFallingIce);
         if (self->params) {
             self->hitboxState = 0;
             self->animCurFrame = 0x16;
@@ -799,9 +846,9 @@ void func_us_801C0718(Entity* self) {
         // fallthrough
     case 1:
         MoveEntity();
-        AnimateEntity(D_us_80182100, self);
+        AnimateEntity(anim_falling_ice, self);
         self->velocityY += FIX(0.0625);
-        self->rotate += 0x20;
+        self->rotate += ROT(360 / 128.0);
 
         if (self->posY.i.hi > 0x100) {
             DestroyEntity(self);
@@ -822,20 +869,21 @@ void func_us_801C0718(Entity* self) {
     }
 }
 
-static u8 D_us_80182140[] = {
-    0x02, 0x01, 0x02, 0x02, 0x02, 0x03, 0x02, 0x04, 0x02, 0x05, 0x02,
-    0x06, 0x02, 0x07, 0x02, 0x08, 0x02, 0x09, 0x02, 0x0A, 0x02, 0x0B,
-    0x02, 0x0C, 0x02, 0x0D, 0x02, 0x0E, 0x02, 0x0F, 0x02, 0x10, 0x02,
-    0x11, 0x02, 0x12, 0x02, 0x13, 0x02, 0x14, 0x02, 0x15, 0x02, 0x16,
-    0x02, 0x17, 0x02, 0x18, 0xFF, 0x00, 0x00, 0x00,
+static AnimateEntityFrame anim_mist_a[] = {
+    {0x02, 0x01}, {0x02, 0x02}, {0x02, 0x03}, {0x02, 0x04}, {0x02, 0x05},
+    {0x02, 0x06}, {0x02, 0x07}, {0x02, 0x08}, {0x02, 0x09}, {0x02, 0x0A},
+    {0x02, 0x0B}, {0x02, 0x0C}, {0x02, 0x0D}, {0x02, 0x0E}, {0x02, 0x0F},
+    {0x02, 0x10}, {0x02, 0x11}, {0x02, 0x12}, {0x02, 0x13}, {0x02, 0x14},
+    {0x02, 0x15}, {0x02, 0x16}, {0x02, 0x17}, {0x02, 0x18}, POSE_END,
 };
-static u8 D_us_80182174[] = {
-    0x03, 0x01, 0x03, 0x02, 0x03, 0x03, 0x03, 0x04, 0x03, 0x05,
-    0x03, 0x06, 0x03, 0x07, 0x03, 0x08, 0x03, 0x09, 0x03, 0x0A,
-    0x03, 0x0B, 0x03, 0x0C, 0x03, 0x0D, 0xFF, 0x00,
+static AnimateEntityFrame anim_mist_b[] = {
+    {0x03, 0x01}, {0x03, 0x02}, {0x03, 0x03}, {0x03, 0x04}, {0x03, 0x05},
+    {0x03, 0x06}, {0x03, 0x07}, {0x03, 0x08}, {0x03, 0x09}, {0x03, 0x0A},
+    {0x03, 0x0B}, {0x03, 0x0C}, {0x03, 0x0D}, POSE_END,
 };
 
-void func_us_801C0844(Entity* self) {
+// Summoned above Frozen Half just before the Blizzard attack commences
+void EntityFrozenHalfFrostMist(Entity* self) {
     s32 animResult;
 
     switch (self->step) {
@@ -851,7 +899,7 @@ void func_us_801C0844(Entity* self) {
         }
 
         self->blendMode = BLEND_QUARTER | BLEND_TRANSP;
-        self->palette = 0x8202;
+        self->palette = PAL_FLAG(0x202);
         self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0x80;
         // fallthrough
@@ -861,9 +909,9 @@ void func_us_801C0844(Entity* self) {
         self->velocityX += self->velocityX / 0x20;
 
         if (!self->params) {
-            animResult = AnimateEntity(D_us_80182174, self);
+            animResult = AnimateEntity(anim_mist_b, self);
         } else {
-            animResult = AnimateEntity(D_us_80182140, self);
+            animResult = AnimateEntity(anim_mist_a, self);
         }
 
         self->opacity -= 1;
