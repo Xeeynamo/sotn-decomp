@@ -1,16 +1,15 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "st0.h"
-#include "sfx.h"
-
-#ifdef VERSION_PSP
-extern bool g_isSecretStairsButtonPressed;
-extern u32 E_ID(SECRET_STAIRS);
-extern u32 E_ID(SECRET_BUTTON);
-#else
-static bool g_isSecretStairsButtonPressed = 0;
-#endif
 
 extern EInit g_EInitSecretStairs;
+
+#ifdef VERSION_PSP
+extern u32 E_ID(SECRET_STAIRS);
+extern u32 E_ID(SECRET_BUTTON);
+#endif
+
+static bool g_isSecretStairsButtonPressed = 0;
+
 static Point16 D_801808A0[] = {
     {0x280, 0x030}, {0x298, 0x048}, {0x2B0, 0x060}, {0x2C0, 0x070}};
 static u16 D_801808B0[] = {
@@ -173,7 +172,6 @@ void EntitySecretStairs(Entity* self) {
                         g_Tilemap.fg[*tilePos] = *(tilePos + 1);
                     }
                 }
-
             } else {
                 self->zPriority -= self->params;
             }

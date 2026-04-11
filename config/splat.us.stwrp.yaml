@@ -38,10 +38,11 @@ segments:
     subalign: 4
     subsegments:
       - [0x0, .data, header]
-      - [0xA0, .data, header] # palette definitions
-      - [0xB8, .data, header] # layers
-      - [0x1B8, .data, header] # graphics banks
-      - [0x23C, .data, gen/e_laydef] # layout entries header
+      - [0x40, .data, sprite_banks]
+      - [0xA0, .data, cluts]
+      - [0xB8, .data, layers]
+      - [0x1B8, .data, graphics_banks]
+      - [0x23C, .data, gen/e_laydef]
       - [0x3E4, .data, e_init]
       - [0x4D0, .data, background_block_init]
       - [0x508, .data, e_red_door_tiles]
@@ -58,18 +59,14 @@ segments:
       - [0xFE8, .data, e_particles]
       - [0x1120, .data, e_room_fg]
       - [0x11AC, .data, gen/rooms]
-      - [0x1228, .data, gen/e_layout] # layout entries data
+      - [0x1228, .data, gen/e_layout]
       - [0x1420, .data, stage_data]
       - [0x6D88, .data, gen/sprites]
-      - [0x6E30, .rodata, warp] # warp strings
-      - [0x6E70, .rodata, warp] # EntityWarpRoom
-      - [0x6E90, .rodata, warp] # EntityWarpSmallRocks
-      - [0x6EA8, .rodata, e_red_door] # EntityRedDoor
-      - [0x6EC0, .rodata, e_collect] # CollectGold strings
-      - [0x6F10, .rodata, e_collect] # EntityPrizeDrop
-      - [0x6F30, .rodata, e_collect] # EntityEquipItemDrop
+      - [0x6E30, .rodata, warp]
+      - [0x6EA8, .rodata, e_red_door]
+      - [0x6EC0, .rodata, e_collect]
       - [0x6F48, .rodata, e_misc]
-      - [0x6F94, .rodata, e_stage_name] # EntityStageNamePopup
+      - [0x6F94, .rodata, e_stage_name]
       - [0x6FC8, .rodata, prim_helpers]
       - [0x6FD0, c, e_room_bg]
       - [0x70B0, c, e_lock_camera]

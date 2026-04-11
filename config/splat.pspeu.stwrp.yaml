@@ -11,7 +11,6 @@ options:
   compiler: GCC
   symbol_addrs_path:
     - config/symbols.pspeu.txt
-    - config/symbols.pspeu.stwrp.txt
   undefined_funcs_auto_path: build/pspeu/config/undefined_funcs_auto.pspeu.stwrp.txt
   undefined_syms_auto_path: build/pspeu/config/undefined_syms_auto.pspeu.stwrp.txt
   find_file_boundaries: yes
@@ -55,7 +54,7 @@ segments:
       - [0xBDA0, c, wrp/e_room_fg]
       - [0xBEB8, c, wrp/st_common]
       - [0xC9A0, c, wrp/prim_helpers]
-      - [0xD0E0, c, wrp_psp/st_init_wrp]
+      - [0xD0E0, c, wrp/st_init_psp]
       - [0xD1B8, c, wrp/e_breakable]
       - [0xD338, c, wrp/e_room_bg]
       - [0xD448, c, wrp/e_lock_camera]
@@ -67,31 +66,30 @@ segments:
       - [0xF010, .data, wrp/e_misc]
       - [0xF060, .data, wrp/collision]
       - [0xF438, .data, wrp/e_room_fg]
-      - [0xF4D8, data] # WRP_spriteBanks
-      - [0xF5F8, .data, wrp_psp/layers] # OVL_EXPORT(rooms_layers)
-      - [0xF6E8, .data, wrp_psp/header_cluts]
-      - [0xF708, .data, wrp_psp/graphics_banks]
+      - [0xF4D8, .data, wrp/gen/sprites]
+      - [0xF598, .data, wrp/sprite_banks]
+      - [0xF5F8, .data, wrp/layers]
+      - [0xF6E8, .data, wrp/cluts]
+      - [0xF708, .data, wrp/graphics_banks]
       - [0xF790, .data, wrp/e_red_door_tiles]
-      - [0xF7B0, .data, wrp_psp/e_init]
-      - [0xF8A0, data] # WRP_gen_rooms.c
+      - [0xF7B0, .data, wrp/e_init]
+      - [0xF8A0, .data, wrp/gen/rooms]
       - [0xF920, .data, wrp/e_breakable]
       - [0xF970, .data, wrp/stage_data]
-      - [0x142E0, .data, wrp_psp/header]
+      - [0x142E0, .data, wrp/header]
       - [0x14320, .data, wrp/background_block_init]
       - [0x14360, .data, wrp/e_lock_camera]
-      - [0x143D8, data]
-      - [0x14430, .data, wrp/warp]
+      - [0x143D8, .data, wrp/warp]
       - [0x14480, .rodata, wrp/e_red_door]
       - [0x14498, .rodata, wrp/e_collect]
       - [0x144F8, .rodata, wrp/warp]
       - {start: 0x14580, type: .bss, vram: 0x0924BC00, name: wrp/create_entity}
       - {start: 0x14580, type: .bss, vram: 0x0924BC20, name: wrp/e_collect}
-      - {start: 0x14580, type: .bss, vram: 0x0924BC68, name: wrp/e_collect}
-      - {start: 0x14580, type: .bss, vram: 0x0924BC80, name: wrp_psp/layers}
-      - {start: 0x14580, type: .bss, vram: 0x0924BC90, name: wrp_psp/st_init_wrp}
+      - {start: 0x14580, type: .bss, vram: 0x0924BC80, name: wrp/layers}
+      - {start: 0x14580, type: .bss, vram: 0x0924BC90, name: wrp/st_init_psp}
       - {start: 0x14580, type: .bss, vram: 0x0924BCC8, name: wrp/e_breakable}
       - {start: 0x14580, type: .bss, vram: 0x0924BCD0, name: wrp/stage_data}
-      - {start: 0x14580, type: .bss, vram: 0x0924CCD0, name: wrp_psp/d_prize_drops}
+      - {start: 0x14580, type: .bss, vram: 0x0924CCD0, name: wrp/d_prize_drops}
       - {start: 0x14580, type: .bss, vram: 0x0924CCD8, name: wrp/e_lock_camera}
       - {start: 0x14580, type: .bss, vram: 0x0924CCE0, name: wrp/warp}
   - [0x14580]
