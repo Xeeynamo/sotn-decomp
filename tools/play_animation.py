@@ -21,7 +21,7 @@ import numpy as np
 import matplotlib.animation as animation
 import time
 
-PRINT_DEBUG = False
+PRINT_DEBUG = True
 
 
 def print_debug(s):
@@ -48,6 +48,7 @@ def load_array_from_file(filelines, arrayname):
         array_contents = array_contents.rstrip(",")  # remove trailing comma if exists
         # strip whitespace and turn into list of members
         array_members = array_contents.replace(" ", "").split(",")
+        print("Array I found was:", array_members)
         return array_members
     print("Error loading animation array. Hmm.")
     exit()
@@ -129,9 +130,10 @@ def get_initializer_for_ent(anim_name, src_file, overlay):
 
 
 class AnimationShower:
-    def __init__(self, anim_num, overlay, palette, unk5A):
+    def __init__(self, dump_filename, anim_num, overlay, palette, unk5A):
         self.palette = palette
         self.unk5A = unk5A
+        texture_data = dt.load_raw_dump(dump_filename)
         self.textureDisplayer = dt.textureDisplayer(texture_data)
 
         spritebank = anim_num & 0x7FFF
@@ -216,7 +218,7 @@ class AnimationShower:
             assert u_1 - u_0 == width
             assert v_1 - v_0 == height
             print_debug(
-                f"Loading texture: {tpage=}, {clut=}, {u_0=}, {v_0=}, {width=}, {height=}"
+                f"Loading texture: {tpage=:X}, {clut=:X}, {u_0=}, {v_0=}, {width=}, {height=}"
             )
             image = self.textureDisplayer.get_image(
                 tpage, clut, u_0, v_0, width, height
@@ -252,6 +254,7 @@ class AnimationShower:
             if animation_bytes[i] == 0 or animation_bytes[i] == 255:
                 continue
             duration, anim_idx = animation_bytes[i : i + 2]
+            print(f"Rendering frame with {duration=}, {anim_idx=}")
             picture = self.render_frame(anim_idx)
             for _ in range(duration):
                 pictures.append(picture)
@@ -271,7 +274,7 @@ def save_as_gif(frames):
     # frames[0].save("Testgif.gif", save_all = True, append_images = frames[1:], duration=40, loop=0, transparency=0)
 
 
-def main(overlay, src_file):
+def main(overlay, src_file, dump_filename):
     anims = load_anims(src_file)
     while True:
         print("Loaded animations:")
@@ -285,7 +288,9 @@ def main(overlay, src_file):
         anim_num, initframe, unk5A, palette, enemyNum = initializer
         print(anim_num, palette)
 
-        shower = AnimationShower(anim_num, overlay, palette=palette, unk5A=unk5A)
+        shower = AnimationShower(
+            dump_filename, anim_num, overlay, palette=palette, unk5A=unk5A
+        )
         fig, ax = plt.subplots()
         ax.set_xlim(0, 256)
         ax.set_ylim(0, 256)
@@ -301,21 +306,20 @@ def main(overlay, src_file):
         plt.show()
 
 
-parser = argparse.ArgumentParser(description="Renders in-game animations from ANIMSET")
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Renders in-game animations from ANIMSET"
+    )
 
-parser.add_argument("dump_filename")
+    parser.add_argument("dump_filename")
 
-parser.add_argument("overlay", help="Overlay name. dra, no3, cen, etc")
+    parser.add_argument("overlay", help="Overlay name. dra, no3, cen, etc")
 
-parser.add_argument(
-    "filename",
-    help="File name (potentially with path) to relevant source file. Could be .c or .h. Starts in src. Example: st/no3/e_warg.c",
-)
+    parser.add_argument(
+        "filename",
+        help="File name (potentially with path) to relevant source file. Could be .c or .h. Starts in src. Example: st/no3/e_warg.c",
+    )
 
-args = parser.parse_args()
-texture_data = dt.load_raw_dump(args.dump_filename)
+    args = parser.parse_args()
 
-main(
-    args.overlay,
-    args.filename,
-)
+    main(args.overlay, args.filename, args.dump_filename)

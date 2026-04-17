@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz0.h"
 
-extern EInit D_us_80180AB0;
-extern EInit D_us_80180ABC;
+extern EInit g_EInitImp;
+extern EInit g_EInitImpSmoke;
 // Imp flapping wings
 static u8 anim_imp[] = {
     4, 1, 4, 2, 4, 3, 4, 4, 4, 5, 4, 6, 4, 5, 4, 4, 4, 3, 4, 2, 4, 1, 0};
@@ -46,7 +46,7 @@ void EntityImp(Entity* self) {
     }
     switch (self->step) {
     case IMP_INIT:
-        InitializeEntity(D_us_80180AB0);
+        InitializeEntity(g_EInitImp);
         SetStep(IMP_IDLE);
         break;
     case IMP_IDLE:
@@ -404,7 +404,7 @@ void EntityImp(Entity* self) {
 void EntityImpSmoke(Entity* self) {
     Entity* player;
     if (!self->step) {
-        InitializeEntity(D_us_80180ABC);
+        InitializeEntity(g_EInitImpSmoke);
         self->zPriority = g_unkGraphicsStruct.g_zEntityCenter + 4;
         player = &PLAYER;
         self->posX.i.hi = player->posX.i.hi;
