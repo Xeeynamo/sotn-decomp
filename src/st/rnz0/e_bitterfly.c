@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz0.h"
 
-static s16 D_pspeu_092589E8[] = {0, 4, 0, 4, 4, -4, -8, 0};
+static s16 sensors[] = {0, 4, 0, 4, 4, -4, -8, 0};
 
 static u8 anim_passive_flying[] = {
     5, 1, 6, 2, 4, 3, 4, 4, 5, 5, 5, 6, 4, 7, 5, 8, 5, 9, 6, 10, 0};
@@ -14,7 +14,7 @@ static u8 anim_become_skull[] = {
 static u8 anim_unused[] = {
     2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 6, 2, 7, 2, 8, 2, 9, 2, 10, 0, 0, 0, 0};
 
-extern EInit D_us_80180AA4;
+extern EInit g_EInitBitterfly;
 
 typedef enum { BF_INIT, BF_IDLE = 2, BF_HIT = 4, BF_DEAD = 8 } BitterflySteps;
 
@@ -40,7 +40,7 @@ void EntityBitterfly(Entity* self) {
     }
     switch (self->step) {
     case BF_INIT:
-        InitializeEntity(D_us_80180AA4);
+        InitializeEntity(g_EInitBitterfly);
         self->drawFlags = ENTITY_OPACITY;
         self->opacity = 0;
         self->blendMode = BLEND_ADD | BLEND_TRANSP;
@@ -101,7 +101,7 @@ void EntityBitterfly(Entity* self) {
             }
             break;
         case BF_DEAD_FALL:
-            if (UnkCollisionFunc3(D_pspeu_092589E8) & 1) {
+            if (UnkCollisionFunc3(sensors) & 1) {
                 PlaySfxPositional(SFX_SKULL_KNOCK_B);
                 self->ext.bitterfly.deathTimer = 0x18;
                 self->step_s += 1;

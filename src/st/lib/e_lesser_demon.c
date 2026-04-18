@@ -119,7 +119,7 @@ u8 func_us_801BBAB4(void) {
             g_CurrentEntity->primIndex = primIndex;
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
+            g_CurrentEntity->ext.lesserDemon.prim = prim;
             while (prim != NULL) {
                 PGREY_ALT(prim, 0, 0)
                 prim->u0 = 2;
@@ -161,12 +161,12 @@ u8 func_us_801BBAB4(void) {
             ret = true;
             g_CurrentEntity->ext.lesserDemon.unk84 = 2;
         }
-        g_CurrentEntity->ext.lesserDemon.unk80 = 0;
+        g_CurrentEntity->ext.lesserDemon.timer = 0;
         g_CurrentEntity->ext.lesserDemon.unk84++;
         break;
 
     case 1:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
             tempPos.x.i.hi = prim->x0;
             tempPos.x.i.lo = prim->x1;
@@ -181,14 +181,14 @@ u8 func_us_801BBAB4(void) {
             prim->r0 += 3;
             prim = prim->next;
         }
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         PrimToggleVisibility(prim, 0x18);
-        if (g_CurrentEntity->ext.lesserDemon.unk80++ > 0x30) {
+        if (g_CurrentEntity->ext.lesserDemon.timer++ > 0x30) {
             primIndex = g_CurrentEntity->primIndex;
             g_api.FreePrimitives(primIndex);
             g_CurrentEntity->flags &= ~FLAG_HAS_PRIMS;
             g_CurrentEntity->ext.lesserDemon.unk84++;
-            g_CurrentEntity->ext.lesserDemon.unk80 = 0;
+            g_CurrentEntity->ext.lesserDemon.timer = 0;
         }
         break;
 
@@ -244,7 +244,7 @@ void EntityLesserDemonSpit(Entity* self) {
                 self->flags |= FLAG_HAS_PRIMS;
                 self->primIndex = primIndex;
                 prim = &g_PrimBuf[primIndex];
-                self->ext.lesserDemon.unk7C = prim;
+                self->ext.lesserDemon.prim = prim;
                 prim->tpage = 0x13;
                 prim->clut = 0x24D;
                 prim->u0 = 0x68;
@@ -273,21 +273,21 @@ void EntityLesserDemonSpit(Entity* self) {
             self->animCurFrame = 0x25;
             self->poseTimer = 0;
             self->pose = 0;
-            self->ext.lesserDemon.unk80 = 0;
+            self->ext.lesserDemon.timer = 0;
             PlaySfxPositional(SFX_FM_EXPLODE_B);
             self->step++;
         }
         break;
 
     case 4:
-        prim = self->ext.lesserDemon.unk7C;
-        if (self->ext.lesserDemon.unk80++ > 0x10) {
+        prim = self->ext.lesserDemon.prim;
+        if (self->ext.lesserDemon.timer++ > 0x10) {
             self->step++;
-            self->ext.lesserDemon.unk80 = 0x1D;
+            self->ext.lesserDemon.timer = 0x1D;
             self->hitboxHeight = 0x40;
             self->hitboxOffY -= 0x20;
         } else {
-            prim->y0 -= 0x10 - self->ext.lesserDemon.unk80;
+            prim->y0 -= 0x10 - self->ext.lesserDemon.timer;
             prim->y1 = prim->y0;
             self->hitboxHeight = ((prim->y2 - prim->y0) / 2) - 0x10;
             self->hitboxOffY = -self->hitboxHeight;
@@ -295,8 +295,8 @@ void EntityLesserDemonSpit(Entity* self) {
         break;
 
     case 5:
-        prim = self->ext.lesserDemon.unk7C;
-        if (!--self->ext.lesserDemon.unk80) {
+        prim = self->ext.lesserDemon.prim;
+        if (!--self->ext.lesserDemon.timer) {
             self->pose = 0;
             self->poseTimer = 0;
             self->hitboxState = 0;
@@ -346,7 +346,7 @@ void func_us_801BC28C(void) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
+            g_CurrentEntity->ext.lesserDemon.prim = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x13;
             prim->clut = 0x24A;
@@ -381,7 +381,7 @@ void func_us_801BC28C(void) {
         break;
 
     case 1:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         if (prim->next->r3) {
             prim->clut = 0x252;
         } else {
@@ -417,7 +417,7 @@ void func_us_801BC57C(void) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
+            g_CurrentEntity->ext.lesserDemon.prim = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x1A;
             prim->clut = PAL_CC_BLUE_EFFECT_A;
@@ -448,7 +448,7 @@ void func_us_801BC57C(void) {
         break;
 
     case 1:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         LOH(prim->next->tpage) += 0x40;
         prim->next->x2 += 0x40;
         prim->next->y2 = prim->next->x2;
@@ -531,7 +531,7 @@ void func_us_801BC814(Primitive* prim) {
 
     case 1:
         if (!--prim->v0) {
-            prim2 = g_CurrentEntity->ext.lesserDemon.unk7C;
+            prim2 = g_CurrentEntity->ext.lesserDemon.prim;
             prim2 = FindFirstUnkPrim(prim2);
             if (prim2 != NULL) {
                 if (g_CurrentEntity->facingLeft) {
@@ -608,7 +608,7 @@ void func_us_801BCC10(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.lesserDemon.unk7C = prim;
+            self->ext.lesserDemon.prim = prim;
             while (prim != NULL) {
                 prim->p3 = 0;
                 prim->drawMode = DRAW_HIDE;
@@ -619,7 +619,7 @@ void func_us_801BCC10(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = self->ext.lesserDemon.unk7C;
+        prim = self->ext.lesserDemon.prim;
         prim->p3 = 4;
         prim->type = PRIM_GT4;
         prim->tpage = 0x1A;
@@ -652,7 +652,7 @@ void func_us_801BCC10(Entity* self) {
         prim->priority = self->zPriority + 4;
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-        prim = self->ext.lesserDemon.unk7C;
+        prim = self->ext.lesserDemon.prim;
         prim = prim->next;
         for (i = 0; i < 3; i++) {
             if (self->facingLeft) {
@@ -677,7 +677,7 @@ void func_us_801BCC10(Entity* self) {
     case 1:
         AnimateEntity(D_us_80181BF0, self);
         MoveEntity();
-        prim = self->ext.lesserDemon.unk7C;
+        prim = self->ext.lesserDemon.prim;
         if (self->facingLeft) {
             prim->x0 = self->posX.i.hi;
             prim->x3 = prim->x0;
@@ -735,7 +735,7 @@ void func_us_801BCFD4(Primitive* prim) {
 
     case 1:
         if (prim->y1 < 0xF0) {
-            prim2 = g_CurrentEntity->ext.lesserDemon.unk7C;
+            prim2 = g_CurrentEntity->ext.lesserDemon.prim;
             prim2 = FindFirstUnkPrim(prim2);
             if (prim2 != NULL) {
                 prim2->p3 = 2;
@@ -789,7 +789,7 @@ void func_us_801BD268(void) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
+            g_CurrentEntity->ext.lesserDemon.prim = prim;
             while (prim != NULL) {
                 prim->priority = g_CurrentEntity->zPriority + 8;
                 prim->drawMode = DRAW_HIDE;
@@ -803,7 +803,7 @@ void func_us_801BD268(void) {
         break;
 
     case 1:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         prim->p3 = 2;
         PGREY(prim, 0) = 0;
         PGREY(prim, 1) = 0;
@@ -855,16 +855,16 @@ void func_us_801BD268(void) {
         break;
 
     case 2:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
             if (prim->p3) {
                 func_us_801BCFD4(prim);
             }
             prim = prim->next;
         }
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
-            if (g_CurrentEntity->ext.lesserDemon.unk80 % 2) {
+            if (g_CurrentEntity->ext.lesserDemon.timer % 2) {
                 if (prim->u1) {
                     prim->x0--;
                     prim->x2 = prim->x0;
@@ -883,7 +883,7 @@ void func_us_801BD268(void) {
             prim->y3 -= 8;
             prim = prim->next;
         }
-        if (g_CurrentEntity->ext.lesserDemon.unk80 % 2) {
+        if (g_CurrentEntity->ext.lesserDemon.timer % 2) {
             if (!--g_CurrentEntity->ext.lesserDemon.unk85) {
                 g_CurrentEntity->ext.lesserDemon.unk84++;
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
@@ -918,14 +918,14 @@ void func_us_801BD268(void) {
         break;
 
     case 3:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
             if (prim->p3) {
                 func_us_801BCFD4(prim);
             }
             prim = prim->next;
         }
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
             prim->y0 -= 8;
             prim->y1 -= 8;
@@ -942,14 +942,14 @@ void func_us_801BD268(void) {
         break;
 
     case 4:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
             if (prim->p3) {
                 func_us_801BCFD4(prim);
             }
             prim = prim->next;
         }
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
             if (prim->u1) {
                 prim->x0++;
@@ -1050,7 +1050,7 @@ void EntityLesserDemon(Entity* self) {
     case 3:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.lesserDemon.unk80 = 0x30;
+            self->ext.lesserDemon.timer = 0x30;
             self->step_s++;
         }
         hit = func_us_801BDA34();
@@ -1069,7 +1069,7 @@ void EntityLesserDemon(Entity* self) {
             self->facingLeft = 0;
             SetStep(6);
         }
-        if (!--self->ext.lesserDemon.unk80) {
+        if (!--self->ext.lesserDemon.timer) {
             if (!(self->posX.i.hi & 0xFF00)) {
                 if (Random() & 3) {
                     self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
@@ -1142,7 +1142,7 @@ void EntityLesserDemon(Entity* self) {
     case 9:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.lesserDemon.unk80 = D_us_80181C34[Random() & 3];
+            self->ext.lesserDemon.timer = D_us_80181C34[Random() & 3];
             self->step_s++;
         }
         AnimateEntity(D_us_80181B4C, self);
@@ -1155,7 +1155,7 @@ void EntityLesserDemon(Entity* self) {
         } else {
             self->velocityX = FIX(-1.0);
         }
-        if (!--self->ext.lesserDemon.unk80) {
+        if (!--self->ext.lesserDemon.timer) {
             self->step_s--;
             if (self->posX.i.hi & 0xFF00) {
                 if (Random() & 3) {
@@ -1192,7 +1192,7 @@ void EntityLesserDemon(Entity* self) {
             } else {
                 self->velocityX = FIX(-2.0);
             }
-            self->ext.lesserDemon.unk80 = 0x60;
+            self->ext.lesserDemon.timer = 0x60;
             self->step_s++;
             break;
         }
@@ -1201,7 +1201,7 @@ void EntityLesserDemon(Entity* self) {
         if (g_Timer % 8 == 0) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
-        if (!--self->ext.lesserDemon.unk80) {
+        if (!--self->ext.lesserDemon.timer) {
             SetStep(9);
         }
         break;
@@ -1314,7 +1314,7 @@ void EntityLesserDemon(Entity* self) {
                 PlaySfxPositional(SFX_LESSER_DEMON_POISON);
                 self->ext.lesserDemon.unk84 = 0;
                 self->step_s++;
-                self->ext.lesserDemon.unk80 = 0;
+                self->ext.lesserDemon.timer = 0;
             }
             break;
 
@@ -1370,7 +1370,7 @@ void EntityLesserDemon(Entity* self) {
         break;
 
     case 14:
-        FntPrint("timer %x\n", self->ext.lesserDemon.unk80);
+        FntPrint("timer %x\n", self->ext.lesserDemon.timer);
         switch (self->step_s) {
         case 0:
             posX = self->posX.i.hi;
@@ -1408,17 +1408,17 @@ void EntityLesserDemon(Entity* self) {
                 self->step_s++;
                 self->ext.lesserDemon.unk8C = self->hitPoints;
                 self->hitPoints = 0x7FFF;
-                self->ext.lesserDemon.unk80 = 0x80;
+                self->ext.lesserDemon.timer = 0x80;
             }
             break;
 
         case 1:
-            if (self->ext.lesserDemon.unk80 & 1) {
+            if (self->ext.lesserDemon.timer & 1) {
                 self->palette = 0x249;
             } else {
                 self->palette = 0x24E;
             }
-            if (!--self->ext.lesserDemon.unk80) {
+            if (!--self->ext.lesserDemon.timer) {
                 self->palette = 0x249;
                 self->hitEffect = 0x249;
                 self->flags &= ~0xF;
@@ -1431,7 +1431,7 @@ void EntityLesserDemon(Entity* self) {
             break;
 
         case 2:
-            self->ext.lesserDemon.unk80--;
+            self->ext.lesserDemon.timer--;
             if (!AnimateEntity(D_us_80181B9C, self) &&
                 !(self->flags & FLAG_HAS_PRIMS)) {
                 self->ext.lesserDemon.unk87 = 0;
@@ -1484,7 +1484,7 @@ void EntityLesserDemon(Entity* self) {
                 self->drawFlags = ENTITY_OPACITY;
                 self->blendMode = BLEND_TRANSP | BLEND_ADD;
                 self->opacity = 0x80;
-                self->ext.lesserDemon.unk80 = 0x40;
+                self->ext.lesserDemon.timer = 0x40;
                 self->step_s++;
             }
             break;
@@ -1501,7 +1501,7 @@ void EntityLesserDemon(Entity* self) {
                     tempEntity->posY.i.hi += (Random() & 0x1F) - 0x10;
                 }
             }
-            if (!--self->ext.lesserDemon.unk80) {
+            if (!--self->ext.lesserDemon.timer) {
                 PlaySfxPositional(SFX_EXPLODE_SMALL);
                 self->animCurFrame = 0;
                 D_us_80181ACC |= 4;

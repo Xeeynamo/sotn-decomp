@@ -177,7 +177,7 @@ void EntityBottomSecretRoomFloor(Entity* self) {
     }
 }
 
-extern EInit D_us_80180A68;
+extern EInit g_EInitWallDebris;
 // Debris produced when left wall is destroyed
 void EntitySecretWallDebris(Entity* self) {
     Collider collider;
@@ -190,7 +190,7 @@ void EntitySecretWallDebris(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A68);
+        InitializeEntity(g_EInitWallDebris);
         self->drawFlags = ENTITY_ROTATE;
 
         if (Random() & 1) {

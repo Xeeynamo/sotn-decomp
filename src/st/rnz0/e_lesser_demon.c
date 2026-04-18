@@ -1,53 +1,49 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "rnz0.h"
 
-static s16 D_pspeu_09259590[] = {0, 32, 0, 4, 8, -4, -16};
+static s16 sensors1[] = {0, 32, 0, 4, 8, -4, -16};
 static s16 unused1[] = {0, 32, 8, 0};
-static s16 D_pspeu_092595A0[] = {0, 10, 255, 0};
-static s16 D_pspeu_092595A8[] = {0, 8, 10, 8, 8, 10, 8, 0};
+static Point16 sensors2[] = {{0, 10}, {255, 0}};
+static s16 poseOffsets[] = {0, 8, 10, 8, 8, 10, 8, 0};
 
 // Walk cycle
-static u8 D_pspeu_092595B8[] = {
-    8, 1, 11, 2, 11, 3, 16, 4, 11, 5, 11, 6, 8, 1, 0};
+static u8 animWalk[] = {8, 1, 11, 2, 11, 3, 16, 4, 11, 5, 11, 6, 8, 1, 0};
 // Punch attack
-static u8 D_pspeu_092595C8[] = {16, 7,  32, 8,  1, 1, 1,  9,  1,  45, 2,   46,
-                                2,  47, 1,  45, 1, 9, 12, 11, 10, 1,  255, 0};
+static u8 animPunch[] = {16, 7,  32, 8,  1, 1, 1,  9,  1,  45, 2,   46,
+                         2,  47, 1,  45, 1, 9, 12, 11, 10, 1,  255, 0};
 // Jump windup
-static u8 D_pspeu_092595E0[] = {20, 12, 10, 13, 255, 0};
+static u8 animJumpWindup[] = {20, 12, 10, 13, 255, 0};
 // Flying through the air
-static u8 D_pspeu_092595E8[] = {
-    10, 14, 10, 15, 10, 16, 10, 17, 1, 18, 10, 15, 0};
+static u8 animFlying[] = {10, 14, 10, 15, 10, 16, 10, 17, 1, 18, 10, 15, 0};
 // Jump landing (note it's the windup backward)
-static u8 D_pspeu_092595F8[] = {10, 13, 20, 12, 255, 0};
+static u8 animJumpLand[] = {10, 13, 20, 12, 255, 0};
 // Flying (slow wing flaps)
-static u8 D_pspeu_09259600[] = {
-    5,  39, 4,  41, 4,  15, 5,  42, 3,  16, 3,  43, 2,
-    44, 10, 40, 1,  44, 1,  16, 1,  15, 2,  41, 0};
+static u8 animFlyingSlow[] = {5,  39, 4,  41, 4,  15, 5,  42, 3,  16, 3,  43, 2,
+                              44, 10, 40, 1,  44, 1,  16, 1,  15, 2,  41, 0};
 // Flying (faster wing flaps - note same frames for less time)
-static u8 D_pspeu_09259620[] = {3, 39, 2, 41, 2, 15, 3, 42, 2, 16, 2, 43, 1, 44,
-                                6, 40, 1, 44, 1, 16, 1, 15, 2, 41, 0};
+static u8 animFlyingFast[] = {3,  39, 2,  41, 2,  15, 3,  42, 2,  16, 2,  43, 1,
+                              44, 6,  40, 1,  44, 1,  16, 1,  15, 2,  41, 0};
 // Windup for minion spawning
-static u8 D_pspeu_09259640[] = {4, 19, 2, 20, 2, 21, 2, 22, 10, 17, 255, 0};
+static u8 animMinionWindup[] = {4, 19, 2, 20, 2, 21, 2, 22, 10, 17, 255, 0};
 // Windup and shoot fireball
-static u8 D_pspeu_09259650[] = {40, 7, 64, 8, 1, 1, 42, 9, 10, 1, 255, 0};
+static u8 animFireball[] = {40, 7, 64, 8, 1, 1, 42, 9, 10, 1, 255, 0};
 // Minion spawning animation
-static u8 D_pspeu_09259660[] = {
+static u8 animMinionSpawn[] = {
     10, 18, 16, 19, 48, 24, 10, 19, 10, 16, 10, 17, 255, 0};
 // Some kind of death animation
-static u8 D_pspeu_09259670[] = {
-    24, 1, 12, 2, 12, 3, 48, 4, 12, 5, 12, 6, 24, 1, 0};
+static u8 animDying[] = {24, 1, 12, 2, 12, 3, 48, 4, 12, 5, 12, 6, 24, 1, 0};
 // Final fade-away death animation
-static u8 D_pspeu_09259680[] = {
+static u8 animDeathFade[] = {
     6, 39, 6, 41, 6, 12, 6, 13, 6, 14, 6, 20, 6, 24, 255, 0};
 
-extern EInit D_us_80180A38;
+extern EInit g_EInitLesserDemon;
 
 typedef enum {
     LD_STEP_MINION_INIT = 32,
 } LesserDemonSteps;
 
 // Seems to be related to the iframes of the minion spawn
-void func_pspeu_0924DBD0(s16* unkArg) {
+void InitializeMinion(s16* unkArg) {
     switch (g_CurrentEntity->step_s) {
     case 0:
         g_CurrentEntity->animCurFrame = 0;
@@ -79,12 +75,12 @@ void func_pspeu_0924DBD0(s16* unkArg) {
 
     case 3:
         if (g_CurrentEntity->ext.lesserDemon.unkAC & 1) {
-            g_CurrentEntity->palette = D_us_80180A38[3];
+            g_CurrentEntity->palette = g_EInitLesserDemon[3];
         } else {
             g_CurrentEntity->palette = PAL_FLAG(PAL_UNK_19F);
         }
         if (!(--g_CurrentEntity->ext.lesserDemon.unkAC)) {
-            g_CurrentEntity->palette = D_us_80180A38[3];
+            g_CurrentEntity->palette = g_EInitLesserDemon[3];
             g_CurrentEntity->hitboxState = 3;
             SetStep(1);
         }
@@ -93,7 +89,7 @@ void func_pspeu_0924DBD0(s16* unkArg) {
 }
 
 // Seems to be the windup just before the spit attack
-u8 func_pspeu_0924DDF0(void) {
+u8 SpitWindup(void) {
     Primitive* prim;
     Pos tempPos;
     s32 primIndex;
@@ -110,7 +106,7 @@ u8 func_pspeu_0924DDF0(void) {
             g_CurrentEntity->primIndex = primIndex;
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
+            g_CurrentEntity->ext.lesserDemon.prim = prim;
             while (prim != NULL) {
                 PGREY_ALT(prim, 0, 0)
                 prim->u0 = 2;
@@ -152,12 +148,12 @@ u8 func_pspeu_0924DDF0(void) {
             ret = true;
             g_CurrentEntity->ext.lesserDemon.unk84 = 2;
         }
-        g_CurrentEntity->ext.lesserDemon.unk80 = 0;
+        g_CurrentEntity->ext.lesserDemon.timer = 0;
         g_CurrentEntity->ext.lesserDemon.unk84++;
         break;
 
     case 1:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
             tempPos.x.i.hi = prim->x0;
             tempPos.x.i.lo = prim->x1;
@@ -172,14 +168,14 @@ u8 func_pspeu_0924DDF0(void) {
             prim->r0 += 3;
             prim = prim->next;
         }
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         PrimToggleVisibility(prim, 0x18);
-        if (g_CurrentEntity->ext.lesserDemon.unk80++ > 0x40) {
+        if (g_CurrentEntity->ext.lesserDemon.timer++ > 0x40) {
             primIndex = g_CurrentEntity->primIndex;
             g_api.FreePrimitives(primIndex);
             g_CurrentEntity->flags &= ~FLAG_HAS_PRIMS;
             g_CurrentEntity->ext.lesserDemon.unk84++;
-            g_CurrentEntity->ext.lesserDemon.unk80 = 0;
+            g_CurrentEntity->ext.lesserDemon.timer = 0;
         }
         break;
 
@@ -192,12 +188,12 @@ u8 func_pspeu_0924DDF0(void) {
 extern EInit g_EInitLesserDemonSpit;
 
 // Traveling diagonally downward
-static u8 D_pspeu_09259690[] = {1, 25, 1, 26, 1, 27, 1, 28, 0};
+static u8 animSpitFly[] = {1, 25, 1, 26, 1, 27, 1, 28, 0};
 // Splash when hitting the ground
-static u8 D_pspeu_092596A0[] = {
+static u8 animSpitHit[] = {
     4, 29, 4, 30, 4, 31, 4, 32, 4, 33, 2, 34, 2, 36, 255, 0};
 // Fizzling out on ground
-static u8 D_pspeu_092596B0[] = {4, 37, 4, 38, 255, 0};
+static u8 animSpitFizzle[] = {4, 37, 4, 38, 255, 0};
 
 void EntityLesserDemonSpit(Entity* self) {
     Primitive* prim;
@@ -226,8 +222,8 @@ void EntityLesserDemonSpit(Entity* self) {
 
     case 2:
         MoveEntity();
-        AnimateEntity(D_pspeu_09259690, self);
-        if (CheckColliderOffsets(D_pspeu_092595A0, 0)) {
+        AnimateEntity(animSpitFly, self);
+        if (CheckColliderOffsets(sensors2, 0)) {
             self->pose = 0;
             self->poseTimer = 0;
             self->scaleX = 0x140;
@@ -239,13 +235,13 @@ void EntityLesserDemonSpit(Entity* self) {
         break;
 
     case 3:
-        if (!AnimateEntity(D_pspeu_092596A0, self)) {
+        if (!AnimateEntity(animSpitHit, self)) {
             primIndex = g_api.AllocPrimitives(PRIM_GT4, 1);
             if (primIndex != -1) {
                 self->flags |= FLAG_HAS_PRIMS;
                 self->primIndex = primIndex;
                 prim = &g_PrimBuf[primIndex];
-                self->ext.lesserDemon.unk7C = prim;
+                self->ext.lesserDemon.prim = prim;
                 prim->tpage = 0x13;
                 prim->clut = 0x231;
                 prim->u0 = 0x68;
@@ -274,28 +270,28 @@ void EntityLesserDemonSpit(Entity* self) {
             self->animCurFrame = 0x25;
             self->poseTimer = 0;
             self->pose = 0;
-            self->ext.lesserDemon.unk80 = 0;
+            self->ext.lesserDemon.timer = 0;
             PlaySfxPositional(SFX_FM_EXPLODE_B);
             self->step++;
         }
         break;
 
     case 4:
-        prim = self->ext.lesserDemon.unk7C;
-        if (self->ext.lesserDemon.unk80++ > 0x10) {
+        prim = self->ext.lesserDemon.prim;
+        if (self->ext.lesserDemon.timer++ > 0x10) {
             self->step++;
-            self->ext.lesserDemon.unk80 = 0x1D;
+            self->ext.lesserDemon.timer = 0x1D;
             self->hitboxHeight = 0x40;
             self->hitboxOffY -= 0x20;
         } else {
-            prim->y0 -= 0x10 - self->ext.lesserDemon.unk80;
+            prim->y0 -= 0x10 - self->ext.lesserDemon.timer;
             prim->y1 = prim->y0;
         }
         break;
 
     case 5:
-        prim = self->ext.lesserDemon.unk7C;
-        if (!--self->ext.lesserDemon.unk80) {
+        prim = self->ext.lesserDemon.prim;
+        if (!--self->ext.lesserDemon.timer) {
             self->pose = 0;
             self->poseTimer = 0;
             self->hitboxState = 0;
@@ -313,7 +309,7 @@ void EntityLesserDemonSpit(Entity* self) {
 
     case 6:
         self->scaleY -= 0x20;
-        if (!AnimateEntity(D_pspeu_092596B0, self)) {
+        if (!AnimateEntity(animSpitFizzle, self)) {
             self->drawFlags |= ENTITY_OPACITY;
             self->opacity = 0x80;
             self->step++;
@@ -332,7 +328,7 @@ void EntityLesserDemonSpit(Entity* self) {
 }
 
 // Lesser Demon punch attack
-void func_pspeu_0924E7D0(void) {
+void PunchAttack(void) {
     Primitive* prim;
     s32 primIndex;
 
@@ -343,7 +339,7 @@ void func_pspeu_0924E7D0(void) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
+            g_CurrentEntity->ext.lesserDemon.prim = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x13;
             prim->clut = 0x22E;
@@ -378,7 +374,7 @@ void func_pspeu_0924E7D0(void) {
         break;
 
     case 1:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         if (prim->next->r3) {
             prim->clut = 0x236;
         } else {
@@ -403,7 +399,7 @@ void func_pspeu_0924E7D0(void) {
     }
 }
 
-void func_pspeu_0924EB18(void) {
+void ChargingFireball(void) {
     Primitive* prim;
     s32 primIndex;
 
@@ -414,7 +410,7 @@ void func_pspeu_0924EB18(void) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
+            g_CurrentEntity->ext.lesserDemon.prim = prim;
             UnkPolyFunc2(prim);
             prim->tpage = 0x1A;
             prim->clut = PAL_CC_BLUE_EFFECT_A;
@@ -445,7 +441,7 @@ void func_pspeu_0924EB18(void) {
         break;
 
     case 1:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         LOH(prim->next->tpage) += 0x40;
         prim->next->x2 += 0x40;
         prim->next->y2 = prim->next->x2;
@@ -461,7 +457,7 @@ void func_pspeu_0924EB18(void) {
     }
 }
 
-static void func_us_801BC814(Primitive* prim) {
+static void fireballHelper(Primitive* prim) {
     s16 angleOffset;
     s32 posX2, posY2;
     Pos params;
@@ -528,7 +524,7 @@ static void func_us_801BC814(Primitive* prim) {
 
     case 1:
         if (!--prim->v0) {
-            prim2 = g_CurrentEntity->ext.lesserDemon.unk7C;
+            prim2 = g_CurrentEntity->ext.lesserDemon.prim;
             prim2 = FindFirstUnkPrim(prim2);
             if (prim2 != NULL) {
                 if (g_CurrentEntity->facingLeft) {
@@ -583,7 +579,7 @@ static void func_us_801BC814(Primitive* prim) {
     }
 }
 
-extern EInit D_us_80180A50;
+extern EInit g_EInitLesserDemonFireball;
 static u8 blueFireballAnim[] = {
     1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1, 7, 1, 8, 0};
 
@@ -595,7 +591,7 @@ void EntityLesserDemonFireball(Entity* self) {
 
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A50);
+        InitializeEntity(g_EInitLesserDemonFireball);
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA;
         self->drawFlags = ENTITY_SCALEX;
         self->scaleX = 0x180;
@@ -609,7 +605,7 @@ void EntityLesserDemonFireball(Entity* self) {
             self->flags |= FLAG_HAS_PRIMS;
             self->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            self->ext.lesserDemon.unk7C = prim;
+            self->ext.lesserDemon.prim = prim;
             while (prim != NULL) {
                 prim->p3 = 0;
                 prim->drawMode = DRAW_HIDE;
@@ -620,7 +616,7 @@ void EntityLesserDemonFireball(Entity* self) {
             DestroyEntity(self);
             return;
         }
-        prim = self->ext.lesserDemon.unk7C;
+        prim = self->ext.lesserDemon.prim;
         prim->p3 = 4;
         prim->type = PRIM_GT4;
         prim->tpage = 0x1A;
@@ -653,7 +649,7 @@ void EntityLesserDemonFireball(Entity* self) {
         prim->priority = self->zPriority + 4;
         prim->drawMode =
             DRAW_TPAGE2 | DRAW_TPAGE | DRAW_COLORS | DRAW_UNK02 | DRAW_TRANSP;
-        prim = self->ext.lesserDemon.unk7C;
+        prim = self->ext.lesserDemon.prim;
         prim = prim->next;
         for (i = 0; i < 3; i++) {
             if (self->facingLeft) {
@@ -678,7 +674,7 @@ void EntityLesserDemonFireball(Entity* self) {
     case 1:
         AnimateEntity(blueFireballAnim, self);
         MoveEntity();
-        prim = self->ext.lesserDemon.unk7C;
+        prim = self->ext.lesserDemon.prim;
         if (self->facingLeft) {
             prim->x0 = self->posX.i.hi;
             prim->x3 = prim->x0;
@@ -697,7 +693,7 @@ void EntityLesserDemonFireball(Entity* self) {
         prim = prim->next;
         while (prim != NULL) {
             if (prim->p3 & 2) {
-                func_us_801BC814(prim);
+                fireballHelper(prim);
             }
             prim = prim->next;
         }
@@ -705,7 +701,7 @@ void EntityLesserDemonFireball(Entity* self) {
     }
 }
 
-static u8 D_pspeu_092596D0[][3] = {
+static u8 RainbowRGBs[][3] = {
     {0xC0, 0x80, 0xC0}, {0xC0, 0x80, 0x80}, {0xC0, 0xC0, 0x80},
     {0x80, 0xC0, 0x80}, {0x80, 0xA0, 0xA0}, {0x80, 0x80, 0xC0},
     {0xC0, 0x80, 0xC0}};
@@ -715,27 +711,27 @@ static u8 unused_triples[][3] = {
     {0x40, 0x60, 0x40}, {0x40, 0x60, 0x60}, {0x40, 0x40, 0x60},
     {0x60, 0x40, 0x60}};
 
-static s16 D_pspeu_092596E8[] = {0x40, 0x80, 0xC0, 0x80};
+static s16 step9Timers[] = {0x40, 0x80, 0xC0, 0x80};
 
-void func_pspeu_0924F908(Primitive* prim) {
+void RainbowHelper(Primitive* prim) {
     Primitive* prim2;
 
     switch (prim->u0) {
     case 0:
         if (prim->u1) {
-            prim->r0 = D_pspeu_092596D0[prim->v0 - 1][0] + 0x20;
-            prim->g0 = D_pspeu_092596D0[prim->v0 - 1][1] + 0x20;
-            prim->b0 = D_pspeu_092596D0[prim->v0 - 1][2] + 0x20;
-            prim->r2 = D_pspeu_092596D0[prim->v0][0] + 0x20;
-            prim->g2 = D_pspeu_092596D0[prim->v0][1] + 0x20;
-            prim->b2 = D_pspeu_092596D0[prim->v0][2] + 0x20;
+            prim->r0 = RainbowRGBs[prim->v0 - 1][0] + 0x20;
+            prim->g0 = RainbowRGBs[prim->v0 - 1][1] + 0x20;
+            prim->b0 = RainbowRGBs[prim->v0 - 1][2] + 0x20;
+            prim->r2 = RainbowRGBs[prim->v0][0] + 0x20;
+            prim->g2 = RainbowRGBs[prim->v0][1] + 0x20;
+            prim->b2 = RainbowRGBs[prim->v0][2] + 0x20;
         } else {
-            prim->r0 = D_pspeu_092596D0[prim->v0 - 1][0] + 0x20;
-            prim->g0 = D_pspeu_092596D0[prim->v0 - 1][1] + 0x20;
-            prim->b0 = D_pspeu_092596D0[prim->v0 - 1][2] + 0x20;
-            prim->r2 = D_pspeu_092596D0[prim->v0][0] + 0x20;
-            prim->g2 = D_pspeu_092596D0[prim->v0][1] + 0x20;
-            prim->b2 = D_pspeu_092596D0[prim->v0][2] + 0x20;
+            prim->r0 = RainbowRGBs[prim->v0 - 1][0] + 0x20;
+            prim->g0 = RainbowRGBs[prim->v0 - 1][1] + 0x20;
+            prim->b0 = RainbowRGBs[prim->v0 - 1][2] + 0x20;
+            prim->r2 = RainbowRGBs[prim->v0][0] + 0x20;
+            prim->g2 = RainbowRGBs[prim->v0][1] + 0x20;
+            prim->b2 = RainbowRGBs[prim->v0][2] + 0x20;
         }
         prim->r1 = prim->r0;
         prim->g1 = prim->g0;
@@ -748,7 +744,7 @@ void func_pspeu_0924F908(Primitive* prim) {
 
     case 1:
         if (prim->y1 < 0xF0) {
-            prim2 = g_CurrentEntity->ext.lesserDemon.unk7C;
+            prim2 = g_CurrentEntity->ext.lesserDemon.prim;
             prim2 = FindFirstUnkPrim(prim2);
             if (prim2 != NULL) {
                 prim2->p3 = 2;
@@ -787,7 +783,7 @@ void func_pspeu_0924F908(Primitive* prim) {
 // Creates second, sub-lesser demon.
 // Similar to library boss version, but just spawns more lesser demons.
 #define PARAM_IS_MINION 0x10
-void func_pspeu_0924FE10(void) {
+void spawnMinion(void) {
     Entity* tempEntity;
     Primitive* prim;
     s32 primIndex;
@@ -801,7 +797,7 @@ void func_pspeu_0924FE10(void) {
             g_CurrentEntity->flags |= FLAG_HAS_PRIMS;
             g_CurrentEntity->primIndex = primIndex;
             prim = &g_PrimBuf[primIndex];
-            g_CurrentEntity->ext.lesserDemon.unk7C = prim;
+            g_CurrentEntity->ext.lesserDemon.prim = prim;
             while (prim != NULL) {
                 prim->priority = g_CurrentEntity->zPriority + 2;
                 prim->drawMode = DRAW_HIDE;
@@ -815,7 +811,7 @@ void func_pspeu_0924FE10(void) {
         break;
 
     case 1:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         prim->p3 = 2;
         PGREY(prim, 0) = 0;
         PGREY(prim, 1) = 0;
@@ -867,16 +863,16 @@ void func_pspeu_0924FE10(void) {
         break;
 
     case 2:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
             if (prim->p3) {
-                func_pspeu_0924F908(prim);
+                RainbowHelper(prim);
             }
             prim = prim->next;
         }
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
-            if (g_CurrentEntity->ext.lesserDemon.unk80 % 2) {
+            if (g_CurrentEntity->ext.lesserDemon.timer % 2) {
                 if (prim->u1) {
                     prim->x0--;
                     prim->x2 = prim->x0;
@@ -895,7 +891,7 @@ void func_pspeu_0924FE10(void) {
             prim->y3 -= 8;
             prim = prim->next;
         }
-        if (g_CurrentEntity->ext.lesserDemon.unk80 % 2) {
+        if (g_CurrentEntity->ext.lesserDemon.timer % 2) {
             if (!--g_CurrentEntity->ext.lesserDemon.unk85) {
                 g_CurrentEntity->ext.lesserDemon.unk84++;
                 tempEntity = AllocEntity(&g_Entities[176], &g_Entities[192]);
@@ -916,14 +912,14 @@ void func_pspeu_0924FE10(void) {
         break;
 
     case 3:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
             if (prim->p3) {
-                func_pspeu_0924F908(prim);
+                RainbowHelper(prim);
             }
             prim = prim->next;
         }
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
             prim->y0 -= 8;
             prim->y1 -= 8;
@@ -940,14 +936,14 @@ void func_pspeu_0924FE10(void) {
         break;
 
     case 4:
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
             if (prim->p3) {
-                func_pspeu_0924F908(prim);
+                RainbowHelper(prim);
             }
             prim = prim->next;
         }
-        prim = g_CurrentEntity->ext.lesserDemon.unk7C;
+        prim = g_CurrentEntity->ext.lesserDemon.prim;
         while (prim != NULL) {
             if (prim->u1) {
                 prim->x0++;
@@ -980,12 +976,12 @@ void func_pspeu_0924FE10(void) {
     }
 }
 
-static s16 D_pspeu_092596F0[] = {0x18, 0x28, 0x18, 0x18, 0xFF, 0x00};
+static s16 offsets2[] = {0x18, 0x28, 0x18, 0x18, 0xFF, 0x00};
 
-u8 func_pspeu_09250678(void) {
+u8 checkHit(void) {
     u8 ret = 0;
 
-    ret = CheckColliderOffsets(D_pspeu_092596F0, g_CurrentEntity->facingLeft);
+    ret = CheckColliderOffsets(offsets2, g_CurrentEntity->facingLeft);
     if (ret ^ 2) {
         ret = 1;
     } else {
@@ -993,11 +989,9 @@ u8 func_pspeu_09250678(void) {
     }
     if (g_CurrentEntity->poseTimer == 0) {
         if (g_CurrentEntity->facingLeft) {
-            g_CurrentEntity->posX.i.hi +=
-                D_pspeu_092595A8[g_CurrentEntity->pose];
+            g_CurrentEntity->posX.i.hi += poseOffsets[g_CurrentEntity->pose];
         } else {
-            g_CurrentEntity->posX.i.hi -=
-                D_pspeu_092595A8[g_CurrentEntity->pose];
+            g_CurrentEntity->posX.i.hi -= poseOffsets[g_CurrentEntity->pose];
         }
     }
     return ret;
@@ -1027,7 +1021,7 @@ void EntityLesserDemon(Entity* self) {
     }
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_80180A38);
+        InitializeEntity(g_EInitLesserDemon);
 #ifdef VERSION_US
         self->flags |= FLAG_UNK_02000000;
 #endif
@@ -1042,10 +1036,10 @@ void EntityLesserDemon(Entity* self) {
         break;
     case LD_STEP_MINION_INIT:
         // Note: this function calls SetStep(1) so we progress from there.
-        func_pspeu_0924DBD0(D_pspeu_09259590);
+        InitializeMinion(sensors1);
         break;
     case 1:
-        if (UnkCollisionFunc3(D_pspeu_09259590) & 1) {
+        if (UnkCollisionFunc3(sensors1) & 1) {
             SetStep(3);
         }
         break;
@@ -1059,20 +1053,20 @@ void EntityLesserDemon(Entity* self) {
 
     case 3:
         if (!self->step_s) {
-            self->ext.lesserDemon.unk80 = 0x80;
+            self->ext.lesserDemon.timer = 0x80;
             self->step_s++;
         }
-        hit = func_pspeu_09250678();
+        hit = checkHit();
         if (hit) {
             self->facingLeft ^= 1;
         }
-        if (!AnimateEntity(D_pspeu_092595B8, self)) {
+        if (!AnimateEntity(animWalk, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         if (hit) {
             SetStep(6);
         }
-        if (--self->ext.lesserDemon.unk80) {
+        if (--self->ext.lesserDemon.timer) {
             break;
         }
         if (!(self->posX.i.hi & 0xFF00)) {
@@ -1094,7 +1088,7 @@ void EntityLesserDemon(Entity* self) {
     case 6:
         switch (self->step_s) {
         case 0:
-            if (!AnimateEntity(D_pspeu_092595E0, self)) {
+            if (!AnimateEntity(animJumpWindup, self)) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->step_s++;
@@ -1108,8 +1102,8 @@ void EntityLesserDemon(Entity* self) {
             break;
 
         case 1:
-            AnimateEntity(D_pspeu_092595E8, self);
-            if (UnkCollisionFunc3(D_pspeu_09259590) & 1) {
+            AnimateEntity(animFlying, self);
+            if (UnkCollisionFunc3(sensors1) & 1) {
                 PlaySfxPositional(SFX_STOMP_HARD_B);
                 self->pose = 0;
                 self->poseTimer = 0;
@@ -1120,7 +1114,7 @@ void EntityLesserDemon(Entity* self) {
             break;
 
         case 2:
-            if (!AnimateEntity(D_pspeu_092595F8, self)) {
+            if (!AnimateEntity(animJumpLand, self)) {
                 SetStep(3);
             }
             break;
@@ -1128,7 +1122,7 @@ void EntityLesserDemon(Entity* self) {
         break;
 
     case 8:
-        if (!AnimateEntity(D_pspeu_09259600, self)) {
+        if (!AnimateEntity(animFlyingSlow, self)) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
         }
         if (!self->poseTimer && self->pose == 7) {
@@ -1146,11 +1140,11 @@ void EntityLesserDemon(Entity* self) {
     case 9:
         if (!self->step_s) {
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            self->ext.lesserDemon.unk80 = D_pspeu_092596E8[Random() & 3];
+            self->ext.lesserDemon.timer = step9Timers[Random() & 3];
             self->step_s++;
             break;
         }
-        AnimateEntity(D_pspeu_09259600, self);
+        AnimateEntity(animFlyingSlow, self);
         MoveEntity();
         if (!self->poseTimer && self->pose == 7) {
             PlaySfxPositional(SFX_WING_FLAP_B);
@@ -1160,7 +1154,7 @@ void EntityLesserDemon(Entity* self) {
         } else {
             self->velocityX = FIX(-1.0);
         }
-        if (!--self->ext.lesserDemon.unk80) {
+        if (!--self->ext.lesserDemon.timer) {
             self->step_s--;
             if (self->posX.i.hi & 0xFF00) {
                 if (g_Timer % 2) {
@@ -1198,16 +1192,16 @@ void EntityLesserDemon(Entity* self) {
             } else {
                 self->velocityX = FIX(-2.0);
             }
-            self->ext.lesserDemon.unk80 = 0x60;
+            self->ext.lesserDemon.timer = 0x60;
             self->step_s++;
             break;
         }
         MoveEntity();
-        AnimateEntity(D_pspeu_09259620, self);
+        AnimateEntity(animFlyingFast, self);
         if (g_Timer % 8 == 0) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
-        if (!--self->ext.lesserDemon.unk80) {
+        if (!--self->ext.lesserDemon.timer) {
             SetStep(9);
         }
         break;
@@ -1264,7 +1258,7 @@ void EntityLesserDemon(Entity* self) {
 
         case 2:
             tempEntity = self->ext.lesserDemon.unk88;
-            if (!AnimateEntity(D_pspeu_092595C8, self) &&
+            if (!AnimateEntity(animPunch, self) &&
                 !(self->flags & FLAG_HAS_PRIMS)) {
                 self->ext.lesserDemon.unk87 = 0;
                 DestroyEntity(tempEntity);
@@ -1292,16 +1286,16 @@ void EntityLesserDemon(Entity* self) {
             break;
         }
         if (self->ext.lesserDemon.unk87) {
-            func_pspeu_0924E7D0();
+            PunchAttack();
         }
         break;
 
     case 11:
-        AnimateEntity(D_pspeu_09259600, self);
+        AnimateEntity(animFlyingSlow, self);
         if (!self->poseTimer && self->pose == 7) {
             PlaySfxPositional(SFX_WING_FLAP_B);
         }
-        if (UnkCollisionFunc3(D_pspeu_09259590) & 1) {
+        if (UnkCollisionFunc3(sensors1) & 1) {
             PlaySfxPositional(SFX_STOMP_HARD_B);
             SetStep(3);
         }
@@ -1314,17 +1308,17 @@ void EntityLesserDemon(Entity* self) {
         switch (self->step_s) {
         case 0:
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
-            AnimateEntity(D_pspeu_09259640, self);
+            AnimateEntity(animMinionWindup, self);
             if (self->pose == 2) {
                 PlaySfxPositional(SFX_LESSER_DEMON_POISON);
                 self->ext.lesserDemon.unk84 = 0;
                 self->step_s++;
-                self->ext.lesserDemon.unk80 = 0;
+                self->ext.lesserDemon.timer = 0;
             }
             break;
 
         case 1:
-            if (func_pspeu_0924DDF0()) {
+            if (SpitWindup()) {
                 tempEntity = AllocEntity(&g_Entities[160], &g_Entities[192]);
                 if (tempEntity != NULL) {
                     CreateEntityFromEntity(
@@ -1344,7 +1338,7 @@ void EntityLesserDemon(Entity* self) {
             break;
 
         case 2:
-            if (!AnimateEntity(D_pspeu_09259640, self)) {
+            if (!AnimateEntity(animMinionWindup, self)) {
                 SetStep(9);
             }
             break;
@@ -1356,7 +1350,7 @@ void EntityLesserDemon(Entity* self) {
             self->ext.lesserDemon.unk84 = 0;
             self->step_s++;
         }
-        if (!AnimateEntity(D_pspeu_09259650, self)) {
+        if (!AnimateEntity(animFireball, self)) {
             self->ext.lesserDemon.unk84 = 0;
             SetStep(3);
             break;
@@ -1372,7 +1366,7 @@ void EntityLesserDemon(Entity* self) {
             }
         }
         if (self->pose > 1) {
-            func_pspeu_0924EB18();
+            ChargingFireball();
         }
         break;
 
@@ -1406,13 +1400,13 @@ void EntityLesserDemon(Entity* self) {
                 SetStep(9);
                 return;
             }
-            AnimateEntity(D_pspeu_09259660, self);
+            AnimateEntity(animMinionSpawn, self);
             self->facingLeft = (GetSideToPlayer() & 1) ^ 1;
             if (self->pose == 3) {
                 self->ext.lesserDemon.unk84 = 0;
                 PlaySfxPositional(SFX_RAPID_SYNTH_BUBBLE);
                 self->step_s++;
-                self->ext.lesserDemon.unk80 = 0xE0;
+                self->ext.lesserDemon.timer = 0xE0;
             }
             break;
 
@@ -1422,7 +1416,7 @@ void EntityLesserDemon(Entity* self) {
             } else {
                 self->palette = 0x232;
             }
-            if (!--self->ext.lesserDemon.unk80) {
+            if (!--self->ext.lesserDemon.timer) {
                 self->palette = 0x22D;
                 self->hitEffect = 0x22D;
                 self->flags &= ~0xF;
@@ -1430,17 +1424,17 @@ void EntityLesserDemon(Entity* self) {
                 self->step_s++;
                 self->ext.lesserDemon.unk84++;
             }
-            func_pspeu_0924FE10();
+            spawnMinion();
             break;
 
         case 2:
-            self->ext.lesserDemon.unk80--;
-            if (!AnimateEntity(D_pspeu_09259660, self) &&
+            self->ext.lesserDemon.timer--;
+            if (!AnimateEntity(animMinionSpawn, self) &&
                 !(self->flags & FLAG_HAS_PRIMS)) {
                 self->ext.lesserDemon.unk87 = 0;
                 SetStep(9);
             } else {
-                func_pspeu_0924FE10();
+                spawnMinion();
             }
             break;
         }
@@ -1461,11 +1455,11 @@ void EntityLesserDemon(Entity* self) {
         }
         switch (self->step_s) {
         case 0:
-            AnimateEntity(D_pspeu_09259600, self);
+            AnimateEntity(animFlyingSlow, self);
             if (!self->poseTimer && self->pose == 7) {
                 PlaySfxPositional(SFX_WING_FLAP_B);
             }
-            if (UnkCollisionFunc3(D_pspeu_09259590) & 1) {
+            if (UnkCollisionFunc3(sensors1) & 1) {
                 self->step_s++;
                 self->pose = 0;
                 self->poseTimer = 0;
@@ -1475,25 +1469,25 @@ void EntityLesserDemon(Entity* self) {
             break;
 
         case 1:
-            hit = func_pspeu_09250678();
-            if (!AnimateEntity(D_pspeu_09259670, self) || hit) {
+            hit = checkHit();
+            if (!AnimateEntity(animDying, self) || hit) {
                 self->pose = 0;
                 self->poseTimer = 0;
                 self->drawFlags = ENTITY_OPACITY;
                 self->blendMode = BLEND_TRANSP | BLEND_ADD;
                 self->opacity = 0x80;
-                self->ext.lesserDemon.unk80 = 0x40;
+                self->ext.lesserDemon.timer = 0x40;
                 self->step_s++;
             }
             break;
 
         case 2:
-            if (!--self->ext.lesserDemon.unk80) {
+            if (!--self->ext.lesserDemon.timer) {
                 PlaySfxPositional(SFX_EXPLODE_SMALL);
                 DestroyEntity(self);
                 break;
             }
-            AnimateEntity(D_pspeu_09259680, self);
+            AnimateEntity(animDeathFade, self);
             self->opacity -= 2;
             if (g_Timer % 5 == 0) {
                 tempEntity = AllocEntity(&g_Entities[224], &g_Entities[256]);
@@ -1532,12 +1526,12 @@ void EntityLesserDemon(Entity* self) {
         break;
     }
 }
-extern EInit D_us_80180A5C;
+extern EInit g_EInitLesserDemonDummy;
 
 void EntityLesserDemonDummy(Entity* self) {
     FntPrint("duumy_set\n");
     if (!self->step) {
-        InitializeEntity(D_us_80180A5C);
+        InitializeEntity(g_EInitLesserDemonDummy);
         self->hitboxWidth = 0x1C;
         self->hitboxHeight = 4;
         self->hitboxOffX = -0x14;
