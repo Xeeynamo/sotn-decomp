@@ -180,7 +180,7 @@ files:
           - [0x49CC, cmpgfx, stage_title_np3_jp, 128, 128, 4]
           - [0x4D10, cmpgfx, stage_placeholder_np3, 128, 128, 4]
           - [0x52B4, cmpgfx, e_skyswirl_g0, 128, 128, 4, 0x14900] # unused
-          - [0x6420, cmpgfx, e_skyswirl_g1, 128, 128, 4, 0x14900] # unused        
+          - [0x6420, cmpgfx, e_skyswirl_g1, 128, 128, 4, 0x14900] # unused
           - [0x7728, cmpgfx, e_merman_g0, 128, 128, 4, 0x15A80]
           - [0x83C8, cmpgfx, e_merman_g1, 128, 128, 4, 0x15A80]
           - [0x9004, cmpgfx, e_merman_g2, 128, 128, 4, 0x15A80]
@@ -249,7 +249,7 @@ files:
       - start: 0
         vram: 0x80180000
         assets:
-          - [0x40, sprite_banks, sprite_banks]
+          - [0x40, sprite_banks, hd/sprite_banks]
           - [0xA0, paldef, palette_def]
           - [0xB8, layers, layers]
           - [0x1B8, gfx_banks, graphics_banks]
