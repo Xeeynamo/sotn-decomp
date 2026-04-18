@@ -34,12 +34,12 @@ void EntitySpikesDamage(Entity* self);
 void func_us_801B1F1C(Entity* self);
 void func_us_801B87E8_from_cat(Entity* self);
 void func_us_801BACF4_from_cat(Entity* self);
-void func_us_801BEFD8(Entity* self);
-void func_us_801BFF94(Entity* self);
-void func_us_801C0118(Entity* self);
-void func_us_801C02C4(Entity* self);
-void func_us_801C0718(Entity* self);
-void func_us_801C0844(Entity* self);
+void EntityFrozenHalf(Entity* self);
+void EntityFrozenHalfOrbitIcicle(Entity* self);
+void EntityFrozenHalfThrownChunk(Entity* self);
+void EntityFrozenHalfBlizzard(Entity* self);
+void EntityFrozenHalfFallingIce(Entity* self);
+void EntityFrozenHalfFrostMist(Entity* self);
 void EntitySalome(Entity* self);
 void EntitySalomeEffects(Entity* self);
 void EntitySalomeMagicOrb(Entity* self);
@@ -90,12 +90,12 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     func_us_801B1F1C,
     func_us_801B87E8_from_cat,
     func_us_801BACF4_from_cat,
-    func_us_801BEFD8,
-    func_us_801BFF94,
-    func_us_801C0118,
-    func_us_801C02C4,
-    func_us_801C0718,
-    func_us_801C0844,
+    EntityFrozenHalf,
+    EntityFrozenHalfOrbitIcicle,
+    EntityFrozenHalfThrownChunk,
+    EntityFrozenHalfBlizzard,
+    EntityFrozenHalfFallingIce,
+    EntityFrozenHalfFrostMist,
     EntitySalome,
     EntitySalomeEffects,
     EntitySalomeMagicOrb,
@@ -128,10 +128,10 @@ EInit D_us_80181018 = {ANIMSET_OVL(2), 0, 0, 0x000, 0x005};
 EInit D_us_80181024 = {ANIMSET_DRA(0), 0, 0, 0x000, 0x005};
 
 EInit g_EInitFrozenHalf = {ANIMSET_OVL(3), 1, 72, 0x200, 0x0D9};
-EInit D_us_8018103C = {ANIMSET_OVL(3), 24, 72, 0x200, 0x0DA};
-EInit D_us_80181048 = {ANIMSET_OVL(3), 30, 72, 0x200, 0x0DB};
-EInit D_us_80181054 = {ANIMSET_OVL(3), 23, 72, 0x200, 0x005};
-EInit D_us_80181060 = {ANIMSET_OVL(3), 28, 72, 0x200, 0x0DC};
+EInit g_EInitFrozenHalfOrbitIcicle = {ANIMSET_OVL(3), 24, 72, 0x200, 0x0DA};
+EInit g_EInitFrozenHalfThrownChunk = {ANIMSET_OVL(3), 30, 72, 0x200, 0x0DB};
+EInit g_EInitFrozenHalfBlizzard = {ANIMSET_OVL(3), 23, 72, 0x200, 0x005};
+EInit g_EInitFrozenHalfFallingIce = {ANIMSET_OVL(3), 28, 72, 0x200, 0x0DC};
 
 EInit g_EInitSalome = {ANIMSET_OVL(4), 0, 76, 0x206, 0x0E5};
 EInit g_EInitSalomeEffects = {ANIMSET_OVL(4), 0, 76, 0x206, 0x005};
