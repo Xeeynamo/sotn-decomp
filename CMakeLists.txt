@@ -450,7 +450,7 @@ set(SOURCE_FILES_STAGE_WRP
     src/st/wrp/gen/rooms.c
     src/st/wrp/gen/e_layout.c
     src/st/wrp/stage_data.c
-    src/st/wrp/gen/sprites.c
+    src/st/wrp/gen/us/sprites.c
     src/st/wrp/warp.c
     src/st/wrp/st_update.c
     src/st/wrp/collision.c
