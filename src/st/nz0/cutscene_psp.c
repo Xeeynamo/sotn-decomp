@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../nz0/nz0.h"
 #include <cutscene.h>
+#include "../cutscene_dialog.h"
 
 // clang-format off
 static u16 actor_names_en[] = {
@@ -315,13 +316,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step = 5;
                     self->step_s = 0;
                     return;
-                case CSOP_CLOSE_DIALOG:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    g_Dialogue.portraitAnimTimer = 0x18;
-                    self->step = 6;
-                    return;
+                #include "../cutscene_actions1.h"
                 case CSOP_PLAY_SOUND:
                     if (g_SkipCutscene) {
                         g_Dialogue.scriptCur += 2;

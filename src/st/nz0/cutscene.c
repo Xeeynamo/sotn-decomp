@@ -2,6 +2,7 @@
 #include "nz0.h"
 #include "../pfn_entity_update.h"
 #include <cutscene.h>
+#include "../cutscene_dialog.h"
 
 static u8 D_801813C8[] = {0x00, 0x40, 0x00, 0x00};
 static u8 D_801813CC[] = {0x00, 0x00, 0x00, 0x00};
@@ -228,13 +229,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 self->step = 5;
                 self->step_s = 0;
                 return;
-            case CSOP_CLOSE_DIALOG:
-                if (g_SkipCutscene) {
-                    continue;
-                }
-                g_Dialogue.portraitAnimTimer = 0x18;
-                self->step = 6;
-                return;
+            #include "../cutscene_actions1.h"
             case CSOP_PLAY_SOUND:
                 if (g_SkipCutscene) {
                     g_Dialogue.scriptCur += 2;

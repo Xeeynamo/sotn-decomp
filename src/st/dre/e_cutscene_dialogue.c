@@ -442,13 +442,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     self->step = DIALOGUE_OPEN_DIALOG_BOX;
                     self->step_s = DIALOG_BOX_INIT;
                     return;
-                case CSOP_CLOSE_DIALOG:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    g_Dialogue.portraitAnimTimer = 24;
-                    self->step = DIALOGUE_CLOSE_DIALOG_BOX;
-                    return;
+                #include "../cutscene_actions1.h"
                 case CSOP_PLAY_SOUND:
                     if (g_SkipCutscene) {
 // psp and psx refuse to agree on this particular increment
