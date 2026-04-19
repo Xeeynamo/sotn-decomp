@@ -387,7 +387,6 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 #define CSA1_ANIM_TIMER 24
                 #define CSA1_V_SKIPCUTSCENE skip_cutscene
                 #define CSA1_V_NEXTCHAR nextByte
-                // TODO: maybe need to force += 2 here
                 #include "../cutscene_actions1.h"
                 case CSOP_WAIT_FOR_SOUND:
                     if (skip_cutscene) {
