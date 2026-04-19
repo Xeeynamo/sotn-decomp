@@ -3,5 +3,5 @@ case CSOP_CLOSE_DIALOG:
         continue;
     }
     g_Dialogue.portraitAnimTimer = 0x18;
-    self->step = 6; // DIALOGUE_CLOSE_DIALOG_BOX;
+    self->step = DIALOGUE_CLOSE_DIALOG_BOX;
     return;
