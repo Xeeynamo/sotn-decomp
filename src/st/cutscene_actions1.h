@@ -55,3 +55,16 @@ case CSOP_WAIT_FOR_SOUND:
     // no: music not playing yet, so repeat this step
     *g_Dialogue.scriptCur--;
     return;
+
+case CSOP_SCRIPT_UNKNOWN_11:
+    if (CSA1_V_SKIPCUTSCENE) {
+        continue;
+    }
+    // "has music track stopped playing?"
+    if (g_api.func_80131F68() != true) {
+        // yes: nothing is playing, go to next step
+        continue;
+    }
+    // no: still waiting for playback to stop, repeat this step
+    *g_Dialogue.scriptCur--;
+    return;

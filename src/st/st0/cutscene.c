@@ -456,15 +456,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 
                 #define CSA1_V_NEXTCHAR nextByte
                 #include "../cutscene_actions1.h"
-                case CSOP_SCRIPT_UNKNOWN_11:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    if (g_api.func_80131F68() != 1) {
-                        continue;
-                    }
-                    *g_Dialogue.scriptCur--;
-                    return;
+
                 case CSOP_SET_END:
                     ptr = *g_Dialogue.scriptCur++;
                     ptr <<= 4;
