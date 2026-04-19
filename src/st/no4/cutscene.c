@@ -384,13 +384,9 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step = DIALOGUE_OPEN_DIALOG_BOX;
                     self->step_s = DIALOG_BOX_INIT;
                     return;
-                case CSOP_CLOSE_DIALOG:
-                    if (skip_cutscene) {
-                        continue;
-                    }
-                    g_Dialogue.portraitAnimTimer = 24;
-                    self->step = DIALOGUE_CLOSE_DIALOG_BOX;
-                    return;
+                #define CSA1_ANIM_TIMER 24
+                #define CSA1_V_SKIPCUTSCENE skip_cutscene
+                #include "../cutscene_actions1.h"
                 case CSOP_PLAY_SOUND:
                     if (skip_cutscene) {
                         g_Dialogue.scriptCur += 2;
