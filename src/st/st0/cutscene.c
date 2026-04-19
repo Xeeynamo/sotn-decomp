@@ -3,22 +3,7 @@
 #include "../pfn_entity_update.h"
 #include <cutscene.h>
 
-enum DialogueSteps {
-    DIALOGUE_INIT,
-    DIALOGUE_RUN,
-    DIALOGUE_LOAD_PORTRAIT,
-    DIALOGUE_START_TEXT,
-    DIALOGUE_UNLOAD_PORTRAIT,
-    DIALOGUE_OPEN_DIALOG_BOX,
-    DIALOGUE_CLOSE_DIALOG_BOX,
-    DIALOGUE_END,
-};
-
-enum DialogueSubsteps {
-    DIALOG_BOX_INIT,
-    DIALOG_BOX_DRAW_RED,
-    DIALOG_BOX_DRAW_BLUE,
-};
+#include "../cutscene_dialog.h"
 
 #define DAI_CUTSCENE_ALUCARD_READY 1
 
@@ -468,13 +453,9 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step = DIALOGUE_OPEN_DIALOG_BOX;
                     self->step_s = DIALOG_BOX_INIT;
                     return;
-                case CSOP_CLOSE_DIALOG:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    g_Dialogue.portraitAnimTimer = 24;
-                    self->step = DIALOGUE_CLOSE_DIALOG_BOX;
-                    return;
+
+                #include "../cutscene_actions1.h"
+
                 case CSOP_PLAY_SOUND:
                     if (g_SkipCutscene) {
                         g_Dialogue.scriptCur += 2;
