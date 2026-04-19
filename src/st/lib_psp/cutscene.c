@@ -313,6 +313,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step_s = 0;
                     return;
 
+#define CSA1_V_OVL_EXPORT cutscene_data
 #include "../cutscene_actions1.h"
 
                 case CSOP_SCRIPT_UNKNOWN_13:
