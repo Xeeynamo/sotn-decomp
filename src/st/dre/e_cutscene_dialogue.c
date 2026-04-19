@@ -443,7 +443,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     self->step_s = DIALOG_BOX_INIT;
                     return;
 
-// D_pspeu_09261388 should probably be an OVL_Export(xxx) macro, once implemented
+// D_pspeu_09261388 should probably be an OVL_Export(xxx), once implemented
 #define CSA1_V_OVL_CUTSCENE_SCRIPT_PTR D_pspeu_09261388
 #include "../cutscene_actions1.h"
 
