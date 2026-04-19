@@ -454,8 +454,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step_s = DIALOG_BOX_INIT;
                     return;
 
-                #define CSA1_V_NEXTCHAR nextByte
-                #include "../cutscene_actions1.h"
+#define CSA1_V_NEXTCHAR nextByte
+#include "../cutscene_actions1.h"
 
                 case CSOP_SET_END:
                     ptr = *g_Dialogue.scriptCur++;

@@ -442,7 +442,8 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     self->step = DIALOGUE_OPEN_DIALOG_BOX;
                     self->step_s = DIALOG_BOX_INIT;
                     return;
-                #include "../cutscene_actions1.h"
+
+#include "../cutscene_actions1.h"
 
                 case CSOP_SET_END:
                     ptr = (u32)*g_Dialogue.scriptCur++;

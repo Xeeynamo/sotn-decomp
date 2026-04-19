@@ -202,7 +202,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 self->step_s = 0;
                 return;
 
-            #include "../cutscene_actions1.h"
+#include "../cutscene_actions1.h"
 
             case CSOP_SET_END:
                 ptr = (u_long)*g_Dialogue.scriptCur++;

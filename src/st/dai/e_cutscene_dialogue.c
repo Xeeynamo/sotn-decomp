@@ -456,9 +456,11 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     self->step = DIALOGUE_OPEN_DIALOG_BOX;
                     self->step_s = DIALOG_BOX_INIT;
                     return;
-                #define CSA1_ANIM_TIMER 24
-                #define CSA1_V_SKIPCUTSCENE skip_cutscene
-                #include "../cutscene_actions1.h"
+
+#define CSA1_ANIM_TIMER 24
+#define CSA1_V_SKIPCUTSCENE skip_cutscene
+#include "../cutscene_actions1.h"
+
                 case CSOP_SET_END:
                     ptr = (u_long)*g_Dialogue.scriptCur++;
                     ptr <<= 4;
