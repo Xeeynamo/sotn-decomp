@@ -443,6 +443,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     self->step_s = DIALOG_BOX_INIT;
                     return;
 
+#define CSA1_NO_EMIT_CSOP_SET_END 1 // we provide our own CSOP_SET_END
 #include "../cutscene_actions1.h"
 
                 case CSOP_SET_END:
@@ -458,6 +459,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
 #endif
                     SetCutsceneEnd((u8*)ptr);
                     continue;
+
                 case CSOP_SCRIPT_UNKNOWN_13:
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_14:

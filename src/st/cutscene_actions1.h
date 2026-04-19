@@ -67,3 +67,29 @@ if (g_api.func_80131F68() != true) {
 // no: still waiting for playback to stop, repeat this step
 *g_Dialogue.scriptCur--;
 return;
+
+// ---------------------------------------------------
+
+#ifndef CSA1_V_OVL_EXPORT
+#define CSA1_V_OVL_EXPORT cutscene_script_ptr
+#endif // CSA1_V_OVL_EXPORT
+
+// ---------------------------------------------------
+
+#ifndef CSA1_NO_EMIT_CSOP_SET_END
+case CSOP_SET_END:
+#ifndef CSA1_IGNORE_CSOP_END
+ptr = (u_long)*g_Dialogue.scriptCur++;
+ptr <<= 4;
+ptr |= (u_long)*g_Dialogue.scriptCur++;
+ptr <<= 4;
+ptr |= (u_long)*g_Dialogue.scriptCur++;
+ptr <<= 4;
+ptr |= (u_long)*g_Dialogue.scriptCur++;
+#ifdef VERSION_PSP
+ptr += (u_long)OVL_EXPORT(CSA1_V_OVL_EXPORT);
+#endif // VERSION_PSP
+SetCutsceneEnd((u8*)ptr);
+#endif // CSA1_IGNORE_CSOP_END
+continue;
+#endif // CSA1_NO_EMIT_CSOP_SET_END

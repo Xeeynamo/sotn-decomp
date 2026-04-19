@@ -455,21 +455,9 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     return;
 
 #define CSA1_V_NEXTCHAR nextByte
+#define CSA1_V_OVL_EXPORT cutscene_script
 #include "../cutscene_actions1.h"
 
-                case CSOP_SET_END:
-                    ptr = *g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= *g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= *g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= *g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
-                    ptr += (u32)OVL_EXPORT(cutscene_script);
-#endif
-                    SetCutsceneEnd((u8*)ptr);
-                    continue;
                 case CSOP_SCRIPT_UNKNOWN_13:
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_14:
