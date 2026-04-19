@@ -81,6 +81,10 @@ u16 func_80131F38(void) {
     return g_SeqPlayingId | 0x200;
 }
 
+// this is something vaguely like: "is a CD music track currently playing?"
+// seems like: cutscenes and dialogue tend to use this after starting a music track to wait until 
+// playback has actually started (or, to wait to know a playing track that was requested 
+// to stop has actually ended)
 bool func_80131F68(void) {
     bool ret;
     if (D_8013B61C) {
@@ -1129,7 +1133,7 @@ void PlaySfx(s16 sfxId) {
         case 0x92:
         case 0x93:
         case 0x94:
-            D_8013B61C = 1;
+            D_8013B61C = 1; // flag vaguely like: "has music track started playing?"
             break;
         }
         g_SoundCommandRingBuffer[g_SoundCommandRingBufferWritePos] = sfxId;

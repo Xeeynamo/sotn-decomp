@@ -283,24 +283,30 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     nextChar = *g_Dialogue.scriptCur++;
                     nextChar <<= 4;
                     nextChar |= *g_Dialogue.scriptCur++;
-                    g_api.PlaySfx(nextChar);
+                    g_api.PlaySfx(nextChar); // usually: music track ID
                     continue;
                 case CSOP_WAIT_FOR_SOUND:
                     if (g_SkipCutscene) {
                         continue;
                     }
+                    // "has music track started playing?"
                     if (g_api.func_80131F68() != false) {
+                        // yes: playing, go to next step
                         continue;
                     }
+                    // no: music not playing yet, so repeat this step
                     *g_Dialogue.scriptCur--;
                     return;
                 case CSOP_SCRIPT_UNKNOWN_11:
                     if (g_SkipCutscene) {
                         continue;
                     }
+                    // "has music track stopped playing?"
                     if (g_api.func_80131F68() != true) {
+                        // yes: nothing is playing, go to next step
                         continue;
                     }
+                    // no: still waiting for playback to stop, repeat this step
                     *g_Dialogue.scriptCur--;
                     return;
                 case CSOP_SET_END:

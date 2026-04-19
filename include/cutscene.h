@@ -11,9 +11,9 @@ typedef enum {
     CSOP_NEXT_DIALOG,
     CSOP_SET_POS,
     CSOP_CLOSE_DIALOG,
-    CSOP_PLAY_SOUND,
-    CSOP_WAIT_FOR_SOUND,
-    CSOP_SCRIPT_UNKNOWN_11,
+    CSOP_PLAY_SOUND,        // play sound, usually (always?) for music.    (does nothing if cutscene is being skipped)
+    CSOP_WAIT_FOR_SOUND,    // wait for CD audio playback to begin         (does nothing if cutscene is being skipped)
+    CSOP_SCRIPT_UNKNOWN_11, // wait for CD audio playback to stop          (does nothing if cutscene is being skipped)
     CSOP_SET_END,
     CSOP_SCRIPT_UNKNOWN_13,
     CSOP_SCRIPT_UNKNOWN_14,
@@ -22,7 +22,7 @@ typedef enum {
     CSOP_SET_FLAG,
     CSOP_SCRIPT_UNKNOWN_18,
     CSOP_LOAD_PORTRAIT,
-    CSOP_SCRIPT_UNKNOWN_20,
+    CSOP_SCRIPT_UNKNOWN_20, // same as CSOP_PLAY_SOUND, but always runs (always runs even if cutscene is being skipped)
     CSOP_SCRIPT_UNKNOWN_21,
     CSOP_SCRIPT_UNKNOWN_22,
     CSOP_SCRIPT_UNKNOWN_23,
