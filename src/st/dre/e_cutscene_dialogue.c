@@ -460,8 +460,6 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     SetCutsceneEnd((u8*)ptr);
                     continue;
 
-                case CSOP_SCRIPT_UNKNOWN_13:
-                    continue;
                 case CSOP_SCRIPT_UNKNOWN_14:
                     ptr = (u32)*g_Dialogue.scriptCur++;
                     ptr <<= 4;

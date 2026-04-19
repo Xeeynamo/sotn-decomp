@@ -390,8 +390,6 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 #define CSA1_V_NEXTCHAR nextByte
 #define CSA1_IGNORE_CSOP_END 1
 #include "../cutscene_actions1.h"
-                case CSOP_SCRIPT_UNKNOWN_13:
-                    continue;
                 case CSOP_SCRIPT_UNKNOWN_14:
                     continue;
                 case CSOP_SCRIPT_UNKNOWN_15:

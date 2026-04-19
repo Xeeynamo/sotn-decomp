@@ -93,3 +93,6 @@ SetCutsceneEnd((u8*)ptr);
 #endif // CSA1_IGNORE_CSOP_END
 continue;
 #endif // CSA1_NO_EMIT_CSOP_SET_END
+
+case CSOP_SCRIPT_UNKNOWN_13:
+continue;
