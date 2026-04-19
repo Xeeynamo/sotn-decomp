@@ -317,7 +317,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step_s = 0;
                     return;
 
-#define CSA1_V_OVL_EXPORT OVL_EXPORT(cutscene_text_offset)
+#define CSA1_V_OVL_CUTSCENE_SCRIPT_PTR OVL_EXPORT(cutscene_text_offset)
 #include "../cutscene_actions1.h"
                 case CSOP_SCRIPT_UNKNOWN_14:
                     ptr = (u_long)*g_Dialogue.scriptCur++;
