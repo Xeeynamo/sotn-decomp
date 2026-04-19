@@ -443,22 +443,9 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     self->step_s = DIALOG_BOX_INIT;
                     return;
 
-#define CSA1_NO_EMIT_CSOP_SET_END 1 // we provide our own CSOP_SET_END
+// D_pspeu_09261388 should probably be an OVL_Export(xxx) macro, once implemented
+#define CSA1_V_OVL_CUTSCENE_SCRIPT_PTR D_pspeu_09261388
 #include "../cutscene_actions1.h"
-
-                case CSOP_SET_END:
-                    ptr = (u32)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
-                    ptr += (u32)D_pspeu_09261388;
-#endif
-                    SetCutsceneEnd((u8*)ptr);
-                    continue;
 
                 case CSOP_SCRIPT_UNKNOWN_14:
                     ptr = (u32)*g_Dialogue.scriptCur++;
