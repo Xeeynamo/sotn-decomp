@@ -459,22 +459,6 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                 #define CSA1_ANIM_TIMER 24
                 #define CSA1_V_SKIPCUTSCENE skip_cutscene
                 #include "../cutscene_actions1.h"
-                case CSOP_PLAY_SOUND:
-                    if (skip_cutscene) {
-// psp and psx refuse to agree on this particular increment
-#ifdef VERSION_PSP
-                        g_Dialogue.scriptCur += 2;
-#else
-                    g_Dialogue.scriptCur++;
-                    g_Dialogue.scriptCur++;
-#endif
-                        continue;
-                    }
-                    nextChar = *g_Dialogue.scriptCur++;
-                    nextChar <<= 4;
-                    nextChar |= *g_Dialogue.scriptCur++;
-                    g_api.PlaySfx(nextChar);
-                    continue;
                 case CSOP_WAIT_FOR_SOUND:
                     if (skip_cutscene) {
                         continue;

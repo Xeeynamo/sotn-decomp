@@ -213,17 +213,6 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                 return;
 
             #include "../cutscene_actions1.h"
-            case CSOP_PLAY_SOUND:
-                if (g_SkipCutscene) {
-                    g_Dialogue.scriptCur++;
-                    g_Dialogue.scriptCur++;
-                    continue;
-                }
-                nextChar = *g_Dialogue.scriptCur++;
-                nextChar <<= 4;
-                nextChar |= *g_Dialogue.scriptCur++;
-                g_api.PlaySfx(nextChar);
-                continue;
             case CSOP_WAIT_FOR_SOUND:
                 if (g_SkipCutscene) {
                     continue;

@@ -454,18 +454,8 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step_s = DIALOG_BOX_INIT;
                     return;
 
+                #define CSA1_V_NEXTCHAR nextByte
                 #include "../cutscene_actions1.h"
-
-                case CSOP_PLAY_SOUND:
-                    if (g_SkipCutscene) {
-                        g_Dialogue.scriptCur += 2;
-                        continue;
-                    }
-                    nextByte = *g_Dialogue.scriptCur++;
-                    nextByte <<= 4;
-                    nextByte |= *g_Dialogue.scriptCur++;
-                    g_api.PlaySfx(nextByte);
-                    continue;
                 case CSOP_WAIT_FOR_SOUND:
                     if (g_SkipCutscene) {
                         continue;
