@@ -42,3 +42,16 @@ case CSOP_PLAY_SOUND:
     CSA1_V_NEXTCHAR |= *g_Dialogue.scriptCur++;
     g_api.PlaySfx(CSA1_V_NEXTCHAR);  // usually: music track ID
     continue;
+
+case CSOP_WAIT_FOR_SOUND:
+    if (CSA1_V_SKIPCUTSCENE) {
+        continue;
+    }
+    // "has music track started playing?"
+    if (g_api.func_80131F68() != false) {
+        // yes: playing, go to next step
+        continue;
+    }
+    // no: music not playing yet, so repeat this step
+    *g_Dialogue.scriptCur--;
+    return;

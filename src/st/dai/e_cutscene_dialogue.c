@@ -459,15 +459,6 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                 #define CSA1_ANIM_TIMER 24
                 #define CSA1_V_SKIPCUTSCENE skip_cutscene
                 #include "../cutscene_actions1.h"
-                case CSOP_WAIT_FOR_SOUND:
-                    if (skip_cutscene) {
-                        continue;
-                    }
-                    if (g_api.func_80131F68()) {
-                        continue;
-                    }
-                    *g_Dialogue.scriptCur--;
-                    return;
                 case CSOP_SCRIPT_UNKNOWN_11:
                     if (skip_cutscene) {
                         continue;

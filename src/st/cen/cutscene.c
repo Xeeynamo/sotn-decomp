@@ -269,18 +269,6 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step_s = 0;
                     return;
                 #include "../cutscene_actions1.h"
-                case CSOP_WAIT_FOR_SOUND:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    // "has music track started playing?"
-                    if (g_api.func_80131F68() != false) {
-                        // yes: playing, go to next step
-                        continue;
-                    }
-                    // no: music not playing yet, so repeat this step
-                    *g_Dialogue.scriptCur--;
-                    return;
                 case CSOP_SCRIPT_UNKNOWN_11:
                     if (g_SkipCutscene) {
                         continue;
