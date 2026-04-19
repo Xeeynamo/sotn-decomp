@@ -7,6 +7,7 @@ import (
 	"slices"
 
 	"github.com/spf13/cobra"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/deps"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/format"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/mods"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
@@ -65,6 +66,17 @@ func main() {
 	}
 	cleanCmd.Flags().BoolP("verbose", "v", false, "Echo git clean stdout and stderr")
 	rootCmd.AddCommand(cleanCmd)
+	rootCmd.AddCommand(&cobra.Command{
+		Use:          "extract-saturn",
+		Short:        "Extract Saturn asm stubs from disc files using saturn-splitter",
+		SilenceUsage: true,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			if err := deps.EnsureBuildDeps([]string{"saturn"}); err != nil {
+				return err
+			}
+			return runSaturnSplitter()
+		},
+	})
 	rootCmd.AddCommand(&cobra.Command{
 		Use:          "extract-assets <asset.yaml>",
 		Short:        "Extract asset files from the disk files",
