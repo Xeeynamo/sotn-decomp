@@ -455,7 +455,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     return;
 
 #define CSA1_V_NEXTCHAR nextByte
-#define CSA1_V_OVL_EXPORT cutscene_script
+#define CSA1_V_OVL_CUTSCENE_SCRIPT_PTR OVL_EXPORT(cutscene_script)
 #include "../cutscene_actions1.h"
                 case CSOP_SCRIPT_UNKNOWN_14:
                     ptr = *g_Dialogue.scriptCur++;

@@ -70,9 +70,9 @@ return;
 
 // ---------------------------------------------------
 
-#ifndef CSA1_V_OVL_EXPORT
-#define CSA1_V_OVL_EXPORT cutscene_script_ptr
-#endif // CSA1_V_OVL_EXPORT
+#ifndef CSA1_V_OVL_CUTSCENE_SCRIPT_PTR
+#define CSA1_V_OVL_CUTSCENE_SCRIPT_PTR OVL_EXPORT(cutscene_script_ptr)
+#endif // CSA1_V_OVL_CUTSCENE_SCRIPT_PTR
 
 // ---------------------------------------------------
 
@@ -87,7 +87,7 @@ ptr |= (u_long)*g_Dialogue.scriptCur++;
 ptr <<= 4;
 ptr |= (u_long)*g_Dialogue.scriptCur++;
 #ifdef VERSION_PSP
-ptr += (u_long)OVL_EXPORT(CSA1_V_OVL_EXPORT);
+ptr += (u_long)CSA1_V_OVL_CUTSCENE_SCRIPT_PTR;
 #endif // VERSION_PSP
 SetCutsceneEnd((u8*)ptr);
 #endif // CSA1_IGNORE_CSOP_END
