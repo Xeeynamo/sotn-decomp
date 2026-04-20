@@ -270,14 +270,6 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     return;
 
 #include "../cutscene_actions1.h"
-                case CSOP_SCRIPT_UNKNOWN_14:
-                    ptr = (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
 #ifdef VERSION_HD
                     g_Dialogue.scriptCur += *(u8*)(ptr + 0x100000) << 2;
 #else

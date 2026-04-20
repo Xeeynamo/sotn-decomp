@@ -389,9 +389,9 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 #define CSA1_V_SKIPCUTSCENE skip_cutscene
 #define CSA1_V_NEXTCHAR nextByte
 #define CSA1_IGNORE_CSOP_END 1
+#define CSA1_IGNORE_CSOP_UNKNOWN_14 1
 #include "../cutscene_actions1.h"
-                case CSOP_SCRIPT_UNKNOWN_14:
-                    continue;
+                    continue; // TEMP, this will be removed next
                 case CSOP_SCRIPT_UNKNOWN_15:
                     continue;
                 case CSOP_WAIT_FOR_FLAG:

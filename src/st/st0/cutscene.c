@@ -457,14 +457,6 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 #define CSA1_V_NEXTCHAR nextByte
 #define CSA1_V_OVL_CUTSCENE_SCRIPT_PTR OVL_EXPORT(cutscene_script)
 #include "../cutscene_actions1.h"
-                case CSOP_SCRIPT_UNKNOWN_14:
-                    ptr = *g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= *g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= *g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= *g_Dialogue.scriptCur++;
                     // This needs help. Casting the const to short is good.
                     ptr += (u16)0x100000;
 #ifdef VERSION_PSP

@@ -447,14 +447,6 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
 #define CSA1_V_OVL_CUTSCENE_SCRIPT_PTR D_pspeu_09261388
 #include "../cutscene_actions1.h"
 
-                case CSOP_SCRIPT_UNKNOWN_14:
-                    ptr = (u32)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u32)*g_Dialogue.scriptCur++;
 #ifdef VERSION_PSP
                     ptr += (u32)D_pspeu_09261388;
 #else
