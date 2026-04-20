@@ -464,7 +464,7 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
 #ifdef VERSION_PSP
                     ptr += (u_long)OVL_EXPORT(cutscene_script_ptr);
 #else
-                    ptr += 0x100000;
+                ptr += 0x100000;
 #endif
                     g_Dialogue.scriptCur += *(u8*)ptr << 2;
 

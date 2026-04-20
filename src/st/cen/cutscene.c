@@ -273,7 +273,7 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
 #ifdef VERSION_HD
                     g_Dialogue.scriptCur += *(u8*)(ptr + 0x100000) << 2;
 #else
-                    g_Dialogue.scriptCur += *(u16*)ptr << 2;
+                g_Dialogue.scriptCur += *(u16*)ptr << 2;
 #endif
 
                     ptr = (u_long)*g_Dialogue.scriptCur++;

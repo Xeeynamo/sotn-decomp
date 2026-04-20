@@ -95,8 +95,6 @@ continue;
 case CSOP_SCRIPT_UNKNOWN_13:
 continue;
 
-
-
 case CSOP_SCRIPT_UNKNOWN_14:
 #ifndef CSA1_IGNORE_CSOP_UNKNOWN_14
 ptr = (u_long)*g_Dialogue.scriptCur++;
@@ -107,4 +105,4 @@ ptr |= (u_long)*g_Dialogue.scriptCur++;
 ptr <<= 4;
 ptr |= (u_long)*g_Dialogue.scriptCur++;
 #endif // CSA1_IGNORE_CSOP_UNKNOWN_14
-// TODO: put 'continue' here after reaching the end
+       // TODO: put 'continue' here after reaching the end
