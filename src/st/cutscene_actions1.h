@@ -76,7 +76,6 @@ return;
 
 // ---------------------------------------------------
 
-#ifndef CSA1_NO_EMIT_CSOP_SET_END
 case CSOP_SET_END:
 #ifndef CSA1_IGNORE_CSOP_END
 ptr = (u_long)*g_Dialogue.scriptCur++;
@@ -92,7 +91,6 @@ ptr += (u_long)CSA1_V_OVL_CUTSCENE_SCRIPT_PTR;
 SetCutsceneEnd((u8*)ptr);
 #endif // CSA1_IGNORE_CSOP_END
 continue;
-#endif // CSA1_NO_EMIT_CSOP_SET_END
 
 case CSOP_SCRIPT_UNKNOWN_13:
 continue;
