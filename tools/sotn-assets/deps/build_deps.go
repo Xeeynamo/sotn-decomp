@@ -73,7 +73,7 @@ func ensurePSPDeps(eg *errgroup.Group) {
 		)
 	})
 	eg.Go(func() error {
-		const MetroWrapVersion = "0.1.2"
+		const MetroWrapVersion = "0.2.1"
 		_, err := os.Stat("bin/.mw-version-" + MetroWrapVersion)
 		if err == nil {
 			return nil
@@ -81,7 +81,7 @@ func ensurePSPDeps(eg *errgroup.Group) {
 		if !os.IsNotExist(err) {
 			return fmt.Errorf("check bin/.mw-version-*: %w", err)
 		}
-		if err := Cargo("install", "metrowrap", "--bins", "--root", ".", "--locked", "--version", MetroWrapVersion); err != nil {
+		if err := Cargo("install", "metrowrap", "--force", "--bins", "--root", ".", "--locked", "--version", MetroWrapVersion); err != nil {
 			return fmt.Errorf("install metrowrap: %w", err)
 		}
 		if err := os.WriteFile("bin/.mw-version-"+MetroWrapVersion, []byte{}, 0644); err != nil {
