@@ -830,11 +830,12 @@ with open(build_ninja, "w") as f:
         command=(
             "VERSION=$version"
             " tools/sotn_str/target/release/sotn_str process -p -f $in"
-            " | bin/mw -o $out --src-dir $src_dir"
+            " | iconv --from-code=UTF-8 --to-code=$encoding"
+            " | bin/mw -o $out"
             " --mwcc-path bin/mwccpsp.exe --use-wibo --wibo-path bin/wibo --as-path tools/pspas/target/release/pspas"
-            " --asm-dir asm/pspeu --target-encoding $encoding --macro-inc-path include/macro.inc"
+            " --asm-dir asm/pspeu --macro-inc-path include/macro.inc "
             " -gccdep -MD"  # for metrowerks, "system" headers seem to be anything included with angle brackets
-            f" -gccinc -Iinclude -Iinclude/pspsdk -D_internal_version_$version -DSOTN_STR {extra_cpp_defs} -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
+            f" -gccinc -I$src_dir  -Iinclude -Iinclude/pspsdk -D_internal_version_$version -DSOTN_STR {extra_cpp_defs} -c -lang c -sdatathreshold 0 -char unsigned -fl divbyzerocheck"
             " $opt_level -opt nointrinsics"
             " -"
         ),
