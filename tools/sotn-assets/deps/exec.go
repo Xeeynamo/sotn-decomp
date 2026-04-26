@@ -142,18 +142,6 @@ func GenSaturnNinja() error {
 	}).Run()
 }
 
-func CheckSHA(checkFile string) error {
-	binPath, err := venvPython()
-	if err != nil {
-		return err
-	}
-	return (&exec.Cmd{
-		Path:   binPath,
-		Args:   []string{binPath, "tools/builds/check.py", checkFile},
-		Stdout: os.Stdout,
-		Stderr: os.Stderr,
-	}).Run()
-}
 
 func GenNinja(args ...string) error {
 	binPath, err := venvPython()

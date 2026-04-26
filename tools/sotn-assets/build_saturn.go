@@ -28,7 +28,7 @@ func buildSaturn() error {
 	if err := deps.Ninja(); err != nil {
 		return fmt.Errorf("ninja: %w", err)
 	}
-	return deps.CheckSHA("config/check.saturn.sha")
+	return checkVersions(os.Stderr, []string{"saturn"})
 }
 
 var saturnExtractSentinels = []string{
