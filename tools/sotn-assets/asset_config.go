@@ -29,6 +29,7 @@ import (
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/tiledef"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/assets/xamusicconfig"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/psx"
+	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/sotn"
 	"github.com/xeeynamo/sotn-decomp/tools/sotn-assets/splat"
 	"golang.org/x/sync/errgroup"
 )
@@ -48,7 +49,7 @@ type assetFileEntry struct {
 }
 
 type assetConfig struct {
-	Version string           `yaml:"version"`
+	Version sotn.Version     `yaml:"version"`
 	Files   []assetFileEntry `yaml:"files"`
 }
 
@@ -120,6 +121,7 @@ func readConfig(path string) (*assetConfig, error) {
 func enqueueExtractAssetEntry(
 	eg *errgroup.Group,
 	handler assets.Extractor,
+	version sotn.Version,
 	assetDir string,
 	srcDir string,
 	name string,
@@ -147,6 +149,7 @@ func enqueueExtractAssetEntry(
 			Name:        name,
 			Args:        args,
 			OvlName:     filepath.Base(assetDir),
+			Version:     version,
 			SplatConfig: splatConfig,
 			Symbol:      symbol,
 		}); err != nil {
@@ -156,7 +159,7 @@ func enqueueExtractAssetEntry(
 	})
 }
 
-func extractAssetFile(file assetFileEntry) error {
+func extractAssetFile(config *assetConfig, file assetFileEntry) error {
 	var eg errgroup.Group
 	data, err := os.ReadFile(file.Target)
 	if err != nil {
@@ -195,7 +198,7 @@ func extractAssetFile(file assetFileEntry) error {
 					}
 					start := int(off) - segment.Start
 					end := start + size
-					enqueueExtractAssetEntry(&eg, handler, file.AssetDir, file.SourceDir, name, data[segment.Start:], start, end, args, segment.Vram, func(addr psx.Addr) string {
+					enqueueExtractAssetEntry(&eg, handler, config.Version, file.AssetDir, file.SourceDir, name, data[segment.Start:], start, end, args, segment.Vram, func(addr psx.Addr) string {
 						if sym, ok := symbols[addr]; ok {
 							return sym
 						}
@@ -243,7 +246,7 @@ func extractFromConfig(c *assetConfig) error {
 			continue
 		}
 		eg.Go(func() error {
-			return extractAssetFile(file)
+			return extractAssetFile(c, file)
 		})
 	}
 	return eg.Wait()
