@@ -3,7 +3,6 @@
 
 extern s32 D_us_801D36E8[];
 extern s32 D_us_801D3768[];
-extern s32 D_us_801D4344;
 
 static void func_us_801C096C(void) {
     Entity* entity;
@@ -41,7 +40,7 @@ static void func_us_801C096C(void) {
         *colliders = 0;
     }
 
-    D_us_801D4344 = 1;
+    g_Dop.unk04 = 1;
     g_Dop.vram_flag = TOUCHING_GROUND;
     func_8010E570(0);
     entity = &g_Entities[E_ID_41];
