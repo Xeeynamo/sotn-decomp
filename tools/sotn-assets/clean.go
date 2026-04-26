@@ -12,7 +12,7 @@ import (
 func clean(version string, verbose bool) error {
 	var versions []sotn.Version
 	if version == "" || version == "all" {
-		for _, v := range sotn.VersionsAll {
+		for _, v := range sotn.VersionsEverything {
 			versions = append(versions, v)
 		}
 	} else {
@@ -31,6 +31,9 @@ func clean(version string, verbose bool) error {
 			})
 		}
 	}
+	eg.Go(func() error {
+		return deps.GitClean("config/saturn", verbose)
+	})
 	eg.Go(func() error {
 		return deps.GitClean("assets/", verbose)
 	})
