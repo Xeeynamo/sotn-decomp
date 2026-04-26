@@ -8,107 +8,107 @@ u8 gfx_stage_name_jp_sm[] = {
 #endif
 
 u8 gfx_stage_name_jp_lg[] = {
-#include GEN_VERSION(gfx_stage_name_jp_lg.h)
+#include "gen/gfx_stage_name_jp_lg.h"
 };
 
 #ifdef VERSION_US
 // unreferenced
 u8 D_801843AC[] = {
-#include GEN_VERSION(D_801843AC.h)
+#include "gen/D_801843AC.h"
 };
 
 // unreferenced
 u8 D_80185BD4[] = {
-#include GEN_VERSION(D_80185BD4.h)
+#include "gen/D_80185BD4.h"
 };
 
 // unreferenced
 u8 D_80187470[] = {
-#include GEN_VERSION(D_80187470.h)
+#include "gen/D_80187470.h"
 };
 
 // unreferenced
 u8 D_80187CA4[] = {
-#include GEN_VERSION(D_80187CA4.h)
+#include "gen/D_80187CA4.h"
 };
 #endif
 
 u8 gfx_confessional[] = {
-#include GEN_VERSION(gfx_confessional.h)
+#include "gen/gfx_confessional.h"
 };
 
 u8 gfx_chair[] = {
-#include GEN_VERSION(gfx_chair.h)
+#include "gen/gfx_chair.h"
 };
 
 u8 gfx_corner_guard[] = {
-#include GEN_VERSION(gfx_corner_guard.h)
+#include "gen/gfx_corner_guard.h"
 };
 
 u8 gfx_bone_pillar[] = {
-#include GEN_VERSION(gfx_bone_pillar.h)
+#include "gen/gfx_bone_pillar.h"
 };
 
 u8 gfx_bone_pillar_fire[] = {
-#include GEN_VERSION(gfx_bone_pillar_fire.h)
+#include "gen/gfx_bone_pillar_fire.h"
 };
 
 u8 gfx_bone_halberd[] = {
-#include GEN_VERSION(gfx_bone_halberd.h)
+#include "gen/gfx_bone_halberd.h"
 };
 
 u8 gfx_winged_guard[] = {
-#include GEN_VERSION(gfx_winged_guard.h)
+#include "gen/gfx_winged_guard.h"
 };
 
 u8 gfx_ghost_bat[] = {
-#include GEN_VERSION(gfx_ghost_bat.h)
+#include "gen/gfx_ghost_bat.h"
 };
 
 u8 gfx_crow[] = {
-#include GEN_VERSION(gfx_crow.h)
+#include "gen/gfx_crow.h"
 };
 
 u8 gfx_skelerang[] = {
-#include GEN_VERSION(gfx_skelerang.h)
+#include "gen/gfx_skelerang.h"
 };
 
 u8 gfx_skelerang_spittle_bone[] = {
-#include GEN_VERSION(gfx_skelerang_spittle_bone.h)
+#include "gen/gfx_skelerang_spittle_bone.h"
 };
 
 u8 gfx_hunting_girl[] = {
-#include GEN_VERSION(gfx_hunting_girl.h)
+#include "gen/gfx_hunting_girl.h"
 };
 
 u8 gfx_spectral_sword[] = {
-#include GEN_VERSION(gfx_spectral_sword.h)
+#include "gen/gfx_spectral_sword.h"
 };
 
 #ifndef VERSION_PSP
 u8 gfx_sealed_door[] = {
-#include GEN_VERSION(gfx_sealed_door.h)
+#include "gen/gfx_sealed_door.h"
 };
 #endif
 
 u8 gfx_breakable[] = {
-#include GEN_VERSION(gfx_breakable.h)
+#include "gen/gfx_breakable.h"
 };
 
 u8 gfx_portrait_alucard[] = {
-#include GEN_VERSION(gfx_portrait_alucard.h)
+#include "gen/gfx_portrait_alucard.h"
 };
 
 u8 gfx_portrait_maria[] = {
-#include GEN_VERSION(gfx_portrait_maria.h)
+#include "gen/gfx_portrait_maria.h"
 };
 
 u8 gfx_cutscene_1[] = {
-#include GEN_VERSION(gfx_cutscene_1.h)
+#include "gen/gfx_cutscene_1.h"
 };
 
 u8 gfx_cutscene_2[] = {
-#include GEN_VERSION(gfx_cutscene_2.h)
+#include "gen/gfx_cutscene_2.h"
 };
 
 #ifndef VERSION_PSP
@@ -117,7 +117,7 @@ u8 gfx_stage_name_en[] = {
 };
 #else
 u8 gfx_sealed_door[] = {
-#include GEN_VERSION(gfx_sealed_door.h)
+#include "gen/gfx_sealed_door.h"
 };
 #endif
 

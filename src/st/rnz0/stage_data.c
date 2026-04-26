@@ -5,97 +5,97 @@
 
 // This is an unused image that says "Golem Maker". Likely stripped on PSP.
 u8 D_8018326C[] = {
-#include GEN_VERSION(D_8018326C.h)
+#include "gen/D_8018326C.h"
 };
 
 #endif
 
 u8 D_80183B54[] = {
-#include GEN_VERSION(D_80183B54.h)
+#include "gen/D_80183B54.h"
 };
 
 u8 D_80183EC8[] = {
-#include GEN_VERSION(D_80183EC8.h)
+#include "gen/D_80183EC8.h"
 };
 
 u8 D_80184EB8[] = {
-#include GEN_VERSION(D_80184EB8.h)
+#include "gen/D_80184EB8.h"
 };
 
 u8 D_80185DF4[] = {
-#include GEN_VERSION(D_80185DF4.h)
+#include "gen/D_80185DF4.h"
 };
 
 u8 D_80186C4C[] = {
-#include GEN_VERSION(D_80186C4C.h)
+#include "gen/D_80186C4C.h"
 };
 
 u8 D_80187A34[] = {
-#include GEN_VERSION(D_80187A34.h)
+#include "gen/D_80187A34.h"
 };
 
 u8 D_80188A64[] = {
-#include GEN_VERSION(D_80188A64.h)
+#include "gen/D_80188A64.h"
 };
 
 u8 D_801898D0[] = {
-#include GEN_VERSION(D_801898D0.h)
+#include "gen/D_801898D0.h"
 };
 
 u8 D_8018A4B8[] = {
-#include GEN_VERSION(D_8018A4B8.h)
+#include "gen/D_8018A4B8.h"
 };
 
 u8 D_8018B14C[] = {
-#include GEN_VERSION(D_8018B14C.h)
+#include "gen/D_8018B14C.h"
 };
 
 u8 D_8018BF30[] = {
-#include GEN_VERSION(D_8018BF30.h)
+#include "gen/D_8018BF30.h"
 };
 
 u8 D_8018C4F8[] = {
-#include GEN_VERSION(D_8018C4F8.h)
+#include "gen/D_8018C4F8.h"
 };
 
 u8 D_8018CADC[] = {
-#include GEN_VERSION(D_8018CADC.h)
+#include "gen/D_8018CADC.h"
 };
 
 u8 D_8018D6E0[] = {
-#include GEN_VERSION(D_8018D6E0.h)
+#include "gen/D_8018D6E0.h"
 };
 
 u8 D_8018DFF0[] = {
-#include GEN_VERSION(D_8018DFF0.h)
+#include "gen/D_8018DFF0.h"
 };
 
 u8 D_8018EF38[] = {
-#include GEN_VERSION(D_8018EF38.h)
+#include "gen/D_8018EF38.h"
 };
 
 u8 D_8018F2DC[] = {
-#include GEN_VERSION(D_8018F2DC.h)
+#include "gen/D_8018F2DC.h"
 };
 
 u8 D_801900B8[] = {
-#include GEN_VERSION(D_801900B8.h)
+#include "gen/D_801900B8.h"
 };
 
 u8 D_80190AD8[] = {
-#include GEN_VERSION(D_80190AD8.h)
+#include "gen/D_80190AD8.h"
 };
 
 u8 D_80191850[] = {
-#include GEN_VERSION(D_80191850.h)
+#include "gen/D_80191850.h"
 };
 
 u8 D_80192414[] = {
-#include GEN_VERSION(D_80192414.h)
+#include "gen/D_80192414.h"
 };
 
 u8 D_80193390[] = {
-#include GEN_VERSION(D_80193390.h)
+#include "gen/D_80193390.h"
 };
 
 u16 D_8019396C[] = {
