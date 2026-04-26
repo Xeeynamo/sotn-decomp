@@ -42,7 +42,7 @@ func (off Addr) Boundaries() Offsets {
 }
 
 func (off Addr) Format(f fmt.State, c rune) {
-	f.Write([]byte(fmt.Sprintf("0x%08X", uint32(off))))
+	_, _ = f.Write([]byte(fmt.Sprintf("0x%08X", uint32(off))))
 }
 
 func (off Addr) Real(begin Addr) int {
@@ -78,13 +78,13 @@ func (off Addr) InRange(begin Addr, end Addr) bool {
 func (off Addr) MoveFile(r io.ReadSeeker, begin Addr) error {
 	end := off.Boundaries().GameEnd
 	if !off.InRange(begin, end) {
-		err := fmt.Errorf("offset %s is outside the boundaries [%s, %s]", off, begin, end)
-		panic(err)
-		return err
+		return fmt.Errorf("offset %s is outside the boundaries [%s, %s]", off, begin, end)
 	}
 
 	fileOffset := int64(off - begin)
-	r.Seek(fileOffset, 0)
+	if _, err := r.Seek(fileOffset, 0); err != nil {
+		return fmt.Errorf("seeking to offset %s: %w", off, err)
+	}
 	return nil
 }
 
