@@ -51,6 +51,19 @@ func main() {
 			return buildVersions(versions)
 		},
 	})
+	checkCmd := &cobra.Command{
+		Use:          "check [version|all]",
+		Short:        "Check for matching checksums for all imported files",
+		SilenceUsage: true,
+		RunE: func(cmd *cobra.Command, args []string) error {
+			versions, err := parseBuildArgs(args)
+			if err != nil {
+				return err
+			}
+			return checkVersions(os.Stderr, versions)
+		},
+	}
+	rootCmd.AddCommand(checkCmd)
 	cleanCmd := &cobra.Command{
 		Use:          "clean [version|all]",
 		Short:        "Clean extracted files, assets, and build artifacts for a version (or all versions)",
