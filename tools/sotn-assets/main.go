@@ -76,7 +76,7 @@ func main() {
 				return err
 			}
 			if c.Version != "" {
-				_ = os.Setenv("VERSION", c.Version)
+				_ = os.Setenv("VERSION", string(c.Version))
 			}
 			return extractFromConfig(c)
 		},
@@ -92,7 +92,7 @@ func main() {
 				return err
 			}
 			if c.Version != "" {
-				_ = os.Setenv("VERSION", c.Version)
+				_ = os.Setenv("VERSION", string(c.Version))
 			}
 			return buildFromConfig(c)
 		},
