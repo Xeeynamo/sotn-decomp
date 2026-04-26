@@ -37,6 +37,11 @@ func buildVersions(versions []string) error {
 		if err := deps.Ninja(); err != nil {
 			return err
 		}
+		if _, skip := os.LookupEnv("SKIP_CHECK"); !skip {
+			if err := checkVersions(os.Stderr, regular); err != nil {
+				return fmt.Errorf("check: %w", err)
+			}
+		}
 	}
 	return nil
 }

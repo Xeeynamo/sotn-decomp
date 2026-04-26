@@ -38,19 +38,24 @@ func main() {
 		Long:          "Wraps all the build-chain and tooling with a clear and simple interface",
 		SilenceErrors: true,
 	}
-	rootCmd.AddCommand(&cobra.Command{
+	buildCmd := &cobra.Command{
 		Use:          "build [version...]",
 		Short:        "Build game files (downloads dependencies automatically)",
 		Long:         "Build one or more game versions. If no version is specified, builds all versions (us, hd, pspeu).",
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			if skip, _ := cmd.Flags().GetBool("skip-check"); skip {
+				_ = os.Setenv("SKIP_CHECK", "1")
+			}
 			versions, err := parseBuildArgs(args)
 			if err != nil {
 				return err
 			}
 			return buildVersions(versions)
 		},
-	})
+	}
+	buildCmd.Flags().Bool("skip-check", false, "Skip checksum verification after build")
+	rootCmd.AddCommand(buildCmd)
 	checkCmd := &cobra.Command{
 		Use:          "check [version|all]",
 		Short:        "Check for matching checksums for all imported files",
