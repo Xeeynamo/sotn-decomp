@@ -26,17 +26,9 @@ SATURN_WAV_FILES 		:= $(patsubst disks/saturn/SD/%.PCM,$(SATURN_ASSETS_DIR)/SD/%
 .PHONY: saturn
 saturn: build_saturn check_saturn
 
-.PHONY: check_saturn
-check_saturn:
-	sha1sum --check config/check.saturn.sha
-
 .PHONY: build_saturn
 build_saturn: $(SATURN_TOOLCHAIN)
 	python3 ./tools/builds/saturn.py && ninja
-
-.PHONY: extract_saturn
-extract_saturn:
-	@./sotn.sh extract-saturn
 
 .PHONY: extract_disk_saturn
 extract_disk_saturn:
