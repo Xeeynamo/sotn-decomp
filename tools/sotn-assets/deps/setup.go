@@ -200,9 +200,12 @@ func downloadFromGithubIfNotExists(repo, tag, name, destination string) error {
 	_ = os.Remove(destination)
 	url := fmt.Sprintf("https://github.com/%s/releases/download/%s/%s", repo, tag, name)
 	if err := downloadIfNotExists(url, destination); err != nil {
-		return fmt.Errorf("failed to download at %s", url)
+		return fmt.Errorf("failed to download %s: %w", url, err)
 	}
-	return os.WriteFile(tagPath, []byte(tag), 0o644)
+	if err := os.WriteFile(tagPath, []byte(tag), 0o644); err != nil {
+		return fmt.Errorf("failed to write %s: %w", tagPath, err)
+	}
+	return nil
 }
 
 func downloadIfNotExists(url string, filename string) error {
