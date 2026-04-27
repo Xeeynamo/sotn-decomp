@@ -2234,7 +2234,7 @@ extern GpuUsage g_GpuUsage;
 extern PlayerStatus g_Status;
 extern u32 D_80097C98;
 extern s32 subWeapon; // g_SubweaponId
-extern u32 D_80097C40[];
+extern s32 D_80097C40[];
 extern PlayerDraw g_PlayerDraw[0x10];
 extern bool g_InvincibleFlag;
 extern s32 D_800987B4;

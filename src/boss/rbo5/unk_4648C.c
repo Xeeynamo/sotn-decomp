@@ -3974,7 +3974,6 @@ block_147:
 }
 
 extern RECT D_us_8018206C;
-extern u16 D_us_801D43AA;
 extern s32 D_us_801D43C0;
 extern s32 D_us_801D43C4;
 extern u8 D_us_80182074[][8];
@@ -4127,7 +4126,7 @@ void EntityDopplegangerDissolves(Entity* self) {
         }
         break;
     case 4:
-        if (DOPPLEGANGER.step == Dop_Kill || D_us_801D43AA <= 0) {
+        if (DOPPLEGANGER.step == Dop_Kill || g_Dop.unk6A <= 0) {
             g_stone_flag = 1;
             if (g_Timer % 2 == 0) {
                 goto after_loop;
@@ -4155,7 +4154,7 @@ void EntityDopplegangerDissolves(Entity* self) {
 
         LoadImage(&D_us_8018206C, data);
         if (--self->ext.dissolve.unk7C <= 0) {
-            if ((DOPPLEGANGER.step == Dop_Kill) || D_us_801D43AA == 0) {
+            if ((DOPPLEGANGER.step == Dop_Kill) || g_Dop.unk6A == 0) {
                 if (self->ext.dissolve.unk7C < -0x1F) {
                     g_stone_flag = 2;
                     DestroyEntity(self);
@@ -4178,7 +4177,7 @@ void EntityDopplegangerDissolves(Entity* self) {
                     prim->b0 = ((rand() & 3) + 0xF8);
                     prim->r1 = 0x20 - ((i / 6) * 2);
                 }
-            } else if (DOPPLEGANGER.step == Dop_Kill || D_us_801D43AA <= 0) {
+            } else if (DOPPLEGANGER.step == Dop_Kill || g_Dop.unk6A <= 0) {
                 xBase = D_us_801D43C0 - (prim->x0 + prim->x1) / 2;
                 yBase = D_us_801D43C4 - ((prim->y0 + prim->y2) / 2);
                 tangent = ratan2(-yBase, xBase);
@@ -4224,7 +4223,7 @@ void EntityDopplegangerDissolves(Entity* self) {
         break;
     }
 
-    if (DOPPLEGANGER.step == Dop_Kill || D_us_801D43AA <= 0) {
+    if (DOPPLEGANGER.step == Dop_Kill || g_Dop.unk6A <= 0) {
         g_stone_flag = 1;
     }
     func_us_801C4954(1, 1);

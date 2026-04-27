@@ -3,10 +3,10 @@
 #include "../pfn_entity_update.h"
 
 extern RoomHeader OVL_EXPORT(rooms)[];
-extern SpriteParts* OVL_EXPORT(spriteBanks)[];
+extern s16** OVL_EXPORT(spriteBanks)[];
 extern u_long* OVL_EXPORT(cluts)[];
 extern RoomDef OVL_EXPORT(rooms_layers)[];
-extern GfxBank* OVL_EXPORT(gfxBanks)[];
+extern u_long** OVL_EXPORT(gfxBanks)[];
 
 AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .Update = Update,
@@ -14,11 +14,11 @@ AbbreviatedOverlay OVL_EXPORT(Overlay) = {
     .UpdateRoomPosition = UpdateRoomPosition,
     .InitRoomEntities = InitRoomEntities,
     .rooms = OVL_EXPORT(rooms),
-    .spriteBanks = OVL_EXPORT(spriteBanks),
+    .spriteBanks = (SpriteParts**)OVL_EXPORT(spriteBanks),
     .cluts = OVL_EXPORT(cluts),
     .objLayoutHorizontal = &OBJ_LAYOUT_HORIZONTAL,
     .tileLayers = OVL_EXPORT(rooms_layers),
-    .gfxBanks = OVL_EXPORT(gfxBanks),
+    .gfxBanks = (GfxBank**)OVL_EXPORT(gfxBanks),
     .UpdateStageEntities = UpdateStageEntities,
 };
 
