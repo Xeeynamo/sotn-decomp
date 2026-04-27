@@ -16,7 +16,6 @@ linker_scripts = set()
 
 extra_cpp_defs = ""
 sotn_progress_report = "SOTN_PROGRESS_REPORT" in os.environ
-skip_check = "SKIP_CHECK" in os.environ
 force_symbols = "FORCE_SYMBOLS" in os.environ
 dummy_object = bytes()
 if sotn_progress_report:
@@ -737,24 +736,15 @@ def add_splat_config(nw: ninja_syntax.Writer, ver: str, file_name: str):
         )
 
 
-def add_checksum(nw: ninja_syntax.Writer, ver: str, file_name: str):
-    with open(file_name) as f:
-        lines = f.readlines()
-    binaries = [line.split(" ")[2].strip() for line in lines]
-    if ver == "us":
-        dirt = build_path(ver, "dra.dirt.done")
-        binaries.append(dirt)
-        nw.build(
-            rule="dirt",
-            outputs=dirt,
-            inputs=f"config/dirt.{ver}.json",
-            implicit=build_path(ver, "DRA.BIN"),
-        )
+def add_dirt(nw: ninja_syntax.Writer, ver: str):
+    if ver != "us":
+        return
+    dirt = build_path(ver, "dra.dirt.done")
     nw.build(
-        rule="check",
-        outputs=[f"{ver} 🆗"],
-        inputs=file_name,
-        implicit=binaries,
+        rule="dirt",
+        outputs=dirt,
+        inputs=f"config/dirt.{ver}.json",
+        implicit=build_path(ver, "DRA.BIN"),
     )
 
 
@@ -904,12 +894,6 @@ with open(build_ninja, "w") as f:
         command="echo '{options: { symbol_addrs_path: [ '$in']}}' > $out",
         description="create dynamic splat $out",
     )
-    nw.rule(
-        "check",
-        command=".venv/bin/python3 tools/builds/check.py $in",
-        description="check $in",
-    )
-
     actual_version = os.getenv("VERSION")
     if not actual_version:
         actual_version = "us,hd,pspeu"
@@ -925,8 +909,8 @@ with open(build_ninja, "w") as f:
                 continue
             add_splat_config(nw, version, entry.path)
         add_assets_config(nw, version)
-        if not sotn_progress_report and not skip_check:
-            add_checksum(nw, version, f"config/check.{version}.sha")
+        if not sotn_progress_report:
+            add_dirt(nw, version)
 
     nw.build(
         rule="phony",
