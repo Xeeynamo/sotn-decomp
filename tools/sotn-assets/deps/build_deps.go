@@ -96,14 +96,21 @@ func ensurePSPDeps(eg *errgroup.Group) {
 	})
 }
 
+// gen.py invokes sotn-assets by path as "bin/sotn-assets", so the running
+// executable must stay in sync with itself.
 func ensureSotnAssets() error {
-	// must "build" itself due to how gen.py works
-	if _, err := os.Stat("bin/sotn-assets"); err == nil {
-		return nil
-	}
 	self, err := os.Executable()
 	if err != nil {
 		return fmt.Errorf("resolve own executable: %w", err)
+	}
+	selfInfo, err := os.Stat(self)
+	if err != nil {
+		return fmt.Errorf("stat own executable: %w", err)
+	}
+	if destInfo, err := os.Stat("bin/sotn-assets"); err == nil {
+		if selfInfo.ModTime().Equal(destInfo.ModTime()) {
+			return nil
+		}
 	}
 	if err := os.MkdirAll("bin", 0755); err != nil {
 		return err
