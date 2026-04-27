@@ -48,7 +48,6 @@ CLEAN_FILES		:= $(ASSETS_DIR) $(ASM_DIR) $(BUILD_DIR) $(SRC_DIR)/weapon $(CONFIG
 CROSS           := mipsel-linux-gnu-
 LD              := $(CROSS)ld
 OBJCOPY         := $(CROSS)objcopy
-CYGNUS			:= $(BIN_DIR)/cygnus-2.7-96Q3-bin
 
 # Other tooling
 SPLAT           := $(and $(PYTHON_BIN),$(PYTHON_BIN)/)splat split
@@ -66,9 +65,6 @@ M2C_APP         := $(TOOLS_DIR)/m2c/m2c.py
 PERMUTER_APP	:= $(TOOLS_DIR)/decomp-permuter
 MASPSX_APP      := $(TOOLS_DIR)/maspsx/maspsx.py
 PSPAS           := $(TOOLS_DIR)/pspas/target/release/pspas
-DOSEMU_APP		:= $(or $(shell which dosemu),/usr/bin/dosemu)
-SATURN_SPLITTER_DIR := $(TOOLS_DIR)/saturn-splitter
-SATURN_SPLITTER_APP := $(SATURN_SPLITTER_DIR)/rust-dis/target/release/rust-dis
 SOTNDISK        := bin/sotn-disk
 SOTNASSETS      := bin/sotn-assets
 
@@ -127,7 +123,7 @@ extract_pspeu: extract_assets
 .PHONY: build
 build: ##@ build game files
 build: build_$(VERSION)
-build_us build_hd build_pspeu:
+build_us build_hd build_pspeu build_saturn:
 	@./sotn.sh build $(subst build_,,$@)
 .PHONY: build_all
 build_all:
@@ -365,8 +361,8 @@ PHONY_TARGETS += dump-disk $(addprefix dump-disk_,eu hk jp10 jp11 saturn us uspr
 PHONY_TARGETS += force-symbols $(addprefix FORCE_,$(FORCE_SYMBOLS)) force-extract context function-finder duplicates-report
 PHONY_TARGETS += git-submodules update-dependencies update-dependencies-all $(addprefix dependencies_,us pspeu hd saturn) requirements-python graphviz
 PHONY_TARGETS += help get-debug get-phony get-silent
-MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(SATURN_SPLITTER_DIR) $(SATURN_SPLITTER_APP) $(EXTRACTED_DISK_DIR)
-MUFFLED_TARGETS += $(DOSEMU_APP) $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)/bin
+MUFFLED_TARGETS += $(PHONY_TARGETS) $(MASPSX_APP) $(EXTRACTED_DISK_DIR)
+MUFFLED_TARGETS += $(ASMDIFFER) $(dir $(M2C_APP)) $(M2C_APP) $(PERMUTER_APP) $(SOTNDISK) $(SOTNASSETS) $(VENV_DIR) $(VENV_DIR)/bin
 .PHONY: $(PHONY_TARGETS)
 # Specifying .SILENT in this manner allows us to set the DEBUG environment variable and display everything for debugging
 #$(DEBUG).SILENT: $(MUFFLED_TARGETS)
