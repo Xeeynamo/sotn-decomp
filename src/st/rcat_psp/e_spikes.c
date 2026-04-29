@@ -89,8 +89,7 @@ void EntitySpikesParts(Entity* self) {
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
 
-        // Need to keep this conversion to compile to seh and not move
-        g_api.CheckCollision((s16)posX, (s16)posY, &collider, 0);
+        g_api.CheckCollision(posX, posY, &collider, 0);
 
         if (collider.effects) {
             if (collider.effects & EFFECT_SOLID) {
