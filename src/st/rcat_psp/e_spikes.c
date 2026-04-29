@@ -26,7 +26,6 @@ enum SpikesPointDirections {
 
 INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/e_spikes", EntitySpikesDust);
 
-extern void (*D_91CF780)(s16 posX, s16 posY, Collider* collider, u32 unk);
 extern u16 D_us_80181018;
 
 void EntitySpikesParts(Entity* self) {
@@ -91,7 +90,7 @@ void EntitySpikesParts(Entity* self) {
         posY = self->posY.i.hi;
 
         // Need to keep this conversion to compile to seh and not move
-        D_91CF780((s16)posX, (s16)posY, &collider, 0);
+        g_api.CheckCollision((s16)posX, (s16)posY, &collider, 0);
 
         if (collider.effects) {
             if (collider.effects & EFFECT_SOLID) {
