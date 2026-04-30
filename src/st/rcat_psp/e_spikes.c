@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rcat/rcat.h"
+#define SPIKES_ELEMENT ELEMENT_CUT | ELEMENT_UNK_10 | ELEMENT_UNK_1
 
 enum SpikesSteps {
     SPIKES_INIT,
@@ -26,7 +27,10 @@ enum SpikesPointDirections {
 
 static AnimateEntityFrame anim_dust[] = {
     {2, 1}, {2, 2}, {2, 3}, {2, 4}, {2, 5}, {4, 6}, POSE_END};
+
 extern u16 g_EInitParticle;
+extern u16 g_EInitInteractable;
+extern u16 D_us_80181018;
 
 void EntitySpikesDust(Entity* self) {
     s16 angle;
@@ -46,8 +50,6 @@ void EntitySpikesDust(Entity* self) {
         DestroyEntity(self);
     }
 }
-
-extern u16 D_us_80181018;
 
 void EntitySpikesParts(Entity* self) {
     Collider collider;
@@ -135,4 +137,16 @@ INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/e_spikes", SpikesApplyDamage);
 
 INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/e_spikes", EntitySpikes);
 
-INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/e_spikes", EntitySpikesDamage);
+void EntitySpikesDamage(Entity* self) {
+    if (!self->step) {
+        InitializeEntity(&g_EInitInteractable);
+        self->attackElement = SPIKES_ELEMENT;
+        self->attack = 15;
+        self->hitboxState = 1;
+        self->hitboxWidth = 4;
+        self->hitboxHeight = 4;
+        self->poseTimer = 4;
+        return;
+    }
+    DestroyEntity(self);
+}
