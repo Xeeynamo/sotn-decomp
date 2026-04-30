@@ -1,5 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rcat/rcat.h"
+#ifdef VERSION_PSP
+extern s32 E_ID(SPIKES_PARTS);
+extern s32 E_ID(SPIKES_DUST);
+extern s32 E_ID(SPIKES_DAMAGE);
+#endif
+#define HAS_ORIENTATIONS
+#define SPIKES_TILE_WIDTH 48
 #define SPIKES_ELEMENT ELEMENT_CUT | ELEMENT_UNK_10 | ELEMENT_UNK_1
 
 enum SpikesSteps {
@@ -27,6 +34,9 @@ enum SpikesPointDirections {
 
 static AnimateEntityFrame anim_dust[] = {
     {2, 1}, {2, 2}, {2, 3}, {2, 4}, {2, 5}, {4, 6}, POSE_END};
+#ifdef HAS_ORIENTATIONS
+static u8 parts_params[][3] = {{5, 4, 6}, {1, 0, 2}, {9, 8, 10}};
+#endif
 
 extern u16 g_EInitParticle;
 extern u16 g_EInitInteractable;
@@ -131,7 +141,61 @@ void EntitySpikesParts(Entity* self) {
     }
 }
 
-INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/e_spikes", SpikesBreak);
+extern s32 D_psp_E_SPIKES_DUST;
+extern s32 D_psp_E_SPIKES_PARTS;
+extern Entity g_Entities_224;
+
+void SpikesBreak(u32 tileIdx) {
+    Entity* entity;
+    s16 tilePosX, tilePosY;
+    s32 count;
+    s32 tileIdxOffset;
+    u32 tileType;
+    u8 collisionType;
+    u8 params;
+
+    tilePosX = ((tileIdx % SPIKES_TILE_WIDTH) * 16) + 8;
+    tilePosY = ((tileIdx / SPIKES_TILE_WIDTH) * 16) + 8;
+    params = 0;
+    tileIdx -= SPIKES_TILE_WIDTH + 1;
+
+    for (count = 0; count < 3; tileIdx += SPIKES_TILE_WIDTH, count++) {
+        for (tileIdxOffset = 0; tileIdxOffset < 3; tileIdxOffset++) {
+            tileType = (&g_Tilemap.fg[tileIdx])[tileIdxOffset];
+            collisionType = g_Tilemap.tileDef->collision[tileType];
+            if (collisionType == 3) {
+                params |= parts_params[count][tileIdxOffset];
+            }
+        }
+    }
+    tilePosX -= g_Tilemap.scrollX.i.hi;
+    tilePosY -= g_Tilemap.scrollY.i.hi;
+
+    for (count = 0; count < 3; count++) {
+        entity = AllocEntity(&g_Entities_224, (Entity*)&D_80097C98);
+        if (entity != NULL) {
+            CreateEntityFromCurrentEntity(D_psp_E_SPIKES_PARTS, entity);
+            entity->posX.i.hi = tilePosX;
+            entity->posY.i.hi = tilePosY;
+            entity->params = params + (count << 8);
+        }
+    }
+
+    entity = AllocEntity(&g_Entities_224, (Entity*)&D_80097C98);
+    if (entity != NULL) {
+        CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, entity);
+        entity->posX.i.hi = tilePosX;
+        entity->posY.i.hi = tilePosY;
+        // params & 0xF0 to EntityIntenseExplosion uses the dust cloud palette
+        entity->params = 16;
+    }
+    entity = AllocEntity(&g_Entities_224, (Entity*)&D_80097C98);
+    if (entity != NULL) {
+        CreateEntityFromCurrentEntity(D_psp_E_SPIKES_DUST, entity);
+        entity->posX.i.hi = tilePosX;
+        entity->posY.i.hi = tilePosY;
+    }
+}
 
 INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/e_spikes", SpikesApplyDamage);
 
