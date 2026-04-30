@@ -8,6 +8,8 @@ extern s32 E_ID(SPIKES_DAMAGE);
 #define HAS_ORIENTATIONS
 #define SPIKES_TILE_WIDTH 48
 #define SPIKES_ELEMENT ELEMENT_CUT | ELEMENT_UNK_10 | ELEMENT_UNK_1
+#define DAMAGE_ENT_START g_CurrentEntity[1]
+#define DAMAGE_ENT_END g_CurrentEntity[4]
 
 enum SpikesSteps {
     SPIKES_INIT,
@@ -197,7 +199,27 @@ void SpikesBreak(u32 tileIdx) {
     }
 }
 
-INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/e_spikes", SpikesApplyDamage);
+void SpikesApplyDamage(u32 tileIdx) {
+    Entity* spikesDamage;
+
+    s16 tilePosX, tilePosY;
+
+    tilePosX = ((tileIdx % SPIKES_TILE_WIDTH) * 16) + 8;
+    tilePosY = ((tileIdx / SPIKES_TILE_WIDTH) * 16) + 8;
+    tilePosX -= g_Tilemap.scrollX.i.hi;
+    tilePosY -= g_Tilemap.scrollY.i.hi;
+    spikesDamage = &g_CurrentEntity[1];
+
+    spikesDamage->posX.i.hi = tilePosX;
+    spikesDamage->posY.i.hi = tilePosY;
+
+    spikesDamage = AllocEntity(&DAMAGE_ENT_START, &DAMAGE_ENT_END);
+    if (spikesDamage != NULL) {
+        CreateEntityFromCurrentEntity(E_ID(SPIKES_DAMAGE), spikesDamage);
+        spikesDamage->posX.i.hi = tilePosX;
+        spikesDamage->posY.i.hi = tilePosY;
+    }
+}
 
 INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/e_spikes", EntitySpikes);
 
