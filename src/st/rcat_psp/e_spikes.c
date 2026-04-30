@@ -30,7 +30,7 @@ extern u16 D_us_80181018;
 
 void EntitySpikesParts(Entity* self) {
     Collider collider;
-    s32 posX, posY;
+    s16 posX, posY;
     u8 params;
 
     switch (self->step) { // irregular
