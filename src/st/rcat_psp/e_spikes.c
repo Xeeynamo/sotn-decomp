@@ -221,7 +221,49 @@ void SpikesApplyDamage(u32 tileIdx) {
     }
 }
 
-INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/e_spikes", EntitySpikes);
+void EntitySpikes(Entity* self) {
+    Entity* entity;
+    Entity* playerPtr;
+    u32 tileIdx;
+    u32 tileType;
+    u8 collisionType;
+    s32 count;
+    s16 posX, posY;
+    s16 scrollX, scrollY;
+
+    playerPtr = &PLAYER;
+    switch (self->step) { // irregular
+    case SPIKES_INIT:
+        InitializeEntity(g_EInitSpawner);
+        break;
+    case SPIKES_INTERACT:
+        entity = self + 1;
+        entity->posX.i.hi = -16;
+        entity->posY.i.hi = -16;
+        posX = playerPtr->posX.i.hi;
+        posY = playerPtr->posY.i.hi;
+        scrollX = posX + g_Tilemap.scrollX.i.hi;
+        scrollY = posY + g_Tilemap.scrollY.i.hi;
+        tileIdx = (scrollX >> 4) + (scrollY >> 4) * g_Tilemap.hSize * 16;
+        tileIdx -= SPIKES_TILE_WIDTH;
+
+        for (count = 0; count < 3; tileIdx += SPIKES_TILE_WIDTH, count++) {
+            tileType = g_Tilemap.fg[tileIdx];
+            collisionType = g_Tilemap.tileDef->collision[tileType];
+            if (collisionType > 243 && collisionType < 248) {
+                if (g_api.CheckEquipmentItemCount(
+                        ITEM_SPIKE_BREAKER, EQUIP_ARMOR)) {
+                    g_Tilemap.fg[tileIdx] = 0;
+                    SpikesBreak(tileIdx);
+                    g_api_PlaySfx(SFX_EXPLODE_FAST_A);
+                } else {
+                    SpikesApplyDamage(tileIdx);
+                }
+            }
+        }
+        break;
+    }
+}
 
 void EntitySpikesDamage(Entity* self) {
     if (!self->step) {
