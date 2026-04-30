@@ -24,13 +24,34 @@ enum SpikesPointDirections {
     SPIKES_ON_FLOOR = 8,
 };
 
-INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/e_spikes", EntitySpikesDust);
+static AnimateEntityFrame anim_dust[] = {
+    {2, 1}, {2, 2}, {2, 3}, {2, 4}, {2, 5}, {4, 6}, POSE_END};
+extern u16 g_EInitParticle;
+
+void EntitySpikesDust(Entity* self) {
+    s16 angle;
+
+    if (!self->step) {
+        InitializeEntity(&g_EInitParticle);
+        self->zPriority = 160;
+        self->animSet = 8;
+        self->animCurFrame = 1;
+        self->palette = PAL_FLAG(PAL_SPIKES_DUST);
+        angle = GetAngleBetweenEntitiesShifted(self, &PLAYER);
+        SetEntityVelocityFromAngle(angle, 40);
+        return;
+    }
+    MoveEntity();
+    if (AnimateEntity(anim_dust, self) == 0) {
+        DestroyEntity(self);
+    }
+}
 
 extern u16 D_us_80181018;
 
 void EntitySpikesParts(Entity* self) {
     Collider collider;
-    s16 posX, posY;
+    s32 posX, posY;
     u8 params;
 
     switch (self->step) { // irregular
@@ -89,7 +110,8 @@ void EntitySpikesParts(Entity* self) {
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
 
-        g_api.CheckCollision(posX, posY, &collider, 0);
+        // Need to keep this conversion to compile to seh and not move
+        g_api.CheckCollision((s16)posX, (s16)posY, &collider, 0);
 
         if (collider.effects) {
             if (collider.effects & EFFECT_SOLID) {
