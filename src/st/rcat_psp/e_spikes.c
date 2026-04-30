@@ -1,15 +1,20 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../rcat/rcat.h"
+
 #ifdef VERSION_PSP
 extern s32 E_ID(SPIKES_PARTS);
 extern s32 E_ID(SPIKES_DUST);
 extern s32 E_ID(SPIKES_DAMAGE);
 #endif
+
 #define HAS_ORIENTATIONS
+#define SPIKES_PARTS_FRAME 18
 #define SPIKES_TILE_WIDTH 48
-#define SPIKES_ELEMENT ELEMENT_CUT | ELEMENT_UNK_10 | ELEMENT_UNK_1
+
+#define DAMAGE_ENT_ON_HIT
 #define DAMAGE_ENT_START g_CurrentEntity[1]
 #define DAMAGE_ENT_END g_CurrentEntity[4]
+#define SPIKES_ELEMENT ELEMENT_CUT | ELEMENT_UNK_10 | ELEMENT_UNK_1
 
 enum SpikesSteps {
     SPIKES_INIT,
@@ -34,21 +39,27 @@ enum SpikesPointDirections {
     SPIKES_ON_FLOOR = 8,
 };
 
+#ifdef STAGE_IS_NZ1
+#define START_COUNT 1
+#else
+#define START_COUNT 0
+#endif
+
+extern EInit g_EInitParticle;
+extern EInit D_us_80181018;
+extern EInit g_EInitInteractable;
+
 static AnimateEntityFrame anim_dust[] = {
     {2, 1}, {2, 2}, {2, 3}, {2, 4}, {2, 5}, {4, 6}, POSE_END};
 #ifdef HAS_ORIENTATIONS
 static u8 parts_params[][3] = {{5, 4, 6}, {1, 0, 2}, {9, 8, 10}};
 #endif
 
-extern u16 g_EInitParticle;
-extern u16 g_EInitInteractable;
-extern u16 D_us_80181018;
-
 void EntitySpikesDust(Entity* self) {
     s16 angle;
 
     if (!self->step) {
-        InitializeEntity(&g_EInitParticle);
+        InitializeEntity(g_EInitParticle);
         self->zPriority = 160;
         self->animSet = 8;
         self->animCurFrame = 1;
@@ -58,20 +69,22 @@ void EntitySpikesDust(Entity* self) {
         return;
     }
     MoveEntity();
-    if (AnimateEntity(anim_dust, self) == 0) {
+    if (!AnimateEntity(anim_dust, self)) {
         DestroyEntity(self);
     }
 }
 
 void EntitySpikesParts(Entity* self) {
     Collider collider;
-    s32 posX, posY;
+    s16 posX, posY;
     u8 params;
 
     switch (self->step) { // irregular
     case SPIKES_PARTS_INIT:
-        InitializeEntity(&D_us_80181018);
-        self->animCurFrame = 18;
+        InitializeEntity(D_us_80181018);
+#ifdef SPIKES_PARTS_FRAME
+        self->animCurFrame = SPIKES_PARTS_FRAME;
+#endif
         self->drawFlags |= ENTITY_ROTATE;
         self->flags |= FLAG_DESTROY_IF_OUT_OF_CAMERA |
                        FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA;
@@ -81,8 +94,11 @@ void EntitySpikesParts(Entity* self) {
         self->rotate = 0;
         self->ext.spikes.rotate = 0;
 
+#ifdef HAS_ORIENTATIONS
         params = (self->params & 0xFF00) >> 8;
-
+#else
+        params = self->params;
+#endif
         if (params & 1) {
             self->velocityX = FIX(0.5);
             self->rotate += ROT(1.40625);
@@ -94,6 +110,7 @@ void EntitySpikesParts(Entity* self) {
             self->ext.spikes.rotate -= 8;
         }
 
+#ifdef HAS_ORIENTATIONS
         params = self->params & 0xFF;
         if (params & SPIKES_POINT_LEFT) {
             self->velocityX -= FIX(0.75);
@@ -112,6 +129,9 @@ void EntitySpikesParts(Entity* self) {
         if (params & SPIKES_ON_FLOOR) {
             self->velocityY -= FIX(2.5);
         }
+#else
+        self->velocityY += FIX(0.75);
+#endif
         self->velocityX += ((Random() & 3) << 13) - FIX(0.1875);
         self->velocityY += ((Random() & 3) << 13) - FIX(0.1875);
         self->ext.spikes.rotate += ((Random() & 3) * 16) - 24;
@@ -120,13 +140,9 @@ void EntitySpikesParts(Entity* self) {
         MoveEntity();
         self->velocityY += FIX(0.15625);
         self->rotate += self->ext.spikes.rotate;
-
         posX = self->posX.i.hi;
         posY = self->posY.i.hi;
-
-        // Need to keep this conversion to compile to seh and not move
-        g_api.CheckCollision((s16)posX, (s16)posY, &collider, 0);
-
+        g_api.CheckCollision(posX, posY, &collider, 0);
         if (collider.effects) {
             if (collider.effects & EFFECT_SOLID) {
                 self->velocityY = -self->velocityY / 2;
@@ -143,24 +159,23 @@ void EntitySpikesParts(Entity* self) {
     }
 }
 
-extern s32 D_psp_E_SPIKES_DUST;
-extern s32 D_psp_E_SPIKES_PARTS;
-extern Entity g_Entities_224;
-
 void SpikesBreak(u32 tileIdx) {
     Entity* entity;
     s16 tilePosX, tilePosY;
     s32 count;
+#ifdef HAS_ORIENTATIONS
     s32 tileIdxOffset;
     u32 tileType;
     u8 collisionType;
     u8 params;
+#endif
 
     tilePosX = ((tileIdx % SPIKES_TILE_WIDTH) * 16) + 8;
     tilePosY = ((tileIdx / SPIKES_TILE_WIDTH) * 16) + 8;
+
+#ifdef HAS_ORIENTATIONS
     params = 0;
     tileIdx -= SPIKES_TILE_WIDTH + 1;
-
     for (count = 0; count < 3; tileIdx += SPIKES_TILE_WIDTH, count++) {
         for (tileIdxOffset = 0; tileIdxOffset < 3; tileIdxOffset++) {
             tileType = (&g_Tilemap.fg[tileIdx])[tileIdxOffset];
@@ -170,20 +185,25 @@ void SpikesBreak(u32 tileIdx) {
             }
         }
     }
+#endif
     tilePosX -= g_Tilemap.scrollX.i.hi;
     tilePosY -= g_Tilemap.scrollY.i.hi;
 
     for (count = 0; count < 3; count++) {
-        entity = AllocEntity(&g_Entities_224, (Entity*)&D_80097C98);
+        entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
         if (entity != NULL) {
-            CreateEntityFromCurrentEntity(D_psp_E_SPIKES_PARTS, entity);
+            CreateEntityFromCurrentEntity(E_ID(SPIKES_PARTS), entity);
             entity->posX.i.hi = tilePosX;
             entity->posY.i.hi = tilePosY;
+#ifdef HAS_ORIENTATIONS
             entity->params = params + (count << 8);
+#else
+            entity->params = count;
+#endif
         }
     }
 
-    entity = AllocEntity(&g_Entities_224, (Entity*)&D_80097C98);
+    entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (entity != NULL) {
         CreateEntityFromCurrentEntity(E_INTENSE_EXPLOSION, entity);
         entity->posX.i.hi = tilePosX;
@@ -191,9 +211,9 @@ void SpikesBreak(u32 tileIdx) {
         // params & 0xF0 to EntityIntenseExplosion uses the dust cloud palette
         entity->params = 16;
     }
-    entity = AllocEntity(&g_Entities_224, (Entity*)&D_80097C98);
+    entity = AllocEntity(&g_Entities[224], &g_Entities[256]);
     if (entity != NULL) {
-        CreateEntityFromCurrentEntity(D_psp_E_SPIKES_DUST, entity);
+        CreateEntityFromCurrentEntity(E_ID(SPIKES_DUST), entity);
         entity->posX.i.hi = tilePosX;
         entity->posY.i.hi = tilePosY;
     }
@@ -201,28 +221,42 @@ void SpikesBreak(u32 tileIdx) {
 
 void SpikesApplyDamage(u32 tileIdx) {
     Entity* spikesDamage;
-
     s16 tilePosX, tilePosY;
 
     tilePosX = ((tileIdx % SPIKES_TILE_WIDTH) * 16) + 8;
     tilePosY = ((tileIdx / SPIKES_TILE_WIDTH) * 16) + 8;
     tilePosX -= g_Tilemap.scrollX.i.hi;
     tilePosY -= g_Tilemap.scrollY.i.hi;
-    spikesDamage = &g_CurrentEntity[1];
 
+#ifdef HAS_ORIENTATIONS
+    spikesDamage = &g_CurrentEntity[1];
+#ifdef DAMAGE_ENT_ON_HIT
     spikesDamage->posX.i.hi = tilePosX;
     spikesDamage->posY.i.hi = tilePosY;
+#endif
+#endif
 
+#ifdef DAMAGE_ENT_ON_HIT
+    // Create the damage entity at tile location
     spikesDamage = AllocEntity(&DAMAGE_ENT_START, &DAMAGE_ENT_END);
     if (spikesDamage != NULL) {
         CreateEntityFromCurrentEntity(E_ID(SPIKES_DAMAGE), spikesDamage);
         spikesDamage->posX.i.hi = tilePosX;
         spikesDamage->posY.i.hi = tilePosY;
     }
+#else
+    // Move the damage entity to tile location
+    spikesDamage->posX.i.hi = tilePosX;
+    spikesDamage->posY.i.hi = tilePosY;
+#endif
 }
 
 void EntitySpikes(Entity* self) {
+#ifdef HAS_ORIENTATIONS
     Entity* entity;
+#else
+    u32 newTileType;
+#endif
     Entity* playerPtr;
     u32 tileIdx;
     u32 tileType;
@@ -235,11 +269,28 @@ void EntitySpikes(Entity* self) {
     switch (self->step) { // irregular
     case SPIKES_INIT:
         InitializeEntity(g_EInitSpawner);
+#ifdef DAMAGE_ENT_ON_SPAWN
+        entity = self + 1;
+        CreateEntityFromCurrentEntity(E_ID(SPIKES_DAMAGE), entity);
+#endif
+#ifdef HAS_ORIENTATIONS
         break;
     case SPIKES_INTERACT:
         entity = self + 1;
         entity->posX.i.hi = -16;
         entity->posY.i.hi = -16;
+#else
+
+        g_GpuBuffers[0].draw.r0 = 0x10;
+        g_GpuBuffers[0].draw.g0 = 0x10;
+        g_GpuBuffers[0].draw.b0 = 0x10;
+        g_GpuBuffers[1].draw.r0 = 0x10;
+        g_GpuBuffers[1].draw.g0 = 0x10;
+        g_GpuBuffers[1].draw.b0 = 0x10;
+    /* fallthrough */
+    case SPIKES_INTERACT:
+#endif
+
         posX = playerPtr->posX.i.hi;
         posY = playerPtr->posY.i.hi;
         scrollX = posX + g_Tilemap.scrollX.i.hi;
@@ -253,7 +304,26 @@ void EntitySpikes(Entity* self) {
             if (collisionType > 243 && collisionType < 248) {
                 if (g_api.CheckEquipmentItemCount(
                         ITEM_SPIKE_BREAKER, EQUIP_ARMOR)) {
+#ifdef STAGE_IS_NZ1
+                    g_Tilemap.fg[tileIdx] = 0x58B;
+#elif defined(HAS_ORIENTATIONS)
                     g_Tilemap.fg[tileIdx] = 0;
+#else
+                    switch (tileType) {
+                    case 0x6AE:
+                        newTileType = 0x6B1;
+                        break;
+
+                    case 0x6AF:
+                        newTileType = 0x6B2;
+                        break;
+
+                    case 0x6B0:
+                        newTileType = 0x6B3;
+                        break;
+                    }
+                    g_Tilemap.fg[tileIdx] = newTileType;
+#endif
                     SpikesBreak(tileIdx);
                     g_api_PlaySfx(SFX_EXPLODE_FAST_A);
                 } else {
@@ -267,14 +337,16 @@ void EntitySpikes(Entity* self) {
 
 void EntitySpikesDamage(Entity* self) {
     if (!self->step) {
-        InitializeEntity(&g_EInitInteractable);
+        InitializeEntity(g_EInitInteractable);
         self->attackElement = SPIKES_ELEMENT;
         self->attack = 15;
         self->hitboxState = 1;
         self->hitboxWidth = 4;
         self->hitboxHeight = 4;
         self->poseTimer = 4;
-        return;
+#ifdef DAMAGE_ENT_ON_HIT
+    } else {
+        DestroyEntity(self);
+#endif
     }
-    DestroyEntity(self);
 }
