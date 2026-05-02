@@ -64,7 +64,8 @@ func TestCheck(t *testing.T) {
 		defer cleanup()
 		defer cleanup2()
 		out := strings.Builder{}
-		require.NoError(t, checkVersions(&out, []string{"test2-1", "test2-2"}))
+		err := checkVersions(&out, []string{"test2-1", "test2-2"})
+		require.Error(t, err)
 		assert.Equal(t,
 			"⚠️ test2-1\n"+
 				"  ✅ ovl1  ❌ ovl2  \n"+
@@ -83,7 +84,8 @@ func TestCheck(t *testing.T) {
 		})
 		defer cleanup()
 		out := strings.Builder{}
-		require.NoError(t, checkVersions(&out, []string{"us", "test1", "hd"}))
+		err := checkVersions(&out, []string{"us", "test1", "hd"})
+		require.Error(t, err)
 		assert.Equal(t,
 			"✅ us     ✅ hd\n"+
 				"⚠️ test1\n"+
@@ -103,7 +105,8 @@ func TestCheck(t *testing.T) {
 		})
 		defer cleanup()
 		out := strings.Builder{}
-		require.NoError(t, checkVersions(&out, []string{"test3"}))
+		err := checkVersions(&out, []string{"test3"})
+		require.Error(t, err)
 		for _, line := range strings.Split(out.String(), "\n") {
 			assert.True(t, utf8.RuneCountInString(line) <= 60, "line less than 60 characters")
 		}

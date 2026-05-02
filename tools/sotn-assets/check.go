@@ -89,7 +89,7 @@ func checkVersions(w io.Writer, versions []string) error {
 	}
 	_, _ = w.Write([]byte("\n"))
 	if len(failing) > 0 {
-		os.Exit(1)
+		return fmt.Errorf("checksum check failed")
 	}
 	return nil
 }
