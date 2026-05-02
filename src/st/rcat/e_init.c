@@ -124,11 +124,7 @@ EInit g_EInitUnkId13 = {ANIMSET_DRA(0), 0, 0, 0x000, 0x002};
 EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0x000, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0x000, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0x000, 0x003};
-#ifdef VERSION_PSP
 EInit g_EInitEnvironment = {ANIMSET_OVL(2), 0, 0, 0x000, 0x005};
-#else
-EInit D_us_80181018 = {ANIMSET_OVL(2), 0, 0, 0x000, 0x005};
-#endif
 EInit D_us_80181024 = {ANIMSET_DRA(0), 0, 0, 0x000, 0x005};
 
 EInit g_EInitFrozenHalf = {ANIMSET_OVL(3), 1, 72, 0x200, 0x0D9};
