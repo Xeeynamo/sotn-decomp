@@ -60,8 +60,8 @@ int __FindExceptionTable(ExceptionInfo* info, char* retaddr) {
             retaddr) {
             continue;
         }
-        if (&D_psp_090DC8E4[i].exception_table_end->function_address
-                 [D_psp_090DC8E4[i].exception_table_end->function_size & ~1] >
+        if (D_psp_090DC8E4[i].exception_table_end->function_address +
+                FUNCTION_SIZE(D_psp_090DC8E4[i].exception_table_end) >
             retaddr) {
             info->exception_table_start =
                 D_psp_090DC8E4[i].exception_table_start;
