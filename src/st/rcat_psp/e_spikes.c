@@ -7,6 +7,6 @@
 #define DAMAGE_ENT_ON_HIT
 #define DAMAGE_ENT_START g_CurrentEntity[1]
 #define DAMAGE_ENT_END g_CurrentEntity[4]
-#define SPIKES_ELEMENT ELEMENT_CUT | ELEMENT_UNK_10 | ELEMENT_UNK_1
+#define SPIKES_ELEMENT (ELEMENT_CUT | ELEMENT_UNK_10 | ELEMENT_UNK_1)
 
 #include "../e_spikes.h"
