@@ -250,9 +250,9 @@
 | main     | PadRead_PSP                       |       13 |          2 |        |       |     |
 | main     | GsInitVcount                      |       13 |          2 |        |       |     |
 | main     | InitCARD                          |       13 |          2 |        |       |     |
+| main     | func_psp_089375A0                 |       13 |          2 |        |       |     |
 | main     | func_psp_08934F04                 |       13 |          2 |        |       |     |
 | main     | func_psp_08934F24                 |       13 |          2 |        |       |     |
-| main     | func_psp_089375A0                 |       13 |          2 |        |       |     |
 | sel      | func_psp_09239180                 |       13 |          2 |        |       |     |
 | no2      | jtbl_pspeu_0928D418               |       14 |          0 | Yes    |       |     |
 | np3      | jtbl_pspeu_09291AF0               |       14 |          0 | Yes    |       |     |
@@ -557,7 +557,7 @@
 | main     | AddPrim                           |       18 |          1 |        |       |     |
 | main     | VSyncCallback                     |       18 |          1 |        |       |     |
 | main     | gte_stsxy01c                      |       18 |          1 |        |       |     |
-| main     | __DecodeAddress                   |       18 |          1 |        |       |     |
+| main     | func_psp_08935D08                 |       18 |          1 |        |       |     |
 | main     | sceGuStencilFunc                  |       18 |          1 |        |       |     |
 | main     | sceGuStencilOp                    |       18 |          1 |        |       |     |
 | main     | sceVfpuVector4Clamp               |       18 |          1 |        |       |     |
@@ -1052,11 +1052,11 @@
 | no4      | func_pspeu_09258910               |       26 |          3 |        |       |     |
 | dra      | func_psp_09140D68                 |       26 |          4 |        |       |     |
 | main     | _sceGuCallbackFinish              |       26 |          4 |        |       |     |
+| main     | DecodeCatchBlock                  |       26 |          4 |        |       |     |
 | main     | func_psp_089132C8                 |       26 |          4 |        |       |     |
 | main     | avsync_startAudioVideo            |       26 |          4 |        |       |     |
 | main     | func_psp_08914FFC                 |       26 |          4 |        |       |     |
 | main     | __getreent                        |       26 |          4 |        |       |     |
-| main     | DecodeCatchBlock                  |       26 |          4 |        |       |     |
 | main     | func_psp_0891FC64                 |       26 |          5 |        |       |     |
 | main     | func_psp_0892A28C                 |       26 |          5 |        |       |     |
 | dra      | func_psp_09100818                 |       27 |          1 |        |       |     |
@@ -1721,7 +1721,7 @@
 | no4      | func_pspeu_0925A0F0               |       39 |          3 |        |       |     |
 | sel      | func_psp_092391A0                 |       39 |          3 |        |       |     |
 | main     | func_psp_0891A14C                 |       39 |          4 |        |       |     |
-| main     | BinarySearch                      |       39 |          4 |        |       |     |
+| main     | func_psp_08935794                 |       39 |          4 |        |       |     |
 | no4      | func_pspeu_0923BAB0               |       39 |          4 |        |       |     |
 | rare     | func_pspeu_0924BED8               |       39 |          4 |        |       |     |
 | sel      | func_psp_092407A0                 |       39 |          4 |        |       |     |
@@ -2973,8 +2973,8 @@
 | main     | func_psp_089193D4                 |       77 |         16 |        |       |     |
 | dra      | 5087C.rodata                      |       78 |          0 | Yes    |       |     |
 | rare     | func_pspeu_0923B680               |       78 |          4 |        |       |     |
+| main     | func_psp_089372DC                 |       78 |          7 |        |       |     |
 | main     | memchr                            |       78 |          7 |        |       |     |
-| main     | __FindExceptionTable              |       78 |          7 |        |       |     |
 | maria    | func_pspeu_092AE0A8               |       78 |          7 |        |       |     |
 | ric      | func_pspeu_092A6610               |       78 |          7 |        |       |     |
 | main     | sceWavePlayEx                     |       78 |          8 |        |       |     |
@@ -3528,7 +3528,7 @@
 | sel      | func_psp_0923F9E8                 |      103 |         13 |        |       |     |
 | st0      | func_pspeu_092378A0               |      103 |         13 |        |       |     |
 | dra      | 8D3E8.rodata                      |      104 |          0 | Yes    |       |     |
-| main     | 36E88.rodata                      |      104 |          0 | Yes    |       |     |
+| main     | ExceptionHandler.rodata           |      104 |          0 | Yes    |       |     |
 | dra      | func_psp_09143248                 |      104 |          3 |        |       |     |
 | nz1      | func_pspeu_09253E68               |      104 |          4 |        |       |     |
 | are      | func_pspeu_09253668               |      104 |          5 |        |       |     |
