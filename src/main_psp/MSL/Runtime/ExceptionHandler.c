@@ -2,114 +2,12 @@
 //! PSPO=4,p
 #include <game_psp.h>
 
-#define FUNCTION_SIZE_MASK 0xFFFFFFFE
-#define DIRECT_STORE_MASK 0x00000001
-
-#define FUNCTION_SIZE(eti) ((eti)->function_size & FUNCTION_SIZE_MASK)
-#define DIRECT_STORED(eti) (((eti)->function_size & DIRECT_STORE_MASK) != 0)
-
-typedef unsigned char exaction_type;
-#define EXACTION_ENDBIT 0x80
-#define EXACTION_OPT1BIT 0x40
-#define EXACTION_OPT2BIT 0x20
-#define EXACTION_MASK 0x1F
-
-#define REGCOND EXACTION_OPT1BIT
-#define REGPTR EXACTION_OPT2BIT
-
-#define EXACTION_ENDOFLIST 0
-#define EXACTION_BRANCH 1
-#define EXACTION_DESTROYLOCAL 2
-#define EXACTION_DESTROYLOCALCOND 3
-#define EXACTION_DESTROYLOCALPOINTER 4
-#define EXACTION_DESTROYLOCALARRAY 5
-#define EXACTION_DESTROYBASE 6
-#define EXACTION_DESTROYMEMBER 7
-#define EXACTION_DESTROYMEMBERCOND 8
-#define EXACTION_DESTROYMEMBERARRAY 9
-#define EXACTION_DELETEPOINTER 10
-#define EXACTION_DELETEPOINTERCOND 11
-#define EXACTION_CATCHBLOCK 12
-#define EXACTION_ACTIVECATCHBLOCK 13
-#define EXACTION_TERMINATE 14
-#define EXACTION_SPECIFICATION 15
-#define EXACTION_DESTROYBASEVTTOBJECT 16
-#define EXACTION_DESTROYBASEVTTPOINTER 17
-#define EXACTION_DESTROYVLA 18
-#define EXACTION_FREEVLA 19
-
-#define DTORARG_TYPE short
-#define DTORARG_PARTIAL (0)   //	destroy non-virtual bases
-#define DTORARG_COMPLETE (-1) //	destroy all bases
-#define DTORARG_DELETE (1)    //	destroy all bases and delete object
-
-#define DTORCALL_COMPLETE(dtor, objptr)                                        \
-    (((void (*)(void*, DTORARG_TYPE))dtor)(objptr, DTORARG_COMPLETE))
-#define DTORCALL_PARTIAL(dtor, objptr)                                         \
-    (((void (*)(void*, DTORARG_TYPE))dtor)(objptr, DTORARG_PARTIAL))
+#include "CompressedNumbers.h"
+#include "ExceptionHandler.h"
 
 enum { SKIP = 0, APPLY = 1 };
 
 typedef void (*DeleteFunc)(void*);
-
-typedef struct TargetContext {
-    /* 0x00 */ unsigned long GPR[0x20];
-    /* 0x84 */ unsigned long unk84;
-    /* 0x88 */ unsigned long unk88;
-    /* 0x8C */ s32 unk8C;
-    /* 0x90 */ s32 unk90;
-    /* 0x94 */ bool unk94;
-    /* 0x98 */ unsigned long unk98;
-    /* 0x9C */ unsigned long FPR[0x20];
-} TargetContext; // size: 0x118
-
-typedef s8 vbase_ctor_arg_type;
-typedef s8 local_cond_type;
-
-typedef struct CatchInfo {
-    /* 0x00 */ void* location;
-    /* 0x04 */ void* typeinfo;
-    /* 0x08 */ void* dtor;
-    /* 0x0C */ void* sublocation;
-    /* 0x10 */ long pointercopy;
-    /* 0x14 */ void* stacktop;
-} CatchInfo; // size: 0x18
-
-typedef struct ThrowContext {
-    /* 0x00 */ s8* throwtype;
-    /* 0x04 */ void* location;
-    /* 0x08 */ void* dtor;
-    /* 0x0C */ CatchInfo* catchinfo;
-    /* 0x10 */ char* returnaddr;
-    /* 0x14 */ char* SP;
-    /* 0x18 */ char* FP;
-    /* 0x1C */ char* throwSP;
-    /* 0x20 */ TargetContext target;
-} ThrowContext; // size: 0x138
-
-typedef struct TargetExceptionInfo {
-    float dummy;
-} TargetExceptionInfo;
-
-typedef struct ExceptionTableIndex {
-    char* function_address;
-    unsigned long function_size;
-    char* exception_table;
-} ExceptionTableIndex;
-
-typedef struct ExceptionInfo {
-    char* current_function;
-    char* exception_record;
-    char* action_pointer;
-    ExceptionTableIndex* exception_table_start;
-    ExceptionTableIndex* exception_table_end;
-    TargetExceptionInfo target;
-} ExceptionInfo;
-
-#define __FunctionPointer(info, context, fp) (fp)
-#define __AdjustReturnAddress(info, context, retaddr) (retaddr)
-#define __LocalVariable(context, offset) ((context)->FP + (offset))
-#define __Register(context, regno) ((context)->target.GPR[regno])
 
 typedef struct ActionIterator {
     ExceptionInfo info;
@@ -133,9 +31,6 @@ typedef struct ex_specification {
     char* specs;
 } ex_specification;
 
-char* __DecodeAddress(char* p, void** paddr);
-char* __DecodeSignedNumber(char* p, long* pnum);
-char* __DecodeUnsignedNumber(char* p, unsigned long* pnum);
 void Branch(ExceptionInfo* info, ThrowContext* context);
 void Specification(int apply, ExceptionInfo* info, ThrowContext* context);
 void ActiveCatchBlock(int apply, ExceptionInfo* info, ThrowContext* context);
@@ -150,10 +45,9 @@ void DestroyLocalArray(int apply, ExceptionInfo* info, ThrowContext* context);
 void DestroyLocalPointer(int apply, ExceptionInfo* info, ThrowContext* context);
 void DestroyLocalCond(int apply, ExceptionInfo* info, ThrowContext* context);
 void DestroyLocal(int apply, ExceptionInfo* info, ThrowContext* context);
-char* __SkipUnwindInfo(char* p);
-char* __PopStackFrame(ThrowContext* context, ExceptionInfo* info);
 ExceptionInfo* func_psp_089368B8(ExceptionInfo* arg0, ExceptionInfo* arg1);
 ThrowContext* func_psp_08936844(ThrowContext* arg0, ThrowContext* arg1);
+void DecodeCatchBlock(char* ap, ex_catchblock* cb);
 
 static ExceptionTableIndex* BinarySearch(
     ExceptionTableIndex* table, unsigned long tablesize, char* return_address) {
@@ -173,7 +67,56 @@ static ExceptionTableIndex* BinarySearch(
     return 0;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", FindExceptionRecord);
+void FindExceptionRecord(char* return_address, ExceptionInfo* info) {
+    ExceptionTableIndex* exceptiontable;
+    char* rangetable;
+    unsigned long return_offset;
+    unsigned long currentPC;
+    unsigned long deltaPC;
+    unsigned long length;
+    unsigned long actions;
+
+    info->exception_record = 0;
+    info->action_pointer = 0;
+
+    if (!__FindExceptionTable(info, return_address)) {
+        return;
+    }
+
+    return_address = __AdjustReturnAddress(info, context, return_address);
+
+    if (!(exceptiontable = BinarySearch(
+              info->exception_table_start,
+              info->exception_table_end - info->exception_table_start,
+              return_address))) {
+        return;
+    }
+    if (DIRECT_STORED(exceptiontable))
+        info->exception_record = (char*)&exceptiontable->exception_table;
+    else
+        info->exception_record = exceptiontable->exception_table;
+
+    info->current_function = exceptiontable->function_address;
+    return_offset = return_address - exceptiontable->function_address;
+
+    rangetable = __SkipUnwindInfo(info->exception_record);
+    for (currentPC = 0;;) {
+        rangetable = __DecodeUnsignedNumber(rangetable, &deltaPC);
+        if (deltaPC == 0)
+            return;
+        rangetable = __DecodeUnsignedNumber(rangetable, &length);
+        rangetable = __DecodeUnsignedNumber(rangetable, &actions);
+        currentPC += deltaPC;
+        if (return_offset < currentPC)
+            return;
+        currentPC += length;
+        if (return_offset <= currentPC) {
+            break;
+        }
+    }
+
+    info->action_pointer = info->exception_record + actions;
+}
 
 static exaction_type CurrentAction(const ActionIterator* iter) {
     return iter->info.action_pointer
@@ -314,7 +257,7 @@ static void CatchBlock(int apply, ExceptionInfo* info, ThrowContext* context) {
     info->action_pointer = ap;
 }
 
-static char* __DecodeAddress(char* p, void** paddr) {
+char* __DecodeAddress(char* p, void** paddr) {
     unsigned long addr;
 
     addr = ((unsigned char*)p)[0] | (((unsigned char*)p)[1] << 8) |
@@ -728,7 +671,7 @@ static CatchInfo* FindMostRecentException(
     return catchinfo;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", DecodeActiveCatchBlock);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandler", DecodeActiveCatchBlock);
 
 ThrowContext* func_psp_08936844(ThrowContext* arg0, ThrowContext* arg1) {
     arg0->throwtype = arg1->throwtype;
@@ -769,11 +712,11 @@ static int IsInSpecification(char* extype, ex_specification* spec) {
     return false;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", __unexpected);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandler", __unexpected);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", func_psp_08936A44);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandler", func_psp_08936A44);
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", func_psp_08936AC8);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandler", func_psp_08936AC8);
 
 static void DecodeSpecification(char* ap, ex_specification* sp) {
     ap += sizeof(exaction_type);
@@ -847,7 +790,14 @@ static char* FindExceptionHandler(
     return iter.info.action_pointer;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", DecodeCatchBlock);
+static void DecodeCatchBlock(char* ap, ex_catchblock* cb) {
+    ap = __DecodeAddress(ap + sizeof(exaction_type), (void**)&cb->catch_type);
+
+    cb->catch_type = cb->catch_type != NULL ? cb->catch_type : NULL;
+
+    ap = __DecodeUnsignedNumber(ap, &cb->pcoffset);
+    ap = __DecodeSignedNumber(ap, &cb->cinfo_ref);
+}
 
 static void SetupCatchInfo(
     ThrowContext* context, long cinfo_ref, long result_offset) {
@@ -864,7 +814,7 @@ static void SetupCatchInfo(
     }
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", __ThrowHandler);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandler", __ThrowHandler);
 
 void __end_catch(CatchInfo* catchinfo) {
     if (catchinfo->location != NULL && catchinfo->dtor != NULL) {
@@ -872,10 +822,10 @@ void __end_catch(CatchInfo* catchinfo) {
     }
 }
 
-INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36E88", D_psp_0893C1A0);
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandler", D_psp_0893C1A0);
 
-INCLUDE_RODATA("main_psp/nonmatchings/main_psp/36E88", D_psp_0893C1AC);
+INCLUDE_RODATA("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandler", D_psp_0893C1AC);
 
 const char D_psp_0893C1B4[] = "bad_exception";
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/36E88", func_psp_08936E8C);
+INCLUDE_ASM("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandler", func_psp_08936E8C);
