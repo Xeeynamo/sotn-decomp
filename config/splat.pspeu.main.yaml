@@ -353,6 +353,7 @@ segments:
       - [0x30F3C, asm, func_psp_0892F848]
       - [0x3104C, asm, func_psp_0892F958]
       - [0x31178, c, main_psp/31178]
+      - [0x340E0, c, main_psp/340E0]
       - [0x35670, c, main_psp/35670]
       - [0x359F8, c, main_psp/vector4]
       - [0x36174, c, main_psp/36174]
@@ -397,6 +398,7 @@ segments:
       - [0x3D564, .rodata, main_psp/280FC]
       - [0x3D580, rodata]
       - [0x3D6B4, .rodata, main_psp/31178]
+      - [0x3D72C, .rodata, main_psp/340E0]
       - [0x3D760, .rodata, main_psp/36174]
       - [0x3D794, .rodata, main_psp/MSL/Runtime/ExceptionHandler]
       - [0x3D8B8, rodata]
@@ -425,7 +427,7 @@ segments:
       - [0x649A4, .data, main_psp/sound/dvdumd_io]
       - [0x649BC, data]
       - [0x65808, .data, main_psp/31178]
-      - [0xAEBAC, data]
+      - [0xAEBAC, .data, main_psp/340E0]
       - [0xAEC1C, .data, main_psp/36174]
       - [0xAEC44, data]
       - {start: 0xAEF24, type: bss, vram: 0x089AD830, name: bss0}
@@ -449,6 +451,7 @@ segments:
       - {start: 0xAEF24, type: .bss, vram: 0x08DADC40, name: main_psp/sound/2B910}
       - {start: 0xAEF24, type: bss, vram: 0x08DADCB4, name: bss6}
       - {start: 0xAEF24, type: .bss, vram: 0x08DAF2C8, name: main_psp/31178}
-      - {start: 0xAEF24, type: bss, vram: 0x08E2E5F8, name: bss7}
+      - {start: 0xAEF24, type: .bss, vram: 0x08E2E5F8, name: main_psp/340E0}
+      - {start: 0xAEF24, type: bss, vram: 0x090DC8DC, name: bss7}
   - [0xAEF24, bin, elf_footer]
   - [0xB3E1C]

@@ -331,8 +331,8 @@ void func_psp_0892C540(unkStruct2* arg0, s32 iVoiceNum, s32 arg2, s32 size,
         pitch = arg4 * arg0->unk278;
         func_psp_0892CB1C();
         sceSasSetKeyOff(iVoiceNum);
-        sceSasSetVoice(
-            iVoiceNum, 0x40000000 | (arg2 + 0x30) & 0x0FFFFFFF, size, loopflag);
+        sceSasSetVoice(iVoiceNum, ((arg2 + 0x30) & 0x0FFFFFFF) | 0x40000000,
+                       size, loopflag);
         func_psp_0892C524(arg0, iVoiceNum, arg5, arg6);
         sceSasSetPitch(iVoiceNum, pitch);
         sceSasSetKeyOn(iVoiceNum);

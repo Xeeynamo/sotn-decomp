@@ -280,7 +280,6 @@ func_psp_0890EF84 = 0x0890EF84; // ignore:true
 func_psp_0890EF88 = 0x0890EF88; // ignore:true
 _write_r = 0x0890F0C8;
 __swsetup_r = 0x0890F130;
-func_psp_089123B8 = 0x089123B8; // ignore:false
 startCheck = 0x08913314;
 playMovie = 0x089133D4;
 pad_read = 0x08913B48;
