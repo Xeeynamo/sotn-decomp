@@ -75,11 +75,11 @@
 | main     | func_psp_0892C168                 |        8 |          1 |        |       |     |
 | main     | func_psp_0892CB10                 |        8 |          1 |        |       |     |
 | main     | func_psp_0892CF7C                 |        8 |          1 |        |       |     |
+| main     | func_psp_08936E8C                 |        8 |          1 |        |       |     |
 | main     | func_psp_08912814                 |        8 |          1 |        |       |     |
 | main     | func_psp_0892A9D4                 |        8 |          1 |        |       |     |
 | main     | func_psp_0892A9E0                 |        8 |          1 |        |       |     |
 | main     | func_psp_0892F83C                 |        8 |          1 |        |       |     |
-| main     | func_psp_08936E8C                 |        8 |          1 |        |       |     |
 | main     | sceGuGetAllStatus                 |        8 |          1 |        |       |     |
 | main     | D_psp_0893C1B4                    |        9 |          0 |        |       |     |
 | dra      | func_psp_090E4C58                 |        9 |          1 |        |       |     |
@@ -1052,7 +1052,7 @@
 | no4      | func_pspeu_09258910               |       26 |          3 |        |       |     |
 | dra      | func_psp_09140D68                 |       26 |          4 |        |       |     |
 | main     | _sceGuCallbackFinish              |       26 |          4 |        |       |     |
-| main     | DecodeCatchBlock                  |       26 |          4 |        |       |     |
+| main     | func_psp_08936CE0                 |       26 |          4 |        |       |     |
 | main     | func_psp_089132C8                 |       26 |          4 |        |       |     |
 | main     | avsync_startAudioVideo            |       26 |          4 |        |       |     |
 | main     | func_psp_08914FFC                 |       26 |          4 |        |       |     |
@@ -1275,7 +1275,7 @@
 | dra      | func_psp_09142DE0                 |       31 |          2 |        |       |     |
 | dra      | func_psp_090EC968                 |       31 |          2 |        |       |     |
 | main     | func_psp_0891A99C                 |       31 |          2 |        |       |     |
-| main     | SetupCatchInfo                    |       31 |          2 |        |       |     |
+| main     | func_psp_08936D30                 |       31 |          2 |        |       |     |
 | main     | func_psp_0892E914                 |       31 |          2 |        |       |     |
 | are      | func_pspeu_092633C0               |       31 |          2 |        |       |     |
 | cat      | func_pspeu_09254240               |       31 |          2 |        |       |     |
@@ -1787,8 +1787,8 @@
 | main     | func_psp_08934C9C                 |       40 |          4 |        |       |     |
 | main     | _fstat_r                          |       40 |          4 |        |       |     |
 | main     | _kill_r                           |       40 |          4 |        |       |     |
+| main     | func_psp_089373F0                 |       40 |          5 |        |       |     |
 | main     | func_psp_0892A8FC                 |       40 |          5 |        |       |     |
-| main     | __SkipUnwindInfo                  |       40 |          5 |        |       |     |
 | main     | func_psp_0892BAE0                 |       40 |          6 |        |       |     |
 | dra      | func_800E9880                     |       40 |          8 |        |       |     |
 | main     | func_psp_0891AEC8                 |       40 |          8 |        |       |     |
@@ -2998,7 +2998,7 @@
 | np3      | func_pspeu_0925B680               |       79 |          6 |        |       |     |
 | lib      | func_psp_09258A38                 |       79 |          7 |        |       |     |
 | rnz0     | func_pspeu_09250678               |       79 |          7 |        |       |     |
-| main     | __SetupFrameInfo                  |       79 |          8 |        |       |     |
+| main     | func_psp_08937110                 |       79 |          8 |        |       |     |
 | maria    | func_pspeu_092B1E18               |       79 |          8 |        |       |     |
 | chi      | func_psp_092399B0                 |       79 |          8 |        |       |     |
 | no4      | func_pspeu_092427C8               |       79 |          8 |        |       |     |
@@ -3053,7 +3053,7 @@
 | no2      | func_pspeu_0924F378               |       82 |          6 |        |       |     |
 | np3      | func_pspeu_0925BD38               |       82 |          6 |        |       |     |
 | main     | __DecodeSignedNumber              |       82 |          7 |        |       |     |
-| main     | __DecodeUnsignedNumber            |       82 |          7 |        |       |     |
+| main     | func_psp_0893551C                 |       82 |          7 |        |       |     |
 | no3      | func_pspeu_092545B8               |       82 |          8 |        |       |     |
 | no4      | func_pspeu_09238CF0               |       82 |          8 |        |       |     |
 | dra      | func_psp_090F76D0                 |       82 |          9 |        |       |     |
@@ -3066,7 +3066,7 @@
 | rcat     | func_pspeu_09248B40               |       82 |          9 |        |       |     |
 | main     | exit                              |       82 |         10 |        |       |     |
 | dra      | func_psp_090FF298                 |       82 |         11 |        |       |     |
-| main     | FindMostRecentException           |       82 |         11 | Yes    |       |     |
+| main     | func_psp_0893676C                 |       82 |         11 | Yes    |       |     |
 | no0      | func_pspeu_09257F68               |       82 |         13 |        |       |     |
 | dra      | func_psp_09141C10                 |       82 |         15 |        |       |     |
 | dra      | func_psp_09143548                 |       83 |          4 |        |       |     |
@@ -3103,7 +3103,7 @@
 | no0      | func_pspeu_0925B0B0               |       85 |         10 |        |       |     |
 | rnz0     | func_pspeu_09239C80               |       85 |         10 |        |       |     |
 | dra      | func_psp_090E83E8                 |       85 |         12 |        |       |     |
-| main     | FindExceptionRecord               |       85 |         12 |        |       |     |
+| main     | func_psp_08935808                 |       85 |         12 |        |       |     |
 | nz1      | func_pspeu_0925AEA8               |       85 |         12 |        |       |     |
 | sel      | func_psp_0923B908                 |       85 |         13 |        |       |     |
 | main     | _setmodreent                      |       85 |         15 |        |       |     |
@@ -3619,7 +3619,7 @@
 | are      | func_pspeu_0925F050               |      107 |         11 |        |       |     |
 | rare     | func_pspeu_09249460               |      107 |         13 |        |       |     |
 | dra      | func_psp_09138600                 |      107 |         17 |        |       |     |
-| main     | FindExceptionHandler              |      107 |         18 | Yes    |       |     |
+| main     | func_psp_08936BCC                 |      107 |         18 | Yes    |       |     |
 | main     | func_psp_089117F4                 |      108 |          1 |        |       |     |
 | dra      | func_psp_090EC0C0                 |      108 |          3 |        |       |     |
 | are      | func_pspeu_0923FEF0               |      108 |          8 |        |       |     |
@@ -4317,7 +4317,7 @@
 | main     | __kernel_sin                      |      195 |         28 |        |       |     |
 | maria    | func_pspeu_092B0E50               |      195 |         32 |        |       |     |
 |          | func_092EEC50                     |      195 |         37 | Yes    |       |     |
-| main     | UnwindStack                       |      195 |         39 | Yes    |       |     |
+| main     | func_psp_08936534                 |      195 |         39 | Yes    |       |     |
 | nz0      | func_pspeu_0923B1F0               |      196 |         18 |        |       |     |
 | dra      | func_psp_09116450                 |      196 |         22 |        |       |     |
 | dra      | func_psp_091398F0                 |      196 |         35 | Yes    |       |     |
