@@ -28,8 +28,6 @@ void __SetupFrameInfo(ThrowContext* context, ExceptionInfo* info) {
     context->target.unk98 = 0;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandlerTS", func_psp_08937228);
-
 typedef struct unkStruct {
     ExceptionTableIndex* exception_table_start;
     ExceptionTableIndex* exception_table_end;
@@ -37,8 +35,22 @@ typedef struct unkStruct {
 
 extern unkStruct D_psp_090DC8E4[];
 
+int func_psp_08937228(ExceptionTableIndex* arg0, ExceptionTableIndex* arg1) {
+    int i;
+
+    for (i = 0; i < 0x10; i++) {
+        if (D_psp_090DC8E4[i].exception_table_start == NULL) {
+            D_psp_090DC8E4[i].exception_table_start = arg0;
+            D_psp_090DC8E4[i].exception_table_end = arg1;
+            D_psp_090DC8E4[i].exception_table_end--;
+            return i;
+        }
+    }
+    return -1;
+}
+
 int __FindExceptionTable(ExceptionInfo* info, char* retaddr) {
-    s32 i;
+    int i;
 
     for (i = 0; i < 0x10; i++) {
         if (D_psp_090DC8E4[i].exception_table_start == NULL) {
@@ -48,8 +60,8 @@ int __FindExceptionTable(ExceptionInfo* info, char* retaddr) {
             retaddr) {
             continue;
         }
-        if (&D_psp_090DC8E4[i].exception_table_end->function_address
-                 [D_psp_090DC8E4[i].exception_table_end->function_size & ~1] >
+        if (D_psp_090DC8E4[i].exception_table_end->function_address +
+                FUNCTION_SIZE(D_psp_090DC8E4[i].exception_table_end) >
             retaddr) {
             info->exception_table_start =
                 D_psp_090DC8E4[i].exception_table_start;
@@ -60,7 +72,19 @@ int __FindExceptionTable(ExceptionInfo* info, char* retaddr) {
     return 0;
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandlerTS", __SkipUnwindInfo);
+char* __SkipUnwindInfo(char* p) {
+    unsigned long dummy;
+    bool temp_s0;
+
+    temp_s0 = *((s8*)p) & 0x40;
+    p++;
+    p = __DecodeUnsignedNumber(p, &dummy);
+    p = __DecodeUnsignedNumber(p, &dummy);
+    if (temp_s0) {
+        p = __DecodeUnsignedNumber(p, &dummy);
+    }
+    return p;
+}
 
 INCLUDE_ASM("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandlerTS", __TransferControl);
 
