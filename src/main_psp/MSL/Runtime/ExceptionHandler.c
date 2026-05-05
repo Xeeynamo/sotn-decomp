@@ -814,7 +814,31 @@ static void SetupCatchInfo(
     }
 }
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandler", __ThrowHandler);
+void __ThrowHandler(ThrowContext* context) {
+    ExceptionInfo info;
+    char* catchblock;
+    ex_catchblock handler;
+    long result_offset;
+
+    FindExceptionRecord(context->returnaddr, &info);
+    if (info.exception_record == NULL) {
+        terminate();
+    }
+
+    __SetupFrameInfo(context, &info);
+
+    if (context->throwtype == NULL) {
+        context->catchinfo = FindMostRecentException(context, &info);
+    } else {
+        context->catchinfo = NULL;
+    }
+
+    catchblock = FindExceptionHandler(context, &info, &result_offset);
+    DecodeCatchBlock(catchblock, &handler);
+    UnwindStack(context, &info, catchblock);
+    SetupCatchInfo(context, handler.cinfo_ref, result_offset);
+    __TransferControl(context, &info, info.current_function + handler.pcoffset);
+}
 
 void __end_catch(CatchInfo* catchinfo) {
     if (catchinfo->location != NULL && catchinfo->dtor != NULL) {
@@ -828,4 +852,4 @@ INCLUDE_RODATA("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandler", D_
 
 const char D_psp_0893C1B4[] = "bad_exception";
 
-INCLUDE_ASM("main_psp/nonmatchings/main_psp/MSL/Runtime/ExceptionHandler", func_psp_08936E8C);
+const char* func_psp_08936E8C(void) { return D_psp_0893C1B4; }
