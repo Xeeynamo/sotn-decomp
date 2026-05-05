@@ -15,10 +15,10 @@ void func_us_801B1F1C(Entity* self) {
         }
 
         g_Tilemap.flags |= LAYER_SEMI_TRANS;
-        g_api.func_800EA5E4(0x8004);
-        g_api.func_800EA5E4(0x8006);
-        g_api.func_800EA5E4(0x8007);
-        g_api.func_800EA5E4(0x8008);
+        g_api.func_800EA5E4(ANIMSET_OVL(4));
+        g_api.func_800EA5E4(ANIMSET_OVL(6));
+        g_api.func_800EA5E4(ANIMSET_OVL(7));
+        g_api.func_800EA5E4(ANIMSET_OVL(8));
         self->step = 4;
         break;
     case 1:
@@ -34,11 +34,11 @@ void func_us_801B1F1C(Entity* self) {
         break;
     case 3:
         g_Tilemap.flags |= LAYER_SEMI_TRANS;
-        g_api.func_800EA5E4(0x8004);
-        g_api.func_800EA5E4(0x8006);
-        g_api.func_800EA5E4(0x8007);
-        g_api.func_800EA5E4(0x8008);
-        g_api.func_800EA5E4(0x800B);
+        g_api.func_800EA5E4(ANIMSET_OVL(4));
+        g_api.func_800EA5E4(ANIMSET_OVL(6));
+        g_api.func_800EA5E4(ANIMSET_OVL(7));
+        g_api.func_800EA5E4(ANIMSET_OVL(8));
+        g_api.func_800EA5E4(ANIMSET_OVL(11));
         self->step++;
         break;
     case 4:
