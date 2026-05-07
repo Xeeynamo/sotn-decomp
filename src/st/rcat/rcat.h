@@ -11,6 +11,7 @@
 enum Palettes {
     PAL_NONE,
     PAL_BREAKABLE = 0x237,
+    PAL_SPIKES_DUST = 0x09B,
 };
 
 enum Entities {
