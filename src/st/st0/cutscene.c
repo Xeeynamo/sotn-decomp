@@ -3,22 +3,7 @@
 #include "../pfn_entity_update.h"
 #include <cutscene.h>
 
-enum DialogueSteps {
-    DIALOGUE_INIT,
-    DIALOGUE_RUN,
-    DIALOGUE_LOAD_PORTRAIT,
-    DIALOGUE_START_TEXT,
-    DIALOGUE_UNLOAD_PORTRAIT,
-    DIALOGUE_OPEN_DIALOG_BOX,
-    DIALOGUE_CLOSE_DIALOG_BOX,
-    DIALOGUE_END,
-};
-
-enum DialogueSubsteps {
-    DIALOG_BOX_INIT,
-    DIALOG_BOX_DRAW_RED,
-    DIALOG_BOX_DRAW_BLUE,
-};
+#include "../cutscene_dialog.h"
 
 #define DAI_CUTSCENE_ALUCARD_READY 1
 
@@ -468,64 +453,10 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step = DIALOGUE_OPEN_DIALOG_BOX;
                     self->step_s = DIALOG_BOX_INIT;
                     return;
-                case CSOP_CLOSE_DIALOG:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    g_Dialogue.portraitAnimTimer = 24;
-                    self->step = DIALOGUE_CLOSE_DIALOG_BOX;
-                    return;
-                case CSOP_PLAY_SOUND:
-                    if (g_SkipCutscene) {
-                        g_Dialogue.scriptCur += 2;
-                        continue;
-                    }
-                    nextByte = *g_Dialogue.scriptCur++;
-                    nextByte <<= 4;
-                    nextByte |= *g_Dialogue.scriptCur++;
-                    g_api.PlaySfx(nextByte);
-                    continue;
-                case CSOP_WAIT_FOR_SOUND:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    if (g_api.func_80131F68()) {
-                        continue;
-                    }
-                    *g_Dialogue.scriptCur--;
-                    return;
-                case CSOP_SCRIPT_UNKNOWN_11:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    if (g_api.func_80131F68() != 1) {
-                        continue;
-                    }
-                    *g_Dialogue.scriptCur--;
-                    return;
-                case CSOP_SET_END:
-                    ptr = *g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= *g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= *g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= *g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
-                    ptr += (u32)OVL_EXPORT(cutscene_script);
-#endif
-                    SetCutsceneEnd((u8*)ptr);
-                    continue;
-                case CSOP_SCRIPT_UNKNOWN_13:
-                    continue;
-                case CSOP_SCRIPT_UNKNOWN_14:
-                    ptr = *g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= *g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= *g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= *g_Dialogue.scriptCur++;
+
+#define CSA1_V_NEXTCHAR nextByte
+#define CSA1_V_OVL_CUTSCENE_SCRIPT_PTR OVL_EXPORT(cutscene_script)
+#include "../cutscene_actions1.h"
                     // This needs help. Casting the const to short is good.
                     ptr += (u16)0x100000;
 #ifdef VERSION_PSP

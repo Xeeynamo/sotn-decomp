@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "../nz0/nz0.h"
 #include <cutscene.h>
+#include "../cutscene_dialog.h"
 
 // clang-format off
 static u16 actor_names_en[] = {
@@ -315,62 +316,9 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step = 5;
                     self->step_s = 0;
                     return;
-                case CSOP_CLOSE_DIALOG:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    g_Dialogue.portraitAnimTimer = 0x18;
-                    self->step = 6;
-                    return;
-                case CSOP_PLAY_SOUND:
-                    if (g_SkipCutscene) {
-                        g_Dialogue.scriptCur += 2;
-                        continue;
-                    }
-                    nextChar = *g_Dialogue.scriptCur++;
-                    nextChar <<= 4;
-                    nextChar |= *g_Dialogue.scriptCur++;
-                    g_api.PlaySfx(nextChar);
-                    continue;
-                case CSOP_WAIT_FOR_SOUND:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    if (g_api.func_80131F68() != false) {
-                        continue;
-                    }
-                    g_Dialogue.scriptCur--;
-                    return;
-                case CSOP_SCRIPT_UNKNOWN_11:
-                    if (g_SkipCutscene) {
-                        continue;
-                    }
-                    if (g_api.func_80131F68() != true) {
-                        continue;
-                    }
-                    g_Dialogue.scriptCur--;
-                    return;
-                case CSOP_SET_END:
-                    ptr = (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr += OVL_EXPORT(cutscene_text_offset);
-                    SetCutsceneEnd((u8*)ptr);
-                    continue;
-                case CSOP_SCRIPT_UNKNOWN_13:
-                    continue;
-                case CSOP_SCRIPT_UNKNOWN_14:
-                    ptr = (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
+
+#define CSA1_V_OVL_CUTSCENE_SCRIPT_PTR OVL_EXPORT(cutscene_text_offset)
+#include "../cutscene_actions1.h"
                     ptr += OVL_EXPORT(cutscene_text_offset);
                     g_Dialogue.scriptCur += *(u8*)ptr << 2;
 

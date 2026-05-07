@@ -3,22 +3,7 @@
 #include "../pfn_entity_update.h"
 #include <cutscene.h>
 
-enum DialogueSteps {
-    DIALOGUE_INIT = 0,
-    DIALOGUE_RUN = 1,
-    DIALOGUE_LOAD_PORTRAIT = 2,
-    DIALOGUE_START_TEXT = 3,
-    DIALOGUE_UNLOAD_PORTRAIT = 4,
-    DIALOGUE_OPEN_DIALOG_BOX = 5,
-    DIALOGUE_CLOSE_DIALOG_BOX = 6,
-    DIALOGUE_END = 7,
-};
-
-enum DialogueSubsteps {
-    DIALOG_BOX_INIT = 0,
-    DIALOG_BOX_DRAW_RED = 1,
-    DIALOG_BOX_DRAW_BLUE = 2,
-};
+#include "../cutscene_dialog.h"
 
 // cutscene_script_box.h
 #define CUTSCENE_UNK3_RECT_X 0
@@ -399,47 +384,14 @@ void OVL_EXPORT(EntityCutscene)(Entity* self) {
                     self->step = DIALOGUE_OPEN_DIALOG_BOX;
                     self->step_s = DIALOG_BOX_INIT;
                     return;
-                case CSOP_CLOSE_DIALOG:
-                    if (skip_cutscene) {
-                        continue;
-                    }
-                    g_Dialogue.portraitAnimTimer = 24;
-                    self->step = DIALOGUE_CLOSE_DIALOG_BOX;
-                    return;
-                case CSOP_PLAY_SOUND:
-                    if (skip_cutscene) {
-                        g_Dialogue.scriptCur += 2;
-                        continue;
-                    }
-                    nextByte = *g_Dialogue.scriptCur++;
-                    nextByte <<= 4;
-                    nextByte |= *g_Dialogue.scriptCur++;
-                    g_api.PlaySfx(nextByte);
-                    continue;
-                case CSOP_WAIT_FOR_SOUND:
-                    if (skip_cutscene) {
-                        continue;
-                    }
-                    if (g_api.func_80131F68()) {
-                        continue;
-                    }
-                    *g_Dialogue.scriptCur--;
-                    return;
-                case CSOP_SCRIPT_UNKNOWN_11:
-                    if (skip_cutscene) {
-                        continue;
-                    }
-                    if (g_api.func_80131F68() != 1) {
-                        continue;
-                    }
-                    *g_Dialogue.scriptCur--;
-                    return;
-                case CSOP_SET_END:
-                    continue;
-                case CSOP_SCRIPT_UNKNOWN_13:
-                    continue;
-                case CSOP_SCRIPT_UNKNOWN_14:
-                    continue;
+
+#define CSA1_ANIM_TIMER 24
+#define CSA1_V_SKIPCUTSCENE skip_cutscene
+#define CSA1_V_NEXTCHAR nextByte
+#define CSA1_IGNORE_CSOP_END 1
+#define CSA1_IGNORE_CSOP_UNKNOWN_14 1
+#include "../cutscene_actions1.h"
+                    continue; // TEMP, this will be removed next
                 case CSOP_SCRIPT_UNKNOWN_15:
                     continue;
                 case CSOP_WAIT_FOR_FLAG:

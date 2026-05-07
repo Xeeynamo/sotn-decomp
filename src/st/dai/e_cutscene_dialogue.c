@@ -2,22 +2,7 @@
 #include "dai.h"
 #include <cutscene.h>
 
-enum DialogueSteps {
-    DIALOGUE_INIT = 0,
-    DIALOGUE_RUN = 1,
-    DIALOGUE_LOAD_PORTRAIT = 2,
-    DIALOGUE_START_TEXT = 3,
-    DIALOGUE_UNLOAD_PORTRAIT = 4,
-    DIALOGUE_OPEN_DIALOG_BOX = 5,
-    DIALOGUE_CLOSE_DIALOG_BOX = 6,
-    DIALOGUE_END = 7,
-};
-
-enum DialogueSubsteps {
-    DIALOG_BOX_INIT = 0,
-    DIALOG_BOX_DRAW_RED = 1,
-    DIALOG_BOX_DRAW_BLUE = 2,
-};
+#include "../cutscene_dialog.h"
 
 #define DAI_CUTSCENE_ALUCARD_READY 1
 
@@ -471,70 +456,11 @@ void OVL_EXPORT(EntityCutsceneDialogue)(Entity* self) {
                     self->step = DIALOGUE_OPEN_DIALOG_BOX;
                     self->step_s = DIALOG_BOX_INIT;
                     return;
-                case CSOP_CLOSE_DIALOG:
-                    if (skip_cutscene) {
-                        continue;
-                    }
-                    g_Dialogue.portraitAnimTimer = 24;
-                    self->step = DIALOGUE_CLOSE_DIALOG_BOX;
-                    return;
-                case CSOP_PLAY_SOUND:
-                    if (skip_cutscene) {
-// psp and psx refuse to agree on this particular increment
-#ifdef VERSION_PSP
-                        g_Dialogue.scriptCur += 2;
-#else
-                    g_Dialogue.scriptCur++;
-                    g_Dialogue.scriptCur++;
-#endif
-                        continue;
-                    }
-                    nextChar = *g_Dialogue.scriptCur++;
-                    nextChar <<= 4;
-                    nextChar |= *g_Dialogue.scriptCur++;
-                    g_api.PlaySfx(nextChar);
-                    continue;
-                case CSOP_WAIT_FOR_SOUND:
-                    if (skip_cutscene) {
-                        continue;
-                    }
-                    if (g_api.func_80131F68()) {
-                        continue;
-                    }
-                    *g_Dialogue.scriptCur--;
-                    return;
-                case CSOP_SCRIPT_UNKNOWN_11:
-                    if (skip_cutscene) {
-                        continue;
-                    }
-                    if (g_api.func_80131F68() != 1) {
-                        continue;
-                    }
-                    *g_Dialogue.scriptCur--;
-                    return;
-                case CSOP_SET_END:
-                    ptr = (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-#ifdef VERSION_PSP
-                    ptr += (u_long)OVL_EXPORT(cutscene_script_ptr);
-#endif
-                    SetCutsceneEnd((u8*)ptr);
-                    continue;
-                case CSOP_SCRIPT_UNKNOWN_13:
-                    continue;
-                case CSOP_SCRIPT_UNKNOWN_14:
-                    ptr = (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
-                    ptr <<= 4;
-                    ptr |= (u_long)*g_Dialogue.scriptCur++;
+
+#define CSA1_ANIM_TIMER 24
+#define CSA1_V_SKIPCUTSCENE skip_cutscene
+#include "../cutscene_actions1.h"
+
 #ifdef VERSION_PSP
                     ptr += (u_long)OVL_EXPORT(cutscene_script_ptr);
 #else
