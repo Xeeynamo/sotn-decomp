@@ -1566,7 +1566,7 @@ void HandleNowLoading(void) {
         break;
     case Play_PrepareNextStage:
 #ifdef VERSION_PSP
-        if (!func_psp_08932B74(g_GameStep, 5)) {
+        if (!func_psp_08932B74()) {
             break;
         }
 #endif
