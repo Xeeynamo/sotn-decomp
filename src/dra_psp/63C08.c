@@ -1089,7 +1089,7 @@ s32 func_psp_091415E0(s32 arg0) {
 s32 func_psp_09141608(s32 arg0) {
     u32 i;
 
-    if (D_psp_08B42064) {
+    if (g_VoiceLanguage != LANG_JP) {
         for (i = 0; i < 5; i++) {
             if (arg0 == (D_psp_09189D40[i][0] - 0x300)) {
                 return D_psp_09189D40[i][1] - 0x300;

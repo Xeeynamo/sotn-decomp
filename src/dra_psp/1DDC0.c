@@ -719,7 +719,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     }
     if (type == SimFileType_Vh) {
         if (fileId & 0x8000) {
-            if (!D_psp_08B42064) {
+            if (g_VoiceLanguage == LANG_JP) {
                 var_a0 = fileId & 0x7FFF;
                 g_SimFile = &D_800A036C[var_a0];
             } else {
@@ -766,7 +766,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
     }
     if (type == SimFileType_Vb) {
         if (fileId & 0x8000) {
-            if (!D_psp_08B42064) {
+            if (g_VoiceLanguage == LANG_JP) {
                 g_SimFile = &D_800A036C[fileId & 0x7FFF];
             } else {
                 g_SimFile = &D_psp_09160430[fileId & 0x7FFF];
@@ -785,7 +785,7 @@ s32 func_psp_090FAB30(s32 fileId, SimFileType type, bool arg2) {
         return 0;
     }
     if (type == SimFileType_Seq) {
-        if (!D_psp_08B42064) {
+        if (g_VoiceLanguage == LANG_JP) {
             g_SimFile = &D_800A04AC[fileId];
         } else {
             g_SimFile = &D_psp_091605D0[fileId];

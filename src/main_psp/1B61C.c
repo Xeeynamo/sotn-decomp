@@ -26,7 +26,7 @@ extern u32 D_psp_08B42054;
 extern s32 g_UserLanguage;
 extern char* D_psp_08B4205C;
 extern char* D_psp_08B42060;
-extern s32 D_psp_08B42064;
+extern s32 g_VoiceLanguage;
 
 extern void FinishedRenderingCB(s32 arg0);
 extern void VBlankhandler(int idx, void* cookie);
@@ -87,19 +87,19 @@ static void UnloadPSPModules(void) {
     sceUtilityUnloadModule(PSP_MODULE_AV_SASCORE);
 }
 
-static void func_psp_0891A14C(void) {
-    static char* D_psp_08946424 = "PACK/";
-    static char* D_psp_08946430 = "sound/";
-    static char* D_psp_0894643C = "PACK_E/";
-    static char* D_psp_08946448 = "snd_e/";
+static void SetVoiceLanguagePaths(void) {
+    static char* j_pack_path = "PACK/";
+    static char* j_snd_path = "sound/";
+    static char* e_pack_path = "PACK_E/";
+    static char* e_snd_path = "snd_e/";
 
-    D_psp_08B42064 = func_psp_0893277C();
-    if (D_psp_08B42064 == 0) {
-        D_psp_08B4205C = D_psp_08946424;
-        D_psp_08B42060 = D_psp_08946430;
+    g_VoiceLanguage = GetDxCVoiceLanguage();
+    if (g_VoiceLanguage == LANG_JP) {
+        D_psp_08B4205C = j_pack_path;
+        D_psp_08B42060 = j_snd_path;
     } else {
-        D_psp_08B4205C = D_psp_0894643C;
-        D_psp_08B42060 = D_psp_08946448;
+        D_psp_08B4205C = e_pack_path;
+        D_psp_08B42060 = e_snd_path;
     }
 }
 
@@ -184,7 +184,7 @@ int main(int argc, char* argv[]) {
     printf("月下ユーティリティ開始00\n"); // Moonlight Started utility
     func_psp_0891979C(4);
     printf("月下ユーティリティ終了00\n"); // Moonlight End utility
-    func_psp_0891A14C();
+    SetVoiceLanguagePaths();
     SetScreenMode(
         GetDxCScreenMode() == 0 ? SCREEN_MODE_PERFECT : SCREEN_MODE_FULL);
     func_psp_08933A10();
