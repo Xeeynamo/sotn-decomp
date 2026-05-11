@@ -43,8 +43,8 @@ s16 g_SeqVolume2;
 s32 D_8013980C;
 s16 D_80139800;
 s16 D_psp_092374B8;
-s16 D_psp_092374B0;
-s16 g_CurrentXaSoundId;
+s16 g_PlayingXaBgmId;
+s16 g_QueuedXaBgmId;
 s16 D_80138F80;
 u8 D_80139014;
 u8 g_SeqPlayingId;
@@ -58,7 +58,7 @@ s16 g_XaVolumeMultiplier;
 s32 D_8013AE90;
 s32 D_8013AEF4;
 u8 D_8013B688[8];
-u8 g_CdMode[2];
+u8 g_CdParam[2];
 s8 D_8013B690;
 u16 g_SfxScriptVolume[NUM_CH];
 u16 g_SfxScriptVolumeCopy[NUM_CH];
@@ -688,7 +688,7 @@ void func_psp_09140588(s32 arg0) {
     if (!func_psp_09141550(arg0)) {
         D_psp_092374B8 = arg0;
     }
-    D_psp_092374B0 = arg0;
+    g_PlayingXaBgmId = arg0;
 }
 
 void MuteCd(void) {
@@ -836,7 +836,7 @@ void InitSoundVars1(void) {
     g_SeqAccessNum = 0;
     D_80138FBC = 0;
     D_psp_092374B8 = 0;
-    D_psp_092374B0 = 0;
+    g_PlayingXaBgmId = 0;
     D_80139800 = 0;
     D_80138F80 = 0;
     D_80139014 = 0;
@@ -899,8 +899,8 @@ void SoundInit(void) {
     SetMaxVolume();
     g_CdVolume = 0x78;
     SetCdVolume(0, g_CdVolume, g_CdVolume);
-    g_CdMode[0] = CdlModeSpeed | CdlModeRT | CdlModeSF;
-    DoCdCommand(CdlSetmode, g_CdMode, 0);
+    g_CdParam[0] = CdlModeSpeed | CdlModeRT | CdlModeSF;
+    DoCdCommand(CdlSetmode, g_CdParam, 0);
     InitSoundVars1();
     SetReverbDepth(10);
 }
@@ -1008,7 +1008,7 @@ static void AddCdSoundCommand(s16 arg0) {
         if (isFound) {
             g_DebugEnabled++;
             g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] =
-                CD_SOUND_COMMAND_14;
+                CD_SOUND_START_XA_PLAYBACK;
             g_CdSoundCommandQueuePos++;
             if (g_CdSoundCommandQueuePos == MAX_SND_COUNT) {
                 D_8013AEE8++;
@@ -1017,7 +1017,7 @@ static void AddCdSoundCommand(s16 arg0) {
                 }
                 g_CdSoundCommandQueuePos = 1;
                 g_CdSoundCommandQueue[g_CdSoundCommandQueuePos] =
-                    CD_SOUND_COMMAND_14;
+                    CD_SOUND_START_XA_PLAYBACK;
                 g_CdSoundCommandQueuePos++;
             }
         }
@@ -1153,8 +1153,8 @@ void CdSoundCommand4(void) {
     switch (g_CdSoundCommandStep) {
     case 0:
         D_801390A0 = 1;
-        g_CurrentXaConfigId = g_CurrentXaSoundId;
-        if (g_CurrentXaSoundId < 0x3D) {
+        g_CurrentXaConfigId = g_QueuedXaBgmId;
+        if (g_QueuedXaBgmId < 0x3D) {
             g_CdSoundCommand16 = 0;
         }
         D_80139014 = g_XaMusicConfigs[g_CurrentXaConfigId].unk230;
@@ -1200,7 +1200,7 @@ void CdSoundCommand6(void) {
     switch (g_CdSoundCommandStep) {
     case 0:
         D_801390A0 = 1;
-        D_8013845C = g_CurrentXaSoundId;
+        D_8013845C = g_QueuedXaBgmId;
         g_CdSoundCommandStep++;
         break;
 
@@ -1237,7 +1237,7 @@ void CdSoundCommand6(void) {
 void CdFadeOut1(void) {
     switch (g_CdSoundCommandStep) {
     case 0:
-        if (D_psp_092374B0 == 0) {
+        if (g_PlayingXaBgmId == 0) {
             SetMaxVolume();
             AdvanceCdSoundCommandQueue();
             break;
@@ -1254,7 +1254,7 @@ void CdFadeOut1(void) {
         break;
 
     case 1:
-        func_psp_0892A620(func_psp_091415E0(D_psp_092374B0), false);
+        func_psp_0892A620(func_psp_091415E0(g_PlayingXaBgmId), false);
         func_psp_09140588(0);
         SetMaxVolume();
         D_801390A0 = g_CdSoundCommandStep = 0;
@@ -1384,7 +1384,7 @@ void CdSoundCommand12(void) {
         if (g_CdSoundCommand16 >= 2) {
             g_CdSoundCommand16 = 0;
         }
-        if (D_psp_092374B0 == 0) {
+        if (g_PlayingXaBgmId == 0) {
             D_8013980C = 0;
             AdvanceCdSoundCommandQueue();
         } else {
@@ -1415,14 +1415,14 @@ void CdSoundCommand12(void) {
     case 3:
         temp_a2 = VSync(-1);
         for (i = 0; i < 8; i++) {
-            D_8013B5F4[g_CdSoundCommand16].unk0[i] = D_8013B688[i];
+            D_8013B5F4[g_CdSoundCommand16].cdLoc[i] = D_8013B688[i];
         }
         var_t0 = D_8013AE90 - (temp_a2 - D_8013AEF4);
         if (var_t0 <= 0) {
             var_t0 = 1;
         }
         D_8013B5F4[g_CdSoundCommand16].unk8 = var_t0;
-        D_8013B5F4[g_CdSoundCommand16].unkc = D_psp_092374B0;
+        D_8013B5F4[g_CdSoundCommand16].unkc = g_PlayingXaBgmId;
         D_8013B5F4[g_CdSoundCommand16].unke = D_80139014;
         SsSetSerialAttr(SS_SERIAL_A, SS_MIX, SS_SOFF);
         if (DoCdCommand(CdlPause, NULL, NULL) == 0) {
@@ -1449,7 +1449,7 @@ void CdSoundCommand12(void) {
     }
 }
 
-void CdSoundCommand14(void) {
+void CdSoundStartXaPlayback(void) {
     s32 i;
 
     switch (g_CdSoundCommandStep) {
@@ -1459,34 +1459,34 @@ void CdSoundCommand14(void) {
             AdvanceCdSoundCommandQueue();
             break;
         }
-        if (D_psp_092374B0 != 0) {
+        if (g_PlayingXaBgmId != 0) {
             D_8013980C = 0;
             AdvanceCdSoundCommandQueue();
             break;
         }
         D_801390A0 = 1;
         for (i = 0; i < 8; i++) {
-            D_8013B688[i] = D_8013B5F4[g_CdSoundCommand16 - 1].unk0[i];
+            D_8013B688[i] = D_8013B5F4[g_CdSoundCommand16 - 1].cdLoc[i];
         }
         func_psp_09140588(D_8013B5F4[g_CdSoundCommand16 - 1].unkc);
-        g_XaMusicVolume = g_XaMusicConfigs[D_psp_092374B0].volume;
+        g_XaMusicVolume = g_XaMusicConfigs[g_PlayingXaBgmId].volume;
         g_CdVolume = 0;
         SetCdVolume(0, 0, 0);
-        g_CdMode[0] = 0xC8;
+        g_CdParam[0] = CdlModeSF | CdlModeRT | CdlModeSpeed; // XA playback
         g_CdSoundCommandStep++;
         break;
 
     case 1:
-        if (DoCdCommand(CdlSetmode, g_CdMode, NULL) == 0) {
-            g_CdMode[0] = g_XaMusicConfigs[D_psp_092374B0].filter_file;
-            g_CdMode[1] =
-                g_XaMusicConfigs[D_psp_092374B0].filter_channel_id & 0xF;
+        if (DoCdCommand(CdlSetmode, g_CdParam, NULL) == 0) {
+            g_CdParam[0] = g_XaMusicConfigs[g_PlayingXaBgmId].filter_file;
+            g_CdParam[1] =
+                g_XaMusicConfigs[g_PlayingXaBgmId].filter_channel_id & 0xF;
             g_CdSoundCommandStep++;
         }
         break;
 
     case 2:
-        if (DoCdCommand(CdlSetfilter, g_CdMode, NULL) == 0) {
+        if (DoCdCommand(CdlSetfilter, g_CdParam, NULL) == 0) {
             g_CdSoundCommandStep++;
         }
         break;
@@ -1523,7 +1523,7 @@ void CdSoundCommand14(void) {
 
     case 7:
         if (g_CdVolume < g_XaMusicVolume) {
-            g_CdVolume += 0xC;
+            g_CdVolume += 12;
         }
         if (g_CdVolume >= g_XaMusicVolume) {
             g_CdVolume = g_XaMusicVolume;
@@ -1931,7 +1931,7 @@ void ExecSoundCommands(void) {
                 }
                 AddCdSoundCommand(CD_SOUND_COMMAND_FADE_OUT_2);
             }
-            g_CurrentXaSoundId = id - 0x300;
+            g_QueuedXaBgmId = id - 0x300;
             AddCdSoundCommand(CD_SOUND_COMMAND_START_XA);
             continue;
         }
@@ -2074,8 +2074,8 @@ void ExecSoundCommands(void) {
             AddCdSoundCommand(CD_SOUND_COMMAND_12);
             break;
 
-        case SET_UNK_11:
-            AddCdSoundCommand(CD_SOUND_COMMAND_14);
+        case SET_XA_PLAYBACK:
+            AddCdSoundCommand(CD_SOUND_START_XA_PLAYBACK);
             break;
 
         case SET_UNK_12:
@@ -2219,8 +2219,8 @@ void ExecCdSoundCommands(void) {
         CdSoundCommand12();
         break;
 
-    case CD_SOUND_COMMAND_14:
-        CdSoundCommand14();
+    case CD_SOUND_START_XA_PLAYBACK:
+        CdSoundStartXaPlayback();
         break;
 
     case CD_SOUND_COMMAND_16:
