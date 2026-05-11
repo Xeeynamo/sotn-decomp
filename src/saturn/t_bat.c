@@ -5,7 +5,7 @@
 INCLUDE_ASM("asm/saturn/t_bat/data", d60CF000, d_060CF000);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF060, func_060CF060);
 
-s32 CheckEntityValid(Entity *entity) {
+s32 CheckEntityValid(Entity* entity) {
     if (entity->hitboxState == 0)
         return 0;
     if (entity->posX.i.hi < -16)
@@ -16,7 +16,7 @@ s32 CheckEntityValid(Entity *entity) {
         return 0;
     if (entity->posY.i.hi < 0)
         return 0;
-    if (entity->hitPoints >= 0x7000) 
+    if (entity->hitPoints >= 0x7000)
         return 0;
     if (entity->hitPoints <= 0)
         return 0;
