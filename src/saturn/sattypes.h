@@ -185,7 +185,7 @@ typedef struct Entity {
     /* 0x34 */ u32 flags;
     /* 0x38 */ u16 enemyId;
     /* 0x3A */ u16 hitboxState; // hitbox state
-    /* 0x3C */ char pad_3C[2];
+    /* 0x3C */ s16 hitPoints;
     /* 0x3E */ s16 attack;
     /* 0x40 */ s16 attackElement;
     /* 0x42 */ s16 pad_42;

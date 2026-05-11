@@ -4,7 +4,25 @@
 
 INCLUDE_ASM("asm/saturn/t_bat/data", d60CF000, d_060CF000);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF060, func_060CF060);
-INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF294, func_060CF294);
+
+s32 CheckEntityValid(Entity *entity) {
+    if (entity->hitboxState == 0)
+        return 0;
+    if (entity->posX.i.hi < -16)
+        return 0;
+    if (entity->posX.i.hi > 0x150)
+        return 0;
+    if (entity->posY.i.hi > 0xF0)
+        return 0;
+    if (entity->posY.i.hi < 0)
+        return 0;
+    if (entity->hitPoints >= 0x7000) 
+        return 0;
+    if (entity->hitPoints <= 0)
+        return 0;
+    return 1;
+}
+
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF2E8, func_060CF2E8);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF410, func_060CF410);
 INCLUDE_ASM("asm/saturn/t_bat/f_nonmat", f60CF5F4, func_060CF5F4);
