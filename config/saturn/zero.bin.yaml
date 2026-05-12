@@ -20,6 +20,16 @@ segments:
       - start: 0x58
         type: c
         file: zero
+        end: 0xA5C3
+
+      - start: 0xA5C4
+        type: data
+        file: zero
+        end: 0xADE4
+
+      - start: 0xADE5
+        type: c
+        file: zero
         end: 0xae07
   
       # ratan2
