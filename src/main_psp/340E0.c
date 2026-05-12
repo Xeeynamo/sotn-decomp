@@ -17,21 +17,21 @@ typedef struct {
     s32 unk4;
     s32 unk8;
     s32 unkC;
-    s32 unk10;
-    unkStruct2* unk14;
-    s32 unk18;
+    s32 readStep;
+    void* buf;
+    u32 bufSize;
     u32 unk1C;
     u32 unk20;
     s32 unk24;
     s32 unk28;
-    s32 unk2C;
-    s32 unk30;
-    char unk34[0x40];
+    s32 fd;
+    s32 index;
+    char filePath[0x40];
 } unkStruct;
 
 extern s32 D_psp_08B4205C;
 
-static s32 D_psp_090DC8C4[6];
+static SceUID semaphoreIDs[6];
 static s32 D_psp_090DC8C0;
 static u8 D_psp_0908C8C0[0x50000];
 static u8 D_psp_0906C8C0[0x20000]; // unused
@@ -52,30 +52,30 @@ void func_psp_08933954(unkStruct* arg0);
 void func_psp_08933C30(s32 arg0, s32 arg1);
 void func_psp_08933ED8(s32 arg0);
 
-s32 func_psp_089329EC(s32 arg0, s32 arg1) {
+static s32 func_psp_089329EC(s32 arg0, s32 arg1) {
     unkStruct2* var_s0;
     unkStruct2* var_s1;
 
-    var_s1 = D_psp_08E2E5F8[arg0].unk14;
-    var_s0 = D_psp_08E2E5F8[arg0].unk14;
-    return (s32)var_s0 + (*(&var_s1[arg1].unk0 + 2) + 0x80);
+    var_s1 = D_psp_08E2E5F8[arg0].buf;
+    var_s0 = D_psp_08E2E5F8[arg0].buf;
+    return *(&var_s1[arg1].unk0 + 2) + 0x80 + (s32)var_s0;
 }
 
-s32 func_psp_08932A7C(s32 arg0, s32 arg1) {
+static s32 func_psp_08932A7C(s32 arg0, s32 arg1) {
     unkStruct2* var_s0;
 
-    var_s0 = D_psp_08E2E5F8[arg0].unk14;
+    var_s0 = D_psp_08E2E5F8[arg0].buf;
     return *(&var_s0[arg1].unk0 + 3);
 }
 
 void func_psp_08932AD4(s32 arg0) {
     s32 var_s0;
-    unkStruct* var_s1;
+    unkStruct* ptr;
 
     var_s0 = 0;
     func_psp_089337EC(0);
-    var_s1 = D_psp_08E2E5F8;
-    if (var_s1[0].unkC == arg0) {
+    ptr = D_psp_08E2E5F8;
+    if (ptr[0].unkC == arg0) {
         var_s0 = 1;
     }
     func_psp_08933830(0);
@@ -175,7 +175,7 @@ s32 func_psp_08933180(s32 arg0) { return func_psp_089329EC(5, arg0); }
 
 s32 func_psp_089331AC(void) { return func_psp_08933180(0); }
 
-s32 func_psp_089331D0(SceUID fd, s32 arg1) {
+s32 func_psp_089331D0(SceUID fd, u32 bufSize) {
     volatile s32 ret;
     SceInt64 res;
 
@@ -198,192 +198,186 @@ void func_psp_0893325C(unkStruct* arg0) {
     s32 ret;
     SceInt64 res;
 
-    if (arg0->unk2C > 0) {
-        ret = sceIoClose(arg0->unk2C);
+    if (arg0->fd > 0) {
+        ret = sceIoClose(arg0->fd);
         if (ret == SCE_KERNEL_ERROR_ASYNC_BUSY) {
-            ret = sceIoWaitAsync(arg0->unk2C, &res);
-            ret = sceIoClose(arg0->unk2C);
+            ret = sceIoWaitAsync(arg0->fd, &res);
+            ret = sceIoClose(arg0->fd);
         }
-        arg0->unk2C = -1;
+        arg0->fd = -1;
     }
-    arg0->unk10 = 0;
+    arg0->readStep = 0;
     sceKernelDelayThreadCB(499980);
 }
 
 s32 func_psp_08933304(u32 args, void* argp) {
-    unkStruct** var_s6;
     char filePath[0x200];
     s32 var_s3;
     s32 ret;
-    s32 var_s5;
     s32 i;
-    unkStruct2* temp_s2;
-    unkStruct* temp_s0;
 
-    var_s5 = 1;
-    var_s6 = (unkStruct**)argp;
-    temp_s0 = *var_s6;
-    func_psp_08933760(temp_s0);
-    temp_s0->unk10 = 0;
-    temp_s0->unk1C = 0;
-    temp_s0->unk8 = -1;
-    func_psp_0890F250(temp_s0->unk34, &filePath);
-    func_psp_089337A8(temp_s0);
-    while (var_s5) {
-        func_psp_08933760(temp_s0);
+    bool running = true;
+    unkStruct** var_s6 = (unkStruct**)argp;
+    unkStruct* ptr = *var_s6;
+
+    func_psp_08933760(ptr);
+    ptr->readStep = 0;
+    ptr->unk1C = 0;
+    ptr->unk8 = -1;
+    func_psp_0890F250(ptr->filePath, &filePath);
+    func_psp_089337A8(ptr);
+    while (running) {
+        func_psp_08933760(ptr);
         if (func_psp_089123B8() == 0) {
-            func_psp_0893325C(temp_s0);
+            func_psp_0893325C(ptr);
         } else {
-            switch (temp_s0->unk10) {
+            switch (ptr->readStep) {
             case 0:
-                temp_s0->unk2C = sceIoOpenAsync(filePath, 1, 0x1FF);
-                if (temp_s0->unk2C >= 0) {
-                    temp_s0->unk10++;
-                    temp_s0->unk1C = 0;
+                ptr->fd = sceIoOpenAsync(filePath, 1, 0x1FF);
+                if (ptr->fd >= 0) {
+                    ptr->readStep++;
+                    ptr->unk1C = 0;
                 }
                 break;
             case 1:
-                var_s3 = func_psp_089331D0(temp_s0->unk2C, 0);
+                var_s3 = func_psp_089331D0(ptr->fd, 0);
                 if (var_s3 > 0) {
-                    temp_s0->unk10++;
+                    ptr->readStep++;
                 } else if (var_s3 < 0) {
-                    func_psp_0893325C(temp_s0);
+                    func_psp_0893325C(ptr);
                 }
                 break;
             case 2:
                 ret = sceIoReadAsync(
-                    temp_s0->unk2C,
-                    (void*)((((u32)temp_s0->unk14 + temp_s0->unk1C) &
-                             0x0FFFFFFF) |
+                    ptr->fd,
+                    (void*)((((u32)ptr->buf + ptr->unk1C) & 0x0FFFFFFF) |
                             0x40000000),
                     0x800);
                 if (ret >= 0) {
-                    temp_s0->unk10++;
+                    ptr->readStep++;
                 } else {
-                    func_psp_0893325C(temp_s0);
+                    func_psp_0893325C(ptr);
                 }
                 break;
             case 3:
-                var_s3 = func_psp_089331D0(temp_s0->unk2C, temp_s0->unk18);
+                var_s3 = func_psp_089331D0(ptr->fd, ptr->bufSize);
                 if (var_s3 > 0) {
-                    temp_s0->unk10++;
-                    temp_s0->unk1C = 0x800;
-                    temp_s2 = temp_s0->unk14;
-                    temp_s0->unk24 = 0x80;
+                    unkStruct2* temp_s2;
+                    ptr->readStep++;
+                    ptr->unk1C = 0x800;
+                    temp_s2 = ptr->buf;
+                    ptr->unk24 = 0x80;
                     for (i = 0; i < temp_s2->unk0; i++) {
-                        temp_s0->unk24 += (&temp_s2[i] + 1)->unk4;
+                        ptr->unk24 += (&temp_s2[i] + 1)->unk4;
                     }
                 } else if (var_s3 < 0) {
-                    func_psp_0893325C(temp_s0);
+                    func_psp_0893325C(ptr);
                 }
                 break;
             case 4:
-                temp_s0->unk20 = temp_s0->unk24 - temp_s0->unk1C;
-                if (temp_s0->unk20 > 0x6400) {
-                    temp_s0->unk20 = 0x6400;
+                ptr->unk20 = ptr->unk24 - ptr->unk1C;
+                if (ptr->unk20 > 0x6400) {
+                    ptr->unk20 = 0x6400;
                 }
                 ret = sceIoReadAsync(
-                    temp_s0->unk2C,
-                    (void*)((((u32)temp_s0->unk14 + temp_s0->unk1C) &
-                             0x0FFFFFFF) |
+                    ptr->fd,
+                    (void*)((((u32)ptr->buf + ptr->unk1C) & 0x0FFFFFFF) |
                             0x40000000),
-                    temp_s0->unk20);
+                    ptr->unk20);
                 if (ret >= 0) {
-                    temp_s0->unk10++;
+                    ptr->readStep++;
                 } else {
-                    func_psp_0893325C(temp_s0);
+                    func_psp_0893325C(ptr);
                 }
                 break;
             case 5:
-                var_s3 = func_psp_089331D0(temp_s0->unk2C, temp_s0->unk18);
+                var_s3 = func_psp_089331D0(ptr->fd, ptr->bufSize);
                 if (var_s3 > 0) {
-                    temp_s0->unk1C += temp_s0->unk20;
-                    if (temp_s0->unk1C >= temp_s0->unk24) {
-                        temp_s0->unk10++;
+                    ptr->unk1C += ptr->unk20;
+                    if (ptr->unk1C >= ptr->unk24) {
+                        ptr->readStep++;
                     } else {
-                        temp_s0->unk10 = 4;
+                        ptr->readStep = 4;
                     }
                 } else if (var_s3 < 0) {
-                    func_psp_0893325C(temp_s0);
+                    func_psp_0893325C(ptr);
                 }
                 break;
             case 6:
-                ret = sceIoClose(temp_s0->unk2C);
-                if (temp_s0->unk4 == 0 && func_psp_08932CC8()) {
+                ret = sceIoClose(ptr->fd);
+                if (ptr->unk4 == 0 && func_psp_08932CC8()) {
                     memcpy(D_psp_0908C8C0, (void*)func_psp_08932CA4(),
                            func_psp_08932CC8());
                     D_psp_090DC8C0 = func_psp_08932CC8();
                 }
-                temp_s0->unk2C = -1;
-                var_s5 = 0;
+                ptr->fd = -1;
+                running = false;
                 break;
             }
         }
-        func_psp_089337A8(temp_s0);
+        func_psp_089337A8(ptr);
         sceDisplayWaitVblankStartCB();
     }
-    func_psp_08933760(temp_s0);
-    temp_s0->unk28 = -1;
-    temp_s0->unk2C = -1;
-    temp_s0->unk8 = temp_s0->unkC;
-    func_psp_089337A8(temp_s0);
+    func_psp_08933760(ptr);
+    ptr->unk28 = -1;
+    ptr->fd = -1;
+    ptr->unk8 = ptr->unkC;
+    func_psp_089337A8(ptr);
     sceKernelExitDeleteThread(0);
     return 0;
 }
 
 void func_psp_08933760(unkStruct* arg0) {
-    sceKernelWaitSema(D_psp_090DC8C4[arg0->unk30], 1, NULL);
+    sceKernelWaitSema(semaphoreIDs[arg0->index], 1, NULL);
 }
 
 void func_psp_089337A8(unkStruct* arg0) {
-    sceKernelSignalSema(D_psp_090DC8C4[arg0->unk30], 1);
+    sceKernelSignalSema(semaphoreIDs[arg0->index], 1);
 }
 
 void func_psp_089337EC(s32 arg0) {
-    sceKernelWaitSema(D_psp_090DC8C4[arg0], 1, NULL);
+    sceKernelWaitSema(semaphoreIDs[arg0], 1, NULL);
 }
 
-void func_psp_08933830(s32 arg0) {
-    sceKernelSignalSema(D_psp_090DC8C4[arg0], 1);
-}
+void func_psp_08933830(s32 arg0) { sceKernelSignalSema(semaphoreIDs[arg0], 1); }
 
 void func_psp_08933870(unkStruct* arg0) {
     arg0->unk8 = -1;
     arg0->unkC = -1;
-    arg0->unk10 = 0;
+    arg0->readStep = 0;
     arg0->unk28 = -1;
-    arg0->unk2C = -1;
+    arg0->fd = -1;
 }
 
-void func_psp_089338BC(unkStruct* arg0, u32 arg1) {
+static void func_psp_089338BC(unkStruct* arg0, u32 priority) {
     volatile s32 ret;
-    unkStruct* sp18;
+    unkStruct* args;
 
-    sp18 = arg0;
+    args = arg0;
 
     func_psp_08933954(arg0);
     arg0->unk28 = sceKernelCreateThread(
-        "BACKREADL", &func_psp_08933304, arg1, 0x1000, 0, NULL);
+        "BACKREADL", &func_psp_08933304, priority, 0x1000, 0, NULL);
     if (arg0->unk28 < 0) {
         (volatile) arg0;
     }
-    ret = sceKernelStartThread(arg0->unk28, 4, &sp18);
+    ret = sceKernelStartThread(arg0->unk28, 4, &args);
     (volatile) ret;
 }
 
-void func_psp_08933954(unkStruct* arg0) {
+static void func_psp_08933954(unkStruct* arg0) {
     s32 ret;
     SceInt64 res;
 
     if (arg0->unk28 >= 0) {
         sceKernelTerminateDeleteThread(arg0->unk28);
-        if (arg0->unk2C >= 0) {
-            ret = sceIoClose(arg0->unk2C);
+        if (arg0->fd >= 0) {
+            ret = sceIoClose(arg0->fd);
             if (ret == SCE_KERNEL_ERROR_ASYNC_BUSY) {
-                ret = sceIoWaitAsync(arg0->unk2C, &res);
-                ret = sceIoClose(arg0->unk2C);
+                ret = sceIoWaitAsync(arg0->fd, &res);
+                ret = sceIoClose(arg0->fd);
             }
-            arg0->unk2C = -1;
+            arg0->fd = -1;
         }
         arg0->unk28 = -1;
     }
@@ -393,24 +387,24 @@ void func_psp_08933A10(void) {
     s32 i;
 
     for (i = 0; i < 6; i++) {
-        D_psp_090DC8C4[i] = sceKernelCreateSema("BACKREAD_SEMA", 0, 1, 1, NULL);
+        semaphoreIDs[i] = sceKernelCreateSema("BACKREAD_SEMA", 0, 1, 1, NULL);
     }
     for (i = 0; i < 6; i++) {
-        D_psp_08E2E5F8[i].unk30 = i;
+        D_psp_08E2E5F8[i].index = i;
         func_psp_08933870(&D_psp_08E2E5F8[i]);
     }
-    D_psp_08E2E5F8[0].unk14 = (unkStruct2*)D_psp_08E2E8C0;
-    D_psp_08E2E5F8[1].unk14 = (unkStruct2*)D_psp_08F8A8C0;
-    D_psp_08E2E5F8[2].unk14 = (unkStruct2*)D_psp_08F958C0;
-    D_psp_08E2E5F8[3].unk14 = (unkStruct2*)D_psp_08FA08C0;
-    D_psp_08E2E5F8[4].unk14 = (unkStruct2*)D_psp_08FCC8C0;
-    D_psp_08E2E5F8[5].unk14 = (unkStruct2*)D_psp_08FCC8C0;
-    D_psp_08E2E5F8[0].unk18 = LEN(D_psp_08E2E8C0);
-    D_psp_08E2E5F8[1].unk18 = LEN(D_psp_08F8A8C0);
-    D_psp_08E2E5F8[2].unk18 = LEN(D_psp_08F958C0);
-    D_psp_08E2E5F8[3].unk18 = LEN(D_psp_08FA08C0);
-    D_psp_08E2E5F8[4].unk18 = LEN(D_psp_08FCC8C0);
-    D_psp_08E2E5F8[5].unk18 = LEN(D_psp_08FCC8C0);
+    D_psp_08E2E5F8[0].buf = D_psp_08E2E8C0;
+    D_psp_08E2E5F8[1].buf = D_psp_08F8A8C0;
+    D_psp_08E2E5F8[2].buf = D_psp_08F958C0;
+    D_psp_08E2E5F8[3].buf = D_psp_08FA08C0;
+    D_psp_08E2E5F8[4].buf = D_psp_08FCC8C0;
+    D_psp_08E2E5F8[5].buf = D_psp_08FCC8C0;
+    D_psp_08E2E5F8[0].bufSize = LEN(D_psp_08E2E8C0);
+    D_psp_08E2E5F8[1].bufSize = LEN(D_psp_08F8A8C0);
+    D_psp_08E2E5F8[2].bufSize = LEN(D_psp_08F958C0);
+    D_psp_08E2E5F8[3].bufSize = LEN(D_psp_08FA08C0);
+    D_psp_08E2E5F8[4].bufSize = LEN(D_psp_08FCC8C0);
+    D_psp_08E2E5F8[5].bufSize = LEN(D_psp_08FCC8C0);
     D_psp_090DC8C0 = 0;
 }
 
@@ -419,43 +413,44 @@ void func_psp_08933BA0(void) {
 
     for (i = 0; i < 6; i++) {
         func_psp_08933954(&D_psp_08E2E5F8[i]);
-        sceKernelDeleteSema(D_psp_08E2E5F8[i].unk30);
+        // BUG, this should be semaphoreIDs[D_psp_08E2E5F8[i].index]
+        sceKernelDeleteSema(D_psp_08E2E5F8[i].index);
     }
 }
 
 void func_psp_08933C30(s32 arg0, s32 arg1) {
-    u8 temp_s1;
-    unkStruct* temp_s0;
+    u8 priority;
+    unkStruct* ptr;
 
-    temp_s1 = 0x3E;
+    priority = 62;
     func_psp_089337EC(arg0);
-    temp_s0 = &D_psp_08E2E5F8[arg0];
-    if (arg0 == 4 || arg0 == 5 || temp_s0->unk8 != arg1) {
-        temp_s0->unkC = arg1;
-        temp_s0->unk8 = -1;
-        temp_s0->unk4 = arg0;
+    ptr = &D_psp_08E2E5F8[arg0];
+    if (arg0 == 4 || arg0 == 5 || ptr->unk8 != arg1) {
+        ptr->unkC = arg1;
+        ptr->unk8 = -1;
+        ptr->unk4 = arg0;
         switch (arg0) {
         case 0:
-            sprintf(temp_s0->unk34, "%sSTP%02d.BIN;1", D_psp_08B4205C, arg1);
-            func_psp_089338BC(temp_s0, temp_s1);
+            sprintf(ptr->filePath, "%sSTP%02d.BIN;1", D_psp_08B4205C, arg1);
+            func_psp_089338BC(ptr, priority);
             break;
         case 1:
         case 2:
-            sprintf(temp_s0->unk34, "%sW%cP%02d.BIN;1", D_psp_08B4205C,
+            sprintf(ptr->filePath, "%sW%cP%02d.BIN;1", D_psp_08B4205C,
                     arg0 + 0x2F, arg1);
-            func_psp_089338BC(temp_s0, temp_s1 - 1);
+            func_psp_089338BC(ptr, priority - 1);
             break;
         case 3:
-            sprintf(temp_s0->unk34, "%sTP%02d.BIN;1", D_psp_08B4205C, arg1);
-            func_psp_089338BC(temp_s0, temp_s1 - 1);
+            sprintf(ptr->filePath, "%sTP%02d.BIN;1", D_psp_08B4205C, arg1);
+            func_psp_089338BC(ptr, priority - 1);
             break;
         case 4:
-            sprintf(temp_s0->unk34, "%sPLP%01d.BIN;1", D_psp_08B4205C, arg1);
-            func_psp_089338BC(temp_s0, temp_s1);
+            sprintf(ptr->filePath, "%sPLP%01d.BIN;1", D_psp_08B4205C, arg1);
+            func_psp_089338BC(ptr, priority);
             break;
         case 5:
-            sprintf(temp_s0->unk34, "%sOTP%01d.BIN;1", D_psp_08B4205C, arg1);
-            func_psp_089338BC(temp_s0, temp_s1);
+            sprintf(ptr->filePath, "%sOTP%01d.BIN;1", D_psp_08B4205C, arg1);
+            func_psp_089338BC(ptr, priority);
             break;
         }
     }
@@ -464,14 +459,14 @@ void func_psp_08933C30(s32 arg0, s32 arg1) {
 
 s32 func_psp_08933E38(s32 arg0) {
     s32 var_s1;
-    unkStruct* temp_s0;
+    unkStruct* ptr;
 
     var_s1 = 0;
     func_psp_089337EC(arg0);
-    temp_s0 = &D_psp_08E2E5F8[arg0];
-    if (temp_s0->unkC == -1) {
+    ptr = &D_psp_08E2E5F8[arg0];
+    if (ptr->unkC == -1) {
         var_s1 = 1;
-    } else if (temp_s0->unkC == temp_s0->unk8) {
+    } else if (ptr->unkC == ptr->unk8) {
         var_s1 = 1;
     }
     func_psp_08933830(arg0);
@@ -479,15 +474,15 @@ s32 func_psp_08933E38(s32 arg0) {
 }
 
 void func_psp_08933ED8(s32 arg0) {
-    unkStruct* temp_s0;
+    unkStruct* ptr;
 
     func_psp_089337EC(arg0);
-    temp_s0 = &D_psp_08E2E5F8[arg0];
-    func_psp_08933954(temp_s0);
+    ptr = &D_psp_08E2E5F8[arg0];
+    func_psp_08933954(ptr);
     func_psp_08933830(arg0);
     sceDisplayWaitVblankStartCB();
-    temp_s0->unkC = -1;
-    temp_s0->unk8 = -1;
+    ptr->unkC = -1;
+    ptr->unk8 = -1;
 }
 
 u8* func_psp_08933F5C(void) { return D_psp_0908C8C0; }

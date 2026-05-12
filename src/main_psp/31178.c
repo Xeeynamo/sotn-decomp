@@ -1128,7 +1128,7 @@ s32 GetDxCScreenMode(void) { return D_psp_08DED03C.screenMode; }
 
 s32 GetDxCWallpaperIndex(void) { return D_psp_08DED03C.wallpaperIndex; }
 
-s32 func_psp_0893277C(void) { return D_psp_08DED03C.unk5; }
+s32 GetDxCVoiceLanguage(void) { return D_psp_08DED03C.voiceLanguage; }
 
 s32 GetDxCUseAnalogStick(void) { return D_psp_08DED03C.useAnalogStick; }
 
