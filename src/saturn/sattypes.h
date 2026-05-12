@@ -25,6 +25,7 @@ typedef unsigned long long u64;
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
 #define STAGE_ST0 0x1F
 #define TOTAL_ENTITY_COUNT 256
+#define STAGE_ENTITY_START 64
 #define FACTORY(id, param) ((id) + (param << 16))
 
 #define SFX_HEART_PICKUP 0x67A
