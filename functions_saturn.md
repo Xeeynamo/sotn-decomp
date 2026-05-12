@@ -192,7 +192,6 @@
 | zero/f_nonmat/f601333C.s     | func_0601333C   |       51 |          4 |       |     |
 | zero/f_nonmat/f6016C08.s     | func_06016C08   |       51 |          4 |       |     |
 | zero/f_nonmat/f600831C.s     | func_0600831C   |       51 |          6 |       |     |
-| t_bat/f_nonmat/f60CF294.s    | func_060CF294   |       51 |          7 |       |     |
 | t_bat/f_nonmat/f60D125C.s    | func_060D125C   |       51 |          7 |       |     |
 | zero/f_nonmat/f600AFA8.s     | func_0600AFA8   |       52 |          2 |       |     |
 | zero/f_nonmat/f6004E94.s     | func_06004E94   |       52 |          4 |       |     |
