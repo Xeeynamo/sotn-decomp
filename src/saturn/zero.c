@@ -858,7 +858,7 @@ long ratan2(long dx, long dy) {
         }
     } else {
         if (dy < 0) {
-            if (-dy >= -dx){
+            if (-dy >= -dx) {
                 ret = 0x800 + ratan_tbl[(-dx << 10) / -dy];
             } else {
                 ret = 0xC00 - ratan_tbl[(-dy << 10) / -dx];
