@@ -18,19 +18,19 @@ typedef struct {
 
 INCLUDE_ASM("asm/saturn/t_bat/data", d60CF000, d_060CF000);
 
-extern u32 s_LastTargetedEntityIndex; // 0x060D1E00
+extern u32 s_LastTargetedEntityIndex;        // 0x060D1E00
 extern BatAbilityValues g_BatAbilityStats[]; // 0x060D1D34
-extern FamiliarStats s_BatStats; // 0x060D2830
+extern FamiliarStats s_BatStats;             // 0x060D2830
 
-Entity* FindValidTarget(Entity *self) {
-    #define ABS(x, y) (((x) - (y)) < 0 ? (y) - (x) : (x) - (y))
+Entity* FindValidTarget(Entity* self) {
+#define ABS(x, y) (((x) - (y)) < 0 ? (y) - (x) : (x) - (y))
     s16 s_TargetMatch[0x80];
 
     const s32 EntitySearchCount = 128;
     s32 foundIndex;
     s32 i;
     u32 found;
-    Entity *entity;
+    Entity* entity;
 
     found = 0;
     entity = &g_Entities[STAGE_ENTITY_START];
@@ -42,7 +42,7 @@ Entity* FindValidTarget(Entity *self) {
         if (entity->hitboxState == 0) {
             continue;
         }
-        if (entity->flags & 0x200000) {
+        if (entity->flags & FLAG_UNK_00200000) {
             continue;
         }
         if (entity->posX.i.hi < -16) {
@@ -57,7 +57,8 @@ Entity* FindValidTarget(Entity *self) {
         if (entity->posY.i.hi < 0) {
             continue;
         }
-        if (entity->hitboxState & 8 && !g_BatAbilityStats[s_BatStats.level / 10].makeBadAttacks) {
+        if (entity->hitboxState & 8 &&
+            !g_BatAbilityStats[s_BatStats.level / 10].makeBadAttacks) {
             continue;
         }
         if (ABS(self->posX.i.hi, entity->posX.i.hi) < 64 &&
@@ -73,13 +74,14 @@ Entity* FindValidTarget(Entity *self) {
         if (entity->hitPoints >= 0x7000) {
             continue;
         }
-        if (entity->flags & 0x80000) {
-            if (entity->hitPoints >= g_BatAbilityStats[s_BatStats.level / 10].minimumEnemyHp) {
+        if (entity->flags & FLAG_UNK_80000) {
+            if (entity->hitPoints >=
+                g_BatAbilityStats[s_BatStats.level / 10].minimumEnemyHp) {
                 found++;
                 s_TargetMatch[i] = 1;
             }
         } else {
-            entity->flags |= 0x80000;
+            entity->flags |= FLAG_UNK_80000;
             return entity;
         }
     }
@@ -88,7 +90,8 @@ Entity* FindValidTarget(Entity *self) {
         for (i = 0; i < EntitySearchCount; i++) {
             if (s_TargetMatch[foundIndex]) {
                 entity = &g_Entities[STAGE_ENTITY_START + foundIndex];
-                s_LastTargetedEntityIndex = (foundIndex + 1) % EntitySearchCount;
+                s_LastTargetedEntityIndex =
+                    (foundIndex + 1) % EntitySearchCount;
                 return entity;
             }
             foundIndex = (foundIndex + 1) % EntitySearchCount;
