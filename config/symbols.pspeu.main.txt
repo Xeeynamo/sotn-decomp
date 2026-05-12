@@ -711,6 +711,7 @@ dispThread = 0x08B42010;
 readThread = 0x08B42020;
 soundThread = 0x08B42030;
 power_cb = 0x08B42040;
+g_VoiceLanguage = 0x08B42064;
 D_psp_08C63B28 = 0x08C63B28; // size:0x8
 D_psp_08C63B30 = 0x08C63B30; // size:0x8
 D_psp_08C63B38 = 0x08C63B38; // size:0x8
