@@ -57,7 +57,30 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C064, func_0606C064);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C088, func_0606C088);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C160, func_0606C160);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C3E4, func_0606C3E4);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C504, func_0606C504);
+
+void FUN_0606c504(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
+    Entity* entity;
+    s32 i;
+    
+    entity = &g_Entities[0];
+    for (i = 0; i < TOTAL_ENTITY_COUNT; i++, entity++) {
+        if (entity->unk68) {
+            s32 temp = entity->unk68 * 0x100;
+            entity->posX.val += arg0 * temp;
+            entity->posY.val += arg1 * temp;
+        } else {
+            if (entity->flags & FLAG_POS_CAMERA_LOCKED) {
+                entity->posX.i.hi += arg0;
+                entity->posY.i.hi += arg1;
+            }
+            if (entity->flags & FLAG_POS_PLAYER_LOCKED) {
+                entity->posX.val -= arg2;
+                entity->posY.val -= arg3;
+            }
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C594, func_0606C594);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C774, func_0606C774);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606CA10, func_0606CA10);
@@ -86,8 +109,8 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DF2C, func_0606DF2C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DFA0, func_0606DFA0);
 
 void servant_work_clear(void) {
-    Entity* entity;
     s32 i;
+    Entity* entity;
 
     entity = &g_Entities[4];
     for (i = 4; i < STAGE_ENTITY_START; i++, entity++) {
@@ -99,8 +122,8 @@ void servant_work_clear(void) {
 }
 
 void init_work_sub_out_p(void) {
-    Entity* entity;
     s32 i;
+    Entity* entity;
 
     entity = &g_Entities[0];
     for (i = 0; i < STAGE_ENTITY_START; i++, entity++) {
@@ -630,8 +653,11 @@ s32 func_800FF494(EnemyDef* arg0) {
     }
 }
 
+// func_800F27F4
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070938, func_06070938);
+// func_800F2860
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070988, func_06070988);
+// RunMainEngine
 INCLUDE_ASM("asm/saturn/game/data", d6070A60, d_06070A60);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
 

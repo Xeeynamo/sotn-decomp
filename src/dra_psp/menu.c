@@ -2973,8 +2973,8 @@ void InitWeapon(s32 itemSlot) {
 }
 
 void servant_work_clear(void) {
-    Entity* entity;
     s32 i;
+    Entity* entity;
 
     entity = &g_Entities[4];
     for (i = 4; i < STAGE_ENTITY_START; i++, entity++) {

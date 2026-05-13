@@ -232,7 +232,9 @@ typedef struct Entity {
     /* 0x52 */ s16 unk52;
     /* 0x54 */ char pad_54[0xC];
     /* 0x60 */ s16 primIndex;
-    /* 0x62 */ char pad_62[0x12];
+    /* 0x62 */ char pad_62[0x2];
+    /* 0x64 */ u16 unk68;
+    /* 0x66 */ char pad_66[0xE];
     /* 0x74 */ u16 entityId;
     /* 0x76 */ char pad_76[0x2];
     /* 0x78 */ Ext ext;
