@@ -2972,17 +2972,16 @@ void InitWeapon(s32 itemSlot) {
     }
 }
 
-void func_800FAB1C(void) {
-    const int START = 4;
-    s32 i;
+void servant_work_clear(void) {
     Entity* entity;
+    s32 i;
 
-    entity = &g_Entities[START];
-    for (i = START; i < 64; i++) {
-        if (entity->entityId >= 0xD0 && entity->entityId < 0xE0) {
+    entity = &g_Entities[4];
+    for (i = 4; i < STAGE_ENTITY_START; i++, entity++) {
+        u16 entityID = entity->entityId;
+        if (entityID >= 0xD0 && entityID < 0xE0) {
             DestroyEntity(entity);
         }
-        entity++;
     }
 }
 
@@ -3649,7 +3648,7 @@ block_4:
         break;
     case MENU_STEP_EXIT_10:
         if (g_Servant == FAM_ACTIVE_NONE || g_Servant != g_ServantPrevious) {
-            func_800FAB1C();
+            servant_work_clear();
         }
         if (g_Servant == FAM_ACTIVE_NONE || g_Servant == g_ServantLoaded) {
             if (g_Servant != FAM_ACTIVE_NONE) {

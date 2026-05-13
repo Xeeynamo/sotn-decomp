@@ -234,10 +234,10 @@ typedef struct Entity {
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ char pad_62[0x12];
     /* 0x74 */ u16 entityId;
-    /* 0x76 */ char pad_76[0x1];
-    /* 0x80 */ Ext ext;
-    /* 0x88 */ char pad_88[0x2];
-    /* 0x8A */ struct UnkStruct_060e8350* unk8A;
+    /* 0x76 */ char pad_76[0x2];
+    /* 0x78 */ Ext ext;
+    /* 0xB0 */ char pad_B0[0x4];
+    /* 0xB4 */ struct UnkStruct_060e8350* unkB4;
 } Entity; // size = 0xB8
 
 typedef struct Unk0600B344 {
