@@ -25,6 +25,7 @@ typedef unsigned long long u64;
 #define STAGE_INVERTEDCASTLE_FLAG 0x20
 #define STAGE_ST0 0x1F
 #define TOTAL_ENTITY_COUNT 256
+#define STAGE_ENTITY_START 64
 #define FACTORY(id, param) ((id) + (param << 16))
 
 #define SFX_HEART_PICKUP 0x67A
@@ -116,6 +117,38 @@ typedef enum {
     Player_MariaSpellSuzaku,
     Player_MariaSpellFourHolyBeasts,
 } PlayerSteps;
+
+// Flags for entity->flags
+typedef enum {
+    FLAG_UNK_10 = 0x10,
+    FLAG_UNK_20 = 0x20,
+    FLAG_UNK_40 = 0x40,
+    FLAG_UNK_80 = 0x80,
+    FLAG_DEAD = 0x100, // entity must execute its death routine
+    FLAG_UNK_200 = 0x200,
+    FLAG_UNK_400 = 0x400,
+    FLAG_UNK_800 = 0x800,
+    FLAG_UNK_1000 = 0x1000,
+    FLAG_UNK_2000 = 0x2000,
+    FLAG_UNK_4000 = 0x4000,
+    FLAG_UNK_8000 = 0x8000,
+    FLAG_UNK_10000 = 0x10000,
+    FLAG_UNK_20000 = 0x20000,         // func_8011A9D8 will destroy if not set
+    FLAG_POS_PLAYER_LOCKED = 0x40000, // entity follows player position
+    FLAG_UNK_80000 = 0x80000,
+    FLAG_UNK_100000 = 0x100000,
+    FLAG_UNK_00200000 = 0x00200000,
+    FLAG_SUPPRESS_STUN = 0x400000, // disable invincibility frames
+    FLAG_HAS_PRIMS = 0x800000,     // call FreePrimitives on DestroyEntity
+    FLAG_NOT_AN_ENEMY = 0x01000000,
+    FLAG_UNK_02000000 = 0x02000000,
+    FLAG_KEEP_ALIVE_OFFCAMERA = 0x04000000, // don't destroy entity off-screen
+    FLAG_POS_CAMERA_LOCKED = 0x08000000,    // entity follows camera position
+    FLAG_UNK_10000000 = 0x10000000,         // CHI func_801A169C: "Is Airborne"?
+    FLAG_UNK_20000000 = 0x20000000,
+    FLAG_DESTROY_IF_BARELY_OUT_OF_CAMERA = 0x40000000,
+    FLAG_DESTROY_IF_OUT_OF_CAMERA = 0x80000000,
+} EntityFlag;
 
 typedef struct {
     u8 disableFlag;

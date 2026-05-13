@@ -81,12 +81,11 @@ u16 g_BatClut[] = {
 static Entity* FindValidTarget(Entity* self) {
     static s32 s_TargetMatch[0x80];
 
-    const int EntitySearchCount = 128;
+    const s32 EntitySearchCount = 128;
     s32 foundIndex;
     s32 i;
     u32 found;
     Entity* entity;
-    s32 distance;
 
     found = 0;
     entity = &g_Entities[STAGE_ENTITY_START];
