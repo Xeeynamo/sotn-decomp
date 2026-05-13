@@ -61,7 +61,7 @@ extern u16 g_CurSfxDistance20_21;
 extern u8 D_80139014;
 extern u8 g_SfxScriptModeCopy[4];
 extern u32 g_DebugCurPal;
-extern s16 D_8013901C;
+extern s16 D_8013901C; // likely: "has CD music actually started playing?"
 extern u8 g_MuteCd;
 extern s8 g_SfxScriptDistanceCopy[4];
 extern s16 g_CurrentXaSoundId;

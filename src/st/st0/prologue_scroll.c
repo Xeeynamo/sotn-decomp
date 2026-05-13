@@ -287,10 +287,13 @@ void PrologueScroll(void) {
         }
         break;
     case 5: // 0x801B0940
+        // wait for music playback to start
         if (
 #if defined(VERSION_PSP)
+            // PSP: assume music began playing
             1
 #else
+            // check "is a CD music track currently playing"?
             g_api.func_80131F68()
 #endif
         ) {
