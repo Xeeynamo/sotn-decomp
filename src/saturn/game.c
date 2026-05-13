@@ -61,7 +61,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606C3E4, func_0606C3E4);
 void FUN_0606c504(s32 arg0, s32 arg1, s32 arg2, s32 arg3) {
     Entity* entity;
     s32 i;
-    
+
     entity = &g_Entities[0];
     for (i = 0; i < TOTAL_ENTITY_COUNT; i++, entity++) {
         if (entity->unk68) {
