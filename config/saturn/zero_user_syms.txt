@@ -321,3 +321,6 @@ _WEAPON1_CHR = 0x60071bc;
 _prg_info = 0x6038aac;
 _chr_info = 0x6038aec;
 _d_060481c0 = 0x060481c0;
+___sdivsi3 = 0x06030E6C;
+_ratan_tbl = 0x0600E644;
+_ratan2 = 0x0600EE88;
