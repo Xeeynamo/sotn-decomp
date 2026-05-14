@@ -232,12 +232,14 @@ typedef struct Entity {
     /* 0x52 */ s16 unk52;
     /* 0x54 */ char pad_54[0xC];
     /* 0x60 */ s16 primIndex;
-    /* 0x62 */ char pad_62[0x12];
+    /* 0x62 */ char pad_62[0x2];
+    /* 0x64 */ u16 unk68;
+    /* 0x66 */ char pad_66[0xE];
     /* 0x74 */ u16 entityId;
-    /* 0x76 */ char pad_76[0x1];
-    /* 0x80 */ Ext ext;
-    /* 0x88 */ char pad_88[0x2];
-    /* 0x8A */ struct UnkStruct_060e8350* unk8A;
+    /* 0x76 */ char pad_76[0x2];
+    /* 0x78 */ Ext ext;
+    /* 0xB0 */ char pad_B0[0x4];
+    /* 0xB4 */ struct UnkStruct_060e8350* unkB4;
 } Entity; // size = 0xB8
 
 typedef struct Unk0600B344 {
@@ -325,10 +327,8 @@ typedef struct {
     /* 0x19 */ u8 isConsumable;
     /* 0x1A */ u8 enemyInvincibilityFrames;
     /* 0x1B */ u8 unk1B;
-    /* 0x1C */ u16 unk1C;
-    /* 0x1E */ u16 unk1E;
-    /* 0x20 */ u16 unk20;
-    /* 0x22 */ u16 unk22;
+    /* 0x1C */ u32 comboSub;
+    /* 0x20 */ u32 comboMain;
     /* 0x24 */ u16 mpUsage;
     /* 0x26 */ u16 stunFrames;
     /* 0x28 */ u16 hitType;
