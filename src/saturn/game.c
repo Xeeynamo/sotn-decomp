@@ -150,7 +150,7 @@ void CalcDefense(void) {
     if (CheckEquipmentItemCount(15, 0) != 0) {
         g_Status.elementsImmune |= 0x8000;
     }
-    if (g_Status.relics[25] & 2) {
+    if (g_Status.relics[0x19] & 2) {
         g_Status.elementsImmune |= 0x100;
     }
     if (g_StatBuffTimers[5]) {
