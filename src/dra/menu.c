@@ -3570,7 +3570,7 @@ block_4:
         }
         currentMusicId = prevMusicId;
         if (stopMusicFlag == 0) {
-            PlaySfx(SET_UNK_11);
+            PlaySfx(SET_XA_PLAYBACK);
         }
         CheckWeaponCombo();
         make_all();

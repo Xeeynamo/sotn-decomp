@@ -207,7 +207,7 @@ segments:
       - [0x42034, .rodata, sound] # CdSoundCommand4
       # - [0x4205C, .rodata, sound] # CdSoundCommand6
       # - [0x42074, .rodata, sound] # CdSoundCommand12
-      # - [0x4208C, .rodata, sound] # CdSoundCommand14
+      # - [0x4208C, .rodata, sound] # CdSoundStartXaPlayback
       # - [0x420B4, .rodata, sound] # func_80134F50
       # - [0x42354, .rodata, sound] # func_801353A0
       - [0x42398, c, 42398]

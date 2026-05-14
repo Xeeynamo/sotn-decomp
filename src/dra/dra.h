@@ -498,7 +498,7 @@ typedef struct SeqData {
 } SeqData;
 
 typedef struct Cmd14 {
-    u8 unk0[8];
+    u8 cdLoc[8];
     s32 unk8;
     s16 unkc;
     u8 unke;
