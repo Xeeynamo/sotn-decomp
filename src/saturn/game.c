@@ -97,15 +97,107 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D5FC, func_0606D5FC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D6DC, func_0606D6DC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D798, func_0606D798);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D804, func_0606D804);
+void func_0606D880(void);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D880, func_0606D880);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DAE8, func_0606DAE8);
 
-// _make_att
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DC8C, func_0606DC8C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DCF0, func_0606DCF0);
+inline void make_att(void) {
+    s32 i;
 
-// _make_all
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DF2C, func_0606DF2C);
+    for (i = 0; i < 2; i++) {
+        u32 equipId = g_Status.equipment[i];
+        u32 otherEquipId = g_Status.equipment[1 - i];
+        g_Status.attackHands[i] = func_0606DAE8(equipId, otherEquipId);
+    }
+}
+
+void CalcDefense(void) {
+    Accessory* acc;
+    s32 thisHandItem;
+    s32 i;
+    s16 totalDefense;
+
+    totalDefense = 0;
+    g_Status.elementsWeakTo = 0;
+    g_Status.elementsResist = 0;
+    g_Status.elementsImmune = 0;
+    g_Status.elementsAbsorb = 0;
+
+    // Iterate over player's hands, hand 0 and hand 1.
+    for (i = 0; i < 2; i++) {
+        thisHandItem = g_Status.equipment[i];
+        totalDefense += g_EquipDefs[thisHandItem].defense;
+        // If this hand is shield rod and other hand is a shield, defense bonus
+        // of 2.
+        if (thisHandItem == 4 &&
+            g_EquipDefs[g_Status.equipment[1 - i]].itemCategory == 9) {
+            totalDefense += 2;
+        }
+    }
+    // Iterate over accessories worn by player
+    for (i = 0; i < 5; i++) {
+        acc = &g_AccessoryDefs[g_Status.equipment[i + 3]];
+        totalDefense += acc->defBonus;
+        g_Status.elementsWeakTo |= acc->weakToElements;
+        g_Status.elementsResist |= acc->resistElements;
+        g_Status.elementsImmune |= acc->immuneElements;
+        g_Status.elementsAbsorb |= acc->absorbElements;
+    }
+
+    if (CheckEquipmentItemCount(13, 0) != 0) {
+        g_Status.elementsImmune |= 0x200;
+    }
+    if (CheckEquipmentItemCount(15, 0) != 0) {
+        g_Status.elementsImmune |= 0x8000;
+    }
+    if (g_Status.relics[25] & 2) {
+        g_Status.elementsImmune |= 0x100;
+    }
+    if (g_StatBuffTimers[5]) {
+        g_Status.elementsResist |= 0x8000;
+    }
+    if (g_StatBuffTimers[6]) {
+        g_Status.elementsResist |= 0x2000;
+    }
+    if (g_StatBuffTimers[7]) {
+        g_Status.elementsResist |= 0x4000;
+    }
+    if (g_StatBuffTimers[8]) {
+        g_Status.elementsResist |= 0x100;
+    }
+    if (g_StatBuffTimers[9]) {
+        g_Status.elementsResist |= 0x1000;
+    }
+    if (g_StatBuffTimers[10]) {
+        g_Status.elementsImmune |= 0x200;
+    }
+    if (g_StatBuffTimers[11]) {
+        g_Status.elementsResist |= 0x800;
+    }
+
+    totalDefense += SquareRoot0(g_Status.statsTotal[1]) - 2;
+
+    if (CheckEquipmentItemCount(19, 2) != 0) {
+        totalDefense += g_RoomCount / 60;
+    }
+
+    if (g_StatBuffTimers[0]) {
+        totalDefense += 20;
+    }
+    if (totalDefense < 0) {
+        totalDefense = 0;
+    }
+    if (totalDefense > 999) {
+        totalDefense = 999;
+    }
+    g_Status.defenseEquip = totalDefense;
+}
+
+void make_all(void) {
+    func_0606D880();
+    make_att();
+    CalcDefense();
+}
 
 extern s32 D_8013AEE4;
 
@@ -229,7 +321,7 @@ s32 func_800FD6C4(EquipKind equipTypeFilter) {
     }
 
     for (itemCount = 0, i = 0; i < NUM_BODY_ITEMS; i++) {
-        if (D_800A7734[i].equipType == equipType) {
+        if (g_AccessoryDefs[i].equipType == equipType) {
             itemCount++;
         }
     }
@@ -460,10 +552,10 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     }
 
     res->criticalRate = criticalRate;
-    func_800F4994();
+    func_0606D880();
     itemCategory = g_EquipDefs[equipId].itemCategory;
     if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
-        res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
+        res->attack = func_0606DAE8(equipId, g_Status.equipment[1 - handId]);
         if (g_Player.status & PLAYER_STATUS_POISON) {
             res->attack >>= 1;
         }

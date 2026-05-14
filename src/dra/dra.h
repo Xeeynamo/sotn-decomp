@@ -776,10 +776,9 @@ void RevealSecretPassageOnMap(s32, s32, s32);
 void func_800F2120(void);
 void func_800F223C(void);
 void func_800F4994(void);
-void func_800F4F48(void);
 void CalcDefense(void);
 bool IsAlucart(void);
-void func_800F53A4(void);
+void make_all(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void MenuDrawImg(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,
                  s32 idx, s32 unk2, bool disableTexShade, s32 unk4);

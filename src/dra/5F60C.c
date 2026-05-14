@@ -127,7 +127,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
     s32 i;
 
     if (D_8003C730 != 0) {
-        func_800F53A4();
+        make_all();
         UpdateCapePalette();
         return;
     }
@@ -175,7 +175,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
         } else if (g_Status.equipBodyCount[ITEM_NECKLACE_OF_J]) {
             g_Status.equipBodyCount[ITEM_NECKLACE_OF_J]--;
         }
-        func_800F53A4();
+        make_all();
         return;
     }
 
@@ -292,7 +292,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 #if defined(VERSION_PSP)
         D_psp_091FC3F8 = D_psp_091FC400 = D_psp_091FC408 = D_psp_091FC410 = 0;
 #endif
-        func_800F53A4();
+        make_all();
         return;
     }
     // Now we are just looking at non-Richter play.
@@ -603,7 +603,7 @@ void InitStatsAndGear(bool isDeathTakingItems) {
 #endif
     }
 
-    func_800F53A4();
+    make_all();
 }
 
 static PlayerHud g_PlayerHud;

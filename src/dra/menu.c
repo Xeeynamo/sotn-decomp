@@ -321,12 +321,13 @@ s32 CalcAttack(u32 equipId, u32 otherEquipId) {
     return totalAttack;
 }
 
-void func_800F4F48(void) {
+void make_att(void) {
     s32 i;
 
     for (i = 0; i < 2; i++) {
-        g_Status.attackHands[i] =
-            CalcAttack(g_Status.equipment[i], g_Status.equipment[1 - i]);
+        u32 equipId = g_Status.equipment[i];
+        u32 otherEquipId = g_Status.equipment[1 - i];
+        g_Status.attackHands[i] = CalcAttack(equipId, otherEquipId);
     }
 }
 
@@ -348,7 +349,7 @@ void CalcDefense(void) {
         totalDefense += g_EquipDefs[thisHandItem].defense;
         // If this hand is shield rod and other hand is a shield, defense bonus
         // of 2.
-        if ((thisHandItem == ITEM_SHIELD_ROD) &&
+        if (thisHandItem == ITEM_SHIELD_ROD &&
             g_EquipDefs[g_Status.equipment[1 - i]].itemCategory ==
                 ITEM_SHIELD) {
             totalDefense += 2;
@@ -399,7 +400,7 @@ void CalcDefense(void) {
         g_Status.elementsResist |= ELEMENT_DARK;
     }
 
-    totalDefense += (SquareRoot0(g_Status.statsTotal[STAT_CON]) - 2);
+    totalDefense += SquareRoot0(g_Status.statsTotal[STAT_CON]) - 2;
 
     if (CheckEquipmentItemCount(ITEM_WALK_ARMOR, EQUIP_ARMOR) != 0) {
         totalDefense += g_RoomCount / 60;
@@ -417,9 +418,9 @@ void CalcDefense(void) {
     g_Status.defenseEquip = totalDefense;
 }
 
-void func_800F53A4(void) {
+void make_all(void) {
     func_800F4994();
-    func_800F4F48();
+    make_att();
     CalcDefense();
 }
 
@@ -1280,7 +1281,7 @@ void MenuDrawStats(s32 menuDialogue) {
     s32 phi_a0_5;
 
     ctx = &g_Menus[menuDialogue];
-    func_800F53A4();
+    make_all();
     if (menuDialogue == MENU_DG_BG) {
         MenuDrawAlucardPortrait(ctx);
         if (IsAlucart()) {
@@ -3147,7 +3148,7 @@ s32 func_800FB23C(s32* nav, u8* order, u8* count, u32* selected) {
             g_Status.equipment[1 - D_801375D0] = 0;
         }
     }
-    func_800F53A4();
+    make_all();
     var_s6 =
         (g_Player.status & (PLAYER_STATUS_TRANSFORM | PLAYER_STATUS_UNK10) |
          PLAYER.step == Player_UnmorphWolf | PLAYER.step == Player_BossGrab |
@@ -3165,7 +3166,7 @@ s32 func_800FB23C(s32* nav, u8* order, u8* count, u32* selected) {
     if (D_801375CC == EQUIP_HAND) {
         g_Status.equipment[1 - D_801375D0] = yetAnotherId;
     }
-    func_800F53A4();
+    make_all();
     if (g_pads[0].tapped & PAD_MENU_SORT) {
         if (!g_IsSelectingEquipment) {
             if (!func_800FB1EC(itemId)) {
@@ -3572,7 +3573,7 @@ block_4:
             PlaySfx(SET_UNK_11);
         }
         CheckWeaponCombo();
-        func_800F53A4();
+        make_all();
         D_800973EC = 0;
         func_800FAC30();
         func_800F86E4();

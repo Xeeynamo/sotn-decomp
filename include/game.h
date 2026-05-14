@@ -1700,7 +1700,7 @@ typedef struct {
     /* 8003C854 */ void (*InitStatsAndGear)(bool debugMode);
     /* 8003C858 */ s32 (*PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
     /* 8003C85C */ s32 (*SetVolumeCommand22_23)(s32 vol, s32 distance);
-    /* 8003C860 */ void (*func_800F53A4)(void);
+    /* 8003C860 */ void (*make_all)(void);
     /* 8003C864 */ u32 (*CheckEquipmentItemCount)(u32 itemId, u32 equipType);
     /* 8003C868 */ void (*GetPlayerSensor)(Collider* col);
     /* 8003C86C */ void (*RevealSecretPassageAtPlayerPositionOnMap)(s32 arg0);
@@ -1807,7 +1807,7 @@ extern void (*g_api_AddToInventory)(u32 id, EquipKind kind);
 extern RelicDesc* g_api_relicDefs;
 extern s32 (*g_api_PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
 extern s32 (*g_api_SetVolumeCommand22_23)(s32 vol, s32 distance);
-extern void (*g_api_func_800F53A4)(void);
+extern void (*g_api_make_all)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
 extern void (*g_api_GetPlayerSensor)(Collider* col);
 extern void (*g_api_RevealSecretPassageAtPlayerPositionOnMap)(s32 arg0);

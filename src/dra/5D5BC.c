@@ -287,7 +287,7 @@ bool func_800FDD44(s32 itemType) {
     if (isConsumable) {
         if (!g_Status.equipHandCount[equippedItem]) {
             g_Status.equipment[itemType] = ITEM_EMPTY_HAND;
-            func_800F53A4();
+            make_all();
             return true;
         }
         g_Status.equipHandCount[equippedItem]--;
@@ -589,7 +589,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     s32 ret = 0;
     s32 itemCount;
 
-    func_800F53A4();
+    make_all();
     damage->effects = arg1 & ~0x1F;
     damage->damageKind = arg1 & 0x1F;
     // Damage doubled, weakness

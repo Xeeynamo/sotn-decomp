@@ -4370,11 +4370,11 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
         break;
     case INVENTORY_ACCESSORY:
         g_Status.equipment[ACCESSORY_1_SLOT] = itemId;
-        g_api.func_800F53A4();
+        g_api.make_all();
         func_us_801B40F0(stats + 1);
         func_us_801B4080(equipment);
         g_Status.equipment[ACCESSORY_2_SLOT] = itemId;
-        g_api.func_800F53A4();
+        g_api.make_all();
         i = 3;
         ptr = stats + 1;
         maxDigits = *ptr - g_Status.attackHands[0];
@@ -4404,10 +4404,10 @@ void func_us_801B420C(Primitive* prim, Entity* arg1) {
     case INVENTORY_RELIC:
         break;
     }
-    g_api.func_800F53A4();
+    g_api.make_all();
     func_us_801B40F0(stats + 1);
     func_us_801B4080(equipment);
-    g_api.func_800F53A4();
+    g_api.make_all();
     ptr = stats;
     for (i = 0; i < 3; i++) {
 #ifdef VERSION_PSP
