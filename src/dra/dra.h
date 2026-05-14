@@ -777,7 +777,7 @@ void func_800F2120(void);
 void func_800F223C(void);
 void func_800F4994(void);
 void CalcDefense(void);
-bool IsAlucart(void);
+bool IsAlucard(void);
 void make_all(void);
 bool ScissorSprite(SPRT* arg0, MenuContext* arg1);
 void MenuDrawImg(MenuContext* ctx, s32 x, s32 y, s32 w, u32 h, s32 u, s32 v,

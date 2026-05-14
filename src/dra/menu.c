@@ -165,7 +165,7 @@ bool CheckIfAllButtonsAreAssigned(void) {
     return bitMask_Assigned == 0xFF;
 }
 
-bool IsAlucart(void) {
+bool IsAlucard(void) {
     if (CheckEquipmentItemCount(ITEM_ALUCART_SWORD, EQUIP_HAND) &&
         CheckEquipmentItemCount(ITEM_ALUCART_SHIELD, EQUIP_HAND) &&
         CheckEquipmentItemCount(ITEM_ALUCART_MAIL, EQUIP_ARMOR))
@@ -239,7 +239,7 @@ void func_800F4994(void) {
     if (g_Status.relics[RELIC_RING_OF_VLAD] & RELIC_FLAG_ACTIVE) {
         g_Status.statsEquip[STAT_INT] += 10;
     }
-    if (IsAlucart()) {
+    if (IsAlucard()) {
         g_Status.statsEquip[STAT_LCK] += 30;
     }
 
@@ -1284,7 +1284,7 @@ void MenuDrawStats(s32 menuDialogue) {
     make_all();
     if (menuDialogue == MENU_DG_BG) {
         MenuDrawAlucardPortrait(ctx);
-        if (IsAlucart()) {
+        if (IsAlucard()) {
             MenuDrawStr(g_MenuStr[42], 128, 40, ctx);
         } else {
             MenuDrawStr(g_MenuStr[0], 128, 40, ctx);
@@ -1323,7 +1323,7 @@ void MenuDrawStats(s32 menuDialogue) {
         if (g_Player.status & PLAYER_STATUS_STONE) {
             i = 39;
         }
-        if (IsAlucart()) {
+        if (IsAlucard()) {
             i = 45;
         }
         MenuDrawStr(g_MenuStr[i], 260, 68, ctx);

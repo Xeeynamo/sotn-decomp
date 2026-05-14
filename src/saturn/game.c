@@ -108,11 +108,13 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     s16 totalAttack;
     s16 strengthStat;
 
-    if (g_EquipDefs[equipId].itemCategory == 6 || g_EquipDefs[equipId].itemCategory == 10) {
+    if (g_EquipDefs[equipId].itemCategory == 6 ||
+        g_EquipDefs[equipId].itemCategory == 10) {
         return 0;
     }
 
-    if (g_EquipDefs[equipId].itemCategory == 9 && g_EquipDefs[equipId].attack == 1) {
+    if (g_EquipDefs[equipId].itemCategory == 9 &&
+        g_EquipDefs[equipId].attack == 1) {
         return 0;
     }
 
@@ -123,7 +125,8 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     equipmentAttackBonus = 0;
 
     for (i = 0; i < 5; i++) {
-        equipmentAttackBonus += g_AccessoryDefs[g_Status.equipment[3 + i]].attBonus;
+        equipmentAttackBonus +=
+            g_AccessoryDefs[g_Status.equipment[3 + i]].attBonus;
     }
 
     totalAttack = g_EquipDefs[equipId].attack;
@@ -152,22 +155,20 @@ s32 CalcAttack(s32 equipId, s32 otherEquipId) {
     case 0x80:
         totalAttack += g_Status.statsFamiliars[4].level;
         break;
-    case 0x6F:
-        {
-            s32 j;
-            s32 sVar3 = 0;
-            for (j = 0; j < 2; j++) {
-                s32 index = g_Status.equipment[6 + j] - 0x40;
-                if (index < 0) {
-                    continue;
-                }
-                if (index < 7) {
-                    sVar3 += DAT_060850ec[index];
-                }
+    case 0x6F: {
+        s32 j;
+        s32 sVar3 = 0;
+        for (j = 0; j < 2; j++) {
+            s32 index = g_Status.equipment[6 + j] - 0x40;
+            if (index < 0) {
+                continue;
             }
-            totalAttack += sVar3;
+            if (index < 7) {
+                sVar3 += DAT_060850ec[index];
+            }
         }
-        break;
+        totalAttack += sVar3;
+    } break;
     }
 
     if (g_StatBuffTimers[1]) {
