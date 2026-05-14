@@ -286,7 +286,7 @@ typedef struct {
     s32 mp;
     s32 mpMax;
     s32 statsBase[4];
-    char pad[15];
+    s32 statsEquip[4];
     s32 statsTotal[4];
     char pad3[0x14];
     u32 subWeapon;
@@ -356,7 +356,7 @@ typedef struct {
     /* 0x04 */ const char* description;
     /* 0x08 */ s16 attBonus;
     /* 0x0A */ s16 defBonus;
-    /* 0x0C */ u32 unk0C;
+    /* 0x0C */ u8 statsBonus[4];
     /* 0x10 */ u16 weakToElements;
     /* 0x12 */ u16 resistElements;
     /* 0x14 */ u16 immuneElements;

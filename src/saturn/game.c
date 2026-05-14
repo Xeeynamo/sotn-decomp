@@ -97,8 +97,101 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D5FC, func_0606D5FC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D6DC, func_0606D6DC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D798, func_0606D798);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D804, func_0606D804);
-void func_0606D880(void);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D880, func_0606D880);
+
+static inline bool IsAlucard(void) {
+    if (CheckEquipmentItemCount(0xAB, 0) && CheckEquipmentItemCount(0xAA, 0) &&
+        CheckEquipmentItemCount(0x5B, 2))
+        return true;
+    return false;
+}
+
+extern u8 DAT_06057f62;
+
+void func_0606D880(void) {
+    s32* statsPtr;
+    s32 correctStonesEquipped;
+    s32 hourOfDay;
+    s32 i, j;
+    s32 statBonus;
+
+    statsPtr = g_Status.statsEquip;
+    for (i = 0; i < 4; i++) {
+        *statsPtr++ = 0;
+    }
+
+    // Iterate through each Item Slot
+    for (i = 0; i < 5; i++) {
+        // Iterate through the 4 stats (STR, CON, INT, LCK)
+        for (j = 0; j < 4; j++) {
+            statBonus =
+                g_AccessoryDefs[g_Status.equipment[3 + i]].statsBonus[j];
+            if (statBonus > 0x80) {
+                statBonus -= 0x100;
+            }
+            g_Status.statsEquip[j] += statBonus;
+        }
+    }
+
+    // different
+    hourOfDay = (DAT_06057f62 / 16) * 10 + DAT_06057f62 % 16;
+
+    // Hours of sunstone effectiveness
+    if (6 <= hourOfDay && hourOfDay < 18) {
+        // Sunstone check
+        correctStonesEquipped = CheckEquipmentItemCount(0x3C, 4);
+        statsPtr = g_Status.statsEquip;
+        for (i = 0; i < 4; i++) {
+            *statsPtr++ += correctStonesEquipped * 5;
+        }
+    } else {
+        // Moonstone check
+        correctStonesEquipped = CheckEquipmentItemCount(0x3B, 4);
+        statsPtr = g_Status.statsEquip;
+        for (i = 0; i < 4; i++) {
+            *statsPtr++ += correctStonesEquipped * 5;
+        }
+    }
+
+    if (g_StatBuffTimers[4]) {
+        g_Status.statsEquip[0] += 20;
+    }
+    if (g_StatBuffTimers[3]) {
+        g_Status.statsEquip[2] += 20;
+    }
+    if (g_StatBuffTimers[2]) {
+        g_Status.statsEquip[3] += 20;
+    }
+    if (g_Status.relics[0x1B] & 2) {
+        g_Status.statsEquip[1] += 10;
+    }
+    if (g_Status.relics[0x1D] & 2) {
+        g_Status.statsEquip[3] += 10;
+    }
+    if (g_Status.relics[0x1A] & 2) {
+        g_Status.statsEquip[0] += 10;
+    }
+    if (g_Status.relics[0x1C] & 2) {
+        g_Status.statsEquip[2] += 10;
+    }
+    if (IsAlucard()) {
+        g_Status.statsEquip[3] += 30;
+    }
+
+    for (i = 0; i < 4; i++) {
+        if (g_Status.statsEquip[i] > 99) {
+            g_Status.statsEquip[i] = 99;
+        }
+        g_Status.statsTotal[i] = g_Status.statsBase[i] + g_Status.statsEquip[i];
+    }
+
+    g_Status.statsTotal[1] = g_Status.statsBase[1] + g_Status.statsEquip[1] * 8;
+    g_Status.statsTotal[2] = g_Status.statsBase[2] + g_Status.statsEquip[2] * 4;
+    for (i = 0; i < 4; i++) {
+        if (g_Status.statsTotal[i] < 0) {
+            g_Status.statsTotal[i] = 0;
+        }
+    }
+}
 
 extern u8 DAT_060850ec[];
 

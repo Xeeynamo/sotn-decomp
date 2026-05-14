@@ -9,6 +9,7 @@ _DestroyEntity = 0x0600FFB8;
 _PlaySfx = 0x06011278;
 ___sdivsi3 = 0x06030E6C;
 _rand = 0x06032E68;
+_DAT_06057f62 = 0x06057F62;
 _g_Player = 0x0605C140;
 _g_RoomCount = 0x0605C5B0;
 _g_CurrentEntity = 0x0605C6E0;

@@ -166,9 +166,9 @@ bool CheckIfAllButtonsAreAssigned(void) {
 }
 
 bool IsAlucard(void) {
-    if (CheckEquipmentItemCount(ITEM_ALUCART_SWORD, EQUIP_HAND) &&
-        CheckEquipmentItemCount(ITEM_ALUCART_SHIELD, EQUIP_HAND) &&
-        CheckEquipmentItemCount(ITEM_ALUCART_MAIL, EQUIP_ARMOR))
+    if (CheckEquipmentItemCount(ITEM_ALUCARD_SWORD, EQUIP_HAND) &&
+        CheckEquipmentItemCount(ITEM_ALUCARD_SHIELD, EQUIP_HAND) &&
+        CheckEquipmentItemCount(ITEM_ALUCARD_MAIL, EQUIP_ARMOR))
         return true;
     return false;
 }
