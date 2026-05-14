@@ -329,7 +329,7 @@ s32 func_800FD6C4(EquipKind equipTypeFilter) {
 }
 
 // SAT: func_0606F3D8
-u8* GetEquipOrder(EquipKind kind) {
+inline u8* GetEquipOrder(EquipKind kind) {
     switch (kind) {
     case EQUIP_HAND:
         return g_Status.equipHandOrder;
@@ -338,7 +338,7 @@ u8* GetEquipOrder(EquipKind kind) {
 }
 
 // SAT: func_0606F3F8
-u8* GetEquipCount(EquipKind kind) {
+inline u8* GetEquipCount(EquipKind kind) {
     switch (kind) {
     case EQUIP_HAND:
         return g_Status.equipHandCount;
@@ -359,20 +359,6 @@ const char* GetEquipmentName(EquipKind kind, s32 equipId) {
 // CheckEquipmentItemCount
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F448, func_0606F448);
 
-static inline u8* _GetEquipOrder(EquipKind kind) {
-    switch (kind) {
-    case EQUIP_HAND:
-        return g_Status.equipHandOrder;
-    }
-    return g_Status.equipBodyOrder;
-}
-static inline u8* _GetEquipCount(EquipKind kind) {
-    switch (kind) {
-    case EQUIP_HAND:
-        return g_Status.equipHandCount;
-    }
-    return g_Status.equipBodyCount;
-}
 void AddToInventory(u16 id, EquipKind kind) {
     s32 i;
     EquipKind found;
@@ -382,8 +368,8 @@ void AddToInventory(u16 id, EquipKind kind) {
     s32 existingItemSlot;
     s32 emptySlot;
 
-    order = _GetEquipOrder(kind);
-    count = _GetEquipCount(kind);
+    order = GetEquipOrder(kind);
+    count = GetEquipCount(kind);
     if (count[id] >= 99) {
         return;
     }
