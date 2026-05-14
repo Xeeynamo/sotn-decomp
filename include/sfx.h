@@ -56,7 +56,7 @@ enum SfxModes {
 #define SET_PAUSE_SFX_SCRIPTS 0xE
 #define SET_UNPAUSE_SFX_SCRIPTS 0xF
 #define SET_UNK_10 0x10
-#define SET_UNK_11 0x11
+#define SET_XA_PLAYBACK 0x11
 #define SET_UNK_12 0x12
 #define SET_UNK_13 0x13
 #define SET_UNK_80 0x80
@@ -79,7 +79,7 @@ enum SfxModes {
 #define CD_SOUND_COMMAND_8 8
 #define CD_SOUND_COMMAND_10 10
 #define CD_SOUND_COMMAND_12 12
-#define CD_SOUND_COMMAND_14 14
+#define CD_SOUND_START_XA_PLAYBACK 14
 #define CD_SOUND_COMMAND_16 16
 
 // XA music tracks

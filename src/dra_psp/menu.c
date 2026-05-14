@@ -3705,7 +3705,7 @@ block_4:
         if (D_psp_091CDD48 != 0) {
             PlaySfx(SET_UNK_0B);
         } else {
-            PlaySfx(SET_UNK_11);
+            PlaySfx(SET_XA_PLAYBACK);
         }
         CheckWeaponCombo();
         func_800F53A4();

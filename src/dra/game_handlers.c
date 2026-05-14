@@ -795,7 +795,7 @@ void HandleGameOver(void) {
         break;
     case Gameover_Init:
     case Gameover_Init_Alt:
-        PlaySfx(SET_UNK_11);
+        PlaySfx(SET_XA_PLAYBACK);
         if (g_StageId != STAGE_ST0) {
             g_GpuBuffers[1].draw.isbg = 0;
             g_GpuBuffers[0].draw.isbg = 0;
