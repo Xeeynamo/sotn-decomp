@@ -264,10 +264,10 @@ typedef struct {
 } EntityEntry;
 
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-} Unkstruct_800FD5BC;
+    s32 level;
+    s32 exp;
+    s32 unk8; // Possibly the number of times loaded
+} FamiliarStats;
 
 // offsets are not the same as psx
 typedef struct {
@@ -290,14 +290,19 @@ typedef struct {
     s32 statsTotal[4];
     char pad3[0x14];
     u32 subWeapon;
-    u32 equipment[7];
-    s32 : 32;
+    u32 equipment[8];
     u32 attackHands[2];
     s32 defenseEquip;
     u16 elementsWeakTo;
     u16 elementsResist;
     u16 elementsImmune;
     u16 elementsAbsorb;
+    s32 timerHours;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    u32 D_80097C40;
+    FamiliarStats statsFamiliars[7];
 } PlayerStatus;
 
 typedef struct {
@@ -349,7 +354,7 @@ typedef struct {
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* description;
-    /* 0x08 */ s16 unk08;
+    /* 0x08 */ s16 attBonus;
     /* 0x0A */ s16 defBonus;
     /* 0x0C */ u32 unk0C;
     /* 0x10 */ u16 weakToElements;

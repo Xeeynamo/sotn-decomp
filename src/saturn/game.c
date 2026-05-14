@@ -99,15 +99,96 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D798, func_0606D798);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D804, func_0606D804);
 void func_0606D880(void);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D880, func_0606D880);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DAE8, func_0606DAE8);
+
+extern u8 DAT_060850ec[];
+
+s32 CalcAttack(s32 equipId, s32 otherEquipId) {
+    s32 i;
+    s16 equipmentAttackBonus;
+    s16 totalAttack;
+    s16 strengthStat;
+
+    if (g_EquipDefs[equipId].itemCategory == 6 || g_EquipDefs[equipId].itemCategory == 10) {
+        return 0;
+    }
+
+    if (g_EquipDefs[equipId].itemCategory == 9 && g_EquipDefs[equipId].attack == 1) {
+        return 0;
+    }
+
+    if (equipId == 0x10) {
+        return 0;
+    }
+
+    equipmentAttackBonus = 0;
+
+    for (i = 0; i < 5; i++) {
+        equipmentAttackBonus += g_AccessoryDefs[g_Status.equipment[3 + i]].attBonus;
+    }
+
+    totalAttack = g_EquipDefs[equipId].attack;
+    strengthStat = g_Status.statsTotal[0];
+
+    if (totalAttack <= strengthStat) {
+        totalAttack += strengthStat;
+    } else {
+        totalAttack += strengthStat / 2;
+    }
+
+    totalAttack += equipmentAttackBonus;
+
+    switch (equipId) {
+    case 0x7F:
+        totalAttack += g_Status.timerHours;
+        break;
+    case 0x8F:
+        totalAttack += SquareRoot0(g_Status.D_80097C40);
+        break;
+    case 4:
+        if (g_EquipDefs[otherEquipId].itemCategory == 9) {
+            totalAttack += 5;
+        }
+        break;
+    case 0x80:
+        totalAttack += g_Status.statsFamiliars[4].level;
+        break;
+    case 0x6F:
+        {
+            s32 j;
+            s32 sVar3 = 0;
+            for (j = 0; j < 2; j++) {
+                s32 index = g_Status.equipment[6 + j] - 0x40;
+                if (index < 0) {
+                    continue;
+                }
+                if (index < 7) {
+                    sVar3 += DAT_060850ec[index];
+                }
+            }
+            totalAttack += sVar3;
+        }
+        break;
+    }
+
+    if (g_StatBuffTimers[1]) {
+        totalAttack += 20;
+    }
+    if (totalAttack < 0) {
+        totalAttack = 0;
+    }
+    if (totalAttack > 999) {
+        totalAttack = 999;
+    }
+    return totalAttack;
+}
 
 inline void make_att(void) {
     s32 i;
 
     for (i = 0; i < 2; i++) {
-        u32 equipId = g_Status.equipment[i];
-        u32 otherEquipId = g_Status.equipment[1 - i];
-        g_Status.attackHands[i] = func_0606DAE8(equipId, otherEquipId);
+        s32 equipId = g_Status.equipment[i];
+        s32 otherEquipId = g_Status.equipment[1 - i];
+        g_Status.attackHands[i] = CalcAttack(equipId, otherEquipId);
     }
 }
 
@@ -297,7 +378,6 @@ u8 GetEquipItemCategory(s32 equipId) {
 }
 
 // SAT: func_0606F378
-// a little different from PSX version
 s32 func_800FD6C4(EquipKind equipTypeFilter) {
     s32 itemCount;
     s32 equipType;
@@ -541,7 +621,7 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     func_0606D880();
     itemCategory = g_EquipDefs[equipId].itemCategory;
     if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
-        res->attack = func_0606DAE8(equipId, g_Status.equipment[1 - handId]);
+        res->attack = CalcAttack(equipId, g_Status.equipment[1 - handId]);
         if (g_Player.status & PLAYER_STATUS_POISON) {
             res->attack >>= 1;
         }
