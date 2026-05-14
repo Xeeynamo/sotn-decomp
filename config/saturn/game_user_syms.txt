@@ -48,3 +48,4 @@ _g_EnemyDefs = 0x06080288;
 _g_RoomCount = 0x0605c5b0;
 ___sdivsi3 = 0x06030e6c;
 _func_06064684 = 0x06064684;
+_D_8013AEE4 = 0x0605CEB8;

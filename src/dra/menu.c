@@ -2741,15 +2741,18 @@ void CheckWeaponCombo(void) {
     s32 i;
 
     u32 handFlag = 0x80000000; // right hand
-    u32 combo = g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].comboSub &
-                g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].comboMain;
+
+    s32 leftHand = g_Status.equipment[LEFT_HAND_SLOT];
+    s32 rightHand = g_Status.equipment[RIGHT_HAND_SLOT];
+
+    u32 combo =
+        g_EquipDefs[leftHand].comboSub & g_EquipDefs[rightHand].comboMain;
 
     if (combo != 0) {
         handFlag = 0;
     }
 
-    combo |= g_EquipDefs[g_Status.equipment[LEFT_HAND_SLOT]].comboMain &
-             g_EquipDefs[g_Status.equipment[RIGHT_HAND_SLOT]].comboSub;
+    combo |= g_EquipDefs[leftHand].comboMain & g_EquipDefs[rightHand].comboSub;
 
     if (combo != 0) {
         for (i = 0xAA; i < 0xD9; i++) {
@@ -2843,17 +2846,16 @@ void InitWeapon(s32 itemSlot) {
     }
 }
 
-void func_800FAB1C(void) {
-    const int START = 4;
+void servant_work_clear(void) {
     s32 i;
     Entity* entity;
 
-    entity = &g_Entities[START];
-    for (i = START; i < 64; i++) {
-        if (entity->entityId >= 0xD0 && entity->entityId < 0xE0) {
+    entity = &g_Entities[4];
+    for (i = 4; i < STAGE_ENTITY_START; i++, entity++) {
+        u16 entityID = entity->entityId;
+        if (entityID >= 0xD0 && entityID < 0xE0) {
             DestroyEntity(entity);
         }
-        entity++;
     }
 }
 
@@ -3515,7 +3517,7 @@ block_4:
         break;
     case MENU_STEP_EXIT_10:
         if (g_Servant == FAM_ACTIVE_NONE || g_Servant != g_ServantPrevious) {
-            func_800FAB1C();
+            servant_work_clear();
         }
         if (g_Servant == FAM_ACTIVE_NONE || g_Servant == g_ServantLoaded) {
             if (g_Servant != FAM_ACTIVE_NONE) {
