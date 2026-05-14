@@ -98,7 +98,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D6DC, func_0606D6DC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D798, func_0606D798);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D804, func_0606D804);
 
-static inline bool IsAlucard(void) {
+static inline bool IsAlucart(void) {
     if (CheckEquipmentItemCount(0xAB, 0) && CheckEquipmentItemCount(0xAA, 0) &&
         CheckEquipmentItemCount(0x5B, 2))
         return true;
@@ -173,7 +173,7 @@ void func_0606D880(void) {
     if (g_Status.relics[0x1C] & 2) {
         g_Status.statsEquip[2] += 10;
     }
-    if (IsAlucard()) {
+    if (IsAlucart()) {
         g_Status.statsEquip[3] += 30;
     }
 
