@@ -106,7 +106,35 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DCF0, func_0606DCF0);
 
 // _make_all
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DF2C, func_0606DF2C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DFA0, func_0606DFA0);
+
+extern s32 D_8013AEE4;
+
+void CheckWeaponCombo(void) {
+    s32 i;
+
+    u32 handFlag = 0x80000000; // right hand
+
+    s32 leftHand = g_Status.equipment[LEFT_HAND_SLOT];
+    s32 rightHand = g_Status.equipment[RIGHT_HAND_SLOT];
+
+    u32 combo =
+        g_EquipDefs[leftHand].comboSub & g_EquipDefs[rightHand].comboMain;
+
+    if (combo != 0) {
+        handFlag = 0;
+    }
+    combo |= g_EquipDefs[leftHand].comboMain & g_EquipDefs[rightHand].comboSub;
+
+    if (combo != 0) {
+        for (i = 0xB1; i < 0xE4; i++) {
+            if (combo & g_EquipDefs[i].comboSub) {
+                D_8013AEE4 = handFlag + i;
+                return;
+            }
+        }
+    }
+    D_8013AEE4 = 0;
+}
 
 void servant_work_clear(void) {
     s32 i;
