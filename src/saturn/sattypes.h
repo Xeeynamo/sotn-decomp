@@ -264,10 +264,10 @@ typedef struct {
 } EntityEntry;
 
 typedef struct {
-    /* 0x00 */ s32 unk0;
-    /* 0x04 */ s32 unk4;
-    /* 0x08 */ s32 unk8;
-} Unkstruct_800FD5BC;
+    s32 level;
+    s32 exp;
+    s32 unk8; // Possibly the number of times loaded
+} FamiliarStats;
 
 // offsets are not the same as psx
 typedef struct {
@@ -286,11 +286,23 @@ typedef struct {
     s32 mp;
     s32 mpMax;
     s32 statsBase[4];
-    char pad[15];
+    s32 statsEquip[4];
     s32 statsTotal[4];
     char pad3[0x14];
     u32 subWeapon;
-    u32 equipment[7];
+    u32 equipment[8];
+    u32 attackHands[2];
+    s32 defenseEquip;
+    u16 elementsWeakTo;
+    u16 elementsResist;
+    u16 elementsImmune;
+    u16 elementsAbsorb;
+    s32 timerHours;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    u32 D_80097C40;
+    FamiliarStats statsFamiliars[7];
 } PlayerStatus;
 
 typedef struct {
@@ -342,10 +354,13 @@ typedef struct {
 typedef struct {
     /* 0x00 */ const char* name;
     /* 0x04 */ const char* description;
-    /* 0x08 */ u32 unk08;
-    /* 0x0C */ u32 unk0C;
-    /* 0x10 */ u32 unk10;
-    /* 0x14 */ u32 unk14;
+    /* 0x08 */ s16 attBonus;
+    /* 0x0A */ s16 defBonus;
+    /* 0x0C */ u8 statsBonus[4];
+    /* 0x10 */ u16 weakToElements;
+    /* 0x12 */ u16 resistElements;
+    /* 0x14 */ u16 immuneElements;
+    /* 0x16 */ u16 absorbElements;
     /* 0x18 */ u16 icon;
     /* 0x1A */ u16 palette;
     /* 0x1C */ u16 equipType;
@@ -386,14 +401,6 @@ typedef struct {
     /* 0x23 */ u8 hitboxHeight;
     /* 0x24 */ s32 unk24;
 } EnemyDef; /* size=0x28 */
-
-// layout is different
-typedef struct Unkstruct_800A7734 {
-    /* 0x00 */ u16 unk00;
-    /* 0x02 */ char pad_02[0x1A];
-    /* 0x1C */ u16 equipType;
-    /* 0x1E */ char pad_1E[0x2];
-} Unkstruct_800A7734; // size = 0x20
 
 // Flags for g_Player.vram_flag
 // 0x01: touching the ground
@@ -504,7 +511,7 @@ typedef enum {
     NUM_SPELLS,
 } SpellIds;
 
-s32 SquareRoot0(s32);
+u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
 void DestroyEntity(Entity* entity);
@@ -522,7 +529,6 @@ extern EntityEntry** PfnEntityUpdates[];
 extern u16 g_StageId; // u32 in psx
 extern SpellDef g_SpellDefs[];
 extern Accessory g_AccessoryDefs[];
-extern Unkstruct_800A7734 D_800A7734[];
 extern s32 D_80137960;
 extern s32 D_80137964;
 extern s32 D_80137968;

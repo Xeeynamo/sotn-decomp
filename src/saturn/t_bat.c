@@ -10,12 +10,6 @@ typedef struct {
     s32 makeBadAttacks;
 } BatAbilityValues;
 
-typedef struct {
-    s32 level;
-    s32 exp;
-    s32 unk8; // Possibly the number of times loaded
-} FamiliarStats;
-
 INCLUDE_ASM("asm/saturn/t_bat/data", d60CF000, d_060CF000);
 
 extern u32 s_LastTargetedEntityIndex;        // 0x060D1E00

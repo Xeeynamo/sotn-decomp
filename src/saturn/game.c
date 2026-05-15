@@ -97,15 +97,282 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D5FC, func_0606D5FC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D6DC, func_0606D6DC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D798, func_0606D798);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D804, func_0606D804);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606D880, func_0606D880);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DAE8, func_0606DAE8);
 
-// _make_att
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DC8C, func_0606DC8C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DCF0, func_0606DCF0);
+static inline bool IsAlucart(void) {
+    if (CheckEquipmentItemCount(0xAB, 0) && CheckEquipmentItemCount(0xAA, 0) &&
+        CheckEquipmentItemCount(0x5B, 2))
+        return true;
+    return false;
+}
 
-// _make_all
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606DF2C, func_0606DF2C);
+extern u8 DAT_06057f62;
+
+void func_0606D880(void) {
+    s32* statsPtr;
+    s32 correctStonesEquipped;
+    s32 hourOfDay;
+    s32 i, j;
+    s32 statBonus;
+
+    statsPtr = g_Status.statsEquip;
+    for (i = 0; i < 4; i++) {
+        *statsPtr++ = 0;
+    }
+
+    // Iterate through each Item Slot
+    for (i = 0; i < 5; i++) {
+        // Iterate through the 4 stats (STR, CON, INT, LCK)
+        for (j = 0; j < 4; j++) {
+            statBonus =
+                g_AccessoryDefs[g_Status.equipment[3 + i]].statsBonus[j];
+            if (statBonus > 0x80) {
+                statBonus -= 0x100;
+            }
+            g_Status.statsEquip[j] += statBonus;
+        }
+    }
+
+    // different
+    hourOfDay = (DAT_06057f62 / 16) * 10 + DAT_06057f62 % 16;
+
+    // Hours of sunstone effectiveness
+    if (6 <= hourOfDay && hourOfDay < 18) {
+        // Sunstone check
+        correctStonesEquipped = CheckEquipmentItemCount(0x3C, 4);
+        statsPtr = g_Status.statsEquip;
+        for (i = 0; i < 4; i++) {
+            *statsPtr++ += correctStonesEquipped * 5;
+        }
+    } else {
+        // Moonstone check
+        correctStonesEquipped = CheckEquipmentItemCount(0x3B, 4);
+        statsPtr = g_Status.statsEquip;
+        for (i = 0; i < 4; i++) {
+            *statsPtr++ += correctStonesEquipped * 5;
+        }
+    }
+
+    if (g_StatBuffTimers[4]) {
+        g_Status.statsEquip[0] += 20;
+    }
+    if (g_StatBuffTimers[3]) {
+        g_Status.statsEquip[2] += 20;
+    }
+    if (g_StatBuffTimers[2]) {
+        g_Status.statsEquip[3] += 20;
+    }
+    if (g_Status.relics[0x1B] & 2) {
+        g_Status.statsEquip[1] += 10;
+    }
+    if (g_Status.relics[0x1D] & 2) {
+        g_Status.statsEquip[3] += 10;
+    }
+    if (g_Status.relics[0x1A] & 2) {
+        g_Status.statsEquip[0] += 10;
+    }
+    if (g_Status.relics[0x1C] & 2) {
+        g_Status.statsEquip[2] += 10;
+    }
+    if (IsAlucart()) {
+        g_Status.statsEquip[3] += 30;
+    }
+
+    for (i = 0; i < 4; i++) {
+        if (g_Status.statsEquip[i] > 99) {
+            g_Status.statsEquip[i] = 99;
+        }
+        g_Status.statsTotal[i] = g_Status.statsBase[i] + g_Status.statsEquip[i];
+    }
+
+    g_Status.statsTotal[1] = g_Status.statsBase[1] + g_Status.statsEquip[1] * 8;
+    g_Status.statsTotal[2] = g_Status.statsBase[2] + g_Status.statsEquip[2] * 4;
+    for (i = 0; i < 4; i++) {
+        if (g_Status.statsTotal[i] < 0) {
+            g_Status.statsTotal[i] = 0;
+        }
+    }
+}
+
+extern u8 DAT_060850ec[];
+
+s32 CalcAttack(s32 equipId, s32 otherEquipId) {
+    s32 i;
+    s16 equipmentAttackBonus;
+    s16 totalAttack;
+    s16 strengthStat;
+
+    if (g_EquipDefs[equipId].itemCategory == 6 ||
+        g_EquipDefs[equipId].itemCategory == 10) {
+        return 0;
+    }
+
+    if (g_EquipDefs[equipId].itemCategory == 9 &&
+        g_EquipDefs[equipId].attack == 1) {
+        return 0;
+    }
+
+    if (equipId == 0x10) {
+        return 0;
+    }
+
+    equipmentAttackBonus = 0;
+
+    for (i = 0; i < 5; i++) {
+        equipmentAttackBonus +=
+            g_AccessoryDefs[g_Status.equipment[3 + i]].attBonus;
+    }
+
+    totalAttack = g_EquipDefs[equipId].attack;
+    strengthStat = g_Status.statsTotal[0];
+
+    if (totalAttack <= strengthStat) {
+        totalAttack += strengthStat;
+    } else {
+        totalAttack += strengthStat / 2;
+    }
+
+    totalAttack += equipmentAttackBonus;
+
+    switch (equipId) {
+    case 0x7F:
+        totalAttack += g_Status.timerHours;
+        break;
+    case 0x8F:
+        totalAttack += SquareRoot0(g_Status.D_80097C40);
+        break;
+    case 4:
+        if (g_EquipDefs[otherEquipId].itemCategory == 9) {
+            totalAttack += 5;
+        }
+        break;
+    case 0x80:
+        totalAttack += g_Status.statsFamiliars[4].level;
+        break;
+    case 0x6F: {
+        s32 j;
+        s32 sVar3 = 0;
+        for (j = 0; j < 2; j++) {
+            s32 index = g_Status.equipment[6 + j] - 0x40;
+            if (index < 0) {
+                continue;
+            }
+            if (index < 7) {
+                sVar3 += DAT_060850ec[index];
+            }
+        }
+        totalAttack += sVar3;
+    } break;
+    }
+
+    if (g_StatBuffTimers[1]) {
+        totalAttack += 20;
+    }
+    if (totalAttack < 0) {
+        totalAttack = 0;
+    }
+    if (totalAttack > 999) {
+        totalAttack = 999;
+    }
+    return totalAttack;
+}
+
+inline void make_att(void) {
+    s32 i;
+
+    for (i = 0; i < 2; i++) {
+        s32 equipId = g_Status.equipment[i];
+        s32 otherEquipId = g_Status.equipment[1 - i];
+        g_Status.attackHands[i] = CalcAttack(equipId, otherEquipId);
+    }
+}
+
+void CalcDefense(void) {
+    Accessory* acc;
+    s32 thisHandItem;
+    s32 i;
+    s16 totalDefense;
+
+    totalDefense = 0;
+    g_Status.elementsWeakTo = 0;
+    g_Status.elementsResist = 0;
+    g_Status.elementsImmune = 0;
+    g_Status.elementsAbsorb = 0;
+
+    // Iterate over player's hands, hand 0 and hand 1.
+    for (i = 0; i < 2; i++) {
+        thisHandItem = g_Status.equipment[i];
+        totalDefense += g_EquipDefs[thisHandItem].defense;
+        // If this hand is shield rod and other hand is a shield, defense bonus
+        // of 2.
+        if (thisHandItem == 4 &&
+            g_EquipDefs[g_Status.equipment[1 - i]].itemCategory == 9) {
+            totalDefense += 2;
+        }
+    }
+    // Iterate over accessories worn by player
+    for (i = 0; i < 5; i++) {
+        acc = &g_AccessoryDefs[g_Status.equipment[i + 3]];
+        totalDefense += acc->defBonus;
+        g_Status.elementsWeakTo |= acc->weakToElements;
+        g_Status.elementsResist |= acc->resistElements;
+        g_Status.elementsImmune |= acc->immuneElements;
+        g_Status.elementsAbsorb |= acc->absorbElements;
+    }
+
+    if (CheckEquipmentItemCount(13, 0) != 0) {
+        g_Status.elementsImmune |= 0x200;
+    }
+    if (CheckEquipmentItemCount(15, 0) != 0) {
+        g_Status.elementsImmune |= 0x8000;
+    }
+    if (g_Status.relics[0x19] & 2) {
+        g_Status.elementsImmune |= 0x100;
+    }
+    if (g_StatBuffTimers[5]) {
+        g_Status.elementsResist |= 0x8000;
+    }
+    if (g_StatBuffTimers[6]) {
+        g_Status.elementsResist |= 0x2000;
+    }
+    if (g_StatBuffTimers[7]) {
+        g_Status.elementsResist |= 0x4000;
+    }
+    if (g_StatBuffTimers[8]) {
+        g_Status.elementsResist |= 0x100;
+    }
+    if (g_StatBuffTimers[9]) {
+        g_Status.elementsResist |= 0x1000;
+    }
+    if (g_StatBuffTimers[10]) {
+        g_Status.elementsImmune |= 0x200;
+    }
+    if (g_StatBuffTimers[11]) {
+        g_Status.elementsResist |= 0x800;
+    }
+
+    totalDefense += SquareRoot0(g_Status.statsTotal[1]) - 2;
+
+    if (CheckEquipmentItemCount(19, 2) != 0) {
+        totalDefense += g_RoomCount / 60;
+    }
+
+    if (g_StatBuffTimers[0]) {
+        totalDefense += 20;
+    }
+    if (totalDefense < 0) {
+        totalDefense = 0;
+    }
+    if (totalDefense > 999) {
+        totalDefense = 999;
+    }
+    g_Status.defenseEquip = totalDefense;
+}
+
+void make_all(void) {
+    func_0606D880();
+    make_att();
+    CalcDefense();
+}
 
 extern s32 D_8013AEE4;
 
@@ -205,7 +472,6 @@ u8 GetEquipItemCategory(s32 equipId) {
 }
 
 // SAT: func_0606F378
-// a little different from PSX version
 s32 func_800FD6C4(EquipKind equipTypeFilter) {
     s32 itemCount;
     s32 equipType;
@@ -229,7 +495,7 @@ s32 func_800FD6C4(EquipKind equipTypeFilter) {
     }
 
     for (itemCount = 0, i = 0; i < NUM_BODY_ITEMS; i++) {
-        if (D_800A7734[i].equipType == equipType) {
+        if (g_AccessoryDefs[i].equipType == equipType) {
             itemCount++;
         }
     }
@@ -237,7 +503,7 @@ s32 func_800FD6C4(EquipKind equipTypeFilter) {
 }
 
 // SAT: func_0606F3D8
-u8* GetEquipOrder(EquipKind kind) {
+inline u8* GetEquipOrder(EquipKind kind) {
     switch (kind) {
     case EQUIP_HAND:
         return g_Status.equipHandOrder;
@@ -246,7 +512,7 @@ u8* GetEquipOrder(EquipKind kind) {
 }
 
 // SAT: func_0606F3F8
-u8* GetEquipCount(EquipKind kind) {
+inline u8* GetEquipCount(EquipKind kind) {
     switch (kind) {
     case EQUIP_HAND:
         return g_Status.equipHandCount;
@@ -267,20 +533,6 @@ const char* GetEquipmentName(EquipKind kind, s32 equipId) {
 // CheckEquipmentItemCount
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F448, func_0606F448);
 
-static inline u8* _GetEquipOrder(EquipKind kind) {
-    switch (kind) {
-    case EQUIP_HAND:
-        return g_Status.equipHandOrder;
-    }
-    return g_Status.equipBodyOrder;
-}
-static inline u8* _GetEquipCount(EquipKind kind) {
-    switch (kind) {
-    case EQUIP_HAND:
-        return g_Status.equipHandCount;
-    }
-    return g_Status.equipBodyCount;
-}
 void AddToInventory(u16 id, EquipKind kind) {
     s32 i;
     EquipKind found;
@@ -290,8 +542,8 @@ void AddToInventory(u16 id, EquipKind kind) {
     s32 existingItemSlot;
     s32 emptySlot;
 
-    order = _GetEquipOrder(kind);
-    count = _GetEquipCount(kind);
+    order = GetEquipOrder(kind);
+    count = GetEquipCount(kind);
     if (count[id] >= 99) {
         return;
     }
@@ -460,10 +712,10 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     }
 
     res->criticalRate = criticalRate;
-    func_800F4994();
+    func_0606D880();
     itemCategory = g_EquipDefs[equipId].itemCategory;
     if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
-        res->attack = func_800F4D38(equipId, g_Status.equipment[1 - handId]);
+        res->attack = CalcAttack(equipId, g_Status.equipment[1 - handId]);
         if (g_Player.status & PLAYER_STATUS_POISON) {
             res->attack >>= 1;
         }
