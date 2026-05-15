@@ -1807,7 +1807,7 @@ extern void (*g_api_AddToInventory)(u32 id, EquipKind kind);
 extern RelicDesc* g_api_relicDefs;
 extern s32 (*g_api_PlaySfxVolPan)(s32 sfxId, s32 sfxVol, s32 sfxPan);
 extern s32 (*g_api_SetVolumeCommand22_23)(s32 vol, s32 distance);
-extern void (*g_api_make_all)(void);
+extern void (*g_api_MakeAll)(void);
 extern u32 (*g_api_CheckEquipmentItemCount)(u32 itemId, u32 equipType);
 extern void (*g_api_GetPlayerSensor)(Collider* col);
 extern void (*g_api_RevealSecretPassageAtPlayerPositionOnMap)(s32 arg0);
