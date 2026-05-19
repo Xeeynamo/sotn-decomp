@@ -229,7 +229,7 @@ typedef struct Entity {
     /* 0x4c */ u16 pose;
     /* 0x4e */ s16 poseTimer;
     /* 0x50 */ char pad_50[0x2];
-    /* 0x52 */ s16 unk52;
+    /* 0x52 */ s16 animCurFrame;
     /* 0x54 */ char pad_54[0xC];
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ char pad_62[0x2];

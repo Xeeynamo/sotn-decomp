@@ -35,6 +35,7 @@ _PreventEntityFromRespawning = 0x0607B1C8;
 _SetStep = 0x0607B218;
 _SetSubStep = 0x0607B240;
 _CreateEntityFromCurrentEntity = 0x0607B318;
+_AnimateEntity = 0x0607B674;
 _CheckCollision = 0x0607B7B4;
 _g_SubwpnDefs = 0x0607C14C;
 _g_EquipDefs = 0x0607C250;

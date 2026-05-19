@@ -1123,8 +1123,11 @@ void func_06079BCC(Entity* entity) {
 }
 
 void FallEntity(Entity* entity) {
-    if (entity->velocityY < FIX(6)) {
-        entity->velocityY += FIX(0.25f);
+    #define TERMINAL_VELOCITY FIX(6)
+    #define GRAVITY FIX(0.25f)
+
+    if (entity->velocityY < TERMINAL_VELOCITY) {
+        entity->velocityY += GRAVITY;
     }
 }
 
@@ -1307,7 +1310,40 @@ void func_0607B604(Entity* entity) {
 }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B618, func_0607B618);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B674, func_0607B674);
+
+u32 AnimateEntity(u8 frames[], Entity* entity) {
+    u8* currentFrame;
+    u16 flag;
+
+    flag = 0;
+    currentFrame = frames + entity->pose * 2;
+    if (!entity->poseTimer) {
+        if (*currentFrame) {
+            if (*currentFrame == 0xFF) {
+                return 0;
+            }
+
+            entity->poseTimer = currentFrame[0];
+            entity->animCurFrame = currentFrame[1];
+            currentFrame += 2;
+            entity->pose++;
+            flag |= 0x80;
+        } else {
+            entity->pose = 0;
+            currentFrame = frames;
+            entity->poseTimer = currentFrame[0];
+            entity->animCurFrame = currentFrame[1];
+            entity->pose++;
+            return 0;
+        }
+    }
+    entity->poseTimer--;
+    entity->animCurFrame = currentFrame[-1];
+    flag |= 1;
+
+    return flag;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B714, func_0607B714);
 
 void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
