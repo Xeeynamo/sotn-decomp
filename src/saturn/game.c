@@ -1299,10 +1299,11 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B3D0, func_0607B3D0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B448, func_0607B448);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B4B8, func_0607B4B8);
 
-void func_0607B604(s32* param_1) {
-    s32* temp = (s32*)*param_1;
-    temp[0x14 / 4] = param_1[1];
-    temp[0x18 / 4] = param_1[2];
+void func_0607B604(Entity* entity) {
+    struct Unk0600B344* temp = entity->unk0;
+
+    temp->unk14 = entity->posX.val;
+    temp->unk18 = entity->posY.val;
 }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B618, func_0607B618);
