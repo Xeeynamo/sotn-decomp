@@ -155,8 +155,8 @@ void MoveEntity(void) {
 }
 
 void FallEntity(void) {
-    if (g_CurrentEntity->velocityY < FALL_TERMINAL_VELOCITY) {
-        g_CurrentEntity->velocityY += FALL_GRAVITY;
+    if (g_CurrentEntity->velocityY < FIX(6)) {
+        g_CurrentEntity->velocityY += FIX(0.25f);
     }
 }
 
