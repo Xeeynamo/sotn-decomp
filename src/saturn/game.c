@@ -20,8 +20,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066854, func_06066854);
 
 void (*func_06064684)();
 
-// func_060668D4
-// similar to func_8011A9D8
+// SAT: func_060668D4
 void func_8011A9D8(void) {
     Entity* entity;
     s32 i;
@@ -1105,24 +1104,30 @@ void MoveEntity(Entity* entity) {
     entity->posY.val += entity->velocityY;
 }
 
-void func_06079BB4(s32* param_1) {
-    s32* temp = (s32*)*param_1;
+void func_06079BB4(Entity* entity) {
+    struct Unk0600B344* temp = entity->unk0;
 
-    if (temp != 0) {
-        temp[0x14 / 4] = param_1[1];
-        temp[0x18 / 4] = param_1[2];
+    if (temp != NULL) {
+        temp->unk14 = entity->posX.val;
+        temp->unk18 = entity->posY.val;
     }
 }
 
-void func_06079BCC(s32* param_1) {
-    s32* temp = (s32*)*param_1;
-    if (temp != 0) {
-        param_1[1] = temp[0x14 / 4];
-        param_1[2] = temp[0x18 / 4];
+void func_06079BCC(Entity* entity) {
+    struct Unk0600B344* temp = entity->unk0;
+
+    if (temp != NULL) {
+        entity->posX.val = temp->unk14;
+        entity->posY.val = temp->unk18;
     }
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079BE4, func_06079BE4);
+void FallEntity(Entity* entity) {
+    if (entity->velocityY < FIX(6)) {
+        entity->velocityY += FIX(0.25f);
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079C04, func_06079C04);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079DEC, func_06079DEC);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079F60, func_06079F60);
@@ -1246,10 +1251,17 @@ Entity* AllocEntity(Entity* start, Entity* end) {
     return NULL;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B1C8, func_0607B1C8);
+// SAT: func_0607B1C8
+void PreventEntityFromRespawning(Entity* entity) {
+    if (entity->entityRoomIndex) {
+        u16 index = entity->entityRoomIndex - 1 >> 5;
+        g_unkGraphicsStruct.D_80097428[index] |=
+            1 << ((entity->entityRoomIndex - 1) & 0x1F);
+    }
+}
 
 // SAT: func_0607B218
-void func_801C58A4(s32 step) {
+void SetStep(s32 step) {
     g_CurrentEntity->step = step;
     g_CurrentEntity->step_s = 0;
     g_CurrentEntity->pose = 0;
@@ -1257,7 +1269,7 @@ void func_801C58A4(s32 step) {
 }
 
 // SAT: func_0607B240
-void func_801C58C4(s32 step_s) {
+void SetSubStep(s32 step_s) {
     g_CurrentEntity->step_s = step_s;
     g_CurrentEntity->pose = 0;
     g_CurrentEntity->poseTimer = 0;
