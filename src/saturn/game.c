@@ -1123,8 +1123,8 @@ void func_06079BCC(Entity* entity) {
 }
 
 void FallEntity(Entity* entity) {
-    #define TERMINAL_VELOCITY FIX(6)
-    #define GRAVITY FIX(0.25f)
+#define TERMINAL_VELOCITY FIX(6)
+#define GRAVITY FIX(0.25f)
 
     if (entity->velocityY < TERMINAL_VELOCITY) {
         entity->velocityY += GRAVITY;

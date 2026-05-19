@@ -155,8 +155,8 @@ void MoveEntity(void) {
 }
 
 void FallEntity(void) {
-    #define TERMINAL_VELOCITY FIX(6)
-    #define GRAVITY FIX(0.25f)
+#define TERMINAL_VELOCITY FIX(6)
+#define GRAVITY FIX(0.25f)
 
     if (g_CurrentEntity->velocityY < TERMINAL_VELOCITY) {
         g_CurrentEntity->velocityY += GRAVITY;
