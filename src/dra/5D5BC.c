@@ -277,8 +277,8 @@ void LearnSpell(s32 spellId) {
     }
 }
 
-bool func_800FDD44(s32 itemType) {
-    s32 equippedItem = g_Status.equipment[itemType];
+bool reduce_weapon(s32 hand) {
+    s32 equippedItem = g_Status.equipment[hand];
     bool isConsumable = g_EquipDefs[equippedItem].isConsumable;
 
     if (CheckEquipmentItemCount(ITEM_DUPLICATOR, EQUIP_ACCESSORY)) {
@@ -286,7 +286,7 @@ bool func_800FDD44(s32 itemType) {
     }
     if (isConsumable) {
         if (!g_Status.equipHandCount[equippedItem]) {
-            g_Status.equipment[itemType] = ITEM_EMPTY_HAND;
+            g_Status.equipment[hand] = ITEM_EMPTY_HAND;
             make_all();
             return true;
         }
@@ -325,8 +325,8 @@ u32 CheckAndDoLevelUp(void) {
     if (g_ExpNext[g_Status.level + 1] <= g_Status.exp) {
         g_Status.level++;
         g_Status.mpMax += 4 + (rand() & 1);
-        g_Status.hp += g_LevelHPIncrease[(s32)g_Status.level / 10];
-        g_Status.hpMax += g_LevelHPIncrease[(s32)g_Status.level / 10];
+        g_Status.hp += g_LevelHPIncrease[g_Status.level / 10];
+        g_Status.hpMax += g_LevelHPIncrease[g_Status.level / 10];
         g_Status.heartsMax += 2;
         // Run again, in case we have enough EXP to level up twice
         CheckAndDoLevelUp();
@@ -419,7 +419,7 @@ s32 func_800FE044(s32 amount, s32 type) {
     if (amount != 0 && g_Status.level != 99) {
         playerXPBoost = amount;
         // from here on, "type" is really the enemy's level
-        if ((s32)g_Status.level > type) {
+        if (g_Status.level > type) {
             levelDiff = g_Status.level - type;
             for (i = 0; i < levelDiff; i++) {
                 playerXPBoost = playerXPBoost * 2 / 3;
@@ -428,7 +428,7 @@ s32 func_800FE044(s32 amount, s32 type) {
                 playerXPBoost = 1;
             }
         }
-        if ((s32)g_Status.level < type) {
+        if (g_Status.level < type) {
             levelDiff = type - g_Status.level;
             if (levelDiff > 5) {
                 levelDiff = 5;

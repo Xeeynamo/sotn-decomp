@@ -288,7 +288,7 @@ typedef struct {
     s32 statsBase[4];
     s32 statsEquip[4];
     s32 statsTotal[4];
-    u32 level;
+    s32 level;
     u32 exp;
     char pad3[0xC];
     u32 subWeapon;

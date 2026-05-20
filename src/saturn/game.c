@@ -618,8 +618,28 @@ bool CastSpell(SpellIds spellId) {
 // _waza_work_set
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F798, func_0606F798);
 
-// _reduce_weapon
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F800, func_0606F800);
+bool reduce_weapon(s32 hand) {
+    s32* equippedItem;
+    bool isConsumable;
+
+    if (hand > 2) {
+        return true;
+    }
+    equippedItem = &g_Status.equipment[hand];
+    isConsumable = g_EquipDefs[*equippedItem].isConsumable;
+    if (CheckEquipmentItemCount(0x56, 4)) {
+        return false;
+    }
+    if (isConsumable) {
+        if (!g_Status.equipHandCount[*equippedItem]) {
+            *equippedItem = 0;
+            make_all();
+            return true;
+        }
+        g_Status.equipHandCount[*equippedItem]--;
+    }
+    return false;
+}
 
 // SAT: func_0606F884
 // no return value on PSX?
@@ -669,8 +689,8 @@ u32 CheckAndDoLevelUp(void) {
         if (maxMp) {
             g_Status.mp = g_Status.mpMax;
         }
-        g_Status.hp += g_LevelHPIncrease[(s32)g_Status.level / 10];
-        g_Status.hpMax += g_LevelHPIncrease[(s32)g_Status.level / 10];
+        g_Status.hp += g_LevelHPIncrease[g_Status.level / 10];
+        g_Status.hpMax += g_LevelHPIncrease[g_Status.level / 10];
         g_Status.heartsMax += 2;
         statsGained = 0;
         CheckAndDoLevelUp();
@@ -755,7 +775,7 @@ s32 func_800FE044(s32 amount, s32 type) {
         return 1;
     }
     playerXPBoost = amount;
-    if ((s32)g_Status.level > type) {
+    if (g_Status.level > type) {
         levelDiff = g_Status.level - type;
         for (i = 0; i < levelDiff; i++) {
             playerXPBoost = playerXPBoost * 2 / 3;
@@ -764,7 +784,7 @@ s32 func_800FE044(s32 amount, s32 type) {
             playerXPBoost = 1;
         }
     }
-    if ((s32)g_Status.level < type) {
+    if (g_Status.level < type) {
         levelDiff = type - g_Status.level;
         if (levelDiff > 5) {
             levelDiff = 5;

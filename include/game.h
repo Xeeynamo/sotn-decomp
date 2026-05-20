@@ -1197,7 +1197,7 @@ typedef struct {
     /* 80097BB8 */ s32 statsBase[4];
     /* 80097BC8 */ s32 statsEquip[4];
     /* 80097BD8 */ s32 statsTotal[4];
-    /* 80097BE8 */ u32 level;
+    /* 80097BE8 */ s32 level;
     /* 80097BEC */ u32 exp;
     /* 80097BF0 */ s32 gold;
     /* 80097BF4 */ s32 killCount;
