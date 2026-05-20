@@ -586,7 +586,8 @@ void AddHearts(s32 value) {
 }
 
 // Note: Arg3 is unused, but is given in the call from func_80113D7C
-s32 get_damage_sub(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
+// original name: get_damage_sub
+s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     s32 ret = 0;
     s32 itemCount;
 

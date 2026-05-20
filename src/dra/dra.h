@@ -809,7 +809,7 @@ void LearnSpell(s32 spellId);
 void func_800FDE00(void);
 s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts);
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId);
-s32 get_damage_sub(DamageParam*, s32, s32 amount, s32);
+s32 HandleDamage(DamageParam*, s32, s32 amount, s32);
 s32 HandleTransformationMP(TransformationForm, CallMode);
 void ClearStatBuff(s32 arg0);
 bool func_8010183C(s32 arg0);

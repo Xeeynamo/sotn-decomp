@@ -904,7 +904,7 @@ void EntityAlucard() {
     if (PLAYER.hitParams) {
         playerStep = PLAYER.step;
         playerStepS = PLAYER.step_s;
-        i = get_damage_sub(&damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
+        i = HandleDamage(&damage, PLAYER.hitParams, PLAYER.hitPoints, 0);
 #if defined(VERSION_PSP)
         if (g_InvincibleFlag) {
             PLAYER.hitPoints = 0;

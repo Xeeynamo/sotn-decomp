@@ -1134,7 +1134,7 @@ s32 func_80113D7C(s16 damageAmount) {
 
     damageAmount = damageAmount / 2;
 
-    handleDamageResult = get_damage_sub(&damage, DAMAGEKIND_2, damageAmount, 1);
+    handleDamageResult = HandleDamage(&damage, DAMAGEKIND_2, damageAmount, 1);
     CreateHPNumMove(damage.damageTaken, 0);
     func_800FE8F0();
     if (handleDamageResult == 4) {
@@ -2184,7 +2184,7 @@ void PlayerStepBossGrab(void) {
         return;
     case 1:
         if (g_Player.unk60 == 3) {
-            temp_s0 = get_damage_sub(&damage, DAMAGEKIND_2, g_Player.unk64, 1);
+            temp_s0 = HandleDamage(&damage, DAMAGEKIND_2, g_Player.unk64, 1);
             CreateHPNumMove(damage.damageTaken, 0);
             if (temp_s0 == 4) {
                 SetPlayerStep(Player_Kill);

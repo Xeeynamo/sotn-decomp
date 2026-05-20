@@ -642,7 +642,7 @@ u32 CheckAndDoLevelUp(void) {
     s32 i;
     s32 statsGained;
     bool maxMp;
-    
+
     if (D_80137960 != 0) {
         D_80137960 -= 1;
         return 3;
@@ -704,7 +704,7 @@ s32 func_800FE044(s32 amount, s32 type) {
     s32 i;
     s32 levelDiff;
     s32 activeFamiliar;
-    
+
     if (type == 0x8000) {
         if (g_Status.hpMax == 9999) {
             return 1;
@@ -750,7 +750,7 @@ s32 func_800FE044(s32 amount, s32 type) {
     if (amount == 0) {
         return 1;
     }
-    
+
     if (g_Status.level == 99) {
         return 1;
     }
@@ -792,7 +792,8 @@ s32 func_800FE044(s32 amount, s32 type) {
     if (g_Status.statsFamiliars[activeFamiliar].exp > 9899) {
         g_Status.statsFamiliars[activeFamiliar].exp = 9899;
     }
-    g_Status.statsFamiliars[activeFamiliar].level = (g_Status.statsFamiliars[activeFamiliar].exp / 100) + 1;
+    g_Status.statsFamiliars[activeFamiliar].level =
+        (g_Status.statsFamiliars[activeFamiliar].exp / 100) + 1;
     return 0;
 }
 
@@ -913,7 +914,8 @@ inline void AddHearts(s32 value) {
     }
 }
 
-s32 get_damage_sub(DamageParam* damage, s32 arg1, s32 amount) {
+// original name: get_damage_sub
+s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount) {
     s32 ret;
     s32 itemCount;
 
