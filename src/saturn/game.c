@@ -630,9 +630,171 @@ s32 func_800FDE00(void) {
     return 0;
 }
 
-// _check_experience
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F8A8, func_0606F8A8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FA30, func_0606FA30);
+extern s32 g_LevelHPIncrease[];
+extern s32 g_ExpNext[];
+extern s32 g_PlayableCharacter;
+extern s32 g_Servant;
+extern RelicDesc g_RelicDefs[];
+
+// original name: check_experience
+u32 CheckAndDoLevelUp(void) {
+    s32 statgain;
+    s32 i;
+    s32 statsGained;
+    bool maxMp;
+    
+    if (D_80137960 != 0) {
+        D_80137960 -= 1;
+        return 3;
+    }
+    if (D_80137964 != 0) {
+        D_80137964 -= 1;
+        return 2;
+    }
+    if (D_80137968 != 0) {
+        D_80137968 -= 1;
+        return 4;
+    }
+    if (g_Status.level == 99) {
+        return 0;
+    }
+    if (g_ExpNext[g_Status.level + 1] <= g_Status.exp) {
+        g_Status.level++;
+        if (g_Status.mp == g_Status.mpMax) {
+            maxMp = true;
+        } else {
+            maxMp = false;
+        }
+        g_Status.mpMax += 4 + (rand() & 1);
+        if (maxMp) {
+            g_Status.mp = g_Status.mpMax;
+        }
+        g_Status.hp += g_LevelHPIncrease[(s32)g_Status.level / 10];
+        g_Status.hpMax += g_LevelHPIncrease[(s32)g_Status.level / 10];
+        g_Status.heartsMax += 2;
+        statsGained = 0;
+        CheckAndDoLevelUp();
+        for (i = 0; i < 4; i++) {
+            statgain = rand() & 1;
+            g_Status.statsBase[i] += statgain;
+            if (g_Status.statsBase[i] > 99) {
+                g_Status.statsBase[i] = 99;
+                statgain = 0;
+            }
+            statsGained += statgain;
+        }
+        if (statsGained < 2) {
+            i = rand() & 3;
+            g_Status.statsBase[i]++;
+            if (g_Status.statsBase[i] > 99) {
+                g_Status.statsBase[i] = 99;
+            }
+        }
+        return 1;
+    }
+    return 0;
+}
+
+// SAT: func_0606FA30
+s32 func_800FE044(s32 amount, s32 type) {
+    s32 iVar4;
+    u32 uVar8;
+    s32 oldHeartMax;
+    u32 playerXPBoost;
+    s32 i;
+    s32 levelDiff;
+    s32 activeFamiliar;
+    
+    if (type == 0x8000) {
+        if (g_Status.hpMax == 9999) {
+            return 1;
+        }
+        g_Status.hpMax += amount;
+        if (g_Status.hpMax > 9999) {
+            g_Status.hpMax = 9999;
+        }
+        if (g_PlayableCharacter != 0) {
+            g_Status.hpMax += amount;
+            if (g_Status.hpMax > 9999) {
+                g_Status.hpMax = 9999;
+            }
+        }
+        g_Status.hp = g_Status.hpMax;
+        D_80137960++;
+        return 0;
+    }
+    if (type == 0x4000) {
+        if (g_PlayableCharacter != 0) {
+            return 1;
+        }
+        oldHeartMax = g_Status.heartsMax;
+        if (g_Status.heartsMax == 9999) {
+            return 1;
+        }
+        g_Status.heartsMax += amount;
+        if (g_Status.heartsMax > 9999) {
+            g_Status.heartsMax = 9999;
+        }
+        g_Status.hearts += g_Status.heartsMax - oldHeartMax;
+        D_80137964++;
+        return 0;
+    }
+    if (type == 0x2000) {
+        g_Status.relics[amount] = 3;
+        if (g_RelicDefs[amount].unk0C) {
+            g_Status.relics[amount] = 1;
+        }
+        D_80137968++;
+        return 0;
+    }
+    if (amount == 0) {
+        return 1;
+    }
+    
+    if (g_Status.level == 99) {
+        return 1;
+    }
+    playerXPBoost = amount;
+    if ((s32)g_Status.level > type) {
+        levelDiff = g_Status.level - type;
+        for (i = 0; i < levelDiff; i++) {
+            playerXPBoost = playerXPBoost * 2 / 3;
+        }
+        if (playerXPBoost == 0) {
+            playerXPBoost = 1;
+        }
+    }
+    if ((s32)g_Status.level < type) {
+        levelDiff = type - g_Status.level;
+        if (levelDiff > 5) {
+            levelDiff = 5;
+        }
+        for (i = 0; i < levelDiff; i++) {
+            playerXPBoost += playerXPBoost / 4;
+        }
+    }
+    g_Status.exp += playerXPBoost;
+    if (g_ExpNext[99] <= g_Status.exp) {
+        g_Status.exp = g_ExpNext[99];
+    }
+    if (g_Servant == 0) {
+        return 0;
+    }
+    activeFamiliar = g_Servant - 1;
+    playerXPBoost = amount / g_Status.statsFamiliars[activeFamiliar].level;
+    for (i = 0; playerXPBoost > 0; i++) {
+        playerXPBoost = playerXPBoost / 2;
+    }
+    if (i < 1) {
+        i = 1;
+    }
+    g_Status.statsFamiliars[activeFamiliar].exp += i;
+    if (g_Status.statsFamiliars[activeFamiliar].exp > 9899) {
+        g_Status.statsFamiliars[activeFamiliar].exp = 9899;
+    }
+    g_Status.statsFamiliars[activeFamiliar].level = (g_Status.statsFamiliars[activeFamiliar].exp / 100) + 1;
+    return 0;
+}
 
 // SAT: func_0606FC60
 // sh2 compiler is more literal?

@@ -301,6 +301,7 @@ void func_800FDE00(void) {
     D_80137968 = 0;
 }
 
+// original name: check_experience
 u32 CheckAndDoLevelUp(void) {
     s32 i;
     s32 statsGained;

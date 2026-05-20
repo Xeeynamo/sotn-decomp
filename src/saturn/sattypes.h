@@ -288,7 +288,9 @@ typedef struct {
     s32 statsBase[4];
     s32 statsEquip[4];
     s32 statsTotal[4];
-    char pad3[0x14];
+    u32 level;
+    u32 exp;
+    char pad3[0xC];
     u32 subWeapon;
     u32 equipment[8];
     u32 attackHands[2];
@@ -474,6 +476,14 @@ typedef struct {
     s32 : 32;
     s32 D_80097428[8];
 } unkGraphicsStruct;
+
+typedef struct {
+    s32 : 32;
+    s32 : 32;
+    u16 : 16;
+    u16 : 16;
+    s32 unk0C;
+} RelicDesc;
 
 typedef enum {
     PLAYER_CHARACTER,
