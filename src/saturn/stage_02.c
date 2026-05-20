@@ -277,7 +277,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60E9220, func_060E9220);
 
 void func_060E9270(Entity* self) {
     func_06079BB4(self);
-    func_0600B004(self->unk0, DAT_060f237c[self->unk52]);
+    func_0600B004(self->unk0, DAT_060f237c[self->animCurFrame]);
 }
 
 // dupe of func_060e97c4
@@ -313,7 +313,7 @@ void func_060e97c4(u16** param_1) {
 
 void func_060E97F0(Entity* self) {
     func_06079BB4(self);
-    func_0600B004(self->unk0, DAT_060f2878[self->unk52]);
+    func_0600B004(self->unk0, DAT_060f2878[self->animCurFrame]);
 }
 
 // EntityBoneScimitar
@@ -378,7 +378,7 @@ INCLUDE_ASM("asm/saturn/stage_02/f_nonmat", f60EC1F0, func_060EC1F0);
 
 void func_060EC240(Entity* self) {
     func_06079BB4(self);
-    func_0600B004(self->unk0, DAT_060f4e6c[self->unk52]);
+    func_0600B004(self->unk0, DAT_060f4e6c[self->animCurFrame]);
 }
 
 // EntitySpittleBone

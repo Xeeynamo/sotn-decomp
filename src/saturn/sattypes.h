@@ -229,7 +229,7 @@ typedef struct Entity {
     /* 0x4c */ u16 pose;
     /* 0x4e */ s16 poseTimer;
     /* 0x50 */ char pad_50[0x2];
-    /* 0x52 */ s16 unk52;
+    /* 0x52 */ s16 animCurFrame;
     /* 0x54 */ char pad_54[0xC];
     /* 0x60 */ s16 primIndex;
     /* 0x62 */ char pad_62[0x2];
@@ -459,6 +459,22 @@ typedef struct {
     /* 0x46A */ u16 unk7E;
 } PlayerState;
 
+typedef struct {
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 D_80097428[8];
+} unkGraphicsStruct;
+
 typedef enum {
     PLAYER_CHARACTER,
     E_AFTERIMAGE_1,
@@ -539,6 +555,7 @@ extern PlayerState g_Player;
 extern Entity* g_CurrentEntity;
 extern PlayerStatus g_Status;
 extern SubweaponDef g_SubwpnDefs[];
+extern unkGraphicsStruct g_unkGraphicsStruct;
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7
@@ -548,7 +565,5 @@ typedef struct {
     /* 0x0 */ s32 x;
     /* 0x2 */ s32 y;
 } Point16; // size = 0x4
-
-#define FIX(x) (x << 16)
 
 #endif
