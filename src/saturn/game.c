@@ -636,11 +636,10 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606FA30, func_0606FA30);
 
 // SAT: func_0606FC60
 // sh2 compiler is more literal?
-bool IsRelicActive(s32 arg0) {
-    if ((g_Status.relics[arg0] & 2) != 0) {
+inline bool IsRelicActive(s32 relicId) {
+    if (g_Status.relics[relicId] & 2) {
         return 1;
     }
-
     return 0;
 }
 
@@ -650,19 +649,19 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
 
     if (subweaponId == 0) {
         *subwpn = g_SubwpnDefs[g_Status.subWeapon];
-        accessoryCount = CheckEquipmentItemCount(0x4f, 4); // 4f instead of 4d
+        accessoryCount = CheckEquipmentItemCount(0x4F, 4); // 4F instead of 4D
         if (accessoryCount == 1) {
-            subwpn->unk2 = subwpn->unk2 / 2;
+            subwpn->heartCost /= 2;
         }
         if (accessoryCount == 2) {
-            subwpn->unk2 = subwpn->unk2 / 3;
+            subwpn->heartCost /= 3;
         }
-        if (subwpn->unk2 <= 0) {
-            subwpn->unk2 = 1;
+        if (subwpn->heartCost <= 0) {
+            subwpn->heartCost = 1;
         }
-        if (g_Status.hearts >= subwpn->unk2) {
+        if (g_Status.hearts >= subwpn->heartCost) {
             if (useHearts) {
-                g_Status.hearts -= subwpn->unk2;
+                g_Status.hearts -= subwpn->heartCost;
             }
             return g_Status.subWeapon;
         } else {
@@ -690,16 +689,13 @@ s32 func_800FE3C4(SubweaponDef* subwpn, s32 subweaponId, bool useHearts) {
 
 // SAT: func_0606FE60
 void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
-    s32 criticalModRate;
     s32 criticalRate;
     u8 itemCategory;
 
-    criticalModRate = 5;
-
     *res = g_EquipDefs[equipId]; // hack not needed
     criticalRate = res->criticalRate;
-    criticalRate = criticalRate - criticalModRate +
-                   SquareRoot0((g_Status.statsTotal[3] * 2) + (rand() & 0xF));
+    criticalRate +=
+        SquareRoot0((g_Status.statsTotal[3] * 2) + (rand() & 0xF)) - 5;
     if (criticalRate > 255) {
         criticalRate = 255;
     }
@@ -713,18 +709,19 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId) {
     res->criticalRate = criticalRate;
     func_0606D880();
     itemCategory = g_EquipDefs[equipId].itemCategory;
-    if (itemCategory != ITEM_FOOD && itemCategory != ITEM_MEDICINE) {
-        res->attack = CalcAttack(equipId, g_Status.equipment[1 - handId]);
-        if (g_Player.status & PLAYER_STATUS_POISON) {
-            res->attack >>= 1;
-        }
+    if (itemCategory == ITEM_FOOD || itemCategory == ITEM_MEDICINE) {
+        return;
+    }
+    res->attack = CalcAttack(equipId, g_Status.equipment[1 - handId]);
+    if (g_Player.status & PLAYER_STATUS_POISON) {
+        res->attack >>= 1;
     }
 }
 
 // SAT: func_0606FFA0
 bool HasEnoughMp(s32 mpCount, bool subtractMp) {
-    if (!(mpCount > g_Status.mp)) { // condition swapped
-        if (subtractMp != 0) {
+    if (mpCount <= g_Status.mp) {
+        if (subtractMp) {
             g_Status.mp -= mpCount;
         }
         return false;
@@ -733,18 +730,18 @@ bool HasEnoughMp(s32 mpCount, bool subtractMp) {
 }
 
 // SAT: func_0606FFC8
-void func_800FE8F0(void) {
+inline void func_800FE8F0(void) {
     if (D_8013B5E8 == 0) {
         D_8013B5E8 = 0x40;
     }
 }
 
 // SAT: func_0606FFE4
-void AddHearts(s32 value) {
+inline void AddHearts(s32 value) {
     Entity* player;
     if (g_Status.hearts < g_Status.heartsMax) {
         g_Status.hearts += value;
-        if (g_Status.hearts > g_Status.heartsMax) { // swapped
+        if (g_Status.hearts > g_Status.heartsMax) {
             g_Status.hearts = g_Status.heartsMax;
         }
         player = &PLAYER;
@@ -754,23 +751,259 @@ void AddHearts(s32 value) {
     }
 }
 
-const u16 pad_06070038 = 0xCCCC;
-const u16 pad_0607003A = 0xCCCD;
+s32 get_damage_sub(DamageParam* damage, s32 arg1, s32 amount) {
+    s32 ret;
+    s32 itemCount;
 
-// _get_damage_sub
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607003C, func_0607003C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60703DC, func_060703DC);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070410, func_06070410);
+    make_all();
+    damage->effects = arg1 & ~0x1F;
+    damage->damageKind = arg1 & 0x1F;
+    // Damage doubled, weakness
+    if (g_Status.elementsWeakTo & damage->effects) {
+        amount *= 2;
+    }
+    // Damage halved, resistance
+    if (g_Status.elementsResist & damage->effects) {
+        amount /= 2;
+    }
+    // Immune, zero damage
+    if (g_Status.elementsImmune & damage->effects) {
+        if ((g_Status.elementsImmune & damage->effects) & 0x200) {
+            damage->effects &= 0xFFFFFDFF;
+        } else {
+            return 0;
+        }
+    }
+    // Absorb, hp goes up based on damage amount
+    if (g_Status.elementsAbsorb & damage->effects) {
+        if (amount < 1) {
+            amount = 1;
+        }
+        damage->unkC = amount;
+        if (g_Status.hp != g_Status.hpMax) {
+            func_800FE8F0();
+            g_Status.hp += damage->unkC;
+            if (g_Status.hp > g_Status.hpMax) {
+                g_Status.hp = g_Status.hpMax;
+            }
+        }
+        return 5;
+    }
+    // Player wearing cat-eye circlet. Same as above if-statement but
+    //  with arg2 doubled. Item description says "Big HP restore" so makes
+    //  sense
+    if (CheckEquipmentItemCount(0x2B, 1) != 0 && damage->damageKind == 7) {
+        amount *= 2;
+        if (amount < 1) {
+            amount = 1;
+        }
+        damage->unkC = amount;
+        if (g_Status.hp != g_Status.hpMax) {
+            func_800FE8F0();
+            g_Status.hp += damage->unkC;
+            if (g_Status.hp > g_Status.hpMax) {
+                g_Status.hp = g_Status.hpMax;
+            }
+        }
+        return 5;
+    }
+
+    // Very strange to have ballroom mask check. This item is not known to
+    // have special behavior. Also, not possible to equip two. This may be
+    // a new discovery of a property of the item. Worth further analysis.
+
+    itemCount = CheckEquipmentItemCount(0x1C, 1);
+    if ((itemCount != 0) &&
+        (damage->effects &
+         (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
+          EFFECT_UNK_1000 | EFFECT_UNK_0800 | EFFECT_UNK_0100 |
+          EFFECT_SOLID_FROM_BELOW))) {
+        if (itemCount == 1) {
+            amount -= amount / 5;
+        }
+        if (itemCount == 2) {
+            amount -= amount / 3;
+        }
+    }
+    if (g_Player.status & PLAYER_STATUS_STONE) {
+        damage->damageTaken = g_Status.hpMax / 8;
+        ret = 8;
+    } else if (damage->effects & EFFECT_UNK_0200) {
+        damage->damageTaken = amount - g_Status.defenseEquip * 2;
+        if (damage->damageTaken <= 0) {
+            damage->damageTaken = 0;
+        }
+        ret = 7;
+    } else if (damage->damageKind == 6) {
+        if (g_GameTimer % 10 == 0) {
+            damage->damageTaken = 1;
+        } else {
+            damage->damageTaken = 0;
+        }
+        ret = 9;
+    } else {
+        if (damage->damageKind < 0x10) {
+            damage->damageTaken = amount - g_Status.defenseEquip;
+        } else {
+            damage->damageTaken = g_Status.hpMax / 8;
+        }
+        if (g_Player.status & PLAYER_STATUS_POISON) {
+            damage->damageTaken *= 2;
+        }
+        // Check for player wearing a Talisman (chance to dodge attack)
+        itemCount = CheckEquipmentItemCount(0x55, 4);
+        if (itemCount != 0) {
+            if (g_Status.statsTotal[3] * itemCount >= (rand() & 0x1FF)) {
+                return 2;
+            }
+        }
+        if (damage->damageTaken > 0) {
+            if (damage->damageKind == 0 || damage->damageKind == 1) {
+                if (damage->damageTaken * 2 >= g_Status.hpMax) {
+                    damage->damageKind = 4;
+                } else if (amount * 50 >= g_Status.hpMax) {
+                    damage->damageKind = 3;
+                } else {
+                    damage->damageKind = 2;
+                }
+            }
+            ret = 3;
+        } else {
+            if (g_Status.defenseEquip >= 100 &&
+                !(damage->effects &
+                  (EFFECT_UNK_0100 | EFFECT_SOLID_FROM_BELOW)) &&
+                !(g_Player.status & PLAYER_STATUS_STONE)) {
+                damage->damageKind = 0;
+                ret = 1;
+            } else {
+                damage->damageKind = 2;
+                ret = 3;
+            }
+            damage->damageTaken = 1;
+        }
+    }
+
+    // If our HP is less than the damage, we die.
+    if (g_Status.hp <= damage->damageTaken) {
+        g_Status.hp = 0;
+        if (ret == 7) {
+            return 7;
+        }
+        if (ret == 9) {
+            ret = 6;
+        } else {
+            ret = 4;
+        }
+    } else {
+        if (ret != 9) {
+            func_800FE8F0();
+        }
+        // Here is where we actually take the damage away.
+        g_Status.hp -= damage->damageTaken;
+        // Blood cloak gives hearts when damage is taken
+        if ((CheckEquipmentItemCount(0x37, 3) != 0) && (ret != 9)) {
+            AddHearts(damage->damageTaken);
+        }
+        // Fury Plate "DEF goes up when damage taken", so here we get 0x200
+        // frames of defense stat buff.
+        if (CheckEquipmentItemCount(0x16, 2) != 0) {
+            if (g_StatBuffTimers[0] < 0x200) {
+                g_StatBuffTimers[0] = 0x200;
+            }
+        }
+    }
+    return ret;
+}
+
+void DecrementStatBuffTimers(void) {
+    s32 i;
+    for (i = 0; i < 16; i++) {
+        if (!g_StatBuffTimers[i]) {
+            continue;
+        }
+        switch ((u32)i) {
+        default:
+            // !FAKE
+            i++;
+            i--;
+        case 0:
+        case 1:
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+        case 11:
+            g_StatBuffTimers[i]--;
+        }
+    }
+}
+
+s32 HandleTransformationMP(s32 form, s32 mode) {
+    if (form == 0) {
+        if (!IsRelicActive(0)) {
+            return -1;
+        }
+        if (g_Status.mp - 1 > 0) {
+            if (mode != 0) {
+                if (g_GameTimer % 60 == 0) {
+                    g_Status.mp -= 1;
+                }
+            }
+            return 0;
+        }
+        return -1;
+    } else if (form == 1) {
+        if (!IsRelicActive(7)) {
+            return -1;
+        }
+        if (IsRelicActive(8)) {
+            if (g_Status.mp - 2 > 0) {
+                if (mode != 0) {
+                    if (g_GameTimer % 30 == 0) {
+                        g_Status.mp -= 2;
+                    }
+                }
+                return 0;
+            }
+            return -1;
+        } else {
+            if (g_Status.mp - 10 > 0) {
+                if (mode != 0) {
+                    if (g_GameTimer % 8 == 0) {
+                        g_Status.mp -= 10;
+                    }
+                }
+                return 0;
+            }
+            return -1;
+        }
+    } else if (form == 2) {
+        if (!IsRelicActive(4)) {
+            return -1;
+        }
+        if (g_Status.mp - 1 > 0) {
+            if (mode != 0) {
+                if (g_GameTimer % 120 == 0) {
+                    g_Status.mp -= 1;
+                }
+            }
+            return 0;
+        }
+        return -1;
+    }
+    return -1;
+}
 
 // SAT: func_06070540
-s32 func_800FF064(s32 arg0) {
-    s32 playerMP;
-
-    playerMP = g_Status.mp - 4;
-
-    if (playerMP > 0) {
-        if (arg0 != 0) {
-            g_Status.mp = playerMP;
+s32 HandleGravityBootsMP(s32 mode) {
+    if ((g_Status.mp - 4) > 0) {
+        if (mode != 0) {
+            g_Status.mp -= 4;
         }
         return 0;
     }
@@ -778,30 +1011,34 @@ s32 func_800FF064(s32 arg0) {
 }
 
 // SAT: func_06070568
-void ClearStatBuff(s32 context) { g_StatBuffTimers[context] = 0; }
+inline void ClearStatBuff(s32 i) { g_StatBuffTimers[i] = 0; }
 
-// probably PSX ClearStatBuffs but strange to match
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070580, func_06070580);
+void ClearStatBuffs(void) {
+    s32 i;
+
+    for (i = 0; i < 16; i++) {
+        ClearStatBuff(i);
+    }
+}
 
 // SAT: func_060705A0
-void GiveStatBuff(s32 arg0) { g_StatBuffTimers[arg0] = 0x1000; }
+void GiveStatBuff(s32 i) { g_StatBuffTimers[i] = 0x1000; }
 
 // SAT: func_060705B8
-s32 GetStatBuffTimer(s32 arg0) { return g_StatBuffTimers[arg0]; }
+s32 GetStatBuffTimer(s32 i) { return g_StatBuffTimers[i]; }
 
 // SAT: func_060705CC
-u16 func_800FF128(Entity* enemyEntity, Entity* attackerEntity) {
+u16 DealDamage(Entity* enemyEntity, Entity* attackerEntity) {
     s32 stats[4];
     EnemyDef sp20;
     EnemyDef* enemy;
-    u16 temp_v1;
+    u16 element;
     u16 elementMask;
+    u16 maskedElement;
     s32 higherStatIdx;
     s32 i;
-    u16 element;
     u16 damage;
     u16 result;
-    u16 stuff;
 
     enemy = &sp20;
     sp20 = g_EnemyDefs[enemyEntity->enemyId];
@@ -821,13 +1058,15 @@ u16 func_800FF128(Entity* enemyEntity, Entity* attackerEntity) {
     }
 
     result = 0;
-    temp_v1 = element & elementMask;
-    if (temp_v1 == (temp_v1 & (elementMask & enemy->immunes))) {
+    maskedElement = element & elementMask;
+    if (maskedElement == (maskedElement & (elementMask & enemy->immunes))) {
         result = DAMAGE_FLAG_IMMUNE;
-    } else if (temp_v1 == (temp_v1 & (elementMask & enemy->absorbs))) {
+    } else if (
+        maskedElement == (maskedElement & (elementMask & enemy->absorbs))) {
         result = damage + DAMAGE_FLAG_ABSORB;
     } else {
-        if (temp_v1 == (temp_v1 & (elementMask & enemy->strengths))) {
+        if (maskedElement ==
+            (maskedElement & (elementMask & enemy->strengths))) {
             damage /= 2;
         }
         if (element & enemy->weaknesses) {
@@ -869,12 +1108,12 @@ u16 func_800FF128(Entity* enemyEntity, Entity* attackerEntity) {
         }
 
         if (damage > enemy->defense) {
-            damage = damage - enemy->defense;
+            damage -= enemy->defense;
         } else {
             damage = 1;
         }
 
-        if (damage < 0 || damage >= 10000) {
+        if (damage > 9999) {
             damage = 9999;
         }
 
@@ -885,11 +1124,14 @@ u16 func_800FF128(Entity* enemyEntity, Entity* attackerEntity) {
 }
 
 // SAT: func_060707F0
-s32 func_800FF460(s32 arg0) {
+s32 func_800FF460(u32 arg0) {
+    s32 res;
+
     if (arg0 == 0) {
         return 0;
     }
-    return arg0 + ((u32)(arg0 * g_Status.statsTotal[3]) >> 7);
+    res = arg0 + (arg0 * g_Status.statsTotal[3]) / 0x80;
+    return res;
 }
 
 // SAT: func_06070820
@@ -901,7 +1143,7 @@ s32 func_800FF494(EnemyDef* arg0) {
     s32 ringOfArcanaCount = CheckEquipmentItemCount(0x4D, 4); // 4d not 4b
     s32 rnd = rand() & 0xFF;
 
-    rnd -= (g_Status.statsTotal[3] + (rand() & 0x1F)) / 20; // swapped
+    rnd -= (g_Status.statsTotal[3] + (rand() & 0x1F)) / 20;
 
     if (ringOfArcanaCount != 0) {
         rnd -= arg0->rareItemDropRate * ringOfArcanaCount;
@@ -909,27 +1151,27 @@ s32 func_800FF494(EnemyDef* arg0) {
 
     if (rnd < arg0->rareItemDropRate) {
         return 0x40; // drop the enemy's rare item
-    } else {
-        // drop a common item, typically hearts or money
-        rnd -= arg0->rareItemDropRate;
-        if (ringOfArcanaCount != 0) {
-            rnd -= arg0->uncommonItemDropRate * ringOfArcanaCount;
-        }
-        rnd -= (g_Status.statsTotal[3] + (rand() & 0x1F)) / 20; // swapped
-
-        if (rnd >= arg0->uncommonItemDropRate) {
-            rnd = rand() % 28;
-            if (arg0->rareItemDropRate == 0) {
-                rnd++;
-            }
-            if (arg0->uncommonItemDropRate == 0) {
-                rnd++;
-            }
-            return ringOfArcanaCount + rnd; // swapped
-        } else {
-            return 0x20; // drop the enemy's uncommon item
-        }
     }
+
+    // drop a common item, typically hearts or money
+    rnd -= arg0->rareItemDropRate;
+    if (ringOfArcanaCount != 0) {
+        rnd -= arg0->uncommonItemDropRate * ringOfArcanaCount;
+    }
+    rnd -= (g_Status.statsTotal[3] + (rand() & 0x1F)) / 20;
+
+    if (rnd < arg0->uncommonItemDropRate) {
+        return 0x20; // drop the enemy's uncommon item
+    }
+    rnd = rand() % 28;
+    if (!arg0->rareItemDropRate) {
+        rnd++;
+    }
+    if (!arg0->uncommonItemDropRate) {
+        rnd++;
+    }
+    rnd += ringOfArcanaCount;
+    return rnd;
 }
 
 // func_800F27F4

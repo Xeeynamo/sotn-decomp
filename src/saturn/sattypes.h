@@ -307,7 +307,7 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ s16 attack;
-    /* 0x02 */ s16 unk2;
+    /* 0x02 */ s16 heartCost;
     /* 0x04 */ u16 attackElement;
     /* 0x06 */ u8 unk6;
     /* 0x07 */ u8 sp17;
@@ -527,6 +527,34 @@ typedef enum {
     NUM_SPELLS,
 } SpellIds;
 
+typedef enum {
+    EFFECT_NONE = 0,
+    EFFECT_SOLID = 1 << 0,
+    EFFECT_UNK_0002 = 1 << 1,
+    EFFECT_QUICKSAND = 1 << 2,
+    EFFECT_WATER = 1 << 3,
+    EFFECT_MIST_ONLY = 1 << 4,
+    EFFECT_UNK_0020 = 1 << 5,
+    // Used when you jump from below to a platform. You can drop below.
+    EFFECT_SOLID_FROM_ABOVE = 1 << 6,
+    // Doesn't collide when falling on it but you cannot go back up.
+    EFFECT_SOLID_FROM_BELOW = 1 << 7,
+    EFFECT_UNK_0100 = 1 << 8,
+    EFFECT_UNK_0200 = 1 << 9,
+    EFFECT_UNK_0400 = 1 << 10,
+    EFFECT_UNK_0800 = 1 << 11,
+    EFFECT_UNK_1000 = 1 << 12,
+    EFFECT_UNK_2000 = 1 << 13,
+    EFFECT_UNK_4000 = 1 << 14,
+    EFFECT_UNK_8000 = 1 << 15,
+
+    // Aggregate helpers below:
+    EFFECT_NOTHROUGH = EFFECT_SOLID | EFFECT_QUICKSAND,
+    EFFECT_NOTHROUGH_PLUS = EFFECT_SOLID | EFFECT_UNK_0002 | EFFECT_QUICKSAND,
+    // Should be renamed once we know what 8000 and 4000 are
+    EFFECT_UNK_C000 = EFFECT_UNK_8000 | EFFECT_UNK_4000
+} ColliderEffectFlags;
+
 u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
@@ -556,6 +584,7 @@ extern Entity* g_CurrentEntity;
 extern PlayerStatus g_Status;
 extern SubweaponDef g_SubwpnDefs[];
 extern unkGraphicsStruct g_unkGraphicsStruct;
+extern u32 g_GameTimer;
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7

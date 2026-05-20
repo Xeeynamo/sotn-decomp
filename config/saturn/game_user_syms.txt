@@ -16,6 +16,7 @@ _g_RoomCount = 0x0605C5B0;
 _g_unkGraphicsStruct = 0x0605C5C0;
 _g_CurrentEntity = 0x0605C6E0;
 _g_Status = 0x0605C6F0;
+_g_GameTimer = 0x0605CD50;
 _D_8013AEE4 = 0x0605CEB8;
 _g_randomNext = 0x0605D748;
 _g_StageId = 0x0605D750;

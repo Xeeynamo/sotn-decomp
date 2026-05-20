@@ -585,7 +585,7 @@ void AddHearts(s32 value) {
 }
 
 // Note: Arg3 is unused, but is given in the call from func_80113D7C
-s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
+s32 get_damage_sub(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     s32 ret = 0;
     s32 itemCount;
 
@@ -647,7 +647,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
     // Very strange to have ballroom mask check. This item is not known to
     // have special behavior. Also, not possible to equip two. This may be
     // a new discovery of a property of the item. Worth further analysis.
-    ;
+
     if (itemCount = CheckEquipmentItemCount(ITEM_BALLROOM_MASK, EQUIP_HEAD)) {
         if (damage->effects &
             (EFFECT_UNK_8000 | EFFECT_UNK_4000 | EFFECT_UNK_2000 |
@@ -696,7 +696,7 @@ s32 HandleDamage(DamageParam* damage, s32 arg1, s32 amount, s32 arg3) {
         if (damage->damageTaken > 0) {
             if (damage->damageKind == DAMAGEKIND_1 ||
                 damage->damageKind == DAMAGEKIND_0) {
-                if ((damage->damageTaken * 2) >= g_Status.hpMax) {
+                if (damage->damageTaken * 2 >= g_Status.hpMax) {
                     damage->damageKind = DAMAGEKIND_4;
                 } else if (amount * 50 >= g_Status.hpMax) {
                     damage->damageKind = DAMAGEKIND_3;
@@ -794,9 +794,8 @@ s32 HandleTransformationMP(TransformationForm form, CallMode mode) {
                 }
             }
             return 0;
-        } else {
-            return -1;
         }
+        return -1;
     } else if (form == FORM_MIST) {
         if (!IsRelicActive(RELIC_FORM_OF_MIST)) {
             return -1;
@@ -809,24 +808,21 @@ s32 HandleTransformationMP(TransformationForm form, CallMode mode) {
                     }
                 }
                 return 0;
-            } else {
-                return -1;
             }
+            return -1;
         } else {
             if (g_Status.mp - 10 > 0) {
                 if (mode != CHECK_ONLY) {
-                    if ((g_GameTimer % 8) == 0) {
+                    if (g_GameTimer % 8 == 0) {
                         g_Status.mp -= 10;
                     }
                 }
                 return 0;
-            } else {
-                return -1;
             }
+            return -1;
         }
-        return 0;
     } else if (form == FORM_WOLF) {
-        if (IsRelicActive(RELIC_SOUL_OF_WOLF) == false) {
+        if (!IsRelicActive(RELIC_SOUL_OF_WOLF)) {
             return -1;
         }
         if (g_Status.mp - 1 > 0) {
@@ -976,6 +972,7 @@ exit:
 
 s32 func_800FF460(u32 arg0) {
     s32 res;
+
     if (arg0 == 0) {
         return 0;
     }
@@ -992,7 +989,7 @@ s32 func_800FF494(EnemyDef* arg0) {
         CheckEquipmentItemCount(ITEM_RING_OF_ARCANA, EQUIP_ACCESSORY);
     s32 rnd = rand() & 0xFF;
 
-    rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
+    rnd -= (g_Status.statsTotal[3] + (rand() & 0x1F)) / 20;
 
     if (ringOfArcanaCount != 0) {
         rnd -= arg0->rareItemDropRate * ringOfArcanaCount;
@@ -1007,10 +1004,10 @@ s32 func_800FF494(EnemyDef* arg0) {
     if (ringOfArcanaCount != 0) {
         rnd -= arg0->uncommonItemDropRate * ringOfArcanaCount;
     }
-    rnd -= ((rand() & 0x1F) + g_Status.statsTotal[3]) / 20;
+    rnd -= (g_Status.statsTotal[3] + (rand() & 0x1F)) / 20;
 
     if (rnd < arg0->uncommonItemDropRate) {
-        return 0x20;
+        return 0x20; // drop the enemy's uncommon item
     }
     rnd = rand() % 28;
     if (!arg0->rareItemDropRate) {
