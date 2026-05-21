@@ -288,7 +288,9 @@ typedef struct {
     s32 statsBase[4];
     s32 statsEquip[4];
     s32 statsTotal[4];
-    char pad3[0x14];
+    s32 level;
+    u32 exp;
+    char pad3[0xC];
     u32 subWeapon;
     u32 equipment[8];
     u32 attackHands[2];
@@ -298,8 +300,8 @@ typedef struct {
     u16 elementsImmune;
     u16 elementsAbsorb;
     s32 timerHours;
-    s32 : 32;
-    s32 : 32;
+    s32 timerMinutes;
+    s32 timerSeconds;
     s32 : 32;
     u32 D_80097C40;
     FamiliarStats statsFamiliars[7];
@@ -307,7 +309,7 @@ typedef struct {
 
 typedef struct {
     /* 0x00 */ s16 attack;
-    /* 0x02 */ s16 unk2;
+    /* 0x02 */ s16 heartCost;
     /* 0x04 */ u16 attackElement;
     /* 0x06 */ u8 unk6;
     /* 0x07 */ u8 sp17;
@@ -475,6 +477,27 @@ typedef struct {
     s32 D_80097428[8];
 } unkGraphicsStruct;
 
+typedef struct {
+    s32 : 32;
+    s32 : 32;
+    u16 : 16;
+    u16 : 16;
+    s32 unk0C;
+} RelicDesc;
+
+typedef struct {
+    s32 buttonConfig[8];
+    u16 buttonMask[8];
+    s32 timeAttackRecords[32];
+    s32 cloakColors[6];
+    s32 windowColors[3];
+    s32 equipOrderTypes[11];
+    s32 isCloakLiningReversed;
+    s32 isSoundMono;
+    s32 D_8003CB00;
+    s32 D_8003CB04;
+} GameSettings;
+
 typedef enum {
     PLAYER_CHARACTER,
     E_AFTERIMAGE_1,
@@ -527,6 +550,34 @@ typedef enum {
     NUM_SPELLS,
 } SpellIds;
 
+typedef enum {
+    EFFECT_NONE = 0,
+    EFFECT_SOLID = 1 << 0,
+    EFFECT_UNK_0002 = 1 << 1,
+    EFFECT_QUICKSAND = 1 << 2,
+    EFFECT_WATER = 1 << 3,
+    EFFECT_MIST_ONLY = 1 << 4,
+    EFFECT_UNK_0020 = 1 << 5,
+    // Used when you jump from below to a platform. You can drop below.
+    EFFECT_SOLID_FROM_ABOVE = 1 << 6,
+    // Doesn't collide when falling on it but you cannot go back up.
+    EFFECT_SOLID_FROM_BELOW = 1 << 7,
+    EFFECT_UNK_0100 = 1 << 8,
+    EFFECT_UNK_0200 = 1 << 9,
+    EFFECT_UNK_0400 = 1 << 10,
+    EFFECT_UNK_0800 = 1 << 11,
+    EFFECT_UNK_1000 = 1 << 12,
+    EFFECT_UNK_2000 = 1 << 13,
+    EFFECT_UNK_4000 = 1 << 14,
+    EFFECT_UNK_8000 = 1 << 15,
+
+    // Aggregate helpers below:
+    EFFECT_NOTHROUGH = EFFECT_SOLID | EFFECT_QUICKSAND,
+    EFFECT_NOTHROUGH_PLUS = EFFECT_SOLID | EFFECT_UNK_0002 | EFFECT_QUICKSAND,
+    // Should be renamed once we know what 8000 and 4000 are
+    EFFECT_UNK_C000 = EFFECT_UNK_8000 | EFFECT_UNK_4000
+} ColliderEffectFlags;
+
 u32 SquareRoot0(s32);
 s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
@@ -539,6 +590,7 @@ void PlaySfx(s16 sfxId);
 // the struct to the base address
 extern Equipment g_EquipDefs[];
 
+extern GameSettings g_Settings;
 extern GameApi g_api;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
 extern EntityEntry** PfnEntityUpdates[];
@@ -556,6 +608,7 @@ extern Entity* g_CurrentEntity;
 extern PlayerStatus g_Status;
 extern SubweaponDef g_SubwpnDefs[];
 extern unkGraphicsStruct g_unkGraphicsStruct;
+extern u32 g_GameTimer;
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7
