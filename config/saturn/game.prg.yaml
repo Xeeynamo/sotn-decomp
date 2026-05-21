@@ -21,18 +21,18 @@ segments:
         type: c
         file: game
         end: 0x8D3
-      - start: 0x8d4
+      - start: 0x8D4
         type: c
         file: game
-        end: 0x92b
-      - start: 0x92c
+        end: 0x92B
+      - start: 0x92C
         type: data
         file: game
-        end: 0xb2f
-      - start: 0xb30
+        end: 0xB2F
+      - start: 0xB30
         type: c
         file: game
-        end: 0x197b
+        end: 0x197B
         # misdetected function TODO
       - start: 0x197C
         type: data
@@ -49,22 +49,36 @@ segments:
       - start: 0x80D0
         type: c
         file: game
-        end: 0xAA5F
-        # function that doesn't have an rts TODO
-      - start: 0xaa60
-        type: data
-        file: game
-        end: 0xbc3b
-      - start: 0xbc3c
+        end: 0x92BF
+
+        # file split here
+
+      - start: 0x92C0
         type: c
         file: game
-        end: 0xc8b3
-      # todo problematic jump table
-      - start: 0xc8b4
+        end: 0xA937
+
+        # file split here
+
+      - start: 0xA938
+        type: c
+        file: game
+        end: 0xAA5F
+        # function that doesn't have an rts TODO
+      - start: 0xAA60
         type: data
         file: game
-        end: 0xcbcb
-      - start: 0xcbcc
+        end: 0xBC3B
+      - start: 0xBC3C
+        type: c
+        file: game
+        end: 0xC8B3
+      # todo problematic jump table
+      - start: 0xC8B4
+        type: data
+        file: game
+        end: 0xCBCB
+      - start: 0xCBCC
         type: c
         file: game
         end: 0x2008B

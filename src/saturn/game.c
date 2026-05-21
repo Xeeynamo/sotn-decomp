@@ -437,7 +437,29 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606EEF8, func_0606EEF8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F01C, func_0606F01C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F14C, func_0606F14C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F1C8, func_0606F1C8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F21C, func_0606F21C);
+
+s32 TimeAttackController(s32 eventId, s32 action) {
+    switch (action) {
+    case 0:
+        return g_Settings.timeAttackRecords[eventId];
+
+    case 1:
+        if (g_Settings.timeAttackRecords[eventId] != 0) {
+            return 1;
+        }
+        g_Settings.timeAttackRecords[eventId] = g_Status.timerSeconds;
+        g_Settings.timeAttackRecords[eventId] += g_Status.timerMinutes * 100;
+        g_Settings.timeAttackRecords[eventId] += g_Status.timerHours * 10000;
+        break;
+
+    case 2:
+        g_Settings.D_8003CB00 |= (1 << eventId);
+        break;
+    }
+    return 0;
+}
+
+// FILE SPLIT HERE
 
 bool CalcPlayerDamage(DamageParam* damage) {
     if (damage->damageKind != DAMAGEKIND_5) {
@@ -618,7 +640,8 @@ bool CastSpell(SpellIds spellId) {
 // _waza_work_set
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F798, func_0606F798);
 
-bool reduce_weapon(s32 hand) {
+// original name: reduce_weapon
+bool ReduceWeapon(s32 hand) {
     s32* equippedItem;
     bool isConsumable;
 
@@ -1357,6 +1380,8 @@ s32 func_800FF494(EnemyDef* arg0) {
     rnd += ringOfArcanaCount;
     return rnd;
 }
+
+// FILE SPLIT HERE
 
 // func_800F27F4
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070938, func_06070938);

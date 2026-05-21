@@ -277,7 +277,8 @@ void LearnSpell(s32 spellId) {
     }
 }
 
-bool reduce_weapon(s32 hand) {
+// original name: reduce_weapon
+bool ReduceWeapon(s32 hand) {
     s32 equippedItem = g_Status.equipment[hand];
     bool isConsumable = g_EquipDefs[equippedItem].isConsumable;
 

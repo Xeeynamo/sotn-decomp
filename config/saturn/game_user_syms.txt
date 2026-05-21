@@ -22,6 +22,7 @@ _D_8013AEE4 = 0x0605CEB8;
 _g_randomNext = 0x0605D748;
 _g_StageId = 0x0605D750;
 _g_Servant = 0x0605D7E4;
+_g_Settings = 0x0605D800;
 _g_api = 0x060645A8;
 _PfnEntityUpdates = 0x06064648;
 _func_06064684 = 0x06064684;

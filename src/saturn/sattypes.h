@@ -300,8 +300,8 @@ typedef struct {
     u16 elementsImmune;
     u16 elementsAbsorb;
     s32 timerHours;
-    s32 : 32;
-    s32 : 32;
+    s32 timerMinutes;
+    s32 timerSeconds;
     s32 : 32;
     u32 D_80097C40;
     FamiliarStats statsFamiliars[7];
@@ -485,6 +485,19 @@ typedef struct {
     s32 unk0C;
 } RelicDesc;
 
+typedef struct {
+    s32 buttonConfig[8];
+    u16 buttonMask[8];
+    s32 timeAttackRecords[32];
+    s32 cloakColors[6];
+    s32 windowColors[3];
+    s32 equipOrderTypes[11];
+    s32 isCloakLiningReversed;
+    s32 isSoundMono;
+    s32 D_8003CB00;
+    s32 D_8003CB04;
+} GameSettings;
+
 typedef enum {
     PLAYER_CHARACTER,
     E_AFTERIMAGE_1,
@@ -577,6 +590,7 @@ void PlaySfx(s16 sfxId);
 // the struct to the base address
 extern Equipment g_EquipDefs[];
 
+extern GameSettings g_Settings;
 extern GameApi g_api;
 extern Entity g_Entities[TOTAL_ENTITY_COUNT]; // 0x060997F8
 extern EntityEntry** PfnEntityUpdates[];

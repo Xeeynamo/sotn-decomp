@@ -506,7 +506,7 @@ block_45:
                 if (PLAYER.step == Player_Stand || PLAYER.step == Player_Walk ||
                     PLAYER.step == Player_Crouch) {
                     func_8010E42C(0);
-                    reduce_weapon(hand);
+                    ReduceWeapon(hand);
                     return true;
                 }
                 return false;
@@ -550,9 +550,9 @@ block_45:
         return false;
     }
 
-    reduce_weapon(hand);
+    ReduceWeapon(hand);
     if (var_s7) {
-        reduce_weapon((hand + 1) & 1);
+        ReduceWeapon((hand + 1) & 1);
     }
     HasEnoughMp(g_EquipDefs[equipped_id].mpUsage, 1);
     // 95 is Estoc
