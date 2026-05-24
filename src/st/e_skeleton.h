@@ -297,7 +297,6 @@ void EntitySkeletonThrownBone(Entity* self) { // Bone Projectile from Skeleton
     }
 }
 
-#if !defined(STAGE_IS_RCAT)
 // Unclear if this has a way to run. Not called, and not in
 // the main entity list.
 void UnusedSkeletonEntity(Entity* self) {
@@ -321,4 +320,3 @@ void UnusedSkeletonEntity(Entity* self) {
         DestroyEntity(self);
     }
 }
-#endif
