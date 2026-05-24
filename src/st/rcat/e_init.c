@@ -45,7 +45,7 @@ void EntitySalomeEffects(Entity* self);
 void EntitySalomeMagicOrb(Entity* self);
 void EntitySalomeSkull(Entity* self);
 void EntitySalomeCat(Entity* self);
-void func_us_801B3248(Entity* self);
+void EntitySecretWallRight(Entity* self);
 void EntitySecretWall(Entity* self);
 void EntityBreakableWallSegment(Entity* self);
 void EntityBreakableWallParticles(Entity* self);
@@ -101,7 +101,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySalomeMagicOrb,
     EntitySalomeSkull,
     EntitySalomeCat,
-    func_us_801B3248,
+    EntitySecretWallRight,
     EntitySecretWall,
     EntityBreakableWallSegment,
     EntityBreakableWallParticles,
@@ -125,7 +125,7 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0x000, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0x000, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0x000, 0x003};
 EInit g_EInitEnvironment = {ANIMSET_OVL(2), 0, 0, 0x000, 0x005};
-EInit D_us_80181024 = {ANIMSET_DRA(0), 0, 0, 0x000, 0x005};
+EInit g_EInitBreakableWallSegment = {ANIMSET_DRA(0), 0, 0, 0x000, 0x005};
 
 EInit g_EInitFrozenHalf = {ANIMSET_OVL(3), 1, 72, 0x200, 0x0D9};
 EInit g_EInitFrozenHalfOrbitIcicle = {ANIMSET_OVL(3), 24, 72, 0x200, 0x0DA};
