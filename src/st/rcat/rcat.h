@@ -10,6 +10,8 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_BREAKABLE_WALL_DEBRIS_MAIN = 0x05C,
+    PAL_BREAKABLE_WALL_DEBRIS_HIGHLIGHT = 0x15E,
     PAL_BREAKABLE = 0x237,
     PAL_SPIKES_DUST = 0x09B,
 };
@@ -60,7 +62,7 @@ enum Entities {
     E_SALOME_MAGIC_ORB,              // EntitySalomeMagicOrb
     E_SALOME_SKULL,                  // EntitySalomeSkull
     E_SALOME_CAT,                    // EntitySalomeCat
-    E_UNK_2D,                        // func_us_801B3248
+    E_SECRET_WALL_RIGHT,             // EntitySecretWallRight
     E_SECRET_WALL,                   // EntitySecretWall
     E_BREAKABLE_WALL_SEGMENT,        // EntityBreakableWallSegment
     E_BREAKABLE_WALL_PARTICLES,      // EntityBreakableWallParticles
