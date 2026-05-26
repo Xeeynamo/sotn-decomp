@@ -23,17 +23,17 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void EntityLava(Entity* self);
-void EntityCavernBackgroundLossoth(Entity* self);
-void EntityCavernBackgroundDiscusLord(Entity* self);
-void EntityLavaEmbers(Entity* self);
+void EntityCavernBackgroundIce(Entity* self);
+void EntityCavernBackgroundIceBridge(Entity* self);
+void EntitySnowflakes(Entity* self);
 void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
 void EntitySpikeRoomDarkness(Entity* self);
 void EntitySpikesDamage(Entity* self);
 void func_us_801B1F1C(Entity* self);
-void func_us_801B87E8_from_cat(Entity* self);
-void func_us_801BACF4_from_cat(Entity* self);
+void func_us_801B87E8(Entity* self);
+void func_us_801BACF4(Entity* self);
 void EntityFrozenHalf(Entity* self);
 void EntityFrozenHalfOrbitIcicle(Entity* self);
 void EntityFrozenHalfThrownChunk(Entity* self);
@@ -79,17 +79,17 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     EntityLava,
-    EntityCavernBackgroundLossoth,
-    EntityCavernBackgroundDiscusLord,
-    EntityLavaEmbers,
+    EntityCavernBackgroundIce,
+    EntityCavernBackgroundIceBridge,
+    EntitySnowflakes,
     EntitySpikes,
     EntitySpikesParts,
     EntitySpikesDust,
     EntitySpikeRoomDarkness,
     EntitySpikesDamage,
     func_us_801B1F1C,
-    func_us_801B87E8_from_cat,
-    func_us_801BACF4_from_cat,
+    func_us_801B87E8,
+    func_us_801BACF4,
     EntityFrozenHalf,
     EntityFrozenHalfOrbitIcicle,
     EntityFrozenHalfThrownChunk,
