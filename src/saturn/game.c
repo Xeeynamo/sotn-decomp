@@ -551,8 +551,27 @@ const char* GetEquipmentName(EquipKind kind, s32 equipId) {
     return g_AccessoryDefs[equipId].name;
 }
 
-// CheckEquipmentItemCount
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F448, func_0606F448);
+u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
+    switch (equipType) {
+    case 0: {
+        s32 isInLeftHand = g_Status.equipment[0] == itemId;
+        s32 isInRightHand = g_Status.equipment[1] == itemId;
+        return isInLeftHand + isInRightHand;
+    }
+    case 1:
+        return g_Status.equipment[3] == itemId;
+    case 2:
+        return g_Status.equipment[4] == itemId;
+    case 3:
+        return g_Status.equipment[5] == itemId;
+    case 4: {
+        s32 isAcc1 = g_Status.equipment[6] == itemId;
+        s32 isAcc2 = g_Status.equipment[7] == itemId;
+        return isAcc1 + isAcc2;
+    }
+    }
+    return 0;
+}
 
 void AddToInventory(u16 id, EquipKind kind) {
     s32 i;
@@ -622,8 +641,52 @@ void GetSpellDef(SpellDef* spell, s32 id) {
     }
 }
 
-// _etc_hosei
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F65C, func_0606F65C);
+// original name: etc_hosei
+s16 GetStatusAilmentTimer(s32 statusAilment, s16 timer) {
+    s16 ret;
+    s32 petrify_adjustment;
+
+    switch (statusAilment) {
+    case 0:
+        ret = timer;
+        ret -= g_Status.statsTotal[1] * 16;
+        if (ret < 0x100) {
+            ret = 0x100;
+        }
+        break;
+    case 1:
+        ret = timer;
+        ret -= g_Status.statsTotal[1] * 4;
+        if (ret < 0x40) {
+            ret = 0x40;
+        }
+        break;
+    case 2:
+        ret = timer;
+        petrify_adjustment = ((g_Status.statsTotal[1] + rand() % 12) - 9) / 10;
+        if (petrify_adjustment < 0) {
+            petrify_adjustment = 0;
+        }
+        if (4 < petrify_adjustment) {
+            petrify_adjustment = 4;
+        }
+        ret -= petrify_adjustment;
+        break;
+    case 3:
+        ret = timer;
+        ret += g_Status.statsTotal[2] * 4;
+        break;
+    case 4:
+    case 5:
+        ret = timer;
+        if (CheckEquipmentItemCount(0x52, 4) != 0) {
+            ret += ret / 2;
+        }
+        break;
+    }
+
+    return ret;
+}
 
 // SAT: func_0606F760
 bool CastSpell(SpellIds spellId) {
@@ -676,8 +739,6 @@ s32 func_800FDE00(void) {
 extern s32 g_LevelHPIncrease[];
 extern s32 g_ExpNext[];
 extern s32 g_PlayableCharacter;
-extern s32 g_Servant;
-extern RelicDesc g_RelicDefs[];
 
 // original name: check_experience
 u32 CheckAndDoLevelUp(void) {
@@ -1383,10 +1444,63 @@ s32 func_800FF494(EnemyDef* arg0) {
 
 // FILE SPLIT HERE
 
-// func_800F27F4
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070938, func_06070938);
-// func_800F2860
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070988, func_06070988);
+bool func_800F27F4(s32 arg0) {
+    if (arg0 == 0) {
+        if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0) {
+            return false;
+        }
+        if (D_8003C708.flags & (0x40 | 0x20)) {
+            return false;
+        }
+        D_801375C8 = 1;
+        return true;
+    }
+    D_801375C8 = 8;
+}
+
+void func_800F2860(void) {
+    switch(D_801375C8) {
+    case 0:
+        break;
+    case 1:
+        PlaySfx(0xF0000080);
+        D_801375C8++;
+        break;
+    case 2:
+        if (func_80131F68() == 0) {
+            D_801375C8++;
+        }
+        break;
+    case 3:
+        PlaySfx(0xE0000120);
+        D_801375C8++;
+        break;
+    case 4:
+        if (func_80131F68() != 0) {
+            D_801375C8++;
+        }
+        break;
+    case 5:
+        if (func_80131F68() == 0) {
+            D_801375C8++;
+        }
+        break;
+    case 6:
+        PlaySfx(currentMusicId);
+        D_801375C8 = 0;
+        break;
+    case 7:
+        if (func_80131F68() == 0) {
+            D_801375C8--;
+        }
+        break;
+    case 8:
+        PlaySfx(0xF0000080);
+        D_801375C8--;
+        break;
+    }
+}
+
 // RunMainEngine
 INCLUDE_ASM("asm/saturn/game/data", d6070A60, d_06070A60);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);
