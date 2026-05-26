@@ -51,8 +51,8 @@ enum Entities {
     E_SPIKE_ROOM_DARKNESS,          // EntitySpikeRoomDarkness
     E_SPIKES_DAMAGE,                // EntitySpikesDamage
     E_UNK_1F,                       // func_us_801B1F1C
-    E_UNK_20,                       // func_us_801B87E8_from_cat
-    E_UNK_21,                       // func_us_801BACF4_from_cat
+    E_UNK_20,                       // func_us_801B87E8
+    E_UNK_21,                       // func_us_801BACF4
     E_FROZEN_HALF,                  // EntityFrozenHalf
     E_FROZEN_HALF_ORBIT_ICICLE,     // EntityFrozenHalfOrbitIcicle
     E_FROZEN_HALF_THROWN_CHUNK,     // EntityFrozenHalfThrownChunk
