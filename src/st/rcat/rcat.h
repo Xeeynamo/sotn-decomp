@@ -12,7 +12,8 @@ enum Palettes {
     PAL_NONE,
     PAL_BREAKABLE_WALL_DEBRIS_MAIN = 0x05C,
     PAL_BREAKABLE_WALL_DEBRIS_HIGHLIGHT = 0x15E,
-    PAL_CAVERN_A = 0x224,
+    PAL_LAVA_TRANSPARENT = 0x223,
+    PAL_LAVA_OPAQUE = 0x224,
     PAL_BREAKABLE = 0x237,
     PAL_SPIKES_DUST = 0x09B,
 };
@@ -43,7 +44,7 @@ enum Entities {
     E_LAVA,                         // EntityLava
     E_CAVERN_BACKGROUND_ICE,        // EntityCavernBackgroundIce
     E_CAVERN_BACKGROUND_ICE_BRIDGE, // EntityCavernBackgroundIceBridge
-    E_LAVA_EMBERS,                  // EntityLavaEmbers
+    E_SNOWFLAKES,                   // EntitySnowflakes
     E_SPIKES,                       // EntitySpikes
     E_SPIKES_PARTS,                 // EntitySpikesParts
     E_SPIKES_DUST,                  // EntitySpikesDust

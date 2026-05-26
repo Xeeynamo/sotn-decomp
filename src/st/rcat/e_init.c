@@ -25,7 +25,7 @@ void EntityGreyPuff(Entity* self);
 void EntityLava(Entity* self);
 void EntityCavernBackgroundIce(Entity* self);
 void EntityCavernBackgroundIceBridge(Entity* self);
-void EntityLavaEmbers(Entity* self);
+void EntitySnowflakes(Entity* self);
 void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
@@ -81,7 +81,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityLava,
     EntityCavernBackgroundIce,
     EntityCavernBackgroundIceBridge,
-    EntityLavaEmbers,
+    EntitySnowflakes,
     EntitySpikes,
     EntitySpikesParts,
     EntitySpikesDust,

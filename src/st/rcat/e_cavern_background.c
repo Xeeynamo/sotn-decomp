@@ -50,7 +50,7 @@ void EntityCavernBackgroundIce(Entity* self) {
             self->ext.prim = prim;
             while (prim != NULL) {
                 prim->tpage = 0xF;
-                prim->clut = PAL_CAVERN_A;
+                prim->clut = PAL_LAVA_OPAQUE;
                 prim->u0 = 0x85;
                 prim->u1 = 0xC3;
                 prim->u2 = prim->u0;
@@ -190,7 +190,7 @@ void EntityCavernBackgroundIceBridge(Entity* self) {
             self->ext.prim = prim;
             while (prim != NULL) {
                 prim->tpage = 0xF;
-                prim->clut = PAL_CAVERN_A;
+                prim->clut = PAL_LAVA_OPAQUE;
                 prim->u0 = 0x85;
                 prim->u1 = 0xC3;
                 prim->u2 = prim->u0;
