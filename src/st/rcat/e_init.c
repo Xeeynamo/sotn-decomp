@@ -23,8 +23,8 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void EntityLava(Entity* self);
-void EntityCavernBackgroundLossoth(Entity* self);
-void EntityCavernBackgroundDiscusLord(Entity* self);
+void EntityCavernBackgroundIce(Entity* self);
+void EntityCavernBackgroundIceBridge(Entity* self);
 void EntityLavaEmbers(Entity* self);
 void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
@@ -79,8 +79,8 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     EntityLava,
-    EntityCavernBackgroundLossoth,
-    EntityCavernBackgroundDiscusLord,
+    EntityCavernBackgroundIce,
+    EntityCavernBackgroundIceBridge,
     EntityLavaEmbers,
     EntitySpikes,
     EntitySpikesParts,
