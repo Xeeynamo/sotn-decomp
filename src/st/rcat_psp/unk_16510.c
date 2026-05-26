@@ -46,5 +46,3 @@ void func_us_801B1F1C(Entity* self) {
         break;
     }
 }
-
-INCLUDE_ASM("st/rcat_psp/nonmatchings/rcat_psp/unk_16510", EntitySpikeRoomDarkness);
