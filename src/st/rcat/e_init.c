@@ -23,17 +23,17 @@ void EntityUnkId13(Entity* self);
 void EntityExplosionVariants(Entity* self);
 void EntityGreyPuff(Entity* self);
 void EntityLava(Entity* self);
-void EntityCavernBackgroundLossoth(Entity* self);
-void EntityCavernBackgroundDiscusLord(Entity* self);
-void EntityLavaEmbers(Entity* self);
+void EntityCavernBackgroundIce(Entity* self);
+void EntityCavernBackgroundIceBridge(Entity* self);
+void EntitySnowflakes(Entity* self);
 void EntitySpikes(Entity* self);
 void EntitySpikesParts(Entity* self);
 void EntitySpikesDust(Entity* self);
 void EntitySpikeRoomDarkness(Entity* self);
 void EntitySpikesDamage(Entity* self);
 void func_us_801B1F1C(Entity* self);
-void func_us_801B87E8_from_cat(Entity* self);
-void func_us_801BACF4_from_cat(Entity* self);
+void func_us_801B87E8(Entity* self);
+void func_us_801BACF4(Entity* self);
 void EntityFrozenHalf(Entity* self);
 void EntityFrozenHalfOrbitIcicle(Entity* self);
 void EntityFrozenHalfThrownChunk(Entity* self);
@@ -45,7 +45,7 @@ void EntitySalomeEffects(Entity* self);
 void EntitySalomeMagicOrb(Entity* self);
 void EntitySalomeSkull(Entity* self);
 void EntitySalomeCat(Entity* self);
-void func_us_801B3248(Entity* self);
+void EntitySecretWallRight(Entity* self);
 void EntitySecretWall(Entity* self);
 void EntityBreakableWallSegment(Entity* self);
 void EntityBreakableWallParticles(Entity* self);
@@ -79,17 +79,17 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntityExplosionVariants,
     EntityGreyPuff,
     EntityLava,
-    EntityCavernBackgroundLossoth,
-    EntityCavernBackgroundDiscusLord,
-    EntityLavaEmbers,
+    EntityCavernBackgroundIce,
+    EntityCavernBackgroundIceBridge,
+    EntitySnowflakes,
     EntitySpikes,
     EntitySpikesParts,
     EntitySpikesDust,
     EntitySpikeRoomDarkness,
     EntitySpikesDamage,
     func_us_801B1F1C,
-    func_us_801B87E8_from_cat,
-    func_us_801BACF4_from_cat,
+    func_us_801B87E8,
+    func_us_801BACF4,
     EntityFrozenHalf,
     EntityFrozenHalfOrbitIcicle,
     EntityFrozenHalfThrownChunk,
@@ -101,7 +101,7 @@ PfnEntityUpdate OVL_EXPORT(EntityUpdates)[] = {
     EntitySalomeMagicOrb,
     EntitySalomeSkull,
     EntitySalomeCat,
-    func_us_801B3248,
+    EntitySecretWallRight,
     EntitySecretWall,
     EntityBreakableWallSegment,
     EntityBreakableWallParticles,
@@ -125,7 +125,7 @@ EInit g_EInitLockCamera = {ANIMSET_DRA(0), 0, 0, 0x000, 0x001};
 EInit g_EInitCommon = {ANIMSET_DRA(0), 0, 0, 0x000, 0x003};
 EInit g_EInitDamageNum = {ANIMSET_DRA(0), 0, 0, 0x000, 0x003};
 EInit g_EInitEnvironment = {ANIMSET_OVL(2), 0, 0, 0x000, 0x005};
-EInit D_us_80181024 = {ANIMSET_DRA(0), 0, 0, 0x000, 0x005};
+EInit g_EInitBreakableWallSegment = {ANIMSET_DRA(0), 0, 0, 0x000, 0x005};
 
 EInit g_EInitFrozenHalf = {ANIMSET_OVL(3), 1, 72, 0x200, 0x0D9};
 EInit g_EInitFrozenHalfOrbitIcicle = {ANIMSET_OVL(3), 24, 72, 0x200, 0x0DA};

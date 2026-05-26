@@ -10,66 +10,70 @@
 
 enum Palettes {
     PAL_NONE,
+    PAL_BREAKABLE_WALL_DEBRIS_MAIN = 0x05C,
+    PAL_BREAKABLE_WALL_DEBRIS_HIGHLIGHT = 0x15E,
+    PAL_LAVA_TRANSPARENT = 0x223,
+    PAL_LAVA_OPAQUE = 0x224,
     PAL_BREAKABLE = 0x237,
     PAL_SPIKES_DUST = 0x09B,
 };
 
 enum Entities {
     E_NONE,
-    E_BREAKABLE,                     // OVL_EXPORT(EntityBreakable)
-    E_EXPLOSION,                     // EntityExplosion
-    E_PRIZE_DROP,                    // EntityPrizeDrop
-    E_DAMAGE_DISPLAY,                // EntityDamageDisplay
-    E_RED_DOOR,                      // OVL_EXPORT(EntityRedDoor)
-    E_INTENSE_EXPLOSION,             // EntityIntenseExplosion
-    E_SOUL_STEAL_ORB,                // EntitySoulStealOrb
-    E_ROOM_FOREGROUND,               // EntityRoomForeground
-    E_STAGE_NAME_POPUP,              // EntityStageNamePopup
-    E_EQUIP_ITEM_DROP,               // EntityEquipItemDrop
-    E_RELIC_ORB,                     // EntityRelicOrb
-    E_HEART_DROP,                    // EntityHeartDrop
-    E_ENEMY_BLOOD,                   // EntityEnemyBlood
-    E_MESSAGE_BOX,                   // EntityMessageBox
-    E_DUMMY_F,                       // EntityDummy
-    E_DUMMY_10,                      // EntityDummy
-    E_BACKGROUND_BLOCK,              // OVL_EXPORT(EntityBackgroundBlock)
-    E_LOCK_CAMERA,                   // OVL_EXPORT(EntityLockCamera)
-    E_UNK_ID13,                      // EntityUnkId13
-    E_EXPLOSION_VARIANTS,            // EntityExplosionVariants
-    E_GREY_PUFF,                     // EntityGreyPuff
-    E_LAVA,                          // EntityLava
-    E_CAVERN_BACKGROUND_LOSSOTH,     // EntityCavernBackgroundLossoth
-    E_CAVERN_BACKGROUND_DISCUS_LORD, // EntityCavernBackgroundDiscusLord
-    E_LAVA_EMBERS,                   // EntityLavaEmbers
-    E_SPIKES,                        // EntitySpikes
-    E_SPIKES_PARTS,                  // EntitySpikesParts
-    E_SPIKES_DUST,                   // EntitySpikesDust
-    E_SPIKE_ROOM_DARKNESS,           // EntitySpikeRoomDarkness
-    E_SPIKES_DAMAGE,                 // EntitySpikesDamage
-    E_UNK_1F,                        // func_us_801B1F1C
-    E_UNK_20,                        // func_us_801B87E8_from_cat
-    E_UNK_21,                        // func_us_801BACF4_from_cat
-    E_FROZEN_HALF,                   // EntityFrozenHalf
-    E_FROZEN_HALF_ORBIT_ICICLE,      // EntityFrozenHalfOrbitIcicle
-    E_FROZEN_HALF_THROWN_CHUNK,      // EntityFrozenHalfThrownChunk
-    E_FROZEN_HALF_BLIZZARD,          // EntityFrozenHalfBlizzard
-    E_FROZEN_HALF_FALLING_ICE,       // EntityFrozenHalfFallingIce
-    E_FROZEN_HALF_FROST_MIST,        // EntityFrozenHalfFrostMist
-    E_SALOME,                        // EntitySalome
-    E_SALOME_EFFECTS,                // EntitySalomeEffects
-    E_SALOME_MAGIC_ORB,              // EntitySalomeMagicOrb
-    E_SALOME_SKULL,                  // EntitySalomeSkull
-    E_SALOME_CAT,                    // EntitySalomeCat
-    E_UNK_2D,                        // func_us_801B3248
-    E_SECRET_WALL,                   // EntitySecretWall
-    E_BREAKABLE_WALL_SEGMENT,        // EntityBreakableWallSegment
-    E_BREAKABLE_WALL_PARTICLES,      // EntityBreakableWallParticles
-    E_BREAKABLE_WALL_DEBRIS,         // EntityBreakableWallDebris
-    E_SKELETON,                      // EntitySkeleton
-    E_SKELETON_THROWN_BONE,          // EntitySkeletonThrownBone
-    E_SKELETON_PIECES,               // EntitySkeletonPieces
-    E_BLOOD_SKELETON,                // EntityBloodSkeleton
-    E_BAT,                           // EntityBat
+    E_BREAKABLE,                    // OVL_EXPORT(EntityBreakable)
+    E_EXPLOSION,                    // EntityExplosion
+    E_PRIZE_DROP,                   // EntityPrizeDrop
+    E_DAMAGE_DISPLAY,               // EntityDamageDisplay
+    E_RED_DOOR,                     // OVL_EXPORT(EntityRedDoor)
+    E_INTENSE_EXPLOSION,            // EntityIntenseExplosion
+    E_SOUL_STEAL_ORB,               // EntitySoulStealOrb
+    E_ROOM_FOREGROUND,              // EntityRoomForeground
+    E_STAGE_NAME_POPUP,             // EntityStageNamePopup
+    E_EQUIP_ITEM_DROP,              // EntityEquipItemDrop
+    E_RELIC_ORB,                    // EntityRelicOrb
+    E_HEART_DROP,                   // EntityHeartDrop
+    E_ENEMY_BLOOD,                  // EntityEnemyBlood
+    E_MESSAGE_BOX,                  // EntityMessageBox
+    E_DUMMY_F,                      // EntityDummy
+    E_DUMMY_10,                     // EntityDummy
+    E_BACKGROUND_BLOCK,             // OVL_EXPORT(EntityBackgroundBlock)
+    E_LOCK_CAMERA,                  // OVL_EXPORT(EntityLockCamera)
+    E_UNK_ID13,                     // EntityUnkId13
+    E_EXPLOSION_VARIANTS,           // EntityExplosionVariants
+    E_GREY_PUFF,                    // EntityGreyPuff
+    E_LAVA,                         // EntityLava
+    E_CAVERN_BACKGROUND_ICE,        // EntityCavernBackgroundIce
+    E_CAVERN_BACKGROUND_ICE_BRIDGE, // EntityCavernBackgroundIceBridge
+    E_SNOWFLAKES,                   // EntitySnowflakes
+    E_SPIKES,                       // EntitySpikes
+    E_SPIKES_PARTS,                 // EntitySpikesParts
+    E_SPIKES_DUST,                  // EntitySpikesDust
+    E_SPIKE_ROOM_DARKNESS,          // EntitySpikeRoomDarkness
+    E_SPIKES_DAMAGE,                // EntitySpikesDamage
+    E_UNK_1F,                       // func_us_801B1F1C
+    E_UNK_20,                       // func_us_801B87E8
+    E_UNK_21,                       // func_us_801BACF4
+    E_FROZEN_HALF,                  // EntityFrozenHalf
+    E_FROZEN_HALF_ORBIT_ICICLE,     // EntityFrozenHalfOrbitIcicle
+    E_FROZEN_HALF_THROWN_CHUNK,     // EntityFrozenHalfThrownChunk
+    E_FROZEN_HALF_BLIZZARD,         // EntityFrozenHalfBlizzard
+    E_FROZEN_HALF_FALLING_ICE,      // EntityFrozenHalfFallingIce
+    E_FROZEN_HALF_FROST_MIST,       // EntityFrozenHalfFrostMist
+    E_SALOME,                       // EntitySalome
+    E_SALOME_EFFECTS,               // EntitySalomeEffects
+    E_SALOME_MAGIC_ORB,             // EntitySalomeMagicOrb
+    E_SALOME_SKULL,                 // EntitySalomeSkull
+    E_SALOME_CAT,                   // EntitySalomeCat
+    E_SECRET_WALL_RIGHT,            // EntitySecretWallRight
+    E_SECRET_WALL,                  // EntitySecretWall
+    E_BREAKABLE_WALL_SEGMENT,       // EntityBreakableWallSegment
+    E_BREAKABLE_WALL_PARTICLES,     // EntityBreakableWallParticles
+    E_BREAKABLE_WALL_DEBRIS,        // EntityBreakableWallDebris
+    E_SKELETON,                     // EntitySkeleton
+    E_SKELETON_THROWN_BONE,         // EntitySkeletonThrownBone
+    E_SKELETON_PIECES,              // EntitySkeletonPieces
+    E_BLOOD_SKELETON,               // EntityBloodSkeleton
+    E_BAT,                          // EntityBat
     NUM_ENTITIES,
 };
 
