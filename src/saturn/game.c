@@ -435,7 +435,49 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606E0D0, func_0606E0D0);
 // _MODE_GAME
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606EE28, func_0606EE28);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606EEF8, func_0606EEF8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F01C, func_0606F01C);
+
+extern s16 g_ButtonMask[];
+
+void func_0606F01C(void) {
+    s32 i;
+    u8* ptr;
+
+    for (i = 0; i < 0x300; i++) {
+        g_CastleFlags[i] = 0;
+    }
+    g_CastleFlags[0xB9] = 1;
+    g_CastleFlags[0x9B] = 1;
+    if (g_PlayableCharacter != 0) {
+        g_CastleFlags[0x35] = 1;
+        g_CastleFlags[0x62] = 1;
+        g_CastleFlags[0x63] = 1;
+        g_CastleFlags[0x85] = 1;
+        g_CastleFlags[0x95] = 1;
+        g_CastleFlags[0x96] = 1;
+    }
+    for (i = 0, ptr = (u8*)&g_MenuNavigation; i < sizeof(MenuNavigation); i++) {
+        *ptr++ = 0;
+    }
+    for (i = 0; i < 8; i++) {
+        g_Settings.buttonConfig[i] = i;
+        g_Settings.buttonMask[i] = g_ButtonMask[i];
+    }
+    for (i = 0; i < 6; i++) {
+        g_Settings.cloakColors[i] = 0;
+    }
+    g_Settings.windowColors[0] = 0;
+    g_Settings.windowColors[1] = 0;
+    g_Settings.windowColors[2] = 8;
+    g_Settings.isCloakLiningReversed = 0;
+    for (i = 0; i < 11; i++) {
+        g_Settings.equipOrderTypes[i] = i;
+    }
+    D_8003C708.flags = 0;
+    if (g_PlayableCharacter != 0) {
+        g_Status.timerFrames = g_Status.timerMinutes = g_Status.timerHours = 0;
+        g_Status.timerSeconds = 1;
+    }
+}
 
 extern s32 DAT_0605c10c;
 extern s32 DAT_0608609c;
@@ -764,7 +806,6 @@ s32 func_800FDE00(void) {
 
 extern s32 g_LevelHPIncrease[];
 extern s32 g_ExpNext[];
-extern s32 g_PlayableCharacter;
 
 // original name: check_experience
 u32 CheckAndDoLevelUp(void) {

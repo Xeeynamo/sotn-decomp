@@ -505,6 +505,21 @@ typedef struct {
     s16 zPriority;
 } FgLayer;
 
+typedef struct {
+    /* 0x00 */ s32 cursorMain;
+    /* 0x04 */ s32 cursorRelic;
+    /* 0x08 */ s32 cursorEquip;
+    /* 0x0C */ s32 cursorHandEquipType;
+    /* 0x10 */ s32 cursorEquipType[4];
+    /* 0x20 */ s32 scrollEquipType[5];
+    /* 0x34 */ s32 cursorSpells;
+    /* 0x38 */ s32 cursorSettings;
+    /* 0x3C */ s32 cursorCloak;
+    /* 0x40 */ s32 cursorButtons;
+    /* 0x44 */ s32 cursorWindowColors;
+    /* 0x48 */ s32 cursorTimeAttack;
+} MenuNavigation; /* size=0x4C */
+
 typedef enum {
     PLAYER_CHARACTER,
     E_AFTERIMAGE_1,
@@ -621,6 +636,9 @@ extern s32 D_8006BB00;
 extern s32 g_Servant;
 extern RelicDesc g_RelicDefs[];
 extern s32 currentMusicId;
+extern u8 g_CastleFlags[];
+extern s32 g_PlayableCharacter;
+extern MenuNavigation g_MenuNavigation;
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7
