@@ -402,7 +402,8 @@ void CheckWeaponCombo(void) {
     D_8013AEE4 = 0;
 }
 
-void servant_work_clear(void) {
+// original name: servant_work_clear
+void ServantWorkClear(void) {
     s32 i;
     Entity* entity;
 
@@ -435,7 +436,32 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606E0D0, func_0606E0D0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606EE28, func_0606EE28);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606EEF8, func_0606EEF8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F01C, func_0606F01C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F14C, func_0606F14C);
+
+extern s32 DAT_0605c10c;
+extern s32 DAT_0608609c;
+
+void func_0606F14C(void) {
+    g_Status.timerFrames += DAT_0605c10c - DAT_0608609c;
+    DAT_0608609c = DAT_0605c10c;
+    if (g_Status.timerFrames >= 60) {
+        g_Status.timerFrames -= 60;
+        g_Status.timerSeconds++;
+        if (g_Status.timerSeconds >= 60) {
+            g_Status.timerSeconds -= 60;
+            g_Status.timerMinutes++;
+            if (g_Status.timerMinutes >= 60) {
+                g_Status.timerMinutes -= 60;
+                g_Status.timerHours++;
+                if (g_Status.timerHours >= 100) {
+                    g_Status.timerSeconds = 59;
+                    g_Status.timerMinutes = 59;
+                    g_Status.timerHours = 99;
+                }
+            }
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F1C8, func_0606F1C8);
 
 s32 TimeAttackController(s32 eventId, s32 action) {
@@ -1459,7 +1485,7 @@ bool func_800F27F4(s32 arg0) {
 }
 
 void func_800F2860(void) {
-    switch(D_801375C8) {
+    switch (D_801375C8) {
     case 0:
         break;
     case 1:

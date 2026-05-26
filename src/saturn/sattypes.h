@@ -302,7 +302,7 @@ typedef struct {
     s32 timerHours;
     s32 timerMinutes;
     s32 timerSeconds;
-    s32 : 32;
+    s32 timerFrames;
     u32 D_80097C40;
     FamiliarStats statsFamiliars[7];
 } PlayerStatus;
