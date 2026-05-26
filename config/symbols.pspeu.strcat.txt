@@ -1,10 +1,7 @@
-CreateEntityFromCurrentEntity = 0x09238598;
 DestroyEntity = 0x09248DB0;
-AllocEntity = 0x092497B0;
 InitializeEntity = 0x09249D38;
 func_us_801BACF4_from_cat = 0x0924CB18;
 func_us_801B87E8_from_cat = 0x0924D4D0;
-EntitySpikeRoomDarkness = 0x0924DDF8;
 RCAT_spriteBanks = 0x092565B8;
 RCAT_rooms_layers = 0x09256978;
 RCAT_cluts = 0x092570E8;
@@ -14,4 +11,3 @@ g_EInitInteractable = 0x09257408;
 RCAT_rooms = 0x09257568;
 RCAT_PrizeDrops = 0x0927B868;
 RCAT_BackgroundBlockInit = 0x0927B8C8;
-D_psp_E_UNK_21 = 0x0927BC38;
