@@ -2976,7 +2976,8 @@ void InitWeapon(s32 itemSlot) {
     }
 }
 
-void servant_work_clear(void) {
+// original name: servant_work_clear
+void ServantWorkClear(void) {
     s32 i;
     Entity* entity;
 
@@ -3652,7 +3653,7 @@ block_4:
         break;
     case MENU_STEP_EXIT_10:
         if (g_Servant == FAM_ACTIVE_NONE || g_Servant != g_ServantPrevious) {
-            servant_work_clear();
+            ServantWorkClear();
         }
         if (g_Servant == FAM_ACTIVE_NONE || g_Servant == g_ServantLoaded) {
             if (g_Servant != FAM_ACTIVE_NONE) {

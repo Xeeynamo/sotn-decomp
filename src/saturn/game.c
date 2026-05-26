@@ -402,7 +402,8 @@ void CheckWeaponCombo(void) {
     D_8013AEE4 = 0;
 }
 
-void servant_work_clear(void) {
+// original name: servant_work_clear
+void ServantWorkClear(void) {
     s32 i;
     Entity* entity;
 
@@ -434,8 +435,75 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f606E0D0, func_0606E0D0);
 // _MODE_GAME
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606EE28, func_0606EE28);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606EEF8, func_0606EEF8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F01C, func_0606F01C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F14C, func_0606F14C);
+
+extern s16 g_ButtonMask[];
+
+void func_0606F01C(void) {
+    s32 i;
+    u8* ptr;
+
+    for (i = 0; i < 0x300; i++) {
+        g_CastleFlags[i] = 0;
+    }
+    g_CastleFlags[0xB9] = 1;
+    g_CastleFlags[0x9B] = 1;
+    if (g_PlayableCharacter != 0) {
+        g_CastleFlags[0x35] = 1;
+        g_CastleFlags[0x62] = 1;
+        g_CastleFlags[0x63] = 1;
+        g_CastleFlags[0x85] = 1;
+        g_CastleFlags[0x95] = 1;
+        g_CastleFlags[0x96] = 1;
+    }
+    for (i = 0, ptr = (u8*)&g_MenuNavigation; i < sizeof(MenuNavigation); i++) {
+        *ptr++ = 0;
+    }
+    for (i = 0; i < 8; i++) {
+        g_Settings.buttonConfig[i] = i;
+        g_Settings.buttonMask[i] = g_ButtonMask[i];
+    }
+    for (i = 0; i < 6; i++) {
+        g_Settings.cloakColors[i] = 0;
+    }
+    g_Settings.windowColors[0] = 0;
+    g_Settings.windowColors[1] = 0;
+    g_Settings.windowColors[2] = 8;
+    g_Settings.isCloakLiningReversed = 0;
+    for (i = 0; i < 11; i++) {
+        g_Settings.equipOrderTypes[i] = i;
+    }
+    D_8003C708.flags = 0;
+    if (g_PlayableCharacter != 0) {
+        g_Status.timerFrames = g_Status.timerMinutes = g_Status.timerHours = 0;
+        g_Status.timerSeconds = 1;
+    }
+}
+
+extern s32 DAT_0605c10c;
+extern s32 DAT_0608609c;
+
+void func_0606F14C(void) {
+    g_Status.timerFrames += DAT_0605c10c - DAT_0608609c;
+    DAT_0608609c = DAT_0605c10c;
+    if (g_Status.timerFrames >= 60) {
+        g_Status.timerFrames -= 60;
+        g_Status.timerSeconds++;
+        if (g_Status.timerSeconds >= 60) {
+            g_Status.timerSeconds -= 60;
+            g_Status.timerMinutes++;
+            if (g_Status.timerMinutes >= 60) {
+                g_Status.timerMinutes -= 60;
+                g_Status.timerHours++;
+                if (g_Status.timerHours >= 100) {
+                    g_Status.timerSeconds = 59;
+                    g_Status.timerMinutes = 59;
+                    g_Status.timerHours = 99;
+                }
+            }
+        }
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F1C8, func_0606F1C8);
 
 s32 TimeAttackController(s32 eventId, s32 action) {
@@ -551,8 +619,27 @@ const char* GetEquipmentName(EquipKind kind, s32 equipId) {
     return g_AccessoryDefs[equipId].name;
 }
 
-// CheckEquipmentItemCount
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F448, func_0606F448);
+u32 CheckEquipmentItemCount(u32 itemId, u32 equipType) {
+    switch (equipType) {
+    case 0: {
+        s32 isInLeftHand = g_Status.equipment[0] == itemId;
+        s32 isInRightHand = g_Status.equipment[1] == itemId;
+        return isInLeftHand + isInRightHand;
+    }
+    case 1:
+        return g_Status.equipment[3] == itemId;
+    case 2:
+        return g_Status.equipment[4] == itemId;
+    case 3:
+        return g_Status.equipment[5] == itemId;
+    case 4: {
+        s32 isAcc1 = g_Status.equipment[6] == itemId;
+        s32 isAcc2 = g_Status.equipment[7] == itemId;
+        return isAcc1 + isAcc2;
+    }
+    }
+    return 0;
+}
 
 void AddToInventory(u16 id, EquipKind kind) {
     s32 i;
@@ -622,8 +709,52 @@ void GetSpellDef(SpellDef* spell, s32 id) {
     }
 }
 
-// _etc_hosei
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f606F65C, func_0606F65C);
+// original name: etc_hosei
+s16 GetStatusAilmentTimer(s32 statusAilment, s16 timer) {
+    s16 ret;
+    s32 petrify_adjustment;
+
+    switch (statusAilment) {
+    case 0:
+        ret = timer;
+        ret -= g_Status.statsTotal[1] * 16;
+        if (ret < 0x100) {
+            ret = 0x100;
+        }
+        break;
+    case 1:
+        ret = timer;
+        ret -= g_Status.statsTotal[1] * 4;
+        if (ret < 0x40) {
+            ret = 0x40;
+        }
+        break;
+    case 2:
+        ret = timer;
+        petrify_adjustment = ((g_Status.statsTotal[1] + rand() % 12) - 9) / 10;
+        if (petrify_adjustment < 0) {
+            petrify_adjustment = 0;
+        }
+        if (4 < petrify_adjustment) {
+            petrify_adjustment = 4;
+        }
+        ret -= petrify_adjustment;
+        break;
+    case 3:
+        ret = timer;
+        ret += g_Status.statsTotal[2] * 4;
+        break;
+    case 4:
+    case 5:
+        ret = timer;
+        if (CheckEquipmentItemCount(0x52, 4) != 0) {
+            ret += ret / 2;
+        }
+        break;
+    }
+
+    return ret;
+}
 
 // SAT: func_0606F760
 bool CastSpell(SpellIds spellId) {
@@ -675,9 +806,6 @@ s32 func_800FDE00(void) {
 
 extern s32 g_LevelHPIncrease[];
 extern s32 g_ExpNext[];
-extern s32 g_PlayableCharacter;
-extern s32 g_Servant;
-extern RelicDesc g_RelicDefs[];
 
 // original name: check_experience
 u32 CheckAndDoLevelUp(void) {
@@ -1383,10 +1511,63 @@ s32 func_800FF494(EnemyDef* arg0) {
 
 // FILE SPLIT HERE
 
-// func_800F27F4
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070938, func_06070938);
-// func_800F2860
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6070988, func_06070988);
+bool func_800F27F4(s32 arg0) {
+    if (arg0 == 0) {
+        if (g_unkGraphicsStruct.D_800973FC != 0 || D_8006BB00 != 0) {
+            return false;
+        }
+        if (D_8003C708.flags & (0x40 | 0x20)) {
+            return false;
+        }
+        D_801375C8 = 1;
+        return true;
+    }
+    D_801375C8 = 8;
+}
+
+void func_800F2860(void) {
+    switch (D_801375C8) {
+    case 0:
+        break;
+    case 1:
+        PlaySfx(0xF0000080);
+        D_801375C8++;
+        break;
+    case 2:
+        if (func_80131F68() == 0) {
+            D_801375C8++;
+        }
+        break;
+    case 3:
+        PlaySfx(0xE0000120);
+        D_801375C8++;
+        break;
+    case 4:
+        if (func_80131F68() != 0) {
+            D_801375C8++;
+        }
+        break;
+    case 5:
+        if (func_80131F68() == 0) {
+            D_801375C8++;
+        }
+        break;
+    case 6:
+        PlaySfx(currentMusicId);
+        D_801375C8 = 0;
+        break;
+    case 7:
+        if (func_80131F68() == 0) {
+            D_801375C8--;
+        }
+        break;
+    case 8:
+        PlaySfx(0xF0000080);
+        D_801375C8--;
+        break;
+    }
+}
+
 // RunMainEngine
 INCLUDE_ASM("asm/saturn/game/data", d6070A60, d_06070A60);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6071C3C, func_06071C3C);

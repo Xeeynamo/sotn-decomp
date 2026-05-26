@@ -205,6 +205,7 @@ void GetSpellDef(SpellDef* spell, s32 id) {
     }
 }
 
+// original name: etc_hosei
 s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
     s16 ret;
     s32 petrify_adjustment;
@@ -227,7 +228,7 @@ s16 GetStatusAilmentTimer(StatusAilments statusAilment, s16 timer) {
     case STATUS_AILMENT_PETRIFIED:
         ret = timer;
         petrify_adjustment =
-            (((rand() % 12) + g_Status.statsTotal[STAT_CON]) - 9) / 10;
+            ((g_Status.statsTotal[STAT_CON] + rand() % 12) - 9) / 10;
         if (petrify_adjustment < 0) {
             petrify_adjustment = 0;
         }

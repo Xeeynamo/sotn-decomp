@@ -1183,8 +1183,6 @@ bool func_800F27F4(s32 arg0) {
 // of binary to mismatch. Removing it from the header seems
 // to make it match everywhere
 void func_800F2860(void) {
-    s32 var_v0;
-
     switch (D_801375C8) {
     case 0:
         break;
@@ -1195,7 +1193,6 @@ void func_800F2860(void) {
     case 2:
         if (func_80131F68() == false) {
             D_801375C8++;
-            break;
         }
         break;
     case 3:
@@ -1205,24 +1202,21 @@ void func_800F2860(void) {
     case 4:
         if (func_80131F68() != false) {
             D_801375C8++;
-            break;
         }
         break;
     case 5:
         if (func_80131F68() == false) {
             D_801375C8++;
-            break;
         }
         break;
     case 6:
         PlaySfx(currentMusicId);
         D_801375C8 = 0;
-        return;
+        break;
     case 7:
-        if (func_80131F68() != 0) {
-            return;
+        if (func_80131F68() == false) {
+            D_801375C8--;
         }
-        D_801375C8--;
         break;
     case 8:
         PlaySfx(SET_UNK_80);

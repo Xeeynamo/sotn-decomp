@@ -302,7 +302,7 @@ typedef struct {
     s32 timerHours;
     s32 timerMinutes;
     s32 timerSeconds;
-    s32 : 32;
+    s32 timerFrames;
     u32 D_80097C40;
     FamiliarStats statsFamiliars[7];
 } PlayerStatus;
@@ -463,7 +463,7 @@ typedef struct {
 
 typedef struct {
     s32 : 32;
-    s32 : 32;
+    s32 D_800973FC;
     s32 : 32;
     s32 : 32;
     s32 : 32;
@@ -497,6 +497,28 @@ typedef struct {
     s32 D_8003CB00;
     s32 D_8003CB04;
 } GameSettings;
+
+typedef struct {
+    u16 flags;
+    u16 unk2;
+    u16 unk4;
+    s16 zPriority;
+} FgLayer;
+
+typedef struct {
+    /* 0x00 */ s32 cursorMain;
+    /* 0x04 */ s32 cursorRelic;
+    /* 0x08 */ s32 cursorEquip;
+    /* 0x0C */ s32 cursorHandEquipType;
+    /* 0x10 */ s32 cursorEquipType[4];
+    /* 0x20 */ s32 scrollEquipType[5];
+    /* 0x34 */ s32 cursorSpells;
+    /* 0x38 */ s32 cursorSettings;
+    /* 0x3C */ s32 cursorCloak;
+    /* 0x40 */ s32 cursorButtons;
+    /* 0x44 */ s32 cursorWindowColors;
+    /* 0x48 */ s32 cursorTimeAttack;
+} MenuNavigation; /* size=0x4C */
 
 typedef enum {
     PLAYER_CHARACTER,
@@ -583,8 +605,7 @@ s32 func_800F4D38(s32, s32);
 void func_800F4994(void);
 void DestroyEntity(Entity* entity);
 extern int rand(void);
-u32 CheckEquipmentItemCount(u32 itemId, u32 equipType);
-void PlaySfx(s16 sfxId);
+void PlaySfx(s32 sfxId);
 
 // Not 100% sure about address, gcc seems to added the offset within
 // the struct to the base address
@@ -609,6 +630,15 @@ extern PlayerStatus g_Status;
 extern SubweaponDef g_SubwpnDefs[];
 extern unkGraphicsStruct g_unkGraphicsStruct;
 extern u32 g_GameTimer;
+extern FgLayer D_8003C708;
+extern s32 D_801375C8;
+extern s32 D_8006BB00;
+extern s32 g_Servant;
+extern RelicDesc g_RelicDefs[];
+extern s32 currentMusicId;
+extern u8 g_CastleFlags[];
+extern s32 g_PlayableCharacter;
+extern MenuNavigation g_MenuNavigation;
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7
