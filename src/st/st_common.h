@@ -380,6 +380,7 @@ u8 GetAngleBetweenEntitiesShifted(Entity* a, Entity* b) {
     return Ratan2Shifted(dx, dy);
 }
 
+// original name: search_point
 u8 GetAnglePointToEntityShifted(s16 x, s16 y) {
     s16 dx = x - g_CurrentEntity->posX.i.hi;
     s16 dy = y - g_CurrentEntity->posY.i.hi;
