@@ -2063,7 +2063,7 @@ typedef struct {
     /* 0x80097480 */ s32 : 32;
     /* 0x80097484 */ s32 : 32;
     /* 0x80097488 */ f32 D_80097488;
-    /* 0x80097488 */ f32 D_8009748C;
+    /* 0x8009748C */ f32 D_8009748C;
 } unkGraphicsStruct;
 
 typedef struct {
