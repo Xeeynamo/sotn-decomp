@@ -268,7 +268,7 @@ void PlayerStepStand(void) {
     if ((PLAYER.step < 0x40) && (!g_Player.unk48)) {
         if (D_800ACF74 != 0) {
             D_800ACF74--;
-        } else if (D_80097448[0] > 0x30) {
+        } else if (g_unkGraphicsStruct.D_80097448 > 0x30) {
             x_offset = 4;
             if (PLAYER.facingLeft) {
                 x_offset = -x_offset;
@@ -805,7 +805,7 @@ void PlayerStepCrouch(void) {
     case 0x0:
         if (D_800ACF74 != 0) {
             D_800ACF74--;
-        } else if (D_80097448[0] > 0x18) {
+        } else if (g_unkGraphicsStruct.D_80097448 > 0x18) {
             if (!g_Player.unk48) {
                 x_offset = 12;
                 if (PLAYER.facingLeft) {
@@ -1695,7 +1695,7 @@ void PlayerStepStoned(s32 arg0) {
         break;
     case 2:
         yShift = FIX(44.0 / 256);
-        if (D_80097448[0] > 0x28) {
+        if (g_unkGraphicsStruct.D_80097448 > 0x28) {
             yShift = yShift / 4;
         }
 
@@ -2336,7 +2336,7 @@ bool BatFormFinished(void) {
     if (PLAYER.step_s == 0) {
         return false;
     }
-    if (D_80097448[1] || g_Player.padTapped & PAD_R1 ||
+    if (g_unkGraphicsStruct.D_8009744C || g_Player.padTapped & PAD_R1 ||
         HandleTransformationMP(FORM_BAT, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphBat);
         SetPlayerAnim(0xCA);
@@ -3012,12 +3012,12 @@ bool MistFormFinished(void) {
         return 0;
     }
 #ifndef VERSION_PSP
-    if (D_80097448[1] != 0 || g_Player.padTapped & BTN_MIST ||
+    if (g_unkGraphicsStruct.D_8009744C != 0 || g_Player.padTapped & BTN_MIST ||
 #else
     if (g_SecondaryMistTimer != 0) {
         g_SecondaryMistTimer--;
     }
-    if (D_80097448[1] != 0 ||
+    if (g_unkGraphicsStruct.D_8009744C != 0 ||
         g_SecondaryMistTimer == 0 &&
             ((g_Player.padPressed & BTN_MIST) != BTN_MIST) ||
 #endif

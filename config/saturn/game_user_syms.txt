@@ -31,6 +31,7 @@ _D_8003C708 = 0x0605D7E8;
 _g_MenuNavigation = 0x0605D790;
 _g_Settings = 0x0605D800;
 _g_api = 0x060645A8;
+_GetPlayerSensor = 0x06064634;
 _PfnEntityUpdates = 0x06064648;
 _func_06064684 = 0x06064684;
 _CalcDefense = 0x0606DCF0;

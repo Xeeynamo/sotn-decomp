@@ -2046,6 +2046,24 @@ typedef struct {
     // size must be 8 for the loop in RunMainEngine, while
     // PreventEntityFromRespawning suggests it has a size of 32
     /* 0x80097428 */ s32 D_80097428[8];
+    /* 0x80097448 */ s32 D_80097448;
+    /* 0x8009744C */ s32 D_8009744C;
+    /* 0x80097450 */ s32 D_80097450;
+    /* 0x80097454 */ s32 : 32;
+    /* 0x80097458 */ s32 : 32;
+    /* 0x8009745C */ s32 : 32;
+    /* 0x80097460 */ s32 : 32;
+    /* 0x80097464 */ s32 : 32;
+    /* 0x80097468 */ s32 : 32;
+    /* 0x8009746C */ s32 : 32;
+    /* 0x80097470 */ s32 : 32;
+    /* 0x80097474 */ s32 : 32;
+    /* 0x80097478 */ s32 : 32;
+    /* 0x8009747C */ s32 : 32;
+    /* 0x80097480 */ s32 : 32;
+    /* 0x80097484 */ s32 : 32;
+    /* 0x80097488 */ f32 D_80097488;
+    /* 0x80097488 */ f32 D_8009748C;
 } unkGraphicsStruct;
 
 typedef struct {
@@ -2195,7 +2213,6 @@ typedef enum {
 // 0x80-0xFF: stage entities, only player can interact with
 extern Entity g_Entities[TOTAL_ENTITY_COUNT];
 
-extern s32 g_entityDestroyed[18];
 extern Event g_EvHwCardEnd;
 extern Event g_EvHwCardErr;
 extern Event g_EvHwCardTmo;
@@ -2208,9 +2225,6 @@ extern u32 g_randomNext;
 extern s32 D_80096ED8[];
 extern s32 D_800973EC; // flag to check if the menu is shown
 extern unkGraphicsStruct g_unkGraphicsStruct;
-extern s32 D_80097448[]; // underwater physics. 7448 and 744C. Could be struct.
-extern s32 D_80097450;
-extern Pos D_80097488;
 extern Pad g_pads[PAD_COUNT];
 extern Stages g_StageId;
 extern s32 D_800974A4; // map open

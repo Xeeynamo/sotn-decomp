@@ -453,7 +453,7 @@ void func_us_801BF3F4(Entity* self) {
         self->posY.i.hi++;
         if (collision) {
             player->posY.i.hi++;
-            D_80097488.y.i.hi += 1;
+            g_unkGraphicsStruct.D_8009748C.i.hi += 1;
             g_api.func_8010DFF0(0, 1);
         }
         if (self->params) {
@@ -485,7 +485,7 @@ void func_us_801BF3F4(Entity* self) {
             g_Player.demo_timer = 2;
             g_Player.padSim = 0;
             player->posY.i.hi--;
-            D_80097488.y.i.hi -= 1;
+            g_unkGraphicsStruct.D_8009748C.i.hi -= 1;
             self->posY.i.hi--;
             tilePos = 0x31;
             for (i = 0; i < 2; i++) {
@@ -504,7 +504,7 @@ void func_us_801BF3F4(Entity* self) {
         self->posY.i.hi--;
         if (collision) {
             player->posY.i.hi--;
-            D_80097488.y.i.hi -= 1;
+            g_unkGraphicsStruct.D_8009748C.i.hi -= 1;
             g_api.func_8010DFF0(0, 1);
         }
         posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;

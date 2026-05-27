@@ -23,12 +23,12 @@ void EntityGearHorizontal(Entity* self) {
             if (!self->params) {
                 if (!(g_Player.vram_flag & TOUCHING_R_WALL)) {
                     player->posX.val += FIX(0.25);
-                    D_80097488.x.val += FIX(0.25);
+                    g_unkGraphicsStruct.D_80097488.val += FIX(0.25);
                 }
             } else {
                 if (!(g_Player.vram_flag & TOUCHING_L_WALL)) {
                     player->posX.val -= FIX(0.25);
-                    D_80097488.x.val -= FIX(0.25);
+                    g_unkGraphicsStruct.D_80097488.val -= FIX(0.25);
                 }
             }
         }

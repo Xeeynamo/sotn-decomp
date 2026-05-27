@@ -720,7 +720,7 @@ void RicMain(void) {
     if (g_Player.timers[PL_T_12]) {
         newStatus |= PLAYER_STATUS_SPELLCAST;
     }
-    if (*D_80097448 != 0) {
+    if (g_unkGraphicsStruct.D_80097448 != 0) {
         newStatus |= PLAYER_STATUS_UNK20000;
     }
     newStatus |= PLAYER_STATUS_UNK10000000;
@@ -770,7 +770,8 @@ void RicMain(void) {
         return;
     }
     InitRicAfterImage();
-    if ((*D_80097448 > 0x28) && !g_CurrentEntity->nFramesInvincibility) {
+    if ((g_unkGraphicsStruct.D_80097448 > 0x28) &&
+        !g_CurrentEntity->nFramesInvincibility) {
         PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
         PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
     }
@@ -801,7 +802,8 @@ void RicMain(void) {
         CheckStageCollision(1);
     }
     g_Player.unk04 = vramFlag;
-    if (*D_80097448 > 0x28 && !g_CurrentEntity->nFramesInvincibility) {
+    if (g_unkGraphicsStruct.D_80097448 > 0x28 &&
+        !g_CurrentEntity->nFramesInvincibility) {
         PLAYER.velocityY = (PLAYER.velocityY * 4) / 3;
         PLAYER.velocityX = (PLAYER.velocityX * 4) / 3;
     }

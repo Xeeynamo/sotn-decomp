@@ -2100,7 +2100,7 @@ void EntityFloatingIcePlatform(Entity* self) {
     if (collision) {
         dy = dy - self->ext.et_801C4980.prevTimer;
         player->posY.i.hi += dy;
-        D_80097488.x.i.hi += dy;
+        g_unkGraphicsStruct.D_80097488.i.hi += dy;
     }
 
     prevPosY = -prevPosY;

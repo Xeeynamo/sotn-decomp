@@ -46,7 +46,7 @@ void MarStepStand(void) {
     if (PLAYER.step < 64) {
         if (mar_8015459C != 0) {
             mar_8015459C--;
-        } else if (D_80097448[0] > 48) {
+        } else if (g_unkGraphicsStruct.D_80097448 > 48) {
             xMod = 4;
             if (PLAYER.facingLeft) {
                 xMod = -xMod;
@@ -292,7 +292,7 @@ void MarStepCrouch(void) {
     case 0x0:
         if (mar_8015459C != 0) {
             mar_8015459C--;
-        } else if (*D_80097448 > 0x18 && !g_Player.unk48) {
+        } else if (g_unkGraphicsStruct.D_80097448 > 0x18 && !g_Player.unk48) {
             xShift = 9;
             if (PLAYER.facingLeft) {
                 xShift = -xShift;

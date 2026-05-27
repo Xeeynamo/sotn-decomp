@@ -88,7 +88,8 @@ bool WolfFormFinished(void) {
     if (PLAYER.step_s == 0 || PLAYER.step_s == 8) {
         return false;
     }
-    if (D_80097448[1] != 0 && !IsRelicActive(RELIC_HOLY_SYMBOL) ||
+    if (g_unkGraphicsStruct.D_8009744C != 0 &&
+            !IsRelicActive(RELIC_HOLY_SYMBOL) ||
         g_Player.padTapped & BTN_WOLF ||
         HandleTransformationMP(FORM_WOLF, REDUCE) < 0) {
         SetPlayerStep(Player_UnmorphWolf);
@@ -112,7 +113,7 @@ void func_8012C97C(void) {
         g_Entities[PLAYER_CHARACTER].step_s == 9) {
         return;
     }
-    if (D_80097448[1] <= 12) {
+    if (g_unkGraphicsStruct.D_8009744C <= 12) {
         return;
     }
     if (!IsRelicActive(RELIC_HOLY_SYMBOL)) {

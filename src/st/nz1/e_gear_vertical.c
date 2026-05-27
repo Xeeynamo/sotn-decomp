@@ -56,7 +56,7 @@ void EntityGearVertical(Entity* self) {
                        self->ext.gearPuzzle.cooldownTimer;
                 offsetY = posY - self->ext.gearPuzzle.offsetY;
                 player->posY.i.hi += offsetY;
-                D_80097488.y.val += offsetY;
+                g_unkGraphicsStruct.D_8009748C.val += offsetY;
             }
 #ifdef VERSION_PSP
             collision = GetPlayerCollisionWith(

@@ -243,7 +243,7 @@ typedef struct Entity {
 } Entity; // size = 0xB8
 
 typedef struct Unk0600B344 {
-    /* 0x00 */ s16 unk0;
+    /* 0x00 */ u16 unk0;
     /* 0x02 */ char pad_02[0x6];
     /* 0x08 */ s16 unk8;
     /* 0x0A */ char pad_0A[0x4];
@@ -388,7 +388,7 @@ typedef struct {
     /* 0x06 */ u16 attack;
     /* 0x08 */ u16 attackElement;
     /* 0x0A */ s16 defense;
-    /* 0x0C */ u16 unkC;
+    /* 0x0C */ u16 hitboxState;
     /* 0x0E */ u16 weaknesses;
     /* 0x10 */ u16 strengths;
     /* 0x12 */ u16 immunes;
@@ -401,7 +401,7 @@ typedef struct {
     /* 0x20 */ u16 uncommonItemDropRate;
     /* 0x22 */ u8 hitboxWidth;
     /* 0x23 */ u8 hitboxHeight;
-    /* 0x24 */ s32 unk24;
+    /* 0x24 */ s32 flags;
 } EnemyDef; /* size=0x28 */
 
 // Flags for g_Player.vram_flag
@@ -475,6 +475,25 @@ typedef struct {
     s32 : 32;
     s32 : 32;
     s32 D_80097428[8];
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s16 unk90;
+    s16 unk92;
+    s16 unk94;
 } unkGraphicsStruct;
 
 typedef struct {

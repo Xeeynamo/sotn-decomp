@@ -33,7 +33,7 @@ bool func_8010FDF8(s32 branchFlags) {
         }
     }
 
-    if (D_80097448[0] > 40) {
+    if (g_unkGraphicsStruct.D_80097448 > 40) {
         YAccel = YAccel / 4;
     }
 

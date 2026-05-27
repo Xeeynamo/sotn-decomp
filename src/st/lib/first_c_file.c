@@ -169,7 +169,7 @@ void func_us_801AE8E8(Entity* self) {
                 dx = player->posX.i.hi + 10 - posX;
                 if (dx >= 0) {
                     player->posX.i.hi -= dx;
-                    D_80097488.x.i.hi -= dx;
+                    g_unkGraphicsStruct.D_80097488.i.hi -= dx;
                     g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_R_WALL;
                     if (!g_CastleFlags[LIB_BOOKSHELF_SECRET]) {
                         if (--self->ext.et_801AE8E8.unk82) {
@@ -190,7 +190,7 @@ void func_us_801AE8E8(Entity* self) {
                 dx = player->posX.i.hi - 10 - posX;
                 if (dx <= 0) {
                     player->posX.i.hi -= dx;
-                    D_80097488.x.i.hi -= dx;
+                    g_unkGraphicsStruct.D_80097488.i.hi -= dx;
                     g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_L_WALL;
                     if (!g_CastleFlags[LIB_BOOKSHELF_SECRET]) {
                         if (--self->ext.et_801AE8E8.unk82) {

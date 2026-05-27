@@ -1062,9 +1062,9 @@ void func_800F2404(s32 arg0) {
 
     g_unkGraphicsStruct.unk20 = 0;
     g_unkGraphicsStruct.unk24 = 0;
-    D_80097448[0] = 0;
-    D_80097448[1] = 0;
-    D_80097450 = 0;
+    g_unkGraphicsStruct.D_80097448 = 0;
+    g_unkGraphicsStruct.D_8009744C = 0;
+    g_unkGraphicsStruct.D_80097450 = 0;
     SetGPUBuffRGBZero();
 }
 
@@ -1424,8 +1424,8 @@ void RunMainEngine(void) {
         g_Player.unk7C = PLAYER.posX.i.hi;
         D_801375A0 = PLAYER.posY.i.hi;
         g_Player.unk7E = PLAYER.posY.i.hi;
-        D_80097488.x.val = 0;
-        D_80097488.y.val = 0;
+        g_unkGraphicsStruct.D_80097488.val = 0;
+        g_unkGraphicsStruct.D_8009748C.val = 0;
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             g_PlOvl.D_8013C000();
             g_PlOvl.D_8013C008();
@@ -1521,8 +1521,8 @@ void RunMainEngine(void) {
         D_801375B8 = D_801375B0 - g_Tilemap.scrollY.i.hi;
         D_801375A4 = D_8013759C - PLAYER.posX.val;
         D_801375A8 = D_801375A0 - PLAYER.posY.val;
-        D_801375A4 -= D_80097488.x.val;
-        D_801375A8 -= D_80097488.y.val;
+        D_801375A4 -= g_unkGraphicsStruct.D_80097488.val;
+        D_801375A8 -= g_unkGraphicsStruct.D_8009748C.val;
         func_800F0940();
 
         for (i = 0, ent = g_Entities; i < TOTAL_ENTITY_COUNT; i++, ent++) {

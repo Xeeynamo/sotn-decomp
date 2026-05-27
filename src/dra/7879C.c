@@ -2596,7 +2596,7 @@ block_748:
                 }
                 break;
             case 0x7004:
-                if (D_80097448[1] == 0 ||
+                if (g_unkGraphicsStruct.D_8009744C == 0 ||
                     IsRelicActive(RELIC_HOLY_SYMBOL) != 0) {
                     self->step += 1;
                 }

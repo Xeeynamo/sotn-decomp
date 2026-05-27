@@ -274,7 +274,7 @@ void func_8012DBBC(void) {
         }
     }
     vel_boost = FIX(20.0 / 128);
-    if (D_80097448[0] > 12) {
+    if (g_unkGraphicsStruct.D_80097448 > 12) {
         vel_boost /= 4;
     }
     PLAYER.velocityY += vel_boost;
@@ -291,7 +291,7 @@ void func_8012DF04(void) {
         return;
     }
     velocityBoost = FIX(20.0 / 128);
-    if (D_80097448[0] > 12) {
+    if (g_unkGraphicsStruct.D_80097448 > 12) {
         velocityBoost /= 4;
     }
     PLAYER.velocityY += velocityBoost;
@@ -436,7 +436,7 @@ void func_8012E040(void) {
         break;
     }
     vel_boost = FIX(20.0 / 128);
-    if (D_80097448[0] > 12) {
+    if (g_unkGraphicsStruct.D_80097448 > 12) {
         // Interesting, wrong registers if you do /= here.
         vel_boost = vel_boost / 4;
     }
@@ -682,12 +682,13 @@ void func_8012ED30(void) {
         return;
     }
     if (!IsRelicActive(RELIC_SKILL_OF_WOLF) ||
-        !(g_Player.padPressed & PAD_TRIANGLE) || (D_80097448[1] == 0)) {
+        !(g_Player.padPressed & PAD_TRIANGLE) ||
+        (g_unkGraphicsStruct.D_8009744C == 0)) {
         func_8012CED4();
         return;
     }
     SetSpeedX(FIX(0.5));
-    if (D_80097448[1] > 12) {
+    if (g_unkGraphicsStruct.D_8009744C > 12) {
         PLAYER.velocityY = FIX(-0.5);
     } else {
         PLAYER.velocityY = 0;
@@ -1677,7 +1678,7 @@ void func_801309B4(Entity* self) {
     if (self->poseTimer < 0) {
         if (D_80138448 != 0) {
             D_80138448 -= 1;
-        } else if (*D_80097448 > 0x18) {
+        } else if (g_unkGraphicsStruct.D_80097448 > 0x18) {
             var_s2 = 4;
             if (PLAYER.facingLeft) {
                 var_s2 = -var_s2;

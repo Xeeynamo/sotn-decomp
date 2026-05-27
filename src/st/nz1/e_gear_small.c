@@ -32,7 +32,7 @@ void EntityGearSidewaysSmall(Entity* self) {
             offsetY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             params = offsetY - self->ext.gearPuzzle.offsetY;
             player->posY.i.hi += params;
-            D_80097488.y.i.hi += params;
+            g_unkGraphicsStruct.D_8009748C.i.hi += params;
         }
 
         self->rotate += 64;
@@ -67,8 +67,8 @@ void EntityGearSidewaysSmall(Entity* self) {
                 player = &PLAYER;
                 player->posX.val += offsetX;
                 player->posY.val += FIX(1) + offsetY;
-                D_80097488.x.val += offsetX;
-                D_80097488.y.val += offsetY;
+                g_unkGraphicsStruct.D_80097488.val += offsetX;
+                g_unkGraphicsStruct.D_8009748C.val += offsetY;
             }
         }
         break;

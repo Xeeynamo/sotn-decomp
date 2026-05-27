@@ -634,8 +634,8 @@ void EntityDiplocephalusTorso(Entity* self) {
         if (collision) {
             player->posX.i.hi += posX;
             player->posY.i.hi += 2;
-            D_80097488.x.i.hi += posX;
-            D_80097488.y.i.hi += 2;
+            g_unkGraphicsStruct.D_80097488.i.hi += posX;
+            g_unkGraphicsStruct.D_8009748C.i.hi += 2;
         }
     }
     self->ext.diploBody.unkA4 = self->posX.i.hi + g_Tilemap.scrollX.i.hi;

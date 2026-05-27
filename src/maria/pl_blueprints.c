@@ -970,9 +970,10 @@ void MarEntityHitByCutBlood(Entity* self) {
                     tilePrim->b0 -= 1;
                     tilePrim->posY.val += tilePrim->velocityY.val;
                     tilePrim->posX.val += tilePrim->velocityX.val;
-                    if (*D_80097448 == 0 ||
+                    if (g_unkGraphicsStruct.D_80097448 == 0 ||
                         !(tilePrim->posY.i.hi >
-                          (PLAYER.posY.i.hi - *D_80097448 + 0x19))) {
+                          (PLAYER.posY.i.hi - g_unkGraphicsStruct.D_80097448 +
+                           0x19))) {
                         tilePrim->drawMode |= DRAW_HIDE;
                     }
                 } else {
