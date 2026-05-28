@@ -169,7 +169,7 @@ void EntityFloorTrap(Entity* self) {
         launchSpeed = self->velocityX;
         other = &PLAYER;
         other->posY.i.hi += launchSpeed;
-        g_unkGraphicsStruct.D_80097488.i.hi += launchSpeed;
+        g_unkGraphicsStruct.shoveX.i.hi += launchSpeed;
     }
     if (self->hitFlags) {
         self->ext.floorTrap.paletteTimer = 63;

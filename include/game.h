@@ -2030,7 +2030,7 @@ typedef struct {
 
 // Used in game.h
 typedef struct {
-    /* 0x800973F8 */ s32 D_800973F8;
+    /* 0x800973F8 */ s32 primIndex;
     /* 0x800973FC */ s32 D_800973FC;
     /* 0x80097400 */ bool pauseEnemies; // True for Stopwatch and cutscenes
     /* 0x80097404 */ s32 unk4;
@@ -2062,8 +2062,8 @@ typedef struct {
     /* 0x8009747C */ s32 : 32;
     /* 0x80097480 */ s32 : 32;
     /* 0x80097484 */ s32 : 32;
-    /* 0x80097488 */ f32 D_80097488;
-    /* 0x8009748C */ f32 D_8009748C;
+    /* 0x80097488 */ f32 shoveX;
+    /* 0x8009748C */ f32 shoveY;
 } unkGraphicsStruct;
 
 typedef struct {

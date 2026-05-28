@@ -58,10 +58,10 @@ void EntityGearSidewaysLarge(Entity* self) {
                 if (!(g_Player.vram_flag & TOUCHING_R_WALL)) {
 
                     player->posX.val += offsetX;
-                    g_unkGraphicsStruct.D_80097488.val += offsetX;
+                    g_unkGraphicsStruct.shoveX.val += offsetX;
                 }
                 player->posY.val += offsetY + FIX(3);
-                g_unkGraphicsStruct.D_8009748C.val += offsetY + FIX(3);
+                g_unkGraphicsStruct.shoveY.val += offsetY + FIX(3);
                 self->ext.gearPuzzle.offsetX = angle;
             }
             self->ext.gearPuzzle.collision = collision;

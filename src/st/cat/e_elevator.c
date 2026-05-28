@@ -40,7 +40,7 @@ void EntityElevator(Entity* self) {
                 (posY < 0 && ((g_Player.vram_flag ^ TOUCHING_CEILING) &
                               TOUCHING_CEILING))) {
                 player->posY.i.hi += posY;
-                g_unkGraphicsStruct.D_8009748C.i.hi += posY;
+                g_unkGraphicsStruct.shoveY.i.hi += posY;
             }
         }
 
@@ -68,7 +68,7 @@ void EntityElevator(Entity* self) {
 
             if (isPlayerTouching & 4) {
                 player->posY.i.hi += posY;
-                g_unkGraphicsStruct.D_8009748C.i.hi += posY;
+                g_unkGraphicsStruct.shoveY.i.hi += posY;
             }
             self->ext.topElevator.unk80--;
         }

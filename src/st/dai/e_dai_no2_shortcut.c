@@ -63,7 +63,7 @@ void EntityBlock(Entity* self) {
     if (collision & 4) {
         playerPtr = &PLAYER;
         playerPtr->posY.i.hi++;
-        g_unkGraphicsStruct.D_8009748C.i.hi++;
+        g_unkGraphicsStruct.shoveY.i.hi++;
     }
     self->hitboxOffX = -16;
     self->hitboxOffY = -60;

@@ -1039,7 +1039,7 @@ void func_800F2404(s32 arg0) {
 
     if (arg0 == 0) {
         g_unkGraphicsStruct.BottomCornerTextTimer = 0;
-        g_unkGraphicsStruct.D_800973F8 = 0;
+        g_unkGraphicsStruct.primIndex = 0;
         g_unkGraphicsStruct.D_800973FC = 0;
     }
     g_CutsceneHasControl = 0;
@@ -1389,12 +1389,12 @@ void RunMainEngine(void) {
 #endif
         func_800F24F4();
 #if defined(VERSION_PSP)
-        g_unkGraphicsStruct.D_800973F8 = (s16)AllocPrimitives(PRIM_GT4, 16);
+        g_unkGraphicsStruct.primIndex = (s16)AllocPrimitives(PRIM_GT4, 16);
 #else
-        g_unkGraphicsStruct.D_800973F8 = AllocPrimitives(PRIM_GT4, 16);
+        g_unkGraphicsStruct.primIndex = AllocPrimitives(PRIM_GT4, 16);
 #endif
-        if (g_unkGraphicsStruct.D_800973F8 != 0) {
-            prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
+        if (g_unkGraphicsStruct.primIndex != 0) {
+            prim = &g_PrimBuf[g_unkGraphicsStruct.primIndex];
             while (prim != NULL) {
                 prim->tpage = 0x1A;
                 prim->clut = 0x120;
@@ -1424,8 +1424,8 @@ void RunMainEngine(void) {
         g_Player.unk7C = PLAYER.posX.i.hi;
         D_801375A0 = PLAYER.posY.i.hi;
         g_Player.unk7E = PLAYER.posY.i.hi;
-        g_unkGraphicsStruct.D_80097488.val = 0;
-        g_unkGraphicsStruct.D_8009748C.val = 0;
+        g_unkGraphicsStruct.shoveX.val = 0;
+        g_unkGraphicsStruct.shoveY.val = 0;
         if (g_StageId == STAGE_ST0 || g_PlayableCharacter != PLAYER_ALUCARD) {
             g_PlOvl.D_8013C000();
             g_PlOvl.D_8013C008();
@@ -1521,8 +1521,8 @@ void RunMainEngine(void) {
         D_801375B8 = D_801375B0 - g_Tilemap.scrollY.i.hi;
         D_801375A4 = D_8013759C - PLAYER.posX.val;
         D_801375A8 = D_801375A0 - PLAYER.posY.val;
-        D_801375A4 -= g_unkGraphicsStruct.D_80097488.val;
-        D_801375A8 -= g_unkGraphicsStruct.D_8009748C.val;
+        D_801375A4 -= g_unkGraphicsStruct.shoveX.val;
+        D_801375A8 -= g_unkGraphicsStruct.shoveY.val;
         func_800F0940();
 
         for (i = 0, ent = g_Entities; i < TOTAL_ENTITY_COUNT; i++, ent++) {

@@ -667,7 +667,7 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
 #if STAGE == STAGE_ST0
                 g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
 #else
-                g_unkGraphicsStruct.D_8009748C.i.hi -= y;
+                g_unkGraphicsStruct.shoveY.i.hi -= y;
                 g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
                 if (plStatus &
                     (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
@@ -687,7 +687,7 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
 #if STAGE == STAGE_ST0
                     g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_CEILING;
 #else
-                    g_unkGraphicsStruct.D_8009748C.i.hi += y;
+                    g_unkGraphicsStruct.shoveY.i.hi += y;
                     g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_CEILING;
                     if (plStatus &
                         (PLAYER_STATUS_BAT_FORM | PLAYER_STATUS_MIST_FORM)) {
@@ -708,7 +708,7 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
                 }
                 player->posX.i.hi += x;
 #if STAGE != STAGE_ST0
-                g_unkGraphicsStruct.D_80097488.i.hi += x;
+                g_unkGraphicsStruct.shoveX.i.hi += x;
                 g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_L_WALL;
 #endif
                 return 1;
@@ -719,7 +719,7 @@ u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
                 player->posX.i.hi -= x;
 #if STAGE != STAGE_ST0
 
-                g_unkGraphicsStruct.D_80097488.i.hi -= x;
+                g_unkGraphicsStruct.shoveX.i.hi -= x;
                 g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_R_WALL;
 #endif
                 return 1;

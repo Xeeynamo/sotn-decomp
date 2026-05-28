@@ -73,14 +73,14 @@ void MoveBoat(u16 playerInBoat, Entity* entity) {
         if (posX > 0) {
             if (!(g_Player.vram_flag & TOUCHING_R_WALL)) {
                 tempEntity->posX.i.hi += posX;
-                g_unkGraphicsStruct.D_80097488.i.hi += posX;
+                g_unkGraphicsStruct.shoveX.i.hi += posX;
             }
         } else if (!(g_Player.vram_flag & TOUCHING_L_WALL)) {
             tempEntity->posX.i.hi += posX;
-            g_unkGraphicsStruct.D_80097488.i.hi += posX;
+            g_unkGraphicsStruct.shoveX.i.hi += posX;
         }
         tempEntity->posY.i.hi += posY;
-        g_unkGraphicsStruct.D_8009748C.i.hi += posY;
+        g_unkGraphicsStruct.shoveY.i.hi += posY;
     }
 }
 
@@ -131,7 +131,7 @@ void EntityFerrymanController(Entity* self) {
             self->posY.i.hi += offset;
             if (playerInBoat) {
                 tempEntity->posY.i.hi += offset;
-                g_unkGraphicsStruct.D_8009748C.i.hi += offset;
+                g_unkGraphicsStruct.shoveY.i.hi += offset;
             }
         }
     }
@@ -926,14 +926,14 @@ void MoveBoatElevator(
         if (posXTemp > 0) {
             if (!(g_Player.vram_flag & TOUCHING_R_WALL)) {
                 player->posX.i.hi += posXTemp;
-                g_unkGraphicsStruct.D_80097488.i.hi += posXTemp;
+                g_unkGraphicsStruct.shoveX.i.hi += posXTemp;
             }
         } else if (!(g_Player.vram_flag & TOUCHING_L_WALL)) {
             player->posX.i.hi += posXTemp;
-            g_unkGraphicsStruct.D_80097488.i.hi += posXTemp;
+            g_unkGraphicsStruct.shoveX.i.hi += posXTemp;
         }
         player->posY.i.hi += posYTemp;
-        g_unkGraphicsStruct.D_8009748C.i.hi += posYTemp;
+        g_unkGraphicsStruct.shoveY.i.hi += posYTemp;
     }
     entity->posX.i.hi = posX;
     entity->posY.i.hi = posY;

@@ -517,7 +517,7 @@ void EntityTriangleElevator(Entity* self) {
                 ((offsetY < 0) &&
                  ((g_Player.vram_flag ^ TOUCHING_CEILING) & 2))) {
                 player->posY.i.hi += offsetY;
-                g_unkGraphicsStruct.D_8009748C.i.hi += offsetY;
+                g_unkGraphicsStruct.shoveY.i.hi += offsetY;
             }
         }
 
@@ -543,7 +543,7 @@ void EntityTriangleElevator(Entity* self) {
             self->posY.i.hi += offsetY;
             if (collision & 4) {
                 player->posY.i.hi += offsetY;
-                g_unkGraphicsStruct.D_8009748C.i.hi += offsetY;
+                g_unkGraphicsStruct.shoveY.i.hi += offsetY;
             }
             self->ext.topElevator.unk80--;
         }
@@ -742,7 +742,7 @@ void func_us_801AABA4(Entity* self) {
                 ((offsetY < 0) &&
                  ((g_Player.vram_flag ^ TOUCHING_CEILING) & 2))) {
                 player->posY.i.hi += offsetY;
-                g_unkGraphicsStruct.D_8009748C.i.hi += offsetY;
+                g_unkGraphicsStruct.shoveY.i.hi += offsetY;
             }
         }
 
@@ -768,7 +768,7 @@ void func_us_801AABA4(Entity* self) {
             self->posY.i.hi += offsetY;
             if (collision & 4) {
                 player->posY.i.hi += offsetY;
-                g_unkGraphicsStruct.D_8009748C.i.hi += offsetY;
+                g_unkGraphicsStruct.shoveY.i.hi += offsetY;
             }
             self->ext.topElevator.unk80--;
         }

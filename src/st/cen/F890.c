@@ -182,7 +182,7 @@ void EntityPlatform(Entity* self) {
         if (temp_v0 > 496) {
             self->posY.i.hi--;
             player->posY.i.hi--;
-            g_unkGraphicsStruct.D_8009748C.i.hi--;
+            g_unkGraphicsStruct.shoveY.i.hi--;
         } else {
             g_api.PlaySfx(SFX_DOOR_CLOSE_A);
             if (player->facingLeft == 0) {
@@ -221,7 +221,7 @@ void EntityPlatform(Entity* self) {
         if (temp_v0 < 592) {
             self->posY.i.hi++;
             player->posY.i.hi++;
-            g_unkGraphicsStruct.D_80097488.i.hi++;
+            g_unkGraphicsStruct.shoveX.i.hi++;
         } else {
             g_PauseAllowed = true;
             if (g_unkGraphicsStruct.pauseEnemies != 0) {

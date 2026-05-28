@@ -175,7 +175,7 @@ void EntityCavernDoor(Entity* self) {
         if (collision & 4) {
             entity = &PLAYER;
             entity->posY.i.hi++;
-            g_unkGraphicsStruct.D_8009748C.i.hi++;
+            g_unkGraphicsStruct.shoveY.i.hi++;
         }
 
         if (!(self->ext.cavernDoor.jiggler & 0xF)) {

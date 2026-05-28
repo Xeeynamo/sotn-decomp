@@ -126,7 +126,7 @@ void EntityElevator2(Entity* self) {
             } else if (isPlayerColliding) {
                 player = &PLAYER;
                 player->posY.i.hi--;
-                g_unkGraphicsStruct.D_8009748C.i.hi--;
+                g_unkGraphicsStruct.shoveY.i.hi--;
             }
         } else {
             self->posY.i.hi++;
@@ -136,7 +136,7 @@ void EntityElevator2(Entity* self) {
             } else if (isPlayerColliding) {
                 player = &PLAYER;
                 player->posY.i.hi++;
-                g_unkGraphicsStruct.D_8009748C.i.hi++;
+                g_unkGraphicsStruct.shoveY.i.hi++;
             }
         }
     }
