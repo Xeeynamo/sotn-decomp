@@ -299,7 +299,7 @@ void EntityRWarpRoom(Entity* self) {
             g_api.func_8010DFF0(0, 1);
 
             PLAYER_posY_i_hi += 1;
-            D_80097488.y.i.hi += 1;
+            g_unkGraphicsStruct.shoveY.i.hi += 1;
 
             if (g_pads[0].pressed & PAD_UP &&
                 ImplicitGetDistanceToPlayerX() < 8 &&

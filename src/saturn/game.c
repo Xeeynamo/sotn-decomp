@@ -1819,7 +1819,104 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A030, func_0607A030);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A118, func_0607A118);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A1C8, func_0607A1C8);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A290, func_0607A290);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A608, func_0607A608);
+
+void (*GetPlayerSensor)(Collider* col);
+u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
+    Entity* player;
+    s16 x, y;
+    u16 checks;
+    Collider col;
+    s32 plStatus;
+
+    plStatus = g_Player.status;
+    player = &PLAYER;
+
+    x = g_CurrentEntity->posX.i.hi;
+    y = g_CurrentEntity->posY.i.hi;
+    if (x > 0x160 || x < -0x20 || y < -0x180 || y > 0x180) {
+        return 0;
+    }
+
+    x = player->posX.i.hi - x;
+    y = player->posY.i.hi - y;
+
+    if (g_CurrentEntity->facingLeft) {
+        x += g_CurrentEntity->hitboxOffX;
+    } else {
+        x -= g_CurrentEntity->hitboxOffX;
+    }
+    y -= g_CurrentEntity->hitboxOffY;
+
+    (*GetPlayerSensor)(&col);
+    w += col.unk14 >> 0x10;
+    h += col.unk18 >> 0x10;
+
+    if (x > 0) {
+        checks = 1;
+    } else {
+        checks = 0;
+    }
+    if (y > 0) {
+        checks |= 2;
+    }
+    x += w;
+    y += h;
+    w += w;
+    h += h;
+
+    if ((u16)x <= w && (u16)y <= h) {
+        if (x != 0 && x != w) {
+            if ((flags & 4) && checks ^ 2 && player->velocityY >= 0) {
+                if (y < 8) {
+                    player->posY.i.hi -= y;
+                    g_unkGraphicsStruct.unk94 -= y;
+                    g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_GROUND;
+                    if (plStatus & 3) {
+                        return 0;
+                    }
+                    return 4;
+                }
+            }
+            if ((flags & 2) && (checks & 2) &&
+                (player->velocityY <= 0 || (flags & 0x10))) {
+                y = h - y;
+                if (y < 0x10) {
+                    player->posY.i.hi += y;
+                    g_unkGraphicsStruct.unk94 += y;
+                    g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_CEILING;
+                    if (plStatus & 3) {
+                        return 0;
+                    }
+                    return 2;
+                }
+            }
+        }
+        if (y != 0 && y != h) {
+            if (flags & 1) {
+                if (checks & 1) {
+                    x = w - x;
+                    if (flags & 8 && x > 2) {
+                        x = 2;
+                    }
+                    player->posX.i.hi += x;
+                    g_unkGraphicsStruct.unk90 += x;
+                    g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_L_WALL;
+                    return 1;
+                } else {
+                    if (flags & 8 && x > 2) {
+                        x = 2;
+                    }
+                    player->posX.i.hi -= x;
+                    g_unkGraphicsStruct.unk90 -= x;
+                    g_Player.vram_flag |= VRAM_FLAG_UNK40 | TOUCHING_R_WALL;
+                    return 1;
+                }
+            }
+        }
+    }
+    return 0;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A88C, func_0607A88C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A994, func_0607A994);
 
@@ -1848,8 +1945,28 @@ s32 GetDistanceToPlayerY(Entity* self) {
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA40, func_0607AA40);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AA74, func_0607AA74);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AAA4, func_0607AAA4);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AACC, func_0607AACC);
+
+void func_0607AAA4(Entity* entity) {
+    Entity* player = &PLAYER;
+    Unk0600B344* temp = entity->unk0;
+
+    if (temp->unk14 >= player->posX.val) {
+        entity->facingLeft = 0;
+    } else {
+        entity->facingLeft = 1;
+    }
+}
+
+void func_0607AACC(Entity* entity) {
+    Entity* player = &PLAYER;
+    Unk0600B344* temp = entity->unk0;
+
+    if (temp->unk14 >= player->posX.val) {
+        entity->facingLeft = 1;
+    } else {
+        entity->facingLeft = 0;
+    }
+}
 
 // SAT func_0607AAF4
 /*
@@ -1887,13 +2004,65 @@ s32 GetSideToPlayer2(Entity* self) {
     return side;
 }
 
-// _bicyousei_dir_0
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AB4C, func_0607AB4C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AB84, func_0607AB84);
+// original name: bicyousei_dir_0
+void BicyouseiDir0(Entity* entity) {
+    Unk0600B344* temp = entity->unk0;
 
-// _hanten_dir_0
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607ABBC, func_0607ABBC);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607ABF4, func_0607ABF4);
+    if (temp->unk14 >= PLAYER.posX.val) {
+        temp->unk0 &= ~0x10;
+        entity->facingLeft = 0;
+    } else {
+        temp->unk0 |= 0x10;
+        entity->facingLeft = 1;
+    }
+}
+
+void BicyouseiDir1(Entity* entity) {
+    Unk0600B344* temp = entity->unk0;
+
+    if (temp->unk14 >= PLAYER.posX.val) {
+        temp->unk0 |= 0x10;
+        entity->facingLeft = 0;
+    } else {
+        temp->unk0 &= ~0x10;
+        entity->facingLeft = 1;
+    }
+}
+
+// original name: hanten_dir_0
+bool HantenDir0(Entity* entity) {
+    Unk0600B344* temp = entity->unk0;
+    bool ret = false;
+    Entity* player = &PLAYER;
+
+    if (entity->facingLeft == 0) {
+        if (temp->unk14 < player->posX.val) {
+            ret = true;
+        }
+    } else {
+        if (temp->unk14 > player->posX.val) {
+            ret = true;
+        }
+    }
+    return ret;
+}
+
+bool HantenDir1(Entity* entity) {
+    Unk0600B344* temp = entity->unk0;
+    bool ret = false;
+    Entity* player = &PLAYER;
+
+    if (entity->facingLeft == 0) {
+        if (temp->unk14 > player->posX.val) {
+            ret = true;
+        }
+    } else {
+        if (temp->unk14 < player->posX.val) {
+            ret = true;
+        }
+    }
+    return ret;
+}
 
 extern u8 DAT_06099811;
 u8 func_0607AC2C(void) { return DAT_06099811; }
@@ -2048,8 +2217,24 @@ void SetSubStep(s32 step_s) {
     g_CurrentEntity->poseTimer = 0;
 }
 
-// _teki_init
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B264, func_0607B264);
+// original name: teki_init
+void TekiInit(Entity* entity, u16 enemyId) {
+    EnemyDef* enemy;
+
+    g_CurrentEntity->enemyId = enemyId;
+
+    enemy = &g_EnemyDefs[enemyId];
+    entity->hitPoints = enemy->hitPoints;
+    entity->attack = enemy->attack;
+    entity->attackElement = enemy->attackElement;
+    entity->hitboxState = enemy->hitboxState;
+    entity->hitboxWidth = enemy->hitboxWidth * 5 / 4;
+    entity->hitboxHeight = enemy->hitboxHeight;
+    entity->flags = enemy->flags;
+    entity->hitboxOffX = 0;
+    entity->hitboxOffY = 0;
+    entity->step_s = 0;
+}
 
 extern u32 g_randomNext;
 

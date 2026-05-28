@@ -119,7 +119,7 @@ void EntityPendulumWeight(Entity* self) {
             posY = self->posY.i.hi + g_Tilemap.scrollY.i.hi;
             offset = posY - self->ext.pendulum.offsetY;
             entity->posY.i.hi += offset + 1;
-            D_80097488.y.i.hi += offset + 1;
+            g_unkGraphicsStruct.shoveY.i.hi += offset + 1;
         }
 
         collision = GetPlayerCollisionWith(self, 0xC, 0xC, 4);
@@ -127,7 +127,7 @@ void EntityPendulumWeight(Entity* self) {
             posX = self->posX.i.hi + g_Tilemap.scrollX.i.hi;
             offset = posX - self->ext.pendulum.offsetX;
             entity->posX.i.hi += offset;
-            D_80097488.x.i.hi += offset;
+            g_unkGraphicsStruct.shoveX.i.hi += offset;
         }
         break;
     }

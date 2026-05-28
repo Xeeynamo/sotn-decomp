@@ -874,8 +874,8 @@ void EntityAlucard() {
 #endif
         return;
     }
-    if ((D_80097448[1] != 0) && (IsRelicActive(RELIC_HOLY_SYMBOL) == 0) &&
-        !(PLAYER.hitParams & 0x1F)) {
+    if ((g_unkGraphicsStruct.D_8009744C != 0) &&
+        (IsRelicActive(RELIC_HOLY_SYMBOL) == 0) && !(PLAYER.hitParams & 0x1F)) {
         PLAYER.hitParams = 6;
     }
 
@@ -1019,7 +1019,7 @@ specialmove:
         }
 #endif
 
-        if (D_80097448[1] == 0) {
+        if (g_unkGraphicsStruct.D_8009744C == 0) {
             if (CHECK_SHOULDER(BTN_MIST) &&
                 (HandleTransformationMP(FORM_MIST, CHECK_ONLY) == 0) &&
                 (PLAYER.step == Player_Stand || PLAYER.step == Player_Walk ||
@@ -1057,7 +1057,8 @@ specialmove:
         }
         if (CHECK_SHOULDER(BTN_WOLF) &&
             (HandleTransformationMP(FORM_WOLF, CHECK_ONLY) == 0) &&
-            ((D_80097448[1] == 0) || IsRelicActive(RELIC_HOLY_SYMBOL)) &&
+            ((g_unkGraphicsStruct.D_8009744C == 0) ||
+             IsRelicActive(RELIC_HOLY_SYMBOL)) &&
             (PLAYER.step == Player_Stand || PLAYER.step == Player_Walk ||
              PLAYER.step == Player_Crouch || PLAYER.step == Player_Fall ||
              PLAYER.step == Player_Jump || PLAYER.step == Player_AlucardStuck ||
@@ -1356,7 +1357,7 @@ block_159:
         newStatus |= PLAYER_STATUS_UNK20000000 | NO_AFTERIMAGE |
                      PLAYER_STATUS_UNK100000 | PLAYER_STATUS_CURSE;
     }
-    if (*D_80097448 != 0) {
+    if (g_unkGraphicsStruct.D_80097448 != 0) {
         newStatus |= NO_AFTERIMAGE | PLAYER_STATUS_UNK20000;
     }
     if (g_Player.timers[ALU_T_DARKMETAMORPH]) {
@@ -1412,9 +1413,9 @@ block_159:
             PLAYER.rotPivotY = 0x18;
         }
         InitPlayerAfterImage();
-        if ((*D_80097448 >= 0x29 ||
+        if ((g_unkGraphicsStruct.D_80097448 >= 0x29 ||
              ((g_Player.status & PLAYER_STATUS_WOLF_FORM) &&
-              *D_80097448 > 0xC)) &&
+              g_unkGraphicsStruct.D_80097448 > 0xC)) &&
             (!g_CurrentEntity->nFramesInvincibility)) {
             PLAYER.velocityY = PLAYER.velocityY * 3 / 4;
             PLAYER.velocityX = PLAYER.velocityX * 3 / 4;
@@ -1462,9 +1463,9 @@ block_159:
         }
     post_oddblock:
         g_Player.unk04 = vramFlag;
-        if (((*D_80097448 >= 0x29) ||
+        if (((g_unkGraphicsStruct.D_80097448 >= 0x29) ||
              ((g_Player.status & PLAYER_STATUS_WOLF_FORM) &&
-              (*D_80097448 > 0xC))) &&
+              (g_unkGraphicsStruct.D_80097448 > 0xC))) &&
             (!g_CurrentEntity->nFramesInvincibility)) {
             PLAYER.velocityY = PLAYER.velocityY * 4 / 3;
             PLAYER.velocityX = PLAYER.velocityX * 4 / 3;

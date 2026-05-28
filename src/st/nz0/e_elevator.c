@@ -180,7 +180,7 @@ void EntityElevator(Entity* self) {
                 g_api.func_8010DFF0(0, 1);
                 player = &PLAYER;
                 player->posY.i.hi--;
-                D_80097488.y.i.hi--;
+                g_unkGraphicsStruct.shoveY.i.hi--;
             }
         }
         break;
@@ -197,7 +197,7 @@ void EntityElevator(Entity* self) {
             g_api.func_8010DFF0(0, 1);
             player = &PLAYER;
             player->posY.i.hi++;
-            D_80097488.y.i.hi++;
+            g_unkGraphicsStruct.shoveY.i.hi++;
         }
         break;
     }

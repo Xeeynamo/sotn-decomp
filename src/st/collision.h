@@ -408,7 +408,7 @@ void HitDetection(void) {
                     x /= 2;
                     y /= 2;
                 }
-                prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
+                prim = &g_PrimBuf[g_unkGraphicsStruct.primIndex];
                 while (prim != NULL) {
                     if (prim->drawMode == DRAW_HIDE) {
                         prim->clut = PAL_UNK_199;
@@ -662,7 +662,7 @@ void HitDetection(void) {
             otherEntity = otherEntity->nextPart;
         } while (otherEntity != NULL && otherEntity != entityHit);
     }
-    prim = &g_PrimBuf[g_unkGraphicsStruct.D_800973F8];
+    prim = &g_PrimBuf[g_unkGraphicsStruct.primIndex];
     while (prim != NULL) {
         if (prim->drawMode != DRAW_HIDE) {
             miscVar2 = prim->p1;

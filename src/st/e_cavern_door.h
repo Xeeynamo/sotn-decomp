@@ -72,8 +72,8 @@ void EntityCavernDoorPlatform(Entity* self) {
             player->posY.i.hi += 1;
 // Need to identify this var, and see why it's in NP3 but not NO3
 #if !defined(STAGE_IS_NO3)
-            D_80097488.x.i.hi += xDiff;
-            D_80097488.y.i.hi += 1;
+            g_unkGraphicsStruct.shoveX.i.hi += xDiff;
+            g_unkGraphicsStruct.shoveY.i.hi += 1;
 #endif
         }
         self->ext.cavernDoor.xCoord.val = self->posX.val;

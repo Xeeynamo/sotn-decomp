@@ -293,66 +293,66 @@ void EntityAlucardWaterEffect(Entity* self) {
         if (self->ext.aluwater.unk7E) {
             self->ext.aluwater.unk7E--;
         }
-        D_80097448[0] = var_s3;
+        g_unkGraphicsStruct.D_80097448 = var_s3;
         if (status & (PLAYER_STATUS_CROUCH | PLAYER_STATUS_TRANSFORM)) {
             if (status & PLAYER_STATUS_CROUCH) {
                 if (status & PLAYER_STATUS_WOLF_FORM) {
                     if (var_s3 > 4) {
-                        D_80097448[1] = var_s3 - 4;
+                        g_unkGraphicsStruct.D_8009744C = var_s3 - 4;
                     } else {
-                        D_80097448[1] = 0;
+                        g_unkGraphicsStruct.D_8009744C = 0;
                     }
                     if (var_s3 > 12) {
-                        D_80097450 = var_s3 - 12;
+                        g_unkGraphicsStruct.D_80097450 = var_s3 - 12;
                     } else {
-                        D_80097450 = 0;
+                        g_unkGraphicsStruct.D_80097450 = 0;
                     }
                 } else {
                     if (var_s3 > 8) {
-                        D_80097448[1] = var_s3 - 8;
+                        g_unkGraphicsStruct.D_8009744C = var_s3 - 8;
                     } else {
-                        D_80097448[1] = 0;
+                        g_unkGraphicsStruct.D_8009744C = 0;
                     }
                     if (var_s3 > 0x18) {
-                        D_80097450 = var_s3 - 0x18;
+                        g_unkGraphicsStruct.D_80097450 = var_s3 - 0x18;
                     } else {
-                        D_80097450 = 0;
+                        g_unkGraphicsStruct.D_80097450 = 0;
                     }
                 }
             } else if (
                 status & (PLAYER_STATUS_MIST_FORM | PLAYER_STATUS_BAT_FORM)) {
                 if (var_s3 > 6) {
-                    D_80097448[1] = var_s3 - 6;
+                    g_unkGraphicsStruct.D_8009744C = var_s3 - 6;
                 } else {
-                    D_80097448[1] = 0;
+                    g_unkGraphicsStruct.D_8009744C = 0;
                 }
                 if (var_s3 > 0x10) {
-                    D_80097450 = var_s3 - 0x10;
+                    g_unkGraphicsStruct.D_80097450 = var_s3 - 0x10;
                 } else {
-                    D_80097450 = 0;
+                    g_unkGraphicsStruct.D_80097450 = 0;
                 }
             } else if (status & PLAYER_STATUS_WOLF_FORM) {
                 if (var_s3 > 8) {
-                    D_80097448[1] = var_s3 - 8;
+                    g_unkGraphicsStruct.D_8009744C = var_s3 - 8;
                 } else {
-                    D_80097448[1] = 0;
+                    g_unkGraphicsStruct.D_8009744C = 0;
                 }
                 if (var_s3 > 0x18) {
-                    D_80097450 = var_s3 - 0x18;
+                    g_unkGraphicsStruct.D_80097450 = var_s3 - 0x18;
                 } else {
-                    D_80097450 = 0;
+                    g_unkGraphicsStruct.D_80097450 = 0;
                 }
             }
         } else {
             if (var_s3 > 0x10) {
-                D_80097448[1] = var_s3 - 0x10;
+                g_unkGraphicsStruct.D_8009744C = var_s3 - 0x10;
             } else {
-                D_80097448[1] = 0;
+                g_unkGraphicsStruct.D_8009744C = 0;
             }
             if (var_s3 > 0x30) {
-                D_80097450 = var_s3 - 0x30;
+                g_unkGraphicsStruct.D_80097450 = var_s3 - 0x30;
             } else {
-                D_80097450 = 0;
+                g_unkGraphicsStruct.D_80097450 = 0;
             }
         }
     } else {
