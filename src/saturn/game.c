@@ -1767,7 +1767,7 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079A2C, func_06079A2C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079AF0, func_06079AF0);
 
 // original name: normal_move
-void NormalMove(Entity* entity) {
+inline void NormalMove(Entity* entity) {
     Unk0600B344* temp = entity->unk0;
 
     if (temp != NULL) {
@@ -1778,12 +1778,12 @@ void NormalMove(Entity* entity) {
     }
 }
 
-void MoveEntity(Entity* entity) {
+inline void MoveEntity(Entity* entity) {
     entity->posX.val += entity->velocityX;
     entity->posY.val += entity->velocityY;
 }
 
-void func_06079BB4(Entity* entity) {
+inline void func_06079BB4(Entity* entity) {
     Unk0600B344* temp = entity->unk0;
 
     if (temp != NULL) {
@@ -1792,7 +1792,7 @@ void func_06079BB4(Entity* entity) {
     }
 }
 
-void func_06079BCC(Entity* entity) {
+inline void func_06079BCC(Entity* entity) {
     Unk0600B344* temp = entity->unk0;
 
     if (temp != NULL) {
@@ -1801,7 +1801,7 @@ void func_06079BCC(Entity* entity) {
     }
 }
 
-void FallEntity(Entity* entity) {
+inline void FallEntity(Entity* entity) {
 #define TERMINAL_VELOCITY FIX(6)
 #define GRAVITY FIX(0.25f)
 
@@ -1810,15 +1810,350 @@ void FallEntity(Entity* entity) {
     }
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079C04, func_06079C04);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079DEC, func_06079DEC);
+s32 UnkCollisionFunc3(Entity* entity, s16* sensors) {
+    Collider col;
+    Collider colBack;
+    s16 x, y;
+    s16 i;
+
+    NormalMove(entity);
+    FallEntity(entity);
+    func_06079BCC(entity);
+
+    if (entity->velocityY >= 0) {
+        x = entity->posX.i.hi;
+        y = entity->posY.i.hi;
+        for (i = 0; i < 4; i++) {
+            x += *sensors++;
+            y += *sensors++;
+            CheckCollision(x * 0x10000, y * 0x10000, &col, 0);
+            if ((col.effects & EFFECT_UNK_8000) && i == 1) {
+                if (col.effects & EFFECT_SOLID) {
+                    CheckCollision(x * 0x10000, (y - 8) * 0x10000, &colBack, 0);
+                    if (colBack.effects & EFFECT_SOLID) {
+                        continue;
+                    }
+                    entity->posY.i.hi += col.unk18 / 0x10000 + 4;
+                    entity->velocityX = 0;
+                    entity->velocityY = 0;
+                    entity->flags &= ~FLAG_UNK_10000000;
+                    func_06079BB4(entity);
+                    return 1;
+                }
+            } else if ((col.effects & EFFECT_NOTHROUGH) && i != 1) {
+                if (col.effects & EFFECT_QUICKSAND) {
+                    entity->flags &= ~FLAG_UNK_10000000;
+                    return 4;
+                }
+                CheckCollision(x * 0x10000, (y - 8) * 0x10000, &colBack, 0);
+                if (colBack.effects & EFFECT_SOLID) {
+                    continue;
+                }
+                entity->posY.i.hi += col.unk18 / 0x10000;
+                entity->velocityX = 0;
+                entity->velocityY = 0;
+                entity->flags &= ~FLAG_UNK_10000000;
+                func_06079BB4(entity);
+                return 1;
+            }
+        }
+    }
+    entity->flags |= FLAG_UNK_10000000;
+    func_06079BB4(entity);
+    return 0;
+}
+
+s32 UnkCollisionFunc2(Entity* entity, s16* posX) {
+    Collider collider;
+    s16 x, y;
+
+    func_06079BCC(entity);
+    entity->posX.val += entity->velocityX;
+    entity->posY.i.hi += 3;
+    x = entity->posX.i.hi + *posX++;
+    y = entity->posY.i.hi + *posX++;
+    CheckCollision(x * 0x10000, y * 0x10000, &collider, 0);
+    if (collider.effects & EFFECT_SOLID) {
+        entity->posY.i.hi += collider.unk18 / 0x10000;
+    } else {
+        func_06079BB4(entity);
+        return 0;
+    }
+    if (entity->velocityX != 0) {
+        if (entity->velocityX < 0) {
+            x -= *posX++;
+        } else {
+            x += *posX++;
+        }
+        y += *posX++;
+        y -= 7;
+        CheckCollision(x * 0x10000, y * 0x10000, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_0002)) == EFFECT_UNK_0002) {
+                entity->posX.val -= entity->velocityX;
+                entity->velocityX = 0;
+                func_06079BB4(entity);
+                return 0xFF;
+            } else {
+                func_06079BB4(entity);
+                return 0x61;
+            }
+        }
+        y += 0xF;
+        CheckCollision(x * 0x10000, y * 0x10000, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            if (collider.effects & EFFECT_UNK_8000) {
+                func_06079BB4(entity);
+                return 0x61;
+            } else {
+                func_06079BB4(entity);
+                return 1;
+            }
+        } else {
+            entity->posX.val -= entity->velocityX;
+            entity->velocityX = 0;
+            func_06079BB4(entity);
+            return 0x80;
+        }
+    } else {
+        func_06079BB4(entity);
+        return 1;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079F60, func_06079F60);
 
 // _v_side_hosei
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A030, func_0607A030);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A118, func_0607A118);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A1C8, func_0607A1C8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607A290, func_0607A290);
+
+u8 CheckColliderOffsets(Entity* entity, s16* arg0, u8 facing) {
+    Collider collider;
+    s16 posX, posY;
+    u8 ret;
+
+    if (g_CurrentEntity->unk0 != NULL) {
+        func_06079BCC(entity);
+    }
+    ret = 0;
+    while (*arg0 != 0xFF) {
+        ret <<= 1;
+        if (facing) {
+            posX = entity->posX.i.hi + *arg0++;
+        } else {
+            posX = entity->posX.i.hi - *arg0++;
+        }
+        posY = entity->posY.i.hi + *arg0++;
+        CheckCollision(posX * 0x10000, posY * 0x10000, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            ret |= 1;
+        }
+    }
+    return ret;
+}
+
+bool UnkCollisionFunc5(Entity* entity, s16* pointXY) {
+    Collider collider;
+
+    FallEntity(entity);
+    func_06079BCC(entity);
+    MoveEntity(entity);
+
+    if (entity->velocityY >= 0) {
+        s16 posX = entity->posX.i.hi + pointXY[0];
+        s16 posY = entity->posY.i.hi + pointXY[1];
+        CheckCollision(posX * 0x10000, posY * 0x10000, &collider, 0);
+        if (collider.effects & EFFECT_SOLID) {
+            entity->posY.i.hi += collider.unk18 / 0x10000;
+            entity->velocityY = -entity->velocityY / 2;
+            func_06079BB4(entity);
+            if (entity->velocityY > FIX(-1.0)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+u8 UnkCollisionFunc4(Entity* entity, u8 arg1) {
+    Collider collider;
+    u8 bits_01;
+    u8 bits_23;
+    u8 bits_45;
+    u8 bits_67;
+    u16 collEff;
+    s16 posX, posY;
+
+    NormalMove(entity);
+    func_06079BCC(entity);
+
+    bits_67 = 0;
+    bits_23 = 0;
+    bits_45 = 0;
+    collEff = 0;
+    bits_01 = arg1 & 3;
+    switch (bits_01) {
+    case 0:
+        entity->posY.i.hi += 3;
+        posX = entity->posX.i.hi;
+        posY = entity->posY.i.hi;
+        CheckCollision(posX * 0x10000, posY * 0x10000, &collider, 0);
+        if (collider.effects) {
+            collEff = collider.effects;
+            entity->posY.i.hi += collider.unk18 / 0x10000;
+            posX = entity->posX.i.hi;
+            posY = entity->posY.i.hi - 4;
+            CheckCollision(posX * 0x10000, posY * 0x10000, &collider, 0);
+            if (collider.effects & EFFECT_UNK_0002) {
+                bits_67 = 0x40;
+                if (entity->velocityX > 0) {
+                    bits_01 = 2;
+                } else {
+                    bits_01 = 3;
+                    entity->velocityX = -entity->velocityX;
+                }
+                entity->velocityY = -entity->velocityX;
+                entity->velocityX = 0;
+            }
+        } else {
+            bits_67 = 0x80;
+            entity->posX.val -= entity->velocityX;
+            if (entity->velocityX > 0) {
+                bits_01 = 3;
+            } else {
+                bits_01 = 2;
+                entity->velocityX = -entity->velocityX;
+            }
+            entity->velocityY = entity->velocityX;
+            entity->velocityX = 0;
+        }
+        break;
+    case 1:
+        entity->posY.i.hi -= 3;
+        posX = entity->posX.i.hi;
+        posY = entity->posY.i.hi;
+        CheckCollision(posX * 0x10000, posY * 0x10000, &collider, 0);
+        if (collider.effects) {
+            collEff = collider.effects;
+            entity->posY.i.hi += collider.unk20 / 0x10000;
+            posX = entity->posX.i.hi;
+            posY = entity->posY.i.hi + 4;
+            CheckCollision(posX * 0x10000, posY * 0x10000, &collider, 0);
+            if (collider.effects & EFFECT_UNK_0002) {
+                bits_67 = 0x40;
+                if (entity->velocityX > 0) {
+                    bits_01 = 2;
+                } else {
+                    bits_01 = 3;
+                    entity->velocityX = -entity->velocityX;
+                }
+                entity->velocityY = entity->velocityX;
+                entity->velocityX = 0;
+            }
+        } else {
+            bits_67 = -0x80;
+            entity->posX.val -= entity->velocityX;
+            if (entity->velocityX > 0) {
+                bits_01 = 3;
+            } else {
+                bits_01 = 2;
+                entity->velocityX = -entity->velocityX;
+            }
+            entity->velocityY = -entity->velocityX;
+            entity->velocityX = 0;
+        }
+        break;
+    case 2:
+        entity->posX.i.hi += 3;
+        posX = entity->posX.i.hi;
+        posY = entity->posY.i.hi;
+        CheckCollision(posX * 0x10000, posY * 0x10000, &collider, 0);
+        if (collider.effects) {
+            collEff = collider.effects;
+            entity->posX.i.hi += collider.unk14 / 0x10000;
+            posX = entity->posX.i.hi - 4;
+            posY = entity->posY.i.hi;
+            CheckCollision(posX * 0x10000, posY * 0x10000, &collider, 0);
+            if (collider.effects & EFFECT_SOLID) {
+                bits_67 = 0x40;
+                if (entity->velocityY > 0) {
+                    bits_01 = 0;
+                } else {
+                    bits_01 = 1;
+                    entity->velocityY = -entity->velocityY;
+                }
+                entity->velocityX = -entity->velocityY;
+                entity->velocityY = 0;
+            }
+        } else {
+            bits_67 = 0x80;
+            entity->posY.val -= entity->velocityY;
+            if (entity->velocityY > 0) {
+                bits_01 = 1;
+            } else {
+                bits_01 = 0;
+                entity->velocityY = -entity->velocityY;
+            }
+            entity->velocityX = entity->velocityY;
+            entity->velocityY = 0;
+        }
+        break;
+    case 3:
+        entity->posX.i.hi -= 3;
+        posX = entity->posX.i.hi;
+        posY = entity->posY.i.hi;
+        CheckCollision(posX * 0x10000, posY * 0x10000, &collider, 0);
+        if (collider.effects) {
+            collEff = collider.effects;
+            entity->posX.i.hi += collider.unk1C / 0x10000;
+            posX = entity->posX.i.hi + 4;
+            posY = entity->posY.i.hi;
+            CheckCollision(posX * 0x10000, posY * 0x10000, &collider, 0);
+            if (collider.effects & EFFECT_SOLID) {
+                bits_67 = 0x40;
+                if (entity->velocityY > 0) {
+                    bits_01 = 0;
+                } else {
+                    bits_01 = 1;
+                    entity->velocityY = -entity->velocityY;
+                }
+                entity->velocityX = entity->velocityY;
+                entity->velocityY = 0;
+            }
+        } else {
+            bits_67 = 0x80;
+            entity->posY.val -= entity->velocityY;
+            if (entity->velocityY > 0) {
+                bits_01 = 1;
+            } else {
+                bits_01 = 0;
+                entity->velocityY = -entity->velocityY;
+            }
+            entity->velocityX = -entity->velocityY;
+            entity->velocityY = 0;
+        }
+        break;
+    }
+
+    func_06079BB4(entity);
+
+    if (collEff & 0x8000) {
+        bits_23 = 4;
+    }
+    if (collEff & 0x1000) {
+        bits_23 = 8;
+    }
+    if (collEff & 0x2000) {
+        bits_23 = 0xC;
+    }
+    if (collEff & 0x0800) {
+        bits_45 = 0x20;
+    }
+    if (collEff & 0x4000) {
+        bits_45 = 0x10;
+    }
+    bits_01 = bits_01 + bits_67 + bits_23 + bits_45;
+    return bits_01;
+}
 
 void (*GetPlayerSensor)(Collider* col);
 u8 GetPlayerCollisionWith(Entity* self, u16 w, u16 h, u16 flags) {
