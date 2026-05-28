@@ -1589,7 +1589,45 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6072C04, func_06072C04);
 
 // _SUB_DISP
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6072C94, func_06072C94);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60731C0, func_060731C0);
+
+bool CheckIfAllButtonsAreAssigned(void) {
+    s32 buf[9];
+    s32 i;
+    s32 bitMask_Assigned;
+    s32* buttonConfig;
+
+    for (i = 0; i < 9; i++) {
+        buf[i] = 0;
+    }
+
+    buttonConfig = g_Settings.buttonConfig;
+    for (i = 0; i < 8; i++) {
+        buf[*buttonConfig++] = 1;
+    }
+
+    for (i = 0; i < 9; i++) {
+        if (buf[i] == 0) {
+            g_Settings.buttonConfig[8] = i;
+            break;
+        }
+    }
+
+    for (i = 0; i < 9; i++) {
+        g_Settings.buttonMask[i] = g_ButtonMask[g_Settings.buttonConfig[i]];
+    }
+
+    bitMask_Assigned = 0;
+    buttonConfig = g_Settings.buttonConfig;
+    for (i = 0; i < 9; i++) {
+        bitMask_Assigned |= 1 << *buttonConfig++;
+    }
+    if (bitMask_Assigned == 0xFF) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6073280, func_06073280);
 
 // _INIT_SUB_GAMEN
@@ -1728,8 +1766,17 @@ INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079958, func_06079958);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079A2C, func_06079A2C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079AF0, func_06079AF0);
 
-// _normal_move
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6079B74, func_06079B74);
+// original name: normal_move
+void NormalMove(Entity* entity) {
+    Unk0600B344* temp = entity->unk0;
+
+    if (temp != NULL) {
+        temp->unk14 += entity->velocityX;
+        temp->unk18 += entity->velocityY;
+        entity->posX.val = temp->unk14;
+        entity->posY.val = temp->unk18;
+    }
+}
 
 void MoveEntity(Entity* entity) {
     entity->posX.val += entity->velocityX;
@@ -1737,7 +1784,7 @@ void MoveEntity(Entity* entity) {
 }
 
 void func_06079BB4(Entity* entity) {
-    struct Unk0600B344* temp = entity->unk0;
+    Unk0600B344* temp = entity->unk0;
 
     if (temp != NULL) {
         temp->unk14 = entity->posX.val;
@@ -1746,7 +1793,7 @@ void func_06079BB4(Entity* entity) {
 }
 
 void func_06079BCC(Entity* entity) {
-    struct Unk0600B344* temp = entity->unk0;
+    Unk0600B344* temp = entity->unk0;
 
     if (temp != NULL) {
         entity->posX.val = temp->unk14;
@@ -1853,24 +1900,115 @@ u8 func_0607AC2C(void) { return DAT_06099811; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AC40, func_0607AC40);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AE48, func_0607AE48);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AECC, func_0607AECC);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AF0C, func_0607AF0C);
 
-extern s16 DAT_06085e86[];
-s32 func_0607AF28(u8 pos) { return DAT_06085e86[pos]; }
+Entity* FindFirstFreeEntity(s16 start, s16 end) {
+    Entity* current = &g_Entities[start];
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AF3C, func_0607AF3C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AF68, func_0607AF68);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AF94, func_0607AF94);
+    while (start < end) {
+        if (current->entityId == 0) {
+            return current;
+        }
+        start++;
+        current++;
+    }
+    return NULL;
+}
 
-// _search_point
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607AFD8, func_0607AFD8);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B014, func_0607B014);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B04C, func_0607B04C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B0AC, func_0607B0AC);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B0D0, func_0607B0D0);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B104, func_0607B104);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B134, func_0607B134);
+extern s16 g_SineTable[];
+
+inline s32 GetSineScaled(u8 arg0, s16 arg1) {
+    s32 sine = g_SineTable[arg0];
+    return sine * arg1;
+}
+
+s16 GetSine(u8 arg0) { return g_SineTable[arg0]; }
+
+void SetEntityVelocityFromAngle(Entity* entity, u8 arg0, s16 arg1) {
+    entity->velocityX = GetSineScaled(arg0, arg1);
+    entity->velocityY = GetSineScaled(arg0 - 0x40, arg1);
+}
+
+inline u8 Ratan2Shifted(s16 x, s16 y) {
+    u8 angle = ratan2(y, x) >> 4;
+    return angle + 0x40;
+}
+
+u8 GetAngleBetweenEntitiesShifted(Entity* a, Entity* b) {
+    s16 dx = b->posX.i.hi - a->posX.i.hi;
+    s16 dy = b->posY.i.hi - a->posY.i.hi;
+    return Ratan2Shifted(dx, dy);
+}
+
+// original name: search_point
+u8 GetAnglePointToEntityShifted(Entity* entity, s16 x, s16 y) {
+    s16 dx = x - entity->posX.i.hi;
+    s16 dy = y - entity->posY.i.hi;
+
+    return Ratan2Shifted(dx, dy);
+}
+
+u8 AdjustValueWithinThreshold(u8 threshold, u8 currentValue, u8 targetValue) {
+    u8 absoluteDifference;
+    s8 relativeDifference = targetValue - currentValue;
+
+    if (relativeDifference < 0) {
+        absoluteDifference = -relativeDifference;
+    } else {
+        absoluteDifference = relativeDifference;
+    }
+
+    if (absoluteDifference > threshold) {
+        if (relativeDifference < 0) {
+            absoluteDifference = currentValue - threshold;
+        } else {
+            absoluteDifference = currentValue + threshold;
+        }
+
+        return absoluteDifference;
+    }
+
+    return targetValue;
+}
+
+void UnkEntityFunc0(Entity* entity, u16 slope, s16 speed) {
+    entity->velocityX = rcos(slope) * speed / 16;
+    entity->velocityY = rsin(slope) * speed / 16;
+}
+
+u16 Ratan2(s16 x, s16 y) { return ratan2(y, x); }
+
+u16 GetAngleBetweenEntities(Entity* a, Entity* b) {
+    s32 dx = b->posX.i.hi - a->posX.i.hi;
+    s32 dy = b->posY.i.hi - a->posY.i.hi;
+    return ratan2(dy, dx);
+}
+
+u16 GetAnglePointToEntity(Entity* entity, s16 x, s16 y) {
+    s16 dx = x - entity->posX.i.hi;
+    s16 dy = y - entity->posY.i.hi;
+    return ratan2(dy, dx);
+}
+
+u16 GetNormalizedAngle(u16 arg0, u16 arg1, u16 arg2) {
+    u16 temp_a2 = (s16)(arg2 - arg1);
+    u16 ret;
+
+    if (temp_a2 & 0x800) {
+        ret = (0x800 - temp_a2) & 0x7FF;
+    } else {
+        ret = temp_a2;
+    }
+
+    if (ret > arg0) {
+        if (temp_a2 & 0x800) {
+            ret = arg1 - arg0;
+        } else {
+            ret = arg1 + arg0;
+        }
+        return ret;
+    }
+    return arg2;
+}
 
 // SAT: func_0607B184
 Entity* AllocEntity(Entity* start, Entity* end) {
@@ -1921,21 +2059,28 @@ s32 Random(void) {
     return g_randomNext >> 0x18;
 }
 
-void CreateEntityFromCurrentEntity(u16 id, Entity* entity) {
+void CreateEntityFromCurrentEntity(u16 entityId, Entity* entity) {
     DestroyEntity(entity);
-    entity->entityId = id;
-    entity->pfnUpdate = (*PfnEntityUpdates)[id - 1]->func;
+    entity->entityId = entityId;
+    entity->pfnUpdate = (*PfnEntityUpdates)[entityId - 1]->func;
     entity->posX.i.hi = g_CurrentEntity->posX.i.hi;
     entity->posY.i.hi = g_CurrentEntity->posY.i.hi;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B374, func_0607B374);
+void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity) {
+    DestroyEntity(entity);
+    entity->entityId = entityId;
+    entity->pfnUpdate = (*PfnEntityUpdates)[entityId - 1]->func;
+    entity->posX.i.hi = source->posX.i.hi;
+    entity->posY.i.hi = source->posY.i.hi;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B3D0, func_0607B3D0);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B448, func_0607B448);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B4B8, func_0607B4B8);
 
 void func_0607B604(Entity* entity) {
-    struct Unk0600B344* temp = entity->unk0;
+    Unk0600B344* temp = entity->unk0;
 
     temp->unk14 = entity->posX.val;
     temp->unk18 = entity->posY.val;
