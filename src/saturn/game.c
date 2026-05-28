@@ -1889,7 +1889,8 @@ s32 UnkCollisionFunc2(Entity* entity, s16* posX) {
         y -= 7;
         CheckCollision(x * 0x10000, y * 0x10000, &collider, 0);
         if (collider.effects & EFFECT_SOLID) {
-            if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_0002)) == EFFECT_UNK_0002) {
+            if ((collider.effects & (EFFECT_UNK_8000 | EFFECT_UNK_0002)) ==
+                EFFECT_UNK_0002) {
                 entity->posX.val -= entity->velocityX;
                 entity->velocityX = 0;
                 func_06079BB4(entity);
