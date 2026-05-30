@@ -718,6 +718,40 @@ files:
     asset_path: assets/st/rcat
     src_path: src/st/rcat
     splat_config_path: config/splat.pspeu.strcat.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
+          - [0x1EF38, sprite_banks, psp/sprite_banks]
+          - [0x1EF98, skip] # layers - there is a bug here with an empty layer residing in BSS
+          - [0x1F3E0, skip] # palette_def - bug with multiple cluts
+          - [0x1FA98, gfx_banks, psp/graphics_banks]
+          - [0x1FEE8, rooms, rooms]
+          - [0x1FFE0, skip]
+          - [0x20120, cmpgfx, gfx_unk_5084, 128, 128, 4]
+          - [0x21A50, cmpgfx, gfx_unk_69B0, 128, 128, 4]
+          - [0x239D8, cmpgfx, gfx_unk_8934, 128, 128, 4]
+          - [0x24300, cmpgfx, gfx_salome_1, 128, 128, 4, 0x2C9B8]
+          - [0x24F08, cmpgfx, gfx_salome_2, 128, 128, 4, 0x2C9B8]
+          - [0x26070, cmpgfx, gfx_frozen_half_1, 128, 128, 4, 0x2C8F8]
+          - [0x26D80, cmpgfx, gfx_frozen_half_2, 128, 128, 4, 0x2C8F8]
+          - [0x27BB0, cmpgfx, gfx_frozen_half_3, 128, 128, 4, 0x2C8F8]
+          - [0x28B00, cmpgfx, gfx_unk_EC48, 128, 128, 4]
+          - [0x298E8, cmpgfx, gfx_breakable, 128, 128, 4, 0x2CB18]
+          - [0x2A2A0, cmpgfx, gfx_blood_skeleton, 128, 128, 4, 0x2CC18]
+          - [0x2AE30, cmpgfx, gfx_bat, 128, 128, 4, 0x2CCB8]
+          - [0x2B8F8, cmpgfx, gfx_skeleton, 128, 128, 4, 0x2CD18]
+          - [0x2C458, palette, pal_21A, 16] # 0x21A
+          - [0x2C718, palette, pal_22A, 16] # 0x22A
+          - [0x2C8B8, palette, pal_235, 16] # 0x235
+          - [0x2C8F8, palette, pal_frozen_half, 16] # 0x200
+          - [0x2C9B8, palette, pal_salome, 16] # 0x206
+          - [0x2CB18, palette, pal_breakable, 16] # 0x237
+          - [0x2CC18, palette, pal_blood_skeleton, 16] # 0x250
+          - [0x2CCB8, palette, pal_bat, 16] # 0x240
+          - [0x2CD18, palette, pal_skeleton, 16] # 0x260
+          - [0x2CD38, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rcen.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rchi.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rdai.bin
