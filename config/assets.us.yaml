@@ -269,7 +269,7 @@ files:
             - [0xFCC, skip]
             - [0x2AF0, rooms, rooms]
             - [0x2BE4, skip]
-            - [0x3DA4, cmpgfx, gfx_unk_3DA4, 128, 128, 4,]
+            - [0x3DA4, cmpgfx, gfx_unk_3DA4, 128, 128, 4]
             - [0x56D0, cmpgfx, gfx_wereskeleton, 128, 128, 4, 0x16C38]
             - [0x5E00, cmpgfx, gfx_thornweed_corpseweed, 128, 128, 4, 0x16C78]
             - [0x6B8C, cmpgfx, gfx_breakable, 128, 128, 4, 0x16CF8]
@@ -993,6 +993,55 @@ files:
     asset_path: assets/st/rcat
     src_path: src/st/rcat
     splat_config_path: config/splat.us.strcat.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+            - [0x2C, sprite_banks, us/sprite_banks]
+            - [0x8C, palette, pal_02F, 16] # 0x02F
+            - [0xCC, palette, pal_07C, 16] # 0x07C
+            - [0x24C, palette, pal_091, 16] # 0x091
+            - [0x2EC, palette, pal_096, 16] # 0x096
+            - [0x34C, palette, pal_094, 16] # 0x094
+            - [0x38C, palette, pal_09C, 16] # 0x09C
+            - [0x3CC, palette, pal_3CC, 16]
+            - [0x40C, palette, pal_0A0, 16] # 0x0A0
+            - [0x58C, paldef, palette_def]
+            - [0x6FC, skip] # multiple cluts here are not importing correctly, see issue #2401
+            - [0x728, layers, layers]
+            - [0xB80, gfx_banks, us/graphics_banks]
+            - [0xD2C, layout, entity_layouts]
+            - [0xED4, skip]
+            - [0x2484, rooms, rooms]
+            - [0x2578, skip] # layout entries data
+            - [0x3BC0, cmpgfx, gfx_alucard_sleep, 128, 128, 4] # unused and stripped from PSP
+            - [0x5084, cmpgfx, gfx_unk_5084, 128, 128, 4]
+            - [0x69B0, cmpgfx, gfx_unk_69B0, 128, 128, 4]
+            - [0x8934, cmpgfx, gfx_unk_8934, 128, 128, 4]
+            - [0x925C, cmpgfx, gfx_unk_925C, 128, 128, 4] # unused and stripped from PSP
+            - [0xA45C, cmpgfx, gfx_salome_1, 128, 128, 4, 0x12AF4]
+            - [0xB060, cmpgfx, gfx_salome_2, 128, 128, 4, 0x12AF4]
+            - [0xC1C4, cmpgfx, gfx_frozen_half_1, 128, 128, 4, 0x12A34]
+            - [0xCED0, cmpgfx, gfx_frozen_half_2, 128, 128, 4, 0x12A34]
+            - [0xDCFC, cmpgfx, gfx_frozen_half_3, 128, 128, 4, 0x12A34]
+            - [0xEC48, cmpgfx, gfx_unk_EC48, 128, 128, 4]
+            - [0xFA2C, cmpgfx, gfx_breakable, 128, 128, 4, 0x12C54]
+            - [0x103E0, cmpgfx, gfx_blood_skeleton, 128, 128, 4, 0x12D54]
+            - [0x10F70, cmpgfx, gfx_bat, 128, 128, 4, 0x12DF4]
+            - [0x11A34, cmpgfx, gfx_skeleton, 128, 128, 4, 0x12E54]
+            - [0x12594, palette, pal_21A, 16] # 0x21A
+            - [0x12794, palette, pal_unused_12794, 16] # unused
+            - [0x12854, palette, pal_22A, 16] # 0x22A
+            - [0x129B4, palette, pal_unused_129B4, 16] # unused
+            - [0x129F4, palette, pal_235, 16] # 0x235
+            - [0x12A34, palette, pal_frozen_half, 16] # 0x200
+            - [0x12AF4, palette, pal_salome, 16] # 0x206
+            - [0x12C54, palette, pal_breakable, 16] # 0x237
+            - [0x12D54, palette, pal_blood_skeleton, 16] # 0x250
+            - [0x12DD4, palette, pal_unused_12DD4, 16] # unused
+            - [0x12DF4, palette, pal_bat, 16] # 0x240
+            - [0x12E54, palette, pal_skeleton, 16] # 0x260
+            - [0x12E74, skip]
   - target: disks/us/ST/RCEN/RCEN.BIN
   - target: disks/us/ST/RCHI/RCHI.BIN
   - target: disks/us/ST/RDAI/RDAI.BIN
