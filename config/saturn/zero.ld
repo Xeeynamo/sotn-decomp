@@ -4,13 +4,14 @@ SECTIONS
     _gp = 0x0;
     zero_ROM_START = __romPos;
     zero_VRAM = ADDR(.zero);
-    .zero 0x06004080 : AT(zero_ROM_START) SUBALIGN(2)
+    .zero 0x06004080 : AT(zero_ROM_START) SUBALIGN(4)
     {
         zero_TEXT_START = .;
         build/saturn/zero.o(.text);
         build/saturn/lib/gfs.o(.text);
         build/saturn/lib/spr.o(.text);
-        build/saturn/lib/dma.o(.text);
+        build/saturn/lib/dma/dma_scu1.o(.text);
+        build/saturn/lib/dma/dma.o(.text);
         build/saturn/lib/scl.o(.text);
         build/saturn/lib/csh.o(.text);
         build/saturn/lib/per.o(.text);

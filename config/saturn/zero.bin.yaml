@@ -98,37 +98,31 @@ segments:
       # DMA
       - start: 0x1F474
         type: c
-        file: lib/dma
-        end: 0x1F69B
-
-      # splitter bug here
-      - start: 0x1F69C
-        type: data
-        file: lib/dma
-        end: 0x1F8CF
+        file: lib/dma/dma_scu1
+        end: 0x1F813
 
       # continue DMA
-      - start: 0x1F8D0
+      - start: 0x1F814
         type: c
-        file: lib/dma
+        file: lib/dma/dma
         end: 0x1FB7F
 
       # splitter bug
       - start: 0x1FB80
         type: data
-        file: lib/dma
-        end: 0x1FD5F
+        file: lib/dma/dma
+        end: 0x1FCDB
 
       # continue DMA
-      - start: 0x1FD60
+      - start: 0x1FCDC
         type: c
-        file: lib/dma
-        end: 0x1FFD7
+        file: lib/dma/dma
+        end: 0x20007
 
       # after DMA
-      - start: 0x1FFD8
+      - start: 0x20008
         type: data
-        file: lib/dma
+        file: lib/dma/dma
         end: 0x203C3
     
       # SEGA_SCL.A
