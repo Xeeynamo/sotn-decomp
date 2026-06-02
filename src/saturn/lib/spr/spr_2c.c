@@ -1,104 +1,14 @@
-#include "sattypes.h"
-#include "inc_asm.h"
+#include "../sattypes.h"
+#include "../inc_asm.h"
 
 #define _SPR2_
 #include "spr.h"
 
-extern Uint16 SpEraseLTPoint;
-extern Uint16 SpEraseRBPoint;
 extern Uint16 EraseData;
 extern Uint16 EraseLeftX;
 extern Uint16 EraseTopY;
 extern Uint16 EraseRightX;
 extern Uint16 EraseBotY;
-extern Uint16 BitWidth;
-
-extern XyInt scrSize[8];
-
-// SEGA_SPR.A
-
-// func_060218E8
-void SPR_SetTvMode(Uint16 mode, Uint16 screenSize, Uint16 doubleInterlace) {
-
-    SpTvMode = 0x0007 & mode;
-    SPR_WRITE_REG(SPR_W_TVMR, SpTvMode);
-    if (screenSize > SPR_TV_704X240)
-        screenSize = SPR_TV_320X224;
-    SpScreenX = scrSize[screenSize].x;
-    SpScreenY = scrSize[screenSize].y;
-    if (doubleInterlace == ON)
-        SpScreenY <<= 1;
-
-    if ((mode == SPR_TV_HIRESO) || (mode == SPR_TV_ROT8))
-        BitWidth = 1;
-    else
-        BitWidth = 0;
-
-    if (doubleInterlace)
-        SpDie = SPR_FBCR_DIE;
-    else
-        SpDie = 0;
-    SpDil = 0;
-}
-
-// func_06021A58
-void SPR_GetStatus(SprSpStatus* spStatus) {
-
-    spStatus->frameChgMode = SpFrameChgMode;
-    spStatus->frameEraseMode = SpFrameEraseMode;
-    spStatus->vbInterval = VBInterval;
-    spStatus->eraseData = EraseData;
-    spStatus->eraseLeftX = EraseLeftX;
-    spStatus->eraseTopY = EraseTopY;
-    spStatus->eraseRightX = EraseRightX;
-    spStatus->eraseBotY = EraseBotY;
-}
-
-// func_06021AE8
-void SPR_SetEraseData(
-    Uint16 eraseData, Uint16 leftX, Uint16 topY, Uint16 rightX, Uint16 botY) {
-
-    EraseData = eraseData;
-    EraseLeftX = leftX;
-    EraseTopY = topY;
-    EraseRightX = rightX;
-    EraseBotY = botY;
-
-    SPR_WRITE_REG(SPR_W_EWDR, eraseData);
-
-    if (BitWidth)
-        leftX >>= 4;
-    else
-        leftX >>= 3;
-    if (SpDie)
-        topY >>= 1;
-    SpEraseLTPoint = (leftX << 9) + topY;
-    SPR_WRITE_REG(SPR_W_EWLR, SpEraseLTPoint);
-
-    rightX++;
-    if (BitWidth)
-        rightX >>= 4;
-    else
-        rightX >>= 3;
-    if (SpDie)
-        botY >>= 1;
-    SpEraseRBPoint = (rightX << 9) + botY;
-    SPR_WRITE_REG(SPR_W_EWRR, SpEraseRBPoint);
-}
-
-// func_06022060
-void SPR_WaitDrawEnd(void) {
-    while ((SPR_READ_REG(SPR_R_EDSR) & 0x0002) == 0)
-        ;
-}
-
-// func_06022088
-void SPR_SetEosMode(Sint32 eosFlag) {
-    if (eosFlag)
-        SpFbcrMode = SPR_FBCR_EOS;
-    else
-        SpFbcrMode = 0;
-}
 
 #define VRAM_GRAN_MAX 16384
 #define SP_SYS_CMD_MAX 4
@@ -198,11 +108,11 @@ extern Uint16 eraseData;
 extern Uint16 displayInterval;
 extern Vaddr crGourTblR;
 extern SprGourTbl* crGourTbl;
+extern SprSpCmd* s_chainLastCmd;
+extern Vaddr s_chainTopCmdR;
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60220B4, func_060220B4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60220EC, func_060220EC);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6022138, func_06022138);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6022148, func_06022148);
+Vaddr flushDrawPrtyBlock(int entryCnt, SprDrawPrtyBlk* mstZBlk,
+                         SprDrawPrtyBlk* slvZBlk, SprSpCmd** rtnChainLastCmd);
 
 // func_06022164
 void SPR_2Initial(Spr2WorkArea* workArea) {
@@ -376,7 +286,56 @@ void SPR_2OpenCommand(Uint16 drawPrtyFlag) {
     SpSlvCmdPos = 0;
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6022A48, func_06022A48);
+// func_06022A48
+void SPR_2CloseCommand(void) {
+    SprSpCmd* spCmd;
+
+    SPR_2FlushDrawPrty();
+
+    spCmd = SpCmdTbl + SpCmdNo;
+    spCmd->control = CTRL_END;
+    topSpCmd->control = CTRL_SKIP | JUMP_ASSIGN;
+    if (displayInterval == 0xffff) {
+        SpCmdNo = 0;
+
+        spCmd = SpCmdTbl + SpCmdNo++;
+        spCmd->control = JUMP_NEXT | FUNC_LCOORD;
+        spCmd->ax = 0;
+        spCmd->ay = 0;
+
+        spCmd = SpCmdTbl + SpCmdNo++;
+        spCmd->control = JUMP_NEXT | ZOOM_NOPOINT | DIR_NOREV | FUNC_POLYGON;
+        spCmd->drawMode = ECDSPD_DISABLE | COLOR_5 | COMPO_REP;
+        spCmd->color = eraseData;
+
+        spCmd->ax = EraseLeftX;
+        spCmd->ay = EraseTopY;
+        spCmd->bx = EraseRightX;
+        spCmd->by = EraseTopY;
+        spCmd->cx = EraseRightX;
+        spCmd->cy = EraseBotY;
+        spCmd->dx = EraseLeftX;
+        spCmd->dy = EraseBotY;
+        spCmd->grshAddr = 0;
+
+        spCmd = SpCmdTbl + SpCmdNo++;
+        spCmd->control = JUMP_NEXT | FUNC_LCOORD;
+        spCmd->ax = SpLCoordX;
+        spCmd->ay = SpLCoordY;
+
+        spCmd = SpCmdTbl + SpCmdNo;
+        spCmd->control = CTRL_SKIP | JUMP_ASSIGN;
+        spCmd->link = SpCmdTblR + SP_SYS_CMD_MAX * 4;
+        topSpCmd->link = SpCmdTblR;
+    } else {
+        topSpCmd->link = SpCmdTblR + SP_SYS_CMD_MAX * 4;
+    }
+
+    if (SpGourTblMax) {
+        DMA_ScuMemCopy(crGourTbl, SpGourTbl, sizeof(SprGourTbl) * SpGourTblMax);
+        DMA_ScuResult();
+    }
+}
 
 // func_06022C7C
 void SPR_2FlushDrawPrty(void) { SPR_2FlushDrawPrtyBlock(); }
@@ -420,18 +379,61 @@ void SPR_2Cmd(Sint32 drawPrty, SprSpCmd* pSpCmd) {
     sprMemCpyW(spCmd, pSpCmd, 16);
 }
 
-// _SPR_2FlushDrawPrtyBlock
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6022E8C, func_06022E8C);
+// func_06022E8C
+void SPR_2FlushDrawPrtyBlock(void) {
+    extern void SlaveFlushDrawPrtyBlock(void);
+    SprSpCmd *spCmd, *chainLastCmd;
+    Vaddr chainTopCmdR;
+    int wCmdNo;
 
-// SlaveFlushDrawPrtyBlock
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60230B8, func_060230B8);
+    SPR_RunSlaveSH((PARA_RTN*)SlaveFlushDrawPrtyBlock, 0);
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6023108, func_06023108);
+    chainTopCmdR = flushDrawPrtyBlock(
+        SpDrawPrtyBlkMax - (SpDrawPrtyBlkMax >> 1),
+        SpMstDrawPrtyBlk + (SpDrawPrtyBlkMax >> 1),
+        SpSlvDrawPrtyBlk + (SpDrawPrtyBlkMax >> 1), &chainLastCmd);
 
-// SPR_RunSlaveSH
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6023114, func_06023114);
+    SPR_WaitEndSlaveSH();
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6023144, func_06023144);
+    if (s_chainLastCmd) {
+        s_chainLastCmd->link = chainTopCmdR;
+        chainTopCmdR = s_chainTopCmdR;
+        if (chainLastCmd == 0)
+            chainLastCmd = s_chainLastCmd;
+    }
 
-// flushDrawPrtyBlock
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60231C0, func_060231C0);
+    if (chainLastCmd) {
+        wCmdNo = SpCmdNo;
+
+        spCmd = SpCmdTbl + SpCmdNo - 1;
+        spCmd->control |= JUMP_ASSIGN;
+        spCmd->link = chainTopCmdR;
+
+        SpCmdNo = SpCmdNo + SpMstCmdPos + SpSlvCmdPos;
+        chainLastCmd->link = SpCmdTblR + (SpCmdNo << 2);
+
+        spCmd = SpCmdTbl + SpCmdNo++;
+        spCmd->control = CTRL_SKIP | JUMP_NEXT;
+
+        if (SpMstCmdPos) {
+            spCmd = SpCmdTbl + wCmdNo;
+            DMA_ScuMemCopy(spCmd, SpMstCmd, sizeof(SprSpCmd) * SpMstCmdPos);
+            DMA_ScuResult();
+        }
+        if (SpSlvCmdPos) {
+            spCmd = spCmd + SpMstCmdPos;
+            DMA_ScuMemCopy(spCmd, SpSlvCmd, sizeof(SprSpCmd) * SpSlvCmdPos);
+            DMA_ScuResult();
+        }
+    }
+    mstCmd = SpMstCmd;
+    slvCmd = SpSlvCmd;
+    SpMstCmdPos = 0;
+    SpSlvCmdPos = 0;
+}
+
+// func_060230B8
+void SlaveFlushDrawPrtyBlock(void) {
+    s_chainTopCmdR = flushDrawPrtyBlock(SpDrawPrtyBlkMax >> 1, SpMstDrawPrtyBlk,
+                                        SpSlvDrawPrtyBlk, &s_chainLastCmd);
+}

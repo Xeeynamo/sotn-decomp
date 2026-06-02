@@ -521,4 +521,3 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6021770, func_06021770); // _GFSB_RtnPk
 
 // _gfsb_getActSiz
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60217C0, func_060217C0);
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f602185A, func_0602185A);
