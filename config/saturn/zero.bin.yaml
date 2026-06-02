@@ -107,20 +107,14 @@ segments:
         file: lib/dma/dma_scu0
         end: 0x1FCDB
 
-      # continue DMA
+      # DMA_CPU0
       - start: 0x1FCDC
         type: c
-        file: lib/dma/dma
+        file: lib/dma/dma_cpu0
         end: 0x20007
 
-      # after DMA
-      - start: 0x20008
-        type: data
-        file: lib/dma/dma
-        end: 0x203C3
-    
       # SEGA_SCL.A
-      - start: 0x203C4
+      - start: 0x20008
         type: c
         file: lib/scl
         end: 0x26B1B

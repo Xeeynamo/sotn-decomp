@@ -12,7 +12,7 @@ SECTIONS
         build/saturn/lib/spr.o(.text);
         build/saturn/lib/dma/dma_scu1.o(.text);
         build/saturn/lib/dma/dma_scu0.o(.text);
-        build/saturn/lib/dma/dma.o(.text);
+        build/saturn/lib/dma/dma_cpu0.o(.text);
         build/saturn/lib/scl.o(.text);
         build/saturn/lib/csh.o(.text);
         build/saturn/lib/per.o(.text);

@@ -143,5 +143,3 @@ DmaCpuStatus DMA_CpuGetStatus(Uint32 ch) {
     work_reg = DMA_PEEK_L(REG_CHCR + OFSET0_REG * ch);
     return work_reg & R_CHCR_TE;
 }
-
-INCLUDE_ASM("asm/saturn/zero/data", d6024088, d_6024088);
