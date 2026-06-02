@@ -283,11 +283,10 @@ void FUN_06007eb8(s16 param_1) {
         param_1, d_0605AEA0[0], d_0605AEA0[1], d_0605AEA0[2], d_0605AEA0[3]);
 }
 
-void func_06024088();
 void func_06008134();
 
 void FUN_06007f04(void) {
-    func_06024088();
+    SCL_Vdp2Init();
     SCL_SetDisplayMode(0, 1, 0);
     SPR_2FrameChgIntr(-1);
     SclPriBuffDirty.SclColOffset = 1;
@@ -611,7 +610,7 @@ void func_0600C0FC(void) { DAT_060645D0->unk0->unk8 = 0xc; }
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C114, func_0600C114);
 
 void func_0600C18C(void) {
-    DAT_0605AEA8 = 0x10;
+    d_0605AEA8 = 0x10;
     return;
 }
 

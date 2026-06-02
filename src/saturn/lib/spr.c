@@ -435,5 +435,3 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6023144, func_06023144);
 
 // flushDrawPrtyBlock
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60231C0, func_060231C0);
-
-INCLUDE_ASM("asm/saturn/zero/data", d6023394, d_06023394);

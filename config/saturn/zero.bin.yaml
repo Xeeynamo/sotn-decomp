@@ -89,50 +89,32 @@ segments:
         file: lib/spr
         end: 0x1F313
 
-      # after SEGA_SPR.A
+      # DMA_CPUM
       - start: 0x1F314
         type: data
-        file: lib/spr
+        file: lib/dma/dma_cpum
         end: 0x1F473
 
-      # DMA
+      # DMA_SCU1
       - start: 0x1F474
         type: c
-        file: lib/dma
-        end: 0x1F69B
+        file: lib/dma/dma_scu1
+        end: 0x1F813
 
-      # splitter bug here
-      - start: 0x1F69C
-        type: data
-        file: lib/dma
-        end: 0x1F8CF
-
-      # continue DMA
-      - start: 0x1F8D0
+      # DMA_SCU0
+      - start: 0x1F814
         type: c
-        file: lib/dma
-        end: 0x1FB7F
+        file: lib/dma/dma_scu0
+        end: 0x1FCDB
 
-      # splitter bug
-      - start: 0x1FB80
-        type: data
-        file: lib/dma
-        end: 0x1FD5F
-
-      # continue DMA
-      - start: 0x1FD60
+      # DMA_CPU0
+      - start: 0x1FCDC
         type: c
-        file: lib/dma
-        end: 0x1FFD7
+        file: lib/dma/dma_cpu0
+        end: 0x20007
 
-      # after DMA
-      - start: 0x1FFD8
-        type: data
-        file: lib/dma
-        end: 0x203C3
-    
       # SEGA_SCL.A
-      - start: 0x203C4
+      - start: 0x20008
         type: c
         file: lib/scl
         end: 0x26B1B
