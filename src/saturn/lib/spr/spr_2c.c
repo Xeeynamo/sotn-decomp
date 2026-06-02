@@ -432,7 +432,7 @@ void SPR_2FlushDrawPrtyBlock(void) {
     SpSlvCmdPos = 0;
 }
 
-// func_060230B8
+// func_060230B8 
 void SlaveFlushDrawPrtyBlock(void) {
     s_chainTopCmdR = flushDrawPrtyBlock(SpDrawPrtyBlkMax >> 1, SpMstDrawPrtyBlk,
                                         SpSlvDrawPrtyBlk, &s_chainLastCmd);
