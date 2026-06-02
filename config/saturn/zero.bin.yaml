@@ -89,10 +89,10 @@ segments:
         file: lib/spr
         end: 0x1F313
 
-      # after SEGA_SPR.A
+      # DMA_CPUM
       - start: 0x1F314
         type: data
-        file: lib/spr
+        file: lib/dma/dma_cpum
         end: 0x1F473
 
       # DMA_SCU1

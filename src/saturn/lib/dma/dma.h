@@ -19,15 +19,39 @@
 #define DMA_CHCR_SM 12
 #define DMA_CHCR_DM 14
 
+#define DMA_DMAOR_DME 0
+#define DMA_DMAOR_NMIF 1
+#define DMA_DMAOR_AE 2
+#define DMA_DMAOR_PR 3
+
+#define DMA_CPU_CH0 0
+#define DMA_CPU_CH1 1
+
+#define DMA_CPU_FIX (0 << DMA_DMAOR_PR)
+#define DMA_CPU_ROR (1 << DMA_DMAOR_PR)
+
+#define DMA_CPU_DIS (0 << DMA_DMAOR_DME)
+#define DMA_CPU_ENA (1 << DMA_DMAOR_DME)
+
 #define DMA_CPU_M_PR (1 << 0)
 #define DMA_CPU_M_AE (1 << 1)
 #define DMA_CPU_M_NMIF (1 << 2)
 #define DMA_CPU_M_DME (1 << 3)
 
-#define DMA_DMAOR_DME 0
-#define DMA_DMAOR_NMIF 1
-#define DMA_DMAOR_AE 2
-#define DMA_DMAOR_PR 3
+#define DMA_CPU_AM_NOM 0x0
+#define DMA_CPU_AM_ADD 0x1
+#define DMA_CPU_AM_SUB 0x2
+
+#define DMA_CPU_1 (0 << DMA_CHCR_TS)
+#define DMA_CPU_2 (1 << DMA_CHCR_TS)
+#define DMA_CPU_4 (2 << DMA_CHCR_TS)
+#define DMA_CPU_16 (3 << DMA_CHCR_TS)
+
+#define DMA_CPU_MOD (0 << DMA_CHCR_AR)
+#define DMA_CPU_AUTO (1 << DMA_CHCR_AR)
+
+#define DMA_CPU_INT_ENA (1 << DMA_CHCR_IE)
+#define DMA_CPU_INT_DIS (0 << DMA_CHCR_IE)
 
 #define DMA_CPU_RXI 0x1
 #define DMA_CPU_TXI 0x2
@@ -42,6 +66,12 @@
 #define DMA_CPU_M_IE (1 << 7)
 #define DMA_CPU_M_DRCR (1 << 8)
 #define DMA_CPU_M_TE (1 << 9)
+
+#define DMA_CPU_ADR_ERR (1 << DMA_DMAOR_AE)
+#define DMA_CPU_ADR_NO_ERR (0 << DMA_DMAOR_AE)
+
+#define DMA_CPU_TE_MV (0 << DMA_CHCR_TE)
+#define DMA_CPU_TE_SP (1 << DMA_CHCR_TE)
 
 typedef struct {
     Uint32 pr;
@@ -68,6 +98,10 @@ typedef struct {
 } DmaCpuComStatus;
 
 typedef Uint32 DmaCpuStatus;
+
+#define DMA_CPU_END 0
+#define DMA_CPU_FAIL 1
+#define DMA_CPU_BUSY 2
 
 #define DMA_SCU_CH0 0x0
 #define DMA_SCU_CH1 0x1

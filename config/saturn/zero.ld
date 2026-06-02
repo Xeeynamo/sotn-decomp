@@ -10,6 +10,7 @@ SECTIONS
         build/saturn/zero.o(.text);
         build/saturn/lib/gfs.o(.text);
         build/saturn/lib/spr.o(.text);
+        build/saturn/lib/dma/dma_cpum.o(.text);
         build/saturn/lib/dma/dma_scu1.o(.text);
         build/saturn/lib/dma/dma_scu0.o(.text);
         build/saturn/lib/dma/dma_cpu0.o(.text);
