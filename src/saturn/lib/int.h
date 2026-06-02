@@ -1,6 +1,7 @@
 #ifndef INT_H
 #define INT_H
 
+#include "xpt.h"
 #include "sys.h"
 
 #define INT_MSK_NULL 0

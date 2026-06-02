@@ -21,6 +21,7 @@ SECTIONS
         build/saturn/lib/per.o(.text);
         build/saturn/lib/cdc.o(.text);
         build/saturn/lib/mth.o(.text);
+        build/saturn/lib/int.o(.text);
         build/saturn/lib/bup.o(.text);
         build/saturn/lib/sys.o(.text);
         zero_TEXT_END = .;

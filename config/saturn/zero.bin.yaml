@@ -247,17 +247,17 @@ segments:
       - start: 0x2BB04
         type: data
         file: lib/mth
-        end: 0x2C1A7     
-      # _MTH_Hypot (C) 
+        end: 0x2C1A7
+      # _MTH_Hypot (C)
       - start: 0x2C1A8
         type: c
         file: lib/mth
         end: 0x2C307
 
-      # after SEGA_MTH.A
+      # INT_MAIN
       - start: 0x2C308
-        type: data
-        file: lib/mth
+        type: c
+        file: lib/int
         end: 0x2C363
 
       # _bup_version

@@ -32,6 +32,3 @@ INCLUDE_ASM("asm/saturn/zero/data", d602FB84, d_0602FB84);
 
 // _MTH_Hypot (C)
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6030228, func_06030228);
-
-// _INT_SetScuFunc
-INCLUDE_ASM("asm/saturn/zero/data", d6030388, d_06030388);
