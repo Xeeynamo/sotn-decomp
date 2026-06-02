@@ -107,9 +107,12 @@ lib_srcs = [
     'src/saturn/lib/dma/dma_cpu0.c',
     'src/saturn/lib/gfs.c',
     'src/saturn/lib/mth.c',
+    'src/saturn/lib/int.c',
     'src/saturn/lib/per.c',
     'src/saturn/lib/scl.c',
-    'src/saturn/lib/spr.c',
+    'src/saturn/lib/spr/spr_1c.c',
+    'src/saturn/lib/spr/spr_2c.c',
+    'src/saturn/lib/spr/spr_slv.c',
     'src/saturn/lib/sys.c',
 ]
 
@@ -187,9 +190,12 @@ multi_objs = {
         'build/saturn/lib/dma/dma_cpu0.o',
         'build/saturn/lib/gfs.o',
         'build/saturn/lib/mth.o',
+        'build/saturn/lib/int.o',
         'build/saturn/lib/per.o',
         'build/saturn/lib/scl.o',
-        'build/saturn/lib/spr.o',
+        'build/saturn/lib/spr/spr_1c.o',
+        'build/saturn/lib/spr/spr_2c.o',
+        'build/saturn/lib/spr/spr_slv.o',
         'build/saturn/lib/sys.o',
     ]
 }

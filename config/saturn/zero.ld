@@ -9,7 +9,9 @@ SECTIONS
         zero_TEXT_START = .;
         build/saturn/zero.o(.text);
         build/saturn/lib/gfs.o(.text);
-        build/saturn/lib/spr.o(.text);
+        build/saturn/lib/spr/spr_1c.o(.text);
+        build/saturn/lib/spr/spr_2c.o(.text);
+        build/saturn/lib/spr/spr_slv.o(.text);
         build/saturn/lib/dma/dma_cpum.o(.text);
         build/saturn/lib/dma/dma_scu1.o(.text);
         build/saturn/lib/dma/dma_scu0.o(.text);
@@ -19,6 +21,7 @@ SECTIONS
         build/saturn/lib/per.o(.text);
         build/saturn/lib/cdc.o(.text);
         build/saturn/lib/mth.o(.text);
+        build/saturn/lib/int.o(.text);
         build/saturn/lib/bup.o(.text);
         build/saturn/lib/sys.o(.text);
         zero_TEXT_END = .;

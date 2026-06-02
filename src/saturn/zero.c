@@ -5,7 +5,7 @@
 #include "lib/scl.h"
 
 #define _SPR2_
-#include "lib/spr.h"
+#include "lib/spr/spr.h"
 
 // func_06004080
 void entrypoint(void) {

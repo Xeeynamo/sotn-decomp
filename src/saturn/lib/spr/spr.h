@@ -1,17 +1,11 @@
 #ifndef SPR_H
 #define SPR_H
 
-#include "xpt.h"
-#include "def.h"
-#include "mth.h"
+#include "../xpt.h"
+#include "../def.h"
+#include "../mth.h"
 
 #define SPR_SYNC_VB_OUT
-#if 0
-#define USE_SLAVE
-#define USE_DSP
-#define USE_INBETWEEN_OBJECT
-#define USE_DEBUG_INFO
-#endif
 #define USE_ERASE_POLIGON
 
 #define _PC_ 0
@@ -119,8 +113,7 @@ typedef struct SprSpStatus SprSpStatus;
     *(volatile Uint16*)(VDP2_REG_BASE + (reg)) = (val)
 #define SPR_SCLREAD_REG(reg) (*(volatile Uint16*)(VDP2_REG_BASE + (reg)))
 
-#if 0
-#else
+extern Sint32 SpInitialFlag;
 extern Sint32 SpScreenX;
 extern Sint32 SpScreenY;
 extern volatile Uint16 SpFrameChgMode;
@@ -132,7 +125,6 @@ extern Uint16 SpTvMode;
 extern Uint16 SpFbcrMode;
 extern Uint16 SpDie;
 extern Uint16 SpDil;
-#endif
 
 void SPR_Initial(Uint8** VRAM);
 void SPR_SetTvMode(Uint16 mode, Uint16 screenSize, Uint16 doubleInterlace);
@@ -358,10 +350,7 @@ void SPR_2FrameChgIntr(Uint16);
 void SPR_2FrameEraseData(Uint16);
 void SPR_2SetGourTbl(Uint16, SprGourTbl*);
 void SPR_2SetLookupTbl(Uint16, SprLookupTbl*);
-#if 0
-#else
 int SPR_2SetChar(Uint16, Uint16, Uint16, Uint16, Uint16, Uint8*);
-#endif
 void SPR_2ClrChar(Uint16);
 void SPR_2ClrAllChar(void);
 Uint16 SPR_2GourTblNoToVram(Uint16);

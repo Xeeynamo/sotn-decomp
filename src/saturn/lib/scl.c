@@ -3,7 +3,7 @@
 #include "xpt.h"
 #include "scl.h"
 #include "def.h"
-#include "spr.h"
+#include "spr/spr.h"
 
 // SEGA_SCL.A
 

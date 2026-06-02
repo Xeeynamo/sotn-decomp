@@ -81,17 +81,35 @@ segments:
       - start: 0x17234
         type: c
         file: lib/gfs
-        end: 0x1D867
+        end: 0x1D76B
 
-      # SEGA_SPR.A
-      - start: 0x1D868
+      # SPR_1C
+      - start: 0x1D76C
         type: c
-        file: lib/spr
+        file: lib/spr/spr_1c
+        end: 0x1E0E3
+
+      # SPR_2C
+      - start: 0x1E0E4
+        type: c
+        file: lib/spr/spr_2c
+        end: 0x1F087
+
+      # SPR_SLV
+      - start: 0x1F088
+        type: c
+        file: lib/spr/spr_slv
+        end: 0x1F0CF
+
+      # SPR_2A.SRC
+      - start: 0x1F0D0
+        type: data
+        file: lib/spr/spr_slv
         end: 0x1F313
 
       # DMA_CPUM
       - start: 0x1F314
-        type: data
+        type: c
         file: lib/dma/dma_cpum
         end: 0x1F473
 
@@ -229,17 +247,17 @@ segments:
       - start: 0x2BB04
         type: data
         file: lib/mth
-        end: 0x2C1A7     
-      # _MTH_Hypot (C) 
+        end: 0x2C1A7
+      # _MTH_Hypot (C)
       - start: 0x2C1A8
         type: c
         file: lib/mth
         end: 0x2C307
 
-      # after SEGA_MTH.A
+      # INT_MAIN
       - start: 0x2C308
-        type: data
-        file: lib/mth
+        type: c
+        file: lib/int
         end: 0x2C363
 
       # _bup_version
