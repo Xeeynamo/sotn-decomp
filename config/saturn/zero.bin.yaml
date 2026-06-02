@@ -95,22 +95,16 @@ segments:
         file: lib/spr
         end: 0x1F473
 
-      # DMA
+      # DMA_SCU1
       - start: 0x1F474
         type: c
         file: lib/dma/dma_scu1
         end: 0x1F813
 
-      # continue DMA
+      # DMA_SCU0
       - start: 0x1F814
         type: c
-        file: lib/dma/dma
-        end: 0x1FB7F
-
-      # splitter bug
-      - start: 0x1FB80
-        type: data
-        file: lib/dma/dma
+        file: lib/dma/dma_scu0
         end: 0x1FCDB
 
       # continue DMA
