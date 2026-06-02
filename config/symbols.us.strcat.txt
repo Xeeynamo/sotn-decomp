@@ -1,10 +1,1 @@
-RCAT_spriteBanks = 0x8018002C;
 RCAT_cluts = 0x801806F8;
-RCAT_rooms_layers = 0x80180A98;
-RCAT_gfxBanks = 0x80180CF0;
-RCAT_pStObjLayoutHorizontal = 0x80180D2C;
-RCAT_pStObjLayoutVertical = 0x80180E00;
-RCAT_BackgroundBlockInit = 0x801810EC;
-RCAT_RedDoorTiles = 0x80181114;
-RCAT_PrizeDrops = 0x801813C8;
-RCAT_rooms = 0x80182484;
