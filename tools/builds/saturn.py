@@ -90,6 +90,8 @@ def add_srcs(srcs, output_dir, args):
 snd_srcs = [
     'src/saturn/alucard.c',
     'src/saturn/zero.c',
+    'src/saturn/lib/snd.c',
+    'src/saturn/zero_2.c',
     'src/saturn/game.c',
     'src/saturn/richter.c',
     'src/saturn/stage_02.c',
@@ -181,6 +183,8 @@ def link_multi(multi_objs, output_dir):
 
 multi_objs = {
     'build/saturn/zero.o' : [
+        'build/saturn/lib/snd.o',
+        'build/saturn/zero_2.o',
         'build/saturn/lib/bup.o',
         'build/saturn/lib/cdc.o',
         'build/saturn/lib/csh.o',

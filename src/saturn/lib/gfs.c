@@ -1,6 +1,8 @@
 #include "sattypes.h"
 #include "inc_asm.h"
 
+const char gfs_version[] = "GFS_SBL Version 2.14 1997-04-11";
+
 // SEGADGFS.A (debug version of lib)
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B2B4, func_0601B2B4); // GFS_Init
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601B3A0, func_0601B3A0);
