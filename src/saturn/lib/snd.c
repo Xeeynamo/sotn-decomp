@@ -1,7 +1,27 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 #include "inc_asm.h"
 
+#include "per.h"
 #include "snd.h"
+
+extern Uint8* snd_adr_sys_int_work;
+
+#define ADR_SCSP_REG ((Uint8*)0x25b00400)
+#define ADR_SND_MEM ((Uint8*)0x25a00000)
+#define ADR_SND_VECTOR ((Uint8*)0x25a00000)
+#define ADR_SYS_TBL (ADR_SND_MEM + 0x400)
+
+#define ADR_SYS_INFO (0x00)
+#define ADR_HOST_INT (0x04)
+#define ADR_ARA_CRNT (0x08)
+#define ADR_SYS_INT_WORK (0x12)
+#define ADR_HARD_CHK_STAT (0x18)
+#define ADR_TIMING_FLAG (0xe0)
+#define ADR_CMD_MODE (0xe1)
+
+#define ADR_PRG_ADR (0x00)
+#define ADR_PRG_SIZE (0x04)
+#define ADR_ARA_ADR (0x08)
 
 #define ADR_COM_DATA (0x00)
 #define ADR_PRM_DATA (0x02)
@@ -13,6 +33,28 @@
 
 #define SIZE_COM_BLOCK (0x10)
 #define MAX_NUM_COM_BLOCK 8
+
+#define SCSP_REG_SET 0x0200
+#define MEM_CLR_SIZE 0xb000
+
+#define ARA_MAP_SIZE 0x2
+
+#define ARA_MAP_0 0x0
+#define ARA_MAP_4 0x1
+
+#define B_END_MARK 31
+#define B_DATA_ID 28
+#define B_ID_NUM 24
+#define B_START_ADR 0
+#define B_LOAD_MARK 31
+#define B_AREA_SIZE 0
+
+#define M_END_MARK (0x1 << B_END_MARK)
+#define M_DATA_ID (0x7 << B_DATA_ID)
+#define M_ID_NUM (0xf << B_ID_NUM)
+#define M_START_ADR (0xfffff << B_START_ADR)
+#define M_LOAD_MARK (0x1 << B_LOAD_MARK)
+#define M_AREA_SIZE (0xfffff << B_AREA_SIZE)
 
 #define COM_START_SEQ 0x01       /* Sequence Start			*/
 #define COM_STOP_SEQ 0x02        /* Sequence Stop			*/
@@ -50,6 +92,12 @@
 #define POKE_W(adr, data) (*((volatile Uint16*)(adr)) = ((Uint16)(data)))
 #define POKE_L(adr, data) (*((volatile Uint32*)(adr)) = ((Uint32)(data)))
 
+#define PEEK_B(adr) (*((volatile Uint8*)(adr)))
+#define PEEK_W(adr) (*((volatile Uint16*)(adr)))
+#define PEEK_L(adr) (*((volatile Uint32*)(adr)))
+
+#define CHG_LONG(x) (((x) * 2) + (0x4 - (((x) * 2) % 4)))
+
 #define MAX_ADR_COM_DATA                                                       \
     (adr_host_int_work + ADR_COM_DATA + (SIZE_COM_BLOCK * MAX_NUM_COM_BLOCK))
 #define NOW_ADR_COM_DATA (adr_com_block + ADR_COM_DATA)
@@ -62,30 +110,211 @@ extern Uint32 intrflag;
         return (ret);                                                          \
     } while (0)
 
+#define _WAIT_()                                                               \
+    do {                                                                       \
+        int i, j;                                                              \
+        for (i = 0; i < 32; i++)                                               \
+            j = *(volatile int*)0;                                             \
+    } while (0)
+
 #define SET_COMMAND(set_com)                                                   \
     (POKE_W((adr_com_block + ADR_COM_DATA), (Uint16)(set_com) << 8))
 
 #define SET_PRM(no, set_prm)                                                   \
     (POKE_B(adr_com_block + ADR_PRM_DATA + (no), (set_prm)))
 
+extern volatile Uint8* adr_sys_info_tbl;
 extern volatile Uint8* adr_host_int_work;
+extern volatile Uint32* adr_snd_area_crnt;
+extern volatile Uint16* adr_song_stat;
+extern volatile Uint16* adr_tl_vl;
+extern volatile Uint16* adr_tl_hz_vl;
+extern volatile Uint16* adr_pcm;
+extern volatile Uint16* adr_seq;
 extern volatile Uint8* adr_com_block;
 
+void DmaClrZero(void*, Uint32);
+Uint16 ChgPan(SndPan);
 Uint8 GetComBlockAdr(void);
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60186C8, func_060186C8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018848, func_06018848);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018910, func_06018910);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f601896C, func_0601896C);
+// func_060186C8
+void SND_Init(SndIniDt* sys_ini) {
+    PER_SMPC_SND_OFF();
+    POKE_W(ADR_SCSP_REG, SCSP_REG_SET);
+    DmaClrZero(ADR_SND_MEM, MEM_CLR_SIZE);
+    CopyMem(ADR_SND_VECTOR, (void*)(SND_INI_PRG_ADR(*sys_ini)),
+            SND_INI_PRG_SZ(*sys_ini));
+    adr_sys_info_tbl =
+        (Uint8*)(ADR_SND_MEM + PEEK_L(ADR_SYS_TBL + ADR_SYS_INFO));
+    adr_host_int_work =
+        (Uint8*)(ADR_SND_MEM + PEEK_L(ADR_SYS_TBL + ADR_HOST_INT));
+    snd_adr_sys_int_work =
+        (Uint8*)(ADR_SND_MEM +
+                 ((Uint32)PEEK_W(ADR_SYS_TBL + ADR_SYS_INT_WORK) << 16 |
+                  (Uint32)PEEK_W(ADR_SYS_TBL + ADR_SYS_INT_WORK + 2)));
+    adr_com_block = adr_host_int_work;
+    adr_snd_area_crnt =
+        (Uint32*)(ADR_SND_MEM + PEEK_L(ADR_SYS_TBL + ADR_ARA_CRNT));
+    adr_song_stat = (Uint16*)(adr_host_int_work + ADR_SONG_STAT);
+    adr_pcm = (Uint16*)(adr_host_int_work + ADR_PCM);
+    adr_seq = (Uint16*)(adr_host_int_work + ADR_SEQ);
+    adr_tl_vl = (Uint16*)(adr_host_int_work + ADR_TL_VL);
+    adr_tl_hz_vl = (Uint16*)(adr_host_int_work + ADR_TL_HZ_VL);
+    CopyMem((void*)(PEEK_L(adr_sys_info_tbl + ADR_ARA_ADR) + ADR_SND_MEM),
+            (void*)(SND_INI_ARA_ADR(*sys_ini)),
+            CHG_LONG(SND_INI_ARA_SZ(*sys_ini)));
+    intrflag = 0;
+    PER_SMPC_SND_ON();
+}
 
-// SND_StartSeq_DR
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60189F0, func_060189F0);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018A78, func_06018A78);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018AD4, func_06018AD4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018B30, func_06018B30);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018B8C, func_06018B8C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018C00, func_06018C00);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018C74, func_06018C74);
+// func_06018848
+SndRet SND_ChgMap(SndAreaMap area_no) {
+    if (intrflag)
+        return SND_RET_NSET;
+    intrflag = 1;
+    if (GetComBlockAdr() == 0)
+        HOST_SET_RETURN(SND_RET_NSET);
+    SET_PRM(0, area_no);
+    SET_COMMAND(COM_CHG_MAP);
+    while (PEEK_W(adr_com_block + ADR_COM_DATA))
+        _WAIT_();
+
+    if (GetComBlockAdr() == 0)
+        HOST_SET_RETURN(SND_RET_NSET);
+    SET_PRM(0, area_no);
+    SET_COMMAND(COM_CHG_MAP);
+    while (PEEK_W(adr_com_block + ADR_COM_DATA))
+        _WAIT_();
+
+    HOST_SET_RETURN(SND_RET_SET);
+}
+
+// func_06018910
+SndRet SND_SetTlVl(SndTlVl vol) {
+    if (intrflag)
+        return SND_RET_NSET;
+    intrflag = 1;
+    if (GetComBlockAdr() == 0)
+        HOST_SET_RETURN(SND_RET_NSET);
+    SET_PRM(0, vol);
+    SET_COMMAND(COM_SET_TL_VL);
+    HOST_SET_RETURN(SND_RET_SET);
+}
+
+// func_0601896C
+SndRet SND_ChgMixPrm(SndEfctOut efct_out, SndLev level, SndPan pan) {
+    if (intrflag)
+        return SND_RET_NSET;
+    intrflag = 1;
+    if (GetComBlockAdr() == 0)
+        HOST_SET_RETURN(SND_RET_NSET);
+    SET_PRM(0, efct_out);
+    SET_PRM(1, ChgPan(pan) | (level << 5));
+    SET_COMMAND(COM_CHG_MIX_PRM);
+    HOST_SET_RETURN(SND_RET_SET);
+}
+
+// func_060189F0
+SndRet SND_StartSeq_DR(SndSeqNum seq_no, SndSeqBnkNum seq_bk_no,
+                       SndSeqSongNum song_no, SndSeqPri pri_lev) {
+    if (intrflag)
+        return SND_RET_NSET;
+    intrflag = 1;
+    if (GetComBlockAdr() == 0)
+        HOST_SET_RETURN(SND_RET_NSET);
+    SET_PRM(0, seq_no);
+    SET_PRM(1, seq_bk_no);
+    SET_PRM(2, song_no);
+    SET_PRM(3, pri_lev);
+    SET_COMMAND(COM_START_SEQ);
+    HOST_SET_RETURN(SND_RET_SET);
+}
+
+// func_06018A78
+SndRet SND_StopSeq(SndSeqNum seq_no) {
+    if (intrflag)
+        return SND_RET_NSET;
+    intrflag = 1;
+    if (GetComBlockAdr() == 0)
+        HOST_SET_RETURN(SND_RET_NSET);
+    SET_PRM(0, seq_no);
+    SET_COMMAND(COM_STOP_SEQ);
+    HOST_SET_RETURN(SND_RET_SET);
+}
+
+// func_06018AD4
+SndRet SND_PauseSeq(SndSeqNum seq_no) {
+    if (intrflag)
+        return SND_RET_NSET;
+    intrflag = 1;
+    if (GetComBlockAdr() == 0)
+        HOST_SET_RETURN(SND_RET_NSET);
+    SET_PRM(0, seq_no);
+    SET_COMMAND(COM_PAUSE_SEQ);
+    HOST_SET_RETURN(SND_RET_SET);
+}
+
+// func_06018B30
+SndRet SND_ContSeq(SndSeqNum seq_no) {
+    if (intrflag)
+        return SND_RET_NSET;
+    intrflag = 1;
+    if (GetComBlockAdr() == OFF)
+        HOST_SET_RETURN(SND_RET_NSET);
+    SET_PRM(0, seq_no);
+    SET_COMMAND(COM_CONT_SEQ);
+    HOST_SET_RETURN(SND_RET_SET);
+}
+
+// func_06018B8C
+SndRet SND_SetSeqVl(SndSeqNum seq_no, SndSeqVl seq_vl, SndFade fade) {
+    if (intrflag)
+        return SND_RET_NSET;
+    intrflag = 1;
+    if (GetComBlockAdr() == 0)
+        HOST_SET_RETURN(SND_RET_NSET);
+    SET_PRM(0, seq_no);
+    SET_PRM(1, seq_vl);
+    SET_PRM(2, fade);
+    SET_COMMAND(COM_SET_SEQ_VL);
+    HOST_SET_RETURN(SND_RET_SET);
+}
+
+// func_06018C00
+SndRet SND_SetSeqPan(SndSeqNum seq_no, Uint8 ctrl_sw, Uint8 md_pan) {
+    if (intrflag)
+        return SND_RET_NSET;
+    intrflag = 1;
+    if (GetComBlockAdr() == 0)
+        HOST_SET_RETURN(SND_RET_NSET);
+    SET_PRM(0, seq_no);
+    SET_PRM(1, (ctrl_sw | md_pan));
+    SET_COMMAND(COM_SET_SEQ_PAN);
+    HOST_SET_RETURN(SND_RET_SET);
+}
+
+// func_06018C74
+SndRet SND_StartPcmTL(SndPcmStartPrm* sprm, SndPcmChgPrm* cprm) {
+    if (intrflag)
+        return SND_RET_NSET;
+    intrflag = 1;
+    if (GetComBlockAdr() == 0)
+        HOST_SET_RETURN(SND_RET_NSET);
+    SET_PRM(0, SND_PRM_MODE(*sprm) | SND_PRM_NUM(*cprm));
+    SET_PRM(1, (SND_PRM_LEV(*cprm) << 5) | ChgPan(SND_PRM_PAN(*cprm)));
+    SET_PRM(2, SND_PRM_SADR(*sprm) >> 8);
+    SET_PRM(3, SND_PRM_SADR(*sprm));
+    SET_PRM(4, SND_PRM_SIZE(*sprm) >> 8);
+    SET_PRM(5, SND_PRM_SIZE(*sprm));
+    SET_PRM(6, SND_PRM_PICH(*cprm) >> 8);
+    SET_PRM(7, SND_PRM_PICH(*cprm));
+    SET_PRM(8, (SND_R_EFCT_IN(*cprm) << 3) | SND_R_EFCT_LEV(*cprm));
+    SET_PRM(9, (SND_L_EFCT_IN(*cprm) << 3) | SND_L_EFCT_LEV(*cprm));
+    SET_PRM(10, SND_PRM_TL(*cprm));
+    SET_PRM(11, 0);
+    SET_COMMAND(COM_START_PCM);
+    HOST_SET_RETURN(SND_RET_SET);
+}
 
 // func_06018D88
 SndRet SND_StopPcm2(SndPcmNum pcm_num) {
@@ -99,14 +328,57 @@ SndRet SND_StopPcm2(SndPcmNum pcm_num) {
     HOST_SET_RETURN(SND_RET_SET);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018DE4, func_06018DE4);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018EB8, func_06018EB8);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018EE0, func_06018EE0);
+// func_06018DE4
+SndRet SND_ChgPcmTL(SndPcmChgPrm* cprm) {
+    if (intrflag)
+        return SND_RET_NSET;
+    intrflag = 1;
+    if (GetComBlockAdr() == 0)
+        HOST_SET_RETURN(SND_RET_NSET);
+    SET_PRM(0, SND_PRM_NUM(*cprm));
+    SET_PRM(1, (SND_PRM_LEV(*cprm) << 5) | ChgPan(SND_PRM_PAN(*cprm)));
+    SET_PRM(2, SND_PRM_PICH(*cprm) >> 8);
+    SET_PRM(3, SND_PRM_PICH(*cprm));
+    SET_PRM(4, (SND_R_EFCT_IN(*cprm) << 3) | SND_R_EFCT_LEV(*cprm));
+    SET_PRM(5, (SND_L_EFCT_IN(*cprm) << 3) | SND_L_EFCT_LEV(*cprm));
+    SET_PRM(6, SND_PRM_TL(*cprm));
+    SET_COMMAND(COM_CHG_PCM_PRM);
+    HOST_SET_RETURN(SND_RET_SET);
+}
+
+// func_06018EB8
+void SND_GetSeqStat(SndSeqStat* status, SndSeqNum seq_no) {
+    SND_SEQ_STAT_MODE(*status) = (PEEK_W(adr_song_stat + seq_no)) & 0xff00;
+    SND_SEQ_STAT_STAT(*status) = (Uint8)(PEEK_W(adr_song_stat + seq_no));
+}
+
+// func_06018EE0
+void SND_GetPcmPlayAdr(SndPcmPlayAdr* pcm_adr, SndPcmNum num) {
+    SND_PCM_RADR(*pcm_adr) = (Uint8)(PEEK_W(adr_pcm + num) >> 8);
+    SND_PCM_LADR(*pcm_adr) = (Uint8)PEEK_W(adr_pcm + num);
+}
 
 // func_06018F04
 void DmaClrZero(void* dst, Uint32 cnt) { memset(dst, 0x00, cnt); }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6018F20, func_06018F20);
+// func_06018F20
+void GetSndMapInfo(
+    void** adr, Uint32** ladr, Uint16 data_kind, Uint16 data_no) {
+    Uint32 i;
+    Uint32 map0;
+
+    map0 = PEEK_L(adr_snd_area_crnt + ARA_MAP_0);
+    for (i = 1; (map0 & M_END_MARK) != M_END_MARK; i++) {
+        if ((((map0 & M_DATA_ID) >> B_DATA_ID) == (Uint32)data_kind) &&
+            (((map0 & M_ID_NUM) >> B_ID_NUM) == (Uint32)data_no)) {
+            *adr = (void*)(ADR_SND_MEM + ((map0 & M_START_ADR) >> B_START_ADR));
+            *ladr = (Uint32*)(adr_snd_area_crnt + ARA_MAP_SIZE * (i - 1) +
+                              ARA_MAP_4);
+            break;
+        }
+        map0 = PEEK_L(adr_snd_area_crnt + ARA_MAP_SIZE * i + ARA_MAP_0);
+    }
+}
 
 // func_06018FA8
 Uint16 ChgPan(SndPan pan) { return ((pan) < 0) ? (~(pan) + 0x10 + 1) : (pan); }

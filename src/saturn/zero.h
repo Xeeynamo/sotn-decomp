@@ -112,7 +112,6 @@ extern s32* DAT_06064690;
 extern s32* DAT_06066000;
 
 void func_06006FA8(void);
-int func_06018D88(void);
 
 extern u8 DAT_060644c1;
 extern u8 DAT_060644dc;
