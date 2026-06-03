@@ -3,6 +3,12 @@
 
 // SEGA_CDC.A
 
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D4A4, func_0602D4A4);
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D528, func_0602D528);
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D600, func_0602D600);
+
 // _CDC_CdScan
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602D660, func_0602D660);
 

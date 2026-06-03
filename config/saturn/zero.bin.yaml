@@ -154,28 +154,20 @@ segments:
         file: lib/csh
         end: 0x27B17
 
-      # after SEGA_CSH.A
-      - start: 0x27B18
-        type: data
-        file: lib/csh
-        end: 0x28B8B
-
-
       # SEGA_PER.A
-      - start: 0x28B8C
+      - start: 0x27B18
         type: c
         file: lib/per
-        end: 0x28F87
+        end: 0x29373
 
       # after PER
-      - start: 0x28F88
+      - start: 0x29374
         type: data
         file: lib/per
-        end: 0x295DF
-
+        end: 0x29423
 
       # CDC
-      - start: 0x295E0
+      - start: 0x29424
         type: c
         file: lib/cdc
         end: 0x2B41D
