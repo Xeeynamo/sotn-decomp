@@ -57,6 +57,3 @@ void CSH_Purge(void* adrs, Uint32 P_size) {
         (*ptr)[0] = zero;
     } while (ptr++ < end);
 }
-
-// more funcs here
-INCLUDE_ASM("asm/saturn/zero/data", d602BB98, d_0602bb98);
