@@ -188,4 +188,10 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F3FC, func_0602F3FC);
 // _CDSUB_SoftTimer
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F46C, func_0602F46C);
 
-INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/data", d602F49E, d_0602F49E);
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F4A0, func_0602F4A0);
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F4D8, func_0602F4D8);
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F524, func_0602F524);
+
+INCLUDE_ASM("asm/saturn/zero/f_nonmat", f602F534, func_0602F534);

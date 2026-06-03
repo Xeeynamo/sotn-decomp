@@ -88,19 +88,16 @@ segments:
         type: c
         file: lib/spr/spr_1c
         end: 0x1E0E3
-
       # SPR_2C
       - start: 0x1E0E4
         type: c
         file: lib/spr/spr_2c
         end: 0x1F087
-
       # SPR_SLV
       - start: 0x1F088
         type: c
         file: lib/spr/spr_slv
         end: 0x1F0CF
-
       # SPR_2A.SRC
       - start: 0x1F0D0
         type: data
@@ -112,19 +109,16 @@ segments:
         type: c
         file: lib/dma/dma_cpum
         end: 0x1F473
-
       # DMA_SCU1
       - start: 0x1F474
         type: c
         file: lib/dma/dma_scu1
         end: 0x1F813
-
       # DMA_SCU0
       - start: 0x1F814
         type: c
         file: lib/dma/dma_scu0
         end: 0x1FCDB
-
       # DMA_CPU0
       - start: 0x1FCDC
         type: c
@@ -170,78 +164,30 @@ segments:
       - start: 0x29424
         type: c
         file: lib/cdc
-        end: 0x2B41D
+        end: 0x2B4CF
 
-      # after CDC
-      - start: 0x2B41E
-        type: data
-        file: lib/cdc
-        end: 0x2B5B7
-
-
-      # SEGA_MTH.A
-      # _MTH_MoveMatrix (hasm)
-      - start: 0x2B5B8
+      # MTH_FIXD.SRC
+      - start: 0x2B4D0
         type: data
         file: lib/mth
-        end: 0x2B611
-      # _MTH_RotateMatrixX (hasm)
-      - start: 0x2B612
+        end: 0x2B573
+      # MTH_MTRX.SRC
+      - start: 0x2B574
         type: data
         file: lib/mth
-        end: 0x2B6D7
-      # ??? (gap)
-      - start: 0x2B6D8
-        type: data
-        file: lib/mth
-        end: 0x2B7BB        
-      # _MTH_RotateMatrixZ (hasm)
-      - start: 0x2B7BC
-        type: data
-        file: lib/mth
-        end: 0x2B88B
-      # gap
-      - start: 0x2B88C
-        type: data
-        file: lib/mth
-        end: 0x2B8A1
-      # _MTH_MulMatrix (hasm)
-      - start: 0x2B8A2
-        type: data
-        file: lib/mth
-        end: 0x2B9DB
-      # gap
-      - start: 0x2B9DC
-        type: data
-        file: lib/mth
-        end: 0x2B9DB
-      # _MTH_CoordTrans (hasm)
-      - start: 0x2B9DC
-        type: data
-        file: lib/mth
-        end: 0x2BA27
-      # _MTH_NormalTrans (hasm)
-      - start: 0x2BA28
-        type: data
-        file: lib/mth
-        end: 0x2BA6B     
-      # gap  
+        end: 0x2BA6B
+      # MTH_PS2D.SRC
       - start: 0x2BA6C
         type: data
         file: lib/mth
-        end: 0x2BADB
-      # _MTH_ComputeBright
-      - start: 0x2BADC
-        type: data
-        file: lib/mth
         end: 0x2BB03
-      # SINTBL etc
+      # MTH_TRI.SRC
       - start: 0x2BB04
         type: data
         file: lib/mth
-        end: 0x2C1A7
-      # _MTH_Hypot (C)
-      - start: 0x2C1A8
+        end: 0x2C103
+      # MTH_CURV.C
+      - start: 0x2C104
         type: c
         file: lib/mth
         end: 0x2C307

@@ -818,8 +818,7 @@ const short ratan_tbl[] = {
     0x203, 0x203, 0x203, 0x204, 0x204, 0x204,
 };
 
-s32 func_06030184(s32);
-s32 func_0600EE64(s32 param_1) { return func_06030184(param_1 << 4) >> 4; }
+s32 func_0600EE64(s32 param_1) { return MTH_Sqrt(param_1 << 4) >> 4; }
 
 long ratan2(long dx, long dy) {
     long ret;
