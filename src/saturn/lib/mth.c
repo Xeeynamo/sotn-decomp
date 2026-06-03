@@ -18,7 +18,7 @@ INCLUDE_ASM("asm/saturn/zero/data", d602FB84, d_0602FB84);
 Fixed32 MTH_Sqrt(Fixed32 x) {
     Fixed32 s, last;
     Sint32 count = 0;
-    
+
     if (x > MTH_FIXED(0.0)) {
         s = (x > MTH_FIXED(1.0)) ? x : MTH_FIXED(1.0);
         do {
@@ -37,7 +37,7 @@ Fixed32 MTH_Sqrt(Fixed32 x) {
 Fixed32 MTH_Hypot(Fixed32 x, Fixed32 y) {
     Sint32 bai;
     Fixed32 bun;
-    
+
     x = ABS(x);
     y = ABS(y);
     if ((x > MTH_FIXED(1.0)) || (y > MTH_FIXED(1.0))) {
