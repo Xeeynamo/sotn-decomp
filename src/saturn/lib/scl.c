@@ -2204,5 +2204,3 @@ Uint32 SCL_GetColRamOffset(Uint32 Object) {
         break;
     }
 }
-
-const u16 pad_602B9B2 = 0;

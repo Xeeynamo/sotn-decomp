@@ -89,10 +89,6 @@ segments:
 
       # DGFS
       - start: 0x17214
-        type: data
-        file: lib/gfs
-        end: 0x17233
-      - start: 0x17234
         type: c
         file: lib/gfs
         end: 0x1D76B
