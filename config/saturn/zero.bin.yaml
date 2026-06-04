@@ -245,4 +245,16 @@ segments:
       - start: 0x2CB74
         type: data
         file: lib/sys
+        end: 0x369FB
+
+      # 68k sound driver
+      - start: 0x369FC
+        type: data
+        file: lib/sys
+        end: 0x3D1EF
+
+      # post-SYS
+      - start: 0x3D1F0
+        type: data
+        file: lib/sys
         end: 0x4C560
