@@ -1,0 +1,181 @@
+CreateEntityFromLayout = 0x09237700;
+CreateEntityWhenInVerticalRange = 0x09237820; // source=match
+CreateEntityWhenInHorizontalRange = 0x092379B8; // source=match
+FindFirstEntityToTheRight = 0x09237B50;
+FindFirstEntityToTheLeft = 0x09237BC0;
+CreateEntitiesToTheRight = 0x09237C48;
+CreateEntitiesToTheLeft = 0x09237D88;
+FindFirstEntityAbove = 0x09237EE0;
+FindFirstEntityBelow = 0x09237F58;
+CreateEntitiesAbove = 0x09237FE0;
+CreateEntitiesBelow = 0x09238128;
+InitRoomEntities = 0x09238288;
+UpdateRoomPosition = 0x092384B8;
+CreateEntityFromCurrentEntity = 0x09238598;
+CreateEntityFromEntity = 0x09238620;
+EntityBloodSplatter = 0x092386A8;
+func_801C53AC = 0x09238C38; // source=match
+EntityBloodyZombie = 0x09238E80;
+EntityBloodDrips = 0x09239898;
+EntitySkelerang = 0x09239B28; // source=match
+EntitySkelerangBoomerang = 0x0923A620; // source=match
+EntitySkelerangUnknown = 0x0923A9D8; // source=match
+EntityLifeUpSpawn = 0x0923AA48;
+EntityStageNamePopup = 0x0923B6C8;
+func_us_801D6254 = 0x0923C548;
+func_us_801D6474 = 0x0923C860;
+EntityMarionette = 0x0923CB80;
+EntityIsNearPlayer = 0x0923E210; // source=match
+BO0_EntityRedDoor = 0x0923E2F8;
+Random = 0x0923F518;
+Update = 0x0923F558;
+UpdateStageEntities = 0x0923F938;
+func_psp_0923AD68 = 0x0923FA50;
+func_psp_0923B2F0 = 0x0923FFD8;
+EntitySoulStealOrb = 0x09240468;
+EntityEnemyBlood = 0x092409C8;
+func_psp_09240078 = 0x09240FE0;
+func_psp_09240110 = 0x09241078;
+func_psp_09240150 = 0x092410B8;
+func_psp_09240708 = 0x09241670;
+func_psp_092407E0 = 0x09241748;
+func_psp_09240960 = 0x092418C8;
+CollectGold = 0x09241968;
+func_psp_09240B00 = 0x09241A68;
+func_psp_09240D98 = 0x09241D00;
+func_psp_09240E58 = 0x09241DC0;
+func_psp_09240EB0 = 0x09241E18;
+EntityPrizeDrop = 0x09241E40;
+EntityExplosion = 0x09242C58;
+func_psp_09241E58 = 0x09242DC0;
+EntityEquipItemDrop = 0x09242F58;
+EntityRelicOrb = 0x092437B0;
+EntityHeartDrop = 0x092448E8;
+EntityMessageBox = 0x09244AB0;
+CheckColliderOffsets = 0x09245228;
+EntityUnkId13 = 0x09245370;
+EntityExplosionVariantsSpawner = 0x092454B8;
+EntityGreyPuffSpawner = 0x09245638;
+EntityExplosionVariants = 0x09245768;
+EntityGreyPuff = 0x092458E0;
+EntityIntenseExplosion = 0x09245A60;
+MakeEntityFromId = 0x09245BD0;
+MakeExplosions = 0x09245CD8;
+EntityBigRedFireball = 0x09245DB0;
+UnkRecursivePrimFunc2 = 0x09246048;
+PlaySfxPositional = 0x09246A70;
+HitDetection = 0x09246BC8;
+EntityDamageDisplay = 0x09248398;
+BottomCornerText = 0x09248DA0;
+EntityRoomForeground = 0x09249398;
+EntityOwl = 0x092494B0;
+OwlKnightDeathAnim = 0x0924AC10; // source=match
+EntityOwlKnight = 0x0924B118;
+EntityOwlKnightSword = 0x0924CF20;
+EntityOwlTarget = 0x0924D058;
+DestroyEntity = 0x0924D098;
+PreventEntityFromRespawning = 0x0924D130;
+AnimateEntity = 0x0924D1B8;
+GetDistanceToPlayerX = 0x0924D328;
+GetDistanceToPlayerY = 0x0924D398;
+GetSideToPlayer = 0x0924D3F0;
+MoveEntity = 0x0924D478;
+FallEntity = 0x0924D4C8;
+UnkCollisionFunc3 = 0x0924D500;
+UnkCollisionFunc2 = 0x0924D7B8;
+AllocEntity = 0x0924DA98;
+GetSineScaled = 0x0924DB08;
+SetEntityVelocityFromAngle = 0x0924DB58;
+Ratan2Shifted = 0x0924DBC0;
+GetAngleBetweenEntitiesShifted = 0x0924DC18;
+AdjustValueWithinThreshold = 0x0924DCA0; // source=match
+UnkEntityFunc0 = 0x0924DD88;
+GetAngleBetweenEntities = 0x0924DE30;
+GetNormalizedAngle = 0x0924DEB0;
+SetStep = 0x0924DFA8;
+SetSubStep = 0x0924DFF8;
+InitializeEntity = 0x0924E038;
+EntityDummy = 0x0924E1E0;
+CheckFieldCollision = 0x0924E218;
+GetPlayerCollisionWith = 0x0924E3A8;
+ReplaceBreakableWithItemDrop = 0x0924E880;
+UnkPrimHelper = 0x0924E978; // end st_common
+UpdateAnimation = 0x0924EE78;
+FindFirstUnkPrim = 0x0924F0F8;
+FindFirstUnkPrim2 = 0x0924F148;
+PrimResetNext = 0x0924F200;
+UnkPolyFunc2 = 0x0924F308;
+UnkPolyFunc0 = 0x0924F370;
+PrimDecreaseBrightness = 0x0924F3C8;
+InitEntityIds = 0x09251098; // source=match
+BO0_Load = 0x09251368;
+EntityBreakable = 0x092513E0;
+func_psp_0923D390 = 0x09251648;
+DrawFacade = 0x092528E0; // source=match
+DrawSides = 0x09252CA8; // source=match
+DrawRoof = 0x092530E8; // source=match
+Entity3DHouseSpawner = 0x09253380; // source=match
+Entity3DBackgroundHouse = 0x09253480; // source=match
+func_us_801BEDD8 = 0x09253888;
+EntityChair = 0x09253978;
+func_us_801B3D8C = 0x09254330; // source=match
+func_us_801B3F30 = 0x09254568; // source=match
+func_us_801B4148 = 0x09254868; // source=match
+func_us_801B41A4 = 0x092548D0; // source=match
+func_us_801B4210 = 0x09254958; // source=match
+BO0_EntityBackgroundBlock = 0x09254B48;
+EntityOlroxAfterImage = 0x0925D268;
+func_psp_09239568 = 0x0925E0C8;
+BO0_EntityLockCamera = 0x09269500;
+func_us_801B72E8 = 0x09269E10; // source=match
+EntitySpikesDust = 0x0926A1B0;
+EntitySpikesParts = 0x0926A288; // source=match
+SpikesBreak = 0x0926A568; // source=match
+SpikesApplyDamage = 0x0926A6F8; // source=match
+EntitySpikes = 0x0926A7D8;
+EntitySpikesDamage = 0x0926AA60;
+g_bigRedFireballAnim = 0x0926B3B0;
+greyPuff_rot = 0x0926B518;
+greyPuff_yVel = 0x0926B528;
+explode_yVel = 0x0926B540;
+explode_startFrame = 0x0926B558;
+explode_lifetime = 0x0926B560;
+BO0_spriteBanks = 0x092759B0;
+BO0_rooms_layers = 0x09275A20;
+BO0_cluts = 0x09275A90;
+BO0_gfxBanks = 0x09275C60;
+BO0_RedDoorTiles = 0x09275CB0;
+BO0_EntityUpdates = 0x09275CF0;
+BO0_EInitBreakable = 0x09275E20;
+g_EInitObtainable = 0x09275E30;
+g_EInitParticle = 0x09275E40;
+g_EInitSpawner = 0x09275E50;
+g_EInitInteractable = 0x09275E60;
+g_EInitUnkId13 = 0x09275E70;
+g_EInitLockCamera = 0x09275E80;
+g_EInitCommon = 0x09275E90;
+g_EInitDamageNum = 0x09275EA0;
+g_EInitSkelerang = 0x09275EB0;
+g_EInitSkelerangBoomerang = 0x09275EC0;
+g_EInitEnvironment = 0x09275ED0;
+g_EInitOwlKnight = 0x09275F00;
+g_EInitOwlKnightSword = 0x09275F10;
+g_EInitOwl = 0x09275F20;
+g_EInitBloodyZombie = 0x09275F30;
+g_EInitOlroxAfterImage = 0x09275F40;
+BO0_rooms = 0x09275FE0;
+g_eBreakableAnimations = 0x09276010;
+g_eBreakableHitboxes = 0x09276030;
+g_eBreakableanimSets = 0x09276038;
+blend_modes = 0x09276048;
+BO0_Overlay = 0x0928F1C8;
+BO0_BackgroundBlockInit = 0x0928F488;
+g_LayoutObjPosVertical = 0x09290300;
+g_LayoutObjPosHorizontal = 0x09290308;
+g_LayoutObjVertical = 0x09290310;
+g_LayoutObjHorizontal = 0x09290318;
+g_ItemIconSlots = 0x09290328;
+D_psp_E_SPIKES_DAMAGE = 0x092903B0;
+D_psp_E_SPIKES_DUST = 0x092904D8;
+D_psp_E_SPIKES_PARTS = 0x092904E0;
+BO0_PrizeDrops = 0x09290578;

@@ -1,0 +1,117 @@
+BO0_Overlay = 0x80180000;
+BO0_spriteBanks = 0x8018002C;
+BO0_cluts = 0x801800F4;
+BO0_rooms_layers = 0x80180118;
+BO0_gfxBanks = 0x801802D0;
+BO0_pStObjLayoutHorizontal = 0x80180320;
+BO0_pStObjLayoutVertical = 0x801803F4;
+BO0_EntityUpdates = 0x801804C8;
+BO0_EInitBreakable = 0x801805F4;
+g_EInitObtainable = 0x80180600;
+g_EInitParticle = 0x8018060C;
+g_EInitSpawner = 0x80180618;
+g_EInitInteractable = 0x80180624;
+g_EInitUnkId13 = 0x80180630;
+g_EInitLockCamera = 0x8018063C;
+g_EInitCommon = 0x80180648;
+g_EInitDamageNum = 0x80180654;
+g_EInitSkelerang = 0x80180660;
+g_EInitSkelerangBoomerang = 0x8018066C;
+g_EInitEnvironment = 0x80180678;
+g_EInitMarionette = 0x80180690;
+g_EInitOwlKnight = 0x8018069C;
+g_EInitSlinger = 0x801806A6;
+g_EInitOwlKnightSword = 0x801806A8;
+g_EInitOwl = 0x801806B4;
+g_EInitBloodyZombie = 0x801806C0;
+g_EInitOlroxAfterImage = 0x801806CC;
+BO0_BackgroundBlockInit = 0x80180748;
+BO0_RedDoorTiles = 0x8018075C;
+BO0_PrizeDrops = 0x80181444;
+BO0_rooms = 0x80182614;
+BO0_EntityBackgroundBlock = 0x801A99FC; // source=match
+BO0_EntityLockCamera = 0x801A9AC4; // source=match
+EntityBreakable = 0x801A9C80; // source=match
+func_us_801B3D8C = 0x801A9DB4; // source=match
+func_us_801B3F30 = 0x801A9F58; // source=match
+func_us_801B4148 = 0x801AA170; // source=match
+func_us_801B41A4 = 0x801AA1CC; // source=match
+func_us_801B4210 = 0x801AA238; // source=match
+DrawFacade = 0x801AA3B0; // source=match
+DrawSides = 0x801AA5C0; // source=match
+DrawRoof = 0x801AA804; // source=match
+Entity3DHouseSpawner = 0x801AA988; // source=match
+Entity3DBackgroundHouse = 0x801AAA78; // source=match
+func_us_801B4DA4 = 0x801AADCC; // source=match
+EntitySpikesDust = 0x801AB2DC; // source=match
+EntitySpikesParts = 0x801AB390; // source=match
+EntitySpikes = 0x801AB778; // source=match
+EntitySpikesDamage = 0x801AB970; // source=match
+EntityOlroxAfterImage = 0x801AFF78;
+func_us_801B72E8 = 0x801BA880; // source=match
+EntityChair = 0x801BBD84;
+Random = 0x801BC0DC; // source=match
+Update = 0x801BC10C; // source=match
+UpdateStageEntities = 0x801BC408; // source=match
+HitDetection = 0x801BC510; // source=match
+EntityDamageDisplay = 0x801BD628; // source=match
+InitRoomEntities = 0x801BE528; // source=match
+UpdateRoomPosition = 0x801BE6A0; // source=match
+CreateEntityFromCurrentEntity = 0x801BE754; // source=match
+CreateEntityFromEntity = 0x801BE7C8; // source=match
+BO0_EntityRedDoor = 0x801BE8BC; // source=match
+DestroyEntity = 0x801BF4F4; // source=match
+AnimateEntity = 0x801BF624; // source=match
+GetDistanceToPlayerX = 0x801BF7F4; // source=match
+GetSideToPlayer = 0x801BF864; // source=match
+MoveEntity = 0x801BF8A8; // source=match
+UnkCollisionFunc3 = 0x801BF904; // source=match
+UnkCollisionFunc2 = 0x801BFB7C; // source=match
+AllocEntity = 0x801BFD64; // source=match
+SetEntityVelocityFromAngle = 0x801BFE0C; // source=match
+Ratan2Shifted = 0x801BFE78; // source=match
+GetAngleBetweenEntitiesShifted = 0x801BFEB0; // source=match
+AdjustValueWithinThreshold = 0x801BFF40; // source=match
+SetStep = 0x801C0134; // source=match
+SetSubStep = 0x801C0154; // source=match
+InitializeEntity = 0x801C0204; // source=match
+EntityDummy = 0x801C0300; // source=match
+GetPlayerCollisionWith = 0x801C05A8; // source=match
+EntityPrizeDrop = 0x801C0F14; // source=match
+EntityExplosion = 0x801C1788; // source=match
+EntityEquipItemDrop = 0x801C1928; // source=match
+EntityRelicOrb = 0x801C21C0; // source=match
+EntityHeartDrop = 0x801C2C90; // source=match
+EntityMessageBox = 0x801C2DAC; // source=match
+EntityUnkId13 = 0x801C33F8; // source=match
+EntityExplosionVariantsSpawner = 0x801C3508; // source=match
+EntityExplosionVariants = 0x801C3720; // source=match
+EntityGreyPuff = 0x801C3810; // source=match
+EntityIntenseExplosion = 0x801C41B0; // source=match
+MakeExplosions = 0x801C4444; // source=match
+EntityBigRedFireball = 0x801C44FC; // source=match
+UnkRecursivePrimFunc2 = 0x801C4CB4; // source=match
+PlaySfxPositional = 0x801C55AC; // source=match
+EntityStageNamePopup = 0x801C5874; // source=match
+EntitySkelerang = 0x801C64F8; // source=match
+EntitySkelerangBoomerang = 0x801C6C80; // source=match
+EntitySkelerangUnknown = 0x801C6EF4; // source=match
+func_us_801D6254 = 0x801C6F50; // source=match
+func_us_801D6474 = 0x801C7170; // source=match
+EntityMarionette = 0x801C73F4; // source=match
+EntityBloodSplatter = 0x801C82E0; // source=match
+EntityBloodyZombie = 0x801C899C; // source=match
+EntityBloodDrips = 0x801C9154; // source=match
+EntityOwl = 0x801C9360; // source=match
+EntityOwlKnight = 0x801CA628; // source=match
+EntityOwlKnightSword = 0x801CB888; // source=match
+EntityOwlTarget = 0x801CB968; // source=match
+EntityLifeUpSpawn = 0x801CB9A0; // source=match
+EntitySoulStealOrb = 0x801CC254; // source=match
+EntityEnemyBlood = 0x801CC5E8; // source=match
+EntityRoomForeground = 0x801CCA98; // source=match
+UnkPrimHelper = 0x801CCEB4; // source=match
+FindFirstUnkPrim = 0x801CD3EC; // source=match
+FindFirstUnkPrim2 = 0x801CD41C; // source=match
+UnkPolyFunc2 = 0x801CD600; // source=match
+UnkPolyFunc0 = 0x801CD654; // source=match

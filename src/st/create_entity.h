@@ -8,7 +8,7 @@
 //  PSX HD | TBD   | TBD     | 0xB78 | 0x10 |
 //
 
-#include <common.h>
+#include <stage.h>
 
 static u16* g_LayoutObjHorizontal;
 static u16* g_LayoutObjVertical;
@@ -16,8 +16,6 @@ static u8 g_LayoutObjPosHorizontal;
 STATIC_PAD_BSS(3);
 static u8 g_LayoutObjPosVertical;
 STATIC_PAD_BSS(3);
-
-#include <stage.h>
 
 #define LAYOUT_OBJ_START 0xfffe
 #define LAYOUT_OBJ_END 0xffff
