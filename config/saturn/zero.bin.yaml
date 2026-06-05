@@ -75,10 +75,20 @@ segments:
       - start: 0xD9EC
         type: c
         file: zero
-        end: 0x17233
+        end: 0x14647
+
+      - start: 0x14648
+        type: c
+        file: lib/snd
+        end: 0x14FF3
+
+      - start: 0x14FF4
+        type: c
+        file: zero_2
+        end: 0x17213
 
       # DGFS
-      - start: 0x17234
+      - start: 0x17214
         type: c
         file: lib/gfs
         end: 0x1D76B
@@ -229,6 +239,18 @@ segments:
 
       # post-SYS
       - start: 0x2CB74
+        type: data
+        file: lib/sys
+        end: 0x369FB
+
+      # 68k sound driver
+      - start: 0x369FC
+        type: data
+        file: lib/sys
+        end: 0x3D1EF
+
+      # post-SYS
+      - start: 0x3D1F0
         type: data
         file: lib/sys
         end: 0x4C560

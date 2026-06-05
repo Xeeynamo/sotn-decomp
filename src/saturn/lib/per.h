@@ -40,4 +40,48 @@ typedef Uint16 PerNum;
 typedef Uint8 PerMulId;
 typedef Uint8 PerMulCon;
 
+#define PER_SM_MSHON 0x00
+#define PER_SM_SSHON 0x02
+#define PER_SM_SSHOFF 0x03
+#define PER_SM_SNDON 0x06
+#define PER_SM_SNDOFF 0x07
+#define PER_SM_CDON 0x08
+#define PER_SM_CDOFF 0x09
+#define PER_SM_SYSRES 0x0d
+#define PER_SM_NMIREQ 0x18
+#define PER_SM_RESENA 0x19
+#define PER_SM_RESDIS 0x1a
+#define PER_SM_SETSM 0x17
+#define PER_SM_SETTIM 0x16
+
+#define PER_SMPC_WAIT()                                                        \
+    do {                                                                       \
+        while ((PER_PeekByte(PER_REG_SF) & PER_B_SF) == PER_B_SF)              \
+            ;                                                                  \
+        PER_PokeByte(PER_REG_SF, PER_B_SF);                                    \
+    } while (0)
+
+#define PER_SMPC_GO_CMD(smpc_cmd)                                              \
+    do {                                                                       \
+        PER_PokeByte(PER_REG_COMREG, smpc_cmd);                                \
+        while (PER_PeekByte(PER_REG_SF) & PER_B_SF)                            \
+            ;                                                                  \
+    } while (0)
+
+#define PER_SMPC_NO_IREG(com)                                                  \
+    do {                                                                       \
+        PER_SMPC_WAIT();                                                       \
+        PER_SMPC_GO_CMD(com);                                                  \
+    } while (0)
+
+#define PER_SMPC_SND_ON()                                                      \
+    do {                                                                       \
+        PER_SMPC_NO_IREG(PER_SM_SNDON);                                        \
+    } while (FALSE)
+
+#define PER_SMPC_SND_OFF()                                                     \
+    do {                                                                       \
+        PER_SMPC_NO_IREG(PER_SM_SNDOFF);                                       \
+    } while (0)
+
 #endif

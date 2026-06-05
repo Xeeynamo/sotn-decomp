@@ -8,6 +8,8 @@ SECTIONS
     {
         zero_TEXT_START = .;
         build/saturn/zero.o(.text);
+        build/saturn/lib/snd.o(.text);
+        build/saturn/zero_2.o(.text);
         build/saturn/lib/gfs.o(.text);
         build/saturn/lib/spr/spr_1c.o(.text);
         build/saturn/lib/spr/spr_2c.o(.text);
