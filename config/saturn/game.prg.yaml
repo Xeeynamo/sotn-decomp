@@ -15,47 +15,47 @@ segments:
     subsegments:
       - start: 0x0
         type: data
-        file: game
+        file: game_0
         end: 0x3F
       - start: 0x40
         type: c
-        file: game
+        file: game_0
         end: 0x8D3
       - start: 0x8D4
         type: c
-        file: game
+        file: game_0
         end: 0x92B
       - start: 0x92C
         type: data
-        file: game
+        file: game_0
         end: 0xB2F
       - start: 0xB30
         type: c
-        file: game
+        file: game_0
         end: 0x197B
         # misdetected function TODO
       - start: 0x197C
         type: data
-        file: game
+        file: game_0
         end: 0x1A03
       - start: 0x1A04
         type: c
-        file: game
+        file: game_0
         end: 0x80C7
       - start: 0x80C8
         type: data
-        file: game
+        file: game_0
         end: 0x80CF
       - start: 0x80D0
         type: c
-        file: game
+        file: game_0
         end: 0x92BF
 
         # file split here
 
       - start: 0x92C0
         type: c
-        file: game
+        file: game_0
         end: 0xA937
 
         # file split here
