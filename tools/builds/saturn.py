@@ -176,6 +176,7 @@ def link_multi(multi_objs, output_dir):
             elf_name, 
             'link_multi', 
             inputs=[main_obj],
+            implicit=[x for x in sub_objs if x],
             variables={
                 'ld_file': ld_file,
                 'syms_file': syms_file,
