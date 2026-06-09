@@ -3,7 +3,7 @@
 
 #if !defined(STAGE_IS_CAT) && !defined(STAGE_IS_NZ1) &&                        \
     !defined(STAGE_IS_ARE) && !defined(STAGE_IS_RARE)
-static u16 unused[] = {
+static u16 unused[] UNUSED = {
     0x0000, 0x0000, 0x0000, 0x0000, 0x0001, 0x0000, 0x0001, 0x0000,
     0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0001, 0x0101};
 #endif

@@ -821,6 +821,14 @@ files:
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/rwrp.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/mar.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo0.bin
+    asset_path: assets/boss/bo0
+    src_path: src/boss/bo0
+    splat_config_path: config/splat.pspeu.bobo0.yaml
+    segments:
+      - start: 0x80
+        vram: 0x09237700
+        assets:
+          - [0x80, skip]
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo1.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo2.bin
   - target: disks/pspeu/PSP_GAME/USRDIR/res/ps/PSPBIN/bo3.bin

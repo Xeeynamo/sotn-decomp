@@ -1165,6 +1165,14 @@ files:
           - [0x52E0, palette, D_801852E0, 16]
           - [0x5300, skip]
   - target: disks/us/BOSS/BO0/BO0.BIN
+    asset_path: assets/boss/bo0
+    src_path: src/boss/bo0
+    splat_config_path: config/splat.us.bobo0.yaml
+    segments:
+      - start: 0
+        vram: 0x80180000
+        assets:
+          - [0x0, skip]
   - target: disks/us/BOSS/BO1/BO1.BIN
   - target: disks/us/BOSS/BO2/BO2.BIN
   - target: disks/us/BOSS/BO3/BO3.BIN
