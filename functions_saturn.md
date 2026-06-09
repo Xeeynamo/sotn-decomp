@@ -12,8 +12,6 @@
 | zero/f_nonmat/f6009038.s     | func_06009038   |       20 |          1 |       |     |
 | zero/f_nonmat/f600A330.s     | func_0600A330   |       20 |          1 |       |     |
 | zero/f_nonmat/f600FB9C.s     | func_0600FB9C   |       20 |          1 |       |     |
-| game/f_nonmat/f607718C.s     | func_0607718C   |       21 |          0 |       |     |
-| game/f_nonmat/f60771B0.s     | func_060771B0   |       21 |          0 |       |     |
 | game/f_nonmat/f606C064.s     | func_0606C064   |       21 |          1 |       |     |
 | game/f_nonmat/f607371C.s     | func_0607371C   |       21 |          1 |       |     |
 | richter/f_nonmat/f60B9A2C.s  | func_060B9A2C   |       21 |          1 |       |     |
@@ -84,13 +82,11 @@
 | zero/f_nonmat/f60198F4.s     | func_060198F4   |       35 |          4 |       |     |
 | alucard/f_nonmat/f60A5674.s  | func_060A5674   |       36 |          0 |       |     |
 | zero/f_nonmat/f6019FE4.s     | func_06019FE4   |       36 |          5 |       |     |
-| game/f_nonmat/f6077148.s     | func_06077148   |       37 |          0 |       |     |
 | zero/f_nonmat/f600FACC.s     | func_0600FACC   |       37 |          1 |       |     |
 | zero/f_nonmat/f6007CA0.s     | func_06007CA0   |       37 |          2 |       |     |
 | zero/f_nonmat/f600D4C4.s     | func_0600D4C4   |       37 |          2 |       |     |
 | zero/f_nonmat/f600C254.s     | func_0600C254   |       38 |          1 |       |     |
 | zero/f_nonmat/f6019FA0.s     | func_06019FA0   |       38 |          4 |       |     |
-| game/f_nonmat/f60766DC.s     | func_060766DC   |       38 |          6 |       |     |
 | alucard/f_nonmat/f60B95C8.s  | func_060B95C8   |       39 |          0 |       |     |
 | zero/f_nonmat/f6008FF0.s     | func_06008FF0   |       39 |          0 |       |     |
 | game/f_nonmat/f60736D4.s     | func_060736D4   |       39 |          1 |       |     |
