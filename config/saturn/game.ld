@@ -7,6 +7,7 @@ SECTIONS
     .game 0x06066000 : AT(game_ROM_START) SUBALIGN(2)
     {
         game_TEXT_START = .;
+        build/saturn/game_0.o(.text);
         build/saturn/game.o(.text);
         game_TEXT_END = .;
         game_TEXT_SIZE = ABSOLUTE(game_TEXT_END - game_TEXT_START);

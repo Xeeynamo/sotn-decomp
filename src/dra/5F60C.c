@@ -88,17 +88,14 @@ void RefreshCapePalette(void) {
     }
 }
 
-void func_800FF708(s32 equipType, s32 arg1) {
+void func_800FF708(s32 equipType, s32 slot) {
     s32 rnd;
 
-    do {
-    loop_1:
-        rnd = rand() % 90;
-        while (rnd == 0x19) {
-            goto loop_1;
-        }
-    } while (g_AccessoryDefs[rnd].equipType != equipType);
-    (g_Status.equipment + 2)[arg1] = rnd;
+    while ((rnd = rand() % 90) == 25 ||
+           g_AccessoryDefs[rnd].equipType != equipType) {
+        // try again
+    }
+    (g_Status.equipment + 2)[slot] = rnd;
 }
 
 char* g_LuckCode = "x-x!v''q";
@@ -113,6 +110,7 @@ extern s32 D_psp_091FC408;
 extern s32 D_psp_091FC410;
 #endif
 
+// original name: status_work_init
 void InitStatsAndGear(bool isDeathTakingItems) {
     s32 prologueBonusState;
     s32 dracDefeatTime;
