@@ -570,24 +570,45 @@ void InitStatsAndGear(s32 isDeathTakingItems) {
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6075838, func_06075838);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6075D24, func_06075D24);
 
-// _status_pause
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60766DC, func_060766DC);
+// original name: status_pause
+bool StatusPause(s32 arg0) {
+    if (arg0 == 0) {
+        if (g_PlayerHud.unk24 != 0) {
+            return 0;
+        }
+        g_PlayerHud.unk24 = 1;
+    } else if (arg0 == 1) {
+        if (g_PlayerHud.unk24 != 0x15) {
+            return 0;
+        }
+        g_PlayerHud.unk24 = 0x33;
+    }
+    return 1;
+}
 
-struct Unk_060860D8 {
-    u8 pad[0x23];
-    s32 unk24;
-};
-
-extern struct Unk_060860D8 DAT_060860D8;
-s32 func_06076718(void) { return DAT_060860D8.unk24 == 0x15; }
+s32 func_06076718(void) { return g_PlayerHud.unk24 == 0x15; }
 
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607672C, func_0607672C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6076A04, func_06076A04);
 
-// _set_XYWH
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077148, func_06077148);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607718C, func_0607718C);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60771B0, func_060771B0);
+// original name: set_XYWH
+void SetXYWH(Primitive* prim, s32 x, s32 y, s32 w, s32 h) {
+    prim->x0 = prim->x3 = x;
+    prim->x1 = prim->x2 = x + w - 1;
+    prim->y0 = prim->y1 = y;
+    prim->y2 = prim->y3 = y + h - 1;
+}
+
+void SetXW(Primitive* prim, s32 x, s32 w) {
+    prim->x0 = prim->x3 = x;
+    prim->x1 = prim->x2 = x + w - 1;
+}
+
+void SetYH(Primitive* prim, s32 y, s32 h) {
+    prim->y0 = prim->y1 = y;
+    prim->y2 = prim->y3 = y + h - 1;
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60771D4, func_060771D4);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077260, func_06077260);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6077354, func_06077354);

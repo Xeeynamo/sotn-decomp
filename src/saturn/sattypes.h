@@ -542,6 +542,48 @@ typedef struct {
     /* 0x48 */ s32 cursorTimeAttack;
 } MenuNavigation; /* size=0x4C */
 
+typedef struct {
+    u32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    u32 : 32;
+    s32 : 32;
+    u32 : 32;
+    u32 : 32;
+    u32 : 32;
+    u32 unk24;
+    s32 : 32;
+    s32 : 32;
+} PlayerHud;
+
+typedef struct {
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 x0;
+    s16 y0;
+    s16 x1;
+    s16 y1;
+    s16 x2;
+    s16 y2;
+    s16 x3;
+    s16 y3;
+    s16 : 16;
+    s16 : 16;
+    s32 : 32;
+} Primitive;
+
+typedef struct {
+    /* 0x0 */ u16 pressed;
+    /* 0x2 */ u16 previous;
+    /* 0x4 */ u16 tapped;
+    /* 0x6 */ u16 repeat;
+} Pad; // size = 0x8
+
 typedef enum {
     PLAYER_CHARACTER,
     E_AFTERIMAGE_1,
@@ -661,6 +703,8 @@ extern s32 currentMusicId;
 extern u8 g_CastleFlags[];
 extern s32 g_PlayableCharacter;
 extern MenuNavigation g_MenuNavigation;
+extern PlayerHud g_PlayerHud;
+extern Pad g_pads[];
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7

@@ -1632,7 +1632,7 @@ void RunMainEngine(void) {
             if ((g_StageId == STAGE_ST0) ||
                 (g_PlayableCharacter != PLAYER_ALUCARD)) {
 #if !defined(VERSION_PSP)
-                if (!func_8010183C(0)) {
+                if (!StatusPause(0)) {
                     return;
                 }
 #endif
@@ -1674,7 +1674,7 @@ void RunMainEngine(void) {
         DrawHudSubweapon2();
 #else
         DrawHudSubweapon();
-        if ((g_pads[0].tapped & PAD_START) && func_8010183C(1)) {
+        if ((g_pads[0].tapped & PAD_START) && StatusPause(1)) {
             D_800974A4 = 0;
             g_GameEngineStep = Engine_Normal;
             PlaySfx(SET_UNPAUSE_SFX_SCRIPTS);

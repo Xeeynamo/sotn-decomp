@@ -1171,8 +1171,8 @@ void DrawRichterHudSubweapon(void) {
     }
 }
 
-// Seems to be stripped on PSP
-bool func_8010183C(s32 arg0) {
+// original name: status_pause
+bool StatusPause(s32 arg0) {
     if (arg0 == 0) {
         if (g_PlayerHud.unk24 == 0) {
             g_PlayerHud.unk24 = 1;
