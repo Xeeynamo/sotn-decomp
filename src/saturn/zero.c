@@ -34,14 +34,15 @@ INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6004A46, func_06004A46);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004B20, func_06004B20);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C14, func_06004C14);
 
-s32 d_060505E8[];
+s32 g_PadsRepeatTimer[];
 
-void _func_06004C44(void) {
+// func_06004C44
+void ResetPadsRepeat(void) {
     u8* ptr;
     s32 i;
 
     g_pads[0].repeat = 0;
-    ptr = d_060505E8;
+    ptr = g_PadsRepeatTimer;
     for (i = 0; i < 0x10; i++) {
         *ptr++ = 0x10;
     }
@@ -50,7 +51,8 @@ void _func_06004C44(void) {
 // _REPEAT_PAD
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C70, func_06004C70);
 
-void _func_06004CDC(void) {
+// func_06004CDC
+void InitializePads(void) {
     g_pads[0].previous = g_pads[0].pressed = g_pads[0].tapped =
         g_pads[0].repeat = 0;
 }
