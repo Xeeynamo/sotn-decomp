@@ -126,6 +126,7 @@ func_us_801B4210 = 0x09254958; // source=match
 BO0_EntityBackgroundBlock = 0x09254B48;
 EntityOlroxAfterImage = 0x0925D268;
 func_psp_09239568 = 0x0925E0C8;
+EntityPrisoner = 0x09268E80;
 BO0_EntityLockCamera = 0x09269500;
 func_us_801B72E8 = 0x09269E10; // source=match
 EntitySpikesDust = 0x0926A1B0;
@@ -158,6 +159,7 @@ g_EInitDamageNum = 0x09275EA0;
 g_EInitSkelerang = 0x09275EB0;
 g_EInitSkelerangBoomerang = 0x09275EC0;
 g_EInitEnvironment = 0x09275ED0;
+g_EInitPrisoner = 0x09275EE0;
 g_EInitOwlKnight = 0x09275F00;
 g_EInitOwlKnightSword = 0x09275F10;
 g_EInitOwl = 0x09275F20;
@@ -176,6 +178,7 @@ g_LayoutObjVertical = 0x09290310;
 g_LayoutObjHorizontal = 0x09290318;
 g_ItemIconSlots = 0x09290328;
 D_psp_E_SPIKES_DAMAGE = 0x092903B0;
+D_psp_E_PRISONER = 0x092904A8;
 D_psp_E_SPIKES_DUST = 0x092904D8;
 D_psp_E_SPIKES_PARTS = 0x092904E0;
 BO0_PrizeDrops = 0x09290578;

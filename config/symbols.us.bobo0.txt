@@ -18,6 +18,7 @@ g_EInitDamageNum = 0x80180654;
 g_EInitSkelerang = 0x80180660;
 g_EInitSkelerangBoomerang = 0x8018066C;
 g_EInitEnvironment = 0x80180678;
+g_EInitPrisoner = 0x80180684;
 g_EInitMarionette = 0x80180690;
 g_EInitOwlKnight = 0x8018069C;
 g_EInitSlinger = 0x801806A6;
@@ -47,6 +48,7 @@ EntitySpikesDust = 0x801AB2DC; // source=match
 EntitySpikesParts = 0x801AB390; // source=match
 EntitySpikes = 0x801AB778; // source=match
 EntitySpikesDamage = 0x801AB970; // source=match
+EntityPrisoner = 0x801ACDC8;
 EntityOlroxAfterImage = 0x801AFF78;
 func_us_801B72E8 = 0x801BA880; // source=match
 EntityChair = 0x801BBD84;

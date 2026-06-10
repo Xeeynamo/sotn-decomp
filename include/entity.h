@@ -3317,7 +3317,7 @@ typedef struct {
     /* 0x82 */ u8 : 8;
     /* 0x83 */ u8 : 8;
     /* 0x84 */ s16 unk84;
-} ET_801B6E34;
+} ET_Prisoner;
 
 typedef struct {
     /* 0x7C */ s32 : 32;
@@ -4321,7 +4321,7 @@ typedef union { // offset=0x7C
     ET_801CEB08 et_801CEB08;
     ET_801B3F30 et_801B3F30;
     ET_801B4210 et_801B4210;
-    ET_801B6E34 et_801B6E34;
+    ET_Prisoner prisoner;
     ET_801B87E8 et_801B87E8;
     ET_801B72E8 et_801B72E8;
     ET_FleaRider fleaRider;

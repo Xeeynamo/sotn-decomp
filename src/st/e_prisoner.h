@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-#include "no2.h"
 
 #ifdef VERSION_PSP
-extern s32 E_ID(ID_28);
+extern s32 E_ID(PRISONER);
 #endif
 
 static u8 D_us_80180E44[] = {
@@ -17,14 +16,16 @@ static u8 D_us_80180E8C[] = {3, 15, 3, 14, -1, 0};
 static u8 D_us_80180E94[] = {
     14, 22, 14, 23, 14, 24, 14, 25, 14, 26, 14, 27, 14, 28, 14, 29, 0, 0};
 
-void func_us_801B6E34(Entity* self) {
+extern EInit g_EInitPrisoner;
+
+void EntityPrisoner(Entity* self) {
     Entity* tempEntity;
     u8 rand;
 
     tempEntity = self + 1;
     switch (self->step) {
     case 0:
-        InitializeEntity(D_us_801808B0);
+        InitializeEntity(g_EInitPrisoner);
         self->animCurFrame = 0;
         self->zPriority = 0x1E;
         if (self->params & 1) {
@@ -32,7 +33,7 @@ void func_us_801B6E34(Entity* self) {
         }
         if ((self->params & 0x10) == 0) {
             tempEntity = self + 1;
-            CreateEntityFromEntity(E_ID(ID_28), self, tempEntity);
+            CreateEntityFromEntity(E_ID(PRISONER), self, tempEntity);
             tempEntity->params = self->params + 0x10;
             self->step = 1;
             return;
@@ -46,18 +47,18 @@ void func_us_801B6E34(Entity* self) {
 
     case 1:
         if (GetDistanceToPlayerX() < 0x40) {
-            if (self->ext.et_801B6E34.unk80) {
+            if (self->ext.prisoner.unk80) {
                 rand = Random() & 0xF;
             } else {
                 rand = Random() & 1;
             }
             if (!rand) {
-                self->ext.et_801B6E34.unk80 |= 1;
-                self->ext.et_801B6E34.unk84 = (Random() & 3) * 7;
+                self->ext.prisoner.unk80 |= 1;
+                self->ext.prisoner.unk84 = (Random() & 3) * 7;
                 if (Random() & 1) {
-                    self->ext.et_801B6E34.unk84 = -self->ext.et_801B6E34.unk84;
+                    self->ext.prisoner.unk84 = -self->ext.prisoner.unk84;
                 }
-                self->posX.i.hi += self->ext.et_801B6E34.unk84;
+                self->posX.i.hi += self->ext.prisoner.unk84;
                 self->step++;
             } else {
                 self->step = 6;
@@ -77,9 +78,13 @@ void func_us_801B6E34(Entity* self) {
         break;
 
     case 3:
+#ifndef BOSS_IS_BO0
         if (!AnimateEntity(D_us_80180E58, self)) {
             PlaySfxPositional(SFX_DUNGEON_PRISONER_RATTLE);
         }
+#else // BOSS_IS_BO0
+        AnimateEntity(D_us_80180E58, self);
+#endif
         tempEntity->animCurFrame = self->animCurFrame + 2;
         tempEntity->zPriority = 0x6A;
         tempEntity->blendMode = BLEND_NO;
@@ -134,7 +139,7 @@ void func_us_801B6E34(Entity* self) {
         tempEntity->animCurFrame = self->animCurFrame;
         tempEntity->opacity++;
         if (tempEntity->opacity > 0x80) {
-            self->posX.i.hi -= self->ext.et_801B6E34.unk84;
+            self->posX.i.hi -= self->ext.prisoner.unk84;
             SetStep(1);
         }
         break;
@@ -154,6 +159,6 @@ void func_us_801B6E34(Entity* self) {
         break;
 
     case 16:
-#include "../pad2_anim_debug.h"
+#include "pad2_anim_debug.h"
     }
 }

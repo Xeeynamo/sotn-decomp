@@ -118,5 +118,3 @@ INCLUDE_ASM("boss/bo0_psp/nonmatchings/bo0_psp/unk_1D5A8", func_pspeu_09267E48);
 INCLUDE_ASM("boss/bo0_psp/nonmatchings/bo0_psp/unk_1D5A8", func_pspeu_09267EF8);
 
 INCLUDE_ASM("boss/bo0_psp/nonmatchings/bo0_psp/unk_1D5A8", func_pspeu_09267FC0);
-
-INCLUDE_ASM("boss/bo0_psp/nonmatchings/bo0_psp/unk_1D5A8", func_pspeu_09268E80);
