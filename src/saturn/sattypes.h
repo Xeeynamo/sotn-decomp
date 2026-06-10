@@ -477,7 +477,7 @@ typedef struct {
     s32 : 32;
     s32 : 32;
     s32 : 32;
-    s32 D_80097428[8];
+    u32 D_80097428[8];
     s32 : 32;
     s32 : 32;
     s32 : 32;
@@ -583,6 +583,30 @@ typedef struct {
     /* 0x4 */ u16 tapped;
     /* 0x6 */ u16 repeat;
 } Pad; // size = 0x8
+
+typedef struct {
+    SotnFixed32 scrollX;
+    SotnFixed32 scrollY;
+} Tilemap;
+
+typedef struct {
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 g_ScrollDeltaX;
+    s32 : 32;
+    s32 g_ScrollDeltaY;
+} UNK_0605c680;
+
+typedef struct {
+    /* 0x0 */ u16 posX;
+    /* 0x2 */ u16 posY;
+    /* 0x4 */ u16 entityId;
+    /* 0x6 */ u8 entityRoomIndex;
+    /* 0x8 */ u16 params;
+} LayoutEntity; // size = 0xA
 
 typedef enum {
     PLAYER_CHARACTER,
@@ -705,6 +729,8 @@ extern s32 g_PlayableCharacter;
 extern MenuNavigation g_MenuNavigation;
 extern PlayerHud g_PlayerHud;
 extern Pad g_pads[];
+extern Tilemap g_Tilemap;
+extern UNK_0605c680 DAT_0605c680;
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7
