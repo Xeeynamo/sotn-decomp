@@ -5291,7 +5291,7 @@
 |          | func_092EAE98                     |      446 |         58 | Yes    |       |     |
 |          | func_092E7DB8                     |      448 |         26 |        |       |     |
 | no3      | func_pspeu_0924D328               |      448 |         35 |        |       |     |
-| bo0      | func_pspeu_09268E80               |      448 |         82 |        |       |     |
+| bo0      | EntityPrisoner                    |      448 |         82 |        |       |     |
 | cat      | func_pspeu_0925B118               |      449 |         40 |        |       |     |
 | dra      | func_psp_0913C160                 |      450 |         49 | Yes    |       |     |
 | cat      | func_pspeu_0925DC38               |      450 |         50 |        |       |     |
