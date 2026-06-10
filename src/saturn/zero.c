@@ -34,35 +34,27 @@ INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f6004A46, func_06004A46);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004B20, func_06004B20);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C14, func_06004C14);
 
-s16 d_0605C676;
-s32 d_060505E8[];
+s32 g_PadsRepeatTimer[];
 
-void _func_06004C44(void) {
-    u8* puVar2;
-    int i;
-    d_0605C676 = 0;
-    puVar2 = d_060505E8;
+// func_06004C44
+void ResetPadsRepeat(void) {
+    u8* ptr;
+    s32 i;
+
+    g_pads[0].repeat = 0;
+    ptr = g_PadsRepeatTimer;
     for (i = 0; i < 0x10; i++) {
-        *puVar2++ = 0x10;
+        *ptr++ = 0x10;
     }
 }
 
 // _REPEAT_PAD
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004C70, func_06004C70);
 
-extern s16 d_0605C670[];
-void _func_06004CDC(void) {
-    s16* puVar1;
-    s16* puVar2;
-    s16* puVar3;
-
-    puVar1 = &d_0605C670[0];
-    puVar2 = &d_0605C670[1];
-    puVar3 = &d_0605C670[2];
-    d_0605C670[3] = 0;
-    *puVar3 = 0;
-    *puVar1 = 0;
-    *puVar2 = 0;
+// func_06004CDC
+void InitializePads(void) {
+    g_pads[0].previous = g_pads[0].pressed = g_pads[0].tapped =
+        g_pads[0].repeat = 0;
 }
 
 // _SET_VBLANK

@@ -88,17 +88,14 @@ void RefreshCapePalette(void) {
     }
 }
 
-void func_800FF708(s32 equipType, s32 arg1) {
+void func_800FF708(s32 equipType, s32 slot) {
     s32 rnd;
 
-    do {
-    loop_1:
-        rnd = rand() % 90;
-        while (rnd == 0x19) {
-            goto loop_1;
-        }
-    } while (g_AccessoryDefs[rnd].equipType != equipType);
-    (g_Status.equipment + 2)[arg1] = rnd;
+    while ((rnd = rand() % 90) == 25 ||
+           g_AccessoryDefs[rnd].equipType != equipType) {
+        // try again
+    }
+    (g_Status.equipment + 2)[slot] = rnd;
 }
 
 char* g_LuckCode = "x-x!v''q";
@@ -113,6 +110,7 @@ extern s32 D_psp_091FC408;
 extern s32 D_psp_091FC410;
 #endif
 
+// original name: status_work_init
 void InitStatsAndGear(bool isDeathTakingItems) {
     s32 prologueBonusState;
     s32 dracDefeatTime;
@@ -1173,8 +1171,8 @@ void DrawRichterHudSubweapon(void) {
     }
 }
 
-// Seems to be stripped on PSP
-bool func_8010183C(s32 arg0) {
+// original name: status_pause
+bool StatusPause(s32 arg0) {
     if (arg0 == 0) {
         if (g_PlayerHud.unk24 == 0) {
             g_PlayerHud.unk24 = 1;

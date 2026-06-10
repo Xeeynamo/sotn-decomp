@@ -812,7 +812,6 @@ void GetEquipProperties(s32 handId, Equipment* res, s32 equipId);
 s32 HandleDamage(DamageParam*, s32, s32 amount, s32);
 s32 HandleTransformationMP(TransformationForm, CallMode);
 void ClearStatBuff(s32 arg0);
-bool func_8010183C(s32 arg0);
 s32 func_801025F4(void);
 void func_80102CD8(s32);
 Entity* GetFreeEntity(s16 start, s16 end);

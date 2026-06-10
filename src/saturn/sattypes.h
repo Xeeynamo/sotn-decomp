@@ -271,14 +271,15 @@ typedef struct {
 
 // offsets are not the same as psx
 typedef struct {
-    u8 relics[30];
-    char pad4[0xc];
+    u8 relics[32];
+    char pad[2];
+    u8 spells[8];
     u8 equipHandCount[176];
-    u8 equipBodyCount[26];
-    char pad5[0x42];
+    u8 equipBodyCount[92];
     u8 equipHandOrder[176];
-    u8 equipBodyOrder[26];
-    char pad2[0x4E];
+    u8 equipBodyOrder[92];
+    u8 saveName[8];
+    u32 spellsLearnt;
     s32 hp;
     s32 hpMax;
     s32 hearts;
@@ -290,7 +291,9 @@ typedef struct {
     s32 statsTotal[4];
     s32 level;
     u32 exp;
-    char pad3[0xC];
+    s32 gold;
+    s32 killCount;
+    u32 D_80097BF8;
     u32 subWeapon;
     u32 equipment[8];
     u32 attackHands[2];
@@ -497,7 +500,7 @@ typedef struct {
 } unkGraphicsStruct;
 
 typedef struct {
-    s32 : 32;
+    const char* name;
     s32 : 32;
     u16 : 16;
     u16 : 16;
@@ -538,6 +541,48 @@ typedef struct {
     /* 0x44 */ s32 cursorWindowColors;
     /* 0x48 */ s32 cursorTimeAttack;
 } MenuNavigation; /* size=0x4C */
+
+typedef struct {
+    u32 : 32;
+    s32 : 32;
+    s32 : 32;
+    s32 : 32;
+    u32 : 32;
+    s32 : 32;
+    u32 : 32;
+    u32 : 32;
+    u32 : 32;
+    u32 unk24;
+    s32 : 32;
+    s32 : 32;
+} PlayerHud;
+
+typedef struct {
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 : 16;
+    s16 x0;
+    s16 y0;
+    s16 x1;
+    s16 y1;
+    s16 x2;
+    s16 y2;
+    s16 x3;
+    s16 y3;
+    s16 : 16;
+    s16 : 16;
+    s32 : 32;
+} Primitive;
+
+typedef struct {
+    /* 0x0 */ u16 pressed;
+    /* 0x2 */ u16 previous;
+    /* 0x4 */ u16 tapped;
+    /* 0x6 */ u16 repeat;
+} Pad; // size = 0x8
 
 typedef enum {
     PLAYER_CHARACTER,
@@ -658,6 +703,8 @@ extern s32 currentMusicId;
 extern u8 g_CastleFlags[];
 extern s32 g_PlayableCharacter;
 extern MenuNavigation g_MenuNavigation;
+extern PlayerHud g_PlayerHud;
+extern Pad g_pads[];
 
 #define NUM_HORIZONTAL_SENSORS 4
 #define NUM_VERTICAL_SENSORS 7

@@ -92,6 +92,7 @@ snd_srcs = [
     'src/saturn/zero.c',
     'src/saturn/lib/snd.c',
     'src/saturn/zero_2.c',
+    'src/saturn/game_0.c',
     'src/saturn/game.c',
     'src/saturn/richter.c',
     'src/saturn/stage_02.c',
@@ -155,7 +156,6 @@ def link_objs(srcs, output_dir):
                 'syms_file': syms_file})
 
 objs = [
-    'build/saturn/game.o',
     'build/saturn/alucard.o',
     'build/saturn/richter.o',
     'build/saturn/stage_02.o',
@@ -176,12 +176,16 @@ def link_multi(multi_objs, output_dir):
             elf_name, 
             'link_multi', 
             inputs=[main_obj],
+            implicit=[x for x in sub_objs if x],
             variables={
                 'ld_file': ld_file,
                 'syms_file': syms_file,
                 'objs': sub_objs})
 
 multi_objs = {
+    'build/saturn/game.o' : [
+        'build/saturn/game_0.o',
+    ],
     'build/saturn/zero.o' : [
         'build/saturn/lib/snd.o',
         'build/saturn/zero_2.o',
