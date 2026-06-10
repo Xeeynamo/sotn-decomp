@@ -47,7 +47,7 @@ enum OVL_EXPORT(Entities) {
     E_UNK_26,              // func_us_801AC54C/func_pspeu_09250568
     E_UNK_27,              // func_pspeu_0923CB80
     E_BIG_RED_FIREBALL,    // EntityBigRedFireball
-    E_UNK_29,              // func_us_801ACDC8/func_pspeu_09268E80
+    E_PRISONER,            // EntityPrisoner
     E_UNK_2A,              // func_us_801B001C/func_pspeu_0925D328
     E_UNK_2B,              // func_us_801AD338/func_pspeu_09258F58
     E_OLROX_AFTER_IMAGE,   // EntityOlroxAfterImage
@@ -102,4 +102,5 @@ extern EInit g_EInitInteractable;
 extern s32 E_ID(SPIKES_PARTS);
 extern s32 E_ID(SPIKES_DUST);
 extern s32 E_ID(SPIKES_DAMAGE);
+extern s32 E_ID(PRISONER);
 #endif
