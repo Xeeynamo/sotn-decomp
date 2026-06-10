@@ -7,12 +7,192 @@
 INCLUDE_ASM("asm/saturn/game/data", d6066000, d_06066000);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066040, func_06066040);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60661BC, func_060661BC);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066330, func_06066330);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066400, func_06066400);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60664E0, func_060664E0);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60665BC, func_060665BC);
+
+extern LayoutEntity* g_LayoutObjHorizontal;
+extern LayoutEntity* g_LayoutObjVertical;
+extern u8 g_LayoutObjPosHorizontal;
+extern u8 g_LayoutObjPosVertical;
+
+static inline void FindFirstEntityToTheRight(u16 posX) {
+    while (true) {
+        if (g_LayoutObjHorizontal->posX != 0xFFFE &&
+            g_LayoutObjHorizontal->posX >= posX) {
+            break;
+        }
+        g_LayoutObjHorizontal++;
+    }
+}
+
+static inline void FindFirstEntityToTheLeft(u16 posX) {
+    while (true) {
+        if (g_LayoutObjHorizontal->posX != 0xFFFF &&
+            (g_LayoutObjHorizontal->posX <= posX ||
+             g_LayoutObjHorizontal->posX == 0xFFFE)) {
+            break;
+        }
+        g_LayoutObjHorizontal--;
+    }
+}
+
+void CreateEntitiesToTheRight(s16 posX) {
+    u8 roomIndex;
+
+    if (g_LayoutObjPosHorizontal) {
+        FindFirstEntityToTheRight(posX - (DAT_0605c680.g_ScrollDeltaX >> 0x10));
+        g_LayoutObjPosHorizontal = 0;
+    }
+    while (true) {
+        if (g_LayoutObjHorizontal->posX == 0xFFFF ||
+            posX < g_LayoutObjHorizontal->posX) {
+            break;
+        }
+        roomIndex = g_LayoutObjHorizontal->entityRoomIndex;
+        if (roomIndex != 0) {
+            s32 temp;
+            roomIndex--;
+            temp = g_unkGraphicsStruct.D_80097428[roomIndex >> 5];
+            if ((temp & (1 << (roomIndex & 0x1F))) == 0) {
+                CreateEntityWhenInVerticalRange(g_LayoutObjHorizontal);
+            }
+        } else {
+            CreateEntityWhenInVerticalRange(g_LayoutObjHorizontal);
+        }
+        g_LayoutObjHorizontal++;
+    }
+}
+
+void CreateEntitiesToTheLeft(s16 posX) {
+    u8 roomIndex;
+
+    if (posX < 0) {
+        posX = 0;
+    }
+    if (g_LayoutObjPosHorizontal == 0) {
+        FindFirstEntityToTheLeft(posX - (DAT_0605c680.g_ScrollDeltaX >> 0x10));
+        g_LayoutObjPosHorizontal = 1;
+    }
+    while (true) {
+        if (g_LayoutObjHorizontal->posX == 0xFFFE ||
+            posX > g_LayoutObjHorizontal->posX) {
+            break;
+        }
+        roomIndex = g_LayoutObjHorizontal->entityRoomIndex;
+        if (roomIndex != 0) {
+            roomIndex--;
+            if ((g_unkGraphicsStruct.D_80097428[roomIndex >> 5] &
+                 (1 << (roomIndex & 0x1F))) == 0) {
+                CreateEntityWhenInVerticalRange(g_LayoutObjHorizontal);
+            }
+        } else {
+            CreateEntityWhenInVerticalRange(g_LayoutObjHorizontal);
+        }
+        g_LayoutObjHorizontal--;
+    }
+}
+
+static inline void FindFirstEntityAbove(u16 posY) {
+    while (true) {
+        if (g_LayoutObjVertical->posY != 0xFFFE &&
+            g_LayoutObjVertical->posY >= posY) {
+            break;
+        }
+        g_LayoutObjVertical++;
+    }
+}
+
+static inline void FindFirstEntityBelow(u16 posY) {
+    while (true) {
+        if (g_LayoutObjVertical->posY != 0xFFFF &&
+            (g_LayoutObjVertical->posY <= posY ||
+             g_LayoutObjVertical->posY == 0xFFFE)) {
+            break;
+        }
+        g_LayoutObjVertical--;
+    }
+}
+
+void CreateEntitiesAbove(s16 posY) {
+    u8 roomIndex;
+
+    if (g_LayoutObjPosVertical) {
+        FindFirstEntityAbove(posY - (DAT_0605c680.g_ScrollDeltaY >> 0x10));
+        g_LayoutObjPosVertical = 0;
+    }
+    while (true) {
+        if (g_LayoutObjVertical->posY == 0xFFFF ||
+            posY < g_LayoutObjVertical->posY) {
+            break;
+        }
+        roomIndex = g_LayoutObjVertical->entityRoomIndex;
+        if (roomIndex != 0) {
+            roomIndex--;
+            if ((g_unkGraphicsStruct.D_80097428[roomIndex >> 5] &
+                 (1 << (roomIndex & 0x1F))) == 0) {
+                CreateEntityWhenInHorizontalRange(g_LayoutObjVertical);
+            }
+        } else {
+            CreateEntityWhenInHorizontalRange(g_LayoutObjVertical);
+        }
+        g_LayoutObjVertical++;
+    }
+}
+
+void CreateEntitiesBelow(s16 posY) {
+    u8 roomIndex;
+
+    if (posY < 0) {
+        posY = 0;
+    }
+    if (g_LayoutObjPosVertical == 0) {
+        FindFirstEntityBelow(posY - (DAT_0605c680.g_ScrollDeltaY >> 0x10));
+        g_LayoutObjPosVertical = 1;
+    }
+    while (true) {
+        if (g_LayoutObjVertical->posY == 0xFFFE ||
+            posY > g_LayoutObjVertical->posY) {
+            break;
+        }
+        roomIndex = g_LayoutObjVertical->entityRoomIndex;
+        if (roomIndex != 0) {
+            roomIndex--;
+            if ((g_unkGraphicsStruct.D_80097428[roomIndex >> 5] &
+                 (1 << (roomIndex & 0x1F))) == 0) {
+                CreateEntityWhenInHorizontalRange(g_LayoutObjVertical);
+            }
+        } else {
+            CreateEntityWhenInHorizontalRange(g_LayoutObjVertical);
+        }
+        g_LayoutObjVertical--;
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f60666A4, func_060666A4);
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f6066854, func_06066854);
+
+void UpdateRoomPosition(void) {
+    Tilemap* tilemap = &g_Tilemap;
+    s16 tmp;
+
+    if (DAT_0605c680.g_ScrollDeltaX != 0) {
+        tmp = tilemap->scrollX.i.hi;
+        if (DAT_0605c680.g_ScrollDeltaX > 0) {
+            tmp += 0x190;
+            CreateEntitiesToTheRight(tmp);
+        } else {
+            tmp -= 0x50;
+            CreateEntitiesToTheLeft(tmp);
+        }
+    }
+    if (DAT_0605c680.g_ScrollDeltaY != 0) {
+        tmp = tilemap->scrollY.i.hi;
+        if (DAT_0605c680.g_ScrollDeltaY > 0) {
+            tmp += 0x130;
+            CreateEntitiesAbove(tmp);
+        } else {
+            tmp -= 0x40;
+            CreateEntitiesBelow(tmp);
+        }
+    }
+}
 
 #define FLAG_UNK_20000 0x20000
 #define STAGE_ENTITY_START 64

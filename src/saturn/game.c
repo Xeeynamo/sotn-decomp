@@ -144,7 +144,24 @@ bool func_800FB1EC(s32 arg0) {
     return false;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f60735A4, func_060735A4);
+extern s32 g_NewPlayerStatsTotal[];
+extern s32 g_NewAttackRightHand;
+extern s32 g_NewAttackLeftHand;
+extern s32 g_NewDefenseEquip;
+
+// SAT: func_060735A4
+void func_800F7244(void) {
+    s32 i;
+
+    g_NewAttackRightHand = g_Status.attackHands[0];
+    g_NewAttackLeftHand = g_Status.attackHands[1];
+    g_NewDefenseEquip = g_Status.defenseEquip;
+    for (i = 0; i < 4; i++) {
+        g_NewPlayerStatsTotal[i] =
+            g_Status.statsBase[i] + g_Status.statsEquip[i];
+    }
+}
+
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607360C, func_0607360C);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607369C, func_0607369C);
 

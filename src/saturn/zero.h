@@ -47,7 +47,7 @@ s32* DAT_060485e0;
 struct Unk0605d6c0* DAT_0605d6c0[];
 u16 DAT_060086d4;
 s32 PTR_FUN_060086cc(s32, s32, s32);
-void func_0600871C(s32, s32, s32);
+void func_0600871C(s32, UNK_0605c680*, s32);
 
 struct Unk0605CD90 {
     s32 dst0;
@@ -64,7 +64,6 @@ struct Unk0605CD90 {
 };
 
 void func_060089F0(struct Unk0605CD90* param_1);
-s32 DAT_0605c680;
 s32 DAT_060086e4;
 s32 func_0600F96C(s32, s32, s32);
 // func_060086E8
