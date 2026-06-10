@@ -206,7 +206,6 @@
 | alucard/f_nonmat/f60A6618.s  | func_060A6618   |       60 |          1 |       |     |
 | zero/f_nonmat/f6011F58.s     | func_06011F58   |       60 |          3 |       |     |
 | zero/f_nonmat/f6008AB4.s     | func_06008AB4   |       60 |          8 |       |     |
-| game/f_nonmat/f60735A4.s     | func_060735A4   |       61 |          1 |       |     |
 | game/f_nonmat/f607B448.s     | func_0607B448   |       61 |          4 |       |     |
 | alucard/f_nonmat/f60A7D68.s  | func_060A7D68   |       61 |          5 |       |     |
 | zero/f_nonmat/f600DACC.s     | func_0600DACC   |       62 |          2 |       |     |
@@ -257,7 +256,6 @@
 | zero/f_nonmat/f600B004.s     | func_0600B004   |       74 |          2 |       |     |
 | alucard/f_nonmat/f60B9610.s  | func_060B9610   |       74 |          6 |       |     |
 | richter/f_nonmat/f60A9A74.s  | func_060A9A74   |       74 |          7 |       |     |
-| game/f_nonmat/f6066854.s     | func_06066854   |       75 |          8 |       |     |
 | game/f_nonmat/f607360C.s     | func_0607360C   |       76 |          4 |       |     |
 | richter/f_nonmat/f60A8F00.s  | func_060A8F00   |       76 |          5 |       |     |
 | zero/f_nonmat/f6014CB8.s     | func_06014CB8   |       76 |          7 |       |     |
@@ -421,7 +419,6 @@
 | alucard/f_nonmat/f60AF050.s  | func_060AF050   |      113 |          3 |       |     |
 | alucard/f_nonmat/f60A5738.s  | func_060A5738   |      114 |          6 |       |     |
 | alucard/f_nonmat/f60BAE70.s  | func_060BAE70   |      115 |         11 |       |     |
-| game/f_nonmat/f6066330.s     | func_06066330   |      115 |         11 |       |     |
 | game/f_nonmat/f6079F60.s     | func_06079F60   |      115 |         13 |       |     |
 | alucard/f_nonmat/f60AEEE4.s  | func_060AEEE4   |      115 |         22 |       |     |
 | game/f_nonmat/f6078E80.s     | func_06078E80   |      116 |          5 |       |     |
@@ -439,7 +436,6 @@
 | zero/f_nonmat/f600E164.s     | func_0600E164   |      120 |          4 |       |     |
 | game/f_nonmat/f6079958.s     | func_06079958   |      120 |          7 |       |     |
 | richter/f_nonmat/f60AC398.s  | func_060AC398   |      120 |          8 |       |     |
-| game/f_nonmat/f60664E0.s     | func_060664E0   |      121 |         11 |       |     |
 | zero/f_nonmat/f6012474.s     | func_06012474   |      121 |         11 |       |     |
 | richter/f_nonmat/f60A8C88.s  | func_060A8C88   |      121 |         15 |       |     |
 | warp/f_nonmat/f60DCF5C.s     | func_060DCF5C   |      122 |          9 |       |     |
@@ -450,14 +446,12 @@
 | richter/f_nonmat/f60AF704.s  | func_060AF704   |      124 |          0 |       |     |
 | richter/f_nonmat/f60AC824.s  | func_060AC824   |      124 |          7 |       |     |
 | richter/f_nonmat/f60ABA98.s  | func_060ABA98   |      124 |          9 |       |     |
-| game/f_nonmat/f6066400.s     | func_06066400   |      124 |         13 |       |     |
 | zero/f_nonmat/f601992C.s     | func_0601992C   |      124 |         13 |       |     |
 | t_bat/f_nonmat/f60D0968.s    | func_060D0968   |      126 |          4 |       |     |
 | game/f_nonmat/f606D5FC.s     | func_0606D5FC   |      126 |          9 |       |     |
 | alucard/f_nonmat/f60BD2B0.s  | func_060BD2B0   |      127 |          5 |       |     |
 | richter/f_nonmat/f60B3A48.s  | func_060B3A48   |      127 |         10 |       |     |
 | alucard/f_nonmat/f60B0638.s  | func_060B0638   |      127 |         11 |       |     |
-| game/f_nonmat/f60665BC.s     | func_060665BC   |      128 |         13 |       |     |
 | game/f_nonmat/f607A030.s     | func_0607A030   |      128 |         14 |       |     |
 | zero/f_nonmat/f6004B20.s     | func_06004B20   |      129 |          5 |       |     |
 | zero/f_nonmat/f600B254.s     | func_0600B254   |      129 |          7 |       |     |
