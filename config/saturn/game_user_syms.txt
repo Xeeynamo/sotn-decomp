@@ -7,6 +7,7 @@ _rcos = 0x0600F81C;
 _SquareRoot0 = 0x0600F914;
 _DestroyEntity = 0x0600FFB8;
 _PlaySfx = 0x06011278;
+_PlaySfxVolPan = 0x06011AA0;
 _func_80131F68 = 0x06012DD0;
 ___sdivsi3 = 0x06030E6C;
 ___ashlsi3 = 0x06030F0C;

@@ -1579,7 +1579,39 @@ u32 AnimateEntity(u8 frames[], Entity* entity) {
     return flag;
 }
 
-INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B714, func_0607B714);
+void PlaySfxVolPan();
+
+void PlaySfxPositional(s32 sfxId) {
+    Entity* entity = g_CurrentEntity;
+    s16 sfxVol;
+    int dx;
+    s32 dy;
+    s16 sfxPan;
+
+    dx = entity->posX.i.hi - 0xA0;
+    sfxPan = (ABS(dx) - 0x28) >> 5;
+    if (sfxPan > 8) {
+        sfxPan = 8;
+    } else if (sfxPan < 0) {
+        sfxPan = 0;
+    }
+    if (dx < 0) {
+        sfxPan = -sfxPan;
+    }
+    sfxVol = ABS(dx) - 0x60;
+
+    dy = ABS(entity->posY.i.hi - 0x80) - 0x70;
+    if (dy > 0) {
+        sfxVol += dy;
+    }
+    if (sfxVol < 0) {
+        sfxVol = 0;
+    }
+    sfxVol = 0x7F - (sfxVol >> 1);
+    if (sfxVol > 0) {
+        PlaySfxVolPan(sfxId, sfxVol, sfxPan);
+    }
+}
 
 void (*CheckCollision)(s32 x, s32 y, Collider* res, s32 unk);
 INCLUDE_ASM("asm/saturn/game/f_nonmat", f607B7B4, func_0607B7B4);
