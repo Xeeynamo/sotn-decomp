@@ -221,7 +221,6 @@ void CreateBlueTrailEntity(Entity* parent) {
 void CreateAdditionalBats(s32 amount, s32 entityId) {
     s32 i;
     Entity* entity;
-    u16 facing;
 
     amount = MIN(amount, 3);
     for (i = 0; i < amount; i++) {

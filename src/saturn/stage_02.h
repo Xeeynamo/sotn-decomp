@@ -58,7 +58,7 @@ s16 Random(void);
 s32 AnimateEntity(Entity* entity, const u8 frames[], const u8 frames2[]);
 Entity* AllocEntity(Entity*, Entity*);
 void InitializeEntity(u16 arg0[]);
-void func_801C29B0(s32 sfxId); // sfx
+void PlaySfxPositional(s32 sfxId);
 void CreateEntityFromEntity(u16 entityId, Entity* source, Entity* entity);
 void SetStep(u8 step);
 

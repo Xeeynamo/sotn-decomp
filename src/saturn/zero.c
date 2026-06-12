@@ -3,6 +3,7 @@
 #include "inc_asm.h"
 #include "sattypes.h"
 #include "lib/scl.h"
+#include "lib/sys.h"
 
 #define _SPR2_
 #include "lib/spr/spr.h"
@@ -10,7 +11,7 @@
 // func_06004080
 void entrypoint(void) {
     func_06030df0();
-    Scl_s_reg.tvmode = Scl_s_reg.tvmode & 0x7eff;
+    Scl_s_reg.tvmode &= 0x7EFF;
     SclProcess = 1;
     func_060044D0();
     DAT_0605cea2 = 0;
@@ -20,7 +21,173 @@ void entrypoint(void) {
     } while (true);
 }
 
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60040D8, func_060040D8);
+void func_0600456c();
+void SetVblank();
+void ReturnToGame();
+void func_06004f50();
+void func_06005310();
+void func_0600652C();
+void func_06007d54();
+void func_06007e14();
+void func_06008264();
+void func_06008298();
+void func_06008a70();
+void func_06008d04();
+void func_06009838();
+void func_0600d8bc();
+void MoviePRGClear();
+void func_06010400();
+void PlaySfx();
+void func_06012fb4();
+void SPR_WaitDrawEnd();
+void SCL_Vdp2Init();
+void SCL_DisplayFrame();
+void func_06032e68();
+extern s32 DAT_06057f34;
+extern u16 DAT_0605cea0;
+extern u16 DAT_0605cea2;
+extern s32 DAT_0605d7f0;
+extern s32 DAT_0605d7f8;
+void (*func_06064580)();
+void (*func_060645e0)();
+void (*func_06064614)();
+void (*func_0606463c)();
+void (*func_06064644)();
+void (*func_06064674)();
+void (*func_06064688)();
+void (*func_0606468c)();
+s32 (*func_06064690)();
+
+void func_060040d8(void) {
+    g_Timer++;
+    func_06007d54();
+    switch (DAT_0605cea2) {
+    case 0:
+        func_0600456c();
+        DAT_0605d7f8 = 0;
+        func_06004f50(0x20);
+        DAT_0605cea0++;
+        break;
+    case 6:
+        if (DAT_0605cea0 == 0) {
+            func_06005328();
+            DAT_0605cea0++;
+            Scl_s_reg.tvmode |= 0x8000;
+            SclProcess = 1;
+        }
+        func_060645e0();
+        break;
+    case 2:
+        if (DAT_0605cea0 == 0) {
+            func_06005328();
+            DAT_0605cea0++;
+        }
+        func_06064688();
+        func_06008a70();
+        break;
+    case 3:
+        func_0606468c();
+        break;
+    case 7:
+        func_06064614();
+        func_06008a70();
+        break;
+    case 4:
+        if (DAT_0605cea0 == 0) {
+            func_06005328();
+            DAT_0605cea0++;
+        }
+        func_06064674();
+        break;
+    case 8:
+        if (DAT_0605cea0 == 0) {
+            func_06005328();
+            DAT_0605cea0++;
+        }
+        func_06064580();
+        break;
+    case 0x11:
+        if (*((u32*)&DAT_0605cea0) == 0x11) {
+            if (func_06005328() == 0) {
+                DAT_0605cea0++;
+            }
+        } else {
+            func_06009838();
+            func_0606463c();
+            func_06008a70();
+        }
+        break;
+    case 5:
+        if (DAT_0605cea0 == 0) {
+            func_06008d04(0, 2);
+            func_06005328();
+            DAT_0605cea0++;
+        }
+        func_06064644();
+        func_06008a70();
+        break;
+    case 0x20:
+        func_06007e14();
+        Scl_s_reg.dispenbl &= 0xFFC0;
+        SclProcess = 1;
+        Scl_s_reg.tvmode &= 0x7EFF;
+        SclProcess = 1;
+        InitializePads();
+        SPR_WaitDrawEnd();
+        ClearFrameBuffer(0x8000);
+        SCL_DisplayFrame();
+        ClearFrameBuffer(0x8000);
+        SetVblank(1);
+        DAT_06057f34 = 0;
+        MoviePRGClear();
+        func_06005328();
+        DAT_06057f34 = func_06064690();
+        if ((DAT_06057f34 == 2) && (DAT_0605d7f8 == 0)) {
+            SYS_EXECDMP();
+        }
+        Scl_s_reg.tvmode &= 0x7EFF;
+        SclProcess = 1;
+        SCL_DisplayFrame();
+        SCL_Vdp2Init();
+        func_06011ce4();
+        ReturnToGame();
+        func_06004f50(0x31);
+        func_06007d54();
+        break;
+    case 0x31:
+        DAT_0605d7f0 = 1;
+        func_0600d8bc();
+        break;
+    }
+    if (func_0600fb4c() != 0) {
+        if (DAT_0605cea2 == 6) {
+            SYS_EXECDMP();
+        } else {
+            PlaySfx(0xF000000B);
+            while (func_06013320() == 0) {
+                func_06010400();
+                SCL_DisplayFrame();
+            }
+            func_06012fb4();
+            func_0600652C();
+            func_0601333c();
+            if (DAT_0605cea2 == 2) {
+                SYS_EXECDMP();
+            }
+        }
+        func_06008d04(0, 4);
+        func_06004f50(0x30);
+    }
+    func_06010400();
+    func_06007e14();
+    func_06005310();
+    SPR_WaitDrawEnd();
+    func_06008264();
+    SCL_DisplayFrame();
+    func_06008298();
+    func_06032e68();
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f60044D0, func_060044D0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600456C, func_0600456C);
 
@@ -57,14 +224,14 @@ void InitializePads(void) {
         g_pads[0].repeat = 0;
 }
 
-// _SET_VBLANK
+// SET_VBLANK
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004D00, func_06004D00);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004D84, func_06004D84);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004DE8, func_06004DE8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E50, func_06004E50);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004E94, func_06004E94);
 
-// _RETURN_TO_GAME
+// RETURN_TO_GAME
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004EF0, func_06004EF0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6004F50, func_06004F50);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6005208, func_06005208);
@@ -627,7 +794,7 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C818, func_0600C818);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C880, func_0600C880);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600C99C, func_0600C99C);
 
-// _ClearFrameBuffer
+// ClearFrameBuffer
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CAB8, func_0600CAB8);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600CB04, func_0600CB04);
 INCLUDE_ASM_NO_ALIGN("asm/saturn/zero/f_nonmat", f600CB26, func_0600CB26);
@@ -657,8 +824,8 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D6C0, func_0600D6C0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D6EC, func_0600D6EC);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600D8BC, func_0600D8BC);
 
-// _MOVIE_PRG_CLEAR
-void func_0600DA90(void) { memset(0x06066000, 0, 0x9A000); }
+// original name: MOVIE_PRG_CLEAR
+void MoviePRGClear(void) { memset(0x06066000, 0, 0x9A000); }
 
 void func_0600DAB4(void) { func_0600DACC(); }
 
@@ -678,18 +845,14 @@ INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DE38, func_0600DE38);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600DFC0, func_0600DFC0);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E01C, func_0600E01C);
 
-void func_0600E050(struct Unk0600E050* param_1, short param_2, short param_3)
-
-{
+void func_0600E050(struct Unk0600E050* param_1, short param_2, short param_3) {
     param_1->unkc = param_2 + param_1->unkc;
     param_1->unke = param_3 + param_1->unke;
 }
 
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f600E070, func_0600E070);
 
-void func_0600E0A4(struct Unk0600E050* param_1, short param_2, short param_3)
-
-{
+void func_0600E0A4(struct Unk0600E050* param_1, short param_2, short param_3) {
     param_1->unk4 = param_2 + param_1->unk4;
     param_1->unk8 = param_3 + param_1->unk8;
 }
@@ -959,7 +1122,37 @@ void func_06011264(void) {
 
 INCLUDE_ASM("asm/saturn/zero/data", d6011278, d_06011278);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011A6C, func_06011A6C);
-INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011AA0, func_06011AA0);
+
+extern s32 DAT_06064230;
+extern s16 DAT_060643c4;
+extern u8 DAT_060644c4;
+
+s32 PlaySfxVolPan(s32 sfxId, s32 sfxVol, s16 sfxPan) {
+    s32 ret = 0;
+
+    if (sfxId < 0x600 || sfxId > 0x916) {
+        return -3;
+    }
+    if (sfxPan < -8 || sfxPan > 8) {
+        sfxPan = 0x40;
+        ret = -1;
+    } else {
+        if (sfxPan == 0) {
+            sfxPan = sfxPan * 8 + 0x40;
+        } else if (sfxPan > 0) {
+            sfxPan = sfxPan * 8 + 0x3F;
+        } else {
+            sfxPan = sfxPan * 8 + 0x40;
+        }
+    }
+    DAT_06064230 = sfxVol;
+    DAT_060643c4 = sfxPan;
+    DAT_060644c4 = 1;
+    PlaySfx(sfxId);
+    DAT_060644c4 = 0;
+    return ret;
+}
+
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011B28, func_06011B28);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011C28, func_06011C28);
 INCLUDE_ASM("asm/saturn/zero/f_nonmat", f6011CE4, func_06011CE4);
