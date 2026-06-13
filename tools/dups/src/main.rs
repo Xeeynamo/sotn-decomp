@@ -463,18 +463,18 @@ fn do_dups_report(output_file: Option<String>, threshold: f64) {
             path_matcher: "st/rare".to_string(),
         },
         SrcAsmPair {
-            asm_dir: String::from("../../asm/us/st/rbo3/matchings/"),
-            src_dir: String::from("../../src/st/rbo3/"),
-            overlay_name: String::from("RBO3"),
-            include_asm: get_all_include_asm("../../src/st/rbo3/"),
-            path_matcher: "st/rbo3".to_string(),
-        },
-        SrcAsmPair {
             asm_dir: String::from("../../asm/us/st/rcat/matchings/"),
             src_dir: String::from("../../src/st/rcat/"),
             overlay_name: String::from("RCAT"),
             include_asm: get_all_include_asm("../../src/st/rcat/"),
             path_matcher: "st/rcat".to_string(),
+        },
+        SrcAsmPair {
+            asm_dir: String::from("../../asm/us/st/rno3/matchings/"),
+            src_dir: String::from("../../src/st/rno3/"),
+            overlay_name: String::from("RNO3"),
+            include_asm: get_all_include_asm("../../src/st/rno3/"),
+            path_matcher: "st/rno3".to_string(),
         },
         SrcAsmPair {
             asm_dir: String::from("../../asm/us/st/rnz0/matchings/"),
