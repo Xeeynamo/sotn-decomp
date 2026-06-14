@@ -59,7 +59,7 @@ jobs:
     needs: extract-assets
     steps:
       - name: Install requirements
-        run: sudo apt-get update && sudo apt-get install build-essential libsdl2-dev
+        run: sudo apt-get update && sudo apt-get install build-essential libsdl2-dev libxtst-dev
       - name: Install multilib
         if: matrix.arch == 'i686'
         run: |
@@ -71,6 +71,8 @@ jobs:
         with:
           ref: ${{ github.ref }}
           submodules: false
+      - name: Clone psyz backend
+        run: git submodule update --init --recursive tools/psyz
       - name: Get assets
         uses: actions/download-artifact@v4
         with:
@@ -90,10 +92,6 @@ jobs:
           export CC=${{ matrix.compiler }}
           cmake -B ${{github.workspace}}/pc ${PC_FLAGS} -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           cmake --build ${{github.workspace}}/pc --config ${{ matrix.build_type }}
-      - name: Test
-        if: matrix.sound_engine == 'lle'
-        run: |
-          ${{github.workspace}}/pc/sotn --test sndlib
 
   build-macos:
     strategy:
@@ -110,6 +108,8 @@ jobs:
         with:
           ref: ${{ github.ref }}
           submodules: false
+      - name: Clone psyz backend
+        run: git submodule update --init --recursive tools/psyz
       - uses: actions/setup-go@v6
         with:
           go-version-file: 'go.work'
@@ -149,6 +149,8 @@ jobs:
       with:
         ref: ${{ github.ref }}
         submodules: false
+    - name: Clone psyz backend
+      run: git submodule update --init --recursive tools/psyz
     - name: Get assets
       uses: actions/download-artifact@v4
       with:

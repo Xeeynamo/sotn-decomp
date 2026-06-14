@@ -33,11 +33,8 @@ else()
     add_compile_options(-funsigned-char)
 endif()
 
-find_package(SDL2 REQUIRED)
-
 set(SOURCE_FILES_PC
     src/pc/main.c
-    src/pc/log.c
     src/pc/stubs.c
     src/pc/sotn.c
     src/pc/pc.c
@@ -52,124 +49,6 @@ set(SOURCE_FILES_PC
     src/pc/weapon_pc.c
     src/pc/psxsdk/PsyCross/src/gte/PsyX_GTE.cpp
     src/pc/psxsdk/PsyCross/src/gte/inline_c.c
-    src/pc/psxsdk/PsyCross/src/gte/libgte_.c
-)
-
-if(WIN32)
-    list(APPEND SOURCE_FILES_PC src/pc/plat_win.c)
-else()
-    list(APPEND SOURCE_FILES_PC src/pc/plat_unix.c)
-endif()
-
-set(SOURCE_FILES_PSX_SDK
-    src/main/psxsdk/libgpu/ext.c
-    src/main/psxsdk/libgpu/prim.c
-)
-
-set(WANT_LIBSND_LLE FALSE CACHE BOOL "Whether to append use LLE for libsnd")
-set(SOURCE_FILES_LIBSND_LLE
-    # libsnd
-    src/main/psxsdk/libsnd/adsr.c
-    src/main/psxsdk/libsnd/cres.c
-    src/main/psxsdk/libsnd/decre.c
-    src/main/psxsdk/libsnd/libsnd_i.h
-    src/main/psxsdk/libsnd/next.c
-    src/main/psxsdk/libsnd/pause.c
-    src/main/psxsdk/libsnd/play.c
-    src/main/psxsdk/libsnd/replay.c
-    src/main/psxsdk/libsnd/scsmvol.c
-    src/main/psxsdk/libsnd/scssattr.c
-    src/main/psxsdk/libsnd/scssvol.c
-    src/main/psxsdk/libsnd/seqinit.c
-    src/main/psxsdk/libsnd/seqread.c
-    src/main/psxsdk/libsnd/seskoff.c
-    src/main/psxsdk/libsnd/seskon.c
-    src/main/psxsdk/libsnd/sscall.c
-    src/main/psxsdk/libsnd/ssclose.c
-    src/main/psxsdk/libsnd/ssend.c
-    src/main/psxsdk/libsnd/ssinit.c
-    src/main/psxsdk/libsnd/ssinit_h.c
-    src/main/psxsdk/libsnd/ssplay.c
-    src/main/psxsdk/libsnd/ssquit.c
-    src/main/psxsdk/libsnd/ssstart.c
-    src/main/psxsdk/libsnd/sstable.c
-    src/main/psxsdk/libsnd/sstick.c
-    src/main/psxsdk/libsnd/ssvol.c
-    src/main/psxsdk/libsnd/stop.c
-    src/main/psxsdk/libsnd/tempo.c
-    src/main/psxsdk/libsnd/ut_gpa.c
-    src/main/psxsdk/libsnd/ut_gva.c
-    src/main/psxsdk/libsnd/ut_rdel.c
-    src/main/psxsdk/libsnd/ut_rdep.c
-    src/main/psxsdk/libsnd/ut_rev.c
-    src/main/psxsdk/libsnd/ut_rfb.c
-    src/main/psxsdk/libsnd/ut_roff.c
-    src/main/psxsdk/libsnd/ut_ron.c
-    src/main/psxsdk/libsnd/ut_sva.c
-    src/main/psxsdk/libsnd/vm_doff.c
-    src/main/psxsdk/libsnd/vm_don.c
-    src/main/psxsdk/libsnd/vm_vsu.c
-    src/main/psxsdk/libsnd/vmanager.c
-    src/main/psxsdk/libsnd/vs_mono.c
-    src/main/psxsdk/libsnd/vs_srv.c
-    src/main/psxsdk/libsnd/vs_vab.c
-    src/main/psxsdk/libsnd/vs_vfb.c
-    src/main/psxsdk/libsnd/vs_vh.c
-    src/main/psxsdk/libsnd/vs_vtb.c
-    src/main/psxsdk/libsnd/vs_vtbp.c
-    src/main/psxsdk/libsnd/vs_vtc.c
-
-    # libspu
-    src/main/psxsdk/libspu/s_cb.c
-    src/main/psxsdk/libspu/s_crwa.c
-    src/main/psxsdk/libspu/s_dcb.c
-    src/main/psxsdk/libspu/s_gva.c
-    src/main/psxsdk/libspu/s_i.c
-    src/main/psxsdk/libspu/s_ini.c
-    src/main/psxsdk/libspu/s_it.c
-    src/main/psxsdk/libspu/s_itc.c
-    src/main/psxsdk/libspu/s_m_f.c
-    src/main/psxsdk/libspu/s_m_init.c
-    src/main/psxsdk/libspu/s_m_m.c
-    src/main/psxsdk/libspu/s_m_util.c
-    src/main/psxsdk/libspu/s_m_wsa.c
-    src/main/psxsdk/libspu/s_n2p.c
-    src/main/psxsdk/libspu/s_q.c
-    src/main/psxsdk/libspu/s_r.c
-    src/main/psxsdk/libspu/s_sav.c
-    src/main/psxsdk/libspu/s_sca.c
-    src/main/psxsdk/libspu/s_si.c
-    src/main/psxsdk/libspu/s_sic.c
-    src/main/psxsdk/libspu/s_sk.c
-    src/main/psxsdk/libspu/s_snv.c
-    src/main/psxsdk/libspu/s_sr.c
-    src/main/psxsdk/libspu/s_srmp.c
-    src/main/psxsdk/libspu/s_stm.c
-    src/main/psxsdk/libspu/s_stsa.c
-    src/main/psxsdk/libspu/s_sva.c
-    src/main/psxsdk/libspu/s_w.c
-    src/main/psxsdk/libspu/s_wp.c
-    src/main/psxsdk/libspu/spu.c
-    src/main/psxsdk/libspu/sr_gaks.c
-
-    src/pc/psxsdk/emu.cpp
-    src/pc/psxsdk/mednafen/spu.cpp
-)
-if(WANT_LIBSND_LLE)
-    list(APPEND SOURCE_FILES_PSX_SDK ${SOURCE_FILES_LIBSND_LLE})
-endif()
-
-set(SOURCE_FILES_MOCK_SDK
-    src/pc/psxsdk/libapi.c
-    src/pc/psxsdk/libetc.c
-    src/pc/psxsdk/libgpu.c
-    src/pc/psxsdk/libgte.c
-    src/pc/psxsdk/libgs.c
-    src/pc/psxsdk/libcd.c
-    src/pc/psxsdk/libcard.c
-    src/pc/psxsdk/libspu.c
-    src/pc/psxsdk/libsnd.c
-    src/pc/psxsdk/cdc.c
 )
 
 set(SOURCE_FILES_3RD
@@ -544,10 +423,6 @@ set_source_files_properties(src/weapon/w_052.c PROPERTIES COMPILE_DEFINITIONS WE
 set(SOURCE_FILES_CORE
     ${SOURCE_FILES_DRA}
     ${SOURCE_FILES_RIC}
-    ${SOURCE_FILES_PC}
-    ${SOURCE_FILES_PSX_SDK}
-    ${SOURCE_FILES_MOCK_SDK}
-    ${SOURCE_FILES_3RD}
     ${SOURCE_FILES_STAGE_SEL}
     ${SOURCE_FILES_STAGE_CEN}
     ${SOURCE_FILES_STAGE_NZ0}
@@ -583,36 +458,17 @@ target_compile_definitions(core PUBLIC
     _internal_version_us
 )
 
-# sdl2 target
 add_executable(${PROJECT_NAME}
-    src/pc/sdl2.c
-    src/pc/render_soft.c
-    src/pc/render_shared.c
-    src/pc/render_gl.c
-    src/pc/psxsdk/mednafen/gpu.cpp
-    src/pc/psxsdk/mednafen/gpu_line.cpp
-    src/pc/psxsdk/mednafen/gpu_polygon.cpp
-    src/pc/psxsdk/mednafen/gpu_sprite.cpp
-    src/pc/sdl2_macros.c
-)
-target_include_directories(${PROJECT_NAME} PRIVATE ${SDL2_INCLUDE_DIRS})
+    ${SOURCE_FILES_PC}
+    ${SOURCE_FILES_MOCK_SDK}
+    ${SOURCE_FILES_3RD})
+add_subdirectory(tools/psyz/psyz)
+target_link_libraries(core PUBLIC psyz)
+target_include_directories(psyz PUBLIC tools/psyz/psyz/include)
+target_compile_definitions(psyz PRIVATE __psyz)
+psyz_strip_file_prefix(${PROJECT_NAME})
 if (WIN32)
-    target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} core)
+    target_link_libraries(${PROJECT_NAME} PRIVATE core)
 else()
-    target_link_libraries(${PROJECT_NAME} PRIVATE ${SDL2_LIBRARIES} core m)
-endif()
-if(WANT_LIBSND_LLE)
-    target_compile_definitions(core PRIVATE WANT_LIBSND_LLE=1)
-    target_compile_definitions(${PROJECT_NAME} PRIVATE WANT_LIBSND_LLE=1)
-endif()
-
-# null target
-add_executable(${PROJECT_NAME}_null
-    src/pc/null.c
-)
-
-if (WIN32)
-    target_link_libraries(${PROJECT_NAME}_null PRIVATE core)
-else()
-    target_link_libraries(${PROJECT_NAME}_null PRIVATE core m)
+    target_link_libraries(${PROJECT_NAME} PRIVATE core m)
 endif()

@@ -125,28 +125,11 @@ static bool parseArgs(
     return true;
 }
 
-static void testSndLib(void) {
-#ifdef WANT_LIBSND_LLE
-    run_tests();
-    exit(0);
-#else
-    printf("this test is only available for LLE builds\n");
-    exit(-1);
-#endif
-}
-
 int Main(int argc, char* argv[]) {
     struct InitGameParams params;
     if (!parseArgs(&params, argc, argv)) {
         printHelp();
         return -1;
-    }
-    switch (params.testMode) {
-    case NO_TEST:
-        break;
-    case TEST_SNDLIB:
-        testSndLib();
-        break;
     }
     if (!InitGame(&params)) {
         return -1;
@@ -154,3 +137,5 @@ int Main(int argc, char* argv[]) {
     MainGame();
     ResetGame();
 }
+
+int main(int argc, char* argv[]) { return Main(argc, argv); }
